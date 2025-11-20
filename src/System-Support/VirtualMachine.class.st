@@ -251,30 +251,6 @@ VirtualMachine >> gcBiasToGrowLimit: arg [
 	^self primitiveFailed
 ]
 
-{ #category : 'statistics' }
-VirtualMachine >> gcStatisticsDuring: aBlockClosure [ 
-	
-	| incrementalGCCount fullGCCount incrementalGCTime fullGCTime timeToRun |
-	incrementalGCCount := self incrementalGCCount.
-	fullGCCount := self fullGCCount.
-	incrementalGCTime := self totalIncrementalGCTime.
-	fullGCTime := self totalFullGCTime.
-	
-	timeToRun := aBlockClosure millisecondsToRun.
-
-	incrementalGCCount := self incrementalGCCount - incrementalGCCount.
-	fullGCCount := self fullGCCount - fullGCCount.
-	incrementalGCTime := self totalIncrementalGCTime - incrementalGCTime.
-	fullGCTime := self totalFullGCTime - fullGCTime.
-
-	
-	^ { #incrementalGCCount -> incrementalGCCount.
-	  #fullGCCount -> fullGCCount.
-	  #incrementalGCTime -> incrementalGCTime milliSecond.
-	  #fullGCTime -> fullGCTime milliSecond.
-	  #timeToRun -> timeToRun } asDictionary 
-]
-
 { #category : 'parameters' }
 VirtualMachine >> getParameters [
 	"Answer an Array containing the current values of the VM's internal
@@ -335,14 +311,6 @@ VirtualMachine >> hasSmallFloats [
 ]
 
 { #category : 'accessing' }
-VirtualMachine >> headlessOption [
-	"Return the default name for the headless option for this VM"
-	^ self optionDash, (Smalltalk os isUnix
-		ifTrue: [ 'vm-display-null' ]
-		ifFalse: [ 'headless' ])
-]
-
-{ #category : 'accessing' }
 VirtualMachine >> imageFile [
 	"Image file "
 	^ Smalltalk image imageFile
@@ -353,28 +321,6 @@ VirtualMachine >> imagePath [
 	"Image file path
 	Ex:  '/Users/foo/Pharo/Pharo-1.1.1-dev10.09.1.image'"
 	^ Smalltalk image imagePath
-]
-
-{ #category : 'accessing' }
-VirtualMachine >> imageVersionInImageHeader [
-
-	^ self parameterAt: 79
-]
-
-{ #category : 'accessing' }
-VirtualMachine >> imageVersionInImageHeader: aValue [
-
-	(aValue between: 0 and: 65535)
-		ifFalse: [ self error: 'The image version should be an integer positive of 16bits' ].
-	
-	^ self parameterAt: 79 put: aValue
-]
-
-{ #category : 'parameters' }
-VirtualMachine >> imageVersionNumber [
-	"Image version number (6505 means the Squeak V3 format with BlockClosure support (but _without_ BlockContext support)"
-
-	^ self parameterAt: 41
 ]
 
 { #category : 'gc' }
@@ -388,31 +334,6 @@ VirtualMachine >> incrementalGCCount [
 VirtualMachine >> interpreterClass [
 	"Return the interpreter class that is currently executing the system (Cog VM only)"
 	^ self getSystemAttribute: 1007
-]
-
-{ #category : 'accessing' }
-VirtualMachine >> interpreterSourceDate [
-	"Return the date of changes given by `self interpreterSourceVersion`"
-	| dateString parts |
-
-	dateString := (self interpreterSourceVersion splitOn: 'Date: ') second.
-
-	dateString first isDigit
-		ifTrue: [
-			"most probably the date is in ISO 8601 Format"
-			^ dateString asDateAndTime ].
-
-	"Otherwise assume the old format: DDD MMM DD HH:MM:SS YYYY +TTTT ..."
-	parts := dateString substrings first: 6.
-	"create a more reasonable string.."
-	dateString := String streamContents: [ :s |
-		s
-			nextPutAll: (parts at: 5 ); space; "year"
-			nextPutAll: (parts at: 2 ); space; "month name"
-			nextPutAll: (parts at: 3 ); space; "day of month"
-			nextPutAll: (parts at: 4 ); space; "time"
-			nextPutAll: (parts last); space    "timezone"].
-	^ dateString asDateAndTime
 ]
 
 { #category : 'accessing' }
@@ -450,24 +371,6 @@ VirtualMachine >> isAIOInterrupt [
 	 (This means we are going idle until we have something real to process)"
 
 	^ (self getSystemAttribute: 1010) = 'AIO'
-]
-
-{ #category : 'testing' }
-VirtualMachine >> isPharoVM [
-	"Answers if this VM is a valid PharoVM (made with our sources)"
-	| version |
-
-	self flag: #pharoTodo. "We need a certain way of identify PharoVM, but in the mean time this ensures "
-	version := self version.
-	^ (version beginsWith: 'PharoVM')
-		or: [
-			(version includesSubstring: 'NBCoInterpreter')
-				or: [
-					(version includesSubstring: 'Commit: ')
-						and: [
-							| pos |
-							pos := (version findString: 'Commit: ') + 8.
-							(version copyFrom: pos to: pos + 39) allSatisfy: [ :each | (($a to: $f), ($0 to: $9)) includes: each ] ] ] ]
 ]
 
 { #category : 'testing' }
@@ -680,14 +583,6 @@ VirtualMachine >> optionAt: i [
 ]
 
 { #category : 'accessing' }
-VirtualMachine >> optionDash [
-	"VMs release in Mai 2013 use -- instead of - for VM command line options"
-	^ (Smalltalk vm interpreterSourceDate > (Date readFrom: '17-5-2013' pattern: 'd-m-y'))
-		ifTrue: [ '--' ]
-		ifFalse: [ '-' ]
-]
-
-{ #category : 'accessing' }
 VirtualMachine >> options [
 	"return an array with all the options passed to the VM (up to the image) "
 	^ Array streamContents: [ :s|
@@ -888,19 +783,6 @@ VirtualMachine >> processPreemptionYields: aBoolean [
 	self parameterAt: 48 put: ((self parameterAt: 48) bitClear: 4) + (aBoolean ifTrue: [0] ifFalse: [2r100])
 ]
 
-{ #category : 'accessing' }
-VirtualMachine >> saveImageVersionInImageHeader [
-
-	| currentVersion |
-	currentVersion := SystemVersion current.
-
-	"If the primitive is not available we return false"
-	[	self imageVersionInImageHeader: (currentVersion major * 10) + currentVersion minor.
-		^ true ]
-		onErrorDo: [ ^ false ]. 
-		
-]
-
 { #category : 'gc' }
 VirtualMachine >> setGCBiasToGrowGCLimit: aNumber [
 	"Primitive. Indicate that the bias to grow logic should do a GC after aNumber Bytes"
@@ -947,132 +829,6 @@ VirtualMachine >> setGCSemaphore: semaIndex [
 	] fork.
 	process inspect.
 "
-]
-
-{ #category : 'statistics' }
-VirtualMachine >> statisticsReport [
-	"Workspace openContents: (Smalltalk vm statisticsReport) label: 'VM Statistics'"
-
-	| oldSpaceSize youngSpaceSize memorySize freeSize fullGCs fullGCTime incrGCs incrGCTime tenureCount upTime upTime2 fullGCs2 fullGCTime2 incrGCs2 incrGCTime2 tenureCount2 str |
-	oldSpaceSize		:= self oldSpace.
-	youngSpaceSize		:= self youngSpaceSize.
-	tenureCount			:= self tenureCount.
-	memorySize			:= self memorySize.
-	freeSize				:= self freeSize.
-	fullGCs				:= self fullGCCount.
-	fullGCTime			:= self totalFullGCTime.
-	incrGCs				:= self incrementalGCCount.
-	incrGCTime			:= self totalIncrementalGCTime.
-
-	upTime := Time millisecondClockValue.
-	str := (String new: 1000) writeStream.
-	str	<< 'uptime			';
-		print: (upTime / 1000 / 60 // 60); nextPut: $h;
-		print: (upTime / 1000 / 60 \\ 60) asInteger; nextPut: $m;
-		print: (upTime / 1000 \\ 60) asInteger; nextPut: $s; cr.
-
-	str	<< 'memory			'.
-	memorySize printWithCommasOn: str.
-	str << ' bytes'; cr.
-	str	<<	'	old			'.
-	oldSpaceSize printWithCommasOn: str.
-	str << ' bytes (';
-		print: ((oldSpaceSize / memorySize * 100) roundTo: 0.1); << '%)'; cr.
-	str	<< '	young		'.
-	(youngSpaceSize) printWithCommasOn: str.
-	str << ' bytes (';
-		print: ((youngSpaceSize / memorySize * 100) roundTo: 0.1); << '%)'; cr.
-	str	<< '	used		'.
-	youngSpaceSize + oldSpaceSize - freeSize printWithCommasOn: str.
-	str << ' bytes (';
-		print: ((youngSpaceSize + oldSpaceSize - freeSize / memorySize * 100) roundTo: 0.1); << '%)'; cr.
-	str	<< '	free		'.
-	freeSize printWithCommasOn: str.
-	str << ' bytes (';
-		print: ((freeSize / memorySize * 100) roundTo: 0.1); << '%)'; cr.
-
-	str	<< 'GCs				'.
-	(fullGCs + incrGCs) printWithCommasOn: str.
-	fullGCs + incrGCs > 0 ifTrue: [
-		str
-			<< ' (';
-			print: ((upTime / (fullGCs + incrGCs)) roundTo: 1);
-			<< 'ms between GCs)'
-	].
-	str cr.
-	str	<< '	full			';
-		print: fullGCs; << ' totalling '.
-	fullGCTime printWithCommasOn: str.
-	str << 'ms (';
-		print: ((fullGCTime / upTime * 100) roundTo: 0.1);
-		<< '% uptime)'.
-	fullGCs = 0 ifFalse:
-		[str	<< ', avg '; print: ((fullGCTime / fullGCs) roundTo: 0.1); << 'ms'].
-	str	cr.
-	str	<< '	incr		';
-		print: incrGCs; << ' totalling '.
-	incrGCTime printWithCommasOn: str.
-	str << 'ms (';
-		print: ((incrGCTime / upTime * 100) roundTo: 0.1);
-		<< '% uptime), avg '; print: ((incrGCTime / incrGCs) roundTo: 0.1); << 'ms'; cr.
-	str	<< '	tenures		'.
-	tenureCount printWithCommasOn: str.
-	tenureCount = 0 ifFalse:
-		[str << ' (avg '; print: (incrGCs / tenureCount) asInteger; << ' GCs/tenure)'].
-	str	cr.
-
-LastStats ifNil: [LastStats := Array new: 6]
-ifNotNil: [
-	upTime2 := upTime - (LastStats at: 1).
-	fullGCs2 := fullGCs - (LastStats at: 2).
-	fullGCTime2 := fullGCTime - (LastStats at: 3).
-	incrGCs2 := incrGCs - (LastStats at: 4).
-	incrGCTime2 := incrGCTime - (LastStats at: 5).
-	tenureCount2 := tenureCount - (LastStats at: 6).
-
-	str	<<  'Since last view	'.
-	(fullGCs2 + incrGCs2) printWithCommasOn: str.
-	fullGCs2 + incrGCs2 > 0 ifTrue: [
-		str
-			<< ' (';
-			print: ((upTime2 / (fullGCs2 + incrGCs2)) roundTo: 1);
-			<< 'ms between GCs)'.
-	].
-	str cr.
-	str	<< '	uptime		'; print: ((upTime2 / 1000.0) roundTo: 0.1); << 's'; cr.
-	str	<< '	full			';
-		print: fullGCs2; << ' totalling '.
-	fullGCTime2 printWithCommasOn: str.
-	str << 'ms (';
-		print: ((fullGCTime2 / upTime2 * 100) roundTo: 0.1);
-		<< '% uptime)'.
-	fullGCs2 = 0 ifFalse:
-		[str	<< ', avg '; print: ((fullGCTime2 / fullGCs2) roundTo: 0.1); << 'ms'].
-	str	cr.
-	str	<< '	incr		';
-		print: incrGCs2; << ' totalling '.
-	incrGCTime2 printWithCommasOn: str.
-	str << 'ms (';
-		print: ((incrGCTime2 / upTime2 * 100) roundTo: 0.1);
-		<< '% uptime), avg '.
-	incrGCs2 > 0 ifTrue: [
-		 str print: ((incrGCTime2 / incrGCs2) roundTo: 0.1); << 'ms'
-	].
-	str cr.
-	str	<< '	tenures		'.
-	tenureCount2 printWithCommasOn: str.
-	tenureCount2 = 0 ifFalse:
-		[str << ' (avg '; print: (incrGCs2 / tenureCount2) asInteger; << ' GCs/tenure)'].
-	str	cr.
-].
-	LastStats at: 1 put: upTime.
-	LastStats at: 2 put: fullGCs.
-	LastStats at: 3 put: fullGCTime.
-	LastStats at: 4 put: incrGCs.
-	LastStats at: 5 put: incrGCTime.
-	LastStats at: 6 put: tenureCount.
-
-	^ str contents
 ]
 
 { #category : 'testing' }

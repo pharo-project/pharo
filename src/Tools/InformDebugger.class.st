@@ -11,5 +11,6 @@ Class {
 
 { #category : 'opening api' }
 InformDebugger class >> openOn: aDebugSession withFullView: aBool andNotification: aString [
-	self inform: (self messageToPrintFrom: aDebugSession)
+	
+	InformativeNotification signal: (self messageToPrintFrom: aDebugSession)
 ]

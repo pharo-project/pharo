@@ -51,10 +51,8 @@ DigitalSignatureAlgorithm class >> example [
 	msg := 'This is a test...'.
 	keys := self testKeySet.
 	sig := self sign: msg privateKey: keys first.
-	self inform: 'Signature created'.
-	(self verify: sig isSignatureOf: msg publicKey: keys last)
-		ifTrue: [self inform: 'Signature verified.']
-		ifFalse: [self error: 'ERROR! Signature verification failed']
+	self verify: sig isSignatureOf: msg publicKey: keys last
+		
 ]
 
 { #category : 'public' }

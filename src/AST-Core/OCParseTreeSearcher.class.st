@@ -4,7 +4,7 @@ ParseTreeSearcher walks over a normal source code parse tree using the visitor p
 Instance Variables:
 	answer	<Object>	the ""answer"" that is propagated between matches
 	argumentSearches	<Collection of: (Association key: ASTProgramNode value: BlockClosure)>	argument searches (search for the ASTProgramNode and perform the BlockClosure when its found)
-	context	<RBSmallDictionary>	a dictionary that contains what each meta-node matches against. This could be a normal Dictionary that is created for each search but is created once and reused (efficiency).
+	context	<SmallDictionary>	a dictionary that contains what each meta-node matches against. This could be a normal Dictionary that is created for each search but is created once and reused (efficiency).
 	messages	<Collection>	the sent messages in our searches
 	searches	<Collection of: (Association key: ASTProgramNode value: BlockClosure)>	non-argument searches (search for the ASTProgramNode and perform the BlockClosure when its found)
 	

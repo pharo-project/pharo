@@ -40,6 +40,13 @@ CmdShortcutActivation class >> by: aKeyCombination for: anAnnotationUser [
 ]
 
 { #category : 'well known shortcuts' }
+CmdShortcutActivation class >> moveFor: anAnnotationUser [
+	<classAnnotationDependency>
+
+	^self by: $o meta for: anAnnotationUser
+]
+
+{ #category : 'well known shortcuts' }
 CmdShortcutActivation class >> removalFor: anAnnotationUser [
 	<classAnnotationDependency>
 

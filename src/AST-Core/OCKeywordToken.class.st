@@ -1,5 +1,5 @@
 "
-RBKeywordToken is the first-class representation of a keyword token (e.g. add:)
+OCKeywordToken is the first-class representation of a keyword token (e.g. add:)
 "
 Class {
 	#name : 'OCKeywordToken',

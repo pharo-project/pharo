@@ -630,20 +630,6 @@ String >> asComment [
 ]
 
 { #category : 'converting' }
-String >> asDateAndTime [
- 	"Convert from UTC format"
-
-	^ DateAndTime fromString: self
-]
-
-{ #category : 'converting' }
-String >> asDuration [
- 	"Convert from [-]D:HH:MM:SS[.S] format. What is between [] implies optional elements"
-
- 	^ Duration fromString: self
-]
-
-{ #category : 'converting' }
 String >> asFourCode [
 	"'abcd' asFourCode >>> -513645724"
 	"'1111' asFourCode >>> 825307441"
@@ -748,13 +734,6 @@ String >> asString [
 String >> asSymbol [
 	"Answer the unique Symbol whose characters are the characters of the string."
 	^Symbol intern: self
-]
-
-{ #category : 'converting' }
-String >> asTime [
-	"Many allowed forms, see Time>>readFrom:"
-
-	^ Time fromString: self
 ]
 
 { #category : 'converting' }

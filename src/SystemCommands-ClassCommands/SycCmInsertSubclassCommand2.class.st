@@ -65,13 +65,7 @@ SycCmInsertSubclassCommand2 >> packageNames [
 { #category : 'preparation' }
 SycCmInsertSubclassCommand2 >> prepareFullExecution [
 	
-	"Here there is a bug when we repplace firstNavigationScopes by refactoringScopes
-	when using refactoringScopes the model is not able to find the superclass of a class. 
-	Probably because the model is just made for the class and not the class hierarchy.
-	After fighting to understand I decided to stop and introduced firstNavigationScopes which is breaking the scope
-	reduction but.... else insert is not working."
-	
-	refactoringScopes := context firstNavigationScopes.
+	refactoringScopes := context refactoringScopes.
 	targetClass := context lastSelectedClass.
 
 ]

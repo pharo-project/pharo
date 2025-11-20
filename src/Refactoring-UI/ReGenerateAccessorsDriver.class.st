@@ -19,16 +19,16 @@ ReGenerateAccessorsDriver class >> refactoringClass [
 ]
 
 { #category : 'configuration' }
-ReGenerateAccessorsDriver >> configureRefactoring [
+ReGenerateAccessorsDriver >> instantiateRefactoring [
 		
-	refactoring := ReUpFrontPreconditionCheckingCompositeRefactoring new
-							model: model; 
-							refactorings: (selectedVariables collect: [:each | 
-									self refactoringClass 
-										model: model 
-										instanceVariable: each 
-										class: self targetClass name ]);
-								yourself.
+	^ ReUpFrontPreconditionCheckingCompositeRefactoring new
+		model: model; 
+		refactorings: (selectedVariables collect: [:each | 
+			self refactoringClass 
+				model: model 
+				instanceVariable: each 
+				class: self targetClass name ]);
+		yourself.
 ]
 
 { #category : 'configuration' }

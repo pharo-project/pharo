@@ -32,14 +32,10 @@ ReRemoveInstanceVariablesDriver >> browseInstanceVariableReferences [
 		
 ]
 
-{ #category : 'resources' }
+{ #category : 'configuration' }
 ReRemoveInstanceVariablesDriver >> configureRefactoring [
 
-	refactoring := ReUpFrontPreconditionCheckingCompositeRefactoring new
-							model: model; 
-							refactorings: (variables collect: [:each | 
-									ReRemoveInstanceVariableRefactoring model: model remove: each from: class]);
-								yourself.
+	super configureRefactoring.
 	refactoring prepareForInteractiveMode
 ]
 
@@ -60,6 +56,16 @@ ReRemoveInstanceVariablesDriver >> handleBreakingChanges [
 	| select |
 	select := self selectDialog.
 	select ifNotNil: [ select action ]
+]
+
+{ #category : 'configuration' }
+ReRemoveInstanceVariablesDriver >> instantiateRefactoring [
+
+	^ ReUpFrontPreconditionCheckingCompositeRefactoring new
+		model: model; 
+		refactorings: (variables collect: [:each | 
+				ReRemoveInstanceVariableRefactoring model: model remove: each from: class]);
+		yourself
 ]
 
 { #category : 'execution' }

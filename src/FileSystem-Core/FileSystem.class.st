@@ -404,11 +404,6 @@ FileSystem >> exists: aResolvable [
 ]
 
 { #category : 'public' }
-FileSystem >> extensionDelimiter [
-	^ $.
-]
-
-{ #category : 'public' }
 FileSystem >> file: aResolvable posixPermissions: anInteger [
 	"Set the mode of aResolvable to anInteger (as defined by chmod())"
 

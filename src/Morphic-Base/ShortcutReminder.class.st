@@ -301,7 +301,7 @@ ShortcutReminder >> remind: aMenuItem [
 ShortcutReminder >> resetCount [
 
 	countDict := Dictionary new.
-	self inform: 'Shortcut reminder count reset'
+	InformativeNotification signal: 'Shortcut reminder count reset'
 ]
 
 { #category : 'shortcut creation' }

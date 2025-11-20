@@ -1,5 +1,5 @@
 "
-Visit any RBProgrmNode in the syntax tree and evaluate a generic block
+Visit any OCProgramNode in the syntax tree and evaluate a generic block
 "
 Class {
 	#name : 'OCGenericNodeVisitor',

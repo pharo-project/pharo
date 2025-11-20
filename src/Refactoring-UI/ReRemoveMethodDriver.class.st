@@ -39,17 +39,6 @@ ReRemoveMethodDriver >> changes [
 	^ refactoring removeMethodChanges
 ]
 
-{ #category : 'resources' }
-ReRemoveMethodDriver >> configureRefactoring [
-
-	| classSelectorMapping |
-	classSelectorMapping := methods collect: [ :m | m origin -> m selector ].
-
-	refactoring := ReRemoveMethodsRefactoring
-			            model: model
-			            classSelectorMapping: classSelectorMapping
-]
-
 { #category : 'configuration' }
 ReRemoveMethodDriver >> defaultSelectDialog [
 
@@ -68,6 +57,17 @@ ReRemoveMethodDriver >> handleBreakingChanges [
 	| select |
 	select := self selectDialog.
 	select ifNotNil: [ select action ]
+]
+
+{ #category : 'configuration' }
+ReRemoveMethodDriver >> instantiateRefactoring [
+
+	| classSelectorMapping |
+	classSelectorMapping := methods collect: [ :m | m origin -> m selector ].
+
+	^ ReRemoveMethodsRefactoring
+       model: model
+       classSelectorMapping: classSelectorMapping
 ]
 
 { #category : 'execution' }

@@ -52,7 +52,7 @@ DebugContext >> blockNotFoundDialog: aMethod with: aText [
 	message := 'Method for block not found on stack, can''t edit and continue'.
 
 	"shouldn't edit doits"
-	aMethod selector isDoIt ifTrue: [ ^ self inform: message ].
+	aMethod selector isDoIt ifTrue: [ ^ InformativeNotification signal: message ].
 
 	result := self
 		          confirm: message
@@ -78,7 +78,7 @@ DebugContext >> checkSelectorUnchanged: aSelector [
 	unchanged := aSelector == self selectedMessageName
 		or: [ self selectedMessageName isDoIt and: [ aSelector numArgs = self selectedMessageName numArgs ] ].
 	unchanged
-		ifFalse: [ self inform: 'can''t change selector' ].
+		ifFalse: [ InformativeNotification signal: 'can''t change selector' ].
 	^ unchanged
 ]
 

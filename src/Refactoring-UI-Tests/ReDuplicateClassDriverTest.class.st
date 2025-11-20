@@ -18,14 +18,19 @@ ReDuplicateClassDriverTest >> newName [
 { #category : 'tests' }
 ReDuplicateClassDriverTest >> setUpMocksOn: driver [
 
-	| dialog requestClass |
+	| dialog requestClass selectedSuperclass |
+	selectedSuperclass := MockObject new.
+	selectedSuperclass on: #name respond: ReClassToBeDuplicated superclass name.
+
 	dialog := MockObject new.
 	dialog
 		on: #window respond: SpDialogWindowPresenter new beOk;
+		on: #selectedSuperclass respond: selectedSuperclass;
 		on:	 #newClassName respond: #ReClassCopiedToBeDeleted;
 		on: #packageName respond: #SomePackage;
 		on: #isCancelled respond: true;
-		on: #openModal respond: dialog.
+		on: #openModal respond: dialog;
+		on: #packageName respond: #SomePackage.
 	driver requestDialog: dialog.
 	
 	requestClass := MockObject new.
@@ -70,6 +75,24 @@ ReDuplicateClassDriverTest >> testDuplicateClass [
 		assert: (methodChanges select: [ :mc |
 				 mc selector = #hash or: [ mc selector = #= ] ]) size
 		equals: 2
+]
+
+{ #category : 'tests' }
+ReDuplicateClassDriverTest >> testDuplicateClassInIncompleteModelFails [
+
+	| driver rbClass |
+	testingEnvironment := RBClassEnvironment classes: { ReClassToBeDuplicated }.
+	driver := ReDuplicateClassDriver className:
+		          ReClassToBeDuplicated name.
+
+	self setUpMocksOn: driver.
+
+	driver scopes: { testingEnvironment }.
+	rbClass := testingEnvironment classes anyOne.
+
+	self
+		should: [ driver runRefactoring ]
+		raise: RBRefactoringError
 ]
 
 { #category : 'tests' }

@@ -37,18 +37,18 @@ Class {
 DockingBarMorph class >> example [
 	"self example"
 
-	DockingBarMorph new
+	self new
 		addMorph: (SimpleButtonMorph new
 				 label: 'Say hello';
-				 target: [ MorphicUIManager new inform: 'Hello' ];
+				 target: [ InformativeNotification signal: 'Hello' ];
 				 actionSelector: #value);
 		addMorph: (SimpleButtonMorph new
 				 label: 'Say bonjour';
-				 target: [ MorphicUIManager new inform: 'Bonjour' ];
+				 target: [ InformativeNotification signal: 'Bonjour' ];
 				 actionSelector: #value);
 		addMorph: (SimpleButtonMorph new
 				 label: 'Close';
-				 target: [ DockingBarMorph allInstances last delete ];
+				 target: [ self allInstances last delete ];
 				 actionSelector: #value);
 		adhereToBottom;
 		openInWorld

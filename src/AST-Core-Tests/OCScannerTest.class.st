@@ -1,5 +1,5 @@
-"
-SUnit tests for RBScanner
+" 
+SUnit tests for OCScanner
 "
 Class {
 	#name : 'OCScannerTest',

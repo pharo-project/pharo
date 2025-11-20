@@ -30,14 +30,10 @@ ReRemoveSharedVariablesDriver >> browseSharedVariableReferences [
 	StMessageBrowser browse: refactoring violators
 ]
 
-{ #category : 'resources' }
+{ #category : 'configuration' }
 ReRemoveSharedVariablesDriver >> configureRefactoring [
 
-	refactoring := ReUpFrontPreconditionCheckingCompositeRefactoring new
-							model: model; 
-							refactorings: (variables collect: [:each | 
-									ReRemoveSharedVariableRefactoring model: model remove: each from: class]);
-								yourself.
+	super configureRefactoring.
 	refactoring prepareForInteractiveMode
 ]
 
@@ -58,6 +54,16 @@ ReRemoveSharedVariablesDriver >> handleBreakingChanges [
 	| select  |
 	select := self defaultSelectDialog.
 	select ifNotNil: [ select action ]
+]
+
+{ #category : 'configuration' }
+ReRemoveSharedVariablesDriver >> instantiateRefactoring [
+
+	^ ReUpFrontPreconditionCheckingCompositeRefactoring new
+		model: model; 
+		refactorings: (variables collect: [:each | 
+				ReRemoveSharedVariableRefactoring model: model remove: each from: class]);
+		yourself
 ]
 
 { #category : 'execution' }

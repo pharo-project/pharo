@@ -52,6 +52,19 @@ RBInsertNewClassRefactoring >> applicabilityPreconditions [
 		  (ReIsValidPackageName new packageNamed: packageName) }
 ]
 
+{ #category : 'transforming' }
+RBInsertNewClassRefactoring >> checkSuperclass [
+
+	| superclassObj superclassName |
+	"I fail if superclass is not defined in the model"
+	superclassObj := self model classObjectFor: superclass.
+	superclassObj ifNil: [
+			superclassName := superclass isString
+				                  ifTrue: [ superclass , ' ' ]
+				                  ifFalse: [ '' ].
+			self refactoringError: 'The new class'' superclass ' , superclassName , 'is missing from the model' ]
+]
+
 { #category : 'accessing' }
 RBInsertNewClassRefactoring >> comment [
 
@@ -80,6 +93,12 @@ RBInsertNewClassRefactoring >> packageName [
 RBInsertNewClassRefactoring >> packageName: anObject [
 
 	packageName := anObject
+]
+
+{ #category : 'transforming' }
+RBInsertNewClassRefactoring >> prepareForExecution [
+
+	self checkSuperclass
 ]
 
 { #category : 'transforming' }

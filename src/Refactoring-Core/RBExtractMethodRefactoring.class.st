@@ -279,6 +279,8 @@ RBExtractMethodRefactoring >> getExtractedSource [
 	((extractionInterval first between: 1 and: (self startLimit: source size))
 		and: [extractionInterval last between: 1 and: source size])
 			ifFalse: [self refactoringError: 'Invalid interval'].
+	(extractionInterval first > extractionInterval last)
+		ifTrue: [ self refactoringError: 'Invalid interval' ].
 	^source copyFrom: extractionInterval first to: extractionInterval last
 ]
 

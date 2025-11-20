@@ -295,19 +295,9 @@ OCSequenceNode >> hasNonLocalReturn [
 { #category : 'testing' }
 OCSequenceNode >> hasSameExitPoint [
 
-	statements last isReturn ifTrue: [ ^ true ].
-	^ self hasSameExitPoint: false
-]
-
-{ #category : 'testing' }
-OCSequenceNode >> hasSameExitPoint: aBoolean [ 
-
-	| statementsWithBlocks |
-	aBoolean ifTrue: [ ^ true ].
 	statements ifEmpty: [ ^ true ].
-	statementsWithBlocks := statements select: [ :stm | stm hasBlock ].
-	^ (statements last isReturn not and: [
-		statementsWithBlocks allSatisfy: [ :stm | stm hasSameExitPoint: false ] ]).
+	statements last isReturn ifTrue: [ ^ true ].
+	^ self hasNonLocalReturn not
 ]
 
 { #category : 'testing' }
@@ -433,13 +423,6 @@ OCSequenceNode >> postCopy [
 	super postCopy.
 	self temporaries: (self temporaries collect: [ :each | each copy ]).
 	self statements: (self statements collect: [ :each | each copy ])
-]
-
-{ #category : 'testing' }
-OCSequenceNode >> references: aVariableName [
-	"Return wether the variable named aVariable is accessed in read or write with the receiver."
-	
-	^ statements anySatisfy: [:each | each references: aVariableName]
 ]
 
 { #category : 'replacing' }

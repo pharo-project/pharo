@@ -96,7 +96,7 @@ Clipboard >> clipboardText: text [
 { #category : 'testing' }
 Clipboard >> hasRecentClippings [
 
-	^ self recentClippings notEmpty
+	^ self recentClippings isNotEmpty
 ]
 
 { #category : 'initialization' }

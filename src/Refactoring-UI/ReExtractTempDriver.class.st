@@ -11,16 +11,6 @@ Class {
 	#tag : 'Drivers'
 }
 
-{ #category : 'resources' }
-ReExtractTempDriver >> configureRefactoring [
-
-	refactoring := RBExtractToTemporaryRefactoring
-			extract: interval
-			from: selector 
-			in: class.
-	refactoring prepareForExecution 
-]
-
 { #category : 'instance creation' }
 ReExtractTempDriver >> extract: anInterval from: aSelector in: aClass [
 
@@ -43,6 +33,15 @@ ReExtractTempDriver >> getVariableName: initialAnswer errorMessage: message [
 	
 	
 		
+]
+
+{ #category : 'configuration' }
+ReExtractTempDriver >> instantiateRefactoring [
+
+	^ RBExtractToTemporaryRefactoring
+		extract: interval
+		from: selector 
+		in: class
 ]
 
 { #category : 'execution' }

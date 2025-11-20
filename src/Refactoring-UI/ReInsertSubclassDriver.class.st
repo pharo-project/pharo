@@ -49,23 +49,25 @@ ReInsertSubclassDriver >> comment: aString [
 	comment := aString
 ]
 
-{ #category : 'accessing' }
-ReInsertSubclassDriver >> configureRefactoring [
-
-	refactoring := (RBInsertNewClassRefactoring className: self subclass)
-		model: model;
-		superclass: self superclass;
-		subclasses: self subclasses; 
-		packageName: self packageName;
-		tagName: self tagName;
-		comment: self comment;
-		yourself
-]
-
 { #category : 'initialization' }
 ReInsertSubclassDriver >> dialogTitleForClassSelection [
 
 	^ 'Insert subclass of ', superclass name
+]
+
+{ #category : 'configuration' }
+ReInsertSubclassDriver >> instantiateRefactoring [
+
+	^ (RBInsertNewClassRefactoring className: self subclass)
+			model: model;
+			superclass: self superclass;
+			subclasses: self subclasses; 
+			packageName: self packageName;
+			tagName: self tagName;
+			comment: self comment;
+			prepareForExecution;
+			yourself.
+	
 ]
 
 { #category : 'accessing' }

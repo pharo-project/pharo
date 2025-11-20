@@ -6,12 +6,26 @@ Class {
 	#superclass : 'Announcement',
 	#instVars : [
 		'item',
-		'index'
+		'index',
+		'entries',
+		'token'
 	],
 	#category : 'NECompletion-Model',
 	#package : 'NECompletion',
 	#tag : 'Model'
 }
+
+{ #category : 'accessing' }
+CompletionItemSelected >> entries [
+
+	^ entries
+]
+
+{ #category : 'accessing' }
+CompletionItemSelected >> entries: anObject [
+
+	entries := anObject
+]
 
 { #category : 'accessing' }
 CompletionItemSelected >> index [
@@ -35,4 +49,16 @@ CompletionItemSelected >> selectedItem [
 CompletionItemSelected >> selectedItem: anObject [
 
 	item := anObject
+]
+
+{ #category : 'accessing' }
+CompletionItemSelected >> token [
+
+	^ token
+]
+
+{ #category : 'accessing' }
+CompletionItemSelected >> token: anObject [
+
+	token := anObject
 ]

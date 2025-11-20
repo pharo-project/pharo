@@ -16,9 +16,11 @@ Object >> inform: aString [
 	"Display a message for the user to read and then dismiss."
 
 	self halt.
-	"DO NOT CALL THIS METHOD!"
-	aString isEmptyOrNil
-		ifFalse: [ UIManager default inform: aString ]
+
+	self deprecated: 'This method will be removed of Object because the API should not hold UI interactions.
+	The most simple way to replace the usage of #inform: is to use `InformativeNotification signal: aString`. 
+	But if you have access to a spec application or presenter you can use the #inform: implemented on those instead.'. "DO NOT CALL THIS METHOD!"
+	aString isEmptyOrNil ifFalse: [ UIManager default inform: aString ]
 ]
 
 { #category : '*UIManager' }

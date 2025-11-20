@@ -394,7 +394,7 @@ RBClassDataForRefactoringTest >> modifiesCollection [
 	^collection
 ]
 
-{ #category : 'tests' }
+{ #category : 'temp definition move' }
 RBClassDataForRefactoringTest >> moveDefinition [
 	| temp |
 	^(self collect:
@@ -407,13 +407,27 @@ RBClassDataForRefactoringTest >> moveDefinition [
 			temp odd]
 ]
 
+{ #category : 'temp definition move' }
+RBClassDataForRefactoringTest >> moveDefinition2 [
+	| temp |
+	(#(1 2 3) collect:
+			[ :each |
+			temp := each printString.
+			temp , temp])
+		select:
+			[:each |
+			temp := each size, temp.
+			].
+		^ temp
+]
+
 { #category : 'inline' }
 RBClassDataForRefactoringTest >> multipleCalls [
 	self caller2.
 	self caller2
 ]
 
-{ #category : 'tests' }
+{ #category : 'temp definition move' }
 RBClassDataForRefactoringTest >> noMoveDefinition [
 	| temp |
 	^(self collect:
@@ -547,6 +561,61 @@ RBClassDataForRefactoringTest >> stringConcatenation [
 { #category : 'tests' }
 RBClassDataForRefactoringTest >> symbolReference [
 	^#(#renameThisMethod: #(4 #renameThisMethod:))
+]
+
+{ #category : 'temp definition move' }
+RBClassDataForRefactoringTest >> tempAccessedInTwoBlocksCannotSeeItsDefinitionMoved [
+	| temp |
+	(#(1 2 3) collect:
+			[ :each |
+			temp := each printString.
+			temp , temp])
+		select:
+			[:each |
+			temp := each size, temp.
+			].
+		^ temp
+]
+
+{ #category : 'temp definition move' }
+RBClassDataForRefactoringTest >> tempDefCanBeMoveInEachBlock [
+	| temp |
+	^(self collect:
+			[:each |
+			temp := each printString.
+			temp , temp])
+		select:
+			[:each |
+			temp := each size.
+			temp odd]
+]
+
+{ #category : 'temp definition move' }
+RBClassDataForRefactoringTest >> tempDefCannotBeMoveInEachBlock2 [
+	| temp y |
+	^(#(1 2 3) collect:
+			[:each |
+			temp := each , temp.
+			])
+		select:
+			[:each |
+			y := temp.
+			temp := each printString.
+			temp , temp.
+			]
+]
+
+{ #category : 'tests' }
+RBClassDataForRefactoringTest >> tempDefinitionCanBePlacedInTwoBlockSinceNoAccessInSecond [
+	| temp |
+	^(self collect:
+			[:each |
+			temp := each printString.
+			temp , temp])
+		select:
+			[:each |
+			temp := each size.
+			temp odd]
 ]
 
 { #category : 'lint' }

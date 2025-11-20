@@ -16,10 +16,13 @@ Class {
 	#tag : 'Drivers'
 }
 
-{ #category : 'resources' }
-ReRenameArgumentOrTemporaryDriver >> configureRefactoring [
+{ #category : 'configuration' }
+ReRenameArgumentOrTemporaryDriver >> instantiateRefactoring [
 
-	refactoring := RBRenameArgumentOrTemporaryRefactoring renameTemporaryFrom: sourceNode sourceInterval in: method origin selector: method selector
+	^ RBRenameArgumentOrTemporaryRefactoring
+		  renameTemporaryFrom: sourceNode sourceInterval
+		  in: method origin
+		  selector: method selector
 ]
 
 { #category : 'accessing' }

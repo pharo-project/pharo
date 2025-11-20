@@ -75,7 +75,7 @@ SmalltalkImage class >> new [
 { #category : 'system startup' }
 SmalltalkImage class >> shutDown: isImageClosing [
 
-	isImageClosing ifTrue: [ SourceFiles close ]
+	isImageClosing ifTrue: [ SourceFileArray default close ]
 ]
 
 { #category : 'system startup' }
@@ -245,7 +245,7 @@ SmalltalkImage >> backupTo: newNameWithoutSuffix [
 	Results:
 		true  when continuing in the new session
 		false for the current session"
-	(SourceFiles changesFileStream isNil or: [ SourceFiles changesFileStream closed ])
+	(SourceFileArray default changesFileStream isNil or: [ SourceFileArray default changesFileStream closed ])
     ifFalse: [
 		self
 			closeSourceFiles; "so copying the changes file will always work"
@@ -413,7 +413,7 @@ SmalltalkImage >> closeLog: logger [
 SmalltalkImage >> closeSourceFiles [
 	"Shut down the source files if appropriate."
 
-	SourceFiles close
+	SourceFileArray default close
 ]
 
 { #category : 'system attribute' }
@@ -822,89 +822,6 @@ SmalltalkImage >> lastImagePath [
 	^ LastImagePath
 ]
 
-{ #category : 'sources, change log' }
-SmalltalkImage >> licenseString [
-	^ self licenseStringTemplate format: (Array with: Date today year asString)
-]
-
-{ #category : 'sources, change log' }
-SmalltalkImage >> licenseStringTemplate [
-	^ 'LICENSE
-
-Licensed under the MIT License with parts under the Apache License.
-
-Copyright (c) 2008-{1} The Pharo Project, and Contributors
-Copyright (c) 2008-{1} Inria
-Copyright (c) 1996-2008 Viewpoints Research Institute, and Contributors
-Copyright (c) 1996 Apple Computer, Inc.
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this
-software and associated documentation files (the "Software"), to deal in the Software
-without restriction, including without limitation the rights to use, copy, modify, merge,
-publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons
-to whom the Software is furnished to do so, subject to the following conditions: The
-above copyright notice and this permission notice shall be included in all copies or
-substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS
-OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-You may obtain a copy of the Apache License at
-http://www.apache.org/licenses/LICENSE-2.0
-
-Pharo uses icons by Mark James (http://www.famfamfam.com) under
-Creative Commons Attribution 2.5 License.
-
-Pharo uses icons by Eclipse under
-Eclipse Public License - v 1.0
-http://www.eclipse.org/legal/epl-v10.html
-
-Pharo uses Source Code Pro Fonts by Adobe under
-SIL Open Font License, v 1.1
-http://scripts.sil.org/OFL
-
-Pharo uses Open Sans by Steve Matteson under
-Apache License, 2.0
-http://www.apache.org/licenses/LICENSE-2.0.html
-
-Pharo uses  Bitstream Vera Fonts
-http://dejavu-fonts.org/wiki/index.php?title=License
-
-Copyright (c) 2003 by Bitstream, Inc. All Rights Reserved.
-Bitstream Vera is a trademark of Bitstream, Inc.
-Permission is hereby granted, free of charge, to any person obtaining a copy of the fonts
-accompanying this license ("Fonts") and associated documentation files (the "Font Software"),
-to reproduce and distribute the Font Software, including without limitation the rights to use, copy,
-merge, publish, distribute, and/or sell copies of the Font Software, and to permit persons to whom
-the Font Software is furnished to do so, subject to the following conditions:
-The above copyright and trademark notices and this permission notice shall be included in all
-copies of one or more of the Font Software typefaces.
-The Font Software may be modified, altered, or added to, and in particular the designs of glyphs
-or characters in the Fonts may be modified and additional glyphs or characters may be added to
-the Fonts, only if the fonts are renamed to names not containing either the words "Bitstream"
-or the word "Vera".
-This License becomes null and void to the extent applicable to Fonts or Font Software that
-has been modified and is distributed under the "Bitstream Vera" names.
-The Font Software may be sold as part of a larger software package but no copy of one or more
-of the Font Software typefaces may be sold by itself.
-THE FONT SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
-INCLUDING BUT NOT LIMITED TO ANY WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
-PURPOSE AND NONINFRINGEMENT OF COPYRIGHT, PATENT, TRADEMARK, OR OTHER RIGHT. IN NO EVENT
-SHALL BITSTREAM OR THE GNOME FOUNDATION BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-INCLUDING ANY GENERAL, SPECIAL, INDIRECT, INCIDENTAL, OR CONSEQUENTIAL DAMAGES, WHETHER IN AN
-ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF THE USE OR INABILITY TO USE THE
-FONT SOFTWARE OR FROM OTHER DEALINGS IN THE FONT SOFTWARE.
-Except as contained in this notice, the names of Gnome, the Gnome Foundation,
-and Bitstream Inc., shall not be used in advertising or otherwise to promote the sale,
-use or other dealings in this Font Software without prior written authorization from
-the Gnome Foundation or Bitstream Inc., respectively.
-For further information, contact: fonts at gnome dot org.'
-]
-
 { #category : 'miscellaneous' }
 SmalltalkImage >> logDuring: aMonadicBlock [
 	" for safe use, if stream is a file, it needs to be closed after use "
@@ -1055,17 +972,6 @@ SmalltalkImage >> memoryHogs [
 	^ MemoryHogs ifNil: [MemoryHogs := OrderedCollection new]
 ]
 
-{ #category : 'miscellaneous' }
-SmalltalkImage >> metacelloPlatformAttributes [
-	"Returns the tags for the conditional platform loading in Metacello. Pay attention the order is important: from most  to least general."
-
-	^ {
-		  #squeakCommon.
-		  #pharo.
-		  ('pharo' , SystemVersion current major asString , '.x') asSymbol.
-		  ('pharo' , SystemVersion current major asString , '.0.x') asSymbol }
-]
-
 { #category : 'special objects' }
 SmalltalkImage >> newSpecialObjectsArray [
 	"Smalltalk recreateSpecialObjectsArray"
@@ -1210,7 +1116,7 @@ SmalltalkImage >> openSourceFiles [
 	self imagePath = LastImagePath ifFalse: [ "Reset the author full name to blank when the image gets moved"
 		LastImagePath := self imagePath ].
 
-	SourceFiles ensureOpen
+	SourceFileArray default ensureOpen
 ]
 
 { #category : 'system attribute' }
@@ -1458,7 +1364,7 @@ SmalltalkImage >> saveAs: newNameWithoutSuffix [
 		false for the current session "
 
 	newNameWithoutSuffix ifNil: [ ^ self ].
-  (SourceFiles changesFileStream isNil or: [ SourceFiles changesFileStream closed ])
+  (SourceFileArray default changesFileStream isNil or: [ SourceFileArray default changesFileStream closed ])
     ifFalse: [
 		self closeSourceFiles.
 		self saveChangesInFileNamed: (self fullNameForChangesNamed: newNameWithoutSuffix)
@@ -1659,10 +1565,10 @@ SmalltalkImage >> stripImageExtensionFrom: aString [
 
 	| answer imageExtension delimitedImageExtension |
 	answer := aString.
-	imageExtension := Path extensionDelimiter asString, self imageSuffix.
-	delimitedImageExtension := imageExtension copyWith: Path extensionDelimiter.
+	imageExtension := File extensionDelimiter asString, self imageSuffix.
+	delimitedImageExtension := imageExtension copyWith: File extensionDelimiter.
 	[answer isNil not and: [(answer endsWith: imageExtension) or: [answer endsWith: delimitedImageExtension]]]
-		whileTrue: [answer := answer copyUpToLast: Path extensionDelimiter].
+		whileTrue: [answer := answer copyUpToLast: File extensionDelimiter].
 	^answer
 ]
 
@@ -1707,15 +1613,6 @@ SmalltalkImage >> unregisterExternalObject: anObject [
 	"Unregister the given object in the external objects array. Do nothing if it isn't registered."
 
 	ExternalSemaphoreTable unregisterExternalObject: anObject
-]
-
-{ #category : 'sources, change log' }
-SmalltalkImage >> version [
-	"Answer the version of this release."
-
-	^ SystemVersion current
-		  ifNil: [ 'No version set yet' ]
-		  ifNotNil: [ :version | version version ]
 ]
 
 { #category : 'accessing' }

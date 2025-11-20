@@ -55,45 +55,44 @@ ChangesLog >> assureStartupStampLogged [
 
 	startupStamp ifNil: [ ^ self ].
 
-	SourceFiles changesWriteStreamDo: [ :changesFile |
-			(ChunkWriteStream on: changesFile)
-				cr;
-				cr;
-				nextPut: startupStamp asString;
-				cr.
-			startupStamp := nil ].
-
-	SourceFiles forceChangesToDisk
+	SourceFileArray default
+		changesWriteStreamDo: [ :changesFile |
+				(ChunkWriteStream on: changesFile)
+					cr;
+					cr;
+					nextPut: startupStamp asString;
+					cr.
+				startupStamp := nil ];
+		forceChangesToDisk
 ]
 
 { #category : 'logging' }
 ChangesLog >> forceChangesToDisk [
 
-	SourceFiles forceChangesToDisk
+	SourceFileArray default forceChangesToDisk
 ]
 
 { #category : 'logging' }
 ChangesLog >> logChange: aStringOrText [
 	"Write the argument, aString, onto the changes file."
 
-	| aString |
-	(SourceFiles changesFileStream isNil or: [ SourceFiles changesFileStream closed ])
-    ifTrue: [ ^ self ].
+	| aString sources |
+	sources := SourceFileArray default.
+	(sources changesFileStream isNil or: [ sources changesFileStream closed ]) ifTrue: [ ^ self ].
 
 	self assureStartupStampLogged.
 
 	aString := aStringOrText asString.
-	(aString findFirst: [ :char | char isSeparator not ]) = 0
-		ifTrue: [ ^ self ].	"null doits confuse replay"
+	(aString findFirst: [ :char | char isSeparator not ]) = 0 ifTrue: [ ^ self ]. "null doits confuse replay"
 
-	SourceFiles changesWriteStreamDo: [ :changesFile |
-		changesFile
-			cr; cr.
+	sources changesWriteStreamDo: [ :changesFile |
+			changesFile
+				cr;
+				cr.
 
-		(ChunkWriteStream on: changesFile)
-			nextPut: aString ].
+			(ChunkWriteStream on: changesFile) nextPut: aString ].
 
-	SourceFiles forceChangesToDisk
+	sources forceChangesToDisk
 ]
 
 { #category : 'event-listening' }

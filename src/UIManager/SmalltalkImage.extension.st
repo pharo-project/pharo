@@ -6,7 +6,7 @@ SmalltalkImage >> getFileNameFromUser [
 	| givenName strippedName imageFile changesFile |
 	givenName := UIManager default
 		request: 'New File Name?'
-		initialAnswer: (self imageFile basename copyUpToLast:  Path extensionDelimiter).
+		initialAnswer: (self imageFile basename copyUpToLast:  File extensionDelimiter).
 	strippedName := self stripImageExtensionFrom: givenName.
 	strippedName isEmptyOrNil ifTrue: [^nil].
 	imageFile := self fileForImageNamed: strippedName.

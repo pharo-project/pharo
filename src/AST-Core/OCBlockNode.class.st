@@ -232,12 +232,6 @@ OCBlockNode >> hasSameExitPoint [
 ]
 
 { #category : 'testing' }
-OCBlockNode >> hasSameExitPoint: aBoolean [ 
-
-	^ body hasSameExitPoint: aBoolean 
-]
-
-{ #category : 'testing' }
 OCBlockNode >> hasTemporaries [
 
 	^ self temporaries isNotEmpty
@@ -356,13 +350,6 @@ OCBlockNode >> postCopy [
 { #category : 'accessing' }
 OCBlockNode >> precedence [
 	^0
-]
-
-{ #category : 'testing' }
-OCBlockNode >> references: aVariableName [
-	"Return wether the variable named aVariable is accessed in read or write with the receiver."
-	
-	^ body references: aVariableName
 ]
 
 { #category : 'adding-removing' }

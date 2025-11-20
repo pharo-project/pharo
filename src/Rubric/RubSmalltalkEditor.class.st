@@ -451,7 +451,7 @@ RubSmalltalkEditor >> debug: aStream [
 	method := self compile: aStream for: receiver in: context.
 	method ifNil: [ ^self ].
 	method isReturnSpecial
-		ifTrue: [ self inform: 'Nothing to debug, the expression is optimized'.
+		ifTrue: [ InformativeNotification signal: 'Nothing to debug, the expression is optimized'.
 			^ self ].
 	 self debug: method receiver: receiver in: context
 ]

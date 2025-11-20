@@ -3106,7 +3106,7 @@ Morph >> handleTextInputEvent: anEvent [
 Morph >> handleUnknownEvent: anEvent [
 	"An event of an unknown type was sent to the receiver. What shall we do?!"
 
-	self inform: 'Unknown event: ' , anEvent printString.
+	InformativeNotification signal: 'Unknown event: ' , anEvent printString.
 	anEvent wasHandled: true
 ]
 
@@ -4994,14 +4994,6 @@ Morph >> prepareToBeSaved [
 	self formerOwner: nil.
 	self formerPosition: nil.
 	fullBounds := nil
-]
-
-{ #category : 'menus' }
-Morph >> presentHelp [
-	"Present a help message if there is one available"
-
-	self inform: 'Sorry, no help has been
-provided here yet.'
 ]
 
 { #category : 'structure' }

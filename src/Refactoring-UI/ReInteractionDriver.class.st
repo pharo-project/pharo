@@ -87,6 +87,13 @@ ReInteractionDriver >> changes [
 
 ]
 
+{ #category : 'configuration' }
+ReInteractionDriver >> configureRefactoring [
+
+	refactoring := self instantiateRefactoring.
+	refactoring prepareForExecution
+]
+
 { #category : 'ui - requests' }
 ReInteractionDriver >> confirm: aString [
 
@@ -171,6 +178,12 @@ ReInteractionDriver >> initialize [
 	super initialize.
 	stoppedBeforeApplyingRefactoring := false.
 	"for now unused but we should soon use it. Check applyChanges"
+]
+
+{ #category : 'configuration' }
+ReInteractionDriver >> instantiateRefactoring [
+	"I return a new refactoring instance, ready to run."
+	self subclassResponsibility
 ]
 
 { #category : 'accessing' }

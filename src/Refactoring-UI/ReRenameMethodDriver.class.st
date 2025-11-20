@@ -73,15 +73,6 @@ ReRenameMethodDriver >> configureMessage [
 	refactoring renameMap: newMessage renameMap.
 ]
 
-{ #category : 'execution' }
-ReRenameMethodDriver >> configureRefactoring [
-
-	"here we do not fully configure the refactoring because we are missing information such as the signature.
-	Since we want to let the refactoring validate input we need to create it upfront then configure later."
-	
-	refactoring := ReRenameMethodRefactoring new renameMethod: originalMessage selector in: class 
-]
-
 { #category : 'configuration' }
 ReRenameMethodDriver >> defaultSelectDialog [ 
 
@@ -107,6 +98,16 @@ ReRenameMethodDriver >> initialize [
 	
 	super initialize.
 	shouldEscape := false.
+]
+
+{ #category : 'configuration' }
+ReRenameMethodDriver >> instantiateRefactoring [
+	"here we do not fully configure the refactoring because we are missing information such as the signature.
+	Since we want to let the refactoring validate input we need to create it upfront then configure later."
+
+	^ ReRenameMethodRefactoring new 
+		renameMethod: originalMessage selector 
+		in: class
 ]
 
 { #category : 'for mocks' }

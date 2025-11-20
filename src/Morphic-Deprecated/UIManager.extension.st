@@ -42,6 +42,26 @@ UIManager >> informUserDuring: aBlock [
 ]
 
 { #category : '*Morphic-Deprecated' }
+UIManager >> request: aTitleString regex: initialRegexString [
+	"Prompt the user for a valid regex.
+	 Return nil on cancel or a valid RxMatcher"
+	| regex |
+	regex := initialRegexString.
+	"loop until we get a valid regex string back"
+	[
+		regex := self
+			multiLineRequest: aTitleString
+			initialAnswer: regex
+			answerHeight: 200.
+		"cancelled dialog ==> nil"
+		regex ifNil: [ ^ nil ].
+
+		[ ^ regex asRegex ] on: Error do: [ :regexParsingError|
+			self defer: [	InformativeNotification signal: 'Bad Regex: ', regexParsingError asString ]].
+	] repeat
+]
+
+{ #category : '*Morphic-Deprecated' }
 UIManager >> requestPassword: queryString [
 	"Create an instance of me whose question is queryString. Invoke it centered
 	 at the cursor, and answer the string the user accepts. Answer the empty

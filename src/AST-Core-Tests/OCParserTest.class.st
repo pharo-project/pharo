@@ -1,5 +1,5 @@
 "
-SUnit tests for RBParser
+SUnit tests for OCParser
 "
 Class {
 	#name : 'OCParserTest',

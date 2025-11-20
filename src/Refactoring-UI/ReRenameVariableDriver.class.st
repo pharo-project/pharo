@@ -15,15 +15,6 @@ Class {
 	#tag : 'Drivers'
 }
 
-{ #category : 'execution' }
-ReRenameVariableDriver >> configureRefactoring [
-
-	refactoring := self refactoringClass
-		               model: model
-		               variable: oldName
-		               class: class
-]
-
 { #category : 'private' }
 ReRenameVariableDriver >> informError: cond [
 
@@ -31,6 +22,15 @@ ReRenameVariableDriver >> informError: cond [
 		label: cond errorString;
 		title: 'Invalid name';
 		openModal
+]
+
+{ #category : 'configuration' }
+ReRenameVariableDriver >> instantiateRefactoring [
+
+	^ self refactoringClass 
+		model: model 
+		variable: oldName 
+		class: class
 ]
 
 { #category : 'private' }

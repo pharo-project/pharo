@@ -395,7 +395,8 @@ ReAbstractTransformation >> preconditions [
 
 { #category : 'transforming' }
 ReAbstractTransformation >> prepareForExecution [
-	"I am empty by default. You can override me to initialize your instance variables just before execution.
+	"I am empty by default. You can override me to initialize your instance variables just before execution 
+	and/or to validate the structural prerequisites required for proper operation.
 	I am typicaly a place where names (of classes, methods, etc.) are converted to RB model entities."
 ]
 

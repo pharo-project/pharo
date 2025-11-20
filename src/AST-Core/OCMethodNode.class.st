@@ -535,13 +535,6 @@ OCMethodNode >> printOn: aStream [
 	aStream nextPutAll: self formattedCode
 ]
 
-{ #category : 'testing' }
-OCMethodNode >> references: aVariableName [
-	"Return wether the variable named aVariable is accessed in read or write with the receiver."
-	
-	^ body references: aVariableName
-]
-
 { #category : 'private' }
 OCMethodNode >> reformatSource [
 	| stream newSource newTree |
@@ -693,17 +686,4 @@ OCMethodNode >> temporaries [
 { #category : 'accessing' }
 OCMethodNode >> temporaryNames [
 	^ self body temporaryNames
-]
-
-{ #category : 'tree accessing' }
-OCMethodNode >> variableWith: aSymbol [
-
-	| matcher block |
-	matcher := OCParseTreeSearcher new.
-	block := [ :aNode :answer | aNode ].
-
-	matcher
-		matches: aSymbol do: block;
-		matchesArgument: aSymbol do: block.
-	^ matcher executeTree: self initialAnswer: nil
 ]

@@ -1,7 +1,7 @@
 "
-RBScanner is a stream that returns a sequence of tokens from the string. The tokens know where they came from in the source code and which comments were attached to them.
+OCScanner is a stream that returns a sequence of tokens from the string. The tokens know where they came from in the source code and which comments were attached to them.
 
-NOTE: The RBScanner should never be used directly. (If you do so, do it on your own risk!)
+NOTE: The OCScanner should never be used directly. (If you do so, do it on your own risk!)
 The Scanner is private the to Parser, and even the Parser should be used only via the API of the Compiler!
 
 Instance Variables:

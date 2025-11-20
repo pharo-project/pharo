@@ -17,5 +17,7 @@ BaselineOfUIInfrastructure >> baseline: spec [
 				baseline: 'Fonts' with: [ spec loads: #Core from: repository ];
 				baseline: 'FreeType' with: [ spec loads: #ui from: repository ];
 				baseline: 'MenuRegistration' with: [ spec repository: repository ];
-				baseline: 'Keymapping' with: [ spec loads: #Core from: repository ] ]
+				baseline: 'Keymapping' with: [ spec loads: #Core from: repository ].
+
+			spec package: 'System-Utilities' ]
 ]

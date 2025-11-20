@@ -120,16 +120,6 @@ RePullUpMethodDriver >> configureAndRunRefactoring [
 	and in such a case we should cancel the complete flow."
 ]
 
-{ #category : 'resources' }
-RePullUpMethodDriver >> configureRefactoring [
-
-	refactoring := RePullUpMethodRefactoring
-		               model: model
-		               pullUp: (methods collect: [ :each | each selector ])
-		               from: class name
-		               to: superclass name
-]
-
 { #category : 'execution' }
 RePullUpMethodDriver >> defaultSelectDialog [
 
@@ -156,6 +146,16 @@ RePullUpMethodDriver >> handleBreakingChanges [
 	dialog isCancelled ifTrue: [ ^ false ].
 	dialog presenter selectedItems do: [ :item | item action ].
 	^ true
+]
+
+{ #category : 'configuration' }
+RePullUpMethodDriver >> instantiateRefactoring [
+
+	^ RePullUpMethodRefactoring
+       model: model
+       pullUp: (methods collect: [ :each | each selector ])
+       from: class name
+       to: superclass name
 ]
 
 { #category : 'ui - dialogs' }

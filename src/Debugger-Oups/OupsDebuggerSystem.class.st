@@ -88,11 +88,12 @@ OupsDebuggerSystem >> performPreDebugActionsIn: aDebugRequest [
 
 { #category : 'error management' }
 OupsDebuggerSystem >> signalDebuggerError: aDebugRequest [
+
 	| failingSession |
 	failingSession := aDebugRequest debugSession
-		name: self signalDebuggerErrorMessage;
-		yourself.
-	self inform: 'failingSession signalDebuggerError: aDebugRequest exception'
+		                  name: self signalDebuggerErrorMessage;
+		                  yourself.
+	InformativeNotification signal: 'failingSession signalDebuggerError: aDebugRequest exception'
 ]
 
 { #category : 'error management' }

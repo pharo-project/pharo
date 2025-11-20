@@ -66,7 +66,6 @@ ReGlobalVariablesUsageRule >> isKnownGlobal: aString [
 			Display
 			Processor
 			Smalltalk
-			SourceFiles
 			Transcript
 			Undeclared
 			World

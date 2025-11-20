@@ -22,21 +22,21 @@ Class {
 	#tag : 'Drivers'
 }
 
-{ #category : 'resources' }
-RePushDownMethodInSomeClassesDriver >> configureRefactoring [
-
-	refactoring :=  RBPushDownMethodRefactoring
-		model: model
-		pushDown: (methods collect: [ :each | each selector ])
-		from: class
-		in: classes.
-]
-
 { #category : 'execution' }
 RePushDownMethodInSomeClassesDriver >> gatherUserInput [
 
 	super gatherUserInput.
 	classes := self selectClasses
+]
+
+{ #category : 'configuration' }
+RePushDownMethodInSomeClassesDriver >> instantiateRefactoring [
+
+	^ RBPushDownMethodRefactoring
+		model: model
+		pushDown: (methods collect: [ :each | each selector ])
+		from: class
+		in: classes.
 ]
 
 { #category : 'initialization' }

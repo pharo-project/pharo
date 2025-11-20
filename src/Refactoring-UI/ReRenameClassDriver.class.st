@@ -19,17 +19,17 @@ ReRenameClassDriver class >> rename: oldName [
 		yourself
 ]
 
-{ #category : 'resources' }
-ReRenameClassDriver >> configureRefactoring [
-	
-		refactoring := ReRenameClassRefactoring rename: oldName.
-]
-
 { #category : 'initialization' }
 ReRenameClassDriver >> initialize [ 
 	
 	super initialize.
 	shouldEscape := false.
+]
+
+{ #category : 'configuration' }
+ReRenameClassDriver >> instantiateRefactoring [
+
+	^ ReRenameClassRefactoring rename: oldName
 ]
 
 { #category : 'accessing' }

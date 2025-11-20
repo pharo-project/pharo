@@ -66,15 +66,15 @@ ReDuplicateClassDriver >> className: aClassName [
 ]
 
 { #category : 'accessing' }
-ReDuplicateClassDriver >> configureRefactoring [
-
-	refactoring := ReDuplicateClassRefactoring copyClass: rbClass
-]
-
-{ #category : 'accessing' }
 ReDuplicateClassDriver >> dialogTitleForClassSelection [
 
 	^ 'Duplicate class ' , className
+]
+
+{ #category : 'configuration' }
+ReDuplicateClassDriver >> instantiateRefactoring [
+
+	^ ReDuplicateClassRefactoring copyClass: rbClass
 ]
 
 { #category : 'accessing' }

@@ -104,7 +104,7 @@ RBRenameTemporaryVariableTransformation >> class: aClass selector: aSelector ren
 RBRenameTemporaryVariableTransformation >> privateTransform [
 	| parseTree definingNode variableNode |
 	parseTree := self definingMethod.
-	variableNode := parseTree variableWith: variableName.
+	variableNode := parseTree latestUseOfVariableNamed: variableName.
 	self checkExistingVariable: variableNode.
 	definingNode := variableNode whichUpNodeDefines: variableName.
 	self checkNewVariable: definingNode.

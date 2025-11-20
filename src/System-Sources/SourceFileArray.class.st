@@ -17,10 +17,38 @@ Class {
 		'readOnlyQueue',
 		'flushChanges'
 	],
+	#classVars : [
+		'Default'
+	],
 	#category : 'System-Sources-Sources',
 	#package : 'System-Sources',
 	#tag : 'Sources'
 }
+
+{ #category : 'accessing' }
+SourceFileArray class >> default [
+
+	^ Default
+]
+
+{ #category : 'accessing' }
+SourceFileArray class >> default: anInstance [
+
+	Default := anInstance
+]
+
+{ #category : 'class initialization' }
+SourceFileArray class >> initialize [
+
+	"Guard since initializing twice would create bugs."
+	self default ifNotNil: [ ^ self ].
+	
+	self default: self new.
+	
+	"This next line is to add a deprecated global variable. The deprecation happened in Pharo 14 development. We can remove it completly in the future."
+	self class environment at: #SourceFiles put: self default.
+	(self class environment bindingOf: #SourceFiles) isDeprecated: true
+]
 
 { #category : 'system startup' }
 SourceFileArray class >> startUp: resuming [

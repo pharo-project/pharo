@@ -372,9 +372,10 @@ Class >> classVariablesNeedFullDefinition [
 
 { #category : 'accessing - comment' }
 Class >> comment [
-    ^ self commentSourcePointer
+
+	^ self commentSourcePointer
 		  ifNil: [ '' ]
-		  ifNotNil: [ :ptr | SourceFiles sourceCodeAt: ptr ]
+		  ifNotNil: [ :ptr | SourceFileArray default sourceCodeAt: ptr ]
 ]
 
 { #category : 'accessing - comment' }
@@ -395,7 +396,7 @@ Class >> comment: aString stamp: aStamp [
 
 	pointer := self commentSourcePointer ifNil: [ 0 ].
 
-	SourceFiles
+	SourceFileArray default
 		writeComment: aString
 		ofClass: self
 		metadata: ' '
@@ -427,7 +428,7 @@ Class >> commentStamp [
 
 	^ self commentSourcePointer
 		  ifNil: [ '' ]
-		  ifNotNil: [:sourcePointer | SourceFiles commentTimeStampAt: sourcePointer ]
+		  ifNotNil: [:sourcePointer | SourceFileArray default commentTimeStampAt: sourcePointer ]
 ]
 
 { #category : 'accessing - comment' }

@@ -81,12 +81,6 @@ OCReturnNode >> hasSameExitPoint [
 	^ true
 ]
 
-{ #category : 'testing' }
-OCReturnNode >> hasSameExitPoint: aBoolean [
-
-	^ value hasSameExitPoint: aBoolean 
-]
-
 { #category : 'comparing' }
 OCReturnNode >> hash [
 	^self value hash

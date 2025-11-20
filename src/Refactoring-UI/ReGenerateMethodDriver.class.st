@@ -8,10 +8,19 @@ Class {
 		'targetClass',
 		'selectedVariables'
 	],
+	#classVars : [
+		'DefaultSelectDialog'
+	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',
 	#tag : 'Drivers'
 }
+
+{ #category : 'configuration' }
+ReGenerateMethodDriver class >> defaultSelectDialog [
+
+	^ DefaultSelectDialog ifNil: [ SpSelectMultipleDialog new ]
+]
 
 { #category : 'execution' }
 ReGenerateMethodDriver >> configureRefactoring [
@@ -41,6 +50,14 @@ ReGenerateMethodDriver >> defaultSelectDialog [
 ReGenerateMethodDriver >> dialogTitle [
 
 	self subclassResponsibility 
+]
+
+{ #category : 'configuration' }
+ReGenerateMethodDriver >> instantiateRefactoring [
+
+	^ self refactoringClass 
+		className: self targetClass name
+		variables: selectedVariables
 ]
 
 { #category : 'execution' }

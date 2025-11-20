@@ -282,11 +282,6 @@ SettingBrowser class >> taskbarIconName [
 	^#smallConfiguration
 ]
 
-{ #category : 'menu' }
-SettingBrowser >> about [
-	self inform: 'Here you can browse, query and change all system settings' translated
-]
-
 { #category : 'accessing' }
 SettingBrowser >> acceptableKeywords: aCollectionOfRegExps [
 	self treeHolder acceptableKeywords: aCollectionOfRegExps
@@ -496,8 +491,9 @@ SettingBrowser >> keyDown: anEvent from: aTreeMorph [
 
 { #category : 'menu' }
 SettingBrowser >> loadSettings [
+
 	self treeHolder updateSettingNodes.
-	self inform: 'Settings has been updated from the disk.'
+	InformativeNotification signal: 'Settings has been updated from the disk.'
 ]
 
 { #category : 'menu' }
@@ -715,8 +711,9 @@ SettingBrowser >> statusViewIn: aMorph [
 
 { #category : 'menu' }
 SettingBrowser >> storeSettings [
+
 	self treeHolder storeSettingNodes.
-	self inform: 'Settings has been stored on the disk.'
+	InformativeNotification signal: 'Settings has been stored on the disk.'
 ]
 
 { #category : 'updating' }

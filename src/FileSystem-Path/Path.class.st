@@ -114,12 +114,6 @@ Path class >> delimiter [
 	^$/
 ]
 
-{ #category : 'encodings' }
-Path class >> extensionDelimiter [
-	"Return the extension delimiter character."
-	^ $.
-]
-
 { #category : 'instance creation' }
 Path class >> from: aString [
 	"Answer an instance of the receiver with the supplied path using the default delimiter"
@@ -409,7 +403,8 @@ Path >> extension [
 
 { #category : 'accessing' }
 Path >> extensionDelimiter [
-	^ self class extensionDelimiter
+
+	^ File extensionDelimiter
 ]
 
 { #category : 'accessing' }

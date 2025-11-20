@@ -1283,8 +1283,9 @@ SystemWindow >> configureForUnembedding [
 
 { #category : 'accessing' }
 SystemWindow >> copyTitle [
+
 	Clipboard clipboardText: self label.
-	self inform: 'Window title copied.'
+	InformativeNotification signal: 'Window title copied.'
 ]
 
 { #category : 'initialization' }
@@ -3062,28 +3063,22 @@ SystemWindow >> taskbarMoveRight [
 { #category : 'move' }
 SystemWindow >> taskbarMoveTo [
 	"Move the current task button to the prompted location"
-	
+
 	| taskBarSize taskLocation desiredLocation answer |
-	
 	taskBarSize := self worldTaskbar orderedTasks size.
 	taskLocation := self worldTaskbar orderedTasks indexOf: self taskbarTask.
 
-	answer := UIManager default
-		          request: 'Enter new task location: 1..', taskBarSize printString
-		          initialAnswer: taskLocation asString
-		          title: 'Move Task'.
-		
-	answer ifNil: [ ^ self ].
-	
-	[
-	desiredLocation := answer asNumber.
-	((1 to: taskBarSize) includes: desiredLocation) ifFalse: [
-		self error: 'incorrect location' ] ] onErrorDo: [
-		UIManager default inform: 'Location must be a number between 1 and ' , taskBarSize printString.
-		^ self ].
-	
-	self moveTaskbarTaskToOffset: (taskLocation - desiredLocation) negated
+	answer := UIManager default request: 'Enter new task location: 1..' , taskBarSize printString initialAnswer: taskLocation asString title: 'Move Task'.
 
+	answer ifNil: [ ^ self ].
+
+	[
+		desiredLocation := answer asNumber.
+		((1 to: taskBarSize) includes: desiredLocation) ifFalse: [ self error: 'incorrect location' ] ] onErrorDo: [
+			InformativeNotification signal: 'Location must be a number between 1 and ' , taskBarSize printString.
+			^ self ].
+
+	self moveTaskbarTaskToOffset: (taskLocation - desiredLocation) negated
 ]
 
 { #category : 'theme' }
