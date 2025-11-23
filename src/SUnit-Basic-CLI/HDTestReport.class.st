@@ -38,7 +38,7 @@ HDTestReport class >> currentStageName: aStageName [
 { #category : 'running' }
 HDTestReport class >> runClasses: aCollectionOfClasses named: packageName [
 
-	| suite classes time result |
+	| suite classes result |
 	suite := TestSuite named: packageName.
 	ShuffleSeed ifNotNil: [ suite shuffleSeed: ShuffleSeed asInteger ].
 
@@ -46,10 +46,7 @@ HDTestReport class >> runClasses: aCollectionOfClasses named: packageName [
 	classes ifEmpty: [ ^ nil ].
 
 	classes do: [ :class | suite addTests: class buildSuite tests ].
-	time := DateAndTime now.
-	('Beginning to run tests of ' , packageName , ' with random seed ' , suite shuffleSeed asString , OSPlatform current lineEnding) traceCr.
 	result := self runSuite: suite.
-	('Finished to run tests of ' , packageName , ' in ' , (DateAndTime now - time) humanReadablePrintString , OSPlatform current lineEnding) traceCr.
 	^ result
 ]
 
@@ -238,9 +235,12 @@ HDTestReport >> reportTestCase: aTestCase runBlock: aBlock [
 { #category : 'running' }
 HDTestReport >> run [
 
-	suiteTime := [
-		             self setUp.
-		             [ CurrentExecutionEnvironment runTestsBy: [ suite tests do: [ :each | each run: self ] ] ] millisecondsToRun ] ensure: [ self tearDown ]
+	[
+		| time |
+		self setUp.
+		time := DateAndTime now.
+		CurrentExecutionEnvironment runTestsBy: [ suite tests do: [ :each | each run: self ] ].
+		suiteTime := DateAndTime now - time ] ensure: [ self tearDown ]
 ]
 
 { #category : 'running' }
@@ -289,10 +289,20 @@ HDTestReport >> serializeError: error of: aTestCase [
 { #category : 'running' }
 HDTestReport >> setUp [
 
-	| aFile |
+	| aFile logString |
 	self openProgressStream.
-	progressStream nextPutAll: 'running suite: ';
-		nextPutAll: suite name ; crlf; flush.
+	logString := String streamContents: [ :aStream |
+			             aStream
+				             nextPutAll: 'Running suite ';
+				             nextPutAll: suite name;
+				             nextPutAll: ' with random seed ';
+				             print: suite shuffleSeed;
+				             nextPutAll: OSPlatform current lineEnding ].
+	 "We print in the progress file but also in the stdout for the CI infos."
+	logString trace.
+	progressStream
+		nextPutAll: logString;
+		flush.
 
 	aFile := File named: self suiteFileNameWithoutExtension , '.xml' .
 	aFile delete.
@@ -385,6 +395,7 @@ HDTestReport >> suiteTotal [
 
 { #category : 'running' }
 HDTestReport >> tearDown [
+	| logString |
 	suite resources 
 		do: [ :each | each reset ].
 		
@@ -396,13 +407,19 @@ HDTestReport >> tearDown [
 	stream 
 		nextPutAll: ' failures="'; print: suiteFailures; 
 		nextPutAll: '" errors="'; print: suiteErrors; 
-		nextPutAll: '" time="'; print: suiteTime / 1000.0; 
+		nextPutAll: '" time="'; print: suiteTime asMilliSeconds / 1000.0; 
 		nextPutAll: '">'.
 	stream close.
 	
-	progressStream 
-		nextPutAll: 'finished running suite: ';
-		nextPutAll: suite name;
+	logString := String streamContents: [ :aStream |
+			             aStream
+				             nextPutAll: 'Finishing running suite ';
+				             nextPutAll: suite name;
+				             nextPutAll: ' in '.
+			             suiteTime printHumanReadableOn: aStream ]. "We print in the progress file but also in the stdout for the CI infos."
+	logString traceCr.
+	progressStream
+		nextPutAll: logString;
 		close
 ]
 
