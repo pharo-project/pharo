@@ -293,7 +293,7 @@ HDTestReport >> setUp [
 	self openProgressStream.
 	logString := String streamContents: [ :aStream |
 			             aStream
-				             nextPutAll: 'Running suite ';
+				             nextPutAll: 'Beginning to run tests of ';
 				             nextPutAll: suite name;
 				             nextPutAll: ' with random seed ';
 				             print: suite shuffleSeed;
@@ -413,7 +413,7 @@ HDTestReport >> tearDown [
 	
 	logString := String streamContents: [ :aStream |
 			             aStream
-				             nextPutAll: 'Finishing running suite ';
+				             nextPutAll: 'Finished to run tests of ';
 				             nextPutAll: suite name;
 				             nextPutAll: ' in '.
 			             suiteTime printHumanReadableOn: aStream ]. "We print in the progress file but also in the stdout for the CI infos."
