@@ -25,10 +25,6 @@ CommandLineTestRunner >> createStdout [
 	^ Stdio stdout
 ]
 
-{ #category : 'running' }
-CommandLineTestRunner >> done [
-]
-
 { #category : 'helper' }
 CommandLineTestRunner >> increaseTestCount [
 	currentTest := currentTest + 1

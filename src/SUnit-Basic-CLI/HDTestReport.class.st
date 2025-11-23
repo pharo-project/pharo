@@ -41,20 +41,16 @@ HDTestReport class >> runClasses: aCollectionOfClasses named: packageName [
 	| suite classes time result |
 	suite := TestSuite named: packageName.
 	ShuffleSeed ifNotNil: [ suite shuffleSeed: ShuffleSeed asInteger ].
-	classes := (aCollectionOfClasses select: [ :class |
-		            class isTestCase and: [ class isAbstract not ] ])
-		           asSortedCollection: [ :a :b | a name <= b name ].
+
+	classes := (aCollectionOfClasses select: [ :class | class isTestCase and: [ class isAbstract not ] ]) asSortedCollection: [ :a :b | a name <= b name ].
 	classes ifEmpty: [ ^ nil ].
+
 	classes do: [ :class | suite addTests: class buildSuite tests ].
 	time := DateAndTime now.
-	('Beginning to run tests of ' , packageName , ' with random seed '
-	 , suite shuffleSeed asString , OSPlatform current lineEnding)
-		traceCr.
+	('Beginning to run tests of ' , packageName , ' with random seed ' , suite shuffleSeed asString , OSPlatform current lineEnding) traceCr.
 	result := self runSuite: suite.
-	('Finished to run tests of ' , packageName , ' in '
-	 , (DateAndTime now - time) humanReadablePrintString
-	 , OSPlatform current lineEnding) traceCr.
-	^ result 
+	('Finished to run tests of ' , packageName , ' in ' , (DateAndTime now - time) humanReadablePrintString , OSPlatform current lineEnding) traceCr.
+	^ result
 ]
 
 { #category : 'running' }
@@ -66,7 +62,9 @@ HDTestReport class >> runPackage: aString [
 { #category : 'running' }
 HDTestReport class >> runSuite: aTestSuite [
 
-	^ self new runSuite: aTestSuite
+	^ self new
+		  suite: aTestSuite;
+		  run
 ]
 
 { #category : 'running' }
@@ -96,12 +94,6 @@ HDTestReport >> calculateNodeName [
 		at: 'JENKINS_HOME'
 		ifPresent: [ :value | name ]
 		ifAbsent: [ '' ]
-]
-
-{ #category : 'running' }
-HDTestReport >> done [
-	"just close the file"
-	[ progressStream close ] on: Error do: []
 ]
 
 { #category : 'private' }
@@ -136,11 +128,6 @@ HDTestReport >> initialize [
 	stageName := self class currentStageName.
 	nodeName := self calculateNodeName.
 	
-]
-
-{ #category : 'initialization' }
-HDTestReport >> initializeOn: aTestSuite [
-	suite := aTestSuite
 ]
 
 { #category : 'private' }
@@ -251,17 +238,9 @@ HDTestReport >> reportTestCase: aTestCase runBlock: aBlock [
 { #category : 'running' }
 HDTestReport >> run [
 
-	[
-	self setUp.
-	suiteTime := [ self runAll ] millisecondsToRun ] ensure: [
-		self tearDown ]
-]
-
-{ #category : 'running' }
-HDTestReport >> runAll [
-	CurrentExecutionEnvironment runTestsBy: [ 
-		suite tests do: [ :each | each run: self ]
-	]
+	suiteTime := [
+		             self setUp.
+		             [ CurrentExecutionEnvironment runTestsBy: [ suite tests do: [ :each | each run: self ] ] ] millisecondsToRun ] ensure: [ self tearDown ]
 ]
 
 { #category : 'running' }
@@ -276,14 +255,6 @@ HDTestReport >> runCase: aTestCase [
 			] on: Exception do: [ :exc | 
 					exc recordResultOf: aTestCase inHDTestReport: self ]
 		]
-]
-
-{ #category : 'running' }
-HDTestReport >> runSuite: aTestSuite [
-	^ self
-		initializeOn: aTestSuite;
-		run;
-		done
 ]
 
 { #category : 'running' }
@@ -372,6 +343,12 @@ HDTestReport >> stageName [
 { #category : 'accessing' }
 HDTestReport >> stageName: anObject [
 	stageName := anObject
+]
+
+{ #category : 'initialization' }
+HDTestReport >> suite: aTestSuite [
+
+	suite := aTestSuite
 ]
 
 { #category : 'accessing' }
