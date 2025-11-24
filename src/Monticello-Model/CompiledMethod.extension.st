@@ -34,7 +34,7 @@ CompiledMethod >> basicAsMCMethodDefinition [
 CompiledMethod >> sameAsMCDefinition: anMCMethodDefinition [
 
 	^ anMCMethodDefinition selector = self selector and: [
-		  anMCMethodDefinition className = self className and: [
+		  anMCMethodDefinition className = self methodClass name and: [
 			  anMCMethodDefinition classIsMeta = self isClassSide and: [
 				  anMCMethodDefinition protocol = self protocolName and: [ anMCMethodDefinition source = self sourceCode ] ] ] ]
 ]
