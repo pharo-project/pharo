@@ -29,8 +29,8 @@ Internal Representation and Key Implementation Points.
 Class {
 	#name : 'MCGitlabRepository',
 	#superclass : 'MCPrivateHostableRepository',
-	#category : 'Metacello-Gitlab',
-	#package : 'Metacello-Gitlab'
+	#category : 'Metacello-GitBasedRepository',
+	#package : 'Metacello-GitBasedRepository'
 }
 
 { #category : 'accessing' }

@@ -1,8 +1,8 @@
 Class {
 	#name : 'MCBitbucketRepository',
 	#superclass : 'MCPrivateHostableRepository',
-	#category : 'Metacello-Bitbucket',
-	#package : 'Metacello-Bitbucket'
+	#category : 'Metacello-GitBasedRepository',
+	#package : 'Metacello-GitBasedRepository'
 }
 
 { #category : 'accessing' }

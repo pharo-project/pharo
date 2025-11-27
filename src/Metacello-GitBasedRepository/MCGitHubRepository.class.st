@@ -6,8 +6,8 @@ Class {
 		'DownloadCache',
 		'ETagsCache'
 	],
-	#category : 'Metacello-GitHub',
-	#package : 'Metacello-GitHub'
+	#category : 'Metacello-GitBasedRepository',
+	#package : 'Metacello-GitBasedRepository'
 }
 
 { #category : 'accessing' }
