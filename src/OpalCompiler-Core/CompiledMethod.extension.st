@@ -60,12 +60,6 @@ CompiledMethod >> sourceNode [
 ]
 
 { #category : '*OpalCompiler-Core' }
-CompiledMethod >> temporaryVariableNamed: aName [
-	(self hasTemporaryVariableNamed: aName) ifFalse: [ ^nil ].
-	^self sourceNode scope lookupVar: aName
-]
-
-{ #category : '*OpalCompiler-Core' }
 CompiledMethod >> temporaryVariables [
 	"on the level of compiledMethod, temps include the arguments"
 	self flag: #TODO. "we need to revist temps vs args"

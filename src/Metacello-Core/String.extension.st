@@ -139,7 +139,7 @@ String >> removeFromMetacelloRepositories: aMetacelloRepositoriesSpec [
 { #category : '*Metacello-Core' }
 String >> setIncludesInMetacelloPackage: aMetacelloPackageSpec [
 
-	aMetacelloPackageSpec setIncludes: { self }.
+	aMetacelloPackageSpec setIncludes: { self }
 ]
 
 { #category : '*Metacello-Core' }

@@ -28,9 +28,13 @@ ReGeneratePrintOnDriverTest >> testGeneratePrintOn [
 
 	self deny: (driver targetClass definesMethod: #printOn:).
 
-	driver selectDialog selectedItems: #(#iVarA #iVarB).
-	driver runRefactoring.
+	SpWindowSimulateOpenModal 
+		value: [ :aDiag | 
+				aDiag presenter selectedItems: #(#iVarA #iVarB).
+				aDiag triggerOkAction ]
+		during: [ driver runRefactoring ].
 	driverChanges := driver refactoring changes.
+
 
 	self 
 		assert: driverChanges changes size 

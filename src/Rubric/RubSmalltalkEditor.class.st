@@ -45,12 +45,6 @@ RubSmalltalkEditor class >> buildShortcutsOn: aBuilder [
 		do: [ :target | target editor inspectIt: nil ]
 		description: 'Do & inspect it'.
 
-	(aBuilder shortcut: #basicInspectIt)
-		category: RubSmalltalkEditor name
-		default: $i meta shift
-		do: [ :target | target editor basicInspectIt ]
-		description: 'Do & basic inspect it'.
-
 	(aBuilder shortcut: #implementorsOfIt)
 		category: RubSmalltalkEditor name
 		default: $m meta
@@ -155,11 +149,6 @@ RubSmalltalkEditor >> atCompletionPosition [
 	cursorPosition := self startIndex.
 	cursorPosition < 2 ifTrue: [ ^ false ].
 	^ (self lineIndentationStart: cursorPosition) < cursorPosition
-]
-
-{ #category : 'do-its' }
-RubSmalltalkEditor >> basicInspectIt [
-	self evaluateSelectionAndDo: [:result | result basicInspect]
 ]
 
 { #category : 'source navigation' }
@@ -451,7 +440,7 @@ RubSmalltalkEditor >> debug: aStream [
 	method := self compile: aStream for: receiver in: context.
 	method ifNil: [ ^self ].
 	method isReturnSpecial
-		ifTrue: [ self inform: 'Nothing to debug, the expression is optimized'.
+		ifTrue: [ InformativeNotification signal: 'Nothing to debug, the expression is optimized'.
 			^ self ].
 	 self debug: method receiver: receiver in: context
 ]

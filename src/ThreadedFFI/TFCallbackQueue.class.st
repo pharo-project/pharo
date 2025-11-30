@@ -174,7 +174,7 @@ TFCallbackQueue >> startUp [
 
 	[self initializeQueue.
 	self forkCallbackProcess]
-		onErrorDo: [ self inform: 'The current VM does not support TFFI Callbacks. It will use the old implementation' ]
+		onErrorDo: [ InformativeNotification signal:  'The current VM does not support TFFI Callbacks. It will use the old implementation' ]
 ]
 
 { #category : 'initialization' }

@@ -43,13 +43,6 @@ ReRefactoring class >> preconditionSignal [
 	^ RBRefactoringError , RBRefactoringWarning
 ]
 
-{ #category : 'converting' }
-ReRefactoring >> asRefactoring [
-
-	self deprecated: 'This method is a no-op and can be removed' transformWith: '`@rec asRefactoring' -> '`@rec'.
-	^ self
-]
-
 { #category : 'preconditions' }
 ReRefactoring >> breakingChangePreconditions [
 
@@ -66,10 +59,11 @@ ReRefactoring >> canReferenceVariable: aString in: aClass [
 { #category : 'scripting api - conditions' }
 ReRefactoring >> checkBreakingChangePreconditions [
 	"Check a preconditions and raise an error on violations. This method is part of the scripting API since it raises an error."
-	
+
 	| failedPreconditions |
 	failedPreconditions := self failedBreakingChangePreconditions.
 	failedPreconditions ifEmpty: [ ^ self ].
+
 	RBRefactoringWarning signalFor: failedPreconditions
 ]
 
@@ -157,12 +151,6 @@ ReRefactoring >> safeVariableNameFor: aClass temporaries: allTempAndArgs basedOn
 			i := i + 1.
 			newString := baseString , i printString ].
 	^ newString
-]
-
-{ #category : 'transforming' }
-ReRefactoring >> transform [ 
-
-	self deprecated: 'Use privateTransform instead' transformWith: '`@rec transform' -> '`@rec privateTransform'
 ]
 
 { #category : 'utilities' }

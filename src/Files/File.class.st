@@ -526,6 +526,13 @@ File class >> exists: aString [
 	^self primExists: (self encodePathString: aString)
 ]
 
+{ #category : 'primitives - path' }
+File class >> extensionDelimiter [
+	"This method makes more sens on Path but it is needed in the minimal version of Pharo for now so it needs to be in Files."
+
+	^ $.
+]
+
 { #category : 'attributes' }
 File class >> file: pathString posixPermissions: anInteger [
 	"Set the mode of pathString to anInteger (as defined by chmod())"

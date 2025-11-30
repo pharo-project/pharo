@@ -25,6 +25,13 @@ Class {
 	#tag : 'Public'
 }
 
+{ #category : 'class initialization' }
+FileSystem class >> initialize [
+	"The initialization is done here because the startup of SourceFileArray needs to use the File system to work."
+
+	SessionManager default registerSystemClassNamed: #SourceFileArray
+]
+
 { #category : 'system startup' }
 FileSystem class >> startUp: aBoolean [
 	"This is only here to deal with migration from older versions of
@@ -394,11 +401,6 @@ FileSystem >> exists: aResolvable [
 	a file or directory at that path, false if there is not."
 
 	^ store exists: (self resolve: aResolvable)
-]
-
-{ #category : 'public' }
-FileSystem >> extensionDelimiter [
-	^ $.
 ]
 
 { #category : 'public' }

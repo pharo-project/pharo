@@ -22,12 +22,6 @@ MCTraitDefinition >> = aDefinition [
 												  self classInstVarNames = aDefinition classInstVarNames and: [ comment = aDefinition comment ] ] ] ] ] ] ]
 ]
 
-{ #category : 'visiting' }
-MCTraitDefinition >> accept: aVisitor [
-	^ aVisitor visitTraitDefinition: self
-
-]
-
 { #category : 'printing' }
 MCTraitDefinition >> classSlotDefinitionString [
 
@@ -46,18 +40,18 @@ MCTraitDefinition >> classSlotDefinitionString [
 MCTraitDefinition >> createClassInEnvironment: anEnvironent [
 
 	^ [
-	  self class classInstaller make: [ :aBuilder |
-		  aBuilder
-			  name: name;
-			  traitComposition: (Smalltalk compiler evaluate: self traitCompositionString);
-			  classTraitComposition: (Smalltalk compiler evaluate: self classTraitCompositionString);
-			  slots: self instanceVariables;
-			  classSlots: self classInstanceVariables;
-			  package: self packageName;
-			  tag: self tagName;
-			  comment: comment stamp: commentStamp;
-			  beTrait.
-			anEnvironent ifNotNil: [ aBuilder environment: anEnvironent ] ] ]
+		  self class classInstaller make: [ :aBuilder |
+				  aBuilder
+					  name: name;
+					  traitComposition: (self class compiler evaluate: self traitCompositionString);
+					  classTraitComposition: (self class compiler evaluate: self classTraitCompositionString);
+					  slots: self instanceVariables;
+					  classSlots: self classInstanceVariables;
+					  package: self packageName;
+					  tag: self tagName;
+					  comment: comment stamp: self commentStamp;
+					  beTrait.
+				  anEnvironent ifNotNil: [ aBuilder environment: anEnvironent ] ] ]
 		  on: Warning , DuplicatedVariableError
 		  do: [ :ex | ex resume ]
 ]

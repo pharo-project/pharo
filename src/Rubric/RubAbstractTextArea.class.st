@@ -746,6 +746,8 @@ RubAbstractTextArea >> deselect [
 
 { #category : 'event handling' }
 RubAbstractTextArea >> doubleClick: anEvent [
+
+	model interactionModel reactToRubTextAreaDoubleClick: anEvent. 
 	^ self handleEdit: [ self editor doubleClick: anEvent ]
 ]
 
@@ -2086,7 +2088,9 @@ RubAbstractTextArea >> themeChanged [
 	(self decoratorNamed: #shoutStyler) ifNotNil: [ :styler |
 		styler refreshStyling
 	].
-	self color: self theme backgroundColor.
+
+	self class backgroundColor: self theme backgroundColor.
+	self color: self defaultColor.
 	super themeChanged
 ]
 

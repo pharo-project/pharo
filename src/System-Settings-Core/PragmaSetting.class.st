@@ -62,8 +62,7 @@ Class {
 		'order',
 		'icon',
 		'ordering',
-		'dialog',
-		'allowedInStyle'
+		'dialog'
 	],
 	#category : 'System-Settings-Core-Base',
 	#package : 'System-Settings-Core',
@@ -81,28 +80,9 @@ PragmaSetting >> acceptSettings: aVisitor [
 	^ aVisitor visitPragmaSetting: self
 ]
 
-{ #category : 'accessing' }
-PragmaSetting >> allowedInStyle [
-	^ allowedInStyle ifNil: [allowedInStyle := self hasValue]
-]
-
 { #category : 'user interface' }
 PragmaSetting >> asString [
 	^ self name
-]
-
-{ #category : 'user interface' }
-PragmaSetting >> chooseFileDirectory [
-	| result |
-	result := self theme chooseDirectoryIn: self currentWorld title: 'Choose a directory' path: nil.
-	result ifNotNil: [ self realValue: result  ]
-]
-
-{ #category : 'user interface' }
-PragmaSetting >> chooseFilePath [
-    | result |
-    result := self theme chooseFileIn: self currentWorld title: 'Choose a file' extensions: nil path: nil preview: true.
-    result ifNotNil: [ self realValue: result fullName.]
 ]
 
 { #category : 'user interface' }
@@ -147,30 +127,8 @@ PragmaSetting >> exportSettingAction [
 	^ nil
 ]
 
-{ #category : 'user interface' }
-PragmaSetting >> fontButtonLabel [
-	| emphases |
-	emphases := IdentityDictionary new at: nil put: 'Regular' translated;
-				 at: 0 put: 'Regular' translated;
-				 at: 1 put: 'Bold' translated;
-				 at: 2 put: 'Italic' translated;
-				 at: 4 put: 'Underlined' translated;
-				 at: 8 put: 'Narrow' translated;
-				 at: 16 put: 'StruckOut' translated;
-				 yourself.
-	^ StringMorph contents: self realValue familyName , ' '
-			, (emphases
-					at: self realValue emphasis
-					ifAbsent: ['']) , ' ' , self realValue pointSize asString font: self realValue
-]
-
 { #category : 'accessing' }
 PragmaSetting >> hasDefault [
-	^ false
-]
-
-{ #category : 'accessing' }
-PragmaSetting >> hasEditableList [
 	^ false
 ]
 
@@ -194,32 +152,6 @@ PragmaSetting >> icon: aForm [
 	icon := aForm
 ]
 
-{ #category : 'user interface' }
-PragmaSetting >> inputMorphFor: aContainer [
-	^ self inputWidget
-		ifNotNil: [:iw |
-			( self theme newRowIn: self for: {iw})
-				 clipSubmorphs: true;
-				 hResizing: #shrinkWrap;
-				 cellInset: 0;
-				 yourself]
-]
-
-{ #category : 'user interface' }
-PragmaSetting >> inputWidget [
-	"return the default widget for the input a the setting"
-	^ self dialog
-		ifNotNil: [:d | d numArgs = 0
-				ifTrue: [d value]
-				ifFalse: [d value: self]]
-]
-
-{ #category : 'export' }
-PragmaSetting >> isExportable [
-
-	^ false
-]
-
 { #category : 'accessing' }
 PragmaSetting >> label [
 	^ label ifNil: [self name translated] ifNotNil: [label translated]
@@ -228,11 +160,6 @@ PragmaSetting >> label [
 { #category : 'accessing' }
 PragmaSetting >> label: aString [
 	label := aString
-]
-
-{ #category : 'user interface' }
-PragmaSetting >> labelMorphFor: aContainer [
-	^ StringMorph contents: (aContainer model viewedLabelOfSetting: self)
 ]
 
 { #category : 'accessing' }
@@ -250,11 +177,6 @@ PragmaSetting >> name: aName [
 { #category : 'user interface' }
 PragmaSetting >> noOrdering [
 	ordering := false
-]
-
-{ #category : 'user interface' }
-PragmaSetting >> notInStyle [
-	allowedInStyle := false
 ]
 
 { #category : 'accessing' }

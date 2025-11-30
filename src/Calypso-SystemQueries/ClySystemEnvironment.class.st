@@ -232,25 +232,22 @@ ClySystemEnvironment >> name: anObject [
 ]
 
 { #category : 'ui' }
-ClySystemEnvironment >> notifyErroInClassDefinition: anError [ 
+ClySystemEnvironment >> notifyErroInClassDefinition: anError [
 
 	| text |
-
 	anError freeze.
 
 	text := ((anError isKindOf: MessageNotUnderstood) and: [ anError receiver isKindOf: ShiftClassBuilder ])
-		ifTrue: [ 'The selector {1} is unrecognized in your class definition.'
-		        format: { anError message selector } ]
-		ifFalse: [ anError messageText ].
+		        ifTrue: [ 'The selector {1} is unrecognized in your class definition.' format: { anError message selector } ]
+		        ifFalse: [ anError messageText ].
 
 	SpConfirmDialog new
 		title: 'There is an error in your class definition';
-		label: text;
+		message: text;
 		acceptLabel: 'Debug';
 		cancelLabel: 'Close';
 		onAccept: [ anError debug ];
 		openDialog
-		
 ]
 
 { #category : 'package management' }

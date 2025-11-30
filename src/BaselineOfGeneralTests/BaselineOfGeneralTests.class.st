@@ -14,28 +14,27 @@ BaselineOfGeneralTests >> baseline: spec [
 	repository := self packageRepositoryURLForSpec: spec.
 	spec for: #common do: [
 		spec
-			package: 'Debugging-Utils-Tests';
+			baseline: 'Debugging' with: [ spec loads: #Tests from: repository ];
 			package: 'NumberParser-Tests';
 			package: 'AST-Core-Tests';
 			package: 'Kernel-CodeModel-Tests';
 			package: 'Monticello-Tests';
-			"required by MonticelloMocks"package: 'System-Installers-Tests';
 			package: 'MonticelloMocks';
 			package: 'Fuel-Core-Tests';
 			package: 'FormCanvas-Tests';
 			package: 'Collections-DoubleLinkedList-Tests';
 			package: 'Collections-Arithmetic-Tests';
 			package: 'Metacello-CommandLine-Tests';
-			package: 'Debugger-Model-Tests';
-			package: 'Debugger-Oups-Tests';
-			package: 'EmbeddedFreeType-Tests';
 			baseline: 'Epicea' with: [
 				spec
 					repository: repository;
 					loads: #Tests ];
 			package: 'FileSystem-Memory-Tests';
-			package: 'Fonts-Infrastructure-Tests';
+			baseline: 'Fonts' with: [ spec loads: #Tests from: repository ];
+			baseline: 'FreeType' with: [ spec loads: #tests from: repository ];
 			package: 'Graphics-Tests';
+			package: 'Text-Tests';
+			package: 'Morphic-Testing-Support';
 			package: 'Morphic-Tests';
 			package: 'Morphic-Widgets-FastTable-Tests';
 			package: 'NECompletion-Tests';
@@ -45,6 +44,7 @@ BaselineOfGeneralTests >> baseline: spec [
 			package: 'Rubric-Tests';
 			package: 'ScriptingExtensions-Tests';
 			package: 'STON-Tests';
+			package: 'System-Object Events-Tests';
 			package: 'System-Caching-Tests';
 			package: 'System-Utilities-Tests';
 			package: 'System-Hashing-Tests';
@@ -65,7 +65,7 @@ BaselineOfGeneralTests >> baseline: spec [
 			"requires Zinc-Resource-Meta-Tests"package:
 			'System-Identification-Tests';
 			package: 'System-Dependencies-Tests';
-			package: 'System-BasicCommandLineHandler-Tests';
+			package: 'System-CommandLineHandler-Tests';
 			package: 'Transcript-NonInteractive-Tests';
 			package: 'PharoDocComment-Tests' "standalone" ]
 ]

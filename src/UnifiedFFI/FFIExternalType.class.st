@@ -279,6 +279,12 @@ FFIExternalType >> loader: aLoader [
 	loader := aLoader
 ]
 
+{ #category : 'accessing' }
+FFIExternalType >> naturalPointerArity [
+
+	^ self class naturalPointerArity
+]
+
 { #category : 'testing' }
 FFIExternalType >> needsArityPacking [
 	"Regular types needs to be ''rolled'' if they are passed as pointers to its calling functions.
@@ -294,7 +300,7 @@ FFIExternalType >> needsArityPacking [
 	 Means that if I have a type that is naturally a pointer (for example an ExternalAddress, who
 	 is a 'void*'), it will have a natural arity of 1, then I pack if arity is bigger.
 	 Other cases could need to be rolled when pointer arity is diffrent."
-	^ self pointerArity > self class naturalPointerArity
+	^ self pointerArity > self naturalPointerArity
 ]
 
 { #category : 'testing' }

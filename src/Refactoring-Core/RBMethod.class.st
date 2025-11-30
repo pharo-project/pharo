@@ -108,19 +108,6 @@ RBMethod >> literal: anObject containsReferenceTo: aSymbol [
 ]
 
 { #category : 'accessing' }
-RBMethod >> method [
-	self deprecated: 'Use compiledMethod' transformWith: '`@rec method' -> '`@rec compiledMethod'.
-	^compiledMethod
-]
-
-{ #category : 'accessing' }
-RBMethod >> method: aCompiledMethod [
-	self deprecated: 'Use compiledMethod' transformWith: '`@rec method: `@arg' -> '`@rec compiledMethod: `@arg'.
-	
-	self compiledMethod: aCompiledMethod
-]
-
-{ #category : 'accessing' }
 RBMethod >> methodClass [
 
 	^ class
@@ -222,7 +209,7 @@ RBMethod >> refersToVariable: aString [
 	
 	| searcher tree |
 	tree := self parseTree.
-	((tree defines: aString) or: [ tree body defines: aString ])
+	((tree exactNodeDefines: aString) or: [ tree body exactNodeDefines: aString ])
 		ifTrue: [ ^ false ].
 	searcher := self parserTreeSearcher.
 	searcher
@@ -230,7 +217,7 @@ RBMethod >> refersToVariable: aString [
 		matches: '[:`@vars | | `@temps | `@.Stmts]'
 			do: [ :node :answer |
 			answer
-				or: [ ((node defines: aString) or: [ node body defines: aString ]) not
+				or: [ ((node exactNodeDefines: aString) or: [ node body exactNodeDefines: aString ]) not
 						and: [ searcher executeTree: node body initialAnswer: false ] ] ].
 	^ searcher executeTree: self parseTree initialAnswer: false
 ]

@@ -106,7 +106,7 @@ RBTemporaryToInstanceVariableRefactoring >> applicabilityPreconditions [
 			   in: class) not.
 		  (RBCondition withBlock: [
 				parseTree ifNotNil: [ .
-				   self checkForValidTemporaryVariable ].
+				   self isTemporaryVariableNameValid ].
 			   true ]) }
 ]
 
@@ -114,30 +114,9 @@ RBTemporaryToInstanceVariableRefactoring >> applicabilityPreconditions [
 RBTemporaryToInstanceVariableRefactoring >> breakingChangePreconditions [
 
 	^ {
-		  (RBCondition withBlock: [
-			   (class allSubclasses anySatisfy: [ :cls |
-				    cls definesInstanceVariable: temporaryVariableName asString ])
-				   ifTrue: [
-					   self refactoringWarning:
-						   ('One or more subclasses of <1p> already defines an<n>instance variable with the same name. Proceed anyway?'
-							    expandMacrosWith: class name) ].
-			   true ]).
-		  (ReVariablesNotReadBeforeWrittenCondition new
-			   subtree: parseTree;
-			   variables: temporaryVariableName) }
-]
-
-{ #category : 'preconditions' }
-RBTemporaryToInstanceVariableRefactoring >> checkForValidTemporaryVariable [ 
-
-	(parseTree allTemporaryVariables includes: temporaryVariableName)
-		ifFalse:
-			[self refactoringError: temporaryVariableName
-						, ' isn''t a valid temporary variable name'].
-	(parseTree allArgumentVariables includes: temporaryVariableName)
-		ifTrue:
-			[self refactoringError: temporaryVariableName , ' is a block parameter'].
-
+		  self preconditionNoSubclassDefinesVar.
+		  self preconditionNoMultipleTempOccurences.
+		  self preconditionNoReadBeforeWritten }
 ]
 
 { #category : 'initialization' }
@@ -145,6 +124,40 @@ RBTemporaryToInstanceVariableRefactoring >> class: aClass selector: aSelector va
 	class := self classObjectFor: aClass.
 	selector := aSelector.
 	temporaryVariableName := aVariableName
+]
+
+{ #category : 'preconditions' }
+RBTemporaryToInstanceVariableRefactoring >> isTemporaryVariableNameValid [
+
+	(parseTree allTemporaryVariables includes: temporaryVariableName) ifFalse: [
+		self refactoringError: temporaryVariableName , ' isn''t a valid temporary variable name' ].
+	(parseTree allArgumentVariables includes: temporaryVariableName) ifTrue: [
+		self refactoringError: temporaryVariableName , ' is a block parameter' ]
+]
+
+{ #category : 'preconditions' }
+RBTemporaryToInstanceVariableRefactoring >> preconditionNoMultipleTempOccurences [
+
+	^ ReMultipleMethodsDontReferToTempVarCondition name: temporaryVariableName class: class selector: selector 
+]
+
+{ #category : 'preconditions' }
+RBTemporaryToInstanceVariableRefactoring >> preconditionNoReadBeforeWritten [
+
+	^ ReVariablesNotReadBeforeWrittenCondition new
+		  subtree: parseTree;
+		  variables: { temporaryVariableName };
+		  checkForTemporaryVariables: true
+]
+
+{ #category : 'preconditions' }
+RBTemporaryToInstanceVariableRefactoring >> preconditionNoSubclassDefinesVar [
+
+	^ RBCondition
+		  withBlock: [ (class allSubclasses anySatisfy: [ :cls | cls definesInstanceVariable: temporaryVariableName asString ]) not ]
+		  errorString:
+			  ('One or more subclasses of <1p> already defines an<n>instance variable with the same name.'
+				   expandMacrosWith: class name)
 ]
 
 { #category : 'preconditions' }
@@ -163,10 +176,6 @@ RBTemporaryToInstanceVariableRefactoring >> prepareForExecution [
 RBTemporaryToInstanceVariableRefactoring >> privateTransform [
 
 	self removeTemporaryOfClass: class.
-	class allSubclasses do: [ :cls |
-		(cls definesInstanceVariable: temporaryVariableName)
-			ifTrue: [ cls removeInstanceVariable: temporaryVariableName ]
-			ifFalse: [ self removeTemporaryOfClass: cls ] ].
 	class addInstanceVariable: temporaryVariableName
 ]
 
@@ -182,8 +191,8 @@ RBTemporaryToInstanceVariableRefactoring >> removeTemporaryOfMethod: aSelector i
 	method := aClass methodFor: aSelector.
 	methodParseTree := method parseTree.
 	methodParseTree ifNil: [ self refactoringError: 'Could not parse method' ].
-	( matcher := self parseTreeRewriterClass removeTemporaryNamed: temporaryVariableName )
-		executeTree: methodParseTree.
+	(methodParseTree temporaryNames includes: temporaryVariableName) ifFalse: [ ^ self ].
+	(matcher := self parseTreeRewriterClass removeTemporaryNamed: temporaryVariableName) executeTree: methodParseTree.
 	method compileTree: matcher tree
 ]
 

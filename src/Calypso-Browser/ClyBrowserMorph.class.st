@@ -250,6 +250,12 @@ ClyBrowserMorph >> allNavigationScopes [
 		ifFalse: [ { self systemScope. defaultScope } ]
 ]
 
+{ #category : 'accessing' }
+ClyBrowserMorph >> application [ 
+
+	^ StPharoApplication current
+]
+
 { #category : 'opening/closing' }
 ClyBrowserMorph >> buildWindow [
 	| window |
@@ -299,8 +305,8 @@ ClyBrowserMorph >> close [
 	currentWindow := self window.
 
 	(currentWindow ownerThatIsA: GroupWindowMorph) ifNotNil: [ :group |
-		^self okToChange ifTrue: [
-			[group removeWindow: currentWindow]]].
+		^ self okToChange ifTrue: [
+			  group removeWindow: currentWindow ]].
 
 	currentWindow close
 ]
@@ -308,7 +314,7 @@ ClyBrowserMorph >> close [
 { #category : 'tools support' }
 ClyBrowserMorph >> confirmDiscardChanges [
 
-	^ (Smalltalk at: #StPharoApplication) current confirm: 'Changes have not been saved.
+	^ self application confirm: 'Changes have not been saved.
 Is it OK to discard changes?'
 ]
 

@@ -1,12 +1,12 @@
 "
-RBParser takes a source code string and generates an AST for it. This is a hand-written, recursive descent parser and has been optimized for speed. The simplest way to call this is either 'RBParser parseExpression: aString' if you want the AST for an expression, or 'RBParser parseMethod: aString' if you want to parse an entire method.
+OCParser takes a source code string and generates an AST for it. This is a hand-written, recursive descent parser and has been optimized for speed. The simplest way to call this is either 'OCParser parseExpression: aString' if you want the AST for an expression, or 'OCParser parseMethod: aString' if you want to parse an entire method.
 
 Instance Variables:
 	currentToken	<ASTToken>	The current token being processed.
 	emptyStatements	<Boolean>	True if empty statements are allowed. In IBM, they are, in VW they aren't.
 	errorBlock	<BlockClosure>	The block to evaluate on a syntax error.
 	nextToken	<ASTToken>	The next token that will be processed. This allows one-token lookahead.
-	scanner	<RBScanner>	The scanner that generates a stream of tokens to parse.
+	scanner	<OCScanner>	The scanner that generates a stream of tokens to parse.
 	source	<String>	The source code to parse
 	tags	<Collection of: Interval>	The source intervals of the tags appearing at the top of a method (e.g. Primitive calls)
 
@@ -179,18 +179,6 @@ OCParser >> doItMethodNodeClass [
 { #category : 'private - classes' }
 OCParser >> englobingErrorNodeClass [
 	^OCEnglobingErrorNode
-]
-
-{ #category : 'error handling' }
-OCParser >> errorBlock [
-
-	self deprecated: 'see errorBlock:'
-]
-
-{ #category : 'accessing' }
-OCParser >> errorBlock: aBlock [
-
-	self deprecated: 'RBParser instances offer no more errorBlock facility. Use helpers methods on the class side, or `checkFaulty: aBlock` on a parsed AST'
 ]
 
 { #category : 'error handling' }
@@ -533,7 +521,7 @@ OCParser >> parseErrorNode: aMessageString [
 	Anyway, the error node is an empty string and the current token will be used to continue the parsing."
 	^ OCParseErrorNode new
 		errorMessage: aMessageString;
-		value: '' asString;
+		value: '';
 		start: self errorPosition;
 		stop: self errorPosition - 1;
 		errorPosition: self errorPosition

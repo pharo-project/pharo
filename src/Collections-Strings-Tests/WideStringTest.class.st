@@ -19,6 +19,14 @@ WideStringTest >> classToBeTested [
 ]
 
 { #category : 'tests - converting' }
+WideStringTest >> testAsByteArray [
+	self assert: 'a' asWideString asByteArray equals: #[0 0 0 97].
+	self assert: 'A' asWideString asByteArray equals: #[0 0 0 65].
+	self assert: 'ABA' asWideString asByteArray equals: #[0 0 0 65 0 0 0 66 0 0 0 65].
+	self assert: '' asWideString asByteArray equals: #[]	
+]
+
+{ #category : 'tests - converting' }
 WideStringTest >> testAsInteger [
 	self assert: '1796exportFixes-tkMX' asWideString asInteger equals: 1796.
 	self assert: 'donald' asWideString asInteger isNil.
@@ -41,7 +49,6 @@ WideStringTest >> testAsInteger [
 
 { #category : 'testing' }
 WideStringTest >> testAtPut [
-	"Non regression test for http://bugs.squeak.org/view.php?id=6998"
 
 	| w1 |
 	w1 := WideString with: (Unicode value: 402) with: $a with: (Unicode value: 400) with: $b.
@@ -50,7 +57,6 @@ WideStringTest >> testAtPut [
 
 { #category : 'tests - beginswith' }
 WideStringTest >> testBeginsWith [
-	"from johnmci at http://bugs.squeak.org/view.php?id=5331"
 
 	| w1 w2 |
 	self assert: ('abc' beginsWith: 'ab').
@@ -68,7 +74,6 @@ WideStringTest >> testBeginsWith [
 
 { #category : 'tests - match' }
 WideStringTest >> testCharactersExactlyMatching [
-	"from johnmci at http://bugs.squeak.org/view.php?id=5331"
 
 	self assert: ('abc' charactersExactlyMatching: 'abc') equals: 3.
 	self assert: ('abd' charactersExactlyMatching: 'abc') equals: 2.
@@ -83,7 +88,6 @@ WideStringTest >> testCharactersExactlyMatching [
 
 { #category : 'tests - compare' }
 WideStringTest >> testCompare [
-	"from johnmci at http://bugs.squeak.org/view.php?id=5331"
 
 	self assert: ('abc' compare: 'abc') equals: 2.
 	self assert: ('abc' compare: 'abd') equals: 1.
@@ -138,7 +142,6 @@ WideStringTest >> testCompare [
 
 { #category : 'tests - endswith' }
 WideStringTest >> testEndsWith [
-	"from johnmci at http://bugs.squeak.org/view.php?id=5331"
 
 	self assert: ('abc' endsWith: 'bc').
 	self assert: ('abc' endsWith: 'bc' asWideString).
@@ -151,7 +154,6 @@ WideStringTest >> testEndsWith [
 
 { #category : 'tests - compare' }
 WideStringTest >> testEqual [
-	"from johnmci at http://bugs.squeak.org/view.php?id=5331"
 
 	self assert: 'abc' equals: 'abc'.
 	self assert: 'abc' equals: 'abc' asWideString.
@@ -167,8 +169,7 @@ WideStringTest >> testEqual [
 
 { #category : 'tests - substrings' }
 WideStringTest >> testFindSubstring [
-	"This is related to http://bugs.squeak.org/view.php?id=6366
-	finding substring in a WideString was broken because matchTable are byte-wise"
+	"finding substring in a WideString was broken because matchTable are byte-wise"
 
 	| ws1 ws2 |
 	self assert: ('abcd' findString: 'bc' startingAt: 1) equals: 2.
@@ -190,7 +191,6 @@ WideStringTest >> testFindSubstring [
 
 { #category : 'testing' }
 WideStringTest >> testIsAsciiString [
-	"Non-regression for https://pharo.manuscript.com/f/cases/15232 "
 
 	self assert: '' asWideString isAsciiString equals: true.
 	self assert: 'abcdefGHIJKL 98765,./@#%$' asWideString isAsciiString equals: true.
@@ -200,7 +200,6 @@ WideStringTest >> testIsAsciiString [
 
 { #category : 'tests - match' }
 WideStringTest >> testMatch [
-	"from johnmci at http://bugs.squeak.org/view.php?id=5331"
 
 	self assert: ('*baz' match: 'mobaz' ).
 	self assert: ('*foo#zort' match: 'afoo3zortthenfoo3zort' ).
@@ -225,7 +224,6 @@ WideStringTest >> testMatch [
 
 { #category : 'tests - relation order' }
 WideStringTest >> testRelationOrder [
-	"from johnmci at http://bugs.squeak.org/view.php?id=5331"
 
 	self assert: ('aa' < 'ab').
 	self assert: ('aa' <= 'ab').
@@ -258,7 +256,6 @@ WideStringTest >> testRelationOrder [
 
 { #category : 'tests - relation order' }
 WideStringTest >> testRelationOrderWithCase [
-	"from johnmci at http://bugs.squeak.org/view.php?id=5331"
 
 	self assert: ('ABC' caseInsensitiveLessOrEqual: 'abc').
 	self assert: ('ABC' caseInsensitiveLessOrEqual: 'abd').
@@ -288,7 +285,6 @@ WideStringTest >> testRelationOrderWithCase [
 
 { #category : 'tests - compare' }
 WideStringTest >> testSameAs [
-	"from johnmci at http://bugs.squeak.org/view.php?id=5331"
 
 	self assert: ('abc' sameAs: 'aBc' asWideString).
 	self assert: ('aBc' asWideString sameAs: 'abc').
@@ -298,7 +294,6 @@ WideStringTest >> testSameAs [
 
 { #category : 'tests - substrings' }
 WideStringTest >> testSubstrings [
-	"this is related to http://bugs.squeak.org/view.php?id=6367"
 
 	| w1 w2 |
 	w1 := WideString

@@ -158,7 +158,6 @@ SessionManager class >> initializeKernelRegistrations [
 		registerSystemClassNamed: #File atPriority: 90;
 		registerSystemClassNamed: #FinalizationProcess;
 		registerSystemClassNamed: #Stdio;
-		registerSystemClassNamed: #EndianDetector;
 		registerSystemClassNamed: #Symbol
 ]
 
@@ -234,7 +233,8 @@ SessionManager >> initialize [
 	networkCategory := self createCategory: 'Network'.
 	guiCategory := self createCategory: 'Graphical User Interface'.
 	toolsCategory := self createCategory: 'Tools'.
-	userCategory := self createCategory: 'User'
+	userCategory := self createCategory: 'User'.
+	self installNewSession
 ]
 
 { #category : 'session management' }

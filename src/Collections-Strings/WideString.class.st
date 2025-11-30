@@ -57,12 +57,13 @@ WideString class >> fromString: aString [
 { #category : 'converting' }
 WideString >> asByteArray [
 	"Convert to a ByteArray with the ascii values of the string."
-	"'a' asByteArray >>> #[97]"
-	"'A' asByteArray >>> #[65]"
-	"'ABA' asByteArray >>> #[65 66 65]"
-	| b |
-	b := ByteArray new: self byteSize.
-	1 to: self size * 4 do: [:i |
+	"'a' asWideString asByteArray >>> #[0 0 0 97]"
+	"'A' asWideString asByteArray >>> #[0 0 0 65]"
+	
+	| b s |
+	s := self byteSize.
+	b := ByteArray new: s.
+	1 to: s do: [:i |
 		b at: i put: (self byteAt: i)].
 	^ b
 ]
@@ -85,7 +86,10 @@ WideString >> asLowercase [
 	"Answer a copy of self with all characters in a lower case.
 	This might be a difficult task, ask Unicode."
 
-	^ Unicode toLowercaseString: self
+	^ self class environment
+		  at: #Unicode
+		  ifPresent: [ :class | class toLowercaseString: self ]
+		  ifAbsent: [ self error: 'In order to do this operation you need the Unicode support in Pharo but it is currently not present.' ]
 ]
 
 { #category : 'converting' }
@@ -93,7 +97,10 @@ WideString >> asUppercase [
 	"Answer a copy of self with all characters in an upper case.
 	This might be a difficult task, ask Unicode."
 
-	^ Unicode toUppercaseString: self
+	^ self class environment
+		  at: #Unicode
+		  ifPresent: [ :class | class toUppercaseString: self ]
+		  ifAbsent: [ self error: 'In order to do this operation you need the Unicode support in Pharo but it is currently not present.' ]
 ]
 
 { #category : 'converting' }

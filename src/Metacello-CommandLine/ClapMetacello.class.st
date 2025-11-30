@@ -41,7 +41,7 @@ ClapMetacello class >> commandSpecification [
 ClapMetacello >> execute [
 
 	| metacello |
-	super execute.
+	self prepareImageAndExit.
 	metacello := Metacello new
 		             baseline: self projectName;
 		             repository: self repositoryUrl;

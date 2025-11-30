@@ -23,7 +23,7 @@ ImageCleanerCliCommand class >> commandSpecification [
 
 	<commandline>
 	^ (ClapCommandSpec id: #clean)
-		  description: 'Cleans the image=, If no option specified, runs Smalltalk cleanUp: true.';
+		  description: 'Cleans the image. If no option specified, runs Smalltalk cleanUp: true.';
 		  commandClass: self;
 		  addHelp;
 		  addFlag: #production description: 'Do production cleanup: do release cleanup + unload tests and example packages';

@@ -53,9 +53,7 @@ SmalltalkImage class >> cleanUp [
 { #category : 'settings' }
 SmalltalkImage class >> compilerClass [
 
-	^CompilerClass ifNil: [
-		"use OpalCompiler as the fallback compiler if installed"
-		self class environment at: #OpalCompiler ifAbsent: [ nil ] ]
+	^ CompilerClass
 ]
 
 { #category : 'settings' }
@@ -72,18 +70,6 @@ SmalltalkImage class >> current [
 SmalltalkImage class >> new [
 
 	self error: 'Use current'
-]
-
-{ #category : 'system startup' }
-SmalltalkImage class >> shutDown: isImageClosing [
-
-	isImageClosing ifTrue: [ SourceFiles close ]
-]
-
-{ #category : 'system startup' }
-SmalltalkImage class >> startUp: isImageStarting [
-
-	ChangesLog default
 ]
 
 { #category : 'image' }
@@ -247,7 +233,7 @@ SmalltalkImage >> backupTo: newNameWithoutSuffix [
 	Results:
 		true  when continuing in the new session
 		false for the current session"
-	(SourceFiles changesFileStream isNil or: [ SourceFiles changesFileStream closed ])
+	(SourceFileArray default changesFileStream isNil or: [ SourceFileArray default changesFileStream closed ])
     ifFalse: [
 		self
 			closeSourceFiles; "so copying the changes file will always work"
@@ -415,7 +401,7 @@ SmalltalkImage >> closeLog: logger [
 SmalltalkImage >> closeSourceFiles [
 	"Shut down the source files if appropriate."
 
-	SourceFiles close
+	SourceFileArray default close
 ]
 
 { #category : 'system attribute' }
@@ -684,23 +670,6 @@ SmalltalkImage >> garbageCollectMost [
 	^ self primBytesLeft
 ]
 
-{ #category : 'snapshot and quit' }
-SmalltalkImage >> getFileNameFromUser [
-
-	| givenName strippedName imageFile changesFile |
-	givenName := UIManager default
-		request: 'New File Name?'
-		initialAnswer: (self imageFile basename copyUpToLast:  Path extensionDelimiter).
-	strippedName := self stripImageExtensionFrom: givenName.
-	strippedName isEmptyOrNil ifTrue: [^nil].
-	imageFile := self fileForImageNamed: strippedName.
-	changesFile := self fileForChangesNamed: strippedName.
-	((imageFile exists or: [changesFile exists]) and:
-		[(self confirm: ('{1} already exists. Overwrite?' format: {strippedName})) not])
-			ifTrue: [^nil].
-	^strippedName
-]
-
 { #category : 'accessing' }
 SmalltalkImage >> globals [
 	"Answer the global SystemEnvironment"
@@ -800,7 +769,7 @@ SmalltalkImage >> informSpaceLeftAfterGarbageCollection [
 
 	"SmalltalkImage current informSpaceLeftAfterGarbageCollection"
 
-	self inform: self spaceLeftAfterGarbageCollection
+	InformativeNotification signal: self spaceLeftAfterGarbageCollection
 ]
 
 { #category : 'memory space' }
@@ -839,89 +808,6 @@ SmalltalkImage >> isSelfEvaluating [
 { #category : 'accessing' }
 SmalltalkImage >> lastImagePath [
 	^ LastImagePath
-]
-
-{ #category : 'sources, change log' }
-SmalltalkImage >> licenseString [
-	^ self licenseStringTemplate format: (Array with: Date today year asString)
-]
-
-{ #category : 'sources, change log' }
-SmalltalkImage >> licenseStringTemplate [
-	^ 'LICENSE
-
-Licensed under the MIT License with parts under the Apache License.
-
-Copyright (c) 2008-{1} The Pharo Project, and Contributors
-Copyright (c) 2008-{1} Inria
-Copyright (c) 1996-2008 Viewpoints Research Institute, and Contributors
-Copyright (c) 1996 Apple Computer, Inc.
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this
-software and associated documentation files (the "Software"), to deal in the Software
-without restriction, including without limitation the rights to use, copy, modify, merge,
-publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons
-to whom the Software is furnished to do so, subject to the following conditions: The
-above copyright notice and this permission notice shall be included in all copies or
-substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS
-OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-You may obtain a copy of the Apache License at
-http://www.apache.org/licenses/LICENSE-2.0
-
-Pharo uses icons by Mark James (http://www.famfamfam.com) under
-Creative Commons Attribution 2.5 License.
-
-Pharo uses icons by Eclipse under
-Eclipse Public License - v 1.0
-http://www.eclipse.org/legal/epl-v10.html
-
-Pharo uses Source Code Pro Fonts by Adobe under
-SIL Open Font License, v 1.1
-http://scripts.sil.org/OFL
-
-Pharo uses Open Sans by Steve Matteson under
-Apache License, 2.0
-http://www.apache.org/licenses/LICENSE-2.0.html
-
-Pharo uses  Bitstream Vera Fonts
-http://dejavu-fonts.org/wiki/index.php?title=License
-
-Copyright (c) 2003 by Bitstream, Inc. All Rights Reserved.
-Bitstream Vera is a trademark of Bitstream, Inc.
-Permission is hereby granted, free of charge, to any person obtaining a copy of the fonts
-accompanying this license ("Fonts") and associated documentation files (the "Font Software"),
-to reproduce and distribute the Font Software, including without limitation the rights to use, copy,
-merge, publish, distribute, and/or sell copies of the Font Software, and to permit persons to whom
-the Font Software is furnished to do so, subject to the following conditions:
-The above copyright and trademark notices and this permission notice shall be included in all
-copies of one or more of the Font Software typefaces.
-The Font Software may be modified, altered, or added to, and in particular the designs of glyphs
-or characters in the Fonts may be modified and additional glyphs or characters may be added to
-the Fonts, only if the fonts are renamed to names not containing either the words "Bitstream"
-or the word "Vera".
-This License becomes null and void to the extent applicable to Fonts or Font Software that
-has been modified and is distributed under the "Bitstream Vera" names.
-The Font Software may be sold as part of a larger software package but no copy of one or more
-of the Font Software typefaces may be sold by itself.
-THE FONT SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
-INCLUDING BUT NOT LIMITED TO ANY WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
-PURPOSE AND NONINFRINGEMENT OF COPYRIGHT, PATENT, TRADEMARK, OR OTHER RIGHT. IN NO EVENT
-SHALL BITSTREAM OR THE GNOME FOUNDATION BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-INCLUDING ANY GENERAL, SPECIAL, INDIRECT, INCIDENTAL, OR CONSEQUENTIAL DAMAGES, WHETHER IN AN
-ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF THE USE OR INABILITY TO USE THE
-FONT SOFTWARE OR FROM OTHER DEALINGS IN THE FONT SOFTWARE.
-Except as contained in this notice, the names of Gnome, the Gnome Foundation,
-and Bitstream Inc., shall not be used in advertising or otherwise to promote the sale,
-use or other dealings in this Font Software without prior written authorization from
-the Gnome Foundation or Bitstream Inc., respectively.
-For further information, contact: fonts at gnome dot org.'
 ]
 
 { #category : 'miscellaneous' }
@@ -1017,7 +903,7 @@ SmalltalkImage >> lowSpaceWatcher [
 		ifTrue: [self garbageCollect <= self lowSpaceThreshold
 				ifTrue: ["free space must be above threshold before
 					starting low space watcher"
-					^ self inform: 'Not enough memory to launch the lowSpaceWatcher.']].
+					^ InformativeNotification signal:  'Not enough memory to launch the lowSpaceWatcher.']].
 	self specialObjectsArray at: 23 put: nil.
 	"process causing low space will be saved here"
 	LowSpaceSemaphore := Semaphore new.
@@ -1039,7 +925,12 @@ SmalltalkImage >> lowSpaceWatcher [
 			self bytesLeft > free
 				ifTrue: [^ self installLowSpaceWatcher]].
 
-	UIManager default lowSpaceWatcherDefaultAction: preemptedProcess.
+	 "When there is a signal from the VM, we signal an exception in the preempted process.
+	If we don't have preemptedProcess we are in an error state. We will throw an error"
+	preemptedProcess
+		ifNotNil: [ preemptedProcess signalException: OutOfMemory new ]
+		ifNil: [ self error: 'We have a lowSpaceWatcher signal, but there is no ctx... how we arrive here' ].
+
 	"We need to reinstall the lowSpaceWatcher"
 	Smalltalk installLowSpaceWatcher
 ]
@@ -1067,17 +958,6 @@ SmalltalkImage >> memoryHogs [
 	"Answer the list of objects to notify with #freeSomeSpace if memory gets full."
 
 	^ MemoryHogs ifNil: [MemoryHogs := OrderedCollection new]
-]
-
-{ #category : 'miscellaneous' }
-SmalltalkImage >> metacelloPlatformAttributes [
-	"Returns the tags for the conditional platform loading in Metacello. Pay attention the order is important: from most  to least general."
-
-	^ {
-		  #squeakCommon.
-		  #pharo.
-		  ('pharo' , SystemVersion current major asString , '.x') asSymbol.
-		  ('pharo' , SystemVersion current major asString , '.0.x') asSymbol }
 ]
 
 { #category : 'special objects' }
@@ -1224,7 +1104,7 @@ SmalltalkImage >> openSourceFiles [
 	self imagePath = LastImagePath ifFalse: [ "Reset the author full name to blank when the image gets moved"
 		LastImagePath := self imagePath ].
 
-	SourceFiles ensureOpen
+	SourceFileArray default ensureOpen
 ]
 
 { #category : 'system attribute' }
@@ -1332,28 +1212,6 @@ SmalltalkImage >> printOn: aStream [
 	aStream nextPutAll: 'Smalltalk'
 ]
 
-{ #category : 'private' }
-SmalltalkImage >> privSaveImageWithCleanup [
-
-	"Do not use this method for common image saving. This method is designated for saving the image during the shrinking process in headless images."
-
-	20 timesRepeat: [
-		(Delay forMilliseconds: 50) wait.
-		Processor yield.
-		Smalltalk garbageCollect. ].
-
-	[
-		self snapshot: true andQuit: true.
-	] onErrorDo: [:e |
-		'PharoDebug.log' asFileReference ensureDelete; writeStreamDo: [ :rep |
-			rep nextPutAll: 'Error:'; cr.
-			rep nextPutAll: e asString; cr.
-	  		rep nextPutAll: thisContext stack size asString.
-	 	  	thisContext stack copy withIndexDo: [:stck :i |
-				[ rep nextPutAll: i asString; space; nextPutAll: stck asString; cr] onErrorDo: []]].
-		Smalltalk exitFailure ]
-]
-
 { #category : 'snapshot and quit' }
 SmalltalkImage >> quitPrimitive [
 	"Primitive. Exit to another operating system on the host machine, if one
@@ -1369,12 +1227,6 @@ SmalltalkImage >> recompile [
 	Smalltalk globals allClassesAndTraits
 		do: [:classOrTrait | classOrTrait recompile]
 		displayingProgress: 'Recompiling all classes and traits'
-]
-
-{ #category : 'snapshot and quit' }
-SmalltalkImage >> recordStartupStamp [
-
-	ChangesLog default recordStartupStamp
 ]
 
 { #category : 'special objects' }
@@ -1466,20 +1318,13 @@ SmalltalkImage >> restartMethods [
 ]
 
 { #category : 'saving' }
-SmalltalkImage >> saveAs [
-	"Put up the 'saveAs' prompt, obtain a name, and save the image  under that new name."
-
-	self saveAs: self getFileNameFromUser
-]
-
-{ #category : 'saving' }
 SmalltalkImage >> saveAs: newNameWithoutSuffix [
 	"Results:
 		true  when continuing in the new session
 		false for the current session "
 
 	newNameWithoutSuffix ifNil: [ ^ self ].
-  (SourceFiles changesFileStream isNil or: [ SourceFiles changesFileStream closed ])
+  (SourceFileArray default changesFileStream isNil or: [ SourceFileArray default changesFileStream closed ])
     ifFalse: [
 		self closeSourceFiles.
 		self saveChangesInFileNamed: (self fullNameForChangesNamed: newNameWithoutSuffix)
@@ -1496,11 +1341,8 @@ SmalltalkImage >> saveAsNewVersion [
 
 	| newImageFile strippedName |
 	newImageFile := self imageFile nextVersion.
-	(newImageFile withExtension: self changesSuffix)
-		ifExists: [ :newChangesFile |
-			^ self
-				inform:
-					'There is already .changes file of the desired name,
+	(newImageFile withExtension: self changesSuffix) ifExists: [ :newChangesFile |
+			^ InformativeNotification signal: 'There is already .changes file of the desired name,
 ' , newChangesFile fullName , '
 curiously already present, even though there is
 no corresponding .' , self imageSuffix , ' file.   Please remedy
@@ -1538,16 +1380,6 @@ SmalltalkImage >> saveImageInFileNamed: aFile [
 		closeSourceFiles;
 		openSourceFiles;  "so SNAPSHOT appears in new changes file"
 		snapshot: true andQuit: false
-]
-
-{ #category : 'saving' }
-SmalltalkImage >> saveImageInNewContext [
-
-	" This method is used for saving the Smalltalk image in a new process so the current process with all stack information may be forgotten.
-
-	Do not use this method for common image saving. This method is designated for saving the image during the shrinking process in headless images. "
-
-	[ self privSaveImageWithCleanup ] forkAt: 40
 ]
 
 { #category : 'saving' }
@@ -1683,10 +1515,10 @@ SmalltalkImage >> stripImageExtensionFrom: aString [
 
 	| answer imageExtension delimitedImageExtension |
 	answer := aString.
-	imageExtension := Path extensionDelimiter asString, self imageSuffix.
-	delimitedImageExtension := imageExtension copyWith: Path extensionDelimiter.
+	imageExtension := File extensionDelimiter asString, self imageSuffix.
+	delimitedImageExtension := imageExtension copyWith: File extensionDelimiter.
 	[answer isNil not and: [(answer endsWith: imageExtension) or: [answer endsWith: delimitedImageExtension]]]
-		whileTrue: [answer := answer copyUpToLast: Path extensionDelimiter].
+		whileTrue: [answer := answer copyUpToLast: File extensionDelimiter].
 	^answer
 ]
 
@@ -1731,20 +1563,6 @@ SmalltalkImage >> unregisterExternalObject: anObject [
 	"Unregister the given object in the external objects array. Do nothing if it isn't registered."
 
 	ExternalSemaphoreTable unregisterExternalObject: anObject
-]
-
-{ #category : 'sources, change log' }
-SmalltalkImage >> version [
-	"Answer the version of this release."
-
-	^ SystemVersion current
-		  ifNil: [ 'No version set yet' ]
-		  ifNotNil: [ :version | version version ]
-]
-
-{ #category : 'copying' }
-SmalltalkImage >> veryDeepCopyWith: deepCopier [
-	"Return self.  I can't be copied.  Do not record me."
 ]
 
 { #category : 'accessing' }

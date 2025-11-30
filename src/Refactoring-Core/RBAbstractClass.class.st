@@ -197,12 +197,6 @@ RBAbstractClass >> checkSelector: aSelector using: aMatcher [
 	^ aMatcher answer
 ]
 
-{ #category : 'accessing' }
-RBAbstractClass >> classBinding [
-	self deprecated: 'Use binding' transformWith: '`@receiver classBinding' -> '`@receiver binding'.
-	^ self binding 
-]
-
 { #category : 'accessing - navigation' }
 RBAbstractClass >> classSide [
 	"Return the metaclass of the couple class/metaclass. Useful to avoid explicit test."
@@ -587,16 +581,6 @@ RBAbstractClass >> newMethods [
 ]
 
 { #category : 'method accessing' }
-RBAbstractClass >> parseTreeFor: aSymbol [
-
-	self
-		deprecated: 'Use parseTreeForSelector: instead'
-		transformWith: '`@receiver parseTreeFor: `@argument'
-			-> '`@receiver parseTreeForSelector: `@argument'.
-	^ self parseTreeForSelector: aSymbol
-]
-
-{ #category : 'method accessing' }
 RBAbstractClass >> parseTreeForSelector: aSelector [
 
 	| class method |
@@ -808,20 +792,6 @@ RBAbstractClass >> superclassRedefines: aSelector [
 	^ self allSuperclasses anySatisfy: [ :each | each directlyDefinesMethod: aSelector ]
 ]
 
-{ #category : 'accessing - deprecated' }
-RBAbstractClass >> theMetaClass [
-	self deprecated:  'Please use #classSide instead' transformWith:  '`@receiver theMetaClass'
-						-> '`@receiver classSide'.
-	^ self classSide
-]
-
-{ #category : 'accessing - deprecated' }
-RBAbstractClass >> theNonMetaClass [
-	self deprecated:  'Please use #instanceSide instead' transformWith:  '`@receiver theNonMetaClass'
-						-> '`@receiver instanceSide'.
-	^ self instanceSide
-]
-
 { #category : 'variable accessing' }
 RBAbstractClass >> typeOfClassVariable: aSymbol [
 	^model classNamed: #Object
@@ -970,15 +940,6 @@ RBAbstractClass >> whoDefinesInstanceVariable: aString [
 	(self directlyDefinesInstanceVariable: aString) ifTrue: [ ^ self ].
 	sprClass := self superclass.
 	^ sprClass ifNotNil: [ sprClass whoDefinesInstanceVariable: aString ]
-]
-
-{ #category : 'method accessing' }
-RBAbstractClass >> whoDefinesMethod: aSelector [
-
-	self
-		deprecated: 'Use whichClassIncludesSelector: instead of current one'
-		transformWith: '`@rec whoDefinesMethod: `@arg' -> '`@rec whichClassIncludesSelector: `@arg'.
-	^ self whichClassIncludesSelector: aSelector 
 ]
 
 { #category : 'accessing' }

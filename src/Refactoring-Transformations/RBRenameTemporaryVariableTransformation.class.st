@@ -83,7 +83,7 @@ RBRenameTemporaryVariableTransformation >> checkNewVariable: aParseTree [
 	aParseTree
 		ifNil: [ self refactoringError: ('Temporary variable named {1} is not defined by this method.'
 							format: { variableName asString }) ].
-	(aParseTree whoDefines: newVariableName)
+	(aParseTree whichUpNodeDefines: newVariableName)
 		ifNotNil: [ self refactoringError: ('Temporary variable named {1} is already defined.'
 							format: { newVariableName asString }) ].
 	(aParseTree allDefinedVariables includes: newVariableName)
@@ -104,9 +104,9 @@ RBRenameTemporaryVariableTransformation >> class: aClass selector: aSelector ren
 RBRenameTemporaryVariableTransformation >> privateTransform [
 	| parseTree definingNode variableNode |
 	parseTree := self definingMethod.
-	variableNode := parseTree variableWith: variableName.
+	variableNode := parseTree latestUseOfVariableNamed: variableName.
 	self checkExistingVariable: variableNode.
-	definingNode := variableNode whoDefines: variableName.
+	definingNode := variableNode whichUpNodeDefines: variableName.
 	self checkNewVariable: definingNode.
 	(self parseTreeRewriterClass rename: variableName to: newVariableName)
 		executeTree: definingNode.

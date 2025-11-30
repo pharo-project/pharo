@@ -9,11 +9,6 @@ Class {
 	#tag : 'Manifest'
 }
 
-{ #category : 'meta-data - dependency analyser' }
-ManifestRandomCore class >> ignoredDependencies [
-	^ #(#Transcript)
-]
-
 { #category : 'accessing' }
 ManifestRandomCore class >> packageName [
 	^ 'Random-Core'

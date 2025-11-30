@@ -39,6 +39,16 @@ Form >> listRenderOn: aCanvas atRow: index bounds: aRectangle color: aColor back
 ]
 
 { #category : '*Morphic-Base' }
+Form class >> openImageInWindow: fullName [
+	"Handle five file formats: GIF, JPG, PNG, Form storeOn: (run coded), and
+	BMP. Fail if file format is not recognized."
+
+	| image |
+	image := self fromFileNamed: fullName.
+	(ImageMorph withForm: image) openInWorld
+]
+
+{ #category : '*Morphic-Base' }
 Form >> scaledByDisplayScaleFactor [
 
 	^ self scaledToSize: self extent * self currentWorld displayScaleFactor
@@ -67,6 +77,18 @@ Form >> scaledIntoFormOfSize: aNumberOrPoint [
 		at: extent - scaledForm extent // 2.
 
 	^ result
+]
+
+{ #category : '*Morphic-Base' }
+Form class >> serviceOpenImageInWindow [
+	"Answer a service for opening a graphic in a window"
+	<formService>
+	^ FileServiceEntry
+		provider: self
+		label: 'Open graphic in a window'
+		selector: #openImageInWindow:
+		description: 'Open a graphic file in a window'
+		buttonLabel: 'Open'
 ]
 
 { #category : '*Morphic-Base-Support' }

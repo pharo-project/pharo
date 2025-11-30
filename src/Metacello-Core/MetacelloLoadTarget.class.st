@@ -44,18 +44,22 @@ MetacelloLoadTarget >> visitPackageLoadDirective: aMetacelloPackageLoadDirective
 
 { #category : 'visiting' }
 MetacelloLoadTarget >> visitPostLoadDirective: aMetacelloPostLoadDirective [
-	
+
 	aMetacelloPostLoadDirective spec postLoadDoItBlock ifNotNil: [ :block |
-		block valueWithPossibleArgs: {
-				self.
-				aMetacelloPostLoadDirective spec } ]
+			MetacelloNotification signal: 'Executing: ' , aMetacelloPostLoadDirective label.
+			block valueWithPossibleArgs: {
+					self.
+					aMetacelloPostLoadDirective spec }.
+			MetacelloNotification signal: 'Done executing: ' , aMetacelloPostLoadDirective label ]
 ]
 
 { #category : 'visiting' }
 MetacelloLoadTarget >> visitPreLoadDirective: aMetacelloPreLoadDirective [
-	
+
 	aMetacelloPreLoadDirective spec preLoadDoItBlock ifNotNil: [ :block |
-		block valueWithPossibleArgs: {
-				self.
-				aMetacelloPreLoadDirective spec } ]
+			MetacelloNotification signal: 'Executing: ' , aMetacelloPreLoadDirective label.
+			block valueWithPossibleArgs: {
+					self.
+					aMetacelloPreLoadDirective spec }.
+			MetacelloNotification signal: 'Done executing: ' , aMetacelloPreLoadDirective label ]
 ]

@@ -312,8 +312,15 @@ FFIEnumeration class >> representationType [
 
 { #category : 'comparing' }
 FFIEnumeration >> = anEnumInst [
+
 	^ self class == anEnumInst class
 		and: [ self value = anEnumInst value ]
+]
+
+{ #category : 'comparing' }
+FFIEnumeration >> hash [
+
+	^ self class hash bitXor: self value
 ]
 
 { #category : 'accessing' }

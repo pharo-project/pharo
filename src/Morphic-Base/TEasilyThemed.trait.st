@@ -381,22 +381,6 @@ TEasilyThemed >> newBalloonHelp: aTextStringOrMorph for: aMorph corner: cornerSy
 ]
 
 { #category : 'controls' }
-TEasilyThemed >> newBracketSliderFor: aModel getValue: getSel setValue: setSel min: minValue max: maxValue quantum: quantum getEnabled: enabledSel help: helpText [
-	"Answer a bracket slider with the given selectors."
-
-	^self theme
-		newBracketSliderIn: self
-		for: aModel
-		getValue: getSel
-		setValue: setSel
-		min: minValue
-		max: maxValue
-		quantum: quantum
-		getEnabled: enabledSel
-		help: helpText
-]
-
-{ #category : 'controls' }
 TEasilyThemed >> newButtonFor: aModel action: actionSel getEnabled: enabledSel label: stringOrText help: helpText [
 	"Answer a new button."
 
@@ -831,22 +815,6 @@ TEasilyThemed >> newImageFor: aModel get: getSel help: helpText [
 		newImageIn: self
 		for: aModel
 		get: getSel
-		help: helpText
-]
-
-{ #category : 'controls' }
-TEasilyThemed >> newIncrementalSliderFor: aModel getValue: getSel setValue: setSel min: min max: max quantum: quantum getEnabled: enabledSel help: helpText [
-	"Answer an inremental slider with the given selectors."
-
-	^self theme
-		newIncrementalSliderIn: self
-		for: aModel
-		getValue: getSel
-		setValue: setSel
-		min: min
-		max: max
-		quantum: quantum
-		getEnabled: enabledSel
 		help: helpText
 ]
 

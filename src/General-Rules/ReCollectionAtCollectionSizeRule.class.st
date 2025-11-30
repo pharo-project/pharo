@@ -1,5 +1,6 @@
 "
-Checks for code using  ""collection at: collection size"" instead of ""collection last"" or using ""collection at: 1"" instead of ""collection first"".
+Instead of accessing to an element of a sequenceable collection using the index `1` or using the collection size, it is more readable to use `first` or `last`.
+This does not change the behavior but provides a better abstraction in the code.
 "
 Class {
 	#name : 'ReCollectionAtCollectionSizeRule',
@@ -16,7 +17,7 @@ ReCollectionAtCollectionSizeRule class >> group [
 
 { #category : 'accessing' }
 ReCollectionAtCollectionSizeRule class >> ruleName [
-	^ 'Uses "collection at: collection size"/"collection at: 1" instead of "collection last"/"collection first"'
+	^ 'Use "collection last"/"collection first" instead of "collection at: collection size"/"collection at: 1" '
 ]
 
 { #category : 'accessing' }

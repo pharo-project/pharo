@@ -101,12 +101,6 @@ OCAssignmentNode >> hasBlock [
 	^ value hasBlock 
 ]
 
-{ #category : 'testing' }
-OCAssignmentNode >> hasSameExitPoint: aBoolean [ 
-
-	^ value hasSameExitPoint: aBoolean
-]
-
 { #category : 'comparing' }
 OCAssignmentNode >> hash [
 	^self variable hash bitXor: self value hash

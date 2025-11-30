@@ -329,21 +329,6 @@ TestExecutionEnvironmentTest >> testNotifyTestServicesAboutCompletedTest [
 ]
 
 { #category : 'tests' }
-TestExecutionEnvironmentTest >> testNotifyTestServicesAboutHalt [
-	| errorPassed expectedException|
-	errorPassed := false.
-	expectedException := Halt new messageText: 'test halt'.
-	self runWithNoHandlers: [
-		[self runTestWith: [ expectedException signal]] on: Halt do: [:actualException |
-			errorPassed := true.
-			self assert: actualException equals: expectedException.
-			self assert: (testService signaledExceptions includes: actualException)].
-	].
-
-	self assert: errorPassed
-]
-
-{ #category : 'tests' }
 TestExecutionEnvironmentTest >> testNotifyTestServicesAboutUnhandledError [
 	| errorPassed expectedException|
 

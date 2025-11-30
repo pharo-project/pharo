@@ -77,7 +77,7 @@ ExternalSemaphoreTable class >> freedSlotsIn: externalObjects ratherThanIncrease
 
 				needToGrow
 					ifTrue: ["If we did GC, warn we had to gc so actions could be taken if appropriate."
-						self traceCr: DateAndTime now printString;
+						self
 							traceCr:  'WARNING:  Had to GC to make room for more external objects.';
 							traceCr: 'If this happens often, it would be a good idea to either:';
 							traceCr: '- Raise the maxExternalSemaphores size.';

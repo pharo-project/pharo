@@ -10,11 +10,6 @@ Class {
 }
 
 { #category : 'meta-data - dependency analyser' }
-ManifestNetworkUUID class >> ignoredDependencies [
-	^ #(#'Network-Kernel')
-]
-
-{ #category : 'meta-data - dependency analyser' }
 ManifestNetworkUUID class >> manuallyResolvedDependencies [
 	^ #(#'Collections-Abstract')
 ]

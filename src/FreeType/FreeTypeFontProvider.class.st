@@ -59,7 +59,9 @@ FreeTypeFontProvider class >> initialize [
 	FreeTypeSettings initialize.
 
 	current := nil.
-	self current "this creates an instance of me, and updates from the system"
+	self current. "this creates an instance of me, and updates from the system"
+	LogicalFontManager current addFontProvider:
+		self current.
 ]
 
 { #category : 'accessing' }

@@ -555,12 +555,12 @@ OCASTTranslator >> visitAnnotationMarkNode: aAnnotationValueNode [
 { #category : 'visitor - double dispatching' }
 OCASTTranslator >> visitArrayNode: anArrayNode [
 
-	| elementNodes |
-
-	anArrayNode statements size > 32 ifTrue: [^ self visitLargeArrayNode: anArrayNode ].
+	| elementNodes stackLimit |
+	stackLimit := CompiledCode LargeFrame min: self compilationContext encoderClass arraySizeLimitForPushArrayInstruction.
+	methodBuilder stackSize + anArrayNode statements size > stackLimit ifTrue: [ ^ self visitLargeArrayNode: anArrayNode ].
 
 	elementNodes := anArrayNode children.
-	elementNodes do: [:node | self visitNode: node].
+	elementNodes do: [ :node | self visitNode: node ].
 	methodBuilder pushConsArray: elementNodes size
 ]
 
@@ -706,7 +706,7 @@ OCASTTranslator >> visitInlinedBlockNode: anOptimizedBlockNode [
 
 { #category : 'visitor - double dispatching' }
 OCASTTranslator >> visitLargeArrayNode: anArrayNode [
-	"Long form: using at:put:"
+	"Long approach using at:put:"
 	methodBuilder pushLiteralVariable: Array binding.
 	methodBuilder pushLiteral: anArrayNode statements size.
 	methodBuilder send: #new:.

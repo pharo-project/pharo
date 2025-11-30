@@ -51,8 +51,8 @@ ReRenameMethodDriverTest >> testInvalidNameFollowedByAValidNameExpectSuccess [
 
 { #category : 'tests' }
 ReRenameMethodDriverTest >> testValidNameExpectSuccess [
-
 	| rbclasses driver model method dialog requestClass |
+	
 	rbclasses := RBClassEnvironment classes: { MyClassARoot }.
 	model := RBNamespace onEnvironment: rbclasses.
 	method := (model classObjectFor: MyClassARoot) methodFor: 'accessingSharedVariable' asSymbol.

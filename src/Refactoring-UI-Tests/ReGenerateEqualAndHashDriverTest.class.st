@@ -37,8 +37,11 @@ ReGenerateEqualAndHashDriverTest >> testGenerateEqualAndHashExistingImplementors
 	self assert: (driver targetClass definesMethod: #hash).
 	self assert: (driver targetClass definesMethod: #=).
 
-	driver selectDialog selectedItems: #(#name #iVarB).
-	driver runRefactoring.
+	SpWindowSimulateOpenModal 
+		value: [ :aDiag | 
+				aDiag presenter selectedItems: #(#name #iVarB). 
+				aDiag triggerOkAction ]
+		during: [ driver runRefactoring ].
 	driverChanges := driver refactoring changes.
 
 	self 
@@ -63,7 +66,12 @@ ReGenerateEqualAndHashDriverTest >> testGenerateEqualAndHashFirstGen [
 	rbClass := testingEnvironment class.
 
 	self deny: (driver targetClass definesMethod: #hash).
-	driver runRefactoring.
+	
+	SpWindowSimulateOpenModal 
+		value: [ :aDiag | 
+				aDiag presenter selectedItems: #(#iVar2 #iVar1). 
+				aDiag triggerOkAction ]
+		during: [ driver runRefactoring ].
 	driverChanges := driver refactoring changes.
 	self 
 		assert: driverChanges changes size 

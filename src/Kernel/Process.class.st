@@ -215,7 +215,7 @@ Process >> endProcess [
 { #category : 'error handling' }
 Process >> errorHandler [
 
-	^ errorHandler ifNil: [ ErrorHandler defaultErrorHandler ]
+	^ errorHandler ifNil: [ ErrorHandler default ]
 ]
 
 { #category : 'accessing' }
@@ -289,17 +289,6 @@ Process >> isActive [
 	There can be only one such process, held in a slot on the Processor."
 
 	^ self state == #active
-]
-
-{ #category : 'testing' }
-Process >> isActiveProcess [
-	"A process is #active if it is currently executing.
-	There can be only one such process, held in a slot on the Processor."
-
-	self
-		deprecated: 'Please use #isActive instead'
-		transformWith: '`@receiver isActiveProcess' -> '`@receiver isActive'.
-	^ self isActive
 ]
 
 { #category : 'testing' }

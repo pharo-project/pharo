@@ -5,7 +5,8 @@ Class {
 	#name : 'CmCommandAborted',
 	#superclass : 'CmCommandError',
 	#instVars : [
-		'reason'
+		'reason',
+		'application'
 	],
 	#category : 'Commander2-Errors',
 	#package : 'Commander2',

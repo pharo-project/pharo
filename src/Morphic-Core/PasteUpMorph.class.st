@@ -2,18 +2,12 @@
 A morph whose submorphs comprise a paste-up of rectangular subparts which ""show through"".  Anything called a 'Playfield' is a PasteUpMorph.
 
 Facilities commonly needed on pages of graphical presentations and on simulation playfields, such as the painting of new objects, turtle trails, gradient fills, background paintings, parts-bin behavior, collision-detection, etc., are (or will be) provided.
-
-
-
-
-
 "
 Class {
 	#name : 'PasteUpMorph',
 	#superclass : 'BorderedMorph',
 	#instVars : [
 		'backgroundMorph',
-		'worldState',
 		'griddingOn'
 	],
 	#classVars : [
@@ -270,16 +264,6 @@ PasteUpMorph >> contentsMenuTitle [
 	^ 'Contents' translated
 ]
 
-{ #category : 'cursor' }
-PasteUpMorph >> currentCursor [
-	^ worldState currentCursor
-]
-
-{ #category : 'cursor' }
-PasteUpMorph >> currentCursor: aCursor [
-	^ worldState currentCursor: aCursor
-]
-
 { #category : 'accessing' }
 PasteUpMorph >> currentWindow [
 
@@ -424,7 +408,7 @@ PasteUpMorph >> findWindow: evt [
 	expanded := self  windowsSatisfying: [:w | w isCollapsed not].
 	collapsed := self  windowsSatisfying: [:w | w isCollapsed].
 	nakedMorphs := self submorphsSatisfying:[:m | m isSystemWindow not].
-	(expanded isEmpty and: [collapsed isEmpty and: [nakedMorphs isEmpty]]) ifTrue: [^ self inform: 'No morph in world'].
+	(expanded isEmpty and: [collapsed isEmpty and: [nakedMorphs isEmpty]]) ifTrue: [^ InformativeNotification signal: 'No morph in world'].
 	(expanded asSortedCollection: [:w1 :w2 | w1 label caseInsensitiveLessOrEqual: w2 label]) do:
 		[:w | menu add: w label target: w selector: #activateAndForceLabelToShow.
 			w model canDiscardEdits ifFalse: [menu lastItem color: Color red]].
@@ -790,29 +774,6 @@ PasteUpMorph >> resizeBackgroundMorph [
 	"Resize the background morph to fit the world."
 
 	self backgroundMorph ifNotNil: [ self backgroundMorph extent: self extent ]
-]
-
-{ #category : 'gridding' }
-PasteUpMorph >> setGridSpec [
-	"Gridding rectangle provides origin and modulus"
-	| response result |
-	response := self morphicUIManager
-			request: 'New grid origin (usually 0@0):' translated
-			initialAnswer: self gridOrigin printString.
-	response isEmpty ifTrue: [^ self].
-	result := [self class compiler evaluate: response] onErrorDo: [^ self].
-	(result isPoint and: [(result >= (0@0))])
-		ifTrue: [self gridOrigin: result]
-		ifFalse: [self inform: ('Must be a Point with coordinates (for example 10@10)' translated )].
-
-	response := self morphicUIManager
-			request: 'New grid spacing:' translated
-			initialAnswer: self gridModulus printString.
-	response isEmptyOrNil ifTrue: [^ self].
-	result := [self class compiler evaluate: response] onErrorDo: [^ self].
-	(result isPoint and: [(result > (0@0)) ])
-		ifTrue: [self gridModulus: result]
-		ifFalse: [self inform: ('Must be a Point with coordinates (for example 10@10)' translated )]
 ]
 
 { #category : 'wiw support' }

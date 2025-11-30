@@ -32,19 +32,3 @@ RGMethodDefinition >> asMCMethodDefinitionFromActiveDefinition [
 		  timeStamp: compiledMethod timeStamp
 		  source: compiledMethod sourceCode
 ]
-
-{ #category : '*Monticello-Model' }
-RGMethodDefinition >> basicAsMCMethodDefinition [
-   "Creates a MCMethodDefinition from the receiver"
-   
-	^ self isActive 
-		ifTrue: [ self asMCMethodDefinitionFromActiveDefinition ]
-		ifFalse: [
-		   ^ MCMethodDefinition
-				className: self instanceSideParentName
-		 	   	classIsMeta: self isMeta
-				selector: self selector
-				category: self protocol
-				timeStamp: self stamp
-				source: self sourceCode ]
-]

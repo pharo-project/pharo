@@ -341,7 +341,7 @@ TaAbstractComposition >> isNotEmpty [
 { #category : 'operations' }
 TaAbstractComposition >> isSourcesPresentInSystem [
 
-	^ ((Smalltalk globals includesKey: #SourceFiles) and: [ (Smalltalk globals at: #SourceFiles) isNotNil])
+	^ self class environment at: #SourceFileArray ifPresent: [ :class | class default isNotNil ] ifAbsent: [ false ]
 ]
 
 { #category : 'testing' }
@@ -397,7 +397,7 @@ TaAbstractComposition >> reverseAlias: aSelector [
 TaAbstractComposition >> saveSourceCode: sourceCode ofMethod: newMethod [
 	"I have to check because during bootstrap there is no SouceFiles"
 
-	(sourceCode isNotNil and: [ (Smalltalk globals includesKey: #SourceFiles) and: [ (Smalltalk globals at: #SourceFiles) isNotNil ] ])
+	(sourceCode isNotNil and: [ self isSourcesPresentInSystem ])
 		ifFalse: [ ^ self ].
 
 	"Preamble was 'Trait method'.

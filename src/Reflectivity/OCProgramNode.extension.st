@@ -63,14 +63,6 @@ OCProgramNode >> hasBreakpoint [
 ]
 
 { #category : '*Reflectivity' }
-OCProgramNode >> hasLinks [
-	self
-		deprecated: 'use #hasMetaLinks'
-		transformWith:  '`@receiver hasLinks' -> '`@receiver hasMetaLinks'.
-	^self hasMetaLinks
-]
-
-{ #category : '*Reflectivity' }
 OCProgramNode >> hasMetaLinks [
 	^ self links isNotNil and: [ self links notEmpty ]
 ]

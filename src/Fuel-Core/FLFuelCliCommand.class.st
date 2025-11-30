@@ -51,7 +51,7 @@ FLFuelCliCommand >> allFuelFiles [
 { #category : 'execution' }
 FLFuelCliCommand >> execute [ 
 
-	super execute.
+	self prepareImageAndExit.
 	
 	self validateParameters.
 	self processFiles.

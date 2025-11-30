@@ -14,6 +14,12 @@ OCIRPop >> accept: aVisitor [
 	^ aVisitor visitPop: self
 ]
 
+{ #category : 'stack' }
+OCIRPop >> deltaStack [
+
+	^ -1
+]
+
 { #category : 'testing' }
 OCIRPop >> isPop [
 	^true

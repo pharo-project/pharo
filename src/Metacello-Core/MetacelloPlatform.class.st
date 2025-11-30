@@ -80,3 +80,9 @@ MetacelloPlatform >> extractTypeFromDescription: description [
 	(description beginsWith: 'bitbucket://') ifTrue: [ ^ 'bitbucket' ].
 	^ 'http'
 ]
+
+{ #category : 'execution' }
+MetacelloPlatform >> withMetacelloLoadSessionDo: aBlock [ 
+
+	aBlock value
+]

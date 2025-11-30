@@ -9,16 +9,11 @@ I can be created from a directory using the #inDirectory: class message. e.g.,
   MonticelloBootstrap inDirectory: 'test'.
 
 Then, the method #loadPackageVersion: will load a specific version, and #loadBootstrapPackages will load the packages in the correct order for the corresponding version of the bootstrap.
-
-The convenience method #bootstrapDefault will create an instance with the default parameters for bootstrap and load all bootstrap packages.
-
-  MonticelloBootstrap bootstrapDefault
 "
 Class {
 	#name : 'MonticelloBootstrap',
 	#superclass : 'Object',
 	#instVars : [
-		'directory',
 		'localRepository'
 	],
 	#category : 'Monticello-Base',
@@ -26,44 +21,18 @@ Class {
 	#tag : 'Base'
 }
 
-{ #category : 'instance creation' }
-MonticelloBootstrap class >> bootstrapDefault [
-
-	(self inDirectory: self defaultDirectory)
-		bootstrap
-]
-
-{ #category : 'defaults' }
-MonticelloBootstrap class >> defaultDirectory [
-
-	^ FileLocator localDirectory / 'package-cache'
-]
-
-{ #category : 'instance creation' }
-MonticelloBootstrap class >> inDirectory: aDirectory [
-
-	^ self new
-		directory: aDirectory;
-		yourself
-]
-
 { #category : 'bootstrapping' }
 MonticelloBootstrap >> bootstrap [
+	"We load the MCZs created by PBBootstrap in the host image."
+	
+	"We load ShiftClassBuilder at the end because it has a patch to work in the bootstrap process. The patch is used when there is no source."
+	(self bootstrapVersionsSatisfying: [ :package | (#( 'Shift-ClassBuilder' 'Monticello' ) includes: package name) not ]) do: [ :version | self loadPackageVersion: version ].
 
-	self createWorkingCopies.
-	self loadBootstrapPackages.
+	self loadBootstrapPackageNamed: 'Shift-ClassBuilder'.
 
-	"Package loading reinstalled PeformCommandLineHandler as default command line handler.
-	We need to use ClapCommandLineHandler"
-	ClapCommandLineHandler initialize.
-
-	SessionManager default registerSystemClassNamed: #SmalltalkImage
-]
-
-{ #category : 'versions' }
-MonticelloBootstrap >> bootstrapVersionsExcept: aBlock [
-
-	^ self bootstrapVersionsSatisfying: [ :arg | (aBlock value: arg) not ]
+	"We load lastly monticello because we are using it to reload itself.
+	Othewise, we should handle the case that after loading monticello we should return to a safe place from the stack where no old methods or classes are used."
+	self loadBootstrapPackageNamed: 'Monticello'
 ]
 
 { #category : 'versions' }
@@ -72,22 +41,6 @@ MonticelloBootstrap >> bootstrapVersionsSatisfying: aBlock [
 	^ PackageOrganizer default packages
 		  select: [ :package | package name ~= UndefinedPackage undefinedPackageName and: [ aBlock value: package ] ]
 		  thenCollect: [ :rpackage | self fileNameForPackageNamed: rpackage name ]
-]
-
-{ #category : 'bootstrapping' }
-MonticelloBootstrap >> createWorkingCopies [
-	"For each of the packages inside the image, excepted by the Unpackaged package, create a monticello working copy.
-	This is achieved by creating an instance of a working copy and snapshotting it. This generates and registers the working copy automatically."
-
-	(PackageOrganizer default packageNames copyWithout: UndefinedPackage undefinedPackageName) asSortedCollection do: [ :packageName |
-		SystemNotification signal: 'Creating Snapshot of: ' , packageName.
-		(MCWorkingCopy ensureForPackageNamed: packageName) snapshot ]
-]
-
-{ #category : 'accessing' }
-MonticelloBootstrap >> directory: aDirectory [
-
-	directory := aDirectory
 ]
 
 { #category : 'versions' }
@@ -109,28 +62,6 @@ MonticelloBootstrap >> fileNameForPackageNamed: name [
 MonticelloBootstrap >> loadBootstrapPackageNamed: aName [
 
 	(self bootstrapVersionsSatisfying: [ :package | aName = package name ]) do: [ :version | self loadPackageVersion: version ]
-]
-
-{ #category : 'bootstrapping' }
-MonticelloBootstrap >> loadBootstrapPackages [
-
-	MCCacheRepository cacheDirectory: directory.
-
-	(self bootstrapVersionsExcept: [ :package | #( 'Shift-ClassBuilder' 'Monticello' ) includes: package name ]) do: [ :version | self loadPackageVersion: version ].
-
-	"We load ShiftClassBuilder at the end because it has a patch to work in the bootstrap process. The patch is used when there is no source."
-
-	self loadBootstrapPackageNamed: 'Shift-ClassBuilder'.
-
-	"We load lastly monticello because we are using it to reload itself.
-	Othewise, we should handle the case that after loading monticello we should return to a safe place from the stack where no old methods or classes are used."
-	self loadBootstrapPackageNamed: 'Monticello'
-]
-
-{ #category : 'bootstrapping' }
-MonticelloBootstrap >> loadPackageNamed: aName [
-
-	self loadPackagesNamed: { aName }
 ]
 
 { #category : 'bootstrapping' }
@@ -164,7 +95,7 @@ MonticelloBootstrap >> loadPackagesNamed: aCollectionOfNames [
 MonticelloBootstrap >> localRepository [
 
 	^ localRepository ifNil: [
-		localRepository := MCDirectoryRepository new
-			directory: directory asFileReference;
-			yourself.	]
+			  localRepository := MCDirectoryRepository new
+				                     directory: (FileLocator localDirectory / 'package-cache') asFileReference;
+				                     yourself ]
 ]

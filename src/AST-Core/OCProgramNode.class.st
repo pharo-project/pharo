@@ -14,7 +14,7 @@ The #start and #stop methods are used to find the source that corresponds to thi
 
 The #acceptVisitor: method is used by ASTProgramNodeVisitors (the visitor pattern). This will also require updating all the ASTProgramNodeVisitors so that they know of the new node.
 
-The #isFaulty method is used to distinguish between valid nodes and nodes created from an invalid source Smalltalk code. For example, code parsed with RBParsers #parseFaultyExpression: or #parseFaultyMethod:.
+The #isFaulty method is used to distinguish between valid nodes and nodes created from an invalid source Smalltalk code. For example, code parsed with OCParser #parseFaultyExpression: or #parseFaultyMethod:.
 
 Subclasses might also want to redefine match:inContext: and copyInContext: to do parse tree searching and replacing.
 
@@ -474,11 +474,6 @@ OCProgramNode >> debugHighlightStop [
 	^ self stop
 ]
 
-{ #category : 'testing' }
-OCProgramNode >> defines: aName [
-	^false
-]
-
 { #category : 'enumeration' }
 OCProgramNode >> do: aBlock [
 	"Hacked to fit collection protocols"
@@ -532,6 +527,11 @@ OCProgramNode >> evaluatedFirst: aNode [
 			[:each |
 			each == aNode ifTrue: [^true].
 			each isImmediateNode ifFalse: [^false]].
+	^false
+]
+
+{ #category : 'testing' }
+OCProgramNode >> exactNodeDefines: aName [
 	^false
 ]
 
@@ -606,14 +606,14 @@ OCProgramNode >> hasProperty: aKey [
 
 { #category : 'testing' }
 OCProgramNode >> hasSameExitPoint [
+	"I'm checking node's execution flow.
+	I'm used by extract method refactoring to ensure behavior is preserved.
+	Subtree that is selected for extraction should preserve execution flow.
+	This means that the selected code should either always return something or
+	flow from the beginning to the end without non-local returning blocks.
+	Check https://inria.hal.science/hal-04670318/document subsection 3.2.1. for example and explanation"
 
-	^ self hasSameExitPoint: false
-]
-
-{ #category : 'testing' }
-OCProgramNode >> hasSameExitPoint: aBoolean [ 
-
-	^ true
+	^ self hasNonLocalReturn not
 ]
 
 { #category : 'comparing' }
@@ -745,11 +745,6 @@ OCProgramNode >> isGlobalVariable [
 ]
 
 { #category : 'testing' }
-OCProgramNode >> isHaltNode [
-	^ false
-]
-
-{ #category : 'testing' }
 OCProgramNode >> isImmediateNode [
 	^false
 ]
@@ -834,15 +829,6 @@ OCProgramNode >> isPragmaError [
 { #category : 'testing' }
 OCProgramNode >> isPseudoVariable [
 	^false
-]
-
-{ #category : 'testing' }
-OCProgramNode >> isReservedVariable [
-	self
-		deprecated: 'Please use #isPseudoVariable instead'
-		transformWith: '`@receiver isReservedVariable' -> '`@receiver isPseudoVariable'.
-
-	^ self isPseudoVariable
 ]
 
 { #category : 'testing' }
@@ -1160,11 +1146,6 @@ OCProgramNode >> recurseIntoCharacter [
 	^$`
 ]
 
-{ #category : 'testing' }
-OCProgramNode >> references: aVariableName [
-	^self children anySatisfy: [:each | each references: aVariableName]
-]
-
 { #category : 'replacing' }
 OCProgramNode >> removeDeadCode [
 	self children do: [:each | each removeDeadCode]
@@ -1403,11 +1384,12 @@ OCProgramNode >> whichNodeIsContainedBy: anInterval [
 ]
 
 { #category : 'querying' }
-OCProgramNode >> whoDefines: aName [
-
-	^ (self defines: aName)
+OCProgramNode >> whichUpNodeDefines: aName [
+	"Returns the node that defines a variable starting bottom up. It can be either a method, a block."
+	
+	^ (self exactNodeDefines: aName)
 		  ifTrue: [ self ]
-		  ifFalse: [ parent ifNotNil: [ parent whoDefines: aName ] ]
+		  ifFalse: [ parent ifNotNil: [ parent whichUpNodeDefines: aName ] ]
 ]
 
 { #category : 'accessing' }

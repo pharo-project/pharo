@@ -50,21 +50,13 @@ ClyCommitPackageCommand >> description [
 { #category : 'execution' }
 ClyCommitPackageCommand >> execute [
 
-	| repoBrowser commitBrowser repos targetRepo |
-	repoBrowser := self class environment
-		               at: #IceTipRepositoriesBrowser
-		               ifAbsent: [
-		               ^ self inform: 'Iceberg 0.7 and higher is required' ].
-	commitBrowser := self class environment
-		                 at: #IceTipCommitBrowser
-		                 ifAbsent: [
-		                 ^ self inform: 'Iceberg 0.7 and higher is required' ].
-	packages ifEmpty: [ ^ repoBrowser ensureIsOpen ].
+	| repos targetRepo |
+	packages ifEmpty: [ ^ IceTipRepositoriesBrowser ensureIsOpen ].
 	repos := IceRepository registry select: [ :repo |
 		         packages anySatisfy: [ :package |
 			         repo includesPackageNamed: package name ] ].
 	repos ifEmpty: [
-		^ self inform: 'Selected packages are not managed by Iceberg' ].
+		^ InformativeNotification signal: 'Selected packages are not managed by Iceberg' ].
 	targetRepo := repos size = 1
 		              ifTrue: [ repos first ]
 		              ifFalse: [
@@ -91,5 +83,5 @@ Causes can be:
 You can fix this problem using the Iceberg tool.'
 			title: 'Error'.
 		^ self ].
-	(commitBrowser onRepository: targetRepo) open
+	(IceTipCommitBrowser onRepository: targetRepo) open
 ]

@@ -26,23 +26,7 @@ Class {
 
 { #category : 'accessing' }
 ClapContext class >> defaultRoot [
-	^ (ClapRoot id: #clap)
-		description: 'Entry point for commands implemented with Clap';
-		addHelp;
-		add: ClapCommandSpec forHelp;
-
-		addFlag: #save description: 'Save the image after the command terminates';
-		addFlag: #noSave description: 'Do not save the image even if the command is stateful';
-		addFlag: #rename 
-			description: 'Rename the image as <NAME> before running the command' 
-			positionalSpec: [ :spec | spec identifier: #NAME];
-		addFlag: #keepAlive description: 'Keep the image running after the command terminates';
-
-		meaning: [ :args |
-			args at: #helpFlag ifPresent: [ :help |
-				help value; exitSuccess ].
-			args validateAll ];
-		yourself
+	^ ClapPharoApplication commandSpecification
 ]
 
 { #category : 'private' }
@@ -266,7 +250,18 @@ ClapContext >> handleExit: exit [
 { #category : 'testing' }
 ClapContext >> hasFlag: anIdentifier [
 
-		^ (self lastSubcommand occurrencesOf: anIdentifier) isNotEmpty
+		^ self hasFlag: anIdentifier in: self lastSubcommand
+]
+
+{ #category : 'private' }
+ClapContext >> hasFlag: anIdentifier in: aMatch [
+
+	^ (aMatch occurrencesOf: anIdentifier)
+		  ifEmpty: [
+				  aMatch parent isClapContext
+					  ifTrue: [ false ]
+					  ifFalse: [ self hasFlag: anIdentifier in: aMatch parent ] ]
+		  ifNotEmpty: [ true ]
 ]
 
 { #category : 'private' }
@@ -294,6 +289,12 @@ ClapContext >> initialize [
 	obeyingExits := false
 ]
 
+{ #category : 'testing' }
+ClapContext >> isClapContext [
+
+	^ true
+]
+
 { #category : 'validation' }
 ClapContext >> isValid: aValidation [
 
@@ -304,8 +305,9 @@ ClapContext >> isValid: aValidation [
 ClapContext >> lastSubcommand [
 
 	^ self
-		ifMatch: [ :aMatch | aMatch subcommands last ]
-		ifMismatch: [ ClapUnmatchCommand signalClapContext: self ]
+		  ifMatch: [ :aMatch | 
+						aMatch subcommands ifEmpty: [ aMatch ] ifNotEmpty: [ :subcommands | subcommands last ] ]
+		  ifMismatch: [ ClapUnmatchCommand signalClapContext: self ]
 ]
 
 { #category : 'accessing' }
@@ -326,14 +328,23 @@ ClapContext >> noneMatched [
 { #category : 'accessing' }
 ClapContext >> positional: anIdentifier [ 
 		
+	^ self positional: anIdentifier in: self lastSubcommand
+]
+
+{ #category : 'private' }
+ClapContext >> positional: anIdentifier in: aMatch [
+		
 	| identifierMatches |
 	
-	identifierMatches := (self lastSubcommand occurrencesOf: anIdentifier)
+	identifierMatches := (aMatch occurrencesOf: anIdentifier)
 		select: [ :identifierMatch | 
 			identifierMatch specification isPositional
 				or: [ identifierMatch specification isFlag and: [ self hasPositional: identifierMatch ] ] ].
 	^ identifierMatches
-		ifEmpty: [ NotFound signal: 'No positional found with id: ', anIdentifier  ] 
+		ifEmpty: [ 
+			aMatch parent isClapContext
+				ifTrue: [ NotFound signal: 'No positional found with id: ', anIdentifier  ]
+				ifFalse: [ self positional: anIdentifier in: aMatch parent ] ]
 ]
 
 { #category : 'printing' }

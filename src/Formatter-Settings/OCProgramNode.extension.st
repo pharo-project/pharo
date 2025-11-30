@@ -10,8 +10,7 @@ OCProgramNode class >> defaultFormatter [
 { #category : '*Formatter-Settings' }
 OCProgramNode class >> formatters [
 
-	^ (OCAbstractFormatter subclasses reject: [ :each | each isAbstract ])
-			sort: [ :a :b | a priority > b priority ]
+	^ (OCAbstractFormatter allSubclasses reject: [ :each | each isAbstract ]) sort: [ :a :b | a priority > b priority ]
 ]
 
 { #category : '*Formatter-Settings' }

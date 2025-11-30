@@ -422,6 +422,14 @@ StringTest >> testAllRangesOfSubstring [
 ]
 
 { #category : 'tests - converting' }
+StringTest >> testAsByteArray [
+	self assert: 'a' asByteArray equals: #[97].
+	self assert: 'A' asByteArray equals: #[65].
+	self assert: 'ABA' asByteArray equals: #[65 66 65].
+	self assert: '' asByteArray equals: #[]
+]
+
+{ #category : 'tests - converting' }
 StringTest >> testAsCamelCase [
 
 	self assert: 'A man, a plan, a canal, panama' asCamelCase equals: 'AMan,APlan,ACanal,Panama'.

@@ -43,18 +43,6 @@ Stdio class >> cleanStdioHandles [
 	Stderr := Stdin := Stdout := nil
 ]
 
-{ #category : 'private' }
-Stdio class >> createStdioFileFor: moniker [
-
-	^ [
-	  [ self createWriteStreamBlock cull: moniker asString ]
-		  on: CannotDeleteFileException
-		  do: [ "HACK: if the image is opened a second time windows barks about the already opened locked file"
-			  self createWriteStreamBlock cull: moniker asString , '_' , DateAndTime now asFileNameCompatibleString ] ]
-		  on: FileException
-		  do: [ NullStream new ]
-]
-
 { #category : 'accessing' }
 Stdio class >> createWriteStreamBlock [
 
@@ -82,9 +70,7 @@ Stdio class >> standardIOStreamNamed: moniker forWrite: forWrite [
 	handle := File stdioHandles at: streamIndex.
 	(handle isNil or: [ (File fileDescriptorIsAvailable: streamIndex-1) not ]) ifTrue: [
 		"On windows, create a file for stdio, error on other platforms"
-		Smalltalk os isWindows
-			ifTrue: [ ^ self createStdioFileFor: moniker ]
-			ifFalse: [ self error: moniker , ' is unavailable' ] ].
+		^ Smalltalk os createStdioFileFor: moniker ].
 	^ StdioStream handle: handle file: (File named: moniker) forWrite: forWrite
 ]
 

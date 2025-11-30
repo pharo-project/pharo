@@ -90,14 +90,6 @@ Integer >> humanReadableSISizeString [
 ]
 
 { #category : '*System-NumberPrinting' }
-Integer >> numberOfDigits [
-	"Return how many digits are necessary to print this number in base 10.
-	This does not count any place for minus sign, radix prefix or whatever."
-
-	^ self numberOfDigitsInBase: 10
-]
-
-{ #category : '*System-NumberPrinting' }
 Integer >> print: positiveNumberString on: aStream prefix: prefix length: minimum padded: zeroFlag [
 	"Return a String based on concatenation of positiveNumberString with prefix then padded by 0 is zeroFlag is set for a minimum length."
 
@@ -168,6 +160,14 @@ Integer >> printOn: aStream base: base length: minimum padded: zeroFlag [
 		prefix: prefix
 		length: minimum
 		padded: zeroFlag
+]
+
+{ #category : '*System-NumberPrinting' }
+Integer >> printOn: aStream base: b nDigits: n [
+	"Append a representation of this number in base b on aStream using nDigits.
+	self must be positive."
+
+	self subclassResponsibility
 ]
 
 { #category : '*System-NumberPrinting' }

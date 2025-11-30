@@ -390,19 +390,6 @@ Object >> attemptToAssign: value withIndex: index [
 	"CAN'T REACH"
 ]
 
-{ #category : 'deprecation' }
-Object >> backwardCompatible: anExplanationString on: date in: version transformWith: aRule [
-	"Automatically transform the backward compatible calls to this method"
-
-	BackwardCompatibility new
-		context: thisContext sender;
-		explanation: anExplanationString;
-		date: date;
-		version: version;
-		rule: aRule;
-		signal
-]
-
 { #category : 'accessing' }
 Object >> basicAt: index [
 	"Primitive. Assumes receiver is indexable. Answer the value of an
@@ -540,32 +527,6 @@ Object >> caseOf: aBlockAssociationCollection otherwise: aBlock [
 "#b caseOf: {[#a]->[1+1]. ['d' asSymbol]->[2+2]. [#c]->[3+3]} otherwise: [0]"
 ]
 
-{ #category : 'updating' }
-Object >> changed [
-	"Receiver changed in a general way; inform all the dependents by
-	sending each dependent an update: message."
-
-	self changed: self
-]
-
-{ #category : 'updating' }
-Object >> changed: aParameter [
-	"Receiver changed. The change is denoted by the argument aParameter.
-	Usually the argument is a Symbol that is part of the dependent's change
-	protocol. Inform all of the dependents."
-
-	self dependents do: [:aDependent | aDependent update: aParameter]
-]
-
-{ #category : 'updating' }
-Object >> changed: anAspect with: anObject [
-	"Receiver changed. The change is denoted by the argument anAspect.
-	Usually the argument is a Symbol that is part of the dependent's change
-	protocol. Inform all of the dependents. Also pass anObject for additional information."
-
-	self dependents do: [:aDependent | aDependent update: anAspect with: anObject]
-]
-
 { #category : 'introspection' }
 Object >> className [
 	"Answer a string characterizing the receiver's class, for use in list views for example"
@@ -649,85 +610,6 @@ It doesn't handle cycles, #veryDeepCopy does. In the future we will make it hand
 			[newObject instVarAt: index put: (self instVarAt: index) deepCopy.
 			index := index - 1].
 	^newObject
-]
-
-{ #category : 'deprecation' }
-Object >> deprecated: anExplanationString [
-	"Warn that the sending method has been deprecated."
-
-	Deprecation new
-		context: thisContext sender;
-		explanation: anExplanationString;
-		signal
-]
-
-{ #category : 'deprecation' }
-Object >> deprecated: anExplanationString on: date in: version [
-	"Warn that the sending method has been deprecated."
-
-	Deprecation new
-		context: thisContext sender;
-		explanation: anExplanationString;
-		date: date;
-		version: version;
-		signal
-]
-
-{ #category : 'deprecation' }
-Object >> deprecated: anExplanationString 
-	on: date 
-	in: version 
-	transformWith: aRule [
-	"Automatically transform the deprecated calls."
-
-	Deprecation new
-		context: thisContext sender;
-		explanation: anExplanationString;
-		date: date;
-		version: version;
-		rule: aRule;
-		signal
-]
-
-{ #category : 'deprecation' }
-Object >> deprecated: anExplanationString 
-	on: date 
-	in: version 
-	transformWith: aRule 
-	when: conditionBlock [
-	"Automatically transform the deprecated call if it matches the condition."
-
-	Deprecation new
-		context: thisContext sender;
-		explanation: anExplanationString;
-		date: date;
-		version: version;
-		rule: aRule;
-		condition: conditionBlock;
-		signal
-]
-
-{ #category : 'deprecation' }
-Object >> deprecated: anExplanationString transformWith: aRule [
-	"Automatically transform the deprecated call."
-
-	Deprecation new
-		context: thisContext sender;
-		explanation: anExplanationString;
-		rule: aRule;
-		signal
-]
-
-{ #category : 'deprecation' }
-Object >> deprecated: anExplanationString transformWith: aRule when: conditionBlock [
-	"Automatically transform the deprecated call if it matches the condition."
-
-	Deprecation new
-		context: thisContext sender;
-		explanation: anExplanationString;
-		rule: aRule;
-		condition: conditionBlock;
-		signal
 ]
 
 { #category : 'displaying' }
@@ -1877,25 +1759,6 @@ Object >> unpinInMemory [
 	^self setPinnedInMemory: false
 ]
 
-{ #category : 'updating' }
-Object >> update: aParameter [
-	"Receive a change notice from an object of whom the receiver is a
-	dependent. The default behavior is to do nothing; a subclass might want
-	to change itself in some way."
-
-	^ self
-]
-
-{ #category : 'updating' }
-Object >> update: anAspect with: anObject [
-	"Receive a change notice from an object of whom the receiver is a
-	dependent. The default behavior is to call update:,
-	which by default does nothing; a subclass might want
-	to change itself in some way."
-
-	^ self update: anAspect
-]
-
 { #category : 'evaluating' }
 Object >> value [
 
@@ -1906,68 +1769,6 @@ Object >> value [
 Object >> valueWithArguments: aSequenceOfArguments [
 
 	^self
-]
-
-{ #category : 'copying' }
-Object >> veryDeepCopyWith: deepCopier [
-	"Copy me and the entire tree of objects I point to.  An object in the tree twice is copied once, and both references point to him.  deepCopier holds a dictionary of objects we have seen.  Some classes refuse to be copied.  Some classes are picky about which fields get deep copied."
-
-	| class selfNumberOfInstanceVariables fieldOfSelf copyOfSelf currentClass hasVeryDeepInnerMethod currentNumberOfInstanceVariables |
-
-	deepCopier references at: self ifPresent: [ :newer | 	"already copied" ^ newer].
-	class := self class.
-	class isMeta ifTrue: [ "a metaclass" ^ self ].
-	copyOfSelf := self shallowCopy.
-	deepCopier references at: self put: copyOfSelf.	"remember"
-
-	(class isVariable and: [class isPointers]) ifTrue: [
-		self basicSize to: 1 by: -1 do: [ :i |
-			fieldOfSelf := self basicAt: i.
-			copyOfSelf
-				basicAt: i
-				put: (deepCopier references
-					at: fieldOfSelf
-					ifAbsent: [ fieldOfSelf veryDeepCopyWith: deepCopier ])]].
-
-	"Ask each superclass if it wants to share (weak copy) any inst vars"
-	copyOfSelf veryDeepInner: deepCopier.
-
-	"other superclasses want all instance variables deep copied"
-	currentClass := class.
-	selfNumberOfInstanceVariables := class instSize.
-
-	[ selfNumberOfInstanceVariables == 0 ] whileFalse: [
-		hasVeryDeepInnerMethod := currentClass includesSelector: #veryDeepInner:.
-		currentNumberOfInstanceVariables := currentClass instSize - currentClass superclass instSize.
-		hasVeryDeepInnerMethod
-			ifTrue: ["skip inst vars"
-				selfNumberOfInstanceVariables := selfNumberOfInstanceVariables - currentNumberOfInstanceVariables]
-			ifFalse: [
-				currentNumberOfInstanceVariables timesRepeat: [
-					fieldOfSelf := self instVarAt: selfNumberOfInstanceVariables.
-					copyOfSelf
-						instVarAt: selfNumberOfInstanceVariables
-						put: (deepCopier references
-							at: fieldOfSelf
-							ifAbsent: [ fieldOfSelf veryDeepCopyWith: deepCopier ]).
-					selfNumberOfInstanceVariables := selfNumberOfInstanceVariables - 1 ]].
-		currentClass := currentClass superclass ].
-
-	^ copyOfSelf
-]
-
-{ #category : 'copying' }
-Object >> veryDeepFixupWith: deepCopier [
-	"I have no fields and no superclass.  Catch the super call."
-
-	"avoid to use me we will deprecate it in the future"
-]
-
-{ #category : 'copying' }
-Object >> veryDeepInner: deepCopier [
-	"No special treatment for inst vars of my superclasses.  Override when some need to be weakly copied.  Object>>veryDeepCopyWith: will veryDeepCopy any inst var whose class does not actually define veryDeepInner:"
-
-	"avoid to use me we will deprecate it in the future"
 ]
 
 { #category : 'model - updating' }

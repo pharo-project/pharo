@@ -78,7 +78,7 @@ RBExtractMethodRefactoring >> checkAssignments: variableNames [
 	removeAssigned := variableNames copy.
 	node := self placeholderNode.
 	outsideVars := variableNames
-				select: [:each | (node whoDefines: each) references: each].
+				select: [:each | (node whichUpNodeDefines: each) references: each].
 	outsideVars size == 1
 		ifTrue: [self checkSingleAssignment: outsideVars asArray first].
 	outsideVars size > 1
@@ -88,7 +88,7 @@ RBExtractMethodRefactoring >> checkAssignments: variableNames [
 	(OCReadBeforeWrittenTester readBeforeWritten: removeAssigned
 		in: extractedParseTree) ifNotEmpty:
 			[self refactoringError: 'Cannot extract assignment if read before written.'].
-	removeAssigned do: [:each | (node whoDefines: each) removeTemporaryNamed: each].
+	removeAssigned do: [:each | (node whichUpNodeDefines: each) removeTemporaryNamed: each].
 	self updateTemporariesInExtractedMethodFor: variableNames
 ]
 
@@ -279,6 +279,8 @@ RBExtractMethodRefactoring >> getExtractedSource [
 	((extractionInterval first between: 1 and: (self startLimit: source size))
 		and: [extractionInterval last between: 1 and: source size])
 			ifFalse: [self refactoringError: 'Invalid interval'].
+	(extractionInterval first > extractionInterval last)
+		ifTrue: [ self refactoringError: 'Invalid interval' ].
 	^source copyFrom: extractionInterval first to: extractionInterval last
 ]
 
@@ -545,7 +547,7 @@ RBExtractMethodRefactoring >> validateRenameNode: aParseTree withOldName: oldNam
 				ifNil: [ self refactoringError: conditions errorString ] ].
 	(self parameterMap values includes: newName) ifTrue: [
 		self refactoringError: newName asString , ' is already defined as parameter' ].
-	(aParseTree whoDefines: newName)
+	(aParseTree whichUpNodeDefines: newName)
 		ifNotNil: [ self refactoringError: newName asString , ' is already defined' ].
 	(aParseTree allDefinedVariables includes: newName)
 		ifTrue: [ self refactoringError: newName asString , ' is already defined' ]

@@ -1,7 +1,7 @@
 "
 Small pieces of source code used used to test various AST based tools.
 
-See `RBCodeSnippet allSnippets` for a various collection of instances.
+See `OCCodeSnippet allSnippets` for a various collection of instances.
 
 * source <String> the source code of the snippet
 * isScripting <Boolean> the source is for a script (without pattern or pragmas)
@@ -15,7 +15,7 @@ See `RBCodeSnippet allSnippets` for a various collection of instances.
 * numberOfCritique <Integer> how many critiques are expected
 * skippedTests <Collection> list of test to not execute (that should be fixed)
 
-Tests are executed by the parametrized matrix class `RBCodeSnippetTest`
+Tests are executed by the parametrized matrix class `OCCodeSnippetTest`
 
 Additional tools can add more information and expectation (please improve the list and the tools)
 "

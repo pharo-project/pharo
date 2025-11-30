@@ -22,6 +22,42 @@ IntegerTest >> testANegativeIntegerCannotBeAPowerOfTwo [
 		description: 'A negative integer cannot be a power of two'
 ]
 
+{ #category : 'tests - converting' }
+IntegerTest >> testAsByteArray [
+	self assert: 1 asByteArray equals: #[ 1 ].
+	"sign is lost"
+	self assert: -1 asByteArray equals: #[ 1 ].
+	self assert: 1 asByteArray equals: (1 asByteArrayOfSize: 1 bytesCount).
+	
+	self assert: SmallInteger maxVal asByteArray equals: #[15 255 255 255 255 255 255 255].
+	self assert: SmallInteger maxVal asByteArray equals: (SmallInteger maxVal asByteArrayOfSize: SmallInteger maxVal bytesCount).
+	
+	self assert: SmallInteger minVal asByteArray equals: #[16 0 0 0 0 0 0 0].
+	
+	self assert: 1 asByteArray asInteger equals: 1.
+	
+		self assert: (SmallInteger maxVal + 1) asByteArray equals: #[16 0 0 0 0 0 0 0].
+	self assert: (SmallInteger maxVal + 1) asByteArray equals: ((SmallInteger maxVal + 1) asByteArrayOfSize: (SmallInteger maxVal + 1)  bytesCount).
+	
+	self assert: (SmallInteger maxVal + 1) asByteArray asInteger equals: (SmallInteger maxVal + 1).
+]
+
+{ #category : 'tests - converting' }
+IntegerTest >> testAsByteArrayOfSize [
+	self assert: (1 asByteArrayOfSize: 1) equals: #[ 1 ].
+	"sign is ignored"
+	self assert: (-1 asByteArrayOfSize: 1) equals: #[ 1 ].
+	self assert: 1 asByteArray equals: (1 asByteArrayOfSize: 1 bytesCount).
+	
+	self assert: (SmallInteger maxVal asByteArrayOfSize: 8) equals: #[15 255 255 255 255 255 255 255].
+	self assert: (SmallInteger minVal asByteArrayOfSize: 8) equals: #[16 0 0 0 0 0 0 0].
+	
+	self assert: (1 asByteArrayOfSize: 1) asInteger equals: 1.
+	
+	self assert: ((SmallInteger maxVal + 1) asByteArrayOfSize: 8) equals: #[16 0 0 0 0 0 0 0].
+	self assert: ((SmallInteger minVal - 1) asByteArrayOfSize: 8) equals: #[16 0 0 0 0 0 0 1].
+]
+
 { #category : 'tests - basic' }
 IntegerTest >> testAsLargerPowerOfTwo [
 "Invalid input testing"

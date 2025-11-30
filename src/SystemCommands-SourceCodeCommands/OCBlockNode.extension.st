@@ -10,7 +10,7 @@ OCBlockNode >> displaySourceCode [
 			         args do: [ :arg |
 				         s
 					         nextPutAll: ':';
-					         nextPutAll: arg name asString;
+					         nextPutAll: arg name;
 					         nextPutAll: ' ' ] ]).
 		code := code , '| ' ].
 	code := code , '  ]'.

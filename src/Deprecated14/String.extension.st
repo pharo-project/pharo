@@ -1,13 +1,42 @@
 Extension { #name : 'String' }
 
 { #category : '*Deprecated14' }
+String >> asDate [
+	"Many allowed forms, see Date>>#readFrom:"
+	self deprecated: 'Use Date>>#readFrom:pattern: specifying a concrete pattern instead.'.
+	^ Date fromString: self
+]
+
+{ #category : '*Deprecated14' }
+String >> isValidSelector [
+	"check I could be a valid selector (name of method).
+	 For checking if there is symbol like me used as a selector, see #isSelectorSymbol on Symbol"
+
+	self deprecated: 'Use OCScanner isSelector: ' 
+		on: '02/02/2025'  
+		in: 'pharo13' 
+		transformWith: '`@receiver isValidSelector' -> 'OCScanner isSelector: `@receiver'.
+	^ OCScanner isSelector: self
+]
+
+{ #category : '*Deprecated14' }
+String >> parseLiterals [
+
+	self 
+		deprecated: 'Use OCParser parseLiterals: instead of String>>parseLiterals' 
+		on: '29/12/2024' 
+		in: 'pharo13' 
+		transformWith: 
+		'`@receiver parseLiterals' -> 'OCParser parseLiterals: `@receiver'.
+	^ OCParser parseLiterals: self
+]
+
+{ #category : '*Deprecated14' }
 String >> trimmed [
 	"Trim separators from both sides of the receiving string."
 
 	"'  hello  ' trimmed >>> 'hello'"
-
 	"'hello' trimmed >>> 'hello'"
-
 	"'' trimmed >>> ''"
 
 	self

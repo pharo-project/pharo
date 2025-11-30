@@ -759,12 +759,6 @@ Point >> truncated [
 	^ x truncated @ y truncated
 ]
 
-{ #category : 'copying' }
-Point >> veryDeepCopyWith: deepCopier [
-	"Return self.  I am immutable in the Morphic world.  Do not record me."
-	^ self
-]
-
 { #category : 'accessing' }
 Point >> x [
 	"Answer the x coordinate."

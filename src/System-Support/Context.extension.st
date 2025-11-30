@@ -19,18 +19,22 @@ Context >> errorReportOn: stream [
 	stream cr.
 	stream
 		nextPutAll: 'VM: ';
-		nextPutAll: Smalltalk os name asString;
+		nextPutAll: Smalltalk os name;
 		nextPutAll: ' - ';
-		nextPutAll: Smalltalk os subtype asString;
+		nextPutAll: Smalltalk os subtype;
 		nextPutAll: ' - ';
-		nextPutAll: Smalltalk os version asString;
+		nextPutAll: Smalltalk os version;
 		nextPutAll: ' - ';
-		nextPutAll: Smalltalk vm version asString;
+		nextPutAll: Smalltalk vm version;
 		cr.
-	stream
-		nextPutAll: 'Image: ';
-		nextPutAll: SystemVersion current asString;
-		cr.
+	
+	self class environment at: #SystemVersion ifPresent: [ :class |
+		stream
+			nextPutAll: 'Image: ';
+			nextPutAll: class current asString;
+			cr.
+ ].
+
 	stream cr. "Note: The following is an open-coded version of  Context>>stackOfSize: since this method may be called during a  low space condition and we might run out of space for allocating the  full stack."
 	stackDepth := 0.
 	aContext := self.

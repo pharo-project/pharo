@@ -34,13 +34,12 @@ SycConvertTempToInstVarCommand >> execute [
 
 { #category : 'execution' }
 SycConvertTempToInstVarCommand >> executeRefactorings [
-	
-	^ (ReConvertTemporaryToInstanceVariableDriver new 
-		scopes: refactoringScopes 
-		class: method origin
-		selector: method selector
-		variable: sourceNode name) runRefactoring
-		
+
+	^ ((ReConvertTemporaryToInstanceVariableDriver newApplication: self application)
+		   scopes: refactoringScopes
+		   class: method origin
+		   selector: method selector
+		   variable: sourceNode name) runRefactoring
 ]
 
 { #category : 'execution' }

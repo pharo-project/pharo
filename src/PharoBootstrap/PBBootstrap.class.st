@@ -145,6 +145,7 @@ PBBootstrap >> createImage [
 PBBootstrap >> ensureBaselineOfPharoBootstrap [
 	(self originRepository versionWithInfo: (self originRepository versionInfoFromVersionNamed: 'BaselineOfPharoBootstrap')) load.
 	(self originRepository versionWithInfo: (self originRepository versionInfoFromVersionNamed: 'BaselineOfTraits')) load.
+	(self originRepository versionWithInfo: (self originRepository versionInfoFromVersionNamed: 'BaselineOfMonticello')) load.
 	(self originRepository versionWithInfo: (self originRepository versionInfoFromVersionNamed: 'BaselineOfMetacello')) load.	
 ]
 
@@ -187,8 +188,11 @@ PBBootstrap >> exportMonticelloInStFile [
 		MCCacheRepository initialize.
 		MCWorkingCopy initialize.
 		MCLazyVersionInfo initialize.
-		MCMethodDefinition initialize.
-		MCDataStream initialize.'
+		SharedRandom initialize.
+		DigitalSignatureAlgorithm initialize.
+		MD5NonPrimitive initialize.
+		SHA1 initialize.
+		UUIDGenerator initialize.'
 		intoFile: 'Monticello.st'
 
 ]
@@ -319,22 +323,10 @@ PBBootstrap >> mczCache [
 ]
 
 { #category : 'package-names' }
-PBBootstrap >> monticelloNetworkPackageNames [
-
-	^ #('Network-Kernel'
-		 'Network-MIME'
-		 'Network-Protocols'
-
-		 'MonticelloRemoteRepositories'
-
-		 'Zinc-HTTP'
-		 'Zodiac-Core')
-]
-
-{ #category : 'package-names' }
 PBBootstrap >> monticelloPackageNames [
 
-	^ #('Ring-OldChunkImporter' 'Zinc-Resource-Meta-Core' 'System-Changes' 'Ring-Definitions-Core' 'Jobs' 'Compression' 'Monticello-Model' 'Monticello' 'Ring-Definitions-Monticello' )
+	self ensureBaselineOfPharoBootstrap.
+	^ #BaselineOfMonticello asClass corePackageNames
 ]
 
 { #category : 'accessing' }
@@ -351,7 +343,7 @@ PBBootstrap >> originRepository [
 { #category : 'package-names' }
 PBBootstrap >> packagesToExportAsMCZ [
 
-	^ #(BaselineOfMetacello) , (#BaselineOfMetacello asClass allPackageNames)  , self monticelloPackageNames , self hermesPackageNames, self kernelPackageNames , self monticelloNetworkPackageNames
+	^ #(BaselineOfMetacello) , (#BaselineOfMetacello asClass allPackageNames)  , self monticelloPackageNames , self hermesPackageNames, self kernelPackageNames
 ]
 
 { #category : 'preparation' }
@@ -386,7 +378,7 @@ PBBootstrap >> prepareEnvironmentForExport [
 			ringEnvironment removePackage: p].
 
 	ringEnvironment cleanGlobalVariables.
-	ringEnvironment addGlobalsNamed: #(#Smalltalk #SourceFiles #Transcript #Undeclared #Display #TextConstants  #Sensor #Processor).
+	ringEnvironment addGlobalsNamed: #(#Smalltalk #Transcript #Undeclared #Display #TextConstants  #Sensor #Processor).
 	ringEnvironment clean
 
 ]
@@ -395,7 +387,7 @@ PBBootstrap >> prepareEnvironmentForExport [
 PBBootstrap >> prepareEnvironmentForHermes [
 	ringEnvironment := self originRepository asRing2EnvironmentWith: self allPackagesForHermes.
 	ringEnvironment fixProtoObjectClassSuperclass.
-	ringEnvironment addGlobalsNamed: #(Smalltalk Transcript FileStream MacRomanTextConverter SourceFiles Processor Display Sensor UTF8TextConverter Undeclared TextConstants).
+	ringEnvironment addGlobalsNamed: #(Smalltalk Transcript FileStream MacRomanTextConverter Processor Display Sensor UTF8TextConverter Undeclared TextConstants).
 	ringEnvironment clean
 ]
 

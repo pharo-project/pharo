@@ -63,7 +63,7 @@ MCVersionInfo >> = other [
 MCVersionInfo >> asDictionary [
 	^ Dictionary new
 		at: #name put: name;
-		at: #id put: id asString;
+		at: #id put: id displayString;
 		at: #message put: message;
 		at: #date put: date;
 		at: #time put: time;
@@ -185,7 +185,7 @@ MCVersionInfo >> timeStamp [
 
 { #category : 'accessing' }
 MCVersionInfo >> timeString [
-	^ date asString, ', ', time asString
+	^ String streamContents: [ :s | s print: date; nextPutAll: ', '; print: time ]
 ]
 
 { #category : 'accessing' }

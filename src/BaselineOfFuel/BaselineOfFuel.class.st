@@ -11,6 +11,12 @@ Class {
 	#package : 'BaselineOfFuel'
 }
 
+{ #category : 'accessing' }
+BaselineOfFuel class >> corePackageNames [
+
+	^ self packagesOfGroupNamed: #Core
+]
+
 { #category : 'baselines' }
 BaselineOfFuel >> baseline: spec [
 

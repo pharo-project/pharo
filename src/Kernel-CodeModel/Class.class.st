@@ -150,12 +150,12 @@ Class >> addSharedPool: aSharedPool [
 
 { #category : 'pool variables' }
 Class >> addSharedPoolNamed: aSharedPoolName [
+
 	<reflection: 'Class structural modification - Shared pool modification'>
-	|poolClass|
-	poolClass := aSharedPoolName asClassIfAbsent: [nil].
-	poolClass isPool
-		ifTrue: [ self addSharedPool: poolClass ]
-		ifFalse: [ self error: 'The specified class is not pool.' ]
+	self environment at: aSharedPoolName ifPresent: [ :poolClass |
+			poolClass isPool
+				ifTrue: [ self addSharedPool: poolClass ]
+				ifFalse: [ self error: 'The specified class is not pool.' ] ]
 ]
 
 { #category : 'accessing - class hierarchy' }
@@ -372,9 +372,10 @@ Class >> classVariablesNeedFullDefinition [
 
 { #category : 'accessing - comment' }
 Class >> comment [
-    ^ self commentSourcePointer
+
+	^ self commentSourcePointer
 		  ifNil: [ '' ]
-		  ifNotNil: [ :ptr | SourceFiles sourceCodeAt: ptr ]
+		  ifNotNil: [ :ptr | SourceFileArray default sourceCodeAt: ptr ]
 ]
 
 { #category : 'accessing - comment' }
@@ -395,7 +396,7 @@ Class >> comment: aString stamp: aStamp [
 
 	pointer := self commentSourcePointer ifNil: [ 0 ].
 
-	SourceFiles
+	SourceFileArray default
 		writeComment: aString
 		ofClass: self
 		metadata: ' '
@@ -427,7 +428,7 @@ Class >> commentStamp [
 
 	^ self commentSourcePointer
 		  ifNil: [ '' ]
-		  ifNotNil: [:sourcePointer | SourceFiles commentTimeStampAt: sourcePointer ]
+		  ifNotNil: [:sourcePointer | SourceFileArray default commentTimeStampAt: sourcePointer ]
 ]
 
 { #category : 'accessing - comment' }
@@ -962,23 +963,16 @@ Class >> sharedPoolsDo: aBlockClosure [
 ]
 
 { #category : 'initialization' }
-Class >> sharing: sharedPoolNames [
-	"Set up sharedPools. Answer whether recompilation is advisable."
+Class >> sharingSharedPoolNames: sharedPoolNames [
+	"Set up sharedPools. Answer whether recompilation is advisable. Raises an error if a sharePool named does not exist."
 
 	| oldPools |
 	oldPools := self sharedPools.
 	self sharedPools: OrderedCollection new.
 	sharedPoolNames do: [ :poolName |
-		self sharedPools add: (self environment at: poolName asSymbol ifAbsent: [
-				 (self confirm: 'The pool dictionary ' , poolName , ' does not exist.' , '\Do you want it automatically created?' withCRs)
-					 ifTrue: [
-						 self classInstaller make: [ :builder |
-							 builder
-								 superclass: SharedPool;
-								 name: poolName;
-								 package: self package name;
-								 tag: self packageTag name ] ]
-					 ifFalse: [ ^ self inform: poolName , ' does not exist' ] ]) ].
+		| shared | 
+		shared := self environment at: poolName asSymbol ifAbsent: [ self error: 'The pool dictionary ' , poolName , ' does not exist.' ].
+		self sharedPools add: shared ].
 	self sharedPools ifEmpty: [ self sharedPools: nil ].
 	oldPools do: [ :pool |
 		| found |

@@ -37,19 +37,6 @@ Class {
 	#package : 'Graphics-Files'
 }
 
-{ #category : 'testing' }
-BMPReadWriter class >> readAllFrom: fd [
-	"MessageTally spyOn:[BMPReadWriter readAllFrom: FileDirectory default]"
-	fd fileNames do:[:fName|
-		(fName endsWith: '.bmp') ifTrue:[
-			[Form fromBinaryStream: (fd readOnlyFileNamed: fName)] on: Error do:[:nix].
-		].
-	].
-	fd directoryNames do:[:fdName|
-		self readAllFrom: (fd / fdName)
-	]
-]
-
 { #category : 'image reading/writing' }
 BMPReadWriter class >> typicalFileExtensions [
 	"Answer a collection of file extensions (lowercase) which files that I can read might commonly have"

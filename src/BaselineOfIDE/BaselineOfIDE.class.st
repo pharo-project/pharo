@@ -92,8 +92,7 @@ BaselineOfIDE >> baseline: spec [
 
 		self load: 'Fuel' group: 'Tests' spec: spec.
 
-		self load: 'FreeType' group: 'tests' spec: spec.
-		self load: 'Keymapping' group: 'tests' spec: spec.
+		self load: 'Keymapping' group: 'Tests' spec: spec.
 
 		spec baseline: 'Zodiac' with: [ spec repository: repository ].
 		spec baseline: 'SortFunctions' with: [ spec repository: repository ].
@@ -129,9 +128,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: #'BeautifulComments'  with: [ spec requires:  #( 'Microdown') ].
 		
 		spec package: 'IconPacks'.
-
-		spec baseline: 'ThreadedFFI' with: [ spec repository: repository ].
-
 		spec package: 'Kernel-ExtraUtils' ]
 ]
 

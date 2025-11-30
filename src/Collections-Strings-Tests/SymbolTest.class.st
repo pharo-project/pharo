@@ -319,6 +319,14 @@ SymbolTest >> testAsAccessor [
 	self should: [ self assert: #'' asAccessor ] raise: Error.	
 ]
 
+{ #category : 'tests - converting' }
+SymbolTest >> testAsByteArray [
+	self assert: #a asByteArray equals: #[97].
+	self assert: #A asByteArray equals: #[65].
+	self assert: #ABA asByteArray equals: #[65 66 65].
+	self assert: #'' asByteArray equals: #[]
+]
+
 { #category : 'tests' }
 SymbolTest >> testAsMutator [
 	self assert: #x asMutator equals: #x:.

@@ -29,7 +29,7 @@ Class {
 ExternalChangesBrowser class >> browseRecentLog [
 	<example>
 
-	^ self openOnStream: SourceFiles changesFileStream
+	^ self openOnStream: SourceFileArray default changesFileStream
 ]
 
 { #category : 'layout' }
@@ -117,7 +117,7 @@ ExternalChangesBrowser class >> registerToolsOn: registry [
 ExternalChangesBrowser class >> serviceBrowseCSOrSTFile [
 	"Answer a service for opening a changelist browser on a file"
 
-	^ (SimpleServiceEntry
+	^ (FileServiceEntry
 		provider: self
 		label: 'Changelist browser'
 		selector: #openOnStream:

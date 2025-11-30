@@ -555,13 +555,12 @@ RubTextEditor >> cmdActions [
 { #category : 'menu messages' }
 RubTextEditor >> compareToClipboard [
 	"Check to see if whether the receiver's text is the same as the text currently on the clipboard, and inform the user."
+
 	| s1 s2 |
 	s1 := self clipboardText string.
 	s2 := self string.
-	s1 = s2 ifTrue: [^ self inform: 'Exact match'].
-	self morphicUIManager
-		longMessage: (TextDiffBuilder buildDisplayPatchFrom: s1 to: s2)
-		title: 'Comparison to Clipboard Text'
+	s1 = s2 ifTrue: [ ^ InformativeNotification signal: 'Exact match' ].
+	self morphicUIManager longMessage: (TextDiffBuilder buildDisplayPatchFrom: s1 to: s2) title: 'Comparison to Clipboard Text'
 ]
 
 { #category : 'editing keys' }
@@ -2133,7 +2132,7 @@ RubTextEditor >> saveContentsInFile [
 
 	| fileName stringToSave parentWindow labelToUse suggestedName lastIndex |
 	stringToSave := self string.
-	stringToSave size = 0 ifTrue: [^self inform: 'nothing to save.'].
+	stringToSave size = 0 ifTrue: [^InformativeNotification signal: 'nothing to save.'].
 	parentWindow := self model dependents
 				detect: [:dep | dep isKindOf: SystemWindow]
 				ifNone: [nil].

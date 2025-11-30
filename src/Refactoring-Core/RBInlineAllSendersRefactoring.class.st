@@ -66,7 +66,7 @@ RBInlineAllSendersRefactoring >> applicabilityPreconditions [
 { #category : 'transforming' }
 RBInlineAllSendersRefactoring >> checkInlinedMethods [
 	numberReplaced = 0
-		ifTrue: [self inform:  'Could not find any senders to inline into']
+		ifTrue: [ InformativeNotification signal:  'Could not find any senders to inline into']
 ]
 
 { #category : 'transforming' }

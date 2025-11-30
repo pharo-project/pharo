@@ -42,9 +42,13 @@ Bitmap class >> decompressFromByteArray: byteArray [
 
 { #category : 'class initialization' }
 Bitmap class >> initialize [
-	Smalltalk specialObjectsArray
-		at: 5
-		put: self
+	"Put BitMap in the special object array. But maybe this is useless? We should check if the VM still needs this entry."
+
+	| array |
+	array := Smalltalk specialObjectsArray copy.
+	array at: 5 put: self.
+
+	Smalltalk specialObjectsArray becomeForward: array
 ]
 
 { #category : 'instance creation' }
@@ -523,6 +527,13 @@ Bitmap >> storeBits: startBit to: stopBit on: aStream [
 				ifTrue: [aStream cr.
 					lineWidth := 0]].
 	lineWidth > 0 ifTrue: [ aStream cr ]
+]
+
+{ #category : 'converting' }
+Bitmap >> tfPointerAddress [
+
+	self pinInMemory.
+	^ PointerUtils oopForObject: self
 ]
 
 { #category : 'filing' }

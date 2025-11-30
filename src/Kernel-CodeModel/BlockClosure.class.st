@@ -602,12 +602,6 @@ BlockClosure >> repeatWithGCIf: testBlock [
 	^ans
 ]
 
-{ #category : 'accessing' }
-BlockClosure >> sender [	
-	self deprecated: 'Blocks do not have senders. As the outerContext or home context instead, but take care: clean blocks do not know the context!'.
-	^ self subclassResponsibility
-]
-
 { #category : 'evaluating' }
 BlockClosure >> simulateValueWithArguments: anArray caller: aContext [
 	"Simulate the valueWithArguments: primitive. Fail if anArray is not an array of the right arity."

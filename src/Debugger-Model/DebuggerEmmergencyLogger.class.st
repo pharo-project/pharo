@@ -34,7 +34,7 @@ DebuggerEmmergencyLogger >> logError: anError forSession: aDebugSession [
 		inContext: aDebugSession interruptedContext ]
 		on: Error
 		do: [ :err |
-			self inform: (String streamContents: [ :str |
+			InformativeNotification signal: (String streamContents: [ :str |
 					 str << 'Cannot log error:'.
 					 str space.
 					 str << anError description.

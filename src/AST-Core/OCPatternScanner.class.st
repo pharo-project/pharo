@@ -1,5 +1,5 @@
 "
-RBPatternScanner is a subclass of RBScanner that allows the extended syntax of pattern matching trees.
+OCPatternScanner is a subclass of OCScanner that allows the extended syntax of pattern matching trees.
 
 "
 Class {

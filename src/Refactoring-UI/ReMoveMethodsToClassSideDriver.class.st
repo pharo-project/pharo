@@ -52,22 +52,14 @@ ReMoveMethodsToClassSideDriver >> changes [
 { #category : 'configuration' }
 ReMoveMethodsToClassSideDriver >> defaultSelectDialog [
 
-	^ self class defaultSelectDialog
+	^ super defaultSelectDialog
 		  title: 'Warning you may break your code';
 		  label:
 			  'One or more methods are already defined on the class side!';
 		  items: self breakingChoices;
 		  display: [ :each | each description ];
 		  displayIcon: [ :each | self iconNamed: each systemIconName ];
-		  openModal
-]
-
-{ #category : 'execution' }
-ReMoveMethodsToClassSideDriver >> handleBreakingChanges [
-
-	| select |
-	select := self selectDialog.
-	select ifNotNil: [ select action ]
+		  yourself
 ]
 
 { #category : 'execution' }

@@ -22,7 +22,7 @@ Behavior >> compile: selector from: oldClass [
 	| method newMethod |
 	method := oldClass compiledMethodAt: selector.
 	newMethod := oldClass compiler
-		             source: (oldClass sourceCodeAt: selector);
+		             source: method sourceCode;
 		             priorMethod: method;
 		             class: self;
 		             permitFaulty: true;

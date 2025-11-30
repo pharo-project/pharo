@@ -239,12 +239,6 @@ ReAbstractTransformation >> eagerlyCheckApplicabilityPreconditions [
 		cond check ifFalse: [ RBRefactoringError signalFor: { cond } ] ]
 ]
 
-{ #category : 'condition definitions' }
-ReAbstractTransformation >> emptyCondition [
-	self deprecated: 'Use trueCondition' transformWith: '`@rec emptyCondition' -> '`@rec trueCondition'. 
-	^ RBCondition true
-]
-
 { #category : 'transforming' }
 ReAbstractTransformation >> execute [
 	"Check precondition, execute the transformation that produces changes and finally execute the changes. This method is part of the scripting API. It should not be called from the driver."
@@ -401,7 +395,8 @@ ReAbstractTransformation >> preconditions [
 
 { #category : 'transforming' }
 ReAbstractTransformation >> prepareForExecution [
-	"I am empty by default. You can override me to initialize your instance variables just before execution.
+	"I am empty by default. You can override me to initialize your instance variables just before execution 
+	and/or to validate the structural prerequisites required for proper operation.
 	I am typicaly a place where names (of classes, methods, etc.) are converted to RB model entities."
 ]
 
@@ -409,15 +404,6 @@ ReAbstractTransformation >> prepareForExecution [
 ReAbstractTransformation >> privateTransform [ 
 
 	self subclassResponsibility 
-]
-
-{ #category : 'exceptions' }
-ReAbstractTransformation >> refactoringConfirmWarning: aString [
-	| ret |
-	ret := self uiManager
-		confirm: aString
-		orCancel: [ ^ RBRefactoringError signal: 'aborted' ].
-	^ ret
 ]
 
 { #category : 'exceptions' }
@@ -522,14 +508,6 @@ ReAbstractTransformation >> shouldOverride: aSelector in: aClass [
 		value: self
 		value: aClass
 		value: aSelector
-]
-
-{ #category : 'transforming' }
-ReAbstractTransformation >> transform [
-	"Do the actual operations."
-	self deprecated: 'Use generateChanges or privateTransform instead. Check subclasses for more details.'. 
-	
-	self subclassResponsibility
 ]
 
 { #category : 'condition definitions' }

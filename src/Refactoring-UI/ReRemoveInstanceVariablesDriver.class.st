@@ -32,34 +32,32 @@ ReRemoveInstanceVariablesDriver >> browseInstanceVariableReferences [
 		
 ]
 
-{ #category : 'resources' }
+{ #category : 'configuration' }
 ReRemoveInstanceVariablesDriver >> configureRefactoring [
 
-	refactoring := ReUpFrontPreconditionCheckingCompositeRefactoring new
-							model: model; 
-							refactorings: (variables collect: [:each | 
-									ReRemoveInstanceVariableRefactoring model: model remove: each from: class]);
-								yourself.
+	super configureRefactoring.
 	refactoring prepareForInteractiveMode
 ]
 
 { #category : 'configuration' }
 ReRemoveInstanceVariablesDriver >> defaultSelectDialog [
 
-	^ self class defaultSelectDialog
+	^ super defaultSelectDialog
 		  title: 'There are references to variables!';
 		  items: self breakingChoices;
 		  display: [ :each | each description ];
 		  displayIcon: [ :each | self iconNamed: each systemIconName ];
-		  openModal
+		yourself
 ]
 
-{ #category : 'execution' }
-ReRemoveInstanceVariablesDriver >> handleBreakingChanges [
+{ #category : 'configuration' }
+ReRemoveInstanceVariablesDriver >> instantiateRefactoring [
 
-	| select |
-	select := self selectDialog.
-	select ifNotNil: [ select action ]
+	^ ReUpFrontPreconditionCheckingCompositeRefactoring new
+		model: model; 
+		refactorings: (variables collect: [:each | 
+				ReRemoveInstanceVariableRefactoring model: model remove: each from: class]);
+		yourself
 ]
 
 { #category : 'execution' }

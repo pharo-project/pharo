@@ -13,3 +13,9 @@ Class {
 OCIRPopIntoInstVar >> accept: aVisitor [
 	^ aVisitor visitPopIntoInstVar: self
 ]
+
+{ #category : 'stack' }
+OCIRPopIntoInstVar >> deltaStack [
+
+	^ -1
+]

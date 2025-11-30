@@ -82,29 +82,15 @@ ReExtractMethodDriver >> configureMessage [
 	refactoring renameMap: newMessage renameMap."
 ]
 
-{ #category : 'resources' }
-ReExtractMethodDriver >> configureRefactoring [
-
-	"here we do not fully configure the refactoring because we are missing information such as the signature.
-	Since we want to let the refactoring validate input we need to create it upfront then configure later."
-	
-	refactoring := self class refactoringClass new
-		               extract: body
-		               from: sourceMethod selector
-		               in: class name.
-	refactoring prepareForExecution 
-]
-
 { #category : 'configuration' }
 ReExtractMethodDriver >> defaultSelectDialog [
 
-	^ self class defaultSelectDialog
+	^ super defaultSelectDialog
 		  title: 'There are potential breaking changes!';
 		  label: self labelBasedOnBreakingChanges;
 		  items: self breakingChoices;
 		  display: [ :each | each description ];
-		  displayIcon: [ :each | self iconNamed: each systemIconName ];
-		  openModal
+		  displayIcon: [ :each | self iconNamed: each systemIconName ]
 ]
 
 { #category : 'instance creation' }
@@ -121,12 +107,15 @@ ReExtractMethodDriver >> extractMethod [
 	^ self applyChanges
 ]
 
-{ #category : 'execution' }
-ReExtractMethodDriver >> handleBreakingChanges [
+{ #category : 'configuration' }
+ReExtractMethodDriver >> instantiateRefactoring [
+	"here we do not fully configure the refactoring because we are missing information such as the signature.
+	Since we want to let the refactoring validate input we need to create it upfront then configure later."
 
-	| select |
-	select := self selectDialog.
-	select ifNotNil: [ select action ]
+	^ self class refactoringClass new 
+		extract: body 
+		from: sourceMethod selector 
+		in: class name
 ]
 
 { #category : 'configuration' }

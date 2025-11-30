@@ -39,6 +39,12 @@ Class {
 	#tag : 'Methods'
 }
 
+{ #category : 'class initialization' }
+CompiledCode class >> LargeFrame [
+
+	^ LargeFrame
+]
+
 { #category : 'instance creation' }
 CompiledCode class >> basicNew [
 
@@ -124,16 +130,6 @@ CompiledCode class >> newFrom: aCompiledMethod [
 	1 to: aCompiledMethod numLiterals do: [ :i | 
 		inst literalAt: i put: (aCompiledMethod literalAt: i)].
 	^ inst
-]
-
-{ #category : 'instance creation' }
-CompiledCode class >> newMethod: numberOfBytes header: headerWord [
-
-	self 
-		deprecated: 'Use #basicNew:header: instead.' 
-		transformWith: '`@rcv newMethod: `@numberOfBytes header: `@headerWord' -> '`@rcv basicNew: `@numberOfBytes header: `@headerWord'.
-	
-	^ self basicNew: numberOfBytes header: headerWord
 ]
 
 { #category : 'constants' }
@@ -1011,7 +1007,7 @@ CompiledCode >> timeStamp [
 	"Answer the authoring time-stamp for the given method, retrieved from the sources or changes file. Answer the empty string if no time stamp is available."
 	"(CompiledMethod compiledMethodAt: #timeStamp) timeStamp"
 
-	^ SourceFiles timeStampAt: self sourcePointer
+	^ SourceFileArray default timeStampAt: self sourcePointer
 ]
 
 { #category : 'testing' }

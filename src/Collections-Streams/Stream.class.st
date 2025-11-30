@@ -39,12 +39,6 @@ Stream >> atEnd [
 	self subclassResponsibility
 ]
 
-{ #category : 'private' }
-Stream >> basicNext [
-
-	^ self next
-]
-
 { #category : 'modes' }
 Stream >> binary [
 	"do nothing"

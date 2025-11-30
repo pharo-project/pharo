@@ -210,7 +210,7 @@ CompiledMethod >> flushCache [
 
 { #category : 'source code management' }
 CompiledMethod >> getPreambleFrom: aFileStream at: position [
-	^ SourceFiles getPreambleFrom: aFileStream at: position
+	^ SourceFileArray default getPreambleFrom: aFileStream at: position
 ]
 
 { #category : 'source code management' }
@@ -219,7 +219,7 @@ CompiledMethod >> getSourceFromFile [
 	"Read the source code from file, determining source file index and
 	file position from the last bytes of this method (size defined in #trailerSize)."
 
-	^ [ SourceFiles sourceCodeAt: self sourcePointer ] on: Error do: [ nil ]
+	^ [ SourceFileArray default sourceCodeAt: self sourcePointer ] on: Error do: [ nil ]
 ]
 
 { #category : 'source code management' }
@@ -883,7 +883,7 @@ CompiledMethod >> sourceCodeOrNil [
 { #category : 'source code management' }
 CompiledMethod >> sourcePointer [
 	"Answer the integer which can be used to find the source file and position for this method.
-	The actual interpretation of this number is up to the SourceFileArray stored in the global variable SourceFiles."
+	The actual interpretation of this number is up to the SourceFileArray default instance."
 	| trailerBytes trailerSize start |
 	trailerSize := self class trailerSize.
 	trailerBytes := ByteArray new: trailerSize.
@@ -961,11 +961,6 @@ CompiledMethod >> valueWithReceiver: aReceiver [
 CompiledMethod >> valueWithReceiver: aReceiver arguments: anArray [
 	<reflection: 'Message sending and code execution - Arbitrary method/primitive execution'>
 	^self receiver: aReceiver withArguments: anArray executeMethod: self
-]
-
-{ #category : 'copying' }
-CompiledMethod >> veryDeepCopyWith: deepCopier [
-	"Return self.  I am always shared.  Do not record me.  Only use this for blocks.  Normally methodDictionaries should not be copied this way."
 ]
 
 { #category : 'runtime system' }

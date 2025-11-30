@@ -343,14 +343,11 @@ RBPullUpMethodTransformation >> removeDuplicatesOf: aSelector [
 					    exceptForVariables: #(  )) and: [
 					   (aClass superclass whichClassIncludesSelector: aSelector)
 					   == targetSuperclass ] ]) ifTrue: [
-				  removeDuplicates ifFalse: [
-					  removeDuplicates := self refactoringConfirmWarning:
-						                      'Do you want to remove duplicate subclass methods?' ].
-				  removeDuplicates ifTrue: [
+		
 					  self generateChangesFor: (RBRemoveMethodTransformation
 							   model: self model
 							   selector: aClass
-							   from: aSelector) ] ] ] ]
+							   from: aSelector) ] ] ]
 ]
 
 { #category : 'executing' }

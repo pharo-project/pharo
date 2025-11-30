@@ -14,19 +14,13 @@ Object >> confirm: queryString [
 { #category : '*UIManager' }
 Object >> inform: aString [
 	"Display a message for the user to read and then dismiss."
-	
+
 	self halt.
-	"DO NOT CALL THIS METHOD!"
-	aString isEmptyOrNil
-		ifFalse: [ UIManager default inform: aString ]
-]
 
-{ #category : '*UIManager' }
-Object >> primitiveError: aString [
-	"This method is called when the error handling results in a recursion in
-	calling on error: or halt or halt:."
-
-	UIManager default onPrimitiveError: aString
+	self deprecated: 'This method will be removed of Object because the API should not hold UI interactions.
+	The most simple way to replace the usage of #inform: is to use `InformativeNotification signal: aString`. 
+	But if you have access to a spec application or presenter you can use the #inform: implemented on those instead.'. "DO NOT CALL THIS METHOD!"
+	aString isEmptyOrNil ifFalse: [ UIManager default inform: aString ]
 ]
 
 { #category : '*UIManager' }

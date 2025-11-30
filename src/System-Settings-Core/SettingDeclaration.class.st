@@ -207,16 +207,6 @@ SettingDeclaration >> hasDefaultValue [
 	^ self preferenceValue = self defaultValue
 ]
 
-{ #category : 'user interface' }
-SettingDeclaration >> hasEditableList [
-	^ (self realValue isKindOf: Boolean) not
-]
-
-{ #category : 'user interface' }
-SettingDeclaration >> hasPrivateListener [
-	^ self hasActionForEvent: self privateChangeEvent
-]
-
 { #category : 'accessing' }
 SettingDeclaration >> hasValue [
 	^ true
@@ -254,205 +244,8 @@ SettingDeclaration >> initialize [
 ]
 
 { #category : 'user interface' }
-SettingDeclaration >> inputMorphFor: aContainer [
-	^ (super inputMorphFor: aContainer)
-		ifNotNil: [:im |
-				self whenPrivateChangedSend: #settingValueChanged: to: aContainer model.
-				self whenPrivateChangedSend: #innerWidgetChanged to: aContainer.
-				im]
-]
-
-{ #category : 'user interface' }
-SettingDeclaration >> inputWidget [
-	"return the default widget for the input a the setting"
-	| inputWidget xtraDialogWidget |
-	xtraDialogWidget := super inputWidget.
-	inputWidget :=  self localInputWidgetSelector ifNotNil: [:localSel | self perform: localSel].
-	
-	(inputWidget isNil and: [self typeClass isNotNil])
-		ifTrue: [ inputWidget := self typeClass settingInputWidgetForNode: self ].
-
-	(inputWidget notNil and: [ inputWidget respondsTo: #model: ])
-		ifTrue: [ inputWidget model ifNil: [ inputWidget model: self ] ].
-
-	xtraDialogWidget
-		ifNotNil: [inputWidget := inputWidget ifNil: [xtraDialogWidget]
-			ifNotNil: [ self theme  newRowIn: self for: {inputWidget. xtraDialogWidget}]].
-	^ inputWidget
-]
-
-{ #category : 'user interface' }
-SettingDeclaration >> inputWidgetForBoolean [
-	^  self theme
-			newCheckboxIn: self
-			for: self
-			getSelected: #realValue
-			setSelected: #realValue:
-			getEnabled: #enabled
-			label: ''
-			help: nil
-]
-
-{ #category : 'user interface' }
-SettingDeclaration >> inputWidgetForColor [
-	^ (
-	 self theme
-		newColorChooserIn: self
-		for: self
-		getColor: #realValue
-		setColor: #realValue:
-		getEnabled: #enabled
-		help: 'Choose a color') minWidth: 150; width: 150; yourself
-]
-
-{ #category : 'user interface' }
-SettingDeclaration >> inputWidgetForDirectory [
-
-	^ self inputWidgetForFileOrDirectoryWithAction: #chooseFileDirectory
-]
-
-{ #category : 'user interface' }
-SettingDeclaration >> inputWidgetForFileOrDirectoryWithAction: aSymbol [
-	| list button |
-	list := EditableDropListMorph
-		on: self
-		list: #list
-		selected: #index
-		changeSelected: #index:
-		useIndex: true
-		addToList: #addToList:
-		class: String
-		getEnabled: #enabled
-		default: self defaultValue.
-	list
-		ghostText: self ghostHelp;
-		hResizing: #rigid;
-		width: 450;
-		wantsFrameAdornments: true.
-	button := self theme
-		newButtonIn: self
-		for: self
-		getState: nil
-		action: aSymbol
-		arguments: nil
-		getEnabled: nil
-		label:
-			(AlphaImageMorph new
-				image: (self iconNamed: #smallOpen))
-		help: 'Open directory chooser dialog' translated.
-	^ self theme
-		newRowIn: self
-		for:
-			{list.
-			button}
-]
-
-{ #category : 'user interface' }
-SettingDeclaration >> inputWidgetForFont [
-	^ (self theme
-		newButtonIn: self
-		for: self
-		getState: nil
-		action: #getFont
-		arguments: {}
-		getEnabled: #enabled
-		getLabel: #fontButtonLabel
-		help: 'Choose a font ...' translated) cornerStyle: #square
-]
-
-{ #category : 'user interface' }
-SettingDeclaration >> inputWidgetForLabel [
-	| widget |
-	widget := self theme newLabelIn: self for: self label: '' getEnabled: nil.
-	widget getTextSelector: #preferenceValue.
-	widget width: 450.
-	^ widget
-]
-
-{ #category : 'user interface' }
-SettingDeclaration >> inputWidgetForNumber [
-	^ self inputWidgetForString width: 200
-]
-
-{ #category : 'user interface' }
-SettingDeclaration >> inputWidgetForPassword [
-	| widget |
-	widget :=  self theme
-				newTextEntryIn: self
-				for: self
-				get: #realValue
-				set: #realValue:
-				class: String
-				getEnabled: #enabled
-				help: nil.
-	widget
-		wantsFrameAdornments: true;
-		hResizing: #rigid;
-		width: 450;
-		font: (StrikeFont passwordFontSize:  self theme  textFont pointSize).
-	^ widget
-]
-
-{ #category : 'user interface' }
-SettingDeclaration >> inputWidgetForPoint [
-	^ self inputWidgetForString width: 200
-]
-
-{ #category : 'user interface' }
-SettingDeclaration >> inputWidgetForString [
-	| widget |
-	widget := EditableDropListMorph
-		on: self
-		list: #list
-		selected: #index
-		changeSelected: #index:
-		useIndex: true
-		addToList: #addToList:
-		class: (Smalltalk globals at: self type)
-		getEnabled: #enabled
-		default: self defaultValue.
-	self ghostHelp ifNotNil: [ :gh | widget ghostText: gh ].
-	widget contentMorph wantsFrameAdornments: true.
-	widget hResizing: #rigid.
-	widget width: 450.
-	^ widget
-]
-
-{ #category : 'user interface' }
-SettingDeclaration >> inputWidgetSelectorInClass: aClass [
-	| selector |
-	^ (aClass respondsTo: (selector := #settingInputWidgetForNode:))
-		ifTrue: [selector]
-]
-
-{ #category : 'export' }
-SettingDeclaration >> isExportable [
-
-	^ true
-]
-
-{ #category : 'user interface' }
 SettingDeclaration >> list [
 	^ self class valueListFor: self
-]
-
-{ #category : 'user interface' }
-SettingDeclaration >> listenersForEvent: anEvent [
-	| listeners actionSequence |
-	listeners := Set new.
-	actionSequence := self actionMap at: anEvent ifAbsent: [].
-	actionSequence ifNotNil: [
-		actionSequence isCollection
-			ifTrue: [actionSequence do: [:oneAction |
-					oneAction receiver ifNotNil: [:r | listeners add: r]]]
-			ifFalse: [listeners add: actionSequence receiver]].
-	^ listeners
-]
-
-{ #category : 'user interface' }
-SettingDeclaration >> localInputWidgetSelector [
-	| imSel |
-	^ (self respondsTo: (imSel := ('inputWidgetFor' , self type) asSymbol)) ifTrue: [imSel]
 ]
 
 { #category : 'user interface' }
@@ -463,15 +256,6 @@ SettingDeclaration >> maxKept [
 ]
 
 { #category : 'user interface' }
-SettingDeclaration >> maxNameWidthForFont: aFont [
-	| max |
-	max := 0.
-	self domainValuesLabels
-		do: [:v | max := max max: (aFont widthOfStringOrText: v)].
-	^ max
-]
-
-{ #category : 'user interface' }
 SettingDeclaration >> preferenceValue [
 	^ self realValue
 ]
@@ -479,26 +263,6 @@ SettingDeclaration >> preferenceValue [
 { #category : 'accessing' }
 SettingDeclaration >> privateChangeEvent [
 	^ #privateSettingValueChanged
-]
-
-{ #category : 'user interface' }
-SettingDeclaration >> privateForget: aReceiver [
-	"do not notify aReceiver anymore"
-	self removeActionsWithReceiver: aReceiver forEvent: self privateChangeEvent
-]
-
-{ #category : 'user interface' }
-SettingDeclaration >> privateForget: aReceiver selector: aSelector [
-	"Private"
-	self
-		removeActionsSatisfying: [:action | action receiver == aReceiver
-				and: [action selector = aSelector]]
-		forEvent: self privateChangeEvent
-]
-
-{ #category : 'user interface' }
-SettingDeclaration >> privateListeners [
-	^ self listenersForEvent: self privateChangeEvent
 ]
 
 { #category : 'accessing' }

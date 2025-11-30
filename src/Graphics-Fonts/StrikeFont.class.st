@@ -326,6 +326,11 @@ StrikeFont class >> useUnderscoreIfOver1bpp [
 	self allInstances do: [ :font | font useUnderscoreIfOver1bpp ]
 ]
 
+{ #category : 'visitor' }
+StrikeFont >> acceptSettings: aVisitor [
+	^ aVisitor visitStrikeFont: self
+]
+
 { #category : 'character shapes' }
 StrikeFont >> alter: char formBlock: formBlock [
 	self characterFormAt: char

@@ -23,25 +23,14 @@ Class {
 	#tag : 'Strategies'
 }
 
-{ #category : 'settings' }
+{ #category : 'accessing' }
 OupsDebuggerSelector class >> handleDebuggerErrors [
 	^ handleDebuggerErrors ifNil: [ handleDebuggerErrors := false ]
 ]
 
-{ #category : 'settings' }
+{ #category : 'accessing' }
 OupsDebuggerSelector class >> handleDebuggerErrors: aBoolean [
 	handleDebuggerErrors := aBoolean
-]
-
-{ #category : 'settings' }
-OupsDebuggerSelector class >> handleDebuggerErrorsSettingsOn: aBuilder [
-	<systemsettings>
-	(aBuilder setting: #handleDebuggerErrors)
-		label: 'Handle debugger errors';
-		target: self;
-		default: false;
-		parent: #debugging;
-		description: 'Try to debug debugger errors when they occur.'
 ]
 
 { #category : 'accessing' }

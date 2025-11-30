@@ -42,6 +42,12 @@ UIManager class >> forCurrentSystemConfiguration [
 			new
 ]
 
+{ #category : 'class initialization' }
+UIManager class >> initialize [
+
+	SessionManager default registerSystemClassNamed: self name
+]
+
 { #category : 'initialization' }
 UIManager class >> isActiveManager [
 	"Answer whether I should act as the active UI manager."
@@ -62,6 +68,14 @@ UIManager class >> nonInteractiveDuring: aBlock [
 	currentManager nonInteractiveManager.
 
 	aBlock ensure: [ currentManager beDefault ]
+]
+
+{ #category : 'handlers' }
+UIManager class >> startUp: isImageStarting [
+	"Install the right UIManager"
+
+	isImageStarting ifFalse: [ ^ false ].
+	self default: self forCurrentSystemConfiguration
 ]
 
 { #category : 'ui TEasilyThemed' }
@@ -380,70 +394,9 @@ UIManager >> edit: aText label: labelString accept: aBlockOrNil [
 	^self subclassResponsibility
 ]
 
-{ #category : 'error handling' }
-UIManager >> handleError: anError [
-
-	self handleError: anError log: true
-]
-
-{ #category : 'error handling' }
-UIManager >> handleError: anError log: shouldLog [
-	"Provide a default handling for unhandled error.
-	 We should never reach this code, because it should be overridden by subclasses.
-	 (but we can't put 'self subclassResponsibility' , because it will cause infinite loop,
-	 in case if current ui manager having no override of this method).
-	 This method is only for documentation purposes."
-
-	Smalltalk snapshot: false andQuit: true
-]
-
-{ #category : 'error handling' }
-UIManager >> handleNotification: aNotification [
-
-	"by default, do nothing"
-
-	aNotification resume
-]
-
-{ #category : 'error handling' }
-UIManager >> handleWarning: aWarning [
-	"Handle warning notification. Should be overidden by subclass."
-
-	self subclassResponsibility
-]
-
-{ #category : 'debug requests' }
-UIManager >> handleWarningDebugRequest: aWarningDebugRequest fromDebuggerSystem: anOupsDebuggerSystem [
-	"Handle warning notification. Should be overidden by subclass."
-
-	self subclassResponsibility
-]
-
 { #category : 'ui requests' }
 UIManager >> inform: aString [
 	"Display a message for the user to read and then dismiss."
-
-	^self subclassResponsibility
-]
-
-{ #category : 'ui requests' }
-UIManager >> informUser: aString during: aBlock [
-	"Display a message above (or below if insufficient room) the cursor
-	 during execution of the given block.
-		UIManager default informUser: 'Just a sec!' during: [(Delay forSeconds: 1) wait].
-	"
-
-	^self informUserDuring: [:bar | bar label: aString. aBlock value]
-]
-
-{ #category : 'ui requests' }
-UIManager >> informUserDuring: aBlock [
-	"Display a message above (or below if insufficient room) the cursor
-	during execution of the given block.
-		UIManager default informUserDuring:[:bar|
-			#(one two three) do:[:info|
-				bar label: info.
-				(Delay forSeconds: 1) wait]]"
 
 	^self subclassResponsibility
 ]
@@ -461,19 +414,6 @@ UIManager >> logError: anError [
 	Smalltalk
 		logError: anError messageText
 		inContext: anError signalerContext
-]
-
-{ #category : 'default actions' }
-UIManager >> lowSpaceWatcherDefaultAction: preemptedProcess [
-
-	"When there is a signal from the VM, we signal an exception in the preempted process.
-	If we don't have preemptedProcess we are in an error state. We will throw an error"
-
-	preemptedProcess
-		ifNotNil: [ preemptedProcess signalException: OutOfMemory new.
-						^ self ].
-
-	self error: 'We have a lowSpaceWatcher signal, but there is no ctx... how we arrive here'
 ]
 
 { #category : 'ui requests' }
@@ -502,14 +442,6 @@ UIManager >> nonInteractiveManager [
 	 We put it here, so subclasses can override it."
 
 	^NonInteractiveUIManager beDefault
-]
-
-{ #category : 'default actions' }
-UIManager >> onFontsChanged [
-]
-
-{ #category : 'events' }
-UIManager >> onPrimitiveError: aString [
 ]
 
 { #category : 'ui TEasilyThemed' }
@@ -605,15 +537,6 @@ UIManager >> request: aStringOrText initialAnswer: defaultAnswer title: aTitle e
 	"Create an instance of me whose question is queryString with the given
 	 initial answer. Invoke it centered at the given point, and answer the
 	 string the user accepts. Answer the empty string if the user cancels."
-
-	^self subclassResponsibility
-]
-
-{ #category : 'ui requests' }
-UIManager >> requestPassword: queryString [
-	"Create an instance of me whose question is queryString. Invoke it centered
-	 at the cursor, and answer the string the user accepts. Answer the empty
-	 string if the user cancels."
 
 	^self subclassResponsibility
 ]

@@ -26,9 +26,11 @@ Class {
 		'name',
 		'interruptedContext',
 		'interruptedProcess',
-		'exception'
+		'exception',
+		'stepThroughController'
 	],
 	#classVars : [
+		'FastStepThroughMode',
 		'LogDebuggerStackToFile'
 	],
 	#classInstVars : [
@@ -57,13 +59,25 @@ DebugSession class >> defaultContextModelClass [
 	^ DebugContext
 ]
 
-{ #category : 'settings' }
+{ #category : 'accessing' }
+DebugSession class >> fastStepThroughMode [
+
+	^ FastStepThroughMode ifNil: [ FastStepThroughMode := false ]
+]
+
+{ #category : 'accessing' }
+DebugSession class >> fastStepThroughMode: aBoolean [
+
+	^ FastStepThroughMode := aBoolean
+]
+
+{ #category : 'accessing' }
 DebugSession class >> logDebuggerStackToFile [
 	^ LogDebuggerStackToFile 
 		ifNil: [ LogDebuggerStackToFile := false ]
 ]
 
-{ #category : 'settings' }
+{ #category : 'accessing' }
 DebugSession class >> logDebuggerStackToFile: aBoolean [
 	LogDebuggerStackToFile := aBoolean
 ]
@@ -118,6 +132,37 @@ DebugSession >> exception: anObject [
 	exception := anObject
 ]
 
+{ #category : 'debugging actions' }
+DebugSession >> fastStepThrough: aContext [
+	"Send messages until you return to aContext.
+	 Used to step into a block in the method."
+	|  ctrl originContext targetContext |
+	ctrl := self stepThroughController.	
+		
+	aContext stepIntoQuickMethod: false.
+	(self isContextPostMortem: aContext) ifTrue: [ ^ self ].
+	"Wrap blocks in aContext with HaltingBlocks"
+	ctrl prepareContextForStepThrough: aContext.
+	
+	originContext := ctrl completeStep: aContext inProcess: interruptedProcess.
+	targetContext := ctrl findNextContext: originContext 
+								 having: aContext home 
+					  			 fixing: interruptedProcess suspendedContext .
+	
+	targetContext == originContext 
+		ifTrue: [ "Step through is equivalent to Step over"
+			interruptedProcess suspendedContext: originContext.
+			interruptedProcess isTerminated
+					ifTrue: [ aContext terminateTo: nil ]
+					ifFalse: [ self updateContextTo: 
+									(self stepToFirstInterestingBytecodeIn: interruptedProcess) ] ]
+		ifFalse: [ "Step through either enters of exits the block"
+			interruptedProcess suspendedContext: targetContext.
+			self updateContextTo: targetContext ].
+			
+	self triggerEvent: #stepThrough
+]
+
 { #category : 'evaluating' }
 DebugSession >> implement: aMessage classified: aSymbol inClass: aClass forContext: aContext [
 
@@ -133,25 +178,6 @@ DebugSession >> implement: aMessage classified: aSymbol inClass: aClass forConte
 
 	self updateContextTo: aContext.
 	self contextChanged
-]
-
-{ #category : 'debug - session' }
-DebugSession >> implement: aMessage inClass: aClass forContext: aContext [
-	| method |
-	aClass compile: (DynamicMessageImplementor for: aMessage in: aClass) value.
-	method := aClass lookupSelector: aMessage selector.
-
-	MethodClassifier classify: method.
-
-	aContext privRefreshWith: method.
-	aContext method numArgs > 0 ifTrue:
-		[aMessage arguments withIndexDo:
-			[:arg :index|
-				aContext tempAt: index put: arg]].
-
-	self updateContextTo: aContext.
-	self contextChanged.
-	^ method
 ]
 
 { #category : 'private' }
@@ -399,7 +425,7 @@ DebugSession >> rewindContextToMethod: aMethod fromContext: aContext [
 
 	ctxt == aContext
 		ifFalse: [
-			self inform: 'Method saved, but current context unchanged\because of unwind error. Click OK to see error' withCRs ]
+			InformativeNotification signal: 'Method saved, but current context unchanged\because of unwind error. Click OK to see error' withCRs ]
 		ifTrue: [
 			interruptedProcess restartTopWith: aMethod.
 			self stepToFirstInterestingBytecodeIn: interruptedProcess ].
@@ -509,6 +535,9 @@ DebugSession >> stepThrough [
 DebugSession >> stepThrough: aContext [
 	"Send messages until you return to selectedContext.
 	 Used to step into a block in the method."
+	
+	self class fastStepThroughMode ifTrue: [ ^ self fastStepThrough: aContext ].
+	
 	aContext stepIntoQuickMethod: false.
 	(self isContextPostMortem: aContext) ifTrue: [^ self].
 
@@ -516,6 +545,12 @@ DebugSession >> stepThrough: aContext [
 	self updateContextTo: (self stepToFirstInterestingBytecodeIn: interruptedProcess).
 
 	self triggerEvent: #stepThrough
+]
+
+{ #category : 'accessing' }
+DebugSession >> stepThroughController [
+	^ stepThroughController ifNil: [
+		  stepThroughController := FastStepThroughController new ]
 ]
 
 { #category : 'private' }

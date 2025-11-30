@@ -263,7 +263,6 @@ SpIconPacksFetchPresenter >> initializeIconPacksPresenters [
 		"headerTitle: 'Remote Icon Packs';"
 		items: self fetchedIconPacks;
 		display: [ : themeIcons | themeIcons name ];
-		contextMenu: [  ];
 		yourself.
 	availableIconPacksPresenter := self newList
 		headerTitle: 'Downloaded Icon Packs';

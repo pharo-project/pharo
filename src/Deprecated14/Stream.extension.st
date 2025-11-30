@@ -1,6 +1,13 @@
 Extension { #name : 'Stream' }
 
 { #category : '*Deprecated14' }
+Stream >> basicNext [
+
+	self deprecated: 'Use #next' transformWith: '`@rcv basicNext' -> '`@rcv next'.
+	^ self next
+]
+
+{ #category : '*Deprecated14' }
 Stream >> basicNext: anAmount putAll: aCollection startingAt: startIndex [
 
 	self

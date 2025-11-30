@@ -252,3 +252,16 @@ WriteStreamTest >> testWithFromTo [
 		assert: stream contents equals: self string;
 		assert: stream size equals: self stringSize
 ]
+
+{ #category : 'tests' }
+WriteStreamTest >> testWriteStreamWithOrderedCollectionAndSet [
+	"This is a regression test showing a bug that got introduce at some point in Pharo."
+
+	| set stream |
+	set := Set withAll: { 1. 2. 3 }.
+	stream := self newStreamOn: OrderedCollection new.
+
+	stream nextPutAll: set.
+
+	self assertCollection: stream contents equals: (OrderedCollection withAll: { 1. 2. 3 })
+]

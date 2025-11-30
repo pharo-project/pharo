@@ -14,6 +14,12 @@ OCIRPopIntoTemp >> accept: aVisitor [
 	^ aVisitor visitPopIntoTemp: self
 ]
 
+{ #category : 'stack' }
+OCIRPopIntoTemp >> deltaStack [
+
+	^ -1
+]
+
 { #category : 'accessing' }
 OCIRPopIntoTemp >> nextBytecodeOffsetAfterJump [
 	"if we are in to:do: answers the next byte code offset"

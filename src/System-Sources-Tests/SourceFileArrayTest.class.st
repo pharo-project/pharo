@@ -21,10 +21,10 @@ SourceFileArrayTest >> ensureChangesFileOpenedInProcess [
 
 	| sourcePointer fileIndex filePosition string |
 	sourcePointer :=  thisContext method sourcePointer.
-	fileIndex := SourceFiles fileIndexFromSourcePointer: sourcePointer.
-	filePosition := SourceFiles filePositionFromSourcePointer: sourcePointer.
+	fileIndex := SourceFileArray default fileIndexFromSourcePointer: sourcePointer.
+	filePosition := SourceFileArray default filePositionFromSourcePointer: sourcePointer.
 	
-	string := SourceFiles
+	string := SourceFileArray default
 		readStreamAtFileIndex: fileIndex
 		atPosition: filePosition
 		ifPresent: [ :readStream | (ChunkReadStream on: readStream) next ]
@@ -49,7 +49,7 @@ SourceFileArrayTest >> testAddressRange [
 { #category : 'tests' }
 SourceFileArrayTest >> testChangesFileStream [
 
-	self assert: SourceFiles changesFileStream isNotNil
+	self assert: SourceFileArray default changesFileStream isNotNil
 ]
 
 { #category : 'tests' }
@@ -94,7 +94,7 @@ SourceFileArrayTest >> testForkedRead [
 		readSemaphore wait.
 
 		"Read the string that was written in other process."
-		readString := SourceFiles
+		readString := SourceFileArray default
 			readStreamAtFileIndex: 2 "changes"
 			atPosition: position
 			ifPresent: [ :readStream | (ChunkReadStream on: readStream) next ]
@@ -103,7 +103,7 @@ SourceFileArrayTest >> testForkedRead [
 		] fork.
 
 	"Write the string, that will be read in other process."
-	SourceFiles changesWriteStreamDo: [ :theFile |
+	SourceFileArray default changesWriteStreamDo: [ :theFile |
 		theFile cr.
 		position := theFile position.
 		(ChunkWriteStream on: theFile) nextPut: originalString.
@@ -131,7 +131,7 @@ SourceFileArrayTest >> testForkedWrite [
 		readSemaphore wait.
 
 		"Write the string, that will be read in other process."
-		SourceFiles changesWriteStreamDo: [ :theFile |
+		SourceFileArray default changesWriteStreamDo: [ :theFile |
 			theFile cr.
 			position := theFile position.
 			(ChunkWriteStream on: theFile) nextPut: originalString.
@@ -144,7 +144,7 @@ SourceFileArrayTest >> testForkedWrite [
 	testSemaphore wait.
 
 	"Read the string that was written in other process."
-	readString := SourceFiles
+	readString := SourceFileArray default
 		readStreamAtFileIndex: 2 "changes"
 		atPosition: position
 		ifPresent: [ :readStream | (ChunkReadStream on: readStream) next ]
@@ -201,11 +201,11 @@ SourceFileArrayTest >> testProtocol [
 
 	| okCm notOkCm |
 	okCm := Point >> #dotProduct:.
-	self assert: ((SourceFiles sourcedDataAt: okCm sourcePointer) beginsWith: 'Point methodsFor: ''point functions''').
-	self assert: (SourceFiles protocolAt: okCm sourcePointer) equals: 'point functions'.
+	self assert: ((SourceFileArray default sourcedDataAt: okCm sourcePointer) beginsWith: 'Point methodsFor: ''point functions''').
+	self assert: (SourceFileArray default protocolAt: okCm sourcePointer) equals: 'point functions'.
 
 	notOkCm := Behavior >> #superclass.
-	self assert: (SourceFiles protocolAt: notOkCm sourcePointer) equals: 'accessing - class hierarchy'
+	self assert: (SourceFileArray default protocolAt: notOkCm sourcePointer) equals: 'accessing - class hierarchy'
 ]
 
 { #category : 'tests' }
@@ -228,7 +228,7 @@ SourceFileArrayTest >> testSourcePointerFromFileIndexAndPosition [
 { #category : 'tests' }
 SourceFileArrayTest >> testSourcesFileStream [
 
-	self assert: SourceFiles sourcesFileStream isNotNil
+	self assert: SourceFileArray default sourcesFileStream isNotNil
 ]
 
 { #category : 'tests' }

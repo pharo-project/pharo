@@ -38,7 +38,8 @@ WorkingSession >> addDeferredStartupAction: aBlock [
 
 { #category : 'accessing' }
 WorkingSession >> errorHandler [
-	^ UIManager default
+
+	^ ErrorHandler default
 ]
 
 { #category : 'deferred startup actions' }

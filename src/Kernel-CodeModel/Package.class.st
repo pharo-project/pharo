@@ -77,10 +77,10 @@ Package class >> initializeProperties [
 ]
 
 { #category : 'instance creation' }
-Package class >> named: aString [
+Package class >> named: aPackageName [
 
 	^ self new
-		  name: aString;
+		  name: aPackageName;
 		  yourself
 ]
 
@@ -502,9 +502,10 @@ Package >> name [
 Package >> name: aSymbol [
 	"Set the name of a package. This method is private and should not be used.
 	If you wish to rename a package, use #renameTo: instead"
-
+	
+	
 	aSymbol isEmptyOrNil ifTrue: [ self error: 'Cannot have empty or nil package name.' ].
-	name := aSymbol asSymbol
+	name := (self sanitizeName: aSymbol) asSymbol
 ]
 
 { #category : 'private' }
@@ -683,7 +684,7 @@ Package >> renameTo: aSymbol [
 
 	| oldName newName |
 	oldName := self name.
-	newName := aSymbol asSymbol.
+	newName := (self sanitizeName: aSymbol) asSymbol.
 	self organizer validatePackageDoesNotExist: aSymbol.
 
 	self organizer basicUnregisterPackage: self.
@@ -716,6 +717,12 @@ Package >> roots [
 
 	^ self definedClasses
 		select: [ :each | each superclass isNil or: [ each superclass package ~~ self ] ]
+]
+
+{ #category : 'accessing' }
+Package >> sanitizeName: aName [
+
+	^ aName trimBoth
 ]
 
 { #category : 'accessing' }

@@ -160,3 +160,15 @@ DTCoveragePluginPresenter >> updateSourceCodePanel: compiledMethod [
 			 highlightColor: (Color r: 0.74 g: 0.98 b: 0.71)).
 	^ sourceCodePanel yourself
 ]
+
+{ #category : 'private' }
+DTCoveragePluginPresenter >> whenPackagesSelectionChanged: packagesSelected [
+
+	| allClasses |
+	allClasses := packagesSelected flatCollect: [ :package | package classes ].
+
+	itemsList roots: ((plugin itemsToBeAnalysedFor: packagesSelected) sorted: #name ascending).
+	itemsList roots: itemsList items.
+	itemsList selectAll.
+	self updatePackagesListLabel 
+]

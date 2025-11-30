@@ -203,7 +203,7 @@ ReCompositeExtractMethodRefactoring >> calculateAssignments [
 		sequenceNode := (self sourceMethodTree allChildren select: [ :each | each isSequence ]) last.
 
 		assignments := temporaries select: [ :temp |
-			whoDefinesTemp := (sequenceNode whoDefines: temp).
+			whoDefinesTemp := (sequenceNode whichUpNodeDefines: temp).
 			whoDefinesTemp statements anySatisfy: [ :statement |
 				(statement references: temp)
 				and: [ (subtree allChildren includes: statement) not ] ] ] ]
@@ -373,12 +373,12 @@ ReCompositeExtractMethodRefactoring >> newMethodName [
 
 				"it's a valid selector"
 				(newSelector isString and: [ self isValidSelector: newSelector])
-					ifFalse: [ self inform: newSelector asString, ' is not a valid selector.'.
+					ifFalse: [ InformativeNotification signal:  newSelector asString, ' is not a valid selector.'.
 								  newSelector := nil ].
 
 				"already exists in class"
 				(self definingClass directlyDefinesLocalMethod: newSelector)
-					ifTrue: [ self inform: newSelector, ' is already defined in ', class asString.
+					ifTrue: [ InformativeNotification signal:  newSelector, ' is already defined in ', class asString.
 								 newSelector := nil ] ] ].
 
 	^ methodName

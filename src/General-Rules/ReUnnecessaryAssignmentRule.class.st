@@ -35,5 +35,5 @@ ReUnnecessaryAssignmentRule class >> uniqueIdentifierName [
 ReUnnecessaryAssignmentRule >> basicCheck: aNode [
 	aNode isReturn ifFalse: [ ^ false ].
 	aNode isAssignment ifFalse: [ ^ false ].
-	^ (aNode whoDefines: aNode variable name) isNotNil
+	^ (aNode whichUpNodeDefines: aNode variable name) isNotNil
 ]

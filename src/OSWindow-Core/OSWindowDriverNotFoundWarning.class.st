@@ -16,7 +16,7 @@ Class {
 { #category : 'handling' }
 OSWindowDriverNotFoundWarning >> defaultAction [
 
-	self inform: self messageText.
+	InformativeNotification signal: self messageText.
 	self resume: nil
 ]
 

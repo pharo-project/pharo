@@ -37,11 +37,6 @@ MCVersion class >> package: aPackage info: aVersionInfo snapshot: aSnapshot depe
 ]
 
 { #category : 'actions' }
-MCVersion >> addToCache [
-	MCCacheRepository uniqueInstance storeVersion: self
-]
-
-{ #category : 'actions' }
 MCVersion >> adopt [
 	self workingCopy adopt: self
 ]
@@ -90,11 +85,11 @@ MCVersion >> info [
 
 { #category : 'initialization' }
 MCVersion >> initializeWithPackage: aPackage info: aVersionInfo snapshot: aSnapshot dependencies: aCollection [
+
 	package := aPackage.
 	info := aVersionInfo.
 	snapshot := aSnapshot.
-	dependencies := aCollection.
-	self addToCache.
+	dependencies := aCollection
 ]
 
 { #category : 'actions' }

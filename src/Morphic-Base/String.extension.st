@@ -40,6 +40,7 @@ String >> heightToDisplayInList: aList [
 String >> indentationIfBlank: aBlock [
 	"Answer the number of leading tabs in the receiver.  If there are
 	 no visible characters, pass the number of tabs to aBlock and return its value."
+	
 	| reader leadingTabs lastSeparator cr tab ch |
 	cr := Character cr.
 	tab := Character tab.

@@ -8,7 +8,8 @@ CompiledMethod >> hasDocComment [
 { #category : '*PharoDocComment' }
 CompiledMethod >> pharoDocCommentNodes [
 	"we try to avoid to have to create the AST if we are sure that we do not need it"
-	^ (self sourceCode includesSubstring: '>>>')
-		  ifTrue: [ self ast pharoDocCommentNodes ]
-		  ifFalse: [ ^ #(  ) ]
+
+	self sourceCode ifNotNil: [ :code | (code includesSubstring: '>>>') ifTrue: [ ^ self ast pharoDocCommentNodes ] ].
+
+	^ #(  )
 ]

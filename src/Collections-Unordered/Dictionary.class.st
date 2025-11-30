@@ -459,16 +459,16 @@ Dictionary >> at: key update: updateBlock [
 ]
 
 { #category : 'accessing' }
-Dictionary >> at: key update: updateBlock initial: initBlocktOrValue [
+Dictionary >> at: key update: updateBlock initial: initBlockOrValue [
 	"I am used to update the value at a given key. The updateBlock is passed
 	the existing value, and the result of the block is stored back.
-	If the key does not exist, store the value of the initBlocktOrValue.
+	If the key does not exist, store the value of the initBlockOrValue.
 	initBlocktOrValue can be a block in case the initial value is expensive to compute.
 	I use findElementOrNil: to avoid looking up the key twice."
 	| index |
 	index := self findElementOrNil: key.
 	(array at: index)
-		ifNil: [ self atNewIndex: index put: key -> initBlocktOrValue value]
+		ifNil: [ self atNewIndex: index put: key -> initBlockOrValue value]
 		ifNotNil: [ :assoc | assoc value: (updateBlock value: assoc value) ]
 ]
 
@@ -850,16 +850,6 @@ Dictionary >> removeKey: key ifAbsent: aBlock [
 	tally := tally - 1.
 	self fixCollisionsFrom: index.
 	^ assoc value
-]
-
-{ #category : 'undeclared' }
-Dictionary >> removeUnreferencedKeys [
-	"This is private code for the Undeclared handling, not a general API."
-
-	self
-		deprecated: 'Use "Smalltalk image cleanOutUndeclared" instead'
-		transformWith: '`@rcv removeUnreferencedKeys' -> 'Smalltalk image cleanOutUndeclared'.
-	Smalltalk image cleanOutUndeclared
 ]
 
 { #category : 'private' }

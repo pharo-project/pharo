@@ -723,7 +723,7 @@ ZnClient >> interactivePolicy [
 	self
 		beOneShot;
 		ifFail: [ :exception |
-			self inform: 'HTTP call failed with ', exception printString.
+			InformativeNotification signal: 'HTTP call failed with ', exception printString.
 			nil ]
 ]
 

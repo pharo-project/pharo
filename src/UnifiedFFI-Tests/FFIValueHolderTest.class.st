@@ -5,7 +5,16 @@ Class {
 	#package : 'UnifiedFFI-Tests'
 }
 
-{ #category : 'accessing' }
+{ #category : 'private - ffi' }
+FFIValueHolderTest >> ffiConcatStringList: anArray size: aSize [
+
+	^ self 
+		ffiCall: #(void *TestConcatStringList(char **anArray, int aSize))
+		module: 'to-test'
+		options: #(+optCallbackCall)
+]
+
+{ #category : 'private - ffi' }
 FFIValueHolderTest >> ffiMethodCharPointerPointer: value [
 
 	^ self 
@@ -14,7 +23,7 @@ FFIValueHolderTest >> ffiMethodCharPointerPointer: value [
 		options: #(+optCallbackCall)
 ]
 
-{ #category : 'accessing' }
+{ #category : 'private - ffi' }
 FFIValueHolderTest >> ffiMethodExternalObject: value [
 
 	^ self 
@@ -23,7 +32,7 @@ FFIValueHolderTest >> ffiMethodExternalObject: value [
 		options: #(+optCallbackCall)
 ]
 
-{ #category : 'accessing' }
+{ #category : 'private - ffi' }
 FFIValueHolderTest >> ffiMethodExternalObjectPointerPointer: value [
 
 	^ self 
@@ -32,7 +41,7 @@ FFIValueHolderTest >> ffiMethodExternalObjectPointerPointer: value [
 		options: #(+optCallbackCall)
 ]
 
-{ #category : 'accessing' }
+{ #category : 'private - ffi' }
 FFIValueHolderTest >> ffiMethodInt: value [
 
 	^ self 
@@ -41,7 +50,7 @@ FFIValueHolderTest >> ffiMethodInt: value [
 		options: #(+optCallbackCall)
 ]
 
-{ #category : 'accessing' }
+{ #category : 'private - ffi' }
 FFIValueHolderTest >> ffiMethodIntPointer: value [
 
 	^ self 
@@ -50,7 +59,7 @@ FFIValueHolderTest >> ffiMethodIntPointer: value [
 		options: #(+optCallbackCall)
 ]
 
-{ #category : 'accessing' }
+{ #category : 'private - ffi' }
 FFIValueHolderTest >> ffiMethodStructPointerPointer: value [
 
 	^ self 
@@ -59,11 +68,20 @@ FFIValueHolderTest >> ffiMethodStructPointerPointer: value [
 		options: #(+optCallbackCall)
 ]
 
-{ #category : 'accessing' }
+{ #category : 'private - ffi' }
 FFIValueHolderTest >> ffiMethodStructure: value [
 
 	^ self 
 		ffiCall: #(int TestStructureValueHolder (FFITestStructure *value))
+		module: 'to-test'
+		options: #(+optCallbackCall)
+]
+
+{ #category : 'private - ffi' }
+FFIValueHolderTest >> ffiSumIntegerList: anArray size: aSize [
+
+	^ self 
+		ffiCall: #(int TestSumIntegerList(int *anArray, int aSize))
 		module: 'to-test'
 		options: #(+optCallbackCall)
 ]
@@ -82,7 +100,101 @@ FFIValueHolderTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : 'tests' }
+{ #category : 'tests - array' }
+FFIValueHolderTest >> testArrayOfIntegersCanBePassed [
+	"This test validates we can use an FFIArray to pass as an * (adresss to, 
+	 pointer to, reference to) argument"
+	| holder result |
+	
+	"This callback simulates this C function: 
+	
+	int sum_list(const int *list, size_t size) {
+    int sum = 0;
+    for (size_t i = 0; i < size; i++) {
+        sum += list[i];
+    }
+    return sum;}
+	"
+	FFICallbackFunctionResolution 
+		registerCallback: (FFICallback 
+			signature: #(int (int *aValue, int size)) 
+			block: [ :aValue :aSize |
+				| sum |
+				sum := 0.
+				0 to: (aSize - 1) do: [ :i |
+					sum := sum + (aValue signedLongAt: (i * FFIInt32 externalTypeSize) + 1) ].
+				sum ])
+		as: #TestSumIntegerList.
+		
+	
+	holder := FFIArray newType: FFIInt32 size: 5.
+	1 to: 5 do: [ :i | 
+		holder at: i put: i factorial ].
+	
+	result := self ffiSumIntegerList: holder size: 5.
+	
+	self 
+		assert: result
+		equals: ((1 to: 5) collect: #factorial) sum
+]
+
+{ #category : 'tests - array' }
+FFIValueHolderTest >> testArrayOfStringsCanBePassed [
+	"This test validates we can use an FFIArray to pass as an ** (adresss to address, 
+	 pointer to pointer, reference to reference) argument"
+	| holder result strings |
+	
+	"This callback simulates this C function (it concatenates a string): 
+	
+	char *concat_list(const char **list, size_t size) {
+	int len;
+	char *concat;
+    for (size_t i = 0; i < size; i++) {
+        len += strlen(list[i]);
+    }
+    len = len + ((size - 1) * 2) + 1; /* space for comma and final zero */ 
+    concat = malloc(len);
+    concat[0] = '\0';
+    for (size_t i = 0; i < size; i++) {
+       strcat(concat, list[i]);
+       if(i < (size - 1)) {
+       	strcat(concat, "", "");
+       }
+    }
+    return concat;
+	"
+	FFICallbackFunctionResolution 
+		registerCallback: (FFICallback 
+			signature: #(void *(char **aValue, int size)) 
+			block: [ :aValue :aSize |
+				| concat |
+				concat := ''.
+				0 to: (aSize - 1) do: [ :i |
+					concat := concat, ((aValue pointerAt: (i * FFIOop externalTypeSize) + 1) utf8StringFromCString).
+					i < (aSize - 1) 
+						ifTrue: [ concat := concat, ', ' ] ].
+				ExternalAddress fromString: concat ])
+		as: #TestConcatStringList.
+		
+	strings := (String loremIpsum: 100) substrings: ' ,'.
+	holder := FFIArray newType: 'char*' size: strings size.
+	1 to: strings size do: [ :i | 
+		holder 
+			at: i 
+			put: (ExternalAddress fromString: (strings at: i)) ].
+	
+	[ 
+		result := self ffiConcatStringList: holder size: strings size.
+		self 
+			assert: result utf8StringFromCString
+			equals: (', ' join: strings) ]
+	ensure: [
+		holder asArray do: #free.
+		result ifNotNil: #free ]
+		
+]
+
+{ #category : 'tests - basic' }
 FFIValueHolderTest >> testBasicTypeCanBeHolded [
 	| holder |
 
@@ -322,6 +434,33 @@ FFIValueHolderTest >> testCallStructPointerPointerWithValueHolder [
 ]
 
 { #category : 'tests' }
+FFIValueHolderTest >> testCallStructureWithReference [
+	| struct holder result |
+	
+	struct := FFITestStructure new.
+	holder := struct referenceTo.
+	
+	"this simulates a c function like this: 
+	int aFunction(FFITestStructure *aValue) {
+		aValue->byteValue = 42;
+		return 1;
+	}"
+	FFICallbackFunctionResolution 
+		registerCallback: (FFICallback 
+			signature: #(int (void *aValue)) 
+			block: [ :aValue |
+				(FFITestStructure fromHandle: aValue) byte: 42.
+				1 ])
+		as: #TestStructureValueHolder.
+	self assert: struct byte equals: 0.
+
+	result := self ffiMethodStructure: holder.
+	
+	self assert: result equals: 1.
+	self assert: struct byte equals: 42
+]
+
+{ #category : 'tests' }
 FFIValueHolderTest >> testCallStructureWithValueHolder [
 	| holder result resultStruct |
 	
@@ -346,7 +485,7 @@ FFIValueHolderTest >> testCallStructureWithValueHolder [
 	resultStruct free
 ]
 
-{ #category : 'tests' }
+{ #category : 'tests - basic' }
 FFIValueHolderTest >> testOpaqueObjectTypeCanBeHolded [
 	| holder |
 
@@ -360,15 +499,16 @@ FFIValueHolderTest >> testOpaqueObjectTypeCanBeHolded [
 	self assert: holder value getHandle equals: (ExternalAddress fromAddress: 42)
 ]
 
-{ #category : 'tests' }
+{ #category : 'tests - basic' }
 FFIValueHolderTest >> testStructureTypeCanBeHolded [
 	| holder |
+	
+	"a holder of the structure is the handle of the structure itself, since from the POV 
+	 of uFFI is the same to pass `AStruct arg` than `AStruct *arg` sinie the argument 
+	 mangling will be aquivalent (this maybe should be review)?" 
 	
 	holder :=  FFITestStructure newValueHolder.
 	self assert: holder type class equals: FFITestStructure.
 	self assert: (holder getHandle isKindOf: ByteArray).
-	self assert: holder getHandle size equals: FFITestStructure newBuffer size.	
-	"this can't be like this (the structure tries to be filled with the handle)"
-	"holder value: (structClass fromHandle: (ExternalAddress fromAddress: 42)).
-	self assert: holder value getHandle equals: (ExternalAddress fromAddress: 42)"
+	self assert: holder getHandle size equals: FFITestStructure structureSize
 ]
