@@ -46,7 +46,7 @@ ReInstanceVariableHasReferences >> violators [
 	aClass withAllSubclasses do: [ :each |
 		| res |
 		res := (each whichMethodsReferToInstanceVariable: instanceVariable).
-		res isNotEmpty
+		res isEmpty
 			ifTrue: [ violators addAll: res ].
 		].
 	^ violators
