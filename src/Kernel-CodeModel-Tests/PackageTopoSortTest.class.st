@@ -7,7 +7,7 @@ Class {
 }
 
 { #category : 'tests' }
-PackageTopoSortTest >> testSortClassAndSubclassPutsSubclassFirst [
+PackageTopoSortTest >> testSortClassAndSubclassPutsSubclassLast [
 
 	| sorted |
 	sorted := Package new sortTopologically: {
@@ -15,8 +15,8 @@ PackageTopoSortTest >> testSortClassAndSubclassPutsSubclassFirst [
 			          PackageTopoSortTest }.
 	
 	self assert: sorted asArray equals: {
-			PackageTopoSortTest.
-			PackageTopoSortTest superclass }
+			PackageTopoSortTest superclass.
+			PackageTopoSortTest }
 ]
 
 { #category : 'tests' }
@@ -28,7 +28,7 @@ PackageTopoSortTest >> testSortEmptyArray [
 ]
 
 { #category : 'tests' }
-PackageTopoSortTest >> testSortSubclassAndClassPutsSubclassFirst [
+PackageTopoSortTest >> testSortSubclassAndClassPutsSubclassLast [
 
 	| sorted |
 	sorted := Package new sortTopologically: {
@@ -36,8 +36,8 @@ PackageTopoSortTest >> testSortSubclassAndClassPutsSubclassFirst [
 			          PackageTopoSortTest superclass }.
 
 	self assert: sorted asArray equals: {
-			PackageTopoSortTest.
-			PackageTopoSortTest superclass }
+			PackageTopoSortTest superclass.
+			PackageTopoSortTest }
 ]
 
 { #category : 'tests' }

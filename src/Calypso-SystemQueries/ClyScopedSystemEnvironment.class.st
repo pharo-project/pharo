@@ -54,9 +54,8 @@ ClyScopedSystemEnvironment >> compileANewClassFrom: newClassDefinitionString not
 	| newClassPackageName |
 	newClassPackageName := self extractPackageNameFrom: newClassDefinitionString.
 	(scope definesPackageNamed: newClassPackageName) ifFalse: [
-		StPharoApplication current inform:
-			'Impossible to create a class in a package outside the scope'.
-		^ nil ].
+			InformativeNotification signal: 'Impossible to create a class in a package outside the scope'.
+			^ nil ].
 
 	^ super compileANewClassFrom: newClassDefinitionString notifying: aController startingFrom: oldClass
 ]

@@ -520,7 +520,7 @@ ClassDescription >> instanceVariablesOn: aStream [
 	"Write my instance variable names separated by spaces on the argument."
 
 	self localSlots
-		do: [ :each | aStream nextPutAll: each name asString]
+		do: [ :each | aStream nextPutAll: each name ]
 		separatedBy: [ aStream space ]
 ]
 

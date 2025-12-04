@@ -41,9 +41,20 @@ MCHttpRepository class >> clearPasswords [
 
 ]
 
+{ #category : 'instance creation' }
+MCHttpRepository class >> createRepositoryFromSpec: aRepositorySpec [
+
+	^ self location: aRepositorySpec description user: aRepositorySpec username password: aRepositorySpec password
+]
+
 { #category : 'accessing' }
 MCHttpRepository class >> description [
 	^ 'HTTP'
+]
+
+{ #category : 'testing' }
+MCHttpRepository class >> isAvailableFor: type [
+	^ self = MCHttpRepository and: [ type = 'http' ]
 ]
 
 { #category : 'testing' }
@@ -104,6 +115,15 @@ MCHttpRepository class >> repositoryClassFor: location [
 { #category : 'accessing' }
 MCHttpRepository class >> urlSchemes [
 	^ #(http https)
+]
+
+{ #category : 'converting' }
+MCHttpRepository >> asRepositorySpecFor: aMetacelloMCProject [
+
+	^(aMetacelloMCProject repositorySpec)
+		description:  self description;
+	 	type: 'http';
+		yourself
 ]
 
 { #category : 'private' }

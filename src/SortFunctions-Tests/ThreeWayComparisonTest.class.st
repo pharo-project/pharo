@@ -39,6 +39,15 @@ ThreeWayComparisonTest >> testIntegers [
 ]
 
 { #category : 'tests' }
+ThreeWayComparisonTest >> testObjects [
+
+	self assert: (Point>>#degrees threeWayCompareTo: (Point>>#x)) equals: -1.
+	"because this because 'Point>>#degrees' < 'Point>>#x' returns true"
+	self assert: (ChainedSortFunctionTest threeWayCompareTo: SortFunctionTest) equals: -1.
+	
+]
+
+{ #category : 'tests' }
 ThreeWayComparisonTest >> testStrings [
 
 	| a b c d |

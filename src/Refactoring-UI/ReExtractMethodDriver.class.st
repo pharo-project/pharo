@@ -90,8 +90,7 @@ ReExtractMethodDriver >> defaultSelectDialog [
 		  label: self labelBasedOnBreakingChanges;
 		  items: self breakingChoices;
 		  display: [ :each | each description ];
-		  displayIcon: [ :each | self iconNamed: each systemIconName ];
-		  openModal
+		  displayIcon: [ :each | self iconNamed: each systemIconName ]
 ]
 
 { #category : 'instance creation' }
@@ -106,14 +105,6 @@ ReExtractMethodDriver >> extract: aString from: compiledMethod in: aClass [
 ReExtractMethodDriver >> extractMethod [
 	
 	^ self applyChanges
-]
-
-{ #category : 'execution' }
-ReExtractMethodDriver >> handleBreakingChanges [
-
-	| select |
-	select := self selectDialog.
-	select ifNotNil: [ select action ]
 ]
 
 { #category : 'configuration' }

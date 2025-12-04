@@ -59,11 +59,6 @@ RubSmalltalkCodeMode class >> menuOn: aBuilder [
 		selector: #browseFullClass;
 		help: nil;
 		iconName: #smallSystemBrowser.
-	(aBuilder item: #'Do & basic inspect it' translated)
-		keyText: 'I';
-		selector: #basicInspectIt;
-		help: nil;
-		iconName: #smallInspectIt.
 	(aBuilder item: #'Debug it' translated)
 		keyText: 'D';
 		selector: #debugIt;

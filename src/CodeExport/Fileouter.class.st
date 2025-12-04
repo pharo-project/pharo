@@ -1,10 +1,14 @@
+"
+I drive the file out of packages, classes and methods.
+"
 Class {
 	#name : 'Fileouter',
 	#superclass : 'Object',
 	#instVars : [
 		'behaviors',
 		'methods',
-		'exporter'
+		'exporter',
+		'packageDefinitions'
 	],
 	#category : 'CodeExport-Base',
 	#package : 'CodeExport',
@@ -29,8 +33,10 @@ Fileouter >> addFullClass: aClass [
 { #category : 'API - configuration' }
 Fileouter >> addFullPackage: aPackage [
 
+	packageDefinitions add: aPackage.
 	behaviors addAll: aPackage definedClasses.
-	methods addAll: aPackage methods. 
+	methods addAll: aPackage methods.
+	methods addAll: aPackage extensionMethods.	
 ]
 
 { #category : 'API - configuration' }
@@ -58,6 +64,8 @@ Fileouter >> fileOut [
 	sortedBehaviors := self sortBehaviors.
 	sortedMethods := self methods sorted: [ :a :b | a name < b name ].
 
+	self writeFileoutVersion.
+"	packageDefinitions do: [ :p | self fileoutPackageDefinition: p ]."
 	sortedBehaviors do: [ :c | self fileoutBehavior: c ].
 	sortedMethods do: [ :m | self fileoutMethod: m ].
 	sortedBehaviors do: [ :c | self fileoutBehaviorInitializer: c ].
@@ -67,8 +75,8 @@ Fileouter >> fileOut [
 Fileouter >> fileoutBehavior: aBehavior [
 
 	| comment |
-	exporter writeClassDefinition: aBehavior.
-	exporter writeClassDefinition: aBehavior class.
+	exporter writeClassDefinitionOf: aBehavior.
+	exporter writeClassDefinitionOf: aBehavior class.
 	
 	comment := aBehavior comment.
 	(comment isNil or: [comment isEmpty])
@@ -97,7 +105,7 @@ Fileouter >> fileoutOnFileReference: aFileReference [
 { #category : 'API' }
 Fileouter >> fileoutOnStream: aStream [
 
-	exporter := CodeExporter onStream: aStream.
+	exporter := CodeExporterV100 onStream: aStream.
 	self fileOut
 ]
 
@@ -105,6 +113,7 @@ Fileouter >> fileoutOnStream: aStream [
 Fileouter >> initialize [
 
 	super initialize.
+	packageDefinitions := Set new.
 	behaviors := Set new.
 	methods := Set new
 ]
@@ -122,7 +131,25 @@ Fileouter >> methods: anObject [
 ]
 
 { #category : 'accessing' }
+Fileouter >> packageDefinitions [
+
+	^ packageDefinitions
+]
+
+{ #category : 'accessing' }
+Fileouter >> packageDefinitions: anObject [
+
+	packageDefinitions := anObject
+]
+
+{ #category : 'accessing' }
 Fileouter >> sortBehaviors [
 
 	^ Package new sortTopologically: self behaviors
+]
+
+{ #category : 'private - writing' }
+Fileouter >> writeFileoutVersion [
+
+	exporter writeFileoutVersion
 ]

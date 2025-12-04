@@ -47,15 +47,7 @@ ReRemoveInstanceVariablesDriver >> defaultSelectDialog [
 		  items: self breakingChoices;
 		  display: [ :each | each description ];
 		  displayIcon: [ :each | self iconNamed: each systemIconName ];
-		  openModal
-]
-
-{ #category : 'execution' }
-ReRemoveInstanceVariablesDriver >> handleBreakingChanges [
-
-	| select |
-	select := self selectDialog.
-	select ifNotNil: [ select action ]
+		yourself
 ]
 
 { #category : 'configuration' }

@@ -28,6 +28,12 @@ ByteArrayTest >> setUp [
 ]
 
 { #category : 'tests' }
+ByteArrayTest >> testAsByteArrayOfSize [
+	self assert: (#[51 52 53] asByteArrayOfSize: 10 ) equals: #[0 0 0 0 0 0 0 51 52 53].
+	self assert: (#[51 52 53] asByteArrayOfSize: 3 ) equals: #[51 52 53]
+]
+
+{ #category : 'tests' }
 ByteArrayTest >> testAsInteger [ 
 	self assert: #[122] asInteger equals: 122.
 	self assert: #[122 8] asInteger equals: 31240.

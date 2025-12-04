@@ -7,13 +7,10 @@ Class {
 }
 
 { #category : 'meta-data - dependency analyser' }
-ManifestOpalCompilerCore class >> ignoredDependencies [
-	^ #(#'Morphic-Base')
-]
-
-{ #category : 'meta-data - dependency analyser' }
 ManifestOpalCompilerCore class >> manuallyResolvedDependencies [
-	^ #(#'Morphic-Base' #'System-Announcements' #'System-Sources')
+
+	<ignoreForCoverage>
+	^ #(#'System-Announcements' #'System-Sources' #'Collections-Abstract')
 ]
 
 { #category : 'code-critics' }

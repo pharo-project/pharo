@@ -17,5 +17,5 @@ ReBrowseMethodChoice >> action [
 { #category : 'accessing' }
 ReBrowseMethodChoice >> description [ 
 
-	^ 'Browse the method(s)'
+	^ 'Browse the method'
 ]

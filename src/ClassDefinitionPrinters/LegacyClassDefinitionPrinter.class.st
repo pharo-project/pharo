@@ -75,7 +75,8 @@ LegacyClassDefinitionPrinter >> traitDefinitionString [
 			cr;
 			tab;
 			nextPutAll: ' package: ';
-			nextPutAll: forClass category asString printString
+			print: forClass category asString
+			"we do not want the # if category returns a symbol"
 	]
 ]
 

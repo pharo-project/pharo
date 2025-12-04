@@ -58,21 +58,18 @@ ByteArray >> asByteArray [
 
 { #category : 'converting' }
 ByteArray >> asByteArrayOfSize: size [
-	"
-		'34523' asByteArray asByteArrayOfSize: 100.
 
-	(((
-		| repeats bytes |
-		repeats := 1000000.
-		bytes := '123456789123456789123456789123456789123456789123456789' asByteArray.
-		 [repeats timesRepeat: (bytes asByteArrayOfSize: 1024) ] timeToRun.
-	)))"
+	"(#[51 52 53] asByteArrayOfSize: 10 ) >>> #[0 0 0 0 0 0 0 51 52 53]"
 
-	| bytes |
-	size < self size
+	| answer selfSize |
+	selfSize := self size.
+
+	size < selfSize
 		ifTrue: [^ self error: 'bytearray bigger than ', size asString].
-	bytes := self asByteArray.
-	^ (ByteArray new: (size - bytes size)), bytes
+	
+	answer := ByteArray new: size.
+	answer replaceFrom: size - selfSize + 1 to: size with: self startingAt: 1.
+	^answer
 ]
 
 { #category : 'private' }
@@ -85,11 +82,12 @@ ByteArray >> asByteArrayPointer [
 ByteArray >> asInteger [
 	"Convert me to an Integer, network byte order, most significant byte first, big endian"
 
-	| integer |
+	| integer size |
+	size := self size.
 	integer := 0.
-	1 to: self size do: [ :index |
+	1 to: size do: [ :index |
 		"we use inlined to:do: instead of #withIndexDo:"
-		integer := integer + ((self at: index) bitShift: (self size - index) * 8) ].
+		integer := integer + ((self at: index) bitShift: (size - index) * 8) ].
 	^ integer
 ]
 

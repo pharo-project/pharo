@@ -385,23 +385,32 @@ ReleaseTest >> testNoPeriodInMethodSignature [
 { #category : 'tests - variables' }
 ReleaseTest >> testNoShadowedVariablesInMethods [
 	"Fail if there are methods who define shadowed temps or args"
+
 	| found validExceptions remaining |
 	found := SystemNavigation default methods select: [ :m |
-		m isQuick not and: [ "quick methods do not define variables"
-			m ast variableDefinitionNodes anySatisfy: [ :node | node variable isShadowing ] ]].
-	"No other exceptions beside the ones mentioned here should be allowed"
+			         m isQuick not and: [ "quick methods do not define variables"
+				         m ast variableDefinitionNodes anySatisfy: [ :node | node variable isShadowing ] ] ]. "No other exceptions beside the ones mentioned here should be allowed"
 	validExceptions := {
-		DebugInfoTest>>#testListShadowedVariablesAreNotDuplicated.
-		RBSmalllintTestObject>>#tempVarOverridesInstVar.
-		ReTempVarOverridesInstVarRuleTest>>#sampleMethod: . OCClosureCompilerTest>>#testInlineBlockShadowVariableTwoBlocksTemporary .  OCClosureCompilerTest>>#testInlineBlockShadowVariableUsedInBlock . OCClosureCompilerTest>>#testInlineBlockShadowVariableAssignedInside . OCClosureCompilerTest>>#testInlineBlockShadowVariableTemporary . OCClosureCompilerTest>>#testInlineBlockShadowVariableUsedInInnerBlock . OCClosureCompilerTest>>#testInlineBlockShadowVariableUsedInInnerInnerBlock . OCClosureCompilerTest>>#testInlineBlockShadowVariableInnerBlocks . OCClosureCompilerTest>>#testInlineBlockShadowVariableParameter}.
+		                   (DebugInfoTest >> #testListShadowedVariablesAreNotDuplicated).
+		                   (RBSmalllintTestObject >> #tempVarOverridesInstVar).
+		                   (ReTempVarOverridesInstVarRuleTest >> #sampleMethod:).
+		                   (OCClosureCompilerTest >> #testInlineBlockShadowVariableTwoBlocksTemporary).
+		                   (OCClosureCompilerTest >> #testInlineBlockShadowVariableUsedInBlock).
+		                   (OCClosureCompilerTest >> #testInlineBlockShadowVariableAssignedInside).
+		                   (OCClosureCompilerTest >> #testInlineBlockShadowVariableTemporary).
+		                   (OCClosureCompilerTest >> #testInlineBlockShadowVariableUsedInInnerBlock).
+		                   (OCClosureCompilerTest >> #testInlineBlockShadowVariableUsedInInnerInnerBlock).
+		                   (OCClosureCompilerTest >> #testInlineBlockShadowVariableInnerBlocks).
+		                   (OCClosureCompilerTest >> #testInlineBlockShadowVariableParameter).
+		                   (ReClassToConvertTemporaryToInstanceVariable >> #doAction2) }.
 
 	remaining := found asOrderedCollection
-								removeAll: validExceptions;
-								yourself.
+		             removeAll: validExceptions;
+		             yourself.
 
 	self
 		assert: remaining isEmpty
-		description: ('the following methods have shadowing variable definitions and should be cleaned: ', remaining asString)
+		description: 'the following methods have shadowing variable definitions and should be cleaned: ' , remaining asString
 ]
 
 { #category : 'tests' }
@@ -547,7 +556,7 @@ ReleaseTest >> testThatThereAreNoSelectorsRemainingThatAreSentButNotImplemented 
 	                    'Context>>#doPrimitive:method:receiver:args:' 'Context>>#failPrimitiveWith:' 'EDTest>>#prepareMethodVersionTest'
 	                    'ExternalDropHandler class>>#defaultHandler' 'FFICallbackArgumentReader>>#stackPointer' 'FFIFloat32>>#callbackReturnOn:for:'
 	                    'FFIFloatType>>#callbackReturnOn:for:' 'FFIIndirectFunctionResolution>>#resolveFunction:'
-	                    'OCIRReconstructor>>#fixPushNilsForTemps' 'IceTipHiedraAltComponentHistoryBrowser>>#newCommitRow:commit:'
+	                    'IceTipHiedraAltComponentHistoryBrowser>>#newCommitRow:commit:'
 	                    'IceTipHiedraAltHistoryBrowser>>#newCommitRow:commit:' 'IceTipHiedraAltHistoryBrowser>>#initializeCommitList'
 	                    'InstructionStream>>#interpretNext3ByteSistaV1Instruction:for:extA:extB:'
 	                    'LazyListMorph>>#drawOnAthensCanvas:' 'MCFileTreeAbstractReader>>#packageProperties' 'MicrodownSpecComponentForTest class>>#open'

@@ -155,7 +155,7 @@ ReRuleManager class >> reset [
 ReRuleManager class >> resetWithInform [
 
 	self reset.
-	self inform: 'Cache of the Renraku rule manager has been reset'
+	InformativeNotification signal: 'Cache of the Renraku rule manager has been reset'
 ]
 
 { #category : 'accessing' }

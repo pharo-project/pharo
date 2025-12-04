@@ -59,15 +59,7 @@ ReMoveMethodsToClassSideDriver >> defaultSelectDialog [
 		  items: self breakingChoices;
 		  display: [ :each | each description ];
 		  displayIcon: [ :each | self iconNamed: each systemIconName ];
-		  openModal
-]
-
-{ #category : 'execution' }
-ReMoveMethodsToClassSideDriver >> handleBreakingChanges [
-
-	| select |
-	select := self selectDialog.
-	select ifNotNil: [ select action ]
+		  yourself
 ]
 
 { #category : 'execution' }

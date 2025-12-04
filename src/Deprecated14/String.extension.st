@@ -36,9 +36,7 @@ String >> trimmed [
 	"Trim separators from both sides of the receiving string."
 
 	"'  hello  ' trimmed >>> 'hello'"
-
 	"'hello' trimmed >>> 'hello'"
-
 	"'' trimmed >>> ''"
 
 	self

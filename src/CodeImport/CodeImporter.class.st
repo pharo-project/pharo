@@ -111,6 +111,14 @@ CodeImporter class >> readStream: aReadStream [
 		yourself
 ]
 
+{ #category : 'instance creation' }
+CodeImporter class >> withParserClass: aClass [
+
+	^ self new
+		  parserClass: aClass;
+		  yourself
+]
+
 { #category : 'accessing' }
 CodeImporter >> codeDeclarations [
 	^codeDeclarations
@@ -142,13 +150,13 @@ CodeImporter >> file: aFileStream [
 { #category : 'evaluating' }
 CodeImporter >> flushChangesFile [
 
-	logSource ifTrue: [ ChangesLog default forceChangesToDisk ]
+	logSource ifTrue: [ SourceFileArray default forceChangesToDisk ]
 ]
 
 { #category : 'initialization' }
 CodeImporter >> initialize [
 	codeDeclarations := OrderedCollection new.
-	parserClass := ChunkFileFormatParser.
+	parserClass := ChunkFileFormatParserV100.
 	logSource := true
 ]
 
@@ -164,6 +172,18 @@ CodeImporter >> parseChunks [
 	codeDeclarations := (parserClass for: readStream) parseChunks.
 	readStream close. "On windows we cannot manipulate a file if it is open, and this caused random failures in our CI depending on how things are garbage collected. So now I'm closing explicitly the stream after reading it."
 	^ codeDeclarations
+]
+
+{ #category : 'accessing' }
+CodeImporter >> parserClass [
+
+	^ parserClass
+]
+
+{ #category : 'accessing' }
+CodeImporter >> parserClass: anObject [
+
+	parserClass := anObject
 ]
 
 { #category : 'accessing' }

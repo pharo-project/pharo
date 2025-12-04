@@ -45,12 +45,6 @@ RubSmalltalkEditor class >> buildShortcutsOn: aBuilder [
 		do: [ :target | target editor inspectIt: nil ]
 		description: 'Do & inspect it'.
 
-	(aBuilder shortcut: #basicInspectIt)
-		category: RubSmalltalkEditor name
-		default: $i meta shift
-		do: [ :target | target editor basicInspectIt ]
-		description: 'Do & basic inspect it'.
-
 	(aBuilder shortcut: #implementorsOfIt)
 		category: RubSmalltalkEditor name
 		default: $m meta
@@ -155,11 +149,6 @@ RubSmalltalkEditor >> atCompletionPosition [
 	cursorPosition := self startIndex.
 	cursorPosition < 2 ifTrue: [ ^ false ].
 	^ (self lineIndentationStart: cursorPosition) < cursorPosition
-]
-
-{ #category : 'do-its' }
-RubSmalltalkEditor >> basicInspectIt [
-	self evaluateSelectionAndDo: [:result | result basicInspect]
 ]
 
 { #category : 'source navigation' }

@@ -2,6 +2,10 @@
 A MCMethodDefinition represents a method definition. 
 It captures the following information.
 
+## Implementation details
+
+It might be long to get the timestamp of a method since it requires to access the source file. As an optimization we might save the source pointer instead and retireve the timestamp lazily in case we don't always need this timestamp.
+
 Instance Variables
 	category:		<Object>
 	classIsMeta:		<Object>
@@ -22,7 +26,8 @@ Class {
 		'selector',
 		'className',
 		'timeStamp',
-		'sortKey'
+		'sortKey',
+		'sourcePointer'
 	],
 	#classVars : [
 		'InitializersEnabled'
@@ -32,28 +37,41 @@ Class {
 }
 
 { #category : 'instance creation' }
-MCMethodDefinition class >> className: classString classIsMeta: metaBoolean selector: selectorString category: catString timeStamp: timeString source: sourceString [
+MCMethodDefinition class >> className: classString classIsMeta: metaBoolean selector: selectorString category: protocolName sourcePointer: aNumber source: sourceString [
+
 	^ self new
-		initializeWithClassName: classString
-		classIsMeta: metaBoolean
-		selector: selectorString
-		category: catString
-		timeStamp: timeString
-		source: sourceString
+		  className: classString;
+		  selector: selectorString;
+		  protocol: protocolName;
+		  sourcePointer: aNumber;
+		  classIsMeta: metaBoolean;
+		  source: sourceString;
+		  yourself
 ]
 
 { #category : 'instance creation' }
-MCMethodDefinition class >> className: classString
-selector: selectorString
-category: catString
-timeStamp: timeString
-source: sourceString [
-	^ self	className: classString
-			classIsMeta: false
-			selector: selectorString
-			category: catString
-			timeStamp: timeString
-			source: sourceString
+MCMethodDefinition class >> className: classString classIsMeta: metaBoolean selector: selectorString category: protocolName timeStamp: timeString source: sourceString [
+
+	^ self new
+		  className: classString;
+		  selector: selectorString;
+		  protocol: protocolName;
+		  timeStamp: timeString;
+		  classIsMeta: metaBoolean;
+		  source: sourceString;
+		  yourself
+]
+
+{ #category : 'instance creation' }
+MCMethodDefinition class >> className: classString selector: selectorString category: catString timeStamp: timeString source: sourceString [
+
+	^ self
+		  className: classString
+		  classIsMeta: false
+		  selector: selectorString
+		  category: catString
+		  timeStamp: timeString
+		  source: sourceString
 ]
 
 { #category : 'settings' }
@@ -104,8 +122,20 @@ MCMethodDefinition >> classIsMeta [
 ]
 
 { #category : 'accessing' }
+MCMethodDefinition >> classIsMeta: aBoolean [
+
+	classIsMeta := aBoolean
+]
+
+{ #category : 'accessing' }
 MCMethodDefinition >> className [
 	^className
+]
+
+{ #category : 'serializing' }
+MCMethodDefinition >> className: aString [
+
+	className := aString asSymbol
 ]
 
 { #category : 'printing' }
@@ -142,17 +172,6 @@ MCMethodDefinition >> hash [
 	hash := String stringHash: category initialHash: hash.
 	hash := String stringHash: className initialHash: hash.
 	^ hash
-]
-
-{ #category : 'serializing' }
-MCMethodDefinition >> initializeWithClassName: classString classIsMeta: metaBoolean selector: selectorString category: protocolName timeStamp: timeString source: sourceString [
-
-	className := classString asSymbol.
-	selector := selectorString asSymbol.
-	category := protocolName isEmptyOrNil ifTrue: [ Protocol unclassified ] ifFalse: [ protocolName asSymbol ].
-	timeStamp := timeString.
-	classIsMeta := metaBoolean.
-	source := sourceString withInternalLineEndings
 ]
 
 { #category : 'installing' }
@@ -234,6 +253,14 @@ MCMethodDefinition >> protocol [
 	^ category
 ]
 
+{ #category : 'serializing' }
+MCMethodDefinition >> protocol: anObject [
+
+	category := anObject isEmptyOrNil
+		            ifTrue: [ Protocol unclassified ]
+		            ifFalse: [ anObject asSymbol ]
+]
+
 { #category : 'installing' }
 MCMethodDefinition >> removeSelector: aSelector fromClass: aClass [
 	"Safely remove the given selector from the target class.
@@ -261,6 +288,12 @@ MCMethodDefinition >> selector [
 	^selector
 ]
 
+{ #category : 'serializing' }
+MCMethodDefinition >> selector: aString [
+
+	selector := aString asSymbol
+]
+
 { #category : 'comparing' }
 MCMethodDefinition >> sortKey [
 	^ sortKey
@@ -276,6 +309,17 @@ MCMethodDefinition >> source [
 	^ source
 ]
 
+{ #category : 'serializing' }
+MCMethodDefinition >> source: aString [
+
+	source := aString withInternalLineEndings
+]
+
+{ #category : 'accessing' }
+MCMethodDefinition >> sourcePointer: anObject [
+	sourcePointer := anObject
+]
+
 { #category : 'printing' }
 MCMethodDefinition >> summary [
 
@@ -284,7 +328,15 @@ MCMethodDefinition >> summary [
 
 { #category : 'accessing' }
 MCMethodDefinition >> timeStamp [
-	^ timeStamp
+	"My computation is lazy because it takes time to compute and is not always necessary."
+
+	^ timeStamp ifNil: [ sourcePointer ifNotNil: [ :pointer | timeStamp := SourceFileArray default timeStampAt: pointer ] ]
+]
+
+{ #category : 'serializing' }
+MCMethodDefinition >> timeStamp: aString [
+
+	timeStamp := aString
 ]
 
 { #category : 'installing' }

@@ -83,7 +83,7 @@ Form >> scaledIntoFormOfSize: aNumberOrPoint [
 Form class >> serviceOpenImageInWindow [
 	"Answer a service for opening a graphic in a window"
 	<formService>
-	^ SimpleServiceEntry
+	^ FileServiceEntry
 		provider: self
 		label: 'Open graphic in a window'
 		selector: #openImageInWindow:

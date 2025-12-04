@@ -48,6 +48,7 @@ ReVariablesNotReadBeforeWrittenCondition >> variables: aCollection [
 { #category : 'displaying' }
 ReVariablesNotReadBeforeWrittenCondition >> violationMessageOn: aStream [
 
+	self check ifTrue: [ ^ self ].
 	aStream
 		nextPutAll: 'Cannot extract selected code because variables: ';
 		nextPutAll: variables asString;

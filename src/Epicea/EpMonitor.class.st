@@ -176,8 +176,8 @@ EpMonitor >> behaviorRemoved: aClassRemovedAnnouncement [
 
 	"Fix class name (remove AnObsolete prefix)"
 	classRemoved definitionSource: (classRemoved definitionSource
-			 copyReplaceAll: aClassRemovedAnnouncement classRemoved name asString
-			 with: aClassRemovedAnnouncement classRemoved originalName asString).
+			 copyReplaceAll: aClassRemovedAnnouncement classRemoved name
+			 with: aClassRemovedAnnouncement classRemoved originalName).
 
 	"Fix class name in the metaclass"
 	classRemoved classSide definitionSource:
@@ -185,10 +185,12 @@ EpMonitor >> behaviorRemoved: aClassRemovedAnnouncement [
 
 	"Fix category"
 	toReplace := (classRemoved definitionSource includesSubstring: '_UnpackagedPackage')
-		             ifTrue: [ 'package: ' , '_UnpackagedPackage' printString ]
-		             ifFalse: [ 'package: ' , 'Unclassified' printString ].
+		             ifTrue: [ 'package: ' , '_UnpackagedPackage' ]
+		             ifFalse: [ 'package: ' , 'Unclassified' ].
 
-	classRemoved definitionSource: (classRemoved definitionSource copyReplaceAll: toReplace with: 'package: ' , aClassRemovedAnnouncement packageTagAffected categoryName printString).
+	classRemoved definitionSource: (classRemoved definitionSource 
+		copyReplaceAll: toReplace 
+		with: 'package: ' , aClassRemovedAnnouncement packageTagAffected categoryName).
 
 	classRemoved name: aClassRemovedAnnouncement classRemoved originalName.
 	classRemoved package: aClassRemovedAnnouncement packageAffected name.

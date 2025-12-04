@@ -162,7 +162,12 @@ MCClassDefinition >> comment: aString [
 
 { #category : 'accessing' }
 MCClassDefinition >> commentStamp [
-	^ commentStamp
+	"Lazy initialization of this parameter to speed up the creation of the class definition in some cases by avoiding the reading of the source file. In case the actual class is not in the image, use the default value we had in the past."
+
+	^ commentStamp ifNil: [
+			  commentStamp := [ self actualClass commentStamp ]
+				                  on: Error
+				                  do: [ '' ] ]
 ]
 
 { #category : 'accessing' }
@@ -214,18 +219,6 @@ MCClassDefinition >> createVariableFromString: aString [
 			UndefinedSlot named: slotName ast: ast  ]
 ]
 
-{ #category : 'accessing' }
-MCClassDefinition >> defaultCommentStamp [
-	^ String new
-
-	"The version below avoids stomping on stamps already in the image
-
-	^ (Smalltalk globals at: name ifPresent: [:c | c organization commentStamp])
-		ifNil: ['']
-	"
-
-]
-
 { #category : 'printing' }
 MCClassDefinition >> definitionString [
 	^ String streamContents: [:stream | self printDefinitionOn: stream]
@@ -273,7 +266,6 @@ MCClassDefinition >> initialize [
 	classTraitComposition := '{}'.
 	type := #normal.
 	comment := ''.
-	commentStamp := self defaultCommentStamp.
 	variables := OrderedCollection new
 ]
 

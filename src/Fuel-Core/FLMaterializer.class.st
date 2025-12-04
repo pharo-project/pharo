@@ -21,23 +21,6 @@ FLMaterializer class >> defaultShouldMaterializeHeaderOnly [
 	^ false
 ]
 
-{ #category : 'file service' }
-FLMaterializer class >> fileReaderServicesForFile: fullName suffix: suffix [
-	<fileService>
-	suffix = 'fuel'
-		ifFalse: [ ^ #() ].
-	^ { self serviceFuelMaterialize }
-]
-
-{ #category : 'file service' }
-FLMaterializer class >> inspectMaterializationFromFileNamed: aString [
-	| result |
-	result := self new
-		filePath: aString;
-		materializeRoot.
-	^ result inspect
-]
-
 { #category : 'convenience' }
 FLMaterializer class >> materializeFrom: aStream [
 	^ self new
@@ -75,16 +58,6 @@ FLMaterializer class >> materializeHeaderFromFileNamed: aFilePath [
 	^ self new
 		filePath: aFilePath;
 		materializeHeader
-]
-
-{ #category : 'file service' }
-FLMaterializer class >> serviceFuelMaterialize [
-	^ SimpleServiceEntry 
-		provider: self 
-		label: 'Materialize Fuel file'
-		selector: #inspectMaterializationFromFileNamed:
-		description: 'Materialize objects previously serialized with Fuel'
-		buttonLabel: 'materialize'
 ]
 
 { #category : 'private' }

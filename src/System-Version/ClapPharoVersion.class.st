@@ -53,7 +53,7 @@ ClapPharoVersion >> fullVersionString [
 				  nextPutAll: '[version] ';
 				  print: SystemVersion current majorMinorVersion;
 				  nextPutAll: ' ';
-				  print: SystemVersion current asString ]
+				  print: SystemVersion current displayString ]
 ]
 
 { #category : 'version strings' }

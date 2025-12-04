@@ -37,12 +37,6 @@ PerformMessageCommandLineHandler class >> commandName [
 	^ 'perform'
 ]
 
-{ #category : 'class initialization' }
-PerformMessageCommandLineHandler class >> initialize [
-	
-	self registerAsCommandLinehandler
-]
-
 { #category : 'activation' }
 PerformMessageCommandLineHandler >> activateCommand [
 	

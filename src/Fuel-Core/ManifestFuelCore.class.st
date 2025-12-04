@@ -36,6 +36,13 @@ Class {
 	#tag : 'Manifest'
 }
 
+{ #category : 'meta-data - dependency analyser' }
+ManifestFuelCore class >> manuallyResolvedDependencies [
+
+	<ignoreForCoverage>
+	^ #(#'FileSystem-Disk')
+]
+
 { #category : 'code-critics' }
 ManifestFuelCore class >> ruleCollectionMessagesToExternalObjectRuleV1FalsePositive [
 	^ #(#(#(#RGMethodDefinition #(#FLDecoder #initializeMigrations #false)) #'2021-06-20T13:59:18.830224+02:00') )

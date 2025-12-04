@@ -1,4 +1,4 @@
-" 
+"
 OCLiteralToken is the first-class representation of a literal token (entire literals, even literal arrays, are a single token in the Pharo grammar).
 
 Instance Variables:

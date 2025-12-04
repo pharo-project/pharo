@@ -39,7 +39,7 @@ EpMethodModification >> fileOutEntryOn: aWriteStream [
 	"File out the receiver into aWriteStream if its affected method was not already deleted"
 
 	self methodAffected realParent ifNotNil: [ 
-		(CodeExporter onStream: aWriteStream)
+		(CodeExporterV100 onStream: aWriteStream)
 			writeMethod: self methodAffected originMethod ]
 ]
 

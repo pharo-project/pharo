@@ -18,10 +18,10 @@ Class {
 		'scopes',
 		'refactoring',
 		'previewPresenterClass',
-		'selectDialog',
 		'requestDialog',
 		'informDialog',
-		'stoppedBeforeApplyingRefactoring'
+		'stoppedBeforeApplyingRefactoring',
+		'selectDialogForBreakingChanges'
 	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',
@@ -142,6 +142,17 @@ ReInteractionDriver >> failedPreconditionsErrorString: conditions [
 ReInteractionDriver >> furtherActionFor: aReport [
 	
 	aReport browse
+]
+
+{ #category : 'execution' }
+ReInteractionDriver >> handleBreakingChanges [
+
+	| selection dialog |
+	dialog := self selectDialogForBreakingChanges.
+	selection := dialog openModal.
+	selection ifNil: [ ^ false ].
+	selection action.
+	^ true
 ]
 
 { #category : 'ui - requests' }
@@ -268,15 +279,15 @@ ReInteractionDriver >> scopes: anObject [
 ]
 
 { #category : 'configuration' }
-ReInteractionDriver >> selectDialog [
-	
-	^ selectDialog ifNil: [ selectDialog := self defaultSelectDialog ].
+ReInteractionDriver >> selectDialogForBreakingChanges [
+
+	^ selectDialogForBreakingChanges ifNil: [ selectDialogForBreakingChanges := self defaultSelectDialog ].
 	
 ]
 
 { #category : 'configuration' }
-ReInteractionDriver >> selectDialog: aDialog [
+ReInteractionDriver >> selectDialogForBreakingChanges: aDialog [
 	
-	selectDialog := aDialog 
+	selectDialogForBreakingChanges := aDialog 
 	
 ]

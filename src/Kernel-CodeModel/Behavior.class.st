@@ -1438,6 +1438,12 @@ Behavior >> methodDictionary: aDictionary [
 	self methodDict: aDictionary
 ]
 
+{ #category : 'accessing' }
+Behavior >> methodNamed: aSelector [
+	<reflection: 'Class structural inspection - Selectors and methods inspection'>
+	^ self methodDict at: aSelector
+]
+
 { #category : 'accessing - method dictionary' }
 Behavior >> methods [
 	<reflection: 'Class structural inspection - Selectors and methods inspection'>

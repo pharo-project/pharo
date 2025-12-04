@@ -109,11 +109,11 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec package: 'System-CommandLineHandler'.
 		spec package: 'Clap-Core'.
 		spec package: 'Clap-Commands-Pharo' .
-		spec package: 'System-CommandLine'.
 		spec package: 'System-Finalization'.
 		spec package: 'System-Platforms'.
 		spec package: 'System-SessionManager'.
 		
+		spec package: 'ClassDefinitionPrinters'.
 		spec package: 'CodeExport'.
 		spec package: 'System-Sources'.
 		spec package: 'System-Support'.
@@ -128,7 +128,6 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		
 		spec package: 'CodeImport-Commands'.
 		
-		spec package: 'Debugging-Utils'.
 		spec package: 'OpalCompiler-Core'.
 		spec package: 'DebugInfo'
 			with: [ spec requires: #( 'OpalCompiler-Core' ) ].
@@ -166,11 +165,11 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'Shift-ClassBuilder'.
 			'System-Announcements'.
 			'System-CommandLineHandler'.
-			'System-CommandLine'.
 			'System-Finalization'.
 			'System-Platforms'.
 			'System-SessionManager'.
 
+			'ClassDefinitionPrinters'.
 			'CodeExport'.
 			'System-Sources'.
 			
@@ -201,7 +200,6 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'Collections-Stack'.
 			'CodeImport'.
 			'CodeImport-Commands'.
-			'Debugging-Utils'.
 			'DebugInfo'.
 			'NumberParser'.
 			'OpalCompiler-Core'.

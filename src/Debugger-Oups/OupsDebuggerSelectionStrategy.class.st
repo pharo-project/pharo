@@ -20,31 +20,19 @@ Class {
 	#tag : 'Strategies'
 }
 
-{ #category : 'settings' }
+{ #category : 'accessing' }
 OupsDebuggerSelectionStrategy class >> debuggerSelectionStrategy [
 
 	^ debuggerSelectionStrategy ifNil: [
 		  debuggerSelectionStrategy := self defaultDebuggerSelectionStrategy ]
 ]
 
-{ #category : 'settings' }
+{ #category : 'accessing' }
 OupsDebuggerSelectionStrategy class >> debuggerSelectionStrategy: aClass [
 	debuggerSelectionStrategy := aClass
 ]
 
-{ #category : 'settings' }
-OupsDebuggerSelectionStrategy class >> debuggerSelectionStrategySettingsOn: aBuilder [
-	<systemsettings>
-	(aBuilder pickOne: #debuggerSelectionStrategy)
-		label: 'Debugger selection strategy';
-		target: self;
-		default: self defaultDebuggerSelectionStrategy;
-		parent: #debugging;
-		domainValues: (self allSubclasses);
-		description: 'Sets the strategy to open a debugger.'
-]
-
-{ #category : 'settings' }
+{ #category : 'accessing' }
 OupsDebuggerSelectionStrategy class >> defaultDebuggerSelectionStrategy [
 	^OupsDebuggerSelector
 ]

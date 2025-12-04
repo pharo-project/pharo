@@ -150,12 +150,12 @@ Class >> addSharedPool: aSharedPool [
 
 { #category : 'pool variables' }
 Class >> addSharedPoolNamed: aSharedPoolName [
+
 	<reflection: 'Class structural modification - Shared pool modification'>
-	|poolClass|
-	poolClass := aSharedPoolName asClassIfAbsent: [nil].
-	poolClass isPool
-		ifTrue: [ self addSharedPool: poolClass ]
-		ifFalse: [ self error: 'The specified class is not pool.' ]
+	self environment at: aSharedPoolName ifPresent: [ :poolClass |
+			poolClass isPool
+				ifTrue: [ self addSharedPool: poolClass ]
+				ifFalse: [ self error: 'The specified class is not pool.' ] ]
 ]
 
 { #category : 'accessing - class hierarchy' }
@@ -396,14 +396,14 @@ Class >> comment: aString stamp: aStamp [
 
 	pointer := self commentSourcePointer ifNil: [ 0 ].
 
-	SourceFileArray default
+	SourceFileArray default newWriter
+		metadata: ' ';
+		timestamp: aStamp;
+		prior: pointer;
+		successBlock: [ :newSourcePointer | self commentSourcePointer: newSourcePointer ];
+		failBlock: [ "ignore" ];
 		writeComment: aString
-		ofClass: self
-		metadata: ' '
-		timestamp: aStamp
-		priorSourcePointer: pointer
-		onSuccess: [ :newSourcePointer | self commentSourcePointer: newSourcePointer ]
-		onFail: [ "ignore" ].
+		ofClass: self.
 
 	self codeChangeAnnouncer
 		class: self

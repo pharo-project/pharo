@@ -10,11 +10,6 @@ Class {
 }
 
 { #category : 'meta-data - dependency analyser' }
-ManifestSystemCommandLineHandler class >> ignoredDependencies [
-	^ #( #'System-Hashing')
-]
-
-{ #category : 'meta-data - dependency analyser' }
 ManifestSystemCommandLineHandler class >> manuallyResolvedDependencies [
-	^ #( #'Collections-Abstract' #'System-Support' #'Kernel-CodeModel' #'Collections-Streams' #'System-Hashing')
+	^ #( #'Collections-Abstract' #'System-Support' #'Kernel-CodeModel' #'Collections-Streams')
 ]

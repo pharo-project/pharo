@@ -5,6 +5,12 @@ Class {
 	#package : 'BaselineOfFreeType'
 }
 
+{ #category : 'accessing' }
+BaselineOfFreeType class >> uiPackageNames [
+
+	^ self packagesOfGroupNamed: #ui
+]
+
 { #category : 'baselines' }
 BaselineOfFreeType >> baseline: spec [
 
@@ -19,7 +25,7 @@ BaselineOfFreeType >> baseline: spec [
 
 			spec
 				group: 'core' with: #( 'FreeType' 'EmbeddedFreeType' );
-				group: 'ui' with: #( 'core' 'FreeType-Graphics' );
+				group: 'ui' with: #( 'FreeType' 'EmbeddedFreeType' 'FreeType-Graphics' );
 				group: 'tests' with: #( 'core' 'FreeType-Tests' 'EmbeddedFreeType-Tests' ) ]
 ]
 

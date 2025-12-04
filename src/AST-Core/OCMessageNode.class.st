@@ -189,13 +189,6 @@ OCMessageNode >> isFirstCascaded [
 ]
 
 { #category : 'testing' }
-OCMessageNode >> isHaltNode [
-
-	^ (#( #halt #halt: #haltIf: #haltOnce #haltIfNil #haltOnCount: ) includes: self selector) or: [
-		  self receiver isGlobalVariable and: [ self receiver variable value = Halt and: [ (Halt class selectorsInProtocol: #halting) includes: self selector ] ] ]
-]
-
-{ #category : 'testing' }
 OCMessageNode >> isKeyword [
 	^ self selector isKeyword
 ]
@@ -446,6 +439,8 @@ OCMessageNode >> selectorAndArgumentNames [
 					do: [:sel :arg |
 							st
 								<< sel asString;
+								"we do not want to get #between: 1 #and: 2
+								but between: 1 and: 2"
 								<< ' ';
 								<< arg sourceCode;
 								<< ' ']]) allButLast ]

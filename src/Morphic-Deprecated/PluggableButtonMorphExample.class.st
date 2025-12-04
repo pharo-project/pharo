@@ -59,7 +59,8 @@ PluggableButtonMorphExample class >> exampleButtonWithIconTop [
 
 { #category : 'actions' }
 PluggableButtonMorphExample >> action [
-	self inform: 'Button pressed'
+
+	InformativeNotification signal: 'Button pressed'
 ]
 
 { #category : 'building' }

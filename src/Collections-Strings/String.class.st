@@ -474,9 +474,7 @@ String >> < aString [
 	The collation order is simple ascii (with case differences)."
 
 	" 'abc' < 'def' >>> true"
-
 	" 'abc' < 'abc' >>> false"
-
 	" 'def' < 'abc' >>> false"
 
 	^ (self compare: self with: aString) < 0
@@ -488,9 +486,7 @@ String >> <= aString [
 	The collation order is simple ascii (with case differences)."
 
 	" 'abc' <= 'def' >>> true"
-
 	" 'abc' <= 'abc' >>> true"
-
 	" 'def' <= 'abc' >>> false"
 
 	^ (self compare: self with: aString) <= 0
@@ -502,9 +498,7 @@ String >> = aString [
 	The collation order is simple ascii (with case differences)."
 
 	" 'abc' = 'def' >>> false"
-
 	" 'abc' = 'abc' >>> true"
-
 	" 'def' = 'abc' >>> false"
 
 	(aString isString and: [ self size = aString size ]) ifFalse: [ ^ false ].
@@ -517,9 +511,7 @@ String >> > aString [
 	The collation order is simple ascii (with case differences)."
 
 	" 'def' > 'abc' >>> true"
-
 	" 'def' > 'def' >>> false"
-
 	" 'abc' > 'def' >>> false"
 
 	^ (self compare: self with: aString) > 0
@@ -531,9 +523,7 @@ String >> >= aString [
 	The collation order is simple ascii (with case differences)."
 
 	" 'def' >= 'abc' >>> true"
-
 	" 'def' >= 'def' >>> true"
-
 	" 'abc' >= 'def' >>> false"
 
 	^ (self compare: self with: aString) >= 0
@@ -580,7 +570,12 @@ String >> asByteArray [
 	"'a' asByteArray >>> #[97]"
 	"'A' asByteArray >>> #[65]"
 	"'ABA' asByteArray >>> #[65 66 65]"
-	self subclassResponsibility
+	
+	| ba sz |
+	sz := self byteSize.
+	ba := ByteArray new: sz.
+	ba replaceFrom: 1 to: sz with: self startingAt: 1.
+	^ba
 ]
 
 { #category : 'converting' }
@@ -595,6 +590,7 @@ String >> asCamelCase [
 	"Convert to CamelCase, i.e, remove spaces, and convert starting lowercase to uppercase."
    "'A man, a plan, a canal, panama' asCamelCase >>> 'AMan,APlan,ACanal,Panama'"
  	"'Here 123should % be 6 the name6 of the method' asCamelCase  >>> 'Here123should%Be6TheName6OfTheMethod'"
+	
 		^ self species streamContents: [:stream |
                self substrings do: [:sub |
                        stream nextPutAll: sub capitalized]]
@@ -634,6 +630,7 @@ String >> asFourCode [
 	"'abcd' asFourCode >>> -513645724"
 	"'1111' asFourCode >>> 825307441"
 	"'1234' asFourCode >>> 825373492"
+	
 	| result |
 	self size = 4
 		ifFalse: [^self error: 'must be exactly four characters'].
@@ -649,8 +646,9 @@ String >> asFourCode [
 
 { #category : 'converting' }
 String >> asHTMLString [
-	"substitute the < & > into HTML compliant elements"
-	"'<a>' asHTMLString"
+	"Substitute the < & > into HTML compliant elements"
+	"'<a>' asHTMLString >>> '&lt;a&gt;'"
+
 	^ self species new: self size streamContents: [ :s|
 		self do: [:c | s nextPutAll: c asHTMLString ]]
 ]
@@ -659,6 +657,7 @@ String >> asHTMLString [
 String >> asHex [
 	"'A' asHex >>> '16r41'"
 	"'AA' asHex >>> '16r4116r41'"
+	
 	^ self species new: self size * 4 streamContents: [ :stream |
 		self do: [ :ch | stream nextPutAll: ch hex ]]
 ]
@@ -671,6 +670,7 @@ String >> asInteger [
 	"'10' asInteger >>> 10"
 	"'a' asInteger >>> nil"
 	"'1.234' asInteger >>> 1"
+	
 	^self asSignedInteger
 ]
 
@@ -680,6 +680,7 @@ String >> asLowercase [
 	"'PhaRo' asLowercase >>> 'pharo'"
 	"'' asLowercase >>> ''"
 	"' ' asLowercase >>> ' '"
+	
 	^ self copy asString translateToLowercase
 ]
 
@@ -751,9 +752,7 @@ String >> asUppercase [
 	"Answer a String made up from the receiver whose characters are all uppercase."
 
 	"'pharo' asUppercase >>> 'PHARO'"
-
 	"'' asUppercase >>> ''"
-
 	"' ' asUppercase >>> ' '"
 
 	^self copy asString translateToUppercase
@@ -830,6 +829,7 @@ String >> beginsWith: prefix caseSensitive: aBoolean [
 	"('pharo' beginsWith: 'pharo-project' caseSensitive: false) >>> false"
 	"('pharo' beginsWith: 'phuro' caseSensitive: false) >>> false"
 	"('pharo' beginsWith: 'Pha' caseSensitive: false) >>> true"
+	
 	prefix ifEmpty: [ ^true ].
 	aBoolean ifTrue: [ ^self beginsWith: prefix ].
 	self size < prefix size ifTrue: [^ false].
@@ -941,20 +941,14 @@ String >> compare: string1 with: string2 [
 
 { #category : 'comparing' }
 String >> compare: string1 with: string2 collated: order [
+
 	"'abc' = 'abc' asWideString >>> true"
-
 	"'abc' asWideString = 'abc' >>> true"
-
 	"(ByteArray with: 97 with: 0 with: 0 with: 0) asString ~= 'a000' asWideString >>> true"
-
 	"('abc' sameAs: 'aBc' asWideString) >>> true"
-
 	"('aBc' asWideString sameAs: 'abc') >>> true"
-
 	"('a000' asWideString ~= (ByteArray with: 97 with: 0 with: 0 with: 0) asString) >>> true"
-
 	"((ByteArray with: 97 with: 0 with: 0 with: 0) asString sameAs: 'Abcd' asWideString) >>> false"
-
 	"('a000' asWideString sameAs: (ByteArray with: 97 with: 0 with: 0 with: 0) asString) >>> false"
 
 	(string1 isByteString and: [ string2 isByteString ]) ifTrue: [ ^ string1 compareWith: string2 collated: order ].
@@ -985,6 +979,7 @@ String >> contractTo: smallSize [
 String >> copyReplaceAll: oldSubstring with: newSubstring [
 	"Answer a copy of the receiver in which all occurrences of oldSubstring have been replaced by newSubstring"
 	"('ab cd ab ef ab' copyReplaceAll: 'ab' with: 'zk') >>> 'zk cd zk ef zk'"
+	
     | idx |
     self = oldSubstring ifTrue: [ ^ newSubstring copy ].
     oldSubstring isEmpty ifTrue: [ ^ self copy ].
@@ -1163,15 +1158,17 @@ String >> endsWith: suffix [
 String >> endsWith: suffix caseSensitive: aBoolean [
 	"Answer whether the tail end of the receiver is the same as suffix"
 
-	"IMPLEMENTATION NOTE:
-	following algorithm is optimized in primitive only in case self and suffix are bytes like.
-	Otherwise, if self or suffix are wide strings, then slow version with asLowercase convertation,
-	(primitive is not correct for wide strings)"
-
 	"('pharo' endsWith: '' caseSensitive: false) >>> true"
 	"('pharo' endsWith: 'project-pharo' caseSensitive: false) >>> false"
 	"('pharo' endsWith: 'phuro' caseSensitive: false) >>> false"
 	"('pharo' endsWith: 'aRo' caseSensitive: false) >>> true"
+	
+	
+	"IMPLEMENTATION NOTE:
+	following algorithm is optimized in primitive only in case self and suffix are bytes like.
+	Otherwise, if self or suffix are wide strings, then slow version with asLowercase convertation,
+	(primitive is not correct for wide strings)"
+	
 	suffix ifEmpty: [ ^ true ].
 	aBoolean ifTrue: [ ^self endsWith: suffix ].
 	self size < suffix size ifTrue: [^ false].
@@ -1210,11 +1207,8 @@ String >> escapeCharacter: aCharacter [
 	"See `unescapeCharacter:` for the opposite"
 
 	"('abc' escapeCharacter: $X) >>> 'abc'"
-
 	"('aXb' escapeCharacter: $X) >>> 'aXXb'"
-
 	"('XaX' escapeCharacter: $X) >>> 'XXaXX'"
-
 	"('XXaXbXXcXXXdXX' escapeCharacter: $X) >>> 'XXXXaXXbXXXXcXXXXXXdXXXX'"
 
 	| result stream |
@@ -1350,12 +1344,14 @@ String >> expandMacrosWithArguments: anArray [
 String >> findAnySubstring: aCollection startingAt: start [
 	"Answer the index where an element of aCollection begins. If none are found, answer size + 1. aCollection is an Array of Strings or Characters."
 
+	"('abcdef' findAnySubstring: 'cde' startingAt: 1) >>> 3"
+	
 	^aCollection inject: 1 + self size into: [:min :searchTerm |
 		| ind |
 		ind := searchTerm isCharacter
-			ifTrue: [self indexOf: searchTerm startingAt: start ifAbsent: [min]]
-			ifFalse: [self indexOfSubCollection: searchTerm startingAt: start ifAbsent: [min]].
-		min min: ind]
+			ifTrue: [ self indexOf: searchTerm startingAt: start ifAbsent: [min]]
+			ifFalse: [ self indexOfSubCollection: searchTerm startingAt: start ifAbsent: [min]].
+		min min: ind ]
 ]
 
 { #category : 'finding/searching' }
@@ -1767,7 +1763,6 @@ String >> includesSubstring: substring [
 
 { #category : 'finding/searching' }
 String >> includesSubstring: substring at: index [
-
 	"Answer true if the receiver contains the substring str exactly at index, false otherwise."
 
 	"('abcdefgh' includesSubstring: 'de' at: 1) >>> false"
@@ -1785,6 +1780,7 @@ String >> includesSubstring: substring at: index [
 { #category : 'testing' }
 String >> includesSubstring: aString caseSensitive: caseSensitive [
 	"Returns whether the receiver contains the argument."
+	
 	"('abcdefgh' includesSubstring: 'de' caseSensitive: false) >>> true"
 	"('abcdefgh' includesSubstring: 'DE' caseSensitive: false) >>> true"
 	"('abcDefgh' includesSubstring: 'De' caseSensitive: true) >>> true"
@@ -1801,6 +1797,7 @@ String >> includesUnifiedCharacter [
 { #category : 'accessing' }
 String >> indexOf: aCharacter [
 	"Return the index starting at 1 of the argument in the receiver, zero if not present."
+	
 	"('abcdf' indexOf: $a) >>> 1"
 	"('abddf' indexOf: $k) >>> 0"
 
@@ -1834,10 +1831,10 @@ String >> indexOf: aCharacter startingAt: start ifAbsent: aBlock [
 
 { #category : 'accessing' }
 String >> indexOfFirstUppercaseCharacter [
-	"Returns the index of the first Uppercase character.
-	'uouFauhZ ' indexOfFirstUppercaseCharacter2 -> 4
-	New implementation much faster than older one.
-	"
+	"Returns the index of the first Uppercase character."
+	
+	"'uouFauhZ ' indexOfFirstUppercaseCharacter >>> 4 "
+	
 	| size |
 	size := self size.
 	1 to: size do: [:i|
@@ -1897,6 +1894,7 @@ String >> initialIntegerOrNil [
 { #category : 'testing' }
 String >> isAllAlphaNumerics [
 	"Returns whether the receiver is composed entirely of alphanumerics (i.e., letters or digits)."
+	
 	"'3.123' isAllAlphaNumerics >>> false"
 	"'a3123abc' isAllAlphaNumerics >>> true"
 	"'3123' isAllAlphaNumerics >>> true"
@@ -1922,8 +1920,10 @@ String >> isAllDigits [
 { #category : 'testing' }
 String >> isAllSeparators [
 	"Returns whether the receiver is composed entirely of separators i.e., a space, tab, lf, cr, and newPage"
+	
 	"(Character space asString, Character space asString) isAllSeparators >>> true"
 	"(Character space asString, 'a') isAllSeparators >>> false"
+	
 	self do: [ :c | c isSeparator ifFalse: [ ^false ] ].
 	^true
 ]
@@ -2043,12 +2043,9 @@ String >> keywords [
 	"Returns the keywords of the provided selector. Assumes the reciever is a valid keyword based selector (@reciever isKeyword > true). Prefer using Symbol>>#keywordsStrict if you're not sure if the reciever is keyword-based."
 
 	"#foo: keywords >>> #('foo:')"
-
 	"#foo:bar: keywords >>> #('foo:' 'bar:')"
-	
-	"#foo keywords >>> #('foo')" "Invalid input/output !"
-	
-	"#+ keywords >>> #('+')" "Invalid input/output !"
+	"#foo keywords >>> #('foo')" 
+	"#+ keywords >>> #('+')"
 
 	| keywords |
 	keywords := Array streamContents: [ :kwds |
@@ -2069,6 +2066,7 @@ String >> keywords [
 { #category : 'testing' }
 String >> lastSpacePosition [
 	"Answer the character position of the final space or other separator character in the receiver, and 0 if none"
+	
 	"'fred the bear' lastSpacePosition >>> 9"
 	"'ziggie' lastSpacePosition >>> 0"
 	"'elvis ' lastSpacePosition >>> 6"
@@ -2150,10 +2148,9 @@ String >> lineNumber: anIndex [
 { #category : 'accessing' }
 String >> lineNumberCorrespondingToIndex: anIndex [
 	"Answer a lineNumber for the line at the given character position."
-	|lineNumber|
 
+	| lineNumber |
 	lineNumber := 0.
-
 	self lineIndicesDo: [:start :endWithoutDelimiters :end |
 		lineNumber := lineNumber + 1.
 		anIndex <= end ifTrue: [^lineNumber]].
@@ -2209,9 +2206,10 @@ String >> match: text [
 
 { #category : 'converting' }
 String >> normalizeCamelCase [
-	"
-	'TheRollingStones' normalizeCamelCase >>> 'The Rolling Stones'
-	"
+	
+	"'TheRollingStones' normalizeCamelCase >>> 'The Rolling Stones'"
+	"'The Rolling Stones' normalizeCamelCase >>> 'The Rolling Stones'"
+	
 	^ self class streamContents: [ : stream |
 		self do: [ : char |
 			(char isUppercase and: [
@@ -2258,6 +2256,7 @@ String >> numArgs [
 String >> numericSuffix [
 	"'abc98' numericSuffix >>> 98"
 	"'98abc' numericSuffix >>> 0"
+	
 	^ self stemAndNumericSuffix last
 ]
 
@@ -2265,6 +2264,7 @@ String >> numericSuffix [
 String >> occursInWithEmpty: prefix caseSensitive: aBoolean [
 	"Answer whether the receiver begins with the given prefix string.
 	The comparison is case-sensitive."
+	
 	| matchTable |
 	prefix isEmpty ifTrue: [ ^ true ].
 	self size < prefix size ifTrue: [ ^ false ].
@@ -2281,6 +2281,7 @@ String >> occursInWithEmpty: prefix caseSensitive: aBoolean [
 { #category : 'converting' }
 String >> onlyLetters [
 	"answer the receiver with only letters"
+	
 	^ self select:[:each | each isLetter]
 ]
 
@@ -2401,7 +2402,6 @@ String >> skipDelimiters: delimiters startingAt: start [
 { #category : 'converting' }
 String >> squeezeOutNumber [
 	"Try to find a number somewhere in this string, as explained in Number>readFrom:
-
 	this method returns the first number found"
 
 	"'th is is29 a stRI4' squeezeOutNumber >>> 29"
@@ -2474,10 +2474,10 @@ String >> startsWithDigit [
 { #category : 'converting' }
 String >> stemAndNumericSuffix [
 	"Parse the receiver into a string-valued stem and a numeric-valued suffix."
-	"'Fred2305' stemAndNumericSuffix"
+	
+	"'Fred2305' stemAndNumericSuffix >>> #('Fred' 2305)"
 
 	| stem suffix position |
-
 	stem := self.
 	suffix := 0.
 	position := 1.
@@ -2596,6 +2596,7 @@ String >> translateWith: table [
 { #category : 'copying' }
 String >> trim [
 	"Trim separators from both sides of the receiving string."
+	
 	"' this string will be trimmed   ' trim >>> 'this string will be trimmed'"
 
 	^ self trimBoth
@@ -2606,9 +2607,7 @@ String >> trimBoth [
 	"Trim separators from both sides of the receiving string."
 
 	"'  hello  ' trimBoth >>> 'hello'"
-
 	"'hello' trimBoth >>> 'hello'"
-
 	"'' trimBoth >>> ''"
 
 	^ self trimBoth: [ :char | char isSeparator ]
@@ -2718,9 +2717,7 @@ String >> uncapitalized [
 	"Return a copy with the first letter downShifted (in lower case)"
 
 	"'Pharo' uncapitalized >>> 'pharo'"
-
 	"'PHARO' uncapitalized >>> 'pHARO'"
-
 	"'' uncapitalized >>> ''"
 
 	| answer |
@@ -2752,6 +2749,8 @@ String >> unescapeCharacter: aCharacter [
 String >> withBlanksCondensed [
 	"Return a copy of the receiver with leading/trailing blanks (separators) removed
 	 and consecutive white spaces (separators) condensed to the first one."
+	
+	" ' abc  d   ' withBlanksCondensed >>> 'abc d'"
 
 	| trimmed lastBlank |
 	trimmed := self trimBoth.
@@ -2763,12 +2762,14 @@ String >> withBlanksCondensed [
 						ifFalse: [ stream nextPut: eachChar ].
 					lastBlank := eachChar isSeparator ] ]
 
-	" ' abc  d   ' withBlanksCondensed"
+	
 ]
 
 { #category : 'formatting' }
 String >> withCRs [
-	"Return a copy of the receiver in which backslash (\) characters have been replaced with carriage returns. For example '-hello\-hi' will be
+	"Return a copy of the receiver in which backslash (\) characters have been replaced with carriage returns."
+	
+	"'-hello\-hi' withCRs >>>
 	'-hello
 	 -hi'"
 
@@ -2857,6 +2858,7 @@ String >> withPlatformLineEndings [
 String >> withSeparatorsCompacted [
     "Returns a copy of the receiver with each sequence of whitespace (separator)
     characters replaced by a single space character"
+
     "' test ' withSeparatorsCompacted >>> ' test '"
     "' test  test' withSeparatorsCompacted >>> ' test test'"
     "'test  test      ' withSeparatorsCompacted >>> 'test test '"
@@ -2879,6 +2881,7 @@ String >> withSeparatorsCompacted [
 { #category : 'platform conventions' }
 String >> withUnixLineEndings [
 	"Answer a new instance where all occurrences of CRLF and LF are substituted with LF."
+	
 	"(('asa' , String cr , 'asa') withUnixLineEndings at: 4) >>> Character lf"
 
 	^ self withLineEndings: String lf
@@ -2897,9 +2900,7 @@ String >> withoutPeriodSuffix [
 	"Return a copy of the receiver up to, but not including, the first period.  If the receiver's *first* character is a period, then just return the entire receiver. "
 
 	"'foo.' withoutPeriodSuffix >>> 'foo'"
-
 	"'foo.bar' withoutPeriodSuffix >>> 'foo'"
-
 	"'foo.bar.txt' withoutPeriodSuffix >>> 'foo'"
 
 	| likely |
@@ -2914,7 +2915,6 @@ String >> withoutPrefix: prefix [
 	"Remove the given prefix, if present."
 
 	"('UMLClass' withoutPrefix: 'UML') >>> 'Class'"
-
 	"('UMLClass' withoutPrefix: 'ML') >>> 'UMLClass'"
 
 	^ (self beginsWith: prefix)
@@ -2927,7 +2927,6 @@ String >> withoutQuoting [
 	"remove the initial and final quote marks (single quote for string, or double quotes for comments), if present (and if matches nesting quotes). Have a look at testWithoutQuoting. If you want to remove single/double quotes not in first and last positions of the strings, have a look at copyWithout: $' "
 
 	"'''h''' withoutQuoting >>> 'h'"
-
 	"' ''h'' ' withoutQuoting >>>  ' ''h'' '"
 
 	| quote |
@@ -2943,7 +2942,6 @@ String >> withoutSuffix: suffix [
 	"Remove the given suffix, if present."
 
 	"('UMLClass' withoutSuffix: 'Class') >>> 'UML'"
-
 	"('UMLClass' withoutSuffix: 'Cass') >>> 'UMLClass'"
 
 	^ (self endsWith: suffix)

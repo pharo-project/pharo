@@ -8,6 +8,12 @@ Trait {
 }
 
 { #category : 'visitor' }
+TChunkVisitor >> visitClassChunk: aClassChunk [
+
+	self notYetImplemented
+]
+
+{ #category : 'visitor' }
 TChunkVisitor >> visitClassCommentChunk: aChunk [
 
 	self visitCodeChunk: aChunk

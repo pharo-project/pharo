@@ -19,13 +19,13 @@ Context >> errorReportOn: stream [
 	stream cr.
 	stream
 		nextPutAll: 'VM: ';
-		nextPutAll: Smalltalk os name asString;
+		nextPutAll: Smalltalk os name;
 		nextPutAll: ' - ';
-		nextPutAll: Smalltalk os subtype asString;
+		nextPutAll: Smalltalk os subtype;
 		nextPutAll: ' - ';
-		nextPutAll: Smalltalk os version asString;
+		nextPutAll: Smalltalk os version;
 		nextPutAll: ' - ';
-		nextPutAll: Smalltalk vm version asString;
+		nextPutAll: Smalltalk vm version;
 		cr.
 	
 	self class environment at: #SystemVersion ifPresent: [ :class |

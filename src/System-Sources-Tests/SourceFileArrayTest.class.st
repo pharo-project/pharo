@@ -103,11 +103,12 @@ SourceFileArrayTest >> testForkedRead [
 		] fork.
 
 	"Write the string, that will be read in other process."
-	SourceFileArray default changesWriteStreamDo: [ :theFile |
+	SourceFileArray default writeChangesDuring: [ :theFile |
 		theFile cr.
 		position := theFile position.
 		(ChunkWriteStream on: theFile) nextPut: originalString.
-	].
+		theFile position
+	] onSuccess: [ :sourcePointer | "Ignore" ] onFail: [ "Ignore" ].
 
 	readSemaphore signal.
 	testSemaphore wait.
@@ -131,11 +132,11 @@ SourceFileArrayTest >> testForkedWrite [
 		readSemaphore wait.
 
 		"Write the string, that will be read in other process."
-		SourceFileArray default changesWriteStreamDo: [ :theFile |
+		SourceFileArray default writeChangesDuring: [ :theFile |
 			theFile cr.
 			position := theFile position.
 			(ChunkWriteStream on: theFile) nextPut: originalString.
-		].
+		] onSuccess: [ :sourcePointer | "Ignore" ] onFail: [ "Ignore" ].
 
 		testSemaphore signal
 		] fork.
@@ -237,8 +238,8 @@ SourceFileArrayTest >> testWriteSourceWritesInGivenSourceFileArray [
 	| fs array |
 	fs := FileSystem memory.
 	array := SourceFileArray new.
-	array changesFileStream: (SourceFile on: 'changes.chunk' potentialLocations: { fs root }) tryOpen.
-	array sourcesFileStream: (SourceFile on: 'sources.chunk' potentialLocations: { fs root }) tryOpen.
+	array changesFileStream: (SourceFile lookupFileNamed: 'changes.chunk' potentialLocations: { fs root }) tryOpen.
+	array sourcesFileStream: (SourceFile lookupFileNamed: 'sources.chunk' potentialLocations: { fs root }) tryOpen.
 
 	array
 		writeChangesDuring: [ :file |
@@ -263,8 +264,8 @@ SourceFileArrayTest >> testWriteSourceWritesInGivenSourceFileArrayWithFlushDefer
 	fs := FileSystem memory.
 	array := SourceFileArray new.
 	array
-		changesFileStream: (SourceFile on: 'changes.chunk' potentialLocations: { fs root }) tryOpen;
-		sourcesFileStream: (SourceFile on: 'sources.chunk' potentialLocations: { fs root }) tryOpen;
+		changesFileStream: (SourceFile lookupFileNamed: 'changes.chunk' potentialLocations: { fs root }) tryOpen;
+		sourcesFileStream: (SourceFile lookupFileNamed: 'sources.chunk' potentialLocations: { fs root }) tryOpen;
 		deferFlushDuring: [
 				array
 					writeChangesDuring: [ :file |
@@ -317,14 +318,14 @@ SourceFileArrayTest >> testWriteToChangesFileInGivenSourceFileArray [
 	| fs array |
 	fs := FileSystem memory.
 	array := SourceFileArray new.
-	array changesFileStream: (SourceFile on: 'changes.chunk' potentialLocations: { fs root }) tryOpen.
-	array sourcesFileStream: (SourceFile on: 'sources.chunk' potentialLocations: { fs root }) tryOpen.
-	array changesWriteStreamDo: [ :changesFile |
+	array changesFileStream: (SourceFile lookupFileNamed: 'changes.chunk' potentialLocations: { fs root }) tryOpen.
+	array sourcesFileStream: (SourceFile lookupFileNamed: 'sources.chunk' potentialLocations: { fs root }) tryOpen.
+	array writeChangesDuring: [ :changesFile |
 			changesFile
 				cr;
 				cr.
 			(ChunkWriteStream on: changesFile) nextPut: 'test'.
-			changesFile cr ].
+			changesFile cr ] onSuccess: [ :sourcePointer | "Ignore" ] onFail: [ "Ignore" ].
 	self assert: (fs / 'changes.chunk') contents equals: '
 
 test!'

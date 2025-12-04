@@ -32,6 +32,8 @@ PharoChangesCondenser >> backupOldChanges [
 { #category : 'private' }
 PharoChangesCondenser >> basicCondense [
 
+	(CodeExporterV100 onStream: stream)
+		writeFileoutVersion.
 	self
 		condenseClassesAndTraits;
 		swapSourcePointers.

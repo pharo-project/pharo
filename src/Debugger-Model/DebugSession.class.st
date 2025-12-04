@@ -71,26 +71,13 @@ DebugSession class >> fastStepThroughMode: aBoolean [
 	^ FastStepThroughMode := aBoolean
 ]
 
-{ #category : 'settings' }
-DebugSession class >> fastStepThroughModeSettingOn: aBuilder [
-
-	<systemsettings>
-	(aBuilder setting: #fastStepThroughMode)
-		label: 'Enable the fast step through mode';
-		target: self;
-		parent: #debugging;
-		default: false;
-		description:
-			'If enabled, the debugger will perform step through operations using halting blocks. This implementation is more efficient than the original one based on interpreter steps'
-]
-
-{ #category : 'settings' }
+{ #category : 'accessing' }
 DebugSession class >> logDebuggerStackToFile [
 	^ LogDebuggerStackToFile 
 		ifNil: [ LogDebuggerStackToFile := false ]
 ]
 
-{ #category : 'settings' }
+{ #category : 'accessing' }
 DebugSession class >> logDebuggerStackToFile: aBoolean [
 	LogDebuggerStackToFile := aBoolean
 ]

@@ -133,6 +133,13 @@ SourceFileCharacterReadWriteStream >> readOnlyCopy [
 	^ readStream
 ]
 
+{ #category : 'initialization' }
+SourceFileCharacterReadWriteStream >> reset [
+
+	readStream reset.
+	writeStream reset
+]
+
 { #category : 'accessing' }
 SourceFileCharacterReadWriteStream >> setToEnd [
 

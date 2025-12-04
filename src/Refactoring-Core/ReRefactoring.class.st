@@ -59,10 +59,11 @@ ReRefactoring >> canReferenceVariable: aString in: aClass [
 { #category : 'scripting api - conditions' }
 ReRefactoring >> checkBreakingChangePreconditions [
 	"Check a preconditions and raise an error on violations. This method is part of the scripting API since it raises an error."
-	
+
 	| failedPreconditions |
 	failedPreconditions := self failedBreakingChangePreconditions.
 	failedPreconditions ifEmpty: [ ^ self ].
+
 	RBRefactoringWarning signalFor: failedPreconditions
 ]
 

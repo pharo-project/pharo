@@ -49,7 +49,7 @@ MCTraitDefinition >> createClassInEnvironment: anEnvironent [
 					  classSlots: self classInstanceVariables;
 					  package: self packageName;
 					  tag: self tagName;
-					  comment: comment stamp: commentStamp;
+					  comment: comment stamp: self commentStamp;
 					  beTrait.
 				  anEnvironent ifNotNil: [ aBuilder environment: anEnvironent ] ] ]
 		  on: Warning , DuplicatedVariableError

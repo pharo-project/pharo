@@ -302,6 +302,12 @@ SourceFileBufferedReadWriteStream >> refreshBufferFrom: aPosition [
 	bufferOffset := nextBufferPosition
 ]
 
+{ #category : 'initialization' }
+SourceFileBufferedReadWriteStream >> reset [
+	
+	nextPosition := 0
+]
+
 { #category : 'reading' }
 SourceFileBufferedReadWriteStream >> setToEnd [
 

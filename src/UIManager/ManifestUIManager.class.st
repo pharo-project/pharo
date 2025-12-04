@@ -10,11 +10,6 @@ Class {
 }
 
 { #category : 'meta-data - dependency analyser' }
-ManifestUIManager class >> ignoredDependencies [
-	^ #(#CodeImport #Files #'Graphics-Display Objects' #'Transcript-NonInteractive')
-]
-
-{ #category : 'meta-data - dependency analyser' }
 ManifestUIManager class >> manuallyResolvedDependencies [
-	^ #(#'Collections-Streams' #'System-Support')
+	^ #(#'Collections-Streams')
 ]

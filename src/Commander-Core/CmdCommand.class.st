@@ -201,7 +201,7 @@ CmdCommand >> execute [
 { #category : 'ui requests' }
 CmdCommand >> inform: aString [
 
-	self application inform: aString
+	InformativeNotification signal: aString
 ]
 
 { #category : 'accessing' }

@@ -745,11 +745,6 @@ OCProgramNode >> isGlobalVariable [
 ]
 
 { #category : 'testing' }
-OCProgramNode >> isHaltNode [
-	^ false
-]
-
-{ #category : 'testing' }
 OCProgramNode >> isImmediateNode [
 	^false
 ]

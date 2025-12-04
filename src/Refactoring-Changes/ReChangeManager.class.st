@@ -251,7 +251,7 @@ ReChangeManager >> undoLastRefactoring [
 	 ] asJob
 		title: 'Refactoring';
 		run]
-	ifEmpty: [ self inform: 'There aren''t refactorings to undo.'  ]
+	ifEmpty: [ InformativeNotification signal:  'There aren''t refactorings to undo.'  ]
 ]
 
 { #category : 'public access' }

@@ -25,21 +25,13 @@ BaselineOfMorphicCore >> baseline: spec [
 	repository := self packageRepositoryURLForSpec: spec.
 
 	spec for: #common do: [
-
-		spec package: 'System-Object Events'.
-		spec package: 'System-Caching'.
-		spec package: 'Graphics-Canvas'.
-		spec package: 'FormCanvas-Core'.
-		spec package: 'Tool-Registry'.
-		spec package: 'System-Model'.
-		spec baseline: 'Fonts' with: [
-				spec
-					repository: repository;
-					loads: #Core ].
-		spec baseline: 'FreeType' with: [
-			spec
-				repository: repository;
-				loads: 'ui' ].
-		spec package: 'Morphic-Core' with: [ spec requires: #( 'System-Model' ) ].
-		spec package: 'System-FileRegistry' with: [ spec requires: #( 'System-Model' ) ] ]
+			spec package: 'System-Object Events'.
+			spec package: 'System-Caching'.
+			spec package: 'Graphics-Canvas'.
+			spec package: 'FormCanvas-Core'.
+			spec package: 'Tool-Registry'.
+			spec package: 'System-Model'.
+			spec package: 'FileSystem-Memory'.
+			spec package: 'FileSystem-Zip'.
+			spec package: 'Morphic-Core' with: [ spec requires: #( 'System-Model' ) ] ]
 ]

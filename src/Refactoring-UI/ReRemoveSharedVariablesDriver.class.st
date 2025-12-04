@@ -45,15 +45,7 @@ ReRemoveSharedVariablesDriver >> defaultSelectDialog [
 		  items: self breakingChoices;
 		  display: [ :each | each description ];
 		  displayIcon: [ :each | self iconNamed: each systemIconName ];
-		  openModal
-]
-
-{ #category : 'execution' }
-ReRemoveSharedVariablesDriver >> handleBreakingChanges [
-
-	| select  |
-	select := self defaultSelectDialog.
-	select ifNotNil: [ select action ]
+			yourself
 ]
 
 { #category : 'configuration' }

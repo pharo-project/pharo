@@ -11,5 +11,7 @@ Class {
 
 { #category : 'meta-data - dependency analyser' }
 ManifestTranscriptNonInteractive class >> manuallyResolvedDependencies [
-	^ #(#'Collections-Strings' #'System-Support')
+
+	<ignoreForCoverage>
+	^ #(#'Kernel-CodeModel' #'System-Support')
 ]

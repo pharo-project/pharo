@@ -1,21 +1,15 @@
 | mcPackages |
 mcPackages := #(
- 'ScriptingExtensions'
- 'FileSystem-Memory'
+ 'Zinc-Resource-Meta-Core'
  'STON-Core'
  'MonticelloFileTree-Core'
  'MonticelloFileTree-FileSystem-Utilities'
  'Metacello-Base'
  'Metacello-Core'
- 'Metacello-GitBasedRepository'
- 'Metacello-Gitlab'
- 'Metacello-GitHub'
- 'Metacello-Bitbucket'
  'Metacello-CommandLine'
  ).
 
-(MonticelloBootstrap inDirectory: (MCCacheRepository uniqueInstance directory))
-  loadPackagesNamed: mcPackages!
+MonticelloBootstrap new loadPackagesNamed: mcPackages!
 
 "For now, it happens that the bootstrap does not caches the pragmas. This should be fixed later by reloading the packages after Metacello and Monticello are reloaded but we need them for reseting the system announcer for example."
 CompiledMethod allInstancesDo: [ :m | m cachePragmas ].

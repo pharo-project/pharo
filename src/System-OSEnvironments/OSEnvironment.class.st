@@ -16,9 +16,6 @@ and its variants receive normal strings and decide whether they have to encode t
 Class {
 	#name : 'OSEnvironment',
 	#superclass : 'Object',
-	#instVars : [
-		'platform'
-	],
 	#classVars : [
 		'Current'
 	],
@@ -29,30 +26,13 @@ Class {
 
 { #category : 'instance creation' }
 OSEnvironment class >> current [
-	^ Current ifNil: [ Current := self platform: OSPlatform current ]
+	^ Current ifNil: [ Current := self new ]
 ]
 
 { #category : 'examples' }
 OSEnvironment class >> example [
 
 	Smalltalk os environment asDictionary inspect
-]
-
-{ #category : 'class initialization' }
-OSEnvironment class >> initialize [
-	SessionManager default
-		registerSystemClassNamed: self name
-]
-
-{ #category : 'instance creation' }
-OSEnvironment class >> platform: anOSPlatform [
-	^ self basicNew initializeWith: anOSPlatform
-]
-
-{ #category : 'system startup' }
-OSEnvironment class >> startUp: isImageStarting [
-
-	isImageStarting ifTrue: [ Current := nil ]
 ]
 
 { #category : 'converting' }
@@ -169,12 +149,6 @@ OSEnvironment >> includesKey: aKey [
 	^ self at: aKey ifPresent: [ :value | true ] ifAbsent: [ false ]
 ]
 
-{ #category : 'initialization' }
-OSEnvironment >> initializeWith: anOSPlatform [
-	super initialize.
-	platform := anOSPlatform
-]
-
 { #category : 'accessing' }
 OSEnvironment >> keys [
 	"Answer an Array containing the receiver's keys."
@@ -196,7 +170,7 @@ OSEnvironment >> keysDo: aBlock [
 
 { #category : 'accessing' }
 OSEnvironment >> platform [
-	^ platform
+	^  OSPlatform current
 ]
 
 { #category : 'accessing' }

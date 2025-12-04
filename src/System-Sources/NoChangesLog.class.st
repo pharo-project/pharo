@@ -30,4 +30,12 @@ NoChangesLog class >> install [
 
 { #category : 'logging' }
 NoChangesLog >> logChange: aStringOrText [
+
+	"Do not log anything"
+]
+
+{ #category : 'event-listening' }
+NoChangesLog >> logClassAdded: announcement [
+
+	"Do not log anything"
 ]

@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'path',
 		'stream',
-		'potentialLocations'
+		'potentialLocations',
+		'formatVersionClass'
 	],
 	#category : 'System-Sources-Sources',
 	#package : 'System-Sources',
@@ -12,7 +13,17 @@ Class {
 }
 
 { #category : 'instance creation' }
-SourceFile class >> on: aPath potentialLocations: locations [
+SourceFile class >> createFileNamed: aFileReference version: aVersion [ 
+	
+	| file |
+	file := self lookupFileNamed: aFileReference basename potentialLocations: { aFileReference parent }.
+	file version: aVersion.
+	file forceCreateSourceFile.
+	^ file
+]
+
+{ #category : 'instance creation' }
+SourceFile class >> lookupFileNamed: aPath potentialLocations: locations [
 
 	^ self new
 		path: aPath;
@@ -48,10 +59,50 @@ SourceFile >> cr [
 	stream cr
 ]
 
+{ #category : 'versions' }
+SourceFile >> declareVersion [
+	
+	| newStream |
+	newStream := self newSourceStreamReadOnly: false.	
+	newStream ifNil: [ Error signal: 'Cannot create source file: cannot open file' ].
+	newStream size = 0 ifFalse: [ Error signal: 'Cannot create source file: file already exists' ].	
+	
+	(self exporterClass onStream: newStream) writeFileoutVersion.
+	newStream flush.
+	stream := newStream.
+]
+
+{ #category : 'versions' }
+SourceFile >> detectParserVersion [
+	
+	"Let's find a compatible parser for this file"
+	{ChunkFileFormatParserV200 . ChunkFileFormatParserV100} do: [ :p |
+		| parser |
+		parser := p for: stream.
+		[ ^ parser parseVersion ]
+			on: CodeImportError do: [ :e | 
+				"Ignore only errors related to version parsing.
+				And try with the next parser if that is the case".
+				stream close. self tryOpen ] ].
+	
+	self error: 'Something went really wrong here!'
+]
+
 { #category : 'buffering' }
 SourceFile >> discardBuffer [
 
 	stream wrappedStream discardBuffer
+]
+
+{ #category : 'opening' }
+SourceFile >> ensureSourceFileCreated [
+
+	"Make sure that the source file is set up if it does not exist"
+	(self newSourceStreamReadOnly: true) ifNotNil: [ ^ self ].
+	
+	"If the file does not exist, open it for write and declare the default version v1.0.0"
+	self version: ChunkFileFormatParserV100.
+	self forceCreateSourceFile
 ]
 
 { #category : 'accessing' }
@@ -62,6 +113,12 @@ SourceFile >> ensureWrittenPosition: aPosition [
 	^ stream ensureWrittenPosition: aPosition
 ]
 
+{ #category : 'versions' }
+SourceFile >> exporterClass [
+
+	^ (formatVersionClass ifNil: [ formatVersionClass := self formatVersion ]) writer
+]
+
 { #category : 'accessing' }
 SourceFile >> flush [
 
@@ -69,6 +126,23 @@ SourceFile >> flush [
 		ifTrue: [ ^ self ].
 
 	stream flush
+]
+
+{ #category : 'opening' }
+SourceFile >> forceCreateSourceFile [
+	
+	"If the file does not exist, open it for write and declare the default version v1.0.0"
+	self declareVersion.
+	self close
+]
+
+{ #category : 'formatting' }
+SourceFile >> formatVersion [
+	
+	self tryOpen.
+	stream ifNil: [ self error ].
+	
+	^ self detectParserVersion
 ]
 
 { #category : 'accessing' }
@@ -117,6 +191,42 @@ SourceFile >> isReadOnly [
 	^ stream isReadOnly
 ]
 
+{ #category : 'streaming' }
+SourceFile >> newSourceStreamReadOnly: readOnly [
+
+	| basename newStream |
+	
+	basename := path asFileReference basename.
+	readOnly ifFalse: [
+			potentialLocations do: [ :each |
+					[
+						newStream := SourceFileCharacterReadWriteStream
+							             on: (SourceFileBufferedReadWriteStream on: (each asFileReference / basename) unbufferedBinaryWriteStream)
+							             encoding: 'utf8'.
+						^ newStream ]
+						on: Error
+						do: [ ] ] ].
+	
+	"Open a read write stream only if read only access was not requested.
+	We need to create the encoding and buffering streams manually because we need a read write stream."
+	potentialLocations do: [ :each |
+			  [
+				  newStream := ZnCharacterReadStream on: (each asFileReference / basename) binaryReadStream encoding: 'utf8'.
+				  ^ newStream ]
+				  on: Error
+				  do: [ ] ].
+
+	^ nil
+]
+
+{ #category : 'instance creation' }
+SourceFile >> newWriter [
+
+	^ SourceFileWriter new
+		  sourceFile: self;
+		  yourself
+]
+
 { #category : 'accessing' }
 SourceFile >> next [
 
@@ -135,7 +245,7 @@ SourceFile >> next: anInteger putAll: aString startingAt: startIndex [
 	stream next: anInteger putAll: aString startingAt: startIndex
 ]
 
-{ #category : 'file in/out' }
+{ #category : 'streaming' }
 SourceFile >> nextChunk [
 
 	^ (ChunkReadStream on: stream) next
@@ -206,7 +316,7 @@ SourceFile >> printOn: aStream [
 { #category : 'accessing' }
 SourceFile >> readOnlyCopy [
 
-	^ (self species on: path potentialLocations: potentialLocations)
+	^ (self species lookupFileNamed: path potentialLocations: potentialLocations)
 		tryOpenReadOnly: true;
 		yourself
 ]
@@ -249,28 +359,41 @@ SourceFile >> tryOpen [
 
 { #category : 'opening' }
 SourceFile >> tryOpenReadOnly: readOnly [
-	| basename |
-	basename := path asFileReference basename.
 
+	| newStream |
 	"Open a read write stream only if read only access was not requested.
 	We need to create the encoding and buffering streams manually because we need a read write stream."
-	readOnly ifFalse: [
-		potentialLocations
-			do: [ :each |
-				[ stream := SourceFileCharacterReadWriteStream
-					on: (SourceFileBufferedReadWriteStream on:(each asFileReference / basename) unbufferedBinaryWriteStream)
-					encoding: 'utf8'.
-				^ self ] on: Error do: [  ] ] ].
-
-	potentialLocations do: [ :each |
-			[ stream := ZnCharacterReadStream
-					on: (each asFileReference / basename) binaryReadStream
-					encoding: 'utf8'.
-				^ self ] on: Error do: [  ] ]
+	newStream := self newSourceStreamReadOnly: readOnly.
+	
+	newStream ifNotNil: [
+		"The file exists and we have the right to at least read it"
+		newStream size = 0 ifTrue: [
+			"If empty, then the file has not been open as a source file"
+			Error signal: 'Cannot open non source file: ', self fullName asString
+		] ].
+	
+	stream := newStream.
 ]
 
 { #category : 'accessing' }
 SourceFile >> upToEnd [
 
 	^ stream upToEnd
+]
+
+{ #category : 'versions' }
+SourceFile >> version: aClass [
+	
+	formatVersionClass := aClass
+]
+
+{ #category : 'stop conditions' }
+SourceFile >> writeChangesDuring: aBlock onSuccess: successBlock onFail: failBlock [
+
+	| sourceCodePosition |
+	(self closed or: [ self isReadOnly ]) ifTrue: [ ^ failBlock value ].
+	self setToEnd.
+
+	sourceCodePosition := aBlock value: self.
+	successBlock value: sourceCodePosition
 ]

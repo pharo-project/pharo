@@ -29,6 +29,12 @@ SystemDependenciesTest >> compilerLayerPackages [
 	^ self kernelLayerPackages , BaselineOfPharoBootstrap compilerPackageNames
 ]
 
+{ #category : 'packages' }
+SystemDependenciesTest >> debuggingLayerPackages [
+
+	^ self sunitCoreLayerPackages , BaselineOfDebugging corePackageNames
+]
+
 { #category : 'accessing' }
 SystemDependenciesTest >> dependenciesReport [
 
@@ -70,17 +76,24 @@ SystemDependenciesTest >> knownCompilerDependencies [
 ]
 
 { #category : 'known dependencies' }
+SystemDependenciesTest >> knownDebuggingDependencies [
+	"ideally this list should be empty"
+
+	^ #( #'Morphic-Core' #'System-Object Events' #'Tool-Base' )
+]
+
+{ #category : 'known dependencies' }
 SystemDependenciesTest >> knownKernelDependencies [
 	"ideally this list should be empty"
 
-	^ #( #'FileSystem-Core' )
+	^ #( #'FileSystem-Core' 'CodeImport' )
 ]
 
 { #category : 'known dependencies' }
 SystemDependenciesTest >> knownMorphicCoreDependencies [
 	"ideally this list should be empty"
 
-	^ #(#'Keymapping-KeyCombinations' #'Morphic-Base' 'Morphic-Widgets-ColorPicker')
+	^ #(#'Keymapping-KeyCombinations' #'Morphic-Base' 'Morphic-Widgets-ColorPicker' 'Tool-Base')
 ]
 
 { #category : 'known dependencies' }
@@ -99,10 +112,17 @@ SystemDependenciesTest >> knownUIDependencies [
 	     'NECompletion-Morphic' #VariablesLibrary #'Tools-CodeNavigation' #'Spec2-CommonWidgets' #'NewTools-Scopes' #'NewTools-FileBrowser' #EnlumineurFormatter )
 ]
 
+{ #category : 'known dependencies' }
+SystemDependenciesTest >> knownUIInfrastructureDependencies [
+	"ideally this list should be empty"
+
+	^ #( #'Morphic-Core' #'System-Object Events' #'Tool-Base' )
+]
+
 { #category : 'packages' }
 SystemDependenciesTest >> metacelloCoreLayerPackages [
 
-	^ self monticelloLayerPackages , (BaselineOfMetacello packagesOfGroupNamed: 'Core') , (BaselineOfTonel packagesOfGroupNamed: #core)
+	^ self monticelloCoreLayerPackages , (BaselineOfMetacello packagesOfGroupNamed: 'Core') , (BaselineOfTonel packagesOfGroupNamed: #core)
 ]
 
 { #category : 'accessing' }
@@ -127,7 +147,7 @@ SystemDependenciesTest >> monticelloCoreLayerPackages [
 { #category : 'packages' }
 SystemDependenciesTest >> monticelloLayerPackages [
 
-	^ self monticelloCoreLayerPackages , BaselineOfMonticello remoteRepositoriesPackageNames
+	^ self metacelloCoreLayerPackages , BaselineOfMonticello remoteRepositoriesPackageNames
 ]
 
 { #category : 'accessing' }
@@ -146,7 +166,7 @@ SystemDependenciesTest >> packagesOfGroupNamed: aGroupName on: aBaseline [
 { #category : 'packages' }
 SystemDependenciesTest >> sunitCoreLayerPackages [
 
-	^ self metacelloCoreLayerPackages , BaselineOfSUnit corePackageNames
+	^ self monticelloLayerPackages , BaselineOfSUnit corePackageNames
 ]
 
 { #category : 'tests' }
@@ -169,7 +189,8 @@ SystemDependenciesTest >> testExternalBasicToolsDependencies [
 		self tonelCorePackageNames,
 		BaselineOfKernelTests withAllPackageNames,
 		BaselineOfTraits corePackages,
-		BaselineOfSUnit withAllPackageNames, "ALL"
+		BaselineOfSUnit withAllPackageNames,
+		BaselineOfDebugging corePackageNames,
 		BaselineOfDisplay withAllPackageNames,
 		BaselineOfUnifiedFFI withAllPackageNames,
 		BaselineOfFonts allPackageNames,
@@ -201,6 +222,15 @@ SystemDependenciesTest >> testExternalCompilerDependencies [
 	dependencies := self externalDependendiesOf: self compilerLayerPackages.
 
 	self assertCollection: dependencies hasSameElements: self knownCompilerDependencies
+]
+
+{ #category : 'tests' }
+SystemDependenciesTest >> testExternalDebuggingDependencies [
+
+	| dependencies |
+	dependencies := self externalDependendiesOf: self debuggingLayerPackages.
+
+	self assertCollection: dependencies hasSameElements: self knownDebuggingDependencies
 ]
 
 { #category : 'tests' }
@@ -296,7 +326,7 @@ SystemDependenciesTest >> testExternalMorphicCoreDependencies [
 	dependencies := self externalDependendiesOf: (
 		self metacelloPackageNames,
 		self tonelCorePackageNames,
-		BaselineOfUI debuggerBaseUIPackageNames,
+		BaselineOfDebugging corePackageNames,
 		BaselineOfUIInfrastructure withAllPackageNames,
 		BaselineOfTraits corePackages,
 		BaselineOfSUnit corePackageNames,
@@ -318,7 +348,7 @@ SystemDependenciesTest >> testExternalMorphicDependencies [
 	dependencies := self externalDependendiesOf: (
 		self metacelloPackageNames,
 		self tonelCorePackageNames,
-		BaselineOfUI debuggerBaseUIPackageNames,
+		BaselineOfDebugging corePackageNames,
 		BaselineOfUIInfrastructure withAllPackageNames,
 		BaselineOfTraits corePackages,
 		BaselineOfSUnit corePackageNames,
@@ -355,6 +385,7 @@ SystemDependenciesTest >> testExternalSpec2Dependencies [
 		"Language"
 		self metacelloPackageNames,
 		self tonelCorePackageNames,
+		BaselineOfDebugging corePackageNames,
 		BaselineOfUI allPackageNames,
 		BaselineOfUIInfrastructure withAllPackageNames,
 		BaselineOfTraits corePackages,
@@ -407,6 +438,7 @@ SystemDependenciesTest >> testExternalUIDependencies [
 	dependencies := (self externalDependendiesOf: (
 		self metacelloPackageNames,
 		self tonelCorePackageNames,
+		BaselineOfDebugging corePackageNames,
 		BaselineOfUI allPackageNames,
 		BaselineOfUIInfrastructure withAllPackageNames,
 		BaselineOfTraits corePackages,
@@ -437,7 +469,7 @@ SystemDependenciesTest >> testExternalUIInfrastructureDependencies [
 	| dependencies |
 	dependencies := self externalDependendiesOf: self uiInfrastructureCoreLayerPackages.
 
-	self assertEmpty: dependencies
+	self assertCollection: dependencies hasSameElements: self knownUIInfrastructureDependencies
 ]
 
 { #category : 'tests' }
@@ -468,6 +500,7 @@ SystemDependenciesTest >> tonelCorePackageNames [
 { #category : 'packages' }
 SystemDependenciesTest >> uiInfrastructureCoreLayerPackages [
 
-	^ self sunitCoreLayerPackages , BaselineOfUnifiedFFI allPackageNames , BaselineOfThreadedFFI allPackageNames , BaselineOfDisplay allPackageNames
-	  , BaselineOfFonts allPackageNames , BaselineOfFreeType allPackageNames , BaselineOfMenuRegistration allPackageNames , BaselineOfKeymapping corePackageNames
+	^ self debuggingLayerPackages , BaselineOfUnifiedFFI allPackageNames , BaselineOfThreadedFFI allPackageNames , BaselineOfDisplay allPackageNames
+	  , BaselineOfFonts corePackageNames , BaselineOfFreeType uiPackageNames , BaselineOfMenuRegistration allPackageNames , BaselineOfKeymapping corePackageNames
+	  , BaselineOfFuel corePackageNames
 ]

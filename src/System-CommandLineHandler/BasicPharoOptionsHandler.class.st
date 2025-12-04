@@ -26,8 +26,9 @@ Class {
 	#classVars : [
 		'CurrentOptionsHandler'
 	],
-	#category : 'System-CommandLineHandler',
-	#package : 'System-CommandLineHandler'
+	#category : 'System-CommandLineHandler-Base',
+	#package : 'System-CommandLineHandler',
+	#tag : 'Base'
 }
 
 { #category : 'accessing' }

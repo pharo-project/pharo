@@ -84,7 +84,7 @@ SourceFileBufferedReadWriteStreamTest >> testEnsureWrittenPositionFlushesComplet
 	preambleLength := 2 + trait name size + 13 + 3 + 9 + changestampsize
 	                  + 3.
 
-	SourceFileArray default changesWriteStreamDo: [ :sourceFile |
+	SourceFileArray default writeChangesDuring: [ :sourceFile |
 		| stream |
 		[ "We want the internal buffer to be flushed after
 				writing the first two characters of the method selector"
@@ -105,6 +105,7 @@ SourceFileBufferedReadWriteStreamTest >> testEnsureWrittenPositionFlushesComplet
 			1 to: 10 do: [ :index | "Need to know the length of the category name"
 				trait compile: 'aMethod' , index asString classified: 'a' ] ] ]
 			ensure: [ stream sizeBuffer: stream defaultBufferSize ] ]
+			onSuccess: [ :sourcePointer | "Ignore" ] onFail: [ "Ignore" ]
 ]
 
 { #category : 'tests' }

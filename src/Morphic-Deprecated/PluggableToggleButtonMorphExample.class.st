@@ -63,7 +63,8 @@ PluggableToggleButtonMorphExample >> buildToggleButtonWithIcon [
 
 { #category : 'actions' }
 PluggableToggleButtonMorphExample >> toggleAction: aBoolean [
-	self inform: (aBoolean
-		ifTrue: [ 'Button pressed' ]
-		ifFalse: [ 'Button unpressed' ])
+
+	InformativeNotification signal: (aBoolean
+			 ifTrue: [ 'Button pressed' ]
+			 ifFalse: [ 'Button unpressed' ])
 ]

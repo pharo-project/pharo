@@ -107,7 +107,6 @@ CORE_IMAGE_NAME=${PHARO_NAME_PREFIX}-core-${SUFFIX}
 COMPILER_IMAGE_NAME=${PHARO_NAME_PREFIX}-compiler-${SUFFIX}
 TRAITS_IMAGE_NAME=${PHARO_NAME_PREFIX}-traits-${SUFFIX}
 MC_BOOTSTRAP_IMAGE_NAME=${PHARO_NAME_PREFIX}-monticello_bootstrap-${SUFFIX}
-MC_IMAGE_NAME=${PHARO_NAME_PREFIX}-monticello-${SUFFIX}
 METACELLO_IMAGE_NAME=${PHARO_NAME_PREFIX}-metacello-${SUFFIX}
 PHARO_IMAGE_NAME=${PHARO_NAME_PREFIX}-${SUFFIX}
 
@@ -151,7 +150,7 @@ ${VM} "${COMPILER_IMAGE_NAME}.image" perform --save PharoBootstrapFixMethodsTool
 
 # Installing compiler through Hermes 
 echo $(date -u) "[Compiler] Installing compiler through Hermes"
-${VM} "${COMPILER_IMAGE_NAME}.image" loadHermes UIManager.hermes Debugging-Utils.hermes OpalCompiler-Core.hermes ParseTreeRewriter.hermes Deprecation.hermes DebugInfo.hermes CodeImport.hermes CodeImport-Commands.hermes --save --no-fail-on-undeclared
+${VM} "${COMPILER_IMAGE_NAME}.image" loadHermes UIManager.hermes OpalCompiler-Core.hermes ParseTreeRewriter.hermes Deprecation.hermes DebugInfo.hermes CodeImport.hermes CodeImport-Commands.hermes --save --no-fail-on-undeclared
 ${VM} "${COMPILER_IMAGE_NAME}.image" eval --save "SystemEnvironment deprecatedAliases: { #SystemDictionary }." # This line should be removed in Pharo 14 since it is for backward compatibility.
 ${VM} "${COMPILER_IMAGE_NAME}.image" st ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/01-initialization/01-init.st --no-source --save --quit
 
@@ -182,17 +181,14 @@ ${VM} "${MC_BOOTSTRAP_IMAGE_NAME}.image" st ${ST_CACHE}/Monticello.st --save --q
 ${VM} "${MC_BOOTSTRAP_IMAGE_NAME}.image" st ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/02-monticello-bootstrap/01-bootstrapMonticello.st --save --quit
 zip "${MC_BOOTSTRAP_IMAGE_NAME}.zip" ${MC_BOOTSTRAP_IMAGE_NAME}.*
 
-#Bootstrap Monticello Part 2: Networking Packages and Remote Repositories
-echo $(date -u) "[Monticello] Loading Networking Packages and Remote Repositories"
-${VM} "${MC_BOOTSTRAP_IMAGE_NAME}.image" save $MC_IMAGE_NAME
-${VM} "${MC_IMAGE_NAME}.image" st ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/02-monticello-bootstrap/02-bootstrapMonticelloRemote.st --save --quit
-zip "${MC_IMAGE_NAME}.zip" ${MC_IMAGE_NAME}.*
-
 #Bootstrap Metacello
 echo "[Metacello] Bootstrapping Metacello"
-${VM} "${MC_IMAGE_NAME}.image" save ${METACELLO_IMAGE_NAME}
+${VM} "${MC_BOOTSTRAP_IMAGE_NAME}.image" save ${METACELLO_IMAGE_NAME}
 ${VM} "${METACELLO_IMAGE_NAME}.image" st ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/03-metacello-bootstrap/01-loadMetacello.st --save --quit
-${VM} "${METACELLO_IMAGE_NAME}.image" metacello install --save --signalErrorOnWarning 'github://pharo-vcs/tonel:Pharo12' Tonel --groups core
+git clone https://github.com/pharo-vcs/tonel.git -b "Pharo${PHARO_MAJOR}" "${BOOTSTRAP_DOWNLOADS}/tonel"
+${VM} "${METACELLO_IMAGE_NAME}.image" metacello install --save --signalErrorOnWarning "filetree://${BOOTSTRAP_DOWNLOADS}/tonel" Tonel --groups core
+#We need the next line because we will reload Tonel from github and this could cause some trouble later
+${VM} "${METACELLO_IMAGE_NAME}.image" "${IMAGE_FLAGS}" eval --save "MetacelloProjectRegistration resetRegistry"
 zip "${METACELLO_IMAGE_NAME}.zip" ${METACELLO_IMAGE_NAME}.*
 
 echo $(date -u) "[Pharo] Reloading rest of packages"
@@ -207,6 +203,8 @@ ${VM} "${PHARO_IMAGE_NAME}.image" eval --save "Smalltalk vm parameterAt: 45 put:
 env 2>&1 > env.log
 
 ${VM} "${PHARO_IMAGE_NAME}.image" eval --save "MCCacheRepository uniqueInstance disable"
+#First we load the remote repositories capabilities of Monticello to be able to load the Pharo baseline with external remote dependencies
+${VM} "${PHARO_IMAGE_NAME}.image" metacello install --save --signalErrorOnWarning "tonel://${BOOTSTRAP_REPOSITORY}/src" Monticello --groups RemoteRepositories
 ${VM} "${PHARO_IMAGE_NAME}.image" metacello install --save --signalErrorOnWarning "tonel://${BOOTSTRAP_REPOSITORY}/src" Pharo
 
 #Storing the image version into the image header

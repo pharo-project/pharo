@@ -1,6 +1,20 @@
 Extension { #name : 'Object' }
 
 { #category : '*Deprecated14' }
+Object >> basicInspect [
+
+	self deprecated: 'Basic inspector does not exist anymore, you should use the inpector.' transformWith: '`@rcv basicInspect' -> '`@rcv inspect'.
+	^ self inspect
+]
+
+{ #category : '*Deprecated14' }
+Object >> basicInspector [
+
+	self deprecated: 'Basic inspector does not exist anymore, you should use the inpector.' transformWith: '`@rcv basicInspector' -> '`@rcv inspector'.
+	^ self inspector
+]
+
+{ #category : '*Deprecated14' }
 Object >> haltOnAccess [
 
 	self

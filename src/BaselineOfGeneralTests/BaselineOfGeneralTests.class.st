@@ -14,20 +14,17 @@ BaselineOfGeneralTests >> baseline: spec [
 	repository := self packageRepositoryURLForSpec: spec.
 	spec for: #common do: [
 		spec
-			package: 'Debugging-Utils-Tests';
+			baseline: 'Debugging' with: [ spec loads: #Tests from: repository ];
 			package: 'NumberParser-Tests';
 			package: 'AST-Core-Tests';
 			package: 'Kernel-CodeModel-Tests';
 			package: 'Monticello-Tests';
-			"required by MonticelloMocks"package: 'System-Installers-Tests';
 			package: 'MonticelloMocks';
 			package: 'Fuel-Core-Tests';
 			package: 'FormCanvas-Tests';
 			package: 'Collections-DoubleLinkedList-Tests';
 			package: 'Collections-Arithmetic-Tests';
 			package: 'Metacello-CommandLine-Tests';
-			package: 'Debugger-Model-Tests';
-			package: 'Debugger-Oups-Tests';
 			baseline: 'Epicea' with: [
 				spec
 					repository: repository;

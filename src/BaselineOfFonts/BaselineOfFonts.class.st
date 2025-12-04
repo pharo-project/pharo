@@ -5,6 +5,12 @@ Class {
 	#package : 'BaselineOfFonts'
 }
 
+{ #category : 'accessing' }
+BaselineOfFonts class >> corePackageNames [
+
+	^ self packagesOfGroupNamed: #Core
+]
+
 { #category : 'baselines' }
 BaselineOfFonts >> baseline: spec [
 
@@ -20,7 +26,7 @@ BaselineOfFonts >> baseline: spec [
 				package: 'Graphics-Fonts' with: [ spec requires: #( 'Fonts-Abstract' 'Fonts-Infrastructure' 'Text-Core' ) ].
 
 			spec
-				group: 'Core' with: #( 'Fonts-Abstract' 'Fonts-Infrastructure' 'Graphics-Fonts' );
+				group: 'Core' with: #( 'Fonts-Abstract' 'Fonts-Infrastructure' 'Graphics-Fonts' 'Text-Core' );
 				group: 'Tests' with: #( 'Fonts-Infrastructure-Tests' ) ]
 ]
 

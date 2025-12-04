@@ -14,7 +14,7 @@ String >> encodeWith: encoding [
 	"Produce a ByteArray that encodes the receiver, using a specified encoding.
 	Encoding is either a ZnCharacterEncoder instance or an identifier for one."
 
-	" 'Les élèves français' encodeWith: #utf8 "
+	" ('Les élèves français' encodeWith: #utf8) >>> #[76 101 115 32 195 169 108 195 168 118 101 115 32 102 114 97 110 195 167 97 105 115]"
 
 	^ encoding asZnCharacterEncoder encodeString: self
 ]

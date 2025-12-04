@@ -491,7 +491,7 @@ CoStaticBenchmarks >> latexMMRResults [
         prefixSizes do: [:pSize |
             | val |
             val := (self mmrForPrefixSize: pSize) printShowingDecimalPlaces: 4.
-            s nextPutAll: pSize asString; nextPutAll: ' & '.
+            s print: pSize ; nextPutAll: ' & '.
             s nextPutAll: val; nextPutAll: ' \\ \hline'; cr.
         ].
         s nextPutAll: '\end{tabular}'; cr.

@@ -37,7 +37,7 @@ EpMethodAddition >> fileOutEntryOn: aWriteStream [
 	"Write a code chunk to create the receiver's method on aWriteStream"
 
 	self methodAffected origin ifNotNil: [ :methodDefinition |
-		(CodeExporter onStream: aWriteStream)
+		(CodeExporterV100 onStream: aWriteStream)
 			writeMethod: self methodAffected originMethod ]
 ]
 

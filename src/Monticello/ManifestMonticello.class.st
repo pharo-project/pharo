@@ -10,12 +10,8 @@ Class {
 }
 
 { #category : 'meta-data - dependency analyser' }
-ManifestMonticello class >> ignoredDependencies [
-	^ #(#'Graphics-Primitives')
-]
-
-{ #category : 'meta-data - dependency analyser' }
 ManifestMonticello class >> manuallyResolvedDependencies [
 
-	^ #( #'Graphics-Primitives' #Jobs )
+	<ignoreForCoverage>
+	^ #(#Jobs #'Random-Core' #'System-Support')
 ]

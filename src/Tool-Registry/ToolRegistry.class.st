@@ -180,10 +180,11 @@ ToolRegistry >> openWorkspace [
 ]
 
 { #category : 'registration' }
-ToolRegistry >> register: anObject as: aNameSelector [
+ToolRegistry >> register: aClass as: aNameSelector [
 	"Register a tool class under given name"
-	tools at: aNameSelector put: anObject.
-	self announcer announce: (ToolRegistryToolRegistered tool: anObject name: aNameSelector)
+	
+	tools at: aNameSelector put: aClass.
+	self announcer announce: (ToolRegistryToolRegistered tool: aClass name: aNameSelector)
 ]
 
 { #category : 'announcer' }

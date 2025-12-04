@@ -24,20 +24,6 @@ SUnitExtensionsTest >> assertionFailedInRaiseWithExceptionDoTest [
 ]
 
 { #category : 'real tests' }
-SUnitExtensionsTest >> differentExceptionInShouldRaiseWithExceptionDoTest [
-
-	[ self
-		should: [ Error signal ]
-		raise: Halt
-		withExceptionDo: [ :anException | 
-									self 
-										assert: false 
-										description: 'should:raise:withExceptionDo: handled an exception that should not handle'] ]
-	on: Error
-	do: [ :anException | anException return: nil ]
-]
-
-{ #category : 'real tests' }
 SUnitExtensionsTest >> errorInRaiseWithExceptionDoTest [
 
 	self
@@ -142,18 +128,6 @@ SUnitExtensionsTest >> testAutoDenyFalse [
 SUnitExtensionsTest >> testAutoDenyTrue [
 	self deny: 1 equals: 2.
 	self deny: false
-]
-
-{ #category : 'tests' }
-SUnitExtensionsTest >> testDifferentExceptionInShouldRaiseWithExceptionDo [
-	| testCase testResult |
-	testCase := self class selector: #differentExceptionInShouldRaiseWithExceptionDoTest.
-	testResult := testCase run.
-
-	self assert: (testResult passed includes: testCase).
-	self assertEmpty: testResult errors.
-	self assertEmpty: testResult failures.
-	self assert: testResult passed size equals: 1
 ]
 
 { #category : 'tests' }

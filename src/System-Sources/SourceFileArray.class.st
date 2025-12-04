@@ -15,7 +15,8 @@ Class {
 	#instVars : [
 		'files',
 		'readOnlyQueue',
-		'flushChanges'
+		'flushChanges',
+		'exporterClass'
 	],
 	#classVars : [
 		'Default'
@@ -37,6 +38,13 @@ SourceFileArray class >> default: anInstance [
 	Default := anInstance
 ]
 
+{ #category : 'system startup' }
+SourceFileArray class >> ensureSourceFilesCreated [
+	
+	PharoFilesOpener default locateSources ensureSourceFileCreated.
+	PharoFilesOpener default locateChanges ensureSourceFileCreated.
+]
+
 { #category : 'class initialization' }
 SourceFileArray class >> initialize [
 
@@ -48,6 +56,12 @@ SourceFileArray class >> initialize [
 	"This next line is to add a deprecated global variable. The deprecation happened in Pharo 14 development. We can remove it completly in the future."
 	self class environment at: #SourceFiles put: self default.
 	(self class environment bindingOf: #SourceFiles) isDeprecated: true
+]
+
+{ #category : 'system startup' }
+SourceFileArray class >> shutDown: isImageClosing [
+
+	isImageClosing ifTrue: [ self default close ]
 ]
 
 { #category : 'system startup' }
@@ -67,19 +81,6 @@ SourceFileArray >> changesFileStream [
 SourceFileArray >> changesFileStream: aStream [
 
 	^ files at: 2 put: aStream
-]
-
-{ #category : 'public - string writing' }
-SourceFileArray >> changesWriteStreamDo: aBlock [
-
-	| changesFile |
-	changesFile := self changesFileStream.
-	changesFile ifNil: [ ^ self ].
-	changesFile closed ifTrue: [ ^ self ].
-	changesFile isReadOnly ifTrue: [ ^ self ].
-	changesFile setToEnd.
-
-	^ aBlock value: changesFile
 ]
 
 { #category : 'public - file system operations' }
@@ -168,6 +169,12 @@ SourceFileArray >> ensureOpen [
 	readOnlyQueue := SharedQueue new
 ]
 
+{ #category : 'accessing' }
+SourceFileArray >> exporterClass [
+
+	^ exporterClass ifNil: [ exporterClass := CodeExporterV100 ]
+]
+
 { #category : 'private - accessing file streams' }
 SourceFileArray >> fileAt: index [
 	^ files at: index
@@ -216,9 +223,8 @@ SourceFileArray >> forceChangesToDisk [
 	"Ensure that the changes file has been fully written to disk by closing and re-opening it. This makes the system more robust in the face of a power failure or hard-reboot."
 
 	| changesFile |
-	changesFile := self changesFileStream.
-	changesFile isReadOnly ifFalse: [
-		changesFile flush ].
+	changesFile := self changesFileStream ifNil: [ ^ self ].
+	changesFile isReadOnly ifFalse: [ changesFile flush ].
 	changesFile close.
 	changesFile tryOpen.
 	changesFile setToEnd
@@ -236,6 +242,34 @@ SourceFileArray >> initialize [
 
 	readOnlyQueue := SharedQueue new.
 	flushChanges := true
+]
+
+{ #category : 'public - file system operations' }
+SourceFileArray >> logChange: aStringOrText [
+	"Write the argument, aString, onto the changes file."
+
+	| aString |
+	aString := aStringOrText asString.
+	(aString findFirst: [ :char | char isSeparator not ]) = 0 ifTrue: [ ^ self ]. "null doits confuse replay"
+	self
+		writeChangesDuring: [ :changesFile |
+			| position |
+			position := changesFile position.
+			changesFile
+					cr;
+					cr.
+			(ChunkWriteStream on: changesFile) nextPut: aString.
+			position ]
+		onSuccess: [ :sourcePointer | "Ignore" ]
+		onFail: [ "Ignore" ]
+]
+
+{ #category : 'public - string writing' }
+SourceFileArray >> newWriter [
+
+	^ SourceFileWriter new
+		  sourceFile: self;
+		  yourself
 ]
 
 { #category : 'public - string reading' }
@@ -472,50 +506,16 @@ SourceFileArray >> timeStampFromPreamble: preamble for: sourceDataPointers [
 	^ stamp
 ]
 
-{ #category : 'public - string writing' }
+{ #category : 'private' }
 SourceFileArray >> writeChangesDuring: aBlock onSuccess: successBlock onFail: failBlock [
 
-	| file sourceCodePosition |
+	| file |
 	file := self changesFileStream.
-	(file isNil or: [ file closed or: [ file isReadOnly ] ]) ifTrue: [ ^ failBlock value ].
-
-	ChangesLog default assureStartupStampLogged.
-
-	file setToEnd.
-	sourceCodePosition := aBlock value: file.
-	successBlock value: (self sourcePointerFromFileIndex: 2 andPosition: sourceCodePosition).
+	file ifNil: [ ^ failBlock value ].
+	
+	file writeChangesDuring: aBlock
+		onSuccess: [ :sourceCodePosition | successBlock value: (self sourcePointerFromFileIndex: 2 andPosition: sourceCodePosition) ]
+		onFail: failBlock.
 
 	self flushChangesFile
-]
-
-{ #category : 'public - string writing' }
-SourceFileArray >> writeComment: aComment ofClass: aClass metadata: metadata timestamp: aTimeStamp priorSourcePointer: priorSourcePointer onSuccess: successBlock onFail: failBlock [
-
-	self
-		writeChangesDuring: [ :file |
-				(CodeExporter onStream: file)
-					writeComment: aComment
-					ofClass: aClass
-					stamp: aTimeStamp
-					withMetadata: metadata
-					priorSourcePointer: priorSourcePointer ]
-		onSuccess: successBlock
-		onFail: failBlock
-]
-
-{ #category : 'public - string writing' }
-SourceFileArray >> writeSource: source ofMethod: method protocol: protocol metadata: metadata timestamp: timestamp priorSourcePointer: priorSourcePointer onSuccess: successBlock onFail: failBlock [
-
-	self
-		writeChangesDuring: [ :file |
-				(CodeExporter onStream: file)
-					writeMethodWithClass: method methodClass
-					selector: method selector
-					source: source
-					protocol: protocol
-					stamp: timestamp
-					withMetadata: metadata
-					priorSourcePointer: priorSourcePointer ]
-		onSuccess: successBlock
-		onFail: failBlock
 ]

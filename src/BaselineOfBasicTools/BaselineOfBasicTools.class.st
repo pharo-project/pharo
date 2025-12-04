@@ -41,6 +41,7 @@ BaselineOfBasicTools >> baseline: spec [
 			spec
 				baseline: 'Traits' with: [ spec loads: 'core-traits' from: repository ];
 				baseline: 'SUnit' with: [ spec loads: 'Core' from: repository ];
+				baseline: 'Debugging' with: [ spec loads: 'Core' from: repository ];
 				baseline: 'UnifiedFFI' with: [ spec repository: repository ];
 				baseline: 'ThreadedFFI' with: [ spec repository: repository ];
 				baseline: 'UIInfrastructure' with: [ spec repository: repository ];
@@ -57,7 +58,6 @@ BaselineOfBasicTools >> baseline: spec [
 						loads: 'Core';
 						repository: repository ].
 
-			spec package: 'ClassDefinitionPrinters'.
 			spec package: 'Tool-Profilers'.
 			spec package: 'NECompletion'.
 			spec package: 'NECompletion-Morphic'.
@@ -68,13 +68,8 @@ BaselineOfBasicTools >> baseline: spec [
 			spec package: 'System-Sources-Tests'. "<= Not sure this one should be here but it is where the classes were loaded before been extracted from Tests package."
 
 			spec package: 'ClassDefinitionPrinters-Tests'.
-			spec package: 'Kernel-CodeModel-Tests'.
-			spec package: 'Monticello-Tests'.
-			spec package: 'MonticelloMocks'.
 			spec package: 'Network-Mail'.
 			spec package: 'Network-Mail-Tests'.
-
-
 
 			spec package: 'OpalCompiler-ToolFeatures'.
 			spec package: 'OpalCompiler-ToolFeatures-Tests'.
@@ -240,17 +235,15 @@ BaselineOfBasicTools >> postload: loader package: packageSpec [
 	Initialized := true
 ]
 
-{ #category : 'baseline' }
+{ #category : 'accessing' }
 BaselineOfBasicTools >> project [
-	
-	| aProject |
-	
-	aProject := super project.
-	aProject loadType: #atomic.
-	^ aProject.
+
+	^ super project
+		  loadType: #atomic;
+		  yourself
 ]
 
-{ #category : 'baseline' }
+{ #category : 'dependencies' }
 BaselineOfBasicTools >> specRefactoring: spec [
 	
 	"Package used to rename #defaultSpec methods to #defaultLayout.

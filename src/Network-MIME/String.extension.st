@@ -11,8 +11,8 @@ String >> base64Decoded [
 	Base64 encoding is a technique to represent binary data as ASCII text.
 	The inverse operation is ByteArray>>#base64Encoded"
 
-	"'AgMFBwsNERMXHR8lKSsvNTs9Q0dJT1NZYWVna21xf4OJi5WXnaOnrbO1v8HFx9Pf4+Xp7/H7' base64Decoded"
-	"'SGVsbG8gV29ybGQh' base64Decoded utf8Decoded"
+	"'AgMFBwsNERMXHR8lKSsvNTs9Q0dJT1NZYWVna21xf4OJi5WXnaOnrbO1v8HFx9Pf4+Xp7/H7' base64Decoded >>> #[2 3 5 7 11 13 17 19 23 29 31 37 41 43 47 53 59 61 67 71 73 79 83 89 97 101 103 107 109 113 127 131 137 139 149 151 157 163 167 173 179 181 191 193 197 199 211 223 227 229 233 239 241 251]"
+	"'SGVsbG8gV29ybGQh' base64Decoded utf8Decoded >>> 'Hello World!'"
 
 	^ ZnBase64Encoder new decode: self
 ]
@@ -25,10 +25,10 @@ String >> decodeMimeHeader [
 	Encoding is Q (quoted printable) or B (Base64), handled by
 	Base64MimeConverter / RFC2047MimeConverter.
 
-	Thanks to Yokokawa-san, it works in m17n package.  Try the following:
+	Thanks to Yokokawa-san, it works in m17n package.  Try the following:"
+"'=?ISO-2022-JP?B?U1dJS0lQT1AvGyRCPUJDKyVpJXMlQRsoQi8=?= =?ISO-2022-JP?B?GyRCJVElRiUjJSobKEIoUGF0aW8p?=' decodeMimeHeader >>> 'SWIKIPOP/渋谷ランチ/パティオ(Patio)' "
 
-	'=?ISO-2022-JP?B?U1dJS0lQT1AvGyRCPUJDKyVpJXMlQRsoQi8=?= =?ISO-2022-JP?B?GyRCJVElRiUjJSobKEIoUGF0aW8p?=' decodeMimeHeader.
-"
+
 	| input |
 	input := self readStream.
 	^String streamContents: [ :output | | temp |

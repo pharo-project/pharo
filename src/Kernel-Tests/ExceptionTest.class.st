@@ -64,15 +64,6 @@ ExceptionTest >> runWithNoHandlers: aBlock [
 	^ result
 ]
 
-{ #category : 'tests - handling' }
-ExceptionTest >> testCaptureIfSignalledWhenStepping [
-	self deny: Exception captureIfSignalledWhenStepping.
-	self assert: Error captureIfSignalledWhenStepping.
-	self deny: (Error allSubclasses anySatisfy: [ :c| c  captureIfSignalledWhenStepping]).
-	self assert: (UnhandledException withAllSubclasses select:[:c| c captureIfSignalledWhenStepping]) size equals: 1.
-	self assert: (UnhandledException withAllSubclasses select:[:c| c captureIfSignalledWhenStepping]) first identicalTo: Halt
-]
-
 { #category : 'tests' }
 ExceptionTest >> testDefaultAction [
 	"Ensure that the resuming an UnhandledError when the underlying
@@ -510,17 +501,6 @@ ExceptionTest >> testUnhandledExceptionShouldAllowToCatchError [
 	].
 	self assert: caughtException class equals: UnhandledError.
 	self assert: caughtException exception equals: error
-]
-
-{ #category : 'tests - handling' }
-ExceptionTest >> testUnhandledExceptionShouldAllowToCatchHalt [
-
-	| halt caughtException |
-	halt := Halt new.
-	self runWithNoHandlers: [
-		[ halt signal ] on: UnhandledException do: [ :err | caughtException := err ]
-	].
-	self assert: caughtException equals: halt
 ]
 
 { #category : 'tests - handling' }

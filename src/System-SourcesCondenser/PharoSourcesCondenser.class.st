@@ -45,7 +45,8 @@ PharoSourcesCondenser >> installFreshChangesFile [
 
 	"Force the creation of a fresh changes file "
 	changesFile writeStreamDo: [ :strm |
-		 "Nothing, just create the file" ]
+		(CodeExporterV100 onStream: strm)
+			writeFileoutVersion ]
 ]
 
 { #category : 'public' }
