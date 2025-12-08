@@ -144,17 +144,18 @@ TestSuite >> run: aResult [
 TestSuite >> runWith: aBlock [
 
 	self setUp.
-	[ 
+	[
 		self shuffledTests do: [ :each |
-			each class announcer
-				when: TestCaseAnnouncement 
-				send: #announce: 
-				to: self testSuiteAnnouncer.
-			aBlock value: each.
-			each class removeSubscription: self testSuiteAnnouncer.
-			self announceTest: each ] ]
-	ensure: [ 
-		self tearDown ]
+				"THIS IS A TEMPORARY HACK!! This should be removed during the development of Pharo14. See the description of this issue: https://github.com/pharo-vcs/iceberg/issues/1993
+				I am here to allow the tests of some CIs to run"
+				(each isKindOf: TestCase)
+					ifTrue: [
+							each class announcer when: TestCaseAnnouncement send: #announce: to: self testSuiteAnnouncer.
+							aBlock value: each.
+							each class removeSubscription: self testSuiteAnnouncer ]
+					ifFalse: [ aBlock value: each ].
+
+				self announceTest: each ] ] ensure: [ self tearDown ]
 ]
 
 { #category : 'running' }
