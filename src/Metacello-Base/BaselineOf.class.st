@@ -67,7 +67,10 @@ reference](MetacelloScriptingAPI.md). There more information on [working with Gi
 "
 Class {
 	#name : 'BaselineOf',
-	#superclass : 'ConfigurationOf',
+	#superclass : 'Object',
+	#instVars : [
+		'project'
+	],
 	#category : 'Metacello-Base',
 	#package : 'Metacello-Base'
 }
@@ -147,6 +150,18 @@ BaselineOf >> baseline: spec [
 	"
 ]
 
+{ #category : 'defaults' }
+BaselineOf >> bleedingEdge [
+	"override if different behavior desired.
+	 Use:
+		self versionDoesNotExistError: #bleedingEdge
+	 if #bleedingEdge version is disallowed."
+
+	<defaultSymbolicVersion: #bleedingEdge>
+	self flag: #ConfigurationRemoval. "I think this method should not be on baselines but let's see that later."
+	^ self defaultBleedingEdgeVersion
+]
+
 { #category : 'queries' }
 BaselineOf >> classNamed: aSymbol [
 
@@ -166,14 +181,46 @@ BaselineOf >> classNamed: aSymbol ifPresent: aBlock ifAbsent: absentBlock [
 ]
 
 { #category : 'accessing' }
+BaselineOf >> customProjectAttributes [
+    "Edit to return a collection of any custom attributes e.g. for conditional loading: Array with: #'Condition1' with: #'Condition2.
+	For more information see: http://code.google.com/p/metacello/wiki/CustomProjectAttrributes "
+
+    ^ #()
+]
+
+{ #category : 'defaults' }
+BaselineOf >> defaultBleedingEdgeVersion [
+
+	self flag: #ConfigurationRemoval. "I think this method should not be on baselines but let's see that later."
+	^ ((self project map values select: [ :version | version blessing == #baseline ]) detectMax: [ :version | version ])
+		  ifNotNil: [ :bleedingEdgeVersion | bleedingEdgeVersion versionString ]
+		  ifNil: [ #notDefined ]
+]
+
+{ #category : 'accessing' }
+BaselineOf >> initalizeProjectWithRepositoryDescription: repositoryDescription [
+
+	^ project := self newProjectWithRepositoryDescription: repositoryDescription
+]
+
+{ #category : 'accessing' }
 BaselineOf >> newProjectWithRepositoryDescription: aListOrRepositoryDescriptions [
 
-	| newProject |
-	newProject := super newProjectWithRepositoryDescription:
-		           aListOrRepositoryDescriptions.
-	aListOrRepositoryDescriptions do: [ :desc |
-		newProject version spec repository: desc ].
-	^ newProject
+	| aProject |
+	aProject := self projectClass new
+		            projectAttributes: self customProjectAttributes;
+		            versionNumberClass: self versionNumberClass;
+		            setBaselineRepositoryDescription: aListOrRepositoryDescriptions;
+		            yourself.
+		
+	"Construct the project"
+	MetacelloBaselineConstructor on: self project: aProject.
+	
+	"change to #atomic if desired"
+	aProject loadType: #linear.
+
+	aListOrRepositoryDescriptions do: [ :desc | aProject version spec repository: desc ].
+	^ aProject
 ]
 
 { #category : 'queries' }
@@ -202,8 +249,23 @@ BaselineOf >> pharoVersionsFrom: aVersion [
 ]
 
 { #category : 'accessing' }
+BaselineOf >> project [
+
+	^ project ifNil: [
+		  "By default we don't know where the project came from..."
+		  self initalizeProjectWithRepositoryDescription: #() ]
+]
+
+{ #category : 'accessing' }
+BaselineOf >> project: aProject [
+
+	project := aProject
+]
+
+{ #category : 'accessing' }
 BaselineOf >> projectClass [
-    ^ MetacelloBaselineProject
+
+	^ MetacelloBaselineProject
 ]
 
 { #category : 'queries' }

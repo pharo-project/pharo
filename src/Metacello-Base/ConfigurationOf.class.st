@@ -59,10 +59,7 @@ To create a new Metacello configuration:
 "
 Class {
 	#name : 'ConfigurationOf',
-	#superclass : 'Object',
-	#instVars : [
-		'project'
-	],
+	#superclass : 'BaselineOf',
 	#category : 'Metacello-Base',
 	#package : 'Metacello-Base'
 }
@@ -82,80 +79,9 @@ ConfigurationOf class >> unloadMetacello [
 	(self packageOrganizer packages select: [ :package | package name beginsWith: 'Metacello' ]) do: [ :package | package removeFromSystem ]
 ]
 
-{ #category : 'defaults' }
-ConfigurationOf >> bleedingEdge [ 
-	"override if different behavior desired.
-	 Use:
-		self versionDoesNotExistError: #bleedingEdge
-	 if #bleedingEdge version is disallowed."
-
-	<defaultSymbolicVersion: #bleedingEdge>
-	
-	^self defaultBleedingEdgeVersion
-]
-
-{ #category : 'accessing' }
-ConfigurationOf >> customProjectAttributes [
-    "Edit to return a collection of any custom attributes e.g. for conditional loading: Array with: #'Condition1' with: #'Condition2.
-	For more information see: http://code.google.com/p/metacello/wiki/CustomProjectAttrributes "
-
-    ^ #()
-]
-
-{ #category : 'defaults' }
-ConfigurationOf >> defaultBleedingEdgeVersion [
-
-	^ ((self project map values select: [ :version | version blessing == #baseline ]) detectMax: [ :version | version ])
-		  ifNotNil: [ :bleedingEdgeVersion | bleedingEdgeVersion versionString ]
-		  ifNil: [ #notDefined ]
-]
-
-{ #category : 'accessing' }
-ConfigurationOf >> initalizeProjectWithRepositoryDescription: repositoryDescription [
-
-	^ project := self newProjectWithRepositoryDescription: repositoryDescription
-]
-
-{ #category : 'accessing' }
-ConfigurationOf >> newProjectWithRepositoryDescription: repositoryDescription [
-
-	| aProject |
-	aProject := self projectClass new projectAttributes:
-		            self customProjectAttributes.
-	aProject versionNumberClass: self versionNumberClass.
-	aProject setBaselineRepositoryDescription: repositoryDescription.
-	
-	"Construct the project"
-	MetacelloBaselineConstructor on: self project: aProject.
-	
-	 "change to #atomic if desired"
-	aProject loadType: #linear.
-	^ aProject
-]
-
-{ #category : 'accessing' }
-ConfigurationOf >> project [
-
-	^ project ifNil: [
-		  "By default we don't know where the project came from..."
-		  self initalizeProjectWithRepositoryDescription: #() ]
-]
-
-{ #category : 'accessing' }
-ConfigurationOf >> project: aProject [
-
-	project := aProject
-]
-
 { #category : 'accessing' }
 ConfigurationOf >> projectClass [
     ^ MetacelloProject
-]
-
-{ #category : 'private' }
-ConfigurationOf >> versionDoesNotExistError: versionStringOrSymbol [
-
-	(MetacelloSymbolicVersionDoesNotExistError project: self project versionString: versionStringOrSymbol) signal
 ]
 
 { #category : 'accessing' }
