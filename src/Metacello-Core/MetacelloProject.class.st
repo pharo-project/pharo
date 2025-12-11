@@ -78,11 +78,6 @@ MetacelloProject >> configuration: anObject [
 	configuration := anObject
 ]
 
-{ #category : 'spec classes' }
-MetacelloProject >> configurationOfProjectSpec [
-    ^ MetacelloConfigurationOfProjectSpec for: self
-]
-
 { #category : 'accessing' }
 MetacelloProject >> defaultBlessing [
 

@@ -1,6 +1,12 @@
 Extension { #name : 'MetacelloAbstractVersionConstructor' }
 
 { #category : '*Deprecated14' }
+MetacelloAbstractVersionConstructor >> configuration: aString with: aBlock [
+
+	self error: 'Configurations are not supported anymore, only baseline can be used as dependencies.'
+]
+
+{ #category : '*Deprecated14' }
 MetacelloAbstractVersionConstructor >> setAuthorWithBlock: aBlock [
 
 	| spec |

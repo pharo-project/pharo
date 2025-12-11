@@ -137,22 +137,8 @@ MetacelloAbstractVersionConstructor >> configuration [
 { #category : 'accessing' }
 MetacelloAbstractVersionConstructor >> configuration: aConfig [
 
+	self flag: #ConfigurationRemoval. "This method should probably be renamed since it does not contain a configuration anymore."
 	configuration := aConfig
-]
-
-{ #category : 'api' }
-MetacelloAbstractVersionConstructor >> configuration: aString with: aBlock [
-
-	| spec projectSpec |
-	projectSpec := self project configurationOfProjectSpec
-		               name: aString;
-		               yourself.
-	spec := self project projectReferenceSpec
-		        name: aString;
-		        projectReference: projectSpec;
-		        yourself.
-	self root packages merge: spec.
-	self with: projectSpec during: aBlock
 ]
 
 { #category : 'accessing' }
@@ -510,12 +496,10 @@ MetacelloAbstractVersionConstructor >> project: aString with: aBlockOrString [
 	projectSpec := self project projectSpec
 		               name: aString;
 		               yourself.
-
 	self root packages merge: (self project projectReferenceSpec
 			 name: aString;
 			 projectReference: projectSpec;
 			 yourself).
-
 	aBlockOrString isString
 		ifTrue: [ projectSpec versionString: aBlockOrString ]
 		ifFalse: [ self with: projectSpec during: aBlockOrString ]

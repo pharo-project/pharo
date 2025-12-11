@@ -224,12 +224,6 @@ Metacello >> className: className [
 	self scriptExecutor classNameArg: className
 ]
 
-{ #category : 'api projectSpec' }
-Metacello >> configuration: projectName [
-
-	self scriptExecutor configurationArg: projectName
-]
-
 { #category : 'private' }
 Metacello >> execute: aBlock [
 	"I'm doing a copy of the script executor so that we can execute different commands with the same setup of our Metacello instance."

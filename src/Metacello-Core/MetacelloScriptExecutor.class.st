@@ -10,7 +10,6 @@ Class {
 		'singleRoot',
 		'projectSpecGenerator',
 		'actionArg',
-		'configurationArg',
 		'baselineArg',
 		'projectArg',
 		'classNameArg',
@@ -48,16 +47,6 @@ MetacelloScriptExecutor >> classNameArg [
 { #category : 'args' }
 MetacelloScriptExecutor >> classNameArg: anObject [
     classNameArg := anObject
-]
-
-{ #category : 'args' }
-MetacelloScriptExecutor >> configurationArg [
-    ^ configurationArg
-]
-
-{ #category : 'args' }
-MetacelloScriptExecutor >> configurationArg: anObject [
-    configurationArg := anObject
 ]
 
 { #category : 'execution' }
@@ -173,22 +162,13 @@ MetacelloScriptExecutor >> projectArg: anObject [
 { #category : 'execution' }
 MetacelloScriptExecutor >> projectSpecGenerator [
     baselineArg
-        ifNotNil: [ 
-            configurationArg ifNotNil: [ self error: ' baseline: and configuration: are both be specified' ].
+        ifNotNil: [
             projectArg ifNotNil: [ self error: ' baseline: and project are both be specified' ].
             ^ MetacelloBaselineSpecGenerator new
                 target: baselineArg;
                 yourself ].
-    configurationArg
-        ifNotNil: [ 
-            baselineArg ifNotNil: [ self error: ' baseline: and configuration: are both be specified' ].
-            projectArg ifNotNil: [ self error: ' configuration and project are both be specified' ].
-            ^ MetacelloConfigurationSpecGenerator new
-                target: configurationArg;
-                yourself ].
     projectArg
         ifNotNil: [ 
-            configurationArg ifNotNil: [ self error: ' project and configuration: are both be specified' ].
             baselineArg ifNotNil: [ self error: ' baseline: and project are both be specified' ].
             ^ MetacelloProjectSpecGenerator new
                 target: projectArg;
