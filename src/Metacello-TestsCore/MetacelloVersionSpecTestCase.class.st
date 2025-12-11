@@ -13,7 +13,6 @@ MetacelloVersionSpecTestCase >> testVersionMergeSpec [
 		blessing: #baseline;
 		versionString: '1.0';
 		description: 'A description';
-		author: 'dkh';
 		timestamp: '1/24/2012 09:59';
 		preLoadDoIt: #preLoadDoIt;
 		postLoadDoIt: #postLoadDoIt;
@@ -22,7 +21,6 @@ MetacelloVersionSpecTestCase >> testVersionMergeSpec [
 		blessing: #release;
 		versionString: '1.1';
 		description: 'A FULL description';
-		author: 'DaleHenrichs';
 		timestamp: '1/24/2012 10:22';
 		preLoadDoIt: #preLoadDoItB;
 		postLoadDoIt: #postLoadDoItB;
@@ -31,7 +29,6 @@ MetacelloVersionSpecTestCase >> testVersionMergeSpec [
 	self assert: version blessing value equals: #release.
 	self assert: version versionString value equals: '1.1'.
 	self assert: version description value equals: 'A FULL description'.
-	self assert: version author value equals: 'DaleHenrichs'.
 	self assert: version timestamp value equals: '1/24/2012 10:22'.
 	self assert: version preLoadDoIt value identicalTo: #preLoadDoItB.
 	self assert: version postLoadDoIt value identicalTo: #postLoadDoItB
@@ -133,7 +130,6 @@ MetacelloVersionSpecTestCase >> testVersionSpec [
 		blessing: #baseline;
 		versionString: '1.0';
 		description: 'A description';
-		author: 'dkh';
 		timestamp: '1/24/2012 09:59';
 		preLoadDoIt: #preLoadDoIt;
 		postLoadDoIt: #postLoadDoIt;
@@ -141,7 +137,6 @@ MetacelloVersionSpecTestCase >> testVersionSpec [
 	self assert: version blessing value equals: #baseline.
 	self assert: version versionString value equals: '1.0'.
 	self assert: version description value equals: 'A description'.
-	self assert: version author value equals: 'dkh'.
 	self assert: version timestamp value equals: '1/24/2012 09:59'.
 	self assert: version preLoadDoIt value identicalTo: #preLoadDoIt.
 	self assert: version postLoadDoIt value identicalTo: #postLoadDoIt.
@@ -217,7 +212,6 @@ MetacelloVersionSpecTestCase >> testVersionSpecCreateVersion [
 		blessing: #baseline;
 		versionString: '1.0';
 		description: 'A description';
-		author: 'dkh';
 		timestamp: '1/24/2012 09:59';
 		preLoadDoIt: #preLoadDoIt;
 		postLoadDoIt: #postLoadDoIt;
@@ -229,6 +223,5 @@ MetacelloVersionSpecTestCase >> testVersionSpecCreateVersion [
 	self assert: version blessing equals: #baseline.
 	self assert: version versionString equals: '1.0'.
 	self assert: version description equals: 'A description'.
-	self assert: version author equals: 'dkh'.
 	self assert: version timestamp equals: '1/24/2012 09:59'
 ]

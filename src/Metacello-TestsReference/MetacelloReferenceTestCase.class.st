@@ -25,7 +25,6 @@ MetacelloReferenceTestCase >> expectedPrintString [
 spec description: ''Descriptive comment''.
 spec preLoadDoIt: #''preloadForVersion''.
 spec postLoadDoIt: #''postloadForVersion''.
-spec author: ''dkh''.
 spec timestamp: ''12009-07-10T14:40''.
 spec repositories: [
 	spec

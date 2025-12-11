@@ -1,20 +1,16 @@
 Extension { #name : 'MetacelloAbstractVersionConstructor' }
 
 { #category : '*Deprecated14' }
-MetacelloAbstractVersionConstructor >> configuration: aString with: aBlock [
+MetacelloAbstractVersionConstructor >> author: aBlockOrString [
 
-	self error: 'Configurations are not supported anymore, only baseline can be used as dependencies.'
+	self deprecated: 'The author metadata is not supported anymore. It was used with SmalltalkHub but not this information is already managed by git or other CVS.
+	If you wish to keep this as a trace, you can leave the infos in a method comment.'
 ]
 
 { #category : '*Deprecated14' }
-MetacelloAbstractVersionConstructor >> setAuthorWithBlock: aBlock [
+MetacelloAbstractVersionConstructor >> configuration: aString with: aBlock [
 
-	| spec |
-	self deprecated: 'Author should be provided as a string and not a block since it brind not value.'.
-	(spec := self root getAuthor) ifNil: [
-		spec := self project valueHolderSpec.
-		self root author: spec ].
-	self with: spec during: aBlock
+	self error: 'Configurations are not supported anymore, only baseline can be used as dependencies.'
 ]
 
 { #category : '*Deprecated14' }

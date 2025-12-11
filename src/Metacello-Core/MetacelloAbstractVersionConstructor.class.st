@@ -50,23 +50,6 @@ MetacelloAbstractVersionConstructor >> attributeOrder [
 ]
 
 { #category : 'api' }
-MetacelloAbstractVersionConstructor >> author: aBlockOrString [
-	"Define author field of version spec (MetacelloMCVersionSpec).
-	 If <aBlockOrString> is a String, the version spec author is set to the String.
-	If <aBlockOrString> is a Block, the specifications in <aBlockOrString> are applied to the author spec (MetacelloValueHolderSpec). Not Recommended! This second version is now deprecated.
-	
-		spec author: 'dkh'.
-		
-		spec author: [
-			spec value: 'dkh'. ].
-	 "
-
-	aBlockOrString isString
-		ifTrue: [ self root author: aBlockOrString ]
-		ifFalse: [ self setAuthorWithBlock: aBlockOrString ]
-]
-
-{ #category : 'api' }
 MetacelloAbstractVersionConstructor >> baseline: aString [
 
 	| spec projectSpec |

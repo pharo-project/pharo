@@ -24,7 +24,6 @@ MetacelloReferenceConfig >> baseline10: spec [
 		"#development, #baseline, #release, #beta, etc."
 		spec blessing: #baseline.									
 		spec description: 'Descriptive comment'.
-		spec author: 'dkh'.
 		spec timestamp: (DateAndTime fromString: '2009-07-10T14:40').
 		spec timestamp: '12009-07-10T14:40'.
 		spec

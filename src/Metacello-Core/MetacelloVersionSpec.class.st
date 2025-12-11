@@ -6,7 +6,6 @@ Class {
 		'packages',
 		'versionString',
 		'packageList',
-		'author',
 		'timestamp',
 		'importArray',
 		'postLoadDoIt',
@@ -24,21 +23,6 @@ Class {
 MetacelloVersionSpec >> acceptVisitor: aVisitor [
 	
 	^ aVisitor visitVersionSpec: self
-]
-
-{ #category : 'accessing' }
-MetacelloVersionSpec >> author [
-
-	^ author ifNil: [
-		  self project valueHolderSpec
-			  value: '';
-			  yourself ]
-]
-
-{ #category : 'accessing' }
-MetacelloVersionSpec >> author: anObject [
-
-	author := anObject asMetacelloValueHolderFor: self
 ]
 
 { #category : 'accessing' }
@@ -67,7 +51,6 @@ MetacelloVersionSpec >> configMethodBasicOn: aStream last: last indent: indent [
 				          self getDescription.
 				          self getPreLoadDoIt.
 				          self getPostLoadDoIt.
-				          self getAuthor.
 				          self getTimestamp }.
 			1 to: values size do: [ :index | (values at: index) ifNotNil: [ lastIndex := index ] ].
 			lastBlock := [ :arg | arg = lastIndex ] ]
@@ -98,15 +81,9 @@ MetacelloVersionSpec >> configMethodBasicOn: aStream last: last indent: indent [
 		indent: indent.
 	self
 		configMethodValueOn: aStream
-		for: self getAuthor
-		selector: 'author:'
-		last: (lastBlock value: 5)
-		indent: indent.
-	self
-		configMethodValueOn: aStream
 		for: self getTimestamp
 		selector: 'timestamp:'
-		last: (lastBlock value: 6)
+		last: (lastBlock value: 5)
 		indent: indent
 ]
 
@@ -271,11 +248,6 @@ MetacelloVersionSpec >> description: anObject [
 ]
 
 { #category : 'accessing' }
-MetacelloVersionSpec >> getAuthor [
-	^author
-]
-
-{ #category : 'accessing' }
 MetacelloVersionSpec >> getBlessing [
 	^blessing
 ]
@@ -342,7 +314,6 @@ MetacelloVersionSpec >> mergeMap [
     map at: #'versionString' put: versionString.
     map at: #'blessing' put: blessing.
     map at: #'description' put: description.
-    map at: #'author' put: author.
     map at: #'timestamp' put: timestamp.
     map at: #'preLoadDoIt' put: preLoadDoIt.
     map at: #'postLoadDoIt' put: postLoadDoIt.
@@ -492,7 +463,6 @@ MetacelloVersionSpec >> postCopy [
     super postCopy.
   blessing := blessing copy.
     description := description copy.
-    author := author copy.
     timestamp := timestamp copy.
     packageList := packageList copy.
     repositories := repositories copy.

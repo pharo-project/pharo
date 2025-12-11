@@ -38,12 +38,6 @@ MetacelloVersion >> = aMetacelloVersion [
 	^self versionNumber = aMetacelloVersion versionNumber
 ]
 
-{ #category : 'querying' }
-MetacelloVersion >> author [
-
-	^self spec author value
-]
-
 { #category : 'accessing' }
 MetacelloVersion >> basicSpec [
     ^ self spec
