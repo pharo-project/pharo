@@ -23,14 +23,12 @@ MetacelloCoreIssue125TestCase >> baseline: spec [
 
 			spec group: 'Core' with: #( 'Example Project' ) ].
 	spec for: #( #attribute1 #attribute2 ) do: [
-			spec
-				baseline: 'Extra Project' with: [
-						spec
-							repository: 'repository2';
-							preLoadDoIt: #preloadForProject;
-							postLoadDoIt: #postloadForProject;
-							loads: #( 'core' ) ];
-				yourself.
+			spec baseline: 'Extra Project' with: [
+					spec
+						repository: 'repository2';
+						preLoadDoIt: #preloadForProject;
+						postLoadDoIt: #postloadForProject;
+						loads: #( 'core' ) ].
 			spec group: 'Core' with: #( 'Extra Project' ) ]
 ]
 
