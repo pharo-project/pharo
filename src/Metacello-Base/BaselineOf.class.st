@@ -118,6 +118,21 @@ BaselineOf class >> packagesOfGroupNamed: aName [
 ]
 
 { #category : 'accessing' }
+BaselineOf class >> project [
+
+	^self new project
+]
+
+{ #category : 'unloading Metacello' }
+BaselineOf class >> unloadMetacello [
+	"Unload the classes that implement Metacello. Metacello is not needed once a project has been loaded, so it can safely be unloaded."
+
+	<script>
+	<apiDocumentation>
+	(self packageOrganizer packages select: [ :package | package name beginsWith: 'Metacello' ]) do: [ :package | package removeFromSystem ]
+]
+
+{ #category : 'accessing' }
 BaselineOf class >> version [
 	
 	^ self project version

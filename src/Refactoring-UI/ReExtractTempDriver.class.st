@@ -22,17 +22,14 @@ ReExtractTempDriver >> extract: anInterval from: aSelector in: aClass [
 { #category : 'user requests' }
 ReExtractTempDriver >> getVariableName: initialAnswer errorMessage: message [
 
-	^ self requestDialog 
-		title: 'Extract code to temp variable';
-		label: 'New temp name: ' , message;
-		text: initialAnswer;
-		acceptLabel: 'Ok!';
-		cancelLabel: 'Cancel';
-		onAccept: [ :dialog | dialog presenter text ];
-		openModal
-	
-	
-		
+	^ self requestDialog
+		  title: 'Extract code to temp variable';
+		  message: 'New temp name: ' , message;
+		  text: initialAnswer;
+		  acceptLabel: 'Ok!';
+		  cancelLabel: 'Cancel';
+		  onAccept: [ :dialog | dialog presenter text ];
+		  openModal
 ]
 
 { #category : 'configuration' }
