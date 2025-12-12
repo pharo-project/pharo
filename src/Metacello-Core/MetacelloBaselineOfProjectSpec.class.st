@@ -57,19 +57,14 @@ MetacelloBaselineOfProjectSpec >> constructClassName [
 
 { #category : 'mutability' }
 MetacelloBaselineOfProjectSpec >> copyForRegistration: aMetacelloProjectRegistration onWrite: aBlock [
-  | copy |
-  aMetacelloProjectRegistration
-    baselineProjectSpecIfPresent: [ :spec | 
-      copy := spec copy.
-      aBlock value: copy.
-      aMetacelloProjectRegistration baselineProjectSpec: copy ]
-    ifAbsent: [ 
-      aMetacelloProjectRegistration
-        configurationProjectSpecIfPresent: [ :spec | 
-          copy := spec copy.
-          aBlock value: copy.
-          aMetacelloProjectRegistration configurationProjectSpec: copy ]
-        ifAbsent: [ aBlock value: nil ] ]
+
+	| copy |
+	aMetacelloProjectRegistration
+		baselineProjectSpecIfPresent: [ :spec |
+				copy := spec copy.
+				aBlock value: copy.
+				aMetacelloProjectRegistration baselineProjectSpec: copy ]
+		ifAbsent: [ aBlock value: nil ]
 ]
 
 { #category : 'printing' }
