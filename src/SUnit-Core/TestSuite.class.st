@@ -54,6 +54,26 @@ TestSuite >> announceTest: aTest [
 	^ self testSuiteAnnouncer announce: (TestAnnouncement with: aTest)
 ]
 
+{ #category : 'private' }
+TestSuite >> cleanAfterRunOn: aTestSuite [
+	"as a test suite is in fact a composite (that can have other test suites), 
+	 we visit this suite in the context of its execution"
+
+	aTestSuite cleanTestSuite: self
+]
+
+{ #category : 'private' }
+TestSuite >> cleanTestCase: aTestCase [
+
+	aTestCase class removeSubscription: self testSuiteAnnouncer
+]
+
+{ #category : 'private' }
+TestSuite >> cleanTestSuite: aTestSuite [
+
+	aTestSuite testSuiteAnnouncer: nil
+]
+
 { #category : 'running' }
 TestSuite >> debug [
 	| result |
@@ -95,6 +115,29 @@ TestSuite >> name [
 TestSuite >> name: aString [
 
 	name := aString
+]
+
+{ #category : 'private' }
+TestSuite >> prepareTestCase: aTestCase [
+
+	aTestCase class announcer
+		when: TestCaseAnnouncement 
+		send: #announce: 
+		to: self testSuiteAnnouncer
+]
+
+{ #category : 'private' }
+TestSuite >> prepareTestSuite: aTestSuite [
+	
+	aTestSuite testSuiteAnnouncer: self testSuiteAnnouncer
+]
+
+{ #category : 'private' }
+TestSuite >> prepareToRunOn: aTestSuite [
+	"as a test suite is in fact a composite (that can have other test suites), 
+	 we visit this suite in the context of its execution"
+
+	aTestSuite prepareTestSuite: self
 ]
 
 { #category : 'accessing' }
@@ -146,12 +189,10 @@ TestSuite >> runWith: aBlock [
 	self setUp.
 	[ 
 		self shuffledTests do: [ :each |
-			each class announcer
-				when: TestCaseAnnouncement 
-				send: #announce: 
-				to: self testSuiteAnnouncer.
-			aBlock value: each.
-			each class removeSubscription: self testSuiteAnnouncer.
+			"prepare for testing"
+			each prepareToRunOn: self.
+			[ aBlock value: each ]
+			ensure: [ each cleanAfterRunOn: self ].
 			self announceTest: each ] ]
 	ensure: [ 
 		self tearDown ]
@@ -188,7 +229,14 @@ TestSuite >> tearDown [
 
 { #category : 'announcing' }
 TestSuite >> testSuiteAnnouncer [
+
 	^ announcer ifNil: [ announcer := Announcer new. ]
+]
+
+{ #category : 'tests' }
+TestSuite >> testSuiteAnnouncer: anAnnouncer [
+
+	announcer := anAnnouncer
 ]
 
 { #category : 'accessing' }
