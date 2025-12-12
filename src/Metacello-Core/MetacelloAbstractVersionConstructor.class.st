@@ -7,7 +7,6 @@ Class {
 		'project',
 		'attributeMap',
 		'attributeOrder',
-		'symbolicVersion',
 		'currentContext'
 	],
 	#category : 'Metacello-Core-Constructors',
@@ -102,79 +101,11 @@ MetacelloAbstractVersionConstructor >> configuration: aConfig [
 	configuration := aConfig
 ]
 
-{ #category : 'accessing' }
-MetacelloAbstractVersionConstructor >> configurationClass [
-
-	^self configuration class
-]
-
 { #category : 'private' }
 MetacelloAbstractVersionConstructor >> evaluatePragma: pragma [
 
 	currentContext := pragma.
 	[ self configuration perform: pragma methodSelector with: self ] ensure: [ currentContext := nil ]
-]
-
-{ #category : 'pragma extraction' }
-MetacelloAbstractVersionConstructor >> extractCommonDefaultSymbolicVersionPragmas [
-
-	^ Dictionary new
-]
-
-{ #category : 'pragma extraction' }
-MetacelloAbstractVersionConstructor >> extractDefaultSymbolicVersionPragmas [
-
-	^ Dictionary new
-]
-
-{ #category : 'private' }
-MetacelloAbstractVersionConstructor >> extractPragmas: pragmaKeyword for: aClass into: versionDict [
-
-	| versionString  pragmas |
-	(Pragma 
-		allNamed: pragmaKeyword
-		in: aClass) do: [:pragma |
-			versionString := pragma argumentAt: 1.
-			pragmas := versionDict 
-				at: versionString 
-				ifAbsent: [ | list |
-					list := OrderedCollection new.
-					versionDict at: versionString put: list.
-					list ].
-			pragmas add: pragma ].
-]
-
-{ #category : 'private' }
-MetacelloAbstractVersionConstructor >> extractPragmas: pragmaKeyword into: versionDict [
-
-	^self extractPragmas: pragmaKeyword for: self configurationClass into: versionDict
-]
-
-{ #category : 'pragma extraction' }
-MetacelloAbstractVersionConstructor >> extractSymbolicVersionPragmas [
-
-	| aDict |
-	aDict := Dictionary new.
-	self extractPragmas: #symbolicVersion: into: aDict.
-	^aDict
-]
-
-{ #category : 'pragma extraction' }
-MetacelloAbstractVersionConstructor >> extractVersionImportPragmas [
-
-	| aDict |
-	aDict := Dictionary new.
-	self extractPragmas: #version:imports: into: aDict.
-	^aDict
-]
-
-{ #category : 'pragma extraction' }
-MetacelloAbstractVersionConstructor >> extractVersionPragmas [
-
-	| aDict |
-	aDict := Dictionary new.
-	self extractPragmas: #version: into: aDict.
-	^aDict
 ]
 
 { #category : 'api' }
@@ -531,18 +462,6 @@ MetacelloAbstractVersionConstructor >> supplyingAnswers: aCollection [
 
 	self flag: #ConfigurationRemoval. "I think this method should not be on baselines but let's see that later. After cleaning the code it will be easier to see if this is still used."
 	self root answers: aCollection
-]
-
-{ #category : 'accessing' }
-MetacelloAbstractVersionConstructor >> symbolicVersion [
-
-	^symbolicVersion
-]
-
-{ #category : 'accessing' }
-MetacelloAbstractVersionConstructor >> symbolicVersion: aSymbol [
-
-	symbolicVersion := aSymbol
 ]
 
 { #category : 'validation' }

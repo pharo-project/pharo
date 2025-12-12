@@ -44,16 +44,6 @@ MetacelloBaselineProject class >> singletonVersionName [
     ^ 'baseline'
 ]
 
-{ #category : 'versions' }
-MetacelloBaselineProject >> bleedingEdge [
-    ^ nil
-]
-
-{ #category : 'versions' }
-MetacelloBaselineProject >> currentVersionAgainst: resolvedPackageAndProjectNames [
-    ^ nil
-]
-
 { #category : 'accessing' }
 MetacelloBaselineProject >> repositoryDescription [
 	^ repositoryDescription

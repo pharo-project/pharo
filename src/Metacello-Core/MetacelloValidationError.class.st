@@ -67,6 +67,7 @@ MetacelloValidationError >> printOn: aStream [
 			space;
 			nextPut: $} ].
 
+	self flag: #ConfigurationRemoval. "Not related to configuration removal but this code is broken and can be repaired easily"
 	(self configurationClass isNil and: [ self callSite isNil ]) ifTrue: [ ^ self ].
 
 	aStream

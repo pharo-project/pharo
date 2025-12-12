@@ -2,7 +2,6 @@ Class {
 	#name : 'MetacelloVersion',
 	#superclass : 'Magnitude',
 	#instVars : [
-		'importedVersions',
 		'spec',
 		'versionNumber'
 	],
@@ -132,18 +131,6 @@ MetacelloVersion >> groups [
 MetacelloVersion >> hash [
 
 	^self versionNumber hash
-]
-
-{ #category : 'accessing' }
-MetacelloVersion >> importedVersions [
-
-	^ importedVersions ifNil: [ importedVersions := #(  ) ]
-]
-
-{ #category : 'accessing' }
-MetacelloVersion >> importedVersions: aCollection [
-
-	importedVersions := aCollection
 ]
 
 { #category : 'private' }
