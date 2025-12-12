@@ -535,6 +535,7 @@ MetacelloAbstractVersionConstructor >> setProject: aProject [
 { #category : 'api' }
 MetacelloAbstractVersionConstructor >> supplyingAnswers: aCollection [
 
+	self flag: #ConfigurationRemoval. "I think this method should not be on baselines but let's see that later. After cleaning the code it will be easier to see if this is still used."
 	self root answers: aCollection
 ]
 
