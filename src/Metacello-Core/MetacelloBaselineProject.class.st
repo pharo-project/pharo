@@ -42,11 +42,6 @@ MetacelloBaselineProject >> asBaselineProject [
     ^ self
 ]
 
-{ #category : 'scripting' }
-MetacelloBaselineProject >> asConfigurationProject [
-    ^ MetacelloProject new
-]
-
 { #category : 'versions' }
 MetacelloBaselineProject >> bleedingEdge [
     ^ nil

@@ -465,11 +465,6 @@ MCGitBasedNetworkRepository >> localRepository [
 	^ localRepository
 ]
 
-{ #category : 'accessing' }
-MCGitBasedNetworkRepository >> metacelloProjectClassFor: aScriptEngine [
-    ^ MetacelloBaselineProject
-]
-
 { #category : 'private' }
 MCGitBasedNetworkRepository >> normalizeTagsData: jsonObject [
   ^ self subclassResponsibility

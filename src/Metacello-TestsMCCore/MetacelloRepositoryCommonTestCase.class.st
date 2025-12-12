@@ -6,100 +6,47 @@ Class {
 }
 
 { #category : 'baselines' }
-MetacelloRepositoryCommonTestCase >> baseline10: spec [
-    <version: '1.0-baseline'>
-    spec
-        for: #'common'
-        do: [ 
-            spec
-                package: 'Example-Core'
-                with: [ 
-                    spec
-                        includes: 'Example-AddOn';
-                        file: 'Example-Core-anon.1';
-                        repository: self directoryForPlatform ] ]
-]
+MetacelloRepositoryCommonTestCase >> baseline: spec [
 
-{ #category : 'baselines' }
-MetacelloRepositoryCommonTestCase >> baseline13: spec [
-    <version: '1.3-baseline'>
-    spec
-        for: #'squeakCommon'
-        do: [ 
-            spec
-                package: 'Example-Core'
-                with: [ 
-                    spec
-                        includes: 'Example-AddOn';
-                        file: 'Example-Core-anon.1';
-                        repository: 'ftp://ftp.example.com/examples' ] ]
-]
+	<baseline>
+	spec for: #common do: [
+			spec package: 'Example-Core' with: [
+					spec
+						includes: 'Example-AddOn';
+						file: 'Example-Core-anon.1';
+						repository: (OSPlatform current isWindows
+								 ifTrue: [ 'c:\opt\mcexamples' ]
+								 ifFalse: [ '/opt/mcexamples' ]) ].
 
-{ #category : 'baselines' }
-MetacelloRepositoryCommonTestCase >> baseline14: spec [
-    <version: '1.4-baseline'>
-    spec
-        for: #'common'
-        do: [ 
-            spec
-                package: 'Example-Core'
-                with: [ 
-                    spec
-                        includes: 'Example-AddOn';
-                        file: 'Example-Core-anon.1';
-                        repository: 'http://example.com/examples' ] ]
-]
+			spec package: 'Example-Core2' with: [
+					spec
+						includes: 'Example-AddOn2';
+						file: 'Example-Core2-anon.1';
+						repository: 'ftp://ftp.example.com/examples' ].
 
-{ #category : 'baselines' }
-MetacelloRepositoryCommonTestCase >> baseline15: spec [
-    <version: '1.5-baseline'>
-    spec
-        for: #'common'
-        do: [ 
-            spec
-                package: 'Example-Core'
-                with: [ 
-                    spec
-                        includes: 'Example-AddOn';
-                        file: 'Example-Core-anon.1';
-                        repository: 'dictionary://Metacello_Platform_Test_GlobalDictionary' ] ]
-]
+			spec package: 'Example-Core3' with: [
+					spec
+						includes: 'Example-AddOn3';
+						file: 'Example-Core3-anon.1';
+						repository: 'http://example.com/examples' ].
+					
+			spec package: 'Example-Core4' with: [
+					spec
+						includes: 'Example-AddOn4';
+						file: 'Example-Core4-anon.1';
+						repository: 'dictionary://Metacello_Platform_Test_GlobalDictionary' ].
 
-{ #category : 'baselines' }
-MetacelloRepositoryCommonTestCase >> baseline16: spec [
-  <version: '1.6-baseline'>
-  spec
-    for: #'common'
-    do: [ 
-      spec
-        package: 'Example-Core'
-        with: [ 
-          spec
-            includes: 'Example-AddOn';
-            file: 'Example-Core-anon.1';
-            repository:
-                'filetree://' , MCFileTreeFileUtils default fullName , '/temp/repo' ] ]
-]
-
-{ #category : 'accessing' }
-MetacelloRepositoryCommonTestCase >> directoryForPlatform [
-
-	| dir |
-	"I don't know how to do this in other platforms (not Pharo)"
-	dir := '/opt/mcexamples'.
-	OSPlatform current isWindows ifTrue: [ dir := 'c:\opt\mcexamples' ].
-	^ dir
+			spec package: 'Example-Core5' with: [
+					spec
+						includes: 'Example-AddOn5';
+						file: 'Example-Core5-anon.1';
+						repository: 'filetree://' , MCFileTreeFileUtils default fullName , '/temp/repo' ] ]
 ]
 
 { #category : 'accessing' }
 MetacelloRepositoryCommonTestCase >> project [
-     "force new version as workaround for https://code.google.com/p/smalltalk-hub/issues/detail?id=21"
 
-	| constructor project |
-	"Construct Metacello project"
-	constructor := MetacelloVersionConstructor on: self.
-	project := constructor project.
-	^project
+	^ (MetacelloBaselineConstructor on: self) project
 ]
 
 { #category : 'running' }
@@ -122,30 +69,31 @@ MetacelloRepositoryCommonTestCase >> tearDown [
 
 { #category : 'tests' }
 MetacelloRepositoryCommonTestCase >> testAsRepositorySpecFor [
+
 	| project testBlock |
 	project := self project.
-	testBlock := [ :pkg :expectedType1 :expectedType2 | 
-	| repoSpec1 repo repoSpec2 |
-	repoSpec1 := pkg repositorySpecs first.
-	self assert: repoSpec1 type equals: expectedType1.
-	repo := repoSpec1 createRepository.
-	repoSpec2 := repo asRepositorySpecFor: project.
-	self assert: repoSpec2 type equals: expectedType2.
-	expectedType1 = expectedType2
-		ifTrue: [ self assert: repoSpec1 description equals: repoSpec2 description ]
-		ifFalse:
-			[ "special case for standard directory type that defaults to MCServerDirectoryRepository" self assert: (repoSpec1 description copyFrom: 'server://' size + 1 to: repoSpec1 description size) equals: repoSpec2 description ] ].
-	testBlock value: ((project version: '1.0-baseline') packageNamed: 'Example-Core') value: 'directory' value: 'directory'.
-	testBlock value: ((project version: '1.3-baseline') packageNamed: 'Example-Core') value: 'ftp' value: 'ftp'.
-	testBlock value: ((project version: '1.4-baseline') packageNamed: 'Example-Core') value: 'http' value: 'http'.
-	testBlock value: ((project version: '1.5-baseline') packageNamed: 'Example-Core') value: 'dictionary' value: 'dictionary'
+	testBlock := [ :pkg :expectedType1 :expectedType2 |
+		             | repoSpec1 repo repoSpec2 |
+		             repoSpec1 := pkg repositorySpecs first.
+		             self assert: repoSpec1 type equals: expectedType1.
+		             repo := repoSpec1 createRepository.
+		             repoSpec2 := repo asRepositorySpecFor: project.
+		             self assert: repoSpec2 type equals: expectedType2.
+		             expectedType1 = expectedType2
+			             ifTrue: [ self assert: repoSpec1 description equals: repoSpec2 description ]
+			             ifFalse: [ "special case for standard directory type that defaults to MCServerDirectoryRepository"
+				             self assert: (repoSpec1 description copyFrom: 'server://' size + 1 to: repoSpec1 description size) equals: repoSpec2 description ] ].
+	testBlock value: (project version packageNamed: 'Example-Core') value: 'directory' value: 'directory'.
+	testBlock value: (project version packageNamed: 'Example-Core2') value: 'ftp' value: 'ftp'.
+	testBlock value: (project version packageNamed: 'Example-Core3') value: 'http' value: 'http'.
+	testBlock value: (project version packageNamed: 'Example-Core4') value: 'dictionary' value: 'dictionary'
 ]
 
 { #category : 'tests' }
 MetacelloRepositoryCommonTestCase >> testDictionaryRepository [
-	| project pkg repoSpec repo |
-	project := self project.
-	pkg := (project version: '1.5-baseline') packageNamed: 'Example-Core'.
+
+	| pkg repoSpec repo |
+	pkg := self project version packageNamed: 'Example-Core4'.
 	repoSpec := pkg repositorySpecs first.
 	self assert: repoSpec type equals: 'dictionary'.
 	repo := repoSpec createRepository.
@@ -155,43 +103,45 @@ MetacelloRepositoryCommonTestCase >> testDictionaryRepository [
 
 { #category : 'tests' }
 MetacelloRepositoryCommonTestCase >> testDirectoryRepository [
-	| project pkg repoSpec repo |
-	project := self project.
-	pkg := (project version: '1.0-baseline') packageNamed: 'Example-Core'.
+
+	| pkg repoSpec repo |
+	pkg := self project version packageNamed: 'Example-Core'.
 	repoSpec := pkg repositorySpecs first.
 	self assert: repoSpec type equals: 'directory'.
 	repo := repoSpec createRepository.
 	self assert: repo class identicalTo: MCDirectoryRepository.
-	self assert: repo description equals: self directoryForPlatform
+	self assert: repo description equals: (OSPlatform current isWindows
+			 ifTrue: [ 'c:\opt\mcexamples' ]
+			 ifFalse: [ '/opt/mcexamples' ])
 ]
 
 { #category : 'tests' }
 MetacelloRepositoryCommonTestCase >> testFileTreeRepository [
 	"must create repository against an existing directory"
 
-	| project pkg repoSpec repo fileUtils workingDir tempDir repoDir |
+	| pkg repoSpec repo fileUtils workingDir tempDir repoDir |
 	fileUtils := MCFileTreeFileUtils.
 	workingDir := fileUtils default.
 	tempDir := fileUtils directoryFromPath: 'temp' relativeTo: workingDir.
-	[ fileUtils ensureDirectoryExists: tempDir.
-	repoDir := fileUtils directoryFromPath: 'repo' relativeTo: tempDir.
-	fileUtils ensureDirectoryExists: repoDir.
-	project := self project.
-	pkg := (project version: '1.6-baseline') packageNamed: 'Example-Core'.
-	repoSpec := pkg repositorySpecs first.
-	self assert: repoSpec type equals: 'filetree'.
-	repo := repoSpec createRepository.
-	self assert: repo class identicalTo: (testingEnvironment at: #MCFileTreeRepository ifAbsent: [  ]).
-	MetacelloNotification signal: ('testFileTreeRepository: ' , (fileUtils directoryFromPath: 'temp/repo' relativeTo: fileUtils default) fullName).
-	self assert: repo description equals: 'filetree://' , (fileUtils directoryFromPath: 'temp/repo' relativeTo: fileUtils default) fullName ]
-		ensure: [ (fileUtils directoryExists: tempDir) ifTrue: [ fileUtils deleteAll: tempDir ] ]
+	[
+		fileUtils ensureDirectoryExists: tempDir.
+		repoDir := fileUtils directoryFromPath: 'repo' relativeTo: tempDir.
+		fileUtils ensureDirectoryExists: repoDir.
+		pkg := self project version packageNamed: 'Example-Core5'.
+		repoSpec := pkg repositorySpecs first.
+		self assert: repoSpec type equals: 'filetree'.
+		repo := repoSpec createRepository.
+		self assert: repo class identicalTo: (testingEnvironment at: #MCFileTreeRepository ifAbsent: [ ]).
+		MetacelloNotification signal: 'testFileTreeRepository: ' , (fileUtils directoryFromPath: 'temp/repo' relativeTo: fileUtils default) fullName.
+		self assert: repo description equals: 'filetree://' , (fileUtils directoryFromPath: 'temp/repo' relativeTo: fileUtils default) fullName ] ensure: [
+		(fileUtils directoryExists: tempDir) ifTrue: [ fileUtils deleteAll: tempDir ] ]
 ]
 
 { #category : 'tests' }
 MetacelloRepositoryCommonTestCase >> testFtpRepository [
-	| project pkg repoSpec repo |
-	project := self project.
-	pkg := (project version: '1.3-baseline') packageNamed: 'Example-Core'.
+
+	| pkg repoSpec repo |
+	pkg := self project version packageNamed: 'Example-Core2'.
 	repoSpec := pkg repositorySpecs first.
 	self assert: repoSpec type equals: 'ftp'.
 	repo := repoSpec createRepository.
@@ -202,9 +152,9 @@ MetacelloRepositoryCommonTestCase >> testFtpRepository [
 
 { #category : 'tests' }
 MetacelloRepositoryCommonTestCase >> testHttpRepository [
-	| project pkg repoSpec repo |
-	project := self project.
-	pkg := (project version: '1.4-baseline') packageNamed: 'Example-Core'.
+
+	| pkg repoSpec repo |
+	pkg := self project version packageNamed: 'Example-Core3'.
 	repoSpec := pkg repositorySpecs first.
 	self assert: repoSpec type equals: 'http'.
 	repo := repoSpec createRepository.

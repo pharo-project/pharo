@@ -39,11 +39,6 @@ MetacelloProject >> asBaselineProject [
     ^ MetacelloBaselineProject new
 ]
 
-{ #category : 'scripting' }
-MetacelloProject >> asConfigurationProject [
-    ^ self
-]
-
 { #category : 'private' }
 MetacelloProject >> attributes [
 
