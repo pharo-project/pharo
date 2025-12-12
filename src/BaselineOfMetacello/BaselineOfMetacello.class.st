@@ -20,11 +20,10 @@ BaselineOfMetacello >> baseline: spec [
 
 		spec
 			package: 'Metacello-TestsCore';
-			package: 'Metacello-TestsMCCore';
-			package: 'Metacello-TestsReference'.
+			package: 'Metacello-TestsMCCore'.
 
 		spec 
 			group: 'Core' with: #('Metacello-Base' 'Metacello-Core' 'MonticelloFileTree-Core' 'Zinc-Resource-Meta-Core' 'STON-Core' 'Metacello-CommandLine');
-			group: 'Tests' with: #( 'Metacello-TestsCore' 'Metacello-TestsMCCore' 'Metacello-TestsReference');
+			group: 'Tests' with: #( 'Metacello-TestsCore' 'Metacello-TestsMCCore');
 			group: 'default' with: #('Core') ]
 ]

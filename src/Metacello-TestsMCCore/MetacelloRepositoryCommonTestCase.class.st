@@ -46,7 +46,10 @@ MetacelloRepositoryCommonTestCase >> baseline: spec [
 { #category : 'accessing' }
 MetacelloRepositoryCommonTestCase >> project [
 
-	^ (MetacelloBaselineConstructor on: self) project
+	| project |
+	project := MetacelloBaselineProject new.
+	MetacelloBaselineConstructor on: self project: project.
+	^ project
 ]
 
 { #category : 'running' }
