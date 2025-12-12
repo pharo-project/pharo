@@ -106,14 +106,6 @@ MetacelloProjectRegistration class >> fromMCBaselineProjectSpec: aProjectSpec [
         yourself
 ]
 
-{ #category : 'instance creation' }
-MetacelloProjectRegistration class >> fromMCConfigurationProjectSpec: aProjectSpec [
-    ^ self new
-        projectName: aProjectSpec name;
-        configurationProjectSpec: aProjectSpec;
-        yourself
-]
-
 { #category : 'querying' }
 MetacelloProjectRegistration class >> projectSpecForClassNamed: aClassName ifAbsent: absentBlock [
     ^ self registry projectSpecForClassNamed: aClassName ifAbsent: absentBlock
@@ -235,6 +227,7 @@ MetacelloProjectRegistration >> canUpgradeTo: aProjectRegistration [
 MetacelloProjectRegistration >> configurationProjectSpec [
   "only one of baselineProjectSpec or configurationProjectSpec should ever be set"
 
+	self flag: #ConfigurationRemoval. "I think this method should not be on baselines but let's see that later."
   ^ configurationProjectSpec
 ]
 
@@ -247,7 +240,9 @@ MetacelloProjectRegistration >> configurationProjectSpec: anObject [
 
 	self shouldBeMutable.
 	baselineProjectSpec := nil.
-	self assert: anObject isConfigurationOfProjectSpec.
+	
+	self flag: #ConfigurationRemoval. "I think this method should not be on baselines but let's see that later."
+	self assert: false. "Code to remove"
 	configurationProjectSpec := anObject
 ]
 

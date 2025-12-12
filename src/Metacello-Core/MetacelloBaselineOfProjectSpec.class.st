@@ -72,13 +72,6 @@ MetacelloBaselineOfProjectSpec >> hasClassName [
 ]
 
 { #category : 'testing' }
-MetacelloBaselineOfProjectSpec >> hasConflictWithConfigurationSpec: projectSpec [
-  "baseline can be loaded on top of a configuration without a conflict"
-
-  ^ false
-]
-
-{ #category : 'testing' }
 MetacelloBaselineOfProjectSpec >> hasConflictWithProjectSpec: projectSpec [
 	^ projectSpec hasConflictWithBaselineSpec: self
 ]

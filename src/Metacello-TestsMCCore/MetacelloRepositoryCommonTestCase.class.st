@@ -1,12 +1,12 @@
 Class {
-	#name : 'MetacelloRepositorySqueakCommonTestCase',
+	#name : 'MetacelloRepositoryCommonTestCase',
 	#superclass : 'AbstractEnvironmentTestCase',
 	#category : 'Metacello-TestsMCCore',
 	#package : 'Metacello-TestsMCCore'
 }
 
 { #category : 'baselines' }
-MetacelloRepositorySqueakCommonTestCase >> baseline10: spec [
+MetacelloRepositoryCommonTestCase >> baseline10: spec [
     <version: '1.0-baseline'>
     spec
         for: #'common'
@@ -21,7 +21,7 @@ MetacelloRepositorySqueakCommonTestCase >> baseline10: spec [
 ]
 
 { #category : 'baselines' }
-MetacelloRepositorySqueakCommonTestCase >> baseline13: spec [
+MetacelloRepositoryCommonTestCase >> baseline13: spec [
     <version: '1.3-baseline'>
     spec
         for: #'squeakCommon'
@@ -36,7 +36,7 @@ MetacelloRepositorySqueakCommonTestCase >> baseline13: spec [
 ]
 
 { #category : 'baselines' }
-MetacelloRepositorySqueakCommonTestCase >> baseline14: spec [
+MetacelloRepositoryCommonTestCase >> baseline14: spec [
     <version: '1.4-baseline'>
     spec
         for: #'common'
@@ -51,7 +51,7 @@ MetacelloRepositorySqueakCommonTestCase >> baseline14: spec [
 ]
 
 { #category : 'baselines' }
-MetacelloRepositorySqueakCommonTestCase >> baseline15: spec [
+MetacelloRepositoryCommonTestCase >> baseline15: spec [
     <version: '1.5-baseline'>
     spec
         for: #'common'
@@ -66,7 +66,7 @@ MetacelloRepositorySqueakCommonTestCase >> baseline15: spec [
 ]
 
 { #category : 'baselines' }
-MetacelloRepositorySqueakCommonTestCase >> baseline16: spec [
+MetacelloRepositoryCommonTestCase >> baseline16: spec [
   <version: '1.6-baseline'>
   spec
     for: #'common'
@@ -82,7 +82,7 @@ MetacelloRepositorySqueakCommonTestCase >> baseline16: spec [
 ]
 
 { #category : 'accessing' }
-MetacelloRepositorySqueakCommonTestCase >> directoryForPlatform [
+MetacelloRepositoryCommonTestCase >> directoryForPlatform [
 
 	| dir |
 	"I don't know how to do this in other platforms (not Pharo)"
@@ -92,7 +92,7 @@ MetacelloRepositorySqueakCommonTestCase >> directoryForPlatform [
 ]
 
 { #category : 'accessing' }
-MetacelloRepositorySqueakCommonTestCase >> project [
+MetacelloRepositoryCommonTestCase >> project [
      "force new version as workaround for https://code.google.com/p/smalltalk-hub/issues/detail?id=21"
 
 	| constructor project |
@@ -103,7 +103,7 @@ MetacelloRepositorySqueakCommonTestCase >> project [
 ]
 
 { #category : 'running' }
-MetacelloRepositorySqueakCommonTestCase >> setUp [
+MetacelloRepositoryCommonTestCase >> setUp [
     super setUp.
     testingEnvironment
         at: #'Metacello_Platform_Test_GlobalDictionary'
@@ -114,14 +114,14 @@ MetacelloRepositorySqueakCommonTestCase >> setUp [
 ]
 
 { #category : 'running' }
-MetacelloRepositorySqueakCommonTestCase >> tearDown [
+MetacelloRepositoryCommonTestCase >> tearDown [
 
 	testingEnvironment removeKey: #Metacello_Platform_Test_GlobalDictionary ifAbsent: [  ].
 	super tearDown
 ]
 
 { #category : 'tests' }
-MetacelloRepositorySqueakCommonTestCase >> testAsRepositorySpecFor [
+MetacelloRepositoryCommonTestCase >> testAsRepositorySpecFor [
 	| project testBlock |
 	project := self project.
 	testBlock := [ :pkg :expectedType1 :expectedType2 | 
@@ -142,7 +142,7 @@ MetacelloRepositorySqueakCommonTestCase >> testAsRepositorySpecFor [
 ]
 
 { #category : 'tests' }
-MetacelloRepositorySqueakCommonTestCase >> testDictionaryRepository [
+MetacelloRepositoryCommonTestCase >> testDictionaryRepository [
 	| project pkg repoSpec repo |
 	project := self project.
 	pkg := (project version: '1.5-baseline') packageNamed: 'Example-Core'.
@@ -154,7 +154,7 @@ MetacelloRepositorySqueakCommonTestCase >> testDictionaryRepository [
 ]
 
 { #category : 'tests' }
-MetacelloRepositorySqueakCommonTestCase >> testDirectoryRepository [
+MetacelloRepositoryCommonTestCase >> testDirectoryRepository [
 	| project pkg repoSpec repo |
 	project := self project.
 	pkg := (project version: '1.0-baseline') packageNamed: 'Example-Core'.
@@ -166,7 +166,7 @@ MetacelloRepositorySqueakCommonTestCase >> testDirectoryRepository [
 ]
 
 { #category : 'tests' }
-MetacelloRepositorySqueakCommonTestCase >> testFileTreeRepository [
+MetacelloRepositoryCommonTestCase >> testFileTreeRepository [
 	"must create repository against an existing directory"
 
 	| project pkg repoSpec repo fileUtils workingDir tempDir repoDir |
@@ -188,7 +188,7 @@ MetacelloRepositorySqueakCommonTestCase >> testFileTreeRepository [
 ]
 
 { #category : 'tests' }
-MetacelloRepositorySqueakCommonTestCase >> testFtpRepository [
+MetacelloRepositoryCommonTestCase >> testFtpRepository [
 	| project pkg repoSpec repo |
 	project := self project.
 	pkg := (project version: '1.3-baseline') packageNamed: 'Example-Core'.
@@ -201,7 +201,7 @@ MetacelloRepositorySqueakCommonTestCase >> testFtpRepository [
 ]
 
 { #category : 'tests' }
-MetacelloRepositorySqueakCommonTestCase >> testHttpRepository [
+MetacelloRepositoryCommonTestCase >> testHttpRepository [
 	| project pkg repoSpec repo |
 	project := self project.
 	pkg := (project version: '1.4-baseline') packageNamed: 'Example-Core'.
