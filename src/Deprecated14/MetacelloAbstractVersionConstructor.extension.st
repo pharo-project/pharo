@@ -31,12 +31,9 @@ MetacelloAbstractVersionConstructor >> setDescriptionWithBlock: aBlock [
 ]
 
 { #category : '*Deprecated14' }
-MetacelloAbstractVersionConstructor >> setTimestampWithBlock: aBlock [
+MetacelloAbstractVersionConstructor >> timestamp: aBlockOrStringOrDateAndTime [
 
-	| spec |
-	self deprecated: 'Timestamp should be provided as a string and not a block since it brind not value.'.
-	(spec := self root getTimestamp) ifNil: [
-		spec := self project valueHolderSpec.
-		self root timestamp: spec ].
-	self with: spec during: aBlock
+	self deprecated:
+		'The timestamp metadata is not supported anymore. It was used with SmalltalkHub but not this information is already managed by git or other CVS.
+	If you wish to keep this as a trace, you can leave the infos in a method comment.'
 ]

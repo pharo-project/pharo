@@ -300,11 +300,6 @@ MetacelloVersion >> spec: aMetacellVersionSpec [
 	spec := aMetacellVersionSpec
 ]
 
-{ #category : 'querying' }
-MetacelloVersion >> timestamp [
-    ^ self basicSpec timestamp value
-]
-
 { #category : 'actions' }
 MetacelloVersion >> unload [
 

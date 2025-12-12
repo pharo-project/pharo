@@ -20,12 +20,8 @@ MetacelloReferenceConfig >> baseline10: spec [
 	<version: '1.0-baseline'>
 	
 	spec for: #common do: [
-		"recommended methods for specifying author, blessing, description, timestamp, preLoadDoIt, postLoadDoit"
-		"#development, #baseline, #release, #beta, etc."
-		spec blessing: #baseline.									
+		"recommended methods for specifying, description, preLoadDoIt, postLoadDoit"							
 		spec description: 'Descriptive comment'.
-		spec timestamp: (DateAndTime fromString: '2009-07-10T14:40').
-		spec timestamp: '12009-07-10T14:40'.
 		spec
 			"Before loading packages or projects in this version, send #preloadForVersion to an instance of this config"
 			preLoadDoIt: #preloadForVersion;

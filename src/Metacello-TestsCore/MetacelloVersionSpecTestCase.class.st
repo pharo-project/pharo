@@ -12,21 +12,18 @@ MetacelloVersionSpecTestCase >> testVersionMergeSpec [
 	versionA := self versionSpec
 		versionString: '1.0';
 		description: 'A description';
-		timestamp: '1/24/2012 09:59';
 		preLoadDoIt: #preLoadDoIt;
 		postLoadDoIt: #postLoadDoIt;
 		yourself.
 	versionB := self versionSpec
 		versionString: '1.1';
 		description: 'A FULL description';
-		timestamp: '1/24/2012 10:22';
 		preLoadDoIt: #preLoadDoItB;
 		postLoadDoIt: #postLoadDoItB;
 		yourself.
 	version := versionA mergeSpec: versionB.
 	self assert: version versionString value equals: '1.1'.
 	self assert: version description value equals: 'A FULL description'.
-	self assert: version timestamp value equals: '1/24/2012 10:22'.
 	self assert: version preLoadDoIt value identicalTo: #preLoadDoItB.
 	self assert: version postLoadDoIt value identicalTo: #postLoadDoItB
 ]
@@ -123,13 +120,11 @@ MetacelloVersionSpecTestCase >> testVersionSpec [
 	version := self versionSpec
 		versionString: '1.0';
 		description: 'A description';
-		timestamp: '1/24/2012 09:59';
 		preLoadDoIt: #preLoadDoIt;
 		postLoadDoIt: #postLoadDoIt;
 		yourself.
 	self assert: version versionString value equals: '1.0'.
 	self assert: version description value equals: 'A description'.
-	self assert: version timestamp value equals: '1/24/2012 09:59'.
 	self assert: version preLoadDoIt value identicalTo: #preLoadDoIt.
 	self assert: version postLoadDoIt value identicalTo: #postLoadDoIt.
 	self should: [ version preLoadDoIt: '' ] raise: Error.
@@ -201,7 +196,6 @@ MetacelloVersionSpecTestCase >> testVersionSpecCreateVersion [
 	spec := self versionSpec
 		versionString: '1.0';
 		description: 'A description';
-		timestamp: '1/24/2012 09:59';
 		preLoadDoIt: #preLoadDoIt;
 		postLoadDoIt: #postLoadDoIt;
 		yourself.
@@ -210,6 +204,5 @@ MetacelloVersionSpecTestCase >> testVersionSpecCreateVersion [
 	self assert: version spec identicalTo: spec.
 	self assert: version versionNumber asString equals: '1.0'.
 	self assert: version versionString equals: '1.0'.
-	self assert: version description equals: 'A description'.
-	self assert: version timestamp equals: '1/24/2012 09:59'
+	self assert: version description equals: 'A description'
 ]

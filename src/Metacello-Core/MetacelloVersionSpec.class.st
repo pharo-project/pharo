@@ -34,8 +34,7 @@ MetacelloVersionSpec >> configMethodBasicOn: aStream last: last indent: indent [
 			values := {
 				          self getDescription.
 				          self getPreLoadDoIt.
-				          self getPostLoadDoIt.
-				          self getTimestamp }.
+				          self getPostLoadDoIt }.
 			1 to: values size do: [ :index | (values at: index) ifNotNil: [ lastIndex := index ] ].
 			lastBlock := [ :arg | arg = lastIndex ] ]
 		ifFalse: [ lastBlock := [ :arg | false ] ].
@@ -56,12 +55,6 @@ MetacelloVersionSpec >> configMethodBasicOn: aStream last: last indent: indent [
 		for: self getPostLoadDoIt
 		selector: 'postLoadDoIt:'
 		last: (lastBlock value: 3)
-		indent: indent.
-	self
-		configMethodValueOn: aStream
-		for: self getTimestamp
-		selector: 'timestamp:'
-		last: (lastBlock value: 4)
 		indent: indent
 ]
 
@@ -241,11 +234,6 @@ MetacelloVersionSpec >> getPreLoadDoIt [
 ]
 
 { #category : 'accessing' }
-MetacelloVersionSpec >> getTimestamp [
-	^timestamp
-]
-
-{ #category : 'accessing' }
 MetacelloVersionSpec >> import [
     ^ importName
 ]
@@ -282,16 +270,16 @@ MetacelloVersionSpec >> loader: aMetacelloLoadTarget [
 
 { #category : 'merging' }
 MetacelloVersionSpec >> mergeMap [
-    | map |
-    map := super mergeMap.
-    map at: #'versionString' put: versionString.
-    map at: #'description' put: description.
-    map at: #'timestamp' put: timestamp.
-    map at: #'preLoadDoIt' put: preLoadDoIt.
-    map at: #'postLoadDoIt' put: postLoadDoIt.
-    map at: #'packageList' put: self packages.
-    map at: #'repositories' put: self repositories.
-    ^ map
+
+	| map |
+	map := super mergeMap.
+	map at: #versionString put: versionString.
+	map at: #description put: description.
+	map at: #preLoadDoIt put: preLoadDoIt.
+	map at: #postLoadDoIt put: postLoadDoIt.
+	map at: #packageList put: self packages.
+	map at: #repositories put: self repositories.
+	^ map
 ]
 
 { #category : 'merging' }
@@ -571,21 +559,6 @@ MetacelloVersionSpec >> specsNamed: packageAndProjectNames projectDo: projectBlo
 	map := self packages map.
 	packageAndProjectNames do: [ :name |
 		(map at: name ifAbsent: [  ]) ifNotNil: [ :pkgSpec | pkgSpec projectDo: projectBlock packageDo: packageBlock groupDo: groupBlock ] ]
-]
-
-{ #category : 'accessing' }
-MetacelloVersionSpec >> timestamp [
-
-	^ timestamp ifNil: [
-		  self project valueHolderSpec
-			  value: '';
-			  yourself ]
-]
-
-{ #category : 'accessing' }
-MetacelloVersionSpec >> timestamp: anObject [
-
-	timestamp := anObject asMetacelloValueHolderFor: self
 ]
 
 { #category : 'private' }
