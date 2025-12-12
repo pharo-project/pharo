@@ -853,13 +853,7 @@ MetacelloProjectSpec >> version [
 
 	^ self versionString
 		  ifNotNil: [ self project versionString ]
-		  ifNil: [
-			  | vrsn |
-			  "Eventually it will become an error to not specify a project reference version as default: #stable is the preferred default""self deprecated: 'Must specify a project reference version.'."
-			  self flag: 'deprecate after version 1.0'.
-			  (vrsn := self project latestVersion) isNil
-				  ifTrue: [ self project version: #bleedingEdge ]
-				  ifFalse: [ vrsn ] ]
+		  ifNil: [ self error: 'No version specified' ]
 ]
 
 { #category : 'querying' }

@@ -25,21 +25,6 @@ MetacelloVersionSpec >> acceptVisitor: aVisitor [
 	^ aVisitor visitVersionSpec: self
 ]
 
-{ #category : 'accessing' }
-MetacelloVersionSpec >> blessing [
-
-	^ blessing ifNil: [
-		  self project valueHolderSpec
-			  value: self project defaultBlessing;
-			  yourself ]
-]
-
-{ #category : 'accessing' }
-MetacelloVersionSpec >> blessing: anObject [
-
-	blessing := anObject asMetacelloValueHolderFor: self
-]
-
 { #category : 'printing' }
 MetacelloVersionSpec >> configMethodBasicOn: aStream last: last indent: indent [
 
@@ -47,7 +32,6 @@ MetacelloVersionSpec >> configMethodBasicOn: aStream last: last indent: indent [
 	last
 		ifTrue: [ "need to calculate last statement with a value"
 			values := {
-				          self getBlessing.
 				          self getDescription.
 				          self getPreLoadDoIt.
 				          self getPostLoadDoIt.
@@ -57,33 +41,27 @@ MetacelloVersionSpec >> configMethodBasicOn: aStream last: last indent: indent [
 		ifFalse: [ lastBlock := [ :arg | false ] ].
 	self
 		configMethodValueOn: aStream
-		for: self getBlessing
-		selector: 'blessing:'
-		last: (lastBlock value: 1)
-		indent: indent.
-	self
-		configMethodValueOn: aStream
 		for: self getDescription
 		selector: 'description:'
-		last: (lastBlock value: 2)
+		last: (lastBlock value: 1)
 		indent: indent.
 	self
 		configMethodValueOn: aStream
 		for: self getPreLoadDoIt
 		selector: 'preLoadDoIt:'
-		last: (lastBlock value: 3)
+		last: (lastBlock value: 2)
 		indent: indent.
 	self
 		configMethodValueOn: aStream
 		for: self getPostLoadDoIt
 		selector: 'postLoadDoIt:'
-		last: (lastBlock value: 4)
+		last: (lastBlock value: 3)
 		indent: indent.
 	self
 		configMethodValueOn: aStream
 		for: self getTimestamp
 		selector: 'timestamp:'
-		last: (lastBlock value: 5)
+		last: (lastBlock value: 4)
 		indent: indent
 ]
 
@@ -248,11 +226,6 @@ MetacelloVersionSpec >> description: anObject [
 ]
 
 { #category : 'accessing' }
-MetacelloVersionSpec >> getBlessing [
-	^blessing
-]
-
-{ #category : 'accessing' }
 MetacelloVersionSpec >> getDescription [
 	^description
 ]
@@ -312,7 +285,6 @@ MetacelloVersionSpec >> mergeMap [
     | map |
     map := super mergeMap.
     map at: #'versionString' put: versionString.
-    map at: #'blessing' put: blessing.
     map at: #'description' put: description.
     map at: #'timestamp' put: timestamp.
     map at: #'preLoadDoIt' put: preLoadDoIt.

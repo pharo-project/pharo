@@ -10,7 +10,6 @@ Class {
 MetacelloVersionSpecTestCase >> testVersionMergeSpec [
 	| versionA versionB version |
 	versionA := self versionSpec
-		blessing: #baseline;
 		versionString: '1.0';
 		description: 'A description';
 		timestamp: '1/24/2012 09:59';
@@ -18,7 +17,6 @@ MetacelloVersionSpecTestCase >> testVersionMergeSpec [
 		postLoadDoIt: #postLoadDoIt;
 		yourself.
 	versionB := self versionSpec
-		blessing: #release;
 		versionString: '1.1';
 		description: 'A FULL description';
 		timestamp: '1/24/2012 10:22';
@@ -26,7 +24,6 @@ MetacelloVersionSpecTestCase >> testVersionMergeSpec [
 		postLoadDoIt: #postLoadDoItB;
 		yourself.
 	version := versionA mergeSpec: versionB.
-	self assert: version blessing value equals: #release.
 	self assert: version versionString value equals: '1.1'.
 	self assert: version description value equals: 'A FULL description'.
 	self assert: version timestamp value equals: '1/24/2012 10:22'.
@@ -38,7 +35,6 @@ MetacelloVersionSpecTestCase >> testVersionMergeSpec [
 MetacelloVersionSpecTestCase >> testVersionMergeSpec2 [
 	| versionA versionB version repository package group projectReferenceSpec |
 	versionA := self versionSpec
-		blessing: #baseline;
 		versionString: '1.0';
 		repository: 'http://example.com/repository' username: 'dkh' password: 'password';
 		repository: '/opt/gemstone/repository';
@@ -67,7 +63,6 @@ MetacelloVersionSpecTestCase >> testVersionMergeSpec2 [
 						yourself));
 		yourself.
 	versionB := self versionSpec
-		blessing: #release;
 		versionString: '1.1';
 		repository: 'http://example.com/repository' username: 'DaleHenrichs' password: 'secret';
 		repository: '/opt/gemstone/repo';
@@ -96,7 +91,6 @@ MetacelloVersionSpecTestCase >> testVersionMergeSpec2 [
 						yourself));
 		yourself.
 	version := versionA mergeSpec: versionB.
-	self assert: version blessing value equals: #release.
 	self assert: version versionString value equals: '1.1'.
 	repository := version repositories map at: '/opt/gemstone/repository' ifAbsent: [ self assert: false ].
 	self assert: repository type equals: 'directory'.
@@ -127,14 +121,12 @@ MetacelloVersionSpecTestCase >> testVersionMergeSpec2 [
 MetacelloVersionSpecTestCase >> testVersionSpec [
 	| version |
 	version := self versionSpec
-		blessing: #baseline;
 		versionString: '1.0';
 		description: 'A description';
 		timestamp: '1/24/2012 09:59';
 		preLoadDoIt: #preLoadDoIt;
 		postLoadDoIt: #postLoadDoIt;
 		yourself.
-	self assert: version blessing value equals: #baseline.
 	self assert: version versionString value equals: '1.0'.
 	self assert: version description value equals: 'A description'.
 	self assert: version timestamp value equals: '1/24/2012 09:59'.
@@ -148,7 +140,6 @@ MetacelloVersionSpecTestCase >> testVersionSpec [
 MetacelloVersionSpecTestCase >> testVersionSpec2 [
 	| version projectReferenceSpec group package repository |
 	version := self versionSpec
-		blessing: #baseline;
 		versionString: '1.0';
 		repository: 'http://example.com/repository' username: 'dkh' password: 'password';
 		repository: '/opt/gemstone/repository';
@@ -187,7 +178,6 @@ MetacelloVersionSpecTestCase >> testVersionSpec2 [
 				postLoadDoIt: #postLoadDoItB;
 				yourself);
 		yourself.
-	self assert: version blessing value equals: #baseline.
 	self assert: version versionString value equals: '1.0'.
 	repository := version repositories map at: '/opt/gemstone/repository' ifAbsent: [ self assert: false ].
 	self assert: repository type equals: 'directory'.
@@ -209,7 +199,6 @@ MetacelloVersionSpecTestCase >> testVersionSpec2 [
 MetacelloVersionSpecTestCase >> testVersionSpecCreateVersion [
 	| spec version |
 	spec := self versionSpec
-		blessing: #baseline;
 		versionString: '1.0';
 		description: 'A description';
 		timestamp: '1/24/2012 09:59';
@@ -220,7 +209,6 @@ MetacelloVersionSpecTestCase >> testVersionSpecCreateVersion [
 	self assert: version class identicalTo: spec versionClass.
 	self assert: version spec identicalTo: spec.
 	self assert: version versionNumber asString equals: '1.0'.
-	self assert: version blessing equals: #baseline.
 	self assert: version versionString equals: '1.0'.
 	self assert: version description equals: 'A description'.
 	self assert: version timestamp equals: '1/24/2012 09:59'

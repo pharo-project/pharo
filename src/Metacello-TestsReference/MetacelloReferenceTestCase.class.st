@@ -21,8 +21,7 @@ MetacelloReferenceTestCase >> conditionResult: resultString [
 
 { #category : 'testing' }
 MetacelloReferenceTestCase >> expectedPrintString [
-    ^ 'spec blessing: #''baseline''.
-spec description: ''Descriptive comment''.
+    ^ 'spec description: ''Descriptive comment''.
 spec preLoadDoIt: #''preloadForVersion''.
 spec postLoadDoIt: #''postloadForVersion''.
 spec timestamp: ''12009-07-10T14:40''.

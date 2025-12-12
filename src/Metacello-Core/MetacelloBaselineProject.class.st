@@ -72,16 +72,6 @@ MetacelloBaselineProject >> lastVersion [
     ^ self version
 ]
 
-{ #category : 'versions' }
-MetacelloBaselineProject >> latestVersion [
-    ^ self version
-]
-
-{ #category : 'versions' }
-MetacelloBaselineProject >> latestVersion: blessing [
-    ^ nil
-]
-
 { #category : 'accessing' }
 MetacelloBaselineProject >> repositoryDescription [
 	^ repositoryDescription

@@ -44,11 +44,6 @@ MetacelloVersion >> basicSpec [
 ]
 
 { #category : 'querying' }
-MetacelloVersion >> blessing [
-    ^ self basicSpec blessing value
-]
-
-{ #category : 'querying' }
 MetacelloVersion >> defaultPackageNamesToLoad: defaultList [
 	"Answer the list of packages and projects to be loaded: packages already loaded plust defaultList"
 	

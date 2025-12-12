@@ -207,7 +207,7 @@ BaselineOf >> customProjectAttributes [
 BaselineOf >> defaultBleedingEdgeVersion [
 
 	self flag: #ConfigurationRemoval. "I think this method should not be on baselines but let's see that later."
-	^ ((self project map values select: [ :version | version blessing == #baseline ]) detectMax: [ :version | version ])
+	^ (self project map values detectMax: [ :version | version ])
 		  ifNotNil: [ :bleedingEdgeVersion | bleedingEdgeVersion versionString ]
 		  ifNil: [ #notDefined ]
 ]

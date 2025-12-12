@@ -112,12 +112,6 @@ MetacelloProject >> errorMap: anObject [
     errorMap := anObject
 ]
 
-{ #category : 'private' }
-MetacelloProject >> excludeFromLatestVersion [
-
-	^#(structural development broken baseline)
-]
-
 { #category : 'spec classes' }
 MetacelloProject >> groupSpec [
 
@@ -144,23 +138,6 @@ MetacelloProject >> lastVersion [
 	coll := (self map values asArray sort: [:a :b | a <= b ]) asOrderedCollection.
 	coll isEmpty ifTrue: [ ^nil ].
 	^coll last
-]
-
-{ #category : 'versions' }
-MetacelloProject >> latestVersion [
-
-	| excluded |
-"	self deprecated: 'Please use #stableVersion instead.'.
-"	self flag: 'deprecate after version 1.0'.
-	excluded := self excludeFromLatestVersion.
-	^(self map values select: [:version |  
-		(excluded includes: version blessing) not ]) detectMax: [:version | version ]
-]
-
-{ #category : 'versions' }
-MetacelloProject >> latestVersion: blessing [
-
-	^(self map values select: [:version | blessing = version blessing ]) detectMax: [:version | version ]
 ]
 
 { #category : 'loading' }
@@ -330,12 +307,6 @@ MetacelloProject >> repositorySpecClass [
 { #category : 'development support' }
 MetacelloProject >> setBaselineRepositoryDescription: aListOrRepositoryDescriptions [
     "noop "
-]
-
-{ #category : 'private' }
-MetacelloProject >> sortedAndFilteredVersions [
-
-		^(self map values asArray sort: [:a :b | a >= b ]) select: [:vrsn | (#(structural broken baseline) includes: vrsn blessing) not ].
 ]
 
 { #category : 'versions' }

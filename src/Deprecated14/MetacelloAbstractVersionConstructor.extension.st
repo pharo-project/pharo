@@ -8,20 +8,15 @@ MetacelloAbstractVersionConstructor >> author: aBlockOrString [
 ]
 
 { #category : '*Deprecated14' }
-MetacelloAbstractVersionConstructor >> configuration: aString with: aBlock [
+MetacelloAbstractVersionConstructor >> blessing: aBlockOrString [
 
-	self error: 'Configurations are not supported anymore, only baseline can be used as dependencies.'
+	self deprecated: 'The blessing metadata is not supported anymore.'
 ]
 
 { #category : '*Deprecated14' }
-MetacelloAbstractVersionConstructor >> setBlessingWithBlock: aBlock [
+MetacelloAbstractVersionConstructor >> configuration: aString with: aBlock [
 
-	| spec |
-	self deprecated: 'Blessing should be provided as a string and not a block since it brind not value.'.
-	(spec := self root getBlessing) ifNil: [
-		spec := self project valueHolderSpec.
-		self root blessing: spec ].
-	self with: spec during: aBlock
+	self error: 'Configurations are not supported anymore, only baseline can be used as dependencies.'
 ]
 
 { #category : '*Deprecated14' }
