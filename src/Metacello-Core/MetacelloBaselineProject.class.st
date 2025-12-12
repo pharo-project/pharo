@@ -32,6 +32,13 @@ Class {
 	#tag : 'Model'
 }
 
+{ #category : 'class initialization' }
+MetacelloBaselineProject class >> initialize [
+
+	"Deprecation added during the development of Pharo 14."
+	self deprecatedAliases: #( #MetacelloMCBaselineProject )
+]
+
 { #category : 'accessing' }
 MetacelloBaselineProject class >> singletonVersionName [
     ^ 'baseline'

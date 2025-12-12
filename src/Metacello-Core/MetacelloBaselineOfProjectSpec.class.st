@@ -6,6 +6,13 @@ Class {
 	#tag : 'Specs'
 }
 
+{ #category : 'class initialization' }
+MetacelloBaselineOfProjectSpec class >> initialize [
+
+	"Deprecation added during the development of Pharo 14."
+	self deprecatedAliases: #( #MetacelloMCBaselineOfProjectSpec )
+]
+
 { #category : 'visiting' }
 MetacelloBaselineOfProjectSpec >> acceptVisitor: aVisitor [
 	
