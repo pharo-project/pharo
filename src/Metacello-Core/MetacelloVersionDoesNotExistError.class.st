@@ -2,8 +2,7 @@ Class {
 	#name : 'MetacelloVersionDoesNotExistError',
 	#superclass : 'MetacelloError',
 	#instVars : [
-		'project',
-		'versionString'
+		'project'
 	],
 	#category : 'Metacello-Core-Exceptions-Errors',
 	#package : 'Metacello-Core',
@@ -11,26 +10,17 @@ Class {
 }
 
 { #category : 'instance creation' }
-MetacelloVersionDoesNotExistError class >> project: aMetacelloProject versionString: aVersionString [
+MetacelloVersionDoesNotExistError class >> project: aMetacelloProject [
 
-	^(self new)
-		project: aMetacelloProject;
-		versionString: aVersionString;
-		yourself
+	^ self new
+		  project: aMetacelloProject;
+		  yourself
 ]
 
 { #category : 'printing' }
 MetacelloVersionDoesNotExistError >> description [
-    "Return a textual description of the exception."
 
-    ^ 'Version ' , self versionString printString , ' is not defined in ' , self project label
-        , '. Possible versions include: ' , self possibleVersions printString
-]
-
-{ #category : 'accessing' }
-MetacelloVersionDoesNotExistError >> possibleVersions [
-
-	^ self project versions collect: [ :each | each versionString ]
+	^ 'Not version defined in ' , self project label
 ]
 
 { #category : 'accessing' }
@@ -49,14 +39,4 @@ MetacelloVersionDoesNotExistError >> signal [
 
   self messageText: self description.
   ^ super signal
-]
-
-{ #category : 'accessing' }
-MetacelloVersionDoesNotExistError >> versionString [
-	^ versionString
-]
-
-{ #category : 'accessing' }
-MetacelloVersionDoesNotExistError >> versionString: anObject [
-	versionString := anObject
 ]

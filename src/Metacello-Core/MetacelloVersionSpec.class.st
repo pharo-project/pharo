@@ -534,16 +534,13 @@ MetacelloVersionSpec >> versionClass [
 
 { #category : 'private' }
 MetacelloVersionSpec >> versionNumber [
+
     ^ self project versionNumberClass fromString: self versionString
 ]
 
 { #category : 'querying' }
 MetacelloVersionSpec >> versionString [
 
-	^ versionString ifNil: [ '' ]
-]
-
-{ #category : 'accessing' }
-MetacelloVersionSpec >> versionString: anObject [
-	versionString := anObject
+	self flag: #ConfigurationRemoval. "I think this method should not be on baselines but let's see that later."
+	^ self project singletonVersionName
 ]

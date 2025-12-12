@@ -64,13 +64,10 @@ MetacelloBaselineProject >> singletonVersionName [
 ]
 
 { #category : 'versions' }
-MetacelloBaselineProject >> version [
-    ^ self version: self singletonVersionName
-]
-
-{ #category : 'versions' }
 MetacelloBaselineProject >> versions [
-  ^ [ {(self version)} ]
-    on: MetacelloVersionDoesNotExistError
-    do: [ :ex | ^ #() ]
+
+	self flag: #ConfigurationRemoval. "I think this method should not be on baselines but let's see that later."
+	^ [ { self version } ]
+		  on: MetacelloVersionDoesNotExistError
+		  do: [ :ex | ^ #(  ) ]
 ]

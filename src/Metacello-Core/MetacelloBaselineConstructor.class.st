@@ -257,19 +257,16 @@ MetacelloBaselineConstructor >> name: anObject [
 { #category : 'private' }
 MetacelloBaselineConstructor >> on: aConfig project: aProject [
 
-	| pragma versionMap versionSpec |
+	| pragma versionSpec |
 	self configuration: aConfig.
 	pragma := self extractBaselinePragmaFor: aConfig class.
 	project := aProject ifNil: [ MetacelloBaselineProject new ].
 	versionSpec := self project versionSpec.
 	self root: versionSpec.
 	self evaluatePragma: pragma.
-	versionMap := Dictionary new.
 	self project attributes do: [ :attribute |
 		(self attributeMap at: attribute ifAbsent: [ ]) ifNotNil: [ :blockList | blockList do: [ :block | self with: versionSpec during: block ] ] ].
-	versionSpec versionString: self project singletonVersionName.
-	versionMap at: versionSpec versionString put: versionSpec createVersion.
-	self project map: versionMap.
+	self project setVersion: versionSpec createVersion.
 	self project configuration: aConfig
 ]
 

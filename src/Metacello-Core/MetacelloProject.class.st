@@ -5,8 +5,8 @@ Class {
 		'versionNumberClass',
 		'projectAttributes',
 		'loadType',
-		'versionMap',
-		'configuration'
+		'configuration',
+		'version'
 	],
 	#category : 'Metacello-Core-Model',
 	#package : 'Metacello-Core',
@@ -101,18 +101,6 @@ MetacelloProject >> loadType: aSymbol [
 	"#atomic or #linear"
 
 	loadType := aSymbol
-]
-
-{ #category : 'accessing' }
-MetacelloProject >> map [
-	versionMap ifNil: [ ^ Dictionary new ].
-	^ versionMap
-]
-
-{ #category : 'accessing' }
-MetacelloProject >> map: aDictionary [
-
-	versionMap := aDictionary
 ]
 
 { #category : 'spec classes' }
@@ -240,6 +228,12 @@ MetacelloProject >> setBaselineRepositoryDescription: aListOrRepositoryDescripti
     "noop "
 ]
 
+{ #category : 'versions' }
+MetacelloProject >> setVersion: aVersion [
+
+	version := aVersion
+]
+
 { #category : 'spec classes' }
 MetacelloProject >> valueHolderSpec [
 
@@ -247,9 +241,17 @@ MetacelloProject >> valueHolderSpec [
 ]
 
 { #category : 'versions' }
+MetacelloProject >> version [
+
+	^ version ifNil: [ (MetacelloVersionDoesNotExistError project: self project) signal ]
+]
+
+{ #category : 'versions' }
 MetacelloProject >> version: aVersionString [
 
-	^ self map at: aVersionString ifAbsent: [ (MetacelloVersionDoesNotExistError project: self project versionString: aVersionString) signal ]
+	self flag: #ConfigurationRemoval. "I think this method should not be on baselines but let's see that later."
+	aVersionString = self singletonVersionName ifFalse: [ self error ].
+	^ self version
 ]
 
 { #category : 'versions' }
@@ -267,10 +269,4 @@ MetacelloProject >> versionNumberClass: aClass [
 MetacelloProject >> versionSpec [
 
 	^ MetacelloVersionSpec for: self
-]
-
-{ #category : 'versions' }
-MetacelloProject >> versions [
-
-	^self map values asArray sort: [:a :b | a <= b ]
 ]
