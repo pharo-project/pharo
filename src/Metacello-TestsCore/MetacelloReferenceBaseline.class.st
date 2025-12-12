@@ -1,9 +1,6 @@
 Class {
 	#name : 'MetacelloReferenceBaseline',
 	#superclass : 'Object',
-	#instVars : [
-		'project'
-	],
 	#category : 'Metacello-TestsCore',
 	#package : 'Metacello-TestsCore'
 }
@@ -153,9 +150,5 @@ MetacelloReferenceBaseline >> baseline: spec [
 { #category : 'accessing' }
 MetacelloReferenceBaseline >> project [
 
-	^ project ifNil: [
-			  | projec |
-			  projec := MetacelloBaselineProject new.
-			  MetacelloBaselineConstructor on: self project: projec.
-			  project := projec ]
+	^ (MetacelloBaselineConstructor on: self) project
 ]

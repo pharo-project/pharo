@@ -24,10 +24,7 @@ MetacelloCoreVersionQueryTestCase >> baseline: spec [
 { #category : 'accessing' }
 MetacelloCoreVersionQueryTestCase >> project [
 
-	| project |
-	project := MetacelloBaselineProject new.
-	MetacelloBaselineConstructor on: self project: project.
-	^ project
+	^ (MetacelloBaselineConstructor on: self) project
 ]
 
 { #category : 'tests' }

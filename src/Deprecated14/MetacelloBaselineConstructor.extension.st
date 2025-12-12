@@ -1,26 +1,26 @@
-Extension { #name : 'MetacelloAbstractVersionConstructor' }
+Extension { #name : 'MetacelloBaselineConstructor' }
 
 { #category : '*Deprecated14' }
-MetacelloAbstractVersionConstructor >> author: aBlockOrString [
+MetacelloBaselineConstructor >> author: aBlockOrString [
 
 	self deprecated: 'The author metadata is not supported anymore. It was used with SmalltalkHub but not this information is already managed by git or other CVS.
 	If you wish to keep this as a trace, you can leave the infos in a method comment.'
 ]
 
 { #category : '*Deprecated14' }
-MetacelloAbstractVersionConstructor >> blessing: aBlockOrString [
+MetacelloBaselineConstructor >> blessing: aBlockOrString [
 
 	self deprecated: 'The blessing metadata is not supported anymore.'
 ]
 
 { #category : '*Deprecated14' }
-MetacelloAbstractVersionConstructor >> configuration: aString with: aBlock [
+MetacelloBaselineConstructor >> configuration: aString with: aBlock [
 
 	self error: 'Configurations are not supported anymore, only baseline can be used as dependencies.'
 ]
 
 { #category : '*Deprecated14' }
-MetacelloAbstractVersionConstructor >> description: aBlockOrString [
+MetacelloBaselineConstructor >> description: aBlockOrString [
 
 	self deprecated:
 		'The description metadata is not supported anymore. It was used with SmalltalkHub but not this information is already managed by git or other CVS.
@@ -28,7 +28,7 @@ MetacelloAbstractVersionConstructor >> description: aBlockOrString [
 ]
 
 { #category : '*Deprecated14' }
-MetacelloAbstractVersionConstructor >> timestamp: aBlockOrStringOrDateAndTime [
+MetacelloBaselineConstructor >> timestamp: aBlockOrStringOrDateAndTime [
 
 	self deprecated:
 		'The timestamp metadata is not supported anymore. It was used with SmalltalkHub but not this information is already managed by git or other CVS.
