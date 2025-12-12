@@ -43,7 +43,8 @@ MetacelloProjectSpec >> addToMetacelloPackages: aMetacelloPackagesSpec [
 
 { #category : 'scripting' }
 MetacelloProjectSpec >> asBaselineProjectSpec [
-    ^ self copyForScriptingInto: (MetacelloBaselineOfProjectSpec for: self project asBaselineProject)
+
+	^ self copyForScriptingInto: (MetacelloBaselineOfProjectSpec for: self project)
 ]
 
 { #category : 'scripting' }

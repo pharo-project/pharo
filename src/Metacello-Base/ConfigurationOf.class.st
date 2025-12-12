@@ -65,11 +65,6 @@ Class {
 }
 
 { #category : 'accessing' }
-ConfigurationOf >> projectClass [
-    ^ MetacelloProject
-]
-
-{ #category : 'accessing' }
 ConfigurationOf >> versionNumberClass [
     ^ MetacelloSemanticVersionNumber
 ]

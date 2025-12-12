@@ -143,15 +143,14 @@ MetacelloBaselineOfProjectSpec >> repositoryVersionString [
 MetacelloBaselineOfProjectSpec >> validateVersionString: issues withDefaultVersionString: ignored [
 
 	self versionString ifNotNil: [ :vs |
-		| prj |
-		prj := self project asBaselineProject.
-		vs ~= prj singletonVersionName ifTrue: [
-			issues add: (MetacelloValidationError
-					 reasonCode: #invalidVersionString
-					 callSite:
-					 #validateForScriptLoad:withDefaultVersionString:withDefaultRepositoryDecription:
-					 explanation: 'version field is incorrect, should be: '
-						 , prj singletonVersionName printString) ] ]
+			| prj |
+			self flag: #ConfigurationRemoval. "I have the impression that the project is self."
+			prj := self project.
+			vs ~= prj singletonVersionName ifTrue: [
+					issues add: (MetacelloValidationError
+							 reasonCode: #invalidVersionString
+							 callSite: #validateForScriptLoad:withDefaultVersionString:withDefaultRepositoryDecription:
+							 explanation: 'version field is incorrect, should be: ' , prj singletonVersionName printString) ] ]
 ]
 
 { #category : 'querying' }

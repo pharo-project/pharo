@@ -20,23 +20,17 @@ MetacelloProject class >> new [
 
 	| inst |
 	inst := self basicNew.
-	^inst configuration: inst; yourself
+	^ inst
+		  configuration: inst;
+		  yourself
 ]
 
 { #category : 'instance creation' }
 MetacelloProject class >> on: aConfig [
 
-	^self basicNew configuration: aConfig; yourself
-]
-
-{ #category : 'accessing' }
-MetacelloProject class >> versionConstructorClass [
-    ^ MetacelloVersionConstructor
-]
-
-{ #category : 'scripting' }
-MetacelloProject >> asBaselineProject [
-    ^ MetacelloBaselineProject new
+	^ self basicNew
+		  configuration: aConfig;
+		  yourself
 ]
 
 { #category : 'private' }
@@ -57,12 +51,6 @@ MetacelloProject >> baselineOfProjectSpecClass [
     ^ MetacelloBaselineOfProjectSpec
 ]
 
-{ #category : 'versions' }
-MetacelloProject >> bleedingEdge [
-
-	^self version: #bleedingEdge
-]
-
 { #category : 'accessing' }
 MetacelloProject >> configuration [
 	^ configuration
@@ -70,6 +58,7 @@ MetacelloProject >> configuration [
 
 { #category : 'accessing' }
 MetacelloProject >> configuration: anObject [
+
 	configuration := anObject
 ]
 
@@ -90,12 +79,6 @@ MetacelloProject >> defaultPlatformAttributes [
 		  ('pharo' , SystemVersion current major asString , '.0.x') asSymbol }
 ]
 
-{ #category : 'versions' }
-MetacelloProject >> development [
-
-	^self version: #development
-]
-
 { #category : 'accessing' }
 MetacelloProject >> errorMap [
 	^ errorMap
@@ -103,8 +86,8 @@ MetacelloProject >> errorMap [
 
 { #category : 'accessing' }
 MetacelloProject >> errorMap: anObject [
-    errorMap ifNil: [ errorMap := Dictionary new ].
-    errorMap := anObject
+
+	errorMap := anObject
 ]
 
 { #category : 'spec classes' }
@@ -113,26 +96,10 @@ MetacelloProject >> groupSpec [
 	^ MetacelloGroupSpec for: self
 ]
 
-{ #category : 'versions' }
-MetacelloProject >> hasVersion: versionString [
-
-	self version: versionString ifAbsent: [ ^false ].
-	^true
-]
-
 { #category : 'accessing' }
 MetacelloProject >> label [
 
 	^self configuration class name
-]
-
-{ #category : 'versions' }
-MetacelloProject >> lastVersion [
-
-	| coll |
-	coll := (self map values asArray sort: [:a :b | a <= b ]) asOrderedCollection.
-	coll isEmpty ifTrue: [ ^nil ].
-	^coll last
 ]
 
 { #category : 'loading' }
@@ -302,12 +269,6 @@ MetacelloProject >> repositorySpecClass [
 { #category : 'development support' }
 MetacelloProject >> setBaselineRepositoryDescription: aListOrRepositoryDescriptions [
     "noop "
-]
-
-{ #category : 'versions' }
-MetacelloProject >> stableVersion [
-
-	^self version: #stable
 ]
 
 { #category : 'accessing' }

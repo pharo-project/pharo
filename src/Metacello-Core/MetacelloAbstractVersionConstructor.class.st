@@ -118,19 +118,13 @@ MetacelloAbstractVersionConstructor >> evaluatePragma: pragma [
 { #category : 'pragma extraction' }
 MetacelloAbstractVersionConstructor >> extractCommonDefaultSymbolicVersionPragmas [
 
-	| aDict |
-	aDict := Dictionary new.
-	self extractPragmas: #defaultSymbolicVersion: for: ConfigurationOf into: aDict.
-	^aDict
+	^ Dictionary new
 ]
 
 { #category : 'pragma extraction' }
 MetacelloAbstractVersionConstructor >> extractDefaultSymbolicVersionPragmas [
 
-	| aDict |
-	aDict := Dictionary new.
-	self extractPragmas: #defaultSymbolicVersion: into: aDict.
-	^aDict
+	^ Dictionary new
 ]
 
 { #category : 'private' }
@@ -452,7 +446,7 @@ MetacelloAbstractVersionConstructor >> project: aString with: aBlockOrString [
 { #category : 'accessing' }
 MetacelloAbstractVersionConstructor >> projectClass [
 
-	^ MetacelloProject
+	^ MetacelloBaselineProject
 ]
 
 { #category : 'api' }

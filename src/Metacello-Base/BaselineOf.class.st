@@ -165,18 +165,6 @@ BaselineOf >> baseline: spec [
 	"
 ]
 
-{ #category : 'defaults' }
-BaselineOf >> bleedingEdge [
-	"override if different behavior desired.
-	 Use:
-		self versionDoesNotExistError: #bleedingEdge
-	 if #bleedingEdge version is disallowed."
-
-	<defaultSymbolicVersion: #bleedingEdge>
-	self flag: #ConfigurationRemoval. "I think this method should not be on baselines but let's see that later."
-	^ self defaultBleedingEdgeVersion
-]
-
 { #category : 'queries' }
 BaselineOf >> classNamed: aSymbol [
 
@@ -201,15 +189,6 @@ BaselineOf >> customProjectAttributes [
 	For more information see: http://code.google.com/p/metacello/wiki/CustomProjectAttrributes "
 
     ^ #()
-]
-
-{ #category : 'defaults' }
-BaselineOf >> defaultBleedingEdgeVersion [
-
-	self flag: #ConfigurationRemoval. "I think this method should not be on baselines but let's see that later."
-	^ (self project map values detectMax: [ :version | version ])
-		  ifNotNil: [ :bleedingEdgeVersion | bleedingEdgeVersion versionString ]
-		  ifNil: [ #notDefined ]
 ]
 
 { #category : 'accessing' }
