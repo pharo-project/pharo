@@ -419,12 +419,6 @@ Metacello >> onWarningLog [
       ex resume ]
 ]
 
-{ #category : 'api projectSpec' }
-Metacello >> project: projectName [
-
-	self scriptExecutor projectArg: projectName
-]
-
 { #category : 'api actions' }
 Metacello >> record [
 

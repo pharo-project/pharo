@@ -64,13 +64,6 @@ MetacelloProjectRegistry >> projectSpecForClassNamed: aClassName ifAbsent: absen
 		  configurationProjectSpec
 ]
 
-{ #category : 'accessing' }
-MetacelloProjectRegistry >> projectSpecs [
-	"MetacelloProjectRegistration projectSpecs"
-
-	^ self configurationProjectSpecs , self baselineProjectSpecs
-]
-
 { #category : 'registration' }
 MetacelloProjectRegistry >> registerProjectRegistration: aMetacelloProjectRegistration [
 	"unconditionally register <newRegistration> ... use with care"

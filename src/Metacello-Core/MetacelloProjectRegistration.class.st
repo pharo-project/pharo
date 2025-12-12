@@ -88,13 +88,6 @@ MetacelloProjectRegistration class >> projectSpecForClassNamed: aClassName ifAbs
     ^ self registry projectSpecForClassNamed: aClassName ifAbsent: absentBlock
 ]
 
-{ #category : 'accessing' }
-MetacelloProjectRegistration class >> projectSpecs [
-    "MetacelloProjectRegistration projectSpecs"
-
-    ^ self configurationProjectSpecs , self baselineProjectSpecs
-]
-
 { #category : 'registration' }
 MetacelloProjectRegistration class >> registrationForClassNamed: aClassName ifAbsent: absentBlock [
 

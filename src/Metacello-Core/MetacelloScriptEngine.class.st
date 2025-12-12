@@ -38,15 +38,6 @@ MetacelloScriptEngine class >> baselineNameFrom: baseName [
         ifFalse: [ 'BaselineOf' , baseName ]
 ]
 
-{ #category : 'utilities' }
-MetacelloScriptEngine class >> configurationNameFrom: baseName [
-	"Return the fully-qualified configuration class name."
-
-	^ ((baseName beginsWith: 'ConfigurationOf')
-		   ifTrue: [ baseName ]
-		   ifFalse: [ 'ConfigurationOf' , baseName ]) asSymbol
-]
-
 { #category : 'defaults' }
 MetacelloScriptEngine class >> defaultRepositoryDescription [
 

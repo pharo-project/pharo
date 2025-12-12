@@ -9,17 +9,18 @@ Class {
 { #category : 'accessing' }
 MetacelloBaselineSpecGenerator >> projectSpecCreationBlock [
 
+	self flag: #ConfigurationRemoval. "Now that there are only one subclass we can simplify the hierarchy."
 	^ [ :projectName |
-	  | projectSpec spec |
-	  projectSpec := MetacelloBaselineProject new baselineOfProjectSpec
-		                 name: projectName;
-		                 className: 'BaselineOf' , projectName;
-		                 yourself.
-	  spec := MetacelloBaselineProject new projectReferenceSpec
-		          name: projectName;
-		          projectReference: projectSpec;
-		          yourself.
-	  { spec } ]
+		  | projectSpec spec |
+		  projectSpec := MetacelloBaselineProject new baselineOfProjectSpec
+			                 name: projectName;
+			                 className: 'BaselineOf' , projectName;
+			                 yourself.
+		  spec := MetacelloBaselineProject new projectReferenceSpec
+			          name: projectName;
+			          projectReference: projectSpec;
+			          yourself.
+		  { spec } ]
 ]
 
 { #category : 'accessing' }

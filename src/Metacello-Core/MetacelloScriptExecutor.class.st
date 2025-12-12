@@ -149,31 +149,15 @@ MetacelloScriptExecutor >> postCopy [
 	options := options copy
 ]
 
-{ #category : 'args' }
-MetacelloScriptExecutor >> projectArg [
-    ^ projectArg
-]
-
-{ #category : 'args' }
-MetacelloScriptExecutor >> projectArg: anObject [
-    projectArg := anObject
-]
-
 { #category : 'execution' }
 MetacelloScriptExecutor >> projectSpecGenerator [
-    baselineArg
-        ifNotNil: [
-            projectArg ifNotNil: [ self error: ' baseline: and project are both be specified' ].
-            ^ MetacelloBaselineSpecGenerator new
-                target: baselineArg;
-                yourself ].
-    projectArg
-        ifNotNil: [ 
-            baselineArg ifNotNil: [ self error: ' baseline: and project are both be specified' ].
-            ^ MetacelloProjectSpecGenerator new
-                target: projectArg;
-                yourself ].
-    self error: 'project, baseline, or configuration not specified'
+
+	baselineArg ifNotNil: [
+			^ MetacelloBaselineSpecGenerator new
+				  target: baselineArg;
+				  yourself ].
+
+	self error: 'Baseline not specified'
 ]
 
 { #category : 'execution callback' }
