@@ -4,7 +4,6 @@ Class {
 	#instVars : [
 		'versionNumberClass',
 		'projectAttributes',
-		'symbolicVersionMap',
 		'loadType',
 		'versionMap',
 		'configuration'
@@ -90,12 +89,6 @@ MetacelloProject >> label [
 	^self configuration class name
 ]
 
-{ #category : 'loading' }
-MetacelloProject >> load: aVersionString [
-
-	^(self version: aVersionString) load
-]
-
 { #category : 'accessing' }
 MetacelloProject >> loadType [
 	"#atomic or #linear"
@@ -108,12 +101,6 @@ MetacelloProject >> loadType: aSymbol [
 	"#atomic or #linear"
 
 	loadType := aSymbol
-]
-
-{ #category : 'private' }
-MetacelloProject >> lookupVersion: aVersionString ifAbsent: aBlock [
-
-	^ self map at: aVersionString ifAbsent: [ aBlock value ]
 ]
 
 { #category : 'accessing' }
@@ -253,25 +240,6 @@ MetacelloProject >> setBaselineRepositoryDescription: aListOrRepositoryDescripti
     "noop "
 ]
 
-{ #category : 'accessing' }
-MetacelloProject >> symbolicVersionMap [
-
-	^symbolicVersionMap
-]
-
-{ #category : 'accessing' }
-MetacelloProject >> symbolicVersionMap: aDictionary [
-
-	self flag: #ConfigurationRemoval. "I think this method should not be on baselines but let's see that later."
-	symbolicVersionMap := aDictionary
-]
-
-{ #category : 'versions' }
-MetacelloProject >> symbolicVersionSymbols [
-
-	^self symbolicVersionMap keys asArray sort: [:a :b | a <= b ]
-]
-
 { #category : 'spec classes' }
 MetacelloProject >> valueHolderSpec [
 
@@ -280,27 +248,8 @@ MetacelloProject >> valueHolderSpec [
 
 { #category : 'versions' }
 MetacelloProject >> version: aVersionString [
-    
-    aVersionString isSymbol
-        ifTrue: [ 
-            | symbolicVersionString |
-            symbolicVersionString := self symbolicVersionMap
-                at: aVersionString
-                ifAbsent: [ (MetacelloSymbolicVersionDoesNotExistError project: self project versionString: aVersionString) signal ].
-            symbolicVersionString == #'notDefined'
-                ifTrue: [ (MetacelloSymbolicVersionNotDefinedError project: self project versionString: aVersionString) signal ].
-            ^ self
-                lookupVersion: symbolicVersionString
-                ifAbsent: [ (MetacelloSymbolicVersionDoesNotExistError project: self project versionString: symbolicVersionString) signal ] ].
-    ^ self
-        lookupVersion: aVersionString
-        ifAbsent: [ (MetacelloVersionDoesNotExistError project: self project versionString: aVersionString) signal ]
-]
 
-{ #category : 'versions' }
-MetacelloProject >> version: aVersionString ifAbsent: aBlock [
-
-	^[ self version: aVersionString ] on: MetacelloVersionDoesNotExistError do: [:ex | aBlock value ].
+	^ self map at: aVersionString ifAbsent: [ (MetacelloVersionDoesNotExistError project: self project versionString: aVersionString) signal ]
 ]
 
 { #category : 'versions' }

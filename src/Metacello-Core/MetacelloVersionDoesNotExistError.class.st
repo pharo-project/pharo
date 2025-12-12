@@ -29,7 +29,8 @@ MetacelloVersionDoesNotExistError >> description [
 
 { #category : 'accessing' }
 MetacelloVersionDoesNotExistError >> possibleVersions [
-    ^ self project symbolicVersionSymbols , (self project versions collect: [ :each | each versionString ])
+
+	^ self project versions collect: [ :each | each versionString ]
 ]
 
 { #category : 'accessing' }

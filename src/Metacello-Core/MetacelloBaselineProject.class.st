@@ -58,12 +58,9 @@ MetacelloBaselineProject >> setBaselineRepositoryDescription: aListOrRepositoryD
 
 { #category : 'versions' }
 MetacelloBaselineProject >> singletonVersionName [
-    ^ self class singletonVersionName
-]
 
-{ #category : 'versions' }
-MetacelloBaselineProject >> symbolicVersionSymbols [
-    ^ nil
+	self flag: #ConfigurationRemoval. "Fuse with superclass."
+	^ self class singletonVersionName
 ]
 
 { #category : 'versions' }
