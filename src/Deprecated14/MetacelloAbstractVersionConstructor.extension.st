@@ -20,14 +20,11 @@ MetacelloAbstractVersionConstructor >> configuration: aString with: aBlock [
 ]
 
 { #category : '*Deprecated14' }
-MetacelloAbstractVersionConstructor >> setDescriptionWithBlock: aBlock [
+MetacelloAbstractVersionConstructor >> description: aBlockOrString [
 
-	| spec |
-	self deprecated: 'Description should be provided as a string and not a block since it brind not value.'.
-	(spec := self root getDescription) ifNil: [
-		spec := self project valueHolderSpec.
-		self root description: spec ].
-	self with: spec during: aBlock
+	self deprecated:
+		'The description metadata is not supported anymore. It was used with SmalltalkHub but not this information is already managed by git or other CVS.
+	If you wish to keep this as a trace, you can leave the infos in a method comment.'
 ]
 
 { #category : '*Deprecated14' }

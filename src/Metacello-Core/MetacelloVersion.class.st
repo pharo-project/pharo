@@ -50,11 +50,6 @@ MetacelloVersion >> defaultPackageNamesToLoad: defaultList [
 	^ self packageAndProjectNamesToLoad: defaultList loader: nil
 ]
 
-{ #category : 'querying' }
-MetacelloVersion >> description [
-    ^ self basicSpec description value
-]
-
 { #category : 'private' }
 MetacelloVersion >> doFetchRequiredFromArray: anArray withEngine: anEngine [
 

@@ -21,8 +21,7 @@ MetacelloReferenceTestCase >> conditionResult: resultString [
 
 { #category : 'testing' }
 MetacelloReferenceTestCase >> expectedPrintString [
-    ^ 'spec description: ''Descriptive comment''.
-spec preLoadDoIt: #''preloadForVersion''.
+    ^ 'spec preLoadDoIt: #''preloadForVersion''.
 spec postLoadDoIt: #''postloadForVersion''.
 spec repositories: [
 	spec

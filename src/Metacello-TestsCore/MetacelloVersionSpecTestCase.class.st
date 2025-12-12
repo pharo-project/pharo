@@ -8,22 +8,20 @@ Class {
 
 { #category : 'tests' }
 MetacelloVersionSpecTestCase >> testVersionMergeSpec [
+
 	| versionA versionB version |
 	versionA := self versionSpec
-		versionString: '1.0';
-		description: 'A description';
-		preLoadDoIt: #preLoadDoIt;
-		postLoadDoIt: #postLoadDoIt;
-		yourself.
+		            versionString: '1.0';
+		            preLoadDoIt: #preLoadDoIt;
+		            postLoadDoIt: #postLoadDoIt;
+		            yourself.
 	versionB := self versionSpec
-		versionString: '1.1';
-		description: 'A FULL description';
-		preLoadDoIt: #preLoadDoItB;
-		postLoadDoIt: #postLoadDoItB;
-		yourself.
+		            versionString: '1.1';
+		            preLoadDoIt: #preLoadDoItB;
+		            postLoadDoIt: #postLoadDoItB;
+		            yourself.
 	version := versionA mergeSpec: versionB.
 	self assert: version versionString value equals: '1.1'.
-	self assert: version description value equals: 'A FULL description'.
 	self assert: version preLoadDoIt value identicalTo: #preLoadDoItB.
 	self assert: version postLoadDoIt value identicalTo: #postLoadDoItB
 ]
@@ -119,12 +117,10 @@ MetacelloVersionSpecTestCase >> testVersionSpec [
 	| version |
 	version := self versionSpec
 		versionString: '1.0';
-		description: 'A description';
 		preLoadDoIt: #preLoadDoIt;
 		postLoadDoIt: #postLoadDoIt;
 		yourself.
 	self assert: version versionString value equals: '1.0'.
-	self assert: version description value equals: 'A description'.
 	self assert: version preLoadDoIt value identicalTo: #preLoadDoIt.
 	self assert: version postLoadDoIt value identicalTo: #postLoadDoIt.
 	self should: [ version preLoadDoIt: '' ] raise: Error.
@@ -192,17 +188,16 @@ MetacelloVersionSpecTestCase >> testVersionSpec2 [
 
 { #category : 'tests' }
 MetacelloVersionSpecTestCase >> testVersionSpecCreateVersion [
+
 	| spec version |
 	spec := self versionSpec
-		versionString: '1.0';
-		description: 'A description';
-		preLoadDoIt: #preLoadDoIt;
-		postLoadDoIt: #postLoadDoIt;
-		yourself.
+		        versionString: '1.0';
+		        preLoadDoIt: #preLoadDoIt;
+		        postLoadDoIt: #postLoadDoIt;
+		        yourself.
 	version := spec createVersion.
 	self assert: version class identicalTo: spec versionClass.
 	self assert: version spec identicalTo: spec.
 	self assert: version versionNumber asString equals: '1.0'.
-	self assert: version versionString equals: '1.0'.
-	self assert: version description equals: 'A description'
+	self assert: version versionString equals: '1.0'
 ]

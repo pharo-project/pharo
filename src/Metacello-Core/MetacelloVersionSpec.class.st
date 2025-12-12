@@ -6,13 +6,10 @@ Class {
 		'packages',
 		'versionString',
 		'packageList',
-		'timestamp',
 		'importArray',
 		'postLoadDoIt',
-		'blessing',
 		'importName',
-		'preLoadDoIt',
-		'description'
+		'preLoadDoIt'
 	],
 	#category : 'Metacello-Core-Specs',
 	#package : 'Metacello-Core',
@@ -32,7 +29,6 @@ MetacelloVersionSpec >> configMethodBasicOn: aStream last: last indent: indent [
 	last
 		ifTrue: [ "need to calculate last statement with a value"
 			values := {
-				          self getDescription.
 				          self getPreLoadDoIt.
 				          self getPostLoadDoIt }.
 			1 to: values size do: [ :index | (values at: index) ifNotNil: [ lastIndex := index ] ].
@@ -40,21 +36,15 @@ MetacelloVersionSpec >> configMethodBasicOn: aStream last: last indent: indent [
 		ifFalse: [ lastBlock := [ :arg | false ] ].
 	self
 		configMethodValueOn: aStream
-		for: self getDescription
-		selector: 'description:'
-		last: (lastBlock value: 1)
-		indent: indent.
-	self
-		configMethodValueOn: aStream
 		for: self getPreLoadDoIt
 		selector: 'preLoadDoIt:'
-		last: (lastBlock value: 2)
+		last: (lastBlock value: 1)
 		indent: indent.
 	self
 		configMethodValueOn: aStream
 		for: self getPostLoadDoIt
 		selector: 'postLoadDoIt:'
-		last: (lastBlock value: 3)
+		last: (lastBlock value: 2)
 		indent: indent
 ]
 
@@ -204,26 +194,6 @@ MetacelloVersionSpec >> defaultPackageNames [
 ]
 
 { #category : 'accessing' }
-MetacelloVersionSpec >> description [
-
-	^ description ifNil: [
-		  self project valueHolderSpec
-			  value: '';
-			  yourself ]
-]
-
-{ #category : 'accessing' }
-MetacelloVersionSpec >> description: anObject [
-
-	description := anObject asMetacelloValueHolderFor: self
-]
-
-{ #category : 'accessing' }
-MetacelloVersionSpec >> getDescription [
-	^description
-]
-
-{ #category : 'accessing' }
 MetacelloVersionSpec >> getPostLoadDoIt [
 	^postLoadDoIt
 ]
@@ -274,7 +244,6 @@ MetacelloVersionSpec >> mergeMap [
 	| map |
 	map := super mergeMap.
 	map at: #versionString put: versionString.
-	map at: #description put: description.
 	map at: #preLoadDoIt put: preLoadDoIt.
 	map at: #postLoadDoIt put: postLoadDoIt.
 	map at: #packageList put: self packages.
@@ -421,9 +390,6 @@ MetacelloVersionSpec >> packagesSpec [
 { #category : 'copying' }
 MetacelloVersionSpec >> postCopy [
     super postCopy.
-  blessing := blessing copy.
-    description := description copy.
-    timestamp := timestamp copy.
     packageList := packageList copy.
     repositories := repositories copy.
     packages := packages copy	"leave reference to packages for upgrade purposes"

@@ -21,7 +21,6 @@ MetacelloReferenceConfig >> baseline10: spec [
 	
 	spec for: #common do: [
 		"recommended methods for specifying, description, preLoadDoIt, postLoadDoit"							
-		spec description: 'Descriptive comment'.
 		spec
 			"Before loading packages or projects in this version, send #preloadForVersion to an instance of this config"
 			preLoadDoIt: #preloadForVersion;

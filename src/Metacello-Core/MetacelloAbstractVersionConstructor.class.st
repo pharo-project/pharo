@@ -108,23 +108,6 @@ MetacelloAbstractVersionConstructor >> configurationClass [
 	^self configuration class
 ]
 
-{ #category : 'api' }
-MetacelloAbstractVersionConstructor >> description: aBlockOrString [
-	"Define description field of version spec (MetacelloMCVersionSpec).
-	 If <aBlockOrString> is a String, the version spec blessing is set to the String. It is recommended to use a Symbol.
-	If <aBlockOrString> is a Block, the specifications in <aBlockOrString> are applied to the blessing spec (MetacelloValueHolderSpec). Not Recommended! This second version is now deprecated.
-	
-		spec description: 'Descriptive comment'.
-		
-		spec description: [
-			spec value: 'Descriptive comment'.
-	 "
-
-	aBlockOrString isString
-		ifTrue: [ self root description: aBlockOrString ]
-		ifFalse: [ self setDescriptionWithBlock: aBlockOrString ]
-]
-
 { #category : 'private' }
 MetacelloAbstractVersionConstructor >> evaluatePragma: pragma [
 
