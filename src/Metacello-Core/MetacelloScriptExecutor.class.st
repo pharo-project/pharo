@@ -8,7 +8,6 @@ Class {
 		'options',
 		'roots',
 		'singleRoot',
-		'projectSpecGenerator',
 		'actionArg',
 		'baselineArg',
 		'projectArg',
@@ -39,6 +38,15 @@ MetacelloScriptExecutor >> baselineArg: anObject [
 	baselineArg := anObject
 ]
 
+{ #category : 'baselines' }
+MetacelloScriptExecutor >> baselineNameFrom: baseName [
+    "Return the fully-qualified configuration class name."
+
+    ^ (baseName indexOfSubCollection: 'BaselineOf') > 0
+        ifTrue: [ baseName ]
+        ifFalse: [ 'BaselineOf' , baseName ]
+]
+
 { #category : 'args' }
 MetacelloScriptExecutor >> classNameArg [
     ^ classNameArg
@@ -52,15 +60,16 @@ MetacelloScriptExecutor >> classNameArg: anObject [
 { #category : 'execution' }
 MetacelloScriptExecutor >> execute [
 
-	projectSpecGenerator := self projectSpecGenerator.
-	self executeString: projectSpecGenerator target do: [ :projectReferenceSpec |
-		| engine |
-		engine := MetacelloScriptEngine new
-			          options: self options copy;
-			          projectReferenceSpec: projectReferenceSpec;
-			          yourself.
-		engine perform: actionArg key withArguments: actionArg value.
-		engine root ifNotNil: [ :root | self roots add: root ] ].
+	baselineArg ifNil: [ self error: 'Baseline not specified' ].
+
+	self executeString: baselineArg do: [ :projectReferenceSpec |
+			| engine |
+			engine := MetacelloScriptEngine new
+				          options: self options copy;
+				          projectReferenceSpec: projectReferenceSpec;
+				          yourself.
+			engine perform: actionArg key withArguments: actionArg value.
+			engine root ifNotNil: [ :root | self roots add: root ] ].
 	^ (self singleRoot and: [ self roots size == 1 ])
 		  ifTrue: [ self roots first ]
 		  ifFalse: [ self roots ]
@@ -69,9 +78,11 @@ MetacelloScriptExecutor >> execute [
 { #category : 'execution callback' }
 MetacelloScriptExecutor >> executeString: aString do: projectSpecBlock [
 
+	| projectSpec |
 	singleRoot ifNil: [ self singleRoot: true ].
-	((projectSpecGenerator projectSpecLookupBlock value: aString) select: self projectSpecSelectBlock) do: [ :projectSpec |
-		projectSpecBlock value: (self applyArgsToProjectSpec: projectSpec copy) ]
+	projectSpec := MetacelloProjectRegistration projectSpecForClassNamed: (self baselineNameFrom: aString) ifAbsent: [ ].
+
+	(self projectSpecSelectBlock value: projectSpec) ifTrue: [ projectSpecBlock value: (self applyArgsToProjectSpec: projectSpec copy) ]
 ]
 
 { #category : 'actions api' }
@@ -147,17 +158,6 @@ MetacelloScriptExecutor >> postCopy [
 
 	super postCopy.
 	options := options copy
-]
-
-{ #category : 'execution' }
-MetacelloScriptExecutor >> projectSpecGenerator [
-
-	baselineArg ifNotNil: [
-			^ MetacelloBaselineSpecGenerator new
-				  target: baselineArg;
-				  yourself ].
-
-	self error: 'Baseline not specified'
 ]
 
 { #category : 'execution callback' }

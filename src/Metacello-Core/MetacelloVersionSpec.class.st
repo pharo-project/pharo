@@ -535,7 +535,8 @@ MetacelloVersionSpec >> versionClass [
 { #category : 'private' }
 MetacelloVersionSpec >> versionNumber [
 
-    ^ self project versionNumberClass fromString: self versionString
+	self flag: #ConfigurationRemoval. "I think this method should not be on baselines but let's see that later."
+	^ 'baseline'
 ]
 
 { #category : 'querying' }

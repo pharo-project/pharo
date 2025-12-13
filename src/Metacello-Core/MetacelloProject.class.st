@@ -2,7 +2,6 @@ Class {
 	#name : 'MetacelloProject',
 	#superclass : 'Object',
 	#instVars : [
-		'versionNumberClass',
 		'projectAttributes',
 		'loadType',
 		'configuration',
@@ -252,17 +251,6 @@ MetacelloProject >> version: aVersionString [
 	self flag: #ConfigurationRemoval. "I think this method should not be on baselines but let's see that later."
 	aVersionString = self singletonVersionName ifFalse: [ self error ].
 	^ self version
-]
-
-{ #category : 'versions' }
-MetacelloProject >> versionNumberClass [
-
-	^ versionNumberClass ifNil: [ versionNumberClass := MetacelloVersionNumber ]
-]
-
-{ #category : 'versions' }
-MetacelloProject >> versionNumberClass: aClass [
-    versionNumberClass := aClass
 ]
 
 { #category : 'spec classes' }

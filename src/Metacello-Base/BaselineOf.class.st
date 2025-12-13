@@ -104,6 +104,13 @@ BaselineOf class >> deepPackagesOfGroupNamed: aName [
 		flattened
 ]
 
+{ #category : 'class initialization' }
+BaselineOf class >> initialize [
+	"Deprecation added during the development of Pharo 14. Can be removed in a few versions of Pharo."
+
+	self deprecatedAliases: { #ConfigurationOf }
+]
+
 { #category : 'testing' }
 BaselineOf class >> isProject [
 	"This method can be overriden if we have baselines in the image for tests so that we do not consider it is a project of the image."
@@ -203,7 +210,6 @@ BaselineOf >> newProjectWithRepositoryDescription: aListOrRepositoryDescriptions
 	| aProject |
 	aProject := self projectClass new
 		            projectAttributes: self customProjectAttributes;
-		            versionNumberClass: self versionNumberClass;
 		            setBaselineRepositoryDescription: aListOrRepositoryDescriptions;
 		            yourself.
 		
@@ -266,9 +272,4 @@ BaselineOf >> projectClass [
 BaselineOf >> tools [
 
 	^ Smalltalk tools
-]
-
-{ #category : 'accessing' }
-BaselineOf >> versionNumberClass [
-    ^ MetacelloVersionNumber
 ]
