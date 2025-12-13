@@ -11,7 +11,6 @@ Class {
 		'projectReferenceSpec'
 	],
 	#classVars : [
-		'DefaultRepositoryDescription',
 		'DefaultVersionString'
 	],
 	#category : 'Metacello-Core-Scripts',
@@ -21,35 +20,16 @@ Class {
 
 { #category : 'utilities' }
 MetacelloScriptEngine class >> baseNameOf: className [
-  ^ (className beginsWith: 'BaselineOf')
-    ifTrue: [ className copyFrom: 'BaselineOf' size + 1 to: className size ]
-    ifFalse: [ 
-      (className beginsWith: 'ConfigurationOf')
-        ifTrue: [ className copyFrom: 'ConfigurationOf' size + 1 to: className size ]
-        ifFalse: [ className ] ]
-]
 
-{ #category : 'defaults' }
-MetacelloScriptEngine class >> defaultRepositoryDescription [
-
-	DefaultRepositoryDescription ifNil: [ DefaultRepositoryDescription := 'http://smalltalkhub.com/mc/Pharo/MetaRepoForPharo30/main' ].
-	^ DefaultRepositoryDescription
-]
-
-{ #category : 'defaults' }
-MetacelloScriptEngine class >> defaultRepositoryDescription: descriptionOrNil [
-  DefaultRepositoryDescription := descriptionOrNil
+	^ (className beginsWith: 'BaselineOf')
+		  ifTrue: [ className copyFrom: 'BaselineOf' size + 1 to: className size ]
+		  ifFalse: [ className ]
 ]
 
 { #category : 'defaults' }
 MetacelloScriptEngine class >> defaultVersionString [
     DefaultVersionString ifNil: [ DefaultVersionString := #'stable' ].
     ^ DefaultVersionString
-]
-
-{ #category : 'defaults' }
-MetacelloScriptEngine >> defaultRepositoryDescription [
-    ^ self class defaultRepositoryDescription
 ]
 
 { #category : 'defaults' }
@@ -406,15 +386,10 @@ MetacelloScriptEngine >> setDefaultsAndValidate: aProjectSpec [
 	"NOTE: aProjectSpec has defaults assigned if versionString or repository missing"
 
 	| issues |
-	issues := aProjectSpec
-		          validateForScriptLoad: self
-		          withDefaultVersionString: self defaultVersionString
-		          withDefaultRepositoryDecription:
-		          self defaultRepositoryDescription.
+	issues := aProjectSpec validateForScriptLoad: self withDefaultVersionString: self defaultVersionString.
+
 	issues isEmpty ifTrue: [ ^ self ].
-	(MetacelloValidationFailure
-		 issues: issues
-		 message: 'Project spec validation failure') signal
+	MetacelloValidationFailure issues: issues message: 'Project spec validation failure'
 ]
 
 { #category : 'project lookup' }

@@ -98,8 +98,8 @@ MetacelloProjectRegistration class >> registrationForProjectSpec: aProjectSpec i
 
 { #category : 'accessing' }
 MetacelloProjectRegistration class >> registry [
-    Registry ifNil: [ Registry := MetacelloProjectRegistry new ].
-    ^ Registry
+
+	^ Registry ifNil: [ Registry := MetacelloProjectRegistry new ]
 ]
 
 { #category : 'accessing' }

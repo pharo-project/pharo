@@ -143,7 +143,7 @@ MetacelloBaselineOfProjectSpec >> validateVersionString: issues withDefaultVersi
 			vs ~= prj singletonVersionName ifTrue: [
 					issues add: (MetacelloValidationError
 							 reasonCode: #invalidVersionString
-							 callSite: #validateForScriptLoad:withDefaultVersionString:withDefaultRepositoryDecription:
+							 callSite: #validateForScriptLoad:withDefaultVersionString:
 							 explanation: 'version field is incorrect, should be: ' , prj singletonVersionName printString) ] ]
 ]
 
