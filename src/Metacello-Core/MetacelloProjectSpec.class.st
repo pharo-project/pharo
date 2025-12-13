@@ -3,7 +3,6 @@ Class {
 	#superclass : 'MetacelloSpec',
 	#instVars : [
 		'file',
-		'versionString',
 		'preLoadDoIt',
 		'loads',
 		'projectPackage',
@@ -787,6 +786,8 @@ MetacelloProjectSpec >> versionOrNil [
 
 { #category : 'querying' }
 MetacelloProjectSpec >> versionString [
+	"This was a variable in the past but it is not used. I'm still here because some people might still call me. I can be removed once we clean the code using me."
 
-	^ versionString
+	self flag: #ConfigurationRemoval. "I think this method should not be on baselines but let's see that later."
+	^ nil
 ]
