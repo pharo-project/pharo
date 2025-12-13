@@ -6,6 +6,12 @@ Class {
 	#tag : 'Specs'
 }
 
+{ #category : 'private' }
+MetacelloLockTest >> performTest [
+
+	MetacelloProjectRegistration useRegistry: MetacelloProjectRegistry new during: [ super performTest ]
+]
+
 { #category : 'accessing' }
 MetacelloLockTest >> project [
 

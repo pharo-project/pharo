@@ -109,7 +109,17 @@ MetacelloProjectRegistration class >> registry: aMetacelloProjectRegistry [
 
 { #category : 'accessing' }
 MetacelloProjectRegistration class >> resetRegistry [
-    Registry := nil
+
+	<script>
+	Registry := nil
+]
+
+{ #category : 'accessing' }
+MetacelloProjectRegistration class >> useRegistry: aRegistry during: aBlock [
+
+	| oldRegistry |
+	oldRegistry := Registry.
+	[ aBlock value ] ensure: [ Registry := oldRegistry ]
 ]
 
 { #category : 'comparing' }
