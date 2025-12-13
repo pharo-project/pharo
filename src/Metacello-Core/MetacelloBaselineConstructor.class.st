@@ -266,7 +266,7 @@ MetacelloBaselineConstructor >> on: aConfig project: aProject [
 	self evaluatePragma: pragma.
 	self project attributes do: [ :attribute |
 		(self attributeMap at: attribute ifAbsent: [ ]) ifNotNil: [ :blockList | blockList do: [ :block | self with: versionSpec during: block ] ] ].
-	self project setVersion: versionSpec createVersion.
+	self project version: versionSpec createVersion.
 	self project configuration: aConfig
 ]
 

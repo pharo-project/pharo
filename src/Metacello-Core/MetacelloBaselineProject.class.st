@@ -62,12 +62,3 @@ MetacelloBaselineProject >> singletonVersionName [
 	self flag: #ConfigurationRemoval. "Fuse with superclass."
 	^ self class singletonVersionName
 ]
-
-{ #category : 'versions' }
-MetacelloBaselineProject >> versions [
-
-	self flag: #ConfigurationRemoval. "I think this method should not be on baselines but let's see that later."
-	^ [ { self version } ]
-		  on: MetacelloVersionDoesNotExistError
-		  do: [ :ex | ^ #(  ) ]
-]

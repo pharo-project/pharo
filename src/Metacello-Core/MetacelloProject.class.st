@@ -132,12 +132,12 @@ MetacelloProject >> printOn: aStream [
 	| label |
 	self configuration class printOn: aStream.
 	aStream nextPut: $(.
-	self versions do: [ :vrsn |
-		aStream nextPutAll: vrsn versionString.
-		vrsn spec ifNotNil: [ (label := vrsn spec projectLabel) isEmpty ifFalse: [ aStream nextPutAll: ' [' , label , ']' ] ].
-		aStream
-			nextPut: $,;
-			space ].
+	version ifNotNil: [
+			aStream nextPutAll: self singletonVersionName.
+			version spec ifNotNil: [ (label := version spec projectLabel) isEmpty ifFalse: [ aStream nextPutAll: ' [' , label , ']' ] ].
+			aStream
+				nextPut: $,;
+				space ].
 	aStream nextPut: $)
 ]
 
@@ -227,12 +227,6 @@ MetacelloProject >> setBaselineRepositoryDescription: aListOrRepositoryDescripti
     "noop "
 ]
 
-{ #category : 'versions' }
-MetacelloProject >> setVersion: aVersion [
-
-	version := aVersion
-]
-
 { #category : 'spec classes' }
 MetacelloProject >> valueHolderSpec [
 
@@ -246,11 +240,9 @@ MetacelloProject >> version [
 ]
 
 { #category : 'versions' }
-MetacelloProject >> version: aVersionString [
+MetacelloProject >> version: aVersion [
 
-	self flag: #ConfigurationRemoval. "I think this method should not be on baselines but let's see that later."
-	aVersionString = self singletonVersionName ifFalse: [ self error ].
-	^ self version
+	version := aVersion
 ]
 
 { #category : 'spec classes' }

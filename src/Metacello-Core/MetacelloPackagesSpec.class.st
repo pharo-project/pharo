@@ -208,8 +208,7 @@ MetacelloPackagesSpec >> sortPackageSpecs: orderedSpecs packageSpec: packageSpec
 				                 ifNone: [
 					                 MetacelloNameNotDefinedError signal:
 						                 'project group, or package named: ' , targetPackageOrProjectName printString
-						                 , ' not found when used in requires: or includes: field of package: ' , packageSpec name printString , ' for version: '
-						                 , aVersionSpec versionString , ' of ' , aVersionSpec projectLabel , '.'.
+						                 , ' not found when used in requires: or includes: field of package: ' , packageSpec name printString , ' of ' , aVersionSpec projectLabel , '.'.
 					                 nil "return nil if resumed" ].
 			targetIndex := orderedSpecs indexOf: targetPackage.
 			(groupLoopDetected not and: [ packageIndex = targetIndex ]) ifTrue: [

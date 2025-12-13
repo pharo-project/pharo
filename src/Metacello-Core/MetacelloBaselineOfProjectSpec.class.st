@@ -154,10 +154,3 @@ MetacelloBaselineOfProjectSpec >> version [
 	projectInitialized ifFalse: [ ^ nil ].
 	^ self project version
 ]
-
-{ #category : 'querying' }
-MetacelloBaselineOfProjectSpec >> versionString [
-
-	^ versionString ifNil: [
-		  self version ifNotNil: [ :v | v versionString ] ]
-]

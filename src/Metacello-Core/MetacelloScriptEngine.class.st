@@ -73,28 +73,18 @@ MetacelloScriptEngine >> do: aBlock required: required onProjectDownGrade: onDow
 
 	MetacelloProjectRegistration
 		copyRegistryDuring: [
-			self handleNotificationsForAction: [
-				| versionSpec projectSpec requiredArray |
-				self setDefaultsAndValidateProjectSpec.
-				[
-				projectSpec := (self lookupProjectSpecFor:
-					                self projectReferenceSpec) copy ]
-					on: MetacelloAllowProjectDowngrade , MetacelloAllowProjectUpgrade
-					do: [ :notification |
-						notification
-							handleOnDownGrade: onDownGradeBlock
-							onUpgrade: onUpgradeBlock ].
+				self handleNotificationsForAction: [
+						| versionSpec projectSpec requiredArray |
+						self setDefaultsAndValidateProjectSpec.
+						[ projectSpec := (self lookupProjectSpecFor: self projectReferenceSpec) copy ]
+							on: MetacelloAllowProjectDowngrade , MetacelloAllowProjectUpgrade
+							do: [ :notification | notification handleOnDownGrade: onDownGradeBlock onUpgrade: onUpgradeBlock ].
 
-				projectSpec loads: required.
-				projectSpec ensureProjectLoadedWithEngine: self.
-				versionSpec := projectSpec project version:
-					               projectSpec versionString.
-				requiredArray := projectSpec loadListForVersion: versionSpec.
-				self root:
-					(aBlock
-						 value: versionSpec
-						 value: requiredArray
-						 value: projectSpec) ] ]
+						projectSpec loads: required.
+						projectSpec ensureProjectLoadedWithEngine: self.
+						versionSpec := projectSpec project version.
+						requiredArray := projectSpec loadListForVersion: versionSpec.
+						self root: (aBlock value: versionSpec value: requiredArray value: projectSpec) ] ]
 		commitIfSuccess: aBoolean
 ]
 

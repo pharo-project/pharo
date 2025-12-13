@@ -536,12 +536,12 @@ MetacelloVersionSpec >> versionClass [
 MetacelloVersionSpec >> versionNumber [
 
 	self flag: #ConfigurationRemoval. "I think this method should not be on baselines but let's see that later."
-	^ 'baseline'
+	^ MetacelloVersionNumber fromString: self project singletonVersionName
 ]
 
 { #category : 'querying' }
 MetacelloVersionSpec >> versionString [
-
+1halt.
 	self flag: #ConfigurationRemoval. "I think this method should not be on baselines but let's see that later."
 	^ self project singletonVersionName
 ]
