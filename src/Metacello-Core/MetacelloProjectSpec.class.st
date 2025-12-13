@@ -513,6 +513,17 @@ MetacelloProjectSpec >> loads: aCollection [
 	aCollection setLoadsInMetacelloProject: self
 ]
 
+{ #category : 'scripting' }
+MetacelloProjectSpec >> lookForIssues [
+
+	| issues |
+	issues := OrderedCollection new.
+	self name ifNil: [ issues add: (MetacelloValidationError explanation: 'name field required') ].
+	self className ifNil: [ issues add: (MetacelloValidationError explanation: 'className field required') ].
+	self repositories isEmpty ifTrue: [ issues add: (MetacelloValidationError explanation: 'repository field required') ].
+	^ issues
+]
+
 { #category : 'merging' }
 MetacelloProjectSpec >> mergeMap [
 
@@ -783,34 +794,6 @@ MetacelloProjectSpec >> unregisterProject [
         ifPresent: [ :existing :new | existing unregisterProject ]
 ]
 
-{ #category : 'scripting' }
-MetacelloProjectSpec >> validateForScriptLoad: aScriptEngine withDefaultVersionString: defaultVersionString [
-
-	| issues callSite |
-	issues := OrderedCollection new.
-	callSite := #validateForScriptLoad:withDefaultVersionString:.
-	self name ifNil: [ issues add: (MetacelloValidationError reasonCode: #incompleteProjectSpec callSite: callSite explanation: 'name field required') ].
-	self className ifNil: [ issues add: (MetacelloValidationError reasonCode: #incompleteProjectSpec callSite: callSite explanation: 'className field required') ].
-	self repositories isEmpty ifTrue: [
-		issues add: (MetacelloValidationError reasonCode: #incompleteProjectSpec callSite: callSite explanation: 'repository field required') ].
-	self validateVersionString: issues withDefaultVersionString: defaultVersionString.
-	^ issues
-]
-
-{ #category : 'scripting' }
-MetacelloProjectSpec >> validateVersionString: issues withDefaultVersionString: defaultVersionString [
-
-	self versionString ifNil: [
-		defaultVersionString
-			ifNotNil: [ self versionString: defaultVersionString ]
-			ifNil: [
-				issues add: (MetacelloValidationError
-						 reasonCode: #incompleteProjectSpec
-						 callSite:
-						 #validateForScriptLoad:withDefaultVersionString:
-						 explanation: 'version field required') ] ]
-]
-
 { #category : 'querying' }
 MetacelloProjectSpec >> version [
 	"Empty version string means use latestVersion or #bleedingEdge"
@@ -844,6 +827,7 @@ MetacelloProjectSpec >> versionString [
 
 { #category : 'accessing' }
 MetacelloProjectSpec >> versionString: anObject [
+1halt.
     self shouldBeMutable.
     versionString := anObject
 ]

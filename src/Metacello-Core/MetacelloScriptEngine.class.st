@@ -10,9 +10,6 @@ Class {
 		'specBuilder',
 		'projectReferenceSpec'
 	],
-	#classVars : [
-		'DefaultVersionString'
-	],
 	#category : 'Metacello-Core-Scripts',
 	#package : 'Metacello-Core',
 	#tag : 'Scripts'
@@ -24,17 +21,6 @@ MetacelloScriptEngine class >> baseNameOf: className [
 	^ (className beginsWith: 'BaselineOf')
 		  ifTrue: [ className copyFrom: 'BaselineOf' size + 1 to: className size ]
 		  ifFalse: [ className ]
-]
-
-{ #category : 'defaults' }
-MetacelloScriptEngine class >> defaultVersionString [
-    DefaultVersionString ifNil: [ DefaultVersionString := #'stable' ].
-    ^ DefaultVersionString
-]
-
-{ #category : 'defaults' }
-MetacelloScriptEngine >> defaultVersionString [
-    ^ self class defaultVersionString
 ]
 
 { #category : 'actions api' }
@@ -55,7 +41,7 @@ MetacelloScriptEngine >> do: aBlock required: required onProjectDownGrade: onDow
 		copyRegistryDuring: [
 				self handleNotificationsForAction: [
 						| versionSpec projectSpec requiredArray |
-						self setDefaultsAndValidateProjectSpec.
+						self validateProjectSpec.
 						[ projectSpec := (self lookupProjectSpecFor: self projectReferenceSpec) copy ]
 							on: MetacelloAllowProjectDowngrade , MetacelloAllowProjectUpgrade
 							do: [ :notification | notification handleOnDownGrade: onDownGradeBlock onUpgrade: onUpgradeBlock ].
@@ -95,7 +81,7 @@ MetacelloScriptEngine >> get [
 		copyRegistryDuring: [
 			self handleNotificationsForAction: [
 				| spec projectPackage |
-				self setDefaultsAndValidateProjectSpec.
+				self validateProjectSpec.
 				spec := self projectReferenceSpec.
 				projectPackage := spec projectPackage.
 				projectPackage repositorySpecs do: [ :repoSpec |
@@ -200,7 +186,7 @@ MetacelloScriptEngine >> initialize [
 
 { #category : 'actions api' }
 MetacelloScriptEngine >> list [
-  self setDefaultsAndValidateProjectSpec.
+  self validateProjectSpec.
   self root: self projectReferenceSpec
 ]
 
@@ -255,7 +241,7 @@ MetacelloScriptEngine >> lock [
 	| spec |
 	MetacelloProjectRegistration
 		copyRegistryDuring: [
-			self setDefaultsAndValidate: self projectReferenceSpec copy. "don't add defaults"
+			self validateProjectSpec.
 			spec := self projectReferenceSpec.
 			MetacelloProjectRegistration
 				registrationForProjectSpec: spec
@@ -336,7 +322,7 @@ MetacelloScriptEngine >> record: required [
 MetacelloScriptEngine >> register [
 
 	| spec |
-	self setDefaultsAndValidate: self projectReferenceSpec copy. "don't add defaults"
+	self validateProjectSpec.
 	spec := self projectReferenceSpec.
 	MetacelloProjectRegistration
 		registrationForProjectSpec: spec
@@ -381,24 +367,6 @@ MetacelloScriptEngine >> root: anObject [
 	root := anObject
 ]
 
-{ #category : 'project lookup' }
-MetacelloScriptEngine >> setDefaultsAndValidate: aProjectSpec [
-	"NOTE: aProjectSpec has defaults assigned if versionString or repository missing"
-
-	| issues |
-	issues := aProjectSpec validateForScriptLoad: self withDefaultVersionString: self defaultVersionString.
-
-	issues isEmpty ifTrue: [ ^ self ].
-	MetacelloValidationFailure issues: issues message: 'Project spec validation failure'
-]
-
-{ #category : 'project lookup' }
-MetacelloScriptEngine >> setDefaultsAndValidateProjectSpec [
-  "NOTE: projectSpec has defaults assigned if versionString or repository missing"
-
-  self setDefaultsAndValidate: self projectReferenceSpec
-]
-
 { #category : 'options' }
 MetacelloScriptEngine >> silently [
     ^ self options at: #'silently' ifAbsent: [ false ]
@@ -415,7 +383,7 @@ MetacelloScriptEngine >> unlock [
 	| spec |
 	MetacelloProjectRegistration
 		copyRegistryDuring: [
-			self setDefaultsAndValidate: self projectReferenceSpec copy. "don't add defaults"
+			self validateProjectSpec.
 			spec := self projectReferenceSpec.
 			MetacelloProjectRegistration
 				registrationForProjectSpec: spec
@@ -431,11 +399,17 @@ MetacelloScriptEngine >> unlock [
 MetacelloScriptEngine >> unregister [
 
 	| spec |
-	self setDefaultsAndValidate: self projectReferenceSpec copy. "don't add defaults"
+	self validateProjectSpec.
 	spec := self projectReferenceSpec.
 	MetacelloProjectRegistration
 		registrationForProjectSpec: spec
 		ifAbsent: [ :ignored |  ]
 		ifPresent: [ :existing :new | existing unregisterProject ].
 	self root: spec
+]
+
+{ #category : 'project lookup' }
+MetacelloScriptEngine >> validateProjectSpec [
+
+	self projectReferenceSpec lookForIssues ifNotEmpty: [ :issues | MetacelloValidationFailure issues: issues message: 'Project spec validation failure' ]
 ]
