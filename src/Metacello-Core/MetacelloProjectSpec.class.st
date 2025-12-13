@@ -133,12 +133,6 @@ MetacelloProjectSpec >> compareVersionsEqual: aMetacelloProjectSpec [
 ]
 
 { #category : 'printing' }
-MetacelloProjectSpec >> configHasVersionString [
-
-	^ self versionString isNotNil
-]
-
-{ #category : 'printing' }
 MetacelloProjectSpec >> configMethodBodyOn: aStream indent: indent [
   ^ self configMethodBodyOn: aStream indent: indent fromShortCut: false
 ]
@@ -146,120 +140,106 @@ MetacelloProjectSpec >> configMethodBodyOn: aStream indent: indent [
 { #category : 'printing' }
 MetacelloProjectSpec >> configMethodBodyOn: aStream indent: indent fromShortCut: fromShortCut [
 
-	| hasVersionString hasOperator hasProjectPackage hasLoads hasClassName hasPreLoadDoIt hasPostLoadDoIt |
+	| hasOperator hasProjectPackage hasLoads hasClassName hasPreLoadDoIt hasPostLoadDoIt |
 	hasClassName := self hasClassName.
-	hasVersionString := self configHasVersionString.
 	hasOperator := operator isNotNil.
 	hasProjectPackage := self hasRepository or: [ hasClassName & self getFile isNotNil ].
 	hasLoads := self loads isNotNil.
 	hasPreLoadDoIt := self getPreLoadDoIt isNotNil.
 	hasPostLoadDoIt := self getPostLoadDoIt isNotNil.
 	hasClassName ifTrue: [
-		hasVersionString | hasOperator | hasProjectPackage | hasLoads
-			ifTrue: [
-				aStream
-					cr;
-					tab: indent + 1 ]
-			ifFalse: [ aStream space ].
-		aStream nextPutAll: 'className: ' , self className printString.
-		hasVersionString | hasPreLoadDoIt | hasPostLoadDoIt | hasOperator | hasLoads | hasProjectPackage ifTrue: [ aStream nextPut: $; ] ].
-	hasVersionString ifTrue: [
-		| vs |
-		hasClassName | hasOperator | hasProjectPackage | hasLoads | hasPreLoadDoIt | hasPostLoadDoIt
-			ifTrue: [
-				aStream
-					cr;
-					tab: indent + 1 ]
-			ifFalse: [ aStream space ].
-		vs := self versionString.
-		aStream nextPutAll: 'versionString: '.
-		vs isSymbol ifTrue: [ aStream nextPut: $# ].
-		aStream nextPutAll: vs asString printString.
-		hasPreLoadDoIt | hasPostLoadDoIt | hasOperator | hasProjectPackage | hasLoads ifTrue: [ aStream nextPut: $; ] ].
-	hasPreLoadDoIt ifTrue: [
-		hasClassName | hasOperator | hasProjectPackage | hasLoads | hasPreLoadDoIt
-			ifTrue: [
-				aStream
-					cr;
-					tab: indent + 1 ]
-			ifFalse: [ aStream space ].
-		aStream nextPutAll: 'preLoadDoIt: '.
-		self preLoadDoIt value isSymbol
-			ifTrue: [
-				aStream
-					nextPut: $#;
-					nextPutAll: self preLoadDoIt value asString printString ]
-			ifFalse: [ aStream nextPutAll: self preLoadDoIt value asString ].
-		hasPostLoadDoIt | hasOperator | hasProjectPackage | hasLoads ifTrue: [ aStream nextPut: $; ] ].
-	hasPostLoadDoIt ifTrue: [
-		hasClassName | hasOperator | hasProjectPackage | hasLoads | hasPostLoadDoIt
-			ifTrue: [
-				aStream
-					cr;
-					tab: indent + 1 ]
-			ifFalse: [ aStream space ].
-		aStream nextPutAll: 'postLoadDoIt: '.
-		self postLoadDoIt value isSymbol
-			ifTrue: [
-				aStream
-					nextPut: $#;
-					nextPutAll: self postLoadDoIt value asString printString ]
-			ifFalse: [ aStream nextPutAll: self postLoadDoIt value asString ].
-		hasOperator | hasProjectPackage | hasLoads ifTrue: [ aStream nextPut: $; ] ].
-	hasOperator ifTrue: [
-		hasClassName | hasVersionString | hasProjectPackage | hasLoads | hasPreLoadDoIt | hasPostLoadDoIt
-			ifTrue: [
-				aStream
-					cr;
-					tab: indent + 1 ]
-			ifFalse: [ aStream space ].
-		aStream nextPutAll: 'operator: #' , self operator asString printString.
-		hasProjectPackage | hasLoads ifTrue: [ aStream nextPut: $; ] ].
-	hasLoads ifTrue: [
-		hasClassName | hasVersionString | hasOperator | hasProjectPackage | hasPreLoadDoIt | hasPostLoadDoIt
-			ifTrue: [
-				aStream
-					cr;
-					tab: indent + 1 ]
-			ifFalse: [ aStream space ].
-		aStream nextPutAll: 'loads: #('.
-		self loads do: [ :str | aStream nextPutAll: str printString , ' ' ].
-		aStream nextPut: $).
-		hasProjectPackage ifTrue: [ aStream nextPut: $; ] ].
-	hasProjectPackage ifTrue: [
-		| hasName hasRepo |
-		hasRepo := self hasRepository.
-		hasName := self file ~= self className.
-		hasName ifTrue: [
-			hasClassName | hasVersionString | hasOperator | hasLoads | hasPreLoadDoIt | hasPostLoadDoIt
+			hasOperator | hasProjectPackage | hasLoads
 				ifTrue: [
-					aStream
-						cr;
-						tab: indent + 1 ]
+						aStream
+							cr;
+							tab: indent + 1 ]
 				ifFalse: [ aStream space ].
-			aStream nextPutAll: 'file: ' , self file printString.
-			hasRepo ifTrue: [ aStream nextPut: $; ] ].
-		hasRepo ifTrue: [
-			| repos |
-			repos := self repositories map values.
-			repos size = 1
+			aStream nextPutAll: 'className: ' , self className printString.
+			hasPreLoadDoIt | hasPostLoadDoIt | hasOperator | hasLoads | hasProjectPackage ifTrue: [ aStream nextPut: $; ] ].
+	hasPreLoadDoIt ifTrue: [
+			hasClassName | hasOperator | hasProjectPackage | hasLoads | hasPreLoadDoIt
 				ifTrue: [
-					fromShortCut
+						aStream
+							cr;
+							tab: indent + 1 ]
+				ifFalse: [ aStream space ].
+			aStream nextPutAll: 'preLoadDoIt: '.
+			self preLoadDoIt value isSymbol
+				ifTrue: [
+						aStream
+							nextPut: $#;
+							nextPutAll: self preLoadDoIt value asString printString ]
+				ifFalse: [ aStream nextPutAll: self preLoadDoIt value asString ].
+			hasPostLoadDoIt | hasOperator | hasProjectPackage | hasLoads ifTrue: [ aStream nextPut: $; ] ].
+	hasPostLoadDoIt ifTrue: [
+			hasClassName | hasOperator | hasProjectPackage | hasLoads | hasPostLoadDoIt
+				ifTrue: [
+						aStream
+							cr;
+							tab: indent + 1 ]
+				ifFalse: [ aStream space ].
+			aStream nextPutAll: 'postLoadDoIt: '.
+			self postLoadDoIt value isSymbol
+				ifTrue: [
+						aStream
+							nextPut: $#;
+							nextPutAll: self postLoadDoIt value asString printString ]
+				ifFalse: [ aStream nextPutAll: self postLoadDoIt value asString ].
+			hasOperator | hasProjectPackage | hasLoads ifTrue: [ aStream nextPut: $; ] ].
+	hasOperator ifTrue: [
+			hasClassName | hasProjectPackage | hasLoads | hasPreLoadDoIt | hasPostLoadDoIt
+				ifTrue: [
+						aStream
+							cr;
+							tab: indent + 1 ]
+				ifFalse: [ aStream space ].
+			aStream nextPutAll: 'operator: #' , self operator asString printString.
+			hasProjectPackage | hasLoads ifTrue: [ aStream nextPut: $; ] ].
+	hasLoads ifTrue: [
+			hasClassName | hasOperator | hasProjectPackage | hasPreLoadDoIt | hasPostLoadDoIt
+				ifTrue: [
+						aStream
+							cr;
+							tab: indent + 1 ]
+				ifFalse: [ aStream space ].
+			aStream nextPutAll: 'loads: #('.
+			self loads do: [ :str | aStream nextPutAll: str printString , ' ' ].
+			aStream nextPut: $).
+			hasProjectPackage ifTrue: [ aStream nextPut: $; ] ].
+	hasProjectPackage ifTrue: [
+			| hasName hasRepo |
+			hasRepo := self hasRepository.
+			hasName := self file ~= self className.
+			hasName ifTrue: [
+					hasClassName | hasOperator | hasLoads | hasPreLoadDoIt | hasPostLoadDoIt
 						ifTrue: [
-							hasClassName | hasVersionString | hasOperator | hasLoads | hasPreLoadDoIt | hasPostLoadDoIt | hasName
-								ifTrue: [
-									aStream
-										cr;
-										tab: indent + 1 ]
-								ifFalse: [ aStream space ] ]
+								aStream
+									cr;
+									tab: indent + 1 ]
+						ifFalse: [ aStream space ].
+					aStream nextPutAll: 'file: ' , self file printString.
+					hasRepo ifTrue: [ aStream nextPut: $; ] ].
+			hasRepo ifTrue: [
+					| repos |
+					repos := self repositories map values.
+					repos size = 1
+						ifTrue: [
+								fromShortCut
+									ifTrue: [
+											hasClassName | hasOperator | hasLoads | hasPreLoadDoIt | hasPostLoadDoIt | hasName
+												ifTrue: [
+														aStream
+															cr;
+															tab: indent + 1 ]
+												ifFalse: [ aStream space ] ]
+									ifFalse: [
+											aStream
+												cr;
+												tab: indent + 1 ].
+								repos first configMethodCascadeOn: aStream lastCascade: true ]
 						ifFalse: [
-							aStream
-								cr;
-								tab: indent + 1 ].
-					repos first configMethodCascadeOn: aStream lastCascade: true ]
-				ifFalse: [
-					aStream cr.
-					self repositories configMethodCascadeOn: aStream indent: indent ] ] ]
+								aStream cr.
+								self repositories configMethodCascadeOn: aStream indent: indent ] ] ]
 ]
 
 { #category : 'printing' }
@@ -277,36 +257,29 @@ MetacelloProjectSpec >> configMethodOn: aStream indent: indent [
 { #category : 'printing' }
 MetacelloProjectSpec >> configShortCutMethodOn: aStream member: aMember indent: indent [
 
-	| hasVersionString hasOperator hasProjectPackage hasLoads hasClassName hasPreLoadDoIt hasPostLoadDoIt |
+	| hasOperator hasProjectPackage hasLoads hasClassName hasPreLoadDoIt hasPostLoadDoIt |
 	hasClassName := self hasClassName.
-	hasVersionString := self configHasVersionString.
 	hasOperator := operator isNotNil.
 	hasProjectPackage := self hasRepository or: [ hasClassName & (self getFile isNotNil or: [ className ~= self name ]) ].
 	hasLoads := self loads isNotNil.
 	hasPreLoadDoIt := self getPreLoadDoIt isNotNil.
 	hasPostLoadDoIt := self getPostLoadDoIt isNotNil.
 	hasClassName | hasOperator | hasProjectPackage | hasLoads | hasPreLoadDoIt | hasPostLoadDoIt ifTrue: [
-		(aMember methodUpdateSelector == #copy: or: [ aMember methodUpdateSelector == #with: ])
-			ifTrue: [
-				aStream
-					nextPutAll: 'with: [';
-					cr ]
-			ifFalse: [
-				aStream
-					nextPutAll: 'overrides: [';
-					cr ].
-		aStream
-			tab: indent;
-			nextPutAll: 'spec'.
-		self configMethodBodyOn: aStream indent: indent fromShortCut: true.
-		aStream nextPutAll: ' ]'.
-		^ self ].
-	hasVersionString ifTrue: [
-		| vs |
-		vs := self versionString.
-		aStream nextPutAll: 'with: '.
-		vs isSymbol ifTrue: [ aStream nextPut: $# ].
-		aStream nextPutAll: vs asString printString ]
+			(aMember methodUpdateSelector == #copy: or: [ aMember methodUpdateSelector == #with: ])
+				ifTrue: [
+						aStream
+							nextPutAll: 'with: [';
+							cr ]
+				ifFalse: [
+						aStream
+							nextPutAll: 'overrides: [';
+							cr ].
+			aStream
+				tab: indent;
+				nextPutAll: 'spec'.
+			self configMethodBodyOn: aStream indent: indent fromShortCut: true.
+			aStream nextPutAll: ' ]'.
+			^ self ]
 ]
 
 { #category : 'private' }
@@ -442,9 +415,8 @@ MetacelloProjectSpec >> hasNoLoadConflicts: aMetacelloProjectSpec [
 { #category : 'testing' }
 MetacelloProjectSpec >> hasNonVersionStringField [
 
-	| hasVersionString hasOperator hasProjectPackage hasLoads hasClassName hasPreLoadDoIt hasPostLoadDoIt |
+	| hasOperator hasProjectPackage hasLoads hasClassName hasPreLoadDoIt hasPostLoadDoIt |
 	hasClassName := self hasClassName.
-	hasVersionString := self versionString isNotNil.
 	hasOperator := operator isNotNil.
 	hasProjectPackage := (self file isNotNil and: [ hasClassName and: [ self className ~= self name ] ]) or: [ self hasRepository ].
 	hasLoads := self loads isNotNil.
@@ -531,7 +503,6 @@ MetacelloProjectSpec >> mergeMap [
 	map := super mergeMap.
 	map at: #name put: name.
 	map at: #className put: className.
-	map at: #versionString put: versionString.
 	map at: #operator put: operator.
 	map at: #loads put: loads.
 	map at: #preLoadDoIt put: preLoadDoIt.
@@ -713,11 +684,8 @@ MetacelloProjectSpec >> registration [
 
 { #category : 'scripting' }
 MetacelloProjectSpec >> registrationsCompareEqual: aMetacelloProjectSpec [
-	"name className versionString operator loads preLoadDoIt postLoadDoIt"
 
-	^ self className = aMetacelloProjectSpec className and: [
-		  self versionString = aMetacelloProjectSpec versionString and: [
-			  self operator == aMetacelloProjectSpec operator ] ]
+	^ self className = aMetacelloProjectSpec className and: [ self operator == aMetacelloProjectSpec operator ]
 ]
 
 { #category : 'accessing' }
@@ -823,11 +791,4 @@ MetacelloProjectSpec >> versionOrNil [
 MetacelloProjectSpec >> versionString [
 
 	^ versionString
-]
-
-{ #category : 'accessing' }
-MetacelloProjectSpec >> versionString: anObject [
-1halt.
-    self shouldBeMutable.
-    versionString := anObject
 ]

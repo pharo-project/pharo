@@ -12,7 +12,6 @@ Class {
 		'baselineArg',
 		'projectArg',
 		'classNameArg',
-		'versionArg',
 		'repositoryArg'
 	],
 	#category : 'Metacello-Core-Scripts',
@@ -22,10 +21,10 @@ Class {
 
 { #category : 'execution' }
 MetacelloScriptExecutor >> applyArgsToProjectSpec: aProjectSpec [
-    classNameArg ifNotNil: [ aProjectSpec className: classNameArg ].
-    versionArg ifNotNil: [ aProjectSpec versionString: versionArg ].
-    repositoryArg ifNotNil: [ aProjectSpec repository: repositoryArg ].
-    ^ aProjectSpec
+
+	classNameArg ifNotNil: [ aProjectSpec className: classNameArg ].
+	repositoryArg ifNotNil: [ aProjectSpec repository: repositoryArg ].
+	^ aProjectSpec
 ]
 
 { #category : 'args' }
@@ -216,14 +215,4 @@ MetacelloScriptExecutor >> unlock [
 { #category : 'actions api' }
 MetacelloScriptExecutor >> unregister [
   actionArg := #'unregister' -> #()
-]
-
-{ #category : 'args' }
-MetacelloScriptExecutor >> versionArg [
-    ^ versionArg
-]
-
-{ #category : 'args' }
-MetacelloScriptExecutor >> versionArg: anObject [
-    versionArg := anObject
 ]

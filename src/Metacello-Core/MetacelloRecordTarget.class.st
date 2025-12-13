@@ -99,10 +99,6 @@ MetacelloRecordTarget >> visitProjectReference: aMetacelloProjectReferenceSpec [
 
 	displayString := 'Project: ' , projectReferenceToLoad name.
 
-	projectReferenceToLoad versionString ifNotNil: [
-		displayString := displayString , ' '
-		                 , projectReferenceToLoad versionString ].
-
 	MetacelloNotification signal: displayString.
 
 	projectReferenceToLoad isLocked ifTrue: [

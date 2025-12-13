@@ -500,9 +500,3 @@ Metacello >> unregister [
 
 	^ self execute: [ :executor | executor unregister ]
 ]
-
-{ #category : 'api projectSpec' }
-Metacello >> version: versionString [
-
-	self scriptExecutor versionArg: versionString
-]
