@@ -260,7 +260,7 @@ MetacelloBaselineConstructor >> on: aConfig project: aProject [
 	| pragma versionSpec |
 	self configuration: aConfig.
 	pragma := self extractBaselinePragmaFor: aConfig class.
-	project := aProject ifNil: [ MetacelloBaselineProject new ].
+	project := aProject ifNil: [ MetacelloProject new ].
 	versionSpec := self project versionSpec.
 	self root: versionSpec.
 	self evaluatePragma: pragma.

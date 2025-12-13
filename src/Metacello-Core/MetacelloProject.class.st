@@ -1,16 +1,47 @@
+"
+The **MetacelloMCBaselineProject**  is a wrapper for the **BaselineOf** version specification for file-based repositories.
+
+There is a single version in a **MetacelloMCBaselineProject**, named *'baseline'*.
+
+A typical **BaselineOf** is specification:
+
+```Smalltalk
+baseline: spec
+    <baseline>
+    spec
+        package: 'External-Core';
+        package: 'External-Tests' with: [ spec requires: 'External-Core' ];
+        yourself.
+    spec
+        group: 'Core' with: #('External-Core');
+        group: 'default' with: #('Core');
+        group: 'Tests' with: #('External-Tests');
+        yourself
+```
+
+The `<baseline>` pragma marks the method containing the baseline specification.
+"
 Class {
 	#name : 'MetacelloProject',
 	#superclass : 'Object',
 	#instVars : [
-		'projectAttributes',
+		'repositoryDescription',
+		'version',
 		'loadType',
-		'configuration',
-		'version'
+		'projectAttributes',
+		'configuration'
 	],
 	#category : 'Metacello-Core-Model',
 	#package : 'Metacello-Core',
 	#tag : 'Model'
 }
+
+{ #category : 'class initialization' }
+MetacelloProject class >> initialize [
+
+	"Deprecation added during the development of Pharo 14."
+	self deprecatedAliases: #( #MetacelloMCBaselineProject. #MetacelloBaselineProject )
+]
 
 { #category : 'instance creation' }
 MetacelloProject class >> new [
@@ -28,6 +59,11 @@ MetacelloProject class >> on: aConfig [
 	^ self basicNew
 		  configuration: aConfig;
 		  yourself
+]
+
+{ #category : 'accessing' }
+MetacelloProject class >> singletonVersionName [
+    ^ 'baseline'
 ]
 
 { #category : 'private' }
@@ -210,6 +246,11 @@ MetacelloProject >> repositoriesSpecClass [
 	^MetacelloRepositoriesSpec
 ]
 
+{ #category : 'accessing' }
+MetacelloProject >> repositoryDescription [
+	^ repositoryDescription
+]
+
 { #category : 'spec classes' }
 MetacelloProject >> repositorySpec [
 
@@ -224,7 +265,16 @@ MetacelloProject >> repositorySpecClass [
 
 { #category : 'development support' }
 MetacelloProject >> setBaselineRepositoryDescription: aListOrRepositoryDescriptions [
-    "noop "
+	"set #version repositories to < aListOrRepositoryDescriptions>. Should be the directory where the BaselineOf is located."
+
+	repositoryDescription := aListOrRepositoryDescriptions
+]
+
+{ #category : 'versions' }
+MetacelloProject >> singletonVersionName [
+
+	self flag: #ConfigurationRemoval. "Fuse with superclass."
+	^ self class singletonVersionName
 ]
 
 { #category : 'spec classes' }

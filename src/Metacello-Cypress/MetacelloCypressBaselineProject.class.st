@@ -12,7 +12,7 @@ Metacello has an internal rule to not load Monticello packages of the same versi
 "
 Class {
 	#name : 'MetacelloCypressBaselineProject',
-	#superclass : 'MetacelloBaselineProject',
+	#superclass : 'MetacelloProject',
 	#category : 'Metacello-Cypress',
 	#package : 'Metacello-Cypress'
 }

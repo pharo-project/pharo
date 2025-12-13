@@ -37,7 +37,7 @@ MetacelloCoreIssue125TestCase >> projectWith: projectAttributes [
 
 	| project |
 	"Construct Metacello project"
-	project := MetacelloBaselineProject new.
+	project := MetacelloProject new.
 	project projectAttributes: projectAttributes.
 	MetacelloBaselineConstructor on: self project: project.
 	^ project

@@ -265,7 +265,7 @@ BaselineOf >> project: aProject [
 { #category : 'accessing' }
 BaselineOf >> projectClass [
 
-	^ MetacelloBaselineProject
+	^ MetacelloProject
 ]
 
 { #category : 'queries' }
