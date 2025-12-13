@@ -767,9 +767,7 @@ MetacelloProjectSpec >> version [
 	"Empty version string means use latestVersion or #bleedingEdge"
 
 	self flag: #ConfigurationRemoval. "I think this method should not be on baselines but let's see that later."
-	^ self versionString
-		  ifNotNil: [ self project versionString ]
-		  ifNil: [ self error: 'No version specified' ]
+	self error: 'No version specified'
 ]
 
 { #category : 'querying' }

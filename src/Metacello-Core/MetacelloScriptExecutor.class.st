@@ -10,7 +10,6 @@ Class {
 		'singleRoot',
 		'actionArg',
 		'baselineArg',
-		'projectArg',
 		'classNameArg',
 		'repositoryArg'
 	],
