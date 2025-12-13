@@ -4,7 +4,6 @@ Class {
 	#instVars : [
 		'repositories',
 		'packages',
-		'versionString',
 		'packageList',
 		'importArray',
 		'postLoadDoIt',
@@ -243,7 +242,6 @@ MetacelloVersionSpec >> mergeMap [
 
 	| map |
 	map := super mergeMap.
-	map at: #versionString put: versionString.
 	map at: #preLoadDoIt put: preLoadDoIt.
 	map at: #postLoadDoIt put: postLoadDoIt.
 	map at: #packageList put: self packages.
@@ -541,7 +539,7 @@ MetacelloVersionSpec >> versionNumber [
 
 { #category : 'querying' }
 MetacelloVersionSpec >> versionString [
-1halt.
+
 	self flag: #ConfigurationRemoval. "I think this method should not be on baselines but let's see that later."
 	^ self project singletonVersionName
 ]

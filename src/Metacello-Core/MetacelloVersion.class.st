@@ -311,11 +311,6 @@ MetacelloVersion >> versionNumber: aVersionNumber [
 	versionNumber := aVersionNumber
 ]
 
-{ #category : 'querying' }
-MetacelloVersion >> versionNumberFrom: aString [
-    ^ self versionNumber class fromString: aString
-]
-
 { #category : 'accessing' }
 MetacelloVersion >> versionSpec [
 

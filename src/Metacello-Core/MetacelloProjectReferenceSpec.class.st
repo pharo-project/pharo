@@ -207,5 +207,6 @@ MetacelloProjectReferenceSpec >> versionOrNil [
 { #category : 'accessing' }
 MetacelloProjectReferenceSpec >> versionString [
 
-	^self projectReference versionString
+	self flag: #ConfigurationRemoval. "I think this method should not be on baselines but let's see that later."
+	^ nil
 ]
