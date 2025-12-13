@@ -229,7 +229,7 @@ MetacelloVersionSpec >> importArray [
 { #category : 'printing' }
 MetacelloVersionSpec >> label [
 
-	^self versionString, ' [', self projectLabel, ']'
+	^ 'baseline [' , self projectLabel , ']'
 ]
 
 { #category : 'accessing' }

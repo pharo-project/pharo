@@ -91,7 +91,9 @@ MetacelloProjectSpec >> className [
 
 { #category : 'accessing' }
 MetacelloProjectSpec >> className: aString [
+	"We can remove this check in a few version of Pharo. It was added in the development of Pharo 14."
 
+	aString ifNotNil: [ (aString beginsWith: 'ConfigurationOf') ifTrue: [ self error: 'Configurations are not supported anymore' ] ].
 	self shouldBeMutable.
 	className := aString.
 	self projectPackage: nil
@@ -322,7 +324,6 @@ MetacelloProjectSpec >> copyForScriptingInto: aProjectSpec [
     ^aProjectSpec
         setName: name;
         className: className;
-        versionString: versionString;
         operator: operator;
         setLoads: loads;
         preLoadDoIt: preLoadDoIt;

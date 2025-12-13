@@ -48,7 +48,7 @@ MetacelloVersionSpecTestCase >> testVersionMergeSpec2 [
 					(self projectSpec
 						name: 'Project';
 						projectPackage: self project packageSpec;
-						className: 'ConfigurationOfProjectA';
+						className: 'BaselineOfProjectA';
 						repository: 'http://example.com/repository' username: 'dkh' password: 'password';
 						repository: '/opt/gemstone/repository';
 						yourself));
@@ -75,7 +75,7 @@ MetacelloVersionSpecTestCase >> testVersionMergeSpec2 [
 					(self projectSpec
 						name: 'Project';
 						projectPackage: self project packageSpec;
-						className: 'ConfigurationOfProjectA';
+						className: 'BaselineOfProjectA';
 						repository: 'http://example.com/repository' username: 'DaleHenrichs' password: 'secret';
 						repository: '/opt/gemstone/repo';
 						yourself));
@@ -153,8 +153,7 @@ MetacelloVersionSpecTestCase >> testVersionSpec2 [
 		add:
 			(self projectSpec
 				name: 'Project';
-				className: 'ConfigurationOfProjectA';
-				versionString: #stable;
+				className: 'BaselineOfProjectA';
 				loads: #('MyPackage' 'MyTests');
 				preLoadDoIt: #preLoadDoItB;
 				postLoadDoIt: #postLoadDoItB;
@@ -172,7 +171,6 @@ MetacelloVersionSpecTestCase >> testVersionSpec2 [
 	self assert: (group includes includes: 'Core').
 	projectReferenceSpec := version packages packageNamed: 'Project' ifAbsent: [ self assert: false ].
 	self assert: projectReferenceSpec projectName equals: 'Project'.
-	self assert: projectReferenceSpec versionString equals: #stable.
 	version projectDo: [ :prjct | prjct == projectReferenceSpec ] packageDo: [ :pkg | pkg == package ] groupDo: [ :grp | grp == group ]
 ]
 

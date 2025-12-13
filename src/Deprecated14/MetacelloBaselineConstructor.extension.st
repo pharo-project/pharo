@@ -34,3 +34,10 @@ MetacelloBaselineConstructor >> timestamp: aBlockOrStringOrDateAndTime [
 		'The timestamp metadata is not supported anymore. It was used with SmalltalkHub but not this information is already managed by git or other CVS.
 	If you wish to keep this as a trace, you can leave the infos in a method comment.'
 ]
+
+{ #category : '*Deprecated14' }
+MetacelloBaselineConstructor >> versionString: anObject [
+
+	self error:
+		'Configurations are not supported anymore, only baseline can be used as dependencies and project managed with baseline have their version managed by the repositories.'
+]

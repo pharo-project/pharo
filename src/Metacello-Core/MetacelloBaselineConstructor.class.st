@@ -89,9 +89,9 @@ MetacelloBaselineConstructor >> className: aString [
 	"Define className field of a project spec (MetacelloMCProjectSpec).
 	
 		spec project: 'CoolBrowser' with: [
-			spec className: 'ConfigurationOfCoolBrowser'. ].
+			spec className: 'BaselineOfCoolBrowser'. ].
 
-	The className field is OPTIONAL in the project spec. If omitted, the className will be created by prepending 'ConfigurationOf' to the project name.
+	The className field is OPTIONAL in the project spec. If omitted, the className will be created by prepending 'BaselineOf' to the project name.
 	 "
 
 	self root className: aString
@@ -273,6 +273,7 @@ MetacelloBaselineConstructor >> on: aConfig project: aProject [
 { #category : 'api' }
 MetacelloBaselineConstructor >> operator: anObject [
 
+	self flag: #ConfigurationRemoval. "I think this method is now useless but I need to check."
 	self root operator: anObject
 ]
 
@@ -345,7 +346,7 @@ MetacelloBaselineConstructor >> project [
 { #category : 'api' }
 MetacelloBaselineConstructor >> project: aString [
 
-	self project: aString with: ''
+	self project: aString with: [ ]
 ]
 
 { #category : 'api' }
@@ -379,7 +380,7 @@ MetacelloBaselineConstructor >> project: aString overrides: aBlock [
 ]
 
 { #category : 'api' }
-MetacelloBaselineConstructor >> project: aString with: aBlockOrString [
+MetacelloBaselineConstructor >> project: aString with: aBlock [
 
 	| projectSpec |
 	projectSpec := self project projectSpec
@@ -389,9 +390,8 @@ MetacelloBaselineConstructor >> project: aString with: aBlockOrString [
 			 name: aString;
 			 projectReference: projectSpec;
 			 yourself).
-	aBlockOrString isString
-		ifTrue: [ projectSpec versionString: aBlockOrString ]
-		ifFalse: [ self with: projectSpec during: aBlockOrString ]
+
+	self with: projectSpec during: aBlock
 ]
 
 { #category : 'api' }
@@ -484,12 +484,6 @@ MetacelloBaselineConstructor >> validateDoItSelector: anObject [
 MetacelloBaselineConstructor >> value: anObject [
 
 	self root value: anObject
-]
-
-{ #category : 'api' }
-MetacelloBaselineConstructor >> versionString: anObject [
-
-	self root versionString: anObject
 ]
 
 { #category : 'private' }

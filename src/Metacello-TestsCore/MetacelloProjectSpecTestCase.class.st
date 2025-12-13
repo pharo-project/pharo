@@ -11,16 +11,14 @@ MetacelloProjectSpecTestCase >> testProjectMergeSpec [
 	| projectA projectB project |
 	projectA := self projectSpec
 		name: 'Project';
-		className: 'ConfigurationOfProject';
-		versionString: '1.0';
+		className: 'BaselineOfProject';
 		loads: #('MyPackage');
 		preLoadDoIt: #preLoadDoIt;
 		postLoadDoIt: #postLoadDoIt;
 		yourself.
 	projectB := self projectSpec
 		name: 'Project';
-		className: 'ConfigurationOfProjectB';
-		versionString: #stable;
+		className: 'BaselineOfProjectB';
 		operator: #<;
 		loads: #('MyPackage' 'MyTests');
 		preLoadDoIt: #preLoadDoItB;
@@ -28,8 +26,7 @@ MetacelloProjectSpecTestCase >> testProjectMergeSpec [
 		yourself.
 	project := projectA mergeSpec: projectB.
 	self assert: project name equals: 'Project'.
-	self assert: project className equals: 'ConfigurationOfProjectB'.
-	self assert: project versionString equals: #stable.
+	self assert: project className equals: 'BaselineOfProjectB'.
 	self assert: project operator identicalTo: #<.
 	self assert: project loads equals: #('MyPackage' 'MyTests').
 	self assert: project preLoadDoIt value identicalTo: #preLoadDoItB.
@@ -42,20 +39,20 @@ MetacelloProjectSpecTestCase >> testProjectMergeSpec2 [
 	projectA := self projectSpec
 		name: 'Project';
 		projectPackage: self project packageSpec;
-		className: 'ConfigurationOfProject';
+		className: 'BaselineOfProject';
 		repository: 'http://example.com/repository' username: 'dkh' password: 'password';
 		repository: '/opt/gemstone/repository';
 		yourself.
 	projectB := self projectSpec
 		name: 'Project';
 		projectPackage: self project packageSpec;
-		className: 'ConfigurationOfProjectB';
+		className: 'BaselineOfProjectB';
 		repository: 'http://example.com/repository' username: 'DaleHenrichs' password: 'secret';
 		repository: '/opt/gemstone/repo';
 		yourself.
 	project := projectA mergeSpec: projectB.
 	self assert: project name equals: 'Project'.
-	self assert: project className equals: 'ConfigurationOfProjectB'.
+	self assert: project className equals: 'BaselineOfProjectB'.
 	self assert: project projectPackage name equals: project className.
 	self assert: project projectPackage file equals: project className.
 	repository := project repositories map at: '/opt/gemstone/repository' ifAbsent: [ self assert: false ].
@@ -74,9 +71,7 @@ MetacelloProjectSpecTestCase >> testProjectSpec [
 	project := self projectSpec.
 	project
 		name: 'Project';
-		className: 'ConfigurationOfProject';
-		versionString: '1.0';
-		versionString: #stable;
+		className: 'BaselineOfProject';
 		operator: #<;
 		operator: nil;
 		loads: 'MyPackage';
@@ -85,8 +80,7 @@ MetacelloProjectSpecTestCase >> testProjectSpec [
 		postLoadDoIt: #postLoadDoIt;
 		yourself.
 	self assert: project name equals: 'Project'.
-	self assert: project className equals: 'ConfigurationOfProject'.
-	self assert: project versionString equals: #stable.
+	self assert: project className equals: 'BaselineOfProject'.
 	self assert: project operator identicalTo: #>=.
 	self assert: project loads equals: #('MyPackage' 'MyTests').
 	self assert: project preLoadDoIt value identicalTo: #preLoadDoIt.
@@ -106,12 +100,12 @@ MetacelloProjectSpecTestCase >> testProjectSpec2 [
 	project
 		name: 'Project';
 		projectPackage: self project packageSpec;
-		className: 'ConfigurationOfProject';
+		className: 'BaselineOfProject';
 		repository: 'http://example.com/repository' username: 'dkh' password: 'password';
 		repository: '/opt/gemstone/repository';
 		yourself.
 	self assert: project name equals: 'Project'.
-	self assert: project className equals: 'ConfigurationOfProject'.
+	self assert: project className equals: 'BaselineOfProject'.
 	self assert: project projectPackage name equals: project className.
 	self assert: project projectPackage file equals: project className.
 	repository := project repositories map at: '/opt/gemstone/repository' ifAbsent: [ self assert: false ].

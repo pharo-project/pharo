@@ -139,7 +139,6 @@ MetacelloBaselineOfProjectSpec >> validateVersionString: issues withDefaultVersi
 
 	self versionString ifNotNil: [ :vs |
 			| prj |
-			self flag: #ConfigurationRemoval. "I have the impression that the project is self."
 			prj := self project.
 			vs ~= prj singletonVersionName ifTrue: [
 					issues add: (MetacelloValidationError
