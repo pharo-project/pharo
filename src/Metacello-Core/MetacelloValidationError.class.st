@@ -7,9 +7,9 @@ Class {
 	#instVars : [
 		'explanation'
 	],
-	#category : 'Metacello-Core-Validation',
+	#category : 'Metacello-Core-Exceptions',
 	#package : 'Metacello-Core',
-	#tag : 'Validation'
+	#tag : 'Exceptions'
 }
 
 { #category : 'instance creation' }
