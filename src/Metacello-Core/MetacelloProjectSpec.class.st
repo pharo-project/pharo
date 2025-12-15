@@ -491,7 +491,6 @@ MetacelloProjectSpec >> lookForIssues [
 	issues := OrderedCollection new.
 	self name ifNil: [ issues add: (MetacelloValidationError explanation: 'name field required') ].
 	self className ifNil: [ issues add: (MetacelloValidationError explanation: 'className field required') ].
-	self repositories isEmpty ifTrue: [ issues add: (MetacelloValidationError explanation: 'repository field required') ].
 	^ issues
 ]
 
