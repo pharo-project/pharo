@@ -77,7 +77,6 @@ spec
 		spec 
 			requires: #(''Example-Core'' ''UI Support'' );
 			includes: #(''Example-UI'' );
-			supplyingAnswers: #( #( ''list of packages'' ''Kernel* Collection*'' ) );
 			file: ''Example-AddOn-anon.7'';
 			repository: ''http://www.example.com/or'' username: ''foo'' password: ''bar'';
 			preLoadDoIt: #''preloadForAddOn'';
@@ -108,7 +107,6 @@ MetacelloReferenceTestCase >> testReferenceConfig [
 	name: ''Example-AddOn'';
 	requires: #(''Example-Core'' ''UI Support'' );
 	includes: #(''Example-UI'' );
-	supplyingAnswers: #( #( ''list of packages'' ''Kernel* Collection*'' ) );
 	file: ''Example-AddOn-anon.5'';
 	repository: ''http://www.example.com/or'' username: ''foo'' password: ''bar'';
 	preLoadDoIt: #''preloadForAddOn'';

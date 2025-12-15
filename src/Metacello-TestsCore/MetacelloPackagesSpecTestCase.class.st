@@ -62,7 +62,6 @@ MetacelloPackagesSpecTestCase >> testAddPackageA [
 				name: 'Package';
 				requires: 'AnotherPackage';
 				includes: 'IncludedPackage';
-				answers: #(#('preload' 'preload answer') #('postload' 'postload answer'));
 				file: 'Package-dkh.1';
 				preLoadDoIt: #preLoadDoIt;
 				postLoadDoIt: #postLoadDoIt;
@@ -73,14 +72,12 @@ MetacelloPackagesSpecTestCase >> testAddPackageA [
 				name: 'Package';
 				requires: 'AndAnotherPackage';
 				includes: 'AndIncludedPackage';
-				answers: #(#('postload' 'postload answer'));
 				file: 'Package-dkh.2';
 				yourself).
 	package := packages packageNamed: 'Package' ifAbsent: [ self assert: false ].
 	self assert: package name equals: 'Package'.
 	self assert: package requires equals: #('AndAnotherPackage').
 	self assert: package includes equals: #('AndIncludedPackage').
-	self assert: package answers equals: #(#('postload' 'postload answer')).
 	self assert: package file equals: 'Package-dkh.2'.
 	self assert: package preLoadDoIt value identicalTo: nil.
 	self assert: package postLoadDoIt value identicalTo: nil
@@ -92,28 +89,25 @@ MetacelloPackagesSpecTestCase >> testAddPackageB [
 
 	| packages package |
 	packages := self packagesSpec.
-	packages
-		add:
-			{(self packageSpec
-				name: 'Package';
-				requires: 'AnotherPackage';
-				includes: 'IncludedPackage';
-				answers: #(#('preload' 'preload answer') #('postload' 'postload answer'));
-				file: 'Package-dkh.1';
-				preLoadDoIt: #preLoadDoIt;
-				postLoadDoIt: #postLoadDoIt;
-				yourself) . (self packageSpec
-				name: 'Package';
-				requires: 'AndAnotherPackage';
-				includes: 'AndIncludedPackage';
-				answers: #(#('postload' 'postload answer'));
-				file: 'Package-dkh.2';
-				yourself)}.
+	packages add: {
+			(self packageSpec
+				 name: 'Package';
+				 requires: 'AnotherPackage';
+				 includes: 'IncludedPackage';
+				 file: 'Package-dkh.1';
+				 preLoadDoIt: #preLoadDoIt;
+				 postLoadDoIt: #postLoadDoIt;
+				 yourself).
+			(self packageSpec
+				 name: 'Package';
+				 requires: 'AndAnotherPackage';
+				 includes: 'AndIncludedPackage';
+				 file: 'Package-dkh.2';
+				 yourself) }.
 	package := packages packageNamed: 'Package' ifAbsent: [ self assert: false ].
 	self assert: package name equals: 'Package'.
-	self assert: package requires equals: #('AndAnotherPackage').
-	self assert: package includes equals: #('AndIncludedPackage').
-	self assert: package answers equals: #(#('postload' 'postload answer')).
+	self assert: package requires equals: #( 'AndAnotherPackage' ).
+	self assert: package includes equals: #( 'AndIncludedPackage' ).
 	self assert: package file equals: 'Package-dkh.2'.
 	self assert: package preLoadDoIt value identicalTo: nil.
 	self assert: package postLoadDoIt value identicalTo: nil
@@ -174,7 +168,6 @@ MetacelloPackagesSpecTestCase >> testAddProjectA [
 	self assert: projectReferenceSpec projectName equals: 'Project'.
 	self should: [ projectReferenceSpec includes: #() ] raise: Error.
 	self should: [ projectReferenceSpec requires: #() ] raise: Error.
-	self should: [ projectReferenceSpec answers: #() ] raise: Error.
 	projectReferenceSpec
 		projectDo: [ :prjct | self assert: projectReferenceSpec identicalTo: prjct ]
 		packageDo: [ :ignored | self assert: false ]
@@ -215,7 +208,6 @@ MetacelloPackagesSpecTestCase >> testAddProjectB [
 	self assert: projectReferenceSpec projectName equals: 'Project'.
 	self should: [ projectReferenceSpec includes: #() ] raise: Error.
 	self should: [ projectReferenceSpec requires: #() ] raise: Error.
-	self should: [ projectReferenceSpec answers: #() ] raise: Error.
 	projectReferenceSpec
 		projectDo: [ :prjct | self assert: projectReferenceSpec identicalTo: prjct ]
 		packageDo: [ :ignored | self assert: false ]
@@ -274,7 +266,6 @@ MetacelloPackagesSpecTestCase >> testCopyToPackage [
 				name: 'Package';
 				requires: 'AnotherPackage';
 				includes: 'IncludedPackage';
-				answers: #(#('preload' 'preload answer') #('postload' 'postload answer'));
 				file: 'Package-dkh.1';
 				preLoadDoIt: #preLoadDoIt;
 				postLoadDoIt: #postLoadDoIt;
@@ -289,7 +280,6 @@ MetacelloPackagesSpecTestCase >> testCopyToPackage [
 	self assert: package name equals: 'PackageCopy'.
 	self assert: package requires equals: #('AnotherPackage').
 	self assert: package includes equals: #('IncludedPackage').
-	self assert: package answers equals: #(#('preload' 'preload answer') #('postload' 'postload answer')).
 	self assert: package file equals: 'Package-dkh.1'.
 	self assert: package preLoadDoIt value identicalTo: #preLoadDoIt.
 	self assert: package postLoadDoIt value identicalTo: #postLoadDoIt
@@ -385,7 +375,6 @@ MetacelloPackagesSpecTestCase >> testMergePackageA [
 				name: 'Package';
 				requires: 'AnotherPackage';
 				includes: 'IncludedPackage';
-				answers: #(#('preload' 'preload answer') #('postload' 'postload answer'));
 				file: 'Package-dkh.1';
 				preLoadDoIt: #preLoadDoIt;
 				postLoadDoIt: #postLoadDoIt;
@@ -396,14 +385,12 @@ MetacelloPackagesSpecTestCase >> testMergePackageA [
 				name: 'Package';
 				requires: 'AndAnotherPackage';
 				includes: 'AndIncludedPackage';
-				answers: #(#('xpostload' 'xpostload answer'));
 				file: 'Package-dkh.2';
 				yourself).
 	package := packages packageNamed: 'Package' ifAbsent: [ self assert: false ].
 	self assert: package name equals: 'Package'.
 	self assert: package requires equals: #('AnotherPackage' 'AndAnotherPackage').
 	self assert: package includes equals: #('IncludedPackage' 'AndIncludedPackage').
-	self assert: package answers equals: #(#('preload' 'preload answer') #('postload' 'postload answer') #('xpostload' 'xpostload answer')).
 	self assert: package file equals: 'Package-dkh.2'.
 	self assert: package preLoadDoIt value identicalTo: #preLoadDoIt.
 	self assert: package postLoadDoIt value identicalTo: #postLoadDoIt
@@ -421,7 +408,6 @@ MetacelloPackagesSpecTestCase >> testMergePackageB [
 				name: 'Package';
 				requires: 'AnotherPackage';
 				includes: 'IncludedPackage';
-				answers: #(#('preload' 'preload answer') #('postload' 'postload answer'));
 				file: 'Package-dkh.1';
 				preLoadDoIt: #preLoadDoIt;
 				postLoadDoIt: #postLoadDoIt;
@@ -432,14 +418,12 @@ MetacelloPackagesSpecTestCase >> testMergePackageB [
 				name: 'Package';
 				requires: 'AndAnotherPackage';
 				includes: 'AndIncludedPackage';
-				answers: #(#('xpostload' 'xpostload answer'));
 				file: 'Package-dkh.2';
 				yourself)}.
 	package := packages packageNamed: 'Package' ifAbsent: [ self assert: false ].
 	self assert: package name equals: 'Package'.
 	self assert: package requires equals: #('AnotherPackage' 'AndAnotherPackage').
 	self assert: package includes equals: #('IncludedPackage' 'AndIncludedPackage').
-	self assert: package answers equals: #(#('preload' 'preload answer') #('postload' 'postload answer') #('xpostload' 'xpostload answer')).
 	self assert: package file equals: 'Package-dkh.2'.
 	self assert: package preLoadDoIt value identicalTo: #preLoadDoIt.
 	self assert: package postLoadDoIt value identicalTo: #postLoadDoIt
@@ -550,7 +534,6 @@ MetacelloPackagesSpecTestCase >> testPackageMergeSpec [
 		name: 'Package';
 		requires: 'AnotherPackage';
 		includes: 'IncludedPackage';
-		answers: #(#('preload' 'preload answer') #('postload' 'postload answer'));
 		file: 'Package-dkh.1';
 		preLoadDoIt: #preLoadDoIt;
 		postLoadDoIt: #postLoadDoIt;
@@ -561,7 +544,6 @@ MetacelloPackagesSpecTestCase >> testPackageMergeSpec [
 		name: 'Package';
 		requires: 'AndAnotherPackage';
 		includes: 'AndIncludedPackage';
-		answers: #(#('xpostload' 'xpostload answer'));
 		file: 'Package-dkh.2';
 		repository: 'http://example.com/repository' username: 'DaleHenrichs' password: 'secret';
 		repository: '/opt/gemstone/repo';
@@ -570,7 +552,6 @@ MetacelloPackagesSpecTestCase >> testPackageMergeSpec [
 	self assert: package name equals: 'Package'.
 	self assert: package requires equals: #('AnotherPackage' 'AndAnotherPackage').
 	self assert: package includes equals: #('IncludedPackage' 'AndIncludedPackage').
-	self assert: package answers equals: #(#('preload' 'preload answer') #('postload' 'postload answer') #('xpostload' 'xpostload answer')).
 	self assert: package file equals: 'Package-dkh.2'.
 	self assert: package preLoadDoIt value identicalTo: #preLoadDoIt.
 	self assert: package postLoadDoIt value identicalTo: #postLoadDoIt.
@@ -591,7 +572,6 @@ MetacelloPackagesSpecTestCase >> testPackageSpec [
 		name: 'Package';
 		requires: 'AnotherPackage';
 		includes: 'IncludedPackage';
-		answers: #(#('preload' 'preload answer') #('postload' 'postload answer'));
 		file: 'Package-dkh.1';
 		preLoadDoIt: #preLoadDoIt;
 		postLoadDoIt: #postLoadDoIt;
@@ -601,7 +581,6 @@ MetacelloPackagesSpecTestCase >> testPackageSpec [
 	self assert: package name equals: 'Package'.
 	self assert: package requires equals: #('AnotherPackage').
 	self assert: package includes equals: #('IncludedPackage').
-	self assert: package answers equals: #(#('preload' 'preload answer') #('postload' 'postload answer')).
 	self assert: package file equals: 'Package-dkh.1'.
 	self assert: package preLoadDoIt value identicalTo: #preLoadDoIt.
 	self assert: package postLoadDoIt value identicalTo: #postLoadDoIt.
@@ -724,7 +703,6 @@ MetacelloPackagesSpecTestCase >> testRemovePackageA [
                 name: 'Package';
                 requires: 'AnotherPackage';
                 includes: 'IncludedPackage';
-                answers: #(#('preload' 'preload answer') #('postload' 'postload answer'));
                 file: 'Package-dkh.1';
                 preLoadDoIt: #'preLoadDoIt';
                 postLoadDoIt: #'postLoadDoIt';
@@ -751,7 +729,6 @@ MetacelloPackagesSpecTestCase >> testRemovePackageB [
                 name: 'Package';
                 requires: 'AnotherPackage';
                 includes: 'IncludedPackage';
-                answers: #(#('preload' 'preload answer') #('postload' 'postload answer'));
                 file: 'Package-dkh.1';
                 preLoadDoIt: #'preLoadDoIt';
                 postLoadDoIt: #'postLoadDoIt';
@@ -778,7 +755,6 @@ MetacelloPackagesSpecTestCase >> testRemovePackageC [
                 name: 'Package';
                 requires: 'AnotherPackage';
                 includes: 'IncludedPackage';
-                answers: #(#('preload' 'preload answer') #('postload' 'postload answer'));
                 file: 'Package-dkh.1';
                 preLoadDoIt: #'preLoadDoIt';
                 postLoadDoIt: #'postLoadDoIt';
@@ -801,7 +777,6 @@ MetacelloPackagesSpecTestCase >> testRemovePackageD [
                 name: 'Package';
                 requires: 'AnotherPackage';
                 includes: 'IncludedPackage';
-                answers: #(#('preload' 'preload answer') #('postload' 'postload answer'));
                 file: 'Package-dkh.1';
                 preLoadDoIt: #'preLoadDoIt';
                 postLoadDoIt: #'postLoadDoIt';

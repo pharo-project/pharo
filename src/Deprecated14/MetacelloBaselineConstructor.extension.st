@@ -28,6 +28,12 @@ MetacelloBaselineConstructor >> description: aBlockOrString [
 ]
 
 { #category : '*Deprecated14' }
+MetacelloBaselineConstructor >> supplyingAnswers: aCollection [
+
+	self deprecated: 'This option is not available anymore since multiple versions of Pharo.'
+]
+
+{ #category : '*Deprecated14' }
 MetacelloBaselineConstructor >> timestamp: aBlockOrStringOrDateAndTime [
 
 	self deprecated:

@@ -116,7 +116,6 @@ MetacelloReferenceBaseline >> baseline: spec [
 					requires: #('Example-Core' 'UI Support' );
 					includes: #('Example-UI' );
 					file: 'Example-AddOn-anon.7';
-					supplyingAnswers: #( #('list of packages' 'Kernel* Collection*'));
 					repository: 'http://www.example.com/or' username: 'foo' password: 'bar' ;
 					preLoadDoIt: #preloadForAddOn;
 					postLoadDoIt: #postloadForAddOn ];

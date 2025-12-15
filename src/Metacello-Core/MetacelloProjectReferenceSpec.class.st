@@ -20,12 +20,6 @@ MetacelloProjectReferenceSpec >> acceptVisitor: aVisitor [
 	^ aVisitor visitProjectReference: self
 ]
 
-{ #category : 'accessing' }
-MetacelloProjectReferenceSpec >> answers: aListOfPairs [
-
-	self shouldNotImplement
-]
-
 { #category : 'printing' }
 MetacelloProjectReferenceSpec >> configMethodCascadeOn: aStream member: aMember last: lastCascade indent: indent [
 

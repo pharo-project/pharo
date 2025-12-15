@@ -14,9 +14,9 @@ Class {
 	#instVars : [
 		'root',
 		'attributeOrder',
-		'configuration',
 		'project',
-		'attributeMap'
+		'attributeMap',
+		'baselineClass'
 	],
 	#category : 'Metacello-Core-Constructors',
 	#package : 'Metacello-Core',
@@ -84,6 +84,18 @@ MetacelloBaselineConstructor >> baseline: aString with: aBlock [
 	self with: (self baseline: aString) during: aBlock
 ]
 
+{ #category : 'accessing' }
+MetacelloBaselineConstructor >> baselineClass [
+
+	^baselineClass
+]
+
+{ #category : 'accessing' }
+MetacelloBaselineConstructor >> baselineClass: aConfig [
+
+	baselineClass := aConfig
+]
+
 { #category : 'api' }
 MetacelloBaselineConstructor >> className: aString [
 	"Define className field of a project spec (MetacelloMCProjectSpec).
@@ -97,23 +109,10 @@ MetacelloBaselineConstructor >> className: aString [
 	self root className: aString
 ]
 
-{ #category : 'accessing' }
-MetacelloBaselineConstructor >> configuration [
-
-	^configuration
-]
-
-{ #category : 'accessing' }
-MetacelloBaselineConstructor >> configuration: aConfig [
-
-	self flag: #ConfigurationRemoval. "This method should probably be renamed since it does not contain a configuration anymore."
-	configuration := aConfig
-]
-
 { #category : 'private' }
 MetacelloBaselineConstructor >> evaluatePragma: pragma [
 
-	self configuration perform: pragma methodSelector with: self
+	self baselineClass perform: pragma methodSelector with: self
 ]
 
 { #category : 'pragma extraction' }
@@ -258,7 +257,7 @@ MetacelloBaselineConstructor >> name: anObject [
 MetacelloBaselineConstructor >> on: aConfig project: aProject [
 
 	| pragma versionSpec |
-	self configuration: aConfig.
+	self baselineClass: aConfig.
 	pragma := self extractBaselinePragmaFor: aConfig class.
 	project := aProject ifNil: [ MetacelloProject new ].
 	versionSpec := self project versionSpec.
@@ -464,13 +463,6 @@ MetacelloBaselineConstructor >> root [
 { #category : 'accessing' }
 MetacelloBaselineConstructor >> root: aMetacelloSpec [
     root := aMetacelloSpec
-]
-
-{ #category : 'api' }
-MetacelloBaselineConstructor >> supplyingAnswers: aCollection [
-
-	self flag: #ConfigurationRemoval. "I think this method should not be on baselines but let's see that later. After cleaning the code it will be easier to see if this is still used."
-	self root answers: aCollection
 ]
 
 { #category : 'validation' }

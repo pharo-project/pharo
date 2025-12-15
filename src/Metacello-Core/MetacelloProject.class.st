@@ -91,6 +91,7 @@ MetacelloProject >> configuration [
 
 { #category : 'accessing' }
 MetacelloProject >> configuration: anObject [
+	"I should probably be renamed #baselineClass"
 
 	configuration := anObject
 ]

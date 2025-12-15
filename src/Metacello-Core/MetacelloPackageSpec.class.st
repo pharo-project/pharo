@@ -22,13 +22,13 @@ MetacelloPackageSpec >> acceptVisitor: aVisitor [
 { #category : 'printing' }
 MetacelloPackageSpec >> configMethodBodyOn: aStream hasName: hasName indent: indent [
 
-	| hasFile hasRepositories hasPreLoadDoIt hasPostLoadDoIt hasRequiresOrIncludesOrAnswers |
+	| hasFile hasRepositories hasPreLoadDoIt hasPostLoadDoIt hasRequiresOrIncludes |
 	hasFile := file isNotNil.
 	hasRepositories := self repositorySpecs size > 0.
 	hasPreLoadDoIt := self getPreLoadDoIt isNotNil.
 	hasPostLoadDoIt := self getPostLoadDoIt isNotNil.
-	hasRequiresOrIncludesOrAnswers := (self requires isEmpty and: [ self includes isEmpty and: [ self answers isEmpty ] ]) not.
-	hasRequiresOrIncludesOrAnswers ifTrue: [
+	hasRequiresOrIncludes := (self requires isEmpty and: [ self includes isEmpty ]) not.
+	hasRequiresOrIncludes ifTrue: [
 		self
 			configMethodBodyOn: aStream
 			hasName: hasName
@@ -38,13 +38,13 @@ MetacelloPackageSpec >> configMethodBodyOn: aStream hasName: hasName indent: ind
 		configMethodOn: aStream
 		for: file
 		selector: 'file: '
-		cascading: hasName | hasRepositories | hasPreLoadDoIt | hasPostLoadDoIt | hasRequiresOrIncludesOrAnswers
+		cascading: hasName | hasRepositories | hasPreLoadDoIt | hasPostLoadDoIt | hasRequiresOrIncludes
 		cascade: hasRepositories | hasPreLoadDoIt | hasPostLoadDoIt
 		indent: indent.
 	hasRepositories ifTrue: [
 		self repositorySpecs size > 1
 			ifTrue: [
-				hasName | hasFile | hasPreLoadDoIt | hasPostLoadDoIt | hasRequiresOrIncludesOrAnswers ifTrue: [
+				hasName | hasFile | hasPreLoadDoIt | hasPostLoadDoIt | hasRequiresOrIncludes ifTrue: [
 					aStream
 						cr;
 						tab: indent ].
@@ -57,7 +57,7 @@ MetacelloPackageSpec >> configMethodBodyOn: aStream hasName: hasName indent: ind
 				self repositories configMethodCascadeOn: aStream indent: indent + 1.
 				aStream nextPutAll: ' ]' ]
 			ifFalse: [
-				hasName | hasFile | hasPreLoadDoIt | hasPostLoadDoIt | hasRequiresOrIncludesOrAnswers ifTrue: [
+				hasName | hasFile | hasPreLoadDoIt | hasPostLoadDoIt | hasRequiresOrIncludes ifTrue: [
 					aStream
 						cr;
 						tab: indent ].
@@ -67,14 +67,14 @@ MetacelloPackageSpec >> configMethodBodyOn: aStream hasName: hasName indent: ind
 		configMethodOn: aStream
 		for: self getPreLoadDoIt
 		selector: 'preLoadDoIt: '
-		cascading: hasName | hasFile | hasRepositories | hasPostLoadDoIt | hasRequiresOrIncludesOrAnswers
+		cascading: hasName | hasFile | hasRepositories | hasPostLoadDoIt | hasRequiresOrIncludes
 		cascade: hasPostLoadDoIt
 		indent: indent.
 	self
 		configMethodOn: aStream
 		for: self getPostLoadDoIt
 		selector: 'postLoadDoIt: '
-		cascading: hasName | hasFile | hasRepositories | hasPreLoadDoIt | hasRequiresOrIncludesOrAnswers
+		cascading: hasName | hasFile | hasRepositories | hasPreLoadDoIt | hasRequiresOrIncludes
 		cascade: false
 		indent: indent.
 	aStream nextPut: $.
@@ -94,16 +94,16 @@ MetacelloPackageSpec >> configMethodCascadeOn: aStream member: aMember last: las
 { #category : 'printing' }
 MetacelloPackageSpec >> configMethodOn: aStream indent: indent [
 
-	| hasRepositories hasPreLoadDoIt hasPostLoadDoIt hasRequiresOrIncludesOrAnswers hasFile |
+	| hasRepositories hasPreLoadDoIt hasPostLoadDoIt hasRequiresOrIncludes hasFile |
 	hasFile := file isNotNil.
 	hasRepositories := self repositorySpecs size > 0.
 	hasPreLoadDoIt := self getPreLoadDoIt isNotNil.
 	hasPostLoadDoIt := self getPostLoadDoIt isNotNil.
-	hasRequiresOrIncludesOrAnswers := (self requires isEmpty and: [ self includes isEmpty and: [ self answers isEmpty ] ]) not.
+	hasRequiresOrIncludes := (self requires isEmpty and: [ self includes isEmpty ]) not.
 	aStream
 		tab: indent;
 		nextPutAll: 'spec '.
-	hasFile | hasRepositories | hasPreLoadDoIt | hasPostLoadDoIt | hasRequiresOrIncludesOrAnswers
+	hasFile | hasRepositories | hasPreLoadDoIt | hasPostLoadDoIt | hasRequiresOrIncludes
 		ifTrue: [
 			aStream
 				cr;
@@ -117,13 +117,13 @@ MetacelloPackageSpec >> configMethodOn: aStream indent: indent [
 { #category : 'printing' }
 MetacelloPackageSpec >> configShortCutMethodBodyOn: aStream member: aMember indent: indent [
 
-	| hasFile hasRepositories hasPreLoadDoIt hasPostLoadDoIt hasRequiresOrIncludesOrAnswers |
+	| hasFile hasRepositories hasPreLoadDoIt hasPostLoadDoIt hasRequiresOrIncludes |
 	hasFile := file isNotNil.
 	hasRepositories := self repositorySpecs size > 0.
 	hasPreLoadDoIt := self getPreLoadDoIt isNotNil.
 	hasPostLoadDoIt := self getPostLoadDoIt isNotNil.
-	hasRequiresOrIncludesOrAnswers := (self requires isEmpty and: [ self includes isEmpty and: [ self answers isEmpty ] ]) not.
-	hasRepositories | hasPreLoadDoIt | hasPostLoadDoIt | hasRequiresOrIncludesOrAnswers ifTrue: [
+	hasRequiresOrIncludes := (self requires isEmpty and: [ self includes isEmpty ]) not.
+	hasRepositories | hasPreLoadDoIt | hasPostLoadDoIt | hasRequiresOrIncludes ifTrue: [
 		aStream
 			nextPutAll: 'package: ' , self name printString , ' ';
 			nextPutAll: aMember methodUpdateSelector asString , ' [';
