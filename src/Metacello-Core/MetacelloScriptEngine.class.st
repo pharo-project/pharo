@@ -411,5 +411,5 @@ MetacelloScriptEngine >> unregister [
 { #category : 'project lookup' }
 MetacelloScriptEngine >> validateProjectSpec [
 
-	self projectReferenceSpec lookForIssues ifNotEmpty: [ :issues | MetacelloValidationFailure issues: issues message: 'Project spec validation failure' ]
+	self projectReferenceSpec lookForIssues
 ]

@@ -355,12 +355,6 @@ MetacelloProjectSpec >> getFile [
     ^ file
 ]
 
-{ #category : 'accessing' }
-MetacelloProjectSpec >> getOperator [
-
-	^operator
-]
-
 { #category : 'querying' }
 MetacelloProjectSpec >> getPostLoadDoIt [
 
@@ -491,11 +485,8 @@ MetacelloProjectSpec >> loads: aCollection [
 { #category : 'scripting' }
 MetacelloProjectSpec >> lookForIssues [
 
-	| issues |
-	issues := OrderedCollection new.
-	self name ifNil: [ issues add: (MetacelloValidationError explanation: 'name field required') ].
-	self className ifNil: [ issues add: (MetacelloValidationError explanation: 'className field required') ].
-	^ issues
+	self name ifNil: [ MetacelloValidationFailure signal: 'Name field required' ].
+	self className ifNil: [ MetacelloValidationFailure signal: 'ClassName field required' ]
 ]
 
 { #category : 'merging' }

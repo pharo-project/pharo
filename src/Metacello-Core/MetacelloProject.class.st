@@ -274,7 +274,6 @@ MetacelloProject >> setBaselineRepositoryDescription: aListOrRepositoryDescripti
 { #category : 'versions' }
 MetacelloProject >> singletonVersionName [
 
-	self flag: #ConfigurationRemoval. "Fuse with superclass."
 	^ self class singletonVersionName
 ]
 
