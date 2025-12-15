@@ -372,6 +372,18 @@ OCProgramNode >> checkFaulty: aBlock [
 ]
 
 { #category : 'accessing' }
+OCProgramNode >> childAtPath: aPath [
+
+	"Return the AST node following aPath from myself.
+	aPath is a list of indexes, each index is the index of the child in the children collection.
+	
+	See #treePath"
+	
+	aPath ifEmpty: [ ^ self ].
+	^ (self children at: aPath first) childAtPath: aPath allButFirst
+]
+
+{ #category : 'accessing' }
 OCProgramNode >> children [
 	^#()
 ]
@@ -1073,8 +1085,12 @@ OCProgramNode >> parserClass [
 
 { #category : 'copying' }
 OCProgramNode >> postCopy [
+	| newComments |
 	super postCopy.
-	properties := properties copy
+	properties := properties copy.
+	newComments := self comments copy.
+	newComments do: [ :e | e parent: self ].
+	self comments: newComments
 ]
 
 { #category : 'accessing' }
@@ -1338,6 +1354,27 @@ OCProgramNode >> tempVariableReadNodes [
 { #category : 'accessing' }
 OCProgramNode >> temporaryVariables [
 	^parent ifNil: [#()] ifNotNil: [parent temporaryVariables]
+]
+
+{ #category : 'accessing' }
+OCProgramNode >> treePath [
+
+	"Return the index path to get to self from the method node.
+	
+	See #childAtPath:"
+	
+	^ self treePathUpTo: self methodNode
+]
+
+{ #category : 'accessing' }
+OCProgramNode >> treePathUpTo: aParent [
+
+	"Return the index path to get to self from aParent.
+	
+	See #childAtPath:"
+
+	aParent == self ifTrue: [ ^ #(  ) ].
+	^ (self parent treePathUpTo: aParent) , { (self parent children indexOf: self) }
 ]
 
 { #category : 'querying' }

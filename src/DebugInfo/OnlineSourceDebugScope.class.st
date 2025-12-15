@@ -47,9 +47,15 @@ OnlineSourceDebugScope >> readVariableNamed: aName fromContext: aContext [
 { #category : 'api' }
 OnlineSourceDebugScope >> variableNamed: aName [
 
+	^ self variableNamed: aName ifAbsent: [ self error: 'Variable not found: ' , aName ]
+]
+
+{ #category : 'api' }
+OnlineSourceDebugScope >> variableNamed: aName ifAbsent: aBlock [
+
 	^ self variables
 		detect: [ :e | e name = aName ]
-		ifNone: [ self error: 'Variable not found: ', aName  ]
+		ifNone: aBlock
 ]
 
 { #category : 'accessing' }

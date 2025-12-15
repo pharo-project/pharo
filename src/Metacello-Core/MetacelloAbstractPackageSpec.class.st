@@ -21,19 +21,22 @@ MetacelloAbstractPackageSpec >> addToMetacelloPackages: aMetacelloPackagesSpec [
 			yourself)
 ]
 
-{ #category : 'printing' }
+{ #category : 'Protocol (printing) - 4 selector(s)' }
 MetacelloAbstractPackageSpec >> configMethodBodyOn: aStream hasName: hasName cascading: hasCascading indent: indent [
 
 	| hasRequires hasIncludes |
-	hasRequires := self requires isEmpty not.
-	hasIncludes := self includes isEmpty not.
+	hasRequires := self requires isNotEmpty.
+	hasIncludes := self includes isNotEmpty.
 	hasRequires ifTrue: [
 			hasName | hasIncludes | hasCascading ifTrue: [
 					aStream
 						cr;
 						tab: indent ].
 			aStream nextPutAll: 'requires: #('.
-			self requires do: [ :str | aStream nextPutAll: str printString , ' ' ].
+			self requires do: [ :str |
+					aStream
+						print: str;
+						nextPutAll: ' ' ].
 			hasIncludes | hasCascading
 				ifTrue: [ aStream nextPutAll: ');' ]
 				ifFalse: [ aStream nextPut: $) ] ].
@@ -43,7 +46,10 @@ MetacelloAbstractPackageSpec >> configMethodBodyOn: aStream hasName: hasName cas
 						cr;
 						tab: indent ].
 			aStream nextPutAll: 'includes: #('.
-			self includes do: [ :str | aStream nextPutAll: str printString , ' ' ].
+			self includes do: [ :str |
+					aStream
+						print: str;
+						nextPutAll: ' ' ].
 			hasCascading
 				ifTrue: [ aStream nextPutAll: ');' ]
 				ifFalse: [ aStream nextPut: $) ] ]

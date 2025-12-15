@@ -480,20 +480,29 @@ OCASTTranslator >> replaceVariables: temporaries using: replacements [
 OCASTTranslator >> replaceVariablesInBlock: anOptimizedBlockNode using: replacements [
 
 	| copiedBody |
-	replacements ifEmpty: [ "Avoid crazy stuff with the AST"
-		^ anOptimizedBlockNode body ].
-
+	replacements ifEmpty: [ ^ anOptimizedBlockNode body ].
+	
 	"Use a copy -> leave the original AST as the original code"
 	copiedBody := anOptimizedBlockNode body copy.
+	
 	replacements keysAndValuesDo: [ :k :v |
-			copiedBody allChildren
-				select: [ :node | node isVariable and: [ node name = k asString ] ]
-				thenDo: [ :node |
-						node name: v asString.
-						node variable ifNotNil: [ :var |
-								var name: v asString.
-								"Rename the temp/arg for copied variables on inner blocks"
-								var originalVar name: v asString ]  ] ].
+			(copiedBody allChildren copyWithout: copiedBody) do: [ :node |
+					| originalNode |
+					
+					node isCommentNode ifFalse: [
+						"Store the original variable node as a property.
+							We need this in the IR metadata.
+						Since renames can happen recursively in the tree, lookup the name in the copies of copies"
+						originalNode := anOptimizedBlockNode body childAtPath: (node treePathUpTo: copiedBody).
+						[originalNode hasProperty: #originalNode]
+							whileTrue: [ originalNode := originalNode propertyAt: #originalNode ].
+						node propertyAt: #originalNode put: originalNode ].
+
+					(node isVariable and: [ node name = k asString ]) ifTrue: [
+							node name: v asString.
+							node variable ifNotNil: [ :var |
+									var name: v asString. "Rename the temp/arg for copied variables on inner blocks"
+									var originalVar name: v asString ] ] ] ].
 
 	^ copiedBody
 ]
@@ -525,6 +534,7 @@ OCASTTranslator >> subTranslator [
 { #category : 'visitor - double dispatching' }
 OCASTTranslator >> translateFullBlock: aBlockNode [
 
+	| originalBlockNode |
 	methodBuilder mapToNode: aBlockNode.
 
 	"args, then copied, then temps"
@@ -541,9 +551,11 @@ OCASTTranslator >> translateFullBlock: aBlockNode [
 	self visitNode: aBlockNode body.
 	methodBuilder mapToNode: aBlockNode body.
 	methodBuilder addBlockReturnTopIfRequired.
-	aBlockNode ir: self ir.
-	aBlockNode resetBcToASTCache.
-	^ aBlockNode ir compiledBlock: aBlockNode scope
+	
+	originalBlockNode := aBlockNode propertyAt: #originalNode ifAbsent: [aBlockNode].
+	originalBlockNode ir: self ir.
+	originalBlockNode resetBcToASTCache.
+	^ originalBlockNode ir compiledBlock: originalBlockNode scope
 ]
 
 { #category : 'visiting' }

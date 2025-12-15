@@ -171,6 +171,33 @@ MethodMapExamples >> exampleTempNamedTempVectorNestedBlock [
 ]
 
 { #category : 'examples' }
+MethodMapExamples >> exampleWithDoubleHoisting [
+	
+	17 ifNil: [ | a | a yourself ] ifNotNil: [ :a | a yourself ].
+	
+	"This a should be hoisted also and conflict with the two above"
+	17 ifNotNil: [ :a | a yourself ]
+]
+
+{ #category : 'examples' }
+MethodMapExamples >> exampleWithHoisting [
+	
+	17 ifNil: [ | a | a yourself ] ifNotNil: [ :a | a yourself ]
+]
+
+{ #category : 'examples' }
+MethodMapExamples >> exampleWithNestedHoisting [
+
+	17
+		ifNil: [
+				| a |
+				a yourself ]
+		ifNotNil: [ :a |
+			"This a should be hoisted also and conflict with the two above"
+			17 ifNotNil: [ :a | a yourself ] ]
+]
+
+{ #category : 'examples' }
 MethodMapExamples >> helperMethod12 [
 	| i |
 	i := 5.

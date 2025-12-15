@@ -87,11 +87,12 @@ OnlineSourceDebugInfo >> asOfflineDebugInfo [
 						blockBody := astScope node body.
 						blockStatements := blockBody statements.
 						currentScopeBytecodeToASTCache := astScope outerNotOptimizedScope node bcToASTCache.
-						blockStatements ifEmpty: [ mappedPCs := currentScopeBytecodeToASTCache pcsForNode: blockBody ] ifNotEmpty: [
+						blockStatements ifEmpty: [
+							mappedPCs := currentScopeBytecodeToASTCache pcsForNode: blockBody ] ifNotEmpty: [
 								mappedPCs := ((blockStatements flatCollect: [ :e | e withAllChildren ])
 									              flatCollect: [ :e | currentScopeBytecodeToASTCache pcsForNode: e ]
-									              as: Set) sorted.
-								mappedPCs := mappedPCs first to: mappedPCs last ]. "It may happen that no children has a mapping.
+									              as: Set) sorted ].
+						"It may happen that no children has a mapping.
 						This happens when a node is completely optimized out.
 						For example, a statement reading a variable but doing nothing else.
 						In that case, save an empty range"
