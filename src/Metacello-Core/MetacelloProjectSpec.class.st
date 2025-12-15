@@ -293,15 +293,19 @@ MetacelloProjectSpec >> copyForRegistration: aMetacelloProjectRegistration onWri
 
 { #category : 'scripting' }
 MetacelloProjectSpec >> copyForScriptingInto: aProjectSpec [
-    ^aProjectSpec
-        setName: name;
-        className: className;
-        operator: operator;
-        setLoads: loads;
-        preLoadDoIt: preLoadDoIt;
-        postLoadDoIt: postLoadDoIt;
-        repositories: repositories copy;
-        file: file
+
+	aProjectSpec
+		setName: name;
+		className: className;
+		operator: operator;
+		setLoads: loads;
+		repositories: repositories copy;
+		file: file.
+
+	preLoadDoIt ifNotNil: [ aProjectSpec preLoadDoIt: preLoadDoIt ].
+	postLoadDoIt ifNotNil: [ aProjectSpec postLoadDoIt: postLoadDoIt ].
+
+	^ aProjectSpec
 ]
 
 { #category : 'accessing' }
@@ -590,15 +594,6 @@ MetacelloProjectSpec >> operator: anObject [
 
     self shouldBeMutable.
     operator := anObject
-]
-
-{ #category : 'accessing' }
-MetacelloProjectSpec >> packageFileSpecFor: aMetacelloPackagesSpec [
-
-	^(aMetacelloPackagesSpec project projectReferenceSpec)
-			name: self name;
-			projectReference: self copy;
-			yourself.
 ]
 
 { #category : 'copying' }

@@ -15,21 +15,3 @@ UndefinedObject >> metacelloRegistrationHash [
 UndefinedObject >> registrationsCompareEqual: aMetacelloProjectSpec [
     ^ self = aMetacelloProjectSpec
 ]
-
-{ #category : '*Metacello-Core' }
-UndefinedObject >> setPostLoadDoItInMetacelloSpec: aMetacelloSpec [
-
-	aMetacelloSpec setPostLoadDoIt: 
-		(aMetacelloSpec project valueHolderSpec
-			value: self;
-			yourself)
-]
-
-{ #category : '*Metacello-Core' }
-UndefinedObject >> setPreLoadDoItInMetacelloSpec: aMetacelloSpec [
-
-	aMetacelloSpec setPreLoadDoIt: 
-		(aMetacelloSpec project valueHolderSpec
-			value: self;
-			yourself)
-]

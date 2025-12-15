@@ -138,6 +138,12 @@ MCVersionLoader >> mergeVersions [
 		merge
 ]
 
+{ #category : 'accessing' }
+MCVersionLoader >> versions [
+
+	^versions
+]
+
 { #category : 'checking' }
 MCVersionLoader >> warnAboutLosingChangesTo: versionCollection ifCancel: cancelBlock ifMerge: mergeBlock [
 

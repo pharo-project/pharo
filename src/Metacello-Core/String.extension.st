@@ -103,14 +103,6 @@ String >> metacelloVersionComponentLessThan: aMetacelloVersonComponent [
 ]
 
 { #category : '*Metacello-Core' }
-String >> packageFileSpecFor: aMetacelloPackagesSpec [
-
-	^(aMetacelloPackagesSpec project packageSpec)
-			file: self;
-			yourself
-]
-
-{ #category : '*Metacello-Core' }
 String >> removeFromMetacelloPackages: aMetacelloPackagesSpec [
 
 	aMetacelloPackagesSpec addMember: 
@@ -138,16 +130,6 @@ String >> setIncludesInMetacelloPackage: aMetacelloPackageSpec [
 String >> setLoadsInMetacelloProject: aMetacelloPackageSpec [
 
 	aMetacelloPackageSpec setLoads: { self }.
-]
-
-{ #category : '*Metacello-Core' }
-String >> setPostLoadDoItInMetacelloSpec: aMetacelloSpec [
-    self asSymbol setPostLoadDoItInMetacelloSpec: aMetacelloSpec
-]
-
-{ #category : '*Metacello-Core' }
-String >> setPreLoadDoItInMetacelloSpec: aMetacelloSpec [
-    self asSymbol setPreLoadDoItInMetacelloSpec: aMetacelloSpec
 ]
 
 { #category : '*Metacello-Core' }
