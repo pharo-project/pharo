@@ -11,6 +11,11 @@ Class {
 	#package : 'NewFiles'
 }
 
+{ #category : 'accessing' }
+OldFile class >> apiName [
+	^ 'OldFile'
+]
+
 { #category : 'primitives - files' }
 OldFile class >> checkHandle: handle forPath: path [
 	handle ifNil: [ 

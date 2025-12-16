@@ -18,6 +18,11 @@ Class {
 	#package : 'NewFiles'
 }
 
+{ #category : 'as yet unclassified' }
+NewFile class >> apiName [
+	^ 'NewFile'
+]
+
 { #category : 'file primitives' }
 NewFile class >> deleteFile: path [
 	^ self primitiveDeleteFile: path
