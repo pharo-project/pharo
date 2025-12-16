@@ -143,9 +143,9 @@ PBBootstrap >> createImage [
 
 { #category : 'pre-requisites' }
 PBBootstrap >> ensureBaselineOfPharoBootstrap [
+	(self originRepository versionWithInfo: (self originRepository versionInfoFromVersionNamed: 'BaselineOfMonticello')) load.
 	(self originRepository versionWithInfo: (self originRepository versionInfoFromVersionNamed: 'BaselineOfPharoBootstrap')) load.
 	(self originRepository versionWithInfo: (self originRepository versionInfoFromVersionNamed: 'BaselineOfTraits')) load.
-	(self originRepository versionWithInfo: (self originRepository versionInfoFromVersionNamed: 'BaselineOfMonticello')) load.
 	(self originRepository versionWithInfo: (self originRepository versionInfoFromVersionNamed: 'BaselineOfMetacello')) load.	
 ]
 
@@ -170,84 +170,6 @@ PBBootstrap >> exportKernelProtocols [
 	self exportProtocolsFor: self kernelPackageNames to: self bootstrapCacheDirectory / 'protocolsKernel.txt'.
 	
 	
-]
-
-{ #category : 'preparation' }
-PBBootstrap >> exportMonticelloInStFile [
-
-	self
-		exportPackages: self monticelloPackageNames
-		usingInitializeScript: '		
-		ZipConstants initialize.
-		ZipFileConstants initialize.
-		ZipWriteStream initialize.
-		GZipConstants initialize.
-		InflateStream initialize.
-		FastInflateStream initialize.
-		
-		MCCacheRepository initialize.
-		MCWorkingCopy initialize.
-		MCLazyVersionInfo initialize.
-		SharedRandom initialize.
-		DigitalSignatureAlgorithm initialize.
-		MD5NonPrimitive initialize.
-		SHA1 initialize.
-		UUIDGenerator initialize.'
-		intoFile: 'Monticello.st'
-
-]
-
-{ #category : 'exporting' }
-PBBootstrap >> exportPackageNamesFor: packageNames to: aTextFile [
-
-	"export list of packages for the Package initialization. Eech package on standalone line"
-		
-	aTextFile ensureDelete.
-	aTextFile writeStreamDo: [:stream | 
-		packageNames do: [ :each | stream nextPutAll: each; cr ]].
-]
-
-{ #category : 'exporting' }
-PBBootstrap >> exportPackages: packageList intoFile: aFileName [
-
-	self
-		exportPackages: packageList
-		usingInitializeScript: ''
-		intoFile: aFileName
-]
-
-{ #category : 'exporting' }
-PBBootstrap >> exportPackages: packageList usingInitializeScript: aScriptString intoFile: aFileName [
-
-	self
-		exportPackages: packageList
-		withBlacklistedClasses: #()
-		withBlacklistedMethods: #() 
-		usingInitializeScript: aScriptString
-		intoFile: aFileName
-]
-
-{ #category : 'exporting' }
-PBBootstrap >> exportPackages: packageList withBlacklistedClasses: blacklistedClasses withBlacklistedMethods: methods usingInitializeScript: aString intoFile: aFileName [
-
-	| mcst | 	
-	mcst := (self bootstrapCacheDirectory / 'st-cache' / aFileName) asFileReference.
-	mcst ensureDelete.
-	mcst parent ensureCreateDirectory.
-	mcst writeStreamDo: [ :stream | | writer version |
-		writer := MCStWriter on: stream.
-		writer writeInitializers: false.
-		
-		packageList do: [ :packageName |
-			| definitions |
-			version := (self originRepository loadVersionFromFileNamed: packageName).
-			definitions := version snapshot definitions.
-			definitions := definitions reject: [:def | blacklistedClasses includes: def className ].
-			definitions := definitions reject: [:def | def isMethodDefinition and: [methods includes: def selector] ].
-			writer writeDefinitions: definitions ].
-		"Write initialization instructions"
-		stream nextPutAll: aString.
-	].
 ]
 
 { #category : 'preparation' }
@@ -323,7 +245,7 @@ PBBootstrap >> mczCache [
 ]
 
 { #category : 'package-names' }
-PBBootstrap >> monticelloPackageNames [
+PBBootstrap >> monticelloCorePackageNames [
 
 	self ensureBaselineOfPharoBootstrap.
 	^ #BaselineOfMonticello asClass corePackageNames
@@ -343,7 +265,7 @@ PBBootstrap >> originRepository [
 { #category : 'package-names' }
 PBBootstrap >> packagesToExportAsMCZ [
 
-	^ #(BaselineOfMetacello) , (#BaselineOfMetacello asClass allPackageNames)  , self monticelloPackageNames , self hermesPackageNames, self kernelPackageNames
+	^ #(BaselineOfMetacello) , (#BaselineOfMetacello asClass allPackageNames)  , self monticelloCorePackageNames , self hermesPackageNames, self kernelPackageNames
 ]
 
 { #category : 'preparation' }
@@ -352,7 +274,6 @@ PBBootstrap >> prepareBootstrap [
 	self
 		exportKernelProtocols;
 		exportAllPackagesIntoMcz;
-		exportMonticelloInStFile;
 		
 		prepareEnvironmentForHermes;
 		generateHermesFiles;

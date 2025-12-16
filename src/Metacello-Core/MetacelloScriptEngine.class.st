@@ -327,8 +327,7 @@ MetacelloScriptEngine >> register [
 	MetacelloProjectRegistration
 		registrationForProjectSpec: spec
 		ifAbsent: [ :new | new registerProject ]
-		ifPresent: [ :existing :new |
-			existing copyOnWrite: [ :existingCopy | existingCopy merge: new ] ].
+		ifPresent: [ :existing :new | existing copyOnWrite: [ :existingCopy | existingCopy merge: new ] ].
 	self root: spec
 ]
 
@@ -401,10 +400,7 @@ MetacelloScriptEngine >> unregister [
 	| spec |
 	self validateProjectSpec.
 	spec := self projectReferenceSpec.
-	MetacelloProjectRegistration
-		registrationForProjectSpec: spec
-		ifAbsent: [ :ignored |  ]
-		ifPresent: [ :existing :new | existing unregisterProject ].
+	MetacelloProjectRegistration registrationForProjectSpec: spec ifAbsent: [ :ignored |  ] ifPresent: [ :existing :new | existing unregisterProject ].
 	self root: spec
 ]
 

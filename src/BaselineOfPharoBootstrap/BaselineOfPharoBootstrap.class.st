@@ -142,6 +142,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec package: 'SUnit-Tests'.
 		spec package: 'Kernel-Tests'.
 		spec package: 'SUnit-Basic-CLI'.		
+		BaselineOfMonticello corePackageNames do: [ :package | spec package: package ].
 
 		spec group: 'KernelGroup' with: {
 			'FFI-Kernel'.
@@ -175,7 +176,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			
 			'System-Support'.
 
-			'Zinc-Character-Encoding-Core' }.
+			'Zinc-Character-Encoding-Core' } .
 
 		"These packages are added using hermes after bootstrap"
 
@@ -210,6 +211,8 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'FileSystem-Path'.
 			'FileSystem-Core'.
 			'FileSystem-Disk'}.
+			
+		spec group: 'MonticelloCore' with: BaselineOfMonticello corePackageNames.
 
 		spec group: 'ToLoadByHermes' with: {
 			'AdditionalPackages'.
@@ -217,6 +220,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'CompilerGroup'.
 			'FileSystemGroup'.
 			'Hermes-Extensions'.
+			'MonticelloCore'.
 			'SUnitGroup'.
 		}.
 

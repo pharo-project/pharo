@@ -128,9 +128,6 @@ zip "${HERMES_ARCHIVE_NAME}.zip" *.hermes
 # Archive Package definitions
 zip "${RPACKAGE_ARCHIVE_NAME}.zip" protocolsKernel.txt
 
-# Find st-cache path
-[[ -z "${BOOTSTRAP_CACHE}" ]] && ST_CACHE='st-cache' || ST_CACHE="${BOOTSTRAP_CACHE}/st-cache"
-
 # Installing Package
 echo $(date -u) "[Compiler] Initializing Bootstraped Image"
 ${VM} "${COMPILER_IMAGE_NAME}.image" # I have to run once the image so the next time it starts the CommandLineHandler.
@@ -176,8 +173,7 @@ zip "${CORE_IMAGE_NAME}.zip" "${CORE_IMAGE_NAME}.image"
 echo $(date -u) "[Monticello] Bootstrap Monticello Core and Local repositories"
 
 ${VM} "${CORE_IMAGE_NAME}.image" save ${MC_BOOTSTRAP_IMAGE_NAME}
-#cp "${CORE_IMAGE_NAME}.image" "${MC_BOOTSTRAP_IMAGE_NAME}.image"
-${VM} "${MC_BOOTSTRAP_IMAGE_NAME}.image" st ${ST_CACHE}/Monticello.st --save --quit
+${VM} "${MC_BOOTSTRAP_IMAGE_NAME}.image" loadHermes Ring-Definitions-Core.hermes Ring-OldChunkImporter.hermes Jobs.hermes Random-Core.hermes System-Hashing.hermes Compression.hermes Monticello-Model.hermes Network-UUID.hermes Monticello.hermes Ring-Definitions-Monticello.hermes --save --no-fail-on-undeclared
 ${VM} "${MC_BOOTSTRAP_IMAGE_NAME}.image" st ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/02-monticello-bootstrap/01-bootstrapMonticello.st --save --quit
 zip "${MC_BOOTSTRAP_IMAGE_NAME}.zip" ${MC_BOOTSTRAP_IMAGE_NAME}.*
 
@@ -185,8 +181,8 @@ zip "${MC_BOOTSTRAP_IMAGE_NAME}.zip" ${MC_BOOTSTRAP_IMAGE_NAME}.*
 echo "[Metacello] Bootstrapping Metacello"
 ${VM} "${MC_BOOTSTRAP_IMAGE_NAME}.image" save ${METACELLO_IMAGE_NAME}
 ${VM} "${METACELLO_IMAGE_NAME}.image" st ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/03-metacello-bootstrap/01-loadMetacello.st --save --quit
-git clone https://github.com/pharo-vcs/tonel.git -b "Pharo${PHARO_MAJOR}" "${BOOTSTRAP_DOWNLOADS}/tonel"
-${VM} "${METACELLO_IMAGE_NAME}.image" metacello install --save --signalErrorOnWarning "filetree://${BOOTSTRAP_DOWNLOADS}/tonel" Tonel --groups core
+git clone https://github.com/pharo-vcs/tonel.git -b "Pharo${PHARO_MAJOR}" "${BOOTSTRAP_CACHE}/tonel"
+${VM} "${METACELLO_IMAGE_NAME}.image" metacello install --save --signalErrorOnWarning "filetree://${BOOTSTRAP_CACHE}/tonel" Tonel --groups core
 #We need the next line because we will reload Tonel from github and this could cause some trouble later
 ${VM} "${METACELLO_IMAGE_NAME}.image" "${IMAGE_FLAGS}" eval --save "MetacelloProjectRegistration resetRegistry"
 zip "${METACELLO_IMAGE_NAME}.zip" ${METACELLO_IMAGE_NAME}.*

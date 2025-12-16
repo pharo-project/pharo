@@ -143,6 +143,15 @@ PluggableMenuItemSpec >> name: anObject [
 	name := anObject
 ]
 
+{ #category : 'printing' }
+PluggableMenuItemSpec >> printOn: aStream [
+
+	super printOn: aStream. 
+	aStream << ' ('.
+	aStream print: self label.
+	aStream << ')'.
+]
+
 { #category : 'accessing' }
 PluggableMenuItemSpec >> separator [
 	"Answer whether the receiver should be followed by a separator"
