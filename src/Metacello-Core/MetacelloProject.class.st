@@ -96,12 +96,6 @@ MetacelloProject >> configuration: anObject [
 	configuration := anObject
 ]
 
-{ #category : 'accessing' }
-MetacelloProject >> defaultBlessing [
-
-	^#release
-]
-
 { #category : 'private' }
 MetacelloProject >> defaultPlatformAttributes [
 	"Returns the tags for the conditional platform loading in Metacello. Pay attention the order is important: from most  to least general."

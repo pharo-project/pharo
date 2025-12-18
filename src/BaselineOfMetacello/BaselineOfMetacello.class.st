@@ -5,6 +5,12 @@ Class {
 	#package : 'BaselineOfMetacello'
 }
 
+{ #category : 'accessing' }
+BaselineOfMetacello class >> corePackageNames [
+
+	^ self packagesOfGroupNamed: #Core
+]
+
 { #category : 'baseline' }
 BaselineOfMetacello >> baseline: spec [
 	<baseline>

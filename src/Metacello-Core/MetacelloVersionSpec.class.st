@@ -240,13 +240,12 @@ MetacelloVersionSpec >> loader: aMetacelloLoadTarget [
 { #category : 'merging' }
 MetacelloVersionSpec >> mergeMap [
 
-	| map |
-	map := super mergeMap.
-	map at: #preLoadDoIt put: preLoadDoIt.
-	map at: #postLoadDoIt put: postLoadDoIt.
-	map at: #packageList put: self packages.
-	map at: #repositories put: self repositories.
-	^ map
+	^ super mergeMap
+		  at: #preLoadDoIt put: preLoadDoIt;
+		  at: #postLoadDoIt put: postLoadDoIt;
+		  at: #packageList put: self packages;
+		  at: #repositories put: self repositories;
+		  yourself
 ]
 
 { #category : 'merging' }
@@ -387,10 +386,11 @@ MetacelloVersionSpec >> packagesSpec [
 
 { #category : 'copying' }
 MetacelloVersionSpec >> postCopy [
-    super postCopy.
-    packageList := packageList copy.
-    repositories := repositories copy.
-    packages := packages copy	"leave reference to packages for upgrade purposes"
+
+	super postCopy.
+	packageList := packageList copy.
+	repositories := repositories copy.
+	packages := packages copy "leave reference to packages for upgrade purposes"
 ]
 
 { #category : 'querying' }

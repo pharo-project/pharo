@@ -17,7 +17,7 @@ MetacelloReferenceBaseline >> baseline: spec [
 	<baseline>
 	
 	spec for: #common do: [
-		"recommended methods for specifying, description, preLoadDoIt, postLoadDoit"							
+		"recommended methods for specifying preLoadDoIt, postLoadDoit"
 		spec
 			"Before loading packages or projects in this version, send #preloadForVersion to an instance of this config"
 			preLoadDoIt: #preloadForVersion;
@@ -77,7 +77,6 @@ MetacelloReferenceBaseline >> baseline: spec [
 						operator: #~>;
 						loads: #('UI-Core' 'UI-Tests' );
 						repository: 'http://www.example.com/r'];
-			"Change the versionString for 'UI Support'"
 			project: 'UI Support';	
 			"Remove the project reference 'UI Tests'"				
 			removeProject: 'UI Tests';

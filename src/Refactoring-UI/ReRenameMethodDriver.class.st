@@ -190,31 +190,24 @@ ReRenameMethodDriver >> requestNewMessage [
 ReRenameMethodDriver >> runRefactoring [
 
 	| failedConditions |
-		
 	self configureRefactoring.
 
-	failedConditions := OrderedCollection empty.	
-	[ 
+	failedConditions := OrderedCollection empty.
+	[
 		newMessage := self requestNewMessage.
 		self configureMessage.
-		
+
 		refactoring isMethodDefinitionUnchanged ifTrue: [ ^ self ].
 		shouldEscape ifTrue: [ ^ self ]. "What is the use of this variable: shouldEscape?"
-		
+
 		failedConditions := refactoring failedApplicabilityPreconditions.
 		failedConditions do: [ :cond |
-			self informDialog
-				label: cond errorString;
-				title: 'Invalid method name';
-				openModal 
-		].
-	
-	] doWhileFalse: [	failedConditions isEmpty ].
+				self informDialog
+					label: cond errorString;
+					title: 'Invalid method name';
+					openModal ] ] doWhileFalse: [ failedConditions isEmpty ].
 
-	refactoring failedBreakingChangePreconditions 
-		ifEmpty: [ self applyChanges ]
-		ifNotEmpty: [ self handleBreakingChanges ]
-
+	refactoring failedBreakingChangePreconditions ifEmpty: [ self applyChanges ] ifNotEmpty: [ self handleBreakingChanges ]
 ]
 
 { #category : 'initialization' }

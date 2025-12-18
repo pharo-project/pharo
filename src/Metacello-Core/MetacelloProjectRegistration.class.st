@@ -199,12 +199,6 @@ MetacelloProjectRegistration >> copyOnWrite: aBlock [
 ]
 
 { #category : 'accessing' }
-MetacelloProjectRegistration >> currentBranchName [
-
-	^ baselineProjectSpec repositoryBranchName
-]
-
-{ #category : 'accessing' }
 MetacelloProjectRegistration >> currentVersionString [
 
 	^ baselineProjectSpec repositoryVersionString

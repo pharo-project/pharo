@@ -13,33 +13,9 @@ Class {
 }
 
 { #category : 'accessing' }
-BaselineOfPharoBootstrap class >> compilerPackageNames [
-
-	^ self packagesOfGroupNamed: #CompilerGroup
-]
-
-{ #category : 'accessing' }
-BaselineOfPharoBootstrap class >> fileSystemPackageNames [
-
-	^ self packagesOfGroupNamed: #FileSystemGroup
-]
-
-{ #category : 'accessing' }
-BaselineOfPharoBootstrap class >> kernelAdditionalPackagesNames [
-
-	^ self packagesOfGroupNamed: #AdditionalPackages
-]
-
-{ #category : 'accessing' }
 BaselineOfPharoBootstrap class >> kernelPackageNames [
 
 	^ self packagesOfGroupNamed: #KernelGroup
-]
-
-{ #category : 'accessing' }
-BaselineOfPharoBootstrap class >> multilingualPackageNames [
-
-	^ self packagesOfGroupNamed: #MultilingualGroup
 ]
 
 { #category : 'traversing' }
@@ -51,6 +27,12 @@ BaselineOfPharoBootstrap class >> packagesRecursiveIn: aGroupName [
 	packages := allMembers includes select: [ :aName | allPackagesInBaseline includes: aName ].
 	groups := allMembers includes reject: [ :aName | allPackagesInBaseline includes: aName ].		
 	^ packages , (groups flatCollect: [ :aInnerGroupName | self packagesRecursiveIn: aInnerGroupName ]).
+]
+
+{ #category : 'accessing' }
+BaselineOfPharoBootstrap class >> packagesToExportAsMCZ [
+
+	^ self packagesRecursiveIn: 'ToExportAsMCZ'
 ]
 
 { #category : 'accessing' }
@@ -67,171 +49,42 @@ BaselineOfPharoBootstrap class >> sUnitPackageNames [
 
 { #category : 'baselines' }
 BaselineOfPharoBootstrap >> baseline: spec [
+
 	<baseline>
-
 	spec for: #common do: [
-		spec package: 'AST-Core'.
-		spec package: 'Announcements-Core'.
-		spec package: 'Collections-Abstract'.
-		spec package: 'Collections-Arithmetic'.
-		spec package: 'Collections-Atomic'.
-		spec package: 'Collections-DoubleLinkedList'.
-		spec package: 'Collections-Native'.
-		spec package: 'Collections-Sequenceable'.
-		spec package: 'Collections-Stack'.
-		spec package: 'Collections-Streams'.
-		spec package: 'Collections-Strings'.
-		spec package: 'Collections-Support'.
-		spec package: 'Collections-Unordered'.
-		spec package: 'Collections-Weak'.
-		spec package: 'Deprecation'.
-		spec package: 'Files'.
-		spec package: 'FileSystem-Path'.
-		spec package: 'Hermes'.
-		spec package: 'Hermes-Extensions'.
+			spec package: 'Random-Core'.
+			spec package: 'SUnit-Core'.
+			spec package: 'SUnit-Tests'.
+			spec package: 'Kernel-Tests'.
+			spec package: 'SUnit-Basic-CLI'.
+			BaselineOfKernel corePackageNames do: [ :package | spec package: package ].
+			BaselineOfKernel additionalPackagesPackageNames do: [ :package | spec package: package ].
+			BaselineOfCompiler corePackageNames do: [ :package | spec package: package ].
+			BaselineOfFileSystem corePackageNames do: [ :package | spec package: package ].
+			BaselineOfTraits corePackageNames do: [ :package | spec package: package ].
+			BaselineOfMonticello corePackageNames do: [ :package | spec package: package ].
+			BaselineOfMetacello corePackageNames do: [ :package | spec package: package ].
 
-		spec package: 'Kernel'.
-		spec package: 'Kernel-CodeModel'.
-		spec package: 'Kernel-BytecodeEncoders'.
-		spec package: 'System-Time'.
-		spec package: 'NumberParser'.
+			spec group: 'KernelGroup' with: BaselineOfKernel corePackageNames.
 
-		spec package: 'Math-Operations-Extensions'.
+			spec group: 'AdditionalPackages' with: BaselineOfKernel additionalPackagesPackageNames.
 
-		spec package: 'Multilingual-Encodings'.
-		
-		spec package: 'Transcript-NonInteractive'.
-		spec package: 'ParseTreeRewriter'.
-		spec package: 'PharoBootstrap-Initialization'.
-		spec package: 'ReflectionMirrors-Primitives'.
-		spec package: 'Shift-ClassBuilder'.
-		spec package: 'System-Announcements'.
-		spec package: 'System-CommandLineHandler'.
-		spec package: 'Clap-Core'.
-		spec package: 'Clap-Commands-Pharo' .
-		spec package: 'System-Finalization'.
-		spec package: 'System-Platforms'.
-		spec package: 'System-SessionManager'.
-		
-		spec package: 'ClassDefinitionPrinters'.
-		spec package: 'CodeExport'.
-		spec package: 'System-Sources'.
-		spec package: 'System-Support'.
-		spec package: 'System-Version'.
+			spec group: 'CompilerGroup' with: BaselineOfCompiler corePackageNames.
 
-		spec package: 'UIManager'.
-		spec package: 'Zinc-Character-Encoding-Core'.
-		
-		spec package: 'FFI-Kernel'.
-		
-		spec package: 'CodeImport'.
-		
-		spec package: 'CodeImport-Commands'.
-		
-		spec package: 'OpalCompiler-Core'.
-		spec package: 'DebugInfo'
-			with: [ spec requires: #( 'OpalCompiler-Core' ) ].
-		
-		spec package: 'FileSystem-Core'.
-		spec package: 'FileSystem-Disk'.
+			spec group: 'FileSystemGroup' with: BaselineOfFileSystem corePackageNames.
 
-		spec package: 'System-NumberPrinting'.
+			spec group: 'TraitGroup' with: BaselineOfTraits corePackageNames.
 
-		spec package: 'Random-Core'.
-		spec package: 'SUnit-Core'.
-		spec package: 'SUnit-Tests'.
-		spec package: 'Kernel-Tests'.
-		spec package: 'SUnit-Basic-CLI'.		
-		BaselineOfMonticello corePackageNames do: [ :package | spec package: package ].
+			spec group: 'MonticelloCore' with: BaselineOfMonticello corePackageNames.
 
-		spec group: 'KernelGroup' with: {
-			'FFI-Kernel'.
-			'Announcements-Core'.
-			'Collections-Abstract'.
-			'Collections-DoubleLinkedList'.
-			'Collections-Native'.
-			'Collections-Sequenceable'.
-			'Collections-Streams'.
-			'Collections-Strings'.
-			'Collections-Support'.
-			'Collections-Unordered'.
-			'Collections-Weak'.
-			'Files'.
-			'Hermes'.
-			'Kernel'.
-			'Kernel-CodeModel'.
-			'Kernel-BytecodeEncoders'.
-			'Transcript-NonInteractive'.
-			'PharoBootstrap-Initialization'.
-			'Shift-ClassBuilder'.
-			'System-Announcements'.
-			'System-CommandLineHandler'.
-			'System-Finalization'.
-			'System-Platforms'.
-			'System-SessionManager'.
+			spec group: 'MetacelloGroup' with: BaselineOfMetacello corePackageNames.
 
-			'ClassDefinitionPrinters'.
-			'CodeExport'.
-			'System-Sources'.
+			"Group of packages to load with Hermes."
+			spec group: 'ToLoadByHermes' with: { 'AdditionalPackages'. 'CompilerGroup'. 'FileSystemGroup'. 'TraitGroup'. 'MonticelloCore'. 'SUnitGroup' }.
+
+			"Group of packages to export as MCZ"
+			spec group: 'ToExportAsMCZ' with: { 'KernelGroup'. 'ToLoadByHermes'. 'MetacelloGroup' }. 
 			
-			'System-Support'.
-
-			'Zinc-Character-Encoding-Core' } .
-
-		"These packages are added using hermes after bootstrap"
-
-		spec group: 'AdditionalPackages' with: {
-			'Clap-Core'.
-			'Clap-Commands-Pharo'.
-			'ReflectionMirrors-Primitives'.
-			'System-Time'.
-			'Math-Operations-Extensions'.
-			'System-NumberPrinting'.
-			'System-Version'
-		}.
-
-		spec group: 'MultilingualGroup' with: {
-			'Multilingual-Encodings' }.
-
-		spec group: 'CompilerGroup' with: {
-			'UIManager'.
-			'AST-Core'.
-			'Collections-Arithmetic'.
-			'Collections-Atomic'.
-			'Collections-Stack'.
-			'CodeImport'.
-			'CodeImport-Commands'.
-			'DebugInfo'.
-			'NumberParser'.
-			'OpalCompiler-Core'.
-			'ParseTreeRewriter'.
-			'Deprecation'}.
-		
-		spec group: 'FileSystemGroup' with: {
-			'FileSystem-Path'.
-			'FileSystem-Core'.
-			'FileSystem-Disk'}.
-			
-		spec group: 'MonticelloCore' with: BaselineOfMonticello corePackageNames.
-
-		spec group: 'ToLoadByHermes' with: {
-			'AdditionalPackages'.
-			'MultilingualGroup'.
-			'CompilerGroup'.
-			'FileSystemGroup'.
-			'Hermes-Extensions'.
-			'MonticelloCore'.
-			'SUnitGroup'.
-		}.
-
-		spec group: 'SUnitGroup' with: {
-			'Deprecation'.
-			'Random-Core'.
-			'ParseTreeRewriter'.
-			'SUnit-Core'.
-			'SUnit-Tests'.
-			'Kernel-Tests'.
-			'SUnit-Basic-CLI'}.
-
-	]
+			"The next group is here for testing the minimal image"
+			spec group: 'SUnitGroup' with: { 'Deprecation'. 'Random-Core'. 'ParseTreeRewriter'. 'SUnit-Core'. 'SUnit-Tests'. 'Kernel-Tests'. 'SUnit-Basic-CLI' } ]
 ]

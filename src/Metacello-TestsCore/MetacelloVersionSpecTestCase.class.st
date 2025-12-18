@@ -108,6 +108,7 @@ MetacelloVersionSpecTestCase >> testVersionMergeSpec2 [
 
 { #category : 'tests' }
 MetacelloVersionSpecTestCase >> testVersionSpec [
+
 	| version |
 	version := self versionSpec
 		preLoadDoIt: #preLoadDoIt;
