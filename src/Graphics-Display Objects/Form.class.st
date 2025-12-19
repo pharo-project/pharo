@@ -1002,21 +1002,21 @@ Form >> fadeImageCoarse: otherImage at: topLeft [
 { #category : 'transitions' }
 Form >> fadeImageFine: otherImage at: topLeft [
 	"Display fadeImageFine: (Form fromDisplay: (40@40 extent: 300@300)) reverse at: 40@40"
-	| d pix|
+
+	| d pix |
 	d := self depth.
-	^ self fadeImage: otherImage at: topLeft indexAndMaskDo:
-		[:i :mask | | j ii  |
-		i=1 ifTrue: [pix := (1 bitShift: d) - 1.
-					1 to: 8//d-1 do:
-						[:q | pix := pix bitOr: (pix bitShift: d*4)]].
-		i <= 16 ifTrue:
-		[ii := #(0 10 2 8 7 13 5 15 1 11 3 9 6 12 4 14) at: i.
-		j := ii//4+1.
-		(0 to: 28 by: 4) do:
-			[:k | mask bits at: j+k put:
-				((mask bits at: j+k) bitOr: (pix))].
-		true]
-		ifFalse: [false]]
+	^ self fadeImage: otherImage at: topLeft indexAndMaskDo: [ :i :mask |
+			  | j ii |
+			  i = 1 ifTrue: [
+					  pix := (1 bitShift: d) - 1.
+					  1 to: 8 // d - 1 do: [ :q | pix := pix bitOr: (pix bitShift: d * 4) ] ].
+			  i <= 16
+				  ifTrue: [
+						  ii := #( 0 10 2 8 7 13 5 15 1 11 3 9 6 12 4 14 ) at: i.
+						  j := ii // 4 + 1.
+						  (0 to: 28 by: 4) do: [ :k | mask bits at: j + k put: ((mask bits at: j + k) bitOr: pix) ].
+						  true ]
+				  ifFalse: [ false ] ]
 ]
 
 { #category : 'transitions' }
@@ -2543,26 +2543,29 @@ Form >> yTallyPixelValue: pv orNot: not [
 Form >> zoomIn: goingIn orOutTo: otherImage at: topLeft vanishingPoint: vp [
 	"Display zoomInTo: (Form fromDisplay: (40@40 extent: 300@300)) reverse at: 40@40.
 	Display zoomOutTo: (Form fromDisplay: (40@40 extent: 300@300)) reverse at: 40@40."
+
 	| nSteps minTime startTime |
 	nSteps := 16.
-	minTime := 500.  "milliseconds"
+	minTime := 500. "milliseconds"
 	startTime := Time millisecondClockValue.
-	^ self wipeImage: otherImage at: topLeft clippingBox: nil rectForIndex:
-		[:i | | bigR j lilR lead | "i runs from 1 to nsteps"
-		i > nSteps
-			ifTrue: [nil "indicates all done"]
-			ifFalse:
-			["If we are going too fast, delay for a bit"
-			lead := startTime + (i-1*minTime//nSteps) - Time millisecondClockValue.
-			lead > 10 ifTrue: [(Delay forMilliseconds: lead) wait].
-
-			"Return an array with the difference rectangles for this step."
-			j := goingIn ifTrue: [i] ifFalse: [nSteps+1-i].
-			bigR := vp - (vp*(j)//nSteps) corner:
-				vp + (otherImage extent-vp*(j)//nSteps).
-			lilR := vp - (vp*(j-1)//nSteps) corner:
-				vp + (otherImage extent-vp*(j-1)//nSteps).
-			bigR areasOutside: lilR]]
+	^ self
+		  wipeImage: otherImage
+		  at: topLeft
+		  clippingBox: nil
+		  rectForIndex: [ :i |
+				  | bigR j lilR lead |
+				  "i runs from 1 to nsteps"
+				  i > nSteps
+					  ifTrue: [ nil "indicates all done" ]
+					  ifFalse: [ "If we are going too fast, delay for a bit"
+							  lead := startTime + (i - 1 * minTime // nSteps) - Time millisecondClockValue.
+							  lead > 10 ifTrue: [ (Delay forMilliseconds: lead) wait ]. "Return an array with the difference rectangles for this step."
+							  j := goingIn
+								       ifTrue: [ i ]
+								       ifFalse: [ nSteps + 1 - i ].
+							  bigR := vp - (vp * j // nSteps) corner: vp + (otherImage extent - vp * j // nSteps).
+							  lilR := vp - (vp * (j - 1) // nSteps) corner: vp + (otherImage extent - vp * (j - 1) // nSteps).
+							  bigR areasOutside: lilR ] ]
 ]
 
 { #category : 'transitions' }

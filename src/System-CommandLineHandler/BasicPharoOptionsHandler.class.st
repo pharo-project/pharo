@@ -67,10 +67,7 @@ BasicPharoOptionsHandler >> filteredArguments [
 	
 	arguments ifEmpty: [ ^ arguments ].
 		
-	arguments first = '--interactive'
-		ifTrue: [ ^ arguments copyWithoutFirst ].
-		
-	^ arguments
+	^ arguments copyWithout: '--interactive'
 ]
 
 { #category : 'execution' }

@@ -3,7 +3,6 @@ mcPackages := #(
  'Zinc-Resource-Meta-Core'
  'STON-Core'
  'MonticelloFileTree-Core'
- 'MonticelloFileTree-FileSystem-Utilities'
  'Metacello-Base'
  'Metacello-Core'
  'Metacello-CommandLine'

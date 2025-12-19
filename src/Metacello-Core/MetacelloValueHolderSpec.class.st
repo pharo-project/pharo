@@ -9,12 +9,6 @@ Class {
 	#tag : 'Specs'
 }
 
-{ #category : 'private' }
-MetacelloValueHolderSpec >> asMetacelloValueHolderFor: aMetacelloVersionSpec [
-
-	^ self
-]
-
 { #category : 'printing' }
 MetacelloValueHolderSpec >> configMethodOn: aStream indent: indent [
 

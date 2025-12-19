@@ -4,9 +4,8 @@ SUnit tests for reducing collections
 Class {
 	#name : 'ReduceTest',
 	#superclass : 'TestCase',
-	#category : 'Collections-Tests-Sequenceable',
-	#package : 'Collections-Tests',
-	#tag : 'Sequenceable'
+	#category : 'Collections-Unordered-Tests',
+	#package : 'Collections-Unordered-Tests'
 }
 
 { #category : 'accessing' }

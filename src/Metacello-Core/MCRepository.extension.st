@@ -35,11 +35,6 @@ MCRepository class >> isFiletreeAlternateFormat: aRepositorySpec [
 ]
 
 { #category : '*Metacello-Core' }
-MCRepository >> metacelloProjectClassFor: aScriptEngine [
-    ^ MetacelloProject
-]
-
-{ #category : '*Metacello-Core' }
 MCRepository class >> newRepositoryFromSpec: aRepositorySpec [
 
 	^ self allSubclasses

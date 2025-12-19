@@ -219,7 +219,7 @@ FLEncoder >> objectCount [
 { #category : 'accessing' }
 FLEncoder >> objectCount: aNumber [
 	objectCount := aNumber.
-	objectsIndexes := IdentityDictionary new.
+	objectsIndexes := IdentityDictionary new: aNumber.
 	substitutionIndexes := IdentityDictionary new.
 	indexStream := FLIndexStream on: stream digits: aNumber bytesCount
 ]

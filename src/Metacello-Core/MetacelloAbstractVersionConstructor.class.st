@@ -50,23 +50,6 @@ MetacelloAbstractVersionConstructor >> attributeOrder [
 ]
 
 { #category : 'api' }
-MetacelloAbstractVersionConstructor >> author: aBlockOrString [
-	"Define author field of version spec (MetacelloMCVersionSpec).
-	 If <aBlockOrString> is a String, the version spec author is set to the String.
-	If <aBlockOrString> is a Block, the specifications in <aBlockOrString> are applied to the author spec (MetacelloValueHolderSpec). Not Recommended! This second version is now deprecated.
-	
-		spec author: 'dkh'.
-		
-		spec author: [
-			spec value: 'dkh'. ].
-	 "
-
-	aBlockOrString isString
-		ifTrue: [ self root author: aBlockOrString ]
-		ifFalse: [ self setAuthorWithBlock: aBlockOrString ]
-]
-
-{ #category : 'api' }
 MetacelloAbstractVersionConstructor >> baseline: aString [
 
 	| spec projectSpec |
@@ -86,28 +69,6 @@ MetacelloAbstractVersionConstructor >> baseline: aString [
 MetacelloAbstractVersionConstructor >> baseline: aString with: aBlock [
 
 	self with: (self baseline: aString) during: aBlock
-]
-
-{ #category : 'api' }
-MetacelloAbstractVersionConstructor >> blessing: aBlockOrString [
-	"Define blessing field of version spec (MetacelloMCVersionSpec).
-	 If <aBlockOrString> is a String, the version spec blessing is set to the String. It is recommended to use a Symbol.
-	If <aBlockOrString> is a Block, the specifications in <aBlockOrString> are applied to the blessing spec (MetacelloValueHolderSpec). Not Recommended! This second version is now deprecated.
-	
-		spec blessing: #release.
-		
-		spec blessing: [
-			spec value: #release. ].
-	
-	The blessing should typically be set to one of three values:
-		#baseline - indicating that the version spec is specifying a baseline version
-		#development - indicating that the version spec is not stabilized and will change over time
-		#release - indicating that the version spec has stabilized and will NOT change over time
-	 "
-
-	aBlockOrString isString
-		ifTrue: [ self root blessing: aBlockOrString ]
-		ifFalse: [ self setBlessingWithBlock: aBlockOrString ]
 ]
 
 { #category : 'initialization' }
@@ -140,42 +101,10 @@ MetacelloAbstractVersionConstructor >> configuration: aConfig [
 	configuration := aConfig
 ]
 
-{ #category : 'api' }
-MetacelloAbstractVersionConstructor >> configuration: aString with: aBlock [
-
-	| spec projectSpec |
-	projectSpec := self project configurationOfProjectSpec
-		               name: aString;
-		               yourself.
-	spec := self project projectReferenceSpec
-		        name: aString;
-		        projectReference: projectSpec;
-		        yourself.
-	self root packages merge: spec.
-	self with: projectSpec during: aBlock
-]
-
 { #category : 'accessing' }
 MetacelloAbstractVersionConstructor >> configurationClass [
 
 	^self configuration class
-]
-
-{ #category : 'api' }
-MetacelloAbstractVersionConstructor >> description: aBlockOrString [
-	"Define description field of version spec (MetacelloMCVersionSpec).
-	 If <aBlockOrString> is a String, the version spec blessing is set to the String. It is recommended to use a Symbol.
-	If <aBlockOrString> is a Block, the specifications in <aBlockOrString> are applied to the blessing spec (MetacelloValueHolderSpec). Not Recommended! This second version is now deprecated.
-	
-		spec description: 'Descriptive comment'.
-		
-		spec description: [
-			spec value: 'Descriptive comment'.
-	 "
-
-	aBlockOrString isString
-		ifTrue: [ self root description: aBlockOrString ]
-		ifFalse: [ self setDescriptionWithBlock: aBlockOrString ]
 ]
 
 { #category : 'private' }
@@ -470,7 +399,7 @@ MetacelloAbstractVersionConstructor >> project [
 { #category : 'api' }
 MetacelloAbstractVersionConstructor >> project: aString [
 
-	self project: aString with: ''
+	self project: aString with: [ ]
 ]
 
 { #category : 'api' }
@@ -516,9 +445,7 @@ MetacelloAbstractVersionConstructor >> project: aString with: aBlockOrString [
 			 projectReference: projectSpec;
 			 yourself).
 
-	aBlockOrString isString
-		ifTrue: [ projectSpec versionString: aBlockOrString ]
-		ifFalse: [ self with: projectSpec during: aBlockOrString ]
+	self with: projectSpec during: aBlockOrString
 ]
 
 { #category : 'accessing' }
@@ -604,12 +531,6 @@ MetacelloAbstractVersionConstructor >> setProject: aProject [
 	project := aProject
 ]
 
-{ #category : 'api' }
-MetacelloAbstractVersionConstructor >> supplyingAnswers: aCollection [
-
-	self root answers: aCollection
-]
-
 { #category : 'accessing' }
 MetacelloAbstractVersionConstructor >> symbolicVersion [
 
@@ -620,29 +541,6 @@ MetacelloAbstractVersionConstructor >> symbolicVersion [
 MetacelloAbstractVersionConstructor >> symbolicVersion: aSymbol [
 
 	symbolicVersion := aSymbol
-]
-
-{ #category : 'api' }
-MetacelloAbstractVersionConstructor >> timestamp: aBlockOrStringOrDateAndTime [
-	"Define timestamp field of version spec (MetacelloMCVersionSpec).
-	 If <aBlockOrStringOrDateAndTime> is a String, the version spec timetamp is set to the String.
-	 If <aBlockOrStringOrDateAndTime> is a DateAndTime, the version spec timetamp is set to the printString of the DateAndTime.
-	If <aBlockOrStringOrDateAndTime> is a Block, the specifications in <aBlockOrStringOrDateAndTime> are applied to the timestamp spec (MetacelloValueHolderSpec). Not Recommended! This third version is now deprecated.
-	
-		spec timestamp: '10/7/2009 14:40'.
-		
-		spec timestamp: DateAndTime now'.
-		
-		spec timestamp: [
-			spec value: '10/7/2009 14:40'. ].
-    "
-
-	aBlockOrStringOrDateAndTime isString
-		ifTrue: [ self root timestamp: aBlockOrStringOrDateAndTime ]
-		ifFalse: [
-			aBlockOrStringOrDateAndTime isBlock
-				ifTrue: [ self setTimestampWithBlock: aBlockOrStringOrDateAndTime ]
-				ifFalse: [ self timestamp: aBlockOrStringOrDateAndTime printString ] ]
 ]
 
 { #category : 'validation' }
@@ -660,12 +558,6 @@ MetacelloAbstractVersionConstructor >> value: anObject [
 
 { #category : 'api' }
 MetacelloAbstractVersionConstructor >> version: anObject [
-
-	self root versionString: anObject
-]
-
-{ #category : 'api' }
-MetacelloAbstractVersionConstructor >> versionString: anObject [
 
 	self root versionString: anObject
 ]

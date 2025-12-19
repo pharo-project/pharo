@@ -1,32 +1,23 @@
 Class {
-	#name : 'MetacelloReferenceConfig',
+	#name : 'MetacelloReferenceBaseline',
 	#superclass : 'Object',
-	#instVars : [
-		'project'
-	],
-	#category : 'Metacello-TestsReference',
-	#package : 'Metacello-TestsReference'
+	#category : 'Metacello-TestsCore',
+	#package : 'Metacello-TestsCore'
 }
 
 { #category : 'accessing' }
-MetacelloReferenceConfig class >> project [
+MetacelloReferenceBaseline class >> project [
   "force new version as workaround for https://code.google.com/p/smalltalk-hub/issues/detail?id=21"
 
   ^ self new project
 ]
 
 { #category : 'baseline 1.0' }
-MetacelloReferenceConfig >> baseline10: spec [ 
-	<version: '1.0-baseline'>
+MetacelloReferenceBaseline >> baseline: spec [ 
+	<baseline>
 	
 	spec for: #common do: [
-		"recommended methods for specifying author, blessing, description, timestamp, preLoadDoIt, postLoadDoit"
-		"#development, #baseline, #release, #beta, etc."
-		spec blessing: #baseline.									
-		spec description: 'Descriptive comment'.
-		spec author: 'dkh'.
-		spec timestamp: (DateAndTime fromString: '2009-07-10T14:40').
-		spec timestamp: '12009-07-10T14:40'.
+		"recommended methods for specifying preLoadDoIt, postLoadDoit"
 		spec
 			"Before loading packages or projects in this version, send #preloadForVersion to an instance of this config"
 			preLoadDoIt: #preloadForVersion;
@@ -55,8 +46,6 @@ MetacelloReferenceConfig >> baseline10: spec [
 					"OPTIONAL: Name of config class (i.e., ConfigurationOfXXX), if not specified, className is assumed to be the 
 					 name of the project prependended with 'ConfigurationOf'"
 					className: 'ConfigurationOfUI';
-					"Version of project to be loaded. if theversionString is not specified, then the latest version of the project is used."
-					versionString: '1.0';
 					"Before loading this project, send #preloadForProject to an instance of this config"
 					preLoadDoIt: #preloadForProject;
 					"After loading this project, send #postloadForProject to an instance of this config"
@@ -74,7 +63,6 @@ MetacelloReferenceConfig >> baseline10: spec [
 				"One or more of the following attributes may be defined"
 				spec
 					className: 'ConfigurationOfUINew';
-					versionString: '1.0';
 					operator: #>=;
 					loads: #('UI-Core' 'UI-Tests' );
 					repository: 'http://www.example.com/r' username: 'foo' password: 'bar' ];
@@ -86,12 +74,10 @@ MetacelloReferenceConfig >> baseline10: spec [
 					"One or more of the following attributes may be changed"
 					spec
 						className: 'ConfigurationOfUI';
-						versionString: '1.0';
 						operator: #~>;
 						loads: #('UI-Core' 'UI-Tests' );
 						repository: 'http://www.example.com/r'];
-			"Change the versionString for 'UI Support' to '1.0.1'"
-			project: 'UI Support' with: '1.0.1';	
+			project: 'UI Support';	
 			"Remove the project reference 'UI Tests'"				
 			removeProject: 'UI Tests';
 			"Multiple repositories for configuration - config may be found in either repository. 
@@ -129,7 +115,6 @@ MetacelloReferenceConfig >> baseline10: spec [
 					requires: #('Example-Core' 'UI Support' );
 					includes: #('Example-UI' );
 					file: 'Example-AddOn-anon.7';
-					supplyingAnswers: #( #('list of packages' 'Kernel* Collection*'));
 					repository: 'http://www.example.com/or' username: 'foo' password: 'bar' ;
 					preLoadDoIt: #preloadForAddOn;
 					postLoadDoIt: #postloadForAddOn ];
@@ -157,9 +142,7 @@ MetacelloReferenceConfig >> baseline10: spec [
 ]
 
 { #category : 'accessing' }
-MetacelloReferenceConfig >> project [
+MetacelloReferenceBaseline >> project [
 
-	^ project ifNil: [
-		  "Construct Metacello project"
-		  project := (MetacelloVersionConstructor on: self) project ]
+	^ (MetacelloBaselineConstructor on: self) project
 ]

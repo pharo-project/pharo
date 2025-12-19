@@ -497,8 +497,3 @@ MCWorkingCopy >> versionInfo [
 		ifNotEmpty: [ :list | list first ] 
 		ifEmpty: [ nil ]
 ]
-
-{ #category : 'accessing' }
-MCWorkingCopy >> versionInfo: aVersionInfo [
-	ancestry := MCWorkingAncestry new addAncestor: aVersionInfo
-]

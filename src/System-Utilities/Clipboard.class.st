@@ -34,6 +34,13 @@ Clipboard class >> clipboardText: aTextOrString [
 ]
 
 { #category : 'accessing' }
+Clipboard class >> clipboardText: aText informing: aString [
+
+	InformativeNotification signal: aString.
+	^ self clipboardText: aText
+]
+
+{ #category : 'accessing' }
 Clipboard class >> default [
 
 	^ Default ifNil: [ Default := self new ]

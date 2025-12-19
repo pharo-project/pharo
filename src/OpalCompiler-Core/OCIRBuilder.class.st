@@ -269,8 +269,7 @@ OCIRBuilder >> mapToByteIndex: index [
 { #category : 'mapping' }
 OCIRBuilder >> mapToNode: object [
 	"new instructions will be associated with object"
-
-	sourceMapNodes addLast: object
+	sourceMapNodes addLast: (object propertyAt: #originalNode ifAbsent: [ object ])
 ]
 
 { #category : 'initialize' }

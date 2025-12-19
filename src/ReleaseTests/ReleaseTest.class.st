@@ -559,7 +559,7 @@ ReleaseTest >> testThatThereAreNoSelectorsRemainingThatAreSentButNotImplemented 
 	                    'IceTipHiedraAltComponentHistoryBrowser>>#newCommitRow:commit:'
 	                    'IceTipHiedraAltHistoryBrowser>>#newCommitRow:commit:' 'IceTipHiedraAltHistoryBrowser>>#initializeCommitList'
 	                    'InstructionStream>>#interpretNext3ByteSistaV1Instruction:for:extA:extB:'
-	                    'LazyListMorph>>#drawOnAthensCanvas:' 'MCFileTreeAbstractReader>>#packageProperties' 'MicrodownSpecComponentForTest class>>#open'
+	                    'LazyListMorph>>#drawOnAthensCanvas:' 'MicrodownSpecComponentForTest class>>#open'
 	                    'PSMCClassChangeWrapper>>#remoteChosen' 'PolygonMorph>>#intersects:' 'RBBasicLintRuleTestData class>>#canCall:in:from:'
 	                    'RBBasicLintRuleTestData class>>#createMatcherFor:method:' 'RBBasicLintRuleTestData class>>#sentNotImplementedInApplication'
 	                    'RBBasicLintRuleTestData class>>#utilityMethods' 'RBClassDataForRefactoringTest>>#inlineComponent'

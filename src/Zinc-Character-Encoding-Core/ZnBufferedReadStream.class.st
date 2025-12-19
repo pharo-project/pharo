@@ -340,6 +340,13 @@ ZnBufferedReadStream >> readStream [
 	^ self
 ]
 
+{ #category : 'initialization' }
+ZnBufferedReadStream >> reset [
+
+	stream reset.
+	self discardBuffer
+]
+
 { #category : 'accessing' }
 ZnBufferedReadStream >> setToEnd [
 

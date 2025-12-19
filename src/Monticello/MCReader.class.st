@@ -26,6 +26,12 @@ MCReader class >> concreteSubclasses [
 	^ self allSubclasses reject: [:c | c isAbstract]
 ]
 
+{ #category : 'accessing' }
+MCReader class >> extension [
+
+	^ self subclassResponsibility
+]
+
 { #category : 'testing' }
 MCReader class >> isAbstract [
 	^ (self respondsTo: #extension) not

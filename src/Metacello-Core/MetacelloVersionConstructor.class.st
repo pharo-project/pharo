@@ -105,7 +105,6 @@ MetacelloVersionConstructor >> collectAllVersionsFromVersionImportPragmasInto: v
 				version := versionSpec createVersion.
 				pragmaColl do: [ :pragma | importedVersions addAll: (pragma argumentAt: 2) ].
 				version importedVersions: importedVersions.
-				self validateVersionString: versionString againstSpec: versionSpec.
 				versionMap at: versionSpec versionString put: version ].
 			self reset ] ]
 ]
@@ -131,7 +130,6 @@ MetacelloVersionConstructor >> collectAllVersionsFromVersionPragmasInto: version
 						self errorMap at: versionSpec versionString put: ex.
 						defined := false ] ].
 		defined ifTrue: [
-			self validateVersionString: versionString againstSpec: versionSpec.
 			versionMap at: versionSpec versionString put: versionSpec createVersion ].
 		self reset ]
 ]
@@ -205,21 +203,6 @@ MetacelloVersionConstructor >> resolveSymbolicVersion: symbolicVrsn withPragma: 
 		self evaluatePragma: pragma.
 		self project attributes do: [ :attribute | (self attributeMap at: attribute ifAbsent: [  ]) ifNotNil: [ :versionString | result := versionString ] ] ].
 	^ result
-]
-
-{ #category : 'validation' }
-MetacelloVersionConstructor >> validateVersionString: versionString againstSpec: versionSpec [
-
-	versionString = versionSpec versionString
-		ifFalse: [ 
-			MetacelloValidationNotification
-				signal:
-					(MetacelloValidationError
-						reasonCode: #incorrectVersionString
-						callSite: #validateVersionString:againstSpec
-						explanation:
-							'The version declared in the pragma ', versionString printString , ' does not match the version in the spec '
-								, versionSpec versionString printString) ].
 ]
 
 { #category : 'private' }

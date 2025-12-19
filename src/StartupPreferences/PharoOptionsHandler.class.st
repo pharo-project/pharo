@@ -60,18 +60,9 @@ PharoOptionsHandler >> changePreferences [
 { #category : 'accessing' }
 PharoOptionsHandler >> filteredArguments [
 	
-	arguments ifEmpty: [ ^ arguments ].
-	
-	arguments first = self noDefaultPreferencesArgument 
-		ifTrue: [ ^ arguments copyWithoutFirst ].
-		
-	(arguments first beginsWith: self preferencesFileArgument)
-		ifTrue: [ ^ arguments copyWithoutFirst ].
-		
-	arguments first = '--interactive'
-		ifTrue: [ ^ arguments copyWithoutFirst ].
-		
-	^ arguments
+	^ super filteredArguments reject: [:each | 
+		(each = self noDefaultPreferencesArgument) 
+		or: [ each beginsWith: self preferencesFileArgument ]]
 ]
 
 { #category : 'execution' }

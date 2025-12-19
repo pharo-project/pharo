@@ -1,8 +1,8 @@
 Class {
 	#name : 'MetacelloReferenceTestCase',
 	#superclass : 'TestCase',
-	#category : 'Metacello-TestsReference',
-	#package : 'Metacello-TestsReference'
+	#category : 'Metacello-TestsCore',
+	#package : 'Metacello-TestsCore'
 }
 
 { #category : 'testing' }
@@ -21,12 +21,8 @@ MetacelloReferenceTestCase >> conditionResult: resultString [
 
 { #category : 'testing' }
 MetacelloReferenceTestCase >> expectedPrintString [
-    ^ 'spec blessing: #''baseline''.
-spec description: ''Descriptive comment''.
-spec preLoadDoIt: #''preloadForVersion''.
+    ^ 'spec preLoadDoIt: #''preloadForVersion''.
 spec postLoadDoIt: #''postloadForVersion''.
-spec author: ''dkh''.
-spec timestamp: ''12009-07-10T14:40''.
 spec repositories: [
 	spec
 		repository: ''/opt/mc/repository'';
@@ -40,7 +36,6 @@ spec
 	project: ''UI Support'' with: [
 		spec
 			className: ''ConfigurationOfUI'';
-			versionString: ''1.0'';
 			preLoadDoIt: #''preloadForProject'';
 			postLoadDoIt: #''postloadForProject'';
 			operator: #''~>'';
@@ -49,18 +44,16 @@ spec
 	project: ''UI Support'' overrides: [
 		spec
 			className: ''ConfigurationOfUINew'';
-			versionString: ''1.0'';
 			operator: #''>='';
 			loads: #(''UI-Core'' ''UI-Tests'' );
 			repository: ''http://www.example.com/r'' username: ''foo'' password: ''bar'' ];
 	project: ''UI Tests'' copyFrom: ''UI Support'' with: [
 		spec
 			className: ''ConfigurationOfUI'';
-			versionString: ''1.0'';
 			operator: #''~>'';
 			loads: #(''UI-Core'' ''UI-Tests'' );
 			repository: ''http://www.example.com/r'' ];
-	project: ''UI Support'' with: ''1.0.1'';
+	project: ''UI Support'' ;
 	removeProject: ''UI Tests'';
 	project: ''UI Multi'' with: [
 		spec
@@ -83,7 +76,6 @@ spec
 		spec 
 			requires: #(''Example-Core'' ''UI Support'' );
 			includes: #(''Example-UI'' );
-			supplyingAnswers: #( #( ''list of packages'' ''Kernel* Collection*'' ) );
 			file: ''Example-AddOn-anon.7'';
 			repository: ''http://www.example.com/or'' username: ''foo'' password: ''bar'';
 			preLoadDoIt: #''preloadForAddOn'';
@@ -105,15 +97,15 @@ spec
 
 { #category : 'testing' }
 MetacelloReferenceTestCase >> testReferenceConfig [
+
 	| spec map string expected |
-	spec := (MetacelloReferenceConfig project version: '1.0-baseline') spec.
+	spec := MetacelloReferenceBaseline project version spec.
 	map := spec packages map.
 	string := self conditionResult: (map at: 'Example-AddOn') printString.
 	expected := 'spec 
 	name: ''Example-AddOn'';
 	requires: #(''Example-Core'' ''UI Support'' );
 	includes: #(''Example-UI'' );
-	supplyingAnswers: #( #( ''list of packages'' ''Kernel* Collection*'' ) );
 	file: ''Example-AddOn-anon.5'';
 	repository: ''http://www.example.com/or'' username: ''foo'' password: ''bar'';
 	preLoadDoIt: #''preloadForAddOn'';
@@ -124,23 +116,16 @@ MetacelloReferenceTestCase >> testReferenceConfig [
 	self assert: string equals: 'spec name: ''Example-Core'''.
 
 	string := (map at: 'Example-TestsUI') printString.
-	self
-		assert: string
-		equals:
-			'spec 
+	self assert: string equals: 'spec 
 	name: ''Example-TestsUI'';
 	requires: #(''Example-UI'' ).'.
 
 	string := (map at: 'UI Support') printString.
-	self
-		assert: string
-		equals:
-			'spec 
+	self assert: string equals: 'spec 
 	name: ''UI Support'';
 	projectReference: [
 		spec
 			className: ''ConfigurationOfUINew'';
-			versionString: ''1.0.1'';
 			operator: #''>='';
 			loads: #(''UI-Core'' ''UI-Tests'' );
 			repository: ''http://www.example.com/r'' username: ''foo'' password: ''bar'' ].'
@@ -148,14 +133,15 @@ MetacelloReferenceTestCase >> testReferenceConfig [
 
 { #category : 'testing' }
 MetacelloReferenceTestCase >> testReferenceConfigPrintString [
+
 	| version string expected x y |
-	version := MetacelloReferenceConfig project version: '1.0-baseline'.
+	version := MetacelloReferenceBaseline project version.
 	string := self conditionResult: version spec printString.
 	expected := self expectedPrintString.
-	1 to: string size do: [ :i | 
-		(i > expected size or: [ (string at: i) ~= (expected at: i) ])
-			ifTrue: [ x := string copyFrom: (i - 25 max: 1) to: (i + 25 min: string size).
-				y := expected copyFrom: ((i - 25 max: 1) min: expected size) to: (i + 25 min: expected size).
-				Array with: x with: y	"halt" ] ].
+	1 to: string size do: [ :i |
+			(i > expected size or: [ (string at: i) ~= (expected at: i) ]) ifTrue: [
+					x := string copyFrom: (i - 25 max: 1) to: (i + 25 min: string size).
+					y := expected copyFrom: ((i - 25 max: 1) min: expected size) to: (i + 25 min: expected size).
+					Array with: x with: y "halt" ] ].
 	self assert: string equals: expected
 ]

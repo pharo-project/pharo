@@ -12,12 +12,6 @@ MetacelloGroupSpec >> acceptVisitor: aVisitor [
 	^ aVisitor visitGroupSpec: self
 ]
 
-{ #category : 'accessing' }
-MetacelloGroupSpec >> answers: aListOfPairs [
-
-	self shouldNotImplement
-]
-
 { #category : 'printing' }
 MetacelloGroupSpec >> configMethodCascadeOn: aStream member: aMember last: lastCascade indent: indent [
 

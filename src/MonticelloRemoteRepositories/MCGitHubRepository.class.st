@@ -102,14 +102,11 @@ MCGitHubRepository class >> projectZipUrlFor: projectPath versionString: version
 
 { #category : 'private' }
 MCGitHubRepository class >> resetCacheDirectoryIfInvalid [
-  "use class var to survive upgrade when MCGitHubRepository moved to subclass of MCGitBasedRepository"
+	"use class var to survive upgrade when MCGitHubRepository moved to subclass of MCGitBasedRepository"
 
-  "Reset if invalid"
+	"Reset if invalid"
 
-  CacheDirectory isNotNil
-    and: [ 
-      (MCFileTreeFileUtils current directoryExists: CacheDirectory)
-        ifFalse: [ CacheDirectory := nil ] ]
+	CacheDirectory isNotNil and: [ (self fileUtils directoryExists: CacheDirectory) ifFalse: [ CacheDirectory := nil ] ]
 ]
 
 { #category : 'accessing' }

@@ -24,7 +24,8 @@ MetacelloSpecTestCase >> packagesSpec [
 
 { #category : 'accessing' }
 MetacelloSpecTestCase >> project [
-    ^ self projectWith: #()
+
+	^ (MetacelloStubConstructor on: self) project
 ]
 
 { #category : 'accessing' }
@@ -40,17 +41,6 @@ MetacelloSpecTestCase >> projectReferenceSpec [
 { #category : 'specs' }
 MetacelloSpecTestCase >> projectSpec [
     ^ self project projectSpec
-]
-
-{ #category : 'accessing' }
-MetacelloSpecTestCase >> projectWith: projectAttributes [
-
-	| project |
-	"Construct Metacello project"
-	project := self projectClass new.
-	project projectAttributes: projectAttributes.
-	MetacelloVersionConstructor on: self project: project.
-	^ project
 ]
 
 { #category : 'accessing' }

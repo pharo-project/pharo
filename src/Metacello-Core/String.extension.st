@@ -31,14 +31,6 @@ String >> addToMetacelloRepositories: aMetacelloRepositoriesSpec [
 ]
 
 { #category : '*Metacello-Core' }
-String >> asMetacelloValueHolderFor: aMetacelloVersionSpec [
-
-	^ aMetacelloVersionSpec project valueHolderSpec
-		  value: self;
-		  yourself
-]
-
-{ #category : '*Metacello-Core' }
 String >> asMetacelloVersionNumber [
 
 	^MetacelloVersionNumber fromString: self

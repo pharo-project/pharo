@@ -34,12 +34,6 @@ MetacelloSpec >> addMember [
 	^MetacelloAddMemberSpec for: self project
 ]
 
-{ #category : 'querying' }
-MetacelloSpec >> answers [
-
-	^#()
-]
-
 { #category : 'printing' }
 MetacelloSpec >> configMethodOn: aStream indent: indent [
 
