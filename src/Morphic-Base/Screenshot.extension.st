@@ -59,21 +59,22 @@ Screenshot >> makeAScreenshot [
 		| form name |
 		form := choice = #world
 			        ifTrue: [ self currentWorld imageForm ]
-			        ifFalse: [ Screenshot new formScreenshotFromUserSelection ].
+			        ifFalse: [ self class new formScreenshotFromUserSelection ].
 		name := (FileSystem workingDirectory / filePrefix , 'png')
 			        nextVersion.
 		PNGReadWriter
 			putForm: form
 			onFileNamed:
 			(FileSystem workingDirectory / filePrefix , 'png') nextVersion.
-		MorphicUIManager new
-			inform: (String streamContents: [ :s |
-					 s
-						 nextPutAll: 'Screenshot saved under ';
-						 nextPutAll: name fullName;
-						 cr;
-						 nextPutAll: 'Click to open location' ])
-			actionOnClick: [ name openInOSFileBrowser ] ]
+
+		(GrowlMorph openWithLabel: 'Information' contents: (String streamContents: [ :s |
+								  s
+									  nextPutAll: 'Screenshot saved under ';
+									  nextPutAll: name fullName;
+									  cr;
+									  nextPutAll: 'Click to open location' ]))
+				vanishDelay: 2 second;
+				actionBlock: [ name openInOSFileBrowser ] ]
 ]
 
 { #category : '*Morphic-Base' }

@@ -43,6 +43,44 @@ TestSuiteTest >> testAnnouncement [
 ]
 
 { #category : 'tests' }
+TestSuiteTest >> testAnnouncementInCompositeTest [
+	| announcements unitTest suiteTest result |
+	unitTest := ClassFactoryForTestCaseTest.
+	unitTest resetAnnouncer.
+	
+	suiteTest := TestSuite new 
+		addTest: unitTest suite;
+		addTest: unitTest suite;
+		yourself.
+	announcements := Dictionary new.
+
+	suiteTest testSuiteAnnouncer 
+		when: TestCaseAnnouncement 
+		do: [ :ann | (announcements at: ann class ifAbsentPut: [ OrderedCollection new ]) add: ann ] 
+		for: self.
+
+	result := suiteTest run.
+
+	self assertEmpty: result failures.
+	self assertEmpty: result errors.
+
+	self
+		assert: (announcements at: TestCaseStarted ifAbsent: [ #() ]) size
+		equals: (suiteTest tests inject: 0 into: [ :sum :suite | sum + suite tests size ]).
+	self
+		assert: (announcements at: TestCaseEnded ifAbsent: [ #() ]) size
+		equals: (suiteTest tests inject: 0 into: [ :sum :suite | sum + suite tests size ]). 
+
+	self assertCollection: announcements keys hasSameElements: {
+			TestCaseStarted.
+			TestCaseEnded.
+			TestSuiteEnded }.
+			
+	"announcer should have been reset after suite execution"
+	self deny: unitTest shouldAnnounce
+]
+
+{ #category : 'tests' }
 TestSuiteTest >> testHistory [
 	| unitTest suiteTest result |
 	

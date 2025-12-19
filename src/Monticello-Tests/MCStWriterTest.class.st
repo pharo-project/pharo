@@ -240,7 +240,7 @@ MCStWriterTest >> testMethodDefinitionWithBangs [
 
 	| methodDefinition |
 	methodDefinition := (RGMethodDefinition realClass: self class selector: #methodWithBangs) asMCMethodDefinition.
-	methodDefinition setTimeStamp: ''.
+	methodDefinition timeStamp: ''.
 	writer visitMethodDefinition: methodDefinition.
 
 	self assertContentsOf: stream contents match: self expectedMethodDefinitionWithBangs.

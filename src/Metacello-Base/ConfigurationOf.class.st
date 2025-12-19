@@ -82,32 +82,12 @@ ConfigurationOf class >> unloadMetacello [
 	(self packageOrganizer packages select: [ :package | package name beginsWith: 'Metacello' ]) do: [ :package | package removeFromSystem ]
 ]
 
-{ #category : 'defaults' }
-ConfigurationOf >> bleedingEdge [ 
-	"override if different behavior desired.
-	 Use:
-		self versionDoesNotExistError: #bleedingEdge
-	 if #bleedingEdge version is disallowed."
-
-	<defaultSymbolicVersion: #bleedingEdge>
-	
-	^self defaultBleedingEdgeVersion
-]
-
 { #category : 'accessing' }
 ConfigurationOf >> customProjectAttributes [
     "Edit to return a collection of any custom attributes e.g. for conditional loading: Array with: #'Condition1' with: #'Condition2.
 	For more information see: http://code.google.com/p/metacello/wiki/CustomProjectAttrributes "
 
     ^ #()
-]
-
-{ #category : 'defaults' }
-ConfigurationOf >> defaultBleedingEdgeVersion [
-
-	^ ((self project map values select: [ :version | version blessing == #baseline ]) detectMax: [ :version | version ])
-		  ifNotNil: [ :bleedingEdgeVersion | bleedingEdgeVersion versionString ]
-		  ifNil: [ #notDefined ]
 ]
 
 { #category : 'accessing' }
@@ -150,12 +130,6 @@ ConfigurationOf >> project: aProject [
 { #category : 'accessing' }
 ConfigurationOf >> projectClass [
     ^ MetacelloProject
-]
-
-{ #category : 'private' }
-ConfigurationOf >> versionDoesNotExistError: versionStringOrSymbol [
-
-	(MetacelloSymbolicVersionDoesNotExistError project: self project versionString: versionStringOrSymbol) signal
 ]
 
 { #category : 'accessing' }

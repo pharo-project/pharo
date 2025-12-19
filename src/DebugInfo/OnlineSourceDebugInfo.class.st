@@ -54,77 +54,65 @@ OnlineSourceDebugInfo >> asBitMask: aCollectionOfFlags [
 { #category : 'converting' }
 OnlineSourceDebugInfo >> asOfflineDebugInfo [
 
-	| debugInfo stopTable astScopes scopes |
+	| debugInfo stopTable astScopes scopes bytecodeRange |
 	debugInfo := OfflineSourceDebugInfo new.
 	debugInfo sourceCode: nil. "self sourceCode"
 
-	stopTable := compiledCode symbolicBytecodes asArray
-		             select: [ :e | self shouldStopAt: e offset ]
-		             thenCollect: [ :e |
-				             | range stopTableInfo |
-				             range := self rangeForPC: e offset.
-				             stopTableInfo := {
-					                              e offset.
-					                              (self asBitMask: {
-							                               (self isSourceStore:
-								                                e offset).
-							                               (self isSourceReturn:
-								                                e offset).
-							                               (self isSourceSend:
-								                                e offset) }).
-					                              range first.
-					                              range last }.
-				             stopTableInfo ].
-
-	"Compress the stop table as a byte array if possible"
+	stopTable := compiledCode symbolicBytecodes asArray select: [ :e | self shouldStopAt: e offset ] thenCollect: [ :e |
+			             | range stopTableInfo |
+			             range := self rangeForPC: e offset.
+			             stopTableInfo := {
+				                              e offset.
+				                              (self asBitMask: {
+						                               (self isSourceStore: e offset).
+						                               (self isSourceReturn: e offset).
+						                               (self isSourceSend: e offset) }).
+				                              range first.
+				                              range last }.
+			             stopTableInfo ]. "Compress the stop table as a byte array if possible"
 	stopTable := stopTable flattened.
-	(stopTable allSatisfy: [ :byte | byte < 255 ]) ifTrue: [
-		stopTable := stopTable asByteArray ].
+	(stopTable allSatisfy: [ :byte | byte < 255 ]) ifTrue: [ stopTable := stopTable asByteArray ].
 	debugInfo stopTable: stopTable.
 
-	astScopes := (OCScopesCollector new visitNode: compiledCode ast)
-		             scopes.
+	astScopes := (OCScopesCollector new visitNode: compiledCode ast) scopes.
 
 	scopes := Dictionary new.
 	astScopes do: [ :astScope |
-			| onlineScope cachedScope tempDescriptions |
+			| onlineScope cachedScope |
 			onlineScope := OnlineSourceDebugScope on: astScope.
 			cachedScope := OfflineSourceDebugScope new.
-			tempDescriptions := onlineScope variables collect: [ :temp |
-				                    temp descriptionArrayForScope: astScope ].
 			(astScope isBlockScope and: [ astScope isOptimized ])
 				ifTrue: [
 						| mappedPCs currentScopeBytecodeToASTCache blockBody blockStatements |
 						blockBody := astScope node body.
 						blockStatements := blockBody statements.
-						currentScopeBytecodeToASTCache := astScope outerNotOptimizedScope node
-							                      bcToASTCache.
-						blockStatements
-							ifEmpty: [
-								mappedPCs := currentScopeBytecodeToASTCache pcsForNode: blockBody ]
-							ifNotEmpty: [
-								mappedPCs := ((blockStatements flatCollect: [ :e | { e }, e allChildren ])
-									flatCollect: [ :e | currentScopeBytecodeToASTCache pcsForNode: e ] as: Set)
-										sorted.
-								mappedPCs := mappedPCs first to: mappedPCs last ].
-						cachedScope bytecodeRange: (mappedPCs first to: mappedPCs last) ]
+						currentScopeBytecodeToASTCache := astScope outerNotOptimizedScope node bcToASTCache.
+						blockStatements ifEmpty: [
+							mappedPCs := currentScopeBytecodeToASTCache pcsForNode: blockBody ] ifNotEmpty: [
+								mappedPCs := ((blockStatements flatCollect: [ :e | e withAllChildren ])
+									              flatCollect: [ :e | currentScopeBytecodeToASTCache pcsForNode: e ]
+									              as: Set) sorted ].
+						"It may happen that no children has a mapping.
+						This happens when a node is completely optimized out.
+						For example, a statement reading a variable but doing nothing else.
+						In that case, save an empty range"
+						mappedPCs ifNotEmpty: [ bytecodeRange := mappedPCs first to: mappedPCs last ] ]
 				ifFalse: [
 						| bytecodeCache |
-						bytecodeCache := astScope outerNotOptimizedScope node
-							                 bcToASTCache.
+						bytecodeCache := astScope outerNotOptimizedScope node bcToASTCache.
+						bytecodeRange := bytecodeCache firstBcOffset to: bytecodeCache lastBcOffset ].
 
-						cachedScope bytecodeRange:
-							(bytecodeCache firstBcOffset to: bytecodeCache lastBcOffset) ].
+			"If the scope has no bytecode mapping, ignore it"
+			bytecodeRange ifNotNil: [ | tempDescriptions |
+				cachedScope bytecodeRange: bytecodeRange.
+				tempDescriptions := onlineScope variables collect: [ :temp | temp descriptionArrayForScope: astScope ].
+				tempDescriptions ifNotEmpty: [ cachedScope variables: tempDescriptions ].
+				scopes at: astScope put: cachedScope ] ].
 
-			tempDescriptions ifNotEmpty: [
-				cachedScope variables: tempDescriptions ].
-
-			scopes at: astScope put: cachedScope ].
-
-	astScopes do: [ :each |
-			scopes
-				at: each outerScope
-				ifPresent: [ :parent | parent addChild: (scopes at: each) ] ].
+	astScopes do: [ :each | 
+		scopes
+			at: each outerScope
+			ifPresent: [ :parent | parent addChild: (scopes at: each) ] ].
 	debugInfo rootScope: (scopes at: compiledCode ast scope).
 
 	^ debugInfo

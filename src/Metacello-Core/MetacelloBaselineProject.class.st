@@ -53,18 +53,8 @@ MetacelloBaselineProject >> bleedingEdge [
 ]
 
 { #category : 'versions' }
-MetacelloBaselineProject >> currentVersionAgainst: resolvedPackageAndProjectNames [
-    ^ nil
-]
-
-{ #category : 'versions' }
 MetacelloBaselineProject >> development [
     ^ nil
-]
-
-{ #category : 'versions' }
-MetacelloBaselineProject >> hasVersion: versionString [
-    ^ versionString = 'baseline'
 ]
 
 { #category : 'versions' }
@@ -75,11 +65,6 @@ MetacelloBaselineProject >> lastVersion [
 { #category : 'versions' }
 MetacelloBaselineProject >> latestVersion [
     ^ self version
-]
-
-{ #category : 'versions' }
-MetacelloBaselineProject >> latestVersion: blessing [
-    ^ nil
 ]
 
 { #category : 'accessing' }

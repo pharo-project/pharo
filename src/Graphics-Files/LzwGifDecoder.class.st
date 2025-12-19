@@ -168,21 +168,18 @@ LzwGifDecoder >> initializeTables [
 	"The two arrays are our lookup tables.
 	We do this instead of Dictionaries because
 	the method is much, much faster"
-	prefixTable := Array new: (maxCode).
-	suffixTable := Array new: (maxCode).
 
-	"The initial code size and mask settings
+	prefixTable := Array new: maxCode.
+	suffixTable := Array new: maxCode. "The initial code size and mask settings
 	also get reinitialized each time"
 	codeSize := minimumCodeSize + 1.
-	clearCode := (1 bitShift: minimumCodeSize).
+	clearCode := 1 bitShift: minimumCodeSize.
 	eoiCode := clearCode + 1.
 	nextAvailableCode := clearCode + 2.
-	bitMask := (1 bitShift: codeSize) - 1.
-
-	"Fill the tables with the initial values"
+	bitMask := (1 bitShift: codeSize) - 1. "Fill the tables with the initial values"
 	1 to: clearCode do: [ :n |
-		prefixTable at: n put: (n - 1).
-		suffixTable at: n put: (n - 1) ]
+			prefixTable at: n put: n - 1.
+			suffixTable at: n put: n - 1 ]
 ]
 
 { #category : 'accessing' }

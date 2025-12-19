@@ -1,45 +1,49 @@
 Extension { #name : 'MetacelloAbstractVersionConstructor' }
 
 { #category : '*Deprecated14' }
-MetacelloAbstractVersionConstructor >> setAuthorWithBlock: aBlock [
+MetacelloAbstractVersionConstructor >> author: aBlockOrString [
 
-	| spec |
-	self deprecated: 'Author should be provided as a string and not a block since it brind not value.'.
-	(spec := self root getAuthor) ifNil: [
-		spec := self project valueHolderSpec.
-		self root author: spec ].
-	self with: spec during: aBlock
+	self deprecated: 'The author metadata is not supported anymore. It was used with SmalltalkHub but not this information is already managed by git or other CVS.
+	If you wish to keep this as a trace, you can leave the infos in a method comment.'
 ]
 
 { #category : '*Deprecated14' }
-MetacelloAbstractVersionConstructor >> setBlessingWithBlock: aBlock [
+MetacelloAbstractVersionConstructor >> blessing: aBlockOrString [
 
-	| spec |
-	self deprecated: 'Blessing should be provided as a string and not a block since it brind not value.'.
-	(spec := self root getBlessing) ifNil: [
-		spec := self project valueHolderSpec.
-		self root blessing: spec ].
-	self with: spec during: aBlock
+	self deprecated: 'The blessing metadata is not supported anymore.'
 ]
 
 { #category : '*Deprecated14' }
-MetacelloAbstractVersionConstructor >> setDescriptionWithBlock: aBlock [
+MetacelloAbstractVersionConstructor >> configuration: aString with: aBlock [
 
-	| spec |
-	self deprecated: 'Description should be provided as a string and not a block since it brind not value.'.
-	(spec := self root getDescription) ifNil: [
-		spec := self project valueHolderSpec.
-		self root description: spec ].
-	self with: spec during: aBlock
+	self error: 'Configurations are not supported anymore, only baseline can be used as dependencies.'
 ]
 
 { #category : '*Deprecated14' }
-MetacelloAbstractVersionConstructor >> setTimestampWithBlock: aBlock [
+MetacelloAbstractVersionConstructor >> description: aBlockOrString [
 
-	| spec |
-	self deprecated: 'Timestamp should be provided as a string and not a block since it brind not value.'.
-	(spec := self root getTimestamp) ifNil: [
-		spec := self project valueHolderSpec.
-		self root timestamp: spec ].
-	self with: spec during: aBlock
+	self deprecated:
+		'The description metadata is not supported anymore. It was used with SmalltalkHub but not this information is already managed by git or other CVS.
+	If you wish to keep this as a trace, you can leave the infos in a method comment.'
+]
+
+{ #category : '*Deprecated14' }
+MetacelloAbstractVersionConstructor >> supplyingAnswers: aCollection [
+
+	self deprecated: 'This option is not available anymore since multiple versions of Pharo.'
+]
+
+{ #category : '*Deprecated14' }
+MetacelloAbstractVersionConstructor >> timestamp: aBlockOrStringOrDateAndTime [
+
+	self deprecated:
+		'The timestamp metadata is not supported anymore. It was used with SmalltalkHub but not this information is already managed by git or other CVS.
+	If you wish to keep this as a trace, you can leave the infos in a method comment.'
+]
+
+{ #category : '*Deprecated14' }
+MetacelloAbstractVersionConstructor >> versionString: anObject [
+
+	self error:
+		'Configurations are not supported anymore, only baseline can be used as dependencies and project managed with baseline have their version managed by the repositories.'
 ]

@@ -4,8 +4,7 @@ Class {
 	#instVars : [
 		'name',
 		'requires',
-		'includes',
-		'answers'
+		'includes'
 	],
 	#category : 'Metacello-Core-Specs',
 	#package : 'Metacello-Core',
@@ -22,62 +21,38 @@ MetacelloAbstractPackageSpec >> addToMetacelloPackages: aMetacelloPackagesSpec [
 			yourself)
 ]
 
-{ #category : 'querying' }
-MetacelloAbstractPackageSpec >> answers [
+{ #category : 'Protocol (printing) - 4 selector(s)' }
+MetacelloAbstractPackageSpec >> configMethodBodyOn: aStream hasName: hasName cascading: hasCascading indent: indent [
 
-	^answers ifNil: [ answers := #() ].
-]
-
-{ #category : 'accessing' }
-MetacelloAbstractPackageSpec >> answers: aListOfPairs [
-
-	self setAnswers: aListOfPairs
-]
-
-{ #category : 'printing' }
-MetacelloAbstractPackageSpec >> configMethodBodyOn: aStream hasName: hasName cascading: cascading indent: indent [
-
-	| hasCascading hasRequires hasIncludes hasAnswers |
-	hasCascading := cascading.
-	hasRequires := self requires isEmpty not.
-	hasIncludes := self includes isEmpty not.
-	hasAnswers := self answers isEmpty not.
-	hasRequires
-		ifTrue: [ 
-			hasName | hasIncludes | hasAnswers | hasCascading
-				ifTrue: [ aStream cr; tab: indent ].
+	| hasRequires hasIncludes |
+	hasRequires := self requires isNotEmpty.
+	hasIncludes := self includes isNotEmpty.
+	hasRequires ifTrue: [
+			hasName | hasIncludes | hasCascading ifTrue: [
+					aStream
+						cr;
+						tab: indent ].
 			aStream nextPutAll: 'requires: #('.
-			self requires do: [:str | aStream nextPutAll: str printString, ' ' ].
-			hasIncludes | hasAnswers | hasCascading
+			self requires do: [ :str |
+					aStream
+						print: str;
+						nextPutAll: ' ' ].
+			hasIncludes | hasCascading
 				ifTrue: [ aStream nextPutAll: ');' ]
-				ifFalse: [ aStream nextPut: $) ]].
-	hasIncludes
-		ifTrue: [ 
-			hasName | hasRequires | hasAnswers | hasCascading
-				ifTrue: [ aStream cr; tab: indent ].
+				ifFalse: [ aStream nextPut: $) ] ].
+	hasIncludes ifTrue: [
+			hasName | hasRequires | hasCascading ifTrue: [
+					aStream
+						cr;
+						tab: indent ].
 			aStream nextPutAll: 'includes: #('.
-			self includes do: [:str | aStream nextPutAll: str printString, ' ' ].
-			hasAnswers | hasCascading
-				ifTrue: [ aStream nextPutAll: ');' ]
-				ifFalse: [ aStream nextPut: $) ]].
-	hasAnswers
-		ifTrue: [ 
-			hasName | hasRequires | hasIncludes | hasCascading
-				ifTrue: [ aStream cr; tab: indent ].
-			aStream nextPutAll: 'supplyingAnswers: #( '.
-			self answers do: [:ar | 
-				aStream nextPutAll: '#( '.
-				ar do: [:val | 
-					(val isString or: [ val isNumber or: [ val isSymbol or: [ val isCharacter ]]])
-						ifTrue: [  aStream nextPutAll: val printString, ' ' ].
-					val == true
-						ifTrue: [  aStream nextPutAll: 'true ' ].
-					val == false
-						ifTrue: [  aStream nextPutAll: 'false ' ]].
-				aStream nextPutAll: ') ' ].
+			self includes do: [ :str |
+					aStream
+						print: str;
+						nextPutAll: ' ' ].
 			hasCascading
 				ifTrue: [ aStream nextPutAll: ');' ]
-				ifFalse: [ aStream nextPut: $) ]].
+				ifFalse: [ aStream nextPut: $) ] ]
 ]
 
 { #category : 'printing' }
@@ -172,7 +147,6 @@ MetacelloAbstractPackageSpec >> mergeMap [
 	map := super mergeMap.
 	map at: #requires put: requires.
 	map at: #includes put: includes.
-	map at: #answers put: answers.
 	^map
 ]
 
@@ -185,7 +159,6 @@ MetacelloAbstractPackageSpec >> mergeSpec: anotherSpec [
 	anotherSpec name ifNotNil: [ newSpec name: anotherSpec name ].
 	(map at: #requires) ifNotNil: [ :anotherRequires | newSpec setRequires: self requires , anotherRequires ].
 	(map at: #includes) ifNotNil: [ :anotherIncludes | newSpec setIncludes: self includes , anotherIncludes ].
-	(map at: #answers) ifNotNil: [ :anotherAnswers | newSpec setAnswers: self answers , anotherAnswers ].
 	^ newSpec
 ]
 
@@ -205,7 +178,7 @@ MetacelloAbstractPackageSpec >> name: aString [
 { #category : 'merging' }
 MetacelloAbstractPackageSpec >> nonOverridable [
 
-	^#( includes requires answers )
+	^#( includes requires )
 ]
 
 { #category : 'copying' }
@@ -213,8 +186,7 @@ MetacelloAbstractPackageSpec >> postCopy [
 
 	super postCopy.
 	requires := requires copy.
-	includes := includes copy.
-	answers := answers copy.
+	includes := includes copy
 ]
 
 { #category : 'visiting' }
@@ -293,12 +265,6 @@ MetacelloAbstractPackageSpec >> resolveToPackagesAndProjectsIn: aVersionSpec  vi
 MetacelloAbstractPackageSpec >> resolveToPackagesIn: aVersionSpec visited: visited [
 
 	^self subclassResponsibility
-]
-
-{ #category : 'private' }
-MetacelloAbstractPackageSpec >> setAnswers: aCollection [
-
-	answers := aCollection
 ]
 
 { #category : 'private' }

@@ -6,7 +6,7 @@ Class {
 	#superclass : 'MCWriter',
 	#instVars : [
 		'zip',
-		'infoWriter'
+		'writtenInfo'
 	],
 	#category : 'Monticello-Storing',
 	#package : 'Monticello',
@@ -29,14 +29,6 @@ MCMczWriter class >> readerClass [
 ]
 
 { #category : 'writing' }
-MCMczWriter >> addString: string at: path [
-	| member |
-	member := zip addString: string as: path.
-	member desiredCompressionMethod: ZipArchive compressionDeflated 
-	
-]
-
-{ #category : 'writing' }
 MCMczWriter >> addString: string at: path encodedTo: encodingName [
 	| member |
 	member := zip addString: (string encodeWith: encodingName) as: path.
@@ -49,16 +41,16 @@ MCMczWriter >> flush [
 	zip writeTo: stream.
 ]
 
-{ #category : 'accessing' }
-MCMczWriter >> format [
-	^ '1'
-]
-
 { #category : 'initialization' }
 MCMczWriter >> initialize [
 	super initialize.
 	zip := ZipArchive new.
 
+]
+
+{ #category : 'private' }
+MCMczWriter >> isInfoWritten: aVersionInfo [
+	^ self writtenInfo includes: aVersionInfo
 ]
 
 { #category : 'serializing' }
@@ -76,10 +68,8 @@ MCMczWriter >> serializePackage: aPackage [
 
 { #category : 'serializing' }
 MCMczWriter >> serializeVersionInfo: aVersionInfo [
-	infoWriter ifNil: [infoWriter := MCVersionInfoWriter new].
-	^ String streamContents: [:s |
-		infoWriter stream: s.
-		infoWriter writeVersionInfo: aVersionInfo]
+
+	^ String streamContents: [ :aStream | self writeVersionInfo: aVersionInfo on: aStream ]
 ]
 
 { #category : 'accessing' }
@@ -90,11 +80,6 @@ MCMczWriter >> snapshotWriterClass [
 { #category : 'visiting' }
 MCMczWriter >> writeDefinitions: aVersion [
 	self writeSnapshot: aVersion snapshot
-]
-
-{ #category : 'visiting' }
-MCMczWriter >> writeFormat [
-"	self addString: self format at: 'format'."
 ]
 
 { #category : 'visiting' }
@@ -113,7 +98,6 @@ MCMczWriter >> writeSnapshot: aSnapshot [
 
 { #category : 'visiting' }
 MCMczWriter >> writeVersion: aVersion [
-	self writeFormat.
 	self writePackage: aVersion package.
 	self writeVersionInfo: aVersion info.
 	self writeDefinitions: aVersion.
@@ -133,6 +117,44 @@ MCMczWriter >> writeVersionInfo: aVersionInfo [
 	string := self serializeVersionInfo: aVersionInfo.
 	self addString: string at: 'version' encodedTo: 'utf8'.
 
+]
+
+{ #category : 'visiting' }
+MCMczWriter >> writeVersionInfo: aVersionInfo on: aStream [
+
+	(self isInfoWritten: aVersionInfo) ifTrue: [
+			^ aStream
+				  nextPutAll: '(id ';
+				  print: aVersionInfo id asString;
+				  nextPut: $) ].
+	aStream nextPut: $(.
+	#( name message id date time author ) do: [ :sel |
+			| toWrite |
+			toWrite := (aVersionInfo perform: sel) ifNil: [ '' ].
+			sel = #date ifTrue: [ toWrite := toWrite yyyymmdd ].
+			aStream
+				nextPutAll: sel;
+				space;
+				print: (toWrite asString encodeWith: #utf8) asString;
+				space ].
+	aStream nextPutAll: 'ancestors ('.
+	aVersionInfo ancestors do: [ :ea | self writeVersionInfo: ea on: aStream ].
+	aStream nextPutAll: ') stepChildren ('.
+	aVersionInfo stepChildren do: [ :ea | self writeVersionInfo: ea on: aStream ].
+	aStream nextPutAll: '))'.
+
+	self wroteInfo: aVersionInfo
+]
+
+{ #category : 'private' }
+MCMczWriter >> writtenInfo [
+
+	^ writtenInfo ifNil: [ writtenInfo := Set new ]
+]
+
+{ #category : 'private' }
+MCMczWriter >> wroteInfo: aVersionInfo [
+	self writtenInfo add: aVersionInfo
 ]
 
 { #category : 'accessing' }

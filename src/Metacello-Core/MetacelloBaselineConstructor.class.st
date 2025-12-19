@@ -22,16 +22,13 @@ MetacelloBaselineConstructor >> calculate: aConfig project: aProject [
 	| pragma versionMap versionSpec |
 	self configuration: aConfig.
 	pragma := self extractBaselinePragmaFor: aConfig class.
-	self setProject: (aProject ifNil: [
-			 [ aConfig class project ]
-				 on: MessageNotUnderstood
-				 do: [ :ex | ex return: nil ] ]).
+	self setProject: (aProject ifNil: [ MetacelloBaselineProject new ]).
 	versionSpec := self project versionSpec.
 	self root: versionSpec.
 	self evaluatePragma: pragma.
 	versionMap := Dictionary new.
 	self project attributes do: [ :attribute |
-		(self attributeMap at: attribute ifAbsent: [  ]) ifNotNil: [ :blockList | blockList do: [ :block | self with: versionSpec during: block ] ] ].
+		(self attributeMap at: attribute ifAbsent: [ ]) ifNotNil: [ :blockList | blockList do: [ :block | self with: versionSpec during: block ] ] ].
 	versionSpec versionString: self project singletonVersionName.
 	versionMap at: versionSpec versionString put: versionSpec createVersion.
 	self project map: versionMap.

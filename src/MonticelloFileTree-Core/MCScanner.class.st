@@ -11,9 +11,8 @@ Class {
 	#instVars : [
 		'stream'
 	],
-	#category : 'Monticello-Chunk Format',
-	#package : 'Monticello',
-	#tag : 'Chunk Format'
+	#category : 'MonticelloFileTree-Core',
+	#package : 'MonticelloFileTree-Core'
 }
 
 { #category : 'public api' }

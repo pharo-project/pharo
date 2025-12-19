@@ -22,5 +22,6 @@ BaselineOfUIInfrastructure >> baseline: spec [
 
 			spec
 				package: 'System-Utilities';
-				package: 'System-FileRegistry' ]
+				package: 'System-FileRegistry';
+				package: 'Tool-Registry'. ]
 ]

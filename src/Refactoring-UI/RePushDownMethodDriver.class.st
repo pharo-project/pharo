@@ -78,10 +78,11 @@ RePushDownMethodDriver >> defaultSelectDialog [
 
 	^ super defaultSelectDialog
 		  title: 'There are potential breaking changes!';
-		  label: self labelBasedOnBreakingChanges;
+		  message: self labelBasedOnBreakingChanges;
 		  items: self breakingChoices;
 		  display: [ :each | each description ];
-		  displayIcon: [ :each | self iconNamed: each systemIconName ]; yourself
+		  displayIcon: [ :each | self iconNamed: each systemIconName ];
+		  yourself
 ]
 
 { #category : 'execution' }

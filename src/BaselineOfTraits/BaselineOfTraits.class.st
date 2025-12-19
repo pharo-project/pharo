@@ -19,14 +19,15 @@ Class {
 }
 
 { #category : 'baselines' }
-BaselineOfTraits class >> corePackages [
-	 ^ (self packagesOfGroupNamed: 'core-traits') , (self packagesOfGroupNamed: 'core')
+BaselineOfTraits class >> corePackageNames [
+
+	^ self packagesOfGroupNamed: 'core'
 ]
 
 { #category : 'baselines' }
-BaselineOfTraits class >> packagesToExportWithHermes [
+BaselineOfTraits class >> coreTraitsPackageNames [
 
-	^ self allPackageNames reject: [ :aPackageName | aPackageName = 'Traits-Tests'].
+	^ self packagesOfGroupNamed: 'core-traits'
 ]
 
 { #category : 'baselines' }
@@ -34,15 +35,15 @@ BaselineOfTraits >> baseline: spec [
 
 	<baseline>
 	spec for: #common do: [
-		spec
-			package: 'Traits';
-			package: 'Kernel-Traits' with: [ spec requires: #( 'Traits' ) ];
-			package: 'Traits-Tests' with: [ spec requires: #( 'Traits' ) ].
+			spec
+				package: 'Traits';
+				package: 'Kernel-Traits' with: [ spec requires: #( 'Traits' ) ];
+				package: 'Traits-Tests' with: [ spec requires: #( 'Traits' ) ].
 
-		spec group: 'core' with: #( 'Traits' ).
+			spec group: 'core' with: #( 'Traits' ).
 
-		spec group: 'core-traits' with: #( 'Kernel-Traits' ).
+			spec group: 'core-traits' with: #( 'Kernel-Traits' ).
 
-		spec group: 'default' with: #( 'core-traits' ).
-		spec group: 'traits-tests' with: #( 'default' 'Traits-Tests' ) ]
+			spec group: 'default' with: #( 'core-traits' ).
+			spec group: 'traits-tests' with: #( 'default' 'Traits-Tests' ) ]
 ]

@@ -60,9 +60,11 @@ ByteArray >> asByteArray [
 ByteArray >> asByteArrayOfSize: size [
 
 	"(#[51 52 53] asByteArrayOfSize: 10 ) >>> #[0 0 0 0 0 0 0 51 52 53]"
+	"(#[51 52 53] asByteArrayOfSize: 3 ) >>> #[51 52 53]"
 
 	| answer selfSize |
 	selfSize := self size.
+	size == selfSize ifTrue: [ ^self].
 
 	size < selfSize
 		ifTrue: [^ self error: 'bytearray bigger than ', size asString].

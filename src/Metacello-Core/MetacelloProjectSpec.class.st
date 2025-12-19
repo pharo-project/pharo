@@ -142,12 +142,6 @@ MetacelloProjectSpec >> compareVersionsEqual: aMetacelloProjectSpec [
 ]
 
 { #category : 'printing' }
-MetacelloProjectSpec >> configHasVersionString [
-
-	^ self versionString isNotNil
-]
-
-{ #category : 'printing' }
 MetacelloProjectSpec >> configMethodBodyOn: aStream indent: indent [
   ^ self configMethodBodyOn: aStream indent: indent fromShortCut: false
 ]
@@ -155,36 +149,22 @@ MetacelloProjectSpec >> configMethodBodyOn: aStream indent: indent [
 { #category : 'printing' }
 MetacelloProjectSpec >> configMethodBodyOn: aStream indent: indent fromShortCut: fromShortCut [
 
-	| hasVersionString hasOperator hasProjectPackage hasLoads hasClassName hasPreLoadDoIt hasPostLoadDoIt |
+	| hasOperator hasProjectPackage hasLoads hasClassName hasPreLoadDoIt hasPostLoadDoIt |
 	hasClassName := self hasClassName.
-	hasVersionString := self configHasVersionString.
 	hasOperator := operator isNotNil.
 	hasProjectPackage := self hasRepository or: [ hasClassName & self getFile isNotNil ].
 	hasLoads := self loads isNotNil.
 	hasPreLoadDoIt := self getPreLoadDoIt isNotNil.
 	hasPostLoadDoIt := self getPostLoadDoIt isNotNil.
 	hasClassName ifTrue: [
-		hasVersionString | hasOperator | hasProjectPackage | hasLoads
+		hasOperator | hasProjectPackage | hasLoads
 			ifTrue: [
 				aStream
 					cr;
 					tab: indent + 1 ]
 			ifFalse: [ aStream space ].
 		aStream nextPutAll: 'className: ' , self className printString.
-		hasVersionString | hasPreLoadDoIt | hasPostLoadDoIt | hasOperator | hasLoads | hasProjectPackage ifTrue: [ aStream nextPut: $; ] ].
-	hasVersionString ifTrue: [
-		| vs |
-		hasClassName | hasOperator | hasProjectPackage | hasLoads | hasPreLoadDoIt | hasPostLoadDoIt
-			ifTrue: [
-				aStream
-					cr;
-					tab: indent + 1 ]
-			ifFalse: [ aStream space ].
-		vs := self versionString.
-		aStream nextPutAll: 'versionString: '.
-		vs isSymbol ifTrue: [ aStream nextPut: $# ].
-		aStream nextPutAll: vs asString printString.
-		hasPreLoadDoIt | hasPostLoadDoIt | hasOperator | hasProjectPackage | hasLoads ifTrue: [ aStream nextPut: $; ] ].
+		hasPreLoadDoIt | hasPostLoadDoIt | hasOperator | hasLoads | hasProjectPackage ifTrue: [ aStream nextPut: $; ] ].
 	hasPreLoadDoIt ifTrue: [
 		hasClassName | hasOperator | hasProjectPackage | hasLoads | hasPreLoadDoIt
 			ifTrue: [
@@ -216,7 +196,7 @@ MetacelloProjectSpec >> configMethodBodyOn: aStream indent: indent fromShortCut:
 			ifFalse: [ aStream nextPutAll: self postLoadDoIt value asString ].
 		hasOperator | hasProjectPackage | hasLoads ifTrue: [ aStream nextPut: $; ] ].
 	hasOperator ifTrue: [
-		hasClassName | hasVersionString | hasProjectPackage | hasLoads | hasPreLoadDoIt | hasPostLoadDoIt
+		hasClassName | hasProjectPackage | hasLoads | hasPreLoadDoIt | hasPostLoadDoIt
 			ifTrue: [
 				aStream
 					cr;
@@ -225,7 +205,7 @@ MetacelloProjectSpec >> configMethodBodyOn: aStream indent: indent fromShortCut:
 		aStream nextPutAll: 'operator: #' , self operator asString printString.
 		hasProjectPackage | hasLoads ifTrue: [ aStream nextPut: $; ] ].
 	hasLoads ifTrue: [
-		hasClassName | hasVersionString | hasOperator | hasProjectPackage | hasPreLoadDoIt | hasPostLoadDoIt
+		hasClassName | hasOperator | hasProjectPackage | hasPreLoadDoIt | hasPostLoadDoIt
 			ifTrue: [
 				aStream
 					cr;
@@ -240,7 +220,7 @@ MetacelloProjectSpec >> configMethodBodyOn: aStream indent: indent fromShortCut:
 		hasRepo := self hasRepository.
 		hasName := self file ~= self className.
 		hasName ifTrue: [
-			hasClassName | hasVersionString | hasOperator | hasLoads | hasPreLoadDoIt | hasPostLoadDoIt
+			hasClassName | hasOperator | hasLoads | hasPreLoadDoIt | hasPostLoadDoIt
 				ifTrue: [
 					aStream
 						cr;
@@ -255,7 +235,7 @@ MetacelloProjectSpec >> configMethodBodyOn: aStream indent: indent fromShortCut:
 				ifTrue: [
 					fromShortCut
 						ifTrue: [
-							hasClassName | hasVersionString | hasOperator | hasLoads | hasPreLoadDoIt | hasPostLoadDoIt | hasName
+							hasClassName | hasOperator | hasLoads | hasPreLoadDoIt | hasPostLoadDoIt | hasName
 								ifTrue: [
 									aStream
 										cr;
@@ -286,36 +266,29 @@ MetacelloProjectSpec >> configMethodOn: aStream indent: indent [
 { #category : 'printing' }
 MetacelloProjectSpec >> configShortCutMethodOn: aStream member: aMember indent: indent [
 
-	| hasVersionString hasOperator hasProjectPackage hasLoads hasClassName hasPreLoadDoIt hasPostLoadDoIt |
+	| hasOperator hasProjectPackage hasLoads hasClassName hasPreLoadDoIt hasPostLoadDoIt |
 	hasClassName := self hasClassName.
-	hasVersionString := self configHasVersionString.
 	hasOperator := operator isNotNil.
 	hasProjectPackage := self hasRepository or: [ hasClassName & (self getFile isNotNil or: [ className ~= self name ]) ].
 	hasLoads := self loads isNotNil.
 	hasPreLoadDoIt := self getPreLoadDoIt isNotNil.
 	hasPostLoadDoIt := self getPostLoadDoIt isNotNil.
 	hasClassName | hasOperator | hasProjectPackage | hasLoads | hasPreLoadDoIt | hasPostLoadDoIt ifTrue: [
-		(aMember methodUpdateSelector == #copy: or: [ aMember methodUpdateSelector == #with: ])
-			ifTrue: [
-				aStream
-					nextPutAll: 'with: [';
-					cr ]
-			ifFalse: [
-				aStream
-					nextPutAll: 'overrides: [';
-					cr ].
-		aStream
-			tab: indent;
-			nextPutAll: 'spec'.
-		self configMethodBodyOn: aStream indent: indent fromShortCut: true.
-		aStream nextPutAll: ' ]'.
-		^ self ].
-	hasVersionString ifTrue: [
-		| vs |
-		vs := self versionString.
-		aStream nextPutAll: 'with: '.
-		vs isSymbol ifTrue: [ aStream nextPut: $# ].
-		aStream nextPutAll: vs asString printString ]
+			(aMember methodUpdateSelector == #copy: or: [ aMember methodUpdateSelector == #with: ])
+				ifTrue: [
+						aStream
+							nextPutAll: 'with: [';
+							cr ]
+				ifFalse: [
+						aStream
+							nextPutAll: 'overrides: [';
+							cr ].
+			aStream
+				tab: indent;
+				nextPutAll: 'spec'.
+			self configMethodBodyOn: aStream indent: indent fromShortCut: true.
+			aStream nextPutAll: ' ]'.
+			^ self ]
 ]
 
 { #category : 'private' }
@@ -387,12 +360,6 @@ MetacelloProjectSpec >> getFile [
     "raw access to iv"
 
     ^ file
-]
-
-{ #category : 'accessing' }
-MetacelloProjectSpec >> getOperator [
-
-	^operator
 ]
 
 { #category : 'querying' }
@@ -531,6 +498,13 @@ MetacelloProjectSpec >> loads [
 MetacelloProjectSpec >> loads: aCollection [
 
 	aCollection setLoadsInMetacelloProject: self
+]
+
+{ #category : 'scripting' }
+MetacelloProjectSpec >> lookForIssues [
+
+	self name ifNil: [ MetacelloValidationFailure signal: 'Name field required' ].
+	self className ifNil: [ MetacelloValidationFailure signal: 'ClassName field required' ]
 ]
 
 { #category : 'merging' }
@@ -803,63 +777,11 @@ MetacelloProjectSpec >> unregisterProject [
         ifPresent: [ :existing :new | existing unregisterProject ]
 ]
 
-{ #category : 'scripting' }
-MetacelloProjectSpec >> validateForScriptLoad: aScriptEngine withDefaultVersionString: defaultVersionString withDefaultRepositoryDecription: defaultRepositoryDecription [
-
-	| issues callSite |
-	issues := OrderedCollection new.
-	callSite := #validateForScriptLoad:withDefaultVersionString:withDefaultRepositoryDecription:.
-	self name ifNil: [
-		issues add: (MetacelloValidationError
-				 reasonCode: #incompleteProjectSpec
-				 callSite: callSite
-				 explanation: 'name field required') ].
-	self className ifNil: [
-		issues add: (MetacelloValidationError
-				 reasonCode: #incompleteProjectSpec
-				 callSite: callSite
-				 explanation: 'className field required') ].
-	self repositories isEmpty ifTrue: [
-		defaultRepositoryDecription
-			ifNotNil: [ self repository: defaultRepositoryDecription ]
-			ifNil: [
-				issues add: (MetacelloValidationError
-						 reasonCode: #incompleteProjectSpec
-						 callSite: callSite
-						 explanation: 'repository field required') ] ].
-	self
-		validateVersionString: issues
-		withDefaultVersionString: defaultVersionString.
-	^ issues
-]
-
-{ #category : 'scripting' }
-MetacelloProjectSpec >> validateVersionString: issues withDefaultVersionString: defaultVersionString [
-
-	self versionString ifNil: [
-		defaultVersionString
-			ifNotNil: [ self versionString: defaultVersionString ]
-			ifNil: [
-				issues add: (MetacelloValidationError
-						 reasonCode: #incompleteProjectSpec
-						 callSite:
-						 #validateForScriptLoad:withDefaultVersionString:withDefaultRepositoryDecription:
-						 explanation: 'version field required') ] ]
-]
-
 { #category : 'querying' }
 MetacelloProjectSpec >> version [
 	"Empty version string means use latestVersion or #bleedingEdge"
 
-	^ self versionString
-		  ifNotNil: [ self project versionString ]
-		  ifNil: [
-			  | vrsn |
-			  "Eventually it will become an error to not specify a project reference version as default: #stable is the preferred default""self deprecated: 'Must specify a project reference version.'."
-			  self flag: 'deprecate after version 1.0'.
-			  (vrsn := self project latestVersion) isNil
-				  ifTrue: [ self project version: #bleedingEdge ]
-				  ifFalse: [ vrsn ] ]
+	^ self versionString ifNotNil: [ self project versionString ]
 ]
 
 { #category : 'querying' }

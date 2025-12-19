@@ -32,8 +32,8 @@ PharoCommonTools class >> initialize [
 
 { #category : 'world menu' }
 PharoCommonTools class >> menuToploOn: aBuilder [
-	<worldMenu>
 
+	<worldMenu>
 	(aBuilder item: #LoadToplo)
 		parent: #Tools;
 		label: 'Load Toplo and Bloc';
@@ -41,11 +41,11 @@ PharoCommonTools class >> menuToploOn: aBuilder [
 		help: 'Load Toplo, a widget framework on top of Bloc.';
 		order: 100;
 		action: [
-			(Smalltalk classNamed: #Metacello) new
-				baseline: 'Toplo';
-				repository: (Smalltalk classNamed: #BaselineOfPharo) toploRepository;
-				onConflictUseIncoming;
-				load ]
+				Metacello new
+					baseline: 'Toplo';
+					repository: (Smalltalk classNamed: #BaselineOfPharo) toploRepository;
+					onConflictUseIncoming;
+					load ]
 ]
 
 { #category : 'system startup' }
@@ -69,17 +69,7 @@ PharoCommonTools class >> worldMenuOn: aBuilder [
 		order: 0;
 		keyText: 'o, b';
 		help: 'System browser to browse and edit code.';
-		iconName: #smallSystemBrowser.
-
-	(aBuilder item: 'Git Repositories Browser')
-		order: 1;
-		iconName: #komitterSmalltalkhubRemote;
-		parent: #Browsing;
-		keyText: 'o, i';
-		help: 'Iceberg is a set of tools that allow one to handle git repositories directly from a Pharo image.';
-		action: [ "Pay attention using newApplication: ... will break IceTipRepositoriesBrowser because it initializes
-			a model."
-			(Smalltalk at: #IceTipRepositoriesBrowser) ensureIsOpen ]
+		iconName: #smallSystemBrowser
 ]
 
 { #category : 'accessing' }

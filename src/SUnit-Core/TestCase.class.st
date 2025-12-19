@@ -640,6 +640,12 @@ TestCase >> announcer [
 ]
 
 { #category : 'private' }
+TestCase >> cleanAfterRunOn: aTestSuite [
+
+	aTestSuite cleanTestCase: self
+]
+
+{ #category : 'private' }
 TestCase >> cleanUpInstanceVariables [
 	self class allInstVarNames do: [ :name |
 		(self instanceVariablesToKeep includes: name) ifFalse: [
@@ -784,6 +790,12 @@ TestCase >> prepareToRunAgain [
 	self
 		tearDown;
 		setUp
+]
+
+{ #category : 'private' }
+TestCase >> prepareToRunOn: aTestSuite [
+
+	aTestSuite prepareTestCase: self
 ]
 
 { #category : 'printing' }

@@ -224,12 +224,6 @@ Metacello >> className: className [
 	self scriptExecutor classNameArg: className
 ]
 
-{ #category : 'api projectSpec' }
-Metacello >> configuration: projectName [
-
-	self scriptExecutor configurationArg: projectName
-]
-
 { #category : 'private' }
 Metacello >> execute: aBlock [
 	"I'm doing a copy of the script executor so that we can execute different commands with the same setup of our Metacello instance."
@@ -425,12 +419,6 @@ Metacello >> onWarningLog [
       ex resume ]
 ]
 
-{ #category : 'api projectSpec' }
-Metacello >> project: projectName [
-
-	self scriptExecutor projectArg: projectName
-]
-
 { #category : 'api actions' }
 Metacello >> record [
 
@@ -510,10 +498,4 @@ Metacello >> unregister [
 	"unlock projects in registry"
 
 	^ self execute: [ :executor | executor unregister ]
-]
-
-{ #category : 'api projectSpec' }
-Metacello >> version: versionString [
-
-	self scriptExecutor versionArg: versionString
 ]

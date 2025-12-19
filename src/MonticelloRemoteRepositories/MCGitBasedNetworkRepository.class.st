@@ -47,7 +47,8 @@ MCGitBasedNetworkRepository class >> cacheDirectoryFor: projectPath [
 
 { #category : 'accessing' }
 MCGitBasedNetworkRepository class >> cacheDirectoryPath [
-  ^ MCFileTreeFileUtils current directoryPathString: self cacheDirectory
+
+	^ self fileUtils directoryPathString: self cacheDirectory
 ]
 
 { #category : 'accessing' }
@@ -97,6 +98,12 @@ MCGitBasedNetworkRepository class >> downloadZipArchive: url to: outputFileName 
 			progress isEmpty ifFalse: [ bar current: progress percentage ].
 			progress resume ] ] asJob run.
 	^ ZipArchive new readFrom: outputFileName asFileReference
+]
+
+{ #category : 'accessing' }
+MCGitBasedNetworkRepository class >> fileUtils [
+
+	^ MCFileTreeFileUtils
 ]
 
 { #category : 'class initialization' }
@@ -264,12 +271,9 @@ MCGitBasedNetworkRepository class >> projectZipUrlFor: projectPath versionString
 
 { #category : 'private' }
 MCGitBasedNetworkRepository class >> resetCacheDirectoryIfInvalid [
-  "Reset if invalid"
+	"Reset if invalid"
 
-  repoCacheDirectory isNotNil
-    and: [ 
-      (MCFileTreeFileUtils current directoryExists: repoCacheDirectory)
-        ifFalse: [ repoCacheDirectory := nil ] ]
+	repoCacheDirectory isNotNil and: [ (self fileUtils directoryExists: repoCacheDirectory) ifFalse: [ repoCacheDirectory := nil ] ]
 ]
 
 { #category : 'site credentials' }
@@ -430,14 +434,6 @@ MCGitBasedNetworkRepository >> flushForScriptGet [
     self localRepository flushForScriptGet
 ]
 
-{ #category : 'accessing' }
-MCGitBasedNetworkRepository >> goferVersionFrom: aVersionReference [
-	self flag: #review. "This will fail in non filtree(cypress) formats, but I need to 
-	 implement it to make the tests pass. A better approach maybe to look at those tests 
-	 and try to implement them better."
-	^ self localRepository goferVersionFrom: aVersionReference
-]
-
 { #category : 'initialization' }
 MCGitBasedNetworkRepository >> hasNoLoadConflicts: anMCGitBasedRepository [
   (anMCGitBasedRepository isKindOf: self class)
@@ -467,11 +463,6 @@ MCGitBasedNetworkRepository >> localRepository [
 	self ensureLocalRepository.
 	self validateLocalRepository.
 	^ localRepository
-]
-
-{ #category : 'accessing' }
-MCGitBasedNetworkRepository >> metacelloProjectClassFor: aScriptEngine [
-    ^ MetacelloBaselineProject
 ]
 
 { #category : 'private' }
@@ -581,36 +572,31 @@ MCGitBasedNetworkRepository >> repositoryBranchName [
 
 { #category : 'accessing' }
 MCGitBasedNetworkRepository >> repositoryVersionString [
-  "for git-based network repos, answer the SHA associated with the download: a commit SHA or tag SHA"
+	"for git-based network repos, answer the SHA associated with the download: a commit SHA or tag SHA"
 
-  | versionComponents versionElement pathElements gitBasedPath repositoryDirPath projectDirPath projectDir projectVersionDir |
-  repositoryDirPath := self directory fullName.
-  projectDir := self class cacheDirectoryFor: self projectPath.
-  projectVersionDir := MCFileTreeFileUtils current
-    directoryFromPath: self projectVersion
-    relativeTo: projectDir.
-  projectDirPath := projectVersionDir fullName.
-  (repositoryDirPath beginsWith: projectDirPath)
-    ifFalse: [ ^ self projectVersion ].
-  gitBasedPath := repositoryDirPath
-    copyFrom: projectDirPath size + 2
-    to: repositoryDirPath size.
-  pathElements := gitBasedPath findTokens: '/'.
-  versionElement := pathElements at: 1.
-  versionComponents := versionElement findTokens: '-'.
-  ^ versionComponents last
+	| versionComponents versionElement pathElements gitBasedPath repositoryDirPath projectDirPath projectDir projectVersionDir |
+	repositoryDirPath := self directory fullName.
+	projectDir := self class cacheDirectoryFor: self projectPath.
+	projectVersionDir := self class fileUtils directoryFromPath: self projectVersion relativeTo: projectDir.
+	projectDirPath := projectVersionDir fullName.
+	(repositoryDirPath beginsWith: projectDirPath) ifFalse: [ ^ self projectVersion ].
+	gitBasedPath := repositoryDirPath copyFrom: projectDirPath size + 2 to: repositoryDirPath size.
+	pathElements := gitBasedPath findTokens: '/'.
+	versionElement := pathElements at: 1.
+	versionComponents := versionElement findTokens: '-'.
+	^ versionComponents last
 ]
 
 { #category : 'private' }
 MCGitBasedNetworkRepository >> resolveLocalRespository [
+
 	| directory directoryPath |
-  
 	directory := self calculateRepositoryDirectory.
-	directoryPath := MCFileTreeFileUtils current directoryPathString: directory.
-	directory ifAbsent: [ self error: 'Local directory ', directoryPath, ' does not exist.' ].
-	localRepository := MetacelloPlatform current createRepository: (MetacelloRepositorySpec new 
-		description: 'filetree://', directoryPath;
-		yourself)
+	directoryPath := self class fileUtils directoryPathString: directory.
+	directory ifAbsent: [ self error: 'Local directory ' , directoryPath , ' does not exist.' ].
+	localRepository := MetacelloPlatform current createRepository: (MetacelloRepositorySpec new
+			                    description: 'filetree://' , directoryPath;
+			                    yourself)
 ]
 
 { #category : 'private' }
@@ -649,14 +635,12 @@ MCGitBasedNetworkRepository >> storeVersion: aVersion [
 
 { #category : 'private' }
 MCGitBasedNetworkRepository >> validateLocalRepository [
-	| dir |
 
+	| dir |
 	dir := self calculateRepositoryDirectory.
-	(dir = localRepository directory 
-		and: [ MCFileTreeFileUtils current directoryExists: dir ]) 
-		ifTrue: [ ^ self ].
+	(dir = localRepository directory and: [ self class fileUtils directoryExists: dir ]) ifTrue: [ ^ self ].
 	self flushCache.
- 	self resolveLocalRespository.
+	self resolveLocalRespository
 ]
 
 { #category : 'accessing' }

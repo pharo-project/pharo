@@ -57,7 +57,7 @@ BaselineOfBasicTools >> baseline: spec [
 					spec
 						loads: 'Core';
 						repository: repository ].
-
+			spec package: 'System-Changes'.
 			spec package: 'Tool-Profilers'.
 			spec package: 'NECompletion'.
 			spec package: 'NECompletion-Morphic'.

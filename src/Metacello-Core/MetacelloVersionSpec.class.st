@@ -6,14 +6,10 @@ Class {
 		'packages',
 		'versionString',
 		'packageList',
-		'author',
-		'timestamp',
 		'importArray',
 		'postLoadDoIt',
-		'blessing',
 		'importName',
-		'preLoadDoIt',
-		'description'
+		'preLoadDoIt'
 	],
 	#category : 'Metacello-Core-Specs',
 	#package : 'Metacello-Core',
@@ -26,87 +22,29 @@ MetacelloVersionSpec >> acceptVisitor: aVisitor [
 	^ aVisitor visitVersionSpec: self
 ]
 
-{ #category : 'accessing' }
-MetacelloVersionSpec >> author [
-
-	^ author ifNil: [
-		  self project valueHolderSpec
-			  value: '';
-			  yourself ]
-]
-
-{ #category : 'accessing' }
-MetacelloVersionSpec >> author: anObject [
-
-	author := anObject asMetacelloValueHolderFor: self
-]
-
-{ #category : 'accessing' }
-MetacelloVersionSpec >> blessing [
-
-	^ blessing ifNil: [
-		  self project valueHolderSpec
-			  value: self project defaultBlessing;
-			  yourself ]
-]
-
-{ #category : 'accessing' }
-MetacelloVersionSpec >> blessing: anObject [
-
-	blessing := anObject asMetacelloValueHolderFor: self
-]
-
 { #category : 'printing' }
 MetacelloVersionSpec >> configMethodBasicOn: aStream last: last indent: indent [
 
 	| values lastIndex lastBlock |
 	last
 		ifTrue: [ "need to calculate last statement with a value"
-			values := {
-				          self getBlessing.
-				          self getDescription.
-				          self getPreLoadDoIt.
-				          self getPostLoadDoIt.
-				          self getAuthor.
-				          self getTimestamp }.
-			1 to: values size do: [ :index | (values at: index) ifNotNil: [ lastIndex := index ] ].
-			lastBlock := [ :arg | arg = lastIndex ] ]
+				values := {
+					          self getPreLoadDoIt.
+					          self getPostLoadDoIt }.
+				1 to: values size do: [ :index | (values at: index) ifNotNil: [ lastIndex := index ] ].
+				lastBlock := [ :arg | arg = lastIndex ] ]
 		ifFalse: [ lastBlock := [ :arg | false ] ].
-	self
-		configMethodValueOn: aStream
-		for: self getBlessing
-		selector: 'blessing:'
-		last: (lastBlock value: 1)
-		indent: indent.
-	self
-		configMethodValueOn: aStream
-		for: self getDescription
-		selector: 'description:'
-		last: (lastBlock value: 2)
-		indent: indent.
 	self
 		configMethodValueOn: aStream
 		for: self getPreLoadDoIt
 		selector: 'preLoadDoIt:'
-		last: (lastBlock value: 3)
+		last: (lastBlock value: 1)
 		indent: indent.
 	self
 		configMethodValueOn: aStream
 		for: self getPostLoadDoIt
 		selector: 'postLoadDoIt:'
-		last: (lastBlock value: 4)
-		indent: indent.
-	self
-		configMethodValueOn: aStream
-		for: self getAuthor
-		selector: 'author:'
-		last: (lastBlock value: 5)
-		indent: indent.
-	self
-		configMethodValueOn: aStream
-		for: self getTimestamp
-		selector: 'timestamp:'
-		last: (lastBlock value: 6)
+		last: (lastBlock value: 2)
 		indent: indent
 ]
 
@@ -256,36 +194,6 @@ MetacelloVersionSpec >> defaultPackageNames [
 ]
 
 { #category : 'accessing' }
-MetacelloVersionSpec >> description [
-
-	^ description ifNil: [
-		  self project valueHolderSpec
-			  value: '';
-			  yourself ]
-]
-
-{ #category : 'accessing' }
-MetacelloVersionSpec >> description: anObject [
-
-	description := anObject asMetacelloValueHolderFor: self
-]
-
-{ #category : 'accessing' }
-MetacelloVersionSpec >> getAuthor [
-	^author
-]
-
-{ #category : 'accessing' }
-MetacelloVersionSpec >> getBlessing [
-	^blessing
-]
-
-{ #category : 'accessing' }
-MetacelloVersionSpec >> getDescription [
-	^description
-]
-
-{ #category : 'accessing' }
 MetacelloVersionSpec >> getPostLoadDoIt [
 	^postLoadDoIt
 ]
@@ -293,11 +201,6 @@ MetacelloVersionSpec >> getPostLoadDoIt [
 { #category : 'accessing' }
 MetacelloVersionSpec >> getPreLoadDoIt [
 	^preLoadDoIt
-]
-
-{ #category : 'accessing' }
-MetacelloVersionSpec >> getTimestamp [
-	^timestamp
 ]
 
 { #category : 'accessing' }
@@ -337,18 +240,13 @@ MetacelloVersionSpec >> loader: aMetacelloLoadTarget [
 
 { #category : 'merging' }
 MetacelloVersionSpec >> mergeMap [
-    | map |
-    map := super mergeMap.
-    map at: #'versionString' put: versionString.
-    map at: #'blessing' put: blessing.
-    map at: #'description' put: description.
-    map at: #'author' put: author.
-    map at: #'timestamp' put: timestamp.
-    map at: #'preLoadDoIt' put: preLoadDoIt.
-    map at: #'postLoadDoIt' put: postLoadDoIt.
-    map at: #'packageList' put: self packages.
-    map at: #'repositories' put: self repositories.
-    ^ map
+
+	^ super mergeMap
+		  at: #preLoadDoIt put: preLoadDoIt;
+		  at: #postLoadDoIt put: postLoadDoIt;
+		  at: #packageList put: self packages;
+		  at: #repositories put: self repositories;
+		  yourself
 ]
 
 { #category : 'merging' }
@@ -489,14 +387,11 @@ MetacelloVersionSpec >> packagesSpec [
 
 { #category : 'copying' }
 MetacelloVersionSpec >> postCopy [
-    super postCopy.
-  blessing := blessing copy.
-    description := description copy.
-    author := author copy.
-    timestamp := timestamp copy.
-    packageList := packageList copy.
-    repositories := repositories copy.
-    packages := packages copy	"leave reference to packages for upgrade purposes"
+
+	super postCopy.
+	packageList := packageList copy.
+	repositories := repositories copy.
+	packages := packages copy "leave reference to packages for upgrade purposes"
 ]
 
 { #category : 'querying' }
@@ -629,21 +524,6 @@ MetacelloVersionSpec >> specsNamed: packageAndProjectNames projectDo: projectBlo
 	map := self packages map.
 	packageAndProjectNames do: [ :name |
 		(map at: name ifAbsent: [  ]) ifNotNil: [ :pkgSpec | pkgSpec projectDo: projectBlock packageDo: packageBlock groupDo: groupBlock ] ]
-]
-
-{ #category : 'accessing' }
-MetacelloVersionSpec >> timestamp [
-
-	^ timestamp ifNil: [
-		  self project valueHolderSpec
-			  value: '';
-			  yourself ]
-]
-
-{ #category : 'accessing' }
-MetacelloVersionSpec >> timestamp: anObject [
-
-	timestamp := anObject asMetacelloValueHolderFor: self
 ]
 
 { #category : 'private' }

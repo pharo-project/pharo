@@ -36,38 +36,13 @@ MetacelloProjectRegistration class >> baselineProjectSpecs [
 
 { #category : 'accessing' }
 MetacelloProjectRegistration class >> classRemoved: aClassRemovalAnnouncement [
-  "aRemovalAnnouncement is platform-specific ... responds to #itemClass to 
+	"aRemovalAnnouncement is platform-specific ... responds to #itemClass to 
    answer the class that was removed."
 
-  | aClass registration |
-  aClass := aClassRemovalAnnouncement itemClass.
-  registration := self registry
-    registrationForExactClassNamed: aClass name asString
-    ifAbsent: [ ^ self ].
-  registration unregisterProject
-]
-
-{ #category : 'accessing' }
-MetacelloProjectRegistration class >> configurationClasses [
-	"Return a set of the Metacello configuration classes that have been loaded into the image."
-
-	"self configurationClasses"
-
-	| answer |
-	answer := IdentitySet new.
-	ConfigurationOf allSubclasses
-		do: [ :cl | 
-			(cl includesBehavior: BaselineOf)
-				ifFalse: [ answer add: cl ] ].
-	Object allSubclasses
-		do: [ :cl | 
-			(answer includes: cl)
-				ifFalse: [ (([ cl isMetacelloConfig ]
-						on: Error
-						do: [ :ex | ex return: false ])
-						and: [ cl name asString beginsWith: 'ConfigurationOf' ])
-						ifTrue: [ answer add: cl ] ] ].
-	^ answer
+	| aClass registration |
+	aClass := aClassRemovalAnnouncement itemClass.
+	registration := self registry registrationForExactClassNamed: aClass name asString ifAbsent: [ ^ self ].
+	registration unregisterProject
 ]
 
 { #category : 'accessing' }
@@ -117,13 +92,6 @@ MetacelloProjectRegistration class >> fromMCConfigurationProjectSpec: aProjectSp
 { #category : 'querying' }
 MetacelloProjectRegistration class >> projectSpecForClassNamed: aClassName ifAbsent: absentBlock [
     ^ self registry projectSpecForClassNamed: aClassName ifAbsent: absentBlock
-]
-
-{ #category : 'accessing' }
-MetacelloProjectRegistration class >> projectSpecs [
-    "MetacelloProjectRegistration projectSpecs"
-
-    ^ self configurationProjectSpecs , self baselineProjectSpecs
 ]
 
 { #category : 'registration' }
@@ -278,17 +246,6 @@ MetacelloProjectRegistration >> copyOnWrite: aBlock [
 	aBlock value: copy.
 	copy registerProject.
 	^ copy
-]
-
-{ #category : 'accessing' }
-MetacelloProjectRegistration >> currentBranchName [
-
-	^ self configurationProjectSpec
-		  ifNotNil: [
-			  configurationProjectSpec versionOrNil
-				  ifNil: [ '' ]
-				  ifNotNil: [ :vrsn | vrsn blessing asString ] ]
-		  ifNil: [ baselineProjectSpec repositoryBranchName ]
 ]
 
 { #category : 'accessing' }
