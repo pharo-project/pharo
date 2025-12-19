@@ -36,9 +36,12 @@ Class {
 	#instVars : [
 		'uuidData'
 	],
-	#category : 'Network-UUID-Base',
-	#package : 'Network-UUID',
-	#tag : 'Base'
+	#classVars : [
+		'RandomGenerator'
+	],
+	#category : 'Random-Core-UUID',
+	#package : 'Random-Core',
+	#tag : 'UUID'
 }
 
 { #category : 'instance creation' }
@@ -83,21 +86,11 @@ UUID class >> nilUUID [
 	^ super new
 ]
 
-{ #category : 'instance creation' }
-UUID class >> nonStandardUUID [
-	"This method uses the legacy UUID generation method from Pharo."
-	
-	^ self nonStandardUUIDWithGenerator: UUIDGenerator default
-]
+{ #category : 'accessing' }
+UUID class >> randomGenerator [
+	"I am used by String>>#asAlphaNumeric:extraChars:mergeUID:. I don't know a better place to save this generator even if it's not used by UUID."
 
-{ #category : 'instance creation' }
-UUID class >> nonStandardUUIDWithGenerator: aGenerator [
-	"This method uses the legacy UUID generation method from Pharo."
-	
-	|uuid|
-	uuid := super new.
-	aGenerator placeFields: uuid uuidData.
-	^uuid
+	RandomGenerator ifNil: [ RandomGenerator := Random new ]
 ]
 
 { #category : 'comparing' }

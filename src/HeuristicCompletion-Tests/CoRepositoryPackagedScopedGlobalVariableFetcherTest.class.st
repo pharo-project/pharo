@@ -88,7 +88,7 @@ CoRepositoryPackagedScopedGlobalVariableFetcherTest >> setUp [
 		globals: dict;
 		yourself.
 
-	fetcher := CoRepositoryPackageScopedGlobalVariableFetcher new. 
+	fetcher := CoRepositoryGlobalVariableFetcher new. 
 	fetcher completionClass: completionClass.
 	fetcher systemNavigation: systemNavigation.
 	fetcher filter: (CoBeginsWithFilter caseSensitive: false filterString: 'Ai').
@@ -165,7 +165,7 @@ CoRepositoryPackagedScopedGlobalVariableFetcherTest >> testNoClassesMatchingInPa
 	
 	systemNavigation globals at: noMatch name put: noMatch.
 	
-	localFetcher := CoRepositoryPackageScopedGlobalVariableFetcher new.
+	localFetcher := CoRepositoryGlobalVariableFetcher new.
 	localFetcher
 		completionClass: noMatch;
 		systemNavigation: systemNavigation;
@@ -185,7 +185,7 @@ CoRepositoryPackagedScopedGlobalVariableFetcherTest >> testNoCompletionClassRetu
 
 	| localFetcher fetchedElements |
 	
-	localFetcher := CoRepositoryPackageScopedGlobalVariableFetcher new.
+	localFetcher := CoRepositoryGlobalVariableFetcher new.
 	localFetcher
 		completionClass: nil;
 		filter: (CoBeginsWithFilter caseSensitive: false filterString: 'Ai').

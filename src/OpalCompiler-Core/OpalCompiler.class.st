@@ -547,13 +547,13 @@ OpalCompiler >> install [
 
 	changeStamp ifNil: [ changeStamp := DateAndTime now printString ].
 	logSource := self logged ifNil: [ true ].
-	protocol := protocol ifNil: [ self priorMethod ifNotNil: [ self priorMethod protocol name ] ].
+	protocol := protocol ifNil: [ self priorMethod ifNotNil: [ self priorMethod protocol name ] ifNil: [ Protocol unclassified ] ].
 
 	logSource ifTrue: [
 			method
 				putSource: source
 				withFooter: ''
-				protocol: protocol asString
+				protocol: (protocol isString ifTrue: [ protocol ] ifFalse: [ protocol name ]) asString
 				timestamp: changeStamp asString
 				priorSourcePointer: (self priorMethod ifNil: [ 0 ] ifNotNil: [ self priorMethod sourcePointer ]) ].
 

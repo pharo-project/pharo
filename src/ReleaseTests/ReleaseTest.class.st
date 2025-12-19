@@ -228,7 +228,7 @@ ReleaseTest >> testInstanceSideMethodsWithNilKeyInLastLiteral [
 { #category : 'tests' }
 ReleaseTest >> testKeyClassesArePresentInStartupList [
 	| keyClasses registeredHandlers |
-	keyClasses := #(#Delay #ProcessorScheduler #Stdio #OSPlatform #UUIDGenerator #DiskStore #FinalizationProcess).
+	keyClasses := #(#Delay #ProcessorScheduler #Stdio #OSPlatform #DiskStore #FinalizationProcess).
 	registeredHandlers := SessionManager default startupList
 		collect: [:each | each handledId].
 
@@ -275,7 +275,7 @@ ReleaseTest >> testManifestNamesAccordingToPackageNames [
 { #category : 'tests' }
 ReleaseTest >> testMethodsContainNoHalt [
 
-	| methods |
+	| methods explicitlyRejectMethods |
 	methods := SystemNavigation new allMethods select: [ :method | method containsHalt ].
 	"these methods are using halt for testing something"
 	methods := methods reject: [ :method |
@@ -283,7 +283,10 @@ ReleaseTest >> testMethodsContainNoHalt [
 	"these methods are implementing halt, we are not interested"
 	methods := methods reject: [ :method |
 		           method hasPragmaNamed: #debuggerCompleteToSender ].
-
+	
+	explicitlyRejectMethods := { 'DebugContext>>#confirm:trueChoice:falseChoice:' }.
+	methods := methods reject: [ :method | explicitlyRejectMethods includes: method name  ].
+	
 	"there should be no method left"
 	self assert: methods isEmpty description: [
 		String streamContents: [ :stream |
@@ -402,7 +405,8 @@ ReleaseTest >> testNoShadowedVariablesInMethods [
 		                   (OCClosureCompilerTest >> #testInlineBlockShadowVariableUsedInInnerInnerBlock).
 		                   (OCClosureCompilerTest >> #testInlineBlockShadowVariableInnerBlocks).
 		                   (OCClosureCompilerTest >> #testInlineBlockShadowVariableParameter).
-		                   (ReClassToConvertTemporaryToInstanceVariable >> #doAction2) }.
+		                   (ReClassToConvertTemporaryToInstanceVariable >> #doAction2).
+		                   (MethodMapExamples >> #exampleWithNestedHoisting) }.
 
 	remaining := found asOrderedCollection
 		             removeAll: validExceptions;

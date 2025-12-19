@@ -26,43 +26,29 @@
    - It ensures that classes already suggested from local or dependent packages are not repeated when pulling from the global environment.
 "
 Class {
-	#name : 'CoTransitiveDependencyPackageScopedGlobalVariableFetcher',
-	#superclass : 'CoAbstractPackageDependentScopeGlobalVariableFetcher',
+	#name : 'CoTransitiveDependencyGlobalVariableFetcher',
+	#superclass : 'CoAbstractPackageDependencyFetcher',
 	#category : 'HeuristicCompletion-Model-Fetchers',
 	#package : 'HeuristicCompletion-Model',
 	#tag : 'Fetchers'
 }
 
 { #category : 'enumerating' }
-CoTransitiveDependencyPackageScopedGlobalVariableFetcher >> entriesDo: aBlock [
+CoTransitiveDependencyGlobalVariableFetcher >> entriesDo: aBlock [
+
 	| dependentClassNames dependentPackages twoLevelPackages |
-	completionClass isNil ifTrue: [ ^ self ].
-
-	"2) first localclasses"
-	self packageLocalClasses: aBlock.
-
-	"2) Add classes from transitive dependencies"
+	completionClass ifNil: [ ^ self ].
+	self packageLocalClasses: aBlock. "2) Add classes from transitive dependencies"
 	dependentPackages := self dependenciesOf: package name.
 	twoLevelPackages := dependentPackages asOrderedCollection.
-	dependentPackages do: [ :each |
-		twoLevelPackages addAll: (self dependenciesOf: each) ].
+	dependentPackages do: [ :each | twoLevelPackages addAll: (self dependenciesOf: each) ].
 
-	dependentClassNames := dependentPackages
-		                       inject: OrderedCollection new
-		                       into: [ :acc :pkgName |
-				                       | pkg |
-				                       pkg := organizer
-					                              packageNamed: pkgName
-					                              ifAbsent: [ nil ].
-				                       pkg isNil ifFalse: [
-					                       acc addAll:
-						                       (pkg definedClasses collect: [ :each |
-							                        each name ]) ].
-				                       acc ].
+	dependentClassNames := dependentPackages inject: OrderedCollection new into: [ :acc :pkgName |
+			                       | pkg |
+			                       pkg := organizer packageNamed: pkgName ifAbsent: [ nil ].
+			                       pkg ifNotNil: [ acc addAll: (pkg definedClasses collect: [ :each | each name ]) ].
+			                       acc ].
 
 	dependentClassNames do: [ :className |
-			(filter accepts: className) ifTrue: [
-				aBlock value: (NECGlobalEntry contents: className node: nil) ] ]
-
-
+		(filter accepts: className) ifTrue: [ aBlock value: (NECGlobalEntry contents: className node: nil) ] ]
 ]

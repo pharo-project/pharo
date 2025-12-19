@@ -82,10 +82,11 @@ BehaviorTest >> testAllSelectorsAboveUntil [
 	self deny: (selectors includes: #yourself)
 ]
 
-{ #category : 'tests' }
+{ #category : 'tests - instance names' }
 BehaviorTest >> testBehaviornewnewShouldNotCrash [
 
 	Behavior new new.
+	
 	"still not working correctly but at least does not crash the image"
 ]
 
@@ -99,6 +100,17 @@ BehaviorTest >> testBinding [
 	"returns nil for Metaclasses... like Encoder>>#associationFor:"
 
 	self assert: Object class binding key isNil
+]
+
+{ #category : 'tests - instance names' }
+BehaviorTest >> testClassNilName [
+
+	| cls |
+	cls := Class new.
+	self 
+		assert: cls name
+		equals: #ASubclassOfObject
+	
 ]
 
 { #category : 'tests' }
@@ -286,6 +298,17 @@ BehaviorTest >> testMethodsWritingSlot [
 		size.
 	numberViaIVar := (Point whichSelectorsWrite: 'x') size.
 	self assert: numberViaSlot equals: numberViaIVar
+]
+
+{ #category : 'tests - instance names' }
+BehaviorTest >> testName [
+
+	| beh |
+	beh := Behavior new.
+	self 
+		assert: beh name
+		equals: #ASubclassOfObject
+	
 ]
 
 { #category : 'tests' }

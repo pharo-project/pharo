@@ -400,6 +400,7 @@ CompiledCode >> hasSelector: selector specialSelectorIndex: specialOrNil [
 	 If you do, you may call this method directly to avoid recomputing
 	 the special selector index all the time.
 	 I traverse the method and all the compiled blocks in the literals"
+	
 	(self refersToLiteral: selector) ifTrue: [ ^ true ].
 	"refersToLiteral: traverses all blocks, but only for non-special literals"
 	specialOrNil ifNil: [ ^ false ].

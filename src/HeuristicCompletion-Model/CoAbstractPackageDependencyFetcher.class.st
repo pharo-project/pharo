@@ -2,7 +2,7 @@
 I'm a fetcher supporting group of packages
 "
 Class {
-	#name : 'CoAbstractPackageDependentScopeGlobalVariableFetcher',
+	#name : 'CoAbstractPackageDependencyFetcher',
 	#superclass : 'CoPackageScopedGlobalVariableFetcher',
 	#classVars : [
 		'Dependencies'
@@ -13,31 +13,31 @@ Class {
 }
 
 { #category : 'accessing' }
-CoAbstractPackageDependentScopeGlobalVariableFetcher class >> computeDependenciesOf: aPackageName [
+CoAbstractPackageDependencyFetcher class >> computeDependenciesOf: aPackageName [
 	
 	^ StDependencyChecker new dependenciesOf: aPackageName
 ]
 
 { #category : 'accessing' }
-CoAbstractPackageDependentScopeGlobalVariableFetcher class >> dependenciesOf: aPackageName [
+CoAbstractPackageDependencyFetcher class >> dependenciesOf: aPackageName [
 
 	^ self dependencyCache at: aPackageName ifAbsentPut: [ self computeDependenciesOf: aPackageName ]
 ]
 
 { #category : 'accessing' }
-CoAbstractPackageDependentScopeGlobalVariableFetcher class >> dependencyCache [
+CoAbstractPackageDependencyFetcher class >> dependencyCache [
 
 	^ Dependencies ifNil: [ Dependencies := Dictionary new ]
 ]
 
 { #category : 'accessing' }
-CoAbstractPackageDependentScopeGlobalVariableFetcher class >> resetCache [
+CoAbstractPackageDependencyFetcher class >> resetCache [
 	<script>
 	Dependencies := nil
 ]
 
 { #category : 'enumerating' }
-CoAbstractPackageDependentScopeGlobalVariableFetcher >> dependenciesOf: aString [
+CoAbstractPackageDependencyFetcher >> dependenciesOf: aString [
 
 	^ self class dependenciesOf: aString
 ]

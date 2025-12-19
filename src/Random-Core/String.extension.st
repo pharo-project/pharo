@@ -1,6 +1,6 @@
 Extension { #name : 'String' }
 
-{ #category : '*Network-UUID' }
+{ #category : '*Random-Core' }
 String >> asAlphaNumeric: totalSize extraChars: additionallyAllowed mergeUID: minimalSizeOfRandomPart [
 	"Generates a String with unique identifier ( UID ) qualities, the difference to a
 	 UUID is that its beginning is derived from the receiver, so that it has a meaning
@@ -65,7 +65,7 @@ String >> asAlphaNumeric: totalSize extraChars: additionallyAllowed mergeUID: mi
 			array
 				at: i
 				put: (i - 5) asCharacter ].
-	random := UUIDGenerator default randomGenerator.
+	random := UUID randomGenerator.
 	totalSize - index - 1 timesRepeat: [ out nextPut: (array atRandom: random) ].
 	^ out contents
 

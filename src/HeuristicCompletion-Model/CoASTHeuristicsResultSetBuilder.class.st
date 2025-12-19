@@ -24,6 +24,7 @@ Class {
 CoASTHeuristicsResultSetBuilder >> messageHeuristic [
 
 	^ messageHeuristic ifNil: [ messageHeuristic := self newHeuristicBuilder
+		
 		add: CoSelfMessageHeuristic new;
 		add: CoSuperMessageHeuristic new;
 		add: CoTypedReceiverMessageHeuristic new;
@@ -32,6 +33,7 @@ CoASTHeuristicsResultSetBuilder >> messageHeuristic [
 		add: CoGlobalVariableMessageHeuristic new;
 		add: CoVariableWithTypeNameMessageHeuristic new;
 		add: CoVariableValueMessageHeuristic new;
+		add: CoDependencyMessageHeuritics new;
 		add: CoUnknownMessageHeuristic new;
 		build ]
 ]
@@ -83,7 +85,7 @@ CoASTHeuristicsResultSetBuilder >> variablesHeuristic [
 		add: CoWorkspaceVariablesHeuristic new;
 		add: CoInstanceAccessibleVariablesHeuristic new;
 		add: (CoGlobalVariablesHeuristic new globalVariableFetcherClass:
-					CoDependencyPackageScopedGlobalVariableFetcher);
+					CoDependencyGlobalVariableFetcher);
 			add: CoGlobalVariablesHeuristic new;
 		build ]
 ]

@@ -36,6 +36,8 @@ PharoBootstrapInitialization class >> initializeCommandLineHandlerAndErrorHandli
 
 	OSPlatform startUp: true.
 
+	AbstractAnnouncementSubscription initialize.
+	
 	SmallInteger initialize.
 	String initialize.
 	ByteString initialize. 

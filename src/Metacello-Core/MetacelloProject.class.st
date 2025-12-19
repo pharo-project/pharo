@@ -106,7 +106,6 @@ MetacelloProject >> defaultPlatformAttributes [
 		  ('pharo' , SystemVersion current major asString , '.x') asSymbol.
 		  ('pharo' , SystemVersion current major asString , '.0.x') asSymbol }
 ]
-
 { #category : 'spec classes' }
 MetacelloProject >> groupSpec [
 
@@ -132,7 +131,6 @@ MetacelloProject >> loadType: aSymbol [
 
 	loadType := aSymbol
 ]
-
 { #category : 'spec classes' }
 MetacelloProject >> packageSpec [
 

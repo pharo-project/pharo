@@ -7,9 +7,8 @@ Class {
 	#instVars : [
 		'generator'
 	],
-	#category : 'Network-Tests-UUID',
-	#package : 'Network-Tests',
-	#tag : 'UUID'
+	#category : 'Deprecated14',
+	#package : 'Deprecated14'
 }
 
 { #category : 'running' }

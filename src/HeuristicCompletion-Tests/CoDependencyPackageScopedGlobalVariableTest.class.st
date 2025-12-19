@@ -9,7 +9,7 @@ Class {
 { #category : 'tests' }
 CoDependencyPackageScopedGlobalVariableTest >> testCompletionClassIsUnknownShouldGiveZero [
 	| localFetcher fetchedElements |
-	localFetcher := CoDependencyPackageScopedGlobalVariableFetcher  new.
+	localFetcher := CoDependencyGlobalVariableFetcher  new.
 	localFetcher
 		filter: (CoBeginsWithFilter caseSensitive: false filterString: 'Obj').
 
@@ -23,7 +23,7 @@ CoDependencyPackageScopedGlobalVariableTest >> testCompletionClassIsUnknownShoul
 { #category : 'tests' }
 CoDependencyPackageScopedGlobalVariableTest >> testLocalFirstThenDependent [
 	| localFetcher  fetchedElements |
-	localFetcher := CoDependencyPackageScopedGlobalVariableFetcher  new.
+	localFetcher := CoDependencyGlobalVariableFetcher  new.
 	localFetcher
 		completionClass: ClassWithDependencyOnData2;
 		filter: (CoBeginsWithFilter caseSensitive: false filterString: 'Diff').
@@ -39,7 +39,7 @@ CoDependencyPackageScopedGlobalVariableTest >> testLocalFirstThenDependent [
 { #category : 'tests' }
 CoDependencyPackageScopedGlobalVariableTest >> testNoMatchEverywhereDoesNotReturnResult [
 	| localFetcher  fetchedElements |
-	localFetcher := CoDependencyPackageScopedGlobalVariableFetcher  new.
+	localFetcher := CoDependencyGlobalVariableFetcher  new.
 	localFetcher
 		completionClass: ClassWithDependencyOnData2;
 		filter: (CoBeginsWithFilter caseSensitive: false filterString: 'XXFG').
@@ -54,7 +54,7 @@ CoDependencyPackageScopedGlobalVariableTest >> testNoMatchEverywhereDoesNotRetur
 CoDependencyPackageScopedGlobalVariableTest >> testWhenNoLocalAndNoDependentThenGlobal [
 
 	| localFetcher  fetchedElements |
-	localFetcher := CoDependencyPackageScopedGlobalVariableFetcher  new.
+	localFetcher := CoDependencyGlobalVariableFetcher  new.
 	localFetcher
 		completionClass: ClassWithDependencyOnData2;
 		filter: (CoBeginsWithFilter caseSensitive: false filterString: 'Po').
@@ -70,7 +70,7 @@ CoDependencyPackageScopedGlobalVariableTest >> testWhenNoLocalAndNoDependentThen
 CoDependencyPackageScopedGlobalVariableTest >> testWhenNoLocalThenDependentPackages [
 
 	| localFetcher  fetchedElements |
-	localFetcher := CoDependencyPackageScopedGlobalVariableFetcher  new.
+	localFetcher := CoDependencyGlobalVariableFetcher  new.
 	localFetcher
 		completionClass: ClassWithDependencyOnData2;
 		filter: (CoBeginsWithFilter caseSensitive: false filterString: 'An').

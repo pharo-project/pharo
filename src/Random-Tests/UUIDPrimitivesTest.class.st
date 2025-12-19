@@ -4,9 +4,8 @@ SUnit tests for UUIDPrimitives
 Class {
 	#name : 'UUIDPrimitivesTest',
 	#superclass : 'TestCase',
-	#category : 'Network-Tests-UUID',
-	#package : 'Network-Tests',
-	#tag : 'UUID'
+	#category : 'Random-Tests',
+	#package : 'Random-Tests'
 }
 
 { #category : 'tests' }

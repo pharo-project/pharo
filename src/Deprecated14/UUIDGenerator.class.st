@@ -58,9 +58,8 @@ Class {
 	#classVars : [
 		'Default'
 	],
-	#category : 'Network-UUID-Base',
-	#package : 'Network-UUID',
-	#tag : 'Base'
+	#category : 'Deprecated14',
+	#package : 'Deprecated14'
 }
 
 { #category : 'accessing' }
@@ -75,6 +74,13 @@ UUIDGenerator class >> default [
 UUIDGenerator class >> initialize [
 	SessionManager default
 		registerNetworkClassNamed: self name
+]
+
+{ #category : 'testing' }
+UUIDGenerator class >> isDeprecated [
+	"This Generator is a legacy generator. UUID is the generator that should be used."
+
+	^ true
 ]
 
 { #category : 'system startup' }
