@@ -300,7 +300,7 @@ RBAbstractInstanceVariableTransformationTest >> testVariableIsNotAccessed [
 ]
 
 { #category : 'tests' }
-RBProtectVariableTransformationTest >> testVariableNotDirectlyDefined [
+RBAbstractInstanceVariableTransformationTest >> testVariableNotDirectlyDefined [
 	
 	self skip: 'Until we confirm the removal of `RBProtectVariableTransformation` was intentional'.
 	
