@@ -391,6 +391,7 @@ ReleaseTest >> testNoShadowedVariablesInMethods [
 			         m isQuick not and: [ "quick methods do not define variables"
 				         m ast variableDefinitionNodes anySatisfy: [ :node | node variable isShadowing ] ] ]. "No other exceptions beside the ones mentioned here should be allowed"
 	validExceptions := {
+	(MethodMapExamples >> #exampleWithNestedHoisting) .
 		                   (DebugInfoTest >> #testListShadowedVariablesAreNotDuplicated).
 		                   (RBSmalllintTestObject >> #tempVarOverridesInstVar).
 		                   (ReTempVarOverridesInstVarRuleTest >> #sampleMethod:).
