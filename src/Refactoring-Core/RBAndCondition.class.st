@@ -30,7 +30,9 @@ RBAndCondition >> check [
 { #category : 'private' }
 RBAndCondition >> errorBlock [
 
-	^ [  ]
+	^ left check
+		ifFalse: [ left errorBlock ]
+		ifTrue: [ right errorBlock ]
 ]
 
 { #category : 'accessing' }

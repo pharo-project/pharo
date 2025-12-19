@@ -74,7 +74,7 @@ RBChildrenToSiblingsRefactoring >> applicabilityPreconditions [
 	| conds |
 	conds := {
 		         (ReClassesAreNotMetaClassCondition new
-			          classes: { className };
+			          classes: { parent };
 			          message: 'Superclass must not be a metaclass').
 		         (RBCondition isValidClassName: className).
 		         (RBCondition isGlobal: className in: self model) not }.
@@ -132,12 +132,11 @@ RBChildrenToSiblingsRefactoring >> name: aClassName class: aClass subclasses: su
 
 { #category : 'transforming' }
 RBChildrenToSiblingsRefactoring >> prepareForExecution [
-
-	class := self model classObjectFor: className.
+	"We do not ask the model for `class` since it will be installed in my method >>#addSuperclass"
 	parent := self model classObjectFor: parent.
 	subclasses := subclasses collect: [ :each | self model classObjectFor: each ].
 
-	(class isNil or: [ parent isNil or: [ subclasses anySatisfy: [ :each | each isNil ] ] ]) ifTrue: [
+	(className isNil or: [ parent isNil or: [ subclasses anySatisfy: [ :each | each isNil ] ] ]) ifTrue: [
 		self refactoringError: 'The model is incomplete' ]
 ]
 

@@ -26,6 +26,11 @@ RBNewAbstractCondition >> check [
 	^ self violators isEmpty
 ]
 
+{ #category : 'private' }
+RBNewAbstractCondition >> errorBlock [
+	^ nil
+]
+
 { #category : 'displaying' }
 RBNewAbstractCondition >> errorString [ 
 
