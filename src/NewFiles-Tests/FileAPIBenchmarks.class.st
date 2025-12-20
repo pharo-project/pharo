@@ -29,11 +29,11 @@ FileAPIBenchmarks class >> initialize [
 	RandomDataSize := 1000000.
 	SmallRandomDataSize := 2048.
 	
-   SmallWriteBufferCount := 10000.
+   SmallWriteBufferCount := 100000.
    SmallReadBufferCount := SmallWriteBufferCount.
 
-	WriteBufferCount := 200.
-	ReadBufferCount := WriteBufferCount := 200..
+	WriteBufferCount := 1000.
+	ReadBufferCount := WriteBufferCount.
 
 ]
 
@@ -74,24 +74,39 @@ FileAPIBenchmarks >> generateRandomData [
 	].
 ]
 
+{ #category : 'as yet unclassified' }
+FileAPIBenchmarks >> measure: aBlock withSampleCount: sampleCount title: title [
+	| samples sampleIOSize sampleTime sampleSpeed average stdev |
+	samples := Array new: sampleCount.
+	1 to: sampleCount do: [ :sampleIndex |
+		sampleIOSize := 0.
+		sampleTime := [
+			sampleIOSize := aBlock value: sampleIndex
+		] microsecondsToRun * 1e-6.
+		sampleSpeed := sampleIOSize asFloat / sampleTime * 1e-6.
+		
+		samples at: sampleIndex put: sampleSpeed
+	].
+
+	average := samples average.
+	stdev := samples stdev.
+	Transcript show: title;
+		show: ' '; show: sampleCount; show: ' samples';
+		show: ' speed (MB/s): '; show: average; show: ' +- '; show: stdev; cr.
+]
+
 { #category : 'writing' }
 FileAPIBenchmarks >> readData [
-	| readTime readSize readBuffer readingSpeed |
-	readSize := 0.
+	| readBuffer |
 	readBuffer := ByteArray new: randomData size.
-	readTime := [
-		file position: 0.
-		1 to: ReadBufferCount do: [ :writeIndex |
-			| readCount |
-			readCount := file readInto: readBuffer.
-			readCount >= 0 ifTrue: [
-				readSize := readSize + readCount. 
-			]
-		].
-	] timeToRun asMicroseconds * 1e-6.
+	file position: 0.
+	self measure: [ :sampleIndex |
+		| readCount |
+		readCount := file readInto: readBuffer.
+		self assert: readCount >= 0.
+		readCount
+	] withSampleCount: ReadBufferCount title: 'readData'
 
-	readingSpeed := readSize asFloat / readTime * 1e-6.
-	Transcript show: 'readData speed (MB/s) '; show: readingSpeed asString; cr.
 ]
 
 { #category : 'running' }
@@ -105,12 +120,8 @@ FileAPIBenchmarks >> run [
 		Transcript show: 'RandomDatasetGenerationTime '; show: randomDatasetGenerationTime asString; show: ' ms'; cr.
 		
 		self writeDataAtRandomOffsets.
-		self writeDataAtRandomOffsets.
-		self writeSmallData.
 		self writeSmallData.
 		self writeData.
-		self writeData.
-		self readData.
 		self readData.
 	] ensure: [ 
 		file close
@@ -120,54 +131,35 @@ FileAPIBenchmarks >> run [
 
 { #category : 'writing' }
 FileAPIBenchmarks >> writeData [
-	| writeTime writeSize writingSpeed |
-	writeSize := 0.
-	writeTime := [
-		file position: 0.
-		1 to: WriteBufferCount do: [ :writeIndex |
-			| writeCount |
-			writeCount := file writeFrom: randomData.
-			writeCount >= 0 ifTrue: [ 
-				writeSize := writeSize + writeCount. 
-			]
-		].
-	] timeToRun asMicroseconds * 1e-6.
-
-	writingSpeed := writeSize asFloat / writeTime * 1e-6.
-	Transcript show: 'writeData speed (MB/s) '; show: writingSpeed asString; cr.
+	file position: 0.
+	self measure: [ :sampleIndex |
+		| writeCount |
+		writeCount := file writeFrom: randomData.
+		self assert: writeCount >= 0.
+		writeCount
+	] withSampleCount: WriteBufferCount title: 'writeData'
 ]
 
 { #category : 'writing' }
 FileAPIBenchmarks >> writeDataAtRandomOffsets [
-	| writeTime writeSize writingSpeed |
-	writeSize := 0.
-	writeTime := [
-		randomOffsets do: [ :position |
-			| writeCount |
-			file position: position.
-			writeCount := file writeFrom: smallRandomData.
-			writeCount >= 0 ifTrue: [ 
-				writeSize := writeSize + writeCount. 
-			]
-		].
-	] timeToRun asMicroseconds * 1e-6.
+	self measure: [ :sampleIndex |
+		| writeCount |
+		file position: (randomOffsets at: sampleIndex).
+		writeCount := file writeFrom: smallRandomData.
+		self assert: writeCount >= 0.
+		writeCount
+	] withSampleCount: randomOffsets size title: 'writeDataAtRandomOffsets'.
 
-	writingSpeed := writeSize asFloat / writeTime * 1e-6.
-	Transcript show: 'writeDataAtRandomOffsets speed (MB/s) '; show: writingSpeed asString; cr.
 ]
 
 { #category : 'writing' }
 FileAPIBenchmarks >> writeSmallData [
-	| writeTime writeSize writingSpeed |
-	writeSize := 0.
-	writeTime := [
-		file position: 0.
-		1 to: SmallWriteBufferCount do: [ :writeIndex |
-			file writeFrom: smallRandomData.
-			writeSize := writeSize + smallRandomData size. 
-		].
-	] timeToRun asMicroseconds * 1e-6.
-
-	writingSpeed := writeSize asFloat / writeTime * 1e-6.
-	Transcript show: 'writeSmallData speed (MB/s) '; show: writingSpeed asString; cr.
+	file position: 0.
+	self measure: [ :sampleIndex |
+		| writeCount |
+		file position: (randomOffsets at: sampleIndex).
+		writeCount := file writeFrom: smallRandomData.
+		self assert: writeCount >= 0.
+		writeCount
+	] withSampleCount: SmallWriteBufferCount title: 'writeSmallData'.
 ]
