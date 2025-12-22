@@ -124,7 +124,7 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	   #MenuMorph #RxMatcher #RxParser #RxsPredicate #SHA1
 	   #SystemProgressMorph #SystemWindow #TextContainer
 	   #TextDiffBuilder #ThumbnailMorph #TransferMorph #UITheme )
-		do: [ :each | (Smalltalk globals at: each) initialize ].
+		do: [ :each | (self classNamed: each) initialize ].
 
 	MorphicUIManager new spawnNewProcess.
 	UIManager default: MorphicUIManager new.
@@ -151,7 +151,7 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 
 	#( #BalloonMorph #IconicButtonMorph #ScrollBarMorph
 	   #SystemSettingsPersistence #TabMorph #TaskbarMorph PharoOptionsHandler) do: [ :each |
-		(Smalltalk globals at: each) initialize ].
+		(self classNamed: each) initialize ].
 
 	MCMethodDefinition initializersEnabled: initializersEnabled.
 

@@ -94,6 +94,13 @@ MetacelloProject >> groupSpec [
 	^ MetacelloGroupSpec for: self
 ]
 
+{ #category : 'initialization' }
+MetacelloProject >> initialize [
+	super initialize.
+	
+	loadType := #linear
+]
+
 { #category : 'accessing' }
 MetacelloProject >> label [
 

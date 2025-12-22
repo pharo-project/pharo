@@ -67,7 +67,10 @@ reference](MetacelloScriptingAPI.md). There more information on [working with Gi
 "
 Class {
 	#name : 'BaselineOf',
-	#superclass : 'ConfigurationOf',
+	#superclass : 'Object',
+	#instVars : [
+		'project'
+	],
 	#category : 'Metacello-Base',
 	#package : 'Metacello-Base'
 }
@@ -101,6 +104,13 @@ BaselineOf class >> deepPackagesOfGroupNamed: aName [
 		flattened
 ]
 
+{ #category : 'class initialization' }
+BaselineOf class >> initialize [
+	"Deprecation added during the development of Pharo 14. Can be removed in a few versions of Pharo."
+
+	self deprecatedAliases: { #ConfigurationOf }
+]
+
 { #category : 'testing' }
 BaselineOf class >> isProject [
 	"This method can be overriden if we have baselines in the image for tests so that we do not consider it is a project of the image."
@@ -112,6 +122,21 @@ BaselineOf class >> isProject [
 BaselineOf class >> packagesOfGroupNamed: aName [
 
 	^ (self version groups detect: [ :g | g name = aName ]) includes
+]
+
+{ #category : 'accessing' }
+BaselineOf class >> project [
+
+	^self new project
+]
+
+{ #category : 'unloading Metacello' }
+BaselineOf class >> unloadMetacello [
+	"Unload the classes that implement Metacello. Metacello is not needed once a project has been loaded, so it can safely be unloaded."
+
+	<script>
+	<apiDocumentation>
+	(self packageOrganizer packages select: [ :package | package name beginsWith: 'Metacello' ]) do: [ :package | package removeFromSystem ]
 ]
 
 { #category : 'accessing' }
@@ -166,20 +191,33 @@ BaselineOf >> classNamed: aSymbol ifPresent: aBlock ifAbsent: absentBlock [
 ]
 
 { #category : 'accessing' }
-BaselineOf >> newProjectWithRepositoryDescription: aListOrRepositoryDescriptions [
+BaselineOf >> customProjectAttributes [
+    "Edit to return a collection of any custom attributes e.g. for conditional loading: Array with: #'Condition1' with: #'Condition2.
+	For more information see: http://code.google.com/p/metacello/wiki/CustomProjectAttrributes "
 
-	| newProject |
-	newProject := super newProjectWithRepositoryDescription:
-		           aListOrRepositoryDescriptions.
-	aListOrRepositoryDescriptions do: [ :desc |
-		newProject version spec repository: desc ].
-	^ newProject
+    ^ #()
 ]
 
-{ #category : 'queries' }
-BaselineOf >> os [
+{ #category : 'accessing' }
+BaselineOf >> initalizeProjectWithRepositoryDescription: repositoryDescription [
 
-	^ OSPlatform current
+	^ project := self newProjectWithRepositoryDescription: repositoryDescription
+]
+
+{ #category : 'accessing' }
+BaselineOf >> newProjectWithRepositoryDescription: aListOrRepositoryDescriptions [
+
+	| aProject |
+	aProject := self projectClass new
+		            projectAttributes: self customProjectAttributes;
+		            setBaselineRepositoryDescription: aListOrRepositoryDescriptions;
+		            yourself.
+	
+	"Construct the project"
+	MetacelloBaselineConstructor on: self project: aProject. 
+
+	aListOrRepositoryDescriptions do: [ :desc | aProject version spec repository: desc ].
+	^ aProject
 ]
 
 { #category : 'accessing' }
@@ -199,6 +237,20 @@ BaselineOf >> packageRepositoryURLForSpec: spec [
 BaselineOf >> pharoVersionsFrom: aVersion [
 
 	^ (aVersion to: SystemVersion current major) collect: [ :v | ('pharo' , v asString , '.x') asSymbol ]
+]
+
+{ #category : 'accessing' }
+BaselineOf >> project [
+
+	^ project ifNil: [
+		  "By default we don't know where the project came from..."
+		  self initalizeProjectWithRepositoryDescription: #() ]
+]
+
+{ #category : 'accessing' }
+BaselineOf >> project: aProject [
+
+	project := aProject
 ]
 
 { #category : 'accessing' }
