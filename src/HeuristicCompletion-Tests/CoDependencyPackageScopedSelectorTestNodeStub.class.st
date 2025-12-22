@@ -11,7 +11,7 @@ Class {
 	#tag : 'Mocks'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 CoDependencyPackageScopedSelectorTestNodeStub class >> messageWithReceiver: aReceiver [
 
     ^ self new
@@ -19,7 +19,7 @@ CoDependencyPackageScopedSelectorTestNodeStub class >> messageWithReceiver: aRec
           yourself
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 CoDependencyPackageScopedSelectorTestNodeStub class >> methodNode [
 
     ^ self new
@@ -27,32 +27,32 @@ CoDependencyPackageScopedSelectorTestNodeStub class >> methodNode [
           yourself
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'configuring' }
 CoDependencyPackageScopedSelectorTestNodeStub >> beMessageWithReceiver: aReceiver [
 
     message := true.
     receiver := aReceiver
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'configuring' }
 CoDependencyPackageScopedSelectorTestNodeStub >> beMethod [
 
     method := true
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'testing' }
 CoDependencyPackageScopedSelectorTestNodeStub >> isMessage [
 
     ^ message = true
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'testing' }
 CoDependencyPackageScopedSelectorTestNodeStub >> isMethod [
 
     ^ method = true
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 CoDependencyPackageScopedSelectorTestNodeStub >> receiver [
 
     ^ receiver ifNil: [ receiver := Object new ]

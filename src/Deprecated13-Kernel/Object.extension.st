@@ -1,6 +1,6 @@
 Extension { #name : 'Object' }
 
-{ #category : '*Deprecated13' }
+{ #category : '*Deprecated13-Kernel' }
 Object >> explicitRequirement [
 	"If one of the superclasses can perform the selector, we execute the method of that class, otherwise, the explicit requirement error is thrown"
 

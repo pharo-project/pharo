@@ -17,13 +17,13 @@ CoDependencyPackageScopedSelectorTestReceiverStub class >> variable [
           yourself
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'configuring' }
 CoDependencyPackageScopedSelectorTestReceiverStub >> beVariable [
 
     isVariable := true
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 CoDependencyPackageScopedSelectorTestReceiverStub >> isVariable [
 
     ^ isVariable = true

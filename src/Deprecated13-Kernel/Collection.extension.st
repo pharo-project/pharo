@@ -1,6 +1,6 @@
 Extension { #name : 'Collection' }
 
-{ #category : '*Deprecated13' }
+{ #category : '*Deprecated13-Kernel' }
 Collection >> asCommaString [
 
 	"Return collection printed as 'a, b, c' "
@@ -16,7 +16,7 @@ Collection >> asCommaString [
 	^ String streamContents: [ :s | self asStringOn: s delimiter: ', ' ]
 ]
 
-{ #category : '*Deprecated13' }
+{ #category : '*Deprecated13-Kernel' }
 Collection >> asCommaStringAnd [
 
 	"Return collection printed as 'a, b and c' "
@@ -32,7 +32,7 @@ Collection >> asCommaStringAnd [
 	^String streamContents: [:s | self asStringOn: s delimiter: ', ' last: ' and ']
 ]
 
-{ #category : '*Deprecated13' }
+{ #category : '*Deprecated13-Kernel' }
 Collection >> asStringOn: aStream delimiter: delimString [
 
 	"Print elements on a stream separated
@@ -50,7 +50,7 @@ Collection >> asStringOn: aStream delimiter: delimString [
 		separatedBy: [ aStream nextPutAll: delimString ]
 ]
 
-{ #category : '*Deprecated13' }
+{ #category : '*Deprecated13-Kernel' }
 Collection >> asStringOn: aStream delimiter: delimString last: lastDelimString [
 
 	"Print elements on a stream separated
@@ -77,7 +77,7 @@ Collection >> asStringOn: aStream delimiter: delimString last: lastDelimString [
 		aStream nextPutAll: (n = sz ifTrue: [lastDelimString] ifFalse: [delimString])]
 ]
 
-{ #category : '*Deprecated13' }
+{ #category : '*Deprecated13-Kernel' }
 Collection >> printOn: aStream delimiter: delimString [
 	"Print elements on a stream separated
 	with a delimiter String like: 'a, b, c'"
@@ -91,7 +91,7 @@ Collection >> printOn: aStream delimiter: delimString [
 	self do: [:elem | aStream print: elem] separatedBy: [aStream nextPutAll: delimString]
 ]
 
-{ #category : '*Deprecated13' }
+{ #category : '*Deprecated13-Kernel' }
 Collection >> printOn: aStream delimiter: delimString last: lastDelimString [
 	"Print elements on a stream separated
 	with a delimiter between all the elements and with

@@ -1,6 +1,6 @@
 Extension { #name : 'BlockClosure' }
 
-{ #category : '*Deprecated13' }
+{ #category : '*Deprecated13-Kernel' }
 BlockClosure >> valueWithoutNotifications [
 
 	self deprecated: 'System announcement will be splitted between two announcers. This code should be replaced by either of those:

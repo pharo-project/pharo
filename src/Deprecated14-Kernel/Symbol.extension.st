@@ -1,6 +1,6 @@
 Extension { #name : 'Symbol' }
 
-{ #category : '*Deprecated14' }
+{ #category : '*Deprecated14-Kernel' }
 Symbol >> isSelectorSymbol [
 
 	self deprecated:  'Use isUsedAsSelectorSymbol'

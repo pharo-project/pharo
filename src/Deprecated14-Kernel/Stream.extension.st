@@ -1,13 +1,13 @@
 Extension { #name : 'Stream' }
 
-{ #category : '*Deprecated14' }
+{ #category : '*Deprecated14-Kernel' }
 Stream >> basicNext [
 
 	self deprecated: 'Use #next' transformWith: '`@rcv basicNext' -> '`@rcv next'.
 	^ self next
 ]
 
-{ #category : '*Deprecated14' }
+{ #category : '*Deprecated14-Kernel' }
 Stream >> basicNext: anAmount putAll: aCollection startingAt: startIndex [
 
 	self
@@ -16,14 +16,14 @@ Stream >> basicNext: anAmount putAll: aCollection startingAt: startIndex [
 	^ self next: anAmount putAll: aCollection startingAt: startIndex
 ]
 
-{ #category : '*Deprecated14' }
+{ #category : '*Deprecated14-Kernel' }
 Stream >> basicNextPut: anObject [
 
 	self deprecated: 'Use #nextPut:' transformWith: '`@rcv basicNextPut: `@arg1' -> '`@rcv nextPut: `@arg1'.
 	^ self nextPut: anObject
 ]
 
-{ #category : '*Deprecated14' }
+{ #category : '*Deprecated14-Kernel' }
 Stream >> basicNextPutAll: aCollection [
 
 	self deprecated: 'Use #nextPutAll:' transformWith: '`@rcv basicNextPutAll: `@arg1' -> '`@rcv nextPutAll: `@arg1'.

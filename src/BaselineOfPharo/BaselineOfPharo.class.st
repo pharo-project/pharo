@@ -200,7 +200,9 @@ BaselineOfPharo >> baseline: spec [
 		spec
 			package: 'Morphic-Deprecated';
 			package: 'Deprecated13';
-			package: 'Deprecated14' ]
+			package: 'Deprecated13-Kernel';
+			package: 'Deprecated14';
+			package: 'Deprecated14-Kernel' ]
 ]
 
 { #category : 'actions' }

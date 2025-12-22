@@ -1,6 +1,6 @@
 Extension { #name : 'CharacterSet' }
 
-{ #category : '*Deprecated14' }
+{ #category : '*Deprecated14-Kernel' }
 CharacterSet class >> allCharacters [
 
 	"This name is obsolete since only the characters that will fit in a byte can be queried"

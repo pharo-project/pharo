@@ -62,6 +62,7 @@ BaselineOfKernel >> baseline: spec [
 				package: 'Hermes-Extensions';
 				package: 'Clap-Core';
 				package: 'Clap-Commands-Pharo';
+				package: 'NumberParser';
 				package: 'ReflectionMirrors-Primitives';
 				package: 'System-Time';
 				package: 'Math-Operations-Extensions';
@@ -87,6 +88,7 @@ BaselineOfKernel >> baseline: spec [
 				package: 'Zinc-Character-Encoding-Tests';
 				package: 'System-Time-Tests'.
 
+			"The order of packages in the groups are important for the bootstrap! It define the load order."
 			spec
 				group: 'Core'
 				with: { 'FFI-Kernel'. 'Announcements-Core'. 'Collections-Abstract'. 'Collections-DoubleLinkedList'. 'Collections-Native'. 'Collections-Sequenceable'.
@@ -95,7 +97,7 @@ BaselineOfKernel >> baseline: spec [
 					'System-CommandLineHandler'. 'System-Finalization'. 'System-Platforms'. 'System-SessionManager'. 'ClassDefinitionPrinters'. 'CodeExport'. 'System-Sources'.
 					'System-Support'. 'Zinc-Character-Encoding-Core' };
 				group: 'AdditionalPackages'
-				with: { 'Hermes-Extensions'. 'Clap-Core'. 'Clap-Commands-Pharo'. 'ReflectionMirrors-Primitives'. 'System-Time'. 'Math-Operations-Extensions'.
+				with: { 'Clap-Core'. 'Clap-Commands-Pharo'. 'Hermes-Extensions'. 'NumberParser'. 'ReflectionMirrors-Primitives'. 'System-Time'. 'Math-Operations-Extensions'.
 					'System-NumberPrinting'. 'System-Version'. 'Multilingual-Encodings' };
 				group: 'Tests'
 				with:

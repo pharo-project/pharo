@@ -13,8 +13,8 @@ Class {
 		'parentOldName',
 		'parentNewName'
 	],
-	#category : 'Deprecated14',
-	#package : 'Deprecated14'
+	#category : 'Deprecated14-Kernel',
+	#package : 'Deprecated14-Kernel'
 }
 
 { #category : 'instance creation' }

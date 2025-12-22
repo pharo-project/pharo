@@ -1,6 +1,6 @@
 Extension { #name : 'SequenceableCollection' }
 
-{ #category : '*Deprecated13' }
+{ #category : '*Deprecated13-Kernel' }
 SequenceableCollection >> asStringWithCr [
 	"Convert to a string with returns between items.  Elements are
 usually strings.

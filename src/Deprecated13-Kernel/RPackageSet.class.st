@@ -18,8 +18,8 @@ Class {
 		'cacheActive',
 		'cachePackages'
 	],
-	#category : 'Deprecated13',
-	#package : 'Deprecated13'
+	#category : 'Deprecated13-Kernel',
+	#package : 'Deprecated13-Kernel'
 }
 
 { #category : 'private' }

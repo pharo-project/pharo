@@ -1,6 +1,6 @@
 Extension { #name : 'CompiledCode' }
 
-{ #category : '*Deprecated14' }
+{ #category : '*Deprecated14-Kernel' }
 CompiledCode class >> newMethod: numberOfBytes header: headerWord [
 
 	self 

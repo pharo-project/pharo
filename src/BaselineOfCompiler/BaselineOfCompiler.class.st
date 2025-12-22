@@ -31,7 +31,6 @@ BaselineOfCompiler >> baseline: spec [
 				package: 'CodeImport';
 				package: 'CodeImport-Commands';
 				package: 'DebugInfo';
-				package: 'NumberParser';
 				package: 'OpalCompiler-Core';
 				package: 'ParseTreeRewriter';
 				package: 'Deprecation';
@@ -49,7 +48,7 @@ BaselineOfCompiler >> baseline: spec [
 				group: 'Core'
 				with:
 					{ 'UIManager'. 'AST-Core'. 'Collections-Arithmetic'. 'Collections-Atomic'. 'Collections-Stack'. 'CodeImport'. 'CodeImport-Commands'. 'DebugInfo'.
-					'NumberParser'. 'OpalCompiler-Core'. 'ParseTreeRewriter'. 'Deprecation' };
+					'OpalCompiler-Core'. 'ParseTreeRewriter'. 'Deprecation' };
 				group: 'Tests'
 				with:
 					{ 'Collections-Atomic-Tests'. 'Collections-Stack-Tests'. 'Kernel-Extended-Tests'. 'Kernel-Tests-WithCompiler'. 'AST-Core-Tests'. 'OpalCompiler-Tests'.

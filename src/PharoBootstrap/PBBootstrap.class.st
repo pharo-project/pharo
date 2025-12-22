@@ -128,6 +128,26 @@ PBBootstrap >> buildNumber: aBuildNumber [
 	buildNumber := aBuildNumber
 ]
 
+{ #category : 'package-names' }
+PBBootstrap >> createHermesPackageListFiles [
+	"In order to not duplicate the packages to load by hermes in the baselines and in the build.sh file, we export the list of packages to load in files."
+
+	| toExport |
+	toExport := Dictionary
+		            with: 'hermesAdditionalKernelPackages.txt' -> BaselineOfKernel additionalPackagesPackageNames
+		            with: 'hermesCompilerPackages.txt' -> BaselineOfCompiler corePackageNames
+		            with: 'hermesFileSystemPackages.txt' -> BaselineOfFileSystem corePackageNames
+		            with: 'hermesTraitsPackages.txt' -> BaselineOfTraits corePackageNames
+		            with: 'hermesMonticelloPackages.txt' -> BaselineOfMonticello corePackageNames.
+
+	toExport keysAndValuesDo: [ :fileName :packageNames |
+			self bootstrapCacheDirectory / fileName writeStreamDo: [ :stream |
+					packageNames do: [ :package |
+							stream
+								nextPutAll: package;
+								nextPutAll: '.hermes ' ] ] ]
+]
+
 { #category : 'bootstrapping' }
 PBBootstrap >> createImage [
 
@@ -267,6 +287,7 @@ PBBootstrap >> prepareBootstrap [
 		ensureBaselineOfPharoBootstrap;
 		exportKernelProtocols;
 		exportAllPackagesIntoMcz;
+		createHermesPackageListFiles;
 		prepareEnvironmentForHermes;
 		generateHermesFiles;
 		prepareEnvironmentForExport

@@ -37,7 +37,7 @@ CoDependencyPackageScopedSelectorTest >> testAppliesForNonVariableReceiverMessag
 
 { #category : 'tests' }
 CoDependencyPackageScopedSelectorTest >> testBuildFetcherUsesPackageScopedSelectorFetcher [
-    | heuristic node context fetcher |
+    | heuristic node context |
     heuristic := CoDependencyMessageHeuritics new.
     node := Object new.
     context := CoDependencyPackageScopedSelectorTestContextStub new.

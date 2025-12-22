@@ -148,6 +148,7 @@ MetacelloProjectRegistration >> baselineProjectSpec: anObject [
 
 	self shouldBeMutable.
 	self assert: anObject isBaselineOfProjectSpec.
+
 	baselineProjectSpec := anObject
 ]
 
@@ -281,6 +282,7 @@ MetacelloProjectRegistration >> merge: aProjectRegistration [
 
 	self shouldBeMutable.
 	aProjectRegistration validate.
+
 	baselineProjectSpec := aProjectRegistration baselineProjectSpec.
 	self versionInfo versionString: baselineProjectSpec repositoryVersionString
 ]
@@ -299,10 +301,9 @@ MetacelloProjectRegistration >> postCopy [
 { #category : 'printing' }
 MetacelloProjectRegistration >> printOn: aStream [
 
-	| label descriptions |
-	label := self baselineProjectSpec className.
+	| descriptions |
 	aStream
-		nextPutAll: label;
+		nextPutAll: self baselineProjectSpec className;
 		space;
 		nextPutAll: '[baseline]'.
 	(descriptions := self repositoryDescriptions) isEmpty ifTrue: [ ^ self ].
@@ -377,7 +378,7 @@ MetacelloProjectRegistration >> validate [
 { #category : 'accessing' }
 MetacelloProjectRegistration >> version [
 
-	^ MetacelloProject singletonVersionName
+	^ MetacelloBaselineProject singletonVersionName
 ]
 
 { #category : 'accessing' }

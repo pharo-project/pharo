@@ -1,6 +1,6 @@
 Extension { #name : 'Dictionary' }
 
-{ #category : '*Deprecated14' }
+{ #category : '*Deprecated14-Kernel' }
 Dictionary >> removeUnreferencedKeys [
 	"This is private code for the Undeclared handling, not a general API."
 

@@ -1,6 +1,6 @@
 Extension { #name : 'SmallDictionary' }
 
-{ #category : '*Deprecated14' }
+{ #category : '*Deprecated14-Kernel' }
 SmallDictionary >> bindingsDo: aBlock [
 
 	self
