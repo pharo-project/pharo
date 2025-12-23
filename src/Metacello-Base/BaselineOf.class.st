@@ -176,12 +176,6 @@ BaselineOf >> newProjectWithRepositoryDescription: aListOrRepositoryDescriptions
 	^ newProject
 ]
 
-{ #category : 'queries' }
-BaselineOf >> os [
-
-	^ OSPlatform current
-]
-
 { #category : 'accessing' }
 BaselineOf >> packageRepositoryURLForSpec: spec [
 	" Tries to determine a repository URL from which the baseline is being loaded. Useful for 

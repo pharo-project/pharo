@@ -100,16 +100,14 @@ ConfigurationOf >> initalizeProjectWithRepositoryDescription: repositoryDescript
 ConfigurationOf >> newProjectWithRepositoryDescription: repositoryDescription [
 
 	| aProject |
-	aProject := self projectClass new projectAttributes:
-		            self customProjectAttributes.
-	aProject versionNumberClass: self versionNumberClass.
-	aProject setBaselineRepositoryDescription: repositoryDescription.
+	aProject := self projectClass new
+		            projectAttributes: self customProjectAttributes;
+		            versionNumberClass: self versionNumberClass;
+		            setBaselineRepositoryDescription: repositoryDescription.
 	
 	"Construct the project"
 	MetacelloBaselineConstructor on: self project: aProject.
-	
-	 "change to #atomic if desired"
-	aProject loadType: #linear.
+
 	^ aProject
 ]
 
