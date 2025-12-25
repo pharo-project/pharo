@@ -212,21 +212,14 @@ BaselineOf >> newProjectWithRepositoryDescription: aListOrRepositoryDescriptions
 		            projectAttributes: self customProjectAttributes;
 		            setBaselineRepositoryDescription: aListOrRepositoryDescriptions;
 		            yourself.
-		
-	"Construct the project"
-	MetacelloBaselineConstructor on: self project: aProject.
 	
-	"change to #atomic if desired"
+	"Construct the project"
+	MetacelloBaselineConstructor on: self project: aProject. 
+	
 	aProject loadType: #linear.
 
 	aListOrRepositoryDescriptions do: [ :desc | aProject version spec repository: desc ].
 	^ aProject
-]
-
-{ #category : 'queries' }
-BaselineOf >> os [
-
-	^ OSPlatform current
 ]
 
 { #category : 'accessing' }
@@ -264,8 +257,7 @@ BaselineOf >> project: aProject [
 
 { #category : 'accessing' }
 BaselineOf >> projectClass [
-
-	^ MetacelloProject
+    ^ MetacelloProject
 ]
 
 { #category : 'queries' }

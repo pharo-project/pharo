@@ -34,6 +34,9 @@ BaselineOfMonticello >> baseline: spec [
 			package: 'Compression';
 			package: 'Monticello-Model';
 			package: 'Monticello';
+			package: 'Zinc-Resource-Meta-Core';
+			package: 'STON-Core';
+			package: 'MonticelloFileTree-Core';
 			package: 'Ring-Definitions-Monticello';
 			
 			package: 'Network-Kernel';
@@ -53,7 +56,7 @@ BaselineOfMonticello >> baseline: spec [
 			package: 'Ring-Definitions-Tests-Containers'.
 
 		spec 
-			group: 'Core' with: #('Ring-Definitions-Core' 'Ring-OldChunkImporter' 'Jobs' 'Random-Core' 'System-Hashing' 'Compression' 'Monticello-Model' 'Monticello' 'Ring-Definitions-Monticello');
+			group: 'Core' with: #('Ring-Definitions-Core' 'Ring-OldChunkImporter' 'Jobs' 'Random-Core' 'System-Hashing' 'Compression' 'Monticello-Model' 'Monticello' 'Zinc-Resource-Meta-Core' 'STON-Core' 'MonticelloFileTree-Core' 'Ring-Definitions-Monticello');
 			group: 'RemoteRepositories' with: #( 'Network-Kernel' 'Network-Protocols' 'Network-MIME' 'Zinc-HTTP' 'MonticelloRemoteRepositories' 'Zodiac-Core' );
 			group: 'Tests' with: #( 'Compression-Tests' 'Jobs-Tests' 'Random-Tests' 'Ring-Definitions-Core-Tests' 'Monticello-Tests' 'MonticelloMocks' 'Ring-Definitions-Monticello-Tests' 'Ring-Definitions-Tests-Containers') ].
 ]

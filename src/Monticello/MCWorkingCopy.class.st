@@ -163,7 +163,6 @@ MCWorkingCopy class >> packageRenamed: anAnnouncement [
 { #category : 'event registration' }
 MCWorkingCopy class >> registerForNotifications [
 
-	<systemEventRegistration>
 	self
 		unregisterForNotifications;
 		registerInterestOnSystemChanges

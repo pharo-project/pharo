@@ -40,7 +40,7 @@ Class {
 MetacelloProject class >> initialize [
 
 	"Deprecation added during the development of Pharo 14."
-	self deprecatedAliases: #( #MetacelloMCBaselineProject. #MetacelloBaselineProject )
+	self deprecatedAliases: #( #MetacelloMCBaselineProject #MetacelloBaselineProject )
 ]
 
 { #category : 'instance creation' }
@@ -122,7 +122,7 @@ MetacelloProject >> label [
 MetacelloProject >> loadType [
 	"#atomic or #linear"
 
-	^ loadType ifNil: [ #atomic ]
+	^ loadType
 ]
 
 { #category : 'accessing' }

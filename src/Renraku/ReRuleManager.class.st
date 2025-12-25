@@ -245,7 +245,6 @@ ReRuleManager class >> subSettingsOn: aBuilder with: rules [
 { #category : 'event subscriptions' }
 ReRuleManager class >> subscribe [
 
-	<systemEventRegistration>
 	self unsubscribe.
 
 	self codeChangeAnnouncer weak

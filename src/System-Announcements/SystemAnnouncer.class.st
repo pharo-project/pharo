@@ -32,14 +32,6 @@ SystemAnnouncer class >> reset [
 	self announcer: nil.
 ]
 
-{ #category : 'initialization' }
-SystemAnnouncer class >> restoreAllNotifications [
-
-	<script>
-	self reset.
-	(Pragma allNamed: #systemEventRegistration) do: [ :pragma | pragma methodClass instanceSide perform: pragma methodSelector ]
-]
-
 { #category : 'instance creation' }
 SystemAnnouncer class >> uniqueInstance [
 	"Answer a system annoncer."

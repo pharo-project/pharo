@@ -130,8 +130,8 @@ zip "${RPACKAGE_ARCHIVE_NAME}.zip" protocolsKernel.txt
 # Installing Package
 echo $(date -u) "[Compiler] Initializing Bootstraped Image and fixing the code"
 ${VM} "${COMPILER_IMAGE_NAME}.image" # I have to run once the image so the next time it starts the CommandLineHandler.
-${VM} "${COMPILER_IMAGE_NAME}.image" perform --save PharoBootstrapFixMethodsTool fixMethodsIn: protocolsKernel.txt # Fixing some things espell does not handel well
-${VM} "${COMPILER_IMAGE_NAME}.image" perform --save PharoBootstrapFixMethodsTool fixExtensionMethods
+${VM} "${COMPILER_IMAGE_NAME}.image" perform --save PharoBootstrapInitialization fixMethodsIn: protocolsKernel.txt # Fixing some things espell does not handel well
+${VM} "${COMPILER_IMAGE_NAME}.image" perform --save PharoBootstrapInitialization fixExtensionMethods
 
 echo $(date -u) "[Compiler] Adding more Kernel packages"
 echo "Loading packages: $(cat hermesAdditionalKernelPackages.txt)"
@@ -180,6 +180,7 @@ zip "${MC_BOOTSTRAP_IMAGE_NAME}.zip" ${MC_BOOTSTRAP_IMAGE_NAME}.*
 echo "[Metacello] Bootstrapping Metacello"
 ${VM} "${MC_BOOTSTRAP_IMAGE_NAME}.image" save ${METACELLO_IMAGE_NAME}
 ${VM} "${METACELLO_IMAGE_NAME}.image" st ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/03-metacello-bootstrap/01-loadMetacello.st --save --quit
+${VM} "${METACELLO_IMAGE_NAME}.image" perform --save PharoBootstrapInitialization enableChangeLog # From now on the change log will be registered.
 git clone https://github.com/pharo-vcs/tonel.git -b "Pharo${PHARO_MAJOR}" "${BOOTSTRAP_CACHE}/tonel"
 ${VM} "${METACELLO_IMAGE_NAME}.image" metacello install --save --signalErrorOnWarning "filetree://${BOOTSTRAP_CACHE}/tonel" Tonel --groups core
 #We need the next line because we will reload Tonel from github and this could cause some trouble later

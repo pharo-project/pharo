@@ -33,11 +33,7 @@ BaselineOfThreadedFFI >> baseline: spec [
 { #category : 'doits' }
 BaselineOfThreadedFFI >> reset [
 
-	Smalltalk globals
-		at: #FFIMethodRegistry 
-		ifPresent: [ :class | class resetAll ].
-		
-	Smalltalk globals
-		at: #FFIBackend 
-		ifPresent: [ :class | class reset ]
+	self classNamed: #FFIMethodRegistry ifPresent: [ :class | class resetAll ].
+
+	self classNamed: #FFIBackend ifPresent: [ :class | class reset ]
 ]

@@ -43,7 +43,6 @@ ReBaselineProperlyPackagedRule class >> uniqueIdentifierName [
 ReBaselineProperlyPackagedRule >> basicCheck: aClass [
 
 	aClass isClassSide ifTrue: [ ^ false ].
-	 
-	^(aClass name beginsWith: 'BaselineOf') 
-		and: [ aClass package name ~= aClass name ]
+
+	^ (MetacelloProjectRegistration baselineClasses includes: aClass) and: [ aClass package name ~= aClass name ]
 ]

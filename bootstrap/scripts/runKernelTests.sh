@@ -64,8 +64,8 @@ export PHARO_CI_TESTING_ENVIRONMENT=1
 ./pharo bootstrap.image loadHermes UIManager.hermes Math-Operations-Extensions.hermes System-Time.hermes NumberParser.hermes AST-Core.hermes ParseTreeRewriter.hermes Random-Core.hermes System-NumberPrinting.hermes --save --no-fail-on-undeclared --on-duplication ignore
 
 #Initializing the package manager
-./pharo bootstrap.image perform --save PharoBootstrapFixMethodsTool fixExtensionMethods
-./pharo bootstrap.image perform --save PharoBootstrapFixMethodsTool fixMethodsIn: protocolsKernel.txt
+./pharo bootstrap.image perform --save PharoBootstrapInitialization fixExtensionMethods
+./pharo bootstrap.image perform --save PharoBootstrapInitialization fixMethodsIn: protocolsKernel.txt
 
 #Load traits
 ./pharo bootstrap.image loadHermes Traits.hermes --save
