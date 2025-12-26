@@ -106,6 +106,7 @@ MetacelloProject >> defaultPlatformAttributes [
 		  ('pharo' , SystemVersion current major asString , '.x') asSymbol.
 		  ('pharo' , SystemVersion current major asString , '.0.x') asSymbol }
 ]
+
 { #category : 'spec classes' }
 MetacelloProject >> groupSpec [
 
@@ -131,6 +132,7 @@ MetacelloProject >> loadType: aSymbol [
 
 	loadType := aSymbol
 ]
+
 { #category : 'spec classes' }
 MetacelloProject >> packageSpec [
 
@@ -230,13 +232,7 @@ MetacelloProject >> projectSpec [
 { #category : 'spec classes' }
 MetacelloProject >> repositoriesSpec [
 
-	^self repositoriesSpecClass for: self
-]
-
-{ #category : 'spec classes' }
-MetacelloProject >> repositoriesSpecClass [
-
-	^MetacelloRepositoriesSpec
+	^ MetacelloRepositoriesSpec for: self
 ]
 
 { #category : 'accessing' }
@@ -247,13 +243,7 @@ MetacelloProject >> repositoryDescription [
 { #category : 'spec classes' }
 MetacelloProject >> repositorySpec [
 
-	^self repositorySpecClass for: self
-]
-
-{ #category : 'spec classes' }
-MetacelloProject >> repositorySpecClass [
-
-	^MetacelloRepositorySpec
+	^ MetacelloRepositorySpec for: self
 ]
 
 { #category : 'development support' }

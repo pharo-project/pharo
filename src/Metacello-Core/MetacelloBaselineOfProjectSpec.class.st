@@ -25,11 +25,6 @@ MetacelloBaselineOfProjectSpec >> asBaselineProjectSpec [
 ]
 
 { #category : 'scripting' }
-MetacelloBaselineOfProjectSpec >> asProjectRegistration [
-    ^ MetacelloProjectRegistration fromMCBaselineProjectSpec: self
-]
-
-{ #category : 'scripting' }
 MetacelloBaselineOfProjectSpec >> canDowngradeTo: aProjectSpec [
     "cannot upgrade between baselines"
 
@@ -45,9 +40,17 @@ MetacelloBaselineOfProjectSpec >> canUpgradeTo: aProjectSpec [
   ^ false
 ]
 
+{ #category : 'querying' }
+MetacelloBaselineOfProjectSpec >> className [
+
+	className ifNil: [ self name ifNotNil: [ self className: self constructClassName ] ].
+	^ className
+]
+
 { #category : 'private' }
 MetacelloBaselineOfProjectSpec >> constructClassName [
-    ^ 'BaselineOf' , self name
+
+	^ 'BaselineOf' , self name
 ]
 
 { #category : 'mutability' }
@@ -68,65 +71,49 @@ MetacelloBaselineOfProjectSpec >> hasClassName [
 	^ className isNotNil and: [ className ~= self constructClassName ]
 ]
 
-{ #category : 'testing' }
-MetacelloBaselineOfProjectSpec >> hasConflictWithProjectSpec: projectSpec [
-	^ projectSpec hasConflictWithBaselineSpec: self
-]
-
-{ #category : 'testing' }
-MetacelloBaselineOfProjectSpec >> isBaselineOfProjectSpec [
-	^ true
-]
-
 { #category : 'importing' }
 MetacelloBaselineOfProjectSpec >> mergeImportLoads: aLoadList [
-    aLoadList
-        ifNotNil: [ :otherLoads | self loads ifNil: [ loads := otherLoads ] ifNotNil: [ loads := loads , otherLoads ] ]
+
+	aLoadList ifNotNil: [ :otherLoads |
+			self loads
+				ifNil: [ loads := otherLoads ]
+				ifNotNil: [ loads := loads , otherLoads ] ]
 ]
 
 { #category : 'merging' }
 MetacelloBaselineOfProjectSpec >> mergeRepositoriesSpec: anotherRepositories [
-  "anotherRepositories wins ... there can ever only be one repository for the 
+	"anotherRepositories wins ... there can ever only be one repository for the 
    baseline to load from"
 
-  "https://github.com/dalehenrich/metacello-work/issues/251"
+	"https://github.com/dalehenrich/metacello-work/issues/251"
 
-  self repositories: anotherRepositories
+	self repositories: anotherRepositories
 ]
 
 { #category : 'merging' }
 MetacelloBaselineOfProjectSpec >> mergeSpec: anotherSpec [
-    ^ super mergeSpec: anotherSpec asBaselineProjectSpec
+
+	^ super mergeSpec: anotherSpec asBaselineProjectSpec
 ]
 
 { #category : 'printing' }
 MetacelloBaselineOfProjectSpec >> projectLabel [
-    ^ 'baseline'
-]
 
-{ #category : 'querying' }
-MetacelloBaselineOfProjectSpec >> repositoryBranchName [
-	"extract a branch name from the repository ... if possible"
-
-	"must parallel implementation of MetacelloMCBaselineProject>>setBaselineRepositoryDescription: we want the same repoSpec"
-
-	| spec |
-	self repositorySpecs do: [ :repoSpec | spec := repoSpec ].
-	^ spec createRepository repositoryBranchName
+	^ 'baseline'
 ]
 
 { #category : 'querying' }
 MetacelloBaselineOfProjectSpec >> repositoryVersionString [
-  "extract a version string from the repository ... if possible"
+	"extract a version string from the repository ... if possible"
 
-  "must parallel implementation of MetacelloMCBaselineProject>>setBaselineRepositoryDescription: we want the same repoSpec"
+	"must parallel implementation of MetacelloMCBaselineProject>>setBaselineRepositoryDescription: we want the same repoSpec"
 
-  | spec repo |
-  self repositorySpecs do: [ :repoSpec | spec := repoSpec ].
-  [ repo := spec createRepository ]
-    on: Error
-    do: [ :ex | ^ '' ].
-  ^ repo repositoryVersionString
+	| spec repo |
+	self repositorySpecs do: [ :repoSpec | spec := repoSpec ].
+	[ repo := spec createRepository ]
+		on: Error
+		do: [ :ex | ^ '' ].
+	^ repo repositoryVersionString
 ]
 
 { #category : 'querying' }

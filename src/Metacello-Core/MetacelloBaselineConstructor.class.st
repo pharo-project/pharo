@@ -390,6 +390,7 @@ MetacelloBaselineConstructor >> project: aString with: aBlock [
 
 	self with: projectSpec during: aBlock
 ]
+
 { #category : 'api' }
 MetacelloBaselineConstructor >> projectPackage: aBlock [
 	"projectPackage spec data folded into project spec"
