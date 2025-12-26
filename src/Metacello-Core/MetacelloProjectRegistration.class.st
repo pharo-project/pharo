@@ -2,7 +2,6 @@ Class {
 	#name : 'MetacelloProjectRegistration',
 	#superclass : 'Object',
 	#instVars : [
-		'projectName',
 		'baselineProjectSpec',
 		'loadedInImage',
 		'locked',
@@ -67,10 +66,9 @@ MetacelloProjectRegistration class >> copyRegistryDuring: aBlock commitIfSuccess
 { #category : 'instance creation' }
 MetacelloProjectRegistration class >> fromMCBaselineProjectSpec: aProjectSpec [
 
-    ^ self new
-        projectName: aProjectSpec name;
-        baselineProjectSpec: aProjectSpec;
-        yourself
+	^ self new
+		  baselineProjectSpec: aProjectSpec;
+		  yourself
 ]
 
 { #category : 'querying' }
@@ -224,7 +222,7 @@ MetacelloProjectRegistration >> hasLoadConflicts: aProjectRegistration [
 { #category : 'comparing' }
 MetacelloProjectRegistration >> hash [
 
-	^ (String stringHash: projectName initialHash: 0) bitXor: baselineProjectSpec metacelloRegistrationHash
+	^ String stringHash: baselineProjectSpec metacelloRegistrationHash initialHash: 0
 ]
 
 { #category : 'mutability' }
@@ -242,7 +240,6 @@ MetacelloProjectRegistration >> isMutable [
 MetacelloProjectRegistration >> isValid [
 	" has a name and one or the other of the projectSpecs is non-nil, but not both ... this is CRITICAL"
 
-	projectName ifNil: [ ^ false ].
 	^ baselineProjectSpec isNotNil
 ]
 
@@ -312,13 +309,8 @@ MetacelloProjectRegistration >> printOn: aStream [
 
 { #category : 'accessing' }
 MetacelloProjectRegistration >> projectName [
-	^ projectName
-]
 
-{ #category : 'accessing' }
-MetacelloProjectRegistration >> projectName: anObject [
-    self shouldBeMutable.
-    projectName := anObject
+	^ self baselineProjectSpec name
 ]
 
 { #category : 'accessing' }
