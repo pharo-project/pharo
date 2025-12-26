@@ -601,9 +601,11 @@ MetacelloProjectSpec >> postLoadDoIt [
 ]
 
 { #category : 'accessing' }
-MetacelloProjectSpec >> postLoadDoIt: anObject [
+MetacelloProjectSpec >> postLoadDoIt: aSymbol [
 
-	anObject setPostLoadDoItInMetacelloSpec: self
+	self shouldBeMutable.
+	self validateDoItSelector: aSymbol.
+	postLoadDoIt := aSymbol
 ]
 
 { #category : 'querying' }
@@ -613,9 +615,11 @@ MetacelloProjectSpec >> preLoadDoIt [
 ]
 
 { #category : 'accessing' }
-MetacelloProjectSpec >> preLoadDoIt: anObject [
+MetacelloProjectSpec >> preLoadDoIt: aSymbol [
 
-	anObject setPreLoadDoItInMetacelloSpec: self
+	self shouldBeMutable.
+	self validateDoItSelector: aSymbol.
+	preLoadDoIt := aSymbol
 ]
 
 { #category : 'visiting' }
@@ -723,18 +727,6 @@ MetacelloProjectSpec >> setLoads: aCollection [
 MetacelloProjectSpec >> setName: aStringOrNil [
     self shouldBeMutable.
     name := aStringOrNil
-]
-
-{ #category : 'accessing' }
-MetacelloProjectSpec >> setPostLoadDoIt: aSymbol [
-    self shouldBeMutable.
-    postLoadDoIt := aSymbol
-]
-
-{ #category : 'accessing' }
-MetacelloProjectSpec >> setPreLoadDoIt: aSymbol [
-    self shouldBeMutable.
-    preLoadDoIt := aSymbol
 ]
 
 { #category : 'scripting' }

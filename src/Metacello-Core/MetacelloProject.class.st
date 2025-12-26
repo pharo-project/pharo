@@ -269,12 +269,6 @@ MetacelloProject >> singletonVersionName [
 	^ self class singletonVersionName
 ]
 
-{ #category : 'spec classes' }
-MetacelloProject >> valueHolderSpec [
-
-	^ MetacelloValueHolderSpec for: self
-]
-
 { #category : 'versions' }
 MetacelloProject >> version [
 

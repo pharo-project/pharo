@@ -325,14 +325,12 @@ MetacelloBaselineConstructor >> package: packageName with: aBlockOrString [
 { #category : 'api' }
 MetacelloBaselineConstructor >> postLoadDoIt: aSymbol [
 
-	self validateDoItSelector: aSymbol.
 	self root postLoadDoIt: aSymbol
 ]
 
 { #category : 'api' }
 MetacelloBaselineConstructor >> preLoadDoIt: aSymbol [
 
-	self validateDoItSelector: aSymbol.
 	self root preLoadDoIt: aSymbol
 ]
 
@@ -462,13 +460,6 @@ MetacelloBaselineConstructor >> root [
 { #category : 'accessing' }
 MetacelloBaselineConstructor >> root: aMetacelloSpec [
     root := aMetacelloSpec
-]
-
-{ #category : 'validation' }
-MetacelloBaselineConstructor >> validateDoItSelector: anObject [
-
-	anObject ifNil: [ ^ self ].
-	anObject isSymbol ifFalse: [ self error: 'Invalid message selector for doit: ' , anObject printString ]
 ]
 
 { #category : 'api' }

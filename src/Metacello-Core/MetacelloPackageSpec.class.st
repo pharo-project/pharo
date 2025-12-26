@@ -281,9 +281,10 @@ MetacelloPackageSpec >> postLoadDoIt [
 ]
 
 { #category : 'loading' }
-MetacelloPackageSpec >> postLoadDoIt: anObject [
+MetacelloPackageSpec >> postLoadDoIt: aSymbol [
 
-	anObject setPostLoadDoItInMetacelloSpec: self
+	self validateDoItSelector: aSymbol.
+	postLoadDoIt := aSymbol
 ]
 
 { #category : 'querying' }
@@ -293,9 +294,10 @@ MetacelloPackageSpec >> preLoadDoIt [
 ]
 
 { #category : 'accessing' }
-MetacelloPackageSpec >> preLoadDoIt: anObject [
+MetacelloPackageSpec >> preLoadDoIt: aSymbol [
 
-	anObject setPreLoadDoItInMetacelloSpec: self
+	self validateDoItSelector: aSymbol.
+	preLoadDoIt := aSymbol
 ]
 
 { #category : 'visiting' }
@@ -342,18 +344,6 @@ MetacelloPackageSpec >> repositorySpecs [
 MetacelloPackageSpec >> resolveToPackagesIn: aVersionSpec visited: visited [
 
 	^{ self }
-]
-
-{ #category : 'accessing' }
-MetacelloPackageSpec >> setPostLoadDoIt: aSymbol [
-
-	postLoadDoIt := aSymbol
-]
-
-{ #category : 'accessing' }
-MetacelloPackageSpec >> setPreLoadDoIt: aSymbol [
-
-	preLoadDoIt := aSymbol
 ]
 
 { #category : 'accessing' }

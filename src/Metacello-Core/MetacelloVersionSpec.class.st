@@ -400,9 +400,10 @@ MetacelloVersionSpec >> postLoadDoIt [
 ]
 
 { #category : 'accessing' }
-MetacelloVersionSpec >> postLoadDoIt: anObject [
+MetacelloVersionSpec >> postLoadDoIt: aSymbol [
 
-	anObject setPostLoadDoItInMetacelloSpec: self
+	self validateDoItSelector: aSymbol.
+	postLoadDoIt := aSymbol
 ]
 
 { #category : 'querying' }
@@ -412,9 +413,10 @@ MetacelloVersionSpec >> preLoadDoIt [
 ]
 
 { #category : 'accessing' }
-MetacelloVersionSpec >> preLoadDoIt: anObject [
+MetacelloVersionSpec >> preLoadDoIt: aSymbol [
 
-	anObject setPreLoadDoItInMetacelloSpec: self
+	self validateDoItSelector: aSymbol.
+	preLoadDoIt := aSymbol
 ]
 
 { #category : 'enumerating' }
@@ -494,18 +496,6 @@ MetacelloVersionSpec >> setImport: anArray [
   importArray := importArray
     ifNil: [ anArray ]
     ifNotNil: [ importArray , anArray ]
-]
-
-{ #category : 'accessing' }
-MetacelloVersionSpec >> setPostLoadDoIt: aSymbol [
-
-	postLoadDoIt := aSymbol
-]
-
-{ #category : 'accessing' }
-MetacelloVersionSpec >> setPreLoadDoIt: aSymbol [
-
-	preLoadDoIt := aSymbol
 ]
 
 { #category : 'enumerating' }

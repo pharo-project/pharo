@@ -186,6 +186,14 @@ MetacelloSpec >> shouldBeMutable [
 	self error: 'Not allowed to modify an immutable object'
 ]
 
+{ #category : 'validation' }
+MetacelloSpec >> validateDoItSelector: anObject [
+
+	anObject ifNil: [ ^ self ].
+	anObject isSymbol ifFalse: [ self error: 'Invalid message selector for doit: ' , anObject printString ].
+	anObject precedence == 0 ifTrue: [ self error: 'Invalid selector for doit: ' , anObject printString ]
+]
+
 { #category : 'merging' }
 MetacelloSpec >> validateMergeForSpec: aSpec [
     aSpec class = self class

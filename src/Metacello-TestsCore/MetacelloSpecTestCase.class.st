@@ -51,11 +51,6 @@ MetacelloSpecTestCase >> repositorySpec [
 ]
 
 { #category : 'specs' }
-MetacelloSpecTestCase >> valueHolderSpec [
-    ^ self project valueHolderSpec
-]
-
-{ #category : 'specs' }
 MetacelloSpecTestCase >> versionSpec [
     ^ self project versionSpec
 ]
