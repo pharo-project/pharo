@@ -13,6 +13,12 @@ MetacelloNamelessProjectSpec class >> initialize [
 	self deprecatedAliases: #( #MetacelloMCNamelessProjectSpec )
 ]
 
+{ #category : 'visiting' }
+MetacelloNamelessProjectSpec >> acceptVisitor: aVisitor [
+
+	self error: 'Nameless project spec should be transformed into a baseline spec before visit can start.'
+]
+
 { #category : 'scripting' }
 MetacelloNamelessProjectSpec >> asBaselineProjectSpec [
 
@@ -39,7 +45,23 @@ MetacelloNamelessProjectSpec >> canUpgradeTo: aMetacelloProjectSpec [
 
 { #category : 'mutability' }
 MetacelloNamelessProjectSpec >> copyForRegistration: aMetacelloProjectRegistration onWrite: aBlock [
-	self error: 'Should be converting to configuration spec for the registration, so we should not get here'
+
+	self error: 'Should be converting to baseline of project spec for the registration, so we should not get here'
+]
+
+{ #category : 'scripting' }
+MetacelloNamelessProjectSpec >> copyForScriptingInto: aProjectSpec [
+
+	^ aProjectSpec
+		  setName: name;
+		  className: className;
+		  versionString: versionString;
+		  operator: operator;
+		  setLoads: loads;
+		  preLoadDoIt: preLoadDoIt;
+		  postLoadDoIt: postLoadDoIt;
+		  repositories: repositories copy;
+		  file: file
 ]
 
 { #category : 'merging' }
@@ -60,6 +82,5 @@ MetacelloNamelessProjectSpec >> projectLabel [
 MetacelloNamelessProjectSpec >> version [
 	"Empty version string means use latestVersion or #bleedingEdge"
 
-	self flag: #ConfigurationRemoval. "I think this method should not be on baselines but let's see that later."
-	self error: 'No version specified'
+	^ self versionString ifNotNil: [ self project versionString ]
 ]

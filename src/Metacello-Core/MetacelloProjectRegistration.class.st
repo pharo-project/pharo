@@ -143,7 +143,6 @@ MetacelloProjectRegistration >> baselineProjectSpec [
 MetacelloProjectRegistration >> baselineProjectSpec: anObject [
 
 	self shouldBeMutable.
-
 	baselineProjectSpec := anObject
 ]
 

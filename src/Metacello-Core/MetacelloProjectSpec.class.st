@@ -401,7 +401,6 @@ MetacelloProjectSpec >> initialize [
 	super initialize.
 	projectInitialized := false
 ]
-
 { #category : 'scripting' }
 MetacelloProjectSpec >> isLocked [
 

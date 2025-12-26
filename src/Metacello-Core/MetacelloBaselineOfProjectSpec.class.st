@@ -26,9 +26,9 @@ MetacelloBaselineOfProjectSpec >> asBaselineProjectSpec [
 
 { #category : 'scripting' }
 MetacelloBaselineOfProjectSpec >> canDowngradeTo: aProjectSpec [
-    "cannot upgrade between baselines"
+	"cannot upgrade between baselines"
 
-    ^ false
+	^ false
 ]
 
 { #category : 'scripting' }
