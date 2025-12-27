@@ -30,11 +30,12 @@ CompiledMethod >> firstComment [
 { #category : '*AST-Core' }
 CompiledMethod >> parseTree [
 	"returns an AST for this method, do not cache it. (see #ast for the cached alternative)"
+
 	| ast |
 	ast := self methodClass compiler
-		source: self sourceCode;
-		class: self methodClass;
-		parse.
+		       source: (self sourceCode ifNil: [ self error: 'Cannot build AST of a method with no source code. Concerned method: ' , self displayString ]);
+		       class: self methodClass;
+		       parse.
 	ast compiledMethod: self.
-	^ast
+	^ ast
 ]

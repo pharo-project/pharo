@@ -16,11 +16,7 @@ Class {
 { #category : 'adding' }
 MetacelloRepositorySpec >> addToMetacelloRepositories: aMetacelloRepositoriesSpec [
 
-	aMetacelloRepositoriesSpec addMember: 
-		(aMetacelloRepositoriesSpec addMember 
-			name: self name;
-			spec: self;
-			yourself)
+	aMetacelloRepositoriesSpec addMemberForSpec: self
 ]
 
 { #category : 'mc support' }
@@ -91,11 +87,7 @@ MetacelloRepositorySpec >> hasNoLoadConflicts: aMetacelloRepositorySpec [
 { #category : 'private' }
 MetacelloRepositorySpec >> mergeIntoMetacelloRepositories: aMetacelloRepositoriesSpec [
 
-	aMetacelloRepositoriesSpec addMember: 
-		(aMetacelloRepositoriesSpec mergeMember 
-			name: self name;
-			spec: self;
-			yourself)
+	aMetacelloRepositoriesSpec mergeMemberForSpec: self
 ]
 
 { #category : 'merging' }
@@ -130,11 +122,7 @@ MetacelloRepositorySpec >> password: aString [
 { #category : 'private' }
 MetacelloRepositorySpec >> removeFromMetacelloRepositories: aMetacelloRepositoriesSpec [
 
-	aMetacelloRepositoriesSpec addMember: 
-		(aMetacelloRepositoriesSpec removeMember 
-			name: self name;
-			spec: self;
-			yourself)
+	aMetacelloRepositoriesSpec removeMemberForSpec: self
 ]
 
 { #category : 'accessing' }

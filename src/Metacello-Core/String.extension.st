@@ -4,30 +4,20 @@ Extension { #name : 'String' }
 String >> addToMetacelloPackages: aMetacelloPackagesSpec [
 
 	| spec |
-	spec := 
-		(aMetacelloPackagesSpec project packageSpec)
-			file: self;
-			yourself.
-	aMetacelloPackagesSpec addMember: 
-		(aMetacelloPackagesSpec addMember 
-			name: spec name;
-			spec: spec;
-			yourself)
+	spec := aMetacelloPackagesSpec project packageSpec
+		        file: self;
+		        yourself.
+	aMetacelloPackagesSpec addMemberForSpec: spec
 ]
 
 { #category : '*Metacello-Core' }
 String >> addToMetacelloRepositories: aMetacelloRepositoriesSpec [
 
 	| spec |
-	spec := 
-		(aMetacelloRepositoriesSpec project repositorySpec)
-			description: self;
-			yourself.
-	aMetacelloRepositoriesSpec addMember: 
-		(aMetacelloRepositoriesSpec addMember 
-			name: spec name;
-			spec: spec;
-			yourself)
+	spec := aMetacelloRepositoriesSpec project repositorySpec
+		        description: self;
+		        yourself.
+	aMetacelloRepositoriesSpec addMemberForSpec: spec
 ]
 
 { #category : '*Metacello-Core' }
@@ -40,30 +30,20 @@ String >> asMetacelloVersionNumber [
 String >> mergeIntoMetacelloPackages: aMetacelloPackagesSpec [
 
 	| spec |
-	spec := 
-		(aMetacelloPackagesSpec project packageSpec)
-			file: self;
-			yourself.
-	aMetacelloPackagesSpec addMember: 
-		(aMetacelloPackagesSpec mergeMember 
-			name: spec name;
-			spec: spec;
-			yourself)
+	spec := aMetacelloPackagesSpec project packageSpec
+		        file: self;
+		        yourself.
+	aMetacelloPackagesSpec mergeMemberForSpec: spec
 ]
 
 { #category : '*Metacello-Core' }
 String >> mergeIntoMetacelloRepositories: aMetacelloRepositoriesSpec [
 
 	| spec |
-	spec := 
-		(aMetacelloRepositoriesSpec project repositorySpec)
-			description: self;
-			yourself.
-	aMetacelloRepositoriesSpec addMember: 
-		(aMetacelloRepositoriesSpec mergeMember 
-			name: spec name;
-			spec: spec;
-			yourself)
+	spec := aMetacelloRepositoriesSpec project repositorySpec
+		        description: self;
+		        yourself.
+	aMetacelloRepositoriesSpec mergeMemberForSpec: spec
 ]
 
 { #category : '*Metacello-Core-version comparison' }
@@ -105,19 +85,13 @@ String >> metacelloVersionComponentLessThan: aMetacelloVersonComponent [
 { #category : '*Metacello-Core' }
 String >> removeFromMetacelloPackages: aMetacelloPackagesSpec [
 
-	aMetacelloPackagesSpec addMember: 
-		(aMetacelloPackagesSpec removeMember 
-			name: self;
-			yourself)
+	aMetacelloPackagesSpec removeMemberNamed: self
 ]
 
 { #category : '*Metacello-Core' }
 String >> removeFromMetacelloRepositories: aMetacelloRepositoriesSpec [
 
-	aMetacelloRepositoriesSpec addMember: 
-		(aMetacelloRepositoriesSpec removeMember 
-			name: self;
-			yourself)
+	aMetacelloRepositoriesSpec removeMemberNamed: self
 ]
 
 { #category : '*Metacello-Core' }

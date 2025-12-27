@@ -17,6 +17,7 @@ BaselineOfDebugging >> baseline: spec [
 	<baseline>
 	spec for: #common do: [
 			spec
+				package: 'UIManager';
 				package: 'Debugging-Core';
 				package: 'Debugging-Utils' with: [ spec requires: #( 'Debugging-Core' ) ];
 				package: 'Debugger-Model' with: [ spec requires: #( 'Debugging-Core' 'Debugging-Utils' ) ];
@@ -26,6 +27,6 @@ BaselineOfDebugging >> baseline: spec [
 				package: 'Debugger-Oups-Tests' with: [ spec requires: #( 'Debugger-Oups' ) ].
 
 			spec
-				group: 'Core' with: #( 'Debugging-Core' 'Debugging-Utils' 'Debugger-Model' 'Debugger-Oups' );
+				group: 'Core' with: #( 'UIManager' 'Debugging-Core' 'Debugging-Utils' 'Debugger-Model' 'Debugger-Oups' );
 				group: 'Tests' with: #( 'Debugging-Utils-Tests' 'Debugger-Model-Tests' 'Debugger-Oups-Tests' ) ]
 ]

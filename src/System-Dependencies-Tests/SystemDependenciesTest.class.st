@@ -118,6 +118,13 @@ SystemDependenciesTest >> knownDebuggingDependencies [
 ]
 
 { #category : 'known dependencies' }
+SystemDependenciesTest >> knownDisplayDependencies [
+	"ideally this list should be empty"
+
+	^ #( #'Morphic-Core' #'System-Object Events' #'Tool-Base' )
+]
+
+{ #category : 'known dependencies' }
 SystemDependenciesTest >> knownKernelAdditionalPackagesDependencies [
 	"ideally this list should be empty"
 
@@ -244,12 +251,12 @@ SystemDependenciesTest >> testExternalDisplayDependencies [
 	| dependencies |
 
 	dependencies := self externalDependendiesOf: (
-		self _09sunitCoreLayerPackages,
+		self _10debuggingLayerPackages, 
 		BaselineOfUnifiedFFI allPackageNames,
 		BaselineOfThreadedFFI allPackageNames,
 		BaselineOfDisplay allPackageNames).
 
-	self assertEmpty: dependencies
+	self assert: dependencies equals: self knownDisplayDependencies
 ]
 
 { #category : 'tests' }

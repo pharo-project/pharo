@@ -14,11 +14,7 @@ Class {
 { #category : 'adding' }
 MetacelloAbstractPackageSpec >> addToMetacelloPackages: aMetacelloPackagesSpec [
 
-	aMetacelloPackagesSpec addMember: 
-		(aMetacelloPackagesSpec addMember 
-			name: self name;
-			spec: self;
-			yourself)
+	aMetacelloPackagesSpec addMemberForSpec: self
 ]
 
 { #category : 'Protocol (printing) - 4 selector(s)' }
@@ -133,11 +129,7 @@ MetacelloAbstractPackageSpec >> label [
 { #category : 'merging' }
 MetacelloAbstractPackageSpec >> mergeIntoMetacelloPackages: aMetacelloPackagesSpec [
 
-	aMetacelloPackagesSpec addMember: 
-		(aMetacelloPackagesSpec mergeMember 
-			name: self name;
-			spec: self;
-			yourself)
+	aMetacelloPackagesSpec mergeMemberForSpec: self
 ]
 
 { #category : 'merging' }
@@ -204,11 +196,7 @@ MetacelloAbstractPackageSpec >> referencedSpec [
 { #category : 'removing' }
 MetacelloAbstractPackageSpec >> removeFromMetacelloPackages: aMetacelloPackagesSpec [
 
-	aMetacelloPackagesSpec addMember: 
-		(aMetacelloPackagesSpec removeMember 
-			name: self name;
-			spec: self;
-			yourself)
+	aMetacelloPackagesSpec removeMemberForSpec: self
 ]
 
 { #category : 'loading' }

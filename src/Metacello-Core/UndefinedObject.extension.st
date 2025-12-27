@@ -10,8 +10,3 @@ UndefinedObject >> asMetacelloVersionNumber [
 UndefinedObject >> metacelloRegistrationHash [
     ^ self hash
 ]
-
-{ #category : '*Metacello-Core' }
-UndefinedObject >> registrationsCompareEqual: aMetacelloProjectSpec [
-    ^ self = aMetacelloProjectSpec
-]

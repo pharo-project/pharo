@@ -5,9 +5,9 @@ Class {
 		'versionString',
 		'projectVersion'
 	],
-	#category : 'Metacello-Core-Scripts',
+	#category : 'Metacello-Core-Registry',
 	#package : 'Metacello-Core',
-	#tag : 'Scripts'
+	#tag : 'Registry'
 }
 
 { #category : 'accessing' }

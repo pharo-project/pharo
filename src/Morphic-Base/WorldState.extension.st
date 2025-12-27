@@ -32,6 +32,15 @@ WorldState class >> browseWorldMenuOn: aBuilder [
 ]
 
 { #category : '*Morphic-Base' }
+WorldState class >> cleanUpImage [
+
+	"Give the user a chance to bail"
+	(self confirm: 'Cleanup will destroy change sets and more.
+Are you sure you want to proceed?') ifFalse: [ ^ self ].
+	^ Smalltalk cleanUp: true
+]
+
+{ #category : '*Morphic-Base' }
 WorldState class >> debugWorldMenuOn: aBuilder [
 
 	<worldMenu>
@@ -119,44 +128,45 @@ WorldState >> startThenBrowseMessageTally [
 
 { #category : '*Morphic-Base' }
 WorldState class >> systemOn: aBuilder [
+
 	<worldMenu>
 	(aBuilder item: #System)
 		order: 60;
 		with: [
-			(aBuilder group: #SystemTools)
-				order: 1;
-				withSeparatorAfter.
-			(aBuilder group: #Startup)
-				order: 2;
-				withSeparatorAfter.
-			(aBuilder group: #Image)
-				order: 3;
-				with: [
-					(aBuilder item: #'Space left')
-						help: 'Do a garbage collection, and report results about the to the user.';
-						order: 1;
-						action: [ Smalltalk informSpaceLeftAfterGarbageCollection ].
-					(aBuilder item: #'Do Image Cleanup')
-						help: 'Clean out any caches and other state that should be flushed when trying to get an image into a pristine state.';
-						order: 2;
-						action: [ Smalltalk cleanUp: true ].
-					aBuilder 	withSeparatorAfter].
-			(aBuilder group: #World)
-				order: 4;
-				with: [
-					(aBuilder item: #'Start drawing again')
-						help: 'Resume the drawing after a draw error of the world.';
-						order: 1;
-						action: [ self currentWorld resumeAfterDrawError ].
-					(aBuilder item: #'Start stepping again')
-						help: 'Resume stepping of Morph after an error has occured.';
-						order: 2;
-						action: [ self currentWorld resumeAfterStepError ].
-					(aBuilder item: #'Restore display')
-						help: 'Restore Morphic display.';
-						order: 3;
-						action: [ self currentWorld restoreMorphicDisplay ].
-					aBuilder withSeparatorAfter ] ]
+				(aBuilder group: #SystemTools)
+					order: 1;
+					withSeparatorAfter.
+				(aBuilder group: #Startup)
+					order: 2;
+					withSeparatorAfter.
+				(aBuilder group: #Image)
+					order: 3;
+					with: [
+							(aBuilder item: #'Space left')
+								help: 'Do a garbage collection, and report results about the to the user.';
+								order: 1;
+								action: [ Smalltalk informSpaceLeftAfterGarbageCollection ].
+							(aBuilder item: #'Do Image Cleanup')
+								help: 'Clean out any caches and other state that should be flushed when trying to get an image into a pristine state.';
+								order: 2;
+								action: [ self cleanUpImage ].
+							aBuilder withSeparatorAfter ].
+				(aBuilder group: #World)
+					order: 4;
+					with: [
+							(aBuilder item: #'Start drawing again')
+								help: 'Resume the drawing after a draw error of the world.';
+								order: 1;
+								action: [ self currentWorld resumeAfterDrawError ].
+							(aBuilder item: #'Start stepping again')
+								help: 'Resume stepping of Morph after an error has occured.';
+								order: 2;
+								action: [ self currentWorld resumeAfterStepError ].
+							(aBuilder item: #'Restore display')
+								help: 'Restore Morphic display.';
+								order: 3;
+								action: [ self currentWorld restoreMorphicDisplay ].
+							aBuilder withSeparatorAfter ] ]
 ]
 
 { #category : '*Morphic-Base' }

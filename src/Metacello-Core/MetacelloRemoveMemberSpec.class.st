@@ -1,6 +1,9 @@
 Class {
 	#name : 'MetacelloRemoveMemberSpec',
 	#superclass : 'MetacelloMemberSpec',
+	#instVars : [
+		'name'
+	],
 	#category : 'Metacello-Core-Members',
 	#package : 'Metacello-Core',
 	#tag : 'Members'
@@ -22,4 +25,16 @@ MetacelloRemoveMemberSpec >> applyToList: aListSpec [
 MetacelloRemoveMemberSpec >> methodUpdateSelector [
 
 	^#remove:
+]
+
+{ #category : 'accessing' }
+MetacelloRemoveMemberSpec >> name [
+
+	^ name ifNil: [ super name ]
+]
+
+{ #category : 'accessing' }
+MetacelloRemoveMemberSpec >> name: aString [
+
+	name := aString
 ]

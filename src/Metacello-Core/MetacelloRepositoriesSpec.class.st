@@ -110,8 +110,5 @@ MetacelloRepositoriesSpec >> repository: description username: username password
 		        username: username;
 		        password: password;
 		        yourself.
-	self addMember: (self addMember
-			 name: spec name;
-			 spec: spec;
-			 yourself)
+	self addMemberForSpec: spec
 ]

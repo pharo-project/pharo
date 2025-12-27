@@ -10,6 +10,12 @@ Class {
 	#tag : 'Members'
 }
 
+{ #category : 'visiting' }
+MetacelloMemberListSpec >> acceptVisitor: aVisitor [
+
+	self error: 'Should not be visitable..'
+]
+
 { #category : 'actions' }
 MetacelloMemberListSpec >> add: aSpec [
 
@@ -21,6 +27,12 @@ MetacelloMemberListSpec >> addMember: aMember [
 
 	self list add: aMember.
 	self clearMemberMap
+]
+
+{ #category : 'adding' }
+MetacelloMemberListSpec >> addMemberForSpec: aSpec [
+
+	^ self addMember: (MetacelloAddMemberSpec for: self project spec: aSpec)
 ]
 
 { #category : 'private' }
@@ -141,6 +153,12 @@ MetacelloMemberListSpec >> merge: aSpec [
 	self subclassResponsibility
 ]
 
+{ #category : 'adding' }
+MetacelloMemberListSpec >> mergeMemberForSpec: aSpec [
+
+	^ self addMember: (MetacelloMergeMemberSpec for: self project spec: aSpec)
+]
+
 { #category : 'merging' }
 MetacelloMemberListSpec >> mergeSpec: anotherSpec [
 
@@ -169,6 +187,20 @@ MetacelloMemberListSpec >> postCopy [
 MetacelloMemberListSpec >> remove: aSpec [
 
 	self subclassResponsibility
+]
+
+{ #category : 'adding' }
+MetacelloMemberListSpec >> removeMemberForSpec: aSpec [
+
+	^ self addMember: (MetacelloRemoveMemberSpec for: self project spec: aSpec)
+]
+
+{ #category : 'adding' }
+MetacelloMemberListSpec >> removeMemberNamed: aString [
+
+	^ self addMember: ((MetacelloRemoveMemberSpec for: self project)
+			   name: aString;
+			   yourself)
 ]
 
 { #category : 'enumeration' }

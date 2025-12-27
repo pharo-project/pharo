@@ -18,6 +18,15 @@ Class {
 	#tag : 'Scripts'
 }
 
+{ #category : 'baselines' }
+MetacelloScriptExecutor class >> baselineNameFrom: baseName [
+	"Return the fully-qualified configuration class name."
+
+	^ (baseName indexOfSubCollection: 'BaselineOf') > 0
+		  ifTrue: [ baseName ]
+		  ifFalse: [ 'BaselineOf' , baseName ]
+]
+
 { #category : 'execution' }
 MetacelloScriptExecutor >> applyArgsToProjectSpec: aProjectSpec [
 
@@ -35,16 +44,6 @@ MetacelloScriptExecutor >> baselineArg [
 MetacelloScriptExecutor >> baselineArg: anObject [
 	baselineArg := anObject
 ]
-
-{ #category : 'baselines' }
-MetacelloScriptExecutor >> baselineNameFrom: baseName [
-    "Return the fully-qualified configuration class name."
-
-    ^ (baseName indexOfSubCollection: 'BaselineOf') > 0
-        ifTrue: [ baseName ]
-        ifFalse: [ 'BaselineOf' , baseName ]
-]
-
 { #category : 'args' }
 MetacelloScriptExecutor >> classNameArg [
     ^ classNameArg
@@ -78,9 +77,9 @@ MetacelloScriptExecutor >> executeString: aString do: projectSpecBlock [
 
 	| projectSpec |
 	singleRoot ifNil: [ self singleRoot: true ].
-	projectSpec := MetacelloProjectRegistration projectSpecForClassNamed: (self baselineNameFrom: aString) ifAbsent: [ ].
+	projectSpec := MetacelloProjectRegistration projectSpecForClassNamed: (self class baselineNameFrom: aString) ifAbsent: [ ].
 
-	(self projectSpecSelectBlock value: projectSpec) ifTrue: [ projectSpecBlock value: (self applyArgsToProjectSpec: projectSpec copy) ]
+	(self shouldBeExecutedFor: projectSpec) ifTrue: [ projectSpecBlock value: (self applyArgsToProjectSpec: projectSpec copy) ]
 ]
 
 { #category : 'actions api' }
@@ -158,11 +157,6 @@ MetacelloScriptExecutor >> postCopy [
 	options := options copy
 ]
 
-{ #category : 'execution callback' }
-MetacelloScriptExecutor >> projectSpecSelectBlock [
-    ^ [ :projectSpec | true ]
-]
-
 { #category : 'actions api' }
 MetacelloScriptExecutor >> record: required [
     actionArg := #'record:' -> {required}
@@ -187,6 +181,12 @@ MetacelloScriptExecutor >> repositoryArg: anObject [
 MetacelloScriptExecutor >> roots [
 
 	^ roots ifNil: [ roots := OrderedCollection new ]
+]
+
+{ #category : 'execution callback' }
+MetacelloScriptExecutor >> shouldBeExecutedFor: aSpec [
+
+	^ true
 ]
 
 { #category : 'options api' }

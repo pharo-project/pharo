@@ -28,22 +28,10 @@ MetacelloSpec >> acceptVisitor: aVisitor [
 	self subclassResponsibility
 ]
 
-{ #category : 'spec creation' }
-MetacelloSpec >> addMember [
-
-	^MetacelloAddMemberSpec for: self project
-]
-
 { #category : 'printing' }
 MetacelloSpec >> configMethodOn: aStream indent: indent [
 
 	self subclassResponsibility
-]
-
-{ #category : 'spec creation' }
-MetacelloSpec >> copyMember [
-
-	^MetacelloCopyMemberSpec for: self project
 ]
 
 { #category : 'mutability' }
@@ -98,12 +86,6 @@ MetacelloSpec >> mergeImportLoads: aLoadList [
 MetacelloSpec >> mergeMap [
 
 	^Dictionary new.
-]
-
-{ #category : 'spec creation' }
-MetacelloSpec >> mergeMember [
-
-	^MetacelloMergeMemberSpec for: self project
 ]
 
 { #category : 'merging' }
@@ -171,12 +153,6 @@ MetacelloSpec >> printOn: aStream [
 MetacelloSpec >> project [
 
 	^project
-]
-
-{ #category : 'spec creation' }
-MetacelloSpec >> removeMember [
-
-	^MetacelloRemoveMemberSpec for: self project
 ]
 
 { #category : 'mutability' }

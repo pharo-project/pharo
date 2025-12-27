@@ -23,7 +23,6 @@ BaselineOfCompiler >> baseline: spec [
 	<baseline>
 	spec for: #common do: [
 			spec
-				package: 'UIManager';
 				package: 'AST-Core';
 				package: 'Collections-Arithmetic';
 				package: 'Collections-Atomic';
@@ -47,7 +46,7 @@ BaselineOfCompiler >> baseline: spec [
 			spec
 				group: 'Core'
 				with:
-					{ 'UIManager'. 'AST-Core'. 'Collections-Arithmetic'. 'Collections-Atomic'. 'Collections-Stack'. 'CodeImport'. 'CodeImport-Commands'. 'DebugInfo'.
+					{ 'AST-Core'. 'Collections-Arithmetic'. 'Collections-Atomic'. 'Collections-Stack'. 'CodeImport'. 'CodeImport-Commands'. 'DebugInfo'.
 					'OpalCompiler-Core'. 'ParseTreeRewriter'. 'Deprecation' };
 				group: 'Tests'
 				with:

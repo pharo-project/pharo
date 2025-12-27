@@ -2,13 +2,26 @@ Class {
 	#name : 'MetacelloMemberSpec',
 	#superclass : 'MetacelloSpec',
 	#instVars : [
-		'name',
 		'spec'
 	],
 	#category : 'Metacello-Core-Members',
 	#package : 'Metacello-Core',
 	#tag : 'Members'
 }
+
+{ #category : 'instance creation' }
+MetacelloMemberSpec class >> for: aProject spec: aSpec [
+
+	^ (self for: aProject)
+		  spec: aSpec;
+		  yourself
+]
+
+{ #category : 'visiting' }
+MetacelloMemberSpec >> acceptVisitor: aVisitor [
+
+	self error: 'Should not be visitable..'
+]
 
 { #category : 'adding' }
 MetacelloMemberSpec >> addToMetacelloPackages: aMetacelloPackagesSpec [
@@ -73,13 +86,7 @@ MetacelloMemberSpec >> methodUpdateSelector [
 { #category : 'accessing' }
 MetacelloMemberSpec >> name [
 
-	^name
-]
-
-{ #category : 'accessing' }
-MetacelloMemberSpec >> name: aString [
-
-	name := aString
+	^ self spec name
 ]
 
 { #category : 'removing' }
