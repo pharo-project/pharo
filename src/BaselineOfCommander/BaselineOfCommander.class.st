@@ -9,18 +9,13 @@ Class {
 BaselineOfCommander >> baseline: spec [
 
 	<baseline>
-	| repository |
-	repository := self packageRepositoryURLForSpec: spec.
-
+	
 	spec for: #common do: [
+		spec repository: (self packageRepositoryURLForSpec: spec).
 		spec
-			baseline: #ClassAnnotation with: [
-				spec
-					repository: repository;
-					loads: 'Core' ];
-			project: #ClassAnnotationTests
-			copyFrom: #ClassAnnotation
-			with: [ spec loads: 'Tests' ];
+			baseline: #ClassAnnotation with: [ spec loads: 'Core' ];
+			project: #ClassAnnotationTests copyFrom: #ClassAnnotation with: [ spec loads: 'Tests' ];
+
 			package: #'Commander-Core'
 			with: [ spec requires: #( ClassAnnotation ) ];
 			package: #'Commander-Core-Tests'

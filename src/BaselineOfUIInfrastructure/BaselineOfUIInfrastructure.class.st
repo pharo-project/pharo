@@ -9,16 +9,15 @@ Class {
 BaselineOfUIInfrastructure >> baseline: spec [
 
 	<baseline>
-	| repository |
-	repository := self packageRepositoryURLForSpec: spec.
 	spec for: #common do: [
+		spec repository: (self packageRepositoryURLForSpec: spec).
 			spec
-				baseline: 'Display' with: [ spec repository: repository ];
-				baseline: 'Fonts' with: [ spec loads: #Core from: repository ];
-				baseline: 'FreeType' with: [ spec loads: #ui from: repository ];
-				baseline: 'MenuRegistration' with: [ spec repository: repository ];
-				baseline: 'Keymapping' with: [ spec loads: #Core from: repository ];
-				baseline: 'Fuel' with: [ spec loads: #( 'Core' ) from: repository ]. "Fuel is currently depending on graphics objects so I'm loading it here for now instead of BaselineOfBasicTools."
+				baseline: 'Display';
+				baseline: 'Fonts' with: [ spec loads: #Core ];
+				baseline: 'FreeType' with: [ spec loads: #ui ];
+				baseline: 'MenuRegistration';
+				baseline: 'Keymapping' with: [ spec loads: #Core ];
+				baseline: 'Fuel' with: [ spec loads: #( 'Core' ) ]. "Fuel is currently depending on graphics objects so I'm loading it here for now instead of BaselineOfBasicTools."
 
 			spec
 				package: 'System-Utilities';

@@ -18,10 +18,12 @@ BaselineOfAthens >> baseline: spec [
 		for: #common
 		do: [ 
 			"Inter packages dependencies are now added but it is missing some dependencies on other projects such as Morphic for Athens-Morphic"
+			spec repository: (self packageRepositoryURLForSpec: spec).
+			
 			"Dependencies"
-			self
-				display: spec;
-				unifiedFFI: spec.
+			spec
+				baseline: 'Display';
+				baseline: 'UnifiedFFI' with: [ spec loads: 'minimal' ]. 
 
 			"Packages"
 			spec
@@ -40,21 +42,4 @@ BaselineOfAthens >> baseline: spec [
 				group: 'Cairo-core' with: #('Athens-Core' 'Athens-Cairo');
 				group: 'Examples' with: #('Athens-Examples');
 				group: 'Tests' with: #('Athens-Cairo-Tests') ]
-]
-
-{ #category : 'baseline' }
-BaselineOfAthens >> display: spec [
-
-	spec
-		baseline: 'Display'
-		with: [ spec repository: (self packageRepositoryURLForSpec: spec) ]
-]
-
-{ #category : 'baseline' }
-BaselineOfAthens >> unifiedFFI: spec [
-	spec
-		baseline: 'UnifiedFFI'
-		with: [ spec
-				loads: 'minimal';
-				repository: (self packageRepositoryURLForSpec: spec) ]
 ]

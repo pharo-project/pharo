@@ -10,20 +10,20 @@ BaselineOfGeneralTests >> baseline: spec [
 	"Needs to be re-sorted"
 
 	<baseline>
-	| repository |
-	repository := self packageRepositoryURLForSpec: spec.
+
 	spec for: #common do: [
+		spec repository: (self packageRepositoryURLForSpec: spec).
 		spec
-			baseline: 'Debugging' with: [ spec loads: #Tests from: repository ];
+			baseline: 'Debugging' with: [ spec loads: #Tests ];
 			package: 'NumberParser-Tests';
 			package: 'Fuel-Core-Tests';
 			package: 'FormCanvas-Tests';
 			package: 'Collections-Arithmetic-Tests';
 			package: 'Metacello-CommandLine-Tests';
-			baseline: 'Epicea' with: [ spec loads: #Tests from: repository ];
+			baseline: 'Epicea' with: [ spec loads: #Tests ];
 			package: 'FileSystem-Memory-Tests';
-			baseline: 'Fonts' with: [ spec loads: #Tests from: repository ];
-			baseline: 'FreeType' with: [ spec loads: #tests from: repository ];
+			baseline: 'Fonts' with: [ spec loads: #Tests ];
+			baseline: 'FreeType' with: [ spec loads: #tests ];
 			package: 'Graphics-Tests';
 			package: 'Text-Tests';
 			package: 'Morphic-Testing-Support';

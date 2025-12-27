@@ -9,23 +9,15 @@ Class {
 BaselineOfCalypso >> baseline: spec [
 
 	<baseline>
-	| repository |
-	repository := self packageRepositoryURLForSpec: spec.
 
 	spec for: #common do: [
+		spec repository: (self packageRepositoryURLForSpec: spec).
 		spec
-			baseline: 'ClassAnnotation' with: [
-				spec
-					repository: repository;
-					loads: 'Core' ];
-
-			project: 'ClassAnnotationTests'
-			copyFrom: 'ClassAnnotation'
-			with: [ spec loads: 'Tests' ];
-
-			baseline: 'Commander' with: [ spec repository: repository ];
-			baseline: 'SystemCommands' with: [ spec repository: repository ];
-			baseline: 'CalypsoNavigationModel' with: [ spec repository: repository ].
+			baseline: 'ClassAnnotation' with: [ spec loads: 'Core' ];
+			project: 'ClassAnnotationTests' copyFrom: 'ClassAnnotation' with: [ spec loads: 'Tests' ];
+			baseline: 'Commander';
+			baseline: 'SystemCommands';
+			baseline: 'CalypsoNavigationModel'.
 
 		spec
 			package: #'Calypso-SystemQueries' with: [ spec requires: #( 'CalypsoNavigationModel' #ClassAnnotation ) ];
@@ -49,16 +41,11 @@ BaselineOfCalypso >> baseline: spec [
 			with: [
 				spec requires: #( #'Calypso-SystemQueries-Tests-P1WithHierarchy' ) ];
 			package: #'Calypso-SystemQueries-Tests-P3WithSubclassFromP2'
-			with: [
-				spec requires:
-						#( #'Calypso-SystemQueries-Tests-P2WithSubclassFromP1' ) ];
+			with: [ spec requires: #( #'Calypso-SystemQueries-Tests-P2WithSubclassFromP1' ) ];
 			package: #'Calypso-SystemQueries-Tests-P5WithTags'
-			with: [
-				spec requires: #( #'Calypso-SystemQueries-Tests-PExtendedByP5' ) ];
+			with: [ spec requires: #( #'Calypso-SystemQueries-Tests-PExtendedByP5' ) ];
 			package: #'Calypso-SystemQueries-Tests-PExtendedByP1'
-			with: [
-				spec requires:
-						#( #'Calypso-SystemQueries-Tests-PWithSingleClass' ) ];
+			with: [ spec requires: #( #'Calypso-SystemQueries-Tests-PWithSingleClass' ) ];
 			package: #'Calypso-SystemQueries-Tests-PExtendedByP5';
 			package: #'Calypso-SystemQueries-Tests-PWithSingleClass';
 			package: #'Calypso-SystemPlugins-Traits-Queries'
@@ -237,7 +224,5 @@ BaselineOfCalypso >> baseline: spec [
 				   #'Calypso-SystemPlugins-Reflectivity-Queries-Tests'
 				   #'Calypso-SystemPlugins-Critic-Queries-Tests'
 				   #'Calypso-Browser-Tests' );
-			group: 'default'
-			with:
-				#( 'FullEnvironment' 'SystemBrowser' 'Tests' ) ]
+			group: 'default' with: #( 'FullEnvironment' 'SystemBrowser' 'Tests' ) ]
 ]

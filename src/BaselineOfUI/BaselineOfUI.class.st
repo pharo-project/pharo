@@ -28,27 +28,22 @@ Class {
 BaselineOfUI >> baseline: spec [
 
 	<baseline>
-	| repository |
-	repository := self packageRepositoryURLForSpec: spec.
 	spec for: #common do: [
-		spec postLoadDoIt: #postload:package:.
+			spec repository: (self packageRepositoryURLForSpec: spec).
+			spec postLoadDoIt: #postload:package:.
 
-		spec
-				baseline: 'SUnit' with: [
-						spec
-							loads: 'UI';
-							repository: repository ].
-		
-		"Load morphic before Spec"
-		spec baseline: 'MorphicCore' with: [ spec repository: repository ].
-		spec baseline: 'Morphic' with: [ spec repository: repository ].
-		spec baseline: 'Commander2' with: [ spec repository: repository ].
-		"Spec 2 (base), using external configuration"
-		self specBase: spec.
+			spec baseline: 'SUnit' with: [ spec loads: 'UI' ].
+			
+			"Load morphic before Spec"
+			spec baseline: 'MorphicCore'.
+			spec baseline: 'Morphic'.
+			spec baseline: 'Commander2'.
+			
+			"Spec 2 (base), using external configuration"
+			self specBase: spec.
 
-		spec package: 'Morphic-Widgets-Tree'.
-
-		spec package: 'WebBrowser-Core'  ]
+			spec package: 'Morphic-Widgets-Tree'.
+			spec package: 'WebBrowser-Core' ]
 ]
 
 { #category : 'actions' }

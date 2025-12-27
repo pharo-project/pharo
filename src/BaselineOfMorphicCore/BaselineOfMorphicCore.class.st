@@ -21,9 +21,6 @@ Class {
 BaselineOfMorphicCore >> baseline: spec [
 
 	<baseline>
-	| repository |
-	repository := self packageRepositoryURLForSpec: spec.
-
 	spec for: #common do: [
 			spec package: 'System-Object Events'.
 			spec package: 'System-Caching'.

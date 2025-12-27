@@ -33,30 +33,25 @@ Class {
 BaselineOfBasicTools >> baseline: spec [
 
 	<baseline>
-	| repository |
-	repository := self packageRepositoryURLForSpec: spec.
+	
 	spec for: #common do: [
+			spec repository: (self packageRepositoryURLForSpec: spec).
 			spec postLoadDoIt: #postload:package:.
 
 			spec
-				baseline: 'Traits' with: [ spec loads: 'core-traits' from: repository ];
-				baseline: 'SUnit' with: [ spec loads: 'Core' from: repository ];
-				baseline: 'Debugging' with: [ spec loads: 'Core' from: repository ];
-				baseline: 'UnifiedFFI' with: [ spec repository: repository ];
-				baseline: 'ThreadedFFI' with: [ spec repository: repository ];
-				baseline: 'UIInfrastructure' with: [ spec repository: repository ];
-				baseline: 'UI' with: [ spec repository: repository ];
-				baseline: 'Reflectivity' with: [ spec repository: repository ];
-				baseline: 'DebugPoints' with: [ spec repository: repository ];
-				baseline: 'Athens' with: [
-						spec
-							loads: 'Cairo-core';
-							repository: repository ].
+				baseline: 'Traits' with: [ spec loads: 'core-traits' ];
+				baseline: 'SUnit' with: [ spec loads: 'Core' ];
+				baseline: 'Debugging' with: [ spec loads: 'Core' ];
+				baseline: 'UnifiedFFI';
+				baseline: 'ThreadedFFI';
+				baseline: 'UIInfrastructure';
+				baseline: 'UI';
+				baseline: 'Reflectivity';
+				baseline: 'DebugPoints';
+				baseline: 'Athens' with: [ spec loads: 'Cairo-core'].
+
 			spec package: 'Tool-ExternalBrowser'.
-			spec baseline: 'EnlumineurFormatter' with: [
-					spec
-						loads: 'Core';
-						repository: repository ].
+			spec baseline: 'EnlumineurFormatter' with: [ spec loads: 'Core'].
 			spec package: 'System-Changes'.
 			spec package: 'Tool-Profilers'.
 			spec package: 'NECompletion'.
@@ -73,10 +68,7 @@ BaselineOfBasicTools >> baseline: spec [
 
 			spec package: 'OpalCompiler-ToolFeatures'.
 			spec package: 'OpalCompiler-ToolFeatures-Tests'.
-			spec baseline: 'Refactoring' with: [
-					spec
-						repository: repository;
-						loads: #( 'Core' ) ].
+			spec baseline: 'Refactoring' with: [ spec loads: #( 'Core' ) ].
 
 			spec package: 'Monticello-BackwardCompatibility'.
 			spec package: 'MonticelloFileServices'.

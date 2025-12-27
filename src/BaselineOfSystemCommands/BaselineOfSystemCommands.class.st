@@ -9,10 +9,9 @@ Class {
 BaselineOfSystemCommands >> baseline: spec [
 
 	<baseline>
-	| repository |
-	repository := self packageRepositoryURLForSpec: spec.
 	spec for: #common do: [
-		spec baseline: 'Commander' with: [ spec repository: repository ].
+		spec repository: (self packageRepositoryURLForSpec: spec).
+		spec baseline: 'Commander'.
 		spec
 			package: #'SystemCommands-RefactoringSupport'
 			with: [ spec requires: #( 'Commander' ) ];

@@ -16,17 +16,15 @@ Class {
 BaselineOfBaseLibraries >> baseline: spec [
 
 	<baseline>
-	| repository |
-	repository := self packageRepositoryURLForSpec: spec.
-
 	spec for: #common do: [
-			spec baseline: 'SUnit' with: [ spec loads: 'Core' from: repository ].
-			spec baseline: 'Kernel' with: [ spec loads: 'Tests' from: repository ].
-			spec baseline: 'Compiler' with: [ spec loads: 'Tests' from: repository ].
-			spec baseline: 'FileSystem' with: [ spec loads: 'Tests' from: repository ].
-			spec baseline: 'Slot' with: [ spec loads: 'core' from: repository ].
-			spec baseline: 'Beacon' with: [ spec loads: #( 'CoreTests' ) from: repository ].
-			spec baseline: 'SystemBenchmark' with: [ spec loads: #( 'tests' ) from: repository ].
-			spec baseline: 'Clap' with: [ spec loads: #( 'core' ) from: repository ].
-			spec baseline: 'TaskIt' with: [ spec loads: #( 'coreTests' ) from: repository ] ]
+			spec repository: (self packageRepositoryURLForSpec: spec).
+			spec baseline: 'SUnit' with: [ spec loads: 'Core' ].
+			spec baseline: 'Kernel' with: [ spec loads: 'Tests' ].
+			spec baseline: 'Compiler' with: [ spec loads: 'Tests' ].
+			spec baseline: 'FileSystem' with: [ spec loads: 'Tests' ].
+			spec baseline: 'Slot' with: [ spec loads: 'core' ].
+			spec baseline: 'Beacon' with: [ spec loads: #( 'CoreTests' ) ].
+			spec baseline: 'SystemBenchmark' with: [ spec loads: #( 'tests' ) ].
+			spec baseline: 'Clap' with: [ spec loads: #( 'core' ) ].
+			spec baseline: 'TaskIt' with: [ spec loads: #( 'coreTests' ) ] ]
 ]

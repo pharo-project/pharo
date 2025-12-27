@@ -32,10 +32,8 @@ Class {
 BaselineOfMorphic >> baseline: spec [
 
 	<baseline>
-	| repository |
-	repository := self packageRepositoryURLForSpec: spec.
-
 	spec for: #common do: [
+		spec repository: (self packageRepositoryURLForSpec: spec).
 		spec preLoadDoIt: #preload:package:.
 		spec postLoadDoIt: #postload:package:.
 			
@@ -71,10 +69,7 @@ BaselineOfMorphic >> baseline: spec [
 		"Several packages depend on Rubric as a basic Morphic component"
 		spec package: 'Rubric'.
 
-		spec baseline: 'NewValueHolder' with: [
-			spec
-				repository: repository;
-				loads: 'core' ].
+		spec baseline: 'NewValueHolder' with: [ spec loads: 'core' ].
 
 		spec package: 'DarkBlueTheme'.
 

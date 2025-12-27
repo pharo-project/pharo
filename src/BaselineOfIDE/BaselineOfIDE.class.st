@@ -27,9 +27,6 @@ Installs:
 Class {
 	#name : 'BaselineOfIDE',
 	#superclass : 'BaselineOf',
-	#instVars : [
-		'repository'
-	],
 	#classVars : [
 		'Initialized'
 	],
@@ -42,26 +39,25 @@ Class {
 BaselineOfIDE >> baseline: spec [
 
 	<baseline>
-	repository := self packageRepositoryURLForSpec: spec.
+	
 	spec for: #common do: [
+		spec repository: (self packageRepositoryURLForSpec: spec).
 		spec postLoadDoIt: #postload:package:.
-		spec baseline: 'BasicTools' with: [ spec repository: repository ].
-		spec
-			package: 'Tool-MorphicProfiler'
-			with: [ spec requires: #( 'BasicTools' ) ].
-		spec baseline: 'Athens' with: [ spec repository: repository ].
-		spec baseline: 'Flashback' with: [ spec repository: repository ].
 
-		self
-			load: 'Shift' group: 'shift-tests' spec: spec;
-			load: 'Traits' group: 'traits-tests' spec: spec;
-			load: 'Slot' group: 'slot-tests' spec: spec;
-			load: 'Clap' group: 'development' spec: spec;
-			load: 'SUnit' group: 'Tests' spec: spec;
-			load: 'EnlumineurFormatter' group: 'Tests' spec: spec;
-			load: 'Reflectivity' group: 'tests' spec: spec;
-			load: 'DebugPoints' group: 'Tests' spec: spec;
-			load: 'Refactoring' group: 'Tests' spec: spec.
+		spec baseline: 'BasicTools'.
+		spec package: 'Tool-MorphicProfiler' with: [ spec requires: #( 'BasicTools' ) ].
+		spec baseline: 'Athens'.
+		spec baseline: 'Flashback'.
+		
+		spec baseline: 'Shift' with: [ spec loads: 'shift-tests' ].
+		spec baseline: 'Traits' with: [ spec loads: 'traits-tests' ].
+		spec baseline: 'Slot' with: [ spec loads: 'slot-tests' ].
+		spec baseline: 'Clap' with: [ spec loads: 'development' ].
+		spec baseline: 'SUnit' with: [ spec loads: 'Tests' ].
+		spec baseline: 'EnlumineurFormatter' with: [ spec loads: 'Tests' ].
+		spec baseline: 'Reflectivity' with: [ spec loads: 'Tests' ].
+		spec baseline: 'DebugPoints' with: [ spec loads: 'Tests' ].
+		spec baseline: 'Refactoring' with: [ spec loads: 'Tests' ].
 
 		spec package: 'Math-Operations-Extensions-Tests'.
 		spec package: 'Network-Tests'.
@@ -71,53 +67,39 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'OpalCompiler-UI'.
 		spec package: 'OpalCompiler-UI-Tests'.
 
-		self load: 'Monticello' group: 'Tests' spec: spec.
-		self load: 'Metacello' group: 'Tests' spec: spec.
-
-		spec baseline: 'ReflectionMirrors' with: [ spec repository: repository ].
-		spec baseline: 'FuzzyMatcher' with: [ spec repository: repository ].
-		spec baseline: 'QA' with: [ spec repository: repository ].
-		spec baseline: 'GeneralTests' with: [ spec repository: repository ].
+		spec baseline: 'Monticello' with: [ spec loads: 'Tests' ].
+		spec baseline: 'Metacello' with: [ spec loads: 'Tests' ].
+		spec baseline: 'ReflectionMirrors'.
+		spec baseline: 'FuzzyMatcher'.
+		spec baseline: 'QA'.
+		spec baseline: 'GeneralTests'.
 
 		"Later we will load the UI of enlumineur probably here
 		"
-		spec baseline: 'Shout' with: [ spec repository: repository ].
-		spec baseline: 'OSWindow' with: [ spec repository: repository ].
-		spec
-			baseline: 'EmergencyDebugger'
-			with: [ spec repository: repository ].
-
-		self load: 'Epicea' group: 'Browsers' spec: spec.
-
-		spec baseline: 'Misc' with: [ spec repository: repository ].
-
-		self load: 'Fuel' group: 'Tests' spec: spec.
-
-		self load: 'Keymapping' group: 'Tests' spec: spec.
-
-		spec baseline: 'Zodiac' with: [ spec repository: repository ].
-		spec baseline: 'SortFunctions' with: [ spec repository: repository ].
-		spec baseline: 'Equals' with: [ spec repository: repository ].
-
-		self load: 'NewValueHolder' group: 'tests' spec: spec.
+		spec baseline: 'Shout'.
+		spec baseline: 'OSWindow'.
+		spec baseline: 'EmergencyDebugger'.
+		spec baseline: 'Epicea' with: [ spec loads: 'Browsers' ].
+		spec baseline: 'Misc'.
+		spec baseline: 'Fuel' with: [ spec loads: 'Tests' ].
+		spec baseline: 'Keymapping' with: [ spec loads: 'Tests' ].
+		spec baseline: 'Zodiac'.
+		spec baseline: 'SortFunctions'.
+		spec baseline: 'Equals'.
+		spec baseline: 'NewValueHolder' with: [ spec loads: 'tests' ].
+		
 		spec package: 'STON-Extensions'.
-
 		spec package: 'BaselineOfKernel'.
 		spec package: 'BaselineOfCompiler'.
 		spec package: 'BaselineOfFileSystem'.
 		spec package: 'BaselineOfMonticello'.
 		spec package: 'BaselineOfMetacello'.
 		spec package: 'BaselineOfPharoBootstrap'.
-		spec baseline: 'ReferenceFinder' with: [ spec repository: repository ].
-		spec baseline: 'ClassParser' with: [ spec repository: repository ].
-
-
-		self
-			load: 'Calypso'
-			group: #( 'FullEnvironment' 'SystemBrowser' 'Tests' )
-			spec: spec.
-		spec baseline: 'Ring' with: [ spec repository: repository ].
-		spec baseline: 'HeuristicCompletion' with: [ spec repository: repository ].
+		spec baseline: 'ReferenceFinder'.
+		spec baseline: 'ClassParser'.
+		spec baseline: 'Calypso' with: [ spec loads: #( 'FullEnvironment' 'SystemBrowser' 'Tests' ) ].
+		spec baseline: 'Ring'.
+		spec baseline: 'HeuristicCompletion'.
 		spec package: 'Tool-DependencyAnalyser-UI-Tab' with: [
 			"Depends also on the dependency analyser in newtools"
 			spec requires: #('Calypso') ].
@@ -156,15 +138,6 @@ BaselineOfIDE >> drTests: spec [
 	spec
 		baseline: 'DrTests'
 		with: [ spec repository: (self packageRepositoryURLForSpec: spec) ]
-]
-
-{ #category : 'private - loading' }
-BaselineOfIDE >> load: aProject group: aGroupName spec: spec [
-
-	spec baseline: aProject with: [
-		spec
-			repository: (self packageRepositoryURLForSpec: spec);
-			loads: aGroupName ]
 ]
 
 { #category : 'actions' }
