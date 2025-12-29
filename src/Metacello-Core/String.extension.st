@@ -54,23 +54,6 @@ String >> metacelloIntegerLessThanSelf: anInteger [
 ]
 
 { #category : '*Metacello-Core-version comparison' }
-String >> metacelloSemanticIntegerLessThanSelf: anInteger [
-    "integer version components are always '>' string component"
-
-    ^ true
-]
-
-{ #category : '*Metacello-Core-version comparison' }
-String >> metacelloSemanticStringLessThanSelf: aString [
-    ^ aString < self
-]
-
-{ #category : '*Metacello-Core-version comparison' }
-String >> metacelloSemanticVersionComponentLessThan: aMetacelloVersonComponent [
-    ^ aMetacelloVersonComponent metacelloSemanticStringLessThanSelf: self
-]
-
-{ #category : '*Metacello-Core-version comparison' }
 String >> metacelloStringLessThanSelf: aString [
 
 	^aString < self

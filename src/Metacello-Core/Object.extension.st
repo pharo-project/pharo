@@ -7,21 +7,6 @@ Object >> metacelloIntegerLessThanSelf: anInteger [
 ]
 
 { #category : '*Metacello-Core' }
-Object >> metacelloSemanticIntegerLessThanSelf: anInteger [
-    ^ self error: 'Invalid Metacello verson component - should be String or Integer.'
-]
-
-{ #category : '*Metacello-Core' }
-Object >> metacelloSemanticStringLessThanSelf: anInteger [
-    ^ self error: 'Invalid Metacello verson component - should be String or Integer.'
-]
-
-{ #category : '*Metacello-Core' }
-Object >> metacelloSemanticVersionComponentLessThan: aMetacelloVersonComponent [
-    ^ self error: 'Invalid Metacello verson component - should be String or Integer.'
-]
-
-{ #category : '*Metacello-Core' }
 Object >> metacelloStringLessThanSelf: anInteger [
 
 	^self error: 'Invalid Metacello verson component - should be String or Integer.'
