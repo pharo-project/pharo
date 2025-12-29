@@ -183,6 +183,6 @@ MetacelloVersionSpecTestCase >> testVersionSpecCreateVersion [
 		        postLoadDoIt: #postLoadDoIt;
 		        yourself.
 	version := spec createVersion.
-	self assert: version class identicalTo: spec versionClass.
+	self assert: version class identicalTo: MetacelloVersion.
 	self assert: version spec identicalTo: spec
 ]

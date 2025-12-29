@@ -55,7 +55,6 @@ MetacelloNamelessProjectSpec >> copyForScriptingInto: aProjectSpec [
 	^ aProjectSpec
 		  setName: name;
 		  className: className;
-		  versionString: versionString;
 		  operator: operator;
 		  setLoads: loads;
 		  preLoadDoIt: preLoadDoIt;

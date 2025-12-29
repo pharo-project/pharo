@@ -257,9 +257,9 @@ MetacelloBaselineConstructor >> name: anObject [
 MetacelloBaselineConstructor >> on: aConfig project: aProject [
 
 	| pragma versionSpec |
+	project := aProject.
 	self baselineClass: aConfig.
 	pragma := self extractBaselinePragmaFor: aConfig class.
-	project := aProject ifNil: [ MetacelloProject new ].
 	versionSpec := self project versionSpec.
 	self root: versionSpec.
 	self evaluatePragma: pragma.
@@ -296,7 +296,7 @@ MetacelloBaselineConstructor >> package: aString overrides: aBlock [
 ]
 
 { #category : 'api' }
-MetacelloBaselineConstructor >> package: packageName with: aBlockOrString [
+MetacelloBaselineConstructor >> package: packageName with: aBlock [
 	"Define specification for package <packageName>.
 	 If <aBlockOrString> is a String (or Symbol), the String is expected to be a version (or symbolic version).
 	If <aBlockOrString> is a Block, the specifications in <aBlockOrString> are applied to the project:
@@ -313,13 +313,13 @@ MetacelloBaselineConstructor >> package: packageName with: aBlockOrString [
 		        name: packageName;
 		        yourself.
 
-	aBlockOrString isString
+	aBlock isString
 		ifTrue: [
-			spec file: aBlockOrString.
+			spec file: aBlock.
 			self root packages merge: spec ]
 		ifFalse: [
 			self root packages merge: spec.
-			self with: spec during: aBlockOrString ]
+			self with: spec during: aBlock ]
 ]
 
 { #category : 'api' }
@@ -337,7 +337,7 @@ MetacelloBaselineConstructor >> preLoadDoIt: aSymbol [
 { #category : 'accessing' }
 MetacelloBaselineConstructor >> project [
 
-	^ project
+	^ project ifNil: [ project := MetacelloProject new ]
 ]
 
 { #category : 'api' }

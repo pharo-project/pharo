@@ -31,7 +31,7 @@ MetacelloProjectRegistry >> projectSpecForClassNamed: aClassName ifAbsent: absen
 { #category : 'accessing' }
 MetacelloProjectRegistry >> projectSpecs [
 
-	^ self projectSpecsRegistry values
+	^ self projectSpecsRegistry values collect: [ :registration | registration projectSpec ]
 ]
 
 { #category : 'accessing' }

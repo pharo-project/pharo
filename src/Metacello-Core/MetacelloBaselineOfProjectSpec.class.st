@@ -10,7 +10,7 @@ Class {
 MetacelloBaselineOfProjectSpec class >> initialize [
 
 	"Deprecation added during the development of Pharo 14."
-	self deprecatedAliases: #( #MetacelloMCBaselineOfProjectSpec )
+	self deprecatedAliases: #( #MetacelloMCBaselineOfProjectSpec #MetacelloCypressBaselineProjectSpec )
 ]
 
 { #category : 'visiting' }

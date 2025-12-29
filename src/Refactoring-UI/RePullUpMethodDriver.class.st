@@ -82,7 +82,7 @@ RePullUpMethodDriver >> browseSuperSendsSent [
 	overrides := notSupersendsSent violators.
 	
 	methods do: [:method | 
-		StMessageBrowser
+		(Smalltalk tools toolNamed: #messageList)
 		browse: (overrides collect: [ :ref | ref compiledMethod ])
 		asImplementorsOf: method selector ]
 	

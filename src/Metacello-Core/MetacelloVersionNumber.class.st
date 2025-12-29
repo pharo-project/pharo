@@ -108,7 +108,7 @@ MetacelloVersionNumber >> = aMetacelloVersionNumber [
 MetacelloVersionNumber >> approximateBase [
 
 	| base |
-	base := self copyFrom: 1 to: self size - 1.
+	base := self privateCopyFrom: 1 to: self size - 1.
 	base at: base size put: (base at: base size) + 1.
 	^base
 ]
@@ -195,63 +195,6 @@ MetacelloVersionNumber >> compareLessThan: aMetacelloVersionNumber [
 			(self at: commonSize + 1) isString ]
 ]
 
-{ #category : 'copying' }
-MetacelloVersionNumber >> copyFrom: start to: stop [ 
-	"Answer a copy of a subset of the receiver, starting from element at 
-	index start until element at index stop."
-
-	| newSize new j |
-	newSize := stop - start + 1.
-	new := self species new: newSize.
-	j := 0.
-	start to: stop do: [:i |
-		new at: j + 1 put: (self at: i).
-		j := j + 1 ].
-	^new
-]
-
-{ #category : 'operations' }
-MetacelloVersionNumber >> decrementMajorVersion [
-  self decrementVersionAt: 1
-]
-
-{ #category : 'operations' }
-MetacelloVersionNumber >> decrementMinorVersion [
-  self size < 2
-    ifTrue: [ self at: 2 put: 0 ].
-  self decrementVersionAt: 2
-]
-
-{ #category : 'operations' }
-MetacelloVersionNumber >> decrementMinorVersionNumber [
-	| int |
-	self size to: 1 by: -1 do: [ :index | 
-		(int := self at: index) isString
-			ifFalse: [ 
-				int > 0
-					ifTrue: [ self at: index put: int - 1 ].
-				^ self ] ]
-]
-
-{ #category : 'operations' }
-MetacelloVersionNumber >> decrementPatchVersion [
-  self size < 2
-    ifTrue: [ self at: 2 put: 0 ].
-  self size < 3
-    ifTrue: [ self at: 3 put: 0 ].
-  self decrementVersionAt: 3
-]
-
-{ #category : 'private' }
-MetacelloVersionNumber >> decrementVersionAt: index [
-  | int |
-  int := self at: index.
-  (int := self at: index) isString
-    ifFalse: [ 
-      int > 0
-        ifTrue: [ self at: index put: int - 1 ] ]
-]
-
 { #category : 'enumerating' }
 MetacelloVersionNumber >> do: aBlock [ 
 	"Refer to the comment in Collection|do:."
@@ -300,46 +243,6 @@ hashValue := 4459.
   ].
 
 ^ hashValue abs
-]
-
-{ #category : 'operations' }
-MetacelloVersionNumber >> incrementMajorVersion [
-  self incrementVersionAt: 1
-]
-
-{ #category : 'operations' }
-MetacelloVersionNumber >> incrementMinorVersion [
-  self size < 2
-    ifTrue: [ self at: 2 put: 0 ].
-  self incrementVersionAt: 2
-]
-
-{ #category : 'operations' }
-MetacelloVersionNumber >> incrementMinorVersionNumber [
-
-	| int |
-	self size to: 1 by: -1 do: [:index | 
-		(int := self at: index) isString 
-			ifFalse: [ 
-				self at: index put: int + 1.
-				^self ]].
-]
-
-{ #category : 'operations' }
-MetacelloVersionNumber >> incrementPatchVersion [
-  self size < 2
-    ifTrue: [ self at: 2 put: 0 ].
-  self size < 3
-    ifTrue: [ self at: 3 put: 0 ].
-  self incrementVersionAt: 3
-]
-
-{ #category : 'private' }
-MetacelloVersionNumber >> incrementVersionAt: index [
-  | int |
-  int := self at: index.
-  (int := self at: index) isString
-    ifFalse: [ self at: index put: int + 1 ]
 ]
 
 { #category : 'comparing' }
@@ -403,6 +306,21 @@ MetacelloVersionNumber >> printOn: aStream [
 					ifTrue: [ aStream nextPut: $- ]
 					ifFalse: [ aStream nextPut: $. ] ].
 		aStream nextPutAll: each asString ]
+]
+
+{ #category : 'copying' }
+MetacelloVersionNumber >> privateCopyFrom: start to: stop [
+	"Answer a copy of a subset of the receiver, starting from element at 
+	index start until element at index stop."
+
+	| newSize new j |
+	newSize := stop - start + 1.
+	new := self species new: newSize.
+	j := 0.
+	start to: stop do: [ :i |
+			new at: j + 1 put: (self at: i).
+			j := j + 1 ].
+	^ new
 ]
 
 { #category : 'accessing' }

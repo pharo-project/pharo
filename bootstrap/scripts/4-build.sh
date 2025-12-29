@@ -122,11 +122,9 @@ zip "${BOOTSTRAP_ARCHIVE_IMAGE_NAME}.zip" "${BOOTSTRAP_ARCHIVE_IMAGE_NAME}.image
 cp "${BOOTSTRAP_IMAGE_NAME}.image" "${COMPILER_IMAGE_NAME}.image"
 
 # Archive binary Hermes packages
-zip "${HERMES_ARCHIVE_NAME}.zip" *.hermes
-
+zip "${HERMES_ARCHIVE_NAME}.zip" *.hermes hermesSUnitPackages.txt
 
 echo $(date -u) "[Compiler] Adding more Kernel packages"
-echo "Loading packages: $(cat hermesAdditionalKernelPackages.txt)"
 ${VM} "${COMPILER_IMAGE_NAME}.image" perform --save BasicHermesTool load: --as-array $(cat hermesAdditionalKernelPackages.txt)
 
 # Now that System-Version is loaded, we can initialize the version
@@ -134,7 +132,6 @@ ${VM} "${COMPILER_IMAGE_NAME}.image" perform  --save SystemVersion setMajor:mino
 
 # Installing compiler through Hermes 
 echo $(date -u) "[Compiler] Installing compiler through Hermes"
-echo "Loading packages: $(cat hermesCompilerPackages.txt)"
 ${VM} "${COMPILER_IMAGE_NAME}.image" loadHermes $(cat hermesCompilerPackages.txt) --save --no-fail-on-undeclared
 ${VM} "${COMPILER_IMAGE_NAME}.image" eval --save "SystemEnvironment deprecatedAliases: { #SystemDictionary }." # This line should be removed in Pharo 14 since it is for backward compatibility.
 ${VM} "${COMPILER_IMAGE_NAME}.image" st ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/01-initialization/01-init.st --no-source --save --quit
@@ -142,7 +139,6 @@ ${VM} "${COMPILER_IMAGE_NAME}.image" st ${BOOTSTRAP_REPOSITORY}/bootstrap/script
 echo $(date -u) "[Compiler] Initializing Unicode"
 ${VM} "${COMPILER_IMAGE_NAME}.image" st ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/01-initialization/02-initUnicode.st --no-source --save --quit "${BOOTSTRAP_REPOSITORY}/resources/unicode/"
 
-echo "Loading packages: $(cat hermesFileSystemPackages.txt)"
 ${VM} "${COMPILER_IMAGE_NAME}.image" loadHermes $(cat hermesFileSystemPackages.txt) --save --no-fail-on-undeclared
 zip "${COMPILER_IMAGE_NAME}.zip" "${COMPILER_IMAGE_NAME}.image"
 
@@ -150,7 +146,6 @@ zip "${COMPILER_IMAGE_NAME}.zip" "${COMPILER_IMAGE_NAME}.image"
 echo $(date -u) "[Compiler] Installing Traits through Hermes"
 
 ${VM} "${COMPILER_IMAGE_NAME}.image" save ${TRAITS_IMAGE_NAME}
-echo "Loading packages: $(cat hermesTraitsPackages.txt)"
 ${VM} "${TRAITS_IMAGE_NAME}.image" loadHermes $(cat hermesTraitsPackages.txt) --save
 zip "${TRAITS_IMAGE_NAME}.zip" "${TRAITS_IMAGE_NAME}.image"
 
@@ -158,7 +153,6 @@ zip "${TRAITS_IMAGE_NAME}.zip" "${TRAITS_IMAGE_NAME}.image"
 echo $(date -u) "[Monticello] Bootstrap Monticello Core and Local repositories"
 
 ${VM} "${TRAITS_IMAGE_NAME}.image" save ${MC_BOOTSTRAP_IMAGE_NAME}
-echo "Loading packages: $(cat hermesMonticelloPackages.txt)"
 ${VM} "${MC_BOOTSTRAP_IMAGE_NAME}.image" loadHermes $(cat hermesMonticelloPackages.txt) --save --no-fail-on-undeclared
 ${VM} "${MC_BOOTSTRAP_IMAGE_NAME}.image" st ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/02-monticello-bootstrap/01-bootstrapMonticello.st --save --quit
 zip "${MC_BOOTSTRAP_IMAGE_NAME}.zip" ${MC_BOOTSTRAP_IMAGE_NAME}.*

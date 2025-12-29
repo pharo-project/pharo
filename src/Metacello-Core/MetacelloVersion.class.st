@@ -37,11 +37,6 @@ MetacelloVersion >> = aMetacelloVersion [
 	^self versionNumber = aMetacelloVersion versionNumber
 ]
 
-{ #category : 'accessing' }
-MetacelloVersion >> basicSpec [
-    ^ self spec
-]
-
 { #category : 'querying' }
 MetacelloVersion >> defaultPackageNamesToLoad: defaultList [
 	"Answer the list of packages and projects to be loaded: packages already loaded plust defaultList"
@@ -227,19 +222,19 @@ MetacelloVersion >> printOn: aStream [
 
 	| label |
 	self versionNumber printOn: aStream.
-	self basicSpec ifNotNil: [
-		(label := self projectLabel) isEmpty ifFalse: [
-			aStream nextPutAll: ' [' , label , ']' ] ]
+	self spec ifNotNil: [ (label := self projectLabel) isEmpty ifFalse: [ aStream nextPutAll: ' [' , label , ']' ] ]
 ]
 
 { #category : 'querying' }
 MetacelloVersion >> project [
-    ^ self basicSpec project
+
+	^ self spec project
 ]
 
 { #category : 'accessing' }
 MetacelloVersion >> projectLabel [
-    ^ self basicSpec projectLabel
+
+	^ self spec projectLabel
 ]
 
 { #category : 'querying' }
@@ -294,9 +289,9 @@ MetacelloVersion >> versionKey [
 	 receiver in a dictionary"
 
 	^ String streamContents: [ :aStream |
-		  | label |
-		  self versionNumber printOn: aStream.
-		  self basicSpec ifNotNil: [ (label := self projectLabel) isEmpty ifFalse: [ aStream nextPutAll: ' [' , label , ']' ] ] ]
+			  | label |
+			  self versionNumber printOn: aStream.
+			  self spec ifNotNil: [ (label := self projectLabel) isEmpty ifFalse: [ aStream nextPutAll: ' [' , label , ']' ] ] ]
 ]
 
 { #category : 'querying' }

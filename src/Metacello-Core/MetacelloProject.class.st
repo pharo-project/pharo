@@ -40,7 +40,7 @@ Class {
 MetacelloProject class >> initialize [
 
 	"Deprecation added during the development of Pharo 14."
-	self deprecatedAliases: #( #MetacelloMCBaselineProject #MetacelloBaselineProject )
+	self deprecatedAliases: #( #MetacelloMCBaselineProject #MetacelloBaselineProject #MetacelloCypressBaselineProject )
 ]
 
 { #category : 'instance creation' }
@@ -160,15 +160,16 @@ MetacelloProject >> pragmaKeywords [
 { #category : 'printing' }
 MetacelloProject >> printOn: aStream [
 
-	| label |
 	self configuration class printOn: aStream.
 	aStream nextPut: $(.
-	version ifNotNil: [
-			aStream nextPutAll: self singletonVersionName.
-			version spec ifNotNil: [ (label := version spec projectLabel) isEmpty ifFalse: [ aStream nextPutAll: ' [' , label , ']' ] ].
-			aStream
-				nextPut: $,;
-				space ].
+	version
+		ifNil: [ aStream nextPutAll: 'No version yet' ]
+		ifNotNil: [
+				aStream nextPutAll: self singletonVersionName.
+				version spec projectLabel ifNotEmpty: [ :label | aStream nextPutAll: ' [' , label , ']' ].
+				aStream
+					nextPut: $,;
+					space ].
 	aStream nextPut: $)
 ]
 

@@ -279,13 +279,12 @@ MetacelloProjectRegistration >> projectSpec: anObject [
 
 { #category : 'accessing' }
 MetacelloProjectRegistration >> projectVersion [
-  | pv |
-  pv := self versionInfo projectVersion.
-  pv
-    ifNil: [ 
-      pv := self projectSpec versionOrNil.
-      self versionInfo projectVersion: pv ].
-  ^ pv
+
+	^ self versionInfo projectVersion ifNil: [
+			  | version |
+			  version := self projectSpec versionOrNil.
+			  self versionInfo projectVersion: version.
+			  version ]
 ]
 
 { #category : 'registration' }

@@ -272,8 +272,7 @@ MetacelloScriptEngine >> lookupProjectSpecFor: aProjectSpec [
 	registration := MetacelloProjectRegistration
 		                registrationForProjectSpec: aProjectSpec
 		                ifAbsent: [ :new | new ]
-		                ifPresent: [ :existing :new |
-		                self resolvePresentProject: existing new: new ].
+		                ifPresent: [ :existing :new | self resolvePresentProject: existing new: new ].
 
 	^ registration projectSpec
 ]

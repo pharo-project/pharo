@@ -30,24 +30,6 @@ MetacelloVersionNumberTestCase >> testCollapseZeros [
 	self assert: (MetacelloVersionNumber fromString: '1.0.0-beta.24.0.0.1') collapseZeros printString equals: '1-beta.24.0.0.1'
 ]
 
-{ #category : 'tests - version increment/decrement' }
-MetacelloVersionNumberTestCase >> testIncrementDecrementVersionNumber [
-	| version |
-	super testIncrementDecrementVersionNumber.
-	version := '1' asMetacelloVersionNumber.
-	self assert: version incrementMinorVersionNumber asString equals: '2'.
-	self assert: version decrementMinorVersionNumber asString equals: '1'.
-	version := '1.0' asMetacelloVersionNumber.
-	self assert: version incrementMinorVersionNumber asString equals: '1.1'.
-	self assert: version decrementMinorVersionNumber asString equals: '1.0'.
-	version := '1.0.0' asMetacelloVersionNumber.
-	self assert: version incrementMinorVersionNumber asString equals: '1.0.1'.
-	self assert: version decrementMinorVersionNumber asString equals: '1.0.0'.
-	version := '1.0.0.0' asMetacelloVersionNumber.
-	self assert: version incrementMinorVersionNumber asString equals: '1.0.0.1'.
-	self assert: version decrementMinorVersionNumber asString equals: '1.0.0.0'
-]
-
 { #category : 'tests - matching' }
 MetacelloVersionNumberTestCase >> testInvalidSpecialMatch [
 

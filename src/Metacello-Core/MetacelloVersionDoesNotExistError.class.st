@@ -17,7 +17,7 @@ MetacelloVersionDoesNotExistError class >> project: aMetacelloProject [
 		  yourself
 ]
 
-{ #category : 'printing' }
+{ #category : 'accessing' }
 MetacelloVersionDoesNotExistError >> description [
 
 	^ 'Not version defined in ' , self project label
@@ -33,10 +33,10 @@ MetacelloVersionDoesNotExistError >> project: anObject [
 	project := anObject
 ]
 
-{ #category : 'Signaling' }
+{ #category : 'signaling' }
 MetacelloVersionDoesNotExistError >> signal [
-  "GemStone needs this to print exception correctly"
+	"GemStone needs this to print exception correctly"
 
-  self messageText: self description.
-  ^ super signal
+	self messageText: self description.
+	^ super signal
 ]

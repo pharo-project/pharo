@@ -15,7 +15,7 @@ ReOverrideMethod >> browse [
 		cancelLabel: 'No, forget it';
 		label: ' The newly named method could override existing methods.\n 
 		Do you want to browse superclasses method of ', refactoring newSelector;
-		onAccept: [ StMessageBrowser browseImplementorsOf: refactoring newSelector];
+		onAccept: [ (Smalltalk tools toolNamed: #messageList) browseImplementorsOf: refactoring newSelector];
 		onCancel: [ ];
 		openDialog
 ]

@@ -8,6 +8,7 @@ Class {
 
 { #category : 'tests' }
 MetacelloProjectSpecTestCase >> testProjectMergeSpec [
+
 	| projectA projectB project |
 	projectA := self projectSpec
 		name: 'Project';
@@ -28,7 +29,7 @@ MetacelloProjectSpecTestCase >> testProjectMergeSpec [
 	self assert: project name equals: 'Project'.
 	self assert: project className equals: 'BaselineOfProjectB'.
 	self assert: project operator identicalTo: #<.
-	self assert: project loads equals: #('MyPackage' 'MyTests').
+	self assert: project loads equals: #( 'MyPackage' 'MyTests' ).
 	self assert: project preLoadDoIt value identicalTo: #preLoadDoItB.
 	self assert: project postLoadDoIt value identicalTo: #postLoadDoItB
 ]

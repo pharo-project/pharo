@@ -423,18 +423,6 @@ BlockClosureTest >> testPrintOn [
 	self assert: (OCParser parseExpression: [ 1 + 2 ] printString) equals: (OCParser parseExpression: '[ 1 + 2 ]')
 ]
 
-{ #category : 'tests - printing' }
-BlockClosureTest >> testPrintOnBlockDefinedInMethodWithoutSourceCode [
-	| method block |
-	method := OpalCompiler new compile: 'method ^ [ 1 + 2 ]'.
-	method removeProperty: #source.
-	self deny: method hasSourceCode.
-	
-	block := method valueWithReceiver: nil.
-	"we compare the ast to not depend on pretty printer settings"
-	self assert: (OCParser parseExpression: block printString) equals: (OCParser parseExpression: '[ 1 + 2 ]').
-]
-
 { #category : 'tests' }
 BlockClosureTest >> testSetUp [
 	"Note: In addition to verifying that the setUp worked the way it was expected to, testSetUp is used to illustrate the meaning of the simple access methods, methods that are not normally otherwise 'tested'"

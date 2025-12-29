@@ -33,6 +33,7 @@ MetacelloProjectReferenceSpecTestCase >> testProjectReferenceMergeSpec [
 
 { #category : 'tests' }
 MetacelloProjectReferenceSpecTestCase >> testProjectReferenceSpec [
+
 	| projectReference project |
 	projectReference := self projectReferenceSpec
 		name: 'Project';
@@ -45,8 +46,8 @@ MetacelloProjectReferenceSpecTestCase >> testProjectReferenceSpec [
 	self assert: projectReference name equals: 'Project'.
 	self assert: projectReference projectName equals: 'Project'.
 	self assert: projectReference projectReference identicalTo: project.
-	self should: [ projectReference includes: #() ] raise: Error.
-	self should: [ projectReference requires: #() ] raise: Error.
+	self should: [ projectReference includes: #(  ) ] raise: Error.
+	self should: [ projectReference requires: #(  ) ] raise: Error.
 	projectReference
 		projectDo: [ :prjct | self assert: projectReference identicalTo: prjct ]
 		packageDo: [ :ignored | self assert: false ]

@@ -35,7 +35,7 @@ ReMoveMethodsToClassSideDriver >> browseMethod [
 	Bad UX."
 	
 	methods do: [:each |
-		StMessageBrowser browseImplementorsOf: each selector ]
+		(Smalltalk tools toolNamed: #messageList) browseImplementorsOf: each selector ]
 ]
 
 { #category : 'execution' }

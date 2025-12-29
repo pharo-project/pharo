@@ -98,9 +98,8 @@ Class {
 		'preReleaseVersion',
 		'buildVersion'
 	],
-	#category : 'Metacello-Core-Model',
-	#package : 'Metacello-Core',
-	#tag : 'Model'
+	#category : 'Deprecated14',
+	#package : 'Deprecated14'
 }
 
 { #category : 'private' }
@@ -215,6 +214,13 @@ MetacelloSemanticVersionNumber class >> integerFromString: aString [
     error:
       'invalid version number: normal version component must be integer '
         , aString asString
+]
+
+{ #category : 'testing' }
+MetacelloSemanticVersionNumber class >> isDeprecated [
+	"This was only used with ConfigurationOf but cannot be used with BaselineOf."
+
+	^ true
 ]
 
 { #category : 'private' }
@@ -361,21 +367,6 @@ MetacelloSemanticVersionNumber >> copyFrom: start to: stop [
 	^new
 ]
 
-{ #category : 'operations' }
-MetacelloSemanticVersionNumber >> decrementMajorVersion [
-  self decrementNormalVersionAt: 1
-]
-
-{ #category : 'operations' }
-MetacelloSemanticVersionNumber >> decrementMinorVersion [
-  self decrementNormalVersionAt: 2
-]
-
-{ #category : 'operations' }
-MetacelloSemanticVersionNumber >> decrementMinorVersionNumber [
-  self decrementNormalVersionAt: 3
-]
-
 { #category : 'private' }
 MetacelloSemanticVersionNumber >> decrementNormalVersionAt: index [
   | int col |
@@ -383,11 +374,6 @@ MetacelloSemanticVersionNumber >> decrementNormalVersionAt: index [
   int := col at: index.
   int > 0
     ifTrue: [ col at: index put: int - 1 ]
-]
-
-{ #category : 'operations' }
-MetacelloSemanticVersionNumber >> decrementPatchVersion [
-  self decrementNormalVersionAt: 3
 ]
 
 { #category : 'enumerating' }
@@ -417,32 +403,12 @@ MetacelloSemanticVersionNumber >> hash [
     ^ self versionComponents hash
 ]
 
-{ #category : 'operations' }
-MetacelloSemanticVersionNumber >> incrementMajorVersion [
-  self incrementNormalVersionAt: 1
-]
-
-{ #category : 'operations' }
-MetacelloSemanticVersionNumber >> incrementMinorVersion [
-  self incrementNormalVersionAt: 2
-]
-
-{ #category : 'operations' }
-MetacelloSemanticVersionNumber >> incrementMinorVersionNumber [
-  self incrementNormalVersionAt: 3
-]
-
 { #category : 'private' }
 MetacelloSemanticVersionNumber >> incrementNormalVersionAt: index [
   | int col |
   col := self normalVersion.
   int := col at: index.
   col at: index put: int + 1
-]
-
-{ #category : 'operations' }
-MetacelloSemanticVersionNumber >> incrementPatchVersion [
-  self incrementNormalVersionAt: 3
 ]
 
 { #category : 'comparing' }

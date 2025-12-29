@@ -69,7 +69,7 @@ MetacelloMonticelloLoader >> loadPackageDirective: aMetacelloPackageLoadDirectiv
 
 { #category : 'loading' }
 MetacelloMonticelloLoader >> loadProject: aMetacelloMCBaselineOfProjectSpec [
-	"Loads the project class (BaselineOf, ConfigurationOf) and creates a project from it"
+	"Loads the project BaselineOf and creates a project from it"
 
 	"There is no need at loading a project twice as long as it has the same version."
 

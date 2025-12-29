@@ -286,9 +286,7 @@ MetacelloProjectSpec >> ensureProjectLoadedWithEngine: anEngine [
 	"Ensure that the MetacelloProject is loaded in image. 
 	 projectClass == nil or requested version non-existent warrants a project package load."
 
-	(projectInitialized and: [
-		 (self isMutable and: [ anEngine ignoreImage ]) not ]) ifTrue: [
-		^ self ].
+	(projectInitialized and: [ (self isMutable and: [ anEngine ignoreImage ]) not ]) ifTrue: [ ^ self ].
 
 	projectInitialized := true.
 	project := anEngine loader loadProject: self
@@ -397,6 +395,7 @@ MetacelloProjectSpec >> initialize [
 	super initialize.
 	projectInitialized := false
 ]
+
 { #category : 'scripting' }
 MetacelloProjectSpec >> isLocked [
 

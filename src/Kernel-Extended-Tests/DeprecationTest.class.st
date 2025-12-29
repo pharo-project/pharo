@@ -1,9 +1,8 @@
 Class {
 	#name : 'DeprecationTest',
 	#superclass : 'TestCase',
-	#category : 'Kernel-Tests-Exceptions',
-	#package : 'Kernel-Tests',
-	#tag : 'Exceptions'
+	#category : 'Kernel-Extended-Tests',
+	#package : 'Kernel-Extended-Tests'
 }
 
 { #category : 'tests' }

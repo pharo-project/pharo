@@ -48,7 +48,7 @@ RePushDownMethodDriver >> browseSubclassesSuperSends [
 
 	subclassesSendSuper violators keysAndValuesDo: [ :violator :references |
 		"we should pass the application! "
-		StMessageBrowser
+		(Smalltalk tools toolNamed: #messageList)
 			browse: (references collect: [ :ref | ref compiledMethod ])
 			asSendersOf: violator realClass ]
 ]

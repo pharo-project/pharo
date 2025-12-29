@@ -45,26 +45,6 @@ MetacelloCommonVersionNumberTestCase >> testAlphaNumericVersion4 [
 	self assert: ((self versionClass fromString: '2.9.9-alpha.2') < (self versionClass fromString: '2.9.9')).
 ]
 
-{ #category : 'tests - version increment/decrement' }
-MetacelloCommonVersionNumberTestCase >> testIncrementDecrementVersion [
-	| version |
-	version := self defaultVersion1.
-	self assert: version incrementMajorVersion asString equals: '2.0.0'.
-	self assert: version decrementMajorVersion asString equals: '1.0.0'.
-	self assert: version incrementMinorVersion asString equals: '1.1.0'.
-	self assert: version decrementMinorVersion asString equals: '1.0.0'.
-	self assert: version incrementPatchVersion asString equals: '1.0.1'.
-	self assert: version decrementPatchVersion asString equals: '1.0.0'
-]
-
-{ #category : 'tests - version increment/decrement' }
-MetacelloCommonVersionNumberTestCase >> testIncrementDecrementVersionNumber [
-	| version |
-	version := self defaultVersion1.
-	self assert: version incrementMinorVersionNumber asString equals: '1.0.1'.
-	self assert: version decrementMinorVersionNumber asString equals: '1.0.0'
-]
-
 { #category : 'tests' }
 MetacelloCommonVersionNumberTestCase >> testVersion01 [
 	self assert: (self versionClass fromString: '1.1.1') versionString equals: '1.1.1'
