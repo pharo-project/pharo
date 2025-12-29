@@ -10,8 +10,7 @@ Class {
 		'repositories',
 		'operator',
 		'postLoadDoIt',
-		'className',
-		'projectInitialized'
+		'className'
 	],
 	#category : 'Metacello-Core-Specs',
 	#package : 'Metacello-Core',
@@ -284,9 +283,8 @@ MetacelloProjectSpec >> ensureProjectLoadedWithEngine: anEngine [
 	"Ensure that the MetacelloProject is loaded in image. 
 	 projectClass == nil or requested version non-existent warrants a project package load."
 
-	(projectInitialized and: [ (self isMutable and: [ anEngine ignoreImage ]) not ]) ifTrue: [ ^ self ].
+	(self projectInitialized and: [ (self isMutable and: [ anEngine ignoreImage ]) not ]) ifTrue: [ ^ self ].
 
-	projectInitialized := true.
 	project := anEngine loader loadProject: self
 ]
 
@@ -363,13 +361,6 @@ MetacelloProjectSpec >> hasNonVersionStringField [
 { #category : 'testing' }
 MetacelloProjectSpec >> hasRepository [
     ^ self repositorySpecs notEmpty
-]
-
-{ #category : 'initialization' }
-MetacelloProjectSpec >> initialize [
-
-	super initialize.
-	projectInitialized := false
 ]
 
 { #category : 'scripting' }
@@ -574,7 +565,8 @@ MetacelloProjectSpec >> projectDo: projectBlock packageDo: packageBlock groupDo:
 
 { #category : 'accessing' }
 MetacelloProjectSpec >> projectInitialized [
-	^ projectInitialized
+
+	^ self version isNotNil
 ]
 
 { #category : 'printing' }
@@ -703,16 +695,14 @@ MetacelloProjectSpec >> unregisterProject [
 { #category : 'querying' }
 MetacelloProjectSpec >> version [
 
-	projectInitialized ifFalse: [ ^ nil ].
 	^ self project version
 ]
 
 { #category : 'querying' }
 MetacelloProjectSpec >> versionOrNil [
+	"We should keep only one of #version or #versionOrNil"
 
-	^ [ self version ]
-		  on: MetacelloVersionDoesNotExistError
-		  do: [ :ex | nil ]
+	^ self version
 ]
 
 { #category : 'querying' }

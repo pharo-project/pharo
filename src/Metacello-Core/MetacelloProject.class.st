@@ -247,7 +247,7 @@ MetacelloProject >> singletonVersionName [
 { #category : 'versions' }
 MetacelloProject >> version [
 
-	^ version ifNil: [ (MetacelloVersionDoesNotExistError project: self project) signal ]
+	^ version
 ]
 
 { #category : 'versions' }
