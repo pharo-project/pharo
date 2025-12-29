@@ -22,12 +22,6 @@ MetacelloPackageLoadDirective >> acceptVisitor: aVisitor [
 	^ aVisitor visitPackageLoadDirective: self
 ]
 
-{ #category : 'accessing' }
-MetacelloPackageLoadDirective >> file [
-
-	^ self repositorySpecs asString
-]
-
 { #category : 'comparing' }
 MetacelloPackageLoadDirective >> hash [
 

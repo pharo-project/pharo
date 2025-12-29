@@ -65,7 +65,6 @@ spec
 		spec 
 			requires: #(''Example-Core'' );
 			includes: #(''Example-UI'' );
-			file: ''Example-AddOn-anon.3'';
 			repositories: [
 				spec
 					repository: ''http://www.example.com/yar'';
@@ -76,11 +75,9 @@ spec
 		spec 
 			requires: #(''Example-Core'' ''UI Support'' );
 			includes: #(''Example-UI'' );
-			file: ''Example-AddOn-anon.7'';
 			repository: ''http://www.example.com/or'' username: ''foo'' password: ''bar'';
 			preLoadDoIt: #''preloadForAddOn'';
 			postLoadDoIt: #''postloadForAddOn''. ];
-	package: ''Example-AddOn'' with: ''Example-AddOn-anon.5'';
 	package: ''Example-Core'';
 	package: ''Example-Tests'' with: [
 		spec requires: #(''Example-Core'' ). ];
@@ -106,7 +103,6 @@ MetacelloReferenceTestCase >> testReferenceConfig [
 	name: ''Example-AddOn'';
 	requires: #(''Example-Core'' ''UI Support'' );
 	includes: #(''Example-UI'' );
-	file: ''Example-AddOn-anon.5'';
 	repository: ''http://www.example.com/or'' username: ''foo'' password: ''bar'';
 	preLoadDoIt: #''preloadForAddOn'';
 	postLoadDoIt: #''postloadForAddOn''.'.

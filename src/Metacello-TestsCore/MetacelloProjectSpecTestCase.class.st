@@ -54,7 +54,6 @@ MetacelloProjectSpecTestCase >> testProjectMergeSpec2 [
 	self assert: project name equals: 'Project'.
 	self assert: project className equals: 'ConfigurationOfProjectB'.
 	self assert: project projectPackage name equals: project className.
-	self assert: project projectPackage file equals: project className.
 	project repositories map at: '/opt/gemstone/repository' ifPresent: [ self assert: false ].
 	repository := project repositories map at: '/opt/gemstone/repo' ifAbsent: [ self assert: false ].
 	self assert: repository type equals: 'directory'.
@@ -104,7 +103,6 @@ MetacelloProjectSpecTestCase >> testProjectSpec2 [
 	self assert: project name equals: 'Project'.
 	self assert: project className equals: 'ConfigurationOfProject'.
 	self assert: project projectPackage name equals: project className.
-	self assert: project projectPackage file equals: project className.
 	repository := project repositories map at: '/opt/gemstone/repository' ifAbsent: [ self assert: false ].
 	self assert: repository type equals: 'directory'.
 	repository := project repositories map at: 'http://example.com/repository' ifAbsent: [ self assert: false ].

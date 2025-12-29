@@ -5,7 +5,7 @@ String >> addToMetacelloPackages: aMetacelloPackagesSpec [
 
 	| spec |
 	spec := aMetacelloPackagesSpec project packageSpec
-		        file: self;
+		        name: self;
 		        yourself.
 	aMetacelloPackagesSpec addMemberForSpec: spec
 ]
@@ -31,7 +31,7 @@ String >> mergeIntoMetacelloPackages: aMetacelloPackagesSpec [
 
 	| spec |
 	spec := aMetacelloPackagesSpec project packageSpec
-		        file: self;
+		        name: self;
 		        yourself.
 	aMetacelloPackagesSpec mergeMemberForSpec: spec
 ]

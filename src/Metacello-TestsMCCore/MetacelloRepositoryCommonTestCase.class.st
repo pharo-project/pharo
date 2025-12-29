@@ -13,7 +13,6 @@ MetacelloRepositoryCommonTestCase >> baseline: spec [
 			spec package: 'Example-Core' with: [
 					spec
 						includes: 'Example-AddOn';
-						file: 'Example-Core-anon.1';
 						repository: (OSPlatform current isWindows
 								 ifTrue: [ 'c:\opt\mcexamples' ]
 								 ifFalse: [ '/opt/mcexamples' ]) ].
@@ -21,25 +20,21 @@ MetacelloRepositoryCommonTestCase >> baseline: spec [
 			spec package: 'Example-Core2' with: [
 					spec
 						includes: 'Example-AddOn2';
-						file: 'Example-Core2-anon.1';
 						repository: 'ftp://ftp.example.com/examples' ].
 
 			spec package: 'Example-Core3' with: [
 					spec
 						includes: 'Example-AddOn3';
-						file: 'Example-Core3-anon.1';
 						repository: 'http://example.com/examples' ].
 					
 			spec package: 'Example-Core4' with: [
 					spec
 						includes: 'Example-AddOn4';
-						file: 'Example-Core4-anon.1';
 						repository: 'dictionary://Metacello_Platform_Test_GlobalDictionary' ].
 
 			spec package: 'Example-Core5' with: [
 					spec
 						includes: 'Example-AddOn5';
-						file: 'Example-Core5-anon.1';
 						repository: 'filetree://' , MCFileTreeFileUtils default fullName , '/temp/repo' ] ]
 ]
 

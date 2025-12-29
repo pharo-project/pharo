@@ -53,9 +53,7 @@ MetacelloReferenceBaseline >> baseline: spec [
 					"OPTIONAL: Version comparison operator #= #~= #> #< #>= #<= #~> "
 					operator: #~>; 	
 					"OPTIONAL: List of packages to be loaded from project"															
-					loads: #('UI-Core' );	
-					"Optional: Name of package containing the config, by convention same as className"						
-					file: 'ConfigurationOfUI';	
+					loads: #('UI-Core' );
 					"Repository where package resides"					
 					repository: 'http://www.example.com/r' ];	
 			"Create a new project reference to replace existing project reference"
@@ -95,9 +93,7 @@ MetacelloReferenceBaseline >> baseline: spec [
 					"'Example-Core' must be loaded before 'Example-AddOn'" 
 					requires: #('Example-Core' );
 					"When 'Example-AddOn' is loaded, load 'Example-UI'"				
-					includes: #('Example-UI' );
-					"Explicitly oad version 'Example-AddOn-anon.3' of the package"					
-					file: 'Example-AddOn-anon.3';					
+					includes: #('Example-UI' );			
 					repositories: [
 						spec 
 							"Load 'Example-AddOn' from  the 'http://www.example.com/yar'"
@@ -114,12 +110,9 @@ MetacelloReferenceBaseline >> baseline: spec [
 				spec 
 					requires: #('Example-Core' 'UI Support' );
 					includes: #('Example-UI' );
-					file: 'Example-AddOn-anon.7';
 					repository: 'http://www.example.com/or' username: 'foo' password: 'bar' ;
 					preLoadDoIt: #preloadForAddOn;
 					postLoadDoIt: #postloadForAddOn ];
-			"Change the package version loaded"
-			package: 'Example-AddOn' with:'Example-AddOn-anon.5';	
 			"Create 'Example-Core' package in project"					
 			package: 'Example-Core';								
 			package: 'Example-Tests' with: [
