@@ -1,12 +1,12 @@
 Extension { #name : 'MCDictionaryRepository' }
 
 { #category : '*Metacello-Core' }
-MCDictionaryRepository >> asRepositorySpecFor: aMetacelloMCProject [
+MCDictionaryRepository >> asRepositorySpecFor: aMetacelloProject [
 
 	| desc |
 	desc := self description.
 	desc ifNil: [ desc := 'dictionary://Metacello_Dictionary' ].
-	^(aMetacelloMCProject repositorySpec)
+	^(aMetacelloProject repositorySpec)
 		description:  desc;
 	 	type: 'dictionary';
 		yourself

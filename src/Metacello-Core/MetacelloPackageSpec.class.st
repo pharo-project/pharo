@@ -25,8 +25,8 @@ MetacelloPackageSpec >> configMethodBodyOn: aStream hasName: hasName indent: ind
 	| hasFile hasRepositories hasPreLoadDoIt hasPostLoadDoIt hasRequiresOrIncludes |
 	hasFile := file isNotNil.
 	hasRepositories := self repositorySpecs size > 0.
-	hasPreLoadDoIt := self getPreLoadDoIt isNotNil.
-	hasPostLoadDoIt := self getPostLoadDoIt isNotNil.
+	hasPreLoadDoIt := self preLoadDoIt isNotNil.
+	hasPostLoadDoIt := self postLoadDoIt isNotNil.
 	hasRequiresOrIncludes := (self requires isEmpty and: [ self includes isEmpty ]) not.
 	hasRequiresOrIncludes ifTrue: [
 		self
@@ -65,14 +65,14 @@ MetacelloPackageSpec >> configMethodBodyOn: aStream hasName: hasName indent: ind
 		hasPreLoadDoIt | hasPostLoadDoIt ifTrue: [ aStream nextPut: $; ] ].
 	self
 		configMethodOn: aStream
-		for: self getPreLoadDoIt
+		for: self preLoadDoIt
 		selector: 'preLoadDoIt: '
 		cascading: hasName | hasFile | hasRepositories | hasPostLoadDoIt | hasRequiresOrIncludes
 		cascade: hasPostLoadDoIt
 		indent: indent.
 	self
 		configMethodOn: aStream
-		for: self getPostLoadDoIt
+		for: self postLoadDoIt
 		selector: 'postLoadDoIt: '
 		cascading: hasName | hasFile | hasRepositories | hasPreLoadDoIt | hasRequiresOrIncludes
 		cascade: false
@@ -97,8 +97,8 @@ MetacelloPackageSpec >> configMethodOn: aStream indent: indent [
 	| hasRepositories hasPreLoadDoIt hasPostLoadDoIt hasRequiresOrIncludes hasFile |
 	hasFile := file isNotNil.
 	hasRepositories := self repositorySpecs size > 0.
-	hasPreLoadDoIt := self getPreLoadDoIt isNotNil.
-	hasPostLoadDoIt := self getPostLoadDoIt isNotNil.
+	hasPreLoadDoIt := self preLoadDoIt isNotNil.
+	hasPostLoadDoIt := self postLoadDoIt isNotNil.
 	hasRequiresOrIncludes := (self requires isEmpty and: [ self includes isEmpty ]) not.
 	aStream
 		tab: indent;
@@ -120,8 +120,8 @@ MetacelloPackageSpec >> configShortCutMethodBodyOn: aStream member: aMember inde
 	| hasFile hasRepositories hasPreLoadDoIt hasPostLoadDoIt hasRequiresOrIncludes |
 	hasFile := file isNotNil.
 	hasRepositories := self repositorySpecs size > 0.
-	hasPreLoadDoIt := self getPreLoadDoIt isNotNil.
-	hasPostLoadDoIt := self getPostLoadDoIt isNotNil.
+	hasPreLoadDoIt := self preLoadDoIt isNotNil.
+	hasPostLoadDoIt := self postLoadDoIt isNotNil.
 	hasRequiresOrIncludes := (self requires isEmpty and: [ self includes isEmpty ]) not.
 	hasRepositories | hasPreLoadDoIt | hasPostLoadDoIt | hasRequiresOrIncludes ifTrue: [
 		aStream
@@ -183,18 +183,6 @@ MetacelloPackageSpec >> getName [
     "raw access to iv"
 
     ^ name
-]
-
-{ #category : 'querying' }
-MetacelloPackageSpec >> getPostLoadDoIt [
-
-	^postLoadDoIt
-]
-
-{ #category : 'querying' }
-MetacelloPackageSpec >> getPreLoadDoIt [
-
-	^preLoadDoIt
 ]
 
 { #category : 'accessing' }

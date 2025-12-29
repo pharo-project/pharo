@@ -330,11 +330,12 @@ MCGitBasedNetworkRepository >> allFileNames [
 ]
 
 { #category : 'accessing' }
-MCGitBasedNetworkRepository >> asRepositorySpecFor: aMetacelloMCProject [
-  ^ aMetacelloMCProject repositorySpec
-    description: self description;
-    type: self class basicDescription;
-    yourself
+MCGitBasedNetworkRepository >> asRepositorySpecFor: aMetacelloProject [
+
+	^ aMetacelloProject repositorySpec
+		  description: self description;
+		  type: self class basicDescription;
+		  yourself
 ]
 
 { #category : 'private' }

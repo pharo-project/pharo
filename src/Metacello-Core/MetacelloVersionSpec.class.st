@@ -27,21 +27,21 @@ MetacelloVersionSpec >> configMethodBasicOn: aStream last: last indent: indent [
 	| values lastIndex lastBlock |
 	last
 		ifTrue: [ "need to calculate last statement with a value"
-			values := {
-				          self getPreLoadDoIt.
-				          self getPostLoadDoIt }.
-			1 to: values size do: [ :index | (values at: index) ifNotNil: [ lastIndex := index ] ].
-			lastBlock := [ :arg | arg = lastIndex ] ]
+				values := {
+					          self preLoadDoIt.
+					          self postLoadDoIt }.
+				1 to: values size do: [ :index | (values at: index) ifNotNil: [ lastIndex := index ] ].
+				lastBlock := [ :arg | arg = lastIndex ] ]
 		ifFalse: [ lastBlock := [ :arg | false ] ].
 	self
 		configMethodValueOn: aStream
-		for: self getPreLoadDoIt
+		for: self preLoadDoIt
 		selector: 'preLoadDoIt:'
 		last: (lastBlock value: 1)
 		indent: indent.
 	self
 		configMethodValueOn: aStream
-		for: self getPostLoadDoIt
+		for: self postLoadDoIt
 		selector: 'postLoadDoIt:'
 		last: (lastBlock value: 2)
 		indent: indent
@@ -190,16 +190,6 @@ MetacelloVersionSpec >> defaultPackageNames [
 
 	self packages packageNamed: 'default' ifAbsent: [ ^self packageNames ].
 	^#('default')
-]
-
-{ #category : 'accessing' }
-MetacelloVersionSpec >> getPostLoadDoIt [
-	^postLoadDoIt
-]
-
-{ #category : 'accessing' }
-MetacelloVersionSpec >> getPreLoadDoIt [
-	^preLoadDoIt
 ]
 
 { #category : 'accessing' }

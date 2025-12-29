@@ -125,15 +125,14 @@ MetacelloRecordTarget >> visitProjectReference: aMetacelloProjectReferenceSpec [
 ]
 
 { #category : 'visiting' }
-MetacelloRecordTarget >> visitProjectSpec: aMetacelloMCBaselineOfProjectSpec [
+MetacelloRecordTarget >> visitProjectSpec: aMetacelloProjectSpec [
 	
 	"Download the baseline!"
 	| loadedSpec |
-	loadedSpec := engine lookupProjectSpecFor: aMetacelloMCBaselineOfProjectSpec.
+	loadedSpec := engine lookupProjectSpecFor: aMetacelloProjectSpec.
 
 	"And interpret"
-	currentRepositorySpecs := aMetacelloMCBaselineOfProjectSpec
-		                          repositorySpecs.
+	currentRepositorySpecs := aMetacelloProjectSpec repositorySpecs.
 	loadedSpec projectPackage acceptVisitor: self
 ]
 

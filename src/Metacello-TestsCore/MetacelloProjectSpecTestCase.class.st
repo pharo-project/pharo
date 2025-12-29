@@ -36,6 +36,7 @@ MetacelloProjectSpecTestCase >> testProjectMergeSpec [
 
 { #category : 'tests' }
 MetacelloProjectSpecTestCase >> testProjectMergeSpec2 [
+
 	| projectA projectB project repository |
 	projectA := self projectSpec
 		name: 'Project';
@@ -56,8 +57,7 @@ MetacelloProjectSpecTestCase >> testProjectMergeSpec2 [
 	self assert: project className equals: 'BaselineOfProjectB'.
 	self assert: project projectPackage name equals: project className.
 	self assert: project projectPackage file equals: project className.
-	repository := project repositories map at: '/opt/gemstone/repository' ifAbsent: [ self assert: false ].
-	self assert: repository type equals: 'directory'.
+	project repositories map at: '/opt/gemstone/repository' ifPresent: [ self assert: false ].
 	repository := project repositories map at: '/opt/gemstone/repo' ifAbsent: [ self assert: false ].
 	self assert: repository type equals: 'directory'.
 	repository := project repositories map at: 'http://example.com/repository' ifAbsent: [ self assert: false ].

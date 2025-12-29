@@ -93,8 +93,7 @@ MetacelloVersionSpecTestCase >> testVersionMergeSpec2 [
 	self assert: package name equals: 'Package'.
 	projectReferenceSpec := version packages packageNamed: 'Project' ifAbsent: [ self assert: false ].
 	self assert: projectReferenceSpec projectName equals: 'Project'.
-	repository := projectReferenceSpec repositories map at: '/opt/gemstone/repository' ifAbsent: [ self assert: false ].
-	self assert: repository type equals: 'directory'.
+	projectReferenceSpec repositories map at: '/opt/gemstone/repository' ifPresent: [ self assert: false ].
 	repository := projectReferenceSpec repositories map at: '/opt/gemstone/repo' ifAbsent: [ self assert: false ].
 	self assert: repository type equals: 'directory'.
 	repository := projectReferenceSpec repositories map at: 'http://example.com/repository' ifAbsent: [ self assert: false ].

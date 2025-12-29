@@ -138,9 +138,7 @@ MetacelloProjectRegistration >> canUpgradeTo: aProjectRegistration [
 
 	(self hasLoadConflicts: aProjectRegistration) ifFalse: [ ^ true ].
 
-	projectSpec ifNotNil: [ ^ projectSpec canUpgradeTo: aProjectRegistration projectSpec ].
-	
-	^ false
+	^ projectSpec canUpgradeTo: aProjectRegistration projectSpec
 ]
 
 { #category : 'mutability' }
@@ -174,8 +172,7 @@ MetacelloProjectRegistration >> currentlyLoadedClassesInProject [
 { #category : 'testing' }
 MetacelloProjectRegistration >> hasLoadConflicts: aProjectRegistration [
 
-	aProjectRegistration validate.
-	^ self projectSpec hasConflictWithProjectSpec: aProjectRegistration projectSpec
+	^ aProjectRegistration projectSpec hasLoadConflicts: self projectSpec
 ]
 
 { #category : 'comparing' }
@@ -223,8 +220,6 @@ MetacelloProjectRegistration >> merge: aProjectRegistration [
 	" ... merge is done when a spec has been loaded into the image"
 
 	self shouldBeMutable.
-	aProjectRegistration validate.
-
 	projectSpec := aProjectRegistration projectSpec.
 	self versionInfo versionString: projectSpec repositoryVersionString
 ]
@@ -310,12 +305,6 @@ MetacelloProjectRegistration >> shouldBeMutable [
 { #category : 'registration' }
 MetacelloProjectRegistration >> unregisterProject [
     self class registry unregisterProjectRegistration: self
-]
-
-{ #category : 'accessing' }
-MetacelloProjectRegistration >> validate [
-
-	projectSpec ifNil: [ self error: 'Invalid project registration' ]
 ]
 
 { #category : 'accessing' }

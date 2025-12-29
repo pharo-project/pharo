@@ -101,8 +101,8 @@ MCFileTreeRepository >> allFileNamesForVersionNamed: aString [
 ]
 
 { #category : 'accessing' }
-MCFileTreeRepository >> asRepositorySpecFor: aMetacelloMCProject [
-    ^ aMetacelloMCProject repositorySpec
+MCFileTreeRepository >> asRepositorySpecFor: aMetacelloProject [
+    ^ aMetacelloProject repositorySpec
         description: self description;
         type: 'filetree';
         yourself
