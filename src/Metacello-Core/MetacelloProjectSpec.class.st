@@ -79,7 +79,7 @@ MetacelloProjectSpec >> className: aString [
 
 	self shouldBeMutable.
 	className := aString.
-	self projectPackage: nil
+	self resetProjectPackage
 ]
 
 { #category : 'scripting' }
@@ -298,7 +298,7 @@ MetacelloProjectSpec >> file [
 MetacelloProjectSpec >> file: aString [
     self shouldBeMutable.
     file := aString.
-    self projectPackage: nil
+    self resetProjectPackage
 ]
 
 { #category : 'accessing' }
@@ -499,7 +499,7 @@ MetacelloProjectSpec >> name: aString [
 
 	self shouldBeMutable.
 	name := aString trim.
-	self projectPackage: nil
+	self resetProjectPackage
 ]
 
 { #category : 'merging' }
@@ -575,20 +575,15 @@ MetacelloProjectSpec >> projectLabel [
 
 { #category : 'accessing' }
 MetacelloProjectSpec >> projectPackage [
-    projectPackage
-        ifNil: [ 
-            self className ifNil: [ ^ nil ].
-            projectPackage := self project packageSpec.
-            projectPackage name: self className.
-            self getFile ifNotNil: [ projectPackage file: self file ].
-            projectPackage repositories: self getRepositories ].
-    ^ projectPackage
-]
+	"I return a MetacelloPackageSpec corresponding to the BaselineOf of the project."
 
-{ #category : 'accessing' }
-MetacelloProjectSpec >> projectPackage: aProjectPackage [
-    self shouldBeMutable.
-    projectPackage := aProjectPackage
+	^ projectPackage ifNil: [
+			  self className ifNil: [ ^ nil ].
+			  projectPackage := self project packageSpec
+				                    name: self className;
+				                    file: self getFile;
+				                    repositories: self getRepositories;
+				                    yourself ]
 ]
 
 { #category : 'querying' }
@@ -624,19 +619,20 @@ MetacelloProjectSpec >> repositories [
 MetacelloProjectSpec >> repositories: anObject [
     self shouldBeMutable.
     repositories := anObject.
-    self projectPackage: nil
+    self resetProjectPackage
 ]
 
 { #category : 'accessing' }
 MetacelloProjectSpec >> repository: aStringOrMetacelloRepositorySpec [
     self repositories repository: aStringOrMetacelloRepositorySpec.
-    self projectPackage: nil
+    self resetProjectPackage
 ]
 
 { #category : 'accessing' }
 MetacelloProjectSpec >> repository: aString username: username password: password [
-    self repositories repository: aString username: username password: password.
-    self projectPackage: nil
+
+	self repositories repository: aString username: username password: password.
+	self resetProjectPackage
 ]
 
 { #category : 'querying' }
@@ -662,6 +658,12 @@ MetacelloProjectSpec >> repositoryVersionString [
 		on: Error
 		do: [ :ex | ^ '' ].
 	^ repo repositoryVersionString
+]
+
+{ #category : 'private' }
+MetacelloProjectSpec >> resetProjectPackage [
+
+	projectPackage := nil
 ]
 
 { #category : 'private' }

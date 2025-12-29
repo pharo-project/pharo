@@ -47,7 +47,6 @@ MetacelloVersionSpecTestCase >> testVersionMergeSpec2 [
 				projectReference:
 					(self projectSpec
 						name: 'Project';
-						projectPackage: self project packageSpec;
 						className: 'ConfigurationOfProjectA';
 						repository: 'http://example.com/repository' username: 'dkh' password: 'password';
 						repository: '/opt/gemstone/repository';
@@ -74,7 +73,6 @@ MetacelloVersionSpecTestCase >> testVersionMergeSpec2 [
 				projectReference:
 					(self projectSpec
 						name: 'Project';
-						projectPackage: self project packageSpec;
 						className: 'ConfigurationOfProjectA';
 						repository: 'http://example.com/repository' username: 'DaleHenrichs' password: 'secret';
 						repository: '/opt/gemstone/repo';

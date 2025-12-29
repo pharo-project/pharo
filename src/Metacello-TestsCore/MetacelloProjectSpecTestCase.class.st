@@ -40,14 +40,12 @@ MetacelloProjectSpecTestCase >> testProjectMergeSpec2 [
 	| projectA projectB project repository |
 	projectA := self projectSpec
 		            name: 'Project';
-		            projectPackage: self project packageSpec;
 		            className: 'ConfigurationOfProject';
 		            repository: 'http://example.com/repository' username: 'dkh' password: 'password';
 		            repository: '/opt/gemstone/repository';
 		            yourself.
 	projectB := self projectSpec
 		            name: 'Project';
-		            projectPackage: self project packageSpec;
 		            className: 'ConfigurationOfProjectB';
 		            repository: 'http://example.com/repository' username: 'DaleHenrichs' password: 'secret';
 		            repository: '/opt/gemstone/repo';
@@ -99,7 +97,6 @@ MetacelloProjectSpecTestCase >> testProjectSpec2 [
 	project := self projectSpec.
 	project
 		name: 'Project';
-		projectPackage: self project packageSpec;
 		className: 'ConfigurationOfProject';
 		repository: 'http://example.com/repository' username: 'dkh' password: 'password';
 		repository: '/opt/gemstone/repository';
