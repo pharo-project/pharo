@@ -73,20 +73,6 @@ MetacelloAbstractPackageSpec >> configMethodOn: aStream for: aValue selector: se
 	cascade ifTrue: [ aStream nextPut: $; ]
 ]
 
-{ #category : 'querying' }
-MetacelloAbstractPackageSpec >> file [ 
-	"MetacelloPackageSpec compatibility"
-	
-	^nil
-]
-
-{ #category : 'accessing' }
-MetacelloAbstractPackageSpec >> getFile [
-	"MetacelloPackageSpec compatibility"
-
-	^ nil
-]
-
 { #category : 'testing' }
 MetacelloAbstractPackageSpec >> hasRepository [
     ^ false
@@ -162,9 +148,8 @@ MetacelloAbstractPackageSpec >> name [
 
 { #category : 'accessing' }
 MetacelloAbstractPackageSpec >> name: aString [
-    ((aString at: 1) isSeparator or: [ (aString at: aString size) isSeparator ])
-        ifTrue: [ self error: 'Names are not allowed to have leading or trailing blanks: ' , aString printString ].
-    name := aString
+
+	name := aString trim
 ]
 
 { #category : 'merging' }

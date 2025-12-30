@@ -132,7 +132,6 @@ MetacelloVersionSpecTestCase >> testVersionSpec2 [
 				name: 'Package';
 				requires: 'AnotherPackage';
 				includes: 'IncludedPackage';
-				file: 'Package-dkh.1';
 				preLoadDoIt: #preLoadDoIt;
 				postLoadDoIt: #postLoadDoIt;
 				yourself);

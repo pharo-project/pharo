@@ -2,9 +2,7 @@ Class {
 	#name : 'MetacelloPackageSpec',
 	#superclass : 'MetacelloAbstractPackageSpec',
 	#instVars : [
-		'file',
 		'repositories',
-		'goferPackage',
 		'preLoadDoIt',
 		'postLoadDoIt'
 	],
@@ -22,9 +20,8 @@ MetacelloPackageSpec >> acceptVisitor: aVisitor [
 { #category : 'printing' }
 MetacelloPackageSpec >> configMethodBodyOn: aStream hasName: hasName indent: indent [
 
-	| hasFile hasRepositories hasPreLoadDoIt hasPostLoadDoIt hasRequiresOrIncludes |
-	hasFile := file isNotNil.
-	hasRepositories := self repositorySpecs size > 0.
+	| hasRepositories hasPreLoadDoIt hasPostLoadDoIt hasRequiresOrIncludes |
+	hasRepositories := self repositorySpecs isNotEmpty.
 	hasPreLoadDoIt := self preLoadDoIt isNotNil.
 	hasPostLoadDoIt := self postLoadDoIt isNotNil.
 	hasRequiresOrIncludes := (self requires isEmpty and: [ self includes isEmpty ]) not.
@@ -32,19 +29,12 @@ MetacelloPackageSpec >> configMethodBodyOn: aStream hasName: hasName indent: ind
 		self
 			configMethodBodyOn: aStream
 			hasName: hasName
-			cascading: hasFile | hasRepositories | hasPreLoadDoIt | hasPostLoadDoIt
+			cascading: hasRepositories | hasPreLoadDoIt | hasPostLoadDoIt
 			indent: indent ].
-	self
-		configMethodOn: aStream
-		for: file
-		selector: 'file: '
-		cascading: hasName | hasRepositories | hasPreLoadDoIt | hasPostLoadDoIt | hasRequiresOrIncludes
-		cascade: hasRepositories | hasPreLoadDoIt | hasPostLoadDoIt
-		indent: indent.
 	hasRepositories ifTrue: [
 		self repositorySpecs size > 1
 			ifTrue: [
-				hasName | hasFile | hasPreLoadDoIt | hasPostLoadDoIt | hasRequiresOrIncludes ifTrue: [
+				hasName | hasPreLoadDoIt | hasPostLoadDoIt | hasRequiresOrIncludes ifTrue: [
 					aStream
 						cr;
 						tab: indent ].
@@ -57,7 +47,7 @@ MetacelloPackageSpec >> configMethodBodyOn: aStream hasName: hasName indent: ind
 				self repositories configMethodCascadeOn: aStream indent: indent + 1.
 				aStream nextPutAll: ' ]' ]
 			ifFalse: [
-				hasName | hasFile | hasPreLoadDoIt | hasPostLoadDoIt | hasRequiresOrIncludes ifTrue: [
+				hasName | hasPreLoadDoIt | hasPostLoadDoIt | hasRequiresOrIncludes ifTrue: [
 					aStream
 						cr;
 						tab: indent ].
@@ -67,14 +57,14 @@ MetacelloPackageSpec >> configMethodBodyOn: aStream hasName: hasName indent: ind
 		configMethodOn: aStream
 		for: self preLoadDoIt
 		selector: 'preLoadDoIt: '
-		cascading: hasName | hasFile | hasRepositories | hasPostLoadDoIt | hasRequiresOrIncludes
+		cascading: hasName | hasRepositories | hasPostLoadDoIt | hasRequiresOrIncludes
 		cascade: hasPostLoadDoIt
 		indent: indent.
 	self
 		configMethodOn: aStream
 		for: self postLoadDoIt
 		selector: 'postLoadDoIt: '
-		cascading: hasName | hasFile | hasRepositories | hasPreLoadDoIt | hasRequiresOrIncludes
+		cascading: hasName | hasRepositories | hasPreLoadDoIt | hasRequiresOrIncludes
 		cascade: false
 		indent: indent.
 	aStream nextPut: $.
@@ -94,16 +84,15 @@ MetacelloPackageSpec >> configMethodCascadeOn: aStream member: aMember last: las
 { #category : 'printing' }
 MetacelloPackageSpec >> configMethodOn: aStream indent: indent [
 
-	| hasRepositories hasPreLoadDoIt hasPostLoadDoIt hasRequiresOrIncludes hasFile |
-	hasFile := file isNotNil.
-	hasRepositories := self repositorySpecs size > 0.
+	| hasRepositories hasPreLoadDoIt hasPostLoadDoIt hasRequiresOrIncludes |
+	hasRepositories := self repositorySpecs isNotEmpty.
 	hasPreLoadDoIt := self preLoadDoIt isNotNil.
 	hasPostLoadDoIt := self postLoadDoIt isNotNil.
 	hasRequiresOrIncludes := (self requires isEmpty and: [ self includes isEmpty ]) not.
 	aStream
 		tab: indent;
 		nextPutAll: 'spec '.
-	hasFile | hasRepositories | hasPreLoadDoIt | hasPostLoadDoIt | hasRequiresOrIncludes
+	hasRepositories | hasPreLoadDoIt | hasPostLoadDoIt | hasRequiresOrIncludes
 		ifTrue: [
 			aStream
 				cr;
@@ -117,8 +106,7 @@ MetacelloPackageSpec >> configMethodOn: aStream indent: indent [
 { #category : 'printing' }
 MetacelloPackageSpec >> configShortCutMethodBodyOn: aStream member: aMember indent: indent [
 
-	| hasFile hasRepositories hasPreLoadDoIt hasPostLoadDoIt hasRequiresOrIncludes |
-	hasFile := file isNotNil.
+	| hasRepositories hasPreLoadDoIt hasPostLoadDoIt hasRequiresOrIncludes |
 	hasRepositories := self repositorySpecs size > 0.
 	hasPreLoadDoIt := self preLoadDoIt isNotNil.
 	hasPostLoadDoIt := self postLoadDoIt isNotNil.
@@ -134,8 +122,7 @@ MetacelloPackageSpec >> configShortCutMethodBodyOn: aStream member: aMember inde
 		self configMethodBodyOn: aStream hasName: false indent: indent + 2.
 		aStream nextPutAll: ' ]'.
 		^ self ].
-	aStream nextPutAll: 'package: ' , self name printString.
-	hasFile ifTrue: [ aStream nextPutAll: ' with: ' , file printString ]
+	aStream nextPutAll: 'package: ' , self name printString
 ]
 
 { #category : 'loading' }
@@ -150,39 +137,6 @@ MetacelloPackageSpec >> ensureLoadedForDevelopmentUsing: aTarget ithEngine: anEn
 	"noop"
 
 	
-]
-
-{ #category : 'private' }
-MetacelloPackageSpec >> extractNameFromFile [
-
-	^ file
-]
-
-{ #category : 'querying' }
-MetacelloPackageSpec >> file [
-
-	file ifNil: [ ^ self name ].
-	^ file
-]
-
-{ #category : 'accessing' }
-MetacelloPackageSpec >> file: aString [
-
-	file := aString
-]
-
-{ #category : 'accessing' }
-MetacelloPackageSpec >> getFile [
-	"raw access to iv"
-	
-	^file
-]
-
-{ #category : 'accessing' }
-MetacelloPackageSpec >> getName [
-    "raw access to iv"
-
-    ^ name
 ]
 
 { #category : 'accessing' }
@@ -214,7 +168,6 @@ MetacelloPackageSpec >> mergeMap [
 
 	| map |
 	map := super mergeMap.
-	map at: #file put: file.
 	map at: #repositories put: self repositories.
 	map at: #preLoadDoIt put: preLoadDoIt.
 	map at: #postLoadDoIt put: postLoadDoIt.
@@ -236,12 +189,6 @@ MetacelloPackageSpec >> mergeSpec: anotherSpec [
 	^newSpec
 ]
 
-{ #category : 'querying' }
-MetacelloPackageSpec >> name [
-
-	^ name ifNil: [ name := self extractNameFromFile ]
-]
-
 { #category : 'merging' }
 MetacelloPackageSpec >> nonOverridable [
 
@@ -258,7 +205,6 @@ MetacelloPackageSpec >> packageSpecsInLoadOrder [
 MetacelloPackageSpec >> postCopy [
 
 	super postCopy.
-	goferPackage := nil.
 	repositories := repositories copy.
 ]
 
