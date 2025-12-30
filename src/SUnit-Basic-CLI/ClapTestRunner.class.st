@@ -89,6 +89,7 @@ ClapTestRunner >> runPackages [
 	
 	packages := self testPackages.
 	self inform: 'Running tests in ', packages size asString, ' Packages'.
+	self inform: packages asString.
 	results := (self testRunner runPackages: packages) select: #isNotNil.
 				
 	self informResults: results.

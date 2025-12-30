@@ -44,6 +44,7 @@ HDTestReport class >> runClasses: aCollectionOfClasses named: packageName [
 	classes := (aCollectionOfClasses select: [ :class |
 		            class isTestCase and: [ class isAbstract not ] ])
 		           asSortedCollection: [ :a :b | a name <= b name ].
+	('Selected classes: ' , classes asString) traceCr.
 	classes ifEmpty: [ ^ nil ].
 	classes do: [ :class | suite addTests: class buildSuite tests ].
 	time := DateAndTime now.
@@ -60,6 +61,7 @@ HDTestReport class >> runClasses: aCollectionOfClasses named: packageName [
 { #category : 'running' }
 HDTestReport class >> runPackage: aString [
 
+	('Trying to run tests of ' , aString) traceCr.
 	^ self runClasses: (self packageOrganizer packageNamed: aString) definedClasses named: aString
 ]
 
