@@ -11,13 +11,13 @@ CoHierarchyImplementedSelectorsFetcherTest >> setUp [
 
 	super setUp.
 	fetcher := CoClassImplementedMessagesFetcher new
-		completionClass: self completionClass;
-		forHierarchy.
+		           completionClass: self completionClass;
+		           forHierarchy.
 	expectedElements := {
-		NECSelectorEntry contents: 'ma' node: nil.
-		NECSelectorEntry contents: 'mb' node: nil.
-		NECSelectorEntry contents: 'mc' node: nil.
-		NECSelectorEntry contents: 'superma' node: nil.
-		NECSelectorEntry contents: 'supermb' node: nil.
-		NECSelectorEntry contents: 'supermc' node: nil.}
+		                    (NECSelectorEntry contents: 'ma' node: nil)  fetcher: fetcher; yourself.
+		                    (NECSelectorEntry contents: 'mb' node: nil)  fetcher: fetcher; yourself.
+		                    (NECSelectorEntry contents: 'mc' node: nil) fetcher: fetcher; yourself.
+		                    (NECSelectorEntry contents: 'superma' node: nil)  fetcher: fetcher; yourself.
+		                    (NECSelectorEntry contents: 'supermb' node: nil)  fetcher: fetcher; yourself.
+		                    (NECSelectorEntry contents: 'supermc' node: nil) fetcher: fetcher; yourself }
 ]
