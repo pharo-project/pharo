@@ -20,41 +20,71 @@ Class {
 	#tag : 'SystemIntegration'
 }
 
-{ #category : 'heuristics' }
+{ #category : 'deprecated' }
 CoASTHeuristicsResultSetBuilder >> messageHeuristic [
+	
+	self deprecated: 'Use messagesHeuristic' transformWith: '`@rec messageHeuristic' -> '`@rec messagesHeuristic'.
+	^ self messagesHeuristic
+]
 
-	^ messageHeuristic ifNil: [ messageHeuristic := self newHeuristicBuilder
-		
-		add: CoSelfMessageHeuristic new;
-		add: CoSuperMessageHeuristic new;
-		add: CoTypedReceiverMessageHeuristic new;
-		add: CoInitializeInferencedMessageHeuristic new;
-		add: CoLiteralMessageHeuristic new;
-		add: CoGlobalVariableMessageHeuristic new;
-		add: CoVariableWithTypeNameMessageHeuristic new;
-		add: CoVariableValueMessageHeuristic new;
-		add: CoDependencyMessageHeuritics new;
-		add: CoUnknownMessageHeuristic new;
-		build ]
+{ #category : 'deprecated' }
+CoASTHeuristicsResultSetBuilder >> messageHeuristic: aHeuristic [
+
+		self deprecated: 'Use messagesHeuristic' transformWith: '`@rec messageHeuristic: `@arg' -> '`@rec messagesHeuristic: `@arg'.
+	self messagesHeuristic: aHeuristic
 ]
 
 { #category : 'heuristics' }
-CoASTHeuristicsResultSetBuilder >> messageHeuristic: aHeuristic [
+CoASTHeuristicsResultSetBuilder >> messagesHeuristic [
+
+	^ messageHeuristic ifNil: [
+			  messageHeuristic := self newHeuristicBuilder
+				                     
+				                      add: CoSelfMessageHeuristic new;
+				                      add: CoSuperMessageHeuristic new;
+				                      add: CoDependencyMessageHeuristics new;
+				                      add: CoTypedReceiverMessageHeuristic new;
+				                      add: CoInitializeInferencedMessageHeuristic new;
+				                      add: CoLiteralMessageHeuristic new;
+				                      add: CoGlobalVariableMessageHeuristic new;
+				                      add: CoVariableWithTypeNameMessageHeuristic new;
+				                      add: CoVariableValueMessageHeuristic new;
+				                      add: CoUnknownMessageHeuristic new;
+				                      "add: CoDependencySelectorFetcher new;"build ]
+]
+
+{ #category : 'heuristics' }
+CoASTHeuristicsResultSetBuilder >> messagesHeuristic: aHeuristic [
 
 	messageHeuristic := aHeuristic
 ]
 
-{ #category : 'heuristics' }
+{ #category : 'deprecated' }
 CoASTHeuristicsResultSetBuilder >> methodNodeHeuristic [
-	^ methodNodeHeuristic ifNil: [
-		methodNodeHeuristic := self newHeuristicBuilder
-		add: CoSuperMessageHeuristic new;
-		add: CoUnknownMessageHeuristic new;
-		build ]
+
+		self deprecated: 'Use methodNodeHeuristic' transformWith: '`@rec methodNodeHeuristic' -> '`@rec methodNodesHeuristic'.
+		^ self methodNodesHeuristic
+]
+
+{ #category : 'deprecated' }
+CoASTHeuristicsResultSetBuilder >> methodNodeHeuristic: aHeuristic [
+
+	self deprecated: 'Use methodNodesHeuristic:' transformWith: '`@rec methodNodeHeuristic: `@arg' -> '`@rec methodNodesHeuristic: `@arg'.
+	self methodNodesHeuristic: aHeuristic
 ]
 
 { #category : 'heuristics' }
-CoASTHeuristicsResultSetBuilder >> methodNodeHeuristic: aHeuristic [
+CoASTHeuristicsResultSetBuilder >> methodNodesHeuristic [
+
+	^ methodNodeHeuristic ifNil: [
+			  methodNodeHeuristic := self newHeuristicBuilder
+				                         add: CoSuperMessageHeuristic new;
+				                         add: CoUnknownMessageHeuristic new;
+				                         build ]
+]
+
+{ #category : 'heuristics' }
+CoASTHeuristicsResultSetBuilder >> methodNodesHeuristic: aHeuristic [
 
 	methodNodeHeuristic := aHeuristic
 ]
@@ -107,13 +137,11 @@ CoASTHeuristicsResultSetBuilder >> visitLiteralValueNode: aNode [
 ]
 
 { #category : 'visiting' }
-CoASTHeuristicsResultSetBuilder >> visitMessageNode: aMessageNode [ 
+CoASTHeuristicsResultSetBuilder >> visitMessageNode: aMessageNode [
 
 	completionContext completionToken ifEmpty: [ ^ super visitMessageNode: aMessageNode ].
 
-	^ self
-		configureFetcherForNode: aMessageNode
-		usingHeuristicAvoidingRepetitions: self messageHeuristic
+	^ self configureFetcherForNode: aMessageNode usingHeuristicAvoidingRepetitions: self messagesHeuristic
 ]
 
 { #category : 'visiting' }
@@ -121,9 +149,7 @@ CoASTHeuristicsResultSetBuilder >> visitMethodNode: aMethodNode [
 
 	completionContext completionToken ifEmpty: [ ^ super visitMethodNode: aMethodNode ].
 
-	^ self
-		configureFetcherForNode: aMethodNode
-		usingHeuristicAvoidingRepetitions: self methodNodeHeuristic
+	^ self configureFetcherForNode: aMethodNode usingHeuristicAvoidingRepetitions: self methodNodesHeuristic
 ]
 
 { #category : 'visiting' }
@@ -146,7 +172,7 @@ CoASTHeuristicsResultSetBuilder >> visitValueNode: aNode [
 			aMessageNode selector: #''.
 			^ self
 				  configureFetcherForNode: aMessageNode
-				  usingHeuristicAvoidingRepetitions: self messageHeuristic ] ].
+				  usingHeuristicAvoidingRepetitions: self messagesHeuristic ] ].
 
 	^ super visitValueNode: aNode
 ]

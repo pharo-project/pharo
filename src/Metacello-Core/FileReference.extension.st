@@ -1,10 +1,9 @@
 Extension { #name : 'FileReference' }
 
 { #category : '*Metacello-Core' }
-FileReference >> asRepositorySpecFor: aMetacelloProject [
+FileReference >> asRepositorySpec [
 
-	^ aMetacelloProject repositorySpec
-		  description: self fullName;
+	^ (MetacelloRepositorySpec description: self fullName)
 		  type: 'directory';
 		  yourself
 ]

@@ -13,20 +13,16 @@ BaselineOfMetacello class >> corePackageNames [
 
 { #category : 'baseline' }
 BaselineOfMetacello >> baseline: spec [
+
 	<baseline>
-
 	spec for: #common do: [
-		spec 
-			package: 'Metacello-Base';
-			package: 'Metacello-Core';
-			package: 'Metacello-CommandLine'. 
+			spec
+				package: 'Metacello-Core';
+				package: 'Metacello-CommandLine';
+				package: 'Metacello-Tests'.
 
-		spec
-			package: 'Metacello-TestsCore';
-			package: 'Metacello-TestsMCCore'.
-
-		spec 
-			group: 'Core' with: #('Metacello-Base' 'Metacello-Core' 'Metacello-CommandLine');
-			group: 'Tests' with: #( 'Metacello-TestsCore' 'Metacello-TestsMCCore');
-			group: 'default' with: #('Core') ]
+			spec
+				group: 'Core' with: #( 'Metacello-Core' 'Metacello-CommandLine' );
+				group: 'Tests' with: #( 'Metacello-Tests' );
+				group: 'default' with: #( 'Core' ) ]
 ]

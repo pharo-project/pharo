@@ -102,8 +102,7 @@ MetacelloRepositoriesSpec >> repository: aStringOrSpec [
 MetacelloRepositoriesSpec >> repository: description username: username password: password [
 
 	| spec |
-	spec := self project repositorySpec
-		        description: description;
+	spec := (MetacelloRepositorySpec description: description)
 		        username: username;
 		        password: password;
 		        yourself.

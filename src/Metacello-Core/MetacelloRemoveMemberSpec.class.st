@@ -9,6 +9,14 @@ Class {
 	#tag : 'Members'
 }
 
+{ #category : 'instance creation' }
+MetacelloRemoveMemberSpec class >> named: aString [
+
+	^ self new
+		  name: aString;
+		  yourself
+]
+
 { #category : 'actions' }
 MetacelloRemoveMemberSpec >> applyAdd: addBlock copy: copyBlock merge: mergeBlock remove: removeBlock [
 

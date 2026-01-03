@@ -19,7 +19,8 @@ MethodAnnouncement >> classAffected [
 
 { #category : 'testing' }
 MethodAnnouncement >> isProvidedByExtension [
-	^self methodOrigin package ~= self methodPackage
+
+	^ self method isExtension
 ]
 
 { #category : 'accessing' }

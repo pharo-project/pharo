@@ -323,7 +323,7 @@ Symbol >> = aSymbol [
 	^ super = aSymbol
 ]
 
-{ #category : 'accessing' }
+{ #category : 'evaluating' }
 Symbol >> argumentCount [
     "This method refers to block arguments [:acc :x | ...] has two arguments so argumentCount of a selector that could be used in place of a block
 	should return the same amount of argument than the block."
@@ -650,4 +650,21 @@ Symbol >> value: anObject value: arg [
 Symbol >> valueWithArguments: aCollection [
 
 	^ aCollection first perform: self withArguments: aCollection allButFirst
+]
+
+{ #category : 'evaluating' }
+Symbol >> valueWithEnoughArguments: anArray [
+	"call me with enough arguments from anArray"
+	<reflection: 'Message sending and code execution - Message send reification'>
+	| args |
+	(anArray size == self argumentCount)
+		ifTrue: [ ^self valueWithArguments: anArray ].
+
+	args := Array new: self argumentCount.
+	args replaceFrom: 1
+		to: (anArray size min: args size)
+		with: anArray
+		startingAt: 1.
+
+	^ self valueWithArguments: args
 ]

@@ -2,6 +2,8 @@ Class {
 	#name : 'MetacelloPackageSpec',
 	#superclass : 'MetacelloAbstractPackageSpec',
 	#instVars : [
+		'project',
+		'name',
 		'repositories',
 		'preLoadDoIt',
 		'postLoadDoIt'
@@ -10,6 +12,14 @@ Class {
 	#package : 'Metacello-Core',
 	#tag : 'Specs'
 }
+
+{ #category : 'instance creation' }
+MetacelloPackageSpec class >> project: aMetacelloProject [
+
+	^ self new
+		  project: aMetacelloProject;
+		  yourself
+]
 
 { #category : 'visiting' }
 MetacelloPackageSpec >> acceptVisitor: aVisitor [
@@ -177,16 +187,27 @@ MetacelloPackageSpec >> mergeMap [
 { #category : 'merging' }
 MetacelloPackageSpec >> mergeSpec: anotherSpec [
 
-	| newSpec map anotherRepositories |
+	| newSpec anotherRepositories |
 	newSpec := super mergeSpec: anotherSpec.
-	map := anotherSpec mergeMap.
-	(anotherRepositories := map at: #repositories) notEmpty
-		ifTrue: [ 
-			newSpec 
-				repositories: (self repositories isEmpty
-					ifTrue: [ anotherRepositories ]
-					ifFalse: [ self repositories mergeSpec: anotherRepositories ]) ].
-	^newSpec
+	(anotherRepositories := anotherSpec mergeMap at: #repositories) notEmpty ifTrue: [
+			newSpec repositories: (self repositories isEmpty
+					 ifTrue: [ anotherRepositories ]
+					 ifFalse: [ self repositories mergeSpec: anotherRepositories ]) ].
+
+	anotherSpec name ifNotNil: [ newSpec name: anotherSpec name ].
+	^ newSpec
+]
+
+{ #category : 'querying' }
+MetacelloPackageSpec >> name [
+
+	^name
+]
+
+{ #category : 'accessing' }
+MetacelloPackageSpec >> name: aString [
+
+	name := aString trim
 ]
 
 { #category : 'merging' }
@@ -234,6 +255,18 @@ MetacelloPackageSpec >> preLoadDoIt: aSymbol [
 	preLoadDoIt := aSymbol
 ]
 
+{ #category : 'accessing' }
+MetacelloPackageSpec >> project [
+
+	^ project
+]
+
+{ #category : 'accessing' }
+MetacelloPackageSpec >> project: aMetacelloProject [
+
+	project := aMetacelloProject
+]
+
 { #category : 'visiting' }
 MetacelloPackageSpec >> projectDo: projectBlock packageDo: packageBlock groupDo: groupBlock [
 
@@ -243,7 +276,7 @@ MetacelloPackageSpec >> projectDo: projectBlock packageDo: packageBlock groupDo:
 { #category : 'querying' }
 MetacelloPackageSpec >> repositories [
 
-	^ repositories ifNil: [ repositories := self project repositoriesSpec ]
+	^ repositories ifNil: [ repositories := MetacelloRepositoriesSpec new ]
 ]
 
 { #category : 'querying' }
@@ -272,6 +305,12 @@ MetacelloPackageSpec >> repositoryDescriptions [
 MetacelloPackageSpec >> repositorySpecs [
 
 	^self repositories map values
+]
+
+{ #category : 'private' }
+MetacelloPackageSpec >> resolveToPackagesAndProjectsIn: aVersionSpec [
+
+	^ { self }
 ]
 
 { #category : 'private' }

@@ -45,13 +45,11 @@ ClapMetacello >> execute [
 	metacello := Metacello new
 		             baseline: self projectName;
 		             repository: self repositoryUrl;
+		             silently;
 		             yourself.
-	self shouldSignalErrorOnWarning 
-		ifTrue: [ metacello onWarning: [ :e | Error signal: e messageText in: e signalerContext ] ].
-	self groups 
-		ifEmpty: [ metacello load ] 
-		ifNotEmpty: [ metacello load: self groups ].
-		
+	self shouldSignalErrorOnWarning ifTrue: [ metacello onWarning: [ :e | Error signal: e messageText in: e signalerContext ] ].
+	self groups ifEmpty: [ metacello load ] ifNotEmpty: [ metacello load: self groups ].
+
 	self saveSessionIfAsked
 ]
 

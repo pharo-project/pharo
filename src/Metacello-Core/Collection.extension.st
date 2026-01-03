@@ -1,39 +1,9 @@
 Extension { #name : 'Collection' }
 
 { #category : '*Metacello-Core' }
-Collection >> addToMetacelloPackages: aMetacelloPackagesSpec [
-
-	self do: [:each | each addToMetacelloPackages: aMetacelloPackagesSpec ]
-]
-
-{ #category : '*Metacello-Core' }
 Collection >> addToMetacelloRepositories: aMetacelloRepositoriesSpec [
 
 	self do: [:each | each addToMetacelloRepositories: aMetacelloRepositoriesSpec ]
-]
-
-{ #category : '*Metacello-Core' }
-Collection >> mergeIntoMetacelloPackages: aMetacelloPackagesSpec [
-
-	self do: [:each | each mergeIntoMetacelloPackages: aMetacelloPackagesSpec ]
-]
-
-{ #category : '*Metacello-Core' }
-Collection >> mergeIntoMetacelloRepositories: aMetacelloRepositoriesSpec [
-
-	self do: [:each | each mergeIntoMetacelloRepositories: aMetacelloRepositoriesSpec ]
-]
-
-{ #category : '*Metacello-Core' }
-Collection >> removeFromMetacelloPackages: aMetacelloPackagesSpec [
-
-	self do: [:each | each removeFromMetacelloPackages: aMetacelloPackagesSpec ]
-]
-
-{ #category : '*Metacello-Core' }
-Collection >> removeFromMetacelloRepositories: aMetacelloRepositoriesSpec [
-
-	self do: [:each | each removeFromMetacelloRepositories: aMetacelloRepositoriesSpec ]
 ]
 
 { #category : '*Metacello-Core' }

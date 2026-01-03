@@ -5,7 +5,7 @@ Class {
 		'loadedInImage',
 		'locked',
 		'mutable',
-		'versionInfo',
+		'versionString',
 		'projectSpec'
 	],
 	#classVars : [
@@ -71,13 +71,15 @@ MetacelloProjectRegistration class >> registrationForClassNamed: aClassName ifAb
 ]
 
 { #category : 'querying' }
-MetacelloProjectRegistration class >> registrationForProjectSpec: aProjectSpec ifAbsent: absentBlock ifPresent: presentBlock [
-    | newRegistration |
-    newRegistration := aProjectSpec asProjectRegistration.
-    self registry
-        registrationFor: newRegistration
-        ifPresent: [ :existing | ^ presentBlock value: existing value: newRegistration ]
-        ifAbsent: [ ^ absentBlock value: newRegistration ]
+MetacelloProjectRegistration class >> registrationForProjectSpec: aProjectSpec ifPresent: presentBlock [
+
+	^ self registrationForProjectSpec: aProjectSpec ifPresent: presentBlock ifAbsent: [ ]
+]
+
+{ #category : 'querying' }
+MetacelloProjectRegistration class >> registrationForProjectSpec: aProjectSpec ifPresent: presentBlock ifAbsent: absentBlock [
+
+	^ self registry registrationFor: aProjectSpec ifPresent: presentBlock ifAbsent: absentBlock
 ]
 
 { #category : 'accessing' }
@@ -111,7 +113,7 @@ MetacelloProjectRegistration class >> useRegistry: aRegistry during: aBlock [
 MetacelloProjectRegistration >> = aRegistration [
 
 	aRegistration class == self class ifFalse: [ ^ false ].
-	^ projectSpec registrationsCompareEqual: aRegistration projectSpec
+	^ projectSpec className = aRegistration className
 ]
 
 { #category : 'accessing' }
@@ -120,23 +122,7 @@ MetacelloProjectRegistration >> baseName [
 ]
 
 { #category : 'testing' }
-MetacelloProjectRegistration >> canDowngradeTo: aProjectRegistration [
-	"true if there are no load conflicts
-        OR
-       if the load conflicts involved two cofigurations ONLY and a downgrade is allowed"
-
-	(self hasLoadConflicts: aProjectRegistration) ifFalse: [ ^ true ].
-
-	^ false
-]
-
-{ #category : 'testing' }
 MetacelloProjectRegistration >> canUpgradeTo: aProjectRegistration [
-	"true if there are no load conflicts
-        OR
-       if the load conflicts involved two cofigurations ONLY and an upgrade is allowed"
-
-	(self hasLoadConflicts: aProjectRegistration) ifFalse: [ ^ true ].
 
 	^ projectSpec canUpgradeTo: aProjectRegistration projectSpec
 ]
@@ -146,9 +132,6 @@ MetacelloProjectRegistration >> copyOnWrite: aBlock [
 	"assume that only registered projects are immutable ... otherwise you'll get an error"
 
 	| copy |
-	self class registry registrationFor: self ifPresent: [ :existing |  ] ifAbsent: [
-		aBlock value: self.
-		^ self ].
 	self unregisterProject.
 	copy := self copy.
 	aBlock value: copy.
@@ -169,6 +152,13 @@ MetacelloProjectRegistration >> currentlyLoadedClassesInProject [
 	^ self projectSpec currentlyLoadedClassesInVersion asSet
 ]
 
+{ #category : 'initialization' }
+MetacelloProjectRegistration >> ensureVersionString: anObject [
+	"set versionString, only if it does not already have avalue"
+
+	versionString ifNil: [ self versionString: anObject ]
+]
+
 { #category : 'testing' }
 MetacelloProjectRegistration >> hasLoadConflicts: aProjectRegistration [
 
@@ -178,7 +168,11 @@ MetacelloProjectRegistration >> hasLoadConflicts: aProjectRegistration [
 { #category : 'comparing' }
 MetacelloProjectRegistration >> hash [
 
-	^ String stringHash: projectSpec metacelloRegistrationHash initialHash: 0
+	^ String
+		  stringHash: (projectSpec
+				   ifNil: [ nil hash ]
+				   ifNotNil: [ :project | project metacelloRegistrationHash ])
+		  initialHash: 0
 ]
 
 { #category : 'mutability' }
@@ -189,7 +183,7 @@ MetacelloProjectRegistration >> immutable [
 { #category : 'mutability' }
 MetacelloProjectRegistration >> isMutable [
 
-	^ mutable ifNil: [ true ]
+	^ mutable ifNil: [ mutable := true ]
 ]
 { #category : 'accessing' }
 MetacelloProjectRegistration >> loadedInImage [
@@ -221,7 +215,7 @@ MetacelloProjectRegistration >> merge: aProjectRegistration [
 
 	self shouldBeMutable.
 	projectSpec := aProjectRegistration projectSpec.
-	self versionInfo versionString: projectSpec repositoryVersionString
+	versionString := projectSpec repositoryVersionString
 ]
 
 { #category : 'mutability' }
@@ -275,11 +269,7 @@ MetacelloProjectRegistration >> projectSpec: anObject [
 { #category : 'accessing' }
 MetacelloProjectRegistration >> projectVersion [
 
-	^ self versionInfo projectVersion ifNil: [
-			  | version |
-			  version := self projectSpec versionOrNil.
-			  self versionInfo projectVersion: version.
-			  version ]
+	^ self projectSpec version
 ]
 
 { #category : 'registration' }
@@ -308,18 +298,19 @@ MetacelloProjectRegistration >> unregisterProject [
 ]
 
 { #category : 'accessing' }
-MetacelloProjectRegistration >> version [
-
-	^ MetacelloProject singletonVersionName
-]
-
-{ #category : 'accessing' }
 MetacelloProjectRegistration >> versionInfo [
-
-	^ versionInfo ifNil: [ versionInfo := MetacelloProjectRegistrationVersionInfo new ]
+	"Deprecated in Pharo 14"
+	^ self
 ]
 
 { #category : 'accessing' }
-MetacelloProjectRegistration >> versionInfo: aMetacelloProjectRegistrationVersionInfo [
-  versionInfo := aMetacelloProjectRegistrationVersionInfo
+MetacelloProjectRegistration >> versionString [
+
+	^ versionString
+]
+
+{ #category : 'accessing' }
+MetacelloProjectRegistration >> versionString: anObject [
+
+	versionString := anObject
 ]
