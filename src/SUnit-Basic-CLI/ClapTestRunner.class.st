@@ -91,6 +91,8 @@ ClapTestRunner >> runPackages [
 	self inform: 'Running tests in ', packages size asString, ' Packages'.
 	self inform: packages asString.
 	results := (self testRunner runPackages: packages) select: #isNotNil.
+	
+	FileLocator workingDirectory files do: [ :file | file pathString traceCr ].
 				
 	self informResults: results.
 	self saveSessionIfAsked.
