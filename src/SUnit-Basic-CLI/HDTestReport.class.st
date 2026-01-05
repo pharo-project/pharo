@@ -325,6 +325,7 @@ HDTestReport >> setUp [
 	progressStream nextPutAll: 'running suite: ';
 		nextPutAll: suite name ; crlf; flush.
 
+	('Create XML file ' , self suiteFileNameWithoutExtension , '.xml') traceCr.
 	aFile := File named: self suiteFileNameWithoutExtension , '.xml' .
 	aFile delete.
 	stream := ZnCharacterWriteStream
@@ -424,6 +425,7 @@ HDTestReport >> tearDown [
 		nextPutAll: '" time="'; print: suiteTime / 1000.0; 
 		nextPutAll: '">'.
 	stream close.
+	'Close XML' traceCr.
 	
 	progressStream 
 		nextPutAll: 'finished running suite: ';
