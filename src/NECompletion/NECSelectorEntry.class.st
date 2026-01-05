@@ -14,20 +14,21 @@ Class {
 
 { #category : 'ui related' }
 NECSelectorEntry >> browse [
+
 	| class |
 	class := node receiver propertyAt: #type ifAbsent: nil.
-	class ifNil: [ SystemNavigation new browseAllImplementorsOf: self selector. ^true].
+	class ifNil: [
+			SystemNavigation new browseAllImplementorsOf: self selector.
+			^ true ].
 
 	^ self
-		findMethodAndDo: [ :method |
-			(Smalltalk tools toolNamed: #browser)
-				openOnClass: method methodClass
-				selector: method selector.
-			true ]
-		ifAbsent: [ :sel |
-			SystemNavigation new
-				browseAllImplementorsOf: sel.
-			true ]
+		  findMethodAndDo: [ :method |
+				  (Smalltalk tools toolNamed: #browser) 
+						openOnClass: method methodClass selector: method selector.
+				  true ]
+		  ifAbsent: [ :sel |
+				  SystemNavigation new browseAllImplementorsOf: sel.
+				  true ]
 ]
 
 { #category : 'private' }

@@ -1,7 +1,7 @@
 Extension { #name : 'MCRepository' }
 
 { #category : '*Metacello-Core' }
-MCRepository >> asRepositorySpecFor: aMetacelloMCProject [
+MCRepository >> asRepositorySpec [
 
 	self subclassResponsibility
 ]
@@ -41,11 +41,6 @@ MCRepository class >> newRepositoryFromSpec: aRepositorySpec [
 		  detect: [ :each | each isAvailableFor: aRepositorySpec type ]
 		  ifFound: [ :repositoryClass | repositoryClass createRepositoryFromSpec: aRepositorySpec ]
 		  ifNone: [ self error: 'Unknown repository type: ' , aRepositorySpec description ]
-]
-
-{ #category : '*Metacello-Core' }
-MCRepository >> projectVersion: aString [
-    "noop"
 ]
 
 { #category : '*Metacello-Core' }

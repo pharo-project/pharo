@@ -7,9 +7,9 @@ Class {
 	#instVars : [
 		'sorterClass'
 	],
-	#category : 'HeuristicCompletion-Model-SystemIntegration',
+	#category : 'HeuristicCompletion-Model-Old-Unused',
 	#package : 'HeuristicCompletion-Model',
-	#tag : 'SystemIntegration'
+	#tag : 'Old-Unused'
 }
 
 { #category : 'API - building' }
@@ -37,13 +37,7 @@ CoGlobalSorterResultSetBuilder >> visitNode: aNode [
 
 	| fetcher entries |
 	entries := aNode completionEntries: completionContext position.
-	"
-	""Under investigation: 
-		- for now the class does not define a class side sorterClass method. 
-		
-	sorter := self sorterClass new context: completionContext.
-	entries := sorter sortCompletionList: entries."
-
+	"we should probably be able to remove all the implementations of completionEntries:"
 	fetcher := CoCollectionFetcher onCollection: entries.
 
 	^ self configureFetcher: fetcher forNode: aNode

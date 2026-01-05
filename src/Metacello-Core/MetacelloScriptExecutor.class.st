@@ -189,11 +189,6 @@ MetacelloScriptExecutor >> shouldBeExecutedFor: aSpec [
 	^ true
 ]
 
-{ #category : 'options api' }
-MetacelloScriptExecutor >> silently: aBool [
-    self options at: #'silently' put: aBool
-]
-
 { #category : 'accessing' }
 MetacelloScriptExecutor >> singleRoot [
 

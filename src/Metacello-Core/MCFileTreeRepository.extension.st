@@ -1,6 +1,14 @@
 Extension { #name : 'MCFileTreeRepository' }
 
 { #category : '*Metacello-Core' }
+MCFileTreeRepository >> asRepositorySpec [
+
+	^ (MetacelloRepositorySpec description: self description)
+		  type: 'filetree';
+		  yourself
+]
+
+{ #category : '*Metacello-Core' }
 MCFileTreeRepository class >> createRepositoryFromSpec: aRepositorySpec [
 
 	MCRepository findFiletreeAlternateFormat: aRepositorySpec ifFound: [ :repository | ^ repository createRepositoryFromSpec: aRepositorySpec ].

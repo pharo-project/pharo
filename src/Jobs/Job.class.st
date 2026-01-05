@@ -58,6 +58,12 @@ Job class >> current [
 	^ CurrentJob value
 ]
 
+{ #category : 'enabling' }
+Job class >> disableDuring: aBlock [
+
+	^ self jobAnnouncer suspendAllWhile: aBlock
+]
+
 { #category : 'examples' }
 Job class >> exampleCurrentValue [
 

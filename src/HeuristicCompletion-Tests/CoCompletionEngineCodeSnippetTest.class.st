@@ -24,9 +24,7 @@ CoCompletionEngineCodeSnippetTest >> testCompletion [
 	self assert: editor string equals: snippet source.
 
 	completions := (2 to: snippet source size + 1) collect: [ :i |
-		editor selectFrom: i to: i - 1. "out carret"
-		editor completionEngine createContext entries
-			ifEmpty: [ nil ]
-			ifNotEmpty: [ :e | e first contents ] ].
-	self flag: 'do something with completion?'
+			               editor selectFrom: i to: i - 1. "out carret"
+			               editor completionEngine createContext entries ifEmpty: [ nil ] ifNotEmpty: [ :e | e first contents ] ].
+	
 ]

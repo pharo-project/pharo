@@ -9,10 +9,16 @@ Class {
 	#tag : 'Members'
 }
 
-{ #category : 'instance creation' }
-MetacelloMemberSpec class >> for: aProject spec: aSpec [
+{ #category : 'testing' }
+MetacelloMemberSpec class >> isAbstract [
 
-	^ (self for: aProject)
+	^ self = MetacelloMemberSpec
+]
+
+{ #category : 'instance creation' }
+MetacelloMemberSpec class >> spec: aSpec [
+
+	^ self new
 		  spec: aSpec;
 		  yourself
 ]

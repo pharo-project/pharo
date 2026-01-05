@@ -15,46 +15,126 @@ Class {
 		'variablesHeuristic',
 		'symbolsHeuristic'
 	],
+	#classVars : [
+		'MessageHeuristic',
+		'MethodNodeHeuristic',
+		'SymbolsHeuristic',
+		'VariablesHeuristic'
+	],
 	#category : 'HeuristicCompletion-Model-SystemIntegration',
 	#package : 'HeuristicCompletion-Model',
 	#tag : 'SystemIntegration'
 }
 
-{ #category : 'heuristics' }
-CoASTHeuristicsResultSetBuilder >> messageHeuristic [
+{ #category : 'class initialization' }
+CoASTHeuristicsResultSetBuilder class >> initialize [
+	"self initialize"
+	
+	self initializeMessagesHeuristic.
+	self initializeMethodNodeHeuristic.
+	self initializeSymbolHeuristic.
+	self initializeVariablesHeuristic 
 
-	^ messageHeuristic ifNil: [ messageHeuristic := self newHeuristicBuilder
-		
-		add: CoSelfMessageHeuristic new;
-		add: CoSuperMessageHeuristic new;
-		add: CoTypedReceiverMessageHeuristic new;
-		add: CoInitializeInferencedMessageHeuristic new;
-		add: CoLiteralMessageHeuristic new;
-		add: CoGlobalVariableMessageHeuristic new;
-		add: CoVariableWithTypeNameMessageHeuristic new;
-		add: CoVariableValueMessageHeuristic new;
-		add: CoDependencyMessageHeuritics new;
-		add: CoUnknownMessageHeuristic new;
-		build ]
+	
+]
+
+{ #category : 'class initialization' }
+CoASTHeuristicsResultSetBuilder class >> initializeMessagesHeuristic [
+
+		MessageHeuristic :=  OrderedCollection <- {  
+				                      CoSelfMessageHeuristic new .
+				                      CoSuperMessageHeuristic new.
+				                      CoDependencyMessageHeuristics new .
+				                      CoTypedReceiverMessageHeuristic  new .
+				                      CoInitializeInferencedMessageHeuristic  new .
+				                      CoLiteralMessageHeuristic  new . 
+				                      CoGlobalVariableMessageHeuristic new  .
+				                      CoVariableWithTypeNameMessageHeuristic  new .
+				                      CoVariableValueMessageHeuristic  new .
+				                      CoUnknownMessageHeuristic new  }
+]
+
+{ #category : 'class initialization' }
+CoASTHeuristicsResultSetBuilder class >> initializeMethodNodeHeuristic [
+
+	MethodNodeHeuristic := OrderedCollection <- {
+		                       CoSuperMessageHeuristic new.
+		                       CoUnknownMessageHeuristic new } 
+]
+
+{ #category : 'class initialization' }
+CoASTHeuristicsResultSetBuilder class >> initializeSymbolHeuristic [
+
+	SymbolsHeuristic := OrderedCollection <- { CoLiteralSymbolHeuristic new } 
+]
+
+{ #category : 'class initialization' }
+CoASTHeuristicsResultSetBuilder class >> initializeVariablesHeuristic [
+
+	VariablesHeuristic := OrderedCollection <- {
+		                      CoLocalScopeVariablesHeuristic new.
+		                      CoWorkspaceVariablesHeuristic new.
+		                      CoInstanceAccessibleVariablesHeuristic new.
+		                      (CoGlobalVariablesHeuristic new globalVariableFetcherClass: CoDependencyGlobalVariableFetcher).
+		                      CoGlobalVariablesHeuristic new } 
+]
+
+{ #category : 'deprecated' }
+CoASTHeuristicsResultSetBuilder >> messageHeuristic [
+	
+	self deprecated: 'Use messagesHeuristic' transformWith: '`@rec messageHeuristic' -> '`@rec messagesHeuristic'.
+	^ self messagesHeuristic
+]
+
+{ #category : 'deprecated' }
+CoASTHeuristicsResultSetBuilder >> messageHeuristic: aHeuristic [
+
+		self deprecated: 'Use messagesHeuristic' transformWith: '`@rec messageHeuristic: `@arg' -> '`@rec messagesHeuristic: `@arg'.
+	self messagesHeuristic: aHeuristic
 ]
 
 { #category : 'heuristics' }
-CoASTHeuristicsResultSetBuilder >> messageHeuristic: aHeuristic [
+CoASTHeuristicsResultSetBuilder >> messagesHeuristic [
+
+	^ messageHeuristic ifNil: [
+			| builder |
+			builder := self newHeuristicBuilder.
+			MessageHeuristic do: [ :aCls | builder add: aCls ].
+			messageHeuristic := builder build ]
+]
+
+{ #category : 'heuristics' }
+CoASTHeuristicsResultSetBuilder >> messagesHeuristic: aHeuristic [
 
 	messageHeuristic := aHeuristic
 ]
 
-{ #category : 'heuristics' }
+{ #category : 'deprecated' }
 CoASTHeuristicsResultSetBuilder >> methodNodeHeuristic [
-	^ methodNodeHeuristic ifNil: [
-		methodNodeHeuristic := self newHeuristicBuilder
-		add: CoSuperMessageHeuristic new;
-		add: CoUnknownMessageHeuristic new;
-		build ]
+
+		self deprecated: 'Use methodNodeHeuristic' transformWith: '`@rec methodNodeHeuristic' -> '`@rec methodNodesHeuristic'.
+		^ self methodNodesHeuristic
+]
+
+{ #category : 'deprecated' }
+CoASTHeuristicsResultSetBuilder >> methodNodeHeuristic: aHeuristic [
+
+	self deprecated: 'Use methodNodesHeuristic:' transformWith: '`@rec methodNodeHeuristic: `@arg' -> '`@rec methodNodesHeuristic: `@arg'.
+	self methodNodesHeuristic: aHeuristic
 ]
 
 { #category : 'heuristics' }
-CoASTHeuristicsResultSetBuilder >> methodNodeHeuristic: aHeuristic [
+CoASTHeuristicsResultSetBuilder >> methodNodesHeuristic [
+
+	^ methodNodeHeuristic ifNil: [
+			| builder |
+			builder := self newHeuristicBuilder.
+			MethodNodeHeuristic do: [ :fetcher | builder add: fetcher ].
+			methodNodeHeuristic := builder build ]
+]
+
+{ #category : 'heuristics' }
+CoASTHeuristicsResultSetBuilder >> methodNodesHeuristic: aHeuristic [
 
 	methodNodeHeuristic := aHeuristic
 ]
@@ -66,9 +146,11 @@ CoASTHeuristicsResultSetBuilder >> newHeuristicBuilder [
 
 { #category : 'heuristics' }
 CoASTHeuristicsResultSetBuilder >> symbolsHeuristic [
-	^ symbolsHeuristic ifNil: [ symbolsHeuristic := self newHeuristicBuilder
-		add: CoLiteralSymbolHeuristic new;
-		build ]
+	^ symbolsHeuristic ifNil: [ 
+			| builder |
+			builder := self newHeuristicBuilder.
+			SymbolsHeuristic do: [ :aCls | builder add: aCls ].
+			symbolsHeuristic :=  builder build ]
 ]
 
 { #category : 'heuristics' }
@@ -80,14 +162,12 @@ CoASTHeuristicsResultSetBuilder >> symbolsHeuristic: aHeuristics [
 { #category : 'heuristics' }
 CoASTHeuristicsResultSetBuilder >> variablesHeuristic [
 
-	^ variablesHeuristic ifNil: [ variablesHeuristic := self newHeuristicBuilder
-		add: CoLocalScopeVariablesHeuristic new;
-		add: CoWorkspaceVariablesHeuristic new;
-		add: CoInstanceAccessibleVariablesHeuristic new;
-		add: (CoGlobalVariablesHeuristic new globalVariableFetcherClass:
-					CoDependencyGlobalVariableFetcher);
-			add: CoGlobalVariablesHeuristic new;
-		build ]
+	^ variablesHeuristic ifNil: [
+
+			| builder |
+			builder := self newHeuristicBuilder.
+			VariablesHeuristic do: [ :aCls | builder add: aCls ].
+			variablesHeuristic :=  builder build ]
 ]
 
 { #category : 'heuristics' }
@@ -107,13 +187,11 @@ CoASTHeuristicsResultSetBuilder >> visitLiteralValueNode: aNode [
 ]
 
 { #category : 'visiting' }
-CoASTHeuristicsResultSetBuilder >> visitMessageNode: aMessageNode [ 
+CoASTHeuristicsResultSetBuilder >> visitMessageNode: aMessageNode [
 
 	completionContext completionToken ifEmpty: [ ^ super visitMessageNode: aMessageNode ].
 
-	^ self
-		configureFetcherForNode: aMessageNode
-		usingHeuristicAvoidingRepetitions: self messageHeuristic
+	^ self configureFetcherForNode: aMessageNode usingHeuristicAvoidingRepetitions: self messagesHeuristic
 ]
 
 { #category : 'visiting' }
@@ -121,9 +199,7 @@ CoASTHeuristicsResultSetBuilder >> visitMethodNode: aMethodNode [
 
 	completionContext completionToken ifEmpty: [ ^ super visitMethodNode: aMethodNode ].
 
-	^ self
-		configureFetcherForNode: aMethodNode
-		usingHeuristicAvoidingRepetitions: self methodNodeHeuristic
+	^ self configureFetcherForNode: aMethodNode usingHeuristicAvoidingRepetitions: self methodNodesHeuristic
 ]
 
 { #category : 'visiting' }
@@ -146,7 +222,7 @@ CoASTHeuristicsResultSetBuilder >> visitValueNode: aNode [
 			aMessageNode selector: #''.
 			^ self
 				  configureFetcherForNode: aMessageNode
-				  usingHeuristicAvoidingRepetitions: self messageHeuristic ] ].
+				  usingHeuristicAvoidingRepetitions: self messagesHeuristic ] ].
 
 	^ super visitValueNode: aNode
 ]

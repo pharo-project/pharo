@@ -13,6 +13,6 @@ MetacelloScriptImageExecutor >> shouldBeExecutedFor: projectSpec [
 
 	^ MetacelloProjectRegistration
 		  registrationForProjectSpec: projectSpec
+		  ifPresent: [ :existingRegistration | existingRegistration loadedInImage ]
 		  ifAbsent: [ false ]
-		  ifPresent: [ :existingRegistration :newRegistration | existingRegistration loadedInImage ]
 ]

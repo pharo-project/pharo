@@ -100,14 +100,6 @@ MCFileTreeRepository >> allFileNamesForVersionNamed: aString [
 	^ self filterFileNames: self readableFileNames forVersionNamed: aString
 ]
 
-{ #category : 'accessing' }
-MCFileTreeRepository >> asRepositorySpecFor: aMetacelloProject [
-    ^ aMetacelloProject repositorySpec
-        description: self description;
-        type: 'filetree';
-        yourself
-]
-
 { #category : 'storing' }
 MCFileTreeRepository >> basicStoreVersion: aVersion [
   self readonly

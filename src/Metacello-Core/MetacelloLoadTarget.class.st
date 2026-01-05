@@ -13,6 +13,12 @@ MetacelloLoadTarget >> actionLabel [
 ]
 
 { #category : 'accessing' }
+MetacelloLoadTarget >> baselineFor: aDirective [
+
+	^ aDirective spec project configuration
+]
+
+{ #category : 'accessing' }
 MetacelloLoadTarget >> loader [
 	
 	^ engine loader
@@ -45,9 +51,10 @@ MetacelloLoadTarget >> visitPackageLoadDirective: aMetacelloPackageLoadDirective
 { #category : 'visiting' }
 MetacelloLoadTarget >> visitPostLoadDirective: aMetacelloPostLoadDirective [
 
-	aMetacelloPostLoadDirective spec postLoadDoItBlock ifNotNil: [ :block |
+	aMetacelloPostLoadDirective spec postLoadDoIt ifNotNil: [ :symbol |
 			MetacelloNotification signal: 'Executing: ' , aMetacelloPostLoadDirective label.
-			block valueWithPossibleArgs: {
+			symbol valueWithEnoughArguments: {
+					(self baselineFor: aMetacelloPostLoadDirective).
 					self.
 					aMetacelloPostLoadDirective spec }.
 			MetacelloNotification signal: 'Done executing: ' , aMetacelloPostLoadDirective label ]
@@ -56,9 +63,10 @@ MetacelloLoadTarget >> visitPostLoadDirective: aMetacelloPostLoadDirective [
 { #category : 'visiting' }
 MetacelloLoadTarget >> visitPreLoadDirective: aMetacelloPreLoadDirective [
 
-	aMetacelloPreLoadDirective spec preLoadDoItBlock ifNotNil: [ :block |
+	aMetacelloPreLoadDirective spec preLoadDoIt ifNotNil: [ :symbol |
 			MetacelloNotification signal: 'Executing: ' , aMetacelloPreLoadDirective label.
-			block valueWithPossibleArgs: {
+			symbol valueWithEnoughArguments: {
+					(self baselineFor: aMetacelloPreLoadDirective).
 					self.
 					aMetacelloPreLoadDirective spec }.
 			MetacelloNotification signal: 'Done executing: ' , aMetacelloPreLoadDirective label ]

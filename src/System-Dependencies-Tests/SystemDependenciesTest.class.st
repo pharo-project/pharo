@@ -100,7 +100,7 @@ SystemDependenciesTest >> knownBasicToolsDependencies [
 	"ideally this list should be empty"
 
 	^ #( 'Athens-Cairo' 'Athens-Core' #'Commander-Core' #Reflectivity #'Reflectivity-Tools' #Shout 'HeuristicCompletion-Model'
-	     #VariablesLibrary #'Spec2-CommonWidgets' #'NewTools-Scopes' #'Traits-Tests' 'NewTools-Scopes' 'NewTools-Transcript' #'NewTools-FileBrowser' #EnlumineurFormatter )
+	     #VariablesLibrary #'Spec2-CommonWidgets' #'NewTools-Scopes' #'Traits-Tests' 'NewTools-Scopes' 'NewTools-Transcript' #'NewTools-FileBrowser' #EnlumineurFormatter 'Calypso-SystemTools-OldToolCompatibillity' )
 ]
 
 { #category : 'known dependencies' }

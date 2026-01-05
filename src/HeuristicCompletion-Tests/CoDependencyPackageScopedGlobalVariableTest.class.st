@@ -8,6 +8,7 @@ Class {
 
 { #category : 'tests' }
 CoDependencyPackageScopedGlobalVariableTest >> testCompletionClassIsUnknownShouldGiveZero [
+
 	| localFetcher fetchedElements |
 	localFetcher := CoDependencyGlobalVariableFetcher  new.
 	localFetcher

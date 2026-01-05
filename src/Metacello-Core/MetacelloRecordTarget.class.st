@@ -93,37 +93,29 @@ MetacelloRecordTarget >> visitPackageSpec: aMetacelloPackageSpec [
 { #category : 'visiting' }
 MetacelloRecordTarget >> visitProjectReference: aMetacelloProjectReferenceSpec [
 
-	| displayString registered override registration requiredArray projectReferenceToLoad |
-	projectReferenceToLoad := aMetacelloProjectReferenceSpec
-		                          projectReference.
+	| registered override registration requiredArray projectReferenceToLoad |
+	projectReferenceToLoad := aMetacelloProjectReferenceSpec projectReference.
 
-	displayString := 'Project: ' , projectReferenceToLoad name.
-	projectReferenceToLoad versionString ifNotNil: [
-		displayString := displayString , ' '
-		                 , projectReferenceToLoad versionString ].
-
-	MetacelloNotification signal: displayString.
+	MetacelloNotification signal: 'Project: ' , projectReferenceToLoad name.
 
 	projectReferenceToLoad isLocked ifTrue: [
-		MetacelloNotification signal: 'Project is locked, skipping.'.
-		^ projectReferenceToLoad ].
+			MetacelloNotification signal: 'Project is locked, skipping.'.
+			^ projectReferenceToLoad ].
 
 	registration := MetacelloProjectRegistration
 		                registrationForProjectSpec: projectReferenceToLoad
-		                ifAbsent: [ :new | new ]
-		                ifPresent: [ :existing :new |
-		                engine resolvePresentProject: existing new: new ].
+		                ifPresent: [ :existing | engine resolvePresentProject: existing new: projectReferenceToLoad asProjectRegistration ]
+		                ifAbsent: [ projectReferenceToLoad asProjectRegistration ].
 	registered := registration projectSpec.
+
 	(registered compareEqual: projectReferenceToLoad) ifFalse: [ "counts as override, only if they differ in some aspect"
-		override := registered copy.
-		override mergeScriptLoads: projectReferenceToLoad.
-		projectReferenceToLoad := override ].
+			override := registered copy.
+			override mergeScriptLoads: projectReferenceToLoad.
+			projectReferenceToLoad := override ].
 
 	projectReferenceToLoad ensureProjectLoadedWithEngine: engine.
 	requiredArray := projectReferenceToLoad loadListForVersion: projectReferenceToLoad version.
-	projectReferenceToLoad version
-		recordRequiredFromArray: requiredArray
-		withEngine: engine.
+	projectReferenceToLoad version recordRequiredFromArray: requiredArray withEngine: engine.
 	registration registerProject
 ]
 

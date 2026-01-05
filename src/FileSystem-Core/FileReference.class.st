@@ -356,6 +356,8 @@ FileReference >> lastFileFor: baseFileName extension: extension [
 
 	"FileSystem workingDirectory lastFileFor: 'games' extension: 'ston'"
 
+	self deprecated: 'Use the class NewFileVersionner' on: '1/1/2026' in: #pharo14. 
+	
 	^ (((FileVersionner from: self) versionNumberWithoutNumberPatternFor: baseFileName extension: extension)
 		ifNil: [ self error: 'No file with number pattern' ]
 		ifNotNil: [: version | 
@@ -395,7 +397,7 @@ FileReference >> nextNameFor: baseFileName extension: extension [
    Increment the version number (of the largest one) and answer the new file name, e.g., games23.ston
    If a version number is not found, set the version to 1 and answer a new file name"
 
-	"(FileSystem workingDirectory nextNameFor: 'games' extension: 'ston') asFileReference ensureCreateFile"
+	self deprecated: 'Use the class NewFileVersionner' on: '1/1/2026' in: #pharo14. 
 
 	^ ((FileVersionner from: self) versionNumberWithoutNumberPatternFor: baseFileName extension: extension)
 		ifNil: [ baseFileName, '.1.', extension ]
@@ -408,6 +410,8 @@ FileReference >> nextVersion [
 	preceding the file extension.  Increment the version number and answer the new file name.
 	If a version number is not found, return just the file"
 
+	self deprecated: 'Use NewFileVersionner' on: '1/1/2026' in: #pharo14.
+	
 	self exists
 		ifFalse: [ ^ self ].
 	^ (FileVersionner from: self) nextVersion
@@ -559,7 +563,8 @@ FileReference >> versionNumberFor: basename extension: extension [
 	"Answer the latest (largest) version number for the specified file.
 	0 = basename.extension exists, but nothing later.
 	nil = no file exists"
-
+	self deprecated: 'Use NewFileVersionner' on: '1/1/2026' in: #pharo14.
+	
 	^ (FileVersionner from: self) versionNumberFor: basename extension: extension
 
 ]

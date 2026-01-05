@@ -16,7 +16,6 @@ Class {
 	#name : 'NECMenuMorph',
 	#superclass : 'Morph',
 	#instVars : [
-		'selected',
 		'firstVisible',
 		'titleStringMorph',
 		'context',
@@ -24,7 +23,8 @@ Class {
 		'detailMorph',
 		'detailPosition',
 		'engine',
-		'isDetailMorphVisible'
+		'isDetailMorphVisible',
+		'selectedIndex'
 	],
 	#category : 'NECompletion-Morphic',
 	#package : 'NECompletion-Morphic'
@@ -267,7 +267,7 @@ NECMenuMorph >> createTitle [
 
 { #category : 'paging' }
 NECMenuMorph >> currentPage [
-	^(self selected - 1 // self pageHeight ) + 1
+	^(self selectedIndex - 1 // self pageHeight ) + 1
 ]
 
 { #category : 'private' }
@@ -319,7 +319,7 @@ NECMenuMorph >> drawLine: index on: aCanvas rectangle: rectangle [
 		ifTrue: [ String empty ].
 	type := necEntry hightlightSymbol.
 	font := self selectFont: type.
-	index = self selected
+	index = self selectedIndex
 		ifTrue: [
 			| rect |
 			rect := rectangle withBottom: rectangle top + self class itemHeight.
@@ -432,7 +432,7 @@ NECMenuMorph >> gotoPage: anInteger [
 		ifTrue: [ ^ self ].
 	item := item max: 1.
 	firstVisible := item.
-	self selected: firstVisible
+	self selectedIndex: firstVisible
 ]
 
 { #category : 'event handling' }
@@ -488,13 +488,15 @@ NECMenuMorph >> initialize [
 { #category : 'actions' }
 NECMenuMorph >> insertSelected [
 
-	| item selectionIndex |
+	|  selectionIndex |
 	self delete.
 	context hasEntries ifFalse: [ ^ false ].
-	selectionIndex := self selected.
-	item := context activateEntryAt: selectionIndex.
+	context activateEntryAt: self selectedIndex.
+	
+	"Now we can handle the announcement"
+	selectionIndex := self selectedIndex.
 	self class environment codeChangeAnnouncer announce: (CompletionItemSelected new
-			 selectedItem: item;
+			 selectedItem: (context entries at: selectionIndex);
 			 token: context completionToken;
 			 entries: context entries;
 			 index: selectionIndex).
@@ -543,20 +545,20 @@ NECMenuMorph >> mouseDown: evt [
 
 { #category : 'actions' }
 NECMenuMorph >> moveDown [
-	self selected: self selected + 1.
-	(self selected > self lastVisible
-			and: [self selected <= self itemsCount])
+	self selectedIndex: self selectedIndex + 1.
+	(self selectedIndex > self lastVisible
+			and: [self selectedIndex <= self itemsCount])
 		ifTrue: [firstVisible := firstVisible + 1].
 	self changed
 ]
 
 { #category : 'actions' }
 NECMenuMorph >> moveUp [
-	(self selected = 0
+	(self selectedIndex = 0
 			and: [self firstVisible = 1])
 		ifTrue: [^ self].
-	self selected: self selected - 1.
-	self selected < self firstVisible
+	self selectedIndex: self selectedIndex - 1.
+	self selectedIndex < self firstVisible
 		ifTrue: [firstVisible := firstVisible - 1].
 	self changed
 ]
@@ -597,9 +599,9 @@ NECMenuMorph >> prepareRectForNextRow: aRectangle [
 { #category : 'actions' }
 NECMenuMorph >> refreshSelection [
 
-	self selected: 0.
+	self selectedIndex: 0.
 	firstVisible := 1.
-	context hasEntries ifTrue: [ self selected: 1 ].
+	context hasEntries ifTrue: [ self selectedIndex: 1 ].
 	self show.
 	^ true
 ]
@@ -632,27 +634,27 @@ NECMenuMorph >> selectFont: aSymbol [
 NECMenuMorph >> selectIndexAtPoint: aPoint [
 	| yPos  |
 	yPos := aPoint y - self bounds top.
-	selected := firstVisible + (yPos / self class itemHeight) floor.
-	selected := selected min: context entries size max: 1
-]
-
-{ #category : 'accessing' }
-NECMenuMorph >> selected [
-	"Answer the value of selected"
-	selected ifNil: [ selected := self firstVisible ].
-	^ selected
-]
-
-{ #category : 'accessing' }
-NECMenuMorph >> selected: aNumber [
-	"Set the value of selected"
-	context hasEntries ifTrue:
-		[ ((1 to: self itemsCount) includes: aNumber) ifTrue: [ aNumber ~= selected ifTrue: [ selected := aNumber ] ] ]
+	selectedIndex := firstVisible + (yPos / self class itemHeight) floor.
+	selectedIndex := selectedIndex min: context entries size max: 1
 ]
 
 { #category : 'accessing' }
 NECMenuMorph >> selectedEntry [
-	^ context entries at: self selected
+	^ context entries at: self selectedIndex
+]
+
+{ #category : 'accessing' }
+NECMenuMorph >> selectedIndex [
+	
+	selectedIndex ifNil: [ selectedIndex := self firstVisible ].
+	^ selectedIndex
+]
+
+{ #category : 'accessing' }
+NECMenuMorph >> selectedIndex: aNumber [
+
+	context hasEntries ifTrue:
+		[ ((1 to: self itemsCount) includes: aNumber) ifTrue: [ aNumber ~= selectedIndex ifTrue: [ selectedIndex := aNumber ] ] ]
 ]
 
 { #category : 'actions' }

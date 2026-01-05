@@ -10,7 +10,7 @@ Class {
 }
 
 { #category : 'heuristics' }
-CoASTSessionResultSetBuilder >> messageHeuristic [
+CoASTSessionResultSetBuilder >> messagesHeuristic [
 	^ messageHeuristic ifNil: [ messageHeuristic := self newHeuristicBuilder
 		add: (CoSessionMessagesHeuristic new
 			session: session;

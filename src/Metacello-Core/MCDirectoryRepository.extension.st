@@ -1,10 +1,9 @@
 Extension { #name : 'MCDirectoryRepository' }
 
 { #category : '*Metacello-Core' }
-MCDirectoryRepository >> asRepositorySpecFor: aMetacelloMCProject [
-  ""
+MCDirectoryRepository >> asRepositorySpec [
 
-  ^ directory asRepositorySpecFor: aMetacelloMCProject
+	^ directory asRepositorySpec
 ]
 
 { #category : '*Metacello-Core' }

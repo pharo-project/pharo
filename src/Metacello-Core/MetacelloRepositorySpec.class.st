@@ -13,6 +13,20 @@ Class {
 	#tag : 'Specs'
 }
 
+{ #category : 'instance creation' }
+MetacelloRepositorySpec class >> description: aString [
+
+	^ self new
+		  description: aString;
+		  yourself
+]
+
+{ #category : 'visiting' }
+MetacelloRepositorySpec >> acceptVisitor: aVisitor [
+
+	self error: 'Should not be visitable..'
+]
+
 { #category : 'adding' }
 MetacelloRepositorySpec >> addToMetacelloRepositories: aMetacelloRepositoriesSpec [
 
@@ -92,13 +106,14 @@ MetacelloRepositorySpec >> mergeIntoMetacelloRepositories: aMetacelloRepositorie
 
 { #category : 'merging' }
 MetacelloRepositorySpec >> mergeMap [
-    | map |
-    map := super mergeMap.
-    map at: #'description' put: description.
-    map at: #'type' put: self type.
-    map at: #'username' put: username.
-    map at: #'password' put: password.
-    ^ map
+
+	| map |
+	map := super mergeMap.
+	map at: #description put: description.
+	map at: #type put: self type.
+	map at: #username put: username.
+	map at: #password put: password.
+	^ map
 ]
 
 { #category : 'querying' }

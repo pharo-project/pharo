@@ -628,6 +628,17 @@ SymbolTest >> testValueWithArguments [
 ]
 
 { #category : 'tests' }
+SymbolTest >> testValueWithEnoughArguments [
+
+	| symbol |
+	symbol := #+.
+
+	self assert: (symbol valueWithEnoughArguments: { 1. 4 }) equals: 5.
+	self assert: (symbol valueWithEnoughArguments: { 1. 4. 5 }) equals: 5.
+	self should: [ symbol valueWithEnoughArguments: { 1 } ] raise: Error
+]
+
+{ #category : 'tests' }
 SymbolTest >> testValueWithOneArg [
 
 	| symbol rcvr |

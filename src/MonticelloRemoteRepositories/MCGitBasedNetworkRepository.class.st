@@ -255,15 +255,6 @@ MCGitBasedNetworkRepository class >> projectDirectoryFrom: projectPath version: 
 	^ projectDirectory
 ]
 
-{ #category : 'version patterns' }
-MCGitBasedNetworkRepository class >> projectVersionFromString: aString [
-	"strip leading $v if present and return an instance of MetacelloVersionNumber"
-
-	| versionString |
-	versionString := (aString beginsWith: 'v') ifTrue: [ aString allButFirst ] ifFalse: [ aString ].
-	^ MetacelloVersionNumber fromString: versionString
-]
-
 { #category : 'private' }
 MCGitBasedNetworkRepository class >> projectZipUrlFor: projectPath versionString: versionString [
   self subclassResponsibility
@@ -330,10 +321,9 @@ MCGitBasedNetworkRepository >> allFileNames [
 ]
 
 { #category : 'accessing' }
-MCGitBasedNetworkRepository >> asRepositorySpecFor: aMetacelloProject [
+MCGitBasedNetworkRepository >> asRepositorySpec [
 
-	^ aMetacelloProject repositorySpec
-		  description: self description;
+	^ (MetacelloRepositorySpec description: self description)
 		  type: self class basicDescription;
 		  yourself
 ]
@@ -399,6 +389,19 @@ MCGitBasedNetworkRepository >> downloadJSONTags [
 MCGitBasedNetworkRepository >> ensureLocalRepository [
 	localRepository ifNotNil: [ ^ self ].
 	self resolveLocalRespository
+]
+
+{ #category : 'version patterns' }
+MCGitBasedNetworkRepository >> extractNumericComponent: subString [
+	"$. separated components are integers"
+
+	| number |
+	number := [ subString asNumber ]
+		          on: Error
+		          do: [ :ex | ex return: subString ].
+	^ number asString = subString
+		  ifTrue: [ number ]
+		  ifFalse: [ subString ]
 ]
 
 { #category : 'fetching' }
@@ -538,6 +541,34 @@ MCGitBasedNetworkRepository >> projectVersionEscaped [
   ^ pv
 ]
 
+{ #category : 'version patterns' }
+MCGitBasedNetworkRepository >> projectVersionFromString: aString [
+	"strip leading $v if present and return an instance of MetacelloVersionNumber"
+
+	| versionString components beforeFirst |
+	versionString := (aString beginsWith: 'v')
+		                 ifTrue: [ aString allButFirst ]
+		                 ifFalse: [ aString ].
+
+	components := OrderedCollection new.
+	(versionString findTokens: '.') do: [ :subString |
+			| strs |
+			strs := subString findTokens: '-'. "first subString token could be an integer"
+			components add: (self extractNumericComponent: strs first).
+			strs size > 1 ifTrue: [ "remaining are uncoditionally Strings, because of leading $-" components addAll: strs allButFirst ] ].
+
+	beforeFirst := true.
+	^ String streamContents: [ :aStream |
+			  components do: [ :each |
+					  beforeFirst
+						  ifTrue: [ beforeFirst := false ]
+						  ifFalse: [
+								  each isString
+									  ifTrue: [ aStream nextPut: $- ]
+									  ifFalse: [ aStream nextPut: $. ] ].
+					  aStream nextPutAll: each asString ] ]
+]
+
 { #category : 'accessing' }
 MCGitBasedNetworkRepository >> projectVersionPattern [
   "do not set projectVersionPattern unless it _is_ a pattern: includes $#, %*, or $?"
@@ -595,38 +626,26 @@ MCGitBasedNetworkRepository >> resolveLocalRespository [
 	directory := self calculateRepositoryDirectory.
 	directoryPath := self class fileUtils directoryPathString: directory.
 	directory ifAbsent: [ self error: 'Local directory ' , directoryPath , ' does not exist.' ].
-	localRepository := MetacelloPlatform current createRepository: (MetacelloRepositorySpec new
-			                    description: 'filetree://' , directoryPath;
-			                    yourself)
+	localRepository := MetacelloPlatform current createRepository: (MetacelloRepositorySpec description: 'filetree://' , directoryPath)
 ]
 
 { #category : 'private' }
 MCGitBasedNetworkRepository >> resolveProjectVersionPattern: aString [
-  "aString must conform to the syntax for MetacelloVersionNumber with the exception that aString may have a leading $v which is stripped before conversion to a MetacelloVersionNumber patterm"
+	"aString must conform to the syntax for MetacelloVersionNumber with the exception that aString may have a leading $v which is stripped before conversion to a MetacelloVersionNumber patterm"
 
-  | patternString tagDictionary matchingTags tagAssocs sortedMatchingTags theTag |
-  self projectPath
-    ifNil: [ self error: 'projectPath must be set to resolve project version pattern.' ].
-  patternString := (self class projectVersionFromString: aString) asString.
-  tagDictionary := self downloadJSONTags.
-  tagAssocs := tagDictionary keys
-    collect: [ :tagName | 
-      | tagVersion |
-      tagVersion := self class projectVersionFromString: tagName.
-      tagVersion -> tagName ].
-  matchingTags := tagAssocs select: [ :assoc | assoc key match: patternString ].
-  matchingTags isEmpty
-    ifTrue: [ 
-      projectVersion := aString.
-      ^ self
-        error:
-          'No tags matching the pattern ' , aString printString
-            , ' found for repository description '
-            , self description printString ].
-  sortedMatchingTags := matchingTags asArray sort: [ :a :b | a key <= b key ].
-  theTag := sortedMatchingTags last.
-  projectVersionPattern := aString.
-  projectVersion := theTag value
+	| patternString tagDictionary matchingTags tagAssocs sortedMatchingTags theTag |
+	self projectPath ifNil: [ self error: 'projectPath must be set to resolve project version pattern.' ].
+	patternString := (self projectVersionFromString: aString) asString.
+	tagDictionary := self downloadJSONTags.
+	tagAssocs := tagDictionary keys collect: [ :tagName | (self projectVersionFromString: tagName) -> tagName ].
+	matchingTags := tagAssocs select: [ :assoc | assoc key match: patternString ].
+	matchingTags ifEmpty: [
+			projectVersion := aString.
+			^ self error: 'No tags matching the pattern ' , aString printString , ' found for repository description ' , self description printString ].
+	sortedMatchingTags := matchingTags asArray sort: [ :a :b | a key <= b key ].
+	theTag := sortedMatchingTags last.
+	projectVersionPattern := aString.
+	projectVersion := theTag value
 ]
 
 { #category : 'storing' }

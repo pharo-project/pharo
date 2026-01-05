@@ -63,17 +63,16 @@ MCFtpRepository class >> urlSchemes [
 ]
 
 { #category : 'converting' }
-MCFtpRepository >> asRepositorySpecFor: aMetacelloProject [
+MCFtpRepository >> asRepositorySpec [
+
 	| dir |
 	dir := directory.
-	(directory at: 1) = $/
-		ifFalse: [ dir := '/', dir ].
-	^(aMetacelloProject repositorySpec)
-		description:  'ftp://', host, dir;
-	 	type: 'ftp';
-		username: user;
-		password: password;
-		yourself
+	(directory at: 1) = $/ ifFalse: [ dir := '/' , dir ].
+	^ (MetacelloRepositorySpec description: 'ftp://' , host , dir)
+		  type: 'ftp';
+		  username: user;
+		  password: password;
+		  yourself
 ]
 
 { #category : 'enumerating' }
