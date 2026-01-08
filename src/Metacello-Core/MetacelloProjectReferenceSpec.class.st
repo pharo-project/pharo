@@ -2,7 +2,8 @@ Class {
 	#name : 'MetacelloProjectReferenceSpec',
 	#superclass : 'MetacelloAbstractPackageSpec',
 	#instVars : [
-		'projectReference'
+		'projectReference',
+		'originalName'
 	],
 	#category : 'Metacello-Core-Model',
 	#package : 'Metacello-Core',
@@ -55,6 +56,16 @@ MetacelloProjectReferenceSpec >> mergeSpec: anotherSpec [
 MetacelloProjectReferenceSpec >> name [
 
 	^ self projectReference name
+]
+
+{ #category : 'accessing' }
+MetacelloProjectReferenceSpec >> originalName [
+	^ originalName
+]
+
+{ #category : 'accessing' }
+MetacelloProjectReferenceSpec >> originalName: anObject [
+	originalName := anObject
 ]
 
 { #category : 'loading' }

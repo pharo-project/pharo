@@ -23,14 +23,8 @@ MetacelloMemberSpec class >> spec: aSpec [
 		  yourself
 ]
 
-{ #category : 'visiting' }
-MetacelloMemberSpec >> acceptVisitor: aVisitor [
-
-	self error: 'Should not be visitable..'
-]
-
 { #category : 'actions' }
-MetacelloMemberSpec >> applyToMap: map [
+MetacelloMemberSpec >> applyTo: aCollection [
 
 	self subclassResponsibility
 ]
@@ -49,12 +43,6 @@ MetacelloMemberSpec >> printOn: aStream [
 		nextPutAll: ' [';
 		nextPutAll: self name;
 		nextPutAll: ']'
-]
-
-{ #category : 'accessing' }
-MetacelloMemberSpec >> sourceName [
-
-	^self name
 ]
 
 { #category : 'accessing' }

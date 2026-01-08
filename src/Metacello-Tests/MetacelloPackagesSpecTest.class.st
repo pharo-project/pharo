@@ -203,58 +203,6 @@ MetacelloPackagesSpecTest >> testAddProjectB [
 ]
 
 { #category : 'tests' }
-MetacelloPackagesSpecTest >> testCopyToGroup [
-	"not currently used by MetacelloBaselineConstructor"
-
-	| packages group |
-	packages := MetacelloPackagesSpec new.
-	packages add: (self groupSpec
-			 name: 'Platform';
-			 includes: 'Core';
-			 yourself).
-	packages merge: (self groupSpec
-			 name: 'Platform';
-			 includes: 'Tests';
-			 yourself).
-	group := packages packageNamed: 'Platform' ifAbsent: [ self assert: false ].
-	self assert: (group includes includes: 'Core').
-	self assert: (group includes includes: 'Tests').
-	group := self groupSpec
-		         name: 'PlatformCopy';
-		         includes: 'Copy';
-		         yourself.
-	packages copy: 'Platform' to: group.
-	group := packages packageNamed: 'PlatformCopy' ifAbsent: [ self assert: false ].
-	self assert: (group includes includes: 'Core').
-	self assert: (group includes includes: 'Copy').
-	self assert: (group includes includes: 'Tests')
-]
-
-{ #category : 'tests' }
-MetacelloPackagesSpecTest >> testCopyToPackage [
-	"not currently used by MetacelloBaselineConstructor"
-
-	| packages package |
-	packages := MetacelloPackagesSpec new.
-	packages add: (self packageSpec
-			 name: 'Package';
-			 requires: 'AnotherPackage';
-			 includes: 'IncludedPackage';
-			 preLoadDoIt: #preLoadDoIt;
-			 postLoadDoIt: #postLoadDoIt;
-			 yourself).
-	packages copy: 'Package' to: (self packageSpec
-			 name: 'PackageCopy';
-			 yourself).
-	package := packages packageNamed: 'PackageCopy' ifAbsent: [ self assert: false ].
-	self assert: package name equals: 'PackageCopy'.
-	self assert: package requires equals: #( 'AnotherPackage' ).
-	self assert: package includes equals: #( 'IncludedPackage' ).
-	self assert: package preLoadDoIt value identicalTo: #preLoadDoIt.
-	self assert: package postLoadDoIt value identicalTo: #postLoadDoIt
-]
-
-{ #category : 'tests' }
 MetacelloPackagesSpecTest >> testCopyToProject [
 	"used by MetacelloBaselineConstructor>>project:copyFrom:with:"
 

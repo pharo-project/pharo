@@ -107,10 +107,8 @@ MetacelloGroupSpec >> resolveToPackagesAndProjectsIn: aVersionSpec [
 MetacelloGroupSpec >> resolveToPackagesIn: aVersionSpec into: packages visited: visited [
 
 	visited visit: self doing: [ :aSpec |
-			| map |
-			map := aVersionSpec packagesSpec map.
 			aSpec includes do: [ :pkgName |
-					(aVersionSpec packageNamed: pkgName forMap: map ifAbsent: [ ])
+					(aVersionSpec packageNamed: pkgName inSpecs: aVersionSpec packagesSpec loadableSpecs ifAbsent: [ ])
 						projectDo: [ :prj | packages at: prj name put: prj ]
 						packageDo: [ :pkg | packages at: pkg name put: pkg ]
 						groupDo: [ :grp | grp resolveToPackagesIn: aVersionSpec into: packages visited: visited ] ] ]

@@ -40,17 +40,16 @@ MetacelloRecordTarget >> linearLoadPackages: packages ofSpec: spec [
 MetacelloRecordTarget >> listLoadableSpecsFrom: aVersionSpec [
 	"I take a MetacelloVersionSpec and I return all the specs that needs to be loaded from my requirements."
 
-	| loadableSpecs requirementList managedRequirements map |
+	| loadableSpecs requirementList managedRequirements |
 	loadableSpecs := OrderedCollection new.
 	requirementList := required copy.
 	managedRequirements := Set new.
-	map := aVersionSpec packagesSpec map.
 	[ requirementList isEmpty ] whileFalse: [
 			| newReqd |
 			newReqd := Set new.
 			requirementList do: [ :req |
 					| loadableSpec |
-					loadableSpec := aVersionSpec packageNamed: req forMap: map ifAbsent: [ ^ self error: 'Name not found: ' , req ]. "If the loadable spec is a Group we ignore it."
+					loadableSpec := aVersionSpec packageNamed: req inSpecs: aVersionSpec packagesSpec loadableSpecs ifAbsent: [ ^ self error: 'Name not found: ' , req ]. "If the loadable spec is a Group we ignore it."
 					loadableSpec resolveToLoadableSpec ifNotNil: [ :resolvedSpec | loadableSpecs add: resolvedSpec ].
 					newReqd addAll: loadableSpec requires.
 					newReqd addAll: loadableSpec includes ].

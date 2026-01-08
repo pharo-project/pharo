@@ -7,10 +7,13 @@ Class {
 }
 
 { #category : 'actions' }
-MetacelloMergeMemberSpec >> applyToMap: map [
+MetacelloMergeMemberSpec >> applyTo: aCollection [
 
-	map
-		at: self name
-		ifPresent: [ :aSpec | map at: self name put: (aSpec mergeSpec: self spec) ]
-		ifAbsent: [ map at: self name put: self spec copy ]
+	aCollection
+		detect: [ :aSpec | aSpec name = self spec name ]
+		ifFound: [ :aSpec |
+				aCollection
+					remove: aSpec;
+					add: (aSpec mergeSpec: self spec) ]
+		ifNone: [ aCollection add: self spec ]
 ]

@@ -3,7 +3,7 @@ Class {
 	#superclass : 'MetacelloSpec',
 	#instVars : [
 		'list',
-		'memberMap'
+		'loadableSpecs'
 	],
 	#category : 'Metacello-Core-Model',
 	#package : 'Metacello-Core',
@@ -53,12 +53,13 @@ MetacelloPackagesSpec >> applyIncludesTo: orderedSpecs for: pkgSpec firstTime: f
 { #category : 'private' }
 MetacelloPackagesSpec >> clearMemberMap [
 
-	memberMap := nil.
+	loadableSpecs := nil
 ]
 
 { #category : 'enumeration' }
 MetacelloPackagesSpec >> collect: aBlock [ 
 	| newCollection |
+	1halt.
 	newCollection :=OrderedCollection new.
 	self do: [:each | newCollection add: (aBlock value: each)].
 	^ newCollection
@@ -67,9 +68,8 @@ MetacelloPackagesSpec >> collect: aBlock [
 { #category : 'actions' }
 MetacelloPackagesSpec >> copy: specNamed to: spec [
 
-	self addMember: ((MetacelloCopyMemberSpec spec: spec)
-			 sourceName: specNamed;
-			 yourself)
+	spec originalName: specNamed.
+	self addMember: (MetacelloCopyMemberSpec spec: spec)
 ]
 
 { #category : 'enumeration' }
@@ -85,7 +85,7 @@ MetacelloPackagesSpec >> detect: aBlock ifNone: exceptionBlock [
 	"Evaluate aBlock with each of the receiver's elements as the argument.  
 	Answer the first element for which aBlock evaluates to true. If none  
 	evaluate to true, then evaluate the argument, exceptionBlock."
-
+1halt.
 	self
 		do: [ :each | 
 			(aBlock value: each)
@@ -95,7 +95,7 @@ MetacelloPackagesSpec >> detect: aBlock ifNone: exceptionBlock [
 
 { #category : 'enumeration' }
 MetacelloPackagesSpec >> do: aBlock [
-
+1halt.
 	self specs do: aBlock
 ]
 
@@ -119,13 +119,13 @@ MetacelloPackagesSpec >> list: aCollection [
 ]
 
 { #category : 'accessing' }
-MetacelloPackagesSpec >> map [
+MetacelloPackagesSpec >> loadableSpecs [
 
-	| map |
-	memberMap ifNotNil: [ ^ memberMap ].
-	map := Dictionary new.
-	self list do: [ :member | member applyToMap: map ].
-	^ memberMap := map
+	| specs |
+	loadableSpecs ifNotNil: [ ^ loadableSpecs ].
+	specs := OrderedCollection new.
+	self list do: [ :member | member applyTo: specs ].
+	^ loadableSpecs := specs
 ]
 
 { #category : 'actions' }
@@ -147,21 +147,20 @@ MetacelloPackagesSpec >> mergeSpec: anotherSpec [
 { #category : 'accessing' }
 MetacelloPackagesSpec >> packageNamed: aString ifAbsent: aBlock [
 
-	^self map at: aString ifAbsent: aBlock
+	^ self loadableSpecs
+		  detect: [ :spec | spec name = aString ]
+		  ifNone: aBlock
 ]
 
 { #category : 'accessing' }
 MetacelloPackagesSpec >> packageSpecsInLoadOrderFor: aVersionSpec [
 	"order only the packageSpecs and projectSpecs. groupSpec order does not matter"
 
-	| orderedPackageSpecs groupSpecs moved lastMovedSpecs count terminationLimit map specsWithIncludes firstTime groupLoops |
-	map := self map.
+	| orderedPackageSpecs groupSpecs moved lastMovedSpecs count terminationLimit specsWithIncludes firstTime groupLoops |
 	orderedPackageSpecs := OrderedCollection new.
 	groupSpecs := Set new.
-	self list do: [ :member |
-			| spec |
-			spec := map at: member name ifAbsent: [ ].
-			(spec isNil or: [ orderedPackageSpecs includes: spec ]) ifFalse: [
+	self specs do: [ :spec |
+			(orderedPackageSpecs includes: spec) ifFalse: [
 					spec
 						projectDo: [ :prjSpec | "specification order is the default order" orderedPackageSpecs add: prjSpec ]
 						packageDo: [ :pkgSpec | "specification order is the default order" orderedPackageSpecs add: pkgSpec ]
@@ -235,6 +234,7 @@ MetacelloPackagesSpec >> remove: aSpec [
 { #category : 'enumeration' }
 MetacelloPackagesSpec >> select: aBlock [ 
 	| newCollection |
+	1halt.
 	newCollection := OrderedCollection new.
 	self do: [:each | (aBlock value: each) ifTrue: [newCollection add: each]].
 	^newCollection
@@ -341,5 +341,5 @@ MetacelloPackagesSpec >> specListDo: aBlock [
 MetacelloPackagesSpec >> specs [
 	"Return the list of specs I contains once all members are applied."
 
-	^ self map values
+	^ self loadableSpecs
 ]

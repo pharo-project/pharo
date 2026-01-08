@@ -7,7 +7,9 @@ Class {
 }
 
 { #category : 'actions' }
-MetacelloRemoveMemberSpec >> applyToMap: map [
+MetacelloRemoveMemberSpec >> applyTo: aCollection [
 
-	map removeKey: self name ifAbsent: [ ]
+	aCollection
+		detect: [ :aSpec | aSpec name = self spec name ]
+		ifFound: [ :aSpec | aCollection remove: aSpec ]
 ]

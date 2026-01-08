@@ -7,7 +7,10 @@ Class {
 }
 
 { #category : 'actions' }
-MetacelloAddMemberSpec >> applyToMap: map [
+MetacelloAddMemberSpec >> applyTo: aCollection [
 
-	map at: self name put: self spec
+	aCollection
+		detect: [ :aSpec | aSpec name = self spec name ]
+		ifFound: [ :aSpec | aCollection remove: aSpec ].
+	aCollection add: self spec
 ]

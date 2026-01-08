@@ -1,33 +1,18 @@
 Class {
 	#name : 'MetacelloCopyMemberSpec',
 	#superclass : 'MetacelloMemberSpec',
-	#instVars : [
-		'sourceName'
-	],
 	#category : 'Metacello-Core-Model',
 	#package : 'Metacello-Core',
 	#tag : 'Model'
 }
 
 { #category : 'actions' }
-MetacelloCopyMemberSpec >> applyToMap: map [
+MetacelloCopyMemberSpec >> applyTo: aCollection [
 
-	map
-		at: self sourceName
-		ifPresent: [ :aSpec |
+	aCollection
+		detect: [ :aSpec | aSpec name = self spec originalName ]
+		ifFound: [ :aSpec |
 				aSpec aboutToCopy.
-				map at: self name put: (aSpec copy mergeSpec: self spec copy) ]
-		ifAbsent: [ self error: 'Source spec named ' , self sourceName printString , ' not found' ]
-]
-
-{ #category : 'accessing' }
-MetacelloCopyMemberSpec >> sourceName [
-
-	^sourceName
-]
-
-{ #category : 'accessing' }
-MetacelloCopyMemberSpec >> sourceName: aString [
-
-	sourceName := aString
+				aCollection add: (aSpec copy mergeSpec: self spec copy) ]
+		ifNone: [ self error: 'Source spec named ' , self spec originalName printString , ' not found' ]
 ]

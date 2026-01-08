@@ -225,13 +225,43 @@ MetacelloVersionSpec >> packageNamed: aString forMap: map ifAbsent: absentBlock 
 { #category : 'querying' }
 MetacelloVersionSpec >> packageNamed: aString ifAbsent: aBlock [
 
-	^ self packageNamed: aString forMap: self packagesSpec map ifAbsent: aBlock
+	^ self packageNamed: aString inSpecs: self packagesSpec loadableSpecs ifAbsent: aBlock
+]
+
+{ #category : 'querying' }
+MetacelloVersionSpec >> packageNamed: aString inSpecs: aCollection ifAbsent: absentBlock [
+
+	| importSpec |
+	^ aCollection
+		  detect: [ :spec | spec name = aString ]
+		  ifNone: [
+				  (self importArray isNotNil or: [ self import isNotNil ]) ifTrue: [ "expect the 'missing' name to be satisfied within context of imported project"
+						  importArray ifNotNil: [
+								  importArray do: [ :assoc |
+										  ((assoc value includes: aString) and: [ aCollection anySatisfy: [ :spec | spec name - assoc key ] ]) ifTrue: [
+												  importSpec := (aCollection detect: [ :spec | spec name = assoc key ])
+													                mergeImportLoads: { aString };
+													                yourself ] ].
+								  importSpec ifNotNil: [ ^ importSpec ] ].
+						  (importSpec isNil and: [ self import isNotNil ]) ifTrue: [
+								  ^ (aCollection
+									     detect: [ :spec | spec name = self import ]
+									     ifNone: absentBlock)
+									    mergeImportLoads: { aString };
+									    yourself ] ].
+				  (aString = 'default' or: [ aString = 'ALL' ])
+					  ifTrue: [
+							  self project groupSpec
+								  name: aString;
+								  includes: self packageNames;
+								  yourself ]
+					  ifFalse: [ absentBlock value ] ]
 ]
 
 { #category : 'querying' }
 MetacelloVersionSpec >> packageNames [
 
-	^ self packagesSpec map keys asSet
+	^ self packagesSpec loadableSpecs collect: [ :spec | spec name ]
 ]
 
 { #category : 'querying' }
