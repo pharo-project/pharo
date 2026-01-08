@@ -1,6 +1,6 @@
 Class {
 	#name : 'MetacelloGroupSpec',
-	#superclass : 'MetacelloAbstractPackageSpec',
+	#superclass : 'MetacelloLoadableSpec',
 	#instVars : [
 		'project',
 		'name'

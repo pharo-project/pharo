@@ -1,5 +1,5 @@
 Class {
-	#name : 'MetacelloAbstractPackageSpec',
+	#name : 'MetacelloLoadableSpec',
 	#superclass : 'MetacelloSpec',
 	#instVars : [
 		'includes'
@@ -10,19 +10,19 @@ Class {
 }
 
 { #category : 'testing' }
-MetacelloAbstractPackageSpec class >> isAbstract [
+MetacelloLoadableSpec class >> isAbstract [
 
-	^ self = MetacelloAbstractPackageSpec
+	^ self = MetacelloLoadableSpec
 ]
 
 { #category : 'querying' }
-MetacelloAbstractPackageSpec >> includes [
+MetacelloLoadableSpec >> includes [
 
 	^ includes ifNil: [ includes := #(  ) ]
 ]
 
 { #category : 'accessing' }
-MetacelloAbstractPackageSpec >> includes: aCollection [
+MetacelloLoadableSpec >> includes: aCollection [
 
 	includes := aCollection isString
 		            ifTrue: [ { aCollection } ]
@@ -30,25 +30,25 @@ MetacelloAbstractPackageSpec >> includes: aCollection [
 ]
 
 { #category : 'private' }
-MetacelloAbstractPackageSpec >> includesForPackageOrdering [
+MetacelloLoadableSpec >> includesForPackageOrdering [
 
 	^ #(  )
 ]
 
 { #category : 'querying' }
-MetacelloAbstractPackageSpec >> isPackageLoaded [
+MetacelloLoadableSpec >> isPackageLoaded [
 
 	^ false
 ]
 
 { #category : 'printing' }
-MetacelloAbstractPackageSpec >> label [
+MetacelloLoadableSpec >> label [
 
 	^self name
 ]
 
 { #category : 'merging' }
-MetacelloAbstractPackageSpec >> mergeSpec: anotherSpec [
+MetacelloLoadableSpec >> mergeSpec: anotherSpec [
 
 	| newSpec |
 	newSpec := super mergeSpec: anotherSpec.
@@ -57,20 +57,20 @@ MetacelloAbstractPackageSpec >> mergeSpec: anotherSpec [
 ]
 
 { #category : 'querying' }
-MetacelloAbstractPackageSpec >> name [
+MetacelloLoadableSpec >> name [
 
 	^ self subclassResponsibility
 ]
 
 { #category : 'copying' }
-MetacelloAbstractPackageSpec >> postCopy [
+MetacelloLoadableSpec >> postCopy [
 
 	super postCopy.
 	includes := includes copy
 ]
 
 { #category : 'printing' }
-MetacelloAbstractPackageSpec >> printOn: aStream [
+MetacelloLoadableSpec >> printOn: aStream [
 
 	super printOn: aStream.
 	aStream
@@ -80,55 +80,55 @@ MetacelloAbstractPackageSpec >> printOn: aStream [
 ]
 
 { #category : 'visiting' }
-MetacelloAbstractPackageSpec >> projectDo: projectBlock packageDo: packageBlock groupDo: groupBlock [
+MetacelloLoadableSpec >> projectDo: projectBlock packageDo: packageBlock groupDo: groupBlock [
 
 	self subclassResponsibility
 ]
 
 { #category : 'accessing' }
-MetacelloAbstractPackageSpec >> referencedSpec [
+MetacelloLoadableSpec >> referencedSpec [
 
 	^self
 ]
 
 { #category : 'loading' }
-MetacelloAbstractPackageSpec >> repositorySpecs [
+MetacelloLoadableSpec >> repositorySpecs [
 
 	^#()
 ]
 
 { #category : 'private' }
-MetacelloAbstractPackageSpec >> requiredSpecNamesForPackageOrdering: aVersionSpec [
+MetacelloLoadableSpec >> requiredSpecNamesForPackageOrdering: aVersionSpec [
 
 	^ #(  )
 ]
 
 { #category : 'testing' }
-MetacelloAbstractPackageSpec >> requires [
+MetacelloLoadableSpec >> requires [
 
 	^ #(  )
 ]
 
 { #category : 'private' }
-MetacelloAbstractPackageSpec >> resolveSpecsForPackageOrdering: aVersionSpec [
+MetacelloLoadableSpec >> resolveSpecsForPackageOrdering: aVersionSpec [
 
 	^ { self }
 ]
 
 { #category : 'private' }
-MetacelloAbstractPackageSpec >> resolveToLoadableSpec [
+MetacelloLoadableSpec >> resolveToLoadableSpec [
 
 	^self
 ]
 
 { #category : 'private' }
-MetacelloAbstractPackageSpec >> resolveToPackagesAndProjectsIn: aVersionSpec [
+MetacelloLoadableSpec >> resolveToPackagesAndProjectsIn: aVersionSpec [
 
 	^ self subclassResponsibility
 ]
 
 { #category : 'querying' }
-MetacelloAbstractPackageSpec >> version [ 
+MetacelloLoadableSpec >> version [ 
 	"MetacelloPackageSpec compatibility"
 	
 	^nil
