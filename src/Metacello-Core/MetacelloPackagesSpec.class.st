@@ -2,7 +2,6 @@ Class {
 	#name : 'MetacelloPackagesSpec',
 	#superclass : 'MetacelloSpec',
 	#instVars : [
-		'list',
 		'loadableSpecs'
 	],
 	#category : 'Metacello-Core-Model',
@@ -16,16 +15,12 @@ MetacelloPackagesSpec class >> initialize [
 ]
 
 { #category : 'actions' }
-MetacelloPackagesSpec >> add: aSpec [
+MetacelloPackagesSpec >> add: spec [
 
-	self addMember: (MetacelloAddMemberSpec spec: aSpec)
-]
-
-{ #category : 'adding' }
-MetacelloPackagesSpec >> addMember: aMember [
-
-	self list add: aMember.
-	self clearMemberMap
+	loadableSpecs
+		detect: [ :aSpec | aSpec name = spec name ]
+		ifFound: [ :aSpec | loadableSpecs remove: aSpec ].
+	loadableSpecs add: spec
 ]
 
 { #category : 'accessing' }
@@ -50,88 +45,46 @@ MetacelloPackagesSpec >> applyIncludesTo: orderedSpecs for: pkgSpec firstTime: f
 	^ movedSpecs
 ]
 
-{ #category : 'private' }
-MetacelloPackagesSpec >> clearMemberMap [
-
-	loadableSpecs := nil
-]
-
-{ #category : 'enumeration' }
-MetacelloPackagesSpec >> collect: aBlock [ 
-	| newCollection |
-	1halt.
-	newCollection :=OrderedCollection new.
-	self do: [:each | newCollection add: (aBlock value: each)].
-	^ newCollection
-]
-
 { #category : 'actions' }
 MetacelloPackagesSpec >> copy: specNamed to: spec [
 
-	spec originalName: specNamed.
-	self addMember: (MetacelloCopyMemberSpec spec: spec)
+	loadableSpecs
+		detect: [ :aSpec | aSpec name = specNamed ]
+		ifFound: [ :aSpec |
+				aSpec aboutToCopy.
+				loadableSpecs add: (aSpec copy mergeSpec: spec copy) ]
+		ifNone: [ self error: 'Source spec named ' , specNamed printString , ' not found' ]
 ]
 
-{ #category : 'enumeration' }
-MetacelloPackagesSpec >> detect: aBlock [
-	"Evaluate aBlock with each of the receiver's elements as the argument. 
-	Answer the first element for which aBlock evaluates to true."
+{ #category : 'initialization' }
+MetacelloPackagesSpec >> initialize [
 
-	^ self detect: aBlock ifNone: [ self error: 'Object is not in the collection.' ]
-]
-
-{ #category : 'enumeration' }
-MetacelloPackagesSpec >> detect: aBlock ifNone: exceptionBlock [
-	"Evaluate aBlock with each of the receiver's elements as the argument.  
-	Answer the first element for which aBlock evaluates to true. If none  
-	evaluate to true, then evaluate the argument, exceptionBlock."
-1halt.
-	self
-		do: [ :each | 
-			(aBlock value: each)
-				ifTrue: [ ^ each ] ].
-	^ exceptionBlock value
-]
-
-{ #category : 'enumeration' }
-MetacelloPackagesSpec >> do: aBlock [
-1halt.
-	self specs do: aBlock
+	super initialize.
+	loadableSpecs := OrderedCollection new
 ]
 
 { #category : 'testing' }
 MetacelloPackagesSpec >> isEmpty [
 
-	^self list isEmpty
-]
-
-{ #category : 'accessing' }
-MetacelloPackagesSpec >> list [
-
-	^ list ifNil: [ list := OrderedCollection new ]
-]
-
-{ #category : 'accessing' }
-MetacelloPackagesSpec >> list: aCollection [
-
-	list := aCollection.
-	self clearMemberMap
+	^ self loadableSpecs isEmpty
 ]
 
 { #category : 'accessing' }
 MetacelloPackagesSpec >> loadableSpecs [
 
-	| specs |
-	loadableSpecs ifNotNil: [ ^ loadableSpecs ].
-	specs := OrderedCollection new.
-	self list do: [ :member | member applyTo: specs ].
-	^ loadableSpecs := specs
+	^ loadableSpecs
 ]
 
 { #category : 'actions' }
-MetacelloPackagesSpec >> merge: aSpec [
+MetacelloPackagesSpec >> merge: spec [
 
-	self addMember: (MetacelloMergeMemberSpec spec: aSpec)
+	loadableSpecs
+		detect: [ :aSpec | aSpec name = spec name ]
+		ifFound: [ :aSpec |
+				loadableSpecs
+					remove: aSpec;
+					add: (aSpec mergeSpec: spec) ]
+		ifNone: [ loadableSpecs add: spec ]
 ]
 
 { #category : 'merging' }
@@ -139,8 +92,7 @@ MetacelloPackagesSpec >> mergeSpec: anotherSpec [
 
 	| newSpec |
 	newSpec := super mergeSpec: anotherSpec.
-	newSpec list: self list copy.
-	anotherSpec list do: [ :groupMember | newSpec addMember: groupMember ].
+	anotherSpec loadableSpecs do: [ :spec | newSpec merge: spec copy ].
 	^ newSpec
 ]
 
@@ -159,7 +111,7 @@ MetacelloPackagesSpec >> packageSpecsInLoadOrderFor: aVersionSpec [
 	| orderedPackageSpecs groupSpecs moved lastMovedSpecs count terminationLimit specsWithIncludes firstTime groupLoops |
 	orderedPackageSpecs := OrderedCollection new.
 	groupSpecs := Set new.
-	self specs do: [ :spec |
+	self loadableSpecs do: [ :spec |
 			(orderedPackageSpecs includes: spec) ifFalse: [
 					spec
 						projectDo: [ :prjSpec | "specification order is the default order" orderedPackageSpecs add: prjSpec ]
@@ -210,8 +162,7 @@ MetacelloPackagesSpec >> packageSpecsInLoadOrderFor: aVersionSpec [
 MetacelloPackagesSpec >> postCopy [
 
 	super postCopy.
-	list := list copy.
-	self clearMemberMap
+	loadableSpecs := loadableSpecs copy
 ]
 
 { #category : 'printing' }
@@ -219,25 +170,18 @@ MetacelloPackagesSpec >> printOn: aStream [
 
 	super printOn: aStream.
 	aStream nextPutAll: ' ['.
-	self specs
+	self loadableSpecs
 		ifEmpty: [ aStream nextPutAll: 'Empty' ]
 		ifNotEmpty: [ :specs | specs do: [ :spec | aStream nextPutAll: spec name ] separatedBy: [ aStream nextPutAll: ', ' ] ].
 	aStream nextPutAll: ']'
 ]
 
 { #category : 'removing' }
-MetacelloPackagesSpec >> remove: aSpec [
+MetacelloPackagesSpec >> remove: spec [
 
-	self addMember: (MetacelloRemoveMemberSpec spec: aSpec)
-]
-
-{ #category : 'enumeration' }
-MetacelloPackagesSpec >> select: aBlock [ 
-	| newCollection |
-	1halt.
-	newCollection := OrderedCollection new.
-	self do: [:each | (aBlock value: each) ifTrue: [newCollection add: each]].
-	^newCollection
+	loadableSpecs
+		detect: [ :aSpec | aSpec name = spec name ]
+		ifFound: [ :aSpec | loadableSpecs remove: aSpec ]
 ]
 
 { #category : 'accessing' }
@@ -329,17 +273,4 @@ MetacelloPackagesSpec >> sortPackageSpecs: orderedSpecs packageSpec: packageSpec
 				ifTrue: [ orderedSpecs add: packageSpec beforeIndex: packageIndex ]
 				ifFalse: [ orderedSpecs add: packageSpec afterIndex: targetIndex ] ].
 	^ moved
-]
-
-{ #category : 'enumeration' }
-MetacelloPackagesSpec >> specListDo: aBlock [
-
-	self list do: [:member |  aBlock value: member spec ]
-]
-
-{ #category : 'accessing' }
-MetacelloPackagesSpec >> specs [
-	"Return the list of specs I contains once all members are applied."
-
-	^ self loadableSpecs
 ]

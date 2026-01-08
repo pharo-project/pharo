@@ -59,24 +59,19 @@ BaselineOf class >> allPackageNames [
 { #category : 'accessing' }
 BaselineOf class >> deepPackagesOfGroupNamed: aName [
 	"Traverses the group tree to collect packages"
-	| allGroups projects group |
 
+	| allGroups projects group |
 	allGroups := self version groups.
 	projects := Array streamContents: [ :stream |
-		self version spec
-			specListProjectDo: [ :each | stream nextPut: each ] 
-			packageDo: [ :each | ] 
-			groupDo: [  :each | ] ].
+		            self version packagesSpec loadableSpecs projectDo: [ :each | stream nextPut: each ] packageDo: [ :each |  ] groupDo: [ :each |  ] ].
 	group := allGroups detect: [ :eachGroup | eachGroup name = aName ].
-	^ (group includes
-		collect: [ :each | 
-			(allGroups anySatisfy: [ :eachGroup | eachGroup name = each ])
-				ifTrue: [ self deepPackagesOfGroupNamed: each ]
-				ifFalse: [
-					(projects noneSatisfy: [ :eachProject | eachProject name = each ]) 
-						ifTrue: [ { each } ]
-						ifFalse: [ #() ] ] ])
-		flattened
+	^ (group includes collect: [ :each |
+			   (allGroups anySatisfy: [ :eachGroup | eachGroup name = each ])
+				   ifTrue: [ self deepPackagesOfGroupNamed: each ]
+				   ifFalse: [
+						   (projects noneSatisfy: [ :eachProject | eachProject name = each ])
+							   ifTrue: [ { each } ]
+							   ifFalse: [ #(  ) ] ] ]) flattened
 ]
 
 { #category : 'class initialization' }
