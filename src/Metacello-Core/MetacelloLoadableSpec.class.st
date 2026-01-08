@@ -9,6 +9,13 @@ Class {
 	#tag : 'Model'
 }
 
+{ #category : 'class initialization' }
+MetacelloLoadableSpec class >> initialize [
+	"To remove later. Added in Pharo 14"
+
+	self deprecatedAliases: #( MetacelloAbstractPackageSpec )
+]
+
 { #category : 'testing' }
 MetacelloLoadableSpec class >> isAbstract [
 
