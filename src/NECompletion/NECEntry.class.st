@@ -57,6 +57,12 @@ NECEntry >> activateOn: aCompletionContext [
 	aCompletionContext replaceTokenInEditorWith: entryContents
 ]
 
+{ #category : 'matching' }
+NECEntry >> beginsWith: aString [
+
+	^ self contents beginsWith: aString
+]
+
 { #category : 'private' }
 NECEntry >> browse [
 	self subclassResponsibility
@@ -104,6 +110,18 @@ NECEntry >> hightlightSymbol [
 { #category : 'accessing' }
 NECEntry >> label [
 	^ 'unknown'
+]
+
+{ #category : 'accessing' }
+NECEntry >> node [
+
+	^ node
+]
+
+{ #category : 'accessing' }
+NECEntry >> node: anObject [
+
+	node := anObject
 ]
 
 { #category : 'printing' }

@@ -67,6 +67,12 @@ MetacelloPackageSpec >> info [
 	^self
 ]
 
+{ #category : 'testing' }
+MetacelloPackageSpec >> isPackageSpec [
+
+	^ true
+]
+
 { #category : 'merging' }
 MetacelloPackageSpec >> mergeMap [
 
@@ -151,12 +157,6 @@ MetacelloPackageSpec >> project [
 MetacelloPackageSpec >> project: aMetacelloProject [
 
 	project := aMetacelloProject
-]
-
-{ #category : 'visiting' }
-MetacelloPackageSpec >> projectDo: projectBlock packageDo: packageBlock groupDo: groupBlock [
-
-	packageBlock value: self
 ]
 
 { #category : 'querying' }

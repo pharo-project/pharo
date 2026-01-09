@@ -34,6 +34,12 @@ MetacelloProjectReferenceSpec >> includes: aCollection [
 	self shouldNotImplement
 ]
 
+{ #category : 'testing' }
+MetacelloProjectReferenceSpec >> isProjectReferenceSpec [
+
+	^ true
+]
+
 { #category : 'importing' }
 MetacelloProjectReferenceSpec >> mergeImportLoads: aLoadList [
     self projectReference mergeImportLoads: aLoadList
@@ -73,12 +79,6 @@ MetacelloProjectReferenceSpec >> postCopy [
 
 	super postCopy.
 	projectReference := projectReference copy.
-]
-
-{ #category : 'visiting' }
-MetacelloProjectReferenceSpec >> projectDo: projectBlock packageDo: packageBlock groupDo: groupBlock [
-
-	projectBlock value: self
 ]
 
 { #category : 'accessing' }

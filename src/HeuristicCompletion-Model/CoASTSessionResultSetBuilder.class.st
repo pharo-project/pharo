@@ -11,7 +11,7 @@ Class {
 
 { #category : 'heuristics' }
 CoASTSessionResultSetBuilder >> messagesHeuristic [
-	^ messageHeuristic ifNil: [ messageHeuristic := self newHeuristicBuilder
+	^ messagesHeuristic ifNil: [ messagesHeuristic := self newHeuristicBuilder
 		add: (CoSessionMessagesHeuristic new
 			session: session;
 			yourself);

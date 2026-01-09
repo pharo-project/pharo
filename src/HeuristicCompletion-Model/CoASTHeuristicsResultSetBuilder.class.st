@@ -10,14 +10,14 @@ Class {
 	#name : 'CoASTHeuristicsResultSetBuilder',
 	#superclass : 'CoASTResultSetBuilder',
 	#instVars : [
-		'messageHeuristic',
-		'methodNodeHeuristic',
 		'variablesHeuristic',
-		'symbolsHeuristic'
+		'symbolsHeuristic',
+		'messagesHeuristic',
+		'methodNodesHeuristic'
 	],
 	#classVars : [
-		'MessageHeuristic',
-		'MethodNodeHeuristic',
+		'MessagesHeuristic',
+		'MethodNodesHeuristic',
 		'SymbolsHeuristic',
 		'VariablesHeuristic'
 	],
@@ -41,7 +41,7 @@ CoASTHeuristicsResultSetBuilder class >> initialize [
 { #category : 'class initialization' }
 CoASTHeuristicsResultSetBuilder class >> initializeMessagesHeuristic [
 
-		MessageHeuristic :=  OrderedCollection <- {  
+		MessagesHeuristic :=  OrderedCollection <- {  
 				                      CoSelfMessageHeuristic new .
 				                      CoSuperMessageHeuristic new.
 				                      CoDependencyMessageHeuristics new .
@@ -57,7 +57,7 @@ CoASTHeuristicsResultSetBuilder class >> initializeMessagesHeuristic [
 { #category : 'class initialization' }
 CoASTHeuristicsResultSetBuilder class >> initializeMethodNodeHeuristic [
 
-	MethodNodeHeuristic := OrderedCollection <- {
+	MethodNodesHeuristic := OrderedCollection <- {
 		                       CoSuperMessageHeuristic new.
 		                       CoUnknownMessageHeuristic new } 
 ]
@@ -79,6 +79,54 @@ CoASTHeuristicsResultSetBuilder class >> initializeVariablesHeuristic [
 		                      CoGlobalVariablesHeuristic new } 
 ]
 
+{ #category : 'heuristics' }
+CoASTHeuristicsResultSetBuilder class >> messagesHeuristic [
+
+	^ MessagesHeuristic
+]
+
+{ #category : 'heuristics' }
+CoASTHeuristicsResultSetBuilder class >> messagesHeuristic: aCollection [
+
+	MessagesHeuristic := aCollection 
+]
+
+{ #category : 'heuristics' }
+CoASTHeuristicsResultSetBuilder class >> methodNodesHeuristic [
+
+	^ MethodNodesHeuristic 
+]
+
+{ #category : 'heuristics' }
+CoASTHeuristicsResultSetBuilder class >> methodNodesHeuristic: aCollection [
+
+	MethodNodesHeuristic := aCollection 
+]
+
+{ #category : 'heuristics' }
+CoASTHeuristicsResultSetBuilder class >> symbolsHeuristic [
+
+	^ SymbolsHeuristic
+]
+
+{ #category : 'heuristics' }
+CoASTHeuristicsResultSetBuilder class >> symbolsHeuristic: aCollection [
+
+	SymbolsHeuristic := aCollection 
+]
+
+{ #category : 'heuristics' }
+CoASTHeuristicsResultSetBuilder class >> variablesHeuristic [
+
+	^ VariablesHeuristic
+]
+
+{ #category : 'heuristics' }
+CoASTHeuristicsResultSetBuilder class >> variablesHeuristic: aCollection [
+
+	VariablesHeuristic := aCollection 
+]
+
 { #category : 'deprecated' }
 CoASTHeuristicsResultSetBuilder >> messageHeuristic [
 	
@@ -96,17 +144,17 @@ CoASTHeuristicsResultSetBuilder >> messageHeuristic: aHeuristic [
 { #category : 'heuristics' }
 CoASTHeuristicsResultSetBuilder >> messagesHeuristic [
 
-	^ messageHeuristic ifNil: [
+	^ messagesHeuristic ifNil: [
 			| builder |
 			builder := self newHeuristicBuilder.
-			MessageHeuristic do: [ :aCls | builder add: aCls ].
-			messageHeuristic := builder build ]
+			MessagesHeuristic do: [ :aCls | builder add: aCls ].
+			messagesHeuristic := builder build ]
 ]
 
 { #category : 'heuristics' }
 CoASTHeuristicsResultSetBuilder >> messagesHeuristic: aHeuristic [
 
-	messageHeuristic := aHeuristic
+	messagesHeuristic := aHeuristic
 ]
 
 { #category : 'deprecated' }
@@ -126,17 +174,17 @@ CoASTHeuristicsResultSetBuilder >> methodNodeHeuristic: aHeuristic [
 { #category : 'heuristics' }
 CoASTHeuristicsResultSetBuilder >> methodNodesHeuristic [
 
-	^ methodNodeHeuristic ifNil: [
+	^ methodNodesHeuristic ifNil: [
 			| builder |
 			builder := self newHeuristicBuilder.
-			MethodNodeHeuristic do: [ :fetcher | builder add: fetcher ].
-			methodNodeHeuristic := builder build ]
+			MethodNodesHeuristic do: [ :fetcher | builder add: fetcher ].
+			methodNodesHeuristic := builder build ]
 ]
 
 { #category : 'heuristics' }
 CoASTHeuristicsResultSetBuilder >> methodNodesHeuristic: aHeuristic [
 
-	methodNodeHeuristic := aHeuristic
+	methodNodesHeuristic := aHeuristic
 ]
 
 { #category : 'heuristics' }

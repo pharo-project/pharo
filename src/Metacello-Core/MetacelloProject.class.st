@@ -162,24 +162,6 @@ MetacelloProject >> projectAttributes: aList [
 	projectAttributes := aList
 ]
 
-{ #category : 'development support' }
-MetacelloProject >> projectPackage [
-
-	self configuration class mcWorkingCopy ifNotNil: [ :workingCopy |
-			| pkgSpec repo |
-			pkgSpec := self packageSpec
-				           name: workingCopy packageName;
-				           yourself.
-			repo := workingCopy repositoryGroup repositories
-				        detect: [ :each | each ~~ MCCacheRepository default ]
-				        ifNone: [
-						        MetacelloNotification signal: 'Using cache repository for ' , self label , ' project package'.
-						        MCCacheRepository default ].
-			pkgSpec repository: repo asRepositorySpec.
-			^ pkgSpec ].
-	^ nil
-]
-
 { #category : 'accessing' }
 MetacelloProject >> repositoryDescription [
 	^ repositoryDescription

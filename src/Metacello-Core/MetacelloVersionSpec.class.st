@@ -41,13 +41,7 @@ MetacelloVersionSpec >> currentlyLoadedClassesInVersion [
 
 	| classes |
 	classes := Set new.
-	self
-		projectDo: [ :ignored |  ]
-		packageDo: [ :packageSpec |
-				([ packageSpec workingCopy ]
-					 on: Error
-					 do: [ :ex | ex return: nil ]) ifNotNil: [ :workingCopy | workingCopy systemPackage ifNotNil: [ :package | classes addAll: package classes ] ] ]
-		groupDo: [ :ignored |  ].
+	self packages do: [ :packageSpec | self class packageOrganizer packageNamed: packageSpec name ifPresent: [ :package | classes addAll: package classes ] ].
 	^ classes
 ]
 
@@ -108,10 +102,7 @@ MetacelloVersionSpec >> fetchRequiredFromArray: anArray withEngine: anEngine [
 MetacelloVersionSpec >> groups [
 	"Answers the list of groups associated with this version"
 
-	| groups |
-	groups := OrderedCollection new.
-	self projectDo: [ :ignored |  ] packageDo: [ :ignored |  ] groupDo: [ :grp | groups add: grp ].
-	^ groups
+	^ self packageSpecsInLoadOrder select: [ :spec | spec isGroupSpec ]
 ]
 
 { #category : 'testing' }
@@ -181,11 +172,7 @@ MetacelloVersionSpec >> mergeSpec: anotherSpec [
 
 	| newSpec |
 	newSpec := super mergeSpec: anotherSpec.
-	anotherSpec packagesSpec isEmpty not ifTrue: [
-			newSpec packagesSpec: (self packagesSpec isEmpty
-					 ifTrue: [ anotherSpec packagesSpec ]
-					 ifFalse: [ self packagesSpec mergeSpec: anotherSpec packagesSpec ]) ].
-
+	newSpec packagesSpec: (self packagesSpec mergeSpec: anotherSpec packagesSpec).
 	newSpec repositories: (self repositories mergeSpec: anotherSpec repositories).
 	^ newSpec
 ]
@@ -199,26 +186,21 @@ MetacelloVersionSpec >> packageNamed: aString [
 { #category : 'querying' }
 MetacelloVersionSpec >> packageNamed: aString ifAbsent: aBlock [
 
-	^ self packageNamed: aString inSpecs: self packagesSpec loadableSpecs ifAbsent: aBlock
-]
-
-{ #category : 'querying' }
-MetacelloVersionSpec >> packageNamed: aString inSpecs: aCollection ifAbsent: absentBlock [
-
-	| importSpec |
-	^ aCollection
+	| loadableSpecs |
+    loadableSpecs := self packagesSpec loadableSpecs.
+	^ loadableSpecs
 		  detect: [ :spec | spec name = aString ]
-		  ifNone: [
+		  ifNone: [ | importSpec |
 				  (self importArray isNotNil or: [ self import isNotNil ]) ifTrue: [ "expect the 'missing' name to be satisfied within context of imported project"
 						  importArray ifNotNil: [
 								  importArray do: [ :assoc |
-										  ((assoc value includes: aString) and: [ aCollection anySatisfy: [ :spec | spec name - assoc key ] ]) ifTrue: [
-												  importSpec := (aCollection detect: [ :spec | spec name = assoc key ])
+										  ((assoc value includes: aString) and: [ loadableSpecs anySatisfy: [ :spec | spec name - assoc key ] ]) ifTrue: [
+												  importSpec := (loadableSpecs detect: [ :spec | spec name = assoc key ])
 													                mergeImportLoads: { aString };
 													                yourself ] ].
 								  importSpec ifNotNil: [ ^ importSpec ] ].
 						  (importSpec isNil and: [ self import isNotNil ]) ifTrue: [
-								  ^ (aCollection
+								  ^ (loadableSpecs
 									     detect: [ :spec | spec name = self import ]
 									     ifNone: absentBlock)
 									    mergeImportLoads: { aString };
@@ -248,10 +230,7 @@ MetacelloVersionSpec >> packageSpecsInLoadOrder [
 MetacelloVersionSpec >> packages [
 	"Answers the list of packages associated with this version"
 
-	| packages |
-	packages := OrderedCollection new.
-	self projectDo: [ :ignored |  ] packageDo: [ :pkg | packages add: pkg ] groupDo: [ :ignored |  ].
-	^ packages
+	^ self packageSpecsInLoadOrder select: [ :spec | spec isPackageSpec ]
 ]
 
 { #category : 'accessing' }
@@ -322,12 +301,6 @@ MetacelloVersionSpec >> project: aMetacelloProject [
 	project := aMetacelloProject
 ]
 
-{ #category : 'enumerating' }
-MetacelloVersionSpec >> projectDo: projectBlock packageDo: packageBlock groupDo: groupBlock [
-
-	self packageSpecsInLoadOrder do: [ :pkgSpec | pkgSpec projectDo: projectBlock packageDo: packageBlock groupDo: groupBlock ]
-]
-
 { #category : 'accessing' }
 MetacelloVersionSpec >> projectLabel [
 
@@ -338,10 +311,9 @@ MetacelloVersionSpec >> projectLabel [
 MetacelloVersionSpec >> projects [
 	"Answers the list of projects associated with this version"
 
-	| projects |
-	projects := OrderedCollection new.
-	self projectDo: [ :prj | projects add: prj projectReference ] packageDo: [ :ignored |  ] groupDo: [ :ignored |  ].
-	^ projects
+	^ self packageSpecsInLoadOrder
+		  select: [ :spec | spec isProjectReferenceSpec ]
+		  thenCollect: [ :spec | spec projectReference ]
 ]
 
 { #category : 'private' }

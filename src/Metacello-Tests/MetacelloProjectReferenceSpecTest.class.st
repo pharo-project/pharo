@@ -37,8 +37,5 @@ MetacelloProjectReferenceSpecTest >> testProjectReferenceSpec [
 	self assert: projectReference projectReference identicalTo: project.
 	self should: [ projectReference includes: #(  ) ] raise: Error.
 	self should: [ projectReference requires: #(  ) ] raise: Error.
-	projectReference
-		projectDo: [ :prjct | self assert: projectReference identicalTo: prjct ]
-		packageDo: [ :ignored | self assert: false ]
-		groupDo: [ :ignored | self assert: false ]
+	self assert: projectReference isProjectReferenceSpec
 ]

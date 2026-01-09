@@ -152,17 +152,14 @@ MetacelloPackagesSpecTest >> testAddProjectA [
 	self assert: projectReferenceSpec projectName equals: 'Project'.
 	self should: [ projectReferenceSpec includes: #(  ) ] raise: Error.
 	self should: [ projectReferenceSpec requires: #(  ) ] raise: Error.
-	projectReferenceSpec
-		projectDo: [ :prjct | self assert: projectReferenceSpec identicalTo: prjct ]
-		packageDo: [ :ignored | self assert: false ]
-		groupDo: [ :ignored | self assert: false ].
+	self assert: projectReferenceSpec isProjectReferenceSpec.
 	project := projectReferenceSpec referencedSpec.
 	self assert: project name equals: 'Project'.
 	self assert: project className equals: 'BaselineOfProject'.
 	self assert: project loads equals: #( 'MyPackage' ).
 	self assert: project preLoadDoIt value identicalTo: #preLoadDoIt.
 	self assert: project postLoadDoIt value identicalTo: #postLoadDoIt.
-	project projectDo: [ :prjct | self assert: project identicalTo: prjct ] packageDo: [ :ignored | self assert: false ] groupDo: [ :ignored | self assert: false ]
+	self assert: project class equals: MetacelloProjectSpec
 ]
 
 { #category : 'tests' }
@@ -189,17 +186,14 @@ MetacelloPackagesSpecTest >> testAddProjectB [
 	self assert: projectReferenceSpec projectName equals: 'Project'.
 	self should: [ projectReferenceSpec includes: #(  ) ] raise: Error.
 	self should: [ projectReferenceSpec requires: #(  ) ] raise: Error.
-	projectReferenceSpec
-		projectDo: [ :prjct | self assert: projectReferenceSpec identicalTo: prjct ]
-		packageDo: [ :ignored | self assert: false ]
-		groupDo: [ :ignored | self assert: false ].
+	self assert: projectReferenceSpec isProjectReferenceSpec.
 	project := projectReferenceSpec referencedSpec.
 	self assert: project name equals: 'Project'.
 	self assert: project className equals: 'BaselineOfProject'.
 	self assert: project loads equals: #( 'MyPackage' ).
 	self assert: project preLoadDoIt value identicalTo: #preLoadDoIt.
 	self assert: project postLoadDoIt value identicalTo: #postLoadDoIt.
-	project projectDo: [ :prjct | self assert: project identicalTo: prjct ] packageDo: [ :ignored | self assert: false ] groupDo: [ :ignored | self assert: false ]
+	self assert: project class equals: MetacelloProjectSpec
 ]
 
 { #category : 'tests' }
@@ -366,7 +360,7 @@ MetacelloPackagesSpecTest >> testMergeProjectA [
 	self assert: project loads equals: #( 'MyPackage' ).
 	self assert: project preLoadDoIt value identicalTo: #preLoadDoIt.
 	self assert: project postLoadDoIt value identicalTo: #postLoadDoIt.
-	project projectDo: [ :prjct | self assert: project identicalTo: prjct ] packageDo: [ :ignored | self assert: false ] groupDo: [ :ignored | self assert: false ]
+	self assert: project class equals: MetacelloProjectSpec
 ]
 
 { #category : 'tests' }
@@ -400,7 +394,7 @@ MetacelloPackagesSpecTest >> testMergeProjectB [
 	self assert: project loads equals: #( 'MyPackage' ).
 	self assert: project preLoadDoIt value identicalTo: #preLoadDoIt.
 	self assert: project postLoadDoIt value identicalTo: #postLoadDoIt.
-	project projectDo: [ :prjct | self assert: project identicalTo: prjct ] packageDo: [ :ignored | self assert: false ] groupDo: [ :ignored | self assert: false ]
+	self assert: project class equals: MetacelloProjectSpec
 ]
 
 { #category : 'tests' }

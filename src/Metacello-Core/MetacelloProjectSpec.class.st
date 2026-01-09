@@ -233,16 +233,6 @@ MetacelloProjectSpec >> mergeMap [
 	^ map
 ]
 
-{ #category : 'merging' }
-MetacelloProjectSpec >> mergeRepositoriesSpec: anotherRepositories [
-	"anotherRepositories wins ... there can ever only be one repository for the 
-   baseline to load from"
-
-	"https://github.com/dalehenrich/metacello-work/issues/251"
-
-	self repositories: anotherRepositories
-]
-
 { #category : 'scripting' }
 MetacelloProjectSpec >> mergeScriptLoads: aSpec [
 
@@ -263,7 +253,12 @@ MetacelloProjectSpec >> mergeSpec: anotherSpec [
 
 	| newSpec |
 	newSpec := super mergeSpec: anotherSpec.
-	anotherSpec getRepositories ifNotNil: [ :anotherRepositories | newSpec mergeRepositoriesSpec: anotherRepositories ].
+	anotherSpec getRepositories ifNotNil: [ :anotherRepositories |
+		"anotherRepositories wins ... there can ever only be one repository for the 
+   baseline to load from
+		
+		https://github.com/dalehenrich/metacello-work/issues/251"
+		newSpec repositories: anotherRepositories ].
 	^ newSpec
 ]
 
@@ -356,12 +351,6 @@ MetacelloProjectSpec >> project [
 MetacelloProjectSpec >> project: aMetacelloProject [
 
 	project := aMetacelloProject
-]
-
-{ #category : 'visiting' }
-MetacelloProjectSpec >> projectDo: projectBlock packageDo: packageBlock groupDo: groupBlock [
-
-	projectBlock value: self
 ]
 
 { #category : 'printing' }

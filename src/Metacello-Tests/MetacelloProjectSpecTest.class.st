@@ -81,7 +81,7 @@ MetacelloProjectSpecTest >> testProjectSpec [
 	self assert: project postLoadDoIt value identicalTo: #postLoadDoIt.
 	self should: [ project includes: #(  ) ] raise: Error.
 	self should: [ project requires: #(  ) ] raise: Error.
-	project projectDo: [ :prjct | self assert: project identicalTo: prjct ] packageDo: [ :ignored | self assert: false ] groupDo: [ :ignored | self assert: false ].
+	self assert: project class equals: MetacelloProjectSpec.
 	self should: [ project preLoadDoIt: '' ] raise: Error.
 	self should: [ project postLoadDoIt: '' ] raise: Error
 ]

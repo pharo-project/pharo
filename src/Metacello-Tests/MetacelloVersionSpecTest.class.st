@@ -149,8 +149,7 @@ MetacelloVersionSpecTest >> testVersionSpec2 [
 	group := version packagesSpec packageNamed: 'Platform' ifAbsent: [ self assert: false ].
 	self assert: (group includes includes: 'Core').
 	projectReferenceSpec := version packagesSpec packageNamed: 'Project' ifAbsent: [ self assert: false ].
-	self assert: projectReferenceSpec projectName equals: 'Project'.
-	version projectDo: [ :prjct | prjct == projectReferenceSpec ] packageDo: [ :pkg | pkg == package ] groupDo: [ :grp | grp == group ]
+	self assert: projectReferenceSpec projectName equals: 'Project'
 ]
 
 { #category : 'specs' }

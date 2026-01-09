@@ -42,10 +42,20 @@ MetacelloLoadableSpec >> includesForPackageOrdering [
 	^ #(  )
 ]
 
-{ #category : 'querying' }
-MetacelloLoadableSpec >> isPackageLoaded [
+{ #category : 'testing' }
+MetacelloLoadableSpec >> isGroupSpec [
 
 	^ false
+]
+
+{ #category : 'testing' }
+MetacelloLoadableSpec >> isPackageSpec [
+	 ^ false
+]
+
+{ #category : 'testing' }
+MetacelloLoadableSpec >> isProjectReferenceSpec [
+	 ^ false
 ]
 
 { #category : 'printing' }
@@ -85,13 +95,6 @@ MetacelloLoadableSpec >> printOn: aStream [
 		nextPutAll: self name;
 		nextPutAll: ']'
 ]
-
-{ #category : 'visiting' }
-MetacelloLoadableSpec >> projectDo: projectBlock packageDo: packageBlock groupDo: groupBlock [
-
-	self subclassResponsibility
-]
-
 { #category : 'accessing' }
 MetacelloLoadableSpec >> referencedSpec [
 
