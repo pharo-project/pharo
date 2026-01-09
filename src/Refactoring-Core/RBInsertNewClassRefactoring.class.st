@@ -33,19 +33,23 @@ Class {
 RBInsertNewClassRefactoring >> applicabilityPreconditions [
 
 	| cond |
-	cond := { ((RBCondition isMetaclass: superclass) errorMacro:
-		         'Superclass must not be a metaclass') not }.
+	cond := { (ReClassesAreNotMetaClassCondition new
+		         classes: { superclass };
+		         message: 'Superclass must not be a metaclass') }.
 	subclasses do: [ :sub |
-		        cond := cond , {
-				 	((RBCondition isMetaclass: sub) errorMacro:
-				         'Subclass must <1?not :>be a metaclass') not.
-			        (RBCondition isImmediateSubclass: sub of: superclass) } ].
-	^ cond , { 
-			(RBCondition isValidClassName: className).
-			(RBCondition isGlobal: className in: self model) not.
-			(RBCondition isSymbol: packageName).
-			((RBCondition withBlock: [ packageName isNotEmpty ]) errorMacro:
-				 'Invalid package name') }
+			cond := cond , {
+				        (ReClassesAreNotMetaClassCondition new
+					         classes: { sub };
+					         message: 'Superclass must not be a metaclass';
+					         model: self model).
+				        (ReClassesAreImmediateSubclassesCondition new
+					         classes: { sub };
+					         superclass: superclass;
+					         model: self model) } ].
+	^ cond , {
+		  (ReIsValidClassName new classNamed: className).
+		  (ReNameIsGlobalCondition new model: self model className: className) not.
+		  (ReIsValidPackageName new packageNamed: packageName) }
 ]
 
 { #category : 'transforming' }

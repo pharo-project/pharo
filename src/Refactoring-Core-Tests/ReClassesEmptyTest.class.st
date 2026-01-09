@@ -22,7 +22,7 @@ ReClassesEmptyTest >> testClassIsEmpty [
 ]
 
 { #category : 'tests' }
-ReClassesEmptyTest >> testClassIsEmptyWithMessage [
+ReClassesEmptyTest >> testClassIsEmptyMessage [
 
 	| empty cond |
 	empty := self model classNamed: #MyClassB.
@@ -50,7 +50,7 @@ ReClassesEmptyTest >> testClassIsNotEmpty [
 ]
 
 { #category : 'tests' }
-ReClassesEmptyTest >> testClassIsNotEmptyWithMessage [
+ReClassesEmptyTest >> testClassIsNotEmptyMessage [
 
 	| full cond |
 	full := self model classNamed: #MyClassAlpha.
@@ -79,7 +79,7 @@ ReClassesEmptyTest >> testSomeClassesAreEmpty [
 ]
 
 { #category : 'tests' }
-ReClassesEmptyTest >> testSomeClassesAreEmptyWithMessage [
+ReClassesEmptyTest >> testSomeClassesAreEmptyMessage [
 
 	| full empty cond |
 	full := self model classNamed: #MyClassAlpha.

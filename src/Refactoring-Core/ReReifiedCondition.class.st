@@ -1,18 +1,27 @@
 Class {
 	#name : 'ReReifiedCondition',
 	#superclass : 'RBCondition',
-	#instVars : [
-		'subjects'
-	],
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',
 	#tag : 'Conditions'
 }
 
+{ #category : 'accessing - private' }
+ReReifiedCondition >> candidates [
+	"Candidates are all objects evaluated against the defined conditions. Any object that fails to meet those conditions is considered a violator."
+	self subclassResponsibility 
+]
+
+{ #category : 'checking' }
+ReReifiedCondition >> check [ 
+
+	^ self violators isEmpty
+]
+
 { #category : 'accessing' }
 ReReifiedCondition >> errorString [
 
-	^ String streamContents: [ :aStream | self violationMessageOn: aStream ]
+	^ String streamContents: [ :s | self violationMessageOn: s violators: self violators ]
 ]
 
 { #category : 'checking' }
@@ -30,7 +39,7 @@ ReReifiedCondition >> isTrue [
 { #category : 'accessing' }
 ReReifiedCondition >> nonViolators [
 
-	^ subjects difference: self violators
+	^ self candidates difference: self violators
 ]
 
 { #category : 'logical operations' }
@@ -39,16 +48,18 @@ ReReifiedCondition >> not [
 	^ ReNewNegationCondition on: self
 ]
 
-{ #category : 'accessing - private' }
-ReReifiedCondition >> subjects [
-	"Complex conditions require this method to compute their own subjects"
-	^ subjects
-]
-
 { #category : 'displaying' }
-ReReifiedCondition >> violationMessageOn: aStream [
-
-	self subclassResponsibility 
+ReReifiedCondition >> violationMessageOn: aStream violators: theViolators [
+	| isNegated |
+	theViolators ifEmpty:[^self].
+	isNegated := self violators ~= theViolators.
+	
+	theViolators do: [ :violator |
+		aStream
+			nextPutAll: violator name;
+			nextPutAll: ('<1? is not:is>' expandMacrosWith: isNegated);
+			nextPutAll: ' empty.';
+			space ]
 ]
 
 { #category : 'accessing' }

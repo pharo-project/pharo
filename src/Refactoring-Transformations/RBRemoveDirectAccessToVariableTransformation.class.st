@@ -38,7 +38,7 @@ RBRemoveDirectAccessToVariableTransformation >> applicabilityPreconditions [
 	conds := isClassVariable
 		         ifTrue: [
 			         {
-				         (RBCondition isMetaclass: class) not.
+				         (ReClassesAreNotMetaClassCondition new classes: { class }).
 				         (RBCondition
 					          directlyDefinesClassVariable: variableName asSymbol
 					          in: class).

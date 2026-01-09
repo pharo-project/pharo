@@ -21,6 +21,19 @@ ReClassesHaveNoSubclassesTest >> testClassHasNoSubclasses [
 ]
 
 { #category : 'tests' }
+ReClassesHaveNoSubclassesTest >> testClassHasNoSubclassesMessage [
+
+	| nosubs cond |
+	nosubs := self model classNamed: #MySubAccessingSuperclassState.
+
+	cond := ReClassesHaveNoSubclassesCondition new
+		        classes: { nosubs }.
+
+	self assert: cond check.
+	self assert: cond errorString isEmpty
+]
+
+{ #category : 'tests' }
 ReClassesHaveNoSubclassesTest >> testClassHasSubclasses [
 
 	| hassubs cond |

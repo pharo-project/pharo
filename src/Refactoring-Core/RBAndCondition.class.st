@@ -10,6 +10,12 @@ Class {
 	#tag : 'Conditions'
 }
 
+{ #category : 'accessing - private' }
+RBAndCondition >> candidates [ 
+
+	^ left candidates , right candidates
+]
+
 { #category : 'checking' }
 RBAndCondition >> check [
 	left check
@@ -21,11 +27,20 @@ RBAndCondition >> check [
 	^true
 ]
 
+{ #category : 'private' }
+RBAndCondition >> errorBlock [
+
+	^ left check
+		ifFalse: [ left errorBlock ]
+		ifTrue: [ right errorBlock ]
+]
+
 { #category : 'accessing' }
 RBAndCondition >> errorString [ 
-	"I doubt because I thought it was lazy"
 	
-	^ right errorString, ' and ', left errorString
+	left check ifFalse: [ ^ left errorString ].
+	right check ifFalse: [ ^ right errorString ].
+	^ ''
 ]
 
 { #category : 'initialization' }
@@ -33,6 +48,13 @@ RBAndCondition >> left: aCondition right: aCondition2 [
 	left := aCondition.
 	right := aCondition2.
 
+]
+
+{ #category : 'accessing' }
+RBAndCondition >> nonViolators [ 
+   ^ self check 
+		ifTrue: [ left nonViolators , right nonViolators ]
+		ifFalse: [ ^ #() ] 
 ]
 
 { #category : 'printing' }
@@ -43,8 +65,22 @@ RBAndCondition >> printOn: aStream [
 		print: right
 ]
 
-{ #category : 'accessing' }
-RBAndCondition >> violators [ 
+{ #category : 'displaying' }
+RBAndCondition >> violationMessageOn: aStream violators: theViolators [
+	| violatorsLeft violatorsRight |
+	self flag: 'This implementation wont work for conditions whose candidates cannot be compared by sending =. Fix me!'.
+	violatorsLeft := left candidates select: [ :each | theViolators includes: each ].
+	violatorsRight := right candidates select: [ :each | theViolators includes: each ].
+	
+	left violationMessageOn: aStream violators: violatorsLeft.
+	aStream nextPutAll: ' & '.
+	right violationMessageOn: aStream violators: violatorsRight
+]
 
-	^ left violators , right violators
+{ #category : 'accessing' }
+RBAndCondition >> violators [
+
+	^ self check
+		  ifFalse: [ left violators , right violators ]
+		  ifTrue: [ #(  ) ]
 ]

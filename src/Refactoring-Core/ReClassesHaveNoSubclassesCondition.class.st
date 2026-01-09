@@ -15,11 +15,23 @@ ReClassesHaveNoSubclassesCondition >> hasSubclasses: aClass excluding: classesLi
 
 { #category : 'displaying' }
 ReClassesHaveNoSubclassesCondition >> violationMessageOn: aStream [
-
 	self violators do: [ :violator |
 		aStream
 			nextPutAll: violator name;
 			nextPutAll: ' has subclasses.';
+			space ]
+]
+
+{ #category : 'displaying' }
+ReClassesHaveNoSubclassesCondition >> violationMessageOn: aStream violators: theViolators [ 
+	| verb |
+	theViolators ifEmpty: [ ^self ].
+	verb := theViolators = self violators ifFalse: [ ' does not have' ] ifTrue: [ ' has' ].
+	self violators do: [ :violator |
+		aStream
+			nextPutAll: violator name;
+			nextPutAll: verb;
+			nextPutAll: ' subclasses.';
 			space ]
 ]
 

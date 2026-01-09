@@ -25,7 +25,21 @@ ReMethodsDontReferToSharedVarsTest >> testMethodReferencingInstVarDefinedInItsOw
 		class: myClassBeta selectors: { #methodReferencingSharedVarDefinedInItsDefiningClassAndOneInItsSuperclass }.
 		
 	" the method refers to and shared variable defined in its own defining class, therefore the condition fails "
-	self deny: cond check
+	self deny: cond check.
+	self assert: cond violators equals: { { ##methodReferencingSharedVarDefinedInItsDefiningClassAndOneInItsSuperclass . #SharedVarB } } asSet.
+	self assert: cond nonViolators isEmpty.
+]
+
+{ #category : 'tests' }
+ReMethodsDontReferToSharedVarsTest >> testMethodReferencingInstVarDefinedInItsOwnClassAndAnotherOneDefinedInItsSuperclassMessage [
+	| myClassBeta cond |
+	myClassBeta := self model classNamed: #MyClassBeta.
+	
+	cond := ReMethodsDontReferToLocalSharedVarsCondition new 
+		class: myClassBeta selectors: { #methodReferencingSharedVarDefinedInItsDefiningClassAndOneInItsSuperclass }.
+		
+	" the method refers to and shared variable defined in its own defining class, therefore the condition fails "
+	self assert: ('*methodReferencingSharedVarDefinedInItsDefiningClassAndOneInItsSuperclass*SharedVarB*' match: cond errorString)
 ]
 
 { #category : 'tests' }
@@ -37,7 +51,21 @@ ReMethodsDontReferToSharedVarsTest >> testMethodReferencingNoSharedVariables [
 		class: myClassBeta selectors: { #methodForPullUp }.
 		
 	" the method does not refer to shared variables "
-	self assert: cond check
+	self assert: cond check.
+	self assert: cond violators isEmpty.
+	self assert: cond nonViolators equals: {{ #methodForPullUp . nil }} asSet
+]
+
+{ #category : 'tests' }
+ReMethodsDontReferToSharedVarsTest >> testMethodReferencingNoSharedVariablesMessage [
+	| myClassBeta cond |
+	myClassBeta := self model classNamed: #MyClassBeta.
+	
+	cond := ReMethodsDontReferToLocalSharedVarsCondition new 
+		class: myClassBeta selectors: { #methodForPullUp }.
+		
+	" the method does not refer to shared variables "
+	self assert: cond errorString isEmpty
 ]
 
 { #category : 'tests' }

@@ -6,21 +6,32 @@ Class {
 	#tag : 'Conditions'
 }
 
-{ #category : 'accessing' }
-ReClassesExistCondition >> classes: aCollection [
-	"I must override `classes:` because violators are symbols instead of classes.
-	To correctly compute `nonViolators`, subjects and violators must have matching types."
-	classes := aCollection.
-	subjects := classes keys 
+{ #category : 'accessing - private' }
+ReClassesExistCondition >> candidates [
+	"I must override `candidates` because my violators are symbols instead of classes.
+	To correctly compute `nonViolators`, candidates and violators must have matching types."
+	^ classes keys
+	
 ]
 
 { #category : 'displaying' }
 ReClassesExistCondition >> violationMessageOn: aStream [
-
 	self violators do: [ :violator |
 		aStream
 			nextPutAll: violator;
 			nextPutAll: ' does not exist.';
+			space ]
+]
+
+{ #category : 'displaying' }
+ReClassesExistCondition >> violationMessageOn: aStream violators: theViolators [
+	| verb |
+	theViolators ifEmpty: [ ^self ].
+	verb := theViolators = self violators ifTrue: [ ' does not exist' ] ifFalse: [ ' exists' ].
+	theViolators do: [ :violator |
+		aStream
+			nextPutAll: violator;
+			nextPutAll: verb;
 			space ]
 ]
 

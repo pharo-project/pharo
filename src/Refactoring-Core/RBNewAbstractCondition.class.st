@@ -2,7 +2,7 @@ Class {
 	#name : 'RBNewAbstractCondition',
 	#superclass : 'Object',
 	#instVars : [
-		'subjects'
+		'model'
 	],
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',
@@ -14,15 +14,27 @@ RBNewAbstractCondition >> & aCondition [
 	^RBAndCondition new left: self right: aCondition
 ]
 
-{ #category : 'checking' }
-RBNewAbstractCondition >> check [
+{ #category : 'accessing - private' }
+RBNewAbstractCondition >> candidates [
+
 	self subclassResponsibility
 ]
 
-{ #category : 'accessing' }
+{ #category : 'checking' }
+RBNewAbstractCondition >> check [
+
+	^ self violators isEmpty
+]
+
+{ #category : 'private' }
+RBNewAbstractCondition >> errorBlock [
+	^ nil
+]
+
+{ #category : 'displaying' }
 RBNewAbstractCondition >> errorString [ 
 
-	^ String streamContents: [ :stream | self violationMessageOn: stream ] 
+	^ String streamContents: [ :s | self violationMessageOn: s violators: self violators ]
 ]
 
 { #category : 'testing' }
@@ -37,20 +49,47 @@ RBNewAbstractCondition >> isTrue [
 	^ self check
 ]
 
+{ #category : 'accessing' }
+RBNewAbstractCondition >> model [
+	^ model ifNil: [ model := RBNamespace new ]
+]
+
+{ #category : 'accessing' }
+RBNewAbstractCondition >> nonViolators [
+
+	^ self candidates difference: self violators
+]
+
 { #category : 'logical operations' }
 RBNewAbstractCondition >> not [
 	^ReNewNegationCondition on: self
 ]
 
-{ #category : 'accessing - private' }
-RBNewAbstractCondition >> subjects [
-	"Complex conditions require this method to compute their own subjects"
-	^ subjects
+{ #category : 'displaying' }
+RBNewAbstractCondition >> violationMessageOn: aStream [
+
+	aStream nextPutAll: self errorString
 ]
 
 { #category : 'displaying' }
-RBNewAbstractCondition >> violationMessageOn: aStream [
-	self subclassResponsibility 
+RBNewAbstractCondition >> violationMessageOn: aStream violators: theViolators [
+
+	| isNegated |
+	theViolators ifEmpty:[^self].
+	isNegated := self violators ~= theViolators.
+	
+	theViolators do: [ :violator |
+		aStream
+			nextPutAll: violator;
+			nextPutAll: '<1? is not:is>';
+			nextPutAll: ' a valid package name.';
+			space ]
+]
+
+{ #category : 'accessing' }
+RBNewAbstractCondition >> violators [
+
+	self subclassResponsibility
 ]
 
 { #category : 'logical operations' }

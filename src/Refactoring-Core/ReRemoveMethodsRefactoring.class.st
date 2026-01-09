@@ -104,7 +104,7 @@ ReRemoveMethodsRefactoring >> classSelectorMapping: classSelectorMappingList [
 { #category : 'preconditions' }
 ReRemoveMethodsRefactoring >> preconditionHaveNoSenders [
 
-	^ ReMethodsHaveNoSendersCondition new model: self model; classSelectorsMapping: classSelectorMapping
+	^ (ReMethodsHaveSendersCondition new model: self model; classSelectorsMapping: classSelectorMapping) not
 ]
 
 { #category : 'removing' }

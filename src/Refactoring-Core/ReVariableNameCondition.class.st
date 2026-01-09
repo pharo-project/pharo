@@ -19,6 +19,12 @@ ReVariableNameCondition class >> name: aString [
 	^ self new name: aString
 ]
 
+{ #category : 'accessing - private' }
+ReVariableNameCondition >> candidates [
+
+	^ { name }
+]
+
 { #category : 'accessing' }
 ReVariableNameCondition >> name: aString [
 	name := aString

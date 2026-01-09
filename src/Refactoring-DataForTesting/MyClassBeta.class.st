@@ -91,6 +91,16 @@ MyClassBeta >> methodReferencingSharedVariableFromSuperclass [
 ]
 
 { #category : 'dummy methods' }
+MyClassBeta >> methodSendingAMethodFromItsOwnClass [
+	^ self methodSentFromAMethodInItsOwnClass 
+]
+
+{ #category : 'dummy methods' }
+MyClassBeta >> methodSentFromAMethodInItsOwnClass [
+	^ self
+]
+
+{ #category : 'dummy methods' }
 MyClassBeta >> methodWithSuperSend [
 	"I have the same implementation that my superclass. One of my sibling has a different definition."
 	^ super methodWithSuperSend

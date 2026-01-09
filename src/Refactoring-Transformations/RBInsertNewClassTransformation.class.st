@@ -35,26 +35,26 @@ Class {
 
 { #category : 'preconditions' }
 RBInsertNewClassTransformation >> applicabilityPreconditions [
-	"Superclass and subclasses shouldn't be metaclasses.
-	Each subclass should be immediate subclass of superclass."
 
 	| cond |
-	cond := { ((RBCondition isMetaclass:
-		          (self model classObjectFor: superclass)) errorMacro:
-		         'Superclass must not be a metaclass') not }.
-	subclasses do: [ :each |
-		cond := cond , { 
-			((RBCondition isMetaclass: (self model classObjectFor: each))
-				 errorMacro: 'Subclass must <1?not :>be a metaclass') not.
-			(RBCondition
-				 isImmediateSubclass: (self model classObjectFor: each)
-				 of: (self model classObjectFor: superclass)) } ].
+	cond := { (ReClassesAreNotMetaClassCondition new
+		         classes: { superclass };
+		         message: 'Superclass must not be a metaclass';
+		         model: self model) }.
+	subclasses do: [ :sub |
+			cond := cond , {
+				        (ReClassesAreNotMetaClassCondition new
+					         classes: { sub };
+					         message: 'Superclass must not be a metaclass';
+					         model: self model).
+				        (ReClassesAreImmediateSubclassesCondition new
+					         classes: { sub };
+					         superclass: superclass;
+					         model: self model) } ].
 	^ cond , {
-		  self isValidClassName.
-		  self isNotGlobal.
-		  (RBCondition isSymbol: packageName).
-		  (RBCondition withBlock: [ packageName isNotEmpty ] errorString:
-					   'Invalid package name') }
+		  (ReIsValidClassName new classNamed: className).
+		  (ReNameIsGlobalCondition new model: self model className: className) not.
+		  (ReIsValidPackageName new packageNamed: packageName) }
 ]
 
 { #category : 'transforming' }

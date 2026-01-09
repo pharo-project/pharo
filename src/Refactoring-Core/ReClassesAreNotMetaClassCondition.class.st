@@ -25,10 +25,13 @@ ReClassesAreNotMetaClassCondition >> message: aStringExplaining [
 { #category : 'displaying' }
 ReClassesAreNotMetaClassCondition >> violationMessageOn: aStream [
 
-	self violators do: [ :violator |
-		aStream
-			nextPutAll: violator name;
-			nextPutAll: ' is a meta class.' ].
+	self violators 
+		collect: [ :violator | self model classObjectFor: violator ] 
+		thenDo: [ :violator |
+			aStream
+				nextPutAll: violator name;
+				nextPutAll: ' is a meta class.' ].
+
 	message ifNotEmpty: [ aStream space ].
 	aStream nextPutAll: message
 ]
@@ -36,6 +39,5 @@ ReClassesAreNotMetaClassCondition >> violationMessageOn: aStream [
 { #category : 'accessing' }
 ReClassesAreNotMetaClassCondition >> violators [
 
-	^ violators ifNil: [
-		  violators := subjects select: [ :class | class isMeta ] ]
+	^ violators ifNil: [ violators := self candidates select: [ :class | (self model classObjectFor: class) isMeta ] ]
 ]

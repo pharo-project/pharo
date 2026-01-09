@@ -12,8 +12,7 @@ Class {
 { #category : 'accessing' }
 ReClassHasSubclassesCondition >> class: aClass [
 
-	classes := { aClass }.
-	subjects := classes
+	classes := { aClass }
 ]
 
 { #category : 'accessing' }
@@ -36,5 +35,5 @@ ReClassHasSubclassesCondition >> violators [
 		  violators := ((self theClass allSubclasses collect: [ :each |
 			                 each name ]) includesAll: subclasses)
 			               ifTrue: [ {  } ]
-			               ifFalse: [ subjects ] ]
+			               ifFalse: [ self candidates ] ]
 ]

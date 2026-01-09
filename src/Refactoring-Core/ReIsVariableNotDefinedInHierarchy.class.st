@@ -19,24 +19,39 @@ ReIsVariableNotDefinedInHierarchy class >> name: aString class: aClass [
 		yourself
 ]
 
-{ #category : 'checking' }
-ReIsVariableNotDefinedInHierarchy >> check [
-
-	(class hierarchyDefinesVariable: name) ifTrue: [
-		violator := name.
-		^ false ].
-	^ true
-]
-
 { #category : 'accessing' }
 ReIsVariableNotDefinedInHierarchy >> class: aClass [
 	class := aClass
 ]
 
-{ #category : 'accessing' }
+{ #category : 'displaying' }
 ReIsVariableNotDefinedInHierarchy >> violationMessageOn: aStream [
-	
+	self deprecated: 'User violationMessageOn:violators instead'. 
 	^ aStream
 		  nextPutAll: violator;
 		  nextPutAll: (' is already defined in the class {1} or its hierarchy.' format: { class name })
+]
+
+{ #category : 'accessing' }
+ReIsVariableNotDefinedInHierarchy >> violationMessageOn: aStream violators: theViolators [
+
+	| verb |
+	theViolators ifEmpty: [ ^ self ].
+	verb := theViolators anyOne = violator
+		        ifTrue: [ ' is already' ]
+		        ifFalse: [ ' is not' ].
+	^ aStream
+		  nextPutAll: violator;
+		  nextPutAll: verb;
+		  nextPutAll: (' defined in the class {1} or its hierarchy.' format: { class name })
+]
+
+{ #category : 'accessing' }
+ReIsVariableNotDefinedInHierarchy >> violators [
+	(class hierarchyDefinesVariable: name) ifTrue: [
+		violator := name.
+		^ { violator } ].
+	^ #()
+
+	
 ]

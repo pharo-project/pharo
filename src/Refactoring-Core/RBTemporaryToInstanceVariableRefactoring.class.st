@@ -176,7 +176,19 @@ RBTemporaryToInstanceVariableRefactoring >> prepareForExecution [
 RBTemporaryToInstanceVariableRefactoring >> privateTransform [
 
 	self removeTemporaryOfClass: class.
+	self removeInstVarNamed: temporaryVariableName fromClasses: class subclasses.
 	class addInstanceVariable: temporaryVariableName
+]
+
+{ #category : 'removing' }
+RBTemporaryToInstanceVariableRefactoring >> removeInstVarNamed: varName fromClasses: someClasses [
+	" If I got here and subclasses of `class` have an instVar 
+	named `temporaryVariableName`, we know the user ignored our warning, 
+	therefore we must remove these instVars from subclasses "
+
+	class subclasses do: [ :subclass | 
+		(self model classObjectFor: subclass) 
+			removeInstanceVariable: varName ifAbsent: [ ] ]
 ]
 
 { #category : 'removing' }

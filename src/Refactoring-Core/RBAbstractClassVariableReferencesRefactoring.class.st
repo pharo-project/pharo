@@ -64,7 +64,7 @@ RBAbstractClassVariableReferencesRefactoring >> accessorsRefactoring [
 RBAbstractClassVariableReferencesRefactoring >> applicabilityPreconditions [
 
 	^ {
-		  (RBCondition isMetaclass: class) not.
+		  (ReClassesAreNotMetaClassCondition new classes: { class }).
 		  (RBCondition
 			   directlyDefinesClassVariable: variableName asSymbol
 			   in: class).

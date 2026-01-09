@@ -1,3 +1,8 @@
+"
+I fail when a Shared Variable has no references. 
+My candidates and violators are both shared variable names. 
+I have a single candidate, and therefore a single violator.
+"
 Class {
 	#name : 'ReSharedVariableHasReferences',
 	#superclass : 'RBNewAbstractCondition',
@@ -11,28 +16,10 @@ Class {
 	#tag : 'Conditions'
 }
 
-{ #category : 'accessing' }
-ReSharedVariableHasReferences >> check [
+{ #category : 'accessing - private' }
+ReSharedVariableHasReferences >> candidates [
 
-	aClass withAllSubclasses do: [ :each |
-			| res |
-			res := (each whichMethodsReferToSharedVariable: sharedVariable).
-			res isNotEmpty
-				ifTrue: [ violators addAll: res ].
-			].
-	aClass withAllSubclasses do: [ :each |
-			| res |
-			res := (each classSide whichMethodsReferToSharedVariable: sharedVariable).
-			res isNotEmpty
-				ifTrue: [ violators addAll: res ].
-			].
-	^ violators isNotEmpty
-]
-
-{ #category : 'accessing' }
-ReSharedVariableHasReferences >> errorString [ 
-
-	^ ' Variable ', sharedVariable , ' is still referenced'
+	^ { sharedVariable }
 ]
 
 { #category : 'instance creation' }
@@ -48,7 +35,33 @@ ReSharedVariableHasReferences >> initialize [
 	violators := OrderedCollection new
 ]
 
+{ #category : 'displaying' }
+ReSharedVariableHasReferences >> violationMessageOn: aStream violators: theViolators [
+
+	| verb |
+	theViolators ifEmpty: [ ^ self ].
+	verb := theViolators asArray = self violators asArray
+		        ifTrue: [ ' is still' ]
+		        ifFalse: [ ' is not' ].
+	aStream
+		nextPutAll: ' Variable ';
+		nextPutAll: sharedVariable;
+		nextPutAll: verb;
+		nextPutAll: ' referenced'
+]
+
 { #category : 'accessing' }
-ReSharedVariableHasReferences >> violators [ 
+ReSharedVariableHasReferences >> violators [
+
+	violators ifNotNil: [ ^ violators ].
+	
+	violators := self candidates.
+	aClass withAllSubclasses do: [ :each |
+			{ each. each classSide } 
+				do: [ :cls | cls localMethods do: [ :meth | 
+						(meth refersToVariable: sharedVariable) 
+							ifTrue: [ 
+								" The variable is referred from somewhere, therefore it is not a violator "
+								violators := #() ] ] ] ].
 	^ violators
 ]

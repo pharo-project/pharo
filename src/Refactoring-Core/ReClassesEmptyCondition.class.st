@@ -27,6 +27,21 @@ ReClassesEmptyCondition >> violationMessageOn: aStream [
 			space ]
 ]
 
+{ #category : 'displaying' }
+ReClassesEmptyCondition >> violationMessageOn: aStream violators: theViolators [
+	| isNegated |
+	self flag: 'I am the template to improve other implementations!'.
+	theViolators ifEmpty:[^self].
+	isNegated := self violators ~= theViolators.
+	
+	theViolators do: [ :violator |
+		aStream
+			nextPutAll: violator name;
+			nextPutAll: '<1? is not:is>';
+			nextPutAll: ' empty.';
+			space ]
+]
+
 { #category : 'accessing' }
 ReClassesEmptyCondition >> violators [
 

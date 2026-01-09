@@ -14,36 +14,43 @@ ReNewNegationCondition class >> on: aRBInstanceVariableHasReferences [
 	^ self new condition: aRBInstanceVariableHasReferences ; yourself.
 ]
 
+{ #category : 'accessing - private' }
+ReNewNegationCondition >> candidates [ 
+	^ condition candidates
+]
+
 { #category : 'checking' }
 ReNewNegationCondition >> check [
-	^condition check not
+	" `condition check not` does not work if the condition checks several candidates. "
+	^ condition nonViolators isEmpty
 ]
 
 { #category : 'accessing' }
 ReNewNegationCondition >> condition: aCondition [
 
-	condition := aCondition.
-	subjects := condition subjects
+	condition := aCondition
 ]
 
-{ #category : 'accessing' }
+{ #category : 'displaying' }
 ReNewNegationCondition >> errorString [ 
 
-	^ condition errorString
+	^ String streamContents: [ :s | self violationMessageOn: s violators: self violators ]
 ]
 
 { #category : 'accessing' }
 ReNewNegationCondition >> nonViolators [
 
-	^ subjects difference: self violators
+	^ condition violators
+]
+
+{ #category : 'logical operations' }
+ReNewNegationCondition >> not [
+	^condition
 ]
 
 { #category : 'displaying' }
-ReNewNegationCondition >> violationMessageOn: aWriteStream [
-
-	aWriteStream
-		nextPutAll: 'NOT ';
-		nextPutAll: condition errorString
+ReNewNegationCondition >> violationMessageOn: aStream violators: theViolators [ 
+	condition violationMessageOn: aStream violators: theViolators
 ]
 
 { #category : 'accessing' }

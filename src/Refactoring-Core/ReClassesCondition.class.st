@@ -10,15 +10,13 @@ Class {
 	#tag : 'Conditions'
 }
 
-{ #category : 'checking' }
-ReClassesCondition >> check [ 
-
-	^ self violators isEmpty
+{ #category : 'accessing - private' }
+ReClassesCondition >> candidates [
+	^ classes
 ]
 
 { #category : 'accessing' }
 ReClassesCondition >> classes: aRBClassCollection [
 
-	classes := aRBClassCollection.
-	subjects := classes.
+	classes := aRBClassCollection
 ]

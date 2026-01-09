@@ -15,8 +15,6 @@ Class {
 	#name : 'ReNoSupersendToTargetClassCondition',
 	#superclass : 'ReMethodsCondition',
 	#instVars : [
-		'class',
-		'selectors',
 		'targetSuperclass'
 	],
 	#category : 'Refactoring-Core-Conditions',
@@ -49,11 +47,11 @@ ReNoSupersendToTargetClassCondition >> violators [
 	violators ifNotNil: [ ^ violators ].
 	
 	violators := OrderedCollection new.
-	selectors do: [ :each |
+	self candidates do: [ :aSelector |
 		| parseTree |
-		parseTree := class parseTreeForSelector: each.
+		parseTree := class parseTreeForSelector: aSelector.
 		parseTree superMessages
 			detect: [ :sup | targetSuperclass directlyDefinesMethod: sup ]
-			ifFound: [ violators add: (class methodFor: each) ] ].
+			ifFound: [ violators add: (class methodFor: aSelector) ] ].
 	^ violators
 ]

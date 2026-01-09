@@ -5,10 +5,6 @@ I do not check for shared variables defined in my class superclasses
 Class {
 	#name : 'ReMethodsDontReferToLocalSharedVarsCondition',
 	#superclass : 'ReMethodsCondition',
-	#instVars : [
-		'class',
-		'selectors'
-	],
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',
 	#tag : 'Conditions'
@@ -22,6 +18,16 @@ ReMethodsDontReferToLocalSharedVarsCondition >> class: aRBClass selectors: aColl
 ]
 
 { #category : 'accessing' }
+ReMethodsDontReferToLocalSharedVarsCondition >> nonViolators [
+	"I override nonViolators because my violators differ in type from my candidates.
+	My violators are pairs of the form {selector, instVarName}, while my candidates are selectors."
+	^ (
+		 (self candidates difference: (self violators collect: [ :assoc | assoc first ])) 
+			collect: [ :nonViolator | { nonViolator. nil } ]
+		) asSet
+]
+
+{ #category : 'accessing' }
 ReMethodsDontReferToLocalSharedVarsCondition >> referencedSharedVariables [
 
 	^ self violators collect: [ :violator | violator at: 2 ]
@@ -29,15 +35,34 @@ ReMethodsDontReferToLocalSharedVarsCondition >> referencedSharedVariables [
 
 { #category : 'displaying' }
 ReMethodsDontReferToLocalSharedVarsCondition >> violationMessageOn: aStream [
-
+	self deprecated: 'Use violationMessage:violators: instead'.
 	self violators do: [ :violator |
 		| selector instVar |
-		selector := violator at: 1.
-		instVar := violator at: 2.
+		selector := violator first.
+		instVar := violator second.
 		aStream
 			nextPutAll: '''';
 			nextPutAll: selector;
 			nextPutAll: ''' refers to the shared var #';
+			nextPutAll: instVar ]
+]
+
+{ #category : 'displaying' }
+ReMethodsDontReferToLocalSharedVarsCondition >> violationMessageOn: aStream violators: theViolators [
+	| verb |
+	theViolators ifEmpty: [ ^self ].
+	verb := self violators = theViolators ifTrue: [ ' refers' ] ifFalse: [ ' does not refer' ].
+	
+	theViolators do: [ :violator |
+		| selector instVar |
+		selector := violator first.
+		instVar := violator second.
+		aStream
+			nextPutAll: '''';
+			nextPutAll: selector;
+			nextPutAll: '''';
+			nextPutAll: verb;
+			nextPutAll: ' to the shared var #';
 			nextPutAll: instVar ]
 ]
 
@@ -47,7 +72,7 @@ ReMethodsDontReferToLocalSharedVarsCondition >> violators [
 	violators ifNotNil: [ ^ violators ].
 
 	violators := Set new.
-	selectors do: [ :selector |
+	self candidates do: [ :selector |
 		class classVariableNames do: [ :classVar |
 			((class methodFor: selector) refersToVariable: classVar)
 				ifTrue: [ violators add: { selector . classVar } ] ] ].

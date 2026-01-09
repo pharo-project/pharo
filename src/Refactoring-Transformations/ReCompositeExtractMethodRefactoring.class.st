@@ -407,9 +407,9 @@ ReCompositeExtractMethodRefactoring >> preconditionHasSameExitPoint [
 { #category : 'preconditions' }
 ReCompositeExtractMethodRefactoring >> preconditionNoOverrides [
 
-	^ ReUpToRootDoesNotDefinesMethod new
+	^ (ReUpToRootDoesNotDefinesMethod new
 		  class: class;
-		  selector: newSelector
+		  selector: newSelector) not
 ]
 
 { #category : 'preconditions' }

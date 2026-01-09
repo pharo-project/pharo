@@ -295,3 +295,19 @@ RBConditionTest >> testTrue [
 	self assert: RBCondition true check.
 	self deny: RBCondition true not check.
 ]
+
+{ #category : 'tests' }
+RBConditionTest >> testViolatorsForNegatedConditionAreCorrect [
+
+	| abstract concrete condition negation doubleNegation |
+	abstract := { TestCase . Number }.
+	concrete := { Object . Point }.
+	
+	condition := ReClassesAreAbstractCondition new classes: abstract, concrete.
+	negation := condition not.
+	doubleNegation := negation not.
+	
+	self assert: condition violators asSet equals: concrete asSet.
+	self assert: negation violators asSet equals: abstract asSet.
+	self assert: doubleNegation violators asSet equals: condition violators asSet
+]

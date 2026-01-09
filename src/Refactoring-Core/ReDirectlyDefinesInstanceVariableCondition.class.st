@@ -27,10 +27,15 @@ ReDirectlyDefinesInstanceVariableCondition class >> classNamed: aString inModel:
 		yourself
 ]
 
+{ #category : 'accessing - private' }
+ReDirectlyDefinesInstanceVariableCondition >> candidates [
+	^instanceVariables 
+]
+
 { #category : 'checking' }
 ReDirectlyDefinesInstanceVariableCondition >> check [
 	
-	violators := instanceVariables reject: [ :shared | class directlyDefinesInstanceVariable: shared ].
+	violators := instanceVariables reject: [ :var | class directlyDefinesInstanceVariable: var ].
 	^ violators isEmpty
 ]
 
@@ -47,6 +52,14 @@ ReDirectlyDefinesInstanceVariableCondition >> class: aRBAbstractClass inModel: a
 ReDirectlyDefinesInstanceVariableCondition >> instanceVariables: aColOfStrings [
 
 	instanceVariables := aColOfStrings
+]
+
+{ #category : 'checking' }
+ReDirectlyDefinesInstanceVariableCondition >> nonViolators [
+
+	^ super nonViolators size == self candidates size
+		  ifTrue: [ super nonViolators ]
+		  ifFalse: [ #(  ) ]
 ]
 
 { #category : 'displaying' }
