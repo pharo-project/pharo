@@ -105,6 +105,14 @@ MetacelloPackagesSpec >> packageNamed: aString ifAbsent: aBlock [
 ]
 
 { #category : 'accessing' }
+MetacelloPackagesSpec >> packageNamed: aString ifPresent: aBlock [
+
+	^ self loadableSpecs
+		  detect: [ :spec | spec name = aString ]
+		  ifFound: aBlock
+]
+
+{ #category : 'accessing' }
 MetacelloPackagesSpec >> packageSpecsInLoadOrderFor: aVersionSpec [
 	"order only the packageSpecs and projectSpecs. groupSpec order does not matter"
 
