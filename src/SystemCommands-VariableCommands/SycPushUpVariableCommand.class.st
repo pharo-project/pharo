@@ -46,12 +46,6 @@ SycPushUpVariableCommand >> executeRefactorings [
 		 to: variable definingClass superclass) runRefactoring
 ]
 
-{ #category : 'accessing' }
-SycPushUpVariableCommand >> isComplexRefactoring [
-
-	^ false
-]
-
 { #category : 'execution' }
 SycPushUpVariableCommand >> prepareFullExecutionInContext: aToolContext [
 

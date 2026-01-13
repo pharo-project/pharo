@@ -79,17 +79,19 @@ MenuRegistrationExample class >> pragmaKeyword [
 { #category : 'menu actions' }
 MenuRegistrationExample class >> quitSessionWithoutSaving [
 
-	Smalltalk snapshot: false andQuit: true
+	InformativeNotification signal: 'Quit not saved!'
 ]
 
 { #category : 'menu actions' }
 MenuRegistrationExample class >> saveAndQuit [
-	Smalltalk snapshot: true andQuit: true
+	
+	InformativeNotification signal: 'Saved and quitted!'
 ]
 
 { #category : 'menu actions' }
 MenuRegistrationExample class >> saveAs [
-	Smalltalk saveAs
+	
+	InformativeNotification signal: 'Saved!'
 ]
 
 { #category : 'menu declaring' }

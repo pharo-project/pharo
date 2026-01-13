@@ -210,12 +210,6 @@ Variable >> isSelfVariable [
 ]
 
 { #category : 'testing' }
-Variable >> isShadowing [
-	"I shadow a variable if looking up my name in the outer scope returns a variable"
-	^(self scope outerScope ifNotNil: [:outer | outer lookupVar: self name]) isNotNil
-]
-
-{ #category : 'testing' }
 Variable >> isSuperVariable [
 	^false
 ]

@@ -5389,12 +5389,6 @@ Morph >> removeHalo [
 	self primaryHand removeHaloAround: self
 ]
 
-{ #category : 'event handling' }
-Morph >> removeLink: actionCode [
-	self eventHandler ifNotNil:
-		[self eventHandler on: actionCode send: nil to: nil]
-]
-
 { #category : 'submorphs - add/remove' }
 Morph >> removeMorph: aMorph [
 	"Remove the given morph from my submorphs"

@@ -62,7 +62,10 @@ DummyUIManager >> inform: aString [
 { #category : 'default actions' }
 DummyUIManager >> lowSpaceWatcherDefaultAction [
 
-	self traceCr: '*** LOW SPACE ***'
+	Smalltalk logStdOutDuring: [ :logger |
+			logger
+				nextPutAll: '*** LOW SPACE ***';
+				cr ]
 ]
 
 { #category : 'ui requests' }
@@ -101,12 +104,4 @@ DummyUIManager >> request: aStringOrText initialAnswer: defaultAnswer entryCompl
 DummyUIManager >> request: aStringOrText initialAnswer: defaultAnswer title: aTitle entryCompletion: anEntryCompletion [
 
 	self error: 'No user response possible'
-]
-
-{ #category : 'default actions' }
-DummyUIManager >> traceCr: aString [
-
-	Smalltalk logStdOutDuring: [:logger |
-		logger nextPutAll: aString;
-				 cr ]
 ]

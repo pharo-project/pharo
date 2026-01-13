@@ -1,6 +1,6 @@
 Extension { #name : 'Slot' }
 
-{ #category : '*AST-Core' }
+{ #category : '*OpalCompiler-Core' }
 Slot >> acceptVisitor: aProgramNodeVisitor node: aNode [
 	^ aProgramNodeVisitor visitInstanceVariableNode: aNode
 ]

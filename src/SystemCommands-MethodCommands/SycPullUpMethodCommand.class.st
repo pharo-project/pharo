@@ -42,12 +42,6 @@ SycPullUpMethodCommand >> executeRefactorings [
 		 pullUpMethods: methods) runRefactoring
 ]
 
-{ #category : 'testing' }
-SycPullUpMethodCommand >> isComplexRefactoring [
-
-	^ false
-]
-
 { #category : 'execution' }
 SycPullUpMethodCommand >> prepareFullExecutionInContext: aToolContext [
 

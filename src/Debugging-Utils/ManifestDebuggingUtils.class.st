@@ -13,5 +13,5 @@ Class {
 ManifestDebuggingUtils class >> manuallyResolvedDependencies [
 
 	<ignoreForCoverage>
-	^ #(#'SUnit-Basic-CLI' #'Kernel-CodeModel' #'SUnit-Core' #'Debugging-Core')
+	^ #(#'Kernel-CodeModel')
 ]

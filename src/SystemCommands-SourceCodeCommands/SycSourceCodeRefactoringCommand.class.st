@@ -31,8 +31,3 @@ SycSourceCodeRefactoringCommand >> executeRefactoring: refactoring [
 		on: RBRefactoringError
 		do: [ :e | self morphicUIManager alert: e messageText ]
 ]
-
-{ #category : 'testing' }
-SycSourceCodeRefactoringCommand >> isComplexRefactoring [
-	^ true
-]

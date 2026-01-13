@@ -198,10 +198,34 @@ RGMethod >> fullName [
 	^ (self parent name, '>>#', self selector) asSymbol
 ]
 
+{ #category : 'testing' }
+RGMethod >> hasPragmaNamed: aSymbol [
+	^ self pragmas anySatisfy: [ :pragma | pragma selector = aSymbol ]
+]
+
+{ #category : 'testing' }
+RGMethod >> hasSelector: aSelector [
+	"Answers true if the method refers to the selector"
+	(self selector = aSelector) ifTrue: [ ^ true ].
+	^ self sendsSelector: aSelector
+]
+
+{ #category : 'testing' }
+RGMethod >> hasSelector: selector specialSelectorIndex: specialOrNil [
+
+	^ self ast sentMessages includes: selector
+]
+
 { #category : 'accessing' }
 RGMethod >> hasSourceCode [
 
 	^ self backend forMethod hasSourceCodeFor: self
+]
+
+{ #category : 'private' }
+RGMethod >> implementors [
+
+	^ #()
 ]
 
 { #category : 'initialization' }
@@ -247,6 +271,11 @@ RGMethod >> isFromTrait [
 ]
 
 { #category : 'testing' }
+RGMethod >> isInstalled [
+	^ true
+]
+
+{ #category : 'testing' }
 RGMethod >> isLiteralMethod [
 	"Ring methods does not know how to detect if they are literal"
 	^ false
@@ -270,6 +299,12 @@ RGMethod >> isTaggedWith: aSymbol [
 	^self tags includes: aSymbol
 ]
 
+{ #category : 'accessing' }
+RGMethod >> literalAt: anIndex [
+
+	^ self ast literals at: anIndex
+]
+
 { #category : 'resolving' }
 RGMethod >> makeResolved [
 
@@ -282,6 +317,12 @@ RGMethod >> makeResolved [
 	tags := self tags markAsRingResolved
 ]
 
+{ #category : 'accessing' }
+RGMethod >> messages [
+
+	^ self ast sentMessages
+]
+
 { #category : 'queries - class' }
 RGMethod >> methodClass [
 
@@ -291,6 +332,12 @@ RGMethod >> methodClass [
 { #category : 'accessing' }
 RGMethod >> numArgs [
 	^ self selector asString numArgs
+]
+
+{ #category : 'accessing' }
+RGMethod >> origin [
+
+	^ self parent
 ]
 
 { #category : 'accessing - backend' }
@@ -316,6 +363,12 @@ RGMethod >> parseTree [
 		  onError: [ :str :pos | ^ nil ].
 	tree ifNotNil: [ tree doSemanticAnalysis ].
 	^ tree
+]
+
+{ #category : 'accessing - pragmas & properties' }
+RGMethod >> pragmas [
+
+	^ self ast pragmas
 ]
 
 { #category : 'printing' }
@@ -458,6 +511,28 @@ RGMethod >> pvtUntagFrom: aSymbol [
 	"TODO:Announce"
 ]
 
+{ #category : 'scanning' }
+RGMethod >> readsRef: literalAssociation [
+	"Answer whether the receiver loads the argument."
+	^ self ast allChildren anySatisfy: [:each |
+		each isVariable and: [ each name = literalAssociation key ]]
+
+	"self ast nodesDo: [ :node |
+		node isVariable and: [
+			node parent isAssignment not and: [
+				(node binding =  literalAssociation)
+					 		ifTrue: [^true]]]].
+	^false"
+]
+
+{ #category : 'scanning' }
+RGMethod >> readsSlot: aSlot [
+	| nodes |
+	nodes := self ast instanceVariableNodes select: [:each | each isInstanceVariable].
+	nodes := nodes reject: [ :node | node parent isAssignment and: [ node parent variable = node ] ].
+	^ nodes anySatisfy: [ :node | node binding == aSlot ]
+]
+
 { #category : 'removing' }
 RGMethod >> removeFromSystem [
 
@@ -469,6 +544,17 @@ RGMethod >> selector [
 	"Retrieves the name of the method"
 
 	^ self name asSymbol
+]
+
+{ #category : 'accessing' }
+RGMethod >> sendNodes [
+	^self ast sendNodes
+]
+
+{ #category : 'testing' }
+RGMethod >> sendsSelector: aSymbol [
+	"Answer whether the method sends a particular selector"
+	^ self messages includes: aSymbol
 ]
 
 { #category : 'accessing' }
@@ -537,4 +623,33 @@ RGMethod >> time: aDateAndTime [
 RGMethod >> untagFrom: aSymbol [
 
 	self backend forMethod untagMethod: self from: aSymbol
+]
+
+{ #category : 'querying' }
+RGMethod >> variableNodes [
+	^self ast variableNodes
+]
+
+{ #category : 'scanning' }
+RGMethod >> writesRef: literalAssociation [
+	"Answer whether the receiver stores into the argument."
+	self ast nodesDo: [ :node |
+		node isVariable and: [
+			node parent isAssignment and: [
+				(node parent variable = node) and: [
+					(node binding =  literalAssociation)
+					 		ifTrue: [^true]]]]].
+	^false
+]
+
+{ #category : 'scanning' }
+RGMethod >> writesSlot: aSlot [
+	self ast nodesDo: [ :node |
+		node isVariable and: [
+			node parent isAssignment and: [
+				(node parent variable = node) and: [
+					node isInstanceVariable and: [
+						(node binding ==  aSlot)
+					 		ifTrue: [^true]]]]]].
+	^false
 ]

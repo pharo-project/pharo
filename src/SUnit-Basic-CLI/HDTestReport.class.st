@@ -266,16 +266,18 @@ HDTestReport >> runAll [
 
 { #category : 'running' }
 HDTestReport >> runCase: aTestCase [
-	self
-		reportTestCase: aTestCase
-		runBlock: [ 
-			[aTestCase runCaseManaged.
-			aTestCase shouldPass 
-				ifTrue: [ self recordPassOf: aTestCase ]
-				ifFalse: [ self recordUnexpectedPassOf: aTestCase ]
-			] on: Exception do: [ :exc | 
-					exc recordResultOf: aTestCase inHDTestReport: self ]
-		]
+
+	self reportTestCase: aTestCase runBlock: [
+			[
+				[
+					aTestCase runCaseManaged.
+					aTestCase shouldPass
+						ifTrue: [ self recordPassOf: aTestCase ]
+						ifFalse: [ self recordUnexpectedPassOf: aTestCase ] ]
+					on: Halt
+					do: [ :exc | self recordError: exc duringTest: aTestCase ] ]
+				on: Exception
+				do: [ :exc | exc recordResultOf: aTestCase inHDTestReport: self ] ]
 ]
 
 { #category : 'running' }

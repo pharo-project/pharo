@@ -61,11 +61,6 @@ SycNewExtractMethodCommand >> execute [
 	
 ]
 
-{ #category : 'testing' }
-SycNewExtractMethodCommand >> isComplexRefactoring [
-	^ false
-]
-
 { #category : 'execution' }
 SycNewExtractMethodCommand >> readParametersFromContext: aSourceCodeContext [
 	super readParametersFromContext: aSourceCodeContext.

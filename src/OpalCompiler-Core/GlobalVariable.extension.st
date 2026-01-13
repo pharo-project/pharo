@@ -1,6 +1,6 @@
 Extension { #name : 'GlobalVariable' }
 
-{ #category : '*AST-Core' }
+{ #category : '*OpalCompiler-Core' }
 GlobalVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
 	^ aProgramNodeVisitor visitGlobalVariableNode: aNode
 ]

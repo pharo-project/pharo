@@ -358,12 +358,6 @@ SystemEnvironment >> organization: anOrganization [
 	^ self at: #SystemOrganization put: anOrganization
 ]
 
-{ #category : 'accessing - variable lookup' }
-SystemEnvironment >> outerScope [
-
-	^ nil
-]
-
 { #category : 'accessing' }
 SystemEnvironment >> poolUsers [
 	"Answer a dictionary of pool name -> classes that refer to it.

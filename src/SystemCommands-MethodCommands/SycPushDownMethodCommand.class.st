@@ -42,12 +42,6 @@ SycPushDownMethodCommand >> executeRefactorings [
 		pushDownMethods: methods) runRefactoring
 ]
 
-{ #category : 'testing' }
-SycPushDownMethodCommand >> isComplexRefactoring [
-
-	^ false
-]
-
 { #category : 'execution' }
 SycPushDownMethodCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.

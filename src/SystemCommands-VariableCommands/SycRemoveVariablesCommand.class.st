@@ -55,9 +55,3 @@ SycRemoveVariablesCommand >> execute [
 				 variables: (variables collect: [:each | each name])
 				 for: variables first definingClass) runRefactoring ]
 ]
-
-{ #category : 'testing' }
-SycRemoveVariablesCommand >> isComplexRefactoring [
-
-	^false
-]

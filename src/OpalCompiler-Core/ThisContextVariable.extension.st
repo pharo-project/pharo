@@ -1,6 +1,6 @@
 Extension { #name : 'ThisContextVariable' }
 
-{ #category : '*AST-Core' }
+{ #category : '*OpalCompiler-Core' }
 ThisContextVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
 	^ aProgramNodeVisitor visitThisContextNode: aNode
 ]

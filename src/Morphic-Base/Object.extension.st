@@ -81,13 +81,6 @@ Object >> iconFormSetNamed: aSymbol [
 ]
 
 { #category : '*Morphic-Base' }
-Object >> iconOrThumbnailOfSize: aNumberOrPoint [
-	"Answer an appropiate form to represent the receiver"
-
-	^ nil
-]
-
-{ #category : '*Morphic-Base' }
 Object >> isTransferable [
 
 	^ false

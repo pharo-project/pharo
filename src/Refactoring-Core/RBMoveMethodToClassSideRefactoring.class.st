@@ -101,7 +101,7 @@ RBMoveMethodToClassSideRefactoring >> getNewInstSideSource [
 RBMoveMethodToClassSideRefactoring >> getNewSource [
 
 	| rewriter node temp |
-	temp := self temporaryName.
+	temp := 'newInstance'.
 	node := OCParser parseMethod: method source.
 	rewriter := OCParseTreeRewriter new replace: 'self' with: temp.
 	(rewriter executeTree: node)
@@ -200,16 +200,4 @@ RBMoveMethodToClassSideRefactoring >> storeOn: aStream [
 		nextPutAll: class name.
 	aStream
 		nextPutAll: ')'
-]
-
-{ #category : 'transforming' }
-RBMoveMethodToClassSideRefactoring >> temporaryName [
-	| aString counter tempName |
-	counter := 0.
-	aString := class canonicalArgumentName.
-	tempName := aString.
-	[self checkVariableNamed: tempName]
-	whileTrue: [ counter := counter + 1.
-		tempName := aString , counter asString ].
-	^ tempName
 ]

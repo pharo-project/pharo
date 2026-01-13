@@ -19,6 +19,14 @@ Process >> complete: aContext [
 ]
 
 { #category : '*Debugging-Core' }
+Process >> completeTo: aContext [
+	"Resume self until aContext is on top"
+
+	self suspendedContext == aContext ifTrue: [^ aContext].
+	^ self complete: (self calleeOf: aContext)
+]
+
+{ #category : '*Debugging-Core' }
 Process >> step: aContext [
 	"Resume self until aContext is on top, or if already on top, do next step"
 

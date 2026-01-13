@@ -30,12 +30,6 @@ SycGenerateVariableAccessorCommand >> execute [
 		 selectedVariables: (variables collect: [ :each | each name ])) runRefactoring
 ]
 
-{ #category : 'factory method' }
-SycGenerateVariableAccessorCommand >> isComplexRefactoring [ 
-	
-	^ false
-]
-
 { #category : 'execution' }
 SycGenerateVariableAccessorCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.

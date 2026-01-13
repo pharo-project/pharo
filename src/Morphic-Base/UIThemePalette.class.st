@@ -254,13 +254,6 @@ UIThemePalette >> growlBorderColorFor: aGrowlMorph [
 ]
 
 { #category : 'colors' }
-UIThemePalette >> growlContentsColorFor: aGrowlMorph [
-
-	^ paletteDictionary at: #growlContentsColorFor:
-		  ifAbsentPut: [ colorConfigurator growlContentsColorFor: aGrowlMorph ]
-]
-
-{ #category : 'colors' }
 UIThemePalette >> growlFillColorFor: aGrowlMorph [
 
 	^ paletteDictionary at: #growlFillColorFor: ifAbsentPut: [ colorConfigurator growlFillColorFor: aGrowlMorph ]

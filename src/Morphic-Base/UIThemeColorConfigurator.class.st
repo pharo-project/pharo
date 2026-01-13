@@ -264,12 +264,6 @@ UIThemeColorConfigurator >> growlBorderColorFor: aGrowlMorph [
 ]
 
 { #category : 'colors' }
-UIThemeColorConfigurator >> growlContentsColorFor: aGrowlMorph [
-
-	^ Color white
-]
-
-{ #category : 'colors' }
 UIThemeColorConfigurator >> growlFillColorFor: aGrowlMorph [
 
 	^ Color darkGray alpha: 0.5

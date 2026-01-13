@@ -1,6 +1,6 @@
 Extension { #name : 'SelfVariable' }
 
-{ #category : '*AST-Core' }
+{ #category : '*OpalCompiler-Core' }
 SelfVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
 
 	^ aProgramNodeVisitor visitSelfNode: aNode

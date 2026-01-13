@@ -168,7 +168,7 @@ ClySystemBrowserContext >> lastSelectedPackage [
 { #category : 'selection-methods' }
 ClySystemBrowserContext >> lastSelectedSourceNode [
 
-	^self lastSelectedMethod astForStylingInCalypso
+	^self lastSelectedMethod ast
 ]
 
 { #category : 'accessing' }

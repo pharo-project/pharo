@@ -293,6 +293,11 @@ MCWorkingCopy >> findSnapshotWithVersionInfo: aVersionInfo [
             ifNotNil: [:aVersion | aVersion snapshot]]
 ]
 
+{ #category : 'accessing' }
+MCWorkingCopy >> info [
+	^ self versionInfo
+]
+
 { #category : 'initialization' }
 MCWorkingCopy >> initialize [
 	super initialize.

@@ -18,11 +18,11 @@ BaselineOfDebugging >> baseline: spec [
 	spec for: #common do: [
 			spec
 				package: 'UIManager';
-				package: 'Debugging-Core';
-				package: 'Debugging-Utils' with: [ spec requires: #( 'Debugging-Core' ) ];
-				package: 'Debugger-Model' with: [ spec requires: #( 'Debugging-Core' 'Debugging-Utils' ) ];
+				package: 'Debugging-Utils';
+				package: 'Debugging-Core' with: [ spec requires: #( 'Debugging-Utils' ) ];
+				package: 'Debugger-Model' with: [ spec requires: #( 'Debugging-Core' ) ];
 				package: 'Debugger-Oups' with: [ spec requires: #( 'Debugger-Model' ) ];
-				package: 'Debugging-Utils-Tests' with: [ spec requires: #( 'Debugging-Utils' ) ];
+				package: 'Debugging-Utils-Tests' with: [ spec requires: #( 'Debugging-Core' ) ];
 				package: 'Debugger-Model-Tests' with: [ spec requires: #( 'Debugger-Model' ) ];
 				package: 'Debugger-Oups-Tests' with: [ spec requires: #( 'Debugger-Oups' ) ].
 

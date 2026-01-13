@@ -22,12 +22,6 @@ Form >> floodFillTolerance [
 ]
 
 { #category : '*Morphic-Base' }
-Form >> iconOrThumbnailOfSize: aNumberOrPoint [
-	"Answer an appropiate form to represent the receiver"
-	^ self scaledIntoFormOfSize: aNumberOrPoint
-]
-
-{ #category : '*Morphic-Base' }
 Form >> listRenderOn: aCanvas atRow: index bounds: aRectangle color: aColor backgroundColor: backgroundColor from: aList [
 	self asMorph
 		listRenderOn: aCanvas

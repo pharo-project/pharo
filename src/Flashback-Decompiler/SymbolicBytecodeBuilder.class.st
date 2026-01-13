@@ -12,8 +12,8 @@ Class {
 		'oldPC',
 		'symbolicBytecodes'
 	],
-	#category : 'Debugging-Core',
-	#package : 'Debugging-Core'
+	#category : 'Flashback-Decompiler',
+	#package : 'Flashback-Decompiler'
 }
 
 { #category : 'decoding' }

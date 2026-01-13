@@ -252,6 +252,13 @@ AndreasSystemProfiler >> reportProcessStatsOn: str [
 	str tab; nextPutAll: 'Stack page divorces: ', pageDivorces printString; cr
 ]
 
+{ #category : 'actions' }
+AndreasSystemProfiler >> runBlock: aBlock [
+	"Compatibility with TimeProfiler"
+
+	^ aBlock value
+]
+
 { #category : 'profiling' }
 AndreasSystemProfiler >> runProfilerProcess [
 	"Run the profiler process"
@@ -320,4 +327,19 @@ AndreasSystemProfiler >> stopProfiling [
 		profilerProcess suspend.
 		profilerProcess := nil.
 	]
+]
+
+{ #category : 'accessing' }
+AndreasSystemProfiler >> tallyRoot [
+	^ tallyRoot
+]
+
+{ #category : 'accessing' }
+AndreasSystemProfiler >> totalTally [
+	^ totalTally
+]
+
+{ #category : 'accessing' }
+AndreasSystemProfiler >> totalTime [
+	^ totalTime
 ]

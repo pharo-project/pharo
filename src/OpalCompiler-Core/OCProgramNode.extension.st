@@ -13,6 +13,12 @@ OCProgramNode >> doSemanticAnalysisIn: aClass [
 ]
 
 { #category : '*OpalCompiler-Core' }
+OCProgramNode >> instanceVariableWriteNodes [
+
+	^ self variableWriteNodes select: [ :each | each isInstanceVariable ]
+]
+
+{ #category : '*OpalCompiler-Core' }
 OCProgramNode >> isAccessingSelf [
 	"return true if accessing an ivar, self or super"
 	^ self children anySatisfy: [ :child | child isAccessingSelf ]

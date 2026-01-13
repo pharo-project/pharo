@@ -643,11 +643,6 @@ OCProgramNode >> instanceVariableReadNodes [
 		^self variableReadNodes select: [:each | each isInstanceVariable]
 ]
 
-{ #category : 'querying' }
-OCProgramNode >> instanceVariableWriteNodes [
-		^self variableWriteNodes select: [:each | each isInstanceVariable]
-]
-
 { #category : 'testing' }
 OCProgramNode >> intersectsInterval: anInterval [
 	"Returns whether the node shape is included within the intervale, ending inside the interval, or starting within the interval"
@@ -1397,7 +1392,8 @@ OCProgramNode >> variableReadNodes [
 
 { #category : 'querying' }
 OCProgramNode >> variableWriteNodes [
-		^self variableNodes select: [:each | each isWrite]
+
+	^ self variableNodes select: [ :each | each isWrite ]
 ]
 
 { #category : 'notice' }

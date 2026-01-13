@@ -1,6 +1,6 @@
 Extension { #name : 'ClassVariable' }
 
-{ #category : '*AST-Core' }
+{ #category : '*OpalCompiler-Core' }
 ClassVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
 	^ aProgramNodeVisitor visitClassVariableNode: aNode
 ]

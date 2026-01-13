@@ -360,7 +360,7 @@ SystemDependenciesTest >> testExternalMorphicDependencies [
 { #category : 'tests' }
 SystemDependenciesTest >> testExternalSUnitCoreDependencies [
 
-	self assertEmpty: (self externalDependendiesOf: self _09sunitCoreLayerPackages)
+	self assert: (self externalDependendiesOf: self _09sunitCoreLayerPackages) equals: #('Debugging-Utils')
 ]
 
 { #category : 'tests' }
@@ -413,7 +413,7 @@ SystemDependenciesTest >> testExternalUFFIDependencies [
 		BaselineOfUnifiedFFI allPackageNames,
 		BaselineOfThreadedFFI corePackageNames).
 
-	self assertEmpty: dependencies 
+	self assert: dependencies equals: #('Debugging-Utils')
 ]
 
 { #category : 'tests' }

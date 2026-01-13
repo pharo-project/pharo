@@ -38,12 +38,6 @@ SycPushDownMethodInSomeClassesCommand >> executeRefactorings [
 		pushDownMethods: methods) runRefactoring
 ]
 
-{ #category : 'testing' }
-SycPushDownMethodInSomeClassesCommand >> isComplexRefactoring [ 
-
-	^ false
-]
-
 { #category : 'execution' }
 SycPushDownMethodInSomeClassesCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.

@@ -46,9 +46,3 @@ SycRunTestCommand >> execute [
 		testResult updateResultsInHistory.
 		GrowlMorph showTestResult: testResult with: selector ]
 ]
-
-{ #category : 'testing' }
-SycRunTestCommand >> isComplexRefactoring [
-
-	^ false
-]

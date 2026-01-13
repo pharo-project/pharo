@@ -234,6 +234,12 @@ RBClassEnvironment >> removeClass: aClass [
 		ifFalse: [classes remove: aClass name ifAbsent: []]
 ]
 
+{ #category : 'removing' }
+RBClassEnvironment >> removePackage: aSymbol [
+
+	^ self
+]
+
 { #category : 'accessing' }
 RBClassEnvironment >> selectors [
 

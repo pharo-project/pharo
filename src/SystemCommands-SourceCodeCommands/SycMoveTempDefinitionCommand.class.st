@@ -59,12 +59,6 @@ SycMoveTempDefinitionCommand >> execute [
 		   yourself) runRefactoring
 ]
 
-{ #category : 'testing' }
-SycMoveTempDefinitionCommand >> isComplexRefactoring [
-
-	^ false
-]
-
 { #category : 'execution' }
 SycMoveTempDefinitionCommand >> prepareFullExecutionInContext: aToolContext [
 

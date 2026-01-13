@@ -1,6 +1,6 @@
 Extension { #name : 'SuperVariable' }
 
-{ #category : '*AST-Core' }
+{ #category : '*OpalCompiler-Core' }
 SuperVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
 	^ aProgramNodeVisitor visitSuperNode: aNode
 ]

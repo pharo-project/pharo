@@ -57,12 +57,6 @@ SycRenameArgOrTempCommand >> execute [
 		   yourself) runRefactoring
 ]
 
-{ #category : 'testing' }
-SycRenameArgOrTempCommand >> isComplexRefactoring [
-
-	^ false
-]
-
 { #category : 'execution' }
 SycRenameArgOrTempCommand >> prepareFullExecutionInContext: aToolContext [
 

@@ -43,12 +43,6 @@ SycConvertTempToInstVarCommand >> executeRefactorings [
 ]
 
 { #category : 'execution' }
-SycConvertTempToInstVarCommand >> isComplexRefactoring [
-
-	^ false
-]
-
-{ #category : 'execution' }
 SycConvertTempToInstVarCommand >> prepareFullExecutionInContext: aToolContext [
 
 	super prepareFullExecutionInContext: aToolContext.

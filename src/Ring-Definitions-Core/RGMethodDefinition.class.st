@@ -664,17 +664,6 @@ RGMethodDefinition >> storeOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : 'backward compatibility' }
-RGMethodDefinition >> symbolic [
-
-	^ self method symbolic
-]
-
-{ #category : 'accessing' }
-RGMethodDefinition >> symbolicBytecodes [
-	^self compiledMethod symbolicBytecodes
-]
-
 { #category : 'stamp values' }
 RGMethodDefinition >> timeStamp [
 

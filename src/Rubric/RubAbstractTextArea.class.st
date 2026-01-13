@@ -2326,6 +2326,6 @@ RubAbstractTextArea >> yellowButtonActivity: shiftKeyState [
 	Check if required first!"
 	self wantsYellowButtonMenu
 		ifFalse: [ ^ false ].
-	self openMenu: shiftKeyState and: #invokeModal.
+	self openMenu: shiftKeyState and: [ :menu | menu invokeModal ].
 	^ true
 ]

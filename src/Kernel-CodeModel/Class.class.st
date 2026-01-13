@@ -444,15 +444,6 @@ Class >> commonSuperclassWith: aClass [
 	^ self withAllSuperclasses detect: [ :class | (aClass allSuperclasses includes: class) ] ifNone: nil
 ]
 
-{ #category : 'compiling' }
-Class >> compileAllFrom: oldClass [
-	"Recompile all the methods in the receiver's method dictionary (not the
-	subclasses). Also recompile the methods in the metaclass."
-
-	super compileAllFrom: oldClass.
-	self classSide compileAllFrom: oldClass classSide
-]
-
 { #category : 'copying' }
 Class >> copyForAnnouncement [
 	"Answer a copy of the receiver to be used in the announcement of changes.

@@ -14,8 +14,8 @@ Class {
 		'offset',
 		'bytes'
 	],
-	#category : 'Debugging-Core',
-	#package : 'Debugging-Core'
+	#category : 'Flashback-Decompiler',
+	#package : 'Flashback-Decompiler'
 }
 
 { #category : 'comparing' }

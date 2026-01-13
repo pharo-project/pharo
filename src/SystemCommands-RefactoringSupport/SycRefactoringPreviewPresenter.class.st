@@ -82,19 +82,6 @@ SycRefactoringPreviewPresenter >> alert: aString [
 	aString isEmptyOrNil ifFalse: [ self inform: aString ]
 ]
 
-{ #category : 'epicea support' }
-SycRefactoringPreviewPresenter >> asEpiceaEvent [
-	"thanks to this method epicia know that is a refactoring"
-
-	self flag: #todo. "This is a workaround for a problem found by RewriteTool"
-	(changes allSatisfy: [ :each | each respondsTo: #asEpiceaEvent ])
-		ifFalse: [ ^ EpCompositeRefactoring withAll: #() ].
-
-	^ changes size > 1
-		ifTrue: [ EpCompositeRefactoring withAll: changes ]
-		ifFalse: [ changes anyOne asEpiceaEvent ]
-]
-
 { #category : 'private' }
 SycRefactoringPreviewPresenter >> buildDiffFor: aChange [
 	^ diffPresenter
@@ -216,12 +203,6 @@ SycRefactoringPreviewPresenter >> initializeWidgets [
 	self
 		selectectAllCheckBox;
 		setFocus
-]
-
-{ #category : 'epicea support' }
-SycRefactoringPreviewPresenter >> isEpiceaInterestingJobOwner [
-
-	^ true
 ]
 
 { #category : 'accessing' }

@@ -306,7 +306,11 @@ ThemeIcons >> loadIconsFromZipArchiveUsingScale: newScale [
 					put: (self readPNGFrom: each) ]
 				on: Error do: [ :e | self crTrace: ('{1} not a PNG, skipping.' format: { each fullName }) ] ] ].
 	newIconsPerScale keysAndValuesDo: [ :iconsScale :icons |
-		icons at: #notFound ifAbsentPut: [ Color red iconOrThumbnailOfSize: 16 * iconsScale ] ].
+		icons at: #notFound ifAbsentPut: [ 
+			| form |
+			form := Form extent: (16 * iconsScale) asPoint depth: 32.
+			form fillColor: Color red.
+			form ] ].
 	iconsPerScale := newIconsPerScale.
 	scale := newScale
 ]

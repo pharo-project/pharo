@@ -69,12 +69,6 @@ SycRenameMessageCommand >> execute [
 	
 ]
 
-{ #category : 'execution' }
-SycRenameMessageCommand >> isComplexRefactoring [ 
-
-	^ false
-]
-
 { #category : 'accessing' }
 SycRenameMessageCommand >> newSignature [
 
