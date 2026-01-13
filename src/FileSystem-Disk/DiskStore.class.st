@@ -445,11 +445,6 @@ DiskStore >> gidOf: aPath [
 	^File fileAttribute: (self stringFromPath: aPath) number: 7
 ]
 
-{ #category : 'accessing' }
-DiskStore >> handleClass [
-	^ FileHandle
-]
-
 { #category : 'comparing' }
 DiskStore >> hash [
 	^ self species hash

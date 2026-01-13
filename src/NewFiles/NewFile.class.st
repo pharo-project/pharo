@@ -7,7 +7,7 @@ I am a new file. I support different kinds usages:
 "
 Class {
 	#name : 'NewFile',
-	#superclass : 'FFIExternalObject',
+	#superclass : 'AbstractFile',
 	#instVars : [
 		'mode'
 	],
@@ -54,6 +54,21 @@ NewFile class >> open: path mode: mode creationDisposition: creationDisposition 
 	
 	file mode: mode.
 	^ file autoRelease
+]
+
+{ #category : 'public' }
+NewFile class >> open: aReference writable: isWriteable [
+	| path file |
+	path := aReference fullName.
+	file := self open: path
+		mode: (isWriteable
+			ifTrue: [ NewFileOpenModeReadWrite ]
+			ifFalse:  [NewFileOpenModeReadOnly])
+		creationDisposition: NewFileCreationDispositionOpenAlways
+		flags: NewFileOpenFlagsNone.
+
+	file ifNotNil: [ file setReference: aReference ].
+	^ file
 ]
 
 { #category : 'file open' }
@@ -116,11 +131,6 @@ NewFile class >> primitiveOpen: path mode: mode creationDisposition: creationDis
 { #category : 'accessing' }
 NewFile >> atEnd [
 	^ self position >= self size
-]
-
-{ #category : 'accessing' }
-NewFile >> binaryStream [
-	^ NewBinaryFileStream forFile: self forWrite: self isForWrite
 ]
 
 { #category : 'initialization' }

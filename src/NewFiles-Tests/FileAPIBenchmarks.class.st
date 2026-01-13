@@ -83,7 +83,7 @@ FileAPIBenchmarks >> measure: aBlock withSampleCount: sampleCount title: title [
 		sampleTime := [
 			sampleIOSize := aBlock value: sampleIndex
 		] microsecondsToRun * 1e-6.
-		sampleSpeed := sampleIOSize asFloat / sampleTime * 1e-6.
+		sampleSpeed := sampleIOSize asFloat / (sampleTime max: 1e-6) * 1e-6.
 		
 		samples at: sampleIndex put: sampleSpeed
 	].

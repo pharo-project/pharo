@@ -3,7 +3,7 @@ I provide legacy file plugin support.
 "
 Class {
 	#name : 'OldFile',
-	#superclass : 'FFIExternalObject',
+	#superclass : 'AbstractFile',
 	#instVars : [
 		'isForWrite'
 	],
@@ -47,6 +47,17 @@ OldFile class >> makeWithHandle: handle forWrite: isForWrite [
 	^ file autoRelease
 ]
 
+{ #category : 'public' }
+OldFile class >> open: aReference writable: isWriteable [
+	| path file |
+	path := aReference fullName.
+	file := isWriteable
+		ifTrue: [ self openAlways: path  ]
+		ifFalse: [ self openReadOnly: path]. 
+	file ifNotNil: [ file setReference: aReference ].
+	^ file
+]
+
 { #category : 'primitives - files' }
 OldFile class >> openAlways: path [
 
@@ -77,11 +88,6 @@ OldFile class >> openReadOnly: path [
 { #category : 'accessing' }
 OldFile >> atEnd [
 	^ self position >= self size
-]
-
-{ #category : 'accessing' }
-OldFile >> binaryStream [
-	^ NewBinaryFileStream forFile: self forWrite: self isForWrite
 ]
 
 { #category : 'initialization' }

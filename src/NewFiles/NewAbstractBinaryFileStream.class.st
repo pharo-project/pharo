@@ -132,6 +132,13 @@ NewAbstractBinaryFileStream >> next: amount putAll: aByteArray startingAt: start
 	^ aByteArray
 ]
 
+{ #category : 'accessing' }
+NewAbstractBinaryFileStream >> nextInto: aBuffer [
+	"Return a string with the next n characters of the filestream in it."
+
+	^ self next: aBuffer size into: aBuffer
+]
+
 { #category : 'character writing' }
 NewAbstractBinaryFileStream >> nextPut: anInteger [
 
@@ -151,6 +158,16 @@ NewAbstractBinaryFileStream >> position [
 { #category : 'accessing' }
 NewAbstractBinaryFileStream >> position: newPosition [
 	^ file position: newPosition
+]
+
+{ #category : 'accessing' }
+NewAbstractBinaryFileStream >> readInto: readBuffer startingAt: startIndex count: count [
+	^ file readInto: readBuffer offset: startIndex - 1 withSize: count
+]
+
+{ #category : 'accessing' }
+NewAbstractBinaryFileStream >> setToEnd [
+	self position: self size
 ]
 
 { #category : 'accessing' }
