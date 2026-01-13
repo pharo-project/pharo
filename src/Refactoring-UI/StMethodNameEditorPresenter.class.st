@@ -517,16 +517,14 @@ StMethodNameEditorPresenter >> renameMethodAndClose: presenter [
 { #category : 'action' }
 StMethodNameEditorPresenter >> request: aString initialAnswer: aSecondString [
 
-	^ requestor 
-		ifNil: [
-		self application newRequest
-			title: 'Information needed';
-			label: aString;
-			text: aSecondString;
-			openModal ]
-		ifNotNil: [ 
-			requestor label
-			]
+	^ requestor
+		  ifNil: [
+				  self application newRequest
+					  title: 'Information needed';
+					  message: aString;
+					  text: aSecondString;
+					  openModal ]
+		  ifNotNil: [ requestor label ]
 ]
 
 { #category : 'accessing' }

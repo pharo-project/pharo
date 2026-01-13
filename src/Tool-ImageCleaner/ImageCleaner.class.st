@@ -95,7 +95,7 @@ ImageCleaner >> cleanUpForRelease [
 		cleanOutUndeclared;
 		fixObsoleteReferences;
 		removeEmptyMessageCategories;
-		cleanUp: true except: #(  ) confirming: false.
+		cleanUp: true except: #(  ).
 
 	FreeTypeFontProvider current prepareForRelease.
 

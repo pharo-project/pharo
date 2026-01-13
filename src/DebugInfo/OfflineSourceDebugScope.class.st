@@ -80,6 +80,19 @@ OfflineSourceDebugScope >> matchesBytecodePC: aPC [
 	^ self bytecodeRange includes: aPC
 ]
 
+{ #category : 'printing' }
+OfflineSourceDebugScope >> printOn: aStream [
+	"Generate a string representation of the receiver based on its instance variables."
+
+	super printOn: aStream.
+	aStream
+		nextPutAll: '(';
+		print: rangeStart;
+		nextPutAll: ' - ';
+		print: rangeStop;
+		nextPutAll: ')'
+]
+
 { #category : 'api' }
 OfflineSourceDebugScope >> readVariableNamed: aName fromContext: aContext [
 

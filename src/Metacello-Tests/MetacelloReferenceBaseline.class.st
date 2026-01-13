@@ -1,0 +1,137 @@
+Class {
+	#name : 'MetacelloReferenceBaseline',
+	#superclass : 'Object',
+	#category : 'Metacello-Tests',
+	#package : 'Metacello-Tests'
+}
+
+{ #category : 'accessing' }
+MetacelloReferenceBaseline class >> project [
+  "force new version as workaround for https://code.google.com/p/smalltalk-hub/issues/detail?id=21"
+
+  ^ self new project
+]
+
+{ #category : 'baseline 1.0' }
+MetacelloReferenceBaseline >> baseline: spec [ 
+	<baseline>
+	
+	spec for: #common do: [
+		"recommended methods for specifying preLoadDoIt, postLoadDoit"
+		spec
+			"Before loading packages or projects in this version, send #preloadForVersion to an instance of this config"
+			preLoadDoIt: #preloadForVersion;
+			"After loading packages or projects in this version, send #postloadForVersion to an instance of this config"
+			postLoadDoIt: #postloadForVersion.
+		spec repository: 'http://www.example.com/rr'.
+		spec repository: 'http://www.example.com/private' username: 'foo' password: 'bar'.
+		spec repositories: [
+			"One or more repositories may be defined (MCReposioryGroup). Previous forms useful when specifying a single reposiory."
+			spec 
+				"directory-based repositories"
+				repository: '/opt/mc/repository';
+				repository: 'c:\pharo\myapp\repo\';
+				"ftp-based repository ... note, supported in Pharo/Squeak only"					
+				repository: 'ftp://ftp.example.com/repo';
+				"dictionary-based repository ... repository stored at `Smalltalk at: #GlobalName`"		
+				repository: 'dictionary://GlobalName';				
+				repository: 'http://www.example.com/rr';
+				repository: 'http://www.example.com/ar';
+				repository: 'http://www.example.com/private' username: 'foo' password: 'bar' ].
+		spec
+			"Create or update a project reference named 'UI Support'"
+			project: 'UI Support' with: [							
+				"One or more of the following attributes may be defined or changed"
+				spec
+					"OPTIONAL: Name of config class (i.e., BaselineOfXXX), if not specified, className is assumed to be the 
+					 name of the project prependended with 'BaselineOf'"
+					className: 'BaselineOfUI';
+					"Before loading this project, send #preloadForProject to an instance of this config"
+					preLoadDoIt: #preloadForProject;
+					"After loading this project, send #postloadForProject to an instance of this config"
+					postLoadDoIt: #postloadForProject;
+					"OPTIONAL: List of packages to be loaded from project"															
+					loads: #('UI-Core' );
+					"Repository where package resides"					
+					repository: 'http://www.example.com/r' ];	
+			"Create a new project reference to replace existing project reference"
+			project: 'UI Support' overrides: [					
+				"One or more of the following attributes may be defined"
+				spec
+					className: 'BaselineOfUINew';
+					loads: #('UI-Core' 'UI-Tests' );
+					repository: 'http://www.example.com/r' username: 'foo' password: 'bar' ];
+			"Create project reference named 'UI Tests'"
+		 	project: 'UI Tests' 
+				"based on c copy of 'UI Support' project"									
+				copyFrom: 'UI Support' 								
+				with: [
+					"One or more of the following attributes may be changed"
+					spec
+						className: 'BaselineOfUI';
+						loads: #('UI-Core' 'UI-Tests' );
+						repository: 'http://www.example.com/r'];
+			project: 'UI Support';	
+			"Remove the project reference 'UI Tests'"				
+			removeProject: 'UI Tests';
+			"Multiple repositories for configuration - config may be found in either repository. 
+			 Secondary repository is useful when primary repository may not be available"
+			project: 'UI Multi' with: [							
+				spec
+					className: 'BaselineOfMulti';
+					repository: 'http://www.example.com/r';
+					repository: 'http://www.example.com/s' ].
+		"Create or update 'Example-AddOn' package"								
+		spec 
+			package: 'Example-AddOn' with: [						
+				"One or more of the following attributes may be defined or changed"
+				spec
+					"'Example-Core' must be loaded before 'Example-AddOn'" 
+					requires: #('Example-Core' );
+					"When 'Example-AddOn' is loaded, load 'Example-UI'"				
+					includes: #('Example-UI' );			
+					repositories: [
+						spec 
+							"Load 'Example-AddOn' from  the 'http://www.example.com/yar'"
+							repository: 'http://www.example.com/yar'; 
+							"or 'http://www.example.com/yas' repositores" 
+							repository: 'http://www.example.com/yas']; 
+					"Before loading 'Example-AddOn' send #preloadForAddOn to an instance of this config"
+					preLoadDoIt: #preloadForAddOn;
+					"After loading 'Example-AddOn' send #postloadForAddOn to an instance of this config"			
+					postLoadDoIt: #postloadForAddOn ];
+			"Create a new package to replace existing package"			
+			package: 'Example-AddOn' overrides: [					
+				"One or more of the following attributes may be defined"
+				spec 
+					requires: #('Example-Core' 'UI Support' );
+					includes: #('Example-UI' );
+					repository: 'http://www.example.com/or' username: 'foo' password: 'bar' ;
+					preLoadDoIt: #preloadForAddOn;
+					postLoadDoIt: #postloadForAddOn ];
+			"Create 'Example-Core' package in project"					
+			package: 'Example-Core';								
+			package: 'Example-Tests' with: [
+				spec requires: #('Example-Core' ) ];
+			package: 'Example-TestsUI' with: [
+				spec requires: #('Example-UI' ) ];
+			package: 'Example-UI' with: [
+				spec requires: #('Example-AddOn' ) ];
+			"Remove the package 'Example-Tests'"
+			removePackage: 'Example-Tests'.						
+		spec
+			"Create or update the group 'default', adding 'Example-Core' and 'Example-AddOn' to the group."
+			group: 'default' 
+				with: 	#('Example-Core' 'Example-AddOn' );
+			"Create the group 'default' to replace existing group, consisting of 'Example-Core' and 'Example-AddOn'"	
+			group: 'default' 
+				overrides:  #('Example-Core' 'Example-Tests' );	
+			"Remove the group 'default'"
+			removeGroup: 'default' ].
+]
+
+{ #category : 'accessing' }
+MetacelloReferenceBaseline >> project [
+
+	^ (MetacelloBaselineConstructor on: self) project
+]

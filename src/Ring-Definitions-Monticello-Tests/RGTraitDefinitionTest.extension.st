@@ -19,7 +19,7 @@ RGTraitDefinitionTest >> testAsFullTraitDefinition [
 	self assert: rgClass package isNotNil.
 	self assert: rgClass package equals: rgClass instanceSide package.
 	self assert: rgClass package name equals: #'Kernel-Traits'.
-	self assert: rgClass packageTag equals: #Uncategorized.
+	self assert: rgClass packageTag equals: #Base.
 
 	self assert: rgClass superclass superclass isNil.
 	self assert: rgClass superclass package name equals: #Traits.

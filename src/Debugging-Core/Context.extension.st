@@ -336,7 +336,7 @@ Context >> temporaryVariableNames [
 
 	"If this context did not yet execute, consider the initial PC"
 	| suspendedPC |
-	suspendedPC := self executedPC max: self method initialPC.
+	suspendedPC := self pc max: self method initialPC.
 	^ self method debugInfo variableNamesAt: suspendedPC
 ]
 

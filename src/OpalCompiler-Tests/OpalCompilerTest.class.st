@@ -254,6 +254,28 @@ OpalCompilerTest >> testInstallRequestor [
 ]
 
 { #category : 'tests' }
+OpalCompilerTest >> testSavedProtocolInChangesFileIsRight [
+	"Regression test, the saved protocol was wrong when we provided a Protocol instance during compilation.."
+	
+	| method |
+	"Cleanup"
+	(MockForCompilation includesSelector: #foo) ifTrue: [
+		MockForCompilation removeSelector: #foo ].
+	"Precond"
+	self deny: (MockForCompilation includesSelector: #foo).
+
+	method := MockForCompilation compiler
+		          source: 'foo ^42';
+		          protocol: (Protocol named: 'hitching');
+		          install.
+
+	self assert: (SourceFileArray default protocolAt: method sourcePointer) equals: 'hitching'.
+	"Cleanup"
+	method removeFromSystem.
+	self deny: (MockForCompilation includesSelector: #foo)
+]
+
+{ #category : 'tests' }
 OpalCompilerTest >> testShadowPseudoVariable [
 	"We can shadw PseudoVariables (here thisContext) and it works"
 	| result |

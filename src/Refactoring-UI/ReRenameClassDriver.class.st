@@ -19,6 +19,38 @@ ReRenameClassDriver class >> rename: oldName [
 		yourself
 ]
 
+{ #category : 'execution' }
+ReRenameClassDriver >> breakingChoices [
+
+	| items |
+	items := OrderedCollection new.
+	items add: (ReRenameClassChoice new driver: self).
+	items add: (ReBrowseMethodsChoice new driver: self).
+	^ items
+]
+
+{ #category : 'actions' }
+ReRenameClassDriver >> browseMethods [
+
+	| references |
+	references := refactoring violations.
+	(Smalltalk tools toolNamed: #messageList)
+		browse: (references collect: [ :ref | ref origin realClass lookupSelector: ref selector ])
+		title: 'Methods containing references to a shared var that will shadow class reference after renaming'
+]
+
+{ #category : 'execution' }
+ReRenameClassDriver >> defaultSelectDialog [
+
+	^ super defaultSelectDialog
+		  title: 'There are potential breaking changes!';
+		  message: 'Watchout potential reference shadowing detected!';
+		  items: self breakingChoices;
+		  display: [ :each | each description ];
+		  displayIcon: [ :each | self iconNamed: each systemIconName ];
+		  yourself
+]
+
 { #category : 'initialization' }
 ReRenameClassDriver >> initialize [ 
 	
@@ -47,6 +79,12 @@ ReRenameClassDriver >> model: aRBNamespace [
 { #category : 'accessing' }
 ReRenameClassDriver >> oldName: aString [ 
 	oldName := aString
+]
+
+{ #category : 'actions' }
+ReRenameClassDriver >> renameClass [
+
+	self applyChanges 
 ]
 
 { #category : 'execution' }
@@ -89,7 +127,8 @@ ReRenameClassDriver >> runRefactoring [
 	[ refactoring isValidClassName check & refactoring isNotGlobal check ] whileFalse: [ 
 			newName := self requestNewNameBasedOn: newName.
 			shouldEscape ifTrue: [ ^ self ] ].
-	self applyChanges
+
+	refactoring failedBreakingChangePreconditions ifEmpty: [ self applyChanges ] ifNotEmpty: [ self handleBreakingChanges ]
 	
 ]
 

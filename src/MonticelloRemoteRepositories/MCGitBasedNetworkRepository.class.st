@@ -47,7 +47,8 @@ MCGitBasedNetworkRepository class >> cacheDirectoryFor: projectPath [
 
 { #category : 'accessing' }
 MCGitBasedNetworkRepository class >> cacheDirectoryPath [
-  ^ MCFileTreeFileUtils current directoryPathString: self cacheDirectory
+
+	^ self fileUtils directoryPathString: self cacheDirectory
 ]
 
 { #category : 'accessing' }
@@ -97,6 +98,12 @@ MCGitBasedNetworkRepository class >> downloadZipArchive: url to: outputFileName 
 			progress isEmpty ifFalse: [ bar current: progress percentage ].
 			progress resume ] ] asJob run.
 	^ ZipArchive new readFrom: outputFileName asFileReference
+]
+
+{ #category : 'accessing' }
+MCGitBasedNetworkRepository class >> fileUtils [
+
+	^ MCFileTreeFileUtils
 ]
 
 { #category : 'class initialization' }
@@ -248,15 +255,6 @@ MCGitBasedNetworkRepository class >> projectDirectoryFrom: projectPath version: 
 	^ projectDirectory
 ]
 
-{ #category : 'version patterns' }
-MCGitBasedNetworkRepository class >> projectVersionFromString: aString [
-	"strip leading $v if present and return an instance of MetacelloVersionNumber"
-
-	| versionString |
-	versionString := (aString beginsWith: 'v') ifTrue: [ aString allButFirst ] ifFalse: [ aString ].
-	^ MetacelloVersionNumber fromString: versionString
-]
-
 { #category : 'private' }
 MCGitBasedNetworkRepository class >> projectZipUrlFor: projectPath versionString: versionString [
   self subclassResponsibility
@@ -264,12 +262,9 @@ MCGitBasedNetworkRepository class >> projectZipUrlFor: projectPath versionString
 
 { #category : 'private' }
 MCGitBasedNetworkRepository class >> resetCacheDirectoryIfInvalid [
-  "Reset if invalid"
+	"Reset if invalid"
 
-  repoCacheDirectory isNotNil
-    and: [ 
-      (MCFileTreeFileUtils current directoryExists: repoCacheDirectory)
-        ifFalse: [ repoCacheDirectory := nil ] ]
+	repoCacheDirectory isNotNil and: [ (self fileUtils directoryExists: repoCacheDirectory) ifFalse: [ repoCacheDirectory := nil ] ]
 ]
 
 { #category : 'site credentials' }
@@ -326,11 +321,11 @@ MCGitBasedNetworkRepository >> allFileNames [
 ]
 
 { #category : 'accessing' }
-MCGitBasedNetworkRepository >> asRepositorySpecFor: aMetacelloMCProject [
-  ^ aMetacelloMCProject repositorySpec
-    description: self description;
-    type: self class basicDescription;
-    yourself
+MCGitBasedNetworkRepository >> asRepositorySpec [
+
+	^ (MetacelloRepositorySpec description: self description)
+		  type: self class basicDescription;
+		  yourself
 ]
 
 { #category : 'private' }
@@ -396,6 +391,19 @@ MCGitBasedNetworkRepository >> ensureLocalRepository [
 	self resolveLocalRespository
 ]
 
+{ #category : 'version patterns' }
+MCGitBasedNetworkRepository >> extractNumericComponent: subString [
+	"$. separated components are integers"
+
+	| number |
+	number := [ subString asNumber ]
+		          on: Error
+		          do: [ :ex | ex return: subString ].
+	^ number asString = subString
+		  ifTrue: [ number ]
+		  ifFalse: [ subString ]
+]
+
 { #category : 'fetching' }
 MCGitBasedNetworkRepository >> fetchPackageNamed: aName [
 
@@ -430,14 +438,6 @@ MCGitBasedNetworkRepository >> flushForScriptGet [
     self localRepository flushForScriptGet
 ]
 
-{ #category : 'accessing' }
-MCGitBasedNetworkRepository >> goferVersionFrom: aVersionReference [
-	self flag: #review. "This will fail in non filtree(cypress) formats, but I need to 
-	 implement it to make the tests pass. A better approach maybe to look at those tests 
-	 and try to implement them better."
-	^ self localRepository goferVersionFrom: aVersionReference
-]
-
 { #category : 'initialization' }
 MCGitBasedNetworkRepository >> hasNoLoadConflicts: anMCGitBasedRepository [
   (anMCGitBasedRepository isKindOf: self class)
@@ -467,11 +467,6 @@ MCGitBasedNetworkRepository >> localRepository [
 	self ensureLocalRepository.
 	self validateLocalRepository.
 	^ localRepository
-]
-
-{ #category : 'accessing' }
-MCGitBasedNetworkRepository >> metacelloProjectClassFor: aScriptEngine [
-    ^ MetacelloBaselineProject
 ]
 
 { #category : 'private' }
@@ -546,6 +541,34 @@ MCGitBasedNetworkRepository >> projectVersionEscaped [
   ^ pv
 ]
 
+{ #category : 'version patterns' }
+MCGitBasedNetworkRepository >> projectVersionFromString: aString [
+	"strip leading $v if present and return an instance of MetacelloVersionNumber"
+
+	| versionString components beforeFirst |
+	versionString := (aString beginsWith: 'v')
+		                 ifTrue: [ aString allButFirst ]
+		                 ifFalse: [ aString ].
+
+	components := OrderedCollection new.
+	(versionString findTokens: '.') do: [ :subString |
+			| strs |
+			strs := subString findTokens: '-'. "first subString token could be an integer"
+			components add: (self extractNumericComponent: strs first).
+			strs size > 1 ifTrue: [ "remaining are uncoditionally Strings, because of leading $-" components addAll: strs allButFirst ] ].
+
+	beforeFirst := true.
+	^ String streamContents: [ :aStream |
+			  components do: [ :each |
+					  beforeFirst
+						  ifTrue: [ beforeFirst := false ]
+						  ifFalse: [
+								  each isString
+									  ifTrue: [ aStream nextPut: $- ]
+									  ifFalse: [ aStream nextPut: $. ] ].
+					  aStream nextPutAll: each asString ] ]
+]
+
 { #category : 'accessing' }
 MCGitBasedNetworkRepository >> projectVersionPattern [
   "do not set projectVersionPattern unless it _is_ a pattern: includes $#, %*, or $?"
@@ -581,65 +604,48 @@ MCGitBasedNetworkRepository >> repositoryBranchName [
 
 { #category : 'accessing' }
 MCGitBasedNetworkRepository >> repositoryVersionString [
-  "for git-based network repos, answer the SHA associated with the download: a commit SHA or tag SHA"
+	"for git-based network repos, answer the SHA associated with the download: a commit SHA or tag SHA"
 
-  | versionComponents versionElement pathElements gitBasedPath repositoryDirPath projectDirPath projectDir projectVersionDir |
-  repositoryDirPath := self directory fullName.
-  projectDir := self class cacheDirectoryFor: self projectPath.
-  projectVersionDir := MCFileTreeFileUtils current
-    directoryFromPath: self projectVersion
-    relativeTo: projectDir.
-  projectDirPath := projectVersionDir fullName.
-  (repositoryDirPath beginsWith: projectDirPath)
-    ifFalse: [ ^ self projectVersion ].
-  gitBasedPath := repositoryDirPath
-    copyFrom: projectDirPath size + 2
-    to: repositoryDirPath size.
-  pathElements := gitBasedPath findTokens: '/'.
-  versionElement := pathElements at: 1.
-  versionComponents := versionElement findTokens: '-'.
-  ^ versionComponents last
+	| versionComponents versionElement pathElements gitBasedPath repositoryDirPath projectDirPath projectDir projectVersionDir |
+	repositoryDirPath := self directory fullName.
+	projectDir := self class cacheDirectoryFor: self projectPath.
+	projectVersionDir := self class fileUtils directoryFromPath: self projectVersion relativeTo: projectDir.
+	projectDirPath := projectVersionDir fullName.
+	(repositoryDirPath beginsWith: projectDirPath) ifFalse: [ ^ self projectVersion ].
+	gitBasedPath := repositoryDirPath copyFrom: projectDirPath size + 2 to: repositoryDirPath size.
+	pathElements := gitBasedPath findTokens: '/'.
+	versionElement := pathElements at: 1.
+	versionComponents := versionElement findTokens: '-'.
+	^ versionComponents last
 ]
 
 { #category : 'private' }
 MCGitBasedNetworkRepository >> resolveLocalRespository [
+
 	| directory directoryPath |
-  
 	directory := self calculateRepositoryDirectory.
-	directoryPath := MCFileTreeFileUtils current directoryPathString: directory.
-	directory ifAbsent: [ self error: 'Local directory ', directoryPath, ' does not exist.' ].
-	localRepository := MetacelloPlatform current createRepository: (MetacelloRepositorySpec new 
-		description: 'filetree://', directoryPath;
-		yourself)
+	directoryPath := self class fileUtils directoryPathString: directory.
+	directory ifAbsent: [ self error: 'Local directory ' , directoryPath , ' does not exist.' ].
+	localRepository := MetacelloPlatform current createRepository: (MetacelloRepositorySpec description: 'filetree://' , directoryPath)
 ]
 
 { #category : 'private' }
 MCGitBasedNetworkRepository >> resolveProjectVersionPattern: aString [
-  "aString must conform to the syntax for MetacelloVersionNumber with the exception that aString may have a leading $v which is stripped before conversion to a MetacelloVersionNumber patterm"
+	"aString must conform to the syntax for MetacelloVersionNumber with the exception that aString may have a leading $v which is stripped before conversion to a MetacelloVersionNumber patterm"
 
-  | patternString tagDictionary matchingTags tagAssocs sortedMatchingTags theTag |
-  self projectPath
-    ifNil: [ self error: 'projectPath must be set to resolve project version pattern.' ].
-  patternString := (self class projectVersionFromString: aString) asString.
-  tagDictionary := self downloadJSONTags.
-  tagAssocs := tagDictionary keys
-    collect: [ :tagName | 
-      | tagVersion |
-      tagVersion := self class projectVersionFromString: tagName.
-      tagVersion -> tagName ].
-  matchingTags := tagAssocs select: [ :assoc | assoc key match: patternString ].
-  matchingTags isEmpty
-    ifTrue: [ 
-      projectVersion := aString.
-      ^ self
-        error:
-          'No tags matching the pattern ' , aString printString
-            , ' found for repository description '
-            , self description printString ].
-  sortedMatchingTags := matchingTags asArray sort: [ :a :b | a key <= b key ].
-  theTag := sortedMatchingTags last.
-  projectVersionPattern := aString.
-  projectVersion := theTag value
+	| patternString tagDictionary matchingTags tagAssocs sortedMatchingTags theTag |
+	self projectPath ifNil: [ self error: 'projectPath must be set to resolve project version pattern.' ].
+	patternString := (self projectVersionFromString: aString) asString.
+	tagDictionary := self downloadJSONTags.
+	tagAssocs := tagDictionary keys collect: [ :tagName | (self projectVersionFromString: tagName) -> tagName ].
+	matchingTags := tagAssocs select: [ :assoc | assoc key match: patternString ].
+	matchingTags ifEmpty: [
+			projectVersion := aString.
+			^ self error: 'No tags matching the pattern ' , aString printString , ' found for repository description ' , self description printString ].
+	sortedMatchingTags := matchingTags asArray sort: [ :a :b | a key <= b key ].
+	theTag := sortedMatchingTags last.
+	projectVersionPattern := aString.
+	projectVersion := theTag value
 ]
 
 { #category : 'storing' }
@@ -649,14 +655,12 @@ MCGitBasedNetworkRepository >> storeVersion: aVersion [
 
 { #category : 'private' }
 MCGitBasedNetworkRepository >> validateLocalRepository [
-	| dir |
 
+	| dir |
 	dir := self calculateRepositoryDirectory.
-	(dir = localRepository directory 
-		and: [ MCFileTreeFileUtils current directoryExists: dir ]) 
-		ifTrue: [ ^ self ].
+	(dir = localRepository directory and: [ self class fileUtils directoryExists: dir ]) ifTrue: [ ^ self ].
 	self flushCache.
- 	self resolveLocalRespository.
+	self resolveLocalRespository
 ]
 
 { #category : 'accessing' }

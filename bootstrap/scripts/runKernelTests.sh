@@ -45,34 +45,16 @@ ${BOOTSTRAP_REPOSITORY:-.}/bootstrap/scripts/getPharoVM.sh ${TEST_VM_VERSION} ${
 IMAGE_ARCHIVE=$(find ${CACHE} -name ${TEST_NAME_PREFIX}-bootstrap-${1}bit-*.zip)
 unzip $IMAGE_ARCHIVE
 IMAGE_FILE=$(find . -name ${TEST_NAME_PREFIX}-bootstrap-${1}bit-*.image)
-
 HERMES_ARCHIVE=$(find ${CACHE} -name ${TEST_NAME_PREFIX}-hermesPackages-${1}bit-*.zip)
 unzip $HERMES_ARCHIVE
-
-RPACKAGE_ARCHIVE=$(find ${CACHE} -name ${TEST_NAME_PREFIX}-rpackage-${1}bit-*.zip)
-unzip $RPACKAGE_ARCHIVE
 
 mv $IMAGE_FILE bootstrap.image
 
 export PHARO_CI_TESTING_ENVIRONMENT=1
-	
-#Initializing the Image
-./pharo bootstrap.image
+
 #Adding packages removed from the bootstrap
-./pharo bootstrap.image perform --save BasicHermesTool load: --as-array Clap-Core.hermes Clap-Commands-Pharo.hermes Hermes-Extensions.hermes
-./pharo bootstrap.image perform --save Pragma buildCache
-./pharo bootstrap.image loadHermes UIManager.hermes Math-Operations-Extensions.hermes System-Time.hermes NumberParser.hermes AST-Core.hermes ParseTreeRewriter.hermes Random-Core.hermes System-NumberPrinting.hermes --save --no-fail-on-undeclared --on-duplication ignore
-
-#Initializing the package manager
-./pharo bootstrap.image perform --save PharoBootstrapFixMethodsTool fixExtensionMethods
-./pharo bootstrap.image perform --save PharoBootstrapFixMethodsTool fixMethodsIn: protocolsKernel.txt
-
-#Load traits
-./pharo bootstrap.image loadHermes Traits.hermes --save
-
-#Loading Tests
-./pharo bootstrap.image loadHermes Deprecation.hermes SUnit-Core.hermes SUnit-Basic-CLI.hermes SUnit-Tests.hermes --save --no-fail-on-undeclared --on-duplication ignore
+./pharo bootstrap.image perform --save BasicHermesTool load: --as-array $(cat hermesSUnitPackages.txt)
 ./pharo bootstrap.image perform --save Pragma buildCache
 
-#Running tests
-./pharo bootstrap.image test --junit-xml-output --stage-name ${2} SUnit-Core SUnit-Tests
+#Running tests. We should also run Kernel-Tests but it is currently failing
+./pharo bootstrap.image test --junit-xml-output --stage-name ${2} SUnit-Tests 

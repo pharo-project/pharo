@@ -91,6 +91,41 @@ EpMonitor class >> restart [
 	self current enable
 ]
 
+{ #category : 'asserting' }
+EpMonitor class >> shouldLogMetacelloLoading [
+	"If I am registered, it means I'll use the announcements to disable the monitor during Metacello loading"
+
+	^ (self codeSupportAnnouncer hasSubscriber: self) not
+]
+
+{ #category : 'asserting' }
+EpMonitor class >> shouldLogMetacelloLoading: aBoolean [
+	"If it is false, we register to Metacello announcement to disable Epicea."
+
+	| oldValue |
+	self codeSupportAnnouncer unsubscribe: self.
+
+	aBoolean ifFalse: [
+			self codeSupportAnnouncer weak
+				when: MetacelloExecutionStartAnnouncement do: [
+						oldValue := self current isEnabled.
+						self current disable ]
+				for: self;
+				when: MetacelloExecutionEndAnnouncement do: [ self current enabled: oldValue ] for: self ]
+]
+
+{ #category : 'asserting' }
+EpMonitor class >> shouldLogMetacelloLoadingSettingOn: aBuilder [
+
+	<systemsettings>
+	(aBuilder setting: #shouldLogMetacelloLoading)
+		label: 'Log Metacello loading';
+		default: false;
+		description: 'If enable, log the code execution happening during the execution of Metacello loading.';
+		parent: #epicea;
+		target: self
+]
+
 { #category : 'system startup' }
 EpMonitor class >> shutDown: isImageQuitting [
 	(isImageQuitting not

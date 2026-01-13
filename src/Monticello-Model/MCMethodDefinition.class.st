@@ -296,12 +296,17 @@ MCMethodDefinition >> selector: aString [
 
 { #category : 'comparing' }
 MCMethodDefinition >> sortKey [
-	^ sortKey
-		ifNil: [ sortKey := self className , '.'
-				,
-					(self classIsMeta
-						ifTrue: [ 'meta' ]
-						ifFalse: [ 'nonmeta' ]) , '.' , self selector ]
+
+	^ sortKey ifNil: [
+			  sortKey := Symbol streamContents: [ :aStream |
+					             aStream
+						             nextPutAll: self className;
+						             nextPut: $.;
+						             nextPutAll: (self classIsMeta
+								              ifTrue: [ 'meta' ]
+								              ifFalse: [ 'nonmeta' ]);
+						             nextPut: $.;
+						             nextPutAll: self selector ] ]
 ]
 
 { #category : 'accessing' }

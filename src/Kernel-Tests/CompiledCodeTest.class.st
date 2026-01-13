@@ -30,17 +30,6 @@ CompiledCodeTest >> methodReturnOne [
 	^ 1
 ]
 
-{ #category : 'tests - scanning' }
-CompiledCodeTest >> testAccessesRef [
-	| readMethod writeMethod classVar |
-	readMethod := SmalltalkImage class>>#compilerClass.
-	writeMethod := SmalltalkImage class>>#compilerClass:.
-	classVar := SmalltalkImage classVariableNamed: #CompilerClass.
-
-	self assert: (readMethod accessesRef: classVar).
-	self assert: (writeMethod accessesRef: classVar)
-]
-
 { #category : 'tests - testing' }
 CompiledCodeTest >> testBlockReturnSpecial [
 	"we do not compile blocks with quick returns for now"
@@ -110,7 +99,7 @@ CompiledCodeTest >> testFlag [
 
 ]
 
-{ #category : 'tests - literals' }
+{ #category : 'tests - scanning' }
 CompiledCodeTest >> testHasLiteral [
 
 	| method |
@@ -142,6 +131,18 @@ CompiledCodeTest >> testHasLiteral [
 	self deny: (method hasLiteral: #pragma).
 	"the method selector NOT"
 	self deny: (method hasLiteral: #method)
+]
+
+{ #category : 'tests - scanning' }
+CompiledCodeTest >> testHasLiteral2 [
+
+	| readMethod writeMethod classVar |
+	readMethod := SmalltalkImage class >> #compilerClass.
+	writeMethod := SmalltalkImage class >> #compilerClass:.
+	classVar := SmalltalkImage classVariableNamed: #CompilerClass.
+
+	self assert: (readMethod hasLiteral: classVar).
+	self assert: (writeMethod hasLiteral: classVar)
 ]
 
 { #category : 'tests - literals' }

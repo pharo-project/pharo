@@ -82,6 +82,12 @@ TextEditorDialogWindow >> initialize [
 	self textEditorMorph selectAll
 ]
 
+{ #category : 'accessing' }
+TextEditorDialogWindow >> interactionModel [
+
+	^ self
+]
+
 { #category : 'actions' }
 TextEditorDialogWindow >> newButtons [
 	"Answer new buttons as appropriate."

@@ -12,8 +12,6 @@ Class {
 { #category : 'enumerating' }
 CoSinglePackageScopedGlobalVariableFetcher >> entriesDo: aBlock [
 
-	completionClass isNil ifTrue: [ ^ self ].
+	completionClass ifNil: [ ^ self ].
 	self packageLocalClasses: aBlock
-	
-	
 ]

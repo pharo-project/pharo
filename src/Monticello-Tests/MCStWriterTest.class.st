@@ -166,7 +166,7 @@ MCStWriterTest >> stampRegex [
 	"to match stamps like:
 	 	stamp: '2025-08-13T13:33:59.50038+00:00'"
 	
-	^ 'stamp\: ''\d{4}-\d{2}-\d{2}T\d{2}\:\d{2}\:\d{2}.\d{5,6}[+-]\d{2}\:\d{2}'''
+	^ 'stamp\: ''\d{4}-\d{2}-\d{2}T\d{2}\:\d{2}\:\d{2}.\d{4,6}[+-]\d{2}\:\d{2}'''
 ]
 
 { #category : 'testing' }
@@ -240,7 +240,7 @@ MCStWriterTest >> testMethodDefinitionWithBangs [
 
 	| methodDefinition |
 	methodDefinition := (RGMethodDefinition realClass: self class selector: #methodWithBangs) asMCMethodDefinition.
-	methodDefinition setTimeStamp: ''.
+	methodDefinition timeStamp: ''.
 	writer visitMethodDefinition: methodDefinition.
 
 	self assertContentsOf: stream contents match: self expectedMethodDefinitionWithBangs.

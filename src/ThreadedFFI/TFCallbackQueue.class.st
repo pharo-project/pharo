@@ -79,7 +79,8 @@ TFCallbackQueue >> forkCallbackProcess [
 		[ true ] whileTrue: [
 			semaphore wait.
 			[self executeCallback: self nextPendingCallback]
-				on: Exception fork:  [:ex | ex pass ] ] ]
+				on: Exception 
+				fork:  [:ex | ex pass ] ] ]
 		forkAt: Processor highIOPriority
 		named: 'Callback queue'
 ]

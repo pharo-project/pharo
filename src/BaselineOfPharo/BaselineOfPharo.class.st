@@ -200,7 +200,9 @@ BaselineOfPharo >> baseline: spec [
 		spec
 			package: 'Morphic-Deprecated';
 			package: 'Deprecated13';
-			package: 'Deprecated14' ]
+			package: 'Deprecated13-Kernel';
+			package: 'Deprecated14';
+			package: 'Deprecated14-Kernel' ]
 ]
 
 { #category : 'actions' }
@@ -209,8 +211,8 @@ BaselineOfPharo >> postload: loader package: packageSpec [
 
 	Smalltalk os environment at: #GITHUB_TOKEN ifPresent: [ :token |
 		| credential |
-		credential := (Smalltalk classNamed: #IceCredentialStore) current plaintextCredentialForHostname: 'github.com'.
-		credential password = token ifTrue: [ (Smalltalk classNamed: #IceCredentialStore) current removePlainTextCredential: credential ].
+		credential := (self classNamed: #IceCredentialStore) current plaintextCredentialForHostname: 'github.com'.
+		credential password = token ifTrue: [ (self classNamed: #IceCredentialStore) current removePlainTextCredential: credential ].
 		'Removing credential.' traceCr ].
 
 	"Open the WelcomeBrowser as last step"

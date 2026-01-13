@@ -1,25 +1,13 @@
 Class {
 	#name : 'MetacelloRemoveMemberSpec',
 	#superclass : 'MetacelloMemberSpec',
-	#category : 'Metacello-Core-Members',
+	#category : 'Metacello-Core-Model',
 	#package : 'Metacello-Core',
-	#tag : 'Members'
+	#tag : 'Model'
 }
 
 { #category : 'actions' }
-MetacelloRemoveMemberSpec >> applyAdd: addBlock copy: copyBlock merge: mergeBlock remove: removeBlock [
+MetacelloRemoveMemberSpec >> applyToMap: map [
 
-	removeBlock value: self
-]
-
-{ #category : 'actions' }
-MetacelloRemoveMemberSpec >> applyToList: aListSpec [
-
-	aListSpec remove: self
-]
-
-{ #category : 'accessing' }
-MetacelloRemoveMemberSpec >> methodUpdateSelector [
-
-	^#remove:
+	map removeKey: self name ifAbsent: [ ]
 ]

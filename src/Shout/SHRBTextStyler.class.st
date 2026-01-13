@@ -1,5 +1,16 @@
 "
-I'm the one who visits node to coloring the code
+A visitor for AST nodes used to add styling to the code.
+Style options are organised in style tables, in methods with the pragma `<styleTable: 'aStyleName'>`. This method answer an array of arrays (a slist), where each of the content array being a description of an attribute with the form :  
+```
+(name  foregroundColor [text-attribute] [backgroundColor])
+```
+1. `name`: a symbol identifying the AST type attribute (e.g. `comment` `string`...)
+2. `foregroundColor`: a foreground color for the code text. This can be an hex string (RGBA), following CSS color convention. 
+	- Colors can be also specified with an array (color modifiers...), e.g. `('ff0000' lighter)`. This allows for fine tuning of the desired color.
+	- This value can be `nil` meaning no color will be applied. 
+3. `text attribute`: attributtes qualifying the text: `bold`, `italic`, `underlined`, `narrow`, `struckout`.
+	- This value can be `nil` meaning no text emphasis will be applied.
+4. `backgroundColor`. Changes background color. Same provisions than foreground color can be applied to it (but it applies to the backgound)
 "
 Class {
 	#name : 'SHRBTextStyler',
@@ -15,17 +26,40 @@ Class {
 }
 
 { #category : 'attributes' }
+SHRBTextStyler class >> attributeArrayForColor: colorOrNil backgroundColor: backgroundColorOrNil emphasis: emphasisSymbolOrArrayorNil [
+	"answer an array of text attributes (TextAttribute) that are obtained by parsing a styleTable. 
+	 We can handle foregroundColor, backgroundColor and text emphasis"
+	
+	^ Array streamContents: [ :stream | 
+		"foreground color"
+		colorOrNil ifNotNil: [ :aColor | 
+			stream nextPut: (TextColor color: aColor) ].	
+		"background color"
+		backgroundColorOrNil ifNotNil: [ :aColor | 
+			stream nextPut: (TextBackgroundColor color: aColor) ].
+		"emphasis"
+		emphasisSymbolOrArrayorNil ifNotNil: [
+			emphasisSymbolOrArrayorNil isSymbol
+				ifTrue: [ 
+					stream nextPut: (TextEmphasis perform: emphasisSymbolOrArrayorNil) ]
+				ifFalse: [
+					emphasisSymbolOrArrayorNil do: [ :each | 
+						stream nextPut: (TextEmphasis perform: emphasisSymbolOrArrayorNil) ] ] ] ]
+]
+
+{ #category : 'attributes' }
 SHRBTextStyler class >> attributeArrayForColor: aColorOrNil emphasis: anEmphasisSymbolOrArrayorNil [
-
 	| emphArray answer |
+	
 	answer := Array new.
+	
 	aColorOrNil ifNotNil: [ answer := answer , { (TextColor color: aColorOrNil) } ].
-
 	anEmphasisSymbolOrArrayorNil ifNotNil: [
 		emphArray := anEmphasisSymbolOrArrayorNil isSymbol
-			             ifTrue: [ { anEmphasisSymbolOrArrayorNil } ]
-			             ifFalse: [ anEmphasisSymbolOrArrayorNil ].
-		emphArray do: [ :each | each ~= #normal ifTrue: [ answer := answer , { (TextEmphasis perform: each) } ] ] ].
+			ifTrue: [ { anEmphasisSymbolOrArrayorNil } ]
+			ifFalse: [ anEmphasisSymbolOrArrayorNil ].
+		emphArray 
+			do: [ :each | each ~= #normal ifTrue: [ answer := answer , { (TextEmphasis perform: each) } ] ] ].
 
 	^ answer
 ]
@@ -330,19 +364,28 @@ SHRBTextStyler class >> initialTextAttributes [
 
 { #category : 'attributes' }
 SHRBTextStyler class >> initialTextAttributesForStyleTable: aStyleTable [
-
-	| d |
-	d := IdentityDictionary new.
+	"Parses aStyleTable and answer a dictionary of attributes, with attribute name as key."
+	| dictionary |
+	
+	dictionary := IdentityDictionary new.
 	aStyleTable do: [ :each |
-		| element emphasis color |
-		element := each first.
-		color := each at: 2 ifAbsent: [  ].
+		| element emphasis color backgroundColor |
+		
+		element := each at: 1.
+		color := each at: 2 ifAbsent: [ ].
 		color := color ifNotNil: [ Color colorFrom: color ].
 		emphasis := each at: 3 ifAbsent: [  ].
+		backgroundColor := each at: 4 ifAbsent: [ ].
+		backgroundColor := backgroundColor ifNotNil: [ Color colorFrom: backgroundColor ].
 
-		(self attributeArrayForColor: color emphasis: emphasis) ifNotEmpty: [ :attrArray | d at: element put: attrArray ] ].
+		(self 
+			attributeArrayForColor: color 
+			backgroundColor: backgroundColor
+			emphasis: emphasis)
+		ifNotEmpty: [ :attrArray | 
+			dictionary at: element put: attrArray ] ].
 
-	^ d
+	^ dictionary
 ]
 
 { #category : 'styles' }

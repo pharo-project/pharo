@@ -24,21 +24,63 @@ SystemDependenciesTest class >> resources [
 ]
 
 { #category : 'packages' }
-SystemDependenciesTest >> compilerLayerPackages [
+SystemDependenciesTest >> _01kernelLayerPackages [
 
-	^ self kernelLayerPackages , BaselineOfPharoBootstrap compilerPackageNames
+	^ BaselineOfKernel corePackageNames asSet
 ]
 
 { #category : 'packages' }
-SystemDependenciesTest >> debuggingLayerPackages [
+SystemDependenciesTest >> _02kernelAdditionalPackagesLayerPackages [
 
-	^ self sunitCoreLayerPackages , BaselineOfDebugging corePackageNames
+	^ self _01kernelLayerPackages , BaselineOfKernel additionalPackagesPackageNames
 ]
 
-{ #category : 'accessing' }
-SystemDependenciesTest >> dependenciesReport [
+{ #category : 'packages' }
+SystemDependenciesTest >> _03compilerLayerPackages [
 
-	^ SystemDependenciesReportResource current dependenciesReport
+	^ self _02kernelAdditionalPackagesLayerPackages , BaselineOfCompiler corePackageNames
+]
+
+{ #category : 'packages' }
+SystemDependenciesTest >> _04fileSystemLayerPackages [
+
+	^ self _03compilerLayerPackages , BaselineOfFileSystem corePackageNames
+]
+
+{ #category : 'packages' }
+SystemDependenciesTest >> _05traitsLayerPackages [
+
+	^ self _04fileSystemLayerPackages , BaselineOfTraits corePackageNames
+]
+
+{ #category : 'packages' }
+SystemDependenciesTest >> _06monticelloCoreLayerPackages [
+
+	^ self _05traitsLayerPackages , BaselineOfMonticello corePackageNames
+]
+
+{ #category : 'packages' }
+SystemDependenciesTest >> _07metacelloCoreLayerPackages [
+
+	^ self _06monticelloCoreLayerPackages , (BaselineOfMetacello packagesOfGroupNamed: 'Core') , (BaselineOfTonel packagesOfGroupNamed: #core)
+]
+
+{ #category : 'packages' }
+SystemDependenciesTest >> _08monticelloLayerPackages [
+
+	^ self _07metacelloCoreLayerPackages , BaselineOfMonticello remoteRepositoriesPackageNames
+]
+
+{ #category : 'packages' }
+SystemDependenciesTest >> _09sunitCoreLayerPackages [
+
+	^ self _08monticelloLayerPackages , BaselineOfSUnit corePackageNames
+]
+
+{ #category : 'packages' }
+SystemDependenciesTest >> _10debuggingLayerPackages [
+
+	^ self _09sunitCoreLayerPackages , BaselineOfDebugging corePackageNames
 ]
 
 { #category : 'accessing' }
@@ -46,18 +88,11 @@ SystemDependenciesTest >> externalDependendiesOf: packagesCollection [
 
 	| dependencies |
 
-	dependencies := packagesCollection flatCollect: [ :aPackage | self dependenciesReport dependenciesOf: aPackage ] as: Set.
+	dependencies := packagesCollection flatCollect: [ :aPackage | SystemDependenciesReportResource current dependenciesReport dependenciesOf: aPackage ] as: Set.
 
 	dependencies := dependencies copyWithoutAll: packagesCollection.
 
 	^ dependencies sorted
-]
-
-{ #category : 'packages' }
-SystemDependenciesTest >> kernelLayerPackages [
-
-	^ (BaselineOfPharoBootstrap kernelPackageNames , BaselineOfPharoBootstrap multilingualPackageNames , BaselineOfPharoBootstrap kernelAdditionalPackagesNames)
-		  asSet
 ]
 
 { #category : 'known dependencies' }
@@ -65,7 +100,7 @@ SystemDependenciesTest >> knownBasicToolsDependencies [
 	"ideally this list should be empty"
 
 	^ #( 'Athens-Cairo' 'Athens-Core' #'Commander-Core' #Reflectivity #'Reflectivity-Tools' #Shout 'HeuristicCompletion-Model'
-	     #VariablesLibrary #'Spec2-CommonWidgets' #'NewTools-Scopes' #'Traits-Tests' 'NewTools-Scopes' 'NewTools-Transcript' #'NewTools-FileBrowser' #EnlumineurFormatter )
+	     #VariablesLibrary #'Spec2-CommonWidgets' #'NewTools-Scopes' #'Traits-Tests' 'NewTools-Scopes' 'NewTools-Transcript' #'NewTools-FileBrowser' #EnlumineurFormatter 'Calypso-SystemTools-OldToolCompatibillity' )
 ]
 
 { #category : 'known dependencies' }
@@ -83,10 +118,24 @@ SystemDependenciesTest >> knownDebuggingDependencies [
 ]
 
 { #category : 'known dependencies' }
-SystemDependenciesTest >> knownKernelDependencies [
+SystemDependenciesTest >> knownDisplayDependencies [
+	"ideally this list should be empty"
+
+	^ #( #'Morphic-Core' #'System-Object Events' #'Tool-Base' )
+]
+
+{ #category : 'known dependencies' }
+SystemDependenciesTest >> knownKernelAdditionalPackagesDependencies [
 	"ideally this list should be empty"
 
 	^ #( #'FileSystem-Core' 'CodeImport' )
+]
+
+{ #category : 'known dependencies' }
+SystemDependenciesTest >> knownKernelDependencies [
+	"ideally this list should be empty"
+
+	^ #( #'FileSystem-Core' 'CodeImport' 'Math-Operations-Extensions' 'System-Time' )
 ]
 
 { #category : 'known dependencies' }
@@ -109,7 +158,7 @@ SystemDependenciesTest >> knownUIDependencies [
 	"ideally this list should be empty"
 
 	^ #( 'Athens-Cairo' 'Athens-Core' #'Refactoring-Environment' 'Reflectivity-Tools' #Shout #'Tool-Diff' #'HeuristicCompletion-Model'
-	     'NECompletion-Morphic' #VariablesLibrary #'Tools-CodeNavigation' #'Spec2-CommonWidgets' #'NewTools-Scopes' #'NewTools-FileBrowser' #EnlumineurFormatter )
+	     'NECompletion-Morphic' #VariablesLibrary #'Tools-CodeNavigation' #'Spec2-CommonWidgets' #'NewTools-Scopes' #'NewTools-FileBrowser' #EnlumineurFormatter #'System-Changes' )
 ]
 
 { #category : 'known dependencies' }
@@ -117,37 +166,6 @@ SystemDependenciesTest >> knownUIInfrastructureDependencies [
 	"ideally this list should be empty"
 
 	^ #( #'Morphic-Core' #'System-Object Events' #'Tool-Base' )
-]
-
-{ #category : 'packages' }
-SystemDependenciesTest >> metacelloCoreLayerPackages [
-
-	^ self monticelloCoreLayerPackages , (BaselineOfMetacello packagesOfGroupNamed: 'Core') , (BaselineOfTonel packagesOfGroupNamed: #core)
-]
-
-{ #category : 'accessing' }
-SystemDependenciesTest >> metacelloPackageNames [
-
-	^ BaselineOfPharoBootstrap kernelPackageNames,
-	  BaselineOfPharoBootstrap compilerPackageNames,
-	  BaselineOfPharoBootstrap fileSystemPackageNames,
-	  BaselineOfPharoBootstrap multilingualPackageNames,
-	  BaselineOfPharoBootstrap kernelAdditionalPackagesNames,
-	  BaselineOfMonticello corePackageNames,
-	  BaselineOfMonticello remoteRepositoriesPackageNames,
-	  (BaselineOfMetacello packagesOfGroupNamed: 'Core')
-]
-
-{ #category : 'packages' }
-SystemDependenciesTest >> monticelloCoreLayerPackages [
-
-	^ self compilerLayerPackages , BaselineOfTraits corePackages , BaselineOfPharoBootstrap fileSystemPackageNames , BaselineOfMonticello corePackageNames
-]
-
-{ #category : 'packages' }
-SystemDependenciesTest >> monticelloLayerPackages [
-
-	^ self metacelloCoreLayerPackages , BaselineOfMonticello remoteRepositoriesPackageNames
 ]
 
 { #category : 'accessing' }
@@ -161,12 +179,6 @@ SystemDependenciesTest >> packagesOfGroupNamed: aGroupName on: aBaseline [
 	packages := allMembers includes select: [ :aName | allPackagesInBaseline includes: aName ].
 	groups := allMembers includes reject: [ :aName | allPackagesInBaseline includes: aName ].
 	^ packages , (groups flatCollect: [:aInnerGroupName | self packagesOfGroupNamed: aInnerGroupName on: aBaseline ])
-]
-
-{ #category : 'packages' }
-SystemDependenciesTest >> sunitCoreLayerPackages [
-
-	^ self monticelloLayerPackages , BaselineOfSUnit corePackageNames
 ]
 
 { #category : 'tests' }
@@ -185,12 +197,12 @@ SystemDependenciesTest >> testExternalBasicToolsDependencies [
 	| dependencies |
 
 	dependencies := self externalDependendiesOf: (
-		self metacelloPackageNames,
-		self tonelCorePackageNames,
-		BaselineOfKernelTests withAllPackageNames,
-		BaselineOfTraits corePackages,
+		self _10debuggingLayerPackages,
+		BaselineOfKernel testsPackageNames,
+		BaselineOfCompiler testsPackageNames,
+		BaselineOfFileSystem testsPackageNames,
+		BaselineOfTraits coreTraitsPackageNames,
 		BaselineOfSUnit withAllPackageNames,
-		BaselineOfDebugging corePackageNames,
 		BaselineOfDisplay withAllPackageNames,
 		BaselineOfUnifiedFFI withAllPackageNames,
 		BaselineOfFonts allPackageNames,
@@ -219,7 +231,7 @@ SystemDependenciesTest >> testExternalBasicToolsDependencies [
 SystemDependenciesTest >> testExternalCompilerDependencies [
 
 	| dependencies |
-	dependencies := self externalDependendiesOf: self compilerLayerPackages.
+	dependencies := self externalDependendiesOf: self _03compilerLayerPackages.
 
 	self assertCollection: dependencies hasSameElements: self knownCompilerDependencies
 ]
@@ -228,7 +240,7 @@ SystemDependenciesTest >> testExternalCompilerDependencies [
 SystemDependenciesTest >> testExternalDebuggingDependencies [
 
 	| dependencies |
-	dependencies := self externalDependendiesOf: self debuggingLayerPackages.
+	dependencies := self externalDependendiesOf: self _10debuggingLayerPackages.
 
 	self assertCollection: dependencies hasSameElements: self knownDebuggingDependencies
 ]
@@ -239,32 +251,30 @@ SystemDependenciesTest >> testExternalDisplayDependencies [
 	| dependencies |
 
 	dependencies := self externalDependendiesOf: (
-		self metacelloPackageNames,
-		self tonelCorePackageNames,
-		BaselineOfTraits corePackages,
-		BaselineOfSUnit corePackageNames,
+		self _10debuggingLayerPackages, 
 		BaselineOfUnifiedFFI allPackageNames,
 		BaselineOfThreadedFFI allPackageNames,
 		BaselineOfDisplay allPackageNames).
 
-	self assertEmpty: dependencies
+	self assert: dependencies equals: self knownDisplayDependencies
 ]
 
 { #category : 'tests' }
 SystemDependenciesTest >> testExternalFileSystemDependencies [
 
-	| dependencies |
-	dependencies := self externalDependendiesOf:
-		                BaselineOfPharoBootstrap kernelPackageNames , BaselineOfPharoBootstrap multilingualPackageNames
-		                , BaselineOfPharoBootstrap kernelAdditionalPackagesNames , BaselineOfPharoBootstrap compilerPackageNames
-		                , BaselineOfPharoBootstrap fileSystemPackageNames.
+	self assertEmpty: (self externalDependendiesOf: self _04fileSystemLayerPackages)
+]
 
-	self assertEmpty: dependencies
+{ #category : 'tests' }
+SystemDependenciesTest >> testExternalKernelAdditionalPackagesDependencies [
+
+	self
+		assertCollection: (self externalDependendiesOf: self _02kernelAdditionalPackagesLayerPackages)
+		hasSameElements: self knownKernelAdditionalPackagesDependencies
 ]
 
 { #category : 'tests' }
 SystemDependenciesTest >> testExternalKernelDependencies [
-
 "
 If you will break or weaken this test, a puppy will die!!!
      _ _      _
@@ -272,30 +282,21 @@ If you will break or weaken this test, a puppy will die!!!
      `_/      )
      (_(_/-(_/
 "
-	| dependencies |
 
-	dependencies := self
-		externalDependendiesOf: BaselineOfPharoBootstrap kernelPackageNames , BaselineOfPharoBootstrap multilingualPackageNames, BaselineOfPharoBootstrap kernelAdditionalPackagesNames.
-
-	self assertCollection: dependencies hasSameElements: self knownKernelDependencies
+	self assertCollection: (self externalDependendiesOf: self _01kernelLayerPackages) hasSameElements: self knownKernelDependencies
 ]
 
 { #category : 'tests' }
 SystemDependenciesTest >> testExternalMetacelloCoreDependencies [
 
-	| dependencies |
-	dependencies := self externalDependendiesOf: self metacelloCoreLayerPackages.
-
-	self assertEmpty: dependencies
+	self assertEmpty: (self externalDependendiesOf: self _07metacelloCoreLayerPackages)
 ]
 
 { #category : 'tests' }
 SystemDependenciesTest >> testExternalMinimalImageWithSUnitDependencies [
 
 	| dependencies |
-	dependencies := self externalDependendiesOf:
-		                self compilerLayerPackages , BaselineOfTraits corePackages , BaselineOfPharoBootstrap fileSystemPackageNames
-		                , BaselineOfPharoBootstrap sUnitPackageNames.
+	dependencies := self externalDependendiesOf: self _05traitsLayerPackages , BaselineOfPharoBootstrap sUnitPackageNames.
 
 	self assertEmpty: dependencies
 ]
@@ -303,19 +304,13 @@ SystemDependenciesTest >> testExternalMinimalImageWithSUnitDependencies [
 { #category : 'tests' }
 SystemDependenciesTest >> testExternalMonticelloCoreDependencies [
 
-	| dependencies |
-	dependencies := self externalDependendiesOf: self monticelloCoreLayerPackages.
-
-	self assertEmpty: dependencies
+	self assertEmpty: (self externalDependendiesOf: self _06monticelloCoreLayerPackages)
 ]
 
 { #category : 'tests' }
 SystemDependenciesTest >> testExternalMonticelloDependencies [
 
-	| dependencies |
-	dependencies := self externalDependendiesOf: self monticelloLayerPackages.
-
-	self assertEmpty: dependencies
+	self assertEmpty: (self externalDependendiesOf: self _08monticelloLayerPackages)
 ]
 
 { #category : 'tests' }
@@ -324,11 +319,10 @@ SystemDependenciesTest >> testExternalMorphicCoreDependencies [
 	| dependencies |
 
 	dependencies := self externalDependendiesOf: (
-		self metacelloPackageNames,
-		self tonelCorePackageNames,
-		BaselineOfDebugging corePackageNames,
+		self _10debuggingLayerPackages,
 		BaselineOfUIInfrastructure withAllPackageNames,
-		BaselineOfTraits corePackages,
+		BaselineOfMenuRegistration withAllPackageNames,
+		BaselineOfTraits corePackageNames,
 		BaselineOfSUnit corePackageNames,
 		BaselineOfDisplay allPackageNames,
 		BaselineOfUnifiedFFI allPackageNames,
@@ -346,12 +340,8 @@ SystemDependenciesTest >> testExternalMorphicDependencies [
 	| dependencies |
 
 	dependencies := self externalDependendiesOf: (
-		self metacelloPackageNames,
-		self tonelCorePackageNames,
-		BaselineOfDebugging corePackageNames,
+		self _10debuggingLayerPackages,
 		BaselineOfUIInfrastructure withAllPackageNames,
-		BaselineOfTraits corePackages,
-		BaselineOfSUnit corePackageNames,
 		BaselineOfDisplay allPackageNames,
 		BaselineOfUnifiedFFI allPackageNames,
 		BaselineOfFonts allPackageNames,
@@ -370,10 +360,7 @@ SystemDependenciesTest >> testExternalMorphicDependencies [
 { #category : 'tests' }
 SystemDependenciesTest >> testExternalSUnitCoreDependencies [
 
-	| dependencies |
-	dependencies := self externalDependendiesOf: self sunitCoreLayerPackages.
-
-	self assertEmpty: dependencies
+	self assertEmpty: (self externalDependendiesOf: self _09sunitCoreLayerPackages)
 ]
 
 { #category : 'tests' }
@@ -383,12 +370,10 @@ SystemDependenciesTest >> testExternalSpec2Dependencies [
 
 	dependencies := (self externalDependendiesOf: (
 		"Language"
-		self metacelloPackageNames,
-		self tonelCorePackageNames,
-		BaselineOfDebugging corePackageNames,
+		self _10debuggingLayerPackages,
 		BaselineOfUI allPackageNames,
 		BaselineOfUIInfrastructure withAllPackageNames,
-		BaselineOfTraits corePackages,
+		BaselineOfTraits coreTraitsPackageNames,
 		BaselineOfUnifiedFFI allPackageNames,
 		BaselineOfFonts allPackageNames,
 
@@ -406,12 +391,16 @@ SystemDependenciesTest >> testExternalSpec2Dependencies [
 		(BaselineOfNewValueHolder packagesOfGroupNamed: #core),
 		(BaselineOfSpecCore deepPackagesOfGroupNamed: #default),
 		(BaselineOfSpec2 deepPackagesOfGroupNamed: #default),
-		BaselineOfThreadedFFI corePackageNames,
-
-		BaselineOfSUnit corePackageNames))
+		BaselineOfThreadedFFI corePackageNames))
 			copyWithoutAll: self knownMorphicDependencies, self knownBasicToolsDependencies, self knownUIDependencies.
 
 	self assertEmpty: dependencies
+]
+
+{ #category : 'tests' }
+SystemDependenciesTest >> testExternalTraitsDependencies [
+
+	self assertEmpty: (self externalDependendiesOf: self _05traitsLayerPackages)
 ]
 
 { #category : 'tests' }
@@ -420,10 +409,7 @@ SystemDependenciesTest >> testExternalUFFIDependencies [
 	| dependencies |
 
 	dependencies := self externalDependendiesOf: (
-		self metacelloPackageNames,
-		self tonelCorePackageNames,
-		BaselineOfTraits corePackages,
-		BaselineOfSUnit corePackageNames,
+		self _09sunitCoreLayerPackages,
 		BaselineOfUnifiedFFI allPackageNames,
 		BaselineOfThreadedFFI corePackageNames).
 
@@ -436,13 +422,10 @@ SystemDependenciesTest >> testExternalUIDependencies [
 	| dependencies |
 
 	dependencies := (self externalDependendiesOf: (
-		self metacelloPackageNames,
-		self tonelCorePackageNames,
-		BaselineOfDebugging corePackageNames,
+		self _10debuggingLayerPackages,
 		BaselineOfUI allPackageNames,
 		BaselineOfUIInfrastructure withAllPackageNames,
-		BaselineOfTraits corePackages,
-		BaselineOfSUnit corePackageNames,
+		BaselineOfTraits coreTraitsPackageNames,
 		BaselineOfDisplay allPackageNames,
 		BaselineOfUnifiedFFI allPackageNames,
 		BaselineOfFonts allPackageNames,
@@ -491,16 +474,10 @@ SystemDependenciesTest >> testNoDependencyToDeprecatedPackages [
 	self assertEmpty: dependencies
 ]
 
-{ #category : 'accessing' }
-SystemDependenciesTest >> tonelCorePackageNames [
-
-	^ { BaselineOfTonel name }, (BaselineOfTonel packagesOfGroupNamed: #core)
-]
-
 { #category : 'packages' }
 SystemDependenciesTest >> uiInfrastructureCoreLayerPackages [
 
-	^ self debuggingLayerPackages , BaselineOfUnifiedFFI allPackageNames , BaselineOfThreadedFFI allPackageNames , BaselineOfDisplay allPackageNames
+	^ self _10debuggingLayerPackages , BaselineOfUnifiedFFI allPackageNames , BaselineOfThreadedFFI allPackageNames , BaselineOfDisplay allPackageNames
 	  , BaselineOfFonts corePackageNames , BaselineOfFreeType uiPackageNames , BaselineOfMenuRegistration allPackageNames , BaselineOfKeymapping corePackageNames
 	  , BaselineOfFuel corePackageNames
 ]

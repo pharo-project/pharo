@@ -4,9 +4,9 @@ Class {
 	#instVars : [
 		'projectCache'
 	],
-	#category : 'Metacello-Core-Gofer',
+	#category : 'Metacello-Core-Monticello',
 	#package : 'Metacello-Core',
-	#tag : 'Gofer'
+	#tag : 'Monticello'
 }
 
 { #category : 'accessing' }
@@ -68,35 +68,33 @@ MetacelloMonticelloLoader >> loadPackageDirective: aMetacelloPackageLoadDirectiv
 ]
 
 { #category : 'loading' }
-MetacelloMonticelloLoader >> loadProject: aMetacelloMCBaselineOfProjectSpec [
-	"Loads the project class (BaselineOf, ConfigurationOf) and creates a project from it"
+MetacelloMonticelloLoader >> loadProject: aMetacelloProjectSpec [
+	"Loads the project BaselineOf and creates a project from it"
 
 	"There is no need at loading a project twice as long as it has the same version."
 
 	| projectClass projectClassInstance project |
 	projectCache
-		at: aMetacelloMCBaselineOfProjectSpec className
+		at: aMetacelloProjectSpec className
 		ifPresent: [ :found | ^ found ].
 
 	(self lookupProjectClassNamed:
-		 aMetacelloMCBaselineOfProjectSpec className) ifNil: [
+		 aMetacelloProjectSpec className) ifNil: [
 		self loadPackageDirective: (MetacelloDirective
 				 loadPackage: (MetacelloPackageSpec new
-						  name: aMetacelloMCBaselineOfProjectSpec className;
-						  repositories: aMetacelloMCBaselineOfProjectSpec repositories;
+						  name: aMetacelloProjectSpec className;
+						  repositories: aMetacelloProjectSpec repositories;
 						  yourself)
 				 repositorySpecs:
-				 aMetacelloMCBaselineOfProjectSpec repositorySpecs) ].
+				 aMetacelloProjectSpec repositorySpecs) ].
 
-	projectClass := self lookupProjectClassNamed:
-		                aMetacelloMCBaselineOfProjectSpec className asSymbol.
+	projectClass := self lookupProjectClassNamed:  aMetacelloProjectSpec className asSymbol.
 	projectClassInstance := projectClass new.
 	"Subclasses typically change the load type of the project to #atomic"
-	projectClassInstance initalizeProjectWithRepositoryDescription:
-		aMetacelloMCBaselineOfProjectSpec repositoryDescriptions.
+	projectClassInstance initalizeProjectWithRepositoryDescription: aMetacelloProjectSpec repositoryDescriptions.
 	project := projectClassInstance project.
 	projectCache
-		at: aMetacelloMCBaselineOfProjectSpec className
+		at: aMetacelloProjectSpec className
 		put: project.
 	^ project
 ]

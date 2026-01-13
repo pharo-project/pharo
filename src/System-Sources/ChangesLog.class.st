@@ -26,10 +26,9 @@ ChangesLog class >> default [
 { #category : 'accessing' }
 ChangesLog class >> registerInterestToSystemAnnouncement [
 
-	<systemEventRegistration>
 	DefaultInstance ifNotNil: [ :defaultInstance |
-		self unsubscribeAnnouncersOfDefaultInstance.
-		defaultInstance registerToAnnouncements ]
+			self unsubscribeAnnouncersOfDefaultInstance.
+			defaultInstance registerToAnnouncements ]
 ]
 
 { #category : 'class initialization' }

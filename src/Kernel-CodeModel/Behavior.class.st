@@ -1490,7 +1490,8 @@ Behavior >> methodsWritingSlot: aSlot [
 { #category : 'accessing' }
 Behavior >> name [
 	"Answer a String that is the name of the receiver."
-	^'a subclass of ', self superclass name
+	
+	^ ('ASubclassOf', self superclass name) asSymbol
 ]
 
 { #category : 'instance creation' }

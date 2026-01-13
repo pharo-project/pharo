@@ -1,8 +1,9 @@
 Class {
 	#name : 'FSPrintingTest',
 	#superclass : 'TestCase',
-	#category : 'FileSystem-Core-Tests',
-	#package : 'FileSystem-Core-Tests'
+	#category : 'FileSystem-Core-Tests-Base',
+	#package : 'FileSystem-Core-Tests',
+	#tag : 'Base'
 }
 
 { #category : 'tests' }

@@ -101,7 +101,7 @@ LiteralVariable >> installingIn: aClass [
 { #category : 'testing' }
 LiteralVariable >> isAccessedIn: aMethod [
 
-	^aMethod accessesRef: self
+	^aMethod hasLiteral: self
 ]
 
 { #category : 'testing' }

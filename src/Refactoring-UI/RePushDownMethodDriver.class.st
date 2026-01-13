@@ -48,7 +48,7 @@ RePushDownMethodDriver >> browseSubclassesSuperSends [
 
 	subclassesSendSuper violators keysAndValuesDo: [ :violator :references |
 		"we should pass the application! "
-		StMessageBrowser
+		(Smalltalk tools toolNamed: #messageList)
 			browse: (references collect: [ :ref | ref compiledMethod ])
 			asSendersOf: violator realClass ]
 ]
@@ -78,10 +78,11 @@ RePushDownMethodDriver >> defaultSelectDialog [
 
 	^ super defaultSelectDialog
 		  title: 'There are potential breaking changes!';
-		  label: self labelBasedOnBreakingChanges;
+		  message: self labelBasedOnBreakingChanges;
 		  items: self breakingChoices;
 		  display: [ :each | each description ];
-		  displayIcon: [ :each | self iconNamed: each systemIconName ]; yourself
+		  displayIcon: [ :each | self iconNamed: each systemIconName ];
+		  yourself
 ]
 
 { #category : 'execution' }

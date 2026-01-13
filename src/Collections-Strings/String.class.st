@@ -2771,7 +2771,7 @@ String >> withCRs [
 	
 	"'-hello\-hi' withCRs >>>
 	'-hello
-	 -hi'"
+-hi'"
 
 	^ self collect: [ :c | c = $\ ifTrue: [ Character cr ] ifFalse: [ c ]]
 ]

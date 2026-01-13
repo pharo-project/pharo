@@ -6,7 +6,7 @@ Class {
 }
 
 { #category : 'tests' }
-TraitPackagingTest >> testSortClassAndUsedTraitPutsClassFirst [
+TraitPackagingTest >> testSortClassAndUsedTraitPutsTraitFirst [
 
 	| sorted |
 	sorted := Package new sortTopologically: {
@@ -14,38 +14,12 @@ TraitPackagingTest >> testSortClassAndUsedTraitPutsClassFirst [
 			          Trait1 }.
 
 	self assert: sorted asArray equals: {
-			MOPTestClassB.
-			Trait1 }
+			Trait1.
+			MOPTestClassB }
 ]
 
 { #category : 'tests' }
-TraitPackagingTest >> testSortTraitAndUsedTraitPutsUserFirst [
-
-	| sorted |
-	sorted := Package new sortTopologically: {
-			          Trait2.
-			          Trait3 }.
-
-	self assert: sorted asArray equals: {
-			Trait3.
-			Trait2 }
-]
-
-{ #category : 'tests' }
-TraitPackagingTest >> testSortTraitAndUserClassPutsClassFirst [
-
-	| sorted |
-	sorted := Package new sortTopologically: {
-			          Trait1.
-			          MOPTestClassB }.
-
-	self assert: sorted asArray equals: {
-			MOPTestClassB.
-			Trait1 }
-]
-
-{ #category : 'tests' }
-TraitPackagingTest >> testSortTraitAndUserTraitPutsUserFirst [
+TraitPackagingTest >> testSortTraitAndUsedTraitPutsUsedTraitFirst [
 
 	| sorted |
 	sorted := Package new sortTopologically: {
@@ -53,8 +27,34 @@ TraitPackagingTest >> testSortTraitAndUserTraitPutsUserFirst [
 			          Trait2 }.
 
 	self assert: sorted asArray equals: {
-			Trait3.
-			Trait2 }
+			Trait2.
+			Trait3 }
+]
+
+{ #category : 'tests' }
+TraitPackagingTest >> testSortTraitAndUserClassPutsTraitFirst [
+
+	| sorted |
+	sorted := Package new sortTopologically: {
+			          Trait1.
+			          MOPTestClassB }.
+
+	self assert: sorted asArray equals: {
+			Trait1.
+			MOPTestClassB }
+]
+
+{ #category : 'tests' }
+TraitPackagingTest >> testSortTraitAndUserTraitPutsUsedTraitFirst [
+
+	| sorted |
+	sorted := Package new sortTopologically: {
+			          Trait3.
+			          Trait2 }.
+
+	self assert: sorted asArray equals: {
+			Trait2.
+			Trait3 }
 ]
 
 { #category : 'tests' }

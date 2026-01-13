@@ -1,13 +1,6 @@
 Extension { #name : 'String' }
 
 { #category : '*Deprecated14' }
-String >> asDate [
-	"Many allowed forms, see Date>>#readFrom:"
-	self deprecated: 'Use Date>>#readFrom:pattern: specifying a concrete pattern instead.'.
-	^ Date fromString: self
-]
-
-{ #category : '*Deprecated14' }
 String >> isValidSelector [
 	"check I could be a valid selector (name of method).
 	 For checking if there is symbol like me used as a selector, see #isSelectorSymbol on Symbol"
@@ -20,6 +13,42 @@ String >> isValidSelector [
 ]
 
 { #category : '*Deprecated14' }
+String >> metacelloIntegerLessThanSelf: anInteger [
+	"integer version components are always '>' string component"
+
+	^false
+]
+
+{ #category : '*Deprecated14' }
+String >> metacelloSemanticIntegerLessThanSelf: anInteger [
+    "integer version components are always '>' string component"
+
+    ^ true
+]
+
+{ #category : '*Deprecated14' }
+String >> metacelloSemanticStringLessThanSelf: aString [
+    ^ aString < self
+]
+
+{ #category : '*Deprecated14' }
+String >> metacelloSemanticVersionComponentLessThan: aMetacelloVersonComponent [
+    ^ aMetacelloVersonComponent metacelloSemanticStringLessThanSelf: self
+]
+
+{ #category : '*Deprecated14' }
+String >> metacelloStringLessThanSelf: aString [
+
+	^aString < self
+]
+
+{ #category : '*Deprecated14' }
+String >> metacelloVersionComponentLessThan: aMetacelloVersonComponent [
+
+	^aMetacelloVersonComponent metacelloStringLessThanSelf: self
+]
+
+{ #category : '*Deprecated14' }
 String >> parseLiterals [
 
 	self 
@@ -29,22 +58,4 @@ String >> parseLiterals [
 		transformWith: 
 		'`@receiver parseLiterals' -> 'OCParser parseLiterals: `@receiver'.
 	^ OCParser parseLiterals: self
-]
-
-{ #category : '*Deprecated14' }
-String >> trimmed [
-	"Trim separators from both sides of the receiving string."
-
-	"'  hello  ' trimmed >>> 'hello'"
-	"'hello' trimmed >>> 'hello'"
-	"'' trimmed >>> ''"
-
-	self
-		backwardCompatible: 'Use trimBoth instead -> https://github.com/pharo-project/pharo/issues/18307'
-		on: '28 June 2025'
-		in: 'pharo14'
-		transformWith: '`@receiver trimmed' -> '`@receiver trimBoth'.
-
-
-	^ self trimBoth
 ]

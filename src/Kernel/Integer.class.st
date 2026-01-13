@@ -316,8 +316,8 @@ Integer >> asByteArray [
 Integer >> asByteArrayOfSize: aSize [
 	"Answer a ByteArray of aSize with my value, most-significant byte first.
 	Warning: Sign is not encoded"
-	"(1 asByteArrayOfSize: 1) >>> 1"
-	"(-1 asByteArrayOfSize: 1) >>> 1"
+	"(1 asByteArrayOfSize: 1) >>> #[1]"
+	"(-1 asByteArrayOfSize: 1) >>> #[1]"
 	
 	| answer digitPos bytesCount |
 	bytesCount := self bytesCount.

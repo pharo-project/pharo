@@ -46,9 +46,3 @@ AnnouncementSubscription >> subscriber: aSubscriber [
 
 	subscriber := aSubscriber
 ]
-
-{ #category : 'finalization' }
-AnnouncementSubscription >> unregister [
-
-	"Nothing, for compatibility with weak subscriptions"
-]

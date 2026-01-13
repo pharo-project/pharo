@@ -57,5 +57,5 @@ ImageCleanerCliCommand >> runCleanup [
 
 	self isProductionCleanup ifTrue: [ ^ ImageCleaner cleanUpForProduction ].
 
-	Smalltalk cleanUp: true except: #( ) confirming: false
+	Smalltalk cleanUp: true except: #( )
 ]

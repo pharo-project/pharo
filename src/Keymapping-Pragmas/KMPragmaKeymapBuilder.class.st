@@ -40,7 +40,6 @@ KMPragmaKeymapBuilder class >> pragmas [
 { #category : 'system-events' }
 KMPragmaKeymapBuilder class >> registerInterestToSystemAnnouncement [
 
-	<systemEventRegistration>
 	self release.
 	self codeChangeAnnouncer weak when: MethodAdded , MethodModified , MethodRemoved send: #methodAnnouncementReceived: to: self
 ]

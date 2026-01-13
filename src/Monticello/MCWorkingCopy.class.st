@@ -130,8 +130,7 @@ MCWorkingCopy class >> infoFromDictionary: aDictionary cache: cache [
 { #category : 'class initialization' }
 MCWorkingCopy class >> initialize [
 
-	registry ifNotNil: [ registry rehash ].
-	self registerForNotifications
+	registry ifNotNil: [ registry rehash ]
 ]
 
 { #category : 'system changes' }
@@ -162,8 +161,8 @@ MCWorkingCopy class >> packageRenamed: anAnnouncement [
 
 { #category : 'event registration' }
 MCWorkingCopy class >> registerForNotifications [
+	"We register Montciello during the bootstrap."
 
-	<systemEventRegistration>
 	self
 		unregisterForNotifications;
 		registerInterestOnSystemChanges
@@ -496,9 +495,4 @@ MCWorkingCopy >> versionInfo [
 	^ self ancestors 
 		ifNotEmpty: [ :list | list first ] 
 		ifEmpty: [ nil ]
-]
-
-{ #category : 'accessing' }
-MCWorkingCopy >> versionInfo: aVersionInfo [
-	ancestry := MCWorkingAncestry new addAncestor: aVersionInfo
 ]

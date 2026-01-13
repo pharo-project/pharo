@@ -27,7 +27,7 @@ ReRemoveSharedVariablesDriver >> breakingChoices [
 { #category : 'execution' }
 ReRemoveSharedVariablesDriver >> browseSharedVariableReferences [
 
-	StMessageBrowser browse: refactoring violators
+	(Smalltalk tools toolNamed: #messageList) browse: refactoring violators
 ]
 
 { #category : 'configuration' }

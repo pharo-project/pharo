@@ -29,7 +29,6 @@ BaselineOfMorphicCore >> baseline: spec [
 			spec package: 'System-Caching'.
 			spec package: 'Graphics-Canvas'.
 			spec package: 'FormCanvas-Core'.
-			spec package: 'Tool-Registry'.
 			spec package: 'System-Model'.
 			spec package: 'FileSystem-Memory'.
 			spec package: 'FileSystem-Zip'.

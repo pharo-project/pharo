@@ -7,13 +7,12 @@ Class {
 }
 
 { #category : 'execution callback' }
-MetacelloScriptImageExecutor >> projectSpecSelectBlock [
-    ^ [ :projectSpec | 
-    projectSpec
-        ifNil: [ false ]
-        ifNotNil: [ 
-            MetacelloProjectRegistration
-                registrationForProjectSpec: projectSpec
-                ifAbsent: [ false ]
-                ifPresent: [ :existingRegistration :newRegistration | existingRegistration loadedInImage ] ] ]
+MetacelloScriptImageExecutor >> shouldBeExecutedFor: projectSpec [
+
+	projectSpec ifNil: [ ^ false ].
+
+	^ MetacelloProjectRegistration
+		  registrationForProjectSpec: projectSpec
+		  ifPresent: [ :existingRegistration | existingRegistration loadedInImage ]
+		  ifAbsent: [ false ]
 ]

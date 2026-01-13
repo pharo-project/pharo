@@ -27,8 +27,7 @@ ReRemoveInstanceVariablesDriver >> breakingChoices [
 { #category : 'execution' }
 ReRemoveInstanceVariablesDriver >> browseInstanceVariableReferences [
 
-	StMessageBrowser
-		browse: refactoring violators
+	(Smalltalk tools toolNamed: #messageList) browse: refactoring violators
 		
 ]
 

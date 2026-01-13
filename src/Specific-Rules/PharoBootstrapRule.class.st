@@ -40,7 +40,7 @@ PharoBootstrapRule >> basicCheck: aPackage [
 PharoBootstrapRule >> bootstrapPackages [
 	"This should probably be improved"
 
-	^ BaselineOfPharoBootstrap kernelPackageNames , #( 'AST-Core' )
+	^ BaselineOfKernel corePackageNames , #( 'AST-Core' )
 ]
 
 { #category : 'helpers' }

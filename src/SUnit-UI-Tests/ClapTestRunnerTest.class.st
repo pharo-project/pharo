@@ -178,10 +178,13 @@ ClapTestRunnerTest >> testTestRunnerIsCommandLineTestRunnerWhenNoXtermFlagPresen
 
 { #category : 'tests' }
 ClapTestRunnerTest >> testTestRunnerIsHDTestReporWhenJunitXmlOutput [
+	"If we do not restore the stage name, then it will be wrong to export the tests results"
 
-	| command |
-	context := ClapTestRunner commandSpecification activationWith: #('test' '--junit-xml-output' 'SUnit.*').
-	command := context command.
-	
-	self assert: command testRunner equals: HDTestReport
+	| command oldStageName |
+	oldStageName := HDTestReport currentStageName.
+	[
+		context := ClapTestRunner commandSpecification activationWith: #( 'test' '--junit-xml-output' 'SUnit.*' ).
+		command := context command.
+
+		self assert: command testRunner equals: HDTestReport ] ensure: [ HDTestReport currentStageName: oldStageName ]
 ]

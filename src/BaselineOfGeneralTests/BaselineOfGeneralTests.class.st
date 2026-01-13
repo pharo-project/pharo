@@ -16,19 +16,11 @@ BaselineOfGeneralTests >> baseline: spec [
 		spec
 			baseline: 'Debugging' with: [ spec loads: #Tests from: repository ];
 			package: 'NumberParser-Tests';
-			package: 'AST-Core-Tests';
-			package: 'Kernel-CodeModel-Tests';
-			package: 'Monticello-Tests';
-			package: 'MonticelloMocks';
 			package: 'Fuel-Core-Tests';
 			package: 'FormCanvas-Tests';
-			package: 'Collections-DoubleLinkedList-Tests';
 			package: 'Collections-Arithmetic-Tests';
 			package: 'Metacello-CommandLine-Tests';
-			baseline: 'Epicea' with: [
-				spec
-					repository: repository;
-					loads: #Tests ];
+			baseline: 'Epicea' with: [ spec loads: #Tests from: repository ];
 			package: 'FileSystem-Memory-Tests';
 			baseline: 'Fonts' with: [ spec loads: #Tests from: repository ];
 			baseline: 'FreeType' with: [ spec loads: #tests from: repository ];
@@ -40,7 +32,6 @@ BaselineOfGeneralTests >> baseline: spec [
 			package: 'NECompletion-Tests';
 
 			package: 'Regex-Core-Tests';
-			package: 'Ring-Definitions-Monticello-Tests';
 			package: 'Rubric-Tests';
 			package: 'ScriptingExtensions-Tests';
 			package: 'StartupPreferences-Tests';

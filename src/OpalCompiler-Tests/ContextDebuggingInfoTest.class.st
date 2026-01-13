@@ -88,6 +88,19 @@ ContextDebuggingInfoTest >> testTempNamed [
 ]
 
 { #category : 'tests' }
+ContextDebuggingInfoTest >> testTempNamedAtTheEndOfOptimizedBlock [
+	
+	| s process |
+	s := Semaphore new.
+	process := [ 1 to: 17 do: [ :i | 
+			s signal.
+			Processor activeProcess suspend ] ] fork.
+	s wait.
+	
+	self deny: (process suspendedContext temporaryVariableNames includes: #i)
+]
+
+{ #category : 'tests' }
 ContextDebuggingInfoTest >> testTempNamedPut [
 	| oneTemp |
 	oneTemp := 1.

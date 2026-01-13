@@ -9,8 +9,9 @@ To get the behavior I define, my users should implement:
 "
 Trait {
 	#name : 'TSortable',
-	#category : 'Kernel-Traits',
-	#package : 'Kernel-Traits'
+	#category : 'Kernel-Traits-Base',
+	#package : 'Kernel-Traits',
+	#tag : 'Base'
 }
 
 { #category : 'sorting' }

@@ -9,9 +9,8 @@ HelpBrowser openOn: AnnouncementsHelp
 Class {
 	#name : 'Announcement',
 	#superclass : 'Object',
-	#category : 'Announcements-Core-Base',
-	#package : 'Announcements-Core',
-	#tag : 'Base'
+	#category : 'Announcements-Core',
+	#package : 'Announcements-Core'
 }
 
 { #category : 'public' }
@@ -46,6 +45,12 @@ Announcement class >> handlesAnnouncement: anAnnouncement [
 Announcement class >> where: instancesFilterBlock [
 
 	^AnnouncementDeliveryCondition for: self where: instancesFilterBlock
+]
+
+{ #category : 'critics' }
+Announcement >> affectsCritiques [
+	"Critiques are very abstract concept. Any change can affect critique of arbitrary object"
+	^true
 ]
 
 { #category : 'converting' }

@@ -51,6 +51,9 @@ RBAddParameterTransformation >> applicabilityPreconditions [
 				ifFalse:
 					[ self refactoringError: newSelector printString,
 					' doesn''t have the proper number of arguments.'].
+			permutation size = newSelector numArgs ifFalse: [ 
+				self refactoringError: newSelector printString
+					, ' doesn''t have the proper number of permutations.' ].
 			self newArgs do: [	:arg | self verifyInitializationExpressionOf: arg argValue ].
 			true]) }
 ]

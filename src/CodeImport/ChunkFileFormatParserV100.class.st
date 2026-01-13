@@ -70,7 +70,8 @@ ChunkFileFormatParserV100 >> parseAndValidateVersion [
 	If the file has a version tag as a doIt chunk, validate it.
 	"
 	
-	| firstChunk prefix versionNumber |
+	| firstChunk prefix versionNumber oldPosition |
+	oldPosition := readStream position.
 	firstChunk := readStream next.
 	
 	"Cases for old files:
@@ -86,7 +87,7 @@ ChunkFileFormatParserV100 >> parseAndValidateVersion [
 	prefix := '"VERSION:'.
 	(firstChunk beginsWith: prefix)
 		ifFalse: [ 
-			readStream reset.
+			readStream position: oldPosition.
 			^ self ].
 
 	versionNumber := ((firstChunk allButFirst: prefix size)
@@ -98,11 +99,11 @@ ChunkFileFormatParserV100 >> parseAndValidateVersion [
 				stream := e readStream.
 				version := (NumberParser on: stream)
 					failBlock: [ 
-						readStream reset.
+						readStream position: oldPosition.
 						^ self ];
 					nextIntegerBase: 10.
 				stream atEnd ifFalse: [ 
-					readStream reset.
+					readStream position: oldPosition.
 					^ self ].
 				version ] as: Array.
 	

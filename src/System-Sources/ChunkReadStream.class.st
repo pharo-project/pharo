@@ -29,6 +29,12 @@ ChunkReadStream >> next [
 	^ out contents
 ]
 
+{ #category : 'accessing' }
+ChunkReadStream >> position: anInteger [
+
+	decoratedStream position: anInteger
+]
+
 { #category : 'initialization' }
 ChunkReadStream >> reset [
 	decoratedStream reset

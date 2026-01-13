@@ -165,15 +165,6 @@ CompiledCode >> accessesField: varIndex [
 ]
 
 { #category : 'scanning' }
-CompiledCode >> accessesRef: literalVariable [
-	"Answer whether this method accesses the LiteralVariable"
-	"we do not need to call readsRef: or #writesRef:, as if the variable
-	is stored as a Literal, it will be accessed. This check is much faster"
-
-	^ self hasLiteral: literalVariable
-]
-
-{ #category : 'scanning' }
 CompiledCode >> accessesSlot: aSlot [
 	^aSlot isAccessedIn: self
 ]
@@ -400,6 +391,7 @@ CompiledCode >> hasSelector: selector specialSelectorIndex: specialOrNil [
 	 If you do, you may call this method directly to avoid recomputing
 	 the special selector index all the time.
 	 I traverse the method and all the compiled blocks in the literals"
+	
 	(self refersToLiteral: selector) ifTrue: [ ^ true ].
 	"refersToLiteral: traverses all blocks, but only for non-special literals"
 	specialOrNil ifNil: [ ^ false ].

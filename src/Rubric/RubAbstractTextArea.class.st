@@ -747,7 +747,7 @@ RubAbstractTextArea >> deselect [
 { #category : 'event handling' }
 RubAbstractTextArea >> doubleClick: anEvent [
 
-	model interactionModel reactToRubTextAreaDoubleClick: anEvent. 
+	model ifNotNil: [ model interactionModel reactToRubTextAreaDoubleClick: anEvent ].
 	^ self handleEdit: [ self editor doubleClick: anEvent ]
 ]
 

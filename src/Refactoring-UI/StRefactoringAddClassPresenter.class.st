@@ -62,17 +62,17 @@ StRefactoringAddClassPresenter >> initializeClassNamePresenter [
 StRefactoringAddClassPresenter >> initializeCommentPresenter [
 
 	useTemplateCheckPresenter := self newCheckBox
-		state: false;
-		help: 'When checked, the comment will be prefilled with a generic class comment';
-		label: 'Use comment template';
-		whenActivatedDo: [ commentPresenter text: driver superclass classCommentBlank  ];
-		whenDeactivatedDo: [ commentPresenter text: String empty ];
-		yourself.
+		                             state: false;
+		                             help: 'When checked, the comment will be prefilled with a generic class comment';
+		                             label: 'Use comment template';
+		                             whenActivatedDo: [ commentPresenter text: driver superclass classCommentBlank ];
+		                             whenDeactivatedDo: [ commentPresenter text: String empty ];
+		                             yourself.
 	commentPresenter := self newText
-		beWrapWord;
-		placeholder: 'A comment for your new class';
-		whenTextChangedDo: [ : text | driver comment: commentPresenter text trimmed ];
-		yourself.
+		                    beWrapWord;
+		                    placeholder: 'A comment for your new class';
+		                    whenTextChangedDo: [ :text | driver comment: commentPresenter text trimBoth ];
+		                    yourself
 ]
 
 { #category : 'initialization' }

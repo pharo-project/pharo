@@ -9,6 +9,13 @@ Class {
 	#tag : 'Manifest'
 }
 
+{ #category : 'meta-data - dependency analyser' }
+ManifestRandomCore class >> manuallyResolvedDependencies [
+
+	<ignoreForCoverage>
+	^ #(#'System-NumberPrinting' #NumberParser)
+]
+
 { #category : 'accessing' }
 ManifestRandomCore class >> packageName [
 	^ 'Random-Core'

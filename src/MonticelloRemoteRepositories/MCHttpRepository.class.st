@@ -118,12 +118,11 @@ MCHttpRepository class >> urlSchemes [
 ]
 
 { #category : 'converting' }
-MCHttpRepository >> asRepositorySpecFor: aMetacelloMCProject [
+MCHttpRepository >> asRepositorySpec [
 
-	^(aMetacelloMCProject repositorySpec)
-		description:  self description;
-	 	type: 'http';
-		yourself
+	^ (MetacelloRepositorySpec description: self description)
+		  type: 'http';
+		  yourself
 ]
 
 { #category : 'private' }

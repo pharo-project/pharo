@@ -350,6 +350,11 @@ FileSystemDirectoryEntry >> readStream [
 	^ reference readStream
 ]
 
+{ #category : 'delegate' }
+FileSystemDirectoryEntry >> readStreamDo: aBlock [
+    ^ reference readStreamDo: aBlock
+]
+
 { #category : 'accessing' }
 FileSystemDirectoryEntry >> reference [
 	^ reference
