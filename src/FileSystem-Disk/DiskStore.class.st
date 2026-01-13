@@ -445,6 +445,13 @@ DiskStore >> gidOf: aPath [
 	^File fileAttribute: (self stringFromPath: aPath) number: 7
 ]
 
+{ #category : 'accessing' }
+DiskStore >> handleClass [
+	^ (Smalltalk globals at: #FileAPI ifAbsent: [ nil ])
+		ifNil: [ FileHandle ]
+		ifNotNil: [ :fileAPI | fileAPI currentFileClass ]
+]
+
 { #category : 'comparing' }
 DiskStore >> hash [
 	^ self species hash
