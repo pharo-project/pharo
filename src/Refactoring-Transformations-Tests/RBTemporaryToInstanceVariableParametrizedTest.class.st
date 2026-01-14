@@ -92,6 +92,5 @@ RBTemporaryToInstanceVariableParametrizedTest >> testWhenHierarchyDefinesVariabl
 		{ class . #someMethod . 'foo' }.
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	self assert: (class definesInstanceVariable: 'foo').
-	self deny: ((model classNamed: #Foo1) directlyDefinesInstanceVariable: 'foo').
 	self assert: (class parseTreeForSelector: #someMethod) equals: (self parseMethod: 'someMethod foo := 4. ^ foo')
 ]

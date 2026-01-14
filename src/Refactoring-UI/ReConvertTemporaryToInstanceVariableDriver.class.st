@@ -51,7 +51,7 @@ ReConvertTemporaryToInstanceVariableDriver >> browseMethodsDescription [
 { #category : 'actions' }
 ReConvertTemporaryToInstanceVariableDriver >> browseReferences [
 
-	(application toolNamed: #browser) browseClasses: (class allSubclasses select: [ :cls | cls hasInstVarNamed: variable ])
+	(application toolNamed: #messageList) browseClasses: (class allSubclasses select: [ :cls | cls hasInstVarNamed: variable ]) 
 ]
 
 { #category : 'instance creation' }
