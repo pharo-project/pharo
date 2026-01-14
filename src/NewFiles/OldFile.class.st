@@ -61,8 +61,9 @@ OldFile class >> open: aReference writable: isWriteable [
 { #category : 'primitives - files' }
 OldFile class >> openAlways: path [
 
-	| handle |
-	handle := File open: path writable: true.
+	| encoded handle |
+	encoded := File encodePathString: path.
+	handle := File open: encoded writable: true.
 	self checkHandle: handle forPath: path.
 	^ self makeWithHandle: handle forWrite: true
 ]
@@ -70,8 +71,9 @@ OldFile class >> openAlways: path [
 { #category : 'primitives - files' }
 OldFile class >> openCreateAlways: path [
 
-	| handle |
-	handle := File open: path writable: true.
+	| encoded handle |
+	encoded := File encodePathString: path.
+	handle := File open: encoded writable: true.
 	self checkHandle: handle forPath: path.
 	File truncate: handle to: 0.
 	^ self makeWithHandle: handle forWrite: true
@@ -79,8 +81,9 @@ OldFile class >> openCreateAlways: path [
 
 { #category : 'primitives - files' }
 OldFile class >> openReadOnly: path [
-	| handle |
-	handle := File open: path writable: false.
+	| encoded handle |
+	encoded := File encodePathString: path.
+	handle := File open: encoded writable: false.
 	self checkHandle: handle forPath: path.
 	^ self makeWithHandle: handle forWrite: false
 ]

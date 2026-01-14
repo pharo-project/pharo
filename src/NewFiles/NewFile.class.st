@@ -46,8 +46,9 @@ NewFile class >> finalizeResourceData: aHandle [
 
 { #category : 'file open' }
 NewFile class >> open: path mode: mode creationDisposition: creationDisposition flags: flags [
-	| handle file |
-	handle := self primitiveOpen: path mode: mode creationDisposition: creationDisposition flags: flags.
+	| encoded handle file |
+	encoded := File encodePathString: path.
+	handle := self primitiveOpen: encoded mode: mode creationDisposition: creationDisposition flags: flags.
 	handle isNull ifTrue: [ ^ nil ].
 
 	file := self fromHandle: handle.
