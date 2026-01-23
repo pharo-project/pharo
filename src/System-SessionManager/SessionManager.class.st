@@ -156,6 +156,7 @@ SessionManager class >> initializeKernelRegistrations [
 		registerSystemClassNamed: #ExternalObject atPriority: 60;
 		registerSystemClassNamed: #FFIBackend atPriority: 60;
 		registerSystemClassNamed: #File atPriority: 90;
+		registerSystemClassNamed: #SmalltalkImage atPriority: 90;
 		registerSystemClassNamed: #FinalizationProcess;
 		registerSystemClassNamed: #Stdio;
 		registerSystemClassNamed: #Symbol

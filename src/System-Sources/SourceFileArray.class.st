@@ -38,13 +38,6 @@ SourceFileArray class >> default: anInstance [
 	Default := anInstance
 ]
 
-{ #category : 'system startup' }
-SourceFileArray class >> ensureSourceFilesCreated [
-	
-	PharoFilesOpener default locateSources ensureSourceFileCreated.
-	PharoFilesOpener default locateChanges ensureSourceFileCreated.
-]
-
 { #category : 'class initialization' }
 SourceFileArray class >> initialize [
 
@@ -56,6 +49,16 @@ SourceFileArray class >> initialize [
 	"This next line is to add a deprecated global variable. The deprecation happened in Pharo 14 development. We can remove it completly in the future."
 	self class environment at: #SourceFiles put: self default.
 	(self class environment bindingOf: #SourceFiles) isDeprecated: true
+]
+
+{ #category : 'initialization' }
+SourceFileArray class >> reset [
+	"I am called if the image has changed of location."
+
+	<script>
+	self default
+		close;
+		openSourceFiles
 ]
 
 { #category : 'system startup' }
@@ -71,8 +74,9 @@ SourceFileArray class >> shutDown: isImageClosing [
 SourceFileArray class >> startUp: resuming [
 
 	resuming ifTrue: [
-			self default registerToAnnouncements.
-			Smalltalk openSourceFiles ]
+			self default
+				registerToAnnouncements;
+				openSourceFiles ]
 ]
 
 { #category : 'accessing' }
@@ -117,6 +121,15 @@ SourceFileArray >> commentDataPointers [
 { #category : 'public - string reading' }
 SourceFileArray >> commentTimeStampAt: sourcePointer [
 	^self timeStampAt: sourcePointer for: self commentDataPointers
+]
+
+{ #category : 'public - file system operations' }
+SourceFileArray >> copyChangesTo: newNameWithoutSuffix [
+
+	(self changesFileStream isNil or: [ self changesFileStream closed ]) ifFalse: [
+			self
+				close;
+				saveChangesInFileNamed: (self fullNameForChangesNamed: newNameWithoutSuffix) ]
 ]
 
 { #category : 'private' }
@@ -168,6 +181,13 @@ SourceFileArray >> ensureOpen [
 	files := Array with: aSourcesFile with: aChangesFile.
 
 	readOnlyQueue := SharedQueue new
+]
+
+{ #category : 'system startup' }
+SourceFileArray >> ensureSourceFilesCreated [
+
+	PharoFilesOpener default locateSources ensureSourceFileCreated.
+	PharoFilesOpener default locateChanges ensureSourceFileCreated
 ]
 
 { #category : 'accessing' }
@@ -229,6 +249,12 @@ SourceFileArray >> forceChangesToDisk [
 	changesFile close.
 	changesFile tryOpen.
 	changesFile setToEnd
+]
+
+{ #category : 'private' }
+SourceFileArray >> fullNameForChangesNamed: aString [
+
+	^ ((Smalltalk imageDirectory resolve: aString) , '.changes') fullName
 ]
 
 { #category : 'public - string reading' }
@@ -298,6 +324,14 @@ SourceFileArray >> newWriter [
 	^ SourceFileWriter new
 		  sourceFile: self;
 		  yourself
+]
+
+{ #category : 'system startup' }
+SourceFileArray >> openSourceFiles [
+
+	self
+		ensureSourceFilesCreated;
+		ensureOpen
 ]
 
 { #category : 'public - string reading' }
@@ -436,6 +470,19 @@ SourceFileArray >> reportString [
 		{ self sourcesFileStream. self changesFileStream }
 			do: [:each | each ifNotNil: [
 				aStream nextPutAll: each printString; cr ] ] ]
+]
+
+{ #category : 'private' }
+SourceFileArray >> saveChangesInFileNamed: aString [
+	| changesFile |
+	changesFile := aString asFileReference.
+	changesFile parent ensureCreateDirectory.
+	
+	"Ensure that the destination file is not the same as the original one"
+	(Smalltalk changesFile absolutePath = changesFile absolutePath)
+		ifFalse: [
+			changesFile deleteIfAbsent: [  ].
+			Smalltalk changesFile copyTo: changesFile ]
 ]
 
 { #category : 'public - string reading' }

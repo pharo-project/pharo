@@ -64,7 +64,7 @@ PharoSourcesCondenser >> newSourceNamed: aString [
 	
 	originalSourcesFile copyTo: newSourcesFile.
 	"Use the new sources file"
-	Smalltalk openSourceFiles
+	SourceFileArray default openSourceFiles
 ]
 
 { #category : 'accessing' }

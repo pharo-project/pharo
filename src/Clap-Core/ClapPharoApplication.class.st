@@ -89,14 +89,10 @@ ClapPharoApplication >> pharoVersionContext [
 
 { #category : 'execution' }
 ClapPharoApplication >> prepareImage [
-	self positional: #rename ifPresent: [ :rename | 
-		| imageFile |
-		imageFile := rename value asFileReference.
-		self flag: 'check if it already exists & not same as current'.
-		Smalltalk image
-				changeImagePathTo: imageFile;
-				closeSourceFiles;
-				openSourceFiles ]
+
+	self positional: #rename ifPresent: [ :rename |
+			self flag: 'check if it already exists & not same as current'.
+			Smalltalk changeImagePathTo: rename value asFileReference ]
 ]
 
 { #category : 'execution' }

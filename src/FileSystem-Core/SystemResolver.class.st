@@ -38,8 +38,9 @@ SystemResolver class >> userLocalDirectory: aFileReferenceOrPathName [
 
 { #category : 'origins' }
 SystemResolver >> changes [
+
 	<origin>
-	^ self image withExtension: Smalltalk changesSuffix
+	^ self image withExtension: '.changes'
 ]
 
 { #category : 'origins' }

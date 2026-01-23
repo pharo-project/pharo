@@ -71,6 +71,12 @@ SmalltalkImage class >> new [
 	self error: 'Use current'
 ]
 
+{ #category : 'system startup' }
+SmalltalkImage class >> startUp: imageStarting [
+
+	imageStarting ifTrue: [ self current updateLastImagePath ]
+]
+
 { #category : 'image' }
 SmalltalkImage class >> wordSize [
 	^ Smalltalk vm wordSize
@@ -194,27 +200,16 @@ SmalltalkImage >> backupImageInFileNamed: aFileReference [
 	Note: This method does not save the .changes file, use #saveAs:"
 
 	| imageFile previousFullImageName snapshotReturn |
-
 	imageFile := aFileReference asFileReference.
 	imageFile parent ensureCreateDirectory.
 	previousFullImageName := self imagePath.
 
-	[
-		"change to the new image name "
-		self
-			changeImagePathTo: imageFile fullName;
-			closeSourceFiles;
-			openSourceFiles.  "so SNAPSHOT appears in new changes file"
+	[ "change to the new image name "
+		self changeImagePathTo: imageFile fullName.
 
-		snapshotReturn := self snapshot: true andQuit: false.
-	] ensure: [
-		snapshotReturn isImageStarting ifFalse: [
-			"unlike #saveImageInFileNamed: we do NOT continue in the new image"
-			"switch back to the old image"
-			self
-				changeImagePathTo: previousFullImageName;
-				closeSourceFiles;
-				openSourceFiles ]].
+		snapshotReturn := self snapshot: true andQuit: false ] ensure: [
+			snapshotReturn isImageStarting ifFalse: [ "unlike #saveImageInFileNamed: we do NOT continue in the new image" "switch back to the old image"
+				self changeImagePathTo: previousFullImageName ] ].
 
 	^ snapshotReturn
 ]
@@ -226,13 +221,10 @@ SmalltalkImage >> backupTo: newNameWithoutSuffix [
 	Results:
 		true  when continuing in the new session
 		false for the current session"
-	(SourceFileArray default changesFileStream isNil or: [ SourceFileArray default changesFileStream closed ])
-    ifFalse: [
-		self
-			closeSourceFiles; "so copying the changes file will always work"
-			saveChangesInFileNamed: (self fullNameForChangesNamed: newNameWithoutSuffix)].
 
-	^self backupImageInFileNamed: (self fullNameForImageNamed: newNameWithoutSuffix)
+	SourceFileArray default copyChangesTo: newNameWithoutSuffix.
+
+	^ self backupImageInFileNamed: (self fullNameForImageNamed: newNameWithoutSuffix)
 ]
 
 { #category : 'to clean later' }
@@ -256,16 +248,12 @@ SmalltalkImage >> bytesLeft: aBool [
 	^self primBytesLeft
 ]
 
-{ #category : 'image, changes name' }
+{ #category : 'image' }
 SmalltalkImage >> changeImagePathTo: aString [
 
 	self imagePath: aString.
-	LastImagePath := self imagePath
-]
-
-{ #category : 'image, changes name' }
-SmalltalkImage >> changesSuffix [
-	^ 'changes'
+	LastImagePath := self imagePath.
+	SourceFileArray reset "We reset in case the source manager needs to update itself when we change of location"
 ]
 
 { #category : 'class and trait names' }
@@ -363,13 +351,6 @@ SmalltalkImage >> closeLog: logger [
 	we should delegate to it at some point "
 
 	logger ifNotNil: [ logger close ]
-]
-
-{ #category : 'sources, change log' }
-SmalltalkImage >> closeSourceFiles [
-	"Shut down the source files if appropriate."
-
-	SourceFileArray default close
 ]
 
 { #category : 'system attribute' }
@@ -534,13 +515,7 @@ SmalltalkImage >> extractParameters [
 	^dict
 ]
 
-{ #category : 'image, changes name' }
-SmalltalkImage >> fileForChangesNamed: aString [
-
-	^(self imageDirectory resolve: aString), self changesSuffix
-]
-
-{ #category : 'image, changes name' }
+{ #category : 'image' }
 SmalltalkImage >> fileForImageNamed: aString [
 
 	^(self imageDirectory resolve: aString), self imageSuffix
@@ -611,13 +586,7 @@ SmalltalkImage >> flushClassNameCache [
 	globals flushClassNameCache
 ]
 
-{ #category : 'image, changes name' }
-SmalltalkImage >> fullNameForChangesNamed: aString [
-
-	^(self fileForChangesNamed: aString) fullName
-]
-
-{ #category : 'image, changes name' }
+{ #category : 'image' }
 SmalltalkImage >> fullNameForImageNamed: aString [
 
 	^(self fileForImageNamed: aString) fullName
@@ -682,7 +651,7 @@ SmalltalkImage >> image [
 	^self
 ]
 
-{ #category : 'image, changes name' }
+{ #category : 'image' }
 SmalltalkImage >> imageDirectory [
 	"Answer the directory containing the current image."
 
@@ -703,7 +672,7 @@ SmalltalkImage >> imageFormatVersion [
 	^''
 ]
 
-{ #category : 'image, changes name' }
+{ #category : 'image' }
 SmalltalkImage >> imagePath [
 	"Answer the full path name for the current image."
 
@@ -712,14 +681,14 @@ SmalltalkImage >> imagePath [
 	^ self primImagePath asByteArray utf8Decoded
 ]
 
-{ #category : 'image, changes name' }
+{ #category : 'image' }
 SmalltalkImage >> imagePath: newPath [
 	"Set the the full path name for the current image.  All further snapshots will use this."
 
 	self primImagePath: newPath utf8Encoded asString
 ]
 
-{ #category : 'image, changes name' }
+{ #category : 'image' }
 SmalltalkImage >> imageSuffix [
 	^ 'image'
 ]
@@ -1050,17 +1019,6 @@ SmalltalkImage >> openLog [
 		encoding: 'utf8')] on: FileException do: [ NullStream new ]
 ]
 
-{ #category : 'sources, change log' }
-SmalltalkImage >> openSourceFiles [
-
-
-	self imagePath = LastImagePath ifFalse: [ "Reset the author full name to blank when the image gets moved"
-		LastImagePath := self imagePath ].
-
-	SourceFiles class ensureSourceFilesCreated.
-	SourceFiles ensureOpen
-]
-
 { #category : 'system attribute' }
 SmalltalkImage >> optionAt: i [
 	"Answer the i-th option of the command line, or nil if not so many options."
@@ -1258,12 +1216,7 @@ SmalltalkImage >> saveAs: newNameWithoutSuffix [
 		false for the current session "
 
 	newNameWithoutSuffix ifNil: [ ^ self ].
-  (SourceFileArray default changesFileStream isNil or: [ SourceFileArray default changesFileStream closed ])
-    ifFalse: [
-		self closeSourceFiles.
-		self saveChangesInFileNamed: (self fullNameForChangesNamed: newNameWithoutSuffix)
-		"so copying the changes file will always work" ].
-
+	SourceFileArray default copyChangesTo: newNameWithoutSuffix.
 	^ self saveImageInFileNamed: (self fullNameForImageNamed: newNameWithoutSuffix)
 ]
 
@@ -1275,27 +1228,9 @@ SmalltalkImage >> saveAsNewVersion [
 
 	| newImageFile strippedName |
 	newImageFile := self imageFile nextVersion.
-	(newImageFile withExtension: self changesSuffix) ifExists: [ :newChangesFile |
-			^ InformativeNotification signal: 'There is already .changes file of the desired name,
-' , newChangesFile fullName , '
-curiously already present, even though there is
-no corresponding .' , self imageSuffix , ' file.   Please remedy
-manually and then repeat your request.' ].
 
 	strippedName := self stripImageExtensionFrom: newImageFile fullName.
 	^ self saveAs: strippedName
-]
-
-{ #category : 'saving' }
-SmalltalkImage >> saveChangesInFileNamed: aString [
-	| changesFile |
-	changesFile := aString asFileReference.
-	changesFile parent ensureCreateDirectory.
-	"Ensure that the destination file is not the same as the original one"
-	(Smalltalk changesFile absolutePath = changesFile absolutePath)
-		ifFalse: [
-			changesFile deleteIfAbsent: [  ].
-			Smalltalk changesFile copyTo: changesFile ]
 ]
 
 { #category : 'saving' }
@@ -1305,15 +1240,11 @@ SmalltalkImage >> saveImageInFileNamed: aFile [
 	Note: This method does not save the .changes file, use #saveAs:"
 
 	| imageFile |
-
-	imageFile := aFile  asFileReference.
+	imageFile := aFile asFileReference.
 	imageFile parent ensureCreateDirectory.
 
-	^self
-		changeImagePathTo: imageFile fullName;
-		closeSourceFiles;
-		openSourceFiles;  "so SNAPSHOT appears in new changes file"
-		snapshot: true andQuit: false
+	self changeImagePathTo: imageFile fullName.
+	^ self snapshot: true andQuit: false
 ]
 
 { #category : 'saving' }
@@ -1323,17 +1254,12 @@ SmalltalkImage >> saveSession [
 	^ self snapshot: true andQuit: false
 ]
 
-{ #category : 'image, changes name' }
+{ #category : 'image' }
 SmalltalkImage >> shortImageName [
 	"Answer the current image name but only that name and not the full path as with imageName."
 	"SmalltalkImage current shortImageName"
 
 	^ self imageFile basename
-]
-
-{ #category : 'snapshot and quit' }
-SmalltalkImage >> shutDown [
-	^ self closeSourceFiles
 ]
 
 { #category : 'memory space' }
@@ -1448,6 +1374,12 @@ SmalltalkImage >> unregisterExternalObject: anObject [
 	ExternalSemaphoreTable unregisterExternalObject: anObject
 ]
 
+{ #category : 'image' }
+SmalltalkImage >> updateLastImagePath [
+
+	LastImagePath := self imagePath
+]
+
 { #category : 'accessing' }
 SmalltalkImage >> vm [
 	"Answer the object to query about virtual machine."
@@ -1455,12 +1387,12 @@ SmalltalkImage >> vm [
 	^ vm ifNil: [vm := VirtualMachine new]
 ]
 
-{ #category : 'image, changes name' }
+{ #category : 'image' }
 SmalltalkImage >> vmBinary [
 	^ self vm binary
 ]
 
-{ #category : 'image, changes name' }
+{ #category : 'image' }
 SmalltalkImage >> vmDirectory [
 	^ self vm directory
 ]
