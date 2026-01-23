@@ -72,6 +72,7 @@ CoASTHeuristicsResultSetBuilder class >> initializeSymbolHeuristic [
 CoASTHeuristicsResultSetBuilder class >> initializeVariablesHeuristic [
 
 	VariablesHeuristic := OrderedCollection <- {
+									CoVocabularyHeuristic new. 
 		                      CoLocalScopeVariablesHeuristic new.
 		                      CoWorkspaceVariablesHeuristic new.
 		                      CoInstanceAccessibleVariablesHeuristic new.

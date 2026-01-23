@@ -81,6 +81,11 @@ NECEntry >> contents [
 ]
 
 { #category : 'accessing' }
+NECEntry >> contents: aString [
+	contents := aString
+]
+
+{ #category : 'accessing' }
 NECEntry >> contents: aString node: aNode [
 
 	contents := aString.

@@ -642,6 +642,7 @@ NECMenuMorph >> selectIndexAtPoint: aPoint [
 
 { #category : 'accessing' }
 NECMenuMorph >> selectedEntry [
+	
 	^ context entries at: self selectedIndex
 ]
 
