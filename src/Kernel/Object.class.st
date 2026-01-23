@@ -744,7 +744,8 @@ Object >> doesNotUnderstand: aMessage [
 		message: aMessage;
 		receiver: self.
 	resumeValue := exception signal.
-	^exception reachedDefaultHandler
+		
+	^exception hasToResend 
 		ifTrue: [aMessage sentTo: self]
 		ifFalse: [resumeValue]
 ]
