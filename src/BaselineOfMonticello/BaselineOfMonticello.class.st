@@ -40,7 +40,6 @@ BaselineOfMonticello >> baseline: spec [
 			
 			package: 'Network-Kernel';
 			package: 'Network-Protocols';
-			package: 'Network-MIME';
 			package: 'Zinc-Resource-Meta-Core';
 			package: 'Zinc-HTTP';
 			package: 'MonticelloRemoteRepositories';
@@ -57,6 +56,6 @@ BaselineOfMonticello >> baseline: spec [
 
 		spec 
 			group: 'Core' with: #('Ring-Definitions-Core' 'Ring-OldChunkImporter' 'Jobs' 'Random-Core' 'System-Hashing' 'Compression' 'Monticello-Model' 'Monticello' 'STON-Core' 'MonticelloFileTree-Core' 'Ring-Definitions-Monticello');
-			group: 'RemoteRepositories' with: #( 'Network-Kernel' 'Network-Protocols' 'Network-MIME' 'Zinc-Resource-Meta-Core' 'Zinc-HTTP' 'MonticelloRemoteRepositories' 'Zodiac-Core' );
+			group: 'RemoteRepositories' with: #( 'Network-Kernel' 'Network-Protocols' 'Zinc-Resource-Meta-Core' 'Zinc-HTTP' 'MonticelloRemoteRepositories' 'Zodiac-Core' );
 			group: 'Tests' with: #( 'Compression-Tests' 'Jobs-Tests' 'Random-Tests' 'Ring-Definitions-Core-Tests' 'Monticello-Tests' 'MonticelloMocks' 'Ring-Definitions-Monticello-Tests' 'Ring-Definitions-Tests-Containers') ].
 ]
