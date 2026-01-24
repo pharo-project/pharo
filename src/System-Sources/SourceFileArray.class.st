@@ -254,7 +254,7 @@ SourceFileArray >> forceChangesToDisk [
 { #category : 'private' }
 SourceFileArray >> fullNameForChangesNamed: aString [
 
-	^ ((Smalltalk imageDirectory resolve: aString) , '.changes') fullName
+	^ ((Smalltalk imageDirectory resolve: aString) , 'changes') fullName
 ]
 
 { #category : 'public - string reading' }
