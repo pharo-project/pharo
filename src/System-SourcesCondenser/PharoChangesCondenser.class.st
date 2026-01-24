@@ -181,13 +181,12 @@ PharoChangesCondenser >> swapSourcePointerOfMethod: method [
 
 { #category : 'private - 2 swapping' }
 PharoChangesCondenser >> swapSourcePointers [
-	job
-		title: 'Swapping source pointers';
-		currentValue: 0.
+
+	job currentValue: 0 title: 'Swapping source pointers'.
 
 	Smalltalk allClassesAndTraitsDo: [ :classOrTrait |
-		job increment.
-		self swapSourcePointerOfClassOrTrait: classOrTrait ]
+			job increment.
+			self swapSourcePointerOfClassOrTrait: classOrTrait ]
 ]
 
 { #category : 'accessing' }

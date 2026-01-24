@@ -433,7 +433,7 @@ OCRengineTest >> testVariableOfInBranchesAndOut [
 	| ast resultingNode |
 	ast := OCParser parseMethod: 'whoDefines: aVar
 	| each | 
-	^ aVar isZero
+	aVar isZero
 		ifTrue: [  
 			| each |
 			each := 2.

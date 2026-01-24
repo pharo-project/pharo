@@ -109,14 +109,10 @@ OCCompilerTest >> testErrorOrders [
 
 	| ast notices |
 	ast := OpalCompiler new parse: 'foo | b | ^ a + ¿. 5 "what'.
-	notices := ast allNotices sorted
-		           collect: [ :e |
-		           e position asString , ':' , e messageText ]
-		           as: Array.
+	notices := ast allNotices sorted collect: [ :e | e position asString , ':' , e messageText ] as: Array.
 	self
 		assertCollection: notices
-		equals: #( '17:Unknown character' '27:Unmatched " in comment.'
-			   '13:Undeclared variable named a in foo' '7:Unused variable' '20:Unreachable statement' )
+		equals: #( '17:Unknown character' '27:Unmatched " in comment.' '13:Undeclared variable named a in foo' '20:Unreachable statement' '7:Unused variable' )
 ]
 
 { #category : 'tests - shadowing' }

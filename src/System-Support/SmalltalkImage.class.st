@@ -1018,7 +1018,6 @@ SmalltalkImage >> openLog [
 				yourself)
 		encoding: 'utf8')] on: FileException do: [ NullStream new ]
 ]
-
 { #category : 'system attribute' }
 SmalltalkImage >> optionAt: i [
 	"Answer the i-th option of the command line, or nil if not so many options."

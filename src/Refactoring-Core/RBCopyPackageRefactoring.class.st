@@ -59,19 +59,16 @@ RBCopyPackageRefactoring >> applicabilityPreconditions [
 { #category : 'preconditions' }
 RBCopyPackageRefactoring >> changeReferencesOf: classes with: copyClasses [
 
-	[ : job |
+	[ :job |
 		| jobIndex |
 		jobIndex := 1.
 		job max: classes size.
 		classes with: copyClasses do: [ :cls :copiedClass |
-			| rbClass |
-			job
-				currentValue: jobIndex;
-				title: 'Changing reference of ' , copiedClass printString.
-			rbClass := self model classNamed: cls.
-			self renameReferencesOf: rbClass with: copiedClass.
-			jobIndex := jobIndex + 1 ]
-	] asJob run
+				| rbClass |
+				job currentValue: jobIndex title: 'Changing reference of ' , copiedClass printString.
+				rbClass := self model classNamed: cls.
+				self renameReferencesOf: rbClass with: copiedClass.
+				jobIndex := jobIndex + 1 ] ] asJob run
 ]
 
 { #category : 'accessing' }
@@ -152,21 +149,22 @@ RBCopyPackageRefactoring >> renameReferencesOf: aClass1 with: aClass2 [
 ]
 
 { #category : 'preconditions' }
-RBCopyPackageRefactoring >> reparent: classes  with: copyClasses [
+RBCopyPackageRefactoring >> reparent: classes with: copyClasses [
 
-	[ : job | | jobIndex subclasses dict |
+	[ :job |
+		| jobIndex subclasses dict |
 		jobIndex := 1.
 		dict := Dictionary newFromKeys: classes andValues: copyClasses.
 		subclasses := copyClasses
-			collect: [ :cls | self model classNamed: cls]
-			thenSelect: [ :rb | classes includes: rb superclass name ].
+			              collect: [ :cls | self model classNamed: cls ]
+			              thenSelect: [ :rb | classes includes: rb superclass name ].
 		subclasses do: [ :cls |
-			self model reparentClasses: { cls } to: (self model classNamed: (dict at: cls superclass name)).
-			job
-				currentValue: jobIndex;
-				title: (String streamContents: [ : stream | stream << 'Reparent class '; << cls printString ]).
-			jobIndex := jobIndex + 1 ]
-		] asJob run
+				self model reparentClasses: { cls } to: (self model classNamed: (dict at: cls superclass name)).
+				job currentValue: jobIndex title: (String streamContents: [ :stream |
+							 stream
+								 << 'Reparent class ';
+								 << cls printString ]).
+				jobIndex := jobIndex + 1 ] ] asJob run
 ]
 
 { #category : 'storing' }

@@ -57,7 +57,10 @@ MetacelloBaselineConstructor >> baseline: aString [
 
 { #category : 'api' }
 MetacelloBaselineConstructor >> baseline: aString with: aBlock [
-	"Alias to make baselines more explicits and backward compatible"
+	"Alias to make baselines more explicits and backward compatible.
+	
+	I allow to decalre a dependency to a project. The string will be the project name. In the block some things can be set such as the repository, the things to load (using #loads:) and other parameters.
+	By default if the #className is not defined, it will use BaselineOf{nameOfTheProject}."
 
 	^ self project: aString with: aBlock
 ]
@@ -116,7 +119,9 @@ MetacelloBaselineConstructor >> file: aString [
 
 { #category : 'api' }
 MetacelloBaselineConstructor >> for: attributeListOrSymbol do: aBlock [
-	"conditional version support"
+	"conditional version support.
+	
+	The block will be executed only if the attribute list has one attribute matches an attribute of the current load."
 
 	(attributeListOrSymbol isSymbol
 		 ifTrue: [ { attributeListOrSymbol } ]
@@ -132,6 +137,7 @@ MetacelloBaselineConstructor >> for: attributeListOrSymbol version: aString [
 
 { #category : 'api' }
 MetacelloBaselineConstructor >> group: aString overrides: aStringOrCollection [
+	"Define a groupe to replace an existing group"
 
 	self root packagesSpec add: (self project groupSpec
 			 name: aString;
@@ -141,6 +147,7 @@ MetacelloBaselineConstructor >> group: aString overrides: aStringOrCollection [
 
 { #category : 'api' }
 MetacelloBaselineConstructor >> group: aString with: aStringOrCollection [
+	"Adds the dependencies as parameter to the group named `aString`. If the group does not yet exist, it will be created."
 
 	self root packagesSpec merge: (self project groupSpec
 			 name: aString;
@@ -160,6 +167,8 @@ MetacelloBaselineConstructor >> import: aStringOrCollection [
 		spec baseline: 'Sample' with: [ spec repository: 'github://dalehenrich/sample:master/repository' ].
 		spec baseline: 'Example' with: [ spec repository: 'github://dalehenrich/example:master/repository' ].
 		spec import: #('Sample' 'Example')]	
+		
+		This can be used when we declare projects at the root and import them in some subsections (using `for:do:`).
 	 "
 
 	self root import: aStringOrCollection
@@ -194,6 +203,9 @@ MetacelloBaselineConstructor >> initialize [
 
 { #category : 'api' }
 MetacelloBaselineConstructor >> loads: aStringOrCollection [
+	"Define the list of loadable specs to load. 
+	
+	This is sued when declaring a dependency to another project. It is possible to not load the full project but to load only a subset."
 
 	self root loads: aStringOrCollection
 ]
@@ -235,6 +247,7 @@ MetacelloBaselineConstructor >> operator: anObject [
 
 { #category : 'api' }
 MetacelloBaselineConstructor >> package: aString [
+	"Decalre a package to load"
 
 	self root packagesSpec add: (self project packageSpec
 			 name: aString;
@@ -243,6 +256,7 @@ MetacelloBaselineConstructor >> package: aString [
 
 { #category : 'api' }
 MetacelloBaselineConstructor >> package: aString overrides: aBlock [
+	"Replace the declaration of a package and its dependencies by this new declaration"
 
 	| spec |
 	spec := self project packageSpec
@@ -264,6 +278,8 @@ MetacelloBaselineConstructor >> package: packageName with: aBlock [
 		
 		spec package: 'MyPackage' with: [
 			spec repository: '/opt/gemstone/repository'.
+			
+	If the package declaration already exists, merge the two declarations.
 	 "
 
 	| spec |
@@ -280,12 +296,14 @@ MetacelloBaselineConstructor >> package: packageName with: aBlock [
 
 { #category : 'api' }
 MetacelloBaselineConstructor >> postLoadDoIt: aSymbol [
+	"The symbol should match a method name in the baseline. This method will be executed after the loading of the spec."
 
 	self root postLoadDoIt: aSymbol
 ]
 
 { #category : 'api' }
 MetacelloBaselineConstructor >> preLoadDoIt: aSymbol [
+	"The symbol should match a method name in the baseline. This method will be executed before the loading of the spec (but after the fetching phase)."
 
 	self root preLoadDoIt: aSymbol
 ]
@@ -298,12 +316,28 @@ MetacelloBaselineConstructor >> project [
 
 { #category : 'api' }
 MetacelloBaselineConstructor >> project: aString [
+	"Allow to declare a dependency to a project. This version without a #with: argument is seldom used"
 
 	self project: aString with: [ ]
 ]
 
 { #category : 'api' }
 MetacelloBaselineConstructor >> project: aString copyFrom: oldSpecName with: aBlock [
+	"I allow to copy a dependency declaration and to adapt it.
+	Typically I'll be used to load different groups of a project. 
+	
+	Example:
+	
+	spec project: 'Toto' with: [
+		spec
+			repository: 'uri';
+			loads: #(Core)
+		].
+	
+	spec project: 'TotoTests' copyFrom: 'Toto' with: [ spec loads: #(Tests) ].
+	
+	spec package: 'Model' with: [ spec requires: 'Toto' ].
+	spec package: 'Model-Tests' with: [ spec requires: #(Model TotoTests) ]"
 
 	| spec projectSpec |
 	projectSpec := MetacelloProjectSpec named: aString.
@@ -315,16 +349,20 @@ MetacelloBaselineConstructor >> project: aString copyFrom: oldSpecName with: aBl
 
 { #category : 'api' }
 MetacelloBaselineConstructor >> project: aString overrides: aBlock [
+	"Override a project declaration"
 
 	| spec projectSpec |
 	projectSpec := MetacelloProjectSpec named: aString.
 	spec := MetacelloProjectReferenceSpec projectReference: projectSpec.
 	self with: projectSpec during: aBlock.
-	self root packagesSpec add: spec.
+	self root packagesSpec add: spec
 ]
 
 { #category : 'api' }
 MetacelloBaselineConstructor >> project: aString with: aBlockOrString [
+	"I am used to declare a dependency on a project.
+	I allow to decalre a dependency to a project. The string will be the project name. In the block some things can be set such as the repository, the things to load (using #loads:) and other parameters.
+	By default if the #className is not defined, it will use BaselineOf{nameOfTheProject}."
 
 	| projectSpec spec |
 	projectSpec := MetacelloProjectSpec named: aString.

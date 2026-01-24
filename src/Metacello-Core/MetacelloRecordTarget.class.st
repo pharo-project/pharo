@@ -10,12 +10,6 @@ Class {
 	#tag : 'Targets'
 }
 
-{ #category : 'accessing' }
-MetacelloRecordTarget >> actionLabel [
-
-	^'Recording '
-]
-
 { #category : 'private' }
 MetacelloRecordTarget >> atomicLoadPackages: packages ofSpec: spec [
 

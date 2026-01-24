@@ -7,12 +7,6 @@ Class {
 }
 
 { #category : 'accessing' }
-MetacelloLoadTarget >> actionLabel [
-
-	^'Loading '
-]
-
-{ #category : 'accessing' }
 MetacelloLoadTarget >> baselineFor: aDirective [
 
 	^ aDirective spec project baseline

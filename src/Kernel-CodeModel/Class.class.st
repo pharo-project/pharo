@@ -388,22 +388,13 @@ Class >> comment: aString [
 Class >> comment: aString stamp: aStamp [
 	"Store the comment, aString or Text or RemoteString, associated with the class we are organizing.  Empty string gets stored only if had a non-empty one before."
 
-	| pointer oldComment oldStamp |
+	| oldComment oldStamp |
 	oldComment := self comment.
 	oldStamp := self commentStamp.
 
 	aString string = oldComment string ifTrue: [ ^ self ].
 
-	pointer := self commentSourcePointer ifNil: [ 0 ].
-
-	SourceFileArray default newWriter
-		metadata: ' ';
-		timestamp: aStamp;
-		prior: pointer;
-		successBlock: [ :newSourcePointer | self commentSourcePointer: newSourcePointer ];
-		failBlock: [ "ignore" ];
-		writeComment: aString
-		ofClass: self.
+	SourceFileArray default writeComment: aString stamp: aStamp  of: self.
 
 	self codeChangeAnnouncer
 		class: self

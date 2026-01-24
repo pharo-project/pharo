@@ -29,31 +29,21 @@ Collection >> do: aBlock displayingProgress: aStringOrBlock every: msecs [
                        every: 0."
 
 	| size labelBlock oldLabel lastUpdate |
-	self isEmpty ifTrue: [ ^ self ].
+	self ifEmpty: [ ^ self ].
 	oldLabel := nil.
 	lastUpdate := 0.
 	size := self size.
-	
-	[ : job |	
-		| newLabel |
-		job max: size.
-		self doWithIndex: [ : each : index |
-			"Handle String or Block progress label"
-			labelBlock := aStringOrBlock isString
-				ifTrue: [
-					job title: aStringOrBlock.
-					[ :dummyItem | aStringOrBlock] ]
-				ifFalse: [ aStringOrBlock ].
 
-			(index = 1 or: [ index + 1 = size or: [(Time millisecondsSince: lastUpdate) >= msecs]]) 
-				ifTrue: [ 
-					job currentValue: index.
-					oldLabel = (newLabel := (labelBlock cull: each) ifNil: [oldLabel]) 
-						ifFalse: [
-							job title: newLabel.
-							oldLabel := newLabel ].
-				lastUpdate := Time millisecondClockValue ].
-			aBlock value: each ] 
-	] asJob run
-	
+	[ :job |
+		job max: size.
+		self doWithIndex: [ :each :index |
+				"Handle String or Block progress label"
+				labelBlock := aStringOrBlock isString
+					              ifTrue: [ [ :dummyItem | aStringOrBlock ] ]
+					              ifFalse: [ aStringOrBlock ].
+
+				(index = 1 or: [ index + 1 = size or: [ (Time millisecondsSince: lastUpdate) >= msecs ] ]) ifTrue: [
+						job currentValue: index title: (labelBlock cull: each).
+						lastUpdate := Time millisecondClockValue ].
+				aBlock value: each ] ] asJob run
 ]

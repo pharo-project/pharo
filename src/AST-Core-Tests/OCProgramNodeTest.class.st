@@ -1280,6 +1280,16 @@ OCProgramNodeTest >> testReplaceVariable [
 	self assert: tree newSource equals: 'run "1" 123 "2"'
 ]
 
+{ #category : 'tests - lastIsReturn' }
+OCProgramNodeTest >> testReturnInArrayRaiseError [
+
+	self
+		should: [
+				OCParser parseMethod: 'a1
+							{ ^ 1 . #a }' ]
+		raise: OCCodeError
+]
+
 { #category : 'tests - messages' }
 OCProgramNodeTest >> testSentMessages [
 	| tree messages |
@@ -1315,16 +1325,6 @@ OCProgramNodeTest >> testWithAllParents [
 		              withAllParents.
 	self assert: parentsOf7 last value equals: 7.
 	self assert: parentsOf7 first equals: me ast
-]
-
-{ #category : 'tests - lastIsReturn' }
-OCProgramNodeTest >> testlastIsReturnWhenArrayNodeWithFirstReturnExpectFalse [
-
-	| ast statement |
-	ast := OCParser parseMethod: 'a1
-							{ ^ 1 . #a }'.
-	statement := ast body statements last.
-	self deny: statement lastIsReturn 
 ]
 
 { #category : 'tests - lastIsReturn' }

@@ -2187,21 +2187,21 @@ OCCodeSnippet class >> badSimpleExpressions [
 			         source: '^ 1. 2. ^ 3';
 			         nodeAt: '11200300445';
 			         styled: '^ n. n. ^ n';
-			         isFaulty: false;
+			         isFaulty: true;
 			         value: 1;
 			         notices: #( #( 6 6 6 'Unreachable statement' ) )).
 		        (self new
 			         source: '[ ^ 1. 2. ^ 3 ]';
 			         nodeAt: '002231141155600';
 			         styled: '0 ^ n. n. ^ n 0';
-			         isFaulty: false;
+			         isFaulty: true;
 			         raise: BlockCannotReturn;
 			         notices: #( #( 8 8 8 'Unreachable statement' ) )). "like [^1]"
 		        (self new
 			         source: '{ ^ 1. 2. ^ 3 }';
 			         nodeAt: '001120030044500';
 			         styled: '0 ^ n  n  ^ n 0';
-			         isFaulty: false;
+			         isFaulty: true;
 			         value: 1;
 			         notices: #( #( 8 8 8 'Unreachable statement' ) )).
 		        (self new

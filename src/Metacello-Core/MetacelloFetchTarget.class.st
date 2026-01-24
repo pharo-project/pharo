@@ -6,12 +6,6 @@ Class {
 	#tag : 'Targets'
 }
 
-{ #category : 'accessing' }
-MetacelloFetchTarget >> actionLabel [
-
-	^'Fetching '
-]
-
 { #category : 'visiting' }
 MetacelloFetchTarget >> visitAtomicLoadDirective: aMetacelloAtomicLoadDirective [
 

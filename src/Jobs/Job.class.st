@@ -4,10 +4,12 @@ A Job is a task to run and potentially notified to the user.
 [:job | job title: 'Let us get started'.
 	1 to: 10 do: [:each |
 		job
-			progress: (0.1 * each);
-			title: 'Youpi ', each printString.
+			progress: (0.1 * each) title: 'Youpi ', each printString.
 		(Delay forMilliseconds: 100) wait.
 		] ]  asJob run
+
+
+Note: The morphic implementation of the progress bar updates itself only if it was not updated since 60ms. This means that if you set the progress and the title in two different call, the bar will be updated only once. Please use #progress:title: or #currentValue:title: in order to update both at the same time.
 "
 Class {
 	#name : 'Job',
@@ -87,11 +89,10 @@ Job class >> exampleDebug [
 			title: 'aTitle';
 			max: 10.
 		1 to: 10 do: [ :i|
-			job title: 'Fib ', i asString.
-			"do some hard work"
-			40 benchFib.
 			"update the job progress"
-			job currentValue: i. ]
+			job currentValue: i title: 'Fib ', i asString.
+			"do some hard work"
+			40 benchFib ]
 	] asJob.
 	
 	"run a different thread to interrupt the job"
@@ -103,13 +104,11 @@ Job class >> exampleDebug [
 { #category : 'examples' }
 Job class >> exampleProgress [
 
-	[:job | job title: 'Let us get started'.
-		1 to: 10 do: [:each | 
-			job 
-				progress: (0.1 * each); 
-				title: 'Youpi ', each printString.
-			(Delay forMilliseconds: 100) wait. 
-			] ]  asJob run
+	[ :job |
+		job title: 'Let us get started'.
+		1 to: 10 do: [ :each |
+				job progress: 0.1 * each title: 'Youpi ' , each printString.
+				(Delay forMilliseconds: 100) wait ] ] asJob run
 ]
 
 { #category : 'announcing' }
@@ -207,7 +206,16 @@ Job >> currentValue [
 
 { #category : 'accessing' }
 Job >> currentValue: aNumber [
-	
+	"WARNING: If you want to update the progress and the message, use #currentValue:title: instead because the progress bar framework accept edits only each 60ms. If you do it in two steps, the last one will not update."
+
+	currentValue := aNumber.
+	self announceChange
+]
+
+{ #category : 'accessing' }
+Job >> currentValue: aNumber title: aString [
+
+	title := aString.
 	currentValue := aNumber.
 	self announceChange
 ]
@@ -367,10 +375,21 @@ Job >> progress [
 
 { #category : 'progress' }
 Job >> progress: aNormalizedFloat [
-	"Set the progress: 0.0 - 1.0"
+	"Set the progress: 0.0 - 1.0
+	
+	WARNING: If you want to update the progress and the message, use #progress:title: instead because the progress bar framework accept edits only each 60ms. If you do it in two steps, the last one will not update."
 
-	currentValue := (min + ((max - min) * aNormalizedFloat)).
-	self announceChange.
+	self setProgressTo: aNormalizedFloat.
+	self announceChange
+]
+
+{ #category : 'progress' }
+Job >> progress: aNormalizedFloat title: aString [
+	"We change the title and progress announcing only once."
+
+	self setProgressTo: aNormalizedFloat.
+	title := aString.
+	self announceChange
 ]
 
 { #category : 'private' }
@@ -390,6 +409,12 @@ Job >> run [
 		self cleanupAfterRunning ]
 ]
 
+{ #category : 'private' }
+Job >> setProgressTo: aNormalizedFloat [
+
+	^ currentValue := min + (max - min * aNormalizedFloat)
+]
+
 { #category : 'running' }
 Job >> terminate [
 
@@ -404,9 +429,10 @@ Job >> title [
 
 { #category : 'accessing' }
 Job >> title: anObject [
-	
+	"WARNING: If you want to update the progress and the message, use #progress:title: instead because the progress bar framework accept edits only each 60ms. If you do it in two steps, the last one will not update."
+
 	title := anObject.
-	self announceChange.
+	self announceChange
 ]
 
 { #category : 'compatibility' }

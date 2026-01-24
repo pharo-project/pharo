@@ -1274,15 +1274,15 @@ OCParserTest >> testParseFaultyMethod [
 
 { #category : 'tests - parsing faulty' }
 OCParserTest >> testParseFaultyMethodExpressionHasErrorNodeAsFinal [
-	| node strangeExpression |
 
+	| node strangeExpression |
 	strangeExpression := 'method: asd  ^ asd. n'.
 	node := self parseFaultyMethod: strangeExpression.
 
 	self assert: node isMethod.
-	self deny: node isFaulty.
+	self assert: node isFaulty.
 	self assert: node statements size equals: 2.
-	self assert: (node statements last warningNotices last messageText) equals: 'Unreachable statement'
+	self assert: node statements last errorNotices last messageText equals: 'Unreachable statement'
 ]
 
 { #category : 'tests - parsing faulty' }

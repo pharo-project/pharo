@@ -109,7 +109,6 @@ SourceFileTest >> testWriteClassDefinitionOnFormatV100 [
 	self deny: file exists.
 
 	(SourceFile createFileNamed: file version: ChunkFileFormatParserV100) tryOpen newWriter
-		successBlock: [ :x | ];
 		failBlock: [ self error ];
 		writeClassDefinition: 'ASDASD'.
 
@@ -133,8 +132,6 @@ SourceFileTest >> testWriteClassDefinitionOnFormatV200 [
 	self deny: file exists.
 
 	(SourceFile createFileNamed: file version: ChunkFileFormatParserV200) tryOpen newWriter
-		successBlock: [ :x | ];
-		failBlock: [  ];
 		writeClassDefinition: 'ASDASD'.
 	
 	importer := CodeImporter withParserClass: ChunkFileFormatParserV200.

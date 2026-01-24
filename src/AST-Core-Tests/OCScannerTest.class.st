@@ -1,4 +1,4 @@
-" 
+"
 SUnit tests for OCScanner
 "
 Class {

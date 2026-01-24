@@ -23,7 +23,7 @@ SourceFileWriter >> exporterClass [
 { #category : 'accessing' }
 SourceFileWriter >> failBlock [
 
-	^ failBlock
+	^ failBlock ifNil: [ [ "Do nothing" ] ]
 ]
 
 { #category : 'accessing' }
@@ -35,7 +35,7 @@ SourceFileWriter >> failBlock: anObject [
 { #category : 'accessing' }
 SourceFileWriter >> metadata [
 
-	^ metadata
+	^ metadata ifNil: [ '' ]
 ]
 
 { #category : 'accessing' }
@@ -71,7 +71,7 @@ SourceFileWriter >> sourceFile: anObject [
 { #category : 'accessing' }
 SourceFileWriter >> successBlock [
 
-	^ successBlock
+	^ successBlock ifNil: [ [ :sourcePointer | "Do nothing" ] ]
 ]
 
 { #category : 'accessing' }
@@ -97,13 +97,12 @@ SourceFileWriter >> writeClassDefinition: aClassDefinition [
 
 	sourceFile
 		writeChangesDuring: [ :file |
-			| position |
-			position := file position.
-			(self exporterClass onStream: file)
-				writeClassDefinition: aClassDefinition.
-			position ]
-		onSuccess: successBlock
-		onFail: failBlock
+				| position |
+				position := file position.
+				(self exporterClass onStream: file) writeClassDefinition: aClassDefinition.
+				position ]
+		onSuccess: self successBlock
+		onFail: self failBlock
 ]
 
 { #category : 'writing' }
@@ -115,10 +114,10 @@ SourceFileWriter >> writeComment: aComment ofClass: aClass [
 					writeComment: aComment
 					ofClass: aClass
 					stamp: timestamp
-					withMetadata: metadata
+					withMetadata: self metadata
 					priorSourcePointer: prior ]
-		onSuccess: successBlock
-		onFail: failBlock
+		onSuccess: self successBlock
+		onFail: self failBlock
 ]
 
 { #category : 'writing' }
@@ -132,8 +131,8 @@ SourceFileWriter >> writeSource: source ofMethod: method protocol: protocol [
 					source: source
 					protocol: protocol
 					stamp: timestamp
-					withMetadata: metadata
+					withMetadata: self metadata
 					priorSourcePointer: prior ]
-		onSuccess: successBlock
-		onFail: failBlock
+		onSuccess: self successBlock
+		onFail: self failBlock
 ]

@@ -176,13 +176,8 @@ SystemProgressMorph class >> uniqueInstance [
 
 { #category : 'job subscription' }
 SystemProgressMorph class >> updateJob: aJobChange [
-	| bars |
-	bars := self uniqueInstance bars.
-	bars isEmpty
-		ifFalse: [
-			bars last
-				label: aJobChange title;
-				progress: aJobChange progress ]
+
+	self uniqueInstance bars ifNotEmpty: [ :bars | bars last progress: aJobChange progress label: aJobChange title ]
 ]
 
 { #category : 'accessing' }
