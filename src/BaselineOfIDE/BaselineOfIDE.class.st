@@ -196,26 +196,20 @@ BaselineOfIDE >> loadIceberg [
 	(self classNamed: #Iceberg) enableMetacelloIntegration: true.
 
 	Smalltalk os environment at: #GITHUB_TOKEN ifPresent: [ :token |
-		| credentials |
-		credentials := (self classNamed: #IceTokenCredentials) new
-			               username:
-				               (Smalltalk os environment
-					                at: #GITHUB_USER
-					                ifAbsent: [ self error: 'Github token was found but not the github user associated to this token.' ]);
-			               token: token;
-			               host: 'github.com';
-			               yourself.
+			| credentials |
+			credentials := (self classNamed: #IceTokenCredentials) new
+				               username:
+					               (Smalltalk os environment
+						                at: #GITHUB_USER
+						                ifAbsent: [ self error: 'Github token was found but not the github user associated to this token.' ]);
+				               token: token;
+				               host: 'github.com';
+				               yourself.
 
-		(self classNamed: #IceCredentialStore) current storeCredential: credentials forHostname: 'github.com'.
-		'Using authentification for Github API' traceCr ].
+			(self classNamed: #IceCredentialStore) current storeCredential: credentials forHostname: 'github.com'.
+			'Using authentification for Github API' traceCr ].
 
-	self registerPharo.
-	self registerProject: 'Spec2' baseline: 'Spec2' otherBaselines: #('SpecCore').
-	self registerProject: 'NewTools'.
-	self registerProject: 'Roassal'.
-	self registerProject: 'Microdown'.
-	self registerProject: 'DocumentBrowser' baseline: 'NewToolsDocumentBrowser' otherBaselines: #().
-	self registerIceberg
+	self registerPharo
 ]
 
 { #category : 'actions' }
@@ -240,12 +234,6 @@ BaselineOfIDE >> newTools: spec [
 		spec 
 			repository: (self classNamed: #BaselineOfPharo) newToolsRepository;
 			loads: #('default') ].
-]
-
-{ #category : 'private - register' }
-BaselineOfIDE >> pharoPluginClass [
-	
-	^ self classNamed: #IcePharoPlugin
 ]
 
 { #category : 'actions' }
@@ -309,75 +297,9 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 ]
 
 { #category : 'actions' }
-BaselineOfIDE >> registerIceberg [
-	
-	self pharoPluginClass addIcebergProjectToIceberg.
-	"Register baselines"
-	Metacello new baseline: 'Tonel'; register.
-	Metacello new baseline: 'LibGit'; register.
-	Metacello new baseline: 'Iceberg'; register
-]
-
-{ #category : 'actions' }
 BaselineOfIDE >> registerPharo [
-	
-	self pharoPluginClass addPharoProjectToIceberg
-]
 
-{ #category : 'private - register' }
-BaselineOfIDE >> registerProject: projectName [
-
-	^ self 
-		registerProject: projectName 
-		baseline: projectName 
-		otherBaselines: #()
-]
-
-{ #category : 'private - register' }
-BaselineOfIDE >> registerProject: projectName baseline: baselineName [
-
-	^ self 
-		registerProject: projectName 
-		baseline: baselineName 
-		otherBaselines: #()
-]
-
-{ #category : 'private - register' }
-BaselineOfIDE >> registerProject: projectName baseline: baselineName otherBaselines: anArray [
-
-	^ self 
-		registerProject: projectName
-		externalProject: projectName
-		baseline: baselineName 
-		otherBaselines: anArray
-]
-
-{ #category : 'private - register' }
-BaselineOfIDE >> registerProject: projectName externalProject: externalProject [
-
-	^ self 
-		registerProject: projectName 
-		externalProject: externalProject
-		baseline: projectName 
-		otherBaselines: #()
-]
-
-{ #category : 'private - register' }
-BaselineOfIDE >> registerProject: projectName externalProject: externalProject baseline: baselineName otherBaselines: anArray [
-	| baselineClass className |
-
-	className := ('BaselineOf', baselineName) asSymbol.
-	baselineClass := self classNamed: className.
-	baselineClass ifNil: [ ^ self ].
-
-	self pharoPluginClass
-		addProjectNamed: projectName
-		commit: (self pharoPluginClass commitOfExternalProject: externalProject)
-		baselines: { className }
-		tags: #(#system).
-	"Register baselines"
-	({baselineName}, anArray) do: [ :each |
-		Metacello new baseline: each; register ]
+	(self classNamed: #IcePharoPlugin) addPharoProjectToIceberg
 ]
 
 { #category : 'baselines - dependencies' }

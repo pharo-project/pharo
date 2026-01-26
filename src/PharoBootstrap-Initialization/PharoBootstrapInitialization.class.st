@@ -168,3 +168,16 @@ PharoBootstrapInitialization class >> initializeCommandLineHandlerAndErrorHandli
 	Smalltalk snapshot: true andQuit: true.
 	Processor terminateActive
 ]
+
+{ #category : 'initialization' }
+PharoBootstrapInitialization class >> initializeIcebergRepositories [
+
+	| specs repos |
+	specs := MetacelloProjectRegistration registry baselineProjectSpecs select: [ :spec | spec repositories printString includesSubstring: 'github://' ].
+	repos := specs collect: [ :spec | spec repositories map anyOne ] as: Set.
+
+	repos do: [ :repo |
+			| monticelloRepo |
+			monticelloRepo := MCRepository newRepositoryFromSpec: repo.
+			monticelloRepo getOrCreateIcebergRepository ]
+]
