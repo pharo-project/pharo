@@ -42,6 +42,7 @@ CoASTHeuristicsResultSetBuilder class >> initialize [
 CoASTHeuristicsResultSetBuilder class >> initializeMessagesHeuristic [
 
 		MessagesHeuristic :=  OrderedCollection <- {  
+											CoSnippetHeuristic new . 
 				                      CoSelfMessageHeuristic new .
 				                      CoSuperMessageHeuristic new.
 				                      CoDependencyMessageHeuristics new .
@@ -72,7 +73,7 @@ CoASTHeuristicsResultSetBuilder class >> initializeSymbolHeuristic [
 CoASTHeuristicsResultSetBuilder class >> initializeVariablesHeuristic [
 
 	VariablesHeuristic := OrderedCollection <- {
-									CoVocabularyHeuristic new. 
+									CoSnippetHeuristic new. 
 		                      CoLocalScopeVariablesHeuristic new.
 		                      CoWorkspaceVariablesHeuristic new.
 		                      CoInstanceAccessibleVariablesHeuristic new.

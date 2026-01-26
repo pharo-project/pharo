@@ -94,7 +94,8 @@ NECEntry >> contents: aString node: aNode [
 
 { #category : 'detail information' }
 NECEntry >> createDescription [
-	self subclassResponsibility
+	
+	^ NECEntryDescription label: self contents
 ]
 
 { #category : 'operations' }
