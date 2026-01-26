@@ -81,9 +81,7 @@ MCWorkingCopy class >> ensureForPackageNamed: aPackageName [
 { #category : 'accessing' }
 MCWorkingCopy class >> ensureForPackageNamed: aPackageName packageOrganizer: aPackageOrganizer [
 
-	^ (self hasPackageNamed: aPackageName)
-		  ifTrue: [ self forPackageNamed: aPackageName ]
-		  ifFalse: [ self registerPackage: (MCPackage named: aPackageName) packageOrganizer: aPackageOrganizer ]
+	^ self forPackageNamed: aPackageName ifNone: [ self registerPackage: (MCPackage named: aPackageName) packageOrganizer: aPackageOrganizer ]
 ]
 
 { #category : 'accessing' }
@@ -95,9 +93,15 @@ MCWorkingCopy class >> forPackage: aPackage [
 { #category : 'accessing' }
 MCWorkingCopy class >> forPackageNamed: aPackageName [
 
-	^ self registry values
-		  detect: [ :workingCopy | workingCopy packageName = aPackageName ]
-		  ifNone: [ NotFound signalFor: aPackageName in: self ]
+	^ self forPackageNamed: aPackageName ifNone: [ NotFound signalFor: aPackageName in: self ]
+]
+
+{ #category : 'accessing' }
+MCWorkingCopy class >> forPackageNamed: aPackageName ifNone: aBlock [
+
+	self registry valuesDo: [ :workingCopy | workingCopy packageName = aPackageName ifTrue: [ ^ workingCopy ] ].
+
+	^ aBlock value
 ]
 
 { #category : 'system changes' }

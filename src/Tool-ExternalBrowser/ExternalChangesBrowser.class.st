@@ -63,9 +63,9 @@ ExternalChangesBrowser class >> example1 [
 
 { #category : 'examples' }
 ExternalChangesBrowser class >> example2 [
-	<example>
 
-	self openOn: Smalltalk changesFile fullName
+	<example>
+	self openOn: FileLocator changes fullName
 ]
 
 { #category : 'file service' }

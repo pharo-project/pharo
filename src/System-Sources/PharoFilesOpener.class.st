@@ -106,7 +106,7 @@ PharoFilesOpener >> changesFileOrNilReadOnly: readOnly [
 { #category : 'delegated' }
 PharoFilesOpener >> changesName [
 
-	^ Smalltalk changesFile basename
+	^ FileLocator changes basename
 ]
 
 { #category : 'user interaction' }

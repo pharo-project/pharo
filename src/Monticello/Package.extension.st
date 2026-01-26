@@ -24,7 +24,5 @@ Package >> mcPackage [
 { #category : '*Monticello' }
 Package >> mcWorkingCopy [
 
-	^ (MCWorkingCopy hasPackageNamed: self name)
-		  ifTrue: [ MCWorkingCopy forPackageNamed: self name ]
-		  ifFalse: [ nil ]
+	^ MCWorkingCopy forPackageNamed: self name ifNone: [ nil ]
 ]

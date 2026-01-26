@@ -160,6 +160,7 @@ ReRemoveClassRefactoring >> reparentSubclasses [
 
 { #category : 'storing' }
 ReRemoveClassRefactoring >> storeOn: aStream [
+
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream nextPutAll: ' classNames: '.

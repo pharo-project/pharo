@@ -83,9 +83,7 @@ BaselineOfIDE >> baseline: spec [
 		"
 		spec baseline: 'Shout' with: [ spec repository: repository ].
 		spec baseline: 'OSWindow' with: [ spec repository: repository ].
-		spec
-			baseline: 'EmergencyDebugger'
-			with: [ spec repository: repository ].
+		
 
 		self load: 'Epicea' group: 'Browsers' spec: spec.
 

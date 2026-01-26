@@ -1,5 +1,5 @@
 Class {
-	#name : 'RBRemoveClassTransformationTest',
+	#name : 'RBRemoveClassesTransformationTest',
 	#superclass : 'RBAbstractTransformationTest',
 	#category : 'Refactoring-Transformations-Tests-Test',
 	#package : 'Refactoring-Transformations-Tests',
@@ -7,12 +7,12 @@ Class {
 }
 
 { #category : 'accessing' }
-RBRemoveClassTransformationTest class >> defaultTimeLimit [
+RBRemoveClassesTransformationTest class >> defaultTimeLimit [
 	^20 seconds
 ]
 
 { #category : 'tests' }
-RBRemoveClassTransformationTest >> testCanRemoveReferencedClass [
+RBRemoveClassesTransformationTest >> testCanRemoveReferencedClass [
 
 	| refactoring package |
 	package := RBPackageEnvironment packageNames: {
@@ -20,7 +20,7 @@ RBRemoveClassTransformationTest >> testCanRemoveReferencedClass [
 			           self class packageName }.
 	"The second package has references to the leaf subclass we want to remove and this is part of the test."
 	model := RBNamespace onEnvironment: package.
-	refactoring := RBRemoveClassTransformation
+	refactoring := RBRemoveClassesTransformation
 		               model: model
 		               classNames: { RBTransformationDummyRuleTest1 name }.
 	"Pay attention that we need a direct reference outside of the data for testing package: this is why we use RBTransformationDummyRuleTest1 name and not 'RBTransformationDummyRuleTest1'."
@@ -38,7 +38,7 @@ RBRemoveClassTransformationTest >> testCanRemoveReferencedClass [
 ]
 
 { #category : 'tests' }
-RBRemoveClassTransformationTest >> testCanRemoveSuperclass [
+RBRemoveClassesTransformationTest >> testCanRemoveSuperclass [
 
 	| refactoring package |
 	package := RBPackageEnvironment packageNames: {
@@ -46,7 +46,7 @@ RBRemoveClassTransformationTest >> testCanRemoveSuperclass [
 			           self class packageName }.
 	"The second package has reference to the leave subclass and this is part of the test."
 	model := RBNamespace onEnvironment: package.
-	refactoring := RBRemoveClassTransformation
+	refactoring := RBRemoveClassesTransformation
 		               model: model
 		               classNames: { RBFooDummyLintRuleTest1 name }.
 	"Yes we can remove the superclass even if it has subclasses"
@@ -63,13 +63,13 @@ RBRemoveClassTransformationTest >> testCanRemoveSuperclass [
 ]
 
 { #category : 'tests' }
-RBRemoveClassTransformationTest >> testCanRemoveUnreferencedClass [
+RBRemoveClassesTransformationTest >> testCanRemoveUnreferencedClass [
 
 	| refactoring package |
 	package := RBPackageEnvironment packageName:
 		           RBFooDummyLintRuleTest1 packageName.
 	model := RBNamespace onEnvironment: package.
-	refactoring := RBRemoveClassTransformation
+	refactoring := RBRemoveClassesTransformation
 		               model: model
 		               classNames: { 'RBUnusedRootClass' asSymbol }.
 	"Pay attention that we do not want a direct reference outside of the data for testing package."

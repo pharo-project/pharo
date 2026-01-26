@@ -24,15 +24,15 @@ ReClassesHaveNoReferencesCondition >> model: aRBNamespace [
 
 { #category : 'displaying' }
 ReClassesHaveNoReferencesCondition >> violationMessageOn: aStream [
-	self violators ifEmpty: [ ^ self ].
-	(referencingClassesDictionary reject: [ :refs | refs isEmpty ])
-		keysAndValuesDo: [ :class :refs |
-			aStream
-				nextPutAll: class name;
-				nextPutAll: ' has ';
-				nextPutAll: refs size asString;
-				nextPutAll: ' references.';
-				space ]
+
+		self violators ifEmpty: [ ^ self ].
+		(referencingClassesDictionary reject: [ :refs | refs isEmpty ]) keysAndValuesDo: [ :class :refs |
+				aStream
+					nextPutAll: class name;
+					nextPutAll: ' has ';
+					nextPutAll: refs size asString;
+					nextPutAll: ' references.';
+					space ] 
 ]
 
 { #category : 'accessing' }
@@ -44,9 +44,9 @@ ReClassesHaveNoReferencesCondition >> violators [
 			  classes do: [ :aClass |
 					  | referrers |
 					  referrers := (model methodsReferencingClass: aClass) reject: [ :each |
-						                             (classes includes: each methodClass) or: [ each methodClass isManifest ] ].
+						               (classes includes: each methodClass) or: [ each methodClass isManifest ] ].
 					  referrers ifNotEmpty: [
 							  referencingClassesDictionary at: aClass put: referrers.
-							  violators add: aClass ] ].
-			  violators := violators asArray]
+							  referrers do: [ :aRef | violators add: aRef ] ] ].
+			  violators := violators asArray ]
 ]

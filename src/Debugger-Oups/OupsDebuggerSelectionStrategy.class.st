@@ -74,12 +74,12 @@ OupsDebuggerSelectionStrategy >> hasErrors [
 OupsDebuggerSelectionStrategy >> logErrorsForSession: aDebugSession [
 
 	error ifNotNil: [ "There was an error while opening the debugger, we log that error"
-		DebuggerEmmergencyLogger new
+		DebuggerEmergencyLogger new
 			logError: error
 			forSession: aDebugSession ].
 
 	"We log the original error."
-	DebuggerEmmergencyLogger new
+	DebuggerEmergencyLogger new
 		logError: aDebugSession exception
 		forSession: aDebugSession
 ]

@@ -37,16 +37,12 @@ PharoSourcesCondenser >> fileIndex [
 
 { #category : 'private - 3 installing' }
 PharoSourcesCondenser >> installFreshChangesFile [
+
 	| changesFile |
-
 	"install a new .changes file"
-	changesFile := Smalltalk changesFile.
-	changesFile moveTo: (changesFile , 'bak') nextVersion.
-
-	"Force the creation of a fresh changes file "
-	changesFile writeStreamDo: [ :strm |
-		(CodeExporterV100 onStream: strm)
-			writeFileoutVersion ]
+	changesFile := FileLocator changes.
+	changesFile moveTo: (changesFile , 'bak') nextVersion. "Force the creation of a fresh changes file "
+	changesFile writeStreamDo: [ :strm | (CodeExporterV100 onStream: strm) writeFileoutVersion ]
 ]
 
 { #category : 'public' }

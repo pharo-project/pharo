@@ -40,7 +40,7 @@ SystemResolver class >> userLocalDirectory: aFileReferenceOrPathName [
 SystemResolver >> changes [
 
 	<origin>
-	^ self image withExtension: '.changes'
+	^ self image withExtension: 'changes'
 ]
 
 { #category : 'origins' }

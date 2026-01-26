@@ -2,7 +2,7 @@
 Remove Class Refactoring: Safely delete a selected class, ensuring no references are left behind, and preview changes before applying.
 "
 Class {
-	#name : 'SycRemoveClassCommand',
+	#name : 'SycViolentRemoveClassCommand',
 	#superclass : 'SycClassCommand',
 	#instVars : [
 		'toolContext'
@@ -12,23 +12,23 @@ Class {
 }
 
 { #category : 'accessing' }
-SycRemoveClassCommand >> defaultMenuIconName [
+SycViolentRemoveClassCommand >> defaultMenuIconName [
 	^#remove
 ]
 
 { #category : 'accessing' }
-SycRemoveClassCommand >> defaultMenuItemName [
-	^'(R) Remove'
+SycViolentRemoveClassCommand >> defaultMenuItemName [
+	^'(T) Violent Remove'
 ]
 
 { #category : 'execution' }
-SycRemoveClassCommand >> execute [
+SycViolentRemoveClassCommand >> execute [
 
-	^ ((ReRemoveClassDriver newApplication: self application) scopes: toolContext refactoringScopes classes: classes) runRefactoring 
+	^ ((ReViolentRemoveClassDriver newApplication: self application) scopes: toolContext refactoringScopes classes: classes) runRefactoring  
 ]
 
 { #category : 'execution' }
-SycRemoveClassCommand >> prepareFullExecutionInContext: aToolContext [
+SycViolentRemoveClassCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 	toolContext := aToolContext.
 ]

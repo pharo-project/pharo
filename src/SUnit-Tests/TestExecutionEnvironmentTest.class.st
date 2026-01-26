@@ -240,7 +240,7 @@ TestExecutionEnvironmentTest >> testIgnoreLongTestWhenItIsSuspendedAsUnderDebug 
 	testProcess := [
 		executionEnvironment activated.
 		[ self runTestWith: [
-				executionEnvironment maxTimeForTest: 10 milliSeconds.
+				executionEnvironment maxTimeForTest: 0.2 seconds.
 				Processor activeProcess suspend "it simulates the under debugger condition"]
 		] on: TestTookTooMuchTime do: [ :err | timeOutSignaled := true ]
 	] forkAt: Processor activePriority + 1.
@@ -290,6 +290,15 @@ TestExecutionEnvironmentTest >> testIsMainTestProcessFailed [
 
 	processMonitor recordTestFailure: Error new.
 	self assert: executionEnvironment isMainTestProcessFailed
+]
+
+{ #category : 'tests' }
+TestExecutionEnvironmentTest >> testMaxTimeForTestCannotBeTooShort [
+	"The maximum time limit of a test cannot be inferior to 0.1second because a watchdog process of the test is running in testing environment with high timing priority which requires a sleep time to time to allow other processed to run. If the watch dog does not have the time to sleep, the image will crash."
+
+	self should: [ executionEnvironment maxTimeForTest: 0 second ] raise: Error.
+	self should: [ executionEnvironment maxTimeForTest: -1 second ] raise: Error.
+	self shouldnt: [ executionEnvironment maxTimeForTest: 1 second ] raise: Error
 ]
 
 { #category : 'tests' }
@@ -414,7 +423,7 @@ TestExecutionEnvironmentTest >> testRunningTooLongTest [
 	self
 		should: [
 			self runTestWith: [
-				executionEnvironment maxTimeForTest: 10 milliSeconds.
-				20 milliSeconds wait]]
+				executionEnvironment maxTimeForTest: 0.2 seconds.
+				0.3 seconds wait]]
 		raise: TestTookTooMuchTime
 ]

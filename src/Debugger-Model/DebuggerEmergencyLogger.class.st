@@ -7,7 +7,7 @@ I log this error by:
 
 "
 Class {
-	#name : 'DebuggerEmmergencyLogger',
+	#name : 'DebuggerEmergencyLogger',
 	#superclass : 'Object',
 	#category : 'Debugger-Model-Core',
 	#package : 'Debugger-Model',
@@ -15,13 +15,13 @@ Class {
 }
 
 { #category : 'API' }
-DebuggerEmmergencyLogger >> debugError: anError fromSession: aDebugSession [
+DebuggerEmergencyLogger >> debugError: anError fromSession: aDebugSession [
 
 	self logError: anError forSession: aDebugSession
 ]
 
 { #category : 'API' }
-DebuggerEmmergencyLogger >> logError: anError forSession: aDebugSession [
+DebuggerEmergencyLogger >> logError: anError forSession: aDebugSession [
 
 	| errDescription |
 	errDescription := [ anError description ]

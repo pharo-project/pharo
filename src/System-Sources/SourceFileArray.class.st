@@ -53,30 +53,23 @@ SourceFileArray class >> initialize [
 
 { #category : 'initialization' }
 SourceFileArray class >> reset [
-	"I am called if the image has changed of location."
 
 	<script>
 	self default
-		close;
+		closeSourceFiles;
 		openSourceFiles
 ]
 
 { #category : 'system startup' }
 SourceFileArray class >> shutDown: isImageClosing [
 
-	isImageClosing ifTrue: [
-			self default
-				unsubscribeToAnnouncements;
-				close ]
+	isImageClosing ifTrue: [ self default closeSourceFiles ]
 ]
 
 { #category : 'system startup' }
 SourceFileArray class >> startUp: resuming [
 
-	resuming ifTrue: [
-			self default
-				registerToAnnouncements;
-				openSourceFiles ]
+	resuming ifTrue: [ self default openSourceFiles ]
 ]
 
 { #category : 'accessing' }
@@ -92,16 +85,6 @@ SourceFileArray >> changesFileStream: aStream [
 	^ files at: 2 put: aStream
 ]
 
-{ #category : 'public - file system operations' }
-SourceFileArray >> close [
-
-	| oldFiles |
-	oldFiles := files.
-	files := Array new: 2.
-	self closeFileArray: oldFiles.
-	self emptyReadStreamsQueue
-]
-
 { #category : 'private' }
 SourceFileArray >> closeFileArray: anArray [
 
@@ -110,6 +93,17 @@ SourceFileArray >> closeFileArray: anArray [
 		thenDo: [ :file | file close ].
 
 	^ anArray
+]
+
+{ #category : 'public - file system operations' }
+SourceFileArray >> closeSourceFiles [
+
+	| oldFiles |
+	oldFiles := files.
+	files := Array new: 2.
+	self closeFileArray: oldFiles.
+	self emptyReadStreamsQueue.
+	self unsubscribeToAnnouncements
 ]
 
 { #category : 'private' }
@@ -129,6 +123,15 @@ SourceFileArray >> copyChangesTo: newNameWithoutSuffix [
 	(self changesFileStream isNil or: [ self changesFileStream closed ]) ifFalse: [
 			self
 				close;
+				saveChangesInFileNamed: (self fullNameForChangesNamed: newNameWithoutSuffix) ]
+]
+
+{ #category : 'private' }
+SourceFileArray >> copyChangesTo: newNameWithoutSuffix [
+
+	self isChangesFileInUse ifTrue: [
+			self
+				closeSourceFiles;
 				saveChangesInFileNamed: (self fullNameForChangesNamed: newNameWithoutSuffix) ]
 ]
 
@@ -171,7 +174,7 @@ SourceFileArray >> ensureOpen [
 	Close them before re-opening them."
 
 	| aSourcesFile aChangesFile |
-	self close.
+	self closeSourceFiles.
 
 	aSourcesFile := PharoFilesOpener default sourcesFileOrNil.
 	aChangesFile := PharoFilesOpener default changesFileOrNil.
@@ -185,9 +188,9 @@ SourceFileArray >> ensureOpen [
 
 { #category : 'system startup' }
 SourceFileArray >> ensureSourceFilesCreated [
-
+	
 	PharoFilesOpener default locateSources ensureSourceFileCreated.
-	PharoFilesOpener default locateChanges ensureSourceFileCreated
+	PharoFilesOpener default locateChanges ensureSourceFileCreated.
 ]
 
 { #category : 'accessing' }
@@ -271,6 +274,12 @@ SourceFileArray >> initialize [
 	flushChanges := true
 ]
 
+{ #category : 'testing' }
+SourceFileArray >> isChangesFileInUse [
+
+	^ self changesFileStream isNotNil or: [ self changesFileStream closed not ]
+]
+
 { #category : 'public - file system operations' }
 SourceFileArray >> logChange: aStringOrText [
 	"Write the argument, aString, onto the changes file."
@@ -323,12 +332,13 @@ SourceFileArray >> newWriter [
 		  yourself
 ]
 
-{ #category : 'system startup' }
+{ #category : 'public - file system operations' }
 SourceFileArray >> openSourceFiles [
 
 	self
 		ensureSourceFilesCreated;
-		ensureOpen
+		ensureOpen;
+		registerToAnnouncements
 ]
 
 { #category : 'public - string reading' }
@@ -471,15 +481,14 @@ SourceFileArray >> reportString [
 
 { #category : 'private' }
 SourceFileArray >> saveChangesInFileNamed: aString [
+
 	| changesFile |
 	changesFile := aString asFileReference.
 	changesFile parent ensureCreateDirectory.
-	
 	"Ensure that the destination file is not the same as the original one"
-	(Smalltalk changesFile absolutePath = changesFile absolutePath)
-		ifFalse: [
-			changesFile deleteIfAbsent: [  ].
-			Smalltalk changesFile copyTo: changesFile ]
+	FileLocator changes absolutePath = changesFile absolutePath ifFalse: [
+			changesFile deleteIfAbsent: [ ].
+			FileLocator changes copyTo: changesFile ]
 ]
 
 { #category : 'public - string reading' }

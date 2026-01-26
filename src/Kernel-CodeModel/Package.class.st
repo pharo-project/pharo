@@ -751,7 +751,7 @@ Package >> selectorsForClass: aClass [
 Package >> sortTopologically: allBehaviors [
 
 	| toSort sorted changed |
-	toSort := allBehaviors copy asOrderedCollection.
+	toSort := allBehaviors copy asSet.
 	sorted := OrderedCollection new.
 	changed := true.
 

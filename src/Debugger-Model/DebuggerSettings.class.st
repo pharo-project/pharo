@@ -29,9 +29,7 @@ DebuggerSettings class >> defaultDebuggerRank [
 { #category : 'accessing' }
 DebuggerSettings class >> emergencyDebugger [
 
-	^ self environment
-		  at: #EDEmergencyDebugger
-		  ifAbsent: [ DebuggerEmmergencyLogger new ]
+	^ DebuggerEmergencyLogger new
 ]
 
 { #category : 'accessing' }

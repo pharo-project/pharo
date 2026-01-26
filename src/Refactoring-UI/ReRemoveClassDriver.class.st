@@ -51,10 +51,8 @@ ReRemoveClassDriver >> breakingChoices [
 { #category : 'actions' }
 ReRemoveClassDriver >> browseReferences [
 
-	haveNoReferences violators keysAndValuesDo: [ :violator :references | "we should pass the application! "
-		(Smalltalk tools toolNamed: #messageList)
-			browse: (references collect: [ :ref | ref compiledMethod ])
-			asSendersOf: violator realClass ]
+	haveNoReferences violators do: [ :references |
+		(application toolNamed: #messageList) browse: (references collect: [ :ref | ref compiledMethod ]) ]
 ]
 
 { #category : 'actions' }

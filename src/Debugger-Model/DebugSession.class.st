@@ -455,9 +455,8 @@ DebugSession >> selectedCodeRangeForContext: selectedContext [
 { #category : 'logging' }
 DebugSession >> signalDebuggerError: anError [
 
-	DebuggerSettings emergencyDebugger
-		debugError: anError
-		fromSession: self
+	DebuggerEmergencyLogger new logError: anError forSession: self
+		
 ]
 
 { #category : 'accessing' }

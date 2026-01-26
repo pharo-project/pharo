@@ -204,12 +204,15 @@ SmalltalkImage >> backupImageInFileNamed: aFileReference [
 	imageFile parent ensureCreateDirectory.
 	previousFullImageName := self imagePath.
 
-	[ "change to the new image name "
+	[
+		"change to the new image name "
 		self changeImagePathTo: imageFile fullName.
-
-		snapshotReturn := self snapshot: true andQuit: false ] ensure: [
-			snapshotReturn isImageStarting ifFalse: [ "unlike #saveImageInFileNamed: we do NOT continue in the new image" "switch back to the old image"
-				self changeImagePathTo: previousFullImageName ] ].
+		snapshotReturn := self snapshot: true andQuit: false.
+	] ensure: [
+		snapshotReturn isImageStarting ifFalse: [
+			"unlike #saveImageInFileNamed: we do NOT continue in the new image"
+			"switch back to the old image"
+			self changeImagePathTo: previousFullImageName ] ].
 
 	^ snapshotReturn
 ]
@@ -1225,10 +1228,8 @@ SmalltalkImage >> saveAsNewVersion [
 
 	"SmalltalkImage current saveAsNewVersion"
 
-	| newImageFile strippedName |
-	newImageFile := self imageFile nextVersion.
-
-	strippedName := self stripImageExtensionFrom: newImageFile fullName.
+	| strippedName |
+	strippedName := self stripImageExtensionFrom: self imageFile nextVersion fullName.
 	^ self saveAs: strippedName
 ]
 

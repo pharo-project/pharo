@@ -92,7 +92,7 @@ PackageTag >> initialize [
 
 { #category : 'testing' }
 PackageTag >> isEmpty [
-	^ self classNames isEmpty
+	^ self classes isEmpty
 ]
 
 { #category : 'testing' }
