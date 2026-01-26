@@ -11,7 +11,6 @@ Class {
 
 { #category : 'enumerating' }
 CoClassImplementedMessagesFetcher >> entriesDo: aBlock [
-
 	self completionClass selectorsDo: [ :e |
 		aBlock value: ((NECSelectorEntry contents: e node: astNode) fetcher: self ; yourself)]
 ]

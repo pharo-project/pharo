@@ -20,10 +20,23 @@ CoFetcherDecorator class >> isAbstract [
 	^ self == CoFetcherDecorator
 ]
 
+{ #category : 'private' }
+CoFetcherDecorator >> acceptsEntry: anEntry [
+
+	"I trust my decoree. If I have the entry its because it accepted the entry"
+	^ true
+]
+
 { #category : 'accessing' }
 CoFetcherDecorator >> decoree: anotherFetcher [
 
 	decoree := anotherFetcher
+]
+
+{ #category : 'private' }
+CoFetcherDecorator >> entriesDo: aBlock [
+
+	^ decoree entriesDo: aBlock 
 ]
 
 { #category : 'accessing' }

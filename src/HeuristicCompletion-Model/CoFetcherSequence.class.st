@@ -40,6 +40,11 @@ CoFetcherSequence >> filter: aFilter [
 	subcompletions do: [ :completion | completion filter: aFilter ]
 ]
 
+{ #category : 'enumerating' }
+CoFetcherSequence >> filteredEntriesDo: aBlock [
+	subcompletions do: [ :completion | completion filteredEntriesDo: aBlock ]
+]
+
 { #category : 'initialization' }
 CoFetcherSequence >> initialize [
 
