@@ -9,18 +9,34 @@ Class {
 { #category : 'failure tests' }
 RBMoveMethodToClassSideRefactoringTest >> testFailureExistsMethodInClassSide [
 
-	| method someClass className refactoring |
-	className := RBClassDataForRefactoringTest.
-	method := className >> ('threeElement' , 'Point') asSymbol.
+	| method aMetaClass refactoring |
+	method := RBClassDataForRefactoringTest >> ('threeElement' , 'Point') asSymbol.
 	refactoring := RBMoveMethodToClassSideRefactoring
 		               method: method
-		               class: className.
+		               class: RBClassDataForRefactoringTest.
 	model := refactoring model.
-	someClass := model classNamed: className name , ' class'.
-	someClass
+	
+	aMetaClass := model classNamed: RBClassDataForRefactoringTest name , ' class'.
+	
+	aMetaClass
 		compile: 'threeElementPoint ^ self new'
 		classified: { #example }.
-	self
-		should: [ refactoring generateChanges ]
+
+	self 
+		should: [ refactoring checkBreakingChangePreconditions ]
 		raise: RBRefactoringWarning
+]
+
+{ #category : 'failure tests' }
+RBMoveMethodToClassSideRefactoringTest >> testMoveMethodToClassSideIsOk [
+
+	| method refactoring changes |
+	method := RBClassDataForRefactoringTest >> ('threeElement' , 'Point') asSymbol.
+	refactoring := RBMoveMethodToClassSideRefactoring
+		               method: method
+		               class: RBClassDataForRefactoringTest.
+	changes := refactoring generateChanges changes.
+	self assert: changes size equals: 3
+	
+
 ]

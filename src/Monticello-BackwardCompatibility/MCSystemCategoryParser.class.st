@@ -30,7 +30,8 @@ MCSystemCategoryParser >> addDefinitionsTo: aCollection [
 MCSystemCategoryParser >> category [
 
 	| tokens |
-	tokens := source parseLiterals.
-	tokens size = 3 ifFalse: [ self error: 'Unrecognized category definition' ].
+	tokens := OCParser parseLiterals: source.
+	tokens size = 3 ifFalse: [
+		self error: 'Unrecognized category definition' ].
 	^ tokens at: 3
 ]

@@ -68,13 +68,16 @@ ClyMethodEditorToolMorph >> buildTextMorph [
 { #category : 'operations' }
 ClyMethodEditorToolMorph >> chooseClassForNewMethodIfNone: aBlock [
 
-	targetClasses size = 1 ifTrue: [ ^ targetClasses first].
+	targetClasses size = 1 ifTrue: [ ^ targetClasses first ].
 
-	^[self browser searchDialog
-			requestSingleObject: 'Where to install new method?'
-			from: (ClyAllClassesQuery as: ClyMethodVisibilityProviderAnnotation defaultHierarchy asQueryResult)
-			inScope: (ClyClassScope ofAll: targetClasses)]
-		on: CmdCommandAborted, CmCommandAborted do: [:err | aBlock value ]
+	^ [
+	  StBrowserSearchPresenter searchConfiguring: [ :presenter :dialog |
+		  dialog title: 'Where to install new method?'.
+		  presenter items: ((self browser
+				    itemsForQuery: (ClyAllClassesQuery as: ClyMethodVisibilityProviderAnnotation defaultHierarchy asQueryResult)
+				    inScope: (ClyClassScope ofAll: targetClasses)) collect: [ :item | item actualObject ]) ] ]
+		  on: CmCommandAborted
+		  do: [ :err | aBlock value ]
 ]
 
 { #category : 'events handling' }
@@ -127,7 +130,7 @@ ClyMethodEditorToolMorph >> formatSourceCode [
 
 { #category : 'building' }
 ClyMethodEditorToolMorph >> formatTextIfNeeded [
-	ASTProgramNode formatterClass formatAsYouReadPolicy ifFalse: [ ^self].
+	OCProgramNode formatterClass formatAsYouReadPolicy ifFalse: [ ^self].
 
 	textMorph formatSourceCode.
 	textModel clearUserEdits
@@ -226,8 +229,9 @@ ClyMethodEditorToolMorph >> textChanged: aTextChanged [
 
 	super textChanged: aTextChanged.
 	textMorph segments copy do: #delete.
+	ast := self currentEditedAST.
 	IconStyler new
-	   stylerClasses: {ErrorNodeStyler . SemanticMessageIconStyler . SemanticWarningIconStyler };
-		styleText: textModel withAst: self currentEditedAST.
+	   stylerClasses: {ErrorNodeStyler. SemanticWarningIconStyler };
+		styleText: textModel withAst: ast.
 	^ ast
 ]

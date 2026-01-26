@@ -11,7 +11,7 @@ Class {
 
 { #category : 'accessing' }
 ReAssignmentWithoutEffectRule class >> group [
-	^ 'Optimization'
+	^ self optimizationGroup
 ]
 
 { #category : 'accessing' }

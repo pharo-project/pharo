@@ -197,17 +197,17 @@ RBAbstractClass >> checkSelector: aSelector using: aMatcher [
 	^ aMatcher answer
 ]
 
-{ #category : 'accessing' }
-RBAbstractClass >> classBinding [
-	self deprecated: 'Use binding' transformWith: '`@receiver classBinding' -> '`@receiver binding'.
-	^ self binding 
-]
-
 { #category : 'accessing - navigation' }
 RBAbstractClass >> classSide [
 	"Return the metaclass of the couple class/metaclass. Useful to avoid explicit test."
 
 	^ model metaclassNamed: self name
+]
+
+{ #category : 'accessing' }
+RBAbstractClass >> classVariableNames [
+
+	^ self subclassResponsibility
 ]
 
 { #category : 'method accessing' }
@@ -222,7 +222,7 @@ RBAbstractClass >> compile: aString classified: aSymbolCollection [
 				compile: aString
 				in: self
 				classified: aSymbolCollection.
-	method := model rbMethodClass
+	method := RBMethod
 				for: self
 				source: aString
 				selector: change selector.
@@ -237,8 +237,8 @@ RBAbstractClass >> compile: aString withAttributesFrom: aRBMethod [
 ]
 
 { #category : 'method accessing' }
-RBAbstractClass >> compileTree: aRBMethodNode [
-	^ (self methodFor: aRBMethodNode selector) compileTree: aRBMethodNode
+RBAbstractClass >> compileTree: aMethodNode [
+	^ (self methodFor: aMethodNode selector) compileTree: aMethodNode
 ]
 
 { #category : 'transforming' }
@@ -504,7 +504,8 @@ RBAbstractClass >> instanceVariableNames: aCollectionOfStrings [
 
 { #category : 'testing' }
 RBAbstractClass >> isAbstract [
-	(self whichSelectorsReferToSymbol: #subclassResponsibility) ifNotEmpty: [^true].
+	(self whichSelectorsReferToSymbol: #subclassResponsibility) 
+		ifNotEmpty: [ ^true ].
 	model allReferencesToClass: self do: [:each | ^ false].
 	^ true
 ]
@@ -517,6 +518,14 @@ RBAbstractClass >> isDefined [
 { #category : 'testing' }
 RBAbstractClass >> isMeta [
 	self subclassResponsibility
+]
+
+{ #category : 'accessing' }
+RBAbstractClass >> localMethods [
+
+	^ self localSelectors
+		  collect: [ :selector | self methodFor: selector ]
+		  thenSelect: [ :each | each isNotNil ]
 ]
 
 { #category : 'method accessing' }
@@ -542,7 +551,7 @@ RBAbstractClass >> methodFor: aSelector [
 		  class compiledMethodAt: aSelector ifPresent: [ :compiledMethod |
 			  compiledMethod isFromTrait
 				  ifTrue: [ (compiledMethod traitSource hasMethod: aSelector) ifTrue: [ (model classNamed: compiledMethod origin name) methodFor: aSelector ] ]
-				  ifFalse: [ model rbMethodClass for: self fromMethod: compiledMethod andSelector: aSelector ] ] ]
+				  ifFalse: [ RBMethod for: self fromMethod: compiledMethod andSelector: aSelector ] ] ]
 ]
 
 { #category : 'accessing' }
@@ -572,16 +581,6 @@ RBAbstractClass >> newMethods [
 ]
 
 { #category : 'method accessing' }
-RBAbstractClass >> parseTreeFor: aSymbol [
-
-	self
-		deprecated: 'Use parseTreeForSelector: instead'
-		transformWith: '`@receiver parseTreeFor: `@argument'
-			-> '`@receiver parseTreeForSelector: `@argument'.
-	^ self parseTreeForSelector: aSymbol
-]
-
-{ #category : 'method accessing' }
 RBAbstractClass >> parseTreeForSelector: aSelector [
 
 	| class method |
@@ -594,7 +593,7 @@ RBAbstractClass >> parseTreeForSelector: aSelector [
 
 { #category : 'accessing' }
 RBAbstractClass >> parseTreeSearcherClass [
-	^ RBParseTreeSearcher
+	^ OCParseTreeSearcher
 ]
 
 { #category : 'printing' }
@@ -686,15 +685,17 @@ RBAbstractClass >> removedMethods [
 
 { #category : 'variable accessing' }
 RBAbstractClass >> renameInstanceVariable: oldName to: newName around: aBlock [
+
 	self privateInstanceVariableNames
 		at: (self privateInstanceVariableNames indexOf: oldName asString)
 		put: newName asString.
 	^ self model
-		performChange: (changeFactory
-							renameInstanceVariable: oldName
-							to: newName
-							in: self)
-		around: aBlock
+		  perform: aBlock
+		  onlyWithChange:
+		  (changeFactory
+			   renameInstanceVariable: oldName
+			   to: newName
+			   in: self)
 ]
 
 { #category : 'method accessing' }
@@ -771,6 +772,7 @@ RBAbstractClass >> subclassesDo: aBlock [
 
 { #category : 'accessing' }
 RBAbstractClass >> superclass [
+	
 	^superclass == LookupSuperclass
 		ifTrue: [model classFor: self realClass superclass]
 		ifFalse: [superclass]
@@ -790,20 +792,6 @@ RBAbstractClass >> superclassRedefines: aSelector [
 	^ self allSuperclasses anySatisfy: [ :each | each directlyDefinesMethod: aSelector ]
 ]
 
-{ #category : 'accessing - deprecated' }
-RBAbstractClass >> theMetaClass [
-	self deprecated:  'Please use #classSide instead' transformWith:  '`@receiver theMetaClass'
-						-> '`@receiver classSide'.
-	^ self classSide
-]
-
-{ #category : 'accessing - deprecated' }
-RBAbstractClass >> theNonMetaClass [
-	self deprecated:  'Please use #instanceSide instead' transformWith:  '`@receiver theNonMetaClass'
-						-> '`@receiver instanceSide'.
-	^ self instanceSide
-]
-
 { #category : 'variable accessing' }
 RBAbstractClass >> typeOfClassVariable: aSymbol [
 	^model classNamed: #Object
@@ -811,7 +799,9 @@ RBAbstractClass >> typeOfClassVariable: aSymbol [
 
 { #category : 'testing' }
 RBAbstractClass >> whichClassIncludesSelector: aSelector [
-
+	"Answer the class on the receiver's superclass chain where the
+	argument, aSymbol (a message selector), will be found. Answer nil if none found."
+	
 	(self directlyDefinesMethod: aSelector) ifTrue: [ ^ self ].
 	^ self superclass ifNotNil: [
 		  self superclass whichClassIncludesSelector: aSelector ]
@@ -950,15 +940,6 @@ RBAbstractClass >> whoDefinesInstanceVariable: aString [
 	(self directlyDefinesInstanceVariable: aString) ifTrue: [ ^ self ].
 	sprClass := self superclass.
 	^ sprClass ifNotNil: [ sprClass whoDefinesInstanceVariable: aString ]
-]
-
-{ #category : 'method accessing' }
-RBAbstractClass >> whoDefinesMethod: aSelector [
-
-	self
-		deprecated: 'Use whichClassIncludesSelector: instead of current one'
-		transformWith: '`@rec whoDefinesMethod: `@arg' -> '`@rec whichClassIncludesSelector: `@arg'.
-	^ self whichClassIncludesSelector: aSelector 
 ]
 
 { #category : 'accessing' }

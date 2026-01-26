@@ -1,22 +1,9 @@
 "
-I visit an abstract syntax tree and generate IR (intermediate representation) instructions for each node by sending the appropriate message to my methodBuilder (an IRBuilder).  I hold onto my two subclasses 
-OCASTTranslatorForValue for generating instructions for effect and value, and
-OCASTTranslatorForEffect for generating instructions for effect only.
-
-Which one to use depends on the AST nodes and whether the code will only be executed (for effect only) or if the value is used afterwards (for value).
-
-For example, when translating a return, the value to return needs to be pushed on stack, so the valueTranslator is used:
-visitReturnNode: aReturnNode 
-	valueTranslator visitNode: aReturnNode value.
-	methodBuilder returnTop.
-	
-Whereas, in #visitMethodNode:,  the effectTranslator is used, because no value is pushed on stack at the end of the method body:
-...effectTranslator visitNode: aMethodNode body..
-
+I visit an abstract syntax tree and generate IR (intermediate representation) instructions for each node by sending the appropriate message to my methodBuilder (an `IRBuilder`).
 "
 Class {
 	#name : 'OCASTTranslator',
-	#superclass : 'RBProgramNodeVisitor',
+	#superclass : 'OCProgramNodeVisitor',
 	#instVars : [
 		'methodBuilder',
 		'nextUniqueInlineID'
@@ -293,7 +280,7 @@ OCASTTranslator >> emitRuntimeError: aNode [
 	errors := aNode allErrorNotices.
 
 	methodBuilder
-		pushLiteralVariable: RuntimeSyntaxError binding;
+		pushLiteralVariable: OCRuntimeSyntaxError binding;
 		pushLiteral: (errors isEmpty
 				 ifTrue: [ 'Syntax error' ]
 				 ifFalse: [ errors first messageText ]);
@@ -429,7 +416,7 @@ OCASTTranslator >> initialize [
 
 	super initialize.
 	
-	methodBuilder := IRBuilder new.
+	methodBuilder := OCIRBuilder new.
 	nextUniqueInlineID := 0
 ]
 
@@ -439,6 +426,12 @@ OCASTTranslator >> ir [
 	^ methodBuilder ir
 ]
 
+{ #category : 'visitor - double dispatching' }
+OCASTTranslator >> newNameForInlinedVariable: aVariableName from: aBlockNode [
+
+	^ (aVariableName , '_' , aBlockNode identityHash asString) asSymbol
+]
+
 { #category : 'inline messages' }
 OCASTTranslator >> nextUniqueInlineID [
 
@@ -446,9 +439,89 @@ OCASTTranslator >> nextUniqueInlineID [
 	^ '0', nextUniqueInlineID asString asSymbol
 ]
 
+{ #category : 'visitor - double dispatching' }
+OCASTTranslator >> prepareForInlining: aMessageNode [
+
+	| currentTemps |
+	"Searching for senders will work"
+	methodBuilder addLiteral: aMessageNode selector.
+
+	"Rename shadowing arguments before inline"
+	"Temp vars are renamed in OCASTTranslator >> visitInlinedBlockNode:"
+	currentTemps := methodBuilder currentScope tempKeys asOrderedCollection.
+	aMessageNode arguments
+		select: [ :arg | arg isBlock ]
+		thenDo: [ :blockNode |
+				blockNode arguments do: [ :arg |
+						(currentTemps includes: arg name) ifTrue: [
+							self renameInlinedTemp: arg variable from: blockNode ] ].
+				currentTemps addAll: blockNode scope localTempNames ]
+]
+
 { #category : 'private' }
 OCASTTranslator >> privateMethodBuilder [
 	^ methodBuilder
+]
+
+{ #category : 'visitor - double dispatching' }
+OCASTTranslator >> renameInlinedTemp: aVariable from: aBlockNode [
+
+	aVariable name: (self newNameForInlinedVariable: aVariable name from: aBlockNode)
+]
+
+{ #category : 'visitor - double dispatching' }
+OCASTTranslator >> replaceVariables: temporaries using: replacements [
+
+	replacements keysAndValuesDo: [ :oldName :newName |
+		temporaries replaceAll: oldName with: newName ]
+]
+
+{ #category : 'visitor - double dispatching' }
+OCASTTranslator >> replaceVariablesInBlock: anOptimizedBlockNode using: replacements [
+
+	| copiedBody |
+	replacements ifEmpty: [ ^ anOptimizedBlockNode body ].
+	
+	"Use a copy -> leave the original AST as the original code"
+	copiedBody := anOptimizedBlockNode body copy.
+	
+	replacements keysAndValuesDo: [ :k :v |
+			(copiedBody allChildren copyWithout: copiedBody) do: [ :node |
+					| originalNode |
+					
+					node isCommentNode ifFalse: [
+						"Store the original variable node as a property.
+							We need this in the IR metadata.
+						Since renames can happen recursively in the tree, lookup the name in the copies of copies"
+						originalNode := anOptimizedBlockNode body childAtPath: (node treePathUpTo: copiedBody).
+						[originalNode hasProperty: #originalNode]
+							whileTrue: [ originalNode := originalNode propertyAt: #originalNode ].
+						node propertyAt: #originalNode put: originalNode ].
+
+					(node isVariable and: [ node name = k asString ]) ifTrue: [
+							node name: v asString.
+							node variable ifNotNil: [ :var |
+									var name: v asString. "Rename the temp/arg for copied variables on inner blocks"
+									var originalVar name: v asString ] ] ] ].
+
+	^ copiedBody
+]
+
+{ #category : 'visitor - double dispatching' }
+OCASTTranslator >> replacementsForInlinedShadowVariables: anOptimizedBlockNode [
+
+	| blockTempVariables blockArguments temporaries |
+	blockTempVariables := anOptimizedBlockNode scope
+		                      tempVarNamesWithoutArguments.
+	blockArguments := anOptimizedBlockNode argumentNames.
+	temporaries := blockTempVariables , blockArguments.
+
+	^ (methodBuilder currentScope tempKeys intersection: temporaries)
+		  collect: [ :collisionTemp |
+				  | newName |
+				  newName := self newNameForInlinedVariable: collisionTemp from: anOptimizedBlockNode.
+				  collisionTemp -> newName ]
+			as: Dictionary 
 ]
 
 { #category : 'private' }
@@ -459,23 +532,9 @@ OCASTTranslator >> subTranslator [
 ]
 
 { #category : 'visitor - double dispatching' }
-OCASTTranslator >> translateConstantBlock: aBlockNode [
-	| ir |
-	"even though we never execute the compiledBlock, we create it so that the BlockClosure can use e.g. to query on the bytecode level"
-	ir := IRBuilder new
-				mapToNode: aBlockNode;
-				numArgs: aBlockNode arguments size;
-				pushLiteral: aBlockNode constantValue;
-				blockReturnTop;
-				ir.
-	aBlockNode ir: ir.
-	aBlockNode resetBcToASTCache.
-	^ ir compiledBlock: aBlockNode scope
-]
-
-{ #category : 'visitor - double dispatching' }
 OCASTTranslator >> translateFullBlock: aBlockNode [
 
+	| originalBlockNode |
 	methodBuilder mapToNode: aBlockNode.
 
 	"args, then copied, then temps"
@@ -492,26 +551,28 @@ OCASTTranslator >> translateFullBlock: aBlockNode [
 	self visitNode: aBlockNode body.
 	methodBuilder mapToNode: aBlockNode body.
 	methodBuilder addBlockReturnTopIfRequired.
-	aBlockNode ir: self ir.
-	aBlockNode resetBcToASTCache.
-	^ aBlockNode ir compiledBlock: aBlockNode scope
+	
+	originalBlockNode := aBlockNode propertyAt: #originalNode ifAbsent: [aBlockNode].
+	originalBlockNode ir: self ir.
+	originalBlockNode resetBcToASTCache.
+	^ originalBlockNode ir compiledBlock: originalBlockNode scope
 ]
 
 { #category : 'visiting' }
-OCASTTranslator >> visitAnnotationMarkNode: aRBAnnotationValueNode [
+OCASTTranslator >> visitAnnotationMarkNode: aAnnotationValueNode [
 
-	self emitRuntimeError: aRBAnnotationValueNode
+	self emitRuntimeError: aAnnotationValueNode
 ]
 
 { #category : 'visitor - double dispatching' }
 OCASTTranslator >> visitArrayNode: anArrayNode [
 
-	| elementNodes |
-
-	anArrayNode statements size > 32 ifTrue: [^ self visitLargeArrayNode: anArrayNode ].
+	| elementNodes stackLimit |
+	stackLimit := CompiledCode LargeFrame min: self compilationContext encoderClass arraySizeLimitForPushArrayInstruction.
+	methodBuilder stackSize + anArrayNode statements size > stackLimit ifTrue: [ ^ self visitLargeArrayNode: anArrayNode ].
 
 	elementNodes := anArrayNode children.
-	elementNodes do: [:node | self visitNode: node].
+	elementNodes do: [ :node | self visitNode: node ].
 	methodBuilder pushConsArray: elementNodes size
 ]
 
@@ -581,7 +642,7 @@ OCASTTranslator >> visitConstantBlockNode: anBlockNode [
 	constantBlock := ConstantBlockClosure
 							  numArgs: anBlockNode numArgs
 		                 literal: anBlockNode constantValue.
-	compiledBlock := self translateConstantBlock: anBlockNode.
+	compiledBlock := self subTranslator translateFullBlock: anBlockNode.
 	constantBlock compiledBlock: compiledBlock.
 	methodBuilder pushLiteral: constantBlock
 ]
@@ -621,33 +682,47 @@ OCASTTranslator >> visitInlinedBlockNode: anOptimizedBlockNode [
 			- we call IRBuilder to add temps
 	"
 
+	|  blockTempVariables blockArguments copiedBody replacements |
+
 	methodBuilder mapToNode: anOptimizedBlockNode.
 	anOptimizedBlockNode scope tempVector ifNotEmpty: [
 		methodBuilder
 			createTempVectorNamed: anOptimizedBlockNode scope tempVectorName
 			withVars: anOptimizedBlockNode scope tempVectorVarNames.
 	].
-	methodBuilder addTemps: anOptimizedBlockNode scope tempVarNamesWithoutArguments.
+
+
+	replacements := self replacementsForInlinedShadowVariables: anOptimizedBlockNode.
+
+	blockTempVariables := anOptimizedBlockNode scope tempVarNamesWithoutArguments. 
+	blockArguments :=	anOptimizedBlockNode argumentNames.
+	
+	self replaceVariables: blockTempVariables using: replacements.
+	self replaceVariables: blockArguments using: replacements.
+
 	methodBuilder addTemps: anOptimizedBlockNode scope inComingCopiedVarNames.
-	methodBuilder addTemps: anOptimizedBlockNode argumentNames.
+	methodBuilder addTemps: blockTempVariables.
+	methodBuilder addTemps: blockArguments.
 	anOptimizedBlockNode isInlinedLoop ifTrue: [
-		anOptimizedBlockNode scope tempVarNamesWithoutArguments do: [ :tempName |
+		blockTempVariables do: [ :tempName |
 			methodBuilder pushLiteral: nil.
 			methodBuilder storeTemp: tempName.
 			methodBuilder popTop.
 		]].
 
-	self visitNode: anOptimizedBlockNode body.
+	copiedBody := self replaceVariablesInBlock: anOptimizedBlockNode using: replacements.
+
+	self visitNode: copiedBody.
 	methodBuilder popMap
 ]
 
 { #category : 'visitor - double dispatching' }
-OCASTTranslator >> visitLargeArrayNode: aRBArrayNode [
-	"Long form: using at:put:"
+OCASTTranslator >> visitLargeArrayNode: anArrayNode [
+	"Long approach using at:put:"
 	methodBuilder pushLiteralVariable: Array binding.
-	methodBuilder pushLiteral: aRBArrayNode statements size.
+	methodBuilder pushLiteral: anArrayNode statements size.
 	methodBuilder send: #new:.
-	aRBArrayNode statements withIndexDo: [  :each :index |
+	anArrayNode statements withIndexDo: [  :each :index |
 		methodBuilder pushDup.
 		methodBuilder pushLiteral: index.
 		self visitNode: each.
@@ -657,9 +732,9 @@ OCASTTranslator >> visitLargeArrayNode: aRBArrayNode [
 ]
 
 { #category : 'visitor - double dispatching' }
-OCASTTranslator >> visitLiteralArrayNode: aRBLiteralArrayNode [
+OCASTTranslator >> visitLiteralArrayNode: aLiteralArrayNode [
 
-	methodBuilder pushLiteral: aRBLiteralArrayNode value
+	methodBuilder pushLiteral: aLiteralArrayNode value
 ]
 
 { #category : 'visitor - double dispatching' }
@@ -675,10 +750,11 @@ OCASTTranslator >> visitMessageNode: aMessageNode [
 		^ aMessageNode receiver emitValue: methodBuilder ].
 
 	aMessageNode isInlined ifTrue: [
-		methodBuilder addLiteral: aMessageNode selector. "so searching for senders will work"
+		self prepareForInlining: aMessageNode.
 		^self
 			perform: (OptimizedMessages at: aMessageNode selector)
 			with: aMessageNode].
+		
 	^ self emitMessageNode: aMessageNode
 ]
 
@@ -734,7 +810,7 @@ OCASTTranslator >> visitPragmaNode: aPragmaNode [
 
 	"if the pragma is a primitive that defines an error variable, we need to store error value
 	which is on the stack"
-	aPragmaNode isPrimitiveError ifFalse: [ ^ self ].
+	aPragmaNode isPrimitiveErrorPragma ifFalse: [ ^ self ].
 	var := aPragmaNode methodNode scope lookupVar: aPragmaNode primitiveErrorVariableName.
 	var emitStore: methodBuilder
 ]

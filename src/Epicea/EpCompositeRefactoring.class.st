@@ -21,7 +21,7 @@ EpCompositeRefactoring class >> withAll: someRefactorings [
 
 { #category : 'converting' }
 EpCompositeRefactoring >> asRBRefactoring [
-	^ RBCompositeRefactoryChange new
+	^ ReCompositeChange new
 		changes: (childrenRefactorings collect: [:each | each asRBRefactoring]);
 		yourself
 ]
@@ -31,7 +31,7 @@ EpCompositeRefactoring >> childrenRefactorings [
 	^ childrenRefactorings
 ]
 
-{ #category : 'initializing' }
+{ #category : 'initialization' }
 EpCompositeRefactoring >> initializeWith: someRefactorings [
 	self initialize.
 	childrenRefactorings := someRefactorings collect: [:each | each asEpiceaEvent]

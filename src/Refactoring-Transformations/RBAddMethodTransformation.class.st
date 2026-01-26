@@ -2,13 +2,15 @@
 Adds a method in a class. The source code of the method, as well as the protocol in which the method will be categorized, can be specified.
 
 Usage:
+```
 | transformation |
 transformation := (RBAddMethodTransformation
 		sourceCode: 'printString1 ^super printString'
-		in: RBTransformationTest
+		in: RBAddMethodTransformation
 		withProtocol: #accessing)
-		transform.
-(ChangesBrowser changes: transformation model changes changes) open
+		generateChanges.
+(StRefactoringPreviewPresenter for: transformation) open
+```
 
 Preconditions:
 The source code of the method must be syntactically valid.
@@ -21,9 +23,9 @@ Class {
 		'rbMethod',
 		'protocol'
 	],
-	#category : 'Refactoring-Transformations-Model-Unused',
+	#category : 'Refactoring-Transformations-Model',
 	#package : 'Refactoring-Transformations',
-	#tag : 'Model-Unused'
+	#tag : 'Model'
 }
 
 { #category : 'api' }

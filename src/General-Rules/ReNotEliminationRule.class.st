@@ -32,7 +32,7 @@ Class {
 
 { #category : 'accessing' }
 ReNotEliminationRule class >> group [
-	^ 'Optimization'
+	^ self optimizationGroup
 ]
 
 { #category : 'accessing' }

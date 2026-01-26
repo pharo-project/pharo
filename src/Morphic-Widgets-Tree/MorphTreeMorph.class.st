@@ -1355,15 +1355,6 @@ MorphTreeMorph >> nodeCollapseRequest: anAnnounce [
 		ifNotEmpty: [:nodes | self collapseNodePath: nodes]
 ]
 
-{ #category : 'announce requests' }
-MorphTreeMorph >> nodeExpandRequest: anAnnounce [
-	anAnnounce nodes
-		ifEmpty: [self expandAll]
-		ifNotEmpty: [:nodes | anAnnounce recur
-			ifTrue: [self expandAllFromNode: nodes last]
-			ifFalse: [self expandNodePath: nodes]]
-]
-
 { #category : 'accessing' }
 MorphTreeMorph >> nodeList [
 	^ nodeList ifNil: [nodeList := self getList]
@@ -1445,7 +1436,7 @@ MorphTreeMorph >> registerRequestHandlers [
 	self model announcer when: MorphTreeChangeRequest send: #changeRequest: to: self
 ]
 
-{ #category : 'initialize - release' }
+{ #category : 'initialization' }
 MorphTreeMorph >> release [
 
 	lineColorBlock := nil.
@@ -1630,11 +1621,6 @@ MorphTreeMorph >> selectAll [
 { #category : 'announce requests' }
 MorphTreeMorph >> selectItems: aNodeItemCollection [
 	self selectedItems: aNodeItemCollection
-]
-
-{ #category : 'announce requests' }
-MorphTreeMorph >> selectItemsRequest: anAnnounce [
-	self selectedItems: anAnnounce itemsToSelect
 ]
 
 { #category : 'selection' }

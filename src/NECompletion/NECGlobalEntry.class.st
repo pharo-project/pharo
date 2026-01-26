@@ -15,6 +15,6 @@ NECGlobalEntry >> hightlightSymbol [
 ]
 
 { #category : 'accessing' }
-NECGlobalEntry >> label [
+NECGlobalEntry >> rawLabel [
 	^ 'global'
 ]

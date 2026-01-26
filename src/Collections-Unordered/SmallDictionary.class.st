@@ -357,7 +357,7 @@ SmallDictionary >> at: key update: updateBlock initial: initBlocktOrValue [
 	"I am used to update the value at a given key. The updateBlock is passed
 	the existing value, and the result of the block is stored back.
 	If the key does not exist, store the value of the initBlocktOrValue.
-	initBlocktOrValue can be a block in case the initial value is expencive to compute.
+	initBlocktOrValue can be a block in case the initial value is expensive to compute.
 	I use findElementOrNil: to avoid looking up the key twice."
 	| index |
 	index := self findIndexForKey: key.
@@ -372,17 +372,6 @@ SmallDictionary >> at: key update: updateBlock initial: initBlocktOrValue [
 { #category : 'accessing' }
 SmallDictionary >> bindingOf: varName [
 	^self associationAt: varName ifAbsent:[nil]
-]
-
-{ #category : 'enumerating' }
-SmallDictionary >> bindingsDo: aBlock [
-
-	self
-		deprecated:
-		'use classVariables do: instead'
-		transformWith: '`@receiver bindingsDo: `@arg1' -> '`@receiver associationsDo: `@arg1'.
-
-	self associationsDo: aBlock
 ]
 
 { #category : 'accessing' }
@@ -470,16 +459,6 @@ SmallDictionary >> growTo: aSize [
 			newValues at: i put: (values at: i)].
 	keys := newKeys.
 	values := newValues
-]
-
-{ #category : 'testing' }
-SmallDictionary >> hasBindingThatBeginsWith: aString [
-	"Answer true if the receiver has a key that begins with aString, false otherwise"
-
-	self keysDo:[:each |
-		(each beginsWith: aString)
-			ifTrue:[^true]].
-	^false
 ]
 
 { #category : 'testing' }

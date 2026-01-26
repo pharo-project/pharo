@@ -3,7 +3,7 @@ I provide at least one test which corresponds to a message sent by InstructionSt
 "
 Class {
 	#name : 'OCSourceCode2BytecodeTest',
-	#superclass : 'AbstractEnvironmentTestCase',
+	#superclass : 'TestCase',
 	#instVars : [
 		'instVar'
 	],
@@ -568,7 +568,7 @@ OCSourceCode2BytecodeTest >> testPushReceiverVariableBytecode [
 	scanner := InstructionStream on: method.
 	self
 		assert: ((did := scanner peekInstruction) selector == #pushReceiverVariable:
-				and: [did arguments first == 3])
+				and: [did arguments first == 2])
 		description: 'Failed ' , selector
 ]
 
@@ -661,7 +661,7 @@ OCSourceCode2BytecodeTest >> testStoreAndPopReceiverVariableBytecode [
 	scanner := InstructionStream on: method.
 	self
 		assert: ((did := scanner decodeNextInstruction; peekInstruction) selector == #popIntoReceiverVariable:
-				and: [did arguments first == 3])
+				and: [did arguments first == 2])
 		description: 'Failed ' , selector
 ]
 
@@ -693,7 +693,7 @@ OCSourceCode2BytecodeTest >> testStoreIntoReceiverVariableBytecode [
 	scanner := InstructionStream on: method.
 	self
 		assert: ((did := scanner decodeNextInstruction; peekInstruction) selector == #storeIntoReceiverVariable:
-				and: [did arguments first == 3])
+				and: [did arguments first == 2])
 		description: 'Failed ' , selector
 ]
 

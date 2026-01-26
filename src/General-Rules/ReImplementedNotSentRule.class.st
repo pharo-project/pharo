@@ -59,7 +59,7 @@ ReImplementedNotSentRule class >> enabled: aBoolean [
 
 { #category : 'accessing' }
 ReImplementedNotSentRule class >> group [
-	^ 'Design Flaws'
+	^ self designFlawGroup
 ]
 
 { #category : 'class initialization' }
@@ -108,7 +108,6 @@ ReImplementedNotSentRule class >> shutDown [
 { #category : 'announcement' }
 ReImplementedNotSentRule class >> subscribe [
 
-	<systemEventRegistration>
 	self unsubscribe.
 
 	self codeChangeAnnouncer weak

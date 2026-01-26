@@ -4,7 +4,7 @@ I'm the root of the hierarchy of the collection tests.
 "
 Class {
 	#name : 'CollectionRootTest',
-	#superclass : 'ClassTestCase',
+	#superclass : 'TestCase',
 	#traits : 'TIterateTest + TEmptyTest + TSizeTest',
 	#classTraits : 'TIterateTest classTrait + TEmptyTest classTrait + TSizeTest classTrait',
 	#category : 'Collections-Abstract-Tests-Base',

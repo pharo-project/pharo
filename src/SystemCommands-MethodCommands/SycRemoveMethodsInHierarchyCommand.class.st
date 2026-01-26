@@ -13,8 +13,8 @@ Class {
 SycRemoveMethodsInHierarchyCommand >> asRefactorings [
 
 	| refactoring |
-	refactoring := RBRemoveMethodsInHierarchyRefactoring
-				      		selectors: (methods collect: [:each | each selector])
+	refactoring := ReRemoveMethodsInHierarchyRefactoring
+				      		selectors: (methods collect: [ :each | each selector ])
 							from: methods first origin.
 	^ OrderedCollection with: refactoring
 ]

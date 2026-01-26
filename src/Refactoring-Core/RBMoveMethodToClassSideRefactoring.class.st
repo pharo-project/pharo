@@ -46,7 +46,7 @@ Class {
 { #category : 'refactoring' }
 RBMoveMethodToClassSideRefactoring >> accessorsFor: variableName [
 
-	^ RBCreateAccessorsForVariableTransformation
+	^ ReCreateAccessorsForVariableTransformation
 				model: self model
 				variable: variableName
 				class: class
@@ -66,13 +66,14 @@ RBMoveMethodToClassSideRefactoring >> addMethod: rbMethod to: aClass toProtocol:
 { #category : 'preconditions' }
 RBMoveMethodToClassSideRefactoring >> applicabilityPreconditions [
 
-	^ { (RBCondition isMetaclass: class) not }
+	^ { ReClassesAreNotMetaClassCondition new classes: { class } }.
+
 ]
 
 { #category : 'preconditions' }
 RBMoveMethodToClassSideRefactoring >> breakingChangePreconditions [
-
-	^ { (RBCondition definesSelector: method selector in: class classSide) not }
+	
+	^ { (ReDefinesSelectorsCondition new definesSelectors: { method selector } in: class classSide) not }
 ]
 
 { #category : 'checking' }
@@ -100,14 +101,14 @@ RBMoveMethodToClassSideRefactoring >> getNewInstSideSource [
 RBMoveMethodToClassSideRefactoring >> getNewSource [
 
 	| rewriter node temp |
-	temp := self temporaryName.
-	node := RBParser parseMethod: method source.
-	rewriter := RBParseTreeRewriter new replace: 'self' with: temp.
+	temp := 'newInstance'.
+	node := OCParser parseMethod: method source.
+	rewriter := OCParseTreeRewriter new replace: 'self' with: temp.
 	(rewriter executeTree: node)
 		ifTrue: [
-			node := RBParser parseMethod: rewriter tree formattedCode.
+			node := OCParser parseMethod: rewriter tree formattedCode.
 			node body addNodeFirst:
-				(RBParser parseExpression: temp , ' := self new').
+				(OCParser parseExpression: temp , ' := self new').
 			node body addTemporaryNamed: temp.
 			^ node newSource ]
 		ifFalse: [ ^ node sourceCode ]
@@ -144,19 +145,20 @@ RBMoveMethodToClassSideRefactoring >> preconditions [
 { #category : 'transforming' }
 RBMoveMethodToClassSideRefactoring >> privateTransform [
 
-| oldClass newClass rbMethod rbMethod2 newSource originalProtocol newSource2 |
+	| sourceClass targetClass rbMethod rbMethod2 newSource originalProtocol newSource2 |
 	newSource := self getNewInstSideSource.
 	originalProtocol := method protocolName.
-	oldClass := class.
+	sourceClass := class.
 	self removeInstVariableReferences.
 	method := class methodFor: method selector.
-	newClass := self model classNamed: class name, ' class'.
+	targetClass := self model classNamed: class name, ' class'.
 	newSource2 := self getNewSource.
-	rbMethod := self model rbMethodClass for: newClass source: newSource2 selector: method selector.
-	rbMethod2 := self model rbMethodClass for: oldClass source: newSource selector: method selector.
-	self removeMethod: method selector from: oldClass.
-	self addMethod: rbMethod to: newClass toProtocol: originalProtocol.
-	self addMethod: rbMethod2 to: oldClass toProtocol: originalProtocol
+
+	rbMethod := RBMethod for: targetClass source: newSource2 selector: method selector.
+	rbMethod2 := RBMethod for: sourceClass source: newSource selector: method selector.
+	self removeMethod: method selector from: sourceClass.
+	self addMethod: rbMethod to: targetClass toProtocol: originalProtocol.
+	self addMethod: rbMethod2 to: sourceClass toProtocol: originalProtocol
 ]
 
 { #category : 'transforming' }
@@ -198,16 +200,4 @@ RBMoveMethodToClassSideRefactoring >> storeOn: aStream [
 		nextPutAll: class name.
 	aStream
 		nextPutAll: ')'
-]
-
-{ #category : 'transforming' }
-RBMoveMethodToClassSideRefactoring >> temporaryName [
-	| aString counter tempName |
-	counter := 0.
-	aString := class canonicalArgumentName.
-	tempName := aString.
-	[self checkVariableNamed: tempName]
-	whileTrue: [ counter := counter + 1.
-		tempName := aString , counter asString ].
-	^ tempName
 ]

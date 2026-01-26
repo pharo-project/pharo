@@ -15,6 +15,6 @@ NECInstVarEntry >> hightlightSymbol [
 ]
 
 { #category : 'accessing' }
-NECInstVarEntry >> label [
+NECInstVarEntry >> rawLabel [
 	^ 'instance variable'
 ]

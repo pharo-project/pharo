@@ -20,9 +20,10 @@ MCOrganizationParser >> addDefinitionsTo: aCollection [
 	| definition tokens packageName tags |
 	definition := aCollection
 		              detect: [ :ea | ea isOrganizationDefinition ]
-		              ifNone: [ aCollection add: MCOrganizationDefinition new ].
+		              ifNone: [
+		              aCollection add: MCOrganizationDefinition new ].
 
-	tokens := source parseLiterals.
+	tokens := OCParser parseLiterals: source.
 
 	packageName := tokens at: 4.
 	tags := tokens at: 6.

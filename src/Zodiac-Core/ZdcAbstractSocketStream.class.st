@@ -58,7 +58,7 @@ ZdcAbstractSocketStream >> bufferSize: numberOfBytes [
 	"Not yet implemented. See #initializeBuffers."
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZdcAbstractSocketStream >> close [
 	"Close the stream, flush if necessary"
 
@@ -111,7 +111,7 @@ ZdcAbstractSocketStream >> initialize [
 	self initializeBuffers
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZdcAbstractSocketStream >> initializeBuffers [
 	readBuffer := ZdcIOBuffer onByteArrayOfSize: 4096.
 	writeBuffer := ZdcIOBuffer onByteArrayOfSize: 4096
@@ -243,7 +243,7 @@ ZdcAbstractSocketStream >> nextPutAll: collection [
 		startingAt: 1
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZdcAbstractSocketStream >> on: object [
 	socket := object
 ]

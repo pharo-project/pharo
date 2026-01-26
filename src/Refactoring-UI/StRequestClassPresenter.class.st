@@ -18,6 +18,13 @@ StRequestClassPresenter >> initializeClassNamePresenter [
 ]
 
 { #category : 'initialization' }
+StRequestClassPresenter >> initializeDialogWindow: aDialogPresenter [
+
+	super initializeDialogWindow: aDialogPresenter.
+	aDialogPresenter title: self windowTitle
+]
+
+{ #category : 'initialization' }
 StRequestClassPresenter >> initializeFocus [
 	^ self subclassResponsibility
 ]
@@ -57,23 +64,11 @@ StRequestClassPresenter >> initializeTagsPresenter [
 		yourself.
 ]
 
-{ #category : 'initialization' }
-StRequestClassPresenter >> initializeWindow: aSpWindowPresenter [
-
-	super initializeWindow: aSpWindowPresenter.
-	self
-		setTitleTo: aSpWindowPresenter;
-		setWindowIconTo: aSpWindowPresenter.
-
-	aSpWindowPresenter
-		aboutText: String empty
-]
-
 { #category : 'accessing' }
 StRequestClassPresenter >> newClassName [
 	"Answer a <String> containing the current contents of the new class name presenter"
-	
-	^ textInput text trimmed
+
+	^ textInput text trimBoth
 ]
 
 { #category : 'api - showing' }
@@ -84,24 +79,15 @@ StRequestClassPresenter >> openModal [
 
 { #category : 'accessing' }
 StRequestClassPresenter >> packageName [
+	"Answer a <String> with the receiver's selected package"
 
 	^ packagePresenter selectedItem
 ]
 
 { #category : 'accessing - model' }
-StRequestClassPresenter >> setModelBeforeInitialization: aRBInteractionDriver [
+StRequestClassPresenter >> setModelBeforeInitialization: anInteractionDriver [
 
-	driver := aRBInteractionDriver
-]
-
-{ #category : 'initialization' }
-StRequestClassPresenter >> setTitleTo: aSpWindowPresenter [ 
-	^ self subclassResponsibility
-]
-
-{ #category : 'initialization' }
-StRequestClassPresenter >> setWindowIconTo: aSpWindowPresenter [
-	^ self subclassResponsibility
+	driver := anInteractionDriver
 ]
 
 { #category : 'accessing' }
@@ -113,14 +99,13 @@ StRequestClassPresenter >> tagName [
 { #category : 'callbacks' }
 StRequestClassPresenter >> updateTagItems: item [
 	"Note that as it seems there is no Spec drop list with editable text, we provide a 'Core' tag by default if the package has no tags"
+
 	| pkg |
-	
-	item 
-		ifNil: [ tagPresenter items: { 'Core' } ]
-		ifNotNil: [ 
-			(pkg := PackageOrganizer default packageNamed: item)  tagNames
-				ifEmpty: [ tagPresenter items: { 'Core' }  ]
-				ifNotEmpty: [ : tagNames | tagPresenter items: tagNames asOrderedCollection ] ].
+	item ifNil: [ tagPresenter items: { 'Core' } ] ifNotNil: [
+			(pkg := PackageOrganizer default packageNamed: item) tagNames
+				ifEmpty: [ tagPresenter items: { 'Core' } ]
+				ifNotEmpty: [ :tagNames |
+				tagPresenter items: tagNames asOrderedCollection ] ].
 	tagPresenter selectIndex: 1
 ]
 
@@ -144,20 +129,28 @@ StRequestClassPresenter >> validateAnswer [
 { #category : 'private' }
 StRequestClassPresenter >> validateAnswerBlock [
 
-	^ [ : newClassName : packageName : tagName |
+	^ [ :newClassName :packageName :tagName |
 		  | isValid |
-		  isValid := (self validateNameBlock value: newClassName) and: [ (self validateNameBlock value: packageName) and: [ self validateNameBlock value: tagName ] ].
-		  isValid 
-			ifFalse: [ self inform: 'Name can''t be empty or contain spaces' ].
+		  isValid := (self validateClassNameBlock value: newClassName) and: [
+			             (self validatePackageNameBlock value: packageName) and: [ self validatePackageNameBlock value: tagName ] ].
+		  isValid ifFalse: [ self inform: 'Name can''t be empty or contain spaces' ].
 		  isValid ]
 ]
 
 { #category : 'private' }
-StRequestClassPresenter >> validateNameBlock [
+StRequestClassPresenter >> validateClassNameBlock [
 
-	^ [ :txt |
-	  | isValid |
-	  isValid := txt isNotNil and: [
-		             txt isNotEmpty and: [ (txt includesSubstring: ' ') not ] ].
-	  isValid ]
+	^ [ :txt | txt isNotNil and: [ txt isNotEmpty and: [ (txt includesSubstring: ' ') not ] ] ]
+]
+
+{ #category : 'private' }
+StRequestClassPresenter >> validatePackageNameBlock [
+
+	^ [ :txt | txt isNotNil and: [ txt isNotEmpty ] ]
+]
+
+{ #category : 'accessing' }
+StRequestClassPresenter >> windowTitle [
+
+	^  driver dialogTitleForClassSelection
 ]

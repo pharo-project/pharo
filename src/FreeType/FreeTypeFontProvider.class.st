@@ -59,7 +59,9 @@ FreeTypeFontProvider class >> initialize [
 	FreeTypeSettings initialize.
 
 	current := nil.
-	self current "this creates an instance of me, and updates from the system"
+	self current. "this creates an instance of me, and updates from the system"
+	LogicalFontManager current addFontProvider:
+		self current.
 ]
 
 { #category : 'accessing' }
@@ -343,8 +345,8 @@ FreeTypeFontProvider >> unixFontDirectories [
 	"Trying with some common directories in unix. The prefered version is to read the /etc/fonts/fonts.conf"
 
 	| localUserFonts |
-	localUserFonts := FileLocator home / '.fonts'.
-	^ {localUserFonts} , #('/usr/share/fonts' '/usr/local/share/fonts') collect: [ :each | each asFileReference ] thenSelect: [ :each | each exists ]
+	localUserFonts := { FileLocator home / '.fonts'. FileLocator home / '.local/share/fonts' }.
+	^ localUserFonts, #('/usr/share/fonts' '/usr/local/share/fonts') collect: [ :each | each asFileReference ] thenSelect: [ :each | each exists ]
 ]
 
 { #category : 'file paths' }

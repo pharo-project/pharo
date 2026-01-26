@@ -127,7 +127,7 @@ SystemEnvironment >> at: aKey put: anObject [
  	index := self findElementOrNil: aKey.
  	assoc := array at: index.
  	assoc
- 		ifNil: [self atNewIndex: index put: (GlobalVariable key: aKey value: anObject). self flushClassNameCache]
+ 		ifNil: [self atNewIndex: index put: (GlobalVariable key: aKey value: anObject).]
  		ifNotNil: [assoc value: anObject].
 		
 	registeredMethods do: [ :aMethod | aMethod isInstalled ifTrue: [aMethod recompile] ].		
@@ -135,10 +135,19 @@ SystemEnvironment >> at: aKey put: anObject [
  	^ anObject
 ]
 
-{ #category : 'adding' }
+{ #category : 'accessing' }
+SystemEnvironment >> at: key update: updateBlock initial: initBlocktOrValue [
+	"Unsupported API: SystemEnvironment is not intended to be used as a dictionary."
+
+	self shouldNotImplement
+]
+
+{ #category : 'private' }
 SystemEnvironment >> atNewIndex: index put: aGlobalVariable [
 
 	aGlobalVariable isAssociation ifTrue: [ self error: 'Only global variables should be added to the SystemEnvironment and not associations.' ].
+	"make sure to fludh the caches"
+	self flushClassNameCache.
 	^ super atNewIndex: index put: aGlobalVariable
 ]
 
@@ -206,12 +215,30 @@ SystemEnvironment >> codeChangeAnnouncer [
 ]
 
 { #category : 'accessing' }
+SystemEnvironment >> codeChangeAnnouncer: anAnnouncer [
+	"For now the announcer is still saved in SystemAnnouncer so we access it there. In the future we should save it in the environment.
+	
+	codeChangeAnnouncer := anAnnouncer"
+
+	SystemAnnouncer announcer: anAnnouncer
+]
+
+{ #category : 'accessing' }
 SystemEnvironment >> codeSupportAnnouncer [
 	"A code support announcer is an announcer used for tooling support such as the breakpoints or AST cache."
 
 	"This should not be hardcoded in the futurebut I should have my own instance."
 
 	^ SystemAnnouncer uniqueInstance
+]
+
+{ #category : 'accessing' }
+SystemEnvironment >> codeSupportAnnouncer: anAnnouncer [
+	"For now the announcer is still saved in SystemAnnouncer so we access it there. In the future we should save it in the environment.
+	
+	codeSupportAnnouncer := anAnnouncer"
+
+	SystemAnnouncer announcer: anAnnouncer
 ]
 
 { #category : 'accessing' }
@@ -264,26 +291,6 @@ SystemEnvironment >> forgetClass: aClass [
 
 	self organization removeClass: aClass.
 	self removeKey: aClass name ifAbsent: [  ]
-]
-
-{ #category : 'testing' }
-SystemEnvironment >> hasBindingThatBeginsWith: aString [
-	"Use the cached class and non-class names for better performance."
-
-	| name searchBlock |
-	(self pseudoVariables hasBindingThatBeginsWith: aString) ifTrue: [
-		^ true ].
-	searchBlock := [ :element |
-	               (element beginsWith: aString)
-		               ifTrue: [ 0 ]
-		               ifFalse: [
-			               aString < element
-				               ifTrue: [ -1 ]
-				               ifFalse: [ 1 ] ] ].
-	name := self classNames findBinary: searchBlock ifNone: [ nil ].
-	name ifNotNil: [ ^ true ].
-	name := self nonClassNames findBinary: searchBlock ifNone: [ nil ].
-	^ name isNotNil
 ]
 
 { #category : 'accessing - classes and traits' }
@@ -349,12 +356,6 @@ SystemEnvironment >> organization: anOrganization [
 
 	anOrganization environment: self.
 	^ self at: #SystemOrganization put: anOrganization
-]
-
-{ #category : 'accessing - variable lookup' }
-SystemEnvironment >> outerScope [
-
-	^ nil
 ]
 
 { #category : 'accessing' }
@@ -429,8 +430,7 @@ SystemEnvironment >> renameClass: aClass from: oldName [
 	oldref key: aClass name.
 	self add: oldref. "Old association preserves old refs"
 	self flushClassNameCache.
-	self class codeChangeAnnouncer classRenamed: aClass from: oldName to: aClass name.
-	aClass subclassesDo: [ :subclass | self class codeChangeAnnouncer classParentOf: subclass renamedFrom: oldName to: aClass name ]
+	self class codeChangeAnnouncer classRenamed: aClass from: oldName to: aClass name
 ]
 
 { #category : 'renaming' }
@@ -470,9 +470,4 @@ SystemEnvironment >> undeclaredRegistry [
 	"For now we are referencing a global variable of the default environment of Pharo. But in the future each environments should have their undeclared registry, else we have memory leaks of the environments."
 
 	^ Undeclared
-]
-
-{ #category : 'copying' }
-SystemEnvironment >> veryDeepCopyWith: deepCopier [
-	"Return self. I can't be copied. Do not record me."
 ]

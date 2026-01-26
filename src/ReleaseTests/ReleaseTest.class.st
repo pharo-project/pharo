@@ -99,7 +99,9 @@ ReleaseTest >> knownProcesses [
 		Delay schedulingProcess.
 		TKTWatchDog onDuty pharoProcess.
 		OSSDL2Driver eventLoopProcess.
-		TFCallbackQueue uniqueInstance callbackProcess } asSet
+		TFCallbackQueue uniqueInstance callbackProcess.
+		(Smalltalk classNamed: #StThreadSafeTranscript) ifNotNil: [ :aClass | aClass uniqueInstance workerProcess ] 
+	} asSet
 ]
 
 { #category : 'tests - variables' }
@@ -209,6 +211,22 @@ ReleaseTest >> testExplicitRequirementMethodsShouldBeImplementedInTheirUsers [
 	self assertValidLintRule: ReExplicitRequirementMethodsRule new
 ]
 
+{ #category : 'tests - variables' }
+ReleaseTest >> testInitializeSlotsAreUseful [
+	"When a class has a slot that needs initialization, an #initializeSlots: method call is added to the initialize method. But sometimes we remove the slots without removing the initialization. This test checkes it"
+
+	| senders violators |
+	senders := #initializeSlots: senders select: [ :method | method selector = #initialize ]. "A sender is wrong if the class has no slots to initialize and its subclasses don't have such slots."
+
+	violators := senders reject: [ :sender |
+			             | class |
+			             class := sender methodClass.
+			             (class allSlots anySatisfy: [ :slot | slot wantsInitialization ]) or: [
+				             class hasSubclasses and: [ class subclasses allSatisfy: [ :subclass | subclass slots anySatisfy: [ :slot | slot wantsInitialization ] ] ] ] ].
+
+	self assertEmpty: violators
+]
+
 { #category : 'tests' }
 ReleaseTest >> testInstanceSideMethodsWithNilKeyInLastLiteral [
 	| instanceSideMethodsWithNilKeyInLastLiteral |
@@ -226,15 +244,16 @@ ReleaseTest >> testInstanceSideMethodsWithNilKeyInLastLiteral [
 { #category : 'tests' }
 ReleaseTest >> testKeyClassesArePresentInStartupList [
 	| keyClasses registeredHandlers |
-	keyClasses := #(#Delay #ProcessorScheduler #Stdio #OSPlatform #UUIDGenerator #DiskStore #FinalizationProcess #BasicCommandLineHandler).
+	keyClasses := #(#Delay #ProcessorScheduler #Stdio #OSPlatform #DiskStore #FinalizationProcess).
 	registeredHandlers := SessionManager default startupList
-		collect: [:each | each handledId].
+		collect: [:each | each handlerId].
 
 	keyClasses do:	[ :className |
 		self assert: (registeredHandlers includes: className).
 		self assert: (self hasStartUpOrShutDownMethod: (testingEnvironment at: className)) ].
 
-	self assert: (registeredHandlers includes: #ErrorHandlerSessionHandler)
+	self assert: (registeredHandlers includes: #commandLineHandler) description: 'No Command-line handler found!'.
+	self assert: (registeredHandlers includes: #ErrorHandlerSessionHandler) description: 'No Error handler found!'.
 ]
 
 { #category : 'tests' }
@@ -272,7 +291,7 @@ ReleaseTest >> testManifestNamesAccordingToPackageNames [
 { #category : 'tests' }
 ReleaseTest >> testMethodsContainNoHalt [
 
-	| methods |
+	| methods explicitlyRejectMethods |
 	methods := SystemNavigation new allMethods select: [ :method | method containsHalt ].
 	"these methods are using halt for testing something"
 	methods := methods reject: [ :method |
@@ -280,7 +299,10 @@ ReleaseTest >> testMethodsContainNoHalt [
 	"these methods are implementing halt, we are not interested"
 	methods := methods reject: [ :method |
 		           method hasPragmaNamed: #debuggerCompleteToSender ].
-
+	
+	explicitlyRejectMethods := { 'DebugContext>>#confirm:trueChoice:falseChoice:' }.
+	methods := methods reject: [ :method | explicitlyRejectMethods includes: method name  ].
+	
 	"there should be no method left"
 	self assert: methods isEmpty description: [
 		String streamContents: [ :stream |
@@ -317,12 +339,9 @@ ReleaseTest >> testNoEquivalentSuperclassMethods [
 	"we do not care about methods that are installed from traits"
 	methods := SystemNavigation new allMethods reject: [ :method | method isFromTrait ].
 
-	methods := methods select: [ :method |
-		           method overriddenMethod
-			           ifNotNil: [ :overridenMethod | method equivalentTo: overridenMethod ]
-			           ifNil: [ false ] ].
+	methods := methods select: [ :method | method hasEquivalentMethodInSuperclass ].
 
-	self assert: methods size <= 326
+	self assert: methods size <= 38
 ]
 
 { #category : 'tests - variables' }
@@ -385,22 +404,33 @@ ReleaseTest >> testNoPeriodInMethodSignature [
 { #category : 'tests - variables' }
 ReleaseTest >> testNoShadowedVariablesInMethods [
 	"Fail if there are methods who define shadowed temps or args"
+
 	| found validExceptions remaining |
 	found := SystemNavigation default methods select: [ :m |
-		m isQuick not and: [ "quick methods do not define variables"
-			m ast variableDefinitionNodes anySatisfy: [ :node | node variable isShadowing ] ]].
-	"No other exceptions beside the ones mentioned here should be allowed"
+			         m isQuick not and: [ "quick methods do not define variables"
+				         m ast variableDefinitionNodes anySatisfy: [ :node | node variable isShadowing ] ] ]. "No other exceptions beside the ones mentioned here should be allowed"
 	validExceptions := {
-		RBSmalllintTestObject>>#tempVarOverridesInstVar.
-		ReTempVarOverridesInstVarRuleTest>>#sampleMethod:}.
+		                   (DebugInfoTest >> #testListShadowedVariablesAreNotDuplicated).
+		                   (RBSmalllintTestObject >> #tempVarOverridesInstVar).
+		                   (ReTempVarOverridesInstVarRuleTest >> #sampleMethod:).
+		                   (OCClosureCompilerTest >> #testInlineBlockShadowVariableTwoBlocksTemporary).
+		                   (OCClosureCompilerTest >> #testInlineBlockShadowVariableUsedInBlock).
+		                   (OCClosureCompilerTest >> #testInlineBlockShadowVariableAssignedInside).
+		                   (OCClosureCompilerTest >> #testInlineBlockShadowVariableTemporary).
+		                   (OCClosureCompilerTest >> #testInlineBlockShadowVariableUsedInInnerBlock).
+		                   (OCClosureCompilerTest >> #testInlineBlockShadowVariableUsedInInnerInnerBlock).
+		                   (OCClosureCompilerTest >> #testInlineBlockShadowVariableInnerBlocks).
+		                   (OCClosureCompilerTest >> #testInlineBlockShadowVariableParameter).
+		                   (ReClassToConvertTemporaryToInstanceVariable >> #doAction2).
+		                   (MethodMapExamples >> #exampleWithNestedHoisting) }.
 
 	remaining := found asOrderedCollection
-								removeAll: validExceptions;
-								yourself.
+		             removeAll: validExceptions;
+		             yourself.
 
 	self
 		assert: remaining isEmpty
-		description: ('the following methods have shadowing variable definitions and should be cleaned: ', remaining asString)
+		description: 'the following methods have shadowing variable definitions and should be cleaned: ' , remaining asString
 ]
 
 { #category : 'tests' }
@@ -497,7 +527,7 @@ ReleaseTest >> testShouldFileLocatorBeBeforeSystemSettingsPersistenceInStartupLi
 	"This test documents issue https://pharo.manuscript.com/f/cases/17721"
 
 	| startupList settingsIndex |
-	startupList := (SessionManager default startupList collect: [:each | each handledId]).
+	startupList := (SessionManager default startupList collect: [:each | each handlerId]).
 	settingsIndex := startupList indexOf: #SystemSettingsPersistence.
 	settingsIndex > 0
 		ifTrue: [ self should: [ (startupList indexOf: #FileLocator) < (startupList indexOf: #SystemSettingsPersistence) ] ]
@@ -508,7 +538,7 @@ ReleaseTest >> testShouldWorldMorphBeAfterFontClassesInStartupList [
 	"This test documents issue https://pharo.manuscript.com/f/cases/17834"
 	"The Startup of he WorldMorph is now done in the UIManagerHandler"
 	| startupList |
-	startupList := (SessionManager default startupList collect: [:each | each handledId]).
+	startupList := (SessionManager default startupList collect: [:each | each handlerId]).
 	#(StrikeFont LogicalFont FreeTypeSettings FreeTypeCache)
 		do: [ :fontClass |
 			self should: [ (startupList indexOf: #ErrorHandlerSessionHandler) > (startupList indexOf: #SystemSettingsPersistence) ] ]
@@ -536,51 +566,30 @@ ReleaseTest >> testThatThereAreNoSelectorsRemainingThatAreSentButNotImplemented 
 	 This test makes sure that we do not introduce new cases until we are down to one"
 
 	| knownFailures violations wantedAndValidViolations |
-
 	"String streamContents: [ :aStream | aStream << '#( '.  SystemNavigation default allSentButNotImplementedSelectors do: [ :m | .aStream << '''' << m printString  << ''' ' ]. aStream << ')' ]"
 	knownFailures := #( 'AthensCCWArcSegment>>#accept:' 'AthensCWArcSegment>>#accept:' 'AthensCairoCanvas>>#visitCubicSegment:'
 	                    'AthensCairoCanvas>>#visitQuadSegment:' 'AthensCloseSegment>>#accept:' 'AthensCubicSegment>>#accept:' 'AthensEllipticalArcSegment>>#accept:'
 	                    'AthensInteractiveScene>>#eventHandledByScene:' 'AthensLineSegment>>#accept:' 'AthensMoveSegment>>#accept:' 'AthensParagraph>>#compose:style:from:in:'
 	                    'AthensPolygon>>#paintFillsUsing:on:' 'BalloonEdgeData>>#stepToFirstScanLine' 'BalloonEdgeData>>#stepToNextScanLine'
-	                    'BalloonEngine>>#registerFills:' 'BalloonFillData>>#computeFill' 'ClyFullBrowserMorph>>#extendClassScopeForMethods:'
+	                    'BalloonEngine>>#registerFills:' 'BalloonFillData>>#computeFill'
 	                    'ComplexBorderStyle>>#drawPolyPatchFrom:to:on:usingEnds:' 'ComplexBorderStyle>>#drawLineFrom:to:on:'
-	                    'Context>>#simulatePrimitive:in:receiver:arguments:' 'Context>>#doPrimitive:method:receiver:args:'
-	                    'Context>>#failPrimitiveWith:' 'DAPackageAnalyzerDiffTreePresenter>>#buildRoots' 'DTReRunConfiguration>>#items'
-	                    'DebugSession>>#shouldDisplayContext:basedOnFilters:' 'DiskDirectoryEntry class>>#store:path:node:'
-	                    'EDEmergencyDebugger>>#resetDisplay' 'EDTest>>#prepareMethodVersionTest' 'ExternalDropHandler class>>#defaultHandler'
-	                    'FFICallbackArgumentReader>>#stackPointer' 'FFIFloat32>>#callbackReturnOn:for:' 'FFIFloatType>>#callbackReturnOn:for:'
-	                    'FFIIndirectFunctionResolution>>#resolveFunction:' 'FileDialogWindow>>#saveForcedSelectedFile' 'FileList class>>#morphicViewOnFile:contents:fileList:'
-	                    'GLMOSWindowWorldMorph>>#delete' 'IRReconstructor>>#fixPushNilsForTemps' 'IceLibgitCommitWalk>>#shouldInclude:'
-	                    'IcePackage>>#outgoingCommits' 'IceRemote>>#upstreamForBranch:backend:' 'IceTag>>#lastCommit' 'IceTipHiedraAltComponentHistoryBrowser>>#newCommitRow:commit:'
+	                    'Context>>#doPrimitive:method:receiver:args:' 'Context>>#failPrimitiveWith:' 'EDTest>>#prepareMethodVersionTest'
+	                    'ExternalDropHandler class>>#defaultHandler' 'FFICallbackArgumentReader>>#stackPointer' 'FFIFloat32>>#callbackReturnOn:for:'
+	                    'FFIFloatType>>#callbackReturnOn:for:' 'FFIIndirectFunctionResolution>>#resolveFunction:'
+	                    'IceTipHiedraAltComponentHistoryBrowser>>#newCommitRow:commit:'
 	                    'IceTipHiedraAltHistoryBrowser>>#newCommitRow:commit:' 'IceTipHiedraAltHistoryBrowser>>#initializeCommitList'
-	                    'InstructionStream>>#interpretNext3ByteSistaV1Instruction:for:extA:extB:startPC:'
-	                    'KMDispatcher>>#spotterForKeysFor:' 'KMMetaModifier>>#printOsRepresentationOn:' 'LGitDiff>>#includesFileNamed:'
-	                    'LGitRepository>>#cloneRemote:signature:branch:checkoutOptions:' 'LazyListMorph>>#drawOnAthensCanvas:'
-	                    'MCAddition>>#myVersionOn:' 'MCFileTreeAbstractReader>>#packageProperties' 'MCModification>>#myVersionOn:' 'MCOrganizationDefinition>>#addAnalysisToPackageChangeSet:change:'
-	                    'MicrodownSpecComponentForTest class>>#open' 'MockLessonView>>#showTutorialNode:' 'MorphTreeMorph>>#nodeExpandRequest:'
-	                    'MorphTreeMorph>>#selectItemsRequest:' 'PSMCClassChangeWrapper>>#remoteChosen' 'PolygonMorph>>#intersects:' 'RBBasicDummyLintRuleTest class>>#createMatcherFor:method:'
-	                    'RBBasicDummyLintRuleTest class>>#usesAdd' 'RBBasicDummyLintRuleTest class>>#unreferencedVariables'
-	                    'RBBasicDummyLintRuleTest class>>#classNotReferenced' 'RBBasicDummyLintRuleTest class>>#canCall:in:from:'
-	                    'RBBasicDummyLintRuleTest class>>#tempsReadBeforeWritten' 'RBBasicDummyLintRuleTest class>>#usesTrue'
-	                    'RBBasicDummyLintRuleTest class>>#variableAssignedLiteral' 'RBBasicDummyLintRuleTest class>>#onlyReadOrWritten'
-	                    'RBBasicDummyLintRuleTest class>>#sentNotImplementedInApplication' 'RBBasicDummyLintRuleTest class>>#tempVarOverridesInstVar'
-	                    'RBBasicDummyLintRuleTest class>>#instVarInSubclasses' 'RBBasicDummyLintRuleTest class>>#utilityMethods'
-	                    'RBBasicLintRuleTestData class>>#canCall:in:from:' 'RBBasicLintRuleTestData class>>#createMatcherFor:method:'
-	                    'RBBasicLintRuleTestData class>>#sentNotImplementedInApplication' 'RBBasicLintRuleTestData class>>#utilityMethods'
-	                    'RBClassDataForRefactoringTest>>#inlineComponent' 'RBClassDataForRefactoringTest>>#textInput:name:symbol:'
-	                    'RBClassDataForRefactoringTest>>#inlineFailed' 'RBClassDataForRefactoringTest>>#renderContentOn:'
-	                    'RBEnvironmentVisitor>>#visitPackageEnv:' 'RBEnvironmentVisitor>>#visitClassEnv:' 'RBEnvironmentVisitor>>#visitProtocolEnv:'
-	                    'RBFindAndReplacePreviewPresenter>>#initializeDialogWindow:' 'RBLintRuleTestData>>#runOnEnvironment:'
-	                    'RBRemoveClassRefactoring>>#senders' 'RBTransformationDummyRuleTest class>>#initializeAfterLoad1'
+	                    'InstructionStream>>#interpretNext3ByteSistaV1Instruction:for:extA:extB:'
+	                    'LazyListMorph>>#drawOnAthensCanvas:' 'MicrodownSpecComponentForTest class>>#open'
+	                    'PSMCClassChangeWrapper>>#remoteChosen' 'PolygonMorph>>#intersects:' 'RBBasicLintRuleTestData class>>#canCall:in:from:'
+	                    'RBBasicLintRuleTestData class>>#createMatcherFor:method:' 'RBBasicLintRuleTestData class>>#sentNotImplementedInApplication'
+	                    'RBBasicLintRuleTestData class>>#utilityMethods' 'RBClassDataForRefactoringTest>>#inlineComponent'
+	                    'RBClassDataForRefactoringTest>>#textInput:name:symbol:' 'RBClassDataForRefactoringTest>>#inlineFailed'
+	                    'RBClassDataForRefactoringTest>>#renderContentOn:' 'OCIRReconstructorBuilder>>#fixPushNilsForTemps'
+	                    'RBLintRuleTestData>>#runOnEnvironment:' 'RBTransformationDummyRuleTest class>>#initializeAfterLoad1'
 	                    'RBTransformationDummyRuleTest class>>#rewrite:methods:name:' 'RBTransformationRuleTestData class>>#initializeAfterLoad1'
 	                    'RBTransformationRuleTestData class>>#rewrite:methods:name:' 'RGChunkImporter>>#visitDoItChunk:' 'ReSentNotImplementedRuleTest>>#sampleMethod'
-	                    'Rectangle>>#newRectButtonPressedDo:inWorld:' 'RubSegmentMorph>>#intersects:' 'RubTextSegmentMorph>>#displayIconAt:onAthensCanvas:'
-	                    'SpApplication>>#ensureConfiguration' 'SpApplicationBackend>>#notify:' 'SpChangeSorterPresenter>>#createRingMethodForRemovedSelector:inClass:'
-	                    'SpRenameDefaultSpecToDefaultLayoutRefactoring>>#preconditions' 'SpRenameDefaultSpecToDefaultLayoutRefactoring>>#initialize'
-	                    'SpTransmission>>#from:port:to:transform:postTransmission:' 'SpTreeColumn>>#rowMorphFor:' 'SpUIThemeDecoratorTest>>#testDoesNotUnderstand'
-	                    'SpWindowPresenter>>#notify:' 'StSpotterPragmaBasedProcessor>>#installKeymappingsOn:'
-	                    'StringMorph>>#launchEditor:' 'SycRemoveKeepingSubclassesClassStrategy>>#execute:' 'TransferMorph>>#justDroppedInto:event:'
-	                    'TransferMorph>>#delete' 'ZnConstants class>>#frameworkMCVersion' ).
+	                    'RubSegmentMorph>>#intersects:' 'SpTreeColumn>>#rowMorphFor:' 'SpUIThemeDecoratorTest>>#testDoesNotUnderstand'
+	                    'SpWindowPresenter>>#notify:' 'SpMorphicBackend>>#executeSaveFileDialog:' 'MCMethodDefinitionTest>>#testLoadInvalidCodeInLegacyMode' ).
 
 	violations := (SystemNavigation default allSentButNotImplementedSelectors collect: [ :method | method printString ]) asOrderedCollection.
 	"This next line is to ignore this for SmalltalkCI and not make external Pharo projects fail :("
@@ -595,36 +604,33 @@ ReleaseTest >> testThatThereAreNoSelectorsRemainingThatAreSentButNotImplemented 
 
 { #category : 'tests - variables' }
 ReleaseTest >> testUndeclared [
-	| undeclaredVariables validExceptions remaining description  |
 
-	"we compile a second method with the undeclared #undeclaredStubInstVar1 to trigger the code path of removing twice in #cleanOutUndeclared"
+	| undeclaredVariables validExceptions remaining description |
+	[ "we compile a second method with the undeclared #undeclaredStubInstVar1 to trigger the code path of removing twice in #cleanOutUndeclared"
 	self class compile: 'methodForTest ^undeclaredStubInstVar1'.
 	Smalltalk cleanOutUndeclared.
-	undeclaredVariables := Undeclared associations select: [:each |
-			each isUndeclaredVariable].
+	undeclaredVariables := Undeclared associations select: [ :each | each isUndeclaredVariable ].
 
-	validExceptions := { #undeclaredStubInstVar1 . #undeclaredStubInstVar2 }.
+	validExceptions := { #undeclaredStubInstVar1. #undeclaredStubInstVar2. #Gofer }. "The laste one is for Smalltalk CI and our external projects... But we should find a better solution at some point."
 
 	"for now we filter by name, maybe filtering by variable would be better"
-	remaining := undeclaredVariables reject: [ :each | validExceptions includes: each name  ].
+	remaining := undeclaredVariables reject: [ :each | validExceptions includes: each name ].
 
 	"we look for one of the using methods of the undeclared var and report that,
 	this should be enough to fix it quickly"
 	description := String streamContents: [ :stream |
-			stream nextPutAll: 'Found undeclared Variables: '.
-			remaining do: [ :variable  |
-				| method |
-				method := variable usingMethods anyOne.
-				stream
-					cr
-					nextPutAll: variable name;
-					nextPutAll: ' in: ';
-					print: method methodClass;
-					nextPutAll: '>>';
-					print: method selector]].
+		               stream nextPutAll: 'Found undeclared Variables: '.
+		               remaining do: [ :variable |
+			               | method |
+			               method := variable usingMethods anyOne.
+			               stream cr
+				               nextPutAll: variable name;
+				               nextPutAll: ' in: ';
+				               print: method methodClass;
+				               nextPutAll: '>>';
+				               print: method selector ] ].
 
-	self assert: remaining isEmpty description: description.
-	self class removeSelector: #methodForTest.
+	self assert: remaining isEmpty description: description ] ensure: [ self class removeSelector: #methodForTest ]
 ]
 
 { #category : 'tests - package' }

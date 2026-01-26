@@ -11,5 +11,5 @@ Class {
 
 { #category : 'accessing' }
 MCNoChangesException >> defaultAction [
-	self inform: 'No changes'
+	InformativeNotification signal: 'No changes'
 ]

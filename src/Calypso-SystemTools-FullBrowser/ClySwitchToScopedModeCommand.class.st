@@ -39,12 +39,13 @@ ClySwitchToScopedModeCommand >> packages: anObject [
 
 { #category : 'execution' }
 ClySwitchToScopedModeCommand >> prepareFullExecutionInContext: aBrowserContext [
-	|items|
+
+	| items |
 	super prepareFullExecutionInContext: aBrowserContext.
-	items := aBrowserContext selectedPackageItems collect: [:e | e actualObject ].
-	packages := browser searchDialog
-		requestMultipleObjects: 'Select package scope'
-		from: ClyAllPackagesQuery sorted
-		selecting: items.
-	packages ifEmpty: [ CmdCommandAborted signal ]
+	items := aBrowserContext selectedPackageItems collect: [ :e | e actualObject ].
+	packages := StBrowserSearchPresenter searchConfiguring: [ :presenter :dialog |
+		            dialog title: 'Select package scope'.
+		            presenter
+			            items: (self browser itemsForQuery: ClyAllPackagesQuery sorted);
+			            multipleSelection ]
 ]

@@ -55,8 +55,9 @@ EpClassRemoval >> doesOverride: aCodeChange [
 EpClassRemoval >> fileOutEntryOn: aWriteStream [
 
 	aWriteStream 
-		nextPutAll: self behaviorAffectedName;
-		nextChunkPut: ' removeFromSystem'
+		nextPutAll: self behaviorAffectedName.
+	(ChunkWriteStream on: aWriteStream)
+		nextPut:  ' removeFromSystem'
 ]
 
 { #category : 'initialization' }

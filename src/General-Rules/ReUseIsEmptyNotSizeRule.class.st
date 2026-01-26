@@ -11,7 +11,7 @@ Class {
 
 { #category : 'accessing' }
 ReUseIsEmptyNotSizeRule class >> group [
-	^ 'Coding Idiom Violation'
+	^ self codingIdiomViolationGroup
 ]
 
 { #category : 'accessing' }

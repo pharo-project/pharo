@@ -43,12 +43,6 @@ ReDirectlyDefinesInstanceVariableCondition >> class: aRBAbstractClass inModel: a
 	
 ]
 
-{ #category : 'private' }
-ReDirectlyDefinesInstanceVariableCondition >> errorBlock [
-	^ [ class printString
-				, ' <1?: > directly define <1?s:> instance variable ' , instanceVariables ]
-]
-
 { #category : 'accessing' }
 ReDirectlyDefinesInstanceVariableCondition >> instanceVariables: aColOfStrings [
 

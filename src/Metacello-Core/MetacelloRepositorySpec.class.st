@@ -8,19 +8,23 @@ Class {
 		'type',
 		'resolvedReference'
 	],
-	#category : 'Metacello-Core-Specs',
+	#category : 'Metacello-Core-Model',
 	#package : 'Metacello-Core',
-	#tag : 'Specs'
+	#tag : 'Model'
 }
 
-{ #category : 'adding' }
-MetacelloRepositorySpec >> addToMetacelloRepositories: aMetacelloRepositoriesSpec [
+{ #category : 'instance creation' }
+MetacelloRepositorySpec class >> description: aString [
 
-	aMetacelloRepositoriesSpec addMember: 
-		(aMetacelloRepositoriesSpec addMember 
-			name: self name;
-			spec: self;
-			yourself)
+	^ self new
+		  description: aString;
+		  yourself
+]
+
+{ #category : 'visiting' }
+MetacelloRepositorySpec >> acceptVisitor: aVisitor [
+
+	self error: 'Should not be visitable..'
 ]
 
 { #category : 'mc support' }
@@ -30,24 +34,6 @@ MetacelloRepositorySpec >> canUpgradeTo: aMetacelloRepositorySpec [
   (#('github' 'gitorious' 'bitbucket') includes: self type)
     ifTrue: [ ^ self createRepository canUpgradeTo: aMetacelloRepositorySpec createRepository ].
   ^ false
-]
-
-{ #category : 'printing' }
-MetacelloRepositorySpec >> configMethodCascadeOn: aStream lastCascade: lastCascade [
-
-	aStream nextPutAll: 'repository: ', self description printString.
-	(self username isEmpty not or: [ self password isEmpty not ])
-		ifTrue: [ aStream nextPutAll: ' username: ', self username printString, ' password: ', self password printString ].
-	lastCascade ifFalse: [ aStream nextPut: $;; cr ].
-]
-
-{ #category : 'printing' }
-MetacelloRepositorySpec >> configMethodOn: aStream indent: indent [
-
-	aStream 
-		tab: indent; 
-		nextPutAll: 'spec '.
-	self configMethodCascadeOn: aStream lastCascade: true
 ]
 
 { #category : 'mc support' }
@@ -88,31 +74,16 @@ MetacelloRepositorySpec >> hasNoLoadConflicts: aMetacelloRepositorySpec [
 	^ false
 ]
 
-{ #category : 'private' }
-MetacelloRepositorySpec >> mergeIntoMetacelloRepositories: aMetacelloRepositoriesSpec [
-
-	aMetacelloRepositoriesSpec addMember: 
-		(aMetacelloRepositoriesSpec mergeMember 
-			name: self name;
-			spec: self;
-			yourself)
-]
-
 { #category : 'merging' }
 MetacelloRepositorySpec >> mergeMap [
-    | map |
-    map := super mergeMap.
-    map at: #'description' put: description.
-    map at: #'type' put: self type.
-    map at: #'username' put: username.
-    map at: #'password' put: password.
-    ^ map
-]
 
-{ #category : 'querying' }
-MetacelloRepositorySpec >> name [
-
-	^self description
+	| map |
+	map := super mergeMap.
+	map at: #description put: description.
+	map at: #type put: self type.
+	map at: #username put: username.
+	map at: #password put: password.
+	^ map
 ]
 
 { #category : 'querying' }
@@ -127,14 +98,13 @@ MetacelloRepositorySpec >> password: aString [
 	password := aString
 ]
 
-{ #category : 'private' }
-MetacelloRepositorySpec >> removeFromMetacelloRepositories: aMetacelloRepositoriesSpec [
+{ #category : 'printing' }
+MetacelloRepositorySpec >> printOn: aStream [
 
-	aMetacelloRepositoriesSpec addMember: 
-		(aMetacelloRepositoriesSpec removeMember 
-			name: self name;
-			spec: self;
-			yourself)
+	super printOn: aStream.
+	aStream nextPutAll: ' ['.
+	self description ifEmpty: [ aStream nextPutAll: 'No description' ] ifNotEmpty: [ :string | aStream nextPutAll: string ].
+	aStream nextPutAll: ']'
 ]
 
 { #category : 'accessing' }

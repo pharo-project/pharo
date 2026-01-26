@@ -12,7 +12,7 @@ Class {
 
 { #category : 'accessing' }
 ReAsOrderedCollectionNotNeededRule class >> group [
-	^ 'Optimization'
+	^ self optimizationGroup
 ]
 
 { #category : 'accessing' }

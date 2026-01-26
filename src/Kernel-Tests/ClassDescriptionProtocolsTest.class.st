@@ -10,6 +10,20 @@ Class {
 }
 
 { #category : 'tests' }
+ClassDescriptionProtocolsTest >> testAddEmptyProtocolIsTurnedIntoAsYetUnclassified [
+
+	(class removeProtocol: Protocol unclassified).
+	self deny: (class hasProtocol: Protocol unclassified).
+	
+	"an empty protocol is turned into a yet unclassified one"
+	class addProtocol: ''.
+	self deny: (class hasProtocol: '').
+	
+	self assert: (class hasProtocol: Protocol unclassified).
+	
+]
+
+{ #category : 'tests' }
 ClassDescriptionProtocolsTest >> testAddProtocol [
 
 	class addProtocol: #titan.
@@ -40,7 +54,8 @@ ClassDescriptionProtocolsTest >> testAddProtocolWithProtocolFromOtherClass [
 
 	"The class should have created a new protocol of the same name."
 	self assert: (class hasProtocol: #titan).
-	self deny: (class protocolNamed: #titan) identicalTo: titan
+	self deny: (class protocolNamed: #titan) identicalTo: titan.
+	self assert: (class protocolNamed: #titan) owningClass equals: class
 ]
 
 { #category : 'tests' }
@@ -180,7 +195,8 @@ ClassDescriptionProtocolsTest >> testClassifyUnderWithProtocolFromOtherClass [
 	self assertCollection: (class selectorsInProtocol: #which) hasSameElements: #( #luz ).
 
 	"Since the protocol was not from the class, it should not be the same instance."
-	self deny: (class protocolNamed: #which) identicalTo: which
+	self deny: (class protocolNamed: #which) identicalTo: which.
+	self assert: (class protocolNamed: #which) owningClass equals: class
 ]
 
 { #category : 'tests' }
@@ -193,6 +209,7 @@ ClassDescriptionProtocolsTest >> testEnsureProtocol [
 
 	self assertCollection: class protocolNames hasSameElements: { #titan }.
 	self assert: (class ensureProtocol: #titan) equals: protocol.
+	self assert: (class ensureProtocol: #titan) owningClass equals: class.
 	self assert: (class ensureProtocol: protocol) equals: protocol.
 	self assert: (class ensureProtocol: outsideProtocol) equals: protocol.
 	self deny: (class ensureProtocol: outsideProtocol) identicalTo: outsideProtocol.

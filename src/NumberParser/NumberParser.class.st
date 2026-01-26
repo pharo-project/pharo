@@ -231,20 +231,32 @@ NumberParser >> nextElementaryLargeIntegerBase: aRadix [
 	Stop reading if end of digits or if a LargeInteger is formed.
 	Count the number of digits and the position of lastNonZero digit and store them in instVar."
 
-	| value digit char |
+	| value digit char lastWasUnderscore |
 	value := 0.
 	nDigits := 0.
 	lastNonZero := 0.
+	lastWasUnderscore := false.
+	
+	(sourceStream peekFor: $_)
+		ifTrue: [ self expected: 'No leading underscore in numeric token'].
+	
 	[value isLarge or: [(char := sourceStream next) isNil
 		or: [digit := char digitValue.
 			(0 > digit or: [digit >= aRadix])
 				and: [sourceStream skip: -1.
 					true]]]]
 		whileFalse: [
+			lastWasUnderscore := false.
 			nDigits := nDigits + 1.
 			0 = digit
 				ifFalse: [lastNonZero := nDigits].
-			value := value * aRadix + digit].
+			value := value * aRadix + digit.
+			
+			sourceStream peek = $_ ifTrue: [ 
+				lastWasUnderscore := true.
+				sourceStream next ] ].
+	lastWasUnderscore ifTrue: [ self expected: 'No trailing underscore in numeric token' ].
+	
 	^value
 ]
 
@@ -513,7 +525,7 @@ NumberParser >> readExponent [
 			sourceStream skip: ((eneg or: [ epos ]) ifTrue: [ -2 ] ifFalse: [ -1 ]).
 			^ false ].
 		
-	"If the exponent is bigger than our max exponent, we return an error".
+	"If the exponent is bigger than our max exponent, we return an error"
 	exponent > self maxExponent
 		ifTrue: [ 
 				self expected: 'Exponent is larger than ' , self maxExponent printString , ' (Check Settings)'.

@@ -32,15 +32,11 @@ ReExcessiveArgumentsRuleTest >> longArgMethodCallingFFI: arg1 with: arg2 with: a
 { #category : 'tests' }
 ReExcessiveArgumentsRuleTest >> testRule [
 
-	| critiques|
-	critiques := self myCritiquesOnMethod: self class >> #longArgMethod:with:with:with:with:.
-	self assert: critiques size equals: 1
+	self assert: (self myCritiquesOnMethod: self class >> #longArgMethod:with:with:with:with:) size equals: 1
 ]
 
 { #category : 'tests' }
 ReExcessiveArgumentsRuleTest >> testRuleNotApplyToFFICallingMethods [
 
-	| critiques|
-	critiques := self myCritiquesOnMethod: self class >> #longArgMethodCallingFFI:with:with:with:with:.
-	self assert: critiques isEmpty
+	self assertEmpty: (self myCritiquesOnMethod: self class >> #longArgMethodCallingFFI:with:with:with:with:)
 ]

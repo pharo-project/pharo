@@ -7,6 +7,10 @@ A World, the entire Smalltalk screen, is a PasteUpMorph.  A World responds true 
 Class {
 	#name : 'WorldMorph',
 	#superclass : 'PasteUpMorph',
+	#instVars : [
+		'worldState',
+		'zoomFactor'
+	],
 	#classVars : [
 		'AllowDropFiles',
 		'CursorOwnerWorld',
@@ -15,7 +19,10 @@ Class {
 		'LastScreenModeSelected'
 	],
 	#classInstVars : [
-		'displayScaleFactor'
+		'displayScaleFactor',
+		'dropActionBlock',
+		'dragActionBlock',
+		'resizeActionBlock'
 	],
 	#category : 'Morphic-Core-Worlds',
 	#package : 'Morphic-Core',
@@ -75,20 +82,6 @@ WorldMorph class >> displayScaleFactor: aNumber [
 	displayScaleFactor := aNumber
 ]
 
-{ #category : 'setting' }
-WorldMorph class >> displayScaleFactorSettingsOn: aBuilder [
-	<systemsettings>
-
-	(aBuilder range: #scaleFactor)
-		parent: #appearance;
-		order: 3;
-		default: 1;
-		label: 'Display scale factor';
-		description: 'Specify scale factor for UI elements. This setting does not affect defined font sizes.';
-		target: self;
-		range: (0.5 to: 5 by: 0.5)
-]
-
 { #category : 'settings' }
 WorldMorph class >> displaySettingsOn: aBuilder [
 	<systemsettings>
@@ -116,6 +109,48 @@ WorldMorph class >> doOneCycle [
 			self currentWorld doOneCycle ] ]
 ]
 
+{ #category : 'accessing' }
+WorldMorph class >> dragActionBlock [
+
+	^ dragActionBlock
+]
+
+{ #category : 'accessing' }
+WorldMorph class >> dragActionBlock: aBlock [
+
+	dragActionBlock := aBlock
+]
+
+{ #category : 'accessing' }
+WorldMorph class >> dropActionBlock [
+
+	^ dropActionBlock 
+]
+
+{ #category : 'accessing' }
+WorldMorph class >> dropActionBlock: aBlock [
+
+	dropActionBlock := aBlock
+]
+
+{ #category : 'execution' }
+WorldMorph class >> executeDragBlockWith: aValue [
+
+	self dragActionBlock ifNotNil: [ self dragActionBlock value: aValue ]
+]
+
+{ #category : 'execution' }
+WorldMorph class >> executeDropBlockWith: aValue [
+
+	self dropActionBlock ifNotNil: [ self dropActionBlock value: aValue ]
+]
+
+{ #category : 'execution' }
+WorldMorph class >> executeResizeBlock [
+
+	self resizeActionBlock ifNotNil: [ self resizeActionBlock value ]
+]
+
 { #category : 'extra worlds' }
 WorldMorph class >> extraWorldList [
 	ExtraWorldList ifNil: [ ExtraWorldList := #() ].
@@ -132,7 +167,45 @@ WorldMorph class >> fullscreen: aBoolean [
 
 { #category : 'class initialization' }
 WorldMorph class >> initialize [
-	ExtraWorldListMutex := Semaphore forMutualExclusion
+
+	ExtraWorldListMutex := Semaphore forMutualExclusion.
+	dropActionBlock := nil.
+	dragActionBlock := nil.
+	resizeActionBlock := nil.
+	
+	self initializeWorldAndActiveWorld
+]
+
+{ #category : 'class initialization' }
+WorldMorph class >> initializeWorldAndActiveWorld [
+	"This method is creating the World and ActiveWorld global variables.
+	Waybe some of the initialization code could go directly in WorldMorph and other classes normal initialization?"
+
+	| world hand |
+	"Ensure Morph is initialized."
+	Morph initialize.
+	
+	world := self new.
+	hand := HandMorph new.
+	world addHand: hand.
+	world activeHand: hand.
+
+	Smalltalk at: #World put: world.
+	Smalltalk at: #ActiveWorld put: world.
+
+	world viewBox: world bounds.
+
+	world handsDo: [ :h | h initForEvents ].
+	world borderWidth: 0.
+
+	world displayWorldSafely.
+	MorphicCoreUIManager new spawnNewProcess.
+
+	world cleanseOtherworldlySteppers.
+
+	world worldState invalidate.
+
+	hand targetOffset: 0 @ 0
 ]
 
 { #category : 'settings' }
@@ -149,21 +222,48 @@ WorldMorph class >> removeExtraWorld: aWorld [
 	CursorOwnerWorld == aWorld ifTrue: [ CursorOwnerWorld := nil ]
 ]
 
-{ #category : 'setting' }
-WorldMorph class >> scaleFactor [
+{ #category : 'accessing' }
+WorldMorph class >> resizeActionBlock [
 
-	^ World scaleFactor
+	^ resizeActionBlock 
 ]
 
-{ #category : 'setting' }
-WorldMorph class >> scaleFactor: aValue [
+{ #category : 'accessing' }
+WorldMorph class >> resizeActionBlock: aBlock [
 
-	World scaleFactor: aValue
+	resizeActionBlock := aBlock
 ]
 
 { #category : 'settings' }
 WorldMorph class >> toggleFullscreen [
 	self fullscreen: self isFullscreen not
+]
+
+{ #category : 'setting' }
+WorldMorph class >> zoomFactor [
+
+	^ World zoomFactor
+]
+
+{ #category : 'setting' }
+WorldMorph class >> zoomFactor: aValue [
+
+	World zoomFactor: aValue
+]
+
+{ #category : 'setting' }
+WorldMorph class >> zoomFactorSettingsOn: aBuilder [
+	<systemsettings>
+
+	(aBuilder pickOne: #zoomFactor)
+		parent: #appearance;
+		order: 3;
+		default: 1;
+		label: 'Zoom factor';
+		description: 'Specify zoom factor for UI elements. Bigger zooms in. Smaller zooms out.';
+		target: self;
+		domainValues: (#( 1 1.5 2 2.5 3 3.5 4 4.5 5 ) collect: [ :e | 
+			(e * 100) asInteger asString, '%' -> e ])
 ]
 
 { #category : 'operations' }
@@ -311,6 +411,16 @@ WorldMorph >> copyRectangle: aRectangle into: aForm [
 	^ worldState worldRenderer copyRectangle: aRectangle into: aForm
 ]
 
+{ #category : 'cursor' }
+WorldMorph >> currentCursor [
+	^ worldState currentCursor
+]
+
+{ #category : 'cursor' }
+WorldMorph >> currentCursor: aCursor [
+	^ worldState currentCursor: aCursor
+]
+
 { #category : 'world state' }
 WorldMorph >> defaultWorldColor [
 	^ self class defaultWorldColor
@@ -438,6 +548,7 @@ WorldMorph >> initialize [
 
 	worldState := WorldState new.
 	super initialize.
+	zoomFactor := 1.
 
 	self class codeSupportAnnouncer weak when: FullscreenAnnouncement send: #fullscreenChanged: to: self
 ]
@@ -555,11 +666,6 @@ WorldMorph >> runStepMethods [
 	worldState runStepMethodsIn: self
 ]
 
-{ #category : 'accessing' }
-WorldMorph >> scaleFactor: newScaleFactor [
-	self setProperty: #scaleFactor toValue: newScaleFactor
-]
-
 { #category : 'stepping' }
 WorldMorph >> startStepping: aMorph [
 	"Add the given morph to the step list. Do nothing if it is already being stepped."
@@ -603,6 +709,14 @@ WorldMorph >> stopStepping: aMorph selector: aSelector [
 	"Remove the given morph from the step list."
 
 	worldState stopStepping: aMorph selector: aSelector
+]
+
+{ #category : 'accessing' }
+WorldMorph >> taskbarTasks [
+
+	^ self submorphs
+		  collect: [ :m | m taskbarTask ]
+		  thenSelect: [ :m | m isNotNil ]
 ]
 
 { #category : 'menu & halo' }
@@ -674,4 +788,22 @@ WorldMorph >> worldMenu [
 WorldMorph >> worldState [
 
 	^ worldState
+]
+
+{ #category : 'accessing' }
+WorldMorph >> worldState: anObject [
+
+	worldState := anObject
+]
+
+{ #category : 'accessing' }
+WorldMorph >> zoomFactor [
+
+	^ zoomFactor
+]
+
+{ #category : 'accessing' }
+WorldMorph >> zoomFactor: newScaleFactor [
+	
+	zoomFactor := newScaleFactor
 ]

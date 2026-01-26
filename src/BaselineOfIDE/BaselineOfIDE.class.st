@@ -69,23 +69,21 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Rubric-SpecFindReplaceDialog'.
 
 		spec package: 'OpalCompiler-UI'.
+		spec package: 'OpalCompiler-UI-Tests'.
 
+		self load: 'Monticello' group: 'Tests' spec: spec.
 		self load: 'Metacello' group: 'Tests' spec: spec.
 
-		spec package: 'MonticelloGUI-Tests'.
+		spec baseline: 'ReflectionMirrors' with: [ spec repository: repository ].
+		spec baseline: 'FuzzyMatcher' with: [ spec repository: repository ].
+		spec baseline: 'QA' with: [ spec repository: repository ].
+		spec baseline: 'GeneralTests' with: [ spec repository: repository ].
+
 		"Later we will load the UI of enlumineur probably here
 		"
 		spec baseline: 'Shout' with: [ spec repository: repository ].
-
-		spec
-			baseline: 'ReflectionMirrors'
-			with: [ spec repository: repository ].
-		spec baseline: 'FuzzyMatcher' with: [ spec repository: repository ].
-		spec baseline: 'QA' with: [ spec repository: repository ].
 		spec baseline: 'OSWindow' with: [ spec repository: repository ].
-		spec
-			baseline: 'EmergencyDebugger'
-			with: [ spec repository: repository ].
+		
 
 		self load: 'Epicea' group: 'Browsers' spec: spec.
 
@@ -93,10 +91,7 @@ BaselineOfIDE >> baseline: spec [
 
 		self load: 'Fuel' group: 'Tests' spec: spec.
 
-		spec baseline: 'GeneralTests' with: [ spec repository: repository ].
-
-		self load: 'FreeType' group: 'tests' spec: spec.
-		self load: 'Keymapping' group: 'tests' spec: spec.
+		self load: 'Keymapping' group: 'Tests' spec: spec.
 
 		spec baseline: 'Zodiac' with: [ spec repository: repository ].
 		spec baseline: 'SortFunctions' with: [ spec repository: repository ].
@@ -105,12 +100,13 @@ BaselineOfIDE >> baseline: spec [
 		self load: 'NewValueHolder' group: 'tests' spec: spec.
 		spec package: 'STON-Extensions'.
 
-		spec package: 'BaselineOfPharoBootstrap'.
+		spec package: 'BaselineOfKernel'.
+		spec package: 'BaselineOfCompiler'.
+		spec package: 'BaselineOfFileSystem'.
 		spec package: 'BaselineOfMonticello'.
 		spec package: 'BaselineOfMetacello'.
-		spec
-			baseline: 'ReferenceFinder'
-			with: [ spec repository: repository ].
+		spec package: 'BaselineOfPharoBootstrap'.
+		spec baseline: 'ReferenceFinder' with: [ spec repository: repository ].
 		spec baseline: 'ClassParser' with: [ spec repository: repository ].
 
 
@@ -119,27 +115,28 @@ BaselineOfIDE >> baseline: spec [
 			group: #( 'FullEnvironment' 'SystemBrowser' 'Tests' )
 			spec: spec.
 		spec baseline: 'Ring' with: [ spec repository: repository ].
-		spec
-			baseline: 'HeuristicCompletion'
-			with: [ spec repository: repository ].
-		self
-			load: 'DependencyAnalyzer'
-			group: 'Tool-DependencyAnalyser-UI-Tab'
-			spec: spec.
+		spec baseline: 'HeuristicCompletion' with: [ spec repository: repository ].
+		spec package: 'Tool-DependencyAnalyser-UI-Tab' with: [
+			"Depends also on the dependency analyser in newtools"
+			spec requires: #('Calypso') ].
 		self specCode: spec.
+		self roassal: spec.
+		self microdown: spec.
 		self newTools: spec.
 		self drTests: spec.
-		self microdown: spec.
+
+		spec project: 'Clap-UI' copyFrom: 'Clap' with: [ spec loads: #('ui') ].
+
 		spec package: #'BeautifulComments'  with: [ spec requires:  #( 'Microdown') ].
-		self documentBrowserCore: spec.
-		self welcomeBrowser: spec.
-		self roassal: spec.
 		
-		spec package: 'DarkBlueTheme'.
-
-		spec baseline: 'ThreadedFFI' with: [ spec repository: repository ].
-
+		spec package: 'IconPacks'.
 		spec package: 'Kernel-ExtraUtils' ]
+]
+
+{ #category : 'actions' }
+BaselineOfIDE >> classNamed: aSymbol [
+
+	^ self class environment classNamed: aSymbol
 ]
 
 { #category : 'baselines - dependencies' }
@@ -147,7 +144,7 @@ BaselineOfIDE >> documentBrowserCore: spec [
 
 	spec baseline: 'NewToolsDocumentBrowser' with: [
 		spec
-			repository: (self class environment at: #BaselineOfPharo) documentBrowserRepository;
+			repository: (self classNamed: #BaselineOfPharo) documentBrowserRepository;
 			loads: 'Core+Tests' ]
 ]
 
@@ -174,8 +171,7 @@ BaselineOfIDE >> loadExtraTools [
 
 	Metacello new
 		baseline: 'NewToolsDocumentBrowser';
-		repository: (self class environment at: #BaselineOfPharo)
-				documentBrowserRepository;
+		repository: (self classNamed: #BaselineOfPharo) documentBrowserRepository;
 		onConflictUseIncoming;
 		load.
 
@@ -194,14 +190,14 @@ BaselineOfIDE >> loadIceberg [
 
 	Metacello new
 		baseline: 'Iceberg';
-		repository: (self class environment at: #BaselineOfPharo) icebergRepository;
+		repository: (self classNamed: #BaselineOfPharo) icebergRepository;
 		onConflictUseLoaded;
 		load.
-	(Smalltalk classNamed: #Iceberg) enableMetacelloIntegration: true.
+	(self classNamed: #Iceberg) enableMetacelloIntegration: true.
 
 	Smalltalk os environment at: #GITHUB_TOKEN ifPresent: [ :token |
 		| credentials |
-		credentials := (Smalltalk classNamed: #IceTokenCredentials) new
+		credentials := (self classNamed: #IceTokenCredentials) new
 			               username:
 				               (Smalltalk os environment
 					                at: #GITHUB_USER
@@ -210,7 +206,7 @@ BaselineOfIDE >> loadIceberg [
 			               host: 'github.com';
 			               yourself.
 
-		(Smalltalk classNamed: #IceCredentialStore) current storeCredential: credentials forHostname: 'github.com'.
+		(self classNamed: #IceCredentialStore) current storeCredential: credentials forHostname: 'github.com'.
 		'Using authentification for Github API' traceCr ].
 
 	self registerPharo.
@@ -219,14 +215,13 @@ BaselineOfIDE >> loadIceberg [
 	self registerProject: 'Roassal'.
 	self registerProject: 'Microdown'.
 	self registerProject: 'DocumentBrowser' baseline: 'NewToolsDocumentBrowser' otherBaselines: #().
-	self registerProject: 'WelcomeBrowser'.
 	self registerIceberg
 ]
 
 { #category : 'actions' }
 BaselineOfIDE >> makeCalypsoDefaultBrowser [
 
-	(self class environment at: #ClyBrowserMorph) beAllDefault.
+	(self classNamed: #ClyBrowserMorph) beAllDefault.
 ]
 
 { #category : 'baselines - dependencies' }
@@ -234,8 +229,8 @@ BaselineOfIDE >> microdown: spec [
 
 	spec baseline: 'Microdown' with: [ 
 		spec 
-			repository: (self class environment at: #BaselineOfPharo) microdownRepository;
-			loads: #('RichText' 'Tests') ]
+			repository: (self classNamed: #BaselineOfPharo) microdownRepository;
+			loads: #('RichText' 'ForPharo') ]
 ]
 
 { #category : 'baselines - dependencies' }
@@ -243,14 +238,14 @@ BaselineOfIDE >> newTools: spec [
 
 	spec baseline: 'NewTools' with: [
 		spec 
-			repository: (self class environment at: #BaselineOfPharo) newToolsRepository;
+			repository: (self classNamed: #BaselineOfPharo) newToolsRepository;
 			loads: #('default') ].
 ]
 
 { #category : 'private - register' }
 BaselineOfIDE >> pharoPluginClass [
 	
-	^ Smalltalk classNamed: #IcePharoPlugin
+	^ self classNamed: #IcePharoPlugin
 ]
 
 { #category : 'actions' }
@@ -260,17 +255,18 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 	Initialized = true ifTrue: [ ^ self ].
 
 	"collect and process the standard tools registrations"
-	Smalltalk tools initDefaultToolSet.
+	self tools initDefaultToolSet.
 
 	EpMonitor current enable.
 
-	Smalltalk tools register: ExternalChangesBrowser as: #changeList.
-	Smalltalk tools register: FileList as: #fileList.
-	Smalltalk tools register: Finder as: #finder.
-	Smalltalk tools register: ProcessBrowser as: #processBrowser.
+	self tools
+		register: ExternalChangesBrowser as: #changeList;
+		register: StFileSystemPresenter as: #fileList;
+		register: StFinderPresenter as: #finder;
+		register: StProcessBrowser as: #processBrowser.
 
 	(MorphicCoreUIManager readClassVariableNamed: #UIProcess) ifNotNil: [ :proc | proc terminate ].
-	MorphicCoreUIManager writeClassVariableNamed: #UIProcess   value: nil.
+	MorphicCoreUIManager writeClassVariableNamed: #UIProcess value: nil.
 
 	PolymorphSystemSettings desktopColor: Color veryVeryLightGray lighter.
 	SourceCodeFonts setSourceCodeFonts: 10.
@@ -285,7 +281,7 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 	KMRepository reset.
 	Morph shortcutsHandler: KMShortcutHandler new.
 
-	ASTProgramNode formatterClass: (self class environment at: #EFFormatter ifAbsent: [ RBSimpleFormatter ]).
+	OCProgramNode formatterClass: (self class environment at: #EFFormatter ifAbsent: [ OCSimpleFormatter ]).
 
 	Color flushCache.
 
@@ -296,7 +292,7 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 
 	RubAbstractTextArea highlightMessageSend: true.
 
-	DarkBlueTheme beCurrent.
+	(self class environment at: #PolymorphSystemSettings) defaultTheme beCurrent.
 
 	SDL_Event initialize.
 
@@ -309,7 +305,7 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 	self loadExtraTools.
 	self makeCalypsoDefaultBrowser.
 
-	Initialized := true
+	Initialized := true.
 ]
 
 { #category : 'actions' }
@@ -371,7 +367,7 @@ BaselineOfIDE >> registerProject: projectName externalProject: externalProject b
 	| baselineClass className |
 
 	className := ('BaselineOf', baselineName) asSymbol.
-	baselineClass := Smalltalk classNamed: className.
+	baselineClass := self classNamed: className.
 	baselineClass ifNil: [ ^ self ].
 
 	self pharoPluginClass
@@ -391,7 +387,7 @@ BaselineOfIDE >> roassal: spec [
 		baseline: 'Roassal' 
  		with: [ 
 			spec 
-				repository: (self class environment at: #BaselineOfPharo) roassalRepository;
+				repository: (self classNamed: #BaselineOfPharo) roassalRepository;
     			loads: #( 'Core' 'Tests') ]
 ]
 
@@ -400,14 +396,7 @@ BaselineOfIDE >> specCode: spec [
 
 	spec baseline: 'SpecCode' with: [ 
 		spec
-			repository: (self class environment at: #BaselineOfPharo) specRepository;
+			repository: (self classNamed: #BaselineOfPharo) specRepository;
 			className: 'BaselineOfSpec2';
 			loads: #('Code' 'CodeTests') ]
-]
-
-{ #category : 'baselines - dependencies' }
-BaselineOfIDE >> welcomeBrowser: spec [
-
-	spec baseline: 'WelcomeBrowser' with: [
-		spec repository: (self class environment at: #BaselineOfPharo) welcomeBrowserRepository ]
 ]

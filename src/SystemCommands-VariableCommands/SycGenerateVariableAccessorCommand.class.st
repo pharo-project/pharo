@@ -8,15 +8,6 @@ Class {
 	#package : 'SystemCommands-VariableCommands'
 }
 
-{ #category : 'execution' }
-SycGenerateVariableAccessorCommand >> asRefactorings [
-
-	^self
-		createRefactorings: self refactoringClass
-		using: [ :refactoring :var |
-			refactoring classVariable: var isClassVariable ]
-]
-
 { #category : 'accessing' }
 SycGenerateVariableAccessorCommand >> defaultMenuIconName [
 	^ #smallAdd
@@ -29,8 +20,24 @@ SycGenerateVariableAccessorCommand >> defaultMenuItemName [
 	^ self refactoringClass menuItemString
 ]
 
+{ #category : 'execution' }
+SycGenerateVariableAccessorCommand >> execute [
+
+	(ReGenerateAccessorsDriver new
+		 targetClass: variables first definingClass;
+		 scopes: toolContext refactoringScopes;
+		 scopeInstanceSide: variables first definingClass isInstanceSide;
+		 selectedVariables: (variables collect: [ :each | each name ])) runRefactoring
+]
+
+{ #category : 'execution' }
+SycGenerateVariableAccessorCommand >> prepareFullExecutionInContext: aToolContext [
+	super prepareFullExecutionInContext: aToolContext.
+	toolContext := aToolContext.
+]
+
 { #category : 'factory method' }
 SycGenerateVariableAccessorCommand >> refactoringClass [
 
-	^ RBCreateAccessorsForVariableTransformation
+	^ ReCreateAccessorsForVariableTransformation
 ]

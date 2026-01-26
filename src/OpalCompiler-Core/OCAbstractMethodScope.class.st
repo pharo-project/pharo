@@ -76,7 +76,8 @@ OCAbstractMethodScope >> allTemps [
 
 { #category : 'temp vars - copying' }
 OCAbstractMethodScope >> copiedVarNames [
-	^ copiedVars keys
+
+	^ copiedVars values collect: [ :var | var originalVar name ]
 ]
 
 { #category : 'temp vars - copying' }
@@ -90,16 +91,6 @@ OCAbstractMethodScope >> copyEscapingReads [
 	self tempVars values
 		select: [ :each | each isEscapingRead ]
 		thenDo: [ :each | self addCopyingTemp: each ]
-]
-
-{ #category : 'lookup' }
-OCAbstractMethodScope >> hasBindingThatBeginsWith: aString [
-	"check weather there are any temporaries defined that start with aString"
-	(copiedVars hasBindingThatBeginsWith: aString) ifTrue: [ ^true ].
-	(tempVector hasBindingThatBeginsWith: aString) ifTrue: [ ^true ].
-	(tempVars hasBindingThatBeginsWith: aString) ifTrue: [ ^true ].
-
-	^ self outerScope hasBindingThatBeginsWith: aString
 ]
 
 { #category : 'temp vars - vector' }

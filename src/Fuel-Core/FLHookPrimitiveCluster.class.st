@@ -40,7 +40,7 @@ FLHookPrimitiveCluster >> clusterSerializeStepWith: anEncoder [
 	anEncoder encodeReferenceToClusterObjectClass: theClass
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 FLHookPrimitiveCluster >> initializeAnalyzing: aClass [
 
 	self initializeAnalyzing.

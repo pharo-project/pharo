@@ -83,7 +83,7 @@ PBBootstrap class >> repositoryLocation [
 { #category : 'package-names' }
 PBBootstrap >> allPackagesForHermes [
 
-	^ #BaselineOfPharoBootstrap asClass allPackageNames , #BaselineOfTraits asClass packagesToExportWithHermes
+	^ #BaselineOfPharoBootstrap asClass allPackageNames
 ]
 
 { #category : 'accessing' }
@@ -128,6 +128,27 @@ PBBootstrap >> buildNumber: aBuildNumber [
 	buildNumber := aBuildNumber
 ]
 
+{ #category : 'preparation' }
+PBBootstrap >> createHermesPackageListFiles [
+	"In order to not duplicate the packages to load by hermes in the baselines and in the build.sh file, we export the list of packages to load in files."
+
+	| toExport |
+	toExport := Dictionary newFrom: {
+			            ('hermesAdditionalKernelPackages.txt' -> BaselineOfKernel additionalPackagesPackageNames).
+			            ('hermesCompilerPackages.txt' -> BaselineOfCompiler corePackageNames).
+			            ('hermesFileSystemPackages.txt' -> BaselineOfFileSystem corePackageNames).
+			            ('hermesTraitsPackages.txt' -> BaselineOfTraits corePackageNames).
+			            ('hermesMonticelloPackages.txt' -> BaselineOfMonticello corePackageNames).
+			            ('hermesMetacelloPackages.txt' -> BaselineOfMetacello corePackageNames) }.
+
+	toExport keysAndValuesDo: [ :fileName :packageNames |
+			self bootstrapCacheDirectory / fileName writeStreamDo: [ :stream |
+					packageNames do: [ :package |
+							stream
+								nextPutAll: package;
+								nextPutAll: '.hermes ' ] ] ]
+]
+
 { #category : 'bootstrapping' }
 PBBootstrap >> createImage [
 
@@ -143,9 +164,9 @@ PBBootstrap >> createImage [
 
 { #category : 'pre-requisites' }
 PBBootstrap >> ensureBaselineOfPharoBootstrap [
-	(self originRepository versionWithInfo: (self originRepository versionInfoFromVersionNamed: 'BaselineOfPharoBootstrap')) load.
-	(self originRepository versionWithInfo: (self originRepository versionInfoFromVersionNamed: 'BaselineOfTraits')) load.
-	(self originRepository versionWithInfo: (self originRepository versionInfoFromVersionNamed: 'BaselineOfMetacello')) load.	
+
+	#( BaselineOfKernel BaselineOfCompiler BaselineOfTraits BaselineOfFileSystem BaselineOfMonticello BaselineOfPharoBootstrap BaselineOfMetacello ) do: [
+		:baselineName | (self originRepository versionWithInfo: (self originRepository versionInfoFromVersionNamed: baselineName)) load ]
 ]
 
 { #category : 'preparation' }
@@ -169,81 +190,6 @@ PBBootstrap >> exportKernelProtocols [
 	self exportProtocolsFor: self kernelPackageNames to: self bootstrapCacheDirectory / 'protocolsKernel.txt'.
 	
 	
-]
-
-{ #category : 'preparation' }
-PBBootstrap >> exportMonticelloInStFile [
-
-	self
-		exportPackages: self monticelloPackageNames
-		usingInitializeScript: '		
-		ZipConstants initialize.
-		ZipFileConstants initialize.
-		ZipWriteStream initialize.
-		GZipConstants initialize.
-		InflateStream initialize.
-		FastInflateStream initialize.
-		
-		MCCacheRepository initialize.
-		MCWorkingCopy initialize.
-		MCLazyVersionInfo initialize.
-		MCMethodDefinition initialize.
-		MCDataStream initialize.'
-		intoFile: 'Monticello.st'
-
-]
-
-{ #category : 'exporting' }
-PBBootstrap >> exportPackageNamesFor: packageNames to: aTextFile [
-
-	"export list of packages for the Package initialization. Eech package on standalone line"
-		
-	aTextFile ensureDelete.
-	aTextFile writeStreamDo: [:stream | 
-		packageNames do: [ :each | stream nextPutAll: each; cr ]].
-]
-
-{ #category : 'exporting' }
-PBBootstrap >> exportPackages: packageList intoFile: aFileName [
-
-	self
-		exportPackages: packageList
-		usingInitializeScript: ''
-		intoFile: aFileName
-]
-
-{ #category : 'exporting' }
-PBBootstrap >> exportPackages: packageList usingInitializeScript: aScriptString intoFile: aFileName [
-
-	self
-		exportPackages: packageList
-		withBlacklistedClasses: #()
-		withBlacklistedMethods: #() 
-		usingInitializeScript: aScriptString
-		intoFile: aFileName
-]
-
-{ #category : 'exporting' }
-PBBootstrap >> exportPackages: packageList withBlacklistedClasses: blacklistedClasses withBlacklistedMethods: methods usingInitializeScript: aString intoFile: aFileName [
-
-	| mcst | 	
-	mcst := (self bootstrapCacheDirectory / 'st-cache' / aFileName) asFileReference.
-	mcst ensureDelete.
-	mcst parent ensureCreateDirectory.
-	mcst writeStreamDo: [ :stream | | writer version |
-		writer := MCStWriter on: stream.
-		writer writeInitializers: false.
-		
-		packageList do: [ :packageName |
-			| definitions |
-			version := (self originRepository loadVersionFromFileNamed: packageName).
-			definitions := version snapshot definitions.
-			definitions := definitions reject: [:def | blacklistedClasses includes: def className ].
-			definitions := definitions reject: [:def | def isMethodDefinition and: [methods includes: def selector] ].
-			writer writeDefinitions: definitions ].
-		"Write initialization instructions"
-		stream nextPutAll: aString.
-	].
 ]
 
 { #category : 'preparation' }
@@ -285,7 +231,8 @@ PBBootstrap >> generateHermesFiles [
 
 { #category : 'package-names' }
 PBBootstrap >> hermesPackageNames [
-	^ #BaselineOfPharoBootstrap asClass packagesToExportWithHermes , #BaselineOfTraits asClass packagesToExportWithHermes
+
+	^ #BaselineOfPharoBootstrap asClass packagesToExportWithHermes
 ]
 
 { #category : 'accessing' }
@@ -308,7 +255,6 @@ PBBootstrap >> initializeImage [
 { #category : 'package-names' }
 PBBootstrap >> kernelPackageNames [
 
-	self ensureBaselineOfPharoBootstrap.
 	^ #BaselineOfPharoBootstrap asClass kernelPackageNames
 ]
 
@@ -316,25 +262,6 @@ PBBootstrap >> kernelPackageNames [
 PBBootstrap >> mczCache [
 	
 	^ MCDirectoryRepository new directory: (self bootstrapCacheDirectory / 'pharo-local' / 'package-cache') ensureCreateDirectory
-]
-
-{ #category : 'package-names' }
-PBBootstrap >> monticelloNetworkPackageNames [
-
-	^ #('Network-Kernel'
-		 'Network-MIME'
-		 'Network-Protocols'
-
-		 'MonticelloRemoteRepositories'
-
-		 'Zinc-HTTP'
-		 'Zodiac-Core')
-]
-
-{ #category : 'package-names' }
-PBBootstrap >> monticelloPackageNames [
-
-	^ #('System-Model' 'Ring-OldChunkImporter' 'Zinc-Resource-Meta-Core' 'System-Changes' 'Ring-Definitions-Core' 'Jobs' 'Compression' 'Monticello-Model' 'Monticello' 'Ring-Definitions-Monticello' )
 ]
 
 { #category : 'accessing' }
@@ -351,20 +278,20 @@ PBBootstrap >> originRepository [
 { #category : 'package-names' }
 PBBootstrap >> packagesToExportAsMCZ [
 
-	^ #(BaselineOfMetacello) , (#BaselineOfMetacello asClass allPackageNames)  , self monticelloPackageNames , self hermesPackageNames, self kernelPackageNames , self monticelloNetworkPackageNames
+	^ #BaselineOfPharoBootstrap asClass packagesToExportAsMCZ
 ]
 
 { #category : 'preparation' }
 PBBootstrap >> prepareBootstrap [
-	
+
 	self
+		ensureBaselineOfPharoBootstrap;
 		exportKernelProtocols;
 		exportAllPackagesIntoMcz;
-		exportMonticelloInStFile;
-		
+		createHermesPackageListFiles;
 		prepareEnvironmentForHermes;
 		generateHermesFiles;
-		prepareEnvironmentForExport.
+		prepareEnvironmentForExport
 ]
 
 { #category : 'preparation' }
@@ -386,7 +313,7 @@ PBBootstrap >> prepareEnvironmentForExport [
 			ringEnvironment removePackage: p].
 
 	ringEnvironment cleanGlobalVariables.
-	ringEnvironment addGlobalsNamed: #(#Smalltalk #SourceFiles #Transcript #Undeclared #Display #TextConstants  #Sensor #Processor).
+	ringEnvironment addGlobalsNamed: #(#Smalltalk #Transcript #Undeclared #Display #TextConstants  #Sensor #Processor).
 	ringEnvironment clean
 
 ]
@@ -395,7 +322,7 @@ PBBootstrap >> prepareEnvironmentForExport [
 PBBootstrap >> prepareEnvironmentForHermes [
 	ringEnvironment := self originRepository asRing2EnvironmentWith: self allPackagesForHermes.
 	ringEnvironment fixProtoObjectClassSuperclass.
-	ringEnvironment addGlobalsNamed: #(Smalltalk Transcript FileStream MacRomanTextConverter SourceFiles Processor Display Sensor UTF8TextConverter Undeclared TextConstants).
+	ringEnvironment addGlobalsNamed: #(Smalltalk Transcript FileStream MacRomanTextConverter Processor Display Sensor UTF8TextConverter Undeclared TextConstants).
 	ringEnvironment clean
 ]
 
@@ -409,14 +336,6 @@ PBBootstrap >> repositoryLocation [
 PBBootstrap >> repositoryLocation: aFileReference [
 
 	repositoryLocation := aFileReference
-]
-
-{ #category : 'package-names' }
-PBBootstrap >> sUnitPackageNames [
-
-	self ensureBaselineOfPharoBootstrap.
-	^ #BaselineOfPharoBootstrap asClass sUnitPackageNames
-
 ]
 
 { #category : 'accessing' }

@@ -224,7 +224,7 @@ RBTransformationRuleTestData class >> nuke [
 { #category : 'instance creation' }
 RBTransformationRuleTestData class >> rewrite: stringArrays methods: aBoolean name: aName [
 	| rewriteRule |
-	rewriteRule := RBParseTreeRewriter new.
+	rewriteRule := OCParseTreeRewriter new.
 	stringArrays do:
 			[:each |
 			aBoolean
@@ -305,7 +305,7 @@ RBTransformationRuleTestData >> problemCount [
 
 { #category : 'accessing' }
 RBTransformationRuleTestData >> resetResult [
-	builder := RBRefactoryChangeManager changeFactory compositeRefactoryChange
+	builder := ReChangeManager changeFactory compositeRefactoryChange
 ]
 
 { #category : 'accessing' }
@@ -322,7 +322,7 @@ RBTransformationRuleTestData >> rewriteUsing: searchReplacer [
 { #category : 'rules' }
 RBTransformationRuleTestData >> superSends [
 	| rule |
-	rule := RBParseTreeRewriter new.
+	rule := OCParseTreeRewriter new.
 	rule addSearch: 'super `@message: ``@args'
 				-> (
 					[:aNode |

@@ -37,6 +37,12 @@ ClyShowMethodInheritanceCommand >> defaultMenuItemName [
 	^'Inheritance'
 ]
 
+{ #category : 'accessing' }
+ClyShowMethodInheritanceCommand >> description [
+
+	^ 'Show all method implementors in full hierarchy of selected method classes.'
+]
+
 { #category : 'execution' }
 ClyShowMethodInheritanceCommand >> selectMethodsIn: aQueryBrowser [
 

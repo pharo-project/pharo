@@ -13,7 +13,7 @@ Class {
 
 { #category : 'accessing' }
 RePlatformDependentUserInteractionRule class >> group [
-	^ 'Potential Bugs'
+	^ self potentialBugsGroup
 ]
 
 { #category : 'accessing' }

@@ -9,7 +9,7 @@ WorldMorph >> acceptDroppingMorph: dropped event: evt [
 	self addMorphFront: aMorph.
 	(aMorph fullBounds intersects: self viewBox)
 		ifFalse: [
-			self inform: 'Dropped morph not in bounds'.
+			InformativeNotification signal: 'Dropped morph not in bounds'.
 			aMorph position: self bounds center ].
 	aMorph
 		submorphsDo: [ :m |
@@ -28,9 +28,6 @@ WorldMorph >> dispatchKeystroke: anEvent [
 		[^ self invokeWorldMenuFromEscapeKey].
 
 	(self navigationKey: anEvent) ifTrue: [^self].
-
-	anEvent commandKeyPressed
-		ifTrue: [^ self dispatchCommandKeyInWorld: aChar event: anEvent].
 
 	"It was unhandled. Remember the keystroke."
 	self lastKeystroke: anEvent keyString.

@@ -2,12 +2,14 @@
 I am responsible for moving a method to class side.
 
 Usage:
+```
 | transformation |
 transformation := (RBMoveMethodToClassSideTransformation
-				method: #method
-				class: #RBMoveMethodTransformationTest)
-				transform.
-(ChangesBrowser changes: transformation model changes changes) open
+				method: RBMoveMethodParametrizedTest>>#testMoveMethodIntoClass
+				class: #RBMoveMethodParametrizedTest)
+				generateChanges.
+(StRefactoringPreviewPresenter for: transformation) open
+```
 
 Preconditions:
 - the method exists and belongs to instance side.
@@ -77,14 +79,14 @@ RBMoveMethodToClassSideTransformation >> getNewInstSideSource [
 RBMoveMethodToClassSideTransformation >> getNewSource [
 
 	| rewriter node temp |
-	temp := self temporaryName.
-	node := RBParser parseMethod: method source.
-	rewriter := RBParseTreeRewriter new replace: 'self' with: temp.
+	temp := 'newInstance'.
+	node := OCParser parseMethod: method source.
+	rewriter := OCParseTreeRewriter new replace: 'self' with: temp.
 	(rewriter executeTree: node)
 		ifTrue: [
-			node := RBParser parseMethod: rewriter tree formattedCode.
+			node := OCParser parseMethod: rewriter tree formattedCode.
 			node body addNodeFirst:
-				(RBParser parseExpression: temp , ' := self new').
+				(OCParser parseExpression: temp , ' := self new').
 			node body addTemporaryNamed: temp.
 			^ node newSource ]
 		ifFalse: [ ^ node sourceCode ]
@@ -110,8 +112,8 @@ RBMoveMethodToClassSideTransformation >> privateTransform [
 	method := class methodFor: method selector.
 	newClass := self model classNamed: class name, ' class'.
 	newSource2 := self getNewSource.
-	rbMethod := model rbMethodClass for: newClass source: newSource2 selector: method selector.
-	rbMethod2 := model rbMethodClass for: oldClass source: newSource selector: method selector.
+	rbMethod := RBMethod for: newClass source: newSource2 selector: method selector.
+	rbMethod2 := RBMethod for: oldClass source: newSource selector: method selector.
 	self removeMethod: method selector from: oldClass.
 	self addMethod: rbMethod to: newClass toProtocol: originalProtocol.
 	self addMethod: rbMethod2 to: oldClass toProtocol: originalProtocol
@@ -156,16 +158,4 @@ RBMoveMethodToClassSideTransformation >> storeOn: aStream [
 		nextPutAll: class name.
 	aStream
 		nextPutAll: ')'
-]
-
-{ #category : 'refactoring' }
-RBMoveMethodToClassSideTransformation >> temporaryName [
-	| aString counter tempName |
-	counter := 0.
-	aString := class canonicalArgumentName.
-	tempName := aString.
-	[self checkVariableNamed: tempName]
-	whileTrue: [ counter := counter + 1.
-		tempName := aString , counter asString ].
-	^ tempName
 ]

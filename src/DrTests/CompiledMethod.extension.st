@@ -8,6 +8,11 @@ CompiledMethod >> asResultForDrTest [
 
 { #category : '*DrTests' }
 CompiledMethod >> drTestsBrowse [
-
-	Smalltalk tools browser openOnClass: self methodClass selector: self selector
+	"May be using double dispatch would be better
+	so that the application of DrTest can open tools 
+	without relying on this global."
+	
+	(Smalltalk tools toolNamed: #browser)
+		openOnClass: self methodClass 
+		selector: self selector
 ]

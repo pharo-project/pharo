@@ -290,23 +290,43 @@ Integer >> anyMask: mask [
 
 { #category : 'converting - arrays' }
 Integer >> asByteArray [
+	"Answer a ByteArray with my value, most-significant byte first.
+	Warning: Sign is not encoded"
 
-	| stream |
-	stream := ByteArray new writeStream.
-	self bytesCount to: 1 by: -1 do: [:digitIndex |
-		stream nextPut: (self byteAt: digitIndex)].
-	^ stream contents
+	"1 asByteArray >>> #[1]"
+	"-1 asByteArray >>> #[1]"
+
+	| answer digitPos bytesCount |
+	bytesCount := self bytesCount.
+	answer := ByteArray new: bytesCount.
+	
+	digitPos := 1.
+	bytesCount
+		to: 1
+		by: -1
+		do: [ :pos |
+			answer
+				at: pos
+				put: (self byteAt: digitPos).
+			digitPos := digitPos + 1 ].
+	^ answer
 ]
 
 { #category : 'converting - arrays' }
 Integer >> asByteArrayOfSize: aSize [
-	"Answer a ByteArray of aSize with my value, most-significant byte first."
-	| answer digitPos |
-	aSize < self bytesCount ifTrue: [ self error: 'number to large for byte array' ].
+	"Answer a ByteArray of aSize with my value, most-significant byte first.
+	Warning: Sign is not encoded"
+	"(1 asByteArrayOfSize: 1) >>> #[1]"
+	"(-1 asByteArrayOfSize: 1) >>> #[1]"
+	
+	| answer digitPos bytesCount |
+	bytesCount := self bytesCount.
+	
+	aSize < bytesCount ifTrue: [ self error: 'number to large for byte array' ].
 	answer := ByteArray new: aSize.
 	digitPos := 1.
 	aSize
-		to: aSize - self bytesCount + 1
+		to: aSize - bytesCount + 1
 		by: -1
 		do:
 			[ :pos |
@@ -1074,7 +1094,15 @@ Integer >> normalize [
 	^ self
 ]
 
-{ #category : 'printing' }
+{ #category : 'accessing' }
+Integer >> numberOfDigits [
+	"Return how many digits are necessary to print this number in base 10.
+	This does not count any place for minus sign, radix prefix or whatever."
+
+	^ self numberOfDigitsInBase: 10
+]
+
+{ #category : 'accessing' }
 Integer >> numberOfDigitsInBase: b [
 	"Return how many digits are necessary to print this number in base b.
 	This does not count any place for minus sign, radix prefix or whatever.
@@ -1110,14 +1138,6 @@ Integer >> numberOfDigitsInBase: b [
 Integer >> numerator [
 	"Let an Integer be polymorphic to a Fraction. See #isFraction."
 	^self
-]
-
-{ #category : 'printing' }
-Integer >> printOn: aStream base: b nDigits: n [
-	"Append a representation of this number in base b on aStream using nDigits.
-	self must be positive."
-
-	self subclassResponsibility
 ]
 
 { #category : 'arithmetic' }

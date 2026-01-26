@@ -56,23 +56,8 @@ OpalCompiler class >> compilerClasses [
 	^self package definedClasses
 
 	"Compiler and AST:
-	self package definedClasses, ASTProgramNode package definedClasses, {TRBProgramNodeVisitor}
+	self package definedClasses, ASTProgramNode package definedClasses
 	"
-]
-
-{ #category : 'options' }
-OpalCompiler class >> compilerSettingsOn: aBuilder [
-	<systemsettings>
-	(aBuilder group: #compiler)
-		label: 'Compiler';
-		description: 'All Compiler Settings';
-		with: [
-				(aBuilder setting: #createAndEnableOverlay)
-						label: 'Compiler Overlay Environment';
-						target: self;
-						default: false;
-						description: 'Create a overlay environment for the OpalCompiler package and sets this copy as the global compiler. After this all classes in the package OpalCompiler are not used anymore outside of tests.  Simplifies changing the compiler'.
-				CompilationContext compilerSettingsOn: aBuilder]
 ]
 
 { #category : 'overlay' }
@@ -89,14 +74,11 @@ OpalCompiler class >> createAndEnableOverlay: aBoolean [
 		ifFalse: [ self stopUsingOverlayForDevelopment   ]
 ]
 
-{ #category : 'old - deprecated' }
-OpalCompiler class >> evaluate: textOrString [
-	self
-		deprecated: 'Please use new compiler API instead'
-		transformWith: '`@receiver evaluate: `@statements1 ' -> '`@receiver new source: `@statements1; evaluate'.
-	^ self new
-		source: textOrString;
-		evaluate
+{ #category : 'class initialization' }
+OpalCompiler class >> initialize [
+	"If no compiler is register when I'm loaded, I'll set myself as the compiler of the image."
+
+	SmalltalkImage current compilerClass ifNil: [ self register ]
 ]
 
 { #category : 'public' }
@@ -144,7 +126,7 @@ OpalCompiler class >> overlayStep3FixSuperclassPointers [
 OpalCompiler class >> overlayStep4SetImageCompiler [
 	"make the copy the default compiler for the image"
 	SmalltalkImage compilerClass: (self overlayEnvironment at: #OpalCompiler).
-	ASTCache reset
+	OCASTCache reset
 ]
 
 { #category : 'overlay' }
@@ -190,7 +172,7 @@ OpalCompiler class >> stopUsingOverlayForDevelopment [
 	<script>
 	SmalltalkImage compilerClass: nil.
 	overlayEnvironment := nil.
-	ASTCache reset
+	OCASTCache reset
 ]
 
 { #category : 'plugins' }
@@ -280,7 +262,7 @@ OpalCompiler >> checkNotice: aNotice [
 	"This method handles all the logic of error handling.
 	
 	Error handing in the compiler is only performed at one place, after the parsing/semantic analysis/other parse plugins.
-	Each RBNotice in the AST is then checked with this method.
+	Each ASTNotice in the AST is then checked with this method.
 
 	There is only three outcomes:
 	* If this method returns true (OK), then the work of the compiler can continue.
@@ -355,7 +337,7 @@ OpalCompiler >> compilationContext: anObject [
 
 { #category : 'plugins' }
 OpalCompiler >> compilationContextClass [
-	^compilationContextClass ifNil: [ CompilationContext  ]
+	^compilationContextClass ifNil: [ OCCompilationContext  ]
 ]
 
 { #category : 'plugins' }
@@ -370,11 +352,14 @@ OpalCompiler >> compile [
 	"Policy: compiling is non-faulty by default"
 	self permitFaulty ifNil: [ self permitFaulty: false ].
 
-	ast
-		ifNil: [
-			result := self parse.
-			ast ifNil: [ "some failBlock" ^ result ] ]
-		ifNotNil: [ ast scope ifNil: [ self doSemanticAnalysis ] ].
+	ast ifNil: [
+		result := self parse.
+		ast ifNil: [ "some failBlock" ^ result ] ].
+
+	self callPlugins.
+	(compilationContext isSemanticAnalysisNeeded or: [ ast scope isNil ]) 
+		ifTrue: [ 
+			self doSemanticAnalysis ].
 
 	^ self generateMethod
 ]
@@ -388,14 +373,15 @@ OpalCompiler >> compile: textOrString [
 ]
 
 { #category : 'accessing' }
-OpalCompiler >> compiledMethodClass: aClass [
+OpalCompiler >> compiledBlockClass: aClass [
 
-	self compilationContext compiledMethodClass: aClass
+	self compilationContext compiledBlockClass: aClass
 ]
 
 { #category : 'accessing' }
-OpalCompiler >> compiledMethodTrailer: bytes [
-	self deprecated: 'CompiledMethodTrailer has been removed in Pharo12. Just set the sourcePointer after compiling, see class comment of the deprecated class CompiledMethodTrailer'
+OpalCompiler >> compiledMethodClass: aClass [
+
+	self compilationContext compiledMethodClass: aClass
 ]
 
 { #category : 'accessing' }
@@ -420,8 +406,8 @@ OpalCompiler >> decompileMethod: aCompiledMethod [
 		at: #FBDDecompiler
 		ifPresent: [ :decompilerClass | [ decompilerClass new decompile: aCompiledMethod ]
 			on: Error
-			do: [ RBMethodNode errorMethodNode: aCompiledMethod selector errorMessage: 'Decompilation failed'.  ] ]
-		ifAbsent: [ RBMethodNode errorMethodNode: aCompiledMethod selector errorMessage: 'No decompiler available'. ]
+			do: [ OCMethodNode errorMethodNode: aCompiledMethod selector errorMessage: 'Decompilation failed'.  ] ]
+		ifAbsent: [ OCMethodNode errorMethodNode: aCompiledMethod selector errorMessage: 'No decompiler available'. ]
 ]
 
 { #category : 'private' }
@@ -438,6 +424,9 @@ OpalCompiler >> doSemanticAnalysis [
 		compilationContext: self compilationContext;
 		outerScope: self buildOuterScope;
 		analyze: ast.
+		
+	self  compilationContext semanticAnalysisDone.
+	
 	^ ast
 ]
 
@@ -467,11 +456,7 @@ OpalCompiler >> evaluate [
 	ast ifNil: [ ^ doItMethod ].
 	value := self semanticScope evaluateDoIt: doItMethod.
 
-	self logged == true ifTrue: [
-		Smalltalk globals at: #SystemAnnouncer ifPresent: [ :sysAnn |
-			self semanticScope
-				announceDoItEvaluation: source
-				by: sysAnn uniqueInstance ] ].
+	self logged == true ifTrue: [ self semanticScope announceDoItEvaluation: source by: self class codeSupportAnnouncer ].
 	^ value
 ]
 
@@ -531,9 +516,8 @@ OpalCompiler >> generateIR [
 
 { #category : 'private' }
 OpalCompiler >> generateMethod [
-
 	| method ir |
-	self callPlugins.
+	
 	ast scope registerVariables.
 
 	ast bcToASTCache: nil.
@@ -545,13 +529,6 @@ OpalCompiler >> generateMethod [
 	method propertyAt: #source put: source.
 	self isScripting ifTrue: [ method propertyAt: #ast put: ast ]. "Keep AST for scripts (for the moment)"
 
-	"If the prior method was not set explicitly, we set it because we will need it if we are not in the first compilation"
-	self priorMethod ifNil: [
-		self methodClass ifNotNil: [ :class | "In case the method comes from a trait, we ignore it because it means we are overriding the trait method in the class"
-			class compiledMethodAt: method selector ifPresent: [ :aMethod | aMethod isFromTrait ifFalse: [ self priorMethod: aMethod ] ] ] ].
-
-	"In case we are not compiling the method for the first time, we want to ensure that some properties are kept."
-	self priorMethod ifNotNil: [ priorMethod migratePersistingPropertiesIn: method ].
 	^ method
 ]
 
@@ -563,34 +540,31 @@ OpalCompiler >> install [
 	class := self methodClass.
 	self assert: class isNotNil.
 
-	method := self compile ifNil: [ ^ nil ].
+	method := self compile ifNil: [ ^ nil ]. "If the prior method was not set explicitly, we set it because we will need it if we are not in the first compilation"
+	self priorMethod ifNil: [ "In case the method comes from a trait, we ignore it because it means we are overriding the trait method in the class"
+		class compiledMethodAt: method selector ifPresent: [ :aMethod | aMethod isFromTrait ifFalse: [ self priorMethod: aMethod ] ] ]. "In case we are not compiling the method for the first time, we want to ensure that some properties are kept."
+	self priorMethod ifNotNil: [ priorMethod migratePersistingPropertiesIn: method ].
 
-	changeStamp ifNil: [
-		changeStamp := Date today mmddyyyy , ' '
-		               ,
-			               ((String streamContents: [ :s |
-				                 Time now print24: true on: s ]) copyFrom: 1 to: 5) ].
+	changeStamp ifNil: [ changeStamp := DateAndTime now printString ].
 	logSource := self logged ifNil: [ true ].
-	protocol := protocol ifNil: [
-		            self priorMethod ifNotNil: [ self priorMethod protocol ] ].
+	protocol := protocol ifNil: [ self priorMethod ifNotNil: [ self priorMethod protocol name ] ifNil: [ Protocol unclassified ] ].
 
 	logSource ifTrue: [
-		method
-			putSource: source
-			withPreamble: [ :file | "It is possible the protocol might be wrong, fro example if the protocol is nil or and extension to the package of the class containing the method. But to fix this problem it would require to find the right protocol before classification and this is some work to do... And this logged protocol is not really used."
-				class
-					printProtocolChunk: protocol
-					on: file
-					withStamp: changeStamp
-					priorMethod: self priorMethod.
-				file cr ] ].
+			method
+				putSource: source
+				withFooter: ''
+				protocol: (protocol isString ifTrue: [ protocol ] ifFalse: [ protocol name ]) asString
+				timestamp: changeStamp asString
+				priorSourcePointer: (self priorMethod ifNil: [ 0 ] ifNotNil: [ self priorMethod sourcePointer ]) ].
 
-	class
-		addAndClassifySelector: method selector
-		withMethod: method
-		inProtocol: protocol.
+	"Install the method and classify AFTER setting the source pointer.
+	If the method is a trait method, trait installation is hooked down here.
+	And it depends on having set the source pointer before.
+	
+	This is not the ideal order, because this means that a failure in writing the source code may prevent method installation in the system (and thus preventing further work/updates to code)."			
+	class addAndClassifySelector: method selector withMethod: method inProtocol: protocol.
 
-	class instanceSide noteCompilationOf: method meta: class isClassSide.
+	class noteCompilationOf: method.
 
 	^ method
 ]
@@ -649,16 +623,6 @@ OpalCompiler >> needRequestorScope [
 	"Because requestor do not have a real API, introspection is used."
 	(self requestor respondsTo: #needRequestorScope) ifFalse: [ ^ false ].
 	^ self requestor needRequestorScope
-]
-
-{ #category : 'accessing' }
-OpalCompiler >> noPattern: aBoolean [
-
-	self
-		deprecated: 'Use #isScripting: instead'
-		transformWith: '`@receiver noPattern: `@arg' -> '`@receiver isScripting: `@arg'.
-
-	self isScripting: aBoolean
 ]
 
 { #category : 'public access' }

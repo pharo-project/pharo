@@ -1,6 +1,6 @@
 Class {
 	#name : 'ReClassInteractionDriver',
-	#superclass : 'RBInteractionDriver',
+	#superclass : 'ReInteractionDriver',
 	#instVars : [
 		'packageNames',
 		'packageName',
@@ -11,17 +11,16 @@ Class {
 	#tag : 'Drivers'
 }
 
-{ #category : 'execution' }
-ReClassInteractionDriver >> changes [
-	"Remember should not call generateChanges"
+{ #category : 'testing' }
+ReClassInteractionDriver class >> isAbstract [
 
-	refactoring privateTransform.
-	^ refactoring changes
+	^ self = ReClassInteractionDriver
 ]
 
 { #category : 'accessing' }
-ReClassInteractionDriver >> configureRefactoring [
-	^ self subclassResponsibility
+ReClassInteractionDriver >> dialogTitleForClassSelection [
+
+	^ self subclassResponsibility 
 ]
 
 { #category : 'accessing' }
@@ -57,7 +56,8 @@ ReClassInteractionDriver >> scopes: refactoringScopes [
 
 { #category : 'accessing' }
 ReClassInteractionDriver >> tagName [
-	^ self subclassResponsibility
+
+	^ tagName
 ]
 
 { #category : 'accessing' }

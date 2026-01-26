@@ -16,7 +16,7 @@ ReSendsMethodDictRule class >> checksMethod [
 
 { #category : 'accessing' }
 ReSendsMethodDictRule class >> group [
-	^ 'Bugs'
+	^ self bugsGroup
 ]
 
 { #category : 'accessing' }

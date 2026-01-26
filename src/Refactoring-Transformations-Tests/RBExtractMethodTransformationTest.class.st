@@ -9,8 +9,9 @@ Class {
 { #category : 'private' }
 RBExtractMethodTransformationTest >> sourceCodeAt: anInterval forMethod: aSelector in: aClass [
 
-	^ (aClass sourceCodeAt: aSelector)
-		copyFrom: anInterval first to: anInterval last
+	^ (aClass >> aSelector) sourceCode
+			copyFrom: anInterval first
+			to: anInterval last
 ]
 
 { #category : 'tests' }
@@ -393,7 +394,7 @@ RBExtractMethodTransformationTest >> testWithTemporaryVariable [
 	self
 		assert: (class parseTreeForSelector: #foo1)
 		equals: (self parseMethod: 'foo1 | rule |
-				rule := RBParseTreeRewriter new.
+				rule := OCParseTreeRewriter new.
 				rule addSearch: ''super `@message: ``@args''
 					-> ([:aNode |
 					(class withAllSubclasses

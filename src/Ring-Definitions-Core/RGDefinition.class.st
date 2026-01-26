@@ -190,12 +190,6 @@ RGDefinition >> isOrganization [
 ]
 
 { #category : 'testing - types' }
-RGDefinition >> isPackage [
-
-	^false
-]
-
-{ #category : 'testing - types' }
 RGDefinition >> isPool [
 
 	^false

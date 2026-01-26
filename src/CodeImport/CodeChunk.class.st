@@ -58,6 +58,12 @@ CodeChunk >> isClassCommentDeclaration [
 ]
 
 { #category : 'testing' }
+CodeChunk >> isClassDeclaration [
+
+	^ false
+]
+
+{ #category : 'testing' }
 CodeChunk >> isClassOrganizationDeclaration [
 
 	^ false
@@ -71,6 +77,12 @@ CodeChunk >> isDoItDeclaration [
 
 { #category : 'testing' }
 CodeChunk >> isMethodDeclaration [
+
+	^ false
+]
+
+{ #category : 'testing' }
+CodeChunk >> isPackageDeclaration [
 
 	^ false
 ]

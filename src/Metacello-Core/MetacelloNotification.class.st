@@ -4,9 +4,9 @@ I am a notification for logging of textual represenation of Metacello events
 Class {
 	#name : 'MetacelloNotification',
 	#superclass : 'SystemNotification',
-	#category : 'Metacello-Core-Exceptions-Notifications',
+	#category : 'Metacello-Core-Exceptions',
 	#package : 'Metacello-Core',
-	#tag : 'Exceptions-Notifications'
+	#tag : 'Exceptions'
 }
 
 { #category : 'exceptioninstantiator' }

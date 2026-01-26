@@ -15,7 +15,8 @@ MCDefinition >> <= other [
 
 { #category : 'comparing' }
 MCDefinition >> = aDefinition [
-	^(aDefinition isKindOf: MCDefinition) and: [self isRevisionOf: aDefinition]
+
+	^ self class = aDefinition class and: [ self isRevisionOf: aDefinition ]
 ]
 
 { #category : 'accessing' }
@@ -100,17 +101,6 @@ MCDefinition >> isScriptDefinition [
 { #category : 'testing' }
 MCDefinition >> isTraitDefinition [
 	^ false
-]
-
-{ #category : 'installing' }
-MCDefinition >> load [
-	
-]
-
-{ #category : 'installing' }
-MCDefinition >> loadOver: aDefinition [
-	self load
-	
 ]
 
 { #category : 'installing' }

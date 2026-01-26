@@ -62,11 +62,6 @@ Slot class >> slotUsers [
 		select:  [ :class | class slots anySatisfy: [ :slot | slot class == self ] ]
 ]
 
-{ #category : 'visiting' }
-Slot >> acceptVisitor: aProgramNodeVisitor node: aNode [
-	^ aProgramNodeVisitor visitInstanceVariableNode: aNode
-]
-
 { #category : 'private' }
 Slot >> addAdditionalSlotsTo: slots [
 	"Some slots internal behavior are relying one other slots. This method should add them in order to build the class with them."
@@ -232,9 +227,15 @@ Slot >> isWrittenIn: aCompiledCode [
 ]
 
 { #category : 'accessing' }
+Slot >> name: aSymbol [
+
+	super name: aSymbol asSymbol
+]
+
+{ #category : 'accessing' }
 Slot >> named: aSymbol [
 	"to be polymorhic with slot class"
-	self name: aSymbol
+	self name: aSymbol asSymbol
 ]
 
 { #category : 'accessing' }

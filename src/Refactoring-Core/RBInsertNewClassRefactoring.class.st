@@ -21,7 +21,8 @@ Class {
 		'subclasses',
 		'comment',
 		'packageName',
-		'tagName'
+		'tagName',
+		'traitComposition'
 	],
 	#category : 'Refactoring-Core-Refactorings',
 	#package : 'Refactoring-Core',
@@ -39,12 +40,25 @@ RBInsertNewClassRefactoring >> applicabilityPreconditions [
 				 	((RBCondition isMetaclass: sub) errorMacro:
 				         'Subclass must <1?not :>be a metaclass') not.
 			        (RBCondition isImmediateSubclass: sub of: superclass) } ].
-	^ cond , {
+	^ cond , { 
 			(RBCondition isValidClassName: className).
 			(RBCondition isGlobal: className in: self model) not.
 			(RBCondition isSymbol: packageName).
 			((RBCondition withBlock: [ packageName isNotEmpty ]) errorMacro:
 				 'Invalid package name') }
+]
+
+{ #category : 'transforming' }
+RBInsertNewClassRefactoring >> checkSuperclass [
+
+	| superclassObj superclassName |
+	"I fail if superclass is not defined in the model"
+	superclassObj := self model classObjectFor: superclass.
+	superclassObj ifNil: [
+			superclassName := superclass isString
+				                  ifTrue: [ superclass , ' ' ]
+				                  ifFalse: [ '' ].
+			self refactoringError: 'The new class'' superclass ' , superclassName , 'is missing from the model' ]
 ]
 
 { #category : 'accessing' }
@@ -78,6 +92,12 @@ RBInsertNewClassRefactoring >> packageName: anObject [
 ]
 
 { #category : 'transforming' }
+RBInsertNewClassRefactoring >> prepareForExecution [
+
+	self checkSuperclass
+]
+
+{ #category : 'transforming' }
 RBInsertNewClassRefactoring >> privateTransform [
 
 	self model
@@ -87,7 +107,8 @@ RBInsertNewClassRefactoring >> privateTransform [
 				name: className;
 				package: packageName;
 				tag: tagName;
-				comment: self comment ];
+				comment: self comment;
+				traitComposition: (traitComposition ifNil: #()) ];
 		reparentClasses: subclasses to: (self model classNamed: className)
 ]
 
@@ -112,12 +133,14 @@ RBInsertNewClassRefactoring >> storeOn: aStream [
 
 { #category : 'accessing' }
 RBInsertNewClassRefactoring >> subclasses: aCollection [
+	"Set class objects for a list of class names"
 
 	subclasses := aCollection collect: [ :each | self classObjectFor: each ].
 ]
 
 { #category : 'accessing' }
 RBInsertNewClassRefactoring >> superclass: aClass [
+	"set the superclass object"
 
 	superclass := self classObjectFor: aClass
 ]
@@ -132,4 +155,10 @@ RBInsertNewClassRefactoring >> tagName [
 RBInsertNewClassRefactoring >> tagName: anObject [
 
 	tagName := anObject
+]
+
+{ #category : 'accessing' }
+RBInsertNewClassRefactoring >> traitComposition: aTraitComposition [
+
+	traitComposition := aTraitComposition
 ]

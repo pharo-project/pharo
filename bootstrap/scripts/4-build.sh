@@ -99,121 +99,90 @@ fi
 
 BOOTSTRAP_IMAGE_NAME=bootstrap
 BOOTSTRAP_ARCHIVE_IMAGE_NAME=${PHARO_NAME_PREFIX}-bootstrap-${SUFFIX}
-
 HERMES_ARCHIVE_NAME=${PHARO_NAME_PREFIX}-hermesPackages-${SUFFIX}
-RPACKAGE_ARCHIVE_NAME=${PHARO_NAME_PREFIX}-rpackage-${SUFFIX}
-
-CORE_IMAGE_NAME=${PHARO_NAME_PREFIX}-core-${SUFFIX}
 COMPILER_IMAGE_NAME=${PHARO_NAME_PREFIX}-compiler-${SUFFIX}
 TRAITS_IMAGE_NAME=${PHARO_NAME_PREFIX}-traits-${SUFFIX}
 MC_BOOTSTRAP_IMAGE_NAME=${PHARO_NAME_PREFIX}-monticello_bootstrap-${SUFFIX}
-MC_IMAGE_NAME=${PHARO_NAME_PREFIX}-monticello-${SUFFIX}
 METACELLO_IMAGE_NAME=${PHARO_NAME_PREFIX}-metacello-${SUFFIX}
 PHARO_IMAGE_NAME=${PHARO_NAME_PREFIX}-${SUFFIX}
 
 #Get inside the bootstrap-cache folder. Pharo interprets relatives as relatives to the image and not the 'working directory'
 cd "${BOOTSTRAP_CACHE}"
 
+# Initializing bootstrap image
+echo $(date -u) "[Compiler] Initializing Bootstraped Image and fixing the code"
+${VM} "${BOOTSTRAP_IMAGE_NAME}.image" # I have to run once the image so the next time it starts the CommandLineHandler.
+${VM} "${BOOTSTRAP_IMAGE_NAME}.image" perform --save PharoBootstrapInitialization fixMethodsIn: protocolsKernel.txt # Fixing some things espell does not handel well
+${VM} "${BOOTSTRAP_IMAGE_NAME}.image" perform --save PharoBootstrapInitialization fixExtensionMethods
 
-#Prepare
+# Archive bootstrap image and prepare compiler image
 echo "Prepare Bootstrap files"
-cp "${BOOTSTRAP_IMAGE_NAME}.image" "${COMPILER_IMAGE_NAME}.image"
-
-# Archive bootstrap image
 cp "${BOOTSTRAP_IMAGE_NAME}.image" "${BOOTSTRAP_ARCHIVE_IMAGE_NAME}.image"
 zip "${BOOTSTRAP_ARCHIVE_IMAGE_NAME}.zip" "${BOOTSTRAP_ARCHIVE_IMAGE_NAME}.image"
+cp "${BOOTSTRAP_IMAGE_NAME}.image" "${COMPILER_IMAGE_NAME}.image"
 
 # Archive binary Hermes packages
-zip "${HERMES_ARCHIVE_NAME}.zip" *.hermes
-
-# Archive Package definitions
-zip "${RPACKAGE_ARCHIVE_NAME}.zip" protocolsKernel.txt
-
-# Find st-cache path
-[[ -z "${BOOTSTRAP_CACHE}" ]] && ST_CACHE='st-cache' || ST_CACHE="${BOOTSTRAP_CACHE}/st-cache"
-
-# Installing Package
-echo $(date -u) "[Compiler] Initializing Bootstraped Image"
-${VM} "${COMPILER_IMAGE_NAME}.image" # I have to run once the image so the next time it starts the CommandLineHandler.
+zip "${HERMES_ARCHIVE_NAME}.zip" *.hermes hermesSUnitPackages.txt
 
 echo $(date -u) "[Compiler] Adding more Kernel packages"
-${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" loadHermes Hermes-Extensions.hermes --save
-${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" loadHermes Math-Operations-Extensions.hermes Debugging-Core.hermes System-Time.hermes Multilingual-Encodings.hermes ReflectionMirrors-Primitives.hermes --save --no-fail-on-undeclared
+${VM} "${COMPILER_IMAGE_NAME}.image" perform --save BasicHermesTool load: --as-array $(cat hermesAdditionalKernelPackages.txt)
 
-# Now that System-Time is loaded, we can initialize the version
-${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" perform  --save ChronologyConstants initialize
-${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" perform  --save DateAndTime initialize
-${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" perform  --save SystemVersion setMajor:minor:patch:suffix:build:commitHash: ${PHARO_MAJOR} ${PHARO_MINOR} ${PHARO_PATCH} ${PHARO_SUFFIX} ${BUILD_NUMBER} ${PHARO_COMMIT_HASH}
-
-${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" loadHermes InitializePackagesCommandLineHandler.hermes --save
-
-${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" loadHermes Collections-Atomic.hermes AST-Core.hermes Collections-Arithmetic.hermes ClassDefinitionPrinters.hermes System-SourcesCondenser.hermes System-NumberPrinting.hermes --save --no-fail-on-undeclared
-
-echo $(date -u) "[Compiler] Initializing the packages in the Kernel"
-${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" initializePackages --protocols=protocolsKernel.txt --packages --save
+# Now that System-Version is loaded, we can initialize the version
+${VM} "${COMPILER_IMAGE_NAME}.image" perform  --save SystemVersion setMajor:minor:patch:suffix:build:commitHash: ${PHARO_MAJOR} ${PHARO_MINOR} ${PHARO_PATCH} ${PHARO_SUFFIX} ${BUILD_NUMBER} ${PHARO_COMMIT_HASH}
 
 # Installing compiler through Hermes 
 echo $(date -u) "[Compiler] Installing compiler through Hermes"
-${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" loadHermes Debugging-Utils.hermes OpalCompiler-Core.hermes CodeImport.hermes CodeImportCommandLineHandlers.hermes --save --no-fail-on-undeclared
-${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" eval --save "OpalCompiler register. CompilationContext initialize. OCASTTranslator initialize."
-${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" eval --save "SystemEnvironment deprecatedAliases: { #SystemDictionary }." # This line should be removed in Pharo 14 since it is for backward compatibility.
-${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" st ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/01-initialization/01-init.st --no-source --save --quit
+${VM} "${COMPILER_IMAGE_NAME}.image" loadHermes $(cat hermesCompilerPackages.txt) --save --no-fail-on-undeclared
+${VM} "${COMPILER_IMAGE_NAME}.image" eval --save "SystemEnvironment deprecatedAliases: { #SystemDictionary }." # This line should be removed in Pharo 14 since it is for backward compatibility.
+${VM} "${COMPILER_IMAGE_NAME}.image" st ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/4-build-scripts/01-init.st --no-source --save --quit
 
 echo $(date -u) "[Compiler] Initializing Unicode"
-${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" st ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/01-initialization/02-initUnicode.st --no-source --save --quit "${BOOTSTRAP_REPOSITORY}/resources/unicode/"
+${VM} "${COMPILER_IMAGE_NAME}.image" st ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/4-build-scripts/02-initUnicode.st --no-source --save --quit "${BOOTSTRAP_REPOSITORY}/resources/unicode/"
 
-${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" loadHermes Random-Core.hermes System-Hashing.hermes Network-UUID.hermes FileSystem-Core.hermes FileSystem-Disk.hermes --save --no-fail-on-undeclared
-${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" eval --save "PharoBootstrapInitialization initializeFileSystem"
+${VM} "${COMPILER_IMAGE_NAME}.image" loadHermes $(cat hermesFileSystemPackages.txt) --save --no-fail-on-undeclared
 zip "${COMPILER_IMAGE_NAME}.zip" "${COMPILER_IMAGE_NAME}.image"
 
 # Installing Traits through Hermes 
 echo $(date -u) "[Compiler] Installing Traits through Hermes"
 
-${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" save ${TRAITS_IMAGE_NAME}
-${VM} "${TRAITS_IMAGE_NAME}.image" "${IMAGE_FLAGS}" loadHermes Traits.hermes --save
-${VM} "${TRAITS_IMAGE_NAME}.image" "${IMAGE_FLAGS}" loadHermes Kernel-Traits.hermes Collections-Abstract-Traits.hermes CodeImport-Traits.hermes --save
+${VM} "${COMPILER_IMAGE_NAME}.image" save ${TRAITS_IMAGE_NAME}
+${VM} "${TRAITS_IMAGE_NAME}.image" loadHermes $(cat hermesTraitsPackages.txt) --save
 zip "${TRAITS_IMAGE_NAME}.zip" "${TRAITS_IMAGE_NAME}.image"
-
-#Bootstrap Initialization: Class and Package initialization
-echo $(date -u) "[Core] Class and Package initialization"
-${VM} "${TRAITS_IMAGE_NAME}.image" "${IMAGE_FLAGS}" save ${CORE_IMAGE_NAME}
-zip "${CORE_IMAGE_NAME}.zip" "${CORE_IMAGE_NAME}.image"
 
 #Bootstrap Monticello Part 1: Core and Local repositories
 echo $(date -u) "[Monticello] Bootstrap Monticello Core and Local repositories"
 
-${VM} "${CORE_IMAGE_NAME}.image" "${IMAGE_FLAGS}" save ${MC_BOOTSTRAP_IMAGE_NAME}
-#cp "${CORE_IMAGE_NAME}.image" "${MC_BOOTSTRAP_IMAGE_NAME}.image"
-${VM} "${MC_BOOTSTRAP_IMAGE_NAME}.image" "${IMAGE_FLAGS}" st ${ST_CACHE}/Monticello.st --save --quit
-${VM} "${MC_BOOTSTRAP_IMAGE_NAME}.image" "${IMAGE_FLAGS}" st ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/02-monticello-bootstrap/01-bootstrapMonticello.st --save --quit
+${VM} "${TRAITS_IMAGE_NAME}.image" save ${MC_BOOTSTRAP_IMAGE_NAME}
+${VM} "${MC_BOOTSTRAP_IMAGE_NAME}.image" loadHermes $(cat hermesMonticelloPackages.txt) --save
 zip "${MC_BOOTSTRAP_IMAGE_NAME}.zip" ${MC_BOOTSTRAP_IMAGE_NAME}.*
-
-#Bootstrap Monticello Part 2: Networking Packages and Remote Repositories
-echo $(date -u) "[Monticello] Loading Networking Packages and Remote Repositories"
-${VM} "${MC_BOOTSTRAP_IMAGE_NAME}.image" "${IMAGE_FLAGS}" save $MC_IMAGE_NAME
-${VM} "${MC_IMAGE_NAME}.image" "${IMAGE_FLAGS}" st ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/02-monticello-bootstrap/02-bootstrapMonticelloRemote.st --save --quit
-zip "${MC_IMAGE_NAME}.zip" ${MC_IMAGE_NAME}.*
 
 #Bootstrap Metacello
 echo "[Metacello] Bootstrapping Metacello"
-${VM} "${MC_IMAGE_NAME}.image" "${IMAGE_FLAGS}" save ${METACELLO_IMAGE_NAME}
-${VM} "${METACELLO_IMAGE_NAME}.image" "${IMAGE_FLAGS}" st ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/03-metacello-bootstrap/01-loadMetacello.st --save --quit
-${VM} "${METACELLO_IMAGE_NAME}.image" "${IMAGE_FLAGS}" eval --save "Metacello new baseline: 'Tonel';repository: 'github://pharo-vcs/tonel:Pharo12';onWarning: [ :e | Error signal: e messageText in: e signalerContext ]; load: 'core'"
+${VM} "${MC_BOOTSTRAP_IMAGE_NAME}.image" save ${METACELLO_IMAGE_NAME}
+echo "Loading packages: $(cat hermesMetacelloPackages.txt)"
+${VM} "${METACELLO_IMAGE_NAME}.image" loadHermes $(cat hermesMetacelloPackages.txt) --save --no-fail-on-undeclared
+${VM} "${METACELLO_IMAGE_NAME}.image" st ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/4-build-scripts/03-bootstrapMonticello.st --save --quit
+git clone https://github.com/pharo-vcs/tonel.git -b "Pharo${PHARO_MAJOR}" "${BOOTSTRAP_CACHE}/tonel"
+${VM} "${METACELLO_IMAGE_NAME}.image" metacello install --save --signalErrorOnWarning "filetree://${BOOTSTRAP_CACHE}/tonel" Tonel --groups core
+#We need the next line because we will reload Tonel from github and this could cause some trouble later
+${VM} "${METACELLO_IMAGE_NAME}.image" "${IMAGE_FLAGS}" eval --save "MetacelloProjectRegistry resetRegistry"
 zip "${METACELLO_IMAGE_NAME}.zip" ${METACELLO_IMAGE_NAME}.*
 
 echo $(date -u) "[Pharo] Reloading rest of packages"
-${VM} "${METACELLO_IMAGE_NAME}.image" "${IMAGE_FLAGS}" save "${PHARO_IMAGE_NAME}"
+${VM} "${METACELLO_IMAGE_NAME}.image" save "${PHARO_IMAGE_NAME}"
 
 #Terrible HACK!!!! 
 #I am increasing the size of the eden space.
 #This allows to load the big baselines.
 #However, this is only needed because the VM has a bug when extending the space itself. It is corrupting the objects, this produces random crashes
-${VM} "${PHARO_IMAGE_NAME}.image" "${IMAGE_FLAGS}" eval --save "Smalltalk vm parameterAt: 45 put: (Smalltalk vm parameterAt: 44) * 4"
+${VM} "${PHARO_IMAGE_NAME}.image" eval --save "Smalltalk vm parameterAt: 45 put: (Smalltalk vm parameterAt: 44) * 4"
 
 env 2>&1 > env.log
 
-${VM} "${PHARO_IMAGE_NAME}.image" "${IMAGE_FLAGS}" eval --save "MCCacheRepository uniqueInstance disable"
-${VM} "${PHARO_IMAGE_NAME}.image" "${IMAGE_FLAGS}" eval --save "Metacello new baseline: 'Pharo';repository: 'tonel://${BOOTSTRAP_REPOSITORY}/src';onWarning: [ :e | Error signal: e messageText in: e signalerContext ]; load"
+${VM} "${PHARO_IMAGE_NAME}.image" eval --save "MCCacheRepository uniqueInstance disable"
+#First we load the remote repositories capabilities of Monticello to be able to load the Pharo baseline with external remote dependencies
+${VM} "${PHARO_IMAGE_NAME}.image" metacello install --save --signalErrorOnWarning "tonel://${BOOTSTRAP_REPOSITORY}/src" Monticello --groups RemoteRepositories
+${VM} "${PHARO_IMAGE_NAME}.image" metacello install --save --signalErrorOnWarning "tonel://${BOOTSTRAP_REPOSITORY}/src" Pharo
 
 #Storing the image version into the image header
 ${VM} "${PHARO_IMAGE_NAME}.image" "${IMAGE_FLAGS}" eval --save "Smalltalk vm saveImageVersionInImageHeader"
@@ -225,15 +194,13 @@ ${VM} "${PHARO_IMAGE_NAME}.image" "${IMAGE_FLAGS}" eval --save "Smalltalk vm par
 
 ${VM} "${PHARO_IMAGE_NAME}.image" "${IMAGE_FLAGS}" eval --save "MCCacheRepository uniqueInstance enable. FFIMethodRegistry resetAll. PharoSourcesCondenser condenseNewSources. Smalltalk garbageCollect"
 ${VM} "${PHARO_IMAGE_NAME}.image" "${IMAGE_FLAGS}" clean --release
+${VM} "${PHARO_IMAGE_NAME}.image" "${IMAGE_FLAGS}" eval --save "SystemBuildInfo current initializeForRelease"
 
 ${VM} "${PHARO_IMAGE_NAME}.image" "${IMAGE_FLAGS}" save "Pharo"
 echo "${PHARO_SHORT_VERSION}" > pharo.version
 
 # clean bak sources files
 rm -f *.bak
-
-# delete Pharo60 sources files
-rm PharoV60.sources*
 
 PHARO_SOURCES_PREFIX=$(echo "${PHARO_NAME_PREFIX}" | cut -d'-' -f 1 | cut -d'.' -f 1-2)
 zip "${PHARO_IMAGE_NAME}.zip" ${PHARO_IMAGE_NAME}.* ${PHARO_SOURCES_PREFIX}*.sources pharo.version

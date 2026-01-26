@@ -1,0 +1,59 @@
+"
+I represent an elementary code transformation.
+My subinstances can be composed into composite transformations. 
+
+I'm not a refactoring since a transformation I do not pay attention to behavior preservation. 
+However as a transformation, I will be used by refactorings. 
+
+My main API is 
+	- transform which is actually executing the transformation
+	- asRefactoring to optionally (false by default) check preconditions, if some apply
+
+"
+Class {
+	#name : 'ReTransformation',
+	#superclass : 'ReAbstractTransformation',
+	#category : 'Refactoring-Transformations-Model',
+	#package : 'Refactoring-Transformations',
+	#tag : 'Model'
+}
+
+{ #category : 'private - initialization' }
+ReTransformation class >> initializeRefactoringOptions [
+
+	RefactoringOptions := IdentityDictionary new.
+	RefactoringOptions
+		at: #implementorToInline
+		put: [ :ref :imps | self error: #implementorToInline ];
+
+		at: #methodName
+		put: [ :methodName | self error: #methodName ];
+
+		at: #selfArgumentName
+		put: [ :ref | self error: #selfArgumentName ];
+
+		at: #selectVariableToMoveTo
+		put: [ :ref :class :selector | self error: #selectVariableToMoveTo ];
+
+		at: #variableTypes
+		put: [ :ref :types :selected | self error: #variableTypes ];
+
+		at: #extractAssignment
+		put: [ :ref :varName | self error: #extractAssignment ];
+
+		at: #shouldNotCreateExtraBindings
+		put: [ :ref :string | self error: #shouldNotCreateExtraBindings ];
+
+		at: #alreadyDefined
+		put: [ :ref :cls :selector |  self error: #alreadyDefined ];
+
+		at: #openBrowser
+		put: [ :ref :env |  self error: #openBrowser ]
+]
+
+{ #category : 'displaying' }
+ReTransformation >> changesToDisplayIn: aBrowser [
+
+	^ self changes changes
+		flatCollect: [ :e | e changesToDisplayIn: aBrowser ]
+]

@@ -13,17 +13,6 @@ Class {
 }
 
 { #category : 'user interface' }
-PickOneSettingDeclaration >> chooseValue [
-
-	| chosen |
-	chosen := MorphicUIManager new
-		          chooseFrom: self domainValuesLabels
-		          values: self domainValues
-		          title: self label translated , ' choices' translated.
-	chosen ifNotNil: [ self realValue: chosen realValue ]
-]
-
-{ #category : 'user interface' }
 PickOneSettingDeclaration >> content [
 	^ self domainValues
 		detect: [ :setting | setting realValue = self realValue ]
@@ -45,23 +34,4 @@ PickOneSettingDeclaration >> index [
 { #category : 'user interface' }
 PickOneSettingDeclaration >> index: anInteger [
 	self realValue: (self domainValues at: anInteger) realValue
-]
-
-{ #category : 'user interface' }
-PickOneSettingDeclaration >> inputWidget [
-	| widget row |
-	row := self theme newRowIn: self for: {
-				widget := (self theme
-						newDropListIn: self currentWorld
-						for: self
-						list: #domainValuesLabels
-						getSelected: #index
-						setSelected: #index:
-						getEnabled: #enabled
-						useIndex: true
-						help: self description)
-						extent: 1 @ 30}.
-	widget hResizing: #rigid.
-	widget width: (self maxNameWidthForFont: widget font) + 50.
-	^ row
 ]

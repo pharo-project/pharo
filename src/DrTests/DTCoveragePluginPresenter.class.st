@@ -9,7 +9,7 @@ This subclass adds an extra panel to display the source code of the methods and 
 To achieve this, this subclass has 4 new attributes: sourceCodePanel, coveredNodes, uncoveredNodes, and yellowNodes. The sourceCodePanel is the panel that displays the highlighted source code below the list of method nodes. It also has 4 new methods:
 1) `DTCoveragePluginPresenter>>#updateSourceCodePanel:` updates the panel when the user clicks on a method in the result list. It colors in the order they are presented above, starting from green as a base color.
 2) `DTCoveragePluginPresenter>>#defineColorCoverage:` updates the coveredNodes and uncoveredNodes attributes according to the selected method. 
-3) `DTCoveragePluginPresenter>>#defineColorMessageNode:` updates the yellowNodes attribute according to the selected method. If an RBMessageNode contains selectors with block arguments like `ifTrue:`, `ifFalse:`, `do:` and others, it decides whether they should be highlighted in yellow or green.
+3) `DTCoveragePluginPresenter>>#defineColorMessageNode:` updates the yellowNodes attribute according to the selected method. If an ASTMessageNode contains selectors with block arguments like `ifTrue:`, `ifFalse:`, `do:` and others, it decides whether they should be highlighted in yellow or green.
 4) `DTCoveragePluginPresenter>>#addHighlightingOf:withColor:` applies the highlighting to the source code panel for each attribute (coveredNodes, uncoveredNodes, and yellowNodes).
 "
 Class {
@@ -92,7 +92,7 @@ DTCoveragePluginPresenter >> defineColorCoverage: aMethod [
 		node isSequence ifTrue: [
 			node hasBeenExecuted
 				ifTrue: [
-					(self hasRBSequenceNodeInside: node) ifFalse: [
+					(self hasSequenceNodeInside: node) ifFalse: [
 						coveredNodes add: node ] ]
 				ifFalse: [ uncoveredNodes add: node ] ].
 
@@ -100,19 +100,19 @@ DTCoveragePluginPresenter >> defineColorCoverage: aMethod [
 ]
 
 { #category : 'highlighting' }
-DTCoveragePluginPresenter >> defineColorMessageNode: aRBMessageNode [
-	"handle arguments of a RBMessageNode"
+DTCoveragePluginPresenter >> defineColorMessageNode: aMessageNode [
+	"handle arguments of an ASTMessageNode"
 
 	| blockNodes |
-	blockNodes := aRBMessageNode arguments select: [ :element |
+	blockNodes := aMessageNode arguments select: [ :element |
 		              element isBlock ].
 	blockNodes ifNotEmpty: [
 		(blockNodes allSatisfy: [ :arg | arg body hasBeenExecuted ])
-			ifFalse: [ yellowNodes add: aRBMessageNode . ] ]
+			ifFalse: [ yellowNodes add: aMessageNode . ] ]
 ]
 
 { #category : 'highlighting' }
-DTCoveragePluginPresenter >> hasRBSequenceNodeInside: aSequenceNode [
+DTCoveragePluginPresenter >> hasSequenceNodeInside: aSequenceNode [
 
 	^ aSequenceNode statements anySatisfy: [ :statement |
 		  statement allChildren anySatisfy: [ :node | node isSequence ] ]
@@ -127,8 +127,7 @@ DTCoveragePluginPresenter >> initializeResultsTreeAndLabel [
 		display: [ :node | node drTestsName ];
 		displayColor: [ :node | node displayColor ];
 		children: [ :node | node subResults ];
-		contextMenu: [
-			(self rootCommandsGroup / 'Results tools') beRoot asMenuPresenter ].
+		actions: self rootCommandsGroup / 'Results tools'.
 
 	resultsList outputActivationPort transmitDo: [
 		(DTResultBrowseCommand forSpecContext: self) execute ].
@@ -160,4 +159,16 @@ DTCoveragePluginPresenter >> updateSourceCodePanel: compiledMethod [
 					  compiledMethod ast body sourceInterval last + 1);
 			 highlightColor: (Color r: 0.74 g: 0.98 b: 0.71)).
 	^ sourceCodePanel yourself
+]
+
+{ #category : 'private' }
+DTCoveragePluginPresenter >> whenPackagesSelectionChanged: packagesSelected [
+
+	| allClasses |
+	allClasses := packagesSelected flatCollect: [ :package | package classes ].
+
+	itemsList roots: ((plugin itemsToBeAnalysedFor: packagesSelected) sorted: #name ascending).
+	itemsList roots: itemsList items.
+	itemsList selectAll.
+	self updatePackagesListLabel 
 ]

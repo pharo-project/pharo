@@ -18,7 +18,7 @@ ReGlobalVariablesUsageRule class >> checksMethod [
 
 { #category : 'accessing' }
 ReGlobalVariablesUsageRule class >> group [
-	^ 'Design Flaws'
+	^ self designFlawGroup
 ]
 
 { #category : 'accessing' }
@@ -66,7 +66,6 @@ ReGlobalVariablesUsageRule >> isKnownGlobal: aString [
 			Display
 			Processor
 			Smalltalk
-			SourceFiles
 			Transcript
 			Undeclared
 			World

@@ -9,7 +9,7 @@ this refactoring will add the pool definition to class B.
 "
 Class {
 	#name : 'RBExpandReferencedPoolsRefactoring',
-	#superclass : 'RBRefactoring',
+	#superclass : 'ReRefactoring',
 	#instVars : [
 		'pools',
 		'fromClass',
@@ -64,7 +64,7 @@ RBExpandReferencedPoolsRefactoring >> computePoolsToMove [
 			| varName pool |
 
 			varName := aNode name.
-			( aNode whoDefines: varName )
+			( aNode whichUpNodeDefines: varName )
 				ifNil: [ ( poolVariables includes: varName )
 						ifTrue: [ pool := self whichPoolDefines: varName.
 							pool ifNotNil: [ pools add: pool ]

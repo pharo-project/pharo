@@ -1,45 +1,66 @@
 Class {
 	#name : 'ClapPharoVersionTest',
 	#superclass : 'ClapPharoCommandsTest',
+	#instVars : [
+		'systemVersion'
+	],
 	#category : 'Clap-Tests-Commands',
 	#package : 'Clap-Tests',
 	#tag : 'Commands'
 }
 
+{ #category : 'private' }
+ClapPharoVersionTest >> performTest [ 
+
+	SystemVersion useCurrent: systemVersion during: [ super performTest ]
+]
+
+{ #category : 'running' }
+ClapPharoVersionTest >> setUp [
+	super setUp.
+	systemVersion := SystemVersion
+		                 major: '14'
+		                 minor: '0'
+		                 patch: '0'
+		                 suffix: 'SNAPSHOT'
+		                 build: '99'
+		                 commitHash: '0142ce1f581a7d5641c6c0b56f2051304710047c'
+]
+
 { #category : 'tests' }
 ClapPharoVersionTest >> testDefaultFormat [
-	context := ClapPharoVersion version activateWith: #('version').
-
+	context := ClapPharoVersion commandSpecification activateWith: #('printVersion').
+	
 	self assertSuccess.
 	self
 		assert: self outputString
-		equals: SystemVersion current imageVersionString , self lineEnding
+		equals: '[version] ''Pharo14.0.0'' ''Pharo-14.0.0+SNAPSHOT.build.99.sha.0142ce1f581a7d5641c6c0b56f2051304710047c (64 Bit)''' , self lineEnding
 ]
 
 { #category : 'tests' }
 ClapPharoVersionTest >> testFullFormat [
-	context := ClapPharoVersion version activateWith: #('version' '--full').
-
+	context := ClapPharoVersion commandSpecification activateWith: #('printVersion' '--full').
+	
 	self assertSuccess.
 	self
 		assert: self outputString
-		equals: SystemVersion current imageVersionString , self lineEnding
+		equals: '[version] ''Pharo14.0.0'' ''Pharo-14.0.0+SNAPSHOT.build.99.sha.0142ce1f581a7d5641c6c0b56f2051304710047c (64 Bit)''' , self lineEnding
 ]
 
 { #category : 'tests' }
 ClapPharoVersionTest >> testHashFormat [
-	context := ClapPharoVersion version activateWith: #('version' '--hash').
-
+	context := ClapPharoVersion commandSpecification activateWith: #('printVersion' '--hash').
+	
 	self assertSuccess.
 	self
 		assert: self outputString
-		equals: SystemVersion current commitHash , self lineEnding
+		equals: systemVersion commitHash , self lineEnding
 ]
 
 { #category : 'tests' }
 ClapPharoVersionTest >> testHelpFlag [
-	context := ClapPharoVersion version activateWith: #('version' '--help').
-
+	context := ClapPharoVersion commandSpecification activateWith: #('printVersion' '--help').
+	
 	self assertSuccess.
 	self
 		assert: self outputString lines first
@@ -48,8 +69,8 @@ ClapPharoVersionTest >> testHelpFlag [
 
 { #category : 'tests' }
 ClapPharoVersionTest >> testLicenseFormat [
-	context := ClapPharoVersion version activateWith: #('version' '--license').
-
+	context := ClapPharoVersion commandSpecification activateWith: #('printVersion' '--license').
+	
 	self assertSuccess.
 	self
 		assert: self outputString trim
@@ -59,45 +80,45 @@ ClapPharoVersionTest >> testLicenseFormat [
 { #category : 'tests' }
 ClapPharoVersionTest >> testMultipleFormats [
 	| lines |
-	context := ClapPharoVersion version activateWith: #('version' '--hash' '--release' '--numeric').
-
+	context := ClapPharoVersion commandSpecification activateWith: #('printVersion' '--hash' '--release' '--numeric').
+	
 	self assertSuccess.
 	lines := self outputString lines.
 	self
-		assert: (lines at: 1)
-		equals: SystemVersion current commitHash.
+		assert: lines first
+		equals: systemVersion commitHash.
 	self
-		assert: (lines at: 2)
-		equals: SystemVersion current shortVersionString.
+		assert: lines second
+		equals: '14.0'.
 	self
-		assert: (lines at: 3)
-		equals: SystemVersion current highestUpdate printString
+		assert: lines third
+		equals: '140099'
 ]
 
 { #category : 'tests' }
 ClapPharoVersionTest >> testNumericFormat [
-	context := ClapPharoVersion version activateWith: #('version' '--numeric').
-
+	context := ClapPharoVersion commandSpecification activateWith: #('printVersion' '--numeric').
+	
 	self assertSuccess.
 	self
 		assert: self outputString
-		equals: SystemVersion current highestUpdate printString , self lineEnding
+		equals: '140099' , self lineEnding
 ]
 
 { #category : 'tests' }
 ClapPharoVersionTest >> testReleaseFormat [
-	context := ClapPharoVersion version activateWith: #('version' '--release').
-
+	context := ClapPharoVersion commandSpecification activateWith: #('printVersion' '--release').
+	
 	self assertSuccess.
 	self
 		assert: self outputString
-		equals: SystemVersion current shortVersionString , self lineEnding
+		equals: '14.0' , self lineEnding
 ]
 
 { #category : 'tests' }
 ClapPharoVersionTest >> testVmFormat [
-	context := ClapPharoVersion version activateWith: #('version' '--vm').
-
+	context := ClapPharoVersion commandSpecification activateWith: #('printVersion' '--vm').
+	
 	self assertSuccess.
 	self
 		assert: self outputString

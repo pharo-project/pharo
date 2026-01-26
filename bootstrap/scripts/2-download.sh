@@ -31,9 +31,8 @@ if [ ! -e "${BOOTSTRAP_VMTARGET}" ]; then
 	cd ${BOOTSTRAP_DOWNLOADS}/vmtarget
 	# Extract the VM version from the image file version, avoiding going to git to extract the tags
 
-	#Odd PR builds use the the latest VM, else use the stable VM
 	set_version_variables
-	TEST_VM_KIND="vmLatest"
+	TEST_VM_KIND="vm"
 	${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/getPharoVM.sh ${PHARO_SHORT_VERSION} ${TEST_VM_KIND} $BOOTSTRAP_ARCH
 
   cd -
@@ -52,13 +51,8 @@ if [ ! -e "${BOOTSTRAP_DOWNLOADS}/vmBootstrap/pharo" ]; then
 fi 
 
 if [ ! -e "${BOOTSTRAP_DOWNLOADS}/bootstrapImage.zip" ]; then
-	download_to https://github.com/guillep/PharoBootstrap/releases/download/v1.7.8/bootstrapImage.zip ${BOOTSTRAP_DOWNLOADS}/bootstrapImage.zip
+	download_to https://github.com/guillep/PharoBootstrap/releases/download/v1.7.10/bootstrapImage.zip ${BOOTSTRAP_DOWNLOADS}/bootstrapImage.zip
 fi 
-
-# checking for PharoV60.sources
-if [ ! -e "${BOOTSTRAP_DOWNLOADS}/PharoV60.sources.zip" ]; then
-	download_to http://files.pharo.org/sources/PharoV60.sources.zip ${BOOTSTRAP_DOWNLOADS}/PharoV60.sources.zip
-fi
 
 # checking for icons
 # update the commit hash as soon as you need a new version of the icons to be loaded
@@ -74,12 +68,6 @@ fi
 if [ ! -e "./Pharo.image" ]; then
     cd ${BOOTSTRAP_CACHE}
 	unzip -u ${BOOTSTRAP_DOWNLOADS}/bootstrapImage.zip -d .
-fi
-
-# PharoV6 sources
-if [ ! -e "${BOOTSTRAP_CACHE}/PharoV60.sources" ]; then
-    cd ${BOOTSTRAP_CACHE}
-	unzip -u ${BOOTSTRAP_DOWNLOADS}/PharoV60.sources.zip -d ${BOOTSTRAP_CACHE}
 fi
 
 # Icons

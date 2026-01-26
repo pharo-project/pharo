@@ -37,15 +37,12 @@ PharoSourcesCondenser >> fileIndex [
 
 { #category : 'private - 3 installing' }
 PharoSourcesCondenser >> installFreshChangesFile [
+
 	| changesFile |
-
 	"install a new .changes file"
-	changesFile := Smalltalk changesFile.
-	changesFile moveTo: (changesFile , 'bak') nextVersion.
-
-	"Force the creation of a fresh changes file "
-	changesFile writeStreamDo: [ :strm |
-		 "Nothing, just create the file" ]
+	changesFile := FileLocator changes.
+	changesFile moveTo: (changesFile , 'bak') nextVersion. "Force the creation of a fresh changes file "
+	changesFile writeStreamDo: [ :strm | (CodeExporterV100 onStream: strm) writeFileoutVersion ]
 ]
 
 { #category : 'public' }
@@ -55,17 +52,21 @@ PharoSourcesCondenser >> newSourceNamed: aString [
 
 	"Create a copy with the new name"
 	originalSourcesFile := self originalFile resolve asFileReference.
-	Smalltalk sourceFileVersionString: aString.
-	newSourcesFile := Smalltalk sourcesFile asFileReference.
-
+	PharoFilesOpener sourceFileVersionString: aString.
+	newSourcesFile := self originalFile.
+	
+	"If the condensed file is the new file, don't do anything."
+	originalSourcesFile = newSourcesFile ifTrue: [ ^ self ].
+	
 	originalSourcesFile copyTo: newSourcesFile.
 	"Use the new sources file"
-	Smalltalk openSourceFiles
+	SourceFileArray reset
 ]
 
 { #category : 'accessing' }
 PharoSourcesCondenser >> originalFile [
-	^ Smalltalk sourcesFile asFileReference
+
+	^ PharoFilesOpener sourcesFile
 ]
 
 { #category : 'private - testing' }
@@ -74,36 +75,13 @@ PharoSourcesCondenser >> shouldCondenseMethod: aCompiledMethod [
 	^ aCompiledMethod hasSourcePointer
 ]
 
+{ #category : 'writing' }
+PharoSourcesCondenser >> shouldWriteClassComment: commentRemoteString [
+
+	^ commentRemoteString notNil
+]
+
 { #category : 'accessing' }
 PharoSourcesCondenser >> temporaryFile [
 	^ 'new.sources' asFileReference nextVersion
-]
-
-{ #category : 'private - 3 installing' }
-PharoSourcesCondenser >> updateQuitPosition [
-
-	"We use an empty .changes file, hence the last quit position is 0"
-
-	Smalltalk lastQuitLogPosition: 0
-]
-
-{ #category : 'writing' }
-PharoSourcesCondenser >> writeClassComment: aClass [
-
-	| commentRemoteString stamp |
-
-	commentRemoteString := self commentRemoteStringFor: aClass.
-
-	commentRemoteString ifNil: [ ^ self ].
-
-	self
-		nextCommentChunkDo: [ :strm |
-			strm
-				nextPutAll: aClass name;
-				nextPutAll: ' commentStamp: '.
-			stamp := aClass commentStamp ifNil: [ '<historical>' ].
-			stamp storeOn: strm
-			].
-
-	self writeRemoteString: aClass comment for: aClass
 ]

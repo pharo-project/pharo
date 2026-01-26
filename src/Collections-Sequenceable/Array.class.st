@@ -55,29 +55,10 @@ Class {
 	#tag : 'Base'
 }
 
-{ #category : 'brace support' }
-Array class >> braceStream: nElements [
-	"This method is used in compilation of brace constructs.
-	It MUST NOT be deleted or altered."
-
-	^ WriteStream basicNew braceArray: (self new: nElements)
-]
-
 { #category : 'instance creation' }
 Array class >> empty [
 	"A canonicalized empty Array instance."
 	^ #()
-]
-
-{ #category : 'instance creation' }
-Array class >> new: sizeRequested [
-	"Answer an instance of this class with the number of indexable
-	variables specified by the argument, sizeRequested.
-
-	This is a shortcut (direct call of primitive, no #initialize, for performance"
-
-	<primitive: 71>  "This method runs primitively if successful"
-	^ self basicNew: sizeRequested  "Exceptional conditions will be handled in basicNew:"
 ]
 
 { #category : 'converting' }
@@ -134,7 +115,16 @@ Array >> atWrap: index [
 
 { #category : 'accessing' }
 Array >> atWrap: index put: anObject [
+	
 	"Optimized to go through the primitive if possible"
+
+	"Answer the index'th element of the receiver. If index is out of bounds,
+	let it wrap around from the end to the beginning until it is in bounds."
+
+	"(#(11 22 33) copy atWrap: 4 put: 44; yourself) >>> #(44 22 33)"
+
+	"(#(11 22 33) copy atWrap: 0 put: 55; yourself) >>> #(11 22 55)"
+
 	<primitive: 61>
 	^ self at: index - 1 \\ self size + 1 put: anObject
 ]
@@ -144,13 +134,6 @@ Array >> beReadOnlyLiteral [
 	self isLiteral ifFalse: [ ^ self ].
 	self beReadOnlyObject.
 	self do: [ :each | each beReadOnlyLiteral ]
-]
-
-{ #category : 'copying' }
-Array >> copyWithDependent: newElement [
-
-	self isEmpty ifTrue: [ ^ DependentsArray with: newElement ].
-	^ self copyWith: newElement
 ]
 
 { #category : 'displaying' }

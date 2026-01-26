@@ -1,15 +1,15 @@
 Extension { #name : 'BlockClosureTest' }
 
 { #category : '*Kernel-Extended-Tests' }
-BlockClosureTest >> testCannotReturn [
-
-	| block p |
-	p := [ block := self blockWithNonLocalReturn: #result ] fork.
-	[ p isTerminated ] whileFalse: [ (Delay forMilliseconds: 10) wait ].
-
-	self should: [ block value ] raise: BlockCannotReturn withExceptionDo: [ :err |
-		self assert: err result equals: #result.
-		self assert: err home equals: block home ]
+BlockClosureTest >> testPrintOnBlockDefinedInMethodWithoutSourceCode [
+	| method block |
+	method := OpalCompiler new compile: 'method ^ [ 1 + 2 ]'.
+	method removeProperty: #source.
+	self deny: method hasSourceCode.
+	
+	block := method valueWithReceiver: nil.
+	"we compare the ast to not depend on pretty printer settings"
+	self assert: (OCParser parseExpression: block printString) equals: (OCParser parseExpression: '[ 1 + 2 ]').
 ]
 
 { #category : '*Kernel-Extended-Tests' }
@@ -21,7 +21,7 @@ BlockClosureTest >> testRunSimulated [
 BlockClosureTest >> testSourceNodeOptimized [
 	| block |
 	block := [ :ctx | [ ctx atEnd ] whileTrue: [ 1 + 2 ] ].
-	self assert: block sourceNode printString equals: 'RBBlockNode([ :ctx | [ ctx atEnd ] whileTrue: [ 1 + 2 ] ])'
+	self assert: block sourceNode printString equals: 'OCBlockNode([ :ctx | [ ctx atEnd ] whileTrue: [ 1 + 2 ] ])'
 ]
 
 { #category : '*Kernel-Extended-Tests' }

@@ -107,10 +107,9 @@ Morph class >> halosEnabled: aBoolean [
 
 { #category : 'class initialization' }
 Morph class >> initialize [
-	"Morph initialize"
-
 	"this empty array object is shared by all morphs with no submorphs:"
-	EmptyArray := Array new
+
+	EmptyArray ifNil: [ EmptyArray := Array new ]
 ]
 
 { #category : 'settings' }
@@ -118,14 +117,16 @@ Morph class >> morphNavigationShortcutsOn: aBuilder [
 	"Basic, general navigation shortcut among morphs. #MorphNoCtrl will not work for TextMorphs."
 
 	<keymap>
-	(aBuilder shortcut: #navigateFocusForwardCtrl)
-		category: #MorphFocusCtrlNavigation
+	(aBuilder shortcut: #navigateWindowsForwardCtrl)
+		category: #MorphCtrlNavigation
 		default: Character tab ctrl asKeyCombination
-		do: [ :target :morph :event | morph navigateFocusForward ].
-	(aBuilder shortcut: #navigateFocusBackwardCtrl)
-		category: #MorphFocusCtrlNavigation
+		do: [ :target :morph :event |
+			morph world theme openTaskListIn: morph world from: event ].
+	(aBuilder shortcut: #navigateWindowsBackwardCtrl)
+		category: #MorphCtrlNavigation
 		default: Character tab shift ctrl asKeyCombination
-		do: [ :target :morph :event | morph navigateFocusBackward ].
+		do: [ :target :morph :event |
+			morph world theme openTaskListIn: morph world from: event ].
 	(aBuilder shortcut: #navigateFocusForward)
 		category: #MorphFocusNavigation
 		default: Character tab asKeyCombination
@@ -436,7 +437,7 @@ Morph >> addFlexShell [
 	oldHalo := self halo.
 	anIndex := self owner submorphIndexOf: self.
 	self owner
-		addMorph: (flexMorph := self newTransformationMorph asFlexOf: self)
+		addMorph: (flexMorph := TransformationMorph new asFlexOf: self)
 		asElementNumber: anIndex.
 	self transferStateToRenderer: flexMorph.
 	oldHalo ifNotNil: [ oldHalo setTarget: flexMorph ].
@@ -928,6 +929,13 @@ Morph >> adjustedCenter: c [
 ]
 
 { #category : 'accessing' }
+Morph >> adoptPaneColor [
+	"Adopt our pane color."
+
+	self adoptPaneColor: self paneColor
+]
+
+{ #category : 'accessing' }
 Morph >> adoptPaneColor: paneColor [
 	self submorphsDo:[:m| m adoptPaneColor: paneColor]
 ]
@@ -1397,6 +1405,13 @@ Morph >> boundsInWorld [
 	^self bounds: self bounds in: self world
 ]
 
+{ #category : 'drawing' }
+Morph >> boundsWithinCorners [
+ 	"Changed to be more realistic..."
+
+	^self bounds insetBy: 2
+]
+
 { #category : 'updating' }
 Morph >> breakDependents [
 
@@ -1596,6 +1611,18 @@ Morph >> changeClipLayoutCells [
 { #category : 'drawing' }
 Morph >> changeClipSubmorphs [
 	self clipSubmorphs: self clipSubmorphs not
+]
+
+{ #category : 'user prompt' }
+Morph >> changeColor [
+
+	| dialog |
+	dialog := ColorSelectorDialogWindow new
+		title: 'Choose color';
+		selectedColor: self color.
+	dialog openModal.
+	dialog cancelled
+		ifFalse: [self fillStyle: dialog selectedColor]
 ]
 
 { #category : 'meta-actions' }
@@ -2305,6 +2332,14 @@ Morph >> drawErrorOn: aCanvas [
 ]
 
 { #category : 'drawing' }
+Morph >> drawKeyboardFocusOn: aCanvas [
+	"Draw the keyboard focus indication."
+
+	self focusIndicatorMorph
+		drawOn: aCanvas
+]
+
+{ #category : 'drawing' }
 Morph >> drawMouseDownHighlightOn: aCanvas [
 	self highlightedForMouseDown ifTrue: [
 		aCanvas frameRectangle: self fullBounds color: self color darker darker]
@@ -2445,6 +2480,14 @@ Morph >> eventHandler: anEventHandler [
 	self assureExtension eventHandler: anEventHandler
 ]
 
+{ #category : 'geometry' }
+Morph >> expandFullBoundsForDropShadow: aRectangle [
+	"Return an expanded rectangle for an eventual drop shadow."
+
+	^(aRectangle expandBy: self shadowMargins)
+		quickMerge: aRectangle
+]
+
 { #category : 'drawing' }
 Morph >> expandFullBoundsForRolloverBorder: aRectangle [
 	| delta |
@@ -2583,6 +2626,34 @@ Morph >> flashFinished: flashFill original: originalFill [
 	self fillStyle == flashFill ifTrue: [
 		self fillStyle: originalFill
 	]
+]
+
+{ #category : 'accessing' }
+Morph >> focusBounds [
+	"Answer the bounds for drawing the focus indication."
+
+	^self bounds
+]
+
+{ #category : 'event handling' }
+Morph >> focusChanged [
+	"Report that the area occupied by the morph's focus indicator should be redrawn.
+	Optimized for border-only (no fill)."
+
+	|rects fm|
+	fm := self focusIndicatorMorph.
+	fm fillStyle isTransparent
+		ifTrue: [fm borderWidth > 0 ifTrue: [
+					rects := fm bounds areasOutside: (fm bounds insetBy: fm borderWidth).
+					rects do: [:r | self invalidRect: r]]]
+		ifFalse: [self invalidRect: fm bounds]
+]
+
+{ #category : 'drawing' }
+Morph >> focusIndicatorMorph [
+	"Answer the focus indicator morph for the receiver."
+
+	^self theme focusIndicatorMorphFor: self
 ]
 
 { #category : 'dropping/grabbing' }
@@ -2770,19 +2841,20 @@ Morph >> handleDropFiles: anEvent [
 { #category : 'events - processing' }
 Morph >> handleDropMorph: anEvent [
 	"Handle a dropping morph."
+
 	| aMorph localPt |
 	aMorph := anEvent contents.
 	"Do a symmetric check if both morphs like each other"
-	((self wantsDroppedMorph: aMorph event: anEvent)	"I want her"
-		and: [aMorph wantsToBeDroppedInto: self])		"she wants me"
-		ifFalse: [^ self].
+	((self wantsDroppedMorph: aMorph event: anEvent) and: [
+		 aMorph wantsToBeDroppedInto: self ]) ifFalse: [ ^ self ]. "I want her" "she wants me"
 	anEvent wasHandled: true.
 	"Transform the morph into the receiver's coordinate frame. This is currently incomplete since it only takes the offset into account where it really should take the entire transform."
-	localPt := (self transformedFrom: anEvent hand world) "full transform down"
-				globalPointToLocal: aMorph referencePosition.
+	localPt := (self transformedFrom: anEvent hand world)
+		           globalPointToLocal: aMorph referencePosition. "full transform down"
 	aMorph referencePosition: localPt.
 	self acceptDroppingMorph: aMorph event: anEvent.
-	aMorph justDroppedInto: self event: anEvent
+	aMorph justDroppedInto: self event: anEvent.
+	WorldMorph executeDropBlockWith: anEvent
 ]
 
 { #category : 'events - processing' }
@@ -2857,8 +2929,7 @@ Morph >> handleMouseDown: anEvent [
 	anEvent hand removePendingBalloonFor: self.
 	anEvent wasHandled: true.
 
-	(anEvent controlKeyPressed and: [
-		 self cmdGesturesEnabled and: [ anEvent shiftPressed ] ]) ifTrue: [
+	(anEvent isSpecialMetaMenuGesture and: [ self cmdGesturesEnabled ]) ifTrue: [
 		self invokeMetaMenu: anEvent.
 		^ self eventHandler ifNotNil: [ :handler |
 			  handler mouseDown: anEvent fromMorph: self ] ].
@@ -2867,7 +2938,7 @@ Morph >> handleMouseDown: anEvent [
 	anEvent hand newMouseFocus: self event: anEvent.
 
 	"Check to open halo"
-	anEvent isSpecialGesture
+	(anEvent isSpecialGesture and: [self cmdGesturesEnabled])
 		ifTrue: [
 			^ self handleSpecialGesture: anEvent ].
 
@@ -3035,7 +3106,7 @@ Morph >> handleTextInputEvent: anEvent [
 Morph >> handleUnknownEvent: anEvent [
 	"An event of an unknown type was sent to the receiver. What shall we do?!"
 
-	self inform: 'Unknown event: ' , anEvent printString.
+	InformativeNotification signal: 'Unknown event: ' , anEvent printString.
 	anEvent wasHandled: true
 ]
 
@@ -3196,7 +3267,9 @@ Morph >> handlesMouseOverDragging: evt [
 { #category : 'event handling' }
 Morph >> handlesMouseStillDown: evt [
 	"Return true if the receiver wants to get repeated #mouseStillDown: messages between #mouseDown: and #mouseUp"
-	self eventHandler ifNotNil: [^ self eventHandler handlesMouseStillDown: evt].
+
+	self eventHandler ifNotNil: [
+		^ self eventHandler handlesMouseStillDown: evt ].
 	^ false
 ]
 
@@ -3302,6 +3375,14 @@ Morph >> hasHalo: aBool [
 { #category : 'text-anchor' }
 Morph >> hasInlineAnchorString [
 	^ (self textAnchorType == #inline)-> 'Inline' translated
+]
+
+{ #category : 'testing' }
+Morph >> hasKeyboardFocus [
+	"Answer whether the receiver has keyboard focus."
+
+	^((self world ifNil: [^false])
+		activeHand ifNil: [^false])  keyboardFocus = self
 ]
 
 { #category : 'layout - menu' }
@@ -3562,7 +3643,7 @@ Morph >> inspectAt: aPoint event: evt [
 
 { #category : 'menus' }
 Morph >> inspectInMorphic: evt [
-	Smalltalk tools inspector inspect: self
+	(Smalltalk tools toolNamed: #inspector) inspect: self
 ]
 
 { #category : 'debug and other' }
@@ -3841,6 +3922,31 @@ Morph >> layoutFrame: aLayoutFrame [
 	self layoutFrame == aLayoutFrame ifTrue: [^self].
 	self assureExtension layoutFrame: aLayoutFrame asLayoutFrame.
 	self layoutChanged
+]
+
+{ #category : 'layout' }
+Morph >> layoutInBounds: cellBounds [
+	"Layout specific. Apply the given bounds to the receiver after being layed out in its owner."
+	| box aSymbol |
+
+	cellBounds = self bounds ifTrue:[^self]. "already up to date. Fixed here to use bounds rather than fullBounds for the check."
+	cellBounds extent = self bounds extent "nice fit. Fixed here to use bounds rather than fullBounds for the check."
+		ifTrue:[^self position: cellBounds origin].
+	box := bounds.
+	self hResizing == #shrinkWrap
+		ifTrue:[box := box origin extent: self minExtent x @ box height].
+	self vResizing == #shrinkWrap
+		ifTrue:[box := box origin extent: box width @ self minExtent y].
+	"match #spaceFill constraints"
+	self hResizing == #spaceFill
+		ifTrue:[box := box origin extent: cellBounds width @ box height].
+	self vResizing == #spaceFill
+		ifTrue:[box := box origin extent: box width @ cellBounds height].
+	"align accordingly"
+	aSymbol := (owner ifNil:[self]) cellPositioning.
+	box := box align: (box perform: aSymbol) with: (cellBounds perform: aSymbol).
+	"and install new bounds"
+	self bounds: box
 ]
 
 { #category : 'layout - properties' }
@@ -4124,6 +4230,45 @@ Morph >> minCellSize: aPoint [
 ]
 
 { #category : 'layout' }
+Morph >> minExtent [
+	"Layout specific. Return the minimum size the receiver can be represented in.
+	Implementation note: When this message is sent from an owner trying to lay out its children it will traverse down the morph tree and recompute the minimal arrangement of the morphs based on which the minimal extent is returned. When a morph with some layout strategy is encountered, the morph will ask its strategy to compute the new arrangement. However, since the final size given to the receiver is unknown at the point of the query, the assumption is made that the current bounds of the receiver are the base on which the layout should be computed. This scheme prevents strange layout changes when for instance, a table is contained in another table. Unless the inner table has been resized manually (which means its bounds are already enlarged) the arrangement of the inner table will not change here. Thus the entire layout computation is basically an iterative process which may have different results depending on the incremental changes applied.
+	Fixed for shrinkWrap."
+
+	| layout minExtent extra hFit vFit |
+	hFit := self hResizing.
+	vFit := self vResizing.
+	(hFit == #rigid and: [vFit == #rigid])
+		ifTrue:
+			["The receiver will not adjust to parents layout by growing or shrinking,
+		which means that an accurate layout defines the minimum size."
+
+			^self fullBounds extent max: self minWidth @ self minHeight].
+
+	"An exception -- a receiver with #shrinkWrap constraints but no children is being treated #rigid (the equivalent to a #spaceFill receiver in a non-layouting owner)"
+	self hasSubmorphs
+		ifFalse:
+			[hFit == #shrinkWrap ifTrue: [hFit := #rigid].
+			vFit == #shrinkWrap ifTrue: [vFit := #rigid]].
+	layout := self layoutPolicy.
+	layout
+		ifNil: [minExtent := 0 @ 0]
+		ifNotNil: [minExtent := layout minExtentOf: self in: self layoutBounds].
+	hFit == #rigid
+		ifTrue: [minExtent := self fullBounds extent x @ minExtent y]
+		ifFalse:
+			[extra := self bounds width - self layoutBounds width.
+			minExtent := (minExtent x + extra) @ minExtent y].
+	minExtent := vFit == #rigid
+				ifTrue: [minExtent x @ self fullBounds extent y]
+				ifFalse:
+					[extra := self bounds height - self layoutBounds height.
+					minExtent x @ (minExtent y + extra)].
+	minExtent := minExtent max: self minWidth @ self minHeight.
+	^minExtent
+]
+
+{ #category : 'layout' }
 Morph >> minHeight [
 	"answer the receiver's minHeight"
 	^ self
@@ -4203,6 +4348,12 @@ Morph >> morphicLayerNumber [
 	].
 
 	"leave lots of room for special things"
+]
+
+{ #category : 'theme' }
+Morph >> morphicUIManager [
+
+	^ MorphicUIManager new
 ]
 
 { #category : 'submorphs - accessing' }
@@ -4397,9 +4548,57 @@ Morph >> moveOrResizeFromKeystroke: anEvent [
 			ifFalse: [ self position: self position + dir ] ]
 ]
 
+{ #category : 'dependents-private' }
+Morph >> myDependents [
+	"Improved performance dependents."
+
+	^ (self valueOfProperty: #myDependents) ifNil: [ #() ]
+]
+
+{ #category : 'dependents-private' }
+Morph >> myDependents: aCollectionOrNil [
+	"Improved performance dependents."
+
+	aCollectionOrNil
+		ifNil: [self removeProperty: #myDependents]
+		ifNotNil: [self setProperty: #myDependents toValue: aCollectionOrNil]
+]
+
 { #category : 'naming' }
 Morph >> name: aName [
 	(aName isString) ifTrue: [self setNameTo: aName]
+]
+
+{ #category : 'navigation' }
+Morph >> navigateFocusBackward [
+	"Change the keyboard focus to the previous morph."
+
+	self previousMorphWantingFocus ifNotNil: [:m |
+		m takeKeyboardFocus]
+]
+
+{ #category : 'navigation' }
+Morph >> navigateFocusForward [
+	"Change the keyboard focus to the next morph."
+
+	self nextMorphWantingFocus ifNotNil: [:m |
+		m takeKeyboardFocus]
+]
+
+{ #category : 'event handling' }
+Morph >> navigationKey: event [
+	"Check for tab key activity and change focus as appropriate.
+	Check for menu key to do popup."
+
+	(event key = KeyboardKey escape and: [
+			event anyModifierKeyPressed]) ifTrue: [
+		^ self yellowButtonActivity: false ].
+
+	self window ifNotNil: [:win |
+		(win handlesKeyDown: event) ifTrue: [
+			(win keyDown: event) ifTrue: [^true]]].
+
+	^false
 ]
 
 { #category : 'structure' }
@@ -4500,6 +4699,13 @@ Morph >> openInWorld: aWorld [
 	self announceOpened
 ]
 
+{ #category : 'geometry' }
+Morph >> optimalExtent [
+	"Answer the submorphBounds extent plus twice our border width."
+
+	^self submorphBounds extent + (self borderWidth * 2)
+]
+
 { #category : 'accessing - properties' }
 Morph >> otherProperties [
 	"answer the receiver's otherProperties"
@@ -4583,6 +4789,36 @@ Morph >> ownerThatIsA: aClass [
 	"Return the first enclosing morph that is a kind of aClass, or nil if none"
 
 	^ self firstOwnerSuchThat: [:m | m isKindOf: aClass]
+]
+
+{ #category : 'accessing' }
+Morph >> paneColor [
+	"Answer the window's pane color or our color otherwise."
+
+	^self paneColorOrNil ifNil: [self color]
+]
+
+{ #category : 'accessing' }
+Morph >> paneColor: aColor [
+	"Explicitly set the pane color for the reveiver."
+
+	self setProperty: #paneColor toValue: aColor.
+	self adoptPaneColor
+]
+
+{ #category : 'accessing' }
+Morph >> paneColorOrNil [
+	"Answer the window's pane color or nil otherwise."
+
+	^self valueOfProperty: #paneColor ifAbsent: [
+		(self owner ifNil: [^nil]) paneColorOrNil]
+]
+
+{ #category : 'activation' }
+Morph >> passivate [
+	"Mark the receiver and submorphs as passive (background)."
+
+	self submorphsDo: [:m | m passivate]
 ]
 
 { #category : 'base - worlds' }
@@ -4715,6 +4951,13 @@ Morph >> preOpenInWorld: aWorld [
 		[self position: aWorld visibleClearArea origin]
 ]
 
+{ #category : 'accessing' }
+Morph >> preferredCornerStyle [
+	"Answer the preferred corner style."
+
+	^#square
+]
+
 { #category : 'halos and balloon help' }
 Morph >> preferredDuplicationHandleSelector [
 	"Answer the selector, either #addMakeSiblingHandle: or addDupHandle:, to be offered as the default in a halo open on me"
@@ -4751,14 +4994,6 @@ Morph >> prepareToBeSaved [
 	self formerOwner: nil.
 	self formerPosition: nil.
 	fullBounds := nil
-]
-
-{ #category : 'menus' }
-Morph >> presentHelp [
-	"Present a help message if there is one available"
-
-	self inform: 'Sorry, no help has been
-provided here yet.'
 ]
 
 { #category : 'structure' }
@@ -5154,12 +5389,6 @@ Morph >> removeHalo [
 	self primaryHand removeHaloAround: self
 ]
 
-{ #category : 'event handling' }
-Morph >> removeLink: actionCode [
-	self eventHandler ifNotNil:
-		[self eventHandler on: actionCode send: nil to: nil]
-]
-
 { #category : 'submorphs - add/remove' }
 Morph >> removeMorph: aMorph [
 	"Remove the given morph from my submorphs"
@@ -5372,6 +5601,39 @@ Morph >> rotationCenter: aPointOrNil [
 		ifNotNil:[self setProperty: #rotationCenter toValue: aPointOrNil]
 ]
 
+{ #category : 'accessing' }
+Morph >> roundedCorners [
+	"Return a list of those corners to round.
+
+		1-4
+		|  |
+		2-3
+
+	Returned array contains `codes' of those corners, which should be rounded.
+
+	1 denotes top-left corner
+	2 denotes bottom-left corner
+	3 denotes bottom-right corner
+	4 denotes top-right corner.
+
+	Thus, if this method returned #(2 3) that would mean that bottom (left and right)
+	corners would be rounded whereas top (left and right) corners wouldn't be rounded.
+
+	This method returns #(1 2 3 4) and that means that all the corners should be rounded."
+
+	^self valueOfProperty: #roundedCorners ifAbsent: [#(1 2 3 4)]
+]
+
+{ #category : 'accessing' }
+Morph >> roundedCorners: anArray [
+	"Set the corners to round."
+
+	anArray = #(1 2 3 4)
+		ifTrue: [self removeProperty: #roundedCorners]
+		ifFalse: [self setProperty: #roundedCorners toValue: anArray].
+	self changed
+]
+
 { #category : 'rounding' }
 Morph >> roundedCornersString [
 	"Answer the string to put in a menu that will invite the user to
@@ -5402,9 +5664,9 @@ Morph >> scale: newScale [
 	"Backstop for morphs that don't have to do something special to set their scale"
 ]
 
-{ #category : 'accessing' }
-Morph >> scaleFactor [
-	^self valueOfProperty: #scaleFactor ifAbsent: [ 1.0 ]
+{ #category : 'scaling, rotation' }
+Morph >> scaledIntoFormOfSize: aSmallInteger [
+	^ self imageForm scaledIntoFormOfSize: aSmallInteger
 ]
 
 { #category : 'geometry' }
@@ -5639,7 +5901,7 @@ Morph >> showActions [
 				ifNotNil: ["want more than default behavior"
 					cls == Morph
 						ifFalse: [adder value: cls value: selector]]].
-	Smalltalk tools messageList browse: list title:  'Actions of ' , self printString
+	(Smalltalk tools toolNamed: #messageList) browse: list title:  'Actions of ' , self printString
 ]
 
 { #category : 'halos and balloon help' }
@@ -5648,6 +5910,18 @@ Morph >> showBalloon: msgString [
 	first removing any existing BalloonMorphs in the world."
 	| w |
 	self showBalloon: msgString hand: ((w := self world) ifNotNil:[w activeHand])
+]
+
+{ #category : 'halos and balloon help' }
+Morph >> showBalloon: msgString hand: aHand [
+	"Pop up a balloon containing the given string,
+	first removing any existing BalloonMorphs in the world."
+
+	|w h|
+	(w := self world) ifNil: [^self].
+	h := aHand ifNil: [w activeHand].
+	( self theme builder newBalloonHelp: msgString for: self balloonHelpAligner)
+		popUpFor: self hand: h
 ]
 
 { #category : 'accessing' }
@@ -5698,27 +5972,6 @@ Morph >> simulateClickWith: buttons position: position [
 			buttons: type value
 			hand: hand
 			stamp: Time millisecondClockValue) ]
-]
-
-{ #category : 'event testing' }
-Morph >> simulateKeyStroke: aCharacter [
-	| event |
-
-	event := KeyboardEvent new
-				setType: #keystroke
-				buttons: 0
-				position: 0@0
-				keyValue: aCharacter charCode
-				charCode: aCharacter charCode
-				hand: self activeHand
-				stamp: 0.
-	self keyStroke: event
-]
-
-{ #category : 'event testing' }
-Morph >> simulateKeyStrokes: aString [
-
-	aString do: [:c | self simulateKeyStroke: c ]
 ]
 
 { #category : 'event testing' }
@@ -6074,6 +6327,33 @@ Morph >> tabHitWithEvent: anEvent [
 	anEvent hand newKeyboardFocus: itemToHighlight. "really???"
 	itemToHighlight editor selectAll.
 	itemToHighlight invalidRect: itemToHighlight bounds
+]
+
+{ #category : 'event handling' }
+Morph >> tabKey: event [
+	"Check for tab key activity and change focus as appropriate."
+
+	event controlKeyPressed ifFalse: [
+		event keyCharacter = Character tab ifTrue: [
+			event shiftPressed
+				ifTrue: [self navigateFocusBackward]
+				ifFalse: [self navigateFocusForward].
+			^true]].
+	^false
+]
+
+{ #category : 'event handling' }
+Morph >> takeKeyboardFocus [
+	"Make the receiver the keyboard focus for the active hand."
+
+	self activeHand ifNotNil: [ :hand | hand newKeyboardFocus: self ]
+]
+
+{ #category : 'event handling' }
+Morph >> takesKeyboardFocus [
+	"Answer whether the receiver can normally take keyboard focus."
+
+	^ false
 ]
 
 { #category : 'accessing - backstop' }
@@ -6608,6 +6888,19 @@ Morph >> visible [
 ]
 
 { #category : 'accessing' }
+Morph >> visible: aBoolean [
+	"set the 'visible' attribute of the receiver to aBoolean.
+	Must update owner layout since its full bounds may depend
+	on the receiver extending beyond its bounds."
+
+	(extension isNil and:[aBoolean]) ifTrue: [^ self].
+	self visible == aBoolean ifTrue: [^ self].
+	self assureExtension visible: aBoolean.
+	self changed.
+	owner ifNotNil: [owner layoutChanged]
+]
+
+{ #category : 'accessing' }
 Morph >> visibleClearArea [
 	"Answer the receiver visible clear area. The intersection
 	between the clear area and the viewbox."
@@ -6677,9 +6970,26 @@ Morph >> wantsHaloHandleWithSelector: aSelector inHalo: aHaloMorph [
 ]
 
 { #category : 'event handling' }
+Morph >> wantsKeyboardFocus [
+	"Answer whether the receiver would like keyboard focus
+	in the general case (mouse action normally)."
+
+	^self takesKeyboardFocus and: [
+		self visible and: [self enabled]]
+]
+
+{ #category : 'event handling' }
 Morph >> wantsKeyboardFocusFor: aSubmorph [
 	"Answer whether a plain mouse click on aSubmorph, a text-edit-capable thing, should result in a text selection there"
 	^ false
+]
+
+{ #category : 'event handling' }
+Morph >> wantsKeyboardFocusNavigation [
+	"Answer whether the receiver would like keyboard focus
+	when navigated to by keyboard."
+
+	^self wantsKeyboardFocus
 ]
 
 { #category : 'halos and balloon help' }

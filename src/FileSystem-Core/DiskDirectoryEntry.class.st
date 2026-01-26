@@ -56,14 +56,6 @@ DiskDirectoryEntry class >> reference: aFileReference statAttributes: anArray [
 	^self new initializeWithReference: aFileReference statAttributes: anArray
 ]
 
-{ #category : 'instance creation' }
-DiskDirectoryEntry class >> store: aDiskStore path: aPath node: aNode [
-
-	^(super store: aDiskStore path: aPath)
-		statAttributes: (aNode at: 2);
-		yourself
-]
-
 { #category : 'private - accessing' }
 DiskDirectoryEntry >> accessAttributeMask [
 	"Answer the mask used to retrieve access attributes"

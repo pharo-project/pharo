@@ -13,16 +13,16 @@ Class {
 }
 
 { #category : 'requests' }
-CoVariableValueMessageHeuristic >> buildFetcherFor: aRBMessageNode inContext: aContext [
+CoVariableValueMessageHeuristic >> buildFetcherFor: aMessageNode inContext: aContext [
 
 	"Try to fetch the real value of the variable from the context"
 	self
-		valueOfVariable: aRBMessageNode receiver name
+		valueOfVariable: aMessageNode receiver name
 		inContext: aContext
 		ifPresent: [ :value |
 			^ self
 				newMessageInHierarchyFetcherForClass: value class
-				inASTNode: aRBMessageNode ].
+				inASTNode: aMessageNode ].
 
 	^ CoEmptyFetcher new
 ]
@@ -42,7 +42,9 @@ CoVariableValueMessageHeuristic >> valueOfVariable: aName inContext: completionC
 	If we find in the requestor a binding with the given name, use it, otherwise ignore it."
 
 	"We check using hasBindingOf: to not create bindings that are not there"
-	(completionContext doItRequestor hasBindingOf: aName) ifFalse:  [ ^ self ].
+	completionContext doItRequestor 
+		ifNotNil: [ :re | (re hasBindingOf: aName) ifFalse:  [ ^ self ]]
+		ifNil: [ ^ self ].
 
 	binding := completionContext doItRequestor bindingOf: aName.
 	^ aBlock value: binding value

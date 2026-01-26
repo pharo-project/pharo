@@ -3,11 +3,12 @@ Replaces all the direct accesses to this variable in this class (and its metacla
 
 Usage:
 ```
+| transformation |
 transformation := (RBRemoveDirectAccessToVariableTransformation
 	instanceVariable: 'environment'
 	class: #RBNamespace)
-	transform.
-(ChangesBrowser changes: transformation model changes changes) open
+	generateChanges.
+(StRefactoringPreviewPresenter for: transformation) open
 ```
 
 Preconditions:

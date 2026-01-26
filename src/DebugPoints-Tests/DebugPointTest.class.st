@@ -56,7 +56,10 @@ DebugPointTest >> setUp [
 	node := (DummyTestClass methods select: [ :method |
 		         method name = 'DummyTestClass>>#id:' ]) first ast.
 	context := self setUpContext.
-	cls := self newDummyClass
+	cls := self newDummyClass.
+	
+	"For those tests hitting on the transcript..."
+	Transcript clear.
 ]
 
 { #category : 'initialization' }
@@ -116,7 +119,7 @@ DebugPointTest >> testAddRemoveBreakpointKeepTimestamp [
 	| method |
 	DummyTestClass compile: 'dummy ^42'.
 	method := DummyTestClass >> #dummy.
-	self assertEmpty: Breakpoint all.
+	self assertEmpty: DebugPoint all.
 	dp := DebugPointManager
 		      installNew: BreakDebugPoint
 		      on: (DummyTestClass >> #dummy) ast.
@@ -519,9 +522,17 @@ DebugPointTest >> testModifyMethodWithBreakpoint [
 		      on: (DummyTestClass >> #dummy) ast.
 	self assertCollection: DebugPoint all includesAll: { dp }.
 	self should: [ DummyTestClass new dummy ] raise: Break.
+	self
+		assert: (DummyTestClass >> #dummy) sourceCode
+		equals: 'dummy ^42'.
+
 	DummyTestClass compile: 'dummy ^43'.
+
 	self denyCollection: DebugPoint all includesAll: { dp }.
-	self shouldnt: [ DummyTestClass new dummy ] raise: Break
+	self shouldnt: [ DummyTestClass new dummy ] raise: Break.
+	self
+		assert: (DummyTestClass >> #dummy) sourceCode
+		equals: 'dummy ^43'
 ]
 
 { #category : 'tests' }
@@ -818,20 +829,36 @@ DebugPointTest >> testRemoveBehavior [
 DebugPointTest >> testRemoveClassWithBreakpoint [
 
 	cls compile: 'dummy ^42'.
-	self assertEmpty: Breakpoint all.
+	self assertEmpty: DebugPoint all.
 	dp := DebugPointManager
 		      installNew: BreakDebugPoint
 		      on: (cls >> #dummy) ast.
 	self assertCollection: DebugPoint all includesAll: { dp }.
 	cls removeFromSystem.
-	self assertEmpty: Breakpoint all
+	self assertEmpty: DebugPoint all
+]
+
+{ #category : 'tests' }
+DebugPointTest >> testRemoveMethodWithBreakpoint [
+
+	cls compile: 'dummy ^42'.
+	dp := DebugPointManager
+		      installNew: BreakDebugPoint
+		      on: (cls >> #dummy) ast.
+	self assertCollection: DebugPoint all includesAll: { dp }.
+	self should: [ cls new dummy ] raise: Break.
+
+	(cls >> #dummy) removeFromSystem.
+
+	self denyCollection: DebugPoint all includesAll: { dp }.
+	self should: [ cls new dummy ] raise: MessageNotUnderstood
 ]
 
 { #category : 'tests' }
 DebugPointTest >> testRemovePackageWithBreakpoint [
 
 	cls compile: 'dummy ^42'.
-	self assertEmpty: Breakpoint all.
+	self assertEmpty: DebugPoint all.
 	dp := DebugPointManager
 		      installNew: BreakDebugPoint
 		      on: (cls >> #dummy) ast.
@@ -884,7 +911,6 @@ DebugPointTest >> testTranscriptDebugPoint [
 		      withBehaviors: { TranscriptBehavior }.
 	dp text: 'string'.
 	dp hitWithContext: context.
-	Transcript stepGlobal.
 	self assert: Transcript contents equals: 'string'
 ]
 

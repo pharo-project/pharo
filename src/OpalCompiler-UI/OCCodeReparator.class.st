@@ -46,7 +46,7 @@ OCCodeReparator >> declareTempAndPaste: name [
 	theTextString := self requestor text.
 
 	"We parse again the method displayed in the morph. The variable methodNode has the first version of the method, without temporary declarations. "
-	newMethodNode := RBParser parseMethod: theTextString.
+	newMethodNode := OCParser parseMethod: theTextString.
 
 	"We check if there is a declaration of temporary variables"
 	tempsMark :=  newMethodNode body  rightBar ifNil: [ node methodNode body start ].
@@ -133,7 +133,6 @@ OCCodeReparator >> openMenu [
 	* Return fail if the user cancel"
 
 	| alternatives labels actions lines caption choice name interval |
-
 	interval := node sourceInterval.
 	name := node name.
 	alternatives := self possibleVariablesFor: name.
@@ -151,33 +150,30 @@ OCCodeReparator >> openMenu [
 			actions add: [ ^ nil ].
 			lines add: labels size.
 			labels add: 'Define new class'.
-			actions
-				add: [
-					[ self defineClass: name asSymbol ]
-						on: Abort
-						do: [ self openMenu ] ].
-			labels add: 'Declare new global'.
-			actions add: [ self declareGlobal ].
-			requestor isScripting ifFalse:
-				[labels add: 'Declare new class variable'.
-				actions add: [ self declareClassVar ]].
+			actions add: [
+				[ self defineClass: name asSymbol ]
+					on: Abort
+					do: [ self openMenu ] ].
+			requestor isScripting ifFalse: [
+				labels add: 'Declare new class variable'.
+				actions add: [ self declareClassVar ] ].
 			labels add: 'Define new trait'.
-			actions
-				add: [
-					[ self defineTrait: name asSymbol ]
-						on: Abort
-						do: [ self openMenu ] ] ].
+			actions add: [
+				[ self defineTrait: name asSymbol ]
+					on: Abort
+					do: [ self openMenu ] ] ].
 	lines add: labels size.
-	alternatives
-		do: [ :each |
-			labels add: each.
-			actions
-				add: [
-					self substituteVariable: each atInterval: interval ] ].
+	alternatives do: [ :each |
+		labels add: each.
+		actions add: [ self substituteVariable: each atInterval: interval ] ].
 	lines add: labels size.
 	labels add: 'Cancel'.
-	caption := 'Unknown variable: ' , name , ' please correct, or cancel:'.
-	choice := MorphicUIManager new chooseFrom: labels lines: lines title: caption.
+	caption := 'Unknown variable: ' , name
+	           , ' please correct, or cancel:'.
+	choice := UIManager default
+		          chooseFrom: labels
+		          lines: lines
+		          title: caption.
 	(actions at: choice ifAbsent: [ ^ false ]) value.
 	^ true
 ]
@@ -213,7 +209,7 @@ OCCodeReparator >> substituteVariable: varName atInterval: anInterval [
 		substituteWord: varName
 		wordInterval: anInterval.
 	node methodNode source: self requestor text.
-	node replaceWith:((RBVariableNode named: varName) binding: (node owningScope lookupVar: varName))
+	node replaceWith:((OCVariableNode named: varName) binding: (node owningScope lookupVar: varName))
 ]
 
 { #category : 'correcting' }

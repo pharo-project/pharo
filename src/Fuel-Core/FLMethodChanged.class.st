@@ -16,7 +16,7 @@ FLMethodChanged class >> signalWith: aGlobalName and: aSelector [
 	^ self signal: 'Method ', aGlobalName, '>>#', aSelector, ' changed its bytecodes.'
 ]
 
-{ #category : 'signalling' }
+{ #category : 'signaling' }
 FLMethodChanged class >> signalWithBlock: aBlockWithoutOuterContext [
 
 	^ self signal: 'Clean block' , aBlockWithoutOuterContext

@@ -41,11 +41,11 @@ RBInlineMethodFromComponentRefactoring >> addSelfReferenceToInlineParseTree [
 	(rewriter executeTree: inlineParseTree)
 		ifTrue: [inlineParseTree := rewriter tree].
 	newArguments := inlineParseTree arguments asOrderedCollection.
-	newArguments addFirst: (RBVariableNode named: variableName).
+	newArguments addFirst: (OCVariableNode named: variableName).
 	inlineParseTree
 		renameSelector: (self addArgumentToSelector: inlineParseTree selector)
 		andArguments: newArguments.
-	sourceMessage receiver replaceWith: (RBVariableNode named: variableName)
+	sourceMessage receiver replaceWith: (OCVariableNode named: variableName)
 ]
 
 { #category : 'transforming' }
@@ -60,6 +60,7 @@ RBInlineMethodFromComponentRefactoring >> addSelfReferenceToSourceMessage [
 { #category : 'transforming' }
 RBInlineMethodFromComponentRefactoring >> checkSelectedMessage [
 
+	class ifNil: [ self refactoringError: 'Class could not be found.' ].
 	sourceParseTree := class parseTreeForSelector: sourceSelector.
 	sourceParseTree ifNil: [ self refactoringError: 'Could not parse sources' ].
 	sourceMessage := sourceParseTree whichNodeIsContainedBy: sourceInterval.

@@ -59,7 +59,7 @@ GrowlMorph class >> growlSettingsOn: aBuilder [
 		description: 'All settings concerned with the notifications popup look''n feel';
 		with: [
 			(aBuilder pickOne: #type)
-				label: 'Popup notifycation type';
+				label: 'Popup notification type';
 				target: self;
 				default: #growl;
 				order: 1;
@@ -459,16 +459,14 @@ GrowlMorph >> unoccupiedPositionBottomRight [
 GrowlMorph >> unoccupiedPositionTopLeft [
 
 	| startPos area rect morphs |
-
-	startPos := 10@10.
+	startPos := 10 @ 10.
 	area := self currentWorld clearArea.
-	rect := area topLeft + (startPos) extent: self extent.
+	rect := area topLeft + startPos extent: self extent.
 
 	morphs := self activeGrowlMorphs.
-	[self is: rect saneWithRespectTo: morphs] whileFalse: [
-		rect := rect translateBy: 0@10.
-		rect bottom > area height ifTrue: [^ area topLeft + startPos ]
-	].
+	[ self is: rect saneWithRespectTo: morphs ] whileFalse: [
+			rect := rect translateBy: 0 @ 10.
+			rect bottom > area height ifTrue: [ ^ area topLeft + startPos ] ].
 	^ rect origin
 ]
 

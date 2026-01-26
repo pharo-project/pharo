@@ -152,6 +152,15 @@ FFIStructure class >> compileFields: specArray withAccessors: aSymbol [
 ]
 
 { #category : 'private' }
+FFIStructure class >> compileMethodNamed: aSymbol code: aString classified: protocol [
+
+	"If we already have the method we do not need to compile it. The method can come from a superclass having the same fields"
+	(self lookupSelector: aSymbol) ifNotNil: [ :method | method sourceCode = aString ifTrue: [ ^ self ] ].
+
+	self compile: aString classified: self generatedFieldProtocolName
+]
+
+{ #category : 'private' }
 FFIStructure class >> defineFieldAccessorsFor: fieldName startingAt: byteOffset type: type [
 	"Define read/write accessors for the given field.
 	 This method is equivallent to his parent, but it changes a couple of things:
@@ -182,23 +191,19 @@ FFIStructure class >> defineFieldAccessorsFor: fieldName type: type [
 	 This method is equivallent to his parent, but it changes a couple of things:
 	 - type is FFIExternalType and not ExternalType
 	 - it generates to another protocol, not accessing"
+
 	| code |
+	(type isVoid and: [ type isPointer not ]) ifTrue: [ ^ self ].
 
-	(type isVoid and: [ type isPointer not ]) ifTrue:[ ^ self ].
-
-	code := fieldName,'
+	code := fieldName , '
 	"This method was automatically generated"
-	', (type offsetReadFieldAt: (self offsetVariableNameFor: fieldName)).
-	self
-		compile: code
-		classified: self generatedFieldProtocolName.
+	' , (type offsetReadFieldAt: (self offsetVariableNameFor: fieldName)).
+	self compileMethodNamed: fieldName code: code classified: self generatedFieldProtocolName.
 
-	code := fieldName,': anObject
+	code := fieldName , ': anObject
 	"This method was automatically generated"
-	', (type offsetWriteFieldAt: (self offsetVariableNameFor: fieldName) with:'anObject').
-	self
-		compile: code
-		classified: self generatedFieldProtocolName
+	' , (type offsetWriteFieldAt: (self offsetVariableNameFor: fieldName) with: 'anObject').
+	self compileMethodNamed: fieldName asMutator code: code classified: self generatedFieldProtocolName
 ]
 
 { #category : 'private' }
@@ -227,6 +232,12 @@ FFIStructure class >> emitFlatStructureLayoutInto: flatStructureLayout [
 FFIStructure class >> externalNew [
 	"Create an instance of the receiver on the external heap"
 	^self fromHandle: (ExternalAddress allocate: self structureSize)
+]
+
+{ #category : 'accessing' }
+FFIStructure class >> externalTypeSize [
+
+	^ self structureSize
 ]
 
 { #category : 'private' }
@@ -293,6 +304,23 @@ FFIStructure class >> nestedStructures [
 		thenCollect: [ :each | each objectClass ]
 ]
 
+{ #category : 'instance creation' }
+FFIStructure class >> newBuffer [
+
+	^ FFIOop newBuffer
+]
+
+{ #category : 'instance creation' }
+FFIStructure class >> newValueHolder [
+	| struct |
+	
+	struct := self new.
+	^ FFIReferenceValueHolder 
+		newType: struct
+		handle: struct getHandle
+		size: self structureSize
+]
+
 { #category : 'private' }
 FFIStructure class >> offsetFieldPrefix [
 	^ 'OFFSET'
@@ -331,14 +359,27 @@ FFIStructure class >> resetAllStructures [
 	Manage nested structures with a recursive approach.
 	Stop recursing using a tracking collection of already reset structures."
 
-	| alreadyReset currentCompilationPlatform |
-	currentCompilationPlatform := { OSPlatform current family . Smalltalk vm wordSize }.
-	LastCompilationPlatform = currentCompilationPlatform
-		ifTrue: [ ^ self ].
-
-	LastCompilationPlatform := currentCompilationPlatform.
+	| alreadyReset |
 	alreadyReset := IdentitySet new.
 	self allSubclassesDo: [ :each | each resetStructureIfNotIn: alreadyReset ]
+]
+
+{ #category : 'class management' }
+FFIStructure class >> resetAllStructuresIfPlatformChanged [
+	"Reset the offsets of all structures.
+	This is required when there is a platform change since type sizes and padding rules change.
+
+	Manage nested structures with a recursive approach.
+	Stop recursing using a tracking collection of already reset structures."
+
+	| currentCompilationPlatform |
+	currentCompilationPlatform := {
+		                              OSPlatform current family.
+		                              Smalltalk vm wordSize }.
+	LastCompilationPlatform = currentCompilationPlatform ifTrue: [ ^ self ].
+
+	LastCompilationPlatform := currentCompilationPlatform.
+	self resetAllStructures
 ]
 
 { #category : 'class management' }
@@ -366,6 +407,42 @@ FFIStructure class >> structureSize [
 	^ self byteSize
 ]
 
+{ #category : 'copying' }
+FFIStructure >> copyInMemory [
+	| bytes size |
+	
+	size := self class structureSize.
+	bytes := ByteArray new: size.
+	(LibC memCopy: self getHandle to: bytes size: size).
+	^ self class fromHandle: bytes
+]
+
+{ #category : 'accessing' }
+FFIStructure >> externalTypeSize [
+
+	^ self class externalTypeSize
+]
+
+{ #category : 'private' }
+FFIStructure >> handle: aHandle at: aNumber [
+	"used for boxing/unboxing, as part of the FFIValueHolder mechanism"
+
+	^ self class basicNew setHandle: (aHandle pointerAt: aNumber)
+]
+
+{ #category : 'private' }
+FFIStructure >> handle: aHandle at: aNumber put: anExternalAddress [
+	"used for boxing/unboxing, as part of the FFIValueHolder mechanism"
+	
+	aHandle pointerAt: aNumber put: anExternalAddress
+]
+
+{ #category : 'instance creation' }
+FFIStructure >> newBuffer [
+
+	^ self class newBuffer
+]
+
 { #category : 'converting' }
 FFIStructure >> pointer [
 	self getHandle isExternalAddress
@@ -384,4 +461,14 @@ FFIStructure >> printOn: aStream [
 			(self perform: field ) printOn: aStream.
 			] separatedBy: [ aStream cr ].
 	aStream cr; nextPut: $)"
+]
+
+{ #category : 'converting' }
+FFIStructure >> referenceTo [
+	"In fact, structures in uFFI are always passed by reference, then a referenceTo 
+	 it will always be itself"
+	 
+	 ^ FFIValueHolder 
+	 	newType: self
+	 	handle: self getHandle
 ]

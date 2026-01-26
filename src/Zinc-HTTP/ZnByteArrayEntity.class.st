@@ -79,7 +79,7 @@ ZnByteArrayEntity >> printContentsOn: stream [
 			print: self bytes ]
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnByteArrayEntity >> readFrom: stream [
 	self contentLength
 		ifNil: [

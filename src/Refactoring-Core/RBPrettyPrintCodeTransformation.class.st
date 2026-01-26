@@ -5,7 +5,7 @@ I have no precondition.
 "
 Class {
 	#name : 'RBPrettyPrintCodeTransformation',
-	#superclass : 'RBRefactoring',
+	#superclass : 'ReRefactoring',
 	#category : 'Refactoring-Core-Transformation-Unused',
 	#package : 'Refactoring-Core',
 	#tag : 'Transformation-Unused'

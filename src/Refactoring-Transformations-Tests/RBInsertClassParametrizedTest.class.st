@@ -63,6 +63,30 @@ RBInsertClassParametrizedTest >> testFailureModelInvalidSubclass [
 ]
 
 { #category : 'failure tests' }
+RBInsertClassParametrizedTest >> testFailureModelIsEmtpy [
+	| environment |
+	environment := RBClassEnvironment onEnvironment: RBBrowserEnvironment new
+							classes: #( ).
+	model := self defaultNamespaceClass onEnvironment: environment.
+	
+	self shouldFail: ((rbClass model: model className: #Foo2)
+			 superclass: #Object;
+			 subclasses: { (model classNamed: #Bar) };
+			 packageName: #'Refactoring-Testing')
+]
+
+{ #category : 'failure tests' }
+RBInsertClassParametrizedTest >> testFailureModelMissingSuperclass [
+
+	model := self modelWithoutRealClasses: #( Object ).
+
+	self shouldFail: ((rbClass model: model className: #Foo2)
+			 superclass: #Object;
+			 subclasses: { (model classNamed: #Bar) };
+			 packageName: #'Refactoring-Testing')
+]
+
+{ #category : 'failure tests' }
 RBInsertClassParametrizedTest >> testFailureNonImmediateSubclassOfSuperclass [
 
 	self shouldFail: ((rbClass className: #Foo)

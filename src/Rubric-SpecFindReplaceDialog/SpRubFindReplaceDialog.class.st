@@ -19,38 +19,70 @@ Class {
 		'replaceTextInput',
 		'replaceLabel'
 	],
+	#classInstVars : [
+		'textToFind',
+		'replacingText'
+	],
 	#category : 'Rubric-SpecFindReplaceDialog',
 	#package : 'Rubric-SpecFindReplaceDialog'
 }
 
 { #category : 'layout' }
 SpRubFindReplaceDialog class >> defaultLayout [
+
 	<spec>
 	^ SpBoxLayout newVertical
-		add: #findInput expand: false;
-		add: (SpGridLayout new
-			beColumnHomogeneous;
-			beRowHomogeneous;
-			add: #regExpCheckBox at: 1@1;
-			add: #backwardsCheckBox at: 2@1;
-			add: #caseCheckBox at: 1@2;
-			add: #wrapCheckBox at: 2@2;
-			add: #entireCheckBox at: 1@3;
-			yourself);
-		addLast: (SpBoxLayout newHorizontal
-			borderWidth: 5;
-			spacing: 5;
-			add: #replaceLabel  expand: false fill: false padding: 0;
-			add: #replaceTextInput;
-			yourself);
-		"addLast: (SpBoxLayout newHorizontal
+		  add: #findInput expand: false;
+		  add: (SpGridLayout new
+				   beColumnHomogeneous;
+				   beRowHomogeneous;
+				   add: #regExpCheckBox atPoint: 1 @ 1;
+				   add: #backwardsCheckBox atPoint: 2 @ 1;
+				   add: #caseCheckBox atPoint: 1 @ 2;
+				   add: #wrapCheckBox atPoint: 2 @ 2;
+				   add: #entireCheckBox atPoint: 1 @ 3;
+				   yourself);
+		  addLast: (SpBoxLayout newHorizontal
+				   borderWidth: 5;
+				   spacing: 5;
+				   add: #replaceLabel
+				   expand: false
+				   fill: false
+				   padding: 0;
+				   add: #replaceTextInput;
+				   yourself);
+		  "addLast: (SpBoxLayout newHorizontal
 			borderWidth: 3;
 			spacing: 5;
 			add: #findButton;
 			add: #replaceButton;
 			add: #replaceAllButton;
 			add: #cancelButton);"
-		yourself
+			  yourself
+]
+
+{ #category : 'accessing' }
+SpRubFindReplaceDialog class >> replacingText [
+
+    ^ replacingText ifNil: [ replacingText := '' ]
+]
+
+{ #category : 'accessing' }
+SpRubFindReplaceDialog class >> replacingText: aText [
+
+	replacingText := aText
+]
+
+{ #category : 'accessing' }
+SpRubFindReplaceDialog class >> textToFind [
+
+    ^ textToFind ifNil: [ textToFind := '' ]
+]
+
+{ #category : 'accessing' }
+SpRubFindReplaceDialog class >> textToFind: aText [
+
+	textToFind := aText
 ]
 
 { #category : 'morphic dependencies' }
@@ -66,6 +98,13 @@ SpRubFindReplaceDialog >> closeWindowOnEscIn: aPresenter [
 
 	aPresenter whenBuiltDo: [ :this |
 		this widget announcer when: RubKeystroke do: [ :ann | ann event keyCharacter = Character escape ifTrue: [ self window triggerCancelAction ] ] for: self ]
+]
+
+{ #category : 'initialization' }
+SpRubFindReplaceDialog >> connectPresenters [
+
+    findInput whenTextChangedDo: [ :aText | self updateFindText: aText ].
+    replaceTextInput whenTextChangedDo: [ :aText | self replacingText: aText ]
 ]
 
 { #category : 'operations' }
@@ -98,14 +137,17 @@ SpRubFindReplaceDialog >> findInput: anObject [
 SpRubFindReplaceDialog >> initializeDialogWindow: aDialogWindowPresenter [
 
 	findButton := aDialogWindowPresenter addButton: 'Find' do: [ :presenter |
-			self find ].
+			              self find.
+			              self textToFind: findInput text ].
 	replaceButton := aDialogWindowPresenter addButton: 'Replace' do: [ :presenter |
-			self replace ].
+			                 self replace.
+			                 self replacingText: replaceTextInput text ].
 	replaceAllButton := aDialogWindowPresenter addButton: 'Replace All' do: [ :presenter |
-			self replaceAll ].
+			                    self replaceAll.
+			                    self replacingText: replaceTextInput text ].
 	closeButton := aDialogWindowPresenter addButton: 'Close' do: [ :presenter |
-			presenter triggerCancelAction.
-			presenter close ].
+			               presenter triggerCancelAction.
+			               presenter close ].
 
 	self focusOrder
 		add: findButton;
@@ -117,14 +159,21 @@ SpRubFindReplaceDialog >> initializeDialogWindow: aDialogWindowPresenter [
 		title: self title;
 		initialExtent: 430 @ 220.
 
-	aDialogWindowPresenter whenClosedDo: [ service findText: ''. service discardDialog ]
+	aDialogWindowPresenter whenClosedDo: [
+			service findText: ''.
+			service discardDialog.
+			self updateService ]
 ]
 
 { #category : 'initialization' }
 SpRubFindReplaceDialog >> initializePresenters [
-	findInput := self newTextInput autoAccept: true; placeholder: 'Text to find'.
 
-	findInput whenTextChangedDo: [ self updateFindText ].
+	findInput := self newTextInput
+		             autoAccept: true;
+		             placeholder: 'Text to find'.
+
+	findInput text: self textToFind.
+	self updateFindText: self textToFind.
 
 	self closeWindowOnEscIn: findInput.
 	self assignEnterKeystrokeEventFor: findInput.
@@ -134,9 +183,12 @@ SpRubFindReplaceDialog >> initializePresenters [
 	caseCheckBox := self newCheckBox label: 'Case sensitive'.
 	wrapCheckBox := self newCheckBox label: 'Wrap around'.
 	entireCheckBox := self newCheckBox label: 'Entire words only'.
-
+	self updateFromService.
 	replaceTextInput := self newTextInput autoAccept: true.
 	self closeWindowOnEscIn: replaceTextInput.
+
+	replaceTextInput text: self replacingText.
+	service replaceText: replaceTextInput text.
 
 	replaceLabel := self newLabel label: 'Replace with:'.
 
@@ -171,6 +223,18 @@ SpRubFindReplaceDialog >> replaceAll [
 ]
 
 { #category : 'accessing' }
+SpRubFindReplaceDialog >> replacingText [
+
+	^ self class replacingText
+]
+
+{ #category : 'operations' }
+SpRubFindReplaceDialog >> replacingText: aText [
+
+	^ self class replacingText: aText
+]
+
+{ #category : 'accessing' }
 SpRubFindReplaceDialog >> service [
 	^ service
 ]
@@ -187,15 +251,28 @@ SpRubFindReplaceDialog >> setModelBeforeInitialization: aService [
 ]
 
 { #category : 'accessing' }
+SpRubFindReplaceDialog >> textToFind [
+
+	^ self class textToFind
+]
+
+{ #category : 'accessing' }
+SpRubFindReplaceDialog >> textToFind: aText [
+
+	^ self class textToFind: aText
+]
+
+{ #category : 'accessing' }
 SpRubFindReplaceDialog >> title [
 
 	^ 'Find & Replace'
 ]
 
-{ #category : 'initialization' }
-SpRubFindReplaceDialog >> updateFindText [
+{ #category : 'operations' }
+SpRubFindReplaceDialog >> updateFindText: aText [
 
-	service findText: self findInput text asString
+    service findText: aText.
+    self class textToFind: aText
 ]
 
 { #category : 'initialization' }
@@ -204,6 +281,16 @@ SpRubFindReplaceDialog >> updateFromModel [
 	findInput text: (self service findText
 		ifEmpty: [ '' ]
 		ifNotEmpty: [ :aText | aText asString lines first ])
+]
+
+{ #category : 'initialization' }
+SpRubFindReplaceDialog >> updateFromService [
+
+	caseCheckBox state: service caseSensitive.
+	regExpCheckBox state: service isRegex.
+	entireCheckBox state: service entireWordsOnly.
+	wrapCheckBox state: service wrapAround.
+	backwardsCheckBox state: service searchBackwards
 ]
 
 { #category : 'private' }

@@ -109,6 +109,14 @@ CompiledMethod class >> new [
 	^self basicNew: 2 header: 1024
 ]
 
+{ #category : 'initialization' }
+CompiledMethod class >> resetPragmaCache [
+	<script>
+
+	"Useful in bootstrap process"
+	self allInstancesDo: [ :method | method cachePragmas ]
+]
+
 { #category : 'class initialization' }
 CompiledMethod class >> smallFrameSize [
 
@@ -148,8 +156,9 @@ CompiledMethod >> classBinding [
 
 { #category : 'accessing' }
 CompiledMethod >> classBinding: aBinding [
-       "sets the association to the class that I am installed in"
-       ^self literalAt: self numLiterals put: aBinding
+	"sets the association to the class that I am installed in"
+
+	^ self literalAt: self numLiterals put: aBinding
 ]
 
 { #category : 'source code management' }
@@ -158,7 +167,7 @@ CompiledMethod >> clearSourcePointer [
 	self setSourcePointer: 0
 ]
 
-{ #category : 'accessing' }
+{ #category : 'source code management' }
 CompiledMethod >> codeForNoSource [
 	"if everything fails, decompile the bytecode"
 	"If there is no compiler, we cannot decompile it"
@@ -173,7 +182,7 @@ CompiledMethod >> containsHalt [
 	^ self hasProperty: #containsHalt
 ]
 
-{ #category : 'accessing' }
+{ #category : 'source code management' }
 CompiledMethod >> defaultSelector [
 	"Invent and answer an appropriate message selector (a Symbol) for me,
 	that is, one that will parse with the correct number of arguments."
@@ -181,7 +190,7 @@ CompiledMethod >> defaultSelector [
 	^ #DoIt numArgs: self numArgs
 ]
 
-{ #category : 'displaying' }
+{ #category : 'printing' }
 CompiledMethod >> displayStringOn: aStream [
 	aStream print: self methodClass; nextPutAll: '>>'; store: self selector
 ]
@@ -192,7 +201,7 @@ CompiledMethod >> endPC [
 	^ self size - self class trailerSize
 ]
 
-{ #category : 'accessing' }
+{ #category : 'runtime system' }
 CompiledMethod >> flushCache [
 	"Tell the virtual machine to remove all references to this method from its method lookup caches, and to discard any optimized version 	of the method, if it has any of these.  This must be done whenever a method is modified in place, such as modifying its literals or 	machine code, to reflect the revised code.  c.f. Behavior>>flushCache & Symbol>>flushCache.  Essential.	 See MethodDictionary class 	comment."
 
@@ -201,7 +210,7 @@ CompiledMethod >> flushCache [
 
 { #category : 'source code management' }
 CompiledMethod >> getPreambleFrom: aFileStream at: position [
-	^ SourceFiles getPreambleFrom: aFileStream at: position
+	^ SourceFileArray default getPreambleFrom: aFileStream at: position
 ]
 
 { #category : 'source code management' }
@@ -210,7 +219,7 @@ CompiledMethod >> getSourceFromFile [
 	"Read the source code from file, determining source file index and
 	file position from the last bytes of this method (size defined in #trailerSize)."
 
-	^ [ SourceFiles sourceCodeAt: self sourcePointer ] on: Error do: [ nil ]
+	^ [ SourceFileArray default sourceCodeAt: self sourcePointer ] on: Error do: [ nil ]
 ]
 
 { #category : 'source code management' }
@@ -275,7 +284,7 @@ CompiledMethod >> hasProperty: aKey [
 		  and: [  extendedMethodState includesProperty: aKey ]
 ]
 
-{ #category : 'accessing' }
+{ #category : 'source code management' }
 CompiledMethod >> hasSourceCode [
 
 	^ self sourceCodeOrNil isNotNil
@@ -295,12 +304,6 @@ CompiledMethod >> isAbstract [
 
 	^marker == self class subclassResponsibilityMarker
 		or: [ marker == self class explicitRequirementMarker ]
-]
-
-{ #category : 'testing' }
-CompiledMethod >> isBinarySelector [
-	^self selector
-		allSatisfy: [:each | each isSpecial]
 ]
 
 { #category : 'testing' }
@@ -329,13 +332,10 @@ CompiledMethod >> isConflict [
 { #category : 'testing' }
 CompiledMethod >> isDeprecated [
 
-	^ self sendsAnySelectorOf: #(
-			#deprecated:
-			#deprecated:transformWith:
-			#deprecated:transformWith:when:
-			#deprecated:on:in:
-			#deprecated:on:in:transformWith:
-			#deprecated:on:in:transformWith:when:)
+	^ (self sendsAnySelectorOf:
+		   #( #deprecated: #deprecated:transformWith: #deprecated:transformWith:when: #deprecated:on:in: #deprecated:on:in:transformWith:
+		      #deprecated:on:in:transformWith:when: )) or: [
+		  self methodClass isDeprecated or: [ self package notNil and: [ self package isDeprecated ] ] ]
 ]
 
 { #category : 'testing' }
@@ -485,13 +485,13 @@ CompiledMethod >> linesOfCode [
 	^lines
 ]
 
-{ #category : 'literals' }
+{ #category : 'accessing - literals' }
 CompiledMethod >> literalsToSkip [
 
 	^ 2
 ]
 
-{ #category : 'private' }
+{ #category : 'queries' }
 CompiledMethod >> markerOrNil [
 	^ self encoderClass markerOrNilFor: self
 ]
@@ -516,7 +516,7 @@ CompiledMethod >> methodClass: aClass [
 		ifTrue: [ self literalAt: self numLiterals put: aClass binding ]
 ]
 
-{ #category : 'private' }
+{ #category : 'accessing - pragmas & properties' }
 CompiledMethod >> migratePersistingPropertiesIn: aNewCompileMethod [
 	"While creating a new version of a method, we might want to persist some properties. I am here for this. I migrate the properties to persist from myself, the old version of the method, to the new version."
 
@@ -532,19 +532,21 @@ CompiledMethod >> name [
 	^ self printString
 ]
 
-{ #category : 'accessing' }
+{ #category : 'queries' }
 CompiledMethod >> overriddenMethod [
 
 	^ self methodClass superclass ifNotNil: [ :class | class lookupSelector: self selector ]
 ]
 
-{ #category : 'accessing' }
+{ #category : 'accessing - literals' }
 CompiledMethod >> pathOfLiteralIndexes [
 	
+	"Return the path of this compiled block inside the method literal frame.
+	See CompiledBlock>>#pathOfLiteralIndexes for more details"
 	^ #[]
 ]
 
-{ #category : 'private' }
+{ #category : 'accessing - literals' }
 CompiledMethod >> penultimateLiteral [
 	"Answer the penultimate literal of the receiver, which holds either
 	 the receiver's selector or its properties (which will hold the selector)."
@@ -554,7 +556,7 @@ CompiledMethod >> penultimateLiteral [
 		ifFalse: [nil]
 ]
 
-{ #category : 'private' }
+{ #category : 'accessing - literals' }
 CompiledMethod >> penultimateLiteral: anObject [
 	"Answer the penultimate literal of the receiver, which holds either
 	 the receiver's selector or its properties (which will hold the selector)."
@@ -582,11 +584,10 @@ CompiledMethod >> pragmaAt: aKey [
 	^ self pragmas detect: [ :pragma | pragma selector == aKey ] ifNone: nil
 ]
 
-{ #category : 'literals' }
+{ #category : 'accessing - pragmas & properties' }
 CompiledMethod >> pragmaRefersToLiteral: literal [
 
-	^ self penultimateLiteral isMethodProperties and: [
-		  self pragmas anySatisfy: [ :pragma | pragma refersToLiteral: literal ] ]
+	^ self pragmas anySatisfy: [ :pragma | pragma refersToLiteral: literal ]
 ]
 
 { #category : 'accessing - pragmas & properties' }
@@ -604,20 +605,6 @@ CompiledMethod >> pragmasDo: aBlock [
 	| selectorOrProperties |
 	(selectorOrProperties := self penultimateLiteral) isMethodProperties
 		ifTrue: [selectorOrProperties pragmasDo: aBlock]
-]
-
-{ #category : 'debugger support' }
-CompiledMethod >> prepareForSimulationWith: numArgs [
-	"This method changes the argument count of a CompiledMethod header to numArgs, its temporary count to numArgs + 1 and change the code handling primitive error to store the error code in the unique temporary of the method"
-
-	| newHeader |
-	newHeader := (((self header bitAnd: 2r01110000000000111111111111111111)
-			bitOr: (numArgs bitShift: 24))
-			bitOr: (numArgs + 1 bitShift: 18)).
-	newHeader := newHeader + (self class headerFlagForEncoder: self encoderClass).
-	self objectAt: 1 put: newHeader.
-
-	self encoderClass prepareMethod: self forSimulationWith: numArgs
 ]
 
 { #category : 'printing' }
@@ -741,7 +728,7 @@ CompiledMethod >> propertyKeysAndValuesDo: aBlock [
 		[propertiesOrSelector propertyKeysAndValuesDo: aBlock]
 ]
 
-{ #category : 'protocols' }
+{ #category : 'accessing - protocols' }
 CompiledMethod >> protocol [
 	"Return in which protocol (conceptual groups of methods) the receiver is grouped into.
 	
@@ -750,19 +737,19 @@ CompiledMethod >> protocol [
 	^ self propertyAt: #protocol ifAbsent: [ self methodClass protocolOfSelector: self selector ]
 ]
 
-{ #category : 'protocols' }
+{ #category : 'accessing - protocols' }
 CompiledMethod >> protocol: aProtocol [
 	^ self methodClass classify: self selector under: aProtocol
 ]
 
-{ #category : 'protocols' }
+{ #category : 'accessing - protocols' }
 CompiledMethod >> protocolName [
 	"Return the name of the protocol (conceptual groups of methods) in which the receiver is grouped into."
 
 	^ self protocol ifNotNil: [ :protocol | protocol name ]
 ]
 
-{ #category : 'scanning' }
+{ #category : 'queries' }
 CompiledMethod >> readsField: varIndex [
 	"Answer whether the receiver loads the instance variable indexed by the argument."
 	self isReturnField ifTrue: [^self returnField = (varIndex - 1)].
@@ -782,20 +769,20 @@ CompiledMethod >> receiver: aReceiver withArguments: anArray executeMethod: aMet
 	self primitiveFailed
 ]
 
-{ #category : 'literals' }
+{ #category : 'queries' }
 CompiledMethod >> refersToLiteral: aLiteral [
 	"Answer true if any literal in this method is literal, even if embedded in array structure."
 
 	^(self pragmaRefersToLiteral: aLiteral) or: [ super refersToLiteral: aLiteral]
 ]
 
-{ #category : 'private' }
+{ #category : 'removing' }
 CompiledMethod >> removeFromPackage [
 
 	self isFromTrait ifFalse: [ self package ifNotNil: [ :package | package removeMethod: self ] ]
 ]
 
-{ #category : 'initialization' }
+{ #category : 'removing' }
 CompiledMethod >> removeFromSystem [
 	^ self methodClass removeSelector: self selector
 ]
@@ -829,7 +816,7 @@ CompiledMethod >> removeProperty: propName ifAbsent: aBlock [
 	^value
 ]
 
-{ #category : 'accessing' }
+{ #category : 'queries' }
 CompiledMethod >> returnField [
 	"Answer the index of the instance variable returned by a quick return
 	method."
@@ -876,7 +863,7 @@ CompiledMethod >> setSourcePointer: srcPointer [
 	start + 1 to: self size do: [:n | self at: n put: (trailerBytes at: n - start) ]
 ]
 
-{ #category : 'accessing' }
+{ #category : 'source code management' }
 CompiledMethod >> sourceCode [
 	"Retrieve or reconstruct the source code for this method."
 
@@ -885,7 +872,7 @@ CompiledMethod >> sourceCode [
 		  ifNil: [ self codeForNoSource ]
 ]
 
-{ #category : 'accessing' }
+{ #category : 'source code management' }
 CompiledMethod >> sourceCodeOrNil [
 	"Retrieve the source code for this method, or return nil."
 
@@ -897,7 +884,7 @@ CompiledMethod >> sourceCodeOrNil [
 { #category : 'source code management' }
 CompiledMethod >> sourcePointer [
 	"Answer the integer which can be used to find the source file and position for this method.
-	The actual interpretation of this number is up to the SourceFileArray stored in the global variable SourceFiles."
+	The actual interpretation of this number is up to the SourceFileArray default instance."
 	| trailerBytes trailerSize start |
 	trailerSize := self class trailerSize.
 	trailerBytes := ByteArray new: trailerSize.
@@ -912,6 +899,11 @@ CompiledMethod >> sourcePointer: srcPointer [
 	"Drop the #source property if any"
 	self removeProperty: #source.
 	self setSourcePointer: srcPointer
+]
+
+{ #category : 'debugger support' }
+CompiledMethod >> stepIntoQuickMethods [
+	^self propertyAt: #stepIntoQuickMethod ifAbsent: [ false ]
 ]
 
 { #category : 'debugger support' }
@@ -943,13 +935,7 @@ CompiledMethod >> storeOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : 'source code management' }
-CompiledMethod >> tempNames [
-	"on the level of the compiled method, tempNames includes argument names"
-	^self ast argumentNames, self ast temporaryNames
-]
-
-{ #category : 'protocols' }
+{ #category : 'accessing - protocols' }
 CompiledMethod >> unclassify [
 
 	self protocol: Protocol unclassified
@@ -978,12 +964,20 @@ CompiledMethod >> valueWithReceiver: aReceiver arguments: anArray [
 	^self receiver: aReceiver withArguments: anArray executeMethod: self
 ]
 
-{ #category : 'copying' }
-CompiledMethod >> veryDeepCopyWith: deepCopier [
-	"Return self.  I am always shared.  Do not record me.  Only use this for blocks.  Normally methodDictionaries should not be copied this way."
+{ #category : 'runtime system' }
+CompiledMethod >> voidCogVMState [
+	"Tell the VM to remove all references to any machine code form of the method.
+	 This primitive must be called whenever a method is in use and modified.  This is
+	 more aggressive (and *much* more costly) than flushCache since it must search
+	 through all context objects, making sure that none have a (hidden) machine code pc
+	 in the receiver.  Since modifying a method will likely change the generated machine code,
+	 modifying a method (rather than redefining it) requires this more aggressive flush."
+
+	<primitive: 215>
+	^self flushCache
 ]
 
-{ #category : 'scanning' }
+{ #category : 'queries' }
 CompiledMethod >> writesField: varIndex [
 	"Answer whether the receiver stores into the instance variable indexed by the argument."
 	self isQuick ifTrue: [^false].

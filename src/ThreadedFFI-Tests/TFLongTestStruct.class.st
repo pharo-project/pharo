@@ -41,7 +41,7 @@ TFLongTestStruct class >> initialize [
 { #category : 'accessing - structure variables' }
 TFLongTestStruct >> a [
 	"This method was automatically generated"
-	^(FFITypeArray ofType: #FFICharacterType size: 100) fromHandle: (handle copyFrom: OFFSET_A to: OFFSET_A + 99)
+	^(FFIArray ofType: #FFICharacterType size: 100) fromHandle: (handle copyFrom: OFFSET_A to: OFFSET_A + 99)
 ]
 
 { #category : 'accessing - structure variables' }

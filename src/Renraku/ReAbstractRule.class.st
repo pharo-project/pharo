@@ -37,6 +37,30 @@ Class {
 	#tag : 'Rules'
 }
 
+{ #category : 'accessing - rule group' }
+ReAbstractRule class >> apiChangeGroup [
+
+	^ #'API Change'
+]
+
+{ #category : 'accessing - rule group' }
+ReAbstractRule class >> apiHintsGroup [
+
+	^ #'API Hints'
+]
+
+{ #category : 'accessing - rule group' }
+ReAbstractRule class >> architecturalGroup [
+
+	^ #Architectural
+]
+
+{ #category : 'accessing - rule group' }
+ReAbstractRule class >> bugsGroup [
+
+	^ #Bugs
+]
+
 { #category : 'testing - interest' }
 ReAbstractRule class >> checksClass [
 	"Not checking a class by default - but subclasses should return true when the receiver rule checks on class level."
@@ -65,10 +89,28 @@ ReAbstractRule class >> checksPackage [
 	^ false
 ]
 
+{ #category : 'accessing - rule group' }
+ReAbstractRule class >> cleanCodeGroup [
+
+	^ #'Clean Code'
+]
+
+{ #category : 'accessing - rule group' }
+ReAbstractRule class >> codingIdiomViolationGroup [
+
+	^ #'Coding Idiom Violation'
+]
+
+{ #category : 'accessing - rule group' }
+ReAbstractRule class >> designFlawGroup [
+
+	^ #'Design Flaws'
+]
+
 { #category : 'accessing' }
 ReAbstractRule class >> enabled [
 
-	^ enabled ifNil: [ enabled := true ]
+	^ enabled ifNil: [ enabled := self enabledByDefault ]
 ]
 
 { #category : 'accessing' }
@@ -76,6 +118,12 @@ ReAbstractRule class >> enabled: aBoolean [
 
 	enabled := aBoolean.
 	ReRuleManager reset
+]
+
+{ #category : 'manifest' }
+ReAbstractRule class >> enabledByDefault [
+
+	^ true
 ]
 
 { #category : 'accessing' }
@@ -87,9 +135,6 @@ ReAbstractRule class >> enabledSettingID [
 { #category : 'accessing' }
 ReAbstractRule class >> group [
 
-	(self selectors includes: #group) ifTrue: [
-		self deprecated: 'The method #group of rules should be implemented on the class side in Pharo 13+ and not in instance sice.'.
-		^ self new group ].
 	^ 'Unclassified rules'
 ]
 
@@ -98,6 +143,12 @@ ReAbstractRule class >> identifierMinorVersionNumber [
 	"This number identifies the version of the rule definition. Each time the rule is updated and its changes invalidates previous false positives identification (and as such should be reassessed by developers) the number should be increased."
 
 	^ 1
+]
+
+{ #category : 'accessing - rule group' }
+ReAbstractRule class >> instanceMethodProtocolGroup [
+
+	^ #'Instance Method Protocol'
 ]
 
 { #category : 'testing' }
@@ -142,23 +193,40 @@ ReAbstractRule class >> methodOfInteresetSelectors [
 	^ #(checksMethod checksClass checksPackage checksNode)
 ]
 
+{ #category : 'accessing - rule group' }
+ReAbstractRule class >> methodProtocolNameGroup [
+
+	^ #'Method Protocol Name'
+]
+
+{ #category : 'accessing - rule group' }
+ReAbstractRule class >> optimizationGroup [
+
+	^ #Optimization
+]
+
+{ #category : 'accessing - rule group' }
+ReAbstractRule class >> potentialBugsGroup [
+
+	^ #'Potential Bugs'
+]
+
 { #category : 'accessing' }
 ReAbstractRule class >> rationale [
 	"Answer an explanation of the rule, usually in one line. Long description can be obtained using longDescription."
 
-	(self selectors includes: #rationale) ifTrue: [
-		self deprecated: 'The method #rationale of rules should be implemented on the class side in Pharo 13+ and not in instance sice.'.
-		^ self new rationale ].
 	^ self comment
+]
+
+{ #category : 'accessing - rule group' }
+ReAbstractRule class >> rubricGroup [
+
+	^ #Rubric
 ]
 
 { #category : 'accessing' }
 ReAbstractRule class >> ruleName [
 
-	(self selectors includes: #name) ifTrue: [
-		self deprecated:
-			'The method #name of rules should be implemented on the class side in Pharo 13+ and not in instance sice. It was also renamed into #ruleName.'.
-		^ self new name ].
 	^ self subclassResponsibility
 ]
 
@@ -166,10 +234,19 @@ ReAbstractRule class >> ruleName [
 ReAbstractRule class >> severity [
 	"Answer the severity of issues reported by this rule. This method should return one of #error, #warning, or #information."
 
-	(self selectors includes: #severity) ifTrue: [
-		self deprecated: 'The method #severity of rules should be implemented on the class side in Pharo 13+ and not in instance sice.'.
-		^ self new severity ].
 	^ #warning
+]
+
+{ #category : 'accessing - rule group' }
+ReAbstractRule class >> styleGroup [
+
+	^ #Style
+]
+
+{ #category : 'accessing - rule group' }
+ReAbstractRule class >> sunitGroup [
+
+	^ #SUnit
 ]
 
 { #category : 'manifest' }

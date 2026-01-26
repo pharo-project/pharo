@@ -28,7 +28,7 @@ BaselineOfPharo class >> documentBrowser [
 		newName: 'DocumentBrowser' 
 		owner: 'pharo-spec' 
 		project: 'NewTools-DocumentBrowser' 
-		version: 'Pharo13'
+		version: 'Pharo14'
 ]
 
 { #category : 'repository urls' }
@@ -60,7 +60,7 @@ BaselineOfPharo class >> iceberg [
 		newName: 'Iceberg' 
 		owner: 'pharo-vcs' 
 		project: 'iceberg' 
-		version: 'Pharo13' 
+		version: 'Pharo14'
 		sourceDir: nil
 ]
 
@@ -78,7 +78,7 @@ BaselineOfPharo class >> microdown [
 		newName: 'Microdown' 
 		owner: 'pillar-markup' 
 		project: 'Microdown' 
-		version: 'Pharo13'
+		version: 'Pharo14' 
 ]
 
 { #category : 'repository urls' }
@@ -95,7 +95,7 @@ BaselineOfPharo class >> newTools [
 		newName: 'NewTools' 
 		owner: 'pharo-spec' 
 		project: 'NewTools' 
-		version: 'Pharo13'
+		version: 'Pharo14'
 ]
 
 { #category : 'repository urls' }
@@ -119,7 +119,7 @@ BaselineOfPharo class >> roassal [
 		  newName: 'Roassal'
 		  owner: 'pharo-graphics'
 		  project: 'Roassal'
-		  version: 'v1.06f'
+		  version: 'Pharo14'
 ]
 
 { #category : 'repository urls' }
@@ -136,7 +136,7 @@ BaselineOfPharo class >> scriptableDebugger [
 		newName: 'ScriptableDebugger' 
 		owner: 'pharo-spec' 
 		project: 'ScriptableDebugger' 
-		version: 'Pharo13'
+		version: 'Pharo14'
 ]
 
 { #category : 'repository urls' }
@@ -153,7 +153,7 @@ BaselineOfPharo class >> spec [
 		newName: 'Spec2' 
 		owner: 'pharo-spec' 
 		project:'Spec' 
-		version: 'Pharo13'
+		version: 'Pharo14'
 ]
 
 { #category : 'repository urls' }
@@ -170,30 +170,13 @@ BaselineOfPharo class >> toplo [
 		newName: 'Toplo' 
 		owner: 'pharo-graphics' 
 		project: 'Toplo' 
-		version: 'Pharo12'
+		version: 'dev'
 ]
 
 { #category : 'repository urls' }
 BaselineOfPharo class >> toploRepository [
 
 	^ (self externalProjectNamed: 'Toplo') repository
-]
-
-{ #category : 'accessing - external projects' }
-BaselineOfPharo class >> welcomeBrowser [
-	<externalProject>
-	
-	^ PharoExternalProject 
-		newName: 'WelcomeBrowser' 
-		owner: 'pharo-spec' 
-		project: 'NewTools-WelcomeBrowser' 
-		version: 'Pharo13'
-]
-
-{ #category : 'repository urls' }
-BaselineOfPharo class >> welcomeBrowserRepository [
-
-	^ (self externalProjectNamed: 'WelcomeBrowser') repository
 ]
 
 { #category : 'baselines' }
@@ -205,6 +188,7 @@ BaselineOfPharo >> baseline: spec [
 
 	spec for: #common do: [
 		spec postLoadDoIt: #postload:package:.
+		spec baseline: 'Monticello' with: [ spec loads: 'RemoteRepositories' from: repository ].
 		spec baseline: 'BaseLibraries' with: [ spec repository: repository ].
 
 		spec baseline: 'IDE' with: [ spec repository: repository ].
@@ -213,7 +197,12 @@ BaselineOfPharo >> baseline: spec [
 				repository: repository;
 				loads: #( 'IcebergSupport' ) ].
 
-		spec package: 'Deprecated13' ]
+		spec
+			package: 'Morphic-Deprecated';
+			package: 'Deprecated13';
+			package: 'Deprecated13-Kernel';
+			package: 'Deprecated14';
+			package: 'Deprecated14-Kernel' ]
 ]
 
 { #category : 'actions' }
@@ -222,8 +211,8 @@ BaselineOfPharo >> postload: loader package: packageSpec [
 
 	Smalltalk os environment at: #GITHUB_TOKEN ifPresent: [ :token |
 		| credential |
-		credential := (Smalltalk classNamed: #IceCredentialStore) current plaintextCredentialForHostname: 'github.com'.
-		credential password = token ifTrue: [ (Smalltalk classNamed: #IceCredentialStore) current removePlainTextCredential: credential ].
+		credential := (self classNamed: #IceCredentialStore) current plaintextCredentialForHostname: 'github.com'.
+		credential password = token ifTrue: [ (self classNamed: #IceCredentialStore) current removePlainTextCredential: credential ].
 		'Removing credential.' traceCr ].
 
 	"Open the WelcomeBrowser as last step"

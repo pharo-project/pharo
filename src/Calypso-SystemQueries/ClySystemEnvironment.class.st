@@ -1,5 +1,5 @@
 "
-I represent environment of Pharo system. I incapsulate globals (Smalltalk globals), packageOrganizer (PackageOrganizer  default) and changesAnnouncer (SystemAnnouncer uniqueInstance). I have class side #currentImage instance created with all corresponding globals of current image.
+I represent environment of Pharo system. I incapsulate globals (Smalltalk globals). I have class side #currentImage instance created with all corresponding globals of current image.
 
 I am used to navigate over system by ClyNavigationEnvironment.
 
@@ -15,11 +15,9 @@ Public API and Key Messages
 Internal Representation and Key Implementation Points.
 
     Instance Variables
-	changesAnnouncer:		<SystemAnnouncer>
 	globals:		<SmalltalkDictionary> ""Smalltalk globals class""
 	name:		<String>
-	packageOrganizer:		<PackageOrganizer>
-	projectManager:		<ClyProjectManager>
+	projectManager:		<ProjectManager>
 "
 Class {
 	#name : 'ClySystemEnvironment',
@@ -27,8 +25,6 @@ Class {
 	#instVars : [
 		'name',
 		'globals',
-		'changesAnnouncer',
-		'packageOrganizer',
 		'projectManager'
 	],
 	#classInstVars : [
@@ -41,12 +37,11 @@ Class {
 
 { #category : 'accessing' }
 ClySystemEnvironment class >> currentImage [
-	^currentImage ifNil: [
-		currentImage := self new
-			name: 'Current image';
-			globals: Smalltalk globals;
-			packageOrganizer: PackageOrganizer default;
-			changesAnnouncer: SystemAnnouncer uniqueInstance]
+
+	^ currentImage ifNil: [
+		  currentImage := self new
+			                  name: 'Current image';
+			                  globals: Smalltalk globals ]
 ]
 
 { #category : 'class initialization' }
@@ -79,12 +74,8 @@ ClySystemEnvironment >> bindingOf: aSymbol [
 
 { #category : 'accessing' }
 ClySystemEnvironment >> changesAnnouncer [
-	^ changesAnnouncer
-]
 
-{ #category : 'accessing' }
-ClySystemEnvironment >> changesAnnouncer: anObject [
-	changesAnnouncer := anObject
+	^ self globals codeChangeAnnouncer
 ]
 
 { #category : 'class compilation' }
@@ -170,7 +161,7 @@ Is this really what you want to do?') asText makeBoldFrom: 1 to: newClassName si
 { #category : 'package management' }
 ClySystemEnvironment >> createPackageNamed: packageName [
 
-	^ packageOrganizer addPackage: packageName
+	^ self packageOrganizer addPackage: packageName
 ]
 
 { #category : 'class compilation' }
@@ -179,10 +170,16 @@ ClySystemEnvironment >> defaultClassCompiler [
 	^ self class compiler
 ]
 
+{ #category : 'accessing' }
+ClySystemEnvironment >> definedClassesInPackage: aPackage [
+
+	^ aPackage definedClasses
+]
+
 { #category : 'package management' }
 ClySystemEnvironment >> ensurePackage: packageName [
 
-	^ packageOrganizer ensurePackage: packageName
+	^ self packageOrganizer ensurePackage: packageName
 ]
 
 { #category : 'accessing' }
@@ -235,45 +232,40 @@ ClySystemEnvironment >> name: anObject [
 ]
 
 { #category : 'ui' }
-ClySystemEnvironment >> notifyErroInClassDefinition: anError [ 
+ClySystemEnvironment >> notifyErroInClassDefinition: anError [
 
 	| text |
-
 	anError freeze.
 
 	text := ((anError isKindOf: MessageNotUnderstood) and: [ anError receiver isKindOf: ShiftClassBuilder ])
-		ifTrue: [ 'The selector {1} is unrecognized in your class definition.'
-		        format: { anError message selector } ]
-		ifFalse: [ anError messageText ].
+		        ifTrue: [ 'The selector {1} is unrecognized in your class definition.' format: { anError message selector } ]
+		        ifFalse: [ anError messageText ].
 
 	SpConfirmDialog new
 		title: 'There is an error in your class definition';
-		label: text;
+		message: text;
 		acceptLabel: 'Debug';
 		cancelLabel: 'Close';
 		onAccept: [ anError debug ];
 		openDialog
-		
 ]
 
 { #category : 'package management' }
 ClySystemEnvironment >> packageNamed: aString [
-	^packageOrganizer packageNamed: aString
+
+	^ self packageOrganizer packageNamed: aString
 ]
 
 { #category : 'accessing' }
 ClySystemEnvironment >> packageOrganizer [
-	^ packageOrganizer
-]
 
-{ #category : 'accessing' }
-ClySystemEnvironment >> packageOrganizer: anObject [
-	packageOrganizer := anObject
+	^ self globals packageOrganizer
 ]
 
 { #category : 'accessing' }
 ClySystemEnvironment >> packages [
-	^ packageOrganizer packages
+
+	^ self packageOrganizer packages
 ]
 
 { #category : 'printing' }
@@ -313,10 +305,12 @@ ClySystemEnvironment >> subscribe: anObject for: anAnnouncementClass [
 
 { #category : 'subscription' }
 ClySystemEnvironment >> unsubscribe: anObject [
-	changesAnnouncer unsubscribe: anObject
+
+	self changesAnnouncer unsubscribe: anObject
 ]
 
 { #category : 'subscription' }
 ClySystemEnvironment >> when: anAnnouncementClass send: aSelector to: anObject [
-	changesAnnouncer weak when: anAnnouncementClass send: aSelector to: anObject
+
+	self changesAnnouncer weak when: anAnnouncementClass send: aSelector to: anObject
 ]

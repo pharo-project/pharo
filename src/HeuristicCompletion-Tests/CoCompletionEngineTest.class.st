@@ -1,8 +1,9 @@
 Class {
 	#name : 'CoCompletionEngineTest',
 	#superclass : 'CompletionEngineTest',
-	#category : 'HeuristicCompletion-Tests',
-	#package : 'HeuristicCompletion-Tests'
+	#category : 'HeuristicCompletion-Tests-Core',
+	#package : 'HeuristicCompletion-Tests',
+	#tag : 'Core'
 }
 
 { #category : 'testing' }
@@ -11,21 +12,9 @@ CoCompletionEngineTest class >> shouldInheritSelectors [
 	^ true
 ]
 
-{ #category : 'accessing' }
-CoCompletionEngineTest >> doItContext [
-
-	^ nil
-]
-
 { #category : 'testing' }
 CoCompletionEngineTest >> hasBindingOf: aSymbol [
 	^ false
-]
-
-{ #category : 'running' }
-CoCompletionEngineTest >> newCompletionEngine [
-
-	^ CoCompletionEngine new
 ]
 
 { #category : 'tests - interaction' }

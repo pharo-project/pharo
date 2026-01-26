@@ -27,9 +27,9 @@ Otherwise, if the array is allocated in the C heap, array accesses may run into 
 
 ## Reusable Array types
 
-I can be used to create array types with the ==newArrayType:size:== method, which yields a new array type knowing the element types and the array size. An array type created this way can be then be allocated using the new or externalNew messages.
+I can be used to create array types with the ==newArrayTypeOf:size:== method, which yields a new array type knowing the element types and the array size. An array type created this way can be then be allocated using the new or externalNew messages.
 
-char128Type := FFIArray newArrayType: #char size: 128.
+char128Type := FFIArray newArrayTypeOf: #char size: 128.
 
 ""In Pharo heap""
 newArrayOf128Chars := char128Type new.
@@ -46,7 +46,7 @@ struct {
 can be modeled like this: 
 
 TheStruct class>>initialize
-	Int4 := FFIArray newArrayType: #int size: 4.
+	Int4 := FFIArray newArrayTypeOf: #int size: 4.
 
 TheStruct class>>fieldsDesc 
 	^ #(
@@ -93,6 +93,15 @@ FFIArray class >> findOrCreateType: aTypeName size: aSize [
 		at: aSize ifAbsentPut: [ self newArrayTypeOf: aTypeName size: aSize ]
 ]
 
+{ #category : 'private' }
+FFIArray class >> findOrCreateType: aTypeName size: aSize requestor: aRequestor [
+
+	DefinedTypes ifNil: [ DefinedTypes := SmallDictionary new ].
+	^ (DefinedTypes 
+		at: aTypeName ifAbsentPut: [ SmallDictionary new ])
+		at: aSize ifAbsentPut: [ self newArrayTypeOf: aTypeName size: aSize requestor: aRequestor ]
+]
+
 { #category : 'instance creation' }
 FFIArray class >> fromHandle: aHandle [
 	^ self basicNew
@@ -116,6 +125,16 @@ FFIArray class >> newArrayTypeOf: aTypeName size: aSize [
 ]
 
 { #category : 'private' }
+FFIArray class >> newArrayTypeOf: aTypeName size: aSize requestor: aRequestor [
+
+	^ FFIArray newAnonymousSubclass
+		type: (FFICallout new 
+			requestor: aRequestor;
+			resolveType: aTypeName)
+		size: aSize
+]
+
+{ #category : 'private' }
 FFIArray class >> numberOfElements [
 	^ numberOfElements
 ]
@@ -128,6 +147,22 @@ FFIArray class >> ofType: aTypeName size: aSize [
 		size: aSize
 ]
 
+{ #category : 'class factory' }
+FFIArray class >> ofType: aTypeName size: aSize requestor: aRequestor [
+
+	^ self 
+		findOrCreateType: aTypeName 
+		size: aSize
+		requestor: aRequestor
+]
+
+{ #category : 'initialization' }
+FFIArray class >> reset [
+	<script>
+	
+	DefinedTypes removeAll
+]
+
 { #category : 'private' }
 FFIArray class >> type [
 	^ type
@@ -137,4 +172,34 @@ FFIArray class >> type [
 FFIArray class >> type: aType 	size: elements [
 	type := aType.
 	numberOfElements := elements
+]
+
+{ #category : 'converting' }
+FFIArray >> adoptAddress: anAddress [
+
+	"we do not unbox FFIArrays, for now we skip this"
+]
+
+{ #category : 'converting' }
+FFIArray >> packToArity: arity [
+	"in fact, an FFIArray has a 'natural' arity of 1 + the arity of the contained type. 
+	Which means to box it (pack it) to an arity, first we have to substract that value."
+	| realArity |
+	
+	realArity := arity - self typeArity.
+	^ realArity > 1
+		ifTrue: [ super packToArity: realArity ]
+		ifFalse: [ self ]
+]
+
+{ #category : 'private' }
+FFIArray >> typeArity [
+
+	^self type naturalPointerArity + self type pointerArity
+]
+
+{ #category : 'converting' }
+FFIArray >> unpackFromArity: arity [
+
+	"we do not unbox FFIArrays, for now we skip this"
 ]

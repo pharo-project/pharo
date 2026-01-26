@@ -48,7 +48,7 @@ DarkBlueThemeConfigurator >> darkBaseColor [
 
 { #category : 'colors' }
 DarkBlueThemeConfigurator >> desktopColor [
-	^ self backgroundColor muchDarker
+	^ Color fromHexString: '263238'
 ]
 
 { #category : 'colors' }

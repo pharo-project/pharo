@@ -10,8 +10,6 @@ Internal Representation and Key Implementation Points.
 Class {
 	#name : 'SycSourceCodeCommand',
 	#superclass : 'CmdCommand',
-	#traits : 'TRefactoringCommandSupport',
-	#classTraits : 'TRefactoringCommandSupport classTrait',
 	#instVars : [
 		'method',
 		'sourceNode'
@@ -30,26 +28,6 @@ SycSourceCodeCommand class >> method: aMethod node: aProgramNode [
 	^self new
 		method: aMethod;
 		sourceNode: aProgramNode
-]
-
-{ #category : 'converting' }
-SycSourceCodeCommand >> asRefactorings [
-	self subclassResponsibility
-]
-
-{ #category : 'execution' }
-SycSourceCodeCommand >> execute [
-
-	self executeRefactoring: self asRefactorings
-]
-
-{ #category : 'private' }
-SycSourceCodeCommand >> executeRefactoring: refactoring [
-
-	self initializeDefaultOptionsOf: refactoring.
-	[ refactoring execute ]
-		on: RBRefactoringError
-		do: [ :e | self morphicUIManager alert: e messageText ]
 ]
 
 { #category : 'accessing' }

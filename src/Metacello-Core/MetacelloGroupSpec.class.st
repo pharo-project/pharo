@@ -1,10 +1,22 @@
 Class {
 	#name : 'MetacelloGroupSpec',
-	#superclass : 'MetacelloAbstractPackageSpec',
-	#category : 'Metacello-Core-Specs',
+	#superclass : 'MetacelloLoadableSpec',
+	#instVars : [
+		'project',
+		'name'
+	],
+	#category : 'Metacello-Core-Model',
 	#package : 'Metacello-Core',
-	#tag : 'Specs'
+	#tag : 'Model'
 }
+
+{ #category : 'instance creation' }
+MetacelloGroupSpec class >> project: aMetacelloProject [
+
+	^ self new
+		  project: aMetacelloProject;
+		  yourself
+]
 
 { #category : 'visiting' }
 MetacelloGroupSpec >> acceptVisitor: aVisitor [ 
@@ -12,82 +24,52 @@ MetacelloGroupSpec >> acceptVisitor: aVisitor [
 	^ aVisitor visitGroupSpec: self
 ]
 
-{ #category : 'accessing' }
-MetacelloGroupSpec >> answers: aListOfPairs [
-
-	self shouldNotImplement
-]
-
-{ #category : 'printing' }
-MetacelloGroupSpec >> configMethodCascadeOn: aStream member: aMember last: lastCascade indent: indent [
-
-	aMember methodUpdateSelector == #remove:
-		ifTrue: [ aStream nextPutAll: 'removeGroup: ', self name printString. ]
-		ifFalse: [
-			aStream 
-				nextPutAll: 'group: ', self name printString;
-				space; 
-				nextPutAll: aMember methodUpdateSelector asString, ' #('.
-			self includes do: [:str | aStream nextPutAll: str printString, ' ' ].
-			aStream nextPut: $) ].
-	lastCascade
-		ifTrue: [ aStream nextPut: $. ]
-		ifFalse: [ aStream nextPut: $;; cr ].
-]
-
-{ #category : 'printing' }
-MetacelloGroupSpec >> configMethodOn: aStream indent: indent [
-
-	aStream 
-		tab: indent;
-		nextPutAll: 'spec '; cr;
-		tab: indent + 1;
-		nextPutAll: 'name: ', self name printString, ';'.
-	self configMethodBodyOn: aStream hasName: true cascading: false indent: indent + 1.
-	aStream nextPut: $.
-]
-
 { #category : 'private' }
 MetacelloGroupSpec >> includeSpecNamesForPackageOrdering: aVersionSpec [
   ^ #()
 ]
 
-{ #category : 'loading' }
-MetacelloGroupSpec >> loadUsing: aLoader gofer: gofer withEngine: anEngine [
-	"noop"
+{ #category : 'testing' }
+MetacelloGroupSpec >> isGroupSpec [
+
+	^ true
+]
+
+{ #category : 'merging' }
+MetacelloGroupSpec >> mergeSpec: anotherSpec [
+
+	super mergeSpec: anotherSpec.
+	anotherSpec name ifNotNil: [ :aName | self name: aName ]
+]
+
+{ #category : 'querying' }
+MetacelloGroupSpec >> name [
+
+	^name
+]
+
+{ #category : 'accessing' }
+MetacelloGroupSpec >> name: aString [
+
+	name := aString trim
 ]
 
 { #category : 'loading' }
 MetacelloGroupSpec >> packageSpecsInLoadOrder [
 
-	^ (self project version spec packageSpecsInLoadOrder select: [ :each |
-		   self includes includes: each name ]) flatCollect: [ :e |
-		  e packageSpecsInLoadOrder ]
-]
-
-{ #category : 'loading' }
-MetacelloGroupSpec >> packageSpecsInLoadOrderWithEngine: anEngine [
-
-	^ (self project version spec packageSpecsInLoadOrder select: [ :each |
-		   self includes includes: each name ]) flatCollect: [ :e |
-		  e packageSpecsInLoadOrder ]
-]
-
-{ #category : 'visiting' }
-MetacelloGroupSpec >> projectDo: projectBlock packageDo: packageBlock groupDo: groupBlock [
-
-	groupBlock value: self
-]
-
-{ #category : 'private' }
-MetacelloGroupSpec >> requiredSpecsForPackageOrdering: aVersionSpec [
-  ^ #()
+	^ (self project version packageSpecsInLoadOrder select: [ :each | self includes includes: each name ]) flatCollect: [ :e | e packageSpecsInLoadOrder ]
 ]
 
 { #category : 'accessing' }
-MetacelloGroupSpec >> requires: aCollection [
+MetacelloGroupSpec >> project [
 
-	self shouldNotImplement
+	^ project
+]
+
+{ #category : 'accessing' }
+MetacelloGroupSpec >> project: aMetacelloProject [
+
+	project := aMetacelloProject
 ]
 
 { #category : 'private' }
@@ -97,8 +79,8 @@ MetacelloGroupSpec >> resolveSpecsForPackageOrdering: aVersionSpec [
 	| packageOrProjectSpecs |
 	packageOrProjectSpecs := Set new.
 	self includes do: [ :specName |
-		(aVersionSpec packageNamed: specName ifAbsent: [  ]) ifNotNil: [ :pkgSpec |
-			packageOrProjectSpecs addAll: (pkgSpec resolveToPackagesAndProjectsIn: aVersionSpec visited: MetacelloVisitedPackages new) ] ].
+		(aVersionSpec packageNamed: specName ifAbsent: [ ]) ifNotNil: [ :pkgSpec |
+			packageOrProjectSpecs addAll: (pkgSpec resolveToPackagesAndProjectsIn: aVersionSpec) ] ].
 	^ packageOrProjectSpecs
 ]
 
@@ -109,45 +91,22 @@ MetacelloGroupSpec >> resolveToLoadableSpec [
 ]
 
 { #category : 'private' }
-MetacelloGroupSpec >> resolveToPackagesAndProjectsIn: aVersionSpec visited: visited [
+MetacelloGroupSpec >> resolveToPackagesAndProjectsIn: aVersionSpec [
 
-	| packages |
-	packages := Dictionary new.
-	self
-		resolveToPackagesIn: aVersionSpec
-		andProjects: true
-		into: packages
-		visited: visited.
-	^ packages values asOrderedCollection
+	^ self resolveToPackagesIn: aVersionSpec into: OrderedCollection new visited: OrderedCollection new
 ]
 
 { #category : 'private' }
-MetacelloGroupSpec >> resolveToPackagesIn: aVersionSpec andProjects: andProjectsBool into: packages visited: visited [
+MetacelloGroupSpec >> resolveToPackagesIn: aVersionSpec into: packages visited: visited [
 
-	visited visit: self doing: [ :aSpec |
-		| map |
-		map := aVersionSpec packages map.
-		aSpec includes do: [ :pkgName |
-			(aVersionSpec packageNamed: pkgName forMap: map ifAbsent: [  ])
-				projectDo: [ :prj | andProjectsBool ifTrue: [ packages at: prj name put: prj ] ]
-				packageDo: [ :pkg | packages at: pkg name put: pkg ]
-				groupDo: [ :grp |
-					grp
-						resolveToPackagesIn: aVersionSpec
-						andProjects: andProjectsBool
-						into: packages
-						visited: visited ] ] ]
-]
+	(visited includes: self name) ifTrue: [ ^ self ].
 
-{ #category : 'private' }
-MetacelloGroupSpec >> resolveToPackagesIn: aVersionSpec visited: visited [
+	self includes
+		collect: [ :specName | aVersionSpec packageNamed: specName ]
+		thenDo: [ :spec |
+				spec isGroupSpec
+					ifTrue: [ spec resolveToPackagesIn: aVersionSpec into: packages visited: visited ]
+					ifFalse: [ packages add: spec ] ].
 
-	| packages |
-	packages := Dictionary new.
-	self
-		resolveToPackagesIn: aVersionSpec
-		andProjects: false
-		into: packages
-		visited: visited.
-	^ packages values asOrderedCollection
+	^ packages
 ]

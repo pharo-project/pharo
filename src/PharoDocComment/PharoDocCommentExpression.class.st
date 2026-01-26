@@ -1,5 +1,5 @@
 "
-I am represent an expression within a String (typically the contents of a RBCommentNode resp. the comment text of a method. I am used as expression or the expected expression value by a PharoDocCommentNode.
+I am represent an expression within a String (typically the contents of a ASTCommentNode resp. the comment text of a method. I am used as expression or the expected expression value by a PharoDocCommentNode.
 "
 Class {
 	#name : 'PharoDocCommentExpression',
@@ -16,9 +16,10 @@ Class {
 
 { #category : 'operation' }
 PharoDocCommentExpression >> evaluate [
-
 	"Note: it seems there is no easy way here to reuse in Opal the parsed AST and just compile&evaluate it."
-	self isWellFormed ifFalse: [ self error: 'Doc comment is not well formed' ].
+
+	self isWellFormed ifFalse: [
+		self error: self methodClass name , '>>#' , self methodSelector , ': Doc comment is not well formed. Content: ' , node sourceNode contents ].
 	"we do not check for isFaulty here, as in the case of syntax errors, we want the evaluate to give us better error messages"
 
 	^ self methodClass compiler
@@ -69,7 +70,7 @@ PharoDocCommentExpression >> isNotWellFormed [
 		(n isMessage and: [ n selector == #>>> ]) ifTrue: [ cpt := cpt + 1 ]].
 	cpt ~= 1 ifTrue: [ ^ true ].
 
-	"`self expressionNode` is a RBDoItMethodNode. The last statement should be a return of a binop of >>>"
+	"`self expressionNode` is a ASTDoItMethodNode. The last statement should be a return of a binop of >>>"
 	self expressionNode body statements last value selector ~= #>>> ifTrue: [ ^ true ].
 
 	^false
@@ -84,6 +85,12 @@ PharoDocCommentExpression >> isWellFormed [
 { #category : 'operation' }
 PharoDocCommentExpression >> methodClass [
 	^ node sourceNode methodNode methodClass
+]
+
+{ #category : 'operation' }
+PharoDocCommentExpression >> methodSelector [
+
+	^ node sourceNode methodNode selector
 ]
 
 { #category : 'accessing' }

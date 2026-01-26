@@ -225,6 +225,16 @@ FTTableMorph >> click: event [
 		ifTrue: [ self showMenuForPosition: event cursorPoint ]
 ]
 
+{ #category : 'event handling' }
+FTTableMorph >> clickOnColumnHeaderAt: anIndex [
+	| header |
+	header := self container headerRow submorphs at: anIndex.
+	header click: (MouseButtonEvent basicNew 
+							setType: #mouseDown;
+							yourself).
+		
+]
+
 { #category : 'accessing - colors' }
 FTTableMorph >> colorForSelection: primarySelection [
 
@@ -434,6 +444,13 @@ FTTableMorph >> handlesMouseWheel: event [
 FTTableMorph >> hasDataSource [
 
 	^ self dataSource isNotNil
+]
+
+{ #category : 'testing' }
+FTTableMorph >> hasFilter [
+
+	function ifNil: [ ^ false ].
+	^ function isKindOf: FTFilterFunction
 ]
 
 { #category : 'testing' }
@@ -653,12 +670,6 @@ FTTableMorph >> isResizable [
 ]
 
 { #category : 'testing' }
-FTTableMorph >> isRowIndexVisible: rowIndex [
-	self deprecated: 'Use #isIndexVisible: instead' transformWith: '`@receiver isRowIndexVisible: `@statements1' -> '`@receiver isIndexVisible: `@statements1'.
-	^ self isIndexVisible: rowIndex
-]
-
-{ #category : 'testing' }
 FTTableMorph >> isShowColumnHeaders [
 	^ showColumnHeaders
 ]
@@ -676,9 +687,7 @@ FTTableMorph >> isYellowButtonReallyPressed: anEvent [
 	then you will got right mouse button event.
 	Interesting that it is not a problem in case of external SDL2 window.
 	Try check it from OSWindowWorldMorph new open"
-	^ (Smalltalk os isMacOS)
-		ifTrue: [ anEvent commandKeyPressed not]
-		ifFalse: [ anEvent controlKeyPressed not]
+	^ anEvent metaKeyPressed not
 ]
 
 { #category : 'event handling' }
@@ -966,8 +975,8 @@ FTTableMorph >> resizeAllSubviews [
 { #category : 'private' }
 FTTableMorph >> resizeContainer [
 	| topLeft bottomRight |
-	topLeft := (self bounds left - self borderWidth) @ self bounds top - self borderWidth.
-	bottomRight := (self bounds right  - self verticalScrollBarWidth    - self borderWidth)
+	topLeft := (self bounds left + self borderWidth) @ (self bounds top + self borderWidth).
+	bottomRight := (self bounds right - self verticalScrollBarWidth - self borderWidth)
 					 @ (self bounds bottom - self horizontalScrollBarHeight - self borderWidth).
 	self container
 		bounds:
@@ -1093,12 +1102,6 @@ FTTableMorph >> selectLast [
 ]
 
 { #category : 'accessing - selection' }
-FTTableMorph >> selectRowIndex: aNumber [
-	self deprecated: 'Use #selectIndex: instead' transformWith: '`@receiver selectRowIndex: `@statements1' -> '`@receiver selectIndex: `@statements1'.
-	self selectIndex: aNumber
-]
-
-{ #category : 'accessing - selection' }
 FTTableMorph >> selectedIndex [
 	^ self selectedIndexes ifNotEmpty: #first ifEmpty: [ self selectionModeStrategy nullIndex ]
 ]
@@ -1208,7 +1211,8 @@ FTTableMorph >> startDrag: event [
 
 	passengers := self selectedIndexes collect: [ :each | self dataSource passengerAt: each ].
 	transferMorph := self dataSource transferFor: passengers from: self.
-	transferMorph align: transferMorph draggedMorph topLeft with: event position.
+	transferMorph align: transferMorph draggedMorph topLeft with: ((self transformedFrom: event hand owner)
+		localPointToGlobal: event position).
 	transferMorph dragTransferType: self dataSource dragTransferType.
 
 	event hand grabMorph: transferMorph

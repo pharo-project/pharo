@@ -1,3 +1,6 @@
+"
+Verifies that a given class directly defines a given set of selectors.
+"
 Class {
 	#name : 'ReDefinesSelectorsCondition',
 	#superclass : 'ReMethodsCondition',
@@ -15,6 +18,12 @@ ReDefinesSelectorsCondition >> definesSelectors: aSelectorsList in: aClass [
 
 	class := aClass.
 	selectors := aSelectorsList
+]
+
+{ #category : 'accessing' }
+ReDefinesSelectorsCondition >> nonViolators [
+
+	^ selectors reject: [ :sel | violators contains: sel ]
 ]
 
 { #category : 'displaying' }

@@ -99,5 +99,5 @@ FLVariableObjectCluster >> variablePartReferencesOf: anObject do: aBlock [
 
 { #category : 'accessing' }
 FLVariableObjectCluster >> variableReferences [
-	^ variableReferences ifNil: [ variableReferences := FLLargeIdentityDictionary new ]
+	^ variableReferences ifNil: [ variableReferences := IdentityDictionary new ]
 ]

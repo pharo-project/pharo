@@ -20,8 +20,9 @@ EpPackageRemoval >> fileOutEntryOn: aWriteStream [
 	"Write a code chunk to remove a package"
 
 	aWriteStream
-		nextPutAll: 'self packageOrganizer removePackage: ';
-		nextChunkPut: self packageName;
+		nextPutAll: 'self packageOrganizer removePackage: '.
+	(ChunkWriteStream on: aWriteStream)
+		nextPut: self packageName;
 		cr.
 
 ]

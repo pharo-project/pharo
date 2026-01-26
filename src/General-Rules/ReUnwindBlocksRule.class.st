@@ -24,7 +24,7 @@ Class {
 
 { #category : 'accessing' }
 ReUnwindBlocksRule class >> group [
-	^ 'Optimization'
+	^ self optimizationGroup
 ]
 
 { #category : 'accessing' }

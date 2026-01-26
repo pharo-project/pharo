@@ -18,22 +18,20 @@ BaselineOfCalypso >> baseline: spec [
 				spec
 					repository: repository;
 					loads: 'Core' ];
+
 			project: 'ClassAnnotationTests'
 			copyFrom: 'ClassAnnotation'
 			with: [ spec loads: 'Tests' ];
+
 			baseline: 'Commander' with: [ spec repository: repository ];
-			baseline: 'SystemCommands' with: [ spec repository: repository ].
+			baseline: 'SystemCommands' with: [ spec repository: repository ];
+			baseline: 'CalypsoNavigationModel' with: [ spec repository: repository ].
 
 		spec
-			package: #'Calypso-NavigationModel';
-			package: #'Calypso-NavigationModel-Tests'
-			with: [ spec requires: #( #'Calypso-NavigationModel' ) ];
-			package: #'Calypso-SystemQueries' with: [
-				spec requires: #( #'Calypso-NavigationModel'
-					   #ClassAnnotation ) ];
+			package: #'Calypso-SystemQueries' with: [ spec requires: #( 'CalypsoNavigationModel' #ClassAnnotation ) ];
 			package: #'Calypso-SystemQueries-Tests' with: [
 				spec requires:
-						#( #'Calypso-NavigationModel-Tests'
+						#( 'CalypsoNavigationModel'
 						   #ClassAnnotationTests #'Calypso-SystemQueries'
 						   #'Calypso-SystemQueries-Tests-PWithSingleClass'
 						   #'Calypso-SystemQueries-Tests-PExtendedByP1'
@@ -78,10 +76,6 @@ BaselineOfCalypso >> baseline: spec [
 			package: #'Calypso-SystemPlugins-Traits-Browser' with: [
 				spec requires: #( #'Calypso-SystemTools-FullBrowser'
 						   #'Calypso-SystemPlugins-Traits-Queries' ) ];
-			package: #'Calypso-ProcessQueries'
-			with: [ spec requires: #( #'Calypso-SystemQueries' ) ];
-			package: #'Calypso-ProcessQueries-Tests'
-			with: [ spec requires: #( #'Calypso-ProcessQueries' ) ];
 			package: #'Calypso-SystemPlugins-Critic-Browser' with: [
 				spec requires: #( #'Calypso-SystemTools-FullBrowser'
 						   #'Calypso-SystemPlugins-Critic-Queries' ) ];
@@ -98,9 +92,6 @@ BaselineOfCalypso >> baseline: spec [
 			package: #'Calypso-SystemPlugins-Deprecation-Queries-Tests'
 			with: [
 				spec requires: #( #'Calypso-SystemPlugins-Deprecation-Queries' ) ];
-			package: #'Calypso-SystemPlugins-FileOut-Browser' with: [
-				spec requires: #( #'Calypso-SystemPlugins-FileOut-Queries'
-						   #'Calypso-SystemTools-Core' ) ];
 			package: #'Calypso-SystemPlugins-FileOut-Queries';
 			package: 'Calypso-SystemPlugins-InheritanceAnalysis-Browser'
 			with: [
@@ -125,9 +116,6 @@ BaselineOfCalypso >> baseline: spec [
 				spec requires: #( #'Calypso-SystemTools-FullBrowser'
 						   #'Calypso-SystemTools-QueryBrowser'
 						   'Calypso-SystemPlugins-Reflectivity-Browser' ) ];
-			package: #'Calypso-SystemPlugins-Reflectivity-Browser-Tests'
-			with: [
-				spec requires: #( #'Calypso-SystemPlugins-Reflectivity-Browser' ) ];
 			package: #'Calypso-SystemPlugins-Reflectivity-Queries'
 			with: [ spec requires: #( #'Calypso-SystemQueries' ) ];
 			package: #'Calypso-SystemPlugins-Reflectivity-Queries-Tests'
@@ -175,7 +163,7 @@ BaselineOfCalypso >> baseline: spec [
 			package: #'Calypso-SystemPlugins-DependencyAnalyser-Browser'
 			with: [ spec requires: #( #'Calypso-SystemTools-Core' ) ];
 			package: #'Calypso-Browser' with: [
-				spec requires: #( #'Calypso-NavigationModel'
+				spec requires: #( 'CalypsoNavigationModel'
 					   #Commander ) ];
 			package: #'Calypso-Browser-Tests'
 			with: [ spec requires: #( #'Calypso-Browser' ) ];
@@ -183,8 +171,6 @@ BaselineOfCalypso >> baseline: spec [
 				spec requires:
 						#( #'Calypso-SystemQueries' #'Calypso-Browser'
 						   'SystemCommands' ) ];
-			package: #'Calypso-SystemTools-Core-Tests'
-			with: [ spec requires: #( #'Calypso-SystemTools-Core' ) ];
 			package: #'Calypso-SystemTools-FullBrowser'
 			with: [ spec requires: #( #'Calypso-SystemTools-Core' ) ];
 			package: #'Calypso-SystemTools-FullBrowser-Tests'
@@ -195,17 +181,10 @@ BaselineOfCalypso >> baseline: spec [
 				spec requires: #( #'Calypso-SystemTools-QueryBrowser'
 						   #'Calypso-SystemTools-FullBrowser-Tests' ) ];
 			package: #'Calypso-SystemTools-OldToolCompatibillity'
-			with: [ spec requires: #( #'Calypso-SystemTools-QueryBrowser' ) ];
-			package: #'Calypso-SystemTools-Debugger' with: [
-				spec requires:
-						#( #'Calypso-ProcessQueries' #'Calypso-SystemTools-QueryBrowser' ) ];
-			package: #'Calypso-SystemTools-ProcessBrowser' with: [
-				spec requires:
-						#( #'Calypso-ProcessQueries' #'Calypso-SystemTools-Debugger' ) ].
-
+			with: [ spec requires: #( #'Calypso-SystemTools-QueryBrowser' ) ].
 
 		spec
-			group: 'CoreEnvironment' with: #( #'Calypso-NavigationModel' );
+			group: 'CoreEnvironment' with: #( #'CalypsoNavigationModel' );
 			group: 'CoreBrowser' with: #( #'Calypso-Browser' );
 			group: 'MinimalEnvironment'
 			with:
@@ -230,7 +209,6 @@ BaselineOfCalypso >> baseline: spec [
 				   #'Calypso-SystemTools-OldToolCompatibillity'
 				   #'Calypso-SystemPlugins-Critic-Browser'
 				   'Calypso-SystemPlugins-InheritanceAnalysis-Browser'
-				   #'Calypso-SystemPlugins-FileOut-Browser'
 				   #'Calypso-SystemPlugins-MethodDiffTool'
 				   #'Calypso-SystemPlugins-Deprecation-Browser'
 				   #'Calypso-SystemPlugins-Reflectivity-Browser'
@@ -244,7 +222,7 @@ BaselineOfCalypso >> baseline: spec [
 			with: #( #'Calypso-SystemPlugins-Monticello-Browser' );
 			group: 'MinimalEnvironmentTests'
 			with:
-				#( #'Calypso-NavigationModel-Tests'
+				#( 'CalypsoNavigationModel'
 				   #'Calypso-SystemQueries-Tests' #'Calypso-SystemPlugins-Traits-Queries-Tests'
 				   'Calypso-SystemPlugins-InheritanceAnalysis-Queries-Tests'
 				   #'Calypso-SystemPlugins-Deprecation-Queries-Tests'
@@ -257,16 +235,9 @@ BaselineOfCalypso >> baseline: spec [
 				#( 'MinimalEnvironmentTests' #'Calypso-SystemTools-FullBrowser-Tests'
 				   #'Calypso-SystemTools-QueryBrowser-Tests'
 				   #'Calypso-SystemPlugins-Reflectivity-Queries-Tests'
-				   #'Calypso-SystemPlugins-Reflectivity-Browser-Tests'
 				   #'Calypso-SystemPlugins-Critic-Queries-Tests'
 				   #'Calypso-Browser-Tests' );
-			group: 'ProcessEnvironment' with: #( #'Calypso-ProcessQueries' );
-			group: 'ProcessBrowser'
-			with: #( #'Calypso-SystemTools-ProcessBrowser' );
-			group: 'ProcessBrowserTests'
-			with: #( #'Calypso-ProcessQueries-Tests' );
 			group: 'default'
 			with:
-				#( 'FullEnvironment' 'SystemBrowser' 'Tests' 'ProcessEnvironment'
-				   'ProcessBrowser' 'ProcessBrowserTests' ) ]
+				#( 'FullEnvironment' 'SystemBrowser' 'Tests' ) ]
 ]

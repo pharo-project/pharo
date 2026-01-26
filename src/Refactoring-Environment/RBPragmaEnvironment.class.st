@@ -34,6 +34,17 @@ RBPragmaEnvironment class >> onEnvironment: anEnvironment keywords: aKeywordColl
 		yourself
 ]
 
+{ #category : 'comparing' }
+RBPragmaEnvironment >> = anObject [
+	"Answer whether the receiver and anObject represent the same object."
+
+	self == anObject ifTrue: [ ^ true ].
+	self class = anObject class ifFalse: [ ^ false ].
+	^ environment = anObject environment and: [
+			  keywords = anObject basisObjects and: [
+				  condition = anObject condition ] ]
+]
+
 { #category : 'adding' }
 RBPragmaEnvironment >> addKeyword: aSymbol [
 	keywords add: aSymbol
@@ -42,6 +53,12 @@ RBPragmaEnvironment >> addKeyword: aSymbol [
 { #category : 'accessing' }
 RBPragmaEnvironment >> basisObjects [
 	^ keywords
+]
+
+{ #category : 'accessing' }
+RBPragmaEnvironment >> condition [
+
+	^ condition
 ]
 
 { #category : 'initialization' }
@@ -55,6 +72,13 @@ RBPragmaEnvironment >> defaultLabel [
 	stream := String new writeStream.
 	keywords do: [ :each | stream nextPut: $<; nextPutAll: each; nextPut: $>; nextPut: $ ].
 	^ stream contents
+]
+
+{ #category : 'comparing' }
+RBPragmaEnvironment >> hash [
+	"Answer an integer value that is related to the identity of the receiver."
+
+	^ keywords hash bitXor: condition hash
 ]
 
 { #category : 'testing' }

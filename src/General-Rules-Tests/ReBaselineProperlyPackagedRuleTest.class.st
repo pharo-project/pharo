@@ -31,16 +31,27 @@ ReBaselineProperlyPackagedRuleTest >> testRuleWithBadPackagedBaselineClass [
 
 	| badPackagedBaselineClass critiques |
 	badPackagedBaselineClass := classFactory make: [ :builder |
-		                    builder
-			                    name: 'BaselineOfSimple';
-			                    tag: 'Base';
-			                    package: 'Simple' ].
+			                            builder
+				                            superclass: BaselineOf;
+				                            name: 'BaselineOfSimple';
+				                            tag: 'Base';
+				                            package: 'Simple' ].
 
 	critiques := self myCritiquesOnClass: badPackagedBaselineClass.
-	self assert: critiques size equals: 1.
-
-	"Check it does not lament on class side"
+	self assert: critiques size equals: 1. "Check it does not lament on class side"
 	critiques := self myCritiquesOnClass: badPackagedBaselineClass class.
+	self assert: critiques isEmpty
+]
+
+{ #category : 'tests' }
+ReBaselineProperlyPackagedRuleTest >> testRuleWithBaselineOf [
+
+	| critiques |
+	critiques := self myCritiquesOnClass: BaselineOf.
+	self assert: critiques isEmpty.
+	
+	"Check it does not lament on class side"
+	critiques := self myCritiquesOnClass: BaselineOf class.
 	self assert: critiques isEmpty
 ]
 

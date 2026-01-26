@@ -23,53 +23,53 @@ RBInlineMethodParametrizedTest >> rbModelForInliningMethodTest [
 
 	| newModel |
 	newModel := self modelWithoutRealClasses:
-		            #( #RBRenameClassVariableChange #RBVariableCompositeRefactoryChange #RBRenameInstanceVariableChange #RBCompositeRefactoryChange
-		               #RBRenameVariableChange #RBRefactoryChange ).
+		            #( #ReRenameClassVariableChange #RBVariableCompositeRefactoryChange #ReRenameInstanceVariableChange #ReCompositeChange
+		               #ReRenameVariableChange #ReChange ).
 	newModel
 		defineClass: [ :aBuilder |
 			aBuilder
 				superclass: Object;
-				name: #RBRefactoryChange;
+				name: #ReChange;
 				slots: { #name };
 				package: 'Refactory-Support' ];
 		defineClass: [ :aBuilder |
 			aBuilder
-				superclassName: #RBRefactoryChange;
-				name: #RBCompositeRefactoryChange;
+				superclassName: #ReChange;
+				name: #ReCompositeChange;
 				slots: { #changes };
 				package: 'Refactory-Support' ];
 		defineClass: [ :aBuilder |
 			aBuilder
-				superclassName: #RBCompositeRefactoryChange;
+				superclassName: #ReCompositeChange;
 				name: #RBVariableCompositeRefactoryChange;
 				slots: { #className. #isMeta };
 				package: 'Refactory-Support' ];
 		defineClass: [ :aBuilder |
 			aBuilder
 				superclassName: #RBVariableCompositeRefactoryChange;
-				name: #RBRenameVariableChange;
+				name: #ReRenameVariableChange;
 				slots: { #oldName. #newName };
 				package: 'Refactory-Support' ];
 		defineClass: [ :aBuilder |
 			aBuilder
-				superclassName: #RBRenameVariableChange;
-				name: #RBRenameClassVariableChange;
+				superclassName: #ReRenameVariableChange;
+				name: #ReRenameClassVariableChange;
 				package: 'Refactory-Support' ];
 		defineClass: [ :aBuilder |
 			aBuilder
-				superclassName: #RBRefactoryChange;
-				name: #RBCompositeRefactoryChange;
+				superclassName: #ReChange;
+				name: #ReCompositeChange;
 				slots: { #changes };
 				package: 'Refactory-Support' ];
 		defineClass: [ :aBuilder |
 			aBuilder
-				superclassName: #RBRenameVariableChange;
-				name: #RBRenameInstanceVariableChange;
+				superclassName: #ReRenameVariableChange;
+				name: #ReRenameInstanceVariableChange;
 				package: 'Refactory-Support' ].
 
 
 	self
-		addMethodsToModelClasses: #( #( #RBRenameClassVariableChange #( #( 'removeOldVariable
+		addMethodsToModelClasses: #( #( #ReRenameClassVariableChange #( #( 'removeOldVariable
 					(RBRemoveClassVariableChange remove: oldName from: self changeClass) execute' #private ) #( 'addNewVariable
 					(RBAddClassVariableChange add: newName to: self changeClass) execute' #private ) #( 'executeNotifying: aBlock
 	| undo |
@@ -99,7 +99,7 @@ RBInlineMethodParametrizedTest >> rbModelForInliningMethodTest [
 	^className' #accessing ) #( '= aRefactoryClassChange
 	self class = aRefactoryClassChange class ifFalse: [^false].
 	^className = aRefactoryClassChange changeClassName
-		and: [isMeta = aRefactoryClassChange isMeta]' #comparing ) ) ) #( #RBRenameInstanceVariableChange #( #( 'removeOldVariable
+		and: [isMeta = aRefactoryClassChange isMeta]' #comparing ) ) ) #( #ReRenameInstanceVariableChange #( #( 'removeOldVariable
 	(RBRemoveInstanceVariableChange remove: oldName from: self changeClass)
 		execute' #private ) #( 'addNewVariable
 	(RBAddInstanceVariableChange add: newName to: self changeClass) execute' #private ) #( 'executeNotifying: aBlock
@@ -115,7 +115,7 @@ RBInlineMethodParametrizedTest >> rbModelForInliningMethodTest [
 	self changeClass withAllSubclasses do:
 			[:each |
 			each allInstances
-				do: [:inst | each instVarAt: newIndex put: (each instVarAt: oldIndex)]]' #private ) ) ) #( #RBCompositeRefactoryChange #( #( 'compile: source in: class
+				do: [:inst | each instVarAt: newIndex put: (each instVarAt: oldIndex)]]' #private ) ) ) #( #ReCompositeChange #( #( 'compile: source in: class
 			^self addChange: (RBAddMethodChange compile: source in: class)' #'refactory-changes' ) #( 'addClassVariable: variableName to: aClass
 	^self addChange: (RBAddClassVariableChange add: variableName to: aClass)' #'refactory-changes' ) #( 'addChangeFirst: aRefactoryChange
 	changes addFirst: aRefactoryChange.
@@ -175,7 +175,7 @@ RBInlineMethodParametrizedTest >> rbModelForInliningMethodTest [
 	^aRefactoryChange' #accessing ) #( 'changesSize
 	^changes inject: 0 into: [:sum :each | sum + each changesSize]' #accessing ) #( 'displayString
 	^super displayString asText allBold' #printing ) #( 'problemCount
-	^self changesSize' #accessing ) ) ) #( #RBRenameVariableChange #( #( 'oldName: aString
+	^self changesSize' #accessing ) ) ) #( #ReRenameVariableChange #( #( 'oldName: aString
 	oldName := aString' #private ) #( 'executeNotifying: aBlock
 	| undo |
 	undo := super executeNotifying: aBlock.
@@ -184,7 +184,7 @@ RBInlineMethodParametrizedTest >> rbModelForInliningMethodTest [
 		newName: oldName.
 	^undo' #private ) #( 'newName: aString
 	newName := aString' #private ) #( 'changeString
-	^''Rename '' , oldName , '' to '' , newName' #printing ) ) ) #( #RBRefactoryChange #( #( 'flattenedChanges
+	^''Rename '' , oldName , '' to '' , newName' #printing ) ) ) #( #ReChange #( #( 'flattenedChanges
 	| changes |
 	changes := OrderedCollection new.
 	self flattenOnto: changes.
@@ -246,7 +246,7 @@ RBInlineMethodParametrizedTest >> testFailureInlineMethodForSuperSendThatAlsoSen
 	refactoring := self createRefactoringWithArguments: {
 			               (102 to: 131).
 			               #executeNotifying:.
-			               #RBRenameInstanceVariableChange }.
+			               #ReRenameInstanceVariableChange }.
 	self shouldFail: refactoring
 ]
 
@@ -429,14 +429,14 @@ RBInlineMethodParametrizedTest >> testInlineMethod5 [
 RBInlineMethodParametrizedTest >> testInlineMethodForSuperSend [
 	| refactoring |
 	model := self rbModelForInliningMethodTest.
-	(model classNamed: #RBRenameVariableChange)
+	(model classNamed: #ReRenameVariableChange)
 		removeMethod: #executeNotifying:.
 	refactoring := self createRefactoringWithModel: model andArguments:
-		{ (101 to: 130) . #executeNotifying: . (model classNamed: #RBRenameInstanceVariableChange) }.
+		{ (101 to: 130) . #executeNotifying: . (model classNamed: #ReRenameInstanceVariableChange) }.
 	self executeRefactoring: refactoring.
 
 	self
-		assert: ((model classNamed: #RBRenameInstanceVariableChange)
+		assert: ((model classNamed: #ReRenameInstanceVariableChange)
 				parseTreeForSelector: #executeNotifying:) equals: (self
 							parseMethod: 'executeNotifying: aBlock
 									| undo undos undo1 |

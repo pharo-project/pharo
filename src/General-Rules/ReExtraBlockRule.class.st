@@ -12,7 +12,7 @@ Class {
 
 { #category : 'accessing' }
 ReExtraBlockRule class >> group [
-	^ 'Optimization'
+	^ self optimizationGroup
 ]
 
 { #category : 'accessing' }

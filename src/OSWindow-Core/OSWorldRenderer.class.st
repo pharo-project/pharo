@@ -53,13 +53,35 @@ OSWorldRenderer class >> defaultExtent [
 { #category : 'accessing' }
 OSWorldRenderer class >> isApplicableFor: aWorld [
 
-	^ Smalltalk isHeadless and: [ CommandLineArguments new hasOption: 'interactive' ]
+	^ CommandLineArguments new hasOption: 'interactive'
 ]
 
 { #category : 'accessing' }
 OSWorldRenderer class >> priority [
 
 	^ 2
+]
+
+{ #category : 'start' }
+OSWorldRenderer class >> restart [
+
+	| oldWindows |
+	UIManager default deactivate.
+
+	"We need to keep all open windows, after the restart if they are still valid we register them back. If we don't do this the events for these windows are never delivered."
+	oldWindows := OSSDL2Driver allWindows.
+
+	self shutDown: true.
+	OSSDL2Driver shutDown: true.
+
+	self startUp: true.
+	UIManager default activate.
+
+	oldWindows 
+	 select: [ :e | e sdl2Window isNotNil ]
+	 thenDo: [ :e | OSSDL2Driver current registerWindow: e ].
+
+	InformativeNotification signal: self class name , ' restarted'
 ]
 
 { #category : 'settings' }
@@ -171,10 +193,12 @@ OSWorldRenderer >> copyRectangle: aRectangle into: aForm [
 	^ aForm
 ]
 
-{ #category : 'private' }
+{ #category : 'activation' }
 OSWorldRenderer >> deactivate [
 
-	osWindow ifNotNil: [ osWindow destroy. osWindow := nil ].
+	osWindow ifNotNil: [ 
+		driver beforeMainPharoWindowClosed: osWindow.
+		osWindow destroy. osWindow := nil ].
 	display := nil
 ]
 
@@ -338,7 +362,11 @@ OSWorldRenderer >> osWindowRenderer [
 { #category : 'private' }
 OSWorldRenderer >> pickMostSuitableWindowDriver [
 
-	driver := OSWindowDriver current.
+	driver := OSEnvironment current 
+		at: 'PHARO_WINDOW_DRIVER' 
+		ifPresent: [ :driverName | (self class environment classNamed: driverName) new ]
+		ifAbsent: [ 	OSWindowDriver current ].
+
 	^ driver
 ]
 
@@ -357,7 +385,7 @@ OSWorldRenderer >> requestTextEditingAt: aRectangle [
 { #category : 'accessing' }
 OSWorldRenderer >> screenScaleFactor [
 
-	^ world scaleFactor * self windowScaleFactor
+	^ world zoomFactor * self windowScaleFactor
 ]
 
 { #category : 'system startup' }

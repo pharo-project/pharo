@@ -220,7 +220,8 @@ OSWindowMorphicEventHandler >> visitKeyDownEvent: anEvent [
 		stamp: Time millisecondClockValue.
 	keyEvent
 		scanCode: anEvent scanCode;
-		key: (OSKeySymbols mapKeySymbolValueToKeyboardKey: anEvent symbol).
+		key: (OSKeySymbols mapKeySymbolValueToKeyboardKey: anEvent symbol);
+		isRepeat: anEvent repeat = 1.
 	self dispatchMorphicEvent: keyEvent
 ]
 
@@ -237,7 +238,8 @@ OSWindowMorphicEventHandler >> visitKeyUpEvent: anEvent [
 		stamp: Time millisecondClockValue.
 	keyEvent
 		scanCode: anEvent scanCode;
-		key: (OSKeySymbols mapKeySymbolValueToKeyboardKey: anEvent symbol).
+		key: (OSKeySymbols mapKeySymbolValueToKeyboardKey: anEvent symbol);
+		isRepeat: anEvent repeat = 1.
 	^ keyEvent
 ]
 

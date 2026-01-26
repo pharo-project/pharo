@@ -4,7 +4,7 @@ I will fail on the first one that fails.
 "
 Class {
 	#name : 'ReCompositeRefactoring',
-	#superclass : 'RBRefactoring',
+	#superclass : 'ReRefactoring',
 	#instVars : [
 		'refactorings'
 	],
@@ -12,6 +12,14 @@ Class {
 	#package : 'Refactoring-Core',
 	#tag : 'Refactorings'
 }
+
+{ #category : 'preconditions' }
+ReCompositeRefactoring >> breakingChangePreconditions [
+	"Return the list of the all the breakingChangePreconditions of the composite"
+
+	^ refactorings flatCollect: [ :each |
+		  each breakingChangePreconditions ]
+]
 
 { #category : 'preconditions' }
 ReCompositeRefactoring >> preconditions [
@@ -29,6 +37,12 @@ ReCompositeRefactoring >> prepareForInteractiveMode [
 ReCompositeRefactoring >> privateTransform [
 
 	refactorings do: [ :each | each generateChanges ]
+]
+
+{ #category : 'transforming' }
+ReCompositeRefactoring >> privateTransform2 [
+
+	refactorings do: [ :each | each privateTransform ]
 ]
 
 { #category : 'accessing' }

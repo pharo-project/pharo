@@ -24,10 +24,21 @@ Class {
 		'rule',
 		'tinyHint'
 	],
-	#category : 'Renraku-Critiques',
-	#package : 'Renraku',
-	#tag : 'Critiques'
+	#category : 'Renraku',
+	#package : 'Renraku'
 }
+
+{ #category : 'item decoration' }
+ReAbstractCritique class >> decorateBrowserItem: aBrowserItem by: anEnvironmentPlugin [
+	| critique |
+	critique := aBrowserItem actualObject.
+
+	aBrowserItem addProperty: (ClyCritiqueSeverityProperty of: critique).
+	critique sourceAnchor ifNotNil: [ :anchor |
+		anchor providesInterval ifTrue: [
+			aBrowserItem addProperty: (ClySourceNodeCritiqueIntervalProperty from: anchor interval)]].
+	critique providesChange	ifTrue: [ aBrowserItem markWith: ClyCritiqueFixableTag ]
+]
 
 { #category : 'instance creation' }
 ReAbstractCritique class >> for: anEntity by: aRule [
@@ -141,7 +152,7 @@ ReAbstractCritique >> guidedBan [
 { #category : 'accessing' }
 ReAbstractCritique >> icon [
 
-	^ self iconNamed: ('small', rule severity capitalized, 'Icon') asSymbol
+	^ self iconNamed: ('small' , rule severity capitalized) asSymbol
 ]
 
 { #category : 'initialization' }

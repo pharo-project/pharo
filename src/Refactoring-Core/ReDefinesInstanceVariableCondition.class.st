@@ -1,3 +1,6 @@
+"
+Checks that a class or its superclasses define a variable.
+"
 Class {
 	#name : 'ReDefinesInstanceVariableCondition',
 	#superclass : 'ReClassCondition',
@@ -22,12 +25,6 @@ ReDefinesInstanceVariableCondition >> check [
 	
 	violators := instanceVariables reject: [ :shared | class definesInstanceVariable: shared ].
 	^ violators isEmpty
-]
-
-{ #category : 'private' }
-ReDefinesInstanceVariableCondition >> errorBlock [
-	^ [ class printString
-				, ' <1?: > define <1?s:> instance variable ' , instanceVariables ]
 ]
 
 { #category : 'accessing' }

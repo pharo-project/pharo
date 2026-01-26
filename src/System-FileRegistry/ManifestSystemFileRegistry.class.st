@@ -11,5 +11,7 @@ Class {
 
 { #category : 'meta-data - dependency analyser' }
 ManifestSystemFileRegistry class >> manuallyResolvedDependencies [
-	^ #(#'FileSystem-Core' #'Collections-Abstract')
+
+	<ignoreForCoverage>
+	^ #(#'Collections-Streams' #'FileSystem-Core')
 ]

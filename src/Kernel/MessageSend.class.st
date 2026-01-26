@@ -201,17 +201,17 @@ MessageSend >> valueWithArguments: anArray [
 MessageSend >> valueWithEnoughArguments: anArray [
 	"call the selector with enough arguments from arguments and anArray"
 	<reflection: 'Message sending and code execution - Runtime and Evaluation'>
-	| args |
-	args := Array new: selector numArgs.
-	args replaceFrom: 1
-		to: (arguments size min: args size)
+	| newArgs |
+	newArgs := Array new: selector numArgs.
+	newArgs replaceFrom: 1
+		to: (arguments size min: newArgs size)
 		with: arguments
 		startingAt: 1.
-	args size > arguments size ifTrue: [
-		args replaceFrom: arguments size + 1
-			to: (arguments size + anArray size min: args size)
+	newArgs size > arguments size ifTrue: [
+		newArgs replaceFrom: arguments size + 1
+			to: (arguments size + anArray size min: newArgs size)
 			with: anArray
 			startingAt: 1.
 	].
-	^ receiver perform: selector withArguments: args
+	^ receiver perform: selector withArguments: newArgs
 ]

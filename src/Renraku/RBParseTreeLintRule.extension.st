@@ -17,7 +17,7 @@ RBParseTreeLintRule >> check: aMethod forCritiquesDo: aCriticBlock [
 RBParseTreeLintRule >> critiqueFor: aNode about: aMethod [
 	| anchor |
 
-	anchor := (aNode isKindOf: ASTProgramNode)
+	anchor := (aNode isKindOf: OCProgramNode)
 		ifFalse: [ ReSourceAnchor entity: aMethod ]
 		ifTrue: [
 			ReIntervalSourceAnchor

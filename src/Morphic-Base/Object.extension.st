@@ -75,10 +75,9 @@ Object >> hasModelYellowButtonMenuItems [
 ]
 
 { #category : '*Morphic-Base' }
-Object >> iconOrThumbnailOfSize: aNumberOrPoint [
-	"Answer an appropiate form to represent the receiver"
+Object >> iconFormSetNamed: aSymbol [
 
-	^ nil
+	^ Smalltalk ui icons iconFormSetNamed: aSymbol
 ]
 
 { #category : '*Morphic-Base' }
@@ -88,18 +87,17 @@ Object >> isTransferable [
 ]
 
 { #category : '*Morphic-Base' }
-Object >> taskbarIcon [
-	"Answer the icon for the receiver in a task bar
-	or nil for the default."
+Object >> okToClose [
+	"Sent to models when a window closing.
+	Allows this check to be independent of okToChange."
 
-	self
-		deprecated: 'The direct usage of #taskbarIcon is not recommended anymore since it
-	introduces a dependency with UI layer we do not want to have here. Instead, our UI
-	components should us #taskbarIconName to get the icon to use, and then user can resolve it
-	as their want (since different applications can have different iconpacks, etc.) #Pharo11'
-		transformWith: '`@receiver taskbarIcon' -> '`@receiver iconNamed: `@receiver taskbarIconName'.
+	^true
+]
 
-	^ self iconNamed: self taskbarIconName
+{ #category : '*Morphic-Base' }
+Object >> systemIconName [
+
+	^ #class
 ]
 
 { #category : '*Morphic-Base' }
@@ -115,6 +113,22 @@ Object >> taskbarIconName [
 	or nil for the default."
 
 	^self class taskbarIconName
+]
+
+{ #category : '*Morphic-Base' }
+Object class >> taskbarLabel [
+	"Answer the label string for the receiver in a task bar
+	or nil for the default."
+
+	^nil
+]
+
+{ #category : '*Morphic-Base' }
+Object >> taskbarLabel [
+	"Answer the label string for the receiver in a task bar
+	or nil for the default."
+
+	^self class taskbarLabel
 ]
 
 { #category : '*Morphic-Base' }

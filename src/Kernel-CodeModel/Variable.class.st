@@ -68,11 +68,6 @@ Variable >> = other [
 			and: [ name = other name ]
 ]
 
-{ #category : 'visiting' }
-Variable >> acceptVisitor: aProgramNodeVisitor node: aNode [
-	^ aProgramNodeVisitor visitVariableNode: aNode
-]
-
 { #category : 'testing' }
 Variable >> allowsShadowing [
 	^false
@@ -212,12 +207,6 @@ Variable >> isSelfOrSuperVariable [
 { #category : 'testing' }
 Variable >> isSelfVariable [
 	^false
-]
-
-{ #category : 'testing' }
-Variable >> isShadowing [
-	"I shadow a variable if looking up my name in the outer scope returns a variable"
-	^(self scope outerScope ifNotNil: [:outer | outer lookupVar: self name]) isNotNil
 ]
 
 { #category : 'testing' }

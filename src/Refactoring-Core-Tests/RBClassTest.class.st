@@ -8,16 +8,17 @@ Class {
 		'refactoringClass',
 		'objectClass'
 	],
-	#category : 'Refactoring-Core-Tests',
-	#package : 'Refactoring-Core-Tests'
+	#category : 'Refactoring-Core-Tests-Model',
+	#package : 'Refactoring-Core-Tests',
+	#tag : 'Model'
 }
 
 { #category : 'running' }
 RBClassTest >> setUp [
 
 	super setUp.
-	rbNamespace := RBNamespace new.
-	abstractTransformationClass := rbNamespace classNamed: #RBAbstractTransformation.
+	rbNamespace := RBNamespace onEnvironment: (RBClassEnvironment classes:  {Behavior. Class. ClassDescription. MOPTestClassD. Model. MyClassB. Object. Object. Object class. ProtoObject class. ReAbstractTransformation. ReAbstractTransformation. RBClassRefactoring. ReRefactoring. Trait2}).
+	abstractTransformationClass := rbNamespace classNamed: #ReAbstractTransformation.
 	objectClass := rbNamespace classNamed: #Object.
 	refactoringClass := rbNamespace classNamed: #RBClassRefactoring.
 	rbNamespace defineClass: [ :aBuilder |

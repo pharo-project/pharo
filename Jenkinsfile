@@ -27,30 +27,43 @@ def shell(params){
     else sh(params)
 }
 
-def runTests(architecture, prefix=''){
+def runTests(architecture){
   cleanWs()
   dir(env.STAGE_NAME) {
     try {
         unstash "bootstrap${architecture}"
-        shell "bash -c 'bootstrap/scripts/run${prefix}Tests.sh ${architecture} ${env.STAGE_NAME}${prefix}'"
-        junit allowEmptyResults: true, testResults: "${env.STAGE_NAME}${prefix}*.xml"
+        shell "bash -c 'bootstrap/scripts/runTests.sh ${architecture} ${env.STAGE_NAME}'"
+        junit allowEmptyResults: true, testResults: "${env.STAGE_NAME}*.xml"
     } finally {
-        archiveArtifacts allowEmptyArchive: true, artifacts: "${env.STAGE_NAME}${prefix}*.xml", fingerprint: true
+        archiveArtifacts allowEmptyArchive: true, artifacts: "${env.STAGE_NAME}*.xml", fingerprint: true
         archiveArtifacts allowEmptyArchive: true, artifacts: "*.fuel", fingerprint: true
         // I am archiving the logs to check for crashes and errors.
         if(fileExists('PharoDebug.log')){
-            shell "mv PharoDebug.log PharoDebug-${env.STAGE_NAME}${prefix}.log"
-            archiveArtifacts allowEmptyArchive: true, artifacts: "PharoDebug-${env.STAGE_NAME}${prefix}.log", fingerprint: true
+            shell "mv PharoDebug.log PharoDebug-${env.STAGE_NAME}.log"
+            archiveArtifacts allowEmptyArchive: true, artifacts: "PharoDebug-${env.STAGE_NAME}.log", fingerprint: true
         }
         if(fileExists('crash.dmp')){
-            shell "mv crash.dmp crash-${env.STAGE_NAME}${prefix}.dmp"
-            archiveArtifacts allowEmptyArchive: true, artifacts: "crash-${env.STAGE_NAME}${prefix}.dmp", fingerprint: true
+            shell "mv crash.dmp crash-${env.STAGE_NAME}.dmp"
+            archiveArtifacts allowEmptyArchive: true, artifacts: "crash-${env.STAGE_NAME}.dmp", fingerprint: true
         }
         if(fileExists('progress.log')){
-            shell "mv progress.log progress-${env.STAGE_NAME}${prefix}.log"
-            shell "cat progress-${env.STAGE_NAME}${prefix}.log"
-            archiveArtifacts allowEmptyArchive: true, artifacts: "progress-${env.STAGE_NAME}${prefix}.log", fingerprint: true
+            shell "mv progress.log progress-${env.STAGE_NAME}.log"
+            shell "cat progress-${env.STAGE_NAME}.log"
+            archiveArtifacts allowEmptyArchive: true, artifacts: "progress-${env.STAGE_NAME}.log", fingerprint: true
         }
+    }
+  }
+}
+
+def runCommandLineTests(){
+  cleanWs()
+  dir('cli-tests') {
+    try {
+        unstash "bootstrap64"
+        shell "bash -c 'bootstrap/scripts/runPharoCommandLineTests.sh'"
+        junit allowEmptyResults: true, testResults: "report.xml"
+    } finally {
+        archiveArtifacts allowEmptyArchive: true, artifacts: "report.xml", fingerprint: true
     }
   }
 }
@@ -152,14 +165,14 @@ def bootstrapImage(architectures){
 
           stage ("Full Image-${architecture}") {
             shell "BUILD_NUMBER=${BUILD_NUMBER} BOOTSTRAP_ARCH=${architecture} bash ./bootstrap/scripts/4-build.sh"
-            stash includes: "build/bootstrap-cache/*.zip,build/bootstrap-cache/*.sources,bootstrap/scripts/**", name: "bootstrap${architecture}"
+            stash includes: "build/bootstrap-cache/*.zip,build/bootstrap-cache/*.sources,bootstrap/scripts/**,tests/**", name: "bootstrap${architecture}"
           }
 
           if( isDevelopmentBranch() ) {
             stage("Upload to files.pharo.org-${architecture}") {
               dir("build/bootstrap-cache") {
                   shell "BUILD_NUMBER=${env.BUILD_ID} bash ../../bootstrap/scripts/prepare_for_upload.sh ${architecture}"
-                sshagent (credentials: ['b5248b59-a193-4457-8459-e28e9eb29ed7']) {
+                sshagent (credentials: ['files-pharo-org-inria']) {
                   shell "bash ../../bootstrap/scripts/upload_to_files.pharo.org.sh"
                 }
               }
@@ -247,7 +260,6 @@ try{
             stage("Tests-${platform}-${architecture}") {
               timeout(35) {
                 runTests(architecture)
-                runTests(architecture, "Kernel")
               }
             }
           }
@@ -255,6 +267,17 @@ try{
       }
     }
   }
+
+  testers["unix-commandline"] = {
+    node("unix") {
+      stage("Tests-Pharo-command-line") {
+        timeout(5) {
+          runCommandLineTests()
+        }
+      }
+    }
+  }
+
   parallel testers
 
   notifyBuild("SUCCESS")

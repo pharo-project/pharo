@@ -1,7 +1,7 @@
 Extension { #name : 'ClassVariable' }
 
 { #category : '*Shout' }
-ClassVariable >> styleNameIn: aRBVariableNode [
+ClassVariable >> styleNameIn: aVariableNode [
 
 	^ self isPoolVariable
 		  ifTrue: [ #poolConstant ]

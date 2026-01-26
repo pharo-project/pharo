@@ -60,6 +60,16 @@ RBPackageEnvironment class >> packages: aCollection [
 		packages: aCollection
 ]
 
+{ #category : 'comparing' }
+RBPackageEnvironment >> = anObject [
+	"Answer whether the receiver and anObject represent the same object."
+
+	self == anObject ifTrue: [ ^ true ].
+	self class = anObject class ifFalse: [ ^ false ].
+	^ environment = anObject environment and: [
+		  packages = anObject packages ]
+]
+
 { #category : 'adding' }
 RBPackageEnvironment >> addPackage: aSymbol [
 	packages add: aSymbol
@@ -88,18 +98,16 @@ RBPackageEnvironment >> classesAndSelectorsDo: aBlock [
 
 { #category : 'accessing' }
 RBPackageEnvironment >> classesDo: aBlock [
-	| enumerated enumerator |
+
+	| enumerated |
 	enumerated := IdentitySet new.
-	enumerator := [ :each |
-		(enumerated includes: each) ifFalse: [
-			(environment includesClass: each)
-				ifTrue: [ aBlock value: each ].
-			(environment includesClass: each classSide)
-				ifTrue: [ aBlock value: each classSide].
-			enumerated add: each ] ].
+
 	packages do: [ :package |
-		package classes do: enumerator.
-		package extendedClasses do: enumerator ]
+		package classes , package extendedClasses do: [ :class |
+			(enumerated includes: class) ifFalse: [
+				(environment includesClass: class) ifTrue: [ aBlock value: class ].
+				(environment includesClass: class classSide) ifTrue: [ aBlock value: class classSide ].
+				enumerated add: class ] ] ]
 ]
 
 { #category : 'testing' }
@@ -107,11 +115,17 @@ RBPackageEnvironment >> definesClass: aClass [
 	^ (super definesClass: aClass) and: [ self packages anySatisfy: [ :package | package includesClass: aClass ] ]
 ]
 
+{ #category : 'comparing' }
+RBPackageEnvironment >> hash [
+	"Answer an integer value that is related to the identity of the receiver."
+
+	^ packages hash
+]
+
 { #category : 'testing' }
 RBPackageEnvironment >> includesClass: aClass [
 
-	^ (super includesClass: aClass) and: [
-		  self packages anySatisfy: [ :package | (package includesClass: aClass) or: [ (package extensionProtocolsForClass: aClass) isNotEmpty ] ] ]
+	^ (super includesClass: aClass) and: [ self packages anySatisfy: [ :package | package definesOrExtendsClass: aClass ] ]
 ]
 
 { #category : 'testing' }

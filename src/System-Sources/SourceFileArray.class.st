@@ -7,6 +7,7 @@ This implementation extends the source pointer address space using bit 25 of the
 
 The use of bit 25 of the source pointer for file references permits backward compatibility with StandardSourceFileArray, with essentially unlimited address space expansion for the sources and changes files.
 
+
 "
 Class {
 	#name : 'SourceFileArray',
@@ -14,17 +15,61 @@ Class {
 	#instVars : [
 		'files',
 		'readOnlyQueue',
-		'flushChanges'
+		'flushChanges',
+		'exporterClass'
+	],
+	#classVars : [
+		'Default'
 	],
 	#category : 'System-Sources-Sources',
 	#package : 'System-Sources',
 	#tag : 'Sources'
 }
 
+{ #category : 'accessing' }
+SourceFileArray class >> default [
+
+	^ Default
+]
+
+{ #category : 'accessing' }
+SourceFileArray class >> default: anInstance [
+
+	Default := anInstance
+]
+
+{ #category : 'class initialization' }
+SourceFileArray class >> initialize [
+
+	"Guard since initializing twice would create bugs."
+	self default ifNotNil: [ ^ self ].
+	
+	self default: self new.
+	
+	"This next line is to add a deprecated global variable. The deprecation happened in Pharo 14 development. We can remove it completly in the future."
+	self class environment at: #SourceFiles put: self default.
+	(self class environment bindingOf: #SourceFiles) isDeprecated: true
+]
+
+{ #category : 'initialization' }
+SourceFileArray class >> reset [
+
+	<script>
+	self default
+		closeSourceFiles;
+		openSourceFiles
+]
+
+{ #category : 'system startup' }
+SourceFileArray class >> shutDown: isImageClosing [
+
+	isImageClosing ifTrue: [ self default closeSourceFiles ]
+]
+
 { #category : 'system startup' }
 SourceFileArray class >> startUp: resuming [
 
-	resuming ifTrue: [ Smalltalk openSourceFiles ]
+	resuming ifTrue: [ self default openSourceFiles ]
 ]
 
 { #category : 'accessing' }
@@ -40,29 +85,6 @@ SourceFileArray >> changesFileStream: aStream [
 	^ files at: 2 put: aStream
 ]
 
-{ #category : 'public - string writing' }
-SourceFileArray >> changesWriteStreamDo: aBlock [
-
-	| changesFile |
-	changesFile := self changesFileStream.
-	changesFile ifNil: [ ^ self ].
-	changesFile closed ifTrue: [ ^ self ].
-	changesFile isReadOnly ifTrue: [ ^ self ].
-	changesFile setToEnd.
-
-	^ aBlock value: changesFile
-]
-
-{ #category : 'public - file system operations' }
-SourceFileArray >> close [
-
-	| oldFiles |
-	oldFiles := files.
-	files := Array new: 2.
-	self closeFileArray: oldFiles.
-	self emptyReadStreamsQueue
-]
-
 { #category : 'private' }
 SourceFileArray >> closeFileArray: anArray [
 
@@ -71,6 +93,17 @@ SourceFileArray >> closeFileArray: anArray [
 		thenDo: [ :file | file close ].
 
 	^ anArray
+]
+
+{ #category : 'public - file system operations' }
+SourceFileArray >> closeSourceFiles [
+
+	| oldFiles |
+	oldFiles := files.
+	files := Array new: 2.
+	self closeFileArray: oldFiles.
+	self emptyReadStreamsQueue.
+	self unsubscribeToAnnouncements
 ]
 
 { #category : 'private' }
@@ -82,6 +115,15 @@ SourceFileArray >> commentDataPointers [
 { #category : 'public - string reading' }
 SourceFileArray >> commentTimeStampAt: sourcePointer [
 	^self timeStampAt: sourcePointer for: self commentDataPointers
+]
+
+{ #category : 'private' }
+SourceFileArray >> copyChangesTo: newNameWithoutSuffix [
+
+	self isChangesFileInUse ifTrue: [
+			self
+				closeSourceFiles;
+				saveChangesInFileNamed: (self fullNameForChangesNamed: newNameWithoutSuffix) ]
 ]
 
 { #category : 'private' }
@@ -123,20 +165,29 @@ SourceFileArray >> ensureOpen [
 	Close them before re-opening them."
 
 	| aSourcesFile aChangesFile |
-
-	self close.
+	self closeSourceFiles.
 
 	aSourcesFile := PharoFilesOpener default sourcesFileOrNil.
 	aChangesFile := PharoFilesOpener default changesFileOrNil.
 
-	aChangesFile ifNil: [
-		aChangesFile := PharoFilesOpener default changesFileOrNilReadOnly: true silent: false ].
+	aChangesFile ifNil: [ aChangesFile := PharoFilesOpener default changesFileOrNilReadOnly: true ].
 
-	files := Array
-		with: aSourcesFile
-		with: aChangesFile.
+	files := Array with: aSourcesFile with: aChangesFile.
 
 	readOnlyQueue := SharedQueue new
+]
+
+{ #category : 'system startup' }
+SourceFileArray >> ensureSourceFilesCreated [
+	
+	PharoFilesOpener default locateSources ensureSourceFileCreated.
+	PharoFilesOpener default locateChanges ensureSourceFileCreated.
+]
+
+{ #category : 'accessing' }
+SourceFileArray >> exporterClass [
+
+	^ exporterClass ifNil: [ exporterClass := CodeExporterV100 ]
 ]
 
 { #category : 'private - accessing file streams' }
@@ -149,6 +200,12 @@ SourceFileArray >> fileAt: index ifAbsent: aBlock [
 	^ files at: index ifAbsent: aBlock
 ]
 
+{ #category : 'private' }
+SourceFileArray >> fileForChangesNamed: aString [
+
+	^ (Smalltalk imageDirectory resolve: aString) , 'changes'
+]
+
 { #category : 'private - sourcepointer conversion' }
 SourceFileArray >> fileIndexFromSourcePointer: anInteger [
 	"Return the index of the source file which contains the source chunk addressed by anInteger"
@@ -159,7 +216,10 @@ SourceFileArray >> fileIndexFromSourcePointer: anInteger [
 
 { #category : 'private - sourcepointer conversion' }
 SourceFileArray >> filePositionFromSourcePointer: anInteger [
-	"Return the position of the source chunk addressed by anInteger, just shift by one"
+	
+	"Return the position of the source chunk addressed by anInteger"
+	"The source pointer is composed of 63 bits offset + 1 bit of file identifier in the least significant bit.
+	Thus, shift by one to remove the file identifier"
 
 	^ anInteger >> 1
 ]
@@ -184,12 +244,17 @@ SourceFileArray >> forceChangesToDisk [
 	"Ensure that the changes file has been fully written to disk by closing and re-opening it. This makes the system more robust in the face of a power failure or hard-reboot."
 
 	| changesFile |
-	changesFile := self changesFileStream.
-	changesFile isReadOnly ifFalse: [
-		changesFile flush ].
+	changesFile := self changesFileStream ifNil: [ ^ self ].
+	changesFile isReadOnly ifFalse: [ changesFile flush ].
 	changesFile close.
 	changesFile tryOpen.
 	changesFile setToEnd
+]
+
+{ #category : 'private' }
+SourceFileArray >> fullNameForChangesNamed: aString [
+
+	^ (self fileForChangesNamed: aString) fullName
 ]
 
 { #category : 'public - string reading' }
@@ -206,6 +271,73 @@ SourceFileArray >> initialize [
 	flushChanges := true
 ]
 
+{ #category : 'testing' }
+SourceFileArray >> isChangesFileInUse [
+
+	^ self changesFileStream isNotNil or: [ self changesFileStream closed not ]
+]
+
+{ #category : 'public - file system operations' }
+SourceFileArray >> logChange: aStringOrText [
+	"Write the argument, aString, onto the changes file."
+
+	| aString |
+	aString := aStringOrText asString.
+	(aString findFirst: [ :char | char isSeparator not ]) = 0 ifTrue: [ ^ self ]. "null doits confuse replay"
+	self
+		writeChangesDuring: [ :changesFile |
+			| position |
+			position := changesFile position.
+			changesFile
+					cr;
+					cr.
+			(ChunkWriteStream on: changesFile) nextPut: aString.
+			position ]
+		onSuccess: [ :sourcePointer | "Ignore" ]
+		onFail: [ "Ignore" ]
+]
+
+{ #category : 'event-listening' }
+SourceFileArray >> logClassAdded: announcement [
+
+	self newWriter writeClassDefinition: announcement classAdded definitionString
+]
+
+{ #category : 'event-listening' }
+SourceFileArray >> logClassRenamed: announcement [
+
+	self logChange: '(Smalltalk globals at: #' , announcement oldName , ') rename: #' , announcement newName
+]
+
+{ #category : 'event-listening' }
+SourceFileArray >> logMethodRemoved: announcement [
+
+	self logChange: announcement methodClass name , ' removeSelector: #' , announcement selector
+]
+
+{ #category : 'event-listening' }
+SourceFileArray >> logRemovedClassAnnouncement: announcement [
+
+	self logChange: 'Smalltalk globals removeClassNamed: #' , announcement classRemoved name
+]
+
+{ #category : 'public - string writing' }
+SourceFileArray >> newWriter [
+
+	^ SourceFileWriter new
+		  sourceFile: self;
+		  yourself
+]
+
+{ #category : 'public - file system operations' }
+SourceFileArray >> openSourceFiles [
+
+	self
+		ensureSourceFilesCreated;
+		ensureOpen;
+		registerToAnnouncements
+]
+
 { #category : 'public - string reading' }
 SourceFileArray >> protocolAt: sourcePointer [
 	"Answer the protocol for a given method, retrieved from the sources or changes file. Answer unfound protocol if no protocol is available"
@@ -217,19 +349,21 @@ SourceFileArray >> protocolAt: sourcePointer [
 SourceFileArray >> protocolAt: sourcePointer for: sourceDataPointers [
 	"Answer the protocol for a given method, retrieved from the sources or changes file. Answer unfound protocol if no protocol is available."
 
-	| preamble protocol tokens protocolPosition |
-	protocol := 'unfound protocol'.	"this is to indicate that the tagging in the source does not use the correct format.
+	| preamble protocol |
+	protocol := 'unfound protocol'. "this is to indicate that the tagging in the source does not use the correct format.
 	We will have to fix that. For example some traits methods are wrongly tagged.
 	see http://code.google.com/p/pharo/issues/detail?id=4581"
 	preamble := self sourcedDataAt: sourcePointer.
 	preamble = 'Trait method' ifTrue: [ ^ nil ].
 	(preamble includesSubstring: sourceDataPointers key) ifTrue: [
-		tokens := preamble parseLiterals.
-		protocolPosition := tokens indexOf: sourceDataPointers key.
-		protocolPosition = 0
-			ifFalse: [
-				"New format gives change protocol and unified prior pointer"
-				protocol := tokens at: protocolPosition + 1 ] ].
+		| stream |
+		" Extract the protocol string from the method preamble.
+		A Preamble is a string of the shape:
+		
+		SourceFileArray methodsFor: 'public - string reading' stamp: '1/14/2025 10:16' prior: 62647896"
+		stream := preamble readStream.
+		stream skipTo: $'.
+		protocol := stream upTo: $' ].
 	^ protocol
 ]
 
@@ -323,23 +457,14 @@ SourceFileArray >> readStreamAtFileIndex: index atPosition: position ifPresent: 
     ^ result
 ]
 
-{ #category : 'public - string reading' }
-SourceFileArray >> remoteStringAt: sourcePointer [
+{ #category : 'private' }
+SourceFileArray >> registerToAnnouncements [
 
-	| filePosition fileIndex |
-	fileIndex := self fileIndexFromSourcePointer: sourcePointer.
-	filePosition := self filePositionFromSourcePointer: sourcePointer.
-
-	^ RemoteString newFileNumber: fileIndex position: filePosition
-]
-
-{ #category : 'public - string writing' }
-SourceFileArray >> remoteStringForNewString: aString [
-
-	^ RemoteString new
-		sourceFileArray: self;
-		string: aString;
-		yourself
+	self class codeChangeAnnouncer weak
+		when: ClassAdded send: #logClassAdded: to: self;
+		when: ClassRemoved send: #logRemovedClassAnnouncement: to: self;
+		when: ClassRenamed send: #logClassRenamed: to: self;
+		when: MethodRemoved send: #logMethodRemoved: to: self
 ]
 
 { #category : 'printing' }
@@ -349,6 +474,18 @@ SourceFileArray >> reportString [
 		{ self sourcesFileStream. self changesFileStream }
 			do: [:each | each ifNotNil: [
 				aStream nextPutAll: each printString; cr ] ] ]
+]
+
+{ #category : 'private' }
+SourceFileArray >> saveChangesInFileNamed: aString [
+
+	| changesFile |
+	changesFile := aString asFileReference.
+	changesFile parent ensureCreateDirectory.
+	"Ensure that the destination file is not the same as the original one"
+	FileLocator changes absolutePath = changesFile absolutePath ifFalse: [
+			changesFile deleteIfAbsent: [ ].
+			FileLocator changes copyTo: changesFile ]
 ]
 
 { #category : 'public - string reading' }
@@ -418,36 +555,83 @@ SourceFileArray >> timeStampAt: sourcePointer [
 SourceFileArray >> timeStampAt: sourcePointer for: sourceDataPointers [
 	"Answer the authoring time-stamp for the given method, retrieved from the sources or changes file. Answer the empty string if no time stamp is available."
 
-	| preamble stamp tokens stampPosition |
-	stamp := ''.
-	flushChanges ifFalse: [ ^ stamp ].
+	| preamble |
+	flushChanges ifFalse: [ ^ '' ].
 	preamble := self sourcedDataAt: sourcePointer.
-	(preamble includesSubstring: sourceDataPointers key)
-		ifTrue: [
-			tokens := preamble parseLiterals.
-			stampPosition := tokens indexOf: sourceDataPointers value.
-			stampPosition = 0
-				ifFalse: [
-					"New format gives change stamp and unified prior pointer"
-					stamp := tokens at: stampPosition + 1 ] ].
+	^ self timeStampFromPreamble: preamble for: sourceDataPointers
+]
+
+{ #category : 'public - string reading' }
+SourceFileArray >> timeStampFromPreamble: preamble for: sourceDataPointers [
+	"Answer the authoring time-stamp for the given method, retrieved from the sources or changes file. Answer the empty string if no time stamp is available."
+
+	| stamp index |
+	stamp := ''.
+	(preamble includesSubstring: sourceDataPointers key) ifTrue: [
+		| stream |
+		" Extract the timestamp string from the preamble.
+		This can be a method or a class comment preamble.
+		A method Preamble is a string of the shape:
+		
+			SourceFileArray methodsFor: 'public - string reading' stamp: '1/14/2025 10:16' prior: 62647896
+		
+		A class comment preamble is a string of the shape
+		
+			SHClassWithComment commentStamp: 'anStamp' prior: 0
+		
+		
+		Lookup for the key stamp/commentStamp:, then take the string coming after that"
+		
+		index := preamble findLastOccurrenceOfString: sourceDataPointers value startingAt: 1.
+		index = 0 ifFalse: [
+			stream :=
+				ReadStream
+					on: preamble
+					from: index + sourceDataPointers value size
+					to: preamble size.
+			stream upTo: $'.
+			stamp := stream upTo: $' ] ].
 	^ stamp
 ]
 
-{ #category : 'public - string writing' }
-SourceFileArray >> writeSource: aString preamble: preamble onSuccess: successBlock onFail: failBlock [
+{ #category : 'private' }
+SourceFileArray >> unsubscribeToAnnouncements [
 
-	| file position |
+	self class codeChangeAnnouncer unsubscribe: self
+]
+
+{ #category : 'private' }
+SourceFileArray >> writeChangesDuring: aBlock onSuccess: successBlock onFail: failBlock [
+
+	| file |
 	file := self changesFileStream.
-	(file isNil or: [file closed or: [ file isReadOnly ] ]) ifTrue: [ ^ failBlock value ].
-
-	ChangesLog default assureStartupStampLogged.
-
-	file setToEnd.
-	file nextPutAll: preamble.
-	position := file position.
-	(SourceChunkWriteStream on: file) nextChunkPut: aString.
-
-	successBlock cull: (self sourcePointerFromFileIndex: 2 andPosition: position) cull: file.
+	file ifNil: [ ^ failBlock value ].
+	
+	file writeChangesDuring: aBlock
+		onSuccess: [ :sourceCodePosition | successBlock value: (self sourcePointerFromFileIndex: 2 andPosition: sourceCodePosition) ]
+		onFail: failBlock.
 
 	self flushChangesFile
+]
+
+{ #category : 'public - string writing' }
+SourceFileArray >> writeComment: aString stamp: aStamp of: aClass [
+
+	self newWriter
+		timestamp: aStamp;
+		prior: (aClass commentSourcePointer ifNil: [ 0 ]);
+		successBlock: [ :newSourcePointer | aClass commentSourcePointer: newSourcePointer ];
+		writeComment: aString ofClass: aClass
+]
+
+{ #category : 'public - string writing' }
+SourceFileArray >> writeSource: source of: aMethod withFooter: footer protocol: protocol timestamp: aTimestamp priorSourcePointer: priorSourcePointer [
+
+	self newWriter
+		metadata: footer;
+		timestamp: aTimestamp;
+		prior: priorSourcePointer;
+		successBlock: [ :newSourcePointer | "Update with new source pointer" aMethod sourcePointer: newSourcePointer ];
+		failBlock: [ "if we can not store the source pointer, we put back the property" aMethod propertyAt: #source put: source ];
+		writeSource: source ofMethod: aMethod protocol: protocol
 ]

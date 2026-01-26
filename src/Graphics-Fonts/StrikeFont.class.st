@@ -326,6 +326,11 @@ StrikeFont class >> useUnderscoreIfOver1bpp [
 	self allInstances do: [ :font | font useUnderscoreIfOver1bpp ]
 ]
 
+{ #category : 'visitor' }
+StrikeFont >> acceptSettings: aVisitor [
+	^ aVisitor visitStrikeFont: self
+]
+
 { #category : 'character shapes' }
 StrikeFont >> alter: char formBlock: formBlock [
 	self characterFormAt: char
@@ -474,7 +479,7 @@ StrikeFont >> characterFormAt: character put: characterForm [
 	ascii := character asciiValue.
 	ascii < minAscii ifTrue: [ ^ self error: 'Cant store characters below min ascii' ].
 	ascii > maxAscii ifTrue:
-		[ (self confirm: 'This font does not accomodate ascii values higher than ' , maxAscii printString , '.
+		[ (ConfirmationRequest signal:  'This font does not accomodate ascii values higher than ' , maxAscii printString , '.
 Do you wish to extend it permanently to handle values up to ' , ascii printString)
 			ifTrue: [ self extendMaxAsciiTo: ascii ]
 			ifFalse: [ ^ self error: 'No change made' ] ].

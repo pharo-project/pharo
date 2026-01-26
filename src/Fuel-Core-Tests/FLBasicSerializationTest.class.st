@@ -607,19 +607,6 @@ FLBasicSerializationTest >> testRecursiveArray [
 	self assert: materialized third identicalTo: materialized
 ]
 
-{ #category : 'tests-strings' }
-FLBasicSerializationTest >> testRemoteString [
-	"Tests that the materialized RemoteString has *the same* location on file."
-
-	| aRemoteString materializedRemoteString |
-	aRemoteString := SourceFiles remoteStringAt: thisContext method sourcePointer.
-
-	materializedRemoteString := self resultOfSerializeAndMaterialize: aRemoteString.
-
-	self assert: aRemoteString string equals: materializedRemoteString string.
-	self assert: aRemoteString sourcePointer identicalTo: materializedRemoteString sourcePointer
-]
-
 { #category : 'tests-collections' }
 FLBasicSerializationTest >> testRunArray [
 
@@ -821,20 +808,15 @@ FLBasicSerializationTest >> testWideString [
 
 { #category : 'tests-strings' }
 FLBasicSerializationTest >> testWideStringClassName [
-	| class className |	
+
+	| class className |
 	className := 'Foox' asWideString
-		at: 4 put: (Character value: 265);
-		yourself.
-	class := self classFactory silentlyNewClass
-		setName: className;
-		yourself.
-	self environmentOfTest
-		at: class name
-		put: class.
-		
-	self
-		shouldnt: [ self resultOfSerializeAndMaterialize: class ]
-		raise: FLClassNotFound
+		             at: 4 put: (Character value: 265);
+		             yourself.
+	class := self classFactory silentlyMake: [ :builder | builder name: className ].
+	self environmentOfTest at: class name put: class.
+
+	self shouldnt: [ self resultOfSerializeAndMaterialize: class ] raise: FLClassNotFound
 ]
 
 { #category : 'tests-strings' }

@@ -9,5 +9,6 @@ Class {
 { #category : 'tests perform' }
 RBSharedPoolForTestData1 >> msg4 [
 
+	"Duplicate here on purpose for testing purposes"
 	^ Var1
 ]

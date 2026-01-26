@@ -101,7 +101,7 @@ ZnRequestLine >> printOn: stream [
 	stream nextPut: $)
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnRequestLine >> readFrom: stream [
 	| line lineStream |
 	line := (ZnLineReader on: stream) nextLine.

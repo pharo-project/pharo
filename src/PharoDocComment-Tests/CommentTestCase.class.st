@@ -1,6 +1,13 @@
 "
-I am a TestCase created from a comment.
+I am a TestCase created from a comment so my test `testIt` is not run normally. 
 To create a new instance you can call one of my factory methods, if you want to understand it better you can look at the example in my class side.
+
+## Explanation 
+We want to run one test for each doc comment, therefore we need to have a testCase for those and this is this class.
+The class itself is not a test in itself, but it is instantiated for each DocComment.
+it is used by DrTest when you check all doc comments, and it is used by DocCommentsReleaseTest to check that all doc comments are correct. (see #buildSuite)
+
+
 
 "
 Class {
@@ -35,6 +42,10 @@ CommentTestCase >> docCommentNode: aDocComment [
 
 { #category : 'actions' }
 CommentTestCase >> drTestsBrowse [
+	"May be using double dispatch would be better
+	so that the application of DrTest can open tools 
+	without relying on this global."
+
  	docCommentNode browse
 ]
 
@@ -62,9 +73,14 @@ CommentTestCase >> printString [
 
 { #category : 'tests' }
 CommentTestCase >> testIt [
+	"pay attention this test is not meant to be executed normally. 
+	It is part of the infrastructure to turn an expression into a test."
 
 	| value |
 	value := self evaluate.
 	self assert: value isAssociation.
-	self assert: value key equals: value value
+	self
+		assert: value key = value value
+		description: [
+		(self comparingStringBetween: value key and: value value) , ' Executable comment from: ' , docCommentNode sourceNode methodNode compiledMethod printString ]
 ]

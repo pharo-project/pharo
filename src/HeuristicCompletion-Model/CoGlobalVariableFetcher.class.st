@@ -10,10 +10,18 @@ Class {
 }
 
 { #category : 'enumerating' }
+CoGlobalVariableFetcher >> completionClass: aClass [
+	"we do not use this information but other alternatives such as the CoPackageGlobalVariable needs the completion class to start with."
+	
+]
+
+{ #category : 'enumerating' }
 CoGlobalVariableFetcher >> entriesDo: aBlock [
 
 	self systemNavigation
 		allGlobalNamesStartingWith: filter completionString
-		do: [ :e | aBlock value: (NECGlobalEntry contents: e node: astNode) ]
+		do: [ :e | aBlock value:
+				((NECGlobalEntry contents: e node: astNode) 
+					fetcher: self; yourself) ]
 		caseSensitive: (NECPreferences caseSensitive)
 ]

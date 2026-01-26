@@ -1,5 +1,6 @@
 "
 It provides a request dialog to add a new class in the system, including presenters to specify its name, package tag and comment.
+Pay attention that the name of the new class is set in the subclass instance variable of the model (driver for example).
 
 "
 Class {
@@ -15,9 +16,9 @@ Class {
 }
 
 { #category : 'accessing' }
-StRefactoringAddClassPresenter class >> defaultExtent [
+StRefactoringAddClassPresenter class >> defaultPreferredExtent [
 
-	^ (500 @ 450) scaledByDisplayScaleFactor
+	^ 500 @ 450
 ]
 
 { #category : 'accessing' }
@@ -30,17 +31,18 @@ StRefactoringAddClassPresenter >> commentPresenterText [
 StRefactoringAddClassPresenter >> defaultLayout [
 
 	^ SpGridLayout new
-		  add: 'New class name' at: 1 @ 1;
-		  add: textInput at: 2 @ 1 span: 2 @ 1;
-		  add: 'Package' at: 1 @ 2;
-		  add: packagePresenter at: 2 @ 2 span: 2 @ 1;
-		  add: 'Tag' at: 1 @ 3;
-		  add: tagPresenter at: 2 @ 3 span: 2 @ 1;
-		  add: 'Comment' at: 1 @ 4;
+		  add: 'New class name' atPoint: 1 @ 1;
+		  add: textInput atPoint: 2 @ 1 span: 2 @ 1;
+		  add: 'Package' atPoint: 1 @ 2;
+		  add: packagePresenter atPoint: 2 @ 2 span: 2 @ 1;
+		  add: 'Tag' atPoint: 1 @ 3;
+		  add: tagPresenter atPoint: 2 @ 3 span: 2 @ 1;
+		  add: 'Comment' atPoint: 1 @ 4;
 		  add: (SpBoxLayout newTopToBottom
-				add: useTemplateCheckPresenter expand: false;
-				add: commentPresenter withConstraints: [ : c | c height: 500 ];
-				yourself) at: 2 @ 4 span: 2 @ 1;
+				   add: useTemplateCheckPresenter expand: false;
+				   add: commentPresenter withConstraints: [ :c | c height: 500 ];
+				   yourself)
+		  atPoint: 2 @ 4 span: 2 @ 1;
 		  beColumnNotHomogeneous;
 		  yourself
 ]
@@ -60,17 +62,17 @@ StRefactoringAddClassPresenter >> initializeClassNamePresenter [
 StRefactoringAddClassPresenter >> initializeCommentPresenter [
 
 	useTemplateCheckPresenter := self newCheckBox
-		state: false;
-		help: 'When checked, the comment will be prefilled with a generic class comment';
-		label: 'Use comment template';
-		whenActivatedDo: [ commentPresenter text: driver superclass classCommentBlank  ];
-		whenDeactivatedDo: [ commentPresenter text: String empty ];
-		yourself.
+		                             state: false;
+		                             help: 'When checked, the comment will be prefilled with a generic class comment';
+		                             label: 'Use comment template';
+		                             whenActivatedDo: [ commentPresenter text: driver superclass classCommentBlank ];
+		                             whenDeactivatedDo: [ commentPresenter text: String empty ];
+		                             yourself.
 	commentPresenter := self newText
-		beWrapWord;
-		placeholder: 'A comment for your new class';
-		whenTextChangedDo: [ : text | driver comment: commentPresenter text trimmed ];
-		yourself.
+		                    beWrapWord;
+		                    placeholder: 'A comment for your new class';
+		                    whenTextChangedDo: [ :text | driver comment: commentPresenter text trimBoth ];
+		                    yourself
 ]
 
 { #category : 'initialization' }
@@ -103,14 +105,36 @@ StRefactoringAddClassPresenter >> open [
 		centered
 ]
 
-{ #category : 'initialization' }
-StRefactoringAddClassPresenter >> setTitleTo: aSpWindowPresenter [
+{ #category : 'callbacks' }
+StRefactoringAddClassPresenter >> updateTagItems: item [
+	"Note that as it seems there is no Spec drop list with editable text, we provide a 'Core' tag by default if the package has no tags"
 
-	aSpWindowPresenter title: 'Add new subclass of ' , driver superclass name
+	| pkg superclassTag |
+	superclassTag := driver superclass packageTagName.
+	item
+		ifNil: [
+				superclassTag
+					ifNotNil: [ tagPresenter items: { superclassTag } ]
+					ifNil: [ tagPresenter items: { 'Core' } ] ]
+		ifNotNil: [
+				(pkg := PackageOrganizer default packageNamed: item) tagNames
+					ifEmpty: [
+							superclassTag
+								ifNotNil: [ tagPresenter items: { superclassTag } ]
+								ifNil: [ tagPresenter items: { 'Core' } ] ]
+					ifNotEmpty: [ :tagNames |
+							| orderedTags |
+							orderedTags := tagNames asOrderedCollection.
+							superclassTag ifNotNil: [
+									(orderedTags includes: superclassTag) ifTrue: [
+											orderedTags remove: superclassTag.
+											orderedTags addFirst: superclassTag ] ].
+							tagPresenter items: orderedTags ] ].
+	tagPresenter selectIndex: 1
 ]
 
-{ #category : 'initialization' }
-StRefactoringAddClassPresenter >> setWindowIconTo: aSpWindowPresenter [
+{ #category : 'accessing' }
+StRefactoringAddClassPresenter >> windowIcon [
 
-	aSpWindowPresenter windowIcon: (self iconNamed: #add)
+	^ self iconNamed: #add
 ]

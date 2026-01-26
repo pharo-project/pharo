@@ -11,7 +11,7 @@ Class {
 
 { #category : 'accessing' }
 ReYourselfNotUsedRule class >> group [
-	^ 'Optimization'
+	^ self optimizationGroup
 ]
 
 { #category : 'accessing' }

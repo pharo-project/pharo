@@ -4,8 +4,9 @@ A RBTemporariesNotReadBeforeWrittenConditionTest is a test class for testing the
 Class {
 	#name : 'RBVariablesNotReadBeforeWrittenConditionTest',
 	#superclass : 'RBAbstractConditionTest',
-	#category : 'Refactoring-Core-Tests',
-	#package : 'Refactoring-Core-Tests'
+	#category : 'Refactoring-Core-Tests-Conditions',
+	#package : 'Refactoring-Core-Tests',
+	#tag : 'Conditions'
 }
 
 { #category : 'tests' }

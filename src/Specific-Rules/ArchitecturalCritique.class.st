@@ -4,8 +4,9 @@ A TrivialCritique with and extended actions to open a dependency browser for Arc
 Class {
 	#name : 'ArchitecturalCritique',
 	#superclass : 'ReTrivialCritique',
-	#category : 'Specific-Rules',
-	#package : 'Specific-Rules'
+	#category : 'Specific-Rules-Architectural',
+	#package : 'Specific-Rules',
+	#tag : 'Architectural'
 }
 
 { #category : 'actions' }
@@ -22,5 +23,5 @@ ArchitecturalCritique >> actions [
 { #category : 'actions' }
 ArchitecturalCritique >> openDependencyAnalyzerOn: package [
 
-	^ (DAPackageDependenciesPresenter onPackagesNamed: { package name }) open
+	^ (StPackageDependenciesPresenter onPackagesNamed: { package name }) open
 ]

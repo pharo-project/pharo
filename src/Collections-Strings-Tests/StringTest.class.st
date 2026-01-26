@@ -7,8 +7,8 @@ This is the unit test for the class String. Unit tests are a good way to exercis
 Class {
 	#name : 'StringTest',
 	#superclass : 'CollectionRootTest',
-	#traits : 'TIncludesTest + TCloneTest + TCopyTest + TSetArithmetic + TIterateSequencedReadableTest + TPrintOnSequencedTest + TAsStringCommaAndDelimiterSequenceableTest + TIndexAccess + TSequencedElementAccessTest + TSubCollectionAccess + TPutBasicTest + TCopySequenceableSameContents + TCopyPartOfSequenceable + TCopyPartOfSequenceableForMultipliness + TCopySequenceableWithOrWithoutSpecificElements + TCopySequenceableWithReplacement + TReplacementSequencedTest + (TConvertTest - {#testAsByteArray}) + TConvertAsSortedTest + TBeginsEndsWith + (TIndexAccessForMultipliness - {#testIdentityIndexOfIAbsentDuplicate. #testIdentityIndexOfDuplicate. #collectionWithNonIdentitySameAtEndAndBegining}) + TSequencedConcatenationTest + TPutTest + TConvertAsSetForMultiplinessTest + TSortTest + TSequencedStructuralEqualityTest + TOccurrencesForMultiplinessTest + TCreationWithTest + TSequenceableTruncatedToSize',
-	#classTraits : 'TIncludesTest classTrait + TCloneTest classTrait + TCopyTest classTrait + TSetArithmetic classTrait + TIterateSequencedReadableTest classTrait + TPrintOnSequencedTest classTrait + TAsStringCommaAndDelimiterSequenceableTest classTrait + TIndexAccess classTrait + TSequencedElementAccessTest classTrait + TSubCollectionAccess classTrait + TPutBasicTest classTrait + TCopySequenceableSameContents classTrait + TCopyPartOfSequenceable classTrait + TCopyPartOfSequenceableForMultipliness classTrait + TCopySequenceableWithOrWithoutSpecificElements classTrait + TCopySequenceableWithReplacement classTrait + TReplacementSequencedTest classTrait + TConvertTest classTrait + TConvertAsSortedTest classTrait + TBeginsEndsWith classTrait + TIndexAccessForMultipliness classTrait + TSequencedConcatenationTest classTrait + TPutTest classTrait + TConvertAsSetForMultiplinessTest classTrait + TSortTest classTrait + TSequencedStructuralEqualityTest classTrait + TOccurrencesForMultiplinessTest classTrait + TCreationWithTest classTrait + TSequenceableTruncatedToSize classTrait',
+	#traits : 'TIncludesTest + TCloneTest + TCopyTest + TSetArithmetic + TIterateSequencedReadableTest + TPrintOnSequencedTest + TIndexAccess + TSequencedElementAccessTest + TSubCollectionAccess + TPutBasicTest + TCopySequenceableSameContents + TCopyPartOfSequenceable + TCopyPartOfSequenceableForMultipliness + TCopySequenceableWithOrWithoutSpecificElements + TCopySequenceableWithReplacement + TReplacementSequencedTest + (TConvertTest - {#testAsByteArray}) + TConvertAsSortedTest + TBeginsEndsWith + (TIndexAccessForMultipliness - {#testIdentityIndexOfIAbsentDuplicate. #testIdentityIndexOfDuplicate. #collectionWithNonIdentitySameAtEndAndBegining}) + TSequencedConcatenationTest + TPutTest + TConvertAsSetForMultiplinessTest + TSortTest + TSequencedStructuralEqualityTest + TOccurrencesForMultiplinessTest + TCreationWithTest + TSequenceableTruncatedToSize',
+	#classTraits : 'TIncludesTest classTrait + TCloneTest classTrait + TCopyTest classTrait + TSetArithmetic classTrait + TIterateSequencedReadableTest classTrait + TPrintOnSequencedTest classTrait + TIndexAccess classTrait + TSequencedElementAccessTest classTrait + TSubCollectionAccess classTrait + TPutBasicTest classTrait + TCopySequenceableSameContents classTrait + TCopyPartOfSequenceable classTrait + TCopyPartOfSequenceableForMultipliness classTrait + TCopySequenceableWithOrWithoutSpecificElements classTrait + TCopySequenceableWithReplacement classTrait + TReplacementSequencedTest classTrait + TConvertTest classTrait + TConvertAsSortedTest classTrait + TBeginsEndsWith classTrait + TIndexAccessForMultipliness classTrait + TSequencedConcatenationTest classTrait + TPutTest classTrait + TConvertAsSetForMultiplinessTest classTrait + TSortTest classTrait + TSequencedStructuralEqualityTest classTrait + TOccurrencesForMultiplinessTest classTrait + TCreationWithTest classTrait + TSequenceableTruncatedToSize classTrait',
 	#instVars : [
 		'string',
 		'emptyString',
@@ -317,13 +317,6 @@ StringTest >> nonEmpty [
 ]
 
 { #category : 'requirements' }
-StringTest >> nonEmpty1Element [
-	"Return a collection of size 1 including one element"
-
-	^ nonEmpty1element
-]
-
-{ #category : 'requirements' }
 StringTest >> nonEmptyMoreThan1Element [
 	"Return a collection that don't includes equal elements'"
 
@@ -429,6 +422,14 @@ StringTest >> testAllRangesOfSubstring [
 ]
 
 { #category : 'tests - converting' }
+StringTest >> testAsByteArray [
+	self assert: 'a' asByteArray equals: #[97].
+	self assert: 'A' asByteArray equals: #[65].
+	self assert: 'ABA' asByteArray equals: #[65 66 65].
+	self assert: '' asByteArray equals: #[]
+]
+
+{ #category : 'tests - converting' }
 StringTest >> testAsCamelCase [
 
 	self assert: 'A man, a plan, a canal, panama' asCamelCase equals: 'AMan,APlan,ACanal,Panama'.
@@ -487,18 +488,22 @@ StringTest >> testAsSignedInteger [
 
 { #category : 'tests - converting' }
 StringTest >> testAsSmalltalkComment [
+
 	| exampleStrings |
-	exampleStrings := #('' ' ' '"' '""' '"""' 'abc"abc' 'abc""abc' 'abc"hello"abc' 'abc"' '"abc').
+	exampleStrings := #( '' ' ' '"' '""' '"""' 'abc"abc' 'abc""abc'
+	                     'abc"hello"abc' 'abc"' '"abc' ).
 
 	"check that the result of scanning the comment is empty"
-	exampleStrings
-		do: [ :s |
-			| tokens |
-			tokens := s asComment parseLiterals.
-			self assertEmpty: tokens ].
+	exampleStrings do: [ :s |
+		| tokens |
+		tokens := OCParser parseLiterals: s asComment.
+		self assertEmpty: tokens ].
 
 	"check that the result has the same non-quote characters as the original"
-	exampleStrings do: [ :s | self assert: (s copyWithout: $") equals: (s asComment copyWithout: $") ].
+	exampleStrings do: [ :s |
+		self
+			assert: (s copyWithout: $")
+			equals: (s asComment copyWithout: $") ].
 
 	"finnaly, test for some common kinds of inputs"
 	self assert: '' asComment equals: '""'.
@@ -1349,11 +1354,12 @@ StringTest >> testIncludesSubstringAt [
 { #category : 'tests' }
 StringTest >> testIncludesSubstringCaseSensitive [
 
-	self deny: ('test this string' includesSubstring: 'Ring' caseSensitive: true ).
+	self deny: ('test this string' includesSubstring: 'Ring' caseSensitive: true).
 	self assert: ('test this string' includesSubstring: 'Ring' caseSensitive: false).
-	self deny: ('123éàôüöß' includesSubstring: '' caseSensitive: false).
 	self assert: ('123éàôüöß' includesSubstring: 'öß' caseSensitive: true).
-	self assert: ('123éàôüöß' includesSubstring: 'ÀÔ' caseSensitive: false)
+	self assert: ('123éàôüöß' includesSubstring: 'ÀÔ' caseSensitive: false).
+	self assert: ('test this string' includesSubstring: '' caseSensitive: true). "Consistent with #includesSubstring:"
+	self assert: ('test this string' includesSubstring: '' caseSensitive: false)
 ]
 
 { #category : 'tests' }
@@ -1446,12 +1452,6 @@ StringTest >> testIsPatternVariable [
 
 	self deny: 'notAPattern:varible:' isPatternVariable.
 	self deny: 'notAPattern' isPatternVariable
-]
-
-{ #category : 'tests - testing' }
-StringTest >> testIsValidSelector [
-	self assert: 'class' isValidSelector.
-	self deny: '0class' isValidSelector
 ]
 
 { #category : 'tests' }
@@ -1993,11 +1993,6 @@ StringTest >> testTrimRight [
 	self assert: ('bbaabb' trimRight: [ :each | each = $a ]) equals: 'bbaabb'
 ]
 
-{ #category : 'tests - copying' }
-StringTest >> testTrimmed [
-	self assert: '  a  ' trimmed equals: 'a'
-]
-
 { #category : 'tests - converting' }
 StringTest >> testUncapitalized [
 	| uc lc empty |
@@ -2100,6 +2095,30 @@ StringTest >> testWithNoLineLongerThan [
 
 	self assert: ('Sample text' , String cr , 'to line break' , String cr , 'at some point' withNoLineLongerThan: 28)
 		  equals: ('Sample text' , String cr , 'to line break' , String cr , 'at some point')
+]
+
+{ #category : 'tests - internet' }
+StringTest >> testWithPlatformLineEndings [
+
+	| platformLineEnding |
+	platformLineEnding := OSPlatform current lineEnding.
+
+	{
+		('abc' -> 'abc').
+		('abc' , String cr -> ('abc' , platformLineEnding)).
+		('abc' , String lf -> ('abc' , platformLineEnding)).
+		('abc' , String crlf -> ('abc' , platformLineEnding)).
+		(String cr , 'abc' -> (platformLineEnding , 'abc')).
+		(String lf , 'abc' -> (platformLineEnding , 'abc')).
+		(String crlf , 'abc' -> (platformLineEnding , 'abc')).
+		('abc' , String cr , String cr , 'abc' -> ('abc' , platformLineEnding , platformLineEnding , 'abc')).
+		('abc' , String lf , String lf , 'abc' -> ('abc' , platformLineEnding , platformLineEnding , 'abc')).
+		('abc' , String crlf , String crlf , 'abc' -> ('abc' , platformLineEnding , platformLineEnding , 'abc')).
+		(String cr , 'abc' , String cr , String crlf , 'abc' , String lf
+		 -> (platformLineEnding , 'abc' , platformLineEnding , platformLineEnding , 'abc' , platformLineEnding)).
+		(String lf , 'abc' , String lf , String crlf , 'abc' , String cr
+		 -> (platformLineEnding , 'abc' , platformLineEnding , platformLineEnding , 'abc' , platformLineEnding)) } do: [ :each |
+		self assert: each key withPlatformLineEndings equals: each value ]
 ]
 
 { #category : 'tests - converting' }

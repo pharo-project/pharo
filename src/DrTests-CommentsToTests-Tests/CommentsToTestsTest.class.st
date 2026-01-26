@@ -30,7 +30,7 @@ CommentsToTestsTest >> testCommentWithSyntaxError [
 	docComment := thisContext method ast pharoDocCommentNodes first.
 	commentTestCase := CommentTestCase for: docComment.
 
-	self should: [commentTestCase testIt] raise: CodeError
+	self should: [commentTestCase testIt] raise: OCCodeError
 ]
 
 { #category : 'tests' }

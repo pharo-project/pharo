@@ -21,7 +21,7 @@ Class {
 
 { #category : 'plugin interface' }
 RFValueReification class >> entities [
-	^{ASTValueNode . RBReturnNode. RBMethodNode . Variable}
+	^{OCValueNode . OCReturnNode. OCMethodNode . Variable}
 ]
 
 { #category : 'plugin interface' }
@@ -30,78 +30,78 @@ RFValueReification class >> key [
 ]
 
 { #category : 'generate' }
+RFValueReification >> genForASTArrayNode [
+	^OCVariableNode named: self varName
+]
+
+{ #category : 'generate' }
+RFValueReification >> genForASTAssignmentNode [
+	"#value for Assignemnt is the old value, is that what we want?"
+	^OCVariableNode named: entity variable name
+]
+
+{ #category : 'generate' }
+RFValueReification >> genForASTBlockNode [
+	^OCVariableNode named: self varName
+]
+
+{ #category : 'generate' }
+RFValueReification >> genForASTCascadeNode [
+	^OCVariableNode named: self varName
+]
+
+{ #category : 'generate' }
+RFValueReification >> genForASTLiteralArrayNode [
+	^OCLiteralArrayNode value: entity value
+]
+
+{ #category : 'generate' }
+RFValueReification >> genForASTLiteralValueNode [
+	^OCLiteralValueNode value: entity value
+]
+
+{ #category : 'generate' }
+RFValueReification >> genForASTMessageNode [
+	^OCVariableNode named: self varName
+]
+
+{ #category : 'generate' }
+RFValueReification >> genForASTMethodNode [
+	^OCVariableNode named: self varName
+]
+
+{ #category : 'generate' }
+RFValueReification >> genForASTReturnNode [
+	^OCVariableNode named: self varName
+]
+
+{ #category : 'generate' }
+RFValueReification >> genForASTVariableNode [
+	entity variable
+		ifNotNil: [ entity variable isLiteralVariable
+				ifTrue: [ ^ OCLiteralNode value: entity binding value ] ].
+	^ OCVariableNode named: entity name
+]
+
+{ #category : 'generate' }
 RFValueReification >> genForInstanceVariableSlot [
 	"entity in this case is the binding of the instance variable"
 
-	^ RBMessageNode
-		receiver: (ASTLiteralNode value: entity)
+	^ OCMessageNode
+		receiver: (OCLiteralNode value: entity)
 		selector: #read:
-		arguments: {RBVariableNode selfNode}
+		arguments: {OCVariableNode selfNode}
 ]
 
 { #category : 'generate' }
 RFValueReification >> genForLiteralVariable [
 	"entity in this case is the binding of the literal"
-	^ASTLiteralNode value: entity value
-]
-
-{ #category : 'generate' }
-RFValueReification >> genForRBArrayNode [
-	^RBVariableNode named: self varName
-]
-
-{ #category : 'generate' }
-RFValueReification >> genForRBAssignmentNode [
-	"#value for Assignemnt is the old value, is that what we want?"
-	^RBVariableNode named: entity variable name
-]
-
-{ #category : 'generate' }
-RFValueReification >> genForRBBlockNode [
-	^RBVariableNode named: self varName
-]
-
-{ #category : 'generate' }
-RFValueReification >> genForRBCascadeNode [
-	^RBVariableNode named: self varName
-]
-
-{ #category : 'generate' }
-RFValueReification >> genForRBLiteralArrayNode [
-	^RBLiteralArrayNode value: entity value
-]
-
-{ #category : 'generate' }
-RFValueReification >> genForRBLiteralValueNode [
-	^RBLiteralValueNode value: entity value
-]
-
-{ #category : 'generate' }
-RFValueReification >> genForRBMessageNode [
-	^RBVariableNode named: self varName
-]
-
-{ #category : 'generate' }
-RFValueReification >> genForRBMethodNode [
-	^RBVariableNode named: self varName
-]
-
-{ #category : 'generate' }
-RFValueReification >> genForRBReturnNode [
-	^RBVariableNode named: self varName
-]
-
-{ #category : 'generate' }
-RFValueReification >> genForRBVariableNode [
-	entity variable
-		ifNotNil: [ entity variable isLiteralVariable
-				ifTrue: [ ^ ASTLiteralNode value: entity binding value ] ].
-	^ RBVariableNode named: entity name
+	^OCLiteralNode value: entity value
 ]
 
 { #category : 'generate' }
 RFValueReification >> postamble: aNode [
-	(aNode isKindOf: ASTProgramNode) ifFalse: [ ^#() ].
+	(aNode isKindOf: OCProgramNode) ifFalse: [ ^#() ].
 	aNode isMessage ifTrue: [^RFStoreIntoTempNode named: self varName. ].
 	aNode isCascade ifTrue: [^RFStoreIntoTempNode named: self varName. ].
 	aNode isBlock ifTrue: [^RFStoreIntoTempNode named: self varName].
@@ -124,9 +124,9 @@ RFValueReification >> preambleForArray: aNode [
 	(1 to: aNode size) withIndexDo: [:each :index |
 			| name |
 			name := 'RFArg', index asString, 'RFReification'.
-			arguments add:  (RBVariableNode named: name).
+			arguments add:  (OCVariableNode named: name).
 	].
-	preamble addAll: (RBArrayNode statements: arguments).
+	preamble addAll: (OCArrayNode statements: arguments).
 	preamble add: (RFStorePopIntoTempNode named: self varName).
 	preamble addAll: arguments.
 	^ preamble

@@ -6,16 +6,8 @@ One example are methods that contains message send that is a #halt (and any of i
 "
 Class {
 	#name : 'OCASTMethodMetadataAnalyser',
-	#superclass : 'RBProgramNodeVisitor',
+	#superclass : 'OCProgramNodeVisitor',
 	#category : 'OpalCompiler-Core-Semantics',
 	#package : 'OpalCompiler-Core',
 	#tag : 'Semantics'
 }
-
-{ #category : 'visiting' }
-OCASTMethodMetadataAnalyser >> visitMessageNode: aNode [
-
-	super visitMessageNode: aNode.
-	aNode isHaltNode ifTrue: [
-		aNode methodNode methodPropertyAt: #containsHalt put: true ]
-]

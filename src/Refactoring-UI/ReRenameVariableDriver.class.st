@@ -3,7 +3,7 @@ I'm an abstract model for user interaction for the rename variables refactoring.
 "
 Class {
 	#name : 'ReRenameVariableDriver',
-	#superclass : 'RBInteractionDriver',
+	#superclass : 'ReInteractionDriver',
 	#instVars : [
 		'oldName',
 		'class',
@@ -15,18 +15,16 @@ Class {
 	#tag : 'Drivers'
 }
 
-{ #category : 'execution' }
-ReRenameVariableDriver >> changes [
+{ #category : 'testing' }
+ReRenameVariableDriver class >> isAbstract [
 
-	^ refactoring privateTransform; changes
+	^ self = ReRenameVariableDriver
 ]
 
-{ #category : 'execution' }
-ReRenameVariableDriver >> configureRefactoring [
+{ #category : 'accessing' }
+ReRenameVariableDriver class >> shouldPreviewChangesByDefault [
 
-	refactoring := self refactoringClass
-		               variable: oldName
-		               class: class
+	^ false
 ]
 
 { #category : 'private' }
@@ -36,6 +34,15 @@ ReRenameVariableDriver >> informError: cond [
 		label: cond errorString;
 		title: 'Invalid name';
 		openModal
+]
+
+{ #category : 'configuration' }
+ReRenameVariableDriver >> instantiateRefactoring [
+
+	^ self refactoringClass 
+		model: model 
+		variable: oldName 
+		class: class
 ]
 
 { #category : 'private' }
@@ -63,17 +70,17 @@ ReRenameVariableDriver >> requestNewNameBasedOn: aName [
 
 	| newName |
 	newName := self requestDialog
-		           title: 'Please provide a new variable name';
+		           title: 'Rename variable';
+		           message: 'Please provide a new variable name';
 		           text: aName;
 		           openModal.
 
-	newName ifNil: [
-		shouldEscape := true.
-		^ self ].
-	newName = oldName ifTrue: [
-		shouldEscape := true.
-		^ self ].
+	(newName isNil or: [ newName = oldName ]) ifTrue: [
+			shouldEscape := true.
+			^ self ].
+
 	previouslyProposedName := newName.
+
 	^ newName
 ]
 
@@ -82,7 +89,10 @@ ReRenameVariableDriver >> runRefactoring [
 
 	self configureRefactoring.
 	shouldEscape := false.
-
+	"We cannot rename something that doesn'e exist.
+	If we don't check this before `prepareRefactoringInteractively` 
+	it will loop indefinetely since this precondition will always fail."
+	refactoring preconditionDirectlyDefinesVariable check ifFalse: [ ^ self ].
 	self prepareRefactoringInteractively.
 	shouldEscape ifTrue: [ ^ self ].
 

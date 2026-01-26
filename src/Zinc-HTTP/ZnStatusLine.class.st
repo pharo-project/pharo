@@ -162,7 +162,7 @@ ZnStatusLine >> printOn: stream [
 	stream nextPut: $)
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnStatusLine >> readFrom: stream [
 	| line lineStream httpCode |
 	line := (ZnLineReader on: stream) nextLine.

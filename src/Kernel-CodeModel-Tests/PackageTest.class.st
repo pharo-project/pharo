@@ -98,6 +98,22 @@ PackageTest >> testAddTraitSettingPackage [
 ]
 
 { #category : 'tests' }
+PackageTest >> testAddingAnExtensionMethodCrushingAMethodFromATrait [
+	"This is a regression test. In the past adding an extension methods that was crushing a method from a used trait was not marking the method as an extension."
+
+	| class trait |
+	class := self newClassNamed: #X in: self xPackageName.
+	trait := self newTraitNamed: #XT in: self xPackageName.
+
+	class classInstaller update: class to: [ :builder | builder traits: trait ].
+	trait compile: 'extension ^2'.
+
+	self createMethodNamed: 'extension' inClass: class asExtensionOf: self yPackageName.
+
+	self assert: (class >> #extension) isExtension
+]
+
+{ #category : 'tests' }
 PackageTest >> testAllUnsentMessages [
 
 	| package class1 class2 |
@@ -455,6 +471,42 @@ PackageTest >> testMoveClassToTagName [
 	self assert: class packageTag package equals: yPackage
 ]
 
+{ #category : 'tests' }
+PackageTest >> testPackageCanNotContainSpaceAtBegining [
+
+	self assert: (self ensurePackage: #'   Test1') name equals: #Test1.
+
+	
+]
+
+{ #category : 'tests' }
+PackageTest >> testPackageCanNotContainSpaceAtEnd [
+
+	self assert: (self ensurePackage: #'Test1   ') name equals: #Test1.
+
+	
+]
+
+{ #category : 'tests' }
+PackageTest >> testPackageCanNotContainSpaceEitherAtBeginingOrEnd [
+
+	self assert: (self ensurePackage: #'      Test1   ') name equals: #Test1.
+
+	
+]
+
+{ #category : 'tests' }
+PackageTest >> testPackageCanNotContainSpaces [
+
+
+	self ensurePackage: ' toto'.
+	self ensurePackage: 'toto '.
+	self ensurePackage: ' toto '.
+
+	self assert: (self organizer packages reject: #isUndefined) size equals: 1.
+
+]
+
 { #category : 'tests - properties' }
 PackageTest >> testPropertyAtPut [
 
@@ -470,6 +522,47 @@ PackageTest >> testPropertyAtPut [
 
 	package removeProperty: #testKeySelector.
 	self assert: package properties isNil
+]
+
+{ #category : 'tests - extensions' }
+PackageTest >> testRecompilingClassWithExtensionMethods [
+	"This is a regression test. In the past recompiling a class with extension methods was duplicating the entries in the extension map of the packages."
+
+	| class1 class2 |
+	class1 := self newClassNamed: #X in: self xPackageName.
+	class2 := self newClassNamed: #Y in: self yPackageName.
+
+	self createMethodNamed: 'extension' inClass: class1 asExtensionOf: self yPackageName.
+
+	class1 classInstaller update: class1 to: [ :builder | builder slots: { #slot } ].
+
+	"With the bug, we had 2 entries for the class1."
+	self assert: class2 package extendedClasses size equals: 1.
+	self assert: (class2 package instVarNamed: #extensionSelectors) size equals: 1.
+
+	class1 package removeFromSystem.
+
+	self assertEmpty: (class2 package instVarNamed: #extensionSelectors).
+	self assertEmpty: class2 package extendedClasses
+]
+
+{ #category : 'tests' }
+PackageTest >> testRecompilingClassWithExtensionMethodsCrushingMethodsFromATrait [
+	"This is a regression test. In the past recompiling a class  with extension methods that was crushing a method from a used trait was not marking the method as an extension."
+
+	| class1 class2 trait |
+	class1 := self newClassNamed: #X in: self xPackageName.
+	trait := self newTraitNamed: #XT in: self xPackageName.
+	class2 := self newClassNamed: #Y in: self yPackageName.
+
+	class1 classInstaller update: class1 to: [ :builder | builder traits: trait ].
+	trait compile: 'extension ^2'.
+
+	self createMethodNamed: 'extension' inClass: class1 asExtensionOf: self yPackageName.
+
+	class1 classInstaller update: class1 to: [ :builder | builder slots: { #slot } ].
+
+	self assert: (class1 >> #extension) isExtension
 ]
 
 { #category : 'tests' }

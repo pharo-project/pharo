@@ -63,17 +63,19 @@ ReRenameMethodRefactoring class >> renameMethod: aSelector in: aClass to: newSel
 { #category : 'preconditions' }
 ReRenameMethodRefactoring >> applicabilityPreconditions [
 
-	^ {
-		  self validSelectorCondition.
-		  self methodDefinedInClassCondition.
-		  self newNameDoesNotRequireRefactoringPrecondition not.
-		  self selectorsHaveSameArity }
+	^ { self validSelectorCondition . self selectorsHaveSameArity }
 ]
 
 { #category : 'torevisit' }
 ReRenameMethodRefactoring >> areArgumentsPermuted [
 
 	^ permutation asArray ~= (1 to: oldSelector numArgs) asArray
+]
+
+{ #category : 'torevisit' }
+ReRenameMethodRefactoring >> areArgumentsRenamed [
+
+	^ renameMap isNotEmpty 
 ]
 
 { #category : 'testing' }
@@ -111,6 +113,13 @@ ReRenameMethodRefactoring >> implementorsCanBePrimitives [
 ]
 
 { #category : 'preconditions' }
+ReRenameMethodRefactoring >> isMethodDefinitionUnchanged [
+
+	^ self areNamesTheSame & self areArgumentsPermuted not & self areArgumentsRenamed not
+		   
+]
+
+{ #category : 'preconditions' }
 ReRenameMethodRefactoring >> methodDefinedInClassCondition [
 
 	^ (ReDefinesSelectorsCondition new definesSelectors: {oldSelector} in: class)
@@ -122,19 +131,15 @@ ReRenameMethodRefactoring >> modifyImplementorParseTree: parseTree in: aClass [
 	self renameArgumentsIn: parseTree
 ]
 
-{ #category : 'preconditions' }
-ReRenameMethodRefactoring >> newNameDoesNotRequireRefactoringPrecondition [
-
-	^ ReBlockCondition new
-		   block: [ self areNamesTheSame & self areArgumentsPermuted not ];
-		   violatorErrorString:
-		   'The selector ', newSelector, ' is unchanged and its arguments are not permuted'
-		   
+{ #category : 'instance creation' }
+ReRenameMethodRefactoring >> newName: aString [ 
+	newSelector := aString.
 ]
 
 { #category : 'private' }
 ReRenameMethodRefactoring >> parseTreeRewriterInstance [
 
+	self flag: #'dead code - double check if it is lost during the refactoring'.
 	^ self hasPermutedArguments
 		  ifTrue: [ self parseTreeRewriterClass new ]
 		  ifFalse: [
@@ -186,12 +191,13 @@ ReRenameMethodRefactoring >> storeOn: aStream [
 ReRenameMethodRefactoring >> validSelectorCondition [
 
 	^ (ReBlockCondition new 
-			block: [ newSelector asString isValidSelector. ];
+			block: [ self isValidSelector: newSelector ];
 			violatorErrorString: newSelector ,' is not a valid selector').
 ]
 
 { #category : 'accessing' }
-ReRenameMethodRefactoring >> violations [ 
+ReRenameMethodRefactoring >> violations [
 
-	^ self breakingChangePreconditions violators
+	^ self breakingChangePreconditions flatCollect: [ :each |
+		  each violators ]
 ]

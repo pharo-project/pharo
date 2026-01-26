@@ -746,6 +746,8 @@ RubAbstractTextArea >> deselect [
 
 { #category : 'event handling' }
 RubAbstractTextArea >> doubleClick: anEvent [
+
+	model ifNotNil: [ model interactionModel reactToRubTextAreaDoubleClick: anEvent ].
 	^ self handleEdit: [ self editor doubleClick: anEvent ]
 ]
 
@@ -799,17 +801,6 @@ RubAbstractTextArea >> drawSubmorphsOn: aCanvas [
 ]
 
 { #category : 'drawing' }
-RubAbstractTextArea >> drawSubmorphsOnAthensCanvas: aCanvas [
-	"Draw the focus here since we are using inset bounds
-	for the focus rectangle."
-
-	super drawSubmorphsOnAthensCanvas: aCanvas.
-	self paragraph drawOnAthensCanvas: aCanvas bounds: self drawingBounds color: self textColor.
-	(scrollPane isNil and: [ self readOnly not and: [ self hasKeyboardFocus or: [ self hasFindReplaceFocus ] ] ])
-		ifTrue: [  self drawKeyboardFocusOnAthensCanvas: aCanvas ]
-]
-
-{ #category : 'drawing' }
 RubAbstractTextArea >> drawingBounds [
 	^ (self scrollPane isNil or: [ self wrapped ])
 		ifTrue: [self innerBounds]
@@ -826,7 +817,7 @@ RubAbstractTextArea >> editPrimarySelectionSeparately [
 { #category : 'accessing - im text input' }
 RubAbstractTextArea >> editing [
 
-	^ editing = true
+	^ editing
 ]
 
 { #category : 'accessing - editing mode' }
@@ -1057,7 +1048,7 @@ RubAbstractTextArea >> handleEdit: editBlock [
 { #category : 'event handling' }
 RubAbstractTextArea >> handleKeyDown: anEvent [
 
-	editing = true ifTrue: [ ^ self ].
+	editing ifTrue: [ ^ self ].
 	^ super handleKeyDown: anEvent
 ]
 
@@ -1216,6 +1207,12 @@ RubAbstractTextArea >> initializeShortcuts: aKMDispatcher [
 	self editor initializeShortcuts: aKMDispatcher
 ]
 
+{ #category : 'accessing - cursor' }
+RubAbstractTextArea >> invalidateVirtualColumn [ 
+
+	editingState invalidateVirtualColumn
+]
+
 { #category : 'testing' }
 RubAbstractTextArea >> isReadOnly [
 	^ self readOnly
@@ -1240,12 +1237,11 @@ RubAbstractTextArea >> keyDown: anEvent [
 
 { #category : 'event handling' }
 RubAbstractTextArea >> keyStroke: anEvent [
-
 	"Handle a keystroke event."
 
 	anEvent hand anyButtonPressed ifTrue: [ ^ self ].
 	self handleEdit: [
-		editing = true
+		editing
 			ifTrue: [
 				editing := false.
 				self editor unselect ]
@@ -1266,7 +1262,7 @@ RubAbstractTextArea >> keyboardFocusChange: aBoolean [
 			self showOverEditableTextCursor ]
 		ifFalse: [
 			self hasFocus: false.
-			editing = true ifTrue: [ editing := false ].
+			editing ifTrue: [ editing := false ].
 			self hideOverEditableTextCursor ].
 	super keyboardFocusChange: aBoolean
 ]
@@ -1744,7 +1740,13 @@ RubAbstractTextArea >> recomputeSelection [
 
 { #category : 'multi level undo' }
 RubAbstractTextArea >> redoTypeIn: aText interval: anInterval [
-	self handleEdit: [self editor redoTypeIn: aText interval: anInterval]
+	
+	^ self redoTypeIn: aText interval: anInterval selection: anInterval
+]
+
+{ #category : 'multi level undo' }
+RubAbstractTextArea >> redoTypeIn: aText interval: anInterval selection: selection [
+	self handleEdit: [self editor redoTypeIn: aText interval: anInterval selection: selection]
 ]
 
 { #category : 'caching' }
@@ -2046,7 +2048,7 @@ RubAbstractTextArea >> textEdition: aTextEditionEvent [
 			self editor zapSelectionWith: editText.
 			editing := true ]
 		ifEmpty: [
-			editing = true ifTrue: [
+			editing ifTrue: [
 				self editor zapSelectionWith: ''.
 				editing := false ] ]
 ]
@@ -2086,7 +2088,9 @@ RubAbstractTextArea >> themeChanged [
 	(self decoratorNamed: #shoutStyler) ifNotNil: [ :styler |
 		styler refreshStyling
 	].
-	self color: self theme backgroundColor.
+
+	self class backgroundColor: self theme backgroundColor.
+	self color: self defaultColor.
 	super themeChanged
 ]
 
@@ -2105,7 +2109,13 @@ RubAbstractTextArea >> undoRedoExchange: aninterval with: anotherInterval [
 
 { #category : 'multi level undo' }
 RubAbstractTextArea >> undoTypeIn: aText interval: anInterval [
-	self handleEdit: [self editor undoTypeIn: aText interval: anInterval]
+
+	^ self undoTypeIn: aText interval: anInterval selection: anInterval
+]
+
+{ #category : 'multi level undo' }
+RubAbstractTextArea >> undoTypeIn: aText interval: anInterval selection: aSelection [
+	self handleEdit: [self editor undoTypeIn: aText interval: anInterval selection: aSelection]
 ]
 
 { #category : 'private' }
@@ -2152,15 +2162,23 @@ RubAbstractTextArea >> updateMarginsWith: aMargin [
 
 { #category : 'accessing - text' }
 RubAbstractTextArea >> updateTextWith: aStringOrText [
-	self
-		handleEdit: [ self
-				beEditableWhile: [
-					| s |
-					s := self validateTextFrom: aStringOrText.
-					s = self text
-						ifFalse: [ self selectAll.
-							self editor replaceSelectionWith: s.
-							self deselect ] ] ]
+
+	self handleEdit: [
+		self beEditableWhile: [
+			| s |
+			s := self validateTextFrom: aStringOrText.
+			"Text can = String, but String never = Text"
+			s = self text asString ifFalse: [
+				| wasAtEnd |
+				wasAtEnd := self hasSelection not and: [
+					            self markIndex > self text size ].
+				self selectAll.
+				self editor replaceSelectionWith: s.
+				self deselect.
+				wasAtEnd ifTrue: [ "Keep cursor at end if it was already there"
+					| atEnd |
+					atEnd := self text size + 1.
+					self markIndex: atEnd pointIndex: atEnd ] ] ] ]
 ]
 
 { #category : 'accessing - text' }
@@ -2190,6 +2208,18 @@ RubAbstractTextArea >> veryDeepInner: deepCopier [
 	paragraph := paragraph veryDeepCopyWith: deepCopier.
 	textColor := textColor veryDeepCopyWith: deepCopier.
 	editor := editor veryDeepCopyWith: deepCopier
+]
+
+{ #category : 'accessing - cursor' }
+RubAbstractTextArea >> visualColumn [
+
+	^ editingState visualColumn 
+]
+
+{ #category : 'accessing - cursor' }
+RubAbstractTextArea >> visualColumn: virtualColumn [
+
+	editingState visualColumn: virtualColumn 
 ]
 
 { #category : 'menu' }
@@ -2296,6 +2326,6 @@ RubAbstractTextArea >> yellowButtonActivity: shiftKeyState [
 	Check if required first!"
 	self wantsYellowButtonMenu
 		ifFalse: [ ^ false ].
-	self openMenu: shiftKeyState and: #invokeModal.
+	self openMenu: shiftKeyState and: [ :menu | menu invokeModal ].
 	^ true
 ]

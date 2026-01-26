@@ -11,7 +11,7 @@ Class {
 
 { #category : 'accessing' }
 ReUndeclaredVariableRule class >> group [
-	^ 'Bugs'
+	^ self bugsGroup
 ]
 
 { #category : 'accessing' }

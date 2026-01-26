@@ -38,15 +38,12 @@ ReRenameSharedVariableRefactoring class >> rename: aVarName to: aName in: aClass
 ReRenameSharedVariableRefactoring >> applicabilityPreconditions [
 
 	^ {
-		  (ReIsNotAMetaclass class: class).
+		  (ReClassesAreNotMetaClassCondition new classes: { class }).
 		  (ReIsValidSharedVariableName name: newName).
 		  (ReIsVariableNotDefinedInHierarchy name: newName class: class).
 		  (ReNameIsGlobalCondition new model: model className: newName) not.
 		  "For now only rename a shared variable that is locally defined in a class."
-		  (ReDirectlyDefinesSharedVariableCondition
-			   classNamed: class name
-			   inModel: self model
-			   sharedVariables: { variableName }) }
+		  self preconditionDirectlyDefinesVariable}
 ]
 
 { #category : 'scripting api - conditions' }
@@ -63,6 +60,15 @@ ReRenameSharedVariableRefactoring >> newName [
 { #category : 'accessing' }
 ReRenameSharedVariableRefactoring >> newName: anObject [
 	newName := anObject
+]
+
+{ #category : 'preconditions' }
+ReRenameSharedVariableRefactoring >> preconditionDirectlyDefinesVariable [
+
+	^ ReDirectlyDefinesSharedVariableCondition
+		  classNamed: class name
+		  inModel: self model
+		  sharedVariables: { variableName }
 ]
 
 { #category : 'transforming' }

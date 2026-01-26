@@ -26,9 +26,11 @@ Class {
 		'name',
 		'interruptedContext',
 		'interruptedProcess',
-		'exception'
+		'exception',
+		'stepThroughController'
 	],
 	#classVars : [
+		'FastStepThroughMode',
 		'LogDebuggerStackToFile'
 	],
 	#classInstVars : [
@@ -57,13 +59,25 @@ DebugSession class >> defaultContextModelClass [
 	^ DebugContext
 ]
 
-{ #category : 'settings' }
+{ #category : 'accessing' }
+DebugSession class >> fastStepThroughMode [
+
+	^ FastStepThroughMode ifNil: [ FastStepThroughMode := false ]
+]
+
+{ #category : 'accessing' }
+DebugSession class >> fastStepThroughMode: aBoolean [
+
+	^ FastStepThroughMode := aBoolean
+]
+
+{ #category : 'accessing' }
 DebugSession class >> logDebuggerStackToFile [
 	^ LogDebuggerStackToFile 
 		ifNil: [ LogDebuggerStackToFile := false ]
 ]
 
-{ #category : 'settings' }
+{ #category : 'accessing' }
 DebugSession class >> logDebuggerStackToFile: aBoolean [
 	LogDebuggerStackToFile := aBoolean
 ]
@@ -107,12 +121,46 @@ DebugSession >> createModelForContext: aContext [
 
 { #category : 'accessing' }
 DebugSession >> exception [
-	^ exception
+
+	^ (thisProcess
+		   evaluate: [ LocalProcessException value ]
+		   onBehalfOf: interruptedProcess) ifNil: [ exception ]
 ]
 
 { #category : 'accessing' }
 DebugSession >> exception: anObject [
 	exception := anObject
+]
+
+{ #category : 'debugging actions' }
+DebugSession >> fastStepThrough: aContext [
+	"Send messages until you return to aContext.
+	 Used to step into a block in the method."
+	|  ctrl originContext targetContext |
+	ctrl := self stepThroughController.	
+		
+	aContext stepIntoQuickMethod: false.
+	(self isContextPostMortem: aContext) ifTrue: [ ^ self ].
+	"Wrap blocks in aContext with HaltingBlocks"
+	ctrl prepareContextForStepThrough: aContext.
+	
+	originContext := ctrl completeStep: aContext inProcess: interruptedProcess.
+	targetContext := ctrl findNextContext: originContext 
+								 having: aContext home 
+					  			 fixing: interruptedProcess suspendedContext .
+	
+	targetContext == originContext 
+		ifTrue: [ "Step through is equivalent to Step over"
+			interruptedProcess suspendedContext: originContext.
+			interruptedProcess isTerminated
+					ifTrue: [ aContext terminateTo: nil ]
+					ifFalse: [ self updateContextTo: 
+									(self stepToFirstInterestingBytecodeIn: interruptedProcess) ] ]
+		ifFalse: [ "Step through either enters of exits the block"
+			interruptedProcess suspendedContext: targetContext.
+			self updateContextTo: targetContext ].
+			
+	self triggerEvent: #stepThrough
 ]
 
 { #category : 'evaluating' }
@@ -130,25 +178,6 @@ DebugSession >> implement: aMessage classified: aSymbol inClass: aClass forConte
 
 	self updateContextTo: aContext.
 	self contextChanged
-]
-
-{ #category : 'debug - session' }
-DebugSession >> implement: aMessage inClass: aClass forContext: aContext [
-	| method |
-	aClass compile: (DynamicMessageImplementor for: aMessage in: aClass) value.
-	method := aClass lookupSelector: aMessage selector.
-
-	MethodClassifier classify: method.
-
-	aContext privRefreshWith: method.
-	aContext method numArgs > 0 ifTrue:
-		[aMessage arguments withIndexDo:
-			[:arg :index|
-				aContext tempAt: index put: arg]].
-
-	self updateContextTo: aContext.
-	self contextChanged.
-	^ method
 ]
 
 { #category : 'private' }
@@ -288,16 +317,12 @@ DebugSession >> recompileMethodTo: text inContext: aContext notifying: aNotifyer
 	| newMethod recompilationContext canRewind |
 	canRewind := (self isContextPostMortem: self interruptedContext) not.
 	(recompilationContext := (self createModelForContext: aContext) locateClosureHomeWithContent: text) ifNil: [ ^ false ].
-	canRewind
-		ifFalse: [ (self confirm: 'Can not rewind post mortem context for new method.\ Accept anyway ?' withCRs) or: [ ^ false ] ].
+	canRewind ifFalse: [ (ConfirmationRequest signal: 'Can not rewind post mortem context for new method.\ Accept anyway ?' withCRs) or: [ ^ false ] ].
 
 	newMethod := (self createModelForContext: recompilationContext) recompileCurrentMethodTo: text notifying: aNotifyer.
 	newMethod ifNil: [ ^ false ].
 
-	(self isContextPostMortem: self interruptedContext)
-		ifFalse: [ self rewindContextToMethod: newMethod fromContext: recompilationContext ].
-
-	"Use an alarm instead of triggering the notification directly, as the content of
+	(self isContextPostMortem: self interruptedContext) ifFalse: [ self rewindContextToMethod: newMethod fromContext: recompilationContext ]. "Use an alarm instead of triggering the notification directly, as the content of
 	the editor can still be unaccepted. "
 	self installAlarm: #contextChanged.
 	^ true
@@ -396,7 +421,7 @@ DebugSession >> rewindContextToMethod: aMethod fromContext: aContext [
 
 	ctxt == aContext
 		ifFalse: [
-			self inform: 'Method saved, but current context unchanged\because of unwind error. Click OK to see error' withCRs ]
+			InformativeNotification signal: 'Method saved, but current context unchanged\because of unwind error. Click OK to see error' withCRs ]
 		ifTrue: [
 			interruptedProcess restartTopWith: aMethod.
 			self stepToFirstInterestingBytecodeIn: interruptedProcess ].
@@ -427,20 +452,11 @@ DebugSession >> selectedCodeRangeForContext: selectedContext [
 	^ self pcRangeForContext: selectedContext
 ]
 
-{ #category : 'testing' }
-DebugSession >> shouldDisplayContext: aContext basedOnFilters: stackFilters [
-	"Return true if all filters match the given context, or false otherwise.
-	True is returned if there are no filters."
-
-	^stackFilters allSatisfy: [ :aFilter | aFilter shouldDisplay: aContext ]
-]
-
 { #category : 'logging' }
 DebugSession >> signalDebuggerError: anError [
 
-	DebuggerSettings emergencyDebugger
-		debugError: anError
-		fromSession: self
+	DebuggerEmergencyLogger new logError: anError forSession: self
+		
 ]
 
 { #category : 'accessing' }
@@ -453,54 +469,6 @@ DebugSession >> stack [
 DebugSession >> stackOfSize: size [
 
 	^ interruptedContext stackOfSize: size
-]
-
-{ #category : 'accessing' }
-DebugSession >> stackOfSize: limit usingFilters: stackFilters [
-	"Answer an OrderedCollection of the top 'limit' contexts on the receiver's sender chain, according to the given filters.
-
-	Consider the following stack:
-		a <-- top of the stack
-		b
-		a
-		c
-		a
-		b
-		d
-		e
-		a <-- bottom of the stack
-
-	If the given filters do not match context 'a' and 'b' the following stack will be returned:
-		a <-- top of the stack
-		b
-		a
-		c
-		d
-		e <-- bottom of the stack
-
-	First all consecutive contexts starting from the top of the stack for which a filter does not match are
-	added to the result (a b a in the example). Then from the remaining stack only the context for which all
-	filters match are added to the  result.
-	"
-
-	| stack context |
-	stack := OrderedCollection new.
-	context := interruptedContext.
-
-	"Starting from the top of the stack add all consecutive contexts that should not be displayed."
-	[ context ~~ nil
-	 	and: [(stack size < limit)
-			and: [ (self shouldDisplayContext: context basedOnFilters:  stackFilters) not ] ] ]  whileTrue: [
-				stack addLast: context.
-				context := context sender ].
-
-	"Add all contexts that should be displayed. (the current context is checked again)"
-	[context ~~ nil
-		and: [stack size < limit ] ] whileTrue: [
-			(self shouldDisplayContext: context basedOnFilters: stackFilters)
-				ifTrue: [ stack addLast: context ].
-			context := context sender ].
-	^ stack
 ]
 
 { #category : 'debugging actions' }
@@ -562,6 +530,9 @@ DebugSession >> stepThrough [
 DebugSession >> stepThrough: aContext [
 	"Send messages until you return to selectedContext.
 	 Used to step into a block in the method."
+	
+	self class fastStepThroughMode ifTrue: [ ^ self fastStepThrough: aContext ].
+	
 	aContext stepIntoQuickMethod: false.
 	(self isContextPostMortem: aContext) ifTrue: [^ self].
 
@@ -569,6 +540,12 @@ DebugSession >> stepThrough: aContext [
 	self updateContextTo: (self stepToFirstInterestingBytecodeIn: interruptedProcess).
 
 	self triggerEvent: #stepThrough
+]
+
+{ #category : 'accessing' }
+DebugSession >> stepThroughController [
+	^ stepThroughController ifNil: [
+		  stepThroughController := FastStepThroughController new ]
 ]
 
 { #category : 'private' }
@@ -582,12 +559,43 @@ DebugSession >> stepToFirstInterestingBytecodeIn: aProcess [
 
 	"If we are are stepping into a quick method,
 	make sure that we step correctly over the first primitive bytecode"
+
 	| suspendedContext |
 	suspendedContext := aProcess suspendedContext.
-	(suspendedContext method isQuick and: [ suspendedContext pc == suspendedContext method initialPC ])
+	(suspendedContext method isQuick and: [
+		 suspendedContext pc == suspendedContext method initialPC ])
 		ifTrue: [ ^ suspendedContext updatePCForQuickPrimitiveRestart ].
 
-	^ aProcess stepToSendOrReturn
+	^ Processor activeProcess
+		  evaluate: [
+			  | newContext |
+			  newContext := self stepToFirstInterestingBytecodeInContext: aProcess suspendedContext.
+			  aProcess suspendedContext: newContext.
+			  newContext ]
+		  onBehalfOf: aProcess
+]
+
+{ #category : 'private' }
+DebugSession >> stepToFirstInterestingBytecodeInContext: aContext [
+
+	| bytecodeInterpreter context debugInfo |
+	aContext isDead ifTrue: [
+		self error: 'Cannot step into dead context' ].
+
+	debugInfo := aContext method debugInfo.
+	bytecodeInterpreter := InstructionStream
+		                       on: aContext method
+		                       pc: aContext pc.
+	[ debugInfo shouldStopAt: aContext pc ] whileFalse: [
+			context := bytecodeInterpreter interpretNextInstructionFor:
+				           aContext.
+			context == aContext ifFalse: [ "Caused all non-send, non-store, non-return instructions
+				that may activate a method. This is today the case of mustBeBoolean.
+				
+				If a mustBeBoolean has been activated, we need to change contexts"
+				^ context ] ].
+
+	^ aContext
 ]
 
 { #category : 'debugging actions' }

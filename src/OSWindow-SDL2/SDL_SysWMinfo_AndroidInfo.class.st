@@ -42,7 +42,7 @@ SDL_SysWMinfo_AndroidInfo >> surface [
 { #category : 'accessing - structure variables' }
 SDL_SysWMinfo_AndroidInfo >> surface: anObject [
 	"This method was automatically generated"
-	handle pointerAt: OFFSET_SURFACE put: anObject getHandle
+	handle pointerAt: OFFSET_SURFACE put: anObject getHandle.
 ]
 
 { #category : 'accessing - structure variables' }
@@ -54,5 +54,5 @@ SDL_SysWMinfo_AndroidInfo >> window [
 { #category : 'accessing - structure variables' }
 SDL_SysWMinfo_AndroidInfo >> window: anObject [
 	"This method was automatically generated"
-	handle pointerAt: OFFSET_WINDOW put: anObject getHandle
+	handle pointerAt: OFFSET_WINDOW put: anObject getHandle.
 ]

@@ -17,7 +17,7 @@ Class {
 
 { #category : 'accessing' }
 ReEmptyExceptionHandlerRule class >> group [
-	^ 'Potential Bugs'
+	^ self potentialBugsGroup
 ]
 
 { #category : 'accessing' }

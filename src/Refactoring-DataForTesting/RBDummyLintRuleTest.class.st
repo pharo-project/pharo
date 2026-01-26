@@ -23,7 +23,7 @@ RBDummyLintRuleTest class >> parseTreeSearcher [
 
 { #category : 'parsing' }
 RBDummyLintRuleTest class >> parseTreeSearcherClass [
-	^ RBParseTreeSearcher
+	^ OCParseTreeSearcher
 ]
 
 { #category : 'foo' }

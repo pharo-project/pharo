@@ -51,6 +51,12 @@ RBMetaclass >> classSide [
 	^ self
 ]
 
+{ #category : 'accessing' }
+RBMetaclass >> classVariableNames [
+
+	^ self instanceSide classVariableNames
+]
+
 { #category : 'testing' }
 RBMetaclass >> directlyDefinesClassVariable: aString [
 

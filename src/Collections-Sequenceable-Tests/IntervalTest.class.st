@@ -4,8 +4,8 @@ SUnit tests for intervals
 Class {
 	#name : 'IntervalTest',
 	#superclass : 'CollectionRootTest',
-	#traits : 'TSortTest - {#testSort. #testSortUsingSortBlock} + TCloneTest + TIncludesWithIdentityCheckTest + TSequencedElementAccessTest + TIterateSequencedReadableTest + TSequencedConcatenationTest + TSubCollectionAccess + TAsStringCommaAndDelimiterSequenceableTest + TIndexAccess + TPrintOnSequencedTest + TConvertTest + (TCopySequenceableWithReplacement - {#testCopyReplaceAllWithManyOccurrence. #collectionWith2TimeSubcollection}) + TCopySequenceableWithOrWithoutSpecificElements + (TCopySequenceableSameContents - {#testShuffled}) + (TCopyPartOfSequenceable - {#testCopyEmptyMethod}) + TCopyTest + TBeginsEndsWith + TConvertAsSortedTest + TSequencedStructuralEqualityTest + TOccurrencesTest + TSequenceableTruncatedToSize + (TCreationWithTest - {#testOfSize. #testWithAll. #testWith. #testWithWith. #testWithWithWith. #testWithWithWithWith. #testWithWithWithWithWith})',
-	#classTraits : 'TSortTest classTrait + TCloneTest classTrait + TIncludesWithIdentityCheckTest classTrait + TSequencedElementAccessTest classTrait + TIterateSequencedReadableTest classTrait + TSequencedConcatenationTest classTrait + TSubCollectionAccess classTrait + TAsStringCommaAndDelimiterSequenceableTest classTrait + TIndexAccess classTrait + TPrintOnSequencedTest classTrait + TConvertTest classTrait + TCopySequenceableWithReplacement classTrait + TCopySequenceableWithOrWithoutSpecificElements classTrait + TCopySequenceableSameContents classTrait + TCopyPartOfSequenceable classTrait + TCopyTest classTrait + TBeginsEndsWith classTrait + TConvertAsSortedTest classTrait + TSequencedStructuralEqualityTest classTrait + TOccurrencesTest classTrait + TSequenceableTruncatedToSize classTrait + TCreationWithTest classTrait',
+	#traits : 'TSortTest - {#testSort. #testSortUsingSortBlock} + TCloneTest + TIncludesWithIdentityCheckTest + TSequencedElementAccessTest + TIterateSequencedReadableTest + TSequencedConcatenationTest + TSubCollectionAccess + TIndexAccess + TPrintOnSequencedTest + TConvertTest + (TCopySequenceableWithReplacement - {#testCopyReplaceAllWithManyOccurrence. #collectionWith2TimeSubcollection}) + TCopySequenceableWithOrWithoutSpecificElements + (TCopySequenceableSameContents - {#testShuffled}) + (TCopyPartOfSequenceable - {#testCopyEmptyMethod}) + TCopyTest + TBeginsEndsWith + TConvertAsSortedTest + TSequencedStructuralEqualityTest + TOccurrencesTest + TSequenceableTruncatedToSize + (TCreationWithTest - {#testOfSize. #testWithAll. #testWith. #testWithWith. #testWithWithWith. #testWithWithWithWith. #testWithWithWithWithWith})',
+	#classTraits : 'TSortTest classTrait + TCloneTest classTrait + TIncludesWithIdentityCheckTest classTrait + TSequencedElementAccessTest classTrait + TIterateSequencedReadableTest classTrait + TSequencedConcatenationTest classTrait + TSubCollectionAccess classTrait + TIndexAccess classTrait + TPrintOnSequencedTest classTrait + TConvertTest classTrait + TCopySequenceableWithReplacement classTrait + TCopySequenceableWithOrWithoutSpecificElements classTrait + TCopySequenceableSameContents classTrait + TCopyPartOfSequenceable classTrait + TCopyTest classTrait + TBeginsEndsWith classTrait + TConvertAsSortedTest classTrait + TSequencedStructuralEqualityTest classTrait + TOccurrencesTest classTrait + TSequenceableTruncatedToSize classTrait + TCreationWithTest classTrait',
 	#instVars : [
 		'empty',
 		'nonEmpty',
@@ -15,7 +15,6 @@ Class {
 		'subCollectionNotIn',
 		'collectionOfFloat',
 		'anotherCollection',
-		'nonEmpty1Element',
 		'subCollection',
 		'collectionWithSubCollection',
 		'subCollectionInNonEmpty',
@@ -257,12 +256,6 @@ IntervalTest >> nonEmpty [
 ]
 
 { #category : 'requirements' }
-IntervalTest >> nonEmpty1Element [
-
-	^ nonEmpty1Element
-]
-
-{ #category : 'requirements' }
 IntervalTest >> nonEmptyMoreThan1Element [
 	^nonEmpty
 ]
@@ -294,7 +287,6 @@ IntervalTest >> setUp [
 	one := (1 to:1).
 	nonEmpty := -5 to: 10 by: 3.
 	subCollectionInNonEmpty := -2 to: 4 by: 3.
-	nonEmpty1Element:= 1to:1.
 	anotherCollection:= 2 to: 15.
 	collectionWithoutNil := 1 to: 3.
 	collectResult := { SmallInteger. SmallInteger. SmallInteger.}.

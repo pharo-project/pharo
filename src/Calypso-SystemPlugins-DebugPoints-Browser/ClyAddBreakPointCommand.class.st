@@ -8,12 +8,6 @@ Class {
 	#package : 'Calypso-SystemPlugins-DebugPoints-Browser'
 }
 
-{ #category : 'testing' }
-ClyAddBreakPointCommand class >> canBeExecutedInContext: aBrowserContext [
-
-	^ (super canBeExecutedInContext: aBrowserContext)
-]
-
 { #category : 'activation' }
 ClyAddBreakPointCommand class >> contextMenuOrder [
 	^1
@@ -28,12 +22,13 @@ ClyAddBreakPointCommand class >> methodEditorLeftBarClickActivation [
 
 { #category : 'accessing' }
 ClyAddBreakPointCommand >> defaultMenuIconName [
-	^#smallError
+	^#smallDebug 
 ]
 
 { #category : 'accessing' }
 ClyAddBreakPointCommand >> defaultMenuItemName [
-	^' Add Breakpoint to: ',  sourceNode displaySourceCode
+
+	^ String streamContents: [ :stream | stream << 'Break on "' << sourceNode displaySourceCode << '"' ]
 ]
 
 { #category : 'execution' }

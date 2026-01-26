@@ -4,11 +4,9 @@ My role is to open the .sources and .changes files. My only public methods are i
 Class {
 	#name : 'PharoFilesOpener',
 	#superclass : 'Object',
-	#instVars : [
-		'shouldInformAboutReadOnlyChanges'
-	],
 	#classVars : [
-		'Default'
+		'Default',
+		'SourceFileVersionString'
 	],
 	#category : 'System-Sources-Utilities',
 	#package : 'System-Sources',
@@ -23,6 +21,38 @@ PharoFilesOpener class >> default [
 { #category : 'class initialization' }
 PharoFilesOpener class >> reset [
 	Default := nil
+]
+
+{ #category : 'image, changes name' }
+PharoFilesOpener class >> sourceFileVersionString [
+
+	^ SourceFileVersionString
+]
+
+{ #category : 'image, changes name' }
+PharoFilesOpener class >> sourceFileVersionString: aString [
+
+	SourceFileVersionString := aString
+]
+
+{ #category : 'accessing' }
+PharoFilesOpener class >> sourcesFile [
+	"Answer the full path to the version-stable source code"
+
+	^ (FileLocator imageDirectory / (self sourceFileVersionString , '.' , self sourcesSuffix)) asFileReference
+]
+
+{ #category : 'accessing' }
+PharoFilesOpener class >> sourcesName [
+	"Answer the full path to the version-stable source code"
+
+	^ self sourcesFile fullName
+]
+
+{ #category : 'accessing' }
+PharoFilesOpener class >> sourcesSuffix [
+
+	^ 'sources'
 ]
 
 { #category : 'messages' }
@@ -59,71 +89,47 @@ PharoFilesOpener >> changesFileOrNil [
 { #category : 'public' }
 PharoFilesOpener >> changesFileOrNilReadOnly: readOnly [
 
-	^ self changesFileOrNilReadOnly: readOnly silent: false
-]
-
-{ #category : 'public' }
-PharoFilesOpener >> changesFileOrNilReadOnly: readOnly silent: silent [
 	| changesFile |
-	changesFile := self openChanges: self changesName readOnly: readOnly.
-	(changesFile isNil and: [ silent not ])
-		ifTrue: [ self informProblemInChanges: self cannotLocateMsg ].
+	changesFile := (self locateSources: self changesName forImage: self lastImagePath)
+		               tryOpenReadOnly: readOnly;
+		               yourself.
 
-	silent
-		ifTrue: [ ^ changesFile ].
+	changesFile ifNil: [ self informProblemInChanges: self cannotLocateMsg ].
 
-	changesFile isOpen ifFalse: [
-		changesFile := nil.
-		^ nil ].
+	changesFile isOpen ifFalse: [ ^ nil ].
 
-	(changesFile isReadOnly and: [ self shouldInformAboutReadOnlyChanges ])
-		ifTrue: [ self informProblemInChanges: self cannotWriteMsg ].
-	((changesFile next: 200) includesSubstring: String crlf)
-		ifTrue: [ self informProblemInChanges: self badContentMsg ].
+	changesFile isReadOnly ifTrue: [ self informProblemInChanges: self cannotWriteMsg ].
+	((changesFile next: 200) includesSubstring: String crlf) ifTrue: [ self informProblemInChanges: self badContentMsg ].
 	^ changesFile
 ]
 
 { #category : 'delegated' }
 PharoFilesOpener >> changesName [
-	^ Smalltalk changesName
-]
 
-{ #category : 'helper' }
-PharoFilesOpener >> ignoreIfFail: aBlock [
-	^ [ aBlock value ] onErrorDo: [  ]
-]
-
-{ #category : 'user interaction' }
-PharoFilesOpener >> inform: msg withChangesRef: fileRef [
-	self inform: msg withRef: 'the changes file named ' , fileRef
+	^ FileLocator changes basename
 ]
 
 { #category : 'user interaction' }
 PharoFilesOpener >> inform: msg withRef: fileRef [
-	self inform: (msg copyReplaceAll: '&fileRef' with: fileRef)
-]
 
-{ #category : 'user interaction' }
-PharoFilesOpener >> inform: msg withSourceRef: fileRef [
-	self inform: msg withRef: 'the sources file named ' , fileRef
+	InformativeNotification signal: (msg copyReplaceAll: '&fileRef' with: fileRef)
 ]
 
 { #category : 'open sources' }
 PharoFilesOpener >> informCannotLocateSources [
+
 	| msg |
 	msg := self cannotLocateMsg.
-	Smalltalk os isMacOS
-		ifTrue: [
-			msg := msg
-				,
-					'
+	Smalltalk os isMacOS ifTrue: [
+			msg := msg , '
 Make sure the sources file is not an Alias.' ].
-	self inform: msg withSourceRef: self sourcesName
+	self inform: msg withRef: 'the sources file named ' , self sourcesName
 ]
 
 { #category : 'user interaction' }
 PharoFilesOpener >> informProblemInChanges: msg [
-	self inform: msg withChangesRef: self changesName
+
+	self inform: msg withRef: 'the changes file named ' , self changesName
 ]
 
 { #category : 'delegated' }
@@ -131,46 +137,36 @@ PharoFilesOpener >> lastImagePath [
 	^ Smalltalk lastImagePath
 ]
 
-{ #category : 'open changes' }
-PharoFilesOpener >> openChanges: changesPath readOnly: readOnly [
-
-	^ (SourceFile on: changesPath potentialLocations: {
-			FileLocator imageDirectory.
-			FileLocator workingDirectory.
-		}) tryOpenReadOnly: readOnly;
-			yourself
+{ #category : 'open sources' }
+PharoFilesOpener >> locateChanges [
+	^ self locateSources: self changesName forImage: self lastImagePath
 ]
 
 { #category : 'open sources' }
-PharoFilesOpener >> openSources [
-	^ self openSources: self sourcesName forImage: self lastImagePath
+PharoFilesOpener >> locateSources [
+	^ self locateSources: self sourcesName forImage: self lastImagePath
 ]
 
 { #category : 'open sources' }
-PharoFilesOpener >> openSources: fullSourcesName forImage: imagePath [
+PharoFilesOpener >> locateSources: fullSourcesName forImage: imagePath [
 	"Look in various places for a sources file, return an open stream to it."
 
 	| locations |
-	locations := OSPlatform current potentialLocationsOfSourcesFile, {
+	locations := {
 		FileLocator imageDirectory.
 		FileLocator workingDirectory
 	}.
 
-	^ (SourceFile on: fullSourcesName potentialLocations: locations)
-		tryOpenReadOnly: true;
-		yourself
+	^ (SourceFile lookupFileNamed: fullSourcesName potentialLocations: locations)
 ]
 
-{ #category : 'public' }
-PharoFilesOpener >> setInformAboutReadOnlyChanges [
-	"Make sure the user is informed when the .changes file can not be written to."
-	shouldInformAboutReadOnlyChanges := true
-]
+{ #category : 'open sources' }
+PharoFilesOpener >> openSources [
+	"Look in various places for a sources file, return an open stream to it."
 
-{ #category : 'public' }
-PharoFilesOpener >> shouldInformAboutReadOnlyChanges [
-	"Answer true if and only if the user must be informed when the .changes file can not be written to."
-	^ shouldInformAboutReadOnlyChanges ifNil: [ shouldInformAboutReadOnlyChanges := true ]
+	^ (self locateSources: self sourcesName forImage: self lastImagePath)
+		  tryOpenReadOnly: true;
+		  yourself
 ]
 
 { #category : 'public' }
@@ -184,13 +180,7 @@ PharoFilesOpener >> sourcesFileOrNil [
 		ifFalse: [ sources ]
 ]
 
-{ #category : 'delegated' }
+{ #category : 'accessing' }
 PharoFilesOpener >> sourcesName [
-	^ Smalltalk sourcesName
-]
-
-{ #category : 'public' }
-PharoFilesOpener >> unsetInformAboutReadOnlyChanges [
-	"Make sure the user is *not* informed when the .changes file can not be written to."
-	shouldInformAboutReadOnlyChanges := false
+	^ self class sourcesName
 ]

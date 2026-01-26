@@ -328,12 +328,6 @@ SmallFloat64 >> truncated [
 		ifFalse: [^ self asTrueFraction.  "Extract all bits of the mantissa and shift if necess"]
 ]
 
-{ #category : 'copying' }
-SmallFloat64 >> veryDeepCopyWith: deepCopier [
-	"Answer the receiver, because SmallFloat64s are unique."
-	^self
-]
-
 { #category : 'comparing' }
 SmallFloat64 >> ~= aNumber [
 	"Primitive. Compare the receiver with the argument and return true

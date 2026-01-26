@@ -3,7 +3,7 @@ Extension { #name : 'Object' }
 { #category : '*Reflectivity' }
 Object >> asLiteralNode [
 
-	^ ASTLiteralNode value: self
+	^ OCLiteralNode value: self
 ]
 
 { #category : '*Reflectivity' }
@@ -18,56 +18,6 @@ Object >> asMethodConstant [
 		        control: #instead.
 	constNode link: link.
 	^ const
-]
-
-{ #category : '*Reflectivity' }
-Object >> haltOnAccess [
-
-	^ VariableBreakpoint watchVariablesInObject: self
-]
-
-{ #category : '*Reflectivity' }
-Object >> haltOnAccessTo: aVariableName [
-
-	^ VariableBreakpoint watchVariable: aVariableName inObject: self
-]
-
-{ #category : '*Reflectivity' }
-Object >> haltOnCallTo: aSelector [
-
-	^ Breakpoint breakOn: aSelector inObject: self
-]
-
-{ #category : '*Reflectivity' }
-Object >> haltOnRead [
-
-	^ VariableBreakpoint watchVariablesReadsInObject: self
-]
-
-{ #category : '*Reflectivity' }
-Object >> haltOnReadTo: aVariableName [
-
-	^ VariableBreakpoint watchVariableReads: aVariableName inObject: self
-]
-
-{ #category : '*Reflectivity' }
-Object >> haltOnWrite [
-
-	^ VariableBreakpoint watchVariablesWritesInObject: self
-]
-
-{ #category : '*Reflectivity' }
-Object >> haltOnWriteTo: aVariableName [
-
-	^ VariableBreakpoint
-		  watchVariableWrites: aVariableName
-		  inObject: self
-]
-
-{ #category : '*Reflectivity' }
-Object >> haltOnceOnCallTo: aSelector [
-
-	^ Breakpoint breakOnceOn: aSelector inObject: self
 ]
 
 { #category : '*Reflectivity' }

@@ -1,0 +1,139 @@
+"
+I am a specialized IRBuilder for the decompiler
+"
+Class {
+	#name : 'OCIRReconstructorBuilder',
+	#superclass : 'OCIRBuilder',
+	#instVars : [
+		'temps',
+		'remoteTemps',
+		'closureCopiedValues'
+	],
+	#category : 'OpalCompiler-Core-Bytecode',
+	#package : 'OpalCompiler-Core',
+	#tag : 'Bytecode'
+}
+
+{ #category : 'instructions' }
+OCIRReconstructorBuilder >> blockReturnTop [
+	self fixPushNilsForTemps.
+	^ super blockReturnTop
+]
+
+{ #category : 'initialize' }
+OCIRReconstructorBuilder >> createTempVectorNamed: name withVars: anArray [
+	" Don't add the temp yet, we only know it's index at the end of the block or method "
+	"self addVectorTemps: anArray"
+	" Update the byte index to point before the pushing of the new vector "
+	sourceMapByteIndex := sourceMapByteIndex - 2.
+	self add: (OCIRInstruction createTempVectorNamed: name withVars: anArray)
+]
+
+{ #category : 'accessing' }
+OCIRReconstructorBuilder >> currentSequence [
+	^currentSequence
+]
+
+{ #category : 'accessing' }
+OCIRReconstructorBuilder >> currentSequence: aSeq [
+	currentSequence := aSeq
+]
+
+{ #category : 'removing' }
+OCIRReconstructorBuilder >> fixPushNilsForTemps [
+	" There are pushConstant: nil in the beginning of the blocksequence for all of the defined temps.
+	  We got these pushConstant: nil in. Now our closure will generate them again, meaning we will double
+	  the number of pushConstant: nil in the final block. To avoid this, we strip the ones we got in from the IR.  "
+
+	| blocksequence |
+	blocksequence := self currentScope blockSequence sequence.
+	self currentScope definedTemps do: [ :temp | blocksequence removeFirst ]
+]
+
+{ #category : 'initialization' }
+OCIRReconstructorBuilder >> initialize [
+	temps := Dictionary new.
+	remoteTemps := Dictionary new.
+	closureCopiedValues := Dictionary new.
+	sourceMapByteIndex := 0.
+	super initialize
+]
+
+{ #category : 'testing' }
+OCIRReconstructorBuilder >> isLastClosureInstruction [
+	| nextJumps |
+	nextJumps := jumpAheadStacks at: sourceMapByteIndex + 1 ifAbsent: [ ^ false ].
+	^ nextJumps anySatisfy: [ :anOrigin | anOrigin = self currentScope ]
+]
+
+{ #category : 'instructions' }
+OCIRReconstructorBuilder >> pushFullClosureCompiledBlock: compiledBlock copiedValues: copiedValues [
+	| anInstruction |
+	anInstruction := super pushFullClosureCompiledBlock: compiledBlock copiedValues: copiedValues.
+
+	anInstruction copiedValues withIndexDo: [ :aValue :index |
+		self rememberReference: anInstruction -> index to: aValue in: closureCopiedValues ]
+]
+
+{ #category : 'instructions' }
+OCIRReconstructorBuilder >> pushRemoteTemp: name inVector: nameOfVector [
+	| anInstruction |
+	anInstruction := super pushRemoteTemp: name inVector: nameOfVector.
+	self rememberReference: anInstruction to: nameOfVector in: remoteTemps
+]
+
+{ #category : 'instructions' }
+OCIRReconstructorBuilder >> pushTemp: aSelector [
+	| anInstruction |
+	anInstruction := super pushTemp: aSelector.
+	self rememberReference: anInstruction to: aSelector in: temps
+]
+
+{ #category : 'remapping' }
+OCIRReconstructorBuilder >> remapTemp: aTemp toRemote: aRemote [
+	(temps removeKey: aTemp ifAbsent: [ #() ])
+		do: [ :tempAccess |
+			tempAccess name: aRemote.
+			self rememberReference: tempAccess to: aRemote in: temps ].
+
+	(remoteTemps removeKey: aTemp ifAbsent: [ #() ])
+		do: [ :tempAccess |
+			tempAccess tempVectorName: aRemote.
+			self rememberReference: tempAccess to: aRemote in: remoteTemps. ].
+
+	(closureCopiedValues removeKey: aTemp ifAbsent: [ #() ])
+		do: [ :aClosureAndIndex | |closure index|
+			closure := aClosureAndIndex key.
+			index := aClosureAndIndex value.
+			closure remapCopiedValueAt: index oldOne: aTemp newOne: aRemote.
+			self rememberReference: aClosureAndIndex to: aRemote in: closureCopiedValues. ]
+]
+
+{ #category : 'remapping' }
+OCIRReconstructorBuilder >> rememberReference: anInstruction to: name in: dictionary [
+	(dictionary at: name ifAbsentPut: [ OrderedCollection new ])
+		add: anInstruction
+]
+
+{ #category : 'removing' }
+OCIRReconstructorBuilder >> removeLast: n [
+	" Make the address of the instruction be the address of the first removed instruction. "
+	sourceMapByteIndex := sourceMapByteIndex - n.
+	^ (currentSequence removeLast: n) collect: [ :node |
+		node isTemp ifFalse: [ self error: 'Should only remove temp accesses!' ].
+		node name ]
+]
+
+{ #category : 'instructions' }
+OCIRReconstructorBuilder >> storeRemoteTemp: name inVector: nameOfVector [
+	| anInstruction |
+	anInstruction := super storeRemoteTemp: name inVector: nameOfVector.
+	self rememberReference: anInstruction to: nameOfVector in: remoteTemps
+]
+
+{ #category : 'instructions' }
+OCIRReconstructorBuilder >> storeTemp: aSelector [
+	| anInstruction |
+	anInstruction := super storeTemp: aSelector.
+	self rememberReference: anInstruction to: aSelector in: temps
+]

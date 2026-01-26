@@ -45,6 +45,12 @@ ClyShowVariableRefCommand >> defaultMenuItemName [
 	^'References'
 ]
 
+{ #category : 'accessing' }
+ClyShowVariableRefCommand >> description [
+
+	^ 'Show all variable references.'
+]
+
 { #category : 'execution' }
 ClyShowVariableRefCommand >> execute [
 

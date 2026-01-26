@@ -43,7 +43,8 @@ Class {
 		'args',
 		'invalidArgNames',
 		'canAddArgs',
-		'canEditName'
+		'canEditName',
+		'requestor'
 	],
 	#category : 'Refactoring-UI-UI',
 	#package : 'Refactoring-UI',
@@ -109,38 +110,52 @@ StMethodNameEditorPresenter class >> openOn: aMethod withInvalidArgs: aSet canRe
 ]
 
 { #category : 'action' }
-StMethodNameEditorPresenter >> addArgument [
+StMethodNameEditorPresenter >> addArgumentToKeywordSelector: argumentName [
+	"The argument is an instance of RBArgumentName"
+	
+	| newArg newArgSymbol argValue selectedIndex keywordInput |
+	keywordInput := self getNewKeywordPartBodyName.
+	keywordInput := keywordInput  select: [ :each | each isAlphaNumeric ].
+	
+	keywordInput isEmptyOrNil
+		ifTrue: [ newArgSymbol := (self newArgName: 'anObject') asSymbol ]
+		ifFalse: [ newArgSymbol := (self newArgName: keywordInput) asSymbol ].
+	selectedIndex := argumentsList selection selectedIndex.
+	
+	self selectorInput text: self selectorInput text ,  'with:'.
 
-	| newArg argValue newKeyword |
-	newKeyword := self getNewKeywordName.
-	newKeyword isEmptyOrNil ifTrue: [ CmdCommandAborted signal ].
-	newArg := self newArgName asSymbol.
 	argValue := self getDefaultValue.
 	argValue isEmptyOrNil ifTrue: [ CmdCommandAborted signal ].
-	newArg := RBArgumentName name: newArg value: argValue.
-	argumentsList items: { newArg }.
-	self selectorInput text: self selectorInput text , newKeyword ,':' .
-	argumentsList selectIndex: 1.
+	newArg := RBArgumentName name: newArgSymbol value: argValue.
+	argumentsList items:
+		(argumentsList items copyUpThrough: argumentName) , { newArg }
+		, (argumentsList items copyAfter: argumentName).
+	
+	argumentsList selectIndex: selectedIndex + 1.
 	self canEditName: true.
 	self updateLabel
 ]
 
 { #category : 'action' }
-StMethodNameEditorPresenter >> addArgumentAfter: anItem [
+StMethodNameEditorPresenter >> addArgumentToUnarySelector [
 
-	| newArg argValue selectedIndex newKeyword |
-	newKeyword := self getNewKeywordName.
-	newKeyword isEmptyOrNil ifTrue: [ CmdCommandAborted signal ].
-	selectedIndex := argumentsList selection selectedIndex.
-	newArg := self newArgName asSymbol.
+	| newArg argValue newKeyword |
+	newKeyword := self getNewKeywordPartBodyName.
+	newKeyword := newKeyword select: [ :each | each isAlphaNumeric ].
+	"We do not call cleanedKeyword: because here the newKeyword can be nil after cleaning
+	the following with handle it"
+	
+	newKeyword isEmptyOrNil
+		ifTrue: [ newArg := (self newArgName: 'anObject') asSymbol ]
+		ifFalse: [ newArg := (self newArgName: newKeyword) asSymbol ].
+
 	argValue := self getDefaultValue.
 	argValue isEmptyOrNil ifTrue: [ CmdCommandAborted signal ].
+
 	newArg := RBArgumentName name: newArg value: argValue.
-	argumentsList items:
-		(argumentsList items copyUpThrough: anItem) , { newArg }
-		, (argumentsList items copyAfter: anItem).
-	self selectorInput text: self selectorInput text , newKeyword, ':'.
-	argumentsList selectIndex: selectedIndex + 1.
+	argumentsList items: { newArg }.
+	self selectorInput text: self selectorInput text , ':'.
+	argumentsList selectIndex: 1.
 	self canEditName: true.
 	self updateLabel
 ]
@@ -156,30 +171,27 @@ StMethodNameEditorPresenter >> argumentsList [
 ]
 
 { #category : 'accessing' }
-StMethodNameEditorPresenter >> argumentsListMenu [
-	^ self newMenu
-		addGroup: [ :aGroup |
-			aGroup
-				addItem: [ :anItem |
-					anItem
-						name: 'Rename';
-						visibleIf: [ argumentsList selectedItem canBeRenamed ];
-						iconName: #edit;
-						action: [ self renameArgument: argumentsList selectedItem ] ];
-				addItem: [ :anItem |
-					anItem
-						name: 'Add';
-						visibleIf: [ self canAddArgs ];
-						iconName: #add;
-						action: [ self addArgumentAfter: argumentsList selectedItem ] ];
-				addItem: [ :anItem |
-					anItem
-						name: 'Remove';
-						visibleIf: [ argumentsList selectedItem canBeRemoved ];
-						shortcut: $x meta;
-						iconName: #remove;
-						description: 'Remove argument';
-						action: [ self removeArgument: argumentsList selectedItem ] ] ]
+StMethodNameEditorPresenter >> argumentsListActions [
+
+	^ SpActionGroup new
+		addActionWith: [ :anItem | anItem
+			name: 'Rename';
+			actionEnabled: [ argumentsList selectedItem canBeRenamed ];
+			iconName: #edit;
+			action: [ self renameArgument: argumentsList selectedItem ] ];
+		addActionWith: [ :anItem | anItem
+			name: 'Add';
+			actionEnabled: [ self canAddArgs ];
+			iconName: #add;
+			action: [ self addArgumentToKeywordSelector: argumentsList selectedItem ] ];
+		addActionWith: [ :anItem | anItem
+			name: 'Remove';
+			actionEnabled: [ argumentsList selectedItem canBeRemoved ];
+			shortcutKey: $x actionModifier;
+			iconName: #remove;
+			description: 'Remove argument';
+			action: [ self removeArgument: argumentsList selectedItem ] ];
+		yourself
 ]
 
 { #category : 'accessing' }
@@ -216,6 +228,12 @@ StMethodNameEditorPresenter >> canRenameArgs: anObject [
 	argumentsList items do: [ :arg | arg canBeRenamed: anObject ]
 ]
 
+{ #category : 'accessing' }
+StMethodNameEditorPresenter >> cancelled [
+	
+	^ self withWindowDo: #cancelled
+]
+
 { #category : 'action' }
 StMethodNameEditorPresenter >> computePermutation [
 
@@ -229,11 +247,12 @@ StMethodNameEditorPresenter >> computePermutation [
 StMethodNameEditorPresenter >> connectPresenters [
 
 	selectorInput
-		bindKeyCombination: Character cr asKeyCombination
-		toAction: [ :p | self renameMethodAndClose: self owner ];
-
-		bindKeyCombination: Character escape asKeyCombination
-			toAction: [ self owner triggerCancelAction; close ]
+		addShortcutWith: [ :action | action 
+			shortcutKey: Character cr asKeyCombination;
+			action: [ self renameMethodAndClose: self owner ] ];
+		addShortcutWith: [ :action | action 
+			shortcutKey: Character escape asKeyCombination;
+			action: [ self owner triggerCancelAction; close ] ]
 ]
 
 { #category : 'layout' }
@@ -276,10 +295,9 @@ StMethodNameEditorPresenter >> getDefaultValue [
 ]
 
 { #category : 'action' }
-StMethodNameEditorPresenter >> getNewKeywordName [
-
+StMethodNameEditorPresenter >> getNewKeywordPartBodyName [
 	^ self
-		  request: 'Enter name for new keyword'
+		  request: 'Enter keyword part name without the ending :'
 		  initialAnswer: 'arg'
 ]
 
@@ -306,8 +324,8 @@ StMethodNameEditorPresenter >> initializeAddButton [
 		label: '+';
 		action: [
 			argumentsList items
-				ifEmpty: [ self addArgument ]
-				ifNotEmpty: [ self addArgumentAfter: argumentsList items last ].
+				ifEmpty: [ self addArgumentToUnarySelector ]
+				ifNotEmpty: [ self addArgumentToKeywordSelector: argumentsList items last ].
 			self updateReorderButtonStatus. ].
 ]
 
@@ -320,8 +338,10 @@ StMethodNameEditorPresenter >> initializeArgumentsList [
 		model ifEmpty: [
 			upButton disable.
 			downButton disable ] ].
-	argumentsList items: (methodName arguments collect: [:arg | RBArgumentName name: arg]);
-		contextMenu: self argumentsListMenu.
+	argumentsList 
+		items: (methodName arguments collect: [ :arg | RBArgumentName name: arg ]);
+		actions: self argumentsListActions.
+		
 	argumentsList items ifNotEmpty: [ argumentsList selectIndex: 1 ]
 ]
 
@@ -359,10 +379,9 @@ StMethodNameEditorPresenter >> initializeDialogWindow: aModalPresenter [
 
 { #category : 'initialization' }
 StMethodNameEditorPresenter >> initializePresenters [
-
+	
 	selectorInput := self newTextInput.
 	selectorInput whenTextChangedDo: [ :text | self updateLabel ].
-	selectorInput editable: self canEditName.
 	selectorInput editable: self canEditName.
 
 	previewResult := self newLabel.
@@ -390,14 +409,21 @@ StMethodNameEditorPresenter >> methodName [
 ]
 
 { #category : 'utilities' }
-StMethodNameEditorPresenter >> newArgName [
-	| baseString index newString |
-	newString := baseString := 'anObject'.
+StMethodNameEditorPresenter >> newArgName: baseName [
+
+	| index newString |
+	newString := baseName.
+	newString := newString select: [ :each | each isAlphaNumeric ].
+	(#('self' 'super' 'thisProcess') includes: newString) 
+		ifTrue: [ newString := '' ].
+	newString size isZero ifTrue: [ newString := 'anObject' ].
+	newString first isLetter not 
+		ifTrue: [ newString :=  'a', newString  ].
 	index := 0.
 	[ self invalidArgNames, (self newArgs collect: [:each | each name]) includes: newString ]
 		whileTrue:
 			[index := index + 1.
-			newString := baseString , index printString].
+			newString := newString , index printString].
 	^ newString
 ]
 
@@ -454,8 +480,9 @@ StMethodNameEditorPresenter >> removeArgument: anItem [
 StMethodNameEditorPresenter >> renameArgument: anItem [
 
 	| argName selectedIndex |
+
 	selectedIndex := argumentsList selection selectedIndex.
-	argName := self request: 'Enter default name of argument' initialAnswer: anItem.
+	argName := self request: 'Enter default name of argument' initialAnswer: anItem asString.
 	argName ifNil: [ CmdCommandAborted signal ].
 	(self invalidArgNames includes: argName) ifTrue: [
 		self inform: 'It''s a invalid name'.
@@ -475,28 +502,52 @@ StMethodNameEditorPresenter >> renameMap [
 { #category : 'action' }
 StMethodNameEditorPresenter >> renameMethodAndClose: presenter [
 
-	^ self previewResult label = '(invalid)'
-		ifTrue: [ self inform: 'Invalid method name' ]
-		ifFalse: [
-			methodName
-				arguments: self getParametersOrder;
-				selector: selectorInput text;
-				newArgs: self newArgs;
-				renameMap: self renameMap;
-				permutation: self computePermutation.
-			presenter
-				beOk;
-				close ]
+	methodName
+		arguments: self getParametersOrder;
+		selector: selectorInput text;
+		newArgs: self newArgs;
+		renameMap: self renameMap;
+		permutation: self computePermutation.
+	
+	presenter
+		beOk;
+		close
 ]
 
 { #category : 'action' }
 StMethodNameEditorPresenter >> request: aString initialAnswer: aSecondString [
 
-	^ self application newRequest
-			title: 'Information needed';
-			label: aString;
-			text: aSecondString;
-			openModal
+	^ requestor
+		  ifNil: [
+				  self application newRequest
+					  title: 'Information needed';
+					  message: aString;
+					  text: aSecondString;
+					  openModal ]
+		  ifNotNil: [ requestor label ]
+]
+
+{ #category : 'accessing' }
+StMethodNameEditorPresenter >> requestor: aMockObject [ 
+	requestor := aMockObject
+]
+
+{ #category : 'action' }
+StMethodNameEditorPresenter >> requestorLabel: aString text: aSecondString [
+
+	^ requestor 
+		ifNil: [
+			self application newRequest
+				title: 'Information needed';
+				label: aString;
+				text: aSecondString;
+				openModal ]
+			ifNotNil: [ 
+				requestor 
+					label: aString ; 
+					text: aSecondString;
+					openModal
+			]
 ]
 
 { #category : 'accessing - ui' }

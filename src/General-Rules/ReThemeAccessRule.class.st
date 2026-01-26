@@ -16,12 +16,7 @@ ReThemeAccessRule class >> checksMethod [
 
 { #category : 'accessing' }
 ReThemeAccessRule class >> group [
-	^ 'API Hints'
-]
-
-{ #category : 'class initialization' }
-ReThemeAccessRule class >> initialize [
-   " ReRuleManager cleanUp "
+	^ self apiHintsGroup
 ]
 
 { #category : 'accessing' }

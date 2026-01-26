@@ -24,7 +24,7 @@ DTPluginResult >> buildTreeForUI [
 DTPluginResult >> summarizeInfo [
 	"Text showed in miniDrTests with info of the result "
 
-	^ self asString
+	^ self displayString
 ]
 
 { #category : 'accessing' }

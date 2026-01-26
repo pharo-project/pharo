@@ -20,16 +20,16 @@ SycSuperclassImplementorsCommand >> defaultMenuItemName [
 	^ 'Hierarchical implementors'
 ]
 
-{ #category : 'execution' }
-SycSuperclassImplementorsCommand >> execute [
+{ #category : 'accessing' }
+SycSuperclassImplementorsCommand >> description [
 
-	Smalltalk tools messageList browse: self searchInTheWholeHierarchy.
+	^ 'Finds Hierarchical implementors'
 ]
 
 { #category : 'execution' }
-SycSuperclassImplementorsCommand >> isComplexRefactoring [
+SycSuperclassImplementorsCommand >> execute [
 
-	^ false
+	(Smalltalk tools toolNamed: #messageList) browse: self searchInTheWholeHierarchy.
 ]
 
 { #category : 'execution' }

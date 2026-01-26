@@ -9,7 +9,7 @@ it is clear that these blocks are clean. But they are even more interesting: we 
 
 We create a dummy compiledBlock which and use it to find the pcInOuter / do pc-ast mapping.
 
-the RBBlockNode has two methods: #isConstant returns true, #constantValue returns the literal for constant blocks.
+the ASTBlockNode has two methods: #isConstant returns true, #constantValue returns the literal for constant blocks.
 
 This class implements 0-arg blocks, with correct error handling for args >0. Subclasses for 1-3 args are implemented.
 

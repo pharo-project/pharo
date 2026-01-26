@@ -32,14 +32,6 @@ SystemAnnouncer class >> reset [
 	self announcer: nil.
 ]
 
-{ #category : 'initialization' }
-SystemAnnouncer class >> restoreAllNotifications [
-
-	<script>
-	self reset.
-	(Pragma allNamed: #systemEventRegistration) do: [ :pragma | pragma methodClass instanceSide perform: pragma methodSelector ]
-]
-
 { #category : 'instance creation' }
 SystemAnnouncer class >> uniqueInstance [
 	"Answer a system annoncer."
@@ -74,11 +66,6 @@ SystemAnnouncer >> classDefinitionChangedFrom: oldClass to: newClass [
 { #category : 'triggering' }
 SystemAnnouncer >> classModificationAppliedTo: aClassOrTrait [
 	self announce: (ClassModificationApplied toClass: aClassOrTrait)
-]
-
-{ #category : 'triggering' }
-SystemAnnouncer >> classParentOf: aClass renamedFrom: oldName to: newName [
-	self announce: (ClassParentRenamed classParentOf: aClass renamedFrom: oldName to: newName)
 ]
 
 { #category : 'triggering' }

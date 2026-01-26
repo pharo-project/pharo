@@ -13,11 +13,10 @@ BaselineOfShout >> baseline: spec [
 	spec for: #common do: [
 		spec
 			package: 'Shout';
-			package: 'Shout-UI';
 			package: 'Rubric-Styling';
 			package: 'Shout-Tests';
 
-			group: 'Core' with: #( 'Shout' 'Rubric-Styling' 'Shout-UI');
+			group: 'Core' with: #( 'Shout' 'Rubric-Styling' );
 			group: 'Tests' with: #( 'Shout-Tests' );
 			group: 'default' with: #( 'Core' 'Tests' ) ]
 ]

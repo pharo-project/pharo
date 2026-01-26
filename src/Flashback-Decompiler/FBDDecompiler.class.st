@@ -190,7 +190,7 @@ FBDDecompiler >> directedSuperSend: selector numArgs: numberArguments [
 { #category : 'data flow instructions' }
 FBDDecompiler >> doDup [
 	| dupTemp |
-	simulatedStack last class == RBVariableNode
+	simulatedStack last class == OCVariableNode
 		ifTrue: [ ^ simulatedStack addLast: simulatedStack last ].
 	self incrTempCount.
 	dupTemp := self newTemp.
@@ -245,11 +245,11 @@ FBDDecompiler >> extractFullBlock: aCompiledBlock numCopied: numCopied [
 { #category : 'private' }
 FBDDecompiler >> generateNativeBoostCallErrorMethodFrom: aCompiledMethod [
 	| seq args |
-	seq := RBSequenceNode
+	seq := OCSequenceNode
 		statements:
-			{RBMessageNode receiver: (RBVariableNode named: #CannotDecompileNativeBoostCalls) selector: #signal arguments: #()}.
+			{OCMessageNode receiver: (OCVariableNode named: #CannotDecompileNativeBoostCalls) selector: #signal arguments: #()}.
 	args := OrderedCollection new.
-	1 to: aCompiledMethod numArgs do: [ :i | args add: (RBVariableNode named: 'arg' , i asString) ].
+	1 to: aCompiledMethod numArgs do: [ :i | args add: (OCVariableNode named: 'arg' , i asString) ].
 	^ builder
 		codeMethod: aCompiledMethod selector
 		arguments: args
@@ -271,18 +271,6 @@ FBDDecompiler >> incrArgCount [
 { #category : 'private' }
 FBDDecompiler >> incrTempCount [
 	tempCount := tempCount + 1
-]
-
-{ #category : 'initialize' }
-FBDDecompiler >> initializeErrorCode: cm [
-	| index |
-	cm isPrimitive
-		ifFalse: [ ^ self ].
-	instructionStream willStore
-		ifFalse: [ ^ self ].
-	index := instructionStream decodeNextInstruction arguments first.
-	currentSequence removeTemporaryNamed: (simulatedStack at: index + 1) name.
-	simulatedStack at: index + 1 put: (builder codeTemp: (self errorCodeNameFor: cm))
 ]
 
 { #category : 'initialize' }
@@ -350,12 +338,11 @@ FBDDecompiler >> interpret: seq1 then: seq2 distance: distance [
 
 { #category : 'private' }
 FBDDecompiler >> interpretMethod: aCompiledMethod [
+
 	self maybeSkipCallPrimitiveBytecode: aCompiledMethod.
 	aCompiledMethod isQuick
 		ifTrue: [ self quickMethod ]
-		ifFalse: [
-			self initializeErrorCode: aCompiledMethod.
-			self interpret: aCompiledMethod endPC ]
+		ifFalse: [ self interpret: aCompiledMethod endPC ]
 ]
 
 { #category : 'control flow instructions' }
@@ -402,8 +389,22 @@ FBDDecompiler >> jump: distance if: boolean [
 FBDDecompiler >> maybeSkipCallPrimitiveBytecode: aCompiledMethod [
 	"If the method's bytecode set uses the callPrimitive bytecode, ignore it.
 	The primitive is handled specifically before bytecode interpretation."
-	instructionStream peekByte = aCompiledMethod encoderClass callPrimitiveCode
-		ifTrue: [ instructionStream advanceToFollowingPc ]
+
+	| index |
+	aCompiledMethod isPrimitive ifFalse: [ ^ self ].
+
+	"Skip primitive"
+	instructionStream advanceToFollowingPc.
+
+	"Skip bytecode storing error code if any"
+	instructionStream willStore ifFalse: [ ^ self ].
+
+	index := instructionStream decodeNextInstruction arguments first.
+	currentSequence removeTemporaryNamed:
+		(simulatedStack at: index + 1) name.
+	simulatedStack
+		at: index + 1
+		put: (builder codeTemp: (self errorCodeNameFor: aCompiledMethod))
 ]
 
 { #category : 'instruction decoding forward' }
@@ -472,9 +473,9 @@ FBDDecompiler >> popIntoTemporaryVariable: offset [
 { #category : 'initialize' }
 FBDDecompiler >> pragmasForMethod: aCompiledMethod [
 	^ aCompiledMethod pragmas collect: [ :each |
-		RBPragmaNode
+		OCPragmaNode
 			selector: each selector
-			arguments: (each arguments collect: [ :arg | ASTLiteralNode value: arg ]) ]
+			arguments: (each arguments collect: [ :arg | OCLiteralNode value: arg ]) ]
 ]
 
 { #category : 'data flow instructions' }

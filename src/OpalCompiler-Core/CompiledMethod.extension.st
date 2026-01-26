@@ -1,17 +1,18 @@
 Extension { #name : 'CompiledMethod' }
 
 { #category : '*OpalCompiler-Core' }
+CompiledMethod >> bcToASTCacheKey [
+
+	^ #bcToASTCache
+]
+
+{ #category : '*OpalCompiler-Core' }
 CompiledMethod >> decompile [
 	^Smalltalk globals
 		at: #FBDDecompiler
 		ifPresent: [ :decompiler | decompiler new  decompile: self]
-		ifAbsent: [ RBParser parseMethod: self selector asMethodPreamble, '
+		ifAbsent: [ OCParser parseMethod: self selector asMethodSignature, '
 	self noSourceAvailable' ]
-]
-
-{ #category : '*OpalCompiler-Core' }
-CompiledMethod >> hasTemporaryVariableNamed: aName [
-	^ self tempNames includes: aName
 ]
 
 { #category : '*OpalCompiler-Core' }
@@ -56,36 +57,6 @@ CompiledMethod >> saveBcToASTCacheWithAST: aMethodAST [
 { #category : '*OpalCompiler-Core' }
 CompiledMethod >> sourceNode [
 	^self ast
-]
-
-{ #category : '*OpalCompiler-Core' }
-CompiledMethod >> sourceNodeForPC: aPC [
-
-	| sourceNode |
-	sourceNode := self sourceNode.
-
-	self propertyAt: #bcToASTCache ifPresent: [ :bcToASTCache |
-		^ sourceNode sourceNodeForPC: aPC usingBcToASTCache: bcToASTCache ].
-	^ sourceNode sourceNodeForPC: aPC
-]
-
-{ #category : '*OpalCompiler-Core' }
-CompiledMethod >> symbolic [
-	"List of all the byte codes in a method with a short description of each"
-
-	^ String streamContents: [ :aStream |
-		self isQuick ifTrue: [
-			self isReturnSpecial ifTrue: [ ^ aStream nextPutAll: 'Quick return ' , (#( 'self' 'true' 'false' 'nil' '-1' '0' '1' '2' ) at: self primitive - 255) ].
-			^ aStream nextPutAll: 'Quick return field ' , self returnField printString , ' (0-based)' ].
-
-		self isPrimitive ifTrue: [ self printPrimitiveOn: aStream ].
-		self symbolicBytecodes do: [ :each | each printOn: aStream ] separatedBy: [ aStream cr ] ]
-]
-
-{ #category : '*OpalCompiler-Core' }
-CompiledMethod >> temporaryVariableNamed: aName [
-	(self hasTemporaryVariableNamed: aName) ifFalse: [ ^nil ].
-	^self sourceNode scope lookupVar: aName
 ]
 
 { #category : '*OpalCompiler-Core' }

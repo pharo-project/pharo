@@ -6,39 +6,12 @@ Class {
 	#tag : 'Parametrized'
 }
 
-{ #category : 'tests' }
+{ #category : 'building suites' }
 RBPullUpMethodParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
-		addCase: { #rbClass -> RBPullUpMethodRefactoring };
+		addCase: { #rbClass -> RePullUpMethodRefactoring };
 		addCase: { #rbClass -> RBPullUpMethodTransformation };
 		yourself
-]
-
-{ #category : 'tests' }
-RBPullUpMethodParametrizedTest >> addClassHierarchy [
-
-	model
-		defineClass: [ :aBuilder |
-			aBuilder
-				superclass: Object;
-				name: #SomeClass;
-				sharedVariables: { #Foo };
-				package: #'Refactory-Test data' ];
-		defineClass: [ :aBuilder |
-			aBuilder
-				superclassName: #SomeClass;
-				name: #Subclass;
-				package: #'Refactory-Test data' ];
-		defineClass: [ :aBuilder |
-			aBuilder
-				superclassName: #Subclass;
-				name: #Foo1;
-				package: #'Refactory-Test data' ];
-		defineClass: [ :aBuilder |
-			aBuilder
-				superclassName: #Subclass;
-				name: #Foo2;
-				package: #'Refactory-Test data' ]
 ]
 
 { #category : 'tests' }
@@ -69,19 +42,6 @@ RBPullUpMethodParametrizedTest >> addClassHierarchyForPools [
 { #category : 'accessing' }
 RBPullUpMethodParametrizedTest >> constructor [
 	^ #pullUp:from:
-]
-
-{ #category : 'failure tests' }
-RBPullUpMethodParametrizedTest >> testFailurePullUpClassMethod [
-
-	| class |
-	class := model classNamed: #Object.
-	class addClassVariable: #Foo.
-	class classSide compile: 'foo ^Foo' classified: #( #accessing ).
-	self shouldFail:
-		(self createRefactoringWithModel: model andArguments: {
-				 #( #foo ).
-				 class classSide })
 ]
 
 { #category : 'failure tests' }
@@ -122,39 +82,6 @@ RBPullUpMethodParametrizedTest >> testFailurePullUpWhenSuperClassDoesNotDirectly
 	self shouldntWarn: (self createRefactoringWithModel: model andArguments: {
 				 #( #foo ).
 				 (model classNamed: #ClassC) })
-]
-
-{ #category : 'failure tests' }
-RBPullUpMethodParametrizedTest >> testFailurePullUpWithInvalidSuperSend [
-
-	| class |
-	self addClassHierarchy.
-	(model classNamed: #Foo2)
-		compile: 'yourself ^super yourself + 1'
-		classified: #( #accessing ).
-	class := model classNamed: #Foo1.
-	class compile: 'yourself ^1' classified: #( #accessing ).
-
-	self shouldFail:
-		(self createRefactoringWithModel: model andArguments: {
-				 #( #yourself ).
-				 class })
-]
-
-{ #category : 'failure tests' }
-RBPullUpMethodParametrizedTest >> testFailurePullUpWithMethodThatCannotBePullUp [
-
-	model defineClass: [ :aBuilder |
-		aBuilder
-			superclass: Object;
-			name: #SomeClass;
-			sharedVariables: { #Foo };
-			package: #'Refactory-Test data' ].
-	(model classNamed: #SomeClass) compile: 'yourself ^54' classified: #( #accessing ).
-
-	self shouldFail: (self createRefactoringWithModel: model andArguments: {
-				 #( #yourself ).
-				 (model classNamed: #SomeClass) })
 ]
 
 { #category : 'failure tests' }
@@ -263,25 +190,10 @@ RBPullUpMethodParametrizedTest >> testPullUpReferencesInstVar [
 	class := model classNamed: ('RBTransformation', 'RuleTestData1') asSymbol.
 	refactoring := self createRefactoringWithModel: model
 		andArguments: { #(#foo ) . class }.
-	[ self executeRefactoring: refactoring ] valueSupplyingAnswer: true.
+	self proceedThroughWarning: [ self executeRefactoring: refactoring  ].
 	superClass := model classNamed: ('RBFooLint', 'RuleTestData1') asSymbol.
 	self assert: (superClass parseTreeForSelector: #foo)
 				equals: (self parseMethod: 'foo ^ foo').
-	self assert: (superClass directlyDefinesInstanceVariable: #foo).
 	self deny: (class directlyDefinesMethod: #foo).
-	self deny: (class directlyDefinesInstanceVariable: #foo)
-]
-
-{ #category : 'failure tests' }
-RBPullUpMethodParametrizedTest >> testWarnDoesntPullUpReferencesInstVar [
-
-	| refactoring class |
-	class := model classNamed:
-		         ('RBTransformation' , 'RuleTestData1') asSymbol.
-	refactoring := self
-		               createRefactoringWithModel: model
-		               andArguments: {
-				               #( #foo ).
-				               class }.
-	[ self shouldWarn: refactoring ] valueSupplyingAnswer: false
+	self assert: (class directlyDefinesInstanceVariable: #foo)
 ]

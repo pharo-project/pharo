@@ -39,14 +39,6 @@ MCClassDefinition >> = aDefinition [
 		and: [ type = aDefinition type and: [ self sortedVariables = aDefinition sortedVariables and: [ comment = aDefinition comment ] ] ] ] ] ] ]]
 ]
 
-{ #category : 'visiting' }
-MCClassDefinition >> accept: aVisitor [
-	aVisitor visitClassDefinition: self.
-	(self hasClassInstanceVariables or: [self hasClassTraitComposition])
-		ifTrue: [aVisitor visitMetaclassDefinition: self].
-
-]
-
 { #category : 'accessing' }
 MCClassDefinition >> actualClass [
 
@@ -125,7 +117,8 @@ MCClassDefinition >> classTraitComposition: classTraitCompositionString [
 
 { #category : 'accessing' }
 MCClassDefinition >> classTraitCompositionCompiled [
-		^(Smalltalk compiler evaluate: self classTraitCompositionString) asTraitComposition 
+
+	^ (self class compiler evaluate: self classTraitCompositionString) asTraitComposition
 ]
 
 { #category : 'accessing' }
@@ -164,12 +157,17 @@ MCClassDefinition >> comment [
 { #category : 'accessing' }
 MCClassDefinition >> comment: aString [
 
-	comment := aString withInternalLineEndings
+	comment := aString
 ]
 
 { #category : 'accessing' }
 MCClassDefinition >> commentStamp [
-	^ commentStamp
+	"Lazy initialization of this parameter to speed up the creation of the class definition in some cases by avoiding the reading of the source file. In case the actual class is not in the image, use the default value we had in the past."
+
+	^ commentStamp ifNil: [
+			  commentStamp := [ self actualClass commentStamp ]
+				                  on: Error
+				                  do: [ '' ] ]
 ]
 
 { #category : 'accessing' }
@@ -178,15 +176,16 @@ MCClassDefinition >> commentStamp: anObject [
 ]
 
 { #category : 'installing' }
-MCClassDefinition >> createClass [
+MCClassDefinition >> createClassInEnvironment: anEnvironent [
 
-	| superClass |
+	| superClass targetEnvironment |
 	"Ignore Context definition because of troubles with class migration on bootstrapped image. Temporary solution."
 	name = #Context ifTrue: [
 		Context comment = comment ifFalse: [ Context comment: comment stamp: self commentStamp ].
 		^ self ].
 
 	superClass := superclassName = #nil ifFalse: [ self class environment at: superclassName ].
+	targetEnvironment := anEnvironent ifNil: [ superClass environment ].
 	^ [
 	  self class classInstaller make: [ :builder |
 		  builder
@@ -202,34 +201,22 @@ MCClassDefinition >> createClass [
 			  comment: comment stamp: self commentStamp;
 			  package: self packageName;
 			  tag: self tagName;
-			  environment: superClass environment ] ]
+			  environment: targetEnvironment ] ]
 		  on: Warning , DuplicatedVariableError
 		  do: [ :ex | ex resume ]
 ]
 
 { #category : 'installing' }
 MCClassDefinition >> createVariableFromString: aString [
-	^[ Smalltalk compiler evaluate: aString ] 
+	^[ self class compiler evaluate: aString ] 
 		on: Error 
 		do: [ 
 			"if an error happens, we parse the slot definition to an ast.
 			and create a UndefinedSlot"
 			| ast slotName |
-			ast := RBParser parseExpression: aString. 
+			ast := OCParser parseExpression: aString. 
 			slotName := ast receiver value. 
 			UndefinedSlot named: slotName ast: ast  ]
-]
-
-{ #category : 'accessing' }
-MCClassDefinition >> defaultCommentStamp [
-	^ String new
-
-	"The version below avoids stomping on stamps already in the image
-
-	^ (Smalltalk globals at: name ifPresent: [:c | c organization commentStamp])
-		ifNil: ['']
-	"
-
 ]
 
 { #category : 'printing' }
@@ -279,7 +266,6 @@ MCClassDefinition >> initialize [
 	classTraitComposition := '{}'.
 	type := #normal.
 	comment := ''.
-	commentStamp := self defaultCommentStamp.
 	variables := OrderedCollection new
 ]
 
@@ -345,8 +331,38 @@ MCClassDefinition >> layoutClassName [
 ]
 
 { #category : 'installing' }
-MCClassDefinition >> load [
-	self createClass
+MCClassDefinition >> loadWithLoader: aLoader [
+
+	| superClass targetEnvironment |
+	name = #Context
+		ifTrue: [
+			Context comment = comment ifFalse: [
+				Context comment: comment stamp: self commentStamp ] ]
+		ifFalse: [
+			superClass := superclassName = #nil ifFalse: [
+				              self class environment at: superclassName ].
+			targetEnvironment := aLoader targetEnvironment ifNil: [ superClass environment ].
+			[
+			self class classInstaller make: [ :builder |
+				builder
+					superclass: superClass;
+					name: name;
+					layoutClass: (ObjectLayout layoutForType: type);
+					slots: self instanceVariables;
+					sharedVariables: self classVariables;
+					sharedPoolsFromString: self sharedPoolsString;
+					classSlots: self classInstanceVariables;
+					traitComposition: self traitCompositionCompiled;
+					classTraitComposition: self classTraitCompositionCompiled;
+					comment: comment stamp: self commentStamp;
+					package: self packageName;
+					tag: self tagName;
+					environment: targetEnvironment ] ]
+				on: Warning , DuplicatedVariableError
+				do: [ :ex |
+					aLoader isStrict
+						ifTrue: [ ex pass ]
+						ifFalse: [ ex resume ] ] ]
 ]
 
 { #category : 'accessing' }
@@ -508,8 +524,8 @@ MCClassDefinition >> sortedVariables [
 { #category : 'installing' }
 MCClassDefinition >> sortedVariablesOfType: aSymbol [
 	"version for complex vars, { definition . definition }"
-	^(((self selectVariables: aSymbol) asSortedCollection collect: [:each | Smalltalk compiler evaluate: each])) asArray.
-		
+
+	^ ((self selectVariables: aSymbol) asSortedCollection collect: [ :each | self class compiler evaluate: each ]) asArray
 ]
 
 { #category : 'printing' }
@@ -586,7 +602,8 @@ MCClassDefinition >> traitComposition: traitCompositionString [
 
 { #category : 'accessing' }
 MCClassDefinition >> traitCompositionCompiled [
-	^(Smalltalk compiler evaluate: self traitCompositionString) asTraitComposition 
+
+	^ (self class compiler evaluate: self traitCompositionString) asTraitComposition
 ]
 
 { #category : 'accessing' }

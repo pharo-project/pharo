@@ -85,6 +85,36 @@ PackageRenameTest >> testRenamePackageToOwnTagNameWithClassesInRoot [
 ]
 
 { #category : 'tests' }
+PackageRenameTest >> testRenamePackageTrimSpacesAtBegining [
+
+	| package |
+	package := self ensurePackage: #Test1.
+	package renameTo: '   TestRename'.
+
+	self assert: package name equals: #TestRename
+]
+
+{ #category : 'tests' }
+PackageRenameTest >> testRenamePackageTrimSpacesAtEnd [
+
+	| package |
+	package := self ensurePackage: #Test1.
+	package renameTo: 'TestRename   '.
+
+	self assert: package name equals: #TestRename
+]
+
+{ #category : 'tests' }
+PackageRenameTest >> testRenamePackageTrimSpacesBothSides [
+
+	| package |
+	package := self ensurePackage: #Test1.
+	package renameTo: '   TestRename   '.
+
+	self assert: package name equals: #TestRename
+]
+
+{ #category : 'tests' }
 PackageRenameTest >> testRenamePackageWithExtensions [
 
 	| package class extendedPackage extension |

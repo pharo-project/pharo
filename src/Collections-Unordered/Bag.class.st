@@ -133,10 +133,25 @@ Bag >> associationsDo: aBlock [
 ]
 
 { #category : 'accessing' }
+Bag >> counts [
+	"Returns the amount of occurrences of each element."
+	"#(11 22 22 33 11 11 11) asBag counts >>>  #(4 2 1)"
+	
+	^ contents values
+]
+
+{ #category : 'accessing' }
 Bag >> cumulativeCounts [
 	"Answer with a collection of cumulative percents covered by elements so far."
 
-	"#(1 2 2 3 1 1 1) asBag cumulativeCounts >>> {57.1->1 . 85.7->2 . 100.0->3}"
+	^ self cumulativePercents 
+]
+
+{ #category : 'accessing' }
+Bag >> cumulativePercents [
+	"Answer with a collection of cumulative percents covered by elements so far."
+
+	"#(1 2 2 3 1 1 1) asBag cumulativePercents >>> {57.1->1 . 85.7->2 . 100.0->3}"
 
 	| s n |
 	s := self size / 100.0. n := 0.
@@ -253,7 +268,8 @@ Bag >> size [
 Bag >> sortedCounts [
 	"Answer with a collection of counts with elements, sorted by decreasing
 	count."
-	"Suggested by l. Uzonyi"
+	
+	"#(111 22 33 111 33 111 111 111 22) asBag sortedCounts >>> {5->111. 2->22. 2->33}"
 
 	^(Array new: contents size streamContents: [ :stream |
  			contents associationsDo: [ :each |
@@ -268,7 +284,7 @@ Bag >> sortedElements [
 
 	"#(1 2 2 3 1 1 1) asBag sortedElements >>> {1->4. 2->2. 3->1}"
 
-	^contents associations
+	^ contents associations
  		sort;
  		yourself
 ]

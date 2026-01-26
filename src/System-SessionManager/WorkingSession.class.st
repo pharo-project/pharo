@@ -10,25 +10,12 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'manager',
-		'deferredStartupActions',
-		'properties'
+		'deferredStartupActions'
 	],
 	#category : 'System-SessionManager-Utilities',
 	#package : 'System-SessionManager',
 	#tag : 'Utilities'
 }
-
-{ #category : 'accessing' }
-WorkingSession >> accessMode [
-
-	^ self properties at: #accessMode ifAbsent: [ #readWrite ]
-]
-
-{ #category : 'accessing' }
-WorkingSession >> accessMode: anObject [
-
-	^ self properties at: #accessMode put: anObject
-]
 
 { #category : 'deferred startup actions' }
 WorkingSession >> addDeferredStartupAction: aBlock [
@@ -38,7 +25,8 @@ WorkingSession >> addDeferredStartupAction: aBlock [
 
 { #category : 'accessing' }
 WorkingSession >> errorHandler [
-	^ UIManager default
+
+	^ ErrorHandler default
 ]
 
 { #category : 'deferred startup actions' }
@@ -56,9 +44,9 @@ WorkingSession >> executeDeferredStartupActions: resuming [
 
 { #category : 'initialization' }
 WorkingSession >> initialize [
+
 	super initialize.
-	deferredStartupActions := OrderedCollection new.
-	properties := Dictionary new
+	deferredStartupActions := OrderedCollection new
 ]
 
 { #category : 'startup - shutdown' }
@@ -66,39 +54,9 @@ WorkingSession >> install [
 	manager installSession: self
 ]
 
-{ #category : 'testing' }
-WorkingSession >> isDisabledAccessMode [
-
-	^ self accessMode = #disabled
-]
-
-{ #category : 'testing' }
-WorkingSession >> isReadOnlyAccessMode [
-
-	^ self accessMode = #readOnly
-]
-
-{ #category : 'testing' }
-WorkingSession >> isReadWriteAccessMode [
-
-	^ self accessMode = #readWrite
-]
-
-{ #category : 'testing' }
-WorkingSession >> isWriteOnlyAccessMode [
-
-	^ self accessMode = #writeOnly
-]
-
 { #category : 'accessing' }
 WorkingSession >> manager: aSessionManager [
 	manager := aSessionManager
-]
-
-{ #category : 'startup - shutdown' }
-WorkingSession >> properties [
-
-	^ properties
 ]
 
 { #category : 'startup - shutdown' }

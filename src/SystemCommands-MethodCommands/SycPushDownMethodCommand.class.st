@@ -27,19 +27,17 @@ SycPushDownMethodCommand >> defaultMenuItemName [
 	^'Push down'
 ]
 
+{ #category : 'accessing' }
+SycPushDownMethodCommand >> description [
+
+	^ 'Push down methods.'
+]
+
 { #category : 'execution' }
 SycPushDownMethodCommand >> executeRefactorings [
 
-	(RePushDownMethodDriver
-		model: model
-		scopes: refactoringScopes
-		pushDownMethods: methods) runRefactoring
-]
-
-{ #category : 'testing' }
-SycPushDownMethodCommand >> isComplexRefactoring [
-
-	^ false
+	^ ((RePushDownMethodDriver newApplication: self application) model: model scopes: refactoringScopes pushDownMethods: methods)
+		  runRefactoring
 ]
 
 { #category : 'execution' }

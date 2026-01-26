@@ -280,21 +280,15 @@ RBTransformationsTest >> testPushDownVariableTransform [
 RBTransformationsTest >> testRemoveClassTransform [
 
 	| transformation newClass superclass |
-	transformation := RBRemoveClassTransformation className:
-		                  self changeMockClass name.
+	transformation := RBRemoveClassesTransformation classNames: { self changeMockClass name }.
 	transformation generateChanges.
 	self assert: transformation model changes changes size equals: 1.
-	newClass := transformation model classNamed:
-		            self changeMockClass name.
+	newClass := transformation model classNamed: self changeMockClass name.
 	superclass := transformation model classNamed: #Object.
 	self assert: newClass isNil.
 	newClass := self changeMockClass name.
-	self assert:
-		((superclass subclasses collect: [ :each | each name ]) includes:
-			 newClass) not.
-	self assert:
-		((superclass classSide subclasses collect: [ :each | each name ])
-			 includes: newClass) not
+	self assert: ((superclass subclasses collect: [ :each | each name ]) includes: newClass) not.
+	self assert: ((superclass classSide subclasses collect: [ :each | each name ]) includes: newClass) not
 ]
 
 { #category : 'tests' }
@@ -359,7 +353,7 @@ RBTransformationsTest >> testRenameClassTransform [
 		                  to: newClassName.
 	transformation generateChanges.
 
-	self assert: transformation model changes changes size equals: 1.
+	self assert: transformation model changes changes size equals: 11.
 
 	class := transformation model classNamed: newClassName.
 	self

@@ -41,7 +41,7 @@ NetNameResolver class >> addressForName: hostName timeout: secs [
 	self initializeNetwork.
 	"check if this is a valid numeric host address (e.g. 1.2.3.4)"
 	result := self addressFromString: hostName.
-	result ifNotNil: [ ^ result asSocketAddress ].
+	result ifNotNil: [ ^ SocketAddress fromOldByteAddress: result ].
 
 	"Look up a host name, including ones that start with a digit (e.g. 100000jobs.de or www.pharo-project.org)"
 	deadline := Time millisecondClockValue -> (secs * 1000).
@@ -55,7 +55,7 @@ NetNameResolver class >> addressForName: hostName timeout: secs [
 						ifTrue: [ result := self primNameLookupResult ]
 						ifFalse: [ ^ NameLookupFailure signalFor: hostName ] ]
 				ifFalse: [ ^ NameLookupFailure signalFor: hostName ] ].
-	^ result asSocketAddress
+	^ SocketAddress fromOldByteAddress: result
 ]
 
 { #category : 'address string utils' }
@@ -254,7 +254,7 @@ NetNameResolver class >> localHostAddress [
 
 	self initializeNetwork.
 	[ primAddress := self primLocalAddress ] on: PrimitiveFailed do: [ :err | primAddress := #[0 0 0 0] ].
-	^ (primAddress = #[0 0 0 0] ifTrue: [ #[127 0 0 1] ] ifFalse: [ primAddress ]) asSocketAddress
+	^ SocketAddress fromOldByteAddress: (primAddress = #[0 0 0 0] ifTrue: [ #[127 0 0 1] ] ifFalse: [ primAddress ])
 ]
 
 { #category : 'lookups' }
@@ -303,6 +303,23 @@ NetNameResolver class >> nameForAddress: hostAddress timeout: secs [
 						ifFalse: [nil]]
 				ifFalse: [nil]].
 	^result
+]
+
+{ #category : 'private' }
+NetNameResolver class >> nextSocketAddressInformation [
+
+	| addrSize addr info |
+	addrSize := self primGetAddressInfoSize.
+	addrSize < 0 ifTrue: [^nil].
+	addr := SocketAddress new: addrSize.
+	self primGetAddressInfoResult: addr.
+	info := SocketAddressInformation
+		withSocketAddress: addr
+		family: self primGetAddressInfoFamily
+		type: self primGetAddressInfoType
+		protocol: self primGetAddressInfoProtocol.
+	self primGetAddressInfoNext.
+	^info
 ]
 
 { #category : 'primitives' }

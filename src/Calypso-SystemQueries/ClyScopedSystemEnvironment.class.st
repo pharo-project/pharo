@@ -12,6 +12,12 @@ Class {
 	#tag : 'Domain'
 }
 
+{ #category : 'comparing' }
+ClyScopedSystemEnvironment >> = anObject [
+
+	^ anObject class = self class and: [ anObject scope = self scope ]
+]
+
 { #category : 'accessing' }
 ClyScopedSystemEnvironment >> asGlobalScopeIn: aNavigationEnvironment [
 	^ super asGlobalScopeIn: aNavigationEnvironment
@@ -22,12 +28,6 @@ ClyScopedSystemEnvironment >> asGlobalScopeIn: aNavigationEnvironment [
 { #category : 'converting' }
 ClyScopedSystemEnvironment >> asRBEnvironment [
 	^ scope
-]
-
-{ #category : 'class management' }
-ClyScopedSystemEnvironment >> classNamed: aString [
-	
-	^globals classNamed: aString
 ]
 
 { #category : 'class management' }
@@ -45,15 +45,6 @@ ClyScopedSystemEnvironment >> classNamed: aString ifAbsent: aBlockClosure [
 		  ifAbsent: aBlockClosure
 ]
 
-{ #category : 'class management' }
-ClyScopedSystemEnvironment >> classNamed: aString ifPresent: aBlockClosure ifAbsent: anotherBlockClosure [
-
-	^ globals
-		  at: aString
-		  ifPresent: aBlockClosure
-		  ifAbsent: anotherBlockClosure
-]
-
 { #category : 'compiling' }
 ClyScopedSystemEnvironment >> compileANewClassFrom: newClassDefinitionString notifying: aController startingFrom: oldClass [
 	"The receiver's textual content is a request to define a new class or trait. The
@@ -61,33 +52,30 @@ ClyScopedSystemEnvironment >> compileANewClassFrom: newClassDefinitionString not
 	aController."
 
 	| newClassPackageName |
-	newClassPackageName := self extractPackageNameFrom:
-		                       newClassDefinitionString.
+	newClassPackageName := self extractPackageNameFrom: newClassDefinitionString.
 	(scope definesPackageNamed: newClassPackageName) ifFalse: [
-		self inform:
-			'Impossible to create a class in a package outside the scope'.
-		^ nil ].
+			InformativeNotification signal: 'Impossible to create a class in a package outside the scope'.
+			^ nil ].
 
 	^ super compileANewClassFrom: newClassDefinitionString notifying: aController startingFrom: oldClass
 ]
 
-{ #category : 'package management' }
-ClyScopedSystemEnvironment >> createPackageNamed: packageName [
-	"ToDo: Should we allow new packages creation in calypso while displaying a scope?"
-	^ packageOrganizer addPackage: packageName
-]
-
 { #category : 'accessing' }
-ClyScopedSystemEnvironment >> ensurePackage: packageName [
-	"Should we allow creating new packages while calypso is displaying a scope?".
-	
-	^ packageOrganizer ensurePackage: packageName
+ClyScopedSystemEnvironment >> definedClassesInPackage: aPackage [
+
+	^ scope definedClasses select: [ :class | class package = aPackage ]
 ]
 
 { #category : 'accessing' }
 ClyScopedSystemEnvironment >> extractPackageNameFrom: aDefinitionString [
 
 	^ (CDFluidClassDefinitionParser parse: aDefinitionString) packageName
+]
+
+{ #category : 'comparing' }
+ClyScopedSystemEnvironment >> hash [
+
+	^ self scope hash
 ]
 
 { #category : 'accessing' }
@@ -99,15 +87,30 @@ ClyScopedSystemEnvironment >> includesClassNamed: aSymbol [
 ]
 
 { #category : 'accessing' }
-ClyScopedSystemEnvironment >> packageNamed: aString [
-	
-	^packageOrganizer packageNamed: aString
-]
-
-{ #category : 'accessing' }
 ClyScopedSystemEnvironment >> packages [
 	
 	^ scope packages
+]
+
+{ #category : 'printing' }
+ClyScopedSystemEnvironment >> printOn: aStream [
+
+	| title |
+	title := self class name.
+	aStream
+		nextPutAll: (title first isVowel
+				 ifTrue: [ 'an ' ]
+				 ifFalse: [ 'a ' ]);
+		nextPutAll: title.
+
+	aStream nextPut: $(.
+	aStream nextPutAll: scope label.
+	aStream nextPut: $)
+]
+
+{ #category : 'accessing' }
+ClyScopedSystemEnvironment >> scope [
+	^ scope
 ]
 
 { #category : 'accessing' }

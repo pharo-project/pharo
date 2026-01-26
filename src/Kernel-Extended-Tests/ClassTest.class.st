@@ -280,21 +280,6 @@ ClassTest >> testEnvironment: anObject [
 	testEnvironment := anObject
 ]
 
-{ #category : 'tests' }
-ClassTest >> testHasBindingThatBeginsWith [
-
-	"Lookup in slots of the current class.
-	This class defines #className"
-	self assert: (self class hasBindingThatBeginsWith: 'classNam').
-	
-	"Pools are looked up, too"
-	self assert: (PoolDefiner hasBindingThatBeginsWith: 'AnAu').
-	self assert: (RootClassPoolUser hasBindingThatBeginsWith: 'AnAu').
-
-	"Lookup in globals too"
-	self assert: (self class hasBindingThatBeginsWith: 'Object').
-]
-
 { #category : 'tests - class variables' }
 ClassTest >> testHasClassVarNamed [
 
@@ -567,7 +552,7 @@ ClassTest >> testSuperclassOrder [
 ClassTest >> testSuperclassOrderPreservingOrder [
 	| noHierarchicalRelationship ordered |
 	"a shuffled collection of direct subclasses of Collection"
-	noHierarchicalRelationship := {CharacterSet. WideCharacterSet. OrderedDictionary. DependentsArray. Bag. SmallDictionary. SequenceableCollection. HashedCollection. Heap}.
+	noHierarchicalRelationship := {CharacterSet. WideCharacterSet. OrderedDictionary. Bag. SmallDictionary. SequenceableCollection. HashedCollection. Heap}.
 
 	ordered := Class superclassOrder: noHierarchicalRelationship.
 

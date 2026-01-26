@@ -16,6 +16,7 @@ Class {
 
 { #category : 'converting' }
 DTReRunConfiguration >> asTestSuite [
+
 	^ self configurationToRun asTestSuite
 ]
 
@@ -27,11 +28,6 @@ DTReRunConfiguration >> configurationToRun [
 { #category : 'accessing' }
 DTReRunConfiguration >> configurationToRun: anObject [
 	configurationToRun := anObject
-]
-
-{ #category : 'accessing' }
-DTReRunConfiguration >> items [
-	^ { self testToReRun }
 ]
 
 { #category : 'accessing' }

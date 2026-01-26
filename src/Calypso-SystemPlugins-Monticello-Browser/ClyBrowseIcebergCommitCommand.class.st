@@ -38,7 +38,7 @@ ClyBrowseIcebergCommitCommand >> execute [
 { #category : 'accessing' }
 ClyBrowseIcebergCommitCommand >> iconName [
 
-	^ #glamorousBrowse
+	^ #browse
 ]
 
 { #category : 'execution' }

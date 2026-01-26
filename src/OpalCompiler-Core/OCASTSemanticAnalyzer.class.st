@@ -4,7 +4,7 @@ I visit each node in the abstract syntax tree while growing and shrinking a scop
 "
 Class {
 	#name : 'OCASTSemanticAnalyzer',
-	#superclass : 'RBProgramNodeVisitor',
+	#superclass : 'OCProgramNodeVisitor',
 	#instVars : [
 		'scope',
 		'outerScope',
@@ -158,7 +158,7 @@ OCASTSemanticAnalyzer >> undeclaredVariable: variableNode [
 	"If a invalid variable exists, we use it witout warning"
 	self invalidVariables at: varName ifPresent: [ :v | ^ v ].
 
-	notice := OCUndeclaredVariableNotice new messageText: 'Undeclared variable'.
+	notice := OCUndeclaredVariableNotice new messageText: 'Undeclared variable named ' , (variableNode name ifNil: [ 'unnamed' ]) , ' in ' , variableNode methodNode selector.
 	variableNode addNotice: notice.
 	"If a registered undeclared variable exists, use it. Otherwise create an unregistered one."
 	"It will be registered only at backend when a CompiledMethod is produced.
@@ -270,8 +270,8 @@ OCASTSemanticAnalyzer >> visitPragmaNode: aPragmaNode [
 
 	"if the pragma is a primitive that defines an error variable, we need to declare a temp
 	for it"
-	aPragmaNode isPrimitiveError ifFalse: [ ^ self ].
-	varNode := RBVariableNode named: aPragmaNode primitiveErrorVariableName.
+	aPragmaNode isPrimitiveErrorPragma ifFalse: [ ^ self ].
+	varNode := OCVariableNode named: aPragmaNode primitiveErrorVariableName.
 	self declareVariableNode: varNode as: (PrimitiveErrorVariable node: varNode)
 ]
 

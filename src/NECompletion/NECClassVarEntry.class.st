@@ -15,6 +15,6 @@ NECClassVarEntry >> hightlightSymbol [
 ]
 
 { #category : 'accessing' }
-NECClassVarEntry >> label [
+NECClassVarEntry >> rawLabel [
 	^ 'class variable'
 ]

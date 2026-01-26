@@ -23,12 +23,6 @@ DebugPointTarget >> beForObject: anObject [
 		  yourself
 ]
 
-{ #category : 'actions' }
-DebugPointTarget >> browse [
-
-	self subclassResponsibility 
-]
-
 { #category : 'announcements' }
 DebugPointTarget >> hitAnnouncementOn: aDebugPoint inContext: aContext [
 
@@ -46,6 +40,13 @@ DebugPointTarget >> initialize [
 DebugPointTarget >> install: aLink [
 
 	self subclassResponsibility
+]
+
+{ #category : 'accessing' }
+DebugPointTarget >> node [
+
+	"For polymorphism with DebugPointNodeTarget"
+	^ nil
 ]
 
 { #category : 'removing' }

@@ -13,19 +13,13 @@ MCTraitDefinition >> = aDefinition [
 
 	self flag: #traits. "Ugly we harcoded the super superclass method.  We will have to refactor the definition hierarchy"
 
-	^ (aDefinition isKindOf: MCDefinition) and: [
-		  (self isRevisionOf: aDefinition) and: [
-			  self traitCompositionString = aDefinition traitCompositionString and: [
-				  self classTraitCompositionString = aDefinition classTraitCompositionString and: [
-					  self category = aDefinition category and: [
-						  self slotDefinitionString = aDefinition slotDefinitionString and: [
-							  self classInstVarNames = aDefinition classInstVarNames and: [ comment = aDefinition comment ] ] ] ] ] ] ]
-]
-
-{ #category : 'visiting' }
-MCTraitDefinition >> accept: aVisitor [
-	^ aVisitor visitTraitDefinition: self
-
+	^ self class = aDefinition class and: [
+			  (self isRevisionOf: aDefinition) and: [
+					  self traitCompositionString = aDefinition traitCompositionString and: [
+							  self classTraitCompositionString = aDefinition classTraitCompositionString and: [
+									  self category = aDefinition category and: [
+											  self slotDefinitionString = aDefinition slotDefinitionString and: [
+												  self classInstVarNames = aDefinition classInstVarNames and: [ comment = aDefinition comment ] ] ] ] ] ] ]
 ]
 
 { #category : 'printing' }
@@ -40,25 +34,6 @@ MCTraitDefinition >> classSlotDefinitionString [
 					do: [ :each | stream print: each name ]
 					separatedBy: [ stream nextPutAll: ' . ' ].
 				stream nextPutAll: ' }']]
-]
-
-{ #category : 'installing' }
-MCTraitDefinition >> createClass [
-
-	^ [
-	  self class classInstaller make: [ :aBuilder |
-		  aBuilder
-			  name: name;
-			  traitComposition: (Smalltalk compiler evaluate: self traitCompositionString);
-			  classTraitComposition: (Smalltalk compiler evaluate: self classTraitCompositionString);
-			  slots: self instanceVariables;
-			  classSlots: self classInstanceVariables;
-			  package: self packageName;
-			  tag: self tagName;
-			  comment: comment stamp: commentStamp;
-			  beTrait ] ]
-		  on: Warning , DuplicatedVariableError
-		  do: [ :ex | ex resume ]
 ]
 
 { #category : 'testing' }
@@ -77,6 +52,32 @@ MCTraitDefinition >> hash [
 { #category : 'testing' }
 MCTraitDefinition >> isTraitDefinition [
 	^ true
+]
+
+{ #category : 'installing' }
+MCTraitDefinition >> loadWithLoader: aLoader [
+
+	^ [
+	  self class classInstaller make: [ :aBuilder |
+		  aBuilder
+			  name: name;
+			  traitComposition:
+				  (Smalltalk compiler evaluate: self traitCompositionString);
+			  classTraitComposition:
+				  (Smalltalk compiler evaluate: self classTraitCompositionString);
+			  slots: self instanceVariables;
+			  classSlots: self classInstanceVariables;
+			  package: self packageName;
+			  tag: self tagName;
+			  comment: comment stamp: commentStamp;
+			  beTrait.
+		  aLoader targetEnvironment ifNotNil: [
+			  aBuilder environment: aLoader targetEnvironment ] ] ]
+		  on: Warning , DuplicatedVariableError
+		  do: [ :ex |
+			  aLoader isStrict
+				  ifTrue: [ ex pass ]
+				  ifFalse: [ ex resume ] ]
 ]
 
 { #category : 'printing' }
@@ -119,7 +120,7 @@ MCTraitDefinition >> requirements [
 	self hasTraitComposition
 		ifFalse: [ ^ #() ].
 
-	^ (((RBParser parseExpression: self traitCompositionString)
+	^ (((OCParser parseExpression: self traitCompositionString)
 		allChildren select: [ :e | e isVariable ])
 		collect: [ :e | e name ]
 		as: Set) asArray

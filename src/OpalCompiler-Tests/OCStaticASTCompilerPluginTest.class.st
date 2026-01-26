@@ -10,18 +10,18 @@ Class {
 OCStaticASTCompilerPluginTest >> testClassWithPluginEnabled [
 
  	"It is possible that the method was loaded before the plugin was active. We recompile to be sure the plugin was active."
- 	ASTTransformExamplePluginActive recompile.
- 	self assert: ASTTransformExamplePluginActive new example42 equals: 'meaning of life'
+ 	OCTransformExamplePluginActive recompile.
+ 	self assert: OCTransformExamplePluginActive new example42 equals: 'meaning of life'
 ]
 
 { #category : 'tests' }
 OCStaticASTCompilerPluginTest >> testCreateAndUseStaticCompilerPlugin [
 
 	| result plugin |
-	plugin := ASTPluginMeaningOfLife new.
+	plugin := OCPluginMeaningOfLife new.
 
 	"Use plugin with compiler"
-	result := Object compiler
+	result := OpalCompiler new
 		          addPlugin: plugin;
 		          evaluate: '42'.
 
@@ -38,9 +38,10 @@ OCStaticASTCompilerPluginTest >> testIsAbstract [
 OCStaticASTCompilerPluginTest >> testTransform [
 
 	| ast |
-	ast := (OCOpalExamples >> #exampleReturn42) ast copy.
+	ast := OCParser parseMethod: (OCOpalExamples >> #exampleReturn42) sourceCode.
+		
 	self assert: ast body statements first value value equals: 42.
-	ast := ASTPluginMeaningOfLife transform: ast.
+	ast := OCPluginMeaningOfLife transform: ast.
 	self
 		assert: ast body statements first value value
 		equals: 'meaning of life'

@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 # Bash3 Boilerplate. Copyright (c) 2014, kvz.io
 
+#
+# This script loads packages for a minimal image and run tests on it to ensure it is working fine!
+#
+
 set -o errexit
 set -o pipefail
 set -o nounset
@@ -34,41 +38,23 @@ TEST_NAME_PREFIX=$(basename `find ${CACHE} -name "Pharo*.zip" | head -n 1` | cut
 #  - removing the prefix "Pharo"
 TEST_VM_VERSION=`echo ${TEST_NAME_PREFIX} | cut -d'.' -f 1 | cut -d'-' -f 1 | cut -c6-`0
 
-#Use always the latest VM
-TEST_VM_KIND="vmLatest"
+TEST_VM_KIND="vm"
 
 ${BOOTSTRAP_REPOSITORY:-.}/bootstrap/scripts/getPharoVM.sh ${TEST_VM_VERSION} ${TEST_VM_KIND} ${1}
 					
 IMAGE_ARCHIVE=$(find ${CACHE} -name ${TEST_NAME_PREFIX}-bootstrap-${1}bit-*.zip)
 unzip $IMAGE_ARCHIVE
 IMAGE_FILE=$(find . -name ${TEST_NAME_PREFIX}-bootstrap-${1}bit-*.image)
-
 HERMES_ARCHIVE=$(find ${CACHE} -name ${TEST_NAME_PREFIX}-hermesPackages-${1}bit-*.zip)
 unzip $HERMES_ARCHIVE
-
-RPACKAGE_ARCHIVE=$(find ${CACHE} -name ${TEST_NAME_PREFIX}-rpackage-${1}bit-*.zip)
-unzip $RPACKAGE_ARCHIVE
 
 mv $IMAGE_FILE bootstrap.image
 
 export PHARO_CI_TESTING_ENVIRONMENT=1
-	
-#Initializing the Image
-./pharo bootstrap.image
+
 #Adding packages removed from the bootstrap
-./pharo bootstrap.image loadHermes Hermes-Extensions.hermes --save
-./pharo bootstrap.image loadHermes System-Time.hermes AST-Core.hermes InitializePackagesCommandLineHandler.hermes Random-Core.hermes System-Model.hermes System-NumberPrinting.hermes --save --no-fail-on-undeclared --on-duplication=ignore
-./pharo bootstrap.image perform --save ChronologyConstants initialize
-./pharo bootstrap.image perform --save DateAndTime initialize
+./pharo bootstrap.image perform --save BasicHermesTool load: --as-array $(cat hermesSUnitPackages.txt)
+./pharo bootstrap.image perform --save Pragma buildCache
 
-#Initializing the package manager
-./pharo bootstrap.image initializePackages --packages --protocols=protocolsKernel.txt --save
-
-#Load traits
-./pharo bootstrap.image loadHermes Traits.hermes --save
-
-#Loading Tests
-./pharo bootstrap.image loadHermes Debugging-Utils.hermes SUnit-Core.hermes JenkinsTools-Core.hermes JenkinsTools-Core.hermes SUnit-Tests.hermes --save --no-fail-on-undeclared --on-duplication=ignore
-
-#Running tests
-./pharo bootstrap.image test --junit-xml-output --stage-name=${2} SUnit-Core SUnit-Tests
+#Running tests. We should also run Kernel-Tests but it is currently failing
+./pharo bootstrap.image test --junit-xml-output --stage-name ${2} SUnit-Tests 

@@ -9,7 +9,7 @@ Class {
 { #category : 'tests - variables' }
 OCASTVariableTranslatorTest >> testAssignArgumentVariable [
 	self
-		should: [self compileSource: 'argument: anArgument  anArgument := 17'] raise: CodeError
+		should: [self compileSource: 'argument: anArgument  anArgument := 17'] raise: OCCodeError
 ]
 
 { #category : 'tests - variables' }
@@ -37,13 +37,13 @@ OCASTVariableTranslatorTest >> testAssignInstanceVariable [
 { #category : 'tests - variables' }
 OCASTVariableTranslatorTest >> testAssignSelfVariable [
 	self
-		should: [self compileSource: 'foo self := 17'] raise: CodeError
+		should: [self compileSource: 'foo self := 17'] raise: OCCodeError
 ]
 
 { #category : 'tests - variables' }
 OCASTVariableTranslatorTest >> testAssignSuperVariable [
 	self
-		should: [self compileSource: 'foo super := 17'] raise: CodeError
+		should: [self compileSource: 'foo super := 17'] raise: OCCodeError
 ]
 
 { #category : 'tests - variables' }
@@ -56,7 +56,7 @@ OCASTVariableTranslatorTest >> testAssignTemporaryVariable [
 { #category : 'tests - variables' }
 OCASTVariableTranslatorTest >> testAssignThisContextVariable [
 	self
-		should: [self compileSource: 'foo thisContext := 17'] raise: CodeError
+		should: [self compileSource: 'foo thisContext := 17'] raise: OCCodeError
 ]
 
 { #category : 'tests - variables' }

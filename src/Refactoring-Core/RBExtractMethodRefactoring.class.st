@@ -67,11 +67,8 @@ RBExtractMethodRefactoring >> applicabilityPreconditions [
 	^ {
 		  (RBCondition definesSelector: selector in: class).
 		  (RBCondition withBlock: [
-			   self extractMethod.
 			   self checkSpecialExtractions.
 			   self checkReturn.
-			   needsReturn ifTrue: [ extractedParseTree addReturn ].
-			   self checkTemporaries.
 			   true ]) }
 ]
 
@@ -81,22 +78,23 @@ RBExtractMethodRefactoring >> checkAssignments: variableNames [
 	removeAssigned := variableNames copy.
 	node := self placeholderNode.
 	outsideVars := variableNames
-				select: [:each | (node whoDefines: each) references: each].
+				select: [:each | (node whichUpNodeDefines: each) references: each].
 	outsideVars size == 1
 		ifTrue: [self checkSingleAssignment: outsideVars asArray first].
 	outsideVars size > 1
 		ifTrue:
 			[self refactoringError: 'Cannot extract assignment without all references.'].
 	removeAssigned removeAll: outsideVars.
-	(RBReadBeforeWrittenTester readBeforeWritten: removeAssigned
+	(OCReadBeforeWrittenTester readBeforeWritten: removeAssigned
 		in: extractedParseTree) ifNotEmpty:
 			[self refactoringError: 'Cannot extract assignment if read before written.'].
-	removeAssigned do: [:each | (node whoDefines: each) removeTemporaryNamed: each].
+	removeAssigned do: [:each | (node whichUpNodeDefines: each) removeTemporaryNamed: each].
 	self updateTemporariesInExtractedMethodFor: variableNames
 ]
 
 { #category : 'transforming' }
 RBExtractMethodRefactoring >> checkReturn [
+
 	needsReturn := self placeholderNode isUsedAsReturnValue.
 	extractedParseTree containsReturn ifFalse: [^self].
 	extractedParseTree lastIsReturn ifTrue: [^self].
@@ -121,14 +119,14 @@ RBExtractMethodRefactoring >> checkSelfReturns [
 
 { #category : 'transforming' }
 RBExtractMethodRefactoring >> checkSingleAssignment: varName [
-	((RBReadBeforeWrittenTester isVariable: varName
+	((OCReadBeforeWrittenTester isVariable: varName
 		readBeforeWrittenIn: extractedParseTree)
 			or: [extractedParseTree containsReturn])
 			ifTrue:
 				[self
 					refactoringError: 'Cannot extract assignments to temporaries without all references'].
 	extractedParseTree
-		addNode: (RBReturnNode value: (RBVariableNode named: varName)).
+		addNode: (OCReturnNode value: (OCVariableNode named: varName)).
 	modifiedParseTree := self parseTreeRewriterClass
 				replace: self methodDelimiter
 				with: varName , ' := ' , self methodDelimiter
@@ -169,6 +167,49 @@ RBExtractMethodRefactoring >> compileExtractedMethod [
 		  withAttributesFrom: (class methodFor: selector)
 ]
 
+{ #category : 'preparation' }
+RBExtractMethodRefactoring >> createModifiedParseTreeForNonSequenceSelection [
+
+	| parseTree subtree newCode |
+	parseTree := class parseTreeForSelector: selector.
+	parseTree ifNil: [ self refactoringError: 'Could not parse ' , selector printString ].
+	subtree := self parseTreeSearcherClass treeMatching: extractedParseTree sourceCode in: parseTree.
+	subtree ifNil: [ self refactoringError: 'Could not extract code from method' ].
+	newCode := self methodDelimiter.
+	modifiedParseTree := self parseTreeRewriterClass
+		replace: subtree formattedCode
+		with: newCode
+		in: parseTree
+		onInterval: extractionInterval
+]
+
+{ #category : 'preparation' }
+RBExtractMethodRefactoring >> createModifiedParseTreeForSequenceSelection [
+
+	| parseTree subtree stmts newCode |
+	parseTree := class parseTreeForSelector: selector.
+	parseTree
+		ifNil: [ self refactoringError: 'Could not parse ' , selector printString ].
+	subtree := self parseTreeSearcherClass
+		treeMatchingStatements: extractedParseTree body formattedCode
+		in: parseTree.
+	subtree ifNil: [ self refactoringError: 'Could not extract code from method' ].
+	newCode := self methodDelimiter.
+	stmts := extractedParseTree body statements.
+	stmts
+		ifNotEmpty: [ stmts last isAssignment
+			ifTrue: [ | name |
+					name := stmts last variable name.
+					(self shouldExtractAssignmentTo: name)
+						ifFalse: [ newCode := '<1s> := <2s>' expandMacrosWith: name with: newCode.
+							stmts at: stmts size put: stmts last value ] ] ].
+	modifiedParseTree := self parseTreeRewriterClass
+		replaceStatements: subtree formattedCode
+		with: newCode
+		in: parseTree
+		onInterval: extractionInterval
+]
+
 { #category : 'transforming' }
 RBExtractMethodRefactoring >> existingSelector [
 	"Try to find an existing method instead of creating a new one"
@@ -188,8 +229,25 @@ RBExtractMethodRefactoring >> extract: anInterval from: aSelector in: aClass [
 
 { #category : 'transforming' }
 RBExtractMethodRefactoring >> extractMethod [
-	| parseTree isSequence extractCode subtree newCode |
+	| isSequence extractCode |
 	extractCode := self getExtractedSource.
+	self extractParseTreeForSelection: extractCode.
+	(extractedParseTree isSequence
+		and: [ extractedParseTree statements isEmpty ])
+		ifTrue: [ self refactoringError: 'Select some code to extract' ].
+	isSequence := extractedParseTree isSequence
+		or: [ extractedParseTree isReturn ].
+		
+	self wrapExtractedParseTreeInMethodNode: extractCode.
+
+	isSequence
+		ifTrue: [ self createModifiedParseTreeForSequenceSelection ]
+		ifFalse: [ self createModifiedParseTreeForNonSequenceSelection ].
+]
+
+{ #category : 'preparation' }
+RBExtractMethodRefactoring >> extractParseTreeForSelection: extractCode [
+
 	extractedParseTree := self parserClass new
 		source: extractCode;
 		parseExpression.
@@ -197,57 +255,7 @@ RBExtractMethodRefactoring >> extractMethod [
 		ifNil: [ self refactoringError: 'Invalid source to extract' ].
 	extractedParseTree isFaulty
 		ifTrue: [ self
-				refactoringError: 'Invalid source to extract - ' , extractedParseTree allErrorNotices first messageText ].
-	(extractedParseTree isSequence
-		and: [ extractedParseTree statements isEmpty ])
-		ifTrue: [ self refactoringError: 'Select some code to extract' ].
-	isSequence := extractedParseTree isSequence
-		or: [ extractedParseTree isReturn ].
-	extractedParseTree := RBMethodNode
-		selector: #value
-		arguments: #()
-		body:
-			(extractedParseTree isSequence
-				ifTrue: [ extractedParseTree ]
-				ifFalse: [ RBSequenceNode
-						temporaries: #()
-						statements: (OrderedCollection with: extractedParseTree) ]).
-	extractedParseTree body temporaries
-		ifNotEmpty: [ extractedParseTree body temporaries: #() ].
-	extractedParseTree source: extractCode.
-	parseTree := class parseTreeForSelector: selector.
-	parseTree
-		ifNil: [ self refactoringError: 'Could not parse ' , selector printString ].
-	subtree := isSequence
-		ifTrue: [ self parseTreeSearcherClass
-				treeMatchingStatements: extractedParseTree body formattedCode
-				in: parseTree ]
-		ifFalse:
-			[ self parseTreeSearcherClass treeMatching: extractCode in: parseTree ].
-	subtree
-		ifNil: [ self refactoringError: 'Could not extract code from method' ].
-	newCode := self methodDelimiter.
-	isSequence
-		ifTrue: [ | stmts |
-			stmts := extractedParseTree body statements.
-			stmts
-				ifNotEmpty: [ stmts last isAssignment
-						ifTrue: [ | name |
-							name := stmts last variable name.
-							(self shouldExtractAssignmentTo: name)
-								ifFalse: [ newCode := '<1s> := <2s>' expandMacrosWith: name with: newCode.
-									stmts at: stmts size put: stmts last value ] ] ] ].
-	modifiedParseTree := isSequence
-		ifTrue: [ self parseTreeRewriterClass
-				replaceStatements: subtree formattedCode
-				with: newCode
-				in: parseTree
-				onInterval: extractionInterval ]
-		ifFalse: [ self parseTreeRewriterClass
-				replace: subtree formattedCode
-				with: newCode
-				in: parseTree
-				onInterval: extractionInterval ]
+			refactoringError: 'Invalid source to extract - ' , extractedParseTree allErrorNotices first messageText ].
 ]
 
 { #category : 'instance creation' }
@@ -271,6 +279,8 @@ RBExtractMethodRefactoring >> getExtractedSource [
 	((extractionInterval first between: 1 and: (self startLimit: source size))
 		and: [extractionInterval last between: 1 and: source size])
 			ifFalse: [self refactoringError: 'Invalid interval'].
+	(extractionInterval first > extractionInterval last)
+		ifTrue: [ self refactoringError: 'Invalid interval' ].
 	^source copyFrom: extractionInterval first to: extractionInterval last
 ]
 
@@ -280,9 +290,9 @@ RBExtractMethodRefactoring >> getIntervalForSource: aString [
 
 	| method expression searcher matchedNode |
 	method := class methodFor: selector.
-	expression := RBParser parseExpression: aString.
+	expression := OCParser parseExpression: aString.
 
-	searcher := RBParseTreeSearcher new.
+	searcher := OCParseTreeSearcher new.
 	searcher matchesTree: expression do: [ :aNode :answer | aNode ].
 	matchedNode := searcher executeTree: method ast.
 	matchedNode ifNil: [ self refactoringError: 'Could not find given source in the method.' ].
@@ -298,7 +308,7 @@ RBExtractMethodRefactoring >> getNewMethodName [
 	[newMethodName := self requestMethodNameFor: methodName.
 	newMethodName ifNil: [self refactoringError: 'Did not extract code'].
 	newSelector := newMethodName selector.
-	(self checkMethodName: newSelector in: class)
+	(self isValidSelector: newSelector)
 		ifFalse:
 			[self refactoringWarning: newSelector , ' is not a valid selector name.'.
 			newSelector := nil].
@@ -359,10 +369,10 @@ RBExtractMethodRefactoring >> methodDelimiter [
 RBExtractMethodRefactoring >> nameNewMethod: aSymbol [
 	| args newSend |
 	newExtractedSelector := aSymbol .
-	args := parameters collect: [ :parm | RBVariableNode named: parm ].
+	args := parameters collect: [ :parm | OCVariableNode named: parm ].
 	extractedParseTree renameSelector: aSymbol andArguments: args asArray.
 	aSymbol numArgs = 0
-		ifTrue: [ modifiedParseTree := RBParseTreeRewriter replace: self methodDelimiter with: 'self ' , aSymbol asString in: modifiedParseTree.
+		ifTrue: [ modifiedParseTree := OCParseTreeRewriter replace: self methodDelimiter with: 'self ' , aSymbol asString in: modifiedParseTree.
 			^ self ].
 	newSend := String
 		streamContents: [ :str |
@@ -375,7 +385,7 @@ RBExtractMethodRefactoring >> nameNewMethod: aSymbol [
 						nextPut: $ ;
 						nextPutAll: arg asString;
 						nextPut: $  ] ].
-	modifiedParseTree := RBParseTreeRewriter replace: self methodDelimiter with: newSend in: modifiedParseTree.
+	modifiedParseTree := OCParseTreeRewriter replace: self methodDelimiter with: newSend in: modifiedParseTree.
 	self parameterMap do: [ :e |
 	(self parseTreeRewriterClass rename: e newName to: e name) executeTree: modifiedParseTree ]
 ]
@@ -396,6 +406,12 @@ RBExtractMethodRefactoring >> parameterMap: aDictionary [
 ]
 
 { #category : 'transforming' }
+RBExtractMethodRefactoring >> parameters [
+
+	^ parameters
+]
+
+{ #category : 'transforming' }
 RBExtractMethodRefactoring >> parameters: anOrderedCollection [
 	parameters := anOrderedCollection
 ]
@@ -411,9 +427,17 @@ RBExtractMethodRefactoring >> placeholderNode [
 ]
 
 { #category : 'transforming' }
+RBExtractMethodRefactoring >> prepareForExecution [ 
+
+	self extractMethod.
+	self checkTemporaries.
+]
+
+{ #category : 'transforming' }
 RBExtractMethodRefactoring >> privateTransform [
 
 	| existingSelector |
+	needsReturn ifTrue: [ extractedParseTree addReturn ].
 	existingSelector := self existingSelector.
 	self nameNewMethod: (existingSelector
 			 ifNil: [ newExtractedSelector ifNil: [ self getNewMethodName ] ]
@@ -523,7 +547,7 @@ RBExtractMethodRefactoring >> validateRenameNode: aParseTree withOldName: oldNam
 				ifNil: [ self refactoringError: conditions errorString ] ].
 	(self parameterMap values includes: newName) ifTrue: [
 		self refactoringError: newName asString , ' is already defined as parameter' ].
-	(aParseTree whoDefines: newName)
+	(aParseTree whichUpNodeDefines: newName)
 		ifNotNil: [ self refactoringError: newName asString , ' is already defined' ].
 	(aParseTree allDefinedVariables includes: newName)
 		ifTrue: [ self refactoringError: newName asString , ' is already defined' ]
@@ -532,4 +556,21 @@ RBExtractMethodRefactoring >> validateRenameNode: aParseTree withOldName: oldNam
 { #category : 'renaming' }
 RBExtractMethodRefactoring >> validateRenameOf: oldName to: newName [
 	self validateRenameNode: extractedParseTree withOldName: oldName toWithName: newName
+]
+
+{ #category : 'preparation' }
+RBExtractMethodRefactoring >> wrapExtractedParseTreeInMethodNode: extractCode [
+
+	extractedParseTree := OCMethodNode
+		selector: #value
+		arguments: #()
+		body:
+			(extractedParseTree isSequence
+				ifTrue: [ extractedParseTree ]
+				ifFalse: [ OCSequenceNode
+						temporaries: #()
+						statements: (OrderedCollection with: extractedParseTree) ]).
+	extractedParseTree body temporaries
+		ifNotEmpty: [ extractedParseTree body temporaries: #() ].
+	extractedParseTree source: extractCode.
 ]

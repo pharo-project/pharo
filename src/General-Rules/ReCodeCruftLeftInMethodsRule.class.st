@@ -11,7 +11,7 @@ Class {
 
 { #category : 'accessing' }
 ReCodeCruftLeftInMethodsRule class >> group [
-	^ 'Bugs'
+	^ self bugsGroup
 ]
 
 { #category : 'accessing' }

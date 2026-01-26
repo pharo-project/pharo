@@ -33,14 +33,21 @@ Class {
 { #category : 'tools registry' }
 DrTests class >> beDefaultTestRunner [
 	<script>
+	
+	self initialize
+	
+]
 
-	self registerToolsOn: Smalltalk tools
+{ #category : 'api' }
+DrTests class >> defaultPreferredExtent [ 
+
+	^  800@600
 ]
 
 { #category : 'class initialization' }
 DrTests class >> initialize [
 
-	Smalltalk tools register: self as: #testRunner
+	self currentApplication register: self as: #testRunner
 ]
 
 { #category : 'world menu' }
@@ -61,17 +68,16 @@ DrTests class >> menuCommandOn: aBuilder [
 DrTests class >> open [
 	<script>
 
-	^ self new
+	^ (self newApplication: StPharoApplication current) 
 		  open;
 		  yourself
 ]
 
 { #category : 'tools registry' }
 DrTests class >> registerToolsOn: registry [
-	"Note: For now, DrTests is only available for preview, thus the following code is commented."
 
-	"Add DrTests to registry to replace the old test runner."
-	"registry register: self as: #testRunner"
+	registry register: self as: #testRunner
+
 ]
 
 { #category : 'initialization' }
@@ -172,15 +178,6 @@ DrTests >> initializePresenters [
 DrTests >> initializeStatusLabel [
 
 	statusLabel := self newLabel
-]
-
-{ #category : 'initialization' }
-DrTests >> initializeWindow: aWindowPresenter [
-
-	aWindowPresenter
-		title: self title;
-		initialExtent: 800@600;
-		windowIcon: (self iconNamed: self class systemIconName)
 ]
 
 { #category : 'private' }
@@ -288,12 +285,6 @@ DrTests >> testsConfiguration: aDTTestsConfiguration [
 	self pluginPresenter itemsList selectItems: aDTTestsConfiguration items
 ]
 
-{ #category : 'accessing' }
-DrTests >> title [
-
-	^ 'Dr Tests - ' , currentPlugin pluginName
-]
-
 { #category : 'updating' }
 DrTests >> updateStatus: aString [
 	self statusLabel
@@ -319,4 +310,12 @@ DrTests >> updateWithResults: results [
 
 	pluginResult := results.
 	pluginPresenter updateWithResults: results
+]
+
+{ #category : 'accessing' }
+DrTests >> windowTitle [
+
+	^ self currentPlugin 
+		ifNotNil: [ :p | 'Dr Tests - ' , currentPlugin pluginName ]
+		ifNil: [ 'Dr Tests' ]
 ]

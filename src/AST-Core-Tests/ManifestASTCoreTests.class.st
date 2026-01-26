@@ -18,5 +18,5 @@ ManifestASTCoreTests class >> manuallyResolvedDependencies [
 
 { #category : 'code-critics' }
 ManifestASTCoreTests class >> ruleGRTemporaryNeitherReadNorWrittenRuleV1FalsePositive [
-	^ #(#(#(#RGMethodDefinition #(#ASTEvaluationTest #testEvaluateForContext #false)) #'2019-07-05T11:16:20.959329+02:00') )
+	^ #(#(#(#RGMethodDefinition #(#OCEvaluationTest #testEvaluateForContext #false)) #'2019-07-05T11:16:20.959329+02:00') )
 ]

@@ -10,7 +10,7 @@ For example do we push up instance variable when we push up a method that uses s
 "
 Class {
 	#name : 'RBCompositeTransformation',
-	#superclass : 'RBTransformation',
+	#superclass : 'ReTransformation',
 	#instVars : [
 		'previousTransformations',
 		'transformations'

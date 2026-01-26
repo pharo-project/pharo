@@ -2,14 +2,16 @@
 I am responsible for removing an assignment statement inside a method. In this implementation, the variable name and the expression value must be described separately.
 
 Usage:
+```
 | transformation |
 transformation := (RBRemoveAssignmentTransformation
 				variable: 'variable'
 				value: '1 asString'
 				inMethod: #methodBefore
 				inClass: #RBRemoveAssignmentTransformationTest)
-				transform.
-(ChangesBrowser changes: transformation model changes changes) open
+				generateChanges.
+(StRefactoringPreviewPresenter for: transformation) open
+```
 
 Preconditions:
 - there is an assignment to the given variable.

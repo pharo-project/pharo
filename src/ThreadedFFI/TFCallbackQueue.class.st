@@ -79,7 +79,8 @@ TFCallbackQueue >> forkCallbackProcess [
 		[ true ] whileTrue: [
 			semaphore wait.
 			[self executeCallback: self nextPendingCallback]
-				on: Exception fork:  [:ex | ex pass ] ] ]
+				on: Exception 
+				fork:  [:ex | ex pass ] ] ]
 		forkAt: Processor highIOPriority
 		named: 'Callback queue'
 ]
@@ -174,7 +175,7 @@ TFCallbackQueue >> startUp [
 
 	[self initializeQueue.
 	self forkCallbackProcess]
-		onErrorDo: [ self inform: 'The current VM does not support TFFI Callbacks. It will use the old implementation' ]
+		onErrorDo: [ InformativeNotification signal:  'The current VM does not support TFFI Callbacks. It will use the old implementation' ]
 ]
 
 { #category : 'initialization' }

@@ -17,7 +17,7 @@ ReIsValidSharedVariableName >> check [
 		violator := name.
 		^ false ].
 	string := name asString.
-	(self class reservedNames includes: string) ifTrue: [
+	(Symbol reservedLiterals includes: string) ifTrue: [
 		violator := name.
 		^ false ].
 	string isEmpty ifTrue: [
@@ -26,7 +26,7 @@ ReIsValidSharedVariableName >> check [
 	string first isUppercase ifFalse: [
 		violator := name.
 		^ false ].
-	(RBScanner isVariable: string) ifFalse: [
+	(OCScanner isVariable: string) ifFalse: [
 		violator := name.
 		^ false ].
 	^ true

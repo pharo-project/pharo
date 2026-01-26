@@ -24,7 +24,7 @@ RTFSelfCallInterpreterTest >> tearDown [
 { #category : 'tests' }
 RTFSelfCallInterpreterTest >> testCallingSuperHelper [
 	| interpreter |
-	interpreter := RTFSelfCallInterpreter new.
+	interpreter := RTFSelfCallStackBuilder new.
 
 	interpreter considerClassesThat: [ :class | class inheritsFrom: TestAsserter ].
 
@@ -37,7 +37,7 @@ RTFSelfCallInterpreterTest >> testCallingSuperHelper [
 { #category : 'tests' }
 RTFSelfCallInterpreterTest >> testSimple [
 	| interpreter |
-	interpreter := RTFSelfCallInterpreter new.
+	interpreter := RTFSelfCallStackBuilder new.
 
 	interpreter considerClassesThat: [ :class | class inheritsFrom: TestAsserter ].
 
@@ -50,7 +50,7 @@ RTFSelfCallInterpreterTest >> testSimple [
 { #category : 'tests' }
 RTFSelfCallInterpreterTest >> testWithHelper [
 	| interpreter |
-	interpreter := RTFSelfCallInterpreter new.
+	interpreter := RTFSelfCallStackBuilder new.
 
 	interpreter considerClassesThat: [ :class | class inheritsFrom: TestAsserter ].
 
@@ -63,7 +63,7 @@ RTFSelfCallInterpreterTest >> testWithHelper [
 { #category : 'tests' }
 RTFSelfCallInterpreterTest >> testWithHelperHelper [
 	| interpreter |
-	interpreter := RTFSelfCallInterpreter new.
+	interpreter := RTFSelfCallStackBuilder new.
 
 	interpreter considerClassesThat: [ :class | class inheritsFrom: TestAsserter ].
 
@@ -76,7 +76,7 @@ RTFSelfCallInterpreterTest >> testWithHelperHelper [
 { #category : 'tests' }
 RTFSelfCallInterpreterTest >> testWithSuperHelper [
 	| interpreter |
-	interpreter := RTFSelfCallInterpreter new.
+	interpreter := RTFSelfCallStackBuilder new.
 
 	interpreter considerClassesThat: [ :class | class inheritsFrom: TestAsserter ].
 

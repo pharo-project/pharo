@@ -44,11 +44,6 @@ MCScriptDefinition >> = aDefinition [
 		and: [script = aDefinition script]
 ]
 
-{ #category : 'visiting' }
-MCScriptDefinition >> accept: aVisitor [
-	aVisitor visitScriptDefinition: self
-]
-
 { #category : 'accessing' }
 MCScriptDefinition >> description [
 	^ Array with: packageName with: self scriptSelector
@@ -59,15 +54,10 @@ MCScriptDefinition >> evaluate [
 	self class compiler evaluate: script
 ]
 
-{ #category : 'initializing' }
+{ #category : 'initialization' }
 MCScriptDefinition >> initializeWithScript: aString packageName: packageString [
 	script := aString.
 	packageName := packageString
-]
-
-{ #category : 'installing' }
-MCScriptDefinition >> installScript [
-	self installScript: script
 ]
 
 { #category : 'installing' }
@@ -85,8 +75,9 @@ MCScriptDefinition >> isScriptDefinition [
 ]
 
 { #category : 'installing' }
-MCScriptDefinition >> load [
-	self installScript
+MCScriptDefinition >> loadWithLoader: aLoader [
+
+	self installScript: script
 ]
 
 { #category : 'accessing' }
@@ -123,7 +114,7 @@ MCScriptDefinition >> summary [
 MCScriptDefinition >> systemPackage [
 	"Return the corresponding system package. Return nil if no package in the system has this name."
 
-	^ self class environment organization packageNamed: self packageName ifAbsent: [ nil ]
+	^ self class packageOrganizer packageNamed: self packageName ifAbsent: [ nil ]
 ]
 
 { #category : 'installing' }

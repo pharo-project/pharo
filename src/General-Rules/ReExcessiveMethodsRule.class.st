@@ -22,7 +22,7 @@ ReExcessiveMethodsRule class >> checksClass [
 
 { #category : 'accessing' }
 ReExcessiveMethodsRule class >> group [
-	^ 'Design Flaws'
+	^ self designFlawGroup
 ]
 
 { #category : 'accessing' }

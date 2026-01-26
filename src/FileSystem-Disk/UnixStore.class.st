@@ -32,12 +32,6 @@ UnixStore class >> maxFileNameLength [
 ]
 
 { #category : 'public' }
-UnixStore class >> readOnlyVariant [
-
-	^ ReadOnlyUnixStore
-]
-
-{ #category : 'public' }
 UnixStore class >> separator [
 	^ $:
 ]

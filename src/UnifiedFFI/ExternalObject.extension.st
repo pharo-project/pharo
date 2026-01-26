@@ -8,6 +8,12 @@ ExternalObject >> autoRelease [
 ]
 
 { #category : '*UnifiedFFI' }
+ExternalObject >> isNullOrNil [
+
+	^ self getHandle isNullOrNil
+]
+
+{ #category : '*UnifiedFFI' }
 ExternalObject >> pointer [
 	^ self getHandle pointer
 ]

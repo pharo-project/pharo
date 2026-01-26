@@ -34,8 +34,7 @@ ReRenameMethodDriverTest >> testInvalidNameFollowedByAValidNameExpectSuccess [
 	| rbclasses driver model method |
 	rbclasses := RBClassEnvironment classes: { MyClassARoot }.
 	model := RBNamespace onEnvironment: rbclasses.
-	method := (model classObjectFor: MyClassARoot) methodFor:
-		          'accessingSharedVariable' asSymbol.
+	method := (model classObjectFor: MyClassARoot) methodFor: 'accessingSharedVariable' asSymbol.
 	driver := ReRenameMethodDriver new
 		          scopes: { rbclasses }
 		          model: model
@@ -47,13 +46,13 @@ ReRenameMethodDriverTest >> testInvalidNameFollowedByAValidNameExpectSuccess [
 	self setUpMocksOn: driver.
 	
 	driver runRefactoring.
-	self assert: driver refactoring model changes changes size equals: 4
+	self assert: driver refactoring model changes changes size equals: 6
 ]
 
 { #category : 'tests' }
 ReRenameMethodDriverTest >> testValidNameExpectSuccess [
-
 	| rbclasses driver model method dialog requestClass |
+	
 	rbclasses := RBClassEnvironment classes: { MyClassARoot }.
 	model := RBNamespace onEnvironment: rbclasses.
 	method := (model classObjectFor: MyClassARoot) methodFor: 'accessingSharedVariable' asSymbol.
@@ -78,5 +77,5 @@ ReRenameMethodDriverTest >> testValidNameExpectSuccess [
 
 	driver runRefactoring.
 
-	self assert: driver refactoring model changes changes size equals: 4
+	self assert: driver refactoring model changes changes size equals: 6
 ]

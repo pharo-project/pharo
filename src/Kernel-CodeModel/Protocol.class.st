@@ -1,15 +1,16 @@
 "
 A Protocol is a categorization of methods in Pharo. 
-A class has methods, and the methods are classified into protocols.
-A class holds my instances (for now through ClassOrganization but we want to remove this class in the future) and I hold the selectors of the methods that are inside me.
-I have a name that is used in browsers to display the different protocols.
+A class has methods, and the methods are classified into protocols. We currently have 1 protocol by method.
+A class holds my instances and I hold the selectors of the methods that are inside me.
+I have a name that is used in browsers to display the different protocols and I know which class owns me.
 "
 Class {
 	#name : 'Protocol',
 	#superclass : 'Object',
 	#instVars : [
 		'name',
-		'methodSelectors'
+		'methodSelectors',
+		'owningClass'
 	],
 	#category : 'Kernel-CodeModel-Classes',
 	#package : 'Kernel-CodeModel',
@@ -29,6 +30,14 @@ Protocol class >> named: aStrings [
 
 	^ self new
 		  name: aStrings;
+		  yourself
+]
+
+{ #category : 'instance creation' }
+Protocol class >> named: aString class: aClass [
+
+	^ (self named: aString)
+		  owningClass: aClass;
 		  yourself
 ]
 
@@ -75,6 +84,9 @@ Protocol >> isExtensionProtocol [
 	
 	The protocol needs to be '*NameOfThePackage'. This is an implementation detail and in the future we want to manage extensions in a different way to not rely on protocols. But until now, I can be used to know if I am used to manage extension methods."
 
+	"When we add an empty protocol it is automatically turned into an non classified one. So the following check is not mandatory. Now we let it because it is cheap and makes the system more robust in case of reflective tweaks."
+	
+	self name ifEmpty: [ ^ false ].
 	^ self name first = $*
 ]
 
@@ -101,6 +113,12 @@ Protocol >> methodSelectors: anObject [
 	methodSelectors := anObject
 ]
 
+{ #category : 'adding-removing' }
+Protocol >> methods [
+
+	^ self methodSelectors collect: [ :selector | self owningClass >> selector ]
+]
+
 { #category : 'accessing' }
 Protocol >> name [
 
@@ -110,6 +128,19 @@ Protocol >> name [
 { #category : 'accessing' }
 Protocol >> name: anObject [
 	name := anObject asSymbol
+]
+
+{ #category : 'accessing' }
+Protocol >> owningClass [
+	"The owning class is the class in which I am defined."
+
+	^ owningClass
+]
+
+{ #category : 'accessing' }
+Protocol >> owningClass: aClass [
+
+	owningClass := aClass
 ]
 
 { #category : 'printing' }

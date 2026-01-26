@@ -2,13 +2,15 @@
 Moves an instance variable from a class to another. It does not check whether this variable is being referenced in the former class.
 
 Usage:
+```
 | transformation |
 transformation := (RBMoveInstanceVariableToClassTransformation
 				variable: 'methodBlock'
-				fromClass: #RBBasicLintRuleTest
-				toClass: #RBFooLintRuleTest)
-				transform.
-(ChangesBrowser changes: transformation model changes changes) open
+				fromClass: #RBBasicLintRuleTestData
+				toClass: #RBFooLintRuleTestData)
+				generateChanges.
+(StRefactoringPreviewPresenter for: transformation) open
+```
 
 Preconditions:
 overrides the preconditions from both RBAddVariableRefactoring and RBRemoveVariableRefactoring

@@ -12,6 +12,11 @@ ClyMessageImplementorsQueryTest class >> clyMessageImplementor1 [
 
 { #category : 'methods for tests' }
 ClyMessageImplementorsQueryTest >> clyMessageImplementor1 [
+
+	"This method should be different from the superclass"
+	Object new
+
+
 ]
 
 { #category : 'running' }

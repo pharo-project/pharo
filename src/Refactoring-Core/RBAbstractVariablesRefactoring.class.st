@@ -6,7 +6,7 @@ For example RBMoveMethodRefactoring uses me.
 "
 Class {
 	#name : 'RBAbstractVariablesRefactoring',
-	#superclass : 'RBRefactoring',
+	#superclass : 'ReRefactoring',
 	#instVars : [
 		'tree',
 		'fromClass',
@@ -48,7 +48,7 @@ RBAbstractVariablesRefactoring >> abstractClassVariable: aString [
 
 	| refactoring rewriter nonMetaClass |
 	nonMetaClass := fromClass instanceSide.
-	refactoring := RBCreateAccessorsForVariableTransformation
+	refactoring := ReCreateAccessorsForVariableTransformation
 		               model: self model
 		               variable: aString
 		               class: nonMetaClass
@@ -88,7 +88,7 @@ RBAbstractVariablesRefactoring >> abstractClassVariables [
 RBAbstractVariablesRefactoring >> abstractInstanceVariable: aString [
 
 	| refactoring rewriter |
-	refactoring := RBCreateAccessorsForVariableTransformation
+	refactoring := ReCreateAccessorsForVariableTransformation
 		               model: self model
 		               variable: aString
 		               class: fromClass
@@ -197,7 +197,7 @@ RBAbstractVariablesRefactoring >> processAssignmentNode: aNode [
 	| varName |
 	varName := aNode variable name.
 	ignore = varName ifTrue: [^self].
-	(aNode whoDefines: varName) ifNotNil: [^self].
+	(aNode whichUpNodeDefines: varName) ifNotNil: [^self].
 	(self instanceVariableNames includes: varName)
 		ifTrue: [instVarWriters add: varName].
 	(self classVariableNames includes: varName)
@@ -209,7 +209,7 @@ RBAbstractVariablesRefactoring >> processReferenceNode: aNode [
 	| varName |
 	varName := aNode name.
 	ignore = varName ifTrue: [^self].
-	(aNode whoDefines: varName) ifNotNil: [^self].
+	(aNode whichUpNodeDefines: varName) ifNotNil: [^self].
 	(self instanceVariableNames includes: varName)
 		ifTrue: [instVarReaders add: varName].
 	(self classVariableNames includes: varName)

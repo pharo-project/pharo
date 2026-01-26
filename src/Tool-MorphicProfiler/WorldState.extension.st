@@ -3,14 +3,11 @@ Extension { #name : 'WorldState' }
 { #category : '*Tool-MorphicProfiler' }
 WorldState class >> startMessageTally [
 
-	(self confirm: 'MessageTally will start now,
+	(ConfirmationRequest signal: 'MessageTally will start now,
 and stop when the cursor goes
-to the top of the screen' translated)
-		ifFalse: [ ^ self ].
+to the top of the screen') ifFalse: [ ^ self ].
 
-	TimeProfiler spyAllOn: [
-		MorphicRenderLoop new doOneCycleWhile: [
-			self currentWorld activeHand position y > 0 ] ]
+	TimeProfiler spyAllOn: [ MorphicRenderLoop new doOneCycleWhile: [ self currentWorld activeHand position y > 0 ] ]
 ]
 
 { #category : '*Tool-MorphicProfiler' }
@@ -23,11 +20,8 @@ WorldState >> startMessageTally [
 WorldState class >> startThenBrowseMessageTally [
 	"Tally only the UI process"
 
-	(self confirm: 'MessageTally the UI process until the
-mouse pointer goes to the top of the screen')
-		ifFalse: [ ^ self ].
+	(ConfirmationRequest signal: 'MessageTally the UI process until the
+mouse pointer goes to the top of the screen') ifFalse: [ ^ self ].
 
-	TimeProfiler onBlock: [
-		MorphicRenderLoop new doOneCycleWhile: [
-			self currentWorld activeHand position y > 10 ] ]
+	TimeProfiler onBlock: [ MorphicRenderLoop new doOneCycleWhile: [ self currentWorld activeHand position y > 10 ] ]
 ]

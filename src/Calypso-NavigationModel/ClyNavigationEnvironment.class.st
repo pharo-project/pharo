@@ -132,10 +132,10 @@ Class {
 
 { #category : 'default' }
 ClyNavigationEnvironment class >> defaultOver: aSystem [
-	defaultGlobalEnvironments ifNil: [ defaultGlobalEnvironments := IdentityDictionary new ].
+	defaultGlobalEnvironments ifNil: [ defaultGlobalEnvironments := Dictionary new ].
 
 	^defaultGlobalEnvironments at: aSystem ifAbsentPut: [
-		(ClyNavigationEnvironment over: aSystem)
+		(self over: aSystem)
 			setUpAvailablePlugins;
 			attachToSystem ]
 ]

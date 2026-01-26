@@ -14,12 +14,6 @@ SelfVariable class >> variableName [
 	^#self
 ]
 
-{ #category : 'visiting' }
-SelfVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
-
-	^ aProgramNodeVisitor visitSelfNode: aNode
-]
-
 { #category : 'code generation' }
 SelfVariable >> emitValue: methodBuilder [
 

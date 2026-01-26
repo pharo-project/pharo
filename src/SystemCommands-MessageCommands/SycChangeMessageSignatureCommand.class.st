@@ -83,11 +83,6 @@ SycChangeMessageSignatureCommand >> execute [
 	self executeRefactorings
 ]
 
-{ #category : 'testing' }
-SycChangeMessageSignatureCommand >> isComplexRefactoring [
-	^true
-]
-
 { #category : 'accessing' }
 SycChangeMessageSignatureCommand >> originalMessage [
 	^ originalMessage
@@ -121,7 +116,7 @@ SycChangeMessageSignatureCommand >> requestNewMessageIn: aToolContext [
 	methodName := RBMethodName
 		              selector: originalMessage selector
 		              arguments: originalMessage argumentNames.
-	dialog := SycMethodNameEditorPresenter
+	dialog := StMethodNameEditorPresenter
 		          openOn: methodName
 		          withInvalidArgs: invalidArgNames
 		          canRenameArgs: self canRenameArgs

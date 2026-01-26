@@ -30,8 +30,30 @@ SessionManagerRegistrationTest >> testGivenARegisteredClassRenamedThenItsHandler
 	manager registerSystemClassNamed: #Foo.
 	manager renamedClass: self from: #Foo to: #Bar.
 	self
-		assert: (manager startupList collect: [:each | each handledId])
+		assert: (manager startupList collect: [:each | each handlerId])
 		equals: #( Bar )
+]
+
+{ #category : 'tests' }
+SessionManagerRegistrationTest >> testGivenARegisteredNamedHandlerWhenIRegisterTheSameNameThenRegisteredHandlerIsUpdated [
+	| registeredClassName |
+	
+	manager
+		register: (NamedSessionHandler forClassNamed: #Foo id: #someId)
+		inCategory: manager systemCategory.
+	registeredClassName := (manager startupList detect: [:each | each handlerId = #someId]) registeredClassName.
+	self
+		assert: registeredClassName
+		equals: #Foo.
+		
+	manager
+		register: (NamedSessionHandler forClassNamed: #Bar id: #someId)
+		inCategory: manager systemCategory.
+	registeredClassName := (manager startupList detect: [:each | each handlerId = #someId]) registeredClassName.
+			
+	self
+		assert: registeredClassName
+		equals: #Bar
 ]
 
 { #category : 'tests' }
@@ -42,7 +64,7 @@ SessionManagerRegistrationTest >> testGivenManyRegistrationsInDifferentCategorie
 	manager registerGuiClassNamed: #Foo atPriority: 30.
 	manager registerGuiClassNamed: #Foo atPriority: 50.
 	self
-		assert: (manager startupList collect: [:each | each handledId])
+		assert: (manager startupList collect: [:each | each handlerId])
 		equals: #( Bar Foo )
 ]
 
@@ -53,7 +75,7 @@ SessionManagerRegistrationTest >> testGivenManyRegistrationsInSameCategoryAtDiff
 	manager registerSystemClassNamed: #Foo atPriority: 10.
 	manager registerSystemClassNamed: #Foo atPriority: 20.
 	self
-		assert: (manager startupList collect: [:each | each handledId])
+		assert: (manager startupList collect: [:each | each handlerId])
 		equals: #( Bar Foo )
 ]
 
@@ -64,7 +86,7 @@ SessionManagerRegistrationTest >> testGivenManyRegistrationsInSameCategoryShoudl
 	manager registerSystemClassNamed: #Foo.
 	manager registerSystemClassNamed: #Foo.
 	self
-		assert: (manager startupList collect: [:each | each handledId])
+		assert: (manager startupList collect: [:each | each handlerId])
 		equals: #( Bar Foo )
 ]
 

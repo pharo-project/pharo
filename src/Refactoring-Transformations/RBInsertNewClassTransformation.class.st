@@ -4,13 +4,13 @@ Adds a class in the image, optionally inside an hierarchy (with superclass or su
 Usage:
 ```
 | transformation |
-transformation := (RBInsertClassTransformation
-	addClass: #InsertedClass
-	superclass: #RBTransformationTest
-	subclasses: (Array with: RBInsertClassTransformationTest)
-	category: #'Refactoring2-Transformations-Tests')
-	transform.
-(ChangesBrowser changes: transformation model changes changes) open
+transformation := RBInsertNewClassTransformation new
+	className: #InsertedClass;
+	superclass: #RBAbstractRefactoringTest;
+	subclasses: (Array with: RBInsertClassParametrizedTest);
+	packageName: #'Refactoring2-Transformations-Tests';
+	generateChanges.
+(StRefactoringPreviewPresenter for: transformation) open
 ```
 
 Preconditions:
@@ -57,6 +57,19 @@ RBInsertNewClassTransformation >> applicabilityPreconditions [
 					   'Invalid package name') }
 ]
 
+{ #category : 'transforming' }
+RBInsertNewClassTransformation >> checkSuperclass [
+
+	| superclassObj superclassName |
+	"I fail if superclass is not defined in the model"
+	superclassObj := self model classObjectFor: superclass.
+	superclassObj ifNil: [
+			superclassName := superclass isString
+				                  ifTrue: [ superclass , ' ' ]
+				                  ifFalse: [ '' ].
+			self refactoringError: 'The new class'' superclass ' , superclassName , 'is missing from the model' ]
+]
+
 { #category : 'initialization' }
 RBInsertNewClassTransformation >> initialize [
 
@@ -86,6 +99,12 @@ RBInsertNewClassTransformation >> packageName [
 RBInsertNewClassTransformation >> packageName: anObject [
 
 	packageName := anObject
+]
+
+{ #category : 'transforming' }
+RBInsertNewClassTransformation >> prepareForExecution [
+	
+	self checkSuperclass
 ]
 
 { #category : 'executing' }

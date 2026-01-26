@@ -37,7 +37,7 @@ ReProperMethodProtocolNameRule class >> goodMethodProtocolName [
 { #category : 'accessing' }
 ReProperMethodProtocolNameRule class >> group [
 
-	^ 'Method Protocol Name'
+	^ self methodProtocolNameGroup
 ]
 
 { #category : 'testing' }

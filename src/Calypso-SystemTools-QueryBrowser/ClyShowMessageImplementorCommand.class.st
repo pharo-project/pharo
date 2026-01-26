@@ -66,6 +66,12 @@ ClyShowMessageImplementorCommand >> defaultMenuItemName [
 	^'Implementors'
 ]
 
+{ #category : 'accessing' }
+ClyShowMessageImplementorCommand >> description [
+
+	^ 'Show all message implementors.'
+]
+
 { #category : 'execution' }
 ClyShowMessageImplementorCommand >> execute [
 

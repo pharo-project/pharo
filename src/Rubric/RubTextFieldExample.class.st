@@ -26,9 +26,10 @@ Class {
 
 { #category : 'examples' }
 RubTextFieldExample class >> exampleOpen [
+
 	| st |
 	st := self new newScrolledText.
- 	st openInWorld
+	^ st openInWorld
 ]
 
 { #category : 'examples' }

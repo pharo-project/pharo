@@ -27,6 +27,12 @@ RBBrowserEnvironmentWrapper class >> onEnvironment: anEnvironment [
 		yourself
 ]
 
+{ #category : 'comparing' }
+RBBrowserEnvironmentWrapper >> = anotherEnvironment [
+
+	^ self == anotherEnvironment or: [anotherEnvironment class = self class and: [ environment = anotherEnvironment environment ]]
+]
+
 { #category : 'visiting' }
 RBBrowserEnvironmentWrapper >> acceptVisitor: aProgramNodeVisitor [
 
@@ -67,6 +73,12 @@ RBBrowserEnvironmentWrapper >> descriptionBasis [
 { #category : 'private' }
 RBBrowserEnvironmentWrapper >> environment [
 	^ environment
+]
+
+{ #category : 'comparing' }
+RBBrowserEnvironmentWrapper >> hash [ 
+
+	^ environment hash
 ]
 
 { #category : 'testing' }

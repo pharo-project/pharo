@@ -20,11 +20,6 @@ Class {
 	#tag : 'Variables'
 }
 
-{ #category : 'visiting' }
-ClassVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
-	^ aProgramNodeVisitor visitClassVariableNode: aNode
-]
-
 { #category : 'accessing' }
 ClassVariable >> definingClass [
 	"if a Variable is from a Trait is installed in a class, we store the orginal class of the trait here"

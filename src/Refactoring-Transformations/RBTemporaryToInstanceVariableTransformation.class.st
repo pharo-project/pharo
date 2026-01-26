@@ -12,14 +12,16 @@ The temporary variables with the same name in hierarchy will be removed, and rep
 Example
 --------------------
 
-Example: 
+Example:
+```
 | transformation |
 transformation := (RBTemporaryToInstanceVariableRefactoring 
-				class: MyClassA
+				class: RBDummyEmptyClass
     			selector: #someMethod
     			variable: 'log') 
-				transform.
-(ChangesBrowser changes: transformation model changes changes) open
+				generateChanges.
+(StRefactoringPreviewPresenter for: transformation) open
+```
 
 Script refactoring:
 ```
@@ -111,12 +113,19 @@ RBTemporaryToInstanceVariableTransformation >> applicabilityPreconditions [
 			   definesInstanceVariable: temporaryVariableName asString
 			   in: class) not.
 		  (RBCondition withBlock: [
-			   self checkForValidTemporaryVariable.
+			   self isTemporaryVariableNameValid.
 			   true ]) }
 ]
 
+{ #category : 'instance creation' }
+RBTemporaryToInstanceVariableTransformation >> class: aClass selector: aSelector variable: aVariableName [
+	class := self model classObjectFor: aClass.
+	selector := aSelector.
+	temporaryVariableName := aVariableName
+]
+
 { #category : 'preconditions' }
-RBTemporaryToInstanceVariableTransformation >> checkForValidTemporaryVariable [
+RBTemporaryToInstanceVariableTransformation >> isTemporaryVariableNameValid [
 	| parseTree |
 	parseTree := class parseTreeForSelector: selector.
 	parseTree ifNil: [ self refactoringError: 'Could not create parse tree for ' class name , '>>' , selector ].
@@ -127,19 +136,12 @@ RBTemporaryToInstanceVariableTransformation >> checkForValidTemporaryVariable [
 	(parseTree allArgumentVariables includes: temporaryVariableName)
 		ifTrue:
 			[self refactoringError: temporaryVariableName , ' is a block parameter'].
-	(RBReadBeforeWrittenTester isVariable: temporaryVariableName
+	(OCReadBeforeWrittenTester isVariable: temporaryVariableName
 		readBeforeWrittenIn: parseTree)
 			ifTrue:
 				[self
 					refactoringWarning: ('<1s> is read before it is written.<n>Proceed anyway?'
 							expandMacrosWith: temporaryVariableName)]
-]
-
-{ #category : 'instance creation' }
-RBTemporaryToInstanceVariableTransformation >> class: aClass selector: aSelector variable: aVariableName [
-	class := self model classObjectFor: aClass.
-	selector := aSelector.
-	temporaryVariableName := aVariableName
 ]
 
 { #category : 'executing' }
@@ -159,12 +161,12 @@ RBTemporaryToInstanceVariableTransformation >> removeTemporaryOfClass: aClass [
 
 { #category : 'removing' }
 RBTemporaryToInstanceVariableTransformation >> removeTemporaryOfMethod: aSelector in: aClass [
+
 	| parseTree matcher aMethod |
 	aMethod := aClass methodFor: aSelector.
 	parseTree := aMethod parseTree.
 	parseTree ifNil: [ self refactoringError: 'Could not parse method' ].
-	( matcher := self parseTreeRewriterClass removeTemporaryNamed: temporaryVariableName )
-		executeTree: parseTree.
+	(matcher := self parseTreeRewriterClass removeTemporaryNamed: temporaryVariableName) executeTree: parseTree.
 	aMethod compileTree: matcher tree
 ]
 

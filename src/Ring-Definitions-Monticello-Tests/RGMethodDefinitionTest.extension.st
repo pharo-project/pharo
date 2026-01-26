@@ -8,7 +8,7 @@ RGMethodDefinitionTest >> testAsFullMethodDefinition [
 	self assert: rgMethod package isNil.
 
 	"retrieves package information from protocol name (class extension)"
-	rgMethod := (Class >> #asRingDefinition) asFullRingDefinition.
+	rgMethod := Class asFullRingDefinition methodNamed: #asRingDefinition.
 	self assert: rgMethod parent isNotNil.
 	self assert: rgMethod parentName equals: #Class.
 	self assert: rgMethod parent methods size equals: Class methods size.
@@ -17,7 +17,7 @@ RGMethodDefinitionTest >> testAsFullMethodDefinition [
 	self assert: rgMethod package name equals: #'Ring-Definitions-Core'.
 
 	"retrieves package information from class package name "
-	rgMethod := (Class >> #name) asFullRingDefinition.
+	rgMethod := Class asFullRingDefinition methodNamed: #name.
 	self assert: rgMethod parent isNotNil.
 	self assert: rgMethod parentName equals: #Class.
 	self assert: rgMethod parent methods size equals: Class methods size.

@@ -11,7 +11,7 @@ Class {
 
 { #category : 'accessing' }
 ReEqualsTrueRule class >> group [
-	^ 'Optimization'
+	^ self optimizationGroup
 ]
 
 { #category : 'accessing' }

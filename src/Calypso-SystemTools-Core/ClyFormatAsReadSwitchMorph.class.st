@@ -20,12 +20,12 @@ Class {
 { #category : 'formatting' }
 ClyFormatAsReadSwitchMorph >> formatAsYouRead [
 
-	^ ASTProgramNode formatterClass formatAsYouReadPolicy
+	^ OCProgramNode formatterClass formatAsYouReadPolicy
 ]
 
 { #category : 'formatting' }
 ClyFormatAsReadSwitchMorph >> formatAsYouReadLabel [
-	^ 'F'
+	^ 'Format'
 ]
 
 { #category : 'initialization' }
@@ -47,7 +47,7 @@ ClyFormatAsReadSwitchMorph >> initialize [
 { #category : 'operations' }
 ClyFormatAsReadSwitchMorph >> toggle [
 	| formatter isDirty |
-	formatter := ASTProgramNode formatterClass.
+	formatter := OCProgramNode formatterClass.
 	formatter formatAsYouReadPolicy
 		ifTrue: [
 			formatter formatAsYouReadPolicy: false.

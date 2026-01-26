@@ -17,8 +17,7 @@ RePackageManifestShouldBePackagedInManifestTagRule class >> checksClass [
 
 { #category : 'accessing' }
 RePackageManifestShouldBePackagedInManifestTagRule class >> group [
-
-	^ 'Coding Idiom Violation'
+	^ self codingIdiomViolationGroup
 ]
 
 { #category : 'accessing' }

@@ -1,6 +1,12 @@
 Extension { #name : 'ByteArray' }
 
 { #category : '*UnifiedFFI' }
+ByteArray >> isNullOrNil [
+
+	^ self isNull
+]
+
+{ #category : '*UnifiedFFI' }
 ByteArray >> packAsDoubleToArity: arity [
 	"In case I sending a buffer to get the contents I need to understand this message.
 	 See AthensCairoCanvas>>getCurrentPoint as an example."
@@ -136,18 +142,6 @@ ByteArray >> platformUnsignedLongAt: byteOffset put: value [
 { #category : '*UnifiedFFI' }
 ByteArray >> readString [
 	^ (ExternalData fromHandle: self type: ExternalType string) bytesFromCString
-]
-
-{ #category : '*UnifiedFFI' }
-ByteArray >> readStringUTF8 [
-
-	self
-		deprecated: 'Please use #utf8StringFromCString instead'
-		transformWith: '`@receiver readStringUTF8'
-						-> '`@receiver utf8StringFromCString'.
-
-	^ (ExternalData fromHandle: self type: ExternalType string)
-		  utf8StringFromCString
 ]
 
 { #category : '*UnifiedFFI' }

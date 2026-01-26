@@ -3,7 +3,7 @@ I'm an interaction class in charge of stirring the application or not of removin
 "
 Class {
 	#name : 'ReRemoveSharedVariablesDriver',
-	#superclass : 'RBInteractionDriver',
+	#superclass : 'ReInteractionDriver',
 	#instVars : [
 		'class',
 		'variables'
@@ -12,6 +12,18 @@ Class {
 	#package : 'Refactoring-UI',
 	#tag : 'Drivers'
 }
+
+{ #category : 'accessing' }
+ReRemoveSharedVariablesDriver class >> driverName [
+
+	^ 'Remove shared variable(s)'
+]
+
+{ #category : 'accessing' }
+ReRemoveSharedVariablesDriver class >> shouldPreviewChangesByDefault [
+
+	^ false
+]
 
 { #category : 'execution' }
 ReRemoveSharedVariablesDriver >> breakingChoices [
@@ -27,44 +39,35 @@ ReRemoveSharedVariablesDriver >> breakingChoices [
 { #category : 'execution' }
 ReRemoveSharedVariablesDriver >> browseSharedVariableReferences [
 
-	StMessageBrowser browse: refactoring violators
+	(Smalltalk tools toolNamed: #messageList) browse: refactoring violators
 ]
 
-{ #category : 'execution' }
-ReRemoveSharedVariablesDriver >> changes [
-
-	^ refactoring privateTransform; changes
-]
-
-{ #category : 'resources' }
+{ #category : 'configuration' }
 ReRemoveSharedVariablesDriver >> configureRefactoring [
 
-	refactoring := ReUpFrontPreconditionCheckingCompositeRefactoring new
-							model: model; 
-							refactorings: (variables collect: [:each | 
-									ReRemoveSharedVariableRefactoring model: model remove: each from: class]);
-								yourself.
+	super configureRefactoring.
 	refactoring prepareForInteractiveMode
 ]
 
-{ #category : 'execution' }
+{ #category : 'configuration' }
 ReRemoveSharedVariablesDriver >> defaultSelectDialog [
 
-	^ SpSelectDialog new
-		          title: 'There are references to variables!';
-		          items: self breakingChoices;
-		          display: [ :each | each description ];
-		          displayIcon: [ :each |  self iconNamed: each systemIconName ];
-		          openModal.
-
+	^ super defaultSelectDialog
+		  title: 'There are references to variables!';
+		  items: self breakingChoices;
+		  display: [ :each | each description ];
+		  displayIcon: [ :each | self iconNamed: each systemIconName ];
+			yourself
 ]
 
-{ #category : 'execution' }
-ReRemoveSharedVariablesDriver >> handleBreakingChanges [
+{ #category : 'configuration' }
+ReRemoveSharedVariablesDriver >> instantiateRefactoring [
 
-	| select  |
-	select := self defaultSelectDialog.
-	select ifNotNil: [ select action ]
+	^ ReUpFrontPreconditionCheckingCompositeRefactoring new
+		model: model; 
+		refactorings: (variables collect: [:each | 
+				ReRemoveSharedVariableRefactoring model: model remove: each from: class]);
+		yourself
 ]
 
 { #category : 'execution' }

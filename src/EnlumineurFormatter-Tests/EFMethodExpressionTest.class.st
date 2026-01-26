@@ -10,7 +10,7 @@ EFMethodExpressionTest >> basicCommentFormatConfiguration [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
+			EFContext new storeOn: s]"
 
 	^ self contextClass basicNew
 		  indentStyle: #tabulation;
@@ -27,7 +27,7 @@ EFMethodExpressionTest >> basicConfiguration [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
+			EFContext new storeOn: s]"
 
 	^ self contextClass basicNew
 		  indentStyle: #tabulation;
@@ -47,7 +47,7 @@ EFMethodExpressionTest >> bigMethodeConfiguration [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
+			EFContext new storeOn: s]"
 
 	^ self contextClass basicNew
 		  indentStyle: #tabulation;
@@ -81,7 +81,7 @@ EFMethodExpressionTest >> cascadeConfiguration [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
+			EFContext new storeOn: s]"
 
 	^ self contextClass basicNew
 		  indentStyle: #tabulation;
@@ -108,7 +108,7 @@ EFMethodExpressionTest >> newLineBetweenTopCommentsConfiguration [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
+			EFContext new storeOn: s]"
 
 	^ self contextClass basicNew
 		  indentStyle: #tabulation;
@@ -128,7 +128,7 @@ EFMethodExpressionTest >> noNewLineBetweenTopCommentsConfiguration [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
+			EFContext new storeOn: s]"
 
 	^ self contextClass basicNew
 		  indentStyle: #tabulation;
@@ -145,7 +145,7 @@ EFMethodExpressionTest >> noNewLinesAfterCommentConfiguration [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
+			EFContext new storeOn: s]"
 
 	^ self contextClass basicNew
 		  indentStyle: #tabulation;
@@ -162,7 +162,7 @@ EFMethodExpressionTest >> notBasicCommentFormatConfiguration [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
+			EFContext new storeOn: s]"
 
 	^ self contextClass basicNew
 		  indentStyle: #tabulation;
@@ -180,7 +180,7 @@ EFMethodExpressionTest >> oneNewLineAfterCommentConfiguration [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
+			EFContext new storeOn: s]"
 
 	^ self contextClass basicNew
 		  indentStyle: #tabulation;
@@ -188,7 +188,7 @@ EFMethodExpressionTest >> oneNewLineAfterCommentConfiguration [
 		  useBasicCommentFormat: false;
 		  maxLineLength: 50;
 		  numberOfNewLinesAfterMethodSignature: 1;
-  		  numberOfNewLinesAfterMethodSignatureWithMethodComment: 1; 
+		  numberOfNewLinesAfterMethodSignatureWithMethodComment: 1;
 		  numberOfNewLinesAfterMethodComment: 2;
 		  indentExtraSpaces: 0
 ]
@@ -198,11 +198,11 @@ EFMethodExpressionTest >> oneNewLinesAfterSignatureConfiguration [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
+			EFContext new storeOn: s]"
 
 	^ self contextClass basicNew
-		indentStyle: #tabulation;
-		formatCommentCloseToStatements:false
+		  indentStyle: #tabulation;
+		  formatCommentCloseToStatements: false
 ]
 
 { #category : 'configurations' }
@@ -210,7 +210,7 @@ EFMethodExpressionTest >> signatureConfiguration [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
+			EFContext new storeOn: s]"
 
 	^ self contextClass basicNew
 		  indentStyle: #tabulation;
@@ -225,7 +225,7 @@ EFMethodExpressionTest >> signatureNotOnMultipleLinesConfiguration [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
+			EFContext new storeOn: s]"
 
 	^ self contextClass basicNew
 		  indentStyle: #tabulation;
@@ -241,7 +241,7 @@ EFMethodExpressionTest >> signatureOnMultipleLinesConfiguration [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
+			EFContext new storeOn: s]"
 
 	^ self contextClass basicNew
 		  indentStyle: #tabulation;
@@ -258,7 +258,7 @@ EFMethodExpressionTest >> spaceIndentConfiguration [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
+			EFContext new storeOn: s]"
 
 	^ self contextClass basicNew
 		  numberOfSpacesInIndent: 10;
@@ -277,9 +277,9 @@ EFMethodExpressionTest >> spaceIndentConfiguration [
 { #category : 'tests' }
 EFMethodExpressionTest >> testBasic [
 	| expr source |
-	expr := RBParser parseMethod: 'aMethod <pragma> "aComment" body'.
+	expr := OCParser parseMethod: 'aMethod <pragma> "aComment" body'.
 	configurationSelector := #basicConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals:
 'aMethod
 	"aComment"
@@ -290,9 +290,9 @@ EFMethodExpressionTest >> testBasic [
 { #category : 'tests' }
 EFMethodExpressionTest >> testBasic2 [
 	| expr source |
-	expr := RBParser parseMethod: 'aMethod <pragma1> <pragma2> "aComment1" "aComment2"  body'.
+	expr := OCParser parseMethod: 'aMethod <pragma1> <pragma2> "aComment1" "aComment2"  body'.
 	configurationSelector := #newLineBetweenTopCommentsConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals:
 'aMethod
 	"aComment1"
@@ -305,9 +305,9 @@ EFMethodExpressionTest >> testBasic2 [
 { #category : 'tests' }
 EFMethodExpressionTest >> testBasicSpaceIndent [
 	| expr source |
-	expr := RBParser parseMethod: 'aMethod <pragma> "aComment" body'.
+	expr := OCParser parseMethod: 'aMethod <pragma> "aComment" body'.
 	configurationSelector := #spaceIndentConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals:
 'aMethod
           "aComment"
@@ -318,7 +318,7 @@ EFMethodExpressionTest >> testBasicSpaceIndent [
 { #category : 'tests' }
 EFMethodExpressionTest >> testBigMethod [
 	| expr source |
-	expr := RBParser parseMethod: 
+	expr := OCParser parseMethod: 
 	'aMethode
 	"aComment"
 	"anotherComment"
@@ -328,7 +328,7 @@ EFMethodExpressionTest >> testBigMethod [
 	tmp to: 10 do: [:i | Transcript show:i ; cr ;cr]
 	'.
 	configurationSelector := #bigMethodeConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals:
 'aMethode
 	"aComment"
@@ -337,19 +337,19 @@ EFMethodExpressionTest >> testBigMethod [
 	| tmp |
 	tmp := 1.
 	tmp to: 10 do: [:i |
-		Transcript
-			show: i;
-			cr;
-			cr
-		]'
+			Transcript
+				show: i;
+				cr;
+				cr
+			]'
 ]
 
 { #category : 'tests' }
 EFMethodExpressionTest >> testCommentBasicFormat [
 	| expr source |
-	expr := RBParser parseMethod: 'aMethode "   aComment   "'.
+	expr := OCParser parseMethod: 'aMethode "   aComment   "'.
 	configurationSelector := #basicCommentFormatConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals:
 'aMethode
 	"   aComment   "
@@ -359,9 +359,9 @@ EFMethodExpressionTest >> testCommentBasicFormat [
 { #category : 'tests' }
 EFMethodExpressionTest >> testCommentNotBasicFormat [
 	| expr source |
-	expr := RBParser parseMethod: 'aMethode "   aComment   "'.
+	expr := OCParser parseMethod: 'aMethode "   aComment   "'.
 	configurationSelector := #notBasicCommentFormatConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals:
 'aMethode
 	"aComment   "
@@ -371,9 +371,9 @@ EFMethodExpressionTest >> testCommentNotBasicFormat [
 { #category : 'tests' }
 EFMethodExpressionTest >> testFormatBody [
 	| expr source |
-	expr := RBParser parseMethod: 'aMethode a:=1'.
+	expr := OCParser parseMethod: 'aMethode a:=1'.
 	configurationSelector := #basicConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals:
 'aMethode
 	a := 1'
@@ -382,9 +382,9 @@ EFMethodExpressionTest >> testFormatBody [
 { #category : 'tests' }
 EFMethodExpressionTest >> testIndentCascade [
 	| expr source |
-	expr := RBParser parseMethod: 'aMethode	Transcript cr; show: ''foo'';	cr. Transcript cr;cr'.
+	expr := OCParser parseMethod: 'aMethode	Transcript cr; show: ''foo'';	cr. Transcript cr;cr'.
 	configurationSelector := #cascadeConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals:
 'aMethode
 	Transcript
@@ -399,29 +399,29 @@ EFMethodExpressionTest >> testIndentCascade [
 { #category : 'tests' }
 EFMethodExpressionTest >> testMethodWithMessageArgument [
 	| expr source |
-	expr := RBParser parseMethod: 
+	expr := OCParser parseMethod: 
 'aMethod
 
 	1 to: 10 do: [:i | Transcript show:i ; cr ;cr]
 	'.
 	configurationSelector := #bigMethodeConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals:
 'aMethod
 	1 to: 10 do: [:i |
-		Transcript
-			show: i;
-			cr;
-			cr
-		]'
+			Transcript
+				show: i;
+				cr;
+				cr
+			]'
 ]
 
 { #category : 'tests' }
 EFMethodExpressionTest >> testNewLinesAfterComment [
 	| expr source |
-	expr := RBParser parseMethod: 'aMethode "aComment"'.
+	expr := OCParser parseMethod: 'aMethode "aComment"'.
 	configurationSelector := #oneNewLineAfterCommentConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals:
 'aMethode
 	"aComment"
@@ -432,9 +432,9 @@ EFMethodExpressionTest >> testNewLinesAfterComment [
 { #category : 'tests' }
 EFMethodExpressionTest >> testNewLinesAfterComment2 [
 	| expr source |
-	expr := RBParser parseMethod: 'aMethode "aComment" "anotherComment"'.
+	expr := OCParser parseMethod: 'aMethode "aComment" "anotherComment"'.
 	configurationSelector := #oneNewLineAfterCommentConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals:
 'aMethode
 	"aComment"
@@ -447,9 +447,9 @@ EFMethodExpressionTest >> testNewLinesAfterComment2 [
 { #category : 'tests' }
 EFMethodExpressionTest >> testNewLinesAfterGluedComment [
 	| expr source |
-	expr := RBParser parseMethod: 'aMethode"aComment""anotherComment"'.
+	expr := OCParser parseMethod: 'aMethode"aComment""anotherComment"'.
 	configurationSelector := #oneNewLineAfterCommentConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals:
 'aMethode
 	"aComment""anotherComment"
@@ -460,9 +460,9 @@ EFMethodExpressionTest >> testNewLinesAfterGluedComment [
 { #category : 'tests' }
 EFMethodExpressionTest >> testNewLinesBetweenTopComments [
 	| expr source |
-	expr := RBParser parseMethod: 'aMethode "aComment" "anotherComment"'.
+	expr := OCParser parseMethod: 'aMethode "aComment" "anotherComment"'.
 	configurationSelector := #newLineBetweenTopCommentsConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals:
 'aMethode
 	"aComment"
@@ -473,9 +473,9 @@ EFMethodExpressionTest >> testNewLinesBetweenTopComments [
 { #category : 'tests' }
 EFMethodExpressionTest >> testNoNewLinesAfterComment [
 	| expr source |
-	expr := RBParser parseMethod: 'aMethode "aComment"'.
+	expr := OCParser parseMethod: 'aMethode "aComment"'.
 	configurationSelector := #basicCommentFormatConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals:
 'aMethode
 	"aComment"
@@ -485,9 +485,9 @@ EFMethodExpressionTest >> testNoNewLinesAfterComment [
 { #category : 'tests' }
 EFMethodExpressionTest >> testNoNewLinesAfterGluedComment [
 	| expr source |
-	expr := RBParser parseMethod: 'aMethode "aComment""anotherComment"'.
+	expr := OCParser parseMethod: 'aMethode "aComment""anotherComment"'.
 	configurationSelector := #noNewLinesAfterCommentConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals:
 'aMethode
 	"aComment""anotherComment"
@@ -497,9 +497,9 @@ EFMethodExpressionTest >> testNoNewLinesAfterGluedComment [
 { #category : 'tests' }
 EFMethodExpressionTest >> testNoNewLinesAfterSignature [
 	| expr source |
-	expr := RBParser parseMethod: 'aMethode'.
+	expr := OCParser parseMethod: 'aMethode'.
 	configurationSelector := #signatureConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals:
 'aMethode
 	'
@@ -508,9 +508,9 @@ EFMethodExpressionTest >> testNoNewLinesAfterSignature [
 { #category : 'tests' }
 EFMethodExpressionTest >> testNoNewLinesBetweenTopComments [
 	| expr source |
-	expr := RBParser parseMethod: 'aMethode "aComment" "anotherComment"'.
+	expr := OCParser parseMethod: 'aMethode "aComment" "anotherComment"'.
 	configurationSelector := #noNewLineBetweenTopCommentsConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals:
 'aMethode
 	"aComment"	"anotherComment"	'
@@ -519,9 +519,9 @@ EFMethodExpressionTest >> testNoNewLinesBetweenTopComments [
 { #category : 'tests' }
 EFMethodExpressionTest >> testOneNewLinesAfterSignature [
 	| expr source |
-	expr := RBParser parseMethod: 'aMethode'.
+	expr := OCParser parseMethod: 'aMethode'.
 	configurationSelector := #oneNewLineAfterCommentConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals:
 'aMethode
 	'
@@ -530,9 +530,9 @@ EFMethodExpressionTest >> testOneNewLinesAfterSignature [
 { #category : 'tests' }
 EFMethodExpressionTest >> testPragma [
 	| expr source |
-	expr := RBParser parseMethod: 'aMethode <pragma>'.
+	expr := OCParser parseMethod: 'aMethode <pragma>'.
 	configurationSelector := #notBasicCommentFormatConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals:
 'aMethode
 	<pragma>
@@ -542,9 +542,9 @@ EFMethodExpressionTest >> testPragma [
 { #category : 'tests' }
 EFMethodExpressionTest >> testSignatureNotOnMultipleLines [
 	| expr source |
-	expr := RBParser parseMethod: 'aMethode:arg1 foo:arg2'.
+	expr := OCParser parseMethod: 'aMethode:arg1 foo:arg2'.
 	configurationSelector := #signatureNotOnMultipleLinesConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals:
 'aMethode: arg1 foo: arg2
 	'
@@ -553,9 +553,9 @@ EFMethodExpressionTest >> testSignatureNotOnMultipleLines [
 { #category : 'tests' }
 EFMethodExpressionTest >> testSignatureOnMultipleLines [
 	| expr source |
-	expr := RBParser parseMethod: 'aMethode: arg1 foo:arg2'.
+	expr := OCParser parseMethod: 'aMethode: arg1 foo:arg2'.
 	configurationSelector := #signatureOnMultipleLinesConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals:
 'aMethode: arg1
 	foo: arg2
@@ -565,9 +565,9 @@ EFMethodExpressionTest >> testSignatureOnMultipleLines [
 { #category : 'tests' }
 EFMethodExpressionTest >> testSignatureWithArgument [
 	| expr source |
-	expr := RBParser parseMethod: 'aMethode:arg'.
+	expr := OCParser parseMethod: 'aMethode:arg'.
 	configurationSelector := #signatureNotOnMultipleLinesConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals:
 'aMethode: arg
 	'
@@ -576,9 +576,9 @@ EFMethodExpressionTest >> testSignatureWithArgument [
 { #category : 'tests' }
 EFMethodExpressionTest >> testSignatureWithoutArgument [
 	| expr source |
-	expr := RBParser parseMethod: 'aMethode'.
+	expr := OCParser parseMethod: 'aMethode'.
 	configurationSelector := #basicConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals:
 'aMethode
 	'
@@ -587,9 +587,9 @@ EFMethodExpressionTest >> testSignatureWithoutArgument [
 { #category : 'tests' }
 EFMethodExpressionTest >> testTwoNewLinesAfterSignature [
 	| expr source |
-	expr := RBParser parseMethod: 'aMethode'.
+	expr := OCParser parseMethod: 'aMethode'.
 	configurationSelector := #twoNewLinesAfterSignatureConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals:
 'aMethode
 
@@ -602,7 +602,7 @@ EFMethodExpressionTest >> twoNewLinesAfterSignatureConfiguration [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
+			EFContext new storeOn: s]"
 
 	^ self contextClass basicNew
 		  indentStyle: #tabulation;

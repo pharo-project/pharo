@@ -334,13 +334,6 @@ STONWriter >> on: aWriteStream [
 ]
 
 { #category : 'initialization' }
-STONWriter >> optimizeForLargeStructures [
-	self class environment
-		at: #FLLargeIdentityDictionary
-		ifPresent: [ :identityDictionaryClass | objects := identityDictionaryClass new ]
-]
-
-{ #category : 'initialization' }
 STONWriter >> prettyPrint: boolean [
 	prettyPrint := boolean
 ]

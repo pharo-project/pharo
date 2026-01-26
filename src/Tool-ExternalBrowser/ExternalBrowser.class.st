@@ -62,6 +62,12 @@ ExternalBrowser class >> defaultLayout [
 		yourself
 ]
 
+{ #category : 'accessing' }
+ExternalBrowser class >> defaultPreferredExtent [
+
+	^ 800@600
+]
+
 { #category : 'examples' }
 ExternalBrowser class >> example [
 	<example>
@@ -91,7 +97,7 @@ ExternalBrowser class >> openOn: model [
 ExternalBrowser class >> serviceBrowseCode [
 	"Answer the service of opening a file-contents browser"
 
-	^ (SimpleServiceEntry
+	^ (FileServiceEntry
 		provider: self
 		label: 'Code-file browser'
 		selector: #browseStream:
@@ -177,13 +183,6 @@ ExternalBrowser >> initializePresenter [
 		add: method
 ]
 
-{ #category : 'initialization' }
-ExternalBrowser >> initializeWindow: aWindow [
-
-	aWindow title: 'External Package Browser'.
-	aWindow initialExtent: 800@600
-]
-
 { #category : 'accessing' }
 ExternalBrowser >> method [
 	^ method
@@ -214,8 +213,9 @@ ExternalBrowser >> protocols [
 
 { #category : 'structure accessing' }
 ExternalBrowser >> protocolsOfClass: aClass [
+	"Answer a <Collection> of <String> with the protocol names of aClass"
 
-	^ aClass protocolNames
+	^ aClass protocols
 ]
 
 { #category : 'refresh' }
@@ -261,7 +261,11 @@ ExternalBrowser >> selectorsOfProtocol: aProtocol [
 { #category : 'structure accessing' }
 ExternalBrowser >> showClassDefinition [
 
-	method text: (self classes selectedItem definitionString ifNil: [ '' ])
+	| selectedItem |
+	
+	method text: ((selectedItem := self classes selectedItem) hasDefinitionSource
+		ifTrue: [  selectedItem definitionSource ]
+		ifFalse: [ String empty ])
 ]
 
 { #category : 'accessing' }
@@ -274,4 +278,9 @@ ExternalBrowser >> showClassSide [
 ExternalBrowser >> updatePresenter [
 
 	packages items: self model packages
+]
+
+{ #category : 'initialization' }
+ExternalBrowser >> windowTitle [
+	^  'External Package Browser'
 ]

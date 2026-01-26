@@ -66,15 +66,6 @@ ReCompositeExtractSetUpMethodRefactoring >> extractSetUpCode: sourceCodeString f
 	newSelector := #setUp
 ]
 
-{ #category : 'instance creation' }
-ReCompositeExtractSetUpMethodRefactoring >> extractSetUpInterval: anInterval fromMethod: aSelector inClass: aClassName [ 
-	
-	class := self model classNamed: aClassName.
-	selector := aSelector.
-	sourceCode := self getSourceFromInterval: anInterval.
-	newSelector := #setUp
-]
-
 { #category : 'storing' }
 ReCompositeExtractSetUpMethodRefactoring >> storeOn: aStream [
 

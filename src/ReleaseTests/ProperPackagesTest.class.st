@@ -20,7 +20,7 @@ ProperPackagesTest >> testPackageExtensionsStartsWithProperPackageName [
 	"Method categories that represent extensions should start with a * followed by a package name that starts with an uppercase letter - ensure that"
 
 	self assertEmpty:
-		(SystemNavigation default allMethods select: [ :method | method isExtension and: [ method protocolName second isLowercase ] ])
+		((self class environment allBehaviors flatCollect: [ :class | class extensionProtocols ]) select: [ :protocol | protocol name second isLowercase ])
 ]
 
 { #category : 'tests' }
@@ -38,12 +38,9 @@ ProperPackagesTest >> testProperManifestCategorization [
 	"If a package provides a PackageManifest subclass then this manifest class should be packaged
 	 with 'Manifest' tag similar to all other manifests."
 
-	|violations|
+	| violations |
 	violations := OrderedCollection new.
-	PackageManifest allSubclassesDo: [:each |
- 	   ((each package classesTaggedWith: 'Manifest') includes: each)
-  	      ifFalse: [ violations add: each ]
-	].
+	PackageManifest allSubclassesDo: [ :each | ((each package classesTaggedWith: 'Manifest') includes: each) ifFalse: [ violations add: each ] ].
 
-	self assert: violations isEmpty
+	self assertEmpty: violations
 ]

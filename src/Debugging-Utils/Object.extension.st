@@ -58,5 +58,14 @@ Object >> haltOnCount: anInteger [
 { #category : '*Debugging-Utils' }
 Object >> haltOnce [
 	<debuggerCompleteToSender>
-	Halt once
+	
+	Halt once: thisContext sender
+]
+
+{ #category : '*Debugging-Utils' }
+Object >> haltUpTo: anInteger [
+	"Always halt for a certain amount of time then stop"
+
+	<debuggerCompleteToSender>
+	Halt upTo: anInteger
 ]

@@ -144,6 +144,7 @@ RubTextEditor >> addDeleteSelectionUndoRecord [
 { #category : 'typing support' }
 RubTextEditor >> addString: aString [
 	"Think of a better name"
+	self invalidateVirtualColumn.
 	self hasSelection
 		ifTrue: [self addDeleteSelectionUndoRecord].
 	self openTypeIn.
@@ -152,18 +153,29 @@ RubTextEditor >> addString: aString [
 
 { #category : 'undo - redo private' }
 RubTextEditor >> addTypeInUndoRecord [
-	| begin stop undoText redoText |
-	begin := self startOfTyping min: self stopIndex.
-	stop := self stopIndex max: self startOfTyping.
+	| begin stop undoText redoText selectionBeforeChange |
+	begin := self startOfTyping.
+	stop := self stopIndex.
+
+	selectionBeforeChange := self selectionInterval.
 	self editingState previousInterval: (begin to: stop - 1).
 	undoText := self nullText.
 	redoText := stop > begin
 			ifTrue: [self text copyFrom: begin to: stop - 1]
 			ifFalse: [self nullText].
-	((undoText isEmpty and: [redoText isEmpty]) and: [self editingState previousInterval size < 1])
-			ifFalse: [self
-				redoArray: { textArea. #redoTypeIn:interval:.  {redoText. begin to: begin + self selection size - 1} }
-				undoArray: {textArea. #undoTypeIn:interval:.  {undoText. begin to: stop - 1} }]
+
+	((undoText isEmpty and: [redoText isEmpty])
+		and: [self editingState previousInterval size < 1]) ifTrue: [ ^ self ] .
+
+	self
+		redoArray: { textArea. #redoTypeIn:interval:selection:. { 
+			redoText. 
+			begin to: begin - 1.
+			selectionBeforeChange } }
+		undoArray: { textArea. #undoTypeIn:interval:selection:. { 
+			undoText.
+			begin to: stop - 1.
+			(begin to: begin -1) } }
 ]
 
 { #category : 'new selection' }
@@ -256,6 +268,7 @@ RubTextEditor >> backWord: aKeyboardEvent [
 { #category : 'typing/selecting keys' }
 RubTextEditor >> backspace: aKeyboardEvent [
 	| result startIndex |
+	self invalidateVirtualColumn.
 	self closeTypeIn.
 	result := aKeyboardEvent controlKeyPressed
 		ifTrue: [ self backWord: aKeyboardEvent keyCharacter ]
@@ -277,13 +290,13 @@ RubTextEditor >> backspace: aKeyboardEvent [
 ]
 
 { #category : 'obsolete - parenblinking' }
-RubTextEditor >> blinkParenAt: parenLocation [
+RubTextEditor >> blinkPrevParen: aCharacter [
 	"kept because NECController is sending it to me"
 ]
 
-{ #category : 'obsolete - parenblinking' }
-RubTextEditor >> blinkPrevParen: aCharacter [
-	"kept because NECController is sending it to me"
+{ #category : 'accessing' }
+RubTextEditor >> bufferSize [
+	^ textArea paragraph text size
 ]
 
 { #category : 'testing' }
@@ -430,6 +443,32 @@ RubTextEditor >> changeLfToCr: aKeyboardEvent [
 	^ true
 ]
 
+{ #category : 'accessing' }
+RubTextEditor >> characterAt: anOffset [ 
+	^ self paragraph text asString at: anOffset.
+]
+
+{ #category : 'accessing' }
+RubTextEditor >> characterGroupAt: index in: aString [
+
+	| character |
+	character := aString at: index.
+
+	character isSeparator ifTrue: [ ^ #separator ].
+
+	character isAlphaNumeric ifTrue: [
+		^ character isUppercase
+			  ifTrue: [ #upper ]
+			  ifFalse: [ #lower ] ].
+
+	"exclude '|<>=' from the syntax and consider them binary, except for ':='"
+	(('^"''[](){}$#;:.' includes: character) or: [
+		 character = $= and: [ (aString at: (index - 1 max: 1)) = $: ] ])
+		ifTrue: [ ^ #syntax ].
+
+	^ #binary
+]
+
 { #category : 'menu messages' }
 RubTextEditor >> chooseAlignment [
 	self changeAlignment
@@ -471,6 +510,7 @@ RubTextEditor >> clearUndoManager: aKeyboardEvent [
 { #category : 'events' }
 RubTextEditor >> click: event [
 	| p |
+	self invalidateVirtualColumn.
 	self closeTypeIn.
 	p := self paragraph characterBlockAtPoint: event cursorPoint.
 	textArea markBlock: p pointBlock: p.
@@ -515,13 +555,12 @@ RubTextEditor >> cmdActions [
 { #category : 'menu messages' }
 RubTextEditor >> compareToClipboard [
 	"Check to see if whether the receiver's text is the same as the text currently on the clipboard, and inform the user."
+
 	| s1 s2 |
 	s1 := self clipboardText string.
 	s2 := self string.
-	s1 = s2 ifTrue: [^ self inform: 'Exact match'].
-	self morphicUIManager
-		longMessage: (TextDiffBuilder buildDisplayPatchFrom: s1 to: s2)
-		title: 'Comparison to Clipboard Text'
+	s1 = s2 ifTrue: [ ^ InformativeNotification signal: 'Exact match' ].
+	self morphicUIManager longMessage: (TextDiffBuilder buildDisplayPatchFrom: s1 to: s2) title: 'Comparison to Clipboard Text'
 ]
 
 { #category : 'editing keys' }
@@ -612,36 +651,23 @@ RubTextEditor >> crlf: aKeyboardEvent [
 
 { #category : 'nonediting/nontyping keys' }
 RubTextEditor >> cursorDown: aKeyboardEvent [
-
 	"Private - Move cursor from position in current line to same position in
 	next line. If next line too short, put at end. If shift key down,
 	select."
 
 	self closeTypeIn.
-	self
-		moveCursor:[:position | self
-				sameColumn: position
-				newLine:[:line | line + 1]
-				forward: true]
-		forward: true
-		specialBlock:[:dummy | dummy]
-		event: aKeyboardEvent.
-	^true
+
+	^ self performAction: RubMoveDownAction forEvent: aKeyboardEvent
 ]
 
 { #category : 'nonediting/nontyping keys' }
 RubTextEditor >> cursorEnd: aKeyboardEvent [
 	"Private - Move cursor end of current line."
 
-	| string |
 	self closeTypeIn.
-	string := self string.
-	self
-		moveCursor: [ :position | string indexOf: Character cr startingAt: position ifAbsent: [ string size + 1 ] ]
-		forward: true
-		specialBlock: [ :dummy | string size + 1 ]
-		event: aKeyboardEvent.
-	^ true
+
+	^ self performAction: RubMoveEndAction forEvent: aKeyboardEvent.
+
 ]
 
 { #category : 'nonediting/nontyping keys' }
@@ -649,80 +675,50 @@ RubTextEditor >> cursorHome: aKeyboardEvent [
 	"Private - Move cursor from position in current line to beginning of
 	current line. If control key is pressed put cursor at beginning of text"
 
-	| string |
-	string := self string.
-	self
-		moveCursor: [ :position | (string lastIndexOf: Character cr startingAt: position - 1 ifAbsent: [ 0 ]) + 1 ]
-		forward: false
-		specialBlock: [ :dummy | 1 ]
-		event: aKeyboardEvent.
-	^ true
+	^ self performAction: RubMoveHomeAction forEvent: aKeyboardEvent.
+
 ]
 
 { #category : 'nonediting/nontyping keys' }
 RubTextEditor >> cursorLeft: aKeyboardEvent [
 	"Private - Move cursor left one character if nothing selected, otherwise
-	move cursor to beginning of selection. If the shift key is down, start
-	selecting or extending current selection. Don't allow cursor past
-	beginning of text"
+    move cursor to beginning of selection. If the shift key is down, start
+    selecting or extending current selection. Don't allow cursor past
+    beginning of text"
 
 	textArea editing ifTrue: [ ^ false ].
 	self closeTypeIn.
-	self
-		moveCursor:[:position | position - 1 max: 1]
-		forward: false
-		specialBlock:[:position | self previousWord: position]
-		event: aKeyboardEvent.
-	^ true
+	
+	^ self performAction: RubMoveLeftAction forEvent: aKeyboardEvent.
+
 ]
 
 { #category : 'nonediting/nontyping keys' }
 RubTextEditor >> cursorPageDown: aKeyboardEvent [
 
 	self closeTypeIn.
-	self
-		moveCursor: [:position |
-			self
-				sameColumn: position
-				newLine: [:lineNo | lineNo + self pageHeight]
-				forward: true]
-		forward: true
-		specialBlock:[:dummy | dummy]
-		event: aKeyboardEvent.
-	^true
+	^ self performAction: RubMovePageDownAction forEvent: aKeyboardEvent
 ]
 
 { #category : 'nonediting/nontyping keys' }
 RubTextEditor >> cursorPageUp: aKeyboardEvent [
 
 	self closeTypeIn.
-	self
-		moveCursor: [:position |
-			self
-				sameColumn: position
-				newLine: [:lineNo | lineNo - self pageHeight]
-				forward: false]
-		forward: false
-		specialBlock:[:dummy | dummy]
-		event: aKeyboardEvent.
-	^true
+	^ self performAction: RubMovePageUpAction forEvent: aKeyboardEvent
 ]
 
 { #category : 'nonediting/nontyping keys' }
 RubTextEditor >> cursorRight: aKeyboardEvent [
 	"Private - Move cursor right one character if nothing selected,
-	otherwise move cursor to end of selection. If the shift key is down,
-	start selecting characters or extending already selected characters.
-	Don't allow cursor past end of text"
+    otherwise move cursor to end of selection. If the shift key is down,
+    start selecting characters or extending already selected characters.
+    Don't allow cursor past end of text"
 
 	textArea editing ifTrue: [ ^ false ].
 	self closeTypeIn.
-	self
-		moveCursor: [:position | position + 1]
-		forward: true
-		specialBlock:[:position | self nextWord: position]
-		event: aKeyboardEvent.
-	^ true
+	
+	^ self performAction: RubMoveRightAction forEvent: aKeyboardEvent.
+
 ]
 
 { #category : 'typing/selecting keys' }
@@ -735,19 +731,12 @@ RubTextEditor >> cursorTopHome: aKeyboardEvent [
 
 { #category : 'nonediting/nontyping keys' }
 RubTextEditor >> cursorUp: aKeyboardEvent [
-"Private - Move cursor from position in current line to same position in
+	"Private - Move cursor from position in current line to same position in
 prior line. If prior line too short, put at end"
 
 	self closeTypeIn.
-	self
-		moveCursor: [:position | self
-				sameColumn: position
-				newLine:[:line | line - 1]
-				forward: false]
-		forward: false
-		specialBlock:[:dummy | dummy]
-		event: aKeyboardEvent.
-	^true
+
+	^ self performAction: RubMoveUpAction forEvent: aKeyboardEvent.
 ]
 
 { #category : 'private' }
@@ -781,6 +770,7 @@ RubTextEditor >> defaultCommandKeymapping [
 	(KeyboardKey enter -> #crWithIndent:).
 	(KeyboardKey escape -> #escape:).
 	(KeyboardKey left -> #cursorLeft:).
+	(KeyboardKey space -> #space:).
 	(KeyboardKey right -> #cursorRight:).
 	(KeyboardKey up -> #cursorUp:).
 	(KeyboardKey down -> #cursorDown:).
@@ -840,6 +830,7 @@ RubTextEditor >> doneTyping [
 { #category : 'events' }
 RubTextEditor >> doubleClick: evt [
 	| here |
+	self invalidateVirtualColumn.
 	self closeTypeIn.	"no matter what, if shift is pressed extend the selection"
 	here := self pointIndex.
 	(here between: 2 and: self string size)
@@ -849,21 +840,6 @@ RubTextEditor >> doubleClick: evt [
 		ifTrue: [ self selectWord ].
 	self setEmphasisHereFromText.
 	self storeSelectionInText
-]
-
-{ #category : 'editing keys' }
-RubTextEditor >> duplicate: aKeyboardEvent [
-	"Paste the current selection over the prior selection, if it is non-overlapping and
-	 legal.  Undoer & Redoer: undoAndReselect."
-
-	self closeTypeIn.
-	(self hasSelection and: [self isDisjointFrom: self editingState previousInterval])
-		ifTrue: "Something to duplicate"
-			[self replace: self editingState previousInterval with: self selection and:
-				[self selectAt: self pointIndex]]
-		ifFalse:
-			[textArea flash].
-	^true
 ]
 
 { #category : 'accessing - selection' }
@@ -1180,7 +1156,7 @@ RubTextEditor >> fontToUse [
 { #category : 'typing/selecting keys' }
 RubTextEditor >> forwardDelete: aKeyboardEvent [
 	"Delete forward over the next character"
-
+	self invalidateVirtualColumn.
 	self closeTypeIn.
 	self hasSelection
 		ifFalse: [
@@ -1393,6 +1369,12 @@ RubTextEditor >> insertAndSelectAfterCurrentSelection: aString [
 	self insertAndSelect: aString at: selectionInterval last + 1
 ]
 
+{ #category : 'cursor' }
+RubTextEditor >> invalidateVirtualColumn [
+
+	textArea invalidateVirtualColumn
+]
+
 { #category : 'testing' }
 RubTextEditor >> isCaretBehindChar [
 	"Return true if the cursor position is after an alphanumeric character, otherwise false."
@@ -1431,12 +1413,23 @@ RubTextEditor >> isTextEditor [
 
 { #category : 'private' }
 RubTextEditor >> isWordCharacterAt: index in: aString [
+
+	^ self isWordCharacterAt: index in: aString except: [ :char | false ]
+]
+
+{ #category : 'private' }
+RubTextEditor >> isWordCharacterAt: index in: aString except: aBlock [
 	"By default, group alphanumeric and non-alphanumeric separately"
-	^ (aString at: index) isAlphaNumeric
+
+	| character |
+	character := aString at: index.
+	(aBlock value: character) ifTrue: [ ^ false ].
+	^ character isAlphaNumeric
 ]
 
 { #category : 'typing support' }
 RubTextEditor >> keyDown: aKeyboardEvent [
+
 	textArea announce: ((RubKeystroke with: aKeyboardEvent) morph: self).
 	(self dispatch: aKeyboardEvent) ifTrue: [
 		self doneTyping.
@@ -1446,6 +1439,7 @@ RubTextEditor >> keyDown: aKeyboardEvent [
 
 { #category : 'typing support' }
 RubTextEditor >> keystroke: aKeyboardEvent [
+
 	textArea announce: ((RubKeystroke with: aKeyboardEvent) morph: self).
 	self normalCharacter: aKeyboardEvent.
 	"normal character"
@@ -1474,6 +1468,16 @@ RubTextEditor >> lf: aKeyboardEvent [
 	^false
 ]
 
+{ #category : 'accessing' }
+RubTextEditor >> lineAtCursorPosition [
+	| string |
+	
+	string := self text asString ifEmpty: [ ^ '' ].
+	^ self lineIntervalAtCursorPosition
+		ifNotNil: [ :anInterval | string copyFrom: anInterval first to: anInterval last ]
+		ifNil: [ '' ]
+]
+
 { #category : 'private' }
 RubTextEditor >> lineIndentationStart: aPosition [
 	"The offset of the start of the line of `aPostion`, but skip leading spaces and tabs"
@@ -1487,6 +1491,25 @@ RubTextEditor >> lineIndentationStart: aPosition [
 		position := position + 1 ].
 
 	^ position
+]
+
+{ #category : 'accessing' }
+RubTextEditor >> lineIntervalAtCursorPosition [
+	| string lastEnd index lastStart |
+	
+	index := self pointIndex.
+	string := self text asString ifEmpty: [ ^ nil ].
+	string lineIndicesDo: [ :start :endWithoutDelimiters :end | 
+		index <= end ifTrue: [ 
+			^ start to: endWithoutDelimiters ].
+		lastStart := start.
+		lastEnd := end ].
+	
+	"evaluate the case where the cursor is placed at the end of the text (there will not 
+	 be delimiter, but there will be a line to answer anyway (maybe empty)"
+	^ lastEnd + 1 <= index 
+		ifTrue: [ lastStart to: lastEnd ]
+		ifFalse: [ nil ]
 ]
 
 { #category : 'menu messages' }
@@ -1601,25 +1624,19 @@ RubTextEditor >> morphicUIManager [
 ]
 
 { #category : 'private' }
-RubTextEditor >> moveCursor: directionBlock forward: forward specialBlock: specialBlock event: aKeyboardEvent [
-	"Private - Move cursor.
-	directionBlock is a one argument Block that computes the new Position from a given one.
-	specialBlock is a one argumentBlock that computes the new position from a given one under the alternate semantics.
-	Note that directionBlock always is evaluated first."
-	| shift indices newPosition |
-	shift := aKeyboardEvent shiftPressed.
-	indices := self setIndices: shift forward: forward.
-	newPosition := directionBlock value: (indices at: #moving).
-	(aKeyboardEvent commandKeyPressed or: [ aKeyboardEvent controlKeyPressed ])
-		ifTrue: [newPosition := specialBlock value: newPosition].
-	shift
-		ifTrue: [self selectMark: (indices at: #fixed) point: newPosition - 1]
-		ifFalse: [self selectAt: newPosition].
-	self setEmphasisHereFromTextForward: forward.
+RubTextEditor >> moveCursor: aRubCursorAction shiftPressed: shiftPressed [
 
-	textArea
-		requestTextEditingAt: (textArea cursor positionInWorld
-			corner: textArea cursor positionInWorld)
+	| indices caretPosition newPosition |
+	indices := self setIndices: shiftPressed forward: aRubCursorAction isForward.
+	caretPosition := indices at: #moving.
+
+	newPosition := aRubCursorAction moveFromPosition: caretPosition inEditor: self.
+	shiftPressed
+		ifTrue: [ self selectMark: (indices at: #fixed) point: newPosition - 1 ]
+		ifFalse: [ self selectAt: newPosition ].
+	self setEmphasisHereFromTextForward: aRubCursorAction isForward.
+
+	textArea requestTextEditingAt: (textArea cursor positionInWorld corner: textArea cursor positionInWorld)
 ]
 
 { #category : 'nesting' }
@@ -1652,21 +1669,53 @@ RubTextEditor >> nextCharacterIfAbsent: aBlock [
 { #category : 'private' }
 RubTextEditor >> nextWord: position [
 
-	| string index initialIsAlphaNumeric size |
+	^ self nextWord: position stopOnUpperCase: false
+]
+
+{ #category : 'private' }
+RubTextEditor >> nextWord: position stopOnUpperCase: stopOnUpperCase [
+
+	| string index size initialPosition groupAtStart currentGroup |
 	"Positions go from 1 to size + 1
 	Position N + 1 is after the Nth character"
-	index := 1 max: position.
-
 	string := self string.
 	size := string size + 1.
-	position >= size ifTrue: [ ^ size ].
+	index := initialPosition := 1 max: position.
 
-	initialIsAlphaNumeric := self isWordCharacterAt: index in: string.
+	position >= string size ifTrue: [ ^ size ].
 
-	[
-	index < size and: [
-		(self isWordCharacterAt: index in: string) = initialIsAlphaNumeric ] ]
-		whileTrue: [ index := index + 1 ].
+	[ "Skip blanks"
+	index < string size and: [
+		{
+			Character space.
+			Character tab } includes: (string at: index) ] ] whileTrue: [
+		index := index + 1 ].
+
+	groupAtStart := self characterGroupAt: index in: string.
+
+	"Go at least once forward to guarantee progress"
+	index = initialPosition ifTrue: [ index := index + 1 ].
+
+	"Do not stop if we are in an uppercase->lowercase transition"
+	(groupAtStart = #upper and: [
+		 stopOnUpperCase not or: [
+			 (self characterGroupAt: index in: string) = #lower ] ]) ifTrue: [
+		groupAtStart := #lower ].
+
+	[ "Stop when we reach the end, a new line, or a different character group"
+	index >= size ifTrue: [ ^ size ].
+	(string at: index) = Character cr ifTrue: [ ^ index ].
+
+	currentGroup := self characterGroupAt: index in: string.
+	(stopOnUpperCase not and: [ currentGroup = #upper ]) ifTrue: [
+		currentGroup := #lower ].
+
+	currentGroup = groupAtStart ] whileTrue: [ index := index + 1 ].
+
+	"Moving to the right from upper to lower, we want to stop left of the upper"
+	(stopOnUpperCase and: [
+		 groupAtStart = #upper and: [ currentGroup = #lower ] ]) ifTrue: [
+		index := index - 1 ].
 
 	^ index
 ]
@@ -1707,6 +1756,17 @@ RubTextEditor >> offerFontMenu: aKeyboardEvent [
 	self closeTypeIn.
 	self offerFontMenu.
 	^ true
+]
+
+{ #category : 'cursor' }
+RubTextEditor >> offsetToVisualColumn: line ofColumn: columnIndex [
+
+	^ (line first to: line first + columnIndex - 1)
+		  inject: 0
+		  into: [ :visualColumn :index |
+				  visualColumn + (self
+					   visualCharacterSize: (self characterAt: index)
+					   atOffset: visualColumn) ]
 ]
 
 { #category : 'typing support' }
@@ -1786,6 +1846,19 @@ RubTextEditor >> pasteRecent [
 	^ self paste
 ]
 
+{ #category : 'nonediting/nontyping keys' }
+RubTextEditor >> performAction: aRubAction forEvent: aKeyboardEvent [
+
+	| shift ctrl opt |
+
+	shift := aKeyboardEvent shiftPressed.
+	ctrl := aKeyboardEvent commandKeyPressed or: [ aKeyboardEvent controlKeyPressed ].
+	opt := aKeyboardEvent optionKeyPressed.
+	self moveCursor: (aRubAction cmdPressed: ctrl optPressed: opt) shiftPressed: shift.
+
+	^ true
+]
+
 { #category : 'typing support' }
 RubTextEditor >> performCmdActionsWith: aKeyboardEvent shifted: aBoolean return: return [
 	| key actions action|
@@ -1814,36 +1887,57 @@ RubTextEditor >> previousCharacterIfAbsent: aBlock [
 { #category : 'private' }
 RubTextEditor >> previousWord: position [
 
-	| string index size beforeCaretIsAlpha afterCaretIsAlpha |
-	"The main strategy behind this is to move the caret backwards until there is a alpha/nonalpha or nonalpha/alpha pair.
-	To avoid staying in the same place, we need always move the character at least once before checking the condition"
+	^ self previousWord: position stopOnUpperCase: false
+]
 
-	position <= 2 ifTrue: [ ^ 1 ].
+{ #category : 'private' }
+RubTextEditor >> previousWord: position stopOnUpperCase: stopOnUpperCase [
+
+	| string index size initialPosition groupAtStart currentGroup |
+	"Positions go from 1 to size + 1
+	Position N + 1 is after the Nth character"
 	string := self string.
-	size := string size.
+	size := string size + 1.
+	index := initialPosition := size min: position.
 
-	"If we ask for the word starting after the string, start at the end of the string.
-	Remember that there are N+1 caret positions for a N-sized string."
-	index := (size + 1) min: position.
-
-	"Go backwards once and check if character before the caret is alphanumeric.
-	If not alphanumeric, we go backwards once more.
-	This handles the case when the caret is after the first character of a word, in which case we should just go once backwards.
-	All other cases should go backwards more than once."
-	index := index - 1.
-	beforeCaretIsAlpha := index = 1 or: [
-		                      self isWordCharacterAt: index in: string ].
-	beforeCaretIsAlpha ifFalse: [
+	[ "Skip blanks"
+		index > 1 and: [
+				{
+					Character space.
+					Character tab } includes: (string at: index - 1) ] ] whileTrue: [
 		index := index - 1 ].
 
-	"Finally, iterate backwards until the alphanumericness before and after the caret changes"
-	[
-	afterCaretIsAlpha := beforeCaretIsAlpha := index = 1 or: [
-		                      self isWordCharacterAt: index in: string ].
-	beforeCaretIsAlpha := index = 1 or: [
-		                      self isWordCharacterAt: index - 1 in: string ].
-	beforeCaretIsAlpha = afterCaretIsAlpha and: [ index > 1 ] ]
-		whileTrue: [ index := index - 1 ].
+	index <= 2 ifTrue: [ ^ 1 ].
+
+	groupAtStart := self characterGroupAt: index - 1 in: string.
+
+	"Go at least once backward to guarantee progress"
+	index = initialPosition ifTrue: [ index := index - 1 ].
+
+	"Stop if we are in a lowercase->uppercase transition"
+	groupAtStart = #upper ifTrue: [
+			stopOnUpperCase
+				ifFalse: [ groupAtStart := #lower ]
+				ifTrue: [
+						(index < string size and: [
+							 (self characterGroupAt: index + 1 in: string) = #lower ])
+							ifTrue: [ ^ index ] ] ].
+
+	[ "Stop when we reach the end, a new line, or a different character group"
+		index <= 1 ifTrue: [ ^ 1 ].
+		(string at: index - 1) = Character cr ifTrue: [ ^ index ].
+
+		currentGroup := self characterGroupAt: index - 1 in: string.
+		(stopOnUpperCase not and: [ currentGroup = #upper ]) ifTrue: [
+			currentGroup := #lower ].
+
+		currentGroup = groupAtStart ] whileTrue: [ index := index - 1 ].
+
+	"Moving to the left from lower to upper, we want to stop left of the upper"
+	(stopOnUpperCase and: [
+		 groupAtStart = #lower and: [ currentGroup = #upper ] ]) ifTrue: [
+		index := index - 1 ].
+
 	^ index
 ]
 
@@ -1877,10 +1971,13 @@ RubTextEditor >> redoArray: doArray undoArray: undoArray [
 ]
 
 { #category : 'undoers - redoers' }
-RubTextEditor >> redoTypeIn: aText interval: anInterval [
+RubTextEditor >> redoTypeIn: aText interval: anInterval selection: selection [
+
 	self selectInterval: anInterval.
-	self replace: self selectionInterval with: aText and:
-		[self selectInterval: (anInterval first to: anInterval first + aText size - 1)]
+	self
+		replace: self selectionInterval
+		with: aText
+		and: [ self selectInterval: selection ]
 ]
 
 { #category : 'accessing' }
@@ -1888,17 +1985,45 @@ RubTextEditor >> replace: xoldInterval with: newText and: selectingBlock [
 	"Replace the text in oldInterval with newText and
 	execute selectingBlock to establish the new selection.
 	Create an UndoRecord to allow perfect undoing."
-	| prevSel currInterval |
+
+	self replace: xoldInterval with: newText and: selectingBlock selection: self selectionInterval
+]
+
+{ #category : 'accessing' }
+RubTextEditor >> replace: xoldInterval with: newText and: selectingBlock selection: fromSelection [
+	"Replace the text in oldInterval with newText and
+	execute selectingBlock to establish the new selection.
+	Create an UndoRecord to allow perfect undoing."
+
+	| prevSel currInterval cursorAfterInsertion |
 	self selectInterval: xoldInterval.
 	prevSel := self selection.
 	currInterval := self selectionInterval.
 	self editingState previousInterval: currInterval.
+
 	self zapSelectionWith: newText.
+	cursorAfterInsertion := currInterval first + newText size - 1.
+
 	selectingBlock value.
-	((prevSel isEmpty and: [newText isEmpty]) and: [currInterval size < 1])
-		ifFalse: [self
-			redoArray: {textArea. #redoTypeIn:interval:. {newText. currInterval}}
-			undoArray: {textArea. #undoTypeIn:interval:. {prevSel. currInterval first to: currInterval first + newText size - 1}}]
+
+	((prevSel isEmpty and: [ newText isEmpty ]) and: [
+		 currInterval size < 1 ]) ifTrue: [ ^ self ].
+
+	self
+		redoArray: {
+				textArea.
+				#redoTypeIn:interval:selection:.
+				{
+					newText.
+					currInterval.
+					(cursorAfterInsertion + 1 to: cursorAfterInsertion) } }
+		undoArray: {
+				textArea.
+				#undoTypeIn:interval:selection:.
+				{
+					prevSel.
+					(currInterval first to: currInterval first + newText size - 1).
+					fromSelection } }
 ]
 
 { #category : 'find-select' }
@@ -1931,7 +2056,15 @@ RubTextEditor >> replaceAll: aRegex with: aText startingAt: startIdx [
 
 { #category : 'accessing' }
 RubTextEditor >> replaceSelectionWith: aText [
-	self replace: self selectionInterval with: aText and: []
+
+	self
+		replaceSelectionWith: aText
+		fromSelection: self selectionInterval
+]
+
+{ #category : 'accessing' }
+RubTextEditor >> replaceSelectionWith: aText fromSelection: fromSelection [
+	self replace: self selectionInterval with: aText and: [] selection: fromSelection
 ]
 
 { #category : 'accessing' }
@@ -1960,7 +2093,7 @@ RubTextEditor >> sameColumn: start newLine: lineBlock forward: isForward [
 	The position inside the line will be preserved as good as possible"
 	"The boolean isForward is used in the border case to determine if
 	we should move to the beginning or the end of the line."
-	| column currentLine offsetAtTargetLine targetEOL lines numberOfLines currentLineNumber targetLineNumber |
+	| currentLine offsetAtTargetLine targetEOL lines numberOfLines currentLineNumber targetLineNumber targetLine visualColumn virtualColumn |
 	self walkAlongDisplayedLine
 		ifTrue: [lines := self paragraph lines.
 			numberOfLines := self paragraph numberOfLines.
@@ -1972,16 +2105,25 @@ RubTextEditor >> sameColumn: start newLine: lineBlock forward: isForward [
 				detect:[:lineInterval | lineInterval last >= start]
 				ifNone:[lines last].
 			currentLineNumber := currentLine second].
-	column := start - currentLine first.
+
+	virtualColumn := start - currentLine first.
+	textArea visualColumn ifNil: [
+		textArea visualColumn: (self offsetToVisualColumn: currentLine ofColumn: virtualColumn)
+	].
+
+	visualColumn := textArea visualColumn.
+	
 	targetLineNumber := ((lineBlock value: currentLineNumber) max: 1) min: numberOfLines.
-	offsetAtTargetLine := (lines at: targetLineNumber) first.
-	targetEOL := (lines at: targetLineNumber) last + (targetLineNumber = numberOfLines ifTrue:[1]ifFalse:[0]).
+	targetLine := lines at: targetLineNumber.
+	offsetAtTargetLine := targetLine first.
+	targetEOL := targetLine last + (targetLineNumber = numberOfLines ifTrue: [1] ifFalse: [0]).
 	targetLineNumber = currentLineNumber
 	"No movement or movement failed. Move to beginning or end of line."
 		ifTrue:[^isForward
 			ifTrue:[targetEOL]
 			ifFalse:[offsetAtTargetLine]].
-	^offsetAtTargetLine + column min: targetEOL
+
+	^ offsetAtTargetLine + (self visualToOffsetColumn: targetLine ofColumn: visualColumn) min: targetEOL
 ]
 
 { #category : 'menu messages' }
@@ -1990,7 +2132,7 @@ RubTextEditor >> saveContentsInFile [
 
 	| fileName stringToSave parentWindow labelToUse suggestedName lastIndex |
 	stringToSave := self string.
-	stringToSave size = 0 ifTrue: [^self inform: 'nothing to save.'].
+	stringToSave size = 0 ifTrue: [^InformativeNotification signal: 'nothing to save.'].
 	parentWindow := self model dependents
 				detect: [:dep | dep isKindOf: SystemWindow]
 				ifNone: [nil].
@@ -2367,6 +2509,14 @@ RubTextEditor >> shouldEscapeCharacter: aCharacter [
 	^ #($" $') includes: aCharacter
 ]
 
+{ #category : 'typing/selecting keys' }
+RubTextEditor >> space: aKeyboardEvent [
+	"Close the undo/redo transaction. This undo/redo at a per-word granularity"
+
+	self closeTypeIn.
+	^false
+]
+
 { #category : 'keymapping' }
 RubTextEditor >> specialShiftCmdKeys [
 
@@ -2477,6 +2627,7 @@ RubTextEditor >> swapChars: aKeyboardEvent [
 RubTextEditor >> tab: aKeyboardEvent [
 	"Append a line feed character to the stream of characters."
 
+	self closeTypeIn.
 	self addString: String tab.
 	self unselect.
 	^false
@@ -2546,6 +2697,7 @@ RubTextEditor >> transformFrom: owner [
 
 { #category : 'events' }
 RubTextEditor >> tripleClick: evt [
+	self invalidateVirtualColumn.
 	self closeTypeIn.	"no matter what, if shift is pressed extend the selection"
 	self selectLine.
 	self setEmphasisHereFromText.
@@ -2591,10 +2743,13 @@ RubTextEditor >> undoRedoTransaction: aBlock [
 ]
 
 { #category : 'undoers - redoers' }
-RubTextEditor >> undoTypeIn: aText interval: anInterval [
+RubTextEditor >> undoTypeIn: aText interval: anInterval selection: aSelection [
+
 	self selectInterval: anInterval.
-	self replace: anInterval with: aText and:
-		[self selectInterval: (anInterval first to: anInterval first - 1)]
+	self
+		replace: anInterval
+		with: aText
+		and: [ self selectInterval: aSelection ]
 ]
 
 { #category : 'private' }
@@ -2612,6 +2767,41 @@ RubTextEditor >> unselect [
 RubTextEditor >> visibleHeight [
 
 	^textArea owner bounds height
+]
+
+{ #category : 'cursor' }
+RubTextEditor >> visualCharacterSize: aCharacter atOffset: anOffset [ 
+	
+	| tabSize |
+	aCharacter = Character tab ifFalse: [ ^1 ].
+	
+	tabSize := EFFormatter numberOfSpacesInIndent.
+	
+	^ tabSize - (anOffset rem: tabSize)
+]
+
+{ #category : 'cursor' }
+RubTextEditor >> visualToOffsetColumn: line ofColumn: columnIndex [
+
+	| visualIndex offset |
+	offset := 0.
+	visualIndex := 0.
+
+	[
+	visualIndex < columnIndex and: [ offset < (line last - line first) ] ]
+		whileTrue: [
+				| currentChar |
+				currentChar := self characterAt: line first + offset.
+				visualIndex := visualIndex
+				               +
+				               (self
+					                visualCharacterSize: currentChar
+					                atOffset: visualIndex).
+				offset := offset + 1 ].
+
+	^ visualIndex > columnIndex
+		  ifTrue: [ offset - 1 ]
+		  ifFalse: [ offset ]
 ]
 
 { #category : 'settings' }

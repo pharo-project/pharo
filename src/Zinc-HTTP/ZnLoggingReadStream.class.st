@@ -56,7 +56,7 @@ ZnLoggingReadStream >> collectionSpecies [
 	^ ByteArray
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnLoggingReadStream >> identifier: string [
 	identifier := string
 ]
@@ -74,7 +74,7 @@ ZnLoggingReadStream >> isBinary [
 	^ true
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnLoggingReadStream >> logLevel: integer [
 	"logLevel 1 logs reads with next and friends
 	logLevl 2 logs peek and atEnd too"
@@ -82,7 +82,7 @@ ZnLoggingReadStream >> logLevel: integer [
 	logLevel := integer
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnLoggingReadStream >> logger: oneArgumentBlock [
 	logger := oneArgumentBlock
 ]
@@ -133,7 +133,7 @@ ZnLoggingReadStream >> next: requestedCount into: collection startingAt: offset 
 		ifFalse: [ collection copyFrom: 1 to: offset + readCount - 1 ]
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnLoggingReadStream >> on: binaryReadStream [
 	stream := binaryReadStream
 ]

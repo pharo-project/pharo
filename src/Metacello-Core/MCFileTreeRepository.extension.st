@@ -1,6 +1,14 @@
 Extension { #name : 'MCFileTreeRepository' }
 
 { #category : '*Metacello-Core' }
+MCFileTreeRepository >> asRepositorySpec [
+
+	^ (MetacelloRepositorySpec description: self description)
+		  type: 'filetree';
+		  yourself
+]
+
+{ #category : '*Metacello-Core' }
 MCFileTreeRepository class >> createRepositoryFromSpec: aRepositorySpec [
 
 	MCRepository findFiletreeAlternateFormat: aRepositorySpec ifFound: [ :repository | ^ repository createRepositoryFromSpec: aRepositorySpec ].
@@ -12,4 +20,15 @@ MCFileTreeRepository class >> createRepositoryFromSpec: aRepositorySpec [
 { #category : '*Metacello-Core' }
 MCFileTreeRepository class >> isAvailableFor: type [
 	^ type = 'filetree'
+]
+
+{ #category : '*Metacello-Core' }
+MCFileTreeRepository >> repositoryDescription [
+  ^ self description , ' [' , self repositoryVersionString , ':'
+    , self repositoryBranchName , ']'
+]
+
+{ #category : '*Metacello-Core' }
+MCFileTreeRepository >> resetDirectory [
+	directory := nil
 ]

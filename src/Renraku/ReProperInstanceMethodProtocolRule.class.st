@@ -18,7 +18,7 @@ ReProperInstanceMethodProtocolRule class >> checksClassMethod [
 { #category : 'accessing' }
 ReProperInstanceMethodProtocolRule class >> group [ 
 
-	^ 'Instance Method Protocol'
+	^ self instanceMethodProtocolGroup
 ]
 
 { #category : 'testing' }

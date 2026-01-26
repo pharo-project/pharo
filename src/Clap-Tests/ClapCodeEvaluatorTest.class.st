@@ -8,9 +8,9 @@ Class {
 
 { #category : 'tests' }
 ClapCodeEvaluatorTest >> testEvaluateAliasMultipleArguments [
-	context := ClapCodeEvaluator evaluate activateWith: #('eval'
+	context := ClapCodeEvaluator commandSpecification activateWith: #('eval'
 		'''(2+3)''' 'class' 'printString' ', String space ,' '(2+3)' 'class' 'printString').
-
+	
 	self assertSuccess.
 	self
 		assert: self outputString
@@ -19,8 +19,8 @@ ClapCodeEvaluatorTest >> testEvaluateAliasMultipleArguments [
 
 { #category : 'tests' }
 ClapCodeEvaluatorTest >> testEvaluateAliasSingleArgument [
-	context := ClapCodeEvaluator evaluate activateWith: #('eval' '1 class').
-
+	context := ClapCodeEvaluator commandSpecification activateWith: #('eval' '1 class').
+	
 	self assertSuccess.
 	self
 		assert: self outputString
@@ -29,12 +29,32 @@ ClapCodeEvaluatorTest >> testEvaluateAliasSingleArgument [
 
 { #category : 'tests' }
 ClapCodeEvaluatorTest >> testEvaluatePipeIn [
-	context := (ClapCodeEvaluator evaluate activationWith: #('evaluate'))
+	context := (ClapCodeEvaluator commandSpecification activationWith: #('evaluate'))
 		setStdio: (ClapPluggableStdio onByteArraysWithInput: 'Object class class class class');
 		execute.
-
+	
 	self assertSuccess.
 	self
 		assert: self outputString
 		equals: 'Metaclass' , self lineEnding
+]
+
+{ #category : 'tests' }
+ClapCodeEvaluatorTest >> testEvaluateShouldBeKeptAliveWhenKeepAliveFlagPresent [
+
+	| command |
+	context := ClapCodeEvaluator commandSpecification activationWith: #('evaluate' '--keepAlive' '1').
+	command := context command.
+	
+	self deny: command shouldQuit
+]
+
+{ #category : 'tests' }
+ClapCodeEvaluatorTest >> testEvaluateShouldBeKeptAliveWhenNoQuitFlagPresent [
+
+	| command |
+	context := ClapCodeEvaluator commandSpecification activationWith: #('evaluate' '--no-quit' '1').
+	command := context command.
+	
+	self deny: command shouldQuit
 ]

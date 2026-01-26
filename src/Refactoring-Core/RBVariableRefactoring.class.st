@@ -3,7 +3,7 @@ I am an abstract base class of refactorings modifying class or instance variable
 "
 Class {
 	#name : 'RBVariableRefactoring',
-	#superclass : 'RBRefactoring',
+	#superclass : 'ReRefactoring',
 	#instVars : [
 		'class',
 		'variableName'
@@ -30,7 +30,8 @@ RBVariableRefactoring class >> model: aRBSmalltalk variable: aVarName class: aCl
 { #category : 'instance creation' }
 RBVariableRefactoring class >> variable: aVarName class: aClass [
 	^ self new
-		variable: aVarName class: aClass
+		variable: aVarName class: aClass;
+		yourself
 ]
 
 { #category : 'initialization' }

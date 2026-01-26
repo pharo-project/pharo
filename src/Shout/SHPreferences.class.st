@@ -19,7 +19,8 @@ Class {
 { #category : 'private' }
 SHPreferences class >> applyStyle [
 	| table |
-	table := Groups values flatCollect: [:group | group styleForTable].
+	
+	table := Groups values flatCollect: [:group | group styleForTable ].
 	SHRBTextStyler styleTable: table
 ]
 
@@ -54,14 +55,107 @@ SHPreferences class >> customStyleTable: anArray [
 	self initializeGroups
 ]
 
+{ #category : 'accessing - style defaults' }
+SHPreferences class >> defaultArgsStyle [
+
+	^ SHStyleElement 
+		color: (Color r: 0.0 g: 0.0 b: 0.5004887585532747 alpha: 1.0) 
+		tokens: #(#patternArg #blockPatternArg #blockArg #argument)
+]
+
+{ #category : 'accessing - style defaults' }
+SHPreferences class >> defaultBaseStyle [
+
+	^ SHStyleElement 
+		color: Color black 
+ 		tokens: #(#default)
+]
+
+{ #category : 'accessing - style defaults' }
+SHPreferences class >> defaultCommentStyle [
+
+	^ SHStyleElement 
+		color: (Color r: 0.4203323558162268 g: 0.4203323558162268 b: 0.4203323558162268 alpha: 1.0) 
+		tokens: #(#comment)
+]
+
+{ #category : 'accessing - style defaults' }
+SHPreferences class >> defaultErrorStyle [
+
+	^ SHStyleElement 
+		color: Color red 
+		tokens: #(#invalid #undefinedSelector #undefinedIdentifier)
+]
+
+{ #category : 'accessing - style defaults' }
+SHPreferences class >> defaultGlobalVarStyle [
+
+	^ SHStyleElement 
+		color: (Color r: 0.0 g: 0.0 b: 0.5004887585532747 alpha: 1.0) 
+		tokens: #(#globalVar #poolConstant)
+]
+
+{ #category : 'accessing - style defaults' }
+SHPreferences class >> defaultInstanceVarStyle [
+
+	^ SHStyleElement 
+		color: (Color r: 0.0 g: 0.0 b: 0.5004887585532747 alpha: 1.0) 
+		tokens: #(#instVar #classVar)
+]
+
+{ #category : 'accessing - style defaults' }
+SHPreferences class >> defaultMessageSendsStyle [
+
+	^ SHStyleElement color: Color black tokens: #(selector #incompleteSelector)
+]
+
+{ #category : 'accessing - style defaults' }
+SHPreferences class >> defaultPrimitiveTypesStyle [
+
+	^ SHStyleElement 
+		color: (Color r: 0.5004887585532747 g: 0.0 b: 0.0 alpha: 1.0) 
+		tokens: #(#character #number #symbol #string)
+]
+
+{ #category : 'accessing - style defaults' }
+SHPreferences class >> defaultReservedWordsStyle [
+
+	^ SHStyleElement 
+		color: (Color r: 0.0 g: 0.5004887585532747 b: 0.5004887585532747 alpha: 1.0) 
+		tokens: #(#self #super #true #false #nil #thisContext)
+]
+
+{ #category : 'accessing - style defaults' }
+SHPreferences class >> defaultSelectorPatternsStyle [
+
+	^ SHStyleElement 
+		emphasis: #bold 
+		tokens: #(#patternSelector)
+]
+
 { #category : 'accessing - styles' }
 SHPreferences class >> defaultStyle [
+
 	^ Groups at: #default
 ]
 
 { #category : 'accessing - styles' }
 SHPreferences class >> defaultStyle: aGroupStyle [
 	^ Groups at: #default put: aGroupStyle
+]
+
+{ #category : 'accessing - style defaults' }
+SHPreferences class >> defaultSyntaxStyle [
+
+	^ SHStyleElement tokens: #(#return #blockArgColon #parenthesis #parenthesis1 #parenthesis2 #parenthesis3 #parenthesis4 #parenthesis5 #parenthesis6 #parenthesis7 #block #block1 #block2 #block3 #block4 #block5 #block6 #block7 #byteArrayStart #byteArrayEnd #byteArrayStart1 #byteArrayEnd1 #brace #brace1 #brace2 #brace3 #brace4 #brace5 #brace6 #brace7 #cascadeSeparator #statementSeparator #methodTempBar #blockTempBar #blockArgsBar)
+]
+
+{ #category : 'accessing - style defaults' }
+SHPreferences class >> defaultVariableStyle [
+
+	^ SHStyleElement 
+		color: (Color r: 0.0 g: 0.0 b: 0.5004887585532747 alpha: 1.0) 
+		tokens: #(#blockTempVar #blockPatternTempVar #tempVar #patternTempVar #incompleteIdentifier)
 ]
 
 { #category : 'accessing' }
@@ -97,7 +191,8 @@ SHPreferences class >> globalVarStyle: aGroupStyle [
 
 { #category : 'class initialization' }
 SHPreferences class >> initialize [
-	self customStyleTable: SHRBTextStyler defaultStyleTable
+
+	self customStyleTable: SHRBTextStyler styleTable
 ]
 
 { #category : 'private - initialization' }
@@ -161,6 +256,7 @@ SHPreferences class >> selectorPatternsStyle: aGroupStyle [
 
 { #category : 'settings' }
 SHPreferences class >> setStyleTable: anArray [
+
 	SHRBTextStyler styleTable: anArray
 ]
 
@@ -173,70 +269,89 @@ SHPreferences class >> setStyleTableNamed: aString [
 { #category : 'settings' }
 SHPreferences class >> settingsOn: aBuilder [
 	<systemsettings>
+	
 	(aBuilder setting: #'Syntax Highlighting')
 		target: self;
-		dialog: [ self styleTableRow ];
+		"dialog: [ self styleTableRow ];"
 		parentName: #codeBrowsing;
 		description: 'Syntax Highlighting As You Type: Enable syntax highlighting in browsers, debuggers and workspaces and set patterns style.';
 		selector: #enabled;
 		default: true;
 		iconName: #smallConfiguration;
 		with: [
+			(aBuilder pickOne: #styleTableSelector)
+				order: 0;
+				label: 'Syntax Highlight Table';
+				domainValues: self styleTableAvailableStylesMethodsWithNames;
+				description: 'Syntax Highlight stylb;e table selection'.
 			(aBuilder setting: #selectorPatternsStyle)
 				label: 'Selector Patterns';
-				default: (SHStyleElement emphasis: #bold tokens: #(#patternSelector));
+				default: self defaultSelectorPatternsStyle;
 				description: 'Selector patterns in method pane'.
 			(aBuilder setting: #errorStyle)
-				default: (SHStyleElement color: Color red tokens: #(#invalid #undefinedSelector #undefinedIdentifier));
+				default: self defaultErrorStyle;
 				label: 'Syntactic error';
 				description: 'Invalid and undefined code' .
 			(aBuilder setting: #argsStyle)
 				label: 'Parameters';
-				default: (SHStyleElement color: (Color r: 0.0 g: 0.0 b: 0.5004887585532747 alpha: 1.0) tokens: #(#patternArg #blockPatternArg #blockArg #argument));
+				default: self defaultArgsStyle;
 				description: 'Parameters in patterns, message sends, and blocks' .
 			(aBuilder setting: #commentStyle)
 				label: 'Comments';
-				default: (SHStyleElement color: (Color r: 0.4203323558162268 g: 0.4203323558162268 b: 0.4203323558162268 alpha: 1.0) tokens: #(#comment));
+				default: self defaultCommentStyle;
 				description: 'Comments in code pane' .
-			(aBuilder setting: #defaultStyle)
+			(aBuilder setting: #defaultBaseStyle)
 				label: 'Default' ;
-				default: (SHStyleElement color: Color black tokens: #(#default));
+				default: self defaultStyle;
 				description: 'Default style' .
 			(aBuilder setting: #globalVarStyle)
 				label: 'Global variables' ;
-				default: (SHStyleElement color: (Color r: 0.0 g: 0.0 b: 0.5004887585532747 alpha: 1.0) tokens: #(#globalVar #poolConstant));
+				default: self defaultGlobalVarStyle;
 				description: 'References to global variables, including classes' .
 			(aBuilder setting: #instanceVarStyle)
 				label: 'Instance/class variables' ;
-				default: (SHStyleElement color: (Color r: 0.0 g: 0.0 b: 0.5004887585532747 alpha: 1.0) tokens: #(#instVar #classVar));
+				default: self defaultInstanceVarStyle;
 				description: 'References to instance and class variables' .
 			(aBuilder setting: #messageSendsStyle)
-				default: (SHStyleElement color: Color black tokens: #(selector #incompleteSelector));
+				default: self defaultMessageSendsStyle;
 				label: 'Message sends' ;
 				description: 'Message sends' .
 			(aBuilder setting: #primitiveTypesStyle)
 				label: 'Primitive types';
-				default: (SHStyleElement color: (Color r: 0.5004887585532747 g: 0.0 b: 0.0 alpha: 1.0) tokens: #(#character #number #symbol #string));
+				default: self defaultPrimitiveTypesStyle;
 				description: 'Literal data' .
 			(aBuilder setting: #reservedWordsStyle)
 				label: 'Reserved words';
-				default: (SHStyleElement color: (Color r: 0.0 g: 0.5004887585532747 b: 0.5004887585532747 alpha: 1.0) tokens: #(#self #super #true #false #nil #thisContext));
+				default: self defaultReservedWordsStyle;
 				description: 'Reserved words of the Smalltalk language' .
 			(aBuilder setting: #syntaxStyle)
 				label: 'Syntax';
-				default: (SHStyleElement tokens: #(#return #blockArgColon #parenthesis #parenthesis1 #parenthesis2 #parenthesis3 #parenthesis4 #parenthesis5 #parenthesis6 #parenthesis7 #block #block1 #block2 #block3 #block4 #block5 #block6 #block7 #byteArrayStart #byteArrayEnd #byteArrayStart1 #byteArrayEnd1 #brace #brace1 #brace2 #brace3 #brace4 #brace5 #brace6 #brace7 #cascadeSeparator #statementSeparator #methodTempBar #blockTempBar #blockArgsBar));
+				default: self defaultSyntaxStyle;
 				description: 'Any other syntactic element' .
 			(aBuilder setting: #variableStyle)
 				label: 'Variable';
-				default: (SHStyleElement color: (Color r: 0.0 g: 0.0 b: 0.5004887585532747 alpha: 1.0) tokens: #(#blockTempVar #blockPatternTempVar #tempVar #patternTempVar #incompleteIdentifier));
-				description: 'Temporary variable'  ]
+				default: self defaultVariableStyle;
+				description: 'Temporary variable']
+]
+
+{ #category : 'settings' }
+SHPreferences class >> styleTableAvailableStyles [
+	
+	^ Pragma allNamed: #styleTable: in: SHRBTextStyler class
+]
+
+{ #category : 'settings' }
+SHPreferences class >> styleTableAvailableStylesMethodsWithNames [
+	
+	^ self styleTableAvailableStyles 
+		collect: [ :eachPragma | (eachPragma argumentAt: 1) -> eachPragma methodSelector ]
 ]
 
 { #category : 'settings' }
 SHPreferences class >> styleTableRow [
 	| allStyles |
 
-	allStyles := Pragma  allNamed: #styleTable: in: SHRBTextStyler class.
+	allStyles := self styleTableAvailableStyles.
 	^Smalltalk ui theme
 		newRowIn: self
 		for: (
@@ -253,6 +368,19 @@ SHPreferences class >> styleTableRow [
 					help: ('Change style table to ', (eachPragma argumentAt: 1)) translated)
 						label: (eachPragma argumentAt: 1);
 						yourself ] ))
+]
+
+{ #category : 'settings' }
+SHPreferences class >> styleTableSelector [
+
+	^ SHRBTextStyler styleTableSelector
+]
+
+{ #category : 'settings' }
+SHPreferences class >> styleTableSelector: aName [
+
+	SHRBTextStyler styleTableSelector: aName
+	
 ]
 
 { #category : 'accessing - styles' }

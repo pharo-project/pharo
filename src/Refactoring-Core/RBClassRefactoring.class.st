@@ -10,7 +10,7 @@ Check method `RBClassRefactoring class>>#model:className:`
 "
 Class {
 	#name : 'RBClassRefactoring',
-	#superclass : 'RBRefactoring',
+	#superclass : 'ReRefactoring',
 	#instVars : [
 		'className'
 	],

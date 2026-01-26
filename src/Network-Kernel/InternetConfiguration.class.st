@@ -320,7 +320,9 @@ InternetConfiguration class >> shutDown [
 
 { #category : 'system startup' }
 InternetConfiguration class >> startUp [
-	Smalltalk os configureHttpProxy
+
+	"Configure the http proxy depending on the platform"
+	InternetConfigurationInitializer new visit
 ]
 
 { #category : 'tests' }

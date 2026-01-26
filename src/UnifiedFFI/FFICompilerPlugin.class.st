@@ -39,6 +39,12 @@ Class {
 	#tag : 'Base'
 }
 
+{ #category : 'private' }
+FFICompilerPlugin class >> compilationContextClass [
+
+	^ OCCompilationContext
+]
+
 { #category : 'accessing' }
 FFICompilerPlugin class >> ffiCalloutSelectors [
 	<script: 'self ffiCalloutSelectors inspect'>
@@ -64,9 +70,11 @@ FFICompilerPlugin class >> initializeFFICalloutSelectors [
 { #category : 'installation' }
 FFICompilerPlugin class >> install [
 	<script>
-	(CompilationContext defaultTransformationPlugins includes: self)
+
+	(self compilationContextClass defaultTransformationPlugins includes: self)
 		ifTrue: [ ^ self ].
-	CompilationContext addDefaultTransformationPlugin: self.
+		
+	self compilationContextClass addDefaultTransformationPlugin: self.
 	self recompileSenders
 ]
 
@@ -84,7 +92,8 @@ FFICompilerPlugin class >> recompileSenders [
 { #category : 'installation' }
 FFICompilerPlugin class >> uninstall [
 	<script>
-	CompilationContext removeDefaultTransformationPlugin: self.
+	
+	self compilationContextClass removeDefaultTransformationPlugin: self.
 	self recompileSenders
 ]
 

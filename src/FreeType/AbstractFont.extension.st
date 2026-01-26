@@ -23,32 +23,9 @@ AbstractFont >> displayUnderlineOn: aDisplayContext from: baselineStartPoint to:
 ]
 
 { #category : '*FreeType-addition' }
-AbstractFont >> emphasisString [
-	"Answer a translated string that represents the receiver's emphasis."
-
-	^self emphasisStringFor: self emphasis
-]
-
-{ #category : '*FreeType-addition' }
-AbstractFont >> emphasisStringFor: emphasisCode [
-	"Answer a translated string that represents the attributes given in emphasisCode."
-
-	^self class emphasisStringFor: emphasisCode
-]
-
-{ #category : '*FreeType-addition' }
 AbstractFont >> hasDistinctGlyphsForAll: asciiString [
 	"Answer true if the receiver has glyphs for all the characters
 	in asciiString and no single glyph is shared by more than one character, false otherwise.
-	The default behaviour is to answer true, but subclasses may reimplement"
-
-	^true
-]
-
-{ #category : '*FreeType-addition' }
-AbstractFont >> hasGlyphsForAll: asciiString [
-	"Answer true if the receiver has glyphs for all the characters
-	in asciiString, false otherwise.
 	The default behaviour is to answer true, but subclasses may reimplement"
 
 	^true

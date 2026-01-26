@@ -142,6 +142,8 @@ MCCacheRepository >> versionWithInfo: aVersionInfo ifAbsent: errorBlock [
 MCCacheRepository >> writeStreamWithReplacingForFileNamed: aString do: aBlock [
 
 	| file |
+
+	cacheEnabled ifFalse: [ ^ self ].
 	file := directory / aString.
 	file ensureDelete.
 	file binaryWriteStreamDo: aBlock

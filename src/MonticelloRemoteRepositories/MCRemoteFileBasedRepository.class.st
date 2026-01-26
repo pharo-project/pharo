@@ -13,19 +13,6 @@ MCRemoteFileBasedRepository class >> isAbstract [
 	^ self = MCRemoteFileBasedRepository 
 ]
 
-{ #category : 'testing' }
-MCRemoteFileBasedRepository class >> monticelloSettingsOn: aBuilder [
-
-	<systemsettings>
-	(aBuilder setting: #cacheDirectory)
-		type: #Directory;
-		parent: #monticello;
-		target: MCCacheRepository;
-		default: (FileLocator localDirectory / 'package-cache') asFileReference;
-		description: 'The path of the local repository cache';
-		label: 'Local cache directory'
-]
-
 { #category : 'fetching' }
 MCRemoteFileBasedRepository >> fetchPackageNamed: aName [
 
@@ -37,7 +24,7 @@ MCRemoteFileBasedRepository >> loadVersionFromFileNamed: aString [
 
 	(MCCacheRepository uniqueInstance includesFileNamed: aString) ifTrue: [ ^ MCCacheRepository uniqueInstance loadVersionFromFileNamed: aString ].
 
-	super loadVersionFromFileNamed: aString
+	^ super loadVersionFromFileNamed: aString
 ]
 
 { #category : 'interface' }

@@ -8,11 +8,14 @@ This way client code using A will be able to load and get all the behavior of An
 
 
 Usage:
+```
+| transformation |
 transformation := (RBRenameAndDeprecateClassTransformation 
 				rename: #DANode
 				to: #DANodePresenter)
-				transform. 
-(ChangesBrowser changes: transformation model changes changes) open
+			generateChanges.
+(StRefactoringPreviewPresenter for: transformation) open
+```
 
 
 "
@@ -68,7 +71,7 @@ RBRenameAndDeprecateClassTransformation >> applicabilityPreconditions [
 	| class |
 	class := self model classNamed: className.
 	^ {
-		  (ReClassesExistCondition new classes: { class }).
+		  (ReClassesExistCondition new classes: { class name -> class } asDictionary).
 		  (ReClassesAreNotMetaClassCondition new classes: { class }).
 		  (ReNameIsGlobalCondition new
 			   model: self model

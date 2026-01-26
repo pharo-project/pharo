@@ -79,6 +79,26 @@ Class {
 	#tag : 'Base'
 }
 
+{ #category : 'instance creation' }
+Color class >> R: r G: g B: b [
+	"Return a color with the given R, G, and B components in the range [0..255]."
+
+	"(Color R: 255 G: 255 B: 255) >>> Color white"
+
+	^ self r: r g: g b: b range: 255
+]
+
+{ #category : 'instance creation' }
+Color class >> R: r G: g B: b A: alpha [
+	"Return a color with the given R, G, and B components in the range [0..255] and an alpha in the range [0.0..1.0]."
+	"(Color R: 255 G: 255 B: 255 A: 1) >>> Color white"
+	"(Color R: 255 G: 255 B: 255 A: 0.5) >>> (Color white alpha: 0.5)"
+
+	| c |
+	c := self r: r g: g b: b range: 255.
+	^ c alpha: alpha
+]
+
 { #category : 'private - colormaps' }
 Color class >> aaFontsColormapDepth [
 	"Adjust balance between colored AA text quality (especially if subpixel AA is used) and space / performance.
@@ -292,17 +312,45 @@ Color class >> fromHexString: aColorHex [
 
 	"(Color fromHexString: 'FFFFFF')>>> (Color white) "
 
-	| green red blue alpha hexString |
+	"(Color fromHexString: '000')>>> (Color black)"
+
+	| hexString |
 	hexString := aColorHex withoutPrefix: '#'.
-	red := (Integer readFrom: (hexString first: 2) base: 16) / 255.
-	green := (Integer readFrom: (hexString copyFrom: 3 to: 4) base: 16) / 255.
-	blue := (Integer readFrom: (hexString copyFrom: 5 to: 6) base: 16) / 255.
-
-	alpha := hexString size = 8
-		ifFalse: [ 1.0 ]
-		ifTrue: [ (Integer readFrom: (hexString copyFrom: 7 to: 8) base: 16) / 255 ].
-
-	^ self r: red g: green b: blue alpha: alpha
+	hexString size = 3 ifTrue: [
+			| r g b |
+			r := Integer readFrom: hexString first asString base: 16.
+			g := Integer readFrom: hexString second asString base: 16.
+			b := Integer readFrom: hexString third asString base: 16.
+			^ self r: r * 16 + r / 255 g: g * 16 + g / 255 b: b * 16 + b / 255 ].
+	hexString size = 4 ifTrue: [
+			| r g b a |
+			r := Integer readFrom: hexString first asString base: 16.
+			g := Integer readFrom: hexString second asString base: 16.
+			b := Integer readFrom: hexString third asString base: 16.
+			a := Integer readFrom: hexString fourth asString base: 16.
+			^ self
+				  r: r * 16 + r / 255
+				  g: g * 16 + g / 255
+				  b: b * 16 + b / 255
+				  alpha: a * 16 + a / 255 ].
+	hexString size = 6 ifTrue: [
+			| r g b |
+			r := (Integer readFrom: (hexString first: 2) base: 16) / 255.
+			g := (Integer readFrom: (hexString copyFrom: 3 to: 4) base: 16) / 255.
+			b := (Integer readFrom: (hexString copyFrom: 5 to: 6) base: 16) / 255.
+			^ self r: r g: g b: b ].
+	hexString size = 8 ifTrue: [
+			| r g b a |
+			r := (Integer readFrom: (hexString first: 2) base: 16) / 255.
+			g := (Integer readFrom: (hexString copyFrom: 3 to: 4) base: 16) / 255.
+			b := (Integer readFrom: (hexString copyFrom: 5 to: 6) base: 16) / 255.
+			a := (Integer readFrom: (hexString copyFrom: 7 to: 8) base: 16) / 255.
+			^ self
+				  r: r
+				  g: g
+				  b: b
+				  alpha: a ].
+	self error: 'Color hex string must be 3, 4, 6 or 8 characters long.'
 ]
 
 { #category : 'instance creation' }
@@ -318,20 +366,22 @@ Color class >> fromString: aString [
 	"Return a color for HTML color spec: #FFCCAA or white/black passed as string."
 
 	"(Color fromString: '#FFCCAA')>>> (Color r: 1.0 g: 0.8 b: 0.667 alpha: 1.0) "
+
 	"(Color fromString: 'orange') >>> Color orange"
 
 	| aColorHex |
-	aString isEmptyOrNil
-		ifTrue: [ ^ self white ].
+	aString isEmptyOrNil ifTrue: [ ^ self white ].
 	aColorHex := aString first = $#
-		ifTrue: [ aString allButFirst ]
-		ifFalse: [ aString ].	"Try to match aColorHex with known named colors, case insensitive."
+		             ifTrue: [ aString allButFirst ]
+		             ifFalse: [ aString ]. "Try to match aColorHex with known named colors, case insensitive."
 	^ self registeredColorNames
-		detect: [ :each | each sameAs: aColorHex ]
-		ifFound: [ :namedColor | self named: namedColor ]
-		ifNone: [ (aColorHex size = 6 and: [ aColorHex allSatisfy: [ :character | '0123456789ABCDEFabcdef' includes: character ] ])
-				ifTrue: [ self fromHexString: aColorHex ]
-				ifFalse: [ self white ] ]
+		  detect: [ :each | each sameAs: aColorHex ]
+		  ifFound: [ :namedColor | self named: namedColor ]
+		  ifNone: [
+				  (({ 3. 4. 6. 8 } includes: aColorHex size) and: [
+					   aColorHex allSatisfy: [ :character | '0123456789ABCDEFabcdef' includes: character ] ])
+					  ifTrue: [ self fromHexString: aColorHex ]
+					  ifFalse: [ self white ] ]
 ]
 
 { #category : 'accessing - defaults' }
@@ -1292,14 +1342,31 @@ Color >> colorForInsets [
 	^ self
 ]
 
+{ #category : 'accessing' }
+Color >> contrast: aColor [
+	"Get the contrast ratio between the given color and me. 
+	Contrast is computed from the luminance values of these colors.
+	The L1/L2 formula is based on ISO 9241-3 and ANSI/HFES 100-1988.
+	https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests"
+
+	| l1 l2 a |
+	l1 := self relativeLuminance.
+	l2 := aColor relativeLuminance.
+	a := 0.05.
+
+	^ l1 > l2
+		  ifTrue: [ l1 + a / (l2 + a) ]
+		  ifFalse: [ l2 + a / (l1 + a) ]
+]
+
 { #category : 'converting' }
 Color >> contrastingBlackAndWhiteColor [
 	"Answer black or white depending on the luminance."
 
-	self isTransparent ifTrue: [ ^ self class black].
-	^self luminance > 0.5
-		ifTrue: [self class black]
-		ifFalse: [self class white]
+	self isTransparent ifTrue: [ ^ self class black ].
+	^ self relativeLuminance > 0.5
+		ifTrue: [ self class black ]
+		ifFalse: [ self class white ]
 ]
 
 { #category : 'converting' }
@@ -1307,10 +1374,9 @@ Color >> contrastingColorAdjustment [
 	"Answer darker or lighter color depending on the luminance."
 
 	self isTransparent ifTrue: [ ^ self ].
-
-	^ self luminance > 0.5
+	^ self relativeLuminance > 0.5
 		ifTrue: [ self darker ]
-		ifFalse:  [ self lighter ]
+		ifFalse: [ self lighter ]
 ]
 
 { #category : 'transformations' }
@@ -1662,6 +1728,30 @@ Color >> isColor [
 ]
 
 { #category : 'testing' }
+Color >> isContrastCompliantForISO92413: aColor [
+	"Return true if the ISO 9241-3 standard considers the given color and myself to have sufficient contrast to be used in a UI.
+	Failing to achieve this level of contrast can result in reduced readability and poor visual clarity."
+
+	^ (self contrast: aColor) >= 3
+]
+
+{ #category : 'testing' }
+Color >> isContrastCompliantForWCAG2AA: aColor [
+	"Return true if the WCAG 2 AA standard considers the given color and myself to have sufficient contrast to be used in a UI.
+	With this standard respected, your UI is considered suitable for the majority of the population."
+
+	^ (self contrast: aColor) >= 4.5
+]
+
+{ #category : 'testing' }
+Color >> isContrastCompliantForWCAG2AAA: aColor [
+	"Return true if the WCAG 2 AAA standard considers the given color and myself to have sufficient contrast to be used in a UI.
+	With this standard respected, your UI is considered suitable for people aged 80 and older."
+
+	^ (self contrast: aColor) >= 7
+]
+
+{ #category : 'testing' }
 Color >> isGradientFill [
 
 	^ false
@@ -1950,6 +2040,32 @@ Color >> red [
 	"Return the red component of this color, a float in the range [0.0..1.0]."
 
 	^ self privateRed asFloat / ComponentMax
+]
+
+{ #category : 'accessing' }
+Color >> relativeLuminance [
+	"Return the relative luminance (Y) of this color.
+	Unlike absolute luminance, Y is based on the luminance signal defined in ITU-R BT.709-6
+	that accounts for the varying sensitivity of the human eye to colors.
+	https://www.w3.org/WAI/GL/wiki/Relative_luminance"
+
+	| r g b a |
+	r := (self red * 255 roundTo: 1) / 255.
+	g := (self green * 255 roundTo: 1) / 255.
+	b := (self blue * 255 roundTo: 1) / 255.
+	a := 0.055.
+
+	r := r <= 0.04045
+		     ifTrue: [ r / 12.92 ]
+		     ifFalse: [ r + a / (1 + a) raisedTo: 2.4 ].
+	g := g <= 0.04045
+		     ifTrue: [ g / 12.92 ]
+		     ifFalse: [ g + a / (1 + a) raisedTo: 2.4 ].
+	b := b <= 0.04045
+		     ifTrue: [ b / 12.92 ]
+		     ifFalse: [ b + a / (1 + a) raisedTo: 2.4 ].
+
+	^ 0.2126 * r + (0.7152 * g) + (0.0722 * b)
 ]
 
 { #category : 'other' }

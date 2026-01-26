@@ -32,13 +32,17 @@ ClyDebugTestSetupCommand >> defaultMenuItemName [
 	^'Debug test setup'
 ]
 
+{ #category : 'accessing' }
+ClyDebugTestSetupCommand >> description [
+
+^ 'Debug the setup method of the selected test, then executes the selected test method.' 
+]
+
 { #category : 'execution' }
 ClyDebugTestSetupCommand >> runTest: testSelector of: testClass [
 
 	| breakpoint |
-	breakpoint := Breakpoint new
-		              node: (testClass lookupSelector: #setUp) ast;
-		              install.
+	breakpoint := DebugPointManager installNew: BreakDebugPoint on: (testClass lookupSelector: #setUp) ast.
 	[ super runTest: testSelector of: testClass ] ensure: [
 		[ breakpoint remove ]
 			on: NotFound

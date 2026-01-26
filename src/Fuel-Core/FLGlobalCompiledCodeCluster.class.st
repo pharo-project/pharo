@@ -12,15 +12,6 @@ Class {
 	#tag : 'Clusters-Global'
 }
 
-{ #category : 'accessing - query' }
-FLGlobalCompiledCodeCluster >> findMethodWithSelector: selector in: aClass [
-
-	^ aClass
-		  compiledMethodAt: selector
-		  ifAbsent: [
-		  FLMethodNotFound signalWith: aClass name and: selector ]
-]
-
 { #category : 'serialize/materialize' }
 FLGlobalCompiledCodeCluster >> materializeGlobalClassFrom: aDecoder [
 	| class |

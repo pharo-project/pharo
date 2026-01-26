@@ -21,7 +21,7 @@ PharoBootstrapRule class >> checksPackage [
 { #category : 'accessing' }
 PharoBootstrapRule class >> group [
 
-	^ 'Architectural'
+	^ self architecturalGroup
 ]
 
 { #category : 'accessing' }
@@ -40,7 +40,7 @@ PharoBootstrapRule >> basicCheck: aPackage [
 PharoBootstrapRule >> bootstrapPackages [
 	"This should probably be improved"
 
-	^ BaselineOfPharoBootstrap kernelPackageNames , #( 'AST-Core' )
+	^ BaselineOfKernel corePackageNames , #( 'AST-Core' )
 ]
 
 { #category : 'helpers' }
@@ -53,7 +53,7 @@ PharoBootstrapRule >> critiqueFor: aPackage [
 
 { #category : 'private' }
 PharoBootstrapRule >> dependencyChecker [
-	^ (DependencyChecker ifNil: [ DADependencyChecker ]) new
+	^ (DependencyChecker ifNil: [ StDependencyChecker ]) new
 ]
 
 { #category : 'instance creation' }

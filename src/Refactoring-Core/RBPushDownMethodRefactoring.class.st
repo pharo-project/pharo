@@ -73,6 +73,9 @@ RBPushDownMethodRefactoring >> breakingChangePreconditions [
 	^ OrderedCollection
 		  with: self preconditionIsAbstract
 		  with: self preconditionSubclassesDontSendSuper
+		  with: self preconditionSubclassesDirectlyDefines
+		  with: self preconditionMethodsReferToSelector
+		  with: self preconditionAllSubclassesDirectlyDefines
 ]
 
 { #category : 'transforming' }
@@ -83,9 +86,31 @@ RBPushDownMethodRefactoring >> classes: aCollection [
 ]
 
 { #category : 'preconditions' }
+RBPushDownMethodRefactoring >> preconditionAllSubclassesDirectlyDefines [
+
+	^ ReAllSubclassesDirectlyDefinesCondition new
+		  class: class
+		  selectors: selectors 
+]
+
+{ #category : 'preconditions' }
 RBPushDownMethodRefactoring >> preconditionIsAbstract [
 
 	^ ReClassesAreAbstractCondition new classes: { class }
+]
+
+{ #category : 'preconditions' }
+RBPushDownMethodRefactoring >> preconditionMethodsReferToSelector [
+
+	^ ReMethodsReferToSelectorCondition new
+		  class: class
+		  selectors: selectors 
+]
+
+{ #category : 'preconditions' }
+RBPushDownMethodRefactoring >> preconditionSubclassesDirectlyDefines [
+
+	^ ReSubclassesDirectlyDefinesCondition new class: class selectors: selectors
 ]
 
 { #category : 'preconditions' }
@@ -100,6 +125,7 @@ RBPushDownMethodRefactoring >> preconditionSubclassesDontSendSuper [
 RBPushDownMethodRefactoring >> preconditions [
 
 	^ self applicabilityPreconditions & self breakingChangePreconditions 
+	
 ]
 
 { #category : 'transforming' }
@@ -124,12 +150,7 @@ RBPushDownMethodRefactoring >> pushDown: aSelector [
 		               toClasses: self allClasses.
 	self generateChangesFor: refactoring.
 	self allClasses do: [ :each |
-		(each directlyDefinesMethod: aSelector) ifFalse: [
-			self generateChangesFor:
-				(RBAddMethodTransformation
-					sourceCode: code
-					in: each
-					withProtocol: protocols) ] ]
+		self generateChangesFor: (RBAddMethodTransformation sourceCode: code in: each withProtocol: protocols) ]
 ]
 
 { #category : 'initialization' }

@@ -155,7 +155,7 @@ ReRuleManager class >> reset [
 ReRuleManager class >> resetWithInform [
 
 	self reset.
-	self inform: 'Cache of the Renraku rule manager has been reset'
+	InformativeNotification signal: 'Cache of the Renraku rule manager has been reset'
 ]
 
 { #category : 'accessing' }
@@ -231,21 +231,20 @@ ReRuleManager class >> setDefaultProfile [
 ]
 
 { #category : 'settings' }
-ReRuleManager class >> subSettingsOn: aBuilder with: rules [ 
+ReRuleManager class >> subSettingsOn: aBuilder with: rules [
 
-	 ^ (rules sorted: [ :a :b | a name < b name ]) do: [ :rule |
-		  (aBuilder setting: rule enabledSettingID)
-			  selector: #enabled;
-			  target: rule;
-			  default: rule enabled;
-			  label: rule ruleName;
-			  description: rule rationale ]
+	^ (rules sorted: [ :a :b | a name < b name ]) do: [ :rule |
+			  (aBuilder setting: rule enabledSettingID)
+				  selector: #enabled;
+				  target: rule;
+				  default: rule enabledByDefault;
+				  label: rule ruleName;
+				  description: rule rationale ]
 ]
 
 { #category : 'event subscriptions' }
 ReRuleManager class >> subscribe [
 
-	<systemEventRegistration>
 	self unsubscribe.
 
 	self codeChangeAnnouncer weak
@@ -261,7 +260,7 @@ ReRuleManager class >> uniqueInstance [
 	^ self default
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'class initialization' }
 ReRuleManager class >> unload [
 
 	self reset

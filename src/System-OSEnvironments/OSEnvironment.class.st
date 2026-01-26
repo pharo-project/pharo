@@ -12,15 +12,10 @@ In other words, methods
 - #at:put:
 
 and its variants receive normal strings and decide whether they have to encode those strings to platform bytes or not depending on the platform.
-
-My subclasses may or may not provide additional APIs to have more control on the particular encoding used.
 "
 Class {
 	#name : 'OSEnvironment',
 	#superclass : 'Object',
-	#instVars : [
-		'platform'
-	],
 	#classVars : [
 		'Current'
 	],
@@ -31,55 +26,13 @@ Class {
 
 { #category : 'instance creation' }
 OSEnvironment class >> current [
-	^ Current ifNil: [ Current := self environmentFor: OSPlatform current ]
-]
-
-{ #category : 'private - accessing' }
-OSEnvironment class >> environmentFor: aPlatform [
-	| environmentClass |
-
-	environmentClass := self allSubclasses
-		detect: [ :each | each isDefaultFor: aPlatform ]
-		ifNone: [ nil ].
-
-	^ (environmentClass isNotNil and: [ environmentClass isAvailable  ])
-		ifTrue: [ environmentClass platform: aPlatform ]
-		ifFalse: [ NullOSEnvironment platform: aPlatform ]
+	^ Current ifNil: [ Current := self new ]
 ]
 
 { #category : 'examples' }
 OSEnvironment class >> example [
 
 	Smalltalk os environment asDictionary inspect
-]
-
-{ #category : 'class initialization' }
-OSEnvironment class >> initialize [
-	SessionManager default
-		registerSystemClassNamed: self name
-]
-
-{ #category : 'testing' }
-OSEnvironment class >> isAvailable [
-	self flag: #pharoTodo. "Replace this for a check of FFI available"
-	self environment at: #FFICalloutAPI ifAbsent: [ ^ false ].
-	^ true
-]
-
-{ #category : 'testing' }
-OSEnvironment class >> isDefaultFor: aPlatform [
-	^ false
-]
-
-{ #category : 'instance creation' }
-OSEnvironment class >> platform: anOSPlatform [
-	^ self basicNew initializeWith: anOSPlatform
-]
-
-{ #category : 'system startup' }
-OSEnvironment class >> startUp: isImageStarting [
-
-	isImageStarting ifTrue: [ Current := nil ]
 ]
 
 { #category : 'converting' }
@@ -126,7 +79,7 @@ OSEnvironment >> at: aKey ifAbsent: aBlock [
 	This is the common denominator API for all platforms.
 	Rationale: Windows does not (compared to *nix systems) provide a encoded byte representation of the value. Windows has instead its own wide string representation."
 
-	self subclassResponsibility
+	^ self platform environmentVariableNamed: aKey ifAbsent: aBlock
 ]
 
 { #category : 'accessing' }
@@ -175,7 +128,7 @@ OSEnvironment >> at: aKey put: aValue [
 	This is the common denominator API for all platforms.
 	Rationale: Windows does not (compared to *nix systems) provide a encoded byte representation of the value. Windows has instead its own wide string representation."
 
-	^ self subclassResponsibility
+	^ self platform environmentVariableNamed: aKey put: aValue
 ]
 
 { #category : 'enumeration' }
@@ -196,12 +149,6 @@ OSEnvironment >> includesKey: aKey [
 	^ self at: aKey ifPresent: [ :value | true ] ifAbsent: [ false ]
 ]
 
-{ #category : 'initialization' }
-OSEnvironment >> initializeWith: anOSPlatform [
-	super initialize.
-	platform := anOSPlatform
-]
-
 { #category : 'accessing' }
 OSEnvironment >> keys [
 	"Answer an Array containing the receiver's keys."
@@ -211,16 +158,8 @@ OSEnvironment >> keys [
 
 { #category : 'enumeration' }
 OSEnvironment >> keysAndValuesDo: aBlock [
-	self subclassResponsibility
-]
 
-{ #category : 'enumeration' }
-OSEnvironment >> keysAndValuesDo: aBlock withAssociationString: associationString [
-	| equalsIndex |
-	equalsIndex := associationString indexOf: $=.
-	aBlock
-		value: (associationString first: equalsIndex-1)
-		value: (associationString allButFirst: equalsIndex)
+	^ self platform environmentVariablesDo: aBlock
 ]
 
 { #category : 'enumeration' }
@@ -231,7 +170,7 @@ OSEnvironment >> keysDo: aBlock [
 
 { #category : 'accessing' }
 OSEnvironment >> platform [
-	^ platform
+	^  OSPlatform current
 ]
 
 { #category : 'accessing' }
@@ -242,14 +181,14 @@ OSEnvironment >> removeKey: aKey [
 	This is the common denominator API for all platforms.
 	Rationale: Windows does not (compared to *nix systems) provide a encoded byte representation of the value. Windows has instead its own wide string representation."
 
-	^ self subclassResponsibility
+	^ self platform removeEnvironmentVariableNamed: aKey
 ]
 
 { #category : 'accessing' }
 OSEnvironment >> setEnv: nameString value: valueString [
 	"This method calls the the platform specific set environment routine"
 
-	^ self subclassResponsibility
+	^ self platform setEnv: nameString value: valueString
 ]
 
 { #category : 'accessing' }
@@ -263,13 +202,6 @@ OSEnvironment >> setEnv: nameString value: valueString during: aBlock [
 		oldValue
 			ifNil: [ self removeKey: nameString ]
 			ifNotNil: [ self setEnv: nameString value: oldValue ] ]
-]
-
-{ #category : 'accessing' }
-OSEnvironment >> unsetEnv: string [
-	"This method calls the the platform specific unset environment routine"
-
-	^ self ffiCall: #(int unsetenv #(String string)) module: LibC
 ]
 
 { #category : 'accessing' }

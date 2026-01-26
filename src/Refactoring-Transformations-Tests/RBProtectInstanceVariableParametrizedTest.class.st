@@ -21,7 +21,11 @@ self flag: 'need change tranformation to have the same behavior of ref'.
 RBProtectInstanceVariableParametrizedTest >> setUp [
 
 	super setUp.
-	model := self modelOnClasses: { RBSubclassOfClassToRename . RBBasicLintRuleTestData }
+	model := self modelOnClasses: {
+			         RBSubclassOfClassToRename.
+			         RBBasicLintRuleTestData.
+			         RBSmallSubclassOfSubclassOfClassToRename.
+			         RBSiblingOfSmallSubclass }
 ]
 
 { #category : 'failure tests' }
@@ -46,4 +50,28 @@ RBProtectInstanceVariableParametrizedTest >> testProtectInstanceVariable [
 								^rewriteRule1 := rewriteRule1 , rewriteRule1').
 	self deny: (class directlyDefinesMethod: ('rewrite' , 'Rule1') asSymbol).
 	self deny: (class directlyDefinesMethod: ('rewrite' , 'Rule1:') asSymbol)
+]
+
+{ #category : 'tests' }
+RBProtectInstanceVariableParametrizedTest >> testProtectInstanceVariableWithAccessorFromTheSuperclass [
+
+	| refactoring sibling |
+	refactoring := self createRefactoringWithModel: model andArguments: {
+			               ('rewrite' , 'Rule1').
+			               #RBSubclassOfClassToRename }.
+	self executeRefactoring: refactoring.
+	sibling := refactoring model classNamed: #RBSiblingOfSmallSubclass.
+	self assert: (sibling parseTreeForSelector: #use2) equals: (self parseMethod: 'use2 rewriteRule1:= 13')
+]
+
+{ #category : 'tests' }
+RBProtectInstanceVariableParametrizedTest >> testProtectInstanceVariableWithAccessorInSubclass [
+
+	| refactoring subclass |
+	refactoring := self createRefactoringWithModel: model andArguments: {
+			               ('rewrite' , 'Rule1').
+			               #RBSubclassOfClassToRename }.
+	self executeRefactoring: refactoring.
+	subclass := refactoring model classNamed: #RBSmallSubclassOfSubclassOfClassToRename.
+	self assert: (subclass parseTreeForSelector: #useAccessor) equals: (self parseMethod: 'useAccessor ^rewriteRule1:= 54')
 ]

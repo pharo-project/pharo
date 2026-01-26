@@ -13,6 +13,14 @@ RBReplaceMessageSendParametrizedTest class >> testParameters [
 		yourself
 ]
 
+{ #category : 'running' }
+RBReplaceMessageSendParametrizedTest >> setUp [
+	| classEnv |
+	super setUp.
+	classEnv := RBClassEnvironment classes: { RBReplaceMessageSendTransformation . RBClassDataForRefactoringTest . RBBasicLintRuleTestData }.
+	model := self defaultNamespaceClass onEnvironment: classEnv
+]
+
 { #category : 'failure tests' }
 RBReplaceMessageSendParametrizedTest >> testFailureIncompleteInitializers [
 	"please note that this strange way to create symbol is because some tests are counting symbol

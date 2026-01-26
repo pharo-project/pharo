@@ -8,12 +8,6 @@ Class {
 	#package : 'Calypso-SystemPlugins-DebugPoints-Browser'
 }
 
-{ #category : 'testing' }
-ClyAddWatchDebugPointCommand class >> canBeExecutedInContext: aBrowserContext [
-
-	^ (super canBeExecutedInContext: aBrowserContext)
-]
-
 { #category : 'activation' }
 ClyAddWatchDebugPointCommand class >> contextMenuOrder [
 	^4
@@ -26,7 +20,8 @@ ClyAddWatchDebugPointCommand >> defaultMenuIconName [
 
 { #category : 'accessing' }
 ClyAddWatchDebugPointCommand >> defaultMenuItemName [
-	^' Add Watch to: ',  sourceNode displaySourceCode
+
+	^ String streamContents: [ :stream | stream << 'Watch "' << sourceNode displaySourceCode << '"' ]
 ]
 
 { #category : 'execution' }

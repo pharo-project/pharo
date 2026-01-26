@@ -60,3 +60,54 @@ RBPushDownMethodParametrizedTest >> testPushDownMethodThatReferencesPoolDictiona
 		self assert: (each parseTreeForSelector: #junk) equals: parseTree.
 		self assert: (each definesPoolDictionary: 'TextConstants' asSymbol) ]
 ]
+
+{ #category : 'tests' }
+RBPushDownMethodParametrizedTest >> testPushDownMethodWithAllSubclassesDefinesSelectorRemovesMethod [
+
+	| refactoring class |
+	refactoring := self createRefactoringWithArguments: {
+			               #( #isEmpty ).
+			               'RBLintRuleTestData' }.
+	class := refactoring model classNamed: #RBLintRuleTestData.
+	self assert: (class directlyDefinesMethod: #isEmpty).
+	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
+	self deny: (class directlyDefinesMethod: #isEmpty)
+]
+
+{ #category : 'tests' }
+RBPushDownMethodParametrizedTest >> testPushDownMethodWithMethodThatRefersToSelector [
+
+	| refactoring |
+	refactoring := self createRefactoringWithArguments: {
+			               #( #problemCount ).
+			               'RBLintRuleTestData' }.
+	(refactoring isKindOf: RBPushDownMethodRefactoring)
+		ifTrue: [ self shouldWarn: refactoring ]
+		ifFalse: [ self shouldntWarn: refactoring ]
+]
+
+{ #category : 'tests' }
+RBPushDownMethodParametrizedTest >> testPushDownMethodWithSubclassOfSubclassThatDefinesSelector [
+
+	| refactoring class subclass |
+	refactoring := self createRefactoringWithArguments: {
+			               #( #resetResult ).
+			               'RBLintRuleTestData' }.
+	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
+	class := refactoring model classNamed: #RBLintRuleTestData.
+	subclass := refactoring model classNamed: #RBTransformationRuleTestData.
+	self assert: (subclass parseTreeForSelector: #resetResult) equals: (self parseMethod: 'resetResult
+	builder := ReChangeManager changeFactory compositeRefactoryChange')
+]
+
+{ #category : 'tests' }
+RBPushDownMethodParametrizedTest >> testPushDownMethodWithSubclassesThatDefinesSelector [
+
+	| refactoring |
+	refactoring := self createRefactoringWithArguments: {
+			               #( #isEmpty ).
+			               'RBLintRuleTestData' }.
+	(refactoring isKindOf: RBPushDownMethodRefactoring)
+		ifTrue: [ self shouldWarn: refactoring ]
+		ifFalse: [ self shouldntWarn: refactoring ]
+]

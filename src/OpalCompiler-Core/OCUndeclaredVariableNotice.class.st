@@ -1,6 +1,6 @@
 Class {
 	#name : 'OCUndeclaredVariableNotice',
-	#superclass : 'RBErrorNotice',
+	#superclass : 'OCErrorNotice',
 	#category : 'OpalCompiler-Core-FrontEnd',
 	#package : 'OpalCompiler-Core',
 	#tag : 'FrontEnd'

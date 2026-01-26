@@ -20,9 +20,9 @@ Class {
 }
 
 { #category : 'instance creation' }
-RTFSelfCallNode class >> astNode: aRBMessageNode compiledMethod: aCompiledMethod [
+RTFSelfCallNode class >> astNode: aMessageNode compiledMethod: aCompiledMethod [
 	^ self new
-		astNode: aRBMessageNode;
+		astNode: aMessageNode;
 		compiledMethod: aCompiledMethod;
 		yourself
 ]

@@ -1,3 +1,6 @@
+"
+I am a command that unclasifies a method.
+"
 Class {
 	#name : 'ClyResetProtocolForEditorCommand',
 	#superclass : 'ClyMethodEditorCommand',
@@ -17,6 +20,12 @@ ClyResetProtocolForEditorCommand class >> methodEditorShorcutActivation [
 ClyResetProtocolForEditorCommand >> defaultMenuItemName [
 
 	^ 'Unclassify method'
+]
+
+{ #category : 'accessing' }
+ClyResetProtocolForEditorCommand >> description [
+
+	^ 'Unclasifies a method.'
 ]
 
 { #category : 'execution' }

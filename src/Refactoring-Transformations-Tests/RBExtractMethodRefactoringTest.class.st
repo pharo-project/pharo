@@ -35,7 +35,7 @@ RBExtractMethodRefactoringTest >> testExtractMethodThatMovesTemporaryVariable [
 	| rule |
 	rule := self foo1.
 	self rewriteUsing: rule').
-	self assert: (class parseTreeForSelector: #foo1) equals: (self parseMethod: 'foo1 | rule | 	rule := RBParseTreeRewriter new.
+	self assert: (class parseTreeForSelector: #foo1) equals: (self parseMethod: 'foo1 | rule | 	rule := OCParseTreeRewriter new.
 	rule addSearch: ''super `@message: ``@args''
 				-> (
 					[:aNode |
@@ -171,6 +171,23 @@ RBExtractMethodRefactoringTest >> testFailureExtractMethodWhenGivenSourceIsNotIn
 { #category : 'failure tests' }
 RBExtractMethodRefactoringTest >> testFailureNonExistantSelector [
 	self shouldFail: (RBExtractMethodRefactoring extract: (10 to: 20) from: #checkClass1: in: RBBasicLintRuleTestData)
+]
+
+{ #category : 'tests' }
+RBExtractMethodRefactoringTest >> testInvalidIntervalShouldRaiseError [
+	| refactoring |
+	refactoring := RBExtractMethodRefactoring
+						model: model
+						extract: (5 to: 1)
+						from: #displayName
+						in: RBLintRuleTestData.
+
+	self 
+		should: [ refactoring generateChanges ] 
+		raise: RBRefactoringError
+		whoseDescriptionIncludes: 'Invalid interval'
+		description: 'Interval should be properly created (start >= stop).'.
+
 ]
 
 { #category : 'tests' }

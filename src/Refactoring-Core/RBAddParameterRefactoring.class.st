@@ -63,6 +63,9 @@ RBAddParameterRefactoring >> applicabilityPreconditions [
 		   oldSelector numArgs < newSelector numArgs ifFalse: [
 				   self refactoringError: newSelector printString
 						   , ' doesn''t have the proper number of arguments.' ].
+			permutation size = newSelector numArgs ifFalse: [ 
+				self refactoringError: newSelector printString
+					, ' doesn''t have the proper number of permutations.' ].
 		   self newArgs do: [ :arg |
 				   self verifyInitializationExpressionOf: arg argValue ].
 		   true ]) }
@@ -93,7 +96,7 @@ RBAddParameterRefactoring >> checkVariableReferencesIn: aParseTree [
 		do: [ :aNode :answer |
 			| name |
 			name := aNode name.
-			(aNode whoDefines: name) ifNil: [ self checkSendersAccessTo: name ] ].
+			(aNode whichUpNodeDefines: name) ifNil: [ self checkSendersAccessTo: name ] ].
 	searcher executeTree: aParseTree
 ]
 
@@ -109,7 +112,7 @@ RBAddParameterRefactoring >> modifyImplementorParseTree: parseTree in: aClass [
 		andArguments: ((permutation
 			collect: [ :e | parseTree argumentNames at: e ifAbsent: [ index := index +1.
 				argNames at: index	] ])
-				collect: [:e | RBVariableNode named: e ]).
+				collect: [:e | OCVariableNode named: e ]).
 	self renameArgumentsIn: parseTree
 ]
 

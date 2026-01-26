@@ -27,39 +27,6 @@ Context >> compiler [
 ]
 
 { #category : '*OpalCompiler-Core' }
-Context >> executedPC [
-	"Deeper in the stack the pc was already advanced one bytecode, so we need to go back
-	this one bytecode, which can consist of multiple bytes. But on IR, we record the *last*
-	bytecode offset as the offset of the IR instruction, which means we can just go back one"
-
-	"if we are at the start, return the startpc"
-	(pc == self startpc) ifTrue: [ ^self startpc ].
-
-	"we need to guard for dead contexts (pc is nil)"
-	^self isDead ifTrue: [ self endPC - 1] ifFalse: [ pc - 1]
-]
-
-{ #category : '*OpalCompiler-Core' }
-Context >> isBlockReturn: aPC [
-	^method encoderClass isBlockReturnAt: aPC in: method
-]
-
-{ #category : '*OpalCompiler-Core' }
-Context >> isPushLiteralNil: aPC [
-	^ (self compiledCode at: aPC) = method encoderClass pushNilByte
-]
-
-{ #category : '*OpalCompiler-Core' }
-Context >> isPushTemp: aPC [
-	^ self compiledCode encoderClass isPushTempAt: aPC in: method
-]
-
-{ #category : '*OpalCompiler-Core' }
-Context >> isReturnAt: aPC [
-	^method encoderClass isReturnAt: aPC in: method
-]
-
-{ #category : '*OpalCompiler-Core' }
 Context >> lookupVar: aSymbol [
 	^ self astScope lookupVar: aSymbol
 ]

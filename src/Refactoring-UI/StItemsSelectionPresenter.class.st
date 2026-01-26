@@ -48,6 +48,18 @@ StItemsSelectionPresenter class >> label: aString withItems: items selecting: se
 		yourself 
 ]
 
+{ #category : 'specs' }
+StItemsSelectionPresenter class >> title: aTitle label: aString withItems: items selecting: selectedItems [
+
+	^ self new
+		  title: aTitle
+		  label: aString
+		  withItems: items
+		  selecting: selectedItems; 
+		  openBlockedDialog;
+		  yourself
+]
+
 { #category : 'actions' }
 StItemsSelectionPresenter >> accept [
 
@@ -86,11 +98,14 @@ StItemsSelectionPresenter >> components [
 { #category : 'initialization' }
 StItemsSelectionPresenter >> connectPresenters [
 
-	table bindKeyCombination: Character backspace asShortcut
-		toAction: [ table toggleSelection ].
+	table addShortcutWith: [ :action | action 
+		shortcutKey: Character backspace asShortcut;
+		action: [ table toggleSelection ] ].
+	
 	self components do: [ :each |
-	each bindKeyCombination: Character cr asKeyCombination
-		toAction: [ :presenter | self accept: presenter] ]
+		each addShortcutWith: [ :action | action 
+			shortcutKey: Character cr asKeyCombination;
+			action: [ self accept: each ] ] ]
 ]
 
 { #category : 'initialization' }
@@ -120,4 +135,14 @@ StItemsSelectionPresenter >> label: aString withItems: coll1 selecting: coll2 [
 { #category : 'accessing' }
 StItemsSelectionPresenter >> selectedItems [
 	^ selectedItems
+]
+
+{ #category : 'initialization' }
+StItemsSelectionPresenter >> title: aTitle label: aString withItems: coll1 selecting: coll2 [
+
+	titleHolder := aTitle.
+	label label: aString.
+	table
+		items: coll1;
+		selectItems: coll2
 ]

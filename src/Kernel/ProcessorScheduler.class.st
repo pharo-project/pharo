@@ -52,18 +52,6 @@ ProcessorScheduler class >> idleTime: microsecondsCount [
 	IdleTime := microsecondsCount
 ]
 
-{ #category : 'settings' }
-ProcessorScheduler class >> idleTimeSettingOn: aBuilder [
-	<systemsettings>
-
-	(aBuilder setting: #idleTime)
-		target: self;
-		parent: #pharoSystem ;
-		default: 50000;
-		label: 'Default idle time for the system (microseconds)' ;
-		description: 'Detault idle time for the Pharo process in case of inactivity. In idle mode, the system can be awakened by a signal. This value can limit the minimal delay time.'
-]
-
 { #category : 'class initialization' }
 ProcessorScheduler class >> initialize [
 
@@ -224,7 +212,7 @@ ProcessorScheduler >> nextReadyProcess [
 
 	quiescentProcessLists reverseDo: [ :list |
 		list ifNotEmpty: [
-			list first suspendedContext ifNotNil: [:proc | ^ proc ] ] ].
+			list first ifNotNil: [:proc | ^ proc ] ] ].
 	^ nil
 ]
 

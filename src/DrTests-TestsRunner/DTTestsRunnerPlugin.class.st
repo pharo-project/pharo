@@ -145,6 +145,7 @@ DTTestsRunnerPlugin >> runTestSuites: testSuites [
 				self runSuite: testSuite withResult: specificResult.
 				result mergeWith: specificResult ]
 			displayingProgress: 'Running Tests' ].
+	result updateResultsInHistory.
 	^ result
 ]
 

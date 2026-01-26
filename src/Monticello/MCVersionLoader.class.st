@@ -3,7 +3,7 @@ A MCVersionLoader is responsible for loading a given version.
 "
 Class {
 	#name : 'MCVersionLoader',
-	#superclass : 'Object',
+	#superclass : 'MCAbstractLoader',
 	#instVars : [
 		'versions'
 	],
@@ -63,6 +63,8 @@ MCVersionLoader >> basicLoad [
 	loader := versions size > 1
 		          ifTrue: [ MCMultiPackageLoader new ]
 		          ifFalse: [ MCPackageLoader new ].
+	loader isStrict: self isStrict.
+
 	versions do: [ :ea |
 		loader updatePackage: ea package withSnapshot: ea snapshot ].
 
@@ -81,16 +83,16 @@ MCVersionLoader >> checkForModificationsIfCancel: cancelBlock ifMerge: mergeBloc
 
 { #category : 'checking' }
 MCVersionLoader >> confirmMissingDependency: aDependency [
+
 	| name |
 	name := aDependency versionInfo name.
-	(self confirm: 'Can''t find dependency ', name, '. ignore?')
-		ifFalse: [self error: 'Can''t find dependency ', name]
+	(ConfirmationRequest signal: 'Can''t find dependency ' , name , '. ignore?') ifFalse: [ self error: 'Can''t find dependency ' , name ]
 ]
 
 { #category : 'checking' }
 MCVersionLoader >> depAgeIsOk: aDependency [
-	^ aDependency isOlder not 
-		or: [self confirm: 'load older dependency ', aDependency versionInfo name , '?']
+
+	^ aDependency isOlder not or: [ ConfirmationRequest signal: 'load older dependency ' , aDependency versionInfo name , '?' ]
 ]
 
 { #category : 'private' }
@@ -136,6 +138,12 @@ MCVersionLoader >> mergeVersions [
 	MCVersionMerger new
 		addVersions: self localModifications;
 		merge
+]
+
+{ #category : 'accessing' }
+MCVersionLoader >> versions [
+
+	^versions
 ]
 
 { #category : 'checking' }

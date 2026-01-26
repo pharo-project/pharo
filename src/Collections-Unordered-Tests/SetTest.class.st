@@ -7,8 +7,8 @@ This is the unit test for the class Set. Unit tests are a good way to exercise t
 Class {
 	#name : 'SetTest',
 	#superclass : 'CollectionRootTest',
-	#traits : 'TAddForUniquenessTest + TIncludesWithIdentityCheckTest + TCloneTest + TCopyTest + TRemoveTest + TGrowableTest + TStructuralEqualityTest + TPrintTest + TAsStringCommaAndDelimiterTest + TConvertTest + TConvertAsSortedTest + TConcatenationEqualElementsRemovedTest + TOccurrencesTest + (TCreationWithTest - {#testOfSize. #collectionClass}) + (TSetArithmetic - {#collectionClass})',
-	#classTraits : 'TAddForUniquenessTest classTrait + TIncludesWithIdentityCheckTest classTrait + TCloneTest classTrait + TCopyTest classTrait + TRemoveTest classTrait + TGrowableTest classTrait + TStructuralEqualityTest classTrait + TPrintTest classTrait + TAsStringCommaAndDelimiterTest classTrait + TConvertTest classTrait + TConvertAsSortedTest classTrait + TConcatenationEqualElementsRemovedTest classTrait + TOccurrencesTest classTrait + TCreationWithTest classTrait + TSetArithmetic classTrait',
+	#traits : 'TAddForUniquenessTest + TIncludesWithIdentityCheckTest + TCloneTest + TCopyTest + TRemoveTest + TGrowableTest + TStructuralEqualityTest + TPrintTest + TConvertTest + TConvertAsSortedTest + TConcatenationEqualElementsRemovedTest + TOccurrencesTest + (TCreationWithTest - {#testOfSize. #collectionClass}) + (TSetArithmetic - {#collectionClass})',
+	#classTraits : 'TAddForUniquenessTest classTrait + TIncludesWithIdentityCheckTest classTrait + TCloneTest classTrait + TCopyTest classTrait + TRemoveTest classTrait + TGrowableTest classTrait + TStructuralEqualityTest classTrait + TPrintTest classTrait + TConvertTest classTrait + TConvertAsSortedTest classTrait + TConcatenationEqualElementsRemovedTest classTrait + TOccurrencesTest classTrait + TCreationWithTest classTrait + TSetArithmetic classTrait',
 	#instVars : [
 		'full',
 		'empty',
@@ -17,7 +17,7 @@ Class {
 		'elementNotIn',
 		'collectionOfFloat',
 		'collectionIncluded',
-		'nonEmpty1element',
+		'firstCollection',
 		'withoutEqualElements',
 		'collection5Elements',
 		'collectionWith3Elements',
@@ -166,8 +166,9 @@ SetTest >> expectedSizeAfterReject [
 
 { #category : 'requirements' }
 SetTest >> firstCollection [
-" return a collection that will be the first part of the concatenation"
-	^ nonEmpty1element
+	" return a collection that will be the first part of the concatenation"
+
+	^ firstCollection
 ]
 
 { #category : 'requirements' }
@@ -180,12 +181,6 @@ SetTest >> integerCollectionWithoutEqualElements [
 SetTest >> nonEmpty [
 
 	^ full
-]
-
-{ #category : 'requirements' }
-SetTest >> nonEmpty1Element [
-" return a collection of size 1 including one element"
-	^ nonEmpty1element
 ]
 
 { #category : 'requirements' }
@@ -225,7 +220,7 @@ SetTest >> setUp [
 	elementNotIn := 99.
 	collectionOfFloat := self classToBeTested  with: 2.5 with: 4.6 with: 4.2.
 	collectionOfNonIdentical := self classToBeTested  with: 'a' with: 'b' with: 'c'.
-	nonEmpty1element := self classToBeTested  with: 32.
+	firstCollection := self classToBeTested  with: 32.
 	withoutEqualElements := self classToBeTested  with: 4 with: 5 with: 2.
 	collection5Elements := self classToBeTested with: 1 with: 2 with: 3 with: 4 with: 5
 ]

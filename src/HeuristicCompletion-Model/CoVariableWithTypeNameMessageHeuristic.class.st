@@ -13,23 +13,23 @@ Class {
 }
 
 { #category : 'requests' }
-CoVariableWithTypeNameMessageHeuristic >> buildFetcherFor: aRBMessageNode inContext: completionContext [
+CoVariableWithTypeNameMessageHeuristic >> buildFetcherFor: aMessageNode inContext: completionContext [
 
 	"Heuristic: variables with type information.
 	This is maybe an instance of this class, autocomplete for that class first, then continue with normal completion.
 	E.g., aCollection => use completion for Collection class first, then normal collection.
 	There are two cases: aPoint and anASTCache"
-	aRBMessageNode receiver name size > 1
+	aMessageNode receiver name size > 1
 		and: [ completionContext
-				environmentAt: aRBMessageNode receiver name allButFirst asSymbol
+				environmentAt: aMessageNode receiver name allButFirst asSymbol
 				ifPresent: [ :global |
-					^ self newFetcherForMaybeGlobalInstance: global inASTNode: aRBMessageNode ] ].
+					^ self newFetcherForMaybeGlobalInstance: global inASTNode: aMessageNode ] ].
 
-	aRBMessageNode receiver name size > 2
+	aMessageNode receiver name size > 2
 		and: [ completionContext
-				environmentAt: (aRBMessageNode receiver name allButFirst: 2) asSymbol
+				environmentAt: (aMessageNode receiver name allButFirst: 2) asSymbol
 				ifPresent: [ :global |
-					^ self newFetcherForMaybeGlobalInstance: global inASTNode: aRBMessageNode ] ].
+					^ self newFetcherForMaybeGlobalInstance: global inASTNode: aMessageNode ] ].
 
 	^ CoEmptyFetcher new
 ]

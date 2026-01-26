@@ -1,5 +1,11 @@
 "
-I model local Variables
+I model local variables: temporaries, arguments, remote vector temps, primitive error variables.... but also compilation internal variables such as copied local variables. 
+
+I represent if the variable
+
+- is initialized
+- can be written to 
+- ....
 "
 Class {
 	#name : 'LocalVariable',
@@ -50,7 +56,7 @@ LocalVariable >> analyzeWrite: aVariableNode by: aSemanticAnalyzer [
 
 { #category : 'converting' }
 LocalVariable >> asDoItVariableFrom: aContext [
-	^ DoItVariable fromContext: aContext variable: self
+	^ OCDoItVariable fromContext: aContext variable: self
 ]
 
 { #category : 'converting' }
@@ -72,6 +78,19 @@ LocalVariable >> createCopiedVariableFor: aScope [
 			escaping: self escaping;
 			usage: self usage;
 			scope: aScope
+]
+
+{ #category : 'escaping' }
+LocalVariable >> descriptionArrayForScope: aScope [
+
+	| lexicalDistance |
+	lexicalDistance := aScope nonOptimizedDistanceTo: self scope.
+
+	^ {
+		  self name.
+		  self isArgumentVariable.
+		  lexicalDistance.
+		  index }
 ]
 
 { #category : 'emitting' }

@@ -1,6 +1,8 @@
 "
-Strategy pattern that describes the sorting functionality.
+Pay attention most of the time the sorters are conflicting with the heuristics. 
+This addition is on the edge of being removed. 
 
+Strategy pattern that describes the sorting functionality.
 Sorter allSubclasses collect: #kind an OrderedCollection('' 'alphabetical' '' '')
 "
 Class {
@@ -17,11 +19,6 @@ Class {
 { #category : 'description' }
 CompletionSorter class >> kind [
 	^ ''
-]
-
-{ #category : 'tools registry' }
-CompletionSorter class >> register [
-	CompletionContext sorterClass: AlphabeticSorter
 ]
 
 { #category : 'accessing' }

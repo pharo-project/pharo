@@ -1,5 +1,5 @@
 "
-I am a symbol table where variable names are associated with SemVars.  Each context (method/closure) get a fresh scope that inherits from its outer scope.
+I am a symbol table where variable names are associated with semantics variables.  Each context (method/closure) gets a fresh scope that inherits from its outer scope.
 "
 Class {
 	#name : 'OCAbstractScope',
@@ -20,14 +20,6 @@ OCAbstractScope class >> isAbstract [
 { #category : 'accessing' }
 OCAbstractScope >> environment [
 	^self targetClass environment
-]
-
-{ #category : 'lookup' }
-OCAbstractScope >> hasBindingThatBeginsWith: aString [
-	"check weather there are any variables defined that start with aString"
-	^ outerScope
-		ifNil: [ false ]
-		ifNotNil: [ outerScope hasBindingThatBeginsWith: aString ]
 ]
 
 { #category : 'testing' }
@@ -59,13 +51,28 @@ OCAbstractScope >> lookupVar: name [
 	^ outerScope ifNotNil: [ :it | it lookupVar: name ]
 ]
 
+{ #category : 'testing' }
+OCAbstractScope >> nonOptimizedDistanceTo: aDefiningScope [
+	
+	| currentScope distance |
+	currentScope := self.
+	distance := 0.
+
+	[ currentScope ~= aDefiningScope ] whileTrue: [
+		(currentScope isBlockScope and: [ currentScope isOptimized not ])
+			ifTrue: [ distance := distance + 1 ].
+		currentScope := currentScope outerScope ].
+
+	^ distance
+]
+
 { #category : 'lookup' }
 OCAbstractScope >> outerScope [
 
 	^ outerScope
 ]
 
-{ #category : 'initializing' }
+{ #category : 'initialization' }
 OCAbstractScope >> outerScope: aSemScope [
 
 	outerScope := aSemScope

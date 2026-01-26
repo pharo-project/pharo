@@ -30,7 +30,7 @@ Implementation remarks
 "
 Class {
 	#name : 'EFFormatter',
-	#superclass : 'RBAbstractFormatter',
+	#superclass : 'OCAbstractFormatter',
 	#instVars : [
 		'codeStream',
 		'indent',
@@ -38,7 +38,10 @@ Class {
 		'lineStart',
 		'context',
 		'isInCascadeNode',
-		'lookAheadCode'
+		'lookAheadCode',
+		'mustSkip',
+		'doNotFormatMessageSelectors',
+		'doNotFormatMethodSelectors'
 	],
 	#classVars : [
 		'DefaultPrettyPrintContext',
@@ -127,7 +130,7 @@ EFFormatter class >> indentsForKeywords: anInteger [
 
 { #category : 'class initialization' }
 EFFormatter class >> initialize [
-
+	"self initialize"
 	FormatAsYouReadPolicy := false.
 	DefaultPrettyPrintContext := EFContext new
 ]
@@ -371,25 +374,25 @@ EFFormatter class >> oneLineMessages: aString [
 ]
 
 { #category : 'accessing' }
+EFFormatter class >> periodAtEndOfBlock [
+	^ DefaultPrettyPrintContext periodAtEndOfBlock
+]
+
+{ #category : 'accessing' }
 EFFormatter class >> periodAtEndOfBlock: aBoolean [
 	DefaultPrettyPrintContext periodAtEndOfBlock: aBoolean.
 	self announceASettingChange
 ]
 
 { #category : 'accessing' }
+EFFormatter class >> periodAtEndOfMethod [
+	^ DefaultPrettyPrintContext periodAtEndOfMethod
+]
+
+{ #category : 'accessing' }
 EFFormatter class >> periodAtEndOfMethod: aBoolean [
 	DefaultPrettyPrintContext periodAtEndOfMethod: aBoolean.
 	self announceASettingChange
-]
-
-{ #category : 'accessing' }
-EFFormatter class >> periodsAtEndOfBlock [
-	^ DefaultPrettyPrintContext periodsAtEndOfBlock
-]
-
-{ #category : 'accessing' }
-EFFormatter class >> periodsAtEndOfMethod [
-	^ DefaultPrettyPrintContext periodsAtEndOfMethod
 ]
 
 { #category : 'priority' }
@@ -778,8 +781,8 @@ EFFormatter class >> settingsOn: aBuilder [
 				settingsNewLinesAfterMethodSignatureWithMethodComment: aBuilder;
 				settingsNewLinesAfterTemporaries: aBuilder;
 				settingsNumberOfArgumentsForMultiLine: aBuilder;
-				settingsPeriodsAtEndOfBlock: aBuilder;
-				settingsPeriodsAtEndOfMethod: aBuilder;
+				settingsPeriodAtEndOfBlock: aBuilder;
+				settingsPeriodAtEndOfMethod: aBuilder;
 				settingsRetainBlankLinesBeforeComments: aBuilder;
 				settingsRetainBlankLinesBetweenStatements: aBuilder;
 				settingsSelectorAndArgumentCombinedMaxSize: aBuilder;
@@ -804,9 +807,9 @@ If we include #todo: in the oneLineMessages we get
 ]
 
 { #category : 'settings' }
-EFFormatter class >> settingsPeriodsAtEndOfBlock: aBuilder [
+EFFormatter class >> settingsPeriodAtEndOfBlock: aBuilder [
 
-	(aBuilder setting: #periodsAtEndOfBlock)
+	(aBuilder setting: #periodAtEndOfBlock)
 		label: 'Period at end of block body';
 		default: false;
 		description: 'This settings puts a period after the last expression of a block.
@@ -819,9 +822,9 @@ Example: when set to true
 ]
 
 { #category : 'settings' }
-EFFormatter class >> settingsPeriodsAtEndOfMethod: aBuilder [
+EFFormatter class >> settingsPeriodAtEndOfMethod: aBuilder [
 
-	(aBuilder setting: #periodsAtEndOfMethod)
+	(aBuilder setting: #periodAtEndOfMethod)
 		label: 'Period at end of method';
 		default: false;
 		description: 'This setting puts a period after the last expression of a method.
@@ -1000,6 +1003,21 @@ EFFormatter >> addSpaceIfNeededForLastArgument: aPragmaNode [
 		ifTrue: [ self space ]
 ]
 
+{ #category : 'public interface' }
+EFFormatter >> addToUnformattedMessageSelectors: aCol [
+	"Add message selectors that should not be formatted."
+	
+	doNotFormatMessageSelectors addAll: aCol
+]
+
+{ #category : 'public interface' }
+EFFormatter >> addToUnformattedMethodSelectors: aCol [
+	"Add method selectors for method that should not be formatted.
+	Not that this is different from messages."
+	
+	doNotFormatMethodSelectors addAll: aCol
+]
+
 { #category : 'private' }
 EFFormatter >> areArgumentsTooLong: anArray [
 
@@ -1064,6 +1082,12 @@ EFFormatter >> currentLineLength [
 ]
 
 { #category : 'private - formatting' }
+EFFormatter >> decrementIdentation [
+
+	 indent := indent - 1
+]
+
+{ #category : 'private - formatting' }
 EFFormatter >> firstSeparatorShouldNotPassLine: aMessageNode [
 	"predicate that tells if the keyword should be forced to be on the same line."
 
@@ -1074,10 +1098,11 @@ EFFormatter >> firstSeparatorShouldNotPassLine: aMessageNode [
 
 { #category : 'public interface' }
 EFFormatter >> format: aParseTree [
-	
+
 	self initializeCodeStream.
 	originalSource := aParseTree source.
 	self visitNode: aParseTree.
+	mustSkip ifTrue: [ ^ originalSource ].
 	^ codeStream contents
 ]
 
@@ -1086,7 +1111,7 @@ EFFormatter >> formatArray: anArrayNode [
 	| current |
 	codeStream nextPutAll: self spacesInsideArray.
 	(anArrayNode statements
-		reject: [ :each | each class = RBLiteralValueNode ])
+		reject: [ :each | each class = OCLiteralValueNode ])
 		ifEmpty: [ anArrayNode statements
 				do: [ :each | 
 					current := each.
@@ -1162,14 +1187,16 @@ EFFormatter >> formatBlock2: aBlockNode [
 { #category : 'private - formatting' }
 EFFormatter >> formatBlock: aBlockNode [
 	" see formatBlock2: for a possible alternate and faster definition."
-
 	| isMultiline |
+	
 	isMultiline := self willBeMultiline: aBlockNode body.
+	isMultiline ifTrue: [ self incrementIdentation ].
 
-	codeStream nextPutAll: self spacesInsideBlocksString.
+	(self isEmptyBlock: aBlockNode) ifFalse: [ codeStream nextPutAll: self spacesInsideBlocksString ].
 
 	self formatBlockArgumentsFor: aBlockNode.
 	self formatBlockCommentFor: aBlockNode.
+
 	((isMultiline or: [ self isLineTooLongWithNode: aBlockNode body ])
 		 and: [ self shouldPassNewLineAfterHeadOfBlock: aBlockNode ])
 		ifTrue: [ self newLine ].
@@ -1178,7 +1205,8 @@ EFFormatter >> formatBlock: aBlockNode [
 
 	(self lineUpBlockBrackets and: [ isMultiline ])
 		ifTrue: [ self newLine ]
-		ifFalse: [ codeStream nextPutAll: self spacesInsideBlocksString ]
+		ifFalse: [ codeStream nextPutAll: self spacesInsideBlocksString ].
+	isMultiline ifTrue: [ self decrementIdentation ].
 ]
 
 { #category : 'private - formatting' }
@@ -1270,28 +1298,40 @@ EFFormatter >> formatPragmasFor: aMethodNode [
 { #category : 'private - formatting' }
 EFFormatter >> formatSelectorAndArguments: aMessageNode [
 	"We are formatting a message and here we are about to format the message selector and its arguments."
-	
+
 	| isMultilineMessage hasMultiLineArguments multilineArgumentBeforeAnotherArgument |
-	multilineArgumentBeforeAnotherArgument := self messageHasMultilineArgumentBeforeAnotherArgument: aMessageNode.
-	isMultilineMessage := (self isMultiLineMessage: aMessageNode) or:[multilineArgumentBeforeAnotherArgument].
-	hasMultiLineArguments := self hasAMultiLineMessageArgument: aMessageNode arguments.
+	
+	"we should not format methods performing #ffiCall:"
+	
+	(doNotFormatMessageSelectors includes: aMessageNode selector) 
+		ifTrue: [ mustSkip := true. ^ self ].
+	
+	multilineArgumentBeforeAnotherArgument := self
+		                                          messageHasMultilineArgumentBeforeAnotherArgument:
+		                                          aMessageNode.
+	isMultilineMessage := (self isMultiLineMessage: aMessageNode) or: [
+		                      multilineArgumentBeforeAnotherArgument ].
+	hasMultiLineArguments := self hasAMultiLineMessageArgument:
+		                         aMessageNode arguments.
 	self
-		indent:
-			(((isMultilineMessage or:[hasMultiLineArguments]) and:[aMessageNode isKeyword])
-				ifTrue: [ self indentsForKeywords ]
-				ifFalse: [ 0 ])
-		around: [ self
+		indent: (((isMultilineMessage or: [ hasMultiLineArguments ]) and: [
+				  aMessageNode isKeyword ])
+				 ifTrue: [ self indentsForKeywords ]
+				 ifFalse: [ 0 ])
+		around: [
+			self
 				formatSelectorAndArguments: aMessageNode
 				firstSeparator:
-					(((self firstSeparatorShouldNotPassLine: aMessageNode) and:[multilineArgumentBeforeAnotherArgument not])
-						ifTrue: [ self space ]
-						ifFalse: [ isMultilineMessage
-								ifTrue: [ [ self newLine ] ]
-								ifFalse: [ [ self space ] ] ])
-				restSeparator:
-					((isMultilineMessage)
-						ifTrue: [ [ self newLine ] ]
-						ifFalse: [ [ self space ] ]) ]
+					(((self firstSeparatorShouldNotPassLine: aMessageNode) and: [
+						  multilineArgumentBeforeAnotherArgument not ])
+						 ifTrue: [ self space ]
+						 ifFalse: [
+							 isMultilineMessage
+								 ifTrue: [ [ self newLine ] ]
+								 ifFalse: [ [ self space ] ] ])
+				restSeparator: (isMultilineMessage
+						 ifTrue: [ [ self newLine ] ]
+						 ifFalse: [ [ self space ] ]) ]
 ]
 
 { #category : 'private - formatting' }
@@ -1319,11 +1359,11 @@ EFFormatter >> formatSequenceNodeStatementsFor: aSequenceNode [
 		(i < statements size
 			or: [ 
 				aSequenceNode parent
-					ifNil: [ self periodsAtEndOfBlock or:[ self periodsAtEndOfMethod ] ]
+					ifNil: [ self periodAtEndOfBlock or:[ self periodAtEndOfMethod ] ]
 					ifNotNil: [ :parent | 
 						parent isBlock
-							ifTrue: [ self periodsAtEndOfBlock ]
-							ifFalse: [ self periodsAtEndOfMethod ] ] ])
+							ifTrue: [ self periodAtEndOfBlock ]
+							ifFalse: [ self periodAtEndOfMethod ] ] ])
 			ifTrue: [ codeStream nextPut: $. ].
 		self formatStatementCommentsFor: statement.
 		i < statements size
@@ -1410,6 +1450,12 @@ EFFormatter >> headOfBlockNotEmpty: aBlockNode [
 	^ aBlockNode arguments isNotEmpty or: [aBlockNode comments isNotEmpty]
 ]
 
+{ #category : 'private - formatting' }
+EFFormatter >> incrementIdentation [
+
+	 indent := indent + 1
+]
+
 { #category : 'accessing' }
 EFFormatter >> indent [
 	^ indent
@@ -1486,7 +1532,18 @@ EFFormatter >> indentsForKeywords: anInteger [
 
 { #category : 'initialization' }
 EFFormatter >> initialize [
+
 	super initialize.
+	"if at any level the formatter can locally decide to drop the formatting
+	it should set mustSkip to true and the formatter will return the original source code."
+	mustSkip := false.
+
+	"a list of method selectors that we do not format. Not that this is different from message selectors"	
+	doNotFormatMethodSelectors := OrderedCollection new.
+	self addToUnformattedMethodSelectors:
+		#( methodSelectorAndArgumentNames ).
+	doNotFormatMessageSelectors :=	OrderedCollection new. 
+	self addToUnformattedMessageSelectors: #(ffiCall: ffiCallSafely:options:).	
 	lineStart := 0.
 	self indent: 0.
 	self isInCascadeNode: false.
@@ -1514,6 +1571,14 @@ EFFormatter >> initializeTemporaryLookAheadCode [
 EFFormatter >> installNewContext: aContext [
 	
 	context := aContext
+]
+
+{ #category : 'private - formatting' }
+EFFormatter >> isEmptyBlock: aBlockNode [
+
+	^ (aBlockNode arguments isEmpty and: [
+		   aBlockNode body statements isEmpty ]) and: [
+		  aBlockNode comments isEmpty ]
 ]
 
 { #category : 'accessing' }
@@ -1903,23 +1968,23 @@ EFFormatter >> oneLineMessages: anArray [
 ]
 
 { #category : 'accessing' }
+EFFormatter >> periodAtEndOfBlock [
+	^ context periodAtEndOfBlock
+]
+
+{ #category : 'accessing' }
 EFFormatter >> periodAtEndOfBlock: aBoolean [
 	context periodAtEndOfBlock: aBoolean
 ]
 
 { #category : 'accessing' }
+EFFormatter >> periodAtEndOfMethod [
+	^ context periodAtEndOfMethod
+]
+
+{ #category : 'accessing' }
 EFFormatter >> periodAtEndOfMethod: aBoolean [
 	context periodAtEndOfMethod: aBoolean
-]
-
-{ #category : 'accessing' }
-EFFormatter >> periodsAtEndOfBlock [
-	^ context periodsAtEndOfBlock
-]
-
-{ #category : 'accessing' }
-EFFormatter >> periodsAtEndOfMethod [
-	^ context periodsAtEndOfMethod
 ]
 
 { #category : 'private' }
@@ -2184,9 +2249,7 @@ EFFormatter >> visitLiteralArrayNode: aRBArrayLiteralNode [
 
 { #category : 'visiting' }
 EFFormatter >> visitLiteralNode: aLiteralNode [
-	aLiteralNode value isLiteral
-		ifFalse: [ self writeString: '''<an unprintable nonliteral value>''' ]
-		ifTrue: [ self writeString: aLiteralNode sourceText ]
+		self writeString: aLiteralNode sourceText
 ]
 
 { #category : 'visiting' }
@@ -2196,7 +2259,11 @@ EFFormatter >> visitMessageNode: aMessageNode [
 ]
 
 { #category : 'visiting' }
-EFFormatter >> visitMethodNode: aMethodNode [ 
+EFFormatter >> visitMethodNode: aMethodNode [
+	"Let us avoid to format the template each time we open a browser"
+
+	(doNotFormatMethodSelectors includes: aMethodNode selector)
+		ifTrue: [ mustSkip := true ].
 	self formatMethodPatternFor: aMethodNode.
 	self formatMethodBodyFor: aMethodNode
 ]
@@ -2227,20 +2294,20 @@ EFFormatter >> visitParseErrorNode: aNode [
 ]
 
 { #category : 'visiting - patterns' }
-EFFormatter >> visitPatternBlockNode: aRBPatternBlockNode [ 
+EFFormatter >> visitPatternBlockNode: aPatternBlockNode [ 
 	codeStream nextPut: $`.
 	self 
 		bracketWith: '{}' 
-		around: [self formatBlock: aRBPatternBlockNode]
+		around: [self formatBlock: aPatternBlockNode]
 ]
 
 { #category : 'visiting - patterns' }
-EFFormatter >> visitPatternWrapperBlockNode: aRBPatternWrapperBlockNode [
-	self visitNode: aRBPatternWrapperBlockNode wrappedNode.
+EFFormatter >> visitPatternWrapperBlockNode: aPatternWrapperBlockNode [
+	self visitNode: aPatternWrapperBlockNode wrappedNode.
 	codeStream nextPut: $`.
 	self 
 		bracketWith: '{}' 
-		around: [self formatBlock: aRBPatternWrapperBlockNode]
+		around: [self formatBlock: aPatternWrapperBlockNode]
 ]
 
 { #category : 'visiting' }

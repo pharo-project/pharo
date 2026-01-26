@@ -2,7 +2,7 @@
 I represent message description which includes selector and argument names.
 
 In addition I keep reference to so named contextUser. It is an object which uses given message, which was used to retrieve message instance.
-The #contextUser is either a method or RBMessageNode.
+The #contextUser is either a method or ASTMessageNode.
 
 To create my instance use following expressions: 
 
@@ -51,7 +51,7 @@ SycMessageDescription class >> ofMessageNode: astMessageNode [
 
 	^ (self fromContextOf: astMessageNode methodNode)
 		selector: astMessageNode selector;
-		argumentNames: (astMessageNode arguments collect: [:each | each formattedCode ])
+		argumentNames: (astMessageNode arguments collect: [:each | each sourceCode ])
 
 ]
 
@@ -108,7 +108,7 @@ SycMessageDescription >> methodClass [
 SycMessageDescription >> requestNewSignature [
 	| methodName dialog |
 	methodName := RBMethodName selector: selector arguments: argumentNames copy.
-	dialog := SycMethodNameEditorPresenter openOn: methodName.
+	dialog := StMethodNameEditorPresenter openOn: methodName.
 	dialog cancelled ifTrue: [  CmdCommandAborted signal ].
 
 	selector = methodName selector & (argumentNames = methodName arguments)

@@ -72,6 +72,12 @@ FFILiteralArgument >> externalTypeSize [
 	^ self externalType byteSize
 ]
 
+{ #category : 'testing' }
+FFILiteralArgument >> isLiteralArgument [
+	
+	^ true
+]
+
 { #category : 'accessing' }
 FFILiteralArgument >> loader [
 	^ self

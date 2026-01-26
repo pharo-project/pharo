@@ -27,7 +27,7 @@ Class {
 
 { #category : 'accessing' }
 ReStringConcatenationRule class >> group [
-	^ 'Optimization'
+	^ self optimizationGroup
 ]
 
 { #category : 'accessing' }

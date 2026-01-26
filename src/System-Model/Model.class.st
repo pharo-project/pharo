@@ -31,6 +31,8 @@ Model >> addDependent: anObject [
 { #category : 'window' }
 Model >> addModelItemsToWindowMenu: aMenu [
 	"aMenu is being constructed to be presented to the user in response to the user's pressing on the menu widget in the title bar of a morphic window.  Here, the model is given the opportunity to add any model-specific items to the menu, whose default target is the SystemWindow itself."
+	
+	"Duplicate here because the superclass method should be unused"
 ]
 
 { #category : 'accessing' }
@@ -62,8 +64,10 @@ Model >> canDiscardEdits [
 Model >> changed [
 	"Receiver changed in a general way; inform all the dependents by
 	sending each dependent an update: message."
+	
+	"Duplicate here because the superclass method should be unused"
 
-	self changed: self
+	^ self changed: self
 ]
 
 { #category : 'updating' }
@@ -71,6 +75,8 @@ Model >> changed: aParameter [
 	"Receiver changed. The change is denoted by the argument aParameter.
 	Usually the argument is a Symbol that is part of the dependent's change
 	protocol. Inform all of the dependents."
+	
+	"Duplicate here because the superclass method should be unused"
 
 	self dependents do: [:aDependent | aDependent update: aParameter]
 ]
@@ -80,6 +86,8 @@ Model >> changed: anAspect with: anObject [
 	"Receiver changed. The change is denoted by the argument anAspect.
 	Usually the argument is a Symbol that is part of the dependent's change
 	protocol. Inform all of the dependents. Also pass anObject for additional information."
+	
+	"Duplicate here because the superclass method should be unused"
 
 	self dependents do: [:aDependent | aDependent update: anAspect with: anObject]
 ]
@@ -116,6 +124,8 @@ Model >> hasUnacceptedEdits [
 { #category : 'window' }
 Model >> modelWakeUpIn: aWindow [
 	"A window with me as model is being entered or expanded.  Default response is no-op"
+	
+	"Duplicate here because the superclass method should be unused"
 ]
 
 { #category : 'dependents-private' }
@@ -133,6 +143,8 @@ Model >> myDependents: aCollectionOrNil [
 { #category : 'updating' }
 Model >> okToChange [
 	"Allows a controller to ask this of any model"
+	
+	"Duplicate here because the superclass method should be unused"
 	^ true
 ]
 
@@ -194,6 +206,8 @@ Model >> update: anAspect with: anObject [
 	dependent. The default behavior is to call update:,
 	which by default does nothing; a subclass might want
 	to change itself in some way."
+	
+	"Duplicate here because the superclass method should be unused"
 
 	^ self update: anAspect
 ]
@@ -258,4 +272,8 @@ Model >> whenChangedSend: aSelector to: aReceiver [
 { #category : 'updating' }
 Model >> windowIsClosing [
 	"This message is used to inform a models that its window is closing. Most models do nothing, but some, such as the Debugger, must do some cleanup. Note that this mechanism must be used with care by models that support multiple views, since one view may be closed while others left open."
+	
+	"Duplicate here because the superclass method should be unused"
+	
+	^ self
 ]

@@ -10,11 +10,20 @@ Class {
 }
 
 { #category : 'execution callback' }
+MetacelloScriptApiExecutor >> execute [
+
+	MetacelloPlatform current withMetacelloLoadSessionDo: [ ^ super execute ]
+]
+
+{ #category : 'execution callback' }
 MetacelloScriptApiExecutor >> executeString: aString do: projectSpecBlock [
 
-  singleRoot ifNil: [ self singleRoot: true ].
-  (projectSpecGenerator projectSpecCreationBlock value: aString)
-    do: [ :projectSpec | 
-      projectSpec
-        ifNotNil: [ projectSpecBlock value: (self applyArgsToProjectSpec: projectSpec copy) ] ]
+	| spec |
+	singleRoot ifNil: [ self singleRoot: true ].
+
+	spec := (MetacelloProjectSpec project: MetacelloProject new)
+		        name: aString;
+		        className: 'BaselineOf' , aString;
+		        yourself.
+	projectSpecBlock value: (self applyArgsToProjectSpec: spec)
 ]

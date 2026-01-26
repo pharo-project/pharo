@@ -19,14 +19,13 @@ MenuRegistrationExample class >> mostUsedToolsOn: aBuilder [
 	(aBuilder group: #Tools)
 		withSeparatorAfter;
 		order: 0;
-		target: Smalltalk tools;
 		with: [
 			(aBuilder item: #'System browser')
-				selector: #openClassBrowser;
-				icon: (aBuilder iconNamed: Smalltalk tools browser taskbarIconName).
+				action: [ (Smalltalk tools toolNamed: #browser) open  ] ;
+				icon: (aBuilder iconNamed: #smallSystemBrowser).
 			(aBuilder item: #Playground)
-				selector: #openPlayground;
-				icon: (aBuilder iconNamed: Smalltalk tools workspace taskbarIconName).
+				action: [ (Smalltalk tools toolNamed: #workspace) open ];
+				icon: (aBuilder iconNamed: #workspace).
 			]
 ]
 
@@ -39,7 +38,7 @@ MenuRegistrationExample class >> myOwnCoolMenuRegistrationOn: aBuilder [
 		with: [
 			(aBuilder item: #MyOwnCoolTool)
 				label: 'My own cool tool also here';
-				target: Smalltalk tools workspace;
+				target: (Smalltalk tools toolNamed: #workspace);
 				selector: #openContents: ;
 				arguments: #('yep, my own cool tool can be also opened from a world sub-menu ! :)')]
 ]
@@ -50,7 +49,7 @@ MenuRegistrationExample class >> myOwnCoolToolRegistrationOn: aBuilder [
 	(aBuilder item: #MyOwnCoolTool)
 		parent: #Tools;
 		label: 'My own cool tool';
-		target: Smalltalk tools workspace;
+		target: (Smalltalk tools toolNamed: #workspace) ;
 		selector: #openContents: ;
 		arguments: #('yep, my own cool tool can be opened from the world menu ! :)')
 ]
@@ -64,7 +63,7 @@ MenuRegistrationExample class >> pharoItemsOn: aBuilder [
 				{'Save'. {Smalltalk. #saveSession}. 'save the current version of the image on disk'}.
 				{'Save as...'. {self. #saveAs}. 'save the current version of the image on disk under a new name.'}.
 				{'Save and quit'. {self. #saveAndQuit}. 'save the current image on disk, and quit Pharo.'}.
-	 			{'Quit'. {self. #quitSession}. 'quit Pharo.'}
+	 			{'Quit'. {self. #quitSessionWithoutSaving}. 'quit Pharo.'}
 			} do: [:triplet |
 					(aBuilder item: triplet first asSymbol)
 						target: triplet second first;
@@ -78,23 +77,21 @@ MenuRegistrationExample class >> pragmaKeyword [
 ]
 
 { #category : 'menu actions' }
-MenuRegistrationExample class >> quitSession [
+MenuRegistrationExample class >> quitSessionWithoutSaving [
 
-	Smalltalk
-		snapshot: (MorphicUIManager new
-				 confirm: 'Save changes before quitting?' translated
-				 orCancel: [ ^ self ])
-		andQuit: true
+	InformativeNotification signal: 'Quit not saved!'
 ]
 
 { #category : 'menu actions' }
 MenuRegistrationExample class >> saveAndQuit [
-	Smalltalk snapshot: true andQuit: true
+	
+	InformativeNotification signal: 'Saved and quitted!'
 ]
 
 { #category : 'menu actions' }
 MenuRegistrationExample class >> saveAs [
-	Smalltalk saveAs
+	
+	InformativeNotification signal: 'Saved!'
 ]
 
 { #category : 'menu declaring' }
@@ -109,18 +106,19 @@ MenuRegistrationExample class >> toolsOn: aBuilder [
 	<worldMenuExample>
 	(aBuilder item: #Tools)
 		order: 1.0;
-		target: Smalltalk tools;
 		iconName: #smallDoIt;
 		withSeparatorAfter;
 		with: [
 			(aBuilder item: #Transcript)
-				selector: #openTranscript;
-				icon: (aBuilder iconNamed: Smalltalk tools transcript  taskbarIconName).
+				action: [ (Smalltalk tools toolNamed: #transcript) open] ;
+				keyText: 'o, t';
+				help: 'Window on the new Transcript output stream, which is useful for writing log messages.';
+				icon: (aBuilder iconNamed: #smallDebug).
 			(aBuilder item: #'File Browser')
-				selector: #openFileList;
-				icon: (aBuilder iconNamed: Smalltalk tools fileList taskbarIconName).
+				action: [ (Smalltalk tools toolNamed: #fileList) open] ;
+				icon: (self  iconNamed: #smallWindow).
 			(aBuilder item: #'Process Browser')
 				selector: #openProcessBrowser;
-				icon: (aBuilder iconNamed: Smalltalk tools processBrowser taskbarIconName);
+				icon: (aBuilder iconNamed: #processBrowser);
 				withSeparatorAfter]
 ]

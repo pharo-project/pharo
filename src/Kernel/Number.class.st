@@ -346,6 +346,12 @@ Number >> isZero [
 	^self = 0
 ]
 
+{ #category : 'comparing' }
+Number >> literalEqual: other [
+
+	^ self class == other class and: [self = other]
+]
+
 { #category : 'arithmetic' }
 Number >> negated [
 	"Answer a Number that is the negation of the receiver."
@@ -366,28 +372,6 @@ Number >> positive [
 	See also strictlyPositive"
 
 	^ self >= 0
-]
-
-{ #category : 'printing' }
-Number >> printOn: aStream [
-	self printOn: aStream base: 10
-]
-
-{ #category : 'printing' }
-Number >> printString [
-
-	^ self printStringBase: 10
-]
-
-{ #category : 'printing' }
-Number >> printStringBase: base [
-	"Return a String representation of this number in base b."
-	"(10 printStringBase: 10) >>> '10'"
-	"(-10 printStringBase: 10) >>> '-10'"
-	"(10 printStringBase: 2) >>> '1010'"
-	"(10 printStringBase: 16) >>> 'A'"
-
-	^ String streamContents: [:strm | self printOn: strm base: base]
 ]
 
 { #category : 'arithmetic' }

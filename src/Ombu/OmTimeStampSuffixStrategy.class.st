@@ -4,6 +4,12 @@ I attach a timestamp as a suffix to the name (after last _).
 Class {
 	#name : 'OmTimeStampSuffixStrategy',
 	#superclass : 'OmSuffixAfterDotStrategy',
+	#instVars : [
+		'lastSuffix'
+	],
+	#pools : [
+		'ChronologyConstants'
+	],
 	#category : 'Ombu-Strategies',
 	#package : 'Ombu',
 	#tag : 'Strategies'
@@ -19,6 +25,15 @@ OmTimeStampSuffixStrategy >> nextSuffix [
 	Maybe this will get fixed in the  future? Check https://github.com/pharo-project/pharo/issues/13447 and if it's the case, remove the hack :)
 	OmSessionStoreTest>>#testNextStoreName is here to make sure we have no regression while running it on Windows, so if the hack is still needed you will know it."
 
-	Smalltalk os isWindows ifTrue: [ 1 milliSeconds wait ].
-	^ DateAndTime now asNanoSeconds printStringHex
+	| stamp currentNanos now |
+	now := DateAndTime now asUTC.
+
+	"We need to get the full nanos, since epoch, because only using #nanoSecond is from midnight"
+	currentNanos := now asSeconds * NanosInSecond + now nanoSecond.
+
+	stamp := currentNanos printStringHex.
+	"We continue until we have a new stamp because we changed of millisecond"
+	^ (Smalltalk os isWindows and: [ lastSuffix = stamp ])
+		  ifTrue: [ self nextSuffix ]
+		  ifFalse: [ lastSuffix := stamp ]
 ]

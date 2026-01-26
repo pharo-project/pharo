@@ -26,6 +26,13 @@ FFICalloutMethodBuilder class >> calloutAPI: aCalloutAPI [
 		yourself
 ]
 
+{ #category : 'private' }
+FFICalloutMethodBuilder class >> irBuilderClass [
+	"This is provided for compatibility with older Pharo versions."
+
+	^ OCIRBuilder
+]
+
 { #category : 'accessing' }
 FFICalloutMethodBuilder >> addFunctionResolveStrategy: aStrategy [
 	functionResolutionStrategies add: aStrategy
@@ -112,7 +119,7 @@ FFICalloutMethodBuilder >> generateFFICallout: builder spec: functionSpec ffiLib
 	"save ffi call as literal"
 	builder pushLiteral: (self createFFICalloutLiteralFromSpec: functionSpec).
 	"iterate arguments in order (in the function) to create the function call"
-	functionSpec arguments do: [ :each | each emitArgument: builder context: sender inCallout: self requestor ].
+	functionSpec arguments do: [ :each | each emitResolvedTypeArgument: builder context: sender inCallout: self requestor ].
 	"create the array"
 	builder pushConsArray: functionSpec arguments size.
 	"send call and store into result"
@@ -133,7 +140,7 @@ FFICalloutMethodBuilder >> generateMethodFromSpec: functionSpec [
 
 	ffiLibrary := self extractLibrary.
 
-	ir := IRBuilder buildIR: [ :builder | | r |
+	ir := self irBuilderClass buildIR: [ :builder | | r |
 
 		"Copy the properties of the old method"
 		sender methodProperties
@@ -165,6 +172,12 @@ FFICalloutMethodBuilder >> initialize [
 FFICalloutMethodBuilder >> initializeCalloutAPI: aCalloutAPI [
 	calloutAPI := aCalloutAPI.
 	self initialize
+]
+
+{ #category : 'private' }
+FFICalloutMethodBuilder >> irBuilderClass [
+
+	^ self class irBuilderClass
 ]
 
 { #category : 'accessing' }

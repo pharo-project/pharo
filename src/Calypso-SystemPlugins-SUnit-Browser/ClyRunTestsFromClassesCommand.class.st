@@ -14,6 +14,12 @@ ClyRunTestsFromClassesCommand class >> contextClass [
 	^ClyClass asCalypsoItemContext
 ]
 
+{ #category : 'accessing' }
+ClyRunTestsFromClassesCommand >> description [
+
+	^ 'Run all selected test cases'
+]
+
 { #category : 'execution' }
 ClyRunTestsFromClassesCommand >> execute [
 

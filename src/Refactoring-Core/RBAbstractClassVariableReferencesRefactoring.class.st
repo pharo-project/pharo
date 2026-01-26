@@ -51,7 +51,7 @@ RBAbstractClassVariableReferencesRefactoring >> abstractInstanceSideReferences [
 RBAbstractClassVariableReferencesRefactoring >> accessorsRefactoring [
 
 	^ accessorsRefactoring
-		ifNil: [ accessorsRefactoring := RBCreateAccessorsForVariableTransformation
+		ifNil: [ accessorsRefactoring := ReCreateAccessorsForVariableTransformation
 				model: self model
 				variable: variableName asString
 				class: class

@@ -34,7 +34,10 @@ DTTestCaseProfilingData class >> testCase: testCase duration: aDuration testResu
 
 { #category : 'actions' }
 DTTestCaseProfilingData >> drTestsBrowse [
-	Smalltalk tools browser openOnClass:testCase class selector:testCase selector
+	
+	self browser 
+		openOnClass: testCase class 
+		selector: testCase selector
 ]
 
 { #category : 'accessing' }

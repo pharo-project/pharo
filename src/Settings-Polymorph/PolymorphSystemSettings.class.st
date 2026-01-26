@@ -22,20 +22,26 @@ Class {
 
 { #category : 'settings' }
 PolymorphSystemSettings class >> appearanceSettingsOn: aBuilder [
+
 	<systemsettings>
 	(aBuilder group: #appearance)
-		label: 'Appearance' ;
+		label: 'Appearance';
 		description: 'All settings concerned with the look''n feel of your system';
 		with: [
 			(aBuilder pickOne: #uiThemeClass)
 				label: 'User interface theme';
 				target: self;
-				default: (Smalltalk at: #PharoLightTheme);
+				default: self defaultTheme;
 				order: 1;
 				domainValues: self uiThemeClassChoices.
 			self morphicSettingsOn: aBuilder.
-			self desktopSettingsOn: aBuilder.
-			self soundSettingsOn: aBuilder]
+			self desktopSettingsOn: aBuilder ]
+]
+
+{ #category : 'settings' }
+PolymorphSystemSettings class >> defaultTheme [
+
+	^ DarkBlueTheme
 ]
 
 { #category : 'desktop' }
@@ -232,7 +238,6 @@ PolymorphSystemSettings class >> desktopSettingsOn: aBuilder [
 				with: [
 					(aBuilder setting: #desktopLogoFileName)
 						type: #FilePathEncoder;
-						default: '';
 						description: 'The path of an image file for your own logo, the default pharo logo is used if empty.' ;
 						label: 'Logo image file name'].
 			self desktopColorSettingsOn: aBuilder.
@@ -279,6 +284,11 @@ PolymorphSystemSettings class >> morphicHaloSettingsOn: aBuilder [
 		description: 'All halo settings';
 		noOrdering;
 		with: [
+			(aBuilder setting: #cmdGesturesEnabled)
+				label: 'Enable Gesture to Open Halo';
+				target: Morph;
+				default: true;
+				description: 'Enables or Disables the gestures to open the Halo or the meta menu. The Halo is open with Alt+Shift+Click and the Menu with Ctrl+Alt+Shift+Click'.
 			(aBuilder setting: #cycleHalosBothDirections)
 				label: 'Cycle both directions';
 				target: Morph;
@@ -1203,42 +1213,6 @@ PolymorphSystemSettings class >> showDesktopLogo: aBoolean [
 	ShowDesktopLogo = aBoolean ifTrue: [^ self].
 	ShowDesktopLogo := aBoolean.
 	self desktopLogoChanged
-]
-
-{ #category : 'sound' }
-PolymorphSystemSettings class >> soundSettingsOn: aBuilder [
-	(aBuilder setting: #soundEnabled)
-		label: 'Sound';
-		target: SoundSystem;
-		default: false;
-		noOrdering;
-		with: [
-			(aBuilder setting: #useThemeSounds)
-				label: 'Use theme sounds';
-				target: SoundTheme;
-				default: true;
-				with: [
-					(aBuilder pickOne: #soundThemeClass)
-						label: 'Sound theme' ;
-						target: self;
-						domainValues: self soundThemeClassChoices]]
-]
-
-{ #category : 'sound' }
-PolymorphSystemSettings class >> soundThemeClass [
-	^ SoundTheme current class
-]
-
-{ #category : 'sound' }
-PolymorphSystemSettings class >> soundThemeClass: aSoundThemeClass [
-	aSoundThemeClass ifNil: [^ self].
-	self soundThemeClass ~= aSoundThemeClass
-		ifTrue: [aSoundThemeClass beCurrent]
-]
-
-{ #category : 'sound' }
-PolymorphSystemSettings class >> soundThemeClassChoices [
-	^ SoundTheme allThemeClasses collect: [:c | c themeName -> c]
 ]
 
 { #category : 'morphic' }

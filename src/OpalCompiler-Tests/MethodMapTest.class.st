@@ -8,10 +8,18 @@ Class {
 
 { #category : 'utilities' }
 MethodMapTest >> compileAndRunExample: aSelector [
-	| oldMethod recompiledMethod |
-	oldMethod := MethodMapExamples>>aSelector.
-	recompiledMethod := oldMethod methodClass compiler compile: oldMethod sourceCode.
-	^recompiledMethod valueWithReceiver: MethodMapExamples new
+
+	| recompiledMethod |
+	recompiledMethod := self compileExample: aSelector.
+	^ recompiledMethod valueWithReceiver: MethodMapExamples new
+]
+
+{ #category : 'utilities' }
+MethodMapTest >> compileExample: aSelector [
+
+	| oldMethod |
+	oldMethod := MethodMapExamples >> aSelector.
+	^ oldMethod methodClass compiler compile: oldMethod sourceCode
 ]
 
 { #category : 'tests - ast mapping' }
@@ -27,7 +35,7 @@ MethodMapTest >> inlinedBlockSourceNode [
 { #category : 'helpers' }
 MethodMapTest >> parseExpression: aString [
 
-	^ RBParser parseExpression: aString
+	^ OCParser parseExpression: aString
 ]
 
 { #category : 'tests - ast mapping' }
@@ -77,6 +85,17 @@ MethodMapTest >> testCompiledBlockSourceNode [
 	method := OpalCompiler new compile: 'foo Object. [ self ]. ^ #bar'.
 	block := method literals detect: #isCompiledBlock.
 	self assert: block sourceNode equals: (self parseExpression: '[ self ]')
+]
+
+{ #category : 'tests - ast mapping' }
+MethodMapTest >> testConstantBlockIsMappedToBlockNode [
+
+	| method block |
+	method := self compileExample: #exampleConstantBlock.
+	block := method literalAt: 1.
+	self assert: block isBlock.
+	
+	self assert: block compiledBlock ast isBlock
 ]
 
 { #category : 'tests - temp access' }
@@ -178,7 +197,7 @@ MethodMapTest >> testMethodSourceNodeAtInitialPC [
 
 { #category : 'tests - ast mapping' }
 MethodMapTest >> testMethodSourceNodeAtPC [
-	self assert: (((Object>>#halt) sourceNodeForPC:  (Smalltalk vm for32bit: 22 for64bit: 42)) isKindOf: RBMessageNode)
+	self assert: (((Object>>#halt) sourceNodeForPC:  (Smalltalk vm for32bit: 22 for64bit: 42)) isKindOf: OCMessageNode)
 ]
 
 { #category : 'tests - ast mapping' }
@@ -207,9 +226,9 @@ MethodMapTest >> testTempNamedTempCopyingNestedBlock2 [
 
 { #category : 'tests - ast mapping' }
 MethodMapTest >> testThisContextSourceNode [
-	self assert: (thisContext sourceNode isKindOf: RBMethodNode).
-	self assert: ([thisContext sourceNode] value isKindOf: RBBlockNode).
-	self assert: ([true ifTrue: [thisContext sourceNode]]value isKindOf: RBBlockNode)
+	self assert: (thisContext sourceNode isKindOf: OCMethodNode).
+	self assert: ([thisContext sourceNode] value isKindOf: OCBlockNode).
+	self assert: ([true ifTrue: [thisContext sourceNode]]value isKindOf: OCBlockNode)
 ]
 
 { #category : 'tests - ast mapping' }
@@ -217,5 +236,5 @@ MethodMapTest >> testThisContextSourceNodeInInlinedMessage [
 	| inlinedBlockSourceNode |
 	"we get the method node as this is what created the context"
 	inlinedBlockSourceNode := self inlinedBlockSourceNode.
-	self assert: (inlinedBlockSourceNode isKindOf: RBMethodNode)
+	self assert: (inlinedBlockSourceNode isKindOf: OCMethodNode)
 ]

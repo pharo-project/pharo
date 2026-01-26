@@ -123,9 +123,7 @@ MCStWriter >> writeDefinitions: aCollection [
 	
 	initializers := Set new.
 
-	(MCDependencySorter sortItems: aCollection)
-		do: [:ea | ea accept: self]
-		displayingProgress: 'Writing definitions...'.
+	(MCDependencySorter sortItems: aCollection) do: [:ea | ea accept: self].
 		
 	presentInitializers := initializers select: [:each | Smalltalk hasClassNamed: each key ].
 	notPresentInitializers := initializers reject: [:each | Smalltalk hasClassNamed: each key ].
@@ -209,7 +207,7 @@ MCStWriter >> writeMethodSource: definition [
 MCStWriter >> writePackage: packageName tags: aCollection [
 
 	stream
-		nextChunkPut: ('self packageOrganizer ensurePackage: {1} withTags: {2}' format: {
+		nextPut: ('self packageOrganizer ensurePackage: {1} withTags: {2}' format: {
 						 packageName storeString.
 						 aCollection storeString });
 		cr

@@ -123,7 +123,7 @@ OldClassDefinitionBuilder >> build [
 
 	| layoutClass selectorParts superclassName subclassName instanceVariableNames classVariableNames packageName poolDictionariesNames traitsDefinition isTrait |
 	
-	superclassName := ast receiver formattedCode.
+	superclassName := ast receiver sourceCode.
 	selectorParts := ast selector findBetweenSubstrings: { $: }.
 	isTrait := superclassName endsWith: ' classTrait'.
 	

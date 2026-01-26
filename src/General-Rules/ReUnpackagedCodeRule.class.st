@@ -21,7 +21,7 @@ ReUnpackagedCodeRule class >> checksMethod [
 
 { #category : 'accessing' }
 ReUnpackagedCodeRule class >> group [
-	^ 'Potential Bugs'
+	^ self potentialBugsGroup
 ]
 
 { #category : 'accessing' }

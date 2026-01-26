@@ -18,7 +18,7 @@ ReIvarNeitherReadNorWrittenRule class >> checksClass [
 
 { #category : 'accessing' }
 ReIvarNeitherReadNorWrittenRule class >> group [
-	^ 'Clean Code'
+	^ self cleanCodeGroup
 ]
 
 { #category : 'accessing' }

@@ -11,8 +11,7 @@ Class {
 
 { #category : 'accessing' }
 ReNilBranchRule class >> group [
-
-	^ 'Design Flaws'
+	^ self designFlawGroup
 ]
 
 { #category : 'accessing' }

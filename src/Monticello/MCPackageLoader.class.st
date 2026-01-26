@@ -1,25 +1,35 @@
 "
 A MCPackageLoader is responsible for loading packages.  It gets used by VersionLoader, so it is eventually responsible for loading everything.
+It could also be used to load a package into a specific environment.
+Here is an example:
+```
+someEnvironment := SystemEnvironment new.
+MCPackageLoader new
+	targetEnvironment: someEnvironment;
+	installSnapshot: someMCVersion snapshot; 
+	load.
+```
 
 Instance Variables
 	additions:		<Definitions>  Definitions that need to be added
-	errorDefinitions:		<Object>
 	obsoletions:		<Object>
 	provisions:		<Object>
 	removals:		<Object>
 	requirements:		<Object>
+	targetEnvironment:		<SystemEnvironment> The environment where to load.
 	unloadableDefinitions:		<Object>
 "
 Class {
 	#name : 'MCPackageLoader',
-	#superclass : 'Object',
+	#superclass : 'MCAbstractLoader',
 	#instVars : [
 		'requirements',
 		'unloadableDefinitions',
 		'obsoletions',
 		'additions',
 		'removals',
-		'provisions'
+		'provisions',
+		'targetEnvironment'
 	],
 	#category : 'Monticello-Loading',
 	#package : 'Monticello',
@@ -67,7 +77,7 @@ MCPackageLoader >> analyze [
 { #category : 'private' }
 MCPackageLoader >> basicLoad [
 
-	SourceFiles deferFlushDuring: [ self basicLoadDefinitions ]
+	SourceFileArray default deferFlushDuring: [ self basicLoadDefinitions ]
 ]
 
 { #category : 'private' }
@@ -76,11 +86,18 @@ MCPackageLoader >> basicLoadDefinitions [
 	self loadClassDefinitions.
 
 	"We want to announce the addition of the methods only once all methods are loaded because the system might react to the annoucements and execute code requirement other methods from the classes we are loading."
-	self class codeChangeAnnouncer delayAnnouncementsAfter: [ additions select: [ :aDefinition | aDefinition isMethodDefinition ] thenDo: [ :definition | definition load ] ].
+	self class codeChangeAnnouncer delayAnnouncementsAfter: [
+		additions
+			select: [ :aDefinition | aDefinition isMethodDefinition ]
+			thenDo: [ :definition | definition loadWithLoader: self ] ].
 
-	removals do: [ :each | each unload ] displayingProgress: 'Cleaning up...'.
+	removals
+		do: [ :each | each unload ]
+		displayingProgress: 'Cleaning up...'.
 
-	additions do: [ :each | each postloadOver: (self obsoletionFor: each) ] displayingProgress: 'Initializing...'
+	additions
+		do: [ :each | each postloadOver: (self obsoletionFor: each) ]
+		displayingProgress: 'Initializing...'
 ]
 
 { #category : 'private' }
@@ -153,7 +170,7 @@ MCPackageLoader >> loadClassDefinitions [
 	[
 	(additions select: [ :aDefinition | aDefinition isClassDefinition ])
 		do: [ :aDefinition |
-			[ aDefinition load ]
+			[ aDefinition loadWithLoader: self ]
 				on: Error
 				do: [ :error | errors at: aDefinition put: error ] ]
 		displayingProgress: 'Loading classes...'.
@@ -162,15 +179,13 @@ MCPackageLoader >> loadClassDefinitions [
 	[
 	| previousErrors |
 	previousErrors := errors copy.
-	previousErrors
-		keysDo: [ :aClassDefinition |
-			errors removeKey: aClassDefinition.
-			[ aClassDefinition load ]
-				on: Error
-				do: [ :error | errors at: aClassDefinition put: error ] ].
+	previousErrors keysDo: [ :aClassDefinition |
+		errors removeKey: aClassDefinition.
+		[ aClassDefinition loadWithLoader: self ]
+			on: Error
+			do: [ :error | errors at: aClassDefinition put: error ] ].
 	previousErrors size = errors size ] whileFalse ] ensure: [ "Finally we warn about the errors we could not fix."
-		errors ifNotEmpty: [
-			self warnAboutErrors: errors ] ]
+		errors ifNotEmpty: [ self warnAboutErrors: errors ] ]
 ]
 
 { #category : 'patch ops' }
@@ -206,6 +221,18 @@ MCPackageLoader >> sorterForItems: aCollection [
 	sorter := MCDependencySorter items: aCollection.
 	sorter addExternalProvisions: self provisions.
 	^ sorter
+]
+
+{ #category : 'public' }
+MCPackageLoader >> targetEnvironment [
+
+	^ targetEnvironment
+]
+
+{ #category : 'public' }
+MCPackageLoader >> targetEnvironment: anEnvironment [
+
+	targetEnvironment := anEnvironment
 ]
 
 { #category : 'public' }

@@ -32,6 +32,14 @@ DebugPoint class >> all [
 	^AllDebugPoints ifNil: [ AllDebugPoints := Set new. ]
 ]
 
+{ #category : 'accessing' }
+DebugPoint class >> allInstalledInMethod: aCompiledMethod [
+	"We don't expect this code to be slow: there are rarely thousands of breakpoints installed in a running system. Therefore the enumerating of all links of all breakpoints should be quick because few breakpoints are involved. Future work could store install-time metadata in debug points to simplify this."
+	^ self all select: [ :dp |
+		  dp link nodes anySatisfy: [ :n |
+			  n methodNode compiledMethod == aCompiledMethod method ] ]
+]
+
 { #category : 'world menu' }
 DebugPoint class >> menuCommandOn: aBuilder [
 
@@ -111,12 +119,6 @@ DebugPoint >> behaviors [
 	^ checkBehaviors , sideEffectBehaviors
 ]
 
-{ #category : 'actions' }
-DebugPoint >> browse [
-
-	^ self target browse
-]
-
 { #category : 'accessing' }
 DebugPoint >> checkBehaviors [
 
@@ -132,6 +134,7 @@ DebugPoint >> disable [
 { #category : 'reflective operations' }
 DebugPoint >> doesNotUnderstand: message [
 	"forward not understood messages to behaviors, 'delegation complements composition' "
+	<debuggerCompleteToSender>
 
 	self behaviors do: [ :bh |
 		(bh respondsTo: message selector) ifTrue: [
@@ -283,13 +286,8 @@ DebugPoint >> properties [
 { #category : 'removing' }
 DebugPoint >> remove [
 
-	| nodes |
-	nodes := self link nodes copy.
-	self behaviors do: [ :bh | bh remove ].
-	self class remove: self.
-	self link ifNotNil: [ self link uninstall ].
-
-	DebugPointManager notifyDebugPointRemoved: self fromNodes: nodes
+	self removeWithoutUninstall.
+	self link ifNotNil: [ self link uninstall ]
 ]
 
 { #category : 'API' }
@@ -344,6 +342,16 @@ DebugPoint >> removeNode: aNode [
 DebugPoint >> removeSideEffectBehavior: aSideEffectBehavior [
 
 	sideEffectBehaviors remove: aSideEffectBehavior
+]
+
+{ #category : 'removing' }
+DebugPoint >> removeWithoutUninstall [
+
+	| nodes |
+	nodes := self link nodes copy.
+	self behaviors do: [ :bh | bh remove ].
+	self class remove: self.
+	DebugPointManager notifyDebugPointRemoved: self fromNodes: nodes
 ]
 
 { #category : 'scope' }

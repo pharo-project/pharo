@@ -19,19 +19,6 @@ ReVariableNameCondition class >> name: aString [
 	^ self new name: aString
 ]
 
-{ #category : 'utilities' }
-ReVariableNameCondition class >> reservedNames [
-	^#('self' 'true' 'false' 'nil' 'thisContext' 'super')
-]
-
-{ #category : 'accessing' }
-ReVariableNameCondition >> errorString [
-
-	^ String streamContents: [ :stream |
-		self violationMessageOn: stream
-		]
-]
-
 { #category : 'accessing' }
 ReVariableNameCondition >> name: aString [
 	name := aString

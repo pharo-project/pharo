@@ -4,9 +4,9 @@ Class {
 	#instVars : [
 		'projectCache'
 	],
-	#category : 'Metacello-Core-Gofer',
+	#category : 'Metacello-Core-Monticello',
 	#package : 'Metacello-Core',
-	#tag : 'Gofer'
+	#tag : 'Monticello'
 }
 
 { #category : 'accessing' }
@@ -32,12 +32,18 @@ MetacelloMonticelloLoader >> initialize [
 ]
 
 { #category : 'loading' }
-MetacelloMonticelloLoader >> loadAtomicPackageDirectives: packageDirectives [
+MetacelloMonticelloLoader >> loadAtomicPackageDirectives: packageDirectives engine: theEngine [
 	"Each package directive can specify many repositorySpecs.
 	Find the first one that defines the package (assumming they all are equivalent) and use that."
 
-	| model references |
+	| model references strictnesses strictness |
 	model := MCVersionLoader new.
+
+	strictnesses := packageDirectives collect: [ :e | e shouldLoadStrict ] as: Set.
+	self assert: strictnesses size = 1 description: 'Cannot load atomically packages with different strictness policies'.
+	strictness := strictnesses anyOne.
+	"If not specified explicitly, use the default one defined in the engine"
+	model isStrict: (strictness ifNil: [ theEngine strict ]).
 
 	references := packageDirectives collect: [ :e |
 		| repository |
@@ -62,41 +68,25 @@ MetacelloMonticelloLoader >> loadAtomicPackageDirectives: packageDirectives [
 ]
 
 { #category : 'loading' }
-MetacelloMonticelloLoader >> loadPackageDirective: aMetacelloPackageLoadDirective [
-
-	self loadAtomicPackageDirectives: { aMetacelloPackageLoadDirective }
-]
-
-{ #category : 'loading' }
-MetacelloMonticelloLoader >> loadProject: aMetacelloMCBaselineOfProjectSpec [
-	"Loads the project class (BaselineOf, ConfigurationOf) and creates a project from it"
-
+MetacelloMonticelloLoader >> loadProject: aMetacelloProjectSpec engine: anEngine [
+	"Loads the project BaselineOf and creates a project from it"
 	"There is no need at loading a project twice as long as it has the same version."
 
 	| projectClass projectClassInstance project |
 	projectCache
-		at: aMetacelloMCBaselineOfProjectSpec className
+		at: aMetacelloProjectSpec className
 		ifPresent: [ :found | ^ found ].
 
-	(self lookupProjectClassNamed:
-		 aMetacelloMCBaselineOfProjectSpec className) ifNil: [
-		self loadPackageDirective: (MetacelloDirective
-				 loadPackage: (MetacelloPackageSpec new
-						  name: aMetacelloMCBaselineOfProjectSpec className;
-						  repositories: aMetacelloMCBaselineOfProjectSpec repositories;
-						  yourself)
-				 repositorySpecs:
-				 aMetacelloMCBaselineOfProjectSpec repositorySpecs) ].
+	(self lookupProjectClassNamed: aMetacelloProjectSpec className) ifNil: [
+		self loadAtomicPackageDirectives: { (MetacelloPackageLoadDirective spec: aMetacelloProjectSpec projectPackage) } engine: anEngine ].
 
-	projectClass := self lookupProjectClassNamed:
-		                aMetacelloMCBaselineOfProjectSpec className asSymbol.
+	projectClass := self lookupProjectClassNamed:  aMetacelloProjectSpec className asSymbol.
 	projectClassInstance := projectClass new.
 	"Subclasses typically change the load type of the project to #atomic"
-	projectClassInstance initalizeProjectWithRepositoryDescription:
-		aMetacelloMCBaselineOfProjectSpec repositoryDescriptions.
+	projectClassInstance initalizeProjectWithRepositoryDescription: aMetacelloProjectSpec repositoryDescriptions.
 	project := projectClassInstance project.
 	projectCache
-		at: aMetacelloMCBaselineOfProjectSpec className
+		at: aMetacelloProjectSpec className
 		put: project.
 	^ project
 ]

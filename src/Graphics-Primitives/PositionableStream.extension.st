@@ -32,8 +32,5 @@ PositionableStream >> nextWordsInto: aBitmap [
 		 destY: 0.
 	blt copyBits.
 
-	"And do whatever the bitmap needs to do to convert from big-endian order."
-	aBitmap restoreEndianness.
-
 	^ aBitmap 	"May be WordArray, ColorArray, etc"
 ]

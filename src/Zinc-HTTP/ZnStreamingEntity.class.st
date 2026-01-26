@@ -53,7 +53,7 @@ ZnStreamingEntity class >> readFrom: stream usingType: mimeType andLength: lengt
 		yourself
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnStreamingEntity >> close [
 	stream ifNotNil: [
 		stream close.
@@ -85,7 +85,7 @@ ZnStreamingEntity >> isEmpty [
 	^ false
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnStreamingEntity >> readFrom: readStream [
 
 	self contentLength

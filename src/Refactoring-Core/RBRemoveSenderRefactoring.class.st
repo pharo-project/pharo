@@ -66,25 +66,6 @@ RBRemoveSenderRefactoring class >> remove: anInterval inMethod: aSelector forCla
 		forClass: aClass
 ]
 
-{ #category : 'preconditions' }
-RBRemoveSenderRefactoring >> applicabilityPreconditions [
-
-	^ {
-		  (RBCondition withBlock: [
-			   class ifNil: [ self refactoringError: 'Invalid class name' ].
-			   true ]).
-		  (RBCondition definesSelector: sourceSelector in: class).
-		  (RBCondition withBlock: [
-			   self checkSelectedMessage.
-			   "self parseInlineMethod."
-			   self rewriteInlinedTree.
-			   (sourceMessage parent isReturn or: [
-				    self hasMultipleReturns not ]) ifFalse: [
-				   self refactoringError:
-					   'Cannot inline method since it contains multiple returns that cannot be rewritten' ].
-			   true ]) }
-]
-
 { #category : 'transforming' }
 RBRemoveSenderRefactoring >> checkSelectedMessage [
 
@@ -98,10 +79,10 @@ RBRemoveSenderRefactoring >> inlineParseTree [
 
 	| aSymbol |
 	aSymbol := self inlineSelector.
-	^ inlineParseTree ifNil: [inlineParseTree := RBMethodNode
+	^ inlineParseTree ifNil: [inlineParseTree := OCMethodNode
 		selector:  aSymbol
-		arguments: ( (1 to: aSymbol numArgs) collect: [ :e | RBVariableNode named: 'arg', e asString ])
-		body: ( RBSequenceNode statements: #())]
+		arguments: ( (1 to: aSymbol numArgs) collect: [ :e | OCVariableNode named: 'arg', e asString ])
+		body: ( OCSequenceNode statements: #())]
 ]
 
 { #category : 'transforming' }
@@ -114,6 +95,13 @@ RBRemoveSenderRefactoring >> nameOfTheClassOfTheMethodToInline [
 RBRemoveSenderRefactoring >> preconditions [
 
 	^ self applicabilityPreconditions
+]
+
+{ #category : 'initialization' }
+RBRemoveSenderRefactoring >> prepareForExecution [
+
+	self checkSelectedMessage.
+	self rewriteInlinedTree.
 ]
 
 { #category : 'transforming' }

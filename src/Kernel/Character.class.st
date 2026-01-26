@@ -13,7 +13,9 @@ Class {
 	#type : 'immediate',
 	#classVars : [
 		'CharSet',
-		'DigitValues'
+		'Cr',
+		'DigitValues',
+		'Lf'
 	],
 	#category : 'Kernel-BasicObjects',
 	#package : 'Kernel',
@@ -103,7 +105,7 @@ Character class >> constantNames [
 Character class >> cr [
 	"Answer the Character representing a carriage return."
 
-	^self value: 13
+	^ Cr
 ]
 
 { #category : 'accessing - untypeable characters' }
@@ -154,7 +156,11 @@ Character class >> home [
 Character class >> initialize [
 	"Create the DigitsValues table."
 
-	self initializeDigitValues
+	self initializeDigitValues.
+
+	"Cr and LF are heavily used by some projects and we gain to cache them."
+	Cr := self value: 13.
+	Lf := self value: 10
 ]
 
 { #category : 'private - initialization' }
@@ -179,7 +185,7 @@ Character class >> insert [
 Character class >> lf [
 	"Answer the Character representing a linefeed."
 
-	^self value: 10
+	^ Lf
 ]
 
 { #category : 'accessing - untypeable characters' }
@@ -265,11 +271,10 @@ Character class >> specialCharacters [
 		   with: self times)
 ]
 
-{ #category : 'queries' }
-Character class >> supportsNonASCII [
+{ #category : 'constants' }
+Character class >> syntaxCharacters [
 
-	^ (self environment includesKey: #Unicode) and: [
-		((self environment  at: #EncodedCharSet) charsetAt: 255) name = #Unicode ]
+	^ '^"''|[](){}$#<>=;:.' copy
 ]
 
 { #category : 'accessing - untypeable characters' }
@@ -462,11 +467,6 @@ Character >> hexDigitValue [
 	^ ((codePoint := self asInteger) between: 0 and: 127)
 		ifTrue: [ #(nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 0 1 2 3 4 5 6 7 8 9 nil nil nil nil nil nil nil 10 11 12 13 14 15 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 10 11 12 13 14 15 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil) at: codePoint + 1 ]
 		ifFalse: [ nil ]
-]
-
-{ #category : 'initialization' }
-Character >> initialize [
-		super initialize.
 ]
 
 { #category : 'testing' }
@@ -784,6 +784,13 @@ Character >> isSurrogateOther [
 ]
 
 { #category : 'testing' }
+Character >> isSyntax [
+	"Answer whether the receiver is part of the Smalltalk syntax, i.e. ^""'|[](){}$#<>=;:."
+
+	^ self class syntaxCharacters includes: self
+]
+
+{ #category : 'testing' }
 Character >> isTitlecaseLetter [
 ^ self characterSet isTitlecaseLetter: self
 ]
@@ -817,7 +824,7 @@ Character >> nextObject [
 { #category : 'printing' }
 Character >> printOn: aStream [
 	| name |
-	(self asInteger > 32 and: [ self asInteger ~= 127])
+	(self asInteger > 32 and: [ self asInteger ~= 127 and: [ (self asInteger between: 16rD800 and: 16rDFFF) not "¹" ] ])
 		ifTrue: [ aStream nextPut: $$; nextPut: self ]
 		ifFalse: [
 			name := self class constantNameFor: self.
@@ -825,13 +832,11 @@ Character >> printOn: aStream [
 			name isNotNil
 				ifTrue: [ aStream space; nextPutAll: name ]
 				ifFalse: [ aStream nextPutAll: ' value: '; print: self asInteger ] ]
-]
 
-{ #category : 'printing' }
-Character >> printStringHex [
-	"$A printStringHex >>> '41'"
-
-	^ self asInteger printStringBase: 16
+	"¹ Covers the surrogate code points which should not be printed as a literal as they “cannot be assigned
+	to [an] abstract character” and “cannot be conformantly interchanged using Unicode encoding forms” per
+	section ‘2.4.1 Types of Code Points’ in ‘The Unicode Standard, Version 17.0 – Core Specification’
+	available at: https://www.unicode.org/versions/Unicode17.0.0/core-spec/chapter-2/#G14527"
 ]
 
 { #category : 'comparing' }
@@ -854,13 +859,6 @@ Character >> shallowCopy [
 { #category : 'testing - kind' }
 Character >> shouldBePrintedAsLiteral [
 	^ self asInteger between: 33 and: 255
-]
-
-{ #category : 'printing' }
-Character >> storeBinaryOn: aStream [
-	self asInteger < 256
-		ifTrue: [ aStream basicNextPut: self asInteger ]
-		ifFalse: [ aStream nextInt32Put: self asInteger ]
 ]
 
 { #category : 'storing' }
@@ -901,10 +899,4 @@ Character >> tokenish [
 { #category : 'converting' }
 Character >> uppercase [
 	^ self asUppercase
-]
-
-{ #category : 'copying' }
-Character >> veryDeepCopyWith: deepCopier [
-	"Answer the receiver, because Characters are unique."
-	^self
 ]

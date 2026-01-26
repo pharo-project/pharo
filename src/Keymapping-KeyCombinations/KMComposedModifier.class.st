@@ -85,15 +85,6 @@ KMComposedModifier >> printOn: aStream [
 		separatedBy: [ aStream << ' + ' ]
 ]
 
-{ #category : 'printing' }
-KMComposedModifier >> printOsRepresentationOn: aStream [
-	| modifiersSorted |
-	modifiersSorted := modifiers asSortedCollection: [ : a : b | a printingPosition < b printingPosition ].
-	modifiersSorted
-		do: [ :modifier| modifier printOsRepresentationOn: aStream ]
-		separatedBy: [ aStream << $+ ]
-]
-
 { #category : 'combining' }
 KMComposedModifier >> shift [
 	modifiers add: KMModifier shift

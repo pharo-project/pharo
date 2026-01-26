@@ -14,6 +14,10 @@ StSelectDialogMock >> action [
 	^ self
 ]
 
+{ #category : 'api - showing' }
+StSelectDialogMock >> openModal [
+]
+
 { #category : 'accessing' }
 StSelectDialogMock >> selectedItems [
 

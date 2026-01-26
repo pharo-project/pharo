@@ -108,7 +108,7 @@ ZdcIOBuffer >> capacity [
 	^ self gapAtFront + self availableForWriting
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZdcIOBuffer >> close [
 	buffer ifNotNil: [
 		ZdcByteArrayManager current recycle: buffer.
@@ -231,7 +231,7 @@ ZdcIOBuffer >> nextPut: anObject [
 	^ anObject
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZdcIOBuffer >> on: sequenceableCollection [
 	buffer := sequenceableCollection.
 	self reset

@@ -7,13 +7,10 @@ Class {
 }
 
 { #category : 'meta-data - dependency analyser' }
-ManifestOpalCompilerCore class >> ignoredDependencies [
-	^ #(#'Morphic-Base' #'System-Settings-Core')
-]
-
-{ #category : 'meta-data - dependency analyser' }
 ManifestOpalCompilerCore class >> manuallyResolvedDependencies [
-	^ #(#'Morphic-Base' #'System-Settings-Core' #'System-Announcements' #'System-Sources')
+
+	<ignoreForCoverage>
+	^ #(#'System-Announcements' #'System-Sources' #'Collections-Abstract')
 ]
 
 { #category : 'code-critics' }
@@ -43,15 +40,15 @@ ManifestOpalCompilerCore class >> ruleImplementedNotSentRuleV1FalsePositive [
 
 { #category : 'code-critics' }
 ManifestOpalCompilerCore class >> ruleTempsReadBeforeWrittenRuleV1FalsePositive [
-^ #(#(#(#RGMethodDefinition #(#IRSequence #absorbJumpToSingleInstr: #false)) #'2012-12-19T08:10:39.177+01:00') )
+^ #(#(#(#RGMethodDefinition #(#OCIRSequence #absorbJumpToSingleInstr: #false)) #'2012-12-19T08:10:39.177+01:00') )
 ]
 
 { #category : 'code-critics' }
 ManifestOpalCompilerCore class >> ruleToDoCollectRuleV1FalsePositive [
-^ #(#(#(#RGMethodDefinition #(#IRBytecodeScope #args #false)) #'2012-12-19T08:16:58.474000001+01:00') #(#(#RGMethodDefinition #(#IRBytecodeScope #temps #false)) #'2012-12-19T08:17:19.677+01:00') )
+^ #(#(#(#RGMethodDefinition #(#OCIRBytecodeScope #args #false)) #'2012-12-19T08:16:58.474000001+01:00') #(#(#RGMethodDefinition #(#OCIRBytecodeScope #temps #false)) #'2012-12-19T08:17:19.677+01:00') )
 ]
 
 { #category : 'code-critics' }
 ManifestOpalCompilerCore class >> ruleVariableAssignedLiteralRuleV1FalsePositive [
-^ #(#(#(#RGClassDefinition #(#IRMethod)) #'2012-12-19T08:13:54.508+01:00') )
+^ #(#(#(#RGClassDefinition #(#OCIRMethod)) #'2012-12-19T08:13:54.508+01:00') )
 ]

@@ -7,11 +7,13 @@ Example
 --------
 Script
 ```
-(RBAddVariableAccessorWithLazyInitialization 
+| transformation |
+transformation := (RBAddVariableAccessorWithLazyInitializationTransformation 
 	variable: 'foo1' 
 	class: RBLintRuleTestData 
 	classVariable: false 
-	defaultValue: '123') execute
+	defaultValue: '123') generateChanges.
+(StRefactoringPreviewPresenter for: transformation) open
 ```
 
 After refactoring we get:
@@ -71,7 +73,7 @@ RBAddVariableAccessorWithLazyInitializationTransformation >> checkVariableRefere
 			| name |
 
 			name := aNode name.
-			( aNode whoDefines: name ) ifNil: [ self canReferenceVariable: name in: class  ]
+			( aNode whichUpNodeDefines: name ) ifNil: [ self canReferenceVariable: name in: class  ]
 			].
 	searcher executeTree: aParseTree
 ]

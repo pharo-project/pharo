@@ -35,11 +35,6 @@ MCOrganizationDefinition >> = aDefinition [
 ]
 
 { #category : 'accessing' }
-MCOrganizationDefinition >> accept: aVisitor [
-	^ aVisitor visitOrganizationDefinition: self
-]
-
-{ #category : 'accessing' }
 MCOrganizationDefinition >> categories [
 
 	^ self packageName
@@ -96,11 +91,6 @@ MCOrganizationDefinition >> packageName: anObject [
 	packageName := anObject
 ]
 
-{ #category : 'installing' }
-MCOrganizationDefinition >> postloadOver: oldDefinition [
-	"Nothing to do"
-]
-
 { #category : 'accessing' }
 MCOrganizationDefinition >> sortKey [
 	^ '<organization>'
@@ -129,7 +119,7 @@ MCOrganizationDefinition >> tagNames: aCollection [
 	"ensure the tags are sorted alphabetically, so the merge don't take it as a conflict"
 
 	| tags |
-	tags := aCollection.
+	tags := aCollection collect: [ :element | element asSymbol ].
 	tags := tags \ { Package rootTagName }.
 	tagNames := tags sorted asArray
 ]

@@ -50,6 +50,11 @@ FTStaticBasicItem >> dataSource: anObject [
 	children do: [ :item | item dataSource: anObject ]
 ]
 
+{ #category : 'testing' }
+FTStaticBasicItem >> hasComputedChildren [
+	^ self hasChildren
+]
+
 { #category : 'updating' }
 FTStaticBasicItem >> updateData [
 	"Static Item cannot do it."

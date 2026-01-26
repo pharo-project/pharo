@@ -3,7 +3,7 @@ My responsibility is to add accessors to all variables both on instance and clas
 "
 Class {
 	#name : 'RBAbstractVariablesTransformation',
-	#superclass : 'RBTransformation',
+	#superclass : 'ReTransformation',
 	#instVars : [
 		'tree',
 		'fromClass',
@@ -181,7 +181,7 @@ RBAbstractVariablesTransformation >> processAssignmentNode: aNode [
 	| varName |
 	varName := aNode variable name.
 	ignore = varName ifTrue: [^self].
-	(aNode whoDefines: varName) ifNotNil: [^self].
+	(aNode whichUpNodeDefines: varName) ifNotNil: [^self].
 	(self instanceVariableNames includes: varName)
 		ifTrue: [instVarWriters add: varName].
 	(self classVariableNames includes: varName)
@@ -193,7 +193,7 @@ RBAbstractVariablesTransformation >> processReferenceNode: aNode [
 	| varName |
 	varName := aNode name.
 	ignore = varName ifTrue: [^self].
-	(aNode whoDefines: varName) ifNotNil: [^self].
+	(aNode whichUpNodeDefines: varName) ifNotNil: [^self].
 	(self instanceVariableNames includes: varName)
 		ifTrue: [instVarReaders add: varName].
 	(self classVariableNames includes: varName)

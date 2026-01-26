@@ -21,7 +21,7 @@ Class {
 
 { #category : 'accessing' }
 ReWhileTrueRule class >> group [
-	^ 'Coding Idiom Violation'
+	^ self codingIdiomViolationGroup
 ]
 
 { #category : 'accessing' }

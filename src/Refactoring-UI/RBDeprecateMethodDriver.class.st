@@ -12,7 +12,7 @@ You can create my instance and execute the refactoring by running:
 "
 Class {
 	#name : 'RBDeprecateMethodDriver',
-	#superclass : 'RBInteractionDriver',
+	#superclass : 'ReInteractionDriver',
 	#instVars : [
 		'useInsteadSelector',
 		'selectorToDeprecate'
@@ -26,6 +26,12 @@ Class {
 RBDeprecateMethodDriver class >> deprecateMethod: aString in: aClass scopes: aCollection [
 
 	^ self new deprecateMethod: aString in: aClass  scopes: aCollection
+]
+
+{ #category : 'accessing' }
+RBDeprecateMethodDriver class >> driverName [
+
+	^ 'Deprecate method'
 ]
 
 { #category : 'initialization' }

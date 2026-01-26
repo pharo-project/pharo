@@ -804,7 +804,7 @@ OrderedDictionaryTest >> testEquals [
 
 	"For equality, order will not matter"
 	self orderedAssociations
-		with: self orderedAssociations reversed
+		with: self orderedAssociations
 		do: [:firstAssociation :secondAssociation |
 			dictionaryOne add: firstAssociation.
 			dictionaryTwo add: secondAssociation.
@@ -814,11 +814,7 @@ OrderedDictionaryTest >> testEquals [
 			self
 				assertDictionary: dictionaryTwo
 				doesNotEqual: self emptyDictionary.
-			dictionaryOne size < self orderedAssociations size
-				ifTrue: [
-					self
-						assertDictionary: dictionaryOne
-						doesNotEqual: dictionaryTwo]].
+			].
 
 	self
 		assertDictionary: dictionaryOne
@@ -845,6 +841,37 @@ OrderedDictionaryTest >> testEqualsOtherOrderedDictionaries [
 		self
 			assertDictionary: self dictionaryWithOrderedAssociations
 			doesNotEqual: (each newFrom: self orderedAssociations)]
+]
+
+{ #category : 'accessing' }
+OrderedDictionaryTest >> testEqualsWhenKeyArentInTheSameOrder [
+	| dictionaryOne dictionaryTwo |
+
+	dictionaryOne := self emptyDictionary.
+	dictionaryTwo := self emptyDictionary.
+	self
+		assertDictionary: dictionaryOne
+		equals: dictionaryTwo.
+
+	self orderedAssociations
+		with: self orderedAssociations reversed
+		do: [:firstAssociation :secondAssociation |
+			dictionaryOne add: firstAssociation.
+			dictionaryTwo add: secondAssociation.
+			self
+				assertDictionary: dictionaryOne
+				doesNotEqual: self emptyDictionary.
+			self
+				assertDictionary: dictionaryTwo
+				doesNotEqual: self emptyDictionary.
+			dictionaryOne size < self orderedAssociations size
+				ifTrue: [
+					self
+						assertDictionary: dictionaryOne
+						doesNotEqual: dictionaryTwo]].
+
+	self
+		assertDictionary: dictionaryOne doesNotEqual: dictionaryTwo.
 ]
 
 { #category : 'tests' }
@@ -1125,41 +1152,41 @@ OrderedDictionaryTest >> testKeys [
 
 { #category : 'tests' }
 OrderedDictionaryTest >> testKeysAndValuesDo [
-	| dictionary |
 
+	| dictionary |
 	dictionary := self emptyDictionary.
-	self
-		should: [:block | dictionary keysAndValuesDo: block]
-		enumerate: #()
-		and: #().
-	self orderedAssociations withIndexDo: [:each :i |
-		dictionary add: each.
-		self
-			should: [:block | dictionary keysAndValuesDo: block]
-			enumerate: (self orderedKeysFirst: i)
-			and: (self orderedValuesFirst: i)]
+	self should: [ :block | dictionary keysAndValuesDo: block ] enumerate: #(  ) and: #(  ).
+	self orderedAssociations withIndexDo: [ :each :i |
+			dictionary add: each.
+			self
+				should: [ :block | dictionary keysAndValuesDo: block ]
+				enumerate: (self orderedKeysFirst: i)
+				and: (self orderedValuesFirst: i) ]
 ]
 
 { #category : 'tests' }
 OrderedDictionaryTest >> testKeysAndValuesRemove [
+
 	| dictionary |
 	dictionary := self dictionaryWithOrderedAssociations.
-	self orderedAssociations
-		withIndexDo: [ :removedAssociation :i |
+	self orderedAssociations withIndexDo: [ :removedAssociation :i |
 			| unremovedAssociations |
 			unremovedAssociations := (self orderedAssociationsAllButFirst: i) asOrderedCollection.
-			dictionary
-				keysAndValuesRemove: [ :key :value |
-					(self isTestingIdentityDictionary ifTrue: [ key == removedAssociation key ] ifFalse: [ key = removedAssociation key ])
-						ifTrue: [ self assert: value equals: removedAssociation value.
-							true ]
-						ifFalse: [ | unremovedAssociation |
-							unremovedAssociation := unremovedAssociations removeFirst.
-							self isTestingIdentityDictionary
-								ifTrue: [ self assert: key identicalTo: unremovedAssociation key ]
-								ifFalse: [ self assert: key equals: unremovedAssociation key ].
-							self assert: value equals: unremovedAssociation value.
-							false ] ].
+			dictionary keysAndValuesRemove: [ :key :value |
+					(self isTestingIdentityDictionary
+						 ifTrue: [ key == removedAssociation key ]
+						 ifFalse: [ key = removedAssociation key ])
+						ifTrue: [
+								self assert: value equals: removedAssociation value.
+								true ]
+						ifFalse: [
+								| unremovedAssociation |
+								unremovedAssociation := unremovedAssociations removeFirst.
+								self isTestingIdentityDictionary
+									ifTrue: [ self assert: key identicalTo: unremovedAssociation key ]
+									ifFalse: [ self assert: key equals: unremovedAssociation key ].
+								self assert: value equals: unremovedAssociation value.
+								false ] ].
 			self assertEmpty: unremovedAssociations.
 			self assertKey: removedAssociation key wasRemovedfrom: dictionary ].
 	self assertEmpty: dictionary

@@ -16,7 +16,8 @@ Class {
 		'className',
 		'newClassName',
 		'rbClass',
-		'rbMetaclass'
+		'rbMetaclass',
+		'superclassName'
 	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',
@@ -31,6 +32,37 @@ ReDuplicateClassDriver class >> className: aClassName [
 		yourself
 ]
 
+{ #category : 'accessing' }
+ReDuplicateClassDriver class >> driverName [
+
+	^ 'Duplicate class'
+]
+
+{ #category : 'accessing' }
+ReDuplicateClassDriver class >> shouldPreviewChangesByDefault [
+
+	^ false
+]
+
+{ #category : 'private' }
+ReDuplicateClassDriver >> acceptClassRequest: dialog [
+
+	self
+		packageName: dialog presenter packageName;
+		tagName: dialog presenter tagName;
+		newClassName: dialog presenter newClassName;
+		superclassName: dialog presenter selectedSuperclass.
+	
+	refactoring
+		packageName: dialog presenter packageName;
+		className: dialog presenter newClassName;
+		superclassName: dialog presenter selectedSuperclassName;					
+		sourceClass: className;
+		instanceMethods: dialog presenter selectedInstanceMethods;
+		classMethods: dialog presenter selectedClassMethods;
+		packageTagName: dialog presenter tagName.
+]
+
 { #category : 'introspection' }
 ReDuplicateClassDriver >> className [
 	"Answer a <String> representing the class to be copied"
@@ -41,18 +73,32 @@ ReDuplicateClassDriver >> className [
 { #category : 'accessing' }
 ReDuplicateClassDriver >> className: aClassName [
 
-	className := aClassName.
+	className := aClassName
 
 ]
 
 { #category : 'accessing' }
-ReDuplicateClassDriver >> configureRefactoring [
+ReDuplicateClassDriver >> dialogTitleForClassSelection [
 
-	refactoring := ReCopyClassRefactoring new.
+	^ 'Duplicate class ' , className
+]
+
+{ #category : 'configuration' }
+ReDuplicateClassDriver >> instantiateRefactoring [
+
+	^ ReDuplicateClassRefactoring copyClass: rbClass
+]
+
+{ #category : 'accessing' }
+ReDuplicateClassDriver >> newClass [
+	"Answer the new created <Class>"
+
+	^ (self model classNamed: self newClassName) binding value
 ]
 
 { #category : 'accessing' }
 ReDuplicateClassDriver >> newClassName [
+	"Answer a <Symbol> representing the new duplicated class"
 
 	^ newClassName
 ]
@@ -63,32 +109,30 @@ ReDuplicateClassDriver >> newClassName: anObject [
 	newClassName := anObject
 ]
 
-{ #category : 'execution' }
+{ #category : 'private' }
+ReDuplicateClassDriver >> newRequestClassDialog [
+
+	^ (StClassAndMethodsSelectionPresenter newApplication: self application model: self)
+		withInstanceMethods: rbClass localMethods
+		withClassMethods: rbMetaclass localMethods;
+		baseClassName: self className;
+		basePackageName: (self model environment at: self className) packageName;
+		basePackageTagName: (self model environment at: self className) packageTag name;
+		onCancel: [ : dialog | dialog close ];
+		onAccept: [ :dialog |
+			self acceptClassRequest: dialog.
+			dialog close ];
+		yourself
+]
+
+{ #category : 'private' }
 ReDuplicateClassDriver >> requestNewClass [
 
-	^ requestDialog ifNil: [
-		requestDialog := (StClassAndMethodsSelectionPresenter on: self)
-			withInstanceMethods: rbClass methods
-			withClassMethods: rbMetaclass allMethods;
-			baseClassName: self className;
-			basePackageName: (self model environment at: self className) packageName;
-			onCancel: [ : dialog | dialog close ];
-			onAccept: [ :dialog |
-				self
-					packageName: dialog presenter packageName;
-					tagName: dialog presenter tagName;
-					newClassName: dialog presenter newClassName.
-				refactoring
-					packageName: dialog presenter packageName;
-					className: dialog presenter newClassName;
-					sourceClass: className;
-					instanceMethods: dialog presenter selectedInstanceMethods;
-					classMethods: dialog presenter selectedClassMethods.
-
-				dialog close ];
-			selectAll;
-			openModal;
-			yourself ]
+	requestDialog ifNil: [ requestDialog := self newRequestClassDialog ].
+	requestDialog selectAll.
+	^ requestDialog
+		openModal;
+		yourself
 ]
 
 { #category : 'execution' }
@@ -96,9 +140,14 @@ ReDuplicateClassDriver >> runRefactoring [
 
 	self configureRefactoring.
 	self requestNewClass.
-	requestDialog window isCancelled
-		ifTrue: [ ^ nil ].
-	self applyChanges 
+	requestDialog window isCancelled ifTrue: [ ^ nil ].
+	refactoring
+		superclassName: requestDialog selectedSuperclass name;
+		className: requestDialog newClassName;
+		packageName: requestDialog packageName;
+		packageTagName: requestDialog tagName.
+
+	self applyChanges
 ]
 
 { #category : 'execution' }
@@ -115,18 +164,20 @@ ReDuplicateClassDriver >> runRefactoring: aReCopyClassRefactoring [
 { #category : 'accessing' }
 ReDuplicateClassDriver >> scopes: refactoringScopes [
 
-	| selectedClass |
-	
 	scopes := refactoringScopes.
 	model := self refactoringScopeOn: scopes last.
-	selectedClass := model environment classes anyOne.	
-
-	rbClass := model classFor: selectedClass.
-	rbMetaclass := model classFor: selectedClass class.
+	rbClass := model classNamed: className.
+	rbMetaclass := model metaclassNamed: className.
 ]
 
 { #category : 'accessing' }
-ReDuplicateClassDriver >> tagName [
+ReDuplicateClassDriver >> superclassName [
 
-	^ tagName
+	^ superclassName
+]
+
+{ #category : 'accessing' }
+ReDuplicateClassDriver >> superclassName: anObject [
+
+	superclassName := anObject
 ]

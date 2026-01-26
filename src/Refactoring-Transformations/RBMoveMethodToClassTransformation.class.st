@@ -2,12 +2,14 @@
 I am responsible for moving a method from one class to another existing class
 
 Usage:
+```
 | transformation |
 transformation := (RBMoveMethodToClassTransformation
-				method: #method
-				class: #RBMoveMethodTransformationTest)
-				transform.
-(ChangesBrowser changes: transformation model changes changes) open
+				method: RBMoveMethodToClassTransformation>>#storeOn:
+				class: #RBMoveMethodParametrizedTest)
+				generateChanges.
+(StRefactoringPreviewPresenter for: transformation) open
+```
 
 "
 Class {
@@ -55,7 +57,7 @@ RBMoveMethodToClassTransformation >> privateTransform [
 	| oldClass newClass rbMethod originalProtocol |
 	oldClass := self classModelOf: method methodClass.
 	newClass := self classModelOf: class.
-	rbMethod := model rbMethodClass for: newClass source: method sourceCode selector: method selector.
+	rbMethod := RBMethod for: newClass source: method sourceCode selector: method selector.
 	originalProtocol := method protocolName.
 
 	self generateChangesFor: (RBRemoveMethodTransformation 

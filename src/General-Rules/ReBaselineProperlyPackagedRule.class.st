@@ -19,7 +19,7 @@ ReBaselineProperlyPackagedRule class >> checksClass [
 
 { #category : 'accessing' }
 ReBaselineProperlyPackagedRule class >> group [
-	^ 'Design Flaws'
+	^ self designFlawGroup
 ]
 
 { #category : 'accessing' }
@@ -43,7 +43,6 @@ ReBaselineProperlyPackagedRule class >> uniqueIdentifierName [
 ReBaselineProperlyPackagedRule >> basicCheck: aClass [
 
 	aClass isClassSide ifTrue: [ ^ false ].
-	 
-	^(aClass name beginsWith: 'BaselineOf') 
-		and: [ aClass package name ~= aClass name ]
+
+	^ (MetacelloProjectRegistry baselineClasses includes: aClass) and: [ aClass package name ~= aClass name ]
 ]

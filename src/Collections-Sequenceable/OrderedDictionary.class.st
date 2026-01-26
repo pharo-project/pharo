@@ -94,6 +94,9 @@ OrderedDictionary >> = anObject [
 	(self species == anObject species
 		and: [self size = anObject size])
 		ifFalse: [^ false].
+	
+	dictionary keysDo: [:key | 
+        ((self indexOfKey: key) = (anObject indexOfKey: key)) ifFalse: [ ^ false ] ].
 
 	dictionary associationsDo: [:each |
 		(anObject at: each key ifAbsent: [^ false]) = each value
@@ -263,7 +266,7 @@ OrderedDictionary >> at: key update: updateBlock initial: initBlocktOrValue [
 	"I am used to update the value at a given key. The updateBlock is passed
 	the existing value, and the result of the block is stored back.
 	If the key does not exist, store the value of the initBlocktOrValue.
-	initBlocktOrValue can be a block in case the initial value is expencive to compute."
+	initBlocktOrValue can be a block in case the initial value is expensive to compute."
 	| val |
 	val := self at: key ifAbsent: [ nil ].
 	val
@@ -311,11 +314,6 @@ OrderedDictionary >> growOrderedKeys [
 			to: orderedKeys size
 			with: orderedKeys
 			startingAt: 1
-]
-
-{ #category : 'testing' }
-OrderedDictionary >> hasBindingThatBeginsWith: aString [
-	^ dictionary hasBindingThatBeginsWith: aString
 ]
 
 { #category : 'comparing' }

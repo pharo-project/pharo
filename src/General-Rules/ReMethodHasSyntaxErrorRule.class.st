@@ -16,7 +16,7 @@ ReMethodHasSyntaxErrorRule class >> checksMethod [
 
 { #category : 'accessing' }
 ReMethodHasSyntaxErrorRule class >> group [
-	^ 'Bugs'
+	^ self bugsGroup
 ]
 
 { #category : 'accessing' }

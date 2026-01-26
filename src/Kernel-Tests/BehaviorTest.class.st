@@ -82,10 +82,11 @@ BehaviorTest >> testAllSelectorsAboveUntil [
 	self deny: (selectors includes: #yourself)
 ]
 
-{ #category : 'tests' }
+{ #category : 'tests - instance names' }
 BehaviorTest >> testBehaviornewnewShouldNotCrash [
 
 	Behavior new new.
+	
 	"still not working correctly but at least does not crash the image"
 ]
 
@@ -99,6 +100,17 @@ BehaviorTest >> testBinding [
 	"returns nil for Metaclasses... like Encoder>>#associationFor:"
 
 	self assert: Object class binding key isNil
+]
+
+{ #category : 'tests - instance names' }
+BehaviorTest >> testClassNilName [
+
+	| cls |
+	cls := Class new.
+	self 
+		assert: cls name
+		equals: #ASubclassOfObject
+	
 ]
 
 { #category : 'tests' }
@@ -160,6 +172,18 @@ BehaviorTest >> testHasProperty [
 	self deny: (self class hasProperty: #testKeySelector)
 ]
 
+{ #category : 'tests - testing - class hierarchy' }
+BehaviorTest >> testIncludesBehavior [
+	self assert: (Object includesBehavior: Object).
+	self assert: (Behavior includesBehavior: Object).
+	self deny: (Object includesBehavior: Behavior).
+	self deny: (Protocol includesBehavior: Behavior).
+	self deny: (Behavior includesBehavior: Protocol).
+	"it should work for metaclasses, too"
+	self assert: (Metaclass class includesBehavior: Class).
+	self assert: (Metaclass class includesBehavior: Behavior class)
+]
+
 { #category : 'tests' }
 BehaviorTest >> testIncludesMethod [
 	self assert: (Object includesMethod: Object>>#halt).
@@ -167,6 +191,18 @@ BehaviorTest >> testIncludesMethod [
 
 	self assert: (Point includesMethod: Point>>#x).
 	self deny: (LookupKey includesMethod: Point>>#x)
+]
+
+{ #category : 'tests - testing - class hierarchy' }
+BehaviorTest >> testInheritsFrom [
+	self deny: (Object inheritsFrom: Object).
+	self assert: (Behavior inheritsFrom: Object).
+	self deny: (Object inheritsFrom: Behavior).
+	self deny: (Protocol inheritsFrom: Behavior).
+	self deny: (Behavior inheritsFrom: Protocol).
+	"it should work for metaclasses, too"
+	self assert: (Metaclass class inheritsFrom: Class).
+	self assert: (Metaclass class inheritsFrom: Behavior class)
 ]
 
 { #category : 'metrics' }
@@ -184,6 +220,18 @@ BehaviorTest >> testIsAbstract [
 	
 	self deny: Class isAbstract.
 	self deny: Object isAbstract
+]
+
+{ #category : 'tests - testing - class hierarchy' }
+BehaviorTest >> testIsInClassHierarchyOf [
+	self assert: (Object isInClassHierarchyOf: Object).
+	self assert: (Behavior isInClassHierarchyOf: Object).
+	self assert: (Object isInClassHierarchyOf: Behavior).
+	self deny: (Protocol isInClassHierarchyOf: Behavior).
+	self deny: (Behavior isInClassHierarchyOf: Protocol).
+	"it should work for metaclasses, too"
+	self assert: (Metaclass class isInClassHierarchyOf: Class).
+	self assert: (Metaclass class isInClassHierarchyOf: Behavior class)
 ]
 
 { #category : 'tests' }
@@ -252,6 +300,17 @@ BehaviorTest >> testMethodsWritingSlot [
 	self assert: numberViaSlot equals: numberViaIVar
 ]
 
+{ #category : 'tests - instance names' }
+BehaviorTest >> testName [
+
+	| beh |
+	beh := Behavior new.
+	self 
+		assert: beh name
+		equals: #ASubclassOfObject
+	
+]
+
 { #category : 'tests' }
 BehaviorTest >> testNonObsoleteClass [
 	"Does it work on not-obsolete classes?"
@@ -272,6 +331,16 @@ BehaviorTest >> testPropertyValueAtPut [
 
 	self class propertyAt: #testKeySelector put: 42.
 	self assert: (self class propertyAt: #testKeySelector) equals: 42.
+	self class removeProperty: #testKeySelector
+]
+
+{ #category : 'tests - properties' }
+BehaviorTest >> testPropertyValueAtPutChangeGetLatestPutValue [
+
+	self class propertyAt: #testKeySelector put: 42.
+	self assert: (self class propertyAt: #testKeySelector) equals: 42.
+	self class propertyAt: #testKeySelector put: 46.
+	self assert: (self class propertyAt: #testKeySelector) equals: 46.
 	self class removeProperty: #testKeySelector
 ]
 

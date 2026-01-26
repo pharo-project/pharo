@@ -3,7 +3,7 @@ I am raised on an attempt to create a file or directory over top of an existing 
 "
 Class {
 	#name : 'FileExists',
-	#superclass : 'FileSystemError',
+	#superclass : 'FileException',
 	#category : 'FileSystem-Core-Kernel-Errors',
 	#package : 'FileSystem-Core',
 	#tag : 'Kernel-Errors'

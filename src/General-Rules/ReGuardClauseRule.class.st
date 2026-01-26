@@ -30,7 +30,7 @@ Class {
 
 { #category : 'accessing' }
 ReGuardClauseRule class >> group [
-	^ 'Coding Idiom Violation'
+	^ self codingIdiomViolationGroup
 ]
 
 { #category : 'accessing' }
@@ -43,17 +43,35 @@ ReGuardClauseRule class >> ruleName [
 	^ 'Replace single branch conditional with guard clause'
 ]
 
+{ #category : 'accessing' }
+ReGuardClauseRule class >> severity [
+
+	^ #information
+]
+
 { #category : 'initialization' }
 ReGuardClauseRule >> initialize [
 	super initialize.
 	self
-		replace: '`@condition ifTrue: [| `@trueTemps | `.Statement1. `.Statement2. `@.Statements1]'
-		with: '`@condition ifFalse: [^self].
+		addMatchingMethod: '`@methodName: `@args
+					| `@temps |
+					`@.Statements.
+					`@condition ifTrue: [| `@trueTemps | `.Statement1. `.Statement2. `@.Statements1]'
+		rewriteTo: '`@methodName: `@args
+					| `@temps `@trueTemps |
+					`@.Statements.
+					`@condition ifFalse: [^self].
 					`.Statement1.
 					`.Statement2.
 					`@.Statements1';
-		replace: '`@condition ifFalse: [| `@falseTemps | `.Statement1. `.Statement2. `@.Statements1]'
-		with: '`@condition ifTrue: [^self].
+		addMatchingMethod: '`@methodName: `@args
+					| `@temps |
+					`@.Statements.
+					`@condition ifFalse: [| `@falseTemps | `.Statement1. `.Statement2. `@.Statements1]'
+		rewriteTo: '`@methodName: `@args
+					| `@temps `@falseTemps |
+					`@.Statements.
+					`@condition ifTrue: [^self].
 					`.Statement1.
 					`.Statement2.
 					`@.Statements1'

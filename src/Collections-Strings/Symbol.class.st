@@ -108,8 +108,7 @@ Symbol class >> intern: aStringOrSymbol [
 
 	SymbolTableSemaphore enabled ifFalse: [
 		^ self rawIntern: aStringOrSymbol ].
-	SymbolTableSemaphore singleInstance critical: [
-		^ self rawIntern: aStringOrSymbol ]
+	^ SymbolTableSemaphore singleInstance critical: [ self rawIntern: aStringOrSymbol ]
 ]
 
 { #category : 'instance creation' }
@@ -165,14 +164,6 @@ Symbol class >> rawIntern: aStringOrSymbol [
 		  NewSymbols add: aStringOrSymbol createSymbol ]
 ]
 
-{ #category : 'instance creation' }
-Symbol class >> readFrom: strm [
-	"Symbol readFromString: '#abc'"
-
-	strm peek = $# ifFalse: [self error: 'Symbols must be introduced by #'].
-    	^ strm contents parseLiterals first
-]
-
 { #category : 'selector table' }
 Symbol class >> rebuildSelectorTable [
 
@@ -194,6 +185,12 @@ Symbol class >> rehash [
 	SymbolTable := WeakSet withAll: self allSubInstances.
 	NewSymbols := WeakSet new.
 	self resetSelectorTable
+]
+
+{ #category : 'accessing' }
+Symbol class >> reservedLiterals [
+
+	^ PseudoVariable lookupDictionary keys union: #( #nil #true #false )
 ]
 
 { #category : 'cleanup' }
@@ -325,6 +322,13 @@ Symbol >> = aSymbol [
 	^ super = aSymbol
 ]
 
+{ #category : 'evaluating' }
+Symbol >> argumentCount [
+    "This method refers to block arguments [:acc :x | ...] has two arguments so argumentCount of a selector that could be used in place of a block
+	should return the same amount of argument than the block."
+	^ self numArgs + 1
+]
+
 { #category : 'converting' }
 Symbol >> asAccessor [
 	"Return a accessor (getter) message from a setter message.
@@ -343,6 +347,25 @@ Symbol >> asAccessor [
 ]
 
 { #category : 'converting' }
+Symbol >> asMethodSignature [
+	"Returns the method signature method name with parameters based on the receiving selector."
+	
+	self numArgs = 0
+		ifTrue: [ ^ self asString ].
+	^ String
+		streamContents: [ :str |
+			| keywords |
+			keywords := self keywords.
+			keywords
+				doWithIndex: [ :each :index |
+					str
+						nextPutAll: each;
+						nextPutAll: ' var';
+						nextPutAll: index asString.
+					index = keywords size ifFalse: [ str space ] ] ]
+]
+
+{ #category : 'converting' }
 Symbol >> asMutator [
 	"Return a setter message from a getter message.
 	Return self if it is already a setter.
@@ -353,6 +376,8 @@ Symbol >> asMutator [
 
 	"#_ asMutator >>> #_:"
 	"#foo:: asMutator >>> #'foo::'"
+	
+	self isBinary ifTrue: [ self error: 'Binary selectors cannot be transformed into mutators' ].
 
 	self endsWithAColon ifTrue:[ ^ self ].
 	^ (self copyWith: $:) asSymbol
@@ -465,11 +490,6 @@ Symbol >> isOrientedFill [
 ]
 
 { #category : 'testing' }
-Symbol >> isSelectorSymbol [
-	^ self class selectorTable includes: self
-]
-
-{ #category : 'testing' }
 Symbol >> isSymbol [
 	^ true
 ]
@@ -483,6 +503,14 @@ Symbol >> isUnary [
 	"#between:and: isUnary >>> false"
 
 	^ self precedence = 1
+]
+
+{ #category : 'testing' }
+Symbol >> isUsedAsSelectorSymbol [
+	"Returns whether the receiver is currently used as a method selector.
+	Notice that a symbol representing a valid method selector could return false if there are no method installed with such selector."
+	
+	^ self class selectorTable includes: self
 ]
 
 { #category : 'sorting' }
@@ -611,7 +639,31 @@ Symbol >> value: anObject [
 	^anObject perform: self
 ]
 
-{ #category : 'copying' }
-Symbol >> veryDeepCopyWith: deepCopier [
-	"Return self.  I am immutable in the Morphic world.  Do not record me."
+{ #category : 'evaluating' }
+Symbol >> value: anObject value: arg [
+
+	^ anObject perform: self with: arg
+]
+
+{ #category : 'evaluating' }
+Symbol >> valueWithArguments: aCollection [
+
+	^ aCollection first perform: self withArguments: aCollection allButFirst
+]
+
+{ #category : 'evaluating' }
+Symbol >> valueWithEnoughArguments: anArray [
+	"call me with enough arguments from anArray"
+	<reflection: 'Message sending and code execution - Message send reification'>
+	| args |
+	(anArray size == self argumentCount)
+		ifTrue: [ ^self valueWithArguments: anArray ].
+
+	args := Array new: self argumentCount.
+	args replaceFrom: 1
+		to: (anArray size min: args size)
+		with: anArray
+		startingAt: 1.
+
+	^ self valueWithArguments: args
 ]

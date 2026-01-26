@@ -59,7 +59,7 @@ SycRefactoringPreviewPresenter class >> title [
 SycRefactoringPreviewPresenter >> accept [
 	self okToChange ifFalse: [ ^ self ].
 	
-	[ RBRefactoryChangeManager instance
+	[ ReChangeManager instance
 			performChanges: self pickedChanges ] asJob
 		title: 'Refactoring';
 		run
@@ -80,19 +80,6 @@ SycRefactoringPreviewPresenter >> alert: aString [
 	"Display a message for the user to read and then dismiss."
 
 	aString isEmptyOrNil ifFalse: [ self inform: aString ]
-]
-
-{ #category : 'epicea support' }
-SycRefactoringPreviewPresenter >> asEpiceaEvent [
-	"thanks to this method epicia know that is a refactoring"
-
-	self flag: #todo. "This is a workaround for a problem found by RewriteTool"
-	(changes allSatisfy: [ :each | each respondsTo: #asEpiceaEvent ])
-		ifFalse: [ ^ EpCompositeRefactoring withAll: #() ].
-
-	^ changes size > 1
-		ifTrue: [ EpCompositeRefactoring withAll: changes ]
-		ifFalse: [ changes anyOne asEpiceaEvent ]
 ]
 
 { #category : 'private' }
@@ -140,14 +127,20 @@ SycRefactoringPreviewPresenter >> command: aCommand [
 
 { #category : 'initialization' }
 SycRefactoringPreviewPresenter >> connectPresenters [
-	table bindKeyCombination: Character backspace asShortcut
-		toAction: [ self toggleSelectionOf: table selectedItem ].
+
+	table 
+		addShortcutWith: [ :action | action 
+			shortcutKey: Character backspace asKeyCombination;
+			action: [ self toggleSelectionOf: table selectedItem ] ].
 
 	{ table . scopeDropList . diffPresenter } do: [ :each |
-		each bindKeyCombination: Character cr asKeyCombination
-			toAction: [ self owner triggerOkAction; close ];
-		bindKeyCombination: Character escape asKeyCombination
-			toAction: [ self owner triggerCancelAction; close ] ]
+		each
+			addShortcutWith: [ :action | action 
+				shortcutKey: Character cr asKeyCombination;
+				action: [ self owner triggerOkAction; close ] ];
+			addShortcutWith: [ :action | action 
+				shortcutKey: Character escape asKeyCombination;
+				action: [ self owner triggerCancelAction; close ] ] ]
 ]
 
 { #category : 'accessing' }
@@ -210,12 +203,6 @@ SycRefactoringPreviewPresenter >> initializeWidgets [
 	self
 		selectectAllCheckBox;
 		setFocus
-]
-
-{ #category : 'epicea support' }
-SycRefactoringPreviewPresenter >> isEpiceaInterestingJobOwner [
-
-	^ true
 ]
 
 { #category : 'accessing' }
@@ -285,7 +272,7 @@ SycRefactoringPreviewPresenter >> updateTablePresenter [
 	| aCompositeChange anEnvironment |
 	"We get the environment to apply the changes from any element in the changes instance variable"
 	anEnvironment := self activeRBEnvironment.
-	aCompositeChange := RBCompositeRefactoryChange new
+	aCompositeChange := ReCompositeChange new
 		onSystemEnvironment: anEnvironment.
 	changes do: [ :each | aCompositeChange addChange: each ].
 

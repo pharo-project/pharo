@@ -71,6 +71,13 @@ TraitedClass >> allTraits [
 	^ self traitComposition allTraits
 ]
 
+{ #category : 'organization' }
+TraitedClass >> dependencies [
+	"Return the (transitive) set of behaviors that I depend on"
+	
+	^ super dependencies copyWithAll: self traitComposition allTraits
+]
+
 { #category : 'initialization' }
 TraitedClass >> doRebuildMethodDictionary [
 
@@ -103,7 +110,7 @@ TraitedClass >> findOriginClassOf: aMethod [
 	<reflection: 'Class structural inspection - Selectors and methods inspection'>
 	
 	(aMethod hasProperty: #traitSource)
-		ifTrue: [ ^ aMethod traitSource innerClass ].
+		ifTrue: [ ^ (aMethod propertyAt: #traitSource) innerClass ].
 
 	(self includesLocalSelector: aMethod selector)
 		ifTrue: [ ^ self ].

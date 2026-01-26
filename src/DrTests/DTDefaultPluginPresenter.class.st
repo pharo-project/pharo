@@ -38,8 +38,12 @@ DTDefaultPluginPresenter class >> buildContextualPackageGroupWith: presenterInst
 DTDefaultPluginPresenter class >> buildItemsListGroupWith: presenterInstance [
 
 	^ (CmCommandGroup named: 'List items menu') asSpecGroup
-		register: (DTBrowseSelectedItemCommand forSpec context: presenterInstance);
-		yourself
+		  register:
+			  (DTInspectSelectedItemCommand forSpecContext: presenterInstance)
+				  beHiddenWhenCantBeRun;
+		  register:
+			  (DTBrowseSelectedItemCommand forSpec context: presenterInstance);
+		  yourself
 ]
 
 { #category : 'private - commands' }
@@ -59,20 +63,24 @@ DTDefaultPluginPresenter class >> buildPackageGroupWith: presenterInstance [
 
 { #category : 'private - commands' }
 DTDefaultPluginPresenter class >> buildResultGroupWith: presenterInstance [
-	| commandGroup pluginCommands |
 
+	| commandGroup pluginCommands plugin |
 	commandGroup := (CmCommandGroup named: 'Results tools') asSpecGroup
-		description: 'Commands related to result.';
-		register: (DTResultBrowseCommand forSpecContext: presenterInstance) beHiddenWhenCantBeRun;
-		yourself.
+		                description: 'Commands related to result.';
+		                register:
+			                (DTResultBrowseCommand forSpecContext:
+					                 presenterInstance) beHiddenWhenCantBeRun;
+		                yourself.
 
-	pluginCommands := presenterInstance plugin
-		buildContextualMenuGroupWith: presenterInstance.
+	plugin := presenterInstance plugin.
+	plugin ifNil: [ ^ commandGroup ].
+
+	pluginCommands := plugin buildContextualMenuGroupWith:
+		                  presenterInstance.
 	pluginCommands entries ifEmpty: [ ^ commandGroup ].
-
 	^ commandGroup
-		register: pluginCommands beDisplayedAsGroup;
-		yourself
+		  register: pluginCommands beDisplayedAsGroup;
+		  yourself
 ]
 
 { #category : 'actions' }
@@ -82,6 +90,12 @@ DTDefaultPluginPresenter >> browseSelectedItem [
 	"
 
 	self selectedItems first drTestsBrowse
+]
+
+{ #category : 'actions' }
+DTDefaultPluginPresenter >> browseSelectedPackage [
+
+	self selectedPackage browse
 ]
 
 { #category : 'actions' }
@@ -141,22 +155,23 @@ DTDefaultPluginPresenter >> drTests [
 { #category : 'initialization' }
 DTDefaultPluginPresenter >> initializeItemsListAndLabel [
 
-	itemsList := self newFilterableListPresenter.
+	itemsList := self newFilterableTreePresenter.
 	itemsList
-		displayIcon: [ :aClass | self iconNamed: aClass systemIconName  ];
+		displayIcon: [ :aClass | self iconNamed: aClass systemIconName ];
 		displayColor: [ :aClass |
-			(self packagesSelected includes: aClass package)
-				ifTrue: [ self theme textColor ]
-				ifFalse: [ self theme classExtensionColor ] ];
-		help: 'Select the classes to analyze. Cmd+A or Ctrl+A to select all classes.';
-		sortingBlock: #name ascending;
+				(self packagesSelected includes: aClass package)
+					ifTrue: [ self theme textColor ]
+					ifFalse: [ self theme classExtensionColor ] ];
+		help:
+			'Select the classes to analyze. Cmd+A or Ctrl+A to select all classes.';
 		displayBlock: [ :item | item name ];
-		whenSelectionChangedDo: [ self whenItemsSelectionChanged: self selectedItems ];
+		whenSelectionChangedDo: [
+			self whenItemsSelectionChanged: self selectedItems ];
 		beMultipleSelection;
-		contextMenu: [ (self rootCommandsGroup / 'List items menu') beRoot asMenuPresenter ].
+		actions: (self rootCommandsGroup / 'List items menu') beRoot.
 
-	packagesList
-		whenSelectionChangedDo: [ self whenPackagesSelectionChanged: self packagesSelected ]
+	packagesList whenSelectionChangedDo: [
+		self whenPackagesSelectionChanged: self packagesSelected ]
 ]
 
 { #category : 'initialization' }
@@ -168,7 +183,7 @@ DTDefaultPluginPresenter >> initializePackagesListAndLabel [
 		sortingBlock: #name ascending;
 		displayBlock: [ :package | package name ];
 		beMultipleSelection;
-		contextMenu: [ (self rootCommandsGroup / 'Package menu') beRoot asMenuPresenter ]
+		actions: self rootCommandsGroup / 'Package menu'
 ]
 
 { #category : 'initialization' }
@@ -204,12 +219,23 @@ DTDefaultPluginPresenter >> initializeResultsTreeAndLabel [
 		display: [ :node | node drTestsName ];
 		displayColor: [ :node | node displayColor ];
 		children: [ :node | node subResults ];
-		contextMenu: [
-			(self rootCommandsGroup / 'Results tools') beRoot asMenuPresenter ].
+		actions: self rootCommandsGroup / 'Results tools'.
 
 	resultsList outputActivationPort
 		transmitDo: [
 			(DTResultBrowseCommand forSpecContext: self) execute ]
+]
+
+{ #category : 'actions' }
+DTDefaultPluginPresenter >> inspectSelectedItem [
+
+	self selectedItems first inspect
+]
+
+{ #category : 'actions' }
+DTDefaultPluginPresenter >> inspectSelectedPackage [
+
+	self selectedPackage inspect
 ]
 
 { #category : 'accessing' }
@@ -221,6 +247,12 @@ DTDefaultPluginPresenter >> itemsList [
 DTDefaultPluginPresenter >> newFilterableListPresenter [
 
 	^ self instantiate: DTFilterableListPresenter
+]
+
+{ #category : 'widgets' }
+DTDefaultPluginPresenter >> newFilterableTreePresenter [
+
+	^ self instantiate: DTFilterableTreePresenter
 ]
 
 { #category : 'accessing' }
@@ -285,6 +317,12 @@ DTDefaultPluginPresenter >> selectNoneInPackageList [
 DTDefaultPluginPresenter >> selectedItems [
 
 	^ itemsList selectedItems
+]
+
+{ #category : 'accessing' }
+DTDefaultPluginPresenter >> selectedPackage [
+
+	^ packagesList selectedItem
 ]
 
 { #category : 'accessing' }
@@ -382,8 +420,7 @@ DTDefaultPluginPresenter >> updateWithResults: someResults [
 	self updateResultViewsDropList.
 	self updateResultLabel.
 	self resultTree: lastResults buildTreeForUI.
-	resultsList contextMenu: [
-		(self rootCommandsGroup / 'Results tools') beRoot asMenuPresenter ]
+	resultsList actions: self rootCommandsGroup / 'Results tools'
 ]
 
 { #category : 'private' }
@@ -396,8 +433,17 @@ DTDefaultPluginPresenter >> whenItemsSelectionChanged: itemsSelected [
 { #category : 'private' }
 DTDefaultPluginPresenter >> whenPackagesSelectionChanged: packagesSelected [
 
+	| allClasses |
+	allClasses := packagesSelected flatCollect: [ :package | package classes ].
 	itemsList
-		items: (plugin itemsToBeAnalysedFor: packagesSelected);
-		selectAll.
-	self updatePackagesListLabel
+		roots: (((plugin itemsToBeAnalysedFor: packagesSelected) reject: [ :aClass | allClasses includes: aClass superclass ]) sorted:
+					 #name ascending);
+		children: [ :aClass | aClass subclasses & allClasses sorted: #name ascending ];
+		expandAll.
+	itemsList roots: itemsList items.
+	itemsList selectAll.
+	self updatePackagesListLabel.
+
+
+
 ]

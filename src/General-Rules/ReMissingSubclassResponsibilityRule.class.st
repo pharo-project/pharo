@@ -16,7 +16,7 @@ ReMissingSubclassResponsibilityRule class >> checksClass [
 
 { #category : 'accessing' }
 ReMissingSubclassResponsibilityRule class >> group [
-	^ 'Design Flaws'
+	^ self designFlawGroup
 ]
 
 { #category : 'accessing' }

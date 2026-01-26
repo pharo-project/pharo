@@ -19,11 +19,34 @@ ExternalAddress class >> allocate: byteSize [
 ]
 
 { #category : 'instance creation' }
+ExternalAddress class >> allocate: firstByteSize allocate: secondByteSize during: aBlock [
+
+	| firstAddress secondAddress |
+	firstAddress := self allocate: firstByteSize.
+	secondAddress := self allocate: secondByteSize.
+
+	^ [ aBlock value: firstAddress value: secondAddress ] ensure: [
+		  firstAddress free.
+		  secondAddress free ]
+]
+
+{ #category : 'instance creation' }
 ExternalAddress class >> allocate: byteSize bytesDuring: aBlock [
 
 	| address |
 	address := self allocate: byteSize.
 	^ [ aBlock value: address ] ensure: [ address free ]
+]
+
+{ #category : 'instance creation' }
+ExternalAddress class >> allocateMemoryOfSizes: aCollectionOfSizes during: aBlock [
+
+	| addresses |
+
+	addresses := aCollectionOfSizes collect: [ :aSize | self allocate: aSize ] as: Array.
+
+	^ [ aBlock valueWithArguments: addresses ]
+		  ensure: [ addresses do: [ :anAddress | anAddress free ] ]
 ]
 
 { #category : 'instance creation' }
@@ -202,13 +225,6 @@ ExternalAddress >> isNull [
 	"Answer true if I am a null pointer"
 	1 to: self size do:[:i| (self at: i) = 0 ifFalse:[^false]].
 	^true
-]
-
-{ #category : 'printing' }
-ExternalAddress >> printOn: aStream [
-	"print this as a hex address ('@ 16rFFFFFFFF') to distinguish it from ByteArrays"
-
-	aStream nextPutAll: '@ '; nextPutAll: (self asInteger storeStringBase: 16 length: 11 padded: true)
 ]
 
 { #category : 'copying' }

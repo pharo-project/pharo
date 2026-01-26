@@ -100,7 +100,10 @@ Morph >> attachKeymapCategory: aCategoryName targetting: anObject [
 
 { #category : '*Morphic-Base-keymapping' }
 Morph >> bindKeyCombination: aShortcut toAction: anAction [
-	self kmDispatcher bindKeyCombination: aShortcut asKeyCombination toAction: anAction
+	
+	self kmDispatcher 
+		bindKeyCombination: aShortcut asKeyCombination 
+		toAction: anAction
 ]
 
 { #category : '*Morphic-Base' }
@@ -314,7 +317,7 @@ Morph >> hasKeymapCategoryNamed: aString [
 Morph >> initializeShortcuts: aKMDispatcher [
 	"Where we may attach keymaps or even on:do: local shortcuts if needed."
 
-	aKMDispatcher attachCategory: #MorphFocusCtrlNavigation
+	aKMDispatcher attachCategory: #MorphCtrlNavigation
 ]
 
 { #category : '*Morphic-Base' }
@@ -363,17 +366,6 @@ Morph >> kmDispatcher [
 			kmd := KMDispatcher target: self.
 			self initializeShortcuts: kmd.
 			kmd ]
-]
-
-{ #category : '*Morphic-Base' }
-Morph >> newTransformationMorph [
-	^TransformationMorph new
-]
-
-{ #category : '*Morphic-Base-keymapping' }
-Morph >> on: aShortcut do: anAction [
-
-	^ self bindKeyCombination: aShortcut toAction: anAction
 ]
 
 { #category : '*Morphic-Base' }
@@ -438,6 +430,12 @@ Morph >> setShadowOffset: evt [
 		[:newPoint | self shadowPoint: newPoint].
 	evt hand attachMorph: handle.
 	handle startStepping
+]
+
+{ #category : '*Morphic-Base' }
+Morph class >> systemIconName [
+
+	^ #morph
 ]
 
 { #category : '*Morphic-Base' }

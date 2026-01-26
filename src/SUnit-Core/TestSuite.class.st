@@ -49,15 +49,41 @@ TestSuite >> addTests: aCollection [
 	aCollection do: [:eachTest | self addTest: eachTest]
 ]
 
-{ #category : 'announcements' }
+{ #category : 'announcing' }
 TestSuite >> announceTest: aTest [
 	^ self testSuiteAnnouncer announce: (TestAnnouncement with: aTest)
 ]
 
+{ #category : 'private' }
+TestSuite >> cleanAfterRunOn: aTestSuite [
+	"as a test suite is in fact a composite (that can have other test suites), 
+	 we visit this suite in the context of its execution"
+
+	aTestSuite cleanTestSuite: self
+]
+
+{ #category : 'private' }
+TestSuite >> cleanTestCase: aTestCase [
+
+	aTestCase class removeSubscription: self testSuiteAnnouncer
+]
+
+{ #category : 'private' }
+TestSuite >> cleanTestSuite: aTestSuite [
+
+	aTestSuite testSuiteAnnouncer: nil
+]
+
 { #category : 'running' }
 TestSuite >> debug [
-
-	self runWith: [ :test | test debug ]
+	| result |
+	
+	result := TestResult new.
+	self runWith: [ :test | 
+		[ test debug: result ]
+		ensure: [
+			result dispatchResultsIntoHistory.
+			self testSuiteAnnouncer announce: (TestSuiteEnded result: result) ] ]
 ]
 
 { #category : 'accessing' }
@@ -91,7 +117,30 @@ TestSuite >> name: aString [
 	name := aString
 ]
 
-{ #category : 'running' }
+{ #category : 'private' }
+TestSuite >> prepareTestCase: aTestCase [
+
+	aTestCase class announcer
+		when: TestCaseAnnouncement 
+		send: #announce: 
+		to: self testSuiteAnnouncer
+]
+
+{ #category : 'private' }
+TestSuite >> prepareTestSuite: aTestSuite [
+	
+	aTestSuite testSuiteAnnouncer: self testSuiteAnnouncer
+]
+
+{ #category : 'private' }
+TestSuite >> prepareToRunOn: aTestSuite [
+	"as a test suite is in fact a composite (that can have other test suites), 
+	 we visit this suite in the context of its execution"
+
+	aTestSuite prepareTestSuite: self
+]
+
+{ #category : 'accessing' }
 TestSuite >> resourceClass [
 
 	^ TestResource
@@ -110,7 +159,7 @@ TestSuite >> resources: someOrderedTestResourceClasses [
 	resources := someOrderedTestResourceClasses
 ]
 
-{ #category : 'running' }
+{ #category : 'accessing' }
 TestSuite >> resultClass [
 
 	^ TestAsserter classForTestResult
@@ -128,39 +177,46 @@ TestSuite >> run [
 TestSuite >> run: aResult [
 
 	CurrentExecutionEnvironment runTestsBy: [
-		self runWith: [ :test | test run: aResult ] ]
+		[ self runWith: [ :test | test run: aResult ] ]
+		ensure: [
+			aResult dispatchResultsIntoHistory.
+			self testSuiteAnnouncer announce: (TestSuiteEnded result: aResult) ] ]
 ]
 
-{ #category : 'running' }
+{ #category : 'private' }
 TestSuite >> runWith: aBlock [
+
 	self setUp.
-	[ self shuffledTests
-		do: [ :each |
-			aBlock value: each.
-			self announceTest: each.
-			self changed: each ] ]
-		ensure: [ self tearDown ]
+	[ 
+		self shuffledTests do: [ :each |
+			"prepare for testing"
+			each prepareToRunOn: self.
+			[ aBlock value: each ]
+			ensure: [ each cleanAfterRunOn: self ].
+			self announceTest: each ] ]
+	ensure: [ 
+		self tearDown ]
 ]
 
 { #category : 'running' }
 TestSuite >> setUp [
 	self resources do: [:each |
-			each isAvailable ifFalse: [ each signalInitializationError ]]
+		each isAvailable ifFalse: [ each signalInitializationError ]]
 ]
 
-{ #category : 'running' }
+{ #category : 'accessing' }
 TestSuite >> shuffleSeed [
 
 	^ randomGenerator seed
 ]
 
-{ #category : 'running' }
+{ #category : 'accessing' }
 TestSuite >> shuffleSeed: aSeed [
 
 	randomGenerator := Random seed: aSeed
 ]
 
-{ #category : 'running' }
+{ #category : 'accessing' }
 TestSuite >> shuffledTests [
 
 	^ self tests shuffledBy: randomGenerator
@@ -171,9 +227,16 @@ TestSuite >> tearDown [
 	self resourceClass resetResources: self resources
 ]
 
-{ #category : 'announcements' }
+{ #category : 'announcing' }
 TestSuite >> testSuiteAnnouncer [
+
 	^ announcer ifNil: [ announcer := Announcer new. ]
+]
+
+{ #category : 'tests' }
+TestSuite >> testSuiteAnnouncer: anAnnouncer [
+
+	announcer := anAnnouncer
 ]
 
 { #category : 'accessing' }
@@ -182,12 +245,12 @@ TestSuite >> tests [
 	^ tests ifNil: [ tests := OrderedCollection new ]
 ]
 
-{ #category : 'announcements' }
+{ #category : 'announcing' }
 TestSuite >> unsubscribe: anAnnouncementClass [
 	self testSuiteAnnouncer unsubscribe: anAnnouncementClass
 ]
 
-{ #category : 'announcements' }
+{ #category : 'announcing' }
 TestSuite >> when: aAnnouncement do: aBlock for: aSubscriber [
 
 	self testSuiteAnnouncer when: aAnnouncement do: aBlock for: aSubscriber

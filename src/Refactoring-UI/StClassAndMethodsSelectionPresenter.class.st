@@ -7,7 +7,8 @@ Class {
 		'instanceMethods',
 		'classMethods',
 		'methodsNotebookPresenter',
-		'codePresenter'
+		'codePresenter',
+		'selectedSuperclassPresenter'
 	],
 	#category : 'Refactoring-UI-UI',
 	#package : 'Refactoring-UI',
@@ -28,11 +29,11 @@ StClassAndMethodsSelectionPresenter class >> buildStMethodsSelectionContextualGr
 		register: ((CmCommandGroup named: 'StClassAndMethodsSelectionOperationsMenu') asSpecGroup
 			register: ((StClassAndMethodsSelectAllCommand
 				forSpecWithIconNamed: #checkedBox
-				shortcutKey: 'A' asShortcut) 
+				shortcutKey: $a actionModifier) 
 					context: presenterInstance);			
 			register: ((StClassAndMethodsSelectNoneCommand 
 				forSpecWithIconNamed: #checkboxUnselected
-				shortcutKey: 'N' asShortcut)
+				shortcutKey: $n actionModifier)
 					context: presenterInstance);
 			beDisplayedAsGroup;
 			yourself);
@@ -40,7 +41,7 @@ StClassAndMethodsSelectionPresenter class >> buildStMethodsSelectionContextualGr
 ]
 
 { #category : 'accessing' }
-StClassAndMethodsSelectionPresenter class >> defaultExtent [
+StClassAndMethodsSelectionPresenter class >> defaultPreferredExtent [
 
 	^ 500 @ 700
 ]
@@ -56,6 +57,12 @@ StClassAndMethodsSelectionPresenter >> baseClassName: aString [
 StClassAndMethodsSelectionPresenter >> basePackageName: aString [
 
  	packagePresenter selectItem: aString.
+]
+
+{ #category : 'accessing' }
+StClassAndMethodsSelectionPresenter >> basePackageTagName: aString [
+
+	tagPresenter selectItem: aString
 ]
 
 { #category : 'accessing' }
@@ -86,9 +93,10 @@ StClassAndMethodsSelectionPresenter >> defaultLayout [
 			beColumnNotHomogeneous;
 			column: 2 expand: true;
 			build: [ :builder | builder
-				add: 'New class name: '; add: textInput; nextRow;
+				add: 'Superclass '; add: selectedSuperclassPresenter; nextRow; 
+				add: 'New class name '; add: textInput; nextRow;
 				add: 'Package'; add: packagePresenter; nextRow;
-				add: 'Tag'; add: tagPresenter; nextRow ]) height: 100;
+				add: 'Tag'; add: tagPresenter; nextRow ]) height: 130;
 		add: (SpPanedLayout newLeftToRight 
 			add: methodsNotebookPresenter;
 			add: codePresenter;
@@ -130,17 +138,12 @@ StClassAndMethodsSelectionPresenter >> initializeClassTablePresenter [
 	^ self newTable
 		beMultipleSelection;
 		addColumn: ((SpCheckBoxTableColumn title: '' evaluated: [ : im | self selectedClassMethods includes: im ])
-			onActivation: [ : cv | ];
-			onDeactivation: [ : cv |  ];
 			beNotExpandable;
-			width: 20;
 			yourself);
-		addColumn: ((SpStringTableColumn title: 'Name' evaluated: [ : im | im selector asString ])
-			width: 180;
-			yourself);
+		addColumn: (SpStringTableColumn title: 'Name' evaluated: [ : im | im selector asString ]);
 		sortingBlock: [ :a :b | a selector < b selector ];
 		whenSelectionChangedDo: [ : selection | self handleMethodChange: selection selectedItem compiledMethod ];
-		contextMenu: [ (self rootCommandsGroup / 'StClassAndMethodsSelectionMenu') beRoot asMenuPresenter ];
+		actions: (self rootCommandsGroup / 'StClassAndMethodsSelectionMenu');
 		yourself
 ]
 
@@ -168,17 +171,12 @@ StClassAndMethodsSelectionPresenter >> initializeInstanceTablePresenter [
 	^ self newTable	
 		beMultipleSelection;
 		addColumn: ((SpCheckBoxTableColumn title: '' evaluated: [ : im | self selectedInstanceMethods includes: im ])
-			onActivation: [ : cv | ];
-			onDeactivation: [ : cv |  ];
 			beNotExpandable;
-			width: 20;
 			yourself);
-		addColumn: ((SpStringTableColumn title: 'Name' evaluated: [ : im | im selector asString ])
-			width: 180;
-			yourself);
+		addColumn: (SpStringTableColumn title: 'Name' evaluated: [ : im | im selector asString ]);
 		sortingBlock: [ :a :b | a selector < b selector ];
 		whenSelectionChangedDo: [ : selection | self handleMethodChange: selection selectedItem compiledMethod ];
-		contextMenu: [ (self rootCommandsGroup / 'StClassAndMethodsSelectionMenu') beRoot asMenuPresenter ];			
+		actions: (self rootCommandsGroup / 'StClassAndMethodsSelectionMenu');			
 		"searchMatching: [ :selFormula :textToSearch | selFormula selector beginsWith: textToSearch ];"
 		yourself.
 ]
@@ -187,16 +185,18 @@ StClassAndMethodsSelectionPresenter >> initializeInstanceTablePresenter [
 StClassAndMethodsSelectionPresenter >> initializeNotebookPresenter [
 
 	methodsNotebookPresenter := self newNotebook
-		addPage: ((SpNotebookPage 
-			title: 'Instance' 
-			icon: (self iconNamed: #smallObjects) 
-			provider: [ self initializeInstanceTablePresenter ])
-				whenRetrievedDo: [ :presenter | self instanceMethods ifNotNil: [ : iMthds | presenter items: iMthds ] ]);
-		addPage: ((SpNotebookPage 
-			title: 'Class' 
-			icon: (self iconNamed: #class) 
-			provider: [ self initializeClassTablePresenter ])
-				whenRetrievedDo: [ :presenter | self classMethods ifNotNil: [ : iMthds | presenter items: iMthds ] ]);
+		addPage: (SpNotebookPage new 
+			title: 'Instance';
+			icon: (self iconNamed: #smallObjects); 
+			presenterProvider: [ self initializeInstanceTablePresenter ];
+			whenRetrievedDo: [ :presenter | self instanceMethods ifNotNil: [ : iMthds | presenter items: iMthds ] ];
+			yourself);
+		addPage: (SpNotebookPage new
+			title: 'Class';
+			icon: (self iconNamed: #class); 
+			presenterProvider: [ self initializeClassTablePresenter ];
+			whenRetrievedDo: [ :presenter | self classMethods ifNotNil: [ : iMthds | presenter items: iMthds ] ];
+			yourself);
 		yourself
 ]
 
@@ -205,6 +205,7 @@ StClassAndMethodsSelectionPresenter >> initializePresenters [
 
 	super initializePresenters.
 	self
+		initializeSuperclassPresenter;
 		initializeNotebookPresenter;
 		initializeCodePresenter.
 	methodsNotebookPresenter update.
@@ -212,6 +213,24 @@ StClassAndMethodsSelectionPresenter >> initializePresenters [
 		acceptLabel: 'Create';
 		validateAnswer: self validateAnswerBlock;
 		initializeFocus
+]
+
+{ #category : 'initialization' }
+StClassAndMethodsSelectionPresenter >> initializeSuperclassPresenter [
+	"Private - We could get all classes for the superclasses list, but it takes longer to get them so it affects DX 
+	allClasses := modelEnvironment rootEnvironment allClasses
+	"
+	| modelEnvironment modelEnvironmentClasses |
+	
+	modelEnvironment := driver model environment.
+	modelEnvironmentClasses := (modelEnvironment allClasses 
+		collect: [ : each | each superclass ])
+		reject: [ :each | each isNil ].
+	selectedSuperclassPresenter := self newDropList
+		startWithSelection;
+		items: (modelEnvironmentClasses sorted: #name ascending);
+		displayIcon: [ : className | self iconNamed: #class ];
+		yourself.
 ]
 
 { #category : 'accessing' }
@@ -287,16 +306,30 @@ StClassAndMethodsSelectionPresenter >> selectedInstanceMethods: anObject [
 	selectedInstanceMethods := anObject
 ]
 
-{ #category : 'initialization' }
-StClassAndMethodsSelectionPresenter >> setTitleTo: aSpWindowPresenter [
+{ #category : 'accessing' }
+StClassAndMethodsSelectionPresenter >> selectedSuperclass [
+	"Answer the receiver's selected super<Class>"
 
-	aSpWindowPresenter title: 'Copy class ' , driver className
+	^ selectedSuperclassPresenter selectedItem
+]
+
+{ #category : 'accessing' }
+StClassAndMethodsSelectionPresenter >> selectedSuperclassName [
+	"Answer a <Symbol> representing the receiver's selected superclass name"
+
+	^ self selectedSuperclass name
 ]
 
 { #category : 'initialization' }
-StClassAndMethodsSelectionPresenter >> setWindowIconTo: aSpWindowPresenter [
+StClassAndMethodsSelectionPresenter >> updatePresenter [
 
-	aSpWindowPresenter windowIcon: (self iconNamed: #smallCopy)
+	selectedSuperclassPresenter selectFirst
+]
+
+{ #category : 'accessing' }
+StClassAndMethodsSelectionPresenter >> windowIcon [
+
+	^ self iconNamed: #smallCopy
 ]
 
 { #category : 'initialization' }

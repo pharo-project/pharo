@@ -38,7 +38,7 @@ ClyBrowseIcebergPackageCommand >> execute [
 { #category : 'accessing' }
 ClyBrowseIcebergPackageCommand >> iconName [
 
-	^ #glamorousBrowse
+	^ #browse
 ]
 
 { #category : 'accessing' }

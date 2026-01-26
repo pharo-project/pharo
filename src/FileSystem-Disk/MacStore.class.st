@@ -13,9 +13,3 @@ Class {
 MacStore class >> isActiveClass [
 	^ Smalltalk os isMacOS
 ]
-
-{ #category : 'current' }
-MacStore class >> readOnlyVariant [
-
-	^ ReadOnlyMacStore
-]
