@@ -227,7 +227,7 @@ String class >> indexOfAscii: anInteger inString: aString startingAt: start [
 { #category : 'accessing' }
 String class >> initialHash [
 
-	^ InitialHash
+	^ InitialHash ifNil: [ InitialHash := ByteString hash ]
 ]
 
 { #category : 'class initialization' }
@@ -242,7 +242,6 @@ String class >> initialize [
 	UppercasingTable := self newUppercasingTable.
 	Tokenish := self newTokenish.
 	CSLineEnders := self newCSLineEnders.
-	InitialHash := ByteString hash.
 
  	"separators and non-separators"
 	CSSeparators := CharacterSet separators.
