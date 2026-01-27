@@ -62,6 +62,28 @@ OSWorldRenderer class >> priority [
 	^ 2
 ]
 
+{ #category : 'start' }
+OSWorldRenderer class >> restart [
+
+	| oldWindows |
+	UIManager default deactivate.
+
+	"We need to keep all open windows, after the restart if they are still valid we register them back. If we don't do this the events for these windows are never delivered."
+	oldWindows := OSSDL2Driver allWindows.
+
+	self shutDown: true.
+	OSSDL2Driver shutDown: true.
+
+	self startUp: true.
+	UIManager default activate.
+
+	oldWindows 
+	 select: [ :e | e sdl2Window isNotNil ]
+	 thenDo: [ :e | OSSDL2Driver current registerWindow: e ].
+	 
+	self inform: self class name , ' restarted'
+]
+
 { #category : 'settings' }
 OSWorldRenderer class >> settingsOn: aBuilder [
 
@@ -171,10 +193,12 @@ OSWorldRenderer >> copyRectangle: aRectangle into: aForm [
 	^ aForm
 ]
 
-{ #category : 'private' }
+{ #category : 'activation' }
 OSWorldRenderer >> deactivate [
 
-	osWindow ifNotNil: [ osWindow destroy. osWindow := nil ].
+	osWindow ifNotNil: [ 
+		driver beforeMainPharoWindowClosed: osWindow.
+		osWindow destroy. osWindow := nil ].
 	display := nil
 ]
 

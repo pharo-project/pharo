@@ -55,10 +55,17 @@ function set_version_common() {
     PHARO_MINOR="$(git describe --tags --first-parent | cut -d'-' -f 1 | cut -c 2- | cut -d'.' -f 2-2)"
     PHARO_PATCH="$(git describe --tags --first-parent | cut -d'-' -f 1 | cut -c 2- | cut -d'.' -f 3-3)"
 
+	# I am hardcoding here so we have Pharo13.0-PR and 130 as short version
+	# We want to make it transparent for the user so the file name and the zeroconf works with 130
+	# This is a hack and we should not push it to newer versions of the repository (it is for P13, and not for P14)
+
 	# This will answer "Pharo7.0-PR"
-	PHARO_NAME_PREFIX="Pharo${PHARO_MAJOR}.${PHARO_MINOR}-${PHARO_SUFFIX}"
+	# PHARO_NAME_PREFIX="Pharo${PHARO_MAJOR}.${PHARO_MINOR}-${PHARO_SUFFIX}"
+	PHARO_NAME_PREFIX="Pharo${PHARO_MAJOR}.0-${PHARO_SUFFIX}"
+
     # This will answer "70"
-	PHARO_SHORT_VERSION="${PHARO_MAJOR}${PHARO_MINOR}"
+	# PHARO_SHORT_VERSION="${PHARO_MAJOR}${PHARO_MINOR}"
+	PHARO_SHORT_VERSION="${PHARO_MAJOR}0"
 }
 
 # sets variables when we are in a release build

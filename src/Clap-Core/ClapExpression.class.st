@@ -60,6 +60,12 @@ ClapExpression >> ifMismatch: aBlock [
 ]
 
 { #category : 'testing' }
+ClapExpression >> isClapContext [
+	
+	^ false
+]
+
+{ #category : 'testing' }
 ClapExpression >> isFullMatch [
 
 	"This method is used to test if flags with positionals are a full match,

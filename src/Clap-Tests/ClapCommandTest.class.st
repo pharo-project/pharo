@@ -99,6 +99,30 @@ ClapCommandTest >> testShouldGetFlagPositionalValueWhenAskingForAFlagHavingPosit
 ]
 
 { #category : 'tests' }
+ClapCommandTest >> testShouldGetFlagWhenFlagNotDeclaredInLastSubcommand [
+	| command |
+	context := ClapContext specification: ClapGitCommandExample git.
+	command := context
+		arguments: #('git' '--paginate' 'status');
+		command.
+	
+	self assert: (command hasFlag: #paginate)
+]
+
+{ #category : 'tests' }
+ClapCommandTest >> testShouldGetPositionalWhenPositionalNotDeclaredInLastSubcommand [
+	| command |
+	context := ClapContext specification: ClapGitCommandExample git.
+	command := context
+		arguments: #('git' '-C' 'someDir' 'status');
+		command.
+	
+	self 
+		assert: (command positional: #C)
+		equals: 'someDir'
+]
+
+{ #category : 'tests' }
 ClapCommandTest >> testShouldReturnFalseWhenAskingForAMissingFlag [
 	| command |
 	context := ClapContext specification: ClapHelloCommandLineExample hello.

@@ -296,6 +296,7 @@ OCIRPushRemoteTemp deprecatedAliases: { #IRPushRemoteTemp }.
 OCIRPopIntoRemoteTemp deprecatedAliases: { #IRPopIntoRemoteTemp }.
 OCIRStoreRemoteTemp deprecatedAliases: { #IRStoreRemoteTemp }.
 OCIRInstruction deprecatedAliases: { #IRInstruction }.
+	OCASTCache deprecatedAliases: { #ASTCache }.
 
 
 

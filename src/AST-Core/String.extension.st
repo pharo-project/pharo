@@ -8,6 +8,6 @@ String >> isValidSelector [
 	self deprecated: 'Use OCScanner isSelector: ' 
 		on: '02/02/2025'  
 		in: 'pharo13' 
-		transformWith: '`@rec isValidSelector' -> 'OCScanner isSelector: `@arg'.
+		transformWith: '`@receiver isValidSelector' -> 'OCScanner isSelector: `@receiver'.
 	^ OCScanner isSelector: self
 ]
