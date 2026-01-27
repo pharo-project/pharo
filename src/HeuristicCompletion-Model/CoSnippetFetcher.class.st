@@ -38,7 +38,7 @@ CoSnippetFetcher class >> replace: aShortString bySnippet: aSnippet [
 { #category : 'enumerating' }
 CoSnippetFetcher >> acceptsEntry: anEntry [
 	"Here we do not know to filter the entry because the entry will not correspond to the token filter because it is about the corresponding snippet."
-	anEntry traceCr.
+
 	^ true
 ]
 

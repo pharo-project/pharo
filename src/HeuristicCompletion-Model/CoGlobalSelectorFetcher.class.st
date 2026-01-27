@@ -35,7 +35,7 @@ CoGlobalSelectorFetcher >> entriesDo: aBlock [
 			
 	- the last one is to look globally in the method implementors and try to match. 		
 	"
-	' #' traceCr.
+	
 	astNode ifNotNil: [ :node |
 			node parent ifNotNil: [ :parent | "Try first to continue the parent keyword message"
 					(parent isMessage and: [ parent isKeyword ]) ifTrue: [
