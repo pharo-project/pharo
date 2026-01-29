@@ -132,9 +132,7 @@ StRequestClassPresenter >> validateAnswerBlock [
 	^ [ :newClassName :packageName :tagName |
 		  | isValid |
 		  isValid := (self validateClassNameBlock value: newClassName) and: [
-			             (self validatePackageNameBlock value: packageName) and: [ self validatePackageNameBlock value: tagName ] ].
-		  isValid ifFalse: [ self inform: 'Name can''t be empty or contain spaces' ].
-		  isValid ]
+			             (self validatePackageNameBlock value: packageName) and: [ self validatePackageNameBlock value: tagName ] ] ]
 ]
 
 { #category : 'private' }
