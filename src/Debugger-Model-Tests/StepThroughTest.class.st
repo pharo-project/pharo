@@ -174,15 +174,15 @@ StepThroughTest >> testStepIntoBlockArgumentInMessageSend [
 	
 	"Reached message node in the blocks body '+ 1'"
 	expectedMethod := (self class lookupSelector: #stepI1) literalAt: 1.
-	node := expectedMethod compiledBlock sourceNodeForPC: session interruptedContext pc.
+	node := expectedMethod sourceNodeForPC: session interruptedContext pc.
 	self assert: node isMessage.
 	self assert: node selector equals: #+.
 	session stepThrough. 
 	
 	"Reached sequence node in the blocks body 'i + 1'"
 	expectedMethod := (self class lookupSelector: #stepI1) literalAt: 1.
-	self assert: session interruptedContext method equals: expectedMethod compiledBlock.
-	node := expectedMethod compiledBlock sourceNodeForPC: session interruptedContext pc.
+	self assert: session interruptedContext method equals: expectedMethod.
+	node := expectedMethod sourceNodeForPC: session interruptedContext pc.
 	self assert: node isSequence.
 	session stepThrough. 
 	
@@ -281,8 +281,8 @@ StepThroughTest >> testStepThroughInABlockInAInstanceVariable [
 	expectedMethod := (self class lookupSelector: #stepD1) literalAt: 1 .
 
 	"Checking that after the step through, the execution is at the 'self stepA2' node of the stepA1 method"
-	self assert: (session interruptedContext method) equals: expectedMethod compiledBlock.
-	node := expectedMethod compiledBlock sourceNodeForPC: session interruptedContext pc.
+	self assert: (session interruptedContext method) equals: expectedMethod.
+	node := expectedMethod sourceNodeForPC: session interruptedContext pc.
 	self assert: node isMessage.
 	self assert: node receiver value equals: 2.
 	self assert: node selector equals: #+.
@@ -308,8 +308,8 @@ StepThroughTest >> testStepThroughInABlockInATemporary [
 	expectedMethod := (self class lookupSelector: #stepE1) literalAt: 1 .
 
 	"Checking that after the step through, the execution is at the 'self stepA2' node of the stepA1 method"
-	self assert: (session interruptedContext method) equals: expectedMethod compiledBlock.
-	node := expectedMethod compiledBlock sourceNodeForPC: session interruptedContext pc.
+	self assert: (session interruptedContext method) equals: expectedMethod.
+	node := expectedMethod sourceNodeForPC: session interruptedContext pc.
 	self assert: node isMessage.
 	self assert: node receiver value equals: 2.
 	self assert: node selector equals: #-.
@@ -335,8 +335,8 @@ StepThroughTest >> testStepThroughInABlockInATemporaryDirectly [
 	expectedMethod := (self class lookupSelector: #stepF1) literalAt: 1 .
 
 	"Checking that after the step through, the execution is at the 'self stepA2' node of the stepA1 method"
-	self assert: (session interruptedContext method) equals: expectedMethod compiledBlock.
-	node := expectedMethod compiledBlock sourceNodeForPC: session interruptedContext pc.
+	self assert: (session interruptedContext method) equals: expectedMethod.
+	node := expectedMethod sourceNodeForPC: session interruptedContext pc.
 	self assert: node isMessage.
 	self assert: node receiver value equals: 2.
 	self assert: node selector equals: #-.
