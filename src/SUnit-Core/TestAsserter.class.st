@@ -90,7 +90,7 @@ TestAsserter >> assert: actualNumber closeTo: expectedNumber [
 	self
 		assert: actualNumber
 		closeTo: expectedNumber
-		precision: Float defaultComparisonPrecision
+		precision: self defaultComparisonPrecision
 ]
 
 { #category : 'asserting' }
@@ -312,6 +312,12 @@ TestAsserter >> comparingStringBetween: actual and: expected [
 			  nextPutAll: ' instead of ';
 			  print: expected;
 			  nextPut: $. ]
+]
+
+{ #category : 'as yet unclassified' }
+TestAsserter >> defaultComparisonPrecision [
+
+	^ Float defaultComparisonPrecision
 ]
 
 { #category : 'factory' }
