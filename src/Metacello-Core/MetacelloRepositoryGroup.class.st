@@ -56,7 +56,7 @@ MetacelloRepositoryGroup >> uniqueRepository [
 
 	repositories asSet isEmpty ifTrue: [
 		self error: 'No repositories found!' ].
-	repositories asSet size = 1 ifTrue: [
+	repositories asSet size > 1 ifTrue: [
 		self error: 'Conflicting repositories!' ].
 	^ repositories anyOne
 ]
