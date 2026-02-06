@@ -314,7 +314,7 @@ TestAsserter >> comparingStringBetween: actual and: expected [
 			  nextPut: $. ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 TestAsserter >> defaultComparisonPrecision [
 
 	^ Float defaultComparisonPrecision
