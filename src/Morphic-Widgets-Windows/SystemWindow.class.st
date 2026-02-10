@@ -509,9 +509,6 @@ SystemWindow class >> windowMenuOn: aBuilder [
 		iconName: #smallHelp;
 		withSeparatorAfter.
 	(aBuilder item: #'Change title') action: [ aBuilder model relabel ].
-	(aBuilder item: #'Copy title')
-		action: [ aBuilder model copyTitle ];
-		withSeparatorAfter.
 	(aBuilder item: #'Send to back') action: [ aBuilder model sendToBack ].
 	(aBuilder item: #'Make next-to-topmost')
 		action: [ aBuilder model makeSecondTopmost ];
@@ -1279,13 +1276,6 @@ SystemWindow >> configureForUnembedding [
 				themeChanged;
 				addGrips ].
 	self attachKeymapCategory: #WindowShortcuts.
-]
-
-{ #category : 'accessing' }
-SystemWindow >> copyTitle [
-
-	Clipboard clipboardText: self label.
-	InformativeNotification signal: 'Window title copied.'
 ]
 
 { #category : 'initialization' }

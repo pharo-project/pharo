@@ -14,26 +14,6 @@ Class {
 }
 
 { #category : 'examples' }
-SDL2Example >> osWindow [
-	"
-	self new osWindow
-	"
-
-	| attrs window extent form |
-	extent := 800 @ 600.
-	form := Form extent: extent depth: 32.
-	attrs := OSWindowAttributes new.
-	attrs
-		preferableDriver: OSSDL2Driver new;
-		extent: extent.
-	window := OSWindow createWithAttributes: attrs.
-	window eventHandler:
-		(OSWindowMorphicEventHandler for: self currentWorld).
-	window newFormRenderer: form.
-	^ window
-]
-
-{ #category : 'examples' }
 SDL2Example >> simpleBlackWindow [
 	"
 	self new simpleBlackWindow

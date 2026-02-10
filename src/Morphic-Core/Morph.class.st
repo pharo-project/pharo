@@ -856,7 +856,6 @@ Morph >> addYellowButtonMenuItemsTo: aMenu event: evt [
 	aMenu addLine.
 	self isWorldMorph
 		ifFalse: [aMenu add: 'copy to paste buffer' selector: #copyToPasteBuffer:].
-	(self allStringsAfter: nil) isEmpty ifFalse: [aMenu add: 'copy text' selector: #clipText].
 	self addExportMenuItems: aMenu hand: evt hand.
 	aMenu addLine.
 	aMenu add: 'adhere to edge...' selector: #adhereToEdge.
@@ -1481,8 +1480,6 @@ Morph >> buildMetaMenu: evt [
 	self maybeAddCollapseItemTo: menu.
 	menu add: 'delete' selector: #dismissMorph:.
 	menu addLine.
-	menu add: 'copy text' selector: #clipText.
-	menu addLine.
 	menu add: 'go behind' selector: #goBehind.
 	menu add: 'add halo' selector: #addHalo:.
 	menu add: 'duplicate' selector: #maybeDuplicateMorph:.
@@ -1859,25 +1856,6 @@ Morph >> clipSubmorphs: aBool [
 		self assureExtension.
 		extension clipSubmorphs: aBool.
 		self invalidRect: self fullBounds]
-]
-
-{ #category : 'printing' }
-Morph >> clipText [
-	"Copy the text in the receiver or in its submorphs to the clipboard"
-	| content |
-	"My own text"
-	content := self userString.
-	"Or in my submorphs"
-	content ifNil: [
-		| list |
-		list := self allStringsAfter: nil.
-		list notEmpty ifTrue: [
-			content := String streamContents: [:stream |
-				list do: [:each | stream nextPutAll: each; cr]]]].
-	"Did we find something?"
-	content
-		ifNil: [self flash "provide feedback"]
-		ifNotNil: [Clipboard clipboardText: content]
 ]
 
 { #category : 'drawing' }

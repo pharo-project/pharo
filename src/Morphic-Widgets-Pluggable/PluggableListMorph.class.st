@@ -288,23 +288,6 @@ PluggableListMorph >> commandKeyTypedIntoMenu: evt [
 	^ self modifierKeyPressed: evt
 ]
 
-{ #category : 'menus' }
-PluggableListMorph >> copyListToClipboard [
-	"Copy my items to the clipboard as a multi-line string"
-
-	| stream |
-	stream := (String new: self getList size * 40) writeStream.
-	list do: [:ea | stream nextPutAll: ea asString] separatedBy: [stream nextPut: Character cr].
-	Clipboard clipboardText: stream contents
-]
-
-{ #category : 'menus' }
-PluggableListMorph >> copySelectionToClipboard [
-	"Copy my selected item to the clipboard as a string"
-
-	self selection ifNotNil: [ Clipboard clipboardText: self selection asString ] ifNil: [ self flash ]
-]
-
 { #category : 'multi-selection' }
 PluggableListMorph >> defaultMultipleSelectionValue [
 
