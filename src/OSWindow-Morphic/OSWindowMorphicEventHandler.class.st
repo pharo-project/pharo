@@ -18,9 +18,8 @@ Class {
 	#pools : [
 		'OSKeySymbols'
 	],
-	#category : 'OSWindow-Core-Morphic',
-	#package : 'OSWindow-Core',
-	#tag : 'Morphic'
+	#category : 'OSWindow-Morphic',
+	#package : 'OSWindow-Morphic'
 }
 
 { #category : 'instance creation' }

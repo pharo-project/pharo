@@ -118,26 +118,6 @@ You will need to restart the image to make this changes take effect.';
 				domainValues: (self allSubclasses select: [ :each | each isSuitable ]) ]
 ]
 
-{ #category : 'system startup' }
-OSWindowDriver class >> shutDown: quitting [
-
-	quitting ifFalse: [ ^ self ].
-
-	Current ifNil: [ ^ self ].
-
-	"Clean driver"
-	Current shutDown: quitting.
-	Current := nil.
-
-	"clean OSWindow worlds"
-	WorldMorph extraWorldList copy
-		select: [ :each | each isKindOf: OSWindowWorldMorph ]
-		thenDo: [ :each | WorldMorph removeExtraWorld: each ].
-	"Clean also active world"
-	(ActiveWorld isKindOf: OSWindowWorldMorph)
-		ifTrue: [ ActiveWorld := nil ]
-]
-
 { #category : 'events' }
 OSWindowDriver >> afterMainPharoWindowCreated: aWindow [
 ]

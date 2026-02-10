@@ -13,26 +13,9 @@ Class {
 	#classVars : [
 		'FormMapping'
 	],
-	#category : 'OSWindow-Core-Utilities',
-	#package : 'OSWindow-Core',
-	#tag : 'Utilities'
+	#category : 'Graphics-Canvas',
+	#package : 'Graphics-Canvas'
 }
-
-{ #category : 'examples' }
-ScalingCanvas class >> example [
-
-	| morph |
-
-	(morph := MenuMorph new)
-		addTitle: 'Lorem ipsum'.
-	(morph add: 'Dolor sit amet' target: nil selector: #yourself) keyText: 'x';
-		icon: (self iconNamed: #smallConfiguration).
-	(morph add: 'Consectetur adipiscing elit' target: nil selector: #yourself) keyText: 'y'.
-	morph addLine.
-	(morph add: 'Sed do eiusmod' target: nil selector: #yourself) keyText: 'z'.
-	
-	^ self privateExampleWithMorph: morph
-]
 
 { #category : 'examples' }
 ScalingCanvas class >> exampleDrawPolygon [
@@ -155,49 +138,6 @@ ScalingCanvas class >> exampleFrameAndFillRectangle2 [
 					borderWidth: 1.1 borderColor: Color green translucent;
 				frameAndFillRectangle: (rectangle translateBy: 20@4) fillColor: Color blue translucent
 					borderWidth: 1.9 borderColor: Color green translucent ] ]
-]
-
-{ #category : 'examples' }
-ScalingCanvas class >> exampleImageMorph1 [
-
-	^ self privateExampleWithMorph: (Morph new
-		color: Color veryVeryLightGray;
-		addMorph: ((ImageMorph withForm: (self iconNamed: #search))
-			position: 4@4;
-			yourself);
-		addMorph: ((ImageMorph withForm: (self iconNamed: #search) copy)
-			position: 24@4;
-			yourself);
-		extent: 44@24;
-		yourself)
-]
-
-{ #category : 'examples' }
-ScalingCanvas class >> exampleImageMorph2 [
-
-	| forms imageMorph |
-	
-	forms := (1 to: 2) collect: [ :scale |
-		(FormCanvas extent: 100 asPoint * scale depth: 1)
-			fillOval: ((0 asPoint extent: 100 asPoint * scale) insetBy: 5 * scale) fillStyle: Color green;
-			form ].
-	(imageMorph := ImageMorph withFormSet: (FormSet forms: forms))
-		color: Color blue.
-	^ self privateExampleWithMorph: imageMorph
-]
-
-{ #category : 'examples' }
-ScalingCanvas class >> exampleImageMorph3 [
-
-	| forms imageMorph |
-	
-	forms := (1 to: 2) collect: [ :scale |
-		(FormCanvas extent: 10 asPoint * scale)
-			fillOval: ((0 asPoint extent: 10 asPoint * scale) insetBy: 1 * scale) fillStyle: Color black;
-			form ].
-	(imageMorph := ImageMorph withFormSet: (FormSet forms: forms))
-		resize: 200@100.
-	^ self privateExampleWithMorph: imageMorph
 ]
 
 { #category : 'examples' }

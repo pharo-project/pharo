@@ -10,15 +10,63 @@ Class {
 	#instVars : [
 		'form'
 	],
+	#classInstVars : [
+		'canvasScaleFactor',
+		'autoSetCanvasScaleFactor'
+	],
 	#category : 'OSWindow-Core-Renderer',
 	#package : 'OSWindow-Core',
 	#tag : 'Renderer'
 }
 
+{ #category : 'accessing' }
+OSWindowFormRenderer class >> autoSetCanvasScaleFactor [
+
+	^ autoSetCanvasScaleFactor ifNil: [ autoSetCanvasScaleFactor := true ]
+]
+
+{ #category : 'accessing' }
+OSWindowFormRenderer class >> autoSetCanvasScaleFactor: boolean [
+
+	autoSetCanvasScaleFactor := boolean
+]
+
+{ #category : 'accessing' }
+OSWindowFormRenderer class >> canvasScaleFactor [
+
+	^ canvasScaleFactor ifNil: [ canvasScaleFactor := 1 ]
+]
+
+{ #category : 'accessing' }
+OSWindowFormRenderer class >> canvasScaleFactor: newScale [
+
+	canvasScaleFactor := 1 max: newScale asInteger
+]
+
+{ #category : 'accessing' }
+OSWindowFormRenderer class >> settingsOn: aBuilder [
+
+	<systemsettings>
+
+	(aBuilder group: #canvasScaleFactorGroup)
+		parent: #appearance;
+		label: 'World renderer canvas scaling';
+		with: [
+			(aBuilder pickOne: #canvasScaleFactor)
+				label: 'Canvas scale factor';
+				target: self;
+				domainValues: (1 to: 5);
+				default: 1.
+			(aBuilder setting: #autoSetCanvasScaleFactor)
+				label: 'Set canvas scale factor automatically';
+				target: self;
+				default: true ]
+]
+
 { #category : 'private' }
 OSWindowFormRenderer >> canvasScaleFactor [
 
-	^ OSWorldRenderer canvasScaleFactor
+	^ self class canvasScaleFactor
 ]
 
 { #category : 'morphic integration' }

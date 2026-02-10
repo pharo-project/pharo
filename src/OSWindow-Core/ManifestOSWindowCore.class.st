@@ -8,10 +8,3 @@ Class {
 	#package : 'OSWindow-Core',
 	#tag : 'Manifest'
 }
-
-{ #category : 'meta-data - dependency analyser' }
-ManifestOSWindowCore class >> manuallyResolvedDependencies [
-
-	<ignoreForCoverage>
-	^ #(#'Tool-Profilers')
-]

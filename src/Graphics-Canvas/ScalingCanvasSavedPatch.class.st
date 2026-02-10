@@ -8,9 +8,8 @@ Class {
 		'form',
 		'scale'
 	],
-	#category : 'Morphic-Core-Kernel',
-	#package : 'Morphic-Core',
-	#tag : 'Kernel'
+	#category : 'Graphics-Canvas',
+	#package : 'Graphics-Canvas'
 }
 
 { #category : 'instance creation' }

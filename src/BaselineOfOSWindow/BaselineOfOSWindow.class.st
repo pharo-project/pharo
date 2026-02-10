@@ -11,11 +11,12 @@ BaselineOfOSWindow >> baseline: spec [
 	spec for: #'common' do: [
 		spec 
 			package: 'OSWindow-Core';
+			package: 'OSWindow-Morphic' with: [ spec requires: #( 'OSWindow-Core' ) ];
 			package: 'OSWindow-SDL2' with: [ spec requires: #( 'OSWindow-Core' ) ];
 			package: 'OSWindow-SDL2-Examples' with: [ spec requires:  #( 'OSWindow-Core' 'OSWindow-SDL2' ) ];
 			package: 'OSWindow-Tests' with: [ spec requires:  #( 'OSWindow-Core' 'OSWindow-SDL2' ) ].
 		spec 
 			group: 'Core' with: #('OSWindow-Core' 'OSWindow-SDL2' 'OSWindow-SDL2-Examples');
 			group: 'Tests' with: #('OSWindow-Tests');
-			group: 'default' with: #('Core' 'Tests') ]
+			group: 'default' with: #('Core' 'OSWindow-Morphic' 'Tests') ]
 ]

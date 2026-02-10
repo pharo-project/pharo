@@ -11,38 +11,9 @@ Class {
 		'windowCloseAction',
 		'previousFrameRenderingTime'
 	],
-	#classInstVars : [
-		'canvasScaleFactor',
-		'autoSetCanvasScaleFactor'
-	],
-	#category : 'OSWindow-Core-Morphic',
-	#package : 'OSWindow-Core',
-	#tag : 'Morphic'
+	#category : 'OSWindow-Morphic',
+	#package : 'OSWindow-Morphic'
 }
-
-{ #category : 'accessing' }
-OSWorldRenderer class >> autoSetCanvasScaleFactor [
-
-	^ autoSetCanvasScaleFactor ifNil: [ autoSetCanvasScaleFactor := true ]
-]
-
-{ #category : 'accessing' }
-OSWorldRenderer class >> autoSetCanvasScaleFactor: boolean [
-
-	autoSetCanvasScaleFactor := boolean
-]
-
-{ #category : 'accessing' }
-OSWorldRenderer class >> canvasScaleFactor [
-
-	^ canvasScaleFactor ifNil: [ canvasScaleFactor := 1 ]
-]
-
-{ #category : 'accessing' }
-OSWorldRenderer class >> canvasScaleFactor: newScale [
-
-	canvasScaleFactor := 1 max: newScale asInteger
-]
 
 { #category : 'accessing' }
 OSWorldRenderer class >> defaultExtent [
@@ -60,26 +31,6 @@ OSWorldRenderer class >> isApplicableFor: aWorld [
 OSWorldRenderer class >> priority [
 
 	^ 2
-]
-
-{ #category : 'settings' }
-OSWorldRenderer class >> settingsOn: aBuilder [
-
-	<systemsettings>
-
-	(aBuilder group: #canvasScaleFactorGroup)
-		parent: #appearance;
-		label: 'World renderer canvas scaling';
-		with: [
-			(aBuilder pickOne: #canvasScaleFactor)
-				label: 'Canvas scale factor';
-				target: self;
-				domainValues: (1 to: 5);
-				default: 1.
-			(aBuilder setting: #autoSetCanvasScaleFactor)
-				label: 'Set canvas scale factor automatically';
-				target: self;
-				default: true ]
 ]
 
 { #category : 'accessing' }
@@ -104,9 +55,21 @@ OSWorldRenderer >> actualScreenSize [
 ]
 
 { #category : 'private' }
+OSWorldRenderer >> autoSetCanvasScaleFactor [
+
+	^ self osWindowRenderer class autoSetCanvasScaleFactor
+]
+
+{ #category : 'private' }
 OSWorldRenderer >> canvasScaleFactor [
 
-	^ self class canvasScaleFactor
+	^ self osWindowRenderer class canvasScaleFactor
+]
+
+{ #category : 'private' }
+OSWorldRenderer >> canvasScaleFactor: scaleFactor [
+
+	^ self osWindowRenderer class canvasScaleFactor: scaleFactor
 ]
 
 { #category : 'events' }
@@ -119,8 +82,8 @@ OSWorldRenderer >> checkForNewScreenSize [
 	windowRenderer := self osWindowRenderer.
 	windowRenderer ifNil: [ ^ self ].
 
-	(world == World and: [ self class autoSetCanvasScaleFactor ]) ifTrue: [
-		self class canvasScaleFactor: (windowRenderer outputExtent / self windowExtent) min * self screenScaleFactor ].
+	(world == World and: [ self autoSetCanvasScaleFactor ]) ifTrue: [
+		self canvasScaleFactor: (windowRenderer outputExtent / self windowExtent) min * self screenScaleFactor ].
 
 	(display isNil or: [ display extent = self actualDisplaySize and: [ world worldState realWindowExtent = self actualScreenSize ] ])
 		ifTrue: [ ^ self ].
