@@ -208,11 +208,12 @@ OSWorldRenderer >> doActivate [
 		windowCentered: true;
 		icon: self defaultWindowIcon.
 
-	display := Form extent: initialExtent * self canvasScaleFactor depth: 32.
 	world extent: initialExtent.
 
 	driver := self pickMostSuitableWindowDriver.
 	attributes preferableDriver: driver.
+
+	display := Form extent: initialExtent * self canvasScaleFactor depth: 32.
 	osWindow := OSWindow
 		            createWithAttributes: attributes
 		            eventHandler: (OSWindowMorphicEventHandler for: world).
