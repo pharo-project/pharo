@@ -30,23 +30,6 @@ SDLWindowsPlatform >> addRestartUIManagerOption: handle [
 ]
 
 { #category : 'operations' }
-SDLWindowsPlatform >> afterMainPharoWindowCreated: aOSSDLWindow [
-
-	| sdlWindowInfo handle |
-	sdlWindowInfo := aOSSDLWindow backendWindow getWMInfo.
-	handle := sdlWindowInfo info win window.
-	self enableDebugWindowMenu: handle. 
-
-	self addRestartUIManagerOption: handle.
-
-	"I want to receive the System Windows events"
-	SDL2 eventType: SDL_SYSWMEVENT state: 1.
-	
-	self wtsRegisterSessionNotification: handle.
-
-]
-
-{ #category : 'operations' }
 SDLWindowsPlatform >> afterSetWindowTitle: aString onWindow: aOSSDLWindow [
 ]
 
@@ -56,17 +39,6 @@ SDLWindowsPlatform >> appendMenu: hMenu flags: uFlags idNewItem: uIDNewItem newI
 	self 
 			ffiCall: #(bool AppendMenuW(void* hMenu, uint uFlags, uint uIDNewItem, Win32WideString lpNewItem))
 			module: 'User32.dll'
-
-]
-
-{ #category : 'operations' }
-SDLWindowsPlatform >> beforeMainPharoWindowClosed: aOSSDLWindow [
-
-	| sdlWindowInfo handle |
-	sdlWindowInfo := aOSSDLWindow backendWindow getWMInfo.
-	handle := sdlWindowInfo info win window.
- 
-	self wtsUnRegisterSessionNotification: handle.
 
 ]
 
@@ -105,25 +77,6 @@ SDLWindowsPlatform >> getSystemMetrics: nIndex [
 	self
 		ffiCall: #( int GetSystemMetrics #( int nIndex ) )
 		module: 'User32.dll'
-]
-
-{ #category : 'event handling' }
-SDLWindowsPlatform >> handleSystemCommand: aWindowMessage [
-
-	aWindowMessage wParam = self restartUIManagerMenuID ifTrue: [
-		UIManager default defer: [ OSWorldRenderer restart ] ].
-	
-	^ nil
-]
-
-{ #category : 'event handling' }
-SDLWindowsPlatform >> handleWTSessionChange: aWindowMessage [
-
-	"WTS_SESSION_UNLOCK"
-	aWindowMessage wParam = 8 ifTrue: [
-		UIManager default defer: [ OSWorldRenderer restart ] ]. 
-
-	^ nil
 ]
 
 { #category : 'initialization' }

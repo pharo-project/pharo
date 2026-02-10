@@ -17,19 +17,7 @@ Class {
 }
 
 { #category : 'operations' }
-SDLAbstractPlatform >> afterMainPharoWindowCreated: aOSSDLWindow [
-
-	self subclassResponsibility
-]
-
-{ #category : 'operations' }
 SDLAbstractPlatform >> afterSetWindowTitle: aString onWindow: aOSSDLWindow [
-
-	self subclassResponsibility
-]
-
-{ #category : 'operations' }
-SDLAbstractPlatform >> beforeMainPharoWindowClosed: aOSSDLWindow [
 
 	self subclassResponsibility
 ]

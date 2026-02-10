@@ -42,24 +42,10 @@ OSSDL2Driver class >> isSuitable [
 ]
 
 { #category : 'events' }
-OSSDL2Driver >> afterMainPharoWindowCreated: osWindow [
-
-	OSPlatform current sdlPlatform
-		afterMainPharoWindowCreated: osWindow
-]
-
-{ #category : 'events' }
 OSSDL2Driver >> afterSetWindowTitle: windowTitle onWindow: osWindow [
 
 	OSPlatform current sdlPlatform
 		afterSetWindowTitle: windowTitle onWindow: osWindow
-]
-
-{ #category : 'events' }
-OSSDL2Driver >> beforeMainPharoWindowClosed: osWindow [
-
-	OSPlatform current sdlPlatform
-		beforeMainPharoWindowClosed: osWindow
 ]
 
 { #category : 'private' }

@@ -119,15 +119,7 @@ You will need to restart the image to make this changes take effect.';
 ]
 
 { #category : 'events' }
-OSWindowDriver >> afterMainPharoWindowCreated: aWindow [
-]
-
-{ #category : 'events' }
 OSWindowDriver >> afterSetWindowTitle: windowTitle onWindow: osWindow [
-]
-
-{ #category : 'events' }
-OSWindowDriver >> beforeMainPharoWindowClosed: aWindow [
 ]
 
 { #category : 'window creation' }

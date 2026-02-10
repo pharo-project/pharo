@@ -11,15 +11,7 @@ Class {
 }
 
 { #category : 'operations' }
-SDLUnixPlatform >> afterMainPharoWindowCreated: aOSSDLWindow [
-]
-
-{ #category : 'operations' }
 SDLUnixPlatform >> afterSetWindowTitle: aString onWindow: aOSSDLWindow [
-]
-
-{ #category : 'operations' }
-SDLUnixPlatform >> beforeMainPharoWindowClosed: aOSSDLWindow [
 ]
 
 { #category : 'initialization' }

@@ -10,10 +10,6 @@ Class {
 }
 
 { #category : 'operations' }
-SDLOSXPlatform >> afterMainPharoWindowCreated: aOSSDLWindow [
-]
-
-{ #category : 'operations' }
 SDLOSXPlatform >> afterSetWindowTitle: aString onWindow: aOSSDLWindow [
 
 	| aParam cocoaWindow wmInfo selector |
@@ -56,27 +52,9 @@ SDLOSXPlatform >> allowTouchpadInertia [
 	ObjCLibrary uniqueInstance release: key.
 ]
 
-{ #category : 'operations' }
-SDLOSXPlatform >> beforeMainPharoWindowClosed: aOSSDLWindow [
-]
-
 { #category : 'configuration' }
 SDLOSXPlatform >> defaultRendererFlags [ 
 
 	"SDL_RENDERER_PRESENTVSYNC is required on MacOS for certain screens to avoid rendering issues"
 	^ super defaultRendererFlags | SDL_RENDERER_PRESENTVSYNC
-]
-
-{ #category : 'initialization' }
-SDLOSXPlatform >> initPlatformSpecific [
-
-	| sharedApplication |
-	sharedApplication := ObjCLibrary uniqueInstance sharedApplication.
-	
-	ObjCLibrary uniqueInstance sendMessage: (ObjCLibrary uniqueInstance lookupSelector: 'finishLaunching') to: sharedApplication.
-	
-	SDLOSXPharoMenu uniqueInstance installInOSXWindow.
-	
-	self allowTouchpadInertia.
-
 ]

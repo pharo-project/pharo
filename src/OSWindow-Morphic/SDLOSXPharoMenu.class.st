@@ -17,9 +17,8 @@ Class {
 	#classVars : [
 		'UniqueInstance'
 	],
-	#category : 'OSWindow-SDL2-Pharo-Specific',
-	#package : 'OSWindow-SDL2',
-	#tag : 'Pharo-Specific'
+	#category : 'OSWindow-Morphic',
+	#package : 'OSWindow-Morphic'
 }
 
 { #category : 'instance creation' }
