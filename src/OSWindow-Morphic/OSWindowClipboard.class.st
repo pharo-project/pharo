@@ -5,9 +5,8 @@ For setting/retrieving clipboard text, use clipboardText/clipboardText: accessor
 Class {
 	#name : 'OSWindowClipboard',
 	#superclass : 'Clipboard',
-	#category : 'OSWindow-Core-Base',
-	#package : 'OSWindow-Core',
-	#tag : 'Base'
+	#category : 'OSWindow-Morphic',
+	#package : 'OSWindow-Morphic'
 }
 
 { #category : 'configurations' }
