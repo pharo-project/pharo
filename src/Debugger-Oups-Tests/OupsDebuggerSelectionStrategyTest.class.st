@@ -7,11 +7,10 @@ Class {
 }
 
 { #category : 'private' }
-OupsDebuggerSelectionStrategyTest >> performTest [
-	"Temporary printing to find more information about https://github.com/pharo-project/pharo/issues/12502"
-
+OupsDebuggerSelectionStrategyTest >> setUp [ 
+	
+	super setUp.
 	('Running: ' , testSelector asString , ' from ' , self class name) traceCr.
-	self perform: testSelector asSymbol
 ]
 
 { #category : 'tests - debugging' }
