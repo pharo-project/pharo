@@ -24,10 +24,11 @@ OCCodeSnippetTest class >> testParameters [
 ]
 
 { #category : 'private' }
-OCCodeSnippetTest >> performTest [
+OCCodeSnippetTest >> setUp [ 
 
+	super setUp.
 	self skipIf: testSelector asSymbol.
-	^ super performTest
+
 ]
 
 { #category : 'asserting' }

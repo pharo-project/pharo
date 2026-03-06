@@ -9,7 +9,9 @@ Class {
 { #category : 'private' }
 MetacelloLockTest >> performTest [
 
-	MetacelloProjectRegistry useRegistry: MetacelloProjectRegistry new during: [ super performTest ]
+	MetacelloProjectRegistry 
+		useRegistry: MetacelloProjectRegistry new 
+		during: [ super performTest ]
 ]
 
 { #category : 'accessing' }

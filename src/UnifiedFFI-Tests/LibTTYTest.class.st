@@ -106,14 +106,6 @@ LibTTYTest >> openPseudoTerminal [
 ]
 
 { #category : 'private' }
-LibTTYTest >> performTest [
-
-	OSPlatform current isWindows ifTrue: [
-		self skip ].
-	super performTest
-]
-
-{ #category : 'private' }
 LibTTYTest >> readOutput: fdm [
 
 	^ ExternalAddress allocate: 1024 bytesDuring: [ :buffer |
@@ -122,6 +114,14 @@ LibTTYTest >> readOutput: fdm [
 			[ (count := LibC uniqueInstance read: fdm buffer: buffer size: buffer size) > 0 ] whileTrue: [
 				1 to: count do: [ :index |
 					stream nextPut: (buffer byteAt: index) ] ] ] ]
+]
+
+{ #category : 'private' }
+LibTTYTest >> setUp [
+
+	OSPlatform current isWindows 
+		ifTrue: [ self skip ].
+
 ]
 
 { #category : 'tests' }
