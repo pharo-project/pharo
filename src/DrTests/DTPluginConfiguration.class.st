@@ -71,6 +71,12 @@ DTPluginConfiguration >> packagesSelected: packages [
 ]
 
 { #category : 'accessing' }
+DTPluginConfiguration >> suite [
+
+	^ self asTestSuite 
+]
+
+{ #category : 'accessing' }
 DTPluginConfiguration >> testSuite [
 	^ testSuite
 ]
