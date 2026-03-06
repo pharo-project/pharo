@@ -19,6 +19,6 @@ BaselineOfTestRunner >> baseline: spec [
 			spec
 				group: 'Core' with: #( 'TestRunner-Core' );
 				group: 'Tests' with: #( 'TestRunner-Tests' 'TestRunner-FakeTests' );
-				group: 'default' with: #( 'Core' );
+				group: 'default' with: #( 'Core' 'Tests');
 				group: 'All' with: #( 'Core' 'Tests' )
 ]

@@ -133,7 +133,7 @@ NewTestRunner >> addToSuite: aTestSuite [
 { #category : 'private' }
 NewTestRunner >> classForTestResult [
 
-	^ TestRunnerResult 
+	^ TestResult 
 ]
 
 { #category : 'running' }
@@ -277,7 +277,7 @@ NewTestRunner >> runClasses: aCollectionOfTestCases [
 	"run and return the result of the giving collection of classes"
 
 	self accumulateResult.
-	aCollectionOfTestCases reject: #isAbstract thenDo: [ :class | self runClass: class ]  .
+	aCollectionOfTestCases reject: #isAbstract thenDo: [ :class | self runClass: class ].
 	^ self result
 ]
 
