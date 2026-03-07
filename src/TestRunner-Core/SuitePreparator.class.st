@@ -6,9 +6,6 @@ We would like to apply processes like randomisation or proxies to tests and suit
 Class {
 	#name : 'SuitePreparator',
 	#superclass : 'Object',
-	#instVars : [
-		'applyBlock'
-	],
 	#category : 'TestRunner-Core-SuitePreparators',
 	#package : 'TestRunner-Core',
 	#tag : 'SuitePreparators'

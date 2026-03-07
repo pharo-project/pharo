@@ -32,9 +32,11 @@ DTPluginConfiguration class >> items: aCollectionOfClasses packages: aCollection
 { #category : 'converting' }
 DTPluginConfiguration >> asTestSuite [
 
-	^ (self items reject: #isAbstract)
-		inject: TestSuite new
-		into: [ :suite :eachTestCase | suite, eachTestCase suite ]
+	| suite |
+	suite := TestSuite new.
+
+	self items reject: #isAbstract thenDo: [ :aTestCase | suite addTests: aTestCase suite tests ].
+	^ suite
 ]
 
 { #category : 'result handling' }

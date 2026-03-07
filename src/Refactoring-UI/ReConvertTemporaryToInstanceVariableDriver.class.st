@@ -79,12 +79,6 @@ ReConvertTemporaryToInstanceVariableDriver >> defaultSelectDialog [
 		  yourself
 ]
 
-{ #category : 'execution' }
-ReConvertTemporaryToInstanceVariableDriver >> handleBreakingChanges [
-
-	self selectDialogForBreakingChanges ifNotNil: [ :dialog | dialog action ]
-]
-
 { #category : 'configuration' }
 ReConvertTemporaryToInstanceVariableDriver >> instantiateRefactoring [
 

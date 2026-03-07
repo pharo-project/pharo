@@ -628,18 +628,17 @@ Behavior >> compile: sourceCode classified: protocol withStamp: changeStamp noti
 	"Return the selector of the compiled method"
 
 	| method |
-
+	sourceCode ifEmpty: [ Error signal: 'The source code should not be empty' ].
 	method := self compiler
-		source: sourceCode;
-		requestor: requestor;
-		failBlock: (requestor ifNotNil: [ [ ^ nil ] ]); "no failblock if no requestor"
-		"compatibility: permit faulty code if no requestor"
-		permitFaulty: requestor isNil;
-		permitUndeclared: (requestor isNil);
-		protocol: protocol;
-		changeStamp: changeStamp;
-		logged: logSource;
-		install.
+		          source: sourceCode;
+		          requestor: requestor;
+		          failBlock: (requestor ifNotNil: [ [ ^ nil ] ]);
+		          "no failblock if no requestor""compatibility: permit faulty code if no requestor"permitFaulty: requestor isNil;
+		          permitUndeclared: requestor isNil;
+		          protocol: protocol;
+		          changeStamp: changeStamp;
+		          logged: logSource;
+		          install.
 
 	^ method selector
 ]

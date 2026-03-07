@@ -920,6 +920,12 @@ TestCase >> skipOnPharoCITestingEnvironment [
 		ifTrue: [ self skip ]
 ]
 
+{ #category : 'converting' }
+TestCase >> suite [
+
+	^ (TestSuite named: self selector ) addTest: self; yourself
+]
+
 { #category : 'running' }
 TestCase >> tearDown [
 	"Hooks that subclasses may override to clean the fixture of test."

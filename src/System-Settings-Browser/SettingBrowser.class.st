@@ -231,7 +231,7 @@ SettingBrowser class >> initialExtent [
 
 { #category : 'world menu' }
 SettingBrowser class >> menuCommandOn: aBuilder [
-	<worldMenu>
+	"<worldMenu>
 	(aBuilder item: #Settings)
 		parent: #Pharo;
 		order: 1;
@@ -239,7 +239,7 @@ SettingBrowser class >> menuCommandOn: aBuilder [
 		action: [ SettingBrowser open ];
 		keyText: 'o, s';
 		help: 'Opens a SystemSettingBrowser which allows you to alter many system settings.';
-		withSeparatorAfter
+		withSeparatorAfter"
 ]
 
 { #category : 'opening' }

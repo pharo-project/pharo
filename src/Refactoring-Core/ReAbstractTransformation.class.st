@@ -412,7 +412,7 @@ ReAbstractTransformation >> requestMethodNameFor: aMethodName [
 ]
 
 { #category : 'utilities' }
-ReAbstractTransformation >> safeMethodNameFor: aClass basedOn: aString [
+ReAbstractTransformation >> safeAccessorNameFor: aClass basedOn: aString [
 	"Creates an unused method name containing aString"
 
 	| baseString newString hasParam i |

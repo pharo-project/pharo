@@ -50,11 +50,15 @@ ShuffleSuitePreparatorTest >> suiteSelectors [
 { #category : 'tests' }
 ShuffleSuitePreparatorTest >> testIsSuiteShuffled [
 
-	self assertSuiteSelectorsEquals: { #test1 . #test2 . #test3 . #test4 }.
+	self 
+		assertCollection: self suiteSelectors 
+		equals: { #test1 . #test2 . #test3 . #test4 } asOrderedCollection .
 		
 	self preparator applyOn: self suite.
 	
-	self assertSuiteSelectorsEquals: { #test3 . #test4 . #test2 . #test1 }.
+	self 
+		assertCollection: self suiteSelectors 
+		equals: { #test3 . #test4 . #test2 . #test1 } asOrderedCollection .
 ]
 
 { #category : 'tests' }

@@ -160,7 +160,7 @@ ReCreateAccessorsForVariableTransformation >> defineSetterMethod [
 				ifTrue: ['<1s> anObject<r><r><t>^ <2s> := anObject']
 				ifFalse: ['<1s> anObject<r><r><t><2s> := anObject'].
 	selector := self
-						safeMethodNameFor: definingClass
+						safeAccessorNameFor: definingClass
 						basedOn: variableName asString , ':'.
 						
 	self generateChangesFor: 
@@ -268,7 +268,7 @@ ReCreateAccessorsForVariableTransformation >> privateTransform [
 { #category : 'transforming' }
 ReCreateAccessorsForVariableTransformation >> selector [
 	^ selector ifNil: [
-		selector := self safeMethodNameFor: self definingClass
+		selector := self safeAccessorNameFor: self definingClass
 				basedOn: variableName asString. ]
 ]
 

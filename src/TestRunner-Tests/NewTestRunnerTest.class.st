@@ -151,6 +151,37 @@ NewTestRunnerTest >> testRerunningFailedTest2 [
 ]
 
 { #category : 'tests' }
+NewTestRunnerTest >> testRunCasesAccumulatesResults [
+
+	runner 
+		accumulateResult;
+		runCase: GreenTest suite tests first;
+		runCase: GreenTest suite tests second.
+
+	self assert: runner runCount equals: 2
+]
+
+{ #category : 'tests' }
+NewTestRunnerTest >> testRunCasesDontAccumulatesResults [
+
+	| firstRunningCount |
+	firstRunningCount := runner 
+		doNotAccumulateResult;
+		runCase: GreenTest suite tests first;
+		runCase: GreenTest suite tests second.
+
+	self 
+		assert: runner runCount equals: 0;
+		assert: firstRunningCount passedCount equals: 1
+]
+
+{ #category : 'tests' }
+NewTestRunnerTest >> testRunCountOnNew [
+
+	self assert: runner runCount equals: 0
+]
+
+{ #category : 'tests' }
 NewTestRunnerTest >> testRunnerCanAccumulateResult [
 
 	| firstRunningCount secondRunningCount |

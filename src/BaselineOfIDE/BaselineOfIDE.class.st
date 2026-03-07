@@ -158,6 +158,8 @@ BaselineOfIDE >> documentBrowserCore: spec [
 BaselineOfIDE >> drTests: spec [
 
 	spec
+		baseline: 'TestRunner'
+		with: [ spec repository: (self packageRepositoryURLForSpec: spec) ];
 		baseline: 'DrTests'
 		with: [ spec repository: (self packageRepositoryURLForSpec: spec) ]
 ]

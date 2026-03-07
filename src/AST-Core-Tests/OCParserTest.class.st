@@ -52,6 +52,18 @@ OCParserTest >> parseTreeSearcher [
 	^ OCParseTreeSearcher new
 ]
 
+{ #category : 'tests' }
+OCParserTest >> parsedTestMethod [
+	| tree |
+	tree := self parserClass
+		parseMethod:
+			('test: a`	| b |`	b := (self foo: a; bar) baz.`	b := super test: b.`	^[:arg1 | self foa1 + (super foo: arg1 foo: a foo: b)]'
+				copyReplaceAll: '`'
+				with: (String with: (Character value: 13))).
+	tree doSemanticAnalysis.
+	^ tree
+]
+
 { #category : 'private' }
 OCParserTest >> parserClass [
 	^ self class parserClass
@@ -1774,42 +1786,6 @@ OCParserTest >> testPrimitives [
 			do: [:each | self assert: (self parserClass parseMethod: each first) isPrimitive equals: each last]
 ]
 
-{ #category : 'tests' }
-OCParserTest >> testQuerying [
-	| tree aNode arg1Node bNode |
-	tree := self parserClass
-		parseMethod:
-			('test: a`	| b |`	b := (self foo: a; bar) baz.`	b := super test: b.`	^[:arg1 | self foa1 + (super foo: arg1 foo: a foo: b)]'
-				copyReplaceAll: '`'
-				with: (String with: (Character value: 13))).
-	tree doSemanticAnalysis.
-	self assert: (tree selfMessages collect: [ :each | each value ]) asSortedCollection asArray equals: #(#bar #foa1 #foo:).
-	self assert: (tree superMessages collect: [ :each | each value ]) asSortedCollection asArray equals: #(#foo:foo:foo: #test:).
-	aNode := tree whichNodeIsContainedBy: (112 to: 112).
-	self assert: aNode name equals: 'a'.
-	bNode := tree whichNodeIsContainedBy: (119 to: 119).
-	self assert: bNode name equals: 'b'.
-	arg1Node := tree whichNodeIsContainedBy: (102 to: 105).
-	self assert: arg1Node name equals: 'arg1'.
-	self assert: (arg1Node statementNode isMessage and: [ arg1Node statementNode selector value = #+ ]).
-	self assert: (arg1Node statementNodeIn: arg1Node methodOrBlockNode) equals: arg1Node statementNode.
-	self assert: (arg1Node statementNodeIn: arg1Node methodOrBlockNode body) equals: arg1Node statementNode.
-	self assert: (arg1Node statementNodeIn: tree) equals: tree body statements last.
-	self assert: (arg1Node statementNodeIn: tree body) equals: tree body statements last.
-	self should: [ arg1Node statementNodeIn: OCSequenceNode new ] raise: NotFound.
-	self assert: (arg1Node whichUpNodeDefines: 'arg1') isBlock.
-	self assert: (aNode whichUpNodeDefines: 'a') isMethod.
-	self assert: (aNode whichUpNodeDefines: 'b') isSequence.
-	self assert: (tree whichNodeIsContainedBy: (91 to: 119)) selector value equals: #foo:foo:foo:.
-	self assert: (tree whichNodeIsContainedBy: (69 to: 121)) isBlock.
-	self assert: (tree whichNodeIsContainedBy: (69 to: 118)) isNil.
-	self assert: aNode blockVariables asSortedCollection asArray equals: #('arg1').
-	self assert: aNode temporaryVariables asSortedCollection asArray equals: #('b').
-	self assert: tree allDefinedVariables asSortedCollection asArray equals: #('a' 'arg1' 'b').
-	self assert: tree allArgumentVariables asSortedCollection asArray equals: #('a' 'arg1').
-	self assert: tree allTemporaryVariables asSortedCollection asArray equals: #('b')
-]
-
 { #category : 'to be reworked' }
 OCParserTest >> testQueryingPrimitiveErrorVar [
 	| tree |
@@ -1862,6 +1838,15 @@ OCParserTest >> testScopesEnclosingMatchingLiterals [
 	self assert: tree statements first isDynamicArray
 ]
 
+{ #category : 'tests' }
+OCParserTest >> testSelectorAndBlockDetection [
+	| tree |
+	tree := self parsedTestMethod.
+	self assert: (tree whichNodeIsContainedBy: (91 to: 119)) selector value equals: #foo:foo:foo:.
+	self assert: (tree whichNodeIsContainedBy: (69 to: 121)) isBlock.
+	self assert: (tree whichNodeIsContainedBy: (69 to: 118)) isNil.
+]
+
 { #category : 'tests - Selector' }
 OCParserTest >> testSelectorFromMessageIsSelectorNode [
 	| tree |
@@ -1869,6 +1854,13 @@ OCParserTest >> testSelectorFromMessageIsSelectorNode [
 	self assert: tree isMessage.
 	self assert: tree selectorNode isSelector.
 	self assert: tree selector equals: #selector
+]
+
+{ #category : 'tests' }
+OCParserTest >> testSelfMessages [
+	| tree |
+	tree := self parsedTestMethod.
+	self assert: (tree selfMessages collect: [ :each | each value ]) asSortedCollection asArray equals: #(#bar #foa1 #foo:).
 ]
 
 { #category : 'tests - Cascade' }
@@ -1912,6 +1904,19 @@ OCParserTest >> testSequenceNodeStartAtFirstTokenAfterTheSelector [
 	self assert: tree body start equals: 7
 ]
 
+{ #category : 'tests' }
+OCParserTest >> testStatementNodeResolution [
+	| tree arg1Node |
+	tree := self parsedTestMethod.
+	arg1Node := tree whichNodeIsContainedBy: (102 to: 105).
+	self assert: (arg1Node statementNode isMessage and: [ arg1Node statementNode selector value = #+ ]).
+	self assert: (arg1Node statementNodeIn: arg1Node methodOrBlockNode) equals: arg1Node statementNode.
+	self assert: (arg1Node statementNodeIn: arg1Node methodOrBlockNode body) equals: arg1Node statementNode.
+	self assert: (arg1Node statementNodeIn: tree) equals: tree body statements last.
+	self assert: (arg1Node statementNodeIn: tree body) equals: tree body statements last.
+	self should: [ arg1Node statementNodeIn: OCSequenceNode new ] raise: NotFound.
+]
+
 { #category : 'tests - parsing' }
 OCParserTest >> testStatements [
 	| tree |
@@ -1930,6 +1935,13 @@ OCParserTest >> testString [
 	self assert: (self parserClass parseMethod: 'selector ''<''') isMethod.
 	self assert: (self parserClass parseMethod: 'selector ''>''') isMethod.
 	self assert: (self parserClass parseMethod: 'selector ^ ''<>''') isMethod
+]
+
+{ #category : 'tests' }
+OCParserTest >> testSuperMessages [
+	| tree |
+	tree := self parsedTestMethod.
+	self assert: (tree superMessages collect: [ :each | each value ]) asSortedCollection asArray equals: #(#foo:foo:foo: #test:).
 ]
 
 { #category : 'tests - parsing' }
@@ -2044,6 +2056,41 @@ OCParserTest >> testUnfinishedStatementWithLeadingParenthesisRaisesError [
 
 	self should: [(self parserClass parseExpression: '[])')]
 		  raise: OCCodeError
+]
+
+{ #category : 'tests' }
+OCParserTest >> testVariableCollections [
+	| tree aNode |
+	tree := self parsedTestMethod.
+	aNode := tree whichNodeIsContainedBy: (112 to: 112).
+	self assert: aNode blockVariables asSortedCollection asArray equals: #('arg1').
+	self assert: aNode temporaryVariables asSortedCollection asArray equals: #('b').
+	self assert: tree allDefinedVariables asSortedCollection asArray equals: #('a' 'arg1' 'b').
+	self assert: tree allArgumentVariables asSortedCollection asArray equals: #('a' 'arg1').
+	self assert: tree allTemporaryVariables asSortedCollection asArray equals: #('b').
+]
+
+{ #category : 'tests' }
+OCParserTest >> testWhichNodeIsContainedByReturnsCorrectVariableNodes [
+	| tree aNode bNode arg1Node |
+	tree := self parsedTestMethod.
+	aNode := tree whichNodeIsContainedBy: (112 to: 112).
+	self assert: aNode name equals: 'a'.
+	bNode := tree whichNodeIsContainedBy: (119 to: 119).
+	self assert: bNode name equals: 'b'.
+	arg1Node := tree whichNodeIsContainedBy: (102 to: 105).
+	self assert: arg1Node name equals: 'arg1'.
+]
+
+{ #category : 'tests' }
+OCParserTest >> testWhichUpNodeDefines [
+	| tree aNode arg1Node |
+	tree := self parsedTestMethod.
+	arg1Node := tree whichNodeIsContainedBy: (102 to: 105).
+	aNode := tree whichNodeIsContainedBy: (112 to: 112).
+	self assert: (arg1Node whichUpNodeDefines: 'arg1') isBlock.
+	self assert: (aNode whichUpNodeDefines: 'a') isMethod.
+	self assert: (aNode whichUpNodeDefines: 'b') isSequence.
 ]
 
 { #category : 'private' }

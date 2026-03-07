@@ -222,6 +222,13 @@ TestSuite >> shuffledTests [
 	^ self tests shuffledBy: randomGenerator
 ]
 
+{ #category : 'accessing' }
+TestSuite >> suite [ 
+	"polymorphic method used by Test Runner"
+
+	^ self
+]
+
 { #category : 'running' }
 TestSuite >> tearDown [
 	self resourceClass resetResources: self resources

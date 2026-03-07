@@ -120,7 +120,7 @@ RBAddVariableAccessorWithLazyInitializationTransformation >> defineGetterMethod 
 
 { #category : 'accessing' }
 RBAddVariableAccessorWithLazyInitializationTransformation >> getterMethod [
-	^ self safeMethodNameFor: self definingClass basedOn: variableName asString
+	^ self safeAccessorNameFor: self definingClass basedOn: variableName asString
 ]
 
 { #category : 'preconditions' }

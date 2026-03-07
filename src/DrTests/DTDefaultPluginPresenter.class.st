@@ -108,11 +108,11 @@ DTDefaultPluginPresenter >> browseSelectedResult [
 DTDefaultPluginPresenter >> buildLabelString: nameOfItems numberOfItemsSelected: aInt [
 
 	^ String streamContents: [ :stream |
-		stream
-			<< nameOfItems;
-			<< ' (';
-			<< aInt asString;
-			<< ' selected):' ]
+			  stream
+				  << nameOfItems;
+				  << ' (';
+				  print: aInt;
+				  << ' selected):' ]
 ]
 
 { #category : 'initialization' }

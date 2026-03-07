@@ -555,10 +555,9 @@ RubSmalltalkEditor >> evaluateSelectionAndDo: aBlock [
 	"Treat the current selection as an expression; evaluate it and invoke aBlock with the result.
 	If no selection is present select the current line."
 
-	self expressionSelectAndEmptyCheck: [^ ''].
-	^ self
-		evaluate: self selection
-		andDo: aBlock
+	self selectLine.
+	self selection ifEmpty: [ ^ '' ].
+	^ self evaluate: self selection andDo: aBlock
 ]
 
 { #category : 'do-its' }

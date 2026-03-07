@@ -27,7 +27,10 @@ ToolShortcutsCategory >> openPlayground [
 { #category : 'keymaps' }
 ToolShortcutsCategory >> openSettings [
 	<shortcut>
-	^ KMKeymap shortcut: PharoShortcuts current openSettingsShortcut action: [ SettingBrowser open ]
+	
+	^ KMKeymap 
+		shortcut: PharoShortcuts current openSettingsShortcut 
+		action: [ (StSettingsBrowser newApplication: StPharoApplication current) open ]
 ]
 
 { #category : 'keymaps' }

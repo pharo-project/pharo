@@ -12,7 +12,6 @@ Class {
 		'selectedClasses',
 		'resultItemsPresenter',
 		'resultDescriptionPresenter',
-		'suitePreparationModesPresenter',
 		'suitePreparationMode'
 	],
 	#category : 'TestRunner-UI',
@@ -170,7 +169,7 @@ TestRunnerAbstractPresenter >> informInProgress [
 	resultDescriptionPresenter  text: 'In progress ...'
 ]
 
-{ #category : 'buttons-presenters-initialization' }
+{ #category : 'initialization' }
 TestRunnerAbstractPresenter >> initialize [
 	self initializeRunner.
 	super initialize

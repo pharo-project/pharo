@@ -39,24 +39,10 @@ Class {
 	#tag : 'Core'
 }
 
-{ #category : 'running' }
-NewTestRunner class >> example [
-	<script>
-	self new 
-	suitePreparator: ShuffleSuitePreparator new ;
-	run: DependencyTest;
-	inspect
-]
-
 { #category : 'tests' }
 NewTestRunner class >> isValidClass: aClass [
 
-	| criterias |
-	criterias := { 
-		             [ :class | class isTestCase ].
-		             [ :class | class isAbstract not ] }.
-
-	^ criterias allSatisfy: [ :criteria | criteria value: aClass ]
+	^ aClass isTestCase and: [ aClass isAbstract not ]
 ]
 
 { #category : 'running' }
@@ -73,8 +59,7 @@ NewTestRunner class >> runCase: aTestCase [
 	"return the result of the execution of the giving testCase"
 
 	^ self new
-		  runCase: aTestCase;
-		  result
+		  runCase: aTestCase
 ]
 
 { #category : 'running' }
@@ -142,19 +127,20 @@ NewTestRunner >> addPass: aPassedTest [
 NewTestRunner >> addToSuite: aTestSuite [
 	"add the giving testsuite to the current suite. Notice that only the tests are added"
 
-	suite := self suite , aTestSuite
+	self suite addTests: aTestSuite tests
 ]
 
 { #category : 'private' }
 NewTestRunner >> classForTestResult [
 
-	^ TestResult
+	^ TestRunnerResult 
 ]
 
 { #category : 'running' }
 NewTestRunner >> debugFailure: failure [
 	"debug the giving failure"
 
+	self flag: #TODO. "method not defined in execution mode interface"
 	self executionMode debugFailure: failure
 ]
 
@@ -169,13 +155,13 @@ NewTestRunner >> doNotAccumulateResult [
 NewTestRunner >> errorCount [
 	"returns the number of testcase which failed du to error during the execution"
 
-	^ result errorCount
+	^ self result errorCount
 ]
 
 { #category : 'accessing' }
 NewTestRunner >> executionMode [ 
 
-	^ executionMode 
+	^ executionMode ifNil: [ executionMode := self executionModeClass runTestsMode ]
 ]
 
 { #category : 'setter' }
@@ -203,16 +189,6 @@ NewTestRunner >> hasTestsToRun [
 	If any test has not been collected, there nothing to run"
 
 	^ self suite tests isNotEmpty
-]
-
-{ #category : 'initialization' }
-NewTestRunner >> initialize [
-
-	super initialize.
-	self 
-		doNotAccumulateResult;
-		suitePreparator: self suitePreparatorClass new;
-		executionMode: self executionModeClass runTestsMode
 ]
 
 { #category : 'accessing' }
@@ -276,10 +252,11 @@ NewTestRunner >> runAll [
 NewTestRunner >> runCase: aTestCase [
 	"run and return the result of the fiving testCase"
 
-	| executionResult |
-	executionResult := self executionMode executeCase: aTestCase.
-	self result + executionResult.
-	^ executionResult
+	| testResult |
+	testResult :=  self executionMode executeCase: aTestCase.
+	self shouldAccumulate ifTrue: [ 
+		self result mergeWith: testResult ].
+	^ testResult 
 ]
 
 { #category : 'running' }
@@ -292,7 +269,7 @@ NewTestRunner >> runClass: aClass [
 
 	self runAll.
 
-	^ result
+	^ self result
 ]
 
 { #category : 'running' }
@@ -300,9 +277,8 @@ NewTestRunner >> runClasses: aCollectionOfTestCases [
 	"run and return the result of the giving collection of classes"
 
 	self accumulateResult.
-	aCollectionOfTestCases do: [ :class | 
-		class isAbstract ifFalse: [ self runClass: class ] ].
-	^ result
+	aCollectionOfTestCases reject: #isAbstract thenDo: [ :class | self runClass: class ]  .
+	^ self result
 ]
 
 { #category : 'accessing' }
@@ -335,7 +311,7 @@ NewTestRunner >> runFailure: aTestCase [
 	"rerun the giving failure then update the result"
 
 	| rerunningResult |
-	rerunningResult := aTestCase run.
+	rerunningResult := self executionMode executeCase: aTestCase .
 
 	rerunningResult hasPassed ifTrue: [ result removeFailure: aTestCase ].
 	self updateResultWith: rerunningResult
@@ -375,9 +351,12 @@ NewTestRunner >> runSequenceableCollection: aCollection [
 
 { #category : 'running' }
 NewTestRunner >> runSuite [
-	"run the tests from the current collected suite"
+	"run the tests from the current suite and collect the results"
 
-	self suite tests do: [ :aTestCase | self runCase: aTestCase ]
+	self suite tests 
+		collect: [ :aTestCase | self runCase: aTestCase ] 
+		thenDo: [ :aResult | self result mergeWith: aResult ].
+	^ self result 
 ]
 
 { #category : 'running' }
@@ -391,7 +370,7 @@ NewTestRunner >> runSuite: aTestSuite [
 { #category : 'testing' }
 NewTestRunner >> shouldAccumulate [
 
-	^ shouldAccumulate
+	^ shouldAccumulate ifNil: [ shouldAccumulate := false ]
 ]
 
 { #category : 'setter' }
@@ -428,7 +407,7 @@ NewTestRunner >> suite: aTestSuite [
 { #category : 'private' }
 NewTestRunner >> suitePreparator [
 
-	^ suitePreparator
+	^ suitePreparator ifNil: [ suitePreparator := self suitePreparatorClass new ]
 ]
 
 { #category : 'setter' }
@@ -498,6 +477,5 @@ NewTestRunner >> testsCount [
 NewTestRunner >> updateResultWith: testResult [
 	"Merge the current result with the giving one then return it"
 
-	self result + testResult.
-	^ result
+	^ self result mergeWith: testResult; yourself
 ]

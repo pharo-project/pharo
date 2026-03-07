@@ -101,11 +101,11 @@ DTTreeNode >> drTestsBuildContextMenu: menu [
 { #category : 'accessing' }
 DTTreeNode >> drTestsName [
 
-	^ String streamContents: [ :s |
-		s
+	^ String streamContents: [ :stream |
+		stream
 			<< self name;
 			<< ' (';
-			<< (self subResultsAggregator value: self subResults) asString;
+			print: (self subResultsAggregator value: self subResults);
 			<< ')' ]
 ]
 
