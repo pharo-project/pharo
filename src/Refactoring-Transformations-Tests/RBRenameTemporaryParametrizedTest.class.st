@@ -13,7 +13,7 @@ RBRenameTemporaryParametrizedTest class >> testParameters [
 		addCase: { #rbClass -> RBRenameArgumentOrTemporaryRefactoring .
 					  #constructor -> #renameTemporaryFrom:to:in:selector: .
 					  #index -> 1};
-		addCase: { #rbClass -> RBRenameTemporaryVariableTransformation .
+		addCase: { #rbClass -> RBRenameArgumentOrTemporaryRefactoring .
 					  #constructor -> #rename:to:in:selector: .
 					  #index -> 2};
 		yourself
@@ -175,12 +175,12 @@ RBRenameTemporaryParametrizedTest >> testWarningExistingInstanceVariable [
 
 	self shouldWarn: refactoring.
 
-	refactoring := RBRenameTemporaryVariableTransformation
+	refactoring := RBRenameArgumentOrTemporaryRefactoring 
 		               model: model
 		               rename: 'rules'
 		               to: 'name'
 		               in: #RBLintRuleTestData
 		               selector: #openEditor.
-	self assert: refactoring class equals: RBRenameTemporaryVariableTransformation.
+	self assert: refactoring class equals: RBRenameArgumentOrTemporaryRefactoring .
 	self shouldFail: refactoring
 ]

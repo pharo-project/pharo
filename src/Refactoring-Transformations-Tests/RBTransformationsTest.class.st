@@ -393,7 +393,7 @@ RBTransformationsTest >> testRenameTemporaryTransform [
 		                  withProtocol: #accessing.
 	transformation generateChanges.
 
-	transformation := RBRenameTemporaryVariableTransformation
+	transformation := RBRenameArgumentOrTemporaryRefactoring 
 		                  model: transformation model
 		                  rename: #temp
 		                  to: #temp2

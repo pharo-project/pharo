@@ -22,6 +22,16 @@ Class {
 	#tag : 'Refactorings'
 }
 
+{ #category : 'api' }
+RBRenameArgumentOrTemporaryRefactoring class >> model: aModel rename: oldName to: newName in: aClass selector: aSelector [
+
+	^ self new
+		model: aModel;
+		class: aClass selector: aSelector interval: nil newName: newName;
+		oldName: oldName;
+		yourself
+]
+
 { #category : 'instance creation' }
 RBRenameArgumentOrTemporaryRefactoring class >> model: aRBSmalltalk renameTemporaryFrom: anInterval to: newName in: aClass selector: aSelector [
 	^ self new
@@ -30,6 +40,16 @@ RBRenameArgumentOrTemporaryRefactoring class >> model: aRBSmalltalk renameTempor
 			selector: aSelector
 			interval: anInterval
 			newName: newName;
+		yourself
+]
+
+{ #category : 'api' }
+RBRenameArgumentOrTemporaryRefactoring class >> rename: oldName to: newName in: aClass selector: aSelector [
+
+	^ self new
+		class: aClass selector: aSelector interval: nil;
+		oldName: oldName;
+		newName: newName;
 		yourself
 ]
 
@@ -109,6 +129,12 @@ RBRenameArgumentOrTemporaryRefactoring >> newName: aString [
 	newName := aString
 ]
 
+{ #category : 'accessing' }
+RBRenameArgumentOrTemporaryRefactoring >> oldName: aString [
+
+	oldName := aString
+]
+
 { #category : 'preconditions' }
 RBRenameArgumentOrTemporaryRefactoring >> preconditionCheckVariableName [
 
@@ -119,22 +145,43 @@ RBRenameArgumentOrTemporaryRefactoring >> preconditionCheckVariableName [
 RBRenameArgumentOrTemporaryRefactoring >> prepareForExecution [
 
 	| variableNode |
-	oldName := self getExistingNameFromInterval.
+
 	parseTree := class parseTreeForSelector: selector.
-	variableNode := [ self
-		                whichVariableNode: parseTree
-		                inInterval: interval
-		                name: oldName. ]
-		on: OCCodeError 
-		do: [ self refactoringError: 'Selected code does not contain any variables or contains multiple of them.' ].
-	(variableNode isNil or: [ variableNode isVariable not ]) ifTrue: [
-		self refactoringError: oldName asString , ' isn''t a valid variable' ].
-	variableNode name = oldName ifFalse: [
-		self refactoringError: 'Invalid selection' ].
+
+	oldName ifNil: [
+		oldName := self getExistingNameFromInterval
+	].
+
+	variableNode := parseTree latestUseOfVariableNamed: oldName.
+
+	variableNode ifNil: [
+		self refactoringError:
+			('Temporary variable named {1} does not exist.'
+				format: { oldName asString })
+	].
+
+	variableNode isVariable ifFalse: [
+		self refactoringError:
+			('Temporary variable named {1} does not exist.'
+				format: { oldName asString })
+	].
+
 	definingNode := variableNode whichUpNodeDefines: oldName.
+
 	definingNode ifNil: [
 		self refactoringError:
-			oldName asString , ' isn''t defined by the method' ]
+			('{1} isn''t defined by the method'
+				format: { oldName asString })
+	].
+
+	"Transformation compatibility: name-based rename should fail if instance variable exists"
+	interval ifNil: [
+		(class realClass instVarNames includes: newName) ifTrue: [
+			self refactoringError:
+				('Temporary variable named {1} is already defined.'
+					format: { newName asString })
+		]
+	].
 ]
 
 { #category : 'transforming' }
