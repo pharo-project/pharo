@@ -147,13 +147,10 @@ RBRenameArgumentOrTemporaryRefactoring >> prepareForExecution [
 	| variableNode |
 
 	parseTree := class parseTreeForSelector: selector.
-
 	oldName ifNil: [
 		oldName := self getExistingNameFromInterval
 	].
-
 	variableNode := parseTree latestUseOfVariableNamed: oldName.
-
 	variableNode ifNil: [
 		self refactoringError:
 			('Temporary variable named {1} does not exist.'
@@ -167,14 +164,12 @@ RBRenameArgumentOrTemporaryRefactoring >> prepareForExecution [
 	].
 
 	definingNode := variableNode whichUpNodeDefines: oldName.
-
 	definingNode ifNil: [
 		self refactoringError:
 			('{1} isn''t defined by the method'
 				format: { oldName asString })
 	].
 
-	"Transformation compatibility: name-based rename should fail if instance variable exists"
 	interval ifNil: [
 		(class realClass instVarNames includes: newName) ifTrue: [
 			self refactoringError:
