@@ -235,7 +235,19 @@ MCMethodDefinition >> isOverrideMethod [
 { #category : 'installing' }
 MCMethodDefinition >> load [
 
-	| method |
+	| method stream |
+	
+	stream := Stdio stdout.
+	Time now print24: true on: stream.
+
+	stream
+		nextPut: Character tab;
+		nextPutAll: category asString;
+		nextPut: Character tab;
+		nextPutAll: source asString;
+		lf;
+		flush.
+	
 	method := self actualClass compiler
 		          protocol: category;
 		          changeStamp: timeStamp;
