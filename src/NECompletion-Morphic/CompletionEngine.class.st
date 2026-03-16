@@ -148,7 +148,7 @@ CompletionEngine >> handleKeyDownBefore: aKeyboardEvent editor: anEditor [
 			self openMenu.
 			^ true ].
 
-	key sameContents: KeyboardKey backspace ifTrue: [
+	(key sameContents: KeyboardKey backspace) ifTrue: [
 		self smartBackspace ifTrue: [ ^ true ] ].
 
 	self isMenuOpen ifFalse: [ ^ false ].

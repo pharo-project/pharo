@@ -191,11 +191,6 @@ ByteString >> compareWith: anotherString collated: order [
 		  ifFalse: [ 1 ]
 ]
 
-{ #category : 'comparing' }
-ByteString >> sameContents: aSymborOrString [
-	^ self = aSymborOrString asString
-]
-
 { #category : 'converting' }
 ByteString >> createSymbol [
 

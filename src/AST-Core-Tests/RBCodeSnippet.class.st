@@ -3150,7 +3150,7 @@ RBCodeSnippet >> searchDefinition [
 		| parent |
 		(node isLiteralNode and: [
 			 parent := node parent.
-			 node value sameContents: self source and: [
+			 (node value sameContents: self source) and: [
 				 parent isMessage and: [ parent selector = #source: ] ] ])
 			ifTrue: [
 				parent isCascaded ifTrue: [ parent := parent parent ].

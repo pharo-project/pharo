@@ -34,7 +34,7 @@ MCClassDefinition >> = aDefinition [
 		and: [ superclassName = aDefinition superclassName
 		and: [ self traitCompositionString = aDefinition traitCompositionString
 		and: [ self classTraitCompositionString = aDefinition classTraitCompositionString
-		and: [ self packageName sameContents: aDefinition packageName
+		and: [ (self packageName sameContents: aDefinition packageName)
 		and: [  self tagName = aDefinition tagName
 		and: [ type = aDefinition type and: [ self sortedVariables = aDefinition sortedVariables and: [ comment = aDefinition comment ] ] ] ] ] ] ]]
 ]

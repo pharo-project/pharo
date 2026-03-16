@@ -668,7 +668,7 @@ Dictionary >> keyAtValue: value ifAbsent: exceptionBlock [
 	: Use =, not ==, so stings like 'this' can be found.  Note that MethodDictionary continues to use == so it will be fast."
 
 	self associationsDo:
-		[:association | value sameContents: association value ifTrue: [^association key]].
+		[:association | (value sameContents: association value) ifTrue: [^association key]].
 	^exceptionBlock value
 ]
 

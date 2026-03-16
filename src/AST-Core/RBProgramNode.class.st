@@ -498,7 +498,7 @@ RBProgramNode >> equalTo: aNode exceptForVariables: variableNameCollection [
 	(self equalTo: aNode withMapping: dictionary) ifFalse: [^false].
 	dictionary keysAndValuesDo:
 			[:key :value |
-			(key sameContents: value or: [variableNameCollection includes: key]) ifFalse: [^false]].
+			((key sameContents: value) or: [variableNameCollection includes: key]) ifFalse: [^false]].
 	^true
 ]
 

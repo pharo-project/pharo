@@ -23,7 +23,7 @@ Class {
 
 { #category : 'accessing' }
 HEExtendedEnvironment >> classNamed: aClassName [
-	^ newClass name sameContents: aClassName
+	^ (newClass name sameContents: aClassName)
 		ifTrue: [ newClass ]
 		ifFalse: [ inner classNamed: aClassName ]
 ]

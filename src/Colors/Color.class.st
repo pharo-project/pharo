@@ -872,7 +872,7 @@ Color class >> registeredNameOf: aColor [
 	colorName := #unnamed.
 	ColorRegistry
 		keysAndValuesDo: [ :key :value |
-			value sameContents: aColor
+			(value sameContents: aColor)
 				ifTrue: [ colorName := key ] ].
 	^ colorName
 ]

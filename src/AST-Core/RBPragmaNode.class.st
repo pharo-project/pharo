@@ -64,7 +64,7 @@ RBPragmaNode >> argumentAt: keywordSelector [
 { #category : 'accessing' }
 RBPragmaNode >> argumentAt: keywordSelector ifAbsent: absentBlock [
 	self selectorParts with: self arguments do: [ :selectorPart :argument |
-		selectorPart value sameContents: keywordSelector
+		(selectorPart value sameContents: keywordSelector)
 			ifTrue: [ ^ argument ]].
 	^ absentBlock value
 ]

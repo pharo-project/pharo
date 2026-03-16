@@ -339,7 +339,7 @@ MenuRegistration >> itemNamed: aName [
 	"Return the MenuRegistration named aName or nil if none is found"
 
 	| result |
-	self name sameContents: aName ifTrue: [ ^ self ].
+	(self name sameContents: aName) ifTrue: [ ^ self ].
 	result := self itemList
 		ifNotNil: [ :l |
 			l

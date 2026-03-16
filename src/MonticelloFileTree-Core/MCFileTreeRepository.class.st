@@ -224,7 +224,7 @@ MCFileTreeRepository >> goferVersionFrom: aVersionReference [
     ((self readableFileNames collect: [ :fileName | self fileDirectoryOn: fileName ])
         select: [ :packageDirectory | self fileUtils directoryExists: packageDirectory ])
         collect: [ :packageDirectory | 
-            (self versionInfoForPackageDirectory: packageDirectory) name sameContents: aVersionReference name
+            ((self versionInfoForPackageDirectory: packageDirectory) name sameContents: aVersionReference name)
                 ifTrue: [ ^ self loadVersionFromFileNamed: (self fileUtils directoryName: packageDirectory) ] ].
     ^ nil
 ]
@@ -333,7 +333,7 @@ MCFileTreeRepository >> versionFrom: aVersionReferenceString [
     (self readableFileNames collect: [ :fileName | self fileDirectoryOn: fileName ])
         select: [ :packageDirectory | self fileUtils directoryExists: packageDirectory ]
         thenCollect: [ :packageDirectory | 
-            (self versionInfoForPackageDirectory: packageDirectory) name sameContents: aVersionReferenceString
+            ((self versionInfoForPackageDirectory: packageDirectory) name sameContents: aVersionReferenceString)
                 ifTrue: [ ^ self loadVersionFromFileNamed: (self fileUtils directoryName: packageDirectory) ] ].
     ^ nil
 ]

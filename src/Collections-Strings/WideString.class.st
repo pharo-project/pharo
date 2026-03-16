@@ -215,8 +215,3 @@ WideString >> wordAt: index put: anInteger [
 	<primitive: 61>
 	self basicAt: index put: anInteger
 ]
-
-{ #category : 'comparing' }
-WideString >> sameContents: aSymborOrString [
-	^ self = aSymborOrString asString
-]

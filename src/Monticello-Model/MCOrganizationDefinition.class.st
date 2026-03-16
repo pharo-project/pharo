@@ -31,7 +31,7 @@ MCOrganizationDefinition class >> packageName: aPackageName tagNames: aCollectio
 { #category : 'comparing' }
 MCOrganizationDefinition >> = aDefinition [
 
-	^ super = aDefinition and: [ packageName sameContents: aDefinition packageName and: [ tagNames = aDefinition tagNames ] ]
+	^ super = aDefinition and: [ (packageName sameContents: aDefinition packageName) and: [ tagNames = aDefinition tagNames ] ]
 ]
 
 { #category : 'accessing' }

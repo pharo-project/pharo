@@ -247,7 +247,7 @@ ProcessList >> indexOf: anElement startingAt: start ifAbsent: exceptionBlock [
 	currentLink := self linkAt: start ifAbsent: [nil].
 	index := start.
 	[currentLink isNil ]
-		whileFalse: [currentLink value sameContents: anElement value ifTrue: [^index].
+		whileFalse: [(currentLink value sameContents: anElement value) ifTrue: [^index].
 					currentLink := currentLink nextLink.
 					index := index +1].
 	^exceptionBlock value
@@ -304,7 +304,7 @@ ProcessList >> linkOf: anObject [
 ProcessList >> linkOf: anObject ifAbsent: errorBlock [
 
 	self
-		linksDo: [:el | el value sameContents: anObject
+		linksDo: [:el | (el value sameContents: anObject)
 				ifTrue: [^ el]].
 	^ errorBlock value
 ]

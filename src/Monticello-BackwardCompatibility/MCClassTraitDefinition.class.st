@@ -27,7 +27,7 @@ MCClassTraitDefinition >> = aDefinition [
 	^ super = aDefinition
 		and: [ baseTrait = aDefinition baseTrait
 		and: [ self classTraitCompositionString = aDefinition classTraitCompositionString
-		and: [ self packageName sameContents: aDefinition packageName
+		and: [ (self packageName sameContents: aDefinition packageName)
 		and: [  self tagName = aDefinition tagName] ] ] ]
 ]
 

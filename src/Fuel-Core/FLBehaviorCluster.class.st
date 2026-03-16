@@ -132,7 +132,7 @@ FLBehaviorCluster >> serializeReferencesStepWith: anEncoder [
 { #category : 'serialize/materialize' }
 FLBehaviorCluster >> setTag: packageTagName ofPackage: packageName to: aClass [
 
-	packageName sameContents: UndefinedPackage undefinedPackageName ifFalse: [
+	(packageName sameContents: UndefinedPackage undefinedPackageName) ifFalse: [
 		aClass packageOrganizer
 			packageNamed: packageName
 			ifPresent: [ :package |

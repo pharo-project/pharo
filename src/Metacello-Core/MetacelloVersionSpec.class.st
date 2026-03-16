@@ -506,7 +506,7 @@ MetacelloVersionSpec >> packageSpecsInLoadOrderForMap: packageMap [
 	importArray ifNotNil: [
 		loadOrder do: [ :pkg |
 			importArray do: [ :assoc |
-				assoc key sameContents: pkg name ifTrue: [
+				(assoc key sameContents: pkg name) ifTrue: [
 					importProjectSpecs at: pkg name put: pkg.
 					(assoc value select: [ :each | importNames includes: each ]) do: [
 						:each |

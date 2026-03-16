@@ -930,7 +930,7 @@ MenuMorph >> keyDown: evt [
 
 	| matchString key selectable |
 	key := evt key.
-	(key sameContents: KeyboardKey enter or: [key sameContents: KeyboardKey keypadEnter])
+	((key sameContents: KeyboardKey enter) or: [key sameContents: KeyboardKey keypadEnter])
 		ifTrue: [ selectedItem
 				ifNotNil: [ ^ selectedItem hasSubMenu
 						ifTrue: [ evt hand newMouseFocus: selectedItem subMenu.
@@ -938,7 +938,7 @@ MenuMorph >> keyDown: evt [
 						ifFalse: [ "self delete." selectedItem invokeWithEvent: evt ] ].
 			(selectable := self items) size = 1 ifTrue: [ ^ selectable first invokeWithEvent: evt ].
 			^ self ].
-	key sameContents: KeyboardKey escape
+	(key sameContents: KeyboardKey escape)
 		ifTrue: [ "escape key"
 			self
 				valueOfProperty: #matchString
@@ -960,15 +960,15 @@ MenuMorph >> keyDown: evt [
 	key isArrowRight ifTrue: [ (self rightArrowStroked: evt) ifTrue: [ ^ self ] ].
 	key isArrowUp ifTrue: [ ^ self moveSelectionDown: -1 event: evt ].	"up arrow key"
 	key isArrowDown ifTrue: [ ^ self moveSelectionDown: 1 event: evt ].	"down arrow key"
-	key sameContents: KeyboardKey pageUp ifTrue: [ ^ self moveSelectionDown: -5 event: evt ].	"page up key"
-	key sameContents: KeyboardKey pageDown ifTrue: [ ^ self moveSelectionDown: 5 event: evt ].	"page down key"
+	(key sameContents: KeyboardKey pageUp) ifTrue: [ ^ self moveSelectionDown: -5 event: evt ].	"page up key"
+	(key sameContents: KeyboardKey pageDown) ifTrue: [ ^ self moveSelectionDown: 5 event: evt ].	"page down key"
 
 	"If we reach this point, it means that we are editing the filter associated to each menu. "
 	"In case ther eis no filter associated to the menu, we simply create one"
 	matchString := self valueOfProperty: #matchString ifAbsentPut: [ String new ].
 
 	"If we press the backspace, then we simply remove the last character from matchString"
-	(key sameContents: KeyboardKey backspace and: [ matchString notEmpty ])
+	((key sameContents: KeyboardKey) backspace and: [ matchString notEmpty ])
 		ifTrue: [ matchString := matchString allButLast.
 			self recordFiltering: matchString.
 			self displayFiltered: evt ]

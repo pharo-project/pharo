@@ -429,7 +429,7 @@ ZipWriteStream >> scanBitLengths: bits into: anArray [
 	lastCount := 1.
 	2 to: bits size do:[:i|
 		value := bits at: i.
-		value sameContents: lastValue
+		(value sameContents: lastValue)
 			ifTrue:[lastCount := lastCount + 1]
 			ifFalse:[self scanBitLength: lastValue repeatCount: lastCount into: anArray.
 					lastValue := value.
@@ -525,7 +525,7 @@ ZipWriteStream >> sendLiteralTree: lTree distanceTree: dTree using: blTree bitLe
 	lastCount := 1.
 	2 to: bits size do:[:i|
 		value := bits at: i.
-		value sameContents: lastValue
+		(value sameContents: lastValue)
 			ifTrue:[lastCount := lastCount + 1]
 			ifFalse:[self sendBitLength: lastValue repeatCount: lastCount tree: blTree.
 					lastValue := value.

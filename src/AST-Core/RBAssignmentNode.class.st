@@ -72,7 +72,7 @@ RBAssignmentNode >> assignmentPosition [
 
 { #category : 'testing' }
 RBAssignmentNode >> assigns: aVariableName [
-	^variable name sameContents: aVariableName or: [value assigns: aVariableName]
+	^(variable name sameContents: aVariableName) or: [value assigns: aVariableName]
 ]
 
 { #category : 'accessing' }
