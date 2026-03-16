@@ -6,8 +6,8 @@ the closure : #( array node .
 Forgetting the opening will be assumed to be a parentheses node.
 "
 Class {
-	#name : RBLiteralArrayErrorNode,
-	#superclass : RBEnglobingErrorNode,
+	#name : 'RBLiteralArrayErrorNode',
+	#superclass : 'RBEnglobingErrorNode',
 	#category : 'AST-Core-Nodes - ErrorNodes',
 	#package : 'AST-Core',
 	#tag : 'Nodes - ErrorNodes'
