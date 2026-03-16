@@ -560,7 +560,7 @@ SHRBStyleAttributionTest >> testInvalidStyle [
 SHRBStyleAttributionTest >> testKeywordStyle [
 
 	| aText |
-	aText := 'm self style: test' asText.
+	aText := 'm self style: ''test''' asText.
 	self style: aText.
 
 	self
