@@ -349,7 +349,7 @@ Number >> isZero [
 { #category : 'comparing' }
 Number >> literalEqual: other [
 
-	^ self class == other class and: [self = other]
+	^ self class == other class and: [self sameContents: other]
 ]
 
 { #category : 'arithmetic' }

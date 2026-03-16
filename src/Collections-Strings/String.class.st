@@ -2194,7 +2194,7 @@ String >> linesDo: aBlock [
 { #category : 'comparing' }
 String >> literalEqual: other [
 
-	^ self class == other class and: [self = other]
+	^ self class == other class and: [self sameContents: other]
 ]
 
 { #category : 'comparing' }

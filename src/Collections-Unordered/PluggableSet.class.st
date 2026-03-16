@@ -97,7 +97,7 @@ PluggableSet >> scanFor: anObject [
 	[
 		| element |
 		((element := array at: index) == nil or: [
-			equalBlock ifNil: [element enclosedElement = anObject] ifNotNil: [
+			equalBlock ifNil: [element enclosedElement sameContents: anObject] ifNotNil: [
 				equalBlock value: element enclosedElement value: anObject ]])
 			ifTrue: [ ^index ].
 		(index := index \\ array size + 1) = start ] whileFalse.
