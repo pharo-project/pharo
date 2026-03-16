@@ -109,12 +109,12 @@ ZdcSecureSMTPClient >> initialize [
 
 { #category : 'testing' }
 ZdcSecureSMTPClient >> isSSL [
-	^ variant = #ssl
+	^ variant sameContents: #ssl
 ]
 
 { #category : 'testing' }
 ZdcSecureSMTPClient >> isStartTLS [
-	^ variant = #startTLS
+	^ variant sameContents: #startTLS
 ]
 
 { #category : 'private' }
@@ -153,8 +153,8 @@ ZdcSecureSMTPClient >> sendCommand: aString [
 
 { #category : 'private' }
 ZdcSecureSMTPClient >> setupStream [
-	variant = #ssl ifTrue: [ ^ self setupStreamForSSL ].
-	variant = #startTLS ifTrue: [ ^ self setupStreamForStartTLS ]
+	(variant sameContents: #ssl) ifTrue: [ ^ self setupStreamForSSL ].
+	(variant sameContents: #startTLS) ifTrue: [ ^ self setupStreamForStartTLS ]
 ]
 
 { #category : 'private' }

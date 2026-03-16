@@ -35,7 +35,7 @@ TaCompositionElement >> addUser: aClass [
 
 { #category : 'transforming selectors' }
 TaCompositionElement >> aliasSelector: selector [
-	^ selector = #initializeTalent
+	^ (selector sameContents: #initializeTalent)
 		ifTrue: [ self initializeSelectorForMe ]
 		ifFalse: [ selector ]
 ]
@@ -163,7 +163,7 @@ TaCompositionElement >> selectors [
 	"We do not rely on the methods of the innerclass because while removing a trait we might return the removed methods during the removal and I need to work properly during the method dictionary rebuild"
 	originals := innerClass localSelectors , innerClass traitComposition selectors.
 	^ (originals includes: #initializeTalent)
-		  ifTrue: [ (originals reject: [ :e | e = #initializeTalent ]) copyWith: self initializeSelectorForMe ]
+		  ifTrue: [ (originals reject: [ :e | e sameContents: #initializeTalent ]) copyWith: self initializeSelectorForMe ]
 		  ifFalse: [ originals ]
 ]
 

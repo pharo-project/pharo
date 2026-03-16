@@ -25,7 +25,7 @@ ReProperMethodProtocolNameRule class >> badMethodProtocolNames [
 ReProperMethodProtocolNameRule class >> checksMethod [
 	"This one is abstract but subclasses should run as rules"
 
-	^ self name ~= #ReProperMethodProtocolNameRule
+	^ (self name sameContents: #ReProperMethodProtocolNameRule) not
 ]
 
 { #category : 'private - accessing' }

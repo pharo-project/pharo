@@ -153,7 +153,7 @@ JoinSection >> createHighlightsFrom: srcPara to: dstPara [
 		ifFalse: [ dstText := '' ].
 	self src text: srcText.
 	self dst text: dstText.
-	self type = #modification
+	(self type sameContents: #modification)
 		ifFalse: [ ^ self ].
 	s := self src highlights.
 	d := self dst highlights.
@@ -194,7 +194,7 @@ JoinSection >> createHighlightsFrom: srcPara to: dstPara [
 JoinSection >> drawMapOn: aCanvas in: rect scale: scale [
 	"Draw the join on the given canvas scaled into the given rectangle."
 
-	self type = #match ifTrue: [^self].
+	(self type sameContents: #match) ifTrue: [^self].
 	aCanvas
 		frameAndFillRectangle: (rect left @ (((self dst range first max: 0) * scale) truncated + rect top)
 						corner: (rect right @ ((self dst range last * scale) truncated + rect top)))

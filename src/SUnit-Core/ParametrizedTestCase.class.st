@@ -80,7 +80,7 @@ ParametrizedTestCase class >> buildSuite [
 
 { #category : 'private' }
 ParametrizedTestCase class >> isAbstract [
-	^ self name = #ParametrizedTestCase
+	^ self name sameContents: #ParametrizedTestCase
 ]
 
 { #category : 'building suites' }

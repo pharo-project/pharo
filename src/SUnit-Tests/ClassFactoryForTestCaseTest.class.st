@@ -51,8 +51,8 @@ ClassFactoryForTestCaseTest >> testClassCreationInDifferentTags [
 	firstThreeClasses := factory createdClasses copy.
 	2 timesRepeat: [ factory make: [ :aBuilder | aBuilder tag: #Two ] ].
 	lastTwoClasses := factory createdClasses copyWithoutAll: firstThreeClasses.
-	self assert: (firstThreeClasses allSatisfy: [ :class | class package name = factory packageName and: [ class packageTag name = #One ] ]).
-	self assert: (lastTwoClasses allSatisfy: [ :class | class package name = factory packageName and: [ class packageTag name = #Two ] ])
+	self assert: (firstThreeClasses allSatisfy: [ :class | class package name = factory packageName and: [ class packageTag name sameContents: #One ] ]).
+	self assert: (lastTwoClasses allSatisfy: [ :class | class package name = factory packageName and: [ class packageTag name sameContents: #Two ] ])
 ]
 
 { #category : 'testing' }
@@ -121,6 +121,6 @@ ClassFactoryForTestCaseTest >> testTraitCreationInDifferentCategories [
 				beTrait;
 				tag: #Two ] ].
 	lastTwoTraits := factory createdTraits copyWithoutAll: firstThreeTraits.
-	self assert: (firstThreeTraits allSatisfy: [ :trait | trait package name = factory packageName and: [ trait packageTag name = #One ] ]).
-	self assert: (lastTwoTraits allSatisfy: [ :trait | trait package name = factory packageName and: [ trait packageTag name = #Two ] ])
+	self assert: (firstThreeTraits allSatisfy: [ :trait | trait package name = factory packageName and: [ trait packageTag name sameContents: #One ] ]).
+	self assert: (lastTwoTraits allSatisfy: [ :trait | trait package name = factory packageName and: [ trait packageTag name sameContents: #Two ] ])
 ]

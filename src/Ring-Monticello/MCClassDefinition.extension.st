@@ -16,7 +16,7 @@ MCClassDefinition >> ensureRingDefinitionIn: anRGEnvironment [
 		def metaclass: metaclassDef.
 		def traitComposition: (self traitCompositionFrom: self traitComposition parent: def).
 		metaclassDef traitComposition: (self traitCompositionFrom: self classTraitComposition parent: metaclassDef).
-		(self superclassName = #nil)
+		(self superclassName sameContents: #nil)
 			ifTrue: [ def superclass: def ]
 			ifFalse: [ def superclass: (anRGEnvironment ensureClassNamed: superclassName ) ].
 		def category: self category.
@@ -29,7 +29,7 @@ MCClassDefinition >> ensureRingDefinitionIn: anRGEnvironment [
 				time: (self timeForStamp: self commentStamp);
 				yourself).
 		self variables do: [ :each |
-			(each class type = #instance) ifTrue: [
+			(each class type sameContents: #instance) ifTrue: [
 				(each name includes: $>)
 					ifFalse: [ def layout addSlot: (RGInstanceVariableSlot named: each name parent: def layout)]
 					ifTrue: [
@@ -37,11 +37,11 @@ MCClassDefinition >> ensureRingDefinitionIn: anRGEnvironment [
 						unknownSlot := RGUnknownSlot named: ((each name copyUpTo: $=) copyWithout: $#) trimBoth parent: def layout.
 						unknownSlot expression: (each name copyAfter: $>) trimBoth.
 						def layout addSlot: unknownSlot]].
-			(each class type = #class) ifTrue: [
+			(each class type sameContents: #class) ifTrue: [
 				def addClassVariable: (RGClassVariable named: each name parent: def)].
-			(each class type = #classInstance) ifTrue: [
+			(each class type sameContents: #classInstance) ifTrue: [
 				metaclassDef layout addSlot: (RGInstanceVariableSlot named: each name parent: metaclassDef layout)].
-			(each class type = #pool) ifTrue: [
+			(each class type sameContents: #pool) ifTrue: [
 				def addSharedPool: (RGPoolVariable named: each name parent: def)]. ].
 		def]
 ]

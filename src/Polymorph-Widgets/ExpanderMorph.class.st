@@ -168,7 +168,7 @@ ExpanderMorph >> titleText: aStringOrText [
 ExpanderMorph >> update: aspect [
 	"Update the receiver."
 
-	aspect = #expanded
+	(aspect sameContents: #expanded)
 		ifTrue: [self spaceFillWeight: (self expanded
 					ifTrue: [1]
 					ifFalse: [0]).

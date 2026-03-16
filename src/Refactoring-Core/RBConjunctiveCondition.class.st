@@ -50,7 +50,7 @@ RBConjunctiveCondition >> check [
 { #category : 'private' }
 RBConjunctiveCondition >> errorBlock [
 
-	^ failed = #leftFailed
+	^ (failed sameContents: #leftFailed)
 		  ifTrue: [ left errorBlock ]
 		  ifFalse: [ right errorBlock ]
 ]
@@ -111,7 +111,7 @@ RBConjunctiveCondition >> unknownFailed [
 { #category : 'displaying' }
 RBConjunctiveCondition >> violationMessageOn: aStream [
 
-	failed = #left
+	(failed sameContents: #left)
 		ifTrue: [ left violationMessageOn: aStream ]
 		ifFalse: [ right violationMessageOn: aStream ]
 ]

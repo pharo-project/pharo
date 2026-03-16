@@ -56,12 +56,12 @@ MetalinkChanged >> action: anObject [
 
 { #category : 'testing' }
 MetalinkChanged >> isAdd [
-	^action = #add
+	^action sameContents: #add
 ]
 
 { #category : 'testing' }
 MetalinkChanged >> isRemove [
-	^action = #remove
+	^action sameContents: #remove
 ]
 
 { #category : 'accessing' }

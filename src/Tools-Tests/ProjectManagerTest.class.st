@@ -9,7 +9,7 @@ Class {
 ProjectManagerTest >> testPackagesInAProject [
 
 	| sUnitProject |
-	sUnitProject := ProjectManager new projects detect: [ :project | project name = #SUnit ].
+	sUnitProject := ProjectManager new projects detect: [ :project | project name sameContents: #SUnit ].
 
 	self
 		assertCollection:

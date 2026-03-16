@@ -175,17 +175,17 @@ OSWindowGLAttributes >> greenSize: anObject [
 
 { #category : 'profile selection' }
 OSWindowGLAttributes >> hasCompatibilityProfile [
-	^ self profileType = #compatibility
+	^ self profileType sameContents: #compatibility
 ]
 
 { #category : 'profile selection' }
 OSWindowGLAttributes >> hasCoreProfile [
-	^ self profileType = #core
+	^ self profileType sameContents: #core
 ]
 
 { #category : 'profile selection' }
 OSWindowGLAttributes >> hasESProfile [
-	^ self profileType = #es
+	^ self profileType sameContents: #es
 ]
 
 { #category : 'initialization' }

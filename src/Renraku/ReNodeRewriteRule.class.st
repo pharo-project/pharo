@@ -35,7 +35,7 @@ ReNodeRewriteRule class >> isAbstract [
 { #category : 'testing' }
 ReNodeRewriteRule class >> isVisible [
 
-	^ self name ~=  #ReNodeRewriteRule
+	^ (self name sameContents: #ReNodeRewriteRule) not
 ]
 
 { #category : 'adding' }

@@ -17,7 +17,7 @@ ReNoNilAssignationInInitializeRule class >> checksMethod [
 { #category : 'running' }
 ReNoNilAssignationInInitializeRule >> check: aMethod forCritiquesDo: aCriticBlock [
 	| problemAssigments|
-	(aMethod selector = #initialize and: [ aMethod methodClass isInstanceSide ]) ifFalse: [ ^ self ].
+	((aMethod selector sameContents: #initialize) and: [ aMethod methodClass isInstanceSide ]) ifFalse: [ ^ self ].
 
 	problemAssigments := aMethod ast assignmentNodes select: [ :assignment | assignment value value isNil ].
 

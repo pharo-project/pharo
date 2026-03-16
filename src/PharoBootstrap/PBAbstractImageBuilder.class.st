@@ -261,7 +261,7 @@ PBAbstractImageBuilder >> createBehaviorFromDefinition: aRFiDefinition [
 	[ ^ classLoader createBehaviorFromDefinition: aRFiDefinition ]
 			on: AssertionFailure do: [ :e |
 				((e signalerContext method selector == #assert:)
-					and: [ e signalerContext sender method selector = #mapStackPages ]) ifFalse: [ e pass ]] 
+					and: [ e signalerContext sender method selector sameContents: #mapStackPages ]) ifFalse: [ e pass ]] 
 ]
 
 { #category : 'running' }
@@ -726,7 +726,7 @@ PBAbstractImageBuilder >> initializeImage [
 						ifFalse: [ ex pass ] ] ]
 				on: AssertionFailure
 				do: [ :e |
-					(e signalerContext sender method selector == #assert: and: [ e signalerContext sender sender method selector = #mapStackPages ])
+					(e signalerContext sender method selector == #assert: and: [ e signalerContext sender sender method selector sameContents: #mapStackPages ])
 						ifTrue: [ e resume ]
 						ifFalse: [ e pass ] ].
 

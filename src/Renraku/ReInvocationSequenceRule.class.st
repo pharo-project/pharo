@@ -39,7 +39,7 @@ ReInvocationSequenceRule class >> exampleSequenceMethods [
 { #category : 'testing' }
 ReInvocationSequenceRule class >> isVisible [
 
-	^ self name ~= #ReInvocationSequenceRule and: [
+	^ (self name sameContents: #ReInvocationSequenceRule) not and: [
 		super isVisible ]
 ]
 

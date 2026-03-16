@@ -18,7 +18,7 @@ RBParseTreeLintRule class >> checksMethod [
 
 { #category : 'testing' }
 RBParseTreeLintRule class >> isVisible [
-	^ self name ~= #RBParseTreeLintRule
+	^ (self name sameContents: #RBParseTreeLintRule) not
 ]
 
 { #category : 'accessing' }

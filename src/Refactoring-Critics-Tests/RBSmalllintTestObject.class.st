@@ -394,7 +394,7 @@ RBSmalllintTestObject >> returnsIfTrue [
 
 { #category : 'methods' }
 RBSmalllintTestObject >> searchingLiteral [
-	^self printString = #a or: [#() = self printString | ( #() == self printString)]
+	^(self printString sameContents: #a) or: [#() = self printString | ( #() == self printString)]
 ]
 
 { #category : 'methods' }

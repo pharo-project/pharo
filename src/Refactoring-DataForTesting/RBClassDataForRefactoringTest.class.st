@@ -501,7 +501,7 @@ RBClassDataForRefactoringTest >> returnsIfTrue [
 
 { #category : 'lint' }
 RBClassDataForRefactoringTest >> searchingLiteral [
-	^self printString = #a or: [#() = self printString | ( #() == self printString)]
+	^(self printString sameContents: #a) or: [#() = self printString | ( #() == self printString)]
 ]
 
 { #category : 'tests' }

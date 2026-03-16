@@ -333,8 +333,8 @@ DiffMorph >> calculateAllDifferences [
 	dstDiffStart := 1.
 	differences := OrderedCollection new.
 	self joinMappings do: [ :join |
-		join type = #match ifFalse: [
-			join type = #modification
+		(join type sameContents: #match) ifFalse: [
+			(join type sameContents: #modification)
 				ifTrue: [
 					differences addAll: (self
 							 differencesStartingOnSrcAt: srcDiffStart

@@ -18,8 +18,8 @@ TestRunnerTreePresenter class >> open [
 { #category : 'presenters-initialization' }
 TestRunnerTreePresenter >> childreenFor: aParent [
 
-	aParent = #failures ifTrue: [ ^ runner result failures ].
-	aParent = #errors ifTrue: [ ^ runner result errors ].
+	(aParent sameContents: #failures) ifTrue: [ ^ runner result failures ].
+	(aParent sameContents: #errors) ifTrue: [ ^ runner result errors ].
 	"..."
 	^ {  }
 ]

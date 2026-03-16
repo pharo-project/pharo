@@ -66,9 +66,9 @@ ProperMethodCategorizationTest >> testClassSideInitializeMethodNeedsToBeInClassI
 
 	Object allSubclassesDo: [:cls | 
 		cls methods do: [:method | 
-			(method selector = #initialize and: [ method isClassSide and: [( method package name beginsWith: 'SmalltalkCI') not ] ])
+			((method selector sameContents: #initialize) and: [ method isClassSide and: [( method package name beginsWith: 'SmalltalkCI') not ] ])
 				ifTrue: [ classSideInitializeMethods add: method ]]].
-	violating := classSideInitializeMethods select: [:m | m protocolName ~= #'class initialization' ].
+	violating := classSideInitializeMethods select: [:m | (m protocolName sameContents: #'class initialization') not ].
 
 	self assert: violating isEmpty description: 'Class side #initialize methods should be in "class initialization" method category:' , violating asString
 ]
@@ -125,11 +125,11 @@ ProperMethodCategorizationTest >> testInstanceSideInitializeMethodNeedsToBeInIni
 
 	Object allSubclassesDo: [ :cls |
 		cls methods do: [ :method |
-			(method selector = #initialize and: [ method isClassSide not and: [ (method package name beginsWith: 'SmalltalkCI') not ] ]) ifTrue: [
+			((method selector sameContents: #initialize) and: [ method isClassSide not and: [ (method package name beginsWith: 'SmalltalkCI') not ] ]) ifTrue: [
 				instanceSideInitializeMethods add: method ] ] ].
 
 	"NSLnScale is an external project and is the last failure of this test."
-	violating := instanceSideInitializeMethods select: [ :m | m protocolName ~= #initialization and: [ (m methodClass name = 'NSLnScale') not ] ].
+	violating := instanceSideInitializeMethods select: [ :m | (m protocolName sameContents: #initialization) not and: [ (m methodClass name = 'NSLnScale') not ] ].
 
 	self assert: violating isEmpty description: 'Instance side #initialize methods should be in "initialization" method category:' , violating asString
 ]

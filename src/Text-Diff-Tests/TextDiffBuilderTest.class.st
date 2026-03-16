@@ -83,7 +83,7 @@ TextDiffBuilderTest >> testIfSequence1 [
 	self assert: (patch count: [ :each | each key sameContents: #insert ]) equals: 3.
 	self assert: (patch count: [ :each | each key sameContents: #remove ]) equals: 3.
 	patch do: [ :each |
-		each key sameContents: #match
+		(each key sameContents: #match)
 			ifTrue: [ self assert: each value first equals: $d ]
 			ifFalse: [ self assert: ('abc' includes: each value first) ] ]
 ]
@@ -98,7 +98,7 @@ TextDiffBuilderTest >> testIfSequence2 [
 	self assert: (patch count: [ :each | each key sameContents: #insert ]) equals: 2.
 	self assert: (patch count: [ :each | each key sameContents: #remove ]) equals: 2.
 	patch do: [ :each |
-		each key sameContents: #match
+		(each key sameContents: #match)
 			ifTrue: [ self assert: ('cd' includes: each value first) ]
 			ifFalse: [ self assert: ('ab' includes: each value first) ] ]
 ]
@@ -113,7 +113,7 @@ TextDiffBuilderTest >> testIfSequence3 [
 	self assert: (patch count: [ :each | each key sameContents: #insert ]) equals: 2.
 	self assert: (patch count: [ :each | each key sameContents: #remove ]) equals: 2.
 	patch do: [ :each |
-		each key sameContents: #match
+		(each key sameContents: #match)
 			ifTrue: [ self assert: ('bd' includes: each value first) ]
 			ifFalse: [ self assert: ('ac' includes: each value first) ] ]
 ]
@@ -128,7 +128,7 @@ TextDiffBuilderTest >> testIfSequence4 [
 	self assert: (patch count: [ :each | each key sameContents: #insert ]) equals: 2.
 	self assert: (patch count: [ :each | each key sameContents: #remove ]) equals: 2.
 	patch do: [ :each |
-		each key sameContents: #match
+		(each key sameContents: #match)
 			ifTrue: [ self assert: ('bc' includes: each value first) ]
 			ifFalse: [ self assert: ('ad' includes: each value first) ] ]
 ]
@@ -146,7 +146,7 @@ TextDiffBuilderTest >> testIfSequence5 [
 	self assert: (patch count: [ :each | each key sameContents: #remove ]) equals: 2.
 	nonMatches := #('ab' 'cd') detect: [ :each | each ~= matches ].
 	patch do: [ :each |
-		each key sameContents: #match
+		(each key sameContents: #match)
 			ifTrue: [ self assert: (matches includes: each value first) ]
 			ifFalse: [ self assert: (nonMatches includes: each value first) ] ]
 ]
@@ -161,7 +161,7 @@ TextDiffBuilderTest >> testIfSequence6 [
 	self assert: (patch count: [ :each | each key sameContents: #insert ]) equals: 1.
 	self assert: (patch count: [ :each | each key sameContents: #remove ]) equals: 1.
 	patch do: [ :each |
-		each key sameContents: #match
+		(each key sameContents: #match)
 			ifTrue: [ self assert: ('abc' includes: each value first) ]
 			ifFalse: [ self assert: each value first equals: $d ] ]
 ]

@@ -35,7 +35,7 @@ ReNodeMatchRule class >> isAbstract [
 { #category : 'testing' }
 ReNodeMatchRule class >> isVisible [
 
-	^ self name ~= #ReNodeMatchRule
+	^ (self name sameContents: #ReNodeMatchRule) not
 ]
 
 { #category : 'adding' }

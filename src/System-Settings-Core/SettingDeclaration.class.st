@@ -128,7 +128,7 @@ SettingDeclaration >> default: anObject [
 
 { #category : 'user interface' }
 SettingDeclaration >> defaultIcon [
-	^ (self type = #LogicalFont
+	^ ((self type sameContents: #LogicalFont)
 		or: [ self realValue isKindOf: AbstractFont ])
 		ifTrue: [ self iconNamed: #smallFonts ]
 		ifFalse: [ self iconNamed: #smallPaint ]

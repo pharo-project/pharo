@@ -639,7 +639,7 @@ DropListMorph >> positionList [
 			ifFalse: [bottomSpace >= topSpace
 				ifTrue: [height := bottomSpace. #below]
 				ifFalse: [height := topSpace. #above]]].
-	pos = #above
+	(pos sameContents: #above)
 		ifTrue: [self buttonMorph roundedCorners: (self roundedCorners copyWithoutAll: #(1 4)).
 				self roundedCorners: (self roundedCorners copyWithoutAll: #(1 4)).
 				self listMorph

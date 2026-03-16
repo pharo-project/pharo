@@ -124,7 +124,7 @@ ScheduleTest >> testExampleFromSwikiPage [
 	"Consider a TV programme scheduled for 8:30pm every Saturday and Sunday for the current year. "
 	"Find the first Saturday and set its time to 20h30"
 	| sat shows |
-	sat := Year current asMonth dates detect: [ :d | d dayOfWeekName = #Saturday ].
+	sat := Year current asMonth dates detect: [ :d | d dayOfWeekName sameContents: #Saturday ].
 	sat := sat start + (Duration hours: 20.5).
 	"Create a schedule"
 	shows := Schedule starting: sat ending: Year current end.
