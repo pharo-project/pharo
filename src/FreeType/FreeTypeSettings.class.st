@@ -179,9 +179,9 @@ FreeTypeSettings >> hintingSymbol [
 FreeTypeSettings >> hintingSymbol: aSymbol [
 	"#Full, #Light, #Normal or #None"
 
-	monoHinting := aSymbol = #Full.
-	lightHinting := aSymbol = #Light.
-	hinting := monoHinting or: [ lightHinting or: [ aSymbol = #Normal ] ].
+	monoHinting := aSymbol sameContents: #Full.
+	lightHinting := aSymbol sameContents: #Light.
+	hinting := monoHinting or: [ lightHinting or: [ aSymbol sameContents: #Normal ] ].
 	FreeTypeCache current removeAll.
 	FreeTypeFont allSubInstances do:[:each | each clearCachedMetrics ].
 
@@ -215,7 +215,7 @@ FreeTypeSettings >> monitorType [
 { #category : 'accessing' }
 FreeTypeSettings >> monitorType: aSymbol [
 	"#LCD or #CRT"
-	subPixelAntiAliasing := aSymbol = #LCD.
+	subPixelAntiAliasing := aSymbol sameContents: #LCD.
 	self currentWorld restoreMorphicDisplay
 ]
 

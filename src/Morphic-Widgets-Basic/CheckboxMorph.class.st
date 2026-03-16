@@ -387,8 +387,8 @@ CheckboxMorph >> update: aParameter [
 	aParameter isArray ifFalse: [ ^ self ].
 	aParameter size == 2 ifFalse: [ ^ self ].
 
-	aParameter first = #labelClickable: ifTrue: [ self labelClickable: aParameter second ].
-	aParameter first = #label: ifTrue: [ self label: aParameter second ]
+	(aParameter first sameContents: #labelClickable:) ifTrue: [ self labelClickable: aParameter second ].
+	(aParameter first sameContents: #label:) ifTrue: [ self label: aParameter second ]
 ]
 
 { #category : 'updating' }

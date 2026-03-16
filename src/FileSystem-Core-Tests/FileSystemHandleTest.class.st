@@ -16,7 +16,7 @@ Class {
 
 { #category : 'testing' }
 FileSystemHandleTest class >> isAbstract [
-	^ self name = #FileSystemHandleTest
+	^ self name sameContents: #FileSystemHandleTest
 ]
 
 { #category : 'testing' }

@@ -51,7 +51,7 @@ FLCreateClassSerializationTest >> testCreateByteArrayWithInstance [
 	
 	result := self resultOfSerializeAndMaterialize: (ByteArray with: 42).
 	
-	self assert: result class name = #ByteArray.
+	self assert: (result class name sameContents: #ByteArray).
 	self assert: result size = 1.
 	self assert: result first = 42."
 ]

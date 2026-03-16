@@ -376,7 +376,7 @@ DiffMorph >> calculatedJoinMappings [
 	destinationRunStart := destinationRunEnd := sourceRunStart := sourceRunEnd := matchSourceStart := matchDestinationStart := 0.
 	self difference
 		do: [ :p |
-			p key sameContents: #match
+			(p key sameContents: #match)
 				ifTrue: [
 					sourceLine := sourceLine + 1.
 					destinationLine := destinationLine + 1.
@@ -398,7 +398,7 @@ DiffMorph >> calculatedJoinMappings [
 								add:
 									(self newJoinSectionFrom: (sourceRunStart to: sourceRunEnd) to: (destinationRunStart to: destinationRunEnd)).
 							destinationRunStart := destinationRunEnd := sourceRunStart := sourceRunEnd := 0 ] ].
-			p key sameContents: #remove
+			(p key sameContents: #remove)
 				ifTrue: [
 					matchSourceStart > 0
 						ifTrue: [
@@ -410,7 +410,7 @@ DiffMorph >> calculatedJoinMappings [
 					sourceRunStart = 0
 						ifTrue: [ sourceRunStart := sourceLine ].
 					sourceRunEnd := sourceLine ].
-			p key sameContents: #insert
+			(p key sameContents: #insert)
 				ifTrue: [
 					matchSourceStart > 0
 						ifTrue: [
@@ -556,7 +556,7 @@ DiffMorph >> differencesStartingOnSrcAt: srcInitialDiffStart onDstAt: dstInitial
 	patchSequenceGroupedByMatch := patchSequence groupByRuns: [ :e |
 		                               e key sameContents: #match ].
 	patchSequenceGroupedByMatch do: [ :patches |
-		patches first key sameContents: #match
+		(patches first key sameContents: #match)
 			ifTrue: [
 				| increment |
 				increment := patches sum: [ :eachAssociation |
@@ -570,7 +570,7 @@ DiffMorph >> differencesStartingOnSrcAt: srcInitialDiffStart onDstAt: dstInitial
 				patches do: [ :association |
 					| string |
 					string := association value.
-					association key sameContents: #remove
+					(association key sameContents: #remove)
 						ifTrue: [ srcDiffStart := srcDiffStart + string size ]
 						ifFalse: [ dstDiffStart := dstDiffStart + string size ] ].
 				differences add: (srck to: srcDiffStart - 1) -> (dstk to: dstDiffStart - 1) ] ].

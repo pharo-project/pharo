@@ -196,7 +196,7 @@ FLContextSerializationTest >> testDoIt [
 		do: [ :error | 
 			| bottomContext |
 			bottomContext := error signalerContext findContextSuchThat: [ :ctxt | 
-				ctxt selector = #evaluate: ].
+				ctxt selector sameContents: #evaluate: ].
 			self environmentOfTest
 				at: #FLGlobalVariableForTesting
 				put: (error signalerContext cut: bottomContext) copyStack ] ]	forkAndWait.

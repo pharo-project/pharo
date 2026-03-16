@@ -130,7 +130,7 @@ ToggleMenuItemMorph >> drawText: aStringOrText on: aCanvas in: aRectangle [
 ToggleMenuItemMorph >> drawText: aStringOrText on: aCanvas in: aRectangle color: stringColor [
 	"Draw the text on the canvas within the given bounds."
 
-	(self enabled not and: [self theme disabledItemStyle = #inset])
+	(self enabled not and: [self theme disabledItemStyle sameContents: #inset])
 		ifTrue: [
 				aCanvas
 					drawString: aStringOrText

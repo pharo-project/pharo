@@ -160,13 +160,13 @@ JoinSection >> createHighlightsFrom: srcPara to: dstPara [
 	diffs := (InlineTextDiffBuilder from: srcText to: dstText) buildPatchSequence groupByRuns: [ :e | e key ].
 	diffs
 		do: [ :c |
-			c first key sameContents: #match
+			(c first key sameContents: #match)
 				ifTrue: [
 					c
 						do: [ :a |
 							si := si + a value size.
 							di := di + a value size ] ].
-			c first key sameContents: #insert
+			(c first key sameContents: #insert)
 				ifTrue: [
 					i := di.
 					c do: [ :a | di := di + a value size ].
@@ -177,7 +177,7 @@ JoinSection >> createHighlightsFrom: srcPara to: dstPara [
 						to: eb
 						to: d
 						color: self additionHighlightColor ].
-			c first key sameContents: #remove
+			(c first key sameContents: #remove)
 				ifTrue: [
 					i := si.
 					c do: [ :a | si := si + a value size ].

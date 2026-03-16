@@ -16,7 +16,7 @@ Class {
 { #category : 'testing' }
 AbstractFontFamilyMember class >> isAbstract [
 
-	^ self name = #AbstractFontFamilyMember
+	^ self name sameContents: #AbstractFontFamilyMember
 ]
 
 { #category : 'converting' }

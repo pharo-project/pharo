@@ -25,7 +25,7 @@ Compute basic arrangement of morphs:
 => Compute number of morphs per, width and height of row/column
 	- if equal spacing based on max size
 => Compute extra space per row/column
-	- if centering = #justified; distribute space equally
+	- if centering sameContents: #justified; distribute space equally
 	- if centering #leftFlush/#topFlush (-1) add start extra
 	- if centering #rightFlush/#bottomFlush (1) add end extra
 	- if centering #centered add 1/2 extra to start/end
@@ -64,7 +64,7 @@ TableLayout >> computeCellArrangement: cellHolder in: newBounds horizontal: aBoo
 		ifFalse:[wrap := aBool ifTrue:[newBounds width] ifFalse:[newBounds height].
 				wrap < maxCell x ifTrue:[wrap := maxCell x]].
 	spacing := properties cellSpacing.
-	(spacing == #globalRect or:[spacing = #globalSquare]) ifTrue:[
+	(spacing == #globalRect or:[spacing sameContents: #globalSquare]) ifTrue:[
 		"Globally equal spacing is a very special case here, so get out fast and easy"
 		^self computeGlobalCellArrangement: cells
 			in: newBounds horizontal: aBool

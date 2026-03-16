@@ -41,7 +41,7 @@ HiFastTableExample class >> openExample: selector [
 HiFastTableExample >> cellColumn: column row: rowIndex [
 	"Answer a morph with the cell view."
 
-	column id = #'Comment' ifTrue: [
+	(column id sameContents: #'Comment') ifTrue: [
 		| hiedraMorph commentMorph |
 		hiedraMorph := hiedraColumnController cellMorphAtRow: rowIndex.
 		commentMorph := (self elementAt: rowIndex) comment asMorph.

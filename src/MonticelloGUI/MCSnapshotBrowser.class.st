@@ -371,18 +371,18 @@ MCSnapshotBrowser >> switchBeInstance [
 
 { #category : 'switch' }
 MCSnapshotBrowser >> switchIsClass [
-	^ switch = #class
+	^ switch sameContents: #class
 ]
 
 { #category : 'switch' }
 MCSnapshotBrowser >> switchIsComment [
-	^ switch = #comment.
+	^ switch sameContents: #comment.
 ]
 
 { #category : 'switch' }
 MCSnapshotBrowser >> switchIsInstance [
 	switch ifNil: [switch := #instance].
-	^ switch = #instance.
+	^ switch sameContents: #instance.
 ]
 
 { #category : 'text' }

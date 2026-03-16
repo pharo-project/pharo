@@ -301,10 +301,10 @@ CoTypeInferencer >> visitMessageNode: aRBMessageNode receiverType: receiverType 
 	(#(+ - / *) includes: aRBMessageNode selector)
 		ifTrue: [ ^ { Number } ].
 
-	"(aRBMessageNode selector = #asValueHolder)
+	"(aRBMessageNode selector sameContents: #asValueHolder)
 		ifTrue: [ ^ { NewValueHolder } ]."
 
-	aRBMessageNode selector = #class
+	(aRBMessageNode selector sameContents: #class)
 		ifTrue: [ ^ receiverType collect: [ :each | each class ] ].
 
 	argumentTypes := aRBMessageNode arguments

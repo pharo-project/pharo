@@ -30,7 +30,7 @@ MCPackageTest >> testUnload [
 	self deny: (MCSnapshotTest hasProtocol: self mockExtensionProtocol).
 	testingEnvironment at: #MCMockClassA ifPresent: [ self fail ].
 	self assert: (Object subclasses
-			 detect: [ :c | c name = #MCMockClassA ]
+			 detect: [ :c | c name sameContents: #MCMockClassA ]
 			 ifNone: [  ]) isNil
 ]
 
@@ -49,7 +49,7 @@ MCPackageTest >> testUnloadWithAdditionalTracking [
 	self deny: (MCSnapshotTest hasProtocol: self mockExtensionProtocol).
 	testingEnvironment at: #MCMockClassA ifPresent: [ self fail ].
 	self assert: (Object subclasses
-			 detect: [ :c | c name = #MCMockClassA ]
+			 detect: [ :c | c name sameContents: #MCMockClassA ]
 			 ifNone: [  ]) isNil.
 	announcer unsubscribe: self.
 	self deny: (announcer hasSubscriber: self)

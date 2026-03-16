@@ -626,19 +626,19 @@ GIFReadWriter >> writeDisposal: aSymbol toPackedByte: aByte [
 	of the passed byte that includes the correct 3-bit
 	disposal code corresponding to the passed in symbol"
 
-	aSymbol = #restoreBackground
+	(aSymbol sameContents: #restoreBackground)
 		ifTrue: [
 			"This is a value of 2 in the 3-bit structure,
 			so 010, then shifted two to the left (equal to 8)"
 			^ aByte + (2 bitShift: 2) ].
 
-	aSymbol = #leaveCurrent
+	(aSymbol sameContents: #leaveCurrent)
 		ifTrue: [
 			"This is a value of 1 in the 3-bit structure,
 			so 001, then shifted two to the left (equal to 4)"
 			^ aByte + (1 bitShift: 2) ].
 
-	aSymbol = #restorePrevState
+	(aSymbol sameContents: #restorePrevState)
 		ifTrue: [
 			"This is a value of 3 in the 3-bit structure,
 			so 011, then shifted two to the left (equal to 12)"

@@ -75,5 +75,5 @@ HECompiledBlock >> headerFor: anEnvironment [
 { #category : 'comparing' }
 HECompiledBlock >> instVarNamesForEqualityComparison [
 
-	^ self class allInstVarNames reject: [ :e | e = #value ]
+	^ self class allInstVarNames reject: [ :e | e sameContents: #value ]
 ]

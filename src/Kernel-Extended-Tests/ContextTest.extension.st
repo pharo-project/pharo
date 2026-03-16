@@ -6,7 +6,7 @@ ContextTest >> testBlockCannotReturn [
 	| p |
 	p := [ thisContext pc: nil ] newProcess.
 	[
-	p suspendedContext method selector = #pc: and: [
+	(p suspendedContext method selector sameContents: #pc:) and: [
 		p suspendedContext sender isDead ] ] whileFalse: [ p step ].
 	self assert: p suspendedContext method selector equals: #pc:.
 	self assert: p suspendedContext sender isDead.

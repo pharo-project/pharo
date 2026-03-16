@@ -174,7 +174,7 @@ FileReferenceAttributeTest >> testModificationTime [
 FileReferenceAttributeTest >> testNLink [
 	"Assume that there is only one hard link to the just created temporary file"
 
-	OSPlatform current name = #'Win32' ifTrue:
+	(OSPlatform current name sameContents: #'Win32') ifTrue:
 		[ self should: [ self tempFileResource file numberOfHardLinks ] raise: FileAttributeNotSupported ]
 	ifFalse:
 		[ self assert: self tempFileResource file numberOfHardLinks equals: 1.

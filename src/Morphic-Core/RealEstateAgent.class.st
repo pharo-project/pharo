@@ -211,7 +211,7 @@ RealEstateAgent class >> standardWindowExtent [
 	"Answer the standard default extent for new windows. "
 	| effectiveExtent width strips height grid allowedArea maxLevel |
 	effectiveExtent := self maximumUsableArea extent - (self scrollBarSetback @ self screenTopSetback).
-	(self usedStrategy = #staggerFor:initialExtent:world:)
+	(self usedStrategy sameContents: #staggerFor:initialExtent:world:)
 		ifTrue: ["NOTE: following copied from
 			strictlyStaggeredInitialFrameFor: "
 			"Number to be staggered at each corner (less on small
@@ -294,7 +294,7 @@ RealEstateAgent class >> usedStrategy: aSelector [
 RealEstateAgent class >> windowColumnsDesired [
 	"Answer how many separate vertical columns of windows are
 	wanted."
-	^ (self usedStrategy = #staggerFor:initialExtent:world:)
+	^ (self usedStrategy sameContents: #staggerFor:initialExtent:world:)
 		ifTrue: [1]
 		ifFalse: [self maximumUsableArea width > 640
 				ifTrue: [2]
@@ -304,7 +304,7 @@ RealEstateAgent class >> windowColumnsDesired [
 { #category : 'settings' }
 RealEstateAgent class >> windowRowsDesired [
 	"Answer how many separate horizontal rows of windows are wanted."
-	^ (self usedStrategy = #staggerFor:initialExtent:world:)
+	^ (self usedStrategy sameContents: #staggerFor:initialExtent:world:)
 		ifTrue: [1]
 		ifFalse: [self maximumUsableArea height > 480
 				ifTrue: [2]

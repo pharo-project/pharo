@@ -60,7 +60,7 @@ ReSearchingLiteralRule >> isSearchingLiteralExpression: aSearchingNode for: anOb
 			[^(self isSearchingLiteralExpression: aSearchingNode receiver
 				for: anObjectNode)
 					and: [self isSearchingLiteralExpression: argument for: anObjectNode]].
-	aSearchingNode selector = #or: ifFalse: [^false].
+	aSearchingNode selector sameContents: #or: ifFalse: [^false].
 	argument isBlock ifFalse: [^false].
 	argument body statements size = 1 ifFalse: [^false].
 	^(self isSearchingLiteralExpression: aSearchingNode receiver

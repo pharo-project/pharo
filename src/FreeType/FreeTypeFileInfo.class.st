@@ -97,7 +97,7 @@ FreeTypeFileInfo >> printOn: aStream [
 	aStream
 		nextPutAll: familyGroupName asString, '::',styleNameExtracted asString, ' ';
 		nextPutAll:
-			(locationType = #absolute
+			((locationType sameContents: #absolute)
 				ifTrue:['']
 				ifFalse:['{',locationType asString,'}']);
 		nextPutAll: absoluteOrRelativePath asString;

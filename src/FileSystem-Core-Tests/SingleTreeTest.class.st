@@ -14,7 +14,7 @@ Class {
 
 { #category : 'testing' }
 SingleTreeTest class >> isAbstract [
-	^ self name = #SingleTreeTest
+	^ self name sameContents: #SingleTreeTest
 ]
 
 { #category : 'running' }

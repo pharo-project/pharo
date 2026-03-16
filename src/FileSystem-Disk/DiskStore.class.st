@@ -181,7 +181,7 @@ DiskStore >> basicEntry: directoryEntry path: aPath nodesDo: aBlock [
 	pathString := self stringFromPath: aPath.
 	encodedPathString := File encodePathString: pathString.
 	entry := File lookupEntryIn: encodedPathString index: index.
-	entry = #badDirectoryPath ifTrue: [ ^ self signalDirectoryDoesNotExist: aPath ].
+	(entry sameContents: #badDirectoryPath) ifTrue: [ ^ self signalDirectoryDoesNotExist: aPath ].
 
 	[ entry isNil ]
 		whileFalse: [

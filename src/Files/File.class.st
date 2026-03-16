@@ -441,7 +441,7 @@ File class >> connectToFile: filePointer writable: writableFlag [
 	It is the responsibility of the caller to coordinate closing the file."
 
 	<primitive: 'primitiveConnectToFile' module: 'FilePlugin' error: error>
-	error = #'bad argument' ifTrue: [
+	(error sameContents: #'bad argument') ifTrue: [
 		(filePointer isKindOf: ByteArray) ifFalse:
 			[ ^self error: 'filePointer must be a ByteArray' ].
 		(writableFlag isKindOf: Boolean) ifFalse:
@@ -456,7 +456,7 @@ File class >> connectToFileDescriptor: fileDescriptor writable: writableFlag [
 	It is the responsibility of the caller to coordinate closing the file."
 
 	<primitive: 'primitiveConnectToFileDescriptor' module: 'FilePlugin' error: error>
-	error = #'bad argument' ifTrue: [
+	(error sameContents: #'bad argument') ifTrue: [
 		fileDescriptor isInteger ifFalse:
 			[ ^self error: 'fileDescriptor must be an integer' ].
 		(writableFlag isKindOf: Boolean) ifFalse:
@@ -629,7 +629,7 @@ File class >> fileDescriptorType: fdNum [
 	* 4 - cygwin terminal (windows only)"
 
 	<primitive: 'primitiveFileDescriptorType' module: 'FilePlugin' error: error>
-	error = #'bad argument'
+	(error sameContents: #'bad argument')
 		ifTrue: [ fdNum isInteger
 				ifFalse: [ ^ self error: 'File Descriptor must be an integer!' ] ].
 	^ self primitiveFailed

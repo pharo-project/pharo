@@ -22,7 +22,7 @@ ReClassVariableNeitherReadNorWrittenRule >> check: aClass forCritiquesDo: aCriti
 	(self unreferencedVariablesOf: aClass)
 		reject: [ :variable |
 			variable definingClass pragmas anySatisfy: [ :pragma |
-				pragma selector = #ignoreUnusedClassVariables: and: [ (pragma argumentAt: 1) includes: variable name ] ] ]
+				pragma selector sameContents: #ignoreUnusedClassVariables: and: [ (pragma argumentAt: 1) includes: variable name ] ] ]
 		thenDo: [ :variable | aCriticBlock cull: (self critiqueFor: aClass about: variable name) ]
 ]
 

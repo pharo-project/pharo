@@ -47,5 +47,5 @@ ReDoNotSendSuperInitializeInClassSideRule >> name [
 { #category : 'testing' }
 ReDoNotSendSuperInitializeInClassSideRule >> shouldCheckMethod: aMethod [
 
-	^ aMethod selector = #initialize and: [ aMethod methodClass isMeta ]
+	^ (aMethod selector sameContents: #initialize) and: [ aMethod methodClass isMeta ]
 ]

@@ -11,7 +11,7 @@ Class {
 
 { #category : 'testing' }
 AbstractEnumerationVisitorTest class >> isAbstract [
-	^ self name = #AbstractEnumerationVisitorTest
+	^ self name sameContents: #AbstractEnumerationVisitorTest
 ]
 
 { #category : 'utilities' }

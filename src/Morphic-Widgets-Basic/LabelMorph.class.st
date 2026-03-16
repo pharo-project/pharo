@@ -100,7 +100,7 @@ LabelMorph >> drawOn: aCanvas [
 
 	super drawOn: aCanvas.
 
-	(self enabled not and: [ self disabledStyle = #inset ])	ifTrue: [
+	(self enabled not and: [ self disabledStyle sameContents: #inset ])	ifTrue: [
 		aCanvas
 			drawString: self contents
 			in: (self stringBounds translateBy: 1)

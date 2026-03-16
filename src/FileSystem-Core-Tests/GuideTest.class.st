@@ -15,7 +15,7 @@ Class {
 
 { #category : 'testing' }
 GuideTest class >> isAbstract [
-	^ self name = #GuideTest
+	^ self name sameContents: #GuideTest
 ]
 
 { #category : 'asserting' }

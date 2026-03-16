@@ -175,7 +175,7 @@ AnimatedImageMorph >> updateActiveForm [
 			activeForm := canvas form.
 			^ self
 			].
-	prevFrame disposal = #leaveCurrent
+	(prevFrame disposal sameContents: #leaveCurrent)
 		ifTrue: [ ^ self leaveCurrent ].	"Otherwise we assume a restore background"
 	^ self restoreBackground
 ]

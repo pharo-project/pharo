@@ -111,7 +111,7 @@ EFContext >> indentStyle: aSymbol [
 	"Indent style can be either #tabulation or #space."
 	
 	indentStyle := aSymbol.
-	indentString := aSymbol = #space
+	(indentString := aSymbol sameContents: #space)
 		ifTrue: [ self stringFromSpaceNumber: numberOfSpacesInIndent ]
 		ifFalse: [ String tab ]
 ]
@@ -342,7 +342,7 @@ EFContext >> numberOfSpacesInIndent [
 { #category : 'accessing' }
 EFContext >> numberOfSpacesInIndent: anInteger [
 	numberOfSpacesInIndent := anInteger.
-	indentString := self indentStyle = #space 
+	indentString := (self indentStyle sameContents: #space) 
 		ifTrue: [ self stringFromSpaceNumber: anInteger ]
 		ifFalse: [ String tab ]
 ]
