@@ -2379,6 +2379,11 @@ String >> sameAs: aString [
 	^(self compare: aString caseSensitive: false) = 2
 ]
 
+{ #category : #comparing }
+String >> sameContents: aSymborOrString [
+	^ self = aSymborOrString asString
+]
+
 { #category : 'accessing' }
 String >> skipAnySubstring: delimiters startingAt: start [
 
