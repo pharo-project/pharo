@@ -228,7 +228,7 @@ RGClassDefinition >> isSameRevisionAs: aRGClassDefinition [
 
 	^ (super isSameRevisionAs: aRGClassDefinition) and: [
 		  self superclassName == aRGClassDefinition superclassName and: [
-			  self package name sameContents: aRGClassDefinition package name and: [
+			  (self package name sameContents: aRGClassDefinition package name) and: [
 				  self packageTag = aRGClassDefinition packageTag and: [
 					  self classVarNames sorted = aRGClassDefinition classVarNames sorted and: [
 						  self sharedPoolNames sorted = aRGClassDefinition sharedPoolNames sorted and: [

@@ -182,9 +182,9 @@ PopupChoiceDialogWindow >> keyDown: anEvent [
 	(super keyDown: anEvent)
 		ifTrue: [ ^ true ].
 
-	(anEvent key sameContents: KeyboardKey enter or: [anEvent key sameContents: KeyboardKey keypadEnter])
+	((anEvent key sameContents: KeyboardKey enter) or: [anEvent key sameContents: KeyboardKey keypadEnter])
 		ifTrue: [ ^self processEnter: anEvent ].
-	anEvent key sameContents: KeyboardKey backspace
+	(anEvent key sameContents: KeyboardKey backspace)
 		ifTrue: [
 			self filter ifNotEmpty: [self filter: self filter allButLast].
 			^ true].
