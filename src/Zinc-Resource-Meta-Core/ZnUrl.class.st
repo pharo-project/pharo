@@ -199,7 +199,7 @@ ZnUrl >> asFileReference [
 	Note that for a FileReference a trailing slash is not relevant"
 
 	| path |
-	self assert: self scheme sameContents: #file description: 'Only a file:// URL can be converted to a FileReference'.
+	self assert: (self scheme sameContents: #file) description: 'Only a file:// URL can be converted to a FileReference'.
 	self isSlash
 		ifTrue: [ ^ FileSystem root ].
 	path := self isDirectoryPath

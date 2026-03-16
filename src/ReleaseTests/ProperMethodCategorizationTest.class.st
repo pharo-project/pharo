@@ -129,7 +129,7 @@ ProperMethodCategorizationTest >> testInstanceSideInitializeMethodNeedsToBeInIni
 				instanceSideInitializeMethods add: method ] ] ].
 
 	"NSLnScale is an external project and is the last failure of this test."
-	violating := instanceSideInitializeMethods select: [ :m | (m protocolName sameContents: #initialization) not and: [ (m methodClass name = 'NSLnScale') not ] ].
+	violating := instanceSideInitializeMethods select: [ :m | (m protocolName sameContents: #initialization) not and: [ (m methodClass name sameContents: 'NSLnScale') not ] ].
 
 	self assert: violating isEmpty description: 'Instance side #initialize methods should be in "initialization" method category:' , violating asString
 ]
