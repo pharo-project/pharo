@@ -24,7 +24,7 @@ ZnCookieJar >> add: aCookie [
 
 { #category : 'accessing' }
 ZnCookieJar >> cookieAt: aName forUrl: urlObject [
-	(self cookiesForUrl: urlObject) do: [ :cookie | cookie name sameContents: aName ifTrue: [ ^ cookie ] ].
+	(self cookiesForUrl: urlObject) do: [ :cookie | (cookie name sameContents: aName) ifTrue: [ ^ cookie ] ].
 	^ nil
 ]
 

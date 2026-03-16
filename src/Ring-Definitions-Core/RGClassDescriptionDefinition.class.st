@@ -22,7 +22,7 @@ RGClassDescriptionDefinition class >> isAbstract [
 RGClassDescriptionDefinition >> = aRGClassDefinition [
 
 	^self class = aRGClassDefinition class
-		and: [ self name sameContents: aRGClassDefinition name
+		and: [ (self name sameContents: aRGClassDefinition name)
 			and: [ self environment = aRGClassDefinition environment ] ]
 ]
 

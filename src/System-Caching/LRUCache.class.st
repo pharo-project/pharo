@@ -247,15 +247,15 @@ LRUCache >> validateInvariantWith: assertable [
 	a key value association, whose key must match the index key"
 	| keysSeen |
 	keyIndex keysAndValuesDo: [ :key :link |
-		assertable assert: link value key sameContents: key ].
+		assertable assert: (link value key sameContents: key) ].
 	"When iterating over all key value pairs, each key lookup up
 	through the index should see the correct key and value in
 	the double linked list node"
 	self keysAndValuesDo: [ :key :value |
 		| link |
 		link := keyIndex at: key.
-		assertable assert: link value value sameContents: value.
-		assertable assert: link value key sameContents: key ].
+		assertable assert: (link value value sameContents: value).
+		assertable assert: (link value key sameContents: key) ].
 	"When iterating over all keys, each key can be present only once"
 	keysSeen := Set new. 
 	self keysAndValuesDo: [ :key :value |

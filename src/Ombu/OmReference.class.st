@@ -105,7 +105,7 @@ OmReference >> stonOn: stonWriter [
 		writeObject: self
 		streamShortList: [ :array |
 			"Optimization: only write globalName if it belongs to a 'remote' store"
-			OmCurrentGlobalName value sameContents: self globalName
+			(OmCurrentGlobalName value sameContents: self globalName)
 				ifFalse: [ array add: self globalName ].
 
 			array add: self localName ]

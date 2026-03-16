@@ -57,7 +57,7 @@ RBAbstractClass class >> named: aString [
 { #category : 'comparing' }
 RBAbstractClass >> = aRBClass [
 	^self class = aRBClass class
-		and: [self name sameContents: aRBClass name and: [self model = aRBClass model]]
+		and: [(self name sameContents: aRBClass name) and: [self model = aRBClass model]]
 ]
 
 { #category : 'variable accessing' }

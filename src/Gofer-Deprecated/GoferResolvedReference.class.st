@@ -30,7 +30,7 @@ GoferResolvedReference >> <= aResolvedReference [
 		4. author name
 		5. repository priority"
 
-	self packageName sameContents: aResolvedReference packageName
+	(self packageName sameContents: aResolvedReference packageName)
 		ifFalse: [ ^ self packageName <= aResolvedReference packageName ].
 	self branch = aResolvedReference branch ifFalse: [
 		^ (self branch isEmpty or: [ aResolvedReference branch isEmpty ])

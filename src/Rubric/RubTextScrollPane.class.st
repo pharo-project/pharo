@@ -298,11 +298,11 @@ RubTextScrollPane >> scrollByKeyboard: event [
 	self
 		handleScrollerOffsetChange: [
 			ret := false.
-			event key sameContents: KeyboardKey up
+			(event key sameContents: KeyboardKey up)
 				ifTrue: [
 					sb scrollUp: 3.
 					ret := true ].
-			event key sameContents: KeyboardKey down
+			(event key sameContents: KeyboardKey down)
 				ifTrue: [
 					sb scrollDown: 3.
 					ret := true ] ].

@@ -156,7 +156,7 @@ RGEnvironmentQueryInterface >> globalVariablesDo: aBlock [
 RGEnvironmentQueryInterface >> includesClassNamed: aSymbol [
 
 	self globalVariablesDo: [ :var |
-		var name sameContents: aSymbol ifTrue: [ ^ true ] ].
+		(var name sameContents: aSymbol) ifTrue: [ ^ true ] ].
 
 	^ self behaviorsDictionary
 		at: aSymbol asSymbol
@@ -173,7 +173,7 @@ RGEnvironmentQueryInterface >> includesClassNamed: aSymbol [
 { #category : 'testing' }
 RGEnvironmentQueryInterface >> includesPackageNamed: aString [
 
-	self packagesDo: [ :each | each name sameContents: aString ifTrue: [ ^ true ] ].
+	self packagesDo: [ :each | (each name sameContents: aString) ifTrue: [ ^ true ] ].
 	^ false
 ]
 

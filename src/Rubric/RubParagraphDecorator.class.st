@@ -90,7 +90,7 @@ RubParagraphDecorator >> container: atextContainerOrRectangle [
 
 { #category : 'querying' }
 RubParagraphDecorator >> decoratorNamed: aKey [
-	^ self key sameContents: aKey
+	^ (self key sameContents: aKey)
 		ifTrue: [ self ]
 		ifFalse: [ next decoratorNamed: aKey ]
 ]
@@ -164,7 +164,7 @@ RubParagraphDecorator >> hasDecorator: aDecorator [
 
 { #category : 'querying' }
 RubParagraphDecorator >> hasDecoratorNamed: aKey [
-	^ self key sameContents: aKey or: [ next hasDecoratorNamed: aKey ]
+	^ (self key sameContents: aKey) or: [ next hasDecoratorNamed: aKey ]
 ]
 
 { #category : 'querying' }

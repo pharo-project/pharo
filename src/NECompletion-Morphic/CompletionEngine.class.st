@@ -170,21 +170,21 @@ CompletionEngine >> handleKeyDownBefore: aKeyboardEvent editor: anEditor [
 		 KeyboardKey keypadDown } includes: key) ifTrue: [
 		menuMorph moveDown.
 		^ true ].
-	key sameContents: KeyboardKey pageUp ifTrue: [
+	(key sameContents: KeyboardKey pageUp) ifTrue: [
 		menuMorph pageUp.
 		^ true ].
-	key sameContents: KeyboardKey pageDown ifTrue: [
+	(key sameContents: KeyboardKey pageDown) ifTrue: [
 		menuMorph pageDown.
 		^ true ].
-	((key sameContents: KeyboardKey enter or: [ key sameContents: KeyboardKey keypadEnter ])
+	(((key sameContents: KeyboardKey enter) or: [ key sameContents: KeyboardKey keypadEnter ])
 		 and: [ NECPreferences useEnterToAccept ]) ifTrue: [
 		menuMorph insertSelected ifTrue: [ ^ true ] ].
-	key sameContents: KeyboardKey tab ifTrue: [
+	(key sameContents: KeyboardKey tab) ifTrue: [
 		menuMorph insertSelected ifTrue: [ ^ true ] ].
-	key sameContents: KeyboardKey backspace ifTrue: [
+	(key sameContents: KeyboardKey backspace) ifTrue: [
 		editor isCaretBehindChar ifFalse: [ self closeMenu ].
 		^ false ].
-	key sameContents: KeyboardKey escape ifTrue: [
+	(key sameContents: KeyboardKey escape) ifTrue: [
 		self closeMenu.
 		^ true ].
 	^ false
