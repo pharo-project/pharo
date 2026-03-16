@@ -1,5 +1,5 @@
 "
-Remove Class Refactoring: Safely delete a selected class, ensuring no references are left behind, and preview changes before applying.
+Violent Remove Class Refactoring: Force remove a class without performing safety checks. This may leave broken references in the system.
 "
 Class {
 	#name : 'SycViolentRemoveClassCommand',
