@@ -5,7 +5,7 @@ Class {
 	#name : 'UndeclaredVariableError',
 	#superclass : 'Error',
 	#instVars : [
-		'variable'
+		#variable
 	],
 	#category : 'Kernel-CodeModel-Exceptions',
 	#package : 'Kernel-CodeModel',

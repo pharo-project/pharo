@@ -7,22 +7,22 @@ Class {
 	#name : 'Socket',
 	#superclass : 'Object',
 	#instVars : [
-		'semaphore',
-		'socketHandle',
-		'readSemaphore',
-		'writeSemaphore'
+		#semaphore,
+		#socketHandle,
+		#readSemaphore,
+		#writeSemaphore
 	],
 	#classVars : [
-		'Connected',
-		'DeadServer',
-		'InvalidSocket',
-		'OtherEndClosed',
-		'Registry',
-		'TCPSocketType',
-		'ThisEndClosed',
-		'UDPSocketType',
-		'Unconnected',
-		'WaitingForConnection'
+		#Connected,
+		#DeadServer,
+		#InvalidSocket,
+		#OtherEndClosed,
+		#Registry,
+		#TCPSocketType,
+		#ThisEndClosed,
+		#UDPSocketType,
+		#Unconnected,
+		#WaitingForConnection
 	],
 	#category : 'Network-Kernel-Base',
 	#package : 'Network-Kernel',
@@ -145,7 +145,7 @@ Socket class >> nameForWellKnownTCPPort: portNum [
 	"Answer the name for the given well-known TCP port number. Answer a string containing the port number if it isn't well-known."
 
 	| portList |
-	portList := #(#(7 'echo') #(9 'discard') #(13 'time') #(19 'characterGenerator') #(21 'ftp') #(23 'telnet') #(25 'smtp') #(80 'http') #(110 'pop3') #(119 'nntp')).
+	portList := #(#(7 echo) #(9 discard) #(13 time) #(19 characterGenerator) #(21 ftp) #(23 telnet) #(25 smtp) #(80 http) #(110 pop3) #(119 nntp)).
 	^ portList
 		detect: [ :pair | pair first = portNum ]
 		ifFound: [ :pair | pair last ]

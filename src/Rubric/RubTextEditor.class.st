@@ -5,8 +5,8 @@ Class {
 	#name : 'RubTextEditor',
 	#superclass : 'Object',
 	#instVars : [
-		'defaultKeymappingIndex',
-		'textArea'
+		#defaultKeymappingIndex,
+		#textArea
 	],
 	#category : 'Rubric-Editing-Core',
 	#package : 'Rubric',

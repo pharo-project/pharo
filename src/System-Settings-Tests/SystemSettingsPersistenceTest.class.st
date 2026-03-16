@@ -5,9 +5,9 @@ Class {
 	#name : 'SystemSettingsPersistenceTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'systemSettings',
-		'memory',
-		'preferencesFile'
+		#systemSettings,
+		#memory,
+		#preferencesFile
 	],
 	#category : 'System-Settings-Tests',
 	#package : 'System-Settings-Tests'

@@ -2,9 +2,9 @@ Class {
 	#name : 'ClyNavigationHistoryTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'environment',
-		'browser',
-		'navigationState'
+		#environment,
+		#browser,
+		#navigationState
 	],
 	#category : 'Calypso-SystemTools-FullBrowser-Tests',
 	#package : 'Calypso-SystemTools-FullBrowser-Tests'

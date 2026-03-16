@@ -5,13 +5,13 @@ Class {
 	#name : 'FLClusterization',
 	#superclass : 'Object',
 	#instVars : [
-		'baselevelBucket',
-		'substitutionsBucket',
-		'globalsBucket',
-		'metalevelInstanceSideBucket',
-		'metalevelClassSideBucket',
-		'primitivesBucket',
-		'postBaselevelBucket'
+		#baselevelBucket,
+		#substitutionsBucket,
+		#globalsBucket,
+		#metalevelInstanceSideBucket,
+		#metalevelClassSideBucket,
+		#primitivesBucket,
+		#postBaselevelBucket
 	],
 	#category : 'Fuel-Core-Base',
 	#package : 'Fuel-Core',

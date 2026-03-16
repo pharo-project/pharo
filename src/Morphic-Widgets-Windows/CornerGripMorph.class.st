@@ -5,7 +5,7 @@ Class {
 	#name : 'CornerGripMorph',
 	#superclass : 'AbstractResizerMorph',
 	#instVars : [
-		'target'
+		#target
 	],
 	#category : 'Morphic-Widgets-Windows-Resizing',
 	#package : 'Morphic-Widgets-Windows',

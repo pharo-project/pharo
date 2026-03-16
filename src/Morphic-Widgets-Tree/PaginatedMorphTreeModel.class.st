@@ -5,7 +5,7 @@ Class {
 	#name : 'PaginatedMorphTreeModel',
 	#superclass : 'MorphTreeModel',
 	#instVars : [
-		'pageSize'
+		#pageSize
 	],
 	#category : 'Morphic-Widgets-Tree-Pagination',
 	#package : 'Morphic-Widgets-Tree',

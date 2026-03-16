@@ -2,9 +2,9 @@ Class {
 	#name : 'FLEncoderDecoderTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'encoder',
-		'stream',
-		'decoder'
+		#encoder,
+		#stream,
+		#decoder
 	],
 	#category : 'Fuel-Core-Tests-Base',
 	#package : 'Fuel-Core-Tests',

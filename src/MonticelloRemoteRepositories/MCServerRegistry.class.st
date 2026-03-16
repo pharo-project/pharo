@@ -5,10 +5,10 @@ Class {
 	#name : 'MCServerRegistry',
 	#superclass : 'Object',
 	#instVars : [
-		'registry'
+		#registry
 	],
 	#classInstVars : [
-		'uniqueInstance'
+		#uniqueInstance
 	],
 	#category : 'MonticelloRemoteRepositories',
 	#package : 'MonticelloRemoteRepositories'

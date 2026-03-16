@@ -5,8 +5,8 @@ Class {
 	#name : 'ExampleSlotWithFluidAPI',
 	#superclass : 'InstanceVariableSlot',
 	#instVars : [
-		'value1',
-		'value2'
+		#value1,
+		#value2
 	],
 	#category : 'Slot-Examples-Base',
 	#package : 'Slot-Examples',

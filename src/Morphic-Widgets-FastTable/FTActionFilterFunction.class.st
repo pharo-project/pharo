@@ -28,8 +28,8 @@ Class {
 	#name : 'FTActionFilterFunction',
 	#superclass : 'FTFilterFunction',
 	#instVars : [
-		'actionButton',
-		'actionBlock'
+		#actionButton,
+		#actionBlock
 	],
 	#category : 'Morphic-Widgets-FastTable-Functions',
 	#package : 'Morphic-Widgets-FastTable',

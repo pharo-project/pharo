@@ -5,8 +5,8 @@ Class {
 	#name : 'ThemeIconsStoredSetting',
 	#superclass : 'AbstractStoredSetting',
 	#instVars : [
-		'name',
-		'url'
+		#name,
+		#url
 	],
 	#category : 'System-Settings-Core-Persistence-Ston-StoredSettings',
 	#package : 'System-Settings-Core',

@@ -7,15 +7,15 @@ Class {
 	#name : 'AthensCurveFlattener',
 	#superclass : 'AthensPathSegmentConverter',
 	#instVars : [
-		'transform',
-		'lengthTolerance',
-		'lengthToleranceSquared'
+		#transform,
+		#lengthTolerance,
+		#lengthToleranceSquared
 	],
 	#classVars : [
-		'CurveAngleToleranceEpsilon',
-		'CurveCollinearityEpsilon',
-		'CurveDistanceEpsilon',
-		'SubdivisionLimit'
+		#CurveAngleToleranceEpsilon,
+		#CurveCollinearityEpsilon,
+		#CurveDistanceEpsilon,
+		#SubdivisionLimit
 	],
 	#category : 'Athens-Core-PathsGeometry',
 	#package : 'Athens-Core',

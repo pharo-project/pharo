@@ -7,27 +7,27 @@ Class {
 	#name : 'FileList',
 	#superclass : 'Model',
 	#instVars : [
-		'reference',
-		'volumeList',
-		'volumeListIndex',
-		'list',
-		'listIndex',
-		'pattern',
-		'brevityState',
-		'dirSelectionBlock',
-		'modalView',
-		'ok',
-		'contents',
-		'optionalButtonSpecs',
-		'grid',
-		'fileEncoding',
-		'sortBlock',
-		'baseLabel',
-		'configuredServices',
-		'sourceTextModel'
+		#reference,
+		#volumeList,
+		#volumeListIndex,
+		#list,
+		#listIndex,
+		#pattern,
+		#brevityState,
+		#dirSelectionBlock,
+		#modalView,
+		#ok,
+		#contents,
+		#optionalButtonSpecs,
+		#grid,
+		#fileEncoding,
+		#sortBlock,
+		#baseLabel,
+		#configuredServices,
+		#sourceTextModel
 	],
 	#classInstVars : [
-		'searchList'
+		#searchList
 	],
 	#category : 'Tool-FileList',
 	#package : 'Tool-FileList'
@@ -574,7 +574,7 @@ FileList >> fileContentsMenu: aMenu shifted: shifted [
 			[services add: self serviceGetHex].
 		(#(needToGetShiftJIS needToGetEUCJP needToGetCNGB needToGetEUCKR needToGetUTF8) includes: brevityState) ifFalse:
 			[services add: self serviceGetEncodedText].
-		(#('st' 'cs') includes: self suffixOfSelectedFile) ifTrue:
+		(#(st cs) includes: self suffixOfSelectedFile) ifTrue:
 			[services addAll: (self itemsForFile: reference)].
 
 		aMenu

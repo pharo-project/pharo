@@ -5,9 +5,9 @@ Class {
 	#name : 'GroupboxMorph',
 	#superclass : 'ModelMorph',
 	#instVars : [
-		'contentMorph',
-		'labelMorph',
-		'getContentSelector'
+		#contentMorph,
+		#labelMorph,
+		#getContentSelector
 	],
 	#category : 'Polymorph-Widgets-Base',
 	#package : 'Polymorph-Widgets',

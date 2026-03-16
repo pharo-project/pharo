@@ -16,8 +16,8 @@ Class {
 	#name : 'SelfPropagatingLinkDemo',
 	#superclass : 'Object',
 	#instVars : [
-		'methodsvisited',
-		'link'
+		#methodsvisited,
+		#link
 	],
 	#category : 'Reflectivity-Examples',
 	#package : 'Reflectivity-Examples'

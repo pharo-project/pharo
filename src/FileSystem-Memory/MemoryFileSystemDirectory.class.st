@@ -5,7 +5,7 @@ Class {
 	#name : 'MemoryFileSystemDirectory',
 	#superclass : 'MemoryFileSystemEntry',
 	#instVars : [
-		'entries'
+		#entries
 	],
 	#category : 'FileSystem-Memory-Base',
 	#package : 'FileSystem-Memory',

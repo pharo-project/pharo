@@ -8,7 +8,7 @@ Class {
 	#name : 'SlotSilentTest',
 	#superclass : 'SlotClassBuilderTest',
 	#instVars : [
-		'yetYetAnotherClass'
+		#yetYetAnotherClass
 	],
 	#category : 'Slot-Tests-ClassBuilder',
 	#package : 'Slot-Tests',

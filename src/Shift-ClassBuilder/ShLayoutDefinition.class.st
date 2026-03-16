@@ -5,12 +5,12 @@ Class {
 	#name : 'ShLayoutDefinition',
 	#superclass : 'Object',
 	#instVars : [
-		'layoutClass',
-		'slots',
-		'classSlots',
-		'sharedPools',
-		'sharedVariables',
-		'builder'
+		#layoutClass,
+		#slots,
+		#classSlots,
+		#sharedPools,
+		#sharedVariables,
+		#builder
 	],
 	#category : 'Shift-ClassBuilder-Builder',
 	#package : 'Shift-ClassBuilder',

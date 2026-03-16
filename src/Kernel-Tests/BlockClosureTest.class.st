@@ -5,8 +5,8 @@ Class {
 	#name : 'BlockClosureTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'aBlock',
-		'contextOfaBlock'
+		#aBlock,
+		#contextOfaBlock
 	],
 	#category : 'Kernel-Tests-Methods',
 	#package : 'Kernel-Tests',
@@ -397,7 +397,7 @@ BlockClosureTest >> testSupplyAnswerOfFillInTheBlank [
 		assert:
 			([ ProvideAnswerNotification signal: 'Your favorite color?' ]
 				 valueSupplyingAnswer: #( 'Your favorite color?'
-				    'blue' ))
+				    blue ))
 		equals: 'blue'
 ]
 
@@ -416,14 +416,14 @@ BlockClosureTest >> testSupplyAnswerOfFillInTheBlankUsingDefaultAnswer [
 BlockClosureTest >> testSupplyAnswerThroughNestedBlocks [
 
 	self should: [true = ([[self confirm: 'You like Smalltalk?']
-		valueSupplyingAnswer: #('Blub' false)] valueSupplyingAnswer: #('Smalltalk' true))]
+		valueSupplyingAnswer: #(Blub false)] valueSupplyingAnswer: #(Smalltalk true))]
 ]
 
 { #category : 'tests' }
 BlockClosureTest >> testSupplyAnswerUsingOnlySubstringOfQuestion [
 
 	self should: [false = ([self confirm: 'You like Smalltalk?']
-		valueSupplyingAnswer: #('like' false))]
+		valueSupplyingAnswer: #(like false))]
 ]
 
 { #category : 'tests' }
@@ -454,10 +454,10 @@ BlockClosureTest >> testSupplySameAnswerToAllQuestions [
 BlockClosureTest >> testSupplySeveralAnswersToSeveralQuestions [
 
 	self should: [#(false true) = ([{self confirm: 'One'. self confirm: 'Two'}]
-		valueSupplyingAnswers: #( ('One' false) ('Two' true) ))].
+		valueSupplyingAnswers: #( (One false) ('Two' true) ))].
 
 	self should: [#(true false) = ([{self confirm: 'One'. self confirm: 'Two'}]
-		valueSupplyingAnswers: #( ('One' true) ('Two' false) ))]
+		valueSupplyingAnswers: #( (One true) ('Two' false) ))]
 ]
 
 { #category : 'tests' }

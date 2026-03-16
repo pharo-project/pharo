@@ -5,10 +5,10 @@ Class {
 	#name : 'MCFtpRepository',
 	#superclass : 'MCFileBasedRepository',
 	#instVars : [
-		'host',
-		'directory',
-		'user',
-		'password'
+		#host,
+		#directory,
+		#user,
+		#password
 	],
 	#category : 'MonticelloRemoteRepositories',
 	#package : 'MonticelloRemoteRepositories'

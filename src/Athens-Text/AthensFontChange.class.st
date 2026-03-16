@@ -5,7 +5,7 @@ Class {
 	#name : 'AthensFontChange',
 	#superclass : 'AthensTextDisplayCommand',
 	#instVars : [
-		'font'
+		#font
 	],
 	#category : 'Athens-Text',
 	#package : 'Athens-Text'

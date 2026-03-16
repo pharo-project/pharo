@@ -23,7 +23,7 @@ Class {
 	#name : 'ClyMethodVisibilityGroupsResult',
 	#superclass : 'ClyBrowserQueryResult',
 	#instVars : [
-		'hierarchy'
+		#hierarchy
 	],
 	#category : 'Calypso-SystemQueries-Results',
 	#package : 'Calypso-SystemQueries',

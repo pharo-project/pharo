@@ -60,13 +60,13 @@ Class {
 	#name : 'Heap',
 	#superclass : 'Collection',
 	#instVars : [
-		'array',
-		'tally',
-		'sortBlock',
-		'indexUpdateBlock'
+		#array,
+		#tally,
+		#sortBlock,
+		#indexUpdateBlock
 	],
 	#classInstVars : [
-		'sortBlock'
+		#sortBlock
 	],
 	#category : 'Collections-Sequenceable-Base',
 	#package : 'Collections-Sequenceable',

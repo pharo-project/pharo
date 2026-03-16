@@ -7,9 +7,9 @@ Class {
 	#name : 'ExceptionTester',
 	#superclass : 'Object',
 	#instVars : [
-		'log',
-		'suiteLog',
-		'iterationsBeforeTimeout'
+		#log,
+		#suiteLog,
+		#iterationsBeforeTimeout
 	],
 	#category : 'Kernel-Tests-Exception',
 	#package : 'Kernel-Tests',

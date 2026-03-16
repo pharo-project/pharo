@@ -21,12 +21,12 @@ Class {
 	#name : 'STONAlternativeRepresentationTestObject',
 	#superclass : 'Object',
 	#instVars : [
-		'id',
-		'time',
-		'gridReference'
+		#id,
+		#time,
+		#gridReference
 	],
 	#classVars : [
-		'KnownObjects'
+		#KnownObjects
 	],
 	#category : 'STON-Tests-Support',
 	#package : 'STON-Tests',
@@ -45,9 +45,9 @@ STONAlternativeRepresentationTestObject class >> example [
 { #category : 'ston persistence' }
 STONAlternativeRepresentationTestObject >> fromSton: stonReader [
 	stonReader parseMapDo: [ :key :value |
-		key = #id ifTrue: [ self id: value ].
-		key = #time ifTrue: [ self timeUTC: value ].
-		key = #grid_reference ifTrue: [ self gridReferenceImperial: value ] ]
+		key sameContents: #id ifTrue: [ self id: value ].
+		key sameContents: #time ifTrue: [ self timeUTC: value ].
+		key sameContents: #grid_reference ifTrue: [ self gridReferenceImperial: value ] ]
 ]
 
 { #category : 'accessing' }

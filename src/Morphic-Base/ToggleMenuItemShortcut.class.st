@@ -17,9 +17,9 @@ Class {
 	#name : 'ToggleMenuItemShortcut',
 	#superclass : 'DisplayableObject',
 	#instVars : [
-		'keyText',
-		'owner',
-		'color'
+		#keyText,
+		#owner,
+		#color
 	],
 	#category : 'Morphic-Base-Menus',
 	#package : 'Morphic-Base',
@@ -33,7 +33,7 @@ ToggleMenuItemShortcut class >> canBeUsed [
 
 { #category : 'private' }
 ToggleMenuItemShortcut class >> keyTextShortcuts [
-	^ #('cmd'. 'alt'. 'shift'.'ctrl'. 'meta' '⌘' '⇧')
+	^ #(cmd. alt. shift.ctrl. meta '⌘' '⇧')
 ]
 
 { #category : 'instance creation' }

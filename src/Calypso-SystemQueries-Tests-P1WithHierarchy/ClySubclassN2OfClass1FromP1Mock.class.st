@@ -7,8 +7,8 @@ Class {
 	#name : 'ClySubclassN2OfClass1FromP1Mock',
 	#superclass : 'ClyClass1FromP1Mock',
 	#instVars : [
-		'subclassSameVar',
-		'subclassN2Var'
+		#subclassSameVar,
+		#subclassN2Var
 	],
 	#category : 'Calypso-SystemQueries-Tests-P1WithHierarchy',
 	#package : 'Calypso-SystemQueries-Tests-P1WithHierarchy'

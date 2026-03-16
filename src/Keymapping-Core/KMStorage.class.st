@@ -5,8 +5,8 @@ Class {
 	#name : 'KMStorage',
 	#superclass : 'Object',
 	#instVars : [
-		'namedRegistry',
-		'anonymousRegistry'
+		#namedRegistry,
+		#anonymousRegistry
 	],
 	#category : 'Keymapping-Core-Base',
 	#package : 'Keymapping-Core',

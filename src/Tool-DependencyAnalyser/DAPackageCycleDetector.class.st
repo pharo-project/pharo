@@ -11,11 +11,11 @@ Class {
 	#name : 'DAPackageCycleDetector',
 	#superclass : 'Object',
 	#instVars : [
-		'sccs',
-		'cycles',
-		'visitedNodes',
-		'queue',
-		'relationGraph'
+		#sccs,
+		#cycles,
+		#visitedNodes,
+		#queue,
+		#relationGraph
 	],
 	#category : 'Tool-DependencyAnalyser-Core',
 	#package : 'Tool-DependencyAnalyser',
@@ -29,7 +29,7 @@ DAPackageCycleDetector class >> collections [
 
 { #category : 'instance creation' }
 DAPackageCycleDetector class >> morphic [
-	^ (self onPackagesNamed: #('Morphic-Base' 'Morphic-Core' 'Morphic-Examples' 'MorphicTests' 'Spec-MorphicAdapters')) runAlgorithm
+	^ (self onPackagesNamed: #('Morphic-Base' 'Morphic-Core' 'Morphic-Examples' MorphicTests 'Spec-MorphicAdapters')) runAlgorithm
 ]
 
 { #category : 'instance creation' }

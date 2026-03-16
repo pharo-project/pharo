@@ -6,9 +6,9 @@ Class {
 	#name : 'ZipNewFileMember',
 	#superclass : 'ZipArchiveMember',
 	#instVars : [
-		'externalFileName',
-		'stream',
-		'reference'
+		#externalFileName,
+		#stream,
+		#reference
 	],
 	#category : 'Compression-Archives',
 	#package : 'Compression',

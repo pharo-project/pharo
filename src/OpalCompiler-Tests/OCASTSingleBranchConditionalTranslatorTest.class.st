@@ -44,7 +44,7 @@ OCASTSingleBranchConditionalTranslatorTest >> testFalseIfFalseEvaluatesBlockWith
 		testComposedExample: 'example
 	{definition}.
 	^false ifFalse: {argument}'
-		withTemps: #( 'temp' )
+		withTemps: #( temp )
 		withBlock: '[
 			temp := 17.
 			iVar := temp ]'.
@@ -85,7 +85,7 @@ OCASTSingleBranchConditionalTranslatorTest >> testFalseIfFalseReturnsBlockValueW
 		testComposedExample: 'example
 	{definition}.
 	^false ifFalse: {argument}'
-		withTemps: #( 'temp' )
+		withTemps: #( temp )
 		withBlock: '[
 			temp := 1.
 			temp ]'.
@@ -309,7 +309,7 @@ OCASTSingleBranchConditionalTranslatorTest >> testTrueIfTrueEvaluateBlockWithTem
 		testComposedExample: 'example
 	{definition}.
 	^true ifTrue: {argument}'
-		withTemps: #( 'temp' )
+		withTemps: #( temp )
 		withBlock: '[
 			temp := 17.
 			iVar := temp ]'.
@@ -350,7 +350,7 @@ OCASTSingleBranchConditionalTranslatorTest >> testTrueIfTrueReturnsBlockValueWit
 		testComposedExample: 'example
 	{definition}.
 	^true ifTrue: {argument}'
-		withTemps: #( 'temp' )
+		withTemps: #( temp )
 		withBlock: '[
 			temp := 1.
 			temp ]'.

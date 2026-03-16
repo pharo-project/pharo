@@ -18,9 +18,9 @@ Class {
 	#name : 'ZnStaticFileServerDelegate',
 	#superclass : 'Object',
 	#instVars : [
-		'prefix',
-		'directory',
-		'mimeTypeExpirations'
+		#prefix,
+		#directory,
+		#mimeTypeExpirations
 	],
 	#category : 'Zinc-HTTP-Examples',
 	#package : 'Zinc-HTTP-Examples'
@@ -181,8 +181,8 @@ ZnStaticFileServerDelegate >> responseForFile: filename fromRequest: aRequest [
 	time := entry modificationTime.
 	modified := true.
 	aRequest headers
-		at: 'If-Modified-Since'
-		ifPresent: [ modified := time > (ZnUtils parseHttpDate: (aRequest headers at: 'If-Modified-Since')) ].
+		at: #'If-Modified-Since'
+		ifPresent: [ modified := time > (ZnUtils parseHttpDate: (aRequest headers at: #'If-Modified-Since')) ].
 	modified
 		ifTrue: [
 			mimeType := ZnMimeType forFilenameExtension: file extension.
@@ -190,11 +190,11 @@ ZnStaticFileServerDelegate >> responseForFile: filename fromRequest: aRequest [
 			(entity := ZnStreamingEntity type: mimeType length: size)
 				stream: fileStream.
 			(response := ZnResponse ok: entity)
-				headers at: 'Modification-Date' put: (ZnUtils httpDate: time).
+				headers at: #'Modification-Date' put: (ZnUtils httpDate: time).
 			(self maxAgeFor: mimeType)
-				ifNotNil: [ :maxAge | response headers at: 'Cache-Control' put: maxAge ].
+				ifNotNil: [ :maxAge | response headers at: #'Cache-Control' put: maxAge ].
 			(self expirationDateFor: mimeType)
-				ifNotNil: [ :expirationDate | response headers at: 'Expires' put: expirationDate ] ]
+				ifNotNil: [ :expirationDate | response headers at: #'Expires' put: expirationDate ] ]
 		ifFalse: [ response := ZnResponse notModified ].
 	^ response
 ]

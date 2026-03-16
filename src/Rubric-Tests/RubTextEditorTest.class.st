@@ -5,8 +5,8 @@ Class {
 	#name : 'RubTextEditorTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'editor',
-		'string'
+		#editor,
+		#string
 	],
 	#category : 'Rubric-Tests-Editing-Core',
 	#package : 'Rubric-Tests',

@@ -13,14 +13,14 @@ Class {
 	#name : 'RBInteractionDriver',
 	#superclass : 'Object',
 	#instVars : [
-		'model',
-		'scopes',
-		'refactoring',
-		'previewPresenterClass',
-		'selectDialog',
-		'requestDialog',
-		'informDialog',
-		'stoppedBeforeApplyingRefactoring'
+		#model,
+		#scopes,
+		#refactoring,
+		#previewPresenterClass,
+		#selectDialog,
+		#requestDialog,
+		#informDialog,
+		#stoppedBeforeApplyingRefactoring
 	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',

@@ -5,7 +5,7 @@ Class {
 	#name : 'UnlimitedInstanceVariableSlot',
 	#superclass : 'DerivedSlot',
 	#instVars : [
-		'offset'
+		#offset
 	],
 	#category : 'Slot-Examples-Base',
 	#package : 'Slot-Examples',

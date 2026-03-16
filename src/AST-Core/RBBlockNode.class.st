@@ -45,14 +45,14 @@ Class {
 	#name : 'RBBlockNode',
 	#superclass : 'RBValueNode',
 	#instVars : [
-		'left',
-		'right',
-		'colons',
-		'arguments',
-		'bar',
-		'body',
-		'scope',
-		'bcToASTCache'
+		#left,
+		#right,
+		#colons,
+		#arguments,
+		#bar,
+		#body,
+		#scope,
+		#bcToASTCache
 	],
 	#category : 'AST-Core-Nodes',
 	#package : 'AST-Core',
@@ -188,7 +188,7 @@ RBBlockNode >> copyInContext: aDictionary [
 
 { #category : 'testing' }
 RBBlockNode >> defines: aName [
-	^arguments anySatisfy: [:each | each name = aName]
+	^arguments anySatisfy: [:each | each name sameContents: aName]
 ]
 
 { #category : 'comparing' }
@@ -206,7 +206,7 @@ RBBlockNode >> equalTo: anObject withMapping: aDictionary [
 
 { #category : 'testing' }
 RBBlockNode >> hasArgumentNamed: aString [
-	^ self arguments anySatisfy: [ :argument| argument name = aString ]
+	^ self arguments anySatisfy: [ :argument| argument name sameContents: aString ]
 ]
 
 { #category : 'testing' }
@@ -249,7 +249,7 @@ RBBlockNode >> hasTemporaries [
 
 { #category : 'testing' }
 RBBlockNode >> hasTemporaryNamed: aString [
-	^ self temporaries anySatisfy: [ :temp| temp name = aString ]
+	^ self temporaries anySatisfy: [ :temp| temp name sameContents: aString ]
 ]
 
 { #category : 'comparing' }

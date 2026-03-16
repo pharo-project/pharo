@@ -2,11 +2,11 @@ Class {
 	#name : 'RGTraitV2Strategy',
 	#superclass : 'RGTraitV2DescriptionStrategy',
 	#instVars : [
-		'comment',
-		'classVariables',
-		'package',
-		'sharedPools',
-		'classTrait'
+		#comment,
+		#classVariables,
+		#package,
+		#sharedPools,
+		#classTrait
 	],
 	#category : 'Ring-Core-Kernel',
 	#package : 'Ring-Core',
@@ -79,7 +79,7 @@ RGTraitV2Strategy >> category: aString [
 	self owner cleanTagsWithoutAnnouncemnt.
 	aTag := self owner package
 		ifNotNil: [
-			self owner package name = aString
+			self owner package name sameContents: aString
 				ifTrue: [ ^ self owner ] "category contains only the package name"
 				ifFalse: [ aString withoutPrefix: self package name, '-'  ]]
 		ifNil: [ aString ].
@@ -282,7 +282,7 @@ RGTraitV2Strategy >> initializeUnresolved [
 { #category : 'private - backend access' }
 RGTraitV2Strategy >> innerBindingOf: aSymbol [
 
-	self classVariables detect: [ :each | each name = aSymbol  ] ifFound: [ :found | ^ found ].
+	self classVariables detect: [ :each | each name sameContents: aSymbol  ] ifFound: [ :found | ^ found ].
 
 	self sharedPoolsDo: [:pool |
 		((self environment ask behaviorNamed: pool name) bindingOf: aSymbol) ifNotNil: [:binding | ^binding]].

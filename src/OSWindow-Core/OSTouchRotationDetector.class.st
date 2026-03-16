@@ -5,13 +5,13 @@ Class {
 	#name : 'OSTouchRotationDetector',
 	#superclass : 'OSTouchStateGestureDetector',
 	#instVars : [
-		'minAngleBeforeDetection',
-		'vectorAtBeginnig',
-		'lastAngle',
-		'currentAngle'
+		#minAngleBeforeDetection,
+		#vectorAtBeginnig,
+		#lastAngle,
+		#currentAngle
 	],
 	#classVars : [
-		'MinAngleBeforeDetection'
+		#MinAngleBeforeDetection
 	],
 	#category : 'OSWindow-Core-Gestures',
 	#package : 'OSWindow-Core',

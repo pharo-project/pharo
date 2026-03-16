@@ -28,7 +28,7 @@ RGBehavior >> hasAbstractMethods [
 
 { #category : '*Calypso-Ring' }
 RGBehavior >> includesLocalSelector: aSymbol [
-	^self localMethods anySatisfy: [ :each | each name = aSymbol ]
+	^self localMethods anySatisfy: [ :each | each name sameContents: aSymbol ]
 ]
 
 { #category : '*Calypso-Ring' }
@@ -91,7 +91,7 @@ RGBehavior >> organization [
 { #category : '*Calypso-Ring' }
 RGBehavior >> protocolNamed: aString [
 
-	^ self protocols detect: [ :each | each name = aString ]
+	^ self protocols detect: [ :each | each name sameContents: aString ]
 ]
 
 { #category : '*Calypso-Ring' }

@@ -7,8 +7,8 @@ Class {
 	#name : 'ForEventTestMock',
 	#superclass : 'Object',
 	#instVars : [
-		'stringMorph',
-		'counter'
+		#stringMorph,
+		#counter
 	],
 	#category : 'Morphic-Tests-Event',
 	#package : 'Morphic-Tests',

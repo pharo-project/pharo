@@ -5,14 +5,14 @@ Class {
 	#name : 'FTBitmapSize',
 	#superclass : 'FFIExternalStructure',
 	#classVars : [
-		'OFFSET_HEIGHT',
-		'OFFSET_SIZE',
-		'OFFSET_WIDTH',
-		'OFFSET_X_PPEM',
-		'OFFSET_Y_PPEM'
+		#OFFSET_HEIGHT,
+		#OFFSET_SIZE,
+		#OFFSET_WIDTH,
+		#OFFSET_X_PPEM,
+		#OFFSET_Y_PPEM
 	],
 	#pools : [
-		'FT2Types'
+		#FT2Types
 	],
 	#category : 'FreeType-Bindings',
 	#package : 'FreeType',

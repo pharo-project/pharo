@@ -7,30 +7,30 @@ Class {
 	#name : 'DiffMorph',
 	#superclass : 'ComposableMorph',
 	#instVars : [
-		'prettyPrint',
-		'contextClass',
-		'srcMorph',
-		'dstMorph',
-		'scrollbarMorph',
-		'mapMorph',
-		'joinMorph',
-		'difference',
-		'joinMappings',
-		'optionsPanel',
-		'showOnlyDestination',
-		'showOptions',
-		'showOnlySource',
-		'sourceTextModel',
-		'destTextModel',
-		'leftCaption',
-		'rightCaption',
-		'beWrapped',
-		'buttonTop',
-		'buttonPrev',
-		'buttonNext',
-		'allDifferences',
-		'selected',
-		'beNavigable'
+		#prettyPrint,
+		#contextClass,
+		#srcMorph,
+		#dstMorph,
+		#scrollbarMorph,
+		#mapMorph,
+		#joinMorph,
+		#difference,
+		#joinMappings,
+		#optionsPanel,
+		#showOnlyDestination,
+		#showOptions,
+		#showOnlySource,
+		#sourceTextModel,
+		#destTextModel,
+		#leftCaption,
+		#rightCaption,
+		#beWrapped,
+		#buttonTop,
+		#buttonPrev,
+		#buttonNext,
+		#allDifferences,
+		#selected,
+		#beNavigable
 	],
 	#category : 'Tool-Diff-Morphs',
 	#package : 'Tool-Diff',
@@ -376,7 +376,7 @@ DiffMorph >> calculatedJoinMappings [
 	destinationRunStart := destinationRunEnd := sourceRunStart := sourceRunEnd := matchSourceStart := matchDestinationStart := 0.
 	self difference
 		do: [ :p |
-			p key = #match
+			p key sameContents: #match
 				ifTrue: [
 					sourceLine := sourceLine + 1.
 					destinationLine := destinationLine + 1.
@@ -398,7 +398,7 @@ DiffMorph >> calculatedJoinMappings [
 								add:
 									(self newJoinSectionFrom: (sourceRunStart to: sourceRunEnd) to: (destinationRunStart to: destinationRunEnd)).
 							destinationRunStart := destinationRunEnd := sourceRunStart := sourceRunEnd := 0 ] ].
-			p key = #remove
+			p key sameContents: #remove
 				ifTrue: [
 					matchSourceStart > 0
 						ifTrue: [
@@ -410,7 +410,7 @@ DiffMorph >> calculatedJoinMappings [
 					sourceRunStart = 0
 						ifTrue: [ sourceRunStart := sourceLine ].
 					sourceRunEnd := sourceLine ].
-			p key = #insert
+			p key sameContents: #insert
 				ifTrue: [
 					matchSourceStart > 0
 						ifTrue: [
@@ -554,9 +554,9 @@ DiffMorph >> differencesStartingOnSrcAt: srcInitialDiffStart onDstAt: dstInitial
 	dstDiffStart := dstInitialDiffStart.
 	differences := OrderedCollection new.
 	patchSequenceGroupedByMatch := patchSequence groupByRuns: [ :e |
-		                               e key = #match ].
+		                               e key sameContents: #match ].
 	patchSequenceGroupedByMatch do: [ :patches |
-		patches first key = #match
+		patches first key sameContents: #match
 			ifTrue: [
 				| increment |
 				increment := patches sum: [ :eachAssociation |
@@ -570,7 +570,7 @@ DiffMorph >> differencesStartingOnSrcAt: srcInitialDiffStart onDstAt: dstInitial
 				patches do: [ :association |
 					| string |
 					string := association value.
-					association key = #remove
+					association key sameContents: #remove
 						ifTrue: [ srcDiffStart := srcDiffStart + string size ]
 						ifFalse: [ dstDiffStart := dstDiffStart + string size ] ].
 				differences add: (srck to: srcDiffStart - 1) -> (dstk to: dstDiffStart - 1) ] ].

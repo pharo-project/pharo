@@ -5,17 +5,17 @@ Class {
 	#name : 'TimespanTest',
 	#superclass : 'ClassTestCase',
 	#instVars : [
-		'timespan',
-		'aTimespan',
-		'anOverlappingTimespan',
-		'anIncludedTimespan',
-		'aDisjointTimespan',
-		'aDay',
-		'aWeek',
-		'dec31',
-		'jan01',
-		'jan08',
-		'localTimeZoneToRestore'
+		#timespan,
+		#aTimespan,
+		#anOverlappingTimespan,
+		#anIncludedTimespan,
+		#aDisjointTimespan,
+		#aDay,
+		#aWeek,
+		#dec31,
+		#jan01,
+		#jan08,
+		#localTimeZoneToRestore
 	],
 	#category : 'System-Time-Tests',
 	#package : 'System-Time-Tests'

@@ -2,17 +2,17 @@ Class {
 	#name : 'MCGitBasedNetworkRepository',
 	#superclass : 'MCRepository',
 	#instVars : [
-		'projectPath',
-		'projectVersion',
-		'repoPath',
-		'projectVersionPattern',
-		'localRepository'
+		#projectPath,
+		#projectVersion,
+		#repoPath,
+		#projectVersionPattern,
+		#localRepository
 	],
 	#classInstVars : [
-		'repoCacheDirectory',
-		'repoDownloadCache',
-		'siteUsername',
-		'sitePassword'
+		#repoCacheDirectory,
+		#repoDownloadCache,
+		#siteUsername,
+		#sitePassword
 	],
 	#category : 'Metacello-GitBasedRepository',
 	#package : 'Metacello-GitBasedRepository'

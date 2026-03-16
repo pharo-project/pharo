@@ -23,7 +23,7 @@ MetacelloMCVersionSpecTestCase >> testMCVersionMergeSpec [
 		merge:
 			(self groupSpec
 				name: 'Platform';
-				includes: 'Core';
+				includes: #Core;
 				yourself);
 		merge:
 			(self projectReferenceSpec
@@ -52,7 +52,7 @@ MetacelloMCVersionSpecTestCase >> testMCVersionMergeSpec [
 		merge:
 			(self groupSpec
 				name: 'Platform';
-				includes: 'Tests';
+				includes: #Tests;
 				yourself);
 		merge:
 			(self projectReferenceSpec
@@ -69,11 +69,11 @@ MetacelloMCVersionSpecTestCase >> testMCVersionMergeSpec [
 	version := versionA mergeSpec: versionB.
 	self assert: version blessing value equals: #release.
 	self assert: version versionString value equals: '1.1'.
-	repository := version repositories map at: '/opt/gemstone/repository' ifAbsent: [ self assert: false ].
+	repository := version repositories map at: #'/opt/gemstone/repository' ifAbsent: [ self assert: false ].
 	self assert: repository type equals: 'directory'.
-	repository := version repositories map at: '/opt/gemstone/repo' ifAbsent: [ self assert: false ].
+	repository := version repositories map at: #'/opt/gemstone/repo' ifAbsent: [ self assert: false ].
 	self assert: repository type equals: 'directory'.
-	repository := version repositories map at: 'http://example.com/repository' ifAbsent: [ self assert: false ].
+	repository := version repositories map at: #'http://example.com/repository' ifAbsent: [ self assert: false ].
 	self assert: repository type equals: 'http'.
 	self assert: repository username equals: 'DaleHenrichs'.
 	self assert: repository password equals: 'secret'.
@@ -81,17 +81,17 @@ MetacelloMCVersionSpecTestCase >> testMCVersionMergeSpec [
 	self assert: package name equals: 'Package'.
 	projectReferenceSpec := version packages packageNamed: 'Project' ifAbsent: [ self assert: false ].
 	self assert: projectReferenceSpec projectName equals: 'Project'.
-	repository := projectReferenceSpec repositories map at: '/opt/gemstone/repository' ifAbsent: [ self assert: false ].
+	repository := projectReferenceSpec repositories map at: #'/opt/gemstone/repository' ifAbsent: [ self assert: false ].
 	self assert: repository type equals: 'directory'.
-	repository := projectReferenceSpec repositories map at: '/opt/gemstone/repo' ifAbsent: [ self assert: false ].
+	repository := projectReferenceSpec repositories map at: #'/opt/gemstone/repo' ifAbsent: [ self assert: false ].
 	self assert: repository type equals: 'directory'.
-	repository := projectReferenceSpec repositories map at: 'http://example.com/repository' ifAbsent: [ self assert: false ].
+	repository := projectReferenceSpec repositories map at: #'http://example.com/repository' ifAbsent: [ self assert: false ].
 	self assert: repository type equals: 'http'.
 	self assert: repository username equals: 'DaleHenrichs'.
 	self assert: repository password equals: 'secret'.
 	group := version packages packageNamed: 'Platform' ifAbsent: [ self assert: false ].
-	self assert: (group includes includes: 'Core').
-	self assert: (group includes includes: 'Tests')
+	self assert: (group includes includes: #Core).
+	self assert: (group includes includes: #Tests)
 ]
 
 { #category : 'tests' }
@@ -108,8 +108,8 @@ MetacelloMCVersionSpecTestCase >> testMCVersionSpec [
 			(self packageSpec
 				name: 'Package';
 				requires: 'AnotherPackage';
-				includes: 'IncludedPackage';
-				answers: #(#('preload' 'preload answer') #('postload' 'postload answer'));
+				includes: #IncludedPackage;
+				answers: #(#(preload 'preload answer') #(postload 'postload answer'));
 				file: 'Package-dkh.1';
 				preLoadDoIt: #preLoadDoIt;
 				postLoadDoIt: #postLoadDoIt;
@@ -125,30 +125,30 @@ MetacelloMCVersionSpecTestCase >> testMCVersionSpec [
 		add:
 			(self groupSpec
 				name: 'Platform';
-				includes: 'Core';
+				includes: #Core;
 				yourself);
 		add:
 			(self projectSpec
 				name: 'Project';
 				className: 'ConfigurationOfProjectA';
 				versionString: #stable;
-				loads: #('MyPackage' 'MyTests');
+				loads: #(MyPackage MyTests);
 				preLoadDoIt: #preLoadDoItB;
 				postLoadDoIt: #postLoadDoItB;
 				yourself);
 		yourself.
 	self assert: version blessing value equals: #baseline.
 	self assert: version versionString value equals: '1.0'.
-	repository := version repositories map at: '/opt/gemstone/repository' ifAbsent: [ self assert: false ].
+	repository := version repositories map at: #'/opt/gemstone/repository' ifAbsent: [ self assert: false ].
 	self assert: repository type equals: 'directory'.
-	repository := version repositories map at: 'http://example.com/repository' ifAbsent: [ self assert: false ].
+	repository := version repositories map at: #'http://example.com/repository' ifAbsent: [ self assert: false ].
 	self assert: repository type equals: 'http'.
 	self assert: repository username equals: 'dkh'.
 	self assert: repository password equals: 'password'.
 	package := version packages packageNamed: 'Package' ifAbsent: [ self assert: false ].
 	self assert: package name equals: 'Package'.
 	group := version packages packageNamed: 'Platform' ifAbsent: [ self assert: false ].
-	self assert: (group includes includes: 'Core').
+	self assert: (group includes includes: #Core).
 	projectReferenceSpec := version packages packageNamed: 'Project' ifAbsent: [ self assert: false ].
 	self assert: projectReferenceSpec projectName equals: 'Project'.
 	self assert: projectReferenceSpec versionString equals: #stable.

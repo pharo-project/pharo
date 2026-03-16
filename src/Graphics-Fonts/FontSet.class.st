@@ -16,7 +16,7 @@ Class {
 	#name : 'FontSet',
 	#superclass : 'Object',
 	#pools : [
-		'TextConstants'
+		#TextConstants
 	],
 	#category : 'Graphics-Fonts',
 	#package : 'Graphics-Fonts'

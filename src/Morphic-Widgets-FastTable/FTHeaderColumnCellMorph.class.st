@@ -5,7 +5,7 @@ Class {
 	#name : 'FTHeaderColumnCellMorph',
 	#superclass : 'FTCellMorph',
 	#instVars : [
-		'column'
+		#column
 	],
 	#category : 'Morphic-Widgets-FastTable-Base',
 	#package : 'Morphic-Widgets-FastTable',

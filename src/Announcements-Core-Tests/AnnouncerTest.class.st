@@ -12,7 +12,7 @@ Class {
 	#name : 'AnnouncerTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'announcer'
+		#announcer
 	],
 	#category : 'Announcements-Core-Tests-Tests',
 	#package : 'Announcements-Core-Tests',

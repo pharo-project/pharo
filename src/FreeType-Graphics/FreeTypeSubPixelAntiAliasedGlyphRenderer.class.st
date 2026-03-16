@@ -5,7 +5,7 @@ Class {
 	#name : 'FreeTypeSubPixelAntiAliasedGlyphRenderer',
 	#superclass : 'FreeTypeGlyphRenderer',
 	#pools : [
-		'FT2Constants'
+		#FT2Constants
 	],
 	#category : 'FreeType-Graphics-GlyphRendering',
 	#package : 'FreeType-Graphics',

@@ -5,7 +5,7 @@ Class {
 	#name : 'FileLocatorTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'locator'
+		#locator
 	],
 	#category : 'FileSystem-Core-Tests-Base',
 	#package : 'FileSystem-Core-Tests',

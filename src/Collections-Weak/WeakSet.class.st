@@ -9,7 +9,7 @@ Class {
 	#name : 'WeakSet',
 	#superclass : 'Set',
 	#instVars : [
-		'flag'
+		#flag
 	],
 	#category : 'Collections-Weak-Base',
 	#package : 'Collections-Weak',

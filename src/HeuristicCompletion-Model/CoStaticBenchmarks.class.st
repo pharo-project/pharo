@@ -24,9 +24,9 @@ Class {
 	#name : 'CoStaticBenchmarks',
 	#superclass : 'Object',
 	#instVars : [
-		'scope',
-		'completionBenchs',
-		'builder'
+		#scope,
+		#completionBenchs,
+		#builder
 	],
 	#category : 'HeuristicCompletion-Model-Benchmarks',
 	#package : 'HeuristicCompletion-Model',

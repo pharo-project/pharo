@@ -5,7 +5,7 @@ Class {
 	#name : 'OSWindowWorldMorphWithModel',
 	#superclass : 'OSWindowWorldMorph',
 	#instVars : [
-		'model'
+		#model
 	],
 	#category : 'OSWindow-Core-Morphic',
 	#package : 'OSWindow-Core',

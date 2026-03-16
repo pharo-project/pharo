@@ -5,7 +5,7 @@ Class {
 	#name : 'HiFastTableExample',
 	#superclass : 'FTSimpleDataSource',
 	#instVars : [
-		'hiedraColumnController'
+		#hiedraColumnController
 	],
 	#category : 'Hiedra-Examples-FastTable',
 	#package : 'Hiedra-Examples',

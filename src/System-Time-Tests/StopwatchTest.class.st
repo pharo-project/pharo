@@ -5,8 +5,8 @@ Class {
 	#name : 'StopwatchTest',
 	#superclass : 'ClassTestCase',
 	#instVars : [
-		'aStopwatch',
-		'aDelay'
+		#aStopwatch,
+		#aDelay
 	],
 	#category : 'System-Time-Tests',
 	#package : 'System-Time-Tests'

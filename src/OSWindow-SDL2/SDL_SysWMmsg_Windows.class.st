@@ -5,13 +5,13 @@ Class {
 	#name : 'SDL_SysWMmsg_Windows',
 	#superclass : 'SDL2Structure',
 	#classVars : [
-		'OFFSET_HWND',
-		'OFFSET_LPARAM',
-		'OFFSET_MSG',
-		'OFFSET_WPARAM'
+		#OFFSET_HWND,
+		#OFFSET_LPARAM,
+		#OFFSET_MSG,
+		#OFFSET_WPARAM
 	],
 	#pools : [
-		'SDL2WindowsMessages'
+		#SDL2WindowsMessages
 	],
 	#category : 'OSWindow-SDL2-Bindings',
 	#package : 'OSWindow-SDL2',

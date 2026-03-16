@@ -5,8 +5,8 @@ Class {
 	#name : 'SDL_SysWMinfo_MirInfo',
 	#superclass : 'SDL2Structure',
 	#classVars : [
-		'OFFSET_CONNECTION',
-		'OFFSET_SURFACE'
+		#OFFSET_CONNECTION,
+		#OFFSET_SURFACE
 	],
 	#category : 'OSWindow-SDL2-Bindings',
 	#package : 'OSWindow-SDL2',

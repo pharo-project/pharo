@@ -7,7 +7,7 @@ Class {
 	#name : 'DTLeavesCollector',
 	#superclass : 'DTResultsTreeVisitor',
 	#instVars : [
-		'leaves'
+		#leaves
 	],
 	#category : 'DrTests-Visitors',
 	#package : 'DrTests',

@@ -2,11 +2,11 @@ Class {
 	#name : 'MetacelloTarget',
 	#superclass : 'Object',
 	#instVars : [
-		'operator',
-		'engine'
+		#operator,
+		#engine
 	],
 	#classVars : [
-		'RetryPackageResolution'
+		#RetryPackageResolution
 	],
 	#category : 'Metacello-Core-Targets',
 	#package : 'Metacello-Core',

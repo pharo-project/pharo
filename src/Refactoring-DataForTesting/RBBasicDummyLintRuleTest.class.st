@@ -2,10 +2,10 @@ Class {
 	#name : 'RBBasicDummyLintRuleTest',
 	#superclass : 'RBDummyLintRuleTest',
 	#instVars : [
-		'methodBlock',
-		'result',
-		'classBlock',
-		'anInstVar'
+		#methodBlock,
+		#result,
+		#classBlock,
+		#anInstVar
 	],
 	#category : 'Refactoring-DataForTesting-LittleHierarchy',
 	#package : 'Refactoring-DataForTesting',
@@ -187,7 +187,7 @@ RBBasicDummyLintRuleTest class >> collectionMessagesToExternalObject [
 											[| receiver |
 											receiver := aNode receiver receiver.
 											receiver isVariable not or:
-													[((#('self' 'super') includes: receiver name)
+													[((#(self super) includes: receiver name)
 														or: [Smalltalk includesKey: receiver name asSymbol]) not]]]].
 	detector methodBlock:
 			[:context :result |
@@ -349,7 +349,7 @@ RBBasicDummyLintRuleTest class >> equalsTrue [
 	| detector matcher |
 	detector := self new.
 	detector name: 'Unnecessary "= true"'.
-	matcher := (self parseTreeSearcher) addSearches: #('true' 'false') ->
+	matcher := (self parseTreeSearcher) addSearches: #(true false) ->
 								[:aNode :answer |
 								answer or:
 										[aNode parent isMessage
@@ -383,7 +383,7 @@ RBBasicDummyLintRuleTest class >> equivalentSuperclassMethods [
 { #category : 'unnecessary code' }
 RBBasicDummyLintRuleTest class >> extraBlock [
 	^self
-		createParseTreeRule: (#('value' 'value: `@value' 'value: `@value1 value: `@value2' 'value: `@value1 value: `value2 value: `@value3' 'valueWithArguments: `@values')
+		createParseTreeRule: (#(value 'value: `@value' 'value: `@value1 value: `@value2' 'value: `@value1 value: `value2 value: `@value3' 'valueWithArguments: `@values')
 				collect: [:each | '[:`@params | | `@temps | `@.statements] ' , each])
 		name: 'Block immediately evaluated'
 ]
@@ -698,7 +698,7 @@ RBBasicDummyLintRuleTest class >> precedence [
 
 { #category : 'accessing' }
 RBBasicDummyLintRuleTest class >> protocolsToCheck [
-	^#('bugs' 'possible bugs' 'unnecessary code' 'intention revealing' 'miscellaneous')
+	^#(bugs 'possible bugs' 'unnecessary code' 'intention revealing' miscellaneous)
 ]
 
 { #category : 'miscellaneous' }
@@ -1067,7 +1067,7 @@ RBBasicDummyLintRuleTest class >> usesTrue [
 			((method referencesLiteral: trueBinding)
 				or: [method referencesLiteral: falseBinding]) ifTrue:
 						[result addClass: context selectedClass selector: context selector.
-						result searchStrings: #('True' 'False')]].
+						result searchStrings: #(True False)]].
 	^detector
 ]
 
@@ -1090,7 +1090,7 @@ RBBasicDummyLintRuleTest class >> utilityMethods [
 							[(context superMessages isEmpty and: [context selfMessages isEmpty]) ifTrue:
 									[(self parseTreeSearcherClass
 										references: context selectedClass allInstVarNames
-												, context selectedClass allClassVarNames asArray , #('self')
+												, context selectedClass allClassVarNames asArray , #(self)
 										in: context parseTree) isEmpty
 										ifTrue: [result addClass: context selectedClass selector: context selector]]]]].
 	^detector

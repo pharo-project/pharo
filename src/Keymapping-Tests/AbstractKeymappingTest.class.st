@@ -12,7 +12,7 @@ Class {
 	#name : 'AbstractKeymappingTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'default'
+		#default
 	],
 	#category : 'Keymapping-Tests',
 	#package : 'Keymapping-Tests'

@@ -5,10 +5,10 @@ Class {
 	#name : 'TreeChunkPagerMorph',
 	#superclass : 'TreeNavigationBarMorph',
 	#instVars : [
-		'atBottom',
-		'lastIndex',
-		'pageSizeEditor',
-		'nextPageAllowed'
+		#atBottom,
+		#lastIndex,
+		#pageSizeEditor,
+		#nextPageAllowed
 	],
 	#category : 'Morphic-Widgets-Tree-Pagination',
 	#package : 'Morphic-Widgets-Tree',

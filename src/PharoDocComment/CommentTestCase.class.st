@@ -7,7 +7,7 @@ Class {
 	#name : 'CommentTestCase',
 	#superclass : 'TestCase',
 	#instVars : [
-		'docCommentNode'
+		#docCommentNode
 	],
 	#category : 'PharoDocComment-Base',
 	#package : 'PharoDocComment',
@@ -52,7 +52,7 @@ CommentTestCase >> expression [
 { #category : 'private' }
 CommentTestCase >> instanceVariablesToKeep [
 
-	^ #( 'docCommentNode' )
+	^ #( docCommentNode )
 ]
 
 { #category : 'printing' }

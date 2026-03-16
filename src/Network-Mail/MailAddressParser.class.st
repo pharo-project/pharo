@@ -9,10 +9,10 @@ Class {
 	#name : 'MailAddressParser',
 	#superclass : 'Object',
 	#instVars : [
-		'tokens',
-		'addresses',
-		'curAddrTokens',
-		'storeNames'
+		#tokens,
+		#addresses,
+		#curAddrTokens,
+		#storeNames
 	],
 	#category : 'Network-Mail',
 	#package : 'Network-Mail'

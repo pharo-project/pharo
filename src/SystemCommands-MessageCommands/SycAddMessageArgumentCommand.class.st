@@ -11,7 +11,7 @@ Class {
 	#name : 'SycAddMessageArgumentCommand',
 	#superclass : 'SycChangeMessageSignatureCommand',
 	#instVars : [
-		'newSelector'
+		#newSelector
 	],
 	#category : 'SystemCommands-MessageCommands',
 	#package : 'SystemCommands-MessageCommands'

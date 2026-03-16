@@ -7,10 +7,10 @@ Class {
 	#name : 'MCMockASubclass',
 	#superclass : 'MCMockClassA',
 	#instVars : [
-		'x'
+		#x
 	],
 	#classVars : [
-		'Y'
+		#Y
 	],
 	#category : 'MonticelloMocks',
 	#package : 'MonticelloMocks'

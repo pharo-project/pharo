@@ -10,11 +10,11 @@ Class {
 	#name : 'TFExternalAsyncCall',
 	#superclass : 'Object',
 	#instVars : [
-		'function',
-		'semaphore',
-		'arguments',
-		'parameterArray',
-		'index'
+		#function,
+		#semaphore,
+		#arguments,
+		#parameterArray,
+		#index
 	],
 	#category : 'ThreadedFFI-Base',
 	#package : 'ThreadedFFI',

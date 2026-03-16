@@ -11,12 +11,12 @@ Class {
 	#name : 'AnimatedImageMorph',
 	#superclass : 'Morph',
 	#instVars : [
-		'frames',
-		'frameStream',
-		'currentFrame',
-		'activeForm',
-		'prevFrame',
-		'currentDisposal'
+		#frames,
+		#frameStream,
+		#currentFrame,
+		#activeForm,
+		#prevFrame,
+		#currentDisposal
 	],
 	#category : 'Images-Animated',
 	#package : 'Images-Animated'

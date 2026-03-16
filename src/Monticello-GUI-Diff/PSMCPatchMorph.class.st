@@ -6,11 +6,11 @@ Class {
 	#name : 'PSMCPatchMorph',
 	#superclass : 'DiffChangeMorph',
 	#instVars : [
-		'changeTree',
-		'selectedChangeWrapper'
+		#changeTree,
+		#selectedChangeWrapper
 	],
 	#classVars : [
-		'UsedByDefault'
+		#UsedByDefault
 	],
 	#category : 'Monticello-GUI-Diff',
 	#package : 'Monticello-GUI-Diff'

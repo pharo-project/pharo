@@ -19,7 +19,7 @@ Class {
 	#name : 'FTAbstractSortingState',
 	#superclass : 'Object',
 	#instVars : [
-		'context'
+		#context
 	],
 	#category : 'Morphic-Widgets-FastTable-Sorting',
 	#package : 'Morphic-Widgets-FastTable',

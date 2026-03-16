@@ -5,11 +5,11 @@ Class {
 	#name : 'MergeJoinSection',
 	#superclass : 'JoinSection',
 	#instVars : [
-		'selectedBorderColor',
-		'selected',
-		'selectionState',
-		'stateIcons',
-		'allowClick'
+		#selectedBorderColor,
+		#selected,
+		#selectionState,
+		#stateIcons,
+		#allowClick
 	],
 	#category : 'Tool-Diff-Joins',
 	#package : 'Tool-Diff',

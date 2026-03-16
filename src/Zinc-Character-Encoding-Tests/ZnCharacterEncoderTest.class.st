@@ -144,7 +144,7 @@ ZnCharacterEncoderTest >> testConvencienceMethods [
 	self assert: (encoder decodeBytes: (encoder encodeString: string)) equals: string.
 	self assert: (encoder encodedByteCountForString: string) equals: 20.
 
-	#( 'ccc' 'ççç' 'c' 'ç' 'çc' 'cç' ) do: [ :each |
+	#( ccc ççç c ç çc cç ) do: [ :each |
 		self assert: (encoder decodeBytes: (encoder encodeString: each)) equals: each ]
 ]
 
@@ -228,7 +228,7 @@ ZnCharacterEncoderTest >> testLatin2Encoder [
 ZnCharacterEncoderTest >> testNextPutAllStartingAtToStream [
 	| encoder |
 	encoder := ZnUTF8Encoder new.
-	#( 'ccc' 'ççç' 'c' 'ç' 'çc' 'cç' 'çç' ) do: [ :each |
+	#( ccc ççç c ç çc cç çç ) do: [ :each |
 		#( ( '' '' ) ( 'ABC' '' ) ( '' 'ABC' ) ( 'ABC' 'ABC' )
 			( 'AéC' '' ) ( '' 'AèC' ) ( 'AéC' 'AèC' )
 			( 'AXC' 'AèC' ) ( 'AéC' 'AXC' )
@@ -257,7 +257,7 @@ ZnCharacterEncoderTest >> testNullEncoder [
 ZnCharacterEncoderTest >> testReadIntoStartingAtCountFromStream [
 	| encoder |
 	encoder := ZnUTF8Encoder new.
-	#( 'ccc' 'ççç' 'c' 'ç' 'çc' 'cç' 'çç' ) do: [ :each |
+	#( ccc ççç c ç çc cç çç ) do: [ :each |
 		#( ( '' '' ) ( 'ABC' '' ) ( '' 'ABC' ) ( 'ABC' 'ABC' )
 			( 'AéC' '' ) ( '' 'AèC' ) ( 'AéC' 'AèC' )
 			( 'AXC' 'AèC' ) ( 'AéC' 'AXC' )

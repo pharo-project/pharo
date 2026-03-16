@@ -54,6 +54,6 @@ ClyClassSideLinkTableDecorator class >> wantsDecorateTableCellOf: aDataSourceIte
 
 	| tagName |
 	tagName := aDataSourceItem name asLowercase.
-	^#('see class side' 'seeclassside')
+	^#('see class side' seeclassside)
 		anySatisfy: [ :each | tagName beginsWith: each ]
 ]

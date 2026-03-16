@@ -63,7 +63,7 @@ ZnClientTest >> testConstruction [
 	self assert: client request url host equals: 'www.example.com'.
 	self assert: client request url port equals: 8080.
 	self assert: client request url pathQueryFragmentPrintString equals: '/foo/a%20space/file.txt?key=123456'.
-	self assert: (client request headers at: 'X-token') equals: 'ABCDEF'
+	self assert: (client request headers at: #'X-token') equals: 'ABCDEF'
 ]
 
 { #category : 'testing' }
@@ -774,7 +774,7 @@ ZnClientTest >> testRedirectWithCookies [
 ZnClientTest >> testRedirectWithCustomHeader [
 	self withServerDo: [ :server | | client |
 		server onRequestRespond: [ :request |
-			(request headers at: 'X-Custom' ifAbsent: [ nil ]) = 'The Secret'
+			(request headers at: #'X-Custom' ifAbsent: [ nil ]) = 'The Secret'
 				ifFalse: [ ZnResponse badRequest: request ]
 				ifTrue: [
 					request uri firstPathSegment = 'one'
@@ -835,14 +835,14 @@ ZnClientTest >> testRelativeRedirect307 [
 ZnClientTest >> testRelativeRedirectUp [
 	self withServerDo: [ :server | | client |
 		server onRequestRespond: [ :request |
-			request uri pathSegments asArray = #('a' 'b' 'c.txt')
+			request uri pathSegments asArray = #(a b 'c.txt')
 				ifTrue: [ ZnResponse redirect: '../d.txt' ]
 				ifFalse: [
-					request uri pathSegments asArray = #('a' 'd.txt')
+					request uri pathSegments asArray = #(a 'd.txt')
 						ifTrue: [ ZnResponse ok: (ZnEntity text: 'OK!') ]
 		 				ifFalse: [ ZnResponse notFound: request uri ] ] ].
 		(client := ZnClient new)
-			url: server localUrl; addPath: #('a' 'b' 'c.txt');
+			url: server localUrl; addPath: #(a b 'c.txt');
 			post.
 		self assert: client isSuccess.
 		self assert: client contents equals: 'OK!'.

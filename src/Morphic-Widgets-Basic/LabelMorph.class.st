@@ -5,11 +5,11 @@ Class {
 	#name : 'LabelMorph',
 	#superclass : 'StringMorph',
 	#instVars : [
-		'getEnabledSelector',
-		'getTextSelector',
-		'enabled',
-		'model',
-		'disabledStyle'
+		#getEnabledSelector,
+		#getTextSelector,
+		#enabled,
+		#model,
+		#disabledStyle
 	],
 	#category : 'Morphic-Widgets-Basic',
 	#package : 'Morphic-Widgets-Basic'

@@ -24,7 +24,7 @@ Class {
 	#name : 'FLGlobalSendCluster',
 	#superclass : 'FLGlobalCluster',
 	#instVars : [
-		'globalSends'
+		#globalSends
 	],
 	#category : 'Fuel-Core-Clusters-Global',
 	#package : 'Fuel-Core',

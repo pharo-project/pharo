@@ -5,14 +5,14 @@ Class {
 	#name : 'FreeTypeFontFamilyMember',
 	#superclass : 'AbstractFontFamilyMember',
 	#instVars : [
-		'fileInfo',
-		'stretchName',
-		'stretchValue',
-		'weightName',
-		'weightValue',
-		'slantName',
-		'slantValue',
-		'isSimulatedStyle'
+		#fileInfo,
+		#stretchName,
+		#stretchValue,
+		#weightName,
+		#weightValue,
+		#slantName,
+		#slantValue,
+		#isSimulatedStyle
 	],
 	#category : 'FreeType-FontManager',
 	#package : 'FreeType',

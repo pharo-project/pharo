@@ -7,7 +7,7 @@ Class {
 	#name : 'SystemAnnouncement',
 	#superclass : 'Announcement',
 	#instVars : [
-		'properties'
+		#properties
 	],
 	#category : 'System-Announcements-System-Base',
 	#package : 'System-Announcements',

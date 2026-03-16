@@ -25,10 +25,10 @@ Class {
 	#name : 'TFExternalFunction',
 	#superclass : 'Object',
 	#instVars : [
-		'handle',
-		'definition',
-		'functionName',
-		'moduleName'
+		#handle,
+		#definition,
+		#functionName,
+		#moduleName
 	],
 	#category : 'ThreadedFFI-Base',
 	#package : 'ThreadedFFI',

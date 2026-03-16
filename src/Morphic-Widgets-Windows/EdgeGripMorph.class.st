@@ -5,9 +5,9 @@ Class {
 	#name : 'EdgeGripMorph',
 	#superclass : 'AbstractResizerMorph',
 	#instVars : [
-		'target',
-		'edgeName',
-		'fitTargetOwner'
+		#target,
+		#edgeName,
+		#fitTargetOwner
 	],
 	#category : 'Morphic-Widgets-Windows-Resizing',
 	#package : 'Morphic-Widgets-Windows',

@@ -7,13 +7,13 @@ Class {
 	#name : 'TickDialogWindow',
 	#superclass : 'DialogWindowMorph',
 	#instVars : [
-		'defaultValue',
-		'itemsHeaderName',
-		'itemsList',
-		'listModel',
-		'listMorph',
-		'resultStorage',
-		'wrapBlockOrSelector'
+		#defaultValue,
+		#itemsHeaderName,
+		#itemsList,
+		#listModel,
+		#listMorph,
+		#resultStorage,
+		#wrapBlockOrSelector
 	],
 	#category : 'Polymorph-Widgets-Windows',
 	#package : 'Polymorph-Widgets',

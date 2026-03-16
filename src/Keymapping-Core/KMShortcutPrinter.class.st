@@ -6,7 +6,7 @@ Class {
 	#name : 'KMShortcutPrinter',
 	#superclass : 'OSPlatformVisitor',
 	#classVars : [
-		'SymbolTable'
+		#SymbolTable
 	],
 	#category : 'Keymapping-Core-Base',
 	#package : 'Keymapping-Core',
@@ -67,7 +67,7 @@ KMShortcutPrinter >> shortcutModifiersOf: aShortcut [
 	modifiers replaceAll: 'Meta' with: 'Ctrl'.
 
 	"Ensure shift is first"
-	((modifiers includes: 'Shift')
+	((modifiers includes: #Shift)
 		and: [ modifiers first ~= 'Shift' ])
 		ifTrue: [ modifiers := (modifiers copyWithout: 'Shift') copyWithFirst: 'Shift' ].
 

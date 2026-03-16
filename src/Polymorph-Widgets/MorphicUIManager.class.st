@@ -9,10 +9,10 @@ Class {
 	#traits : 'TEasilyThemed - {#theme}',
 	#classTraits : 'TEasilyThemed classTrait',
 	#instVars : [
-		'activeTranscript'
+		#activeTranscript
 	],
 	#classVars : [
-		'UIProcess'
+		#UIProcess
 	],
 	#category : 'Polymorph-Widgets',
 	#package : 'Polymorph-Widgets'
@@ -392,7 +392,7 @@ MorphicUIManager >> inform: aStringOrText [
 MorphicUIManager >> informUserDuring: aBlock [
 	"Display a message as progress	during execution of the given block."
 	"UIManager default informUserDuring: [:bar|
-		#('one' 'two' 'three') do: [:info|
+		#(one two three) do: [:info|
 			bar label: info.
 			1 to: 100 do: [:v |
 				bar current: v.

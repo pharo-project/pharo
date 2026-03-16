@@ -6,7 +6,7 @@ Class {
 	#name : 'SycRenameClassCommand',
 	#superclass : 'SycSingleClassCommand',
 	#instVars : [
-		'toolContext'
+		#toolContext
 	],
 	#category : 'SystemCommands-ClassCommands',
 	#package : 'SystemCommands-ClassCommands'

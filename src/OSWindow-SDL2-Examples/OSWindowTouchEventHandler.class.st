@@ -5,7 +5,7 @@ Class {
 	#name : 'OSWindowTouchEventHandler',
 	#superclass : 'OSWindowEventVisitor',
 	#instVars : [
-		'touchExample'
+		#touchExample
 	],
 	#category : 'OSWindow-SDL2-Examples-Touch',
 	#package : 'OSWindow-SDL2-Examples',

@@ -5,8 +5,8 @@ Class {
 	#name : 'LocaleChanged',
 	#superclass : 'Announcement',
 	#instVars : [
-		'newLocale',
-		'oldLocale'
+		#newLocale,
+		#oldLocale
 	],
 	#category : 'System-Localization-Announcements',
 	#package : 'System-Localization',

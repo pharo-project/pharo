@@ -7,7 +7,7 @@ Class {
 	#name : 'SystemDependenciesReportResource',
 	#superclass : 'TestResource',
 	#instVars : [
-		'dependenciesReport'
+		#dependenciesReport
 	],
 	#category : 'System-DependenciesTests',
 	#package : 'System-DependenciesTests'

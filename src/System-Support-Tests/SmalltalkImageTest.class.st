@@ -22,7 +22,7 @@ SmalltalkImageTest >> testAtIfPresentIfAbsent [
 SmalltalkImageTest >> testExtractAllKinds [
 
 	| args extract keys |
-	args := #('ArgWithoutMinus1' '-ArgWithMinus1' 'ArgWithoutMinus2' 'ArgWithoutMinus3' '-ArgWithMinus2').
+	args := #(ArgWithoutMinus1 '-ArgWithMinus1' ArgWithoutMinus2 ArgWithoutMinus3 '-ArgWithMinus2').
 	extract := SmalltalkImage current extractMinusParametersFrom: args.
 	keys := extract keys sort.
 	self assert: extract isDictionary.
@@ -31,7 +31,7 @@ SmalltalkImageTest >> testExtractAllKinds [
 	self assert: (keys at: 2) equals: #ArgWithMinus1.
 	self assert: (keys at: 3) equals: #ArgWithMinus2.
 	self assert: (extract at: #*) equals: (Array with: 'ArgWithoutMinus1').
-	self assert: (extract at: #ArgWithMinus1) equals: #('ArgWithoutMinus2' 'ArgWithoutMinus3').
+	self assert: (extract at: #ArgWithMinus1) equals: #(ArgWithoutMinus2 ArgWithoutMinus3).
 	self assertEmpty: (extract at: #ArgWithMinus2)
 ]
 
@@ -59,7 +59,7 @@ SmalltalkImageTest >> testExtractNil [
 SmalltalkImageTest >> testExtractOneArgNoMinus [
 
 	| args extract |
-	args := #('ArgNoMinus').
+	args := #(ArgNoMinus).
 	extract := SmalltalkImage current extractMinusParametersFrom: args.
 	self assert: extract isDictionary.
 	self assert: extract size equals: 1.
@@ -83,19 +83,19 @@ SmalltalkImageTest >> testExtractOneArgWithMinus [
 SmalltalkImageTest >> testExtractOneArgWithMinusThenArgsWithout [
 
 	| args extract |
-	args := #('-ArgWithMinus' 'ArgWithoutMinus1' 'ArgWithoutMinus2').
+	args := #('-ArgWithMinus' ArgWithoutMinus1 ArgWithoutMinus2).
 	extract := SmalltalkImage current extractMinusParametersFrom: args.
 	self assert: extract isDictionary.
 	self assert: extract size equals: 1.
 	self assert: (extract keys at: 1) equals: #ArgWithMinus.
-	self assert: (extract at: #ArgWithMinus) equals: #('ArgWithoutMinus1' 'ArgWithoutMinus2')
+	self assert: (extract at: #ArgWithMinus) equals: #(ArgWithoutMinus1 ArgWithoutMinus2)
 ]
 
 { #category : 'tests - arguments' }
 SmalltalkImageTest >> testExtractTwoArgsWithAndWithoutMinus [
 
 	| args extract keys |
-	args := #('ArgWithoutMinus' '-ArgWithMinus').
+	args := #(ArgWithoutMinus '-ArgWithMinus').
 	extract := SmalltalkImage current extractMinusParametersFrom: args.
 	keys := extract keys sort.
 	self assert: extract isDictionary.

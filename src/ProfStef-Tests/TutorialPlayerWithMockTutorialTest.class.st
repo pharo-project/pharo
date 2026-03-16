@@ -5,7 +5,7 @@ Class {
 	#name : 'TutorialPlayerWithMockTutorialTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'player'
+		#player
 	],
 	#category : 'ProfStef-Tests-Tests',
 	#package : 'ProfStef-Tests',

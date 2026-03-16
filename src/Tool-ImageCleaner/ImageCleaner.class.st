@@ -23,7 +23,7 @@ Class {
 	#name : 'ImageCleaner',
 	#superclass : 'Object',
 	#instVars : [
-		'literalTable'
+		#literalTable
 	],
 	#category : 'Tool-ImageCleaner',
 	#package : 'Tool-ImageCleaner'
@@ -177,7 +177,7 @@ ImageCleaner >> packagesForCleanUpInProduction [
 	"A list of packages who will be unloaded when going to production.
 	 WARNING, ORDER IS IMPORTANT"
 
-	^#('MonticelloMocks')
+	^#(MonticelloMocks)
 ]
 
 { #category : 'literal sharing' }

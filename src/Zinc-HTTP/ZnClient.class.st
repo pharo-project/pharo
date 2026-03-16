@@ -30,14 +30,14 @@ Class {
 	#name : 'ZnClient',
 	#superclass : 'Object',
 	#instVars : [
-		'request',
-		'response',
-		'connection',
-		'lastUsed',
-		'options',
-		'session',
-		'logLevel',
-		'newOptions'
+		#request,
+		#response,
+		#connection,
+		#lastUsed,
+		#options,
+		#session,
+		#logLevel,
+		#newOptions
 	],
 	#category : 'Zinc-HTTP-Client-Server',
 	#package : 'Zinc-HTTP',
@@ -1156,7 +1156,7 @@ ZnClient >> postLocalOptionsChanged [
 		ifNil: [
 			"request already exists (seen #initialize), set the user-agent should it have been customized"
 			request headers
-				at: 'User-Agent'
+				at: #'User-Agent'
 				put: (self localOptions at: #userAgentString) ]
 ]
 

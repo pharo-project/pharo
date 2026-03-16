@@ -10,8 +10,8 @@ Class {
 	#name : 'RxmSubstring',
 	#superclass : 'RxmLink',
 	#instVars : [
-		'sample',
-		'compare'
+		#sample,
+		#compare
 	],
 	#category : 'Regex-Core-Links',
 	#package : 'Regex-Core',

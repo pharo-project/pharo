@@ -5,8 +5,8 @@ Class {
 	#name : 'HDLintReport',
 	#superclass : 'HDReport',
 	#instVars : [
-		'environment',
-		'rules'
+		#environment,
+		#rules
 	],
 	#category : 'JenkinsTools-ExtraReports',
 	#package : 'JenkinsTools-ExtraReports'

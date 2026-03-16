@@ -22,8 +22,8 @@ Class {
 	#name : 'AnnouncementDeliveryCondition',
 	#superclass : 'Object',
 	#instVars : [
-		'announcementClass',
-		'conditionBlock'
+		#announcementClass,
+		#conditionBlock
 	],
 	#category : 'Announcements-Core-Conditions',
 	#package : 'Announcements-Core',

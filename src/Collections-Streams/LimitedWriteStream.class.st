@@ -7,8 +7,8 @@ Class {
 	#name : 'LimitedWriteStream',
 	#superclass : 'WriteStream',
 	#instVars : [
-		'limit',
-		'limitBlock'
+		#limit,
+		#limitBlock
 	],
 	#category : 'Collections-Streams-Base',
 	#package : 'Collections-Streams',

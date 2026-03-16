@@ -4,7 +4,7 @@ I'm a dialog which ask the user to select a element in a list. See me in action:
 UIManager default inform:
         (UIManager default 
                 chooseFrom: #(one two three) 
-                values: #('1' '2' '3')  
+                values: #(1 2 3)  
                 message: 'Select one' 
                 title: 'PopupChoiceDialogWindowWithMessage example').
 "
@@ -12,10 +12,10 @@ Class {
 	#name : 'PopupChoiceDialogWindowWithMessage',
 	#superclass : 'PopupChoiceDialogWindow',
 	#instVars : [
-		'textMorph',
-		'iconMorph',
-		'textFont',
-		'message'
+		#textMorph,
+		#iconMorph,
+		#textFont,
+		#message
 	],
 	#category : 'Polymorph-Widgets-Windows',
 	#package : 'Polymorph-Widgets',

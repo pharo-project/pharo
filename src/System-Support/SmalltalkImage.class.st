@@ -24,21 +24,21 @@ Class {
 	#name : 'SmalltalkImage',
 	#superclass : 'Object',
 	#instVars : [
-		'globals',
-		'specialObjectsArray',
-		'vm'
+		#globals,
+		#specialObjectsArray,
+		#vm
 	],
 	#classVars : [
-		'CompilerClass',
-		'LastImagePath',
-		'LastQuitLogPosition',
-		'LogFileName',
-		'LowSpaceProcess',
-		'LowSpaceSemaphore',
-		'MemoryHogs',
-		'SourceFileVersionString',
-		'SpecialSelectors',
-		'Tools'
+		#CompilerClass,
+		#LastImagePath,
+		#LastQuitLogPosition,
+		#LogFileName,
+		#LowSpaceProcess,
+		#LowSpaceSemaphore,
+		#MemoryHogs,
+		#SourceFileVersionString,
+		#SpecialSelectors,
+		#Tools
 	],
 	#category : 'System-Support-Image',
 	#package : 'System-Support',
@@ -528,10 +528,10 @@ SmalltalkImage >> extractMinusParameters [
 	Here is an example:
 		I suppose I run pharo with: `pharo myImage.image 1 2 3 woah -minus1 'Hello' -minus2 -minus3 'Hello' 'World'`.
 		This message will return a dictionary with:
-			* --> #(1 2 3 'woah')
-			minus1 --> #('Hello')
+			* --> #(1 2 3 woah)
+			minus1 --> #(Hello)
 			minus2 --> #()
-			minus3 --> #('Hello' 'World')"
+			minus3 --> #(Hello World)"
 
 	| args str index |
 
@@ -1478,7 +1478,7 @@ SmalltalkImage >> removeAllLineFeedsQuietlyCalling: aBlock [
 	Evaluate aBlock for each method so that status can be updated."
 	| authors |
 	authors := Dictionary new.
-	authors at: 'OK' put: Set new.
+	authors at: #'OK' put: Set new.
 	self systemNavigation
 		allBehaviorsDo: [:cls | cls selectorsAndMethodsDo: [:selector :method |
 					| oldStamp newCodeString oldCodeString oldProtocolName nameString |
@@ -1489,7 +1489,7 @@ SmalltalkImage >> removeAllLineFeedsQuietlyCalling: aBlock [
 							newCodeString := oldCodeString withInternalLineEndings.
 							nameString := cls name , '>>' , selector.
 							((cls compiledMethodAt: selector) hasLiteralSuchThat: [ :lit | lit asString includes: Character lf ])
-								ifTrue: [(authors at: 'OK')
+								ifTrue: [(authors at: #'OK')
 										add: nameString]
 								ifFalse: [oldStamp := (method timeStamp)
 												copy replaceAll: Character cr

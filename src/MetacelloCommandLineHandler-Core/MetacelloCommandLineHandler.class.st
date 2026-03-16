@@ -56,7 +56,7 @@ MetacelloCommandLineHandler >> activate [
 
 { #category : 'accessing' }
 MetacelloCommandLineHandler >> availableSubCommands [
-	^ #('install')
+	^ #(install)
 ]
 
 { #category : 'accessing' }

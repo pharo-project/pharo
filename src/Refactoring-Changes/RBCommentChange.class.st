@@ -7,7 +7,7 @@ Class {
 	#name : 'RBCommentChange',
 	#superclass : 'RBRefactoryClassChange',
 	#instVars : [
-		'comment'
+		#comment
 	],
 	#category : 'Refactoring-Changes-Changes-Classes',
 	#package : 'Refactoring-Changes',

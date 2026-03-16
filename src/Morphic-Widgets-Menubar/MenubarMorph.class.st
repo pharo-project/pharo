@@ -19,10 +19,10 @@ Class {
 	#name : 'MenubarMorph',
 	#superclass : 'DockingBarMorph',
 	#instVars : [
-		'menuBarItems'
+		#menuBarItems
 	],
 	#classVars : [
-		'ShowMenubar'
+		#ShowMenubar
 	],
 	#category : 'Morphic-Widgets-Menubar-View',
 	#package : 'Morphic-Widgets-Menubar',

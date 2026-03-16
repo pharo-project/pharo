@@ -92,7 +92,7 @@ ZnUrlTest >> testConvenienceMethods [
 		assert: baseUrl / 'doc/file.html'
 		equals: 'http://api.host.com/doc/file.html' asZnUrl.
 	self
-		assert: baseUrl / #( 'doc' 'file.html' )
+		assert: baseUrl / #( doc 'file.html' )
 		equals: 'http://api.host.com/doc/file.html' asZnUrl.
 	self
 		assert: baseUrl / 'doc/file.html' asZnUrl
@@ -168,15 +168,15 @@ ZnUrlTest >> testFileUrl [
 	url := 'file://localhost/Users/Sven/Desktop/foo.txt' asZnUrl.
 	self assert: url isFile.
 	self assert: url host equals: 'localhost'.
-	self assert: url pathSegments equals: #( 'Users' 'Sven' 'Desktop' 'foo.txt' ) asOrderedCollection.
+	self assert: url pathSegments equals: #( Users Sven Desktop 'foo.txt' ) asOrderedCollection.
 	url := 'file:///Users/Sven/Desktop/foo.txt' asZnUrl.
 	self assert: url isFile.
 	self deny: url hasHost.
-	self assert: url pathSegments equals: #( 'Users' 'Sven' 'Desktop' 'foo.txt' ) asOrderedCollection.
+	self assert: url pathSegments equals: #( Users Sven Desktop 'foo.txt' ) asOrderedCollection.
 	url := 'file:/Users/Sven/Desktop/foo.txt' asZnUrl.
 	self assert: url isFile.
 	self deny: url hasHost.
-	self assert: url pathSegments equals: #( 'Users' 'Sven' 'Desktop' 'foo.txt' ) asOrderedCollection
+	self assert: url pathSegments equals: #( Users Sven Desktop 'foo.txt' ) asOrderedCollection
 ]
 
 { #category : 'testing' }
@@ -227,7 +227,7 @@ ZnUrlTest >> testNoScheme [
 	"When there is no scheme, there is no host:port interpretation,
 	but instead the input is seen a a path - externalize this in test code"
 
-	#('foo' 'localhost' 'www.foo.com' 'foo.txt' 'foo:1')
+	#(foo localhost 'www.foo.com' 'foo.txt' 'foo:1')
 		do: [ :input |
 			| url |
 			url := input asZnUrl.
@@ -251,7 +251,7 @@ ZnUrlTest >> testNoScheme [
 			self deny: url hasFragment.
 			self assert: url hasPath.
 			self assert: url isFilePath.
-			self assert: url pathSegments equals: #('dir' 'foo.txt') asOrderedCollection ]
+			self assert: url pathSegments equals: #(dir 'foo.txt') asOrderedCollection ]
 ]
 
 { #category : 'testing' }
@@ -366,7 +366,7 @@ ZnUrlTest >> testPathRemoval [
 ZnUrlTest >> testPathSegments [
 	self
 		assert: 'http://foo.com/x/y/z' asZnUrl pathSegments
-		equals: #('x' 'y' 'z') asOrderedCollection.
+		equals: #(x y z) asOrderedCollection.
 	self assert: 'http://foo.com/' asZnUrl pathSegments isEmpty.
 	self assert: 'http://foo.com' asZnUrl pathSegments isEmpty
 ]
@@ -639,14 +639,14 @@ ZnUrlTest >> testUserInfo [
 	self assert: url password equals: 'secret'.
 	self assert: url host equals: 'www.foo.com'.
 	self assert: url port equals: 8888.
-	self assert: url pathSegments asArray equals: #('foo' 'bar.txt').
+	self assert: url pathSegments asArray equals: #(foo 'bar.txt').
 	url := 'http://john@www.foo.com:8888/foo/bar.txt' asZnUrl.
 	self assert: url scheme equals: #http.
 	self assert: url username equals: 'john'.
 	self deny: url hasPassword.
 	self assert: url host equals: 'www.foo.com'.
 	self assert: url port equals: 8888.
-	self assert: url pathSegments asArray equals: #('foo' 'bar.txt')
+	self assert: url pathSegments asArray equals: #(foo 'bar.txt')
 ]
 
 { #category : 'testing' }
@@ -655,7 +655,7 @@ ZnUrlTest >> testWindowsFileUrl [
 	url := 'file://localhost/C:/users/Sven/Desktop/foo.txt' asZnUrl.
 	self assert: url isFile.
 	self assert: url host equals: 'localhost'.
-	self assert: url pathSegments equals: #( 'C:' 'users' 'Sven' 'Desktop' 'foo.txt' ) asOrderedCollection
+	self assert: url pathSegments equals: #( 'C:' users Sven Desktop 'foo.txt' ) asOrderedCollection
 ]
 
 { #category : 'testing' }

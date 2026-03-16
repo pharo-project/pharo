@@ -2,9 +2,9 @@ Class {
 	#name : 'ReRenameClassDriver',
 	#superclass : 'RBInteractionDriver',
 	#instVars : [
-		'oldName',
-		'newName',
-		'shouldEscape'
+		#oldName,
+		#newName,
+		#shouldEscape
 	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',

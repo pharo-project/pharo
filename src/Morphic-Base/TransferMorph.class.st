@@ -9,17 +9,17 @@ Class {
 	#name : 'TransferMorph',
 	#superclass : 'Morph',
 	#instVars : [
-		'transferType',
-		'passenger',
-		'draggedMorph',
-		'source',
-		'dropNotifyRecipient',
-		'accepted',
-		'copy',
-		'dragHand'
+		#transferType,
+		#passenger,
+		#draggedMorph,
+		#source,
+		#dropNotifyRecipient,
+		#accepted,
+		#copy,
+		#dragHand
 	],
 	#classVars : [
-		'CopyPlusIcon'
+		#CopyPlusIcon
 	],
 	#category : 'Morphic-Base-Events',
 	#package : 'Morphic-Base',

@@ -14,7 +14,7 @@ Class {
 	#name : 'ColorMappingCanvas',
 	#superclass : 'Canvas',
 	#instVars : [
-		'myCanvas'
+		#myCanvas
 	],
 	#category : 'Graphics-Canvas-Canvases',
 	#package : 'Graphics-Canvas',

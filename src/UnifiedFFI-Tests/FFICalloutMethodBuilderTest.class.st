@@ -5,7 +5,7 @@ Class {
 	#name : 'FFICalloutMethodBuilderTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'architecture'
+		#architecture
 	],
 	#category : 'UnifiedFFI-Tests-Tests',
 	#package : 'UnifiedFFI-Tests',
@@ -34,7 +34,7 @@ FFICalloutMethodBuilderTest >> testAllAtomicTypesCall [
 			signature: #( void method1 (bool var1, byte var2, char var3, double var4, float var5, long var6, longlong var7, sbyte var8, schar var9, short var10, ulong var11, ulonglong var12, ushort var13) );
 			sender: (FFICalloutMethodBuilderTestContext new
 				selector: #methodV1:v2:v3:v4:v5:v6:v7:v8:v9:v10:v11:v12:v13:;
-				argumentNames: #('var1' 'var2' 'var3' 'var4' 'var5' 'var6' 'var7' 'var8' 'var9' 'var10' 'var11' 'var12' 'var13');
+				argumentNames: #(var1 var2 var3 var4 var5 var6 var7 var8 var9 var10 var11 var12 var13);
 				methodClass: Object;
 				yourself )].
 
@@ -71,7 +71,7 @@ FFICalloutMethodBuilderTest >> testCallCreateObject [
 			signature: #( #FFICalloutObjectForTest method1( int var1 ) );
 			sender: (FFICalloutMethodBuilderTestContext new
 				selector: #method1:;
-				argumentNames: #('var1');
+				argumentNames: #(var1);
 				methodClass: FFICalloutObjectForTest;
 				yourself )].
 
@@ -93,7 +93,7 @@ FFICalloutMethodBuilderTest >> testCallReturningEnumeration [
 			signature: #( #FFITestEnumeration method1( int var1 ) );
 			sender: (FFICalloutMethodBuilderTestContext new
 				selector: #method1:;
-				argumentNames: #('var1');
+				argumentNames: #(var1);
 				methodClass: FFICalloutObjectForTest;
 				yourself )].
 
@@ -116,7 +116,7 @@ FFICalloutMethodBuilderTest >> testCallSimple [
 			signature: #( void method1 ( int var1 ) );
 			sender: (FFICalloutMethodBuilderTestContext new
 				selector: #method1:;
-				argumentNames: #('var1');
+				argumentNames: #(var1);
 				methodClass: Object;
 				yourself )].
 
@@ -139,7 +139,7 @@ FFICalloutMethodBuilderTest >> testCallWithConstant [
 			signature: #( void method1 ( int var1, 42 ) );
 			sender: (FFICalloutMethodBuilderTestContext new
 				selector: #method1:value:;
-				argumentNames: #('var1' 'var2');
+				argumentNames: #(var1 var2);
 				methodClass: Object;
 				yourself )].
 
@@ -164,7 +164,7 @@ FFICalloutMethodBuilderTest >> testCallWithObject [
 			signature: #( void method1 ( #FFICalloutObjectForTest var1, int *var2 ) );
 			sender: (FFICalloutMethodBuilderTestContext new
 				selector: #method1:value:;
-				argumentNames: #('var1' 'var2');
+				argumentNames: #(var1 var2);
 				methodClass: FFICalloutObjectForTest;
 				yourself )].
 
@@ -187,7 +187,7 @@ FFICalloutMethodBuilderTest >> testCallWithPointer [
 			signature: #( void method1 ( int var1, int *var2 ) );
 			sender: (FFICalloutMethodBuilderTestContext new
 				selector: #method1:value:;
-				argumentNames: #('var1' 'var2');
+				argumentNames: #(var1 var2);
 				methodClass: Object;
 				yourself )].
 
@@ -211,7 +211,7 @@ FFICalloutMethodBuilderTest >> testCallWithPointerPointer [
 			signature: #( void method1 ( long **var1 ) );
 			sender: (FFICalloutMethodBuilderTestContext new
 				selector: #method1:;
-				argumentNames: #('var1');
+				argumentNames: #(var1);
 				methodClass: Object;
 				yourself )].
 
@@ -236,7 +236,7 @@ FFICalloutMethodBuilderTest >> testCallWithSelf [
 			signature: #( void method1 ( self, int *var2 ) );
 			sender: (FFICalloutMethodBuilderTestContext new
 				selector: #method1:value:;
-				argumentNames: #('var1' 'var2');
+				argumentNames: #(var1 var2);
 				methodClass: FFICalloutObjectForTest;
 				yourself )].
 

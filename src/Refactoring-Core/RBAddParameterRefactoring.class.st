@@ -15,8 +15,8 @@ Class {
 	#name : 'RBAddParameterRefactoring',
 	#superclass : 'RBChangeMethodNameRefactoring',
 	#instVars : [
-		'newArgs',
-		'senders'
+		#newArgs,
+		#senders
 	],
 	#category : 'Refactoring-Core-Refactorings',
 	#package : 'Refactoring-Core',
@@ -69,7 +69,7 @@ RBAddParameterRefactoring >> applicabilityPreconditions [
 { #category : 'preconditions' }
 RBAddParameterRefactoring >> checkSendersAccessTo: name [
 
-	(#('self' 'super') includes: name) ifTrue: [ ^ self ].
+	(#(self super) includes: name) ifTrue: [ ^ self ].
 	self senders
 		detect: [ :each | (self canReferenceVariable: name in: each) not ]
 		ifFound: [ :violatorClass |

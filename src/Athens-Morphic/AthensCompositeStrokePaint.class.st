@@ -5,8 +5,8 @@ Class {
 	#name : 'AthensCompositeStrokePaint',
 	#superclass : 'AthensPaint',
 	#instVars : [
-		'strokePaints',
-		'withInset'
+		#strokePaints,
+		#withInset
 	],
 	#category : 'Athens-Morphic',
 	#package : 'Athens-Morphic'

@@ -5,9 +5,9 @@ Class {
 	#name : 'SimpleBorderStyle',
 	#superclass : 'BorderStyle',
 	#instVars : [
-		'baseColor',
-		'color',
-		'width'
+		#baseColor,
+		#color,
+		#width
 	],
 	#category : 'Morphic-Base-Borders',
 	#package : 'Morphic-Base',

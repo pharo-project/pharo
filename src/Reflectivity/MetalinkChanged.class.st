@@ -5,9 +5,9 @@ Class {
 	#name : 'MetalinkChanged',
 	#superclass : 'SystemAnnouncement',
 	#instVars : [
-		'link',
-		'action',
-		'node'
+		#link,
+		#action,
+		#node
 	],
 	#category : 'Reflectivity-Core',
 	#package : 'Reflectivity',

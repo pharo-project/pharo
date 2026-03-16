@@ -2,8 +2,8 @@ Class {
 	#name : 'CoResultSetResettingTest',
 	#superclass : 'CoBasicCompletionTest',
 	#instVars : [
-		'completion',
-		'mockFilter'
+		#completion,
+		#mockFilter
 	],
 	#category : 'HeuristicCompletion-Tests-Core',
 	#package : 'HeuristicCompletion-Tests',

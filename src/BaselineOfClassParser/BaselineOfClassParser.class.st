@@ -16,7 +16,7 @@ BaselineOfClassParser >> baseline: spec [
 			package: 'UndefinedClasses-Tests' with: [spec requires: #(UndefinedClasses)].
 
 		spec 
-			group: 'Core' with: #('ClassParser' 'UndefinedClasses');
+			group: 'Core' with: #(ClassParser UndefinedClasses);
 			group: 'Tests' with: #('ClassParser-Tests' 'UndefinedClasses-Tests');
-			group: 'default' with: #('Core' 'Tests') ]
+			group: 'default' with: #(Core Tests) ]
 ]

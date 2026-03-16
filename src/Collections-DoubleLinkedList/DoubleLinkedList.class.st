@@ -9,8 +9,8 @@ Class {
 	#name : 'DoubleLinkedList',
 	#superclass : 'Collection',
 	#instVars : [
-		'head',
-		'tail'
+		#head,
+		#tail
 	],
 	#category : 'Collections-DoubleLinkedList-Base',
 	#package : 'Collections-DoubleLinkedList',

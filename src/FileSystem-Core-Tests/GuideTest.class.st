@@ -5,8 +5,8 @@ Class {
 	#name : 'GuideTest',
 	#superclass : 'SingleTreeTest',
 	#instVars : [
-		'guide',
-		'visited'
+		#guide,
+		#visited
 	],
 	#category : 'FileSystem-Core-Tests-Guide',
 	#package : 'FileSystem-Core-Tests',

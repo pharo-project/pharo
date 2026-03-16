@@ -9,9 +9,9 @@ Class {
 	#name : 'ZnRequestLine',
 	#superclass : 'Object',
 	#instVars : [
-		'method',
-		'uri',
-		'version'
+		#method,
+		#uri,
+		#version
 	],
 	#category : 'Zinc-HTTP-Core',
 	#package : 'Zinc-HTTP',

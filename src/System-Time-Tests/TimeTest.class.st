@@ -7,9 +7,9 @@ Class {
 	#name : 'TimeTest',
 	#superclass : 'ClassTestCase',
 	#instVars : [
-		'time',
-		'aTime',
-		'localTimeZoneToRestore'
+		#time,
+		#aTime,
+		#localTimeZoneToRestore
 	],
 	#category : 'System-Time-Tests',
 	#package : 'System-Time-Tests'
@@ -348,7 +348,7 @@ TimeTest >> testReadFrom [
 { #category : 'tests - input' }
 TimeTest >> testReadFromWithError [
 
-	#('invalid' '0:invalid' '1 invalid' '1 pm is the afternoon' '1250 Fake St, New York, USA 12345' '13000 AM' '25:69:1239' '1,3,6') do: [ :each |
+	#(invalid '0:invalid' '1 invalid' '1 pm is the afternoon' '1250 Fake St, New York, USA 12345' '13000 AM' '25:69:1239' '1,3,6') do: [ :each |
 	self should: [self timeClass readFrom: each readStream] raise: Error.]
 ]
 

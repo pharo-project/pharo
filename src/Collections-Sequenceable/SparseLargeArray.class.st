@@ -6,7 +6,7 @@ Class {
 	#superclass : 'SparseLargeTable',
 	#type : 'variable',
 	#instVars : [
-		'arrayClass'
+		#arrayClass
 	],
 	#category : 'Collections-Sequenceable-Sparse',
 	#package : 'Collections-Sequenceable',
@@ -71,7 +71,7 @@ SparseLargeArray >> noCheckAt: index put: value [
        | chunkIndex chunk lastChunkSize |
        chunkIndex := index - base // chunkSize + 1.
        (chunk := self basicAt: chunkIndex) ifNil:
-               [value = defaultValue ifTrue:
+               [value sameContents: defaultValue ifTrue:
                        [^value].
                chunk := arrayClass
                                        new: ((chunkIndex == self basicSize

@@ -5,7 +5,7 @@ Class {
 	#name : 'CDTraitCompositionSequenceNode',
 	#superclass : 'CDTraitCompositionNode',
 	#instVars : [
-		'sequence'
+		#sequence
 	],
 	#category : 'ClassParser-Model',
 	#package : 'ClassParser',

@@ -24,10 +24,10 @@ ZnMultiValueDictionaryTest >> testMultiValues [
 	| dictionary values keys |
 	dictionary := ZnMultiValueDictionary new.
 	dictionary
-		at: 'foo' add: 1;
-		at: 'foo' add: 2.
-	self assert: (dictionary at: 'foo') equals: #(1 2).
-	self assert: dictionary keys asArray equals: #('foo').
+		at: #'foo' add: 1;
+		at: #'foo' add: 2.
+	self assert: (dictionary at: #'foo') equals: #(1 2).
+	self assert: dictionary keys asArray equals: #(foo).
 	values := OrderedCollection new.
 	keys := OrderedCollection new.
 	dictionary

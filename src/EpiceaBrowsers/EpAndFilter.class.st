@@ -5,7 +5,7 @@ Class {
 	#name : 'EpAndFilter',
 	#superclass : 'EpFilter',
 	#instVars : [
-		'subFilters'
+		#subFilters
 	],
 	#category : 'EpiceaBrowsers-Filters',
 	#package : 'EpiceaBrowsers',

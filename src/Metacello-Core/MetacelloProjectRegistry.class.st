@@ -2,8 +2,8 @@ Class {
 	#name : 'MetacelloProjectRegistry',
 	#superclass : 'Object',
 	#instVars : [
-		'baselineRegistry',
-		'configurationRegistry'
+		#baselineRegistry,
+		#configurationRegistry
 	],
 	#category : 'Metacello-Core-Scripts',
 	#package : 'Metacello-Core',
@@ -103,9 +103,9 @@ MetacelloProjectRegistry >> registrationFor: aMetacelloProjectRegistration ifPre
     aMetacelloProjectRegistration baselineProjectSpec
         ifNotNil: [ :spec | self baselineRegistry at: spec className ifPresent: [ :existing | ^ presentBlock value: existing ] ].
     self configurationRegistry
-        at: 'ConfigurationOf' , baseName
+        at: #'ConfigurationOf' , baseName
         ifPresent: [ :existing | ^ presentBlock value: existing ].
-    self baselineRegistry at: 'BaselineOf' , baseName ifPresent: [ :existing | ^ presentBlock value: existing ].
+    self baselineRegistry at: #'BaselineOf' , baseName ifPresent: [ :existing | ^ presentBlock value: existing ].
     ^ absentBlock value
 ]
 
@@ -115,8 +115,8 @@ MetacelloProjectRegistry >> registrationForClassNamed: aClassName ifAbsent: abse
 	^ self registrationForExactClassNamed: aClassName ifAbsent: [
 		  | baseName |
 		  baseName := MetacelloScriptEngine baseNameOf: aClassName.
-		  self configurationRegistry at: 'ConfigurationOf' , baseName ifPresent: [ :registration | ^ registration ].
-		  self baselineRegistry at: 'BaselineOf' , baseName ifPresent: [ :registration | ^ registration ].
+		  self configurationRegistry at: #'ConfigurationOf' , baseName ifPresent: [ :registration | ^ registration ].
+		  self baselineRegistry at: #'BaselineOf' , baseName ifPresent: [ :registration | ^ registration ].
 		  absentBlock value ]
 ]
 

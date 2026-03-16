@@ -6,13 +6,13 @@ Class {
 	#name : 'TaskbarMorph',
 	#superclass : 'Morph',
 	#instVars : [
-		'tasks',
-		'orderedTasks'
+		#tasks,
+		#orderedTasks
 	],
 	#classVars : [
-		'MaximumButtons',
-		'ShowTaskbar',
-		'ShowWindowPreview'
+		#MaximumButtons,
+		#ShowTaskbar,
+		#ShowWindowPreview
 	],
 	#category : 'Morphic-Widgets-Taskbar',
 	#package : 'Morphic-Widgets-Taskbar'

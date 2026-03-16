@@ -5,12 +5,12 @@ Class {
 	#name : 'RGClassDefinition',
 	#superclass : 'RGClassDescriptionDefinition',
 	#instVars : [
-		'metaClass',
-		'comment',
-		'classVariables',
-		'package',
-		'packageTag',
-		'sharedPools'
+		#metaClass,
+		#comment,
+		#classVariables,
+		#package,
+		#packageTag,
+		#sharedPools
 	],
 	#category : 'Ring-Definitions-Core-Base',
 	#package : 'Ring-Definitions-Core',
@@ -123,7 +123,7 @@ RGClassDefinition >> classVarNames [
 { #category : 'class variables' }
 RGClassDefinition >> classVariableNamed: aString [
 
-	^ classVariables detect:[ :v| v name = aString asSymbol ] ifNone: [ nil ]
+	^ classVariables detect:[ :v| v name sameContents: aString asSymbol ] ifNone: [ nil ]
 ]
 
 { #category : 'accessing' }
@@ -228,7 +228,7 @@ RGClassDefinition >> isSameRevisionAs: aRGClassDefinition [
 
 	^ (super isSameRevisionAs: aRGClassDefinition) and: [
 		  self superclassName == aRGClassDefinition superclassName and: [
-			  self package name = aRGClassDefinition package name and: [
+			  self package name sameContents: aRGClassDefinition package name and: [
 				  self packageTag = aRGClassDefinition packageTag and: [
 					  self classVarNames sorted = aRGClassDefinition classVarNames sorted and: [
 						  self sharedPoolNames sorted = aRGClassDefinition sharedPoolNames sorted and: [

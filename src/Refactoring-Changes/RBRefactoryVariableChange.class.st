@@ -7,7 +7,7 @@ Class {
 	#name : 'RBRefactoryVariableChange',
 	#superclass : 'RBRefactoryClassChange',
 	#instVars : [
-		'variable'
+		#variable
 	],
 	#category : 'Refactoring-Changes-Changes-Variables',
 	#package : 'Refactoring-Changes',

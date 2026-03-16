@@ -7,7 +7,7 @@ Class {
 	#name : 'KMKeyCombinationChoice',
 	#superclass : 'KMKeyCombination',
 	#instVars : [
-		'shortcuts'
+		#shortcuts
 	],
 	#category : 'Keymapping-KeyCombinations',
 	#package : 'Keymapping-KeyCombinations'

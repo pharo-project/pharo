@@ -19,12 +19,12 @@ Class {
 	#name : 'ZdcByteArrayManager',
 	#superclass : 'Object',
 	#instVars : [
-		'limit',
-		'resources',
-		'access'
+		#limit,
+		#resources,
+		#access
 	],
 	#classVars : [
-		'Current'
+		#Current
 	],
 	#category : 'Zodiac-Core',
 	#package : 'Zodiac-Core'

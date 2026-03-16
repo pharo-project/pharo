@@ -5,11 +5,11 @@ Class {
 	#name : 'MCSnapshotBrowser',
 	#superclass : 'MCCodeTool',
 	#instVars : [
-		'categorySelection',
-		'classSelection',
-		'protocolSelection',
-		'methodSelection',
-		'switch'
+		#categorySelection,
+		#classSelection,
+		#protocolSelection,
+		#methodSelection,
+		#switch
 	],
 	#category : 'MonticelloGUI-Tools',
 	#package : 'MonticelloGUI',
@@ -31,7 +31,7 @@ MCSnapshotBrowser >> allClassNames [
 
 { #category : 'morphic ui' }
 MCSnapshotBrowser >> buttonSpecs [
-	^ #(('instance' switchBeInstance 'show instance' buttonEnabled switchIsInstance)
+	^ #((instance switchBeInstance 'show instance' buttonEnabled switchIsInstance)
 		('?' switchBeComment 'show comment' buttonEnabled switchIsComment)
 		('class' switchBeClass 'show class' buttonEnabled switchIsClass))
 ]

@@ -5,7 +5,7 @@ Class {
 	#name : 'RBSmalllintTestObject',
 	#superclass : 'RBSmalllintTestSuperclassObject',
 	#instVars : [
-		'temporaryVariable'
+		#temporaryVariable
 	],
 	#category : 'Refactoring-Critics-Tests-Base',
 	#package : 'Refactoring-Critics-Tests',

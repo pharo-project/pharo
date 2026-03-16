@@ -38,15 +38,15 @@ Class {
 	#name : 'SettingDeclaration',
 	#superclass : 'PragmaSetting',
 	#instVars : [
-		'getSelector',
-		'setSelector',
-		'type',
-		'default',
-		'ghostHelp'
+		#getSelector,
+		#setSelector,
+		#type,
+		#default,
+		#ghostHelp
 	],
 	#classVars : [
-		'UniqueObject',
-		'ValueListCache'
+		#UniqueObject,
+		#ValueListCache
 	],
 	#category : 'System-Settings-Core-Base',
 	#package : 'System-Settings-Core',
@@ -556,7 +556,7 @@ SettingDeclaration >> startupAction [
 		name: self label
 		code: (String streamContents: [:s |
 					self targetSelector ifNotNil: [ s << '(' ].
-					s << '(Smalltalk at: '.
+					s << '(Smalltalk at: #'.
 					targetSymbol asSymbol printOn: s.
 					self targetSelector ifNotNil: [:ts | s << ') perform: '. ts printOn: s ].
 					s << ') perform: '.

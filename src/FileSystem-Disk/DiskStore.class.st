@@ -6,11 +6,11 @@ Class {
 	#name : 'DiskStore',
 	#superclass : 'FileSystemStore',
 	#instVars : [
-		'maxFileNameLength'
+		#maxFileNameLength
 	],
 	#classVars : [
-		'CurrentFS',
-		'DefaultWorkingDirectory'
+		#CurrentFS,
+		#DefaultWorkingDirectory
 	],
 	#category : 'FileSystem-Disk-Store',
 	#package : 'FileSystem-Disk',

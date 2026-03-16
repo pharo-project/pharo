@@ -15,12 +15,12 @@ Class {
 	#name : 'RBPragmaNode',
 	#superclass : 'RBProgramNode',
 	#instVars : [
-		'selector',
-		'keywordsPositions',
-		'arguments',
-		'left',
-		'right',
-		'pragma'
+		#selector,
+		#keywordsPositions,
+		#arguments,
+		#left,
+		#right,
+		#pragma
 	],
 	#category : 'AST-Core-Nodes',
 	#package : 'AST-Core',
@@ -64,7 +64,7 @@ RBPragmaNode >> argumentAt: keywordSelector [
 { #category : 'accessing' }
 RBPragmaNode >> argumentAt: keywordSelector ifAbsent: absentBlock [
 	self selectorParts with: self arguments do: [ :selectorPart :argument |
-		selectorPart value = keywordSelector
+		selectorPart value sameContents: keywordSelector
 			ifTrue: [ ^ argument ]].
 	^ absentBlock value
 ]
@@ -94,7 +94,7 @@ RBPragmaNode >> copyInContext: aDictionary [
 
 { #category : 'testing' }
 RBPragmaNode >> defines: aName [
-	^ self isPrimitive and: [ arguments anySatisfy: [ :each | each value = aName ] ]
+	^ self isPrimitive and: [ arguments anySatisfy: [ :each | each value sameContents: aName ] ]
 ]
 
 { #category : 'comparing' }

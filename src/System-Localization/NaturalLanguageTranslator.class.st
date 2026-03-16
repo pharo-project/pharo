@@ -14,7 +14,7 @@ Class {
 	#name : 'NaturalLanguageTranslator',
 	#superclass : 'Object',
 	#classVars : [
-		'Current'
+		#Current
 	],
 	#category : 'System-Localization-Translations',
 	#package : 'System-Localization',

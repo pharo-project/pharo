@@ -8,13 +8,13 @@ Class {
 	#name : 'ZnSimplifiedByteEncoder',
 	#superclass : 'ZnCharacterEncoder',
 	#instVars : [
-		'identifier',
-		'byteToUnicode',
-		'unicodeToByte',
-		'strict'
+		#identifier,
+		#byteToUnicode,
+		#unicodeToByte,
+		#strict
 	],
 	#classInstVars : [
-		'byteTextConverters'
+		#byteTextConverters
 	],
 	#category : 'Zinc-Character-Encoding-Core',
 	#package : 'Zinc-Character-Encoding-Core'
@@ -112,8 +112,8 @@ ZnSimplifiedByteEncoder class >> mappingToIdentifiers [
 	"Return a dictionay mapping from encoding specifications to a list of encoding names."
 
 	^ Dictionary newFromPairs: #(
-		#iso88591Mapping #('iso88591' 'latin1')
-		#asciiMapping #('ascii') )
+		#iso88591Mapping #(iso88591 latin1)
+		#asciiMapping #(ascii) )
 ]
 
 { #category : 'instance creation' }

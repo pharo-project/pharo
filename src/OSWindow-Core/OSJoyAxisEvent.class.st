@@ -13,11 +13,11 @@ Class {
 	#name : 'OSJoyAxisEvent',
 	#superclass : 'OSEvent',
 	#instVars : [
-		'which',
-		'axis',
-		'value',
-		'mapped',
-		'hasMapping'
+		#which,
+		#axis,
+		#value,
+		#mapped,
+		#hasMapping
 	],
 	#category : 'OSWindow-Core-Events',
 	#package : 'OSWindow-Core',

@@ -78,22 +78,22 @@ Class {
 	#name : 'MessageTally',
 	#superclass : 'Magnitude',
 	#instVars : [
-		'class',
-		'method',
-		'process',
-		'tally',
-		'receivers',
-		'senders',
-		'time',
-		'gcStats',
-		'maxClassNameSize',
-		'maxClassPlusSelectorSize',
-		'maxTabs',
-		'reportOtherProcesses'
+		#class,
+		#method,
+		#process,
+		#tally,
+		#receivers,
+		#senders,
+		#time,
+		#gcStats,
+		#maxClassNameSize,
+		#maxClassPlusSelectorSize,
+		#maxTabs,
+		#reportOtherProcesses
 	],
 	#classVars : [
-		'DefaultPollPeriod',
-		'Timer'
+		#DefaultPollPeriod,
+		#Timer
 	],
 	#category : 'Tool-Profilers-Messages',
 	#package : 'Tool-Profilers',

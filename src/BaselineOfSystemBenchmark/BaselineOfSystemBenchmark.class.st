@@ -17,7 +17,7 @@ BaselineOfSystemBenchmark >> baseline: spec [
 		spec
 			package: 'System-Benchmark';
 			package: 'System-Benchmark-Tests'
-			with: [ spec requires: #( 'SUnit' 'System-Benchmark' ) ].
+			with: [ spec requires: #( SUnit 'System-Benchmark' ) ].
 
 		spec
 			group: 'default' with: #( 'System-Benchmark' );

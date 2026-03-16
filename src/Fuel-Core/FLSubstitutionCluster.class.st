@@ -13,14 +13,14 @@ fuelAccept: aVisitor
 
 anAnalyzer when: [:x | x isInteger] substituteBy: [:x | x printString].
 
-In this way, when you serialize #(1 2), you will then materialize #('1' '2')
+In this way, when you serialize #(1 2), you will then materialize #(1 2)
 "
 Class {
 	#name : 'FLSubstitutionCluster',
 	#superclass : 'FLCluster',
 	#instVars : [
-		'substitutions',
-		'substitutes'
+		#substitutions,
+		#substitutes
 	],
 	#category : 'Fuel-Core-Clusters',
 	#package : 'Fuel-Core',

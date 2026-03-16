@@ -22,7 +22,7 @@ Class {
 	#name : 'ClyHierarchicallySortedClassesResult',
 	#superclass : 'ClyBrowserQueryResult',
 	#instVars : [
-		'hierarchy'
+		#hierarchy
 	],
 	#category : 'Calypso-SystemQueries-Results',
 	#package : 'Calypso-SystemQueries',

@@ -22,8 +22,8 @@ Class {
 	#name : 'ZnUrlOperation',
 	#superclass : 'Object',
 	#instVars : [
-		'url',
-		'argument'
+		#url,
+		#argument
 	],
 	#category : 'Zinc-Resource-Meta-Core',
 	#package : 'Zinc-Resource-Meta-Core'

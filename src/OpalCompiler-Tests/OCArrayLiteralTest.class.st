@@ -79,6 +79,6 @@ OCArrayLiteralTest >> testReservedIdentifiers [
 
 { #category : 'tests' }
 OCArrayLiteralTest >> testSymbols [
-	self class compile: 'array ^ #(#nil #true #false #''nil'' #''true'' #''false'')'.
+	self class compile: 'array ^ #(#nil #true #false #nil #true #false)'.
 	self assert: self array equals: {#nil . #true . #false . #nil . #true . #false}
 ]

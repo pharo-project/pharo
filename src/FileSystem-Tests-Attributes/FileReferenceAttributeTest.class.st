@@ -8,7 +8,7 @@ Class {
 	#name : 'FileReferenceAttributeTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'primitives'
+		#primitives
 	],
 	#category : 'FileSystem-Tests-Attributes-Tests',
 	#package : 'FileSystem-Tests-Attributes',

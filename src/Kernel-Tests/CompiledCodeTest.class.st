@@ -2,7 +2,7 @@ Class {
 	#name : 'CompiledCodeTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'var'
+		#var
 	],
 	#category : 'Kernel-Tests-Classes',
 	#package : 'Kernel-Tests',
@@ -351,7 +351,7 @@ CompiledCodeTest >> testLiteralsEvenTheOnesInTheInnerCleanBlocks [
 	^[ thisContext tempNamed: ''b'' ] value'.
 	self
 		assertCollection: method literalsEvenTheOnesInTheInnerBlocks
-		equals: #( 'b' #tempNamed: )
+		equals: #( b #tempNamed: )
 ]
 
 { #category : 'tests - scanning' }

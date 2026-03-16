@@ -126,7 +126,7 @@ ZnChunkedStreamTest >> testReadingNextInto [
 { #category : 'testing' }
 ZnChunkedStreamTest >> testWriting [
 	| chunks result reference |
-	chunks := #( 'ABC' 'DEF' 'GHI' 'JKL' ).
+	chunks := #( ABC DEF GHI JKL ).
 	result := String streamContents: [ :out |
 		| stream |
 		stream := ZnChunkedWriteStream on: out.

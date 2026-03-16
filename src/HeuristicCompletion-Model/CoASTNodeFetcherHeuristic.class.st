@@ -12,7 +12,7 @@ Class {
 	#name : 'CoASTNodeFetcherHeuristic',
 	#superclass : 'Object',
 	#instVars : [
-		'next'
+		#next
 	],
 	#category : 'HeuristicCompletion-Model-Heuristics',
 	#package : 'HeuristicCompletion-Model',

@@ -26,29 +26,29 @@ Class {
 	#name : 'GIFReadWriter',
 	#superclass : 'ImageReadWriter',
 	#instVars : [
-		'width',
-		'height',
-		'bitsPerPixel',
-		'colorPalette',
-		'rowByteSize',
-		'xpos',
-		'ypos',
-		'pass',
-		'interlace',
-		'transparentIndex',
-		'localColorTable',
-		'loopCount',
-		'offset',
-		'frames',
-		'canvasWidth',
-		'canvasHeight',
-		'backgroundColorIndex',
-		'comment'
+		#width,
+		#height,
+		#bitsPerPixel,
+		#colorPalette,
+		#rowByteSize,
+		#xpos,
+		#ypos,
+		#pass,
+		#interlace,
+		#transparentIndex,
+		#localColorTable,
+		#loopCount,
+		#offset,
+		#frames,
+		#canvasWidth,
+		#canvasHeight,
+		#backgroundColorIndex,
+		#comment
 	],
 	#classVars : [
-		'Extension',
-		'ImageSeparator',
-		'Terminator'
+		#Extension,
+		#ImageSeparator,
+		#Terminator
 	],
 	#category : 'Graphics-Files',
 	#package : 'Graphics-Files'
@@ -95,7 +95,7 @@ GIFReadWriter class >> typicalFileExtensions [
 		ifFound: [ #() ]
 		ifNone: [
 			"if none of my subclasses wants , then i''ll have to do"
-			#('gif') ]
+			#(gif) ]
 ]
 
 { #category : 'image reading/writing' }

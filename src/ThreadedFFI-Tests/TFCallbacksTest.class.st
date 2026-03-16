@@ -2,7 +2,7 @@ Class {
 	#name : 'TFCallbacksTest',
 	#superclass : 'TFTestCase',
 	#instVars : [
-		'oldExceptionHandler'
+		#oldExceptionHandler
 	],
 	#category : 'ThreadedFFI-Tests',
 	#package : 'ThreadedFFI-Tests'

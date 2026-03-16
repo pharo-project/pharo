@@ -5,16 +5,16 @@ Class {
 	#name : 'RubCursor',
 	#superclass : 'Morph',
 	#instVars : [
-		'stayVisible',
-		'invisibleCursorColor',
-		'visibleCursorColor',
-		'period'
+		#stayVisible,
+		#invisibleCursorColor,
+		#visibleCursorColor,
+		#period
 	],
 	#classVars : [
-		'DefaultColor',
-		'DefaultWidth',
-		'FixedColor',
-		'Period'
+		#DefaultColor,
+		#DefaultWidth,
+		#FixedColor,
+		#Period
 	],
 	#category : 'Rubric-Editing-Core',
 	#package : 'Rubric',

@@ -5,7 +5,7 @@ Class {
 	#name : 'SimulateMouseTest',
 	#superclass : 'AbstractUITestCase',
 	#instVars : [
-		'morph'
+		#morph
 	],
 	#category : 'SUnit-Support-UITesting-Tests-Base',
 	#package : 'SUnit-Support-UITesting-Tests',

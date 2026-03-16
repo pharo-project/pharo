@@ -7,12 +7,12 @@ Class {
 	#name : 'NECEntry',
 	#superclass : 'Object',
 	#instVars : [
-		'contents',
-		'node',
-		'description'
+		#contents,
+		#node,
+		#description
 	],
 	#classVars : [
-		'SpaceAfterCompletion'
+		#SpaceAfterCompletion
 	],
 	#category : 'NECompletion-Model',
 	#package : 'NECompletion',

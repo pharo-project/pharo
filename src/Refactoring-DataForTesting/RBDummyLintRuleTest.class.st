@@ -2,14 +2,14 @@ Class {
 	#name : 'RBDummyLintRuleTest',
 	#superclass : 'Object',
 	#instVars : [
-		'name',
-		'foo1'
+		#name,
+		#foo1
 	],
 	#classVars : [
-		'Foo1'
+		#Foo1
 	],
 	#pools : [
-		'TextConstants'
+		#TextConstants
 	],
 	#category : 'Refactoring-DataForTesting-LittleHierarchy',
 	#package : 'Refactoring-DataForTesting',

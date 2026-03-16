@@ -2,7 +2,7 @@ Class {
 	#name : 'MetacelloReferenceConfig',
 	#superclass : 'Object',
 	#instVars : [
-		'project'
+		#project
 	],
 	#category : 'Metacello-TestsReference',
 	#package : 'Metacello-TestsReference'

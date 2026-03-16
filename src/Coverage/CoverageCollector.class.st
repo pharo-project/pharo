@@ -36,10 +36,10 @@ Class {
 	#name : 'CoverageCollector',
 	#superclass : 'Object',
 	#instVars : [
-		'metalink',
-		'methods',
-		'nodes',
-		'edges'
+		#metalink,
+		#methods,
+		#nodes,
+		#edges
 	],
 	#category : 'Coverage-Base',
 	#package : 'Coverage',

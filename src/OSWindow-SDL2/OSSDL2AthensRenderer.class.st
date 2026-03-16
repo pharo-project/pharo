@@ -5,13 +5,13 @@ Class {
 	#name : 'OSSDL2AthensRenderer',
 	#superclass : 'OSWindowAthensRenderer',
 	#instVars : [
-		'texture',
-		'renderer',
-		'textureExtent',
-		'mutex'
+		#texture,
+		#renderer,
+		#textureExtent,
+		#mutex
 	],
 	#pools : [
-		'SDL2Constants'
+		#SDL2Constants
 	],
 	#category : 'OSWindow-SDL2-Rendering',
 	#package : 'OSWindow-SDL2',

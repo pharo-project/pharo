@@ -7,7 +7,7 @@ Class {
 	#traits : 'EpTCodeChangeVisitor',
 	#classTraits : 'EpTCodeChangeVisitor classTrait',
 	#instVars : [
-		'environment'
+		#environment
 	],
 	#category : 'EpiceaBrowsers-Visitors',
 	#package : 'EpiceaBrowsers',

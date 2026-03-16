@@ -19,10 +19,10 @@ Class {
 	#name : 'BaselineOfMorphic',
 	#superclass : 'BaselineOf',
 	#instVars : [
-		'initializersEnabled'
+		#initializersEnabled
 	],
 	#classVars : [
-		'Initialized'
+		#Initialized
 	],
 	#category : 'BaselineOfMorphic',
 	#package : 'BaselineOfMorphic'
@@ -46,7 +46,7 @@ BaselineOfMorphic >> baseline: spec [
 		spec baseline: 'Fuel' with: [
 			spec
 				repository: repository;
-				loads: #( 'Core' ) ].
+				loads: #( Core ) ].
 
 		spec package: 'System-Localization'.
 
@@ -151,7 +151,7 @@ BaselineOfMorphic >> exportBitmapDejaVuSans [
 	| familyName styleNames pointSizes family font fileName fontCopy style |
 
 	familyName := 'Bitmap DejaVu Sans'.
-	styleNames := #('Regular' 'Bold' 'Italic' 'Bold Italic').
+	styleNames := #(Regular Bold Italic 'Bold Italic').
 	pointSizes := #(7 9 12 14 18 24).
 
 	family := LogicalFontManager current allFamilies detect: [ :f | 
@@ -192,7 +192,7 @@ BaselineOfMorphic >> loadBitmapDejaVuSans [
 BaselineOfMorphic >> loadBitmapFontFamily: familyName sizes: pointSizes [
 	| fonts fileName directoryReference |
 	directoryReference := (Smalltalk os environment
-		                       at: 'BOOTSTRAP_REPOSITORY'
+		                       at: #'BOOTSTRAP_REPOSITORY'
 		                       ifAbsent: [ FileSystem workingDirectory ])
 		                      asFileReference / 'resources' / 'fonts'.
 	fonts := pointSizes collect: [ :pointSize | 

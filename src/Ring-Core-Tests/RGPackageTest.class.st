@@ -49,7 +49,7 @@ RGPackageTest >> testCategories [
 	class1 package: package.
 	class2 package: package.
 
-	self assert: package categories asArray equals: #('SomePackage').
+	self assert: package categories asArray equals: #(SomePackage).
 
 	class1 tagWith: #tag1.
 	class2 tagWith: #tag1.

@@ -5,8 +5,8 @@ Class {
 	#name : 'AthensBalloonLinearGradient',
 	#superclass : 'AthensBalloonGradientPaint',
 	#instVars : [
-		'origin',
-		'corner'
+		#origin,
+		#corner
 	],
 	#category : 'Athens-Balloon-Paint',
 	#package : 'Athens-Balloon',

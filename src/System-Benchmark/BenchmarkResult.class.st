@@ -19,8 +19,8 @@ Class {
 	#name : 'BenchmarkResult',
 	#superclass : 'Object',
 	#instVars : [
-		'iterations',
-		'elapsedTime'
+		#iterations,
+		#elapsedTime
 	],
 	#category : 'System-Benchmark',
 	#package : 'System-Benchmark'

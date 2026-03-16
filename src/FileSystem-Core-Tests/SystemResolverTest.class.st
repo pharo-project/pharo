@@ -5,7 +5,7 @@ Class {
 	#name : 'SystemResolverTest',
 	#superclass : 'FileSystemResolverTest',
 	#instVars : [
-		'originalUserLocalDir'
+		#originalUserLocalDir
 	],
 	#category : 'FileSystem-Core-Tests-Resolver',
 	#package : 'FileSystem-Core-Tests',

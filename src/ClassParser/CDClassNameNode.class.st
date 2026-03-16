@@ -2,7 +2,7 @@ Class {
 	#name : 'CDClassNameNode',
 	#superclass : 'CDNode',
 	#instVars : [
-		'className'
+		#className
 	],
 	#category : 'ClassParser-Model',
 	#package : 'ClassParser',

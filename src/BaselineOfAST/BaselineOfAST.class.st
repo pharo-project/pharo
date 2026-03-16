@@ -17,7 +17,7 @@ BaselineOfAST >> baseline: spec [
 		spec
 			package: 'AST-Core';
 			package: 'AST-Core-Tests'
-			with: [ spec requires: #( 'SUnit' 'AST-Core' ) ].
+			with: [ spec requires: #( SUnit 'AST-Core' ) ].
 
 		spec
 			group: 'default' with: #( 'AST-Core' );

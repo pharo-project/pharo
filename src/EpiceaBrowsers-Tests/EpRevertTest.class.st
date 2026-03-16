@@ -133,7 +133,7 @@ EpRevertTest >> testClassRemoval [
 	self assert: (self class environment hasClassNamed: className).
 	self assert: (self class environment classNamed: className) package name equals: package.
 	self assert: (self class environment classNamed: className) packageTag name equals: tag.
-	self assert: (self class environment classNamed: className) classSide instVarNames equals: #( 'hey' )
+	self assert: (self class environment classNamed: className) classSide instVarNames equals: #( hey )
 ]
 
 { #category : 'tests' }

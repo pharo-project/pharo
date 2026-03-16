@@ -107,8 +107,8 @@ ZnServerTest >> testAuthorizationFailed [
 						yourself).
 			self assert: response headers contentType equals: ZnMimeType textPlain.
 			self assert: response statusLine code equals: 401.
-			self assert: ((response headers at: 'WWW-Authenticate') includesSubstring: 'Basic').
-			self assert: ((response headers at: 'WWW-Authenticate') includesSubstring: 'Zinc') ]
+			self assert: ((response headers at: #'WWW-Authenticate') includesSubstring: 'Basic').
+			self assert: ((response headers at: #'WWW-Authenticate') includesSubstring: 'Zinc') ]
 ]
 
 { #category : 'testing' }
@@ -120,7 +120,7 @@ ZnServerTest >> testAuthorizationSuccessful [
 			response := ZnEasy
 				get:
 					(server localUrl
-						addPathSegments: #('echo' 'foo');
+						addPathSegments: #(echo foo);
 						yourself)
 				username: 'foo'
 				password: 'secret'.
@@ -153,7 +153,7 @@ ZnServerTest >> testCustomServerString [
 		(client := ZnClient new)
 			get: server localUrl;
 			close.
-		self assert: (client response headers at: 'Server') equals: 'foobar server' ]
+		self assert: (client response headers at: #'Server') equals: 'foobar server' ]
 ]
 
 { #category : 'testing' }
@@ -191,7 +191,7 @@ ZnServerTest >> testEcho [
 			response := ZnEasy
 				get:
 					(server localUrl
-						addPathSegments: #('echo' 'foo');
+						addPathSegments: #(echo foo);
 						yourself).
 			self assert: response contentType equals: ZnMimeType textPlain.
 			self assert: response statusLine code equals: 200.
@@ -228,7 +228,7 @@ ZnServerTest >> testEchoLocalInterface [
 	response := ZnEasy
 		get:
 			(server localUrl
-				addPathSegments: #('echo' 'foo');
+				addPathSegments: #(echo foo);
 				yourself).
 	self assert: response contentType equals: ZnMimeType textPlain.
 	self assert: response statusLine code equals: 200.
@@ -264,7 +264,7 @@ ZnServerTest >> testError [
 { #category : 'testing' }
 ZnServerTest >> testFormTest1 [
 	| inputs client |
-	inputs := #( '1+2=3 & 2+1=3' 'single ''' 'double " - cool ?' 'élèves français' 'Ελλάδα' ).
+	inputs := #( '1+2=3 & 2+1=3' 'single ''' 'double " - cool ?' 'élèves français' Ελλάδα ).
 	self withServerDo: [ :server |
 		(client := ZnClient new)
 			url: server localUrl;
@@ -280,7 +280,7 @@ ZnServerTest >> testFormTest1 [
 { #category : 'testing' }
 ZnServerTest >> testFormTest2 [
 	| inputs client |
-	inputs := #( '1+2=3 & 2+1=3' 'single ''' 'double " - cool ?' 'élèves français' 'Ελλάδα' ).
+	inputs := #( '1+2=3 & 2+1=3' 'single ''' 'double " - cool ?' 'élèves français' Ελλάδα ).
 	self withServerDo: [ :server |
 		(client := ZnClient new)
 			url: server localUrl;
@@ -399,9 +399,9 @@ ZnServerTest >> testGzipCompressionAndChunking [
 			get.
 		self assert: client isSuccess.
 		self assert: client response hasContentEncoding.
-		self assert: (client response headers at: 'Content-Encoding') equals: 'gzip'.
+		self assert: (client response headers at: #'Content-Encoding') equals: 'gzip'.
 		self assert: client response hasTransferEncoding.
-		self assert: (client response headers at: 'Transfer-Encoding') equals: 'chunked' ]
+		self assert: (client response headers at: #'Transfer-Encoding') equals: 'chunked' ]
 ]
 
 { #category : 'testing' }

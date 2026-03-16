@@ -22,6 +22,6 @@ BaselineOfFuel >> baseline: spec [
 
 		spec
 			group: 'Core' with: #( 'Fuel-Core' );
-			group: 'Tests' with: #( 'Core' 'Fuel-Core-Tests' ) ]
+			group: 'Tests' with: #( Core 'Fuel-Core-Tests' ) ]
 
 ]

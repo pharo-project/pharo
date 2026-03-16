@@ -2,13 +2,13 @@ Class {
 	#name : 'MetacelloAbstractVersionConstructor',
 	#superclass : 'Object',
 	#instVars : [
-		'root',
-		'configuration',
-		'project',
-		'attributeMap',
-		'attributeOrder',
-		'symbolicVersion',
-		'currentContext'
+		#root,
+		#configuration,
+		#project,
+		#attributeMap,
+		#attributeOrder,
+		#symbolicVersion,
+		#currentContext
 	],
 	#category : 'Metacello-Core-Constructors',
 	#package : 'Metacello-Core',
@@ -347,7 +347,7 @@ MetacelloAbstractVersionConstructor >> import: aStringOrCollection [
 	
 		spec baseline: 'Sample' with: [ spec repository: 'github://dalehenrich/sample:master/repository' ].
 		spec baseline: 'Example' with: [ spec repository: 'github://dalehenrich/example:master/repository' ].
-		spec import: #('Sample' 'Example')]	
+		spec import: #(Sample Example)]	
 	 "
 
 	self root import: aStringOrCollection

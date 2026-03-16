@@ -28,7 +28,7 @@ Class {
 	#name : 'FileSystemResolver',
 	#superclass : 'Object',
 	#instVars : [
-		'next'
+		#next
 	],
 	#category : 'FileSystem-Core-Base-Resolver',
 	#package : 'FileSystem-Core',

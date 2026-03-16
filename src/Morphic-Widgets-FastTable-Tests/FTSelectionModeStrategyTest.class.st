@@ -5,8 +5,8 @@ Class {
 	#name : 'FTSelectionModeStrategyTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'table',
-		'strategy'
+		#table,
+		#strategy
 	],
 	#category : 'Morphic-Widgets-FastTable-Tests-Selection',
 	#package : 'Morphic-Widgets-FastTable-Tests',

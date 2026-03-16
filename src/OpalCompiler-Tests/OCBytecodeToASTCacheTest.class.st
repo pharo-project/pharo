@@ -2,8 +2,8 @@ Class {
 	#name : 'OCBytecodeToASTCacheTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'cache',
-		'compiledMethod'
+		#cache,
+		#compiledMethod
 	],
 	#category : 'OpalCompiler-Tests-Bytecode',
 	#package : 'OpalCompiler-Tests',

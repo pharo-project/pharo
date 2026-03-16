@@ -8,7 +8,7 @@ Class {
 	#name : 'UnicodeTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'unicodeGenerator'
+		#unicodeGenerator
 	],
 	#category : 'Kernel-Extended-Tests-Charset',
 	#package : 'Kernel-Extended-Tests',

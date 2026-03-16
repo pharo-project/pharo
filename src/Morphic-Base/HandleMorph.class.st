@@ -5,8 +5,8 @@ Class {
 	#name : 'HandleMorph',
 	#superclass : 'EllipseMorph',
 	#instVars : [
-		'pointBlock',
-		'lastPointBlock'
+		#pointBlock,
+		#lastPointBlock
 	],
 	#category : 'Morphic-Base-Widgets',
 	#package : 'Morphic-Base',

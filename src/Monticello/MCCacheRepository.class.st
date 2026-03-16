@@ -7,10 +7,10 @@ Class {
 	#name : 'MCCacheRepository',
 	#superclass : 'MCDirectoryRepository',
 	#instVars : [
-		'cacheEnabled'
+		#cacheEnabled
 	],
 	#classInstVars : [
-		'default'
+		#default
 	],
 	#category : 'Monticello-Repositories',
 	#package : 'Monticello',

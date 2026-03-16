@@ -2,7 +2,7 @@ Class {
 	#name : 'FLFullBasicSerializationTest',
 	#superclass : 'FLBasicSerializationTest',
 	#classVars : [
-		'ClassVariableForTesting'
+		#ClassVariableForTesting
 	],
 	#category : 'Fuel-Core-Tests-FullSerialization',
 	#package : 'Fuel-Core-Tests',
@@ -11,7 +11,7 @@ Class {
 
 { #category : 'accessing' }
 FLFullBasicSerializationTest class >> packageNamesUnderTest [
-	^ #('FuelMetalevel')
+	^ #(FuelMetalevel)
 ]
 
 { #category : 'testing' }

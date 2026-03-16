@@ -8,7 +8,7 @@ Class {
 	#name : 'CoFetcherSequence',
 	#superclass : 'CoFetcher',
 	#instVars : [
-		'subcompletions'
+		#subcompletions
 	],
 	#category : 'HeuristicCompletion-Model-Core',
 	#package : 'HeuristicCompletion-Model',

@@ -9,7 +9,7 @@ Class {
 	#name : 'TickSelectionListMorph',
 	#superclass : 'MorphTreeMorph',
 	#instVars : [
-		'storeValue'
+		#storeValue
 	],
 	#category : 'Morphic-Widgets-TickList',
 	#package : 'Morphic-Widgets-TickList'

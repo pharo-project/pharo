@@ -7,9 +7,9 @@ Class {
 	#name : 'RBRefactoryChange',
 	#superclass : 'Object',
 	#instVars : [
-		'name',
-		'changeFactory',
-		'onSystemDictionary'
+		#name,
+		#changeFactory,
+		#onSystemDictionary
 	],
 	#category : 'Refactoring-Changes-Base',
 	#package : 'Refactoring-Changes',

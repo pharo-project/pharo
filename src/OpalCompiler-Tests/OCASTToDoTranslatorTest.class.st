@@ -24,7 +24,7 @@ OCASTToDoTranslatorTest >> testToDoExecutesBlock [
 	total := 0.
 	1 to: 5 do: {argument}.
 	 ^ total'
-		withTemps: #('total')
+		withTemps: #(total)
 		withBlock: '[ :index | total := total + index ]'.
 
 	self assert: result equals: 15
@@ -57,7 +57,7 @@ OCASTToDoTranslatorTest >> testToDoWithCalculatedArguments [
 	end := 6.
 	begin to: end - 1 do: {argument}.
 	 ^ total'
-		withTemps: #('begin' 'end' 'total')
+		withTemps: #(begin end total)
 		withBlock: '[ :index | total := total + index ]'.
 
 	self assert: result equals: 15
@@ -75,7 +75,7 @@ OCASTToDoTranslatorTest >> testToDoWithTempInBlock [
 	end := 6.
 	begin to: end - 1 do: {argument}.
 	 ^ total'
-		withTemps: #('begin' 'end' 'total')
+		withTemps: #(begin end total)
 		withBlock: '[ :index | | tempInBlock |
 			tempInBlock := index.
 			total := total + tempInBlock ]'.
@@ -95,7 +95,7 @@ OCASTToDoTranslatorTest >> testToDoWithTempOutsideBlock [
 	end := 6.
 	begin to: end - 1 do: {argument}.
 	 ^ total'
-		withTemps: #('begin' 'end' 'total' 'tempOutsideBlock')
+		withTemps: #(begin end total tempOutsideBlock)
 		withBlock: '[ :index |
 			tempOutsideBlock := index.
 			total := total + tempOutsideBlock ]'.

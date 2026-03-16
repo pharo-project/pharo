@@ -5,7 +5,7 @@ Class {
 	#name : 'ClassFactoryForTestCaseTest',
 	#superclass : 'AbstractEnvironmentTestCase',
 	#instVars : [
-		'factory'
+		#factory
 	],
 	#category : 'SUnit-Tests-Core',
 	#package : 'SUnit-Tests',

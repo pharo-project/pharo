@@ -5,14 +5,14 @@ Class {
 	#name : 'AthensSimpleTreeNode',
 	#superclass : 'Object',
 	#instVars : [
-		'children',
-		'box',
-		'subject',
-		'extent',
-		'layoutWidth',
-		'originX',
-		'originY',
-		'color'
+		#children,
+		#box,
+		#subject,
+		#extent,
+		#layoutWidth,
+		#originX,
+		#originY,
+		#color
 	],
 	#category : 'Athens-Examples-Utilities',
 	#package : 'Athens-Examples',

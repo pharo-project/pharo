@@ -2,7 +2,7 @@ Class {
 	#name : 'DTCoveragePluginPresenterTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'presenter'
+		#presenter
 	],
 	#category : 'DrTests-Tests',
 	#package : 'DrTests-Tests'

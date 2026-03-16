@@ -5,9 +5,9 @@ Class {
 	#name : 'EpFileLogNode',
 	#superclass : 'EpLogNode',
 	#instVars : [
-		'globalName',
-		'directoryEntry',
-		'log'
+		#globalName,
+		#directoryEntry,
+		#log
 	],
 	#category : 'EpiceaBrowsers-UI-Graph',
 	#package : 'EpiceaBrowsers',

@@ -23,9 +23,9 @@ Class {
 	#name : 'SoundSystem',
 	#superclass : 'Object',
 	#classVars : [
-		'Current',
-		'SoundEnabled',
-		'SoundQuickStart'
+		#Current,
+		#SoundEnabled,
+		#SoundQuickStart
 	],
 	#category : 'System-Sound',
 	#package : 'System-Sound'

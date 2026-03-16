@@ -72,13 +72,13 @@ Class {
 	#name : 'TestExecutionEnvironment',
 	#superclass : 'ExecutionEnvironment',
 	#instVars : [
-		'watchDogProcess',
-		'watchDogSemaphore',
-		'testCase',
-		'maxTimeForTest',
-		'testCompleted',
-		'services',
-		'mainTestProcess'
+		#watchDogProcess,
+		#watchDogSemaphore,
+		#testCase,
+		#maxTimeForTest,
+		#testCompleted,
+		#services,
+		#mainTestProcess
 	],
 	#category : 'SUnit-Core-Kernel',
 	#package : 'SUnit-Core',
@@ -87,7 +87,7 @@ Class {
 
 { #category : 'fuel support' }
 TestExecutionEnvironment class >> fuelIgnoredInstanceVariableNames [
-    ^#('watchDogProcess' 'watchDogSemaphore' 'mainTestProcess')
+    ^#(watchDogProcess watchDogSemaphore mainTestProcess)
 ]
 
 { #category : 'settings' }

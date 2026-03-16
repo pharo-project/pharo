@@ -8,7 +8,7 @@ Class {
 	#name : 'HEAssociation',
 	#superclass : 'HEExportedLiteral',
 	#instVars : [
-		'key'
+		#key
 	],
 	#category : 'Hermes-Model',
 	#package : 'Hermes',

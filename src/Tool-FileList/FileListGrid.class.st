@@ -5,8 +5,8 @@ Class {
 	#name : 'FileListGrid',
 	#superclass : 'MorphTreeModel',
 	#instVars : [
-		'parent',
-		'treeMorph'
+		#parent,
+		#treeMorph
 	],
 	#category : 'Tool-FileList',
 	#package : 'Tool-FileList'

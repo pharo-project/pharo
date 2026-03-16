@@ -5,7 +5,7 @@ Class {
 	#name : 'NullTaskList',
 	#superclass : 'Object',
 	#instVars : [
-		'world'
+		#world
 	],
 	#category : 'Morphic-Widgets-Taskbar',
 	#package : 'Morphic-Widgets-Taskbar'

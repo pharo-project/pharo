@@ -5,9 +5,9 @@ Class {
 	#name : 'ScheduleTest',
 	#superclass : 'ClassTestCase',
 	#instVars : [
-		'firstEvent',
-		'aSchedule',
-		'restoredTimeZone'
+		#firstEvent,
+		#aSchedule,
+		#restoredTimeZone
 	],
 	#category : 'System-Time-Tests',
 	#package : 'System-Time-Tests'

@@ -2,10 +2,10 @@ Class {
 	#name : 'ExecutionCounterTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'counter',
-		'counter2',
-		'node',
-		'node2'
+		#counter,
+		#counter2,
+		#node,
+		#node2
 	],
 	#category : 'Reflectivity-Tools-Tests',
 	#package : 'Reflectivity-Tools-Tests'

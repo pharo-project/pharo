@@ -13,20 +13,20 @@ Class {
 	#name : 'Job',
 	#superclass : 'Object',
 	#instVars : [
-		'block',
-		'currentValue',
-		'min',
-		'max',
-		'title',
-		'children',
-		'isRunning',
-		'parent',
-		'process',
-		'owner',
-		'announcer'
+		#block,
+		#currentValue,
+		#min,
+		#max,
+		#title,
+		#children,
+		#isRunning,
+		#parent,
+		#process,
+		#owner,
+		#announcer
 	],
 	#classInstVars : [
-		'jobAnnouncer'
+		#jobAnnouncer
 	],
 	#category : 'Jobs-Base',
 	#package : 'Jobs',

@@ -9,8 +9,8 @@ Class {
 	#traits : 'TClyRichTextCommentEditorPaneMorph',
 	#classTraits : 'TClyRichTextCommentEditorPaneMorph classTrait',
 	#instVars : [
-		'editingPackage',
-		'isRendering'
+		#editingPackage,
+		#isRendering
 	],
 	#category : 'BeautifulComments-Core',
 	#package : 'BeautifulComments',

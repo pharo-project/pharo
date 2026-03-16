@@ -5,7 +5,7 @@ Class {
 	#name : 'EpPackageRename',
 	#superclass : 'EpPackageChange',
 	#instVars : [
-		'oldPackageName'
+		#oldPackageName
 	],
 	#category : 'Epicea-Model',
 	#package : 'Epicea',

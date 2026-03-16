@@ -5,7 +5,7 @@ Class {
 	#name : 'ReIsVariableNotDefinedInHierarchy',
 	#superclass : 'ReVariableNameCondition',
 	#instVars : [
-		'class'
+		#class
 	],
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',

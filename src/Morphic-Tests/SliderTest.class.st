@@ -2,8 +2,8 @@ Class {
 	#name : 'SliderTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'aSlider',
-		'window'
+		#aSlider,
+		#window
 	],
 	#category : 'Morphic-Tests-Widgets',
 	#package : 'Morphic-Tests',

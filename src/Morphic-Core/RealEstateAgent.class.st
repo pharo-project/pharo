@@ -5,9 +5,9 @@ Class {
 	#name : 'RealEstateAgent',
 	#superclass : 'Object',
 	#classVars : [
-		'StaggerOffset',
-		'StandardSize',
-		'UsedStrategy'
+		#StaggerOffset,
+		#StandardSize,
+		#UsedStrategy
 	],
 	#category : 'Morphic-Core-Worlds',
 	#package : 'Morphic-Core',

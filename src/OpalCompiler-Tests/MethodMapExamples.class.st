@@ -2,7 +2,7 @@ Class {
 	#name : 'MethodMapExamples',
 	#superclass : 'Object',
 	#instVars : [
-		'ivar'
+		#ivar
 	],
 	#category : 'OpalCompiler-Tests-Misc',
 	#package : 'OpalCompiler-Tests',

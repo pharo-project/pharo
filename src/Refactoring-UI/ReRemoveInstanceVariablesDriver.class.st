@@ -5,8 +5,8 @@ Class {
 	#name : 'ReRemoveInstanceVariablesDriver',
 	#superclass : 'RBInteractionDriver',
 	#instVars : [
-		'class',
-		'variables'
+		#class,
+		#variables
 	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',

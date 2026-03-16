@@ -12,8 +12,8 @@ Class {
 	#name : 'ClyRunClassScriptCommand',
 	#superclass : 'CmdCommand',
 	#instVars : [
-		'targetClass',
-		'script'
+		#targetClass,
+		#script
 	],
 	#category : 'Calypso-SystemPlugins-ClassScripts-Browser',
 	#package : 'Calypso-SystemPlugins-ClassScripts-Browser'

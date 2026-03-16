@@ -23,10 +23,10 @@ Class {
 	#name : 'SystemDictionary',
 	#superclass : 'IdentityDictionary',
 	#instVars : [
-		'cachedClassNames',
-		'cachedNonClassNames',
-		'cachedBehaviors',
-		'pseudoVariables'
+		#cachedClassNames,
+		#cachedNonClassNames,
+		#cachedBehaviors,
+		#pseudoVariables
 	],
 	#category : 'System-Support-Utilities',
 	#package : 'System-Support',
@@ -227,7 +227,7 @@ SystemDictionary >> fillCaches [
 	nonClassNames := OrderedCollection new.
 	self keysAndValuesDo: [ :key :value |
 		"The key == value name test below addresses two separate issues:
-			1) Obsolete classes, where key = #Foo and value name = 'AnObsoleteFoo'
+			1) Obsolete classes, where key sameContents: #Foo and value name = 'AnObsoleteFoo'
 			2) Aliases, i.e., Smalltalk at: #OtherName put: aClass"
 		((value isKindOf: (self class environment at: #Class)) and: [ key == value name ])
 			ifTrue: [ classNames add: key ]

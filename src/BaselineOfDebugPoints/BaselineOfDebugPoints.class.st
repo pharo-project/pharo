@@ -16,15 +16,15 @@ BaselineOfDebugPoints >> baseline: spec [
 
 		spec
 			package: 'DebugPoints'
-			with: [ spec requires: #( 'Reflectivity' ) ].
+			with: [ spec requires: #( Reflectivity ) ].
 
 		spec
 			package: 'DebugPoints-Tests'
-			with: [ spec requires: #( 'DebugPoints' ) ].
+			with: [ spec requires: #( DebugPoints ) ].
 
 		"Groups"
 		spec
-			group: 'Core' with: #( 'DebugPoints' );
-			group: 'Tests' with: #( 'Core' 'DebugPoints-Tests' );
-			group: 'default' with: #( 'Tests' ) ]
+			group: 'Core' with: #( DebugPoints );
+			group: 'Tests' with: #( Core 'DebugPoints-Tests' );
+			group: 'default' with: #( Tests ) ]
 ]

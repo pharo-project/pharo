@@ -5,7 +5,7 @@ Class {
 	#name : 'ClapValidationReport',
 	#superclass : 'Object',
 	#instVars : [
-		'problems'
+		#problems
 	],
 	#category : 'Clap-Core-Validation',
 	#package : 'Clap-Core',

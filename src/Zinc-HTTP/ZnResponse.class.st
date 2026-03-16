@@ -10,7 +10,7 @@ Class {
 	#name : 'ZnResponse',
 	#superclass : 'ZnMessage',
 	#instVars : [
-		'statusLine'
+		#statusLine
 	],
 	#category : 'Zinc-HTTP-Core',
 	#package : 'Zinc-HTTP',
@@ -178,7 +178,7 @@ ZnResponse >> = other [
 
 { #category : 'accessing' }
 ZnResponse >> addCookie: cookie [
-	self headers at: 'Set-Cookie' add: cookie fullString
+	self headers at: #'Set-Cookie' add: cookie fullString
 ]
 
 { #category : 'accessing' }
@@ -189,7 +189,7 @@ ZnResponse >> code [
 { #category : 'accessing' }
 ZnResponse >> cookies [
 	| value cookies |
-	value := self headers at: 'Set-Cookie' ifAbsent: [ ^ #() ].
+	value := self headers at: #'Set-Cookie' ifAbsent: [ ^ #() ].
 	cookies := value isString
 		ifTrue: [ Array with: value ]
 		ifFalse: [ value ].
@@ -272,7 +272,7 @@ ZnResponse >> isSuccess [
 
 { #category : 'accessing' }
 ZnResponse >> location [
-	^ self headers at: 'Location'
+	^ self headers at: #'Location'
 ]
 
 { #category : 'copying' }
@@ -312,7 +312,7 @@ ZnResponse >> setConnectionCloseFor: request [
 
 { #category : 'accessing' }
 ZnResponse >> setContentEncodingGzip [
-	self headers at: 'Content-Encoding' put: 'gzip'
+	self headers at: #'Content-Encoding' put: 'gzip'
 ]
 
 { #category : 'accessing' }
@@ -323,19 +323,19 @@ ZnResponse >> setKeepAliveFor: request [
 
 { #category : 'accessing' }
 ZnResponse >> setLocation: uriString [
-	self headers at: 'Location' put: uriString
+	self headers at: #'Location' put: uriString
 ]
 
 { #category : 'accessing' }
 ZnResponse >> setTransferEncodingChunked [
 	self headers
-		at: 'Transfer-Encoding' put: 'chunked';
+		at: #'Transfer-Encoding' put: 'chunked';
 		clearContentLength
 ]
 
 { #category : 'accessing' }
 ZnResponse >> setWWWAuthenticate: string [
-	self headers at: 'WWW-Authenticate' put: string
+	self headers at: #'WWW-Authenticate' put: string
 ]
 
 { #category : 'accessing' }
@@ -369,5 +369,5 @@ ZnResponse >> writeOn: stream [
 
 { #category : 'accessing' }
 ZnResponse >> wwwAuthenticate [
-	^ self headers at: 'WWW-Authenticate'
+	^ self headers at: #'WWW-Authenticate'
 ]

@@ -6,12 +6,12 @@ Class {
 	#name : 'OCASTSemanticAnalyzer',
 	#superclass : 'RBProgramNodeVisitor',
 	#instVars : [
-		'scope',
-		'outerScope',
-		'compilationContext',
-		'blockCounter',
-		'undeclared',
-		'invalidVariables'
+		#scope,
+		#outerScope,
+		#compilationContext,
+		#blockCounter,
+		#undeclared,
+		#invalidVariables
 	],
 	#category : 'OpalCompiler-Core-Semantics',
 	#package : 'OpalCompiler-Core',

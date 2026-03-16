@@ -11,7 +11,7 @@ Class {
 
 { #category : 'meta data' }
 ManifestManifestCore class >> rejectRules [
-^ #('LawOfDemeterRule' 'MethodHasNoTimeStampRule')
+^ #(LawOfDemeterRule MethodHasNoTimeStampRule)
 ]
 
 { #category : 'meta data' }

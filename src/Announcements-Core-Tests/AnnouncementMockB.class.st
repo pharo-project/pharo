@@ -5,7 +5,7 @@ Class {
 	#name : 'AnnouncementMockB',
 	#superclass : 'Announcement',
 	#instVars : [
-		'parameter'
+		#parameter
 	],
 	#category : 'Announcements-Core-Tests-Mocks',
 	#package : 'Announcements-Core-Tests',

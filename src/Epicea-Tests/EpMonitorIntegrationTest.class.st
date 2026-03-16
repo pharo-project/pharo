@@ -5,9 +5,9 @@ Class {
 	#name : 'EpMonitorIntegrationTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'monitor',
-		'classFactory',
-		'logBuilder'
+		#monitor,
+		#classFactory,
+		#logBuilder
 	],
 	#category : 'Epicea-Tests-Integration',
 	#package : 'Epicea-Tests',

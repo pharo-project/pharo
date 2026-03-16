@@ -79,14 +79,14 @@ Class {
 	#name : 'ZnUrl',
 	#superclass : 'Object',
 	#instVars : [
-		'scheme',
-		'host',
-		'port',
-		'segments',
-		'query',
-		'fragment',
-		'username',
-		'password'
+		#scheme,
+		#host,
+		#port,
+		#segments,
+		#query,
+		#fragment,
+		#username,
+		#password
 	],
 	#category : 'Zinc-Resource-Meta-Core',
 	#package : 'Zinc-Resource-Meta-Core'
@@ -488,7 +488,7 @@ ZnUrl >> isHttps [
 
 { #category : 'testing' }
 ZnUrl >> isLocalHost [
-	^ self hasHost and: [ #('localhost' '127.0.0.1') includes: self host ]
+	^ self hasHost and: [ #(localhost '127.0.0.1') includes: self host ]
 ]
 
 { #category : 'testing' }

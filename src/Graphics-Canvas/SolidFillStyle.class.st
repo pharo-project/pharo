@@ -9,8 +9,8 @@ Class {
 	#name : 'SolidFillStyle',
 	#superclass : 'FillStyle',
 	#instVars : [
-		'color',
-		'pixelValue32'
+		#color,
+		#pixelValue32
 	],
 	#category : 'Graphics-Canvas-Fills',
 	#package : 'Graphics-Canvas',

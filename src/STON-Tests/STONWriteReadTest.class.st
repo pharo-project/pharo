@@ -269,8 +269,8 @@ STONWriteReadTest >> testJsonMode [
 		nil.
 		STON listClass withAll: #( 1 2 3) asByteArray.
 		STON mapClass new
-			at: 'x' put: 1;
-			at: 'y' put: 2;
+			at: #'x' put: 1;
+			at: #'y' put: 2;
 			yourself
 	}.
 	self serializeAndMaterializeJsonMode: object
@@ -451,10 +451,10 @@ STONWriteReadTest >> testSymbols [
 	symbols := Collection allSubclasses collect: [ :each | each name ].
 	self serializeAndMaterialize: symbols.
 	"simple symbols"
-	symbols := #( #foo123 #'123foo' #'punctuation-_./' #'_Foo' #'/root' #'---' #'.st' ).
+	symbols := #( #foo123 #123foo #'punctuation-_./' #_Foo #'/root' #'---' #'.st' ).
 	self serializeAndMaterialize: symbols.
 	"non-simple symbols"
-	symbols := #( #'les-élèves-français' #'euro-€' #'ångström' ).
+	symbols := #( #'les-élèves-français' #'euro-€' #ångström ).
 	self serializeAndMaterialize: symbols
 ]
 

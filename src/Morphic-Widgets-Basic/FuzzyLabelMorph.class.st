@@ -5,8 +5,8 @@ Class {
 	#name : 'FuzzyLabelMorph',
 	#superclass : 'LabelMorph',
 	#instVars : [
-		'offset',
-		'alpha'
+		#offset,
+		#alpha
 	],
 	#category : 'Morphic-Widgets-Basic',
 	#package : 'Morphic-Widgets-Basic'

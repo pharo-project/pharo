@@ -5,12 +5,12 @@ Class {
 	#name : 'TabSelectorMorph',
 	#superclass : 'ModelMorph',
 	#instVars : [
-		'selectedIndex',
-		'visibleTabRange',
-		'font',
-		'tabs',
-		'controls',
-		'wrapScrolling'
+		#selectedIndex,
+		#visibleTabRange,
+		#font,
+		#tabs,
+		#controls,
+		#wrapScrolling
 	],
 	#category : 'Morphic-Widgets-PolyTabs',
 	#package : 'Morphic-Widgets-PolyTabs'

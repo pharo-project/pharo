@@ -5,15 +5,15 @@ Class {
 	#name : 'OSWorldRenderer',
 	#superclass : 'AbstractWorldRenderer',
 	#instVars : [
-		'driver',
-		'osWindow',
-		'display',
-		'windowCloseAction',
-		'previousFrameRenderingTime'
+		#driver,
+		#osWindow,
+		#display,
+		#windowCloseAction,
+		#previousFrameRenderingTime
 	],
 	#classInstVars : [
-		'canvasScaleFactor',
-		'autoSetCanvasScaleFactor'
+		#canvasScaleFactor,
+		#autoSetCanvasScaleFactor
 	],
 	#category : 'OSWindow-Core-Morphic',
 	#package : 'OSWindow-Core',

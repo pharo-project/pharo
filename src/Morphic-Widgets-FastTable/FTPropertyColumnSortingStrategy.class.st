@@ -23,7 +23,7 @@ Class {
 	#name : 'FTPropertyColumnSortingStrategy',
 	#superclass : 'FTStateBasedColumnSortingStrategy',
 	#instVars : [
-		'property'
+		#property
 	],
 	#category : 'Morphic-Widgets-FastTable-Sorting',
 	#package : 'Morphic-Widgets-FastTable',

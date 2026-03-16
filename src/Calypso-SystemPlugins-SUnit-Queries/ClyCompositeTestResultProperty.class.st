@@ -14,7 +14,7 @@ Class {
 	#name : 'ClyCompositeTestResultProperty',
 	#superclass : 'ClyTestResultProperty',
 	#instVars : [
-		'testCaseResults'
+		#testCaseResults
 	],
 	#category : 'Calypso-SystemPlugins-SUnit-Queries',
 	#package : 'Calypso-SystemPlugins-SUnit-Queries'

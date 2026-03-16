@@ -5,8 +5,8 @@ Class {
 	#name : 'EpTraitModification',
 	#superclass : 'EpTraitChange',
 	#instVars : [
-		'oldTrait',
-		'newTrait'
+		#oldTrait,
+		#newTrait
 	],
 	#category : 'Epicea-Model',
 	#package : 'Epicea',

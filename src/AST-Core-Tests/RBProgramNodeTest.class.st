@@ -5,7 +5,7 @@ Class {
 	#name : 'RBProgramNodeTest',
 	#superclass : 'RBParseTreeTest',
 	#instVars : [
-		'node'
+		#node
 	],
 	#category : 'AST-Core-Tests-Nodes',
 	#package : 'AST-Core-Tests',
@@ -190,7 +190,7 @@ RBProgramNodeTest >> testAddSelfReturn [
 RBProgramNodeTest >> testAddTemporariesNamed [
 	| tree variables |
 	tree := self parseExpression: '| a | a'.
-	variables := tree addTemporariesNamed: #('b' 'c').
+	variables := tree addTemporariesNamed: #(b c).
 	self assert: variables first isVariable.
 	self assert: variables first name equals: 'b'.
 	self assert: variables second isVariable.

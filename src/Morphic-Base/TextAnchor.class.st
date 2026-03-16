@@ -15,7 +15,7 @@ Class {
 	#name : 'TextAnchor',
 	#superclass : 'TextAttribute',
 	#instVars : [
-		'anchoredMorph'
+		#anchoredMorph
 	],
 	#category : 'Morphic-Base-Text Support',
 	#package : 'Morphic-Base',

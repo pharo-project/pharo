@@ -5,7 +5,7 @@ Class {
 	#name : 'RBAddPackageChange',
 	#superclass : 'RBRefactoryPackageChange',
 	#instVars : [
-		'packageName'
+		#packageName
 	],
 	#category : 'Refactoring-Changes-Changes-Packages',
 	#package : 'Refactoring-Changes',

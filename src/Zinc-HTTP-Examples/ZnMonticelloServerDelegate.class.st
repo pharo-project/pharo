@@ -14,7 +14,7 @@ Class {
 	#name : 'ZnMonticelloServerDelegate',
 	#superclass : 'Object',
 	#instVars : [
-		'directory'
+		#directory
 	],
 	#category : 'Zinc-HTTP-Examples',
 	#package : 'Zinc-HTTP-Examples'

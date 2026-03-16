@@ -6,20 +6,20 @@ Class {
 	#name : 'ListDialogWindow',
 	#superclass : 'MessageDialogWindow',
 	#instVars : [
-		'pattern',
-		'list',
-		'searchMorph',
-		'listMorph',
-		'listIndex',
-		'answer',
-		'listBlock',
-		'listCreationProcess',
-		'displayBlock',
-		'browseBlock',
-		'acceptNewEntry'
+		#pattern,
+		#list,
+		#searchMorph,
+		#listMorph,
+		#listIndex,
+		#answer,
+		#listBlock,
+		#listCreationProcess,
+		#displayBlock,
+		#browseBlock,
+		#acceptNewEntry
 	],
 	#classInstVars : [
-		'searchList'
+		#searchList
 	],
 	#category : 'Polymorph-Widgets-Windows',
 	#package : 'Polymorph-Widgets',

@@ -5,16 +5,16 @@ Class {
 	#name : 'MCClassDefinition',
 	#superclass : 'MCDefinition',
 	#instVars : [
-		'name',
-		'superclassName',
-		'variables',
-		'packageName',
-		'type',
-		'comment',
-		'commentStamp',
-		'tagName',
-		'traitComposition',
-		'classTraitComposition'
+		#name,
+		#superclassName,
+		#variables,
+		#packageName,
+		#type,
+		#comment,
+		#commentStamp,
+		#tagName,
+		#traitComposition,
+		#classTraitComposition
 	],
 	#category : 'Monticello-Model',
 	#package : 'Monticello-Model'
@@ -34,7 +34,7 @@ MCClassDefinition >> = aDefinition [
 		and: [ superclassName = aDefinition superclassName
 		and: [ self traitCompositionString = aDefinition traitCompositionString
 		and: [ self classTraitCompositionString = aDefinition classTraitCompositionString
-		and: [ self packageName = aDefinition packageName
+		and: [ self packageName sameContents: aDefinition packageName
 		and: [  self tagName = aDefinition tagName
 		and: [ type = aDefinition type and: [ self sortedVariables = aDefinition sortedVariables and: [ comment = aDefinition comment ] ] ] ] ] ] ]]
 ]

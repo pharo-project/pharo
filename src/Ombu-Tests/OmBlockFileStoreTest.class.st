@@ -2,8 +2,8 @@ Class {
 	#name : 'OmBlockFileStoreTest',
 	#superclass : 'OmFileStoreTest',
 	#instVars : [
-		'targetReference',
-		'bigStore'
+		#targetReference,
+		#bigStore
 	],
 	#category : 'Ombu-Tests',
 	#package : 'Ombu-Tests'

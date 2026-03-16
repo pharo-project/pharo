@@ -96,7 +96,7 @@ FLCreateClassSerializationTest >> testCreateClassWithClassSideVariable [
 	materializedClass := self resultOfSerializeRemoveAndMaterialize: aClass.
 
 	self assert: 1 = materializedClass class instVarNames size.
-	self assert: (materializedClass class instVarNames includes: 'a').
+	self assert: (materializedClass class instVarNames includes: #a).
 	self assert: #test = (materializedClass instVarNamed: 'a').
 ]
 

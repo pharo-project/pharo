@@ -24,10 +24,10 @@ Class {
 	#name : 'CalendarMorph',
 	#superclass : 'BorderedMorph',
 	#instVars : [
-		'date',
-		'days',
-		'touchPoints',
-		'announcer'
+		#date,
+		#days,
+		#touchPoints,
+		#announcer
 	],
 	#category : 'Morphic-Widgets-Extra',
 	#package : 'Morphic-Widgets-Extra'
@@ -261,7 +261,7 @@ CalendarMorph >> drawWeekDayNamesOn: aCanvas [
 		width: 1
 		color: Color black.
 
-	#('Sun' 'Mon' 'Tue' 'Wed' 'Thu' 'Fri' 'Sat') withIndexDo: [:dayName :dayIndex |
+	#(Sun Mon Tue Wed Thu Fri Sat) withIndexDo: [:dayName :dayIndex |
 		| cellPosX cellTopCenter textWidth |
 		cellPosX := cellWidth * (dayIndex - 1).
 		cellTopCenter := topLeft translateBy: ((cellPosX + (cellWidth // 2)) + 1) @ 0.
@@ -291,7 +291,7 @@ CalendarMorph >> handleMonthNameTouched [
 	newMonthName := self morphicUIManager
 		chooseDropList: 'Choose a month:'
 		list:
-			#('January' 'February' 'March' 'April' 'May' 'June' 'July' 'August' 'September' 'October' 'November' 'December').
+			#(January February March April May June July August September October November December).
 
 	newMonthName ifNil: [ ^ self ].
 

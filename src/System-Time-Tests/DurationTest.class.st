@@ -5,7 +5,7 @@ Class {
 	#name : 'DurationTest',
 	#superclass : 'ClassTestCase',
 	#instVars : [
-		'aDuration'
+		#aDuration
 	],
 	#category : 'System-Time-Tests',
 	#package : 'System-Time-Tests'

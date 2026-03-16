@@ -2,7 +2,7 @@ Class {
 	#name : 'MorphicNativeWindowTest',
 	#superclass : 'AbstractWindowManagerTest',
 	#instVars : [
-		'window'
+		#window
 	],
 	#category : 'Morphic-Tests',
 	#package : 'Morphic-Tests'

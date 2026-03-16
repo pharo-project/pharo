@@ -5,7 +5,7 @@ Class {
 	#name : 'FFIBackend',
 	#superclass : 'Object',
 	#classVars : [
-		'Current'
+		#Current
 	],
 	#category : 'FFI-Kernel',
 	#package : 'FFI-Kernel'

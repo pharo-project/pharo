@@ -10,10 +10,10 @@ Class {
 	#name : 'SUnitTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'hasRun',
-		'hasSetup',
-		'hasRanOnce',
-		'forkedProcesses'
+		#hasRun,
+		#hasSetup,
+		#hasRanOnce,
+		#forkedProcesses
 	],
 	#category : 'SUnit-Tests-Core',
 	#package : 'SUnit-Tests',

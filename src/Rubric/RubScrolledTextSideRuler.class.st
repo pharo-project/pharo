@@ -5,7 +5,7 @@ Class {
 	#name : 'RubScrolledTextSideRuler',
 	#superclass : 'RubScrolledTextExtra',
 	#instVars : [
-		'side'
+		#side
 	],
 	#category : 'Rubric-Editing-Widgets',
 	#package : 'Rubric',

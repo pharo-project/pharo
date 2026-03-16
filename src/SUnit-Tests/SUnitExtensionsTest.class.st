@@ -5,7 +5,7 @@ Class {
 	#name : 'SUnitExtensionsTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'stream'
+		#stream
 	],
 	#category : 'SUnit-Tests-Core',
 	#package : 'SUnit-Tests',

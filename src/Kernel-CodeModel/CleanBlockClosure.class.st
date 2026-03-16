@@ -23,7 +23,7 @@ Class {
 	#superclass : 'BlockClosure',
 	#type : 'variable',
 	#instVars : [
-		'literal'
+		#literal
 	],
 	#category : 'Kernel-CodeModel-Methods',
 	#package : 'Kernel-CodeModel',

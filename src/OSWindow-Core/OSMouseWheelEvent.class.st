@@ -5,8 +5,8 @@ Class {
 	#name : 'OSMouseWheelEvent',
 	#superclass : 'OSMouseEvent',
 	#instVars : [
-		'scrollHorizontal',
-		'scrollVertical'
+		#scrollHorizontal,
+		#scrollVertical
 	],
 	#category : 'OSWindow-Core-Events',
 	#package : 'OSWindow-Core',

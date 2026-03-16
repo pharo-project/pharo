@@ -2,7 +2,7 @@ Class {
 	#name : 'ReSemanticsOfExtractMethodTransformationTest',
 	#superclass : 'RBAbstractTransformationTest',
 	#instVars : [
-		'class'
+		#class
 	],
 	#category : 'Refactoring-Transformations-Tests-Test',
 	#package : 'Refactoring-Transformations-Tests',

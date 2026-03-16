@@ -12,9 +12,9 @@ Class {
 	#name : 'RxsPiece',
 	#superclass : 'RxsNode',
 	#instVars : [
-		'atom',
-		'min',
-		'max'
+		#atom,
+		#min,
+		#max
 	],
 	#category : 'Regex-Core-Nodes',
 	#package : 'Regex-Core',

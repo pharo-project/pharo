@@ -2,18 +2,18 @@ Class {
 	#name : 'MetacelloVersionSpec',
 	#superclass : 'MetacelloSpec',
 	#instVars : [
-		'repositories',
-		'packages',
-		'versionString',
-		'packageList',
-		'author',
-		'timestamp',
-		'importArray',
-		'postLoadDoIt',
-		'blessing',
-		'importName',
-		'preLoadDoIt',
-		'description'
+		#repositories,
+		#packages,
+		#versionString,
+		#packageList,
+		#author,
+		#timestamp,
+		#importArray,
+		#postLoadDoIt,
+		#blessing,
+		#importName,
+		#preLoadDoIt,
+		#description
 	],
 	#category : 'Metacello-Core-Specs',
 	#package : 'Metacello-Core',
@@ -255,7 +255,7 @@ MetacelloVersionSpec >> defaultPackageNames [
 	 otherwise answer a list of all of the package names in this version"
 
 	self packages packageNamed: 'default' ifAbsent: [ ^self packageNames ].
-	^#('default')
+	^#(default)
 ]
 
 { #category : 'toolbox support' }
@@ -435,7 +435,7 @@ MetacelloVersionSpec >> mergeSpec: anotherSpec [
 
 { #category : 'merging' }
 MetacelloVersionSpec >> nonOverridable [
-    ^ super nonOverridable , #(#'packageList' #'repositories')
+    ^ super nonOverridable , #(#packageList #repositories)
 ]
 
 { #category : 'querying' }
@@ -506,7 +506,7 @@ MetacelloVersionSpec >> packageSpecsInLoadOrderForMap: packageMap [
 	importArray ifNotNil: [
 		loadOrder do: [ :pkg |
 			importArray do: [ :assoc |
-				assoc key = pkg name ifTrue: [
+				assoc key sameContents: pkg name ifTrue: [
 					importProjectSpecs at: pkg name put: pkg.
 					(assoc value select: [ :each | importNames includes: each ]) do: [
 						:each |

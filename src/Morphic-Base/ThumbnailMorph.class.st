@@ -7,16 +7,16 @@ Class {
 	#traits : 'TAbleToRotate',
 	#classTraits : 'TAbleToRotate classTrait',
 	#instVars : [
-		'objectToView',
-		'viewSelector',
-		'lastSketchForm',
-		'lastFormShown',
-		'drawTime'
+		#objectToView,
+		#viewSelector,
+		#lastSketchForm,
+		#lastFormShown,
+		#drawTime
 	],
 	#classVars : [
-		'EccentricityThreshhold',
-		'RecursionDepth',
-		'RecursionMax'
+		#EccentricityThreshhold,
+		#RecursionDepth,
+		#RecursionMax
 	],
 	#category : 'Morphic-Base-Basic',
 	#package : 'Morphic-Base',

@@ -7,12 +7,12 @@ Class {
 	#name : 'LazyListMorph',
 	#superclass : 'Morph',
 	#instVars : [
-		'listItems',
-		'font',
-		'selectedRow',
-		'selectedRows',
-		'listSource',
-		'maxWidth'
+		#listItems,
+		#font,
+		#selectedRow,
+		#selectedRows,
+		#listSource,
+		#maxWidth
 	],
 	#category : 'Morphic-Widgets-Pluggable-Lists',
 	#package : 'Morphic-Widgets-Pluggable',

@@ -21,7 +21,7 @@ Class {
 	#name : 'CmdKMDispatcher',
 	#superclass : 'KMDispatcher',
 	#instVars : [
-		'commandProvider'
+		#commandProvider
 	],
 	#category : 'Commander-Activators-Shortcut',
 	#package : 'Commander-Activators-Shortcut'

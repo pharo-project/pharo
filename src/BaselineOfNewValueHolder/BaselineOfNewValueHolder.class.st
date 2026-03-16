@@ -14,7 +14,7 @@ BaselineOfNewValueHolder >> baseline: spec [
 		spec package: 'NewValueHolder-Tests' 
 			with: [ spec requires: #('NewValueHolder-Core') ].
 		
-		spec group: 'default' with: #('core' 'tests').
+		spec group: 'default' with: #(core tests).
 		spec group: 'core' with: #('NewValueHolder-Core').
 		spec group: 'tests' with: #('NewValueHolder-Tests') ]
 ]

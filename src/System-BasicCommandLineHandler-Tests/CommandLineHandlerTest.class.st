@@ -36,7 +36,7 @@ CommandLineHandlerTest >> testResponsibilityDefault [
 { #category : 'tests' }
 CommandLineHandlerTest >> testResponsibilityEval [
 	| args |
-	args := self argumentsWith: #('eval' '1+2').
+	args := self argumentsWith: #(eval '1+2').
 	self assert: (PharoCommandLineHandler isResponsibleFor: args).
 	self deny: (STCommandLineHandler isResponsibleFor: args).
 	self assert: (EvaluateCommandLineHandler isResponsibleFor: args).
@@ -60,7 +60,7 @@ CommandLineHandlerTest >> testResponsibilitySt [
 	self assert: (STCommandLineHandler isResponsibleFor: args).
 	self deny: (EvaluateCommandLineHandler isResponsibleFor: args).
 
-	args := self argumentsWith: #('st' '/foo/bar/myScript.st').
+	args := self argumentsWith: #(st '/foo/bar/myScript.st').
 	self assert: (PharoCommandLineHandler isResponsibleFor: args).
 	self assert: (STCommandLineHandler isResponsibleFor: args).
 	self deny: (EvaluateCommandLineHandler isResponsibleFor: args)

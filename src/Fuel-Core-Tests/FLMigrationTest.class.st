@@ -39,7 +39,7 @@ FLMigrationTest >> testBadDestinationVariableRename [
 	aPoint := pointClass new.
 
 	self materializer migrateClassNamed: pointClassName variables: (Dictionary new
-			 at: 'x' put: 'posX';
+			 at: #'x' put: 'posX';
 			 yourself).
 
 	self serialize: aPoint.
@@ -97,8 +97,8 @@ FLMigrationTest >> testClassAndVariableRename [
 	pointClass := self redefined: pointClass with: #(posY posX).
 
 	self materializer migrateClassNamed: pointClassName toClass: pointClass variables: (Dictionary new
-			 at: 'x' put: 'posX';
-			 at: 'y' put: 'posY';
+			 at: #'x' put: 'posX';
+			 at: #'y' put: 'posY';
 			 yourself).
 
 	resultPoint := self materialized.
@@ -245,8 +245,8 @@ FLMigrationTest >> testVariableRename [
 	self redefined: pointClass with: #(posY posX).
 
 	self materializer migrateClassNamed: pointClassName variables: (Dictionary new
-			 at: 'x' put: 'posX';
-			 at: 'y' put: 'posY';
+			 at: #'x' put: 'posX';
+			 at: #'y' put: 'posY';
 			 yourself).
 
 	resultPoint := self materialized.

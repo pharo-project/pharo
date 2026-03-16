@@ -10,19 +10,19 @@ Class {
 	#traits : 'TIncludesTest + TCloneTest + TCopyTest + TSetArithmetic + TIterateSequencedReadableTest + TPrintOnSequencedTest + TAsStringCommaAndDelimiterSequenceableTest + TIndexAccess + TSequencedElementAccessTest + TSubCollectionAccess + TPutBasicTest + TCopySequenceableSameContents + TCopyPartOfSequenceable + TCopyPartOfSequenceableForMultipliness + TCopySequenceableWithOrWithoutSpecificElements + TCopySequenceableWithReplacement + TReplacementSequencedTest + (TConvertTest - {#testAsByteArray}) + TConvertAsSortedTest + TBeginsEndsWith + (TIndexAccessForMultipliness - {#testIdentityIndexOfIAbsentDuplicate. #testIdentityIndexOfDuplicate. #collectionWithNonIdentitySameAtEndAndBegining}) + TSequencedConcatenationTest + TPutTest + TConvertAsSetForMultiplinessTest + TSortTest + TSequencedStructuralEqualityTest + TOccurrencesForMultiplinessTest + TCreationWithTest + TSequenceableTruncatedToSize',
 	#classTraits : 'TIncludesTest classTrait + TCloneTest classTrait + TCopyTest classTrait + TSetArithmetic classTrait + TIterateSequencedReadableTest classTrait + TPrintOnSequencedTest classTrait + TAsStringCommaAndDelimiterSequenceableTest classTrait + TIndexAccess classTrait + TSequencedElementAccessTest classTrait + TSubCollectionAccess classTrait + TPutBasicTest classTrait + TCopySequenceableSameContents classTrait + TCopyPartOfSequenceable classTrait + TCopyPartOfSequenceableForMultipliness classTrait + TCopySequenceableWithOrWithoutSpecificElements classTrait + TCopySequenceableWithReplacement classTrait + TReplacementSequencedTest classTrait + TConvertTest classTrait + TConvertAsSortedTest classTrait + TBeginsEndsWith classTrait + TIndexAccessForMultipliness classTrait + TSequencedConcatenationTest classTrait + TPutTest classTrait + TConvertAsSetForMultiplinessTest classTrait + TSortTest classTrait + TSequencedStructuralEqualityTest classTrait + TOccurrencesForMultiplinessTest classTrait + TCreationWithTest classTrait + TSequenceableTruncatedToSize classTrait',
 	#instVars : [
-		'string',
-		'emptyString',
-		'elementInNonEmpty',
-		'notIn',
-		'nonEmpty1element',
-		'withoutEqualElements',
-		'collectionNotIncluded',
-		'indexInNonEmptyArray',
-		'sameAtEndAndBegining',
-		'nonEmpty5ElementsSorted',
-		'unsortedCollection',
-		'subcollection3ElementsSorted',
-		'arrayWithCharacters'
+		#string,
+		#emptyString,
+		#elementInNonEmpty,
+		#notIn,
+		#nonEmpty1element,
+		#withoutEqualElements,
+		#collectionNotIncluded,
+		#indexInNonEmptyArray,
+		#sameAtEndAndBegining,
+		#nonEmpty5ElementsSorted,
+		#unsortedCollection,
+		#subcollection3ElementsSorted,
+		#arrayWithCharacters
 	],
 	#category : 'Collections-Strings-Tests-Base',
 	#package : 'Collections-Strings-Tests',
@@ -730,10 +730,10 @@ StringTest >> testCopyUpToSubstring [
 StringTest >> testCorrectAgainst [
 
 	| coll |
-	coll := OrderedCollection new addAll: #('nest' 'temperature' 'text' 'Jupiter' 'denial' 'nest' 'tttt' 'e' 'alpha' 'beautest'); yourself.
+	coll := OrderedCollection new addAll: #(nest temperature text Jupiter denial nest tttt e alpha beautest); yourself.
 
-	self assert: ('test' correctAgainst: coll) asArray equals: #('beautest' 'nest' 'text' 'nest' 'tttt' 'temperature').
-	self assert: ('123' correctAgainst: coll) asArray equals: #('tttt' 'nest' 'text' 'nest').
+	self assert: ('test' correctAgainst: coll) asArray equals: #(beautest nest text nest tttt temperature).
+	self assert: ('123' correctAgainst: coll) asArray equals: #(tttt nest text nest).
 
 	coll := OrderedCollection new.
 	self assert: ('test' correctAgainst: coll) asArray equals: #()
@@ -770,9 +770,9 @@ StringTest >> testEndsWithAColon [
 { #category : 'tests' }
 StringTest >> testEndsWithAnyOf [
 
-	self assert: ('éèàôüößäóñíá' endsWithAnyOf: #('ia' 'ñí' '' 'áß')).
-	self assert: ('éèàôüößäóñíá' endsWithAnyOf: #('test' 'ÉÈÀ' 'äóñíá')).
-	self assert: ('test' endsWithAnyOf: #('tests' 'tester' 'testing' 't'))
+	self assert: ('éèàôüößäóñíá' endsWithAnyOf: #(ia ñí '' áß)).
+	self assert: ('éèàôüößäóñíá' endsWithAnyOf: #(test ÉÈÀ äóñíá)).
+	self assert: ('test' endsWithAnyOf: #(tests tester testing t))
 ]
 
 { #category : 'tests' }
@@ -866,10 +866,10 @@ StringTest >> testExpandMacrosWithArgumentsLongText [
 { #category : 'tests' }
 StringTest >> testFindAnySubstringStartingAt [
 
-	self assert: ('tester12345' findAnySubstring: #('st' $1) startingAt: 1) equals: 3.
-	self assert: ('éèàôüößäóñíá1234' findAnySubstring: #('st' '' 'óñ' '123') startingAt:  1) equals: 9.
+	self assert: ('tester12345' findAnySubstring: #(st $1) startingAt: 1) equals: 3.
+	self assert: ('éèàôüößäóñíá1234' findAnySubstring: #(st '' óñ 123) startingAt:  1) equals: 9.
 	self assert: ('éèàôüößäóñíá' findAnySubstring: #('') startingAt: 2) equals: 13.
-	self assert: ('éèàôüößäóñíá' findAnySubstring: #('óñ') startingAt: 3) equals: 9.
+	self assert: ('éèàôüößäóñíá' findAnySubstring: #(óñ) startingAt: 3) equals: 9.
 	self assert: ('éèàôüößäóñíá' findAnySubstring: #() startingAt: 3) equals: 13.
 	self assert: ('test12345' findAnySubstring: #('"' '@') startingAt: 12) equals: 10
 ]
@@ -877,10 +877,10 @@ StringTest >> testFindAnySubstringStartingAt [
 { #category : 'tests' }
 StringTest >> testFindBetweenSubstrings [
 
-	self assert: ('éèà ôüößäó ñíá' findBetweenSubstrings: #(' ')) asArray equals: #('éèà' 'ôüößäó' 'ñíá').
-	self assert: ('ieaoftaaka' findBetweenSubstrings: #($a)) asArray equals: #('ie' 'oft' 'k').
-	self assert: ('this is an issue is it not' findBetweenSubstrings: #('is' 'not')) asArray
-                                               equals: #('th' ' ' ' an ' 'sue ' ' it ')
+	self assert: ('éèà ôüößäó ñíá' findBetweenSubstrings: #(' ')) asArray equals: #(éèà ôüößäó ñíá).
+	self assert: ('ieaoftaaka' findBetweenSubstrings: #($a)) asArray equals: #(ie oft k).
+	self assert: ('this is an issue is it not' findBetweenSubstrings: #(is not)) asArray
+                                               equals: #(th ' ' ' an ' 'sue ' ' it ')
 ]
 
 { #category : 'tests' }
@@ -978,16 +978,16 @@ StringTest >> testFindStringStartingAtCaseSensitive [
 StringTest >> testFindTokens [
 
 	|s |
-	s := OrderedCollection withAll: #( 'i' 'd toke' 's').
+	s := OrderedCollection withAll: #( i 'd toke' s).
 	self assert: ('find tokens' findTokens: #($a $f $n)) equals: s.
 
-	s := OrderedCollection withAll: #('éèàôüößäóñí').
+	s := OrderedCollection withAll: #(éèàôüößäóñí).
 	self assert: ('éèàôüößäóñíá' findTokens: $á) equals: s.
 
 	s := OrderedCollection withAll: #().
 	self assert: ('' findTokens: '') equals: s.
 
-	s := OrderedCollection withAll: #('es' ' ' 'his').
+	s := OrderedCollection withAll: #(es ' ' his).
 	self assert: ('test this' findTokens: 't') equals: s
 ]
 
@@ -1006,7 +1006,7 @@ StringTest >> testFindTokensCharacterSetComplement [
 StringTest >> testFindTokensEscapedBy [
 
 	|s|
-	s := OrderedCollection withAll: #('éèà' 'üößä' 'íá').
+	s := OrderedCollection withAll: #(éèà üößä íá).
 	self assert: ('éèàôüößäóñíá' findTokens: #($ô $ó) escapedBy:'ñí') equals: s.
 
 	s := OrderedCollection withAll: #('ths,').
@@ -1242,10 +1242,10 @@ StringTest >> testFindTokensEscapedBy26 [
 { #category : 'tests' }
 StringTest >> testFindTokensIncludes [
 
-	self assert: ('test this' findTokens: 't' includes: 'his') equals: 'his'.
-	self assert: ('test this' findTokens: 's' includes: 'HI') isNil.
-	self assert: ('test this' findTokens: 's' includes: 'hi') equals: 't thi'.
-	self assert: ('test that' findTokens: 't' includes: 'that') isNil.
+	self assert: ('test this' findTokens: 't' includes: #his) equals: 'his'.
+	self assert: ('test this' findTokens: 's' includes: #HI) isNil.
+	self assert: ('test this' findTokens: 's' includes: #hi) equals: 't thi'.
+	self assert: ('test that' findTokens: 't' includes: #that) isNil.
 	self assert: ('éèàôüößäóñíá' findTokens: #($ô $ó) includes:'ñí') equals: 'ñíá'
 ]
 
@@ -1432,7 +1432,7 @@ StringTest >> testIsLiteralSymbol [
 	self assert: ('*+-/\~=<>&@%,|' allSatisfy: [:char | (Symbol with: char) isLiteralSymbol])
 		description: 'single letter binary symbols can be printed without string quotes'.
 
-	self assert: (#('x' 'x:' 'x:y:' 'from:to:by:' 'yourself') allSatisfy: [:str | str asSymbol isLiteralSymbol])
+	self assert: (#(x 'x:' 'x:y:' 'from:to:by:' yourself) allSatisfy: [:str | str asSymbol isLiteralSymbol])
 		description: 'valid ascii selector symbols can be printed without string quotes'
 ]
 
@@ -1558,11 +1558,11 @@ StringTest >> testLines [
 	sampleMixedString := 'Fred', String lf, 'the', String cr, 'Bear'.
 	sampleMixedString2 := 'Fred', String crlf, 'the', String cr, 'Bear'.
 
-	self assert: sampleCRString lines equals: #('Fred' 'the' 'Bear').
-	self assert: sampleLFString lines equals: #('Fred' 'the' 'Bear').
-	self assert: sampleCRLFString lines equals: #('Fred' 'the' 'Bear').
-	self assert: sampleMixedString lines equals: #('Fred' 'the' 'Bear').
-	self assert: sampleMixedString2 lines equals: #('Fred' 'the' 'Bear')
+	self assert: sampleCRString lines equals: #(Fred the Bear).
+	self assert: sampleLFString lines equals: #(Fred the Bear).
+	self assert: sampleCRLFString lines equals: #(Fred the Bear).
+	self assert: sampleMixedString lines equals: #(Fred the Bear).
+	self assert: sampleMixedString2 lines equals: #(Fred the Bear)
 ]
 
 { #category : 'tests - lines' }
@@ -1577,21 +1577,21 @@ StringTest >> testLinesDo [
 		self deny: (aLine includes: Character cr).
 		self deny: (aLine includes: Character lf).
 		lines add: aLine].
-	self assert: lines asArray equals: #('Fred' 'the' 'Bear').
+	self assert: lines asArray equals: #(Fred the Bear).
 
 	lines := OrderedCollection new.
 	sampleLFString linesDo: [:aLine |
 		self deny: (aLine includes: Character cr).
 		self deny: (aLine includes: Character lf).
 		lines add: aLine].
-	self assert: lines asArray equals: #('Fred' 'the' 'Bear').
+	self assert: lines asArray equals: #(Fred the Bear).
 
 	lines := OrderedCollection new.
 	sampleCRLFString linesDo: [:aLine |
 		self deny: (aLine includes: Character cr).
 		self deny: (aLine includes: Character lf).
 		lines add: aLine].
-	self assert: lines asArray equals: #('Fred' 'the' 'Bear')
+	self assert: lines asArray equals: #(Fred the Bear)
 ]
 
 { #category : 'tests - line breaking' }
@@ -1660,7 +1660,7 @@ StringTest >> testMatch [
 
 	#('**' 'f**'  'f**o' 'f*' '*f*' 'f#*' 'f##' '*oo' '#oo' '*o*' '#o#' '#o*' '*o#' 'fo*' 'fo#' '*foo*' '###' '*#'  'f*#' 'f*#o')
 		do: [ :each | self assert: (each match: 'foo') ].
-	#('bar' 'foo#' '#foo' '*foo#' '#foo*' '*bar*') do: [ :each |
+	#(bar 'foo#' '#foo' '*foo#' '#foo*' '*bar*') do: [ :each |
 		self deny: (each match: 'foo') ]
 ]
 
@@ -1850,28 +1850,28 @@ StringTest >> testRomanNumber [
 StringTest >> testSkipAnySubstringStartingAt [
 
 	"Simple skip"
-	self assert: ('abcd' skipAnySubstring: #('a') startingAt: 1) equals: 2.
+	self assert: ('abcd' skipAnySubstring: #(a) startingAt: 1) equals: 2.
 	"Test multiple substrings to skip"
-	self assert: ('abcd' skipAnySubstring: #('a' 'b' 'd') startingAt: 1) equals: 3.
+	self assert: ('abcd' skipAnySubstring: #(a b d) startingAt: 1) equals: 3.
 	"Test skip symbol"
 	self assert: ('abcd' skipAnySubstring: #(ab) startingAt: 1) equals: 3.
 	"Test string is full of substrings to skip"
-	self assert: ('abcd' skipAnySubstring: #('ab' 'cd') startingAt: 1) equals: 5.
+	self assert: ('abcd' skipAnySubstring: #(ab cd) startingAt: 1) equals: 5.
 	"Test first substring matches but second substring is larger than entire string"
-	self assert: ('abcd' skipAnySubstring: #('ab' 'abcdefg') startingAt: 1) equals: 3.
+	self assert: ('abcd' skipAnySubstring: #(ab abcdefg) startingAt: 1) equals: 3.
 	"Test first substring is larger than entire string, and second substring matches string"
-	self assert: ('abcd' skipAnySubstring: #('abcdefg' 'ab') startingAt: 1) equals: 3.
+	self assert: ('abcd' skipAnySubstring: #(abcdefg ab) startingAt: 1) equals: 3.
 	"Test string is empty, return length of string + 1"
-	self assert: ('' skipAnySubstring: #('ab') startingAt: 1) equals: 1.
+	self assert: ('' skipAnySubstring: #(ab) startingAt: 1) equals: 1.
 	"Test starting at index > 1"
-	self assert: ('abcde' skipAnySubstring: #('cd') startingAt: 3) equals: 5.
+	self assert: ('abcde' skipAnySubstring: #(cd) startingAt: 3) equals: 5.
 	"Test substring appears multiple times in a row"
-	self assert: ('ababc' skipAnySubstring: #('ab') startingAt: 1) equals: 5.
+	self assert: ('ababc' skipAnySubstring: #(ab) startingAt: 1) equals: 5.
 	"Test if delimiters is a string it is treated as a collection of characters"
 	self assert: (', ab' skipAnySubstring: ' ,' startingAt: 1) equals: 3.
 	"Test how delimiters order matters: substrings are skipped greedily with no backtracking"
-	self assert: ('abcdefg' skipAnySubstring: #('abcd' 'abc' 'def' 'g') startingAt: 1) equals: 5.
-	self assert: ('abcdefg' skipAnySubstring: #('abc' 'def' 'g' 'abcd') startingAt: 1) equals: 8
+	self assert: ('abcdefg' skipAnySubstring: #(abcd abc def g) startingAt: 1) equals: 5.
+	self assert: ('abcdefg' skipAnySubstring: #(abc def g abcd) startingAt: 1) equals: 8
 ]
 
 { #category : 'tests - instance creation' }
@@ -2023,7 +2023,7 @@ StringTest >> testUpTo [
 { #category : 'tests - converting' }
 StringTest >> testWithBlanksCondensed [
 	#(
-		'foo' 'foo'
+		foo foo
 		'foo bar' 'foo bar'
 		'' ''
 		' ' ''
@@ -2105,7 +2105,7 @@ StringTest >> testWithNoLineLongerThan [
 { #category : 'tests - converting' }
 StringTest >> testWithSeparatorsCompacted [
 	#(
-		'foo' 'foo'
+		foo foo
 		'foo bar' 'foo bar'
 		'' ''
 		' ' ' '
@@ -2149,13 +2149,13 @@ StringTest >> testWithUnixLineEndings [
 { #category : 'tests - converting' }
 StringTest >> testWithoutLeadingDigits [
 	#(
-		'foo' 'foo'
-		'123foo' 'foo'
-		'123 bar7' 'bar7'
-		' 123 	bar7' 'bar7'
+		foo foo
+		123foo foo
+		'123 bar7' bar7
+		' 123 	bar7' bar7
 		'foo.123.txt' 'foo.123.txt'
 		'' ''
-		'1' ''
+		1 ''
 		'1 2 3 ' ''
 	) pairsDo: [ :input :output |
 		self assert: input withoutLeadingDigits equals: output ]
@@ -2164,10 +2164,10 @@ StringTest >> testWithoutLeadingDigits [
 { #category : 'tests - converting' }
 StringTest >> testWithoutPeriodSuffix [
 	#(
-		'foo' 'foo'
-		'foo.' 'foo'
-		'foo.bar' 'foo'
-		'foo.bar.txt' 'foo'
+		foo foo
+		'foo.' foo
+		'foo.bar' foo
+		'foo.bar.txt' foo
 		'' ''
 		'.' '.'
 	) pairsDo: [ :input :output |
@@ -2186,13 +2186,13 @@ StringTest >> testWithoutPrefix [
 { #category : 'tests - internet' }
 StringTest >> testWithoutQuoting [
 
- 	#( '"foo"' 'foo'
-		'''foo''' 'foo'
+ 	#( '"foo"' foo
+		foo foo
 		'"foo''' '"foo'''
 		'''foo"' '''foo"'
 		'"foo' '"foo'
 		'foo"' 'foo"'
-		'foo' 'foo')
+		foo foo)
 	pairsDo: [ :before :after |
 		self assert: before withoutQuoting equals: after ]
 ]
@@ -2200,12 +2200,12 @@ StringTest >> testWithoutQuoting [
 { #category : 'tests - converting' }
 StringTest >> testWithoutTrailingDigits [
 	#(
-		'foo' 'foo'
-		'foo123' 'foo'
-		'bar 123 ' 'bar'
+		foo foo
+		foo123 foo
+		'bar 123 ' bar
 		'foo.123.txt' 'foo.123.txt'
 		'' ''
-		'1' ''
+		1 ''
 		'1 2 3 ' ''
 	) pairsDo: [ :input :output |
 		self assert: input withoutTrailingDigits equals: output ]

@@ -5,7 +5,7 @@ Class {
 	#name : 'AnnouncerSubscriberMockA',
 	#superclass : 'Object',
 	#instVars : [
-		'announcer'
+		#announcer
 	],
 	#category : 'Announcements-Core-Tests-Mocks',
 	#package : 'Announcements-Core-Tests',

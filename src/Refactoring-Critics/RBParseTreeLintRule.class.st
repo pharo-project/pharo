@@ -5,7 +5,7 @@ Class {
 	#name : 'RBParseTreeLintRule',
 	#superclass : 'RBBasicLintRule',
 	#instVars : [
-		'matcher'
+		#matcher
 	],
 	#category : 'Refactoring-Critics',
 	#package : 'Refactoring-Critics'

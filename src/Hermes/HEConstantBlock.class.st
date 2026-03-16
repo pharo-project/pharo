@@ -2,9 +2,9 @@ Class {
 	#name : 'HEConstantBlock',
 	#superclass : 'HEExportedLiteral',
 	#instVars : [
-		'literal',
-		'numArgs',
-		'compiledBlock'
+		#literal,
+		#numArgs,
+		#compiledBlock
 	],
 	#category : 'Hermes-Model',
 	#package : 'Hermes',

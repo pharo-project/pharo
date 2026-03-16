@@ -2,10 +2,10 @@ Class {
 	#name : 'RBInlineTemporaryTransformation',
 	#superclass : 'RBCompositeMethodTransformation',
 	#instVars : [
-		'sourceInterval',
-		'sourceTree',
-		'assignmentNode',
-		'definingNode'
+		#sourceInterval,
+		#sourceTree,
+		#assignmentNode,
+		#definingNode
 	],
 	#category : 'Refactoring-Transformations-Model-Migrated-Unused',
 	#package : 'Refactoring-Transformations',

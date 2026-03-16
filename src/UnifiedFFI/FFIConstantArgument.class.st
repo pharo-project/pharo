@@ -9,7 +9,7 @@ Class {
 	#name : 'FFIConstantArgument',
 	#superclass : 'FFIFunctionArgument',
 	#instVars : [
-		'value'
+		#value
 	],
 	#category : 'UnifiedFFI-Arguments',
 	#package : 'UnifiedFFI',
@@ -59,12 +59,12 @@ FFIConstantArgument >> initialize [
 { #category : 'resolving' }
 FFIConstantArgument >> resolveUsing: aResolver [
 
-	value = false ifTrue: [
+	value sameContents: false ifTrue: [
 		loader := FFILiteralArgument value: 0 type: (aResolver resolveType: #bool).
 		resolvedType := type resolveUsing: aResolver forArgument: self.
 		resolvedType loader: loader.
 		^ self ].
-	value = true ifTrue: [
+	value sameContents: true ifTrue: [
 		loader := FFILiteralArgument value: 1 type: (aResolver resolveType: #bool).
 		resolvedType := type resolveUsing: aResolver forArgument: self.
 		resolvedType loader: loader.
@@ -74,7 +74,7 @@ FFIConstantArgument >> resolveUsing: aResolver [
 		resolvedType := type resolveUsing: aResolver forArgument: self.
 		resolvedType loader: loader.
 		^ self ].
-	value == #self ifTrue: [
+	value sameContents: #self ifTrue: [
 		loader := resolvedType := type resolveUsing: aResolver forArgument: self.
 		loader loader: FFISelfArgument new.
 		^ self ].

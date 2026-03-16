@@ -76,7 +76,7 @@ TDictionaryAssociationAccessTest >> testAssociationAtIfPresent [
 		assert: result isArray;
 		assert: result size = 2;
 		assert: result first = #present;
-		assert: result second key = keyIn;
+		assert: result second key sameContents: keyIn;
 		assert: result second value = (collection at: keyIn).
 
 	"test that cull: is used to support zero-arg blocks"

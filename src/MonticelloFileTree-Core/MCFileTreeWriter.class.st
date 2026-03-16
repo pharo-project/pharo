@@ -5,9 +5,9 @@ Class {
 	#name : 'MCFileTreeWriter',
 	#superclass : 'MCMczWriter',
 	#instVars : [
-		'directory',
-		'packageFileDirectory',
-		'cachedPackageFileDirectoryEntries'
+		#directory,
+		#packageFileDirectory,
+		#cachedPackageFileDirectoryEntries
 	],
 	#category : 'MonticelloFileTree-Core',
 	#package : 'MonticelloFileTree-Core'

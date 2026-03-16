@@ -5,7 +5,7 @@ Class {
 	#name : 'RBRefactoryProtocolChange',
 	#superclass : 'RBRefactoryClassChange',
 	#instVars : [
-		'protocol'
+		#protocol
 	],
 	#category : 'Refactoring-Changes',
 	#package : 'Refactoring-Changes'

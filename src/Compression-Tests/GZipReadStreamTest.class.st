@@ -5,7 +5,7 @@ Class {
 	#name : 'GZipReadStreamTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'filesystem'
+		#filesystem
 	],
 	#category : 'Compression-Tests-Streams',
 	#package : 'Compression-Tests',

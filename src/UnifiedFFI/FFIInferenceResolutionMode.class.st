@@ -33,7 +33,7 @@ FFIInferenceResolutionMode >> resolveUndeclaredTypeForArgument: aFFIValueArgumen
 		ifTrue: [ ^ (aFFIValueArgument value >=0
 			ifTrue: [ aResolver resolveType: #uint32 ]
 			ifFalse: [ aResolver resolveType: #int32 ]) ].
-	(aFFIValueArgument value == #self) ifTrue: [
+	(aFFIValueArgument value sameContents: #self) ifTrue: [
 		^ (aResolver requestor asExternalTypeOn: aResolver)
 			prepareAsSelfFromCalloutDeclaration ].
 

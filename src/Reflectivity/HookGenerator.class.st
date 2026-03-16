@@ -8,10 +8,10 @@ Class {
 	#name : 'HookGenerator',
 	#superclass : 'Object',
 	#instVars : [
-		'entity',
-		'node',
-		'links',
-		'plugins'
+		#entity,
+		#node,
+		#links,
+		#plugins
 	],
 	#category : 'Reflectivity-Core',
 	#package : 'Reflectivity',

@@ -5,7 +5,7 @@ Class {
 	#name : 'AlphaBlendingCanvas',
 	#superclass : 'ColorMappingCanvas',
 	#instVars : [
-		'alpha'
+		#alpha
 	],
 	#category : 'Graphics-Canvas-Canvases',
 	#package : 'Graphics-Canvas',

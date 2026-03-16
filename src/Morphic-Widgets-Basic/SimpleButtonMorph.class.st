@@ -35,12 +35,12 @@ Class {
 	#traits : 'TAbleToRotate',
 	#classTraits : 'TAbleToRotate classTrait',
 	#instVars : [
-		'target',
-		'actionSelector',
-		'arguments',
-		'actWhen',
-		'oldColor',
-		'label'
+		#target,
+		#actionSelector,
+		#arguments,
+		#actWhen,
+		#oldColor,
+		#label
 	],
 	#category : 'Morphic-Widgets-Basic-Buttons',
 	#package : 'Morphic-Widgets-Basic',

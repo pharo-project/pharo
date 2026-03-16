@@ -5,9 +5,9 @@ Class {
 	#name : 'DuplicatedSlotName',
 	#superclass : 'Error',
 	#instVars : [
-		'newSlot',
-		'oldSlot',
-		'host'
+		#newSlot,
+		#oldSlot,
+		#host
 	],
 	#category : 'Kernel-CodeModel-Exceptions',
 	#package : 'Kernel-CodeModel',

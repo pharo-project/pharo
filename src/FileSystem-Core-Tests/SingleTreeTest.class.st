@@ -5,7 +5,7 @@ Class {
 	#name : 'SingleTreeTest',
 	#superclass : 'FileSystemTreeTest',
 	#instVars : [
-		'filesystem'
+		#filesystem
 	],
 	#category : 'FileSystem-Core-Tests-Base',
 	#package : 'FileSystem-Core-Tests',

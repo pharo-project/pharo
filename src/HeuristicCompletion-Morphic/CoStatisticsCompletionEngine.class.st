@@ -5,7 +5,7 @@ Class {
 	#name : 'CoStatisticsCompletionEngine',
 	#superclass : 'CoCompletionEngine',
 	#instVars : [
-		'statistics'
+		#statistics
 	],
 	#category : 'HeuristicCompletion-Morphic-Statistics',
 	#package : 'HeuristicCompletion-Morphic',

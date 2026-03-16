@@ -2,14 +2,14 @@ Class {
 	#name : 'PBBootstrap',
 	#superclass : 'Object',
 	#instVars : [
-		'architecture',
-		'imageReference',
-		'buildNumber',
-		'originRepository',
-		'ringEnvironment',
-		'versionInfo',
-		'repositoryLocation',
-		'logger'
+		#architecture,
+		#imageReference,
+		#buildNumber,
+		#originRepository,
+		#ringEnvironment,
+		#versionInfo,
+		#repositoryLocation,
+		#logger
 	],
 	#category : 'PharoBootstrap',
 	#package : 'PharoBootstrap'
@@ -76,7 +76,7 @@ PBBootstrap class >> new [
 PBBootstrap class >> repositoryLocation [
 	"Returns the location of the repository that we want to bootstrap, which is usually the working directory. Can be overridden if BOOTSTRAP_REPOSITORY is specified"
 	^ (Smalltalk os environment
-		at: 'BOOTSTRAP_REPOSITORY'
+		at: #'BOOTSTRAP_REPOSITORY'
 		ifAbsent: [ '.' ]) asFileReference
 ]
 
@@ -113,7 +113,7 @@ PBBootstrap >> bootstrap [
 { #category : 'accessing' }
 PBBootstrap >> bootstrapCacheDirectory [
 
-	^ (Smalltalk os environment at: 'BOOTSTRAP_CACHE' ifAbsent: ['bootstrap-cache']) asFileReference ensureCreateDirectory
+	^ (Smalltalk os environment at: #'BOOTSTRAP_CACHE' ifAbsent: ['bootstrap-cache']) asFileReference ensureCreateDirectory
 ]
 
 { #category : 'accessing' }
@@ -325,7 +325,7 @@ PBBootstrap >> monticelloNetworkPackageNames [
 		 'Network-MIME'
 		 'Network-Protocols'
 
-		 'MonticelloRemoteRepositories'
+		 MonticelloRemoteRepositories
 
 		 'Zinc-HTTP'
 		 'Zodiac-Core')
@@ -334,7 +334,7 @@ PBBootstrap >> monticelloNetworkPackageNames [
 { #category : 'package-names' }
 PBBootstrap >> monticelloPackageNames [
 
-	^ #('System-Model' 'Ring-OldChunkImporter' 'Zinc-Resource-Meta-Core' 'System-Changes' 'Ring-Definitions-Core' 'Jobs' 'Compression' 'Monticello-Model' 'Monticello' 'Ring-Definitions-Monticello' )
+	^ #('System-Model' 'Ring-OldChunkImporter' 'Zinc-Resource-Meta-Core' 'System-Changes' 'Ring-Definitions-Core' Jobs Compression 'Monticello-Model' Monticello 'Ring-Definitions-Monticello' )
 ]
 
 { #category : 'accessing' }

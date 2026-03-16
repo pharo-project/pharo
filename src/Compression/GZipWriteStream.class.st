@@ -5,7 +5,7 @@ Class {
 	#name : 'GZipWriteStream',
 	#superclass : 'ZipWriteStream',
 	#pools : [
-		'GZipConstants'
+		#GZipConstants
 	],
 	#category : 'Compression-Streams',
 	#package : 'Compression',

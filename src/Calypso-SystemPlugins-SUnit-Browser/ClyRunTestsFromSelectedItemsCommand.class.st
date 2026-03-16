@@ -12,7 +12,7 @@ Class {
 	#name : 'ClyRunTestsFromSelectedItemsCommand',
 	#superclass : 'ClyTestCommand',
 	#instVars : [
-		'testItems'
+		#testItems
 	],
 	#category : 'Calypso-SystemPlugins-SUnit-Browser-Commands',
 	#package : 'Calypso-SystemPlugins-SUnit-Browser',

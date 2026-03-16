@@ -12,7 +12,7 @@ Class {
 	#name : 'OSPlatform',
 	#superclass : 'Object',
 	#classVars : [
-		'Current'
+		#Current
 	],
 	#category : 'System-Platforms-Base',
 	#package : 'System-Platforms',

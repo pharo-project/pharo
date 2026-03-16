@@ -5,7 +5,7 @@ Class {
 	#name : 'FillBorderStyle',
 	#superclass : 'SimpleBorderStyle',
 	#instVars : [
-		'fillStyle'
+		#fillStyle
 	],
 	#category : 'Morphic-Base-Borders',
 	#package : 'Morphic-Base',

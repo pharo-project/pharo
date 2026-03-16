@@ -2,10 +2,10 @@ Class {
 	#name : 'BaselineOfUnifiedFFI',
 	#superclass : 'BaselineOf',
 	#instVars : [
-		'initializersEnabled'
+		#initializersEnabled
 	],
 	#classVars : [
-		'Initialized'
+		#Initialized
 	],
 	#category : 'BaselineOfUnifiedFFI',
 	#package : 'BaselineOfUnifiedFFI'
@@ -21,14 +21,14 @@ BaselineOfUnifiedFFI >> baseline: spec [
 		spec 
 			"unified ffi"
 			package: 'UnifiedFFI';
-			package: 'UnifiedFFI-Tests' with: [ spec requires: #('UnifiedFFI') ];
-			package: 'UnifiedFFI-Legacy' with: [ spec requires: #('UnifiedFFI') ];
-			package: 'System-OSEnvironments' with: [ spec requires: #('UnifiedFFI') ].
+			package: 'UnifiedFFI-Tests' with: [ spec requires: #(UnifiedFFI) ];
+			package: 'UnifiedFFI-Legacy' with: [ spec requires: #(UnifiedFFI) ];
+			package: 'System-OSEnvironments' with: [ spec requires: #(UnifiedFFI) ].
 			
 		spec 
-			group: 'default' with: #('core' 'legacy');
-			group: 'minimal' with: #('UnifiedFFI' 'System-OSEnvironments');
-			group: 'core' with: #('minimal' 'UnifiedFFI-Tests');
+			group: 'default' with: #(core legacy);
+			group: 'minimal' with: #(UnifiedFFI 'System-OSEnvironments');
+			group: 'core' with: #(minimal 'UnifiedFFI-Tests');
 			group: 'legacy' with: #('UnifiedFFI-Legacy') ]
 ]
 

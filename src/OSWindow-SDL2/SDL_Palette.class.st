@@ -5,10 +5,10 @@ Class {
 	#name : 'SDL_Palette',
 	#superclass : 'SDL2Structure',
 	#classVars : [
-		'OFFSET_COLORS',
-		'OFFSET_NCOLORS',
-		'OFFSET_REFCOUNT',
-		'OFFSET_VERSION'
+		#OFFSET_COLORS,
+		#OFFSET_NCOLORS,
+		#OFFSET_REFCOUNT,
+		#OFFSET_VERSION
 	],
 	#category : 'OSWindow-SDL2-Bindings',
 	#package : 'OSWindow-SDL2',

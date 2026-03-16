@@ -5,7 +5,7 @@ Class {
 	#name : 'ClyRequestProtocolForEditorCommand',
 	#superclass : 'ClyMethodEditorCommand',
 	#instVars : [
-		'menuItemName'
+		#menuItemName
 	],
 	#category : 'Calypso-SystemTools-Core-Editors-Methods',
 	#package : 'Calypso-SystemTools-Core',

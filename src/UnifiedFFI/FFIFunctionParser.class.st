@@ -5,9 +5,9 @@ Class {
 	#name : 'FFIFunctionParser',
 	#superclass : 'Object',
 	#instVars : [
-		'requestor',
-		'stream',
-		'fnSpec'
+		#requestor,
+		#stream,
+		#fnSpec
 	],
 	#category : 'UnifiedFFI-Base',
 	#package : 'UnifiedFFI',
@@ -121,7 +121,7 @@ FFIFunctionParser >> parseArgument [
 			argName := argName.
 			indirectIndex := self parseInt ].
 	"for sole 'void' fake argument "
-	(typeAndPtrArity = #('void' 0) and: [ argName isNil ])
+	(typeAndPtrArity = #(void 0) and: [ argName isNil ])
 		ifTrue: [ ^ nil ].
 	argument := self
 		argName: argName

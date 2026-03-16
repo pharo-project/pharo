@@ -25,10 +25,10 @@ Class {
 	#name : 'CalendarDayMorph',
 	#superclass : 'Object',
 	#instVars : [
-		'date',
-		'bounds',
-		'owner',
-		'highlighted'
+		#date,
+		#bounds,
+		#owner,
+		#highlighted
 	],
 	#category : 'Morphic-Widgets-Extra',
 	#package : 'Morphic-Widgets-Extra'

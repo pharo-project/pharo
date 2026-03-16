@@ -5,9 +5,9 @@ Class {
 	#name : 'ReflectivityControlTest',
 	#superclass : 'ReflectivityTestCase',
 	#instVars : [
-		'tag',
-		'link',
-		'link2'
+		#tag,
+		#link,
+		#link2
 	],
 	#category : 'Reflectivity-Tests-Base',
 	#package : 'Reflectivity-Tests',

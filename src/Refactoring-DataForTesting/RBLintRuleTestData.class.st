@@ -6,15 +6,15 @@ Class {
 	#name : 'RBLintRuleTestData',
 	#superclass : 'Object',
 	#instVars : [
-		'name',
-		'foo1'
+		#name,
+		#foo1
 	],
 	#classVars : [
-		'Foo1',
-		'Name1'
+		#Foo1,
+		#Name1
 	],
 	#pools : [
-		'TextConstants'
+		#TextConstants
 	],
 	#category : 'Refactoring-DataForTesting-LittleHierarchy',
 	#package : 'Refactoring-DataForTesting',

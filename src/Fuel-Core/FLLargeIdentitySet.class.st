@@ -38,8 +38,8 @@ Class {
 	#name : 'FLLargeIdentitySet',
 	#superclass : 'FLLargeIdentityHashedCollection',
 	#instVars : [
-		'array',
-		'includesNil'
+		#array,
+		#includesNil
 	],
 	#category : 'Fuel-Core-Collections',
 	#package : 'Fuel-Core',

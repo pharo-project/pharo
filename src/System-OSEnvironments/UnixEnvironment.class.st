@@ -10,9 +10,9 @@ The API accepts both encoding objects and symbols which are used to lookup encod
 
 For example, the following usages are valid:
 
-OSEnvironment current at: 'HOME' encoding: #utf8.
-OSEnvironment current at: 'HOME' encoding: #utf8 asZnCharacterEncoder.
-OSEnvironment current at: 'HOME' encoding: ZnCharacterEncoder utf8.
+OSEnvironment current at: #'HOME' encoding: #utf8.
+OSEnvironment current at: #'HOME' encoding: #utf8 asZnCharacterEncoder.
+OSEnvironment current at: #'HOME' encoding: ZnCharacterEncoder utf8.
 
 # Implementation Details
 

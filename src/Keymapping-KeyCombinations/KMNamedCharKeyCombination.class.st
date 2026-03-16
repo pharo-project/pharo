@@ -13,7 +13,7 @@ Class {
 	#name : 'KMNamedCharKeyCombination',
 	#superclass : 'KMSingleKeyCombination',
 	#instVars : [
-		'name'
+		#name
 	],
 	#category : 'Keymapping-KeyCombinations',
 	#package : 'Keymapping-KeyCombinations'

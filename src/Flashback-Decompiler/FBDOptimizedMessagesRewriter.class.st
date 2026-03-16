@@ -202,7 +202,7 @@ FBDOptimizedMessagesRewriter >> hasCorrectIncrInstruction: msgNode startTemp: st
 FBDOptimizedMessagesRewriter >> isAnd: msgNode [
 	| stmts |
 	stmts := msgNode arguments second body statements.
-	^ stmts size = 1 and: [ stmts first value = false ]
+	^ stmts size = 1 and: [ stmts first value sameContents: false ]
 ]
 
 { #category : 'testing' }
@@ -245,7 +245,7 @@ FBDOptimizedMessagesRewriter >> isLastStatementReturnSelf: seq [
 FBDOptimizedMessagesRewriter >> isOr: msgNode [
 	| stmts |
 	stmts := msgNode arguments first body statements.
-	^ stmts size = 1 and: [ stmts first value = true ]
+	^ stmts size = 1 and: [ stmts first value sameContents: true ]
 ]
 
 { #category : 'testing' }

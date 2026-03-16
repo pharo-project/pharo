@@ -5,7 +5,7 @@ Class {
 	#name : 'TKTTimeoutableTaskExecution',
 	#superclass : 'TKTTaskExecution',
 	#instVars : [
-		'timeout'
+		#timeout
 	],
 	#category : 'TaskIt-Kernel',
 	#package : 'TaskIt',

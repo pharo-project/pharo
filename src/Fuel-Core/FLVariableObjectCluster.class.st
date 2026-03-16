@@ -5,7 +5,7 @@ Class {
 	#name : 'FLVariableObjectCluster',
 	#superclass : 'FLPointerObjectCluster',
 	#instVars : [
-		'variableReferences'
+		#variableReferences
 	],
 	#category : 'Fuel-Core-Clusters',
 	#package : 'Fuel-Core',

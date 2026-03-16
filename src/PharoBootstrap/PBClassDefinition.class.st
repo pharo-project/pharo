@@ -2,8 +2,8 @@ Class {
 	#name : 'PBClassDefinition',
 	#superclass : 'Object',
 	#instVars : [
-		'classDefinition',
-		'bootstrapEnvironment'
+		#classDefinition,
+		#bootstrapEnvironment
 	],
 	#category : 'PharoBootstrap',
 	#package : 'PharoBootstrap'
@@ -61,7 +61,7 @@ PBClassDefinition >> innerBindingOf: aString [
 { #category : 'lookup' }
 PBClassDefinition >> lookupVar: aName declare: aBoolean [
 
-	self allSlots detect: [ :e | e name = aName ] ifFound: [ :e | ^ e ].
+	self allSlots detect: [ :e | e name sameContents: aName ] ifFound: [ :e | ^ e ].
 
 	Smalltalk globals reservedVariables at: aName ifPresent: [ :e | ^e ].
 	

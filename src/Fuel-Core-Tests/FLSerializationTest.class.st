@@ -5,11 +5,11 @@ Class {
 	#name : 'FLSerializationTest',
 	#superclass : 'AbstractEnvironmentTestCase',
 	#instVars : [
-		'streamStrategy',
-		'classFactory',
-		'materializer',
-		'serializer',
-		'addedGlobals'
+		#streamStrategy,
+		#classFactory,
+		#materializer,
+		#serializer,
+		#addedGlobals
 	],
 	#category : 'Fuel-Core-Tests-Base',
 	#package : 'Fuel-Core-Tests',
@@ -18,7 +18,7 @@ Class {
 
 { #category : 'accessing' }
 FLSerializationTest class >> packageNamesUnderTest [
-	^ #('Fuel')
+	^ #(Fuel)
 ]
 
 { #category : 'accessing' }

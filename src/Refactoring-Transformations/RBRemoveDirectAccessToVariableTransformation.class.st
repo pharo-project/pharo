@@ -20,9 +20,9 @@ Class {
 	#name : 'RBRemoveDirectAccessToVariableTransformation',
 	#superclass : 'RBVariableTransformation',
 	#instVars : [
-		'getterMethod',
-		'setterMethod',
-		'receiver'
+		#getterMethod,
+		#setterMethod,
+		#receiver
 	],
 	#category : 'Refactoring-Transformations-Model-Unused',
 	#package : 'Refactoring-Transformations',

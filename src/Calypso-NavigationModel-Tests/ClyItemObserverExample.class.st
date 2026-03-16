@@ -2,7 +2,7 @@ Class {
 	#name : 'ClyItemObserverExample',
 	#superclass : 'Object',
 	#instVars : [
-		'wasNotified'
+		#wasNotified
 	],
 	#category : 'Calypso-NavigationModel-Tests',
 	#package : 'Calypso-NavigationModel-Tests'

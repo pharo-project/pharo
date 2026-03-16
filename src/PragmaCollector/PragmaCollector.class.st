@@ -52,10 +52,10 @@ Class {
 	#name : 'PragmaCollector',
 	#superclass : 'Model',
 	#instVars : [
-		'collected',
-		'filter',
-		'announcing',
-		'selectors'
+		#collected,
+		#filter,
+		#announcing,
+		#selectors
 	],
 	#category : 'PragmaCollector-Base',
 	#package : 'PragmaCollector',

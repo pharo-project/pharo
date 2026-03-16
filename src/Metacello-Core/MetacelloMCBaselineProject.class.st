@@ -14,7 +14,7 @@ baseline: spec
         yourself.
     spec
         group: 'Core' with: #('External-Core');
-        group: 'default' with: #('Core');
+        group: 'default' with: #(Core);
         group: 'Tests' with: #('External-Tests');
         yourself
 ```
@@ -25,7 +25,7 @@ Class {
 	#name : 'MetacelloMCBaselineProject',
 	#superclass : 'MetacelloProject',
 	#instVars : [
-		'repositoryDescription'
+		#repositoryDescription
 	],
 	#category : 'Metacello-Core-Model',
 	#package : 'Metacello-Core',

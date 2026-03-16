@@ -2,8 +2,8 @@ Class {
 	#name : 'ClassUsedInInstructionStreamTest',
 	#superclass : 'SuperClassUsedInInstructionStreamTest',
 	#instVars : [
-		'expectedValue',
-		'aProcess'
+		#expectedValue,
+		#aProcess
 	],
 	#category : 'Kernel-Extended-Tests-Methods',
 	#package : 'Kernel-Extended-Tests',

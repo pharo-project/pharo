@@ -5,7 +5,7 @@ Class {
 	#name : 'AthensBalloonSolidColorPaint',
 	#superclass : 'AthensBalloonPaint',
 	#instVars : [
-		'color'
+		#color
 	],
 	#category : 'Athens-Balloon-Paint',
 	#package : 'Athens-Balloon',

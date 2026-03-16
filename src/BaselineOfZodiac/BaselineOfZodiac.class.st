@@ -17,5 +17,5 @@ BaselineOfZodiac >> baseline: spec [
 		spec 
 			group: 'Core' with: #('Zodiac-Extra');
 			group: 'Tests' with: #('Zodiac-Tests' 'Zinc-Zodiac-Tests');
-			group: 'default' with: #('Core' 'Tests') ]
+			group: 'default' with: #(Core Tests) ]
 ]

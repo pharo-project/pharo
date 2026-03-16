@@ -5,7 +5,7 @@ Class {
 	#name : 'EpLogBrowserOperation',
 	#superclass : 'EpEvent',
 	#instVars : [
-		'entryReferences'
+		#entryReferences
 	],
 	#category : 'Epicea-Model',
 	#package : 'Epicea',

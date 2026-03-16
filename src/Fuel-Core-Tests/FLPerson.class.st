@@ -5,7 +5,7 @@ Class {
 	#name : 'FLPerson',
 	#superclass : 'Object',
 	#instVars : [
-		'id'
+		#id
 	],
 	#category : 'Fuel-Core-Tests-Support-Mocks',
 	#package : 'Fuel-Core-Tests',

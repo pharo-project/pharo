@@ -8,8 +8,8 @@ Class {
 	#name : 'SDLAbstractPlatform',
 	#superclass : 'Object',
 	#pools : [
-		'SDL2Constants',
-		'SDL2ConstantsHint'
+		#SDL2Constants,
+		#SDL2ConstantsHint
 	],
 	#category : 'OSWindow-SDL2-Platforms',
 	#package : 'OSWindow-SDL2',

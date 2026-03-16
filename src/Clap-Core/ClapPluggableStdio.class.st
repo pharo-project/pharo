@@ -5,9 +5,9 @@ Class {
 	#name : 'ClapPluggableStdio',
 	#superclass : 'Object',
 	#instVars : [
-		'in',
-		'out',
-		'err'
+		#in,
+		#out,
+		#err
 	],
 	#category : 'Clap-Core-Activation',
 	#package : 'Clap-Core',

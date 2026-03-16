@@ -39,19 +39,19 @@ Class {
 	#name : 'ExternalType',
 	#superclass : 'Object',
 	#instVars : [
-		'compiledSpec',
-		'referentClass',
-		'referencedType',
-		'pointerSize'
+		#compiledSpec,
+		#referentClass,
+		#referencedType,
+		#pointerSize
 	],
 	#classVars : [
-		'AtomicSelectors',
-		'AtomicTypeNames',
-		'AtomicTypes',
-		'StructTypes'
+		#AtomicSelectors,
+		#AtomicTypeNames,
+		#AtomicTypes,
+		#StructTypes
 	],
 	#pools : [
-		'FFIConstants'
+		#FFIConstants
 	],
 	#category : 'FFI-Kernel',
 	#package : 'FFI-Kernel'
@@ -64,7 +64,7 @@ ExternalType class >> atomicTypeNamed: aString [
 
 { #category : 'type constants' }
 ExternalType class >> bool [
-	^AtomicTypes at: 'bool'
+	^AtomicTypes at: #'bool'
 ]
 
 { #category : 'type constants' }
@@ -91,12 +91,12 @@ ExternalType class >> cleanupUnusedTypes [
 
 { #category : 'type constants' }
 ExternalType class >> double [
-	^AtomicTypes at: 'double'
+	^AtomicTypes at: #'double'
 ]
 
 { #category : 'type constants' }
 ExternalType class >> float [
-	^AtomicTypes at: 'float'
+	^AtomicTypes at: #'float'
 ]
 
 { #category : 'private' }
@@ -117,7 +117,7 @@ ExternalType class >> initializeAtomicTypes [
 	| atomicType byteSize type typeName |
 	#(
 		"name		atomic id		byte size"
-		('void' 		0 				0)
+		(void 		0 				0)
 		('bool' 		1 				1)
 		('byte' 		2 				1)
 		('sbyte' 	3 				1)
@@ -311,32 +311,32 @@ ExternalType class >> short [
 
 { #category : 'type constants' }
 ExternalType class >> signedByte [
-	^AtomicTypes at: 'sbyte'
+	^AtomicTypes at: #'sbyte'
 ]
 
 { #category : 'type constants' }
 ExternalType class >> signedChar [
-	^AtomicTypes at: 'schar'
+	^AtomicTypes at: #'schar'
 ]
 
 { #category : 'type constants' }
 ExternalType class >> signedLong [
-	^AtomicTypes at: 'long'
+	^AtomicTypes at: #'long'
 ]
 
 { #category : 'type constants' }
 ExternalType class >> signedLongLong [
-	^AtomicTypes at: 'longlong'
+	^AtomicTypes at: #'longlong'
 ]
 
 { #category : 'type constants' }
 ExternalType class >> signedShort [
-	^AtomicTypes at: 'short'
+	^AtomicTypes at: #'short'
 ]
 
 { #category : 'type constants' }
 ExternalType class >> string [
-	^(AtomicTypes at: 'char') asPointerType
+	^(AtomicTypes at: #'char') asPointerType
 ]
 
 { #category : 'private' }
@@ -358,27 +358,27 @@ ExternalType class >> ulong [
 
 { #category : 'type constants' }
 ExternalType class >> unsignedByte [
-	^AtomicTypes at: 'byte'
+	^AtomicTypes at: #'byte'
 ]
 
 { #category : 'type constants' }
 ExternalType class >> unsignedChar [
-	^AtomicTypes at: 'char'
+	^AtomicTypes at: #'char'
 ]
 
 { #category : 'type constants' }
 ExternalType class >> unsignedLong [
-	^AtomicTypes at: 'ulong'
+	^AtomicTypes at: #'ulong'
 ]
 
 { #category : 'type constants' }
 ExternalType class >> unsignedLongLong [
-	^AtomicTypes at: 'ulonglong'
+	^AtomicTypes at: #'ulonglong'
 ]
 
 { #category : 'type constants' }
 ExternalType class >> unsignedShort [
-	^AtomicTypes at: 'ushort'
+	^AtomicTypes at: #'ushort'
 ]
 
 { #category : 'type constants' }
@@ -388,7 +388,7 @@ ExternalType class >> ushort [
 
 { #category : 'type constants' }
 ExternalType class >> void [
-	^AtomicTypes at: 'void'
+	^AtomicTypes at: #'void'
 ]
 
 { #category : 'converting' }
@@ -544,10 +544,10 @@ ExternalType >> pointerSize: anInteger [
 { #category : 'printing' }
 ExternalType >> printAtomicType: spec on: aStream [
 	self assert: (spec anyMask: FFIFlagAtomic).
-	aStream nextPutAll: (#(	'void' 'unsigned char' 'unsigned char' 'signed char'
-							'unsigned short' 'short' 'unsigned long' 'long'
-							'unsigned long long' 'long long' 'char' 'signed char'
-							'float' 'double') at: ((spec bitAnd: FFIAtomicTypeMask) bitShift: FFIAtomicTypeShift negated) + 1).
+	aStream nextPutAll: (#(	void 'unsigned char' 'unsigned char' 'signed char'
+							'unsigned short' short 'unsigned long' long
+							'unsigned long long' 'long long' char 'signed char'
+							float double) at: ((spec bitAnd: FFIAtomicTypeMask) bitShift: FFIAtomicTypeShift negated) + 1).
 	aStream space.
 	(spec anyMask: FFIFlagPointer) ifTrue:
 		[aStream nextPut: $*]

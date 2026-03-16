@@ -9,7 +9,7 @@ Class {
 	#name : 'ClySyntaxHelpMorph',
 	#superclass : 'ClyStatusBarItemMorph',
 	#instVars : [
-		'button'
+		#button
 	],
 	#category : 'BeautifulComments-Core',
 	#package : 'BeautifulComments',

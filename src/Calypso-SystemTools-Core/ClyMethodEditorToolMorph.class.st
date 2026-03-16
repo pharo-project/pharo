@@ -26,10 +26,10 @@ Class {
 	#name : 'ClyMethodEditorToolMorph',
 	#superclass : 'ClyTextEditorToolMorph',
 	#instVars : [
-		'ast',
-		'methodProtocol',
-		'extendingPackage',
-		'targetClasses'
+		#ast,
+		#methodProtocol,
+		#extendingPackage,
+		#targetClasses
 	],
 	#category : 'Calypso-SystemTools-Core-Editors-Methods',
 	#package : 'Calypso-SystemTools-Core',

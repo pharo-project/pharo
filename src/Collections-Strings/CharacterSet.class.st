@@ -11,10 +11,10 @@ Class {
 	#name : 'CharacterSet',
 	#superclass : 'Collection',
 	#instVars : [
-		'map'
+		#map
 	],
 	#classVars : [
-		'CrLf'
+		#CrLf
 	],
 	#category : 'Collections-Strings',
 	#package : 'Collections-Strings'

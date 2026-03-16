@@ -11,7 +11,7 @@ Class {
 	#name : 'DTTestsProfilingResult',
 	#superclass : 'DTPluginResult',
 	#instVars : [
-		'testsResult'
+		#testsResult
 	],
 	#category : 'DrTests-TestsProfiling',
 	#package : 'DrTests-TestsProfiling'

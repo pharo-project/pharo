@@ -6,7 +6,7 @@ Class {
 	#name : 'VileFinalizer',
 	#superclass : 'Object',
 	#instVars : [
-		'weakRegistry'
+		#weakRegistry
 	],
 	#category : 'System-Finalization-Tests',
 	#package : 'System-Finalization-Tests'

@@ -2,7 +2,7 @@ Class {
 	#name : 'MetacelloMonticelloLoader',
 	#superclass : 'Object',
 	#instVars : [
-		'projectCache'
+		#projectCache
 	],
 	#category : 'Metacello-Core-Gofer',
 	#package : 'Metacello-Core',

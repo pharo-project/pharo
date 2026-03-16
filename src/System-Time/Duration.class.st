@@ -5,11 +5,11 @@ Class {
 	#name : 'Duration',
 	#superclass : 'Magnitude',
 	#instVars : [
-		'nanos',
-		'seconds'
+		#nanos,
+		#seconds
 	],
 	#pools : [
-		'ChronologyConstants'
+		#ChronologyConstants
 	],
 	#category : 'System-Time',
 	#package : 'System-Time'
@@ -359,7 +359,7 @@ Duration >> printHumanReadableOn: stream [
 		ifTrue: [
 			stream << '- '.
 			^ self abs printHumanReadableOn: stream ].
-	#( (days 'day')
+	#( (days day)
 		(hours 'hour')
 		(minutes 'minute')
 		(seconds 'second')

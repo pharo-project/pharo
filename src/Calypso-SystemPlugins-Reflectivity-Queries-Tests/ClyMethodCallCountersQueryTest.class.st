@@ -2,7 +2,7 @@ Class {
 	#name : 'ClyMethodCallCountersQueryTest',
 	#superclass : 'ClyMethodQueryTest',
 	#instVars : [
-		'installedCounters'
+		#installedCounters
 	],
 	#category : 'Calypso-SystemPlugins-Reflectivity-Queries-Tests-ExecutionCounters',
 	#package : 'Calypso-SystemPlugins-Reflectivity-Queries-Tests',

@@ -6,7 +6,7 @@ Class {
 	#name : 'CoBeginsWithFilter',
 	#superclass : 'CoFilter',
 	#instVars : [
-		'completionString'
+		#completionString
 	],
 	#category : 'HeuristicCompletion-Model-Core',
 	#package : 'HeuristicCompletion-Model',

@@ -5,7 +5,7 @@ Class {
 	#name : 'CNSelectorExtractorTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'selectorExtractor'
+		#selectorExtractor
 	],
 	#category : 'Tools-CodeNavigation-Tests',
 	#package : 'Tools-CodeNavigation-Tests'

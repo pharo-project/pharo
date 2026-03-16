@@ -6,14 +6,14 @@ Class {
 	#name : 'CoTypeInferencer',
 	#superclass : 'RBProgramNodeVisitor',
 	#instVars : [
-		'returnType',
-		'variables',
-		'level',
-		'arguments',
-		'method',
-		'temporaryVariables',
-		'receiverClass',
-		'argumentVariables'
+		#returnType,
+		#variables,
+		#level,
+		#arguments,
+		#method,
+		#temporaryVariables,
+		#receiverClass,
+		#argumentVariables
 	],
 	#category : 'HeuristicCompletion-Model-InitializeInferenceHeuristic',
 	#package : 'HeuristicCompletion-Model',

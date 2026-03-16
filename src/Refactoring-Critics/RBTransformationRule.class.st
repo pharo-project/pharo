@@ -5,12 +5,12 @@ Class {
 	#name : 'RBTransformationRule',
 	#superclass : 'RBLintRule',
 	#instVars : [
-		'rewriteRule',
-		'builder',
-		'class'
+		#rewriteRule,
+		#builder,
+		#class
 	],
 	#classVars : [
-		'RecursiveSelfRule'
+		#RecursiveSelfRule
 	],
 	#category : 'Refactoring-Critics',
 	#package : 'Refactoring-Critics'

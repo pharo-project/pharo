@@ -11,7 +11,7 @@ Class {
 
 { #category : 'accessing' }
 GeneratorTest class >> packageNamesUnderTest [
-	^ #('Generator')
+	^ #(Generator)
 ]
 
 { #category : 'generators' }

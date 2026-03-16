@@ -5,17 +5,17 @@ Class {
 	#name : 'FreeTypeCacheTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'cache',
-		'fullCache',
-		'font1',
-		'font1XGlyph',
-		'font1ZGlyph',
-		'font1YGlyph',
-		'font2',
-		'font3'
+		#cache,
+		#fullCache,
+		#font1,
+		#font1XGlyph,
+		#font1ZGlyph,
+		#font1YGlyph,
+		#font2,
+		#font3
 	],
 	#pools : [
-		'FreeTypeCacheConstants'
+		#FreeTypeCacheConstants
 	],
 	#category : 'FreeType-Tests-Cache',
 	#package : 'FreeType-Tests',

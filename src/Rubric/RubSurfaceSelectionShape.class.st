@@ -2,12 +2,12 @@ Class {
 	#name : 'RubSurfaceSelectionShape',
 	#superclass : 'Object',
 	#instVars : [
-		'color',
-		'borderColor',
-		'borderWidth',
-		'firstIndex',
-		'lastIndex',
-		'vertices'
+		#color,
+		#borderColor,
+		#borderWidth,
+		#firstIndex,
+		#lastIndex,
+		#vertices
 	],
 	#category : 'Rubric-Editing-Core',
 	#package : 'Rubric',

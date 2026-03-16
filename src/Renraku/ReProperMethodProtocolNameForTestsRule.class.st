@@ -12,7 +12,7 @@ Class {
 { #category : 'idioms' }
 ReProperMethodProtocolNameForTestsRule class >> protocolIdiom [
 
-	^self use: 'tests' insteadOf: #('test')
+	^self use: 'tests' insteadOf: #(test)
 ]
 
 { #category : 'running' }

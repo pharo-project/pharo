@@ -2,10 +2,10 @@ Class {
 	#name : 'IncrementalSliderMorph',
 	#superclass : 'ModelMorph',
 	#instVars : [
-		'sliderMorph',
-		'getValueSelector',
-		'setValueSelector',
-		'getEnabledSelector'
+		#sliderMorph,
+		#getValueSelector,
+		#setValueSelector,
+		#getEnabledSelector
 	],
 	#category : 'Morphic-Widgets-Scrolling',
 	#package : 'Morphic-Widgets-Scrolling'

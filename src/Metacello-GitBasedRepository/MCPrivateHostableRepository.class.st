@@ -8,8 +8,8 @@ Class {
 	#name : 'MCPrivateHostableRepository',
 	#superclass : 'MCGitBasedNetworkRepository',
 	#instVars : [
-		'hostname',
-		'sshPort'
+		#hostname,
+		#sshPort
 	],
 	#category : 'Metacello-GitBasedRepository',
 	#package : 'Metacello-GitBasedRepository'

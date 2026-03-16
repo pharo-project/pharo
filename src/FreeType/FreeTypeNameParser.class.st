@@ -5,27 +5,27 @@ Class {
 	#name : 'FreeTypeNameParser',
 	#superclass : 'Object',
 	#instVars : [
-		'combinedName',
-		'familyNameIn',
-		'styleNameIn',
-		'delimiters',
-		'tokens',
-		'extractedSlant',
-		'extractedSlantValue',
-		'extractedUpright',
-		'extractedStretch',
-		'extractedWeight',
-		'italicFlag',
-		'boldFlag',
-		'extractedWeightValue',
-		'extractedStretchValue'
+		#combinedName,
+		#familyNameIn,
+		#styleNameIn,
+		#delimiters,
+		#tokens,
+		#extractedSlant,
+		#extractedSlantValue,
+		#extractedUpright,
+		#extractedStretch,
+		#extractedWeight,
+		#italicFlag,
+		#boldFlag,
+		#extractedWeightValue,
+		#extractedStretchValue
 	],
 	#classInstVars : [
-		'weightNames',
-		'stretchNames',
-		'obliqueNames',
-		'normalNames',
-		'italicNames'
+		#weightNames,
+		#stretchNames,
+		#obliqueNames,
+		#normalNames,
+		#italicNames
 	],
 	#category : 'FreeType-FontManager',
 	#package : 'FreeType',
@@ -49,11 +49,11 @@ FreeTypeNameParser class >> italicNames [
 
 	italicNames ifNotNil:[^italicNames].
 	^ italicNames := #(
-		'ita'
-		'ital'
-		'italic'
-		'cursive'
-		'kursiv')
+		#ita
+		#ital
+		#italic
+		#cursive
+		kursiv)
 ]
 
 { #category : 'known names' }
@@ -66,7 +66,7 @@ FreeTypeNameParser class >> normalNames [
 	"
 
 	normalNames ifNotNil:[^normalNames].
-	^ normalNames := #('Book' 'Normal' 'Regular' 'Roman' 'Upright')
+	^ normalNames := #(Book Normal Regular Roman Upright)
 ]
 
 { #category : 'known names' }
@@ -80,11 +80,11 @@ FreeTypeNameParser class >> obliqueNames [
 
 	obliqueNames ifNotNil:[^obliqueNames].
 	^ obliqueNames := #(
-		'inclined'
-		'oblique'
-		'backslanted'
-		'backslant'
-		'slanted')
+		#inclined
+		#oblique
+		#backslanted
+		#backslant
+		slanted)
 ]
 
 { #category : 'known names' }
@@ -446,7 +446,7 @@ FreeTypeNameParser >> splitBadTokensIn: aString [
 	"split tokens such as BoldOblique, that should be two words"
 	| str |
 	str := aString.
-	#(	('bold' 'oblique') ('bold' 'italic')
+	#(	(bold oblique) ('bold' 'italic')
 	) do:[:pair | | i |
 		(i := str asLowercase findString: pair first, pair second startingAt: 1) > 0
 			ifTrue:[

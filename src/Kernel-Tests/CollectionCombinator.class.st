@@ -8,8 +8,8 @@ To get a first impression, try this with 'inspect it':
     CollectionCombinator new
          forArrays:  (OrderedCollection with: #(#a #b #c)
                                              with: #(1 2 3 4 5)
-                                             with: #('v' 'w' 'x' 'y' 'z')
-                                             with: #('one' 'two' 'three')
+                                             with: #(v w x y z)
+                                             with: #(one two three)
                          )
          processWith: [:item |result addLast: item].
     result
@@ -19,9 +19,9 @@ Class {
 	#name : 'CollectionCombinator',
 	#superclass : 'Object',
 	#instVars : [
-		'resultProcessingBlock',
-		'collectionOfArrays',
-		'buffer'
+		#resultProcessingBlock,
+		#collectionOfArrays,
+		#buffer
 	],
 	#category : 'Kernel-Tests-Methods',
 	#package : 'Kernel-Tests',

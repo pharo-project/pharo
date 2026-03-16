@@ -29,7 +29,7 @@ Class {
 	#name : 'ZnUrlShortenerDelegate',
 	#superclass : 'Object',
 	#classVars : [
-		'Database'
+		#Database
 	],
 	#category : 'Zinc-HTTP-Examples',
 	#package : 'Zinc-HTTP-Examples'
@@ -94,5 +94,5 @@ ZnUrlShortenerDelegate >> welcomeHTML [
 					html
 						str: 'URL'; space;
 						tag: #input attributes: #(type input name url value 'https://pharo.org' size 100); space;
-						tag: #input attributes: #(type submit value 'Shorten') ] ] ]
+						tag: #input attributes: #(type submit value Shorten) ] ] ]
 ]

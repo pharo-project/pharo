@@ -5,7 +5,7 @@ Class {
 	#name : 'EpPackageChange',
 	#superclass : 'EpCodeChange',
 	#instVars : [
-		'packageName'
+		#packageName
 	],
 	#category : 'Epicea-Model',
 	#package : 'Epicea',
@@ -42,7 +42,7 @@ EpPackageChange >> affectedPackageName [
 { #category : 'testing' }
 EpPackageChange >> doesOverride: aCodeChange [
 
-	^ aCodeChange isEpPackageChange and: [ aCodeChange packageName = self packageName ]
+	^ aCodeChange isEpPackageChange and: [ aCodeChange packageName sameContents: self packageName ]
 ]
 
 { #category : 'testing' }

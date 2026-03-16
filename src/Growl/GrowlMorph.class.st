@@ -16,19 +16,19 @@ Class {
 	#name : 'GrowlMorph',
 	#superclass : 'TextMorph',
 	#instVars : [
-		'dismissHandle',
-		'vanishTime',
-		'alpha',
-		'actionBlock',
-		'vanishDelay',
-		'labelAttr',
-		'contentsAttr',
-		'labelColor',
-		'contentsColor'
+		#dismissHandle,
+		#vanishTime,
+		#alpha,
+		#actionBlock,
+		#vanishDelay,
+		#labelAttr,
+		#contentsAttr,
+		#labelColor,
+		#contentsColor
 	],
 	#classVars : [
-		'Position',
-		'Type'
+		#Position,
+		#Type
 	],
 	#category : 'Growl-Base',
 	#package : 'Growl',
@@ -47,7 +47,7 @@ GrowlMorph class >> growlPositionChoices [
 	^#(topRight 'top right'
 		bottomLeft 'bottom left'
 		bottomRight 'bottom right'
-		topLeft 'topLeft') pairsCollect: [:a :b | b -> a]
+		topLeft topLeft) pairsCollect: [:a :b | b -> a]
 ]
 
 { #category : 'settings' }

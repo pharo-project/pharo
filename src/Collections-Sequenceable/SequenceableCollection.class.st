@@ -247,7 +247,7 @@ SequenceableCollection >> at: index incrementBy: value [
 SequenceableCollection >> atAll: indexArray [
 	"Answer a new collection like the receiver which contains all elements
 	of the receiver at the indices of indexArray."
-	"(#('one' 'two' 'three' 'four') atAll: #(3 2 4)) >>> #('three' 'two' 'four')"
+	"(#(one two three four) atAll: #(3 2 4)) >>> #(three two four)"
 
 	| newCollection |
 	newCollection := self species ofSize: indexArray size.
@@ -1423,7 +1423,7 @@ SequenceableCollection >> isSortedBy: aBlock [
 SequenceableCollection >> join: aCollection [
 	"Append the elements of the argument, aSequenceableCollection, separating them by the receiver."
 
-	"({Character space. Character space} join: #('Pharo' 'is' 'cool')) >>>  {$P. $h. $a. $r. $o. Character space. Character space. $i. $s. Character space. Character space. $c. $o. $o. $l}"
+	"({Character space. Character space} join: #(Pharo is cool)) >>>  {$P. $h. $a. $r. $o. Character space. Character space. $i. $s. Character space. Character space. $c. $o. $o. $l}"
 
 	"NB: this implementation only works for Array, since WriteStreams only work for Arrays and Strings. (!) Overridden in OrderedCollection and SortedCollection."
 
@@ -1680,7 +1680,7 @@ SequenceableCollection >> paddedWith: otherCollection do: twoArgBlock [
 SequenceableCollection >> pairsCollect: aBlock [
 	"Evaluate aBlock with my elements taken two at a time, and return an Array with the results"
 
-	"(#(1 'fred' 2 'charlie' 3 'elmer') pairsCollect: [:a :b | b, ' is number ', a printString]) >>> #('fred is number 1' 'charlie is number 2' 'elmer is number 3')"
+	"(#(1 fred 2 charlie 3 elmer) pairsCollect: [:a :b | b, ' is number ', a printString]) >>> #('fred is number 1' 'charlie is number 2' 'elmer is number 3')"
 
 	^ (1 to: self size // 2)
 		collect: [ :index | aBlock value: (self at: 2 * index - 1) value: (self at: 2 * index) ]
@@ -1690,7 +1690,7 @@ SequenceableCollection >> pairsCollect: aBlock [
 SequenceableCollection >> pairsDo: aBlock [
 	"Evaluate aBlock with my elements taken two at a time.  If there's an odd number of items, ignore the last one.  Allows use of a flattened array for things that naturally group into pairs.  See also pairsCollect:"
 
-	"(Array streamContents: [:s | #(1 'fred' 2 'charlie' 3 'elmer') pairsDo: [:a :b | s nextPut: b; nextPut: a]]) >>> #('fred' 1 'charlie' 2 'elmer' 3)"
+	"(Array streamContents: [:s | #(1 fred 2 charlie 3 elmer) pairsDo: [:a :b | s nextPut: b; nextPut: a]]) >>> #(fred 1 charlie 2 elmer 3)"
 
 	1 to: self size // 2 do: [ :index | aBlock value: (self at: 2 * index - 1) value: (self at: 2 * index) ]
 ]
@@ -2181,7 +2181,7 @@ comparison."
 { #category : 'splitjoin' }
 SequenceableCollection >> split: aSequenceableCollection indicesDo: aBlock [
 	"Perform an action specified as aBlock (with a start and end argument) to each of the indices of aSequenceableCollection that have been identified by taking the receiver as a splitter."
-	"('||' split: 'foo||bar||2')>>>#('foo' 'bar' '2') asOrderedCollection"
+	"('||' split: 'foo||bar||2')>>>#(foo bar 2) asOrderedCollection"
 	"(String streamContents: [:s | '||' split: 'foo||bar||2' indicesDo: [ :start :end | s << 's:' << start asString << ' ' << 'e:' << end asString << ' ' ]]) >>> 's:1 e:3 s:6 e:8 s:11 e:11 '"
 
 	| position oldPosition |
@@ -2321,7 +2321,7 @@ SequenceableCollection >> withIndexDo: elementAndIndexBlock [
 SequenceableCollection >> withIndexSelect: elementAndIndexBlock [
 	"select elements from the receiver that the block evaluates true with the element and its index."
 
-	"(#('We' 'love' 'pharo!') withIndexSelect: [:value :index | value size - 1 <= index]) >>> #('We')"
+	"(#(We love 'pharo!') withIndexSelect: [:value :index | value size - 1 <= index]) >>> #(We)"
 
 	^ self class
 		new: self size

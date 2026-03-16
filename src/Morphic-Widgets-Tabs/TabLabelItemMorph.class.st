@@ -7,8 +7,8 @@ Class {
 	#name : 'TabLabelItemMorph',
 	#superclass : 'IconicListItemMorph',
 	#instVars : [
-		'tab',
-		'storedIcon'
+		#tab,
+		#storedIcon
 	],
 	#category : 'Morphic-Widgets-Tabs-Support',
 	#package : 'Morphic-Widgets-Tabs',

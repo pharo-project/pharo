@@ -5,8 +5,8 @@ Class {
 	#name : 'SDL_SysWMinfo_AndroidInfo',
 	#superclass : 'SDL2Structure',
 	#classVars : [
-		'OFFSET_SURFACE',
-		'OFFSET_WINDOW'
+		#OFFSET_SURFACE,
+		#OFFSET_WINDOW
 	],
 	#category : 'OSWindow-SDL2-Bindings',
 	#package : 'OSWindow-SDL2',

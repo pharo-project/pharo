@@ -65,7 +65,7 @@ Class {
 	#name : 'SortedCollection',
 	#superclass : 'OrderedCollection',
 	#instVars : [
-		'sortBlock'
+		#sortBlock
 	],
 	#category : 'Collections-Sequenceable-Ordered',
 	#package : 'Collections-Sequenceable',

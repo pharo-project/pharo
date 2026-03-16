@@ -14,8 +14,8 @@ Class {
 	#name : 'DebugPointBehavior',
 	#superclass : 'Object',
 	#instVars : [
-		'priority',
-		'debugPoint'
+		#priority,
+		#debugPoint
 	],
 	#category : 'DebugPoints-Base',
 	#package : 'DebugPoints',

@@ -13,11 +13,11 @@ Class {
 	#name : 'RBMessageNode',
 	#superclass : 'RBValueNode',
 	#instVars : [
-		'receiver',
-		'selector',
-		'keywordsPositions',
-		'arguments',
-		'superOf'
+		#receiver,
+		#selector,
+		#keywordsPositions,
+		#arguments,
+		#superOf
 	],
 	#category : 'AST-Core-Nodes',
 	#package : 'AST-Core',
@@ -197,7 +197,7 @@ RBMessageNode >> isFirstCascaded [
 RBMessageNode >> isHaltNode [
 
 	^ (#( #halt #halt: #haltIf: #haltOnce #haltIfNil #haltOnCount: ) includes: self selector) or: [
-		  self receiver isGlobalVariable and: [ self receiver variable value = Halt and: [ (Halt class selectorsInProtocol: #halting) includes: self selector ] ] ]
+		  self receiver isGlobalVariable and: [ self receiver variable value sameContents: Halt and: [ (Halt class selectorsInProtocol: #halting) includes: self selector ] ] ]
 ]
 
 { #category : 'testing' }

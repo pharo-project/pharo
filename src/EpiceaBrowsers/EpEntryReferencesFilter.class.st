@@ -5,8 +5,8 @@ Class {
 	#name : 'EpEntryReferencesFilter',
 	#superclass : 'EpFilter',
 	#instVars : [
-		'theLog',
-		'rejectedEntryReferences'
+		#theLog,
+		#rejectedEntryReferences
 	],
 	#category : 'EpiceaBrowsers-Filters',
 	#package : 'EpiceaBrowsers',

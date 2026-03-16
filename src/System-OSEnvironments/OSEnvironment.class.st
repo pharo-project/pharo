@@ -19,10 +19,10 @@ Class {
 	#name : 'OSEnvironment',
 	#superclass : 'Object',
 	#instVars : [
-		'platform'
+		#platform
 	],
 	#classVars : [
-		'Current'
+		#Current
 	],
 	#category : 'System-OSEnvironments-Base',
 	#package : 'System-OSEnvironments',

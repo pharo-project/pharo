@@ -9,9 +9,9 @@ Class {
 	#name : 'WorkingSession',
 	#superclass : 'Object',
 	#instVars : [
-		'manager',
-		'deferredStartupActions',
-		'properties'
+		#manager,
+		#deferredStartupActions,
+		#properties
 	],
 	#category : 'System-SessionManager-Utilities',
 	#package : 'System-SessionManager',

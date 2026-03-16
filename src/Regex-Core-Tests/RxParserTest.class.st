@@ -116,11 +116,11 @@ RxParserTest >> testMatchesInwW [
 	\w	any word constituent character (equivalent to [a-zA-Z0-9:=])
 	\W	any character but a word constituent (equivalent to [^a-xA-Z0-9:=]"
 
-	self assert: ('\w+' asRegex matchesIn: 'now is the time') asArray equals: #('now' 'is' 'the' 'time').
+	self assert: ('\w+' asRegex matchesIn: 'now is the time') asArray equals: #(now is the time).
 	self assert: ('\W+' asRegex matchesIn: 'now is the time') asArray equals: #(' ' ' ' ' ').
 
 	"why do we get that"
-	self assert: ('\w' asRegex matchesIn: 'now') asArray equals: #('n' 'o' 'w')
+	self assert: ('\w' asRegex matchesIn: 'now') asArray equals: #(n o w)
 ]
 
 { #category : 'tests' }

@@ -61,8 +61,8 @@ EmbeddedMenuMorph >> keyDown: evt [
 
 	key isArrowUp ifTrue: [ ^ self moveSelectionDown: -1 event: evt ].	"up arrow key"
 	key isArrowDown ifTrue: [ ^ self moveSelectionDown: 1 event: evt ].	"down arrow key"
-	key = KeyboardKey pageUp ifTrue: [ ^ self moveSelectionDown: -5 event: evt ].	"page up key"
-	key = KeyboardKey pageDown ifTrue: [ ^ self moveSelectionDown: 5 event: evt ].	"page down key"
+	key sameContents: KeyboardKey pageUp ifTrue: [ ^ self moveSelectionDown: -5 event: evt ].	"page up key"
+	key sameContents: KeyboardKey pageDown ifTrue: [ ^ self moveSelectionDown: 5 event: evt ].	"page down key"
 
 	self window ifNotNil: [:win |
 		(win handlesKeyDown: evt) ifTrue: [
@@ -78,7 +78,7 @@ EmbeddedMenuMorph >> keyStroke: event [
 	self window ifNotNil: [:win |
 		(win handlesKeyStroke: event) ifTrue: [
 			(win keyStroke: event) ifTrue: [^true]]].
-	event key = KeyboardKey space
+	event key sameContents: KeyboardKey space
 		ifTrue: [ selectedItem
 			ifNotNil: [ ^ selectedItem hasSubMenu
 					ifTrue: [ event hand newMouseFocus: selectedItem subMenu.

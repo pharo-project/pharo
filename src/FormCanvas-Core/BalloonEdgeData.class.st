@@ -12,12 +12,12 @@ Class {
 	#name : 'BalloonEdgeData',
 	#superclass : 'Object',
 	#instVars : [
-		'index',
-		'xValue',
-		'yValue',
-		'zValue',
-		'lines',
-		'source'
+		#index,
+		#xValue,
+		#yValue,
+		#zValue,
+		#lines,
+		#source
 	],
 	#category : 'FormCanvas-Core-BalloonEngine',
 	#package : 'FormCanvas-Core',

@@ -5,7 +5,7 @@ Class {
 	#name : 'MemoryHandle',
 	#superclass : 'FileSystemHandle',
 	#instVars : [
-		'entry'
+		#entry
 	],
 	#category : 'FileSystem-Memory-Base',
 	#package : 'FileSystem-Memory',

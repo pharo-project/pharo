@@ -5,7 +5,7 @@ Class {
 	#name : 'DebugPointObjectTarget',
 	#superclass : 'DebugPointTarget',
 	#instVars : [
-		'subTarget'
+		#subTarget
 	],
 	#category : 'DebugPoints-Base',
 	#package : 'DebugPoints',

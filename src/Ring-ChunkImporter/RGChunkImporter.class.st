@@ -6,9 +6,9 @@ Class {
 	#name : 'RGChunkImporter',
 	#superclass : 'Object',
 	#instVars : [
-		'environment',
-		'package',
-		'doIts'
+		#environment,
+		#package,
+		#doIts
 	],
 	#category : 'Ring-ChunkImporter',
 	#package : 'Ring-ChunkImporter'

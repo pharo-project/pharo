@@ -5,11 +5,11 @@ Class {
 	#name : 'FBDExamples',
 	#superclass : 'Object',
 	#instVars : [
-		'iVar',
-		'collection'
+		#iVar,
+		#collection
 	],
 	#classVars : [
-		'CVar'
+		#CVar
 	],
 	#category : 'Flashback-Decompiler-Tests-Examples',
 	#package : 'Flashback-Decompiler-Tests',
@@ -360,8 +360,8 @@ FBDExamples >> exampleCascadeIntoBlockWithTempIfTrueIfFalse [
 									aNumber isNumber
 										ifTrue: [
 											aNumber even
-												ifTrue: [ #('even') ]
-												ifFalse: [ #('odd') ] ]
+												ifTrue: [ #(even) ]
+												ifFalse: [ #(odd) ] ]
 										ifFalse: [ 0 ] ] ]
 ]
 
@@ -820,8 +820,8 @@ FBDExamples >> exampleIfTrueIfFalseNested3 [
 			aNumber isNumber
 				ifTrue: [
 					aNumber even
-						ifTrue: [ #('even') ]
-						ifFalse: [ #('odd') ] ]
+						ifTrue: [ #(even) ]
+						ifFalse: [ #(odd) ] ]
 				ifFalse: [ 0 ] ]
 ]
 

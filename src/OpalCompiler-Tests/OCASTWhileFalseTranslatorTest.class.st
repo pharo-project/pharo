@@ -22,7 +22,7 @@ OCASTWhileFalseTranslatorTest >> testWhileFalseExecutesLeftBlock [
 	temp := 0.
 	{argument1} whileFalse: {argument2}.
 	^ temp'
-		withTemps: #( 'temp' )
+		withTemps: #( temp )
 		withFirstBlock: '[ temp := temp + 1. temp > 4 ]'
 		withSecondBlock: '[ ]'.
 
@@ -38,7 +38,7 @@ OCASTWhileFalseTranslatorTest >> testWhileFalseExecutesLeftBlockWithTemp [
 	temp := 0.
 	{argument1} whileFalse: {argument2}.
 	^ temp'
-		withTemps: #( 'temp' )
+		withTemps: #( temp )
 		withFirstBlock: '[ | intemp |
 			intemp := temp + 1.
 			temp := intemp.
@@ -57,7 +57,7 @@ OCASTWhileFalseTranslatorTest >> testWhileFalseExecutesRightBlock [
 	temp := 0.
 	{argument1} whileFalse: {argument2}.
 	^ temp'
-		withTemps: #( 'temp' )
+		withTemps: #( temp )
 		withFirstBlock: '[ temp > 4 ]'
 		withSecondBlock: '[ temp := temp + 1 ]'.
 
@@ -73,7 +73,7 @@ OCASTWhileFalseTranslatorTest >> testWhileFalseExecutesRightBlockWithTemp [
 	temp := 0.
 	{argument1} whileFalse: {argument2}.
 	^ temp'
-		withTemps: #( 'temp' )
+		withTemps: #( temp )
 		withFirstBlock: '[ temp > 4 ]'
 		withSecondBlock: '[ | intemp |
 			intemp := temp + 1.
@@ -90,7 +90,7 @@ OCASTWhileFalseTranslatorTest >> testWhileFalseReturnsNil [
 	{definition}.
 	temp := 0.
 	^ {argument1} whileFalse: {argument2}'
-		withTemps: #( 'temp' )
+		withTemps: #( temp )
 		withFirstBlock: '[ temp := temp + 1. temp > 4 ]'
 		withSecondBlock: '[ ]'.
 

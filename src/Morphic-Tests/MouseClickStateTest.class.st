@@ -2,9 +2,9 @@ Class {
 	#name : 'MouseClickStateTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'morph',
-		'hand',
-		'event'
+		#morph,
+		#hand,
+		#event
 	],
 	#category : 'Morphic-Tests-Event',
 	#package : 'Morphic-Tests',

@@ -5,7 +5,7 @@ Class {
 	#name : 'ValueHolder',
 	#superclass : 'Model',
 	#instVars : [
-		'contents'
+		#contents
 	],
 	#category : 'NewValueHolder-Core-Base',
 	#package : 'NewValueHolder-Core',

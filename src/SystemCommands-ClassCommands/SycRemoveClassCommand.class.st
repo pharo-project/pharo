@@ -5,7 +5,7 @@ Class {
 	#name : 'SycRemoveClassCommand',
 	#superclass : 'SycClassCommand',
 	#instVars : [
-		'toolContext'
+		#toolContext
 	],
 	#category : 'SystemCommands-ClassCommands',
 	#package : 'SystemCommands-ClassCommands'

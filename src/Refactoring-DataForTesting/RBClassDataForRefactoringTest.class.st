@@ -2,7 +2,7 @@ Class {
 	#name : 'RBClassDataForRefactoringTest',
 	#superclass : 'Object',
 	#instVars : [
-		'instanceVariable'
+		#instanceVariable
 	],
 	#category : 'Refactoring-DataForTesting-FatClasses',
 	#package : 'Refactoring-DataForTesting',

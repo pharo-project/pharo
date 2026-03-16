@@ -5,7 +5,7 @@ Class {
 	#name : 'RFTempWrite',
 	#superclass : 'RFVariableWrite',
 	#instVars : [
-		'context'
+		#context
 	],
 	#category : 'Reflectivity-Operations',
 	#package : 'Reflectivity',

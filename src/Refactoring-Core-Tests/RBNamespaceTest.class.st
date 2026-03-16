@@ -2,7 +2,7 @@ Class {
 	#name : 'RBNamespaceTest',
 	#superclass : 'RBRefactoringBrowserTest',
 	#instVars : [
-		'namespace'
+		#namespace
 	],
 	#category : 'Refactoring-Core-Tests',
 	#package : 'Refactoring-Core-Tests'

@@ -7,8 +7,8 @@ Class {
 	#name : 'SessionCategory',
 	#superclass : 'Object',
 	#instVars : [
-		'name',
-		'priorityLists'
+		#name,
+		#priorityLists
 	],
 	#category : 'System-SessionManager-Utilities',
 	#package : 'System-SessionManager',

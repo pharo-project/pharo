@@ -20,7 +20,7 @@ Class {
 	#name : 'ZnPrefixMappingDelegate',
 	#superclass : 'Object',
 	#instVars : [
-		'prefixDictionary'
+		#prefixDictionary
 	],
 	#category : 'Zinc-HTTP-Examples',
 	#package : 'Zinc-HTTP-Examples'

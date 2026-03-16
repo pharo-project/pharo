@@ -132,7 +132,7 @@ ClyClassDefinitionEditorToolMorph >> selectVariableNamed: aString [
 	| classDefinition varNode |
 	classDefinition := self parseClassDefinition.
 	varNode := classDefinition children
-		detect: [ :each | each isVariable and: [each name = aString]]
+		detect: [ :each | each isVariable and: [each name sameContents: aString]]
 		ifNone: [ ^self ].
 	self selectSourceNode: varNode
 ]

@@ -5,9 +5,9 @@ Class {
 	#name : 'RFMethodOperation',
 	#superclass : 'Object',
 	#instVars : [
-		'method',
-		'arguments',
-		'receiver'
+		#method,
+		#arguments,
+		#receiver
 	],
 	#category : 'Reflectivity-Operations',
 	#package : 'Reflectivity',

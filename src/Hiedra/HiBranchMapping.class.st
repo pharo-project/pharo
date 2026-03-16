@@ -6,10 +6,10 @@ Class {
 	#name : 'HiBranchMapping',
 	#superclass : 'Object',
 	#instVars : [
-		'ruler',
-		'branchByLink',
-		'branchCount',
-		'branchByNode'
+		#ruler,
+		#branchByLink,
+		#branchCount,
+		#branchByNode
 	],
 	#category : 'Hiedra-Model',
 	#package : 'Hiedra',

@@ -78,41 +78,41 @@ Class {
 	#name : 'RubAbstractTextArea',
 	#superclass : 'Morph',
 	#instVars : [
-		'model',
-		'paragraph',
-		'editor',
-		'scrollPane',
-		'editingState',
-		'textStyle',
-		'textColor',
-		'margins',
-		'readOnly',
-		'menuAllowed',
-		'editingMode',
-		'cursor',
-		'segments',
-		'embeddedMorphs',
-		'getMenuPolicy',
-		'mouseDownPoint',
-		'completionEngine',
-		'maxLength',
-		'grow',
-		'findReplaceService',
-		'editing',
-		'hasDragDoubleClick'
+		#model,
+		#paragraph,
+		#editor,
+		#scrollPane,
+		#editingState,
+		#textStyle,
+		#textColor,
+		#margins,
+		#readOnly,
+		#menuAllowed,
+		#editingMode,
+		#cursor,
+		#segments,
+		#embeddedMorphs,
+		#getMenuPolicy,
+		#mouseDownPoint,
+		#completionEngine,
+		#maxLength,
+		#grow,
+		#findReplaceService,
+		#editing,
+		#hasDragDoubleClick
 	],
 	#classVars : [
-		'BackgroundColor',
-		'CaseSensitiveFinds',
-		'DefaultTextColor',
-		'HighlightMessageSend',
-		'LineNumbersBackgroundColor',
-		'LineNumbersFont',
-		'LineNumbersTextColor',
-		'WalkAlongDisplayedLine'
+		#BackgroundColor,
+		#CaseSensitiveFinds,
+		#DefaultTextColor,
+		#HighlightMessageSend,
+		#LineNumbersBackgroundColor,
+		#LineNumbersFont,
+		#LineNumbersTextColor,
+		#WalkAlongDisplayedLine
 	],
 	#classInstVars : [
-		'defaultFindReplaceServiceClass'
+		#defaultFindReplaceServiceClass
 	],
 	#category : 'Rubric-Editing-Core',
 	#package : 'Rubric',
@@ -1224,7 +1224,7 @@ RubAbstractTextArea >> isReadOnly [
 { #category : 'event handling' }
 RubAbstractTextArea >> keyDown: anEvent [
 	"Handle a keystroke event."
-	(anEvent key = KeyboardKey enter or: [ anEvent key = KeyboardKey keypadEnter ])
+	(anEvent key sameContents: KeyboardKey enter or: [ anEvent key sameContents: KeyboardKey keypadEnter ])
 		ifTrue: [ self handleReturnKey
 				ifTrue: [ ^ self ] ].
 

@@ -5,9 +5,9 @@ Class {
 	#name : 'ReRemoveUnusedTemporaryVariableRefactoring',
 	#superclass : 'RBRefactoring',
 	#instVars : [
-		'selector',
-		'class',
-		'parseTree'
+		#selector,
+		#class,
+		#parseTree
 	],
 	#category : 'Refactoring-Core-Refactorings',
 	#package : 'Refactoring-Core',

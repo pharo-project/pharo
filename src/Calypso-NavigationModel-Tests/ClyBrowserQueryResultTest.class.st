@@ -2,8 +2,8 @@ Class {
 	#name : 'ClyBrowserQueryResultTest',
 	#superclass : 'ClyQueryNavigationResultTest',
 	#instVars : [
-		'cursor',
-		'items'
+		#cursor,
+		#items
 	],
 	#category : 'Calypso-NavigationModel-Tests',
 	#package : 'Calypso-NavigationModel-Tests'

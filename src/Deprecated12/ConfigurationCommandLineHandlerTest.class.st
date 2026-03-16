@@ -42,19 +42,19 @@ ConfigurationCommandLineHandlerTest >> testHasConfiguration [
 	cli := self command: #('http://ss3.gemstone.com/ss/MetaRepoForPharo20' '--install').
 	self deny: cli hasConfiguration.
 	
-	cli := self command: #('http://ss3.gemstone.com/ss/MetaRepoForPharo20' 'ConfigurationOfFoo').
+	cli := self command: #('http://ss3.gemstone.com/ss/MetaRepoForPharo20' ConfigurationOfFoo).
 	self assert: cli hasConfiguration.
 ]
 
 { #category : 'tests' }
 ConfigurationCommandLineHandlerTest >> testListConfigurations [
 	self skip: 'Currently quits the image when in non-interactive mode'.
-	self activate: #('config' 'http://ss3.gemstone.com/ss/MetaRepoForPharo20').
+	self activate: #(config 'http://ss3.gemstone.com/ss/MetaRepoForPharo20').
 ]
 
 { #category : 'tests' }
 ConfigurationCommandLineHandlerTest >> testResponsibility [
 	| args |
-	args := self argumentsWith: #('config').
+	args := self argumentsWith: #(config).
 	self assert: (ConfigurationCommandLineHandler isResponsibleFor: args).
 ]

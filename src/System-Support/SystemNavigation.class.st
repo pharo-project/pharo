@@ -7,7 +7,7 @@ Class {
 	#name : 'SystemNavigation',
 	#superclass : 'Object',
 	#instVars : [
-		'environment'
+		#environment
 	],
 	#category : 'System-Support-Image',
 	#package : 'System-Support',

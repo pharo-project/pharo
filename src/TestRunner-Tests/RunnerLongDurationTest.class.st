@@ -2,7 +2,7 @@ Class {
 	#name : 'RunnerLongDurationTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'runner'
+		#runner
 	],
 	#category : 'TestRunner-Tests-Core',
 	#package : 'TestRunner-Tests',

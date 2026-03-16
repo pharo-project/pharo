@@ -5,11 +5,11 @@ Class {
 	#name : 'HaloSpec',
 	#superclass : 'Object',
 	#instVars : [
-		'addHandleSelector',
-		'horizontalPlacement',
-		'verticalPlacement',
-		'color',
-		'iconSymbol'
+		#addHandleSelector,
+		#horizontalPlacement,
+		#verticalPlacement,
+		#color,
+		#iconSymbol
 	],
 	#category : 'Morphic-Base-Widgets',
 	#package : 'Morphic-Base',

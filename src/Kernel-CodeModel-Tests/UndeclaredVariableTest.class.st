@@ -2,7 +2,7 @@ Class {
 	#name : 'UndeclaredVariableTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'createdClasses'
+		#createdClasses
 	],
 	#category : 'Kernel-CodeModel-Tests-UndeclaredVariables',
 	#package : 'Kernel-CodeModel-Tests',

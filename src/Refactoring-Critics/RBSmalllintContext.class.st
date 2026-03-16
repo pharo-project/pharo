@@ -2,14 +2,14 @@ Class {
 	#name : 'RBSmalllintContext',
 	#superclass : 'Object',
 	#instVars : [
-		'class',
-		'selector',
-		'parseTree',
-		'literals',
-		'literalSemaphore',
-		'literalProcess',
-		'selectors',
-		'compiledMethod'
+		#class,
+		#selector,
+		#parseTree,
+		#literals,
+		#literalSemaphore,
+		#literalProcess,
+		#selectors,
+		#compiledMethod
 	],
 	#category : 'Refactoring-Critics',
 	#package : 'Refactoring-Critics'
@@ -84,7 +84,7 @@ RBSmalllintContext >> includesBehaviorNamed: aClassName [
 	| current |
 	current := self selectedClass.
 	[ current isNil ] whileFalse: [
-		current name = aClassName
+		current name sameContents: aClassName
 			ifTrue: [ ^ true ].
 		current := current superclass ].
 	^ false

@@ -23,17 +23,17 @@ Class {
 	#name : 'DebugSession',
 	#superclass : 'Object',
 	#instVars : [
-		'name',
-		'interruptedContext',
-		'interruptedProcess',
-		'errorWasInUIProcess',
-		'exception'
+		#name,
+		#interruptedContext,
+		#interruptedProcess,
+		#errorWasInUIProcess,
+		#exception
 	],
 	#classVars : [
-		'LogDebuggerStackToFile'
+		#LogDebuggerStackToFile
 	],
 	#classInstVars : [
-		'contextModelClass'
+		#contextModelClass
 	],
 	#category : 'Debugger-Model-Core',
 	#package : 'Debugger-Model',

@@ -46,8 +46,8 @@ Class {
 	#name : 'ZnKeyValueStoreDelegate',
 	#superclass : 'Object',
 	#instVars : [
-		'data',
-		'access'
+		#data,
+		#access
 	],
 	#category : 'Zinc-HTTP-Examples',
 	#package : 'Zinc-HTTP-Examples'

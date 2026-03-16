@@ -31,7 +31,7 @@ BaselineOfAthens >> baseline: spec [
 				package: 'Athens-Text' with: [ spec requires: 'Athens-Core' ];
 				package: 'Athens-Balloon' with: [ spec requires: #('Athens-Core' 'Athens-Text') ];
 				package: 'Athens-Morphic' with: [ spec requires: #('Athens-Core' 'Athens-Text' 'Athens-Balloon' 'Athens-Cairo') ];
-				package: 'Athens-Cairo' with: [ spec requires: #('Athens-Core' 'UnifiedFFI') ];
+				package: 'Athens-Cairo' with: [ spec requires: #('Athens-Core' UnifiedFFI) ];
 				package: 'Athens-Examples' with: [ spec requires: #('Athens-Morphic' 'Athens-Text' 'Athens-Balloon' 'Athens-Cairo') ];
 				package: 'Athens-Cairo-Tests' with: [ spec requires: 'Athens-Cairo' ].
 

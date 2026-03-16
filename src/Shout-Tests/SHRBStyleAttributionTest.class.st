@@ -2,14 +2,14 @@ Class {
 	#name : 'SHRBStyleAttributionTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'styler',
-		'oldSetting'
+		#styler,
+		#oldSetting
 	],
 	#classVars : [
-		'Test'
+		#Test
 	],
 	#pools : [
-		'SHRBMockSharedPoolStyler'
+		#SHRBMockSharedPoolStyler
 	],
 	#category : 'Shout-Tests-Styling',
 	#package : 'Shout-Tests',
@@ -556,11 +556,11 @@ SHRBStyleAttributionTest >> testInvalidStyle [
 	self assertStyleOf: aText at: 6 shouldBe: #invalid
 ]
 
-{ #category : 'tests' }
+{ #category : tests }
 SHRBStyleAttributionTest >> testKeywordStyle [
 
 	| aText |
-	aText := 'm self style: ''test''' asText.
+	aText := 'm self style: test' asText.
 	self style: aText.
 
 	self
@@ -570,7 +570,7 @@ SHRBStyleAttributionTest >> testKeywordStyle [
 		shouldBe: #selector
 ]
 
-{ #category : 'tests' }
+{ #category : tests }
 SHRBStyleAttributionTest >> testMethodTempBarStyle [
 
 	| aText |
@@ -581,7 +581,7 @@ SHRBStyleAttributionTest >> testMethodTempBarStyle [
 	self assertStyleOf: aText at: 7 shouldBe: #methodTempBar
 ]
 
-{ #category : 'tests' }
+{ #category : tests }
 SHRBStyleAttributionTest >> testNilStyle [
 
 	| aText |
@@ -595,7 +595,7 @@ SHRBStyleAttributionTest >> testNilStyle [
 		shouldBe: #nil
 ]
 
-{ #category : 'tests' }
+{ #category : tests }
 SHRBStyleAttributionTest >> testNumberStyle [
 
 	| aText |
@@ -609,7 +609,7 @@ SHRBStyleAttributionTest >> testNumberStyle [
 		shouldBe: #number
 ]
 
-{ #category : 'tests' }
+{ #category : tests }
 SHRBStyleAttributionTest >> testNumberStyle2 [
 
 	| aText |
@@ -623,7 +623,7 @@ SHRBStyleAttributionTest >> testNumberStyle2 [
 		shouldBe: #number
 ]
 
-{ #category : 'tests' }
+{ #category : tests }
 SHRBStyleAttributionTest >> testParenthesisStyle [
 
 	| aText |

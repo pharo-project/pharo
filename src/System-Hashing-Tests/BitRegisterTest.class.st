@@ -2,9 +2,9 @@ Class {
 	#name : 'BitRegisterTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'reg1',
-		'reg2',
-		'result'
+		#reg1,
+		#reg2,
+		#result
 	],
 	#category : 'System-Hashing-Tests-Registers',
 	#package : 'System-Hashing-Tests',

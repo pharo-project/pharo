@@ -5,8 +5,8 @@ Class {
 	#name : 'AthensPolygon',
 	#superclass : 'Object',
 	#instVars : [
-		'contours',
-		'currentContour'
+		#contours,
+		#currentContour
 	],
 	#category : 'Athens-Core-Paths',
 	#package : 'Athens-Core',

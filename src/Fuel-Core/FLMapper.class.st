@@ -7,8 +7,8 @@ Class {
 	#traits : 'TFLConfigurable',
 	#classTraits : 'TFLConfigurable classTrait',
 	#instVars : [
-		'next',
-		'analysis'
+		#next,
+		#analysis
 	],
 	#category : 'Fuel-Core-Mappers',
 	#package : 'Fuel-Core',

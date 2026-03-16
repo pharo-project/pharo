@@ -5,12 +5,12 @@ Class {
 	#name : 'KMCatcherMorph',
 	#superclass : 'BorderedMorph',
 	#instVars : [
-		'focused',
-		'keystrokes',
-		'keymapSetting',
-		'labelMorph',
-		'initialShortcut',
-		'edited'
+		#focused,
+		#keystrokes,
+		#keymapSetting,
+		#labelMorph,
+		#initialShortcut,
+		#edited
 	],
 	#category : 'Keymapping-Settings',
 	#package : 'Keymapping-Settings'

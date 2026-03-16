@@ -19,7 +19,7 @@ SystemNavigation new  browseAllSendersOf: #systemsettings
 !! Browsing application specific settings
 For specific applications, other pragma keywords can be used. These keywords can be passed as follow:
 --------------------
-(SettingBrowser forKeywords: #('blob')) open.
+(SettingBrowser forKeywords: #(blob)) open.
 --------------------
 Then, only settings which are declared with the keyword 'blob' are viewed. 
 Here is an example of such a setting declared in the class side of a class BlobSettings 
@@ -33,7 +33,7 @@ BlobSettings class>>blobSettingOn: aBuilder
 		with: [	
 			(aBuilder setting: #color)	...
 --------------------
-The expression 'SettingBrowser open' is then equivalent to the '(SettingBrowser forKeywords: #('systemsettings')) open' expression.
+The expression 'SettingBrowser open' is then equivalent to the '(SettingBrowser forKeywords: #(systemsettings)) open' expression.
 
 !! Filtering
 The SettingBrowser has a filtering functionality to limitate the number of settings. You can enter a token in the input field of the toolbar in order to show only settings that are matching the token.
@@ -179,15 +179,15 @@ Class {
 	#name : 'SettingBrowser',
 	#superclass : 'MorphTreeModel',
 	#instVars : [
-		'viewedPackages',
-		'roots',
-		'status',
-		'searchedText',
-		'treeHolder'
+		#viewedPackages,
+		#roots,
+		#status,
+		#searchedText,
+		#treeHolder
 	],
 	#classInstVars : [
-		'searchedTextList',
-		'regexpSearch'
+		#searchedTextList,
+		#regexpSearch
 	],
 	#category : 'System-Settings-Browser',
 	#package : 'System-Settings-Browser'
@@ -199,7 +199,7 @@ SettingBrowser class >> browse: aCollectionOfKeywords [
 	that are declared with a pragma keyword which is at least
 	one of the string contained in aCollectionOfKeywords
 	example:
-	(SettingBrowser browse: #('systemsettings'))
+	(SettingBrowser browse: #(systemsettings))
 	browse all settings which make use of the pragma keyword 'systemsettings'
 
 	Note that the default setting pragma keyword is 'systemsettings'

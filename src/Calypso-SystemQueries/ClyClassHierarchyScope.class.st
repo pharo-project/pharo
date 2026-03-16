@@ -28,7 +28,7 @@ Class {
 	#name : 'ClyClassHierarchyScope',
 	#superclass : 'ClyAbstractClassScope',
 	#instVars : [
-		'localScopeClass'
+		#localScopeClass
 	],
 	#category : 'Calypso-SystemQueries-Scopes',
 	#package : 'Calypso-SystemQueries',

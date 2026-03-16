@@ -25,14 +25,14 @@ Class {
 	#name : 'RubFloatingEditorBuilder',
 	#superclass : 'Object',
 	#instVars : [
-		'editor',
-		'announcer',
-		'acceptOnCR',
-		'autoAccept',
-		'initialContents',
-		'font',
-		'customizeValuable',
-		'escapeBlock'
+		#editor,
+		#announcer,
+		#acceptOnCR,
+		#autoAccept,
+		#initialContents,
+		#font,
+		#customizeValuable,
+		#escapeBlock
 	],
 	#category : 'Rubric-Editing-Core-Support',
 	#package : 'Rubric',

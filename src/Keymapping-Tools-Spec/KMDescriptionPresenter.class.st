@@ -5,9 +5,9 @@ Class {
 	#name : 'KMDescriptionPresenter',
 	#superclass : 'SpPresenter',
 	#instVars : [
-		'shortcutList',
-		'actionBar',
-		'categoryList'
+		#shortcutList,
+		#actionBar,
+		#categoryList
 	],
 	#category : 'Keymapping-Tools-Spec',
 	#package : 'Keymapping-Tools-Spec'

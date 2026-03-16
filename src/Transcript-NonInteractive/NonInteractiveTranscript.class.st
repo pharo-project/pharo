@@ -18,9 +18,9 @@ Class {
 	#name : 'NonInteractiveTranscript',
 	#superclass : 'Object',
 	#instVars : [
-		'stream',
-		'fileName',
-		'accessSemaphore'
+		#stream,
+		#fileName,
+		#accessSemaphore
 	],
 	#category : 'Transcript-NonInteractive-Base',
 	#package : 'Transcript-NonInteractive',

@@ -5,7 +5,7 @@ Class {
 	#name : 'FLBasicSerializationTest',
 	#superclass : 'FLSerializationTest',
 	#instVars : [
-		'currentTimeZone'
+		#currentTimeZone
 	],
 	#category : 'Fuel-Core-Tests-Base',
 	#package : 'Fuel-Core-Tests',
@@ -47,7 +47,7 @@ FLBasicSerializationTest >> testAllRangeOfIntegers [
 FLBasicSerializationTest >> testArray [
 	self assertSerializationEqualityOf: #(1).
 	self assertSerializationEqualityOf: #(10 20).
-	self assertSerializationEqualityOf: #(1 2 3 #('Hello' 2 3)).
+	self assertSerializationEqualityOf: #(1 2 3 #(Hello 2 3)).
 ]
 
 { #category : 'tests' }

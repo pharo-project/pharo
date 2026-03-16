@@ -16,7 +16,7 @@ Integer >> humanReadableByteSizeString [
 { #category : '*FileSystem-Core' }
 Integer >> humanReadableByteSizeStringPrecision: n [
 
-	#( 'B' 'KB' 'MB' 'GB' 'TB' 'PB' 'EB' 'ZB' 'YB' )
+	#( B KB MB GB TB PB EB ZB YB )
 		inject: self
 		into: [ :value :each |
 			value < 1024

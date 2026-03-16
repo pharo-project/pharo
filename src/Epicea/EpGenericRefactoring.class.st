@@ -5,7 +5,7 @@ Class {
 	#name : 'EpGenericRefactoring',
 	#superclass : 'EpRefactoring',
 	#instVars : [
-		'storeString'
+		#storeString
 	],
 	#category : 'Epicea-Model',
 	#package : 'Epicea',

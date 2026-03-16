@@ -15,7 +15,7 @@ Class {
 	#name : 'CmdMenuItem',
 	#superclass : 'Object',
 	#instVars : [
-		'parentGroup'
+		#parentGroup
 	],
 	#category : 'Commander-Core',
 	#package : 'Commander-Core'

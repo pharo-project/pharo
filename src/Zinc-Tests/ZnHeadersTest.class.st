@@ -9,26 +9,26 @@ Class {
 ZnHeadersTest >> testMergeValued [
 	| headers |
 	headers := ZnHeaders new.
-	headers at: 'Set-Cookie' put: 'foo=1'.
-	headers at: 'Set-Cookie' put: 'bar=1' ifPresentMerge: [ :old :new | old, ';', new ].
-	self assert: (headers at: 'Set-Cookie') equals: 'foo=1;bar=1'
+	headers at: #'Set-Cookie' put: 'foo=1'.
+	headers at: #'Set-Cookie' put: 'bar=1' ifPresentMerge: [ :old :new | old, ';', new ].
+	self assert: (headers at: #'Set-Cookie') equals: 'foo=1;bar=1'
 ]
 
 { #category : 'testing' }
 ZnHeadersTest >> testMultiValued [
 	| headers |
 	headers := ZnHeaders new.
-	headers at: 'Set-Cookie' put: 'foo=1'.
-	headers at: 'Set-Cookie' add: 'bar=1'.
-	self assert: (headers at: 'Set-Cookie') equals: #('foo=1' 'bar=1')
+	headers at: #'Set-Cookie' put: 'foo=1'.
+	headers at: #'Set-Cookie' add: 'bar=1'.
+	self assert: (headers at: #'Set-Cookie') equals: #('foo=1' 'bar=1')
 ]
 
 { #category : 'testing' }
 ZnHeadersTest >> testMultiValuedStreaming [
 	| headers keysAndValues |
 	headers := ZnHeaders new.
-	headers at: 'Set-Cookie' put: 'foo=1'.
-	headers at: 'Set-Cookie' add: 'bar=1'.
+	headers at: #'Set-Cookie' put: 'foo=1'.
+	headers at: #'Set-Cookie' add: 'bar=1'.
 	keysAndValues := OrderedCollection streamContents: [ : stream |
 		headers headersDo: [ :key :value |
 			stream nextPut: key; nextPut: value ] ].
@@ -39,12 +39,12 @@ ZnHeadersTest >> testMultiValuedStreaming [
 ZnHeadersTest >> testNormalization [
 	| headers |
 	headers := ZnHeaders new.
-	headers at: 'content-TYPE' put: 'text/plain'.
+	headers at: #'content-TYPE' put: 'text/plain'.
 	self assert: (headers includesKey: 'content-type').
 	self assert: (headers includesKey: 'content-TYPE').
-	self assert: (headers at: 'Content-Type') equals: 'text/plain'.
-	headers at: 'CONTENT-type' put: 'text/html'.
-	self assert: (headers at: 'Content-Type') equals: 'text/html'
+	self assert: (headers at: #'Content-Type') equals: 'text/plain'.
+	headers at: #'CONTENT-type' put: 'text/html'.
+	self assert: (headers at: #'Content-Type') equals: 'text/html'
 ]
 
 { #category : 'testing' }
@@ -54,8 +54,8 @@ ZnHeadersTest >> testReading [
 	headers := ZnHeaders readFrom: string asByteArray readStream.
 	self assert: (headers includesKey: 'Content-Type').
 	self assert: (headers includesKey: 'Content-Length').
-	self assert: (headers at: 'Content-Type') equals: 'text/plain'.
-	self assert: (headers at: 'Content-Length') equals: '128'
+	self assert: (headers at: #'Content-Type') equals: 'text/plain'.
+	self assert: (headers at: #'Content-Length') equals: '128'
 ]
 
 { #category : 'testing' }
@@ -69,8 +69,8 @@ ZnHeadersTest >> testReadingMultiline [
 	headers := ZnHeaders readFrom: string asByteArray readStream.
 	self assert: (headers includesKey: 'Content-Type').
 	self assert: (headers includesKey: 'Content-Length').
-	self assert: (headers at: 'Content-Type') equals: 'text/plain'.
-	self assert: (headers at: 'Content-Length') equals: '128'.
+	self assert: (headers at: #'Content-Type') equals: 'text/plain'.
+	self assert: (headers at: #'Content-Length') equals: '128'.
 	self assert: (headers includesKey: #Long).
 	self assert: (headers at: #long) equals: 'foo bar	baz'
 ]
@@ -85,7 +85,7 @@ ZnHeadersTest >> testReadingMultilineMultiValue [
 		'Content-Length: 128', String crlf,
 		'Long: more', String crlf.
 	headers := ZnHeaders readFrom: string asByteArray readStream.
-	self assert: (headers at: #long) equals: #( 'foo bar	baz' 'more')
+	self assert: (headers at: #long) equals: #( 'foo bar	baz' more)
 ]
 
 { #category : 'testing' }
@@ -96,16 +96,16 @@ ZnHeadersTest >> testReadingMultilineNonBinary [
 		String tab, '3', String crlf,
 		'Bar: EOF', String crlf.
 	headers := ZnHeaders readFrom: string readStream.
-	self assert: (headers at: 'Foo') equals: '1 2', String tab, '3'.
-	self assert: (headers at: 'Bar') equals: 'EOF'
+	self assert: (headers at: #'Foo') equals: '1 2', String tab, '3'.
+	self assert: (headers at: #'Bar') equals: 'EOF'
 ]
 
 { #category : 'testing' }
 ZnHeadersTest >> testWriting [
 	| headers string |
 	headers := ZnHeaders new
-		at: 'Content-Type' put: 'text/plain';
-		at: 'Content-Length' put: '128';
+		at: #'Content-Type' put: 'text/plain';
+		at: #'Content-Length' put: '128';
 		yourself.
 	string := String streamContents: [ :stream | headers writeOn: stream ].
 	self assert: (string includesSubstring: 'Content-Type: text/plain' , String crlf).

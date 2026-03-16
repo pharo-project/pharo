@@ -5,7 +5,7 @@ Class {
 	#name : 'FLContextSerializationTest',
 	#superclass : 'FLSerializationTest',
 	#instVars : [
-		'thisContextSample'
+		#thisContextSample
 	],
 	#category : 'Fuel-Core-Tests-Base',
 	#package : 'Fuel-Core-Tests',

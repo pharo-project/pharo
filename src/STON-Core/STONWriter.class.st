@@ -32,20 +32,20 @@ Class {
 	#name : 'STONWriter',
 	#superclass : 'Object',
 	#instVars : [
-		'writeStream',
-		'prettyPrint',
-		'stonCharacters',
-		'newLine',
-		'asciiOnly',
-		'jsonMode',
-		'keepNewLines',
-		'referencePolicy',
-		'level',
-		'objects'
+		#writeStream,
+		#prettyPrint,
+		#stonCharacters,
+		#newLine,
+		#asciiOnly,
+		#jsonMode,
+		#keepNewLines,
+		#referencePolicy,
+		#level,
+		#objects
 	],
 	#classVars : [
-		'STONCharacters',
-		'STONSimpleSymbolCharacters'
+		#STONCharacters,
+		#STONSimpleSymbolCharacters
 	],
 	#category : 'STON-Core-Writer',
 	#package : 'STON-Core',

@@ -11,7 +11,7 @@ ZnFileUrlTest >> testAsFileReference [
 	fileUrl := 'file:///foo/bar/test.txt' asZnUrl.
 	fileReference := fileUrl asFileReference.
 	self assert: fileReference basename equals: 'test.txt'.
-	self assert: fileReference pathSegments asArray equals: #( 'foo' 'bar' 'test.txt' ).
+	self assert: fileReference pathSegments asArray equals: #( foo bar 'test.txt' ).
 	self assert: fileReference isAbsolute
 ]
 
@@ -22,7 +22,7 @@ ZnFileUrlTest >> testAsFileReferenceNoDoubleSlash [
 	self assert: fileUrl asString equals: 'file:///foo/bar/test.txt'.
 	fileReference := fileUrl asFileReference.
 	self assert: fileReference basename equals: 'test.txt'.
-	self assert: fileReference pathSegments asArray equals: #( 'foo' 'bar' 'test.txt' ).
+	self assert: fileReference pathSegments asArray equals: #( foo bar 'test.txt' ).
 	self assert: fileReference isAbsolute
 ]
 
@@ -34,7 +34,7 @@ ZnFileUrlTest >> testAsZnUrl [
 	self assert: fileUrl isFile.
 	self assert: fileUrl directory equals: 'foo/bar'.
 	self assert: fileUrl file equals: 'test.txt'.
-	self assert: fileUrl pathSegments asArray equals: #( 'foo' 'bar' 'test.txt').
+	self assert: fileUrl pathSegments asArray equals: #( foo bar 'test.txt').
 	self assert: fileUrl pathPrintString equals: '/foo/bar/test.txt'.
 	self assert: fileUrl printString equals: 'file:///foo/bar/test.txt'.
 	self deny: fileUrl hasHost.

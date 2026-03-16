@@ -7,12 +7,12 @@ Class {
 	#name : 'CoverageDemoPresenter',
 	#superclass : 'SpPresenter',
 	#instVars : [
-		'installMetalinkButton',
-		'runCodeButton',
-		'codePanelMorph',
-		'metalinkBlock',
-		'compiledMethods',
-		'coverageCode'
+		#installMetalinkButton,
+		#runCodeButton,
+		#codePanelMorph,
+		#metalinkBlock,
+		#compiledMethods,
+		#coverageCode
 	],
 	#category : 'Reflectivity-Examples',
 	#package : 'Reflectivity-Examples'

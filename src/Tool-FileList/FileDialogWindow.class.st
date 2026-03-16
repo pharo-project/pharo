@@ -5,23 +5,23 @@ Class {
 	#name : 'FileDialogWindow',
 	#superclass : 'DialogWindowMorph',
 	#instVars : [
-		'directoryTreeMorph',
-		'fileListMorph',
-		'directories',
-		'selectedDirectory',
-		'selectedFileIndex',
-		'fileSelectionBlock',
-		'showDirectoriesInFileList',
-		'fileSortBlock',
-		'fileNameText',
-		'defaultExtension',
-		'actionSelector',
-		'answer',
-		'entryCache',
-		'entryCacheDirectory',
-		'previewType',
-		'previewMorph',
-		'preferredFileSystem'
+		#directoryTreeMorph,
+		#fileListMorph,
+		#directories,
+		#selectedDirectory,
+		#selectedFileIndex,
+		#fileSelectionBlock,
+		#showDirectoriesInFileList,
+		#fileSortBlock,
+		#fileNameText,
+		#defaultExtension,
+		#actionSelector,
+		#answer,
+		#entryCache,
+		#entryCacheDirectory,
+		#previewType,
+		#previewMorph,
+		#preferredFileSystem
 	],
 	#category : 'Tool-FileList',
 	#package : 'Tool-FileList'
@@ -490,7 +490,7 @@ FileDialogWindow >> isImageFile: aString [
 	"Answer whether the file name indicates an image file."
 
 	aString ifNil: [^false].
-	^#('pcx' 'bmp' 'jpeg' 'xbm' 'pnm' 'ppm' 'gif' 'pam' 'jpg' 'png' 'pbm')
+	^#(pcx bmp jpeg xbm pnm ppm gif pam jpg png pbm)
 		includes: aString asFileReference extension asLowercase
 ]
 

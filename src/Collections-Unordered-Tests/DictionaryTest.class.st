@@ -7,21 +7,21 @@ Class {
 	#traits : 'TIncludesTest + TDictionaryAddingTest + TDictionaryComparingTest + TDictionaryCopyingTest + TDictionaryEnumeratingTest + (TDictionaryPrintingTest - {#testPrintElementsOn. #testStoreOn}) + TDictionaryRemovingTest + (TPutBasicTest - {#testAtPutOutOfBounds}) + TAsStringCommaAndDelimiterTest + TPrintTest + TConvertTest + TConvertAsSortedTest + (TCopyTest - {#testCopyEmptyWithout. #testCopyNonEmptyWithout. #testCopyNonEmptyWithoutNotIncluded}) + TSetArithmetic + TDictionaryIncludesWithIdentityCheckTest + TDictionaryValueAccessTest + TDictionaryKeysValuesAssociationsAccess + TDictionaryKeyAccessTest + TDictionaryAssociationAccessTest + TStructuralEqualityTest + TOccurrencesForMultiplinessTest',
 	#classTraits : 'TIncludesTest classTrait + TDictionaryAddingTest classTrait + TDictionaryComparingTest classTrait + TDictionaryCopyingTest classTrait + TDictionaryEnumeratingTest classTrait + TDictionaryPrintingTest classTrait + TDictionaryRemovingTest classTrait + TPutBasicTest classTrait + TAsStringCommaAndDelimiterTest classTrait + TPrintTest classTrait + TConvertTest classTrait + TConvertAsSortedTest classTrait + TCopyTest classTrait + TSetArithmetic classTrait + TDictionaryIncludesWithIdentityCheckTest classTrait + TDictionaryValueAccessTest classTrait + TDictionaryKeysValuesAssociationsAccess classTrait + TDictionaryKeyAccessTest classTrait + TDictionaryAssociationAccessTest classTrait + TStructuralEqualityTest classTrait + TOccurrencesForMultiplinessTest classTrait',
 	#instVars : [
-		'emptyDict',
-		'nonEmptyDict',
-		'nonEmpty5ElementsNoDuplicates',
-		'indexArray',
-		'valueArray',
-		'nonEmpty1Element',
-		'collectionNotIncluded',
-		'collectionIncluded',
-		'associationNotIn',
-		'valueNotIn',
-		'keyNotIn',
-		'dictionaryNotIncluded',
-		'dictionaryWithDuplicateValues',
-		'duplicateValue',
-		'nonEmptyWithString'
+		#emptyDict,
+		#nonEmptyDict,
+		#nonEmpty5ElementsNoDuplicates,
+		#indexArray,
+		#valueArray,
+		#nonEmpty1Element,
+		#collectionNotIncluded,
+		#collectionIncluded,
+		#associationNotIn,
+		#valueNotIn,
+		#keyNotIn,
+		#dictionaryNotIncluded,
+		#dictionaryWithDuplicateValues,
+		#duplicateValue,
+		#nonEmptyWithString
 	],
 	#category : 'Collections-Unordered-Tests-Dictionaries',
 	#package : 'Collections-Unordered-Tests',
@@ -447,7 +447,7 @@ DictionaryTest >> testDictionaryPublicProtocolCompatibility [
 		do: [ :assoc |
 			assoc value protocolNames
 				reject: [ :protocol |
-					#('private' 'print' 'undeclared' 'copy' 'compar' '*')
+					#(private print undeclared copy compar '*')
 						anySatisfy: [ :each | protocol asString beginsWith: each ] ]
 				thenDo: [ :protocol |
 					(assoc value selectorsInProtocol: protocol)

@@ -42,8 +42,8 @@ Class {
 	#name : 'FTAllItemsStrategy',
 	#superclass : 'FTTreeFunctionStrategy',
 	#instVars : [
-		'index',
-		'result'
+		#index,
+		#result
 	],
 	#category : 'Morphic-Widgets-FastTable-Tree',
 	#package : 'Morphic-Widgets-FastTable',

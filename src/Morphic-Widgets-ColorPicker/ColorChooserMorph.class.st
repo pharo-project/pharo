@@ -7,9 +7,9 @@ Class {
 	#traits : 'TEnableOnHaloMenu',
 	#classTraits : 'TEnableOnHaloMenu classTrait',
 	#instVars : [
-		'setColorSelector',
-		'enabled',
-		'getEnabledSelector'
+		#setColorSelector,
+		#enabled,
+		#getEnabledSelector
 	],
 	#category : 'Morphic-Widgets-ColorPicker',
 	#package : 'Morphic-Widgets-ColorPicker'

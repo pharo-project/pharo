@@ -19,15 +19,15 @@ Class {
 	#name : 'CompletionEngine',
 	#superclass : 'Object',
 	#instVars : [
-		'contextClass',
-		'menuMorph',
-		'editor',
-		'context',
-		'inverseMapping',
-		'completionDelay'
+		#contextClass,
+		#menuMorph,
+		#editor,
+		#context,
+		#inverseMapping,
+		#completionDelay
 	],
 	#classVars : [
-		'ContextClass'
+		#ContextClass
 	],
 	#category : 'NECompletion-Morphic',
 	#package : 'NECompletion-Morphic'
@@ -137,7 +137,7 @@ CompletionEngine >> handleKeyDownBefore: aKeyboardEvent editor: anEditor [
 			self openMenu.
 			^ true ].
 
-	key = KeyboardKey backspace ifTrue: [
+	key sameContents: KeyboardKey backspace ifTrue: [
 		self smartBackspace ifTrue: [ ^ true ] ].
 
 	self isMenuOpen ifFalse: [ ^ false ].
@@ -159,21 +159,21 @@ CompletionEngine >> handleKeyDownBefore: aKeyboardEvent editor: anEditor [
 		 KeyboardKey keypadDown } includes: key) ifTrue: [
 		menuMorph moveDown.
 		^ true ].
-	key = KeyboardKey pageUp ifTrue: [
+	key sameContents: KeyboardKey pageUp ifTrue: [
 		menuMorph pageUp.
 		^ true ].
-	key = KeyboardKey pageDown ifTrue: [
+	key sameContents: KeyboardKey pageDown ifTrue: [
 		menuMorph pageDown.
 		^ true ].
-	((key = KeyboardKey enter or: [ key = KeyboardKey keypadEnter ])
+	((key sameContents: KeyboardKey enter or: [ key sameContents: KeyboardKey keypadEnter ])
 		 and: [ NECPreferences useEnterToAccept ]) ifTrue: [
 		menuMorph insertSelected ifTrue: [ ^ true ] ].
-	key = KeyboardKey tab ifTrue: [
+	key sameContents: KeyboardKey tab ifTrue: [
 		menuMorph insertSelected ifTrue: [ ^ true ] ].
-	key = KeyboardKey backspace ifTrue: [
+	key sameContents: KeyboardKey backspace ifTrue: [
 		editor isCaretBehindChar ifFalse: [ self closeMenu ].
 		^ false ].
-	key = KeyboardKey escape ifTrue: [
+	key sameContents: KeyboardKey escape ifTrue: [
 		self closeMenu.
 		^ true ].
 	^ false

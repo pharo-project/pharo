@@ -5,8 +5,8 @@ Class {
 	#name : 'DashedBorderStyle',
 	#superclass : 'SimpleBorderStyle',
 	#instVars : [
-		'dashColors',
-		'dashLengths'
+		#dashColors,
+		#dashLengths
 	],
 	#category : 'Morphic-Base-Borders',
 	#package : 'Morphic-Base',

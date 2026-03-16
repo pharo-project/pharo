@@ -5,8 +5,8 @@ Class {
 	#name : 'ExampleSetTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'full',
-		'empty'
+		#full,
+		#empty
 	],
 	#category : 'SUnit-Tests-Core',
 	#package : 'SUnit-Tests',

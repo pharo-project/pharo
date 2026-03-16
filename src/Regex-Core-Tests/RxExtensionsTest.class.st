@@ -17,5 +17,5 @@ RxExtensionsTest >> testSplitJoinBoundaryCases [
 { #category : 'tests' }
 RxExtensionsTest >> testSplitStringOnRegex [
 	self assert: ('foobar' splitOn: '[aeiou]+' asRegex)
-		equals: #('f' 'b' 'r') asOrderedCollection
+		equals: #(f b r) asOrderedCollection
 ]

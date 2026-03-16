@@ -2,11 +2,11 @@ Class {
 	#name : 'OCASTTranslatorTest',
 	#superclass : 'ParametrizedTestCase',
 	#instVars : [
-		'instance',
-		'method',
-		'globals',
-		'encoder',
-		'optimization'
+		#instance,
+		#method,
+		#globals,
+		#encoder,
+		#optimization
 	],
 	#category : 'OpalCompiler-Tests-AST',
 	#package : 'OpalCompiler-Tests',
@@ -123,7 +123,7 @@ OCASTTranslatorTest >> instance: anObject [
 { #category : 'support' }
 OCASTTranslatorTest >> instanceVariablesToKeep [
 
-	^ super instanceVariablesToKeep , #('fullblocks')
+	^ super instanceVariablesToKeep , #(fullblocks)
 ]
 
 { #category : 'accessing' }

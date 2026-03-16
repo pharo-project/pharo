@@ -28,23 +28,23 @@ Class {
 	#name : 'RBScanner',
 	#superclass : 'Object',
 	#instVars : [
-		'stream',
-		'buffer',
-		'tokenStart',
-		'currentCharacter',
-		'characterType',
-		'classificationTable',
-		'comments',
-		'nextToken',
-		'state'
+		#stream,
+		#buffer,
+		#tokenStart,
+		#currentCharacter,
+		#characterType,
+		#classificationTable,
+		#comments,
+		#nextToken,
+		#state
 	],
 	#classVars : [
-		'CascadePatternCharacter',
-		'KeywordPatternCharacter',
-		'PatternVariableCharacter'
+		#CascadePatternCharacter,
+		#KeywordPatternCharacter,
+		#PatternVariableCharacter
 	],
 	#classInstVars : [
-		'classificationTable'
+		#classificationTable
 	],
 	#category : 'AST-Core-Parser',
 	#package : 'AST-Core',

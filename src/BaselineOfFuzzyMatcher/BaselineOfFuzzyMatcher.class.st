@@ -14,7 +14,7 @@ BaselineOfFuzzyMatcher >> baseline: spec [
 			package: 'FuzzyMatcher-Tests'.
 
 		spec 
-			group: 'Core' with: #('FuzzyMatcher');
+			group: 'Core' with: #(FuzzyMatcher);
 			group: 'Tests' with: #('FuzzyMatcher-Tests');
-			group: 'default' with: #('Core' 'Tests') ]
+			group: 'default' with: #(Core Tests) ]
 ]

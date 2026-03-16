@@ -7,14 +7,14 @@ Class {
 	#traits : 'TEnableOnHaloMenu',
 	#classTraits : 'TEnableOnHaloMenu classTrait',
 	#instVars : [
-		'buttonMorph',
-		'labelMorph',
-		'getLabelSelector',
-		'setStateSelector',
-		'getStateSelector',
-		'enabled',
-		'getEnabledSelector',
-		'labelClickable'
+		#buttonMorph,
+		#labelMorph,
+		#getLabelSelector,
+		#setStateSelector,
+		#getStateSelector,
+		#enabled,
+		#getEnabledSelector,
+		#labelClickable
 	],
 	#category : 'Morphic-Widgets-Basic',
 	#package : 'Morphic-Widgets-Basic'

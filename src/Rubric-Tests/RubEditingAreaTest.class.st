@@ -5,9 +5,9 @@ Class {
 	#name : 'RubEditingAreaTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'area',
-		'position',
-		'event'
+		#area,
+		#position,
+		#event
 	],
 	#category : 'Rubric-Tests-Base',
 	#package : 'Rubric-Tests',

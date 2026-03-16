@@ -8,14 +8,14 @@ Class {
 	#name : 'Finder',
 	#superclass : 'Object',
 	#instVars : [
-		'searchingString',
-		'selectedMethod',
-		'selectedClass',
-		'packagesSelection',
-		'environment',
-		'resultDictionary',
-		'useRegEx',
-		'searchStrategy'
+		#searchingString,
+		#selectedMethod,
+		#selectedClass,
+		#packagesSelection,
+		#environment,
+		#resultDictionary,
+		#useRegEx,
+		#searchStrategy
 	],
 	#category : 'Tool-Finder-Base',
 	#package : 'Tool-Finder',

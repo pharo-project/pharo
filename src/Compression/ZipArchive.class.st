@@ -7,14 +7,14 @@ Class {
 	#name : 'ZipArchive',
 	#superclass : 'Archive',
 	#instVars : [
-		'centralDirectorySize',
-		'centralDirectoryOffsetWRTStartingDiskNumber',
-		'zipFileComment',
-		'writeCentralDirectoryOffset',
-		'writeEOCDOffset'
+		#centralDirectorySize,
+		#centralDirectoryOffsetWRTStartingDiskNumber,
+		#zipFileComment,
+		#writeCentralDirectoryOffset,
+		#writeEOCDOffset
 	],
 	#pools : [
-		'ZipFileConstants'
+		#ZipFileConstants
 	],
 	#category : 'Compression-Archives',
 	#package : 'Compression',

@@ -12,10 +12,10 @@ Class {
 	#name : 'ClyQueryBrowserState',
 	#superclass : 'ClyBrowserState',
 	#instVars : [
-		'activeScope',
-		'methodQuery',
-		'queryScopes',
-		'expectedFlatQueryResult'
+		#activeScope,
+		#methodQuery,
+		#queryScopes,
+		#expectedFlatQueryResult
 	],
 	#category : 'Calypso-SystemTools-QueryBrowser-UI',
 	#package : 'Calypso-SystemTools-QueryBrowser',

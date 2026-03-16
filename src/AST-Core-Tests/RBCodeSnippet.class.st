@@ -23,23 +23,23 @@ Class {
 	#name : 'RBCodeSnippet',
 	#superclass : 'Object',
 	#instVars : [
-		'source',
-		'isScripting',
-		'isParseFaulty',
-		'isFaulty',
-		'isFaultyMinusUndeclared',
-		'notices',
-		'value',
-		'hasValue',
-		'formattedCode',
-		'skippedTests',
-		'raise',
-		'messageNotUnderstood',
-		'numberOfCritiques',
-		'group',
-		'default',
-		'nodePositions',
-		'styledPattern'
+		#source,
+		#isScripting,
+		#isParseFaulty,
+		#isFaulty,
+		#isFaultyMinusUndeclared,
+		#notices,
+		#value,
+		#hasValue,
+		#formattedCode,
+		#skippedTests,
+		#raise,
+		#messageNotUnderstood,
+		#numberOfCritiques,
+		#group,
+		#default,
+		#nodePositions,
+		#styledPattern
 	],
 	#category : 'AST-Core-Tests-Snippets',
 	#package : 'AST-Core-Tests',
@@ -306,7 +306,7 @@ RBCodeSnippet class >> badExpressions [
 			         notices: #( #( 1 7 8 ''')'' expected' ) )).
 		        (self new
 			         source: '#( 1 + 2';
-			         nodeAt: '00010203';
+			         nodeAt: 00010203;
 			         styled: 'XX n # n';
 			         formattedCode: '#( 1 #+ 2';
 			         notices: #( #( 1 8 9 ''')'' expected' ) )).
@@ -506,7 +506,7 @@ RBCodeSnippet class >> badExpressions [
 				            #( 1 13 14 ''')'' expected' ) )).
 		        (self new
 			         source: '#( #[ 0 1 2 ]';
-			         nodeAt: '0001112131411';
+			         nodeAt: 0001112131411;
 			         styled: 'XX 00 n n n 0';
 			         notices: #( #( 1 13 14 ''')'' expected' ) )).
 		        (self new
@@ -3150,7 +3150,7 @@ RBCodeSnippet >> searchDefinition [
 		| parent |
 		(node isLiteralNode and: [
 			 parent := node parent.
-			 node value = self source and: [
+			 node value sameContents: self source and: [
 				 parent isMessage and: [ parent selector = #source: ] ] ])
 			ifTrue: [
 				parent isCascaded ifTrue: [ parent := parent parent ].

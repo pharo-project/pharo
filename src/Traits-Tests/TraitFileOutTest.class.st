@@ -2,12 +2,12 @@ Class {
 	#name : 'TraitFileOutTest',
 	#superclass : 'AbstractTraitsOnPreparedModelTest',
 	#instVars : [
-		'ca',
-		'cb',
-		'ta',
-		'tb',
-		'tc',
-		'td'
+		#ca,
+		#cb,
+		#ta,
+		#tb,
+		#tc,
+		#td
 	],
 	#category : 'Traits-Tests',
 	#package : 'Traits-Tests'

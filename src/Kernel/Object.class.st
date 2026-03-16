@@ -515,7 +515,7 @@ Object >> caseOf: aBlockAssociationCollection otherwise: aBlock [
 	 of evaluating aBlock."
 
 	aBlockAssociationCollection associationsDo:
-		[:assoc | (assoc key value = self) ifTrue: [^assoc value value]].
+		[:assoc | (assoc key value sameContents: self) ifTrue: [^assoc value value]].
 	^ aBlock value
 
 "| z | z := {[#a]->[1+1]. ['b' asSymbol]->[2+2]. [#c]->[3+3]}. #b caseOf: z otherwise: [0]"
@@ -1977,18 +1977,18 @@ Object >> yourself [
 	Sending yourself is handy to get the receiver of a message. It is especially useful when using a cascade since all the cascaded messages are send to the receiver. Let us look at an example.
 
 	Imagine that you have the following expression
-		#('hello' 'world') at: 2 put: 'pharo'
-	and that you would like to get the modified array #('hello' 'pharo') - the receiver of the message at:put:.
+		#(hello world) at: 2 put: 'pharo'
+	and that you would like to get the modified array #(hello pharo) - the receiver of the message at:put:.
 
-	Right now the expression #('hello' 'world') at: 2 put: 'pharo' returns 'pharo' and not the receiver because the message at:put: always returns the second argument.
+	Right now the expression #(hello world) at: 2 put: 'pharo' returns 'pharo' and not the receiver because the message at:put: always returns the second argument.
 
 	To get the receiver we can simply use a cascade as follows:
-		#('hello' 'world') at: 2 put: 'pharo'; yourself
+		#(hello world) at: 2 put: 'pharo'; yourself
 	and since yourself returns the receiver of the message we will get the modified array.
 
 	Stepping back using a cascade and yourself is equivalent to declare a variable, assign the expression and return the variable as follows:
 	| a |
-	a := #('hello' 'world').
+	a := #(hello world).
 	a at: 2 put: 'pharo'.
 	a
 	"

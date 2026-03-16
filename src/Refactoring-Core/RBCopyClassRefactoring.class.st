@@ -17,8 +17,8 @@ Class {
 	#name : 'RBCopyClassRefactoring',
 	#superclass : 'RBClassRefactoring',
 	#instVars : [
-		'aClass',
-		'packageName'
+		#aClass,
+		#packageName
 	],
 	#category : 'Refactoring-Core-Refactorings',
 	#package : 'Refactoring-Core',

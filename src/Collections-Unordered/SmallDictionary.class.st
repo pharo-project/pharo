@@ -45,9 +45,9 @@ Class {
 	#name : 'SmallDictionary',
 	#superclass : 'Collection',
 	#instVars : [
-		'keys',
-		'values',
-		'size'
+		#keys,
+		#values,
+		#size
 	],
 	#category : 'Collections-Unordered-Dictionaries',
 	#package : 'Collections-Unordered',
@@ -492,7 +492,7 @@ SmallDictionary >> includes: aValue [
 SmallDictionary >> includesAssociation: anAssociation [
   ^ (self
       associationAt: anAssociation key
-      ifAbsent: [ ^ false ]) value = anAssociation value
+      ifAbsent: [ ^ false ]) value sameContents: anAssociation value
 ]
 
 { #category : 'testing' }

@@ -11,7 +11,7 @@ RBMessageNodeTest >> testArgumentPartsForBinaryMessages [
 	| tree message |
 	tree := self parseMethod: 'test 1 + 2 '.
 	message := tree sendNodes first.
-	self assert: message argumentPartStrings equals: #('2')
+	self assert: message argumentPartStrings equals: #(2)
 ]
 
 { #category : 'tests' }
@@ -27,7 +27,7 @@ RBMessageNodeTest >> testArgumentPartsForKeywordMessages1 [
 	| tree message |
 	tree := self parseMethod: 'test self between: 2 and: 3'.
 	message := tree sendNodes first.
-	self assert: message argumentPartStrings asArray equals: #('2' '3')
+	self assert: message argumentPartStrings asArray equals: #(2 3)
 ]
 
 { #category : 'tests' }
@@ -36,11 +36,11 @@ RBMessageNodeTest >> testArgumentPartsForKeywordMessages2 [
 		| tree message |
 		tree := self parseMethod: 'test self between: x and: y'.
 		message := tree sendNodes first.
-		self assert: message argumentPartStrings asArray equals: #('x' 'y').
+		self assert: message argumentPartStrings asArray equals: #(x y).
 
 		tree := self parseMethod: 'test self between: x and: y and: zzz'.
 		message := tree sendNodes first.
-		self assert: message argumentPartStrings asArray equals: #('x' 'y' 'zzz')
+		self assert: message argumentPartStrings asArray equals: #(x y zzz)
 ]
 
 { #category : 'tests' }

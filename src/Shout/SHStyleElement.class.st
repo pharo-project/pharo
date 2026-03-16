@@ -5,9 +5,9 @@ Class {
 	#name : 'SHStyleElement',
 	#superclass : 'Object',
 	#instVars : [
-		'tokens',
-		'color',
-		'emphasis'
+		#tokens,
+		#color,
+		#emphasis
 	],
 	#category : 'Shout-Styling',
 	#package : 'Shout',

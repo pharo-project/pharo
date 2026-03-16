@@ -2,9 +2,9 @@ Class {
 	#name : 'RubExtraSelectionDecorator',
 	#superclass : 'RubParagraphDecorator',
 	#instVars : [
-		'findReplaceRanges',
-		'findReplaceShapes',
-		'secondarySelectionShapes'
+		#findReplaceRanges,
+		#findReplaceShapes,
+		#secondarySelectionShapes
 	],
 	#category : 'Rubric-Editing-Core',
 	#package : 'Rubric',

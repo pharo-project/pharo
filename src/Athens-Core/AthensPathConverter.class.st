@@ -25,9 +25,9 @@ Class {
 	#name : 'AthensPathConverter',
 	#superclass : 'Object',
 	#instVars : [
-		'sourcePath',
-		'dest',
-		'endPoint'
+		#sourcePath,
+		#dest,
+		#endPoint
 	],
 	#category : 'Athens-Core-Paths',
 	#package : 'Athens-Core',

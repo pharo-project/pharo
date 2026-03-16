@@ -5,7 +5,7 @@ Class {
 	#name : 'PointerLayout',
 	#superclass : 'ObjectLayout',
 	#instVars : [
-		'slotScope'
+		#slotScope
 	],
 	#category : 'Kernel-CodeModel-Layout',
 	#package : 'Kernel-CodeModel',

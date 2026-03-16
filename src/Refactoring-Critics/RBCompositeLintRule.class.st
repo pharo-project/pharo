@@ -5,8 +5,8 @@ Class {
 	#name : 'RBCompositeLintRule',
 	#superclass : 'RBLintRule',
 	#instVars : [
-		'rules',
-		'name'
+		#rules,
+		#name
 	],
 	#category : 'Refactoring-Critics',
 	#package : 'Refactoring-Critics'
@@ -145,8 +145,8 @@ RBCompositeLintRule >> problemCount [
 { #category : 'adding-removing' }
 RBCompositeLintRule >> removeRule: aRule [
 
-	(rules anySatisfy: [ :rule | rule name = aRule name] )
-		ifTrue: [rules := rules reject:  [ :rule | rule name = aRule name]]
+	(rules anySatisfy: [ :rule | rule name sameContents: aRule name] )
+		ifTrue: [rules := rules reject:  [ :rule | rule name sameContents: aRule name]]
 		 ifFalse: [rules do: [ :rule |
 				rule isComposite
 					ifTrue: [rule removeRule: aRule]]]

@@ -2,8 +2,8 @@ Class {
 	#name : 'FTExampleMethodListGeneratorDataSource',
 	#superclass : 'FTExampleMethodListDataSource',
 	#instVars : [
-		'generator',
-		'size'
+		#generator,
+		#size
 	],
 	#category : 'Morphic-Widgets-FastTable-Examples',
 	#package : 'Morphic-Widgets-FastTable',

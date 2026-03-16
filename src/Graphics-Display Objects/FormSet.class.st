@@ -7,9 +7,9 @@ Class {
 	#name : 'FormSet',
 	#superclass : 'Object',
 	#instVars : [
-		'extent',
-		'depth',
-		'forms'
+		#extent,
+		#depth,
+		#forms
 	],
 	#category : 'Graphics-Display Objects-Forms',
 	#package : 'Graphics-Display Objects',

@@ -5,7 +5,7 @@ Class {
 	#name : 'SycMockScope',
 	#superclass : 'Object',
 	#instVars : [
-		'content'
+		#content
 	],
 	#category : 'SystemCommands-RefactoringSupport-Tests',
 	#package : 'SystemCommands-RefactoringSupport-Tests'

@@ -26,7 +26,7 @@ EFParseErrorExpressionTest >> testParseError [
 	self assert: source equals: '#( 1 3 4'
 ]
 
-{ #category : 'tests' }
+{ #category : tests }
 EFParseErrorExpressionTest >> testParseError2 [
 
 	| expr source |

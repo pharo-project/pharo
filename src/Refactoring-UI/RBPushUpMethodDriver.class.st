@@ -14,9 +14,9 @@ Class {
 	#name : 'RBPushUpMethodDriver',
 	#superclass : 'RBInteractionDriver',
 	#instVars : [
-		'class',
-		'methods',
-		'superclass'
+		#class,
+		#methods,
+		#superclass
 	],
 	#category : 'Refactoring-UI-Drivers to migrate to new architecture',
 	#package : 'Refactoring-UI',

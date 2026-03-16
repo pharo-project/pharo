@@ -5,7 +5,7 @@ Class {
 	#name : 'AbstractFileReference',
 	#superclass : 'Object',
 	#instVars : [
-		'path'
+		#path
 	],
 	#category : 'FileSystem-Core-Public',
 	#package : 'FileSystem-Core',
@@ -431,7 +431,7 @@ AbstractFileReference >> extension [
 
 { #category : 'accessing' }
 AbstractFileReference >> extensions [
-	  "#('foo' 'foo.tar' 'foo.tar.gz' 'foo.1.tar' 'foo.1.tar.gz') collect: [:thing| thing extensions] => #(#() #('tar') #('tar' 'gz') #('1' 'tar') #('1' 'tar' 'gz'))"
+	  "#(foo 'foo.tar' 'foo.tar.gz' 'foo.1.tar' 'foo.1.tar.gz') collect: [:thing| thing extensions] => #(#() #(tar) #(tar gz) #(1 tar) #(1 tar gz))"
 
         ^ self fullPath extensions
 ]

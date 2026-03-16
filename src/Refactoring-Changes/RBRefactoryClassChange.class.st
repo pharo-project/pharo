@@ -8,8 +8,8 @@ Class {
 	#name : 'RBRefactoryClassChange',
 	#superclass : 'RBRefactoryChange',
 	#instVars : [
-		'className',
-		'isMeta'
+		#className,
+		#isMeta
 	],
 	#category : 'Refactoring-Changes-Changes-Classes',
 	#package : 'Refactoring-Changes',

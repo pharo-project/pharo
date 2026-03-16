@@ -11,7 +11,7 @@ Class {
 	#name : 'SycExtractTempCommand',
 	#superclass : 'SycSourceCodeRefactoringCommand',
 	#instVars : [
-		'tempName'
+		#tempName
 	],
 	#category : 'SystemCommands-SourceCodeCommands',
 	#package : 'SystemCommands-SourceCodeCommands'

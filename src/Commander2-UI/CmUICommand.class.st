@@ -12,11 +12,11 @@ Class {
 	#name : 'CmUICommand',
 	#superclass : 'CmCommandDecorator',
 	#instVars : [
-		'iconProvider',
-		'iconName',
-		'shortcutKey',
-		'displayStrategy',
-		'positionStrategy'
+		#iconProvider,
+		#iconName,
+		#shortcutKey,
+		#displayStrategy,
+		#positionStrategy
 	],
 	#category : 'Commander2-UI-Core',
 	#package : 'Commander2-UI',

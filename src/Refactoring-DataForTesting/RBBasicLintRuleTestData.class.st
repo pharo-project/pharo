@@ -2,10 +2,10 @@ Class {
 	#name : 'RBBasicLintRuleTestData',
 	#superclass : 'RBLintRuleTestData',
 	#instVars : [
-		'methodBlock',
-		'result',
-		'classBlock',
-		'anInstVar'
+		#methodBlock,
+		#result,
+		#classBlock,
+		#anInstVar
 	],
 	#category : 'Refactoring-DataForTesting-LittleHierarchy',
 	#package : 'Refactoring-DataForTesting',
@@ -113,7 +113,7 @@ RBBasicLintRuleTestData class >> precedence [
 
 { #category : 'accessing' }
 RBBasicLintRuleTestData class >> protocolsToCheck [
-	^#('bugs' 'possible bugs' 'unnecessary code' 'intention revealing' 'miscellaneous')
+	^#(bugs 'possible bugs' 'unnecessary code' 'intention revealing' miscellaneous)
 ]
 
 { #category : 'possible bugs' }
@@ -246,7 +246,7 @@ RBBasicLintRuleTestData class >> utilityMethods [
 							[(context superMessages isEmpty and: [context selfMessages isEmpty]) ifTrue:
 									[(self parseTreeSearcherClass
 										references: context selectedClass allInstVarNames
-												, context selectedClass allClassVarNames asArray , #('self')
+												, context selectedClass allClassVarNames asArray , #(self)
 										in: context parseTree) isEmpty
 										ifTrue: [result addClass: context selectedClass selector: context selector]]]]].
 	^detector

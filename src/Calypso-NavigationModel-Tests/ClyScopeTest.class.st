@@ -2,8 +2,8 @@ Class {
 	#name : 'ClyScopeTest',
 	#superclass : 'ClyAbstractNavigationEnvironmentTest',
 	#instVars : [
-		'scope',
-		'result'
+		#scope,
+		#result
 	],
 	#category : 'Calypso-NavigationModel-Tests',
 	#package : 'Calypso-NavigationModel-Tests'

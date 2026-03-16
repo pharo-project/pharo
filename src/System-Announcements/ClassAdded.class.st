@@ -5,7 +5,7 @@ Class {
 	#name : 'ClassAdded',
 	#superclass : 'ClassAnnouncement',
 	#instVars : [
-		'classAdded'
+		#classAdded
 	],
 	#category : 'System-Announcements-System-Classes',
 	#package : 'System-Announcements',

@@ -20,14 +20,14 @@ Class {
 	#traits : 'TAbleToRotate',
 	#classTraits : 'TAbleToRotate classTrait',
 	#instVars : [
-		'font',
-		'emphasis',
-		'contents',
-		'hasFocus',
-		'backgroundColor'
+		#font,
+		#emphasis,
+		#contents,
+		#hasFocus,
+		#backgroundColor
 	],
 	#classVars : [
-		'EditableStringMorph'
+		#EditableStringMorph
 	],
 	#category : 'Morphic-Base-Basic',
 	#package : 'Morphic-Base',

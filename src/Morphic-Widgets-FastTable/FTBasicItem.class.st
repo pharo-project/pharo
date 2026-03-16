@@ -41,10 +41,10 @@ Class {
 	#name : 'FTBasicItem',
 	#superclass : 'FTTreeItem',
 	#instVars : [
-		'isExpanded',
-		'data',
-		'depth',
-		'recentlyChanged'
+		#isExpanded,
+		#data,
+		#depth,
+		#recentlyChanged
 	],
 	#category : 'Morphic-Widgets-FastTable-Tree',
 	#package : 'Morphic-Widgets-FastTable',

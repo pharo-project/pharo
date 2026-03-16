@@ -67,14 +67,14 @@ Class {
 	#name : 'IdentifierChooserMorph',
 	#superclass : 'BorderedMorph',
 	#instVars : [
-		'requestor',
-		'labels',
-		'choiceMenus',
-		'chooseBlock',
-		'maxLines',
-		'choicesMorph',
-		'scrollPaneWidth',
-		'baseColor'
+		#requestor,
+		#labels,
+		#choiceMenus,
+		#chooseBlock,
+		#maxLines,
+		#choicesMorph,
+		#scrollPaneWidth,
+		#baseColor
 	],
 	#category : 'Polymorph-Widgets-Base',
 	#package : 'Polymorph-Widgets',
@@ -85,7 +85,7 @@ Class {
 IdentifierChooserMorph class >> example [
 
 	(self
-		labels: #('aaa' 'bbb' 'ccc')
+		labels: #(aaa bbb ccc)
 		chooseBlock:  [ :currText | currText matches: '*bb'])
 	openInWorld
 ]

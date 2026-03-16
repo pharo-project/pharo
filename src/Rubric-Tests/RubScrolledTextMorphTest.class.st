@@ -2,7 +2,7 @@ Class {
 	#name : 'RubScrolledTextMorphTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'morph'
+		#morph
 	],
 	#category : 'Rubric-Tests-Base',
 	#package : 'Rubric-Tests',

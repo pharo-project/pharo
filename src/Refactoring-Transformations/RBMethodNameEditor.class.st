@@ -2,17 +2,17 @@
 A MethodNameEditor is an editor to set the name of a method.
 
 
-	MethodNameEditor openOn: (RBMethodName selector: #foo: arguments: #('x')) 
+	MethodNameEditor openOn: (RBMethodName selector: #foo: arguments: #(x)) 
 "
 Class {
 	#name : 'RBMethodNameEditor',
 	#superclass : 'DialogWindowMorph',
 	#instVars : [
-		'argumentIndex',
-		'labelMorph',
-		'methodName',
-		'selectorField',
-		'labelGroup'
+		#argumentIndex,
+		#labelMorph,
+		#methodName,
+		#selectorField,
+		#labelGroup
 	],
 	#category : 'Refactoring-Transformations-Utilities',
 	#package : 'Refactoring-Transformations',

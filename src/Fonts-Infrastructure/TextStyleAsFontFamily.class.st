@@ -5,7 +5,7 @@ Class {
 	#name : 'TextStyleAsFontFamily',
 	#superclass : 'AbstractFontFamily',
 	#instVars : [
-		'textStyle'
+		#textStyle
 	],
 	#category : 'Fonts-Infrastructure-Derived',
 	#package : 'Fonts-Infrastructure',
@@ -16,7 +16,7 @@ Class {
 TextStyleAsFontFamily >> members [
 
 	^ members ifNil: [
-		  members := #( 'Regular' 'Italic' 'Bold' 'Bold Italic' ) collect: [
+		  members := #( Regular Italic Bold 'Bold Italic' ) collect: [
 			             :each |
 			             TextStyleAsFontFamilyMember new
 				             family: self;

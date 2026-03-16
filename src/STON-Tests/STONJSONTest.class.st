@@ -28,7 +28,7 @@ STONJSONTest >> testCircular [
 	self
 		should: [ | foo |
 			foo := { 'foo'->'dummy' } asDictionary.
-			foo at: 'bar' put: foo.
+			foo at: #'bar' put: foo.
 			STONJSON toString: foo ]
 		raise: STONWriterError
 ]

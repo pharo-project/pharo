@@ -5,7 +5,7 @@ Class {
 	#name : 'ClyShowTraitUsersCommand',
 	#superclass : 'SycClassCommand',
 	#instVars : [
-		'browser'
+		#browser
 	],
 	#category : 'Calypso-SystemTools-QueryBrowser-Commands-Queries',
 	#package : 'Calypso-SystemTools-QueryBrowser',

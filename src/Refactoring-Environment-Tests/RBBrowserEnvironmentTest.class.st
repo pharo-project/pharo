@@ -5,11 +5,11 @@ Class {
 	#name : 'RBBrowserEnvironmentTest',
 	#superclass : 'AbstractEnvironmentTestCase',
 	#instVars : [
-		'universalEnvironment'
+		#universalEnvironment
 	],
 	#classVars : [
-		'AClassVariable',
-		'ClassSideOnlyVariable'
+		#AClassVariable,
+		#ClassSideOnlyVariable
 	],
 	#category : 'Refactoring-Environment-Tests',
 	#package : 'Refactoring-Environment-Tests'

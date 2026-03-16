@@ -2,7 +2,7 @@ Class {
 	#name : 'TFUFFITestCase',
 	#superclass : 'ParametrizedTestCase',
 	#instVars : [
-		'ffiLibrary'
+		#ffiLibrary
 	],
 	#category : 'ThreadedFFI-UFFI-Tests',
 	#package : 'ThreadedFFI-UFFI-Tests'

@@ -20,7 +20,7 @@ Class {
 	#name : 'ZnImageExampleDelegate',
 	#superclass : 'Object',
 	#instVars : [
-		'image'
+		#image
 	],
 	#category : 'Zinc-HTTP-Examples',
 	#package : 'Zinc-HTTP-Examples'

@@ -5,9 +5,9 @@ Class {
 	#name : 'CDSharedPoolNode',
 	#superclass : 'CDNode',
 	#instVars : [
-		'name',
-		'start',
-		'stop'
+		#name,
+		#start,
+		#stop
 	],
 	#category : 'ClassParser-Model',
 	#package : 'ClassParser',

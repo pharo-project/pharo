@@ -5,7 +5,7 @@ Class {
 	#name : 'SycProtocolCmCommand',
 	#superclass : 'SycCmCommand',
 	#instVars : [
-		'methodGroups'
+		#methodGroups
 	],
 	#category : 'SystemCommands-MethodCommands',
 	#package : 'SystemCommands-MethodCommands'

@@ -14,8 +14,8 @@ Class {
 	#name : 'RBDeprecateMethodDriver',
 	#superclass : 'RBInteractionDriver',
 	#instVars : [
-		'useInsteadSelector',
-		'selectorToDeprecate'
+		#useInsteadSelector,
+		#selectorToDeprecate
 	],
 	#category : 'Refactoring-UI-Drivers to migrate to new architecture',
 	#package : 'Refactoring-UI',

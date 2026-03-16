@@ -147,8 +147,8 @@ WeakValueDictionaryTest >> testRehashDoesNotTransformAssociations [
 WeakValueDictionaryTest >> testReturnedAssociationsAreRight [
 	| dictionary |
 	dictionary := self classToBeTested new.
-	dictionary at: 'test' put: nil.
-	dictionary at: 'test2' put: 1.
+	dictionary at: #'test' put: nil.
+	dictionary at: #'test2' put: 1.
 	self assert: (dictionary associationAt: 'test') value isNil.
 	self assert: (dictionary associationAt: 'test2') value equals: 1
 ]

@@ -7,7 +7,7 @@ Class {
 	#name : 'ReflectivityDemos',
 	#superclass : 'Object',
 	#classVars : [
-		'CachedLink'
+		#CachedLink
 	],
 	#category : 'Reflectivity-Examples',
 	#package : 'Reflectivity-Examples'

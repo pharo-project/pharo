@@ -11,8 +11,8 @@ Class {
 	#name : 'ClyTestedClassMock',
 	#superclass : 'Object',
 	#instVars : [
-		'two',
-		'one'
+		#two,
+		#one
 	],
 	#category : 'Calypso-SystemPlugins-SUnit-Queries-Tests',
 	#package : 'Calypso-SystemPlugins-SUnit-Queries-Tests'

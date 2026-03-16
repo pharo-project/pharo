@@ -5,8 +5,8 @@ Class {
 	#name : 'ReVariableNameCondition',
 	#superclass : 'RBNewAbstractCondition',
 	#instVars : [
-		'name',
-		'violator'
+		#name,
+		#violator
 	],
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',
@@ -21,7 +21,7 @@ ReVariableNameCondition class >> name: aString [
 
 { #category : 'utilities' }
 ReVariableNameCondition class >> reservedNames [
-	^#('self' 'true' 'false' 'nil' 'thisContext' 'super')
+	^#(self true false nil thisContext super)
 ]
 
 { #category : 'accessing' }

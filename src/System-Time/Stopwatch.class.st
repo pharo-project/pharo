@@ -5,8 +5,8 @@ Class {
 	#name : 'Stopwatch',
 	#superclass : 'Object',
 	#instVars : [
-		'timespans',
-		'state'
+		#timespans,
+		#state
 	],
 	#category : 'System-Time',
 	#package : 'System-Time'

@@ -7,9 +7,9 @@ Class {
 	#name : 'SpRubFindReplaceService',
 	#superclass : 'FindReplaceService',
 	#instVars : [
-		'dialog',
-		'dialogWindow',
-		'textAreaHolder'
+		#dialog,
+		#dialogWindow,
+		#textAreaHolder
 	],
 	#category : 'Rubric-SpecFindReplaceDialog',
 	#package : 'Rubric-SpecFindReplaceDialog'

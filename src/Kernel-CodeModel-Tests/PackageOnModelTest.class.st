@@ -21,13 +21,13 @@ Class {
 	#name : 'PackageOnModelTest',
 	#superclass : 'PackageTestCase',
 	#instVars : [
-		'a1',
-		'b1',
-		'a2',
-		'b2',
-		'xPackage',
-		'yPackage',
-		'zPackage'
+		#a1,
+		#b1,
+		#a2,
+		#b2,
+		#xPackage,
+		#yPackage,
+		#zPackage
 	],
 	#category : 'Kernel-CodeModel-Tests-Packages',
 	#package : 'Kernel-CodeModel-Tests',

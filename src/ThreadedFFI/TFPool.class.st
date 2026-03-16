@@ -6,12 +6,12 @@ Class {
 	#name : 'TFPool',
 	#superclass : 'Object',
 	#instVars : [
-		'mutex',
-		'elements',
-		'provider',
-		'initialSize',
-		'pointer',
-		'releaseBlock'
+		#mutex,
+		#elements,
+		#provider,
+		#initialSize,
+		#pointer,
+		#releaseBlock
 	],
 	#category : 'ThreadedFFI-Base',
 	#package : 'ThreadedFFI',

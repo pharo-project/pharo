@@ -15,9 +15,9 @@ Class {
 	#name : 'PaSelectedCasesExampleTest',
 	#superclass : 'ParametrizedTestCase',
 	#instVars : [
-		'number1',
-		'number2',
-		'result'
+		#number1,
+		#number2,
+		#result
 	],
 	#category : 'SUnit-Tests-Parametrized-Examples',
 	#package : 'SUnit-Tests',

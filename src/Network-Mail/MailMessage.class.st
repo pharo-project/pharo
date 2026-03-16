@@ -10,10 +10,10 @@ Class {
 	#name : 'MailMessage',
 	#superclass : 'Object',
 	#instVars : [
-		'text',
-		'body',
-		'fields',
-		'parts'
+		#text,
+		#body,
+		#fields,
+		#parts
 	],
 	#category : 'Network-Mail',
 	#package : 'Network-Mail'
@@ -98,33 +98,33 @@ MailMessage class >> omittedHeaderFields [
 	and it is impossible to predict them in advance."
 
 	^ #(
-			'comments'
-			'priority'
+			comments
+			priority
 			'disposition-notification-to'
 			'content-id'
-			'received'
+			received
 			'return-path'
-			'newsgroups'
+			newsgroups
 			'message-id'
-			'path'
+			path
 			'in-reply-to'
-			'sender'
-			'fonts'
+			sender
+			fonts
 			'mime-version'
-			'status'
+			status
 			'content-type'
 			'content-transfer-encoding'
 			'errors-to'
-			'keywords'
-			'references'
+			keywords
+			references
 			'nntp-posting-host'
-			'lines'
+			lines
 			'return-receipt-to'
-			'precedence'
-			'originator'
-			'distribution'
+			precedence
+			originator
+			distribution
 			'content-disposition'
-			'importance'
+			importance
 			'resent-to'
 			'resent-cc'
 			'resent-message-id'
@@ -269,7 +269,7 @@ MailMessage >> atomicParts [
 { #category : 'multipart' }
 MailMessage >> attachmentSeparator [
 	^(self fieldNamed: 'content-type' ifAbsent: [^nil]) parameters
-		at: 'boundary' ifAbsent: [^nil]
+		at: #'boundary' ifAbsent: [^nil]
 ]
 
 { #category : 'accessing' }
@@ -314,7 +314,7 @@ MailMessage >> bodyTextFormatted [
 				streamContents: [ :str |
 					self parts
 						do: [ :part |
-							((#('text' 'multipart') includes: part body mainType) or: [ part body contentType = 'message/rfc822' ])
+							((#(text multipart) includes: part body mainType) or: [ part body contentType = 'message/rfc822' ])
 								ifTrue: [
 									"try to inline the message part"
 									str nextPutAll: part bodyTextFormatted ]
@@ -345,7 +345,7 @@ MailMessage >> cleanedHeader [
 
 	| new priorityFields omittedFields |
 	new := (String new: text size) writeStream.
-	priorityFields := #('Date' 'From' 'Subject' 'To' 'Cc').
+	priorityFields := #(Date From Subject To Cc).
 	omittedFields := MailMessage omittedHeaderFields.	"Show the priority fields first, in the order given in priorityFields"
 	priorityFields
 		do: [ :pField |
@@ -611,12 +611,12 @@ MailMessage >> name [
 
 	"try in the content-type: header"
 	type := self fieldNamed: 'content-type' ifAbsent: [nil].
-	(type isNotNil and: [(nameField := type parameters at: 'name' ifAbsent: [nil]) isNotNil])
+	(type isNotNil and: [(nameField := type parameters at: #'name' ifAbsent: [nil]) isNotNil])
 		ifTrue: [^ nameField].
 
 	"try in content-disposition:"
 	disposition := self fieldNamed: 'content-disposition' ifAbsent: [nil].
-	(disposition isNotNil and: [(nameField := disposition parameters at: 'filename' ifAbsent: [nil]) isNotNil])
+	(disposition isNotNil and: [(nameField := disposition parameters at: #'filename' ifAbsent: [nil]) isNotNil])
 		ifTrue: [^ nameField].
 
 	"give up"
@@ -835,7 +835,7 @@ MailMessage >> skipWeekdayName: aStream [
 	[ aStream peek isLetter ] whileTrue: [ name nextPut: aStream next ].
 	abbrev := name contents copyFrom: 1 to: (3 min: name position).
 	abbrev := abbrev asLowercase.
-	(#('sun' 'mon' 'tue' 'wed' 'thu' 'fri' 'sat') includes: abbrev asLowercase)
+	(#(sun mon tue wed thu fri sat) includes: abbrev asLowercase)
 		ifTrue: [
 			"found a weekday; skip to the next alphanumeric character"
 			[ aStream peek isAlphaNumeric ] whileFalse: [ aStream skip: 1 ] ]

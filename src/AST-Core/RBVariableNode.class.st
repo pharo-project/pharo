@@ -14,9 +14,9 @@ Class {
 	#name : 'RBVariableNode',
 	#superclass : 'RBValueNode',
 	#instVars : [
-		'name',
-		'variable',
-		'start'
+		#name,
+		#variable,
+		#start
 	],
 	#category : 'AST-Core-Nodes',
 	#package : 'AST-Core',
@@ -249,7 +249,7 @@ RBVariableNode >> precedence [
 
 { #category : 'testing' }
 RBVariableNode >> references: aVariableName [
-	^self name = aVariableName
+	^self name sameContents: aVariableName
 ]
 
 { #category : 'replacing' }

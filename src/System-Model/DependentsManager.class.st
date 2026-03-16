@@ -2,10 +2,10 @@ Class {
 	#name : 'DependentsManager',
 	#superclass : 'Object',
 	#instVars : [
-		'dependents'
+		#dependents
 	],
 	#classInstVars : [
-		'uniqueInstance'
+		#uniqueInstance
 	],
 	#category : 'System-Model-Base',
 	#package : 'System-Model',

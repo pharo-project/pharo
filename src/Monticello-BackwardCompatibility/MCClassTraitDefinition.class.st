@@ -5,10 +5,10 @@ Class {
 	#name : 'MCClassTraitDefinition',
 	#superclass : 'MCDefinition',
 	#instVars : [
-		'baseTrait',
-		'classTraitComposition',
-		'packageName',
-		'tagName'
+		#baseTrait,
+		#classTraitComposition,
+		#packageName,
+		#tagName
 	],
 	#category : 'Monticello-BackwardCompatibility',
 	#package : 'Monticello-BackwardCompatibility'
@@ -27,7 +27,7 @@ MCClassTraitDefinition >> = aDefinition [
 	^ super = aDefinition
 		and: [ baseTrait = aDefinition baseTrait
 		and: [ self classTraitCompositionString = aDefinition classTraitCompositionString
-		and: [ self packageName = aDefinition packageName
+		and: [ self packageName sameContents: aDefinition packageName
 		and: [  self tagName = aDefinition tagName] ] ] ]
 ]
 

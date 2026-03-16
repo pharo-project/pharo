@@ -17,5 +17,5 @@ BaselineOfOSWindow >> baseline: spec [
 		spec 
 			group: 'Core' with: #('OSWindow-Core' 'OSWindow-SDL2' 'OSWindow-SDL2-Examples');
 			group: 'Tests' with: #('OSWindow-Tests');
-			group: 'default' with: #('Core' 'Tests') ]
+			group: 'default' with: #(Core Tests) ]
 ]

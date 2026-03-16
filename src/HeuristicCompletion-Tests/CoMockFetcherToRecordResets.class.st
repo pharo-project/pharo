@@ -7,7 +7,7 @@ Class {
 	#name : 'CoMockFetcherToRecordResets',
 	#superclass : 'CoFetcher',
 	#instVars : [
-		'resetingCount'
+		#resetingCount
 	],
 	#category : 'HeuristicCompletion-Tests-Core',
 	#package : 'HeuristicCompletion-Tests',

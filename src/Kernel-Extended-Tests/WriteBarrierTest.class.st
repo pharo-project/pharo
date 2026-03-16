@@ -9,7 +9,7 @@ Class {
 	#name : 'WriteBarrierTest',
 	#superclass : 'TestCase',
 	#classVars : [
-		'ContextInstance'
+		#ContextInstance
 	],
 	#category : 'Kernel-Extended-Tests-WriteBarrier',
 	#package : 'Kernel-Extended-Tests',

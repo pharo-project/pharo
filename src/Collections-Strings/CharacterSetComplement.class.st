@@ -11,8 +11,8 @@ Class {
 	#name : 'CharacterSetComplement',
 	#superclass : 'Collection',
 	#instVars : [
-		'absent',
-		'byteArrayMapCache'
+		#absent,
+		#byteArrayMapCache
 	],
 	#category : 'Collections-Strings',
 	#package : 'Collections-Strings'

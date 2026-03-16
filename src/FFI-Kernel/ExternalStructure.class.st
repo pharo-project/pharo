@@ -46,7 +46,7 @@ For example, We can define a machine dependent 'unsigned long' like this:
 		category: 'garbage'.
 Then set the fields like this:
     UnsignedLong class compile: 'fields  ^(Smalltalk wordSize=4 or: [Smalltalk platformName=''Win64''])
-		ifTrue: [#(nil ''ulong'')] ifFalse: [#(nil ''ulonglong'')]' classified: 'garbage'.
+		ifTrue: [#(nil ulong)] ifFalse: [#(nil ulonglong)]' classified: 'garbage'.
 And verify the size on current platform:
 	UnsignedLong byteSize.
 	
@@ -64,13 +64,13 @@ Class {
 	#name : 'ExternalStructure',
 	#superclass : 'ExternalObject',
 	#classVars : [
-		'PreviousPlatform'
+		#PreviousPlatform
 	],
 	#pools : [
-		'FFIConstants'
+		#FFIConstants
 	],
 	#classInstVars : [
-		'compiledSpec'
+		#compiledSpec
 	],
 	#category : 'FFI-Kernel',
 	#package : 'FFI-Kernel'

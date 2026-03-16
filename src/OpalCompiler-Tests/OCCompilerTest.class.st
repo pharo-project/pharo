@@ -5,11 +5,11 @@ Class {
 	#name : 'OCCompilerTest',
 	#superclass : 'AbstractEnvironmentTestCase',
 	#instVars : [
-		'errorMessage',
-		'errorLocation',
-		'errorSource',
-		'text',
-		'interactive'
+		#errorMessage,
+		#errorLocation,
+		#errorSource,
+		#text,
+		#interactive
 	],
 	#category : 'OpalCompiler-Tests-FromOld',
 	#package : 'OpalCompiler-Tests',

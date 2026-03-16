@@ -9,8 +9,8 @@ Class {
 	#name : 'WindowResizing',
 	#superclass : 'WindowAnnouncement',
 	#instVars : [
-		'oldSize',
-		'newSize'
+		#oldSize,
+		#newSize
 	],
 	#category : 'Morphic-Widgets-Windows-Announcements',
 	#package : 'Morphic-Widgets-Windows',

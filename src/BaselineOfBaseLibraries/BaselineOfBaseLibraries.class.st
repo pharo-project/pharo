@@ -36,22 +36,22 @@ BaselineOfBaseLibraries >> baseline: spec [
 
 		spec baseline: 'Beacon' with: [
 			spec
-				loads: #( 'CoreTests' );
+				loads: #( CoreTests );
 				repository: repository ].
 
 		spec baseline: 'SystemBenchmark' with: [
 			spec
-				loads: #( 'tests' );
+				loads: #( tests );
 				repository: repository ].
 
 		spec baseline: 'Clap' with: [
 			spec
-				loads: #( 'core' );
+				loads: #( core );
 				repository: repository ].
 
 		spec baseline: 'TaskIt' with: [
 			spec
-				loads: #( 'coreTests' );
+				loads: #( coreTests );
 				repository: repository ].
 
 		spec

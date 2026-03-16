@@ -7,7 +7,7 @@ Class {
 	#name : 'DebugPointInstanceVariableTarget',
 	#superclass : 'DebugPointClassTarget',
 	#instVars : [
-		'accessStrategy'
+		#accessStrategy
 	],
 	#category : 'DebugPoints-Implementations',
 	#package : 'DebugPoints',

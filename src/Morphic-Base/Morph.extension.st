@@ -307,7 +307,7 @@ Morph >> handleKeystrokeWithKeymappings: aKeystrokeEvent [
 { #category : '*Morphic-Base-keymapping' }
 Morph >> hasKeymapCategoryNamed: aString [
 
-	^ self kmDispatcher targets anySatisfy: [ :e | e category name = aString ]
+	^ self kmDispatcher targets anySatisfy: [ :e | e category name sameContents: aString ]
 ]
 
 { #category : '*Morphic-Base-keymapping' }

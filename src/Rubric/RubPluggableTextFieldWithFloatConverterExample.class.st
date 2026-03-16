@@ -2,8 +2,8 @@ Class {
 	#name : 'RubPluggableTextFieldWithFloatConverterExample',
 	#superclass : 'Object',
 	#instVars : [
-		'myFloat',
-		'announcer'
+		#myFloat,
+		#announcer
 	],
 	#category : 'Rubric-Compatibility-toBeDeprecated',
 	#package : 'Rubric',

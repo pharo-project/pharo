@@ -5,16 +5,16 @@ Class {
 	#name : 'PolymorphSystemSettings',
 	#superclass : 'Object',
 	#classVars : [
-		'DesktopColor',
-		'DesktopGradientDirection',
-		'DesktopGradientFillColor',
-		'DesktopGradientOrigin',
-		'DesktopImageFileName',
-		'DesktopImageLayout',
-		'DesktopLogo',
-		'DesktopLogoFileName',
-		'ShowDesktopLogo',
-		'UseDesktopGradientFill'
+		#DesktopColor,
+		#DesktopGradientDirection,
+		#DesktopGradientFillColor,
+		#DesktopGradientOrigin,
+		#DesktopImageFileName,
+		#DesktopImageLayout,
+		#DesktopLogo,
+		#DesktopLogoFileName,
+		#ShowDesktopLogo,
+		#UseDesktopGradientFill
 	],
 	#category : 'Settings-Polymorph',
 	#package : 'Settings-Polymorph'

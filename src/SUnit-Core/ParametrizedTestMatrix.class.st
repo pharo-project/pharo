@@ -7,9 +7,9 @@ Class {
 	#name : 'ParametrizedTestMatrix',
 	#superclass : 'Object',
 	#instVars : [
-		'selector',
-		'options',
-		'cases'
+		#selector,
+		#options,
+		#cases
 	],
 	#category : 'SUnit-Core-Parametrized',
 	#package : 'SUnit-Core',

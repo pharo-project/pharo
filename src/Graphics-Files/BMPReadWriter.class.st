@@ -18,20 +18,20 @@ Class {
 	#name : 'BMPReadWriter',
 	#superclass : 'ImageReadWriter',
 	#instVars : [
-		'bfType',
-		'bfSize',
-		'bfOffBits',
-		'biSize',
-		'biWidth',
-		'biHeight',
-		'biPlanes',
-		'biBitCount',
-		'biCompression',
-		'biSizeImage',
-		'biXPelsPerMeter',
-		'biYPelsPerMeter',
-		'biClrUsed',
-		'biClrImportant'
+		#bfType,
+		#bfSize,
+		#bfOffBits,
+		#biSize,
+		#biWidth,
+		#biHeight,
+		#biPlanes,
+		#biBitCount,
+		#biCompression,
+		#biSizeImage,
+		#biXPelsPerMeter,
+		#biYPelsPerMeter,
+		#biClrUsed,
+		#biClrImportant
 	],
 	#category : 'Graphics-Files',
 	#package : 'Graphics-Files'
@@ -53,7 +53,7 @@ BMPReadWriter class >> readAllFrom: fd [
 { #category : 'image reading/writing' }
 BMPReadWriter class >> typicalFileExtensions [
 	"Answer a collection of file extensions (lowercase) which files that I can read might commonly have"
-	^#('bmp')
+	^#(bmp)
 ]
 
 { #category : 'reading' }

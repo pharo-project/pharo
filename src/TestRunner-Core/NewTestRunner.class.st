@@ -28,11 +28,11 @@ Class {
 	#name : 'NewTestRunner',
 	#superclass : 'Object',
 	#instVars : [
-		'suite',
-		'result',
-		'suitePreparator',
-		'shouldAccumulate',
-		'executionMode'
+		#suite,
+		#result,
+		#suitePreparator,
+		#shouldAccumulate,
+		#executionMode
 	],
 	#category : 'TestRunner-Core-Core',
 	#package : 'TestRunner-Core',

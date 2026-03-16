@@ -12,7 +12,7 @@ Class {
 	#name : 'AthensBalloonEngine',
 	#superclass : 'BalloonEngine',
 	#instVars : [
-		'currentFill'
+		#currentFill
 	],
 	#category : 'Athens-Balloon-Engine',
 	#package : 'Athens-Balloon',

@@ -8,7 +8,7 @@ Class {
 	#name : 'CoMappingFetcher',
 	#superclass : 'CoFetcherDecorator',
 	#instVars : [
-		'collectBlock'
+		#collectBlock
 	],
 	#category : 'HeuristicCompletion-Model-Core',
 	#package : 'HeuristicCompletion-Model',

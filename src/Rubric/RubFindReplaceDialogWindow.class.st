@@ -5,11 +5,11 @@ Class {
 	#name : 'RubFindReplaceDialogWindow',
 	#superclass : 'DialogWindowMorph',
 	#instVars : [
-		'findTextField'
+		#findTextField
 	],
 	#classVars : [
-		'Finds',
-		'Replacements'
+		#Finds,
+		#Replacements
 	],
 	#category : 'Rubric-Editing-FindReplaceService',
 	#package : 'Rubric',

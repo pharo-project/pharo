@@ -5,10 +5,10 @@ Class {
 	#name : 'LogicalFontStoredSetting',
 	#superclass : 'AbstractFontStoredSetting',
 	#instVars : [
-		'fallbackFamilyNames',
-		'stretchValue',
-		'weightValue',
-		'slantValue'
+		#fallbackFamilyNames,
+		#stretchValue,
+		#weightValue,
+		#slantValue
 	],
 	#category : 'System-Settings-Core-Persistence-Ston-StoredSettings',
 	#package : 'System-Settings-Core',

@@ -22,12 +22,12 @@ Class {
 	#name : 'RBFindAndReplacePreviewPresenter',
 	#superclass : 'SpPresenter',
 	#instVars : [
-		'changeList',
-		'label',
-		'dropList',
-		'selectedRefactorings',
-		'method',
-		'refactoring'
+		#changeList,
+		#label,
+		#dropList,
+		#selectedRefactorings,
+		#method,
+		#refactoring
 	],
 	#category : 'SystemCommands-RefactoringSupport',
 	#package : 'SystemCommands-RefactoringSupport'

@@ -52,7 +52,7 @@ Class {
 	#name : 'ParametrizedTestCase',
 	#superclass : 'TestCase',
 	#instVars : [
-		'parametersToUse'
+		#parametersToUse
 	],
 	#category : 'SUnit-Core-Parametrized',
 	#package : 'SUnit-Core',
@@ -94,7 +94,7 @@ ParametrizedTestCase class >> testParameters [
 { #category : 'private' }
 ParametrizedTestCase >> instanceVariablesToKeep [
 
-	^ super instanceVariablesToKeep, #('testSelector' 'parametersToUse')
+	^ super instanceVariablesToKeep, #(testSelector parametersToUse)
 ]
 
 { #category : 'accessing' }

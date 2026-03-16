@@ -5,7 +5,7 @@ Class {
 	#name : 'TKTServiceManager',
 	#superclass : 'Object',
 	#instVars : [
-		'services'
+		#services
 	],
 	#category : 'TaskIt-Services',
 	#package : 'TaskIt',
@@ -44,7 +44,7 @@ TKTServiceManager >> services [
 { #category : 'start-stop' }
 TKTServiceManager >> startService: aService [
 	services
-		detect: [ :any | any name = aService name ]
+		detect: [ :any | any name sameContents: aService name ]
 		ifFound: [ :s |
 			s = aService
 				ifFalse: [ self

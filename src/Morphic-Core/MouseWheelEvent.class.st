@@ -5,7 +5,7 @@ Class {
 	#name : 'MouseWheelEvent',
 	#superclass : 'MouseEvent',
 	#instVars : [
-		'direction'
+		#direction
 	],
 	#category : 'Morphic-Core-Events',
 	#package : 'Morphic-Core',

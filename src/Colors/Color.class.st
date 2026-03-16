@@ -56,23 +56,23 @@ Class {
 	#name : 'Color',
 	#superclass : 'Object',
 	#instVars : [
-		'rgb',
-		'cachedDepth',
-		'cachedBitPattern',
-		'alpha'
+		#rgb,
+		#cachedDepth,
+		#cachedBitPattern,
+		#alpha
 	],
 	#classVars : [
-		'BlueShift',
-		'CachedColormaps',
-		'ColorRegistry',
-		'ComponentMask',
-		'ComponentMax',
-		'GrayToIndexMap',
-		'GreenShift',
-		'HalfComponentMask',
-		'IndexedColors',
-		'MaskingMap',
-		'RedShift'
+		#BlueShift,
+		#CachedColormaps,
+		#ColorRegistry,
+		#ComponentMask,
+		#ComponentMax,
+		#GrayToIndexMap,
+		#GreenShift,
+		#HalfComponentMask,
+		#IndexedColors,
+		#MaskingMap,
+		#RedShift
 	],
 	#category : 'Colors-Base',
 	#package : 'Colors',
@@ -872,7 +872,7 @@ Color class >> registeredNameOf: aColor [
 	colorName := #unnamed.
 	ColorRegistry
 		keysAndValuesDo: [ :key :value |
-			value = aColor
+			value sameContents: aColor
 				ifTrue: [ colorName := key ] ].
 	^ colorName
 ]

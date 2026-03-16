@@ -81,7 +81,7 @@ MCFileTreePackageStructureStWriter >> writePresentInitializers [
 		superclassOrder: (presentInitializers collect: [ :each | Smalltalk classOrTraitNamed: each key ]))
 		collect: [ :each | each name ].
 	orderedClasses
-		do: [ :className | stream nextPutAll: (presentInitializers detect: [ :each | each key = className ]) value contents ]
+		do: [ :className | stream nextPutAll: (presentInitializers detect: [ :each | each key sameContents: className ]) value contents ]
 ]
 
 { #category : 'writing' }

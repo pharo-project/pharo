@@ -2,8 +2,8 @@ Class {
 	#name : 'RBSearchTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'classSearches',
-		'currentSelector'
+		#classSearches,
+		#currentSelector
 	],
 	#category : 'Refactoring-Core-Tests',
 	#package : 'Refactoring-Core-Tests'
@@ -65,7 +65,7 @@ RBSearchTest >> buildSimpleLiteralSearch [
 				with:
 					(RBParser
 						parseExpression:
-							'#(''bugs'' ''possible bugs'' ''unnecessary code'' ''intention revealing'' ''miscellaneous'')'))
+							'#(bugs ''possible bugs'' ''unnecessary code'' ''intention revealing'' miscellaneous)'))
 		do: [ :aNode :answer |
 			answer
 				remove: self currentSelector ifAbsent: [ self error: 'failed' ];

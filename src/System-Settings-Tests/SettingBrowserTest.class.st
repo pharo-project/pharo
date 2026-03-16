@@ -5,7 +5,7 @@ Class {
 	#name : 'SettingBrowserTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'settingBrowser'
+		#settingBrowser
 	],
 	#category : 'System-Settings-Tests',
 	#package : 'System-Settings-Tests'

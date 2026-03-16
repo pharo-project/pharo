@@ -16,17 +16,17 @@ MetacelloPackagesSpecTestCase >> testAddGroupA [
         add:
             (self groupSpec
                 name: 'Platform';
-                includes: 'Core';
+                includes: #Core;
                 yourself).
     packages
         add:
             (self groupSpec
                 name: 'Platform';
-                includes: 'Tests';
+                includes: #Tests;
                 yourself).
     group := packages packageNamed: 'Platform' ifAbsent: [ self assert: false ].
-    self deny: (group includes includes: 'Core').
-    self assert: (group includes includes: 'Tests')
+    self deny: (group includes includes: #Core).
+    self assert: (group includes includes: #Tests)
 ]
 
 { #category : 'tests' }
@@ -39,15 +39,15 @@ MetacelloPackagesSpecTestCase >> testAddGroupB [
         add:
             {(self groupSpec
                 name: 'Platform';
-                includes: 'Core';
+                includes: #Core;
                 yourself).
             (self groupSpec
                 name: 'Platform';
-                includes: 'Tests';
+                includes: #Tests;
                 yourself)}.
     group := packages packageNamed: 'Platform' ifAbsent: [ self assert: false ].
-    self deny: (group includes includes: 'Core').
-    self assert: (group includes includes: 'Tests')
+    self deny: (group includes includes: #Core).
+    self assert: (group includes includes: #Tests)
 ]
 
 { #category : 'tests' }
@@ -62,7 +62,7 @@ MetacelloPackagesSpecTestCase >> testAddProjectA [
 				name: 'Project';
 				className: 'ConfigurationOfProjectA';
 				versionString: #stable;
-				loads: #('MyPackage' 'MyTests');
+				loads: #(MyPackage MyTests);
 				preLoadDoIt: #preLoadDoItB;
 				postLoadDoIt: #postLoadDoItB;
 				yourself).
@@ -73,7 +73,7 @@ MetacelloPackagesSpecTestCase >> testAddProjectA [
 				className: 'ConfigurationOfProject';
 				versionString: '1.0';
 				operator: #<;
-				loads: #('MyPackage');
+				loads: #(MyPackage);
 				preLoadDoIt: #preLoadDoIt;
 				postLoadDoIt: #postLoadDoIt;
 				yourself).
@@ -92,7 +92,7 @@ MetacelloPackagesSpecTestCase >> testAddProjectA [
 	self assert: project className equals: 'ConfigurationOfProject'.
 	self assert: project versionString equals: '1.0'.
 	self assert: project operator identicalTo: #<.
-	self assert: project loads equals: #('MyPackage').
+	self assert: project loads equals: #(MyPackage).
 	self assert: project preLoadDoIt value identicalTo: #preLoadDoIt.
 	self assert: project postLoadDoIt value identicalTo: #postLoadDoIt.
 	project projectDo: [ :prjct | self assert: project identicalTo: prjct ] packageDo: [ :ignored | self assert: false ] groupDo: [ :ignored | self assert: false ]
@@ -110,7 +110,7 @@ MetacelloPackagesSpecTestCase >> testAddProjectB [
 				name: 'Project';
 				className: 'ConfigurationOfProjectA';
 				versionString: #stable;
-				loads: #('MyPackage' 'MyTests');
+				loads: #(MyPackage MyTests);
 				preLoadDoIt: #preLoadDoItB;
 				postLoadDoIt: #postLoadDoItB;
 				yourself) . (self projectSpec
@@ -118,7 +118,7 @@ MetacelloPackagesSpecTestCase >> testAddProjectB [
 				className: 'ConfigurationOfProject';
 				versionString: '1.0';
 				operator: #<;
-				loads: #('MyPackage');
+				loads: #(MyPackage);
 				preLoadDoIt: #preLoadDoIt;
 				postLoadDoIt: #postLoadDoIt;
 				yourself)}.
@@ -137,7 +137,7 @@ MetacelloPackagesSpecTestCase >> testAddProjectB [
 	self assert: project className equals: 'ConfigurationOfProject'.
 	self assert: project versionString equals: '1.0'.
 	self assert: project operator identicalTo: #<.
-	self assert: project loads equals: #('MyPackage').
+	self assert: project loads equals: #(MyPackage).
 	self assert: project preLoadDoIt value identicalTo: #preLoadDoIt.
 	self assert: project postLoadDoIt value identicalTo: #postLoadDoIt.
 	project projectDo: [ :prjct | self assert: project identicalTo: prjct ] packageDo: [ :ignored | self assert: false ] groupDo: [ :ignored | self assert: false ]
@@ -153,26 +153,26 @@ MetacelloPackagesSpecTestCase >> testCopyToGroup [
         add:
             (self groupSpec
                 name: 'Platform';
-                includes: 'Core';
+                includes: #Core;
                 yourself).
     packages
         merge:
             (self groupSpec
                 name: 'Platform';
-                includes: 'Tests';
+                includes: #Tests;
                 yourself).
     group := packages packageNamed: 'Platform' ifAbsent: [ self assert: false ].
-    self assert: (group includes includes: 'Core').
-    self assert: (group includes includes: 'Tests').
+    self assert: (group includes includes: #Core).
+    self assert: (group includes includes: #Tests).
     group := self groupSpec
         name: 'PlatformCopy';
-        includes: 'Copy';
+        includes: #Copy;
         yourself.
     packages copy: 'Platform' to: group.
     group := packages packageNamed: 'PlatformCopy' ifAbsent: [ self assert: false ].
-    self assert: (group includes includes: 'Core').
-    self assert: (group includes includes: 'Copy').
-    self assert: (group includes includes: 'Tests')
+    self assert: (group includes includes: #Core).
+    self assert: (group includes includes: #Copy).
+    self assert: (group includes includes: #Tests)
 ]
 
 { #category : 'tests' }
@@ -187,7 +187,7 @@ MetacelloPackagesSpecTestCase >> testCopyToProject [
 				name: 'Project';
 				className: 'ConfigurationOfProjectA';
 				versionString: #stable;
-				loads: #('MyPackage' 'MyTests');
+				loads: #(MyPackage MyTests);
 				preLoadDoIt: #preLoadDoItB;
 				postLoadDoIt: #postLoadDoItB;
 				yourself).
@@ -204,7 +204,7 @@ MetacelloPackagesSpecTestCase >> testCopyToProject [
 	self assert: project className equals: 'ConfigurationOfProjectA'.
 	self assert: project versionString equals: #stable.
 	self assert: project operator identicalTo: #>=.
-	self assert: project loads equals: #('MyPackage' 'MyTests').
+	self assert: project loads equals: #(MyPackage MyTests).
 	self assert: project preLoadDoIt value identicalTo: #preLoadDoItB.
 	self assert: project postLoadDoIt value identicalTo: #postLoadDoItB
 ]
@@ -219,17 +219,17 @@ MetacelloPackagesSpecTestCase >> testMergeGroupA [
         add:
             (self groupSpec
                 name: 'Platform';
-                includes: 'Core';
+                includes: #Core;
                 yourself).
     packages
         merge:
             (self groupSpec
                 name: 'Platform';
-                includes: 'Tests';
+                includes: #Tests;
                 yourself).
     group := packages packageNamed: 'Platform' ifAbsent: [ self assert: false ].
-    self assert: (group includes includes: 'Core').
-    self assert: (group includes includes: 'Tests')
+    self assert: (group includes includes: #Core).
+    self assert: (group includes includes: #Tests)
 ]
 
 { #category : 'tests' }
@@ -242,17 +242,17 @@ MetacelloPackagesSpecTestCase >> testMergeGroupB [
         add:
             (self groupSpec
                 name: 'Platform';
-                includes: 'Core';
+                includes: #Core;
                 yourself).
     packages
         merge:
             {(self groupSpec
                 name: 'Platform';
-                includes: 'Tests';
+                includes: #Tests;
                 yourself)}.
     group := packages packageNamed: 'Platform' ifAbsent: [ self assert: false ].
-    self assert: (group includes includes: 'Core').
-    self assert: (group includes includes: 'Tests')
+    self assert: (group includes includes: #Core).
+    self assert: (group includes includes: #Tests)
 ]
 
 { #category : 'tests' }
@@ -265,7 +265,7 @@ MetacelloPackagesSpecTestCase >> testMergeProjectA [
 		name: 'Project';
 		className: 'ConfigurationOfProjectA';
 		versionString: #stable;
-		loads: #('MyPackage' 'MyTests');
+		loads: #(MyPackage MyTests);
 		preLoadDoIt: #preLoadDoItB;
 		postLoadDoIt: #postLoadDoItB;
 		yourself.
@@ -279,7 +279,7 @@ MetacelloPackagesSpecTestCase >> testMergeProjectA [
 		className: 'ConfigurationOfProject';
 		versionString: '1.0';
 		operator: #<;
-		loads: #('MyPackage');
+		loads: #(MyPackage);
 		preLoadDoIt: #preLoadDoIt;
 		postLoadDoIt: #postLoadDoIt;
 		yourself.
@@ -294,7 +294,7 @@ MetacelloPackagesSpecTestCase >> testMergeProjectA [
 	self assert: project className equals: 'ConfigurationOfProject'.
 	self assert: project versionString equals: '1.0'.
 	self assert: project operator identicalTo: #<.
-	self assert: project loads equals: #('MyPackage').
+	self assert: project loads equals: #(MyPackage).
 	self assert: project preLoadDoIt value identicalTo: #preLoadDoIt.
 	self assert: project postLoadDoIt value identicalTo: #postLoadDoIt.
 	project projectDo: [ :prjct | self assert: project identicalTo: prjct ] packageDo: [ :ignored | self assert: false ] groupDo: [ :ignored | self assert: false ]
@@ -310,7 +310,7 @@ MetacelloPackagesSpecTestCase >> testMergeProjectB [
 		name: 'Project';
 		className: 'ConfigurationOfProjectA';
 		versionString: #stable;
-		loads: #('MyPackage' 'MyTests');
+		loads: #(MyPackage MyTests);
 		preLoadDoIt: #preLoadDoItB;
 		postLoadDoIt: #postLoadDoItB;
 		yourself.
@@ -324,7 +324,7 @@ MetacelloPackagesSpecTestCase >> testMergeProjectB [
 		className: 'ConfigurationOfProject';
 		versionString: '1.0';
 		operator: #<;
-		loads: #('MyPackage');
+		loads: #(MyPackage);
 		preLoadDoIt: #preLoadDoIt;
 		postLoadDoIt: #postLoadDoIt;
 		yourself.
@@ -339,7 +339,7 @@ MetacelloPackagesSpecTestCase >> testMergeProjectB [
 	self assert: project className equals: 'ConfigurationOfProject'.
 	self assert: project versionString equals: '1.0'.
 	self assert: project operator identicalTo: #<.
-	self assert: project loads equals: #('MyPackage').
+	self assert: project loads equals: #(MyPackage).
 	self assert: project preLoadDoIt value identicalTo: #preLoadDoIt.
 	self assert: project postLoadDoIt value identicalTo: #postLoadDoIt.
 	project projectDo: [ :prjct | self assert: project identicalTo: prjct ] packageDo: [ :ignored | self assert: false ] groupDo: [ :ignored | self assert: false ]
@@ -355,22 +355,22 @@ MetacelloPackagesSpecTestCase >> testRemoveGroupA [
         add:
             (self groupSpec
                 name: 'Platform';
-                includes: 'Core';
+                includes: #Core;
                 yourself).
     packages
         merge:
             (self groupSpec
                 name: 'Platform';
-                includes: 'Tests';
+                includes: #Tests;
                 yourself).
     group := packages packageNamed: 'Platform' ifAbsent: [ self assert: false ].
-    self assert: (group includes includes: 'Core').
-    self assert: (group includes includes: 'Tests').
+    self assert: (group includes includes: #Core).
+    self assert: (group includes includes: #Tests).
     packages
         remove:
             (self groupSpec
                 name: 'Platform';
-                includes: 'Core';
+                includes: #Core;
                 yourself).
     removed := false.
     packages packageNamed: 'Platform' ifAbsent: [ removed := true ].
@@ -387,15 +387,15 @@ MetacelloPackagesSpecTestCase >> testRemoveGroupB [
         add:
             {(self groupSpec
                 name: 'Platform';
-                includes: 'Core';
+                includes: #Core;
                 yourself).
             (self groupSpec
                 name: 'Base';
-                includes: 'Base';
+                includes: #Base;
                 yourself).
             (self groupSpec
                 name: 'Tests';
-                includes: 'Tests';
+                includes: #Tests;
                 yourself)}.
     packages packageNamed: 'Platform' ifAbsent: [ self assert: false ].
     packages packageNamed: 'Base' ifAbsent: [ self assert: false ].
@@ -423,15 +423,15 @@ MetacelloPackagesSpecTestCase >> testRemoveGroupC [
         add:
             {(self groupSpec
                 name: 'Platform';
-                includes: 'Core';
+                includes: #Core;
                 yourself).
             (self groupSpec
                 name: 'Base';
-                includes: 'Base';
+                includes: #Base;
                 yourself).
             (self groupSpec
                 name: 'Tests';
-                includes: 'Tests';
+                includes: #Tests;
                 yourself)}.
     packages packageNamed: 'Platform' ifAbsent: [ self assert: false ].
     packages packageNamed: 'Base' ifAbsent: [ self assert: false ].
@@ -457,7 +457,7 @@ MetacelloPackagesSpecTestCase >> testRemoveProjectA [
 				className: 'ConfigurationOfProject';
 				versionString: '1.0';
 				operator: #<;
-				loads: #('MyPackage');
+				loads: #(MyPackage);
 				preLoadDoIt: #preLoadDoIt;
 				postLoadDoIt: #postLoadDoIt;
 				yourself).
@@ -467,7 +467,7 @@ MetacelloPackagesSpecTestCase >> testRemoveProjectA [
 	self assert: project className equals: 'ConfigurationOfProject'.
 	self assert: project versionString equals: '1.0'.
 	self assert: project operator identicalTo: #<.
-	self assert: project loads equals: #('MyPackage').
+	self assert: project loads equals: #(MyPackage).
 	self assert: project preLoadDoIt value identicalTo: #preLoadDoIt.
 	self assert: project postLoadDoIt value identicalTo: #postLoadDoIt.
 	packages
@@ -493,7 +493,7 @@ MetacelloPackagesSpecTestCase >> testRemoveProjectB [
 				className: 'ConfigurationOfProject';
 				versionString: '1.0';
 				operator: #<;
-				loads: #('MyPackage');
+				loads: #(MyPackage);
 				preLoadDoIt: #preLoadDoIt;
 				postLoadDoIt: #postLoadDoIt;
 				yourself).
@@ -503,7 +503,7 @@ MetacelloPackagesSpecTestCase >> testRemoveProjectB [
 	self assert: project className equals: 'ConfigurationOfProject'.
 	self assert: project versionString equals: '1.0'.
 	self assert: project operator identicalTo: #<.
-	self assert: project loads equals: #('MyPackage').
+	self assert: project loads equals: #(MyPackage).
 	self assert: project preLoadDoIt value identicalTo: #preLoadDoIt.
 	self assert: project postLoadDoIt value identicalTo: #postLoadDoIt.
 	packages

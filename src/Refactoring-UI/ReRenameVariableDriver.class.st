@@ -5,10 +5,10 @@ Class {
 	#name : 'ReRenameVariableDriver',
 	#superclass : 'RBInteractionDriver',
 	#instVars : [
-		'oldName',
-		'class',
-		'shouldEscape',
-		'previouslyProposedName'
+		#oldName,
+		#class,
+		#shouldEscape,
+		#previouslyProposedName
 	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',

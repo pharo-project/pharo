@@ -5,11 +5,11 @@ Class {
 	#name : 'DANode',
 	#superclass : 'Object',
 	#instVars : [
-		'treeModelParent',
-		'cycle',
-		'browser',
-		'content',
-		'parent'
+		#treeModelParent,
+		#cycle,
+		#browser,
+		#content,
+		#parent
 	],
 	#category : 'Tool-DependencyAnalyser-UI-Nodes',
 	#package : 'Tool-DependencyAnalyser-UI',

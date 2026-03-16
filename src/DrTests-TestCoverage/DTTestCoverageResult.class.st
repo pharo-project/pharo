@@ -8,9 +8,9 @@ Class {
 	#name : 'DTTestCoverageResult',
 	#superclass : 'DTPluginResult',
 	#instVars : [
-		'methodList',
-		'percent',
-		'partiallyCoveredMethods'
+		#methodList,
+		#percent,
+		#partiallyCoveredMethods
 	],
 	#category : 'DrTests-TestCoverage',
 	#package : 'DrTests-TestCoverage'

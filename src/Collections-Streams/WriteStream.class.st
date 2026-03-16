@@ -5,7 +5,7 @@ Class {
 	#name : 'WriteStream',
 	#superclass : 'PositionableStream',
 	#instVars : [
-		'writeLimit'
+		#writeLimit
 	],
 	#category : 'Collections-Streams-Base',
 	#package : 'Collections-Streams',

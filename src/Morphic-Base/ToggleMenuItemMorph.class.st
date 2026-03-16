@@ -5,8 +5,8 @@ Class {
 	#name : 'ToggleMenuItemMorph',
 	#superclass : 'MenuItemMorph',
 	#instVars : [
-		'getStateSelector',
-		'enablementSelector'
+		#getStateSelector,
+		#enablementSelector
 	],
 	#category : 'Morphic-Base-Menus',
 	#package : 'Morphic-Base',

@@ -9,27 +9,27 @@ Class {
 	#traits : 'TSortTest + TEmptySequenceableTest + TAddTest + TSequencedElementAccessTest + TIncludesWithIdentityCheckTest + TCloneTest + TSetArithmetic + TRemoveForMultiplenessTest + TCreationWithTest + TCopyTest + TPutBasicTest + TIterateSequencedReadableTest + TSubCollectionAccess + TIndexAccess + TCopySequenceableWithReplacement + TCopyPartOfSequenceable + TCopySequenceableSameContents + (TCopySequenceableWithOrWithoutSpecificElements - {#testForceToPaddingWith. #testForceToPaddingStartWith}) + TPrintOnSequencedTest + TAsStringCommaAndDelimiterSequenceableTest + TConvertTest + TConvertAsSetForMultiplinessIdentityTest + TSequencedConcatenationTest + TBeginsEndsWith + TReplacementSequencedTest + TIndexAccessForMultipliness + TCopyPartOfSequenceableForMultipliness + TConvertAsSortedTest + TPutTest + TSequencedStructuralEqualityTest + TOccurrencesForMultiplinessTest + TEnumeratingTest + TSequenceableTruncatedToSize',
 	#classTraits : 'TSortTest classTrait + TEmptySequenceableTest classTrait + TAddTest classTrait + TSequencedElementAccessTest classTrait + TIncludesWithIdentityCheckTest classTrait + TCloneTest classTrait + TSetArithmetic classTrait + TRemoveForMultiplenessTest classTrait + TCreationWithTest classTrait + TCopyTest classTrait + TPutBasicTest classTrait + TIterateSequencedReadableTest classTrait + TSubCollectionAccess classTrait + TIndexAccess classTrait + TCopySequenceableWithReplacement classTrait + TCopyPartOfSequenceable classTrait + TCopySequenceableSameContents classTrait + TCopySequenceableWithOrWithoutSpecificElements classTrait + TPrintOnSequencedTest classTrait + TAsStringCommaAndDelimiterSequenceableTest classTrait + TConvertTest classTrait + TConvertAsSetForMultiplinessIdentityTest classTrait + TSequencedConcatenationTest classTrait + TBeginsEndsWith classTrait + TReplacementSequencedTest classTrait + TIndexAccessForMultipliness classTrait + TCopyPartOfSequenceableForMultipliness classTrait + TConvertAsSortedTest classTrait + TPutTest classTrait + TSequencedStructuralEqualityTest classTrait + TOccurrencesForMultiplinessTest classTrait + TEnumeratingTest classTrait + TSequenceableTruncatedToSize classTrait',
 	#instVars : [
-		'empty',
-		'nonEmpty',
-		'collectResult',
-		'emptyButAllocatedWith20',
-		'otherCollection',
-		'indexCollection',
-		'collectionWithElement',
-		'collectionOfFloat',
-		'elementNotIn',
-		'indexArray',
-		'withoutEqualElements',
-		'duplicateElement',
-		'collectionWithDuplicateElement',
-		'collection5Elements',
-		'collectionWith4Elements',
-		'collectionOfCollectionsOfInts',
-		'collectionOfCollectionsOfStrings',
-		'withCharacters',
-		'simpleCollection',
-		'collectionOfString',
-		'collectionWithSameBeginingEnd'
+		#empty,
+		#nonEmpty,
+		#collectResult,
+		#emptyButAllocatedWith20,
+		#otherCollection,
+		#indexCollection,
+		#collectionWithElement,
+		#collectionOfFloat,
+		#elementNotIn,
+		#indexArray,
+		#withoutEqualElements,
+		#duplicateElement,
+		#collectionWithDuplicateElement,
+		#collection5Elements,
+		#collectionWith4Elements,
+		#collectionOfCollectionsOfInts,
+		#collectionOfCollectionsOfStrings,
+		#withCharacters,
+		#simpleCollection,
+		#collectionOfString,
+		#collectionWithSameBeginingEnd
 	],
 	#category : 'Collections-Sequenceable-Tests-Ordered',
 	#package : 'Collections-Sequenceable-Tests',
@@ -660,7 +660,7 @@ OrderedCollectionTest >> testAddBeforeIndex [
 { #category : 'tests - adding' }
 OrderedCollectionTest >> testAddDuplicateItem1 [
 	| collection |
-	collection := #('Jim' 'Mary' 'John' 'Andrew' ) asOrderedCollection.
+	collection := #(Jim Mary John Andrew ) asOrderedCollection.
 	collection add: 'John' before: 'John'.
 	self
 		assert: ((collection asBag occurrencesOf: 'John')
@@ -684,7 +684,7 @@ OrderedCollectionTest >> testAddFirst [
 { #category : 'tests - adding' }
 OrderedCollectionTest >> testAddItem1 [
 	| collection size |
-	collection := #('Jim' 'Mary' 'John' 'Andrew') asOrderedCollection.
+	collection := #(Jim Mary John Andrew) asOrderedCollection.
 	size := collection size.
 	collection add: 'James' before: 'Jim'.
 	collection add: 'Margaret' before: 'Andrew'.
@@ -694,7 +694,7 @@ OrderedCollectionTest >> testAddItem1 [
 { #category : 'tests - adding' }
 OrderedCollectionTest >> testAddItem2 [
 	| collection |
-	collection := #('Jim' 'Mary' 'John' 'Andrew') asOrderedCollection.
+	collection := #(Jim Mary John Andrew) asOrderedCollection.
 	collection add: 'James' before: 'Jim'.
 	collection add: 'Margaret' before: 'Andrew'.
 	self assert: (collection indexOf: 'James') + 1 equals: (collection indexOf: 'Jim').
@@ -727,7 +727,7 @@ OrderedCollectionTest >> testAsOrderedCollectionReturnsOrderedCollection [
 { #category : 'tests - accessing' }
 OrderedCollectionTest >> testAt [
 	| collection |
-	collection := #('Jim' 'Mary' 'John' 'Andrew') asOrderedCollection.
+	collection := #(Jim Mary John Andrew) asOrderedCollection.
 	self assert: (collection at: 1) equals: 'Jim'.
 	self assert: (collection at: 2) equals: 'Mary'
 ]
@@ -1011,7 +1011,7 @@ OrderedCollectionTest >> testIncludesElementIsNotThere [
 { #category : 'tests - enumerating' }
 OrderedCollectionTest >> testIndexOfWithDuplicates [
 	| collection indices bagOfIndices |
-	collection := #('Jim' 'Mary' 'John' 'Andrew' 'Mary' 'John' 'Jim' 'Micheal') asOrderedCollection.
+	collection := #(Jim Mary John Andrew Mary John Jim Micheal) asOrderedCollection.
 	indices := collection collect: [ :item | collection indexOf: item ].
 	self assert: indices asSet size equals: collection asSet size.
 	bagOfIndices := indices asBag.
@@ -1112,7 +1112,7 @@ OrderedCollectionTest >> testRemoveLast [
 { #category : 'tests - copying' }
 OrderedCollectionTest >> testReversed [
 	| collection1 collection2 |
-	collection1 := #('Jim' 'Mary' 'John' 'Andrew') asOrderedCollection.
+	collection1 := #(Jim Mary John Andrew) asOrderedCollection.
 	collection2 := collection1 reversed.
 	self assert: collection2 first equals: 'Andrew'.
 	self assert: collection2 last equals: 'Jim'

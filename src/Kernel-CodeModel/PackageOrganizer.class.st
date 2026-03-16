@@ -9,8 +9,8 @@ Class {
 	#name : 'PackageOrganizer',
 	#superclass : 'Object',
 	#instVars : [
-		'packages',
-		'environment'
+		#packages,
+		#environment
 	],
 	#category : 'Kernel-CodeModel-Packages',
 	#package : 'Kernel-CodeModel',

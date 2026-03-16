@@ -6,10 +6,10 @@ Class {
 	#name : 'PluggableMenuSpec',
 	#superclass : 'Object',
 	#instVars : [
-		'label',
-		'model',
-		'items',
-		'parentMenu'
+		#label,
+		#model,
+		#items,
+		#parentMenu
 	],
 	#category : 'MenuRegistration-Core',
 	#package : 'MenuRegistration',

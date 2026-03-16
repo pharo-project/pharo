@@ -2,7 +2,7 @@ Class {
 	#name : 'RubTextSegmentIconDisplayer',
 	#superclass : 'RubScrolledTextSideRuler',
 	#instVars : [
-		'previouslyIn'
+		#previouslyIn
 	],
 	#category : 'Rubric-Editing-Widgets',
 	#package : 'Rubric',

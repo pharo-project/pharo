@@ -5,8 +5,8 @@ Class {
 	#name : 'EpPackageTagChange',
 	#superclass : 'EpCodeChange',
 	#instVars : [
-		'packageTagName',
-		'packageName'
+		#packageTagName,
+		#packageName
 	],
 	#category : 'Epicea-Model',
 	#package : 'Epicea',

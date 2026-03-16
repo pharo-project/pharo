@@ -111,13 +111,13 @@ Class {
 	#name : 'ClyBrowserItem',
 	#superclass : 'Object',
 	#instVars : [
-		'position',
-		'name',
-		'depth',
-		'properties',
-		'actualObject',
-		'type',
-		'isPrepared'
+		#position,
+		#name,
+		#depth,
+		#properties,
+		#actualObject,
+		#type,
+		#isPrepared
 	],
 	#category : 'Calypso-NavigationModel-Model',
 	#package : 'Calypso-NavigationModel',

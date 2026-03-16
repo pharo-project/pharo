@@ -2,9 +2,9 @@ Class {
 	#name : 'EventManagerTest',
 	#superclass : 'ClassTestCase',
 	#instVars : [
-		'eventSource',
-		'eventListener',
-		'succeeded'
+		#eventSource,
+		#eventListener,
+		#succeeded
 	],
 	#category : 'System-Object Events-Tests',
 	#package : 'System-Object Events-Tests'
@@ -147,7 +147,7 @@ EventManagerTest >> testNoArgumentEventDependentSuppliedArgument [
 
 	eventSource when: #anEvent send: #add: to: eventListener with: 'boundValue'.
 	eventSource triggerEvent: #anEvent.
-	self should: [eventListener includes: 'boundValue']
+	self should: [eventListener includes: #boundValue]
 ]
 
 { #category : 'running - dependent action supplied arguments' }
@@ -157,9 +157,9 @@ EventManagerTest >> testNoArgumentEventDependentSuppliedArguments [
 		when: #anEvent
 		send: #addArg1:addArg2:
 		to: self
-		withArguments: #('hello' 'world').
+		withArguments: #(hello world).
 	eventSource triggerEvent: #anEvent.
-	self should: [(eventListener includes: 'hello') and: [eventListener includes: 'world']]
+	self should: [(eventListener includes: #hello) and: [eventListener includes: #world]]
 ]
 
 { #category : 'running - dependent action' }

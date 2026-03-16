@@ -22,7 +22,7 @@ SupplyAnswerTest >> testChooseDirectory [
 { #category : 'tests' }
 SupplyAnswerTest >> testFillInTheBlank [
 	| answer |
-	answer := [ MorphicUIManager new request: 'Your favorite color?' ] valueSupplyingAnswer: #('Your favorite color?' 'blue').
+	answer := [ MorphicUIManager new request: 'Your favorite color?' ] valueSupplyingAnswer: #('Your favorite color?' blue).
 
 	self assert: answer equals: 'blue'
 ]

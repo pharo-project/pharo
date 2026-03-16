@@ -5,8 +5,8 @@ Class {
 	#name : 'ExpanderMorph',
 	#superclass : 'PanelMorph',
 	#instVars : [
-		'titleMorph',
-		'announcer'
+		#titleMorph,
+		#announcer
 	],
 	#category : 'Polymorph-Widgets-Base',
 	#package : 'Polymorph-Widgets',

@@ -32,7 +32,7 @@ Class {
 	#name : 'FTCellMorph',
 	#superclass : 'FTSelectableMorph',
 	#instVars : [
-		'topSeparator'
+		#topSeparator
 	],
 	#category : 'Morphic-Widgets-FastTable-Base',
 	#package : 'Morphic-Widgets-FastTable',

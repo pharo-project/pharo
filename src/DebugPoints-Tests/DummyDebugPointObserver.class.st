@@ -2,7 +2,7 @@ Class {
 	#name : 'DummyDebugPointObserver',
 	#superclass : 'Object',
 	#instVars : [
-		'tag'
+		#tag
 	],
 	#category : 'DebugPoints-Tests-Utils',
 	#package : 'DebugPoints-Tests',

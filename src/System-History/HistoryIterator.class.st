@@ -25,10 +25,10 @@ Class {
 	#name : 'HistoryIterator',
 	#superclass : 'Object',
 	#instVars : [
-		'index',
-		'plugged',
-		'recorder',
-		'maxSize'
+		#index,
+		#plugged,
+		#recorder,
+		#maxSize
 	],
 	#category : 'System-History-Iterators',
 	#package : 'System-History',

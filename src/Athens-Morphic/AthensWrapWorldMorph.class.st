@@ -10,8 +10,8 @@ Class {
 	#name : 'AthensWrapWorldMorph',
 	#superclass : 'AthensWrapMorph',
 	#instVars : [
-		'worldmorph',
-		'wrappedWorldDisplay'
+		#worldmorph,
+		#wrappedWorldDisplay
 	],
 	#category : 'Athens-Morphic',
 	#package : 'Athens-Morphic'

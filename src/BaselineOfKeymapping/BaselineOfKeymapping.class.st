@@ -19,13 +19,13 @@ BaselineOfKeymapping >> baseline: spec [
 			package: 'Keymapping-Tests'.
 		
 		spec 
-			group: 'default' with: #('core' 'ui' 'tests'); 
+			group: 'default' with: #(core ui tests); 
 			group: 'core' with: #('Keymapping-Core' 'Keymapping-KeyCombinations' );
-			group: 'morphic' with: #('core' 'Keymapping-Pragmas' 'Keymapping-Settings');
-			group: 'spec' with: #('core' 'Keymapping-Tools-Spec');
-			group: 'ui' with: #('core' 'morphic' 'spec');
+			group: 'morphic' with: #(core 'Keymapping-Pragmas' 'Keymapping-Settings');
+			group: 'spec' with: #(core 'Keymapping-Tools-Spec');
+			group: 'ui' with: #(core morphic spec);
 			group: 'tests' with: #(
-				'core' 
+				core 
 				'Keymapping-Tests') ]
 ]
 

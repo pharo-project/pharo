@@ -7,11 +7,11 @@ Class {
 	#name : 'ClyClass2FromP1Mock',
 	#superclass : 'Object',
 	#instVars : [
-		'instVar'
+		#instVar
 	],
 	#classVars : [
-		'ClassVar1',
-		'ClassVar2'
+		#ClassVar1,
+		#ClassVar2
 	],
 	#category : 'Calypso-SystemQueries-Tests-P1WithHierarchy',
 	#package : 'Calypso-SystemQueries-Tests-P1WithHierarchy'

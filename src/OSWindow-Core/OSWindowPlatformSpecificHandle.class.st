@@ -12,10 +12,10 @@ Class {
 	#name : 'OSWindowPlatformSpecificHandle',
 	#superclass : 'Object',
 	#instVars : [
-		'platform',
-		'display',
-		'window',
-		'surface'
+		#platform,
+		#display,
+		#window,
+		#surface
 	],
 	#category : 'OSWindow-Core-Utilities',
 	#package : 'OSWindow-Core',

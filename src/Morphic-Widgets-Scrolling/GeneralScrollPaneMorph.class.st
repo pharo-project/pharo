@@ -5,9 +5,9 @@ Class {
 	#name : 'GeneralScrollPaneMorph',
 	#superclass : 'Morph',
 	#instVars : [
-		'scroller',
-		'hScrollbar',
-		'vScrollbar'
+		#scroller,
+		#hScrollbar,
+		#vScrollbar
 	],
 	#category : 'Morphic-Widgets-Scrolling',
 	#package : 'Morphic-Widgets-Scrolling'

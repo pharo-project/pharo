@@ -12,7 +12,7 @@ ClapMeaningsTest >> testArgFlagBasicMeaning [
 	flag := (ClapFlag id: #foo)
 		add: (ClapPositional id: #bar).
 
-	match := flag match: #('--foo' 'whatever').
+	match := flag match: #('--foo' whatever).
 
 	self assert: match value.
 	self deny: (flag match: #()) value
@@ -27,8 +27,8 @@ ClapMeaningsTest >> testArgFlagCollectionMeaning [
 		meaningCollection.
 	match := flag match: #('--foo' 'whatever 1' 'whatever 2').
 	self assert: match value asArray equals: #('whatever 1' 'whatever 2').
-	match := flag match: #('--foo' 'whatever').
-	self assert: match value asArray equals: #('whatever' nobaz).
+	match := flag match: #('--foo' whatever).
+	self assert: match value asArray equals: #(whatever nobaz).
 	match := flag match: #('--foo').
 	self assert: match value asArray equals: #(nobar nobaz)
 ]
@@ -39,7 +39,7 @@ ClapMeaningsTest >> testArgFlagScalarMeaning [
 	flag := (ClapFlag id: #foo)
 		add: ((ClapPositional id: #bar) implicitMeaning: [ 'oops' ]);
 		meaningScalar.
-	match := flag match: #('--foo' 'whatever').
+	match := flag match: #('--foo' whatever).
 	self assert: match value equals: 'whatever'.
 	match := flag match: #('--foo').
 	self assert: match value equals: 'oops'.

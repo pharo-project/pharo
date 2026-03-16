@@ -12,35 +12,35 @@ Class {
 	#name : 'PNGReadWriter',
 	#superclass : 'ImageReadWriter',
 	#instVars : [
-		'chunk',
-		'form',
-		'width',
-		'height',
-		'depth',
-		'backColor',
-		'bitsPerChannel',
-		'colorType',
-		'interlaceMethod',
-		'bitsPerPixel',
-		'bytesPerScanline',
-		'thisScanline',
-		'prevScanline',
-		'rowSize',
-		'idatChunkStream',
-		'unknownChunks',
-		'palette',
-		'transparentPixelValue',
-		'filtersSeen',
-		'cachedDecoderMap',
-		'bigEndian'
+		#chunk,
+		#form,
+		#width,
+		#height,
+		#depth,
+		#backColor,
+		#bitsPerChannel,
+		#colorType,
+		#interlaceMethod,
+		#bitsPerPixel,
+		#bytesPerScanline,
+		#thisScanline,
+		#prevScanline,
+		#rowSize,
+		#idatChunkStream,
+		#unknownChunks,
+		#palette,
+		#transparentPixelValue,
+		#filtersSeen,
+		#cachedDecoderMap,
+		#bigEndian
 	],
 	#classVars : [
-		'BPP',
-		'BlockHeight',
-		'BlockWidth',
-		'Debugging',
-		'StandardColors',
-		'StandardSwizzleMaps'
+		#BPP,
+		#BlockHeight,
+		#BlockWidth,
+		#Debugging,
+		#StandardColors,
+		#StandardSwizzleMaps
 	],
 	#category : 'Graphics-Files',
 	#package : 'Graphics-Files'
@@ -128,7 +128,7 @@ PNGReadWriter class >> initialize [
 { #category : 'image reading/writing' }
 PNGReadWriter class >> typicalFileExtensions [
 	"Answer a collection of file extensions (lowercase) which files that I can read might commonly have"
-	^#('png')
+	^#(png)
 ]
 
 { #category : 'pixel copies' }

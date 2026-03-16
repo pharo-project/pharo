@@ -28,16 +28,16 @@ Class {
 	#traits : 'TAbleToRotate',
 	#classTraits : 'TAbleToRotate classTrait',
 	#instVars : [
-		'start',
-		'end',
-		'value',
-		'height',
-		'width',
-		'cachedWidth'
+		#start,
+		#end,
+		#value,
+		#height,
+		#width,
+		#cachedWidth
 	],
 	#classVars : [
-		'DefaultHeight',
-		'DefaultWidth'
+		#DefaultHeight,
+		#DefaultWidth
 	],
 	#category : 'Morphic-Base-ProgressBar',
 	#package : 'Morphic-Base',

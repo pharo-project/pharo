@@ -6,14 +6,14 @@ Class {
 	#name : 'AbstractWorldRenderer',
 	#superclass : 'Object',
 	#instVars : [
-		'world',
-		'alreadyActivated'
+		#world,
+		#alreadyActivated
 	],
 	#classVars : [
-		'IsLoggingRenderingProfileToFile',
-		'IsProfilingRenderingTime',
-		'MainWorldRenderer',
-		'RenderingProfilingLogOutput'
+		#IsLoggingRenderingProfileToFile,
+		#IsProfilingRenderingTime,
+		#MainWorldRenderer,
+		#RenderingProfilingLogOutput
 	],
 	#category : 'Morphic-Core-Worlds',
 	#package : 'Morphic-Core',

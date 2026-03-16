@@ -12,10 +12,10 @@ BaselineOfEmergencyDebugger >> baseline: spec [
 	spec for: #common do: [
 		spec 
 			package: 'EmergencyDebugger';
-			package: 'EmergencyDebugger-Tests' with: [ spec requires: #('EmergencyDebugger') ].
+			package: 'EmergencyDebugger-Tests' with: [ spec requires: #(EmergencyDebugger) ].
 			
 		spec 
-			group: 'default' with: #('Base' 'Tests');
-			group: 'Base' with: #('EmergencyDebugger');
+			group: 'default' with: #(Base Tests);
+			group: 'Base' with: #(EmergencyDebugger);
 			group: 'Tests' with: #('EmergencyDebugger-Tests') ]
 ]

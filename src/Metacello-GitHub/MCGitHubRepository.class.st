@@ -2,9 +2,9 @@ Class {
 	#name : 'MCGitHubRepository',
 	#superclass : 'MCGitBasedNetworkRepository',
 	#classVars : [
-		'CacheDirectory',
-		'DownloadCache',
-		'ETagsCache'
+		#CacheDirectory,
+		#DownloadCache,
+		#ETagsCache
 	],
 	#category : 'Metacello-GitHub',
 	#package : 'Metacello-GitHub'
@@ -139,7 +139,7 @@ MCGitHubRepository >> normalizeTagsData: jsonObject [
   jsonObject isDictionary
     ifTrue: [ 
       jsonObject
-        at: 'message'
+        at: #'message'
         ifPresent: [ :errorString | 
           self
             error:
@@ -149,9 +149,9 @@ MCGitHubRepository >> normalizeTagsData: jsonObject [
   jsonObject
     do: [ :tagObject | 
       | tag commit |
-      tag := tagObject at: 'name'.
-      commit := tagObject at: 'commit'.
-      tagDict at: tag put: (commit at: 'sha') ].
+      tag := tagObject at: #'name'.
+      commit := tagObject at: #'commit'.
+      tagDict at: tag put: (commit at: #'sha') ].
   ^ tagDict
 ]
 

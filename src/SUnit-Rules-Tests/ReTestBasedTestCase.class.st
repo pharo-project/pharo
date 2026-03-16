@@ -2,7 +2,7 @@ Class {
 	#name : 'ReTestBasedTestCase',
 	#superclass : 'ReCodeBasedTestCase',
 	#instVars : [
-		'validTestPackage'
+		#validTestPackage
 	],
 	#category : 'SUnit-Rules-Tests-Base',
 	#package : 'SUnit-Rules-Tests',

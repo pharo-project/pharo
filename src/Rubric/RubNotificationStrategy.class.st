@@ -7,7 +7,7 @@ Class {
 	#name : 'RubNotificationStrategy',
 	#superclass : 'Object',
 	#instVars : [
-		'editor'
+		#editor
 	],
 	#category : 'Rubric-Editing-Core',
 	#package : 'Rubric',

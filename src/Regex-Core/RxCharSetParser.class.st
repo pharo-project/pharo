@@ -13,9 +13,9 @@ Class {
 	#name : 'RxCharSetParser',
 	#superclass : 'Object',
 	#instVars : [
-		'source',
-		'lookahead',
-		'elements'
+		#source,
+		#lookahead,
+		#elements
 	],
 	#category : 'Regex-Core-Utilities',
 	#package : 'Regex-Core',

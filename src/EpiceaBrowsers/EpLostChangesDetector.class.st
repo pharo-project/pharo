@@ -6,11 +6,11 @@ Class {
 	#name : 'EpLostChangesDetector',
 	#superclass : 'Object',
 	#instVars : [
-		'hasLostChanges',
-		'lastSessionFileStore'
+		#hasLostChanges,
+		#lastSessionFileStore
 	],
 	#classInstVars : [
-		'enabled'
+		#enabled
 	],
 	#category : 'EpiceaBrowsers-Integration',
 	#package : 'EpiceaBrowsers',

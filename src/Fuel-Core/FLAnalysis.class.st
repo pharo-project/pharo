@@ -14,11 +14,11 @@ Class {
 	#traits : 'TFLConfigurable',
 	#classTraits : 'TFLConfigurable classTrait',
 	#instVars : [
-		'objectStack',
-		'firstMapper',
-		'clusterization',
-		'privateObjectStack',
-		'privateFirstMapper'
+		#objectStack,
+		#firstMapper,
+		#clusterization,
+		#privateObjectStack,
+		#privateFirstMapper
 	],
 	#category : 'Fuel-Core-Base',
 	#package : 'Fuel-Core',

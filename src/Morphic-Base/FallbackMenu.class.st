@@ -10,8 +10,8 @@ Class {
 	#name : 'FallbackMenu',
 	#superclass : 'Object',
 	#instVars : [
-		'builder',
-		'client'
+		#builder,
+		#client
 	],
 	#category : 'Morphic-Base-Menus',
 	#package : 'Morphic-Base',

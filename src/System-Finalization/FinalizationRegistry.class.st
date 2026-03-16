@@ -47,12 +47,12 @@ Class {
 	#name : 'FinalizationRegistry',
 	#superclass : 'Object',
 	#instVars : [
-		'semaphore',
-		'errorHandler',
-		'ephemeronList'
+		#semaphore,
+		#errorHandler,
+		#ephemeronList
 	],
 	#classVars : [
-		'Default'
+		#Default
 	],
 	#category : 'System-Finalization-Registry',
 	#package : 'System-Finalization',
@@ -85,13 +85,13 @@ FinalizationRegistry >> add: anObject finalizer: finalizer [
 { #category : 'adding' }
 FinalizationRegistry >> ephemeronAtKey: aKey [
 	
-	^ ephemeronList detect: [ :e | e key = aKey ]
+	^ ephemeronList detect: [ :e | e key sameContents: aKey ]
 ]
 
 { #category : 'adding' }
 FinalizationRegistry >> ephemeronAtKey: aKey ifAbsent: aBlock [
 
-	^ ephemeronList detect: [ :e | e key = aKey ] ifNone: aBlock
+	^ ephemeronList detect: [ :e | e key sameContents: aKey ] ifNone: aBlock
 ]
 
 { #category : 'finalization' }
@@ -125,7 +125,7 @@ FinalizationRegistry >> handleErrorsDuring: aBlock [
 { #category : 'testing' }
 FinalizationRegistry >> includes: aKey [
 
-	^ ephemeronList anySatisfy: [ :e | e key = aKey ]
+	^ ephemeronList anySatisfy: [ :e | e key sameContents: aKey ]
 ]
 
 { #category : 'initialization' }

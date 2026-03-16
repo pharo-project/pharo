@@ -44,8 +44,8 @@ Class {
 	#name : 'TableLayout',
 	#superclass : 'LayoutPolicy',
 	#instVars : [
-		'properties',
-		'minExtentCache'
+		#properties,
+		#minExtentCache
 	],
 	#category : 'Morphic-Base-Layouts',
 	#package : 'Morphic-Base',

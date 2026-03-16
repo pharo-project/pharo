@@ -5,10 +5,10 @@ Class {
 	#name : 'DrTestsUITest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'drTestsUI',
-		'plugins',
-		'plugin1',
-		'plugin2'
+		#drTestsUI,
+		#plugins,
+		#plugin1,
+		#plugin2
 	],
 	#category : 'DrTests-Tests',
 	#package : 'DrTests-Tests'

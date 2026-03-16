@@ -5,10 +5,10 @@ Class {
 	#name : 'TabBarMorph',
 	#superclass : 'PanelMorph',
 	#instVars : [
-		'tabs',
-		'selectionHistory',
-		'menuButton',
-		'numberOfSelectedTabs'
+		#tabs,
+		#selectionHistory,
+		#menuButton,
+		#numberOfSelectedTabs
 	],
 	#category : 'Morphic-Widgets-Tabs-Morphs',
 	#package : 'Morphic-Widgets-Tabs',

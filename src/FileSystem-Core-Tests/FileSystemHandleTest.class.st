@@ -5,9 +5,9 @@ Class {
 	#name : 'FileSystemHandleTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'filesystem',
-		'handle',
-		'reference'
+		#filesystem,
+		#handle,
+		#reference
 	],
 	#category : 'FileSystem-Core-Tests-Base',
 	#package : 'FileSystem-Core-Tests',

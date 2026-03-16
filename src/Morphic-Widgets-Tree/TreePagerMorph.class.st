@@ -5,7 +5,7 @@ Class {
 	#name : 'TreePagerMorph',
 	#superclass : 'TreeNavigationBarMorph',
 	#instVars : [
-		'currentPageFirstIndex'
+		#currentPageFirstIndex
 	],
 	#category : 'Morphic-Widgets-Tree-Pagination',
 	#package : 'Morphic-Widgets-Tree',

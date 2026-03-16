@@ -37,10 +37,10 @@ Class {
 	#name : 'ClyClassHierarchyMap',
 	#superclass : 'Object',
 	#instVars : [
-		'hierarchy',
-		'classes',
-		'roots',
-		'parentMap'
+		#hierarchy,
+		#classes,
+		#roots,
+		#parentMap
 	],
 	#category : 'Calypso-SystemQueries-Results',
 	#package : 'Calypso-SystemQueries',

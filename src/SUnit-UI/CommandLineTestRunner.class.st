@@ -5,10 +5,10 @@ Class {
 	#name : 'CommandLineTestRunner',
 	#superclass : 'HDTestReport',
 	#instVars : [
-		'stderr',
-		'stdout',
-		'currentTest',
-		'maxTest'
+		#stderr,
+		#stdout,
+		#currentTest,
+		#maxTest
 	],
 	#category : 'SUnit-UI-Headless',
 	#package : 'SUnit-UI',

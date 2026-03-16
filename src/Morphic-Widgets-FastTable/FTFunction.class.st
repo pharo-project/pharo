@@ -35,7 +35,7 @@ Class {
 	#name : 'FTFunction',
 	#superclass : 'Object',
 	#instVars : [
-		'table'
+		#table
 	],
 	#category : 'Morphic-Widgets-FastTable-Functions',
 	#package : 'Morphic-Widgets-FastTable',

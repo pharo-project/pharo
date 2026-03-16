@@ -2,8 +2,8 @@ Class {
 	#name : 'OCCalledMethodProxy',
 	#superclass : 'Object',
 	#instVars : [
-		'originalMethod',
-		'called'
+		#originalMethod,
+		#called
 	],
 	#category : 'OpalCompiler-Tests-AST',
 	#package : 'OpalCompiler-Tests',

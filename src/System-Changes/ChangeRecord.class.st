@@ -7,13 +7,13 @@ Class {
 	#name : 'ChangeRecord',
 	#superclass : 'Object',
 	#instVars : [
-		'file',
-		'position',
-		'type',
-		'class',
-		'protocol',
-		'meta',
-		'stamp'
+		#file,
+		#position,
+		#type,
+		#class,
+		#protocol,
+		#meta,
+		#stamp
 	],
 	#category : 'System-Changes-Records',
 	#package : 'System-Changes',

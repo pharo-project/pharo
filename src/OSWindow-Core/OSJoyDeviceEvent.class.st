@@ -9,9 +9,9 @@ Class {
 	#name : 'OSJoyDeviceEvent',
 	#superclass : 'OSEvent',
 	#instVars : [
-		'which',
-		'mapped',
-		'hasMapping'
+		#which,
+		#mapped,
+		#hasMapping
 	],
 	#category : 'OSWindow-Core-Events',
 	#package : 'OSWindow-Core',

@@ -5,7 +5,7 @@ Class {
 	#name : 'TypingVisitor',
 	#superclass : 'RBProgramNodeVisitor',
 	#instVars : [
-		'typeStack'
+		#typeStack
 	],
 	#category : 'NECompletion-Model',
 	#package : 'NECompletion',

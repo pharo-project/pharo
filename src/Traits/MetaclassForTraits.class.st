@@ -6,7 +6,7 @@ Class {
 	#name : 'MetaclassForTraits',
 	#superclass : 'TraitedMetaclass',
 	#instVars : [
-		'users'
+		#users
 	],
 	#category : 'Traits-Base',
 	#package : 'Traits',

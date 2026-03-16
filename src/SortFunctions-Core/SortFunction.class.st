@@ -40,7 +40,7 @@ Class {
 	#name : 'SortFunction',
 	#superclass : 'Object',
 	#classVars : [
-		'Default'
+		#Default
 	],
 	#category : 'SortFunctions-Core',
 	#package : 'SortFunctions-Core'

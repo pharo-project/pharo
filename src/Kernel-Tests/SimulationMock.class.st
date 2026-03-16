@@ -6,7 +6,7 @@ Class {
 	#name : 'SimulationMock',
 	#superclass : 'Object',
 	#instVars : [
-		'instVar1'
+		#instVar1
 	],
 	#category : 'Kernel-Tests-Methods',
 	#package : 'Kernel-Tests',

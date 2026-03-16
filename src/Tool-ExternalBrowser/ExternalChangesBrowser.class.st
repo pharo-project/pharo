@@ -13,12 +13,12 @@ Class {
 	#name : 'ExternalChangesBrowser',
 	#superclass : 'SpPresenter',
 	#instVars : [
-		'changes',
-		'codePane',
-		'changeSet',
-		'selectAllButton',
-		'deselectAllButton',
-		'fileInSelectedButton'
+		#changes,
+		#codePane,
+		#changeSet,
+		#selectAllButton,
+		#deselectAllButton,
+		#fileInSelectedButton
 	],
 	#category : 'Tool-ExternalBrowser-Browsers',
 	#package : 'Tool-ExternalBrowser',

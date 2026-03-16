@@ -2,8 +2,8 @@ Class {
 	#name : 'HaloMorphTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'outerMorph',
-		'innerMorph'
+		#outerMorph,
+		#innerMorph
 	],
 	#category : 'Morphic-Tests-Widgets',
 	#package : 'Morphic-Tests',

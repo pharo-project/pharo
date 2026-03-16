@@ -5,12 +5,12 @@ Class {
 	#name : 'DrTestsTestRunnerTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'plugin',
-		'package',
-		'testToReRun',
-		'conf',
-		'reRunconf',
-		'testCase'
+		#plugin,
+		#package,
+		#testToReRun,
+		#conf,
+		#reRunconf,
+		#testCase
 	],
 	#category : 'DrTests-Tests',
 	#package : 'DrTests-Tests'

@@ -2,8 +2,8 @@ Class {
 	#name : 'SycGenerateVariableAccessorsWithLazyInitializationCommand',
 	#superclass : 'CmdCommand',
 	#instVars : [
-		'variable',
-		'value'
+		#variable,
+		#value
 	],
 	#category : 'SystemCommands-VariableCommands',
 	#package : 'SystemCommands-VariableCommands'

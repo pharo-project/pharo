@@ -11,21 +11,21 @@ Class {
 	#name : 'TimeProfiler',
 	#superclass : 'MorphTreeModel',
 	#instVars : [
-		'win',
-		'rootMessageTally',
-		'threshold',
-		'minPercentageToExpand',
-		'treeMorph',
-		'block',
-		'blockCodePane',
-		'withBlockCodePane',
-		'blockSource',
-		'reportOtherProcesses',
-		'showLeavesOnly',
-		'codeTabPane',
-		'resultPane',
-		'result',
-		'withToolBar'
+		#win,
+		#rootMessageTally,
+		#threshold,
+		#minPercentageToExpand,
+		#treeMorph,
+		#block,
+		#blockCodePane,
+		#withBlockCodePane,
+		#blockSource,
+		#reportOtherProcesses,
+		#showLeavesOnly,
+		#codeTabPane,
+		#resultPane,
+		#result,
+		#withToolBar
 	],
 	#category : 'Tool-Profilers-Time',
 	#package : 'Tool-Profilers',
@@ -742,7 +742,7 @@ TimeProfiler >> whatToShow: aSymbol [
 
 { #category : 'configuration' }
 TimeProfiler >> whatToShowList [
-	^ #(#'Full tree' #'Leaves')
+	^ #(#'Full tree' #Leaves)
 ]
 
 { #category : 'ui specific' }

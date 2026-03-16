@@ -11,7 +11,7 @@ Class {
 	#name : 'WeakSubscriptionBuilder',
 	#superclass : 'Object',
 	#instVars : [
-		'announcer'
+		#announcer
 	],
 	#category : 'Announcements-Core-Subscription',
 	#package : 'Announcements-Core',

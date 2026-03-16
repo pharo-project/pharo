@@ -5,10 +5,10 @@ Class {
 	#name : 'MIMEDocument',
 	#superclass : 'Object',
 	#instVars : [
-		'type',
-		'contents',
-		'contentStream',
-		'uri'
+		#type,
+		#contents,
+		#contentStream,
+		#uri
 	],
 	#category : 'Network-MIME-Base',
 	#package : 'Network-MIME',
@@ -225,7 +225,7 @@ MIMEDocument >> isGif [
 { #category : 'testing' }
 MIMEDocument >> isJpeg [
 	^ self mainType = 'image'
-		and: [ #('jpeg' 'jpg') includes: self subType ]
+		and: [ #(jpeg jpg) includes: self subType ]
 ]
 
 { #category : 'testing' }

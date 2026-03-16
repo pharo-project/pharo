@@ -5,15 +5,15 @@ Class {
 	#name : 'FTOutline',
 	#superclass : 'FFIExternalStructure',
 	#classVars : [
-		'OFFSET_CONTOURS',
-		'OFFSET_FLAGS',
-		'OFFSET_N_CONTOURS',
-		'OFFSET_N_POINTS',
-		'OFFSET_POINTS',
-		'OFFSET_TAGS'
+		#OFFSET_CONTOURS,
+		#OFFSET_FLAGS,
+		#OFFSET_N_CONTOURS,
+		#OFFSET_N_POINTS,
+		#OFFSET_POINTS,
+		#OFFSET_TAGS
 	],
 	#pools : [
-		'FT2Types'
+		#FT2Types
 	],
 	#category : 'FreeType-Bindings',
 	#package : 'FreeType',

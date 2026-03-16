@@ -10,10 +10,10 @@ Class {
 	#name : 'CoASTHeuristicsResultSetBuilder',
 	#superclass : 'CoASTResultSetBuilder',
 	#instVars : [
-		'messageHeuristic',
-		'methodNodeHeuristic',
-		'variablesHeuristic',
-		'symbolsHeuristic'
+		#messageHeuristic,
+		#methodNodeHeuristic,
+		#variablesHeuristic,
+		#symbolsHeuristic
 	],
 	#category : 'HeuristicCompletion-Model-SystemIntegration',
 	#package : 'HeuristicCompletion-Model',

@@ -5,9 +5,9 @@ Class {
 	#name : 'ImagePreviewMorph',
 	#superclass : 'Morph',
 	#instVars : [
-		'imageMorph',
-		'textMorph',
-		'defaultImageForm'
+		#imageMorph,
+		#textMorph,
+		#defaultImageForm
 	],
 	#category : 'Morphic-Base-Basic',
 	#package : 'Morphic-Base',

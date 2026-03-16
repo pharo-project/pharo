@@ -22,7 +22,7 @@ Class {
 	#name : 'PluggableToggleButtonMorph',
 	#superclass : 'PluggableButtonMorph',
 	#instVars : [
-		'pressed'
+		#pressed
 	],
 	#category : 'Morphic-Widgets-Basic-Buttons',
 	#package : 'Morphic-Widgets-Basic',

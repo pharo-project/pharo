@@ -7,7 +7,7 @@ Class {
 	#name : 'DraggableCallback',
 	#superclass : 'FFICallback',
 	#pools : [
-		'SDL2Constants'
+		#SDL2Constants
 	],
 	#category : 'OSWindow-SDL2-Bindings',
 	#package : 'OSWindow-SDL2',

@@ -7,7 +7,7 @@ Class {
 	#name : 'RTFPrimitiveCallsCollector',
 	#superclass : 'RTFSelfCallVisitor',
 	#instVars : [
-		'primitiveCalls'
+		#primitiveCalls
 	],
 	#category : 'RottenTestsFinder-SelfInterpreter',
 	#package : 'RottenTestsFinder',

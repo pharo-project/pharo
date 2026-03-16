@@ -9,11 +9,11 @@ Class {
 	#name : 'FTBasicTreeListDataSource',
 	#superclass : 'FTDataSource',
 	#instVars : [
-		'childrenBlock',
-		'displayBlock',
-		'sortingBlock',
-		'availableRows',
-		'rootItems'
+		#childrenBlock,
+		#displayBlock,
+		#sortingBlock,
+		#availableRows,
+		#rootItems
 	],
 	#category : 'Morphic-Widgets-FastTable-Tree-Basic',
 	#package : 'Morphic-Widgets-FastTable',

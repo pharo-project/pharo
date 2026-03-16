@@ -5,7 +5,7 @@ Class {
 	#name : 'Archive',
 	#superclass : 'Object',
 	#instVars : [
-		'members'
+		#members
 	],
 	#category : 'Compression-Archives',
 	#package : 'Compression',

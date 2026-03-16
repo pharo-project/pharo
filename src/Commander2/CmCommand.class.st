@@ -12,7 +12,7 @@ Class {
 	#traits : 'CmTWithBasicNameAndDescription + CmTDecorable',
 	#classTraits : 'CmTWithBasicNameAndDescription classTrait + CmTDecorable classTrait',
 	#instVars : [
-		'context'
+		#context
 	],
 	#category : 'Commander2-Commands',
 	#package : 'Commander2',

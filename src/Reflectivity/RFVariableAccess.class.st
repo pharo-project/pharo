@@ -5,7 +5,7 @@ Class {
 	#name : 'RFVariableAccess',
 	#superclass : 'Object',
 	#instVars : [
-		'variable'
+		#variable
 	],
 	#category : 'Reflectivity-Operations',
 	#package : 'Reflectivity',

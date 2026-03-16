@@ -5,7 +5,7 @@ Class {
 	#name : 'FreeTypeSystemSettings',
 	#superclass : 'Model',
 	#classVars : [
-		'LoadFT2Library'
+		#LoadFT2Library
 	],
 	#category : 'FreeType-Settings',
 	#package : 'FreeType',

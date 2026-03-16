@@ -45,26 +45,26 @@ Class {
 	#traits : 'TDebugger',
 	#classTraits : 'TDebugger classTrait',
 	#instVars : [
-		'rawDisplay',
-		'stackSelectionIndex',
-		'methodVersionSelectionIndex',
-		'methodText',
-		'stackText',
-		'titleText',
-		'repl',
-		'input',
-		'result',
-		'isRunning',
-		'debugAPI',
-		'actions',
-		'actionsDescriptions',
-		'shortStack',
-		'shortStackIndex',
-		'error',
-		'errorText'
+		#rawDisplay,
+		#stackSelectionIndex,
+		#methodVersionSelectionIndex,
+		#methodText,
+		#stackText,
+		#titleText,
+		#repl,
+		#input,
+		#result,
+		#isRunning,
+		#debugAPI,
+		#actions,
+		#actionsDescriptions,
+		#shortStack,
+		#shortStackIndex,
+		#error,
+		#errorText
 	],
 	#classVars : [
-		'DefaultDebugAPI'
+		#DefaultDebugAPI
 	],
 	#category : 'EmergencyDebugger-Core',
 	#package : 'EmergencyDebugger',
@@ -144,23 +144,23 @@ EDEmergencyDebugger >> buildDefaultActions [
 	|dic|
 
 	dic := Dictionary new.
-	dic at: 'q!' 						put: [ debugAPI closeEmergencySession ].
-	dic at: 'q' 							put: [ debugAPI terminateSession ].
-	dic at: 'showDebuggerError' 	put: [ self showDebuggerError ].
-	dic at: 'exit' 						put: [ debugAPI terminateSession ].
-	dic at: 'retry' 					put: [ debugAPI tryReopenSessionWithDebugger ].
+	dic at: #'q!' 						put: [ debugAPI closeEmergencySession ].
+	dic at: #'q' 							put: [ debugAPI terminateSession ].
+	dic at: #'showDebuggerError' 	put: [ self showDebuggerError ].
+	dic at: #'exit' 						put: [ debugAPI terminateSession ].
+	dic at: #'retry' 					put: [ debugAPI tryReopenSessionWithDebugger ].
 	dic at: Character arrowUp 		put: [ self moveUpInStack ].
 	dic at: Character arrowDown 	put: [ self moveDownInStack ].
 	dic at: Character arrowLeft 	put: [ self showMoreRecentMethodVersion ].
 	dic at: Character arrowRight 	put: [ self showOlderMethodVersion ].
-	dic at: 'help' 						put: [ self composeHelpText ].
-	dic at: 'revert' 					put: [ self revertCurrentMethodToSelectedVersion ].
-	dic at: 'forceRevert' 			put: [ self revertCurrentMethodToSelectedVersionAndQuit ].
-	dic at: 'terminateAll' 			put: [ debugAPI terminateAllProcesses ].
-	dic at: 'proceed' 					put: [ debugAPI resume ].
-	dic at: 'debug' 					put: [ self debugDebuggerError ].
-	dic at: 'dump' 						put: [ self dumpStackAndQuit ].
-	dic at: 'inspect' 					put: [ self inspectStackAndQuit ].
+	dic at: #'help' 						put: [ self composeHelpText ].
+	dic at: #'revert' 					put: [ self revertCurrentMethodToSelectedVersion ].
+	dic at: #'forceRevert' 			put: [ self revertCurrentMethodToSelectedVersionAndQuit ].
+	dic at: #'terminateAll' 			put: [ debugAPI terminateAllProcesses ].
+	dic at: #'proceed' 					put: [ debugAPI resume ].
+	dic at: #'debug' 					put: [ self debugDebuggerError ].
+	dic at: #'dump' 						put: [ self dumpStackAndQuit ].
+	dic at: #'inspect' 					put: [ self inspectStackAndQuit ].
 
 	^ dic
 ]
@@ -169,19 +169,19 @@ EDEmergencyDebugger >> buildDefaultActions [
 EDEmergencyDebugger >> buildDefaultActionsDescriptions [
 	|dic|
 	dic := Dictionary new.
-	dic at: 'exit/q' put: 'Exit the emergency debugger'.
-	dic at: 'help' put: 'Show this help.'.
-	dic at: 'retry' put: 'Retry opening a graphical debugger'.
-	dic at: '<UP/DOWN> arrows' put: 'Move up/down in the stack'.
-	dic at: '<RIGHT/LEFT> arrows' put: 'Navigate the current method versions'.
-	dic at: 'revert' put: 'Revert the current method to the selected method version in the current context'.
-	dic at: 'forceRevert' put: 'Recompiles the current method to the selected method version and quits the emergency debugger'.
-	dic at: 'terminateAll' put: 'Terminate all non-essential processes (will terminate Ed)'.
-	dic at: 'proceed' put: 'Proceeds the execution'.
-	dic at: 'showDebuggerError' put: 'Display debugger error stack, i.e., why you are here.'.
-	dic at: 'debug' put: 'Debug the debugger error.'.
-	dic at: 'dump' put: 'Dump a printed representation of the stack, quits the debugger and inspects the dump.'.
-	dic at: 'inspect' put: 'Quits the debugger and inspects the stack.'.
+	dic at: #'exit/q' put: 'Exit the emergency debugger'.
+	dic at: #'help' put: 'Show this help.'.
+	dic at: #'retry' put: 'Retry opening a graphical debugger'.
+	dic at: #'<UP/DOWN> arrows' put: 'Move up/down in the stack'.
+	dic at: #'<RIGHT/LEFT> arrows' put: 'Navigate the current method versions'.
+	dic at: #'revert' put: 'Revert the current method to the selected method version in the current context'.
+	dic at: #'forceRevert' put: 'Recompiles the current method to the selected method version and quits the emergency debugger'.
+	dic at: #'terminateAll' put: 'Terminate all non-essential processes (will terminate Ed)'.
+	dic at: #'proceed' put: 'Proceeds the execution'.
+	dic at: #'showDebuggerError' put: 'Display debugger error stack, i.e., why you are here.'.
+	dic at: #'debug' put: 'Debug the debugger error.'.
+	dic at: #'dump' put: 'Dump a printed representation of the stack, quits the debugger and inspects the dump.'.
+	dic at: #'inspect' put: 'Quits the debugger and inspects the stack.'.
 	^dic
 ]
 
@@ -189,22 +189,22 @@ EDEmergencyDebugger >> buildDefaultActionsDescriptions [
 EDEmergencyDebugger >> buildDefaultActionsDescriptionsMap [
 	|dic|
 	dic := Dictionary new.
-	dic at: 'exit' put: 'exit/q'.
-	dic at: 'q' put: 'exit/q'.
-	dic at: 'retry' put: 'retry'.
+	dic at: #'exit' put: 'exit/q'.
+	dic at: #'q' put: 'exit/q'.
+	dic at: #'retry' put: 'retry'.
 	dic at: Character arrowUp put: '<UP/DOWN> arrows'.
 	dic at: Character arrowDown put: '<UP/DOWN> arrows'.
 	dic at: Character arrowLeft put: '<RIGHT/LEFT> arrows'.
 	dic at: Character arrowRight put: '<RIGHT/LEFT> arrows'.
-	dic at: 'revert' put: 'revert'.
-	dic at: 'forceRevert' put: 'forceRevert'.
-	dic at: 'help' put: 'help'.
-	dic at: 'terminateAll' put: 'terminateAll'.
-	dic at: 'proceed' put: 'proceed'.
-	dic at: 'showDebuggerError' put: 'showDebuggerError'.
-	dic at: 'debug' put: 'debug'.
-	dic at: 'dump' put: 'dump'.
-	dic at: 'inspect' put: 'inspect'.
+	dic at: #'revert' put: 'revert'.
+	dic at: #'forceRevert' put: 'forceRevert'.
+	dic at: #'help' put: 'help'.
+	dic at: #'terminateAll' put: 'terminateAll'.
+	dic at: #'proceed' put: 'proceed'.
+	dic at: #'showDebuggerError' put: 'showDebuggerError'.
+	dic at: #'debug' put: 'debug'.
+	dic at: #'dump' put: 'dump'.
+	dic at: #'inspect' put: 'inspect'.
 	^dic
 ]
 

@@ -27,15 +27,15 @@ BaselineOfQA >> baseline: spec [
 
 		spec
 			package: 'General-Rules'
-			with: [ spec requires: #( 'QualityAssistant' ) ];
+			with: [ spec requires: #( QualityAssistant ) ];
 			package: 'General-Rules-Tests'
 			with: [ spec requires: #( 'General-Rules' ) ];
 			package: 'Specific-Rules'
-			with: [ spec requires: #( 'QualityAssistant' ) ];
+			with: [ spec requires: #( QualityAssistant ) ];
 			package: 'Specific-Rules-Tests'
 			with: [ spec requires: #( 'Specific-Rules' ) ];
 			package: 'SUnit-Rules'
-			with: [ spec requires: #( 'QualityAssistant' ) ];
+			with: [ spec requires: #( QualityAssistant ) ];
 			package: 'SUnit-Rules-Tests'
 			with: [ spec requires: #( 'SUnit-Rules' ) ];
 			package: 'ReleaseTests';
@@ -44,5 +44,5 @@ BaselineOfQA >> baseline: spec [
 		spec baseline: 'Reflectivity' with: [
 			spec
 				repository: repository;
-				loads: #( 'tools' ) ] ]
+				loads: #( tools ) ] ]
 ]

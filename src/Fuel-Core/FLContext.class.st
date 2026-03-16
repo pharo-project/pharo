@@ -11,7 +11,7 @@ Class {
 	#traits : 'TFLConfigurable',
 	#classTraits : 'TFLConfigurable classTrait',
 	#instVars : [
-		'map'
+		#map
 	],
 	#category : 'Fuel-Core-Configuration',
 	#package : 'Fuel-Core',

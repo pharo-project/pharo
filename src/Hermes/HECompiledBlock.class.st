@@ -2,12 +2,12 @@ Class {
 	#name : 'HECompiledBlock',
 	#superclass : 'HEExportedLiteral',
 	#instVars : [
-		'encoderClassName',
-		'numArgs',
-		'numTemps',
-		'hasPrimitive',
-		'bytecode',
-		'literals'
+		#encoderClassName,
+		#numArgs,
+		#numTemps,
+		#hasPrimitive,
+		#bytecode,
+		#literals
 	],
 	#category : 'Hermes-Model',
 	#package : 'Hermes',

@@ -18,7 +18,7 @@ Class {
 	#name : 'ClyInheritedMethodGroup',
 	#superclass : 'ClyMethodGroup',
 	#instVars : [
-		'visibilityLevels'
+		#visibilityLevels
 	],
 	#category : 'Calypso-SystemQueries-Domain',
 	#package : 'Calypso-SystemQueries',

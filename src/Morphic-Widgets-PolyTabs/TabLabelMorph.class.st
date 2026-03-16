@@ -5,9 +5,9 @@ Class {
 	#name : 'TabLabelMorph',
 	#superclass : 'PanelMorph',
 	#instVars : [
-		'tabSelector',
-		'normalLabel',
-		'selectedLabel'
+		#tabSelector,
+		#normalLabel,
+		#selectedLabel
 	],
 	#category : 'Morphic-Widgets-PolyTabs',
 	#package : 'Morphic-Widgets-PolyTabs'

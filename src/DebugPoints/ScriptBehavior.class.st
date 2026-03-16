@@ -6,7 +6,7 @@ Class {
 	#name : 'ScriptBehavior',
 	#superclass : 'DebugPointSideEffectBehavior',
 	#instVars : [
-		'script'
+		#script
 	],
 	#category : 'DebugPoints-Behaviors',
 	#package : 'DebugPoints',

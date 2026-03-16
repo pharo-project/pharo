@@ -372,18 +372,18 @@ Class {
 	#name : 'File',
 	#superclass : 'Object',
 	#instVars : [
-		'name'
+		#name
 	],
 	#classVars : [
-		'Registry',
-		'S_IFBLK',
-		'S_IFCHR',
-		'S_IFDIR',
-		'S_IFIFO',
-		'S_IFLNK',
-		'S_IFMT',
-		'S_IFREG',
-		'S_IFSOCK'
+		#Registry,
+		#S_IFBLK,
+		#S_IFCHR,
+		#S_IFDIR,
+		#S_IFIFO,
+		#S_IFLNK,
+		#S_IFMT,
+		#S_IFREG,
+		#S_IFSOCK
 	],
 	#category : 'Files-Core',
 	#package : 'Files',

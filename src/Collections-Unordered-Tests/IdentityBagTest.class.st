@@ -5,9 +5,9 @@ Class {
 	#name : 'IdentityBagTest',
 	#superclass : 'BagTest',
 	#instVars : [
-		'equalNotIdenticalElement',
-		'elementToCopy',
-		'identityBagNonEmptyNoDuplicate5Elements'
+		#equalNotIdenticalElement,
+		#elementToCopy,
+		#identityBagNonEmptyNoDuplicate5Elements
 	],
 	#category : 'Collections-Unordered-Tests-Bags',
 	#package : 'Collections-Unordered-Tests',

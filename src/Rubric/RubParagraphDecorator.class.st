@@ -5,7 +5,7 @@ Class {
 	#name : 'RubParagraphDecorator',
 	#superclass : 'Object',
 	#instVars : [
-		'next'
+		#next
 	],
 	#category : 'Rubric-Editing-Core',
 	#package : 'Rubric',
@@ -14,7 +14,7 @@ Class {
 
 { #category : 'querying' }
 RubParagraphDecorator class >> classOfDecoratorNamed: aKey [
-	^ self allSubclasses detect: [ :cls | cls key = aKey ] ifNone: [  ]
+	^ self allSubclasses detect: [ :cls | cls key sameContents: aKey ] ifNone: [  ]
 ]
 
 { #category : 'testing' }
@@ -90,7 +90,7 @@ RubParagraphDecorator >> container: atextContainerOrRectangle [
 
 { #category : 'querying' }
 RubParagraphDecorator >> decoratorNamed: aKey [
-	^ self key = aKey
+	^ self key sameContents: aKey
 		ifTrue: [ self ]
 		ifFalse: [ next decoratorNamed: aKey ]
 ]
@@ -164,7 +164,7 @@ RubParagraphDecorator >> hasDecorator: aDecorator [
 
 { #category : 'querying' }
 RubParagraphDecorator >> hasDecoratorNamed: aKey [
-	^ self key = aKey or: [ next hasDecoratorNamed: aKey ]
+	^ self key sameContents: aKey or: [ next hasDecoratorNamed: aKey ]
 ]
 
 { #category : 'querying' }

@@ -34,7 +34,7 @@ Or, by adding individual objects using `#with:`
 Or, by adding another collection using `#withAll:`
 ```
 	""add all objects from Array""
-	linkedList := LinkedList withAll: #('one' 'two' 'three').
+	linkedList := LinkedList withAll: #(one two three).
 	linkedList.		""returns: a LinkedList('one' 'two' 'three')""
 ```
 ### Removing
@@ -69,8 +69,8 @@ Class {
 	#name : 'LinkedList',
 	#superclass : 'SequenceableCollection',
 	#instVars : [
-		'firstLink',
-		'lastLink'
+		#firstLink,
+		#lastLink
 	],
 	#category : 'Collections-Sequenceable-Base',
 	#package : 'Collections-Sequenceable',
@@ -313,7 +313,7 @@ LinkedList >> indexOf: anElement startingAt: start ifAbsent: exceptionBlock [
 	currentLink := self linkAt: start ifAbsent: [nil].
 	index := start.
 	[currentLink isNil ]
-		whileFalse: [currentLink value = anElement value ifTrue: [^index].
+		whileFalse: [currentLink value sameContents: anElement value ifTrue: [^index].
 					currentLink := currentLink nextLink.
 					index := index +1].
 	^exceptionBlock value
@@ -370,7 +370,7 @@ LinkedList >> linkOf: anObject [
 LinkedList >> linkOf: anObject ifAbsent: errorBlock [
 
 	self
-		linksDo: [:el | el value = anObject
+		linksDo: [:el | el value sameContents: anObject
 				ifTrue: [^ el]].
 	^ errorBlock value
 ]

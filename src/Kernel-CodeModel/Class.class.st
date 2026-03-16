@@ -17,16 +17,16 @@ Class {
 	#name : 'Class',
 	#superclass : 'ClassDescription',
 	#instVars : [
-		'subclasses',
-		'name',
-		'classPool',
-		'sharedPools',
-		'environment',
-		'commentSourcePointer',
-		'packageTag'
+		#subclasses,
+		#name,
+		#classPool,
+		#sharedPools,
+		#environment,
+		#commentSourcePointer,
+		#packageTag
 	],
 	#classVars : [
-		'ObsoleteClasses'
+		#ObsoleteClasses
 	],
 	#category : 'Kernel-CodeModel-Classes',
 	#package : 'Kernel-CodeModel',

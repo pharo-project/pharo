@@ -5,8 +5,8 @@ Class {
 	#name : 'MCOrganizationDefinition',
 	#superclass : 'MCDefinition',
 	#instVars : [
-		'packageName',
-		'tagNames'
+		#packageName,
+		#tagNames
 	],
 	#category : 'Monticello-Model',
 	#package : 'Monticello-Model'
@@ -31,7 +31,7 @@ MCOrganizationDefinition class >> packageName: aPackageName tagNames: aCollectio
 { #category : 'comparing' }
 MCOrganizationDefinition >> = aDefinition [
 
-	^ super = aDefinition and: [ packageName = aDefinition packageName and: [ tagNames = aDefinition tagNames ] ]
+	^ super = aDefinition and: [ packageName sameContents: aDefinition packageName and: [ tagNames = aDefinition tagNames ] ]
 ]
 
 { #category : 'accessing' }

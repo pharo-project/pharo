@@ -5,11 +5,11 @@ Class {
 	#name : 'FreeTypeFileInfo',
 	#superclass : 'AbstractFreeTypeFileInfo',
 	#instVars : [
-		'absoluteOrRelativePath',
-		'absolutePath',
-		'locationType',
-		'modificationTime',
-		'fileSize'
+		#absoluteOrRelativePath,
+		#absolutePath,
+		#locationType,
+		#modificationTime,
+		#fileSize
 	],
 	#category : 'FreeType-FontManager',
 	#package : 'FreeType',

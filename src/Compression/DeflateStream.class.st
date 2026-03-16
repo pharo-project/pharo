@@ -20,14 +20,14 @@ Class {
 	#name : 'DeflateStream',
 	#superclass : 'WriteStream',
 	#instVars : [
-		'hashHead',
-		'hashTail',
-		'hashValue',
-		'blockPosition',
-		'blockStart'
+		#hashHead,
+		#hashTail,
+		#hashValue,
+		#blockPosition,
+		#blockStart
 	],
 	#pools : [
-		'ZipConstants'
+		#ZipConstants
 	],
 	#category : 'Compression-Streams',
 	#package : 'Compression',

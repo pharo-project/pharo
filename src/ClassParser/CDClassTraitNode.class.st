@@ -5,7 +5,7 @@ Class {
 	#name : 'CDClassTraitNode',
 	#superclass : 'CDAbstractTraitCompositionNode',
 	#instVars : [
-		'name'
+		#name
 	],
 	#category : 'ClassParser-Model',
 	#package : 'ClassParser',

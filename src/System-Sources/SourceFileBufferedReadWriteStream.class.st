@@ -6,13 +6,13 @@ Class {
 	#name : 'SourceFileBufferedReadWriteStream',
 	#superclass : 'Object',
 	#instVars : [
-		'innerStream',
-		'buffer',
-		'bufferLength',
-		'streamSize',
-		'bufferOffset',
-		'nextPosition',
-		'isDirty'
+		#innerStream,
+		#buffer,
+		#bufferLength,
+		#streamSize,
+		#bufferOffset,
+		#nextPosition,
+		#isDirty
 	],
 	#category : 'System-Sources-Streams',
 	#package : 'System-Sources',

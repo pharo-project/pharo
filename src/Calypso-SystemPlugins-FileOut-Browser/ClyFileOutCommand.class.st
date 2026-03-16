@@ -11,7 +11,7 @@ Class {
 	#name : 'ClyFileOutCommand',
 	#superclass : 'CmdCommand',
 	#instVars : [
-		'codeObjects'
+		#codeObjects
 	],
 	#category : 'Calypso-SystemPlugins-FileOut-Browser',
 	#package : 'Calypso-SystemPlugins-FileOut-Browser'

@@ -22,7 +22,7 @@ OCASTWhileTrueTranslatorTest >> testWhileTrueExecutesLeftBlock [
 	temp := 0.
 	{argument1} whileTrue: {argument2}.
 	^ temp'
-		withTemps: #( 'temp' )
+		withTemps: #( temp )
 		withFirstBlock: '[ temp := temp + 1. temp < 5 ]'
 		withSecondBlock: '[ ]'.
 
@@ -38,7 +38,7 @@ OCASTWhileTrueTranslatorTest >> testWhileTrueExecutesLeftBlockWithTemp [
 	temp := 0.
 	{argument1} whileTrue: {argument2}.
 	^ temp'
-		withTemps: #( 'temp' )
+		withTemps: #( temp )
 		withFirstBlock: '[ | intemp |
 			intemp := temp + 1.
 			temp := intemp.
@@ -57,7 +57,7 @@ OCASTWhileTrueTranslatorTest >> testWhileTrueExecutesRightBlock [
 	temp := 0.
 	{argument1} whileTrue: {argument2}.
 	^ temp'
-		withTemps: #( 'temp' )
+		withTemps: #( temp )
 		withFirstBlock: '[ temp < 5 ]'
 		withSecondBlock: '[ temp := temp + 1 ]'.
 
@@ -73,7 +73,7 @@ OCASTWhileTrueTranslatorTest >> testWhileTrueExecutesRightBlockWithTemp [
 	temp := 0.
 	{argument1} whileTrue: {argument2}.
 	^ temp'
-		withTemps: #( 'temp' )
+		withTemps: #( temp )
 		withFirstBlock: '[ temp < 5 ]'
 		withSecondBlock: '[ | intemp |
 			intemp := temp + 1.
@@ -91,7 +91,7 @@ OCASTWhileTrueTranslatorTest >> testWhileTrueReturnsNil [
 	{definition}.
 	temp := 0.
 	^ {argument1} whileTrue: {argument2}'
-		withTemps: #( 'temp' )
+		withTemps: #( temp )
 		withFirstBlock: '[ temp := temp + 1. temp < 5 ]'
 		withSecondBlock: '[ ]'.
 

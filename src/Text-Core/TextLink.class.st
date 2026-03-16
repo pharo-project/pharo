@@ -5,7 +5,7 @@ Class {
 	#name : 'TextLink',
 	#superclass : 'TextAction',
 	#instVars : [
-		'classAndMethod'
+		#classAndMethod
 	],
 	#category : 'Text-Core-Attributes',
 	#package : 'Text-Core',
@@ -94,7 +94,7 @@ TextLink >> validate: specString [
 	last := list last.
 	last first isUppercase
 		ifTrue: [
-			(#('Comment' 'Definition' 'Hierarchy') includes: last)
+			(#(Comment Definition Hierarchy) includes: last)
 				ifFalse: [ ^ nil ].	"Check for 'Rectangle Comment Comment' and remove last one"
 			(list at: list size - 1 ifAbsent: [ ^ nil ]) = last
 				ifTrue: [ list := list allButLast ] ].

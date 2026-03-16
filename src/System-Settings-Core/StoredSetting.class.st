@@ -24,7 +24,7 @@ Class {
 	#name : 'StoredSetting',
 	#superclass : 'AbstractStoredSetting',
 	#instVars : [
-		'realValue'
+		#realValue
 	],
 	#category : 'System-Settings-Core-Persistence-Ston-StoredSettings',
 	#package : 'System-Settings-Core',

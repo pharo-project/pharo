@@ -6,14 +6,14 @@ Class {
 	#name : 'FTPluggableIconListMorphAdaptor',
 	#superclass : 'FTTableMorph',
 	#instVars : [
-		'setSelectionListSelector',
-		'getSelectionListSelector',
-		'setIndexSelector',
-		'getIndexSelector',
-		'keystrokeSelector',
-		'resetListSelector',
-		'doubleClickSelector',
-		'keystrokeActionSelector'
+		#setSelectionListSelector,
+		#getSelectionListSelector,
+		#setIndexSelector,
+		#getIndexSelector,
+		#keystrokeSelector,
+		#resetListSelector,
+		#doubleClickSelector,
+		#keystrokeActionSelector
 	],
 	#category : 'Morphic-Widgets-FastTable-PluggableAdaptor',
 	#package : 'Morphic-Widgets-FastTable',

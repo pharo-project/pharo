@@ -5,7 +5,7 @@ Class {
 	#name : 'FLBinaryFileStreamStrategy',
 	#superclass : 'FLStreamStrategy',
 	#instVars : [
-		'fileName'
+		#fileName
 	],
 	#category : 'Fuel-Core-Tests-Support-StreamStrategies',
 	#package : 'Fuel-Core-Tests',

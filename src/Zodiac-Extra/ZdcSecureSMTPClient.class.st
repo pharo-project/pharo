@@ -19,9 +19,9 @@ Class {
 	#name : 'ZdcSecureSMTPClient',
 	#superclass : 'SMTPClient',
 	#instVars : [
-		'variant',
-		'lineReader',
-		'skipRequireStartTLS'
+		#variant,
+		#lineReader,
+		#skipRequireStartTLS
 	],
 	#category : 'Zodiac-Extra',
 	#package : 'Zodiac-Extra'

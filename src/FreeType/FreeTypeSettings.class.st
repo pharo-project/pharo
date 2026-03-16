@@ -5,29 +5,29 @@ Class {
 	#name : 'FreeTypeSettings',
 	#superclass : 'Object',
 	#instVars : [
-		'gamma',
-		'hinting',
-		'lightHinting',
-		'subPixelAntiAliasing',
-		'forceAutoHinting',
-		'lcdHinting',
-		'lcdvHinting',
-		'monoHinting',
-		'bitBltSubPixelAvailable',
-		'subPixelFilters',
-		'forceNonSubPixelCount',
-		'gammaTable',
-		'gammaInverseTable'
+		#gamma,
+		#hinting,
+		#lightHinting,
+		#subPixelAntiAliasing,
+		#forceAutoHinting,
+		#lcdHinting,
+		#lcdvHinting,
+		#monoHinting,
+		#bitBltSubPixelAvailable,
+		#subPixelFilters,
+		#forceNonSubPixelCount,
+		#gammaTable,
+		#gammaInverseTable
 	],
 	#classVars : [
-		'UpdateFontsAtImageStartup'
+		#UpdateFontsAtImageStartup
 	],
 	#pools : [
-		'FT2Constants',
-		'FreeTypeCacheConstants'
+		#FT2Constants,
+		#FreeTypeCacheConstants
 	],
 	#classInstVars : [
-		'current'
+		#current
 	],
 	#category : 'FreeType-Settings',
 	#package : 'FreeType',

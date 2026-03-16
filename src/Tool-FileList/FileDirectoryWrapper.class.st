@@ -2,9 +2,9 @@ Class {
 	#name : 'FileDirectoryWrapper',
 	#superclass : 'ListItemWrapper',
 	#instVars : [
-		'itemName',
-		'balloonText',
-		'hasContents'
+		#itemName,
+		#balloonText,
+		#hasContents
 	],
 	#category : 'Tool-FileList',
 	#package : 'Tool-FileList'

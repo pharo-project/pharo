@@ -12,7 +12,7 @@ Object subclass: #MyClass
 		slots: {
 		'first' => LazyClassVariable default: 5. 
 		'second' => InstanceVariableSlot.
-		'instVar3'
+		#instVar3
 		}
 		classVariableNames: ''
 		package: #MyPackage'
@@ -29,8 +29,8 @@ Class {
 	#name : 'RBSlotInitializationNode',
 	#superclass : 'RBNode',
 	#instVars : [
-		'selectorParts',
-		'argumentParts'
+		#selectorParts,
+		#argumentParts
 	],
 	#category : 'ClassParser-Model',
 	#package : 'ClassParser',

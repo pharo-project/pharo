@@ -13,9 +13,9 @@ Class {
 	#name : 'FuzzyMatcher',
 	#superclass : 'Object',
 	#instVars : [
-		'pattern',
-		'lowercasePattern',
-		'indexes'
+		#pattern,
+		#lowercasePattern,
+		#indexes
 	],
 	#category : 'FuzzyMatcher-Base',
 	#package : 'FuzzyMatcher',

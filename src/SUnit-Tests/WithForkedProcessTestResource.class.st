@@ -6,7 +6,7 @@ Class {
 	#name : 'WithForkedProcessTestResource',
 	#superclass : 'TestResource',
 	#instVars : [
-		'forkedProcess'
+		#forkedProcess
 	],
 	#category : 'SUnit-Tests-Resources',
 	#package : 'SUnit-Tests',

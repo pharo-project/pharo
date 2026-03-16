@@ -6,8 +6,8 @@ Class {
 	#name : 'RBParameterRemovalRefactoring',
 	#superclass : 'RBChangeMethodNameRefactoring',
 	#instVars : [
-		'parameterIndex',
-		'argument'
+		#parameterIndex,
+		#argument
 	],
 	#category : 'Refactoring-Core-Refactorings-Unused',
 	#package : 'Refactoring-Core',

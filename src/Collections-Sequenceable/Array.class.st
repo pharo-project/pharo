@@ -23,7 +23,7 @@ anArray at: 1
 The following code creates an array of size 2 where the first element is the (literal) number 1 and the second the (literal) string 'here'.
 
 ``` 
-#(1 'here') size 
+#(1 here) size 
 > 2
 ```
 

@@ -29,11 +29,11 @@ Class {
 	#name : 'GlobalIdentifier',
 	#superclass : 'Object',
 	#instVars : [
-		'persistenceStrategy',
-		'persistedInformation'
+		#persistenceStrategy,
+		#persistedInformation
 	],
 	#classInstVars : [
-		'uniqueInstance'
+		#uniqueInstance
 	],
 	#category : 'System-Identification',
 	#package : 'System-Identification'

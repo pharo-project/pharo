@@ -15,6 +15,6 @@ BaselineOfExternalProjectLoader >> baseline: spec [
 	spec for: #common do: [
 		spec package: 'ExternalProjectLoader'.
 
-		spec group: 'Core' with: #( 'ExternalProjectLoader' ).
-		spec group: 'default' with: #( 'Core' ) ]
+		spec group: 'Core' with: #( ExternalProjectLoader ).
+		spec group: 'default' with: #( Core ) ]
 ]

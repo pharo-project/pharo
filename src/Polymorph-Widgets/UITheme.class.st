@@ -17,17 +17,17 @@ Class {
 	#name : 'UITheme',
 	#superclass : 'Model',
 	#instVars : [
-		'settings',
-		'formSets',
-		'soundTheme',
-		'focusIndicator',
-		'windowActiveDropShadowStyle',
-		'useScrollbarThumbShadow',
-		'colorPalette'
+		#settings,
+		#formSets,
+		#soundTheme,
+		#focusIndicator,
+		#windowActiveDropShadowStyle,
+		#useScrollbarThumbShadow,
+		#colorPalette
 	],
 	#classVars : [
-		'Builder',
-		'Current'
+		#Builder,
+		#Current
 	],
 	#category : 'Polymorph-Widgets-Themes',
 	#package : 'Polymorph-Widgets',

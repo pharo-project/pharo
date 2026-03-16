@@ -5,9 +5,9 @@ Class {
 	#name : 'TabGroupMorph',
 	#superclass : 'ModelMorph',
 	#instVars : [
-		'tabSelectorMorph',
-		'contentMorph',
-		'pageMorphs'
+		#tabSelectorMorph,
+		#contentMorph,
+		#pageMorphs
 	],
 	#category : 'Morphic-Widgets-PolyTabs',
 	#package : 'Morphic-Widgets-PolyTabs'

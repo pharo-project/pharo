@@ -5,8 +5,8 @@ Class {
 	#name : 'ClyCreateTestCaseCommand',
 	#superclass : 'ClyBrowserCommand',
 	#instVars : [
-		'package',
-		'packageTag'
+		#package,
+		#packageTag
 	],
 	#category : 'Calypso-SystemPlugins-Traits-Browser',
 	#package : 'Calypso-SystemPlugins-Traits-Browser'

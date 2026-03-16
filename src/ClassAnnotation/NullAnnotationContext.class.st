@@ -9,7 +9,7 @@ Class {
 	#name : 'NullAnnotationContext',
 	#superclass : 'AnnotationContext',
 	#classInstVars : [
-		'instance'
+		#instance
 	],
 	#category : 'ClassAnnotation',
 	#package : 'ClassAnnotation'

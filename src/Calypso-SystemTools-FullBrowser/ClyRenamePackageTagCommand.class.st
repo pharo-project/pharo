@@ -13,9 +13,9 @@ Class {
 	#name : 'ClyRenamePackageTagCommand',
 	#superclass : 'CmdCommand',
 	#instVars : [
-		'package',
-		'newName',
-		'packageTag'
+		#package,
+		#newName,
+		#packageTag
 	],
 	#category : 'Calypso-SystemTools-FullBrowser-Commands-Class groups',
 	#package : 'Calypso-SystemTools-FullBrowser',

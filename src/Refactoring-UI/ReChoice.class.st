@@ -2,8 +2,8 @@ Class {
 	#name : 'ReChoice',
 	#superclass : 'Object',
 	#instVars : [
-		'refactoring',
-		'driver'
+		#refactoring,
+		#driver
 	],
 	#category : 'Refactoring-UI-Choices',
 	#package : 'Refactoring-UI',

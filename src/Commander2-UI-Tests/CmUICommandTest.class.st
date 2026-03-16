@@ -5,7 +5,7 @@ Class {
 	#name : 'CmUICommandTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'command'
+		#command
 	],
 	#category : 'Commander2-UI-Tests-Core',
 	#package : 'Commander2-UI-Tests',

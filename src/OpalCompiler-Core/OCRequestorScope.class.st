@@ -9,8 +9,8 @@ Class {
 	#name : 'OCRequestorScope',
 	#superclass : 'OCAbstractScope',
 	#instVars : [
-		'requestor',
-		'variables'
+		#requestor,
+		#variables
 	],
 	#category : 'OpalCompiler-Core-Semantics',
 	#package : 'OpalCompiler-Core',

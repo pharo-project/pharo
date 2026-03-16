@@ -20,11 +20,11 @@ Class {
 	#name : 'HEPackage',
 	#superclass : 'HEAbstractExported',
 	#instVars : [
-		'version',
-		'packageName',
-		'classes',
-		'extensionMethods',
-		'traits'
+		#version,
+		#packageName,
+		#classes,
+		#extensionMethods,
+		#traits
 	],
 	#category : 'Hermes-Model',
 	#package : 'Hermes',

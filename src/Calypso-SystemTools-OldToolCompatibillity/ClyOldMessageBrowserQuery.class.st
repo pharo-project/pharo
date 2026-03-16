@@ -18,9 +18,9 @@ Class {
 	#name : 'ClyOldMessageBrowserQuery',
 	#superclass : 'ClyConstantMethodQuery',
 	#instVars : [
-		'extraMethods',
-		'criteriaString',
-		'criteriaBlock'
+		#extraMethods,
+		#criteriaString,
+		#criteriaBlock
 	],
 	#category : 'Calypso-SystemTools-OldToolCompatibillity',
 	#package : 'Calypso-SystemTools-OldToolCompatibillity'

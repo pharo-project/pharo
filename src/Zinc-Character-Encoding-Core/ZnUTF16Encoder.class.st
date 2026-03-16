@@ -23,7 +23,7 @@ ZnUTF16Encoder class >> handlesEncoding: string [
 
 { #category : 'accessing' }
 ZnUTF16Encoder class >> knownEncodingIdentifiers [
-	^ #( 'utf16' 'utf16be' 'utf16le' )
+	^ #( utf16 utf16be utf16le )
 ]
 
 { #category : 'private' }

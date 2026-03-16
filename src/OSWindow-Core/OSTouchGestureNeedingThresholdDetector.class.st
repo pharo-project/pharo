@@ -5,10 +5,10 @@ Class {
 	#name : 'OSTouchGestureNeedingThresholdDetector',
 	#superclass : 'OSTouchStateGestureDetector',
 	#instVars : [
-		'minDistBeforeDetection'
+		#minDistBeforeDetection
 	],
 	#classVars : [
-		'MinDistanceBeforeDetection'
+		#MinDistanceBeforeDetection
 	],
 	#category : 'OSWindow-Core-Gestures',
 	#package : 'OSWindow-Core',

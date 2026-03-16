@@ -10,10 +10,10 @@ Class {
 	#name : 'RBAddMethodChange',
 	#superclass : 'RBRefactoryClassChange',
 	#instVars : [
-		'source',
-		'selector',
-		'protocols',
-		'definedSelector'
+		#source,
+		#selector,
+		#protocols,
+		#definedSelector
 	],
 	#category : 'Refactoring-Changes-Changes-Classes',
 	#package : 'Refactoring-Changes',

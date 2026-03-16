@@ -5,8 +5,8 @@ Class {
 	#name : 'OmReference',
 	#superclass : 'OmAbstractReference',
 	#instVars : [
-		'localName',
-		'globalName'
+		#localName,
+		#globalName
 	],
 	#category : 'Ombu-Entries',
 	#package : 'Ombu',
@@ -105,7 +105,7 @@ OmReference >> stonOn: stonWriter [
 		writeObject: self
 		streamShortList: [ :array |
 			"Optimization: only write globalName if it belongs to a 'remote' store"
-			OmCurrentGlobalName value = self globalName
+			OmCurrentGlobalName value sameContents: self globalName
 				ifFalse: [ array add: self globalName ].
 
 			array add: self localName ]

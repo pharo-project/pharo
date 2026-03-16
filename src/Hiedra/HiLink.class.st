@@ -5,9 +5,9 @@ Class {
 	#name : 'HiLink',
 	#superclass : 'Object',
 	#instVars : [
-		'origin',
-		'target',
-		'intermediatePoints'
+		#origin,
+		#target,
+		#intermediatePoints
 	],
 	#category : 'Hiedra-Model',
 	#package : 'Hiedra',

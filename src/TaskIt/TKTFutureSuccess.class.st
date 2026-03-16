@@ -7,7 +7,7 @@ Class {
 	#name : 'TKTFutureSuccess',
 	#superclass : 'TKTFutureState',
 	#instVars : [
-		'value'
+		#value
 	],
 	#category : 'TaskIt-Futures',
 	#package : 'TaskIt',

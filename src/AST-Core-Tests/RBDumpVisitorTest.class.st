@@ -160,7 +160,7 @@ RBDumpVisitorTest >> testGlobalNodeDump [
 RBDumpVisitorTest >> testLiteralArrayNodeDump [
 
 	| node dumpedNode |
-	node := self parseExpression: '#(1 $a true ''a'')'.
+	node := self parseExpression: '#(1 $a true a)'.
 	dumpedNode := self compiler evaluate: node dump.
 
 	self assert: dumpedNode class equals: RBLiteralArrayNode.

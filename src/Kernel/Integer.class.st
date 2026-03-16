@@ -483,13 +483,13 @@ Integer >> bitShiftMagnitude: shiftCount [
 Integer >> bitString [
 	"Returns a string representing the receiver in binary form"
 	"2 bitString
-		'0000000000000000000000000000010'
+		#0000000000000000000000000000010
 
 	-1 bitString
-		'1111111111111111111111111111111'
+		#1111111111111111111111111111111
 
 	-2 bitString
-		'1111111111111111111111111111110'
+		#1111111111111111111111111111110
 	"
 
       ^(self bitStringLength to: 1 by: -1)

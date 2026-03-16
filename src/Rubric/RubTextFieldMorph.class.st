@@ -5,11 +5,11 @@ Class {
 	#name : 'RubTextFieldMorph',
 	#superclass : 'RubScrolledTextMorph',
 	#instVars : [
-		'hasValidText',
-		'acceptOnCR',
-		'entryCompletion',
-		'maxLength',
-		'encrypted'
+		#hasValidText,
+		#acceptOnCR,
+		#entryCompletion,
+		#maxLength,
+		#encrypted
 	],
 	#category : 'Rubric-Editing-Widgets',
 	#package : 'Rubric',

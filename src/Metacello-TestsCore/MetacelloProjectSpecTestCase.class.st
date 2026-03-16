@@ -13,7 +13,7 @@ MetacelloProjectSpecTestCase >> testProjectMergeSpec [
 		name: 'Project';
 		className: 'ConfigurationOfProject';
 		versionString: '1.0';
-		loads: #('MyPackage');
+		loads: #(MyPackage);
 		preLoadDoIt: #preLoadDoIt;
 		postLoadDoIt: #postLoadDoIt;
 		yourself.
@@ -22,7 +22,7 @@ MetacelloProjectSpecTestCase >> testProjectMergeSpec [
 		className: 'ConfigurationOfProjectB';
 		versionString: #stable;
 		operator: #<;
-		loads: #('MyPackage' 'MyTests');
+		loads: #(MyPackage MyTests);
 		preLoadDoIt: #preLoadDoItB;
 		postLoadDoIt: #postLoadDoItB;
 		yourself.
@@ -31,7 +31,7 @@ MetacelloProjectSpecTestCase >> testProjectMergeSpec [
 	self assert: project className equals: 'ConfigurationOfProjectB'.
 	self assert: project versionString equals: #stable.
 	self assert: project operator identicalTo: #<.
-	self assert: project loads equals: #('MyPackage' 'MyTests').
+	self assert: project loads equals: #(MyPackage MyTests).
 	self assert: project preLoadDoIt value identicalTo: #preLoadDoItB.
 	self assert: project postLoadDoIt value identicalTo: #postLoadDoItB
 ]
@@ -48,7 +48,7 @@ MetacelloProjectSpecTestCase >> testProjectSpec [
 		operator: #<;
 		operator: nil;
 		loads: 'MyPackage';
-		loads: #('MyPackage' 'MyTests');
+		loads: #(MyPackage MyTests);
 		preLoadDoIt: #preLoadDoIt;
 		postLoadDoIt: #postLoadDoIt;
 		yourself.
@@ -56,7 +56,7 @@ MetacelloProjectSpecTestCase >> testProjectSpec [
 	self assert: project className equals: 'ConfigurationOfProject'.
 	self assert: project versionString equals: #stable.
 	self assert: project operator identicalTo: #>=.
-	self assert: project loads equals: #('MyPackage' 'MyTests').
+	self assert: project loads equals: #(MyPackage MyTests).
 	self assert: project preLoadDoIt value identicalTo: #preLoadDoIt.
 	self assert: project postLoadDoIt value identicalTo: #postLoadDoIt.
 	self should: [ project includes: #() ] raise: Error.

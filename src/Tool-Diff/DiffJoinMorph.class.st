@@ -5,9 +5,9 @@ Class {
 	#name : 'DiffJoinMorph',
 	#superclass : 'ProportionalSplitterMorph',
 	#instVars : [
-		'srcOffset',
-		'dstOffset',
-		'mappings'
+		#srcOffset,
+		#dstOffset,
+		#mappings
 	],
 	#category : 'Tool-Diff-Morphs',
 	#package : 'Tool-Diff',
