@@ -155,7 +155,6 @@ PBBootstrap >> exportAllPackagesIntoMcz [
 			logger log: '[-] ensureDeleteAll; ensureCreateDirectory'.
 			self mczCache directory ensureDeleteAll; ensureCreateDirectory.
 			self packagesToExportAsMCZ do: [ :packageName |
-				logger log: '[-] exportIntoMcz: ', packageName.
 				self exportIntoMcz: packageName ].
 		]
 		logged: 'Bootstrap process -->> exportAllPackagesIntoMcz'
@@ -163,8 +162,12 @@ PBBootstrap >> exportAllPackagesIntoMcz [
 
 { #category : 'preparation' }
 PBBootstrap >> exportIntoMcz: aPackageName [
-
-	self mczCache storeVersion: (self originRepository loadVersionFromFileNamed: aPackageName).
+	logger
+		execute: [
+			logger.log: '-->>', aPackageName.
+			self mczCache storeVersion: (self originRepository loadVersionFromFileNamed: aPackageName).
+		]
+		logged: 'BoostrapProcess -->> exportAllPackagesIntoMcz'
 ]
 
 { #category : 'preparation' }
