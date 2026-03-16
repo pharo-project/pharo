@@ -951,7 +951,7 @@ RBScannerTest >> testNextLiteralCharacterHasOnlyOneCharacter [
 	self assert: token value equals: $1
 ]
 
-{ #category : tests }
+{ #category : 'tests' }
 RBScannerTest >> testNextLiteralCharacterWithAMissingCharacter [
 	| source scanner scannedToken |
 	source := '$'.
@@ -1522,7 +1522,7 @@ RBScannerTest >> testNextValueOfRadixNumbersIsConvertedToDecimal [
 	self assert: token value equals: 10
 ]
 
-{ #category : tests }
+{ #category : 'tests' }
 RBScannerTest >> testNextWithAWrongSymbolGetError [
 	| source scanner scannedToken |
 	source := '#^'.
@@ -1531,7 +1531,7 @@ RBScannerTest >> testNextWithAWrongSymbolGetError [
 	self verifyErrorToken: scannedToken message: 'Literal expected' translated valueExpected: '#'
 ]
 
-{ #category : tests }
+{ #category : 'tests' }
 RBScannerTest >> testNextWithAnIdentifierTokenGetTheIdentifierToken [
 	| source scanner token |
 	source := identifierToken.
@@ -1541,7 +1541,7 @@ RBScannerTest >> testNextWithAnIdentifierTokenGetTheIdentifierToken [
 	self assert: token value equals: source
 ]
 
-{ #category : tests }
+{ #category : 'tests' }
 RBScannerTest >> testNextWithAnOpeningCommentAtEndGetError [
 	| source token |
 	source := 'self "'.
