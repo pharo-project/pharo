@@ -31,7 +31,7 @@ FFIStrictResolutionMode >> resolveUndeclaredTypeForArgument: aFFIValueArgument w
 			or: [ aFFIValueArgument value = 'NULL' ]])
 				ifTrue: [ ^ (aResolver resolveType: #'void *') ].
 				
-	aFFIValueArgument value sameContents: #self ifTrue: [
+	(aFFIValueArgument value sameContents: #self) ifTrue: [
 		| externalType |
 		externalType := aResolver requestor asExternalTypeOn: aResolver.
 		^ externalType prepareAsSelfFromCalloutDeclaration ].

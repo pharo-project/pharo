@@ -697,7 +697,7 @@ RGBehavior >> methodNamed: aSymbol [
 
 	| allMethods |
 	allMethods := IdentitySet new.
-	self methods do: [ :each | each name sameContents: aSymbol ifTrue: [^ each]].
+	self methods do: [ :each | (each name sameContents: aSymbol) ifTrue: [^ each]].
 	^ nil
 ]
 

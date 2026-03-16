@@ -51,8 +51,8 @@ TextDiffBuilderTest >> testEmptyLcs3 [
 	patch := self patchSequenceFor: #(a b c) and: #(d e f g).
 	self assert: patch size equals: 7.
 	patch do: [ :each |
-		each key sameContents: #remove ifTrue: [ self assert: ('abc' includes: each value first) ].
-		each key sameContents: #insert ifTrue: [ self assert: ('defg' includes: each value first) ] ]
+		(each key sameContents: #remove) ifTrue: [ self assert: ('abc' includes: each value first) ].
+		(each key sameContents: #insert) ifTrue: [ self assert: ('defg' includes: each value first) ] ]
 ]
 
 { #category : 'tests' }
@@ -70,7 +70,7 @@ TextDiffBuilderTest >> testIfPatchIsMinimal [
 	self assert: (patch count: [ :each | each key sameContents: #match ]) equals: 3.
 	self assert: (patch count: [ :each | each key sameContents: #insert ]) equals: 1.
 	self assert: (patch count: [ :each | each key sameContents: #remove ]) equals: 1.
-	patch do: [ :each | each key sameContents: #match ifTrue: [ self assert: each value first equals: $a ] ifFalse: [ self assert: each value first equals: $b ] ]
+	patch do: [ :each | (each key sameContents: #match) ifTrue: [ self assert: each value first equals: $a ] ifFalse: [ self assert: each value first equals: $b ] ]
 ]
 
 { #category : 'tests' }

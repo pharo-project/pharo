@@ -45,9 +45,9 @@ STONAlternativeRepresentationTestObject class >> example [
 { #category : 'ston persistence' }
 STONAlternativeRepresentationTestObject >> fromSton: stonReader [
 	stonReader parseMapDo: [ :key :value |
-		key sameContents: #id ifTrue: [ self id: value ].
-		key sameContents: #time ifTrue: [ self timeUTC: value ].
-		key sameContents: #grid_reference ifTrue: [ self gridReferenceImperial: value ] ]
+		(key sameContents: #id) ifTrue: [ self id: value ].
+		(key sameContents: #time) ifTrue: [ self timeUTC: value ].
+		(key sameContents: #grid_reference) ifTrue: [ self gridReferenceImperial: value ] ]
 ]
 
 { #category : 'accessing' }
