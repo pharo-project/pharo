@@ -356,15 +356,22 @@ PBBootstrap >> packagesToExportAsMCZ [
 
 { #category : 'preparation' }
 PBBootstrap >> prepareBootstrap [
-	
-	self
-		exportKernelProtocols;
-		exportAllPackagesIntoMcz;
-		exportMonticelloInStFile;
-		
-		prepareEnvironmentForHermes;
-		generateHermesFiles;
-		prepareEnvironmentForExport.
+	logger
+		execute: [
+			logger log: '[-] exportKernelProtocols'.
+			self exportKernelProtocols.
+			logger log: '[-] exportAllPackagesIntoMcz'.
+			self exportAllPackagesIntoMcz.
+			logger log: '[-] exportMonticelloInStFile'.
+			self exportMonticelloInStFile.
+				
+			logger log: '[-] prepareEnvironmentForHermes'.
+			self prepareEnvironmentForHermes.
+			logger log: '[-] generateHermesFiles'.
+			self generateHermesFiles.
+			logger log: '[-] prepareEnvironmentForExport'.
+			self prepareEnvironmentForExport.
+		]
 ]
 
 { #category : 'preparation' }
