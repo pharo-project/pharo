@@ -150,10 +150,15 @@ PBBootstrap >> ensureBaselineOfPharoBootstrap [
 
 { #category : 'preparation' }
 PBBootstrap >> exportAllPackagesIntoMcz [
-
-	self mczCache directory ensureDeleteAll; ensureCreateDirectory.
-	self packagesToExportAsMCZ do: [ :packageName |
-		self exportIntoMcz: packageName ].
+	logger
+		execute: [
+			logger log: '[-] ensureDeleteAll; ensureCreateDirectory'.
+			self mczCache directory ensureDeleteAll; ensureCreateDirectory.
+			self packagesToExportAsMCZ do: [ :packageName |
+				logger log: '[-] exportIntoMcz: ', packageName.
+				self exportIntoMcz: packageName ].
+		]
+		logged: 'Bootstrap process -->> exportAllPackagesIntoMcz'
 ]
 
 { #category : 'preparation' }
