@@ -372,6 +372,7 @@ PBBootstrap >> prepareBootstrap [
 			logger log: '[-] prepareEnvironmentForExport'.
 			self prepareEnvironmentForExport.
 		]
+		logged: 'Bootstrap process -->> prepareBootstrap'
 ]
 
 { #category : 'preparation' }
