@@ -21,7 +21,7 @@ BooleanSlot >> addAdditionalSlotsTo: slots [
 	"TODO: this does not take into account adding BooleanSlots higher up in the Hierarchy"
 
 	slots
-		detect: [ :slot | slot name = #_booleanBaseSlot ]
+		detect: [ :slot | slot name sameContents: #_booleanBaseSlot ]
 		ifFound: [ :slot | baseSlot := slot ]
 		ifNone: [ slots add: (baseSlot := #_booleanBaseSlot => BaseSlot default: 0) ]
 ]

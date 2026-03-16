@@ -210,7 +210,7 @@ NonInteractiveTranscript >> isSelfEvaluating [
 { #category : 'testing' }
 NonInteractiveTranscript >> isStderr [
 
-	^ fileName = #stderr
+	^ fileName sameContents: #stderr
 ]
 
 { #category : 'testing' }
@@ -218,7 +218,7 @@ NonInteractiveTranscript >> isStdout [
 	"Answer true when I am setup to be connected to the special
 	standard output stream of the virtual machine process."
 
-	^ fileName = #stdout
+	^ fileName sameContents: #stdout
 ]
 
 { #category : 'streaming' }

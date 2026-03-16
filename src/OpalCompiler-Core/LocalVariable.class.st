@@ -141,17 +141,17 @@ LocalVariable >> isDefinedByBlock [
 
 { #category : 'escaping' }
 LocalVariable >> isEscaping [
-	^escaping = #escapingRead or: [escaping = #escapingWrite]
+	^(escaping sameContents: #escapingRead) or: [escaping sameContents: #escapingWrite]
 ]
 
 { #category : 'escaping' }
 LocalVariable >> isEscapingRead [
-	^escaping = #escapingRead
+	^escaping sameContents: #escapingRead
 ]
 
 { #category : 'escaping' }
 LocalVariable >> isEscapingWrite [
-	^escaping = #escapingWrite
+	^escaping sameContents: #escapingWrite
 ]
 
 { #category : 'testing' }
@@ -162,7 +162,7 @@ LocalVariable >> isLocalVariable [
 
 { #category : 'read/write usage' }
 LocalVariable >> isRead [
-	^usage = #read
+	^usage sameContents: #read
 ]
 
 { #category : 'testing' }
@@ -177,7 +177,7 @@ LocalVariable >> isRemote [
 
 { #category : 'read/write usage' }
 LocalVariable >> isRepeatedWrite [
-	^usage = #repeatedWrite
+	^usage sameContents: #repeatedWrite
 ]
 
 { #category : 'testing' }
@@ -205,12 +205,12 @@ LocalVariable >> isUsed [
 
 { #category : 'read/write usage' }
 LocalVariable >> isWrite [
-	^ usage = #write or: [ self isRepeatedWrite ]
+	^ (usage sameContents: #write) or: [ self isRepeatedWrite ]
 ]
 
 { #category : 'escaping' }
 LocalVariable >> markEscapingRead [
-	escaping = #escapingWrite ifFalse: [escaping := #escapingRead]
+	(escaping sameContents: #escapingWrite) ifFalse: [escaping := #escapingRead]
 ]
 
 { #category : 'escaping' }

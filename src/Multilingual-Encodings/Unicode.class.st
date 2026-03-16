@@ -500,7 +500,7 @@ Unicode class >> initializeTagConstants [
 		select: [:sym | sym size = 2
 						and: [sym first isUppercase and: [sym last isLowercase]]]) asSortedCollection
 		inject: 1
-		into: [:index :sym | sym = #Cn
+		into: [:index :sym | (sym sameContents: #Cn)
 				ifTrue:  [(self classVariableNamed: sym) write: 0. index]
 				ifFalse: [(self classVariableNamed: sym) write: index. index + 1]]
 ]

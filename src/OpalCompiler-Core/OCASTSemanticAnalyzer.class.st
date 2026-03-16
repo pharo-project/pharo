@@ -264,7 +264,7 @@ OCASTSemanticAnalyzer >> visitPragmaNode: aPragmaNode [
 	| varNode |
 	super visitPragmaNode: aPragmaNode.
 	aPragmaNode pragma: aPragmaNode asPragma.
-	aPragmaNode selector = #compilerOptions: ifTrue: [
+	(aPragmaNode selector sameContents: #compilerOptions:) ifTrue: [
 		aPragmaNode pragma sendTo:
 			self compilationContext ].
 

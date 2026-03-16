@@ -25,7 +25,7 @@ WebBrowser class >> isForCurrentSystem [
 WebBrowser class >> isUsed [
 	"All my subclasses are used by me"
 
-	^ self name = #WebBrowser
+	^ (self name sameContents: #WebBrowser)
 		ifTrue: [ super isUsed ]
 		ifFalse: [ true ]
 ]

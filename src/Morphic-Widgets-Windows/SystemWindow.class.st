@@ -486,7 +486,7 @@ SystemWindow class >> windowMenuOn: aBuilder [
 		ifTrue: [ #'Make closable' ].
 	(aBuilder item: closableLabel)
 		action: [
-			(closableLabel = #'Make unclosable')
+			(closableLabel sameContents: #'Make unclosable')
 				ifTrue: [ aBuilder model makeUnclosable ]
 				ifFalse:[ aBuilder model makeClosable] ].
 	draggableLabel := aBuilder model isSticky
@@ -1923,9 +1923,9 @@ SystemWindow >> updatablePanes [
 
 { #category : 'label' }
 SystemWindow >> update: aSymbol [
-	aSymbol = #relabel
+	(aSymbol sameContents: #relabel)
 		ifTrue: [^ model ifNotNil: [ self setLabel: model labelString ] ].
-	aSymbol = #close
+	(aSymbol sameContents: #close)
 		ifTrue: [self delete]
 ]
 

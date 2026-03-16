@@ -65,12 +65,12 @@ ZnEndianSensitiveUTFEncoder >> initialize [
 
 { #category : 'testing' }
 ZnEndianSensitiveUTFEncoder >> isBigEndian [
-	^ endianness = #big
+	^ endianness sameContents: #big
 ]
 
 { #category : 'testing' }
 ZnEndianSensitiveUTFEncoder >> isLittleEndian [
-	^ endianness = #little
+	^ endianness sameContents: #little
 ]
 
 { #category : 'printing' }

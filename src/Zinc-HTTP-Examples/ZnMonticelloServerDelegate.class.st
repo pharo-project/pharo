@@ -66,12 +66,12 @@ ZnMonticelloServerDelegate >> handlePutMczEntry: request [
 
 { #category : 'public' }
 ZnMonticelloServerDelegate >> handleRequest: request [
-	(request method = #GET)
+	(request method sameContents: #GET)
 		ifTrue: [
 			^ request uri isSlash
 				ifTrue: [ self handleListMczEntries: request ]
 				ifFalse: [ self handleGetMczEntry: request ] ].
-	^ (request method = #PUT)
+	^ (request method sameContents: #PUT)
 		ifTrue: [ self handlePutMczEntry: request ]
 		ifFalse: [ ZnResponse badRequest: request ]
 ]

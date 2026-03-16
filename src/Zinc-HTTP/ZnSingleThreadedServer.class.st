@@ -189,7 +189,7 @@ ZnSingleThreadedServer >> handleRequest: request timing: timing [
 	initialMilliseconds := Time millisecondClockValue.
 	ZnCurrentServerSession value: nil.
 	response := self handleRequestProtected: request.
-	request method = #HEAD
+	(request method sameContents: #HEAD)
 		ifTrue: [ response clearEntity ].
 	timing handlerDuration: (self logRequest: request response: response handledStarted: initialMilliseconds).
 	ZnCurrentServerSession value

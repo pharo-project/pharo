@@ -75,7 +75,7 @@ RubFindReplaceDialogWindow >> defaultButton [
 	"Answer the default button."
 	^self
 		findDeepSubmorphThat: [:m |
-			(m isKindOf: PluggableButtonMorph) and: [m actionSelector = #find]]
+			(m isKindOf: PluggableButtonMorph) and: [m actionSelector sameContents: #find]]
 		ifAbsent: []
 ]
 
@@ -406,11 +406,11 @@ RubFindReplaceDialogWindow >> title [
 { #category : 'updating' }
 RubFindReplaceDialogWindow >> update: aSymbol [
 	self textView ifNotNil: [
-		aSymbol = #regexError
+		(aSymbol sameContents: #regexError)
 				ifTrue: [self regexError].
-		aSymbol = #newFinding
+		(aSymbol sameContents: #newFinding)
 				ifTrue: [^ self newFinding].
-		aSymbol = #findPolicy
+		(aSymbol sameContents: #findPolicy)
 			ifTrue: [self findPolicyChanged]].
 	super update: aSymbol
 ]

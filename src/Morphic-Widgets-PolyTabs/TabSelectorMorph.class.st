@@ -72,7 +72,7 @@ TabSelectorMorph >> calculateVisibleTabs [
 	| widths answer availableWidth accumulatedWidth tabStr widthStr width |
 	widths := self tabs collect: [ :t | t minExtent x ].
 	availableWidth := self layoutBounds width.
-	self cornerStyle = #rounded ifTrue: [ availableWidth := availableWidth - 6 ].
+	(self cornerStyle sameContents: #rounded) ifTrue: [ availableWidth := availableWidth - 6 ].
 	widths sum <= availableWidth ifTrue: [ ^ self tabs ].
 	availableWidth := availableWidth - self controlsExtent x.
 	answer := OrderedCollection new.
@@ -532,7 +532,7 @@ TabSelectorMorph >> tabsAndControls [
 		visibleTabs
 			add: self newSpacer;
 			addAll: self controls.
-		self cornerStyle = #rounded
+		(self cornerStyle sameContents: #rounded)
 			ifTrue: [visibleTabs add: self newEndSpacer]].
 	^visibleTabs
 ]

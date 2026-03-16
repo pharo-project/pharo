@@ -45,8 +45,8 @@ FFICalloutMethodBuilder >> build: aBlock [
 
 { #category : 'accessing' }
 FFICalloutMethodBuilder >> callType [
-	self callingConvention = #cdecl ifTrue: [ ^ 0 ].
-	self callingConvention = #stdcall ifTrue: [ ^ 1 ].
+	(self callingConvention sameContents: #cdecl) ifTrue: [ ^ 0 ].
+	(self callingConvention sameContents: #stdcall) ifTrue: [ ^ 1 ].
 
 	self error: 'Invalid call convention!'
 ]

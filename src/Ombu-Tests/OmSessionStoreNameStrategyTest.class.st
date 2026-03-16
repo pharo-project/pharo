@@ -15,7 +15,7 @@ Class {
 { #category : 'testing' }
 OmSessionStoreNameStrategyTest class >> isAbstract [
 
-	^ self name = #OmSessionStoreNameStrategyTest
+	^ self name sameContents: #OmSessionStoreNameStrategyTest
 ]
 
 { #category : 'private' }

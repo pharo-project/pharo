@@ -16,7 +16,7 @@ Class {
 
 { #category : 'testing' }
 OmStoreTest class >> isAbstract [
-	^ self name = #OmStoreTest
+	^ self name sameContents: #OmStoreTest
 ]
 
 { #category : 'running' }

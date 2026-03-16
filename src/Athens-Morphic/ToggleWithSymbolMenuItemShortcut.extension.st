@@ -7,7 +7,7 @@ ToggleWithSymbolMenuItemShortcut >> drawOnAthensCanvas: aCanvas [
 	keyParts := (self keyText substrings: '+') collect: [:each | each trimBoth].
 
 	"Ensure shift is first"
-	((keyParts includes: #Shift) and: [ (keyParts first = 'Shift') not ])
+	((keyParts includes: #Shift) and: [ (keyParts first sameContents: 'Shift') not ])
 		ifTrue: [ keyParts := (keyParts copyWithout: 'Shift') copyWithFirst: 'Shift' ].
 
 	keyFont := self class symbolFont.

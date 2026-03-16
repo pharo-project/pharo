@@ -127,7 +127,7 @@ FFIStructure class >> asExternalTypeOn: generator [
 { #category : 'private' }
 FFIStructure class >> compileFields: specArray withAccessors: aSymbol [
 	| offset fieldSpec defineBoolean|
-	defineBoolean := aSymbol = #always.
+	defineBoolean := aSymbol sameContents: #always.
 	fieldSpec := self fieldSpec.
 	offset := 0.
 	externalStructureAlignment := 1.

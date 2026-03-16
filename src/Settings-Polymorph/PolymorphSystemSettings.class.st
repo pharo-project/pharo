@@ -62,17 +62,17 @@ PolymorphSystemSettings class >> desktopBackgroundChanged [
 					(1.0 -> self desktopGradientFillColor lighter) }.
 			fill origin:
 				(self currentWorld perform: self desktopGradientOrigin).
-			self desktopGradientDirection = #Vertical ifTrue: [
+			(self desktopGradientDirection sameContents: #Vertical) ifTrue: [
 				fill radial: false.
 				fill normal: self currentWorld width @ 0.
 				fill direction: 0 @ self currentWorld height ].
-			self desktopGradientDirection = #Horizontal ifTrue: [
+			(self desktopGradientDirection sameContents: #Horizontal) ifTrue: [
 				fill radial: false.
 				fill normal: 0 @ self currentWorld height.
 				fill direction: self currentWorld width @ 0 ].
-			self desktopGradientDirection = #Radial ifTrue: [
+			(self desktopGradientDirection sameContents: #Radial) ifTrue: [
 				fill radial: true.
-				self desktopGradientOrigin = #center
+				(self desktopGradientOrigin sameContents: #center)
 					ifTrue: [
 						fill direction: self currentWorld width // 2 @ 0.
 						fill normal: 0 @ (self currentWorld height // 2) ]
