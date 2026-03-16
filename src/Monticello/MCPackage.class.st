@@ -65,7 +65,7 @@ MCPackage >> isDirty [
 
 { #category : 'accessing' }
 MCPackage >> name [
-	^ name
+	^ name asSymbol
 ]
 
 { #category : 'accessing' }
