@@ -290,23 +290,43 @@ Integer >> anyMask: mask [
 
 { #category : 'converting - arrays' }
 Integer >> asByteArray [
+	"Answer a ByteArray with my value, most-significant byte first.
+	Warning: Sign is not encoded"
 
-	| stream |
-	stream := ByteArray new writeStream.
-	self bytesCount to: 1 by: -1 do: [:digitIndex |
-		stream nextPut: (self byteAt: digitIndex)].
-	^ stream contents
+	"1 asByteArray >>> #[1]"
+	"-1 asByteArray >>> #[1]"
+
+	| answer digitPos bytesCount |
+	bytesCount := self bytesCount.
+	answer := ByteArray new: bytesCount.
+	
+	digitPos := 1.
+	bytesCount
+		to: 1
+		by: -1
+		do: [ :pos |
+			answer
+				at: pos
+				put: (self byteAt: digitPos).
+			digitPos := digitPos + 1 ].
+	^ answer
 ]
 
 { #category : 'converting - arrays' }
 Integer >> asByteArrayOfSize: aSize [
-	"Answer a ByteArray of aSize with my value, most-significant byte first."
-	| answer digitPos |
-	aSize < self bytesCount ifTrue: [ self error: 'number to large for byte array' ].
+	"Answer a ByteArray of aSize with my value, most-significant byte first.
+	Warning: Sign is not encoded"
+	"(1 asByteArrayOfSize: 1) >>> #[1]"
+	"(-1 asByteArrayOfSize: 1) >>> #[1]"
+	
+	| answer digitPos bytesCount |
+	bytesCount := self bytesCount.
+	
+	aSize < bytesCount ifTrue: [ self error: 'number to large for byte array' ].
 	answer := ByteArray new: aSize.
 	digitPos := 1.
 	aSize
-		to: aSize - self bytesCount + 1
+		to: aSize - bytesCount + 1
 		by: -1
 		do:
 			[ :pos |

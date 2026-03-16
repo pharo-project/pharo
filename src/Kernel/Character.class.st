@@ -779,6 +779,12 @@ Character >> isSpecial [
 ]
 
 { #category : 'testing' }
+Character >> isSpecialSyntaxValid [
+
+	^ '^"''[](){}#$:;.=' includes: self
+]
+
+{ #category : 'testing' }
 Character >> isSurrogateOther [
 ^ self characterSet isSurrogateOther: self
 ]

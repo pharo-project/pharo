@@ -265,7 +265,8 @@ SDL2 class >> initLibrary [
 
 	self
 		setHint: SDL_HINT_VIDEO_ALLOW_SCREENSAVER value: '1';
-		setHint: SDL_HINT_NO_SIGNAL_HANDLERS value: '1'.
+		setHint: SDL_HINT_NO_SIGNAL_HANDLERS value: '1';
+		setHint: SDL_HINT_MOUSE_FOCUS_CLICKTHROUGH value: '1'.
 
 	self init: SDL_INIT_NOPARACHUTE.
 	Session := Smalltalk session

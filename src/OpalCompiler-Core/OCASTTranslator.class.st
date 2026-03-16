@@ -459,21 +459,6 @@ OCASTTranslator >> subTranslator [
 ]
 
 { #category : 'visitor - double dispatching' }
-OCASTTranslator >> translateConstantBlock: aBlockNode [
-	| ir |
-	"even though we never execute the compiledBlock, we create it so that the BlockClosure can use e.g. to query on the bytecode level"
-	ir := IRBuilder new
-				mapToNode: aBlockNode;
-				numArgs: aBlockNode arguments size;
-				pushLiteral: aBlockNode constantValue;
-				blockReturnTop;
-				ir.
-	aBlockNode ir: ir.
-	aBlockNode resetBcToASTCache.
-	^ ir compiledBlock: aBlockNode scope
-]
-
-{ #category : 'visitor - double dispatching' }
 OCASTTranslator >> translateFullBlock: aBlockNode [
 
 	methodBuilder mapToNode: aBlockNode.
@@ -581,7 +566,7 @@ OCASTTranslator >> visitConstantBlockNode: anBlockNode [
 	constantBlock := ConstantBlockClosure
 							  numArgs: anBlockNode numArgs
 		                 literal: anBlockNode constantValue.
-	compiledBlock := self translateConstantBlock: anBlockNode.
+	compiledBlock := self subTranslator translateFullBlock: anBlockNode.
 	constantBlock compiledBlock: compiledBlock.
 	methodBuilder pushLiteral: constantBlock
 ]

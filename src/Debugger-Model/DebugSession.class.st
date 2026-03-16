@@ -27,10 +27,12 @@ Class {
 		#interruptedContext,
 		#interruptedProcess,
 		#errorWasInUIProcess,
-		#exception
+		#exception,
+		#stepThroughController
 	],
 	#classVars : [
-		#LogDebuggerStackToFile
+		'FastStepThroughMode',
+		'LogDebuggerStackToFile'
 	],
 	#classInstVars : [
 		#contextModelClass
@@ -56,6 +58,31 @@ DebugSession class >> contextModelClass: anObject [
 DebugSession class >> defaultContextModelClass [
 
 	^ DebugContext
+]
+
+{ #category : 'accessing' }
+DebugSession class >> fastStepThroughMode [
+
+	^ FastStepThroughMode ifNil: [ FastStepThroughMode := false ]
+]
+
+{ #category : 'accessing' }
+DebugSession class >> fastStepThroughMode: aBoolean [
+
+	^ FastStepThroughMode := aBoolean
+]
+
+{ #category : 'settings' }
+DebugSession class >> fastStepThroughModeSettingOn: aBuilder [
+
+	<systemsettings>
+	(aBuilder setting: #fastStepThroughMode)
+		label: 'Enable the fast step through mode';
+		target: self;
+		parent: #debugging;
+		default: false;
+		description:
+			'If enabled, the debugger will perform step through operations using halting blocks. This implementation is more efficient than the original one based on interpreter steps'
 ]
 
 { #category : 'settings' }
@@ -132,6 +159,37 @@ DebugSession >> exception [
 { #category : 'accessing' }
 DebugSession >> exception: anObject [
 	exception := anObject
+]
+
+{ #category : 'debugging actions' }
+DebugSession >> fastStepThrough: aContext [
+	"Send messages until you return to aContext.
+	 Used to step into a block in the method."
+	|  ctrl originContext targetContext |
+	ctrl := self stepThroughController.	
+		
+	aContext stepIntoQuickMethod: false.
+	(self isContextPostMortem: aContext) ifTrue: [ ^ self ].
+	"Wrap blocks in aContext with HaltingBlocks"
+	ctrl prepareContextForStepThrough: aContext.
+	
+	originContext := ctrl completeStep: aContext inProcess: interruptedProcess.
+	targetContext := ctrl findNextContext: originContext 
+								 having: aContext home 
+					  			 fixing: interruptedProcess suspendedContext .
+	
+	targetContext == originContext 
+		ifTrue: [ "Step through is equivalent to Step over"
+			interruptedProcess suspendedContext: originContext.
+			interruptedProcess isTerminated
+					ifTrue: [ aContext terminateTo: nil ]
+					ifFalse: [ self updateContextTo: 
+									(self stepToFirstInterestingBytecodeIn: interruptedProcess) ] ]
+		ifFalse: [ "Step through either enters of exits the block"
+			interruptedProcess suspendedContext: targetContext.
+			self updateContextTo: targetContext ].
+			
+	self triggerEvent: #stepThrough
 ]
 
 { #category : 'evaluating' }
@@ -584,6 +642,9 @@ DebugSession >> stepThrough [
 DebugSession >> stepThrough: aContext [
 	"Send messages until you return to selectedContext.
 	 Used to step into a block in the method."
+	
+	self class fastStepThroughMode ifTrue: [ ^ self fastStepThrough: aContext ].
+	
 	aContext stepIntoQuickMethod: false.
 	(self isContextPostMortem: aContext) ifTrue: [^ self].
 
@@ -591,6 +652,12 @@ DebugSession >> stepThrough: aContext [
 	self updateContextTo: (self stepToFirstInterestingBytecodeIn: interruptedProcess).
 
 	self triggerEvent: #stepThrough
+]
+
+{ #category : 'accessing' }
+DebugSession >> stepThroughController [
+	^ stepThroughController ifNil: [
+		  stepThroughController := FastStepThroughController new ]
 ]
 
 { #category : 'private' }
@@ -620,6 +687,10 @@ DebugSession >> terminate [
 	self interruptedProcess
 		ifNotNil: [
 			"Assume the user closed the debugger. Simply kill the interrupted process."
+
+			(exception isKindOf: MessageNotUnderstood)
+				ifTrue: [ exception stopResendingMessage ].
+
 			self interruptedProcess terminate.
 			self clear.
 			Smalltalk installLowSpaceWatcher.  "restart low space handler" ]

@@ -18,6 +18,10 @@ SDLUnixPlatform >> afterMainPharoWindowCreated: aOSSDLWindow [
 SDLUnixPlatform >> afterSetWindowTitle: aString onWindow: aOSSDLWindow [
 ]
 
+{ #category : 'operations' }
+SDLUnixPlatform >> beforeMainPharoWindowClosed: aOSSDLWindow [
+]
+
 { #category : 'initialization' }
 SDLUnixPlatform >> initPlatformSpecific [
 

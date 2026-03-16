@@ -32,27 +32,20 @@ MCFileBasedRepository class >> flushAllCaches [
 ]
 
 { #category : 'settings' }
-MCFileBasedRepository class >> monticelloSettingsOn: aBuilder [  
-	<systemsettings>  
+MCFileBasedRepository class >> monticelloSettingsOn: aBuilder [
+
+	<systemsettings>
 	(aBuilder group: #monticello)
 		label: 'Monticello';
 		parent: #SCM;
 		description: 'All Monticello settings';
-		with: [ 
+		with: [
 			(aBuilder setting: #defaultDirectoryName)
 				type: #Directory;
 				target: MCDirectoryRepository;
-				description: 'The path of a directory where you want to start out when choosing local repository locations' ;
+				description: 'The path of a directory where you want to start out when choosing local repository locations';
 				default: FileSystem workingDirectory fullName;
-				label: 'Default local repository directory'.
-			(aBuilder setting: #cacheDirectory)
-				type: #Directory;
-				target: MCCacheRepository;
-				default: (FileLocator localDirectory / 'package-cache') asFileReference;
-				description: 'The path of the local repository cache';
-				label: 'Local cache directory'.	
-				
-				].
+				label: 'Default local repository directory' ]
 ]
 
 { #category : 'accessing' }
@@ -148,10 +141,9 @@ MCFileBasedRepository >> closestAncestorVersionFor: anAncestry ifNone: errorBloc
 
 { #category : 'fetching' }
 MCFileBasedRepository >> fetchPackageNamed: aName [
+	"Do nothing when we are not remote."
 
-	| references |
-	references := self packageNamed: aName.
-	MCCacheRepository default storeVersion: references
+	
 ]
 
 { #category : 'accessing' }
@@ -198,10 +190,7 @@ MCFileBasedRepository >> loadPackageNamed: aString intoLoader: aMCVersionLoader 
 { #category : 'private' }
 MCFileBasedRepository >> loadVersionFromFileNamed: aString [
 
-	(MCCacheRepository uniqueInstance includesFileNamed: aString)
-		ifTrue: [ ^ MCCacheRepository uniqueInstance loadVersionFromFileNamed: aString].
-	
-	^ self versionReaderForFileNamed: aString do: [:r | r version]
+	^ self versionReaderForFileNamed: aString do: [ :r | r version ]
 ]
 
 { #category : 'loading' }
@@ -353,15 +342,13 @@ MCFileBasedRepository >> versionReaderForFileNamed: aString do: aBlock [
 
 { #category : 'interface' }
 MCFileBasedRepository >> versionWithInfo: aVersionInfo ifAbsent: errorBlock [
-	"get a version for the given versionInfo. always query first the packageCache and only then try to load the version from the remote location"
-	^ MCCacheRepository uniqueInstance
-		versionWithInfo: aVersionInfo 
-		ifAbsent: [
-			(self allFileNamesForVersionNamed: aVersionInfo name) do:
-				[:fileName | | version |
-				version := self versionFromRepositoryFromFileNamed: fileName.
-				version info = aVersionInfo ifTrue: [^ version]].
-			^ errorBlock value].
+	"get a version for the given versionInfo"
+
+	(self allFileNamesForVersionNamed: aVersionInfo name) do: [ :fileName |
+		| version |
+		version := self versionFromRepositoryFromFileNamed: fileName.
+		version info = aVersionInfo ifTrue: [ ^ version ] ].
+	^ errorBlock value
 ]
 
 { #category : 'accessing' }

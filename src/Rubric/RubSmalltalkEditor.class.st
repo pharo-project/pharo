@@ -288,6 +288,12 @@ RubSmalltalkEditor >> browseIt: aKeyboardEvent [
 	^true
 ]
 
+{ #category : 'accessing' }
+RubSmalltalkEditor >> characterAt: anInteger [ 
+	
+	^ self text at: anInteger
+]
+
 { #category : 'menu messages' }
 RubSmalltalkEditor >> classCommentsContainingIt [
 	"Open a browser class comments which contain the current selection somewhere in them."
@@ -804,19 +810,20 @@ RubSmalltalkEditor >> isSmalltalkEditor [
 ]
 
 { #category : 'private' }
-RubSmalltalkEditor >> isWordCharacterAt: index in: aString [
+RubSmalltalkEditor >> isWordCharacterAt: index in: aString except: aBlock [
 	"By default, group alphanumeric and non-alphanumeric separately"
+
 	| character |
 	character := aString at: index.
+	(aBlock value: character) ifTrue: [ ^ false ].
 	"In smalltalk code, colons make part of selectors too and are part of a word"
-	^ character isAlphaNumeric or: [
-		"Check that it is a keyword selector.
+	^ character isAlphaNumeric or: [ 
+		"Check that it is a keyword selector:
 		 - followed by a colon
 		 - but not by an assignment "
-		(character = $_) or: [
-			(character = $:) and: [
-				aString size = index
-					or: [  (aString at: index + 1) ~= $= ] ] ] ]
+		  character = $_ or: [
+			  character = $: and: [
+				  aString size = index or: [ (aString at: index + 1) ~= $= ] ] ] ]
 ]
 
 { #category : 'menu messages' }

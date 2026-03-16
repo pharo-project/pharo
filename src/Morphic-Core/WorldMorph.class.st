@@ -605,6 +605,14 @@ WorldMorph >> stopStepping: aMorph selector: aSelector [
 	worldState stopStepping: aMorph selector: aSelector
 ]
 
+{ #category : 'accessing' }
+WorldMorph >> taskbarTasks [
+
+	^ self submorphs
+		  collect: [ :m | m taskbarTask ]
+		  thenSelect: [ :m | m isNotNil ]
+]
+
 { #category : 'menu & halo' }
 WorldMorph >> truncatedMenuLabelFor: aWindowLabel [
 	^ aWindowLabel truncateWithElipsisTo: 47

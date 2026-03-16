@@ -57,12 +57,13 @@ WideString class >> fromString: aString [
 { #category : 'converting' }
 WideString >> asByteArray [
 	"Convert to a ByteArray with the ascii values of the string."
-	"'a' asByteArray >>> #[97]"
-	"'A' asByteArray >>> #[65]"
-	"'ABA' asByteArray >>> #[65 66 65]"
-	| b |
-	b := ByteArray new: self byteSize.
-	1 to: self size * 4 do: [:i |
+	"'a' asWideString asByteArray >>> #[0 0 0 97]"
+	"'A' asWideString asByteArray >>> #[0 0 0 65]"
+	
+	| b s |
+	s := self byteSize.
+	b := ByteArray new: s.
+	1 to: s do: [:i |
 		b at: i put: (self byteAt: i)].
 	^ b
 ]

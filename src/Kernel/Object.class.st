@@ -744,7 +744,8 @@ Object >> doesNotUnderstand: aMessage [
 		message: aMessage;
 		receiver: self.
 	resumeValue := exception signal.
-	^exception reachedDefaultHandler
+		
+	^exception hasToResend 
 		ifTrue: [aMessage sentTo: self]
 		ifFalse: [resumeValue]
 ]
@@ -1270,7 +1271,7 @@ Object >> isVariableBinding [
 { #category : 'comparing' }
 Object >> literalEqual: other [
 
-	^ self class == other class and: [self = other]
+	^ self == other
 ]
 
 { #category : 'printing' }

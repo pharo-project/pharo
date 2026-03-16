@@ -124,7 +124,7 @@ SystemDictionary >> at: aKey put: anObject [
  	index := self findElementOrNil: aKey.
  	assoc := array at: index.
  	assoc
- 		ifNil: [self atNewIndex: index put: (GlobalVariable key: aKey value: anObject). self flushClassNameCache]
+ 		ifNil: [self atNewIndex: index put: (GlobalVariable key: aKey value: anObject)]
  		ifNotNil: [assoc value: anObject].
 		
 	registeredMethods do: [ :aMethod | aMethod isInstalled ifTrue: [aMethod recompile] ].		
@@ -136,6 +136,7 @@ SystemDictionary >> at: aKey put: anObject [
 SystemDictionary >> atNewIndex: index put: aGlobalVariable [
 
 	aGlobalVariable isAssociation ifTrue: [ self error: 'Only global variables should be added to the SystemDictionary and not associations.' ].
+	self flushClassNameCache.
 	^ super atNewIndex: index put: aGlobalVariable
 ]
 

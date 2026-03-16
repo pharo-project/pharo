@@ -244,7 +244,12 @@ Deprecation >> transform [
 
 	self rewriterClass ifNil:[ ^ self ].
 	aMethod := self contextOfSender homeMethod.
-	aMethod isDoIt ifTrue:[ ^ self ]. "no need to transform doits"
+	
+	"no need to transform doits or non installed methods.
+	Non installed methods can arise if we are rewriting a closure whose home method was rewritten"
+	aMethod isDoIt ifTrue:[ ^ self ].
+	aMethod isInstalled ifFalse: [ ^ self ].
+	
 	node := self contextOfSender sourceNodeExecuted.
 	RecursionStopper during: [
 		rewriteRule := self rewriterClass new

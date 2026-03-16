@@ -59,8 +59,8 @@ BaselineOfPharo class >> iceberg [
 	^ PharoExternalProject 
 		newName: 'Iceberg' 
 		owner: 'pharo-vcs' 
-		project: 'iceberg' 
-		version: 'v2.3.1' 
+		project: 'iceberg'
+		version: 'v2.3.4' 
 		sourceDir: nil
 ]
 
@@ -95,7 +95,7 @@ BaselineOfPharo class >> newTools [
 		newName: 'NewTools' 
 		owner: 'pharo-spec' 
 		project: 'NewTools' 
-		version: 'v0.9.0'
+		version: 'v0.9.3'
 ]
 
 { #category : 'repository urls' }
@@ -129,7 +129,7 @@ BaselineOfPharo class >> spec [
 		newName: 'Spec2' 
 		owner: 'pharo-spec' 
 		project:'Spec' 
-		version: 'v1.3.0'
+		version: 'v1.3.6'
 ]
 
 { #category : 'repository urls' }

@@ -17,17 +17,6 @@ Class {
 	#package : 'Morphic-Widgets-Taskbar'
 }
 
-{ #category : 'instance creation' }
-TaskListMorph class >> from: aKeyboardEvent [
-
-	| instance |
-	instance := self new.
-	aKeyboardEvent shiftPressed
-		ifTrue: [ instance selectNextTask ]
-		ifFalse: [ instance selectPreviousTask ].
-	^ instance
-]
-
 { #category : 'testing' }
 TaskListMorph class >> isNavigationEvent: aKeyboardEvent [
 
@@ -110,6 +99,13 @@ TaskListMorph >> handlesKeyboard: evt [
 	^true
 ]
 
+{ #category : 'testing' }
+TaskListMorph >> hasCurrentWindows: currentTasks [
+
+	^ (self tasks includesAll: currentTasks) and: [
+		  currentTasks includesAll: self tasks ]
+]
+
 { #category : 'initialization' }
 TaskListMorph >> initialize [
 	"Initialize the receiver."
@@ -151,9 +147,7 @@ TaskListMorph >> initializeLayout [
 TaskListMorph >> initializeTasks [
 	"Set up the current tasks."
 
-	self tasks: ((self currentWorld submorphs
-		collect: [:m | m taskbarTask])
-		select: [:m | m isNotNil]) asOrderedCollection
+	self tasks: self currentWorld taskbarTasks
 ]
 
 { #category : 'settings' }

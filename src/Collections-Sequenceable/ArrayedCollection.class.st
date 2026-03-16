@@ -22,6 +22,17 @@ ArrayedCollection class >> new [
 ]
 
 { #category : 'instance creation' }
+ArrayedCollection class >> new: sizeRequested [
+	"Answer an instance of this class with the number of indexable
+	variables specified by the argument, sizeRequested.
+
+	This is a shortcut (direct call of primitive, no #initialize, for performance"
+
+	<primitive: 71>  "This method runs primitively if successful"
+	^ self basicNew: sizeRequested  "Exceptional conditions will be handled in basicNew:"
+]
+
+{ #category : 'instance creation' }
 ArrayedCollection class >> new: size withAll: value [
 	"Answer an instance of me, with number of elements equal to size, each
 	of which refers to the argument, value."

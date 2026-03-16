@@ -55,12 +55,12 @@ NativeBrowserOpenVisitor >> pathString: aString [
 { #category : 'private - ffi' }
 NativeBrowserOpenVisitor >> privShellExecute: lpOperation file: lpFile parameters: lpParameters directory: lpDirectory show: nShowCmd [
 	^ self ffiCall: #(
-			FFIConstantHandle ShellExecuteA(
+			FFIConstantHandle ShellExecuteW(
      				int 0, "Operation is not associated with a window"
-     				char* lpOperation,
-         			char* lpFile,
-     				char* lpParameters,
-     				char* lpDirectory,
+     				Win32WideString lpOperation,
+         			Win32WideString lpFile,
+     				Win32WideString lpParameters,
+     				Win32WideString lpDirectory,
         			int nShowCmd)) module: #shell32
 ]
 
@@ -76,10 +76,11 @@ NativeBrowserOpenVisitor >> visitUnix: aPlatform [
 
 { #category : 'visiting' }
 NativeBrowserOpenVisitor >> visitWindows: aPlatform [
+
 	self
-		privShellExecute: 'explore'
-		file: pathString
-		parameters: ''
-		directory: ''
-		show: 5	"SW_SHOW"
+		privShellExecute: 'explore' asWin32WideString
+		file: pathString asWin32WideString
+		parameters: '' asWin32WideString
+		directory: '' asWin32WideString
+		show: 5 "SW_SHOW"
 ]

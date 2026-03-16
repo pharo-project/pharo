@@ -62,6 +62,19 @@ OSWorldRenderer class >> priority [
 	^ 2
 ]
 
+{ #category : 'start' }
+OSWorldRenderer class >> restart [
+
+	UIManager default deactivate.
+	self shutDown: true.
+	OSSDL2Driver shutDown: true.
+
+	self startUp: true.
+	UIManager default activate.
+	
+	self inform: self class name , ' restarted'
+]
+
 { #category : 'settings' }
 OSWorldRenderer class >> settingsOn: aBuilder [
 
@@ -171,10 +184,12 @@ OSWorldRenderer >> copyRectangle: aRectangle into: aForm [
 	^ aForm
 ]
 
-{ #category : 'private' }
+{ #category : 'activation' }
 OSWorldRenderer >> deactivate [
 
-	osWindow ifNotNil: [ osWindow destroy. osWindow := nil ].
+	osWindow ifNotNil: [ 
+		driver beforeMainPharoWindowClosed: osWindow.
+		osWindow destroy. osWindow := nil ].
 	display := nil
 ]
 

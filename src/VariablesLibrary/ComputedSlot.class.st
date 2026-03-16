@@ -27,6 +27,11 @@ ComputedSlot >> = other [
 	^ super = other and: [block = other block]
 ]
 
+{ #category : 'accessing' }
+ComputedSlot >> block [
+	^ block
+]
+
 { #category : 'code generation' }
 ComputedSlot >> emitValue: methodBuilder [
 	"generate the bytecode for 'block cull: self'"
