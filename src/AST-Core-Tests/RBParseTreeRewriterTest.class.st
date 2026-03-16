@@ -256,7 +256,7 @@ RBParseTreeRewriterTest >> testRewriteDynamicArray [
 
 { #category : 'tests - to be refined' }
 RBParseTreeRewriterTest >> testRewriteMethods [
-	"#(source target 'source pattern' 'target pattern')"
+	"#('source' 'target' 'source pattern' 'target pattern')"
 	#(#('arg1: a arg2: b | temp1 temp2 | self stmt1 ifTrue: [^a]. self arg1: a arg2: b' 'arg2: a arg1: b | temp1 temp2 | self stmt1 ifTrue: [^a]. self arg2: b arg2: a' '`arg1: `var1 `arg2: `var2 | `@temps | ``@.stmts. self `arg1: `var1 `arg2: `var2. `@.stmts1' '`arg2: `var1 `arg1: `var2 | `@temps | ``@.stmts. self `arg2: `var2 `arg2: `var1. `@.stmts1') #('arg1: a arg2: b | temp1 temp2 | self stmt1. self arg1: a arg2: b' 'arg1: a arg2: b | temp1 temp2 | [self stmt1] repeat' '`@args: `@vars | `@temps | `@.stmts. self `@args: `@vars' '`@args: `@vars | `@temps | [`@.stmts] repeat') #('+ a | temps | ^self primitiveValue' '- a | temps | ^self primitiveValue' '+ `temp | `@tmps | `@.stmts' '- `temp | `@tmps | `@.stmts') #('a self stmt1. self stmt2' 'a self stmt1. self stmt2' 'b | `@temps | `@.stmts' 'c | `@temps | `@.stmts') #('a <foo: 1 bar: 2>' 'a <bar: 2 foo: 1>' 'a <`sel1: `#arg1 `sel2: `#arg2>' 'a <`sel2: `#arg2 `sel1: `#arg1>') #('a <foo> self foo' 'b <foo> self foo' 'a `@.stmts' 'b `@.stmts'))
 		do:
 			[:each |
@@ -280,12 +280,12 @@ RBParseTreeRewriterTest >> testRewriteMethods [
 
 { #category : 'tests - to be refined' }
 RBParseTreeRewriterTest >> testRewrites [
-	"#(source target 'source pattern' 'target pattern')"
+	"#('source' 'target' 'source pattern' 'target pattern')"
 	#(
 		(	'[:c | |a| a foo1; foo2]'
 			'[:c | |a| b foo1; foo2]'
-			a
-			b )
+			'a'
+			'b' )
 		(	'self foo: 1. bar foo1 foo: 2. (self foo: a) foo: (b foo: c)'
 			'self bar: 1. bar foo1 bar: 2. (self bar: a) bar: (b bar: c)'
 			'``@rcvr foo: ``@arg1'

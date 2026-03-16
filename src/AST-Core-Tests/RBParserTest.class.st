@@ -491,7 +491,7 @@ RBParserTest >> testEquivalentExceptRenaming [
 	#(#('a 3-4' 'a 4-3' false) #('a #[3 4]' 'a #(3 4)' false) #('a variable1 ~~ "comment" variable2' 'a variable1 ~~ variable2' true) #('a variable1' 'a variable2' false) #('a [:a :b | a + b]' 'a [:b :a | a + b]' false) #('a | a b | a + b' 'a | b a | a + b' true) #('a | a | a msg1; msg2' 'a | b | b msg2; msg2' false) #('a c' 'a d' true) #('a | a b | a := b. ^b msg1' 'a | a b | b := a. ^a msg1' true) #('a | a b | a := b. ^b msg1: a' 'a | a b | b := a. ^b msg1: a' false) #('a: b b + 4' 'a: e e + 4' true) #('a: b b + 4' 'b: b b + 4' false) #('a: b b: c b + c' 'a: c b: b c + b' true) #('a: a b: b a + b' 'a: b b: a a + b' false))
 		do: [ :each |
 			self
-				assert: ((self parserClass parseMethod: each first) equalTo: (self parserClass parseMethod: (each at: 2)) exceptForVariables: #(c))
+				assert: ((self parserClass parseMethod: each first) equalTo: (self parserClass parseMethod: (each at: 2)) exceptForVariables: #('c'))
 				identicalTo: each last ]
 ]
 
@@ -938,7 +938,7 @@ RBParserTest >> testLiteralArray [
 	"Test the good parsing of the elements of a literal array which means treating each as a literal."
 	| tree collection |
 	tree := self parserClass parseExpression:
-			  '#( a #b #c . + - 1 -2 3.4 #true true #false false #nil nil "comment" string #[ 1 2 3 ] #(1 2 3))'.
+			  '#( a #b #''c'' . + - 1 -2 3.4 #true true #false false #nil nil "comment" ''string'' #[ 1 2 3 ] #(1 2 3))'.
 	collection := OrderedCollection new.
 	"Create a collection with the expected values contained in the literal array."
 	collection add: #a;
@@ -969,7 +969,7 @@ RBParserTest >> testLiteralArrayContainsLiteralValues [
 	"Test the good parsing of the elements of a literal array which means treating each as a literal."
 	| tree collection |
 	tree := self parserClass parseExpression:
-			  '#( a #b #c . + - 1 -2 3.4 #true true #false false #nil nil "comment" string #[ 1 2 3 ] #(1 2 3))'.
+			  '#( a #b #''c'' . + - 1 -2 3.4 #true true #false false #nil nil "comment" ''string'' #[ 1 2 3 ] #(1 2 3))'.
 	collection := OrderedCollection new.
 	"Create a collection with the expected values contained in the literal array."
 	collection add: #a;
@@ -1085,12 +1085,12 @@ RBParserTest >> testModifying [
 	self
 		assertEmpty:
 			(tree argumentNames asSet
-				removeAll: #(a b);
+				removeAll: #('a' 'b');
 				yourself).
 	self
 		assertEmpty:
 			(tree allDefinedVariables asSet
-				removeAll: #(a b d);
+				removeAll: #('a' 'b' 'd');
 				yourself).
 	tree := self parserClass parseExpression: 'self foo: 0'.
 	tree selector: #+.
@@ -1124,7 +1124,7 @@ RBParserTest >> testNodesDo [
 { #category : 'tests - Number' }
 RBParserTest >> testNumberParsing [
 	| numbers node |
-	numbers := #((1 1) ('-1' -1) ('123' 123) ('123' 123) ('-123' -123) ('1.1' 1.1) ('-1.1' -1.1) ('1.23' 1.23) ('-1.23' -1.23) ('1e3' 1e3) ('1d3' 1d3) ('1q3' 1q3) ('-1e3' -1e3) ('1e-3' 1e-3) ('-1e-3' -1e-3) ('2r1e8'  2r1e8) ('-2r1e8' -2r1e8) ('2r1e-8' 2r1e-8) ('-2r1e-8' -2r1e-8) ('0.50s2' 0.50s2) ('0.500s3' 0.500s3) ('0.050s3' 0.050s3)).
+	numbers := #(('1' 1) ('-1' -1) ('123' 123) ('123' 123) ('-123' -123) ('1.1' 1.1) ('-1.1' -1.1) ('1.23' 1.23) ('-1.23' -1.23) ('1e3' 1e3) ('1d3' 1d3) ('1q3' 1q3) ('-1e3' -1e3) ('1e-3' 1e-3) ('-1e-3' -1e-3) ('2r1e8'  2r1e8) ('-2r1e8' -2r1e8) ('2r1e-8' 2r1e-8) ('-2r1e-8' -2r1e-8) ('0.50s2' 0.50s2) ('0.500s3' 0.500s3) ('0.050s3' 0.050s3)).
 	numbers do: [ :spec |
 		node := self parserClass parseExpression: spec first.
 		self assert: node source equals: spec first.
@@ -1343,7 +1343,7 @@ RBParserTest >> testParseLiterals [
 	self
 		assert: (RBParser parseLiterals:
 				 '''foo'' ''foo:'' ''foo:bar:baz'' ''1'' ''true''')
-		equals: #( foo 'foo:' 'foo:bar:baz' 1 true ).
+		equals: #( 'foo' 'foo:' 'foo:bar:baz' '1' 'true' ).
 	self
 		assert: (RBParser parseLiterals: '(1 2) #(1 2) #[1 2]')
 		equals: #( #( 1 2 ) #( 1 2 ) #[ 1 2 ] ).
@@ -1554,7 +1554,7 @@ RBParserTest >> testParsingPragmaRecogniseAndStorePragmas [
 	'foo <foo: #< >'
 	'foo <foo: #> >'
 	'foo <foo: $a>'
-	'foo <foo: bar>'
+	'foo <foo: ''bar''>'
 	'foo <foo: true>'
 	'foo <foo: false>'
 	'foo <foo: nil>'
@@ -1793,11 +1793,11 @@ RBParserTest >> testQuerying [
 	self assert: (tree whichNodeIsContainedBy: (91 to: 119)) selector value equals: #foo:foo:foo:.
 	self assert: (tree whichNodeIsContainedBy: (69 to: 121)) isBlock.
 	self assert: (tree whichNodeIsContainedBy: (69 to: 118)) isNil.
-	self assert: aNode blockVariables asSortedCollection asArray equals: #(arg1).
-	self assert: aNode temporaryVariables asSortedCollection asArray equals: #(b).
-	self assert: tree allDefinedVariables asSortedCollection asArray equals: #(a arg1 b).
-	self assert: tree allArgumentVariables asSortedCollection asArray equals: #(a arg1).
-	self assert: tree allTemporaryVariables asSortedCollection asArray equals: #(b)
+	self assert: aNode blockVariables asSortedCollection asArray equals: #('arg1').
+	self assert: aNode temporaryVariables asSortedCollection asArray equals: #('b').
+	self assert: tree allDefinedVariables asSortedCollection asArray equals: #('a' 'arg1' 'b').
+	self assert: tree allArgumentVariables asSortedCollection asArray equals: #('a' 'arg1').
+	self assert: tree allTemporaryVariables asSortedCollection asArray equals: #('b')
 ]
 
 { #category : 'to be reworked' }
@@ -2045,5 +2045,5 @@ RBParserTest >> treeWithEverything [
 RBParserTest >> treeWithReallyEverything [
 	^ self parserClass
 		parseMethod:
-			'method: arg1 <foo> <foo: 1.2> | temps | temps := #[ 1 2 3 ]. temps := #(true false nil 1 1.2 $a foo #foo foo #() #(1 2) #[] #[1 2]). { 1 negated. 1 + 2. 1 raisedTo: 2 }. temps foo; foo: self. ^ (temps collect: [:e | | btemps | ((e isNil)) ])'
+			'method: arg1 <foo> <foo: 1.2> | temps | temps := #[ 1 2 3 ]. temps := #(true false nil 1 1.2 $a foo #foo ''foo'' #() #(1 2) #[] #[1 2]). { 1 negated. 1 + 2. 1 raisedTo: 2 }. temps foo; foo: self. ^ (temps collect: [:e | | btemps | ((e isNil)) ])'
 ]

@@ -304,7 +304,7 @@ RBParseTreeSearcherTest >> testMatchingReceiverAndSelector [
 
 	self
 		assert:
-		(contextDictionary at: #'`sel:' asSymbol)
+		(contextDictionary at: '`sel:' asSymbol)
 		equals: 'newRequestTo:'
 ]
 

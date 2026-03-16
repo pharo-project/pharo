@@ -193,7 +193,7 @@ RBCodeSnippet class >> badComments [
 			         nodeAt: 'DDD 00EEE0548884449994A0CCC00 FFF';
 			         styled: '""" 0 """ n """ . """ n """ 0 """';
 			         formattedCode: '[ "a""b""f" 1. "c" "d" 2 "e" ]';
-			         value: 2).
+			         value: 1).
 		        (self new
 			         source: '"a" [ "b" : "c" x "d" : "e" y "f" | "g" ] "h"';
 			         nodeAt: '888 00999000AAA030BBB000FFF0C0GGG000III00 JJJ';
@@ -306,7 +306,7 @@ RBCodeSnippet class >> badExpressions [
 			         notices: #( #( 1 7 8 ''')'' expected' ) )).
 		        (self new
 			         source: '#( 1 + 2';
-			         nodeAt: 00010203;
+			         nodeAt: '00010203';
 			         styled: 'XX n # n';
 			         formattedCode: '#( 1 #+ 2';
 			         notices: #( #( 1 8 9 ''')'' expected' ) )).
@@ -506,7 +506,7 @@ RBCodeSnippet class >> badExpressions [
 				            #( 1 13 14 ''')'' expected' ) )).
 		        (self new
 			         source: '#( #[ 0 1 2 ]';
-			         nodeAt: 0001112131411;
+			         nodeAt: '0001112131411';
 			         styled: 'XX 00 n n n 0';
 			         notices: #( #( 1 13 14 ''')'' expected' ) )).
 		        (self new
