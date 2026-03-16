@@ -164,7 +164,7 @@ PBBootstrap >> exportAllPackagesIntoMcz [
 PBBootstrap >> exportIntoMcz: aPackageName [
 	logger
 		execute: [
-			logger.log: '-->>', aPackageName.
+			logger log: '-->>', aPackageName.
 			self mczCache storeVersion: (self originRepository loadVersionFromFileNamed: aPackageName).
 		]
 		logged: 'BoostrapProcess -->> exportAllPackagesIntoMcz'
