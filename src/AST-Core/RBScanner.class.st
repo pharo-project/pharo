@@ -167,7 +167,7 @@ RBScanner class >> scanTokenObjects: aStringOrStream [
 
 { #category : 'testing' }
 RBScanner >> atEnd [
-	^characterType = #eof and: [ nextToken isNil ]
+	^(characterType sameContents: #eof) and: [ nextToken isNil ]
 ]
 
 { #category : 'private' }
@@ -215,10 +215,10 @@ RBScanner >> getComments [
 
 { #category : 'testing' }
 RBScanner >> isSelector [
-	characterType = #binary
-		ifTrue: [ [ characterType = #binary ] whileTrue: [ self step ].
-			^ characterType = #eof ].
-	characterType ~= #alphabetic
+	(characterType sameContents: #binary)
+		ifTrue: [ [ characterType sameContents: #binary ] whileTrue: [ self step ].
+			^ characterType sameContents: #eof ].
+	(characterType sameContents: #alphabetic) not
 		ifTrue: [ ^ false ].
 	^ self isSelectorNonBinary
 ]
@@ -229,17 +229,17 @@ RBScanner >> isSelectorNonBinary [
 
 	| aState |
 	aState := #alphaAlone.
-	[ characterType = #alphabetic ]
-		whileTrue: [ aState = #colon
+	[ characterType sameContents: #alphabetic ]
+		whileTrue: [ (aState sameContents: #colon)
 				ifTrue: [ aState := #inKeyword ].
 			self scanName.
-			characterType = #eof
-				ifTrue: [ ^ aState = #alphaAlone ].
+			(characterType sameContents: #eof)
+				ifTrue: [ ^ aState sameContents: #alphaAlone ].
 			currentCharacter = $:
 				ifTrue: [ aState := #colon.
 					self step ] ].
-	characterType = #eof
-		ifTrue: [ ^ aState = #colon ].
+	(characterType sameContents: #eof)
+		ifTrue: [ ^ aState sameContents: #colon ].
 	^ false
 
 	"Diagram by:
@@ -302,7 +302,7 @@ RBScanner >> on: aStream [
 RBScanner >> previousStepPosition [
 	"The index of the previous character (that was consumed)"
 
-	^characterType = #eof
+	^(characterType sameContents: #eof)
 		ifTrue: [stream position] "it's the index of the last character"
 		ifFalse: [stream position - 1] "-1 to cancel the lookahead"
 ]
@@ -334,7 +334,7 @@ RBScanner >> scanBinary: aClass [
 	| val |
 	buffer nextPut: currentCharacter.
 	self step.
-	[ characterType = #binary ] whileTrue:
+	[ characterType sameContents: #binary ] whileTrue:
 		[ buffer nextPut: currentCharacter.
 		self step ].
 	val := buffer contents.
@@ -357,7 +357,7 @@ RBScanner >> scanComment [
 	self atEnd
 		ifTrue: [ ^ self scanError: 'Unmatched " in comment.' from: start ].
 	[ currentCharacter = $" and: [ self step ~= $" ] ]
-		whileFalse: [ characterType = #eof
+		whileFalse: [ (characterType sameContents: #eof)
 				ifTrue: [ ^ self scanError: 'Unmatched " in comment.' from: start ].
 			buffer nextPut: currentCharacter.
 			self step ].
@@ -413,9 +413,9 @@ RBScanner >> scanLiteral [
 
 	"This scan accepts keywords as well as binaries and Identifiers."
 	self step.
-	characterType = #alphabetic
+	(characterType sameContents: #alphabetic)
 		ifTrue: [ ^ self scanSymbol ].
-	characterType = #binary
+	(characterType sameContents: #binary)
 		ifTrue: [ ^ self scanLiteralBinary ].
 	currentCharacter = $'
 		ifTrue: [ ^ self scanStringSymbol ].
@@ -499,7 +499,7 @@ RBScanner >> scanLiteralString [
 
 { #category : 'private - scanning' }
 RBScanner >> scanName [
-	[characterType = #alphabetic or: [characterType = #digit]] whileTrue:
+	[(characterType sameContents: #alphabetic) or: [characterType sameContents: #digit]] whileTrue:
 			[buffer nextPut: currentCharacter.
 			self step]
 ]
@@ -578,7 +578,7 @@ RBScanner >> scanSymbol [
 
 { #category : 'private - scanning' }
 RBScanner >> scanSymbolContent [
-	[ characterType = #alphabetic or: [ currentCharacter = $: ] ] whileTrue: [
+	[ (characterType sameContents: #alphabetic) or: [ currentCharacter = $: ] ] whileTrue: [
 		self scanName.
 		currentCharacter = $: ifTrue: [
 			buffer nextPut: $:.
@@ -603,19 +603,19 @@ RBScanner >> scanToken [
 	"fast-n-ugly. Don't write stuff like this. Has been found to cause cancer in laboratory rats. Basically a
 	case statement. Didn't use Dictionary because lookup is pretty slow."
 
-	characterType = #eof ifTrue: [ ^ RBEOFToken start: tokenStart + 1 ]. "The EOF token should occur after the end of input"
-	characterType = #alphabetic ifTrue: [
-		^ state = #literalArray
+	(characterType sameContents: #eof) ifTrue: [ ^ RBEOFToken start: tokenStart + 1 ]. "The EOF token should occur after the end of input"
+	(characterType sameContents: #alphabetic) ifTrue: [
+		^ (state sameContents: #literalArray)
 			ifTrue: [self scanSymbolOrNamedLiteral]
 			ifFalse: [self scanIdentifierOrKeyword]].
-	(characterType = #digit
+	((characterType sameContents: #digit)
 		or: [currentCharacter = $- and: [(self classify: stream peek) = #digit]])
 			ifTrue: [^self scanNumber].
-	characterType = #binary ifTrue: [
-		^ state = #literalArray
+	(characterType sameContents: #binary) ifTrue: [
+		^ (state sameContents: #literalArray)
 			ifTrue: [ self scanLiteralBinary]
 			ifFalse: [ self scanBinarySelector]].
-	characterType = #special ifTrue: [^self scanSpecialCharacter].
+	(characterType sameContents: #special) ifTrue: [^self scanSpecialCharacter].
 	currentCharacter = $' ifTrue: [^self scanLiteralString].
 	currentCharacter = $# ifTrue: [^self scanLiteral].
 	currentCharacter = $$ ifTrue: [^self scanLiteralCharacter].
@@ -659,7 +659,7 @@ RBScanner >> step [
 { #category : 'private - scanning' }
 RBScanner >> stripSeparators [
 
-	[[ characterType = #separator ] whileTrue: [ self step ].
+	[[ characterType sameContents: #separator ] whileTrue: [ self step ].
 	currentCharacter = $" ] whileTrue: [
 		| comment |
 		comment := self scanComment.

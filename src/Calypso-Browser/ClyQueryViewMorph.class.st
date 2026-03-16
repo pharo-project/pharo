@@ -745,12 +745,12 @@ ClyQueryViewMorph >> selectionChanged [
 { #category : 'event handling' }
 ClyQueryViewMorph >> selectionRejected: announcement [
 	"Called when a selection is performed outside the table bounds"
-	announcement direction = #left ifTrue: [
+	(announcement direction sameContents: #left) ifTrue: [
 		self selection items do: [ :item | item isExpanded ifTrue: [ item collapse ] ].
 		self update.
 		^ self
 	].
-	announcement direction = #right ifTrue: [
+	(announcement direction sameContents: #right) ifTrue: [
 		self selection items do: [ :item | [ item expand ] on: ClyNoChildrenError do: ["ignored"] ]
 	]
 ]

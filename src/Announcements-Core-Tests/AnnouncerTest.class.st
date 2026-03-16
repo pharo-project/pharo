@@ -228,7 +228,7 @@ AnnouncerTest >> testSubscribeClassWithExclusion [
 AnnouncerTest >> testSubscribeOnSpecificAnnouncer [
 	| announcement instance |
 	announcer
-		when: (AnnouncementMockB where: [ :ann | ann parameter = #expectedParam ])
+		when: (AnnouncementMockB where: [ :ann | ann parameter sameContents: #expectedParam ])
 		do: [ :ann | announcement := ann ]
 		for: self.
 	announcement := nil.
@@ -419,7 +419,7 @@ AnnouncerTest >> testSymbolIdentifier [
 		when: #FOO send: #bar to: nil;
 		announce: #FOO ]
 		on: MessageNotUnderstood
-		do: [ :ex | passed := (ex message selector = #bar). ].
+		do: [ :ex | passed := (ex message selector sameContents: #bar). ].
 
 	self assert: passed
 ]

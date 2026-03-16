@@ -26,13 +26,13 @@ Class {
 { #category : 'instance creation' }
 RBVariableNode class >> identifierNamed: anIdentifierName at: aPosition [
 
-	anIdentifierName = #self
+	(anIdentifierName sameContents: #self)
 		ifTrue: [ ^ self selfNode start: aPosition ].
-	anIdentifierName = #thisContext
+	(anIdentifierName sameContents: #thisContext)
 		ifTrue: [ ^ self thisContextNode start: aPosition ].
-	anIdentifierName = #thisProcess
+	(anIdentifierName sameContents: #thisProcess)
 		ifTrue: [ ^ self thisProcessNode start: aPosition ].
-	anIdentifierName = #super
+	(anIdentifierName sameContents: #super)
 		ifTrue: [ ^ self superNode start: aPosition ].
 	^ self named: anIdentifierName start: aPosition
 ]

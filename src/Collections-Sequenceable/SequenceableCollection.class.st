@@ -11,7 +11,7 @@ Class {
 { #category : 'testing' }
 SequenceableCollection class >> isAbstract [
 
-	^self name = #SequenceableCollection
+	^self name sameContents: #SequenceableCollection
 ]
 
 { #category : 'instance creation' }

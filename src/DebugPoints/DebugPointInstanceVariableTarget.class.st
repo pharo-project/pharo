@@ -84,19 +84,19 @@ DebugPointInstanceVariableTarget >> instanceVariable: anInstanceVariable [
 { #category : 'testing' }
 DebugPointInstanceVariableTarget >> isReadOnly [
 
-	^ accessStrategy = #read
+	^ accessStrategy sameContents: #read
 ]
 
 { #category : 'testing' }
 DebugPointInstanceVariableTarget >> isReadWrite [
 
-	^ accessStrategy = #all
+	^ accessStrategy sameContents: #all
 ]
 
 { #category : 'testing' }
 DebugPointInstanceVariableTarget >> isWriteOnly [
 
-	^ accessStrategy = #write
+	^ accessStrategy sameContents: #write
 ]
 
 { #category : 'removing' }

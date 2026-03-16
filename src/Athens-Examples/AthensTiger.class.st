@@ -2141,7 +2141,7 @@ AthensTiger >> readParts [
 	] whileFalse.
 
 	results do: [:ea |
-		self assert: ea fillRule = #VGNONZERO.
+		self assert: (ea fillRule sameContents: #VGNONZERO).
 		ea prepareFor: surface ].
 
 	self assert: pointStream atEnd.

@@ -157,10 +157,10 @@ AthensCairoPatternPaint >> setExtend: aSymbol [
 	"
 	| enum |
 	enum := self defaultExtend.
-	aSymbol = #None ifTrue: [ enum := CAIRO_EXTEND_NONE ].
-	aSymbol = #Repeat ifTrue: [ enum := CAIRO_EXTEND_REPEAT ].
-	aSymbol = #Reflect ifTrue: [ enum := CAIRO_EXTEND_REFLECT ].
-	aSymbol = #Pad ifTrue: [ enum := CAIRO_EXTEND_PAD ].
+	(aSymbol sameContents: #None) ifTrue: [ enum := CAIRO_EXTEND_NONE ].
+	(aSymbol sameContents: #Repeat) ifTrue: [ enum := CAIRO_EXTEND_REPEAT ].
+	(aSymbol sameContents: #Reflect) ifTrue: [ enum := CAIRO_EXTEND_REFLECT ].
+	(aSymbol sameContents: #Pad) ifTrue: [ enum := CAIRO_EXTEND_PAD ].
 	self primSetExtend: enum
 ]
 

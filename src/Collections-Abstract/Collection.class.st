@@ -27,7 +27,7 @@ Collection class >> empty [
 { #category : 'testing' }
 Collection class >> isAbstract [
 
-	^self name = #Collection
+	^self name sameContents: #Collection
 ]
 
 { #category : 'instance creation' }

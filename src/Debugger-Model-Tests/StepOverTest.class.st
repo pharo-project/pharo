@@ -222,9 +222,9 @@ StepOverTest >> testStepOverReturnInUnwindBlock [
 	| rootBlock |
 	rootBlock := [ self methodWithUnwindReturn ].
 	self settingUpSessionAndProcessAndContextForBlock: rootBlock.
-	[session interruptedContext selector = #methodWithUnwindReturn] whileFalse: [ session stepInto ].
+	[session interruptedContext selector sameContents: #methodWithUnwindReturn] whileFalse: [ session stepInto ].
 	"Reached methodWithUnwindReturn"
-	[session interruptedContext sender selector = #ensure: ] whileFalse: [ session stepThrough ].
+	[session interruptedContext sender selector sameContents: #ensure: ] whileFalse: [ session stepThrough ].
 	session stepThrough.
 	self
 		assert: session interruptedContext closure
