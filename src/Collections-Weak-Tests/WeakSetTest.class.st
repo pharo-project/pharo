@@ -94,7 +94,7 @@ WeakSetTest >> testAddIncludesSizeReclaim [
 	o2 := o3 := nil.
 	Smalltalk garbageCollect.
 	self deny: (ws includes: 1 / 2).
-	self deny: (ws includes: #123 copy).
+	self deny: (ws includes: '123' copy).
 
 	"fast #size is not updated automatically by dead object reclamation
 	But there is a slowSize trying to tell the truth"

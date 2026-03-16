@@ -484,7 +484,7 @@ SmallDictionary >> hasBindingThatBeginsWith: aString [
 
 { #category : 'testing' }
 SmallDictionary >> includes: aValue [
-	self do: [:each | aValue = each ifTrue: [^true]].
+	self do: [:each | (aValue sameContents: each) ifTrue: [^true]].
 	^false
 ]
 

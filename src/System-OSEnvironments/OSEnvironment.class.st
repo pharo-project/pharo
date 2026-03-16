@@ -187,7 +187,7 @@ OSEnvironment >> do: aBlock [
 { #category : 'testing' }
 OSEnvironment >> includes: anObject [
 
-	self do: [:each | anObject = each ifTrue: [^true]].
+	self do: [:each | (anObject sameContents: each) ifTrue: [^true]].
 	^false
 ]
 

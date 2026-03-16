@@ -576,7 +576,7 @@ Dictionary >> includes: anObject [
 
 	"Check if anObject is one of the values in the dictionary"
 
-	self do: [ :each | anObject = each ifTrue: [ ^ true ] ].
+	self do: [ :each | (anObject sameContents: each) ifTrue: [ ^ true ] ].
 	^ false
 ]
 

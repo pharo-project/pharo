@@ -85,7 +85,7 @@ KMKeyCombination >> hash [
 
 { #category : 'matching' }
 KMKeyCombination >> includes: aShortcut [
-	^self = aShortcut
+	^self sameContents: aShortcut
 ]
 
 { #category : 'combining' }

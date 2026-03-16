@@ -1009,7 +1009,7 @@ Collection >> includes: anObject [
 
 	"({'hello'. 'world'} includes: #hello) >>> true"
 	"({'hel','lo'. 'world'} includes: #hello) >>> true"
-	^ self anySatisfy: [:each | each = anObject]
+	^ self anySatisfy: [:each | each sameContents: anObject]
 ]
 
 { #category : 'testing' }
