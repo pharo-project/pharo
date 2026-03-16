@@ -29,7 +29,7 @@ Class {
 RBParseErrorNode >> = anObject [
 	self == anObject ifTrue: [^true].
 	self class = anObject class ifFalse: [^false].
-	^(anObject value sameContents: value) and: [ anObject errorMessage = errorMessage ]
+	^(anObject value sameContents: value) and: [ anObject errorMessage sameContents: errorMessage ]
 ]
 
 { #category : 'visiting' }
