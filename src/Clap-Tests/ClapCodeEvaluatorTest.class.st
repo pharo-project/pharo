@@ -8,7 +8,7 @@ Class {
 
 { #category : 'tests' }
 ClapCodeEvaluatorTest >> testEvaluateAliasMultipleArguments [
-	context := ClapCodeEvaluator evaluate activateWith: #(eval
+	context := ClapCodeEvaluator evaluate activateWith: #('eval'
 		'''(2+3)''' 'class' 'printString' ', String space ,' '(2+3)' 'class' 'printString').
 
 	self assertSuccess.
