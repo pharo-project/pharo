@@ -184,8 +184,8 @@ WindowAnnouncementTest >> testWindowLabelling [
 	window := SystemWindow labelled: 'foo'.
 	window openInWorld.
 	self assert: win equals: window.
-	self assert: labels equals: #(foo).
+	self assert: labels equals: #('foo').
 	window setLabel: 'bar'.
 	self assert: win equals: window.
-	self assert: labels equals: #(foo bar)
+	self assert: labels equals: #('foo' 'bar')
 ]

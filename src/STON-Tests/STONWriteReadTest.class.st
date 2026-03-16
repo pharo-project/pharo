@@ -451,10 +451,10 @@ STONWriteReadTest >> testSymbols [
 	symbols := Collection allSubclasses collect: [ :each | each name ].
 	self serializeAndMaterialize: symbols.
 	"simple symbols"
-	symbols := #( #foo123 #123foo #'punctuation-_./' #_Foo #'/root' #'---' #'.st' ).
+	symbols := #( #foo123 #'123foo' #'punctuation-_./' #'_Foo' #'/root' #'---' #'.st' ).
 	self serializeAndMaterialize: symbols.
 	"non-simple symbols"
-	symbols := #( #'les-élèves-français' #'euro-€' #ångström ).
+	symbols := #( #'les-élèves-français' #'euro-€' #'ångström' ).
 	self serializeAndMaterialize: symbols
 ]
 

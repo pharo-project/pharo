@@ -135,7 +135,7 @@ PackageTest >> testAllUnsentMessages [
 
 	self
 		assert: package allUnsentMessages
-		equals: (#( nonexistingMethodName1 nonexistingMethodName3 nonexistingMethodName4 ) collect: [ :each | each asSymbol ]) asSet
+		equals: (#( 'nonexistingMethodName1' 'nonexistingMethodName3' 'nonexistingMethodName4' ) collect: [ :each | each asSymbol ]) asSet
 ]
 
 { #category : 'tests' }

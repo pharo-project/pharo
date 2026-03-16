@@ -700,7 +700,7 @@ RxMatcherTest >> testHenry075 [
 
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry076 [
-	self runRegex: #('$b'	b false nil)
+	self runRegex: #('$b'	'b' false nil)
 ]
 
 { #category : 'tests - henry' }
@@ -826,12 +826,12 @@ RxMatcherTest >> testHenry098 [
 
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry099 [
-	self runRegex: #('' abc true (1 ''))
+	self runRegex: #('' 'abc' true (1 ''))
 ]
 
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry100 [
-	self runRegex: #(abc '' false nil)
+	self runRegex: #('abc' '' false nil)
 ]
 
 { #category : 'tests - henry' }
@@ -866,7 +866,7 @@ RxMatcherTest >> testHenry105 [
 
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry106 [
-	self runRegex: #('a|b|c|d|e' e true (1 e))
+	self runRegex: #('a|b|c|d|e' 'e' true (1 'e'))
 ]
 
 { #category : 'tests - henry' }
@@ -896,7 +896,7 @@ RxMatcherTest >> testHenry110 [
 
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry111 [
-	self runRegex: #('[abhgefdc]ij' hij true (1 hij))
+	self runRegex: #('[abhgefdc]ij' 'hij' true (1 'hij'))
 ]
 
 { #category : 'tests - henry' }
@@ -941,12 +941,12 @@ RxMatcherTest >> testHenry119 [
 
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry120 [
-	self runRegex: #('a[bcd]*dcdcde' adcdcde true (1 adcdcde))
+	self runRegex: #('a[bcd]*dcdcde' 'adcdcde' true (1 'adcdcde'))
 ]
 
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry121 [
-	self runRegex: #('a[bcd]+dcdcde' adcdcde false nil)
+	self runRegex: #('a[bcd]+dcdcde' 'adcdcde' false nil)
 ]
 
 { #category : 'tests - henry' }
@@ -961,42 +961,42 @@ RxMatcherTest >> testHenry123 [
 
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry124 [
-	self runRegex: #('[ -~]*' abc true (1 abc))
+	self runRegex: #('[ -~]*' 'abc' true (1 'abc'))
 ]
 
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry125 [
-	self runRegex: #('[ -~ -~]*' abc true (1 abc))
+	self runRegex: #('[ -~ -~]*' 'abc' true (1 'abc'))
 ]
 
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry126 [
-	self runRegex: #('[ -~ -~ -~]*' abc true (1 abc))
+	self runRegex: #('[ -~ -~ -~]*' 'abc' true (1 'abc'))
 ]
 
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry127 [
-	self runRegex: #('[ -~ -~ -~ -~]*' abc true (1 abc))
+	self runRegex: #('[ -~ -~ -~ -~]*' 'abc' true (1 'abc'))
 ]
 
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry128 [
-	self runRegex: #('[ -~ -~ -~ -~ -~]*' abc true (1 abc))
+	self runRegex: #('[ -~ -~ -~ -~ -~]*' 'abc' true (1 'abc'))
 ]
 
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry129 [
-	self runRegex: #('[ -~ -~ -~ -~ -~ -~]*' abc true (1 abc))
+	self runRegex: #('[ -~ -~ -~ -~ -~ -~]*' 'abc' true (1 'abc'))
 ]
 
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry130 [
-	self runRegex: #('[ -~ -~ -~ -~ -~ -~ -~]*' abc true (1 abc))
+	self runRegex: #('[ -~ -~ -~ -~ -~ -~ -~]*' 'abc' true (1 'abc'))
 ]
 
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry131 [
-	self runRegex: #('[a-zA-Z_][a-zA-Z0-9_]*' alpha true (1 alpha))
+	self runRegex: #('[a-zA-Z_][a-zA-Z0-9_]*' 'alpha' true (1 'alpha'))
 ]
 
 { #category : 'tests - henry' }
@@ -1048,21 +1048,21 @@ RxMatcherTest >> testMatches [
 RxMatcherTest >> testMatchesIn [
 	| matcher |
 	matcher := self matcherClass forString: '\w+'.
-	self assert: (matcher matchesIn: 'now is the time') asArray equals: #(now is the time)
+	self assert: (matcher matchesIn: 'now is the time') asArray equals: #('now' 'is' 'the' 'time')
 ]
 
 { #category : 'tests - protocol' }
 RxMatcherTest >> testMatchesInCollect [
 	| matcher |
 	matcher := self matcherClass forString: '\w+'.
-	self assert: (matcher matchesIn: 'now is the time' collect: [ :each | each reversed ]) asArray equals: #(won si eht emit)
+	self assert: (matcher matchesIn: 'now is the time' collect: [ :each | each reversed ]) asArray equals: #('won' 'si' 'eht' 'emit')
 ]
 
 { #category : 'tests - protocol' }
 RxMatcherTest >> testMatchesInDo [
 	| matcher expected |
 	matcher := self matcherClass forString: '\w+'.
-	expected := #(now is the time) asOrderedCollection.
+	expected := #('now' 'is' 'the' 'time') asOrderedCollection.
 	matcher matchesIn: 'now is the time' do: [ :each | self assert: each equals: expected removeFirst ].
 	self assertEmpty: expected
 ]
@@ -1071,21 +1071,21 @@ RxMatcherTest >> testMatchesInDo [
 RxMatcherTest >> testMatchesOnStream [
 	| matcher |
 	matcher := self matcherClass forString: '\w+'.
-	self assert: (matcher matchesOnStream: 'now is the time' readStream) asArray equals: #(now is the time)
+	self assert: (matcher matchesOnStream: 'now is the time' readStream) asArray equals: #('now' 'is' 'the' 'time')
 ]
 
 { #category : 'tests - protocol' }
 RxMatcherTest >> testMatchesOnStreamCollect [
 	| matcher |
 	matcher := self matcherClass forString: '\w+'.
-	self assert: (matcher matchesOnStream: 'now is the time' readStream collect: [ :each | each reversed ]) asArray equals: #(won si eht emit)
+	self assert: (matcher matchesOnStream: 'now is the time' readStream collect: [ :each | each reversed ]) asArray equals: #('won' 'si' 'eht' 'emit')
 ]
 
 { #category : 'tests - protocol' }
 RxMatcherTest >> testMatchesOnStreamDo [
 	| matcher expected |
 	matcher := self matcherClass forString: '\w+'.
-	expected := #(now is the time) asOrderedCollection.
+	expected := #('now' 'is' 'the' 'time') asOrderedCollection.
 	matcher matchesOnStream: 'now is the time' readStream do: [ :each | self assert: each equals: expected removeFirst ].
 	self assertEmpty: expected
 ]
@@ -1253,7 +1253,7 @@ RxMatcherTest >> testStringRegexMatchesDo [
 { #category : 'tests - protocol' }
 RxMatcherTest >> testSubexpressionCount [
 	| matcher |
-	#((a 1) ('a(b)' 2) ('a(b(c))' 3) ('(a)(b)' 3) ('(a(b))*' 3)) do: [ :pair |
+	#(('a' 1) ('a(b)' 2) ('a(b(c))' 3) ('(a)(b)' 3) ('(a(b))*' 3)) do: [ :pair |
 		matcher := self matcherClass forString: pair first.
 		matcher supportsSubexpressions
 			ifTrue: [ self assert: matcher subexpressionCount equals: pair last ] ]

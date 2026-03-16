@@ -112,7 +112,7 @@ MonticelloBootstrap >> loadBootstrapPackages [
 
 	MCCacheRepository cacheDirectory: directory.
 
-	(self bootstrapVersionsExcept: [ :package | #( 'Shift-ClassBuilder' Monticello ) includes: package name ]) do: [ :version | self loadPackageVersion: version ].
+	(self bootstrapVersionsExcept: [ :package | #( 'Shift-ClassBuilder' 'Monticello' ) includes: package name ]) do: [ :version | self loadPackageVersion: version ].
 
 	"We load ShiftClassBuilder at the end because it has a patch to work in the bootstrap process. The patch is used when there is no source."
 

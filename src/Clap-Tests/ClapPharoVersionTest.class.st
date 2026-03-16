@@ -8,7 +8,7 @@ Class {
 
 { #category : 'tests' }
 ClapPharoVersionTest >> testDefaultFormat [
-	context := ClapPharoVersion version activateWith: #(version).
+	context := ClapPharoVersion version activateWith: #('version').
 
 	self assertSuccess.
 	self
@@ -18,7 +18,7 @@ ClapPharoVersionTest >> testDefaultFormat [
 
 { #category : 'tests' }
 ClapPharoVersionTest >> testFullFormat [
-	context := ClapPharoVersion version activateWith: #(version '--full').
+	context := ClapPharoVersion version activateWith: #('version' '--full').
 
 	self assertSuccess.
 	self
@@ -28,7 +28,7 @@ ClapPharoVersionTest >> testFullFormat [
 
 { #category : 'tests' }
 ClapPharoVersionTest >> testHashFormat [
-	context := ClapPharoVersion version activateWith: #(version '--hash').
+	context := ClapPharoVersion version activateWith: #('version' '--hash').
 
 	self assertSuccess.
 	self
@@ -38,7 +38,7 @@ ClapPharoVersionTest >> testHashFormat [
 
 { #category : 'tests' }
 ClapPharoVersionTest >> testHelpFlag [
-	context := ClapPharoVersion version activateWith: #(version '--help').
+	context := ClapPharoVersion version activateWith: #('version' '--help').
 
 	self assertSuccess.
 	self
@@ -48,7 +48,7 @@ ClapPharoVersionTest >> testHelpFlag [
 
 { #category : 'tests' }
 ClapPharoVersionTest >> testLicenseFormat [
-	context := ClapPharoVersion version activateWith: #(version '--license').
+	context := ClapPharoVersion version activateWith: #('version' '--license').
 
 	self assertSuccess.
 	self
@@ -59,7 +59,7 @@ ClapPharoVersionTest >> testLicenseFormat [
 { #category : 'tests' }
 ClapPharoVersionTest >> testMultipleFormats [
 	| lines |
-	context := ClapPharoVersion version activateWith: #(version '--hash' '--release' '--numeric').
+	context := ClapPharoVersion version activateWith: #('version' '--hash' '--release' '--numeric').
 
 	self assertSuccess.
 	lines := self outputString lines.
@@ -76,7 +76,7 @@ ClapPharoVersionTest >> testMultipleFormats [
 
 { #category : 'tests' }
 ClapPharoVersionTest >> testNumericFormat [
-	context := ClapPharoVersion version activateWith: #(version '--numeric').
+	context := ClapPharoVersion version activateWith: #('version' '--numeric').
 
 	self assertSuccess.
 	self
@@ -86,7 +86,7 @@ ClapPharoVersionTest >> testNumericFormat [
 
 { #category : 'tests' }
 ClapPharoVersionTest >> testReleaseFormat [
-	context := ClapPharoVersion version activateWith: #(version '--release').
+	context := ClapPharoVersion version activateWith: #('version' '--release').
 
 	self assertSuccess.
 	self
@@ -96,7 +96,7 @@ ClapPharoVersionTest >> testReleaseFormat [
 
 { #category : 'tests' }
 ClapPharoVersionTest >> testVmFormat [
-	context := ClapPharoVersion version activateWith: #(version '--vm').
+	context := ClapPharoVersion version activateWith: #('version' '--vm').
 
 	self assertSuccess.
 	self

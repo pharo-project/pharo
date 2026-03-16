@@ -12,5 +12,5 @@ Class {
 { #category : 'idioms' }
 ReProperMethodProtocolNameForUtilitiesRule class >> protocolIdiom [
 
-	^self use: #'utilities' insteadOf: #(#utils #utility)
+	^self use: #'utilities' insteadOf: #(#'utils' #'utility')
 ]

@@ -83,7 +83,7 @@ ZnCharacterStreamTest >> testReadStream [
 
 { #category : 'tests' }
 ZnCharacterStreamTest >> testReadStreamManipulation [
-	#(abc élève français 'ö-ö') do: [ :string |
+	#('abc' 'élève' 'français' 'ö-ö') do: [ :string |
 		#(utf8 latin1 utf16 utf32) do: [ :encoding |
 			| bytes stream |
 			bytes := string encodeWith: encoding.

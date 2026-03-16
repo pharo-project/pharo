@@ -338,7 +338,7 @@ BlockClosuresTestCase >> nestedLoopsExample: arrays [
 "arrays := OrderedCollection new.
 arrays add: #(#a #b);
        add: #(1 2 3 4);
-       add: #(w x y z)."
+       add: #('w' 'x' 'y' 'z')."
 sizeOfResult :=
    arrays inject: 1 into:
           [:prod :array | prod * array size].
@@ -431,7 +431,7 @@ BlockClosuresTestCase >> testNestedLoopsExample1 [
 	arrays
 		add: #(#a #b);
 		add: #(1 2 3 4);
-		add: #(w x y z).
+		add: #('w' 'x' 'y' 'z').
 	result := OrderedCollection new.
 	CollectionCombinator new forArrays: arrays processWith: [ :item | result addLast: item ].
 	self assert: (self nestedLoopsExample: arrays) equals: result

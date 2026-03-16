@@ -109,7 +109,7 @@ RBMoveMethodParametrizedTest >> testMoveMethodIntoClassVariable [
 		self
 			setupMethodNameFor: refactoring
 			toReturn: #foo:foo:
-			withArguments: #(transformationRule aSmalllintContext ).
+			withArguments: #('transformationRule' 'aSmalllintContext' ).
 		self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBTransformationRuleTestData.
 	self assert: (class parseTreeForSelector: #checkMethod:) equals: (self parseMethod: 'checkMethod: aSmalllintContext RecursiveSelfRule foo: self foo: aSmalllintContext').
@@ -144,7 +144,7 @@ RBMoveMethodParametrizedTest >> testMoveMethodIntoInstanceVariable [
 		self
 			setupMethodNameFor: refactoring
 			toReturn: #foo:foo:
-			withArguments: #(transformationRule aSmalllintContext ).
+			withArguments: #('transformationRule' 'aSmalllintContext' ).
 		self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBTransformationRuleTestData.
 	self assert: (class parseTreeForSelector: #checkMethod:) equals: (self parseMethod: 'checkMethod: aSmalllintContext rewriteRule foo: self foo: aSmalllintContext').

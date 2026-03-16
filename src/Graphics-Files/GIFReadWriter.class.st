@@ -95,7 +95,7 @@ GIFReadWriter class >> typicalFileExtensions [
 		ifFound: [ #() ]
 		ifNone: [
 			"if none of my subclasses wants , then i''ll have to do"
-			#(gif) ]
+			#('gif') ]
 ]
 
 { #category : 'image reading/writing' }

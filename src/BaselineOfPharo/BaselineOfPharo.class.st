@@ -187,7 +187,7 @@ BaselineOfPharo >> baseline: spec [
 		spec baseline: 'Calypso' with: [
 			spec
 				repository: repository;
-				loads: #( IcebergSupport ) ].
+				loads: #( 'IcebergSupport' ) ].
 
 		spec
 			package: 'Gofer-Deprecated';

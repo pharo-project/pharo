@@ -16,7 +16,7 @@ RGBackendTest >> testDefaultContentFor: anRGEnvironment [
 
 "	| names defaultNames kernelPackage |
 
-	defaultNames := #(Behavior 'Behavior class' Class 'Class class' ClassDescription 'ClassDescription class' Metaclass 'Metaclass class' Object 'Object class' ProtoObject 'ProtoObject class').
+	defaultNames := #('Behavior' 'Behavior class' 'Class' 'Class class' 'ClassDescription' 'ClassDescription class' 'Metaclass' 'Metaclass class' 'Object' 'Object class' 'ProtoObject' 'ProtoObject class').
 
 	self assert: ((anRGEnvironment ask packages collect: #name) includes: #Kernel).
 	kernelPackage := anRGEnvironment ask packageNamed: 'Kernel'.

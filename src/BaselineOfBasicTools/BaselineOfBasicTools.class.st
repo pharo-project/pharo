@@ -54,7 +54,7 @@ BaselineOfBasicTools >> baseline: spec [
 					repository: repository ];
 			baseline: 'SUnit' with: [
 			spec
-				loads: #( UI JenkinsSupport );
+				loads: #( 'UI' 'JenkinsSupport' );
 				repository: repository ].
 		spec package: 'Tool-ExternalBrowser'.
 		spec baseline: 'EnlumineurFormatter' with: [
@@ -73,7 +73,7 @@ BaselineOfBasicTools >> baseline: spec [
 		spec package: 'MonticelloGUI'.
 		spec
 			package: 'Monticello-GUI-Diff'
-			with: [ spec requires: #( 'Tool-Diff' MonticelloGUI ) ].
+			with: [ spec requires: #( 'Tool-Diff' 'MonticelloGUI' ) ].
 		spec package: 'System-Sources-Tests'. "<= Not sure this one should be here but it is where the classes were loaded before been extracted from Tests package."
 
 		spec package: 'Kernel-CodeModel-Tests'.
@@ -87,7 +87,7 @@ BaselineOfBasicTools >> baseline: spec [
 		spec baseline: 'Refactoring' with: [
 			spec
 				repository: repository;
-				loads: #( Core ) ].
+				loads: #( 'Core' ) ].
 
 		spec package: 'Monticello-BackwardCompatibility'.
 		spec package: 'MonticelloFileServices'.

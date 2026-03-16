@@ -2046,7 +2046,7 @@ String >> isWideString [
 { #category : 'splitjoin' }
 String >> join: aCollection [
 	"Append the elements of the argument, aSequenceableCollection, separating them by the receiver."
-	"('*' join: #(WWWWW 'W  EW' zzzz)) >>> 'WWWWW*W  EW*zzzz'"
+	"('*' join: #('WWWWW' 'W  EW' 'zzzz')) >>> 'WWWWW*W  EW*zzzz'"
 
 	^ self species new: (aCollection size * self size) streamContents: [:stream |
 			aCollection
@@ -2062,7 +2062,7 @@ String >> keywords [
 
 	"#foo:bar: keywords >>> #('foo:' 'bar:')"
 	
-	"#foo keywords >>> #(foo)" "Invalid input/output !"
+	"#foo keywords >>> #('foo')" "Invalid input/output !"
 	
 	"#+ keywords >>> #('+')" "Invalid input/output !"
 
@@ -2539,7 +2539,7 @@ String >> substrings [
 	"Answer an array of non-empty substrings from the receiver separated by
 	one or more whitespace characters."
 
-	"'let us make seperate strings' substrings >>>  #(let us make seperate strings)"
+	"'let us make seperate strings' substrings >>>  #('let' 'us' 'make' 'seperate' 'strings')"
 
 	^ self substrings: CSSeparators
 ]

@@ -4,7 +4,7 @@ Built tree nodes are instances of SettingNode. Built trees are suitable for tree
 
 Below, two examples of tree building with a SettingCollector are shown.
 ---------------
-(SettingTree acceptableKeywords: #(#systemsettings)) settingTreeRoots. ""get system setting trees""
+(SettingTree acceptableKeywords: #(#'systemsettings')) settingTreeRoots. ""get system setting trees""
 ---------------
 
 Instance Variables

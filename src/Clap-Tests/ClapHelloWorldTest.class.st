@@ -20,7 +20,7 @@ ClapHelloWorldTest >> setUp [
 { #category : 'tests - matching' }
 ClapHelloWorldTest >> testHello [
 	| match |
-	match := hello match: #(hello).
+	match := hello match: #('hello').
 
 	self deny: match isMismatch.
 	self deny: (match includesMatchOf: #shout).
@@ -30,7 +30,7 @@ ClapHelloWorldTest >> testHello [
 { #category : 'tests - matching' }
 ClapHelloWorldTest >> testHelloWorld [
 	| match |
-	match := hello match: #(hello world).
+	match := hello match: #('hello' 'world').
 
 	self deny: match isMismatch.
 	self deny: (match includesMatchOf: #shout).
@@ -51,7 +51,7 @@ ClapHelloWorldTest >> testLanguageFlag [
 		add: lang;
 		meaning: [ :flag | (flag at: lang) value]).
 
-	match := hello match: #(hello monde '--lang' fr '--shout').
+	match := hello match: #('hello' 'monde' '--lang' 'fr' '--shout').
 
 	self deny: match isMismatch.
 	self assert: (match includesMatchOf: #shout).
@@ -70,7 +70,7 @@ ClapHelloWorldTest >> testLanguageFlag [
 { #category : 'tests - matching' }
 ClapHelloWorldTest >> testShouting [
 	| match |
-	match := hello match: #(hello '--shout').
+	match := hello match: #('hello' '--shout').
 
 	self deny: match isMismatch.
 	self assert: (match includesMatchOf: #shout).
@@ -80,7 +80,7 @@ ClapHelloWorldTest >> testShouting [
 { #category : 'tests - matching' }
 ClapHelloWorldTest >> testShoutingAfterthought [
 	| match |
-	match := hello match: #(hello world '-s').
+	match := hello match: #('hello' 'world' '-s').
 
 	self deny: match isMismatch.
 	self assert: (match includesMatchOf: #shout).
@@ -90,7 +90,7 @@ ClapHelloWorldTest >> testShoutingAfterthought [
 { #category : 'tests - matching' }
 ClapHelloWorldTest >> testShoutingWorld [
 	| match |
-	match := hello match: #(hello '--shout' world).
+	match := hello match: #('hello' '--shout' 'world').
 
 	self deny: match isMismatch.
 	self assert: (match includesMatchOf: #shout).

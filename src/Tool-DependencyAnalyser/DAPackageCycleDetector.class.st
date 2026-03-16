@@ -29,7 +29,7 @@ DAPackageCycleDetector class >> collections [
 
 { #category : 'instance creation' }
 DAPackageCycleDetector class >> morphic [
-	^ (self onPackagesNamed: #('Morphic-Base' 'Morphic-Core' 'Morphic-Examples' MorphicTests 'Spec-MorphicAdapters')) runAlgorithm
+	^ (self onPackagesNamed: #('Morphic-Base' 'Morphic-Core' 'Morphic-Examples' 'MorphicTests' 'Spec-MorphicAdapters')) runAlgorithm
 ]
 
 { #category : 'instance creation' }

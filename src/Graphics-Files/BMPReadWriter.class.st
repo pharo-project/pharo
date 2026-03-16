@@ -53,7 +53,7 @@ BMPReadWriter class >> readAllFrom: fd [
 { #category : 'image reading/writing' }
 BMPReadWriter class >> typicalFileExtensions [
 	"Answer a collection of file extensions (lowercase) which files that I can read might commonly have"
-	^#(bmp)
+	^#('bmp')
 ]
 
 { #category : 'reading' }

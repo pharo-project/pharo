@@ -21,7 +21,7 @@ ReVariableNameCondition class >> name: aString [
 
 { #category : 'utilities' }
 ReVariableNameCondition class >> reservedNames [
-	^#(self true false nil thisContext super)
+	^#('self' 'true' 'false' 'nil' 'thisContext' 'super')
 ]
 
 { #category : 'accessing' }

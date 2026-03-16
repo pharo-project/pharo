@@ -18,5 +18,5 @@ BaselineOfManifest >> baseline: spec [
 		spec 
 			group: 'Core' with: #('Manifest-Core');
 			group: 'Tests' with: #('Manifest-Resources-Tests' 'Manifest-Tests');
-			group: 'default' with: #(Core Tests) ]
+			group: 'default' with: #('Core' 'Tests') ]
 ]

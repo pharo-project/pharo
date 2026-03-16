@@ -225,7 +225,7 @@ MIMEDocument >> isGif [
 { #category : 'testing' }
 MIMEDocument >> isJpeg [
 	^ self mainType = 'image'
-		and: [ #(jpeg jpg) includes: self subType ]
+		and: [ #('jpeg' 'jpg') includes: self subType ]
 ]
 
 { #category : 'testing' }

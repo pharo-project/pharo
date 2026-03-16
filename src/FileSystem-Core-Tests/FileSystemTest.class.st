@@ -23,7 +23,7 @@ FileSystemTest class >> isAbstract [
 
 { #category : 'accessing' }
 FileSystemTest class >> packageNamesUnderTest [
-	^ #(FileSystem)
+	^ #('FileSystem')
 ]
 
 { #category : 'testing' }
@@ -123,7 +123,7 @@ FileSystemTest >> testChildrenAt [
 	entries do: [ :ea |
 		self assert: (ea isKindOf: Path).
 		self assert: ea parent equals: (filesystem resolve: directory).
-		self assert: (#(griffle bint ) includes: ea basename) ]
+		self assert: (#('griffle' 'bint' ) includes: ea basename) ]
 ]
 
 { #category : 'tests' }
@@ -442,7 +442,7 @@ FileSystemTest >> testEntriesAt [
 	entries do: [ :ea |
 		self assert: (ea isKindOf: FileSystemDirectoryEntry).
 		self assert: ea reference parent path equals: (filesystem resolve: directory).
-		self assert: (#(griffle bint ) includes: ea reference basename).
+		self assert: (#('griffle' 'bint' ) includes: ea reference basename).
 		self assert: ea isDirectory ]
 ]
 

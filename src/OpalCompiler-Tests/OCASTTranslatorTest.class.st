@@ -123,7 +123,7 @@ OCASTTranslatorTest >> instance: anObject [
 { #category : 'support' }
 OCASTTranslatorTest >> instanceVariablesToKeep [
 
-	^ super instanceVariablesToKeep , #(fullblocks)
+	^ super instanceVariablesToKeep , #('fullblocks')
 ]
 
 { #category : 'accessing' }

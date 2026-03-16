@@ -110,7 +110,7 @@ ExternalBrowser class >> services [
 { #category : 'System-FileRegistry' }
 ExternalBrowser class >> sourceFileSuffixes [
 
-	^#(st cs)
+	^#('st' 'cs')
 ]
 
 { #category : 'accessing' }

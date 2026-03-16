@@ -47,7 +47,7 @@ BaselineOfIDE >> baseline: spec [
 		spec baseline: 'BasicTools' with: [ spec repository: repository ].
 		spec
 			package: 'Tool-MorphicProfiler'
-			with: [ spec requires: #( BasicTools ) ].
+			with: [ spec requires: #( 'BasicTools' ) ].
 		spec baseline: 'Athens' with: [ spec repository: repository ].
 		spec baseline: 'Flashback' with: [ spec repository: repository ].
 
@@ -115,7 +115,7 @@ BaselineOfIDE >> baseline: spec [
 
 		self
 			load: 'Calypso'
-			group: #( FullEnvironment SystemBrowser Tests )
+			group: #( 'FullEnvironment' 'SystemBrowser' 'Tests' )
 			spec: spec.
 		spec baseline: 'Ring' with: [ spec repository: repository ].
 		spec
@@ -129,7 +129,7 @@ BaselineOfIDE >> baseline: spec [
 		self newTools: spec.
 		self drTests: spec.
 		self microdown: spec.
-		spec package: #'BeautifulComments'  with: [ spec requires:  #( Microdown) ].
+		spec package: #'BeautifulComments'  with: [ spec requires:  #( 'Microdown') ].
 		self documentBrowserCore: spec.
 		self welcomeBrowser: spec.
 		self roassal: spec.
@@ -179,7 +179,7 @@ BaselineOfIDE >> loadExtraTools [
 	"Hack: Document Browser is loaded in 2 steps because of the dependency of some packages to Iceberg.
 	The 2nd load is done through Metacello that adds new project registrations in Iceberg (user, not system).
 	We then remove these last registrations."
-	#('NewTools-DocumentBrowser' iceberg) do: [ :repositoryName | | foundRepo |
+	#('NewTools-DocumentBrowser' 'iceberg') do: [ :repositoryName | | foundRepo |
 		foundRepo := IceRepository registry 
 			detect: [ :repo | repo name = repositoryName ]
 			ifNone: [ self error: repositoryName , ' not found in Iceberg registry!' ].
@@ -211,7 +211,7 @@ BaselineOfIDE >> loadIceberg [
 		'Using authentification for Github API' traceCr ].
 
 	self registerPharo.
-	self registerProject: 'Spec2' baseline: 'Spec2' otherBaselines: #(SpecCore).
+	self registerProject: 'Spec2' baseline: 'Spec2' otherBaselines: #('SpecCore').
 	self registerProject: 'NewTools'.
 	self registerProject: 'Roassal'.
 	self registerProject: 'Microdown'.
@@ -232,7 +232,7 @@ BaselineOfIDE >> microdown: spec [
 	spec baseline: 'Microdown' with: [ 
 		spec 
 			repository: (self class environment at: #BaselineOfPharo) microdownRepository;
-			loads: #(RichText Tests) ]
+			loads: #('RichText' 'Tests') ]
 ]
 
 { #category : 'baselines - dependencies' }
@@ -241,7 +241,7 @@ BaselineOfIDE >> newTools: spec [
 	spec baseline: 'NewTools' with: [
 		spec 
 			repository: (self class environment at: #BaselineOfPharo) newToolsRepository;
-			loads: #(default) ].
+			loads: #('default') ].
 ]
 
 { #category : 'private - register' }
@@ -391,7 +391,7 @@ BaselineOfIDE >> roassal: spec [
  		with: [ 
 			spec 
 				repository: (self class environment at: #BaselineOfPharo) roassalRepository;
-    			loads: #( Core Tests) ]
+    			loads: #( 'Core' 'Tests') ]
 ]
 
 { #category : 'baselines - dependencies' }
@@ -401,7 +401,7 @@ BaselineOfIDE >> specCode: spec [
 		spec
 			repository: (self class environment at: #BaselineOfPharo) specRepository;
 			className: 'BaselineOfSpec2';
-			loads: #(Code CodeTests) ]
+			loads: #('Code' 'CodeTests') ]
 ]
 
 { #category : 'baselines - dependencies' }

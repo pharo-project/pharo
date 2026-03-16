@@ -557,7 +557,7 @@ Collection >> copyWithoutAll: aCollection [
 Collection >> copyWithoutDuplicates [
 	"Answer a copy of the receiver without any duplicated elements"
 	"(#(2 3 4 4 5 6) copyWithoutDuplicates asSet)  >>> #(2 3 4 5 6) asSet"
-	"(#(do la si do la) copyWithoutDuplicates) >>> #(la do si)"
+	"(#('do' 'la' 'si' 'do' 'la') copyWithoutDuplicates) >>> #('la' 'do' 'si')"
 	"(#(#do #la #si #do #la) copyWithoutDuplicates) >>> #(#la #do #si)"
 	^ self asSet asArray
 ]
@@ -763,7 +763,7 @@ Collection >> do: aBlock [
 
 	"
 	(String streamContents: [:s |
-		#(hello the world) do: [:each | s << each]])
+		#('hello' 'the' 'world') do: [:each | s << each]])
 	>>> 'hellotheworld'"
 
 	self subclassResponsibility
@@ -893,7 +893,7 @@ Collection >> flattenOn: aStream [
 Collection >> fold: binaryBlock [
 	"Alias of Collection>>reduce"
 	"Evaluate the block with the first two (or more) elements of the receiver, then with the result of the first evaluation and the next element, and so on.  Answer the result of the final evaluation. If the receiver is empty, raise an error. If the receiver has a single element, answer that element."
-	"( #(if it is to be it is up to me) fold: [:a :b | a, ' ', b] ) >>> 'if it is to be it is up to me'"
+	"( #('if' 'it' 'is' 'to' 'be' 'it' 'is' 'up' 'to' 'me') fold: [:a :b | a, ' ', b] ) >>> 'if it is to be it is up to me'"
 
 	^self reduce: binaryBlock
 ]

@@ -21,7 +21,7 @@ WorldState class >> saveAs [
 	| reference |
 	reference := MorphicUIManager new
 		             chooseForSaveFileReference: 'Save Image as?'
-		             extensions: #( image )
+		             extensions: #( 'image' )
 		             path: Smalltalk imageFile nextVersion.
 
 	reference ifNotNil: [

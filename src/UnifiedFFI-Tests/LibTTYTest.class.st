@@ -161,14 +161,14 @@ LibTTYTest >> test1 [
 LibTTYTest >> test2 [
 
 	self assertProcessSpawnedWithPseudoTerminalPath: '/bin/echo'
-		arguments: #('/bin/echo' Argument1 Argument2 Argument3)
+		arguments: #('/bin/echo' 'Argument1' 'Argument2' 'Argument3')
 		environment: Smalltalk os environment
 		input: ''
 		writes: 'Argument1 Argument2 Argument3' , String crlf
 		hasStatus: 0.
 
 	self assertProcessSpawnedWithPseudoTerminalPath: '/bin/echo'
-		arguments: #('/bin/echo' ĀĂĄ)
+		arguments: #('/bin/echo' 'ĀĂĄ')
 		environment: Smalltalk os environment
 		input: ''
 		writes: 'ĀĂĄ' , String crlf
@@ -189,10 +189,10 @@ LibTTYTest >> test2 [
 		hasStatus: 0.
 
 	self assertProcessSpawnedWithPseudoTerminalPath: '/usr/bin/head'
-		arguments: #('/usr/bin/head' '-n' 2)
+		arguments: #('/usr/bin/head' '-n' '2')
 		environment: Smalltalk os environment
-		input: (String lf join: #(Line1 Line2 Line3 ''))
-		writes: (String crlf join: #(Line1 Line2 Line3 Line1 Line2 ''))
+		input: (String lf join: #('Line1' 'Line2' 'Line3' ''))
+		writes: (String crlf join: #('Line1' 'Line2' 'Line3' 'Line1' 'Line2' ''))
 		hasStatus: 0.
 
 	self assertProcessSpawnedWithPseudoTerminalPath: '/bin/doesnotexist'

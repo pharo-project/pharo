@@ -66,7 +66,7 @@ RBAddParameterTransformation >> canReferenceVariable: aString in: aClass [
 { #category : 'adding' }
 RBAddParameterTransformation >> checkSendersAccessTo: name [
 
-	(#(self super) includes: name) ifTrue: [ ^ self ].
+	(#('self' 'super') includes: name) ifTrue: [ ^ self ].
 	self senders
 		detect: [ :each | (self canReferenceVariable: name in: each) not ]
 		ifFound: [ :violatorClass |

@@ -359,7 +359,7 @@ Duration >> printHumanReadableOn: stream [
 		ifTrue: [
 			stream << '- '.
 			^ self abs printHumanReadableOn: stream ].
-	#( (days day)
+	#( (days 'day')
 		(hours 'hour')
 		(minutes 'minute')
 		(seconds 'second')

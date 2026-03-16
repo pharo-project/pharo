@@ -33,7 +33,7 @@ ToggleMenuItemShortcut class >> canBeUsed [
 
 { #category : 'private' }
 ToggleMenuItemShortcut class >> keyTextShortcuts [
-	^ #(cmd. alt. shift.ctrl. meta '⌘' '⇧')
+	^ #('cmd'. 'alt'. 'shift'.'ctrl'. 'meta' '⌘' '⇧')
 ]
 
 { #category : 'instance creation' }

@@ -18,7 +18,7 @@ ClapContextTest >> setUp [
 { #category : 'running' }
 ClapContextTest >> testMatch [
 	context
-		arguments: #(hello world);
+		arguments: #('hello' 'world');
 		match.
 
 	self assert: context isMatch.
@@ -29,7 +29,7 @@ ClapContextTest >> testMatch [
 { #category : 'running' }
 ClapContextTest >> testRootPositionalAfterSubcommand [
 	context
-		arguments: #(hello world '--directory' 'foo/bar/baz');
+		arguments: #('hello' 'world' '--directory' 'foo/bar/baz');
 		match.
 
 	self assert: context isMatch.
@@ -42,7 +42,7 @@ ClapContextTest >> testRootPositionalAfterSubcommand [
 { #category : 'running' }
 ClapContextTest >> testWrongFlagMatchingButInvalid [
 	context
-		arguments: #(hello '--inexistent');
+		arguments: #('hello' '--inexistent');
 		match.
 
 	self assert: context isMatch.

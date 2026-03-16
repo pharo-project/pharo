@@ -384,7 +384,7 @@ RBCondition class >> referencesInstanceVariable: aString in: aClass [
 
 { #category : 'utilities' }
 RBCondition class >> reservedNames [
-	^#(self true false nil thisContext super)
+	^#('self' 'true' 'false' 'nil' 'thisContext' 'super')
 ]
 
 { #category : 'instance creation' }

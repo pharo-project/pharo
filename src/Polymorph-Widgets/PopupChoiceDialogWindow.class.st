@@ -21,8 +21,8 @@ Class {
 
 { #category : 'instance creation' }
 PopupChoiceDialogWindow class >> chooseFrom: aList lines: lines title: title [
-	"self chooseFrom: #(yes no) lines: #(1 2)  title: 'Foo is the question'"
-	"self chooseFrom: #(yes no) lines: #()  title: 'Foo is the question'"
+	"self chooseFrom: #('yes' 'no') lines: #(1 2)  title: 'Foo is the question'"
+	"self chooseFrom: #('yes' 'no') lines: #()  title: 'Foo is the question'"
 	| pd |
 	pd := (self newWithTheme: self currentWorld theme)
 		title: (title isEmpty ifTrue: ['Choose' translated] ifFalse: [title asString]);

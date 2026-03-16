@@ -25,7 +25,7 @@ ZnUTF32Encoder class >> handlesEncoding: string [
 
 { #category : 'accessing' }
 ZnUTF32Encoder class >> knownEncodingIdentifiers [
-	^ #( utf32 utf32be utf32le ucs4 ucs4be ucs4le)
+	^ #( 'utf32' 'utf32be' 'utf32le' 'ucs4' 'ucs4be' 'ucs4le')
 ]
 
 { #category : 'encoding - decoding' }

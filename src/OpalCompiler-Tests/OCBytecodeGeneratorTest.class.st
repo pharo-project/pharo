@@ -8,7 +8,7 @@ Class {
 
 { #category : 'accessing' }
 OCBytecodeGeneratorTest class >> packageNamesUnderTest [
-	^ #(OpalCompiler)
+	^ #('OpalCompiler')
 ]
 
 { #category : 'helper' }

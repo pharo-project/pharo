@@ -10,7 +10,7 @@ Provides path based access to elements contained in the receiver and any subtree
 					at: $a put: 'Tree-A';
 					at: $b put: 'Tree-B';
 					yourself);
-	yourself) atPath: #(Tree $b)
+	yourself) atPath: #('Tree' $b)
 ```
 "
 Class {

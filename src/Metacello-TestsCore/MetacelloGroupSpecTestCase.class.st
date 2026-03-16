@@ -33,7 +33,7 @@ MetacelloGroupSpecTestCase >> testGroupSpec [
 	self assert: (group includes includes: #Core).
 	group := self groupSpec
 		name: 'Platform';
-		includes: #(Core);
+		includes: #('Core');
 		yourself.
 	self assert: group name equals: 'Platform'.
 	self assert: (group includes includes: #Core).

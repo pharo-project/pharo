@@ -2,7 +2,7 @@
 A MethodNameEditor is an editor to set the name of a method.
 
 
-	MethodNameEditor openOn: (RBMethodName selector: #foo: arguments: #(x)) 
+	MethodNameEditor openOn: (RBMethodName selector: #foo: arguments: #('x')) 
 "
 Class {
 	#name : 'RBMethodNameEditor',

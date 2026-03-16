@@ -109,7 +109,7 @@ MetacelloMCVersionSpecTestCase >> testMCVersionSpec [
 				name: 'Package';
 				requires: 'AnotherPackage';
 				includes: #IncludedPackage;
-				answers: #(#(preload 'preload answer') #(postload 'postload answer'));
+				answers: #(#('preload' 'preload answer') #('postload' 'postload answer'));
 				file: 'Package-dkh.1';
 				preLoadDoIt: #preLoadDoIt;
 				postLoadDoIt: #postLoadDoIt;
@@ -132,7 +132,7 @@ MetacelloMCVersionSpecTestCase >> testMCVersionSpec [
 				name: 'Project';
 				className: 'ConfigurationOfProjectA';
 				versionString: #stable;
-				loads: #(MyPackage MyTests);
+				loads: #('MyPackage' 'MyTests');
 				preLoadDoIt: #preLoadDoItB;
 				postLoadDoIt: #postLoadDoItB;
 				yourself);

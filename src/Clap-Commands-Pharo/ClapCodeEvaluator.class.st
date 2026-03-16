@@ -12,7 +12,7 @@ Class {
 ClapCodeEvaluator class >> evaluate [
 	<commandline>
 	^ (ClapCommand id: #evaluate)
-		aliases: #(eval);
+		aliases: #('eval');
 		description: 'Print the result of a Pharo expression';
 		add: ClapFlag forHelp;
 		add: ((ClapFlag id: #save)

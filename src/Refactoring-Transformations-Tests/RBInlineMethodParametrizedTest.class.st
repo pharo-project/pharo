@@ -190,7 +190,7 @@ RBInlineMethodParametrizedTest >> rbModelForInliningMethodTest [
 	changes := OrderedCollection new.
 	self flattenOnto: changes.
 	^changes' #private ) #( 'name: aString
-	name := aString' #'initialize-release' ) #( initialize #'initialize-release' ) #( 'changeForMetaclass: aSymbol selector: aSelector
+	name := aString' #'initialize-release' ) #( 'initialize' #'initialize-release' ) #( 'changeForMetaclass: aSymbol selector: aSelector
 	^nil' #accessing ) #( 'changeString
 	^self class name' #printing ) #( 'changeForClass: aRBClass selector: aSelector
 	^nil' #accessing ) #( 'executeWithMessage: aString

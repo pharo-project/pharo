@@ -623,7 +623,7 @@ MetacelloProjectSpec >> name: aString [
 
 { #category : 'merging' }
 MetacelloProjectSpec >> nonOverridable [
-    ^ super nonOverridable , #(#projectPackage #repositories)
+    ^ super nonOverridable , #(#'projectPackage' #'repositories')
 ]
 
 { #category : 'querying' }

@@ -61,7 +61,7 @@ DummySoundSystem >> randomBitsFromSoundInput: bitCount [
 DummySoundSystem >> sampledSoundChoices [
 	"No choices other than this."
 
-	^ #(silence)
+	^ #('silence')
 ]
 
 { #category : 'query' }

@@ -26,7 +26,7 @@ SmallInteger >> threeDigitName [
 	self < 20 ifTrue: [
 		^units at: self
 	].
-	answer := #(twenty thirty forty fifty sixty seventy eighty ninety)
+	answer := #('twenty' 'thirty' 'forty' 'fifty' 'sixty' 'seventy' 'eighty' 'ninety')
 			at: self // 10 - 1.
 	(self \\ 10) = 0 ifFalse: [
 		answer := answer,'-',(units at: self \\ 10)

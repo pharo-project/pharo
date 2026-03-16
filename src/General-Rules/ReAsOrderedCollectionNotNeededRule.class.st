@@ -27,7 +27,7 @@ ReAsOrderedCollectionNotNeededRule >> initialize [
 	super initialize.
 	#('addAll:' 'removeAll:' 'includesAll:' 'copyWithoutAll:')
 		do: [ :collectionMessage |
-			#(asArray asOrderedCollection asSortedCollection)
+			#('asArray' 'asOrderedCollection' 'asSortedCollection')
 				do: [ :conversionMessage |
 					| baseString |
 					baseString := '``@receiver ' , collectionMessage , ' ``@arg '.

@@ -54,7 +54,7 @@ PluginBasedJPEGReadWriter class >> putForm: aForm quality: quality progressiveJP
 { #category : 'image reading/writing' }
 PluginBasedJPEGReadWriter class >> typicalFileExtensions [
 	"Answer a collection of file extensions (lowercase) which files that I can read might commonly have"
-	^#(jpg jpeg)
+	^#('jpg' 'jpeg')
 ]
 
 { #category : 'public access' }

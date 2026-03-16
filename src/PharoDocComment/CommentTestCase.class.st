@@ -52,7 +52,7 @@ CommentTestCase >> expression [
 { #category : 'private' }
 CommentTestCase >> instanceVariablesToKeep [
 
-	^ #( docCommentNode )
+	^ #( 'docCommentNode' )
 ]
 
 { #category : 'printing' }

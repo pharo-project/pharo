@@ -13,7 +13,7 @@ MCScannerTest >> assertScans: anArray [
 
 { #category : 'tests' }
 MCScannerTest >> test1 [
-	self assertScans: #(a 23 (x))
+	self assertScans: #(a '23' (x))
 ]
 
 { #category : 'tests' }
@@ -28,7 +28,7 @@ MCScannerTest >> test3 [
 
 { #category : 'tests' }
 MCScannerTest >> test4 [
-	self assertScans: #(a 23 (x () ')''q' y12)).
+	self assertScans: #(a '23' (x () ')''q' y12)).
 ]
 
 { #category : 'tests' }

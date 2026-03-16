@@ -14,7 +14,7 @@ baseline: spec
         yourself.
     spec
         group: 'Core' with: #('External-Core');
-        group: 'default' with: #(Core);
+        group: 'default' with: #('Core');
         group: 'Tests' with: #('External-Tests');
         yourself
 ```

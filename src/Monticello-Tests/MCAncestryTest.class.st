@@ -48,8 +48,8 @@ MCAncestryTest >> testCommonAncestors [
 MCAncestryTest >> testDescendants [
 	| c1 a1 b3 q1 q2 c2 |
 	c1 := self tree.
-	a1 := self treeFrom: #(a1 #(#(00))).
-	b3 := self treeFrom: #(b3 #(#(b2 #(#(b1 #(#(b0 #(#(00))))))) #(a1 #(#(00))))).
+	a1 := self treeFrom: #(a1 #(#('00'))).
+	b3 := self treeFrom: #(b3 #(#(b2 #(#(b1 #(#(b0 #(#('00'))))))) #(a1 #(#('00'))))).
 	q1 := MCWorkingAncestry new addAncestor: a1.
 	q2 := MCWorkingAncestry new addAncestor: q1.
 	self assert: (q2 commonAncestorWith: b3) equals: a1.

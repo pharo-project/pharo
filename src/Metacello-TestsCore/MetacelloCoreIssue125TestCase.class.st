@@ -24,7 +24,7 @@ MetacelloCoreIssue125TestCase >> baseline200: spec [
                                 versionString: '1.0-baseline';
                                 preLoadDoIt: #'preloadForProject';
                                 postLoadDoIt: #'postloadForProject';
-                                loads: #(core);
+                                loads: #('core');
                                 yourself ];
                 yourself.
             spec group: 'Core' with: #('Example Project') ]
@@ -34,7 +34,7 @@ MetacelloCoreIssue125TestCase >> baseline200: spec [
 MetacelloCoreIssue125TestCase >> baseline300: spec [
     <version: '3.0-baseline' imports: #('2.0-baseline')>
     spec
-        for: #(#attribute1 #attribute2)
+        for: #(#'attribute1' #'attribute2')
         do: [ 
             spec
                 project: 'Extra Project'
@@ -44,7 +44,7 @@ MetacelloCoreIssue125TestCase >> baseline300: spec [
                                 versionString: '1.0-baseline';
                                 preLoadDoIt: #'preloadForProject';
                                 postLoadDoIt: #'postloadForProject';
-                                loads: #(core);
+                                loads: #('core');
                                 yourself ];
                 yourself.
             spec group: 'Core' with: #('Extra Project') ]

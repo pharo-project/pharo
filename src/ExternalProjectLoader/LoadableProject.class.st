@@ -44,7 +44,7 @@ LoadableProject class >> allProjects [
 				repository: 'ObjectProfile/Roassal3';
 				version: 'v0.9.9b';
 				summary: 'Roassal3 is an agile visualization engine for Pharo 8 and Pharo 9. Roassal was created to enable interactive data visualization.';
-				group: #( Core Tests);
+				group: #( 'Core' 'Tests');
 				yourself}
 ]
 

@@ -104,7 +104,7 @@ ClyTestedEnvironmentPluginTest >> testFindingTestCoveringMethod [
 { #category : 'tests' }
 ClyTestedEnvironmentPluginTest >> testNormalizingSelectorForComparison [
 	#(#one #one: #two #two: #one:two: #oneTwo: #+ #- #+-)
-		with: #(one one two two onetwo onetwo '+' '-' '+-')
+		with: #('one' 'one' 'two' 'two' 'onetwo' 'onetwo' '+' '-' '+-')
 		do: [ :original :transformed |
 			self assert: (plugin normalizeSelectorForComparison: original) equals: transformed.
 			self assert: (plugin normalizeSelectorForComparison: original asString) equals: transformed.

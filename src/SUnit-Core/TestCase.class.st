@@ -707,7 +707,7 @@ TestCase >> failureLog [
 
 { #category : 'private' }
 TestCase >> instanceVariablesToKeep [
-	^ #(testSelector)
+	^ #('testSelector')
 ]
 
 { #category : 'testing' }

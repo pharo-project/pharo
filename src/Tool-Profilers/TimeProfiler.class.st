@@ -742,7 +742,7 @@ TimeProfiler >> whatToShow: aSymbol [
 
 { #category : 'configuration' }
 TimeProfiler >> whatToShowList [
-	^ #(#'Full tree' #Leaves)
+	^ #(#'Full tree' #'Leaves')
 ]
 
 { #category : 'ui specific' }

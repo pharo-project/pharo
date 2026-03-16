@@ -87,7 +87,7 @@ Class {
 
 { #category : 'fuel support' }
 TestExecutionEnvironment class >> fuelIgnoredInstanceVariableNames [
-    ^#(watchDogProcess watchDogSemaphore mainTestProcess)
+    ^#('watchDogProcess' 'watchDogSemaphore' 'mainTestProcess')
 ]
 
 { #category : 'settings' }

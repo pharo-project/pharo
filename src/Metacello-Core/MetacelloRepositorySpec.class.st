@@ -27,7 +27,7 @@ MetacelloRepositorySpec >> addToMetacelloRepositories: aMetacelloRepositoriesSpe
 MetacelloRepositorySpec >> canUpgradeTo: aMetacelloRepositorySpec [
   self description = aMetacelloRepositorySpec description
     ifTrue: [ ^ true ].
-  (#(github gitorious bitbucket) includes: self type)
+  (#('github' 'gitorious' 'bitbucket') includes: self type)
     ifTrue: [ ^ self createRepository canUpgradeTo: aMetacelloRepositorySpec createRepository ].
   ^ false
 ]
@@ -84,7 +84,7 @@ MetacelloRepositorySpec >> hasNoLoadConflicts: aMetacelloRepositorySpec [
 	self type = aMetacelloRepositorySpec type ifFalse: [ "if the types are different then we don't need to create the repoitory to 
        know that there will be conflicts"
 		^ false ].
-	(#( github gitorious bitbucket ) includes: self type) ifTrue: [ ^ self createRepository hasNoLoadConflicts: aMetacelloRepositorySpec createRepository ].
+	(#( 'github' 'gitorious' 'bitbucket' ) includes: self type) ifTrue: [ ^ self createRepository hasNoLoadConflicts: aMetacelloRepositorySpec createRepository ].
 	^ false
 ]
 

@@ -574,7 +574,7 @@ FileList >> fileContentsMenu: aMenu shifted: shifted [
 			[services add: self serviceGetHex].
 		(#(needToGetShiftJIS needToGetEUCJP needToGetCNGB needToGetEUCKR needToGetUTF8) includes: brevityState) ifFalse:
 			[services add: self serviceGetEncodedText].
-		(#(st cs) includes: self suffixOfSelectedFile) ifTrue:
+		(#('st' 'cs') includes: self suffixOfSelectedFile) ifTrue:
 			[services addAll: (self itemsForFile: reference)].
 
 		aMenu

@@ -41,7 +41,7 @@ ClapMatchesTest >> testFlagAbsentValue [
 	| match flagMatch |
 	slowFlag meaning: [ :flag | flag isMismatch not ].
 
-	match := clap matchOn: #(clap this) readStream.
+	match := clap matchOn: #('clap' 'this') readStream.
 	flagMatch := (match at: #this) at: slowFlag.
 
 	self deny: flagMatch isExplicit.
@@ -56,7 +56,7 @@ ClapMatchesTest >> testFlagOmittedValue [
 	| match flagMatch |
 	clap add: slowFlag. "we need another flag to follow the incomplete one"
 
-	match := clap match: #(clap '--directory' '--slow').
+	match := clap match: #('clap' '--directory' '--slow').
 	flagMatch := match at: dirFlag.
 
 	self assert: flagMatch isExplicit.
@@ -72,7 +72,7 @@ ClapMatchesTest >> testFlagValue [
 	| match flagMatch |
 	slowFlag meaning: [ :flag | flag isMismatch not ].
 
-	match := clap match: #(clap this '--slow').
+	match := clap match: #('clap' 'this' '--slow').
 	flagMatch := ((match at: #this) at: slowFlag).
 
 	self assert: flagMatch isExplicit.
@@ -87,17 +87,17 @@ ClapMatchesTest >> testMultiplePositional [
 	| match |
 	clap add: ((ClapPositional id: #list) multiple: true).
 
-	match := clap match: #(clap foo bar baz '-d' 'a/b/c').
+	match := clap match: #('clap' 'foo' 'bar' 'baz' '-d' 'a/b/c').
 
 	self deny: match isMismatch.
 	self assert: (match includesMatchOf: #directory).
 	self assert: (match includesMatchOf: #list).
 	self
 		assertCollection: (match occurrencesOf: #list collect: #value) asArray
-		equals: #(foo bar baz).
+		equals: #('foo' 'bar' 'baz').
 	self
 		assertCollection: ((match at: #list) allOccurrencesCollect: #value) asArray
-		equals: #(foo bar baz)
+		equals: #('foo' 'bar' 'baz')
 ]
 
 { #category : 'tests' }
@@ -105,7 +105,7 @@ ClapMatchesTest >> testParameterizedFlagValue [
 	| match |
 	dirFlag meaning: [ :flag | Path from: (flag at: #DIR) value ].
 
-	match := clap match: #(clap '--directory' 'foo/bar/baz').
+	match := clap match: #('clap' '--directory' 'foo/bar/baz').
 
 	self
 		assert: (match at: dirFlag) value
@@ -115,7 +115,7 @@ ClapMatchesTest >> testParameterizedFlagValue [
 { #category : 'tests' }
 ClapMatchesTest >> testRootPositionalBeforeSubcommand [
 	| match |
-	match := clap match: #(clap '--directory' 'foo/bar/baz' this).
+	match := clap match: #('clap' '--directory' 'foo/bar/baz' 'this').
 
 	self deny: match isMismatch.
 	self assert: (match includesMatchOf: #directory).
@@ -132,7 +132,7 @@ ClapMatchesTest >> testRootPositionalBeforeSubcommand [
 { #category : 'tests' }
 ClapMatchesTest >> testSubcommandAccessing [
 	| match |
-	match := clap match: #(clap this).
+	match := clap match: #('clap' 'this').
 
 	self deny: match isMismatch.
 	self deny: (match includesMatchOf: #directory).
@@ -152,7 +152,7 @@ ClapMatchesTest >> testSubcommandAccessing [
 { #category : 'tests' }
 ClapMatchesTest >> testThis [
 	| match |
-	match := clap match: #(clap this).
+	match := clap match: #('clap' 'this').
 
 	self deny: match isMismatch.
 	self deny: (match includesMatchOf: #directory).
@@ -165,7 +165,7 @@ ClapMatchesTest >> testThis [
 { #category : 'tests' }
 ClapMatchesTest >> testWrongCommandMismatches [
 	| match |
-	match := clap match: #(foo '-d' 'bar/baz/qux' this).
+	match := clap match: #('foo' '-d' 'bar/baz/qux' 'this').
 
 	self assert: match isMismatch.
 	self

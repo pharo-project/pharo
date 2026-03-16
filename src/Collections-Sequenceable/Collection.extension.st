@@ -110,7 +110,7 @@ Collection >> flattened [
 
 	"( #(1 #(2 3) #(4 #(5))) flattened ) >>> #(1 2 3 4 5)"
 
-	"( #(string1 #(string2 string3)) flattened ) >>> #(string1 string2 string3)"
+	"( #('string1' #('string2' 'string3')) flattened ) >>> #('string1' 'string2' 'string3')"
 
 	^ Array streamContents: [ :stream | self flattenOn: stream ]
 ]

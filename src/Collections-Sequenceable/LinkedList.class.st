@@ -34,7 +34,7 @@ Or, by adding individual objects using `#with:`
 Or, by adding another collection using `#withAll:`
 ```
 	""add all objects from Array""
-	linkedList := LinkedList withAll: #(one two three).
+	linkedList := LinkedList withAll: #('one' 'two' 'three').
 	linkedList.		""returns: a LinkedList('one' 'two' 'three')""
 ```
 ### Removing

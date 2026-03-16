@@ -92,9 +92,9 @@ ClassTest >> testAddInstVarName [
 	| tutu |
 	tutu := testEnvironment at: #TUTU.
 	tutu addInstVarNamed: 'x'.
-	self assert: tutu instVarNames equals: #(x).
+	self assert: tutu instVarNames equals: #('x').
 	tutu addInstVarNamed: 'y'.
-	self assert: tutu instVarNames equals: #(x y)
+	self assert: tutu instVarNames equals: #('x' 'y')
 ]
 
 { #category : 'tests' }
@@ -103,10 +103,10 @@ ClassTest >> testAddSlot [
 	| tutu |
 	tutu := testEnvironment at: #TUTU.
 	tutu addSlot: #x => InstanceVariableSlot.
-	self assert: tutu instVarNames equals: #(x).
+	self assert: tutu instVarNames equals: #('x').
 	self assert: tutu name equals: #TUTU.
 	tutu addSlot: #y => InstanceVariableSlot.
-	self assert: tutu instVarNames equals: #(x y).
+	self assert: tutu instVarNames equals: #('x' 'y').
 	self assert: (tutu slotNamed: #x) definingClass identicalTo: tutu.
 	self assert: (tutu slotNamed: #y) definingClass identicalTo: tutu.
 ]
@@ -118,11 +118,11 @@ ClassTest >> testAddSlotAnonymous [
 	tutu := Object newAnonymousSubclass.
 	self assert: tutu getName isNil.
 	tutu := tutu addSlot: #x => InstanceVariableSlot.
-	self assert: tutu instVarNames equals: #(x).
+	self assert: tutu instVarNames equals: #('x').
 	self assert: tutu getName isNil.
 	tutu := tutu addSlot: #y => InstanceVariableSlot.
 	self assert: tutu getName isNil.
-	self assert: tutu instVarNames equals: #(x y).
+	self assert: tutu instVarNames equals: #('x' 'y').
 	self assert: (tutu slotNamed: #x) definingClass identicalTo: tutu.
 	self assert: (tutu slotNamed: #y) definingClass identicalTo: tutu.
 ]
@@ -473,9 +473,9 @@ ClassTest >> testRemoveSlot [
 	tutu := testEnvironment at: #TUTU.
 	tutu addSlot: (slotx := #x => InstanceVariableSlot).
 	tutu addSlot: #y => InstanceVariableSlot.
-	self assert: tutu instVarNames equals: #(x y).
+	self assert: tutu instVarNames equals: #('x' 'y').
 	tutu removeSlot: slotx.
-	self assert: tutu instVarNames equals: #(y).
+	self assert: tutu instVarNames equals: #('y').
 	self assert: (tutu slotNamed: #y) definingClass identicalTo: tutu.
 ]
 
@@ -546,7 +546,7 @@ ClassTest >> testSubclassInstanceVariableNames [
 
 	self assert: (testEnvironment at: #SubclassExample) identicalTo: class.
 	self assert: class package isUndefined.
-	self assert: class instVarNames equals: #( x y ) ] ensure: [ class ifNotNil: [ class removeFromSystem ] ]
+	self assert: class instVarNames equals: #( 'x' 'y' ) ] ensure: [ class ifNotNil: [ class removeFromSystem ] ]
 ]
 
 { #category : 'tests - file in/out' }

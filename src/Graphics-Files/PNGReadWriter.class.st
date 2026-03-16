@@ -128,7 +128,7 @@ PNGReadWriter class >> initialize [
 { #category : 'image reading/writing' }
 PNGReadWriter class >> typicalFileExtensions [
 	"Answer a collection of file extensions (lowercase) which files that I can read might commonly have"
-	^#(png)
+	^#('png')
 ]
 
 { #category : 'pixel copies' }

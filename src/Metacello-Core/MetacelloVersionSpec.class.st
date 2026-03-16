@@ -255,7 +255,7 @@ MetacelloVersionSpec >> defaultPackageNames [
 	 otherwise answer a list of all of the package names in this version"
 
 	self packages packageNamed: 'default' ifAbsent: [ ^self packageNames ].
-	^#(default)
+	^#('default')
 ]
 
 { #category : 'toolbox support' }
@@ -435,7 +435,7 @@ MetacelloVersionSpec >> mergeSpec: anotherSpec [
 
 { #category : 'merging' }
 MetacelloVersionSpec >> nonOverridable [
-    ^ super nonOverridable , #(#packageList #repositories)
+    ^ super nonOverridable , #(#'packageList' #'repositories')
 ]
 
 { #category : 'querying' }

@@ -58,5 +58,5 @@ BaselineOfCommander >> baseline: spec [
 			group: 'Tests' with: #( #'Commander-Core-Tests' );
 			group: 'default'
 			with:
-				#( Core AllActivators Tests 'Commander-Spec2-Compatibility' ) ]
+				#( 'Core' 'AllActivators' 'Tests' 'Commander-Spec2-Compatibility' ) ]
 ]

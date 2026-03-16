@@ -18,7 +18,7 @@ ManifestOpalCompilerCore class >> manuallyResolvedDependencies [
 
 { #category : 'code-critics' }
 ManifestOpalCompilerCore class >> rejectRules [
-^ #(SearchingLiteralRule ExcessiveArgumentsRule LongMethodsRule ClassInstVarNotInitializedRule UsesAddRule ExcessiveMethodsRule MissingYourselfRule ExcessiveVariablesRule TempsReadBeforeWrittenRule AbstractClassRule IfTrueReturnsRule)
+^ #('SearchingLiteralRule' 'ExcessiveArgumentsRule' 'LongMethodsRule' 'ClassInstVarNotInitializedRule' 'UsesAddRule' 'ExcessiveMethodsRule' 'MissingYourselfRule' 'ExcessiveVariablesRule' 'TempsReadBeforeWrittenRule' 'AbstractClassRule' 'IfTrueReturnsRule')
 ]
 
 { #category : 'code-critics' }

@@ -258,7 +258,7 @@ OCASTCheckerTest >> testSemanticAnalysisOnNonMethodNode [
 	(OCOpalExamples >> #exampleReturn42)}
 		do: [ :object |
 			ast := object sourceNode].
-	#(1 true nil '1 + 2' '^1' '1 + 2. 2 + 3' '#(1 true)' '{ #foo . 1 }' '1+2;+3')
+	#('1' 'true' 'nil' '1 + 2' '^1' '1 + 2. 2 + 3' '#(1 true)' '{ #foo . 1 }' '1+2;+3')
 		do: [ :source |
 			ast := RBParser parseExpression: source.
 			ast doSemanticAnalysis ].

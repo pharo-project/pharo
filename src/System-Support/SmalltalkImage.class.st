@@ -528,10 +528,10 @@ SmalltalkImage >> extractMinusParameters [
 	Here is an example:
 		I suppose I run pharo with: `pharo myImage.image 1 2 3 woah -minus1 'Hello' -minus2 -minus3 'Hello' 'World'`.
 		This message will return a dictionary with:
-			* --> #(1 2 3 woah)
-			minus1 --> #(Hello)
+			* --> #(1 2 3 'woah')
+			minus1 --> #('Hello')
 			minus2 --> #()
-			minus3 --> #(Hello World)"
+			minus3 --> #('Hello' 'World')"
 
 	| args str index |
 

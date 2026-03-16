@@ -8,7 +8,7 @@ Class {
 { #category : 'tests' }
 ZnFastLineReaderTest >> testLinesDo [
 	| lines reader |
-	lines := #( foo bar last).
+	lines := #( 'foo' 'bar' 'last').
 	reader := ZnFastLineReader on: (Character lf join: lines) readStream.
 	self
 		assert: (Array streamContents: [ :out |

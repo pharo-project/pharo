@@ -103,7 +103,7 @@ Class {
 
 { #category : 'fuel support' }
 ProcessMonitorTestService class >> fuelIgnoredInstanceVariableNames [
-    ^#(forkedProcesses suspendedBackgroundFailures)
+    ^#('forkedProcesses' 'suspendedBackgroundFailures')
 ]
 
 { #category : 'settings' }

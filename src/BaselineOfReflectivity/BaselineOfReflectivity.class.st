@@ -27,12 +27,12 @@ BaselineOfReflectivity >> baseline: spec [
 		"Reflectivity requires using code instrumentation"
 
 		spec
-			group: 'default' with: #( Reflectivity );
+			group: 'default' with: #( 'Reflectivity' );
 			group: 'tools'
 			with: #( 'Reflectivity-Tools' 'Reflectivity-Tools-Tests' );
 			group: 'tests'
 			with:
-				#( default tools 'Reflectivity-Tests' 'Reflectivity-Examples' ) ]
+				#( 'default' 'tools' 'Reflectivity-Tests' 'Reflectivity-Examples' ) ]
 ]
 
 { #category : 'baselines' }

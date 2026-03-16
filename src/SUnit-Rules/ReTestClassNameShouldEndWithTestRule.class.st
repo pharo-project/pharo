@@ -20,7 +20,7 @@ ReTestClassNameShouldEndWithTestRule class >> checksClass [
 { #category : 'running' }
 ReTestClassNameShouldEndWithTestRule >> basicCheck: aClass [
 	| suffixes |
-	suffixes := #(Test TestCase).
+	suffixes := #('Test' 'TestCase').
 	^ (aClass inheritsFrom: TestCase) and: [ suffixes noneSatisfy: [ :suffix | aClass name asString endsWith: suffix ] ]
 ]
 

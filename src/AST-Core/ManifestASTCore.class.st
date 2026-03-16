@@ -18,7 +18,7 @@ ManifestASTCore class >> manuallyResolvedDependencies [
 
 { #category : 'meta data' }
 ManifestASTCore class >> rejectRules [
-^ #(LawOfDemeterRule)
+^ #('LawOfDemeterRule')
 ]
 
 { #category : 'meta data' }

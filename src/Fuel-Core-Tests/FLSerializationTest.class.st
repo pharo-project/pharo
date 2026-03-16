@@ -18,7 +18,7 @@ Class {
 
 { #category : 'accessing' }
 FLSerializationTest class >> packageNamesUnderTest [
-	^ #(Fuel)
+	^ #('Fuel')
 ]
 
 { #category : 'accessing' }

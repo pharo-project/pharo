@@ -19,9 +19,9 @@ BaselineOfOpalCompiler >> baseline: spec [
 			with: [ spec repository: (self packageRepositoryURLForSpec: spec) ].
 
 		spec
-			package: 'OpalCompiler-Core' with: [ spec requires: #( AST ) ];
+			package: 'OpalCompiler-Core' with: [ spec requires: #( 'AST' ) ];
 			package: 'OpalCompiler-Tests'
-			with: [ spec requires: #( SUnit 'OpalCompiler-Core' ) ].
+			with: [ spec requires: #( 'SUnit' 'OpalCompiler-Core' ) ].
 
 		spec
 			group: 'default' with: #( 'OpalCompiler-Core' );

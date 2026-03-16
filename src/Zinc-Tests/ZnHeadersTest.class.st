@@ -85,7 +85,7 @@ ZnHeadersTest >> testReadingMultilineMultiValue [
 		'Content-Length: 128', String crlf,
 		'Long: more', String crlf.
 	headers := ZnHeaders readFrom: string asByteArray readStream.
-	self assert: (headers at: #long) equals: #( 'foo bar	baz' more)
+	self assert: (headers at: #long) equals: #( 'foo bar	baz' 'more')
 ]
 
 { #category : 'testing' }

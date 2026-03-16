@@ -94,7 +94,7 @@ ParametrizedTestCase class >> testParameters [
 { #category : 'private' }
 ParametrizedTestCase >> instanceVariablesToKeep [
 
-	^ super instanceVariablesToKeep, #(testSelector parametersToUse)
+	^ super instanceVariablesToKeep, #('testSelector' 'parametersToUse')
 ]
 
 { #category : 'accessing' }

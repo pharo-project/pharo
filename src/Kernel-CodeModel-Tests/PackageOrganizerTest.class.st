@@ -407,7 +407,7 @@ PackageOrganizerTest >> testRenameUpdateTheOrganizer [
 PackageOrganizerTest >> testTestPackageNames [
 
 	| packages |
-	packages := #( 'MockPackage-Tests' 'MockPackage2-tests' MockPackage 'MockPackage-Tests-Package' ) collect: [ :pName | self ensurePackage: pName ].
+	packages := #( 'MockPackage-Tests' 'MockPackage2-tests' 'MockPackage' 'MockPackage-Tests-Package' ) collect: [ :pName | self ensurePackage: pName ].
 
 	"Only 3 mock package names are test packages:  'MockPackage-Tests' 'MockPackage2-tests' 'MockPackage-Tests-Package'"
 	self assert: self organizer testPackageNames size equals: 3.
@@ -420,7 +420,7 @@ PackageOrganizerTest >> testTestPackageNames [
 PackageOrganizerTest >> testTestPackages [
 
 	| packages |
-	packages := #( 'MockPackage-Tests' 'MockPackage2-tests' MockPackage 'MockPackage-Tests-Package' ) collect: [ :pName | self ensurePackage: pName ].
+	packages := #( 'MockPackage-Tests' 'MockPackage2-tests' 'MockPackage' 'MockPackage-Tests-Package' ) collect: [ :pName | self ensurePackage: pName ].
 
 	"Only 2 mock packages are test packages:  'MockPackage-Tests' 'MockPackage2-tests' 'MockPackage-Tests-Package'."
 	self assert: self organizer testPackages size equals: 3.

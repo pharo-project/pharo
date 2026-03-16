@@ -347,7 +347,7 @@ MetacelloAbstractVersionConstructor >> import: aStringOrCollection [
 	
 		spec baseline: 'Sample' with: [ spec repository: 'github://dalehenrich/sample:master/repository' ].
 		spec baseline: 'Example' with: [ spec repository: 'github://dalehenrich/example:master/repository' ].
-		spec import: #(Sample Example)]	
+		spec import: #('Sample' 'Example')]	
 	 "
 
 	self root import: aStringOrCollection

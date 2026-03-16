@@ -8,7 +8,7 @@ Class {
 
 { #category : 'tests' }
 ClapHelloTest >> testHello [
-	context := ClapCommandLineExamples hello activateWith: #(hello).
+	context := ClapCommandLineExamples hello activateWith: #('hello').
 
 	self assertSuccess.
 	self
@@ -18,14 +18,14 @@ ClapHelloTest >> testHello [
 
 { #category : 'tests' }
 ClapHelloTest >> testHelloBothShoutingAndWhispering [
-	context := ClapCommandLineExamples hello activateWith: #(hello '--shout' '--whisper').
+	context := ClapCommandLineExamples hello activateWith: #('hello' '--shout' '--whisper').
 
 	self skip: 'should probably fail or obey the latest flag'
 ]
 
 { #category : 'tests' }
 ClapHelloTest >> testHelloFrench [
-	context := ClapCommandLineExamples hello activateWith: #(hello '--language' fr).
+	context := ClapCommandLineExamples hello activateWith: #('hello' '--language' 'fr').
 
 	self assertSuccess.
 	self
@@ -35,7 +35,7 @@ ClapHelloTest >> testHelloFrench [
 
 { #category : 'tests' }
 ClapHelloTest >> testHelloShoutingLong [
-	context := ClapCommandLineExamples hello activateWith: #(hello '--shout').
+	context := ClapCommandLineExamples hello activateWith: #('hello' '--shout').
 
 	self assertSuccess.
 	self
@@ -45,7 +45,7 @@ ClapHelloTest >> testHelloShoutingLong [
 
 { #category : 'tests' }
 ClapHelloTest >> testHelloShoutingShort [
-	context := ClapCommandLineExamples hello activateWith: #(hello '-s').
+	context := ClapCommandLineExamples hello activateWith: #('hello' '-s').
 
 	self assertSuccess.
 	self
@@ -55,7 +55,7 @@ ClapHelloTest >> testHelloShoutingShort [
 
 { #category : 'tests' }
 ClapHelloTest >> testHelloSomeone [
-	context := ClapCommandLineExamples hello activateWith: #(hello someone).
+	context := ClapCommandLineExamples hello activateWith: #('hello' 'someone').
 
 	self assertSuccess.
 	self
@@ -65,7 +65,7 @@ ClapHelloTest >> testHelloSomeone [
 
 { #category : 'tests' }
 ClapHelloTest >> testHelloWhisperingLong [
-	context := ClapCommandLineExamples hello activateWith: #(hello '--whisper').
+	context := ClapCommandLineExamples hello activateWith: #('hello' '--whisper').
 
 	self assertSuccess.
 	self
@@ -75,7 +75,7 @@ ClapHelloTest >> testHelloWhisperingLong [
 
 { #category : 'tests' }
 ClapHelloTest >> testHelloWhisperingShort [
-	context := ClapCommandLineExamples hello activateWith: #(hello '-w').
+	context := ClapCommandLineExamples hello activateWith: #('hello' '-w').
 
 	self assertSuccess.
 	self

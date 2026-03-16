@@ -20,7 +20,7 @@ BaselineOfClap >> baseline: spec [
 		package: 'Clap-Examples' with: [ spec requires: #('Clap-CommandLine') ];
 		package: 'Clap-Examples-Booklet' with: [ spec requires: #('Clap-CommandLine') ];
 		package: 'Clap-Tests' with: [ spec requires: #('Clap-Core' 'Clap-Examples') ];
-		package: 'Clap-Okay-Tests' with: [ spec requires: #('Clap-Core' Okay) ];
+		package: 'Clap-Okay-Tests' with: [ spec requires: #('Clap-Core' 'Okay') ];
 
 		group: 'default' with: #(core development);
 		group: 'core' with: #('Clap-Core' 'Clap-CommandLine');

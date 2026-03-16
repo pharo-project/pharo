@@ -141,10 +141,10 @@ TextDiffBuilderTest >> testIfSequence5 [
 	self assert: patch size equals: 6.	"lcs is ab or cd"
 	matches := (patch select: [ :each | each key sameContents: #match ])
 		collect: [ :each | each value first ] as: String.
-	self assert: (#(ab cd) includes: matches).
+	self assert: (#('ab' 'cd') includes: matches).
 	self assert: (patch count: [ :each | each key sameContents: #insert ]) equals: 2.
 	self assert: (patch count: [ :each | each key sameContents: #remove ]) equals: 2.
-	nonMatches := #(ab cd) detect: [ :each | each ~= matches ].
+	nonMatches := #('ab' 'cd') detect: [ :each | each ~= matches ].
 	patch do: [ :each |
 		each key sameContents: #match
 			ifTrue: [ self assert: (matches includes: each value first) ]

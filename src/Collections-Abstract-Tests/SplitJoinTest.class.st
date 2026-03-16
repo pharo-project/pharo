@@ -121,7 +121,7 @@ so:"
 { #category : 'sunitgui' }
 SplitJoinTest class >> packageNamesUnderTest [
 	<ignoreForCoverage>
-	^ #(SplitJoin)
+	^ #('SplitJoin')
 ]
 
 { #category : 'running' }
@@ -188,7 +188,7 @@ SplitJoinTest >> testJoinUsingLastOnArray [
 { #category : 'running' }
 SplitJoinTest >> testJoinUsingLastOnArrayOfStrings [
 	self
-		assert: (#('Pharo is modern' 'open source' 'highly portable' fast 'full-featured' ) joinUsing: ', ' last: ' and ')
+		assert: (#('Pharo is modern' 'open source' 'highly portable' 'fast' 'full-featured' ) joinUsing: ', ' last: ' and ')
 		equals: 'Pharo is modern, open source, highly portable, fast and full-featured'
 ]
 
@@ -285,17 +285,17 @@ SplitJoinTest >> testSplitSortedCollectionOnSortedCollection [
 { #category : 'running' }
 SplitJoinTest >> testSplitStringOnBlock [
 	self assert: ('foobar' splitOn: [:ch | 'aeiou' includes: ch])
-		equals: #(f '' b r) asOrderedCollection
+		equals: #('f' '' 'b' 'r') asOrderedCollection
 ]
 
 { #category : 'running' }
 SplitJoinTest >> testSplitStringOnChar [
 	self assert: ('does eat oats and lambs eat oats' splitOn: Character space)
-		equals: #(does eat oats and lambs eat oats) asOrderedCollection
+		equals: #('does' 'eat' 'oats' 'and' 'lambs' 'eat' 'oats') asOrderedCollection
 ]
 
 { #category : 'running' }
 SplitJoinTest >> testSplitStringOnSubstring [
 	self assert: ('the banana man can can bananas' splitOn: 'an')
-		equals: #('the b' '' 'a m' ' c' ' c' ' b' '' as) asOrderedCollection
+		equals: #('the b' '' 'a m' ' c' ' c' ' b' '' 'as') asOrderedCollection
 ]

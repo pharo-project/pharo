@@ -12,5 +12,5 @@ Class {
 { #category : 'idioms' }
 ReProperMethodProtocolNameForConvertingRule class >> protocolIdiom [
 
-	^self use: #'converting' insteadOf: #(#conversion #conversions)
+	^self use: #'converting' insteadOf: #(#'conversion' #'conversions')
 ]

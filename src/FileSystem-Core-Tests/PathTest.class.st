@@ -115,31 +115,31 @@ PathTest >> testCanonicalization [
 	| ref |
 
 	ref := (Path * 'a/b/c') canonicalize.
-	self assert: ref segments equals: #(a b c).
+	self assert: ref segments equals: #('a' 'b' 'c').
 
 	ref := (Path / 'a/b/c') canonicalize.
-	self assert: ref segments equals: #(a b c).
+	self assert: ref segments equals: #('a' 'b' 'c').
 
 	ref := (Path * '../a/b/c') canonicalize.
-	self assert: ref segments equals: #('..' a b c).
+	self assert: ref segments equals: #('..' 'a' 'b' 'c').
 
 	ref := (Path * 'a/b/c/..') canonicalize.
-	self assert: ref segments equals: #(a b).
+	self assert: ref segments equals: #('a' 'b').
 
 	ref := (Path / 'a/b/c/..') canonicalize.
-	self assert: ref segments equals: #(a b).
+	self assert: ref segments equals: #('a' 'b').
 
 	ref := (Path * 'a/b/../c') canonicalize.
-	self assert: ref segments equals: #(a c).
+	self assert: ref segments equals: #('a' 'c').
 
 	ref := (Path / 'a/b/../c') canonicalize.
-	self assert: ref segments equals: #(a c).
+	self assert: ref segments equals: #('a' 'c').
 
 	ref := (Path / '..') canonicalize.
 	self assertEmpty: ref segments.
 
 	ref := (Path / '../a/b/../c') canonicalize.
-	self assert: ref segments equals: #(a c)
+	self assert: ref segments equals: #('a' 'c')
 
 ]
 
@@ -213,28 +213,28 @@ PathTest >> testExtendingPath [
 	self should: [ '/a/b' asPath / nil ] raise: Error.
 
 	ref := '/a/b/c' asPath / 'd/e'.
-	self assert: ref segments equals: #(a b c d e).
+	self assert: ref segments equals: #('a' 'b' 'c' 'd' 'e').
 
 	ref := '/a/b/c' asPath / 'd/e'.
-	self assert: ref parent segments equals: #(a b c d).
+	self assert: ref parent segments equals: #('a' 'b' 'c' 'd').
 
 	ref := '/a/b/c' asPath / '../d'.
-	self assert: ref segments equals:  #(a b c '..' d).
+	self assert: ref segments equals:  #('a' 'b' 'c' '..' 'd').
 
 	ref := '/a/b/c' asPath / 'd/..'.
-	self assert: ref segments equals: #(a b c d '..').
+	self assert: ref segments equals: #('a' 'b' 'c' 'd' '..').
 
 	ref := '/a/b/c' asPath / 'd/../e'.
-	self assert: ref segments equals: #(a b c d '..' e).
+	self assert: ref segments equals: #('a' 'b' 'c' 'd' '..' 'e').
 
 	ref := '/a/b/c' asPath / './d'.
-	self assert: ref segments equals: #(a b c d).
+	self assert: ref segments equals: #('a' 'b' 'c' 'd').
 
 	ref := '/a/b/c' asPath / 'd/.'.
-	self assert: ref segments equals: #(a b c d).
+	self assert: ref segments equals: #('a' 'b' 'c' 'd').
 
 	ref := '/a/b/c' asPath / 'd/./e'.
-	self assert: ref segments equals: #(a b c d e)
+	self assert: ref segments equals: #('a' 'b' 'c' 'd' 'e')
 ]
 
 { #category : 'tests' }
@@ -244,13 +244,13 @@ PathTest >> testExtensions [
 		equals: #().
 	self
 		assertCollection: (Path from: 'foo.tar') extensions asArray
-		equals: #( tar ).
+		equals: #( 'tar' ).
 	self
 		assertCollection: (Path from: 'foo.tar.gz') extensions asArray
-		equals: #( tar gz).
+		equals: #( 'tar' 'gz').
 	self
 		assertCollection: (Path from: 'foo.1.tar.gz') extensions asArray
-		equals: #( 1 tar gz)
+		equals: #( '1' 'tar' 'gz')
 ]
 
 { #category : 'tests' }
@@ -365,7 +365,7 @@ PathTest >> testMakeRelativeFrom2RelativePaths [
 { #category : 'tests' }
 PathTest >> testNetworkPathWithParents [
 	| path allPaths |
-	path := UNCNetworkPath withAll: #(machine plonk griffle nurb).
+	path := UNCNetworkPath withAll: #('machine' 'plonk' 'griffle' 'nurb').
 	allPaths := path withParents.
 
 	self assert: allPaths size equals: 4.
@@ -409,7 +409,7 @@ PathTest >> testParentResolution [
 	relative := Path parent / 'griffle' / 'zonk'.
 	absolute := base resolve: relative.
 	self assert: absolute isAbsolute.
-	self assert: absolute segments equals: #(plonk pinto '..' griffle zonk)
+	self assert: absolute segments equals: #('plonk' 'pinto' '..' 'griffle' 'zonk')
 ]
 
 { #category : 'tests' }
@@ -472,7 +472,7 @@ PathTest >> testParseWindowsPathWithUnixDelimiters [
 	self assert: path segments size equals: 4.
 	self
 		assertCollection: path segments
-		equals: #('C:' a b c)
+		equals: #('C:' 'a' 'b' 'c')
 ]
 
 { #category : 'tests' }
@@ -561,19 +561,19 @@ PathTest >> testRedundantSeparators [
 	| ref |
 
 	ref := '/a/b/c' asPath / 'foo/'.
-	self assert: ref segments equals: #(a b c foo).
+	self assert: ref segments equals: #('a' 'b' 'c' 'foo').
 
 	ref := '/a/b/c' asPath / 'foo//'.
-	self assert: ref segments equals: #(a b c foo).
+	self assert: ref segments equals: #('a' 'b' 'c' 'foo').
 
 	ref := '/a/b/c' asPath / 'foo//..'.
-	self assert: ref segments equals: #(a b c foo '..').
+	self assert: ref segments equals: #('a' 'b' 'c' 'foo' '..').
 
 	ref := '/a/b/c' asPath / '..//foo'.
-	self assert: ref segments equals: #(a b c '..' foo).
+	self assert: ref segments equals: #('a' 'b' 'c' '..' 'foo').
 
 	ref := '/a/b/c' asPath / 'foo//..//bar'.
-	self assert: ref segments equals: #(a b c foo '..' bar)
+	self assert: ref segments equals: #('a' 'b' 'c' 'foo' '..' 'bar')
 ]
 
 { #category : 'tests' }
@@ -598,7 +598,7 @@ PathTest >> testRelativeFromStringNormalization [
 
 	self assert: path isRelative.
 	self assert: path size equals: 3.
-	self assert: path segments equals: #(plonk '..' griffle)
+	self assert: path segments equals: #('plonk' '..' 'griffle')
 ]
 
 { #category : 'tests' }
@@ -610,7 +610,7 @@ PathTest >> testRelativeFromStringNormalizationParent [
 
 	self assert: path isRelative.
 	self assert: path size equals: 4.
-	self assert: path segments equals: #(plonk '..' '..' griffle)
+	self assert: path segments equals: #('plonk' '..' '..' 'griffle')
 ]
 
 { #category : 'tests' }

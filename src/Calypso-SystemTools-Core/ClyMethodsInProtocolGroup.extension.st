@@ -8,7 +8,7 @@ ClyMethodsInProtocolGroup >> decorateTableCell: anItemCellMorph of: groupItem [
 	(myName beginsWith: 'private') ifTrue: [
 		^anItemCellMorph definitionIcon: #protocolPrivate ].
 
-	(#(initial 'class initial' releaz releas finali)
+	(#('initial' 'class initial' 'releaz' 'releas' 'finali')
 		anySatisfy: [ :each | myName beginsWith: each ])
 			ifTrue: [ anItemCellMorph definitionIcon: #protocolProtected]
 ]

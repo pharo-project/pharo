@@ -16,7 +16,7 @@ ManifestKernel class >> dependencies [
 
 { #category : 'meta-data - dependency analyser' }
 ManifestKernel class >> ignoredDependencies [
-	^ #(Reflectivity 'Regex-Core' 'System-Settings-Core' 'FFI-Kernel')
+	^ #('Reflectivity' 'Regex-Core' 'System-Settings-Core' 'FFI-Kernel')
 ]
 
 { #category : 'meta-data - dependency analyser' }

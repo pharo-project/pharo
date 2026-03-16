@@ -15,5 +15,5 @@ BaselineOfSortFunctions >> baseline: spec [
 		spec 
 			group: 'Core' with: #('SortFunctions-Core');
 			group: 'Tests' with: #('SortFunctions-Tests');
-			group: 'default' with: #(Core Tests) ]
+			group: 'default' with: #('Core' 'Tests') ]
 ]

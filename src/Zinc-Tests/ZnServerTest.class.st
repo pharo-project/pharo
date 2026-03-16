@@ -120,7 +120,7 @@ ZnServerTest >> testAuthorizationSuccessful [
 			response := ZnEasy
 				get:
 					(server localUrl
-						addPathSegments: #(echo foo);
+						addPathSegments: #('echo' 'foo');
 						yourself)
 				username: 'foo'
 				password: 'secret'.
@@ -191,7 +191,7 @@ ZnServerTest >> testEcho [
 			response := ZnEasy
 				get:
 					(server localUrl
-						addPathSegments: #(echo foo);
+						addPathSegments: #('echo' 'foo');
 						yourself).
 			self assert: response contentType equals: ZnMimeType textPlain.
 			self assert: response statusLine code equals: 200.
@@ -228,7 +228,7 @@ ZnServerTest >> testEchoLocalInterface [
 	response := ZnEasy
 		get:
 			(server localUrl
-				addPathSegments: #(echo foo);
+				addPathSegments: #('echo' 'foo');
 				yourself).
 	self assert: response contentType equals: ZnMimeType textPlain.
 	self assert: response statusLine code equals: 200.
@@ -264,7 +264,7 @@ ZnServerTest >> testError [
 { #category : 'testing' }
 ZnServerTest >> testFormTest1 [
 	| inputs client |
-	inputs := #( '1+2=3 & 2+1=3' 'single ''' 'double " - cool ?' 'élèves français' Ελλάδα ).
+	inputs := #( '1+2=3 & 2+1=3' 'single ''' 'double " - cool ?' 'élèves français' 'Ελλάδα' ).
 	self withServerDo: [ :server |
 		(client := ZnClient new)
 			url: server localUrl;
@@ -280,7 +280,7 @@ ZnServerTest >> testFormTest1 [
 { #category : 'testing' }
 ZnServerTest >> testFormTest2 [
 	| inputs client |
-	inputs := #( '1+2=3 & 2+1=3' 'single ''' 'double " - cool ?' 'élèves français' Ελλάδα ).
+	inputs := #( '1+2=3 & 2+1=3' 'single ''' 'double " - cool ?' 'élèves français' 'Ελλάδα' ).
 	self withServerDo: [ :server |
 		(client := ZnClient new)
 			url: server localUrl;

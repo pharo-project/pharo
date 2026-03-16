@@ -20,9 +20,9 @@ MetacelloCoreVersionQueryTestCase >> baseline10: spec [
                         versionString: '1.0-baseline';
                         loads: #('Misc-UTF8') ].
             spec
-                group: 'Core' with: #(UTF8);
-                group: 'Tests' with: #(UTF8);
-                group: 'Recursive' with: #(Core Recursive)	"recursive group definition" ]
+                group: 'Core' with: #('UTF8');
+                group: 'Tests' with: #('UTF8');
+                group: 'Recursive' with: #('Core' 'Recursive')	"recursive group definition" ]
 ]
 
 { #category : 'baselines' }
@@ -39,8 +39,8 @@ MetacelloCoreVersionQueryTestCase >> baseline11: spec [
                         versionString: '1.0-baseline';
                         loads: #('Misc-UTF7') ].
             spec
-                group: 'Core' with: #(UTF7);
-                group: 'Tests' with: #(UTF7);
+                group: 'Core' with: #('UTF7');
+                group: 'Tests' with: #('UTF7');
                 yourself ]
 ]
 
@@ -65,9 +65,9 @@ MetacelloCoreVersionQueryTestCase >> baseline20: spec [
                         versionString: '1.0-baseline';
                         loads: #('Misc-UTF8') ].
             spec
-                group: 'Core' with: #(UTF8 UTF9);
-                group: 'Tests' with: #(UTF8);
-                group: 'Recursive' with: #(Core Recursive)	"recursive group definition" ]
+                group: 'Core' with: #('UTF8' 'UTF9');
+                group: 'Tests' with: #('UTF8');
+                group: 'Recursive' with: #('Core' 'Recursive')	"recursive group definition" ]
 ]
 
 { #category : 'accessing' }
@@ -91,7 +91,7 @@ MetacelloCoreVersionQueryTestCase >> testBaseline10Groups [
 	| project version expected list |
 	project := self project.
 	version := project version: '1.0-baseline'.
-	expected := #(Core Tests Recursive).
+	expected := #('Core' 'Tests' 'Recursive').
 	list := version groups.
 	self assert: list size equals: expected size.
 	list do: [ :pkg | self assert: (expected includes: pkg name) ]
@@ -102,7 +102,7 @@ MetacelloCoreVersionQueryTestCase >> testBaseline10Projects [
 	| project version expected list |
 	project := self project.
 	version := project version: '1.0-baseline'.
-	expected := #(UTF8).
+	expected := #('UTF8').
 	list := version projects.
 	self assert: list size equals: expected size.
 	list do: [ :pkg | self assert: (expected includes: pkg name) ]

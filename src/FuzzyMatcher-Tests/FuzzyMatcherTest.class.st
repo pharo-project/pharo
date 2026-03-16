@@ -30,10 +30,10 @@ FuzzyMatcherTest >> testAllMatchingIn [
 
 	| input output |
 
-	input := #(0g ogb gat dog FroG hog goh hgo).
+	input := #('0g' 'ogb' 'gat' 'dog' 'FroG' 'hog' 'goh' 'hgo').
 	output := FuzzyMatcher allMatching: 'og' in: input.
 
-	self assert: output asArray equals: #(ogb dog FroG hog)
+	self assert: output asArray equals: #('ogb' 'dog' 'FroG' 'hog')
 ]
 
 { #category : 'tests' }
@@ -189,9 +189,9 @@ FuzzyMatcherTest >> testSortedByScore [
 
 	| input output |
 
-	input := #(abc a  whj cab cat dog ab).
+	input := #('abc' 'a'  'whj' 'cab' 'cat' 'dog' 'ab').
 
 	output := FuzzyMatcher allSortedByScoreMatching: 'a' in: input.
 
-	self assertCollection: output asArray equals: #(a ab abc cab cat)
+	self assertCollection: output asArray equals: #('a' 'ab' 'abc' 'cab' 'cat')
 ]

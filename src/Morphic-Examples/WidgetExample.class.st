@@ -113,9 +113,9 @@ WidgetExample class >> exampleBasicControls [
 							getValue: #value setValue: #value: help: 'This is a disabled slider') disable}.
 			dialog newVerticalSeparator.
 			dialog newLabelGroup: {
-			'Drop List'->(dialog newDropListFor: (SpListPresenter new items: #(One Two Three Four))
+			'Drop List'->(dialog newDropListFor: (SpListPresenter new items: #('One' 'Two' 'Three' 'Four'))
 							list: #items getSelected: nil setSelected: #selectIndex: help: 'This is a drop list').
-			'Disabled Drop List'->(dialog newDropListFor: (SpListPresenter new items: #(One Two Three Four); selectIndex: 3)
+			'Disabled Drop List'->(dialog newDropListFor: (SpListPresenter new items: #('One' 'Two' 'Three' 'Four'); selectIndex: 3)
 							list: #items getSelected: nil setSelected: #selectIndex:
 							help: 'This is a disabled drop list') disable.
 			'Editable Drop List'->(dialog newEditableDropListFor: (SpListPresenter new items: SortedCollection new)
@@ -125,10 +125,10 @@ WidgetExample class >> exampleBasicControls [
 									collect: [:c | Morph new extent: 120@12; color: c]))
 							list: #items getSelected: nil setSelected: #selectIndex:
 							help: 'This is a morph drop list').
-			'Normal List'->((dialog newListFor: (SpListPresenter new items: #(One Two Three Four); selectIndex: 3)
+			'Normal List'->((dialog newListFor: (SpListPresenter new items: #('One' 'Two' 'Three' 'Four'); selectIndex: 3)
 							list: #items selected: nil changeSelected: #selectIndex:
 							help: 'This is a list') minWidth: 120).
-			'Disabled List'->(dialog newListFor: (SpListPresenter new items: #(One Two Three Four); selectIndex: 3)
+			'Disabled List'->(dialog newListFor: (SpListPresenter new items: #('One' 'Two' 'Three' 'Four'); selectIndex: 3)
 							list: #items selected: nil changeSelected: #selectIndex:
 							help: 'This is a disabled list') disable.
 			'Morph List'->(dialog newMorphListFor: (SpListPresenter new items: ((Color red wheel: 20)
@@ -187,7 +187,7 @@ WidgetExample class >> exampleDialogs [
 		chooseColor: (Color r: 0.529 g: 0.611 b: 0.004);
 		chooseDirectory: 'Choose folder';
 		textEntry: 'Choose a name for the project' title: 'Save project' entryText: 'My Project';
-		chooseDropList: 'Pick one!' list: #(One Two Three Four);
+		chooseDropList: 'Pick one!' list: #('One' 'Two' 'Three' 'Four');
 		deny: 'Opening the safe is not possible!';
 		message: 'Hello!';
 		proceed: 'Save image?';

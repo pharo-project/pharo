@@ -66,7 +66,7 @@ FreeTypeNameParser class >> normalNames [
 	"
 
 	normalNames ifNotNil:[^normalNames].
-	^ normalNames := #(Book Normal Regular Roman Upright)
+	^ normalNames := #('Book' 'Normal' 'Regular' 'Roman' 'Upright')
 ]
 
 { #category : 'known names' }
@@ -446,7 +446,7 @@ FreeTypeNameParser >> splitBadTokensIn: aString [
 	"split tokens such as BoldOblique, that should be two words"
 	| str |
 	str := aString.
-	#(	(bold oblique) ('bold' 'italic')
+	#(	('bold' 'oblique') ('bold' 'italic')
 	) do:[:pair | | i |
 		(i := str asLowercase findString: pair first, pair second startingAt: 1) > 0
 			ifTrue:[

@@ -41,7 +41,7 @@ FileReferenceTest >> testAllChildren [
 		do: [ :child |
 			self assert: child class equals: FileReference.
 			self assert: (ref = child or: [ ref contains: child ]) ].
-	self assert: (children collect: [ :ea | ea basename ]) equals: #(alpha beta gamma delta) ]
+	self assert: (children collect: [ :ea | ea basename ]) equals: #('alpha' 'beta' 'gamma' 'delta') ]
 		ensure: [ (filesystem / 'alpha') ensureDeleteAll ]
 ]
 
@@ -61,7 +61,7 @@ FileReferenceTest >> testAllDirectories [
 		do: [ :child |
 			self assert: child class equals: FileReference.
 			self assert: (ref = child or: [ ref contains: child ]) ].
-	self assert: (children collect: [ :ea | ea basename ]) equals: #(alpha beta gamma delta) ]
+	self assert: (children collect: [ :ea | ea basename ]) equals: #('alpha' 'beta' 'gamma' 'delta') ]
 		ensure: [ (filesystem / 'alpha') ensureDeleteAll ]
 ]
 
@@ -78,7 +78,7 @@ FileReferenceTest >> testAllEntries [
 	entries do: [:entry |
 		self assert: entry class equals: MemoryDirectoryEntry.
 		self assert: (ref = entry reference or: [ref contains: entry reference])].
-	self assert: (entries collect: [ :ea | ea basename ]) equals: #(alpha beta gamma delta) ]
+	self assert: (entries collect: [ :ea | ea basename ]) equals: #('alpha' 'beta' 'gamma' 'delta') ]
 		ensure: [ (filesystem / 'alpha') ensureDeleteAll ]
 ]
 
@@ -195,31 +195,31 @@ FileReferenceTest >> testCanonicalization [
 	| ref |
 
 	ref := 'a/b/c' asFileReference canonicalize.
-	self assert: ref path segments equals: #(a b c).
+	self assert: ref path segments equals: #('a' 'b' 'c').
 
 	ref := '/a/b/c' asFileReference canonicalize.
-	self assert: ref path segments equals: #(a b c).
+	self assert: ref path segments equals: #('a' 'b' 'c').
 
 	ref := '../a/b/c' asFileReference canonicalize.
-	self assert: ref path segments equals: #('..' a b c).
+	self assert: ref path segments equals: #('..' 'a' 'b' 'c').
 
 	ref := 'a/b/c/..' asFileReference canonicalize.
-	self assert: ref path segments equals: #(a b).
+	self assert: ref path segments equals: #('a' 'b').
 
 	ref := '/a/b/c/..' asFileReference canonicalize.
-	self assert: ref path segments equals: #(a b).
+	self assert: ref path segments equals: #('a' 'b').
 
 	ref := 'a/b/../c' asFileReference canonicalize.
-	self assert: ref path segments equals: #(a c).
+	self assert: ref path segments equals: #('a' 'c').
 
 	ref := '/a/b/../c' asFileReference canonicalize.
-	self assert: ref path segments equals: #(a c).
+	self assert: ref path segments equals: #('a' 'c').
 
 	ref := '/..' asFileReference canonicalize.
 	self assertEmpty: ref path segments.
 
 	ref := '/../a/b/../c' asFileReference canonicalize.
-	self assert: ref path segments equals: #(a c)
+	self assert: ref path segments equals: #('a' 'c')
 ]
 
 { #category : 'tests' }
@@ -293,7 +293,7 @@ FileReferenceTest >> testChildren [
 		do: [ :child |
 			self assert: child class equals: FileReference.
 			self assert: (child isChildOf: ref).
-			self assert: (#(beta gamma) includes: child basename) ] ]
+			self assert: (#('beta' 'gamma') includes: child basename) ] ]
 		ensure: [ (filesystem / 'alpha') ensureDeleteAll ]
 ]
 
@@ -484,7 +484,7 @@ FileReferenceTest >> testEntries [
 	entries do: [:entry |
 		self assert: entry class equals: MemoryDirectoryEntry.
 		self assert: (entry reference isChildOf: ref).
-		self assert: (#(beta gamma) includes: entry reference basename)] ]
+		self assert: (#('beta' 'gamma') includes: entry reference basename)] ]
 		ensure: [ (filesystem / 'alpha') ensureDeleteAll ]
 ]
 
@@ -950,7 +950,7 @@ FileReferenceTest >> testParentResolutionWithPath [
 	relative := Path parent / 'griffle' / 'zonk'.
 	absolute := base resolve: relative.
 	self assert: absolute isAbsolute.
-	self assert: absolute path segments equals: #(plonk pinto '..' griffle zonk)
+	self assert: absolute path segments equals: #('plonk' 'pinto' '..' 'griffle' 'zonk')
 ]
 
 { #category : 'tests' }
@@ -960,7 +960,7 @@ FileReferenceTest >> testParentResolutionWithReference [
 	relative := (filesystem referenceTo: '../griffle/zonk').
 	absolute := base resolve: relative.
 	self assert: absolute isAbsolute.
-	self assert: absolute path segments equals: #(plonk pinto '..' griffle zonk)
+	self assert: absolute path segments equals: #('plonk' 'pinto' '..' 'griffle' 'zonk')
 ]
 
 { #category : 'tests' }
@@ -970,7 +970,7 @@ FileReferenceTest >> testParentResolutionWithRemoteReference [
 	relative := filesystem referenceTo: '../griffle/zonk'.
 	absolute := base resolve: relative.
 	self assert: absolute isAbsolute.
-	self assert: absolute path segments equals: #(plonk pinto '..' griffle zonk)
+	self assert: absolute path segments equals: #('plonk' 'pinto' '..' 'griffle' 'zonk')
 ]
 
 { #category : 'tests' }

@@ -43,5 +43,5 @@ FileList class >> services [
 { #category : '*System-FileRegistry' }
 FileList class >> sourceFileSuffixes [
 
-	^#(st cs)
+	^#('st' 'cs')
 ]

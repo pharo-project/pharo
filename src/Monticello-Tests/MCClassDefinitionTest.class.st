@@ -89,8 +89,8 @@ MCClassDefinitionTest >> testCreation [
 	self assert: d superclassName equals: #MCMock.
 	self assert: d type equals: #normal.
 	self assert: d category equals: self mockCategoryName.
-	self assert: d instVarNames asArray equals: #(ivar).
-	self assert: d classVarNames asArray equals: #(CVar InitializationOrder).
+	self assert: d instVarNames asArray equals: #('ivar').
+	self assert: d classVarNames asArray equals: #('CVar' 'InitializationOrder').
 	self assert: d classInstVarNames asArray equals: #().
 	self assert: d comment isString.
 	self assert: d comment equals: self classAComment.

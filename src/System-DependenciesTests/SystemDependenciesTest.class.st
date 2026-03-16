@@ -87,7 +87,7 @@ SystemDependenciesTest >> knownLocalMonticelloDependencies [
 SystemDependenciesTest >> knownMorphicCoreDependencies [
 	"ideally this list should be empty"
 
-	^ #(#'Fonts-Infrastructure' #FreeType #'Keymapping-KeyCombinations' #'Morphic-Base' #'Refactoring-Critics' #'Refactoring-Environment' #Rubric)
+	^ #(#'Fonts-Infrastructure' #'FreeType' #'Keymapping-KeyCombinations' #'Morphic-Base' #'Refactoring-Critics' #'Refactoring-Environment' #'Rubric')
 ]
 
 { #category : 'known dependencies' }
@@ -301,7 +301,7 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 	packages := packages ,  (self packagesOfGroupNamed: 'default' on: BaselineOfLibGit ).
 	packages := packages , {BaselineOfThreadedFFI name} ,
 		(self packagesOfGroupNamed: 'default' on: BaselineOfThreadedFFI ).
-	packages := packages ,  #(TaskIt).
+	packages := packages ,  #('TaskIt').
 	packages := packages , { BaselineOfFuel name } , (BaselineOfFuel packagesOfGroupNamed: #Core).
 	packages := packages ,  { BaselineOfNewTools name }, (self packagesOfGroupNamed: 'CritiqueBrowser' on: BaselineOfNewTools ).
 
@@ -525,7 +525,7 @@ SystemDependenciesTest >> testFilesShouldNotDependOnRandom [
 	Now, there is no dependency between Files and Random-Core and if possible we would like to keep it this way in order to extract Random-Core from the KernelGroup of the Bootstrap (and maybe of the bootstrap in itself generally)"
 
 	| dependencies |
-	dependencies := self externalDependendiesOf: #( Files ).
+	dependencies := self externalDependendiesOf: #( 'Files' ).
 	self deny: (dependencies includes: 'Random-Core')
 ]
 

@@ -84,7 +84,7 @@ specifying the names of the projects you'd like to select:
 
 ```Smalltalk
 Metacello registry
-	baseline: #(Seaside MetacelloPreview);
+	baseline: #('Seaside' 'MetacelloPreview');
 	list.
 ```
 

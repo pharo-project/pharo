@@ -11,7 +11,7 @@ Class {
 
 { #category : 'accessing' }
 FLFullBasicSerializationTest class >> packageNamesUnderTest [
-	^ #(FuelMetalevel)
+	^ #('FuelMetalevel')
 ]
 
 { #category : 'testing' }

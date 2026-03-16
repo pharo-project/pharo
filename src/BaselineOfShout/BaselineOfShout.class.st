@@ -16,7 +16,7 @@ BaselineOfShout >> baseline: spec [
 			package: 'Rubric-Styling';
 			package: 'Shout-Tests';
 
-			group: 'Core' with: #( Shout 'Rubric-Styling' );
+			group: 'Core' with: #( 'Shout' 'Rubric-Styling' );
 			group: 'Tests' with: #( 'Shout-Tests' );
-			group: 'default' with: #( Core Tests ) ]
+			group: 'default' with: #( 'Core' 'Tests' ) ]
 ]

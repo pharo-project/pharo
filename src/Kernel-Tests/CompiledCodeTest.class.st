@@ -351,7 +351,7 @@ CompiledCodeTest >> testLiteralsEvenTheOnesInTheInnerCleanBlocks [
 	^[ thisContext tempNamed: ''b'' ] value'.
 	self
 		assertCollection: method literalsEvenTheOnesInTheInnerBlocks
-		equals: #( b #tempNamed: )
+		equals: #( 'b' #tempNamed: )
 ]
 
 { #category : 'tests - scanning' }

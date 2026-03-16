@@ -314,7 +314,7 @@ MailMessage >> bodyTextFormatted [
 				streamContents: [ :str |
 					self parts
 						do: [ :part |
-							((#(text multipart) includes: part body mainType) or: [ part body contentType = 'message/rfc822' ])
+							((#('text' 'multipart') includes: part body mainType) or: [ part body contentType = 'message/rfc822' ])
 								ifTrue: [
 									"try to inline the message part"
 									str nextPutAll: part bodyTextFormatted ]
@@ -345,7 +345,7 @@ MailMessage >> cleanedHeader [
 
 	| new priorityFields omittedFields |
 	new := (String new: text size) writeStream.
-	priorityFields := #(Date From Subject To Cc).
+	priorityFields := #('Date' 'From' 'Subject' 'To' 'Cc').
 	omittedFields := MailMessage omittedHeaderFields.	"Show the priority fields first, in the order given in priorityFields"
 	priorityFields
 		do: [ :pField |
@@ -835,7 +835,7 @@ MailMessage >> skipWeekdayName: aStream [
 	[ aStream peek isLetter ] whileTrue: [ name nextPut: aStream next ].
 	abbrev := name contents copyFrom: 1 to: (3 min: name position).
 	abbrev := abbrev asLowercase.
-	(#(sun mon tue wed thu fri sat) includes: abbrev asLowercase)
+	(#('sun' 'mon' 'tue' 'wed' 'thu' 'fri' 'sat') includes: abbrev asLowercase)
 		ifTrue: [
 			"found a weekday; skip to the next alphanumeric character"
 			[ aStream peek isAlphaNumeric ] whileFalse: [ aStream skip: 1 ] ]

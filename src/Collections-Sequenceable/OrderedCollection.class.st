@@ -28,11 +28,11 @@ I am usually used to store an unknown amount of objects. When my contents size w
 	ordCol.		""returns: an OrderedCollection('one' 'two' 'three')""
 
 	""or from an other collection""
-	ordCol := OrderedCollection withAll: #(one two three).
+	ordCol := OrderedCollection withAll: #('one' 'two' 'three').
 	ordCol.		""returns: an OrderedCollection('one' 'two' 'three')""
 
 	""or""
-	#(one two three) asOrderedCollection.
+	#('one' 'two' 'three') asOrderedCollection.
 
 	""Some manipulations""
 	ordCol := OrderedCollection ofSize: 2.
@@ -815,7 +815,7 @@ OrderedCollection >> reverseDo: aBlock [
 OrderedCollection >> reversed [
 	"Answer a copy of the receiver with element order reversed.  "
 
-	"#(2 3 4 fred) asOrderedCollection reversed >>> #(fred 4 3 2) asOrderedCollection"
+	"#(2 3 4 'fred') asOrderedCollection reversed >>> #('fred' 4 3 2) asOrderedCollection"
 
 	| newCol |
 	newCol := self speciesForTransform new: self size.
@@ -927,7 +927,7 @@ OrderedCollection >> withIndexCollect: elementAndIndexBlock [
 OrderedCollection >> withIndexSelect: elementAndIndexBlock [
 	"Optimized version of SequenceableCollection>>#withIndexSelect: "
 
-	"(#(We love 'pharo!') asOrderedCollection withIndexSelect: [:value :index | value size - 1 <= index]) >>> (OrderedCollection with: 'We')"
+	"(#('We' 'love' 'pharo!') asOrderedCollection withIndexSelect: [:value :index | value size - 1 <= index]) >>> (OrderedCollection with: 'We')"
 
 	| newCollection element |
 	newCollection := self copyEmpty.

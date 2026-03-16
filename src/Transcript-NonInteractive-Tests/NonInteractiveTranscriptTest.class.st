@@ -22,7 +22,7 @@ NonInteractiveTranscriptTest >> testAppend [
 	transcript
 		show: 'Three'; cr;
 		close.
-	self assert: log contents lines equals: #(One Two Three).
+	self assert: log contents lines equals: #('One' 'Two' 'Three').
 	log ensureDelete
 ]
 
@@ -37,7 +37,7 @@ NonInteractiveTranscriptTest >> testSimple [
 		show: 'Two'; cr;
 		show: 'Three'; cr;
 		close.
-	self assert: log contents lines equals: #(One Two Three).
+	self assert: log contents lines equals: #('One' 'Two' 'Three').
 	log ensureDelete
 ]
 

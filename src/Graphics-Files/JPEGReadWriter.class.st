@@ -241,7 +241,7 @@ JPEGReadWriter class >> putForm: aForm onStream: aBinaryWriteStream [
 { #category : 'image reading/writing' }
 JPEGReadWriter class >> typicalFileExtensions [
 	"Answer a collection of file extensions (lowercase) which files that I can read might commonly have"
-	^#(jpg jpeg)
+	^#('jpg' 'jpeg')
 ]
 
 { #category : 'image reading/writing' }

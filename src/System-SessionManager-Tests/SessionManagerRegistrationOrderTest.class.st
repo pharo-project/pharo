@@ -40,7 +40,7 @@ SessionManagerRegistrationOrderTest >> testCategoriesPriorityOrder [
 
 	self
 		assertHandledId: manager startupList
-		equals: #( aFirstSubscription anObject )
+		equals: #( 'aFirstSubscription' 'anObject' )
 ]
 
 { #category : 'tests' }
@@ -62,7 +62,7 @@ SessionManagerRegistrationOrderTest >> testCustomCategoryGoesAfterSystemCategory
 
 	self
 		assert: manager startupList
-		equals: #( aSystemAction aCustomAction )
+		equals: #( 'aSystemAction' 'aCustomAction' )
 ]
 
 { #category : 'tests' }
@@ -76,7 +76,7 @@ SessionManagerRegistrationOrderTest >> testCustomCategoryOrderIsPreserved [
 
 	self
 		assert: manager startupList
-		equals: #( first second )
+		equals: #( 'first' 'second' )
 ]
 
 { #category : 'tests' }
@@ -89,7 +89,7 @@ SessionManagerRegistrationOrderTest >> testPriorityOrderInTheSameCategoryIsRespe
 
 	self
 		assertHandledId: manager startupList
-		equals: #( aThirdSubscriptionThatShouldGoFirst aFirstSubscription aSecondSubscription )
+		equals: #( 'aThirdSubscriptionThatShouldGoFirst' 'aFirstSubscription' 'aSecondSubscription' )
 ]
 
 { #category : 'tests' }
@@ -98,7 +98,7 @@ SessionManagerRegistrationOrderTest >> testRegisterElementByDefault [
 
 	self
 		assertHandledId: manager startupList
-		equals: #( anObject )
+		equals: #( 'anObject' )
 ]
 
 { #category : 'tests' }
@@ -107,7 +107,7 @@ SessionManagerRegistrationOrderTest >> testRegisterSystemElement [
 
 	self
 		assertHandledId: manager startupList
-		equals: #( anObject )
+		equals: #( 'anObject' )
 ]
 
 { #category : 'tests' }
@@ -118,8 +118,8 @@ SessionManagerRegistrationOrderTest >> testSubscriptionReverseOrder [
 
 	self
 		assertHandledId: manager startupList
-		equals: #( aFirstSubscription anObject ).
+		equals: #( 'aFirstSubscription' 'anObject' ).
 	self
 		assertHandledId: manager shutdownList
-		equals: #( anObject aFirstSubscription )
+		equals: #( 'anObject' 'aFirstSubscription' )
 ]

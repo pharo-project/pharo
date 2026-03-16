@@ -4,7 +4,7 @@ My specification is the root command or parameter that will be matched against t
 To enable dependency injection, all command code should ask me for any external resource (e.g. exiting, error handling, I/O streams).
 
 For example, the command invocation ""eval '1 + 2' "" is represented by this:
-	ClapContext on: #(eval '1 + 2')
+	ClapContext on: #('eval' '1 + 2')
 
 "
 Class {

@@ -488,7 +488,7 @@ ZnUrl >> isHttps [
 
 { #category : 'testing' }
 ZnUrl >> isLocalHost [
-	^ self hasHost and: [ #(localhost '127.0.0.1') includes: self host ]
+	^ self hasHost and: [ #('localhost' '127.0.0.1') includes: self host ]
 ]
 
 { #category : 'testing' }
