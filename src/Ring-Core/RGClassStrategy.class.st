@@ -78,7 +78,7 @@ RGClassStrategy >> category: aString [
 	self owner cleanTagsWithoutAnnouncemnt.
 	aTag := self owner package
 		ifNotNil: [
-			self owner package name sameContents: aString
+			(self owner package name sameContents: aString)
 				ifTrue: [ ^ self owner ] "category contains only the package name"
 				ifFalse: [ aString withoutPrefix: self package name, '-'  ]]
 		ifNil: [ aString ].

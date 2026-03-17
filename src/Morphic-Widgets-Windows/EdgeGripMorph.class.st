@@ -284,11 +284,11 @@ EdgeGripMorph >> targetPoint: aPoint [
 		ifTrue: [self target layoutPolicy minExtentOf: self target in: self target layoutBounds]
 		ifFalse: [self target minimumExtent].
 	rect width <= minExt x ifTrue: [
-		rect := self edgeName sameContents: #left
+		rect := (self edgeName sameContents: #left)
 			ifTrue: [rect withSideOrCorner: #left setToPoint: self target bounds bottomRight - minExt]
 			ifFalse: [rect withSideOrCorner: #right setToPoint: self target bounds topLeft + minExt]].
 	rect height <= minExt y ifTrue: [
-		rect := self edgeName sameContents: #top
+		rect := (self edgeName sameContents: #top)
 			ifTrue: [rect withSideOrCorner: #top setToPoint: self target bounds bottomRight - minExt]
 			ifFalse: [rect withSideOrCorner: #bottom setToPoint: self target bounds topLeft + minExt]].
 	self setTargetBounds: rect
