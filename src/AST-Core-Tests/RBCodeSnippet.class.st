@@ -2949,7 +2949,7 @@ RBCodeSnippet >> hasNotice: aNotice [
 		aNotice node start = each first
 		& (aNotice node stop = each second)
 		& (aNotice position = each third)
-		& (aNotice messageText = each fourth) ]
+		& (aNotice messageText sameContents: each fourth) ]
 ]
 
 { #category : 'testing' }
