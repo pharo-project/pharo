@@ -185,8 +185,8 @@ RxMatcherTest >> testEmptyStringNotAtWordBoundary [
 
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry001 [
-	self runRegex: #(abc
-		abc true (1 abc)
+	self runRegex: #('abc'
+		'abc' true (1 'abc')
 		'xbc' false nil
 		'axc' false nil
 		'abx' false nil
@@ -197,13 +197,13 @@ RxMatcherTest >> testHenry001 [
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry002 [
 	self runRegex: #('ab*c'
-		abc true (1 abc))
+		'abc' true (1 'abc'))
 ]
 
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry003 [
 	self runRegex: #('ab*bc'
-		abc true (1 abc)
+		'abc' true (1 'abc')
 		'abbc' true (1 'abbc')
 		'abbbbc' true (1 'abbbbc'))
 ]
@@ -211,7 +211,7 @@ RxMatcherTest >> testHenry003 [
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry004 [
 	self runRegex: #('ab+bc'
-		abbc true (1 abbc)
+		'abbc' true (1 'abbc')
 		'abc' false nil
 		'abq' false nil
 		'abbbbc' true (1 'abbbbc'))
@@ -220,7 +220,7 @@ RxMatcherTest >> testHenry004 [
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry005 [
 	self runRegex: #('ab?bc'
-		abbc true (1 abbc)
+		'abbc' true (1 'abbc')
 		'abc' true (1 'abc')
 		'abbbbc' false nil
 		'abc' true (1 'abc'))
@@ -229,7 +229,7 @@ RxMatcherTest >> testHenry005 [
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry006 [
 	self runRegex: #('^abc$'
-		abc true (1 abc)
+		'abc' true (1 'abc')
 		'abcc' false nil
 		'aabc' false nil)
 ]
@@ -237,31 +237,31 @@ RxMatcherTest >> testHenry006 [
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry007 [
 	self runRegex: #('^abc'
-		abcc true (1 abc))
+		'abcc' true (1 'abc'))
 ]
 
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry008 [
 	self runRegex: #('abc$'
-		aabc true (1 abc))
+		'aabc' true (1 'abc'))
 ]
 
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry009 [
 	self runRegex: #('^'
-		abc true nil)
+		'abc' true nil)
 ]
 
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry010 [
 	self runRegex: #('$'
-		abc true nil)
+		'abc' true nil)
 ]
 
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry011 [
 	self runRegex: #('a.c'
-		abc true (1 abc)
+		'abc' true (1 'abc')
 		'axc' true (1 'axc'))
 ]
 
@@ -269,30 +269,30 @@ RxMatcherTest >> testHenry011 [
 RxMatcherTest >> testHenry012 [
 	"Need to get creative to include the null character..."
 	self runRegex: #('a.*c'
-		axyzc true (1 axyzc)
+		'axyzc' true (1 'axyzc')
 		'axy zc' true (1 'axy zc') "testing that a dot matches a space"
 		), (Array with: 'axy', (String with: 0 asCharacter), 'zc'), #(false nil "testing that a dot does not match a null"
-		axyzd false nil)
+		'axyzd' false nil)
 ]
 
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry013 [
 	self runRegex: #('.a.*'
-		1234abc true (1 4abc)
+		'1234abc' true (1 '4abc')
 		'abcd' false nil)
 ]
 
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry014 [
 	self runRegex: #('a\w+c'
-		' abbbbc ' true (1 abbbbc)
+		' abbbbc ' true (1 'abbbbc')
 		'abb bc' false nil)
 ]
 
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry015 [
 	self runRegex: #('\w+'
-		'  	foobar	quux' true (1 foobar)
+		'  	foobar	quux' true (1 'foobar')
 		' 	~!@#$%^&*()-+=\|/?.>,<' false nil)
 ]
 
@@ -327,14 +327,14 @@ RxMatcherTest >> testHenry019 [
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry020 [
 	self runRegex: #('a\S*c'
-		aqwertyc true (1 aqwertyc)
+		'aqwertyc' true (1 'aqwertyc')
 		'ab c' false nil)
 ]
 
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry021 [
 	self runRegex: #('\S+'
-		'     	asdf		' true (1 asdf)
+		'     	asdf		' true (1 'asdf')
 		'
 			' false nil)
 ]
@@ -342,21 +342,21 @@ RxMatcherTest >> testHenry021 [
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry022 [
 	self runRegex: #('a\d+c'
-		a0123456789c true (1 a0123456789c)
+		'a0123456789c' true (1 'a0123456789c')
 		'a12b34c' false nil)
 ]
 
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry023 [
 	self runRegex: #('\d+'
-		'foo@#$%123ASD #$$%^&' true (1 123)
+		'foo@#$%123ASD #$$%^&' true (1 '123')
 		'foo!@#$asdfl;' false nil)
 ]
 
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry024 [
 	self runRegex: #('a\D+c'
-		aqwertyc true (1 aqwertyc)
+		'aqwertyc' true (1 'aqwertyc')
 		'aqw6ertc' false nil)
 ]
 
@@ -377,7 +377,7 @@ RxMatcherTest >> testHenry026 [
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry027 [
 	self runRegex: #('\ba\w+' "a word beginning with an A"
-		'land ancient' true (1 ancient)
+		'land ancient' true (1 'ancient')
 		'antique vase' true (1 'antique')
 		'goofy foobar' false nil)
 ]
@@ -392,7 +392,7 @@ RxMatcherTest >> testHenry028 [
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry029 [
 	self runRegex: #('\Ba\w+' "a word with an A in the middle, match at A and further"
-		'land ancient' true (1 and)
+		'land ancient' true (1 'and')
 		'antique vase' true (1 'ase')
 		'smalltalk shall overcome' true (1 'alltalk')
 		'foonix is better' false nil)
@@ -402,10 +402,10 @@ RxMatcherTest >> testHenry029 [
 RxMatcherTest >> testHenry030 [
 	self runRegex: #('fooa\>.*'
 		'fooa ' true nil
-		fooa123 false nil
+		'fooa123' false nil
 		'fooa bar' true nil
-		fooa true nil
-		fooargh false nil)
+		'fooa' true nil
+		'fooargh' false nil)
 ]
 
 { #category : 'tests - henry' }
@@ -419,9 +419,9 @@ RxMatcherTest >> testHenry031 [
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry032 [
 	self runRegex: #('\<foo.*'
-		foo true nil
-		foobar true nil
-		'qfoobarq foonix' true (1 foonix)
+		'foo' true nil
+		'foobar' true nil
+		'qfoobarq foonix' true (1 'foonix')
 		' foo' true nil
 		' 12foo' false nil
 		'barfoo' false nil)
@@ -430,7 +430,7 @@ RxMatcherTest >> testHenry032 [
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry033 [
 	self runRegex: #('.+\<foo'
-		foo false nil
+		'foo' false nil
 		'ab foo' true (1 'ab foo')
 		'abfoo' false nil)
 ]
@@ -438,21 +438,21 @@ RxMatcherTest >> testHenry033 [
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry034 [
 	self runRegex: #('a[bc]d'
-		abc false nil
-		abd true (1 abd))
+		'abc' false nil
+		'abd' true (1 'abd'))
 ]
 
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry035 [
 	self runRegex: #('a[b-d]e'
-		abd false nil
-		ace true (1 ace))
+		'abd' false nil
+		'ace' true (1 'ace'))
 ]
 
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry036 [
 	self runRegex: #('a[b-d]'
-		aac true (1 ac))
+		'aac' true (1 'ac'))
 ]
 
 { #category : 'tests - henry' }
@@ -475,7 +475,7 @@ RxMatcherTest >> testHenry039 [
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry040 [
 	self runRegex: #('[k]'
-		ab false nil)
+		'ab' false nil)
 ]
 
 { #category : 'tests - henry' }
@@ -508,14 +508,14 @@ RxMatcherTest >> testHenry045 [
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry046 [
 	self runRegex: #('a[^bc]d'
-		aed true (1 aed)
+		'aed' true (1 'aed')
 		'abd' false nil)
 ]
 
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry047 [
 	self runRegex: #('a[^-b]c'
-		adc true (1 adc)
+		'adc' true (1 'adc')
 		'a-c' false nil)
 ]
 
@@ -523,13 +523,13 @@ RxMatcherTest >> testHenry047 [
 RxMatcherTest >> testHenry048 [
 	self runRegex: #('a[^]b]c'
 		'a]c' false nil
-		adc true (1 adc))
+		'adc' true (1 'adc'))
 ]
 
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry049 [
 	self runRegex: #('[\de]+'
-		01234 true (1 01234)
+		'01234' true (1 '01234')
 		'0123e456' true (1 '0123e456')
 		'0123e45g78' true (1 '0123e45'))
 ]
@@ -537,7 +537,7 @@ RxMatcherTest >> testHenry049 [
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry050 [
 	self runRegex: #('[e\d]+' "reversal of the above, should be the same"
-		01234 true (1 01234)
+		'01234' true (1 '01234')
 		'0123e456' true (1 '0123e456')
 		'0123e45g78' true (1 '0123e45'))
 ]
@@ -545,13 +545,13 @@ RxMatcherTest >> testHenry050 [
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry051 [
 	self runRegex: #('[\D]+'
-		123abc45def78 true (1 abc))
+		'123abc45def78' true (1 'abc'))
 ]
 
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry052 [
 	self runRegex: #('[[:digit:]e]+'
-		01234 true (1 01234)
+		'01234' true (1 '01234')
 		'0123e456' true (1 '0123e456')
 		'0123e45g78' true (1 '0123e45'))
 ]
@@ -571,7 +571,7 @@ RxMatcherTest >> testHenry054 [
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry055 [
 	self runRegex: #('[\w]+'
-		' 	foo123bar	45' true (1 foo123bar))
+		' 	foo123bar	45' true (1 'foo123bar'))
 ]
 
 { #category : 'tests - henry' }
@@ -597,7 +597,7 @@ RxMatcherTest >> testHenry058 [
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry059 [
 	self runRegex: #('[[:alpha:]]+'
-		' 123foo3 ' true (1 foo)
+		' 123foo3 ' true (1 'foo')
 		'123foo' true (1 'foo')
 		'foo1b' true (1 'foo'))
 ]
@@ -611,14 +611,14 @@ RxMatcherTest >> testHenry060 [
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry061 [
 	self runRegex: #('[[:lower:]]+'
-		UPPERlower1234 true (1 lower)
+		'UPPERlower1234' true (1 'lower')
 		'lowerUPPER' true (1 'lower'))
 ]
 
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry062 [
 	self runRegex: #('[[:upper:]]+'
-		UPPERlower1234 true (1 UPPER)
+		'UPPERlower1234' true (1 'UPPER')
 		'lowerUPPER ' true (1 'UPPER'))
 ]
 
@@ -637,25 +637,25 @@ RxMatcherTest >> testHenry064 [
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry065 [
 	self runRegex: #('[[:graph:]]+'
-		abc true (1 abc))
+		'abc' true (1 'abc'))
 ]
 
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry066 [
 	self runRegex: #('[[:print:]]+'
-		abc true (1 abc))
+		'abc' true (1 'abc'))
 ]
 
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry067 [
 	self runRegex: #('[^[:punct:]]+'
-		'!hello,world!' true (1 hello))
+		'!hello,world!' true (1 'hello'))
 ]
 
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry068 [
 	self runRegex: #('[[:xdigit:]]+'
-		'  x10FCD  ' true (1 10FCD)
+		'  x10FCD  ' true (1 '10FCD')
 		' hgfedcba0123456789ABCDEFGH '
 			true (1 'fedcba0123456789ABCDEF'))
 ]
@@ -663,7 +663,7 @@ RxMatcherTest >> testHenry068 [
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry069 [
 	self runRegex: #('ab|cd'
-		abc true (1 ab)
+		'abc' true (1 'ab')
 		'abcd' true (1 'ab'))
 ]
 
@@ -717,7 +717,7 @@ RxMatcherTest >> testHenry078 [
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry079 [
 	self runRegex: #('a\(*b'
-		ab true (1 ab)
+		'ab' true (1 'ab')
 		'a((b' true (1 'a((b'))
 ]
 
@@ -752,7 +752,7 @@ RxMatcherTest >> testHenry084 [
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry085 [
 	self runRegex: #('a+b+c'
-		aabbabc true (1 abc))
+		'aabbabc' true (1 'abc'))
 ]
 
 { #category : 'tests - henry' }
@@ -806,7 +806,7 @@ RxMatcherTest >> testHenry094 [
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry095 [
 	self runRegex: #('[^ab]*'
-		cde true (1 cde))
+		'cde' true (1 'cde'))
 ]
 
 { #category : 'tests - henry' }
@@ -842,8 +842,8 @@ RxMatcherTest >> testHenry101 [
 
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry102 [
-	self runRegex: #(abcd
-		abcd true (1 abcd))
+	self runRegex: #('abcd'
+		'abcd' true (1 'abcd'))
 ]
 
 { #category : 'tests - henry' }
@@ -879,13 +879,13 @@ RxMatcherTest >> testHenry107 [
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry108 [
 	self runRegex: #('abcd*efg'
-		abcdefg true (1 abcdefg))
+		'abcdefg' true (1 'abcdefg'))
 ]
 
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry109 [
 	self runRegex: #('ab*'
-		xabyabbbz true (1 ab)
+		'xabyabbbz' true (1 'ab')
 		'xayabbbz' true (1 'a'))
 ]
 
@@ -1121,7 +1121,7 @@ RxMatcherTest >> testRegex001 [
 { #category : 'tests' }
 RxMatcherTest >> testRegex002 [
 	self runRegex: #('a\w+c'
-		' abb_bbc ' true (1 abb_bbc)
+		' abb_bbc ' true (1 'abb_bbc')
 		'abb-bc' false nil)
 ]
 
@@ -1136,8 +1136,8 @@ RxMatcherTest >> testRegex003 [
 { #category : 'tests' }
 RxMatcherTest >> testRegex004 [
 	self runRegex: #(':isVowel:'
-		aei true nil
-		xyz false nil)
+		'aei' true nil
+		'xyz' false nil)
 ]
 
 { #category : 'tests - extensions' }
