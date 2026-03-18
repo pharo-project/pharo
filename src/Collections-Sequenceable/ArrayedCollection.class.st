@@ -230,7 +230,7 @@ ArrayedCollection >> storeElementsFrom: firstIndex to: lastIndex on: aStream [
 				[noneYet
 					ifTrue: [noneYet := false]
 					ifFalse: [aStream nextPut: $;].
-				aStream nextPutAll: ' at: #'.
+				aStream nextPutAll: ' at: '.
 				aStream store: index.
 				aStream nextPutAll: ' put: '.
 				aStream store: arrayElement]].

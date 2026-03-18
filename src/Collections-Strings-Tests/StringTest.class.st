@@ -1242,10 +1242,10 @@ StringTest >> testFindTokensEscapedBy26 [
 { #category : 'tests' }
 StringTest >> testFindTokensIncludes [
 
-	self assert: ('test this' findTokens: 't' includes: #his) equals: 'his'.
-	self assert: ('test this' findTokens: 's' includes: #HI) isNil.
-	self assert: ('test this' findTokens: 's' includes: #hi) equals: 't thi'.
-	self assert: ('test that' findTokens: 't' includes: #that) isNil.
+	self assert: ('test this' findTokens: 't' includes: 'his') equals: 'his'.
+	self assert: ('test this' findTokens: 's' includes: 'HI') isNil.
+	self assert: ('test this' findTokens: 's' includes: 'hi') equals: 't thi'.
+	self assert: ('test that' findTokens: 't' includes: 'that') isNil.
 	self assert: ('éèàôüößäóñíá' findTokens: #($ô $ó) includes:'ñí') equals: 'ñíá'
 ]
 
@@ -2023,7 +2023,7 @@ StringTest >> testUpTo [
 { #category : 'tests - converting' }
 StringTest >> testWithBlanksCondensed [
 	#(
-		foo foo
+		'foo' 'foo'
 		'foo bar' 'foo bar'
 		'' ''
 		' ' ''
@@ -2105,7 +2105,7 @@ StringTest >> testWithNoLineLongerThan [
 { #category : 'tests - converting' }
 StringTest >> testWithSeparatorsCompacted [
 	#(
-		foo foo
+		'foo' 'foo'
 		'foo bar' 'foo bar'
 		'' ''
 		' ' ' '
@@ -2149,13 +2149,13 @@ StringTest >> testWithUnixLineEndings [
 { #category : 'tests - converting' }
 StringTest >> testWithoutLeadingDigits [
 	#(
-		foo foo
-		123foo foo
-		'123 bar7' bar7
-		' 123 	bar7' bar7
+		'foo' 'foo'
+		'123foo' 'foo'
+		'123 bar7' 'bar7'
+		' 123 	bar7' 'bar7'
 		'foo.123.txt' 'foo.123.txt'
 		'' ''
-		1 ''
+		'1' ''
 		'1 2 3 ' ''
 	) pairsDo: [ :input :output |
 		self assert: input withoutLeadingDigits equals: output ]
@@ -2164,10 +2164,10 @@ StringTest >> testWithoutLeadingDigits [
 { #category : 'tests - converting' }
 StringTest >> testWithoutPeriodSuffix [
 	#(
-		foo foo
-		'foo.' foo
-		'foo.bar' foo
-		'foo.bar.txt' foo
+		'foo' 'foo'
+		'foo.' 'foo'
+		'foo.bar' 'foo'
+		'foo.bar.txt' 'foo'
 		'' ''
 		'.' '.'
 	) pairsDo: [ :input :output |
@@ -2186,13 +2186,13 @@ StringTest >> testWithoutPrefix [
 { #category : 'tests - internet' }
 StringTest >> testWithoutQuoting [
 
- 	#( '"foo"' foo
-		foo foo
+ 	#( '"foo"' 'foo'
+		'''foo''' 'foo'
 		'"foo''' '"foo'''
 		'''foo"' '''foo"'
 		'"foo' '"foo'
 		'foo"' 'foo"'
-		foo foo)
+		'foo' 'foo')
 	pairsDo: [ :before :after |
 		self assert: before withoutQuoting equals: after ]
 ]
@@ -2200,12 +2200,12 @@ StringTest >> testWithoutQuoting [
 { #category : 'tests - converting' }
 StringTest >> testWithoutTrailingDigits [
 	#(
-		foo foo
-		foo123 foo
-		'bar 123 ' bar
+		'foo' 'foo'
+		'foo123' 'foo'
+		'bar 123 ' 'bar'
 		'foo.123.txt' 'foo.123.txt'
 		'' ''
-		1 ''
+		'1' ''
 		'1 2 3 ' ''
 	) pairsDo: [ :input :output |
 		self assert: input withoutTrailingDigits equals: output ]
