@@ -65,7 +65,7 @@ RBSearchTest >> buildSimpleLiteralSearch [
 				with:
 					(RBParser
 						parseExpression:
-							'#(bugs ''possible bugs'' ''unnecessary code'' ''intention revealing'' miscellaneous)'))
+							'#(''bugs'' ''possible bugs'' ''unnecessary code'' ''intention revealing'' ''miscellaneous'')'))
 		do: [ :aNode :answer |
 			answer
 				remove: self currentSelector ifAbsent: [ self error: 'failed' ];
