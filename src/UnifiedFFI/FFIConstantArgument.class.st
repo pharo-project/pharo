@@ -59,12 +59,12 @@ FFIConstantArgument >> initialize [
 { #category : 'resolving' }
 FFIConstantArgument >> resolveUsing: aResolver [
 
-	(value sameContents: false) ifTrue: [
+	value = false ifTrue: [
 		loader := FFILiteralArgument value: 0 type: (aResolver resolveType: #bool).
 		resolvedType := type resolveUsing: aResolver forArgument: self.
 		resolvedType loader: loader.
 		^ self ].
-	(value sameContents: true) ifTrue: [
+	value = true ifTrue: [
 		loader := FFILiteralArgument value: 1 type: (aResolver resolveType: #bool).
 		resolvedType := type resolveUsing: aResolver forArgument: self.
 		resolvedType loader: loader.
@@ -74,7 +74,7 @@ FFIConstantArgument >> resolveUsing: aResolver [
 		resolvedType := type resolveUsing: aResolver forArgument: self.
 		resolvedType loader: loader.
 		^ self ].
-	(value sameContents: #self) ifTrue: [
+	value == #self ifTrue: [
 		loader := resolvedType := type resolveUsing: aResolver forArgument: self.
 		loader loader: FFISelfArgument new.
 		^ self ].
