@@ -19,7 +19,7 @@ Class {
 ZnBufferedStreamByteTest >> integerEncodingSpec [
 	^ #(
 "<hex-bytes> <integer> <u|s> <be|le> unsigned|signed big-endian|little-endian"
-(00 0 u be)
+('00' 0 u be)
 ('00' 0 s be)
 ('01' 1 u be)
 ('01' 1 s be)
