@@ -122,7 +122,7 @@ spec
 			versionString: ''1.0-baseline'';
 			preLoadDoIt: #''preloadForProject'';
 			postLoadDoIt: #''postloadForProject'';
-			loads: #(core ) ].
+			loads: #(''core'' ) ].
 spec 
 	group: ''Core'' with: #(''Example Project'' );
 	group: ''Core'' with: #(''Extra Project'' ).'.
@@ -147,21 +147,21 @@ spec
 			versionString: ''1.0-baseline'';
 			preLoadDoIt: #''preloadForProject'';
 			postLoadDoIt: #''postloadForProject'';
-			loads: #(core ) ];
+			loads: #(''core'' ) ];
 	project: ''Extra Project'' with: [
 		spec
 			className: ''ConfigurationOfExtraProject'';
 			versionString: ''1.0-baseline'';
 			preLoadDoIt: #''preloadForProject'';
 			postLoadDoIt: #''postloadForProject'';
-			loads: #(core ) ];
+			loads: #(''core'' ) ];
 	project: ''Extra Project'' with: [
 		spec
 			className: ''ConfigurationOfExtraProject'';
 			versionString: ''1.0-baseline'';
 			preLoadDoIt: #''preloadForProject'';
 			postLoadDoIt: #''postloadForProject'';
-			loads: #(core ) ].
+			loads: #(''core'' ) ].
 spec 
 	group: ''Core'' with: #(''Example Project'' );
 	group: ''Core'' with: #(''Extra Project'' );
@@ -186,7 +186,7 @@ spec project: ''Example Project'' with: [
 			versionString: ''1.0-baseline'';
 			preLoadDoIt: #''preloadForProject'';
 			postLoadDoIt: #''postloadForProject'';
-			loads: #(core ) ].
+			loads: #(''core'' ) ].
 spec group: ''Core'' with: #(''Example Project'' ).'.
 	actual := version spec printString.
 	self assert: expected equals: actual
