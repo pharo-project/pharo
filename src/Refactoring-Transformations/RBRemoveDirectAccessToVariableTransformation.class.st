@@ -40,7 +40,7 @@ RBRemoveDirectAccessToVariableTransformation >> applicabilityPreconditions [
 			         {
 				         (RBCondition isMetaclass: class) not.
 				         (RBCondition
-					          directlyDefinesClassVariable: variableName asSymbol
+					          definesClassVariableNamed: variableName asSymbol
 					          in: class).
 				         ((RBCondition withBlock: [
 					           (#( #Object #Behavior #ClassDescription

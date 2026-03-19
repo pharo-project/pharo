@@ -25,7 +25,7 @@ ReDirectlyDefinesSharedVariableCondition class >> classNamed: aString inModel: a
 { #category : 'checking' }
 ReDirectlyDefinesSharedVariableCondition >> check [
 	
-	violators := sharedVariables reject: [ :shared | class directlyDefinesClassVariable: shared ].
+	violators := sharedVariables reject: [ :shared | class definesClassVariableNamed: shared ].
 	^ violators isEmpty
 ]
 

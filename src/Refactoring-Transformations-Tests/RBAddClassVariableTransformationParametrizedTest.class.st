@@ -33,7 +33,7 @@ RBAddClassVariableTransformationParametrizedTest >> testAddClassVariable [
 
 	self assert: ((refactoring model
 		classNamed: #RBTransformationRuleTestData)
-		directlyDefinesClassVariable: #Asdf)
+		definesClassVariableNamed: #Asdf)
 ]
 
 { #category : 'failure tests' }
@@ -72,5 +72,5 @@ RBAddClassVariableTransformationParametrizedTest >> testModelAddClassVariable [
 	self executeRefactoring: refactoring.
 
 	self assert: ((model classNamed: #Bar)
-				directlyDefinesClassVariable: #ClassVarName3)
+				definesClassVariableNamed: #ClassVarName3)
 ]

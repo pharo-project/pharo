@@ -57,11 +57,11 @@ RBCondition class >> checkInstanceVariableName: aName in: aClass [
 ]
 
 { #category : 'instance creation' }
-RBCondition class >> definesClassVariable: aString in: aClass [
+RBCondition class >> definesClassVariableNamed: aString in: aClass [
 	^self new
-		block: [aClass definesClassVariable: aString]
+		block: [aClass definesClassVariableNamed: aString]
 		errorString: aClass printString
-				, ' <1?:does not >define<1?s:> class variable ' , aString
+				, ' <1?:does not >directly define<1?s:> class variable ' , aString
 ]
 
 { #category : 'instance creation' }
@@ -135,14 +135,6 @@ RBCondition class >> definesTemporaryVariable: aString in: aClass [
 ]
 
 { #category : 'instance creation' }
-RBCondition class >> directlyDefinesClassVariable: aString in: aClass [
-	^self new
-		block: [aClass directlyDefinesClassVariable: aString]
-		errorString: aClass printString
-				, ' <1?:does not >directly define<1?s:> class variable ' , aString
-]
-
-{ #category : 'instance creation' }
 RBCondition class >> directlyDefinesInstanceVariable: aString in: aClass [
 	^self new
 		block: [aClass directlyDefinesInstanceVariable: aString]
@@ -155,6 +147,14 @@ RBCondition class >> empty [
 	"Returns an empty condition"
 	self deprecated: 'Use RBCondition true instead' transformWith: '`@rec empty' -> '`@ true'.
 	^ self true
+]
+
+{ #category : 'instance creation' }
+RBCondition class >> hasClassVariableNamed: aString in: aClass [
+	^self new
+		block: [aClass hasClassVariableNamed: aString]
+		errorString: aClass printString
+				, ' <1?:does not >define<1?s:> class variable ' , aString
 ]
 
 { #category : 'instance creation' }

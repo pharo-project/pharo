@@ -72,7 +72,7 @@ RBPullUpVariableTransformation >> variableDefinitionsInHierarchy [
 	^ self definingClass allSubclasses
 		select: [ :each |
 			isClassVariable
-				ifTrue: [ each isMeta not and: [ each directlyDefinesClassVariable: variableName ] ]
+				ifTrue: [ each isMeta not and: [ each definesClassVariableNamed: variableName ] ]
 				ifFalse: [ each directlyDefinesInstanceVariable: variableName ] ]
 		thenCollect: #name
 ]

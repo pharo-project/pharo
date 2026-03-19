@@ -36,9 +36,9 @@ RBRemoveClassVariableParametrizedTest >> testRemoveClassVariable [
 	refactoring :=  self createRefactoringWithModel: model andArguments:
 		{'Foo1' . #RBLintRuleTestData}.
 	class := refactoring model classNamed: #RBLintRuleTestData.
-	self assert: (class definesClassVariable: 'Foo1').
+	self assert: (class hasClassVariableNamed: 'Foo1').
 
 	self executeRefactoring: refactoring.
 
-	self deny: (class definesClassVariable: 'Foo1')
+	self deny: (class hasClassVariableNamed: 'Foo1')
 ]

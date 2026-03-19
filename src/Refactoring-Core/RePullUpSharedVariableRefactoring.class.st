@@ -25,7 +25,7 @@ RePullUpSharedVariableRefactoring >> breakingChangePreconditions [
 
 	^ { (RBCondition withBlock: [
 		   (class subclasses anySatisfy: [ :each |
-			    (each directlyDefinesClassVariable: variableName) not ])
+			    (each definesClassVariableNamed: variableName) not ])
 			   ifTrue: [
 				   self refactoringWarning:
 					   'Not all subclasses have a shared variable named.<n> Do you want pull up this variable anyway?'
@@ -39,7 +39,7 @@ RePullUpSharedVariableRefactoring >> privateTransform [
 	
 	class allSubclasses do:
 		[:each |
-		(each directlyDefinesClassVariable: variableName)
+		(each definesClassVariableNamed: variableName)
 			ifTrue: [each removeClassVariable: variableName]].
 	class addClassVariable: variableName
 ]

@@ -26,7 +26,7 @@ Class {
 RBPushDownVariableTransformation >> applicabilityPreconditionsForClassVariable [
 
 	^ { RBCondition
-		  definesClassVariable: variableName
+		  hasClassVariableNamed: variableName
 		  in: self definingClass }
 ]
 

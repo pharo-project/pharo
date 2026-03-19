@@ -256,13 +256,8 @@ RBAbstractClass >> convertMethod: selector using: searchReplacer [
 ]
 
 { #category : 'testing' }
-RBAbstractClass >> definesClassVariable: aSymbol [
-	"Returns whether the class or its superclasses define a shared variable named: aSymbol"
-
-	self realClass isTrait ifTrue: [ ^ false ].
-	(self directlyDefinesClassVariable: aSymbol) ifTrue: [ ^ true ].
-	^ self superclass isNotNil
-		and: [ self superclass definesClassVariable: aSymbol ]
+RBAbstractClass >> definesClassVariableNamed: aString [
+	self subclassResponsibility
 ]
 
 { #category : 'testing' }
@@ -289,13 +284,8 @@ RBAbstractClass >> definesPoolDictionary: aSymbol [
 
 { #category : 'testing' }
 RBAbstractClass >> definesVariable: aVariableName [
-	^(self definesClassVariable: aVariableName)
+	^(self hasClassVariableNamed: aVariableName)
 		or: [self definesInstanceVariable: aVariableName]
-]
-
-{ #category : 'testing' }
-RBAbstractClass >> directlyDefinesClassVariable: aString [
-	self subclassResponsibility
 ]
 
 { #category : 'testing' }
@@ -328,7 +318,7 @@ RBAbstractClass >> directlyDefinesPoolDictionary: aString [
 
 { #category : 'testing' }
 RBAbstractClass >> directlyDefinesVariable: aVariableName [
-	^(self directlyDefinesClassVariable: aVariableName)
+	^(self definesClassVariableNamed: aVariableName)
 		or: [self directlyDefinesInstanceVariable: aVariableName]
 ]
 
@@ -423,6 +413,16 @@ RBAbstractClass >> getterMethodFor: aVariableName [
 ]
 
 { #category : 'testing' }
+RBAbstractClass >> hasClassVariableNamed: aSymbol [
+	"Returns whether the class or its superclasses define a shared variable named: aSymbol"
+
+	self realClass isTrait ifTrue: [ ^ false ].
+	(self definesClassVariableNamed: aSymbol) ifTrue: [ ^ true ].
+	^ self superclass isNotNil
+		and: [ self superclass hasClassVariableNamed: aSymbol ]
+]
+
+{ #category : 'testing' }
 RBAbstractClass >> hasRemoved: aSelector [
 	^removedMethods isNotNil and: [removedMethods includes: aSelector]
 ]
@@ -434,10 +434,10 @@ RBAbstractClass >> hash [
 
 { #category : 'testing' }
 RBAbstractClass >> hierarchyDefinesClassVariable: aString [
-	(self definesClassVariable: aString)
+	(self hasClassVariableNamed: aString)
 		ifTrue: [ ^ true ].
 	^ self allSubclasses
-		anySatisfy: [ :each | each directlyDefinesClassVariable: aString ]
+		anySatisfy: [ :each | each definesClassVariableNamed: aString ]
 ]
 
 { #category : 'testing' }
@@ -924,7 +924,7 @@ RBAbstractClass >> whichSelectorsReferToSymbol: aSymbol [
 { #category : 'variable accessing' }
 RBAbstractClass >> whoDefinesClassVariable: aString [
 	| sprClass |
-	(self directlyDefinesClassVariable: aString) ifTrue: [ ^ self ].
+	(self definesClassVariableNamed: aString) ifTrue: [ ^ self ].
 	sprClass := self superclass.
 	^ sprClass ifNotNil: [ sprClass whoDefinesClassVariable: aString ]
 ]

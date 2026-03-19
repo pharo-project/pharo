@@ -132,8 +132,8 @@ RBChildrenToSiblingsParametrizedTest >> testModelChildrenToSibling [
 							instVarName1 := instVarName2 := ClassVarName1 := ClassVarName2 := 0').
 	self assert: (superclass directlyDefinesInstanceVariable: 'instVarName1').
 	self assert: (superclass directlyDefinesInstanceVariable: 'instVarName2').
-	self assert: (superclass directlyDefinesClassVariable: 'ClassVarName1').
-	self assert: (superclass directlyDefinesClassVariable: 'ClassVarName2').
+	self assert: (superclass definesClassVariableNamed: 'ClassVarName1').
+	self assert: (superclass definesClassVariableNamed: 'ClassVarName2').
 	self assert: (superclass classSide directlyDefinesInstanceVariable: 'classInstVarName1').
 	self
 		assert: (superclass classSide parseTreeForSelector: #foo)
@@ -158,8 +158,8 @@ RBChildrenToSiblingsParametrizedTest >> testModelChildrenToSibling [
 							self subclassResponsibility').
 	self deny: (class directlyDefinesInstanceVariable: 'instVarName1').
 	self deny: (class directlyDefinesInstanceVariable: 'instVarName2').
-	self deny: (class directlyDefinesClassVariable: 'ClassVarName1').
-	self deny: (class directlyDefinesClassVariable: 'ClassVarName2').
+	self deny: (class definesClassVariableNamed: 'ClassVarName1').
+	self deny: (class definesClassVariableNamed: 'ClassVarName2').
 	self deny: (class classSide directlyDefinesInstanceVariable: 'classInstVarName1').
 	self deny: (class directlyDefinesMethod: #same).
 	self deny: (class directlyDefinesMethod: #initialize).

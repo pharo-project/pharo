@@ -52,8 +52,8 @@ RBRenameClassVariableParametrizedTest >> testRenameClassVar [
 		#RBTransformationRuleTestData}.
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #RBTransformationRuleTestData.
-	self assert: (class directlyDefinesClassVariable: #RSR).
-	self deny: (class directlyDefinesClassVariable: #RecursiveSelfRule).
+	self assert: (class definesClassVariableNamed: #RSR).
+	self deny: (class definesClassVariableNamed: #RecursiveSelfRule).
 	self
 		assert: (class classSide parseTreeForSelector: #initializeAfterLoad1)
 		equals:

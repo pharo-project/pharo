@@ -31,7 +31,7 @@ RBRemoveClassPushStateToSubclassesTest >> testRemoveNotEmptySuperclassPushDownIn
 
 	self assert: (subclass directlyDefinesMethod: #foo).
 	self assert: (subclass directlyDefinesInstanceVariable: #foo).
-	self assert: (subclass directlyDefinesClassVariable: #A)
+	self assert: (subclass definesClassVariableNamed: #A)
 ]
 
 { #category : 'tests' }
