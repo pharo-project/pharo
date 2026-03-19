@@ -256,11 +256,6 @@ RBAbstractClass >> convertMethod: selector using: searchReplacer [
 ]
 
 { #category : 'testing' }
-RBAbstractClass >> definesClassVariableNamed: aString [
-	self subclassResponsibility
-]
-
-{ #category : 'testing' }
 RBAbstractClass >> definesInstanceVariable: aString [
 
 	(self directlyDefinesInstanceVariable: aString) ifTrue: [^true].
@@ -286,6 +281,11 @@ RBAbstractClass >> definesPoolDictionary: aSymbol [
 RBAbstractClass >> definesVariable: aVariableName [
 	^(self hasClassVariableNamed: aVariableName)
 		or: [self definesInstanceVariable: aVariableName]
+]
+
+{ #category : 'testing' }
+RBAbstractClass >> directlyDefinesClassVariable: aString [
+	self subclassResponsibility
 ]
 
 { #category : 'testing' }
@@ -318,7 +318,7 @@ RBAbstractClass >> directlyDefinesPoolDictionary: aString [
 
 { #category : 'testing' }
 RBAbstractClass >> directlyDefinesVariable: aVariableName [
-	^(self definesClassVariableNamed: aVariableName)
+	^(self directlyDefinesClassVariable: aVariableName)
 		or: [self directlyDefinesInstanceVariable: aVariableName]
 ]
 
@@ -417,7 +417,7 @@ RBAbstractClass >> hasClassVariableNamed: aSymbol [
 	"Returns whether the class or its superclasses define a shared variable named: aSymbol"
 
 	self realClass isTrait ifTrue: [ ^ false ].
-	(self definesClassVariableNamed: aSymbol) ifTrue: [ ^ true ].
+	(self directlyDefinesClassVariable: aSymbol) ifTrue: [ ^ true ].
 	^ self superclass isNotNil
 		and: [ self superclass hasClassVariableNamed: aSymbol ]
 ]
@@ -437,7 +437,7 @@ RBAbstractClass >> hierarchyDefinesClassVariable: aString [
 	(self hasClassVariableNamed: aString)
 		ifTrue: [ ^ true ].
 	^ self allSubclasses
-		anySatisfy: [ :each | each definesClassVariableNamed: aString ]
+		anySatisfy: [ :each | each directlyDefinesClassVariable: aString ]
 ]
 
 { #category : 'testing' }
@@ -924,7 +924,7 @@ RBAbstractClass >> whichSelectorsReferToSymbol: aSymbol [
 { #category : 'variable accessing' }
 RBAbstractClass >> whoDefinesClassVariable: aString [
 	| sprClass |
-	(self definesClassVariableNamed: aString) ifTrue: [ ^ self ].
+	(self directlyDefinesClassVariable: aString) ifTrue: [ ^ self ].
 	sprClass := self superclass.
 	^ sprClass ifNotNil: [ sprClass whoDefinesClassVariable: aString ]
 ]

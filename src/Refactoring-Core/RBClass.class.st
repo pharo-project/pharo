@@ -135,7 +135,7 @@ RBClass >> comment: aString [
 ]
 
 { #category : 'testing' }
-RBClass >> definesClassVariableNamed: aString [
+RBClass >> directlyDefinesClassVariable: aString [
 	"Returns whether the class defines locally the shared variable whose name is given in argument."
 	
 	^ self classVariableNames includes: aString asSymbol

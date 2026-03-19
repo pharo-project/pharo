@@ -60,8 +60,8 @@ RBPushDownClassVariableParametrizedTest >> testModelPushDownVariable [
 	"We define a user of the shared variable because the refactoring is trying to be smart."
 	class compile: 'foo ^Foo' classified: #( #accessing ).
 	self executeRefactoring: (self createRefactoringWithModel: model andArguments: { #Foo. #RootOrigin }).
-	self deny: (class superclass definesClassVariableNamed: #Foo).
-	self assert: (class definesClassVariableNamed: #Foo)
+	self deny: (class superclass directlyDefinesClassVariable: #Foo).
+	self assert: (class directlyDefinesClassVariable: #Foo)
 ]
 
 { #category : 'tests' }
@@ -94,10 +94,10 @@ RBPushDownClassVariableParametrizedTest >> testModelPushDownVariableToClassDownT
 
 	self executeRefactoring: (self createRefactoringWithModel: model andArguments: { #Foo. #RootOrigin }).
 
-	self deny: (class superclass superclass definesClassVariableNamed: #Foo).
-	self deny: (class superclass definesClassVariableNamed: #Foo).
+	self deny: (class superclass superclass directlyDefinesClassVariable: #Foo).
+	self deny: (class superclass directlyDefinesClassVariable: #Foo).
 	
-	self assert: (class definesClassVariableNamed: #Foo)
+	self assert: (class directlyDefinesClassVariable: #Foo)
 ]
 
 { #category : 'tests' }
@@ -127,9 +127,9 @@ RBPushDownClassVariableParametrizedTest >> testModelPushDownVariableToMultipleCl
 	class2 := model classNamed: #SubRoot2.
 	(model metaclassNamed: #SubRoot2) compile: 'bar ^Foo' classified: #( #accessing ).
 	self executeRefactoring: (self createRefactoringWithModel: model andArguments: { #Foo. #RootOrigin }).
-	self deny: (class1 superclass definesClassVariableNamed: #Foo).
-	self assert: (class2 definesClassVariableNamed: #Foo).
-	self assert: (class1 definesClassVariableNamed: #Foo)
+	self deny: (class1 superclass directlyDefinesClassVariable: #Foo).
+	self assert: (class2 directlyDefinesClassVariable: #Foo).
+	self assert: (class1 directlyDefinesClassVariable: #Foo)
 ]
 
 { #category : 'tests' }
@@ -159,10 +159,10 @@ RBPushDownClassVariableParametrizedTest >> testPushDownUnusedClassVariable [
 		{ #Foo1 . #RBLintRuleTestData }.
 		
 	class := (refactoring model classNamed: #RBLintRuleTestData).
-	self assert: (class definesClassVariableNamed: #Foo1).
+	self assert: (class directlyDefinesClassVariable: #Foo1).
 
 	self executeRefactoring: refactoring.
 
 	class withAllSubclasses
-			do: [ :each | self deny: (each definesClassVariableNamed: #Foo1) ]
+			do: [ :each | self deny: (each directlyDefinesClassVariable: #Foo1) ]
 ]

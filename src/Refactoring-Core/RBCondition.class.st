@@ -57,14 +57,6 @@ RBCondition class >> checkInstanceVariableName: aName in: aClass [
 ]
 
 { #category : 'instance creation' }
-RBCondition class >> definesClassVariableNamed: aString in: aClass [
-	^self new
-		block: [aClass definesClassVariableNamed: aString]
-		errorString: aClass printString
-				, ' <1?:does not >directly define<1?s:> class variable ' , aString
-]
-
-{ #category : 'instance creation' }
 RBCondition class >> definesInstanceVariable: aString in: aClass [
 	^self new
 		block: [aClass definesInstanceVariable: aString]
@@ -132,6 +124,14 @@ RBCondition class >> definesTemporaryVariable: aString in: aClass [
 			aClass printString
 			, ' <1?:does not >define<1?s:> temporary variable ' , aString.
 	^ condition
+]
+
+{ #category : 'instance creation' }
+RBCondition class >> directlyDefinesClassVariable: aString in: aClass [
+	^self new
+		block: [aClass directlyDefinesClassVariable: aString]
+		errorString: aClass printString
+				, ' <1?:does not >directly define<1?s:> class variable ' , aString
 ]
 
 { #category : 'instance creation' }

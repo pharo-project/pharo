@@ -120,10 +120,10 @@ RBClassTest >> testDirectlyDefinesSharedVariable [
 	root := rbNamespace classNamed: #MyClassARoot.
 	sub := rbNamespace classNamed: #MySubAccessingSuperclassState.
 	self assert: (root subclasses includes: sub).
-	self assert: (root definesClassVariableNamed: #Shared2).
+	self assert: (root directlyDefinesClassVariable: #Shared2).
 	
 	self assert: (sub hasClassVariableNamed: #Shared2).
-	self deny: (sub definesClassVariableNamed: #Shared2).
+	self deny: (sub directlyDefinesClassVariable: #Shared2).
 ]
 
 { #category : 'tests - definition' }
