@@ -183,8 +183,8 @@ Symbol class >> rehash [
    "Symbol rehash"
 	"Rebuild the hash table, reclaiming unreferenced Symbols."
 
-	SymbolTable := WeakSetOfSymbols withAll: self allSubInstances.
-	NewSymbols := WeakSetOfSymbols new.
+	SymbolTable := WeakSet withAll: self allSubInstances.
+	NewSymbols := WeakSet new.
 	self resetSelectorTable
 ]
 
@@ -224,7 +224,7 @@ Symbol class >> selectorThatStartsCaseSensitive: leadingCharacters skipping: ski
 Symbol class >> shutDown: aboutToQuit [
 
 	SymbolTable addAll: NewSymbols.
-	NewSymbols := WeakSetOfSymbols new
+	NewSymbols := WeakSet new
 ]
 
 { #category : 'accessing' }
