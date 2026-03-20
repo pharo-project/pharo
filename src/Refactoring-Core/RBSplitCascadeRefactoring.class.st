@@ -135,13 +135,31 @@ RBSplitCascadeRefactoring >> split: anInterval from: aSelector in: aClass [
 
 { #category : 'transforming' }
 RBSplitCascadeRefactoring >> splitCascade [
-	ancestorNode parent
-		addNode: (beforeNodes size > 1
-			ifTrue: [ OCCascadeNode messages: beforeNodes ]
-			ifFalse: [ beforeNodes first ])
-		before: ancestorNode.
-	afterNodes size > 1
-		ifTrue: [ cascadeNode messages: afterNodes ]
-		ifFalse: [ cascadeNode replaceWith: afterNodes first ].
-	class compileTree: ancestorNode methodNode
+    ancestorNode parent
+        addNode: (beforeNodes size > 1
+            ifTrue: [ OCCascadeNode messages: beforeNodes ]
+            ifFalse: [ beforeNodes first ])
+        before: ancestorNode.
+    ancestorNode isAssignment
+        ifTrue: [
+            "Flatten remaining part for assignment"
+            | allMessages |
+            allMessages := cascadeNode messages.
+            (allMessages copyFrom: beforeNodes size + 1 to: allMessages size - 1)
+                do: [ :each |
+                    | copy |
+                    copy := each copy.
+                    copy receiver: cascadeNode receiver.
+                    ancestorNode parent
+                        addNode: copy
+                        before: ancestorNode
+                ].
+            cascadeNode replaceWith: allMessages last.
+        ]
+        ifFalse: [
+            afterNodes size > 1
+                ifTrue: [ cascadeNode messages: afterNodes ]
+                ifFalse: [ cascadeNode replaceWith: afterNodes first ].
+        ].
+    class compileTree: ancestorNode methodNode
 ]
