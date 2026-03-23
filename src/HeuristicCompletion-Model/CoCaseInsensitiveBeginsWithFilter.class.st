@@ -28,6 +28,12 @@ CoCaseInsensitiveBeginsWithFilter >> accepts: aCandidate [
 ]
 
 { #category : 'testing' }
+CoCaseInsensitiveBeginsWithFilter >> isCaseSensitive [
+
+	^ false
+]
+
+{ #category : 'testing' }
 CoCaseInsensitiveBeginsWithFilter >> isLessNarrowThanCaseInsensitive: anotherFilter [
 
 	^ anotherFilter completionString beginsWith: self completionString
@@ -43,4 +49,10 @@ CoCaseInsensitiveBeginsWithFilter >> isLessNarrowThanCaseSensitive: anotherFilte
 CoCaseInsensitiveBeginsWithFilter >> isMoreNarrowThan: anotherFilter [
 
 	^ anotherFilter isLessNarrowThanCaseInsensitive: self
+]
+
+{ #category : 'testing' }
+CoCaseInsensitiveBeginsWithFilter >> prefixAcceptsContents: aString [
+
+	^ aString asLowercase beginsWith: completionString asLowercase
 ]

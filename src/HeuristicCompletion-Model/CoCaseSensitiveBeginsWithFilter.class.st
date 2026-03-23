@@ -30,7 +30,7 @@ CoCaseSensitiveBeginsWithFilter >> accepts: aCandidate [
 { #category : 'testing' }
 CoCaseSensitiveBeginsWithFilter >> isCaseSensitive [
 
-	^ false
+	^ true
 ]
 
 { #category : 'testing' }
@@ -54,5 +54,5 @@ CoCaseSensitiveBeginsWithFilter >> isMoreNarrowThan: anotherFilter [
 { #category : 'testing' }
 CoCaseSensitiveBeginsWithFilter >> prefixAcceptsContents: aString [
 
-	^ aString asLowercase beginsWith: completionString asLowercase
+	^ aString beginsWith: completionString
 ]
