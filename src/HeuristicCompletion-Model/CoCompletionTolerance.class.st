@@ -1,3 +1,7 @@
+"
+Stores the runtime settings for fuzzy completion, such as the allowed typo rate and the minimum token size.
+
+"
 Class {
 	#name : 'CoCompletionTolerance',
 	#superclass : 'Object',

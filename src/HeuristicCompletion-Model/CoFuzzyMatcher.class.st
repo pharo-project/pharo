@@ -1,3 +1,7 @@
+"
+Computes fuzzy match scores between the typed token and a candidate using Damerau-Levenshtein distance
+
+"
 Class {
 	#name : 'CoFuzzyMatcher',
 	#superclass : 'Object',
