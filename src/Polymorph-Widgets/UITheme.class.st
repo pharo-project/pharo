@@ -89,7 +89,8 @@ UITheme class >> current: aUITheme [
 	SystemProgressMorph reset. "reset to use new fill styles"
 	ScrollBarMorph initializeImagesCache. "reset to use new arrows"
 
-	self class environment at: #SHPreferences ifPresent: [ :shPreferences | shPreferences setStyleTable: aUITheme shStyleTable ].
+	"self class environment at: #SHPreferences ifPresent: [ :shPreferences | shPreferences setStyleTable: aUITheme shStyleTable ]."
+	self class environment at: #SHPreferences ifPresent: [ :shPreferences | shPreferences themeChanged ].
 
 	self class environment at: #PolymorphSystemSettings ifPresent: [ :polymorphSystemSettings | polymorphSystemSettings desktopColor: aUITheme desktopColor ].
 

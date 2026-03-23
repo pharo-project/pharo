@@ -377,19 +377,6 @@ SHRBTextStyler class >> resetTextAttributesCaches [
 ]
 
 { #category : 'styles' }
-SHRBTextStyler class >> settingsOn: aBuilder [
-	<systemsettings>
-
-	(aBuilder setting: #formatIncompleteIdentifiers)
-		target: self;
-		default: false;
-		order: 1;
-		label: 'Format Incomplete Identifiers';
-		parentName: #'Syntax Highlighting';
-		description: 'If the code highlighter tryies to format incomplete identifiers and selectors or not. This is not recommended for big images, as it traverse all the image to get the information'
-]
-
-{ #category : 'styles' }
 SHRBTextStyler class >> solarizedStyleTable [
 	"color can be a valid argument to Color class>>colorFrom: , or nil to
 	use the editor text color.
