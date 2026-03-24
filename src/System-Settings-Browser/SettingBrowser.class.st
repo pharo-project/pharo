@@ -496,7 +496,9 @@ SettingBrowser >> keyDown: anEvent from: aTreeMorph [
 
 { #category : 'menu' }
 SettingBrowser >> loadSettings [
+
 	self treeHolder updateSettingNodes.
+	self class refreshAllSettingBrowsers.
 	self inform: 'Settings has been updated from the disk.'
 ]
 
