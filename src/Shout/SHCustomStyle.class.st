@@ -38,9 +38,11 @@ SHCustomStyle class >> copyFromCurrentStyle [
 						colorDesc := row second.
 						emphasis := #normal.
 						row size >= 3 ifTrue: [ emphasis := row third ].
-						(emphasis isKindOf: Symbol) ifFalse: [ emphasis := (' ' join: emphasis) asSymbol ].
+						(emphasis isKindOf: Symbol) ifFalse: [
+							emphasis := (' ' join: emphasis) asSymbol ].
 						entry at: #color put: (Color colorFrom: colorDesc).
-						entry at: #emphasis put: emphasis ] ]
+						entry at: #emphasis put: emphasis ] ].
+	SettingBrowser refreshAllSettingBrowsers
 ]
 
 { #category : 'private' }
