@@ -18,10 +18,29 @@ CoGlobalVariableFetcher >> completionClass: aClass [
 { #category : 'enumerating' }
 CoGlobalVariableFetcher >> entriesDo: aBlock [
 
+	NECPreferences camelCaseGlobalMatching
+		ifTrue: [ ^ self entriesDoWithFullEnvironmentScan: aBlock ].
+		
 	self systemNavigation
 		allGlobalNamesStartingWith: filter completionString
-		do: [ :e | aBlock value:
-				((NECGlobalEntry contents: e node: astNode) 
-					fetcher: self; yourself) ]
-		caseSensitive: (NECPreferences caseSensitive)
+		do: [ :e | aBlock value: (self newEntryFor: e) ]
+		caseSensitive: NECPreferences caseSensitive
+
+]
+
+{ #category : 'enumerating' }
+CoGlobalVariableFetcher >> entriesDoWithFullEnvironmentScan: aBlock [
+
+	self systemNavigation
+		allGlobalNamesStartingWith: ''
+		do: [ :e | aBlock value: (self newEntryFor: e) ]
+		caseSensitive: true
+]
+
+{ #category : 'private' }
+CoGlobalVariableFetcher >> newEntryFor: aGlobalName [
+
+	^ (NECGlobalEntry contents: aGlobalName node: astNode)
+		fetcher: self;
+		yourself
 ]

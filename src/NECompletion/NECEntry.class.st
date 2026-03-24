@@ -68,7 +68,7 @@ NECEntry >> activateOn: aCompletionContext [
 { #category : 'matching' }
 NECEntry >> beginsWith: aString [
 
-	^ self contents beginsWith: aString
+	^ self matchesPrefixToken: aString caseSensitive: true
 ]
 
 { #category : 'private' }
@@ -145,6 +145,18 @@ NECEntry >> label [
 	typeString := self rawLabel.
 	self originDisplayed ifTrue: [ typeString := typeString , ' from: ', self fetcher asString ].
 	^ typeString
+]
+
+{ #category : 'matching' }
+NECEntry >> matchesCamelCaseCompletionToken: aString caseSensitive: aBoolean [
+
+	^ false
+]
+
+{ #category : 'matching' }
+NECEntry >> matchesPrefixToken: aString caseSensitive: aBoolean [
+
+	^ self contents beginsWith: aString caseSensitive: aBoolean
 ]
 
 { #category : 'accessing' }

@@ -22,7 +22,9 @@ CoCaseInsensitiveBeginsWithFilter class >> filterString: aString [
 { #category : 'testing' }
 CoCaseInsensitiveBeginsWithFilter >> accepts: aCandidate [
 
-	^ aCandidate contents asLowercase beginsWith: completionString asLowercase
+	^ (self candidate: aCandidate matchesPrefixCaseSensitive: false)
+		or: [ NECPreferences camelCaseGlobalMatching
+			and: [ self candidate: aCandidate matchesCamelCaseCaseSensitive: false ] ]
 ]
 
 { #category : 'testing' }

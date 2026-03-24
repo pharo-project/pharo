@@ -20,7 +20,8 @@ Class {
 		'popupShowWithShortcut',
 		'smartCharactersWithSingleSpace',
 		'smartCharactersWithDoubleSpace',
-		'showCompletionDetails'
+		'showCompletionDetails',
+		'camelCaseGlobalMatching'
 	],
 	#category : 'NECompletion-Preferences',
 	#package : 'NECompletion-Preferences'
@@ -52,6 +53,17 @@ NECPreferences class >> backgroundColor: aColor [
 ]
 
 { #category : 'accessing' }
+NECPreferences class >> camelCaseGlobalMatching [
+	^ camelCaseGlobalMatching
+]
+
+{ #category : 'accessing' }
+NECPreferences class >> camelCaseGlobalMatching: aBoolean [
+
+	camelCaseGlobalMatching := aBoolean
+]
+
+{ #category : 'accessing' }
 NECPreferences class >> caseSensitive [
 	^ caseSensitive
 ]
@@ -64,6 +76,12 @@ NECPreferences class >> caseSensitive: aBoolean [
 { #category : 'defaults' }
 NECPreferences class >> defaultBackgroundColor [
 	^ self theme menuColor
+]
+
+{ #category : 'defaults' }
+NECPreferences class >> defaultCamelCaseGlobalMatching [
+
+	^ false
 ]
 
 { #category : 'defaults' }
@@ -141,6 +159,7 @@ NECPreferences class >> initialize [
 	popupShowAutomatic := self defaultPopupShowAutomatic.
 	popupAutomaticDelay := self defaultPopupDelay.
 	showCompletionDetails := self defaultShowCompletionDetails.
+	camelCaseGlobalMatching := self defaultCamelCaseGlobalMatching.
 	NECEntry spaceAfterCompletion: true
 ]
 
@@ -228,6 +247,10 @@ NECPreferences class >> settingsOn: aBuilder [
 						label: 'Smart Characters';
 						default: true;
 						description: 'Decide if you want eCompletion to use smart characters, e.g, to automatically close brackets.'.
+					(aBuilder setting: #camelCaseGlobalMatching)
+						label: 'Camel-case global matching';
+						default: self defaultCamelCaseGlobalMatching;
+						description: 'Allow global and class completions to match camel-case abbreviations such as SC for SortedCollection.' .
 					(aBuilder setting: #smartCharactersWithSingleSpace)
 						label: 'Smart Characters with Single Space';
 						default: '';
