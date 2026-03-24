@@ -76,7 +76,8 @@ MetacelloVersionSpec >> doRecordRequiredFromArray: anArray withEngine: anEngine 
 { #category : 'private' }
 MetacelloVersionSpec >> doWithProgress: aBlock label: aLabel [
 
-	| displayString result |
+	| displayString result startTime |
+	startTime := Time millisecondClockValue.
 	displayString := aLabel , ' baseline of ' , self projectLabel.
 	MetacelloNotification signal: displayString , '...'.
 
@@ -85,7 +86,9 @@ MetacelloVersionSpec >> doWithProgress: aBlock label: aLabel [
 			result := aBlock value.
 			bar value: 2 ].
 
-	MetacelloNotification signal: '...finished to load the baseline'.
+	MetacelloNotification 
+		signal: '...finished to load the baseline' 
+		milliSeconds: (Time millisecondClockValue - startTime).
 	^ result
 ]
 

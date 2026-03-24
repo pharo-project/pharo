@@ -41,12 +41,13 @@ ReClassesHaveNoReferencesCondition >> violators [
 	^ violators ifNil: [
 			  violators := Set new.
 			  referencingClassesDictionary := Dictionary new.
+
 			  classes do: [ :aClass |
 					  | referrers |
-					  referrers := (model methodsReferencingClass: aClass) reject: [ :each |
-						               (classes includes: each methodClass) or: [ each methodClass isManifest ] ].
+					  referrers := (model methodsReferencingClass: aClass) , (model methodsReferencingClass: aClass classSide) reject: [ :each |
+						               (classes includes: each methodClass instanceSide) or: [ each methodClass isManifest ] ].
 					  referrers ifNotEmpty: [
 							  referencingClassesDictionary at: aClass put: referrers.
-							  referrers do: [ :aRef | violators add: aRef ] ] ].
+							  violators addAll: (referrers collect: [ :aRef | aRef ]) ] ].
 			  violators := violators asArray ]
 ]

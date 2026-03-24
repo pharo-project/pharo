@@ -150,7 +150,7 @@ ReCompositeExtractMethodRefactoring >> buildTransformationFor: newMethodName [
 		  add: (ReRemoveUnusedTemporaryVariableRefactoring
 				   model: self model
 				   inMethod: selector
-				   inClass: class name);
+				   inClass: (class realClass ifNil: [ class name ] ifNotNil: [ :rc | rc name ]));
 		  yourself
 ]
 
@@ -213,11 +213,12 @@ ReCompositeExtractMethodRefactoring >> calculateAssignments [
 ReCompositeExtractMethodRefactoring >> calculateIfReturnIsNeededInCaller [
 
 	| searcher |
+	subtree isBlock ifTrue: [ ^ false ].
 	searcher := self parseTreeSearcher.
 	searcher
-		matches: '^self' do: [:aNode :answer | answer];
-		matches: '^`@anything' do: [:aNode :answer | true].
-	^ (searcher executeTree: subtree initialAnswer: false)
+		matches: '^self' do: [ :aNode :answer | answer ];
+		matches: '^`@anything' do: [ :aNode :answer | true ].
+	^ searcher executeTree: subtree initialAnswer: false
 ]
 
 { #category : 'querying' }

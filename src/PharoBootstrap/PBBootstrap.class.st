@@ -133,6 +133,8 @@ PBBootstrap >> createHermesPackageListFiles [
 	"In order to not duplicate the packages to load by hermes in the baselines and in the build.sh file, we export the list of packages to load in files."
 
 	| toExport |
+	
+	logger log: '[+] Exporting Binary Packages'.
 	toExport := Dictionary newFrom: {
 			            ('hermesAdditionalKernelPackages.txt' -> BaselineOfKernel additionalPackagesPackageNames).
 			            ('hermesCompilerPackages.txt' -> BaselineOfCompiler corePackageNames).
@@ -166,26 +168,21 @@ PBBootstrap >> createImage [
 PBBootstrap >> ensureBaselineOfPharoBootstrap [
 	"Update metacello, then install the baselines"
 
-	| old |
-	old := MCMethodDefinition initializersEnabled.
+	logger log: '[+] Patching Monticello'.
+	self updateMonticello.
 
-	[
-		"Disable initializers. We don't care for them in the bootstrap.
-		If they have important side effects for the bootstrap we should refactor that code to remove the side effects"
-		MCMethodDefinition initializersEnabled: false.
-		'Metacello-Core' asPackage removeFromSystem.
-		(self originRepository versionWithInfo: (self originRepository versionInfoFromVersionNamed: 'Metacello-Core')) load.
+	logger log: '[+] Loading new Metacello'.
+	#( 'Metacello-Core' ) do: [ :p | self updateBootstrapPackage: p ].
 
-		#( BaselineOfKernel BaselineOfCompiler BaselineOfTraits BaselineOfFileSystem BaselineOfMonticello BaselineOfPharoBootstrap
-		   BaselineOfMetacello ) do: [ :baselineName |
-			(self originRepository versionWithInfo: (self originRepository versionInfoFromVersionNamed: baselineName)) load ]
-		
-	] ensure: [ MCMethodDefinition initializersEnabled: old ]
+	logger log: '[+] Loading Baselines to Bootstrap'.
+	#( #BaselineOfKernel #BaselineOfCompiler #BaselineOfTraits #BaselineOfFileSystem #BaselineOfMonticello #BaselineOfPharoBootstrap
+	   #BaselineOfMetacello ) do: [ :baselineName | self updateBootstrapPackage: baselineName ]
 ]
 
 { #category : 'preparation' }
 PBBootstrap >> exportAllPackagesIntoMcz [
 
+	logger log: '[+] Exporting Source packages'.
 	self mczCache directory ensureDeleteAll; ensureCreateDirectory.
 	self packagesToExportAsMCZ do: [ :packageName |
 		self exportIntoMcz: packageName ].
@@ -201,6 +198,7 @@ PBBootstrap >> exportIntoMcz: aPackageName [
 PBBootstrap >> exportKernelProtocols [
 	"This method exports all protocols of the methots in the kernel in a single text file to be easily readed and imported from the 'in-midst of initialization' image."
 		
+	logger log: '[+] Exporting Kernel Protocols'.
 	self exportProtocolsFor: self kernelPackageNames to: self bootstrapCacheDirectory / 'protocolsKernel.txt'.
 	
 	
@@ -312,6 +310,7 @@ PBBootstrap >> prepareBootstrap [
 PBBootstrap >> prepareEnvironmentForExport [
 	| allPackages |
 
+	logger log: '[+] Cleaning bootstrap model'.
 	allPackages := ringEnvironment packages collect: #name.
 
 	(allPackages reject: [ :x | #BaselineOfPharoBootstrap asClass kernelPackageNames includes: x ])
@@ -327,7 +326,7 @@ PBBootstrap >> prepareEnvironmentForExport [
 			ringEnvironment removePackage: p].
 
 	ringEnvironment cleanGlobalVariables.
-	ringEnvironment addGlobalsNamed: #(#Smalltalk #Transcript #Undeclared #Display #TextConstants  #Sensor #Processor).
+	ringEnvironment addGlobalsNamed: #(#Smalltalk #Transcript #Undeclared #TextConstants #Processor).
 	ringEnvironment clean
 
 ]
@@ -336,7 +335,7 @@ PBBootstrap >> prepareEnvironmentForExport [
 PBBootstrap >> prepareEnvironmentForHermes [
 	ringEnvironment := self originRepository asRing2EnvironmentWith: self allPackagesForHermes.
 	ringEnvironment fixProtoObjectClassSuperclass.
-	ringEnvironment addGlobalsNamed: #(Smalltalk Transcript FileStream MacRomanTextConverter Processor Display Sensor UTF8TextConverter Undeclared TextConstants).
+	ringEnvironment addGlobalsNamed: #(Smalltalk Transcript Processor Sensor Undeclared TextConstants).
 	ringEnvironment clean
 ]
 
@@ -350,6 +349,46 @@ PBBootstrap >> repositoryLocation [
 PBBootstrap >> repositoryLocation: aFileReference [
 
 	repositoryLocation := aFileReference
+]
+
+{ #category : 'as yet unclassified' }
+PBBootstrap >> updateBootstrapPackage: packageName [
+	"Load the package named packageName of the bootstrapped version.
+	This is used to update bootstrap packages to newer versions of the system seamlessly."
+
+	"Force an empty unload in MCOrganizationDefinition to allow reloading monticello"
+
+	| old package |
+	old := MCMethodDefinition initializersEnabled.
+
+	[ "Disable initializers. We don't care for them in the bootstrap.
+		If they have important side effects for the bootstrap we should refactor that code to remove the side effects"
+		MCMethodDefinition initializersEnabled: false.
+
+		package := self class packageOrganizer packageNamed: packageName ifAbsent: [ nil ].
+		package ifNotNil: [ package removeFromSystem ].
+
+		(self originRepository versionWithInfo: (self originRepository versionInfoFromVersionNamed: packageName)) load
+
+	] ensure: [ MCMethodDefinition initializersEnabled: old ]
+]
+
+{ #category : 'pre-requisites' }
+PBBootstrap >> updateMonticello [
+
+	MCClassDefinition compile: 'kindOfSubclass
+	type = #normal ifTrue: [^ '' subclass: ''].
+	type = #words ifTrue: [^ '' variableWordSubclass: ''].
+	type = #variable ifTrue: [^ '' variableSubclass: ''].
+	type = #bytes ifTrue: [^ '' variableByteSubclass: ''].
+	type = #weak ifTrue: [^ '' weakSubclass: '' ].
+	type = #compiledMethod ifTrue: [^ '' compiledMethodSubclass: '' ].
+	type = #immediate ifTrue: [ ^ '' immediateSubclass: '' ].
+	type = #ephemeron ifTrue: [ ^ '' ephemeronSubclass: '' ].
+	type = #DoubleByteLayout ifTrue: [ ^'' variableDoubleByteSubclass: '' ].
+	type = #DoubleWordLayout ifTrue: [ ^'' variableDoubleWordSubclass: '' ].
+	"To support user defined layouts (load them as normal classes), we just return the default"
+	^ '' subclass: '''
 ]
 
 { #category : 'accessing' }

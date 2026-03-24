@@ -39,10 +39,22 @@ MetacelloRepositorySpec >> canUpgradeTo: aMetacelloRepositorySpec [
 { #category : 'mc support' }
 MetacelloRepositorySpec >> createRepository [
 
-	| repo |
+	| repo group startTime |
+	
+	startTime := Time millisecondClockValue.
+	
 	repo := MetacelloPlatform current createRepository: self.
-	MCRepositoryGroup default addRepository: repo.
-	^ repo
+	group := MCRepositoryGroup default.
+	
+	"If it is a new repository we log the time to create it"
+
+	(group includes: repo) 
+		ifFalse: [ MetacelloNotification 
+			signal: 'Repository created for ' , self description 
+			milliSeconds: (Time millisecondClockValue - startTime)].
+	
+	group addRepository: repo.
+	^repo
 ]
 
 { #category : 'querying' }

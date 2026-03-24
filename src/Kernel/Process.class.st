@@ -30,6 +30,7 @@ Class {
 		'effectiveProcess',
 		'terminating',
 		'level',
+		'shouldOverflow',
 		'errorHandler'
 	],
 	#classVars : [
@@ -487,6 +488,18 @@ Process >> run [
 	[	proc suspend.
 		self resume.
 	] forkAt: Processor highestPriority
+]
+
+{ #category : 'accessing' }
+Process >> shouldOverflow [
+
+	^ shouldOverflow
+]
+
+{ #category : 'accessing' }
+Process >> shouldOverflow: aBoolean [
+
+	shouldOverflow := aBoolean
 ]
 
 { #category : 'signaling' }

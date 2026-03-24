@@ -7,7 +7,8 @@ Class {
 	#classVars : [
 		'OFFSET_FILE',
 		'OFFSET_TIMESTAMP',
-		'OFFSET_TYPE'
+		'OFFSET_TYPE',
+		'OFFSET_WINDOWID'
 	],
 	#category : 'OSWindow-SDL2-Bindings',
 	#package : 'OSWindow-SDL2',
@@ -22,12 +23,13 @@ SDL_DropEvent class >> eventType [
 { #category : 'fields description' }
 SDL_DropEvent class >> fieldsDesc [
 	"
-	self initializeAccessors
+	self rebuildFieldAccessors
 	"
 	^ #(
     Uint32 type;
     Uint32 timestamp;
     char* file;
+    Uint32 windowID;
  	)
 ]
 
@@ -70,4 +72,16 @@ SDL_DropEvent >> type [
 SDL_DropEvent >> type: anObject [
 	"This method was automatically generated"
 	handle unsignedLongAt: OFFSET_TYPE put: anObject
+]
+
+{ #category : 'accessing - structure variables' }
+SDL_DropEvent >> windowID [
+	"This method was automatically generated"
+	^handle unsignedLongAt: OFFSET_WINDOWID
+]
+
+{ #category : 'accessing - structure variables' }
+SDL_DropEvent >> windowID: anObject [
+	"This method was automatically generated"
+	handle unsignedLongAt: OFFSET_WINDOWID put: anObject
 ]

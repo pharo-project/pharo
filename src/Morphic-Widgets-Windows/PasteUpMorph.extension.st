@@ -22,13 +22,6 @@ PasteUpMorph >> isWindowActive: aSystemWindow [
 ]
 
 { #category : '*Morphic-Widgets-Windows' }
-PasteUpMorph >> modelWakeUpIn: aWindow [
-	"I am the model of a SystemWindow, that has just been activated"
-
-	self viewBox = aWindow panelRect ifFalse: [self viewBox: aWindow panelRect]
-]
-
-{ #category : '*Morphic-Widgets-Windows' }
 PasteUpMorph >> navigateVisibleWindowForward [
 	"Change the active window to the next visible and not collapsed window."
 

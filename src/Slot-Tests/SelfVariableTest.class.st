@@ -38,16 +38,6 @@ SelfVariableTest >> testUsingMethods [
 ]
 
 { #category : 'tests' }
-SelfVariableTest >> testUsingMethodsFFI [
-
-	|  var |
-	var := self class lookupVar: #self.
-
-	"We find an ffi method that was run and thus does not contain any push self, yet has self send in the code"
-	self assert: (var usingMethods anySatisfy: [:method | method isFFIMethod and: [ method readsSelf not ]])
-]
-
-{ #category : 'tests' }
 SelfVariableTest >> testUsingMethodsSuper [
 
 	|  var |

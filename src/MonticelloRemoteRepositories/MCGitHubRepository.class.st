@@ -170,3 +170,8 @@ MCGitHubRepository >> normalizeTagsData: jsonObject [
 MCGitHubRepository >> projectTagsUrlFor: projectPath2 [
   ^ 'https://api.github.com/repos/' , projectPath2 , '/tags'
 ]
+
+{ #category : 'accessing' }
+MCGitHubRepository >> scpUrl [
+	^ 'git@github.com:', projectPath, '.git'
+]

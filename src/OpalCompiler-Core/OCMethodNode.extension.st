@@ -58,7 +58,8 @@ OCMethodNode >> doSemanticAnalysisIn: behavior [
 
 { #category : '*OpalCompiler-Core' }
 OCMethodNode >> ensureCachedArgumentNames [
-	^self methodPropertyAt: #argumentNames put: self argumentNames
+
+	self argumentNames ifNotEmpty: [ self methodPropertyAt: #argumentNames put: self argumentNames ]
 ]
 
 { #category : '*OpalCompiler-Core' }

@@ -381,7 +381,7 @@ RBTransformationsTest >> testRenameClassTransform [
 { #category : 'tests' }
 RBTransformationsTest >> testRenameTemporaryTransform [
 
-	| transformation class |
+	| transformation refactoring class |
 	transformation := RBAddMethodTransformation
 		                  sourceCode: 'foo
 									| temp bar |
@@ -393,13 +393,13 @@ RBTransformationsTest >> testRenameTemporaryTransform [
 		                  withProtocol: #accessing.
 	transformation generateChanges.
 
-	transformation := RBRenameTemporaryVariableTransformation
+	refactoring := RBRenameArgumentOrTemporaryRefactoring
 		                  model: transformation model
 		                  rename: #temp
 		                  to: #temp2
 		                  in: self changeMockClass name
 		                  selector: #foo.
-	transformation generateChanges.
+	refactoring generateChanges.
 
 	self assert: transformation model changes changes size equals: 2.
 

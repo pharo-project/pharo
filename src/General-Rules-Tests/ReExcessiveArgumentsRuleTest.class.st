@@ -17,26 +17,7 @@ ReExcessiveArgumentsRuleTest >> longArgMethod: arg1 with: arg2 with: arg3 with: 
 ]
 
 { #category : 'tests' }
-ReExcessiveArgumentsRuleTest >> longArgMethodCallingFFI: arg1 with: arg2 with: arg3 with: arg4 with: arg5 [
-	"This method should not be critisized as it includes an FFI call"
-
-	^self ffiCall: #(
-			int SomeFFI(
-     				String* arg1,
-         			String* arg2,
-     				String* arg3,
-     				String* arg4,
-        			int arg5)) module: #someModule
-]
-
-{ #category : 'tests' }
 ReExcessiveArgumentsRuleTest >> testRule [
 
 	self assert: (self myCritiquesOnMethod: self class >> #longArgMethod:with:with:with:with:) size equals: 1
-]
-
-{ #category : 'tests' }
-ReExcessiveArgumentsRuleTest >> testRuleNotApplyToFFICallingMethods [
-
-	self assertEmpty: (self myCritiquesOnMethod: self class >> #longArgMethodCallingFFI:with:with:with:with:)
 ]

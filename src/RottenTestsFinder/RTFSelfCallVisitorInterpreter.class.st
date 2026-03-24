@@ -18,11 +18,12 @@ Class {
 { #category : 'private' }
 RTFSelfCallVisitorInterpreter >> analyze [
 
-	selfSentMethods add: selfSentMethod.
+	self selfSentMethods add: selfSentMethod.
 ]
 
 { #category : 'accessing' }
 RTFSelfCallVisitorInterpreter >> considerClassesThat [
+
 	^ considerClassesThat
 ]
 
@@ -32,20 +33,21 @@ RTFSelfCallVisitorInterpreter >> considerClassesThat: anObject [
 ]
 
 { #category : 'initialization' }
-RTFSelfCallVisitorInterpreter >> initialize [
+RTFSelfCallVisitorInterpreter >> initialize [ 
 
 	super initialize.
-	selfSentMethods := OrderedCollection new.
+	considerClassesThat := [ :class | class inheritsFrom: Object ].
+	selfSentMethods := OrderedCollection new
 ]
 
 { #category : 'private' }
 RTFSelfCallVisitorInterpreter >> isMethodAnalyzable [
 
-	(considerClassesThat value: selfSentMethod methodClass)
+	(self considerClassesThat value: selfSentMethod methodClass)
 		ifFalse: [ ^ false ].
 	selfSentMethod isPrimitive
 		ifTrue: [ ^ false ].
-	(selfSentMethods includes: selfSentMethod)
+	(self selfSentMethods includes: selfSentMethod)
 		ifTrue: [ ^ false ].
 	^ true
 ]
@@ -55,8 +57,8 @@ RTFSelfCallVisitorInterpreter >> lookupMethodFromNode: aMessageNode [
 
 	| lookupClass |
 	lookupClass := aMessageNode receiver isSuperVariable
-		               ifTrue: [ selfClass superclass ]
-		               ifFalse: [ selfClass ].
+		               ifTrue: [ self selfClass superclass ]
+		               ifFalse: [ self selfClass ].
 
 	selfSentMethod := lookupClass lookupSelector: aMessageNode selector
 ]
@@ -67,6 +69,18 @@ RTFSelfCallVisitorInterpreter >> preAnalysisHook: aMessageNode [
 	^ self
 ]
 
+{ #category : 'api' }
+RTFSelfCallVisitorInterpreter >> reset [
+
+	self selfSentMethods removeAll
+]
+
+{ #category : 'accessing' }
+RTFSelfCallVisitorInterpreter >> selfClass [
+
+	^ selfClass ifNil: [ Error signal: 'self class not assigned' ]
+]
+
 { #category : 'accessing' }
 RTFSelfCallVisitorInterpreter >> selfClass: aClass [
 
@@ -75,7 +89,8 @@ RTFSelfCallVisitorInterpreter >> selfClass: aClass [
 
 { #category : 'accessing' }
 RTFSelfCallVisitorInterpreter >> selfSentMethods [
-	^ selfSentMethods
+
+	^ selfSentMethods 
 ]
 
 { #category : 'visiting' }

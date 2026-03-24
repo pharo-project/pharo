@@ -15,6 +15,31 @@ RBExtractMethodTransformationTest >> sourceCodeAt: anInterval forMethod: aSelect
 ]
 
 { #category : 'tests' }
+RBExtractMethodTransformationTest >> testExtractBlockWithReturnNode [
+
+	| refactoring class |
+	model := self modelOnClasses: { RBLintRuleTestData }.
+	refactoring := ReCompositeExtractMethodRefactoring
+		               model: model
+		               extractSource:
+		               (self sourceCodeAt: (52 to: 59) forMethod: #methodWithBlockContainingReturn in: RBLintRuleTestData)
+		               from: #methodWithBlockContainingReturn
+		               to: #foo
+		               in: #RBLintRuleTestData.
+	refactoring generateChanges.
+
+	class := refactoring model classNamed: #RBLintRuleTestData.
+	self
+		assert: (class parseTreeForSelector: #methodWithBlockContainingReturn)
+		equals: (self parseMethod: 'methodWithBlockContainingReturn
+				| b |
+				b := self foo.
+				^ b value').
+	self assert: (class parseTreeForSelector: #foo) equals: (self parseMethod: 'foo
+				^ [ ^ 42 ]')
+]
+
+{ #category : 'tests' }
 RBExtractMethodTransformationTest >> testExtractUsingExistingMethodRefactoring [
 
 	| transformation class |

@@ -139,9 +139,11 @@ MCClassDefinition >> classVarNames: cvarArray [
 
 { #category : 'printing' }
 MCClassDefinition >> classVariables [
-	^ self needsSlotClassDefinition 
- 		ifTrue: [ self sortedVariablesOfType: #isClassVariable ]
- 		ifFalse: [ self classVariablesString asClassVariableCollection ]
+
+	^ self needsSlotClassDefinition
+		  ifTrue: [ self sortedVariablesOfType: #isClassVariable ]
+		  ifFalse: [
+		  (self classVariablesString substrings: Character separators) collect: [ :substring | substring asSymbol asClassVariable ] ]
 ]
 
 { #category : 'printing' }
@@ -304,7 +306,7 @@ MCClassDefinition >> kindOfSubclass [
 	type = #variable ifTrue: [^ ' variableSubclass: '].
 	type = #bytes ifTrue: [^ ' variableByteSubclass: '].
 	type = #weak ifTrue: [^ ' weakSubclass: ' ].
-	type = #compiledMethod ifTrue: [^ ' variableByteSubclass: ' ].
+	type = #compiledMethod ifTrue: [^ ' compiledMethodSubclass: ' ].
 	type = #immediate ifTrue: [ ^ ' immediateSubclass: ' ].
 	type = #ephemeron ifTrue: [ ^ ' ephemeronSubclass: ' ].
 	type = #DoubleByteLayout ifTrue: [ ^' variableDoubleByteSubclass: ' ].
@@ -619,9 +621,7 @@ MCClassDefinition >> type [
 { #category : 'accessing' }
 MCClassDefinition >> type: aSymbol [
 
-	type := (#( #CompiledMethod #CompiledBlock #CompiledCode ) includes: name)
-		        ifTrue: [ #compiledMethod ]
-		        ifFalse: [ aSymbol ]
+	type := aSymbol
 ]
 
 { #category : 'installing' }

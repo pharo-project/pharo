@@ -259,7 +259,11 @@ CompiledCode >> allLiterals [
 
 { #category : 'source code management' }
 CompiledCode >> argumentNames [
-	^ self propertyAt: #argumentNames ifAbsent: [ self ast argumentNames ]
+	
+	"If the property is not there, this is a method with no arguments"
+	^ self propertyAt: #argumentNames ifAbsent: [ 
+		self numArgs > 0 ifTrue: [ self error: 'Missing argument names for: ', self printString ].
+		#() ]
 ]
 
 { #category : 'compatibility' }

@@ -521,6 +521,8 @@ OpalCompiler >> generateMethod [
 	ast scope registerVariables.
 
 	ast bcToASTCache: nil.
+	ast ensureCachedArgumentNames.
+
 	ir := self generateIR.
 	method := ir compiledMethod.
 

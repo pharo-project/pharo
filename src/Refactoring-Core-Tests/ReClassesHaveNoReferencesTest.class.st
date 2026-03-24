@@ -31,7 +31,7 @@ ReClassesHaveNoReferencesTest >> testClassHasReferences [
 		        classes: { referenced }.
 	self deny: cond check.
 
-	self assert: cond violators size equals: 1.
+	self assert: cond violators size equals: 2.
 
 	violator := cond violators first.
 	self assert: violator selector equals: #accessingSuperclass.

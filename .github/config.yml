@@ -36,6 +36,6 @@ newPRWelcomeComment: >
 
 # Comment to be posted to on pull requests merged by a first time user
 firstPRMergeComment: >
-  Congrats on merging your first pull request! Do another one! We try to have a list of (relatively) easy issues here: https://github.com/orgs/pharo-project/projects/8.
+  Congrats on merging your first pull request! Do another one! We try to have a list of (relatively) easy issues here: https://github.com/pharo-project/pharo/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22.
 
 # It is recommend to include as many gifs and emojis as possible

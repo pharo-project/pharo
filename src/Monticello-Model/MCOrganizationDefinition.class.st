@@ -38,7 +38,7 @@ MCOrganizationDefinition >> = aDefinition [
 MCOrganizationDefinition >> categories [
 
 	^ self packageName
-		  ifNil: [ {  } ]
+		  ifNil: [ #( 'Unpackaged' ) ]
 		  ifNotNil: [ :package | { package } , (self tagNames collect: [ :tagName | package , '-' , tagName ]) ]
 ]
 

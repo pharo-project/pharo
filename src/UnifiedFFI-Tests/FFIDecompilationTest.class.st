@@ -2,52 +2,46 @@
 Tests for FFICompilerPlugin
 "
 Class {
-	#name : 'FFICompilerPluginTest',
+	#name : 'FFIDecompilationTest',
 	#superclass : 'TestCase',
 	#category : 'UnifiedFFI-Tests-Tests',
 	#package : 'UnifiedFFI-Tests',
 	#tag : 'Tests'
 }
 
-{ #category : 'compiler' }
-FFICompilerPluginTest class >> compiler [
-	"the example plugin is active for this class"
+{ #category : 'tests' }
+FFIDecompilationTest >> ffiCopyString: aString to: dest [
 
-	^ super compiler addPlugin: FFICompilerPlugin
+	^ self ffiCall: #(String strcpy(void* dest , String aString))
 ]
 
 { #category : 'tests' }
-FFICompilerPluginTest >> ffiCopyString: aString to: dest [
-	^ self ffiCall: #(String strcpy #(void* dest , String aString))
-]
-
-{ #category : 'tests' }
-FFICompilerPluginTest >> ffiCopyStringWithError: aString to: destError [
+FFIDecompilationTest >> ffiCopyStringWithError: aString to: destError [
 	"This method explicitly uses a non-matching variable dest in the FFI call to provoke an error"
 
 	^ self ffiCall: #(String strcpy #(String dest , String aString))
 ]
 
 { #category : 'tests' }
-FFICompilerPluginTest >> ffiLibraryName [
+FFIDecompilationTest >> ffiLibraryName [
 	^ LibC
 ]
 
 { #category : 'running' }
-FFICompilerPluginTest >> setUp [
+FFIDecompilationTest >> setUp [
 	super setUp.
 	self class recompile
 ]
 
 { #category : 'tests' }
-FFICompilerPluginTest >> testDecompilationOfFFIMethodShouldHaveNamedArgs [
+FFIDecompilationTest >> testDecompilationOfFFIMethodShouldHaveNamedArgs [
 	| decompiledFFIMethod |
-	decompiledFFIMethod := (FFICompilerPluginTest >> #ffiCopyString:to:) decompile.
+	decompiledFFIMethod := (FFIDecompilationTest >> #ffiCopyString:to:) decompile.
 	self assert: decompiledFFIMethod argumentNames equals: #(#aString #dest)
 ]
 
 { #category : 'tests' }
-FFICompilerPluginTest >> testExecutionOfWrongFFIMethodShouldRaiseAnError [
+FFIDecompilationTest >> testExecutionOfWrongFFIMethodShouldRaiseAnError [
 	self
 		should: [ | buffer |
 			buffer := ByteArray new: 12.
@@ -56,27 +50,27 @@ FFICompilerPluginTest >> testExecutionOfWrongFFIMethodShouldRaiseAnError [
 ]
 
 { #category : 'tests' }
-FFICompilerPluginTest >> testFFIMethodDelegatesWhenLookingForHasSelector [
+FFIDecompilationTest >> testFFIMethodDelegatesWhenLookingForHasSelector [
 
 	| buffer ffiMethod |
 	"Execute the method to ensure it is compiled as FFI method"
 	buffer := ByteArray new: 12.
 	self ffiCopyString: 'Hello World!' to: buffer.
 
-	ffiMethod := FFICompilerPluginTest >> #ffiCopyString:to:.
+	ffiMethod := self class >> #ffiCopyString:to:.
 
 	self assert: (ffiMethod hasSelector: #ffiCall: specialSelectorIndex: nil)
 ]
 
 { #category : 'tests' }
-FFICompilerPluginTest >> testMethodCall [
+FFIDecompilationTest >> testMethodCall [
 	| buffer |
 	buffer := ByteArray new: 12.
 	self assert: (self ffiCopyString: 'Hello World!' to: buffer) equals: 'Hello World!'
 ]
 
 { #category : 'tests' }
-FFICompilerPluginTest >> testThatFFIAdditionalStateIsFilledCorrectlyWith2Parameters [
+FFIDecompilationTest >> testThatFFIAdditionalStateIsFilledCorrectlyWith2Parameters [
 	| ffiCallMethod |
 	ffiCallMethod := self class >> #ffiCopyString:to:.
 	self assert: ffiCallMethod properties isNotNil.

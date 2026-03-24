@@ -448,6 +448,18 @@ MCGitBasedNetworkRepository >> hasNoLoadConflicts: anMCGitBasedRepository [
         and: [ self projectVersion = anMCGitBasedRepository projectVersion ] ]
 ]
 
+{ #category : 'accessing' }
+MCGitBasedNetworkRepository >> httpUrl [
+
+	^ self httpsUrl copyReplaceAll: 'https://' with: 'http://'
+]
+
+{ #category : 'accessing' }
+MCGitBasedNetworkRepository >> httpsUrl [
+
+	self subclassResponsibility
+]
+
 { #category : 'testing' }
 MCGitBasedNetworkRepository >> includesVersionNamed: aString [
 	^ self localRepository includesVersionNamed: aString

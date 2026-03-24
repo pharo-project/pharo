@@ -5,10 +5,44 @@ That's why it inherits from Object. We change the super class to TestCase when n
 "
 Class {
 	#name : 'RTFFakeTestSuperClass',
-	#superclass : 'Object',
+	#superclass : 'TestCase',
+	#classVars : [
+		'ShouldIgnore'
+	],
 	#category : 'RottenTestsFinder-FakeTests',
 	#package : 'RottenTestsFinder-FakeTests'
 }
+
+{ #category : 'asserting' }
+RTFFakeTestSuperClass class >> doNotIgnore [ 
+
+	ShouldIgnore := false
+]
+
+{ #category : 'asserting' }
+RTFFakeTestSuperClass class >> ignore [ 
+
+	ShouldIgnore := true
+]
+
+{ #category : 'running' }
+RTFFakeTestSuperClass >> setUp [ 
+
+	super setUp.
+	self shouldIgnore ifTrue: [ self skip ]
+]
+
+{ #category : 'accessing' }
+RTFFakeTestSuperClass >> shouldIgnore [
+
+	^ ShouldIgnore ifNil: [ ShouldIgnore := true ]
+]
+
+{ #category : 'accessing' }
+RTFFakeTestSuperClass >> shouldIgnore: anObject [
+
+	ShouldIgnore := anObject
+]
 
 { #category : 'asserting' }
 RTFFakeTestSuperClass >> shouldLogWithEpicea [

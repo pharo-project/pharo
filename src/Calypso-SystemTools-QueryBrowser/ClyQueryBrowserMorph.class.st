@@ -269,12 +269,6 @@ ClyQueryBrowserMorph >> methodSelection [
 	^self selection asSelectedItemsOf: ClyMethod
 ]
 
-{ #category : 'window' }
-ClyQueryBrowserMorph >> modelWakeUpIn: aSystemWindow [ 
-	
-	"Do nothing"
-]
-
 { #category : 'navigation' }
 ClyQueryBrowserMorph >> navigateSpawnedFullBrowser: aFullBrowser [
 

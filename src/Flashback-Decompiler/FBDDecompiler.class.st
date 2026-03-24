@@ -66,7 +66,7 @@ FBDDecompiler >> createNArgs: numArgs [
 			self incrArgCount.
 			argName := (method propertyAt: #argumentNames)
 				ifNil: [ 'arg' , argCount printString ]
-				ifNotNil: [ :args | args at: argCount ].
+				ifNotNil: [ :args | args at: argCount ifAbsent: [ 'arg' , argCount printString ] ].
 			builder codeArgument: argName ]
 ]
 

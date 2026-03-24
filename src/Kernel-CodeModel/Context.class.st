@@ -1904,6 +1904,12 @@ Context >> stackOfSize: limit [
 	^ stack
 ]
 
+{ #category : 'accessing' }
+Context >> stackOverflow [
+
+	self error: 'Stack overflow'
+]
+
 { #category : 'private' }
 Context >> stackPtr [
 	"For use only by the SystemTracer and the Debugger, Inspectors etc"

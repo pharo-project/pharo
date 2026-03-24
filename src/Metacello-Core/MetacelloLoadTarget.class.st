@@ -49,11 +49,14 @@ MetacelloLoadTarget >> visitPostLoadDirective: aMetacelloPostLoadDirective [
 
 	aMetacelloPostLoadDirective spec postLoadDoIt ifNotNil: [ :symbol |
 			MetacelloNotification signal: 'Executing: ' , aMetacelloPostLoadDirective label.
-			symbol valueWithEnoughArguments: {
-					(self baselineFor: aMetacelloPostLoadDirective).
-					self.
-					aMetacelloPostLoadDirective spec }.
-			MetacelloNotification signal: 'Done executing: ' , aMetacelloPostLoadDirective label ]
+			
+			MetacelloNotification 
+				logTimeDuring: [
+						symbol valueWithEnoughArguments: {
+								(self baselineFor: aMetacelloPostLoadDirective).
+								self.
+								aMetacelloPostLoadDirective spec } ] 
+				description: 'Done executing: ' , aMetacelloPostLoadDirective label  ]
 ]
 
 { #category : 'visiting' }
@@ -61,9 +64,12 @@ MetacelloLoadTarget >> visitPreLoadDirective: aMetacelloPreLoadDirective [
 
 	aMetacelloPreLoadDirective spec preLoadDoIt ifNotNil: [ :symbol |
 			MetacelloNotification signal: 'Executing: ' , aMetacelloPreLoadDirective label.
-			symbol valueWithEnoughArguments: {
-					(self baselineFor: aMetacelloPreLoadDirective).
-					self.
-					aMetacelloPreLoadDirective spec }.
-			MetacelloNotification signal: 'Done executing: ' , aMetacelloPreLoadDirective label ]
+
+			MetacelloNotification 
+				logTimeDuring: [
+						symbol valueWithEnoughArguments: {
+								(self baselineFor: aMetacelloPreLoadDirective).
+								self.
+								aMetacelloPreLoadDirective spec } ] 
+				description: 'Done executing: ' , aMetacelloPreLoadDirective label  ]
 ]

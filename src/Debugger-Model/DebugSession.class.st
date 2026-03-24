@@ -310,21 +310,54 @@ DebugSession >> process: aProcess context: aContext [
 ]
 
 { #category : 'debugging actions' }
-DebugSession >> recompileMethodTo: text inContext: aContext notifying: aNotifyer [
+DebugSession >> recompileMethodTo: aString inContext: aContext notifying: aNotifyer [
+	"The retrieved information has changed and its source must now be updated.
+	 In this case, the retrieved information is the method of the given context.
+	 NOTE: I am letting this method as a 'weak deprecate', but it should not be used 
+	 as it plugs UI concerns (the confirm call) deep down the debugging mechanism.
+	 Please use DebugSession>>recompileMethodTo:inContext:notifying:force: instead"
+	| force |
+
+	force := false.
+	^ [ 
+		self 
+			recompileMethodTo: aString
+			inContext: aContext 
+			notifying: aNotifyer 
+			force: force ] 
+		on: DebugAttemptToRewindPostMortemError 
+		do: [ :e | 
+			force := ConfirmationRequest signal: 'Can not rewind post mortem context for new method.\ Accept anyway ?' withCRs.
+			force ifTrue: [ e retry ].
+			false ]
+]
+
+{ #category : 'debugging actions' }
+DebugSession >> recompileMethodTo: aString inContext: aContext notifying: aNotifyer force: aBoolean [
 	"The retrieved information has changed and its source must now be updated.
 	 In this case, the retrieved information is the method of the given context."
-
 	| newMethod recompilationContext canRewind |
+	
 	canRewind := (self isContextPostMortem: self interruptedContext) not.
-	(recompilationContext := (self createModelForContext: aContext) locateClosureHomeWithContent: text) ifNil: [ ^ false ].
-	canRewind ifFalse: [ (ConfirmationRequest signal: 'Can not rewind post mortem context for new method.\ Accept anyway ?' withCRs) or: [ ^ false ] ].
+	canRewind ifFalse: [ 
+		aBoolean ifFalse: [
+			DebugAttemptToRewindPostMortemError signal ] ].
+		
+	recompilationContext := (self createModelForContext: aContext) locateClosureHomeWithContent: aString.
+	recompilationContext ifNil: [ ^ false ].
 
-	newMethod := (self createModelForContext: recompilationContext) recompileCurrentMethodTo: text notifying: aNotifyer.
+	newMethod := (self createModelForContext: recompilationContext) 
+		recompileCurrentMethodTo: aString 
+		notifying: aNotifyer.
 	newMethod ifNil: [ ^ false ].
 
-	(self isContextPostMortem: self interruptedContext) ifFalse: [ self rewindContextToMethod: newMethod fromContext: recompilationContext ]. "Use an alarm instead of triggering the notification directly, as the content of
+	(self isContextPostMortem: self interruptedContext)
+		ifFalse: [ self rewindContextToMethod: newMethod fromContext: recompilationContext ].
+
+	"Use an alarm instead of triggering the notification directly, as the content of
 	the editor can still be unaccepted. "
 	self installAlarm: #contextChanged.
+	
 	^ true
 ]
 

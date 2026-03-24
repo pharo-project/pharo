@@ -13,6 +13,7 @@ Class {
 		'mutex'
 	],
 	#classVars : [
+		'ShouldPauseOnSave',
 		'UniqueInstance'
 	],
 	#category : 'ThreadedFFI-Callbacks',
@@ -30,19 +31,35 @@ TFCallbackQueue class >> initialize [
 	self startUp: true
 ]
 
+{ #category : 'accessing' }
+TFCallbackQueue class >> pauseOnSave: aBoolean [
+
+	ShouldPauseOnSave := aBoolean
+]
+
+{ #category : 'testing' }
+TFCallbackQueue class >> shouldPauseOnSave [
+
+	^ ShouldPauseOnSave ifNil: [ false ]
+]
+
 { #category : 'system startup' }
 TFCallbackQueue class >> shutDown: inANewImageSession [
 
-	inANewImageSession ifFalse: [ ^ self ].
-	self uniqueInstance shutDown.
-	UniqueInstance := nil
+	inANewImageSession 
+		ifTrue: [ 
+			self uniqueInstance shutDown.
+			UniqueInstance := nil ] 
+		ifFalse: [
+			self uniqueInstance pause ]
 ]
 
 { #category : 'system startup' }
 TFCallbackQueue class >> startUp: inANewImageSession [
 
-	inANewImageSession ifFalse: [ ^ self ].
-	self uniqueInstance startUp
+	inANewImageSession 
+		ifTrue: [ self uniqueInstance startUp ]
+		ifFalse: [ self uniqueInstance resume ]
 ]
 
 { #category : 'instance creation' }
@@ -135,6 +152,14 @@ TFCallbackQueue >> nextPendingCallback [
 	^ TFCallbackInvocation fromHandle: externalAddress
 ]
 
+{ #category : 'operations' }
+TFCallbackQueue >> pause [
+
+	self class shouldPauseOnSave ifFalse: [ ^ self ].
+	
+	self terminateProcess
+]
+
 { #category : 'private - primitives' }
 TFCallbackQueue >> primNextPendingCallback [
 	<primitive: 'primitiveReadNextCallback'>
@@ -160,6 +185,14 @@ TFCallbackQueue >> registerCallback: aCallback [
 		callbacksByAddress
 			at: aCallback callbackData
 			put: aCallback ]
+]
+
+{ #category : 'operations' }
+TFCallbackQueue >> resume [
+
+	self class shouldPauseOnSave ifFalse: [ ^ self ].
+
+	self forkCallbackProcess
 ]
 
 { #category : 'system startup' }

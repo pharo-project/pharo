@@ -36,7 +36,9 @@ MetacelloMonticelloLoader >> loadAtomicPackageDirectives: packageDirectives engi
 	"Each package directive can specify many repositorySpecs.
 	Find the first one that defines the package (assumming they all are equivalent) and use that."
 
-	| model references strictnesses strictness |
+	| model references strictnesses strictness startTime |
+	
+	startTime := Time millisecondClockValue.
 	model := MCVersionLoader new.
 
 	strictnesses := packageDirectives collect: [ :e | e shouldLoadStrict ] as: Set.
@@ -61,10 +63,23 @@ MetacelloMonticelloLoader >> loadAtomicPackageDirectives: packageDirectives engi
 		e first workingCopy repositoryGroup addRepository: e second ].
 	
 
-	packageDirectives do: [ :e |
-		MetacelloNotification signal:
-			'Loaded -> ' , e packageName , ' --- '
-			, e repositorySpecs first fullDescription ]
+	packageDirectives size = 1 
+		ifTrue: [ | singlePackage |
+			singlePackage := packageDirectives anyOne.
+			MetacelloNotification 
+				signal: 'Loaded -> ' , singlePackage packageName , ' --- '
+					, singlePackage repositorySpecs first fullDescription 
+				milliSeconds: (Time millisecondClockValue - startTime)
+			
+		] ifFalse: [  
+			packageDirectives do: [ :e |
+				MetacelloNotification signal:
+					'Loaded -> ' , e packageName , ' --- '
+					, e repositorySpecs first fullDescription ].
+				
+			MetacelloNotification 
+				signal: 'Atomic Loading finished' 
+				milliSeconds: (Time millisecondClockValue - startTime)].
 ]
 
 { #category : 'loading' }

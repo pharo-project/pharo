@@ -484,14 +484,6 @@ SystemWindow class >> useHideForClose: aBoolean [
 	UseHideForClose := aBoolean 
 ]
 
-{ #category : 'top window' }
-SystemWindow class >> wakeUpTopWindowUponStartup [
-	TopWindow ifNotNil:
-		[TopWindow isCollapsed ifFalse:
-			[TopWindow model ifNotNil:
-				[TopWindow model modelWakeUpIn: TopWindow]]]
-]
-
 { #category : 'menu items' }
 SystemWindow class >> windowMenuOn: aBuilder [
 	"To inject your custom items in a specific place, note that each item increases in order by 1. For example, if you wanted your item to be the second item, you could give it an #order: 1.5"
@@ -1050,7 +1042,6 @@ SystemWindow >> basicActivate [
 	].
 
 	self isCollapsed ifFalse: [
-		model ifNotNil:[ model modelWakeUpIn: self ].
 		self positionSubmorphs.
 		labelArea ifNil: [ self adjustBorderUponActivationWhenLabeless ]
 	].

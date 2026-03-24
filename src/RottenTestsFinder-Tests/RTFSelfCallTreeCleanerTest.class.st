@@ -8,8 +8,9 @@ Class {
 		'tree1',
 		'tree2'
 	],
-	#category : 'RottenTestsFinder-Tests',
-	#package : 'RottenTestsFinder-Tests'
+	#category : 'RottenTestsFinder-Tests-SelfInterpreter',
+	#package : 'RottenTestsFinder-Tests',
+	#tag : 'SelfInterpreter'
 }
 
 { #category : 'running' }
