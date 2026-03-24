@@ -1,3 +1,6 @@
+"
+I store all the style information associated with 'Custom' style
+"
 Class {
 	#name : 'SHCustomStyle',
 	#superclass : 'Object',

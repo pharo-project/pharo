@@ -3,7 +3,7 @@ I manage the settings for Shout.
 
 This includes:
   - Turning syntax highlighting on / off
-  - Selecting a predefined style
+  - Choosing a predefined style
   - Editing the custom style table
 "
 Class {
@@ -29,20 +29,20 @@ SHPreferences class >> activeStyleTable [
 
 { #category : 'accessing' }
 SHPreferences class >> activeStyleTable: aStyleTableName [
-	"TODO: Check for validity of style table name"
 
+	(self styleTableNames includes: aStyleTableName) ifFalse: [ 
+		self error: 'Trying to activate unknown style table' ].
 	(Pragma allNamed: #styleTable: in: SHRBTextStyler class)
 		detect: [ :pragma | (pragma argumentAt: 1) = aStyleTableName ]
 		ifFound: [ :pragma |
-				self styleTable:
-					(SHRBTextStyler styleTableNamed: aStyleTableName) ]
+			self styleTable: (SHRBTextStyler styleTableNamed: aStyleTableName) ]
 		ifNone: [ "ignore" ].
 	'Custom' = aStyleTableName ifTrue: [
 		self styleTable: SHCustomStyle styleTable ].
 	'Default' = aStyleTableName ifTrue: [
 			self styleTable:
 				(SHRBTextStyler perform: Smalltalk ui theme shStyleTableName) ].
-	activeStyleTable := aStyleTableName.
+	activeStyleTable := aStyleTableName
 ]
 
 { #category : 'updating' }
@@ -83,31 +83,14 @@ SHPreferences class >> enabled: aBoolean [
 ]
 
 { #category : 'private' }
-SHPreferences class >> getStateOfStyleTableNamed: aStyleTableName [
-
-	^ aStyleTableName = self activeStyleTable
-]
-
-{ #category : 'private' }
 SHPreferences class >> informUI [
-
+	"Update all editor panes using syntax highlighting"
 	self currentWorld themeChanged
-]
-
-{ #category : 'initialization' }
-SHPreferences class >> setStyleTableNamed: styleTableName [
-	"TODO"
-
-	styleTableName = #Custom ifTrue: [ "TODO" ^ self ].
-	styleTableName = #Default ifTrue: [ "TODO" ^ self ].
-
-	self styleTable: (SHRBTextStyler styleTableNamed: styleTableName)
 ]
 
 { #category : 'settings' }
 SHPreferences class >> settingsOn: aBuilder [
-	"TODO: the currently selected theme has to be saved to settings. Replace dialog with actual value"
-
+	
 	<systemsettings>
 	(aBuilder group: 'Syntax Highlighting')
 		parentName: #codeBrowsing;
@@ -132,12 +115,14 @@ SHPreferences class >> settingsOn: aBuilder [
 					label: 'Predefined styles';
 					target: self;
 					domainValues: self styleTableNames;
+					description: 'Choose between the different styles.  Default changes according to the UI Theme and Custom can be modified by you.' ;
 					default: 'Default'.
 				(aBuilder group: #'Edit Custom Style')
+					description: 'Change the Custom style to your liking.  You have to activate it for your changes to take effect.' ;
 					dialog: [
 							Smalltalk ui theme
 								newButtonIn: self
-								for: SHCustomStyle 
+								for: SHCustomStyle
 								getState: nil
 								action: #copyFromCurrentStyle
 								arguments: nil
@@ -155,7 +140,6 @@ SHPreferences class >> settingsOn: aBuilder [
 
 { #category : 'private' }
 SHPreferences class >> styleTable: anArray [
-	"TODO: Implement a `syntaxHighlightChanged` event instead of `themeChanged`"
 
 	SHRBTextStyler styleTable: anArray.
 	self informUI
