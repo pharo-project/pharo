@@ -76,6 +76,12 @@ NECEntry >> browse [
 	self subclassResponsibility
 ]
 
+{ #category : 'matching' }
+NECEntry >> completionMatchText [
+
+	^ self contents
+]
+
 { #category : 'accessing' }
 NECEntry >> contents [
 	^ contents

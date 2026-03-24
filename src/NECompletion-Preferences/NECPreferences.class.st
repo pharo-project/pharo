@@ -224,6 +224,10 @@ NECPreferences class >> settingsOn: aBuilder [
 						label: 'Case Sensitive';
 						default: true;
 						description: 'Decide if you want eCompletion to be case sensitive or not.'.
+					(aBuilder setting: #expandPrefixes)
+						label: 'Expand inferred package prefixes';
+						default: true;
+						description: 'Allow suffix-only matching such as Pre -> SpPresenter when a package prefix is implied.'.
 					(aBuilder setting: #smartCharacters)
 						label: 'Smart Characters';
 						default: true;
