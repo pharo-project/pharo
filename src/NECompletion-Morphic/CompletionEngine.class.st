@@ -144,52 +144,61 @@ CompletionEngine >> handleKeyDownBefore: aKeyboardEvent editor: anEditor [
 	key := aKeyboardEvent key.
 
 	(self isMenuOpen not and: [
-		 self editor atCompletionPosition and: [
-			 NECPreferences popupShowWithShortcut matches: { aKeyboardEvent } ] ])
-		ifTrue: [
+		 self editor atCompletionPosition and: [ NECPreferences popupShowWithShortcut matches: { aKeyboardEvent } ] ]) ifTrue: [
 			aKeyboardEvent supressNextKeyPress: true.
 			self openMenu.
 			^ true ].
 
-	key = KeyboardKey backspace ifTrue: [
-		self smartBackspace ifTrue: [ ^ true ] ].
+	key = KeyboardKey backspace ifTrue: [ self smartBackspace ifTrue: [ ^ true ] ].
 
 	self isMenuOpen ifFalse: [ ^ false ].
 
 	({
 		 KeyboardKey left.
+		 KeyboardKey keypadLeft } includes: key) ifTrue: [
+			menuMorph leaveGroup ifTrue: [ ^ true ].
+			^ false ].
+
+	({
 		 KeyboardKey right.
-		 KeyboardKey keypadLeft.
-		 KeyboardKey keypadRight } includes: key) ifTrue: [ "just move the caret"
-		^ false ].
+		 KeyboardKey keypadRight } includes: key) ifTrue: [
+			menuMorph insertSelected ifTrue: [ ^ true ].
+			^ false ].
 
 	({
 		 KeyboardKey up.
 		 KeyboardKey keypadUp } includes: key) ifTrue: [
-		menuMorph moveUp.
-		^ true ].
+			menuMorph moveUp.
+			^ true ].
+
 	({
 		 KeyboardKey down.
 		 KeyboardKey keypadDown } includes: key) ifTrue: [
-		menuMorph moveDown.
-		^ true ].
+			menuMorph moveDown.
+			^ true ].
+
 	key = KeyboardKey pageUp ifTrue: [
-		menuMorph pageUp.
-		^ true ].
+			menuMorph pageUp.
+			^ true ].
+
 	key = KeyboardKey pageDown ifTrue: [
-		menuMorph pageDown.
-		^ true ].
-	((key = KeyboardKey enter or: [ key = KeyboardKey keypadEnter ])
-		 and: [ NECPreferences useEnterToAccept ]) ifTrue: [
+			menuMorph pageDown.
+			^ true ].
+
+	((key = KeyboardKey enter or: [ key = KeyboardKey keypadEnter ]) and: [ NECPreferences useEnterToAccept ]) ifTrue: [
 		menuMorph insertSelected ifTrue: [ ^ true ] ].
+
 	key = KeyboardKey tab ifTrue: [
 		menuMorph insertSelected ifTrue: [ ^ true ] ].
+
 	key = KeyboardKey backspace ifTrue: [
-		editor isCaretBehindChar ifFalse: [ self closeMenu ].
-		^ false ].
+			editor isCaretBehindChar ifFalse: [ self closeMenu ].
+			^ false ].
+
 	key = KeyboardKey escape ifTrue: [
-		self closeMenu.
-		^ true ].
+			self closeMenu.
+			^ true ].
+
 	^ false
 ]
 

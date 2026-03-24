@@ -487,21 +487,31 @@ NECMenuMorph >> initialize [
 	isDetailMorphVisible := false
 ]
 
-{ #category : 'actions' }
+{ #category : 'drawing' }
 NECMenuMorph >> insertSelected [
 
-	|  selectionIndex |
-	self delete.
+	| selectionIndex selectedEntry |
 	context hasEntries ifFalse: [ ^ false ].
-	context activateEntryAt: self selectedIndex.
-	
-	"Now we can handle the announcement"
+
 	selectionIndex := self selectedIndex.
-	self class environment codeChangeAnnouncer announce: (CompletionItemSelected new
-			 selectedItem: (context entries at: selectionIndex);
-			 token: context completionToken;
-			 entries: context entries;
-			 index: selectionIndex).
+	selectedEntry := context entries at: selectionIndex.
+
+	selectedEntry isGroupEntry ifTrue: [
+		selectedEntry activateOn: context.
+		self hideDetail.
+		self refreshSelection.
+		^ true ].
+
+	self delete.
+	context activateEntryAt: selectionIndex.
+
+	self class environment codeChangeAnnouncer announce:
+		(CompletionItemSelected new
+			selectedItem: selectedEntry;
+			token: context completionToken;
+			entries: context entries;
+			index: selectionIndex).
+
 	^ true
 ]
 
@@ -519,6 +529,15 @@ NECMenuMorph >> itemsCount [
 NECMenuMorph >> lastVisible [
 
 	^ (self firstVisible + self height-1)  min: (self itemsCount)
+]
+
+{ #category : 'drawing' }
+NECMenuMorph >> leaveGroup [
+
+	(context leaveGroup) ifFalse: [ ^ false ].
+	self hideDetail.
+	self refreshSelection.
+	^ true
 ]
 
 { #category : 'event handling' }

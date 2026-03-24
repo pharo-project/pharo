@@ -139,6 +139,12 @@ NECEntry >> hightlightSymbol [
 ]
 
 { #category : 'accessing' }
+NECEntry >> isGroupEntry [ 
+
+	^ false
+]
+
+{ #category : 'accessing' }
 NECEntry >> label [ 
 
 	| typeString |
