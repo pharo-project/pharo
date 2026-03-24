@@ -14,7 +14,10 @@ Class {
 		'completionBuilder',
 		'completionClass',
 		'completion',
-		'completionToken'
+		'completionToken',
+		'groupStack',
+		'groupedEntries',
+		'rawEntries'
 	],
 	#category : 'HeuristicCompletion-Model-SystemIntegration',
 	#package : 'HeuristicCompletion-Model',
@@ -32,10 +35,43 @@ CoCompletionContext class >> engine: aCompletionEngine class: aClass source: aSt
 		yourself
 ]
 
-{ #category : 'activation' }
+{ #category : 'accessing' }
 CoCompletionContext >> activateEntryAt: anIndex [
 
 	(self entries at: anIndex) activateOn: self
+]
+
+{ #category : 'private-grouping' }
+CoCompletionContext >> buildGroupedEntriesFrom: aCollection [
+
+
+	| grouped order buckets |
+	NECPreferences groupEntries ifFalse: [ ^ aCollection asOrderedCollection ].
+	grouped := OrderedCollection new.
+	order := OrderedCollection new.
+	buckets := Dictionary new.
+
+	aCollection do: [ :entry |
+		| prefix bucket |
+		prefix := self groupingPrefixFor: entry.
+		prefix
+			ifNil: [ grouped add: entry ]
+			ifNotNil: [
+				bucket := buckets
+					at: prefix
+					ifAbsentPut: [
+						order add: prefix.
+						OrderedCollection new ].
+				bucket add: entry ] ].
+
+	order do: [ :prefix |
+		| bucket |
+		bucket := buckets at: prefix.
+		bucket size = 1
+			ifTrue: [ grouped add: bucket first ]
+			ifFalse: [ grouped add: (NECPrefixGroupEntry prefix: prefix children: bucket) ] ].
+
+	^ grouped
 ]
 
 { #category : 'testing' }
@@ -125,11 +161,21 @@ CoCompletionContext >> engine: anObject [
 { #category : 'accessing' }
 CoCompletionContext >> entries [
 
-	^ self completion first: 20
+	| currentEntries limit |
+	currentEntries := (groupStack notNil and: [ groupStack notEmpty ])
+		ifTrue: [ groupStack last ]
+		ifFalse: [
+			groupedEntries ifNil: [
+				groupedEntries := self buildGroupedEntriesFrom: self rawEntries ].
+			groupedEntries ].
+
+	limit := currentEntries size min: 20.
+	^ currentEntries first: limit
 ]
 
 { #category : 'accessing' }
 CoCompletionContext >> entryCount [
+
 	^ self entries size
 ]
 
@@ -139,23 +185,41 @@ CoCompletionContext >> environmentAt: aString ifPresent: aBlockClosure [
 	^ self systemNavigation environmentAt: aString ifPresent: aBlockClosure
 ]
 
-{ #category : 'testing' }
+{ #category : 'accessing' }
+CoCompletionContext >> groupingPrefixFor: anEntry [
+
+	| text prefixSize |
+	text := anEntry contents.
+	prefixSize := self groupingPrefixSize max: self completionToken size.
+
+	text size <= prefixSize ifTrue: [ ^ nil ].
+	^ text copyFrom: 1 to: prefixSize
+]
+
+{ #category : 'private-grouping' }
+CoCompletionContext >> groupingPrefixSize [
+
+	^ NECPreferences groupingPrefixSize
+]
+
+{ #category : 'accessing' }
 CoCompletionContext >> hasEntries [
 
-	^ self completion notEmpty
+^ self entries notEmpty
 ]
 
-{ #category : 'menu' }
+{ #category : 'accessing' }
 CoCompletionContext >> hasMessage [
 
-	^ false
+	^ (groupStack notNil and: [ groupStack notEmpty ])
 ]
 
-{ #category : 'initialization' }
+{ #category : 'accessing' }
 CoCompletionContext >> initialize [
 
 	super initialize.
-	completionBuilder := CoASTHeuristicsResultSetBuilder initializeOnContext: self
+	completionBuilder := CoASTHeuristicsResultSetBuilder initializeOnContext: self.
+	groupStack := OrderedCollection new.
 ]
 
 { #category : 'testing' }
@@ -164,11 +228,40 @@ CoCompletionContext >> isScripting [
 	^ engine isNotNil and: [ engine isScripting ]
 ]
 
-{ #category : 'narrowing' }
+{ #category : 'accessing' }
+CoCompletionContext >> leaveGroup [
+
+	groupStack isEmpty ifTrue: [ ^ false ].
+	groupStack removeLast.
+	^ true
+]
+
+{ #category : 'accessing' }
+CoCompletionContext >> message [
+	groupStack isEmpty ifTrue: [ ^ '' ].
+	^ ' back   •   '
+		, (groupStack last size asString)
+		, ' matches for '
+		, groupStack last first contents
+]
+
+{ #category : 'accessing' }
 CoCompletionContext >> narrowWith: aString [
 
 	completionToken := aString.
-	self completion replaceFilterWith: (CoBeginsWithFilter caseSensitive: NECPreferences caseSensitive filterString: aString)
+	groupStack removeAll.
+	groupedEntries := nil.
+	rawEntries := nil.
+	self completion replaceFilterWith:
+		(CoBeginsWithFilter
+			caseSensitive: NECPreferences caseSensitive
+			filterString: aString)
+]
+
+{ #category : 'accessing' }
+CoCompletionContext >> openGroup: aGroupEntry [
+
+	groupStack add: aGroupEntry children
 ]
 
 { #category : 'accessing' }
@@ -179,6 +272,15 @@ CoCompletionContext >> position [
 { #category : 'accessing' }
 CoCompletionContext >> position: anObject [
 	position := anObject
+]
+
+{ #category : 'accessing' }
+CoCompletionContext >> rawEntries [
+
+	rawEntries ifNil: [
+		self completion fetchAll.
+		rawEntries := self completion results asOrderedCollection ].
+	^ rawEntries
 ]
 
 { #category : 'replacing' }
@@ -206,7 +308,9 @@ CoCompletionContext >> systemNavigation [
 { #category : 'accessing' }
 CoCompletionContext >> title [
 
-	^ ''
+	^ groupStack isEmpty
+		ifTrue: [ '' ]
+		ifFalse: [ 'Completions · ' , groupStack last first contents ]
 ]
 
 { #category : 'accessing' }

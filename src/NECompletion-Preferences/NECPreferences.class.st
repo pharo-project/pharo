@@ -20,7 +20,9 @@ Class {
 		'popupShowWithShortcut',
 		'smartCharactersWithSingleSpace',
 		'smartCharactersWithDoubleSpace',
-		'showCompletionDetails'
+		'showCompletionDetails',
+		'groupEntries',
+		'groupingPrefixSize'
 	],
 	#category : 'NECompletion-Preferences',
 	#package : 'NECompletion-Preferences'
@@ -64,6 +66,17 @@ NECPreferences class >> caseSensitive: aBoolean [
 { #category : 'defaults' }
 NECPreferences class >> defaultBackgroundColor [
 	^ self theme menuColor
+]
+
+{ #category : 'defaults' }
+NECPreferences class >> defaultGroupEntries [
+	^ true
+]
+
+{ #category : 'defaults' }
+NECPreferences class >> defaultGroupingPrefixSize [
+
+	^ 5
 ]
 
 { #category : 'defaults' }
@@ -117,8 +130,33 @@ NECPreferences class >> expandPrefixes: aBoolean [
 	expandPrefixes := aBoolean
 ]
 
+{ #category : 'accessing' }
+NECPreferences class >> groupEntries [
+
+	^ groupEntries
+]
+
+{ #category : 'accessing' }
+NECPreferences class >> groupEntries: aBoolean [
+
+	groupEntries := aBoolean
+]
+
+{ #category : 'accessing' }
+NECPreferences class >> groupingPrefixSize [
+
+	^ groupingPrefixSize
+]
+
+{ #category : 'accessing' }
+NECPreferences class >> groupingPrefixSize: anInteger [
+
+	groupingPrefixSize := anInteger
+]
+
 { #category : 'class initialization' }
 NECPreferences class >> initialize [
+
 	enabled := true.
 	caseSensitive := true.
 	smartCharacters := true.
@@ -141,6 +179,8 @@ NECPreferences class >> initialize [
 	popupShowAutomatic := self defaultPopupShowAutomatic.
 	popupAutomaticDelay := self defaultPopupDelay.
 	showCompletionDetails := self defaultShowCompletionDetails.
+	groupEntries := self defaultGroupEntries.
+	groupingPrefixSize := self defaultGroupingPrefixSize.
 	NECEntry spaceAfterCompletion: true
 ]
 
@@ -176,6 +216,7 @@ NECPreferences class >> popupShowWithShortcut: anObject [
 
 { #category : 'settings' }
 NECPreferences class >> settingsOn: aBuilder [
+
 	<systemsettings>
 	(aBuilder setting: #'Code Completion')
 		target: self;
@@ -185,10 +226,9 @@ NECPreferences class >> settingsOn: aBuilder [
 		iconName: #smallConfiguration;
 		description: 'Enable or disable code completion in browsers, debuggers and workspaces.';
 		with: [
-					| availableControllers availableSorters |
-					availableControllers := self availableEngines.
-					availableControllers size > 1
-						ifTrue: [
+				| availableControllers availableSorters |
+				availableControllers := self availableEngines.
+				availableControllers size > 1 ifTrue: [
 							(aBuilder pickOne: #completionEngineClass)
 								order: -1;
 								label: 'CompletionEngine';
@@ -196,8 +236,7 @@ NECPreferences class >> settingsOn: aBuilder [
 								getSelector: #completionEngineClass;
 								setSelector: #completionEngineClass:;
 								default: (Smalltalk at: #CoCompletionEngine);
-								domainValues: availableControllers ].
-					"availableSorters := self availableSorters.
+								domainValues: availableControllers ]. "availableSorters := self availableSorters.
 					availableSorters size > 1
 						ifTrue: [
 							(aBuilder pickOne: #completionSorter)
@@ -207,51 +246,60 @@ NECPreferences class >> settingsOn: aBuilder [
 								getSelector: #sorterClass;
 								setSelector: #sorterClass:;
 								domainValues: availableSorters ]."
-					(aBuilder setting: #backgroundColor)
-						default: (Color
-							r: 0.823069403714565
-							g: 0.823069403714565
-							b: 0.823069403714565 alpha: 1.0);
-						label: 'Background Color'.
-					(aBuilder setting: #useEnterToAccept)
-						label: 'Use ENTER to accept a suggested completion';
-						default: self defaultUseEnterToAccept.
-					(aBuilder setting: #showCompletionDetails)
-						label: 'Show completion details';
-						description: 'Show detailed information about completion entries';
-						default: self defaultShowCompletionDetails.
-					(aBuilder setting: #caseSensitive)
-						label: 'Case Sensitive';
-						default: true;
-						description: 'Decide if you want eCompletion to be case sensitive or not.'.
-					(aBuilder setting: #smartCharacters)
-						label: 'Smart Characters';
-						default: true;
-						description: 'Decide if you want eCompletion to use smart characters, e.g, to automatically close brackets.'.
-					(aBuilder setting: #smartCharactersWithSingleSpace)
-						label: 'Smart Characters with Single Space';
-						default: '';
-				 		description: 'Enumerate the characters which are automatically inserted with a single space in between.'.
-					(aBuilder setting: #smartCharactersWithDoubleSpace)
-						label: 'Smart Characters with Double Space';
-						default: '[]{}';
-				 		description: 'Enumerate the characters which are automatically inserted with a two spaces in between.'.
-					(aBuilder setting: #popupShowAutomatic)
-						default: self defaultPopupShowAutomatic;
-						label: 'Popup is automatic'.
-					(aBuilder setting: #popupAutomaticDelay)
-						default: self defaultPopupDelay;
-						label: 'Popup appearance delay'.
-					(aBuilder pickOne: #popupShowWithShortcut)
-						target: self;
-						default: self defaultPopupShortcut;
-						label: 'Popup appears with this shortcut';
-						domainValues: self availablePopupShortcuts.
-					(aBuilder setting: #spaceAfterCompletion)
-						target: NECEntry;
-						default: self defaultSpaceAfterCompletion;
-						label: 'Put a space after completion'
-					 ]
+				(aBuilder setting: #backgroundColor)
+					default: (Color
+							 r: 0.823069403714565
+							 g: 0.823069403714565
+							 b: 0.823069403714565
+							 alpha: 1.0);
+					label: 'Background Color'.
+				(aBuilder setting: #useEnterToAccept)
+					label: 'Use ENTER to accept a suggested completion';
+					default: self defaultUseEnterToAccept.
+				(aBuilder setting: #showCompletionDetails)
+					label: 'Show completion details';
+					description: 'Show detailed information about completion entries';
+					default: self defaultShowCompletionDetails.
+				(aBuilder setting: #groupEntries)
+					label: 'Group completion entries';
+					default: self defaultGroupEntries;
+					description: 'Group completion results by common prefix.'.
+
+				(aBuilder setting: #groupingPrefixSize)
+					label: 'Grouping prefix size';
+					default: self defaultGroupingPrefixSize;
+					description: 'Number of leading characters used to build completion groups.'.
+				(aBuilder setting: #caseSensitive)
+					label: 'Case Sensitive';
+					default: true;
+					description: 'Decide if you want eCompletion to be case sensitive or not.'.
+				(aBuilder setting: #smartCharacters)
+					label: 'Smart Characters';
+					default: true;
+					description: 'Decide if you want eCompletion to use smart characters, e.g, to automatically close brackets.'.
+				(aBuilder setting: #smartCharactersWithSingleSpace)
+					label: 'Smart Characters with Single Space';
+					default: '';
+					description: 'Enumerate the characters which are automatically inserted with a single space in between.'.
+				(aBuilder setting: #smartCharactersWithDoubleSpace)
+					label: 'Smart Characters with Double Space';
+					default: '[]{}';
+					description: 'Enumerate the characters which are automatically inserted with a two spaces in between.'.
+				(aBuilder setting: #popupShowAutomatic)
+					default: self defaultPopupShowAutomatic;
+					label: 'Popup is automatic'.
+				(aBuilder setting: #popupAutomaticDelay)
+					default: self defaultPopupDelay;
+					label: 'Popup appearance delay'.
+				(aBuilder pickOne: #popupShowWithShortcut)
+					target: self;
+					default: self defaultPopupShortcut;
+					label: 'Popup appears with this shortcut';
+					domainValues: self availablePopupShortcuts.
+				(aBuilder setting: #spaceAfterCompletion)
+					target: NECEntry;
+					default: self defaultSpaceAfterCompletion;
+					label: 'Put a space after completion' ]
 ]
 
 { #category : 'accessing' }
