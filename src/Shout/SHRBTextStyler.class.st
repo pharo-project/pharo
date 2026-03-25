@@ -45,7 +45,7 @@ SHRBTextStyler class >> attributeArrayForColor: colorOrNil backgroundColor: back
 					stream nextPut: (TextEmphasis perform: emphasisSymbolOrArrayorNil) ]
 				ifFalse: [
 					emphasisSymbolOrArrayorNil do: [ :each | 
-						stream nextPut: (TextEmphasis perform: emphasisSymbolOrArrayorNil) ] ] ] ]
+						stream nextPut: (TextEmphasis perform: each) ] ] ] ]
 ]
 
 { #category : 'attributes' }
