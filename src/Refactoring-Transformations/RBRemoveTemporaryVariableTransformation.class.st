@@ -89,28 +89,13 @@ RBRemoveTemporaryVariableTransformation >> privateTransform [
 	| methodTree modifiedNode |
 	methodTree := self definingMethod.
 
-	modifiedNode := (methodTree allChildren select: [:each | each isSequence])
-						detect: [ :sequence | sequence defines: variableName ]
+	modifiedNode := (methodTree withAllChildren select: [:each | each isSequence])
+						detect: [ :sequence | sequence exactNodeDefines: variableName ]
 						ifNone: [ nil ].
 
 	modifiedNode ifNotNil: [ modifiedNode removeTemporaryNamed: variableName ].
 
 	class compileTree: methodTree
-]
-
-{ #category : 'storing' }
-RBRemoveTemporaryVariableTransformation >> storeOn: aStream [
-
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream
-		nextPutAll: ' variable: ''';
-		nextPutAll: variableName;
-		nextPutAll: ''' inMethod: ''';
-		nextPutAll: selector;
-		nextPutAll: ''' inClass: '.
-	class storeOn: aStream.
-	aStream nextPut: $)
 ]
 
 { #category : 'api' }

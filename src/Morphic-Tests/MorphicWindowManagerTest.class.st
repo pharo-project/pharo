@@ -43,7 +43,7 @@ MorphicWindowManagerTest >> testDeleteAWindowAndTaskBarActualized [
 	"This test do not pass on CI because headless image has display size = 0@0 and then 
 	 morphic behaves weird. PropagateNaturalHeight/Width is weak on Morphic because of 
 	 this (if not, see the algoritm I was forced to do), but for now passes (just, not on CI :)"
-	Smalltalk isInteractiveGraphic ifFalse: [ ^ self skip ].
+	Smalltalk isInteractive ifFalse: [ ^ self skip ].
 	
 	manager := MorphicWindowManager open.
 
@@ -77,7 +77,7 @@ MorphicWindowManagerTest >> testDeleteAllWindowToLeftOfAWindow [
 	"This test do not pass on CI because headless image has display size = 0@0 and then 
 	 morphic behaves weird. PropagateNaturalHeight/Width is weak on Morphic because of 
 	 this (if not, see the algoritm I was forced to do), but for now passes (just, not on CI :)"
-	Smalltalk isInteractiveGraphic ifFalse: [ ^ self skip ].
+	Smalltalk isInteractive ifFalse: [ ^ self skip ].
 
 	manager openNewWindowWithRoot: Morph new.
 	manager openNewWindowWithRoot: Morph new.
@@ -108,7 +108,7 @@ MorphicWindowManagerTest >> testDeleteAllWindowToRightOfAWindow [
 	"This test do not pass on CI because headless image has display size = 0@0 and then 
 	 morphic behaves weird. PropagateNaturalHeight/Width is weak on Morphic because of 
 	 this (if not, see the algoritm I was forced to do), but for now passes (just, not on CI :)"
-	Smalltalk isInteractiveGraphic ifFalse: [ ^ self skip ].
+	Smalltalk isInteractive ifFalse: [ ^ self skip ].
 
 	newWindow := manager openNewWindowWithRoot: Morph new.
 	manager openNewWindowWithRoot: Morph new.

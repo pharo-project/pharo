@@ -56,7 +56,7 @@ RBAddVariableAccessorTransformation >> createSetterAccessor [
 { #category : 'private' }
 RBAddVariableAccessorTransformation >> defineGetterMethod [
 
-	getterMethod := self safeMethodNameFor: self definingClass basedOn: variableName asString.
+	getterMethod := self safeAccessorNameFor: self definingClass basedOn: variableName asString.
 	self generateChangesFor: (RBAddMethodTransformation
 		model: self model 
 		sourceCode: ('<1s><r><r><t>^ <2s>' expandMacrosWith: getterMethod with: variableName)
@@ -71,7 +71,7 @@ RBAddVariableAccessorTransformation >> defineSetterMethod [
 
 	|  sourceCode |
 	sourceCode := '<1s> anObject<r><r><t><2s> := anObject'.
-	setterMethod := self safeMethodNameFor: self definingClass basedOn: variableName asString , ':'.
+	setterMethod := self safeAccessorNameFor: self definingClass basedOn: variableName asString , ':'.
 	self generateChangesFor: (RBAddMethodTransformation 
 		model: self model
 		sourceCode: (sourceCode expandMacrosWith: setterMethod with: variableName)

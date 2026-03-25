@@ -76,7 +76,8 @@ OCAbstractMethodScope >> allTemps [
 
 { #category : 'temp vars - copying' }
 OCAbstractMethodScope >> copiedVarNames [
-	^ copiedVars keys
+
+	^ copiedVars values collect: [ :var | var originalVar name ]
 ]
 
 { #category : 'temp vars - copying' }
@@ -90,16 +91,6 @@ OCAbstractMethodScope >> copyEscapingReads [
 	self tempVars values
 		select: [ :each | each isEscapingRead ]
 		thenDo: [ :each | self addCopyingTemp: each ]
-]
-
-{ #category : 'lookup' }
-OCAbstractMethodScope >> hasBindingThatBeginsWith: aString [
-	"check weather there are any temporaries defined that start with aString"
-	(copiedVars hasBindingThatBeginsWith: aString) ifTrue: [ ^true ].
-	(tempVector hasBindingThatBeginsWith: aString) ifTrue: [ ^true ].
-	(tempVars hasBindingThatBeginsWith: aString) ifTrue: [ ^true ].
-
-	^ self outerScope hasBindingThatBeginsWith: aString
 ]
 
 { #category : 'temp vars - vector' }
@@ -142,8 +133,11 @@ OCAbstractMethodScope >> localTemps [
 OCAbstractMethodScope >> lookupDefiningContextForVariable: var startingFrom: aContext [
 	"Is this the definition context for var? If it not, we look in the outer context using the corresponding outer scope. If found, we return the context"
 
+	| nextContext |
+	nextContext := self nextOuterScopeContextOf: aContext.
+	nextContext ifNil: [ self error: var name, ' optimized out' ].
 	^self = var scope
-		ifFalse: [ self outerScope lookupDefiningContextForVariable: var startingFrom: (self nextOuterScopeContextOf: aContext) ]
+		ifFalse: [ self outerScope lookupDefiningContextForVariable: var startingFrom: nextContext ]
 		ifTrue: [ aContext ]
 ]
 

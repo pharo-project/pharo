@@ -81,6 +81,11 @@ ExternalAddress class >> new: n [
 		ifFalse: [self shouldNotImplement]
 ]
 
+{ #category : 'instance creation' }
+ExternalAddress class >> null [
+	^ self new
+]
+
 { #category : 'system startup' }
 ExternalAddress class >> startUp: resuming [
 	"If starting the image afresh all external addresses should be zero.
@@ -131,6 +136,12 @@ ExternalAddress >> asByteArrayPointer [
 		replaceFrom: 1 to: sz with: self startingAt: 1 "answers self"
 ]
 
+{ #category : 'converting' }
+ExternalAddress >> asExternalAddress [
+
+	^ self
+]
+
 { #category : 'private' }
 ExternalAddress >> asExternalPointer [
 	"No need to convert."
@@ -147,6 +158,34 @@ ExternalAddress >> asInteger [
 ExternalAddress >> beNull [
 	"Make the receiver a NULL pointer"
 	self atAllPut: 0
+]
+
+{ #category : 'accessing' }
+ExternalAddress >> boolean8AtOffset: zeroBasedOffset [
+	<primitive: 630>
+	^ (self integerAt: zeroBasedOffset + 1 size: 1 signed: false) ~= 0
+]
+
+{ #category : 'accessing' }
+ExternalAddress >> boolean8AtOffset: zeroBasedOffset put: value [
+	<primitive: 645>
+	^ self integerAt: zeroBasedOffset + 1 put: (value ifTrue:[1] ifFalse:[0]) size: 1 signed: false
+]
+
+{ #category : 'accessing' }
+ExternalAddress >> booleanAt: byteIndex [
+	"This method is duplicated in this subclass with the purpose of ensuring a monomorphic inline cache in the following message send."
+
+	<ignoreMethodWithEquivalentInSuperclass>
+	^ self boolean8AtOffset: byteIndex - 1
+]
+
+{ #category : 'accessing' }
+ExternalAddress >> booleanAt: byteIndex put: value [
+	"This method is duplicated in this subclass with the purpose of ensuring a monomorphic inline cache in the following message send."
+
+	<ignoreMethodWithEquivalentInSuperclass>
+	^ self boolean8AtOffset: byteIndex - 1 put: value
 ]
 
 { #category : 'accessing' }
@@ -178,11 +217,77 @@ ExternalAddress >> bytesFromCString [
 					index := index + 1]]
 ]
 
+{ #category : 'accessing' }
+ExternalAddress >> char16AtOffset: zeroBasedOffset [
+	<primitive: 641>
+	^ (self integerAt: zeroBasedOffset + 1 size: 2 signed: false) asCharacter
+]
+
+{ #category : 'accessing' }
+ExternalAddress >> char16AtOffset: zeroBasedOffset put: value [
+	<primitive: 656>
+	^ self integerAt: zeroBasedOffset + 1 put: value asInteger size: 2 signed: false
+]
+
+{ #category : 'accessing' }
+ExternalAddress >> char32AtOffset: zeroBasedOffset [
+	<primitive: 642>
+	^ (self integerAt: zeroBasedOffset + 1 size: 4 signed: false) asCharacter
+]
+
+{ #category : 'accessing' }
+ExternalAddress >> char32AtOffset: zeroBasedOffset put: value [
+	<primitive: 657>
+	^ self integerAt: zeroBasedOffset + 1 put: value asInteger size: 4 signed: false
+]
+
+{ #category : 'accessing' }
+ExternalAddress >> char8AtOffset: zeroBasedOffset [
+	<primitive: 640>
+	^ (self integerAt: zeroBasedOffset + 1 size: 1 signed: false) asCharacter
+]
+
+{ #category : 'accessing' }
+ExternalAddress >> char8AtOffset: zeroBasedOffset put: value [
+	<primitive: 655>
+	^ self integerAt: zeroBasedOffset + 1 put: value asInteger size: 1 signed: false
+]
+
 { #category : 'copying' }
 ExternalAddress >> clone [
 
 	<primitive: 148>
 	self primitiveFailed
+]
+
+{ #category : 'copying' }
+ExternalAddress >> copyFrom: startIndex to: endIndex [
+	| result size |
+	size := endIndex - startIndex + 1.
+	result := ByteArray new: size.
+	LibC memCopy: (self + (startIndex - 1)) to: result size: size.
+	^ result
+]
+
+{ #category : 'copying' }
+ExternalAddress >> copyFromOffset: startZeroBasedOffset to: endZeroBasedOffset [
+	^ self copyFrom: startZeroBasedOffset + 1 to: endZeroBasedOffset + 1
+]
+
+{ #category : 'accessing' }
+ExternalAddress >> doubleAt: byteIndex [
+	"This method is duplicated in this subclass with the purpose of ensuring a monomorphic inline cache in the following message send."
+
+	<ignoreMethodWithEquivalentInSuperclass>
+	^ self float64AtOffset: byteIndex - 1
+]
+
+{ #category : 'accessing' }
+ExternalAddress >> doubleAt: byteIndex put: value [
+	"This method is duplicated in this subclass with the purpose of ensuring a monomorphic inline cache in the following message send."
+
+	<ignoreMethodWithEquivalentInSuperclass>
+	^ self float64AtOffset: byteIndex - 1 put: value
 ]
 
 { #category : 'finalization' }
@@ -191,6 +296,53 @@ ExternalAddress >> finalize [
 	I must finalize. my mission is to free memory"
 	self isNull ifTrue: [^self].
 	self free
+]
+
+{ #category : 'accessing' }
+ExternalAddress >> float32AtOffset: zeroBasedOffset [
+	<primitive: 643>
+
+	^ FFIBackend current on: self float32At: zeroBasedOffset + 1
+]
+
+{ #category : 'accessing' }
+ExternalAddress >> float32AtOffset: zeroBasedOffset put: value [
+	<primitive: 658>
+
+	^ FFIBackend current on: self float32At: zeroBasedOffset + 1 put: value
+]
+
+{ #category : 'accessing' }
+ExternalAddress >> float64AtOffset: zeroBasedOffset [
+	<primitive: 644>
+
+	^ FFIBackend current on: self float64At: zeroBasedOffset + 1
+]
+
+{ #category : 'accessing' }
+ExternalAddress >> float64AtOffset: zeroBasedOffset put: value [
+
+	<primitive: 659>
+	^ FFIBackend current
+		  on: self
+		  float64At: zeroBasedOffset + 1
+		  put: value
+]
+
+{ #category : 'accessing' }
+ExternalAddress >> floatAt: byteIndex [
+	"This method is duplicated in this subclass with the purpose of ensuring a monomorphic inline cache in the following message send."
+
+	<ignoreMethodWithEquivalentInSuperclass>
+	^ self float32AtOffset: byteIndex - 1
+]
+
+{ #category : 'accessing' }
+ExternalAddress >> floatAt: byteIndex put: value [
+	"This method is duplicated in this subclass with the purpose of ensuring a monomorphic inline cache in the following message send."
+
+	<ignoreMethodWithEquivalentInSuperclass>
+	^ self float32AtOffset: byteIndex - 1 put: value
 ]
 
 { #category : 'initialization' }
@@ -215,6 +367,60 @@ ExternalAddress >> fromInteger: anInteger [
 ]
 
 { #category : 'accessing' }
+ExternalAddress >> getHandle [
+
+	^ self
+]
+
+{ #category : 'accessing' }
+ExternalAddress >> int16AtOffset: zeroBasedOffset [
+	<primitive: 634>
+	^ self integerAt: zeroBasedOffset + 1 size: 2 signed: true
+]
+
+{ #category : 'accessing' }
+ExternalAddress >> int16AtOffset: zeroBasedOffset put: value [
+	<primitive: 649>
+	^ self integerAt: zeroBasedOffset + 1 put: value size: 2 signed: true
+]
+
+{ #category : 'accessing' }
+ExternalAddress >> int32AtOffset: zeroBasedOffset [
+	<primitive: 636>
+	^ self integerAt: zeroBasedOffset + 1 size: 4 signed: true
+]
+
+{ #category : 'accessing' }
+ExternalAddress >> int32AtOffset: zeroBasedOffset put: value [
+	<primitive: 651>
+	^ self integerAt: zeroBasedOffset + 1 put: value size: 4 signed: true
+]
+
+{ #category : 'accessing' }
+ExternalAddress >> int64AtOffset: zeroBasedOffset [
+	<primitive: 638>
+	^ self integerAt: zeroBasedOffset + 1 size: 8 signed: true
+]
+
+{ #category : 'accessing' }
+ExternalAddress >> int64AtOffset: zeroBasedOffset put: value [
+	<primitive: 653>
+	^ self integerAt: zeroBasedOffset + 1 put: value size: 8 signed: true
+]
+
+{ #category : 'accessing' }
+ExternalAddress >> int8AtOffset: zeroBasedOffset [
+	<primitive: 632>
+	^ self integerAt: zeroBasedOffset + 1 size: 1 signed: true
+]
+
+{ #category : 'accessing' }
+ExternalAddress >> int8AtOffset: zeroBasedOffset put: value [
+	<primitive: 647>
+	^ self integerAt: zeroBasedOffset + 1 put: value size: 1 signed: true
+]
+
+{ #category : 'accessing' }
 ExternalAddress >> isExternalAddress [
 	"Return true if the receiver describes the address of an object in the outside world"
 	^true
@@ -227,6 +433,46 @@ ExternalAddress >> isNull [
 	^true
 ]
 
+{ #category : 'accessing' }
+ExternalAddress >> pointerAt: byteIndex [
+	"This method is duplicated in this subclass with the purpose of ensuring a monomorphic inline cache in the following message send."
+
+	<ignoreMethodWithEquivalentInSuperclass>
+	^ self pointerAtOffset: byteIndex - 1
+]
+
+{ #category : 'accessing' }
+ExternalAddress >> pointerAt: byteIndex put: value [
+	"This method is duplicated in this subclass with the purpose of ensuring a monomorphic inline cache in the following message send."
+
+	<ignoreMethodWithEquivalentInSuperclass>
+	^ self pointerAtOffset: byteIndex - 1 put: value
+]
+
+{ #category : 'accessing' }
+ExternalAddress >> pointerAtOffset: zeroBasedOffset [
+	<primitive: 639>
+	"Answer a pointer object stored at the given byte address"
+	| addr |
+	addr := ExternalAddress new.
+	1 to: ExternalAddress wordSize do:
+		[:i|
+		addr basicAt: i put: (self unsignedByteAt: zeroBasedOffset+i)].
+	^addr
+]
+
+{ #category : 'accessing' }
+ExternalAddress >> pointerAtOffset: zeroBasedOffset put: value [
+	<primitive: 654>
+	"Store a pointer object at the given byte address"
+	value isExternalAddress ifFalse:
+		[^self error:'Only external addresses can be stored'].
+	1 to: ExternalAddress wordSize do:
+		[:i|
+		self unsignedByteAt: zeroBasedOffset+i put: (value basicAt: i)].
+	^value
+]
+
 { #category : 'printing' }
 ExternalAddress >> printOn: aStream [
 	"print this as a hex address ('@ 16rFFFFFFFF') to distinguish it from ByteArrays"
@@ -235,10 +481,217 @@ ExternalAddress >> printOn: aStream [
 ]
 
 { #category : 'copying' }
+ExternalAddress >> replaceFrom: start to: stop with: replacement startingAt: repStart [
+	| dstAddress srcAddress repSize |
+
+	self flag: #pharoTodo. "Maybe replace it with a primitive (like the one at Alien)?"
+	repSize := stop - start + 1.
+	dstAddress := start = 1
+		ifTrue: [ self ]
+		ifFalse: [ self + (start - 1) ].
+	srcAddress := repStart = 1
+		ifTrue: [ replacement ]
+		ifFalse: [ replacement copyFrom: repStart to: repStart + repSize ].
+	LibC memCopy: srcAddress to: dstAddress size: repSize
+]
+
+{ #category : 'copying' }
 ExternalAddress >> shallowCopy [
 	"Re-implemented to avoid superclass call to #new:"
 	"But superclass's shallowCopy sends basicNew: and basicNew: is ok. eem 2/21/2016 15:31"
 	^self clone
+]
+
+{ #category : 'accessing' }
+ExternalAddress >> signedCharAt: byteOffset [
+	"This method is duplicated in this subclass with the purpose of ensuring a monomorphic inline cache in the following message send."
+
+	<ignoreMethodWithEquivalentInSuperclass>
+	^ self char8AtOffset: byteOffset - 1
+]
+
+{ #category : 'accessing' }
+ExternalAddress >> signedCharAt: byteIndex put: aCharacter [
+	"This method is duplicated in this subclass with the purpose of ensuring a monomorphic inline cache in the following message send."
+
+	<ignoreMethodWithEquivalentInSuperclass>
+	^ self char8AtOffset: byteIndex - 1 put: aCharacter
+]
+
+{ #category : 'accessing' }
+ExternalAddress >> signedLongAt: byteIndex [
+	"This method is duplicated in this subclass with the purpose of ensuring a monomorphic inline cache in the following message send."
+
+	<ignoreMethodWithEquivalentInSuperclass>
+	^ self int32AtOffset: byteIndex - 1
+]
+
+{ #category : 'accessing' }
+ExternalAddress >> signedLongAt: byteIndex put: value [
+	"This method is duplicated in this subclass with the purpose of ensuring a monomorphic inline cache in the following message send."
+
+	<ignoreMethodWithEquivalentInSuperclass>
+	^ self int32AtOffset: byteIndex - 1 put: value
+]
+
+{ #category : 'accessing' }
+ExternalAddress >> signedLongLongAt: byteIndex [
+	"This method is duplicated in this subclass with the purpose of ensuring a monomorphic inline cache in the following message send."
+
+	<ignoreMethodWithEquivalentInSuperclass>
+	^ self int64AtOffset: byteIndex - 1
+]
+
+{ #category : 'accessing' }
+ExternalAddress >> signedLongLongAt: byteIndex put: value [
+	"This method is duplicated in this subclass with the purpose of ensuring a monomorphic inline cache in the following message send."
+
+	<ignoreMethodWithEquivalentInSuperclass>
+	^ self int64AtOffset: byteIndex - 1 put: value
+]
+
+{ #category : 'accessing' }
+ExternalAddress >> signedShortAt: byteIndex [
+	"This method is duplicated in this subclass with the purpose of ensuring a monomorphic inline cache in the following message send."
+
+	<ignoreMethodWithEquivalentInSuperclass>
+	^ self int16AtOffset: byteIndex - 1
+]
+
+{ #category : 'accessing' }
+ExternalAddress >> signedShortAt: byteIndex put: value [
+	"This method is duplicated in this subclass with the purpose of ensuring a monomorphic inline cache in the following message send."
+
+	<ignoreMethodWithEquivalentInSuperclass>
+	^ self int16AtOffset: byteIndex - 1 put: value
+]
+
+{ #category : 'accessing' }
+ExternalAddress >> uint16AtOffset: zeroBasedOffset [
+	<primitive: 633>
+	^ self integerAt: zeroBasedOffset + 1 size: 2 signed: false
+]
+
+{ #category : 'accessing' }
+ExternalAddress >> uint16AtOffset: zeroBasedOffset put: value [
+	<primitive: 648>
+	^ self integerAt: zeroBasedOffset + 1 put: value size: 2 signed: false
+]
+
+{ #category : 'accessing' }
+ExternalAddress >> uint32AtOffset: zeroBasedOffset [
+	<primitive: 635>
+	^ self integerAt: zeroBasedOffset + 1 size: 4 signed: false
+]
+
+{ #category : 'accessing' }
+ExternalAddress >> uint32AtOffset: zeroBasedOffset put: value [
+	<primitive: 650>
+	^ self integerAt: zeroBasedOffset + 1 put: value size: 4 signed: false
+]
+
+{ #category : 'accessing' }
+ExternalAddress >> uint64AtOffset: zeroBasedOffset [
+	<primitive: 637>
+	^ self integerAt: zeroBasedOffset + 1 size: 8 signed: false
+]
+
+{ #category : 'accessing' }
+ExternalAddress >> uint64AtOffset: zeroBasedOffset put: value [
+	<primitive: 652>
+	^ self integerAt: zeroBasedOffset + 1 put: value size: 8 signed: false
+]
+
+{ #category : 'accessing' }
+ExternalAddress >> uint8AtOffset: zeroBasedOffset [
+	<primitive: 631>
+	^ self integerAt: zeroBasedOffset + 1 size: 1 signed: false
+]
+
+{ #category : 'accessing' }
+ExternalAddress >> uint8AtOffset: zeroBasedOffset put: value [
+	<primitive: 646>
+	^ self integerAt: zeroBasedOffset + 1 put: value size: 1 signed: false
+]
+
+{ #category : 'accessing' }
+ExternalAddress >> unsignedByteAt: byteIndex [
+	"This method is duplicated in this subclass with the purpose of ensuring a monomorphic inline cache in the following message send."
+
+	<ignoreMethodWithEquivalentInSuperclass>
+	^ self uint8AtOffset: byteIndex - 1
+]
+
+{ #category : 'accessing' }
+ExternalAddress >> unsignedByteAt: byteIndex put: value [
+	"This method is duplicated in this subclass with the purpose of ensuring a monomorphic inline cache in the following message send."
+
+	<ignoreMethodWithEquivalentInSuperclass>
+	^ self uint8AtOffset: byteIndex - 1 put: value
+]
+
+{ #category : 'accessing' }
+ExternalAddress >> unsignedCharAt: byteIndex [
+	"This method is duplicated in this subclass with the purpose of ensuring a monomorphic inline cache in the following message send."
+
+	<ignoreMethodWithEquivalentInSuperclass>
+	^ self char8AtOffset: byteIndex - 1
+]
+
+{ #category : 'accessing' }
+ExternalAddress >> unsignedCharAt: byteIndex put: aCharacter [
+	"This method is duplicated in this subclass with the purpose of ensuring a monomorphic inline cache in the following message send."
+
+	<ignoreMethodWithEquivalentInSuperclass>
+	^ self char8AtOffset: byteIndex - 1 put: aCharacter
+]
+
+{ #category : 'accessing' }
+ExternalAddress >> unsignedLongAt: byteIndex [
+	"This method is duplicated in this subclass with the purpose of ensuring a monomorphic inline cache in the following message send."
+
+	<ignoreMethodWithEquivalentInSuperclass>
+	^ self uint32AtOffset: byteIndex - 1
+]
+
+{ #category : 'accessing' }
+ExternalAddress >> unsignedLongAt: byteIndex put: value [
+	"This method is duplicated in this subclass with the purpose of ensuring a monomorphic inline cache in the following message send."
+
+	<ignoreMethodWithEquivalentInSuperclass>
+	^ self uint32AtOffset: byteIndex - 1 put: value
+]
+
+{ #category : 'accessing' }
+ExternalAddress >> unsignedLongLongAt: byteIndex [
+	"This method is duplicated in this subclass with the purpose of ensuring a monomorphic inline cache in the following message send."
+
+	<ignoreMethodWithEquivalentInSuperclass>
+	^ self uint64AtOffset: byteIndex - 1
+]
+
+{ #category : 'accessing' }
+ExternalAddress >> unsignedLongLongAt: byteIndex put: value [
+	"This method is duplicated in this subclass with the purpose of ensuring a monomorphic inline cache in the following message send."
+
+	<ignoreMethodWithEquivalentInSuperclass>
+	^ self uint64AtOffset: byteIndex - 1 put: value
+]
+
+{ #category : 'accessing' }
+ExternalAddress >> unsignedShortAt: byteIndex [
+	"This method is duplicated in this subclass with the purpose of ensuring a monomorphic inline cache in the following message send."
+
+	<ignoreMethodWithEquivalentInSuperclass>
+	^ self uint16AtOffset: byteIndex - 1
+]
+
+{ #category : 'accessing' }
+ExternalAddress >> unsignedShortAt: byteIndex put: value [
+	"This method is duplicated in this subclass with the purpose of ensuring a monomorphic inline cache in the following message send."
+
+	<ignoreMethodWithEquivalentInSuperclass>
+	^ self uint16AtOffset: byteIndex - 1 put: value
 ]
 
 { #category : 'accessing' }
@@ -250,4 +703,9 @@ ExternalAddress >> utf8StringFromCString [
 
 	self isNull ifTrue: [ ^ '' ].
 	^ self bytesFromCString ifNotNil: [ :bytes | bytes utf8Decoded ]
+]
+
+{ #category : 'accessing' }
+ExternalAddress >> value [
+	^ self asInteger
 ]

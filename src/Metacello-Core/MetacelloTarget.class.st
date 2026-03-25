@@ -2,11 +2,7 @@ Class {
 	#name : 'MetacelloTarget',
 	#superclass : 'Object',
 	#instVars : [
-		'operator',
 		'engine'
-	],
-	#classVars : [
-		'RetryPackageResolution'
 	],
 	#category : 'Metacello-Core-Targets',
 	#package : 'Metacello-Core',
@@ -40,24 +36,6 @@ MetacelloTarget class >> on: anEngine [
 ]
 
 { #category : 'accessing' }
-MetacelloTarget class >> retryPackageResolution [
-	"if true, 
-		errors during #retryingResolvePackageSpecReferences:gofer: are caught and 
-		the resolution is retried 3 times. After the thrid time, a MetacelloPackageSpecResolutionError
-		is thrown
-	if false,
-		an error during #retryingResolvePackageSpecReferences:gofer: will be passed,
-		likely resulting in a walkback ... useful for debugging."
-
-	^ RetryPackageResolution ifNil: [ RetryPackageResolution := true ]
-]
-
-{ #category : 'accessing' }
-MetacelloTarget class >> retryPackageResolution: aBool [
-    RetryPackageResolution := aBool
-]
-
-{ #category : 'accessing' }
 MetacelloTarget >> engine [
 	^ engine
 ]
@@ -65,16 +43,4 @@ MetacelloTarget >> engine [
 { #category : 'accessing' }
 MetacelloTarget >> engine: aMetacelloScriptEngine [ 
 	engine := aMetacelloScriptEngine
-]
-
-{ #category : 'accessing' }
-MetacelloTarget >> operator [
-
-	^ operator ifNil: [ #= ]
-]
-
-{ #category : 'accessing' }
-MetacelloTarget >> operator: aSymbol [
-
-	operator := aSymbol
 ]

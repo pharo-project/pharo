@@ -25,7 +25,7 @@ OSWindowGenericRendererExample >> defaultExtent [
 	^ 640@480
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 OSWindowGenericRendererExample >> destroy [
 	"This function must be called when the window is closed"
 	"drawingProcess terminate"
@@ -38,7 +38,7 @@ OSWindowGenericRendererExample >> enqueueRender [
 	]
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 OSWindowGenericRendererExample >> initializeWithRenderer [
 		"Here we put all the things that needs the renderer to be initialized."
 ]

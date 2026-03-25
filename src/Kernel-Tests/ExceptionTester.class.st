@@ -16,17 +16,6 @@ Class {
 	#tag : 'Exception'
 }
 
-{ #category : 'accessing' }
-ExceptionTester >> basicANSISignaledExceptionTestSelectors [
-
-	^#( simpleIsNestedTest simpleOuterTest doubleOuterTest doubleOuterPassTest doublePassOuterTest simplePassTest simpleResignalAsTest simpleResumeTest simpleRetryTest simpleRetryUsingTest simpleReturnTest)
-]
-
-{ #category : 'accessing' }
-ExceptionTester >> basicTestSelectors [
-	^ #(#simpleEnsureTest #simpleEnsureTestWithNotification #simpleEnsureTestWithUparrow #simpleEnsureTestWithError #signalFromHandlerActionTest #resumableFallOffTheEndHandler #nonResumableFallOffTheEndHandler #doubleResumeTest #simpleTimeoutWithZeroDurationTest #simpleTimeoutTest simpleNoTimeoutTest)
-]
-
 { #category : 'logging' }
 ExceptionTester >> clearLog [
 
@@ -119,23 +108,6 @@ ExceptionTester >> doubleOuterPassTestResults [
 		add: self doYetAnotherThingString;
 		add: self doSomethingElseString;
 		yourself
-]
-
-{ #category : 'signaledexception tests' }
-ExceptionTester >> doubleOuterTest [
-	"uses #resume"
-
-	[[[self doSomething.
-	MyTestNotification signal.
-	self doSomethingExceptional]
-		on: MyTestNotification
-		do: [:ex | ex outer.
-			self doSomethingExceptional]]
-			on: MyTestNotification
-			do: [:ex | ex outer.
-				self doSomethingElse]]
-				on: MyTestNotification
-				do: [:ex | self doYetAnotherThing. ex resume]
 ]
 
 { #category : 'signaledexception tests' }
@@ -278,33 +250,6 @@ ExceptionTester >> resumableFallOffTheEndHandlerResults [
 		add: self doSomethingExceptionalString;
 		add: self doYetAnotherThingString;
 		yourself
-]
-
-{ #category : 'suites' }
-ExceptionTester >> runAllTests [
-	"ExceptionTester new runAllTests"
-
-	self
-		runBasicTests;
-		runBasicANSISignaledExceptionTests
-]
-
-{ #category : 'suites' }
-ExceptionTester >> runBasicANSISignaledExceptionTests [
-
-	self basicANSISignaledExceptionTestSelectors
-		do:
-			[:eachTestSelector |
-			self runTest: eachTestSelector]
-]
-
-{ #category : 'suites' }
-ExceptionTester >> runBasicTests [
-
-	self basicTestSelectors
-		do:
-			[:eachTestSelector |
-			self runTest: eachTestSelector]
 ]
 
 { #category : 'testing' }

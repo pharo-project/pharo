@@ -19,17 +19,3 @@ MCTraitDefinition >> asRingDefinition [
 		definitionSource: self classDefinitionString.
 	^ ring
 ]
-
-{ #category : '*Ring-Definitions-Monticello' }
-MCTraitDefinition >> classDefinitionString [
-	"Answer a string describing the class-side definition."
-
-	^String streamContents: [:stream | self printMetaDefinitionOn: stream]
-]
-
-{ #category : '*Ring-Definitions-Monticello' }
-MCTraitDefinition >> printMetaDefinitionOn: stream [
-
-	stream nextPutAll: self className, ' classTrait'.
-	self printDefinitionBodyOn: stream
-]

@@ -230,7 +230,7 @@ ScrollBarMorph >> doScrollUp [
 	self setValue: (value - scrollDelta - 0.000001 max: 0.0)
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 ScrollBarMorph >> downImage [
 	"answer a FormSet to be used in the down button"
 	^ self class
@@ -437,7 +437,7 @@ ScrollBarMorph >> lastPaneColor: anObject [
 	lastPaneColor := anObject
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 ScrollBarMorph >> menuImage [
 	"answer a form to be used in the menu button"
 	^ self class
@@ -995,7 +995,7 @@ ScrollBarMorph >> themeChanged [
 ScrollBarMorph >> thumbColor [
 	"Problem: Part of the ScrollBar/Slider code uses 'slider' to mean the entire scrollbar/slider widget, and part of it uses 'slider' to mean only the draggable 'thumb'.  This should be cleaned up so that 'thumb' is used instead of 'slider' where appropriate.  For now, the meaning of thumbColor is clear, at least."
 
-	^self class imageColorFor: self
+	^self class theme scrollbarImageColorFor: self
 ]
 
 { #category : 'geometry' }
@@ -1009,7 +1009,7 @@ ScrollBarMorph >> totalSliderArea [
 			upperBoundsButton bounds bottomLeft corner: downButton bounds topRight ]
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 ScrollBarMorph >> upImage [
 	"answer a FormSet to be used in the up button"
 	^ self class
@@ -1027,7 +1027,7 @@ ScrollBarMorph >> updateDownButtonBounds [
 	downButton bounds: (self theme scrollBarDownButtonBoundsFor: self)
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 ScrollBarMorph >> updateDownButtonImage [
 	"update the receiver's downButton.  put a new image inside"
 	downButton removeAllMorphs.
@@ -1060,7 +1060,7 @@ ScrollBarMorph >> updateUpButtonBounds [
 	upButton bounds: (self theme scrollBarUpButtonBoundsFor: self)
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 ScrollBarMorph >> updateUpButtonImage [
 "update the receiver's upButton. put a new image inside"
 	upButton removeAllMorphs.

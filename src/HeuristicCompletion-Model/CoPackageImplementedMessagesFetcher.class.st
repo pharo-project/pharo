@@ -37,5 +37,6 @@ CoPackageImplementedMessagesFetcher >> completionPackage: anObject [
 CoPackageImplementedMessagesFetcher >> entriesDo: aBlock [
 
 	SystemNavigation new allSentMessagesInPackage: completionPackage do: [ :e |
-		aBlock value: (NECSelectorEntry contents: e node: astNode)]
+		aBlock value: ((NECSelectorEntry contents: e node: astNode) 
+								fetcher: self ; yourself) ]
 ]

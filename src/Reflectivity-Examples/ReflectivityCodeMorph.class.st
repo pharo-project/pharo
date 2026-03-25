@@ -41,13 +41,13 @@ ReflectivityCodeMorph >> compiledMethod: anObject [
 	compiledMethod := anObject
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 ReflectivityCodeMorph >> defaultBounds [
 "answer the default bounds for the receiver"
 	^ 0 @ 0 corner: 200 @ 40
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 ReflectivityCodeMorph >> defaultColor [
 	^Color veryLightGray
 ]

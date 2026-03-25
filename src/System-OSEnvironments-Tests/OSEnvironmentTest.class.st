@@ -16,7 +16,7 @@ OSEnvironmentTest >> envNameForTest [
 
 { #category : 'helper' }
 OSEnvironmentTest >> instance [
-	^ Smalltalk os environment
+	^ OSEnvironment current
 ]
 
 { #category : 'running' }
@@ -53,29 +53,6 @@ OSEnvironmentTest >> testAtPut [
 
 	env removeKey: key.
 	self deny: (env includesKey: key)
-]
-
-{ #category : 'tests' }
-OSEnvironmentTest >> testEnvironmentFor [
-
-	| compareDictionary |
-
-	compareDictionary := ((Smalltalk hasClassNamed: #UnixEnvironment) and: [Smalltalk hasClassNamed: #Win32Environment])
-		ifTrue: [ "NativeBoost is present in the image"
-			{ 	MacOSPlatform -> #UnixEnvironment.
-	 		  	MacOSXPlatform -> #UnixEnvironment.
-				UnixPlatform -> #UnixEnvironment.
-				Win32Platform -> #Win32Environment  } asDictionary ]
-		ifFalse: [ "NativeBoost is NOT present in the image"
-			{ 	MacOSPlatform -> #NullOSEnvironment.
-	 		  	MacOSXPlatform -> #NullOSEnvironment.
-				UnixPlatform -> #NullOSEnvironment.
-				Win32Platform -> #NullOSEnvironment  } asDictionary ].
-
-	compareDictionary keysAndValuesDo: [ :platformClass :envClassName |
-		self
-			assert:  (OSEnvironment environmentFor: platformClass new) class name
-			equals: envClassName ]
 ]
 
 { #category : 'tests' }

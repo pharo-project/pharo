@@ -109,18 +109,3 @@ RBAddReturnStatementTransformation >> return: anExpression inMethod: aSelector i
 	selector := aSelector.
 	returnValue := anExpression
 ]
-
-{ #category : 'storing' }
-RBAddReturnStatementTransformation >> storeOn: aStream [
-
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream
-		nextPutAll: ' return: ''';
-		nextPutAll: returnValue;
-		nextPutAll: ''' inMethod: ''';
-		nextPutAll: selector;
-		nextPutAll: ''' inClass: '.
-	class storeOn: aStream.
-	aStream nextPut: $)
-]

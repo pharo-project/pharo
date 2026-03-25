@@ -234,29 +234,16 @@ RBClassEnvironment >> removeClass: aClass [
 		ifFalse: [classes remove: aClass name ifAbsent: []]
 ]
 
+{ #category : 'removing' }
+RBClassEnvironment >> removePackage: aSymbol [
+
+	^ self
+]
+
 { #category : 'accessing' }
 RBClassEnvironment >> selectors [
 
 	^ Array streamContents: [ :stream |
 		self classesDo: [ :class |
 			self selectorsForClass: class do: [ :selector | stream nextPut: selector ] ] ]
-]
-
-{ #category : 'storing' }
-RBClassEnvironment >> storeOn: aStream [
-	aStream nextPut: $(.
-	super storeOn: aStream.
-	aStream nextPutAll: ' classes: (('.
-	classes asArray storeOn: aStream.
-	aStream nextPutAll: ' inject: OrderedCollection new into: [:sum :each |
-				| class |
-				class := Smalltalk at: each ifAbsent: [nil].
-				class notNil ifTrue: [sum add: class].
-				sum]) , ('.
-	metaClasses asArray storeOn: aStream.
-	aStream nextPutAll: ' inject: OrderedCollection new into: [:sum :each |
-				| class |
-				class := Smalltalk at: each ifAbsent: [nil].
-				class notNil ifTrue: [sum add: class class].
-				sum])))'
 ]

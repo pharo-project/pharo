@@ -33,7 +33,8 @@ Class {
 		'jumpAheadStacks',
 		'currentSequence',
 		'sourceMapNodes',
-		'sourceMapByteIndex'
+		'sourceMapByteIndex',
+		'stackSize'
 	],
 	#category : 'OpalCompiler-Core-IR-Manipulation',
 	#package : 'OpalCompiler-Core',
@@ -56,6 +57,8 @@ OCIRBuilder >> add: instr [
 	"Associate instr with current parse node or byte range"
 	instr sourceNode: self sourceNode.
 	instr bytecodeIndex: self sourceByteIndex.
+
+	stackSize := stackSize + instr deltaStack.	
 	^ currentSequence add: instr
 ]
 
@@ -84,19 +87,19 @@ OCIRBuilder >> addJumpBackTarget: label to: sequence [
 		addLast: sequence
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 OCIRBuilder >> addLiteral: aLiteral [
 	"Add this literal at the end of the literal array if there is space left"
 	aLiteral ifNil: [ ^ self ].
 	ir addAdditionalLiteral: aLiteral
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 OCIRBuilder >> addPragma: aPragma [
 	^ir addPragma: aPragma
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 OCIRBuilder >> addTemp: tempKey [
 
 	| tempMap |
@@ -109,12 +112,12 @@ OCIRBuilder >> addTemp: tempKey [
 	self cacheIndex: tempKey
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 OCIRBuilder >> addTemps: newKeys [
 	newKeys do: [ :key | self addTemp: key ]
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 OCIRBuilder >> additionalLiterals:  literals [
 	"Add this literal at the end of the literal array if there is space left"
 	ir addAdditionalLiterals: literals
@@ -131,7 +134,7 @@ OCIRBuilder >> blockReturnTop [
 	self popScope
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 OCIRBuilder >> cacheIndex: tempKey [
 	"if we have the ast, we can store the temp offset"
 	self sourceNode ifNotNil: [ :sourceNode |
@@ -146,12 +149,12 @@ OCIRBuilder >> compilationContext [
 	^ir compilationContext
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 OCIRBuilder >> compilationContext: aCompilationContext [
 	ir compilationContext: aCompilationContext
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 OCIRBuilder >> createTempVectorNamed: name withVars: anArray [
 
 	self addTemp: name.
@@ -175,6 +178,7 @@ OCIRBuilder >> initialize [
 	jumpBackTargetStacks := IdentityDictionary new.
 	sourceMapNodes := OrderedCollection new.	"stack"
 	currentScope := Stack new.
+	stackSize := 0.
 	self pushScope: ir.
 
 	"Leave an empty sequence up front (guaranteed not to be in loop)"
@@ -265,11 +269,10 @@ OCIRBuilder >> mapToByteIndex: index [
 { #category : 'mapping' }
 OCIRBuilder >> mapToNode: object [
 	"new instructions will be associated with object"
-
-	sourceMapNodes addLast: object
+	sourceMapNodes addLast: (object propertyAt: #originalNode ifAbsent: [ object ])
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 OCIRBuilder >> numArgs: anInteger [
 	ir numArgs: anInteger.
 	ir sourceNode: self sourceNode
@@ -423,6 +426,12 @@ OCIRBuilder >> sourceNode [
 	^ sourceMapNodes
 		ifEmpty: [nil]
 		ifNotEmpty: [sourceMapNodes last]
+]
+
+{ #category : 'accessing' }
+OCIRBuilder >> stackSize [
+
+	^ stackSize
 ]
 
 { #category : 'private' }

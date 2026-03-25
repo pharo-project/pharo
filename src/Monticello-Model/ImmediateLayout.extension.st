@@ -1,6 +1,6 @@
 Extension { #name : 'ImmediateLayout' }
 
 { #category : '*Monticello-Model' }
-ImmediateLayout class >> mcTypeSymbol [ 	
+ImmediateLayout class >> mcTypeSymbol [
 	^ #immediate
 ]

@@ -119,13 +119,14 @@ ReCompositeExtractMethodRefactoring >> applicabilityPreconditions [
 
 { #category : 'accessing' }
 ReCompositeExtractMethodRefactoring >> arguments [
-	^ arguments
+	^ arguments ifNil: [ arguments:=#(  ) ]
 ]
 
 { #category : 'preconditions' }
-ReCompositeExtractMethodRefactoring >> breakingChangePreconditions [ 
+ReCompositeExtractMethodRefactoring >> breakingChangePreconditions [
 
-	^ { self preconditionHasSameExitPoint }
+	^ { self preconditionNoOverrides.
+		 self preconditionHasSameExitPoint }
 ]
 
 { #category : 'executing' }
@@ -149,7 +150,7 @@ ReCompositeExtractMethodRefactoring >> buildTransformationFor: newMethodName [
 		  add: (ReRemoveUnusedTemporaryVariableRefactoring
 				   model: self model
 				   inMethod: selector
-				   inClass: class name);
+				   inClass: (class realClass ifNil: [ class name ] ifNotNil: [ :rc | rc name ]));
 		  yourself
 ]
 
@@ -199,24 +200,25 @@ ReCompositeExtractMethodRefactoring >> calculateAssignments [
 	
 	^ assignments ifNil: [
 		| sequenceNode whoDefinesTemp |
-		sequenceNode := (self sourceMethodTree allChildren select: [ :each | each isSequence ]) last.
+		sequenceNode := (self sourceMethodTree withAllChildren select: [ :each | each isSequence ]) last.
 
 		assignments := temporaries select: [ :temp |
-			whoDefinesTemp := (sequenceNode whoDefines: temp).
+			whoDefinesTemp := (sequenceNode whichUpNodeDefines: temp).
 			whoDefinesTemp statements anySatisfy: [ :statement |
 				(statement references: temp)
-				and: [ (subtree allChildren includes: statement) not ] ] ] ]
+				and: [ (subtree withAllChildren includes: statement) not ] ] ] ]
 ]
 
 { #category : 'querying' }
 ReCompositeExtractMethodRefactoring >> calculateIfReturnIsNeededInCaller [
 
 	| searcher |
+	subtree isBlock ifTrue: [ ^ false ].
 	searcher := self parseTreeSearcher.
 	searcher
-		matches: '^self' do: [:aNode :answer | answer];
-		matches: '^`@anything' do: [:aNode :answer | true].
-	^ (searcher executeTree: subtree initialAnswer: false)
+		matches: '^self' do: [ :aNode :answer | answer ];
+		matches: '^`@anything' do: [ :aNode :answer | true ].
+	^ searcher executeTree: subtree initialAnswer: false
 ]
 
 { #category : 'querying' }
@@ -286,6 +288,13 @@ ReCompositeExtractMethodRefactoring >> extractSource: aString from: aSelector to
 	self extract: aString from: aSelector in: aClassName.
 	newSelector := aNewSelector.
 	
+]
+
+{ #category : 'preconditions' }
+ReCompositeExtractMethodRefactoring >> failedBreakingChangePreconditions [
+	"Return the failed preconditions without raising error. It should only be called by drivers."
+	
+	^ self breakingChangePreconditions reject: [ :cond | cond check ]
 ]
 
 { #category : 'executing' }
@@ -365,12 +374,12 @@ ReCompositeExtractMethodRefactoring >> newMethodName [
 
 				"it's a valid selector"
 				(newSelector isString and: [ self isValidSelector: newSelector])
-					ifFalse: [ self inform: newSelector asString, ' is not a valid selector.'.
+					ifFalse: [ InformativeNotification signal:  newSelector asString, ' is not a valid selector.'.
 								  newSelector := nil ].
 
 				"already exists in class"
 				(self definingClass directlyDefinesLocalMethod: newSelector)
-					ifTrue: [ self inform: newSelector, ' is already defined in ', class asString.
+					ifTrue: [ InformativeNotification signal:  newSelector, ' is already defined in ', class asString.
 								 newSelector := nil ] ] ].
 
 	^ methodName
@@ -393,9 +402,15 @@ ReCompositeExtractMethodRefactoring >> preconditionAssignmentsNotReadBeforeWritt
 { #category : 'preconditions' }
 ReCompositeExtractMethodRefactoring >> preconditionHasSameExitPoint [
 
-	^ RBCondition
-		withBlock: [ subtree hasSameExitPoint ]
-		errorString: 'You cannot extract guard clauses and other expressions that directly impact the methods execution flow.'
+	^ ReHasSameExitPointAsItsMethodCondition new subtree: subtree
+]
+
+{ #category : 'preconditions' }
+ReCompositeExtractMethodRefactoring >> preconditionNoOverrides [
+
+	^ ReUpToRootDoesNotDefinesMethod new
+		  class: class;
+		  selector: newSelector
 ]
 
 { #category : 'preconditions' }
@@ -468,21 +483,4 @@ ReCompositeExtractMethodRefactoring >> selectorStartingFrom: aString argumentsSi
 ReCompositeExtractMethodRefactoring >> sourceMethodTree [
 
 	^ parseTree ifNil: [ parseTree := self definingMethod ]
-]
-
-{ #category : 'storing' }
-ReCompositeExtractMethodRefactoring >> storeOn: aStream [
-
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream nextPutAll: ' extract: '''.
-	sourceCode storeOn: aStream.
-	aStream
-		nextPutAll: ''' from: #';
-		nextPutAll: selector asString;
-		nextPutAll: ' to: #';
-		nextPutAll: newSelector asString;
-		nextPutAll: ' in: '.
-	class storeOn: aStream.
-	aStream nextPut: $)
 ]

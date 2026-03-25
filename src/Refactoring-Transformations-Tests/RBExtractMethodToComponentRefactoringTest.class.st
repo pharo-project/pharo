@@ -11,7 +11,7 @@ RBExtractMethodToComponentRefactoringTest >> testExtractMethodAtEndOfMethodThatN
 	| refactoring class selectorsSize |
 	refactoring := RBExtractMethodToComponentRefactoring extract: (52 to: 133) from: #openEditor in: RBLintRuleTestData.
 	self setupMethodNameFor: refactoring toReturn: #foo:.
-	self setupSelfArgumentNameFor: refactoring toReturn: 'asdf'.
+	refactoring selfArgumentName:'asdf'.
 	self setupVariableToMoveToFor: refactoring toReturn: 'rules'.
 	self setupVariableTypesFor: refactoring toReturn: (Array with: (refactoring model classNamed: #Collection)).
 	class := refactoring model classNamed: #RBLintRuleTestData.

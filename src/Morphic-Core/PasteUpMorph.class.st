@@ -2,18 +2,12 @@
 A morph whose submorphs comprise a paste-up of rectangular subparts which ""show through"".  Anything called a 'Playfield' is a PasteUpMorph.
 
 Facilities commonly needed on pages of graphical presentations and on simulation playfields, such as the painting of new objects, turtle trails, gradient fills, background paintings, parts-bin behavior, collision-detection, etc., are (or will be) provided.
-
-
-
-
-
 "
 Class {
 	#name : 'PasteUpMorph',
 	#superclass : 'BorderedMorph',
 	#instVars : [
 		'backgroundMorph',
-		'worldState',
 		'griddingOn'
 	],
 	#classVars : [
@@ -43,7 +37,7 @@ PasteUpMorph class >> isMenuOpenByLeftClick [
 	1	 	1 		1
 "
 
-	^ self shouldSwapMenuOpenerButtons ==> [ Smalltalk os isMacOS ]
+	^ self shouldSwapMenuOpenerButtons ==> [ OSPlatform current isMacOS ]
 ]
 
 { #category : 'accessing' }
@@ -159,6 +153,19 @@ PasteUpMorph >> addWorldToggleItemsToHaloMenu: aMenu [
 ]
 
 { #category : 'accessing' }
+PasteUpMorph >> backgroundImage: aForm layout: aSymbol [
+	"Set a background image, replacing the current background morph, if any,
+	with the given layout (see AlphaImageMorph layoutSymbols). "
+
+	self backgroundMorph: (
+		(self theme builder
+			newAlphaImage: aForm help: nil)
+			autoSize: false;
+			layout: aSymbol;
+			lock)
+]
+
+{ #category : 'accessing' }
 PasteUpMorph >> backgroundMorph [
 	"Answer the background morph if any."
 
@@ -186,32 +193,6 @@ PasteUpMorph >> bringTopmostsToFront [
 		thenDo:[:m| self addMorphInLayer: m]
 ]
 
-{ #category : 'Morphic-Base-Windows' }
-PasteUpMorph >> bringWindowsFullOnscreen [
-
-	"Make ever SystemWindow on the desktop be totally on-screen, whenever possible."
-
-	| r |
-
-	bounds
-		allAreasOutsideList: ( self taskbars collect: [ :t | t bounds ] )
-		do: [ :e |
-			r
-				ifNil: [ r := e ]
-				ifNotNil: [ r area > e area
-						ifTrue: [ r ]
-						ifFalse: [ e ]
-					]
-			].
-	( self windowsSatisfying: [ :w | true ] )
-		do: [ :aWindow |
-			aWindow right: ( aWindow right min: r right ).
-			aWindow bottom: ( aWindow bottom min: r bottom ).
-			aWindow left: ( aWindow left max: r left ).
-			aWindow top: ( aWindow top max: r top )
-			]
-]
-
 { #category : 'session management' }
 PasteUpMorph >> checkSession [
 
@@ -234,27 +215,25 @@ PasteUpMorph >> cleanseOtherworldlySteppers [
 
 { #category : 'Morphic-Base-Windows' }
 PasteUpMorph >> closeAllUnchangedWindows [
-	(self confirm: 'Do you really want to close all unchanged windows ?') ifFalse: [
-		^ self ].
-	(self  windowsSatisfying: [:w | w model canDiscardEdits])
-		do: [:w | w delete]
+
+	(ConfirmationRequest signal: 'Do you really want to close all unchanged windows ?') ifFalse: [ ^ self ].
+	(self windowsSatisfying: [ :w | w model canDiscardEdits ]) do: [ :w | w delete ]
 ]
 
 { #category : 'Morphic-Base-Windows' }
 PasteUpMorph >> closeAllWindowsDiscardingChanges [
-	self world systemWindows do: [:w | [w delete] valueSupplyingAnswer: false]
+	self world systemWindows do: [:w | w delete ]
 ]
 
 { #category : 'Morphic-Base-Windows' }
 PasteUpMorph >> closeUnchangedWindows [
 	"Present a menu of window titles for all windows with changes,
 	and activate the one that gets chosen."
-	(self confirm:
-'Do you really want to close all windows
-except those with unaccepted edits?' translated)
-		ifFalse: [^ self].
 
-	self  closeAllUnchangedWindows
+	(ConfirmationRequest signal: 'Do you really want to close all windows
+except those with unaccepted edits?') ifFalse: [ ^ self ].
+
+	self closeAllUnchangedWindows
 ]
 
 { #category : 'Morphic-Base-Windows' }
@@ -281,16 +260,6 @@ PasteUpMorph >> contentsMenu: aMenu [
 { #category : 'menu & halo' }
 PasteUpMorph >> contentsMenuTitle [
 	^ 'Contents' translated
-]
-
-{ #category : 'cursor' }
-PasteUpMorph >> currentCursor [
-	^ worldState currentCursor
-]
-
-{ #category : 'cursor' }
-PasteUpMorph >> currentCursor: aCursor [
-	^ worldState currentCursor: aCursor
 ]
 
 { #category : 'accessing' }
@@ -437,7 +406,7 @@ PasteUpMorph >> findWindow: evt [
 	expanded := self  windowsSatisfying: [:w | w isCollapsed not].
 	collapsed := self  windowsSatisfying: [:w | w isCollapsed].
 	nakedMorphs := self submorphsSatisfying:[:m | m isSystemWindow not].
-	(expanded isEmpty and: [collapsed isEmpty and: [nakedMorphs isEmpty]]) ifTrue: [^ self inform: 'No morph in world'].
+	(expanded isEmpty and: [collapsed isEmpty and: [nakedMorphs isEmpty]]) ifTrue: [^ InformativeNotification signal: 'No morph in world'].
 	(expanded asSortedCollection: [:w1 :w2 | w1 label caseInsensitiveLessOrEqual: w2 label]) do:
 		[:w | menu add: w label target: w selector: #activateAndForceLabelToShow.
 			w model canDiscardEdits ifFalse: [menu lastItem color: Color red]].
@@ -712,12 +681,12 @@ PasteUpMorph >> mouseDown: evt [
 	handHadHalos := evt hand halo isNotNil.
 	evt hand removeHalo.	"shake off halos"
 	evt hand releaseKeyboardFocus.	"shake of keyboard foci"
-	(evt shiftPressed not and: [ self isWorldMorph not and: [ self wantsEasySelection not ] ])
+	(evt shiftPressed not and: [ self isWorldMorph not and: [ self isEasySelecting not ] ])
 		ifTrue: [
 			evt wasHandled: false.
 			^ self ].	"explicitly ignore the event if we're not the world and we'll not select,
 		so that we could be picked up if need be"
-	(evt shiftPressed or: [ self wantsEasySelection ])
+	(evt shiftPressed or: [ self isEasySelecting ])
 		ifTrue: [
 			| clickSelector |
 			evt shiftPressed
@@ -733,6 +702,12 @@ PasteUpMorph >> mouseDown: evt [
 					#dragThroughOnDesktop:}
 				threshold: 5 ]
 		ifFalse: [ self invokeWorldMenu: evt ]	"We'll select on drag, let's decide what to do on click"	"We wont select, just bring world menu if I'm the world"
+]
+
+{ #category : 'navigation' }
+PasteUpMorph >> navigationKey: aKeyboardEvent [
+
+	^ self taskList handleEvent: aKeyboardEvent
 ]
 
 { #category : 'world menu' }
@@ -772,12 +747,6 @@ PasteUpMorph >> positionNear: aPoint forExtent: anExtent adjustmentSuggestion: a
 	^ adjustedPosition
 ]
 
-{ #category : 'private' }
-PasteUpMorph >> privateRemoveMorph: aMorph [
-	backgroundMorph == aMorph ifTrue: [ backgroundMorph := nil ].
-	^super privateRemoveMorph: aMorph
-]
-
 { #category : 'caching' }
 PasteUpMorph >> releaseCachedState [
 	super releaseCachedState.
@@ -805,52 +774,6 @@ PasteUpMorph >> resizeBackgroundMorph [
 	self backgroundMorph ifNotNil: [ self backgroundMorph extent: self extent ]
 ]
 
-{ #category : 'options' }
-PasteUpMorph >> resizeToFit [
-	^self vResizing == #shrinkWrap
-]
-
-{ #category : 'options' }
-PasteUpMorph >> resizeToFitString [
-	"Answer a string, to be used in a self-updating menu, to
-	represent whether the receiver is currently using resize-to-fit
-	or not"
-	^ (self resizeToFit
-		ifTrue: ['<yes>']
-		ifFalse: ['<no>'])
-		, 'resize to fit' translated
-]
-
-{ #category : 'world state' }
-PasteUpMorph >> restoreMainDockingBarDisplay [
-	"Restore the display of docking bars"
-	self dockingBars
-		do: [:each | each updateBounds]
-]
-
-{ #category : 'gridding' }
-PasteUpMorph >> setGridSpec [
-	"Gridding rectangle provides origin and modulus"
-	| response result |
-	response := self morphicUIManager
-			request: 'New grid origin (usually 0@0):' translated
-			initialAnswer: self gridOrigin printString.
-	response isEmpty ifTrue: [^ self].
-	result := [self class compiler evaluate: response] onErrorDo: [^ self].
-	(result isPoint and: [(result >= (0@0))])
-		ifTrue: [self gridOrigin: result]
-		ifFalse: [self inform: ('Must be a Point with coordinates (for example 10@10)' translated )].
-
-	response := self morphicUIManager
-			request: 'New grid spacing:' translated
-			initialAnswer: self gridModulus printString.
-	response isEmptyOrNil ifTrue: [^ self].
-	result := [self class compiler evaluate: response] onErrorDo: [^ self].
-	(result isPoint and: [(result > (0@0)) ])
-		ifTrue: [self gridModulus: result]
-		ifFalse: [self inform: ('Must be a Point with coordinates (for example 10@10)' translated )]
-]
-
 { #category : 'wiw support' }
 PasteUpMorph >> shouldGetStepsFrom: aWorld [
 
@@ -859,11 +782,15 @@ PasteUpMorph >> shouldGetStepsFrom: aWorld [
 	^ super shouldGetStepsFrom: aWorld
 ]
 
-{ #category : 'options' }
-PasteUpMorph >> toggleResizeToFit [
-	"Toggle whether the receiver is set to resize-to-fit"
+{ #category : 'theme' }
+PasteUpMorph >> themeChanged [
+	"The theme has changed.
+	Update the desktop wallpaper if appropriate."
 
-	self vResizeToFit: self resizeToFit not
+	(self theme desktopImageFor: self) ifNotNil: [:aForm |
+		self color: Color white.
+		self backgroundImage: aForm layout: self theme desktopImageLayout].
+	super themeChanged
 ]
 
 { #category : 'project state' }
@@ -880,12 +807,6 @@ PasteUpMorph >> wantsDroppedMorph: aMorph event: evt [
 	self visible ifFalse: [^ false].  "will be a call to #hidden again very soon"
 	self dropEnabled ifFalse: [^ false].
 	^ true
-]
-
-{ #category : 'event handling' }
-PasteUpMorph >> wantsEasySelection [
-	"Answer if the receiver want easy selection mode"
-	^ self isEasySelecting
 ]
 
 { #category : 'halos and balloon help' }

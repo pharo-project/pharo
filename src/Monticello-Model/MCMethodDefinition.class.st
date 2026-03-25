@@ -2,6 +2,10 @@
 A MCMethodDefinition represents a method definition. 
 It captures the following information.
 
+## Implementation details
+
+It might be long to get the timestamp of a method since it requires to access the source file. As an optimization we might save the source pointer instead and retireve the timestamp lazily in case we don't always need this timestamp.
+
 Instance Variables
 	category:		<Object>
 	classIsMeta:		<Object>
@@ -22,64 +26,52 @@ Class {
 		'selector',
 		'className',
 		'timeStamp',
-		'sortKey'
+		'sortKey',
+		'sourcePointer'
 	],
 	#classVars : [
-		'Definitions',
 		'InitializersEnabled'
 	],
 	#category : 'Monticello-Model',
 	#package : 'Monticello-Model'
 }
 
-{ #category : 'initialization' }
-MCMethodDefinition class >> cachedDefinitions [
-
-	^ Definitions ifNil: [ Definitions := WeakIdentityKeyDictionary new ]
-]
-
 { #category : 'instance creation' }
-MCMethodDefinition class >> className: classString classIsMeta: metaBoolean selector: selectorString category: catString timeStamp: timeString source: sourceString [
+MCMethodDefinition class >> className: classString classIsMeta: metaBoolean selector: selectorString category: protocolName sourcePointer: aNumber source: sourceString [
+
 	^ self new
-		initializeWithClassName: classString
-		classIsMeta: metaBoolean
-		selector: selectorString
-		category: catString
-		timeStamp: timeString
-		source: sourceString
+		  className: classString;
+		  selector: selectorString;
+		  protocol: protocolName;
+		  sourcePointer: aNumber;
+		  classIsMeta: metaBoolean;
+		  source: sourceString;
+		  yourself
 ]
 
 { #category : 'instance creation' }
-MCMethodDefinition class >> className: classString
-selector: selectorString
-category: catString
-timeStamp: timeString
-source: sourceString [
-	^ self	className: classString
-			classIsMeta: false
-			selector: selectorString
-			category: catString
-			timeStamp: timeString
-			source: sourceString
+MCMethodDefinition class >> className: classString classIsMeta: metaBoolean selector: selectorString category: protocolName timeStamp: timeString source: sourceString [
+
+	^ self new
+		  className: classString;
+		  selector: selectorString;
+		  protocol: protocolName;
+		  timeStamp: timeString;
+		  classIsMeta: metaBoolean;
+		  source: sourceString;
+		  yourself
 ]
 
-{ #category : 'cleanup' }
-MCMethodDefinition class >> cleanUp [
-	"Flush caches"
+{ #category : 'instance creation' }
+MCMethodDefinition class >> className: classString selector: selectorString category: catString timeStamp: timeString source: sourceString [
 
-	self shutDown.
-]
-
-{ #category : 'initialization' }
-MCMethodDefinition class >> flushMethodCache [
-	"We do not named this method flushCache because it would override an important class methods."
-	Definitions := nil.
-]
-
-{ #category : 'class initialization' }
-MCMethodDefinition class >> initialize [
-
-	SessionManager default registerSystemClassNamed: self name
+	^ self
+		  className: classString
+		  classIsMeta: false
+		  selector: selectorString
+		  category: catString
+		  timeStamp: timeString
+		  source: sourceString
 ]
 
 { #category : 'settings' }
@@ -94,22 +86,11 @@ MCMethodDefinition class >> initializersEnabled: aBoolean [
 	InitializersEnabled := aBoolean
 ]
 
-{ #category : 'system startup' }
-MCMethodDefinition class >> shutDown [
-	"Free up all cached monticello method definitions"
-	self flushMethodCache 
-]
-
 { #category : 'comparing' }
 MCMethodDefinition >> = aDefinition [
 	^ super = aDefinition
 		and: [ aDefinition protocol = self protocol
 		and: [ aDefinition source withInternalLineEndings = self source withInternalLineEndings ] ]
-]
-
-{ #category : 'visiting' }
-MCMethodDefinition >> accept: aVisitor [
-	^ aVisitor visitMethodDefinition: self
 ]
 
 { #category : 'accessing' }
@@ -141,8 +122,20 @@ MCMethodDefinition >> classIsMeta [
 ]
 
 { #category : 'accessing' }
+MCMethodDefinition >> classIsMeta: aBoolean [
+
+	classIsMeta := aBoolean
+]
+
+{ #category : 'accessing' }
 MCMethodDefinition >> className [
 	^className
+]
+
+{ #category : 'serializing' }
+MCMethodDefinition >> className: aString [
+
+	className := aString asSymbol
 ]
 
 { #category : 'printing' }
@@ -179,17 +172,6 @@ MCMethodDefinition >> hash [
 	hash := String stringHash: category initialHash: hash.
 	hash := String stringHash: className initialHash: hash.
 	^ hash
-]
-
-{ #category : 'serializing' }
-MCMethodDefinition >> initializeWithClassName: classString classIsMeta: metaBoolean selector: selectorString category: protocolName timeStamp: timeString source: sourceString [
-
-	className := classString asSymbol.
-	selector := selectorString asSymbol.
-	category := protocolName isEmptyOrNil ifTrue: [ Protocol unclassified ] ifFalse: [ protocolName asSymbol ].
-	timeStamp := timeString.
-	classIsMeta := metaBoolean.
-	source := sourceString withInternalLineEndings
 ]
 
 { #category : 'installing' }
@@ -231,62 +213,55 @@ MCMethodDefinition >> isOverrideMethod [
 ]
 
 { #category : 'installing' }
-MCMethodDefinition >> load [
+MCMethodDefinition >> loadWithLoader: aLoader [
 
-	self loadInEnvironment: self class environment
-]
+	| method actualClass |
+	actualClass := self actualClassIn: aLoader targetEnvironment.
 
-{ #category : 'installing' }
-MCMethodDefinition >> loadInEnvironment: anEnvironment [
+	actualClass ifNil: [ Error signal: 'Class not found: ' , className printString ].
 
-	| method |
-	method := (self actualClassIn: anEnvironment) compiler
+	method := actualClass compiler
 		          protocol: category;
 		          changeStamp: timeStamp;
-		          permitUndeclared: true;
+		          permitUndeclared: aLoader isStrict not;
+		          permitFaulty: aLoader isStrict not;
 		          install: source.
 
-	method selector = selector ifTrue: [ ^ self ].
-	"This can happen if we provide a selector that does not match the source code. I (Cyril Ferlicot) personnaly do not like that. I would prefer even that the MCMethodDefinition would not have a selector variable at all. But this is used in some places of the system :("
-	Warning signal: ('Monticello: Selector missmatch. Got {1}, expected {2} for class {3}.' format: { method selector. selector. self actualClass name }).
+	method selector = selector ifTrue: [ ^ self ]. "This can happen if we provide a selector that does not match the source code. I (Cyril Ferlicot) personnaly do not like that. I would prefer even that the MCMethodDefinition would not have a selector variable at all. But this is used in some places of the system :("
+	(aLoader isStrict
+		 ifTrue: [ Error ]
+		 ifFalse: [ Warning ]) signal: ('Monticello: Selector missmatch. Got {1}, expected {2} for class {3}.' format: {
+				 method selector.
+				 selector.
+				 className }).
 	selector := method selector
 ]
 
 { #category : 'installing' }
-MCMethodDefinition >> overridenMethodOrNil [
-	"Answer the method that I've overriden on load. 
-
-	Preconditions: 
-	  - self actualClass is installed in the System Dictionary.
-	  - self isOverrideMethod is true."
-	
-	| realMethod |
-	realMethod := self actualClass
-		compiledMethodAt: self selector
-		ifAbsent: [ ^ nil ].
-		
-	^ SourceFiles
-		changeRecordsFor: realMethod
-		detect: [ :protocol | protocol ~= category ]
-]
-
-{ #category : 'installing' }
 MCMethodDefinition >> postloadOver: aDefinition [
+
 	super postloadOver: aDefinition.
 	self class initializersEnabled ifTrue: [
-		(self isInitializer
-			and: [ self actualClass isTrait not 
-					and: [ aDefinition isNil or: [ self source ~= aDefinition source ]]]) ifTrue: [
+			(self isInitializer and: [ self actualClass isTrait not and: [ aDefinition isNil or: [ self source ~= aDefinition source ] ] ]) ifTrue: [
 				self actualClass instanceSide initialize ] ].
+		
 	"Postloading of FFI fields. This code will be called when loading FFI structures that are not by default in the image. This is NOT dead code."
-	self isExternalStructureFieldDefinition
-		ifTrue: [self actualClass instanceSide compileFields].
+	self class environment at: #ExternalStructure ifPresent: [
+		self isExternalStructureFieldDefinition ifTrue: [ self actualClass instanceSide compileFields ] ]
 ]
 
 { #category : 'accessing' }
 MCMethodDefinition >> protocol [
 	"Return in which protocol (conceptual groups of methods) the receiver is grouped into."
 	^ category
+]
+
+{ #category : 'serializing' }
+MCMethodDefinition >> protocol: anObject [
+
+	category := anObject isEmptyOrNil
+		            ifTrue: [ Protocol unclassified ]
+		            ifFalse: [ anObject asSymbol ]
 ]
 
 { #category : 'installing' }
@@ -316,19 +291,41 @@ MCMethodDefinition >> selector [
 	^selector
 ]
 
+{ #category : 'serializing' }
+MCMethodDefinition >> selector: aString [
+
+	selector := aString asSymbol
+]
+
 { #category : 'comparing' }
 MCMethodDefinition >> sortKey [
-	^ sortKey
-		ifNil: [ sortKey := self className , '.'
-				,
-					(self classIsMeta
-						ifTrue: [ 'meta' ]
-						ifFalse: [ 'nonmeta' ]) , '.' , self selector ]
+
+	^ sortKey ifNil: [
+			  sortKey := Symbol streamContents: [ :aStream |
+					             aStream
+						             nextPutAll: self className;
+						             nextPut: $.;
+						             nextPutAll: (self classIsMeta
+								              ifTrue: [ 'meta' ]
+								              ifFalse: [ 'nonmeta' ]);
+						             nextPut: $.;
+						             nextPutAll: self selector ] ]
 ]
 
 { #category : 'accessing' }
 MCMethodDefinition >> source [
 	^ source
+]
+
+{ #category : 'serializing' }
+MCMethodDefinition >> source: aString [
+
+	source := aString withInternalLineEndings
+]
+
+{ #category : 'accessing' }
+MCMethodDefinition >> sourcePointer: anObject [
+	sourcePointer := anObject
 ]
 
 { #category : 'printing' }
@@ -339,19 +336,19 @@ MCMethodDefinition >> summary [
 
 { #category : 'accessing' }
 MCMethodDefinition >> timeStamp [
-	^ timeStamp
+	"My computation is lazy because it takes time to compute and is not always necessary."
+
+	^ timeStamp ifNil: [ sourcePointer ifNotNil: [ :pointer | timeStamp := SourcesManager current timeStampAt: pointer ] ]
+]
+
+{ #category : 'serializing' }
+MCMethodDefinition >> timeStamp: aString [
+
+	timeStamp := aString
 ]
 
 { #category : 'installing' }
 MCMethodDefinition >> unload [
-	"Unload me. If I represent an override method, then restore the overriden version. If not, just remove the selector from the class."
 
-	| previousVersion |
-	self isOverrideMethod ifTrue: [ previousVersion := self overridenMethodOrNil ].
-
-	previousVersion
-		ifNil: [ 
-			self actualClass ifNotNil: [ :class | 
-				self removeSelector: selector fromClass: class ] ]
-		ifNotNil: [ previousVersion fileIn ]
+	self actualClass ifNotNil: [ :class | self removeSelector: selector fromClass: class ]
 ]

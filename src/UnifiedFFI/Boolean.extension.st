@@ -9,3 +9,8 @@ Boolean class >> asExternalTypeOn: generator [
 Boolean >> asExternalTypeOn: generator [
 	^ FFIConst value: self asBit
 ]
+
+{ #category : '*UnifiedFFI' }
+Boolean >> asInteger [
+	^ self subclassResponsibility
+]

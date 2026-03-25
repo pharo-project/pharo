@@ -53,7 +53,7 @@ OSWorldRenderer class >> defaultExtent [
 { #category : 'accessing' }
 OSWorldRenderer class >> isApplicableFor: aWorld [
 
-	^ Smalltalk isHeadless and: [ CommandLineArguments new hasOption: 'interactive' ]
+	^ CommandLineArguments new hasOption: 'interactive'
 ]
 
 { #category : 'accessing' }
@@ -80,8 +80,8 @@ OSWorldRenderer class >> restart [
 	oldWindows 
 	 select: [ :e | e sdl2Window isNotNil ]
 	 thenDo: [ :e | OSSDL2Driver current registerWindow: e ].
-	 
-	self inform: self class name , ' restarted'
+
+	InformativeNotification signal: self class name , ' restarted'
 ]
 
 { #category : 'settings' }

@@ -1094,7 +1094,15 @@ Integer >> normalize [
 	^ self
 ]
 
-{ #category : 'printing' }
+{ #category : 'accessing' }
+Integer >> numberOfDigits [
+	"Return how many digits are necessary to print this number in base 10.
+	This does not count any place for minus sign, radix prefix or whatever."
+
+	^ self numberOfDigitsInBase: 10
+]
+
+{ #category : 'accessing' }
 Integer >> numberOfDigitsInBase: b [
 	"Return how many digits are necessary to print this number in base b.
 	This does not count any place for minus sign, radix prefix or whatever.
@@ -1130,14 +1138,6 @@ Integer >> numberOfDigitsInBase: b [
 Integer >> numerator [
 	"Let an Integer be polymorphic to a Fraction. See #isFraction."
 	^self
-]
-
-{ #category : 'printing' }
-Integer >> printOn: aStream base: b nDigits: n [
-	"Append a representation of this number in base b on aStream using nDigits.
-	self must be positive."
-
-	self subclassResponsibility
 ]
 
 { #category : 'arithmetic' }
@@ -1187,18 +1187,6 @@ Integer >> replaceFrom: start to: stop with: replacement startingAt: repStart [
 		[:i |
 		self byteAt: i put: (replacement byteAt: j).
 		j := j+1]
-]
-
-{ #category : 'truncation and round off' }
-Integer >> round: numberOfWishedDecimal [
-	"Round the decimal part of the receiver to be limited to the number of wished decimal. Only leave a fixed amount of decimal. Integers there are already rounded."
-
-	^self
-]
-
-{ #category : 'truncation and round off' }
-Integer >> rounded [
-	"Refer to the comment in Number#rounded."
 ]
 
 { #category : 'enumerating' }

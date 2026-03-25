@@ -39,7 +39,7 @@ ReTestCaseShouldNotUseInitializeRule >> basicCheck: aClass [
 	(aClass selectors includes: #initialize)
 		ifFalse: [ ^ false ].
 
-	alteredVariables := (aClass >> #initialize) ast allChildren
+	alteredVariables := (aClass >> #initialize) ast withAllChildren
 					select: [ :e | e isAssignment and: [ e variable isInstanceVariable ] ]
 					thenCollect: [ :e | e variable ].
 

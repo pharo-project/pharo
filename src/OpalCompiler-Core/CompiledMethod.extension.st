@@ -1,17 +1,31 @@
 Extension { #name : 'CompiledMethod' }
 
 { #category : '*OpalCompiler-Core' }
+CompiledMethod >> ast [
+	"return an AST for this method. The AST is cached. see class comment of ASTCache"
+	
+	"Workaround, see https://github.com/pharo-project/pharo/issues/14871
+	We force recompile to make sure the next call creates a correct BC to AST mapping"
+	
+	 ((self hasLiteral: #runtimeUndeclaredReadInContext:) or: [self hasLiteral: #runtimeUndeclaredWrite:inContext:])
+ 			ifTrue: [self isInstalled ifTrue: [self recompile]].
+	
+	^ OCASTCache at: self
+]
+
+{ #category : '*OpalCompiler-Core' }
+CompiledMethod >> bcToASTCacheKey [
+
+	^ #bcToASTCache
+]
+
+{ #category : '*OpalCompiler-Core' }
 CompiledMethod >> decompile [
 	^Smalltalk globals
 		at: #FBDDecompiler
 		ifPresent: [ :decompiler | decompiler new  decompile: self]
 		ifAbsent: [ OCParser parseMethod: self selector asMethodSignature, '
 	self noSourceAvailable' ]
-]
-
-{ #category : '*OpalCompiler-Core' }
-CompiledMethod >> hasTemporaryVariableNamed: aName [
-	^ self tempNames includes: aName
 ]
 
 { #category : '*OpalCompiler-Core' }
@@ -56,23 +70,6 @@ CompiledMethod >> saveBcToASTCacheWithAST: aMethodAST [
 { #category : '*OpalCompiler-Core' }
 CompiledMethod >> sourceNode [
 	^self ast
-]
-
-{ #category : '*OpalCompiler-Core' }
-CompiledMethod >> sourceNodeForPC: aPC [
-
-	| sourceNode |
-	sourceNode := self sourceNode.
-
-	self propertyAt: #bcToASTCache ifPresent: [ :bcToASTCache |
-		^ bcToASTCache nodeForPC: aPC ].
-	^ sourceNode sourceNodeForPC: aPC
-]
-
-{ #category : '*OpalCompiler-Core' }
-CompiledMethod >> temporaryVariableNamed: aName [
-	(self hasTemporaryVariableNamed: aName) ifFalse: [ ^nil ].
-	^self sourceNode scope lookupVar: aName
 ]
 
 { #category : '*OpalCompiler-Core' }

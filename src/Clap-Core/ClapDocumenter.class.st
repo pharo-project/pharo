@@ -46,8 +46,7 @@ ClapDocumenter class >> stringFrom: documenterBlock [
 { #category : 'documenting' }
 ClapDocumenter >> commandStringFrom: aClapContext [
 	| commands |
-	commands := (aClapContext commandMatches
-		ifEmpty: [ { aClapContext } ])
+	commands := (aClapContext commandMatches ifEmpty: [ { aClapContext } ])
 		collect: [ :command | command specification canonicalName ].
 		
 	^ String space join: commands
@@ -74,6 +73,7 @@ ClapDocumenter >> explain: aCommand [
 { #category : 'documenting' }
 ClapDocumenter >> explain: aCommand canonicalName: aCanonicalName [
 	self descriptionSummary: aCommand.
+	self longDescription: aCommand.
 	formatter newLine.
 	self usage: aCommand canonicalName: aCanonicalName.
 	self parameterDescriptions: aCommand.
@@ -83,8 +83,11 @@ ClapDocumenter >> explain: aCommand canonicalName: aCanonicalName [
 { #category : 'documenting' }
 ClapDocumenter >> explainContext: aClapContext [
 
+	| command |
+	command := [ aClapContext lastSubcommand ] on: ClapUnmatchCommand do: [ aClapContext ].
+
 	self 
-		explain: aClapContext lastSubcommand specification
+		explain: command specification
 		canonicalName: (self commandStringFrom: aClapContext)
 ]
 
@@ -100,6 +103,16 @@ ClapDocumenter >> flagSynopsis: aFlag [
 ClapDocumenter >> initializeOn: aFormatter [
 	self initialize.
 	formatter := aFormatter
+]
+
+{ #category : 'documenting' }
+ClapDocumenter >> longDescription: aCommand [
+	aCommand longDescription ifNil: [ ^ self ].
+
+	formatter
+		newLine;
+		text: aCommand longDescription;
+		newLine
 ]
 
 { #category : 'documenting' }

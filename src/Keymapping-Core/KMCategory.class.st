@@ -168,7 +168,7 @@ KMCategory >> onMatchWith: anEventBuffer notify: aMatchListener andDo: aBlock [
 
 { #category : 'associating' }
 KMCategory >> platformEntries [
-	^self entriesAt: Smalltalk os platformFamily
+	^self entriesAt: OSPlatform current platformFamily
 ]
 
 { #category : 'associating' }

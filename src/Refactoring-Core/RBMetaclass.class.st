@@ -89,9 +89,3 @@ RBMetaclass >> printOn: aStream [
 RBMetaclass >> realName: aSymbol [
 	self realClass: (self model environment at: aSymbol) classSide
 ]
-
-{ #category : 'storing' }
-RBMetaclass >> storeOn: aStream [
-	super storeOn: aStream.
-	aStream nextPutAll: ' class'
-]

@@ -657,7 +657,7 @@ HandMorph >> mapSymbolToKeyValue: keyValue [
 		KeyboardKey tab -> 9.
 		KeyboardKey backspace -> 8.
 		} asDictionary
-		at: (Smalltalk os keyForValue: keyValue)
+		at: (OSPlatform current keyForValue: keyValue)
 		ifAbsent: [ 0 ]
 ]
 
@@ -1154,6 +1154,12 @@ HandMorph >> targetOffset [
 	"Return the offset of the last mouseDown location relative to the origin of the recipient morph. During menu interactions, this is the absolute location of the mouse down event that invoked the menu."
 
 	^ targetOffset
+]
+
+{ #category : 'accessing' }
+HandMorph >> targetOffset: aValue [
+
+	targetOffset := aValue
 ]
 
 { #category : 'accessing' }

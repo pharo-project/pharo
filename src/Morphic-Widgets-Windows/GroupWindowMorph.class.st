@@ -69,14 +69,11 @@ GroupWindowMorph >> changePropotionalLayout [
 { #category : 'initialization' }
 GroupWindowMorph >> closeTopWindow [
 
-	self okToChange ifTrue: [
-			[ self removeWindow: self activeWindow ]
-				on: ProvideAnswerNotification
-				do: [ :notification | "We already got answer from okToChange check above"
-					notification resume: true ] ]
+	self okToChange ifTrue: [ self removeWindow: self activeWindow ]
+			
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 GroupWindowMorph >> defaultColor [
 	^ self theme windowColor lighter
 ]
@@ -223,6 +220,12 @@ GroupWindowMorph >> tabLabelFor: aSystemWindow [
 			help: 'Close this tab and free the window'}
 ]
 
+{ #category : 'event handling' }
+GroupWindowMorph >> themeChanged [
+	self color: self defaultColor.
+	super themeChanged
+]
+
 { #category : 'updating' }
 GroupWindowMorph >> update: aSymbol [
 	"Handle tab changes."
@@ -258,7 +261,7 @@ GroupWindowMorph >> wantsDroppedMorph: aMorph event: evt [
   ^aMorph isSystemWindow
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 GroupWindowMorph >> wantsKeyboardFocus [
 
 	^ false

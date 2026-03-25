@@ -65,19 +65,3 @@ RBRemoveParameterRefactoring >> removeParameter: aString in: aClass selector: aS
 	class := self classObjectFor: aClass.
 	argument := aString
 ]
-
-{ #category : 'storing' }
-RBRemoveParameterRefactoring >> storeOn: aStream [
-
-	aStream nextPut: $(.
-	aStream nextPutAll: self class name.
-	aStream
-		nextPutAll: ' removeParameter: ''';
-		nextPutAll: argument;
-		nextPutAll: ''' in: '.
-	aStream nextPutAll: class name.
-	aStream
-		nextPutAll: ' selector: #';
-		nextPutAll: oldSelector.
-	aStream nextPut: $)
-]

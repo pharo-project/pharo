@@ -36,16 +36,8 @@ SycPullUpMethodCommand >> description [
 { #category : 'execution' }
 SycPullUpMethodCommand >> executeRefactorings [
 
-	(RePullUpMethodDriver
-		 model: model
-		 scopes: refactoringScopes
-		 pullUpMethods: methods) runRefactoring
-]
-
-{ #category : 'testing' }
-SycPullUpMethodCommand >> isComplexRefactoring [
-
-	^ false
+	^ ((RePullUpMethodDriver newApplication: self application) model: model scopes: refactoringScopes pullUpMethods: methods)
+		  runRefactoring
 ]
 
 { #category : 'execution' }

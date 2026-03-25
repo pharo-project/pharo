@@ -24,8 +24,8 @@ RFMethodToExecuteReification class >> key [
 { #category : 'generate' }
 RFMethodToExecuteReification >> genForASTMessageNode [
 	^OCMessageNode
-		receiver: (OCMessageNode receiver: (OCVariableNode named: #RFReceiverReificationVar) selector: #class)
-		selector: #lookupSelector:
+		receiver: (OCMessageNode receiver: (OCVariableNode named: #RFReceiverReificationVar) selector: (OCSelectorNode value: #class))
+		selector: (OCSelectorNode value: #lookupSelector:)
 		arguments: (OCLiteralValueNode value: entity selector)
 ]
 

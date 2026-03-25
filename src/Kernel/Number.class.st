@@ -255,9 +255,17 @@ Number >> ceiling [
 
 { #category : 'calculating' }
 Number >> clampBetween: min and: max [
+	"Return the receiver if between min and max, else the min or max closest to the receiver."
 
-	 (self between: min and: max ) ifTrue: [ ^ self  ]
-	ifFalse: [( self < min )  ifTrue: [ ^ min]].
+	"(1 clampBetween: 10 and: 20) >>> 10"
+
+	"(15 clampBetween: 10 and: 20) >>> 15"
+
+	"(25 clampBetween: 10 and: 20) >>> 20"
+	
+	(self between: min and: max)
+		ifTrue: [ ^ self ]
+		ifFalse: [ self < min ifTrue: [ ^ min ] ].
 	^ max
 ]
 
@@ -306,18 +314,6 @@ Number >> floor [
 	^ self = truncation
 		  ifTrue: [ truncation ]
 		  ifFalse: [ truncation - 1 ]
-]
-
-{ #category : 'truncation and round off' }
-Number >> fractionPart [
-	"Added for ANSI compatibility"
-	^self - self integerPart
-]
-
-{ #category : 'truncation and round off' }
-Number >> integerPart [
-	"Added for ANSI compatibility"
-	^self truncated
 ]
 
 { #category : 'testing' }
@@ -374,28 +370,6 @@ Number >> positive [
 	^ self >= 0
 ]
 
-{ #category : 'printing' }
-Number >> printOn: aStream [
-	self printOn: aStream base: 10
-]
-
-{ #category : 'printing' }
-Number >> printString [
-
-	^ self printStringBase: 10
-]
-
-{ #category : 'printing' }
-Number >> printStringBase: base [
-	"Return a String representation of this number in base b."
-	"(10 printStringBase: 10) >>> '10'"
-	"(-10 printStringBase: 10) >>> '-10'"
-	"(10 printStringBase: 2) >>> '1010'"
-	"(10 printStringBase: 16) >>> 'A'"
-
-	^ String streamContents: [:strm | self printOn: strm base: base]
-]
-
 { #category : 'arithmetic' }
 Number >> quo: aNumber [
 	"Integer quotient defined by division with truncation toward zero.
@@ -434,74 +408,12 @@ Number >> raisedTo: aNumber [
 	^ (aNumber * self ln) exp		"Otherwise use logarithms"
 ]
 
-{ #category : 'mathematical functions' }
-Number >> raisedToFraction: aFraction [
-	self isZero
-		ifTrue:
-			[aFraction negative ifTrue: [^ (ZeroDivide dividend: 1) signal].
-			^self].
-	self negative ifFalse: [^(self ln * aFraction) exp].
-	aFraction denominator even
-		ifTrue: [^ ArithmeticError signal: 'nth root only defined for positive Integer n.'].
-	^(self negated ln * aFraction) exp negated
-]
-
-{ #category : 'mathematical functions' }
-Number >> raisedToInteger: anInteger [
-
-	"The 0 raisedToInteger: 0 is an special case. In some contexts must be 1 and in others must
-	be handled as an indeterminate form.
-	I take the first context because that's the way that was previously handled.
-	Maybe further discussion is required on this topic."
-
-	|bitProbe result|
-
-	anInteger negative ifTrue: [^(self raisedToInteger: anInteger negated) reciprocal].
-	bitProbe := 1 bitShift: anInteger highBit - 1.
- 	result := self class one.
-  	[
-		(anInteger bitAnd: bitProbe) = 0 ifFalse: [result := result * self].
-       bitProbe := bitProbe bitShift: -1.
-		bitProbe > 0 ]
-	whileTrue: [result := result * result].
-
-	^result
-]
-
-{ #category : 'arithmetic' }
-Number >> reciprocal [
-	"Returns the reciprocal of self.
-	In case self is 0 the / signals ZeroDivide"
-
-	"1/2 reciprocal >>> 2"
-	"2 reciprocal >>> (1/2)"
-	"1.25 reciprocal >>> 0.8"
-	"-2 reciprocal >>> (-1/2)"
-
-	^1 / self
-]
-
-{ #category : 'truncation and round off' }
-Number >> reduce [
-    "If self is close to an integer, return that integer"
-    ^ self
-]
-
 { #category : 'arithmetic' }
 Number >> rem: aNumber [
 	"Remainder defined in terms of quo:. Answer a Number with the same
 	sign as self. e.g. 9 rem: 4 = 1, -9 rem: 4 = -1. 0.9 rem: 0.4 = 0.1."
 
 	^self - ((self quo: aNumber) * aNumber)
-]
-
-{ #category : 'truncation and round off' }
-Number >> round: numberOfWishedDecimal [
-	"Round the decimal part of the receiver to be limited to the number of wished decimal. Only leave a fixed amount of decimal"
-   "(10.12345 round: 2) >>> 10.12"
-	"(10.199999999 round: 2) >>>10.2"
-
-	^ self subclassResponsibility
 ]
 
 { #category : 'truncation and round off' }
@@ -534,18 +446,6 @@ Number >> roundUpTo: aNumber [
 	"(-3.1479 roundUpTo: 0.01) >>> -3.14"
 
 	^(self / aNumber) ceiling * aNumber
-]
-
-{ #category : 'truncation and round off' }
-Number >> rounded [
-	"Answer the integer nearest the receiver."
-
-	"1.4 rounded >>> 1"
-	"1.5 rounded >>> 2"
-	"2 rounded >>> 2"
-	"-1.5 rounded >>> -2"
-
-	^(self + (self sign / 2)) truncated
 ]
 
 { #category : 'converting' }

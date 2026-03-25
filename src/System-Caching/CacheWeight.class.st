@@ -32,7 +32,7 @@ CacheWeight >> compute [
 	^ compute
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 CacheWeight >> compute: valuable [
 	compute := valuable
 ]
@@ -55,7 +55,7 @@ CacheWeight >> maximum [
 	^ maximum
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 CacheWeight >> maximum: integer [
 	maximum := integer
 ]

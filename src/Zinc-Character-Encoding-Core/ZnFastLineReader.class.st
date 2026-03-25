@@ -26,17 +26,17 @@ ZnFastLineReader >> atEnd [
 	^ readStream atEnd
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 ZnFastLineReader >> beWide [
 	self bufferStream: (WideString new: 32) writeStream
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 ZnFastLineReader >> bufferStream: characterWriteStream [
 	^ bufferStream := characterWriteStream
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 ZnFastLineReader >> close [
 	readStream close
 ]
@@ -71,7 +71,7 @@ ZnFastLineReader >> nextLine [
 						ifFalse: [  out nextPut: char ] ] ] ]
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 ZnFastLineReader >> on: characterReadStream [
 	readStream := characterReadStream
 ]

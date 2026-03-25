@@ -23,12 +23,19 @@ Class {
 		'notInstVarRefs',
 		'notSharedVarRefs',
 		'notSupersendsReceived',
-		'notSupersendsSent'
+		'notSupersendsSent',
+		'notSuperclassDefiner'
 	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',
 	#tag : 'Drivers'
 }
+
+{ #category : 'accessing' }
+RePullUpMethodDriver class >> driverName [
+
+	^ 'Pull up method(s)'
+]
 
 { #category : 'initialization' }
 RePullUpMethodDriver class >> model: model scopes: refactoringScopes pullUpMethods: methods [
@@ -41,7 +48,8 @@ RePullUpMethodDriver class >> model: model scopes: refactoringScopes pullUpMetho
 
 { #category : 'ui - dialogs' }
 RePullUpMethodDriver >> alertFailedPreconditions [
-	SpAlertDialog new
+
+	self application newAlert
 		title: 'Pull Up method failed: Required preconditions were not met';
 		label:  self failedPreconditionsErrorString;
 		acceptLabel: 'Accept';
@@ -51,20 +59,26 @@ RePullUpMethodDriver >> alertFailedPreconditions [
 { #category : 'execution' }
 RePullUpMethodDriver >> breakingChoices [
 
-	^ refactoring failedBreakingChangePreconditions collect: [ :each |
-		each class strategyChoiceClass new driver: self ]
+	| choices |
+	choices := OrderedCollection new.
+	notSharedVarRefs isFalse ifTrue: [ choices add: (RePushUpSharedVariableChoice new driver: self) ].
+	notInstVarRefs isFalse ifTrue: [ choices add: (RePushUpInstanceVariableChoice new driver: self) ].
+	choices add: (RePullUpMethodTransformationChoice new driver: self).
+	notOverrides isFalse ifTrue: [
+			choices add: (ReBrowseMethodOverridesChoice new
+					 driver: self;
+					 description: 'Browse overriden method(s)') ].
+	notSuperclassDefiner isFalse ifTrue: [ choices add: (ReCopyDownSuperclassMethodChoice new driver: self) ].
+
+	^ choices
 ]
 
 { #category : 'actions' }
 RePullUpMethodDriver >> browseOverrides [
 
 	| overrides |
-	overrides := notOverrides violators.
-	methods do: [:method | 
-		StMessageBrowser
-		browse: (overrides collect: [ :ref | ref realClass methodNamed: method selector ])
-		asImplementorsOf: method selector ]
-	
+	overrides := notOverrides violators collect: [ :sel | superclass methodNamed: sel ].
+	(application toolNamed: #messageList) browse: overrides
 ]
 
 { #category : 'actions' }
@@ -73,7 +87,7 @@ RePullUpMethodDriver >> browseSuperSendsSent [
 	overrides := notSupersendsSent violators.
 	
 	methods do: [:method | 
-		StMessageBrowser
+		(Smalltalk tools toolNamed: #messageList)
 		browse: (overrides collect: [ :ref | ref compiledMethod ])
 		asImplementorsOf: method selector ]
 	
@@ -89,25 +103,67 @@ RePullUpMethodDriver >> changes [
 { #category : 'execution' }
 RePullUpMethodDriver >> configureAndRunRefactoring [
 
-	self configureRefactoring.
+	self configureRefactoring. 
+	"Pay attention that the applicability preconditions do  not include checking the superclass for a 
+	method with the same name because during an interaction we when to let the user the possibility to 
+	do actions to handle this specific case. This is why similarly method in direct superclass is checked 
+	but in the breaking change precondtions."
+	refactoring failedApplicabilityPreconditions 
+		ifNotEmpty: [ ^ self alertFailedPreconditions ].
 
-	refactoring failedApplicabilityPreconditions ifNotEmpty: [
-		^ self alertFailedPreconditions ].
-	
 	self setBreakingChangesPreconditions.
-	refactoring failedBreakingChangePreconditions
-		ifEmpty: [ self applyChanges ]
-		ifNotEmpty: [ self handleBreakingChanges ]
+	refactoring failedBreakingChangePreconditions ifEmpty: [ self applyChanges ] ifNotEmpty: [ self handleBreakingChanges ]
 ]
 
-{ #category : 'resources' }
-RePullUpMethodDriver >> configureRefactoring [
+{ #category : 'copying' }
+RePullUpMethodDriver >> copyDownMethods [
 
-	refactoring := RePullUpMethodRefactoring
-		               model: model
-		               pullUp: (methods collect: [ :each | each selector ])
-		               from: class name
-		               to: superclass name
+	| superclassDefiner subclasses oldSource oldProtocol refactoring2 |
+	refactoring selectors do: [ :aSelector |
+			notSuperclassDefiner violators do: [ :violator |
+					violator second = aSelector ifFalse: [ ^ self ].
+					superclassDefiner := violator first.
+
+					subclasses := refactoring targetSuperclass subclasses reject: [ :each | each directlyDefinesMethod: aSelector ].
+
+					subclasses ifEmpty: [ ^ self ].
+
+					oldSource := superclassDefiner sourceCodeFor: aSelector.
+					oldProtocol := superclassDefiner protocolsFor: aSelector.
+					(superclassDefiner parseTreeForSelector: aSelector) superMessages
+						detect: [ :each | superclassDefiner directlyDefinesMethod: each ]
+						ifFound: [
+								refactoring refactoringError:
+									('Cannot pull up <1s> since we must copy down the superclass method in <2p><n>to the other subclasses, and the superclass method sends a super message which is overriden.'
+										 expandMacrosWith: aSelector
+										 with: superclassDefiner) ].
+
+					refactoring2 := RBExpandReferencedPoolsRefactoring
+						                model: refactoring model
+						                forMethod: (superclassDefiner parseTreeForSelector: aSelector)
+						                fromClass: superclassDefiner
+						                toClasses: subclasses.
+
+					refactoring generateChangesFor: refactoring2.
+
+					subclasses do: [ :each |
+						refactoring generateChangesFor: (RBAddMethodTransformation sourceCode: oldSource in: each withProtocol: oldProtocol) ] ] ].
+	notInstVarRefs check
+		ifFalse: [ self pullUpReferencedInstVars ]
+		ifTrue: [ self pullUpMethods ]
+]
+
+{ #category : 'execution' }
+RePullUpMethodDriver >> defaultSelectDialog [
+
+	^ super defaultSelectDialog
+		  title: 'There are potential breaking changes!';
+		  message: self labelBasedOnBreakingChanges;
+		  items: self breakingChoices;
+		  display: [ :each | each description ];
+		  displayIcon: [ :each | self iconNamed: each systemIconName ];
+		  yourself
+		  
 ]
 
 { #category : 'execution' }
@@ -115,28 +171,14 @@ RePullUpMethodDriver >> gatherUserInput [
 	self selectMethodsAndClass
 ]
 
-{ #category : 'execution' }
-RePullUpMethodDriver >> handleBreakingChanges [
+{ #category : 'configuration' }
+RePullUpMethodDriver >> instantiateRefactoring [
 
-	| presenter choices |
-	
-	"Display previous transformations that will fix the fixable breaking conditions"
-	choices := self breakingChoices.
-	
-	
-	presenter := self application newSelectMultiple.
-
-	presenter
-		title: 'There are potential breaking changes';
-		label: self labelBasedOnBreakingChanges;
-		items: choices;
-		display: [ :each | each description ];
-		onAccept: [ :dialog |
-			| selectedChanges |
-			selectedChanges := dialog presenter selectedItems.
-			selectedChanges do: #action.
-			self applyChanges ];
-		openDialog
+	^ RePullUpMethodRefactoring
+       model: model
+       pullUp: (methods collect: [ :each | each selector ])
+       from: class name
+       to: superclass name
 ]
 
 { #category : 'ui - dialogs' }
@@ -171,12 +213,19 @@ RePullUpMethodDriver >> model: aRBNamespace scopes: refactoringScopes pullUpMeth
 	class := methods first origin
 ]
 
+{ #category : 'transforming' }
+RePullUpMethodDriver >> pullUpMethods [
+
+	refactoring privateTransform.
+	self openPreviewWithChanges: refactoring changes
+]
+
 { #category : 'actions' }
 RePullUpMethodDriver >> pullUpReferencedInstVars [
 
-	notInstVarRefs referencedInstanceVariables do: [ :instVar | 
-		"We add the pushUpVariable transformation to the refactoring previous transformations"
-		refactoring pullUpVariable: instVar ]
+	notInstVarRefs referencedInstanceVariables do: [ :instVar | "We add the pushUpVariable refactoring to the refactoring previous transformations." "should we not call privateTransform instead of generateChanges"
+		refactoring pullUpVariable: instVar ].
+	self pullUpMethods
 ]
 
 { #category : 'actions' }
@@ -198,23 +247,25 @@ RePullUpMethodDriver >> runRefactoring [
 
 { #category : 'execution' }
 RePullUpMethodDriver >> selectMethodsAndClass [
-
 	| dialog classes |
-	classes := class allSuperclasses removeAllSuchThat: [ :each |
-		           each == Object or: [ each == ProtoObject ] ].
-	dialog := self methodsAndSuperclassSelectionPresenterClass
-		          label: 'Methods to be pulled up'
-		          dropLabel: 'Pull up methods from ' , class name , ' to:'
-		          withItems:
-			          (class methods sort: [ :a :b | a asString < b asString ])
-				          asOrderedCollection
-		          selecting: methods asOrderedCollection
-		          dropItems: classes
-		          acceptBlock: [ :selectedClass :selectedMethods |
-			          superclass := selectedClass.
-			          methods := selectedMethods ].
+	
+	classes := class allSuperclasses 
+		removeAllSuchThat: [ :each | each == Object or: [ each == ProtoObject ] ].
+	
+	dialog := (self methodsAndSuperclassSelectionPresenterClass newApplication: self application)
+		title: 'There are potential breaking changes!'
+			label: 'Methods to be pulled up'
+			dropLabel: 'Pull up methods from ' , class name , ' to:'
+			withItems: (class methods sort: #asString ascending) asOrderedCollection
+			selecting: methods asOrderedCollection
+			dropItems: classes
+			acceptBlock: [ :selectedClass :selectedMethods |
+				superclass := selectedClass.
+				methods := selectedMethods ];
+		openModal.			
 
-	dialog cancelled ifFalse: [ ^ self ].
+	dialog isOk ifTrue: [ ^ self ].
+	
 	superclass := nil.
 	methods := nil
 ]
@@ -227,5 +278,5 @@ RePullUpMethodDriver >> setBreakingChangesPreconditions [
 	notSharedVarRefs := refactoring preconditionNoReferencesToSharedVars.
 	notSupersendsSent := refactoring preconditionNoSupersendsSent.
 	notSupersendsReceived := refactoring preconditionNoSupersendsReceived.
-	
+	notSuperclassDefiner := refactoring preconditionNoSuperclassDefiner
 ]

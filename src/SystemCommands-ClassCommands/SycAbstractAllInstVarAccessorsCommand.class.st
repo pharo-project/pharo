@@ -8,6 +8,13 @@ Class {
 	#package : 'SystemCommands-ClassCommands'
 }
 
+{ #category : 'activation' }
+SycAbstractAllInstVarAccessorsCommand class >> sourceCodeMenuActivation [
+
+	<classAnnotation>
+	^ SycSourceCodeMenuActivation byRootGroupItemFor: ClySourceCodeContext
+]
+
 { #category : 'accessing' }
 SycAbstractAllInstVarAccessorsCommand >> asRefactorings [
 

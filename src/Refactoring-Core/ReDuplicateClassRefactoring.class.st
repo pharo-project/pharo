@@ -107,7 +107,7 @@ ReDuplicateClassRefactoring >> copyClass [
 			 yourself)
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 ReDuplicateClassRefactoring >> copyClass: cls withName: aName [
 
 	self className: aName.
@@ -151,7 +151,7 @@ ReDuplicateClassRefactoring >> copyVariables [
 		class: className) ]
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 ReDuplicateClassRefactoring >> initializeWithClass: cls [
 
 	aClass := self classObjectFor: cls
@@ -203,7 +203,7 @@ ReDuplicateClassRefactoring >> privateTransform [
 
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 ReDuplicateClassRefactoring >> sourceClass: classToCopy [
 
 	aClass := self classObjectFor: classToCopy

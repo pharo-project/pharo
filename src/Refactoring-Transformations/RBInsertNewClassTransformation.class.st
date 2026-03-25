@@ -57,6 +57,19 @@ RBInsertNewClassTransformation >> applicabilityPreconditions [
 					   'Invalid package name') }
 ]
 
+{ #category : 'transforming' }
+RBInsertNewClassTransformation >> checkSuperclass [
+
+	| superclassObj superclassName |
+	"I fail if superclass is not defined in the model"
+	superclassObj := self model classObjectFor: superclass.
+	superclassObj ifNil: [
+			superclassName := superclass isString
+				                  ifTrue: [ superclass , ' ' ]
+				                  ifFalse: [ '' ].
+			self refactoringError: 'The new class'' superclass ' , superclassName , 'is missing from the model' ]
+]
+
 { #category : 'initialization' }
 RBInsertNewClassTransformation >> initialize [
 
@@ -88,6 +101,12 @@ RBInsertNewClassTransformation >> packageName: anObject [
 	packageName := anObject
 ]
 
+{ #category : 'transforming' }
+RBInsertNewClassTransformation >> prepareForExecution [
+	
+	self checkSuperclass
+]
+
 { #category : 'executing' }
 RBInsertNewClassTransformation >> privateTransform [
 
@@ -99,25 +118,6 @@ RBInsertNewClassTransformation >> privateTransform [
 				package: packageName;
 				tag: tagName ];
 		reparentClasses: (subclasses collect: [ :subclass | self model classObjectFor: subclass ]) to: (self model classNamed: className asSymbol)
-]
-
-{ #category : 'storing' }
-RBInsertNewClassTransformation >> storeOn: aStream [
-
-	aStream nextPutAll: '(('.
-	self class storeOn: aStream.
-	aStream
-		nextPutAll: ' className: #';
-		nextPutAll: className;
-		nextPutAll: ') superclass: '.
-	superclass storeOn: aStream.
-	aStream nextPutAll: '; subclasses: '.
-	subclasses asArray storeOn: aStream.
-	aStream nextPutAll: '; packageName: '.
-	packageName storeOn: aStream.
-	aStream nextPutAll: '; tagName: '.
-	tagName storeOn: aStream.
-	aStream nextPut: $)
 ]
 
 { #category : 'api' }

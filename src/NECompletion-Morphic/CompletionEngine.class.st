@@ -35,17 +35,20 @@ Class {
 
 { #category : 'accessing' }
 CompletionEngine class >> contextClass [
-	^ContextClass ifNil: [ CompletionContext ]
+
+	^ ContextClass ifNil: [ CoCompletionContext ]
 ]
 
 { #category : 'accessing' }
 CompletionEngine class >> contextClass: aClass [
+
 	ContextClass := aClass
 ]
 
 { #category : 'accessing' }
 CompletionEngine class >> isCompletionEnabled [
-	^NECPreferences enabled
+
+	^ NECPreferences enabled
 ]
 
 { #category : 'private' }
@@ -64,9 +67,10 @@ CompletionEngine >> closeMenu [
 
 { #category : 'replacement' }
 CompletionEngine >> completionToken [
-
 	"Return the word just before the caret"
-	^ (self editor text copyFrom: self completionTokenStart to: self editor caret - 1) asString
+	^ (self editor text 
+			copyFrom: self completionTokenStart 
+			to: self editor caret - 1) asString
 ]
 
 { #category : 'replacement' }
@@ -108,7 +112,8 @@ CompletionEngine >> contextClass: aClass [
 CompletionEngine >> createContext [
 
 	| class |
-	class := editor model ifNotNil: [ :model | model selectedClassOrMetaClass ].
+	class := editor model 
+		ifNotNil: [ :model | model selectedClassOrMetaClass ].
 	^ self contextClass
 		engine: self
 		class: class

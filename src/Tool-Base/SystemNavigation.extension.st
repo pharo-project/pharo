@@ -10,7 +10,7 @@ SystemNavigation >> allMethodsWithSourceString: aString matchCase: caseSensitive
 	addComment := [ :mrClass | list add: (RGCommentDefinition realClass: mrClass)].
 	self allBehaviorsDo: [:each |
 		each selectorsDo: [:sel |
-			((each sourceCodeAt: sel) includesSubstring: aString caseSensitive: caseSensitive)
+			((each >> sel) sourceCode includesSubstring: aString caseSensitive: caseSensitive)
 					ifTrue: [ addMethod value: each value: sel ]].
 			(each comment includesSubstring: aString caseSensitive: caseSensitive) ifTrue: [ addComment value: each]	].
 	^ list
@@ -181,7 +181,7 @@ SystemNavigation >> browseClassVarRefs: aClass [
 			allVars add: var.
 			owningClasses add: class].
 		vars isEmpty ifFalse: [lines add: allVars size]].
-	labelStream contents isEmpty ifTrue: [^self inform: 'No class variables found']. "handle nil superclass better"
+	labelStream contents isEmpty ifTrue: [^InformativeNotification signal: 'No class variables found']. "handle nil superclass better"
 	labelStream skip: -1 "cut last CR".
 	index := (UIManager default chooseFrom: (labelStream contents substrings) lines: lines).
 	index = 0 ifTrue: [^ self].
@@ -252,17 +252,15 @@ SystemNavigation >> browseMessageList: messageList name: labelString autoSelect:
 
 { #category : '*Tool-Base' }
 SystemNavigation >> browseMessageList: messageList name: labelString autoSelect: autoSelectString refreshingBlock: aBlock [
-
 	"Create and schedule a MessageSet browser on the message list."
 
 	| methods |
 	"Do not show trait methods"
 	methods := messageList reject: [ :each | each isFromTrait ].
-	methods isEmpty ifTrue: [
-		^ self inform: 'There are no ' , String cr , labelString ].
+	methods isEmpty ifTrue: [ ^ InformativeNotification signal: 'There are no ' , String cr , labelString ].
 
 	^ (self tools toolNamed: #messageList) new
-		  messages: methods;
+		  methods: methods;
 		  title: labelString;
 		  autoSelect: autoSelectString;
 		  refreshingBlock: aBlock;
@@ -346,7 +344,7 @@ SystemNavigation >> chooseInstVarAlphabeticallyFrom: aClass thenDo: aBlock [
 	"Put up a menu of all the instance variables in the receiver, presented in alphabetical order, and when the user chooses one, evaluate aBlock with the chosen variable as its parameter."
 
 	allVars := aClass allInstVarNames sort.
-	allVars isEmpty ifTrue: [^ self inform: 'There are no instance variables'].
+	allVars isEmpty ifTrue: [^ InformativeNotification signal: 'There are no instance variables'].
 
 	index := (UIManager default chooseFrom: allVars lines: #() title: 'Instance variables in ', aClass name).
 	index = 0 ifTrue: [^ aClass].
@@ -363,8 +361,7 @@ at the top of the list."
 
 	| lines labelStream allVars index count offerAlpha |
 	(count := aClass allInstVarNames size) = 0 ifTrue:
-		[^ self inform: 'There are no
-instance variables.'].
+		[^ InformativeNotification signal: 'There are no instance variables.'].
 
 	allVars := OrderedCollection new.
 	lines := OrderedCollection new.

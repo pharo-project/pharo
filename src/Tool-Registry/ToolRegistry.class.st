@@ -180,23 +180,11 @@ ToolRegistry >> openWorkspace [
 ]
 
 { #category : 'registration' }
-ToolRegistry >> register: anObject as: aNameSelector [
+ToolRegistry >> register: aClass as: aNameSelector [
 	"Register a tool class under given name"
-	tools at: aNameSelector put: anObject.
-	self announcer announce: (ToolRegistryToolRegistered tool: anObject name: aNameSelector)
-]
-
-{ #category : 'registration' }
-ToolRegistry >> remove: aName [
-
-	self 
-		deprecated: 'Use unregisterToolWithRole:' 
-		on: '17/11/2024'  
-		in: 'pharo13' 
-		transformWith:  '`@receiver remove: `@arg'
-						-> '`@receiver unregisterToolWithRole: `@arg'.
-	self unregisterToolWithRole: aName
-
+	
+	tools at: aNameSelector put: aClass.
+	self announcer announce: (ToolRegistryToolRegistered tool: aClass name: aNameSelector)
 ]
 
 { #category : 'announcer' }

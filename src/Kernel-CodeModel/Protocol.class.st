@@ -84,6 +84,9 @@ Protocol >> isExtensionProtocol [
 	
 	The protocol needs to be '*NameOfThePackage'. This is an implementation detail and in the future we want to manage extensions in a different way to not rely on protocols. But until now, I can be used to know if I am used to manage extension methods."
 
+	"When we add an empty protocol it is automatically turned into an non classified one. So the following check is not mandatory. Now we let it because it is cheap and makes the system more robust in case of reflective tweaks."
+	
+	self name ifEmpty: [ ^ false ].
 	^ self name first = $*
 ]
 

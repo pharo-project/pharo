@@ -206,6 +206,12 @@ RGPackage >> extendedTraits [
 	^ (self extensionMethods collect: [:each | each parent]) select: [:each | each isTrait]
 ]
 
+{ #category : 'testing' }
+RGPackage >> extendsClass: aClass [
+
+	^ self extendedClasses includes: aClass
+]
+
 { #category : 'accessing' }
 RGPackage >> extensionMethods [
 

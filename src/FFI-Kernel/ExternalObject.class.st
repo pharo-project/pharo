@@ -17,7 +17,8 @@ Class {
 { #category : 'class initialization' }
 ExternalObject class >> initialize [
 
-	Smalltalk recreateSpecialObjectsArray
+	Smalltalk recreateSpecialObjectsArray.
+	SessionManager default registerSystemClassNamed: self name atPriority: 60
 ]
 
 { #category : 'system startup' }

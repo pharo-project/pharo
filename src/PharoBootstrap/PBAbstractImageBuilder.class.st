@@ -149,16 +149,21 @@ PBAbstractImageBuilder >> bindingOf: aName [
 
 { #category : 'running' }
 PBAbstractImageBuilder >> bootstrap [
+	"During the bootstrap we disable the assertions for speed."
 
-	self
-		initializeBootstrapEnvironment;
-		createVMStubs;
-		flushNewSpace;
-		createInitialObjects;
-		createClasses;
-		installMethods;
-		installExtensionMethods;
-		initializeImage
+	| oldCode |
+	oldCode := (Object >> #assert:) sourceCode.
+	Object compile: 'assert: arg "Do nothing during the bootstrap"'.
+	[
+		self
+			initializeBootstrapEnvironment;
+			createVMStubs;
+			flushNewSpace;
+			createInitialObjects;
+			createClasses;
+			installMethods;
+			installExtensionMethods;
+			initializeImage ] ensure: [ Object compile: oldCode ]
 ]
 
 { #category : 'accessing' }
@@ -331,7 +336,6 @@ PBAbstractImageBuilder >> createInitialObjects [
 			"Initialize the globals of the system. Careful: The AST interpreter will not know about these if we do not put them in the bootstrapEnvironment."
 			self bootstrapInterpreter evaluateCode: 'Smalltalk globals at: #Processor put: nil.'.
 			self bootstrapInterpreter evaluateCode: 'Smalltalk globals at: #Transcript put: nil.'.
-			self bootstrapInterpreter evaluateCode: 'Smalltalk globals at: #SourceFiles put: nil.'.
 
 
 			self log: 'class loader now creates class pools'.

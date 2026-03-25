@@ -186,14 +186,6 @@ Collection >> adaptToCollection: rcvr andSend: selector [
 ]
 
 { #category : 'adapting' }
-Collection >> adaptToNumber: rcvr andSend: selector [
-	"If I am involved in arithmetic with a scalar, return a Collection of
-	the results of each element combined with the scalar in that expression."
-
-	^ self collect: [:element | rcvr perform: selector with: element]
-]
-
-{ #category : 'adapting' }
 Collection >> adaptToPoint: rcvr andSend: selector [
 	"If I am involved in arithmetic with a scalar, return a Collection of
 	the results of each element combined with the scalar in that expression."
@@ -702,13 +694,13 @@ Collection >> difference: aCollection [
 	^ self species withAll: set asArray
 ]
 
-{ #category : 'displaying' }
+{ #category : 'printing' }
 Collection >> displayStringOn: stream [
 	self printNameOn: stream.
 	stream
 		space;
 		nextPut: $[;
-		print: self size;
+		nextPutAll: self size asStringWithCommas;
 		nextPutAll: (' item' asPluralBasedOn: self size);
 		nextPut: $];
 		space.
@@ -1205,8 +1197,13 @@ Collection >> printNameOn: aStream [
 Collection >> printOn: aStream [
 	"Append a sequence of characters that identify the receiver to aStream."
 
-	self printNameOn: aStream.
-	self printElementsOn: aStream
+	[ self printNameOn: aStream.
+	self printElementsOn: aStream ] 
+		on: Error 
+		do: [ :ex | aStream 
+				nextPutAll: 'aCollection of class ';
+				nextPutAll: self class name ;
+				nextPutAll: 'with a failing printOn: is getting printed.' ]
 ]
 
 { #category : 'enumerating' }

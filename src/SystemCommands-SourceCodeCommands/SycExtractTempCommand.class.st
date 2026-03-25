@@ -42,12 +42,6 @@ SycExtractTempCommand >> execute [
 		  scopes: refactoringScopes) runRefactoring
 ]
 
-{ #category : 'testing' }
-SycExtractTempCommand >> isComplexRefactoring [ 
-
-	^ false
-]
-
 { #category : 'execution' }
 SycExtractTempCommand >> prepareFullExecutionInContext: aSourceCodeContext [
 	super prepareFullExecutionInContext: aSourceCodeContext.

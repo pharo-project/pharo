@@ -59,6 +59,8 @@ SocketAddress class >> zero [
 
 { #category : 'converting' }
 SocketAddress >> asSocketAddress [
+
+	^ self
 ]
 
 { #category : 'displaying' }

@@ -57,32 +57,6 @@ WinPlatform >> getEnvironmentVariable: lpName into: lpBuffer size: nSize [
 	^ self ffiCall: #(ulong GetEnvironmentVariableW (Win32WideString lpName, Win32WideString  lpBuffer, ulong nSize))
 ]
 
-{ #category : 'error handling' }
-WinPlatform >> getErrorMessage: anInteger [
-
-    | buffer |
-    buffer := (String new: 500) asWin32WideString.
-    self formatMessage: 16r1000 "Format Message From System"
-                        _: ExternalAddress null
-                        _: anInteger
-                        _: 0
-                        _: buffer
-                        _: 500
-                        _: ExternalAddress null.
-
-    ^ buffer asString
-]
-
-{ #category : 'file paths' }
-WinPlatform >> getTempPath [
-
-  | buffer length |
-	length := self defaultMaximumPathLength.
-	buffer := (String new: length) asWin32WideString.
-	self getTempPath: length buffer: buffer.
-	^buffer asString
-]
-
 { #category : 'file paths' }
 WinPlatform >> getTempPath: bufferLength buffer: buffer [
 
@@ -121,12 +95,6 @@ WinPlatform >> menuShortcutString [
 WinPlatform >> multiByteToWideCharacterCodepage: codepage flags: flags input: input inputLen: inputLen output: output outputLen: outputLen [
 
 	^self ffiCall: #(int MultiByteToWideChar(uint codepage, ulong flags, void* input, int inputLen, Win32WideString output, int outputLen ))
-]
-
-{ #category : 'environment-variables' }
-WinPlatform >> setEnvironmentVariable: nameString value: valueString [
-
-	 ^ self ffiCall: #( int SetEnvironmentVariableW ( Win32WideString nameString, Win32WideString valueString ) )
 ]
 
 { #category : 'accessing' }

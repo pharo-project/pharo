@@ -37,26 +37,9 @@ RBPullUpMethodTransformation class >> pullUp: selectorCollection from: aClass to
 	^ self new pullUp: selectorCollection from: aClass to: aSuperClass
 ]
 
-{ #category : 'preconditions' }
-RBPullUpMethodTransformation >> applicabilityPreconditions [
-
-	^ {
-		  (ReDefinesSelectorsCondition new
-			   definesSelectors: selectors
-			   in: class).
-		  (ReClassHasSubclassesCondition new
-			   class: targetSuperclass;
-			   subclassesList: { class name }).
-		  self preconditionNoReferencesToSharedVars.
-		  self preconditionNoOverrides.
-		  self preconditionNoSupersendsSent.
-		  self preconditionNoSupersendsReceived }
-]
-
 { #category : 'executing' }
 RBPullUpMethodTransformation >> buildTransformations [
 	^ OrderedCollection new
-		addAll: self copyDownMethods;
 		addAll: self pullUpMethods;
 		addAll: self removePulledUpMethods;
 		addAll: self removeDuplicateMethods;
@@ -117,16 +100,16 @@ RBPullUpMethodTransformation >> checkInstVars [
 
 { #category : 'preconditions' }
 RBPullUpMethodTransformation >> checkInstVarsFor: aSelector [
-	class instanceVariableNames do:
-			[:each |
-			((class whichSelectorsReferToInstanceVariable: each) includes: aSelector) ifTrue:
-					[ (self confirm: ('<1p> refers to #<2s> which is defined in <3p>. Do you want pull up variable #<2s> also?' expandMacrosWith: aSelector
-								with: each
-								with: class))
+
+	class instanceVariableNames do: [ :each |
+			((class whichSelectorsReferToInstanceVariable: each) includes: aSelector) ifTrue: [
+					(ConfirmationRequest signal:
+						 ('<1p> refers to #<2s> which is defined in <3p>. Do you want pull up variable #<2s> also?' expandMacrosWith: aSelector with: each with: class))
 						ifTrue: [ self previousTransformations add: (self pullUpVariable: each) ]
-						ifFalse: [ self refactoringWarning: 'You are about to pull your method without the instance variable it uses.
+						ifFalse: [
+								self refactoringWarning: 'You are about to pull your method without the instance variable it uses.
 						It will bring the system is an inconsistent state. But this may be what you want.
-						So do you want to pull up anyway?' ] ]]
+						So do you want to pull up anyway?' ] ] ]
 ]
 
 { #category : 'preconditions' }
@@ -200,86 +183,6 @@ RBPullUpMethodTransformation >> checkSuperclass [
 ]
 
 { #category : 'executing' }
-RBPullUpMethodTransformation >> copyDownMethod: aSelector [
-
-	| oldProtocol oldSource superclassDefiner subclasses refactoring |
-	superclassDefiner := targetSuperclass whichClassIncludesSelector:
-		                     aSelector.
-	superclassDefiner ifNil: [ ^ {  } ].
-	oldSource := superclassDefiner sourceCodeFor: aSelector.
-	oldSource ifNil: [
-		self refactoringError:
-			('Source code for <1s> superclass method not available'
-				 expandMacrosWith: aSelector) ].
-	oldProtocol := superclassDefiner protocolsFor: aSelector.
-	subclasses := targetSuperclass subclasses reject: [ :each |
-		              each directlyDefinesMethod: aSelector ].
-	subclasses ifEmpty: [ ^ {  } ].
-	(superclassDefiner parseTreeForSelector: aSelector) superMessages
-		detect: [ :each | superclassDefiner directlyDefinesMethod: each ]
-		ifFound: [
-			self refactoringError:
-				('Cannot pull up <1s> since we must copy down the superclass method in <2p><n>to the other subclasses, and the superclass method sends a super message which is overriden.'
-					 expandMacrosWith: aSelector
-					 with: superclassDefiner) ].
-	self refactoringWarning:
-		'Do you want to copy down the superclass method to the classes that don''t define '
-		, aSelector , '?'.
-	refactoring := RBExpandReferencedPoolsTransformation
-		               model: self model
-		               forMethod:
-		               (superclassDefiner parseTreeForSelector: aSelector)
-		               fromClass: superclassDefiner
-		               toClasses: subclasses.
-	^ Array with: refactoring withAll: (subclasses collect: [ :each |
-			   RBAddMethodTransformation
-				   model: self model
-				   sourceCode: oldSource
-				   in: each
-				   withProtocol: oldProtocol ])
-]
-
-{ #category : 'executing' }
-RBPullUpMethodTransformation >> copyDownMethods [
-	^ selectors flatCollect: [:each | self copyDownMethod: each]
-]
-
-{ #category : 'preconditions' }
-RBPullUpMethodTransformation >> preconditionNoOverrides [
-
-	^ (ReDefinesSelectorsCondition new
-		   definesSelectors: selectors
-		   in: targetSuperclass) not
-	  | (ReClassesAreAbstractCondition new classes: { targetSuperclass })
-]
-
-{ #category : 'preconditions' }
-RBPullUpMethodTransformation >> preconditionNoReferencesToSharedVars [
-
-	^ ReMethodsDontReferToLocalSharedVarsCondition new
-		  class: class
-		  selectors: selectors
-]
-
-{ #category : 'preconditions' }
-RBPullUpMethodTransformation >> preconditionNoSupersendsReceived [
-
-	^ ReMethodsHaveNoSuperCallInSiblingsCondition new
-		  class: class
-		  targetSuperclass: targetSuperclass
-		  selectors: selectors
-]
-
-{ #category : 'preconditions' }
-RBPullUpMethodTransformation >> preconditionNoSupersendsSent [
-
-	^ ReNoSupersendToTargetClassCondition new
-		  class: class
-		  targetSuperclass: targetSuperclass
-		  selectors: selectors
-]
-
-{ #category : 'executing' }
 RBPullUpMethodTransformation >> pullUp: aSelector [
 	| source refactoring |
 	source := class sourceCodeFor: aSelector.
@@ -343,14 +246,11 @@ RBPullUpMethodTransformation >> removeDuplicatesOf: aSelector [
 					    exceptForVariables: #(  )) and: [
 					   (aClass superclass whichClassIncludesSelector: aSelector)
 					   == targetSuperclass ] ]) ifTrue: [
-				  removeDuplicates ifFalse: [
-					  removeDuplicates := self refactoringConfirmWarning:
-						                      'Do you want to remove duplicate subclass methods?' ].
-				  removeDuplicates ifTrue: [
+		
 					  self generateChangesFor: (RBRemoveMethodTransformation
 							   model: self model
 							   selector: aClass
-							   from: aSelector) ] ] ] ]
+							   from: aSelector) ] ] ]
 ]
 
 { #category : 'executing' }
@@ -360,18 +260,4 @@ RBPullUpMethodTransformation >> removePulledUpMethods [
 			model: self model
 			selector: symbol
 			from: class ]
-]
-
-{ #category : 'storing' }
-RBPullUpMethodTransformation >> storeOn: aStream [
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream
-		nextPutAll: ' pullUp: ';
-		nextPutAll: selectors asString;
-		nextPutAll: ' from: ';
-		nextPutAll: class name;
-		nextPutAll: ' to: ';
-		nextPutAll: targetSuperclass name.
-	aStream nextPut: $)
 ]

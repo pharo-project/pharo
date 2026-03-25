@@ -70,12 +70,15 @@ SystemEnvironmentTest >> supportsNilKey [
 
 { #category : 'tests' }
 SystemEnvironmentTest >> testAddFlushesCaches [
-	"we add to the environemnt with #add:"
-	testingEnvironment add: (GlobalVariable key: #Object value: Object).
-	"we can find it with at:"
-	self assert: (testingEnvironment at: #Object) equals: Object.
-	"and via #allBehavior, which uses the cache"
-	self assert: (testingEnvironment allBehaviors includes: Object).
+	"we add to the environemnt with #add: and the cache is reset"
+	| environment |
+	environment := SystemEnvironment new.
+	environment add: (GlobalVariable key: #Object value: Object).
+	environment allBehaviors.
+	environment add: (GlobalVariable key: #Class value: Class).
+	"check that the cache was reset and we can find Class"
+	self assert: (environment instVarNamed: 'cachedBehaviors') isNil.
+	self assert:( environment allBehaviors includes: Class)
 ]
 
 { #category : 'tests - DictionaryIndexAccessing' }
@@ -195,14 +198,6 @@ SystemEnvironmentTest >> testFlatCollect3 [
 		       self classToBeTested.
 	res := res flatCollect: [ :e | { (e collect: [ :each | each abs ]) } ].
 	self assert: res asSet equals: #( #( 2 3 ) #( 4 5 ) ) asSet
-]
-
-{ #category : 'tests' }
-SystemEnvironmentTest >> testHasBindingThatBeginsWith [
-
-	super testHasBindingThatBeginsWith.
-	self assert: (Smalltalk globals hasBindingThatBeginsWith: 'Obje').
-	self deny: (Smalltalk globals hasBindingThatBeginsWith: 'NOTHEREIope')
 ]
 
 { #category : 'tests - testing' }

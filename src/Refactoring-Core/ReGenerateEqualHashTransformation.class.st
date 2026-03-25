@@ -98,18 +98,18 @@ ReGenerateEqualHashTransformation >> compileEqual [
 			accessor := self accessorForVariable: each.
 			comparison := OCMessageNode
 				receiver: (OCVariableNode named: each)
-				selector: #=
+				selector: (OCSelectorNode value: #=)
 				arguments:
 					(Array
 						with:
 							(OCMessageNode
 								receiver: (OCVariableNode named: 'anObject')
-								selector: accessor)).
+								selector: (OCSelectorNode value: accessor))).
 			statement := statement
 				ifNil: [ comparison ]
 				ifNotNil: [ OCMessageNode
 						receiver: comparison
-						selector: #and:
+						selector: (OCSelectorNode value: #and:)
 						arguments:
 							(Array
 								with:
@@ -137,12 +137,12 @@ ReGenerateEqualHashTransformation >> compileHash [
 		do: [ :each |
 			hash := OCMessageNode
 				receiver: (OCVariableNode named: each)
-				selector: #hash.
+				selector: (OCSelectorNode value: #hash).
 			statement := statement
 				ifNil: [ hash ]
 				ifNotNil: [ OCMessageNode
 						receiver: hash
-						selector: #bitXor:
+						selector: (OCSelectorNode value: #bitXor:)
 						arguments: (Array with: statement) ] ].
 	method
 		addNode: statement;

@@ -29,7 +29,7 @@ SystemNavigationTest >> createClassFactory [
 { #category : 'private' }
 SystemNavigationTest >> performTest [
 
-	self class codeChangeAnnouncer suspendAllWhile: [ ^ super performTest ]
+	self class codeChangeAnnouncer suspendAllWhile: [ super performTest ]
 ]
 
 { #category : 'running' }

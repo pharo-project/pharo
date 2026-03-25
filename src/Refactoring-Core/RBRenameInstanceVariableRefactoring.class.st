@@ -73,11 +73,10 @@ RBRenameInstanceVariableRefactoring >> addNewAccessors [
 RBRenameInstanceVariableRefactoring >> applicabilityPreconditions [
 
 	^ {
-		  (ReIsValidInstanceVariableName name: newName).
+		  self preconditionisValidInstanceVariableName.
 		  self preconditionDirectlyDefinesVariable.
 		  (ReIsVariableNotDefinedInHierarchy name: newName class: class).
-		  (ReNameIsGlobalCondition new model: self model className: newName)
-			  not }
+		  (ReNameIsGlobalCondition new model: self model className: newName) not }
 ]
 
 { #category : 'refactoring' }
@@ -114,6 +113,14 @@ RBRenameInstanceVariableRefactoring >> preconditionDirectlyDefinesVariable [
 			   classNamed: class name
 			   inModel: self model
 			   instanceVariables: { variableName }
+]
+
+{ #category : 'preconditions' }
+RBRenameInstanceVariableRefactoring >> preconditionisValidInstanceVariableName [
+
+	| classSide |
+	classSide := class isMeta.
+	^ ReIsValidInstanceVariableName name: newName classSide: classSide
 ]
 
 { #category : 'transforming' }
@@ -199,18 +206,4 @@ RBRenameInstanceVariableRefactoring >> renameReferences [
 		convertClasses: classes
 		select: [:aClass | aClass whichSelectorsReferToInstanceVariable: variableName]
 		using: replacer
-]
-
-{ #category : 'storing' }
-RBRenameInstanceVariableRefactoring >> storeOn: aStream [
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream
-		nextPutAll: ' rename: ''';
-		nextPutAll: variableName;
-		nextPutAll: ''' to: ''';
-		nextPutAll: newName;
-		nextPutAll: ''' in: '.
-	class storeOn: aStream.
-	aStream nextPut: $)
 ]

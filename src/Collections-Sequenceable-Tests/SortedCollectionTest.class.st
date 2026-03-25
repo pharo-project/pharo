@@ -4,14 +4,13 @@ SUnit tests for sorted collections
 Class {
 	#name : 'SortedCollectionTest',
 	#superclass : 'CollectionRootTest',
-	#traits : 'TIterateSequencedReadableTest + TPrintOnSequencedTest + TAsStringOnDelimiterSequenceableTest + TIncludesWithIdentityCheckTest + (TSequencedElementAccessTest - {#testAtAll}) + TSubCollectionAccess + TIndexAccessForMultipliness + TRemoveTest + TConvertTest + TConvertAsSetForMultiplinessIdentityTest + TAddTest + TBeginsEndsWith + (TCopySequenceableSameContents - {#testShuffled}) + TSetArithmetic + TRemoveByIndexTest + TCopyPartOfSequenceable + TCopyPartOfSequenceableForMultipliness + (TCopySequenceableWithOrWithoutSpecificElements - {#testForceToPaddingStartWith. #testForceToPaddingWith. #testCopyWithFirst. #testCopyWithoutIndex}) + TCopySequenceableWithReplacementForSorted + TCopyTest + TConvertAsSortedTest + TSequencedStructuralEqualityTest + TCreationWithTest + TOccurrencesForMultiplinessTest',
-	#classTraits : 'TIterateSequencedReadableTest classTrait + TPrintOnSequencedTest classTrait + TAsStringOnDelimiterSequenceableTest classTrait + TIncludesWithIdentityCheckTest classTrait + TSequencedElementAccessTest classTrait + TSubCollectionAccess classTrait + TIndexAccessForMultipliness classTrait + TRemoveTest classTrait + TConvertTest classTrait + TConvertAsSetForMultiplinessIdentityTest classTrait + TAddTest classTrait + TBeginsEndsWith classTrait + TCopySequenceableSameContents classTrait + TSetArithmetic classTrait + TRemoveByIndexTest classTrait + TCopyPartOfSequenceable classTrait + TCopyPartOfSequenceableForMultipliness classTrait + TCopySequenceableWithOrWithoutSpecificElements classTrait + TCopySequenceableWithReplacementForSorted classTrait + TCopyTest classTrait + TConvertAsSortedTest classTrait + TSequencedStructuralEqualityTest classTrait + TCreationWithTest classTrait + TOccurrencesForMultiplinessTest classTrait',
+	#traits : 'TIterateSequencedReadableTest + TPrintOnSequencedTest + TIncludesWithIdentityCheckTest + (TSequencedElementAccessTest - {#testAtAll}) + TSubCollectionAccess + TIndexAccessForMultipliness + TRemoveTest + TConvertTest + TConvertAsSetForMultiplinessIdentityTest + TAddTest + TBeginsEndsWith + (TCopySequenceableSameContents - {#testShuffled}) + TSetArithmetic + TRemoveByIndexTest + TCopyPartOfSequenceable + TCopyPartOfSequenceableForMultipliness + (TCopySequenceableWithOrWithoutSpecificElements - {#testForceToPaddingStartWith. #testForceToPaddingWith. #testCopyWithFirst. #testCopyWithoutIndex}) + TCopySequenceableWithReplacementForSorted + TCopyTest + TConvertAsSortedTest + TSequencedStructuralEqualityTest + TCreationWithTest + TOccurrencesForMultiplinessTest',
+	#classTraits : 'TIterateSequencedReadableTest classTrait + TPrintOnSequencedTest classTrait + TIncludesWithIdentityCheckTest classTrait + TSequencedElementAccessTest classTrait + TSubCollectionAccess classTrait + TIndexAccessForMultipliness classTrait + TRemoveTest classTrait + TConvertTest classTrait + TConvertAsSetForMultiplinessIdentityTest classTrait + TAddTest classTrait + TBeginsEndsWith classTrait + TCopySequenceableSameContents classTrait + TSetArithmetic classTrait + TRemoveByIndexTest classTrait + TCopyPartOfSequenceable classTrait + TCopyPartOfSequenceableForMultipliness classTrait + TCopySequenceableWithOrWithoutSpecificElements classTrait + TCopySequenceableWithReplacementForSorted classTrait + TCopyTest classTrait + TConvertAsSortedTest classTrait + TSequencedStructuralEqualityTest classTrait + TCreationWithTest classTrait + TOccurrencesForMultiplinessTest classTrait',
 	#instVars : [
 		'nonEmpty',
 		'elementExistsTwice',
 		'empty',
 		'collectResult',
-		'nonEmpty1Element',
 		'collectionOfFloat',
 		'accessCollection',
 		'elementNoteIn',
@@ -336,13 +335,6 @@ SortedCollectionTest >> nonEmpty [
 ]
 
 { #category : 'requirements' }
-SortedCollectionTest >> nonEmpty1Element [
-	"Return a collection of size 1 including one element."
-
-	^ nonEmpty1Element
-]
-
-{ #category : 'requirements' }
 SortedCollectionTest >> nonEmptyMoreThan1Element [
 	"Return a collection of integer with more than one element"
 
@@ -411,7 +403,6 @@ SortedCollectionTest >> setUp [
 	collectResult add: SmallInteger.
 	collectResult add: SmallInteger.
 	collectResult add: SmallInteger.
-	nonEmpty1Element := SortedCollection new add:5; yourself.
 	collectionOfFloat := SortedCollection new add:1.2 ; add: 5.6 ; add:4.4 ; add: 1.9 ; yourself.
 	collectionOfString := SortedCollection new add: 'a' ; add: 'b' ; add: 'c' ; add: 'd' ; yourself.
 	duplicateFloat := 1.2.

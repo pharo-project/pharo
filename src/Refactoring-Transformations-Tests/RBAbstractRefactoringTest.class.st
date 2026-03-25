@@ -9,6 +9,33 @@ Class {
 	#tag : 'Parametrized'
 }
 
+{ #category : 'tests' }
+RBAbstractRefactoringTest >> addClassHierarchy [
+
+	model
+		defineClass: [ :aBuilder |
+			aBuilder
+				superclass: Object;
+				name: #SomeClass;
+				sharedVariables: { #Foo };
+				package: #'Refactory-Test data' ];
+		defineClass: [ :aBuilder |
+			aBuilder
+				superclassName: #SomeClass;
+				name: #Subclass;
+				package: #'Refactory-Test data' ];
+		defineClass: [ :aBuilder |
+			aBuilder
+				superclassName: #Subclass;
+				name: #Foo1;
+				package: #'Refactory-Test data' ];
+		defineClass: [ :aBuilder |
+			aBuilder
+				superclassName: #Subclass;
+				name: #Foo2;
+				package: #'Refactory-Test data' ]
+]
+
 { #category : 'accessing' }
 RBAbstractRefactoringTest >> constructor [
 ]
@@ -130,15 +157,6 @@ RBAbstractRefactoringTest >> setupMethodNameFor: aRefactoring toReturn: aSelecto
 				selector: aSelector;
 				arguments: stringCollection;
 				yourself].
-	aRefactoring options: options
-]
-
-{ #category : 'set up' }
-RBAbstractRefactoringTest >> setupSelfArgumentNameFor: aRefactoring toReturn: aString [
-
-	| options |
-	options := aRefactoring options copy.
-	options at: #selfArgumentName put: [:ref | aString].
 	aRefactoring options: options
 ]
 

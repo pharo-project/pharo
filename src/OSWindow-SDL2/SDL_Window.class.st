@@ -50,7 +50,7 @@ SDL_Window >> createRenderer: driverIndex flags: flags [
 	^ (self primCreateRenderer: driverIndex flags: flags) initialize
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 SDL_Window >> destroy [
 	OSSDL2Driver current unregisterWindowWithId: self windowID.
 	self primDestroy.

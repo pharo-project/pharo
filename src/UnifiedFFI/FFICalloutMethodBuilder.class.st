@@ -26,6 +26,13 @@ FFICalloutMethodBuilder class >> calloutAPI: aCalloutAPI [
 		yourself
 ]
 
+{ #category : 'private' }
+FFICalloutMethodBuilder class >> irBuilderClass [
+	"This is provided for compatibility with older Pharo versions."
+
+	^ OCIRBuilder
+]
+
 { #category : 'accessing' }
 FFICalloutMethodBuilder >> addFunctionResolveStrategy: aStrategy [
 	functionResolutionStrategies add: aStrategy
@@ -128,16 +135,17 @@ FFICalloutMethodBuilder >> generateFFICallout: builder spec: functionSpec ffiLib
 
 { #category : 'private' }
 FFICalloutMethodBuilder >> generateMethodFromSpec: functionSpec [
-	| ir ffiLibrary properties method |
+	| ir ffiLibrary method |
 	functionSpec resolveUsing: self requestor.
 
 	ffiLibrary := self extractLibrary.
 
-	ir := OCIRBuilder buildIR: [ :builder | | r |
+	ir := self irBuilderClass buildIR: [ :builder | | r properties |
 
 		"Copy the properties of the old method"
-		sender methodProperties
-			ifNotNil: [ properties := sender methodProperties copy.
+		properties := sender compiledCode properties.
+		properties
+			ifNotNil: [ properties := properties copy.
 				properties method: nil.
 				builder properties: properties ].
 
@@ -149,6 +157,7 @@ FFICalloutMethodBuilder >> generateMethodFromSpec: functionSpec [
 		r := self generateFFICallout: builder spec: functionSpec ffiLibrary: ffiLibrary.
 		ffiLibrary postMethodBuildContext: sender builder: builder spec: functionSpec.
 		r].
+	ir compilationContext compiledMethodClass: FFICompiledMethod.
 	method := ir generate.
 	self method isCompiledMethod ifTrue: [method sourcePointer: self method sourcePointer  ].
 	^method
@@ -165,6 +174,12 @@ FFICalloutMethodBuilder >> initialize [
 FFICalloutMethodBuilder >> initializeCalloutAPI: aCalloutAPI [
 	calloutAPI := aCalloutAPI.
 	self initialize
+]
+
+{ #category : 'private' }
+FFICalloutMethodBuilder >> irBuilderClass [
+
+	^ self class irBuilderClass
 ]
 
 { #category : 'accessing' }

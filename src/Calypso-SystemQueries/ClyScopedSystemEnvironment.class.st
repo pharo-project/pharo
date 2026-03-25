@@ -52,12 +52,10 @@ ClyScopedSystemEnvironment >> compileANewClassFrom: newClassDefinitionString not
 	aController."
 
 	| newClassPackageName |
-	newClassPackageName := self extractPackageNameFrom:
-		                       newClassDefinitionString.
+	newClassPackageName := self extractPackageNameFrom: newClassDefinitionString.
 	(scope definesPackageNamed: newClassPackageName) ifFalse: [
-		self inform:
-			'Impossible to create a class in a package outside the scope'.
-		^ nil ].
+			InformativeNotification signal: 'Impossible to create a class in a package outside the scope'.
+			^ nil ].
 
 	^ super compileANewClassFrom: newClassDefinitionString notifying: aController startingFrom: oldClass
 ]

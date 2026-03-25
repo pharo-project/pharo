@@ -157,8 +157,9 @@ OCDumpVisitor >> visitMessageNode: aMessageNode [
 		nextPutAll: aMessageNode class name;
 		nextPutAll: ' receiver: ('.
 	aMessageNode receiver acceptVisitor: self.
-	stream nextPutAll: ') selector: '.
+	stream nextPutAll: ') selector: (OCSelectorNode value: '.
 	aMessageNode selector printOn: stream.
+	stream nextPutAll: ')'.
 	aMessageNode arguments
 		ifNotEmpty: [ stream nextPutAll: ' arguments: {'.
 			aMessageNode arguments

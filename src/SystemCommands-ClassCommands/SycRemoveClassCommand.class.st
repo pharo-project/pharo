@@ -24,9 +24,7 @@ SycRemoveClassCommand >> defaultMenuItemName [
 { #category : 'execution' }
 SycRemoveClassCommand >> execute [
 
-	(ReRemoveClassDriver new
-				 scopes: toolContext refactoringScopes
-				 classes:  classes) runRefactoring
+	^ ((ReRemoveClassDriver newApplication: self application) scopes: toolContext refactoringScopes classes: classes) runRefactoring 
 ]
 
 { #category : 'execution' }

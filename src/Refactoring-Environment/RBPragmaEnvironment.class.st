@@ -121,12 +121,3 @@ RBPragmaEnvironment >> postCopy [
 	super postCopy.
 	keywords := keywords copy
 ]
-
-{ #category : 'storing' }
-RBPragmaEnvironment >> storeOn: aStream [
-	aStream nextPut: $(.
-	super storeOn: aStream.
-	aStream nextPutAll: ' keywords: '.
-	keywords asArray storeOn: aStream.
-	aStream nextPut: $)
-]

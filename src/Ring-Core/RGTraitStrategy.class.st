@@ -256,7 +256,7 @@ RGTraitStrategy >> referencedBehaviors [
 	^ super referencedBehaviors, {self classTrait}
 ]
 
-{ #category : 'accessing' }
+{ #category : 'private - backend access' }
 RGTraitStrategy >> referencedPackages [
 
 	^ Array with: package

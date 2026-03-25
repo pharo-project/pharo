@@ -142,8 +142,5 @@ MCStReader >> snapshot [
 MCStReader >> typeOfSubclass: aSymbol [
 	| layoutClass |
 	layoutClass := ObjectLayout layoutForSubclassDefiningSymbol: aSymbol.
-	"if we get back CompiledMethodLayout, we put ByteLayout as CompiledMethodLayout.
-	The actual class creation methods have a hack to create the right format in this case"
-	layoutClass = CompiledMethodLayout ifTrue: [ layoutClass := ByteLayout ].
 	^layoutClass mcTypeSymbol
 ]

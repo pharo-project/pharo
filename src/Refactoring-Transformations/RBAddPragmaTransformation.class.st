@@ -104,18 +104,3 @@ RBAddPragmaTransformation >> privateTransform [
 	methodTree addPragma: pragmaNode.
 	self definingClass compileTree: methodTree
 ]
-
-{ #category : 'storing' }
-RBAddPragmaTransformation >> storeOn: aStream [
-
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream
-		nextPutAll: ' pragma: ''';
-		nextPutAll: pragma;
-		nextPutAll: ''' inMethod: ''';
-		nextPutAll: selector;
-		nextPutAll: ''' inClass: '.
-	class storeOn: aStream.
-	aStream nextPut: $)
-]

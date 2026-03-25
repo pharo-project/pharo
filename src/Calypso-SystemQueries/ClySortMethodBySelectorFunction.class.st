@@ -15,8 +15,8 @@ ClySortMethodBySelectorFunction >> collate: aMethod1 with: aMethod2 [
 	(aMethod1 selector isBinary and: [aMethod2 selector isBinary not]) ifTrue: [ ^-1 ].
 	(aMethod1 selector isBinary not and: [aMethod2 selector isBinary]) ifTrue: [ ^1 ].
 
-	aMethod1 selector = aMethod2 selector ifTrue: [
+	aMethod1 selector asString = aMethod2 selector asString ifTrue: [
 		^aMethod1 origin name threeWayCompareTo: aMethod2 origin name ].
 
-	^aMethod1 selector threeWayCompareTo: aMethod2 selector
+	^aMethod1 selector asString threeWayCompareTo: aMethod2 selector asString
 ]

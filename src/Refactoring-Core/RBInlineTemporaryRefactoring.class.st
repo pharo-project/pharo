@@ -72,7 +72,7 @@ RBInlineTemporaryRefactoring >> prepareForExecution [
 	assignmentNode isAssignment
 		ifFalse: [ self refactoringError: 'The selected node is not an assignment statement' ].
 		
-	definingNode := assignmentNode whoDefines:
+	definingNode := assignmentNode whichUpNodeDefines:
 		                assignmentNode variable name.
 ]
 
@@ -99,18 +99,4 @@ RBInlineTemporaryRefactoring >> replaceReferences [
 		withTree: assignmentNode value.
 	definingNode removeTemporaryNamed: assignmentNode variable name.
 	rewriter executeTree: definingNode
-]
-
-{ #category : 'storing' }
-RBInlineTemporaryRefactoring >> storeOn: aStream [
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream nextPutAll: ' inline: '.
-	sourceInterval storeOn: aStream.
-	aStream
-		nextPutAll: ' from: #';
-		nextPutAll: selector;
-		nextPutAll: ' in: '.
-	class storeOn: aStream.
-	aStream nextPut: $)
 ]

@@ -6,17 +6,16 @@ Class {
 	#tag : 'Parametrized'
 }
 
-{ #category : 'tests' }
-RBMoveMethodParametrizedTest class >> testParameters [
-	^ ParametrizedTestMatrix new
-		addCase: { #rbClass -> RBMoveMethodRefactoring };
-		addCase: { #rbClass -> RBMoveMethodTransformation };
-		yourself
-]
-
 { #category : 'accessing' }
 RBMoveMethodParametrizedTest >> constructor [
 	^ #selector:class:variable:
+]
+
+{ #category : 'running' }
+RBMoveMethodParametrizedTest >> setUp [ 
+
+	super setUp.
+	rbClass := RBMoveMethodRefactoring
 ]
 
 { #category : 'failure tests' }
@@ -41,9 +40,7 @@ RBMoveMethodParametrizedTest >> testMoveMethodIntoArgument [
 	self proceedThroughWarning:
 		[ refactoring := self createRefactoringWithArguments:
 				{ #checkMethod: . RBTransformationRuleTestData . 'aSmalllintContext' }.
-		self
-			setupSelfArgumentNameFor: refactoring
-			toReturn: 'transformationRule'.
+		refactoring selfArgumentName:  'transformationRule'.
 		self
 			setupVariableTypesFor: refactoring
 			toReturn: (Array with: (refactoring model classNamed: #RBSmalllintContext)).
@@ -73,6 +70,7 @@ RBMoveMethodParametrizedTest >> testMoveMethodIntoArgument [
 
 { #category : 'tests' }
 RBMoveMethodParametrizedTest >> testMoveMethodIntoClass [
+
 	| refactoring class |
 	(model classFor: Object) compile: 'aTestMethodName ^ OrderedCollection new addAll: (1 to: 100); yourself' classified: #test.
 
@@ -83,7 +81,9 @@ RBMoveMethodParametrizedTest >> testMoveMethodIntoClass [
 		setupMethodNameFor: refactoring
 		toReturn: #oneToOneHundred
 		withArguments: #().
-	refactoring setOption: #variableTypes toUse: [ :ref :initialTypes :selectedTypes | selectedTypes ].
+	refactoring 
+		setOption: #variableTypes 
+		toUse: [ :ref :initialTypes :selectedTypes | selectedTypes ].
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #Object.
 	self
@@ -100,9 +100,7 @@ RBMoveMethodParametrizedTest >> testMoveMethodIntoClassVariable [
 	self proceedThroughWarning:
 		[ refactoring := self createRefactoringWithArguments:
 				{ #checkMethod: . RBTransformationRuleTestData . 'RecursiveSelfRule'}.
-		self
-			setupSelfArgumentNameFor: refactoring
-			toReturn: 'transformationRule'.
+		refactoring selfArgumentName: 'transformationRule'.
 		self
 			setupVariableTypesFor: refactoring
 			toReturn: (Array with: (refactoring model classNamed: #OCParseTreeSearcher)).
@@ -135,9 +133,7 @@ RBMoveMethodParametrizedTest >> testMoveMethodIntoInstanceVariable [
 	self proceedThroughWarning:
 		[ refactoring := self createRefactoringWithArguments:
 			  { #checkMethod: . RBTransformationRuleTestData . 'rewriteRule' }.
-		self
-			setupSelfArgumentNameFor: refactoring
-			toReturn: 'transformationRule'.
+		refactoring selfArgumentName:'transformationRule'.
 		self
 			setupVariableTypesFor: refactoring
 			toReturn: (Array with: (refactoring model classNamed: #OCParseTreeRewriter)).
@@ -170,9 +166,7 @@ RBMoveMethodParametrizedTest >> testMoveMethodThatReferencesPoolDictionary [
 	self proceedThroughWarning:
 		[ refactoring := self createRefactoringWithArguments:
 			  { #junk . RBLintRuleTestData . RBClassDataForRefactoringTest name }.
-		self
-			setupSelfArgumentNameFor: refactoring
-			toReturn: 'transformationRule'.
+		refactoring selfArgumentName: 'transformationRule'.
 		self
 			setupVariableTypesFor: refactoring
 			toReturn: (Array with: (refactoring model classNamed: RBClassDataForRefactoringTest class name asSymbol)).

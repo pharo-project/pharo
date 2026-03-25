@@ -197,12 +197,6 @@ RBAbstractClass >> checkSelector: aSelector using: aMatcher [
 	^ aMatcher answer
 ]
 
-{ #category : 'accessing' }
-RBAbstractClass >> classBinding [
-	self deprecated: 'Use binding' transformWith: '`@receiver classBinding' -> '`@receiver binding'.
-	^ self binding 
-]
-
 { #category : 'accessing - navigation' }
 RBAbstractClass >> classSide [
 	"Return the metaclass of the couple class/metaclass. Useful to avoid explicit test."
@@ -228,7 +222,7 @@ RBAbstractClass >> compile: aString classified: aSymbolCollection [
 				compile: aString
 				in: self
 				classified: aSymbolCollection.
-	method := model rbMethodClass
+	method := RBMethod
 				for: self
 				source: aString
 				selector: change selector.
@@ -557,7 +551,7 @@ RBAbstractClass >> methodFor: aSelector [
 		  class compiledMethodAt: aSelector ifPresent: [ :compiledMethod |
 			  compiledMethod isFromTrait
 				  ifTrue: [ (compiledMethod traitSource hasMethod: aSelector) ifTrue: [ (model classNamed: compiledMethod origin name) methodFor: aSelector ] ]
-				  ifFalse: [ model rbMethodClass for: self fromMethod: compiledMethod andSelector: aSelector ] ] ]
+				  ifFalse: [ RBMethod for: self fromMethod: compiledMethod andSelector: aSelector ] ] ]
 ]
 
 { #category : 'accessing' }
@@ -584,16 +578,6 @@ RBAbstractClass >> name: aSymbol [
 RBAbstractClass >> newMethods [
 
 	^ newMethods ifNil: [ newMethods := IdentityDictionary new ] ifNotNil: [ newMethods ]
-]
-
-{ #category : 'method accessing' }
-RBAbstractClass >> parseTreeFor: aSymbol [
-
-	self
-		deprecated: 'Use parseTreeForSelector: instead'
-		transformWith: '`@receiver parseTreeFor: `@argument'
-			-> '`@receiver parseTreeForSelector: `@argument'.
-	^ self parseTreeForSelector: aSymbol
 ]
 
 { #category : 'method accessing' }
@@ -756,11 +740,6 @@ RBAbstractClass >> sourceCodeFor: aSelector [
 	^ (class methodFor: aSelector) source
 ]
 
-{ #category : 'storing' }
-RBAbstractClass >> storeOn: aStream [
-	aStream nextPutAll: self name
-]
-
 { #category : 'testing' }
 RBAbstractClass >> subclassRedefines: aSelector [
 	"Return true, if one of your subclasses redefines the method with name, aMethod"
@@ -788,6 +767,7 @@ RBAbstractClass >> subclassesDo: aBlock [
 
 { #category : 'accessing' }
 RBAbstractClass >> superclass [
+	
 	^superclass == LookupSuperclass
 		ifTrue: [model classFor: self realClass superclass]
 		ifFalse: [superclass]
@@ -805,20 +785,6 @@ RBAbstractClass >> superclassRedefines: aSelector [
 	"Return true, if one of your superclasses redefines the method with name, aMethod"
 
 	^ self allSuperclasses anySatisfy: [ :each | each directlyDefinesMethod: aSelector ]
-]
-
-{ #category : 'accessing - deprecated' }
-RBAbstractClass >> theMetaClass [
-	self deprecated:  'Please use #classSide instead' transformWith:  '`@receiver theMetaClass'
-						-> '`@receiver classSide'.
-	^ self classSide
-]
-
-{ #category : 'accessing - deprecated' }
-RBAbstractClass >> theNonMetaClass [
-	self deprecated:  'Please use #instanceSide instead' transformWith:  '`@receiver theNonMetaClass'
-						-> '`@receiver instanceSide'.
-	^ self instanceSide
 ]
 
 { #category : 'variable accessing' }
@@ -969,15 +935,6 @@ RBAbstractClass >> whoDefinesInstanceVariable: aString [
 	(self directlyDefinesInstanceVariable: aString) ifTrue: [ ^ self ].
 	sprClass := self superclass.
 	^ sprClass ifNotNil: [ sprClass whoDefinesInstanceVariable: aString ]
-]
-
-{ #category : 'method accessing' }
-RBAbstractClass >> whoDefinesMethod: aSelector [
-
-	self
-		deprecated: 'Use whichClassIncludesSelector: instead of current one'
-		transformWith: '`@rec whoDefinesMethod: `@arg' -> '`@rec whichClassIncludesSelector: `@arg'.
-	^ self whichClassIncludesSelector: aSelector 
 ]
 
 { #category : 'accessing' }

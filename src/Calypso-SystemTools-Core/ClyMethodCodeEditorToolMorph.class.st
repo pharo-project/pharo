@@ -96,10 +96,11 @@ ClyMethodCodeEditorToolMorph >> belongsToRemovedBrowserContext [
 
 { #category : 'building' }
 ClyMethodCodeEditorToolMorph >> buildLeftSideBar [
+
 	super buildLeftSideBar.
 
-	self leftSideBar enableMouseCommands: CmdTextLeftBarClickActivation withContextFrom: self.
-	self leftSideBar enableMouseCommands: CmdTextLeftBarDoubleClickActivation withContextFrom: self
+	CmdTextLeftBarClickActivation enableInMorph: self leftSideBar withCommandsFrom: self.
+	CmdTextLeftBarDoubleClickActivation enableInMorph: self leftSideBar withCommandsFrom: self
 ]
 
 { #category : 'operations' }
@@ -129,7 +130,7 @@ ClyMethodCodeEditorToolMorph >> createTextContext [
 ClyMethodCodeEditorToolMorph >> decorateContainerTab [
 	| title |
 	super decorateContainerTab.
-	title := editingMethod selector.
+	title := editingMethod selector asString.
 
 	editingMethod origin isClassSide ifTrue: [
 		title := title asText allBold ].
@@ -185,7 +186,7 @@ ClyMethodCodeEditorToolMorph >> findAnySelectorInSourceCode: selectors [
 	foundNode := ast sendNodes
 		detect: [:each | selectors includes: (foundSelector := each selector) ]
 		ifNone: [
-			ast allChildren
+			ast withAllChildren
 				detect: [:each | each isLiteralNode and: [ selectors includes: each value ]]
 				ifFound: [:literal | ^ literal sourceInterval ].
 			^0 to: -1].

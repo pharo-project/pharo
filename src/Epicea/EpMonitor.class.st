@@ -50,7 +50,9 @@ EpMonitor class >> hasCurrent [
 
 { #category : 'class initialization' }
 EpMonitor class >> initialize [
-	SessionManager default registerToolClassNamed: self name
+
+	SessionManager default registerToolClassNamed: self name.
+	self shouldLogMetacelloLoading: false
 ]
 
 { #category : 'accessing' }
@@ -91,6 +93,44 @@ EpMonitor class >> restart [
 	self current enable
 ]
 
+{ #category : 'asserting' }
+EpMonitor class >> shouldLogMetacelloLoading [
+	"If I am registered, it means I'll use the announcements to disable the monitor during Metacello loading"
+
+	^ (self codeSupportAnnouncer hasSubscriber: self) not
+]
+
+{ #category : 'asserting' }
+EpMonitor class >> shouldLogMetacelloLoading: aBoolean [
+	"If it is false, we register to Metacello announcement to disable Epicea.
+	
+	We save the old value in a stack because one project can load multiple other. If we keep only one value, we will lose the original value."
+
+	| oldValues |
+	self codeSupportAnnouncer unsubscribe: self.
+
+	oldValues := Stack new.
+	aBoolean ifFalse: [
+			self codeSupportAnnouncer weak
+				when: MetacelloExecutionStartAnnouncement do: [
+						oldValues push: self current isEnabled.
+						self current disable ]
+				for: self;
+				when: MetacelloExecutionEndAnnouncement do: [ "old values can be empty during Epicea loading because we are already in a Metacello loading" oldValues ifNotEmpty: [ self current enabled: oldValues pop ] ] for: self ]
+]
+
+{ #category : 'asserting' }
+EpMonitor class >> shouldLogMetacelloLoadingSettingOn: aBuilder [
+
+	<systemsettings>
+	(aBuilder setting: #shouldLogMetacelloLoading)
+		label: 'Log Metacello loading';
+		default: false;
+		description: 'If enable, log the code execution happening during the execution of Metacello loading.';
+		parent: #epicea;
+		target: self
+]
+
 { #category : 'system startup' }
 EpMonitor class >> shutDown: isImageQuitting [
 	(isImageQuitting not
@@ -99,6 +139,12 @@ EpMonitor class >> shutDown: isImageQuitting [
 			ifTrue: [
 				self current sessionSnapshot.
 				self current sessionStore flush. ]
+]
+
+{ #category : 'system startup' }
+EpMonitor class >> startUp: isImageLaunching [
+
+	(isImageLaunching and: [ self hasCurrent ]) ifTrue: [ self current imageRestarted ]
 ]
 
 { #category : 'private' }
@@ -176,8 +222,8 @@ EpMonitor >> behaviorRemoved: aClassRemovedAnnouncement [
 
 	"Fix class name (remove AnObsolete prefix)"
 	classRemoved definitionSource: (classRemoved definitionSource
-			 copyReplaceAll: aClassRemovedAnnouncement classRemoved name asString
-			 with: aClassRemovedAnnouncement classRemoved originalName asString).
+			 copyReplaceAll: aClassRemovedAnnouncement classRemoved name
+			 with: aClassRemovedAnnouncement classRemoved originalName).
 
 	"Fix class name in the metaclass"
 	classRemoved classSide definitionSource:
@@ -185,10 +231,12 @@ EpMonitor >> behaviorRemoved: aClassRemovedAnnouncement [
 
 	"Fix category"
 	toReplace := (classRemoved definitionSource includesSubstring: '_UnpackagedPackage')
-		             ifTrue: [ 'package: ' , '_UnpackagedPackage' printString ]
-		             ifFalse: [ 'package: ' , 'Unclassified' printString ].
+		             ifTrue: [ 'package: ' , '_UnpackagedPackage' ]
+		             ifFalse: [ 'package: ' , 'Unclassified' ].
 
-	classRemoved definitionSource: (classRemoved definitionSource copyReplaceAll: toReplace with: 'package: ' , aClassRemovedAnnouncement packageTagAffected categoryName printString).
+	classRemoved definitionSource: (classRemoved definitionSource 
+		copyReplaceAll: toReplace 
+		with: 'package: ' , aClassRemovedAnnouncement packageTagAffected categoryName).
 
 	classRemoved name: aClassRemovedAnnouncement classRemoved originalName.
 	classRemoved package: aClassRemovedAnnouncement packageAffected name.
@@ -318,6 +366,13 @@ EpMonitor >> enabled: aBoolean [
 	aBoolean
 		ifTrue: [ self enable ]
 		ifFalse: [ self disable ]
+]
+
+{ #category : 'private' }
+EpMonitor >> imageRestarted [
+	"When the image restart we tell the store to check if it needs to be reseted."
+
+	self log store imageRestarted
 ]
 
 { #category : 'initialization' }

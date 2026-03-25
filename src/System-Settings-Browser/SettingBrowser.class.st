@@ -231,7 +231,7 @@ SettingBrowser class >> initialExtent [
 
 { #category : 'world menu' }
 SettingBrowser class >> menuCommandOn: aBuilder [
-	<worldMenu>
+	"<worldMenu>
 	(aBuilder item: #Settings)
 		parent: #Pharo;
 		order: 1;
@@ -239,7 +239,7 @@ SettingBrowser class >> menuCommandOn: aBuilder [
 		action: [ SettingBrowser open ];
 		keyText: 'o, s';
 		help: 'Opens a SystemSettingBrowser which allows you to alter many system settings.';
-		withSeparatorAfter
+		withSeparatorAfter"
 ]
 
 { #category : 'opening' }
@@ -280,11 +280,6 @@ SettingBrowser class >> settingsKeywords [
 { #category : 'icons' }
 SettingBrowser class >> taskbarIconName [
 	^#smallConfiguration
-]
-
-{ #category : 'menu' }
-SettingBrowser >> about [
-	self inform: 'Here you can browse, query and change all system settings' translated
 ]
 
 { #category : 'accessing' }
@@ -417,26 +412,18 @@ SettingBrowser >> exportAllSettings: actions by: groupSize withBasename: aString
 SettingBrowser >> exportSettings [
 
 	| nodes actions |
-
 	nodes := self treeHolder nodeList.
-	[: job | 
-		| title  |
+	[ :job |
+		| title |
 		title := 'Exporting settings'.
 		job title: title.
-		1 to: nodes size do: [ : each |
-			actions := nodes collectWithIndex: [ : e : i |
-			job
-				progress: i;
-				title: (String streamContents: [:s |
-					s << title << ' (' << (e item label) << ')']).			
-				e item exportSettingAction ] ] 
-	]  asJob run.
+		1 to: nodes size do: [ :each |
+				actions := nodes collectWithIndex: [ :e :i |
+						           job progress: i title: (String streamContents: [ :s | s << title << ' (' << e item label << ')' ]).
+						           e item exportSettingAction ] ] ] asJob run.
 
-	actions := actions reject: [:e | e isNil ].
-	self 
-		exportAllSettings: actions 
-		by: 50 
-		withBasename: 'exported_settings'
+	actions := actions reject: [ :e | e isNil ].
+	self exportAllSettings: actions by: 50 withBasename: 'exported_settings'
 ]
 
 { #category : 'export' }
@@ -499,7 +486,7 @@ SettingBrowser >> loadSettings [
 
 	self treeHolder updateSettingNodes.
 	self class refreshAllSettingBrowsers.
-	self inform: 'Settings has been updated from the disk.'
+	InformativeNotification signal: 'Settings has been updated from the disk.'
 ]
 
 { #category : 'menu' }
@@ -554,10 +541,12 @@ SettingBrowser >> menuEmptyList: aTreeNode [
 
 { #category : 'menu' }
 SettingBrowser >> menuSetToDefault: aTreeNode [
+
 	| v |
-	(v := aTreeNode settingDeclaration) hasDefault
-		ifTrue: [(self confirm: 'Set to default value ?' translated)
-				ifTrue: [v setToDefault. self updateList]]
+	(v := aTreeNode settingDeclaration) hasDefault ifTrue: [
+			(ConfirmationRequest signal: 'Set to default value ?') ifTrue: [
+					v setToDefault.
+					self updateList ] ]
 ]
 
 { #category : 'user interface' }
@@ -653,9 +642,10 @@ SettingBrowser >> selection: aSelectionHolder [
 
 { #category : 'menu' }
 SettingBrowser >> setAllToDefault [
-	(self confirm: 'Set all to default value?' translated) ifTrue: [
-		self treeHolder nodeList do: [:node | node item hasDefault ifTrue: [node item setToDefault]].
-		self updateList]
+
+	(ConfirmationRequest signal: 'Set all to default value?') ifTrue: [
+			self treeHolder nodeList do: [ :node | node item hasDefault ifTrue: [ node item setToDefault ] ].
+			self updateList ]
 ]
 
 { #category : 'accessing' }
@@ -717,8 +707,9 @@ SettingBrowser >> statusViewIn: aMorph [
 
 { #category : 'menu' }
 SettingBrowser >> storeSettings [
+
 	self treeHolder storeSettingNodes.
-	self inform: 'Settings has been stored on the disk.'
+	InformativeNotification signal: 'Settings has been stored on the disk.'
 ]
 
 { #category : 'updating' }

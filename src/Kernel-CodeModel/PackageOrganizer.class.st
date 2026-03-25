@@ -4,13 +4,16 @@ I am responsible for providing all the package currently defined in an environme
 The system currently hold a global environment with a default package organizer but it is possible to create new enviornemnt with `SystemEnvironment new` and they will come with a new package organizer.
 
 I am used as en entry point to access packages and tags and update the model.
+
+I am saving the undefined package in my list of packages and in a variable for performance reasons because it can take some time to find the unpackaged package in the middle of all other packages.
 "
 Class {
 	#name : 'PackageOrganizer',
 	#superclass : 'Object',
 	#instVars : [
 		'packages',
-		'environment'
+		'environment',
+		'undefinedPackage'
 	],
 	#category : 'Kernel-CodeModel-Packages',
 	#package : 'Kernel-CodeModel',
@@ -132,7 +135,8 @@ PackageOrganizer >> initialize [
 	super initialize.
 
 	packages := IdentityDictionary new.
-	self ensurePackage: UndefinedPackage new
+	undefinedPackage := UndefinedPackage new.
+	self ensurePackage: undefinedPackage
 ]
 
 { #category : 'testing' }
@@ -337,7 +341,7 @@ PackageOrganizer >> testPackages [
 { #category : 'accessing' }
 PackageOrganizer >> undefinedPackage [
 
-	^ self packages detect: [ :package | package isUndefined ]
+	^ undefinedPackage
 ]
 
 { #category : 'private' }

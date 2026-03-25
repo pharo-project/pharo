@@ -248,7 +248,7 @@ MethodClassifier >> protocolAccessorFor: aMethod [
 	| names selector |
 
 	names := aMethod methodClass allInstVarNames.
-	selector := aMethod selector.
+	selector := aMethod selector asString.
 
 	(selector endsWith: ':')
 		ifTrue: [ "selector might be a setter"

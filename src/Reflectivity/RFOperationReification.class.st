@@ -55,7 +55,7 @@ RFOperationReification >> genForASTBlockNode [
 	blockNode := OCParser parseExpression: entity formattedCode.
 	^OCMessageNode
 		receiver: (OCVariableNode named: #RFBlockOperation)
-		selector: #block:
+		selector: (OCSelectorNode value: #block:)
 		arguments: {blockNode}
 ]
 

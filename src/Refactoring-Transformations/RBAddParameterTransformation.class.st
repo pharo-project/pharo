@@ -51,6 +51,9 @@ RBAddParameterTransformation >> applicabilityPreconditions [
 				ifFalse:
 					[ self refactoringError: newSelector printString,
 					' doesn''t have the proper number of arguments.'].
+			permutation size = newSelector numArgs ifFalse: [ 
+				self refactoringError: newSelector printString
+					, ' doesn''t have the proper number of permutations.' ].
 			self newArgs do: [	:arg | self verifyInitializationExpressionOf: arg argValue ].
 			true]) }
 ]
@@ -87,7 +90,7 @@ RBAddParameterTransformation >> checkVariableReferencesIn: aParseTree [
 		do: [ :aNode :answer |
 			| name |
 			name := aNode name.
-			(aNode whoDefines: name) ifNil: [ self checkSendersAccessTo: name ] ].
+			(aNode whichUpNodeDefines: name) ifNil: [ self checkSendersAccessTo: name ] ].
 	searcher executeTree: aParseTree
 ]
 
@@ -171,26 +174,6 @@ RBAddParameterTransformation >> senders [
 			self model allReferencesTo: oldSelector do: [ :each | senders add: each modelClass ]
 			].
 	^ senders
-]
-
-{ #category : 'storing' }
-RBAddParameterTransformation >> storeOn: aStream [
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream
-		nextPutAll: ' addParameterToMethod: #';
-		nextPutAll: oldSelector;
-		nextPutAll: ' in: '.
-	class storeOn: aStream.
-	aStream
-		nextPutAll: ' newSelector: #';
-		nextPutAll: newSelector;
-		nextPutAll: ' permutation: ';
-		nextPutAll: permutation asString;
-		nextPutAll: ' newArgs: '''.
-	newArgs storeOn: aStream.
-	aStream
-		nextPutAll: ''')'
 ]
 
 { #category : 'adding' }

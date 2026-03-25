@@ -29,15 +29,15 @@ CoFetcherSequence >> context: anObject [
 ]
 
 { #category : 'enumerating' }
-CoFetcherSequence >> entriesDo: aBlock [
-	subcompletions do: [ :completion | completion entriesDo: aBlock ]
-]
-
-{ #category : 'enumerating' }
 CoFetcherSequence >> filter: aFilter [
 
 	super filter: aFilter.
 	subcompletions do: [ :completion | completion filter: aFilter ]
+]
+
+{ #category : 'enumerating' }
+CoFetcherSequence >> filteredEntriesDo: aBlock [
+	subcompletions do: [ :completion | completion filteredEntriesDo: aBlock ]
 ]
 
 { #category : 'initialization' }

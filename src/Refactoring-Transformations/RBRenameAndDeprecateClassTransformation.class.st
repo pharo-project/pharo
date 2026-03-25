@@ -71,7 +71,7 @@ RBRenameAndDeprecateClassTransformation >> applicabilityPreconditions [
 	| class |
 	class := self model classNamed: className.
 	^ {
-		  (ReClassesExistCondition new classes: { class }).
+		  (ReClassesExistCondition new classes: { class name -> class } asDictionary).
 		  (ReClassesAreNotMetaClassCondition new classes: { class }).
 		  (ReNameIsGlobalCondition new
 			   model: self model
@@ -115,19 +115,6 @@ RBRenameAndDeprecateClassTransformation >> className: aClassName newClassName: a
 RBRenameAndDeprecateClassTransformation >> newClassName: aNewClassName [
 
 	newClassName := aNewClassName asSymbol 
-]
-
-{ #category : 'storing' }
-RBRenameAndDeprecateClassTransformation >> storeOn: aStream [
-
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream
-		nextPutAll: ' className ''';
-		nextPutAll: className;
-		nextPutAll: ''' newClassName: ''';
-		nextPutAll: newClassName.
-	aStream nextPut: $)
 ]
 
 { #category : 'private' }

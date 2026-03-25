@@ -35,5 +35,5 @@ ReUnaryAccessingMethodWithoutReturnRule >> basicCheck: aMethod [
 
 	(aMethod numArgs > 0 or: [ aMethod isAbstract ]) ifTrue: [ ^ false ].
 	(aMethod protocolName beginsWith: 'accessing') ifFalse: [ ^ false ].
-	^ aMethod ast allChildren noneSatisfy: [ :each | each isReturn ]
+	^ aMethod ast withAllChildren noneSatisfy: [ :each | each isReturn ]
 ]

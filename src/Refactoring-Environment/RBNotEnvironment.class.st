@@ -45,9 +45,3 @@ RBNotEnvironment >> includesSelector: aSelector in: aClass [
 RBNotEnvironment >> not [
 	^environment
 ]
-
-{ #category : 'storing' }
-RBNotEnvironment >> storeOn: aStream [
-	environment storeOn: aStream.
-	aStream nextPutAll: ' not'
-]

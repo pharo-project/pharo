@@ -35,5 +35,5 @@ WindowsResolver >> preferences [
 { #category : 'origins' }
 WindowsResolver >> temp [
 
-	^ self resolveString: Smalltalk os getTempPath
+	^ self resolveString: OSPlatform current getTempPath
 ]

@@ -122,18 +122,3 @@ RBRemoveSubtreeTransformation >> removeSubtree: aTree in: aMethodTree [
 				in: aMethodTree
 				onInterval: aTree sourceInterval ]
 ]
-
-{ #category : 'storing' }
-RBRemoveSubtreeTransformation >> storeOn: aStream [
-
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream
-		nextPutAll: ' code: ''';
-		nextPutAll: sourceCode;
-		nextPutAll: ''' from: ''';
-		nextPutAll: selector;
-		nextPutAll: ''' in: '.
-	class storeOn: aStream.
-	aStream nextPut: $)
-]

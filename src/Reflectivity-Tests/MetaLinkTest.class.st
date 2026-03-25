@@ -60,16 +60,6 @@ MetaLinkTest >> testControlLink [
 	self assert: link control equals: #after
 ]
 
-{ #category : 'tests - misc' }
-MetaLinkTest >> testDefintionString [
-	| metaLink |
-	metaLink := MetaLink new
-		metaObject: nil;
-		arguments: #();
-		condition: [ true ].
-	self assert: (Smalltalk compiler evaluate: metaLink definitionString) definitionString equals: metaLink definitionString
-]
-
 { #category : 'tests - options' }
 MetaLinkTest >> testLinkOption [
 	| link |

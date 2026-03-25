@@ -150,11 +150,11 @@ SmallDictionary >> associationAt: key ifAbsent: aBlock [
 	isn't implemented with associations like Dictionary."
 
 	| index value |
-	index := keys indexOf: key.
-	index = 0 ifTrue: [ ^ aBlock value].
+	index := self findIndexForKey: key.
+	index = 0 ifTrue: [ ^ aBlock value ].
 
 	value := values at: index.
-	^ key->value
+	^ key -> value
 ]
 
 { #category : 'accessing' }
@@ -167,7 +167,7 @@ SmallDictionary >> associationAt: key ifPresent: aBlock [
 	isn't implemented with associations like Dictionary."
 
 	| index |
-	(index := keys indexOf: key) = 0
+	(index := self findIndexForKey: key) = 0
 		ifTrue: [ ^ nil ].
 	^ aBlock cull: key -> (values at: index)
 ]
@@ -374,17 +374,6 @@ SmallDictionary >> bindingOf: varName [
 	^self associationAt: varName ifAbsent:[nil]
 ]
 
-{ #category : 'enumerating' }
-SmallDictionary >> bindingsDo: aBlock [
-
-	self
-		deprecated:
-		'use classVariables do: instead'
-		transformWith: '`@receiver bindingsDo: `@arg1' -> '`@receiver associationsDo: `@arg1'.
-
-	self associationsDo: aBlock
-]
-
 { #category : 'accessing' }
 SmallDictionary >> capacity [
 	^keys size
@@ -470,16 +459,6 @@ SmallDictionary >> growTo: aSize [
 			newValues at: i put: (values at: i)].
 	keys := newKeys.
 	values := newValues
-]
-
-{ #category : 'testing' }
-SmallDictionary >> hasBindingThatBeginsWith: aString [
-	"Answer true if the receiver has a key that begins with aString, false otherwise"
-
-	self keysDo:[:each |
-		(each beginsWith: aString)
-			ifTrue:[^true]].
-	^false
 ]
 
 { #category : 'testing' }

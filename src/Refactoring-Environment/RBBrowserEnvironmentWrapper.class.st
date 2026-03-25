@@ -150,16 +150,6 @@ RBBrowserEnvironmentWrapper >> selectionIntervalFor: aString [
 		ifNil: [environment selectionIntervalFor: aString]
 ]
 
-{ #category : 'storing' }
-RBBrowserEnvironmentWrapper >> storeOn: aStream [
-	aStream
-		nextPutAll: '(';
-		nextPutAll: self class name;
-		nextPutAll: ' onEnvironment: '.
-	environment storeOn: aStream.
-	aStream nextPut: $)
-]
-
 { #category : 'private' }
 RBBrowserEnvironmentWrapper >> systemDictionary [
 	^ environment systemDictionary

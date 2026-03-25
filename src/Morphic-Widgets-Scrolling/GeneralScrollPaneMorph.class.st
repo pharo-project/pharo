@@ -29,7 +29,7 @@ GeneralScrollPaneMorph >> changeScrollerTableLayout [
 	self scroller changeTableLayout
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 GeneralScrollPaneMorph >> defaultColor [
 	"Answer the default color/fill style for the receiver."
 

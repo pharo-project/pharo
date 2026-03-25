@@ -25,7 +25,7 @@ MCRepository class >> description [
 { #category : 'instance creation' }
 MCRepository class >> fromUrl: aUrlOrString [ 
 	| url |
-	url := aUrlOrString asUrl.
+	url := aUrlOrString asZnUrl.
 
 	^ self allSubclasses 
 		detect: [ :each | 

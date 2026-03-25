@@ -40,12 +40,25 @@ RBInsertNewClassRefactoring >> applicabilityPreconditions [
 				 	((RBCondition isMetaclass: sub) errorMacro:
 				         'Subclass must <1?not :>be a metaclass') not.
 			        (RBCondition isImmediateSubclass: sub of: superclass) } ].
-	^ cond , {
+	^ cond , { 
 			(RBCondition isValidClassName: className).
 			(RBCondition isGlobal: className in: self model) not.
 			(RBCondition isSymbol: packageName).
 			((RBCondition withBlock: [ packageName isNotEmpty ]) errorMacro:
 				 'Invalid package name') }
+]
+
+{ #category : 'transforming' }
+RBInsertNewClassRefactoring >> checkSuperclass [
+
+	| superclassObj superclassName |
+	"I fail if superclass is not defined in the model"
+	superclassObj := self model classObjectFor: superclass.
+	superclassObj ifNil: [
+			superclassName := superclass isString
+				                  ifTrue: [ superclass , ' ' ]
+				                  ifFalse: [ '' ].
+			self refactoringError: 'The new class'' superclass ' , superclassName , 'is missing from the model' ]
 ]
 
 { #category : 'accessing' }
@@ -79,6 +92,12 @@ RBInsertNewClassRefactoring >> packageName: anObject [
 ]
 
 { #category : 'transforming' }
+RBInsertNewClassRefactoring >> prepareForExecution [
+
+	self checkSuperclass
+]
+
+{ #category : 'transforming' }
 RBInsertNewClassRefactoring >> privateTransform [
 
 	self model
@@ -93,33 +112,16 @@ RBInsertNewClassRefactoring >> privateTransform [
 		reparentClasses: subclasses to: (self model classNamed: className)
 ]
 
-{ #category : 'storing' }
-RBInsertNewClassRefactoring >> storeOn: aStream [
-
-	aStream nextPutAll: '(('.
-	self class storeOn: aStream.
-	aStream
-		nextPutAll: ' className: #';
-		nextPutAll: className;
-		nextPutAll: ') superclass: '.
-	superclass storeOn: aStream.
-	aStream nextPutAll: '; subclasses: '.
-	subclasses asArray storeOn: aStream.
-	aStream nextPutAll: '; packageName: '.
-	packageName storeOn: aStream.
-	aStream nextPutAll: '; tagName: '.
-	tagName storeOn: aStream.
-	aStream nextPut: $)
-]
-
 { #category : 'accessing' }
 RBInsertNewClassRefactoring >> subclasses: aCollection [
+	"Set class objects for a list of class names"
 
 	subclasses := aCollection collect: [ :each | self classObjectFor: each ].
 ]
 
 { #category : 'accessing' }
 RBInsertNewClassRefactoring >> superclass: aClass [
+	"set the superclass object"
 
 	superclass := self classObjectFor: aClass
 ]

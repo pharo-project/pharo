@@ -1,6 +1,6 @@
 Class {
 	#name : 'MetacelloPreLoadDirective',
-	#superclass : 'MetacelloPrePostLoadDirective',
+	#superclass : 'MetacelloDirective',
 	#category : 'Metacello-Core-Directives',
 	#package : 'Metacello-Core',
 	#tag : 'Directives'
@@ -15,7 +15,7 @@ MetacelloPreLoadDirective >> acceptVisitor: aTarget [
 { #category : 'actions' }
 MetacelloPreLoadDirective >> addTo: aLoaderDirective [
 
-	spec preLoadDoIt value ifNotNil: [ aLoaderDirective add: self ]
+	spec preLoadDoIt ifNotNil: [ aLoaderDirective add: self ]
 ]
 
 { #category : 'printing' }

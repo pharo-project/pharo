@@ -66,25 +66,6 @@ RBRemoveSenderRefactoring class >> remove: anInterval inMethod: aSelector forCla
 		forClass: aClass
 ]
 
-{ #category : 'preconditions' }
-RBRemoveSenderRefactoring >> applicabilityPreconditions [
-
-	^ {
-		  (RBCondition withBlock: [
-			   class ifNil: [ self refactoringError: 'Invalid class name' ].
-			   true ]).
-		  (RBCondition definesSelector: sourceSelector in: class).
-		  (RBCondition withBlock: [
-			   self checkSelectedMessage.
-			   "self parseInlineMethod."
-			   self rewriteInlinedTree.
-			   (sourceMessage parent isReturn or: [
-				    self hasMultipleReturns not ]) ifFalse: [
-				   self refactoringError:
-					   'Cannot inline method since it contains multiple returns that cannot be rewritten' ].
-			   true ]) }
-]
-
 { #category : 'transforming' }
 RBRemoveSenderRefactoring >> checkSelectedMessage [
 
@@ -116,6 +97,13 @@ RBRemoveSenderRefactoring >> preconditions [
 	^ self applicabilityPreconditions
 ]
 
+{ #category : 'initialization' }
+RBRemoveSenderRefactoring >> prepareForExecution [
+
+	self checkSelectedMessage.
+	self rewriteInlinedTree.
+]
+
 { #category : 'transforming' }
 RBRemoveSenderRefactoring >> privateTransform [
 	self inlineParseTree.
@@ -132,18 +120,4 @@ RBRemoveSenderRefactoring >> remove: anInterval inMethod: aSelector forClass: aC
 	sourceSelector := aSelector.
 	class := self classObjectFor: aClass.
 	sourceInterval := anInterval
-]
-
-{ #category : 'storing' }
-RBRemoveSenderRefactoring >> storeOn: aStream [
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream nextPutAll: ' remove: '.
-	sourceInterval storeOn: aStream.
-	aStream
-		nextPutAll: ' inMethod: #';
-		nextPutAll: sourceSelector;
-		nextPutAll: ' forClass: '.
-	class storeOn: aStream.
-	aStream nextPut: $)
 ]

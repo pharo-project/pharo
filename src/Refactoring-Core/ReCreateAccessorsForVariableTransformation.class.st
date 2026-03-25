@@ -105,6 +105,14 @@ ReCreateAccessorsForVariableTransformation >> applicabilityPreconditions [
 				RBCondition definesInstanceVariable: variableName in: class ]) }
 ]
 
+{ #category : 'printing' }
+ReCreateAccessorsForVariableTransformation >> changesToDisplayIn: aBrowser [
+
+	^ (self changes changes
+		select: [:change | {getterMethodName. setterMethodName} includes: change selector ])
+		flatCollect: [:change | change changesToDisplayIn: aBrowser ]
+]
+
 { #category : 'initialization' }
 ReCreateAccessorsForVariableTransformation >> classVariable: aBoolean [
 	classVariable := aBoolean
@@ -152,7 +160,7 @@ ReCreateAccessorsForVariableTransformation >> defineSetterMethod [
 				ifTrue: ['<1s> anObject<r><r><t>^ <2s> := anObject']
 				ifFalse: ['<1s> anObject<r><r><t><2s> := anObject'].
 	selector := self
-						safeMethodNameFor: definingClass
+						safeAccessorNameFor: definingClass
 						basedOn: variableName asString , ':'.
 						
 	self generateChangesFor: 
@@ -201,13 +209,6 @@ ReCreateAccessorsForVariableTransformation >> findSetterMethod [
 			(self checkClass: definingClass selector: each using: matcher) isNotNil
 				and: [ (definingClass subclassRedefines: each) not ] ]
 		ifNone: [ nil ]
-]
-
-{ #category : 'client refactoring API' }
-ReCreateAccessorsForVariableTransformation >> getterMethod [
-
-	self deprecated: 'Use getterMethodName' transformWith: '`@arg getterMethod' -> '`@arg getterMethodName'.
-	^ self getterMethodName
 ]
 
 { #category : 'client refactoring API' }
@@ -267,34 +268,14 @@ ReCreateAccessorsForVariableTransformation >> privateTransform [
 { #category : 'transforming' }
 ReCreateAccessorsForVariableTransformation >> selector [
 	^ selector ifNil: [
-		selector := self safeMethodNameFor: self definingClass
+		selector := self safeAccessorNameFor: self definingClass
 				basedOn: variableName asString. ]
-]
-
-{ #category : 'client refactoring API' }
-ReCreateAccessorsForVariableTransformation >> setterMethod [
-	self deprecated: 'Use getterMethodName' transformWith: '`@arg setterMethod' -> '`@arg setterMethodName'.
-
-	^ self setterMethodName
 ]
 
 { #category : 'client refactoring API' }
 ReCreateAccessorsForVariableTransformation >> setterMethodName [
 
 	^ setterMethodName
-]
-
-{ #category : 'storing' }
-ReCreateAccessorsForVariableTransformation >> storeOn: aStream [
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream nextPutAll: ' variable: '.
-	variableName storeOn: aStream.
-	aStream nextPutAll: ' class: '.
-	class storeOn: aStream.
-	aStream nextPutAll: ' classVariable: '.
-	classVariable storeOn: aStream.
-	aStream nextPut: $)
 ]
 
 { #category : 'testing' }
@@ -323,12 +304,4 @@ ReCreateAccessorsForVariableTransformation >> usesAssignmentOf: aString in: aCla
 				ifFalse: [ each whichSelectorsReferToInstanceVariable: aString ])
 				anySatisfy:
 					[ :sel | self checkClass: each selector: sel using: matcher ]) ])
-]
-
-{ #category : 'printing' }
-ReCreateAccessorsForVariableTransformation >> whatToDisplayIn: aBrowser [
-
-	^ (self changes changes
-		select: [:change | {getterMethodName. setterMethodName} includes: change selector ])
-		flatCollect: [:change | change whatToDisplayIn: aBrowser ]
 ]

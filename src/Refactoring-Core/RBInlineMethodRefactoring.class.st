@@ -82,12 +82,6 @@ RBInlineMethodRefactoring >> applicabilityPreconditions [
 	^ {
 		  (RBCondition definesSelector: sourceSelector in: class).
 		  (RBCondition withBlock: [
-			   self checkSelectedMessage.
-			   self parseInlineMethod.
-			   inlineParseTree isPrimitive ifTrue: [
-				   self refactoringError: 'Cannot inline primitives' ].
-			   self checkSuperMessages.
-			   self rewriteInlinedTree.
 			   (sourceMessage parent isReturn or: [
 				    self hasMultipleReturns not ]) ifFalse: [
 				   self refactoringError:
@@ -98,15 +92,26 @@ RBInlineMethodRefactoring >> applicabilityPreconditions [
 { #category : 'preconditions' }
 RBInlineMethodRefactoring >> breakingChangePreconditions [
 
-	^ { (RBCondition withBlock: [
-		   self checkOverridden ifTrue: [
-			   self isOverridden ifTrue: [
-				   self refactoringWarning:
-					   ('<1p>>><2s> is overriden. Do you want to inline it anyway?'
-					    , String cr , 'You can break you hooks with this inline.'
-						    expandMacrosWith: self classOfTheMethodToInline
-						    with: self inlineSelector) ] ].
-		   true ]) }
+	^ {
+		  (RBCondition withBlock: [
+				   self checkOverridden ifTrue: [
+						   self isOverridden ifTrue: [
+								   self refactoringWarning:
+									   ('<1p>>><2s> is overriden. Do you want to inline it anyway?' , String cr , 'You can break you hooks with this inline.'
+										    expandMacrosWith: self classOfTheMethodToInline
+										    with: self inlineSelector) ] ].
+				   true ]).
+		  (RBCondition withBlock: [
+				   | statements |
+				   statements := inlineParseTree body statements.
+				   (statements size > 1 and: [ sourceMessage isEvaluatedFirst not ]) ifTrue: [
+						   self refactoringWarning:
+							   'To inline this method, we need to move some of its statements before the original message send.<n>This could change the order of execution, which can change the behavior.<n>Do you want to proceed?'
+								   expandMacros ].
+				   true ]).
+		  (RBCondition withBlock: [
+				   self checkSuperMessages.
+				   true ]) }
 ]
 
 { #category : 'accessing' }
@@ -119,9 +124,10 @@ RBInlineMethodRefactoring >> checkOverridden: aBoolean [
 	checkOverridden := aBoolean
 ]
 
-{ #category : 'transforming' }
+{ #category : 'preconditions' }
 RBInlineMethodRefactoring >> checkSelectedMessage [
 
+	class ifNil: [ self refactoringError: 'Class could not be found.' ].
 	sourceParseTree := class parseTreeForSelector: sourceSelector.
 	sourceParseTree ifNil: [
 		self refactoringError: 'Could not parse sources' ].
@@ -140,7 +146,7 @@ RBInlineMethodRefactoring >> checkSelectedMessage [
 		self refactoringError: 'Cannot inline non-self messages' ]
 ]
 
-{ #category : 'transforming' }
+{ #category : 'preconditions' }
 RBInlineMethodRefactoring >> checkSuperMessages [
 
 	self classOfTheMethodToInline = class ifTrue: [ ^ self ].
@@ -149,14 +155,14 @@ RBInlineMethodRefactoring >> checkSuperMessages [
 		(self classOfTheMethodToInline superclass
 			 whichClassIncludesSelector: each)
 		= (class superclass whichClassIncludesSelector: each) ifFalse: [
-			self refactoringError:
+			self refactoringWarning:
 				('Cannot inline method since it sends a super message <1s> that is overriden'
 					 expandMacrosWith: each) ] ]
 ]
 
-{ #category : 'transforming' }
+{ #category : 'accessing' }
 RBInlineMethodRefactoring >> classOfTheMethodToInline [
-
+	
 	^ classOfTheMethodToInline
 		  ifNil: [
 			  classOfTheMethodToInline := (sourceMessage receiver name
@@ -186,7 +192,7 @@ RBInlineMethodRefactoring >> findFirstOccurrenceOf: searchedString in: textToSea
 	^ firstIndex
 ]
 
-{ #category : 'testing' }
+{ #category : 'preconditions' }
 RBInlineMethodRefactoring >> hasMultipleReturns [
 	"Do we have multiple returns? If the last statement isn't a return, then we have an implicit return of self."
 
@@ -216,7 +222,7 @@ RBInlineMethodRefactoring >> inlineParseTree [
 	^ inlineParseTree
 ]
 
-{ #category : 'transforming' }
+{ #category : 'accessing' }
 RBInlineMethodRefactoring >> inlineSelector [
 
 	^ sourceMessage selector
@@ -234,10 +240,6 @@ RBInlineMethodRefactoring >> inlineSource: messageSendSource fromMethod: aSelect
 RBInlineMethodRefactoring >> inlineSourceReplacing: aParseTree [
 	| statements nodeUnderSequence |
 	statements := inlineParseTree body statements.
-	(statements size > 1 and: [ aParseTree isEvaluatedFirst not ]) ifTrue: [
-		self refactoringWarning:
-			'To inline this method, we need to move some of its statements before the original message send.<n>This could change the order of execution, which can change the behavior.<n>Do you want to proceed?'
-				expandMacros ].
 	nodeUnderSequence := aParseTree.
 	[ nodeUnderSequence parent isSequence ] whileFalse: [ nodeUnderSequence := nodeUnderSequence parent ].
 	nodeUnderSequence parent
@@ -268,7 +270,7 @@ RBInlineMethodRefactoring >> insertInlinedMethod [
 	self removeImmediateBlocks
 ]
 
-{ #category : 'testing' }
+{ #category : 'accessing' }
 RBInlineMethodRefactoring >> isOverridden [
 
 	^ class subclassRedefines: self inlineSelector
@@ -290,7 +292,7 @@ RBInlineMethodRefactoring >> moveComments [
 							OCCommentNode with: aComment contents at: start])]
 ]
 
-{ #category : 'transforming' }
+{ #category : 'canonization' }
 RBInlineMethodRefactoring >> normalizeIfTrues [
 	| rewriter |
 	rewriter := self parseTreeRewriter.
@@ -303,7 +305,7 @@ RBInlineMethodRefactoring >> normalizeIfTrues [
 		whileTrue: [inlineParseTree := rewriter tree]
 ]
 
-{ #category : 'transforming' }
+{ #category : 'canonization' }
 RBInlineMethodRefactoring >> normalizeReturns [
 	| rewriter |
 	rewriter := self parseTreeRewriter.
@@ -328,8 +330,9 @@ RBInlineMethodRefactoring >> normalizeReturns [
 		whileTrue: [inlineParseTree := rewriter tree]
 ]
 
-{ #category : 'transforming' }
+{ #category : 'initialization' }
 RBInlineMethodRefactoring >> parseInlineMethod [
+
 
 	self classOfTheMethodToInline
 		ifNil: [ self
@@ -341,13 +344,23 @@ RBInlineMethodRefactoring >> parseInlineMethod [
 	inlineParseTree := self classOfTheMethodToInline parseTreeForSelector: self inlineSelector.
 	inlineParseTree ifNil: [ self refactoringError: 'Could not parse sources' ].
 	inlineParseTree lastIsReturn
-		ifFalse: [ inlineParseTree addSelfReturn ]
+		ifFalse: [ inlineParseTree addSelfReturn ].
+   inlineParseTree isPrimitive ifTrue: [
+	   self refactoringError: 'Cannot inline primitives' ].
 ]
 
 { #category : 'preconditions' }
 RBInlineMethodRefactoring >> preconditions [ 
 
 	^ self applicabilityPreconditions & self breakingChangePreconditions 
+]
+
+{ #category : 'initialization' }
+RBInlineMethodRefactoring >> prepareForExecution [
+
+	self checkSelectedMessage.
+	self parseInlineMethod.
+	self rewriteInlinedTree.
 ]
 
 { #category : 'transforming' }
@@ -410,7 +423,7 @@ RBInlineMethodRefactoring >> renameConflictingTemporary: aName [
 	newName := aName.
 	index := 0.
 
-	[(sourceMessage whoDefines: newName) isNotNil or:
+	[(sourceMessage whichUpNodeDefines: newName) isNotNil or:
 			[(class hierarchyDefinesVariable: newName) or: [allNames includes: newName]]]
 			whileTrue:
 				[index := index + 1.
@@ -453,7 +466,7 @@ RBInlineMethodRefactoring >> replaceArguments [
 				ifFalse: [ self addTemporary: source assignedTo: replacement ] ]
 ]
 
-{ #category : 'transforming' }
+{ #category : 'canonization' }
 RBInlineMethodRefactoring >> rewriteCascadedMessage [
 	| index messages |
 
@@ -468,7 +481,7 @@ RBInlineMethodRefactoring >> rewriteCascadedMessage [
 	inlineParseTree addReturn
 ]
 
-{ #category : 'transforming' }
+{ #category : 'canonization' }
 RBInlineMethodRefactoring >> rewriteInlinedTree [
 	sourceMessage parent isReturn
 		ifTrue:
@@ -496,21 +509,7 @@ RBInlineMethodRefactoring >> sourceSelector [
 	^ sourceSelector
 ]
 
-{ #category : 'storing' }
-RBInlineMethodRefactoring >> storeOn: aStream [
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream nextPutAll: ' inline: '.
-	sourceInterval storeOn: aStream.
-	aStream
-		nextPutAll: ' inMethod: #';
-		nextPutAll: sourceSelector;
-		nextPutAll: ' forClass: '.
-	class storeOn: aStream.
-	aStream nextPut: $)
-]
-
-{ #category : 'transforming' }
+{ #category : 'canonization' }
 RBInlineMethodRefactoring >> writeGuardClauses [
 	| rewriter |
 	rewriter := self parseTreeRewriter.

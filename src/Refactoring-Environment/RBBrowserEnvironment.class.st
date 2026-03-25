@@ -761,13 +761,6 @@ RBBrowserEnvironment >> shortDescription [
 	^ self description contractTo: 50
 ]
 
-{ #category : 'storing' }
-RBBrowserEnvironment >> storeOn: aStream [
-	aStream
-		nextPutAll: self class name;
-		nextPutAll: ' new'
-]
-
 { #category : 'testing' }
 RBBrowserEnvironment >> supportsQuery: aQuery [
 

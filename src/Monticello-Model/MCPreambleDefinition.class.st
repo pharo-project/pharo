@@ -14,7 +14,8 @@ MCPreambleDefinition class >> scriptSelector [
 ]
 
 { #category : 'installing' }
-MCPreambleDefinition >> load [
-	super load.
+MCPreambleDefinition >> loadWithLoader: aLoader [
+
+	super loadWithLoader: aLoader.
 	self evaluate
 ]

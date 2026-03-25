@@ -36,7 +36,7 @@ OSNullBackendWindow >> clipboardText [
 OSNullBackendWindow >> clipboardText: anObject [
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 OSNullBackendWindow >> destroy [
 ]
 

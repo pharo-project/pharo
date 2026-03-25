@@ -22,14 +22,6 @@ OCAbstractScope >> environment [
 	^self targetClass environment
 ]
 
-{ #category : 'lookup' }
-OCAbstractScope >> hasBindingThatBeginsWith: aString [
-	"check weather there are any variables defined that start with aString"
-	^ outerScope
-		ifNil: [ false ]
-		ifNotNil: [ outerScope hasBindingThatBeginsWith: aString ]
-]
-
 { #category : 'testing' }
 OCAbstractScope >> hasTempVector [
 	^ false
@@ -57,6 +49,21 @@ OCAbstractScope >> lookupVar: name [
 	"search the scope (and the outer scopes) for a variable 'name' and return it"
 
 	^ outerScope ifNotNil: [ :it | it lookupVar: name ]
+]
+
+{ #category : 'testing' }
+OCAbstractScope >> nonOptimizedDistanceTo: aDefiningScope [
+	
+	| currentScope distance |
+	currentScope := self.
+	distance := 0.
+
+	[ currentScope ~= aDefiningScope ] whileTrue: [
+		(currentScope isBlockScope and: [ currentScope isOptimized not ])
+			ifTrue: [ distance := distance + 1 ].
+		currentScope := currentScope outerScope ].
+
+	^ distance
 ]
 
 { #category : 'lookup' }

@@ -100,25 +100,6 @@ RBMoveClassTransformation >> privateTransform [
 	self model repackage: self definingClass in: self packageName tag: self tagName
 ]
 
-{ #category : 'storing' }
-RBMoveClassTransformation >> storeOn: aStream [
-
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream
-		nextPutAll: ' move: ''';
-		nextPutAll: className;
-		nextPutAll: ''' toPackage: ''';
-		nextPutAll: packageName;
-		nextPutAll: ''''.
-	self tagName ifNotNil: [
-		aStream
-			nextPutAll: ' inTag: ''';
-			nextPutAll: tagName;
-			nextPutAll: '''' ].
-	aStream nextPut: $)
-]
-
 { #category : 'accessing' }
 RBMoveClassTransformation >> tagName [
 

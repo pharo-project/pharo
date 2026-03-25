@@ -45,12 +45,6 @@ RubSmalltalkEditor class >> buildShortcutsOn: aBuilder [
 		do: [ :target | target editor inspectIt: nil ]
 		description: 'Do & inspect it'.
 
-	(aBuilder shortcut: #basicInspectIt)
-		category: RubSmalltalkEditor name
-		default: $i meta shift
-		do: [ :target | target editor basicInspectIt ]
-		description: 'Do & basic inspect it'.
-
 	(aBuilder shortcut: #implementorsOfIt)
 		category: RubSmalltalkEditor name
 		default: $m meta
@@ -157,11 +151,6 @@ RubSmalltalkEditor >> atCompletionPosition [
 	^ (self lineIndentationStart: cursorPosition) < cursorPosition
 ]
 
-{ #category : 'do-its' }
-RubSmalltalkEditor >> basicInspectIt [
-	self evaluateSelectionAndDo: [:result | result basicInspect]
-]
-
 { #category : 'source navigation' }
 RubSmalltalkEditor >> bestNodeInString: source at: selectionInterval editingMode: aRubEdittingMode shouldFavourExpressions: isFavouringExpressions onError: aBlock [
 	"Find the best node in the source text in the identified selection area"
@@ -191,7 +180,7 @@ RubSmalltalkEditor >> bestNodeInString: source at: selectionInterval editingMode
 				ifNone: [ ^aBlock value ]].
 
 		node isFaulty ifTrue: [
-			node allChildren size = 1 ifTrue: [
+			node withAllChildren size = 1 ifTrue: [
 				(aRubEdittingMode parseExpression: (node value padLeftTo: source size))
 					ifNil: [ ^node ]
 					ifNotNil: [ :newNode |
@@ -451,7 +440,7 @@ RubSmalltalkEditor >> debug: aStream [
 	method := self compile: aStream for: receiver in: context.
 	method ifNil: [ ^self ].
 	method isReturnSpecial
-		ifTrue: [ self inform: 'Nothing to debug, the expression is optimized'.
+		ifTrue: [ InformativeNotification signal: 'Nothing to debug, the expression is optimized'.
 			^ self ].
 	 self debug: method receiver: receiver in: context
 ]
@@ -566,10 +555,9 @@ RubSmalltalkEditor >> evaluateSelectionAndDo: aBlock [
 	"Treat the current selection as an expression; evaluate it and invoke aBlock with the result.
 	If no selection is present select the current line."
 
-	self expressionSelectAndEmptyCheck: [^ ''].
-	^ self
-		evaluate: self selection
-		andDo: aBlock
+	self selectLine.
+	self selection ifEmpty: [ ^ '' ].
+	^ self evaluate: self selection andDo: aBlock
 ]
 
 { #category : 'do-its' }

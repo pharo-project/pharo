@@ -15,5 +15,6 @@ ClyFFIMethodQuery >> description [
 
 { #category : 'testing' }
 ClyFFIMethodQuery >> selectsMethod: aMethod [
-	^ aMethod isFFIMethod
+
+	^ FFIMethodIdentifier new ast: aMethod ast; transformsFFIMethod
 ]

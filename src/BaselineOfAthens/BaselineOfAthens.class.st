@@ -28,15 +28,14 @@ BaselineOfAthens >> baseline: spec [
 				package: 'Athens-Core' with: [ spec requires: 'Display' ];
 				package: 'Athens-Core-Tests' with: [ spec requires: 'Athens-Core' ];
 				package: 'Athens-Text' with: [ spec requires: 'Athens-Core' ];
-				package: 'Athens-Balloon' with: [ spec requires: #('Athens-Core' 'Athens-Text') ];
-				package: 'Athens-Morphic' with: [ spec requires: #('Athens-Core' 'Athens-Text' 'Athens-Balloon' 'Athens-Cairo') ];
+				package: 'Athens-Morphic' with: [ spec requires: #('Athens-Core' 'Athens-Text' 'Athens-Cairo') ];
 				package: 'Athens-Cairo' with: [ spec requires: #('Athens-Core' 'UnifiedFFI') ];
-				package: 'Athens-Examples' with: [ spec requires: #('Athens-Morphic' 'Athens-Text' 'Athens-Balloon' 'Athens-Cairo') ];
+				package: 'Athens-Examples' with: [ spec requires: #('Athens-Morphic' 'Athens-Text' 'Athens-Cairo') ];
 				package: 'Athens-Cairo-Tests' with: [ spec requires: 'Athens-Cairo' ].
 
 			"Groups"
 			spec
-				group: 'Core' with: #('Cairo-core' 'Athens-Text' 'Athens-Balloon' 'Athens-Morphic');
+				group: 'Core' with: #('Cairo-core' 'Athens-Text' 'Athens-Morphic');
 				group: 'Cairo-core' with: #('Athens-Core' 'Athens-Cairo');
 				group: 'Examples' with: #('Athens-Examples');
 				group: 'Tests' with: #('Athens-Cairo-Tests') ]

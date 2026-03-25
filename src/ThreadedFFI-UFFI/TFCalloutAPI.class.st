@@ -51,7 +51,7 @@ TFCalloutAPI class >> resetTrace [
 ]
 
 { #category : 'tracing' }
-TFCalloutAPI class >> trace: sender [
+TFCalloutAPI class >> traceSender: sender [
 	"This method is not to be used directly, it is called by TFFI when #activateTrace was called."
 
 	TraceBlock ifNil: [ ^ self ].

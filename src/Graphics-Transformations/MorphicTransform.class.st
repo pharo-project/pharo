@@ -174,7 +174,7 @@ MorphicTransform >> setAngle: radians [
 	angle := radians
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 MorphicTransform >> setIdentiy [
 	scale := 1.0.
 	offset := 0 @ 0.

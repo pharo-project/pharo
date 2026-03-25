@@ -9,6 +9,13 @@ Class {
 	#tag : 'Manifest'
 }
 
+{ #category : 'meta-data - dependency analyser' }
+ManifestGeneralRulesTests class >> manuallyResolvedDependencies [
+
+	<ignoreForCoverage>
+	^ #(#ScriptingExtensions)
+]
+
 { #category : 'code-critics' }
 ManifestGeneralRulesTests class >> ruleMethodSelectorKeywordCasingRuleV1FalsePositive [
 

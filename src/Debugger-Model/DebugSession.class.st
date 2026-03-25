@@ -71,26 +71,13 @@ DebugSession class >> fastStepThroughMode: aBoolean [
 	^ FastStepThroughMode := aBoolean
 ]
 
-{ #category : 'settings' }
-DebugSession class >> fastStepThroughModeSettingOn: aBuilder [
-
-	<systemsettings>
-	(aBuilder setting: #fastStepThroughMode)
-		label: 'Enable the fast step through mode';
-		target: self;
-		parent: #debugging;
-		default: false;
-		description:
-			'If enabled, the debugger will perform step through operations using halting blocks. This implementation is more efficient than the original one based on interpreter steps'
-]
-
-{ #category : 'settings' }
+{ #category : 'accessing' }
 DebugSession class >> logDebuggerStackToFile [
 	^ LogDebuggerStackToFile 
 		ifNil: [ LogDebuggerStackToFile := false ]
 ]
 
-{ #category : 'settings' }
+{ #category : 'accessing' }
 DebugSession class >> logDebuggerStackToFile: aBoolean [
 	LogDebuggerStackToFile := aBoolean
 ]
@@ -191,25 +178,6 @@ DebugSession >> implement: aMessage classified: aSymbol inClass: aClass forConte
 
 	self updateContextTo: aContext.
 	self contextChanged
-]
-
-{ #category : 'debug - session' }
-DebugSession >> implement: aMessage inClass: aClass forContext: aContext [
-	| method |
-	aClass compile: (DynamicMessageImplementor for: aMessage in: aClass) value.
-	method := aClass lookupSelector: aMessage selector.
-
-	MethodClassifier classify: method.
-
-	aContext privRefreshWith: method.
-	aContext method numArgs > 0 ifTrue:
-		[aMessage arguments withIndexDo:
-			[:arg :index|
-				aContext tempAt: index put: arg]].
-
-	self updateContextTo: aContext.
-	self contextChanged.
-	^ method
 ]
 
 { #category : 'private' }
@@ -342,17 +310,45 @@ DebugSession >> process: aProcess context: aContext [
 ]
 
 { #category : 'debugging actions' }
-DebugSession >> recompileMethodTo: text inContext: aContext notifying: aNotifyer [
+DebugSession >> recompileMethodTo: aString inContext: aContext notifying: aNotifyer [
+	"The retrieved information has changed and its source must now be updated.
+	 In this case, the retrieved information is the method of the given context.
+	 NOTE: I am letting this method as a 'weak deprecate', but it should not be used 
+	 as it plugs UI concerns (the confirm call) deep down the debugging mechanism.
+	 Please use DebugSession>>recompileMethodTo:inContext:notifying:force: instead"
+	| force |
+
+	force := false.
+	^ [ 
+		self 
+			recompileMethodTo: aString
+			inContext: aContext 
+			notifying: aNotifyer 
+			force: force ] 
+		on: DebugAttemptToRewindPostMortemError 
+		do: [ :e | 
+			force := ConfirmationRequest signal: 'Can not rewind post mortem context for new method.\ Accept anyway ?' withCRs.
+			force ifTrue: [ e retry ].
+			false ]
+]
+
+{ #category : 'debugging actions' }
+DebugSession >> recompileMethodTo: aString inContext: aContext notifying: aNotifyer force: aBoolean [
 	"The retrieved information has changed and its source must now be updated.
 	 In this case, the retrieved information is the method of the given context."
-
 	| newMethod recompilationContext canRewind |
+	
 	canRewind := (self isContextPostMortem: self interruptedContext) not.
-	(recompilationContext := (self createModelForContext: aContext) locateClosureHomeWithContent: text) ifNil: [ ^ false ].
-	canRewind
-		ifFalse: [ (self confirm: 'Can not rewind post mortem context for new method.\ Accept anyway ?' withCRs) or: [ ^ false ] ].
+	canRewind ifFalse: [ 
+		aBoolean ifFalse: [
+			DebugAttemptToRewindPostMortemError signal ] ].
+		
+	recompilationContext := (self createModelForContext: aContext) locateClosureHomeWithContent: aString.
+	recompilationContext ifNil: [ ^ false ].
 
-	newMethod := (self createModelForContext: recompilationContext) recompileCurrentMethodTo: text notifying: aNotifyer.
+	newMethod := (self createModelForContext: recompilationContext) 
+		recompileCurrentMethodTo: aString 
+		notifying: aNotifyer.
 	newMethod ifNil: [ ^ false ].
 
 	(self isContextPostMortem: self interruptedContext)
@@ -361,6 +357,7 @@ DebugSession >> recompileMethodTo: text inContext: aContext notifying: aNotifyer
 	"Use an alarm instead of triggering the notification directly, as the content of
 	the editor can still be unaccepted. "
 	self installAlarm: #contextChanged.
+	
 	^ true
 ]
 
@@ -457,7 +454,7 @@ DebugSession >> rewindContextToMethod: aMethod fromContext: aContext [
 
 	ctxt == aContext
 		ifFalse: [
-			self inform: 'Method saved, but current context unchanged\because of unwind error. Click OK to see error' withCRs ]
+			InformativeNotification signal: 'Method saved, but current context unchanged\because of unwind error. Click OK to see error' withCRs ]
 		ifTrue: [
 			interruptedProcess restartTopWith: aMethod.
 			self stepToFirstInterestingBytecodeIn: interruptedProcess ].
@@ -491,9 +488,8 @@ DebugSession >> selectedCodeRangeForContext: selectedContext [
 { #category : 'logging' }
 DebugSession >> signalDebuggerError: anError [
 
-	DebuggerSettings emergencyDebugger
-		debugError: anError
-		fromSession: self
+	DebuggerEmergencyLogger new logError: anError forSession: self
+		
 ]
 
 { #category : 'accessing' }
@@ -596,12 +592,49 @@ DebugSession >> stepToFirstInterestingBytecodeIn: aProcess [
 
 	"If we are are stepping into a quick method,
 	make sure that we step correctly over the first primitive bytecode"
+
 	| suspendedContext |
 	suspendedContext := aProcess suspendedContext.
-	(suspendedContext method isQuick and: [ suspendedContext pc == suspendedContext method initialPC ])
+	(suspendedContext method isQuick and: [
+		 suspendedContext pc == suspendedContext method initialPC ])
 		ifTrue: [ ^ suspendedContext updatePCForQuickPrimitiveRestart ].
 
-	^ aProcess stepToSendOrReturn
+	^ Processor activeProcess
+		  evaluate: [
+			  | newContext |
+			  newContext := self stepToFirstInterestingBytecodeInContext: aProcess suspendedContext.
+			  aProcess suspendedContext: newContext.
+			  newContext ]
+		  onBehalfOf: aProcess
+]
+
+{ #category : 'private' }
+DebugSession >> stepToFirstInterestingBytecodeInContext: aContext [
+
+	| bytecodeInterpreter context debugInfo |
+	aContext isDead ifTrue: [
+		self error: 'Cannot step into dead context' ].
+
+	debugInfo := aContext method debugInfo.
+	bytecodeInterpreter := InstructionStream
+		                       on: aContext method
+		                       pc: aContext pc.
+	[ debugInfo shouldStopAt: aContext pc ] whileFalse: [
+			context := bytecodeInterpreter interpretNextInstructionFor:
+				           aContext.
+			context == aContext ifFalse: [ "Caused all non-send, non-store, non-return instructions
+				that may activate a method. This is today the case of mustBeBoolean.
+				
+				If a mustBeBoolean has been activated, we need to change contexts"
+				^ context ] ].
+
+	^ aContext
+]
+
+{ #category : 'accessing' }
+DebugSession >> suspendedContext: aContext [ 
+	
+	interruptedContext := aContext
 ]
 
 { #category : 'debugging actions' }

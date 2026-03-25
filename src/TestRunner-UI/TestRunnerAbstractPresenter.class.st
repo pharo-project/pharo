@@ -12,7 +12,6 @@ Class {
 		'selectedClasses',
 		'resultItemsPresenter',
 		'resultDescriptionPresenter',
-		'suitePreparationModesPresenter',
 		'suitePreparationMode'
 	],
 	#category : 'TestRunner-UI',
@@ -31,7 +30,7 @@ TestRunnerAbstractPresenter >> allDefinedTestCases: aCollectionOfPackage [
 
 	"return all the defined test cases from the giving pavkage"
 
-	^ aCollectionOfPackage collectAll: [ :package | 
+	^ aCollectionOfPackage collect: [ :package | 
 		  self definedTestCases: package ]
 ]
 
@@ -170,7 +169,7 @@ TestRunnerAbstractPresenter >> informInProgress [
 	resultDescriptionPresenter  text: 'In progress ...'
 ]
 
-{ #category : 'buttons-presenters-initialization' }
+{ #category : 'initialization' }
 TestRunnerAbstractPresenter >> initialize [
 	self initializeRunner.
 	super initialize
@@ -370,16 +369,16 @@ TestRunnerAbstractPresenter >> suitePreparationModesPresenter [
 
 	^ SpDropListPresenter new
 		  help: 'Suite preparation mode';
-		  items: AbstractSuitePreparator subclasses;
-		  whenSelectedItemChangedDo: [ :aSuitePreparatorClass | 
-			  self updateTestRunnerSuiePreparatorWith: aSuitePreparatorClass.
+		  items: { SuitePreparator new . ShuffleSuitePreparator new };
+		  whenSelectedItemChangedDo: [ :aSuitePreparator | 
+			  self updateTestRunnerSuiePreparatorWith: aSuitePreparator.
 			  self inform: self runner suitePreparator name ]
 ]
 
 { #category : 'accessing' }
 TestRunnerAbstractPresenter >> suitePreparator [
 
-	^ suitePreparationMode ifNil: [ AnyEffectSuitePreparator ]
+	^ suitePreparationMode ifNil: [ SuitePreparator new ]
 ]
 
 { #category : 'buttons-presenters-initialization' }

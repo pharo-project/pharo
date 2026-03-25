@@ -14,3 +14,10 @@ ManifestMorphicDeprecated class >> isDeprecated [
 
 	^ true
 ]
+
+{ #category : 'meta-data - dependency analyser' }
+ManifestMorphicDeprecated class >> manuallyResolvedDependencies [
+
+	<ignoreForCoverage>
+	^ #(#'System-Object Events')
+]

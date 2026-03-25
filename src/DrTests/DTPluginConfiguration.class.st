@@ -31,11 +31,11 @@ DTPluginConfiguration class >> items: aCollectionOfClasses packages: aCollection
 
 { #category : 'converting' }
 DTPluginConfiguration >> asTestSuite [
+
 	| suite |
 	suite := TestSuite new.
-	self items
-		reject: #isAbstract
-		thenDo: [ :s | suite addTest: s suite ].
+
+	self items reject: #isAbstract thenDo: [ :aTestCase | suite addTests: aTestCase suite tests ].
 	^ suite
 ]
 

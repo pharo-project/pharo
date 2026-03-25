@@ -409,28 +409,6 @@ RGBehaviorStrategy >> storeName [
 	self subclassResponsibility
 ]
 
-{ #category : 'accessing - deprecated parallel hierarchy' }
-RGBehaviorStrategy >> theMetaClass [
-	"This method is deprecated so consider to migrate."
-
-	self
-		deprecated: 'Please use #classSide instead'
-		transformWith: '`@receiver theMetaClass' -> '`@receiver classSide'.
-
-	^ self classSide
-]
-
-{ #category : 'accessing - deprecated parallel hierarchy' }
-RGBehaviorStrategy >> theNonMetaClass [
-	"This method is deprecated so consider to migrate."
-
-	self
-		deprecated: 'Please use #instanceSide instead'
-		transformWith: '`@receiver theNonMetaClass' -> '`@receiver instanceSide'.
-
-	^ self instanceSide
-]
-
 { #category : 'variables' }
 RGBehaviorStrategy >> trait [
 

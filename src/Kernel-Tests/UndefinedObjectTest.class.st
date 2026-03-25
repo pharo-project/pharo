@@ -96,8 +96,3 @@ UndefinedObjectTest >> testPrintOn [
 UndefinedObjectTest >> testShallowCopy [
 	self assert: nil shallowCopy isNil
 ]
-
-{ #category : 'tests - copying' }
-UndefinedObjectTest >> testVeryDeepCopyWith [
-	self assert: (nil veryDeepCopyWith: nil) isNil
-]

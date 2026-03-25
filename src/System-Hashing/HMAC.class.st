@@ -24,7 +24,8 @@ HMAC class >> on: aHashFunction [
 
 { #category : 'accessing' }
 HMAC >> destroy [
-	key destroy
+
+	1 to: key size do: [ :x | key at: x put: 0 ]
 ]
 
 { #category : 'accessing' }

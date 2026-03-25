@@ -263,6 +263,19 @@ RBAddParameterParametrizedTest >> testFailureInvalidNumArgsOfNewSelector [
 ]
 
 { #category : 'failure tests' }
+RBAddParameterParametrizedTest >> testFailureInvalidNumOfPermutations [
+
+	| newArg |
+	newArg := RBArgumentName name: 'anObject' value: 'nil'.
+	self shouldFail: (self createRefactoringWithModel: model andArguments: {
+				 #checkClass:.
+				 RBLintRuleTestData.
+				 #checkClass:too:.
+				 #( 1 ).
+				 { newArg } })
+]
+
+{ #category : 'failure tests' }
 RBAddParameterParametrizedTest >> testFailureModelBadInitializationCode [
 
 	| refactoring newArg |

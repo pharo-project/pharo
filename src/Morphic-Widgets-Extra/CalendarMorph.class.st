@@ -144,7 +144,7 @@ CalendarMorph >> daysForLine: aNumber [
 			ifFalse: [each - dayCount]]
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 CalendarMorph >> defaultBounds [
 	"Answer the default bounds for the receiver."
 

@@ -4,15 +4,14 @@ SUnit tests for dictionaries
 Class {
 	#name : 'DictionaryTest',
 	#superclass : 'CollectionRootTest',
-	#traits : 'TIncludesTest + TDictionaryAddingTest + TDictionaryComparingTest + TDictionaryCopyingTest + TDictionaryEnumeratingTest + (TDictionaryPrintingTest - {#testPrintElementsOn. #testStoreOn}) + TDictionaryRemovingTest + (TPutBasicTest - {#testAtPutOutOfBounds}) + TAsStringOnDelimiterTest + TPrintTest + TConvertTest + TConvertAsSortedTest + (TCopyTest - {#testCopyEmptyWithout. #testCopyNonEmptyWithout. #testCopyNonEmptyWithoutNotIncluded}) + TSetArithmetic + TDictionaryIncludesWithIdentityCheckTest + TDictionaryValueAccessTest + TDictionaryKeysValuesAssociationsAccess + TDictionaryKeyAccessTest + TDictionaryAssociationAccessTest + TStructuralEqualityTest + TOccurrencesForMultiplinessTest',
-	#classTraits : 'TIncludesTest classTrait + TDictionaryAddingTest classTrait + TDictionaryComparingTest classTrait + TDictionaryCopyingTest classTrait + TDictionaryEnumeratingTest classTrait + TDictionaryPrintingTest classTrait + TDictionaryRemovingTest classTrait + TPutBasicTest classTrait + TAsStringOnDelimiterTest classTrait + TPrintTest classTrait + TConvertTest classTrait + TConvertAsSortedTest classTrait + TCopyTest classTrait + TSetArithmetic classTrait + TDictionaryIncludesWithIdentityCheckTest classTrait + TDictionaryValueAccessTest classTrait + TDictionaryKeysValuesAssociationsAccess classTrait + TDictionaryKeyAccessTest classTrait + TDictionaryAssociationAccessTest classTrait + TStructuralEqualityTest classTrait + TOccurrencesForMultiplinessTest classTrait',
+	#traits : 'TIncludesTest + TDictionaryAddingTest + TDictionaryComparingTest + TDictionaryCopyingTest + TDictionaryEnumeratingTest + (TDictionaryPrintingTest - {#testPrintElementsOn. #testStoreOn}) + TDictionaryRemovingTest + (TPutBasicTest - {#testAtPutOutOfBounds}) + TPrintTest + TConvertTest + TConvertAsSortedTest + (TCopyTest - {#testCopyEmptyWithout. #testCopyNonEmptyWithout. #testCopyNonEmptyWithoutNotIncluded}) + TSetArithmetic + TDictionaryIncludesWithIdentityCheckTest + TDictionaryValueAccessTest + TDictionaryKeysValuesAssociationsAccess + TDictionaryKeyAccessTest + TDictionaryAssociationAccessTest + TStructuralEqualityTest + TOccurrencesForMultiplinessTest',
+	#classTraits : 'TIncludesTest classTrait + TDictionaryAddingTest classTrait + TDictionaryComparingTest classTrait + TDictionaryCopyingTest classTrait + TDictionaryEnumeratingTest classTrait + TDictionaryPrintingTest classTrait + TDictionaryRemovingTest classTrait + TPutBasicTest classTrait + TPrintTest classTrait + TConvertTest classTrait + TConvertAsSortedTest classTrait + TCopyTest classTrait + TSetArithmetic classTrait + TDictionaryIncludesWithIdentityCheckTest classTrait + TDictionaryValueAccessTest classTrait + TDictionaryKeysValuesAssociationsAccess classTrait + TDictionaryKeyAccessTest classTrait + TDictionaryAssociationAccessTest classTrait + TStructuralEqualityTest classTrait + TOccurrencesForMultiplinessTest classTrait',
 	#instVars : [
 		'emptyDict',
 		'nonEmptyDict',
 		'nonEmpty5ElementsNoDuplicates',
 		'indexArray',
 		'valueArray',
-		'nonEmpty1Element',
 		'collectionNotIncluded',
 		'collectionIncluded',
 		'associationNotIn',
@@ -228,12 +227,6 @@ DictionaryTest >> nonEmpty [
 ]
 
 { #category : 'requirements' }
-DictionaryTest >> nonEmpty1Element [
-" return a collection of size 1 including one element"
-	^ nonEmpty1Element
-]
-
-{ #category : 'requirements' }
 DictionaryTest >> nonEmptyDict [
 	^ nonEmptyDict
 ]
@@ -305,9 +298,6 @@ DictionaryTest >> setUp [
 	collectionIncluded := { self elementTwiceIn }.
 	indexArray := #( 2 3 1 ).
 	valueArray := #( 5 5 5 ).
-	nonEmpty1Element := self classToBeTested new
-		at: #a put: 5;
-		yourself.
 	nonEmptyWithString := Dictionary new add: #A->'foo'; add: #b->'bar'; yourself.
 	duplicateValue := 2.5.
 	dictionaryWithDuplicateValues := Dictionary new
@@ -475,19 +465,6 @@ DictionaryTest >> testFlatCollect3 [
  	res := {#first -> #(-2 3). #second -> #(-4 5)} as: self classToBeTested.
 	res := res flatCollect: [ :e | { (e collect: [ :each | each abs ]) } ].
  	self assert: res asSet equals: #(#(2 3) #(4 5)) asSet
-]
-
-{ #category : 'tests - testing' }
-DictionaryTest >> testHasBindingThatBeginsWith [
-	| newDict |
-	newDict := self collectionClass new
-		at: #abc put: 10;
-		at: #abcd put: 100;
-		at: #def put: 20;
-		yourself.
-	self assert: (newDict hasBindingThatBeginsWith: 'ab').
-	self assert: (newDict hasBindingThatBeginsWith: 'def').
-	self deny: (newDict hasBindingThatBeginsWith: 'defg')
 ]
 
 { #category : 'tests - testing' }

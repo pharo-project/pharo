@@ -35,9 +35,6 @@ Class {
 	#pools : [
 		'TextConstants'
 	],
-	#classInstVars : [
-		'notifier'
-	],
 	#category : 'Text-Core-Base',
 	#package : 'Text-Core',
 	#tag : 'Base'
@@ -51,18 +48,6 @@ TextStyle class >> actualTextStyles [
 	aDict := TextSharedInformation select: [ :thang | thang isKindOf: self ].
 	self defaultFamilyNames do: [ :sym | aDict removeKey: sym ].
 	^ aDict
-]
-
-{ #category : 'accessing' }
-TextStyle class >> addDependent: anObject [
-
-	self notifier addDependent: anObject
-]
-
-{ #category : 'accessing' }
-TextStyle class >> changed: anAspect [
-
-	self notifier changed: anAspect
 ]
 
 { #category : 'utilities' }
@@ -163,6 +148,7 @@ TextStyle class >> fontSizesFor: aName [
 
 { #category : 'class initialization' }
 TextStyle class >> initialize [
+
 	self initializeStyleDecoder
 ]
 
@@ -207,12 +193,6 @@ TextStyle class >> new [
 	^ super new leading: 2
 ]
 
-{ #category : 'accessing' }
-TextStyle class >> notifier [
-
-	^ notifier ifNil: [ notifier := Model new ]
-]
-
 { #category : 'utilities' }
 TextStyle class >> pixelsPerInch [
 	"Answer the nominal resolution of the screen."
@@ -236,12 +216,6 @@ TextStyle class >> pointSizesFor: aName [
 { #category : 'utilities' }
 TextStyle class >> pointsToPixels: points [
 	^points * self pixelsPerInch / 72.0
-]
-
-{ #category : 'accessing' }
-TextStyle class >> removeDependent: anObject [
-
-	self notifier removeDependent: anObject
 ]
 
 { #category : 'constants' }

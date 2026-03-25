@@ -13,23 +13,20 @@ ReExtractTempDriverTest >> testInvalidNameAndAbandon [
 	rbclasses := RBClassEnvironment classes: { MyClassA }.
 	driver := ReExtractTempDriver new
 		          scopes: { rbclasses };
-		          extract: (23 to: 24)
-					from: #methodForPushDown
-		          in: MyClassA.
+		          extract: (23 to: 24) from: #methodForPushDown in: MyClassA.
 	self setUpDriver: driver.
 
 	request := MockObject new.
 	request on: #title: respond: 2.
-	request on: #label: respond: 2.
+	request on: #message: respond: 2.
 	request on: #text: respond: 2.
 	request on: #acceptLabel: respond: 2.
 	request on: #cancelLabel: respond: 2.
-	request on: #onAccept: respond: 3. 
-	request on: #openModal respond: nil. 
+	request on: #onAccept: respond: 3.
+	request on: #openModal respond: nil.
 	driver requestDialog: request.
-	
-	driver runRefactoring.
-	"Renaming the references to the variable is not encapsulated in change objects, therefore the only change is the renaming of the variable itself."
+
+	driver runRefactoring. "Renaming the references to the variable is not encapsulated in change objects, therefore the only change is the renaming of the variable itself."
 
 
 	self assert: driver refactoring changes changes size equals: 0
@@ -49,7 +46,7 @@ ReExtractTempDriverTest >> testValidNameSuccessfulRename [
 
 	request := MockObject new.
 	request on: #title: respond: 2.
-	request on: #label: respond: 2.
+	request on: #message: respond: 2.
 	request on: #text: respond: 2.
 	request on: #acceptLabel: respond: 2.
 	request on: #cancelLabel: respond: 2.

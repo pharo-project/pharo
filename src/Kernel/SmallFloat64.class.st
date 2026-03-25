@@ -205,16 +205,6 @@ SmallFloat64 >> exponent [
 	^self negated exponent
 ]
 
-{ #category : 'truncation and round off' }
-SmallFloat64 >> fractionPart [
-	"Primitive. Answer a Float whose value is the difference between the
-	receiver and the receiver's asInteger value. Optional. See Object
-	documentation whatIsAPrimitive."
-
-	<primitive: 552>
-	^self - self truncated asFloat
-]
-
 { #category : 'comparing' }
 SmallFloat64 >> identityHash [
 	"We need the override since basicIdentityHash is already in SmallInteger range,
@@ -326,12 +316,6 @@ SmallFloat64 >> truncated [
 				r := self - (q asFloat * df).
 				^q*di+r truncated]
 		ifFalse: [^ self asTrueFraction.  "Extract all bits of the mantissa and shift if necess"]
-]
-
-{ #category : 'copying' }
-SmallFloat64 >> veryDeepCopyWith: deepCopier [
-	"Answer the receiver, because SmallFloat64s are unique."
-	^self
 ]
 
 { #category : 'comparing' }

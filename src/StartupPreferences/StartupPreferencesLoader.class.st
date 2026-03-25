@@ -280,10 +280,14 @@ StartupPreferencesLoader >> addAtStartupInPreferenceVersionFolder: aCollection n
 
 { #category : 'private' }
 StartupPreferencesLoader >> addTemplateForStartupInDirectory: aFileReference named: fileName [
-	
-	aFileReference ensureCreateDirectory.
-	aFileReference / fileName writeStreamDo: [ :stream | 
-		stream nextPutAll: self templateString ]
+
+	(aFileReference / fileName) exists
+		ifFalse: [
+				aFileReference ensureCreateDirectory.
+				aFileReference / fileName writeStreamDo: [ :stream |
+					stream nextPutAll: self templateString ] ]
+		ifTrue: [ InformativeNotification signal: 'This file already exists' ].
+	(aFileReference / fileName) inspect
 ]
 
 { #category : 'private' }
@@ -412,15 +416,16 @@ StartupPreferencesLoader >> templateString [
 	^ 'StartupPreferencesLoader default executeAtomicItems: {
 	StartupAction 
 		name: ''Logo'' 
-		code: [ PolymorphSystemSettings showDesktopLogo: false] .
+		code: [ " PolymorphSystemSettings showDesktopLogo: false " ] .
 	StartupAction 
 		name: ''Git Settings'' 
 		code: [ 
+"
 			Iceberg enableMetacelloIntegration: true.
 			IceCredentialsProvider sshCredentials
 					username: ''git'';
 					publicKey: ''/Users/XXX/.ssh/id_rsa.pub'';
-					privateKey: ''/Users/XX/.ssh/id_rsa''.
+					privateKey: ''/Users/XXX/.ssh/id_rsa''.
 			IceCredentialStore current
 					storeCredential: (IcePlaintextCredentials new
 					username: ''GHUSER'';
@@ -435,6 +440,7 @@ StartupPreferencesLoader >> templateString [
 					token: ''YOUR TOKEN'';
 					yourself) 
 				forHostname: ''github.com''.
+"
 			]. 
 }.'
 ]

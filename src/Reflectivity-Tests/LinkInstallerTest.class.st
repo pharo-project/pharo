@@ -64,7 +64,7 @@ LinkInstallerTest >> testCallToSuperWithArgs [
 { #category : 'nodes' }
 LinkInstallerTest >> testFindingAnonymousNodes [
 	| link varNode instance objectSpecificVarNode |
-	varNode := (ReflectivityExamples >> #exampleSendNoReturn) ast allChildren atRandom.
+	varNode := (ReflectivityExamples >> #exampleSendNoReturn) ast withAllChildren atRandom.
 
 	link := MetaLink new.
 	instance := ReflectivityExamples new.
@@ -79,7 +79,7 @@ LinkInstallerTest >> testFindingAnonymousNodes [
 { #category : 'nodes' }
 LinkInstallerTest >> testLinkOnASTProgramNode [
 	| link varNode instance objectSpecificVarNode |
-	varNode := (ReflectivityExamples >> #exampleSendNoReturn) ast allChildren atRandom.
+	varNode := (ReflectivityExamples >> #exampleSendNoReturn) ast withAllChildren atRandom.
 	link := MetaLink new.
 
 	instance := ReflectivityExamples new.
@@ -293,7 +293,7 @@ LinkInstallerTest >> testMethodModified [
 
 	| metalink node |
 	obj1 compileTemporaryMethods.
-	node := (ReflectivityExamples >> #methodToBeModified) ast allChildren atRandom.
+	node := (ReflectivityExamples >> #methodToBeModified) ast withAllChildren atRandom.
 
 	"Putting a link on a random node should migrate the object to an anonymous subclass"
 	metalink := MetaLink new.
@@ -317,7 +317,7 @@ LinkInstallerTest >> testMethodRemoved [
 
 	| metalink node |
 	obj1 compileTemporaryMethods.
-	node := (ReflectivityExamples >> #methodToBeRemoved) ast allChildren atRandom.
+	node := (ReflectivityExamples >> #methodToBeRemoved) ast withAllChildren atRandom.
 
 	"Putting a link on a random node should migrate the object to an anonymous subclass"
 	metalink := MetaLink new.
@@ -364,7 +364,7 @@ LinkInstallerTest >> testNodesRemovedFromLinkWhenMethodRemovedFromObject [
 	link installOnVariableNamed: #instVar for: obj option: #all instanceSpecific: true.
 
 	self assert: link nodes size equals: 8.
-	self assert: (link nodes allSatisfy: [:node| (obj class >> #newMethodWithInstVarAccess) ast allChildren includes: node]) .
+	self assert: (link nodes allSatisfy: [:node| (obj class >> #newMethodWithInstVarAccess) ast withAllChildren includes: node]) .
 	ReflectivityExamples2 new removeNewMethodWithInstVarAccess.
 	self assert: link nodes size equals: 4.
 
@@ -485,7 +485,7 @@ LinkInstallerTest >> testPropagateClassScopedLinks [
 	they must also be added to all anonymous classes with copy of this node and link."
 
 	| metalink metalink2 node anonNode |
-	node := (ReflectivityExamples >> #exampleIfTrueIfFalse) ast allChildren atRandom.
+	node := (ReflectivityExamples >> #exampleIfTrueIfFalse) ast withAllChildren atRandom.
 
 	metalink := MetaLink new.
 	node link: metalink.
@@ -533,7 +533,7 @@ LinkInstallerTest >> testPropagateClassScopedLinksRemoval [
 
 	| metalink metalink2 node anonNode |
 
-	node := (ReflectivityExamples >> #exampleIfTrueIfFalse) ast allChildren atRandom.
+	node := (ReflectivityExamples >> #exampleIfTrueIfFalse) ast withAllChildren atRandom.
 
 	metalink := MetaLink new.
 	node link: metalink.
@@ -575,7 +575,7 @@ LinkInstallerTest >> testPropagateClassScopedLinksRemovalFromMethodNode [
 { #category : 'nodes' }
 LinkInstallerTest >> testPropagateLinksOnRBProgramNode [
 	| link link2 varNode instance objectSpecificVarNode |
-	varNode := (ReflectivityExamples >> #exampleSendNoReturn) ast allChildren atRandom.
+	varNode := (ReflectivityExamples >> #exampleSendNoReturn) ast withAllChildren atRandom.
 	link := MetaLink new.
 	link2 := MetaLink new.
 	varNode link: link.
@@ -602,7 +602,7 @@ LinkInstallerTest >> testPropagateNewClassScopedLinks [
 	it must also be added to all anonymous classes with copy of this node and link."
 
 	| metalink metalink2 node anonNode |
-	node := (ReflectivityExamples >> #exampleIfTrueIfFalse) ast allChildren atRandom.
+	node := (ReflectivityExamples >> #exampleIfTrueIfFalse) ast withAllChildren atRandom.
 
 	metalink := MetaLink new.
 	metalink2 := MetaLink new.
@@ -678,11 +678,11 @@ LinkInstallerTest >> testRemovingMethodNodes [
 	metalink2 := MetaLink new.
 
 	(ReflectivityExamples >> #exampleIfTrueIfFalse) ast link: metalink forObject: obj1.
-	(ReflectivityExamples >> #exampleIfTrueIfFalse) ast allChildren last link: metalink2 forObject: obj1.
+	(ReflectivityExamples >> #exampleIfTrueIfFalse) ast withAllChildren last link: metalink2 forObject: obj1.
 	self removeClassAccessControlForTests: obj1.
 
 	node1 := (ReflectivityExamples >> #exampleIfTrueIfFalse)ast.
-	node2 := (ReflectivityExamples >> #exampleIfTrueIfFalse) ast allChildren last.
+	node2 := (ReflectivityExamples >> #exampleIfTrueIfFalse) ast withAllChildren last.
 
 	node1 removeLink: metalink forObject: obj1.
 	self assert: obj1 class isAnonymous.
@@ -719,12 +719,12 @@ LinkInstallerTest >> testRemovingNodes [
 	metalink := MetaLink new.
 	metalink2 := MetaLink new.
 
-	(ReflectivityExamples >> #exampleIfTrueIfFalse) ast allChildren first link: metalink forObject: obj1.
-	(ReflectivityExamples >> #exampleIfTrueIfFalse) ast allChildren fourth link: metalink2 forObject: obj1.
+	(ReflectivityExamples >> #exampleIfTrueIfFalse) ast withAllChildren first link: metalink forObject: obj1.
+	(ReflectivityExamples >> #exampleIfTrueIfFalse) ast withAllChildren fourth link: metalink2 forObject: obj1.
 	self removeClassAccessControlForTests: obj1.
 
-	node1 := (ReflectivityExamples >> #exampleIfTrueIfFalse) ast allChildren first.
-	node2 := (ReflectivityExamples >> #exampleIfTrueIfFalse) ast allChildren fourth.
+	node1 := (ReflectivityExamples >> #exampleIfTrueIfFalse) ast withAllChildren first.
+	node2 := (ReflectivityExamples >> #exampleIfTrueIfFalse) ast withAllChildren fourth.
 
 	node1 removeLink: metalink forObject: obj1.
 	self assert: obj1 class isAnonymous.

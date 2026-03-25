@@ -108,7 +108,6 @@ ReImplementedNotSentRule class >> shutDown [
 { #category : 'announcement' }
 ReImplementedNotSentRule class >> subscribe [
 
-	<systemEventRegistration>
 	self unsubscribe.
 
 	self codeChangeAnnouncer weak

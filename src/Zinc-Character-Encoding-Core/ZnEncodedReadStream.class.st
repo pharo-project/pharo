@@ -174,6 +174,13 @@ ZnEncodedReadStream >> readStream [
 	^ self
 ]
 
+{ #category : 'initialization' }
+ZnEncodedReadStream >> reset [
+
+	super reset.
+	peeked := nil
+]
+
 { #category : 'accessing' }
 ZnEncodedReadStream >> skip: count [
 	count < 0 ifTrue: [ self error: 'cannot skip backwards' ].

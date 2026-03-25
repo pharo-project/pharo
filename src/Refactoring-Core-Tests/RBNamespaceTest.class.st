@@ -147,7 +147,7 @@ RBNamespaceTest >> testClassesReferencingClass [
 	classes := model classesReferencingClass: (model classFor: RBFooDummyLintRuleTest1).
 	self
 		assertCollection: (classes asArray collect: [ :each | each name ]) 
-		hasSameElements: #(#RBRemoveClassTransformationTest #RBRemoveClassRefactoringTest)
+		hasSameElements: #(#RBRemoveClassesTransformationTest #RBRemoveClassRefactoringTest)
 ]
 
 { #category : 'tests - classes' }

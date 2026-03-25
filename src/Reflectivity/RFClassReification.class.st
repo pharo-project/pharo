@@ -38,5 +38,5 @@ RFClassReification >> genForLiteralVariable [
 RFClassReification >> generate [
 	^OCMessageNode
 		receiver: OCVariableNode selfNode
-		selector: #class
+		selector: (OCSelectorNode value: #class)
 ]

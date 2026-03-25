@@ -57,7 +57,7 @@ RBMoveMethodToClassTransformation >> privateTransform [
 	| oldClass newClass rbMethod originalProtocol |
 	oldClass := self classModelOf: method methodClass.
 	newClass := self classModelOf: class.
-	rbMethod := model rbMethodClass for: newClass source: method sourceCode selector: method selector.
+	rbMethod := RBMethod for: newClass source: method sourceCode selector: method selector.
 	originalProtocol := method protocolName.
 
 	self generateChangesFor: (RBRemoveMethodTransformation 
@@ -68,17 +68,4 @@ RBMoveMethodToClassTransformation >> privateTransform [
 		sourceCode: rbMethod
 		in: newClass
 		withProtocol: originalProtocol)
-]
-
-{ #category : 'storing' }
-RBMoveMethodToClassTransformation >> storeOn: aStream [
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream
-		nextPutAll: ' selector: #';
-		nextPutAll:  method selector;
-		nextPutAll: ' class: '.
-	class storeOn: aStream.
-	aStream
-		nextPutAll: ''')'
 ]

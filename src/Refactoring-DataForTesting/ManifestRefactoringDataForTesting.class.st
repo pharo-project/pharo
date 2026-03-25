@@ -9,6 +9,13 @@ Class {
 	#tag : 'Manifest'
 }
 
+{ #category : 'meta-data - dependency analyser' }
+ManifestRefactoringDataForTesting class >> manuallyResolvedDependencies [
+
+	<ignoreForCoverage>
+	^ #(#'Transcript-NonInteractive')
+]
+
 { #category : 'code-critics' }
 ManifestRefactoringDataForTesting class >> ruleEquivalentSuperclassMethodsRuleV1FalsePositive [
 

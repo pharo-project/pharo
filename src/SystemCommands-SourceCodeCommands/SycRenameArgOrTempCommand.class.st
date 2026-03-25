@@ -38,7 +38,7 @@ SycRenameArgOrTempCommand >> defaultMenuIconName [
 
 { #category : 'accessing' }
 SycRenameArgOrTempCommand >> defaultMenuItemName [
-	^'Rename temp'
+	^'(R) Rename temp'
 ]
 
 { #category : 'accessing' }
@@ -55,12 +55,6 @@ SycRenameArgOrTempCommand >> execute [
 		   method: method;
 		   scopes: toolContext refactoringScopes;
 		   yourself) runRefactoring
-]
-
-{ #category : 'testing' }
-SycRenameArgOrTempCommand >> isComplexRefactoring [
-
-	^ false
 ]
 
 { #category : 'execution' }

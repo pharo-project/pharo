@@ -646,6 +646,21 @@ FBDDecompilerTest >> testOr [
 ]
 
 { #category : 'tests' }
+FBDDecompilerTest >> testPragma [
+	| aCompiledMethod bytecode |
+	aCompiledMethod := OpalCompiler new
+		source:
+			'methodDoublePragma
+											<hello: 5>
+											<hello: 2>';
+		class: OCMockCompilationClass;
+		compile.
+
+	bytecode := aCompiledMethod symbolic asString substrings: String cr.
+	self assert: bytecode first equals: 'Quick return self'
+]
+
+{ #category : 'tests' }
 FBDDecompilerTest >> testPrimitiveErrorCode [
 
 	self checkCorrectDecompilation: #examplePrimitiveErrorCode
@@ -809,6 +824,12 @@ FBDDecompilerTest >> testSimpleBlockiVar [
 ]
 
 { #category : 'tests' }
+FBDDecompilerTest >> testSimpleThisProcess [
+
+	self decompileThenRecompile: (self getMethod: #simpleThisProcess)
+]
+
+{ #category : 'tests' }
 FBDDecompilerTest >> testSuper [
 
 	self checkCorrectDecompilation: #exampleSuper
@@ -888,6 +909,12 @@ FBDDecompilerTest >> testToDo5 [
 ]
 
 { #category : 'tests' }
+FBDDecompilerTest >> testToDo6 [
+
+	self checkCorrectDecompilation: #exampleToDo6
+]
+
+{ #category : 'tests' }
 FBDDecompilerTest >> testToDoArgument [
 
 	self checkCorrectDecompilation: #exampleToDoArgument
@@ -953,6 +980,12 @@ FBDDecompilerTest >> testToDoWithMessage [
 ]
 
 { #category : 'tests' }
+FBDDecompilerTest >> testUsingThisProcess [
+
+	self decompileThenRecompile: (self getMethod: #usingThisProcess)
+]
+
+{ #category : 'tests' }
 FBDDecompilerTest >> testWhileFalse [
 
 	self checkCorrectDecompilation: #exampleWhileFalse
@@ -1004,10 +1037,20 @@ FBDDecompilerTest >> testWhileTrue2 [
 
 { #category : 'tests' }
 FBDDecompilerTest >> testWhileTrue3 [
-	<expectedFailure>
-	"See https://github.com/pharo-project/pharo/issues/13196"
 
 	self checkCorrectDecompilation: #exampleWhileTrue3
+]
+
+{ #category : 'tests' }
+FBDDecompilerTest >> testWhileTrue4 [
+
+	self checkCorrectDecompilation: #exampleWhileTrue4
+]
+
+{ #category : 'tests' }
+FBDDecompilerTest >> testWhileTrue5 [
+
+	self checkCorrectDecompilation: #exampleWhileTrue5
 ]
 
 { #category : 'tests' }

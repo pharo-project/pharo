@@ -101,18 +101,3 @@ RBAddMethodTransformation >> sourceCode: aString in: aClassName withProtocol: aS
 	sourceCode := aString.
 	protocol := aSymbol
 ]
-
-{ #category : 'storing' }
-RBAddMethodTransformation >> storeOn: aStream [
-
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream nextPutAll: ' sourceCode: '''.
-	sourceCode storeOn: aStream.
-	aStream nextPutAll: ''' in: '.
-	class storeOn: aStream.
-	aStream
-		nextPutAll: ' withProtocol: '.
-	protocol storeOn: aStream.
-	aStream nextPut: $)
-]

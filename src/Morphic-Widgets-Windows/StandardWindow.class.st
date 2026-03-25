@@ -22,7 +22,7 @@ StandardWindow class >> newWithTheme: aUITheme [
 		initialize
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 StandardWindow >> defaultColor [
 	"Answer the default color/fill style for the receiver"
 
@@ -215,7 +215,7 @@ StandardWindow >> wantsRoundedCorners [
 		ifFalse: [^super wantsRoundedCorners]
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 StandardWindow >> withText: aStringOrText label: title [
 
 	self title: title.

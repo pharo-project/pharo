@@ -29,7 +29,9 @@ Class {
 		'bindings',
 		'compiledMethodClass',
 		'semanticScope',
-		'compiledBlockClass'
+		'compiledBlockClass',
+		'semanticAnalysisNeeded',
+		'storeSourcesAsProperty'
 	],
 	#classVars : [
 		'DefaultOptions',
@@ -65,21 +67,6 @@ OCCompilationContext class >> cleanOptionString: string [
 		 ws nextPut: rs next.
 		 rs atEnd ] whileFalse ].
 	^ ws contents
-]
-
-{ #category : 'options' }
-OCCompilationContext class >> compilerSettingsOn: aBuilder [
-	self optionsDescription withIndexDo: [ :description :index |
-		| optionStringCleaned option |
-		option := description second.
-		optionStringCleaned := self cleanOptionString: option.
-		(aBuilder setting: option)
-			order: index;
-			target: self;
-			label: optionStringCleaned;
-			description: description third;
-			default: (self defaultOptions includes: option).
-		 ]
 ]
 
 { #category : 'instance creation' }
@@ -330,7 +317,7 @@ OCCompilationContext class >> optionsDescription [
 
 	(- optionBlockClosureOptionalOuter 			'Compiler compiles closure creation with outerContext only if it has a non-local return. Experimental')
 	(+ optionConstantBlockClosure 			'Compiler compiles closure creation to use ConstantBlockClosure for constant with 0-3 arguments. Experimental')
-	(- optionCleanBlockClosure 			'Compiler compiles closure creation to use CleanBlockClosure instead of FullBlockClosure for clean blocks. Experimental')
+	(+ optionCleanBlockClosure 			'Compiler compiles closure creation to use CleanBlockClosure instead of FullBlockClosure for clean blocks. Experimental')
 	(- optionLongIvarAccessBytecodes 	'Specific inst var accesses to Maybe context objects')
 	(+ optionOptimizeIR 					'Rewrite jumps in bytecode in a slightly more efficient way')
 	(- optionParseErrors 					'Parse syntactically wrong code (interactive and non-interactive')
@@ -509,6 +496,12 @@ OCCompilationContext >> isScripting: aBoolean [
 		semanticScope := OCReceiverDoItSemanticScope targetingNilReceiver ]
 ]
 
+{ #category : 'testing' }
+OCCompilationContext >> isSemanticAnalysisNeeded [
+
+	^ semanticAnalysisNeeded == true
+]
+
 { #category : 'options' }
 OCCompilationContext >> optionBlockClosureOptionalOuter [
 	^ options includes: #optionBlockClosureOptionalOuter
@@ -682,6 +675,18 @@ OCCompilationContext >> requestorScopeClass: anObject [
 ]
 
 { #category : 'accessing' }
+OCCompilationContext >> requireSemanticAnalysis [
+
+	semanticAnalysisNeeded := true
+]
+
+{ #category : 'accessing' }
+OCCompilationContext >> semanticAnalysisDone [
+
+	semanticAnalysisNeeded := false
+]
+
+{ #category : 'accessing' }
 OCCompilationContext >> semanticAnalyzerClass [
 	^ semanticAnalyzerClass ifNil: [ semanticAnalyzerClass := OCASTSemanticAnalyzer  ]
 ]
@@ -706,4 +711,16 @@ OCCompilationContext >> semanticScope: anObject [
 { #category : 'options' }
 OCCompilationContext >> setOptions: opts [
 	options := opts
+]
+
+{ #category : 'accessing' }
+OCCompilationContext >> storeSourcesAsProperty [
+	
+	^ storeSourcesAsProperty ifNil: [ true ]
+]
+
+{ #category : 'accessing' }
+OCCompilationContext >> storeSourcesAsProperty: aBoolean [ 
+	
+	storeSourcesAsProperty := aBoolean
 ]

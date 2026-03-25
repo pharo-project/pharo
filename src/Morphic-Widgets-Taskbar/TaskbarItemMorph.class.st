@@ -29,6 +29,12 @@ TaskbarItemMorph >> addEmphaseTo: lab [
 	lab emphasis: 1
 ]
 
+{ #category : 'accessing' }
+TaskbarItemMorph >> buildLabelMorph [
+
+	^ self theme buttonLabelForText: self model taskbarLabel
+]
+
 { #category : 'style - border' }
 TaskbarItemMorph >> disabledBorderStyle [
 	"Return the disabled borderStyle of the receiver."
@@ -58,10 +64,8 @@ TaskbarItemMorph >> initializeAnnouncements [
 
 { #category : 'initialization' }
 TaskbarItemMorph >> initializeFor: aTaskbar [
-	| lm lab labSize |
-
-	labSize := self labelSizeIn: aTaskbar.
-	lab := self labelOfSize: labSize.
+	| lm lab |
+	lab := self buildLabelMorph.
 	self addEmphaseTo: lab.
 	lm := self theme
 		newRowIn: aTaskbar
@@ -70,6 +74,7 @@ TaskbarItemMorph >> initializeFor: aTaskbar [
 			lab}.
 
 	lm cellInset: 2.
+
 	self
 		label: lm font: self theme buttonFont;
 		extent: self minExtent;
@@ -77,22 +82,19 @@ TaskbarItemMorph >> initializeFor: aTaskbar [
 		vResizing: #rigid;
 		useSquareCorners;
 		getMenuSelector: #taskbarButtonMenu:.
+		
+	"The following code works like this:
+	- A Task takes at least 100px.
+	- A Task takes maximum 175px.
+	- If possible, we try to have 15 tasks on one level of the taskbar."
+	self width: (((aTaskbar innerBounds width // 15) min: 175) max: 100).
+	
 	self initializeAnnouncements.
 	lab
 		color:
 			(self model isCollapsed
 				ifTrue: [ self theme taskbarItemLabelColorForCollapsed: self ]
 				ifFalse: [ self theme taskbarItemLabelColorForExpanded: self ])
-]
-
-{ #category : 'accessing' }
-TaskbarItemMorph >> labelOfSize: labSize [
-	^ self theme	buttonLabelForText: (self model taskbarLabel truncateWithElipsisTo: labSize)
-]
-
-{ #category : 'accessing' }
-TaskbarItemMorph >> labelSizeIn: aTaskbar [
-	^ (150 // (aTaskbar tasks size + 1) max: 10) min: 30
 ]
 
 { #category : 'style - border' }

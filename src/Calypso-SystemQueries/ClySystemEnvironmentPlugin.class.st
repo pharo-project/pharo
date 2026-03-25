@@ -29,9 +29,8 @@ Class {
 	#classVars : [
 		'SlowPluginsAreDisabled'
 	],
-	#category : 'Calypso-SystemQueries-Domain',
-	#package : 'Calypso-SystemQueries',
-	#tag : 'Domain'
+	#category : 'Calypso-SystemQueries',
+	#package : 'Calypso-SystemQueries'
 }
 
 { #category : 'testing' }
@@ -121,4 +120,8 @@ ClySystemEnvironmentPlugin >> decorateBrowserItem: anItem ofPackage: aPackage [
 
 { #category : 'item decoration' }
 ClySystemEnvironmentPlugin >> decorateBrowserItem: anItem ofProject: aProject [
+]
+
+{ #category : 'critiques' }
+ClySystemEnvironmentPlugin >> resolveMetadataOfCritiques: aClySortedCritiques [
 ]

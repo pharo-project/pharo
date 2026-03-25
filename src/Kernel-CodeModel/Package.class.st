@@ -1,5 +1,5 @@
 "
-A RPackage is a new implementation of package.
+I am an implementation of package.
 
 
 Instance Variables
@@ -77,10 +77,10 @@ Package class >> initializeProperties [
 ]
 
 { #category : 'instance creation' }
-Package class >> named: aString [
+Package class >> named: aPackageName [
 
 	^ self new
-		  name: aString;
+		  name: aPackageName;
 		  yourself
 ]
 
@@ -99,9 +99,9 @@ Package class >> rootTagName [
 ]
 
 { #category : 'comparing' }
-Package >> <= aRPackage [
+Package >> <= aPackage [
 
-	^ self name <= aRPackage name
+	^ self name <= aPackage name
 ]
 
 { #category : 'add class' }
@@ -488,7 +488,8 @@ Package >> moveClass: aClass toTag: aTag [
 
 	"If the tag is undefined, this means we are adding the class. Else we are updating the package or tag."
 	oldTag isUndefined
-		ifTrue: [ self codeChangeAnnouncer  announce: (ClassAdded class: aClass) ]
+		ifTrue: [ SourcesManager current ifNotNil: [ :instance | "can be nil during the bootstrap" instance writeClassCreation: aClass ].
+				self codeChangeAnnouncer  announce: (ClassAdded class: aClass) ]
 		ifFalse: [ self codeChangeAnnouncer  announce: (ClassRepackaged classRepackaged: aClass oldTag: oldTag newTag: newTag) ]
 ]
 
@@ -502,9 +503,10 @@ Package >> name [
 Package >> name: aSymbol [
 	"Set the name of a package. This method is private and should not be used.
 	If you wish to rename a package, use #renameTo: instead"
-
+	
+	
 	aSymbol isEmptyOrNil ifTrue: [ self error: 'Cannot have empty or nil package name.' ].
-	name := aSymbol asSymbol
+	name := (self sanitizeName: aSymbol) asSymbol
 ]
 
 { #category : 'private' }
@@ -601,8 +603,9 @@ Package >> removeEmptyTags [
 Package >> removeFromSystem [
 	"Copy to not remove collection over which we are iterating."
 
-	self tags copy do: [ :tag | tag removeFromSystem ].
-	self extensionMethods do: [ :method | method removeFromSystem ].
+	SourcesManager current deferFlushDuring: [
+			self tags copy do: [ :tag | tag removeFromSystem ].
+			self extensionMethods do: [ :method | method removeFromSystem ] ].
 
 	self organizer unregisterPackage: self
 ]
@@ -659,11 +662,11 @@ Package >> removeTag: aTag [
 		       ifTrue: [ self tagNamed: aTag ifAbsent: [ ^ self ] ]
 		       ifFalse: [ aTag ].
 
-	"The #asArray is there to not remove elements from the #classes inst var while iterating it."
-	tag classes asArray do: [ :class | class removeFromSystem ].
+	"Make a topo sort of traits and classes"
+	(self sortTopologically: tag classes)
+		do: [ :class | class removeFromSystem ].
 
 	tags remove: tag ifAbsent: [ ^ self ].
-
 	self codeChangeAnnouncer announce: (PackageTagRemoved to: tag)
 ]
 
@@ -683,7 +686,7 @@ Package >> renameTo: aSymbol [
 
 	| oldName newName |
 	oldName := self name.
-	newName := aSymbol asSymbol.
+	newName := (self sanitizeName: aSymbol) asSymbol.
 	self organizer validatePackageDoesNotExist: aSymbol.
 
 	self organizer basicUnregisterPackage: self.
@@ -719,6 +722,12 @@ Package >> roots [
 ]
 
 { #category : 'accessing' }
+Package >> sanitizeName: aName [
+
+	^ aName trimBoth
+]
+
+{ #category : 'accessing' }
 Package >> selectors [
 
 	| allSelectors |
@@ -738,6 +747,30 @@ Package >> selectorsForClass: aClass [
 	^ (self includesClass: aClass)
 		ifFalse: [self extensionSelectorsForClass: aClass]
 		ifTrue: [self definedSelectorsForClass: aClass]
+]
+
+{ #category : 'private' }
+Package >> sortTopologically: allBehaviors [
+
+	| toSort sorted changed |
+	toSort := allBehaviors copy asSet.
+	sorted := OrderedCollection new.
+	changed := true.
+
+	[ changed ] whileTrue: [
+		| behaviorsWithoutInternalDependencies |
+		behaviorsWithoutInternalDependencies := toSort select: [ :e |
+			e dependencies noneSatisfy: [ :d | toSort includes: d ] ].
+		sorted addAllLast: behaviorsWithoutInternalDependencies.
+		toSort removeAll: behaviorsWithoutInternalDependencies.
+
+		behaviorsWithoutInternalDependencies ifEmpty: [ changed := false ].
+	].
+
+	"If the final set is not empty, this means we have cycles"
+	self assert: toSort isEmpty.
+
+	^ sorted
 ]
 
 { #category : 'tags' }

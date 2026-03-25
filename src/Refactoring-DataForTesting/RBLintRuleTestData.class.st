@@ -111,6 +111,13 @@ RBLintRuleTestData >> junk [
 ]
 
 { #category : 'accessing' }
+RBLintRuleTestData >> methodWithBlockContainingReturn [
+    | b |
+    b := [ ^ 42 ].
+    ^ b value 
+]
+
+{ #category : 'accessing' }
 RBLintRuleTestData >> name [
 	^name
 ]

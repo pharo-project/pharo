@@ -22,6 +22,17 @@ Class {
 	#tag : 'Refactorings'
 }
 
+{ #category : 'api' }
+RBRenameArgumentOrTemporaryRefactoring class >> model: aRBModel rename: oldName to: newName in: aClass selector: aSelector [
+
+	^ self new
+		model: aRBModel;
+		class: aClass selector: aSelector interval: nil;
+		oldName: oldName;
+		newName: newName;
+		yourself
+]
+
 { #category : 'instance creation' }
 RBRenameArgumentOrTemporaryRefactoring class >> model: aRBSmalltalk renameTemporaryFrom: anInterval to: newName in: aClass selector: aSelector [
 	^ self new
@@ -31,6 +42,16 @@ RBRenameArgumentOrTemporaryRefactoring class >> model: aRBSmalltalk renameTempor
 			interval: anInterval
 			newName: newName;
 		yourself
+]
+
+{ #category : 'api' }
+RBRenameArgumentOrTemporaryRefactoring class >> rename: oldName to: newName in: aClass selector: aSelector [
+
+    ^ self new
+        class: aClass selector: aSelector interval: nil;
+        oldName: oldName;
+        newName: newName;
+        yourself
 ]
 
 { #category : 'instance creation' }
@@ -67,8 +88,13 @@ RBRenameArgumentOrTemporaryRefactoring >> applicabilityPreconditionsOfTheNewName
 
 	^ {
 		  (RBCondition isValidInstanceVariableName: newName for: class).
+		  (ReLocalNameConflictCondition class: class variableName: newName parseTree: parseTree) }
+]
 
-		  (ReCheckVariableNameCondition class: class variableName: newName parseTree: parseTree) }
+{ #category : 'preconditions' }
+RBRenameArgumentOrTemporaryRefactoring >> breakingChangePreconditions [
+
+	^ { self preconditionCheckVariableName }
 ]
 
 { #category : 'initialization' }
@@ -104,26 +130,49 @@ RBRenameArgumentOrTemporaryRefactoring >> newName: aString [
 	newName := aString
 ]
 
+{ #category : 'accessing' }
+RBRenameArgumentOrTemporaryRefactoring >> oldName: aString [
+	oldName := aString 
+]
+
+{ #category : 'preconditions' }
+RBRenameArgumentOrTemporaryRefactoring >> preconditionCheckVariableName [
+
+	^ ReCheckVariableNameShadowingCondition class: class variableName: newName parseTree: parseTree
+]
+
 { #category : 'transforming' }
 RBRenameArgumentOrTemporaryRefactoring >> prepareForExecution [
 
-	| variableNode |
-	oldName := self getExistingNameFromInterval.
-	parseTree := class parseTreeForSelector: selector.
-	variableNode := [ self
-		                whichVariableNode: parseTree
-		                inInterval: interval
-		                name: oldName. ]
-		on: OCCodeError 
-		do: [ self refactoringError: 'Selected code does not contain any variables or contains multiple of them.' ].
-	(variableNode isNil or: [ variableNode isVariable not ]) ifTrue: [
-		self refactoringError: oldName asString , ' isn''t a valid variable' ].
-	variableNode name = oldName ifFalse: [
-		self refactoringError: 'Invalid selection' ].
-	definingNode := variableNode whoDefines: oldName.
-	definingNode ifNil: [
-		self refactoringError:
-			oldName asString , ' isn''t defined by the method' ]
+ | variableNode |
+
+ parseTree := class parseTreeForSelector: selector.
+ interval 
+	ifNil: [
+     "Name based rename"
+     variableNode := parseTree latestUseOfVariableNamed: oldName
+   ] 
+	ifNotNil: [
+     "Interval based rename"
+     oldName := self getExistingNameFromInterval.
+     variableNode := [
+         self
+             whichVariableNode: parseTree
+             inInterval: interval
+             name: oldName ]
+         on: OCCodeError
+         do: [
+             self refactoringError:
+                 'Selected code does not contain any variables or contains multiple of them.' ]
+ ].
+ (variableNode isNil or: [ variableNode isVariable not ]) ifTrue: [
+     self refactoringError: oldName asString , ' isn''t a valid variable' ].
+ variableNode name = oldName ifFalse: [
+     self refactoringError: 'Invalid selection' ].
+ definingNode := variableNode whichUpNodeDefines: oldName.
+ definingNode ifNil: [
+     self refactoringError:
+         oldName asString , ' isn''t defined by the method' ].
 ]
 
 { #category : 'transforming' }
@@ -143,21 +192,4 @@ RBRenameArgumentOrTemporaryRefactoring >> renameNode: aParseTree [
 RBRenameArgumentOrTemporaryRefactoring >> sourceClass [
 
 	^ class
-]
-
-{ #category : 'storing' }
-RBRenameArgumentOrTemporaryRefactoring >> storeOn: aStream [
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream nextPutAll: ' renameTemporaryFrom: '.
-	interval storeOn: aStream.
-	aStream
-		nextPutAll: ' to: ''';
-		nextPutAll: newName;
-		nextPutAll: ''' in: '.
-	class storeOn: aStream.
-	aStream
-		nextPutAll: ' selector: #';
-		nextPutAll: selector.
-	aStream nextPut: $)
 ]

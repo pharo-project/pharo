@@ -230,11 +230,6 @@ ZnUrl >> asRelativeUrl [
 ]
 
 { #category : 'converting' }
-ZnUrl >> asUrl [
-	^ self
-]
-
-{ #category : 'converting' }
 ZnUrl >> asZnUrl [
 	^ self
 ]

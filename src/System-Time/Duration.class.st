@@ -125,9 +125,12 @@ Duration class >> seconds: seconds [
 
 { #category : 'instance creation' }
 Duration class >> seconds: seconds nanoSeconds: nanos [
+
+	| integerPart |
+	integerPart := seconds truncated.
 	^ self basicNew
 		seconds: seconds truncated
-		nanoSeconds: seconds fractionPart * NanosInSecond + nanos
+		nanoSeconds: (seconds - integerPart) * NanosInSecond + nanos
 ]
 
 { #category : 'instance creation simple' }
@@ -378,7 +381,9 @@ Duration >> printHumanReadableOn: stream [
 
 { #category : 'printing' }
 Duration >> printOn: aStream [
-	"Format as per ANSI 5.8.2.16: [-]D:HH:MM:SS[.S]" 	| d h m s n |
+	"Format as per ANSI 5.8.2.16: [-]D:HH:MM:SS[.S]" 	
+		
+	| d h m s n |
 	d := self days abs.
 	h := self hours abs.
 	m := self minutes abs.
@@ -392,12 +397,13 @@ Duration >> printOn: aStream [
 	m printOn: aStream. aStream nextPut: $:.
 	s < 10 ifTrue: [ aStream nextPut: $0. ].
 	s printOn: aStream.
-	n = 0 ifFalse:
-		[ | z ps |
-		aStream nextPut: $..
-		ps := n asString padLeftTo: 9 with: $0.
-		z := ps findLast: [ :c | c asciiValue > $0 asciiValue ].
-		ps from: 1 to: z do: [ :c | aStream nextPut: c ] ]
+	n = 0 
+		ifFalse: [ 
+			| z ps |
+			aStream nextPut: $..
+			ps := n asString padLeftTo: 9 with: $0.
+			z := ps findLast: [ :c | c asciiValue > $0 asciiValue ].
+			ps from: 1 to: z do: [ :c | aStream nextPut: c ] ]
 ]
 
 { #category : 'operations' }

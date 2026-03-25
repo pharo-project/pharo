@@ -35,15 +35,10 @@ MCOrganizationDefinition >> = aDefinition [
 ]
 
 { #category : 'accessing' }
-MCOrganizationDefinition >> accept: aVisitor [
-	^ aVisitor visitOrganizationDefinition: self
-]
-
-{ #category : 'accessing' }
 MCOrganizationDefinition >> categories [
 
 	^ self packageName
-		  ifNil: [ {  } ]
+		  ifNil: [ #( 'Unpackaged' ) ]
 		  ifNotNil: [ :package | { package } , (self tagNames collect: [ :tagName | package , '-' , tagName ]) ]
 ]
 
@@ -94,11 +89,6 @@ MCOrganizationDefinition >> packageName [
 MCOrganizationDefinition >> packageName: anObject [
 
 	packageName := anObject
-]
-
-{ #category : 'installing' }
-MCOrganizationDefinition >> postloadOver: oldDefinition [
-	"Nothing to do"
 ]
 
 { #category : 'accessing' }

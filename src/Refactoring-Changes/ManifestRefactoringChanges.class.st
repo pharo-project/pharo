@@ -11,5 +11,5 @@ Class {
 
 { #category : 'code-critics' }
 ManifestRefactoringChanges class >> ruleUtilityMethodsRuleV1FalsePositive [
-	^ #(#(#(#RGClassDefinition #(#RBRefactoryChangeFactory)) #'2021-10-08T23:52:53.51808+02:00') )
+	^ #(#(#(#RGClassDefinition #(#ReChangeFactory)) #'2021-10-08T23:52:53.51808+02:00') )
 ]

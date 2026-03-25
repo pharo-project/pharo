@@ -68,6 +68,25 @@ RGEnvironment >> ask [
 	^ queryInterface ifNil: [ queryInterface := RGEnvironmentQueryInterface for: self ]
 ]
 
+{ #category : 'enumerating' }
+RGEnvironment >> associationsDo: aBlock [
+
+	self bindings do: aBlock
+]
+
+{ #category : 'accessing' }
+RGEnvironment >> at: aSymbol [
+
+	^ self ask behaviorNamed: aSymbol
+]
+
+{ #category : 'accessing' }
+RGEnvironment >> at: aString ifAbsent: aBlockClosure [
+	^ (self bindingOf: aString)
+		ifNotNil: [:association | association value ]
+		ifNil: [ aBlockClosure value ]
+]
+
 { #category : 'accessing' }
 RGEnvironment >> backend [
 
@@ -104,11 +123,33 @@ RGEnvironment >> bindingOf: aSymbol [
 	^ result
 ]
 
+{ #category : 'accessing' }
+RGEnvironment >> bindings [
+
+	"TODO:"
+
+	| dict |
+
+	dict := Dictionary new.
+	self globalVariablesDo: [ :each |
+		each name -> each ].
+
+	^ dict
+]
+
 { #category : 'events' }
 RGEnvironment >> child: aChildDefinition renamedFrom: oldName to: newName [
 
 	self queryInterface behaviorsDictionary removeKey: oldName ifAbsent: [].
 	self queryInterface behaviorsDictionary at: newName asSymbol put: aChildDefinition
+]
+
+{ #category : 'accessing' }
+RGEnvironment >> classNamed: aString [
+	| association |
+	association := self bindingOf: aString.
+	^ association ifNotNil: [ association value ]
+		ifNil: [ self error: 'Class "', aString, '" not found' ]
 ]
 
 { #category : 'cleaning' }
@@ -639,6 +680,13 @@ RGEnvironment >> makeResolved [
 	globalVariables := self ask globalVariables markAsRingResolved
 ]
 
+{ #category : 'accessing - class and trait names' }
+RGEnvironment >> nonClassNames [
+
+	"TODO:"
+	^ #()
+]
+
 { #category : 'accessing' }
 RGEnvironment >> package [
 
@@ -828,6 +876,11 @@ RGEnvironment >> removeUnusedPackages [
 	self ask packages copy do: [ :each |
 		(usedPackages includes: each)
 			ifFalse: [ self removePackage: each ] ]
+]
+
+{ #category : 'private' }
+RGEnvironment >> systemDictionary [
+	^ self
 ]
 
 { #category : 'cleaning' }

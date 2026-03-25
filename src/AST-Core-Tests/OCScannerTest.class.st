@@ -1,5 +1,5 @@
 "
-SUnit tests for RBScanner
+SUnit tests for OCScanner
 "
 Class {
 	#name : 'OCScannerTest',
@@ -9,12 +9,12 @@ Class {
 	#tag : 'Parser'
 }
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 OCScannerTest >> buildScannerForText: source [
 	^ self scannerClass on: source readStream
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 OCScannerTest >> scannerClass [
 	^ OCScanner
 ]

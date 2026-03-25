@@ -9,47 +9,10 @@ Class {
 	#tag : 'Base'
 }
 
-{ #category : 'emphasis' }
-AbstractFont class >> emphasisStringFor: emphasisCode [
-	"Answer a translated string that represents the attributes given in emphasisCode."
-
-	| emphases |
-	emphasisCode = 0 ifTrue: [ ^'Normal' translated ].
-
-	emphases := (IdentityDictionary new)
-						at: 1 put: 'Bold' translated;
-						at: 2 put: 'Italic' translated;
-						at: 4 put: 'Underlined' translated;
-						at: 8 put: 'Narrow' translated;
-						at: 16 put: 'StruckOut' translated;
-						yourself.
-
-	^String streamContents: [ :s | | bit |
-		bit := 1.
-		[ bit < 32 ] whileTrue: [ | code |
-			code := emphasisCode bitAnd: bit.
-			code isZero ifFalse: [ s nextPutAll: (emphases at: code); space ].
-			bit := bit bitShift: 1 ].
-		s position isZero ifFalse: [ s skip: -1 ]]
-]
-
-{ #category : 'class initialization' }
-AbstractFont class >> initialize [
-
-	TextStyle addDependent: self
-]
-
 { #category : 'testing' }
 AbstractFont class >> isAbstract [
 
 	^self == AbstractFont
-]
-
-{ #category : 'updating' }
-AbstractFont class >> update: anAspect [
-
-	anAspect == #textDPIChanged ifTrue: [
-		AbstractFont allSubInstancesDo: [ :font | font pixelsPerInchChanged ]]
 ]
 
 { #category : 'measuring' }
@@ -209,12 +172,6 @@ AbstractFont >> lineGrid [
 	^self subclassResponsibility
 ]
 
-{ #category : 'accessing' }
-AbstractFont >> pixelSize [
-	"Make sure that we don't return a Fraction"
-	^ TextStyle pointsToPixels: self pointSize
-]
-
 { #category : 'notifications' }
 AbstractFont >> pixelsPerInchChanged [
 	"The definition of TextStyle class>>pixelsPerInch has changed. Do whatever is necessary."
@@ -237,12 +194,6 @@ AbstractFont >> strikeoutThickness [
 { #category : 'metrics' }
 AbstractFont >> strikeoutTop [
 	^ 0
-]
-
-{ #category : 'accessing' }
-AbstractFont >> textStyle [
-	^ TextStyle actualTextStyles detect:
-		[:aStyle | aStyle fontArray includes: self] ifNone: [ TextStyle fontArray: { self } ]
 ]
 
 { #category : 'accessing' }

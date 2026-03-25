@@ -17,6 +17,14 @@ RBCompositeEnvironment >> = anObject [
 	^ environment = anObject environment and: [otherEnvironment = anObject otherEnvironment]
 ]
 
+{ #category : 'accessing' }
+RBCompositeEnvironment >> definedClasses [
+	| definedClasses |
+	definedClasses := IdentitySet new: 4096.
+	self definedClassesDo: [ :each | each isMeta ifFalse: [definedClasses add: each] ].
+	^ definedClasses reject: [ :each | each isMeta ]
+]
+
 { #category : 'description' }
 RBCompositeEnvironment >> description [
 

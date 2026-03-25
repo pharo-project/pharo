@@ -253,16 +253,3 @@ RBFindAndReplaceTransformation >> selectorsFor: cls [
 RBFindAndReplaceTransformation >> startLimitOf: sourceCode [
 	^ self method ast body statements first start
 ]
-
-{ #category : 'storing' }
-RBFindAndReplaceTransformation >> storeOn: aStream [
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream nextPutAll: ' find: #';
-		nextPutAll: selector;
-		nextPutAll: ' of: #';
-		nextPutAll: class name;
-		nextPutAll: ' inAllHierarchy: '.
-	replacesAllHierarchy storeOn: aStream.
-	aStream nextPut: $)
-]

@@ -8,6 +8,7 @@ Class {
 
 { #category : 'running' }
 AssignmentAndLiteralDebuggerTest >> setUp [
+	<compilerOptions: #(- optionCleanBlockClosure)>
 	super setUp.
 	self settingUpSessionAndProcessAndContextForBlock: [ |var| var:=4]
 ]

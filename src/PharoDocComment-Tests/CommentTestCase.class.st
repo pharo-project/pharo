@@ -75,8 +75,12 @@ CommentTestCase >> printString [
 CommentTestCase >> testIt [
 	"pay attention this test is not meant to be executed normally. 
 	It is part of the infrastructure to turn an expression into a test."
+
 	| value |
 	value := self evaluate.
 	self assert: value isAssociation.
-	self assert: value key equals: value value
+	self
+		assert: value key = value value
+		description: [
+		(self comparingStringBetween: value key and: value value) , ' Executable comment from: ' , docCommentNode sourceNode methodNode compiledMethod printString ]
 ]

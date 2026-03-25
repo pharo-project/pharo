@@ -140,7 +140,7 @@ MCRepositoryTest >> testCanCreateFiletreeRepositoryFromUrl [
 
 { #category : 'tests' }
 MCRepositoryTest >> testCanCreateFiletreeRepositoryFromUrlWithRelativePath [
-	repository := MCRepository fromUrl: 'filetree://.' asUrl.
+	repository := MCRepository fromUrl: 'filetree://.' asZnUrl.
 	self assert: (repository isKindOf: MCFileTreeRepository) 
 ]
 

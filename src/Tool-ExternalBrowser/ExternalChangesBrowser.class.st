@@ -25,13 +25,6 @@ Class {
 	#tag : 'Browsers'
 }
 
-{ #category : 'examples' }
-ExternalChangesBrowser class >> browseRecentLog [
-	<example>
-
-	^ self openOnStream: SourceFiles changesFileStream
-]
-
 { #category : 'layout' }
 ExternalChangesBrowser class >> defaultLayout [
 	<spec: #default>
@@ -63,9 +56,9 @@ ExternalChangesBrowser class >> example1 [
 
 { #category : 'examples' }
 ExternalChangesBrowser class >> example2 [
-	<example>
 
-	self openOn: Smalltalk changesFile fullName
+	<example>
+	self openOn: FileLocator changes fullName
 ]
 
 { #category : 'file service' }
@@ -117,7 +110,7 @@ ExternalChangesBrowser class >> registerToolsOn: registry [
 ExternalChangesBrowser class >> serviceBrowseCSOrSTFile [
 	"Answer a service for opening a changelist browser on a file"
 
-	^ (SimpleServiceEntry
+	^ (FileServiceEntry
 		provider: self
 		label: 'Changelist browser'
 		selector: #openOnStream:

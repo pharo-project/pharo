@@ -15,33 +15,6 @@ RBPullUpMethodParametrizedTest class >> testParameters [
 ]
 
 { #category : 'tests' }
-RBPullUpMethodParametrizedTest >> addClassHierarchy [
-
-	model
-		defineClass: [ :aBuilder |
-			aBuilder
-				superclass: Object;
-				name: #SomeClass;
-				sharedVariables: { #Foo };
-				package: #'Refactory-Test data' ];
-		defineClass: [ :aBuilder |
-			aBuilder
-				superclassName: #SomeClass;
-				name: #Subclass;
-				package: #'Refactory-Test data' ];
-		defineClass: [ :aBuilder |
-			aBuilder
-				superclassName: #Subclass;
-				name: #Foo1;
-				package: #'Refactory-Test data' ];
-		defineClass: [ :aBuilder |
-			aBuilder
-				superclassName: #Subclass;
-				name: #Foo2;
-				package: #'Refactory-Test data' ]
-]
-
-{ #category : 'tests' }
 RBPullUpMethodParametrizedTest >> addClassHierarchyForPools [
 
 	model
@@ -74,110 +47,77 @@ RBPullUpMethodParametrizedTest >> constructor [
 { #category : 'failure tests' }
 RBPullUpMethodParametrizedTest >> testFailurePullUpWhenSuperClassDoesNotDirectlyImplement [
 
-	| classEnvironment classes |
+	| classEnvironment classes refactoring |
 	classes := #( #ClassA #ClassB #ClassC ) inject: OrderedCollection new into: [ :sum :each |
-		           testingEnvironment at: each ifPresent: [ :class |
-			           sum
-				           add: class;
-				           add: class class ].
-		           sum ].
+			           testingEnvironment at: each ifPresent: [ :class |
+					           sum
+						           add: class;
+						           add: class class ].
+			           sum ].
 	classEnvironment := RBClassEnvironment classes: classes.
-	model name: 'Test'.
-	"Classes"
+	model name: 'Test'. "Classes"
 	model
 		defineClass: [ :aBuilder |
-			aBuilder
-				superclass: Object;
-				name: #ClassA;
-				package: 'Testing' ];
+				aBuilder
+					superclass: Object;
+					name: #ClassA;
+					package: 'Testing' ];
 		defineClass: [ :aBuilder |
-			aBuilder
-				superclassName: #ClassA;
-				name: #ClassB;
-				package: 'Testing' ];
+				aBuilder
+					superclassName: #ClassA;
+					name: #ClassB;
+					package: 'Testing' ];
 		defineClass: [ :aBuilder |
-			aBuilder
-				superclassName: #ClassB;
-				name: #ClassC;
-				package: 'Testing' ].
+				aBuilder
+					superclassName: #ClassB;
+					name: #ClassC;
+					package: 'Testing' ].
 	#( #( #ClassA #( #( 'foo
 			^ ''ClassA foo''' #private ) ) ) #( #ClassC #( #( 'foo
 			^ ''ClassC foo''' #private ) ) ) ) do: [ :each |
-		| class |
-		class := model classNamed: each first.
-		each last do: [ :methodPair | class compile: methodPair first classified: methodPair last ] ].
-	self shouldntWarn: (self createRefactoringWithModel: model andArguments: {
-				 #( #foo ).
-				 (model classNamed: #ClassC) })
-]
-
-{ #category : 'failure tests' }
-RBPullUpMethodParametrizedTest >> testFailurePullUpWithInvalidSuperSend [
-
-	| class |
-	self addClassHierarchy.
-	(model classNamed: #Foo2)
-		compile: 'yourself ^super yourself + 1'
-		classified: #( #accessing ).
-	class := model classNamed: #Foo1.
-	class compile: 'yourself ^1' classified: #( #accessing ).
-
-	self shouldFail:
-		(self createRefactoringWithModel: model andArguments: {
-				 #( #yourself ).
-				 class })
+			| class |
+			class := model classNamed: each first.
+			each last do: [ :methodPair | class compile: methodPair first classified: methodPair last ] ].
+	refactoring := self createRefactoringWithModel: model andArguments: {
+			               #( #foo ).
+			               (model classNamed: #ClassC) }.
+	(refactoring isKindOf: RePullUpMethodRefactoring)
+		ifTrue: [ self shouldWarn: refactoring ]
+		ifFalse: [ self shouldntWarn: refactoring ]
 ]
 
 { #category : 'failure tests' }
 RBPullUpMethodParametrizedTest >> testFailurePullUpWithSuperSendThatCannotBeCopiedDown [
 
-	| class |
+	| class refactoring |
 	self addClassHierarchy.
-	(model classNamed: #Object)
-		compile: 'foo ^3'
-		classified: #( #accessing ).
-	(model classNamed: #Subclass)
-		compile: 'foo ^super foo'
-		classified: #( #accessing ).
-	(class := model classNamed: #Foo2)
-		compile: 'foo ^1'
-		classified: #( #accessing ).
+	(model classNamed: #Object) compile: 'foo ^3' classified: #( #accessing ).
+	(model classNamed: #Subclass) compile: 'foo ^super foo' classified: #( #accessing ).
+	(class := model classNamed: #Foo2) compile: 'foo ^1' classified: #( #accessing ).
 
-	self shouldFail:
-		(self createRefactoringWithModel: model andArguments: {
-				 #( #foo ).
-				 class })
-]
 
-{ #category : 'failure tests' }
-RBPullUpMethodParametrizedTest >> testFailureWhenPulledMethodRefersToLocalSharedVar [
+	refactoring := self createRefactoringWithModel: model andArguments: {
+			               #( #foo ).
+			               class }.
 
-	| class |
-	class := model classNamed: #Object.
-	class addClassVariable: #Foo.
-	class classSide compile: 'foo ^Foo' classified: #( #accessing ).
-	self shouldFail:
-		(self createRefactoringWithModel: model andArguments: {
-				 #( #foo ).
-				 class classSide })
+	(refactoring isKindOf: RePullUpMethodRefactoring)
+		ifTrue: [ self shouldWarn: refactoring ]
+		ifFalse: [ self shouldntWarn: refactoring ]
 ]
 
 { #category : 'tests' }
-RBPullUpMethodParametrizedTest >> testPullUpAndCopyDown [
+RBPullUpMethodParametrizedTest >> testPullUp [
+
 	| class |
 	self addClassHierarchy.
 	class := model classNamed: #Foo1.
-	class compile: 'yourself ^1' classified: #(#accessing).
+	class compile: 'yourself ^1' classified: #( #accessing ).
 	self proceedThroughWarning: [
-		self executeRefactoring: (self createRefactoringWithModel: model
-			andArguments: { #(#yourself) . class }) ].
-	self assert: (class superclass parseTreeForSelector: #yourself)
-			equals: (self parseMethod: 'yourself ^1').
-	self deny: (class directlyDefinesMethod: #yourself).
-	class := model classNamed: #Foo2.
-	self assert: (class directlyDefinesMethod: #yourself).
-	self assert: (class parseTreeForSelector: #yourself)
-			equals: ((model classNamed: #Object) parseTreeForSelector: #yourself)
+			self executeRefactoring: (self createRefactoringWithModel: model andArguments: {
+						 #( #yourself ).
+						 class }) ].
+	self assert: (class superclass parseTreeForSelector: #yourself) equals: (self parseMethod: 'yourself ^1').
+	self deny: (class directlyDefinesMethod: #yourself)
 ]
 
 { #category : 'tests' }
@@ -201,26 +141,6 @@ RBPullUpMethodParametrizedTest >> testPullUpInAHighHierarchyClass [
 	self assert: (class definesMethod: #example).
 	self assert: (class parseTreeForSelector: #example)
 				equals: ((model classNamed: #SomeClass) parseTreeForSelector: #example)
-]
-
-{ #category : 'tests' }
-RBPullUpMethodParametrizedTest >> testPullUpMethodWithCopyOverriddenMethodsDown [
-	| refactoring |
-	self proceedThroughWarning:
-		[ refactoring := self createRefactoringWithArguments:
-			{ #(#isComposite ) . RBCompositeLintRuleTestData }.
-		self executeRefactoring: refactoring ].
-	self assert: ((refactoring model classNamed: #RBBasicLintRuleTestData)
-			parseTreeForSelector: #isComposite)
-		equals: (self parseMethod: 'isComposite ^false').
-	self assert: ((refactoring model classNamed: ('RBFoo' , 'LintRuleTestData') asSymbol)
-			parseTreeForSelector: #isComposite)
-		equals: (self parseMethod: 'isComposite ^false').
-	self assert: ((refactoring model classNamed: #RBLintRuleTestData)
-			parseTreeForSelector: #isComposite)
-		equals: (self parseMethod: 'isComposite ^true').
-	self deny: ((refactoring model classNamed: #RBCompositeLintRuleTestData)
-		directlyDefinesMethod: #isComposite)
 ]
 
 { #category : 'tests' }

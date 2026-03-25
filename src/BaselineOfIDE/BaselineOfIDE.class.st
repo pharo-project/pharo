@@ -56,8 +56,14 @@ BaselineOfIDE >> baseline: spec [
 			load: 'Shift' group: 'shift-tests' spec: spec;
 			load: 'Traits' group: 'traits-tests' spec: spec;
 			load: 'Slot' group: 'slot-tests' spec: spec;
-			load: 'Clap' group: 'development' spec: spec;
-			load: 'SUnit' group: 'Tests' spec: spec;
+			load: 'Clap' group: 'development' spec: spec.
+
+		spec
+			baseline: 'SUnit' with: [
+				spec
+					loads: #( 'Tests' 'UITests' );
+					repository: repository ].
+		self
 			load: 'EnlumineurFormatter' group: 'Tests' spec: spec;
 			load: 'Reflectivity' group: 'tests' spec: spec;
 			load: 'DebugPoints' group: 'Tests' spec: spec;
@@ -71,21 +77,19 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'OpalCompiler-UI'.
 		spec package: 'OpalCompiler-UI-Tests'.
 
+		self load: 'Monticello' group: 'Tests' spec: spec.
 		self load: 'Metacello' group: 'Tests' spec: spec.
+
+		spec baseline: 'ReflectionMirrors' with: [ spec repository: repository ].
+		spec baseline: 'FuzzyMatcher' with: [ spec repository: repository ].
+		spec baseline: 'QA' with: [ spec repository: repository ].
+		spec baseline: 'GeneralTests' with: [ spec repository: repository ].
 
 		"Later we will load the UI of enlumineur probably here
 		"
 		spec baseline: 'Shout' with: [ spec repository: repository ].
-
-		spec
-			baseline: 'ReflectionMirrors'
-			with: [ spec repository: repository ].
-		spec baseline: 'FuzzyMatcher' with: [ spec repository: repository ].
-		spec baseline: 'QA' with: [ spec repository: repository ].
 		spec baseline: 'OSWindow' with: [ spec repository: repository ].
-		spec
-			baseline: 'EmergencyDebugger'
-			with: [ spec repository: repository ].
+		
 
 		self load: 'Epicea' group: 'Browsers' spec: spec.
 
@@ -93,10 +97,7 @@ BaselineOfIDE >> baseline: spec [
 
 		self load: 'Fuel' group: 'Tests' spec: spec.
 
-		spec baseline: 'GeneralTests' with: [ spec repository: repository ].
-
-		self load: 'FreeType' group: 'tests' spec: spec.
-		self load: 'Keymapping' group: 'tests' spec: spec.
+		self load: 'Keymapping' group: 'Tests' spec: spec.
 
 		spec baseline: 'Zodiac' with: [ spec repository: repository ].
 		spec baseline: 'SortFunctions' with: [ spec repository: repository ].
@@ -105,12 +106,13 @@ BaselineOfIDE >> baseline: spec [
 		self load: 'NewValueHolder' group: 'tests' spec: spec.
 		spec package: 'STON-Extensions'.
 
-		spec package: 'BaselineOfPharoBootstrap'.
+		spec package: 'BaselineOfKernel'.
+		spec package: 'BaselineOfCompiler'.
+		spec package: 'BaselineOfFileSystem'.
 		spec package: 'BaselineOfMonticello'.
 		spec package: 'BaselineOfMetacello'.
-		spec
-			baseline: 'ReferenceFinder'
-			with: [ spec repository: repository ].
+		spec package: 'BaselineOfPharoBootstrap'.
+		spec baseline: 'ReferenceFinder' with: [ spec repository: repository ].
 		spec baseline: 'ClassParser' with: [ spec repository: repository ].
 
 
@@ -119,9 +121,7 @@ BaselineOfIDE >> baseline: spec [
 			group: #( 'FullEnvironment' 'SystemBrowser' 'Tests' )
 			spec: spec.
 		spec baseline: 'Ring' with: [ spec repository: repository ].
-		spec
-			baseline: 'HeuristicCompletion'
-			with: [ spec repository: repository ].
+		spec baseline: 'HeuristicCompletion' with: [ spec repository: repository ].
 		spec package: 'Tool-DependencyAnalyser-UI-Tab' with: [
 			"Depends also on the dependency analyser in newtools"
 			spec requires: #('Calypso') ].
@@ -130,12 +130,12 @@ BaselineOfIDE >> baseline: spec [
 		self microdown: spec.
 		self newTools: spec.
 		self drTests: spec.
+
+		spec project: 'Clap-UI' copyFrom: 'Clap' with: [ spec loads: #('ui') ].
+
 		spec package: #'BeautifulComments'  with: [ spec requires:  #( 'Microdown') ].
 		
 		spec package: 'IconPacks'.
-
-		spec baseline: 'ThreadedFFI' with: [ spec repository: repository ].
-
 		spec package: 'Kernel-ExtraUtils' ]
 ]
 
@@ -158,6 +158,8 @@ BaselineOfIDE >> documentBrowserCore: spec [
 BaselineOfIDE >> drTests: spec [
 
 	spec
+		baseline: 'TestRunner'
+		with: [ spec repository: (self packageRepositoryURLForSpec: spec) ];
 		baseline: 'DrTests'
 		with: [ spec repository: (self packageRepositoryURLForSpec: spec) ]
 ]
@@ -201,11 +203,11 @@ BaselineOfIDE >> loadIceberg [
 		load.
 	(self classNamed: #Iceberg) enableMetacelloIntegration: true.
 
-	Smalltalk os environment at: #GITHUB_TOKEN ifPresent: [ :token |
+	OSEnvironment current at: #GITHUB_TOKEN ifPresent: [ :token |
 		| credentials |
 		credentials := (self classNamed: #IceTokenCredentials) new
 			               username:
-				               (Smalltalk os environment
+				               (OSEnvironment current
 					                at: #GITHUB_USER
 					                ifAbsent: [ self error: 'Github token was found but not the github user associated to this token.' ]);
 			               token: token;
@@ -236,7 +238,7 @@ BaselineOfIDE >> microdown: spec [
 	spec baseline: 'Microdown' with: [ 
 		spec 
 			repository: (self classNamed: #BaselineOfPharo) microdownRepository;
-			loads: #('RichText' 'Tests' 'ForPharo') ]
+			loads: #('RichText' 'ForPharo') ]
 ]
 
 { #category : 'baselines - dependencies' }

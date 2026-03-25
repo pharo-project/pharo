@@ -110,11 +110,6 @@ OupsDebugRequest >> defaultProcess [
 	^ Processor activeProcess
 ]
 
-{ #category : 'default values' }
-OupsDebugRequest >> defaultUIManager [
-	^ UIManager default
-]
-
 { #category : 'accessing' }
 OupsDebugRequest >> exception [
 

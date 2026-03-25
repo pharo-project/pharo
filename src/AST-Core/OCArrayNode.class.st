@@ -227,11 +227,6 @@ OCArrayNode >> precedence [
 	^0
 ]
 
-{ #category : 'testing' }
-OCArrayNode >> references: aVariableName [
-	^ statements anySatisfy: [ :each | each references: aVariableName ]
-]
-
 { #category : 'replacing' }
 OCArrayNode >> replaceNode: oldNode  withNode: newNode [
 	self statements: (statements collect: [ :statement |

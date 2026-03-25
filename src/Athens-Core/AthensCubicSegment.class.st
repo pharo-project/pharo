@@ -66,3 +66,8 @@ AthensCubicSegment >> via2 [
 AthensCubicSegment >> via2reflected [
 	^self endPoint * 2 - via2
 ]
+
+{ #category : 'visitor' }
+AthensCubicSegment >> visitWith: visitor [
+	visitor visitCubicSegment: self
+]

@@ -18,6 +18,13 @@ Class {
 	#tag : 'Manifest'
 }
 
+{ #category : 'meta-data - dependency analyser' }
+ManifestRenraku class >> manuallyResolvedDependencies [
+
+	<ignoreForCoverage>
+	^ #(#'System-Localization')
+]
+
 { #category : 'code-critics' }
 ManifestRenraku class >> ruleBadMessageRule2V1FalsePositive [
 

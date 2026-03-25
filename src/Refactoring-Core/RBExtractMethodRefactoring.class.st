@@ -78,7 +78,7 @@ RBExtractMethodRefactoring >> checkAssignments: variableNames [
 	removeAssigned := variableNames copy.
 	node := self placeholderNode.
 	outsideVars := variableNames
-				select: [:each | (node whoDefines: each) references: each].
+				select: [:each | (node whichUpNodeDefines: each) references: each].
 	outsideVars size == 1
 		ifTrue: [self checkSingleAssignment: outsideVars asArray first].
 	outsideVars size > 1
@@ -88,7 +88,7 @@ RBExtractMethodRefactoring >> checkAssignments: variableNames [
 	(OCReadBeforeWrittenTester readBeforeWritten: removeAssigned
 		in: extractedParseTree) ifNotEmpty:
 			[self refactoringError: 'Cannot extract assignment if read before written.'].
-	removeAssigned do: [:each | (node whoDefines: each) removeTemporaryNamed: each].
+	removeAssigned do: [:each | (node whichUpNodeDefines: each) removeTemporaryNamed: each].
 	self updateTemporariesInExtractedMethodFor: variableNames
 ]
 
@@ -201,7 +201,8 @@ RBExtractMethodRefactoring >> createModifiedParseTreeForSequenceSelection [
 			ifTrue: [ | name |
 					name := stmts last variable name.
 					(self shouldExtractAssignmentTo: name)
-						ifFalse: [ newCode := '<1s> := <2s>' expandMacrosWith: name with: newCode.
+						ifFalse: [ 
+							newCode := '<1s> := <2s>' expandMacrosWith: name with: newCode.
 							stmts at: stmts size put: stmts last value ] ] ].
 	modifiedParseTree := self parseTreeRewriterClass
 		replaceStatements: subtree formattedCode
@@ -279,6 +280,8 @@ RBExtractMethodRefactoring >> getExtractedSource [
 	((extractionInterval first between: 1 and: (self startLimit: source size))
 		and: [extractionInterval last between: 1 and: source size])
 			ifFalse: [self refactoringError: 'Invalid interval'].
+	(extractionInterval first > extractionInterval last)
+		ifTrue: [ self refactoringError: 'Invalid interval' ].
 	^source copyFrom: extractionInterval first to: extractionInterval last
 ]
 
@@ -501,23 +504,16 @@ RBExtractMethodRefactoring >> selectorsToSearch [
 	^ class allSelectors
 ]
 
+{ #category : 'preparation' }
+RBExtractMethodRefactoring >> shouldExtractAssignmentTo: aVariableName [ 
+	"the default in Pharo for several years has been true"
+	
+	^ true
+]
+
 { #category : 'transforming' }
 RBExtractMethodRefactoring >> startLimit: aNumber [
 	^ aNumber
-]
-
-{ #category : 'storing' }
-RBExtractMethodRefactoring >> storeOn: aStream [
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream nextPutAll: ' extract: '.
-	extractionInterval storeOn: aStream.
-	aStream
-		nextPutAll: ' from: #';
-		nextPutAll: selector;
-		nextPutAll: ' in: '.
-	class storeOn: aStream.
-	aStream nextPut: $)
 ]
 
 { #category : 'accessing' }
@@ -545,7 +541,7 @@ RBExtractMethodRefactoring >> validateRenameNode: aParseTree withOldName: oldNam
 				ifNil: [ self refactoringError: conditions errorString ] ].
 	(self parameterMap values includes: newName) ifTrue: [
 		self refactoringError: newName asString , ' is already defined as parameter' ].
-	(aParseTree whoDefines: newName)
+	(aParseTree whichUpNodeDefines: newName)
 		ifNotNil: [ self refactoringError: newName asString , ' is already defined' ].
 	(aParseTree allDefinedVariables includes: newName)
 		ifTrue: [ self refactoringError: newName asString , ' is already defined' ]

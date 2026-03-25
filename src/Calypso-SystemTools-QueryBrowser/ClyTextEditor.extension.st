@@ -25,9 +25,8 @@ ClyTextEditor >> classNamesContainingIt [
 { #category : '*Calypso-SystemTools-QueryBrowser' }
 ClyTextEditor >> implementorsOf: selectedSelector [
 
-	self browser
-		browseImplementorsOf: selectedSelector
-		inNameResolver: self browserTool selectedClassOrMetaClass
+(Smalltalk tools toolNamed: #messageList) browseImplementorsOf: selectedSelector.
+
 ]
 
 { #category : '*Calypso-SystemTools-QueryBrowser' }

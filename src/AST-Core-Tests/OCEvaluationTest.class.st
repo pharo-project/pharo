@@ -12,7 +12,7 @@ Class {
 { #category : 'tests' }
 OCEvaluationTest >> testEvaluate [
 	self assert: (OCLiteralNode value: 5) evaluate equals: 5.
-	self assert: (OCMessageNode receiver: 5 asLiteralNode selector: #class ) evaluate equals: 5 class
+	self assert: (OCMessageNode receiver: 5 asLiteralNode selector: (OCSelectorNode value: #class)) evaluate equals: 5 class
 ]
 
 { #category : 'tests' }

@@ -214,7 +214,7 @@ OCProgramNodeTest >> testAllParents [
 	| me parentsOf7 |
 	[ :a | a + 7 ].
 	me := self class >> #testAllParents.
-	parentsOf7 := (me ast allChildren select: [ :n |
+	parentsOf7 := (me ast withAllChildren select: [ :n |
 		               n isLiteralNode and: [ n value = 7 ] ]) first
 		              allParents.
 	self assert: parentsOf7 last selector equals: #+.
@@ -1280,6 +1280,16 @@ OCProgramNodeTest >> testReplaceVariable [
 	self assert: tree newSource equals: 'run "1" 123 "2"'
 ]
 
+{ #category : 'tests - lastIsReturn' }
+OCProgramNodeTest >> testReturnInArrayRaiseError [
+
+	self
+		should: [
+				OCParser parseMethod: 'a1
+							{ ^ 1 . #a }' ]
+		raise: OCCodeError
+]
+
 { #category : 'tests - messages' }
 OCProgramNodeTest >> testSentMessages [
 	| tree messages |
@@ -1310,21 +1320,11 @@ OCProgramNodeTest >> testWithAllParents [
 	| me parentsOf7 |
 	[ :a | a + 7 ].
 	me := self class >> #testAllParents.
-	parentsOf7 := (me ast allChildren select: [ :n |
+	parentsOf7 := (me ast withAllChildren select: [ :n |
 		               n isLiteralNode and: [ n value = 7 ] ]) first
 		              withAllParents.
 	self assert: parentsOf7 last value equals: 7.
 	self assert: parentsOf7 first equals: me ast
-]
-
-{ #category : 'tests - lastIsReturn' }
-OCProgramNodeTest >> testlastIsReturnWhenArrayNodeWithFirstReturnExpectFalse [
-
-	| ast statement |
-	ast := OCParser parseMethod: 'a1
-							{ ^ 1 . #a }'.
-	statement := ast body statements last.
-	self deny: statement lastIsReturn 
 ]
 
 { #category : 'tests - lastIsReturn' }

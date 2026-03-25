@@ -293,26 +293,6 @@ SystemEnvironment >> forgetClass: aClass [
 	self removeKey: aClass name ifAbsent: [  ]
 ]
 
-{ #category : 'testing' }
-SystemEnvironment >> hasBindingThatBeginsWith: aString [
-	"Use the cached class and non-class names for better performance."
-
-	| name searchBlock |
-	(self pseudoVariables hasBindingThatBeginsWith: aString) ifTrue: [
-		^ true ].
-	searchBlock := [ :element |
-	               (element beginsWith: aString)
-		               ifTrue: [ 0 ]
-		               ifFalse: [
-			               aString < element
-				               ifTrue: [ -1 ]
-				               ifFalse: [ 1 ] ] ].
-	name := self classNames findBinary: searchBlock ifNone: [ nil ].
-	name ifNotNil: [ ^ true ].
-	name := self nonClassNames findBinary: searchBlock ifNone: [ nil ].
-	^ name isNotNil
-]
-
 { #category : 'accessing - classes and traits' }
 SystemEnvironment >> hasClassNamed: aString [
 	"Answer whether there is a class of the given name, but don't intern aString if it's not already interned."
@@ -376,12 +356,6 @@ SystemEnvironment >> organization: anOrganization [
 
 	anOrganization environment: self.
 	^ self at: #SystemOrganization put: anOrganization
-]
-
-{ #category : 'accessing - variable lookup' }
-SystemEnvironment >> outerScope [
-
-	^ nil
 ]
 
 { #category : 'accessing' }
@@ -456,8 +430,8 @@ SystemEnvironment >> renameClass: aClass from: oldName [
 	oldref key: aClass name.
 	self add: oldref. "Old association preserves old refs"
 	self flushClassNameCache.
-	self class codeChangeAnnouncer classRenamed: aClass from: oldName to: aClass name.
-	aClass subclassesDo: [ :subclass | self class codeChangeAnnouncer classParentOf: subclass renamedFrom: oldName to: aClass name ]
+	SourcesManager current writeClassRenamed: aClass oldName: oldName.
+	self class codeChangeAnnouncer announce: (ClassRenamed class: aClass oldName: oldName newName: aClass name)
 ]
 
 { #category : 'renaming' }
@@ -497,9 +471,4 @@ SystemEnvironment >> undeclaredRegistry [
 	"For now we are referencing a global variable of the default environment of Pharo. But in the future each environments should have their undeclared registry, else we have memory leaks of the environments."
 
 	^ Undeclared
-]
-
-{ #category : 'copying' }
-SystemEnvironment >> veryDeepCopyWith: deepCopier [
-	"Return self. I can't be copied. Do not record me."
 ]

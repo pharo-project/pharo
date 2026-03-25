@@ -121,13 +121,6 @@ Model >> hasUnacceptedEdits [
 	^ false
 ]
 
-{ #category : 'window' }
-Model >> modelWakeUpIn: aWindow [
-	"A window with me as model is being entered or expanded.  Default response is no-op"
-	
-	"Duplicate here because the superclass method should be unused"
-]
-
 { #category : 'dependents-private' }
 Model >> myDependents [
 

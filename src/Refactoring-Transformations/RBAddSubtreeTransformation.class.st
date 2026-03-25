@@ -111,20 +111,3 @@ RBAddSubtreeTransformation >> privateTransform [
 			parseTree ].
 	self definingClass compileTree: parseTree
 ]
-
-{ #category : 'storing' }
-RBAddSubtreeTransformation >> storeOn: aStream [
-
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream
-		nextPutAll: ' interval: ''';
-		nextPutAll: interval asString;
-		nextPutAll: ' with: ''';
-		nextPutAll: sourceCode;
-		nextPutAll: ''' from: ''';
-		nextPutAll: selector;
-		nextPutAll: ''' in: '.
-	class storeOn: aStream.
-	aStream nextPut: $)
-]

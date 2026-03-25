@@ -46,18 +46,17 @@ Delay class >> delaySchedulerClass [
 
 { #category : 'settings' }
 Delay class >> delaySchedulerClass: aSchedulerClass [
+
 	| newScheduler oldScheduler |
-	self delaySchedulerClass = aSchedulerClass ifTrue:[ ^self ].
+	self delaySchedulerClass = aSchedulerClass ifTrue: [ ^ self ].
 	newScheduler := aSchedulerClass new.
-	(newScheduler respondsTo: #startTimerEventLoop)
-		ifFalse: [ self error: 'New delay scheduler must respond to #startTimerEventLoop' ].
+	(newScheduler respondsTo: #startTimerEventLoop) ifFalse: [ self error: 'New delay scheduler must respond to #startTimerEventLoop' ].
 	newScheduler startTimerEventLoop.
 	"To avoid lockup if a higher priority process preempts this method to schedule a delay,
 	the newScheduler needs to be in place before oldScheduler is stopped"
 	oldScheduler := self scheduler.
 	self scheduler: newScheduler.
-	oldScheduler stopTimerEventLoop.
-	self inform: 'Delay scheduler set to ' , aSchedulerClass printString
+	oldScheduler stopTimerEventLoop
 ]
 
 { #category : 'instance creation' }
@@ -163,20 +162,6 @@ Delay class >> startUp [
 Delay class >> stopTimerEventLoop [
 
 	^ self scheduler stopTimerEventLoop
-]
-
-{ #category : 'settings' }
-Delay class >> systemSettingOn: aBuilder [
-	<systemsettings>
-
-	(aBuilder pickOne: #delaySchedulerClass)
-		parent: #pharoSystem ;
-		target: self;
-		label: 'Delay Scheduler' ;
-		domainValues: DelayNullScheduler allSubclasses ;
-		default: DelaySemaphoreScheduler;
-		description: 'Choose the class to use for Delay scheduling.' ,
-			String crlf, 'You can observe which is running from Tools > Process Browser.'
 ]
 
 { #category : 'instance creation' }

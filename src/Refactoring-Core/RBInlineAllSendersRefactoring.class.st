@@ -66,7 +66,7 @@ RBInlineAllSendersRefactoring >> applicabilityPreconditions [
 { #category : 'transforming' }
 RBInlineAllSendersRefactoring >> checkInlinedMethods [
 	numberReplaced = 0
-		ifTrue: [self inform:  'Could not find any senders to inline into']
+		ifTrue: [ InformativeNotification signal:  'Could not find any senders to inline into']
 ]
 
 { #category : 'transforming' }
@@ -168,16 +168,4 @@ RBInlineAllSendersRefactoring >> sendersOf: aSelector in: aClass [
 	class := self classObjectFor: aClass.
 	selector := aSelector.
 	numberReplaced := numberNotReplaced := 0
-]
-
-{ #category : 'storing' }
-RBInlineAllSendersRefactoring >> storeOn: aStream [
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream
-		nextPutAll: ' sendersOf: #';
-		nextPutAll: selector;
-		nextPutAll: ' in: '.
-	class storeOn: aStream.
-	aStream nextPut: $)
 ]

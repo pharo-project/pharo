@@ -18,25 +18,16 @@ Class {
 		'aReceiver',
 		'aMethodContext',
 		'aSender',
-		'instVarForTestLookupSymbol',
 		'nonActiveBlockContext',
 		'anArgument'
 	],
 	#classVars : [
-		'Block',
-		'classVarForTestLookupSymbol'
+		'Block'
 	],
 	#category : 'Kernel-Tests-Methods',
 	#package : 'Kernel-Tests',
 	#tag : 'Methods'
 }
-
-{ #category : 'closures for testing' }
-ContextTest class >> contextWithTempForTesting [
-	| string |
-	string := 'test'.
-	^ [self class. string asUppercase] asContext
-]
 
 { #category : 'helper' }
 ContextTest class >> createBlock [
@@ -48,67 +39,6 @@ ContextTest class >> createBlock [
 ContextTest class >> returnNonActiveContextOfBlock [
 	Block := self createBlock.
 	^ Block value
-]
-
-{ #category : 'private' }
-ContextTest >> privRestartArgBlockTest [
-	"This tests may loop endlessly if incorrect, so call it from another method testing it does not time out"
-
-	| firstTimeThrough |
-	firstTimeThrough := true.
-
-	self
-		assert: 30
-		equals:
-			([ :a |
-			| b |
-			self assert: 10 equals: a.
-			self assert: nil identicalTo: b.
-			b := a + 20.
-			firstTimeThrough
-				ifTrue: [ firstTimeThrough := false.
-					thisContext restart ].
-			b ] value: 10)
-]
-
-{ #category : 'private' }
-ContextTest >> privRestartBlockArgsNoRemoteTempsTest [
-	"This tests may loop endlessly if incorrect, so call it from another method testing it does not time out"
-
-	self
-		assert: 30
-		equals:
-			([ :a :first |
-			| b |
-			self assert: 10 equals: a.
-			self assert: nil identicalTo: b.
-			b := a + 20.
-			first
-				ifTrue: [ "Cheat and modify one of the args so we will not loop endlessly"
-					thisContext tempAt: 2 put: false.
-					thisContext restart ].
-			b ] value: 10 value: true)
-]
-
-{ #category : 'private' }
-ContextTest >> privRestartBlockTest [
-	"This tests may loop endlessly if incorrect, so call it from another method testing it does not time out"
-
-	| a firstTimeThrough |
-	firstTimeThrough := true.
-	a := 10.
-
-	self
-		assert: 30
-		equals:
-			[ | b |
-			self assert: 10 equals: a.
-			self assert: nil identicalTo: b.
-			b := a + 20.
-			firstTimeThrough
-				ifTrue: [ firstTimeThrough := false.
-					thisContext restart ].
-			b ] value
 ]
 
 { #category : 'running' }
@@ -128,7 +58,8 @@ ContextTest >> setUp [
 
 { #category : 'running' }
 ContextTest >> tearDown [
-	aMethodContext stepIntoQuickMethod: false.
+
+	aMethodContext compiledCode stepIntoQuickMethods: false.
 	super tearDown
 ]
 
@@ -151,19 +82,33 @@ ContextTest >> testActiveHome [
 ]
 
 { #category : 'tests' }
-ContextTest >> testAstScope [
+ContextTest >> testBlockCannotReturn [
 
-	| scope |
-	"test that we get a scope for optimized blocks"
-	aMethodContext pc: 88 + 1.
-	scope := aMethodContext astScope.
-	self assert: scope isOptimized.
+	| p |
+	p := [ thisContext pc: nil ] newProcess.
+	[
+	p suspendedContext method selector = #pc: and: [
+		p suspendedContext sender isDead ] ] whileFalse: [ p step ].
+	self assert: p suspendedContext method selector equals: #pc:.
+	self assert: p suspendedContext sender isDead.
+	self assert: p suspendedContext pc equals: p suspendedContext method endPC.
 
-	"test that we do not get a block scope when pushing a block on the stack"
-	aMethodContext pc: 95 + 1.
-	scope := aMethodContext astScope.
-	self assert: aMethodContext sourceNodeExecuted isBlock.
-	self deny: scope isBlockScope
+	p step. "step into a return to a dead sender"
+
+	self assert: p suspendedContext method selector equals: #cannotReturn:
+]
+
+{ #category : 'tests' }
+ContextTest >> testCannotReturn [
+	| context p |
+	p := [context := thisContext] fork.
+	[p isTerminated] whileFalse: [ (Delay forMilliseconds: 10) wait ].
+
+	[ context resume: #result.
+	self assert: false description: 'ContextCannotReturn should be signaled' ]
+		 on: ContextCannotReturn do: [ :err |
+			self assert: err result equals: #result.
+			self assert: err target equals: context]
 ]
 
 { #category : 'tests' }
@@ -202,6 +147,12 @@ ContextTest >> testHomeMethod [
 ]
 
 { #category : 'tests' }
+ContextTest >> testJump [
+	#(exampleClosure exampleSend exampleStore) do: [ :selector |
+		self verifyJumpWithSelector: selector ]
+]
+
+{ #category : 'tests' }
 ContextTest >> testMethodContext [
 
 	self assert: aMethodContext home isNotNil.
@@ -218,7 +169,7 @@ ContextTest >> testMethodContextPrintDetails [
 		equals: 'Rectangle>>areasOutside:
 	Receiver: (100@100) corner: (200@200)
 	Arguments and temporary variables: 
-		aRectangle: 	(200@200) corner: (420@420)
+		temp1: 	(200@200) corner: (420@420)
 	Receiver''s instance variables: 
 		origin: 	(100@100)
 		corner: 	(200@200)
@@ -292,7 +243,7 @@ ContextTest >> testStepIntoQuickMethod [
 	aMethodContext step.
 
 	"Now we step into #topLeft which is a quick method"
-	aMethodContext stepIntoQuickMethod: true.
+	aMethodContext compiledCode stepIntoQuickMethods: true.
 	newContext := aMethodContext step.
 	quickMethod := (Rectangle >> #topLeft).
 	self assert: newContext sender identicalTo: aMethodContext.
@@ -313,7 +264,7 @@ ContextTest >> testStepIntoQuickMethod [
 { #category : 'tests' }
 ContextTest >> testStepIntoQuickMethodBoolean [
 
-	self deny: aMethodContext stepIntoQuickMethod
+	self deny: aMethodContext compiledCode stepIntoQuickMethods
 ]
 
 { #category : 'tests' }
@@ -321,9 +272,9 @@ ContextTest >> testStepIntoQuickMethodInCompiledBlock [
 
 	|newContext|
 	newContext := [ ] asContext.
-	newContext stepIntoQuickMethod: false.
+	newContext compiledCode stepIntoQuickMethods: false.
 	self deny: newContext method stepIntoQuickMethods.
-	newContext stepIntoQuickMethod: true.
+	newContext compiledCode stepIntoQuickMethods: true.
 	self assert: newContext method stepIntoQuickMethods
 ]
 
@@ -344,7 +295,7 @@ ContextTest >> testStepIntoReturnSelfMethod [
 	aMethodContext step.
 
 	"Now we step into #yourself which is a quick method just returning self"
-	aMethodContext stepIntoQuickMethod: true.
+	aMethodContext compiledCode stepIntoQuickMethods: true.
 	newContext := aMethodContext step.
 	quickMethod := (Object >> #yourself).
 	self assert: newContext sender identicalTo: aMethodContext.
@@ -359,53 +310,6 @@ ContextTest >> testStepIntoReturnSelfMethod [
 	The first steppable bytecode is the push just before the return.
 	We do that by setting the PC to aMethod initialPC + 3 (the number of bytes of the primitive)."
 	self assert: newContext pc equals: (quickMethod initialPC + 3)
-]
-
-{ #category : 'tests' }
-ContextTest >> testSteppingAQuickMethod [
-
-	|newContext|
-	aMethodContext := Context
-		sender: thisContext
-		receiver: aReceiver
-		method: (Rectangle >>#center)
-		arguments: #().
-
-	aMethodContext step.
-	aMethodContext stepIntoQuickMethod: true.
-	newContext := aMethodContext step.
-
-	"We're in the quick method now, it should be steppable"
-	self assert: newContext sender identicalTo: aMethodContext.
-	self deny: newContext instructionStream willReturn.
-
-	newContext := newContext step.
-	self assert: newContext instructionStream willReturn.
-
-	newContext := newContext step.
-	self assert: newContext identicalTo: aMethodContext
-]
-
-{ #category : 'tests' }
-ContextTest >> testSteppingReturnSelfMethod [
-
-	|newContext|
-	aMethodContext := Context
-		sender: thisContext
-		receiver: SimulationMock new
-		method: (SimulationMock >>#exampleSelfReturnCall)
-		arguments: #().
-
-	aMethodContext step.
-	aMethodContext stepIntoQuickMethod: true.
-	newContext := aMethodContext step.
-
-	"We're in the quick method now, it should be steppable"
-	self assert: newContext sender identicalTo: aMethodContext.
-	self assert: newContext instructionStream willReturn.
-
-	newContext := newContext step.
-	self assert: newContext identicalTo: aMethodContext
 ]
 
 { #category : 'tests' }

@@ -22,7 +22,7 @@ SycInlineTempCommand >> asRefactorings [
 	^ { RBInlineTemporaryRefactoring
 		inline: assignment sourceInterval
 		from: method selector
-		in: method origin}
+		in: method origin }
 ]
 
 { #category : 'accessing' }

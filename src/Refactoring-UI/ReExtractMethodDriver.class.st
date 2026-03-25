@@ -4,15 +4,55 @@ Class {
 	#instVars : [
 		'class',
 		'newMessage',
-		'shouldEscape',
 		'methodNameEditorPresenterClass',
 		'body',
-		'sourceMethod'
+		'sourceMethod',
+		'notOverride',
+		'sameExitPoint'
 	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',
 	#tag : 'Drivers'
 }
+
+{ #category : 'accessing' }
+ReExtractMethodDriver class >> driverName [
+	"I'm not sure we should keep the `no occurences`? In the future this driver should probably manage all options"
+
+	^ 'Extract method (no occurrences)'
+]
+
+{ #category : 'execution' }
+ReExtractMethodDriver >> breakingChoices [
+
+	| items |
+	items := OrderedCollection new.
+	
+	(notOverride check and: sameExitPoint check) ifFalse: [
+			items add: (ReExtractMethodChoice new
+					 driver: self;
+					 yourself) ].
+
+	notOverride check ifFalse: [ "These choices are exclusive to notOverride"
+			items add: (ReExtractAndBrowseMethodOverridesChoice new
+					 driver: self;
+					 yourself).
+			items add: (ReBrowseMethodOverridesChoice new
+					 driver: self;
+					 description: 'Browse existing methods that will be overriden BUT don''t extract';
+					 yourself) ].
+
+	^ items
+]
+
+{ #category : 'actions' }
+ReExtractMethodDriver >> browseOverrides [
+
+	| overrides |
+	overrides := notOverride violators collect: [ :cls | cls realClass methodNamed: newMessage methodName asSymbol ].
+	
+	overrides do: [ :method | method browse ]
+]
 
 { #category : 'testing' }
 ReExtractMethodDriver >> canAddArgs [
@@ -43,17 +83,16 @@ ReExtractMethodDriver >> configureMessage [
 	refactoring renameMap: newMessage renameMap."
 ]
 
-{ #category : 'resources' }
-ReExtractMethodDriver >> configureRefactoring [
+{ #category : 'configuration' }
+ReExtractMethodDriver >> defaultSelectDialog [
 
-	"here we do not fully configure the refactoring because we are missing information such as the signature.
-	Since we want to let the refactoring validate input we need to create it upfront then configure later."
-	
-	refactoring := ReCompositeExtractMethodRefactoring new
-		               extract: body
-		               from: sourceMethod selector
-		               in: class name.
-	refactoring prepareForExecution 
+	^ super defaultSelectDialog
+		title: 'There are potential breaking changes!';
+		label: self labelBasedOnBreakingChanges;
+		items: self breakingChoices;
+		display: [ :each | each description ];
+		displayIcon: [ :each | self iconNamed: each systemIconName ];
+		yourself
 ]
 
 { #category : 'instance creation' }
@@ -64,25 +103,35 @@ ReExtractMethodDriver >> extract: aString from: compiledMethod in: aClass [
 	body := aString
 ]
 
-{ #category : 'execution' }
-ReExtractMethodDriver >> handleBreakingChanges [
-
-	| select |
-	select := self selectDialog.
-	select ifNotNil: [ select action ]
+{ #category : 'actions' }
+ReExtractMethodDriver >> extractMethod [
+	
+	^ self applyChanges
 ]
 
-{ #category : 'initialization' }
-ReExtractMethodDriver >> initialize [ 
-	
-	super initialize.
-	shouldEscape := false.
+{ #category : 'configuration' }
+ReExtractMethodDriver >> instantiateRefactoring [
+	"here we do not fully configure the refactoring because we are missing information such as the signature.
+	Since we want to let the refactoring validate input we need to create it upfront then configure later."
+
+	^ ReCompositeExtractMethodRefactoring new extract: body from: sourceMethod selector in: class name
+]
+
+{ #category : 'configuration' }
+ReExtractMethodDriver >> labelBasedOnBreakingChanges [
+
+	^ String streamContents: [ :stream |
+			  refactoring failedBreakingChangePreconditions do: [ :cond |
+					  cond violationMessageOn: stream.
+					  stream cr ].
+			  stream cr.
+			  stream nextPutAll: 'Select a strategy' ]
 ]
 
 { #category : 'accessing' }
 ReExtractMethodDriver >> methodNameEditorPresenterClass [
 
-	^ methodNameEditorPresenterClass ifNil: [ methodNameEditorPresenterClass := StMethodNameEditorPresenter]
+	^ methodNameEditorPresenterClass ifNil: [ methodNameEditorPresenterClass := StMethodNameEditorPresenter ]
 ]
 
 { #category : 'accessing' }
@@ -97,36 +146,55 @@ ReExtractMethodDriver >> requestDialogWith: methodName [
 	and thus side-step methodNameEditorPresenter"
 
 	^ requestDialog ifNil: [
-		  requestDialog := (self methodNameEditorPresenterClass
-			                   openOn: methodName
-			                   withInvalidArgs: (RBCondition
-					                    invalidArgumentNamesForSelector:
-					                    sourceMethod selector
-					                    in: model)
-			                   canRenameArgs: self canRenameArgs
-			                   canRemoveArgs: self canRemoveArgs
-			                   canAddArgs: self canAddArgs
-			                   canEditName: self canEditName) presenter ]
+		requestDialog := ((self methodNameEditorPresenterClass newApplication: self application model: methodName)
+				invalidArgNames: (RBCondition
+						invalidArgumentNamesForSelector:
+						sourceMethod selector
+						in: model);
+				canRenameArgs: self canRenameArgs;
+				canRemoveArgs: self canRemoveArgs;
+				canAddArgs: self canAddArgs; 
+				canEditName: self canEditName; 
+				openModal)
+			presenter ]
 ]
 
 { #category : 'interaction' }
 ReExtractMethodDriver >> requestNewMessage [
 
-	| methodName dialog  |
+	| methodName dialog |
+	dialog := nil.
 	methodName := RBMethodName
 		              selector: (refactoring selectorStartingFrom: 'f' argumentsSize: refactoring arguments size)
 		              arguments: refactoring arguments.
-	dialog := self requestDialogWith: methodName.
-	dialog ifNil: [ shouldEscape := true. 
-						^ self ].
+	"Retry until the methodName is valid or the user cancels the dialog"
+	[ dialog isNil or: [ dialog methodName isValid not ] ] whileTrue: [
+			requestDialog := nil.
+			dialog := self requestDialogWith: methodName.
+			dialog cancelled ifTrue: [ ^ nil ] ].
 	^ dialog methodName
 ]
 
-{ #category : 'interaction' }
+{ #category : 'execution' }
 ReExtractMethodDriver >> runRefactoring [
 
 	self configureRefactoring.
+	
+	refactoring failedApplicabilityPreconditions 
+		ifNotEmpty: [ ^ self inform: self failedPreconditionsErrorString ].
 	newMessage := self requestNewMessage.
+	newMessage ifNil: [ "The user has cancelled the dialog" ^ self ].
 	refactoring newSelector: newMessage selector.
-	self applyChanges 
+	
+	self setBreakingChangesPreconditions. 
+	refactoring failedBreakingChangePreconditions
+		ifEmpty: [ self applyChanges ]
+		ifNotEmpty: [ self handleBreakingChanges ]
+]
+
+{ #category : 'configuration' }
+ReExtractMethodDriver >> setBreakingChangesPreconditions [
+
+	notOverride := refactoring preconditionNoOverrides.
+	sameExitPoint := refactoring preconditionHasSameExitPoint
 ]

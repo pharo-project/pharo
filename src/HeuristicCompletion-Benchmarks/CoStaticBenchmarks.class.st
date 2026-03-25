@@ -85,44 +85,6 @@ CoStaticBenchmarks class >> onPackage: aPackage heuristics: aHeuristicsBlock [
 	^ benchmark
 ]
 
-{ #category : 'running sorters' }
-CoStaticBenchmarks class >> runAllSortersOnPackage: aPackageIdentifier [
-    "Runs the CoStaticBenchmarks for every sorter class in sorterClasses using the given package as the scope.
-    Returns a Dictionary mapping sorter class symbols to their benchmark instances."
-
-    | pkg results isPkg |
-    isPkg := aPackageIdentifier isKindOf: Package.
-    isPkg ifTrue: [ pkg := aPackageIdentifier ]
-         ifFalse: [ pkg := PackageOrganizer default packageNamed: aPackageIdentifier ].
-    
-    results := Dictionary new.
-    
-    self sorterClasses do: [ :sorterSymbol |
-        | sorterClass benchmark |
-        
-        sorterClass := Smalltalk at: sorterSymbol.
-        benchmark := self new
-            scope: (CoBenchmarkPackage on: pkg);
-            builder: (CoGlobalSorterResultSetBuilder new
-                        sorterClass: sorterClass;
-                        yourself);
-            yourself.
-    
-        benchmark run.
-    
-        results at: sorterSymbol put: benchmark.
-    ].
-    
-    ^ results
-]
-
-{ #category : 'examples' }
-CoStaticBenchmarks class >> runMessageAllSortersOnNeCompletionPackage [
-	<script>
-	
-	^ (CoStaticBenchmarksMessage runAllSortersOnPackage: (PackageOrganizer default packageNamed: 'NECompletion')) inspect. 
-]
-
 { #category : 'examples' }
 CoStaticBenchmarks class >> runMessageOnNeCompletionPackage [
 	<script>
@@ -139,13 +101,6 @@ CoStaticBenchmarks class >> runOnPackage: aPackage heuristics: aHeuristicsBlock 
 	benchmark := self onPackage: aPackage heuristics: aHeuristicsBlock.
 	benchmark run.
 	^ benchmark
-]
-
-{ #category : 'examples' }
-CoStaticBenchmarks class >> runVariableAllSortersOnNeCompletionPackage [
-	<script>
-	
-	^ (CoStaticBenchmarksVariables runAllSortersOnPackage: (PackageOrganizer default packageNamed: 'NECompletion')) inspect. 
 ]
 
 { #category : 'examples' }
@@ -491,7 +446,7 @@ CoStaticBenchmarks >> latexMMRResults [
         prefixSizes do: [:pSize |
             | val |
             val := (self mmrForPrefixSize: pSize) printShowingDecimalPlaces: 4.
-            s nextPutAll: pSize asString; nextPutAll: ' & '.
+            s print: pSize ; nextPutAll: ' & '.
             s nextPutAll: val; nextPutAll: ' \\ \hline'; cr.
         ].
         s nextPutAll: '\end{tabular}'; cr.

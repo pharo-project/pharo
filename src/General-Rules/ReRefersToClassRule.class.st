@@ -46,7 +46,7 @@ ReRefersToClassRule >> check: aMethod forCritiquesDo: aCriticBlock [
 	(aMethod isClassSide and: [ aMethod selector = #isAbstract ]) ifTrue: [ ^ self ].
 
 	class := aMethod methodClass instanceSide.
-	problemLiterals := (aMethod ast allChildren
+	problemLiterals := (aMethod ast withAllChildren
 			select: [ :node | node isGlobalVariable ])
 			select: [ :var | var name = class name].
 

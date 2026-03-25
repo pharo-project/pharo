@@ -11,10 +11,10 @@ Class {
 }
 
 { #category : 'enumerating' }
-CoHierarchyFetcher >> entriesDo: aBlock [
+CoHierarchyFetcher >> filteredEntriesDo: aBlock [
 	| currentCompletionFetcher |
 	currentCompletionFetcher := decoree.
 	[ currentCompletionFetcher isEmptyCompletionFetcher ]
-		whileFalse: [ currentCompletionFetcher entriesDo: aBlock.
+		whileFalse: [ currentCompletionFetcher filteredEntriesDo: aBlock.
 			currentCompletionFetcher := currentCompletionFetcher onSuperclass ]
 ]

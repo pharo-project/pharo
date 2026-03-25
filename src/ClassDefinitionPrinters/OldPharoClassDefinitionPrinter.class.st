@@ -12,8 +12,13 @@ Class {
 }
 
 { #category : 'internal' }
-OldPharoClassDefinitionPrinter >> basicClassDefinitionString [
+OldPharoClassDefinitionPrinter >> applyCustomizersOn: stream [
 
+	self class customizers do: [ :customizer | customizer oldClassDefinitionFor: forClass on: stream ]
+]
+
+{ #category : 'internal' }
+OldPharoClassDefinitionPrinter >> basicClassDefinitionString [
 	"Pay attention this definition is fragile in presence of complex slots. Use the public API i.e., classDefinitionString"
 
 	| stream |
@@ -24,19 +29,19 @@ OldPharoClassDefinitionPrinter >> basicClassDefinitionString [
 	stream
 		nextPutAll: forClass kindOfSubclass;
 		store: forClass name.
-	self traitCompositionOn: stream.
+	self applyCustomizersOn: stream.
 	self instanceVariablesOn: stream.
 	self classVariablesOn: stream.
 	self poolOn: stream.
 	self packageOn: stream.
 	forClass superclass ifNil: [
-		stream
-			nextPutAll: '.';
-			cr.
-		stream nextPutAll: forClass name.
-		stream
-			space;
-			nextPutAll: 'superclass: nil' ].
+			stream
+				nextPutAll: '.';
+				cr.
+			stream nextPutAll: forClass name.
+			stream
+				space;
+				nextPutAll: 'superclass: nil' ].
 	^ stream contents
 ]
 
@@ -48,32 +53,6 @@ OldPharoClassDefinitionPrinter >> basicMetaclassDefinitionString [
 	^ String streamContents: [ :stream |
 		  stream print: forClass.
 		  self instanceVariablesOn: stream ]
-]
-
-{ #category : 'internal' }
-OldPharoClassDefinitionPrinter >> basicTraitDefinitionString [
-
-	"Pay attention this definition is fragile in presence of complex slots. Use the public API i.e., classDefinitionString"
-
-	forClass instanceSide name == #Trait ifTrue: [
-		^ self classDefinitionString ].
-
-	^ String streamContents: [ :s |
-		  s
-			  nextPutAll: 'Trait named: ';
-			  nextPutAll: forClass name printString.
-		  self traitCompositionOn: s.
-		  self instanceVariablesOn: s.
-		  self packageOn: s ]
-]
-
-{ #category : 'internal' }
-OldPharoClassDefinitionPrinter >> basicTraitedMetaclassDefinitionString [
-
-	^ String streamContents: [:strm |
-			strm print: forClass.
-			self traitCompositionOn: strm.
-			self instanceVariablesOn: strm ]
 ]
 
 { #category : 'public API' }
@@ -131,30 +110,4 @@ OldPharoClassDefinitionPrinter >> poolOn: stream [
 			crtab;
 			nextPutAll: 'poolDictionaries: ';
 			store: poolString ]
-]
-
-{ #category : 'low-level elements' }
-OldPharoClassDefinitionPrinter >> traitCompositionOn: stream [
-
-	forClass hasTraitComposition ifTrue: [
-		stream
-			crtab;
-			nextPutAll: 'uses: ';
-			nextPutAll: forClass traitCompositionString ]
-]
-
-{ #category : 'public API' }
-OldPharoClassDefinitionPrinter >> traitDefinitionString [
-
-	^ forClass needsSlotClassDefinition
-		ifTrue: [ (ClassDefinitionPrinter fluid for: forClass) traitDefinitionString ]
-		ifFalse: [ self basicTraitDefinitionString ]
-]
-
-{ #category : 'public API' }
-OldPharoClassDefinitionPrinter >> traitedMetaclassDefinitionString [
-
-	^ forClass needsSlotClassDefinition
-		ifTrue: [ (ClassDefinitionPrinter fluid for: forClass) traitedMetaclassDefinitionString ]
-		ifFalse: [ self basicTraitedMetaclassDefinitionString ]
 ]

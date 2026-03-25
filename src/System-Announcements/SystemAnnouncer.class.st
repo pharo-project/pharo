@@ -32,14 +32,6 @@ SystemAnnouncer class >> reset [
 	self announcer: nil.
 ]
 
-{ #category : 'initialization' }
-SystemAnnouncer class >> restoreAllNotifications [
-
-	<script>
-	self reset.
-	(Pragma allNamed: #systemEventRegistration) do: [ :pragma | pragma methodClass instanceSide perform: pragma methodSelector ]
-]
-
 { #category : 'instance creation' }
 SystemAnnouncer class >> uniqueInstance [
 	"Answer a system annoncer."
@@ -77,17 +69,6 @@ SystemAnnouncer >> classModificationAppliedTo: aClassOrTrait [
 ]
 
 { #category : 'triggering' }
-SystemAnnouncer >> classParentOf: aClass renamedFrom: oldName to: newName [
-	self announce: (ClassParentRenamed classParentOf: aClass renamedFrom: oldName to: newName)
-]
-
-{ #category : 'triggering' }
-SystemAnnouncer >> classRenamed: aClass from: oldClassName to: newClassName [
-
-	self announce: (ClassRenamed class: aClass oldName: oldClassName newName: newClassName)
-]
-
-{ #category : 'triggering' }
 SystemAnnouncer >> evaluated: textOrStream [
 	^ self evaluated: textOrStream context: nil
 ]
@@ -102,7 +83,7 @@ SystemAnnouncer >> evaluated: expression context: aContext [
 { #category : 'triggering' }
 SystemAnnouncer >> methodRemoved: aMethod origin: aBehavior [
 	"A method with the given selector was removed from the class."
-
+	SourcesManager current writeMethodRemoved: aMethod from: aBehavior.
 	self announce: (MethodRemoved methodRemoved: aMethod origin: aBehavior)
 ]
 

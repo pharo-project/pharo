@@ -123,10 +123,10 @@ ZnFileUrlTest >> testWindowsDriveNamesInFileUrl [
 
 	SystemVersion current major < 3 ifTrue: [ self skip ].
 	self
-		assert: 'file:///C:/Programs/notepad.exe' asUrl asFileReference
+		assert: 'file:///C:/Programs/notepad.exe' asZnUrl asFileReference
 		equals: FileLocator C / 'Programs' / 'notepad.exe'.
 	self
-		assert: 'file:///C:' asUrl asFileReference
+		assert: 'file:///C:' asZnUrl asFileReference
 		equals: FileLocator C
 ]
 

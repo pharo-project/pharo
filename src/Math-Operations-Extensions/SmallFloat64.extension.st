@@ -26,6 +26,16 @@ SmallFloat64 >> arcTan [
 ]
 
 { #category : '*Math-Operations-Extensions' }
+SmallFloat64 >> fractionPart [
+	"Primitive. Answer a Float whose value is the difference between the
+	receiver and the receiver's asInteger value. Optional. See Object
+	documentation whatIsAPrimitive."
+
+	<primitive: 552>
+	^self - self truncated asFloat
+]
+
+{ #category : '*Math-Operations-Extensions' }
 SmallFloat64 >> sin [
 	"Answer the sine of the receiver taken as an angle in radians.
 	 Optional. See Object documentation whatIsAPrimitive."

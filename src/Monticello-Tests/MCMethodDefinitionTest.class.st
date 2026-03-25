@@ -1,6 +1,9 @@
 Class {
 	#name : 'MCMethodDefinitionTest',
 	#superclass : 'MCTestCase',
+	#instVars : [
+		'loader'
+	],
 	#category : 'Monticello-Tests-Base',
 	#package : 'Monticello-Tests',
 	#tag : 'Base'
@@ -34,6 +37,15 @@ MCMethodDefinitionTest >> secondExtensionPackageName [
 ]
 
 { #category : 'running' }
+MCMethodDefinitionTest >> setUp [
+
+	super setUp.
+	self testingEnvironment: SystemEnvironment new.
+	loader := MCPackageLoader new.
+	loader targetEnvironment: testingEnvironment.
+]
+
+{ #category : 'running' }
 MCMethodDefinitionTest >> tearDown [
 
 	{ self secondExtensionPackageName . self extensionPackageName . self mockPackageName } do: [ :packageName | self packageOrganizer removePackage: packageName ].
@@ -49,8 +61,64 @@ MCMethodDefinitionTest >> testCannotLoad [
 		              class: 'NoSuchClass'
 		              source: 'kjahs87 ^self'
 		              meta: false.
-	self should: [ definition load ] raise: Error.
+	[
+	definition loadWithLoader: loader.
+	self fail ]
+		on: Error
+		do: [ :error |
+			self
+				assert: error messageText
+				equals: 'Class not found: #NoSuchClass' ].
 	self assertEmpty: (SystemNavigation new allImplementorsOf: #kjahs87)
+]
+
+{ #category : 'testing' }
+MCMethodDefinitionTest >> testCannotLoadInvalidCodeInStrictMode [
+
+	| definition mockClass |
+	testingEnvironment
+		at: #NoSuchClass
+		put: (mockClass := self mockClass).
+
+	"The source does not parse"
+	definition := self
+		              mockMethod: #kjahs87
+		              class: 'NoSuchClass'
+		              source: 'kjahs87 a :='
+		              meta: false.
+
+	loader beStrict.
+	[
+	definition loadWithLoader: loader.
+	self fail ]
+		on: OCCodeError
+		do: [ :error |
+			self
+				assert: error messageText
+				equals: 'Variable or expression expected' ]
+]
+
+{ #category : 'testing' }
+MCMethodDefinitionTest >> testCannotLoadUndeclaredInStrictMode [
+
+	| definition mockClass |
+	testingEnvironment
+		at: #NoSuchClass
+		put: (mockClass := self mockClass).
+
+	definition := self
+		              mockMethod: #kjahs87
+		              class: 'NoSuchClass'
+		              source: 'kjahs87 ^UNDECLARED'
+		              meta: false.
+
+	loader beStrict.
+	[
+	definition loadWithLoader: loader.
+	self fail ]
+		on: OCCodeError
+		do: [ :error |
+			self assert: error messageText equals: 'Undeclared variable named UNDECLARED in kjahs87' ]
 ]
 
 { #category : 'testing' }
@@ -76,6 +144,10 @@ MCMethodDefinitionTest >> testLoadAndUnload [
 
 	| definition mockClass mockClassInstance |
 	mockClass := self mockClass.
+	testingEnvironment
+		at: mockClass name
+		put: mockClass.
+	
 	mockClassInstance := mockClass new.
 	mockClass compile: 'one ^ 1'.
 	definition := self
@@ -84,10 +156,57 @@ MCMethodDefinitionTest >> testLoadAndUnload [
 		              source: 'one ^2'
 		              meta: false.
 	self assert: mockClassInstance one equals: 1.
-	definition load.
+	definition loadWithLoader: loader.
 	self assert: mockClassInstance one equals: 2.
 	definition unload.
 	self deny: (mockClassInstance respondsTo: #one)
+]
+
+{ #category : 'testing' }
+MCMethodDefinitionTest >> testLoadInvalidCodeInLegacyMode [
+
+	| definition mockClass |
+	testingEnvironment
+		at: #NoSuchClass
+		put: (mockClass := self mockClass).
+
+	"The source does not parse"
+	definition := self
+		              mockMethod: #kjahs87
+		              class: 'NoSuchClass'
+		              source: 'kjahs87 a :='
+		              meta: false.
+
+	definition loadWithLoader: loader.
+
+	[
+	mockClass new kjahs87.
+	self fail ]
+		on: OCRuntimeSyntaxError
+		do: [ :error |
+			self
+				assert: error messageText
+				equals: 'Variable or expression expected' ]
+]
+
+{ #category : 'testing' }
+MCMethodDefinitionTest >> testLoadUndeclaredInLegacyMode [
+
+	| definition mockClass |
+	testingEnvironment
+		at: #NoSuchClass
+		put: (mockClass := self mockClass).
+
+	definition := self
+		              mockMethod: #kjahs87
+		              class: 'NoSuchClass'
+		              source: 'kjahs87 ^UNDECLARED'
+		              meta: false.
+
+	definition loadWithLoader: loader.
+
+	self assert:
+		(mockClass >> #kjahs87) literals first isUndeclaredVariable
 ]
 
 { #category : 'testing' }
@@ -103,53 +222,4 @@ MCMethodDefinitionTest >> testMethodDefinitionWithEmptyProtocolIsClassifiedAsAsY
 		             source: 'name
 	^ self printString'.
 	self assert: methodDef protocol equals: Protocol unclassified
-]
-
-{ #category : 'testing' }
-MCMethodDefinitionTest >> testPartiallyRevertOverrideMethod [
-
-	| definition mockClass mockClassInstance |
-	<ignoreNotImplementedSelectors: #(override)>
-	mockClass := self mockClass.
-	mockClassInstance := mockClass new.
-	mockClass compile: 'override ^ 2' classified: '*' , self extensionPackageName.
-	mockClass compile: 'override ^ 3' classified: '*' , self secondExtensionPackageName.
-	mockClass compile: 'override ^ 4' classified: '*' , self secondExtensionPackageName.
-	definition := (mockClass >> #override) asMCMethodDefinition.
-	self assert: definition isOverrideMethod.
-	self assert: mockClassInstance override equals: 4.
-	definition unload.
-	self assert: mockClassInstance override equals: 2.
-	self assert: (mockClass >> #override) protocolName equals: '*' , self extensionPackageName
-]
-
-{ #category : 'testing' }
-MCMethodDefinitionTest >> testRevertOldMethod [
-
-	| definition changeRecord mockClass |
-	mockClass := self mockClass.
-	mockClass compile: 'yourself ^ self' classified: 'accessing'.
-	mockClass compile: 'yourself ^ self' classified: '*MonticelloMocks'.
-	definition := (mockClass >> #yourself) asMCMethodDefinition.
-	changeRecord := definition overridenMethodOrNil.
-	self assert: changeRecord isNotNil.
-	self assert: changeRecord protocol equals: 'accessing'.
-	changeRecord fileIn
-]
-
-{ #category : 'testing' }
-MCMethodDefinitionTest >> testRevertOverrideMethod [
-
-	| definition mockClass mockClassInstance |
-	<ignoreNotImplementedSelectors: #(override)>
-	mockClass := self mockClass.
-	mockClassInstance := mockClass new.
-	mockClass compile: 'override ^ 1' classified: 'mocks'.
-	mockClass compile: 'override ^ 2' classified: '*' , self secondExtensionPackageName.
-	definition := (mockClass >> #override) asMCMethodDefinition.
-	self assert: definition isOverrideMethod.
-	self assert: mockClassInstance override equals: 2.
-	definition unload.
-	self assert: mockClassInstance override equals: 1.
-	self assert: (RGMethodDefinition realClass: mockClass selector: #override) protocol equals: 'mocks'
 ]

@@ -746,6 +746,8 @@ RubAbstractTextArea >> deselect [
 
 { #category : 'event handling' }
 RubAbstractTextArea >> doubleClick: anEvent [
+
+	model ifNotNil: [ model interactionModel reactToRubTextAreaDoubleClick: anEvent ].
 	^ self handleEdit: [ self editor doubleClick: anEvent ]
 ]
 
@@ -1203,6 +1205,12 @@ RubAbstractTextArea >> initializeShortcuts: aKMDispatcher [
 	because it is the one that knows more details about the goal of editing"
 	super initializeShortcuts: aKMDispatcher.
 	self editor initializeShortcuts: aKMDispatcher
+]
+
+{ #category : 'accessing - cursor' }
+RubAbstractTextArea >> invalidateVirtualColumn [ 
+
+	editingState invalidateVirtualColumn
 ]
 
 { #category : 'testing' }
@@ -2080,7 +2088,9 @@ RubAbstractTextArea >> themeChanged [
 	(self decoratorNamed: #shoutStyler) ifNotNil: [ :styler |
 		styler refreshStyling
 	].
-	self color: self theme backgroundColor.
+
+	self class backgroundColor: self theme backgroundColor.
+	self color: self defaultColor.
 	super themeChanged
 ]
 
@@ -2200,6 +2210,18 @@ RubAbstractTextArea >> veryDeepInner: deepCopier [
 	editor := editor veryDeepCopyWith: deepCopier
 ]
 
+{ #category : 'accessing - cursor' }
+RubAbstractTextArea >> visualColumn [
+
+	^ editingState visualColumn 
+]
+
+{ #category : 'accessing - cursor' }
+RubAbstractTextArea >> visualColumn: virtualColumn [
+
+	editingState visualColumn: virtualColumn 
+]
+
 { #category : 'menu' }
 RubAbstractTextArea >> wantsYellowButtonMenu [
 	^ self menuAllowed
@@ -2304,6 +2326,6 @@ RubAbstractTextArea >> yellowButtonActivity: shiftKeyState [
 	Check if required first!"
 	self wantsYellowButtonMenu
 		ifFalse: [ ^ false ].
-	self openMenu: shiftKeyState and: #invokeModal.
+	self openMenu: shiftKeyState and: [ :menu | menu invokeModal ].
 	^ true
 ]

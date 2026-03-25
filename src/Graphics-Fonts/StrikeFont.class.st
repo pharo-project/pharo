@@ -32,6 +32,9 @@ Class {
 		'pointSize',
 		'fallbackFont'
 	],
+	#classVars : [
+		'Registry'
+	],
 	#pools : [
 		'TextConstants'
 	],
@@ -50,7 +53,7 @@ StrikeFont class >> actualFamilyNames [
 StrikeFont class >> cleanUp: aggressive [
 	"Flush synthesized strike fonts"
 
-	self allInstancesDo: [:sf| sf reset]
+	self registry do: [:sf| sf reset]
 ]
 
 { #category : 'accessing' }
@@ -133,29 +136,8 @@ StrikeFont class >> limitTo16Bits [
 
 	StrikeFont limitTo16Bits
 	"
-	StrikeFont allInstances do: [ :f | f
+	self registry do: [ :f | f
 		setGlyphsDepthAtMost: 16 ]
-]
-
-{ #category : 'font creation' }
-StrikeFont class >> listFont: index [
-	<primitive:'primitiveListFont' module:'FontPlugin'>
-	^nil
-]
-
-{ #category : 'font creation' }
-StrikeFont class >> listFontNames [
-	"StrikeFont listFontNames"
-	"List all the OS font names"
-	| font fontNames index |
-	fontNames := Array new writeStream.
-	index := 0.
-
-	[ font := self listFont: index.
-	font == nil ] whileFalse:
-		[ fontNames nextPut: font.
-		index := index + 1 ].
-	^ fontNames contents
 ]
 
 { #category : 'font creation' }
@@ -169,7 +151,7 @@ StrikeFont class >> makeControlCharsVisible [
 	Make normally not visible characters, visible
 	StrikeFont makeControlCharsVisible
 	"
-	self allInstances do: [ :font | font makeControlCharsVisible ]
+	self registry do: [ :font | font makeControlCharsVisible ]
 ]
 
 { #category : 'character shapes' }
@@ -178,7 +160,7 @@ StrikeFont class >> makeLfInvisible [
 	Make line feed characters invisible
 	StrikeFont makeLfInvisible
 	"
-	self allInstances do: [ :font | font makeLfInvisible ]
+	self registry do: [ :font | font makeLfInvisible ]
 ]
 
 { #category : 'character shapes' }
@@ -187,7 +169,7 @@ StrikeFont class >> makeLfVisible [
 	Make line feed characters visible
 	StrikeFont makeLfVisible
 	"
-	self allInstances do: [ :font | font makeLfVisible ]
+	self registry do: [ :font | font makeLfVisible ]
 ]
 
 { #category : 'character shapes' }
@@ -196,7 +178,7 @@ StrikeFont class >> makeTabInvisible [
 	Make tab characters invisible
 	StrikeFont makeTabInvisible
 	"
-	self allInstances do: [ :font | font makeTabInvisible ]
+	self registry do: [ :font | font makeTabInvisible ]
 ]
 
 { #category : 'character shapes' }
@@ -205,54 +187,22 @@ StrikeFont class >> makeTabVisible [
 	Make tab characters visible
 	StrikeFont makeTabVisible
 	"
-	self allInstances do: [ :font | font makeTabVisible ]
+	self registry do: [ :font | font makeTabVisible ]
+]
+
+{ #category : 'instance creation' }
+StrikeFont class >> new [
+
+	| newInstance |
+	
+	newInstance := super new.
+	self registry add: newInstance.
+	^ newInstance
 ]
 
 { #category : 'instance creation' }
 StrikeFont class >> passwordFontSize: aSize [
 	^ FixedFaceFont new passwordFont fontSize: aSize
-]
-
-{ #category : 'font creation' }
-StrikeFont class >> primitiveCreateFont: fontName size: fontSize flags: fontFlags weight: fontWeight [
-	<primitive:'primitiveCreateFont' module:'FontPlugin'>
-	^self primitiveFailed
-]
-
-{ #category : 'font creation' }
-StrikeFont class >> primitiveDestroyFont: fontHandle [
-	<primitive:'primitiveDestroyFont' module:'FontPlugin'>
-	^self primitiveFailed
-]
-
-{ #category : 'font creation' }
-StrikeFont class >> primitiveFont: fontHandle glyphOfChar: charIndex into: glyphForm [
-	<primitive:'primitiveFontGlyphOfChar' module:'FontPlugin'>
-	^self primitiveFailed
-]
-
-{ #category : 'font creation' }
-StrikeFont class >> primitiveFont: fontHandle widthOfChar: charIndex [
-	<primitive:'primitiveFontWidthOfChar' module:'FontPlugin'>
-	^self primitiveFailed
-]
-
-{ #category : 'font creation' }
-StrikeFont class >> primitiveFontAscent: fontHandle [
-	<primitive:'primitiveFontAscent' module:'FontPlugin'>
-	^self primitiveFailed
-]
-
-{ #category : 'font creation' }
-StrikeFont class >> primitiveFontDescent: fontHandle [
-	<primitive:'primitiveFontDescent' module:'FontPlugin'>
-	^self primitiveFailed
-]
-
-{ #category : 'font creation' }
-StrikeFont class >> primitiveFontEncoding: fontHandle [
-	<primitive:'primitiveFontEncoding' module:'FontPlugin'>
-	^self primitiveFailed
 ]
 
 { #category : 'examples' }
@@ -280,6 +230,12 @@ StrikeFont class >> readStrikeFont2Family: familyName fromDirectory: aDirectory 
 	readStrikeFont2Family: 'Lucida'))."
 ]
 
+{ #category : 'class initialization' }
+StrikeFont class >> registry [
+
+	^ Registry ifNil: [ Registry := WeakSet new ]
+]
+
 { #category : 'removing' }
 StrikeFont class >> saveSpace [
 	"Removes glyphs over 128, leaving only lower ascii.
@@ -288,7 +244,7 @@ StrikeFont class >> saveSpace [
 
 	StrikeFont saveSpace
 	"
-	StrikeFont allInstances do: [ :f | f
+	self registry do: [ :f | f
 		stripHighGlyphs;
 		setGlyphsDepthAtMost: 4 ]
 ]
@@ -312,7 +268,7 @@ StrikeFont class >> setupDefaultFallbackFont [
 StrikeFont class >> shutDown [
 	"StrikeFont shutDown"
 	"Deallocate synthetically derived copies of base fonts to save space"
-	self allSubInstancesDo: [ :sf | sf reset ]
+	self registry do: [ :sf | sf reset ]
 ]
 
 { #category : 'character shapes' }
@@ -323,7 +279,12 @@ StrikeFont class >> useUnderscoreIfOver1bpp [
 	"
 	StrikeFont useUnderscoreIfOver1bpp
 	"
-	self allInstances do: [ :font | font useUnderscoreIfOver1bpp ]
+	self registry do: [ :font | font useUnderscoreIfOver1bpp ]
+]
+
+{ #category : 'visitor' }
+StrikeFont >> acceptSettings: aVisitor [
+	^ aVisitor visitStrikeFont: self
 ]
 
 { #category : 'character shapes' }
@@ -474,7 +435,7 @@ StrikeFont >> characterFormAt: character put: characterForm [
 	ascii := character asciiValue.
 	ascii < minAscii ifTrue: [ ^ self error: 'Cant store characters below min ascii' ].
 	ascii > maxAscii ifTrue:
-		[ (self confirm: 'This font does not accomodate ascii values higher than ' , maxAscii printString , '.
+		[ (ConfirmationRequest signal:  'This font does not accomodate ascii values higher than ' , maxAscii printString , '.
 Do you wish to extend it permanently to handle values up to ' , ascii printString)
 			ifTrue: [ self extendMaxAsciiTo: ascii ]
 			ifFalse: [ ^ self error: 'No change made' ] ].

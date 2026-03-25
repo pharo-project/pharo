@@ -44,7 +44,7 @@ OSSDL2GLRenderer >> createContext [
 	]
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 OSSDL2GLRenderer >> destroy [
 	self onRenderThreadBlocking: [
 		context ifNotNil: [ context delete ].

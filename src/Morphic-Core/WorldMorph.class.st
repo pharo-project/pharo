@@ -8,6 +8,7 @@ Class {
 	#name : 'WorldMorph',
 	#superclass : 'PasteUpMorph',
 	#instVars : [
+		'worldState',
 		'zoomFactor'
 	],
 	#classVars : [
@@ -18,7 +19,10 @@ Class {
 		'LastScreenModeSelected'
 	],
 	#classInstVars : [
-		'displayScaleFactor'
+		'displayScaleFactor',
+		'dropActionBlock',
+		'dragActionBlock',
+		'resizeActionBlock'
 	],
 	#category : 'Morphic-Core-Worlds',
 	#package : 'Morphic-Core',
@@ -105,6 +109,48 @@ WorldMorph class >> doOneCycle [
 			self currentWorld doOneCycle ] ]
 ]
 
+{ #category : 'accessing' }
+WorldMorph class >> dragActionBlock [
+
+	^ dragActionBlock
+]
+
+{ #category : 'accessing' }
+WorldMorph class >> dragActionBlock: aBlock [
+
+	dragActionBlock := aBlock
+]
+
+{ #category : 'accessing' }
+WorldMorph class >> dropActionBlock [
+
+	^ dropActionBlock 
+]
+
+{ #category : 'accessing' }
+WorldMorph class >> dropActionBlock: aBlock [
+
+	dropActionBlock := aBlock
+]
+
+{ #category : 'execution' }
+WorldMorph class >> executeDragBlockWith: aValue [
+
+	self dragActionBlock ifNotNil: [ self dragActionBlock value: aValue ]
+]
+
+{ #category : 'execution' }
+WorldMorph class >> executeDropBlockWith: aValue [
+
+	self dropActionBlock ifNotNil: [ self dropActionBlock value: aValue ]
+]
+
+{ #category : 'execution' }
+WorldMorph class >> executeResizeBlock [
+
+	self resizeActionBlock ifNotNil: [ self resizeActionBlock value ]
+]
+
 { #category : 'extra worlds' }
 WorldMorph class >> extraWorldList [
 	ExtraWorldList ifNil: [ ExtraWorldList := #() ].
@@ -121,7 +167,45 @@ WorldMorph class >> fullscreen: aBoolean [
 
 { #category : 'class initialization' }
 WorldMorph class >> initialize [
-	ExtraWorldListMutex := Semaphore forMutualExclusion
+
+	ExtraWorldListMutex := Semaphore forMutualExclusion.
+	dropActionBlock := nil.
+	dragActionBlock := nil.
+	resizeActionBlock := nil.
+	
+	self initializeWorldAndActiveWorld
+]
+
+{ #category : 'class initialization' }
+WorldMorph class >> initializeWorldAndActiveWorld [
+	"This method is creating the World and ActiveWorld global variables.
+	Waybe some of the initialization code could go directly in WorldMorph and other classes normal initialization?"
+
+	| world hand |
+	"Ensure Morph is initialized."
+	Morph initialize.
+	
+	world := self new.
+	hand := HandMorph new.
+	world addHand: hand.
+	world activeHand: hand.
+
+	Smalltalk at: #World put: world.
+	Smalltalk at: #ActiveWorld put: world.
+
+	world viewBox: world bounds.
+
+	world handsDo: [ :h | h initForEvents ].
+	world borderWidth: 0.
+
+	world displayWorldSafely.
+	MorphicCoreUIManager new spawnNewProcess.
+
+	world cleanseOtherworldlySteppers.
+
+	world worldState invalidate.
+
+	hand targetOffset: 0 @ 0
 ]
 
 { #category : 'settings' }
@@ -138,22 +222,16 @@ WorldMorph class >> removeExtraWorld: aWorld [
 	CursorOwnerWorld == aWorld ifTrue: [ CursorOwnerWorld := nil ]
 ]
 
-{ #category : 'setting' }
-WorldMorph class >> scaleFactor [
+{ #category : 'accessing' }
+WorldMorph class >> resizeActionBlock [
 
-	self
-		deprecated: 'Use #zoomFactor instead.'
-		transformWith: '`@rcv scaleFactor' -> '`@rcv zoomFactor'.
-	^ self zoomFactor
+	^ resizeActionBlock 
 ]
 
-{ #category : 'setting' }
-WorldMorph class >> scaleFactor: aValue [
+{ #category : 'accessing' }
+WorldMorph class >> resizeActionBlock: aBlock [
 
-	self
-		deprecated: 'Use #zoomFactor: instead.'
-		transformWith: '`@rcv scaleFactor: `@arg1' -> '`@rcv zoomFactor: `@arg1'.
-	^ self zoomFactor: aValue
+	resizeActionBlock := aBlock
 ]
 
 { #category : 'settings' }
@@ -333,6 +411,16 @@ WorldMorph >> copyRectangle: aRectangle into: aForm [
 	^ worldState worldRenderer copyRectangle: aRectangle into: aForm
 ]
 
+{ #category : 'cursor' }
+WorldMorph >> currentCursor [
+	^ worldState currentCursor
+]
+
+{ #category : 'cursor' }
+WorldMorph >> currentCursor: aCursor [
+	^ worldState currentCursor: aCursor
+]
+
 { #category : 'world state' }
 WorldMorph >> defaultWorldColor [
 	^ self class defaultWorldColor
@@ -360,6 +448,23 @@ WorldMorph >> depth [
 { #category : 'world menu' }
 WorldMorph >> discoveredWorldMenu [
 	^ worldState discoveredWorldMenu
+]
+
+{ #category : 'menu & halo' }
+WorldMorph >> dispatchKeystroke: anEvent [
+	"A keystroke was hit when no keyboard focus was set, so it is sent here to the world instead."
+
+	|  aChar ascii |
+	aChar := anEvent keyCharacter.
+	(ascii := aChar asciiValue) = 27 ifTrue: "escape key"
+		[^ self invokeWorldMenuFromEscapeKey].
+
+	(self navigationKey: anEvent) ifTrue: [^self].
+
+	"It was unhandled. Remember the keystroke."
+	self lastKeystroke: anEvent keyString.
+	self triggerEvent: #keyStroke.
+	super dispatchKeystroke: anEvent
 ]
 
 { #category : 'api' }
@@ -578,18 +683,6 @@ WorldMorph >> runStepMethods [
 	worldState runStepMethodsIn: self
 ]
 
-{ #category : 'accessing' }
-WorldMorph >> scaleFactor: newZoomFactor [
-
-	self
-		deprecated: 'Use #zoomFactor: instead'
-		on: '20/12/2024'
-		in: 'pharo13'
-		transformWith:
-		'`@receiver scaleFactor: `@arg' -> '`@receiver zoomFactor: `@arg'.
-	self zoomFactor: newZoomFactor
-]
-
 { #category : 'stepping' }
 WorldMorph >> startStepping: aMorph [
 	"Add the given morph to the step list. Do nothing if it is already being stepped."
@@ -712,6 +805,12 @@ WorldMorph >> worldMenu [
 WorldMorph >> worldState [
 
 	^ worldState
+]
+
+{ #category : 'accessing' }
+WorldMorph >> worldState: anObject [
+
+	worldState := anObject
 ]
 
 { #category : 'accessing' }

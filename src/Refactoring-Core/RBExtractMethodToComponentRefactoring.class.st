@@ -12,7 +12,8 @@ Class {
 	#instVars : [
 		'selector',
 		'extractionInterval',
-		'extractedMethodSelector'
+		'extractedMethodSelector',
+		'selfArgumentName'
 	],
 	#category : 'Refactoring-Core-Refactorings-Unused',
 	#package : 'Refactoring-Core',
@@ -86,6 +87,7 @@ RBExtractMethodToComponentRefactoring >> moveMethod [
 		selector: extractedMethodSelector
 		class: class
 		variable: variable.
+	refactoring selfArgumentName: selfArgumentName.
 	self generateChangesFor: refactoring
 ]
 
@@ -97,16 +99,7 @@ RBExtractMethodToComponentRefactoring >> privateTransform [
 		inlineForwarder
 ]
 
-{ #category : 'storing' }
-RBExtractMethodToComponentRefactoring >> storeOn: aStream [
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream nextPutAll: ' extract: '.
-	extractionInterval storeOn: aStream.
-	aStream
-		nextPutAll: ' from: #';
-		nextPutAll: selector;
-		nextPutAll: ' in: '.
-	class storeOn: aStream.
-	aStream nextPut: $)
+{ #category : 'transforming' }
+RBExtractMethodToComponentRefactoring >> selfArgumentName: aString [ 
+	selfArgumentName := aString
 ]

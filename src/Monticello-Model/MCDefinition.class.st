@@ -104,17 +104,6 @@ MCDefinition >> isTraitDefinition [
 ]
 
 { #category : 'installing' }
-MCDefinition >> load [
-	
-]
-
-{ #category : 'installing' }
-MCDefinition >> loadOver: aDefinition [
-	self load
-	
-]
-
-{ #category : 'installing' }
 MCDefinition >> postload [
 ]
 

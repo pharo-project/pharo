@@ -131,6 +131,13 @@ TreeColumnButtonMorph >> startDrag: anEvent [
 ]
 
 { #category : 'theme' }
+TreeColumnButtonMorph >> themeChanged [
+	self fillStyle: (self theme morphTreeColumnFillStyleFor: self).
+	self borderStyle: (self theme morphTreeColumnBorderStyleFor: self).
+	super themeChanged
+]
+
+{ #category : 'theme' }
 TreeColumnButtonMorph >> themedFillStyle [
 	^ self theme morphTreeColumnFillStyleFor: self
 ]

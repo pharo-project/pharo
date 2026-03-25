@@ -48,7 +48,7 @@ RBAbstractInstanceVariableRefactoring >> accessorsRefactoring [
 				class: class
 				classVariable: false
 			]
-		ifNotNil: [ accessorsRefactoring ]
+
 ]
 
 { #category : 'preconditions' }

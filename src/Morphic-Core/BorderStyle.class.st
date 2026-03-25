@@ -36,6 +36,13 @@ BorderStyle class >> color: aColor width: aNumber [
 ]
 
 { #category : 'instance creation' }
+BorderStyle class >> dashed [
+	"Answer a dashed border style"
+
+	^DashedBorderStyle new
+]
+
+{ #category : 'instance creation' }
 BorderStyle class >> default [
 	^Default ifNil:[Default := self new]
 ]
@@ -162,7 +169,7 @@ BorderStyle >> printOn: aStream [
 	self storeOn: aStream
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 BorderStyle >> releaseCachedState [
 	"Release any associated cached state"
 ]

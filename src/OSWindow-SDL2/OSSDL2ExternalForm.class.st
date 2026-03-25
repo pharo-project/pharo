@@ -28,7 +28,7 @@ Class {
 	#tag : 'Base'
 }
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 OSSDL2ExternalForm >> allocateSpace [
 	"Convenient way to allocate space for the pixels.  This isn't done by default, because it is common to use a pointer obtained from elsewhere."
 	| addr |
@@ -37,7 +37,7 @@ OSSDL2ExternalForm >> allocateSpace [
 	self setManualSurfacePointer: addr
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 OSSDL2ExternalForm >> destroySurface [
 	"Users must call this explicitly when this object is no longer needed; otherwise, resource-leakage will occur in the SurfacePlugin"
 	bits ifNotNil: [:surfaceID |
@@ -83,7 +83,7 @@ OSSDL2ExternalForm >> primManualSurface: surfaceID setPointer: aPointer [
 	^ self primitiveFailed
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 OSSDL2ExternalForm >> setExtent: extent depth: bitsPerPixel [
 	bits ifNotNil: [self error: 'bits are already set'].
 	bitsPerPixel == 32 ifFalse: [self error: 'only 32 bits for now'.  "see 'rowPitch' below"].
@@ -100,13 +100,13 @@ OSSDL2ExternalForm >> setExtent: extent depth: bitsPerPixel [
 		isMSB: true
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 OSSDL2ExternalForm >> setExtent: extent depth: bitsPerPixel bits: aPointer [
 	self setExtent: extent depth: bitsPerPixel.
 	self setManualSurfacePointer: aPointer
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 OSSDL2ExternalForm >> setManualSurfacePointer: newPointer [ "ExternalStructure, ExternalAddress, or nil"
 	"Set the memory-location of the image data.  It is OK to set a NULL pointer;
 	 in this case, any attempt to BitBlt to or from the form will result in a primitive-failure."

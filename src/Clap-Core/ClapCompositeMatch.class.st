@@ -50,6 +50,12 @@ ClapCompositeMatch >> at: identifierOrSpec ifPresent: foundBlock ifAbsent: absen
 		ifNone: absentBlock
 ]
 
+{ #category : 'accessing' }
+ClapCompositeMatch >> children [
+	
+	^ children
+]
+
 { #category : 'matching' }
 ClapCompositeMatch >> completeMatchOn: aStream [
 	startIndex := aStream position + 1.

@@ -14,7 +14,7 @@ The #start and #stop methods are used to find the source that corresponds to thi
 
 The #acceptVisitor: method is used by ASTProgramNodeVisitors (the visitor pattern). This will also require updating all the ASTProgramNodeVisitors so that they know of the new node.
 
-The #isFaulty method is used to distinguish between valid nodes and nodes created from an invalid source Smalltalk code. For example, code parsed with RBParsers #parseFaultyExpression: or #parseFaultyMethod:.
+The #isFaulty method is used to distinguish between valid nodes and nodes created from an invalid source Smalltalk code. For example, code parsed with OCParser #parseFaultyExpression: or #parseFaultyMethod:.
 
 Subclasses might also want to redefine match:inContext: and copyInContext: to do parse tree searching and replacing.
 
@@ -120,17 +120,23 @@ OCProgramNode >> allArgumentVariables [
 
 { #category : 'iterating' }
 OCProgramNode >> allChildren [
-	| children |
-	children := OrderedCollection new.
-	self nodesDo: [ :each | children addLast: each ].
-	^ children
+	
+	^ OrderedCollection streamContents: [ :stream | 
+		self allChildrenDo: [ :childNode | 
+			stream nextPut: childNode ] ]
+]
+
+{ #category : 'iterating' }
+OCProgramNode >> allChildrenDo: aBlock [
+	
+	^ self childrenDo: [ :child | child withAllChildrenDo: aBlock ]
 ]
 
 { #category : 'accessing' }
 OCProgramNode >> allComments [
 	"Answer a collection of objects representing the comments in the method. Return an empty collection if the method's source code does not contain a comment."
 
-	^ self allChildren flatCollect: [:el| el comments]
+	^ self withAllChildren flatCollect: [:el| el comments]
 ]
 
 { #category : 'accessing' }
@@ -205,7 +211,7 @@ OCProgramNode >> allTemporaryVariables [
 OCProgramNode >> allVariables [
 	"Return all the variables in subnodes"
 
-	^ self allChildren select: [ :each | each isVariable ]
+	^ self withAllChildren select: [ :each | each isVariable ]
 ]
 
 { #category : 'replacing' }
@@ -264,7 +270,7 @@ OCProgramNode >> asSequenceNode [
 
 { #category : 'querying' }
 OCProgramNode >> assignmentNodes [
-	^self allChildren select: [:each | each isAssignment]
+	^self withAllChildren select: [:each | each isAssignment]
 ]
 
 { #category : 'testing' }
@@ -332,7 +338,7 @@ OCProgramNode >> bestNodeForPosition: aPosition [
 
 { #category : 'querying' }
 OCProgramNode >> blockNodes [
-	^self allChildren select: [:each | each isBlock]
+	^self withAllChildren select: [:each | each isBlock]
 ]
 
 { #category : 'accessing' }
@@ -372,6 +378,18 @@ OCProgramNode >> checkFaulty: aBlock [
 ]
 
 { #category : 'accessing' }
+OCProgramNode >> childAtPath: aPath [
+
+	"Return the AST node following aPath from myself.
+	aPath is a list of indexes, each index is the index of the child in the children collection.
+	
+	See #treePath"
+	
+	aPath ifEmpty: [ ^ self ].
+	^ (self children at: aPath first) childAtPath: aPath allButFirst
+]
+
+{ #category : 'accessing' }
 OCProgramNode >> children [
 	^#()
 ]
@@ -384,6 +402,15 @@ OCProgramNode >> childrenAndComments [
 	result ifEmpty: [ ^ self comments ].
 	self comments ifEmpty: [ ^ result ].
 	^ result , self comments
+]
+
+{ #category : 'iterating' }
+OCProgramNode >> childrenDo: aBlock [
+
+	"Evaluate aBlock with each of the receiver's nodes as the argument"
+	"Includes comments"
+	
+	^ self childrenAndComments do: aBlock 
 ]
 
 { #category : 'replacing' }
@@ -474,11 +501,6 @@ OCProgramNode >> debugHighlightStop [
 	^ self stop
 ]
 
-{ #category : 'testing' }
-OCProgramNode >> defines: aName [
-	^false
-]
-
 { #category : 'enumeration' }
 OCProgramNode >> do: aBlock [
 	"Hacked to fit collection protocols"
@@ -532,6 +554,11 @@ OCProgramNode >> evaluatedFirst: aNode [
 			[:each |
 			each == aNode ifTrue: [^true].
 			each isImmediateNode ifFalse: [^false]].
+	^false
+]
+
+{ #category : 'testing' }
+OCProgramNode >> exactNodeDefines: aName [
 	^false
 ]
 
@@ -606,14 +633,14 @@ OCProgramNode >> hasProperty: aKey [
 
 { #category : 'testing' }
 OCProgramNode >> hasSameExitPoint [
+	"I'm checking node's execution flow.
+	I'm used by extract method refactoring to ensure behavior is preserved.
+	Subtree that is selected for extraction should preserve execution flow.
+	This means that the selected code should either always return something or
+	flow from the beginning to the end without non-local returning blocks.
+	Check https://inria.hal.science/hal-04670318/document subsection 3.2.1. for example and explanation"
 
-	^ self hasSameExitPoint: false
-]
-
-{ #category : 'testing' }
-OCProgramNode >> hasSameExitPoint: aBoolean [ 
-
-	^ true
+	^ self hasNonLocalReturn not
 ]
 
 { #category : 'comparing' }
@@ -629,11 +656,6 @@ OCProgramNode >> instanceVariableNodes [
 { #category : 'querying' }
 OCProgramNode >> instanceVariableReadNodes [
 		^self variableReadNodes select: [:each | each isInstanceVariable]
-]
-
-{ #category : 'querying' }
-OCProgramNode >> instanceVariableWriteNodes [
-		^self variableWriteNodes select: [:each | each isInstanceVariable]
 ]
 
 { #category : 'testing' }
@@ -745,11 +767,6 @@ OCProgramNode >> isGlobalVariable [
 ]
 
 { #category : 'testing' }
-OCProgramNode >> isHaltNode [
-	^ false
-]
-
-{ #category : 'testing' }
 OCProgramNode >> isImmediateNode [
 	^false
 ]
@@ -834,15 +851,6 @@ OCProgramNode >> isPragmaError [
 { #category : 'testing' }
 OCProgramNode >> isPseudoVariable [
 	^false
-]
-
-{ #category : 'testing' }
-OCProgramNode >> isReservedVariable [
-	self
-		deprecated: 'Please use #isPseudoVariable instead'
-		transformWith: '`@receiver isReservedVariable' -> '`@receiver isPseudoVariable'.
-
-	^ self isPseudoVariable
 ]
 
 { #category : 'testing' }
@@ -1087,8 +1095,12 @@ OCProgramNode >> parserClass [
 
 { #category : 'copying' }
 OCProgramNode >> postCopy [
+	| newComments |
 	super postCopy.
-	properties := properties copy
+	properties := properties copy.
+	newComments := self comments copy.
+	newComments do: [ :e | e parent: self ].
+	self comments: newComments
 ]
 
 { #category : 'accessing' }
@@ -1158,11 +1170,6 @@ OCProgramNode >> recurseInto [
 { #category : 'accessing - meta variable' }
 OCProgramNode >> recurseIntoCharacter [
 	^$`
-]
-
-{ #category : 'testing' }
-OCProgramNode >> references: aVariableName [
-	^self children anySatisfy: [:each | each references: aVariableName]
 ]
 
 { #category : 'replacing' }
@@ -1245,7 +1252,7 @@ OCProgramNode >> selfMessages [
 
 { #category : 'accessing' }
 OCProgramNode >> sendNodes [
-	^self allChildren select: [:each | each isMessage]
+	^self withAllChildren select: [:each | each isMessage]
 ]
 
 { #category : 'accessing' }
@@ -1359,16 +1366,37 @@ OCProgramNode >> temporaryVariables [
 	^parent ifNil: [#()] ifNotNil: [parent temporaryVariables]
 ]
 
+{ #category : 'accessing' }
+OCProgramNode >> treePath [
+
+	"Return the index path to get to self from the method node.
+	
+	See #childAtPath:"
+	
+	^ self treePathUpTo: self methodNode
+]
+
+{ #category : 'accessing' }
+OCProgramNode >> treePathUpTo: aParent [
+
+	"Return the index path to get to self from aParent.
+	
+	See #childAtPath:"
+
+	aParent == self ifTrue: [ ^ #(  ) ].
+	^ (self parent treePathUpTo: aParent) , { (self parent children indexOf: self) }
+]
+
 { #category : 'querying' }
 OCProgramNode >> variableDefinitionNodes [
-	^ self allChildren select: [ :each |
+	^ self withAllChildren select: [ :each |
 		  each isVariable and: [ each isDefinition ] ]
 ]
 
 { #category : 'querying' }
 OCProgramNode >> variableNodes [
 
-	^ self allChildren select: [ :each |
+	^ self withAllChildren select: [ :each |
 		  each isVariable and: [ each isDefinition not ] ]
 ]
 
@@ -1379,7 +1407,8 @@ OCProgramNode >> variableReadNodes [
 
 { #category : 'querying' }
 OCProgramNode >> variableWriteNodes [
-		^self variableNodes select: [:each | each isWrite]
+
+	^ self variableNodes select: [ :each | each isWrite ]
 ]
 
 { #category : 'notice' }
@@ -1403,11 +1432,26 @@ OCProgramNode >> whichNodeIsContainedBy: anInterval [
 ]
 
 { #category : 'querying' }
-OCProgramNode >> whoDefines: aName [
-
-	^ (self defines: aName)
+OCProgramNode >> whichUpNodeDefines: aName [
+	"Returns the node that defines a variable starting bottom up. It can be either a method, a block."
+	
+	^ (self exactNodeDefines: aName)
 		  ifTrue: [ self ]
-		  ifFalse: [ parent ifNotNil: [ parent whoDefines: aName ] ]
+		  ifFalse: [ parent ifNotNil: [ parent whichUpNodeDefines: aName ] ]
+]
+
+{ #category : 'iterating' }
+OCProgramNode >> withAllChildren [
+	
+	^ OrderedCollection streamContents: [ :stream | 
+		self withAllChildrenDo: [ :child | stream nextPut: child ] ]
+]
+
+{ #category : 'iterating' }
+OCProgramNode >> withAllChildrenDo: aBlock [
+
+	aBlock value: self.
+	^ self allChildrenDo: aBlock 
 ]
 
 { #category : 'accessing' }

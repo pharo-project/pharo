@@ -169,10 +169,9 @@ Socket class >> newAcceptCheck [
 	self initializeNetwork.
 	socket := self newTCP.
 	socket listenOn: 44444 backlogSize: 4.
-	socket isValid ifTrue: [
-		self inform: 'Everything looks OK for the BSD style accept()'
-	] ifFalse: [
-		self inform: 'It appears that you DO NOT have support for the BSD style accept()'].
+	InformativeNotification signal: (socket isValid
+			 ifTrue: [ 'Everything looks OK for the BSD style accept()' ]
+			 ifFalse: [ 'It appears that you DO NOT have support for the BSD style accept()' ]).
 	socket destroy
 ]
 
@@ -213,30 +212,25 @@ Socket class >> ping: hostName [
 	"Socket ping: 'pharo-project.org'"
 
 	| tcpPort sock serverAddr startTime echoTime |
-	tcpPort := 7.	"7 = echo port, 13 = time port, 19 = character generator port"
+	tcpPort := 7. "7 = echo port, 13 = time port, 19 = character generator port"
 	serverAddr := NetNameResolver addressForName: hostName timeout: 10.
-	serverAddr
-		ifNil: [ ^ self inform: 'Could not find an address for ' , hostName ].
-	sock := Socket new.
+	serverAddr ifNil: [ ^ InformativeNotification signal: 'Could not find an address for ' , hostName ].
+	sock := self new.
 	sock connectNonBlockingTo: serverAddr port: tcpPort.
 	[ sock waitForConnectionFor: 10 ]
 		on: ConnectionTimedOut
 		do: [ :ex |
-			(self confirm: 'Continue to wait for connection to ' , hostName , '?')
-				ifTrue: [ ex retry ]
-				ifFalse: [
-					sock destroy.
-					^ self ] ].
+				InformativeNotification signal: 'Connection timed out'.
+				sock destroy.
+				^ self ].
 	sock sendData: 'echo!'.
 	startTime := Time millisecondClockValue.
 	[ sock waitForDataFor: 15 ]
 		on: ConnectionTimedOut
-		do: [ :ex |
-			(self confirm: 'Packet sent but no echo yet; keep waiting?')
-				ifTrue: [ ex retry ] ].
+		do: [ :ex | InformativeNotification signal: 'Packet sent but no echo yet; keep waiting?' ].
 	echoTime := Time millisecondsSince: startTime.
 	sock destroy.
-	self inform: hostName , ' responded in ' , echoTime printString , ' milliseconds'
+	InformativeNotification signal: hostName , ' responded in ' , echoTime printString , ' milliseconds'
 ]
 
 { #category : 'utilities' }
@@ -247,38 +241,29 @@ Socket class >> pingPorts: portList on: hostName timeOutSecs: timeOutSecs [
 
 	| serverAddr sockets startTime timeoutMsecs done result unconnectedCount connectedCount waitingCount |
 	serverAddr := NetNameResolver addressForName: hostName timeout: 10.
-	serverAddr
-		ifNil: [
-			self inform: 'Could not find an address for ' , hostName.
-			^ #() ].
-	sockets := portList
-		collect: [ :portNum |
-			| sock |
-			sock := Socket new.
-			sock connectTo: serverAddr port: portNum ].
+	serverAddr ifNil: [
+			InformativeNotification signal: 'Could not find an address for ' , hostName.
+			^ #(  ) ].
+	sockets := portList collect: [ :portNum |
+			           self new
+				           connectTo: serverAddr port: portNum;
+				           yourself ].
 	startTime := Time millisecondClockValue.
 	timeoutMsecs := (1000 * timeOutSecs) truncated.
 	done := false.
-	[ done ]
-		whileFalse: [
+	[ done ] whileFalse: [
 			unconnectedCount := 0.
 			connectedCount := 0.
 			waitingCount := 0.
-			sockets
-				do: [ :s |
+			sockets do: [ :s |
 					s isUnconnectedOrInvalid
 						ifTrue: [ unconnectedCount := unconnectedCount + 1 ]
 						ifFalse: [
-							s isConnected
-								ifTrue: [ connectedCount := connectedCount + 1 ].
-							s isWaitingForConnection
-								ifTrue: [ waitingCount := waitingCount + 1 ] ] ].
-			waitingCount = 0
-				ifTrue: [ done := true ].
-			connectedCount = sockets size
-				ifTrue: [ done := true ].
-			(Time millisecondsSince: startTime) >= timeoutMsecs
-				ifTrue: [ done := true ] ].
+								s isConnected ifTrue: [ connectedCount := connectedCount + 1 ].
+								s isWaitingForConnection ifTrue: [ waitingCount := waitingCount + 1 ] ] ].
+			waitingCount = 0 ifTrue: [ done := true ].
+			connectedCount = sockets size ifTrue: [ done := true ].
+			(Time millisecondsSince: startTime) >= timeoutMsecs ifTrue: [ done := true ] ].
 	result := (sockets select: [ :s | s isConnected ]) collect: [ :s | self nameForWellKnownTCPPort: s remotePort ].
 	sockets do: [ :s | s destroy ].
 	^ result

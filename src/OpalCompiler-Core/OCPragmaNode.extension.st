@@ -31,11 +31,6 @@ OCPragmaNode >> asPragma [
 ]
 
 { #category : '*OpalCompiler-Core' }
-OCPragmaNode >> isPrimitiveError [
-	^ #( primitive:error: primitive:module:error: primitive:error:module:) includes: self selector
-]
-
-{ #category : '*OpalCompiler-Core' }
 OCPragmaNode >> isPrimitiveErrorPragma [
 	^ #( primitive:error: primitive:module:error: primitive:error:module:) includes: self selector
 ]

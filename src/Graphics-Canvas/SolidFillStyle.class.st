@@ -30,6 +30,12 @@ SolidFillStyle >> = aFillStyle [
 ]
 
 { #category : 'converting' }
+SolidFillStyle >> asAthensPaintOn: anAthensCanvas [
+
+	^ anAthensCanvas surface createSolidColorPaint: color
+]
+
+{ #category : 'converting' }
 SolidFillStyle >> asColor [
 	^color
 ]

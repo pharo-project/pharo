@@ -1,29 +1,75 @@
+"
+A ShuffleSuitePreparatorTest is a test class for testing the behavior of ShuffleSuitePreparator
+"
 Class {
 	#name : 'ShuffleSuitePreparatorTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'runner'
+		'preparator',
+		'randomGenerator',
+		'suite'
 	],
 	#category : 'TestRunner-Tests-Preparators',
 	#package : 'TestRunner-Tests',
 	#tag : 'Preparators'
 }
 
+{ #category : 'asserting' }
+ShuffleSuitePreparatorTest >> assertSuiteSelectorsEquals: aCollection [
+
+	^ self 
+		assertCollection: self suiteSelectors 
+		equals: aCollection asOrderedCollection 
+]
+
+{ #category : 'accessing' }
+ShuffleSuitePreparatorTest >> preparator [
+
+	^ preparator ifNil: [ preparator := ShuffleSuitePreparator new 
+		randomGenerator: self randomGenerator; yourself. ]
+]
+
+{ #category : 'accessing' }
+ShuffleSuitePreparatorTest >> randomGenerator [ 
+
+	^ randomGenerator ifNil: [ randomGenerator := Random seed: 4 ]
+]
+
+{ #category : 'accessing' }
+ShuffleSuitePreparatorTest >> suite [
+
+	^ suite ifNil: [ suite := EmptyTest suite ]
+]
+
+{ #category : 'enumerating' }
+ShuffleSuitePreparatorTest >> suiteSelectors [
+
+	^ self suite tests collect: #selector
+]
+
 { #category : 'tests' }
-ShuffleSuitePreparatorTest >> testSuitePreparator [
-	
-	|initialSuite initialSuiteCopy|
-	initialSuite := GreenTest suite.
-	initialSuiteCopy := initialSuite copy.
+ShuffleSuitePreparatorTest >> testIsSuiteShuffled [
+
 	self 
-		assert: initialSuiteCopy tests
-		equals: initialSuite tests.
+		assertCollection: self suiteSelectors 
+		equals: { #test1 . #test2 . #test3 . #test4 } asOrderedCollection .
+		
+	self preparator applyOn: self suite.
 	
-	ShuffleSuitePreparator applyOn: initialSuite.
-	
-	self
-		assert: initialSuite tests size
-		equals: initialSuiteCopy tests size.
-	
-	self assert: (initialSuiteCopy tests includesAll: initialSuite tests)
+	self 
+		assertCollection: self suiteSelectors 
+		equals: { #test3 . #test4 . #test2 . #test1 } asOrderedCollection .
+]
+
+{ #category : 'tests' }
+ShuffleSuitePreparatorTest >> testShuffleTwice [
+
+	self preparator applyOn: self suite.
+
+	self assertSuiteSelectorsEquals: { #test3. #test4. #test2. #test1 }.
+
+	suite := nil.
+	self preparator applyOn: self suite.
+
+	self denyCollection: self suiteSelectors equals: { #test3. #test4. #test2. #test1 } asOrderedCollection
 ]

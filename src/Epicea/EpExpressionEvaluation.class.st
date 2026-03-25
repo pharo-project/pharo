@@ -44,7 +44,7 @@ EpExpressionEvaluation >> hash [
 	^ self class hash bitXor: self expression hash
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 EpExpressionEvaluation >> initializeExpression: anExpression [
 
 	self initialize.

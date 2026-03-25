@@ -41,13 +41,3 @@ BlockClosure >> benchFor: duration [
 		  elapsedTime: (Time millisecondsSince: started) milliSeconds;
 		  yourself
 ]
-
-{ #category : '*System-Benchmark' }
-BlockClosure >> durationToRun [
-	"Answer the duration taken to execute this block."
-
-	self
-		deprecated: 'Use #timeToRun instead'
-		transformWith: '`@x durationToRun' -> '`@x timeToRun'.
-	^ self timeToRun
-]

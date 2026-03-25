@@ -42,10 +42,29 @@ StItemsSelectionPresenter class >> defaultLayout [
 
 { #category : 'specs' }
 StItemsSelectionPresenter class >> label: aString withItems: items selecting: selectedItems [
+
+	self deprecated: 'Do not use, this method does not respect the rule of: all presenters should belong 
+	to a POM or application. Instead, create with newApplication: and set the elements on instance side'.
+	
 	^ self new
 		label: aString withItems: items selecting: selectedItems;
 		openBlockedDialog;
 		yourself 
+]
+
+{ #category : 'specs' }
+StItemsSelectionPresenter class >> title: aTitle label: aString withItems: items selecting: selectedItems [
+
+	self deprecated: 'Do not use, this method does not respect the rule of: all presenters should belong 
+	to a POM or application. Instead, create with newApplication: and set the elements on instance side'.
+
+	^ self new
+		  title: aTitle
+		  label: aString
+		  withItems: items
+		  selecting: selectedItems; 
+		  openBlockedDialog;
+		  yourself
 ]
 
 { #category : 'actions' }
@@ -112,15 +131,25 @@ StItemsSelectionPresenter >> initializeWidgets [
 ]
 
 { #category : 'initialization' }
-StItemsSelectionPresenter >> label: aString withItems: coll1 selecting: coll2 [
+StItemsSelectionPresenter >> label: aString withItems: itemsCollection selecting: selectedItemsCollection [
 
 	label label: aString.
-
-	table items: coll1;
-		selectItems: coll2
+	table 
+		items: itemsCollection;
+		selectItems: selectedItemsCollection
 ]
 
 { #category : 'accessing' }
 StItemsSelectionPresenter >> selectedItems [
 	^ selectedItems
+]
+
+{ #category : 'initialization' }
+StItemsSelectionPresenter >> title: aTitle label: aString withItems: coll1 selecting: coll2 [
+
+	titleHolder := aTitle.
+	label label: aString.
+	table
+		items: coll1;
+		selectItems: coll2
 ]

@@ -21,6 +21,20 @@ ClapCommandTest >> testShouldArgumentsBeOkWhenMatched [
 ]
 
 { #category : 'tests' }
+ClapCommandTest >> testShouldGetClapApplicationWhenAskingCommandAndMismatch [
+
+	| spec command |
+	spec := ClapCommandSpec id: #hello.
+	context := spec activationWith: #( 'hi' '--foo' '--bar' ).
+
+	self assert: context match isMismatch.
+	
+	command := context command.
+	
+	self assert: command class equals: ClapApplication
+]
+
+{ #category : 'tests' }
 ClapCommandTest >> testShouldGetCollectionWhenAskingForAMultiplePositional [
 	| command |
 	context := ClapContext specification: ClapHelloCommandLineExample hello.
@@ -85,6 +99,23 @@ ClapCommandTest >> testShouldGetDefaultValueWhenAskingForAMissingNestedPositiona
 ]
 
 { #category : 'tests' }
+ClapCommandTest >> testShouldGetErrorWhenAskingLastSubcommandAndMismatch [
+
+	| spec command |
+	spec := ClapCommandSpec id: #hello.
+	context := spec activationWith: #( 'hi' '--foo' '--bar' ).
+
+	self assert: context match isMismatch.
+	self 
+		should: [ command := context lastSubcommand ] 
+		raise: ClapUnmatchCommand
+		withExceptionDo: [ :error | 
+			self assert: (error description includesSubstring: 'foo') description: 'missing context arguments'.
+			self assert: (error description includesSubstring: 'bar') description: 'missing availabel commands'.
+			]
+]
+
+{ #category : 'tests' }
 ClapCommandTest >> testShouldGetFlagPositionalValueWhenAskingForAFlagHavingPositional [
 	| command |
 	context := ClapContext specification: ClapHelloCommandLineExample hello.
@@ -101,7 +132,7 @@ ClapCommandTest >> testShouldGetFlagPositionalValueWhenAskingForAFlagHavingPosit
 { #category : 'tests' }
 ClapCommandTest >> testShouldGetFlagWhenFlagNotDeclaredInLastSubcommand [
 	| command |
-	context := ClapContext specification: ClapGitCommandExample git.
+	context := ClapContext specification: ClapCommandLineExamples git.
 	command := context
 		arguments: #('git' '--paginate' 'status');
 		command.
@@ -112,7 +143,7 @@ ClapCommandTest >> testShouldGetFlagWhenFlagNotDeclaredInLastSubcommand [
 { #category : 'tests' }
 ClapCommandTest >> testShouldGetPositionalWhenPositionalNotDeclaredInLastSubcommand [
 	| command |
-	context := ClapContext specification: ClapGitCommandExample git.
+	context := ClapContext specification: ClapCommandLineExamples git.
 	command := context
 		arguments: #('git' '-C' 'someDir' 'status');
 		command.

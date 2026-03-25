@@ -44,12 +44,6 @@ ExternalDropHandler class >> defaultHandler: externalDropHandler [
 	DefaultHandler := externalDropHandler
 ]
 
-{ #category : 'class initialization' }
-ExternalDropHandler class >> initialize [
-
-	self resetRegisteredHandlers
-]
-
 { #category : 'accessing' }
 ExternalDropHandler class >> lookupExternalDropHandler: aFileReference [
 
@@ -85,6 +79,12 @@ ExternalDropHandler class >> lookupServiceBasedHandler: aFileReference [
 			  type: nil
 			  extension: nil
 			  action: [ :stream | theOne performServiceFor: aFileReference ] ]
+]
+
+{ #category : 'accessing' }
+ExternalDropHandler class >> morphicUIManager [
+
+	^ MorphicUIManager new
 ]
 
 { #category : 'accessing' }
@@ -147,7 +147,7 @@ ExternalDropHandler >> type [
 	^type
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 ExternalDropHandler >> type: aType extension: anExtension action: anAction [
 	action := anAction.
 	type := aType.

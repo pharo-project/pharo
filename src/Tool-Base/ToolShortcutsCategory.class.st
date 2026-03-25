@@ -27,7 +27,10 @@ ToolShortcutsCategory >> openPlayground [
 { #category : 'keymaps' }
 ToolShortcutsCategory >> openSettings [
 	<shortcut>
-	^ KMKeymap shortcut: PharoShortcuts current openSettingsShortcut action: [ SettingBrowser open ]
+	
+	^ KMKeymap 
+		shortcut: PharoShortcuts current openSettingsShortcut 
+		action: [ (StSettingsBrowser newApplication: StPharoApplication current) open ]
 ]
 
 { #category : 'keymaps' }
@@ -64,5 +67,5 @@ ToolShortcutsCategory >> saveImage [
 		shortcut: PharoShortcuts current saveImageShortcut
 		action: [
 			(Smalltalk snapshot: true andQuit: false) hasSavedSuccessfully
-				ifTrue: [ self inform: 'Image saved' ] ]
+				ifTrue: [ InformativeNotification signal: 'Image saved' ] ]
 ]

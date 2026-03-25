@@ -11,11 +11,3 @@ Class {
 	#package : 'OpalCompiler-Core',
 	#tag : 'Semantics'
 }
-
-{ #category : 'visiting' }
-OCASTMethodMetadataAnalyser >> visitMessageNode: aNode [
-
-	super visitMessageNode: aNode.
-	aNode isHaltNode ifTrue: [
-		aNode methodNode methodPropertyAt: #containsHalt put: true ]
-]

@@ -41,6 +41,12 @@ OCIRPushFullClosure >> copiedValues: anObject [
 	copiedValues := anObject
 ]
 
+{ #category : 'stack' }
+OCIRPushFullClosure >> deltaStack [
+
+	^( copiedValues size - 1) negated
+]
+
 { #category : 'debugging' }
 OCIRPushFullClosure >> indexForVarNamed: aName [
 	^ sourceNode ir indexForVarNamed: aName

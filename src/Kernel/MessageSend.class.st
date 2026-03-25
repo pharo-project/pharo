@@ -81,27 +81,24 @@ MessageSend >> collectArguments: anArgArray [
 ]
 
 { #category : 'evaluating' }
-MessageSend >> cull: arg [
+MessageSend >> cull: arg1 [
+
 	<reflection: 'Message sending and code execution - Runtime and Evaluation'>
-	^ selector numArgs = 0
-		ifTrue: [ self value ]
-		ifFalse: [ self value: arg ]
+	^ self valueWithEnoughArguments: { arg1 }
 ]
 
 { #category : 'evaluating' }
 MessageSend >> cull: arg1 cull: arg2 [
+
 	<reflection: 'Message sending and code execution - Runtime and Evaluation'>
-	^ selector numArgs < 2
-		ifTrue: [ self cull: arg1]
-		ifFalse: [ self value: arg1 value: arg2 ]
+	^ self valueWithEnoughArguments: { arg1. arg2 }
 ]
 
 { #category : 'evaluating' }
 MessageSend >> cull: arg1 cull: arg2 cull: arg3 [
+
 	<reflection: 'Message sending and code execution - Runtime and Evaluation'>
-	^ selector numArgs < 3
-		ifTrue: [ self cull: arg1 cull: arg2 ]
-		ifFalse: [ self value: arg1 value: arg2 value: arg3 ]
+	^ self valueWithEnoughArguments: { arg1. arg2. arg3 }
 ]
 
 { #category : 'comparing' }

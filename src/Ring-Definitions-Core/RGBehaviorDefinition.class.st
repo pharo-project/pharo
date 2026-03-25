@@ -518,6 +518,12 @@ RGBehaviorDefinition >> superclassName: aSymbol [
 		put: aSymbol
 ]
 
+{ #category : 'accessing' }
+RGBehaviorDefinition >> traitComposition [
+
+	^ (self class compiler evaluate: self traitCompositionSource) asTraitComposition
+]
+
 { #category : 'annotations' }
 RGBehaviorDefinition >> traitCompositionSource [
 	"Retrieves aString representing the used traits"

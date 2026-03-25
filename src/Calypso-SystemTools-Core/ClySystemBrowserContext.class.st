@@ -79,6 +79,13 @@ ClySystemBrowserContext >> executeCommand: aCommand by: aCommandActivator [
 	aCommand execute
 ]
 
+{ #category : 'refactoring support' }
+ClySystemBrowserContext >> firstNavigationScopes [
+
+	^ { tool allNavigationScopes first }
+
+]
+
 { #category : 'selection-methods' }
 ClySystemBrowserContext >> firstSelectedMethod [
 	^self firstSelectedObjectIn: self selectedMethods
@@ -161,7 +168,7 @@ ClySystemBrowserContext >> lastSelectedPackage [
 { #category : 'selection-methods' }
 ClySystemBrowserContext >> lastSelectedSourceNode [
 
-	^self lastSelectedMethod astForStylingInCalypso
+	^self lastSelectedMethod ast
 ]
 
 { #category : 'accessing' }

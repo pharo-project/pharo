@@ -86,15 +86,14 @@ TDictionaryEnumeratingTest >> testDo [
 { #category : 'tests - dictionnary enumerating' }
 TDictionaryEnumeratingTest >> testKeysAndValuesDo [
 
-
 	| collection keys |
-	collection := self nonEmptyDict .
+	collection := self nonEmptyDict.
 	keys := OrderedCollection new.
 	collection keysAndValuesDo: [ :key :value |
-		keys add: key.
-		self assert: (collection at: key) = value ].
+			keys add: key.
+			self assert: (collection at: key) = value ].
 
-	collection keys do: [ :key | self assert: (collection keys occurrencesOf: key) = (keys occurrencesOf: key)]
+	collection keys do: [ :key | self assert: (collection keys occurrencesOf: key) = (keys occurrencesOf: key) ] 
 ]
 
 { #category : 'tests - dictionnary enumerating' }

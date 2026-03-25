@@ -31,24 +31,19 @@ SycPushUpVariableCommand >> defaultMenuItemName [
 
 { #category : 'accessing' }
 SycPushUpVariableCommand >> executeRefactorings [
-
 	"Move this validation to the driver"
+
 	toolContext selectedVariables size > 1 ifTrue: [
 			SpAlertDialog new
 				label: 'Cannot pull up many variables at the same time';
 				openModal.
 			^ CmdCommandAborted signal ].
 
-	(RePushUpVariableDriver new
-		 scopes: refactoringScopes
-		 variable: variable actualVariable name
-		 to: variable definingClass superclass) runRefactoring
-]
-
-{ #category : 'accessing' }
-SycPushUpVariableCommand >> isComplexRefactoring [
-
-	^ false
+	^ ((RePushUpVariableDriver newApplication: self application)
+		   scopes: refactoringScopes
+		   variable: variable actualVariable name
+		   shared: variable isClassVariable
+		   to: variable definingClass superclass) runRefactoring
 ]
 
 { #category : 'execution' }

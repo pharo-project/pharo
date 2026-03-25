@@ -33,10 +33,16 @@ ReAbstractRuleTestCase >> generateMethod: code [
 { #category : 'utilities' }
 ReAbstractRuleTestCase >> generateMethod: code classified: protocol [
 
-	| method |
-	method := self class >> (self class compile: code classified: protocol).
-	compiledMethods add: method.
-	^ method
+    ^ self generateMethod: code classified: protocol in: self class
+]
+
+{ #category : 'utilities' }
+ReAbstractRuleTestCase >> generateMethod: code classified: protocol in: aBehavior [
+
+    | method |
+    method := aBehavior >> (aBehavior compile: code classified: protocol).
+    compiledMethods add: method.
+    ^ method
 ]
 
 { #category : 'utilities' }

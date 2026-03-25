@@ -9,6 +9,13 @@ Class {
 	#tag : 'Manifest'
 }
 
+{ #category : 'meta-data - dependency analyser' }
+ManifestFreeTypeGraphics class >> manuallyResolvedDependencies [
+
+	<ignoreForCoverage>
+	^ #(#'Zinc-Character-Encoding-Core')
+]
+
 { #category : 'code-critics' }
 ManifestFreeTypeGraphics class >> ruleLongMethodsRuleV1FalsePositive [
 	^ #(#(#(#RGMethodDefinition #(#FreeTypeGlyphRenderer #convert8to32:colorValue: #false)) #'2022-09-02T00:19:52.25468+02:00') #(#(#RGMethodDefinition #(#FreeTypeGlyphRenderer #renderGlyph:depth:subpixelPosition:font: #false)) #'2022-09-02T00:21:50.487906+02:00') )

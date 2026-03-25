@@ -107,7 +107,7 @@ ReflectiveMethod >> generatePrimitiveWrapper [
 
 	send := OCMessageNode
 		        receiver: OCVariableNode selfNode
-		        selector: #rFwithArgs:executeMethod:
+		        selector: (OCSelectorNode value: #rFwithArgs:executeMethod:)
 		        arguments: {
 				        (OCArrayNode statements: ast arguments).
 				        (OCLiteralNode value: self compiledMethod) }.

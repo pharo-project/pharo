@@ -180,17 +180,6 @@ BlockClosure >> cull: firstArg cull: secondArg cull: thirdArg cull: fourthArg [
 		ifFalse: [self value: firstArg value: secondArg value: thirdArg value: fourthArg]
 ]
 
-{ #category : 'printing' }
-BlockClosure >> doPrintOn: aStream [
-
-	| code |
-	"If the compiler is available, we can print the code nicely"
-	code := Smalltalk hasCompiler
-		        ifTrue: [ self sourceNode value sourceCode ]
-		        ifFalse: [ '[]' ].
-	aStream nextPutAll: code
-]
-
 { #category : 'controlling' }
 BlockClosure >> doWhileFalse: conditionBlock [
 	"Evaluate the receiver once, then again as long the value of conditionBlock is false."
@@ -221,9 +210,14 @@ BlockClosure >> endPC [
 { #category : 'exceptions' }
 BlockClosure >> ensure: aBlock [
 	"Evaluate a termination block after evaluating the receiver, regardless of
-	 whether the receiver's evaluation completes.  N.B.  This method is *not*
+	 whether the receiver's evaluation completes.  Returns the receiver execution result."
+	
+	"N.B.  This method is *not*
 	 implemented as a primitive.  Primitive 198 always fails.  The VM uses prim
 	 198 in a context's method as the mark for an ensure:/ifCurtailed: activation."
+
+	"([ 2 ] ensure: [ 3 ]) >>> 2"
+
 
 	| handler complete returnValue |
 	<primitive: 198>
@@ -562,11 +556,7 @@ BlockClosure >> outerContext: ctxt [
 { #category : 'printing' }
 BlockClosure >> printOn: aStream [
 
-	[self doPrintOn: aStream]
-		onErrorDo: [ aStream
-				nextPutAll: '<Error printing blockClosure in: ';
-				print: self method;
-				nextPutAll: ' >' ]
+	aStream nextPutAll: '[ ] in ' , self homeMethod name asString
 ]
 
 { #category : 'accessing' }
@@ -595,12 +585,6 @@ BlockClosure >> repeatWithGCIf: testBlock [
 	ans := self value.
 	(testBlock value: ans) ifTrue: [ Smalltalk garbageCollect. ans := self value ].
 	^ans
-]
-
-{ #category : 'accessing' }
-BlockClosure >> sender [	
-	<reflection: 'Message sending and code execution - Message send reification'>
-	^ self subclassResponsibility
 ]
 
 { #category : 'evaluating' }
@@ -736,61 +720,6 @@ BlockClosure >> valueNoContextSwitch: anArg [
 	numArgs ~= 1 ifTrue:
 		[self numArgsError: 1].
 	self primitiveFailed
-]
-
-{ #category : 'evaluating' }
-BlockClosure >> valueSupplyingAnswer: anObject [
-	^ (anObject isCollection and: [anObject isString not])
-		ifTrue: [self valueSupplyingAnswers: {anObject}]
-		ifFalse: [self valueSupplyingAnswers: {{'*'. anObject}}]
-]
-
-{ #category : 'evaluating' }
-BlockClosure >> valueSupplyingAnswers: aListOfPairs [
-	"evaluate the block using a list of questions / answers that might be called upon to
-	automatically respond to Object>>confirm: or FillInTheBlank requests"
-
-	^ self
-		on: ProvideAnswerNotification
-		do: [ :notify |
-			| caption |
-			caption := notify messageText withSeparatorsCompacted.	"to remove new lines"
-			aListOfPairs
-				detect: [ :each |
-					caption = each first
-						or: [ (caption includesSubstring: each first caseSensitive: false)
-								or: [ (each first match: caption)
-										or: [ (String includesSelector: #matchesRegex:)
-												and: [ [ caption matchesRegex: each first ]
-														on: Error
-														do: [ :ignored | false ] ] ] ] ] ]
-				ifFound: [ :answer | notify resume: answer second ]
-				ifNone: [ | outerAnswer |
-					outerAnswer := ProvideAnswerNotification
-						signal: notify messageText.
-					outerAnswer
-						ifNil: [ notify resume ]
-						ifNotNil: [ notify resume: outerAnswer ] ] ]
-]
-
-{ #category : 'evaluating' }
-BlockClosure >> valueSuppressingAllMessages [
-
-	^ self valueSuppressingMessages: #('*')
-]
-
-{ #category : 'evaluating' }
-BlockClosure >> valueSuppressingMessages: aListOfStrings [
-
-	^ self
-		valueSuppressingMessages: aListOfStrings
-		supplyingAnswers: #()
-]
-
-{ #category : 'evaluating' }
-BlockClosure >> valueSuppressingMessages: aListOfStrings supplyingAnswers: aListOfPairs [
-
-	^ self valueSupplyingAnswers: aListOfPairs, (aListOfStrings collect: [:each | {each . true}])
 ]
 
 { #category : 'exceptions' }

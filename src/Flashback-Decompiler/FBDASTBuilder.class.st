@@ -115,7 +115,7 @@ FBDASTBuilder >> codeLoopNode: bool condition: seq1 body: seq2 [
 
 { #category : 'building' }
 FBDASTBuilder >> codeMessage: selector receiver: rcvr arguments:args [
-	^ OCMessageNode receiver: rcvr selector: selector arguments: args
+	^ OCMessageNode receiver: rcvr selector: (OCSelectorNode value: selector) arguments: args
 ]
 
 { #category : 'building' }
@@ -169,6 +169,11 @@ FBDASTBuilder >> codeTemp: tempName [
 { #category : 'building' }
 FBDASTBuilder >> codeThisContext [
 	^ OCVariableNode thisContextNode
+]
+
+{ #category : 'building' }
+FBDASTBuilder >> codeThisProcess [
+	^ OCVariableNode thisProcessNode 
 ]
 
 { #category : 'building' }

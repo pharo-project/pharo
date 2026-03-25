@@ -169,6 +169,13 @@ MessageTally class >> spyAllOn: aBlock cutoff: aNumber [
 ]
 
 { #category : 'spying' }
+MessageTally class >> spyFor: seconds [
+	"Run the system profiler for the specified number of seconds"
+
+	^self spyOn: [ (Delay forSeconds: seconds) wait ]
+]
+
+{ #category : 'spying' }
 MessageTally class >> spyOn: aBlock [
 	"
 	Spy on aBlock, in the current process. Can include or not statistics on other processes in the report.

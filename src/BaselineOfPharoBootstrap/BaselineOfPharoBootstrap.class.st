@@ -13,33 +13,9 @@ Class {
 }
 
 { #category : 'accessing' }
-BaselineOfPharoBootstrap class >> compilerPackageNames [
-
-	^ self packagesOfGroupNamed: #CompilerGroup
-]
-
-{ #category : 'accessing' }
-BaselineOfPharoBootstrap class >> fileSystemPackageNames [
-
-	^ self packagesOfGroupNamed: #FileSystemGroup
-]
-
-{ #category : 'accessing' }
-BaselineOfPharoBootstrap class >> kernelAdditionalPackagesNames [
-
-	^ self packagesOfGroupNamed: #AdditionalPackages
-]
-
-{ #category : 'accessing' }
 BaselineOfPharoBootstrap class >> kernelPackageNames [
 
 	^ self packagesOfGroupNamed: #KernelGroup
-]
-
-{ #category : 'accessing' }
-BaselineOfPharoBootstrap class >> multilingualPackageNames [
-
-	^ self packagesOfGroupNamed: #MultilingualGroup
 ]
 
 { #category : 'traversing' }
@@ -54,181 +30,41 @@ BaselineOfPharoBootstrap class >> packagesRecursiveIn: aGroupName [
 ]
 
 { #category : 'accessing' }
+BaselineOfPharoBootstrap class >> packagesToExportAsMCZ [
+
+	^ self packagesRecursiveIn: 'ToExportAsMCZ'
+]
+
+{ #category : 'accessing' }
 BaselineOfPharoBootstrap class >> packagesToExportWithHermes [
 
 	^ self packagesRecursiveIn: 'ToLoadByHermes'
 ]
 
-{ #category : 'accessing' }
-BaselineOfPharoBootstrap class >> sUnitPackageNames [
-
-	^ self packagesOfGroupNamed: #SUnitGroup
-]
-
 { #category : 'baselines' }
 BaselineOfPharoBootstrap >> baseline: spec [
+
 	<baseline>
-
 	spec for: #common do: [
-		spec package: 'AST-Core'.
-		spec package: 'Announcements-Core'.
-		spec package: 'Collections-Abstract'.
-		spec package: 'Collections-Arithmetic'.
-		spec package: 'Collections-Atomic'.
-		spec package: 'Collections-DoubleLinkedList'.
-		spec package: 'Collections-Native'.
-		spec package: 'Collections-Sequenceable'.
-		spec package: 'Collections-Stack'.
-		spec package: 'Collections-Streams'.
-		spec package: 'Collections-Strings'.
-		spec package: 'Collections-Support'.
-		spec package: 'Collections-Unordered'.
-		spec package: 'Collections-Weak'.
-		spec package: 'Debugging-Core'.
-		spec package: 'Files'.
-		spec package: 'FileSystem-Path'.
-		spec package: 'Hermes'.
-		spec package: 'Hermes-Extensions'.
+			BaselineOfKernel corePackageNames do: [ :package | spec package: package ].
+			BaselineOfKernel additionalPackagesPackageNames do: [ :package | spec package: package ].
+			BaselineOfCompiler corePackageNames do: [ :package | spec package: package ].
+			BaselineOfFileSystem corePackageNames do: [ :package | spec package: package ].
+			BaselineOfTraits corePackageNames do: [ :package | spec package: package ].
+			BaselineOfMonticello corePackageNames do: [ :package | spec package: package ].
+			BaselineOfMetacello corePackageNames do: [ :package | spec package: package ].
 
-		spec package: 'Kernel'.
-		spec package: 'Kernel-CodeModel'.
-		spec package: 'Kernel-BytecodeEncoders'.
-		spec package: 'System-Time'.
-		spec package: 'NumberParser'.
+			spec group: 'KernelGroup' with: BaselineOfKernel corePackageNames.
+			spec group: 'AdditionalPackages' with: BaselineOfKernel additionalPackagesPackageNames.
+			spec group: 'CompilerGroup' with: BaselineOfCompiler corePackageNames.
+			spec group: 'FileSystemGroup' with: BaselineOfFileSystem corePackageNames.
+			spec group: 'TraitGroup' with: BaselineOfTraits corePackageNames.
+			spec group: 'MonticelloCore' with: BaselineOfMonticello corePackageNames.
+			spec group: 'MetacelloGroup' with: BaselineOfMetacello corePackageNames.
 
-		spec package: 'Math-Operations-Extensions'.
+			"Group of packages to load with Hermes."
+			spec group: 'ToLoadByHermes' with: { 'AdditionalPackages'. 'CompilerGroup'. 'FileSystemGroup'. 'TraitGroup'. 'MonticelloCore' . 'MetacelloGroup' }.
 
-		spec package: 'Multilingual-Encodings'.
-
-		spec package: 'Network-UUID'.
-		
-		spec package: 'Transcript-NonInteractive'.
-		spec package: 'PharoBootstrap-Initialization'.
-		spec package: 'Random-Core'.
-		spec package: 'ReflectionMirrors-Primitives'.
-		spec package: 'Shift-ClassBuilder'.
-		spec package: 'System-Announcements'.
-		spec package: 'System-BasicCommandLineHandler'.
-		spec package: 'System-CommandLine'.
-		spec package: 'System-CommandLineHandler'.
-		spec package: 'System-Finalization'.
-		spec package: 'System-Hashing'.
-		spec package: 'System-Platforms'.
-		spec package: 'System-SessionManager'.
-		spec package: 'System-Sources'.
-		spec package: 'System-Support'.
-
-		spec package: 'UIManager'.
-		spec package: 'Zinc-Character-Encoding-Core'.
-		
-		spec package: 'FFI-Kernel'.
-		
-		"Minimal command line handler for bootstrap.
-		Only using perform and environment #at:"
-		spec package: 'PerformMessageCommandLineHandler'.
-		
-		spec package: 'CodeImport'.
-		
-		spec package: 'CodeImportCommandLineHandlers'.
-		
-		spec package: 'Debugging-Utils'.
-		spec package: 'OpalCompiler-Core'.
-		
-		spec package: 'FileSystem-Core'.
-		spec package: 'FileSystem-Disk'.
-
-		spec package: 'System-NumberPrinting'.
-		spec package: 'SUnit-Core'.
-		spec package: 'SUnit-Tests'.
-		spec package: 'Kernel-Tests'.
-		spec package: 'JenkinsTools-Core'.
-		spec package: 'System-Model'.
-		spec package: 'InitializePackagesCommandLineHandler'.
-		
-
-		spec group: 'KernelGroup' with: {
-			'FFI-Kernel'.
-			'Announcements-Core'.
-			'Collections-Abstract'.
-			'Collections-DoubleLinkedList'.
-			'Collections-Native'.
-			'Collections-Sequenceable'.
-			'Collections-Stack'.
-			'Collections-Streams'.
-			'Collections-Strings'.
-			'Collections-Support'.
-			'Collections-Unordered'.
-			'Collections-Weak'.
-			'Files'.
-			'FileSystem-Path'.
-			'Hermes'.
-			'Kernel'.
-			'Kernel-CodeModel'.
-			'Kernel-BytecodeEncoders'.
-			'Transcript-NonInteractive'.
-			'PharoBootstrap-Initialization'.
-			'Shift-ClassBuilder'.
-			'System-Announcements'.
-			'System-BasicCommandLineHandler'.
-			'System-CommandLine'.
-			'System-CommandLineHandler'.
-			'System-Finalization'.
-			'System-Platforms'.
-			'System-SessionManager'.
-			'System-Sources'.
-			
-			'PerformMessageCommandLineHandler'.
-			'System-Support'.
-			'NumberParser'.
-
-			'UIManager'.
-			'Zinc-Character-Encoding-Core' }.
-
-		"These packages are added using hermes after bootstrap"
-
-		spec group: 'AdditionalPackages' with: {
-			'ReflectionMirrors-Primitives'.
-			'InitializePackagesCommandLineHandler'.
-			'System-Time'.
-			'Math-Operations-Extensions'.
-			'Debugging-Core'.
-			'System-NumberPrinting'.
-		}.
-
-		spec group: 'MultilingualGroup' with: {
-			'Multilingual-Encodings' }.
-
-		spec group: 'CompilerGroup' with: {
-			'AST-Core'.
-			'Collections-Arithmetic'.
-			'Collections-Atomic'.
-			'CodeImport'.
-			'CodeImportCommandLineHandlers'.
-			'Debugging-Utils'.
-			'OpalCompiler-Core'}.
-		
-		spec group: 'FileSystemGroup' with: {
-			'Random-Core'.
-			'System-Hashing'.
-			'Network-UUID'.
-			'FileSystem-Core'.
-			'FileSystem-Disk'}.
-
-		spec group: 'ToLoadByHermes' with: {
-			'AdditionalPackages'.
-			'MultilingualGroup'.
-			'CompilerGroup'.
-			'FileSystemGroup'.
-			'Hermes-Extensions'.
-			'SUnitGroup'.
-		}.
-
-		spec group: 'SUnitGroup' with: {
-			'System-Model'.
-			'SUnit-Core'.
-			'SUnit-Tests'.
-			'Kernel-Tests'.
-			'JenkinsTools-Core'}.
-
-	]
+			"Group of packages to export as MCZ"
+			spec group: 'ToExportAsMCZ' with: { 'KernelGroup'. 'ToLoadByHermes' } ]
 ]

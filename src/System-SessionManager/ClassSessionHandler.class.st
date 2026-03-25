@@ -21,13 +21,18 @@ ClassSessionHandler class >> forClassNamed: aClassName [
 ]
 
 { #category : 'accessing' }
-ClassSessionHandler >> handledId [
+ClassSessionHandler >> handlerId [
 	^ registeredClassName
 ]
 
 { #category : 'handlers' }
 ClassSessionHandler >> registeredClass [
 	^ Smalltalk globals at: registeredClassName asSymbol
+]
+
+{ #category : 'accessing' }
+ClassSessionHandler >> registeredClassName [
+	^ registeredClassName
 ]
 
 { #category : 'accessing' }

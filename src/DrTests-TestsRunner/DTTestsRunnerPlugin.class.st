@@ -110,43 +110,20 @@ DTTestsRunnerPlugin >> resultButtonHelp [
 	^ 'Browse the test selected in the results list.' translated
 ]
 
+{ #category : 'running' }
+DTTestsRunnerPlugin >> runConfiguration: aDTpluginConfiguration [
+
+	^ AnnouncerTestRunner runSuite: aDTpluginConfiguration asTestSuite
+]
+
 { #category : 'api' }
 DTTestsRunnerPlugin >> runForConfiguration: aDTpluginConfiguration [
+
 	| results |
 	results := self pluginResultClass new
-		testResults: (self runTestSuites: { aDTpluginConfiguration asTestSuite });
-		yourself.
+		           testResults: (self runConfiguration: aDTpluginConfiguration);
+		           yourself.
 	^ aDTpluginConfiguration handleResults: results for: self
-]
-
-{ #category : 'private' }
-DTTestsRunnerPlugin >> runSuite: aTestSuite withResult: aResult [
-
-	aTestSuite when: TestAnnouncement do: [ :testAnnouncement |
-		self flag: #TODO. "Dirty"
-		testAnnouncement test class = TestSuite ifTrue: [
-			self announceStatusChanged:
-				('Running test {1}.' format: { testAnnouncement test name }) ] ]
-		for: self.
-	[ aResult mergeWith: (aTestSuite run) ] ensure: [
-		aTestSuite unsubscribe: TestAnnouncement ]
-]
-
-{ #category : 'private' }
-DTTestsRunnerPlugin >> runTestSuites: testSuites [
-
-	| result |
-	result := TestAsserter classForTestResult new.
-	CurrentExecutionEnvironment runTestsBy: [
-		testSuites
-			do: [ :testSuite |
-				| specificResult |
-				specificResult := testSuite resultClass new.
-				self runSuite: testSuite withResult: specificResult.
-				result mergeWith: specificResult ]
-			displayingProgress: 'Running Tests' ].
-	result updateResultsInHistory.
-	^ result
 ]
 
 { #category : 'api' }
@@ -162,16 +139,4 @@ DTTestsRunnerPlugin >> startButtonHelp [
 { #category : 'api' }
 DTTestsRunnerPlugin >> startButtonLabel [
 	^ 'Run Tests' translated
-]
-
-{ #category : 'tests' }
-DTTestsRunnerPlugin >> testSuiteOf: aSetOfTest withName: aString [
-	^ aSetOfTest
-		collect: [ :each |
-			TestSuite new
-				in: [ :suite |
-					suite
-						addTest: each;
-						name: (self label: aString forSuite: suite) ];
-				yourself ]
 ]

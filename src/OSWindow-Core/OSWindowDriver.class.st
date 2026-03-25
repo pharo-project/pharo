@@ -73,7 +73,7 @@ OSWindowDriver class >> driverClassFromSystem: aClass [
 
 	DriverClass := aClass.
 	Current := nil.
-	self inform: 'You need to restart your image for this changes to take effect.'
+	InformativeNotification signal: 'You need to restart your image for this changes to take effect.'
 ]
 
 { #category : 'class initialization' }

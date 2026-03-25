@@ -9,6 +9,12 @@ Class {
 	#tag : 'Drivers'
 }
 
+{ #category : 'accessing' }
+ReRenameInstanceVariableDriver class >> driverName [
+
+	^ 'Rename instance variable'
+]
+
 { #category : 'execution' }
 ReRenameInstanceVariableDriver >> configureRefactoring [
 

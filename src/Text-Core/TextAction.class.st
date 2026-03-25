@@ -71,12 +71,6 @@ TextAction >> actOnClickBlock: aBlock [
 	actOnClickBlock := aBlock
 ]
 
-{ #category : 'event handling' }
-TextAction >> actOnMove: anEvent for: target in: aParagraph editor: anEditor [
-	"override in subclasses"
-	^ false
-]
-
 { #category : 'testing' }
 TextAction >> analyze: aString [
 	"Analyze the selected text to find both the parameter to store and the text to emphesize (may be different from original selection).  Does not return self!.  May be of the form:

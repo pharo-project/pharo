@@ -36,7 +36,7 @@ EpRenameInstanceVariableRefactoring >> asRBRefactoring [
 		in: affectedClassName
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 EpRenameInstanceVariableRefactoring >> initializeIn: aClassName from:  anOldName to: aNewName [
 	self initialize.
 

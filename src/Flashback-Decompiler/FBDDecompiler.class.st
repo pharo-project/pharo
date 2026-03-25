@@ -51,13 +51,13 @@ FBDDecompiler >> blockReturnTop [
 	self doPop
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 FBDDecompiler >> canDecompile: aCompiledMethod [
 	"Answers false if aCompiledMethod can't be decompiled due to framework specific constraints."
 	^ (self isPrimitiveNativeCall: aCompiledMethod) not
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 FBDDecompiler >> createNArgs: numArgs [
 
 	| argName |
@@ -66,11 +66,11 @@ FBDDecompiler >> createNArgs: numArgs [
 			self incrArgCount.
 			argName := (method propertyAt: #argumentNames)
 				ifNil: [ 'arg' , argCount printString ]
-				ifNotNil: [ :args | args at: argCount ].
+				ifNotNil: [ :args | args at: argCount ifAbsent: [ 'arg' , argCount printString ] ].
 			builder codeArgument: argName ]
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 FBDDecompiler >> createNTemps: numTemps [
 	^ (1 to: numTemps) collect: [ :i | self newTemp ]
 ]
@@ -206,7 +206,7 @@ FBDDecompiler >> doPop [
 	currentSequence addNode: simulatedStack removeLast
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 FBDDecompiler >> errorCodeNameFor: cm [
 	"Assumes the method holds a primitive with error code"
 	| primitivePragma selectorParts |
@@ -273,19 +273,7 @@ FBDDecompiler >> incrTempCount [
 	tempCount := tempCount + 1
 ]
 
-{ #category : 'initialize' }
-FBDDecompiler >> initializeErrorCode: cm [
-	| index |
-	cm isPrimitive
-		ifFalse: [ ^ self ].
-	instructionStream willStore
-		ifFalse: [ ^ self ].
-	index := instructionStream decodeNextInstruction arguments first.
-	currentSequence removeTemporaryNamed: (simulatedStack at: index + 1) name.
-	simulatedStack at: index + 1 put: (builder codeTemp: (self errorCodeNameFor: cm))
-]
-
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 FBDDecompiler >> initializeForMethod: aCompiledMethod [
 	method := aCompiledMethod.
 	loopsArray := FBDLoopScanner scan: method.
@@ -294,7 +282,7 @@ FBDDecompiler >> initializeForMethod: aCompiledMethod [
 	jumpSize := 0
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 FBDDecompiler >> initializeStack [
 	argCount := 0.
 	tempCount := 0.
@@ -304,7 +292,7 @@ FBDDecompiler >> initializeStack [
 		numTemps: method numTemps - method numArgs
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 FBDDecompiler >> initializeStackNumArgs: numArgs copied: copiedVars numTemps: numTemps [
 	| args temps |
 	simulatedStack := OrderedCollection new.
@@ -350,12 +338,11 @@ FBDDecompiler >> interpret: seq1 then: seq2 distance: distance [
 
 { #category : 'private' }
 FBDDecompiler >> interpretMethod: aCompiledMethod [
+
 	self maybeSkipCallPrimitiveBytecode: aCompiledMethod.
 	aCompiledMethod isQuick
 		ifTrue: [ self quickMethod ]
-		ifFalse: [
-			self initializeErrorCode: aCompiledMethod.
-			self interpret: aCompiledMethod endPC ]
+		ifFalse: [ self interpret: aCompiledMethod endPC ]
 ]
 
 { #category : 'control flow instructions' }
@@ -367,7 +354,7 @@ FBDDecompiler >> interpretSeq: seq baseStackSize: stackSize distance: distance [
 		ifTrue: [ false ]
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 FBDDecompiler >> isPrimitiveNativeCall: aCompiledMethod [
 	aCompiledMethod isPrimitive
 		ifFalse: [ ^ false ].
@@ -402,8 +389,22 @@ FBDDecompiler >> jump: distance if: boolean [
 FBDDecompiler >> maybeSkipCallPrimitiveBytecode: aCompiledMethod [
 	"If the method's bytecode set uses the callPrimitive bytecode, ignore it.
 	The primitive is handled specifically before bytecode interpretation."
-	instructionStream peekByte = aCompiledMethod encoderClass callPrimitiveCode
-		ifTrue: [ instructionStream advanceToFollowingPc ]
+
+	| index |
+	aCompiledMethod isPrimitive ifFalse: [ ^ self ].
+
+	"Skip primitive"
+	instructionStream advanceToFollowingPc.
+
+	"Skip bytecode storing error code if any"
+	instructionStream willStore ifFalse: [ ^ self ].
+
+	index := instructionStream decodeNextInstruction arguments first.
+	currentSequence removeTemporaryNamed:
+		(simulatedStack at: index + 1) name.
+	simulatedStack
+		at: index + 1
+		put: (builder codeTemp: (self errorCodeNameFor: aCompiledMethod))
 ]
 
 { #category : 'instruction decoding forward' }
@@ -469,7 +470,7 @@ FBDDecompiler >> popIntoTemporaryVariable: offset [
 				addLast: (builder codeAssignment: simulatedStack removeLast to: (simulatedStack at: offset + 1)). self doPop ]
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 FBDDecompiler >> pragmasForMethod: aCompiledMethod [
 	^ aCompiledMethod pragmas collect: [ :each |
 		OCPragmaNode
@@ -480,6 +481,12 @@ FBDDecompiler >> pragmasForMethod: aCompiledMethod [
 { #category : 'data flow instructions' }
 FBDDecompiler >> pushActiveContext [
 	simulatedStack addLast: builder codeThisContext
+]
+
+{ #category : 'instruction decoding' }
+FBDDecompiler >> pushActiveProcess [
+
+	simulatedStack addLast: builder codeThisProcess
 ]
 
 { #category : 'closure support' }
@@ -563,7 +570,7 @@ FBDDecompiler >> pushTemporaryVariable: offset [
 	simulatedStack addLast: (simulatedStack at: offset + 1)
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 FBDDecompiler >> quickMethod [
 	instructionStream method isReturnSelf
 		ifTrue: [ ^ self methodReturnReceiver ].

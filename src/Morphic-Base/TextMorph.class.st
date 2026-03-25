@@ -1262,6 +1262,19 @@ TextMorph >> openFindDialog [
 	self flash
 ]
 
+{ #category : 'accessing' }
+TextMorph >> optimalExtent [
+	"Create a new paragraph and answer its extent."
+
+	^(Paragraph new
+		compose: text
+		style: textStyle copy
+		from: 1
+		in: (0@0 extent: 9999999@9999999);
+		adjustRightX;
+		extent) + (self borderWidth * 2) + (2@0) "FreeType kerning allowance"
+]
+
 { #category : 'change reporting' }
 TextMorph >> ownerChanged [
 
@@ -1661,6 +1674,13 @@ TextMorph >> successor [
 	^ successor
 ]
 
+{ #category : 'event handling' }
+TextMorph >> takesKeyboardFocus [
+	"Answer whether the receiver can normally take keyboard focus."
+
+	^true
+]
+
 { #category : 'accessing' }
 TextMorph >> text [
 	^ text
@@ -1827,6 +1847,14 @@ TextMorph >> veryDeepInner: deepCopier [
 	successor := successor.
 	backgroundColor := backgroundColor veryDeepCopyWith: deepCopier.
 	margins := margins veryDeepCopyWith: deepCopier
+]
+
+{ #category : 'event handling' }
+TextMorph >> wantsKeyboardFocusNavigation [
+	"Answer whether the receiver wants to be navigated to.
+	Answer false here (use PluggableTextMorph instead)."
+
+	^false
 ]
 
 { #category : 'linked frames' }

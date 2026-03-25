@@ -93,17 +93,3 @@ RBAddMethodRefactoring >> sourceCode: aString in: aClass withProtocol: aProtocol
 								in: aClass
 								withProtocol: aProtocol 
 ]
-
-{ #category : 'storing' }
-RBAddMethodRefactoring >> storeOn: aStream [
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream
-		nextPutAll: ' sourceCode: ''';
-		nextPutAll: source;
-		nextPutAll: ''' in: '.
-	class storeOn: aStream.
-	aStream nextPutAll: ' withProtocol: '.
-	protocol storeOn: aStream.
-	aStream nextPut: $)
-]

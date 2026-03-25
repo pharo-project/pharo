@@ -28,7 +28,7 @@ DoubleLink >> asDoubleLink [
 	^ self
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 DoubleLink >> clearLinks [
 	nextLink := previousLink := nil
 ]

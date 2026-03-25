@@ -1,9 +1,6 @@
 Class {
 	#name : 'CoCompletionEngineTest',
 	#superclass : 'CompletionEngineTest',
-	#instVars : [
-		'oldSort'
-	],
 	#category : 'HeuristicCompletion-Tests-Core',
 	#package : 'HeuristicCompletion-Tests',
 	#tag : 'Core'
@@ -15,34 +12,9 @@ CoCompletionEngineTest class >> shouldInheritSelectors [
 	^ true
 ]
 
-{ #category : 'accessing' }
-CoCompletionEngineTest >> doItContext [
-
-	^ nil
-]
-
 { #category : 'testing' }
 CoCompletionEngineTest >> hasBindingOf: aSymbol [
 	^ false
-]
-
-{ #category : 'running' }
-CoCompletionEngineTest >> newCompletionEngine [
-
-	^ CoCompletionEngine new
-]
-
-{ #category : 'running' }
-CoCompletionEngineTest >> setUp [
-	super setUp.
-	oldSort := CompletionContext sorterClass.
-	CompletionContext sorterClass: NoSorter.
-]
-
-{ #category : 'running' }
-CoCompletionEngineTest >> tearDown [
-	CompletionContext sorterClass: oldSort.
-	super tearDown.	
 ]
 
 { #category : 'tests - interaction' }

@@ -24,7 +24,7 @@ MorphicEvent >> = anEvent [
 	^self type = anEvent type
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 MorphicEvent >> copyHandlerState: anEvent [
 	"Copy the handler state from anEvent. Used for quickly transferring handler information between transformed events."
 ]
@@ -109,7 +109,7 @@ MorphicEvent >> position [
 	^ self subclassResponsibility
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 MorphicEvent >> resetHandlerFields [
 	"Reset anything that is used to cross-communicate between two eventual handlers during event dispatch"
 ]

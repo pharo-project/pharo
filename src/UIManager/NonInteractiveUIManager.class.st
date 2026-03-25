@@ -13,7 +13,7 @@ You can replace the default UI Manager with my instance in cases, when you need 
 "
 Class {
 	#name : 'NonInteractiveUIManager',
-	#superclass : 'CommandLineUIManager',
+	#superclass : 'UIManager',
 	#category : 'UIManager-Base',
 	#package : 'UIManager',
 	#tag : 'Base'
@@ -22,9 +22,44 @@ Class {
 { #category : 'testing' }
 NonInteractiveUIManager class >> isValidForCurrentSystemConfiguration [
 
-	^ Smalltalk isHeadless
-		and: [ Smalltalk isInteractive not
-		and: [ Smalltalk isInteractiveGraphic not ] ]
+	^ Smalltalk isInteractive not
+]
+
+{ #category : 'ui TEasilyThemed' }
+NonInteractiveUIManager >> abort: aStringOrText [
+
+	self abort: aStringOrText title: 'Error'
+]
+
+{ #category : 'ui TEasilyThemed' }
+NonInteractiveUIManager >> abort: aStringOrText title: aString [
+
+	self logTitle: aString andDescription: aStringOrText to: self stderr
+]
+
+{ #category : 'private' }
+NonInteractiveUIManager >> activate [
+	super activate.
+	NonInteractiveTranscript stdout install
+]
+
+{ #category : 'ui TEasilyThemed' }
+NonInteractiveUIManager >> alert: aStringOrText [
+
+	self abort: aStringOrText title: 'Alert'
+]
+
+{ #category : 'ui TEasilyThemed' }
+NonInteractiveUIManager >> alert: aStringOrText title: aString [
+
+	self logTitle: aString andDescription: aStringOrText to: self stdout
+]
+
+{ #category : 'ui TEasilyThemed' }
+NonInteractiveUIManager >> alert: aStringOrText title: aString configure: aBlock [
+	"Ignore the block, because we don't create a dialog, so there is nothing to configure."
+
+	self alert: aStringOrText title: aString
 ]
 
 { #category : 'ui requests' }
@@ -70,10 +105,9 @@ NonInteractiveUIManager >> chooseOrRequestFrom: labelList values: valueList line
 
 { #category : 'ui requests' }
 NonInteractiveUIManager >> confirm: queryString [
-	(ProvideAnswerNotification signal: queryString) ifNotNil: [:answer |
-		^ answer].
 
-	^  self nonInteractiveWarning: 'Confirming: ', queryString
+	self deprecated: 'Use ConfirmationRequest signal: instead.'.
+	^ self nonInteractiveWarning: 'Confirming: ' , queryString
 ]
 
 { #category : 'ui requests' }
@@ -101,9 +135,14 @@ NonInteractiveUIManager >> confirm: queryString trueChoice: trueChoice falseChoi
 	^  self nonInteractiveRequest: queryString
 ]
 
-{ #category : 'debug' }
-NonInteractiveUIManager >> debugProcess: process context: context label: title fullView: bool notification: notificationString [
-	^ self nonInteractiveWarning: 'Opening Debugger'
+{ #category : 'ui TEasilyThemed' }
+NonInteractiveUIManager >> deny: aStringOrText [
+	"Open a denial dialog."
+]
+
+{ #category : 'ui TEasilyThemed' }
+NonInteractiveUIManager >> deny: aStringOrText title: aString [
+	"Open a denial dialog."
 ]
 
 { #category : 'ui requests' }
@@ -113,6 +152,30 @@ NonInteractiveUIManager >> edit: aText label: labelString accept: aBlockOrNil [
 		s  nextPutAll: 'Editing Text: '.
 		labelString ifNotNil: [ s nextPutAll: '[ '; nextPutAll: labelString; nextPutAll: ' ] '].
 		s cr; nextPutAll: aText])
+]
+
+{ #category : 'ui requests' }
+NonInteractiveUIManager >> inform: aString [
+
+	| logBlock |
+	logBlock := [:logger |
+		logger cr;
+			nextPutAll: (String new: 79 withAll: $= ); cr;
+			nextPutAll: 'Notice: ';
+			nextPutAll: aString; cr;
+			nextPutAll: (String new: 79 withAll: $= ); cr].
+
+	Smalltalk logDuring: logBlock
+]
+
+{ #category : 'private' }
+NonInteractiveUIManager >> logTitle: aString andDescription: aStringOrText to: aStream [
+
+	aStream
+		nextPutAll: aString;
+		nextPutAll: ': ';
+		nextPutAll: aStringOrText asString;
+		cr
 ]
 
 { #category : 'ui requests' }
@@ -146,7 +209,63 @@ NonInteractiveUIManager >> nonInteractiveRequest: aStringOrText title: aTitle [
 
 { #category : 'errors' }
 NonInteractiveUIManager >> nonInteractiveWarning: aWarnMessage [
-	^ ProvideAnswerNotification signal: aWarnMessage
+	^ self
+]
+
+{ #category : 'ui TEasilyThemed' }
+NonInteractiveUIManager >> proceed: aStringOrText [
+	"Open a proceed dialog."
+]
+
+{ #category : 'ui TEasilyThemed' }
+NonInteractiveUIManager >> proceed: aStringOrText title: aString [
+	"Open a proceed dialog and answer true if not cancelled, false otherwise."
+]
+
+{ #category : 'ui TEasilyThemed' }
+NonInteractiveUIManager >> question: aStringOrText [
+	"Open a question dialog."
+]
+
+{ #category : 'ui TEasilyThemed' }
+NonInteractiveUIManager >> question: aStringOrText title: aString [
+	"Open a question dialog and answer true if yes,
+	false if no and nil if cancelled."
+]
+
+{ #category : 'ui TEasilyThemed' }
+NonInteractiveUIManager >> questionWithoutCancel: aStringOrText [
+	"Open a question dialog."
+]
+
+{ #category : 'ui TEasilyThemed' }
+NonInteractiveUIManager >> questionWithoutCancel: aStringOrText title: aString [
+	"Open a question dialog and answer true if yes,
+	false if no and nil if cancelled."
+]
+
+{ #category : 'utilities' }
+NonInteractiveUIManager >> quitFrom: aContext withMessage: aString [
+
+	" log error and quit "
+	[ Smalltalk
+		logError: aString
+		inContext: aContext.
+
+	" Print stacks of all current processes "
+
+	Smalltalk logDuring: [:logger |
+		logger nextPutAll: 'Processes and their stacks: ';cr.
+
+		Process allInstances do: [:each | | ctx |
+			logger nextPutAll: 'Process: '; print: each; cr; nextPutAll: '  stack:'; cr; cr.
+
+			ctx := each isActive ifTrue: [ thisContext sender ] ifFalse: [ each suspendedContext ].
+			ctx ifNotNil: [
+				(ctx stackOfSize: 20) do: [:s | logger print: s; cr ]].
+			logger nextPutAll: '------------------------------'; cr; cr.
+		]].
+	] ensure: [ self exitFailure ]
 ]
 
 { #category : 'ui requests' }
@@ -177,15 +296,38 @@ NonInteractiveUIManager >> request: aStringOrText initialAnswer: defaultAnswer t
 { #category : 'ui requests' }
 NonInteractiveUIManager >> request: aStringOrText initialAnswer: defaultAnswer title: aTitle entryCompletion: anEntryCompletion [
 
-	(ProvideAnswerNotification signal: aStringOrText) ifNotNil: [ :answer |
-		^ answer = #default
-			  ifTrue: [ defaultAnswer ]
-			  ifFalse: [ answer ] ].
-
 	^ self nonInteractiveRequest: aStringOrText title: aTitle
 ]
 
-{ #category : 'ui requests' }
-NonInteractiveUIManager >> requestPassword: queryString [
-	^self nonInteractiveWarning: 'Requesting Password'
+{ #category : 'accessing' }
+NonInteractiveUIManager >> stderr [
+
+	^ Stdio stderr
+]
+
+{ #category : 'accessing' }
+NonInteractiveUIManager >> stdin [
+
+	^ Stdio stdin
+]
+
+{ #category : 'accessing' }
+NonInteractiveUIManager >> stdout [
+
+	^ Stdio stdout
+]
+
+{ #category : 'ui TEasilyThemed' }
+NonInteractiveUIManager >> textEntry: aStringOrText [
+	"Open a text entry dialog."
+]
+
+{ #category : 'ui TEasilyThemed' }
+NonInteractiveUIManager >> textEntry: aStringOrText title: aString [
+	"Open a text entry dialog."
+]
+
+{ #category : 'ui TEasilyThemed' }
+NonInteractiveUIManager >> textEntry: aStringOrText title: aString entryText: defaultEntryText [
+	"Open a text entry dialog."
 ]

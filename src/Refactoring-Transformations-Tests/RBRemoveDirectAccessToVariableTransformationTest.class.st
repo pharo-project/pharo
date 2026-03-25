@@ -19,12 +19,12 @@ RBRemoveDirectAccessToVariableTransformationTest >> testClassVariable [
 	| refactoring class |
 	refactoring := RBRemoveDirectAccessToVariableTransformation
 		               classVariable: 'UndoSize'
-		               class: #RBRefactoryChangeManager.
+		               class: #ReChangeManager.
 	refactoring generateChanges.
 
 	self assert: refactoring model changes changes size equals: 2.
 
-	class := (refactoring model classNamed: #RBRefactoryChangeManager)
+	class := (refactoring model classNamed: #ReChangeManager)
 		         classSide.
 	self
 		assert: (class parseTreeForSelector: #initialize)

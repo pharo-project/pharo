@@ -61,6 +61,11 @@ RBMethodName >> isValid [
 ]
 
 { #category : 'accessing' }
+RBMethodName >> methodName [
+	^ String streamContents: [ :s | self printOn: s ]
+]
+
+{ #category : 'accessing' }
 RBMethodName >> newArgs [
 
 	^ newArgs ifNil: [ newArgs := { } ]

@@ -94,13 +94,24 @@ CoFetcher >> filter: newFilter [
 	filter := newFilter
 ]
 
+{ #category : 'enumerating' }
+CoFetcher >> filteredEntriesDo: aBlock [
+	"Each fetcher has the possibility to filter the entry.
+	 A key point is also that the composite fetchers do not filter.
+	Note that the filter is shared amongst fetcher but one filter may decide 
+	to ignore it."
+	
+	self entriesDo: [ :entry | 
+		(self acceptsEntry: entry) 
+			ifTrue: [ aBlock value: entry ] ]
+]
+
 { #category : 'private' }
 CoFetcher >> generator [
-	^ generator ifNil: [
-		generator := Generator on: [ :g |
-			self entriesDo: [ :entry |
-				(self acceptsEntry: entry)
-					ifTrue: [ g yield: entry ] ] ] ]
+
+	^ generator ifNil: [ 
+			generator := Generator on: [ :g | 
+				self filteredEntriesDo: [ :entry | g yield: entry ] ] ]
 ]
 
 { #category : 'initialization' }

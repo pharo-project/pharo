@@ -292,8 +292,14 @@ Array >> printAsSelfEvaluatingFormOn: aStream [
 
 { #category : 'printing' }
 Array >> printOn: aStream [
-	self shouldBePrintedAsLiteral ifTrue: [self printAsLiteralFormOn: aStream. ^ self].
-	self isSelfEvaluating ifTrue: [self printAsSelfEvaluatingFormOn: aStream. ^ self].
+
+	[ self shouldBePrintedAsLiteral 
+		ifTrue: [ self printAsLiteralFormOn: aStream. ^ self ].
+	self isSelfEvaluating 
+		ifTrue: [ self printAsSelfEvaluatingFormOn: aStream. ^ self ] 
+	] 
+		on: Error 
+		do: [ super printOn: aStream ].
 
 	super printOn: aStream
 ]

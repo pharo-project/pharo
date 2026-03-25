@@ -22,3 +22,23 @@ OCMethodNode >> extractSubtreeWith: aSourceCode [
 	^ extractedTree
 		"ifNotNil: [ extractedTree parent: (self parentOfSubtree: extractedTree) ]"
 ]
+
+{ #category : '*Refactoring-Core' }
+OCMethodNode >> latestUseOfVariableNamed: aSymbol [
+
+	| matcher block |
+	matcher := OCParseTreeSearcher new.
+	block := [ :aNode :answer | aNode ].
+
+	matcher
+		matches: aSymbol do: block;
+		matchesArgument: aSymbol do: block.
+	^ matcher executeTree: self initialAnswer: nil
+]
+
+{ #category : '*Refactoring-Core' }
+OCMethodNode >> references: aVariableName [
+	"Return wether the variable named aVariable is accessed in read or write with the receiver."
+	
+	^ body references: aVariableName
+]

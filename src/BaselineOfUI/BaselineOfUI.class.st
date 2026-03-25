@@ -2,7 +2,7 @@
 This baseline is used to generate Pharo images from the local clone of pharo-project/pharo repository. 
 
 Depends on:
-- ConfigurationOfMorphic
+- BaselineOfMorphic
 
 Load type: 
 - atomic
@@ -33,24 +33,22 @@ BaselineOfUI >> baseline: spec [
 	spec for: #common do: [
 		spec postLoadDoIt: #postload:package:.
 
-		"Loading the debugger model and infrastructure before the UI"
-		spec package: 'Debugger-Model'.
-		spec package: 'Debugger-Oups'.
-
+		spec
+				baseline: 'SUnit' with: [
+						spec
+							loads: 'UI';
+							repository: repository ].
+		
 		"Load morphic before Spec"
+		spec baseline: 'MorphicCore' with: [ spec repository: repository ].
 		spec baseline: 'Morphic' with: [ spec repository: repository ].
 		spec baseline: 'Commander2' with: [ spec repository: repository ].
 		"Spec 2 (base), using external configuration"
 		self specBase: spec.
 
-		spec package: 'StartupPreferences'.
 		spec package: 'Morphic-Widgets-Tree'.
 
-		spec baseline: 'Keymapping' with: [
-			spec
-				repository: repository;
-				loads: 'ui' ].
-		spec package: 'WebBrowser-Core' ]
+		spec package: 'WebBrowser-Core'  ]
 ]
 
 { #category : 'actions' }
@@ -60,7 +58,6 @@ BaselineOfUI >> postload: loader package: packageSpec [
 	Initialized = true ifTrue: [ ^ self ].
 
 	Smalltalk ui theme settings preferGradientFill: true.
-	PharoCommonTools initialize.
 
 	Initialized := true
 ]

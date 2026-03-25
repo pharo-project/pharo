@@ -58,62 +58,19 @@ RePullUpMethodRefactoring >> applicabilityPreconditions [
 			   in: class).
 		  (ReClassHasSubclassesCondition new
 			   class: targetSuperclass;
-			   subclassesList: { class name }).
-		  self preconditionNoReferencesToSharedVars.
-		  self preconditionNoSupersendsSent.
-		  self preconditionNoSupersendsReceived }
+			   subclassesList: { class name }) }
 ]
 
 { #category : 'preconditions' }
 RePullUpMethodRefactoring >> breakingChangePreconditions [
 
-	^ { self preconditionNoReferencesToInstVars .
-		 self preconditionNoOverrides }
-]
-
-{ #category : 'private' }
-RePullUpMethodRefactoring >> copyDownMethod: aSelector [
-
-	| oldProtocol oldSource superclassDefiner subclasses refactoring |
-	superclassDefiner := targetSuperclass whichClassIncludesSelector:
-		                     aSelector.
-	superclassDefiner ifNil: [ ^ self ].
-	oldSource := superclassDefiner sourceCodeFor: aSelector.
-	oldSource ifNil: [
-		self refactoringError:
-			('Source code for <1s> superclass method not available'
-				 expandMacrosWith: aSelector) ].
-	oldProtocol := superclassDefiner protocolsFor: aSelector.
-	subclasses := targetSuperclass subclasses reject: [ :each |
-		              each directlyDefinesMethod: aSelector ].
-	subclasses ifEmpty: [ ^ self ].
-	(superclassDefiner parseTreeForSelector: aSelector) superMessages
-		detect: [ :each | superclassDefiner directlyDefinesMethod: each ]
-		ifFound: [
-			self refactoringError:
-				('Cannot pull up <1s> since we must copy down the superclass method in <2p><n>to the other subclasses, and the superclass method sends a super message which is overriden.'
-					 expandMacrosWith: aSelector
-					 with: superclassDefiner) ].
-	self refactoringWarning:
-		'Do you want to copy down the superclass method to the classes that don''t define '
-		, aSelector , '?'.
-	refactoring := RBExpandReferencedPoolsRefactoring
-		               model: self model
-		               forMethod:
-		               (superclassDefiner parseTreeForSelector: aSelector)
-		               fromClass: superclassDefiner
-		               toClasses: subclasses.
-	self generateChangesFor: refactoring.
-	subclasses do: [ :each |
-		self generateChangesFor: (RBAddMethodTransformation
-				 sourceCode: oldSource
-				 in: each
-				 withProtocol: oldProtocol) ]
-]
-
-{ #category : 'transforming' }
-RePullUpMethodRefactoring >> copyDownMethods [
-	selectors do: [:each | self copyDownMethod: each]
+	^ {
+		  self preconditionNoReferencesToInstVars.
+		  self preconditionNoReferencesToSharedVars.
+		  self preconditionNoSupersendsSent.
+		  self preconditionNoSupersendsReceived.
+		  self preconditionNoSuperclassDefiner.
+		  self preconditionNoOverrides }
 ]
 
 { #category : 'preconditions' }
@@ -149,6 +106,12 @@ RePullUpMethodRefactoring >> preconditionNoReferencesToSharedVars [
 ]
 
 { #category : 'preconditions' }
+RePullUpMethodRefactoring >> preconditionNoSuperclassDefiner [
+
+	^ ReNoSuperclassDefinesCondition new class: class targetSuperclass: targetSuperclass selectors: selectors
+]
+
+{ #category : 'preconditions' }
 RePullUpMethodRefactoring >> preconditionNoSupersendsReceived [
 
 	^ ReMethodsHaveNoSuperCallInSiblingsCondition new
@@ -175,7 +138,6 @@ RePullUpMethodRefactoring >> preconditions [
 { #category : 'transforming' }
 RePullUpMethodRefactoring >> privateTransform [
 	self
-		copyDownMethods;
 		pullUpMethods;
 		removePulledUpMethods;
 		removeDuplicateMethods
@@ -221,7 +183,7 @@ RePullUpMethodRefactoring >> pullUpMethods [
 RePullUpMethodRefactoring >> pullUpSharedVariable: aVariable [
 
 	| refactoring |
-	refactoring := RBPullUpClassVariableRefactoring
+	refactoring := RePullUpSharedVariableRefactoring
 		               model: self model
 		               variable: aVariable
 		               class: targetSuperclass.
@@ -281,17 +243,6 @@ RePullUpMethodRefactoring >> selectors [
 { #category : 'initialization' }
 RePullUpMethodRefactoring >> selectors: aList [
 	selectors := aList
-]
-
-{ #category : 'storing' }
-RePullUpMethodRefactoring >> storeOn: aStream [
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream nextPutAll: ' pullUp: '.
-	selectors asArray storeOn: aStream.
-	aStream nextPutAll: ' from: '.
-	class storeOn: aStream.
-	aStream nextPut: $)
 ]
 
 { #category : 'initialization' }

@@ -10,6 +10,6 @@ Class {
 }
 
 { #category : 'accessing' }
-NECLocalEntry >> label [
+NECLocalEntry >> rawLabel [
 	^ 'local variable'
 ]

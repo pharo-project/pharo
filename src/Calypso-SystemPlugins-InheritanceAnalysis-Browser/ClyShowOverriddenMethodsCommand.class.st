@@ -29,5 +29,5 @@ ClyShowOverriddenMethodsCommand >> defaultMenuItemName [
 { #category : 'execution' }
 ClyShowOverriddenMethodsCommand >> selectMethodsIn: aQueryBrowser [
 
-	aQueryBrowser selectLastItem
+	aQueryBrowser selectIndex: aQueryBrowser numberOfElements
 ]

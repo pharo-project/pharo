@@ -54,7 +54,7 @@ LibTTYTest >> assertShellProcessWithCommand: shellCommand input: inputString wri
 
 	self assertProcessSpawnedWithPseudoTerminalPath: '/bin/sh'
 		arguments: { '/bin/sh'. '-c'. shellCommand }
-		environment: Smalltalk os environment
+		environment: OSEnvironment current
 		input: inputString
 		writes: expectedOutputString
 		hasStatus: expectedStatus
@@ -106,14 +106,6 @@ LibTTYTest >> openPseudoTerminal [
 ]
 
 { #category : 'private' }
-LibTTYTest >> performTest [
-
-	Smalltalk os isWindows ifTrue: [
-		self skip ].
-	super performTest
-]
-
-{ #category : 'private' }
 LibTTYTest >> readOutput: fdm [
 
 	^ ExternalAddress allocate: 1024 bytesDuring: [ :buffer |
@@ -122,6 +114,15 @@ LibTTYTest >> readOutput: fdm [
 			[ (count := LibC uniqueInstance read: fdm buffer: buffer size: buffer size) > 0 ] whileTrue: [
 				1 to: count do: [ :index |
 					stream nextPut: (buffer byteAt: index) ] ] ] ]
+]
+
+{ #category : 'running' }
+LibTTYTest >> setUp [
+
+	super setUp.
+	OSPlatform current isWindows 
+		ifTrue: [ self skip ].
+	
 ]
 
 { #category : 'tests' }
@@ -136,7 +137,7 @@ LibTTYTest >> test1 [
 	self assertProcessSpawnedWithFileDescriptor: fileDescriptorPseudoTerminal
 		path: path
 		arguments: { path }
-		environment: Smalltalk os environment
+		environment: OSEnvironment current
 		input: ''
 		writes: ''
 		hasStatus: 0.
@@ -149,7 +150,7 @@ LibTTYTest >> test1 [
 		self assertProcessSpawnedWithFileDescriptor: fileDescriptorFile
 			path: path
 			arguments: { path }
-			environment: Smalltalk os environment
+			environment: OSEnvironment current
 			input: ''
 			writes: ''
 			hasStatus: 127
@@ -162,14 +163,14 @@ LibTTYTest >> test2 [
 
 	self assertProcessSpawnedWithPseudoTerminalPath: '/bin/echo'
 		arguments: #('/bin/echo' 'Argument1' 'Argument2' 'Argument3')
-		environment: Smalltalk os environment
+		environment: OSEnvironment current
 		input: ''
 		writes: 'Argument1 Argument2 Argument3' , String crlf
 		hasStatus: 0.
 
 	self assertProcessSpawnedWithPseudoTerminalPath: '/bin/echo'
 		arguments: #('/bin/echo' 'ĀĂĄ')
-		environment: Smalltalk os environment
+		environment: OSEnvironment current
 		input: ''
 		writes: 'ĀĂĄ' , String crlf
 		hasStatus: 0.
@@ -190,14 +191,14 @@ LibTTYTest >> test2 [
 
 	self assertProcessSpawnedWithPseudoTerminalPath: '/usr/bin/head'
 		arguments: #('/usr/bin/head' '-n' '2')
-		environment: Smalltalk os environment
+		environment: OSEnvironment current
 		input: (String lf join: #('Line1' 'Line2' 'Line3' ''))
 		writes: (String crlf join: #('Line1' 'Line2' 'Line3' 'Line1' 'Line2' ''))
 		hasStatus: 0.
 
 	self assertProcessSpawnedWithPseudoTerminalPath: '/bin/doesnotexist'
 		arguments: #('/bin/doesnotexist')
-		environment: Smalltalk os environment
+		environment: OSEnvironment current
 		input: ''
 		writes: 'Error in tty_spawn at execve(path, argv, envp): No such file or directory' , String crlf
 		hasStatus: 127.

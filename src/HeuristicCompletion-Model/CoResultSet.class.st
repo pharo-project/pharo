@@ -15,8 +15,10 @@ Class {
 	#instVars : [
 		'results',
 		'fetcher',
-		'filter',
-		'sorter'
+		'filter'
+	],
+	#classVars : [
+		'SorterClass'
 	],
 	#category : 'HeuristicCompletion-Model-Core',
 	#package : 'HeuristicCompletion-Model',
@@ -39,6 +41,20 @@ CoResultSet class >> onContext: aCompletionContext fetcher: aFetcher [
 		yourself
 ]
 
+{ #category : 'instance creation' }
+CoResultSet class >> sorterClass [
+
+
+	^ SorterClass
+]
+
+{ #category : 'instance creation' }
+CoResultSet class >> sorterClass: aClass [
+	"not sure that we will keep it. 
+	For now we do not use it."
+	SorterClass := aClass
+]
+
 { #category : 'accessing' }
 CoResultSet >> completionToken [
 
@@ -57,7 +73,7 @@ CoResultSet >> fetch: anInteger [
 
 	| newResults |
 	newResults := fetcher next: anInteger.
-	results addAll: (sorter sortCompletionList: newResults)
+	results addAll: "(sorter sortCompletionList:" newResults
 ]
 
 { #category : 'fetching' }
@@ -119,7 +135,7 @@ CoResultSet >> initialize [
 	super initialize.
 	results := OrderedCollection new.
 	filter := CoFilter empty.
-	sorter := CompletionContext sorterClass new
+	
 ]
 
 { #category : 'testing' }

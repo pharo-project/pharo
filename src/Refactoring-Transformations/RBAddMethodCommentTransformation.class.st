@@ -63,18 +63,3 @@ RBAddMethodCommentTransformation >> privateTransform [
 	self definingClass compileTree:
 		(self parserClass parseMethod: sourceCode)
 ]
-
-{ #category : 'storing' }
-RBAddMethodCommentTransformation >> storeOn: aStream [
-
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream
-		nextPutAll: ' comment: ''';
-		nextPutAll: comment;
-		nextPutAll: ''' inMethod: ''';
-		nextPutAll: selector;
-		nextPutAll: ''' inClass: '.
-	class storeOn: aStream.
-	aStream nextPut: $)
-]

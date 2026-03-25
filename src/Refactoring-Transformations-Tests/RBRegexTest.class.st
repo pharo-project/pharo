@@ -1,8 +1,9 @@
 Class {
 	#name : 'RBRegexTest',
 	#superclass : 'TestCase',
-	#category : 'Refactoring-Transformations-Tests',
-	#package : 'Refactoring-Transformations-Tests'
+	#category : 'Refactoring-Transformations-Tests-Regex',
+	#package : 'Refactoring-Transformations-Tests',
+	#tag : 'Regex'
 }
 
 { #category : 'tests' }

@@ -20,9 +20,9 @@ Class {
 }
 
 { #category : 'enumerating' }
-CoAvoidRepeatedFetcher >> entriesDo: aBlock [
+CoAvoidRepeatedFetcher >> filteredEntriesDo: aBlock [
 	decoree
-		entriesDo: [ :elem |
+		filteredEntriesDo: [ :elem |
 			(self hasAlreadyReturned: elem)
 				ifFalse: [
 					"As the NECEntry does not know how to compare I will enter the content as symbol"
@@ -33,7 +33,7 @@ CoAvoidRepeatedFetcher >> entriesDo: aBlock [
 { #category : 'accessing' }
 CoAvoidRepeatedFetcher >> hasAlreadyReturned: anEntry [
 
-	^ elements includes: anEntry contents asSymbol
+	^ elements includes: anEntry contents
 ]
 
 { #category : 'initialization' }

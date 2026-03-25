@@ -31,7 +31,7 @@ MutexSet >> pvtCritical: aBlock startingAt: index [
 	^mutex critical:[self pvtCritical: aBlock startingAt: index+1]
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 MutexSet >> withAll: mutexList [
 	array := mutexList
 ]

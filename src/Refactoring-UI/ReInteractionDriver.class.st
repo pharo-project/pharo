@@ -13,34 +13,34 @@ Class {
 	#name : 'ReInteractionDriver',
 	#superclass : 'Object',
 	#instVars : [
+		'application',
 		'model',
 		'scopes',
 		'refactoring',
 		'previewPresenterClass',
-		'selectDialog',
 		'requestDialog',
 		'informDialog',
-		'stoppedBeforeApplyingRefactoring'
+		'stoppedBeforeApplyingRefactoring',
+		'selectDialogForBreakingChanges'
 	],
-	#classVars : [
-		'DefaultRequestDialog',
-		'DefaultSelectDialog'
+	#classInstVars : [
+		'shouldPreviewChanges'
 	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',
 	#tag : 'Drivers'
 }
 
-{ #category : 'configuration' }
-ReInteractionDriver class >> defaultRequestDialog [ 
+{ #category : 'accessing' }
+ReInteractionDriver class >> driverName [
 
-	^ DefaultRequestDialog ifNil: [ SpRequestDialog new ]
+	^ self subclassResponsibility
 ]
 
-{ #category : 'configuration' }
-ReInteractionDriver class >> defaultSelectDialog [ 
+{ #category : 'accessing' }
+ReInteractionDriver class >> drivers [
 
-	^ DefaultSelectDialog ifNil: [ SpSelectDialog new ]
+	^ self allSubclasses reject: [ :subclass | subclass isAbstract ]
 ]
 
 { #category : 'testing' }
@@ -53,48 +53,74 @@ ReInteractionDriver class >> isAbstract [
 ReInteractionDriver class >> menuItemString [
 	"Make sure that the user knows that this is a transformation by adding (T) in front of the menu item name."
 
-	^ self refactoringClass menuItemString
+	^ self driverName
 ]
 
-{ #category : 'displaying' }
-ReInteractionDriver class >> refactoringClass [
+{ #category : 'instance creation' }
+ReInteractionDriver class >> newApplication: anApplication [
 
-	self subclassResponsibility
+	^ self new 
+		application: anApplication;
+		yourself
 ]
 
-{ #category : 'configuration' }
-ReInteractionDriver class >> useRequestDialog: aRequestDialog during: aBlock [
+{ #category : 'settings' }
+ReInteractionDriver class >> refactoringsSettingsOn: aBuilder [
 
-	| old |
-	old := DefaultRequestDialog.
-	DefaultRequestDialog := aRequestDialog.
-	^ aBlock ensure: [ DefaultRequestDialog := old ]
+	<systemsettings>
+	(aBuilder group: #Refactorings)
+		label: 'Refactorings';
+		description: 'Settings about the refactorings and transformations of Pharo.';
+		parent: #tools;
+		with: [
+				(aBuilder group: #Previews)
+					label: 'Preview changes';
+					description: 'A list of settings to declare for which refactoring the user wants a preview of the cnahges before applying them or not.';
+					with: [
+							self drivers do: [ :aDriver |
+										(aBuilder setting: aDriver name asSymbol)
+											label: 'Preview changes: ' , aDriver menuItemString;
+											selector: #shouldPreviewChanges;
+											default: self shouldPreviewChangesByDefault;
+											target: aDriver ] ] ]
 ]
 
-{ #category : 'configuration' }
-ReInteractionDriver class >> useSelectDialog: aSelectDialog during: aBlock [
+{ #category : 'accessing' }
+ReInteractionDriver class >> shouldPreviewChanges [
 
-	| old |
-	old := DefaultSelectDialog.
-	DefaultSelectDialog := aSelectDialog.
-	^ aBlock ensure: [ DefaultSelectDialog := old ]
+	^ shouldPreviewChanges ifNil: [ shouldPreviewChanges := self shouldPreviewChangesByDefault ]
 ]
 
-{ #category : 'execution' }
+{ #category : 'accessing' }
+ReInteractionDriver class >> shouldPreviewChanges: anObject [
+
+	shouldPreviewChanges := anObject
+]
+
+{ #category : 'accessing' }
+ReInteractionDriver class >> shouldPreviewChangesByDefault [
+
+	^ true
+]
+
+{ #category : 'accessing' }
 ReInteractionDriver >> application [
 	"For now use the singleton. Normally the application should be passed from Calypso and the command"
 	
-	^ StPharoApplication current
+	^ application ifNil: [ StPharoApplication current ]
+]
 
+{ #category : 'accessing' }
+ReInteractionDriver >> application: anApplication [
+	application := anApplication
 ]
 
 { #category : 'execution' }
 ReInteractionDriver >> applyChanges [
 
 	| applied |
-	applied := self openPreviewWithChanges: self changes.
-	"it looks like there is a bug in Spec"
-	"stoppedBeforeApplyingRefactoring := applied isCancelled not
+
+	applied := self openPreviewWithChanges: self changes "it looks like there is a bug in Spec" "stoppedBeforeApplyingRefactoring := applied isCancelled not
 	isCancelled returns always true so I will use it when this will be fixed in spec."
 ]
 
@@ -108,6 +134,19 @@ ReInteractionDriver >> changes [
 
 ]
 
+{ #category : 'configuration' }
+ReInteractionDriver >> configureRefactoring [
+
+	refactoring := self instantiateRefactoring.
+	refactoring prepareForExecution
+]
+
+{ #category : 'ui - requests' }
+ReInteractionDriver >> confirm: aString [
+
+	^ self application confirm: aString
+]
+
 { #category : 'private' }
 ReInteractionDriver >> defaultInformDialog [
 
@@ -118,15 +157,14 @@ ReInteractionDriver >> defaultInformDialog [
 ReInteractionDriver >> defaultRequestDialog [
 	"We do not use a subclassResponsibility because all the drivers do not have to."
 
-	^ self class defaultRequestDialog
+	^ self application newRequest
 ]
 
 { #category : 'configuration' }
 ReInteractionDriver >> defaultSelectDialog [
 	"We do not use a subclassResponsibility because all the drivers do not have to."
 	
-	^ self
-	
+	^ self application newSelect
 ]
 
 { #category : 'ui - dialogs' }
@@ -153,11 +191,30 @@ ReInteractionDriver >> furtherActionFor: aReport [
 	aReport browse
 ]
 
+{ #category : 'execution' }
+ReInteractionDriver >> handleBreakingChanges [
+
+	| selection dialog |
+	dialog := self selectDialogForBreakingChanges.
+	selection := dialog openModal.
+	selection ifNil: [ ^ false ].
+	selection action.
+	^ true
+]
+
+{ #category : 'ui - requests' }
+ReInteractionDriver >> inform: aString [
+	"Display a message for the user to read and then dismiss."
+
+	aString isEmptyOrNil ifTrue: [ ^ self ].
+	self application inform: aString
+]
+
 { #category : 'private' }
 ReInteractionDriver >> informConditions: conditions [ 
 	"The receiver has multiple failed applicability conditions and more than one could fail, inform all failures"
 
-	conditions do: [ : cond | self inform: cond errorString ].
+	conditions do: [ :cond | self inform: cond errorString ].
 ]
 
 { #category : 'private' }
@@ -181,6 +238,12 @@ ReInteractionDriver >> initialize [
 	"for now unused but we should soon use it. Check applyChanges"
 ]
 
+{ #category : 'configuration' }
+ReInteractionDriver >> instantiateRefactoring [
+	"I return a new refactoring instance, ready to run."
+	self subclassResponsibility
+]
+
 { #category : 'accessing' }
 ReInteractionDriver >> model [
 	"Answer the receiver's <RBBrowserEnvironment>"
@@ -195,11 +258,16 @@ ReInteractionDriver >> model: aRBBrowserEnvironment [
 
 { #category : 'execution' }
 ReInteractionDriver >> openPreviewWithChanges: changes [
+	| presenter |
+	
+	presenter := (self previewPresenterClass newApplication: self application)
+		changesFrom: changes scopes: scopes;
+		refactoring: self refactoring;
+		yourself.
 
-	^ (self previewPresenterClass for: changes scopes: scopes)
-		  application: self application;
-		  refactoring: self refactoring;
-		  openModal
+	self class shouldPreviewChanges
+		ifTrue: [ presenter openModal ]
+		ifFalse: [ presenter accept ]
 ]
 
 { #category : 'configuration' }
@@ -263,15 +331,15 @@ ReInteractionDriver >> scopes: anObject [
 ]
 
 { #category : 'configuration' }
-ReInteractionDriver >> selectDialog [
-	
-	^ selectDialog ifNil: [ selectDialog := self defaultSelectDialog ].
+ReInteractionDriver >> selectDialogForBreakingChanges [
+
+	^ selectDialogForBreakingChanges ifNil: [ selectDialogForBreakingChanges := self defaultSelectDialog ].
 	
 ]
 
 { #category : 'configuration' }
-ReInteractionDriver >> selectDialog: aDialog [
+ReInteractionDriver >> selectDialogForBreakingChanges: aDialog [
 	
-	selectDialog := aDialog 
+	selectDialogForBreakingChanges := aDialog 
 	
 ]

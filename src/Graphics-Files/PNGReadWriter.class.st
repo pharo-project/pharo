@@ -91,7 +91,7 @@ PNGReadWriter class >> computeSwizzleMapForDepth: depth [
 	self error: 'Unrecognized depth'
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 PNGReadWriter class >> debugging: aBoolean [
 	Debugging := aBoolean
 ]

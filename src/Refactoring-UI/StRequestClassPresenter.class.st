@@ -18,6 +18,13 @@ StRequestClassPresenter >> initializeClassNamePresenter [
 ]
 
 { #category : 'initialization' }
+StRequestClassPresenter >> initializeDialogWindow: aDialogPresenter [
+
+	super initializeDialogWindow: aDialogPresenter.
+	aDialogPresenter title: self windowTitle
+]
+
+{ #category : 'initialization' }
 StRequestClassPresenter >> initializeFocus [
 	^ self subclassResponsibility
 ]
@@ -60,8 +67,8 @@ StRequestClassPresenter >> initializeTagsPresenter [
 { #category : 'accessing' }
 StRequestClassPresenter >> newClassName [
 	"Answer a <String> containing the current contents of the new class name presenter"
-	
-	^ textInput text trimmed
+
+	^ textInput text trimBoth
 ]
 
 { #category : 'api - showing' }
@@ -92,14 +99,13 @@ StRequestClassPresenter >> tagName [
 { #category : 'callbacks' }
 StRequestClassPresenter >> updateTagItems: item [
 	"Note that as it seems there is no Spec drop list with editable text, we provide a 'Core' tag by default if the package has no tags"
+
 	| pkg |
-	
-	item 
-		ifNil: [ tagPresenter items: { 'Core' } ]
-		ifNotNil: [ 
-			(pkg := PackageOrganizer default packageNamed: item)  tagNames
-				ifEmpty: [ tagPresenter items: { 'Core' }  ]
-				ifNotEmpty: [ : tagNames | tagPresenter items: tagNames asOrderedCollection ] ].
+	item ifNil: [ tagPresenter items: { 'Core' } ] ifNotNil: [
+			(pkg := PackageOrganizer default packageNamed: item) tagNames
+				ifEmpty: [ tagPresenter items: { 'Core' } ]
+				ifNotEmpty: [ :tagNames |
+				tagPresenter items: tagNames asOrderedCollection ] ].
 	tagPresenter selectIndex: 1
 ]
 
@@ -112,33 +118,30 @@ StRequestClassPresenter >> updateTagSelection: item [
 { #category : 'private' }
 StRequestClassPresenter >> validateAnswer [
 
-	validateBlock ifNotNil: [
-		^ validateBlock
-			value: textInput text
-			value: packagePresenter selectedItem
-			value: tagPresenter selectedItem ].
+	| isValid |
+	isValid := self validateInputs.
+	isValid ifFalse: [ self inform: 'Name can''t be empty or contain spaces' ].
+	^ isValid
+]
+
+{ #category : 'private' }
+StRequestClassPresenter >> validateInputs [
+	| packageName tag clasName |
+	packageName := packagePresenter selectedItem.
+	tag := tagPresenter selectedItem.
+	clasName := textInput text.
+		
+	(packageName isNil or: [ packageName isEmpty ])
+		ifTrue: [ ^ false ].
+	(tag isNil or: [ tag isEmpty ])
+		ifTrue: [ ^ false ].
+	(clasName isNil or: [ clasName isNotEmpty and: [ (clasName includesSubstring: ' ') ]])
+		ifTrue: [ ^ false ].
 	^ true
 ]
 
-{ #category : 'private' }
-StRequestClassPresenter >> validateAnswerBlock [
+{ #category : 'accessing' }
+StRequestClassPresenter >> windowTitle [
 
-	^ [ :newClassName :packageName :tagName |
-		  | isValid |
-		  isValid := (self validateClassNameBlock value: newClassName) and: [
-			             (self validatePackageNameBlock value: packageName) and: [ self validatePackageNameBlock value: tagName ] ].
-		  isValid ifFalse: [ self inform: 'Name can''t be empty or contain spaces' ].
-		  isValid ]
-]
-
-{ #category : 'private' }
-StRequestClassPresenter >> validateClassNameBlock [
-
-	^ [ :txt | txt isNotNil and: [ txt isNotEmpty and: [ (txt includesSubstring: ' ') not ] ] ]
-]
-
-{ #category : 'private' }
-StRequestClassPresenter >> validatePackageNameBlock [
-
-	^ [ :txt | txt isNotNil and: [ txt isNotEmpty ] ]
+	^  driver dialogTitleForClassSelection
 ]

@@ -40,7 +40,7 @@ SycCmDuplicateClassCommand >> executeRefactoring [
 	| driver |
 	driver := (ReDuplicateClassDriver className: self targetClass name)
 		          scopes: refactoringScopes.
-	driver runRefactoring ifNil: [ ^ self ]
+	driver runRefactoring
 ]
 
 { #category : 'accessing' }

@@ -27,30 +27,43 @@ def shell(params){
     else sh(params)
 }
 
-def runTests(architecture, prefix=''){
+def runTests(architecture){
   cleanWs()
   dir(env.STAGE_NAME) {
     try {
         unstash "bootstrap${architecture}"
-        shell "bash -c 'bootstrap/scripts/run${prefix}Tests.sh ${architecture} ${env.STAGE_NAME}${prefix}'"
-        junit allowEmptyResults: true, testResults: "${env.STAGE_NAME}${prefix}*.xml"
+        shell "bash -c 'bootstrap/scripts/runTests.sh ${architecture} ${env.STAGE_NAME}'"
+        junit allowEmptyResults: true, testResults: "${env.STAGE_NAME}*.xml"
     } finally {
-        archiveArtifacts allowEmptyArchive: true, artifacts: "${env.STAGE_NAME}${prefix}*.xml", fingerprint: true
+        archiveArtifacts allowEmptyArchive: true, artifacts: "${env.STAGE_NAME}*.xml", fingerprint: true
         archiveArtifacts allowEmptyArchive: true, artifacts: "*.fuel", fingerprint: true
         // I am archiving the logs to check for crashes and errors.
         if(fileExists('PharoDebug.log')){
-            shell "mv PharoDebug.log PharoDebug-${env.STAGE_NAME}${prefix}.log"
-            archiveArtifacts allowEmptyArchive: true, artifacts: "PharoDebug-${env.STAGE_NAME}${prefix}.log", fingerprint: true
+            shell "mv PharoDebug.log PharoDebug-${env.STAGE_NAME}.log"
+            archiveArtifacts allowEmptyArchive: true, artifacts: "PharoDebug-${env.STAGE_NAME}.log", fingerprint: true
         }
         if(fileExists('crash.dmp')){
-            shell "mv crash.dmp crash-${env.STAGE_NAME}${prefix}.dmp"
-            archiveArtifacts allowEmptyArchive: true, artifacts: "crash-${env.STAGE_NAME}${prefix}.dmp", fingerprint: true
+            shell "mv crash.dmp crash-${env.STAGE_NAME}.dmp"
+            archiveArtifacts allowEmptyArchive: true, artifacts: "crash-${env.STAGE_NAME}.dmp", fingerprint: true
         }
         if(fileExists('progress.log')){
-            shell "mv progress.log progress-${env.STAGE_NAME}${prefix}.log"
-            shell "cat progress-${env.STAGE_NAME}${prefix}.log"
-            archiveArtifacts allowEmptyArchive: true, artifacts: "progress-${env.STAGE_NAME}${prefix}.log", fingerprint: true
+            shell "mv progress.log progress-${env.STAGE_NAME}.log"
+            shell "cat progress-${env.STAGE_NAME}.log"
+            archiveArtifacts allowEmptyArchive: true, artifacts: "progress-${env.STAGE_NAME}.log", fingerprint: true
         }
+    }
+  }
+}
+
+def runCommandLineTests(){
+  cleanWs()
+  dir('cli-tests') {
+    try {
+        unstash "bootstrap64"
+        shell "bash -c 'bootstrap/scripts/runPharoCommandLineTests.sh'"
+        junit allowEmptyResults: true, testResults: "report.xml"
+    } finally {
+        archiveArtifacts allowEmptyArchive: true, artifacts: "report.xml", fingerprint: true
     }
   }
 }
@@ -128,61 +141,79 @@ Build Url: ${env.BUILD_URL}
   }}}
 }
 
-def bootstrapImage(architectures){
-   cleanWs()
-  def builders = [:]
-    
-  for (arch in architectures) {
-      // Need to bind the label variable before the closure - can't do 'for (label in labels)'
-      def architecture = arch
+def defineIsoTestStage(stageName, projectName, testGroup, testPackages){
+    stage("Tests-ISO-" + stageName) {
+        timeout(2) {
+            dir(env.STAGE_NAME) {
+                def PHARO_MAJOR = shellOutput('git describe --tags --first-parent | cut -d\'-\' -f 1 | cut -c 2- | cut -d\'.\' -f 1-1')
+                def PHARO_MINOR = shellOutput('git describe --tags --first-parent | cut -d\'-\' -f 1 | cut -c 2- | cut -d\'.\' -f 2-2')
+                def PHARO_SHORT = PHARO_MAJOR + PHARO_MINOR
 
-      builders[architecture] = {
-        dir(architecture) {
+                unstash "bootstrap64"
+                unzip "build/bootstrap-cache/metacello.zip"
+                shell "bash -c './bootstrap/scripts/getPharoVM.sh ${PHARO_SHORT}'"
+                shell "bash -c './pharo metacello.image metacello install --save --strict --signalErrorOnWarning \"filetree://../src\" SUnit --groups Core'"
+                shell "bash -c './pharo metacello.image metacello install --save --strict --signalErrorOnWarning \"filetree://../src\" " + projectName + " --groups " + testGroup + "'"
+                shell "bash -c './pharo metacello.image test --junit-xml-output --stage-name ${env.STAGE_NAME}  " + testPackages + " '"
+                junit allowEmptyResults: false, testResults: "${env.STAGE_NAME}*.xml"
+            }
+        }
+    }
+}
 
-        try {
-          stage ("Fetch Requirements-${architecture}") {  
+def bootstrapImage(){
+    cleanWs()
+    try {
+        stage ("Fetch Requirements") {  
             checkout scm
             // Stage 1 is to remove any artefacts, not required for Jenkins
-            shell "BUILD_NUMBER=${BUILD_NUMBER} BOOTSTRAP_ARCH=${architecture} bash ./bootstrap/scripts/2-download.sh"
-          }
+            shell "BUILD_NUMBER=${BUILD_NUMBER} BOOTSTRAP_ARCH=64 bash ./bootstrap/scripts/2-download.sh"
+        }
 
-          stage ("Bootstrap-${architecture}") {
-            shell "BUILD_NUMBER=${BUILD_NUMBER} BOOTSTRAP_ARCH=${architecture} bash ./bootstrap/scripts/3-prepare.sh"
-          }
+        stage ("Bootstrap") {
+            shell "BUILD_NUMBER=${BUILD_NUMBER} BOOTSTRAP_ARCH=64 bash ./bootstrap/scripts/3-prepare.sh"
+        }
 
-          stage ("Full Image-${architecture}") {
-            shell "BUILD_NUMBER=${BUILD_NUMBER} BOOTSTRAP_ARCH=${architecture} bash ./bootstrap/scripts/4-build.sh"
-            stash includes: "build/bootstrap-cache/*.zip,build/bootstrap-cache/*.sources,bootstrap/scripts/**", name: "bootstrap${architecture}"
-          }
+        stage ("Metacello") {
+            shell "BUILD_NUMBER=${BUILD_NUMBER} BOOTSTRAP_ARCH=64 bash ./bootstrap/scripts/4-installMetacello.sh"
+            stash includes: "build/bootstrap-cache/*.zip,build/bootstrap-cache/*.sources,bootstrap/scripts/**,tests/**", name: "bootstrap64"
+        }
+        
+        def isoTesters = [:]
+        isoTesters['SUnit'] = { defineIsoTestStage("SUnit", "SUnit", "Tests", "\'SUnit-Tests\'  \'SUnit-Visitor-Tests\'  \'SUnit-MockObjects-Tests\'") }
+        isoTesters['Kernel'] = { defineIsoTestStage("Kernel", "Kernel", "Tests", "\'Kernel-Tests\'  \'Kernel-CodeModel-Tests\'") }
+        isoTesters['Compiler'] = { defineIsoTestStage("Compiler", "Compiler", "Tests", "\'OpalCompiler-Tests\'  \'DebugInfo-Tests\' \'Kernel-Extended-Tests\' \'Kernel-Tests-WithCompiler\'") }
+        parallel isoTesters
 
-          if( isDevelopmentBranch() ) {
-            stage("Upload to files.pharo.org-${architecture}") {
-              dir("build/bootstrap-cache") {
-                  shell "BUILD_NUMBER=${env.BUILD_ID} bash ../../bootstrap/scripts/prepare_for_upload.sh ${architecture}"
-                sshagent (credentials: ['files-pharo-org-inria']) {
-                  shell "bash ../../bootstrap/scripts/upload_to_files.pharo.org.sh"
+        stage ("Full Image") {
+            shell "BUILD_NUMBER=${BUILD_NUMBER} BOOTSTRAP_ARCH=64 bash ./bootstrap/scripts/5-installIDE.sh"
+            stash includes: "build/bootstrap-cache/*.zip,build/bootstrap-cache/*.sources,bootstrap/scripts/**,tests/**", name: "bootstrap64"
+        }
+
+        if( isDevelopmentBranch() ) {
+            stage("Upload to files.pharo.org") {
+                dir("build/bootstrap-cache") {
+                    shell "BUILD_NUMBER=${env.BUILD_ID} bash ../../bootstrap/scripts/prepare_for_upload.sh 64"
+                    sshagent (credentials: ['files-pharo-org-inria']) {
+                        shell "bash ../../bootstrap/scripts/upload_to_files.pharo.org.sh"
+                    }
                 }
-              }
             }
-          }
-      } finally {
-          shell "ls -la"
-          if(fileExists('PharoDebug.log')){
-              shell "mv PharoDebug.log PharoDebug-bootstrap.log"
-              archiveArtifacts allowEmptyArchive: true, artifacts: "PharoDebug-bootstrap.log", fingerprint: true
-          }
-          if(fileExists('crash.dmp')){
-              shell "mv crash.dmp crash-bootstrap.dmp"
-              archiveArtifacts allowEmptyArchive: true, artifacts: "crash-bootstrap.dmp", fingerprint: true
-          }
+        }
+    } finally {
+        shell "ls -la"
+        if(fileExists('PharoDebug.log')){
+            shell "mv PharoDebug.log PharoDebug-bootstrap.log"
+            archiveArtifacts allowEmptyArchive: true, artifacts: "PharoDebug-bootstrap.log", fingerprint: true
+        }
+        if(fileExists('crash.dmp')){
+            shell "mv crash.dmp crash-bootstrap.dmp"
+            archiveArtifacts allowEmptyArchive: true, artifacts: "crash-bootstrap.dmp", fingerprint: true
+        }
 
         archiveArtifacts artifacts: 'build/bootstrap-cache/*.zip,build/bootstrap-cache/*.sources', fingerprint: true
         cleanWs()
-      }
-      }
     }
-  }
-  parallel builders 
 }
 
 def launchBenchmark(){
@@ -213,20 +244,12 @@ def launchBenchmark(){
 try{
   properties([disableConcurrentBuilds()])
 
-  // We run the whole process in 64 bits all the time. 
-  // The 32 bits process is only run when a PR is integrated
-
-  def architectures
-
-  if(isDevelopmentBranch()){
-	  architectures = [/*'32',*/ '64']
-  }else{
-	  architectures = ['64']
-  }
+  // We run the whole process in 64 bits all the time now
+  def architectures = ['64']
 
   node('unix') {
     timeout(60) {
-      bootstrapImage(architectures)
+      bootstrapImage()
     }
   }
 
@@ -247,7 +270,6 @@ try{
             stage("Tests-${platform}-${architecture}") {
               timeout(35) {
                 runTests(architecture)
-                runTests(architecture, "Kernel")
               }
             }
           }
@@ -255,6 +277,17 @@ try{
       }
     }
   }
+
+  testers["unix-commandline"] = {
+    node("unix") {
+      stage("Tests-Pharo-command-line") {
+        timeout(5) {
+          runCommandLineTests()
+        }
+      }
+    }
+  }
+
   parallel testers
 
   notifyBuild("SUCCESS")

@@ -29,8 +29,10 @@ ReDirectlyDefinesInstanceVariableCondition class >> classNamed: aString inModel:
 
 { #category : 'checking' }
 ReDirectlyDefinesInstanceVariableCondition >> check [
-	
-	violators := instanceVariables reject: [ :shared | class directlyDefinesInstanceVariable: shared ].
+
+	violators := instanceVariables reject: [ :shared |
+		             (class directlyDefinesInstanceVariable: shared) or: [ class classSide directlyDefinesInstanceVariable: shared ] ].
+
 	^ violators isEmpty
 ]
 
@@ -41,12 +43,6 @@ ReDirectlyDefinesInstanceVariableCondition >> class: aRBAbstractClass inModel: a
 	model := aRBNamespace.
 	instanceVariables := aCollection 
 	
-]
-
-{ #category : 'private' }
-ReDirectlyDefinesInstanceVariableCondition >> errorBlock [
-	^ [ class printString
-				, ' <1?: > directly define <1?s:> instance variable ' , instanceVariables ]
 ]
 
 { #category : 'accessing' }

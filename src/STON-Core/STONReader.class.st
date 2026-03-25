@@ -388,8 +388,15 @@ STONReader >> parseMapOrListRepresentation [
 
 { #category : 'parsing' }
 STONReader >> parseNamedInstVarsFor: anObject [
+
+	| class |
+	class := anObject class.
+
 	self parseMapDo: [ :instVarName :value |
-		anObject instVarNamed: instVarName asString put: value ]
+			class
+				slotNamed: instVarName
+				ifFound: [ :slot | slot write: value to: anObject ]
+				ifNone: [ InstanceVariableNotFound signalFor: instVarName asString ] ]
 ]
 
 { #category : 'parsing-internal' }
@@ -608,7 +615,11 @@ STONReader >> storeReference: object [
 STONReader >> stringStreamContents: block [
 	stringStream ifNil: [
 		stringStream := (String new: 32) writeStream ].
-	stringStream reset.
+	
+	stringStream originalContents isWideString 
+		ifTrue: [ stringStream := (String new: 32) writeStream ]  
+		ifFalse: [ stringStream reset ].
+	
 	block value: stringStream.
 	^ stringStream contents
 ]

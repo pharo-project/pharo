@@ -201,7 +201,7 @@ RBChangeMethodNameRefactoring >> replaceMessageSends [
 		ifTrue: [ ' class' ]
 		ifFalse: [ '' ]).
 	
-	self generateChangesFor: (RBReplaceMessageSendTransformation
+	self generateChangesFor: (ReReplaceMessageSendTransformation
 			 model: self model
 			 replaceMethod: oldSelector
 			 in: (self model classNamed: className)

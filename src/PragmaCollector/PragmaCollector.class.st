@@ -50,12 +50,13 @@ filter
 "
 Class {
 	#name : 'PragmaCollector',
-	#superclass : 'Model',
+	#superclass : 'Object',
 	#instVars : [
 		'collected',
 		'filter',
 		'announcing',
-		'selectors'
+		'selectors',
+		'announcer'
 	],
 	#category : 'PragmaCollector-Base',
 	#package : 'PragmaCollector',
@@ -104,6 +105,12 @@ PragmaCollector >> announce: anAnnouncement [
 	"see Announcements packages"
 
 	self announcing ifTrue:	[ self announcer announce: anAnnouncement ]
+]
+
+{ #category : 'subscription' }
+PragmaCollector >> announcer [
+
+	^ announcer
 ]
 
 { #category : 'accessing' }
@@ -160,6 +167,7 @@ PragmaCollector >> ifNotEmpty: aBlock [
 { #category : 'initialization' }
 PragmaCollector >> initialize [
 	super initialize.
+	announcer := Announcer new.
 	self installSystemNotifications
 ]
 

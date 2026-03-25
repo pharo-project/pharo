@@ -620,7 +620,7 @@ MorphTreeMorph >> columnsChanged [
 
 { #category : 'events-processing' }
 MorphTreeMorph >> commandOrCrontrolKeyPressed: anEvent [
-	^ (Smalltalk os isMacOS)
+	^ (OSPlatform current isMacOS)
 		ifTrue: [anEvent controlKeyPressed]
 		ifFalse: [anEvent commandKeyPressed]
 ]

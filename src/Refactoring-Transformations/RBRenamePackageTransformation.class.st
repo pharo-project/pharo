@@ -92,15 +92,3 @@ RBRenamePackageTransformation >> renameManifestClass [
 RBRenamePackageTransformation >> renamePackage [
 	self model renamePackage: package to: newName
 ]
-
-{ #category : 'storing' }
-RBRenamePackageTransformation >> storeOn: aStream [
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream nextPutAll: ' rename: '.
-	aStream nextPutAll: package name.
-	aStream
-		nextPutAll: ' to: #';
-		nextPutAll: newName;
-		nextPut: $)
-]

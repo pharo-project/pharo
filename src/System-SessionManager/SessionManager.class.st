@@ -114,7 +114,7 @@ Class {
 { #category : 'class initialization' }
 SessionManager class >> classRemoved: classRemoved [
 
-	self default unregisterClassNamed: classRemoved classRemoved name
+	self default unregisterHandler: classRemoved classRemoved name ifAbsent: [ "Ignore" ]
 ]
 
 { #category : 'class initialization' }
@@ -153,12 +153,11 @@ SessionManager class >> initializeKernelRegistrations [
 		registerSystemClassNamed: #Delay atPriority: 20;
 		registerSystemClassNamed: #ProcessorScheduler atPriority: 30;
 		registerSystemClassNamed: #OSPlatform atPriority: 50;
-		registerSystemClassNamed: #ExternalObject atPriority: 60;
-		registerSystemClassNamed: #FFIBackend atPriority: 60;
 		registerSystemClassNamed: #File atPriority: 90;
+		registerSystemClassNamed: #SmalltalkImage atPriority: 90;
+		registerSystemClassNamed: #SourcesManager; 
 		registerSystemClassNamed: #FinalizationProcess;
 		registerSystemClassNamed: #Stdio;
-		registerSystemClassNamed: #EndianDetector;
 		registerSystemClassNamed: #Symbol
 ]
 
@@ -222,7 +221,7 @@ SessionManager >> hasRegistered: handledId [
 	"handledId, in most cases, will be a class name"
 
 	^ self startupList
-			anySatisfy: [ :handler | handler handledId = handledId ]
+			anySatisfy: [ :handler | handler handlerId = handledId ]
 ]
 
 { #category : 'initialization' }
@@ -234,7 +233,8 @@ SessionManager >> initialize [
 	networkCategory := self createCategory: 'Network'.
 	guiCategory := self createCategory: 'Graphical User Interface'.
 	toolsCategory := self createCategory: 'Tools'.
-	userCategory := self createCategory: 'User'
+	userCategory := self createCategory: 'User'.
+	self installNewSession
 ]
 
 { #category : 'session management' }
@@ -250,7 +250,6 @@ SessionManager >> installSession: aWorkingSession [
 { #category : 'snapshot and quit' }
 SessionManager >> launchSnapshot: save andQuit: quit [
 	| snapshotOperation |
-	ChangesLog default logSnapshot: save andQuit: quit.
 	snapshotOperation := SnapshotOperation save: save andQuit: quit withSessionManager: self.
 
 	snapshotOperation performSnapshot.
@@ -287,17 +286,17 @@ SessionManager >> register: aSessionHandler [
 
 { #category : 'registration' }
 SessionManager >> register: aSessionHandler inCategory: aCategory [
-	aCategory
-		register: aSessionHandler
-		atPriority: aCategory defaultPriority
+
+	^ self register: aSessionHandler inCategory: aCategory atPriority: aCategory defaultPriority
 ]
 
 { #category : 'registration' }
 SessionManager >> register: aSessionHandler inCategory: aCategory atPriority: anInteger [
-	self unregisterHandler: aSessionHandler handledId.
-	aCategory
-		register: aSessionHandler
-		atPriority: anInteger
+
+	self
+		unregisterHandler: aSessionHandler handlerId
+		ifAbsent: [ "To have a clean registration" ].
+	aCategory register: aSessionHandler atPriority: anInteger
 ]
 
 { #category : 'registration' }
@@ -400,8 +399,9 @@ SessionManager >> snapshot: save andQuit: quit [
 	   wait signal ] forkAt: Processor timingPriority - 1.
 	wait wait.
 
-	snapshotOperation hasError 
-		ifTrue: [ snapshotOperation error debug ].
+	snapshotOperation hasError ifTrue: [ 
+		"Resignal the exception from its original context (or a copy of it) to have the original stack trace"
+		snapshotOperation error raiseUnhandledError  ].
 
 	"The execution of the deferred startup actions are executed in the caller thread."
 	self currentSession executeDeferredStartupActions: snapshotOperation isImageStarting.
@@ -436,8 +436,18 @@ SessionManager >> unregisterClassNamed: aClassName [
 ]
 
 { #category : 'registration' }
-SessionManager >> unregisterHandler: anHandledId [
-	categories do: [ :each | each unregisterHandler: anHandledId ]
+SessionManager >> unregisterHandler: aHandlerId [
+
+	^ self unregisterHandler: aHandlerId ifAbsent: [ self error: 'Handler not found: ' , aHandlerId ]
+]
+
+{ #category : 'registration' }
+SessionManager >> unregisterHandler: aHandlerId ifAbsent: aBlock [
+
+	| found |
+	found := false.
+	categories do: [ :each | found := found or: [ each unregisterHandler: aHandlerId ] ].
+	found ifFalse: aBlock
 ]
 
 { #category : 'well-known categories' }

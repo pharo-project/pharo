@@ -11,6 +11,12 @@ Class {
 	#tag : 'Drivers'
 }
 
+{ #category : 'accessing' }
+ReRenameClassDriver class >> driverName [
+
+	^ 'Rename class'
+]
+
 { #category : 'instance creation' }
 ReRenameClassDriver class >> rename: oldName [
 	
@@ -19,10 +25,36 @@ ReRenameClassDriver class >> rename: oldName [
 		yourself
 ]
 
-{ #category : 'resources' }
-ReRenameClassDriver >> configureRefactoring [
-	
-		refactoring := ReRenameClassRefactoring rename: oldName.
+{ #category : 'execution' }
+ReRenameClassDriver >> breakingChoices [
+
+	| items |
+	items := OrderedCollection new.
+	items add: (ReRenameClassChoice new driver: self).
+	items add: (ReBrowseMethodsChoice new driver: self).
+	^ items
+]
+
+{ #category : 'actions' }
+ReRenameClassDriver >> browseMethods [
+
+	| references |
+	references := refactoring violations.
+	(Smalltalk tools toolNamed: #messageList)
+		browse: (references collect: [ :ref | ref origin realClass lookupSelector: ref selector ])
+		title: 'Methods containing references to a shared var that will shadow class reference after renaming'
+]
+
+{ #category : 'execution' }
+ReRenameClassDriver >> defaultSelectDialog [
+
+	^ super defaultSelectDialog
+		title: 'There are potential breaking changes!';
+		message: 'Watchout potential reference shadowing detected!';
+		items: self breakingChoices;
+		display: [ :each | each description ];
+		displayIcon: [ :each | self iconNamed: each systemIconName ];
+		yourself
 ]
 
 { #category : 'initialization' }
@@ -30,6 +62,12 @@ ReRenameClassDriver >> initialize [
 	
 	super initialize.
 	shouldEscape := false.
+]
+
+{ #category : 'configuration' }
+ReRenameClassDriver >> instantiateRefactoring [
+
+	^ ReRenameClassRefactoring rename: oldName
 ]
 
 { #category : 'accessing' }
@@ -49,24 +87,28 @@ ReRenameClassDriver >> oldName: aString [
 	oldName := aString
 ]
 
+{ #category : 'actions' }
+ReRenameClassDriver >> renameClass [
+
+	self applyChanges 
+]
+
 { #category : 'execution' }
 ReRenameClassDriver >> requestNewNameBasedOn: aName [
 
 	newName := self defaultRequestDialog
 		           title: 'Please provide a new class name';
-		           label:
-			           'The new name should be valid and not the one of an existing class.';
-		           validateAnswer: [ :string :presenter |
-			           self validateName: string onPresenter: presenter ];
+		           message: 'The new name should be valid and not the one of an existing class.';
+		           validateAnswer: [ :string :presenter | self validateName: string onPresenter: presenter ];
 		           text: aName;
 		           openModal.
 
 	newName ifNil: [
-		shouldEscape := true.
-		^ self ].
+			shouldEscape := true.
+			^ self ].
 	newName = oldName ifTrue: [
-		shouldEscape := true.
-		^ self ].
+			shouldEscape := true.
+			^ self ].
 
 	refactoring newName: newName.
 	^ newName
@@ -91,20 +133,21 @@ ReRenameClassDriver >> runRefactoring [
 	[ refactoring isValidClassName check & refactoring isNotGlobal check ] whileFalse: [ 
 			newName := self requestNewNameBasedOn: newName.
 			shouldEscape ifTrue: [ ^ self ] ].
-	self applyChanges
+
+	refactoring failedBreakingChangePreconditions ifEmpty: [ self applyChanges ] ifNotEmpty: [ self handleBreakingChanges ]
 	
 ]
 
 { #category : 'validation' }
-ReRenameClassDriver >> validateName: aName onPresenter: presenter [ 
-	
+ReRenameClassDriver >> validateName: aName onPresenter: presenter [
+
 	| condition result |
 	condition := RBCondition isValidClassName: aName.
 	result := condition check.
 
-	result 
-		ifFalse: [ presenter setErrorText: condition errorString  ]
-		ifTrue: [ presenter setErrorText: '' ].
-		
+	result
+		ifFalse: [ presenter setErrorText: condition errorString ]
+		ifTrue: [ presenter errorText: '' ].
+
 	^ result
 ]

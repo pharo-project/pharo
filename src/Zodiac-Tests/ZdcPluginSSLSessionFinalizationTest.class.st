@@ -26,6 +26,7 @@ ZdcPluginSSLSessionFinalizationTest >> tearDown [
 ZdcPluginSSLSessionFinalizationTest >> testPluginSSLSessionIsCorrectlyFinalized [
 
 	| previousState afterState |
+
 	client := ZnClient new.
 	client url: 'https://www.google.com'.
 	client method: #GET.

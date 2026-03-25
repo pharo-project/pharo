@@ -9,30 +9,13 @@ WorldMorph >> acceptDroppingMorph: dropped event: evt [
 	self addMorphFront: aMorph.
 	(aMorph fullBounds intersects: self viewBox)
 		ifFalse: [
-			self inform: 'Dropped morph not in bounds'.
+			InformativeNotification signal: 'Dropped morph not in bounds'.
 			aMorph position: self bounds center ].
 	aMorph
 		submorphsDo: [ :m |
 			(m isKindOf: HaloMorph)
 				ifTrue: [ m delete ] ].
 	self bringTopmostsToFront
-]
-
-{ #category : '*Morphic-Base' }
-WorldMorph >> dispatchKeystroke: anEvent [
-	"A keystroke was hit when no keyboard focus was set, so it is sent here to the world instead."
-
-	|  aChar ascii |
-	aChar := anEvent keyCharacter.
-	(ascii := aChar asciiValue) = 27 ifTrue: "escape key"
-		[^ self invokeWorldMenuFromEscapeKey].
-
-	(self navigationKey: anEvent) ifTrue: [^self].
-
-	"It was unhandled. Remember the keystroke."
-	self lastKeystroke: anEvent keyString.
-	self triggerEvent: #keyStroke.
-	super dispatchKeystroke: anEvent
 ]
 
 { #category : '*Morphic-Base' }

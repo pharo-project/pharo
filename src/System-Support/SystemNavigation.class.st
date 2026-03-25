@@ -258,6 +258,45 @@ SystemNavigation >> allSentMessages [
 	^ sent
 ]
 
+{ #category : 'package scoping' }
+SystemNavigation >> allSentMessagesInClass: aClass [
+	"Answer the set of selectors which are sent somewhere in the system."
+	| sent |
+	sent := IdentitySet new.
+	self allSentMessagesInClass: aClass do: [ :e | sent add: e ].
+	^ sent
+]
+
+{ #category : 'package' }
+SystemNavigation >> allSentMessagesInClass: aClass do: aBlock [
+	"Answer the set of selectors which are sent somewhere in the system."
+	aClass methodsDo: [:method | "Include all sels, but not if sent by self"
+		method literalsDo: [:literal |
+			(literal isSymbol) ifTrue: ["might be sent"
+				literal == method selector ifFalse: [ aBlock value: literal ]].
+			(literal isMemberOf: Array) ifTrue: ["might be performed"
+				literal do: [:x | (x isSymbol) ifTrue: [ x == method selector ifFalse: [ aBlock value: x ]]]]]].
+	"The following may be sent without being in any literal frame"
+	1
+		to: Smalltalk specialSelectorSize
+		do: [:index | aBlock value: (Smalltalk specialSelectorAt: index)]
+]
+
+{ #category : 'package scoping' }
+SystemNavigation >> allSentMessagesInPackage: aPackage [
+	| sent |
+	sent := IdentitySet new.
+	self allSentMessagesInPackage: aPackage do: [ :e | sent add: e ].
+	^ sent
+]
+
+{ #category : 'package scoping' }
+SystemNavigation >> allSentMessagesInPackage: aPackage do: aBlock [
+	"Answer the set of selectors which are sent somewhere in the system."
+
+	aPackage definedClasses do: [ :class | self allSentMessagesInClass: class do: aBlock ]
+]
+
 { #category : 'query' }
 SystemNavigation >> allSymbolsStartingWith: aString do: aBlock [
 
@@ -391,12 +430,8 @@ SystemNavigation >> removeClass: aClass [
 	classToRemove := aClass instanceSide.
 	className := classToRemove name.
 	message := self removeClassMessageFor: className.
-	(result := self confirm: message)
-		ifTrue: [
-			classToRemove subclasses notEmpty
-				ifTrue: [
-					(self confirm: 'class has subclasses: ' , message)
-						ifFalse: [ ^ false ] ].
+	(result := ConfirmationRequest signal: message) ifTrue: [
+			classToRemove subclasses ifNotEmpty: [ (ConfirmationRequest signal: 'Class has subclasses: ' , message) ifFalse: [ ^ false ] ].
 			classToRemove removeFromSystem ].
 	^ result
 ]

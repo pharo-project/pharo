@@ -314,13 +314,15 @@ InternetConfiguration class >> setHttpProxy [
 
 { #category : 'system startup' }
 InternetConfiguration class >> shutDown [
-	Smalltalk os isMacOS
+	OSPlatform current isMacOS
 		ifTrue: [ NetworkSystemSettings useHTTPProxy: false ]
 ]
 
 { #category : 'system startup' }
 InternetConfiguration class >> startUp [
-	Smalltalk os configureHttpProxy
+
+	"Configure the http proxy depending on the platform"
+	InternetConfigurationInitializer new visit
 ]
 
 { #category : 'tests' }

@@ -17,6 +17,14 @@ ThreeWayComparisonTest >> testBooleans [
 ]
 
 { #category : 'tests' }
+ThreeWayComparisonTest >> testCharacters [
+
+	self assert: ($b threeWayCompareTo: $a) equals: 1.
+	self assert: ($a threeWayCompareTo: $b) equals: -1.
+	self assert: ($b threeWayCompareTo: $b ) equals: 0
+]
+
+{ #category : 'tests' }
 ThreeWayComparisonTest >> testFloats [
 
 	| a b c d |
@@ -36,6 +44,15 @@ ThreeWayComparisonTest >> testIntegers [
 	self assert: (42 threeWayCompareTo: 42) equals: 0.
 	self assert: (1 threeWayCompareTo: 42) equals: -1.
 	self assert: (100 threeWayCompareTo: 42) equals: 1
+]
+
+{ #category : 'tests' }
+ThreeWayComparisonTest >> testObjects [
+
+	self assert: (Point>>#degrees threeWayCompareTo: (Point>>#x)) equals: -1.
+	"because this because 'Point>>#degrees' < 'Point>>#x' returns true"
+	self assert: (ChainedSortFunctionTest threeWayCompareTo: SortFunctionTest) equals: -1.
+	
 ]
 
 { #category : 'tests' }

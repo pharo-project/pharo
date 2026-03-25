@@ -39,7 +39,7 @@ RBDeprecateClassTransformation class >> model: aRBModel className: aClassName [
 RBDeprecateClassTransformation >> applicabilityPreconditions [
 
 	^ {
-		  (ReClassesExistCondition new classes: { class }).
+		  (ReClassesExistCondition new classes: { class name -> class } asDictionary).
 		  (ReClassesAreNotMetaClassCondition new classes: { class }) }
 ]
 
@@ -61,14 +61,4 @@ RBDeprecateClassTransformation >> privateTransform [
 						  nextPutAll: '^ true' ])
 			 in: (className , ' class') asSymbol
 			 withProtocol: #deprecation)
-]
-
-{ #category : 'storing' }
-RBDeprecateClassTransformation >> storeOn: aStream [
-
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream nextPutAll: ' className: '.
-	className storeOn: aStream.
-	aStream nextPut: $)
 ]

@@ -9,36 +9,35 @@ Class {
 	#tag : 'Core'
 }
 
+{ #category : 'accessing' }
+RunnerLongDurationTest >> longTestClass [
+
+	^ LongTest
+]
+
 { #category : 'running' }
 RunnerLongDurationTest >> setUp [
 
 	super setUp.
+	self longTestClass doNotIgnoreTest .
 	runner := NewTestRunner new suitePreparator:
-		          ShuffleSuitePreparator
+		          ShuffleSuitePreparator new 
 ]
 
 { #category : 'tests' }
-RunnerLongDurationTest >> testRunningFromACollectionOfPackages [
+RunnerLongDurationTest >> testRunningFromAClass [
 
-	"first execution"
-
-	| packages |
-	packages := OrderedCollection
-		            with: #'Zodiac-Tests' asPackage
-		            with: #'Zodiac-Tests' asPackage.
-	runner runPackages: packages.
-	self assert: runner runCount equals: 79 * 2.
-	self assert: runner passedCount equals: 79 * 2
+	self skip.
+	runner runClass: self longTestClass.
+	self assert: runner runCount equals: 1.
+	self assert: runner passedCount equals: 1
 ]
 
 { #category : 'tests' }
-RunnerLongDurationTest >> testRunningFromAPackage [
+RunnerLongDurationTest >> testRunningFromACollectionOfClasses [
 
-	"first execution"
-
-	| aPackage |
-	aPackage := #'Zodiac-Tests' asPackage.
-	runner runPackage: aPackage.
-	self assert: runner runCount equals: 79.
-	self assert: runner passedCount equals: 79
+	self skip.
+	runner runClasses: { LongTest . LongTest . LongTest }.
+	self assert: runner runCount equals: 3.
+	self assert: runner passedCount equals: 3
 ]

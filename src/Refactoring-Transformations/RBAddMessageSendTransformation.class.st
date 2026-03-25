@@ -104,26 +104,11 @@ RBAddMessageSendTransformation >> privateTransform [
 
 	"if the message requires variables, look for the right variables in this context"
 	variables := messageNode allVariables.
-	assignments := (methodTree allChildren select: #isAssignment)
+	assignments := (methodTree withAllChildren select: #isAssignment)
 		select: [ :each | variables includes: each variable ].
 	previousNode := assignments detectMax: #stop.
 	previousNode
 		ifNil: [ methodTree body addNodeFirst: messageNode ]
 		ifNotNil: [ previousNode parent addNode: messageNode after: previousNode ].
 	class compileTree: methodTree
-]
-
-{ #category : 'storing' }
-RBAddMessageSendTransformation >> storeOn: aStream [
-
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream
-		nextPutAll: ' messageSend: ''';
-		nextPutAll: message;
-		nextPutAll: ''' inMethod: ''';
-		nextPutAll: selector;
-		nextPutAll: ''' inClass: '.
-	class storeOn: aStream.
-	aStream nextPut: $)
 ]

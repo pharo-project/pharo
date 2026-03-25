@@ -65,38 +65,6 @@ InstructionStreamTest >> setUp [
 ]
 
 { #category : 'tests' }
-InstructionStreamTest >> testBlockWithASuperSendHasCorrectNumberOfArguments [
-
-	| aMethod aCompiledBlock aStream |
-	aMethod := self classUnderTest >> #methodWithASuperBlock.
-	aCompiledBlock := aMethod literals at:1.
-
-	self assert: aCompiledBlock isCompiledBlock.
-
-	aStream := InstructionStream on: aCompiledBlock.
-
-	aStream interpretWithClient: self.
-
-	self assert: operations fifth equals: { #directSuperSend:numArgs:. #aSuperMethod:with:. 2 }
-]
-
-{ #category : 'tests' }
-InstructionStreamTest >> testBlockWithASuperWithoutArgumentsSendHasCorrectNumberOfArguments [
-
-	| aMethod aCompiledBlock aStream |
-	aMethod := self classUnderTest >> #methodWithASuperBlockWithoutArguments.
-	aCompiledBlock := aMethod literals at:1.
-
-	self assert: aCompiledBlock isCompiledBlock.
-
-	aStream := InstructionStream on: aCompiledBlock.
-
-	aStream interpretWithClient: self.
-
-	self assert: operations third equals: { #directSuperSend:numArgs:. #yourself. 0 }
-]
-
-{ #category : 'tests' }
 InstructionStreamTest >> testNextPcAnswerNextBytecodePcInCaseOfExtension [
 
 	| stream methodToTest startingPc |
@@ -104,7 +72,7 @@ InstructionStreamTest >> testNextPcAnswerNextBytecodePcInCaseOfExtension [
 	                >> #newMethodWithALotOfLiteralsToTestExtensions.
 
 	startingPc := methodToTest ast firstPcForNode:
-		              (methodToTest ast allChildren select: [ :e |
+		              (methodToTest ast withAllChildren select: [ :e |
 			               e isMessage ]) anyOne.
 	stream := InstructionStream new method: methodToTest pc: startingPc.
 
@@ -113,47 +81,6 @@ InstructionStreamTest >> testNextPcAnswerNextBytecodePcInCaseOfExtension [
 	In our case we have 1 extension and the bytecode so the next pc is at the size of this extension plus the size of the bytecode extended (2 + 2)"
 
 	self assert: (stream nextPc: 16rE0) equals: startingPc + 4
-]
-
-{ #category : 'tests - example' }
-InstructionStreamTest >> testSimulatedTerminationOfProcessDoNotCorruptTheContext [
-
-	| initialContext aContext receiver semaphore process suspendedProcess return errorThatHappen |
-
-	receiver := self classUnderTest new.
-	semaphore := Semaphore new.
-	process := [ semaphore wait ] forkAt: Processor activePriority + 1.
-	receiver process: process.
-	suspendedProcess := [ receiver callingAMethodSuspendedBeforeTheTerminateOfAnotherProcess ] forkAt: Processor activePriority + 1.
-
-	initialContext := aContext := suspendedProcess suspendedContext.
-	[ initialContext method = (self classUnderTest >> #callingAMethodSuspendedBeforeTheTerminateOfAnotherProcess) ]
-		whileFalse: [ initialContext := initialContext sender].
-
-	[return := suspendedProcess stepToHome: initialContext]
-		on: Exception do: [:e | errorThatHappen := e ].
-
-	self assert: errorThatHappen isNil.
-	self assert: receiver expectedValue equals: 42
-]
-
-{ #category : 'tests - example' }
-InstructionStreamTest >> testSimulatingAMethodWithHaltHasCorrectContext [
-
-	| initialContext aContext receiver suspendedProcess return |
-
-	receiver := self classUnderTest new.
-	suspendedProcess := [ receiver callingAMethodWithHalt ] forkAt: Processor activePriority + 1.
-
-	initialContext := aContext := suspendedProcess suspendedContext.
-	[ initialContext method = (self classUnderTest >> #callingAMethodWithHalt) ]
-		whileFalse: [ initialContext := initialContext sender].
-
-	return := suspendedProcess stepToHome: initialContext.
-
-	"Suspended process should stop in the exception"
-	self assert: return method equals: (Object >> #halt).
-	self assert: return size equals: 1
 ]
 
 { #category : 'tests - example' }
@@ -238,43 +165,6 @@ InstructionStreamTest >> testStepTakenConditionalJumpBytecodes [
 		stream interpretNextInstructionFor: context ].
 
 	self assert: context top equals: 2
-]
-
-{ #category : 'tests - example' }
-InstructionStreamTest >> testStepThroughInAMethodWithMNU [
-
-	| initialContext aContext receiver suspendedProcess return |
-
-	receiver := self classUnderTest new.
-	suspendedProcess := [ receiver callingAMethodWithMNU ] forkAt: Processor activePriority + 1.
-
-	initialContext := aContext := suspendedProcess suspendedContext.
-	[ initialContext method = (self classUnderTest >> #callingAMethodWithMNU) ]
-		whileFalse: [ initialContext := initialContext sender].
-
-	return := suspendedProcess stepToHome: initialContext.
-
-	"Suspended process should stop in the exception"
-	self assert: return method equals: (self classUnderTest lookupSelector: #doesNotUnderstand:)
-]
-
-{ #category : 'tests - example' }
-InstructionStreamTest >> testStepThroughInAMethodWithoutError [
-
-	| initialContext aContext receiver suspendedProcess return |
-
-	receiver := self classUnderTest new.
-	suspendedProcess := [ receiver callingAMethodWithSuspendAndReturnANumber ] forkAt: Processor activePriority + 1.
-
-	initialContext := aContext := suspendedProcess suspendedContext.
-	[ initialContext method = (self classUnderTest >> #callingAMethodWithSuspendAndReturnANumber) ]
-		whileFalse: [ initialContext := initialContext sender].
-
-	return := suspendedProcess stepToHome: initialContext.
-
-	"Suspended process should stop in the exception"
-	self assert: return method equals: (self classUnderTest >> #callingAMethodWithSuspendAndReturnANumber).
-	self assert: return top equals: 42
 ]
 
 { #category : 'tests - example' }

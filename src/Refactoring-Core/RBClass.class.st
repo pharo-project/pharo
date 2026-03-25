@@ -229,6 +229,11 @@ RBClass >> packageName: anObject [
 ]
 
 { #category : 'accessing' }
+RBClass >> packageTagName [
+	^ self tagName
+]
+
+{ #category : 'accessing' }
 RBClass >> poolDictionaryNames [
 
 	^ self privatePoolDictionaryNames copy

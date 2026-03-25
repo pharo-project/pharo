@@ -18,7 +18,7 @@ Class Instance Variables:
 "
 Class {
 	#name : 'MCWorkingCopy',
-	#superclass : 'Model',
+	#superclass : 'Object',
 	#instVars : [
 		'ancestry',
 		'counter',
@@ -81,9 +81,7 @@ MCWorkingCopy class >> ensureForPackageNamed: aPackageName [
 { #category : 'accessing' }
 MCWorkingCopy class >> ensureForPackageNamed: aPackageName packageOrganizer: aPackageOrganizer [
 
-	^ (self hasPackageNamed: aPackageName)
-		  ifTrue: [ self forPackageNamed: aPackageName ]
-		  ifFalse: [ self registerPackage: (MCPackage named: aPackageName) packageOrganizer: aPackageOrganizer ]
+	^ self forPackageNamed: aPackageName ifNone: [ self registerPackage: (MCPackage named: aPackageName) packageOrganizer: aPackageOrganizer ]
 ]
 
 { #category : 'accessing' }
@@ -95,9 +93,15 @@ MCWorkingCopy class >> forPackage: aPackage [
 { #category : 'accessing' }
 MCWorkingCopy class >> forPackageNamed: aPackageName [
 
-	^ self registry values
-		  detect: [ :workingCopy | workingCopy packageName = aPackageName ]
-		  ifNone: [ NotFound signalFor: aPackageName in: self ]
+	^ self forPackageNamed: aPackageName ifNone: [ NotFound signalFor: aPackageName in: self ]
+]
+
+{ #category : 'accessing' }
+MCWorkingCopy class >> forPackageNamed: aPackageName ifNone: aBlock [
+
+	self registry valuesDo: [ :workingCopy | workingCopy packageName = aPackageName ifTrue: [ ^ workingCopy ] ].
+
+	^ aBlock value
 ]
 
 { #category : 'system changes' }
@@ -130,8 +134,7 @@ MCWorkingCopy class >> infoFromDictionary: aDictionary cache: cache [
 { #category : 'class initialization' }
 MCWorkingCopy class >> initialize [
 
-	registry ifNotNil: [ registry rehash ].
-	self registerForNotifications
+	registry ifNotNil: [ registry rehash ]
 ]
 
 { #category : 'system changes' }
@@ -162,8 +165,8 @@ MCWorkingCopy class >> packageRenamed: anAnnouncement [
 
 { #category : 'event registration' }
 MCWorkingCopy class >> registerForNotifications [
+	"We register Montciello during the bootstrap."
 
-	<systemEventRegistration>
 	self
 		unregisterForNotifications;
 		registerInterestOnSystemChanges
@@ -205,8 +208,8 @@ MCWorkingCopy class >> unregisterForNotifications [
 
 { #category : 'operations' }
 MCWorkingCopy >> adopt: aVersion [
-	ancestry addAncestor: aVersion info.
-	self changed.
+
+	ancestry addAncestor: aVersion info
 ]
 
 { #category : 'accessing' }
@@ -294,6 +297,11 @@ MCWorkingCopy >> findSnapshotWithVersionInfo: aVersionInfo [
             ifNotNil: [:aVersion | aVersion snapshot]]
 ]
 
+{ #category : 'accessing' }
+MCWorkingCopy >> info [
+	^ self versionInfo
+]
+
 { #category : 'initialization' }
 MCWorkingCopy >> initialize [
 	super initialize.
@@ -309,17 +317,17 @@ MCWorkingCopy >> initializeWithPackage: aPackage [
 
 { #category : 'operations' }
 MCWorkingCopy >> loaded: aVersion [
+
 	ancestry := MCWorkingAncestry new addAncestor: aVersion info.
-	requiredPackages := OrderedCollection withAll: (aVersion dependencies collect: [:ea | ea package]).
-	self modified: false.
-	self changed
+	requiredPackages := OrderedCollection withAll: (aVersion dependencies collect: [ :ea | ea package ]).
+	self modified: false
 ]
 
 { #category : 'operations' }
 MCWorkingCopy >> merged: aVersion [
+
 	ancestry addAncestor: aVersion info.
-	aVersion dependencies do: [:ea | self requirePackage: ea package].
-	self changed
+	aVersion dependencies do: [ :ea | self requirePackage: ea package ]
 ]
 
 { #category : 'accessing' }
@@ -330,10 +338,7 @@ MCWorkingCopy >> modified [
 { #category : 'accessing' }
 MCWorkingCopy >> modified: aBoolean [
 
-	modified = aBoolean ifTrue: [ ^ self ].
 	modified := aBoolean.
-	self changed: #modified.
-	modified ifFalse: [ ChangesLog default logChange: '"' , self packageName , '"' ]
 ]
 
 { #category : 'accessing' }
@@ -491,8 +496,7 @@ MCWorkingCopy >> unload [
 { #category : 'operations' }
 MCWorkingCopy >> unregister [
 
-	self class registry removeKey: package ifAbsent: [ ^ self ].
-	self class changed: { #unregistered . package }
+	self class registry removeKey: package ifAbsent: [ ^ self ]
 ]
 
 { #category : 'accessing' }
@@ -500,9 +504,4 @@ MCWorkingCopy >> versionInfo [
 	^ self ancestors 
 		ifNotEmpty: [ :list | list first ] 
 		ifEmpty: [ nil ]
-]
-
-{ #category : 'accessing' }
-MCWorkingCopy >> versionInfo: aVersionInfo [
-	ancestry := MCWorkingAncestry new addAncestor: aVersionInfo
 ]

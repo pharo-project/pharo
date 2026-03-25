@@ -9,6 +9,12 @@ Class {
 	#tag : 'Reporters'
 }
 
+{ #category : 'testing' }
+AbstractReporterTest class >> isAbstract [
+
+	^ self == AbstractReporterTest
+]
+
 { #category : 'accessing' }
 AbstractReporterTest >> reporter [
 

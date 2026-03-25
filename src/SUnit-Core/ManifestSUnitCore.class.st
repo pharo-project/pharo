@@ -8,3 +8,10 @@ Class {
 	#package : 'SUnit-Core',
 	#tag : 'Manifest'
 }
+
+{ #category : 'meta-data - dependency analyser' }
+ManifestSUnitCore class >> manuallyResolvedDependencies [
+
+	<ignoreForCoverage>
+	^ #(#'Transcript-NonInteractive')
+]

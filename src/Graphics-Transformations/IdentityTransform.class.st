@@ -117,7 +117,7 @@ IdentityTransform >> offset [
 	^0@0
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 IdentityTransform >> setIdentity [
 	"I *am* the identity transform"
 	^self

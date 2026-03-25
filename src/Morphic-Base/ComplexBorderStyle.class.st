@@ -482,7 +482,7 @@ ComplexBorderStyle >> isComplex [
 	^true
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 ComplexBorderStyle >> releaseCachedState [
 	colors := nil.
 	lineStyles := nil

@@ -61,20 +61,6 @@ RBMoveInstanceVariableToClassTransformation >> buildTransformations [
 				class: oldClass)
 ]
 
-{ #category : 'storing' }
-RBMoveInstanceVariableToClassTransformation >> storeOn: aStream [
-
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream nextPutAll: ' variable: '.
-	variableName storeOn: aStream.
-	aStream nextPutAll: ' fromClass: '.
-	oldClass storeOn: aStream.
-	aStream nextPutAll: ' toClass: '.
-	className storeOn: aStream.
-	aStream nextPut: $)
-]
-
 { #category : 'api' }
 RBMoveInstanceVariableToClassTransformation >> variable: aVariableName fromClass: fromClassName toClass: toClassName [
 

@@ -49,36 +49,27 @@ RBRemoveMethodRefactoring >> breakingChangePreconditions [
 
 { #category : 'preconditions' }
 RBRemoveMethodRefactoring >> checkBrowseAllOccurrences: anCollectionOfOccurrences [
+
 	| methods callers |
 	methods := anCollectionOfOccurrences collect: [ :c | c key ] as: Set.
 	callers := anCollectionOfOccurrences collect: [ :v | v value ].
 	methods size = 1
 		ifTrue: [
-			self
-				refactoringWarning:
-					('Possible call to <2s> in <1p> methods.<n>Browse references?'
-						expandMacrosWith: anCollectionOfOccurrences size
-						with: methods anyOne)
-				with: [ self openBrowserOn: (RBBrowserEnvironment new referencesTo: methods anyOne) ] ]
+				self refactoringWarning: ('Possible call to <2s> in <1p> methods.<n>Browse references?'
+						 expandMacrosWith: anCollectionOfOccurrences size
+						 with: methods anyOne) ]
 		ifFalse: [
-			self
-				refactoringWarning:
+				self refactoringWarning:
 					('Possible call to the <2p> selectors in <1p> methods.<n>Browse references?'
-						expandMacrosWith: callers size
-						with: methods size)
-				with: [
-					| env |
-					env := RBSelectorEnvironment new.
-					callers do: [ :d | env addMethod: d method ].
-					self openBrowserOn: env ] ]
+						 expandMacrosWith: callers size
+						 with: methods size) ]
 ]
 
 { #category : 'preconditions' }
 RBRemoveMethodRefactoring >> checkBrowseOccurrenceOf: aSelector in: aRBMethod [
-	self
-		refactoringWarning:
-			('Possible call to <2s> in <1p><n>Browse references?' expandMacrosWith: aRBMethod modelClass with: aSelector)
-		with: [ self openBrowserOn: (RBBrowserEnvironment new referencesTo: aSelector) ]
+
+	self refactoringWarning:
+		('Possible call to <2s> in <1p><n>Browse references?' expandMacrosWith: aRBMethod modelClass with: aSelector)
 ]
 
 { #category : 'preconditions' }
@@ -207,17 +198,6 @@ RBRemoveMethodRefactoring >> sendersExcluding: aSelectorsCollection [
 RBRemoveMethodRefactoring >> sendersOf: aSelector [
 	
 	^ self model allReferencesTo: aSelector
-]
-
-{ #category : 'storing' }
-RBRemoveMethodRefactoring >> storeOn: aStream [
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream nextPutAll: ' removeMethods: '.
-	selector storeOn: aStream.
-	aStream nextPutAll: ' from: '.
-	class storeOn: aStream.
-	aStream nextPut: $)
 ]
 
 { #category : 'preconditions' }

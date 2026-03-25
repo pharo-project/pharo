@@ -38,8 +38,12 @@ DTDefaultPluginPresenter class >> buildContextualPackageGroupWith: presenterInst
 DTDefaultPluginPresenter class >> buildItemsListGroupWith: presenterInstance [
 
 	^ (CmCommandGroup named: 'List items menu') asSpecGroup
-		register: (DTBrowseSelectedItemCommand forSpec context: presenterInstance);
-		yourself
+		  register:
+			  (DTInspectSelectedItemCommand forSpecContext: presenterInstance)
+				  beHiddenWhenCantBeRun;
+		  register:
+			  (DTBrowseSelectedItemCommand forSpec context: presenterInstance);
+		  yourself
 ]
 
 { #category : 'private - commands' }
@@ -59,21 +63,24 @@ DTDefaultPluginPresenter class >> buildPackageGroupWith: presenterInstance [
 
 { #category : 'private - commands' }
 DTDefaultPluginPresenter class >> buildResultGroupWith: presenterInstance [
-	| commandGroup pluginCommands plugin |
 
+	| commandGroup pluginCommands plugin |
 	commandGroup := (CmCommandGroup named: 'Results tools') asSpecGroup
-		description: 'Commands related to result.';
-		register: (DTResultBrowseCommand forSpecContext: presenterInstance) beHiddenWhenCantBeRun;
-		yourself.
+		                description: 'Commands related to result.';
+		                register:
+			                (DTResultBrowseCommand forSpecContext:
+					                 presenterInstance) beHiddenWhenCantBeRun;
+		                yourself.
 
 	plugin := presenterInstance plugin.
 	plugin ifNil: [ ^ commandGroup ].
 
-	pluginCommands := plugin buildContextualMenuGroupWith: presenterInstance.
+	pluginCommands := plugin buildContextualMenuGroupWith:
+		                  presenterInstance.
 	pluginCommands entries ifEmpty: [ ^ commandGroup ].
 	^ commandGroup
-		register: pluginCommands beDisplayedAsGroup;
-		yourself
+		  register: pluginCommands beDisplayedAsGroup;
+		  yourself
 ]
 
 { #category : 'actions' }
@@ -86,6 +93,12 @@ DTDefaultPluginPresenter >> browseSelectedItem [
 ]
 
 { #category : 'actions' }
+DTDefaultPluginPresenter >> browseSelectedPackage [
+
+	self selectedPackage browse
+]
+
+{ #category : 'actions' }
 DTDefaultPluginPresenter >> browseSelectedResult [
 
 	self resultSelected drTestsBrowse
@@ -95,11 +108,11 @@ DTDefaultPluginPresenter >> browseSelectedResult [
 DTDefaultPluginPresenter >> buildLabelString: nameOfItems numberOfItemsSelected: aInt [
 
 	^ String streamContents: [ :stream |
-		stream
-			<< nameOfItems;
-			<< ' (';
-			<< aInt asString;
-			<< ' selected):' ]
+			  stream
+				  << nameOfItems;
+				  << ' (';
+				  print: aInt;
+				  << ' selected):' ]
 ]
 
 { #category : 'initialization' }
@@ -142,22 +155,23 @@ DTDefaultPluginPresenter >> drTests [
 { #category : 'initialization' }
 DTDefaultPluginPresenter >> initializeItemsListAndLabel [
 
-	itemsList := self newFilterableListPresenter.
+	itemsList := self newFilterableTreePresenter.
 	itemsList
-		displayIcon: [ :aClass | self iconNamed: aClass systemIconName  ];
+		displayIcon: [ :aClass | self iconNamed: aClass systemIconName ];
 		displayColor: [ :aClass |
-			(self packagesSelected includes: aClass package)
-				ifTrue: [ self theme textColor ]
-				ifFalse: [ self theme classExtensionColor ] ];
-		help: 'Select the classes to analyze. Cmd+A or Ctrl+A to select all classes.';
-		sortingBlock: #name ascending;
+				(self packagesSelected includes: aClass package)
+					ifTrue: [ self theme textColor ]
+					ifFalse: [ self theme classExtensionColor ] ];
+		help:
+			'Select the classes to analyze. Cmd+A or Ctrl+A to select all classes.';
 		displayBlock: [ :item | item name ];
-		whenSelectionChangedDo: [ self whenItemsSelectionChanged: self selectedItems ];
+		whenSelectionChangedDo: [
+			self whenItemsSelectionChanged: self selectedItems ];
 		beMultipleSelection;
 		actions: (self rootCommandsGroup / 'List items menu') beRoot.
 
-	packagesList
-		whenSelectionChangedDo: [ self whenPackagesSelectionChanged: self packagesSelected ]
+	packagesList whenSelectionChangedDo: [
+		self whenPackagesSelectionChanged: self packagesSelected ]
 ]
 
 { #category : 'initialization' }
@@ -212,6 +226,18 @@ DTDefaultPluginPresenter >> initializeResultsTreeAndLabel [
 			(DTResultBrowseCommand forSpecContext: self) execute ]
 ]
 
+{ #category : 'actions' }
+DTDefaultPluginPresenter >> inspectSelectedItem [
+
+	self selectedItems first inspect
+]
+
+{ #category : 'actions' }
+DTDefaultPluginPresenter >> inspectSelectedPackage [
+
+	self selectedPackage inspect
+]
+
 { #category : 'accessing' }
 DTDefaultPluginPresenter >> itemsList [
 	^ itemsList
@@ -221,6 +247,12 @@ DTDefaultPluginPresenter >> itemsList [
 DTDefaultPluginPresenter >> newFilterableListPresenter [
 
 	^ self instantiate: DTFilterableListPresenter
+]
+
+{ #category : 'widgets' }
+DTDefaultPluginPresenter >> newFilterableTreePresenter [
+
+	^ self instantiate: DTFilterableTreePresenter
 ]
 
 { #category : 'accessing' }
@@ -272,7 +304,8 @@ DTDefaultPluginPresenter >> resultsList [
 { #category : 'api' }
 DTDefaultPluginPresenter >> selectAllInPackageList [
 
-	packagesList selectAll
+	packagesList selectAll.
+
 ]
 
 { #category : 'api' }
@@ -285,6 +318,12 @@ DTDefaultPluginPresenter >> selectNoneInPackageList [
 DTDefaultPluginPresenter >> selectedItems [
 
 	^ itemsList selectedItems
+]
+
+{ #category : 'accessing' }
+DTDefaultPluginPresenter >> selectedPackage [
+
+	^ packagesList selectedItem
 ]
 
 { #category : 'accessing' }
@@ -395,8 +434,13 @@ DTDefaultPluginPresenter >> whenItemsSelectionChanged: itemsSelected [
 { #category : 'private' }
 DTDefaultPluginPresenter >> whenPackagesSelectionChanged: packagesSelected [
 
+	| testClasses |
+	testClasses := plugin itemsToBeAnalysedFor: packagesSelected.
 	itemsList
-		items: (plugin itemsToBeAnalysedFor: packagesSelected);
-		selectAll.
+		roots: ((testClasses reject: [ :aClass | testClasses includes: aClass superclass ]) sorted: #name ascending);
+		children: [ :aClass | aClass subclasses & testClasses sorted: #name ascending ];
+		expandAll.
+	itemsList roots: itemsList items.
+	itemsList selectAll.
 	self updatePackagesListLabel
 ]

@@ -42,14 +42,14 @@ KMPlatformSpecificKeyCombination >> hash [
 { #category : 'testing' }
 KMPlatformSpecificKeyCombination >> matches: aCollection [
 
-	self platform == Smalltalk os platformFamily ifFalse: [ ^ false ].
+	self platform == OSPlatform current platformFamily ifFalse: [ ^ false ].
 	^ self shortcut matches: aCollection
 ]
 
 { #category : 'testing' }
 KMPlatformSpecificKeyCombination >> matchesCompletely: aCollection [
 
-	self platform == Smalltalk os platformFamily ifFalse: [ ^ false ].
+	self platform == OSPlatform current platformFamily ifFalse: [ ^ false ].
 	^ self shortcut matchesCompletely: aCollection
 ]
 

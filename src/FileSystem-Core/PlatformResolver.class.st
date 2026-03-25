@@ -12,7 +12,7 @@ Class {
 { #category : 'instance creation' }
 PlatformResolver class >> forCurrentPlatform [
 	| platformName |
-	platformName :=  Smalltalk os platformName.
+	platformName := OSPlatform current platformName.
 	^ (self allSubclasses detect: [:ea | ea platformName = platformName]) new
 ]
 
@@ -56,7 +56,7 @@ PlatformResolver >> directoryFromEnvVariableNamed: aString [
 { #category : 'private' }
 PlatformResolver >> directoryFromEnvVariableNamed: aString or: aBlock [
 	| envValue |
-	envValue := [ Smalltalk os environment at: aString ifAbsent: [ nil ] ]
+	envValue := [ OSEnvironment current at: aString ifAbsent: [ nil ] ]
 		on: Error
 		do: [ ^ aBlock value ].
 	^ envValue isEmptyOrNil

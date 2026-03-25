@@ -18,19 +18,24 @@ ReDuplicateClassDriverTest >> newName [
 { #category : 'tests' }
 ReDuplicateClassDriverTest >> setUpMocksOn: driver [
 
-	| dialog requestClass |
+	| dialog requestClass selectedSuperclass |
+	selectedSuperclass := MockObject new.
+	selectedSuperclass on: #name respond: ReClassToBeDuplicated superclass name.
+
 	dialog := MockObject new.
 	dialog
 		on: #window respond: SpDialogWindowPresenter new beOk;
+		on: #selectedSuperclass respond: selectedSuperclass;
 		on:	 #newClassName respond: #ReClassCopiedToBeDeleted;
 		on: #packageName respond: #SomePackage;
 		on: #isCancelled respond: true;
-		on: #openModal respond: dialog.
+		on: #openModal respond: dialog;
+		on: #packageName respond: #SomePackage.
 	driver requestDialog: dialog.
 	
 	requestClass := MockObject new.
 	requestClass
-		on: #for:scopes: respond: dialog;
+		on: #withChanges:scopes: respond: dialog;
 		on: #application: respond: dialog;
 		on: #refactoring: respond: dialog;
 		on: #openModal respond: dialog.		
@@ -47,13 +52,13 @@ ReDuplicateClassDriverTest >> tearDown [
 
 { #category : 'tests' }
 ReDuplicateClassDriverTest >> testDuplicateClass [
-
 	| driver rbClass driverChanges methodChanges |
+	
 	testingEnvironment := RBClassEnvironment classes: {
 			                      ReClassToBeDuplicated.
 			                      ReClassToBeDuplicated superclass }.
-	driver := ReDuplicateClassDriver className:
-		          ReClassToBeDuplicated name.
+	
+	driver := ReDuplicateClassDriver className: ReClassToBeDuplicated name.
 
 	self setUpMocksOn: driver.
 
@@ -65,11 +70,29 @@ ReDuplicateClassDriverTest >> testDuplicateClass [
 	self assert: driverChanges changes size equals: 5.
 
 	methodChanges := driverChanges changes select: [ :amc |
-		                 amc isKindOf: RBAddMethodChange ].
+		                 amc isKindOf: ReAddMethodChange ].
 	self
 		assert: (methodChanges select: [ :mc |
 				 mc selector = #hash or: [ mc selector = #= ] ]) size
 		equals: 2
+]
+
+{ #category : 'tests' }
+ReDuplicateClassDriverTest >> testDuplicateClassInIncompleteModelFails [
+
+	| driver rbClass |
+	testingEnvironment := RBClassEnvironment classes: { ReClassToBeDuplicated }.
+	driver := ReDuplicateClassDriver className:
+		          ReClassToBeDuplicated name.
+
+	self setUpMocksOn: driver.
+
+	driver scopes: { testingEnvironment }.
+	rbClass := testingEnvironment classes anyOne.
+
+	self
+		should: [ driver runRefactoring ]
+		raise: RBRefactoringError
 ]
 
 { #category : 'tests' }
@@ -92,14 +115,14 @@ ReDuplicateClassDriverTest >> testDuplicateClassWithTrait [
 	self assert: driverChanges changes size equals: 5.
 
 	methodChanges := driverChanges changes select: [ :amc |
-		                 amc isKindOf: RBAddMethodChange ].
+		                 amc isKindOf: ReAddMethodChange ].
 	self
 		assert: (methodChanges select: [ :mc |
 				 mc selector = #hash or: [ mc selector = #= ] ]) size
 		equals: 2.
 
 	classAddition := driverChanges changes detect: [ :c |
-		                 c isKindOf: RBAddClassChange ].
+		                 c isKindOf: ReAddClassChange ].
 	self
 		assert: classAddition traitComposition asString
 		equals: ReClassToBeDuplicatedWithTraits traitCompositionString

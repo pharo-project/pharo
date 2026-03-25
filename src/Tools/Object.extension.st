@@ -1,20 +1,6 @@
 Extension { #name : 'Object' }
 
 { #category : '*Tools' }
-Object >> basicInspect [
-	"Create and schedule an Inspector in which the user can examine the receiver's variables.
-	Return the receiver. For getting the inspector, use #basicInspector"
-	(Smalltalk tools toolNamed: #basicInspector) inspect: self
-]
-
-{ #category : '*Tools' }
-Object >> basicInspector [
-	"Create and schedule a basic Inspector in which the user can examine the receiver's variables.
-	Return the inspector. For getting the object itself, use #basicInspect"
-	^ (Smalltalk tools toolNamed: #basicInspector) inspect: self
-]
-
-{ #category : '*Tools' }
 Object >> browse [
 	
 	^ (Smalltalk tools toolNamed: #browser) openOnClass: self class

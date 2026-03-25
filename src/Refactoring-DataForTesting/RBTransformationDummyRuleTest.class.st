@@ -310,7 +310,7 @@ RBTransformationDummyRuleTest >> problemCount [
 
 { #category : 'accessing' }
 RBTransformationDummyRuleTest >> resetResult [
-	builder := RBRefactoryChangeManager changeFactory compositeRefactoryChange
+	builder := ReChangeManager changeFactory compositeRefactoryChange
 ]
 
 { #category : 'initialization' }

@@ -28,10 +28,3 @@ FullBlockClosure >> receiver [
 FullBlockClosure >> receiver: anObject [
 	receiver := anObject
 ]
-
-{ #category : 'accessing' }
-FullBlockClosure >> sender [
-	"Answer the context that sent the message that created the receiver."
-	<reflection: 'Message sending and code execution - Message send reification'>
-	^outerContext sender
-]

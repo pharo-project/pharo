@@ -3,7 +3,7 @@ Report tests execution result under XML format
 "
 Class {
 	#name : 'XmlReporter',
-	#superclass : 'AbstractReporter',
+	#superclass : 'Reporter',
 	#instVars : [
 		'stream',
 		'suitePosition'

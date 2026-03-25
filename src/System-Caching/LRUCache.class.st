@@ -136,6 +136,17 @@ LRUCache >> at: key put: value [
 ]
 
 { #category : 'private' }
+LRUCache >> cachedAssociations [
+	"Private"
+	| result |
+	result := OrderedCollection new.
+	self keysAndValuesDo: [ :key :value |
+		result add: (key -> value)
+		].
+	^result asArray
+]
+
+{ #category : 'private' }
 LRUCache >> evict [
 	| link value |
 	link := lruList removeFirst.

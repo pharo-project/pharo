@@ -145,17 +145,3 @@ RBSplitCascadeRefactoring >> splitCascade [
 		ifFalse: [ cascadeNode replaceWith: afterNodes first ].
 	class compileTree: ancestorNode methodNode
 ]
-
-{ #category : 'storing' }
-RBSplitCascadeRefactoring >> storeOn: aStream [
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream nextPutAll: ' split: '.
-	selectedInterval storeOn: aStream.
-	aStream
-		nextPutAll: ' inMethod: #';
-		nextPutAll: selector;
-		nextPutAll: ' forClass: '.
-	class storeOn: aStream.
-	aStream nextPut: $)
-]

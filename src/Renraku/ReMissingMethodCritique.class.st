@@ -40,7 +40,7 @@ ReMissingMethodCritique >> beSubclassResponsibility [
 ReMissingMethodCritique >> change [
 	"an 'add method' change that create the missing method"
 
-	^ (RBRefactoryChangeFactory instance)
+	^ ReChangeFactory instance
 		addMethodSource: (self methodHeader), String cr, String tab, source
 		in: class
 ]

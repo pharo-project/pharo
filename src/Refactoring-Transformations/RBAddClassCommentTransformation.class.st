@@ -53,16 +53,3 @@ RBAddClassCommentTransformation >> privateTransform [
 
 	self definingClass comment: comment
 ]
-
-{ #category : 'storing' }
-RBAddClassCommentTransformation >> storeOn: aStream [
-
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream
-		nextPutAll: ' comment: ''';
-		nextPutAll: comment;
-		nextPutAll: ''' in: ''';
-		nextPutAll: className.
-	aStream nextPut: $)
-]

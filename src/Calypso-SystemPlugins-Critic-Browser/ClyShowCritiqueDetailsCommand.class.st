@@ -37,7 +37,7 @@ ClyShowCritiqueDetailsCommand >> execute [
 
 	self specUIManager
 		title: critique title;
-		label: self critiqueDescription;
+		message: self critiqueDescription;
 		acceptLabel: 'close';
 		extent: 500 @ 500;
 		openDialog

@@ -97,7 +97,7 @@ ExternalBrowser class >> openOn: model [
 ExternalBrowser class >> serviceBrowseCode [
 	"Answer the service of opening a file-contents browser"
 
-	^ (SimpleServiceEntry
+	^ (FileServiceEntry
 		provider: self
 		label: 'Code-file browser'
 		selector: #browseStream:
@@ -226,7 +226,7 @@ ExternalBrowser >> refreshClasses: pack [
 		ifNotNil: [ classes items: (self classesOfPackage: pack) asOrderedCollection].
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 ExternalBrowser >> refreshProtocols: selection [
 
 	self protocols resetListSelection.

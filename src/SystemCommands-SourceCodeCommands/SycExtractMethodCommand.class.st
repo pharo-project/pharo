@@ -29,7 +29,7 @@ SycExtractMethodCommand class >> methodEditorShortcutActivation [
 SycExtractMethodCommand >> asRefactorings [
 
 	| selectedInterval refactoring |
-	selectedInterval := selectedTextInterval ifEmpty: [
+	selectedInterval := (selectedTextInterval ifNil: [(1 to: 0)]) ifEmpty: [
 		                    sourceNode sourceInterval ].
 	refactoring := RBExtractMethodRefactoring
 		               extract: selectedInterval
@@ -83,17 +83,19 @@ SycExtractMethodCommand >> setUpOptionToChangeExtractionClass: refactoring [
 { #category : 'execution' }
 SycExtractMethodCommand >> setUpOptionToChangeMethodNameDuring: refactoring [
 
-	| dialog |
-	refactoring setOption: #methodName toUse: [ :methodName :ref | | invalidArgs |
-		invalidArgs := self computeInvalidArgNamesForSelector: method selector.
-		dialog := StMethodNameEditorPresenter
-			openOn: methodName
-			withInvalidArgs: invalidArgs
-			canRenameArgs: true
-			canRemoveArgs: false
-			canAddArgs: false.
-		dialog cancelled ifTrue: [ CmdCommandAborted signal ].
-		methodName ]
+	refactoring setOption: #methodName toUse: [ :methodName :ref |
+			| dialog invalidArgs |
+			invalidArgs := self computeInvalidArgNamesForSelector: method selector.
+			dialog := nil.
+			[ dialog isNil or: [ dialog presenter methodName isValid not ] ] whileTrue: [
+					dialog := StMethodNameEditorPresenter
+						          openOn: methodName
+						          withInvalidArgs: invalidArgs
+						          canRenameArgs: true
+						          canRemoveArgs: false
+						          canAddArgs: false.
+					dialog cancelled ifTrue: [ CmdCommandAborted signal ] ].
+			methodName ]
 ]
 
 { #category : 'execution' }
@@ -106,9 +108,7 @@ SycExtractMethodCommand >> setUpOptionToOverrideExistingMethodDuring: aRefactori
 { #category : 'execution' }
 SycExtractMethodCommand >> setUpOptionsOf: refactoring [
 
-	self initializeDefaultOptionsOf: refactoring.
 	self setUpOptionToChangeExtractionClass: refactoring.
-
 	self setUpOptionToOverrideExistingMethodDuring: refactoring.
 	self setUpOptionToChangeMethodNameDuring: refactoring
 ]

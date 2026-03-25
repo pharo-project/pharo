@@ -15,13 +15,16 @@ Class {
 	#tag : 'Drivers'
 }
 
-{ #category : 'execution' }
-ReRenameVariableDriver >> configureRefactoring [
+{ #category : 'testing' }
+ReRenameVariableDriver class >> isAbstract [
 
-	refactoring := self refactoringClass
-		               model: model
-		               variable: oldName
-		               class: class
+	^ self = ReRenameVariableDriver
+]
+
+{ #category : 'accessing' }
+ReRenameVariableDriver class >> shouldPreviewChangesByDefault [
+
+	^ false
 ]
 
 { #category : 'private' }
@@ -31,6 +34,15 @@ ReRenameVariableDriver >> informError: cond [
 		label: cond errorString;
 		title: 'Invalid name';
 		openModal
+]
+
+{ #category : 'configuration' }
+ReRenameVariableDriver >> instantiateRefactoring [
+
+	^ self refactoringClass 
+		model: model 
+		variable: oldName 
+		class: class
 ]
 
 { #category : 'private' }
@@ -58,17 +70,17 @@ ReRenameVariableDriver >> requestNewNameBasedOn: aName [
 
 	| newName |
 	newName := self requestDialog
-		           title: 'Please provide a new variable name';
+		           title: 'Rename variable';
+		           message: 'Please provide a new variable name';
 		           text: aName;
 		           openModal.
 
-	newName ifNil: [
-		shouldEscape := true.
-		^ self ].
-	newName = oldName ifTrue: [
-		shouldEscape := true.
-		^ self ].
+	(newName isNil or: [ newName = oldName ]) ifTrue: [
+			shouldEscape := true.
+			^ self ].
+
 	previouslyProposedName := newName.
+
 	^ newName
 ]
 

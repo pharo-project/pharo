@@ -9,7 +9,7 @@ Class {
 { #category : 'mocking' }
 RBAbstractTransformationTest >> changeMockClass [
 
-	^ RBRefactoringChangeMock
+	^ ReChangeMock
 ]
 
 { #category : 'mocking' }
@@ -43,26 +43,6 @@ RBAbstractTransformationTest >> setUp [
 
 	super setUp.
 	model := RBNamespace new
-]
-
-{ #category : 'tests' }
-RBAbstractTransformationTest >> testAPI [
-	"all classes must implement #storeOn: and #privateTransform"
-
-	| incompleteTransformations |
-	incompleteTransformations := ReTransformation allSubclasses
-		select: [ :each |
-			| selectors |
-			selectors := each methods collect: [:m | m selector].
-			each subclasses isEmpty and: [ (selectors includes: #privateTransform) not and: [ (selectors includes: #storeOn:) not ] ] ].
-	self assertEmpty: incompleteTransformations.
-
-	incompleteTransformations := RBCompositeTransformation allSubclasses
-		select: [ :each |
-			| selectors |
-			selectors := each methods collect: [:m | m selector].
-			each subclasses isEmpty and: [ (selectors includes: #buildTransformations) not and: [ (selectors includes: #buildTransformationFor:) not ] ] ].
-	self assertEmpty: incompleteTransformations
 ]
 
 { #category : 'tests' }

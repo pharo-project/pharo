@@ -125,6 +125,13 @@ RBRenameClassRefactoringTest >> testRenameClassFromTrait [
 	self assert: ((refactoring model classNamed: #RBClassUsingSharedPoolForTestData) methodFor: #methodFromTrait) modelClass name equals: #RBTDummy
 ]
 
+{ #category : 'failure tests' }
+RBRenameClassRefactoringTest >> testSharedVariableNameExpectWarning [
+
+	self shouldWarn:
+		(ReRenameClassRefactoring rename: #ReClassToBeRenamed to: #SharedVariableWithRef)
+]
+
 { #category : 'tests' }
 RBRenameClassRefactoringTest >> testUnmarkRemovedClassIfRenameTargetClass [
 	"Unmark a removed class if we rename another class to the removed class name.

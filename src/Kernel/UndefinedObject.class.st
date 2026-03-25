@@ -240,8 +240,3 @@ UndefinedObject >> subclassesDo: aBlock [
 	^ Class subclassesDo: [:cl |
 			cl isMeta ifTrue: [aBlock value: cl soleInstance]]
 ]
-
-{ #category : 'copying' }
-UndefinedObject >> veryDeepCopyWith: deepCopier [
-	"Return self.  I can't be copied.  Do not record me."
-]

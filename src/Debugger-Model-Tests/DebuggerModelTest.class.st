@@ -40,7 +40,19 @@ DebuggerModelTest >> testCorrectlyCreateDebugSession [
 	self assert: session isNotNil.
 	self assert: process isSuspended.
 	self assert: session interruptedContext equals: context.
-	self assert: session interruptedContext printString equals: '[ Set new ] in DebuggerModelTest>>setUp'
+	self assert: session interruptedContext printString equals: '[ ] in UndefinedObject(DebuggerModelTest)>>setUp'
+]
+
+{ #category : 'tests' }
+DebuggerModelTest >> testStepDeadContextThrowsException [
+
+	session interruptedContext terminate.
+	
+	[ session stepToFirstInterestingBytecodeInContext: session interruptedContext.
+		"fail the test if there is no exception"
+		self fail ]
+			on: Error
+			do: [ :err | self assert: err messageText equals: 'Cannot step into dead context' ]
 ]
 
 { #category : 'tests' }
@@ -48,7 +60,7 @@ DebuggerModelTest >> testStepInto [
 
 	self deny: (session isContextPostMortem: context).
 	self assert: session interruptedContext equals: context.
-	self assert: session interruptedContext printString equals: '[ Set new ] in DebuggerModelTest>>setUp' .
+	self assert: session interruptedContext printString equals: '[ ] in UndefinedObject(DebuggerModelTest)>>setUp' .
 
 	session
 		stepInto;
@@ -61,11 +73,11 @@ DebuggerModelTest >> testStepInto [
 DebuggerModelTest >> testStepOver [
 
 	self assert: session interruptedContext equals: context.
-	self assert: session interruptedContext printString equals: '[ Set new ] in DebuggerModelTest>>setUp' .
+	self assert: session interruptedContext printString equals: '[ ] in UndefinedObject(DebuggerModelTest)>>setUp'.
 
 	session stepOver.
 
-	self assert: session interruptedContext printString equals: '[ Set new ] in DebuggerModelTest>>setUp'
+	self assert: session interruptedContext printString equals: '[ ] in UndefinedObject(DebuggerModelTest)>>setUp'
 ]
 
 { #category : 'tests' }

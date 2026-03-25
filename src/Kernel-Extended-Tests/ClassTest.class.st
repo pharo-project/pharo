@@ -226,22 +226,61 @@ ClassTest >> testClassVariableEntanglement [
 
 { #category : 'tests - accessing - comments' }
 ClassTest >> testComment [
-	self assert: Object comment isNotNil.
-	self assert: Object class comment equals: Object comment
+
+	| oldComment oldStamp |
+	oldComment := Object comment.
+	oldStamp := Object commentStamp.
+	
+	[ 
+	
+	Object comment: 'toto' stamp: 'something'.
+	
+	self assert: Object comment equals: 'toto'.
+	self assert: Object class comment equals: 'toto'.
+	
+	] ensure: [
+		Object comment: oldComment stamp: oldStamp
+	]
 ]
 
 { #category : 'tests - accessing - comments' }
 ClassTest >> testCommentSourcePointer [
 
+	| oldComment oldStamp |
+	oldComment := Object comment.
+	oldStamp := Object commentStamp.
+	
+	[ 
+	
+	Object comment: 'toto' stamp: 'something'.
+	
+	self assert: Object commentSourcePointer notNil.
 	self
 		assert: Object class commentSourcePointer
-		identicalTo: Object commentSourcePointer
+		equals: Object commentSourcePointer
+	
+	] ensure: [
+		Object comment: oldComment stamp: oldStamp
+	]
 ]
 
 { #category : 'tests - accessing - comments' }
 ClassTest >> testCommentStamp [
-	self assert: Object commentStamp equals: ''.
-	self assert: Object class commentStamp equals: ''.
+
+	| oldComment oldStamp |
+	oldComment := Object comment.
+	oldStamp := Object commentStamp.
+	
+	[ 
+	
+	Object comment: 'toto' stamp: 'something'.
+	
+	self assert: Object commentStamp equals: 'something'.
+	self assert: Object class commentStamp equals: 'something'.
+	
+	] ensure: [
+		Object comment: oldComment stamp: oldStamp
+	]	
 ]
 
 { #category : 'tests' }
@@ -253,7 +292,9 @@ ClassTest >> testCommonSuperclassWith [
 	"but the other way this is not true"
 	self assert: (Object commonSuperclassWith: ProtoObject) equals: nil.
 	"as nil is the terminator of the hierarchy, we have to support it"
-	self assert: (nil commonSuperclassWith: ProtoObject) equals: nil
+	self assert: (nil commonSuperclassWith: ProtoObject) equals: nil.
+	"metaclass case"
+   self assert: (Array class commonSuperclassWith: Interval class) equals: SequenceableCollection class.
 ]
 
 { #category : 'tests' }
@@ -278,21 +319,6 @@ ClassTest >> testEnvironment [
 { #category : 'accessing' }
 ClassTest >> testEnvironment: anObject [
 	testEnvironment := anObject
-]
-
-{ #category : 'tests' }
-ClassTest >> testHasBindingThatBeginsWith [
-
-	"Lookup in slots of the current class.
-	This class defines #className"
-	self assert: (self class hasBindingThatBeginsWith: 'classNam').
-	
-	"Pools are looked up, too"
-	self assert: (PoolDefiner hasBindingThatBeginsWith: 'AnAu').
-	self assert: (RootClassPoolUser hasBindingThatBeginsWith: 'AnAu').
-
-	"Lookup in globals too"
-	self assert: (self class hasBindingThatBeginsWith: 'Object').
 ]
 
 { #category : 'tests - class variables' }
@@ -567,7 +593,7 @@ ClassTest >> testSuperclassOrder [
 ClassTest >> testSuperclassOrderPreservingOrder [
 	| noHierarchicalRelationship ordered |
 	"a shuffled collection of direct subclasses of Collection"
-	noHierarchicalRelationship := {CharacterSet. WideCharacterSet. OrderedDictionary. DependentsArray. Bag. SmallDictionary. SequenceableCollection. HashedCollection. Heap}.
+	noHierarchicalRelationship := {CharacterSet. WideCharacterSet. OrderedDictionary. Bag. SmallDictionary. SequenceableCollection. HashedCollection. Heap}.
 
 	ordered := Class superclassOrder: noHierarchicalRelationship.
 

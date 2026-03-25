@@ -17,12 +17,6 @@ ReSubclassesDontSendSuperCondition >> class: aRBClass selectors: aCollection [
 	selectors := aCollection 
 ]
 
-{ #category : 'testing' }
-ReSubclassesDontSendSuperCondition >> isFalse [
-
-	^ self check not
-]
-
 { #category : 'displaying' }
 ReSubclassesDontSendSuperCondition >> violationMessageOn: aStream [
 

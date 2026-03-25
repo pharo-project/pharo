@@ -17,6 +17,8 @@ ClyFFIEnvironmentPlugin >> collectMethodGroupProviders [
 { #category : 'item decoration' }
 ClyFFIEnvironmentPlugin >> decorateBrowserItem: anItem ofMethod: aMethod [
 
-	aMethod isFFIMethod ifTrue: [
+	| isFFIMethod |
+	isFFIMethod := FFIMethodIdentifier new ast: aMethod ast; transformsFFIMethod.
+	isFFIMethod ifTrue: [
 		anItem markWith: ClyFFIMethodTag]
 ]

@@ -143,15 +143,3 @@ RBProtocolEnvironment >> protocols [
 RBProtocolEnvironment >> removeProtocol: aSymbol [
 	protocols remove: aSymbol ifAbsent: [  ]
 ]
-
-{ #category : 'storing' }
-RBProtocolEnvironment >> storeOn: aStream [
-	aStream nextPut: $(.
-	super storeOn: aStream.
-	aStream
-		nextPutAll: ' class: ';
-		nextPutAll: class name;
-		nextPutAll: ' protocols: '.
-	protocols asArray storeOn: aStream.
-	aStream nextPut: $)
-]

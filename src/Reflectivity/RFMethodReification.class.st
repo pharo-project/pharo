@@ -26,6 +26,6 @@ RFMethodReification class >> key [
 { #category : 'generate' }
 RFMethodReification >> genForASTProgramNode [
 	^OCMessageNode
-		receiver: (OCMessageNode receiver: (OCLiteralNode value: entity) selector: #methodNode)
-		selector: #compiledMethod
+		receiver: (OCMessageNode receiver: (OCLiteralNode value: entity) selector: (OCSelectorNode value: #methodNode))
+		selector: (OCSelectorNode value: #compiledMethod)
 ]

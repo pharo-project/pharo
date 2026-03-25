@@ -36,6 +36,40 @@ FFIExternalObject class >> asExternalTypeOn: generator [
 ]
 
 { #category : 'instance creation' }
+FFIExternalObject class >> newBuffer [
+
+	^ FFIOop newBuffer
+]
+
+{ #category : 'instance creation' }
+FFIExternalObject class >> newValueHolder [
+
+	^ FFIReferenceValueHolder
+		newType: self new
+		size: FFIExternalType pointerSize
+]
+
+{ #category : 'instance creation' }
 FFIExternalObject class >> null [
 	^ self new
+]
+
+{ #category : 'private' }
+FFIExternalObject >> handle: aHandle at: aNumber [
+	"used for boxing/unboxing, as part of the FFIValueHolder mechanism"
+
+	^ self class basicNew setHandle: (aHandle pointerAt: aNumber)
+]
+
+{ #category : 'private' }
+FFIExternalObject >> handle: aHandle at: aNumber put: anExternalAddress [
+	"used for boxing/unboxing, as part of the FFIValueHolder mechanism"
+	
+	aHandle pointerAt: aNumber put: anExternalAddress
+]
+
+{ #category : 'instance creation' }
+FFIExternalObject >> newBuffer [
+
+	^ self class newBuffer
 ]

@@ -95,9 +95,11 @@ FreeTypeFileInfo >> modificationTime: anObject [
 FreeTypeFileInfo >> printOn: aStream [
 	"super printOn: aStream."
 	aStream
-		nextPutAll: familyGroupName asString, '::',styleNameExtracted asString, ' ';
+		print: familyGroupName, '::';
+		print: styleNameExtracted; 
+		nextPutAll: ' ';
 		nextPutAll:
-			(locationType = #absolute
+			(locationType = #absolute 
 				ifTrue:['']
 				ifFalse:['{',locationType asString,'}']);
 		nextPutAll: absoluteOrRelativePath asString;

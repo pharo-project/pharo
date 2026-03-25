@@ -1,6 +1,9 @@
 Class {
 	#name : 'RBNewAbstractCondition',
 	#superclass : 'Object',
+	#instVars : [
+		'subjects'
+	],
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',
 	#tag : 'Conditions'
@@ -22,9 +25,27 @@ RBNewAbstractCondition >> errorString [
 	^ String streamContents: [ :stream | self violationMessageOn: stream ] 
 ]
 
+{ #category : 'testing' }
+RBNewAbstractCondition >> isFalse [
+
+	^ self isTrue not
+]
+
+{ #category : 'testing' }
+RBNewAbstractCondition >> isTrue [
+
+	^ self check
+]
+
 { #category : 'logical operations' }
 RBNewAbstractCondition >> not [
 	^ReNewNegationCondition on: self
+]
+
+{ #category : 'accessing - private' }
+RBNewAbstractCondition >> subjects [
+	"Complex conditions require this method to compute their own subjects"
+	^ subjects
 ]
 
 { #category : 'displaying' }

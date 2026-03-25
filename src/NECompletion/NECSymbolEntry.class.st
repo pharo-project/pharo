@@ -33,11 +33,20 @@ NECSymbolEntry >> createDescription [
 	or in the system."
 
 	^ self
-		findMethodAndDo: [:method |
+		findMethodAndDo: [ :method |
 			self
 				methodSourceDescription: method methodClass
 				method: method ]
-		ifAbsent: [:selector | self implementorsDescription: selector]
+		ifAbsent: [ :selector | self implementorsDescription: selector]
+]
+
+{ #category : 'private' }
+NECSymbolEntry >> emptyLabel [
+	
+	| stringForEmpty |
+	stringForEmpty := self rawLabel.
+	self originDisplayed ifTrue: [ stringForEmpty := stringForEmpty, ' from: ', self fetcher ].
+	^ stringForEmpty
 ]
 
 { #category : 'detail information' }
@@ -59,15 +68,17 @@ NECSymbolEntry >> implementorsDescription: aSymbol [
 	| implementors output |
 	output := WriteStream on: String new.
 	implementors := self systemNavigation allImplementorsOf: aSymbol.
-	implementors isEmpty ifTrue:
-		[ ^ NECEntryDescription
-			label: 'symbol'
+	implementors isEmpty 
+		ifTrue: [ ^ NECEntryDescription
+			label: self emptyLabel 
 			title: '(no implementors)'
 			description: 'This is just symbol.' ].
+
 	implementors do: [ :each |
 		output
 			nextPutAll: each methodClass printString;
 			cr ].
+
 	^ NECEntryDescription
 		label: self label
 		title: '(Implementors)'
@@ -77,6 +88,7 @@ NECSymbolEntry >> implementorsDescription: aSymbol [
 { #category : 'private' }
 NECSymbolEntry >> methodSourceDescription: aClass method: aCompiledMethod [
 	"I return if it's a class or a method, its class name, and the implementation."
+	
 	| styler styledText |
 
 	styler := SHRBTextStyler new.
@@ -87,6 +99,12 @@ NECSymbolEntry >> methodSourceDescription: aClass method: aCompiledMethod [
 		label: self label
 		title: aClass printString
 		description: styledText
+]
+
+{ #category : 'private' }
+NECSymbolEntry >> rawLabel [
+	
+	^ 'symbol'
 ]
 
 { #category : 'accessing' }

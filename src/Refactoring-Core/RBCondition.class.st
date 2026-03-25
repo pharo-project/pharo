@@ -29,7 +29,7 @@ Class {
 RBCondition class >> canUnderstand: aSelector in: aClass [
 
 	^self new
-		block: [aClass definesMethod: aSelector]
+		block: [ aClass definesMethod: aSelector]
 		errorString: aClass printString , ' <1?:does not >understand<1?s:> ' , aSelector printString
 ]
 
@@ -257,7 +257,11 @@ RBCondition class >> isClassNamed: className definedIn: aModel [
 { #category : 'instance creation' }
 RBCondition class >> isGlobal: aString in: aRBSmalltalk [
 
-	^ self new block: [ aRBSmalltalk includesGlobal: aString asSymbol ] errorString: aString , ' is <1?:not >a class or global variable'
+	^ self new
+		  block: [ aRBSmalltalk includesGlobal: aString asSymbol ]
+		  errorString:
+			  'A class or global variable with the name: ' , aString
+			  , ' already exists'
 ]
 
 { #category : 'instance creation' }

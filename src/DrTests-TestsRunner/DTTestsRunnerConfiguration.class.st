@@ -13,10 +13,14 @@ Class {
 
 { #category : 'converting' }
 DTTestsRunnerConfiguration >> asTestSuite [
-	|newTestSuite|
-	newTestSuite := TestSuite new.
-	self items
-		reject: #drTestsIsAbstract "This method allows to either test a test case instance or a test suite depending on kind of item."
-		thenDo: [ :item | newTestSuite addTest: item drTestsSuite "This method allows to either add a test case instance or a test suite depending on kind of item." ].
-	^ newTestSuite
+
+	| suite |
+	suite := TestSuite new.
+	"drTestsIsAbstract -> This method allows to either test a test case 
+	 instance or a test suite depending on kind of item."
+	self items reject: #drTestsIsAbstract thenDo: [ :aTestCase | 
+		"drTestsSuite -> This method allows to either add a test case 
+		 instance or a test suite depending on kind of item."
+		suite addTests: aTestCase drTestsSuite tests ].
+	^ suite
 ]

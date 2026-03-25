@@ -24,7 +24,7 @@ ClyMethod class >> checkCalypsoItem: aCompiledMethod isEqualTo: anotherCompiledM
 ClyMethod class >> convertToCalypsoBrowserItem: aMethod [
 
 	| item |
-	item := ClyBrowserItem named: aMethod selector with: aMethod.
+	item := ClyBrowserItem named: aMethod selector asString with: aMethod.
 	item addProperty: (ClyMethodDefinitionProperty of: aMethod).
 	^item
 ]

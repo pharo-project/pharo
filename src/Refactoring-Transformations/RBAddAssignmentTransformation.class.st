@@ -66,7 +66,7 @@ RBAddAssignmentTransformation >> applicabilityPreconditions [
 			   ('Method named <1s> does not exist' expandMacrosWith: selector)).
 		  (RBCondition
 			   withBlock: [
-				   (self definingMethod allChildren
+				   (self definingMethod withAllChildren
 					    select: [ :each | each isVariable ]
 					    thenCollect: [ :each | each name ]) anySatisfy: [ :e |
 					   e asString = variableName ] ]
@@ -103,30 +103,13 @@ RBAddAssignmentTransformation >> privateTransform [
 		value: (self parserClass parseExpression: value).
 
 	"check whether there are some dependencies in the expression"
-	assignments := (methodTree allChildren select: #isAssignment)
+	assignments := (methodTree withAllChildren select: #isAssignment)
 		select: [ :each | each variable name asString = variableName ].
 	previousNode := assignments detectMax: #stop.
 	previousNode
 		ifNil: [ methodTree body addNodeFirst: assignmentNode ]
 		ifNotNil: [ previousNode parent addNode: assignmentNode after: previousNode ].
 	class compileTree: methodTree
-]
-
-{ #category : 'storing' }
-RBAddAssignmentTransformation >> storeOn: aStream [
-
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream
-		nextPutAll: ' variable: ''';
-		nextPutAll: variableName;
-		nextPutAll: ' value: ''';
-		nextPutAll: value;
-		nextPutAll: ' inMethod: ''';
-		nextPutAll: selector;
-		nextPutAll: ''' inClass: ''';
-		nextPutAll: className.
-	aStream nextPut: $)
 ]
 
 { #category : 'api' }

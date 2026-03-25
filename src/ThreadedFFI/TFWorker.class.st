@@ -19,6 +19,9 @@ Class {
 	#classVars : [
 		'Default'
 	],
+	#classInstVars : [
+		'workers'
+	],
 	#category : 'ThreadedFFI-Worker',
 	#package : 'ThreadedFFI',
 	#tag : 'Worker'
@@ -46,11 +49,15 @@ TFWorker class >> finalizeResourceData: anArray [
 
 { #category : 'private' }
 TFWorker class >> named: aName [
-
-	^ self new
-		name: aName;
-		autoRelease;
-		yourself
+	
+	workers ifNil: [ workers := WeakValueDictionary new ].
+	^ workers 
+		at: aName 
+		ifAbsentPut: [ 
+			self new
+				name: aName;
+				autoRelease;
+				yourself ]
 ]
 
 { #category : 'accessing' }

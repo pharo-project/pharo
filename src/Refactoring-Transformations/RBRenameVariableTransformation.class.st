@@ -176,19 +176,3 @@ RBRenameVariableTransformation >> renameReferences [
 		select: [ :aClass | self referencesFor: aClass ]
 		using: replacer
 ]
-
-{ #category : 'storing' }
-RBRenameVariableTransformation >> storeOn: aStream [
-
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream nextPutAll: ' rename: '.
-	variableName storeOn: aStream.
-	aStream nextPutAll: ' to: '.
-	newVariableName storeOn: aStream.
-	aStream nextPutAll: ' class: '.
-	class storeOn: aStream.
-	aStream nextPutAll: ' classVariable: '.
-	isClassVariable storeOn: aStream.
-	aStream nextPut: $)
-]

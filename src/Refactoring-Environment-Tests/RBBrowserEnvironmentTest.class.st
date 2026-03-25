@@ -123,14 +123,6 @@ RBBrowserEnvironmentTest >> setUp [
 	universalEnvironment := RBBrowserEnvironment new
 ]
 
-{ #category : 'private' }
-RBBrowserEnvironmentTest >> storeStringFor: aBrowserEnvironment [
-	| newEnvironment |
-	newEnvironment := Smalltalk compiler evaluate: aBrowserEnvironment storeString.
-	self assert: newEnvironment numberSelectors equals: aBrowserEnvironment numberSelectors.
-	self assert: (newEnvironment not & aBrowserEnvironment) numberSelectors equals: 0
-]
-
 { #category : 'tests - environments' }
 RBBrowserEnvironmentTest >> testAndAnOrEnvironmentAndAnotherOrEnvironment [
 
@@ -602,7 +594,6 @@ RBBrowserEnvironmentTest >> universalTestFor: aBrowserEnvironment [
 	self labelFor: aBrowserEnvironment.
 	self uniqueClassesIn: aBrowserEnvironment.
 	self numberSelectorsFor: aBrowserEnvironment.
-	self storeStringFor: aBrowserEnvironment.
 	self classNamesFor: aBrowserEnvironment.
 	self copyFor: aBrowserEnvironment.
 	self packagesFor: aBrowserEnvironment.

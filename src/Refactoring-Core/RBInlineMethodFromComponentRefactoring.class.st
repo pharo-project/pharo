@@ -60,6 +60,7 @@ RBInlineMethodFromComponentRefactoring >> addSelfReferenceToSourceMessage [
 { #category : 'transforming' }
 RBInlineMethodFromComponentRefactoring >> checkSelectedMessage [
 
+	class ifNil: [ self refactoringError: 'Class could not be found.' ].
 	sourceParseTree := class parseTreeForSelector: sourceSelector.
 	sourceParseTree ifNil: [ self refactoringError: 'Could not parse sources' ].
 	sourceMessage := sourceParseTree whichNodeIsContainedBy: sourceInterval.
@@ -82,16 +83,27 @@ RBInlineMethodFromComponentRefactoring >> checkSuperMessages [
 { #category : 'transforming' }
 RBInlineMethodFromComponentRefactoring >> classOfTheMethodToInline [
 
-	| imps |
-
-	classOfTheMethodToInline ifNotNil: [ ^ classOfTheMethodToInline ].
+	^ classOfTheMethodToInline 
+	
+	"All the following is an old logic mixing interaction and precondition
+	we keep it as comment but this logic should be turned into a driver. 
+	
+	ifNotNil: [ ^ classOfTheMethodToInline ].
 	imps := ( self model allImplementorsOf: self inlineSelector ) asOrderedCollection.
 	imps size = 1
 		ifTrue: [ ^ classOfTheMethodToInline := imps first ].
 	imps ifEmpty: [ self refactoringError: 'Nobody defines a method named ' , self inlineSelector ].
 	classOfTheMethodToInline := self requestImplementorToInline: imps.
 	classOfTheMethodToInline ifNil: [ self refactoringError: 'No implementor selected' ].
-	^ classOfTheMethodToInline
+	^ classOfTheMethodToInline"
+	
+
+]
+
+{ #category : 'transforming' }
+RBInlineMethodFromComponentRefactoring >> classOfTheMethodToInline: aClass [ 
+
+	classOfTheMethodToInline := aClass
 ]
 
 { #category : 'testing' }

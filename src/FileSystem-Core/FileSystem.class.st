@@ -24,7 +24,6 @@ Class {
 	#package : 'FileSystem-Core',
 	#tag : 'Public'
 }
-
 { #category : 'system startup' }
 FileSystem class >> startUp: aBoolean [
 	"This is only here to deal with migration from older versions of
@@ -65,12 +64,6 @@ FileSystem >> accessTimeOf: aResolvable [
 	"Returns the access date of aResolvable"
 
 	^ store accessTimeOf: (self resolve: aResolvable)
-]
-
-{ #category : 'public' }
-FileSystem >> beReadOnly [
-
-	store := store asReadOnlyStore
 ]
 
 { #category : 'public' }
@@ -394,11 +387,6 @@ FileSystem >> exists: aResolvable [
 	a file or directory at that path, false if there is not."
 
 	^ store exists: (self resolve: aResolvable)
-]
-
-{ #category : 'public' }
-FileSystem >> extensionDelimiter [
-	^ $.
 ]
 
 { #category : 'public' }

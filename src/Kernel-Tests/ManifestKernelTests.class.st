@@ -17,6 +17,13 @@ ManifestKernelTests class >> dependencies [
 	     #'Collections-Sequenceable' #'SUnit-Core' #Tests #'OpalCompiler-Core' #Traits #Kernel #'Collections-Weak' #UIManager )
 ]
 
+{ #category : 'meta-data - dependency analyser' }
+ManifestKernelTests class >> manuallyResolvedDependencies [
+
+	<ignoreForCoverage>
+	^ #(#'Transcript-NonInteractive')
+]
+
 { #category : 'metadata' }
 ManifestKernelTests class >> packageName [
 	^ #KernelTests

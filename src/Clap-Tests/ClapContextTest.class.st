@@ -58,13 +58,13 @@ ClapContextTest >> testClapCommandDoesNotThrowError [
 		"Command did not match, we expect an Exit was signaled"
 		self assert:
 			(context stdio stdout contents utf8Decoded includesSubstring:
-				 'Entry point for commands implemented with Clap') ]
+				 'Pharo command line entry point.') ]
 ]
 
 { #category : 'tests' }
 ClapContextTest >> testCommandMatchesWhenInvokedFromClapRoot [
 	context := ClapContext withPragmaCommands
-		arguments: #('image' 'cleanup');
+		arguments: #('hello');
 		match;
 		yourself.
 	
@@ -72,7 +72,7 @@ ClapContextTest >> testCommandMatchesWhenInvokedFromClapRoot [
 	self assert: context isValid.
 	self 
 		assertCollection: context command commandSpecIdentifiers 
-		hasSameElements: #('image' 'cleanup').
+		hasSameElements: #('hello').
 ]
 
 { #category : 'tests' }

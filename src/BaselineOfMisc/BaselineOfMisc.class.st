@@ -10,9 +10,10 @@ BaselineOfMisc >> baseline: spec [
 
 	<baseline>
 	spec for: #common do: [
-		spec
-			package: 'PharoDocComment';
-			package: 'System-CommandLine-TextSupport';
-			package: 'Files-Prompt';
-			package: 'System-SourcesCondenser' ]
+			spec
+				package: 'PharoDocComment';
+				package: 'System-CommandLine-TextSupport';
+				package: 'Files-Prompt';
+				package: 'System-SourcesCondenser';
+				package: 'ScriptingExtensions' ]
 ]

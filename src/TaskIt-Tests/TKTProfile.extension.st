@@ -1,8 +1,8 @@
 Extension { #name : 'TKTProfile' }
 
 { #category : '*TaskIt-Tests' }
-TKTProfile class >> test [
-	<profile: #test>
+TKTProfile class >> testProfile [
+	<profile: #testProfile>
 
 	^ TKTTestProfile new
 ]

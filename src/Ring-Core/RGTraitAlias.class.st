@@ -52,7 +52,7 @@ RGTraitAlias >> initialize [
 	aliases := self unresolvedValue: self defaultAliases
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 RGTraitAlias >> initializeUnresolved [
 
 	super initializeUnresolved.

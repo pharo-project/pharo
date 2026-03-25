@@ -39,17 +39,6 @@ RBVariableRefactoring >> refactoredClassName [
 	^ class name
 ]
 
-{ #category : 'storing' }
-RBVariableRefactoring >> storeOn: aStream [
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream nextPutAll: ' variable: '.
-	variableName storeOn: aStream.
-	aStream nextPutAll: ' class: '.
-	class storeOn: aStream.
-	aStream nextPut: $)
-]
-
 { #category : 'initialization' }
 RBVariableRefactoring >> variable: aVarName class: aClassName [
 	class := self classObjectFor: aClassName.

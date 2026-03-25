@@ -129,3 +129,13 @@ RBExtractToTemporaryParametrizedTest >> testFailureNonExistantSelector [
 		( self createRefactoringWithArguments:
 			{ (14 to: 23) . 'asdf' . #checkClass1: . RBClassDataForRefactoringTest })
 ]
+
+{ #category : 'tests' }
+RBExtractToTemporaryParametrizedTest >> testWarningExistingInstanceVariable [
+
+	self shouldWarn: (self createRefactoringWithArguments: {
+				 (20 to: 24).
+				 'instanceVariable'.
+				 #justExpression .
+				 RBClassDataForRefactoringTest })
+]

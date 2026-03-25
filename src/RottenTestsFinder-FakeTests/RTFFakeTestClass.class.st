@@ -34,6 +34,12 @@ RTFFakeTestClass >> testFailingButNotConsideredAsRotten [
 ]
 
 { #category : 'tests' }
+RTFFakeTestClass >> testHelperHelperAssertHelper [
+	
+	self helperHelper; assertHelper 
+]
+
+{ #category : 'tests' }
 RTFFakeTestClass >> testWithAssertionInHelperRun [
 	self assertHelper
 ]

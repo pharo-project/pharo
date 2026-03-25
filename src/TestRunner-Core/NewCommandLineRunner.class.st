@@ -28,7 +28,7 @@ NewCommandLineRunner class >> with: aReporterClass [
 { #category : 'accessing' }
 NewCommandLineRunner >> classForReporter [
 
-	^ AbstractReporter
+	^ Reporter
 ]
 
 { #category : 'private' }
@@ -132,9 +132,13 @@ NewCommandLineRunner >> resetReporter [
 NewCommandLineRunner >> runCase: aTestCase [
 	"run and report a testCase"
 
+	| currentResult |
 	self reporter
 		reportCase: aTestCase
-		runBlock: [self runCaseManaged: aTestCase ]
+		runBlock: [self runCaseManaged: aTestCase ].
+	currentResult := self result.
+	self shouldAccumulate ifFalse: [ self resetResult ].
+	^ currentResult 
 ]
 
 { #category : 'running' }

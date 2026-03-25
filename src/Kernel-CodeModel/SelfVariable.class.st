@@ -14,12 +14,6 @@ SelfVariable class >> variableName [
 	^#self
 ]
 
-{ #category : 'visiting' }
-SelfVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
-
-	^ aProgramNodeVisitor visitSelfNode: aNode
-]
-
 { #category : 'code generation' }
 SelfVariable >> emitValue: methodBuilder [
 
@@ -44,9 +38,8 @@ SelfVariable >> usingMethods [
 	FFI methods after a first call do not have a self send in the bytecode, but one in the code"
 
 	^ environment allMethods select: [ :method |
-		method isFFIMethod or: [
 		  method readsSelf and: [
 			  method sendsToSuper not or: [
 				  method ast variableNodes anySatisfy: [ :varNode |
-					  varNode variable == self ] ] ] ] ]
+					  varNode variable == self ] ] ] ]
 ]

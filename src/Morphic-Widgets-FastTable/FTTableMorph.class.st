@@ -225,6 +225,16 @@ FTTableMorph >> click: event [
 		ifTrue: [ self showMenuForPosition: event cursorPoint ]
 ]
 
+{ #category : 'event handling' }
+FTTableMorph >> clickOnColumnHeaderAt: anIndex [
+	| header |
+	header := self container headerRow submorphs at: anIndex.
+	header click: (MouseButtonEvent basicNew 
+							setType: #mouseDown;
+							yourself).
+		
+]
+
 { #category : 'accessing - colors' }
 FTTableMorph >> colorForSelection: primarySelection [
 
@@ -434,6 +444,13 @@ FTTableMorph >> handlesMouseWheel: event [
 FTTableMorph >> hasDataSource [
 
 	^ self dataSource isNotNil
+]
+
+{ #category : 'testing' }
+FTTableMorph >> hasFilter [
+
+	function ifNil: [ ^ false ].
+	^ function isKindOf: FTFilterFunction
 ]
 
 { #category : 'testing' }
@@ -650,12 +667,6 @@ FTTableMorph >> isMultipleSelection [
 { #category : 'testing' }
 FTTableMorph >> isResizable [
 	^ resizable
-]
-
-{ #category : 'testing' }
-FTTableMorph >> isRowIndexVisible: rowIndex [
-	self deprecated: 'Use #isIndexVisible: instead' transformWith: '`@receiver isRowIndexVisible: `@statements1' -> '`@receiver isIndexVisible: `@statements1'.
-	^ self isIndexVisible: rowIndex
 ]
 
 { #category : 'testing' }
@@ -964,8 +975,8 @@ FTTableMorph >> resizeAllSubviews [
 { #category : 'private' }
 FTTableMorph >> resizeContainer [
 	| topLeft bottomRight |
-	topLeft := (self bounds left - self borderWidth) @ self bounds top - self borderWidth.
-	bottomRight := (self bounds right  - self verticalScrollBarWidth    - self borderWidth)
+	topLeft := (self bounds left + self borderWidth) @ (self bounds top + self borderWidth).
+	bottomRight := (self bounds right - self verticalScrollBarWidth - self borderWidth)
 					 @ (self bounds bottom - self horizontalScrollBarHeight - self borderWidth).
 	self container
 		bounds:
@@ -1088,12 +1099,6 @@ FTTableMorph >> selectIndexes: anArray andMakeVisibleIf: shouldEnsureVisibleSele
 { #category : 'accessing - selection' }
 FTTableMorph >> selectLast [
 	self selectionModeStrategy selectLast
-]
-
-{ #category : 'accessing - selection' }
-FTTableMorph >> selectRowIndex: aNumber [
-	self deprecated: 'Use #selectIndex: instead' transformWith: '`@receiver selectRowIndex: `@statements1' -> '`@receiver selectIndex: `@statements1'.
-	self selectIndex: aNumber
 ]
 
 { #category : 'accessing - selection' }

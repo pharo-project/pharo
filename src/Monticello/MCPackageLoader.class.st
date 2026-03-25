@@ -21,7 +21,7 @@ Instance Variables
 "
 Class {
 	#name : 'MCPackageLoader',
-	#superclass : 'Object',
+	#superclass : 'MCAbstractLoader',
 	#instVars : [
 		'requirements',
 		'unloadableDefinitions',
@@ -77,7 +77,7 @@ MCPackageLoader >> analyze [
 { #category : 'private' }
 MCPackageLoader >> basicLoad [
 
-	SourceFiles deferFlushDuring: [ self basicLoadDefinitions ]
+	SourcesManager current deferFlushDuring: [ self basicLoadDefinitions ]
 ]
 
 { #category : 'private' }
@@ -89,7 +89,7 @@ MCPackageLoader >> basicLoadDefinitions [
 	self class codeChangeAnnouncer delayAnnouncementsAfter: [
 		additions
 			select: [ :aDefinition | aDefinition isMethodDefinition ]
-			thenDo: [ :definition | definition loadInEnvironment: targetEnvironment ] ].
+			thenDo: [ :definition | definition loadWithLoader: self ] ].
 
 	removals
 		do: [ :each | each unload ]
@@ -170,7 +170,7 @@ MCPackageLoader >> loadClassDefinitions [
 	[
 	(additions select: [ :aDefinition | aDefinition isClassDefinition ])
 		do: [ :aDefinition |
-			[ aDefinition loadInEnvironment: targetEnvironment ]
+			[ aDefinition loadWithLoader: self ]
 				on: Error
 				do: [ :error | errors at: aDefinition put: error ] ]
 		displayingProgress: 'Loading classes...'.
@@ -179,15 +179,13 @@ MCPackageLoader >> loadClassDefinitions [
 	[
 	| previousErrors |
 	previousErrors := errors copy.
-	previousErrors
-		keysDo: [ :aClassDefinition |
-			errors removeKey: aClassDefinition.
-			[ aClassDefinition load ]
-				on: Error
-				do: [ :error | errors at: aClassDefinition put: error ] ].
+	previousErrors keysDo: [ :aClassDefinition |
+		errors removeKey: aClassDefinition.
+		[ aClassDefinition loadWithLoader: self ]
+			on: Error
+			do: [ :error | errors at: aClassDefinition put: error ] ].
 	previousErrors size = errors size ] whileFalse ] ensure: [ "Finally we warn about the errors we could not fix."
-		errors ifNotEmpty: [
-			self warnAboutErrors: errors ] ]
+		errors ifNotEmpty: [ self warnAboutErrors: errors ] ]
 ]
 
 { #category : 'patch ops' }
@@ -223,6 +221,12 @@ MCPackageLoader >> sorterForItems: aCollection [
 	sorter := MCDependencySorter items: aCollection.
 	sorter addExternalProvisions: self provisions.
 	^ sorter
+]
+
+{ #category : 'public' }
+MCPackageLoader >> targetEnvironment [
+
+	^ targetEnvironment
 ]
 
 { #category : 'public' }

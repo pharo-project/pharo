@@ -23,34 +23,28 @@ Class {
 	#name : 'ClyOldMessageBrowserAdapter',
 	#superclass : 'Object',
 	#instVars : [
-		'messages',
 		'title',
 		'autoSelect',
 		'refreshingBlock',
-		'openedBrowser'
+		'openedBrowser',
+		'methods'
 	],
 	#category : 'Calypso-SystemTools-OldToolCompatibillity',
 	#package : 'Calypso-SystemTools-OldToolCompatibillity'
 }
 
-{ #category : 'tools registration' }
-ClyOldMessageBrowserAdapter class >> beDefaultBrowser [
-	<script>
-	
-	self registerToolsOn: Smalltalk tools
-]
-
 { #category : 'opening' }
 ClyOldMessageBrowserAdapter class >> browse: methods [
+
 	^ self new
-		messages: methods;
-		open
+		  methods: methods;
+		  open
 ]
 
 { #category : 'opening' }
 ClyOldMessageBrowserAdapter class >> browse: methods title: aString [
 	^ self new
-		messages: methods;
+		methods: methods;
 		title: aString;
 		open
 ]
@@ -58,7 +52,7 @@ ClyOldMessageBrowserAdapter class >> browse: methods title: aString [
 { #category : 'opening' }
 ClyOldMessageBrowserAdapter class >> browse: methods title: aString autoSelect: aSelectString [
 	^ self new
-		messages: methods;
+		methods: methods;
 		title: aString;
 		autoSelect: aSelectString;
 		open
@@ -90,12 +84,6 @@ ClyOldMessageBrowserAdapter class >> on: aNavigationEnvironment systemScope: aSy
 		systemScope: aSystemEnvironmentScope
 ]
 
-{ #category : 'tools registration' }
-ClyOldMessageBrowserAdapter class >> registerToolsOn: registry [
-	
-	registry register: self as: #messageList
-]
-
 { #category : 'accessing' }
 ClyOldMessageBrowserAdapter >> autoSelect [
 	^ autoSelect
@@ -119,25 +107,25 @@ ClyOldMessageBrowserAdapter >> initialize [
 ]
 
 { #category : 'accessing' }
-ClyOldMessageBrowserAdapter >> messages [
-	^ messages
+ClyOldMessageBrowserAdapter >> methods [
+	^ methods
 ]
 
 { #category : 'accessing' }
-ClyOldMessageBrowserAdapter >> messages: anObject [
-	messages := anObject
+ClyOldMessageBrowserAdapter >> methods: anObject [
+	methods := anObject
 ]
 
 { #category : 'opening' }
 ClyOldMessageBrowserAdapter >> open [
-	| query methods comments |
-	methods := messages
+	| query compiledMethods comments |
+	compiledMethods := methods
 		select: [:each | (each isRingObject and: [ each isMethod ]) or: [ each isCompiledMethod  ] ]
 		thenCollect: [ :each | each compiledMethod ].
-	comments := messages
+	comments := methods
 		select: [:each | each isRingObject and: [ each isComment  ]]
 		thenCollect: [ :each | ClyClassComment of: each realParent ].
-	query := ClyOldMessageBrowserQuery named: title with: methods asOrderedCollection, comments.
+	query := ClyOldMessageBrowserQuery named: title with: compiledMethods asOrderedCollection, comments.
 	query
 		criteriaString: autoSelect;
 		criteriaBlock: refreshingBlock.

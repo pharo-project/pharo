@@ -14,24 +14,26 @@ Class {
 
 { #category : 'ui related' }
 NECSelectorEntry >> browse [
+
 	| class |
 	class := node receiver propertyAt: #type ifAbsent: nil.
-	class ifNil: [ SystemNavigation new browseAllImplementorsOf: self selector. ^true].
+	class ifNil: [
+			SystemNavigation new browseAllImplementorsOf: self selector.
+			^ true ].
 
 	^ self
-		findMethodAndDo: [ :method |
-			(Smalltalk tools toolNamed: #browser)
-				openOnClass: method methodClass
-				selector: method selector.
-			true ]
-		ifAbsent: [ :sel |
-			SystemNavigation new
-				browseAllImplementorsOf: sel.
-			true ]
+		  findMethodAndDo: [ :method |
+				  (Smalltalk tools toolNamed: #browser) 
+						openOnClass: method methodClass selector: method selector.
+				  true ]
+		  ifAbsent: [ :sel |
+				  SystemNavigation new browseAllImplementorsOf: sel.
+				  true ]
 ]
 
 { #category : 'private' }
 NECSelectorEntry >> findMethodAndDo: foundBlock ifAbsent: notfoundBlock [
+
 	| theClass result implementors |
 	theClass := node isMessage
 		ifTrue: [ node receiver propertyAt: #type ifAbsent: nil ]
@@ -48,15 +50,43 @@ NECSelectorEntry >> findMethodAndDo: foundBlock ifAbsent: notfoundBlock [
 	^ foundBlock value: result
 ]
 
+{ #category : 'private' }
+NECSelectorEntry >> implementorsDescription: aSymbol [
+	| implementors output |
+	output := WriteStream on: String new.
+	implementors := self systemNavigation allImplementorsOf: aSymbol.
+	implementors isEmpty 
+		ifTrue: [ ^ NECEntryDescription
+			label: self emptyLabel 
+			title: '(no implementors)'
+			description: 'This is just a symbol.' ].
+
+	implementors do: [ :each |
+		output
+			nextPutAll: each methodClass printString;
+			cr ].
+	
+	^ NECEntryDescription
+		label: self label
+		title: '(Implementors)'
+		description: output contents
+]
+
 { #category : 'accessing' }
 NECSelectorEntry >> label [
-	node isMessage ifFalse: [ ^ '' ].
 
-	"I return whether the variable is a class or a method."
-	 ^node receiver
+	node isMessage ifFalse: [ ^ '' ].
+	^ super label.
+]
+
+{ #category : 'accessing' }
+NECSelectorEntry >> rawLabel [
+
+	^ self node receiver
 		propertyAt: #type
 		ifPresent:  [ 'method' ]
 		ifAbsent:  [ 'class' ]
+
 ]
 
 { #category : 'accessing' }

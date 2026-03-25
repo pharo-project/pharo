@@ -75,7 +75,7 @@ AbstractCache >> at: key put: value [
 	self subclassResponsibility
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 AbstractCache >> beThreadSafe [
 	"Configure me so that I can be safely used from multiple threads/processes
 	during important operations. Note that this slows down these operations."
@@ -83,7 +83,7 @@ AbstractCache >> beThreadSafe [
 	access := Monitor new
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 AbstractCache >> computeWeight: valuable [
 	"Set the way to compute the weight of each cached value.
 	This can be either a Symbol or one argument block.
@@ -102,7 +102,7 @@ AbstractCache >> critical: block [
 		ifNotNil: [ access critical: block ]
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 AbstractCache >> factory: block [
 	"Set the factory to compute values from keys to block.
 	The factory will be evaluated for each key not present.
@@ -142,7 +142,7 @@ AbstractCache >> keysAndValuesDo: block [
 	self subclassResponsibility
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 AbstractCache >> maximumWeight: limit [
 	"Set my maximum allowed total weight of all cached values to limit.
 	If the total weight is no longer below limit,

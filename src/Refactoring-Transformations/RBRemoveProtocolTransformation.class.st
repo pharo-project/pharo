@@ -89,16 +89,3 @@ RBRemoveProtocolTransformation >> protocol: aString inClass: aClassName [
 	self className: aClassName.
 	protocol := aString
 ]
-
-{ #category : 'storing' }
-RBRemoveProtocolTransformation >> storeOn: aStream [
-
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream
-		nextPutAll: ' protocol: ''';
-		nextPutAll: protocol;
-		nextPutAll: ''' inClass: ''';
-		nextPutAll: className.
-	aStream nextPut: $)
-]

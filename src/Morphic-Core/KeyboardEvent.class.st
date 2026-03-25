@@ -97,7 +97,7 @@ KeyboardEvent >> isRepeat: aBoolean [
 
 { #category : 'keyboard' }
 KeyboardEvent >> key [
-	^ key ifNil: [key := Smalltalk os keyForValue: keyValue]
+	^ key ifNil: [key := OSPlatform current keyForValue: keyValue]
 ]
 
 { #category : 'keyboard' }
@@ -130,10 +130,10 @@ KeyboardEvent >> keyValue [
 KeyboardEvent >> modifiedCharacter [
 	self flag: #hack.
 	"Hack me.  When Ctrl is pressed, the key ascii value is not right and we have to do something ugly"
-	^(self hasSpecialCTRLKeyValue and: [ (#(MacOSX Windows) includes: Smalltalk os platformFamily) ])
+	^(self hasSpecialCTRLKeyValue and: [ (#(MacOSX Windows) includes: OSPlatform current platformFamily) ])
     	ifTrue: [ (self keyValue + $a asciiValue - 1) asCharacter ]
 		ifFalse: [
-			Smalltalk os isWindows
+			OSPlatform current isWindows
 				ifTrue: [ self keyCharacter asLowercase ]
 				ifFalse: [ self keyCharacter ] ]
 ]
@@ -204,7 +204,7 @@ KeyboardEvent >> scanCode [
 	^scanCode
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 KeyboardEvent >> scanCode: anInt [
 	scanCode := anInt
 ]

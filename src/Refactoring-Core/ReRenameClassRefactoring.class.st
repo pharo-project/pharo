@@ -56,7 +56,14 @@ ReRenameClassRefactoring >> applicabilityPreconditions [
 		  (RBCondition withBlock: [
 			   self doesClassToBeRenamedExist and: [ self isNotMetaclass ] ]).
 		  self isValidClassName.
-		  self isNotGlobal }
+		  self isNotGlobal.
+		}
+]
+
+{ #category : 'preconditions' }
+ReRenameClassRefactoring >> breakingChangePreconditions [
+
+	^ { (ReSharedVariableShadowingClassNameCondition name: newName oldName: className model: self model) }
 ]
 
 { #category : 'initialization' }
@@ -109,7 +116,7 @@ ReRenameClassRefactoring >> newName: aNewName [
 	newName := aNewName asSymbol
 ]
 
-{ #category : 'preconditions' }
+{ #category : 'transforming' }
 ReRenameClassRefactoring >> prepareForExecution [
 
 	class := self model classNamed: className
@@ -138,10 +145,6 @@ ReRenameClassRefactoring >> renameReferences [
 					            , ' already exists within the reference scope' ];
 		            yourself.
 	self model allReferencesToClass: class do: [ :method |
-		(method modelClass hierarchyDefinesVariable: newName) ifTrue: [
-			self refactoringError:
-				newName , ' is already defined in hierarchy of '
-				, method modelClass printString ].
 		(method compiledMethod
 			 ifNil: [ false ]
 			 ifNotNil: [ :m | m isFromTrait ]) ifFalse: [
@@ -151,14 +154,9 @@ ReRenameClassRefactoring >> renameReferences [
 				using: replacer ] ]
 ]
 
-{ #category : 'storing' }
-ReRenameClassRefactoring >> storeOn: aStream [
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream nextPutAll: ' rename: '.
-	class storeOn: aStream.
-	aStream
-		nextPutAll: ' to: #';
-		nextPutAll: newName;
-		nextPut: $)
+{ #category : 'preconditions' }
+ReRenameClassRefactoring >> violations [
+
+	^ self breakingChangePreconditions flatCollect: [ :each |
+		  each violator ]
 ]

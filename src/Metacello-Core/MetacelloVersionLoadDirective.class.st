@@ -9,6 +9,12 @@ Class {
 	#tag : 'Directives'
 }
 
+{ #category : 'testing' }
+MetacelloVersionLoadDirective class >> isAbstract [
+
+	^ self = MetacelloVersionLoadDirective
+]
+
 { #category : 'actions' }
 MetacelloVersionLoadDirective >> add: aDirective [
 
@@ -44,12 +50,6 @@ MetacelloVersionLoadDirective >> loadDirectives: anObject [
 MetacelloVersionLoadDirective >> packageDirectivesDo: aBlock [
 
 	self loadDirectives do: [:directive | directive packageDirectivesDo: aBlock ].
-]
-
-{ #category : 'accessing' }
-MetacelloVersionLoadDirective >> packages [
-	
-	^ loadDirectives flatCollect: [ :e | e packages ]
 ]
 
 { #category : 'printing' }

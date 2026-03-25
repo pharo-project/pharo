@@ -19,7 +19,7 @@ OCVariableNodeNameResolutionTest >> testIsDefinedByBlock [
   test.
 	[ :test2 | | test3| test2. test3].
   ^test'.
-	temps := ast allChildren select: [ :each | each isTempVariable ].
+	temps := ast withAllChildren select: [ :each | each isTempVariable ].
 	"test is defined by the method"
 	self deny: temps first isDefinedByBlock.
 	self deny: temps second isDefinedByBlock.
@@ -34,7 +34,7 @@ OCVariableNodeNameResolutionTest >> testIsDefinedByBlock [
 	"and we are out if the block"
 	self deny: temps sixth isDefinedByBlock.
 
-	args := ast allChildren select: [ :each | each isArgumentVariable ].
+	args := ast withAllChildren select: [ :each | each isArgumentVariable ].
 	"method arg"
 	self deny: args first isDefinedByBlock.
 	self assert: args second isDefinedByBlock.
@@ -52,7 +52,7 @@ OCVariableNodeNameResolutionTest >> testIsDefinition [
   test.
   [ testCopied. testTempVector := 1 ].
   ^test'.
-	temps := ast allChildren select: [ :each | each isTempVariable ].
+	temps := ast withAllChildren select: [ :each | each isTempVariable ].
 
 	"arguments define variables"
 	self assert: ast arguments first isDefinition.
@@ -80,7 +80,7 @@ OCVariableNodeNameResolutionTest >> testIsDefinitionAfterNameResolution [
   test.
   [ testCopied. testTempVector := 1 ].
   ^test'.
-	temps := ast allChildren select: [ :each | each isTempVariable ].
+	temps := ast withAllChildren select: [ :each | each isTempVariable ].
 
 	"arguments define variables"
 	self assert: ast arguments first isDefinition.

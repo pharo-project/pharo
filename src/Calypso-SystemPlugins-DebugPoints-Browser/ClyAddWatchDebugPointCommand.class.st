@@ -20,7 +20,8 @@ ClyAddWatchDebugPointCommand >> defaultMenuIconName [
 
 { #category : 'accessing' }
 ClyAddWatchDebugPointCommand >> defaultMenuItemName [
-	^' Add Watch to: ',  sourceNode displaySourceCode
+
+	^ String streamContents: [ :stream | stream << 'Watch "' << sourceNode displaySourceCode << '"' ]
 ]
 
 { #category : 'execution' }

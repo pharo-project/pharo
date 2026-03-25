@@ -20,7 +20,7 @@ OCIRReconstructorBuilder >> blockReturnTop [
 	^ super blockReturnTop
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 OCIRReconstructorBuilder >> createTempVectorNamed: name withVars: anArray [
 	" Don't add the temp yet, we only know it's index at the end of the block or method "
 	"self addVectorTemps: anArray"

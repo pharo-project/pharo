@@ -49,7 +49,7 @@ ClyBrowserMorph >> browseReferencesTo: aSymbol inNameResolver: anEnvironment [
 { #category : '*Calypso-SystemTools-QueryBrowser' }
 ClyBrowserMorph >> browseSendersOf: aSymbol [
 
-	self spawnQueryBrowserOn: (ClyMessageSendersQuery of: aSymbol)
+	(Smalltalk tools toolNamed: #messageList) browseSendersOf: aSymbol 
 ]
 
 { #category : '*Calypso-SystemTools-QueryBrowser' }
@@ -95,7 +95,7 @@ ClyBrowserMorph >> spawnQueryBrowserOn: aQuery withState: navigationBlock [
 		In that case we do not need a query browser because it will be always empty and useless"
 		targetQuery semiAsync hasEmptyResult ifTrue: [
 			"For slow queries we will not wait and open a browser to indicate execution progress"
-			^self inform: 'There are no ', targetQuery description ]  ].
+			^ InformativeNotification signal:  'There are no ', targetQuery description ]  ].
 
 	self 
 		spawnBrowser: (Smalltalk tools toolNamed: #messageList)

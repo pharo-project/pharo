@@ -36,13 +36,6 @@ Metaclass >> addObsoleteSubclass: aClass [
 	<reflection: 'Class structural modification - Hierarchy modification'>
 ]
 
-{ #category : 'instance variables' }
-Metaclass >> addSlot: aClassSlot [
-
-	<reflection: 'Class structural modification - Slot modification'>
-	^self instanceSide addClassSlot: aClassSlot
-]
-
 { #category : 'class hierarchy' }
 Metaclass >> addSubclass: aClass [
 	<reflection: 'Class structural modification - Hierarchy modification'>
@@ -155,12 +148,6 @@ Metaclass >> expandedDefinitionStringFor: aPrinter [
 	^ aPrinter expandedMetaclassDefinitionString
 ]
 
-{ #category : 'testing' }
-Metaclass >> hasBindingThatBeginsWith: aString [
-	"class and pool vars are accessible from the class side the same as the instance side"
-	^self instanceSide hasBindingThatBeginsWith: aString
-]
-
 { #category : 'accessing - parallel hierarchy - deprecated' }
 Metaclass >> hasClassSide [
 	<reflection: 'Class structural inspection - Class/Metaclass shift'>
@@ -255,7 +242,7 @@ Metaclass >> name [
 	"Answer a String that is the name of the receiver, either 'Metaclass' or
 	the name of the receiver's class followed by ' class'."
 
-	^ thisClass ifNil: [ 'a Metaclass' ] ifNotNil: [ thisClass name asString , ' class' ]
+	^ thisClass ifNil: [ 'a Metaclass' ] ifNotNil: [ thisClass name , ' class' ]
 ]
 
 { #category : 'instance creation' }
@@ -305,12 +292,6 @@ Metaclass >> postCopy [
 	super postCopy.
 	self classLayout: (layout copy host: self).
 	thisClass := nil
-]
-
-{ #category : 'instance variables' }
-Metaclass >> removeSlot: aClassSlot [
-	<reflection: 'Class structural modification - Slot modification'>
-	^self instanceSide removeClassSlot: aClassSlot
 ]
 
 { #category : 'class hierarchy' }

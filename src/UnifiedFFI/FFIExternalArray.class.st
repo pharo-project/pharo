@@ -199,12 +199,6 @@ FFIExternalArray >> size [
 	^ size
 ]
 
-{ #category : 'converting' }
-FFIExternalArray >> tfPointerAddress [
-
-	^ handle tfPointerAddress
-]
-
 { #category : 'accessing' }
 FFIExternalArray >> type [
 	^ type

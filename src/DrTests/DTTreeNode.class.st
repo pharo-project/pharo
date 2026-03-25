@@ -26,6 +26,15 @@ DTTreeNode class >> empty [
 		yourself
 ]
 
+{ #category : 'instance creation' }
+DTTreeNode class >> name: aString subResults: aCollection [
+
+	^ self new 
+		name: aString;
+		subResults: aCollection;
+		yourself 
+]
+
 { #category : 'visiting' }
 DTTreeNode >> acceptVisitor: aDTResultsTreeVisitor [
 	^ aDTResultsTreeVisitor visitDTTreeNode: self
@@ -101,11 +110,11 @@ DTTreeNode >> drTestsBuildContextMenu: menu [
 { #category : 'accessing' }
 DTTreeNode >> drTestsName [
 
-	^ String streamContents: [ :s |
-		s
+	^ String streamContents: [ :stream |
+		stream
 			<< self name;
 			<< ' (';
-			<< (self subResultsAggregator value: self subResults) asString;
+			print: (self subResultsAggregator value: self subResults);
 			<< ')' ]
 ]
 
@@ -148,7 +157,7 @@ DTTreeNode >> startExpanded [
 
 { #category : 'accessing' }
 DTTreeNode >> subResults [
-	^ subResults
+	^ subResults ifNil: [ Error signal: 'Missing subresults' ]
 ]
 
 { #category : 'accessing' }

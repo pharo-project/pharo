@@ -6,16 +6,15 @@ Class {
 	#tag : 'SingleParametrized'
 }
 
-{ #category : 'tests' }
-RBRemoveAllSendersParametrizedTest class >> testParameters [
-	^ ParametrizedTestMatrix new
-		addCase: { #rbClass -> RBRemoveAllSendersRefactoring };
-		yourself
-]
-
 { #category : 'accessing' }
 RBRemoveAllSendersParametrizedTest >> constructor [
 	^ #removeSendersOf:
+]
+
+{ #category : 'running' }
+RBRemoveAllSendersParametrizedTest >> setUp [ 
+	super setUp.
+	rbClass := RBRemoveAllSendersRefactoring
 ]
 
 { #category : 'tests' }

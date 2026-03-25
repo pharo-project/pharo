@@ -254,6 +254,20 @@ ZnCharacterEncoderTest >> testNullEncoder [
 ]
 
 { #category : 'testing' }
+ZnCharacterEncoderTest >> testNumberOfCharactersFrom [
+
+	| bytes |
+	bytes := 'Düsseldorf Königsallee' utf8Encoded.
+	self assert: (#utf8 asZnCharacterEncoder numberOfCharactersFrom: bytes) equals: 22.
+	bytes := 'Düsseldorf Königsallee' encodeWith: #utf16.
+	self assert: (#utf16 asZnCharacterEncoder numberOfCharactersFrom: bytes) equals: 22.
+	bytes := 'Test' encodeWith: #ascii.
+	self assert: (#ascii asZnCharacterEncoder numberOfCharactersFrom: bytes) equals: 4.
+	bytes := 'Test' encodeWith: #latin1.
+	self assert: (#latin1 asZnCharacterEncoder numberOfCharactersFrom: bytes) equals: 4
+]
+
+{ #category : 'testing' }
 ZnCharacterEncoderTest >> testReadIntoStartingAtCountFromStream [
 	| encoder |
 	encoder := ZnUTF8Encoder new.
@@ -412,6 +426,26 @@ ZnCharacterEncoderTest >> testUTF16EncoderWide1 [
 ]
 
 { #category : 'testing' }
+ZnCharacterEncoderTest >> testUTF16Forward [
+	"
+	Ω -> 2 bytes (0x03A9)
+	𐍈 -> 4 bytes (0xD800 0xDF48)
+	"
+
+	| encoder stream |
+	encoder := ZnUTF16Encoder new.
+	stream := (encoder encodeString: 'Ω𐍈') readStream.
+	self assert: stream position equals: 0.
+	encoder forwardOnStream: stream.
+	self assert: stream position equals: 2.
+	encoder forwardOnStream: stream.
+	self assert: stream position equals: 6.
+	self should: [ encoder forwardOnStream: stream ] raise: Error. "Fail if at the end."
+	stream position: 4.
+	self should: [ encoder forwardOnStream: stream ] raise: Error "Fail if in the middle of a character."
+]
+
+{ #category : 'testing' }
 ZnCharacterEncoderTest >> testUTF32EncoderExampleFromD100 [
 	| string bytes encoder |
 	string := #(16r0000004D 16r00000430 16r00004E8C 16r00010302) collect: #asCharacter as: String.
@@ -478,6 +512,23 @@ ZnCharacterEncoderTest >> testUTF32EncoderWide [
 			| bytes |
 			bytes := self encodeString: each with: encoder.
 			self assert: (encoder decodeBytesIntoWideString: bytes) equals: each ]
+]
+
+{ #category : 'testing' }
+ZnCharacterEncoderTest >> testUTF32Forward [
+	"All characters are on 4 bytes"
+
+	| encoder stream |
+	encoder := ZnUTF32Encoder new.
+	stream := (encoder encodeString: 'té') readStream.
+	self assert: stream position equals: 0.
+	encoder forwardOnStream: stream.
+	self assert: stream position equals: 4.
+	encoder forwardOnStream: stream.
+	self assert: stream position equals: 8.
+	self should: [ encoder forwardOnStream: stream ] raise: Error. "Fail if at the end."
+	stream position: 7.
+	self should: [ encoder forwardOnStream: stream ] raise: Error
 ]
 
 { #category : 'testing' }
@@ -610,6 +661,32 @@ ZnCharacterEncoderTest >> testUTF8EncoderWide [
 		do: [ :each | | bytes |
 			bytes := self encodeString: each with: encoder.
 			self assert: (encoder decodeBytesIntoWideString: bytes) equals: each ]
+]
+
+{ #category : 'testing' }
+ZnCharacterEncoderTest >> testUTF8Forward [
+	"
+	A -> 1 byte
+	¢ -> 2 bytes
+	€ -> 3 bytes
+	𝄞 ->_4 bytes
+	"
+
+	| encoder stream |
+	encoder := ZnUTF8Encoder new.
+	stream := (encoder encodeString: 'A¢€𝄞') readStream.
+	self assert: stream position equals: 0.
+	encoder forwardOnStream: stream.
+	self assert: stream position equals: 1.
+	encoder forwardOnStream: stream.
+	self assert: stream position equals: 3.
+	encoder forwardOnStream: stream.
+	self assert: stream position equals: 6.
+	encoder forwardOnStream: stream.
+	self assert: stream position equals: 10.
+	self should: [ encoder forwardOnStream: stream ] raise: Error. "Fail if at the end."
+	stream position: 7.
+	self should: [ encoder forwardOnStream: stream ] raise: Error "Fail if in the middle of a character."
 ]
 
 { #category : 'testing' }

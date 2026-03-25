@@ -104,15 +104,6 @@ Exception class >> signalIn: context [
 	^ self new signalIn: context
 ]
 
-{ #category : 'private' }
-Exception >> completeProcess: aProcess with: aContext [
-	"I am a hook during process completion in case one of my subclass wants to plug a special behavior.
-
-	By default I return my signal context"
-
-	^ self signalContext
-]
-
 { #category : 'handling' }
 Exception >> defaultAction [
 	"No one has handled this error, but now give them a chance to decide how to debug it.
@@ -340,6 +331,12 @@ Exception >> signal: signalerText [
 	^ self signal
 ]
 
+{ #category : 'accessing' }
+Exception >> signalContext [
+
+	^ signalContext
+]
+
 { #category : 'signaling' }
 Exception >> signalIn: context [
 	"Ask ContextHandlers in the sender chain starting at the given context to handle this signal.
@@ -376,6 +373,15 @@ Exception >> signalerContext [
 	^ signalContext findContextSuchThat: [ :context |
 		(context receiver == self
 		or: [ context receiver == self class ]) not ]
+]
+
+{ #category : 'printing' }
+Exception >> stackTraceString [
+
+	^ String streamContents: [ :s |
+			  self printOn: s.
+			  s cr.
+			  self signalerContext printStackTraceOn: s ]
 ]
 
 { #category : 'accessing' }

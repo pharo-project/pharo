@@ -94,6 +94,12 @@ ClyRichTextClassCommentEditorToolMorph >> printContext [
 	^super printContext , ' / ', editingClass name
 ]
 
+{ #category : 'event handling' }
+ClyRichTextClassCommentEditorToolMorph >> reactToRubTextAreaDoubleClick: anEvent [
+
+	self switchToEditMode
+]
+
 { #category : 'initialization' }
 ClyRichTextClassCommentEditorToolMorph >> setBackgroundColor: aColor [
 	

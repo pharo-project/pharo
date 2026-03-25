@@ -25,6 +25,14 @@ MethodMapExamples >> exampleAccessOuterFromCleanBlock [
 ]
 
 { #category : 'examples' }
+MethodMapExamples >> exampleAccessOuterFromFullBlock [
+	<compilerOptions: #(- optionCleanBlockClosure)>
+	| b |
+	b := 1.
+	^[ thisContext tempNamed: 'b' ] value
+]
+
+{ #category : 'examples' }
 MethodMapExamples >> exampleConstantBlock [
 	
 	^ [ nil ]
@@ -168,6 +176,33 @@ MethodMapExamples >> exampleTempNamedTempVectorNestedBlock [
 		b := a.
 		[
 		 b := 2 . thisContext tempNamed: 'b' ] value] value
+]
+
+{ #category : 'examples' }
+MethodMapExamples >> exampleWithDoubleHoisting [
+	
+	17 ifNil: [ | a | a yourself ] ifNotNil: [ :a | a yourself ].
+	
+	"This a should be hoisted also and conflict with the two above"
+	17 ifNotNil: [ :a | a yourself ]
+]
+
+{ #category : 'examples' }
+MethodMapExamples >> exampleWithHoisting [
+	
+	17 ifNil: [ | a | a yourself ] ifNotNil: [ :a | a yourself ]
+]
+
+{ #category : 'examples' }
+MethodMapExamples >> exampleWithNestedHoisting [
+
+	17
+		ifNil: [
+				| a |
+				a yourself ]
+		ifNotNil: [ :a |
+			"This a should be hoisted also and conflict with the two above"
+			17 ifNotNil: [ :a | a yourself ] ]
 ]
 
 { #category : 'examples' }

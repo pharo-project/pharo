@@ -18,3 +18,8 @@ AthensCloseSegment >> accept: aVisitor [
 AthensCloseSegment >> sendCommandTo: aBuilder [
 	^ aBuilder close
 ]
+
+{ #category : 'visitor' }
+AthensCloseSegment >> visitWith: visitor [
+	visitor visitCloseSegment:  self
+]

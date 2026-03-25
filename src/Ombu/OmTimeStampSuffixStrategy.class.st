@@ -33,7 +33,7 @@ OmTimeStampSuffixStrategy >> nextSuffix [
 
 	stamp := currentNanos printStringHex.
 	"We continue until we have a new stamp because we changed of millisecond"
-	^ (Smalltalk os isWindows and: [ lastSuffix = stamp ])
+	^ (OSPlatform current isWindows and: [ lastSuffix = stamp ])
 		  ifTrue: [ self nextSuffix ]
 		  ifFalse: [ lastSuffix := stamp ]
 ]

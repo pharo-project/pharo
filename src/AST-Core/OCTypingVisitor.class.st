@@ -50,7 +50,7 @@ OCTypingVisitor class >> bench: trees [
 		print: trees size;
 		cr.
 
-	valueNodes := (trees flatCollect: #allChildren) select: #isValue.
+	valueNodes := (trees flatCollect: #withAllChildren) select: #isValue.
 	report
 		nextPutAll: 'Number of value nodes: ';
 		print: valueNodes size;

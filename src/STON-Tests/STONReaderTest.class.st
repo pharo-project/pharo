@@ -522,16 +522,16 @@ STONReaderTest >> testTime [
 STONReaderTest >> testURL [
 	self
 		assert: (self materialize: 'URL[''https://pharo.org/files/pharo.png'']')
-		equals: 'https://pharo.org/files/pharo.png' asUrl.
+		equals: 'https://pharo.org/files/pharo.png' asZnUrl.
 	self
 		assert: (self materialize: 'URL[''mailto:sven@stfx.eu'']')
-		equals: 'mailto:sven@stfx.eu' asUrl.
+		equals: 'mailto:sven@stfx.eu' asZnUrl.
 	self
 		assert: (self materialize: 'URL[''file:///var/log/system.log'']')
-		equals: 'file:///var/log/system.log' asUrl.
+		equals: 'file:///var/log/system.log' asZnUrl.
 	self
 		assert: (self materialize: 'URL[''scheme://user:password@host:123/var/log/system.log?foo=1&bar#frag'']')
-		equals: 'scheme://user:password@host:123/var/log/system.log?foo=1&bar#frag' asUrl
+		equals: 'scheme://user:password@host:123/var/log/system.log?foo=1&bar#frag' asZnUrl
 ]
 
 { #category : 'tests' }
@@ -585,8 +585,8 @@ STONReaderTest >> testZnUrlBackwardsCompatibility [
 	"We now have URL, make sure we still support the old format"
 	self
 		assert: (self materialize: 'ZnUrl{#scheme:#https,#host:''pharo.org'',#segments:OrderedCollection[''files'', ''pharo.png'']}')
-		equals: 'https://pharo.org/files/pharo.png' asUrl.
+		equals: 'https://pharo.org/files/pharo.png' asZnUrl.
 	self
 		assert: (self materialize: 'ZnUrl{#scheme:#file,#segments:OrderedCollection[''tmp'', ''foo.txt'']}')
-		equals: 'file:///tmp/foo.txt' asUrl
+		equals: 'file:///tmp/foo.txt' asZnUrl
 ]

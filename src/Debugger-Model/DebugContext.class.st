@@ -52,7 +52,7 @@ DebugContext >> blockNotFoundDialog: aMethod with: aText [
 	message := 'Method for block not found on stack, can''t edit and continue'.
 
 	"shouldn't edit doits"
-	aMethod selector isDoIt ifTrue: [ ^ self inform: message ].
+	aMethod selector isDoIt ifTrue: [ ^ InformativeNotification signal: message ].
 
 	result := self
 		          confirm: message
@@ -78,13 +78,14 @@ DebugContext >> checkSelectorUnchanged: aSelector [
 	unchanged := aSelector == self selectedMessageName
 		or: [ self selectedMessageName isDoIt and: [ aSelector numArgs = self selectedMessageName numArgs ] ].
 	unchanged
-		ifFalse: [ self inform: 'can''t change selector' ].
+		ifFalse: [ InformativeNotification signal: 'can''t change selector' ].
 	^ unchanged
 ]
 
 { #category : 'ui requests' }
 DebugContext >> confirm: message trueChoice: trueChoice falseChoice: falseChoice [
-
+	self halt.
+	"YOU SHOULD NOT CALL UIMANAGER"
 	^ UIManager default
 		confirm: message
 		trueChoice: trueChoice
@@ -129,16 +130,15 @@ DebugContext >> locateClosureHomeWithContent: aText [
 	user to validate the new context. If closureHome is not found or the user does not
 	validate the new context, return nil. aText is the new content of the current context.
 	If the current context is not a BlockContext return it."
-	| closureHome |
 
+	| closureHome |
 	context isBlockContext ifTrue: [
-		closureHome := context activeHome.
-		closureHome ifNil: [
-			self blockNotFoundDialog: context homeMethod with: aText.
-		 	^ nil ].
-		 (self confirm: 'I will have to revert to the method from\which this block originated.  Is that OK?' withCRs)
-			ifFalse: [ ^ nil ].
-		^ closureHome].
+			closureHome := context activeHome.
+			closureHome ifNil: [
+					self blockNotFoundDialog: context homeMethod with: aText.
+					^ nil ].
+			(ConfirmationRequest signal: 'I will have to revert to the method from\which this block originated.  Is that OK?') ifFalse: [ ^ nil ].
+			^ closureHome ].
 
 	^ context
 ]

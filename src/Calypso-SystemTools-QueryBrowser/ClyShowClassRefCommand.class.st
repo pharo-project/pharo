@@ -94,7 +94,7 @@ ClyShowClassRefCommand >> defaultMenuItemName [
 { #category : 'execution' }
 ClyShowClassRefCommand >> execute [
 
-	browser spawnQueryBrowserOn: (ClyClassReferencesQuery toAny: classes) 
+	(Smalltalk tools toolNamed: #messageList) browseReferencesToClass: classes first
 ]
 
 { #category : 'execution' }

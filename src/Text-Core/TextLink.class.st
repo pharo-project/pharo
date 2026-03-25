@@ -79,6 +79,11 @@ TextLink >> info [
 ]
 
 { #category : 'testing' }
+TextLink >> mayActOnEvent: anEvent [
+	^ anEvent isMouseUp and: [ anEvent metaKeyPressed ]
+]
+
+{ #category : 'testing' }
 TextLink >> mayHaveExternalReferences [
 	"Text links can keep references to external objects like AST nodes"
 	^ true

@@ -110,6 +110,8 @@ CleanBlockClosure >> outerCode: aCompiledCode [
 { #category : 'accessing' }
 CleanBlockClosure >> pathOfLiteralIndexes [
 	
+	"Return the path of this compiled block inside the method literal frame.
+	See CompiledBlock>>#pathOfLiteralIndexes for more details"
 	^ self compiledBlock pathOfLiteralIndexes allButLast
 ]
 
@@ -140,13 +142,6 @@ CleanBlockClosure >> receiver [
 { #category : 'accessing' }
 CleanBlockClosure >> refersToLiteral: aLiteral [
 	^self compiledBlock refersToLiteral: aLiteral
-]
-
-{ #category : 'debugger access' }
-CleanBlockClosure >> sender [
-	" clean blocks do not know the sender"
-	<reflection: 'Message sending and code execution - Message send reification'>
-	^nil
 ]
 
 { #category : 'accessing' }

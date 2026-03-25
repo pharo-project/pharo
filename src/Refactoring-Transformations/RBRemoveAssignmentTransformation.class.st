@@ -65,7 +65,7 @@ RBRemoveAssignmentTransformation >> applicabilityPreconditions [
 			   ('Method named <1s> does not exist' expandMacrosWith: selector)).
 		  (RBCondition
 			   withBlock: [
-				   (self definingMethod allChildren
+				   (self definingMethod withAllChildren
 					    select: #isVariable
 					    thenCollect: #name) anySatisfy: [ :e |
 					   e asString = variableName ] ]
@@ -75,7 +75,7 @@ RBRemoveAssignmentTransformation >> applicabilityPreconditions [
 					    with: variableName)).
 		  (RBCondition
 			   withBlock: [
-				   (self definingMethod allChildren
+				   (self definingMethod withAllChildren
 					    select: [ :each | each isAssignment ]
 					    thenCollect: [ :var | var variable ]) anySatisfy: [ :e |
 					   e name asString = variableName ] ]
@@ -104,34 +104,17 @@ RBRemoveAssignmentTransformation >> classExist [
 RBRemoveAssignmentTransformation >> privateTransform [
 	| methodTree valueNode assignments nodeToRemove |
 	methodTree := self definingMethod.
-	assignments := (methodTree allChildren select: #isAssignment)
+	assignments := (methodTree withAllChildren select: #isAssignment)
 		select: [ :each | each variable name asString = variableName ].
 	nodeToRemove := assignments size = 1
 		ifTrue: [ assignments first ]
 		ifFalse: [ valueNode := self parserClass parseExpression: value.
 			assignments
 				detectMax: [ :node |
-					((node allChildren collect: [:each | each class])
-						intersection: (valueNode allChildren collect: [:each | each class])) size ] ].
+					((node withAllChildren collect: [:each | each class])
+						intersection: (valueNode withAllChildren collect: [:each | each class])) size ] ].
 	nodeToRemove parent removeNode: nodeToRemove.
 	class compileTree: methodTree
-]
-
-{ #category : 'storing' }
-RBRemoveAssignmentTransformation >> storeOn: aStream [
-
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream
-		nextPutAll: ' variable: ''';
-		nextPutAll: variableName;
-		nextPutAll: ' value: ''';
-		nextPutAll: value;
-		nextPutAll: ' inMethod: ''';
-		nextPutAll: selector;
-		nextPutAll: ''' inClass: ''';
-		nextPutAll: className.
-	aStream nextPut: $)
 ]
 
 { #category : 'api' }

@@ -23,7 +23,7 @@ FLIteratingCluster >> add: anObject traceWith: aAnalysis [
 		referencesOf: anObject 
 		do: [ :aChild |
 			self addReferenceFrom: anObject to: aChild.
-			aAnalysis trace: aChild ]
+			aAnalysis traceObject: aChild ]
 ]
 
 { #category : 'analyzing' }

@@ -159,7 +159,7 @@ RBMoveMethodRefactoring >> compileDelegatorMethod [
 	| statementNode delegatorNode tree |
 	delegatorNode := OCMessageNode
 		                 receiver: (OCVariableNode named: variable)
-		                 selector: parseTree selector
+		                 selector: (OCSelectorNode value: parseTree selector)
 		                 keywordsPositions: parseTree keywordsPositions
 		                 arguments: (parseTree argumentNames collect: [ :each |
 				                  each = selfVariableName
@@ -179,9 +179,15 @@ RBMoveMethodRefactoring >> compileNewMethods [
 
 { #category : 'transforming' }
 RBMoveMethodRefactoring >> getArgumentNameForSelf [
+	"This logic should be revisited when migrated to a driver.
+	Right now we just made that requestSelfArgumentName return the value of the 
+	stored variable and do not ask the user to get a new value. 
+	So the while loop is then totally bogus but this refactoring is not used."
+	
 	self needsToReplaceSelfReferences ifFalse: [^self].
 
-	[selfVariableName := self requestSelfArgumentName.
+	
+	"[ selfVariableName := self requestSelfArgumentName.
 	(self checkInstanceVariableName: selfVariableName in: class)
 		ifTrue:
 			[self verifyTemporaryVariableDoesNotOverride
@@ -196,7 +202,7 @@ RBMoveMethodRefactoring >> getArgumentNameForSelf [
 						expandMacros.
 			selfVariableName := nil].
 	selfVariableName isNil]
-			whileTrue: []
+			whileTrue: []"
 ]
 
 { #category : 'private - accessing' }
@@ -394,6 +400,16 @@ RBMoveMethodRefactoring >> replaceVariableReferences [
 	parseTree := replacer tree
 ]
 
+{ #category : 'transforming' }
+RBMoveMethodRefactoring >> requestSelfArgumentName [
+	"the dialog is replaced by an access to the instance variable
+	this is not good because it break the validation loops.
+	but the validation loop logic after user input should be defined in a 
+	driver and not this refactoring. "
+	
+	^ selfVariableName 
+]
+
 { #category : 'initialization' }
 RBMoveMethodRefactoring >> selector: aSymbol class: aClass variable: aVariableName [
 	selector := aSymbol.
@@ -401,19 +417,13 @@ RBMoveMethodRefactoring >> selector: aSymbol class: aClass variable: aVariableNa
 	variable := aVariableName
 ]
 
-{ #category : 'storing' }
-RBMoveMethodRefactoring >> storeOn: aStream [
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream
-		nextPutAll: ' selector: #';
-		nextPutAll: selector;
-		nextPutAll: ' class: '.
-	class storeOn: aStream.
-	aStream
-		nextPutAll: ' variable: ''';
-		nextPutAll: variable;
-		nextPutAll: ''')'
+{ #category : 'transforming' }
+RBMoveMethodRefactoring >> selfArgumentName: aString [
+	"instead of requesting it interactively the good logic is to set it up 
+	prior to execute the refactoring."
+	
+	selfVariableName := aString
+	
 ]
 
 { #category : 'transforming' }

@@ -39,7 +39,7 @@ OCPatternBlockNode >> addArgumentWithNameBasedOn: aString to: aBlockNode [
 OCPatternBlockNode >> constructLookupNodeFor: aString in: aBlockNode [
 	^ OCMessageNode
 		  receiver: OCVariableNode selfNode
-		  selector: #lookupMatchFor:in:
+		  selector: (OCSelectorNode value: #lookupMatchFor:in:)
 		  arguments: (Array with: (OCLiteralNode value: aString) with: aBlockNode arguments last copy)
 ]
 

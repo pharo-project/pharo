@@ -101,7 +101,7 @@ RBMoveMethodToClassSideRefactoring >> getNewInstSideSource [
 RBMoveMethodToClassSideRefactoring >> getNewSource [
 
 	| rewriter node temp |
-	temp := self temporaryName.
+	temp := 'newInstance'.
 	node := OCParser parseMethod: method source.
 	rewriter := OCParseTreeRewriter new replace: 'self' with: temp.
 	(rewriter executeTree: node)
@@ -153,9 +153,9 @@ RBMoveMethodToClassSideRefactoring >> privateTransform [
 	method := class methodFor: method selector.
 	targetClass := self model classNamed: class name, ' class'.
 	newSource2 := self getNewSource.
-	rbMethod := self model rbMethodClass for: targetClass source: newSource2 selector: method selector.
-	rbMethod2 := self model rbMethodClass for: sourceClass source: newSource selector: method selector.
-	
+
+	rbMethod := RBMethod for: targetClass source: newSource2 selector: method selector.
+	rbMethod2 := RBMethod for: sourceClass source: newSource selector: method selector.
 	self removeMethod: method selector from: sourceClass.
 	self addMethod: rbMethod to: targetClass toProtocol: originalProtocol.
 	self addMethod: rbMethod2 to: sourceClass toProtocol: originalProtocol
@@ -186,30 +186,4 @@ RBMoveMethodToClassSideRefactoring >> removeMethod: selector from: aRBClass [
 		(RBRemoveMethodTransformation
 			selector: selector
 			from: aRBClass)
-]
-
-{ #category : 'storing' }
-RBMoveMethodToClassSideRefactoring >> storeOn: aStream [
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream
-		nextPutAll: ' method: '.
-	method storeOn: aStream.
-	aStream
-		nextPutAll: ' class: ';
-		nextPutAll: class name.
-	aStream
-		nextPutAll: ')'
-]
-
-{ #category : 'transforming' }
-RBMoveMethodToClassSideRefactoring >> temporaryName [
-	| aString counter tempName |
-	counter := 0.
-	aString := class canonicalArgumentName.
-	tempName := aString.
-	[self checkVariableNamed: tempName]
-	whileTrue: [ counter := counter + 1.
-		tempName := aString , counter asString ].
-	^ tempName
 ]

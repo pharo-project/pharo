@@ -186,11 +186,6 @@ OCBlockNode >> copyInContext: aDictionary [
 		yourself
 ]
 
-{ #category : 'testing' }
-OCBlockNode >> defines: aName [
-	^arguments anySatisfy: [:each | each name = aName]
-]
-
 { #category : 'comparing' }
 OCBlockNode >> equalTo: anObject withMapping: aDictionary [
 	self class = anObject class ifFalse: [^false].
@@ -202,6 +197,15 @@ OCBlockNode >> equalTo: anObject withMapping: aDictionary [
 		ifFalse: [^false].
 	self arguments do: [:each | aDictionary removeKey: each name].
 	^true
+]
+
+{ #category : 'testing' }
+OCBlockNode >> exactNodeDefines: aName [
+	"Returns true whether the block dedfines a name as arguments.
+	If you want to know whether the block has temps you should ask 
+	its body."
+	
+	^arguments anySatisfy: [ :each | each name = aName ]
 ]
 
 { #category : 'testing' }
@@ -222,23 +226,9 @@ OCBlockNode >> hasBlock [
 ]
 
 { #category : 'testing' }
-OCBlockNode >> hasBlockReturn [
-
-	self deprecated: 'This method is deprecated, don''t use it. Use on your own responsibility.'.
-
-	^ self body lastIsReturn
-]
-
-{ #category : 'testing' }
 OCBlockNode >> hasSameExitPoint [
 
 	^ body hasSameExitPoint 
-]
-
-{ #category : 'testing' }
-OCBlockNode >> hasSameExitPoint: aBoolean [ 
-
-	^ body hasSameExitPoint: aBoolean 
 ]
 
 { #category : 'testing' }
@@ -360,11 +350,6 @@ OCBlockNode >> postCopy [
 { #category : 'accessing' }
 OCBlockNode >> precedence [
 	^0
-]
-
-{ #category : 'testing' }
-OCBlockNode >> references: aVariableName [
-	^body references: aVariableName
 ]
 
 { #category : 'adding-removing' }

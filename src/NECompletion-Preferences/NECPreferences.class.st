@@ -197,7 +197,7 @@ NECPreferences class >> settingsOn: aBuilder [
 								setSelector: #completionEngineClass:;
 								default: (Smalltalk at: #CoCompletionEngine);
 								domainValues: availableControllers ].
-					availableSorters := self availableSorters.
+					"availableSorters := self availableSorters.
 					availableSorters size > 1
 						ifTrue: [
 							(aBuilder pickOne: #completionSorter)
@@ -206,7 +206,7 @@ NECPreferences class >> settingsOn: aBuilder [
 								target: CompletionContext;
 								getSelector: #sorterClass;
 								setSelector: #sorterClass:;
-								domainValues: availableSorters ].
+								domainValues: availableSorters ]."
 					(aBuilder setting: #backgroundColor)
 						default: (Color
 							r: 0.823069403714565

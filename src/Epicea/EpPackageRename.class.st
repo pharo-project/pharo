@@ -33,8 +33,9 @@ EpPackageRename >> fileOutEntryOn: aWriteStream [
 	aWriteStream
 		nextPutAll: 'self packageOrganizer renamePackage: ';
 		nextPutAll: self oldPackageName;
-		nextPutAll: ' to: ';
-		nextChunkPut: self newPackageName;
+		nextPutAll: ' to: '.
+	(ChunkWriteStream on: aWriteStream)
+		nextPut:  self newPackageName;
 		cr.
 
 ]

@@ -22,10 +22,11 @@ MCTraitDefinition >> = aDefinition [
 												  self classInstVarNames = aDefinition classInstVarNames and: [ comment = aDefinition comment ] ] ] ] ] ] ]
 ]
 
-{ #category : 'visiting' }
-MCTraitDefinition >> accept: aVisitor [
-	^ aVisitor visitTraitDefinition: self
+{ #category : 'accessing' }
+MCTraitDefinition >> classDefinitionString [
+	"Answer a string describing the class-side definition."
 
+	^String streamContents: [:stream | self printMetaDefinitionOn: stream]
 ]
 
 { #category : 'printing' }
@@ -40,26 +41,6 @@ MCTraitDefinition >> classSlotDefinitionString [
 					do: [ :each | stream print: each name ]
 					separatedBy: [ stream nextPutAll: ' . ' ].
 				stream nextPutAll: ' }']]
-]
-
-{ #category : 'installing' }
-MCTraitDefinition >> createClassInEnvironment: anEnvironent [
-
-	^ [
-	  self class classInstaller make: [ :aBuilder |
-		  aBuilder
-			  name: name;
-			  traitComposition: (Smalltalk compiler evaluate: self traitCompositionString);
-			  classTraitComposition: (Smalltalk compiler evaluate: self classTraitCompositionString);
-			  slots: self instanceVariables;
-			  classSlots: self classInstanceVariables;
-			  package: self packageName;
-			  tag: self tagName;
-			  comment: comment stamp: commentStamp;
-			  beTrait.
-			anEnvironent ifNotNil: [ aBuilder environment: anEnvironent ] ] ]
-		  on: Warning , DuplicatedVariableError
-		  do: [ :ex | ex resume ]
 ]
 
 { #category : 'testing' }
@@ -78,6 +59,32 @@ MCTraitDefinition >> hash [
 { #category : 'testing' }
 MCTraitDefinition >> isTraitDefinition [
 	^ true
+]
+
+{ #category : 'installing' }
+MCTraitDefinition >> loadWithLoader: aLoader [
+
+	^ [
+	  self class classInstaller make: [ :aBuilder |
+		  aBuilder
+			  name: name;
+			  traitComposition:
+				  (Smalltalk compiler evaluate: self traitCompositionString);
+			  classTraitComposition:
+				  (Smalltalk compiler evaluate: self classTraitCompositionString);
+			  slots: self instanceVariables;
+			  classSlots: self classInstanceVariables;
+			  package: self packageName;
+			  tag: self tagName;
+			  comment: comment stamp: commentStamp;
+			  beTrait.
+		  aLoader targetEnvironment ifNotNil: [
+			  aBuilder environment: aLoader targetEnvironment ] ] ]
+		  on: Warning , DuplicatedVariableError
+		  do: [ :ex |
+			  aLoader isStrict
+				  ifTrue: [ ex pass ]
+				  ifFalse: [ ex resume ] ]
 ]
 
 { #category : 'printing' }
@@ -111,6 +118,13 @@ MCTraitDefinition >> printDefinitionOn: stream [
 
 ]
 
+{ #category : 'printing' }
+MCTraitDefinition >> printMetaDefinitionOn: stream [
+
+	stream nextPutAll: self className, ' classTrait'.
+	self printDefinitionBodyOn: stream
+]
+
 { #category : 'comparing' }
 MCTraitDefinition >> requirements [
 	"Assuming that traits in a composition can be identified by
@@ -121,7 +135,7 @@ MCTraitDefinition >> requirements [
 		ifFalse: [ ^ #() ].
 
 	^ (((OCParser parseExpression: self traitCompositionString)
-		allChildren select: [ :e | e isVariable ])
+		withAllChildren select: [ :e | e isVariable ])
 		collect: [ :e | e name ]
 		as: Set) asArray
 ]

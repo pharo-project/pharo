@@ -22,6 +22,11 @@ CompletionEngineTest >> allSmartCharacters [
 	^ self allSelfClosingCharacters , { '||'. '<>' }
 ]
 
+{ #category : 'running' }
+CompletionEngineTest >> doItContext [ 
+	^ nil
+]
+
 { #category : 'tests - keyboard' }
 CompletionEngineTest >> editorTextWithCaret [
 	"The current test in the editor, with a `|` inserted at the caret position"
@@ -35,6 +40,12 @@ CompletionEngineTest >> editorTextWithCaret [
 CompletionEngineTest >> expectText: aString [ 
 
 	self assert: editor text asString equals: aString
+]
+
+{ #category : 'tests - keyboard' }
+CompletionEngineTest >> hasBindingOf: as [
+
+	^ false
 ]
 
 { #category : 'accessing' }
@@ -90,7 +101,7 @@ CompletionEngineTest >> keyboardPressFor: char [
 { #category : 'running' }
 CompletionEngineTest >> newCompletionEngine [
 
-	^ CompletionEngine new
+	^ CoCompletionEngine new
 ]
 
 { #category : 'tests - keyboard' }

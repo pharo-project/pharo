@@ -45,7 +45,7 @@ OCPatternMessageNode >> copyInContext: aDictionary [
 		ifFalse: [ '' join: (self selectorParts collect: [ :each | aDictionary at: each ])].
 	^ OCMessageNode
 		receiver: (self receiver copyInContext: aDictionary)
-		selector: keywordSelector
+		selector: (OCSelectorNode value: keywordSelector asSymbol)
 		arguments: (self copyList: self arguments inContext: aDictionary)
 ]
 

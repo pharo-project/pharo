@@ -225,6 +225,13 @@ FTBasicItem >> getChildren [
 		ifFalse: [ dataSource childrenBlock cull: data cull: self ]
 ]
 
+{ #category : 'testing' }
+FTBasicItem >> hasComputedChildren [
+	"I return true if I have computed children or false if I don't have computed children."
+
+	^ children ifNil: [ true ] ifNotNil: [ super hasComputedChildren ]
+]
+
 { #category : 'initialization' }
 FTBasicItem >> initialize [
 	isExpanded := false.

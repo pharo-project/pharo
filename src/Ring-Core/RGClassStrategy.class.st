@@ -482,6 +482,12 @@ RGClassStrategy >> pvtSharedPoolsDo: aBlock [
 ]
 
 { #category : 'private - backend access' }
+RGClassStrategy >> referencedPackages [
+
+	^ Array with: self package
+]
+
+{ #category : 'private - backend access' }
 RGClassStrategy >> removeClassVariable: anRGInstanceVariableDefinition [
 
 	self owner announceDefinitionChangeDuring: [

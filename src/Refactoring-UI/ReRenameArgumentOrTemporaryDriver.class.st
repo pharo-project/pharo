@@ -9,17 +9,84 @@ Class {
 	#instVars : [
 		'sourceNode',
 		'newName',
-		'method'
+		'method',
+		'notCheckVarName'
 	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',
 	#tag : 'Drivers'
 }
 
-{ #category : 'resources' }
-ReRenameArgumentOrTemporaryDriver >> configureRefactoring [
+{ #category : 'accessing' }
+ReRenameArgumentOrTemporaryDriver class >> driverName [
 
-	refactoring := RBRenameArgumentOrTemporaryRefactoring renameTemporaryFrom: sourceNode sourceInterval in: method origin selector: method selector
+	^ 'Rename argument or temporary variable'
+]
+
+{ #category : 'accessing' }
+ReRenameArgumentOrTemporaryDriver class >> shouldPreviewChangesByDefault [
+
+	^ false
+]
+
+{ #category : 'execution' }
+ReRenameArgumentOrTemporaryDriver >> breakingChoices [
+
+	| choices |
+
+	choices := OrderedCollection new.
+	notCheckVarName isFalse ifTrue: [
+			choices add: (ReRenameTemporaryVariableChoice new driver: self).
+			choices add: (ReNewVariableNameChoice new driver: self).
+			choices add: (ReConvertTemporaryToExistingVariableChoice new driver: self) ].
+
+ 
+	^ choices
+]
+
+{ #category : 'action' }
+ReRenameArgumentOrTemporaryDriver >> convertTemporaryToExistingVariable [
+
+	| transformation |
+	self applyChanges.
+	transformation := RBRemoveTemporaryVariableTransformation
+		                  variable: notCheckVarName violators first
+		                  inMethod: (method methodClass compiledMethodAt: method selector) selector
+		                  inClass: method methodClass name.
+	transformation privateTransform.
+	self openPreviewWithChanges: transformation changes
+]
+
+{ #category : 'configuration' }
+ReRenameArgumentOrTemporaryDriver >> defaultSelectDialog [
+
+	^ super defaultSelectDialog
+		  title: 'There are potential breaking changes!';
+		  message: self labelBasedOnBreakingChanges;
+		  items: self breakingChoices;
+		  display: [ :each | each description ];
+		  displayIcon: [ :each | self iconNamed: each systemIconName ];
+		  yourself
+]
+
+{ #category : 'configuration' }
+ReRenameArgumentOrTemporaryDriver >> instantiateRefactoring [
+
+	^ RBRenameArgumentOrTemporaryRefactoring
+		  renameTemporaryFrom: sourceNode sourceInterval
+		  in: method origin
+		  selector: method selector
+]
+
+{ #category : 'ui - dialogs' }
+ReRenameArgumentOrTemporaryDriver >> labelBasedOnBreakingChanges [
+
+	^ String streamContents: [ :stream |
+			  refactoring failedBreakingChangePreconditions do: [ :cond |
+					  cond check ifFalse: [
+							  cond violationMessageOn: stream.
+							  stream cr ] ].
+			  stream nextPutAll: 'Select the strategies to apply' ]
 ]
 
 { #category : 'accessing' }
@@ -52,28 +119,35 @@ ReRenameArgumentOrTemporaryDriver >> runRefactoring [
 	| cancelled |
 	self configureRefactoring.
 	refactoring prepareForExecution. "This is needed to set some info in the refactoring such as the parse tree or the defining node."
-	
-	(refactoring applicabilityPreconditionsIndependentOfTheNewName reject: [ :condition | condition check ]) 
-		ifNotEmpty: [ ^ self inform: 'The interval selected is not right to rename a temporary variable.' ].
+
+	(refactoring applicabilityPreconditionsIndependentOfTheNewName reject: [ :condition | condition check ]) ifNotEmpty: [
+		^ self inform: 'The interval selected is not right to rename a temporary variable.' ].
 
 	cancelled := false.
-	[ refactoring newName: (self defaultRequestDialog 
-			 title: 'Rename a temp variable';
-			 label: 'New name of the variable';
-			 text: sourceNode name  ;
-			 "We cannot return in this block so we save the result as a boolean to check it later."
-			 onCancel: [  cancelled := true ];
-			 openModal).
+	[
+		refactoring newName: (self defaultRequestDialog
+				 title: 'Rename a temp variable';
+				 message: 'New name of the variable';
+				 text: sourceNode name;
+				 "We cannot return in this block so we save the result as a boolean to check it later."onCancel: [ cancelled := true ];
+				 openModal).
 
-	cancelled ifTrue: [ ^ self inform: 'Refactoring cancelled' ].
+		cancelled ifTrue: [ ^ self inform: 'Refactoring cancelled' ].
 
-	refactoring applicabilityPreconditionsOfTheNewName allSatisfy: [ :condition | condition check ] ] 
-		whileFalse: [
+		refactoring applicabilityPreconditionsOfTheNewName allSatisfy: [ :condition | condition check ] ] whileFalse: [
 			refactoring applicabilityPreconditionsOfTheNewName
 				detect: [ :condition | condition check ]
 				ifFound: [ :condition | self inform: condition errorString ] ].
 
-	self applyChanges
+	self setBreakingChangesPreconditions.
+
+	refactoring failedBreakingChangePreconditions ifEmpty: [ self applyChanges ] ifNotEmpty: [ self handleBreakingChanges ]
+]
+
+{ #category : 'initialization' }
+ReRenameArgumentOrTemporaryDriver >> setBreakingChangesPreconditions [
+
+	notCheckVarName := refactoring preconditionCheckVariableName
 ]
 
 { #category : 'accessing' }

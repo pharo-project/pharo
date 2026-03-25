@@ -1,7 +1,7 @@
 "
-RBScanner is a stream that returns a sequence of tokens from the string. The tokens know where they came from in the source code and which comments were attached to them.
+OCScanner is a stream that returns a sequence of tokens from the string. The tokens know where they came from in the source code and which comments were attached to them.
 
-NOTE: The RBScanner should never be used directly. (If you do so, do it on your own risk!)
+NOTE: The OCScanner should never be used directly. (If you do so, do it on your own risk!)
 The Scanner is private the to Parser, and even the Parser should be used only via the API of the Compiler!
 
 Instance Variables:
@@ -142,30 +142,9 @@ OCScanner class >> on: aStream [
 	^scanner
 ]
 
-{ #category : 'instance creation' }
-OCScanner class >> on: aStream errorBlock: aBlock [
-
-	self
-		deprecated: 'The scanner no more signals errors or execute error blocks, it just silently produces error tokens'
-		transformWith: '`@receiver on: `@arg1 errorBlock: `@arg2' -> '`@receiver on: `@arg1'.
-	^ self on: aStream
-]
-
 { #category : 'accessing' }
 OCScanner class >> patternVariableCharacter [
 	^ PatternVariableCharacter
-]
-
-{ #category : 'public api' }
-OCScanner class >> scanTokenObjects: aStringOrStream [
-	"Return the tokens objects."
-
-	self deprecated: 'Use scanTokens:' 
-		on: '18/12/2024'  
-		in: 'pharo13'
-		transformWith:  '`@receiver scanTokenObjects: `@arg '
-			-> '`@receiver scanTokens: `@arg '.
-	^ self scanTokens: aStringOrStream
 ]
 
 { #category : 'public api' }
@@ -209,11 +188,6 @@ OCScanner >> contents [
 	[ self atEnd ]
 		whileFalse: [ contentsStream nextPut: self next ].
 	^ contentsStream contents
-]
-
-{ #category : 'accessing' }
-OCScanner >> errorBlock: aBlock [
-	self deprecated: 'No-op as errorBlock is removed'
 ]
 
 { #category : 'accessing' }

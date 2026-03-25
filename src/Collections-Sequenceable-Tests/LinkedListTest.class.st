@@ -4,8 +4,8 @@ A set of test cases which thoroughly test functionality of the LinkedList class.
 Class {
 	#name : 'LinkedListTest',
 	#superclass : 'TestCase',
-	#traits : 'TAddTest - {#testTAddWithOccurrences. #testTAddTwice. #testTWriteTwice} + TEmptyTest + TIterateTest + TIterateSequencedReadableTest + TPrintTest + TAsStringOnDelimiterSequenceableTest + TIndexAccess + TSequencedElementAccessTest + TSubCollectionAccess + (TConvertTest - {#testAsByteArray. #integerCollectionWithoutEqualElements}) + (TCopyPartOfSequenceable - {#testCopyEmptyMethod}) + (TCopySequenceableSameContents - {#testSortBy. #integerCollection}) + TCopySequenceableWithOrWithoutSpecificElements + TCopyTest + (TCopySequenceableWithReplacement - {#testCopyReplaceAllWithManyOccurrence. #collectionWith2TimeSubcollection}) + TBeginsEndsWith + TRemoveTest + TSetArithmetic + TIncludesWithIdentityCheckTest + TStructuralEqualityTest + TOccurrencesTest + TSortTest + TSequenceableTruncatedToSize',
-	#classTraits : 'TAddTest classTrait + TEmptyTest classTrait + TIterateTest classTrait + TIterateSequencedReadableTest classTrait + TPrintTest classTrait + TAsStringOnDelimiterSequenceableTest classTrait + TIndexAccess classTrait + TSequencedElementAccessTest classTrait + TSubCollectionAccess classTrait + TConvertTest classTrait + TCopyPartOfSequenceable classTrait + TCopySequenceableSameContents classTrait + TCopySequenceableWithOrWithoutSpecificElements classTrait + TCopyTest classTrait + TCopySequenceableWithReplacement classTrait + TBeginsEndsWith classTrait + TRemoveTest classTrait + TSetArithmetic classTrait + TIncludesWithIdentityCheckTest classTrait + TStructuralEqualityTest classTrait + TOccurrencesTest classTrait + TSortTest classTrait + TSequenceableTruncatedToSize classTrait',
+	#traits : 'TAddTest - {#testTAddWithOccurrences. #testTAddTwice. #testTWriteTwice} + TEmptyTest + TIterateTest + TIterateSequencedReadableTest + TPrintTest + TIndexAccess + TSequencedElementAccessTest + TSubCollectionAccess + (TConvertTest - {#testAsByteArray. #integerCollectionWithoutEqualElements}) + (TCopyPartOfSequenceable - {#testCopyEmptyMethod}) + (TCopySequenceableSameContents - {#testSortBy. #integerCollection}) + TCopySequenceableWithOrWithoutSpecificElements + TCopyTest + (TCopySequenceableWithReplacement - {#testCopyReplaceAllWithManyOccurrence. #collectionWith2TimeSubcollection}) + TBeginsEndsWith + TRemoveTest + TSetArithmetic + TIncludesWithIdentityCheckTest + TStructuralEqualityTest + TOccurrencesTest + TSortTest + TSequenceableTruncatedToSize',
+	#classTraits : 'TAddTest classTrait + TEmptyTest classTrait + TIterateTest classTrait + TIterateSequencedReadableTest classTrait + TPrintTest classTrait + TIndexAccess classTrait + TSequencedElementAccessTest classTrait + TSubCollectionAccess classTrait + TConvertTest classTrait + TCopyPartOfSequenceable classTrait + TCopySequenceableSameContents classTrait + TCopySequenceableWithOrWithoutSpecificElements classTrait + TCopyTest classTrait + TCopySequenceableWithReplacement classTrait + TBeginsEndsWith classTrait + TRemoveTest classTrait + TSetArithmetic classTrait + TIncludesWithIdentityCheckTest classTrait + TStructuralEqualityTest classTrait + TOccurrencesTest classTrait + TSortTest classTrait + TSequenceableTruncatedToSize classTrait',
 	#instVars : [
 		'nextLink',
 		'n',
@@ -18,7 +18,6 @@ Class {
 		'otherList',
 		'link',
 		'collectionWithoutNil',
-		'nonEmpty1Element',
 		'collectionWithoutEqualElements',
 		'elementNotIn',
 		'elementIn',
@@ -231,12 +230,6 @@ LinkedListTest >> nonEmpty [
 ]
 
 { #category : 'requirements' }
-LinkedListTest >> nonEmpty1Element [
-" return a collection of size 1 including one element"
-	^ nonEmpty1Element
-]
-
-{ #category : 'requirements' }
 LinkedListTest >> nonEmptyMoreThan1Element [
 " return a collection that don't includes equl elements'"
 	^collectionWithoutNil
@@ -290,7 +283,6 @@ LinkedListTest >> setUp [
 	sortedCollection := LinkedList new addAll: #(-87 0 49 57 78 92 937); yourself.
 	"sameAttendAndBegining := LinkedList new add: Link new; add: Link new ; add: Link new; yourself."
 	link := ValueLink value: 42.
-	nonEmpty1Element :=  LinkedList new add: Link new; yourself.
 	 "so that we can recognize this link"
 	"nonEmpty := LinkedList with: link with: Link new."
 	"otherList := LinkedList with: Link new with: Link new."

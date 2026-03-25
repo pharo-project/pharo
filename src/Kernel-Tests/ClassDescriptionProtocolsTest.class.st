@@ -10,6 +10,20 @@ Class {
 }
 
 { #category : 'tests' }
+ClassDescriptionProtocolsTest >> testAddEmptyProtocolIsTurnedIntoAsYetUnclassified [
+
+	(class removeProtocol: Protocol unclassified).
+	self deny: (class hasProtocol: Protocol unclassified).
+	
+	"an empty protocol is turned into a yet unclassified one"
+	class addProtocol: ''.
+	self deny: (class hasProtocol: '').
+	
+	self assert: (class hasProtocol: Protocol unclassified).
+	
+]
+
+{ #category : 'tests' }
 ClassDescriptionProtocolsTest >> testAddProtocol [
 
 	class addProtocol: #titan.

@@ -120,6 +120,21 @@ TextLine >> justifiedPadFor: spaceIndex [
 ]
 
 { #category : 'scanning' }
+TextLine >> justifiedPadFor: spaceIndex font: aFont [
+	"Compute the width of pad for a given space in a line of justified text."
+	| pad |
+
+	internalSpaces = 0 ifTrue: [ ^ 0 ].
+	^ (aFont isNotNil and: [ aFont isSubPixelPositioned ])
+		ifTrue: [ paddingWidth * 1.0 / internalSpaces ]
+		ifFalse: [
+			pad := paddingWidth // internalSpaces.
+			spaceIndex <= (paddingWidth \\ internalSpaces)
+				ifTrue: [ pad + 1 ]
+				ifFalse: [ pad ] ]
+]
+
+{ #category : 'scanning' }
 TextLine >> justifiedTabDeltaFor: spaceIndex [
 	"Compute the delta for a tab in a line of justified text, so tab falls
 	somewhere plausible when line is justified."

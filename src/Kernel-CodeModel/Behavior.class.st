@@ -55,6 +55,14 @@ Behavior >> >> selector [
 	^self compiledMethodAt: selector
 ]
 
+{ #category : 'adding-removing methods' }
+Behavior >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: protocol [
+
+	<reflection: 'Class structural modification - Selector/Method modification'>
+
+	self addSelectorSilently: selector withMethod: compiledMethod.
+]
+
 { #category : 'obsolete subclasses' }
 Behavior >> addObsoleteSubclass: aClass [
 	"Weakly remember that aClass was a subclass of the receiver and is now obsolete"
@@ -580,6 +588,80 @@ Behavior >> codeChangeAnnouncer [
 Behavior >> codeSupportAnnouncer [
 
 	^ self environment codeSupportAnnouncer
+]
+
+{ #category : 'compiling' }
+Behavior >> compile: sourceCode classified: protocol [
+	"Compile the source code in the context of the receiver and install the result in the receiver's method dictionary under the given protocol (this can be a protocol or a protocol name).
+	Return the selector of the compiled method.
+		
+	The argument sourceCode is either a string or an object that converts to a string or a PositionableStream on an object that converts to a string."
+
+	^ self compile: sourceCode classified: protocol notifying: nil
+]
+
+{ #category : 'compiling' }
+Behavior >> compile: sourceCode classified: protcol notifying: requestor [
+	 "Return the selector of the compiled method"
+
+	^ self
+		  compile: sourceCode
+		  classified: protcol
+		  withStamp: nil
+		  notifying: requestor
+]
+
+{ #category : 'compiling' }
+Behavior >> compile: sourceCode classified: protocol withStamp: changeStamp notifying: requestor [
+	"Return the selector of the compiled method"
+
+	^ self
+		  compile: sourceCode
+		  classified: protocol
+		  withStamp: changeStamp
+		  notifying: requestor
+		  logSource: self shouldLogSource
+]
+
+{ #category : 'compiling' }
+Behavior >> compile: sourceCode classified: protocol withStamp: changeStamp notifying: requestor logSource: logSource [
+	"Return the selector of the compiled method"
+
+	| method |
+	sourceCode ifEmpty: [ Error signal: 'The source code should not be empty' ].
+	method := self compiler
+		          source: sourceCode;
+		          requestor: requestor;
+		          failBlock: (requestor ifNotNil: [ [ ^ nil ] ]);
+		          "no failblock if no requestor""compatibility: permit faulty code if no requestor"permitFaulty: requestor isNil;
+		          permitUndeclared: requestor isNil;
+		          protocol: protocol;
+		          changeStamp: changeStamp;
+		          logged: logSource;
+		          install.
+
+	^ method selector
+]
+
+{ #category : 'compiling' }
+Behavior >> compileSilently: sourceCode [
+	"Compile the code and classify the resulting method in the given protocol, leaving no trail in the system log, nor in any change set, nor in the 'recent submissions' list. This should only be used when you know for sure that the compilation will succeed."
+
+	^ self compileSilently: sourceCode classified: 'not defined protocol' notifying: nil
+]
+
+{ #category : 'compiling' }
+Behavior >> compileSilently: sourceCode classified: protocolName [
+	"Compile the code and classify the resulting method in the given protocol, leaving no trail in the system log, nor in any change set, nor in the 'recent submissions' list. This should only be used when you know for sure that the compilation will succeed."
+
+	^ self compileSilently: sourceCode classified: protocolName notifying: nil
+]
+
+{ #category : 'compiling' }
+Behavior >> compileSilently: sourceCode classified: protocolName notifying: requestor [
+	"Compile the code and classify the resulting method in the given protocol, leaving no trail in the system log, nor in any change set, nor in the 'recent submissions' list."
+
+	^ self codeChangeAnnouncer suspendAllWhile: [ self compile: sourceCode classified: protocolName notifying: requestor ]
 ]
 
 { #category : 'accessing - method dictionary' }
@@ -1357,6 +1439,12 @@ Behavior >> methodDictionary: aDictionary [
 	self methodDict: aDictionary
 ]
 
+{ #category : 'accessing' }
+Behavior >> methodNamed: aSelector [
+	<reflection: 'Class structural inspection - Selectors and methods inspection'>
+	^ self methodDict at: aSelector
+]
+
 { #category : 'accessing - method dictionary' }
 Behavior >> methods [
 	<reflection: 'Class structural inspection - Selectors and methods inspection'>
@@ -1403,7 +1491,8 @@ Behavior >> methodsWritingSlot: aSlot [
 { #category : 'accessing' }
 Behavior >> name [
 	"Answer a String that is the name of the receiver."
-	^'a subclass of ', self superclass name
+	
+	^ ('ASubclassOf', self superclass name) asSymbol
 ]
 
 { #category : 'instance creation' }
@@ -1448,6 +1537,11 @@ Behavior >> nonObsoleteClass [
 	"Attempt to find and return the current version of this obsolete class"
 
 	^ self environment at: self originalName
+]
+
+{ #category : 'compiling' }
+Behavior >> noteCompilationOf: aSelector [
+	"A hook allowing some classes to react to recompilation of certain selectors"
 ]
 
 { #category : 'initialization' }
@@ -1658,6 +1752,13 @@ Behavior >> setFormat: aFormatInstanceDescription [
      compact, variable sized"
 
 	format := aFormatInstanceDescription
+]
+
+{ #category : 'compiling' }
+Behavior >> shouldLogSource [
+
+	"By default anonymous behaviors do not log source"
+	^ self isAnonymous not
 ]
 
 { #category : 'testing' }

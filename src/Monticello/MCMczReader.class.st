@@ -3,10 +3,9 @@ Reader for an MCZ format
 "
 Class {
 	#name : 'MCMczReader',
-	#superclass : 'MCVersionReader',
+	#superclass : 'MCAbstractMetadataFullReader',
 	#instVars : [
 		'zip',
-		'infoCache',
 		'filename'
 	],
 	#classVars : [
@@ -52,35 +51,6 @@ MCMczReader class >> supportsVersions [
 	^ true
 ]
 
-{ #category : 'loading' }
-MCMczReader >> adaptDefinitions [
-	"In the old export format the 4th variable of a MCClassDefinition was a category. Now we have the package name and in the last variables we have the tag.
-	This is allowing us to read the old format and try to find the package and the tag. This is not bulletproof."
-
-	self class readingOldExport ifFalse: [ ^ self ].
-	definitions
-		select: [ :def | def isClassDefinition ]
-		thenDo: [ :definition |
-			| converter |
-			converter := CategoryConverter category: definition packageName.
-			definition
-				packageName: converter packageName;
-				tagName: converter tagName ]
-]
-
-{ #category : 'converting' }
-MCMczReader >> associate: tokens [
-	| result |
-	result := Dictionary new.
-	tokens pairsDo: [:key :value | 
-					| tmp |
-					tmp := value.
-					value isString ifFalse: [tmp := value collect: [:ea | self associate: ea]].
-					value = 'nil' ifTrue: [tmp := ''].
-					result at: key put: tmp].
-	^ result
-]
-
 { #category : 'parsing' }
 MCMczReader >> contentsForMember: member [
 	^[(member contentStreamFromEncoding: 'utf8') contents] on: ZnInvalidUTF8
@@ -110,11 +80,6 @@ MCMczReader >> extractDependencyFrom: zipMember [
 		info: (self extractInfoFrom: (self parseMember: zipMember))
 ]
 
-{ #category : 'utilities' }
-MCMczReader >> extractInfoFrom: dict [
-	^MCWorkingCopy infoFromDictionary: dict cache: self infoCache
-]
-
 { #category : 'accessing' }
 MCMczReader >> filename [
 	^ filename
@@ -125,24 +90,10 @@ MCMczReader >> filename: aString [
 	filename := aString
 ]
 
-{ #category : 'accessing' }
-MCMczReader >> infoCache [
-	^ infoCache ifNil: [infoCache := Dictionary new]
-]
-
 { #category : 'loading' }
 MCMczReader >> loadDefinitions [
 
 	definitions := OrderedCollection new.
-	(self zip memberNamed: 'snapshot.bin') ifNotNil: [ :m |
-		[
-		definitions := (MCDataStream on: m contents readStream) next definitions.
-		self adaptDefinitions.
-		^ definitions ]
-			on: Error
-			do: [ :fallThrough |
-				('An error happened while reading MCZ. We will fallback to another format. Short error stack: ' , fallThrough signalerContext shortStack) traceCr ] ].
-	"otherwise"
 	(self zip membersMatching: 'snapshot/*') do: [ :m | self extractDefinitionsFrom: m ]
 ]
 
@@ -151,13 +102,6 @@ MCMczReader >> loadDependencies [
 	dependencies := (self zip membersMatching: 'dependencies/*') collect: [:m | self extractDependencyFrom: m].
 	dependencies := dependencies asArray.
 
-]
-
-{ #category : 'loading' }
-MCMczReader >> loadPackage [
-	| dict |
-	dict := self parseMember: 'package'.
-	package := MCPackage named: (dict at: #name)
 ]
 
 { #category : 'loading' }
@@ -173,11 +117,6 @@ MCMczReader >> parseMember: memberOrName [
 	member := self zip member: memberOrName.
 	tokens := (OCParser parseLiterals: (self contentsForMember: member)) first.
 	^ self associate: tokens
-]
-
-{ #category : 'accessing' }
-MCMczReader >> scanner [
-	^ MCScanner
 ]
 
 { #category : 'accessing' }

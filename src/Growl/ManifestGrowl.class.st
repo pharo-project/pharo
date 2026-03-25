@@ -11,6 +11,13 @@ Class {
 	#tag : 'Manifest'
 }
 
+{ #category : 'meta-data - dependency analyser' }
+ManifestGrowl class >> manuallyResolvedDependencies [
+
+	<ignoreForCoverage>
+	^ #(#'SUnit-UI')
+]
+
 { #category : 'code-critics' }
 ManifestGrowl class >> ruleRBBadMessageRuleV1FalsePositive [
 	^ #(#(#(#RGMethodDefinition #(#GrowlMorph #activeGrowlMorphs #false)) #'2018-06-27T18:15:09.571924+02:00') )

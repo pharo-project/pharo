@@ -88,7 +88,7 @@ PanelMorph >> defaultBorderWidth [
 	^0
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 PanelMorph >> defaultColor [
 	"Answer the default color for the receiver."
 

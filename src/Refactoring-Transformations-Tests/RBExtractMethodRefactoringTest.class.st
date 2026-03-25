@@ -174,6 +174,23 @@ RBExtractMethodRefactoringTest >> testFailureNonExistantSelector [
 ]
 
 { #category : 'tests' }
+RBExtractMethodRefactoringTest >> testInvalidIntervalShouldRaiseError [
+	| refactoring |
+	refactoring := RBExtractMethodRefactoring
+						model: model
+						extract: (5 to: 1)
+						from: #displayName
+						in: RBLintRuleTestData.
+
+	self 
+		should: [ refactoring generateChanges ] 
+		raise: RBRefactoringError
+		whoseDescriptionIncludes: 'Invalid interval'
+		description: 'Interval should be properly created (start >= stop).'.
+
+]
+
+{ #category : 'tests' }
 RBExtractMethodRefactoringTest >> testModelExtractMethodWithTemporariesSelected [
 	| class refactoring |
 	model := RBNamespace new.

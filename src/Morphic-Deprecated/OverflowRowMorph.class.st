@@ -232,7 +232,7 @@ OverflowRowMorph >> newPotentialMorph [
 	^potential
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 OverflowRowMorph >> outOfWorld: aWorld [
 	"Get rid of the more column if visible."
 

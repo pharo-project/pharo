@@ -63,8 +63,8 @@ Locale class >> currentPlatform: locale during: aBlock [
 { #category : 'platform specific' }
 Locale class >> defaultEncodingName: languageSymbol [
 	| encodings platformName osVersion |
-	platformName := Smalltalk os platformName.
-	osVersion := Smalltalk os version.
+	platformName := OSPlatform current platformName.
+	osVersion := OSPlatform current version.
 	encodings := self platformEncodings at: languageSymbol
 				ifAbsent: [self platformEncodings at: #default].
 	encodings at: platformName ifPresent: [:encoding | ^encoding].

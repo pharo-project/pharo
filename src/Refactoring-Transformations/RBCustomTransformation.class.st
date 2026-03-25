@@ -50,16 +50,6 @@ RBCustomTransformation >> privateTransform [
 	transformationBlock value: self model
 ]
 
-{ #category : 'storing' }
-RBCustomTransformation >> storeOn: aStream [
-
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream nextPutAll: ' with: '.
-	transformationBlock storeOn: aStream.
-	aStream nextPut: $)
-]
-
 { #category : 'api' }
 RBCustomTransformation >> transformationBlock: aBlockWithOneArg [
 

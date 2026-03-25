@@ -28,9 +28,7 @@ Class {
 		'receiver'
 	],
 	#classVars : [
-		'PrimitiveFailToken',
-		'SpecialPrimitiveSimulators',
-		'TryNamedPrimitiveTemplateMethod'
+		'PrimitiveFailToken'
 	],
 	#category : 'Kernel-CodeModel-Methods',
 	#package : 'Kernel-CodeModel',
@@ -139,35 +137,7 @@ Context class >> contextOn: exceptionClass do: block [
 Context class >> initialize [
 
 	"A unique object to be returned when a primitive fails during simulation"
-	PrimitiveFailToken := Object new.
-	self initializeTryNamedPrimitiveTemplateMethod.
-	SpecialPrimitiveSimulators := nil
-]
-
-{ #category : 'simulation' }
-Context class >> initializePrimitiveSimulators [
-	"extra primitive simulators can be registered by implementing
-	#registerPrimitiveSimulators method in class side of your class."
-	<ignoreNotImplementedSelectors: #(#registerPrimitiveSimulators)>
-
-	SpecialPrimitiveSimulators := Dictionary new.
-
-	Class allSubclassesDo: [:metaclass |
-		(metaclass includesSelector: #registerPrimitiveSimulators) ifTrue: [
-			metaclass instanceSide registerPrimitiveSimulators.
-			]
-		]
-]
-
-{ #category : 'simulation' }
-Context class >> initializeTryNamedPrimitiveTemplateMethod [
-	| source |
-	source := 'tryNamedPrimitive
-	"This method is a template that the Smalltalk simulator uses to
-	execute primitives. See Object documentation whatIsAPrimitive."
-	<primitive:'' module:'' error: errorCode>
-	^ Context primitiveFailTokenFor: errorCode'.
-	TryNamedPrimitiveTemplateMethod := Smalltalk compiler compile: source
+	PrimitiveFailToken := Object new
 ]
 
 { #category : 'instance creation' }
@@ -213,12 +183,6 @@ Context class >> sender: s receiver: r method: m arguments: args [
 	^(self newForMethod: m) setSender: s receiver: r method: m arguments: args
 ]
 
-{ #category : 'accessing' }
-Context class >> specialPrimitiveSimulators [
-	SpecialPrimitiveSimulators ifNil: [ self initializePrimitiveSimulators ].
-	^ SpecialPrimitiveSimulators
-]
-
 { #category : 'special context creation' }
 Context class >> theReturnMethod [
 
@@ -226,11 +190,6 @@ Context class >> theReturnMethod [
 	meth := self lookupSelector: #return:.
 	meth isPrimitive ifTrue: [^ self error: 'expected #return: to not be a primitive'].
 	^ meth
-]
-
-{ #category : 'accessing' }
-Context class >> tryNamedPrimitiveTemplateMethod [
-	^ TryNamedPrimitiveTemplateMethod
 ]
 
 { #category : 'private' }
@@ -251,17 +210,6 @@ Context >> activateMethod: newMethod withArgs: args receiver: rcvr class: class 
 		receiver: rcvr
 		method: newMethod
 		arguments: args
-]
-
-{ #category : 'private' }
-Context >> activateReturn: aContext value: value [
-	"Activate 'aContext return: value' in place of self, so execution will return to aContext's sender"
-
-	^ self
-		activateMethod: Context theReturnMethod
-		withArgs: {value}
-		receiver: aContext
-		class: aContext class
 ]
 
 { #category : 'accessing' }
@@ -406,6 +354,17 @@ Context >> bottomContext [
 	^ self findContextSuchThat: [ :context | context sender isNil]
 ]
 
+{ #category : 'instruction decoding' }
+Context >> callPrimitive: primNumber [
+	| res |
+	res := receiver tryPrimitive: primNumber withArgs: self arguments.
+	primNumber >= (1 << 15) ifTrue: [ "inlined primitive, cannot fail" ^ self push: res ].  
+	"regular primitive. Always at the beginning of methods."
+	(self isFailToken: res) ifTrue: [ "keeps interpreting the method" ^ self ].
+	self push: res.
+	self methodReturnTop
+]
+
 { #category : 'private - exceptions' }
 Context >> canHandleSignal: exception [
 	"Sent to handler (on:do:) contexts only.  If my exception class (first arg) handles exception then return true, otherwise forward this message to the next handler context.  If none left, return false (see nil>>canHandleSignal:)"
@@ -494,6 +453,15 @@ Context >> copyTo: aContext [
 	^ copy
 ]
 
+{ #category : 'accessing' }
+Context >> currentPC [
+
+	"we need to guard for dead contexts (pc is nil)"
+	^ self isDead
+		  ifTrue: [ self endPC ]
+		  ifFalse: [ pc ]
+]
+
 { #category : 'private' }
 Context >> cut: aContext [
 	"Cut aContext and its senders from my sender chain"
@@ -522,22 +490,6 @@ Context >> deadContextForClosure: closure [
 		   arguments: {  })
 		  pc: nil;
 		  yourself
-]
-
-{ #category : 'printing' }
-Context >> debugStack: stackSize on: aStream [
-	"print a condensed version of the stack up to stackSize on aStream"
-
-	(self stackOfSize: stackSize)
-		do: [ :item |
-			item printDebugOn: aStream.
-			aStream cr ]
-]
-
-{ #category : 'printing' }
-Context >> debugStackOn: aStream [
-	"print the top ten contexts on my sender chain."
-	^ self debugStack: 100 on: aStream
 ]
 
 { #category : 'debugger access' }
@@ -631,8 +583,9 @@ Context >> doPrimitive: primitiveIndex method: meth receiver: aReceiver args: ar
 			ifFalse: [ ^self send: (arguments at: 2) to: (arguments at: 1) with: (arguments at: 3) lookupIn: (arguments at: 4) ]
 		].
 
-	primitiveIndex = 88 ifTrue: ["Process>>suspend"
-		"Simulation of suspend primitive should do nothing (with receiver return) by two reasons:
+	(primitiveIndex = 88 and: [ aReceiver == Processor activeProcess ])
+		ifTrue: ["Process>>suspend"
+			"Simulation of suspend primitive should do nothing (with receiver return) by two reasons:
 			- if by mistake the receiver is a simulating process itself
 				the suspend would stop it and the simulation would hang.
 				For example the debugger can hang during stepping over #suspend of real active process.
@@ -742,15 +695,10 @@ Context >> exceptionsToCaptureWhenStepping [
 
 { #category : 'accessing' }
 Context >> executedPC [
-	"Deeper in the stack the pc was already advanced one bytecode, so we need to go back
-	this one bytecode, which can consist of multiple bytes. But on IR, we record the *last*
-	bytecode offset as the offset of the IR instruction, which means we can just go back one"
 
-	"if we are at the start, return the startpc"
-	(pc == self startpc) ifTrue: [ ^self startpc ].
-
-	"we need to guard for dead contexts (pc is nil)"
-	^self isDead ifTrue: [ self endPC - 1] ifFalse: [ pc - 1]
+	"Return the PC of the previous instruction.
+	Heuristic (maybe wrong) we just go back one byte"
+	^ self currentPC - 1 max: method initialPC
 ]
 
 { #category : 'system simulation' }
@@ -883,11 +831,6 @@ Context >> hasSender: context [
 				ifTrue: [^true].
 			senderContext := senderContext sender].
 	^false
-]
-
-{ #category : 'testing' }
-Context >> hasTemporaryVariableNamed: aName [
-	^ self tempNames includes: aName
 ]
 
 { #category : 'accessing' }
@@ -1051,13 +994,6 @@ Context >> jump: distance withInterpreter: anInterpreter [
 	anInterpreter pc: pc
 ]
 
-{ #category : 'debugger access' }
-Context >> longStack [
-	"Answer a String showing the top 100 contexts on my sender chain."
-
-	^ self printStackOfSize: 100
-]
-
 { #category : 'accessing' }
 Context >> method [
 	"self
@@ -1078,6 +1014,14 @@ Context >> methodClass [
 { #category : 'accessing' }
 Context >> methodNode [
 	^ self homeMethod methodNode
+]
+
+{ #category : 'instruction decoding' }
+Context >> methodReturnConstant: value [
+	"Simulate the action of a 'return constant' bytecode whose value is the
+	 argument, value. This corresponds to a source expression like '^0'."
+
+	^self return: value from: self home
 ]
 
 { #category : 'instruction decoding' }
@@ -1243,9 +1187,9 @@ Context >> objectSize: anObject [
 { #category : 'accessing' }
 Context >> outerContext [
 	"Answer the context within which the receiver is nested."
+
 	<reflection: 'Stack Manipulation - Context'>
-	^closureOrNil ifNotNil:
-		[closureOrNil outerContext ifNil: ["if the outer is nil, this is a CleanBlock" self sender]]
+	^ closureOrNil ifNotNil: [ closureOrNil outerContext ]
 ]
 
 { #category : 'accessing' }
@@ -1300,141 +1244,55 @@ Context >> popIntoTemporaryVariable: offset [
 	self at: offset + 1 put: self pop
 ]
 
-{ #category : 'debugger access' }
-Context >> print: anObject on: aStream [
-	"Safely print anObject in the face of direct ProtoObject subclasses"
-	| title |
-	(anObject class canUnderstand: #printOn:)
-		ifTrue: [ ^ anObject printOn: aStream ].
-	title := anObject class name.
-	aStream
-		nextPutAll: (title first isVowel ifTrue: ['an '] ifFalse: ['a ']);
-		nextPutAll: title
-]
-
-{ #category : 'printing' }
-Context >> printDebugOn: aStream [
-	"print a condensed for of the stack.
-		For methods simply print Class >> selector
-		For blocks only print the first line"
-	| blockSource blockSourceSize |
-
-	self printOn: aStream.
-	self outerContext ifNil: [ ^ self ].
-	"print the block..."
-	aStream
-		nextPutAll: ' in Block: '.
-
-	blockSource := [closureOrNil printStringLimitedTo: 50] on:Exception do: ['Cannot print the closure'].
-	blockSourceSize := blockSource size.
-	blockSource := blockSource copyUpTo: Character cr.
-
-	aStream nextPutAll: blockSource.
-	blockSource size < blockSourceSize
-		ifTrue: [ aStream nextPutAll: '...' ]
-]
-
-{ #category : 'printing' }
-Context >> printDebugStackOn: aStream [
-
-	"Print the debug stack from the context on my sender chain.
-	To avoid defining an arbitrary amount of elements in the stack, I use the SmallInteger >> maxVal 	constant."
-
-	^ self debugStack: SmallInteger maxVal on: aStream
-]
-
-{ #category : 'printing' }
-Context >> printDetails: stream [
-	"Put my class>>selector and instance variables and arguments and temporaries on the stream.  Protect against errors during printing."
-
-	| errorMessage string |
-	self printOn: stream.
-	stream cr.
-	stream
-		tab;
-		nextPutAll: 'Receiver: '.
-	errorMessage := '<<error during printing>>'.
-	stream nextPutAll: ([ receiver printStringLimitedTo: 90 ]
-			 on: Exception
-			 do: [ errorMessage ]).
-
-	stream
-		cr;
-		tab;
-		nextPutAll: 'Arguments and temporary variables: ';
-		cr.
-	string := [ (self tempsAndValuesLimitedTo: 80 indent: 2) padRightTo: 1 with: $x ]
-		          on: Exception
-		          do: [ errorMessage ].
-	stream nextPutAll: string.
-
-	stream
-		cr;
-		tab;
-		nextPutAll: 'Receiver''s instance variables: ';
-		cr.
-	receiver class allInstVarNames
-		ifEmpty: [
-			stream nextPutAll: ([ receiver printStringLimitedTo: 90 ]
-					 on: Exception
-					 do: [ errorMessage ]) ]
-		ifNotEmpty: [
-			[ receiver longPrintOn: stream limitedTo: 80 indent: 2 ]
-				on: Exception
-				do: [ stream nextPutAll: errorMessage ] ].
-	stream cr
-]
-
 { #category : 'printing' }
 Context >> printOn: aStream [
-	(closureOrNil isNotNil and: [closureOrNil isKindOf: CleanBlockClosure]) ifTrue:
-		[ | selector |
-			selector := self selector.
-			aStream
-			 print: closureOrNil;
-			 nextPutAll: ' in ';
-			 nextPutAll: self methodClass name;
-			 nextPutAll: '>>';
-			 nextPutAll: selector.
-			 ^self].
 
-	self outerContext
-		ifNil:
-			[ | selector class mclass |
-			self compiledCode
-				ifNil: [ ^ super printOn: aStream ].
-			class := self receiver class.
-			mclass := self methodClass.
-			selector := self selector.
-			aStream nextPutAll: class name.
-			mclass == class
-				ifFalse:
-					[ aStream nextPut: $(.
-					aStream nextPutAll: mclass name.
-					aStream nextPut: $) ].
-			aStream nextPutAll: '>>'.
-			aStream nextPutAll: selector.
-			selector = #doesNotUnderstand:
-				ifTrue:
-					[ aStream space.
-					(self tempAt: 1) selector printOn: aStream ] ]
-		ifNotNil:
-			[ :outerContext |
-			[closureOrNil printOn: aStream] on:Exception do: [aStream nextPutAll: 'Error printing the compiledBlock'].
-			aStream nextPutAll: ' in '.
-			outerContext printOn: aStream ]
+	"Print this single context in the form:
+	  ReceiverClass (ClassOwnerOfTheMethod) >> methodSelector
+	
+	special cases:
+		- ClassOwnerOfTheMethod is optional if ClassOwnerOfTheMethod == ReceiverClass
+		- in case of a DNU, we use as methodSelector: #doesNotUnderstand: #selectorNotUnderstood
+		- in case of a block, prefix it with '[ ] in: '
+	"
+	
+	| selector class mclass |
+	
+	closureOrNil ifNotNil: [ aStream nextPutAll: '[ ] in '	 ].
+
+	"If this is a context without compiled code, it is very potentially broken.
+	Just fall back to a simple print"
+	self compiledCode ifNil: [ ^ super printOn: aStream ].
+
+	"Print the receiver's class"
+	class := self receiver class.
+	aStream nextPutAll: class name.
+	
+	"Now the class where the method is installed, if necessary"
+	mclass := self methodClass.
+	mclass == class ifFalse: [
+			aStream nextPut: $(.
+			aStream nextPutAll: mclass name.
+			aStream nextPut: $) ].
+
+	"And the selector"
+	aStream nextPutAll: '>>'.
+	selector := self selector.
+	aStream nextPutAll: selector.
+
+	"Handle #doesNotUnderstand:"
+	selector = #doesNotUnderstand: ifFalse: [ ^ self ].
+	aStream space.
+	(self tempAt: 1) selector printOn: aStream
 ]
 
-{ #category : 'debugger access' }
-Context >> printStackOfSize: aNumber [
-	"Answer a String showing the top ten contexts on my sender chain."
+{ #category : 'printing' }
+Context >> printStackTraceOn: aStream [
+	"Print the stack trace starting from this context up to the bottom of the stack"
 
-	<reflection: 'Stack Manipulation - Context'>
-	^ String streamContents: [ :stream |
-		  (self stackOfSize: aNumber) do: [ :item |
-			  stream
-				  print: item;
-				  lf ] ]
+	self withSendersDo: [ :context |
+			context printOn: aStream.
+			aStream cr ]
 ]
 
 { #category : 'initialization' }
@@ -1827,6 +1685,30 @@ Context >> selector [
 ]
 
 { #category : 'controlling' }
+Context >> send: selector super: superFlag numArgs: numArgs [
+	"Simulate the action of bytecodes that send a message with selector, 
+	selector. The argument, superFlag, tells whether the receiver of the 
+	message was specified with 'super' in the source method. The arguments 
+	of the message are found in the top numArgs locations on the stack and 
+	the receiver just below them."
+
+	| currentReceiver arguments  |
+	arguments := Array new: numArgs.
+	numArgs to: 1 by: -1 do: [ :i | 
+		arguments at: i put: self pop ].
+	currentReceiver := self pop.
+"	selector == #doPrimitive:method:receiver:args:
+		ifTrue: [answer := receiver 
+					doPrimitive: (arguments at: 1)
+					method: (arguments at: 2)
+					receiver: (arguments at: 3)
+					args: (arguments at: 4).
+				self push: answer.
+				^self]. "
+	^ self send: selector to: currentReceiver with: arguments super: superFlag
+]
+
+{ #category : 'controlling' }
 Context >> send: selector to: rcvr with: arguments lookupIn: lookupClass [
 	"Simulate the action of sending a message with selector and arguments
 	 to rcvr. The argument, lookupClass, is the class in which to lookup the
@@ -1879,7 +1761,7 @@ Context >> send: selector to: aReceiver with: arguments super: superFlag [
 			  with: (Array with: selector with: arguments with: aReceiver)
 			  super: superFlag ].
 
-	(aMethod isRealPrimitive or:[self stepIntoQuickMethod not]) ifTrue: [
+	(aMethod isRealPrimitive or:[ self compiledCode stepIntoQuickMethods not ]) ifTrue: [
 		value := self
 			         tryPrimitiveFor: aMethod
 			         receiver: aReceiver
@@ -1917,7 +1799,7 @@ Context >> send: selector to: aReceiver with: arguments super: superFlag [
 	When activating the quick method, we arrive on the PC corresponding to the primitive which is not suposed to be stepped.
 	We have to fix the PC so that the next executed bytecode is the push.
 	We do that by setting the PC to aMethod initialPC + 3 (the number of bytes of the primitive)."
-	(aMethod isQuick and:[self stepIntoQuickMethod]) ifTrue: [ context pc: aMethod initialPC + self quickMethodPrimitiveBytecodeSize].
+	(aMethod isQuick and:[ self compiledCode stepIntoQuickMethods ]) ifTrue: [ context pc: aMethod initialPC + self quickMethodPrimitiveBytecodeSize].
 
 	"check if activated method handles the error code (a first bytecode will be store into temp)"
 	"long store temp"
@@ -1973,27 +1855,6 @@ Context >> setSender: newSender receiver: newReceiver method: newMethod closure:
 	stackp := 0
 ]
 
-{ #category : 'controlling' }
-Context >> shortDebugStack [
-	"Answer a String showing the top ten contexts on my sender chain."
-	<reflection: 'Stack Manipulation - Context'>
-	^ String streamContents: [ :stream | self debugStack: 10 on: stream ]
-]
-
-{ #category : 'printing' }
-Context >> shortDebugStackOn: aStream [
-	"print the top 30 contexts on my sender chain."
-	<reflection: 'Stack Manipulation - Context'>
-	^ self debugStack: 30 on: aStream
-]
-
-{ #category : 'debugger access' }
-Context >> shortStack [
-	"Answer a String showing the top ten contexts on my sender chain."
-
-	^ self printStackOfSize: 10
-]
-
 { #category : 'debugger access' }
 Context >> singleRelease [
 	"Remove information from the receiver in order to break circularities."
@@ -2043,10 +1904,23 @@ Context >> stackOfSize: limit [
 	^ stack
 ]
 
+{ #category : 'accessing' }
+Context >> stackOverflow [
+
+	self error: 'Stack overflow'
+]
+
 { #category : 'private' }
 Context >> stackPtr [
 	"For use only by the SystemTracer and the Debugger, Inspectors etc"
 	^ stackp
+]
+
+{ #category : 'printing' }
+Context >> stackTraceString [
+	"Return a string representing the stack trace starting from this context up to the bottom of the stack"
+
+	^ String streamContents: [ :s | self printStackTraceOn: s ]
 ]
 
 { #category : 'private' }
@@ -2243,13 +2117,9 @@ Context >> tryNamedPrimitiveIn: aCompiledMethod for: aReceiver withArgs: argumen
 					ifTrue: [ errorCode := nil ]
 					ifFalse: [ self primitiveFailed ]].
 				^  self class primitiveFailTokenFor: errorCode ].
-	"Assume a nil error code implies the primitive is not implemented and fall back on the old code."
-
-	"The primitive doesn't exist or there was an error. Hence, we follow another solution without the primitive"
-	^ self
-		withoutPrimitiveTryNamedPrimitiveIn: aCompiledMethod
-		for: aReceiver
-		withArgs: arguments
+	
+	"Nil error code implies the primitive is not implemented"
+	^ self error: 'Cannot execute primitive'
 ]
 
 { #category : 'private' }
@@ -2357,29 +2227,12 @@ Context >> willFailReturn [
 	^(self method encoderClass isReturnAt: pc in: self method) and: [self sender isNil or: [self sender isDead]]
 ]
 
-{ #category : 'private' }
-Context >> withoutPrimitiveTryNamedPrimitiveIn: aCompiledMethod for: aReceiver withArgs: arguments [
-	"When using the debugger we want to run a method step by step. What what happens when we do a step into a CompiledMethod which has a primitive? If such a method is executed from outside the Debugger (normal scenario) the VM knows that such CompiledMethod has a primitive declaration and hence executes it. If it fails then it continues executing all the bytecodes of the method. Otherwise, it just returns.
+{ #category : 'enumerating' }
+Context >> withSendersDo: aBlock [
 
-Now, what is the problem with the Debugger? The problem is that if the primitive fail, we don't want that the VM directly executes all the remaining bytecodes of the method. Instead, we would like to go step by step witht he Debugger, just as happens with normal methods.
-
-To solve the mentioned problem, we use the following trick: We have the orignal compiled method (the one that has a primitive invocation), the receiver and the arguments. So the idea is to use a template compiled method that ONLY contains the primitive declaration (it doesn't include all the smalltalk code after the primitive). #tryNamedPrimitiveTemplateMethod answers such a template method which looks like:
-
-tryNamedPrimitive
-	<primitive:'' module:''>
-	^ Context primitiveFailToken'
-
-Since this method does not change its bytecodes for every invocation, we can reuse it for all methods with primitives. There are only 2 things we have to change in the template: the number of arguments and the primitive declaration (to use the correct primitive name and module name).
-
-Then what we do is to run that compiled method with the receiver and arguments we have. The result is that we will be invoking almost the same original method but a slighly different version that does not have the smalltalk part after the primitive and that in contrast sends #primitiveFailToken. If this method invocation does not fail, then the Debugger continues debugging the sender of the primitive method. In this case, the step in is the same as step over. If the primitive fails, then the debugger continues executing the smalltalk part after the primitive method. In this case, step in is a real step in."
-
-	| theMethod |
-	arguments size > 8 ifTrue: [ ^ self class primitiveFailToken ].
-	theMethod := self class tryNamedPrimitiveTemplateMethod.
-	theMethod prepareForSimulationWith: arguments size.
-	theMethod ifNil: [ ^ self class primitiveFailToken ].
-	self setNamedPrimitiveInformationFrom: aCompiledMethod toMethod: theMethod.
-	theMethod flushCache.
-
-	^ theMethod valueWithReceiver: aReceiver arguments: arguments
+	| current |
+	current := self.
+	[ current notNil ] whileTrue: [
+			aBlock value: current.
+			current := current sender ]
 ]

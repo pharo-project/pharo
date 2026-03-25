@@ -206,6 +206,13 @@ ZnSimplifiedByteEncoder >> ensureAtBeginOfCodePointOnStream: stream [
 	"Nothing to be done, I am a byte encoding: each code point is encoded in a single byte"
 ]
 
+{ #category : 'encoding - decoding' }
+ZnSimplifiedByteEncoder >> forwardOnStream: aStream [
+	"I should move from 1 character forward on the stream. The stream is over a ByteArray."
+
+	aStream next
+]
+
 { #category : 'comparing' }
 ZnSimplifiedByteEncoder >> hash [
 	^ self identifier hash

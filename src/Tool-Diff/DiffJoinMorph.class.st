@@ -33,7 +33,7 @@ DiffJoinMorph >> compositeText [
 	^t
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 DiffJoinMorph >> defaultColor [
 	"Answer the default color for the receiver."
 

@@ -16,25 +16,19 @@ UnixStore class >> delimiter [
 
 { #category : 'current' }
 UnixStore class >> isActiveClass [
-	^ Smalltalk os isUnix and: [ super isActiveClass ]
+	^ OSPlatform current isUnix and: [ super isActiveClass ]
 ]
 
 { #category : 'public' }
 UnixStore class >> isCaseSensitive [
 	"except for OSX the default is case sensitive"
-	^ Smalltalk os isMacOSX not
+	^ OSPlatform current isMacOSX not
 ]
 
 { #category : 'public' }
 UnixStore class >> maxFileNameLength [
 
 	^ 255
-]
-
-{ #category : 'public' }
-UnixStore class >> readOnlyVariant [
-
-	^ ReadOnlyUnixStore
 ]
 
 { #category : 'public' }

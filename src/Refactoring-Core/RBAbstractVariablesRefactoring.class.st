@@ -197,7 +197,7 @@ RBAbstractVariablesRefactoring >> processAssignmentNode: aNode [
 	| varName |
 	varName := aNode variable name.
 	ignore = varName ifTrue: [^self].
-	(aNode whoDefines: varName) ifNotNil: [^self].
+	(aNode whichUpNodeDefines: varName) ifNotNil: [^self].
 	(self instanceVariableNames includes: varName)
 		ifTrue: [instVarWriters add: varName].
 	(self classVariableNames includes: varName)
@@ -209,7 +209,7 @@ RBAbstractVariablesRefactoring >> processReferenceNode: aNode [
 	| varName |
 	varName := aNode name.
 	ignore = varName ifTrue: [^self].
-	(aNode whoDefines: varName) ifNotNil: [^self].
+	(aNode whichUpNodeDefines: varName) ifNotNil: [^self].
 	(self instanceVariableNames includes: varName)
 		ifTrue: [instVarReaders add: varName].
 	(self classVariableNames includes: varName)

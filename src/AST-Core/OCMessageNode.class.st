@@ -151,13 +151,6 @@ OCMessageNode >> hasBlock [
 	^ receiver hasBlock | (arguments anySatisfy: [ :arg | arg hasBlock ])
 ]
 
-{ #category : 'testing' }
-OCMessageNode >> hasSameExitPoint: aBoolean [
-
-	^ (receiver hasSameExitPoint: aBoolean )
-	& (arguments allSatisfy: [ :arg | arg hasSameExitPoint: aBoolean ])
-]
-
 { #category : 'comparing' }
 OCMessageNode >> hash [
 	^ (self receiver hash bitXor: self selector hash) bitXor: (self hashForCollection: self arguments)
@@ -193,13 +186,6 @@ OCMessageNode >> isFaulty [
 { #category : 'testing' }
 OCMessageNode >> isFirstCascaded [
 	^self isCascaded and: [parent messages first == self]
-]
-
-{ #category : 'testing' }
-OCMessageNode >> isHaltNode [
-
-	^ (#( #halt #halt: #haltIf: #haltOnce #haltIfNil #haltOnCount: ) includes: self selector) or: [
-		  self receiver isGlobalVariable and: [ self receiver variable value = Halt and: [ (Halt class selectorsInProtocol: #halting) includes: self selector ] ] ]
 ]
 
 { #category : 'testing' }
@@ -339,7 +325,7 @@ OCMessageNode >> removeNode: aNode [
 OCMessageNode >> renameSelector: newSelector andArguments: varNodeCollection [
 	self
 		arguments: varNodeCollection;
-		selector: newSelector
+		selector: (OCSelectorNode value: newSelector)
 ]
 
 { #category : 'private - replacing' }
@@ -432,11 +418,9 @@ OCMessageNode >> selector [
 ]
 
 { #category : 'accessing' }
-OCMessageNode >> selector: aSelector [
+OCMessageNode >> selector: aSelectorNode [
 	keywordsPositions := nil.
-	selector := aSelector isString
-		ifTrue: [ OCSelectorNode value: aSelector ]
-		ifFalse: [ aSelector ].
+	selector := aSelectorNode.
 	selector parent: self
 ]
 
@@ -453,6 +437,8 @@ OCMessageNode >> selectorAndArgumentNames [
 					do: [:sel :arg |
 							st
 								<< sel asString;
+								"we do not want to get #between: 1 #and: 2
+								but between: 1 and: 2"
 								<< ' ';
 								<< arg sourceCode;
 								<< ' ']]) allButLast ]

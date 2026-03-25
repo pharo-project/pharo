@@ -59,7 +59,9 @@ FreeTypeFontProvider class >> initialize [
 	FreeTypeSettings initialize.
 
 	current := nil.
-	self current "this creates an instance of me, and updates from the system"
+	self current. "this creates an instance of me, and updates from the system"
+	LogicalFontManager current addFontProvider:
+		self current.
 ]
 
 { #category : 'accessing' }
@@ -289,11 +291,11 @@ FreeTypeFontProvider >> macOSXFolderDirectories [
 
 { #category : 'file paths' }
 FreeTypeFontProvider >> platformAbsoluteDirectories [
-	Smalltalk os isWindows
+	OSPlatform current isWindows
 		ifTrue: [ ^ self winFontDirectories ].
-	Smalltalk os isUnix
+	OSPlatform current isUnix
 		ifTrue: [ ^ self unixFontDirectories ].
-	Smalltalk os isMacOSX
+	OSPlatform current isMacOSX
 		ifTrue: [ ^ self macOSXFolderDirectories ].
 	^ {}
 ]

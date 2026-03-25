@@ -26,11 +26,13 @@ FBDOptimizedMessagesRewriter class >> rewriteAST: ast [
 FBDOptimizedMessagesRewriter >> analyseSeq: seq [
 	"Checks if consecutive messages have the same receiver. If not, creates a cascade"
 
-	| currentCascade |
+	| currentCascade ignoredSelectors |
 	currentCascade := OrderedCollection new.
+	ignoredSelectors := #(#ifTrue:ifFalse: #whileTrue: #whileFalse: #whileTrue #whileFalse #ifTrue: #ifFalse: #ifFalse:#ifTrue).
+	
 	seq statements
 		do: [ :each |
-			(each isMessage and: [ each selector ~= #ifTrue:ifFalse: ])
+			(each isMessage and: [ (ignoredSelectors includes: each selector) not])
 				ifFalse: [ self rewriteSeq: seq with: currentCascade ]
 				ifTrue: [
 					currentCascade
@@ -48,43 +50,43 @@ FBDOptimizedMessagesRewriter >> areArgumentsBlocks: msgNode [
 
 { #category : 'converting' }
 FBDOptimizedMessagesRewriter >> convertToAnd: msgNode [
-	msgNode selector: #and:.
+	msgNode selector: (OCSelectorNode value: #and:).
 	msgNode arguments: {msgNode arguments first}
 ]
 
 { #category : 'converting' }
 FBDOptimizedMessagesRewriter >> convertToIfFalse: msgNode [
-	msgNode selector: #ifFalse:.
+	msgNode selector: (OCSelectorNode value: #ifFalse:).
 	msgNode arguments: {msgNode arguments second}
 ]
 
 { #category : 'converting' }
 FBDOptimizedMessagesRewriter >> convertToIfNil: msgNode [
-	msgNode selector: #ifNil:.
+	msgNode selector: (OCSelectorNode value: #ifNil:).
 	msgNode arguments: {msgNode arguments first}
 ]
 
 { #category : 'converting' }
 FBDOptimizedMessagesRewriter >> convertToIfNilIfNotNil: msgNode [
 	msgNode receiver: msgNode receiver receiver.
-	msgNode selector: #ifNil:ifNotNil:
+	msgNode selector: (OCSelectorNode value: #ifNil:ifNotNil:)
 ]
 
 { #category : 'converting' }
 FBDOptimizedMessagesRewriter >> convertToIfNotNil: msgNode [
-	msgNode selector: #ifNotNil:.
+	msgNode selector: (OCSelectorNode value: #ifNotNil:).
 	msgNode arguments: {msgNode arguments last}
 ]
 
 { #category : 'converting' }
 FBDOptimizedMessagesRewriter >> convertToIfTrue: msgNode [
-	msgNode selector: #ifTrue:.
+	msgNode selector: (OCSelectorNode value: #ifTrue:).
 	msgNode arguments: {msgNode arguments first}
 ]
 
 { #category : 'converting' }
 FBDOptimizedMessagesRewriter >> convertToOr: msgNode [
-	msgNode selector: #or:.
+	msgNode selector: (OCSelectorNode value: #or:).
 	msgNode arguments: {msgNode arguments second}
 ]
 
@@ -103,7 +105,7 @@ FBDOptimizedMessagesRewriter >> convertWhileTrueToToByDo: msgNode start: start e
 			arguments := {end . incrValue . loopBlock} ].
 	msgNode
 		receiver: start;
-		selector: selector;
+		selector: (OCSelectorNode value: selector);
 		arguments: arguments.
 	self removeTempFromSequence: msgNode parent temp: incrVar.
 	msgNode parent removeNode: assignement
@@ -126,7 +128,7 @@ FBDOptimizedMessagesRewriter >> handleIfFalse: msgNode [
 	(self isIfNilIfNotNil: msgNode)
 		ifTrue: [
 			msgNode receiver: msgNode receiver receiver.
-			msgNode selector: #ifNotNil: ]
+			msgNode selector: (OCSelectorNode value: #ifNotNil:) ]
 ]
 
 { #category : 'handling' }
@@ -142,7 +144,7 @@ FBDOptimizedMessagesRewriter >> handleIfTrue: msgNode [
 	(self isIfNilIfNotNil: msgNode)
 		ifTrue: [
 			msgNode receiver: msgNode receiver receiver.
-			msgNode selector: #ifNil: ]
+			msgNode selector: (OCSelectorNode value: #ifNil:) ]
 ]
 
 { #category : 'handling' }
@@ -157,13 +159,20 @@ FBDOptimizedMessagesRewriter >> handleIfTrueIfFalse: msgNode [
 
 { #category : 'handling' }
 FBDOptimizedMessagesRewriter >> handleWhileTrue: msgNode [
-	| startTemp start end incrValue rcvr |
+
+	| startTemp start end incrValue rcvr tempInit |
+	
 	(self isReceiverCorrectCondition: msgNode)
 		ifFalse: [ ^ self ].
+
 	rcvr := msgNode receiver body statements first.
 	startTemp := rcvr receiver.
 	start := (self extractStartValue: msgNode startTemp: startTemp) ifNil: [ ^ self ].
 	end := rcvr arguments first.
+	tempInit := msgNode parent statements at: (msgNode parent statements indexOf: msgNode) - 1.
+
+	(self isTempReferencedElsewhereWithout: msgNode or: tempInit) ifTrue: [ ^ self ]. 
+		
 	(self
 		hasCorrectIncrInstruction: msgNode
 		startTemp: startTemp
@@ -176,7 +185,7 @@ FBDOptimizedMessagesRewriter >> handleWhileTrue: msgNode [
 		end: end
 		by: incrValue
 		incrVariable: startTemp
-		assignement: (msgNode parent statements at: (msgNode parent statements indexOf: msgNode) - 1)
+		assignement: tempInit
 ]
 
 { #category : 'testing' }
@@ -277,6 +286,16 @@ FBDOptimizedMessagesRewriter >> isReconstructed: msg [
 	^ msg hasProperty: #reconstructed
 ]
 
+{ #category : 'testing' }
+FBDOptimizedMessagesRewriter >> isTempReferencedElsewhereWithout: msgNode or: tempInit [
+
+	| withoutNodes |
+	
+	withoutNodes := msgNode parent statements reject: [ :e | e == msgNode or: [ e == tempInit ] ].
+
+	^ withoutNodes anySatisfy: [ :e | e references: tempInit variable name ]
+]
+
 { #category : 'private' }
 FBDOptimizedMessagesRewriter >> removeTempFromSequence: seq temp: temp [
 	| temps |
@@ -307,6 +326,7 @@ FBDOptimizedMessagesRewriter >> rewriteStatements: statements in: seq [
 RemoveNode first uses == to detect the node , then =
 So if you don't remove the first statement of the collection (which has been replaced by the cascade and no longer exists), then this will remove all nodes = to first node (and not ==).
 So if you have the same node twice in the sequence, and this node is the first message of a cascade, then all occurrences of this node would be removed"
+
 	seq replaceNode: statements first withNode: (OCCascadeNode messages: statements copy).
 	(statements
 		removeFirst;

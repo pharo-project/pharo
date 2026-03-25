@@ -81,17 +81,6 @@ OpalCompilerTest >> testCompileFromAnalysedAST [
 ]
 
 { #category : 'tests' }
-OpalCompilerTest >> testCompileFromText [
-
-	| source result |
-	source := 'tt ^3+4' asText.
-
-	result := MockForCompilation compiler compile: source.
-	self assert: result sourceCode isString.
-	self assert: result sourceCode equals: source asString
-]
-
-{ #category : 'tests' }
 OpalCompilerTest >> testCompileSource [
 	| source result |
 	source := 'tt ^3+4'.
@@ -251,6 +240,28 @@ OpalCompilerTest >> testInstallRequestor [
 	self deny: (MockForCompilation includesSelector: #foo).
 	self assert: method isNil.
 	self assert: requestor notifyList first first equals: 'Unknown character ->'
+]
+
+{ #category : 'tests' }
+OpalCompilerTest >> testSavedProtocolInChangesFileIsRight [
+	"Regression test, the saved protocol was wrong when we provided a Protocol instance during compilation.."
+	
+	| method |
+	"Cleanup"
+	(MockForCompilation includesSelector: #foo) ifTrue: [
+		MockForCompilation removeSelector: #foo ].
+	"Precond"
+	self deny: (MockForCompilation includesSelector: #foo).
+
+	method := MockForCompilation compiler
+		          source: 'foo ^42';
+		          protocol: (Protocol named: 'hitching');
+		          install.
+
+	self assert: (SourcesManager current protocolAt: method sourcePointer) equals: 'hitching'.
+	"Cleanup"
+	method removeFromSystem.
+	self deny: (MockForCompilation includesSelector: #foo)
 ]
 
 { #category : 'tests' }

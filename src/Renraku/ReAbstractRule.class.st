@@ -110,7 +110,7 @@ ReAbstractRule class >> designFlawGroup [
 { #category : 'accessing' }
 ReAbstractRule class >> enabled [
 
-	^ enabled ifNil: [ enabled := true ]
+	^ enabled ifNil: [ enabled := self enabledByDefault ]
 ]
 
 { #category : 'accessing' }
@@ -118,6 +118,12 @@ ReAbstractRule class >> enabled: aBoolean [
 
 	enabled := aBoolean.
 	ReRuleManager reset
+]
+
+{ #category : 'manifest' }
+ReAbstractRule class >> enabledByDefault [
+
+	^ true
 ]
 
 { #category : 'accessing' }
@@ -129,9 +135,6 @@ ReAbstractRule class >> enabledSettingID [
 { #category : 'accessing' }
 ReAbstractRule class >> group [
 
-	(self selectors includes: #group) ifTrue: [
-		self deprecated: 'The method #group of rules should be implemented on the class side in Pharo 13+ and not in instance sice.'.
-		^ self new group ].
 	^ 'Unclassified rules'
 ]
 
@@ -212,9 +215,6 @@ ReAbstractRule class >> potentialBugsGroup [
 ReAbstractRule class >> rationale [
 	"Answer an explanation of the rule, usually in one line. Long description can be obtained using longDescription."
 
-	(self selectors includes: #rationale) ifTrue: [
-		self deprecated: 'The method #rationale of rules should be implemented on the class side in Pharo 13+ and not in instance sice.'.
-		^ self new rationale ].
 	^ self comment
 ]
 
@@ -227,10 +227,6 @@ ReAbstractRule class >> rubricGroup [
 { #category : 'accessing' }
 ReAbstractRule class >> ruleName [
 
-	(self selectors includes: #name) ifTrue: [
-		self deprecated:
-			'The method #name of rules should be implemented on the class side in Pharo 13+ and not in instance sice. It was also renamed into #ruleName.'.
-		^ self new name ].
 	^ self subclassResponsibility
 ]
 
@@ -238,9 +234,6 @@ ReAbstractRule class >> ruleName [
 ReAbstractRule class >> severity [
 	"Answer the severity of issues reported by this rule. This method should return one of #error, #warning, or #information."
 
-	(self selectors includes: #severity) ifTrue: [
-		self deprecated: 'The method #severity of rules should be implemented on the class side in Pharo 13+ and not in instance sice.'.
-		^ self new severity ].
 	^ #warning
 ]
 

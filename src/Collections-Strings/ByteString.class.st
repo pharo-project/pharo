@@ -96,16 +96,6 @@ ByteString class >> translate: aString from: start  to: stop  table: table [
 ]
 
 { #category : 'converting' }
-ByteString >> asByteArray [
-
-	| ba sz |
-	sz := self byteSize.
-	ba := ByteArray new: sz.
-	ba replaceFrom: 1 to: sz with: self startingAt: 1.
-	^ba
-]
-
-{ #category : 'converting' }
 ByteString >> asOctetString [
 
 	^ self

@@ -89,7 +89,7 @@ RFValueReification >> genForInstanceVariableSlot [
 
 	^ OCMessageNode
 		receiver: (OCLiteralNode value: entity)
-		selector: #read:
+		selector: (OCSelectorNode value: #read:)
 		arguments: {OCVariableNode selfNode}
 ]
 

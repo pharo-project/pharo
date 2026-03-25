@@ -16,6 +16,12 @@ Class {
 	#tag : 'Drivers'
 }
 
+{ #category : 'accessing' }
+ReRenameMethodDriver class >> driverName [
+
+	^ 'Rename method'
+]
+
 { #category : 'execution' }
 ReRenameMethodDriver >> breakingChoices [
 
@@ -32,27 +38,27 @@ ReRenameMethodDriver >> browseOverrides [
 
 	| overrides |
 	overrides := refactoring violations.
-	StMessageBrowser
+	(Smalltalk tools toolNamed: #messageList)
 		browse: (overrides collect: [ :ref | ref realClass lookupSelector: newMessage selector ])
 		asImplementorsOf: newMessage selector
 ]
 
-{ #category : 'private testing' }
+{ #category : 'private - testing' }
 ReRenameMethodDriver >> canAddArgs [
 	^ false
 ]
 
-{ #category : 'private testing' }
+{ #category : 'private - testing' }
 ReRenameMethodDriver >> canEditName [
 	^ true
 ]
 
-{ #category : 'private testing' }
+{ #category : 'private - testing' }
 ReRenameMethodDriver >> canRemoveArgs [
 	^ false
 ]
 
-{ #category : 'private testing' }
+{ #category : 'private - testing' }
 ReRenameMethodDriver >> canRenameArgs [
 	^ true
 ]
@@ -73,33 +79,16 @@ ReRenameMethodDriver >> configureMessage [
 	refactoring renameMap: newMessage renameMap.
 ]
 
-{ #category : 'execution' }
-ReRenameMethodDriver >> configureRefactoring [
-
-	"here we do not fully configure the refactoring because we are missing information such as the signature.
-	Since we want to let the refactoring validate input we need to create it upfront then configure later."
-	
-	refactoring := ReRenameMethodRefactoring new renameMethod: originalMessage selector in: class 
-]
-
 { #category : 'configuration' }
-ReRenameMethodDriver >> defaultSelectDialog [ 
+ReRenameMethodDriver >> defaultSelectDialog [
 
-	^ self class defaultSelectDialog
-		    title: 'There are potential breaking changes!';
-		          label: 'Watchout potential override detected!';
-		          items: self breakingChoices;
-		          display: [ :each | each description ];
-		          displayIcon: [ :each | self iconNamed: each systemIconName ];
-		          openModal
-]
-
-{ #category : 'execution' }
-ReRenameMethodDriver >> handleBreakingChanges [
-
-	| select |
-	select := self selectDialog.
-	select ifNotNil: [ select action ]
+	^ super defaultSelectDialog
+		title: 'There are potential breaking changes!';
+		message: 'Watchout potential override detected!';
+		items: self breakingChoices;
+		display: [ :each | each description ];
+		displayIcon: [ :each | self iconNamed: each systemIconName ];
+		yourself
 ]
 
 { #category : 'initialization' }
@@ -107,6 +96,16 @@ ReRenameMethodDriver >> initialize [
 	
 	super initialize.
 	shouldEscape := false.
+]
+
+{ #category : 'configuration' }
+ReRenameMethodDriver >> instantiateRefactoring [
+	"here we do not fully configure the refactoring because we are missing information such as the signature.
+	Since we want to let the refactoring validate input we need to create it upfront then configure later."
+
+	^ ReRenameMethodRefactoring new 
+		renameMethod: originalMessage selector 
+		in: class
 ]
 
 { #category : 'for mocks' }
@@ -130,6 +129,20 @@ ReRenameMethodDriver >> model: aModel renameMethodSignature: aMessage in: aClass
 	class := aClass
 ]
 
+{ #category : 'private - factory' }
+ReRenameMethodDriver >> newRequestMethodDialogOn: methodName [
+	
+	^ (self methodNameEditorPresenterClass newApplication: self application model: methodName)
+		invalidArgNames: (RBCondition
+			invalidArgumentNamesForSelector:
+			originalMessage selector
+			in: model);
+		canRenameArgs: self canRenameArgs;
+		canRemoveArgs: self canRemoveArgs;
+		canAddArgs: self canAddArgs;
+		canEditName: self canEditName
+]
+
 { #category : 'actions' }
 ReRenameMethodDriver >> renameMethod [
 
@@ -141,21 +154,13 @@ ReRenameMethodDriver >> requestDialogWith: methodName [
 	"This is lazy loaded and tests expect lazy loading, because they set `requestDialog`
 	and thus side-step methodNameEditorPresenter"
 
-	^ requestDialog := (self methodNameEditorPresenterClass
-		                    openOn: methodName
-		                    withInvalidArgs: (RBCondition
-				                     invalidArgumentNamesForSelector:
-				                     originalMessage selector
-				                     in: model)
-		                    canRenameArgs: self canRenameArgs
-		                    canRemoveArgs: self canRemoveArgs
-		                    canAddArgs: self canAddArgs
-		                    canEditName: self canEditName) presenter
+	requestDialog ifNil: [ requestDialog := self newRequestMethodDialogOn: methodName ].
+	requestDialog openModal.
+	^ requestDialog
 ]
 
 { #category : 'interaction' }
 ReRenameMethodDriver >> requestNewMessage [
-
 	| methodName dialog parameters |
 	
 	"when we rename from a method list or clicking on the method signature in the method body
@@ -175,7 +180,7 @@ ReRenameMethodDriver >> requestNewMessage [
 	and in this case we may have different parameters. "										
 	parameters := originalMessage selector implementors 
 							ifNotEmpty: [:m | m first  argumentNames ]
-							ifEmpty: [ refactoring buildParamtersForSelector: originalMessage selector ].										
+							ifEmpty: [ refactoring buildParametersForSelector: originalMessage selector ].										
 											
 	methodName := RBMethodName
 		              selector: originalMessage selector
@@ -191,31 +196,24 @@ ReRenameMethodDriver >> requestNewMessage [
 ReRenameMethodDriver >> runRefactoring [
 
 	| failedConditions |
-		
 	self configureRefactoring.
 
-	failedConditions := OrderedCollection empty.	
-	[ 
+	failedConditions := OrderedCollection empty.
+	[
 		newMessage := self requestNewMessage.
 		self configureMessage.
-		
+
 		refactoring isMethodDefinitionUnchanged ifTrue: [ ^ self ].
 		shouldEscape ifTrue: [ ^ self ]. "What is the use of this variable: shouldEscape?"
-		
+
 		failedConditions := refactoring failedApplicabilityPreconditions.
 		failedConditions do: [ :cond |
-			self informDialog
-				label: cond errorString;
-				title: 'Invalid method name';
-				openModal 
-		].
-	
-	] doWhileFalse: [	failedConditions isEmpty ].
+				self informDialog
+					message: cond errorString;
+					title: 'Invalid method name';
+					openModal ] ] doWhileFalse: [ failedConditions isEmpty ].
 
-	refactoring failedBreakingChangePreconditions 
-		ifEmpty: [ self applyChanges ]
-		ifNotEmpty: [ self handleBreakingChanges ]
-
+	refactoring failedBreakingChangePreconditions ifEmpty: [ self applyChanges ] ifNotEmpty: [ self handleBreakingChanges ]
 ]
 
 { #category : 'initialization' }

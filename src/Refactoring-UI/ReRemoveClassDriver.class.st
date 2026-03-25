@@ -19,6 +19,18 @@ Class {
 	#tag : 'Drivers'
 }
 
+{ #category : 'accessing' }
+ReRemoveClassDriver class >> driverName [
+
+	^ 'Remove class(es)'
+]
+
+{ #category : 'accessing' }
+ReRemoveClassDriver class >> shouldPreviewChangesByDefault [
+
+	^ false
+]
+
 { #category : 'execution' }
 ReRemoveClassDriver >> breakingChoices [
 
@@ -39,10 +51,7 @@ ReRemoveClassDriver >> breakingChoices [
 { #category : 'actions' }
 ReRemoveClassDriver >> browseReferences [
 
-	haveNoReferences violators keysAndValuesDo: [ :violator :references | "we should pass the application! "
-		StMessageBrowser
-			browse: (references collect: [ :ref | ref compiledMethod ])
-			asSendersOf: violator realClass ]
+	(application toolNamed: #messageList) browse: (haveNoReferences violators collect: [ :ref | ref compiledMethod ])
 ]
 
 { #category : 'actions' }
@@ -52,33 +61,25 @@ ReRemoveClassDriver >> changes [
 
 ]
 
-{ #category : 'initialization' }
-ReRemoveClassDriver >> configureRefactoring [
-
-	refactoring := ReRemoveClassRefactoring
-		               model: model
-		               classNames: (classes collect: [ :cl | cl name ]).
-	refactoring prepareForInteractiveMode
-]
-
 { #category : 'configuration' }
 ReRemoveClassDriver >> defaultSelectDialog [
 
-	^ self class defaultSelectDialog
-		  title: 'There are potential breaking changes!';
-		  label: self labelBasedOnBreakingChanges;
-		  items: self breakingChoices;
-		  display: [ :each | each description ];
-		  displayIcon: [ :each | self iconNamed: each systemIconName ];
-		  openModal
+	^ super defaultSelectDialog
+		extent: 400 @ 1200;
+		title: 'There are potential breaking changes!';
+		message: self labelBasedOnBreakingChanges;
+		items: self breakingChoices;
+		display: [ :each | each description ];
+		displayIcon: [ :each | self iconNamed: each systemIconName ]; 
+		yourself
 ]
 
-{ #category : 'execution' }
-ReRemoveClassDriver >> handleBreakingChanges [
+{ #category : 'configuration' }
+ReRemoveClassDriver >> instantiateRefactoring [
 
-	| select |
-	select := self selectDialog.
-	select ifNotNil: [ select action ]
+	^ ReRemoveClassRefactoring
+       model: model
+       classNames: (classes collect: [ :cl | cl name ])
 ]
 
 { #category : 'ui - dialogs' }

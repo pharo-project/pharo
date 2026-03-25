@@ -91,11 +91,6 @@ RBArgumentName >> printOn: aStream [
 	aStream nextPutAll: self newName
 ]
 
-{ #category : 'storing' }
-RBArgumentName >> storeOn: aStream [
-	aStream
-]
-
 { #category : 'accessing' }
 RBArgumentName >> value: anObject [
 

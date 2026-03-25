@@ -113,7 +113,16 @@ MethodMapTest >> testDeadContextSourceNode [
 
 { #category : 'tests - temp access' }
 MethodMapTest >> testExampleAccessOuterFromCleanBlock [
-	self assert: (self compileAndRunExample: #exampleAccessOuterFromCleanBlock) equals: 1
+"Should rise an exception since we are trying to access outerContext from a clean block"
+	self should: [(self compileAndRunExample: #exampleAccessOuterFromCleanBlock)] raise: Exception.
+
+]
+
+{ #category : 'tests - temp access' }
+MethodMapTest >> testExampleAccessOuterFromFullBLock [
+
+	self assert: (self compileAndRunExample: #exampleAccessOuterFromFullBlock) equals: 1
+
 ]
 
 { #category : 'tests - temp access' }

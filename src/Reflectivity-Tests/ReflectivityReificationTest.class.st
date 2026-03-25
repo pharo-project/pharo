@@ -197,7 +197,7 @@ ReflectivityReificationTest >> testBlockValueAfter [
 	self assert: (ReflectivityExamples >> #exampleBlock) class equals: ReflectiveMethod.
 	self assert: tag isNil.
 	self assert: ReflectivityExamples new exampleBlock identicalTo: 5.
-	self assert: tag printString equals: [ 2 + 3 ] printString.
+	self assert: tag printString equals: '[ ] in ReflectivityExamples>>#exampleBlock'.
 	self assert: (ReflectivityExamples >> #exampleBlock) class equals: CompiledMethod
 ]
 

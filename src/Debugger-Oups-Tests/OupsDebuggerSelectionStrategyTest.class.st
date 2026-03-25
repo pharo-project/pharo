@@ -6,12 +6,11 @@ Class {
 	#tag : 'Tests - strategies'
 }
 
-{ #category : 'private' }
-OupsDebuggerSelectionStrategyTest >> performTest [
-	"Temporary printing to find more information about https://github.com/pharo-project/pharo/issues/12502"
-
+{ #category : 'running' }
+OupsDebuggerSelectionStrategyTest >> setUp [
+	
+	super setUp.
 	('Running: ' , testSelector asString , ' from ' , self class name) traceCr.
-	self perform: testSelector asSymbol
 ]
 
 { #category : 'tests - debugging' }

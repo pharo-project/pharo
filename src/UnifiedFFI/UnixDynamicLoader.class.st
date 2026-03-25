@@ -23,8 +23,8 @@ UnixDynamicLoader class >> initialize [
 
 { #category : 'testing' }
 UnixDynamicLoader class >> isAvailable [
-	^ Smalltalk os isUnix
-		or: [ Smalltalk os isMacOS ]
+	^ OSPlatform current isUnix
+		or: [ OSPlatform current isMacOS ]
 ]
 
 { #category : 'misc' }

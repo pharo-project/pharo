@@ -108,8 +108,7 @@ Symbol class >> intern: aStringOrSymbol [
 
 	SymbolTableSemaphore enabled ifFalse: [
 		^ self rawIntern: aStringOrSymbol ].
-	SymbolTableSemaphore singleInstance critical: [
-		^ self rawIntern: aStringOrSymbol ]
+	^ SymbolTableSemaphore singleInstance critical: [ self rawIntern: aStringOrSymbol ]
 ]
 
 { #category : 'instance creation' }
@@ -323,6 +322,13 @@ Symbol >> = aSymbol [
 	^ super = aSymbol
 ]
 
+{ #category : 'evaluating' }
+Symbol >> argumentCount [
+    "This method refers to block arguments [:acc :x | ...] has two arguments so argumentCount of a selector that could be used in place of a block
+	should return the same amount of argument than the block."
+	^ self numArgs + 1
+]
+
 { #category : 'converting' }
 Symbol >> asAccessor [
 	"Return a accessor (getter) message from a setter message.
@@ -370,6 +376,8 @@ Symbol >> asMutator [
 
 	"#_ asMutator >>> #_:"
 	"#foo:: asMutator >>> #'foo::'"
+	
+	self isBinary ifTrue: [ self error: 'Binary selectors cannot be transformed into mutators' ].
 
 	self endsWithAColon ifTrue:[ ^ self ].
 	^ (self copyWith: $:) asSymbol
@@ -479,18 +487,6 @@ Symbol >> isOrientedFill [
 	"Needs to be implemented here because symbols can occupy 'color' slots of morphs."
 
 	^ false
-]
-
-{ #category : 'testing' }
-Symbol >> isSelectorSymbol [
-
-	self deprecated:  'Use isUsedAsSelectorSymbol'
-		on: '02/02/2025' 
-		in:  'pharo13'
-		transformWith: 
-			'`@rec isSelectorSymbol' -> '`@rec isUsedAsSelectorSymbol'.
-
-	^ self isUsedAsSelectorSymbol
 ]
 
 { #category : 'testing' }
@@ -643,7 +639,31 @@ Symbol >> value: anObject [
 	^anObject perform: self
 ]
 
-{ #category : 'copying' }
-Symbol >> veryDeepCopyWith: deepCopier [
-	"Return self.  I am immutable in the Morphic world.  Do not record me."
+{ #category : 'evaluating' }
+Symbol >> value: anObject value: arg [
+
+	^ anObject perform: self with: arg
+]
+
+{ #category : 'evaluating' }
+Symbol >> valueWithArguments: aCollection [
+
+	^ aCollection first perform: self withArguments: aCollection allButFirst
+]
+
+{ #category : 'evaluating' }
+Symbol >> valueWithEnoughArguments: anArray [
+	"call me with enough arguments from anArray"
+	<reflection: 'Message sending and code execution - Message send reification'>
+	| args |
+	(anArray size == self argumentCount)
+		ifTrue: [ ^self valueWithArguments: anArray ].
+
+	args := Array new: self argumentCount.
+	args replaceFrom: 1
+		to: (anArray size min: args size)
+		with: anArray
+		startingAt: 1.
+
+	^ self valueWithArguments: args
 ]

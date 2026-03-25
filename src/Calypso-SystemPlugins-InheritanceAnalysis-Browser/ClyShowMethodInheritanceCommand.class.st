@@ -44,7 +44,9 @@ ClyShowMethodInheritanceCommand >> description [
 ]
 
 { #category : 'execution' }
-ClyShowMethodInheritanceCommand >> selectMethodsIn: aQueryBrowser [
+ClyShowMethodInheritanceCommand >> selectMethodsIn: aMethodBrowser [
 
-	aQueryBrowser selectObject: methods last
+	| index |
+	index := aMethodBrowser methods indexOf: methods last.
+	aMethodBrowser selectIndex: index
 ]

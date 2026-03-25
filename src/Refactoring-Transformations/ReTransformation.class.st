@@ -18,64 +18,9 @@ Class {
 	#tag : 'Model'
 }
 
-{ #category : 'private - initialization' }
-ReTransformation class >> initializeRefactoringOptions [
-
-	RefactoringOptions := IdentityDictionary new.
-	RefactoringOptions
-		at: #implementorToInline
-		put: [ :ref :imps | self error: #implementorToInline ];
-
-		at: #methodName
-		put: [ :methodName | self error: #methodName ];
-
-		at: #selfArgumentName
-		put: [ :ref | self error: #selfArgumentName ];
-
-		at: #selectVariableToMoveTo
-		put: [ :ref :class :selector | self error: #selectVariableToMoveTo ];
-
-		at: #variableTypes
-		put: [ :ref :types :selected | self error: #variableTypes ];
-
-		at: #extractAssignment
-		put: [ :ref :varName | self error: #extractAssignment ];
-
-		at: #shouldNotCreateExtraBindings
-		put: [ :ref :string | self error: #shouldNotCreateExtraBindings ];
-
-		at: #alreadyDefined
-		put: [ :ref :cls :selector |  self error: #alreadyDefined ];
-
-		at: #openBrowser
-		put: [ :ref :env |  self error: #openBrowser ]
-]
-
-{ #category : 'converting' }
-ReTransformation >> asRefactoring [
-
-	self deprecated: 'This method is a no-op and can be removed' transformWith: '`@rec asRefactoring' -> '`@rec'.
-	^ self yourself
-]
-
-{ #category : 'transforming' }
-ReTransformation >> transform [
-
-	self deprecated: 'Use generateChanges instead' transformWith: '`@rec transform' -> '`@rec generateChanges'.
-	
-	"Performs this transformation in a model,
-	 then it adds the refactoring to the manager"
-
-	self checkPreconditions.
-	self privateTransform
-
-	"below executes the refactoring without prompt"
-	"RBRefactoringManager instance addRefactoring: self"
-]
-
-{ #category : 'displaying' }
-ReTransformation >> whatToDisplayIn: aBrowser [
+{ #category : 'printing' }
+ReTransformation >> changesToDisplayIn: aBrowser [
 
 	^ self changes changes
-		flatCollect: [ :e | e whatToDisplayIn: aBrowser ]
+		flatCollect: [ :e | e changesToDisplayIn: aBrowser ]
 ]

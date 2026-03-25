@@ -114,7 +114,7 @@ OCIRStackCount >> start [
 	^ start
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 OCIRStackCount >> startAt: pos [
 
 	start := position := length := pos

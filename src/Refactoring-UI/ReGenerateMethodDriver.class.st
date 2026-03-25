@@ -8,6 +8,9 @@ Class {
 		'targetClass',
 		'selectedVariables'
 	],
+	#classVars : [
+		'DefaultSelectDialog'
+	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',
 	#tag : 'Drivers'
@@ -19,6 +22,12 @@ ReGenerateMethodDriver class >> defaultSelectDialog [
 	^ DefaultSelectDialog ifNil: [ SpSelectMultipleDialog new ]
 ]
 
+{ #category : 'testing' }
+ReGenerateMethodDriver class >> isAbstract [
+
+	^ self = ReGenerateMethodDriver
+]
+
 { #category : 'execution' }
 ReGenerateMethodDriver >> configureRefactoring [
 
@@ -28,41 +37,48 @@ ReGenerateMethodDriver >> configureRefactoring [
 ]
 
 { #category : 'configuration' }
-ReGenerateMethodDriver >> defaultSelectDialog [
-
-	| dialog |
-	dialog := self class defaultSelectDialog.
-	dialog
-	  	title: self dialogTitle;
-	  	label: 'Please select the variable(s)';
-	  	items: self targetClass instanceVariableNames;
-		display: [ :each | each asString ];
-		displayIcon: [ :each | self iconNamed: each systemIconName ];
-	  	openModal.
-	^ dialog
-]
-
-{ #category : 'configuration' }
 ReGenerateMethodDriver >> dialogTitle [
 
 	self subclassResponsibility 
 ]
 
-{ #category : 'execution' }
-ReGenerateMethodDriver >> refactoringClass [ 
+{ #category : 'configuration' }
+ReGenerateMethodDriver >> instantiateRefactoring [
 
-	^ self class refactoringClass
+	^ self refactoringClass 
+		className: self targetClass name
+		variables: selectedVariables
+]
+
+{ #category : 'execution' }
+ReGenerateMethodDriver >> refactoringClass [
+
+	^ self subclassResponsibility
 ]
 
 { #category : 'execution' }
 ReGenerateMethodDriver >> runRefactoring [
+	| dialog selection |
+	
+"I do not use defaultSelectDialog because it is used mainly for choices selection 
+	when breaking changes. Here this is for doing something else. "
 
-	self selectDialog
-		ifNil: [ ^ self ]
-		ifNotNil: [ selectedVariables := self selectDialog selectedItems ].
-	selectedVariables ifEmpty: [ ^ self ].
+	dialog := SpSelectMultipleDialog newApplication: self application.
+	dialog
+		title: self dialogTitle;
+		message: 'Please select the variable(s)';
+		items: self targetClass instanceVariableNames;
+		display: [ :each | each displayString ];
+		displayIcon: [ :each | self iconNamed: each systemIconName ];
+		yourself.
+	selection := dialog openModal.
+	selection ifNil: [ ^ false ].
+	selection ifEmpty: [ ^ self ].
+	selectedVariables := selection.
 	self configureRefactoring.
 	self applyChanges.
+	
+	^ true
 ]
 
 { #category : 'accessing' }

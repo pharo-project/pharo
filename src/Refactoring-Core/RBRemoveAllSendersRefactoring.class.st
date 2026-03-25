@@ -72,11 +72,14 @@ RBRemoveAllSendersRefactoring >> privateTransform [
 
 { #category : 'removing' }
 RBRemoveAllSendersRefactoring >> removeMethod: aMethod of: node [
-	self generateChangesFor: (RBRemoveSenderRefactoring
+	| ref |
+	ref := (RBRemoveSenderRefactoring
 		model: self model
 		remove: node sourceInterval
 		inMethod: aMethod selector
-		forClass: aMethod methodClass)
+		forClass: aMethod methodClass).
+	ref classOfTheMethodToInline: aMethod methodClass.	
+	self generateChangesFor: ref.
 ]
 
 { #category : 'transforming' }
@@ -110,13 +113,4 @@ RBRemoveAllSendersRefactoring >> selfSendIn: aTree [
 		do: [ :aNode :answer | nodes add: aNode ].
 	searcher executeTree: aTree initialAnswer: {}.
 	^ nodes
-]
-
-{ #category : 'storing' }
-RBRemoveAllSendersRefactoring >> storeOn: aStream [
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream nextPutAll: ' removeSendersOf: '.
-	aStream nextPutAll: selector.
-	aStream nextPut: $)
 ]

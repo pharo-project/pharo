@@ -11,7 +11,7 @@ Class {
 
 { #category : 'testing' }
 WindowsDynamicLoader class >> isAvailable [
-	^ Smalltalk os isWindows
+	^ OSPlatform current isWindows
 ]
 
 { #category : 'private' }

@@ -81,10 +81,7 @@ RBFindAndReplaceSetUpTransformation class >> of: aClass inWholeHierarchy: aBoole
 { #category : 'accessing' }
 RBFindAndReplaceSetUpTransformation >> extractMethodRefactoring [
 	^ RBExtractSetUpMethodRefactoring new
-			setOption: #extractAssignment
-			toUse:  [ :ref :aSelector |
-				true];
-			yourself
+			
 ]
 
 { #category : 'accessing' }

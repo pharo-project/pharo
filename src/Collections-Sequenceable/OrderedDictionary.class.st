@@ -94,6 +94,9 @@ OrderedDictionary >> = anObject [
 	(self species == anObject species
 		and: [self size = anObject size])
 		ifFalse: [^ false].
+	
+	dictionary keysDo: [:key | 
+        ((self indexOfKey: key) = (anObject indexOfKey: key)) ifFalse: [ ^ false ] ].
 
 	dictionary associationsDo: [:each |
 		(anObject at: each key ifAbsent: [^ false]) = each value
@@ -311,11 +314,6 @@ OrderedDictionary >> growOrderedKeys [
 			to: orderedKeys size
 			with: orderedKeys
 			startingAt: 1
-]
-
-{ #category : 'testing' }
-OrderedDictionary >> hasBindingThatBeginsWith: aString [
-	^ dictionary hasBindingThatBeginsWith: aString
 ]
 
 { #category : 'comparing' }

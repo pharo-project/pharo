@@ -15,7 +15,7 @@ Class {
 { #category : 'initialization' }
 RBEntity >> initialize [
 	super initialize.
-	changeFactory := RBRefactoryChangeManager changeFactory
+	changeFactory := ReChangeManager changeFactory
 ]
 
 { #category : 'initialization' }

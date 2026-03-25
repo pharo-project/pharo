@@ -95,7 +95,7 @@ ClyShowMessageSenderCommand >> execute [
 
 	| selectors |
 	selectors := messages collect: [ :each | each selector].
-	browser spawnQueryBrowserOn: (ClyMessageSendersQuery ofAny: selectors)
+	(Smalltalk tools toolNamed: #messageList) browseSendersOfAll: selectors
 ]
 
 { #category : 'execution' }

@@ -13,6 +13,18 @@ Class {
 	#tag : 'Drivers'
 }
 
+{ #category : 'accessing' }
+ReRemoveInstanceVariablesDriver class >> driverName [
+
+	^ 'Remove instance variable(s)'
+]
+
+{ #category : 'accessing' }
+ReRemoveInstanceVariablesDriver class >> shouldPreviewChangesByDefault [
+
+	^ false
+]
+
 { #category : 'execution' }
 ReRemoveInstanceVariablesDriver >> breakingChoices [
 
@@ -27,39 +39,36 @@ ReRemoveInstanceVariablesDriver >> breakingChoices [
 { #category : 'execution' }
 ReRemoveInstanceVariablesDriver >> browseInstanceVariableReferences [
 
-	StMessageBrowser
-		browse: refactoring violators
+	(Smalltalk tools toolNamed: #messageList) browse: refactoring violators
 		
 ]
 
-{ #category : 'resources' }
+{ #category : 'configuration' }
 ReRemoveInstanceVariablesDriver >> configureRefactoring [
 
-	refactoring := ReUpFrontPreconditionCheckingCompositeRefactoring new
-							model: model; 
-							refactorings: (variables collect: [:each | 
-									ReRemoveInstanceVariableRefactoring model: model remove: each from: class]);
-								yourself.
+	super configureRefactoring.
 	refactoring prepareForInteractiveMode
 ]
 
 { #category : 'configuration' }
 ReRemoveInstanceVariablesDriver >> defaultSelectDialog [
 
-	^ self class defaultSelectDialog
-		  title: 'There are references to variables!';
-		  items: self breakingChoices;
-		  display: [ :each | each description ];
-		  displayIcon: [ :each | self iconNamed: each systemIconName ];
-		  openModal
+	^ super defaultSelectDialog
+		title: 'There are references to variables!';
+		items: self breakingChoices;
+		display: [ :each | each description ];
+		displayIcon: [ :each | self iconNamed: each systemIconName ];
+		yourself
 ]
 
-{ #category : 'execution' }
-ReRemoveInstanceVariablesDriver >> handleBreakingChanges [
+{ #category : 'configuration' }
+ReRemoveInstanceVariablesDriver >> instantiateRefactoring [
 
-	| select |
-	select := self selectDialog.
-	select ifNotNil: [ select action ]
+	^ ReUpFrontPreconditionCheckingCompositeRefactoring new
+		model: model; 
+		refactorings: (variables collect: [:each | 
+				ReRemoveInstanceVariableRefactoring model: model remove: each from: class]);
+		yourself
 ]
 
 { #category : 'execution' }
@@ -70,7 +79,14 @@ ReRemoveInstanceVariablesDriver >> runRefactoring [
 	"Normally from the IDE we should not get bogus variables."
 	"we could call the violatorMessages here to let the applicability preconditions do the job."
 	refactoring failedApplicabilityPreconditions 
-		ifNotEmpty: [ ^ self inform: 'The variable ', refactoring variable,  ' does not exist' ].
+		ifNotEmpty: [ 
+			| str |
+			str := String streamContents: [ :s | 
+				s << 'The variable '.
+				refactoring refactorings do: [:r | s <<  r variableName]
+					separatedBy: [ str space ].
+				s <<  ' do(es) not exist' ].
+			^ self inform: str contents ].
 	
 	(refactoring breakingChangePreconditions allSatisfy: [:each | each check])
 		ifTrue: [ self applyChanges ]

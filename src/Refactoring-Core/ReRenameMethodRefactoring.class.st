@@ -170,23 +170,6 @@ ReRenameMethodRefactoring >> selectorsHaveSameArity [
 				, ' doesn''t have the same number of arguments as ', oldSelector printString
 ]
 
-{ #category : 'storing' }
-ReRenameMethodRefactoring >> storeOn: aStream [
-	aStream nextPut: $(.
-	aStream nextPutAll: self class name.
-	aStream
-		nextPutAll: ' renameMethod: #';
-		nextPutAll: oldSelector;
-		nextPutAll: ' in: '.
-	aStream nextPutAll: class name.	
-	aStream
-		nextPutAll: ' to: #';
-		nextPutAll: newSelector;
-		nextPutAll: ' permutation: '.
-	permutation storeOn: aStream.
-	aStream nextPut: $)
-]
-
 { #category : 'preconditions' }
 ReRenameMethodRefactoring >> validSelectorCondition [
 
@@ -196,7 +179,8 @@ ReRenameMethodRefactoring >> validSelectorCondition [
 ]
 
 { #category : 'accessing' }
-ReRenameMethodRefactoring >> violations [ 
+ReRenameMethodRefactoring >> violations [
 
-	^ self breakingChangePreconditions flatCollect: [ :each | each violators ]
+	^ self breakingChangePreconditions flatCollect: [ :each |
+		  each violators ]
 ]

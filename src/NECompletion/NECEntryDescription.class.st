@@ -16,6 +16,7 @@ Class {
 
 { #category : 'instance creation' }
 NECEntryDescription class >> label: firstString [
+	"I'm invoked when there is not much information for exammple."
 	^ self new
 		label: firstString
 		title: '(unknown)'

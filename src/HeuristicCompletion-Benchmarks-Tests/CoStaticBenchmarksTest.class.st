@@ -13,7 +13,7 @@ CoStaticBenchmarksTest >> setUp [
 
 	super setUp.
 	benchmarks := CoStaticBenchmarks new.
-	benchmarks builder: CoGlobalSorterResultSetBuilder new.
+	benchmarks builder: CoASTResultSetBuilder new.
 ]
 
 { #category : 'running' }

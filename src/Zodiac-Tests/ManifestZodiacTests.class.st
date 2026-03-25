@@ -13,12 +13,12 @@ Class {
 ManifestZodiacTests class >> ruleEmptyExceptionHandlerRuleV1FalsePositive [
 
 	<ignoreForCoverage>
-	^ #(#(#(#RGPackageDefinition #(#'Zodiac-Tests')) #'2025-07-28T11:39:54.297192+02:00') )
+	^ #(#(#(#RGMethodDefinition #(#ZdcPluginSSLSessionFinalizationTest #tearDown #false)) #'2025-07-28T11:33:08.113066+02:00') )
 ]
 
 { #category : 'code-critics' }
 ManifestZodiacTests class >> ruleReClassNotCategorizedRuleV1FalsePositive [
 
 	<ignoreForCoverage>
-	^ #(#(#(#RGPackageDefinition #(#'Zodiac-Tests')) #'2025-07-28T11:40:03.105238+02:00') )
+	^ #(#(#(#RGPackageDefinition #(#'Zodiac-Tests')) #'2025-07-28T11:33:19.100601+02:00') )
 ]

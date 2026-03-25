@@ -300,7 +300,7 @@ OCIRMethod >> startSequence [
 	^ startSequence
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 OCIRMethod >> startSequence: irSequence [
 
 	startSequence := irSequence.

@@ -19,12 +19,21 @@ Class {
 		'class',
 		'methodSelectionPresenterClass',
 		'subclassesSendSuper',
-		'isAbstract'
+		'isAbstract',
+		'subclassDirectlyDefines',
+		'refersToSelector',
+		'allSubclassesDirectlyDefines'
 	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',
 	#tag : 'Drivers'
 }
+
+{ #category : 'accessing' }
+RePushDownMethodDriver class >> driverName [
+
+	^ 'Push down method(s)'
+]
 
 { #category : 'initialization' }
 RePushDownMethodDriver class >> model: aRBNamespace scopes: refactoringScopes pushDownMethods: methods [
@@ -37,10 +46,19 @@ RePushDownMethodDriver >> breakingChoices [
 
 	| choices |
 	choices := OrderedCollection new.
-	choices add: (RePushDownMethodChoice new driver: self).
-	subclassesSendSuper isFalse ifTrue: [
-		choices add: (ReBrowseSubclassSuperSendsChoice new driver: self) ].
-	^ choices 
+	choices add: (RePushDownMethodTransformationChoice new driver: self).
+	subclassesSendSuper isFalse ifTrue: [ choices add: (ReBrowseSubclassSuperSendsChoice new driver: self) ].
+	refersToSelector isFalse ifTrue: [ choices add: (ReBrowseMethodsChoice new driver: self) ].
+	allSubclassesDirectlyDefines isFalse ifTrue: [ choices add: (ReRemoveSuperclassMethodChoice new driver: self) ].
+	^ choices
+]
+
+{ #category : 'actions' }
+RePushDownMethodDriver >> browseMethods [
+
+	| violators |
+	violators := refersToSelector violators.
+	(application toolNamed: #messageList) browse: (violators flatCollect: [ :v | v collect: #compiledMethod ])
 ]
 
 { #category : 'actions' }
@@ -48,7 +66,7 @@ RePushDownMethodDriver >> browseSubclassesSuperSends [
 
 	subclassesSendSuper violators keysAndValuesDo: [ :violator :references |
 		"we should pass the application! "
-		StMessageBrowser
+		(Smalltalk tools toolNamed: #messageList)
 			browse: (references collect: [ :ref | ref compiledMethod ])
 			asSendersOf: violator realClass ]
 ]
@@ -64,61 +82,57 @@ RePushDownMethodDriver >> changes [
 RePushDownMethodDriver >> configureAndRunRefactoring [
 
 	self configureRefactoring.
-
-	refactoring failedApplicabilityPreconditions ifNotEmpty: [
-		^ self inform: 'The shared variable does not exist' ].
 	self setBreakingChangesPreconditions.
-	refactoring failedBreakingChangePreconditions
-		ifEmpty: [ self applyChanges ]
-		ifNotEmpty: [ self handleBreakingChanges ]
-]
-
-{ #category : 'resources' }
-RePushDownMethodDriver >> configureRefactoring [
-
-	refactoring :=  RBPushDownMethodRefactoring
-		  model: model
-		  pushDown: (methods collect: [ :each | each selector ])
-		  from: class name
+	refactoring failedBreakingChangePreconditions ifEmpty: [ self applyChanges ] ifNotEmpty: [ self handleBreakingChanges ]
 ]
 
 { #category : 'configuration' }
 RePushDownMethodDriver >> defaultSelectDialog [
 
-	^ self class defaultSelectDialog
+	^ super defaultSelectDialog
 		  title: 'There are potential breaking changes!';
-		  label: self labelBasedOnBreakingChanges;
+		  message: self labelBasedOnBreakingChanges;
 		  items: self breakingChoices;
 		  display: [ :each | each description ];
 		  displayIcon: [ :each | self iconNamed: each systemIconName ];
-		  openModal
+		  yourself
 ]
 
 { #category : 'execution' }
 RePushDownMethodDriver >> gatherUserInput [
 
-	methods := self selectMethods
+	self selectMethods
 ]
 
-{ #category : 'execution' }
-RePushDownMethodDriver >> handleBreakingChanges [
+{ #category : 'configuration' }
+RePushDownMethodDriver >> instantiateRefactoring [
 
-	| select |
-	select := self selectDialog.
-	select ifNotNil: [ select action ]
+	^ RBPushDownMethodRefactoring
+		  model: model
+		  pushDown: (methods collect: [ :each | each selector ])
+		  from: class name
 ]
 
 { #category : 'ui - dialogs' }
 RePushDownMethodDriver >> labelBasedOnBreakingChanges [
 
 	^ String streamContents: [ :stream |
-		  isAbstract isFalse ifTrue: [
-			  isAbstract violationMessageOn: stream.
-			  stream cr ].
-		  subclassesSendSuper isFalse ifTrue: [
-			  subclassesSendSuper violationMessageOn: stream.
-			  stream cr ].
-		  stream nextPutAll: 'Select a strategy' ]
+			  isAbstract isFalse ifTrue: [
+					  isAbstract violationMessageOn: stream.
+					  stream cr ].
+			  subclassesSendSuper isFalse ifTrue: [
+					  subclassesSendSuper violationMessageOn: stream.
+					  stream cr ].
+			  subclassDirectlyDefines isFalse ifTrue: [
+					  subclassDirectlyDefines violationMessageOn: stream.
+					  stream cr ].
+			  refersToSelector isFalse ifTrue: [
+					  refersToSelector violationMessageOn: stream.
+					  stream cr ].
+			  allSubclassesDirectlyDefines isFalse ifTrue: [
+					  allSubclassesDirectlyDefines violationMessageOn: stream.
+					  stream cr ].
+			  stream nextPutAll: 'Select a strategy' ]
 ]
 
 { #category : 'for mocks' }
@@ -149,6 +163,16 @@ RePushDownMethodDriver >> pushDownMethods [
 	self openPreviewWithChanges: refactoring pushDownMethodChanges 
 ]
 
+{ #category : 'removing' }
+RePushDownMethodDriver >> removeSuperclassMethod [
+
+	| selectorsToRemove |
+	selectorsToRemove := allSubclassesDirectlyDefines violators values flatCollect: [ :v | v collect: #selector ].
+	selectorsToRemove := selectorsToRemove asSet.
+	selectorsToRemove do: [ :each | refactoring generateChangesFor: (RBRemoveMethodTransformation selector: each from: class) ].
+	self openPreviewWithChanges: refactoring changes
+]
+
 { #category : 'execution' }
 RePushDownMethodDriver >> runRefactoring [
 
@@ -162,19 +186,26 @@ RePushDownMethodDriver >> runRefactoring [
 RePushDownMethodDriver >> selectMethods [
 
 	| dialog |
-	dialog := self methodsSelectionPresenterClass 
+	
+	dialog := (self methodsSelectionPresenterClass newApplication: self application)
+		          title: 'There are potential breaking changes!'
 		          label: 'Push down methods from ' , class name
-		          withItems:
-			          (class methods sort: [ :a :b | a asString < b asString ])
-				          asOrderedCollection
-		          selecting: methods asOrderedCollection.
-	dialog cancelled ifTrue: [ ^ nil ].
-	^ dialog selectedItems
+		          withItems: (class methods sort: [ :a :b | a asString < b asString ]) asOrderedCollection
+		          selecting: methods asOrderedCollection
+		          acceptBlock: [ :selectedMethods | methods := selectedMethods ];
+		          openModal.
+
+	dialog isOk ifTrue: [ ^ self ].
+
+	methods:= nil
 ]
 
 { #category : 'initialization' }
-RePushDownMethodDriver >> setBreakingChangesPreconditions [ 
+RePushDownMethodDriver >> setBreakingChangesPreconditions [
 
 	isAbstract := refactoring preconditionIsAbstract.
-	subclassesSendSuper := refactoring preconditionSubclassesDontSendSuper
+	subclassesSendSuper := refactoring preconditionSubclassesDontSendSuper.
+	subclassDirectlyDefines := refactoring preconditionSubclassesDirectlyDefines.
+	refersToSelector := refactoring preconditionMethodsReferToSelector.
+	allSubclassesDirectlyDefines := refactoring preconditionAllSubclassesDirectlyDefines 
 ]

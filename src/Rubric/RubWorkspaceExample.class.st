@@ -17,9 +17,9 @@ Class {
 
 { #category : 'examples' }
 RubWorkspaceExample class >> exampleWindowWithScrolledText [
-	<sampleInstance>
 
-	^self open
+	<sampleInstance>
+	^ self open
 ]
 
 { #category : 'examples' }
@@ -37,13 +37,14 @@ RubWorkspaceExample class >> exampleWithCustomShortcut [
 	window := StandardWindow new.
 	window addMorph: text fullFrame: LayoutFrame identity.
 	window title: 'Custom shortcuts example'.
-	window openInWorld
+	^ window openInWorld
 ]
 
 { #category : 'instance creation' }
 RubWorkspaceExample class >> open [
+
 	<script>
-	(self windowWithScrolledText: (self new newScrolledText)) openInWorld
+	^ (self windowWithScrolledText: self new newScrolledText) openInWorld
 ]
 
 { #category : 'private - accessing' }

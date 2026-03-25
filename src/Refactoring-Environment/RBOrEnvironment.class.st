@@ -114,12 +114,3 @@ RBOrEnvironment >> selectorsForClass: aClass do: aBlock [
 			(enumerated includes: each)
 				ifFalse: [ aBlock value: each ] ]
 ]
-
-{ #category : 'storing' }
-RBOrEnvironment >> storeOn: aStream [
-	aStream nextPut: $(.
-	environment storeOn: aStream.
-	aStream nextPutAll: self operator.
-	self orEnvironment storeOn: aStream.
-	aStream nextPut: $)
-]

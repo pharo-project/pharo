@@ -109,6 +109,6 @@ OCSelectorNode >> value [
 ]
 
 { #category : 'accessing' }
-OCSelectorNode >> value: aString [
-	value := aString asSymbol
+OCSelectorNode >> value: aSelector [
+	value := aSelector
 ]

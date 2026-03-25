@@ -6,16 +6,14 @@ Class {
 	#tag : 'Choices'
 }
 
-{ #category : 'accessing' }
+{ #category : 'actions' }
 ReBrowseMethodChoice >> action [
 	
 	driver browseMethod
-
-	
 ]
 
 { #category : 'accessing' }
 ReBrowseMethodChoice >> description [ 
 
-	^ 'Browse the method(s)'
+	^ 'Browse the method'
 ]

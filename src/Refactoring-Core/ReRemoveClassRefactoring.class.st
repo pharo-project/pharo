@@ -157,12 +157,3 @@ ReRemoveClassRefactoring >> reparentSubclasses [
 			class := self model classNamed: each.
 			self model reparentClasses: class subclasses copy to: class superclass]
 ]
-
-{ #category : 'storing' }
-ReRemoveClassRefactoring >> storeOn: aStream [
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream nextPutAll: ' classNames: '.
-	classNames asArray storeOn: aStream.
-	aStream nextPut: $)
-]
