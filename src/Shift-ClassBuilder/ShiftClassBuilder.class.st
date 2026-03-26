@@ -93,6 +93,14 @@ ShiftClassBuilder >> allSlots [
 ]
 
 { #category : 'building' }
+ShiftClassBuilder >> beExtension [
+
+	self
+		superclass: nil;
+		metaSuperclass: Extension
+]
+
+{ #category : 'building' }
 ShiftClassBuilder >> build [
 
 	self tryToFillOldClass.
@@ -305,6 +313,18 @@ ShiftClassBuilder >> environment: anObject [
 	^ self buildEnvironment: anObject
 ]
 
+{ #category : 'accessing' }
+ShiftClassBuilder >> extendedClass [
+
+	^ extensibleProperties at: #extendedClass
+]
+
+{ #category : 'accessing' }
+ShiftClassBuilder >> extendedClass: aClass [
+
+	extensibleProperties at: #extendedClass put: aClass
+]
+
 { #category : 'copying' }
 ShiftClassBuilder >> fillClassSideFromEnvironment: anEnvironment [
 
@@ -411,6 +431,11 @@ ShiftClassBuilder >> installingEnvironment [
 ShiftClassBuilder >> installingEnvironment: anObject [
 
 	installingEnvironment := anObject
+]
+
+{ #category : 'testing' }
+ShiftClassBuilder >> isExtension [
+	^ self metaSuperclass isKindOf: Extension class
 ]
 
 { #category : 'accessing' }
@@ -657,7 +682,7 @@ ShiftClassBuilder >> tryToFillOldClass [
 
 	oldClass ifNotNil: [ ^ self ].
 	name ifNil: [ ^ self ].
-	self oldClass: (self classNamed: self name)
+	self oldClass: (self installingEnvironment at: name ifAbsent: [ nil ])
 ]
 
 { #category : 'building' }

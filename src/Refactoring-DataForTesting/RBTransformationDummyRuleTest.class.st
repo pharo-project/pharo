@@ -148,6 +148,8 @@ RBTransformationDummyRuleTest class >> guardClause [
 
 { #category : 'class initialization' }
 RBTransformationDummyRuleTest class >> initializeAfterLoad1 [
+
+	<ignoreNotImplementedSelectors: #(addMethodSearches:)>
 	RecursiveSelfRule := self parseTreeSearcher.
 	RecursiveSelfRule
 		addMethodSearches: #('`@methodName: `@args | `@temps | self `@methodName: `@args' '`@methodName: `@args | `@temps | ^self `@methodName: `@args')
@@ -223,6 +225,8 @@ RBTransformationDummyRuleTest class >> nuke [
 
 { #category : 'instance creation' }
 RBTransformationDummyRuleTest class >> rewrite: stringArrays methods: aBoolean name: aName [
+	
+	<ignoreNotImplementedSelectors: #(addMethodSearch:)>
 	| rewriteRule |
 	rewriteRule := OCParseTreeRewriter new.
 	stringArrays do:

@@ -15,6 +15,11 @@ CompiledCodeTest >> compiledMethod1 [
 ]
 
 { #category : 'examples' }
+CompiledCodeTest >> compiledMethod1Copy [
+	^ self compiledMethod1 copy
+]
+
+{ #category : 'examples' }
 CompiledCodeTest >> method1 [
 
 	<pragma1: 123 foo: 'bar' >
@@ -45,6 +50,20 @@ CompiledCodeTest >> testBlockReturnSpecial [
 	self deny: [ ^ 3 ] compiledBlock isReturnSpecial.
 	self deny: [ ^ var ] compiledBlock isReturnSpecial.
 	self deny: [ ^ Object ] compiledBlock isReturnSpecial
+]
+
+{ #category : 'tests' }
+CompiledCodeTest >> testChangeProperties [
+
+	| method methodCopy newProperties |
+	method := self compiledMethod1Copy.
+	methodCopy := method copy.
+	
+	newProperties := method properties copyWith: (Pragma for: methodCopy selector: #toto arguments: #()).
+	methodCopy properties: newProperties.
+	
+	self deny: (method hasPragmaNamed: #toto).
+	self assert: (methodCopy hasPragmaNamed: #toto).
 ]
 
 { #category : 'tests - flag' }

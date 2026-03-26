@@ -20,6 +20,8 @@ FFIIndirectFunctionResolution >> isApplicableFor: aRequestor [
 
 { #category : 'resolving' }
 FFIIndirectFunctionResolution >> resolveFunction: anExternalFunction [
+
+	<ignoreNotImplementedSelectors: #( module )>
 	^ (ExternalAddress
 		loadSymbol: anExternalFunction name
 		module: anExternalFunction module)

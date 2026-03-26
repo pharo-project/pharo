@@ -16,6 +16,8 @@ Class {
 
 { #category : 'visitor' }
 AthensCubicSegment >> accept: aVisitor [
+	
+	<ignoreNotImplementedSelectors: #(cubicBezierSegment:)>
 	^ aVisitor cubicBezierSegment: self
 ]
 

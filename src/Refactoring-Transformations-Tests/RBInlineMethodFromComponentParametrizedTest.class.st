@@ -32,7 +32,7 @@ RBInlineMethodFromComponentParametrizedTest >> testInlineComponentIntoCascadedMe
 	| refactoring |
 	self proceedThroughWarning:
 		[ refactoring := self createRefactoringWithArguments:
-				{(35 to: 79) . #inlineComponent . RBClassDataForRefactoringTest}.
+				{(95 to: 139) . #inlineComponent . RBClassDataForRefactoringTest}.
 		refactoring classOfTheMethodToInline: (refactoring model classNamed: #Behavior).
 		(refactoring model classNamed: #Behavior)
 			compile: 'hasImmediateInstances ^self format = 0'
@@ -44,6 +44,8 @@ RBInlineMethodFromComponentParametrizedTest >> testInlineComponentIntoCascadedMe
 	self assert: ((refactoring model classNamed: #RBClassDataForRefactoringTest)
 		parseTreeForSelector: #inlineComponent)
 		equals: (self parseMethod: 'inlineComponent
+		
+	<ignoreNotImplementedSelectors: #(hasImmediateInstances)>
 	| a aBehavior |
 	a := 5.
 	aBehavior := a class.
@@ -97,7 +99,7 @@ RBInlineMethodFromComponentParametrizedTest >> testInlineEmptyComponentMethod [
 
 	self proceedThroughWarning:
 		[ refactoring := self createRefactoringWithArguments:
-			 { (35 to: 91) . #inlineComponent . RBClassDataForRefactoringTest }.
+			 { (95 to: 151) . #inlineComponent . RBClassDataForRefactoringTest }.
 			refactoring classOfTheMethodToInline: (refactoring model classNamed: #Object).
 		self
 			setupInlineExpressionFor: refactoring
@@ -110,6 +112,7 @@ RBInlineMethodFromComponentParametrizedTest >> testInlineEmptyComponentMethod [
 	self assert: ((refactoring model classNamed: #RBClassDataForRefactoringTest)
 		parseTreeForSelector: #inlineComponent)
 		equals: (self parseMethod: 'inlineComponent
+	<ignoreNotImplementedSelectors: #(hasImmediateInstances)>
 	| a anObject |
 	a := 5.
 	anObject := a class.

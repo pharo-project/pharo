@@ -11,6 +11,8 @@ Class {
 
 { #category : 'accessing' }
 FFIFloatType >> callbackReturnOn: callbackContext for: aFloat [
+
+	<ignoreNotImplementedSelectors: #( floatResult: )>
 	^ callbackContext floatResult: aFloat
 ]
 

@@ -712,6 +712,12 @@ String >> asPluralBasedOn: aNumberOrCollection [
 ]
 
 { #category : 'converting' }
+String >> asSelector [
+	
+	^ self asSymbol
+]
+
+{ #category : 'converting' }
 String >> asSignedInteger [
 	"Returns the first signed integer it can find or nil."
 

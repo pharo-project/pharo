@@ -73,10 +73,12 @@ RBAbstractInstanceVariableTransformationTest >> testClassVariable [
 	self
 		assert: (class parseTreeForSelector: #initializeAfterLoad1)
 		equals: (self parseMethod: 'initializeAfterLoad1
-				self recursiveSelfRule: self parseTreeSearcher.
-				self recursiveSelfRule
-					addMethodSearches: #(''`@methodName: `@args | `@temps | self `@methodName: `@args'' ''`@methodName: `@args | `@temps | ^self `@methodName: `@args'')
-					-> [:aNode :answer | true]').
+
+	<ignoreNotImplementedSelectors: #(addMethodSearches:)>
+	self recursiveSelfRule: self parseTreeSearcher.
+	self recursiveSelfRule
+		addMethodSearches: #(''`@methodName: `@args | `@temps | self `@methodName: `@args'' ''`@methodName: `@args | `@temps | ^self `@methodName: `@args'')
+				-> [:aNode :answer | true]').
 	self
 		assert:
 			((refactoring model classNamed: #RBTransformationRuleTestData)

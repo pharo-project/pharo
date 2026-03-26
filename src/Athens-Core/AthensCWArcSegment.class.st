@@ -13,6 +13,8 @@ Class {
 
 { #category : 'visitor' }
 AthensCWArcSegment >> accept: aVisitor [
+
+	<ignoreNotImplementedSelectors: #(cwArcSegment:)>
 	^ aVisitor cwArcSegment: self
 ]
 

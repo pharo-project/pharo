@@ -50,7 +50,9 @@ Class {
 		'extensionSelectors',
 		'name',
 		'organizer',
-		'tags'
+		'tags',
+		'importedExtensions',
+		'scopedSelectors'
 	],
 	#classVars : [
 		'Properties'
@@ -111,6 +113,26 @@ Package >> addClass: aClass [
 	self moveClass: aClass toTag: self rootTag
 ]
 
+{ #category : 'extensions' }
+Package >> addExtensionImport: anExtension [
+
+	self importedExtensions add: anExtension.
+	anExtension addUserPackage: self.
+
+	self importSelectors: anExtension scopedSelectors.
+	
+	"Recompile dependencies, so they can see the extension.
+	For now, we recompile the entire package, since every callsite may now become a scoped callsite"
+	self methods do: [ :m |
+		m methodClass
+			compile: m sourceCode
+			classified: m protocol
+			withStamp: m timeStamp
+			notifying: nil
+			logSource: true
+			recompileDependencies: false ]
+]
+
 { #category : 'add method - compiled method' }
 Package >> addMethod: aCompiledMethod [
 	"Add the method to the receiver as a defined method if the class is  defined in it, else as an extension."
@@ -139,10 +161,38 @@ Package >> classesTaggedWith: aSymbol [
 	^ (self tagNamed: aSymbol ifAbsent: [ ^ #(  ) ]) classes
 ]
 
+{ #category : 'extensions' }
+Package >> cleanupExtendedBehaviors [
+	
+	"This package is about to be removed.
+	Remove the extensions defined by this package in all extended behaviors.
+	
+	CRITICAL: this both removes cached aliases AND removes normal extensions methods.
+	This package becomes unusable after this operation"
+	
+	scopedSelectors ifNil: [ ^ self ].
+
+	scopedSelectors do: [ :e |
+		e cleanupExtendedBehaviors ].
+	scopedSelectors := nil
+]
+
 { #category : 'accessing' }
 Package >> codeChangeAnnouncer [
 
 	^ self environment codeChangeAnnouncer
+]
+
+{ #category : 'extensions' }
+Package >> defineScopedSelector: aSymbol [
+
+	| scopedSelector |
+	scopedSelector := ScopedSelector new
+		                  symbol: aSymbol;
+		                  owner: self;
+		                  yourself.
+	self scopedSelectors at: aSymbol asSymbol put: scopedSelector.
+	^ scopedSelector
 ]
 
 { #category : 'accessing' }
@@ -332,6 +382,18 @@ Package >> importProtocol: aProtocol forClass: aClass [
 		thenDo: [ :method | self addMethod: method ]
 ]
 
+{ #category : 'extensions' }
+Package >> importSelectors: aCollection [ 
+	
+	aCollection do: [ :e | self internScopedSelector: e symbol ]
+]
+
+{ #category : 'extensions' }
+Package >> importedExtensions [
+	
+	^ importedExtensions ifNil: [ importedExtensions := Set new ]
+]
+
 { #category : 'testing' }
 Package >> includesClass: aClass [
 	"Returns true if the receiver includes aClass in the classes that are defined within it: only class definition are considered - not class extensions"
@@ -384,6 +446,16 @@ Package >> initialize [
 	super initialize.
 	extensionSelectors := IdentityDictionary new.
 	tags := Set new
+]
+
+{ #category : 'extensions' }
+Package >> internScopedSelector: aSymbol [
+
+	| found |
+	found := self visibleSelectorForSymbol: aSymbol asSymbol.
+	found == aSymbol ifFalse: [ ^ found ].
+
+	^ self defineScopedSelector: aSymbol
 ]
 
 { #category : 'testing' }
@@ -599,13 +671,30 @@ Package >> removeEmptyTags [
 	(self tags select: [ :tag | tag isEmpty ]) do: [ :emptyTag | self removeTag: emptyTag ]
 ]
 
+{ #category : 'extensions' }
+Package >> removeExtensionImport: anExtension [
+
+	self importedExtensions remove: anExtension.
+	anExtension removeUserPackage: self.
+
+	"Now we remove the local aliases to that extension"
+	anExtension scopedSelectors do: [ :e | | localScopedSelector |
+		localScopedSelector := self visibleSelectorForSymbol: e symbol.
+		(anExtension extendedClass includesSelector: localScopedSelector) ifTrue: [
+			self assert: anExtension extendedClass >> localScopedSelector == (anExtension extendedClass >> e).
+			anExtension extendedClass removeSelector: localScopedSelector ]
+	]
+]
+
 { #category : 'removing' }
 Package >> removeFromSystem [
 	"Copy to not remove collection over which we are iterating."
 
 	SourcesManager current deferFlushDuring: [
 			self tags copy do: [ :tag | tag removeFromSystem ].
-			self extensionMethods do: [ :method | method removeFromSystem ] ].
+			self extensionMethods do: [ :method | method removeFromSystem ].
+			self cleanupExtendedBehaviors.
+	].
 
 	self organizer unregisterPackage: self
 ]
@@ -727,6 +816,12 @@ Package >> sanitizeName: aName [
 	^ aName trimBoth
 ]
 
+{ #category : 'extensions' }
+Package >> scopedSelectors [
+	
+	^ scopedSelectors ifNil: [ scopedSelectors := IdentityDictionary new ]
+]
+
 { #category : 'accessing' }
 Package >> selectors [
 
@@ -818,4 +913,16 @@ Package >> tags [
 	"Returns the tags of the receiver"
 
 	^ tags
+]
+
+{ #category : 'extensions' }
+Package >> visibleExtensions [
+
+	^ (self definedClasses select: [ :e | e isKindOf: Extension ]), self importedExtensions
+]
+
+{ #category : 'extensions' }
+Package >> visibleSelectorForSymbol: aSymbol [
+
+	^ self scopedSelectors at: aSymbol asSymbol ifAbsent: [ aSymbol ]
 ]

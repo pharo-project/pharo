@@ -349,6 +349,12 @@ Character >> asLowercase [
 ]
 
 { #category : 'converting' }
+Character >> asSelector [
+	
+	^ self asSymbol
+]
+
+{ #category : 'converting' }
 Character >> asString [
 	^ String with: self
 ]

@@ -140,7 +140,7 @@ InstructionStreamSteppingTest >> testSimulatingAMethodWithHaltHasCorrectContext 
 { #category : 'tests-step through' }
 InstructionStreamSteppingTest >> testStepThroughInAMethodWithMNU [
 
-	| initialContext aContext receiver suspendedProcess return |
+	| initialContext aContext receiver suspendedProcess suspendedContext lastMarked |
 
 	receiver := self classUnderTest new.
 	suspendedProcess := [ receiver callingAMethodWithMNU ] forkAt: Processor activePriority + 1.
@@ -149,10 +149,15 @@ InstructionStreamSteppingTest >> testStepThroughInAMethodWithMNU [
 	[ initialContext method = (self classUnderTest >> #callingAMethodWithMNU) ]
 		whileFalse: [ initialContext := initialContext sender].
 
-	return := suspendedProcess stepToHome: initialContext.
+	suspendedContext := suspendedProcess stepToHome: initialContext.
+
+	[suspendedContext method hasPragmaNamed: #debuggerCompleteToSender]
+		whileTrue: [ 
+			lastMarked := suspendedContext.
+			suspendedContext := suspendedContext sender ].
 
 	"Suspended process should stop in the exception"
-	self assert: return method equals: (self classUnderTest lookupSelector: #doesNotUnderstand:)
+	self assert: lastMarked method equals: (self classUnderTest lookupSelector: #doesNotUnderstand:)
 ]
 
 { #category : 'tests-step through' }

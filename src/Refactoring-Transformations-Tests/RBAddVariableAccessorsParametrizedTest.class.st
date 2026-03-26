@@ -99,3 +99,20 @@ RBAddVariableAccessorsParametrizedTest >> testNewInstanceVariableAccessors [
 		assert: (class parseTreeForSelector: #foo1:)
 		equals: (self parseMethod: 'foo1: anObject foo1 := anObject')
 ]
+
+{ #category : 'tests' }
+RBAddVariableAccessorsParametrizedTest >> testNewInstanceVariableAccessorsSuperclassAlreadyDefines [
+	| refactoring class |
+	refactoring := rbClass
+		               instanceVariable: 'accessor'
+		               class: #RBBasicLintRuleTestData.
+	self executeRefactoring: refactoring.
+	class := refactoring model classNamed: #RBBasicLintRuleTestData.
+	self denyEmpty: refactoring changes changes.
+	self
+		assert: (class parseTreeForSelector: #accessor1)
+		equals: (self parseMethod: 'accessor1 ^accessor').
+	self
+		assert: (class parseTreeForSelector: #accessor:)
+		equals: (self parseMethod: 'accessor: anObject accessor := anObject')
+]

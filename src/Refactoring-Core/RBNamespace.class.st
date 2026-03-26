@@ -713,6 +713,7 @@ RBNamespace >> reparentClasses: aRBClassCollection to: newClass [
 						sharedVariables: aClass classVariableNames;
 						sharedPools: aClass sharedPoolNames;
 						package: aClass packageName;
+						traits: aClass traitComposition;
 						tag: aClass tagName;
 						classSlots: aClass classSide instanceVariableNames ] ]
 ]

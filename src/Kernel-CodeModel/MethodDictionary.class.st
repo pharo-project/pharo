@@ -131,7 +131,6 @@ MethodDictionary >> at: key put: value [
 	array at: index put: value.
 	key flushCache. "flush the vm cache by selector"
 	self fullCheck.
-	value cachePragmas.
 	^ value
 ]
 

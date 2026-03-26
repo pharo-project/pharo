@@ -17,6 +17,8 @@ Class {
 
 { #category : 'visitor' }
 AthensMoveSegment >> accept: aVisitor [
+
+	<ignoreNotImplementedSelectors: #(moveSegment:)>
 	^ aVisitor moveSegment: self
 ]
 

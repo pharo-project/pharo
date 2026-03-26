@@ -719,6 +719,7 @@ BalloonEngine >> registerFill: fill1 and: fill2 [
 { #category : 'drawing' }
 BalloonEngine >> registerFills: fills [
 
+	<ignoreNotImplementedSelectors: #(isAlphaTransform)>
 	| fillIndexList index fillIndex |
 	((colorTransform isNotNil and:[colorTransform isAlphaTransform]) or:[
 		fills anySatisfy: [:any| any isNotNil and:[any isTranslucent]]])

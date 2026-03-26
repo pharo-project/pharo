@@ -314,7 +314,10 @@ EncoderForSistaV1 class >> bindingWriteScanBlockFor: litVarIndex using: scanner 
 
 { #category : 'instruction stream support' }
 EncoderForSistaV1 class >> bytecodeSize: bytecode [
-	"Answer the number of bytes in the bytecode."
+	"Answer the number of bytes in the bytecode.
+	
+	This method does not take extensions into account.
+	Use #instructionsSizeAt:of:"
 	bytecode < 224 ifTrue: [^1].
 	bytecode < 248 ifTrue: [^2].
 	^3

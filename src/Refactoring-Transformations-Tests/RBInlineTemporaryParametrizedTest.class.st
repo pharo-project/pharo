@@ -28,6 +28,15 @@ RBInlineTemporaryParametrizedTest >> testFailureInlineTemporaryBadInterval [
 ]
 
 { #category : 'failure tests' }
+RBInlineTemporaryParametrizedTest >> testFailureInlineTemporaryMultipleRead [
+
+	self shouldFail: (self createRefactoringWithArguments: {
+				 (38 to: 62).
+				 #inlineFoo:.
+				 RBClassDataForRefactoringTest })
+]
+
+{ #category : 'failure tests' }
 RBInlineTemporaryParametrizedTest >> testFailureInlineTemporaryMutlipleAssignment [
 
 	self shouldFail: (self createRefactoringWithArguments: {

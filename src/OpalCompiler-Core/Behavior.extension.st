@@ -16,20 +16,112 @@ Behavior >> compile: code [
 ]
 
 { #category : '*OpalCompiler-Core' }
+Behavior >> compile: sourceCode classified: protocol [
+	"Compile the source code in the context of the receiver and install the result in the receiver's method dictionary under the given protocol (this can be a protocol or a protocol name).
+	Return the selector of the compiled method.
+		
+	The argument sourceCode is either a string or an object that converts to a string or a PositionableStream on an object that converts to a string."
+
+	^ self compile: sourceCode classified: protocol notifying: nil
+]
+
+{ #category : '*OpalCompiler-Core' }
+Behavior >> compile: sourceCode classified: protcol notifying: requestor [
+	 "Return the selector of the compiled method"
+
+	^ self
+		  compile: sourceCode
+		  classified: protcol
+		  withStamp: nil
+		  notifying: requestor
+]
+
+{ #category : '*OpalCompiler-Core' }
+Behavior >> compile: sourceCode classified: protocol withStamp: changeStamp notifying: requestor [
+	"Return the selector of the compiled method"
+
+	^ self
+		  compile: sourceCode
+		  classified: protocol
+		  withStamp: changeStamp
+		  notifying: requestor
+		  logSource: self shouldLogSource
+]
+
+{ #category : '*OpalCompiler-Core' }
+Behavior >> compile: sourceCode classified: protocol withStamp: changeStamp notifying: requestor logSource: logSource [
+	"Return the selector of the compiled method"
+
+	^ self
+		compile: sourceCode
+		classified: protocol
+		withStamp: changeStamp
+		notifying: requestor
+		logSource: logSource
+		recompileDependencies: true
+]
+
+{ #category : '*OpalCompiler-Core' }
+Behavior >> compile: sourceCode classified: protocol withStamp: changeStamp notifying: requestor logSource: logSource recompileDependencies: recompileDependencies [
+	"Return the selector of the compiled method"
+
+	| method compiler ast aliasingSelectors |
+	
+	sourceCode ifEmpty: [ Error signal: 'The source code should not be empty' ].
+	compiler := self compiler
+		            source: sourceCode;
+		            requestor: requestor;
+		            failBlock: (requestor ifNotNil: [ [ ^ nil ] ]);
+		            "no failblock if no requestor""compatibility: permit undeclared if no requestor"permitUndeclared: requestor isNil;
+		            permitFaulty: requestor isNil;
+		            protocol: protocol;
+		            changeStamp: changeStamp;
+		            logged: logSource.
+
+	ast := compiler parse.
+
+	ast sendNodes do: [ :send | send selector: (OCSelectorNode value: (self package visibleSelectorForSymbol: send selector)) ].
+
+	method := compiler install.
+	
+	"Wait! There was maybe an extension with the same name here!
+	If that's the case, we need to mark the extension as a conflict."
+	self selectors
+		select: [ :e | e isScopedSelector and: [ e symbol = method selector ] ]
+		thenDo: [ :selector | selector bindAliasIn: self ].
+		
+	"We are compiling a normal method.
+	We need to alias it locally if superclasses are extended/aliased.
+	If a subclass has a method with the same selector, this should have been aliased before"
+	aliasingSelectors := (self allSuperclasses flatCollect: [ :aSuperclass |
+		                      aSuperclass methodDict keys select: [ :selector |
+			                      selector isScopedSelector and: [ selector asSymbol = ast selector ] ] ]) asSet.
+	aliasingSelectors do: [ :k | self methodDict at: k put: method ].
+
+
+	^ ast selector
+]
+
+{ #category : '*OpalCompiler-Core' }
 Behavior >> compile: selector from: oldClass [
 	"Compile the method associated with selector in the receiver's method dictionary."
 
-	| method newMethod |
+	| method newMethod compiler ast |
 	method := oldClass compiledMethodAt: selector.
-	newMethod := oldClass compiler
+	compiler := oldClass compiler
 		             source: method sourceCode;
 		             priorMethod: method;
 		             class: self;
 		             permitFaulty: true;
-		             "No need to log recompilation in the sources,
-					 	 We are going to reuse the original source pointer."
-		             logged: false;
-		             install.
+		             logged: true.
+	
+	ast := compiler parse.
+
+	ast sendNodes do: [ :send | 
+		send selector: (OCSelectorNode value: (self package visibleSelectorForSymbol: send selector)) ].
+
+	newMethod := compiler install.
+	
 	newMethod sourcePointer: method sourcePointer.
 	selector == newMethod selector ifFalse: [
 		self error: 'selector changed!' ]
@@ -57,6 +149,27 @@ Behavior >> compileAllFrom: oldClass [
 	This validates sourceCode and variable references and forces
 	all methods to use the current bytecode set"
 	oldClass localSelectors do: [:sel | self compile: sel from: oldClass]
+]
+
+{ #category : '*OpalCompiler-Core' }
+Behavior >> compileSilently: sourceCode [
+	"Compile the code and classify the resulting method in the given protocol, leaving no trail in the system log, nor in any change set, nor in the 'recent submissions' list. This should only be used when you know for sure that the compilation will succeed."
+
+	^ self compileSilently: sourceCode classified: 'not defined protocol' notifying: nil
+]
+
+{ #category : '*OpalCompiler-Core' }
+Behavior >> compileSilently: sourceCode classified: protocolName [
+	"Compile the code and classify the resulting method in the given protocol, leaving no trail in the system log, nor in any change set, nor in the 'recent submissions' list. This should only be used when you know for sure that the compilation will succeed."
+
+	^ self compileSilently: sourceCode classified: protocolName notifying: nil
+]
+
+{ #category : '*OpalCompiler-Core' }
+Behavior >> compileSilently: sourceCode classified: protocolName notifying: requestor [
+	"Compile the code and classify the resulting method in the given protocol, leaving no trail in the system log, nor in any change set, nor in the 'recent submissions' list."
+
+	^ self codeChangeAnnouncer suspendAllWhile: [ self compile: sourceCode classified: protocolName notifying: requestor ]
 ]
 
 { #category : '*OpalCompiler-Core' }

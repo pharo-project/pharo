@@ -65,8 +65,8 @@ ReIsValidInstanceVariableName >> initialize [
 { #category : 'accessing' }
 ReIsValidInstanceVariableName >> violationMessageOn: aStream [
 
-	^ aStream
-		  nextPutAll: violator;
-		  nextPutAll:
-			  ' the name musn''t start in uppercase or be a reserved word.'
+	violator ifNotNil: [
+			^ aStream
+				  nextPutAll: violator;
+				  nextPutAll: ' the name musn''t start in uppercase or be a reserved word.' ]
 ]

@@ -450,8 +450,10 @@ RBAbstractClass >> hierarchyDefinesInstanceVariable: aString [
 
 { #category : 'testing' }
 RBAbstractClass >> hierarchyDefinesMethod: aSelector [
-	(self definesMethod: aSelector) ifTrue: [^true].
-	^self subclassRedefines: aSelector
+
+	(self definesMethod: aSelector) ifTrue: [ ^ true ].
+	(self superclassRedefines: aSelector) ifTrue: [ ^ true ].
+	^ self subclassRedefines: aSelector
 ]
 
 { #category : 'testing' }

@@ -94,9 +94,9 @@ PackageOrganizer >> ensurePackageOfExtensionProtocol: aProtocol [
 ]
 
 { #category : 'registration' }
-PackageOrganizer >> ensureTag: aTagName inPackage: aPackageName [
+PackageOrganizer >> ensureTag: aTagOrString inPackage: aPackageOrString [
 
-	^ (self ensurePackage: aPackageName) ensureTag: aTagName
+	^ (self ensurePackage: aPackageOrString) ensureTag: aTagOrString
 ]
 
 { #category : 'accessing' }

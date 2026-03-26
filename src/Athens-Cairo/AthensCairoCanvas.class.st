@@ -456,6 +456,8 @@ AthensCairoCanvas >> visitCloseSegment: closeSegment [
 
 { #category : 'path segments visitor' }
 AthensCairoCanvas >> visitCubicSegment: anAthensCubicSegment [
+
+	<ignoreNotImplementedSelectors: #(curveToX:Y:viaX:Y:andX:Y:)>
 	|  destination controlPoint controlPoint2 |
 	destination := anAthensCubicSegment to.
 	controlPoint := anAthensCubicSegment via1.
@@ -479,6 +481,8 @@ AthensCairoCanvas >> visitMoveSegment: mov [
 
 { #category : 'path segments visitor' }
 AthensCairoCanvas >> visitQuadSegment: anAthensCubicSegment [
+
+	<ignoreNotImplementedSelectors: #(curveToX:Y:viaX:Y:)>
 	| destination controlPoint |
 	destination := anAthensCubicSegment to.
 	controlPoint := anAthensCubicSegment via.

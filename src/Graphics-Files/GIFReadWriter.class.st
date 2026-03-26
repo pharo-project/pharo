@@ -45,7 +45,7 @@ Class {
 		'comment'
 	],
 	#classVars : [
-		'Extension',
+		'GIFExtension',
 		'ImageSeparator',
 		'Terminator'
 	],
@@ -80,7 +80,7 @@ GIFReadWriter class >> exampleAnim [
 GIFReadWriter class >> initialize [
 
 	ImageSeparator := $, asInteger.
-	Extension := $! asInteger.
+	GIFExtension := $! asInteger.
 	Terminator := $; asInteger
 ]
 
@@ -405,7 +405,7 @@ GIFReadWriter >> readBody [
 			ifFalse:
 				[ "If it's not actual image data, perhaps
 					it's an Extension of some kind (there can be several)"
-					block = Extension
+					block = GIFExtension
 						ifTrue: [
 							frame ifNil: [ frame := AnimatedImageFrame new ].
 							self readExtensionBlock: block withFrame: frame ]
@@ -677,7 +677,7 @@ GIFReadWriter >> writeGCEForFrame: anAnimatedImageFrame [
 	packedByte := self writeDisposal: anAnimatedImageFrame disposal.
 	transparentIndex ifNotNil: [ packedByte := packedByte + 1 ].
 	self
-		nextPut: Extension;
+		nextPut: GIFExtension;
 		nextPutAll: #[249 4];
 		nextPut: packedByte;
 		writeWord: nextDelay // 10;
@@ -714,7 +714,7 @@ GIFReadWriter >> writeNetscapeExtension [
 	"Writes a GIF Application Extension corresponding
 	to the NETSCAPE2.0 version, which specifies the loopCount."
 	self
-		nextPut: Extension;
+		nextPut: GIFExtension;
 		nextPut: 255; "Indicates Application Extension"
 		nextPut: 11; "Indicates how many bytes follow, almost always 11"
 		nextPutAll: 'NETSCAPE2.0' asByteArray;

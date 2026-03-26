@@ -290,6 +290,12 @@ ShiftClassInstaller >> oldClass: anObject [
 	builder oldClass: anObject
 ]
 
+{ #category : 'accessing' }
+ShiftClassInstaller >> packageOrganizer [
+
+	^ builder installingEnvironment organization
+]
+
 { #category : 'building' }
 ShiftClassInstaller >> updateBindings: aBinding of: newClass [
 	newClass methods do: [ :e | e classBinding: aBinding ]
@@ -298,5 +304,9 @@ ShiftClassInstaller >> updateBindings: aBinding of: newClass [
 { #category : 'notifications' }
 ShiftClassInstaller >> updatePackage: aClass [
 	"If the package is nil we leave the class unclassified"
-	builder package ifNotNil: [ :package | aClass package: package tag: builder tag ]
+	builder package ifNotNil: [ :package | 
+		((self packageOrganizer
+			ensurePackage: package)
+				ensureTag: builder tag)
+					addClass: aClass ]
 ]

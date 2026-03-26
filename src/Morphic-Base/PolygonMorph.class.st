@@ -1282,6 +1282,8 @@ PolygonMorph >> intersectionsWith: aRectangle [
 { #category : 'geometry' }
 PolygonMorph >> intersects: aRectangle [
 	"Answer whether any of my segments intersects aRectangle, which is in World coordinates."
+	
+	<ignoreNotImplementedSelectors: #(intersectsLineFrom:to:)>
 	| rect |
 	(super intersects: aRectangle) ifFalse: [ ^false ].
 	rect := self bounds: aRectangle in: self world.

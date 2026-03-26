@@ -325,8 +325,8 @@ RBClass >> tagName: anObject [
 
 { #category : 'accessing' }
 RBClass >> traitComposition [
-	
-	^ traitComposition
+
+	^ traitComposition ifNil: [ TaEmptyComposition new ]
 ]
 
 { #category : 'accessing' }

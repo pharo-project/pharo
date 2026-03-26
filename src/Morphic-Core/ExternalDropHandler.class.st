@@ -35,6 +35,8 @@ ExternalDropHandler class >> cleanUp [
 
 { #category : 'accessing' }
 ExternalDropHandler class >> defaultHandler [
+
+	<ignoreNotImplementedSelectors: #(edit)>
 	DefaultHandler ifNil: [DefaultHandler := ExternalDropHandler type: nil extension: nil action: [:dropStream | dropStream edit]].
 	^DefaultHandler
 ]
