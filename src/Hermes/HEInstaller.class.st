@@ -224,38 +224,41 @@ HEInstaller >> newUndeclaredVariables [
 ]
 
 { #category : 'installing methods' }
-HEInstaller >> rebuildMethod: aMethod into: aClass [
+HEInstaller >> rebuildMethod: hermesMethod into: aClass [
 
 	| newMethod literalSpace extendedEnvironment |
-	(self shouldBuildMethod: aMethod in: aClass) ifFalse: [ ^ self ].
+	(self shouldBuildMethod: hermesMethod in: aClass) ifFalse: [ ^ self ].
 
 	extendedEnvironment := HEExtendedEnvironment new.
 	extendedEnvironment inner: environment.
 	extendedEnvironment newClass: aClass.
-	extendedEnvironment newSelector: aMethod name.
+	extendedEnvironment newSelector: hermesMethod name.
 
 	newMethod := CompiledMethod
 		             basicNew:
-		             aMethod bytecode size + CompiledMethod trailerSize
-		             header: (aMethod headerFor: extendedEnvironment).
+		             hermesMethod bytecode size + CompiledMethod trailerSize
+		             header: (hermesMethod headerFor: extendedEnvironment).
 
 	extendedEnvironment newMethod: newMethod.
 
-	aMethod literals doWithIndex: [ :literal :idx |
+	hermesMethod literals doWithIndex: [ :literal :idx |
 		newMethod
 			literalAt: idx
 			put: (literal asLiteralIn: extendedEnvironment) ].
 
 	newMethod classBinding: aClass binding.
-	literalSpace := aMethod literals size + 1 * Smalltalk wordSize.
+	literalSpace := hermesMethod literals size + 1 * Smalltalk wordSize.
 
-	aMethod bytecode doWithIndex: [ :e :idx |
+	hermesMethod bytecode doWithIndex: [ :e :idx |
 		newMethod at: idx + literalSpace put: e ].
 
 	aClass
-		addAndClassifySelector: aMethod name
+		addAndClassifySelector: hermesMethod name
 		withMethod: newMethod
-		inProtocol: aMethod protocol
+		inProtocol: hermesMethod protocol.
+	
+	"Move later to a common method installer"
+	newMethod cachePragmas.
 ]
 
 { #category : 'reporting undeclared' }

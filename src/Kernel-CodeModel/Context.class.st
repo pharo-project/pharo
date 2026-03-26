@@ -548,7 +548,8 @@ Context >> doPrimitive: primitiveIndex method: meth receiver: aReceiver args: ar
 	 arguments are given as arguments to this message. If successful, push result and return
 	 resuming context, else ^ {errCode, PrimitiveFailToken}. Any primitive which provokes
 	 execution needs to be intercepted and simulated to avoid execution running away."
-
+	<ignoreNotImplementedSelectors: #(tryInvokeWithArguments: primitiveEnterCriticalSectionOnBehalfOf: primitiveTestAndSetOwnershipOfCriticalSectionOnBehalfOf:)>
+	
 	| value |
 	"Judicious use of primitive 19 (a null primitive that doesn't do anything) prevents
 	 the debugger from entering various run-away activities such as spawning a new
@@ -705,6 +706,8 @@ Context >> executedPC [
 Context >> failPrimitiveWith: maybePrimFailToken [
 	"The receiver is a freshly-created context on a primitive method.  Skip the callPrimitive:
 	 bytecode and store the primitive fail code if there is one and the method consumes it."
+	
+	<ignoreNotImplementedSelectors: #(skipCallPrimitive)>
 	self skipCallPrimitive.
 	((self isPrimFailToken: maybePrimFailToken)
 	  and: [method encoderClass isStoreAt: pc in: method]) ifTrue:
@@ -1278,12 +1281,12 @@ Context >> printOn: aStream [
 	"And the selector"
 	aStream nextPutAll: '>>'.
 	selector := self selector.
-	aStream nextPutAll: selector.
+	aStream nextPutAll: selector asString.
 
 	"Handle #doesNotUnderstand:"
 	selector = #doesNotUnderstand: ifFalse: [ ^ self ].
 	aStream space.
-	(self tempAt: 1) selector printOn: aStream
+	(self tempAt: 1) selector asString printOn: aStream
 ]
 
 { #category : 'printing' }

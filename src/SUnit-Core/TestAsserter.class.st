@@ -616,6 +616,18 @@ TestAsserter >> should: aBlock raise: anExceptionalEvent whoseDescriptionInclude
 ]
 
 { #category : 'asserting' }
+TestAsserter >> should: aBlock raise: anExceptionalEvent with: errorVerifyingBlock [
+	"To test that a particular exception is raised during the execution of a Block"
+
+	<debuggerCompleteToSender>
+	[
+		aBlock value.
+		self fail ]
+		on: anExceptionalEvent
+		do: errorVerifyingBlock
+]
+
+{ #category : 'asserting' }
 TestAsserter >> should: aBlock raise: anException withExceptionDo: anotherBlock [
 	<debuggerCompleteToSender>
 	^self assert: (self executeShould: aBlock inScopeOf: anException withExceptionDo: anotherBlock)

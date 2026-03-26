@@ -62,7 +62,7 @@ RBExtractToTemporaryRefactoring >> applicabilityPreconditions [
 	^ {
 		  (ReDefinesSelectorsCondition new definesSelectors: (Array with: selector) in: class).
 		  (ReIsValidInstanceVariableName new name: newVariableName).
-		  (ReLocalNameConflictCondition class: class variableName: newVariableName parseTree: parseTree) }
+		  (ReLocalNameConflictCondition class: class variableName: newVariableName definingNode: selectedParseTree parseTree: parseTree) }
 ]
 
 { #category : 'preconditions' }

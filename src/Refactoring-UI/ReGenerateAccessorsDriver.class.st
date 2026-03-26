@@ -57,8 +57,11 @@ ReGenerateAccessorsDriver >> scopeInstanceSide: aBoolean [
 	scopeInstanceSide := aBoolean
 ]
 
-{ #category : 'configuration' }
-ReGenerateAccessorsDriver >> selectedVariables: aCollection [
+{ #category : 'initialization' }
+ReGenerateAccessorsDriver >> scopes: scopesList scopeInstanceSide: aBoolean selectedVariables: aCollection [
 
-	selectedVariables := aCollection
+	scopeInstanceSide := aBoolean.
+	selectedVariables := aCollection.
+	scopes := scopesList.
+	model := self refactoringScopeOn: scopesList first
 ]

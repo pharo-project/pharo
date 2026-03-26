@@ -278,6 +278,7 @@ FFICallbackArgumentReader >> stackIntegerType [
 
 { #category : 'accessing' }
 FFICallbackArgumentReader >> stackPointer [
+	<ignoreNotImplementedSelectors: #(stackp)>
 	^ callbackContext stackp
 ]
 

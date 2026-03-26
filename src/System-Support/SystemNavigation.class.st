@@ -214,7 +214,7 @@ SystemNavigation >> allReferencesToBinding: aVariablesBinding [
 SystemNavigation >> allSelectorsStartingWith: aString do: aBlock [
 
 	Symbol selectorTable do: [ :e |
-		(e beginsWith: aString)
+		(e asString beginsWith: aString)
 			ifTrue: [ aBlock value: e  ] ]
 ]
 

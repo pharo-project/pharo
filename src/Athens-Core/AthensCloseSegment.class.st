@@ -11,6 +11,8 @@ Class {
 
 { #category : 'visitor' }
 AthensCloseSegment >> accept: aVisitor [
+
+	<ignoreNotImplementedSelectors: #(closeSegment:)>
 	^ aVisitor closeSegment: self
 ]
 

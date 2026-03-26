@@ -83,7 +83,9 @@ DebugPointTest >> tearDown [
 	dp ifNotNil: [ dp remove ].
 	dp2 ifNotNil: [ dp2 remove ].
 
-	DummyTestClass removeSelector: #dummy.
+	(DummyTestClass includesSelector: #dummy)
+		ifTrue: [ DummyTestClass removeSelector: #dummy ].
+
 	cls ifNotNil: [ cls isObsolete ifFalse: [ cls removeFromSystem ] ].
 	self packageOrganizer removePackage: 'DummyPackage'.
 	super tearDown

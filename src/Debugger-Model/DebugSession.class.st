@@ -226,7 +226,7 @@ DebugSession >> isInterruptedContextATest [
 { #category : 'testing' }
 DebugSession >> isInterruptedContextDoesNotUnderstand [
 
-	^ self interruptedContext selector == #doesNotUnderstand:
+	^ self interruptedContext selector == #handleDoesNotUnderstand:to:
 ]
 
 { #category : 'context' }

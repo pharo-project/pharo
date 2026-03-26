@@ -54,6 +54,12 @@ RBLintRuleTestData class >> someOtherFooMethod [
 ]
 
 { #category : 'accessing' }
+RBLintRuleTestData >> accessor [
+
+	^ nil
+]
+
+{ #category : 'accessing' }
 RBLintRuleTestData >> checkClass: aSmalllintContext [
 ]
 
@@ -157,6 +163,8 @@ RBLintRuleTestData >> run [
 
 { #category : 'accessing' }
 RBLintRuleTestData >> runOnEnvironment: anEnvironment [
+
+	<ignoreNotImplementedSelectors: #(printOn:onEnvironment:)>
 	^Object printOn: self onEnvironment: anEnvironment
 ]
 

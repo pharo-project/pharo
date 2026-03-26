@@ -28,7 +28,8 @@ Class {
 		'command',
 		'selectedRefactorings',
 		'diffPresenter',
-		'existsChanges'
+		'existsChanges',
+		'buttonOk'
 	],
 	#category : 'SystemCommands-RefactoringSupport',
 	#package : 'SystemCommands-RefactoringSupport'
@@ -128,19 +129,32 @@ SycRefactoringPreviewPresenter >> command: aCommand [
 { #category : 'initialization' }
 SycRefactoringPreviewPresenter >> connectPresenters [
 
-	table 
-		addShortcutWith: [ :action | action 
-			shortcutKey: Character backspace asKeyCombination;
-			action: [ self toggleSelectionOf: table selectedItem ] ].
+	table addShortcutWith: [ :action |
+			action
+				shortcutKey: Character backspace asKeyCombination;
+				action: [ self toggleSelectionOf: table selectedItem ] ].
 
-	{ table . scopeDropList . diffPresenter } do: [ :each |
-		each
-			addShortcutWith: [ :action | action 
-				shortcutKey: Character cr asKeyCombination;
-				action: [ self owner triggerOkAction; close ] ];
-			addShortcutWith: [ :action | action 
-				shortcutKey: Character escape asKeyCombination;
-				action: [ self owner triggerCancelAction; close ] ] ]
+	{
+		table.
+		scopeDropList.
+		diffPresenter } do: [ :each |
+			each
+				addShortcutWith: [ :action |
+						action
+							shortcutKey: Character cr asKeyCombination;
+							action: [
+									self owner
+										triggerOkAction;
+										close ] ];
+				addShortcutWith: [ :action |
+						action
+							shortcutKey: Character escape asKeyCombination;
+							action: [
+									self owner
+										triggerCancelAction;
+										close ] ] ].
+
+	buttonOk action: [ self accept ]
 ]
 
 { #category : 'accessing' }
@@ -173,18 +187,17 @@ SycRefactoringPreviewPresenter >> initializeDialogWindow: aDialogWindowPresenter
 
 { #category : 'initialization - deprecated' }
 SycRefactoringPreviewPresenter >> initializePresenter [
-	super initializePresenter.
-	table
-		whenSelectionChangedDo: [ :selection |
-			selection selectedItem ifNotNil: [
-				self buildDiffFor: selection selectedItem ] ].
 
-	table
-		whenActivatedDo: [ :selectedElement |
-			self toggleSelectionOf: selectedElement widget selection selectedItem ].
-	
-	scopeDropList
-		whenSelectedItemChangedDo: [ :scope | self updateChanges ]
+	super initializePresenter.
+	table whenSelectionChangedDo: [ :selection | selection selectedItem ifNotNil: [ self buildDiffFor: selection selectedItem ] ].
+
+	table whenActivatedDo: [ :selectedElement | self toggleSelectionOf: selectedElement widget selection selectedItem ].
+
+	scopeDropList whenSelectedItemChangedDo: [ :scope | self updateChanges ].
+
+	buttonOk := self newButton
+		            label: 'Ok';
+		            icon: (self iconNamed: #smallOk)
 ]
 
 { #category : 'initialization' }

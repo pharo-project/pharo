@@ -287,11 +287,12 @@ RBInlineMethodParametrizedTest >> testFailureReturn [
 RBInlineMethodParametrizedTest >> testInlineMethod [
 	| refactoring |
 	refactoring := self createRefactoringWithArguments:
-		{ (451 to: 500) .#sentNotImplementedInApplication . RBBasicLintRuleTestData class }.
+		{ (500 to: 549) .#sentNotImplementedInApplication . RBBasicLintRuleTestData class }.
 
 	self executeRefactoring: refactoring.
 
 	self assert: ((refactoring model metaclassNamed: #RBBasicLintRuleTestData) parseTreeForSelector: #sentNotImplementedInApplication) equals: (self parseMethod: 'sentNotImplementedInApplication
+									<ignoreNotImplementedSelectors: #(isItem:in:)>
 									| detector |
 									detector := self new.
 									detector name: ''Messages sent but not implemented in application''.

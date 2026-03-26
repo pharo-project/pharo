@@ -388,9 +388,9 @@ ClassDescription >> ensureProtocol: aProtocol [
 ClassDescription >> extendingPackages [
 	"the extending packages of a class are the packages that extend it."
 
-	^ (self localMethods , self classSide localMethods
-		   select: [ :each | each isExtension ]
-		   thenCollect: [ :each | each extensionPackage ]) asIdentitySet
+	^ (self localMethods , self classSide localMethods select: [ :each | each isExtension ])
+		  flatCollect: [ :each | each extensionPackages ]
+		  as: IdentitySet
 ]
 
 { #category : 'protocols' }
@@ -726,7 +726,8 @@ ClassDescription >> package: aPackage [
 { #category : 'accessing - packages' }
 ClassDescription >> package: aPackage tag: aTag [
 
-	^ (self packageOrganizer ensureTag: aTag inPackage: aPackage) addClass: self
+	self deprecated: 'Please use directly the package organizer'.
+	^ ((self packageOrganizer ensurePackage: aPackage) ensureTag: aTag) addClass: self
 ]
 
 { #category : 'accessing - packages' }
@@ -904,7 +905,7 @@ ClassDescription >> removeSelector: selector [
 
 	<reflection: 'Class structural modification - Selector/Method modification'>
 	| method origin |
-	method := self compiledMethodAt: selector ifAbsent: [ ^ nil ].
+	method := self compiledMethodAt: selector.
 	origin := method origin.
 
 	"Save the protocol in the properties so that method can still answer their protocol after been removed."

@@ -166,6 +166,9 @@ MCMethodDefinitionTest >> testLoadAndUnload [
 MCMethodDefinitionTest >> testLoadInvalidCodeInLegacyMode [
 
 	| definition mockClass |
+	
+	<ignoreNotImplementedSelectors: #( kjahs87 )>
+	
 	testingEnvironment
 		at: #NoSuchClass
 		put: (mockClass := self mockClass).

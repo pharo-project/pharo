@@ -299,6 +299,12 @@ MCClassDefinition >> isClassDefinition [
 	^ true
 ]
 
+{ #category : 'testing' }
+MCClassDefinition >> isExtensionDefinition [
+
+	^ false
+]
+
 { #category : 'printing' }
 MCClassDefinition >> kindOfSubclass [
 	type = #normal ifTrue: [^ ' subclass: '].

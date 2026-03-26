@@ -18,7 +18,9 @@ RGMethodDefinitionTest >> runCase [
 { #category : 'running' }
 RGMethodDefinitionTest >> tearDown [
 
-	self class removeSelectorSilently: #foo.
+	(self class includesSelector: #foo)
+		ifTrue: [ self class removeSelectorSilently: #foo ].
+
 	self class removeProtocol: 'test'.
 	super tearDown
 ]

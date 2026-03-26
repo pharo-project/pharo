@@ -123,6 +123,7 @@ InstructionStream >> interpretNext3ByteSistaV1Instruction: bytecode for: client 
 	 This method handles the three-byte codes.
 	 For a table of the bytecode set, see EncoderForSistaV1's class comment."
 
+	<ignoreNotImplementedSelectors: #( jumpOrPopIfNotInstanceOf:distance: )>
 	| method byte2 byte3 |
 	method := self compiledCode.
 	byte2 := method at: pc.
@@ -340,7 +341,7 @@ InstructionStream >> scanFor: scanBlock [
 	[pc <= end] whileTrue: 
 		[(scanBlock value: (byte := method at: pc)) ifTrue:
 			[^true].
-		 pc := pc + (encoderClass bytecodeSize: byte)].
+		 pc := pc + (encoderClass instructionSizeAt: pc of: method)].
 	^false
 ]
 

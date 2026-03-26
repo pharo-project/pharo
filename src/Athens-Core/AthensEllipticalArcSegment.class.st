@@ -22,5 +22,7 @@ Class {
 
 { #category : 'visitor' }
 AthensEllipticalArcSegment >> accept: aVisitor [
+
+	<ignoreNotImplementedSelectors: #(ellipticalArcSegment:)>
 	^ aVisitor ellipticalArcSegment: self
 ]

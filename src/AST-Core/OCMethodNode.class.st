@@ -613,7 +613,7 @@ OCMethodNode >> selector [
 { #category : 'accessing' }
 OCMethodNode >> selector: aSelector [
 	keywordsPositions := nil.
-	selector := aSelector asSymbol
+	selector := aSelector
 ]
 
 { #category : 'initialization' }

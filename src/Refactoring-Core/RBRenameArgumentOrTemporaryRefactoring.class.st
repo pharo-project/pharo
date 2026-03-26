@@ -79,7 +79,7 @@ RBRenameArgumentOrTemporaryRefactoring >> applicabilityPreconditions [
 RBRenameArgumentOrTemporaryRefactoring >> applicabilityPreconditionsIndependentOfTheNewName [
 	"Those are the preconditions that should be checked before even asking to the user a new name for the temporary."
 
-	^ { (RBCondition definesSelector: selector in: class) }
+	^ { (ReDefinesSelectorsCondition new definesSelectors: (Array with: selector) in: class) }
 ]
 
 { #category : 'preconditions' }
@@ -87,8 +87,12 @@ RBRenameArgumentOrTemporaryRefactoring >> applicabilityPreconditionsOfTheNewName
 	"Those are the preconditions that should be checked after asking to the user a new name for the temporary."
 
 	^ {
-		  (RBCondition isValidInstanceVariableName: newName for: class).
-		  (ReLocalNameConflictCondition class: class variableName: newName parseTree: parseTree) }
+		  (ReIsValidInstanceVariableName name: newName).
+		  (ReLocalNameConflictCondition
+			   class: class
+			   variableName: newName
+			   definingNode: definingNode
+			   parseTree: parseTree) } 
 ]
 
 { #category : 'preconditions' }

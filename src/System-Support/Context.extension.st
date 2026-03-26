@@ -74,10 +74,21 @@ Context >> printDetails: stream [
 	stream
 		tab;
 		nextPutAll: 'Receiver: '.
-	errorMessage := '<<error during printing>>'.
+	errorMessage := '<<error during printing: '.
 	stream nextPutAll: ([ receiver printStringLimitedTo: 90 ]
 			 on: Exception
-			 do: [ errorMessage ]).
+			 do: [ :err | errorMessage , err messageText asString , '>>' ]).
+	stream
+		cr;
+		tab;
+		nextPutAll: 'Receiver''s instance variables: ';
+		cr.
+	[
+		receiver class allInstVarNames
+			ifEmpty: [ stream nextPutAll: (receiver printStringLimitedTo: 90) ]
+			ifNotEmpty: [ receiver longPrintOn: stream limitedTo: 80 indent: 2 ] ]
+		on: Exception
+		do: [ :err | stream nextPutAll: errorMessage , err messageText asString , '>>' ].
 
 	stream
 		cr;
@@ -86,23 +97,8 @@ Context >> printDetails: stream [
 		cr.
 	string := [ (self tempsAndValuesLimitedTo: 80 indent: 2) padRightTo: 1 with: $x ]
 		          on: Exception
-		          do: [ :ex | '<<error during printing: ' , ex messageText asString , '>>' ].
+		          do: [ :ex | errorMessage , ex messageText asString , '>>' ].
 	stream nextPutAll: string.
-
-	stream
-		cr;
-		tab;
-		nextPutAll: 'Receiver''s instance variables: ';
-		cr.
-	receiver class allInstVarNames
-		ifEmpty: [
-				stream nextPutAll: ([ receiver printStringLimitedTo: 90 ]
-						 on: Exception
-						 do: [ errorMessage ]) ]
-		ifNotEmpty: [
-				[ receiver longPrintOn: stream limitedTo: 80 indent: 2 ]
-					on: Exception
-					do: [ stream nextPutAll: errorMessage ] ].
 	stream cr
 ]
 

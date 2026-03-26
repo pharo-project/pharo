@@ -6,12 +6,21 @@ Class {
 	#superclass : 'ReClassCondition',
 	#instVars : [
 		'variableName',
+		'definingNode',
 		'parseTree'
 	],
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',
 	#tag : 'Conditions'
 }
+
+{ #category : 'instance creation' }
+ReLocalNameConflictCondition class >> class: aClass variableName: aNewName definingNode: aNode parseTree: aParseTree [
+    ^ self new
+        class: aClass;
+        variableName: aNewName definingNode: aNode parseTree: aParseTree;
+        yourself
+]
 
 { #category : 'instance creation' }
 ReLocalNameConflictCondition class >> class: aRBAbstractClass variableName: aVariableName parseTree: aParseTree [ 
@@ -29,14 +38,24 @@ ReLocalNameConflictCondition class >> classNamed: aString inModel: aRBNamespace 
 { #category : 'checking' }
 ReLocalNameConflictCondition >> check [
 
-    (parseTree whichUpNodeDefines: variableName) ifNotNil: [
+    (definingNode exactNodeDefines: variableName) ifTrue: [
         violators addIfNotPresent: variableName ].
 
-    (parseTree allDefinedVariables includes: variableName) ifTrue: [
-        violators addIfNotPresent: variableName ].
+    (parseTree withAllChildren anySatisfy: [ :node |
+        (node exactNodeDefines: variableName) and: [
+            (node withAllChildren includes: definingNode) 
+            or: [ definingNode withAllChildren includes: node ] ] ]) 
+        ifTrue: [ violators addIfNotPresent: variableName ].
 
     ^ violators isEmpty
+]
 
+{ #category : 'instance creation' }
+ReLocalNameConflictCondition >> variableName: aNewName definingNode: aNode parseTree: aParseTree [
+
+	variableName := aNewName.
+	definingNode := aNode.
+	parseTree := aParseTree
 ]
 
 { #category : 'instance creation' }

@@ -269,6 +269,7 @@ ComplexBorderStyle >> computeRaisedColors [
 ComplexBorderStyle >> drawLineFrom: startPoint to: stopPoint on: aCanvas [
 	"Here we're using the balloon engine since this is much faster than BitBlt w/ brushes."
 
+	<ignoreNotImplementedSelectors: #(transformBy:during:)>
 	| delta length dir cos sin tfm w h w1 w2 h1 h2 fill |
 	width isPoint
 		ifTrue:
@@ -309,6 +310,7 @@ ComplexBorderStyle >> drawLineFrom: startPoint to: stopPoint on: aCanvas [
 { #category : 'drawing' }
 ComplexBorderStyle >> drawPolyPatchFrom: startPoint to: stopPoint on: aCanvas usingEnds: endsArray [
 
+	<ignoreNotImplementedSelectors: #(transformBy:during:)>
 	| cos sin tfm fill dir fsOrigin fsDirection points x y |
 	dir := (stopPoint - startPoint) normalized.
 	"Compute the rotational transform from (0@0) -> (1@0) to startPoint -> stopPoint"

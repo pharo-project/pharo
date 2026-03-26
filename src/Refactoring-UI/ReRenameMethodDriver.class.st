@@ -187,7 +187,7 @@ ReRenameMethodDriver >> requestNewMessage [
 		              arguments: parameters.
 	dialog := self requestDialogWith: methodName.
 	
-	dialog ifNil: [ shouldEscape := true. ^ self ].
+	dialog cancelled ifTrue: [ shouldEscape := true. ^ self ].
 
 	^ dialog methodName
 ]
@@ -201,10 +201,10 @@ ReRenameMethodDriver >> runRefactoring [
 	failedConditions := OrderedCollection empty.
 	[
 		newMessage := self requestNewMessage.
+		shouldEscape ifTrue: [ ^ self ].
 		self configureMessage.
 
 		refactoring isMethodDefinitionUnchanged ifTrue: [ ^ self ].
-		shouldEscape ifTrue: [ ^ self ]. "What is the use of this variable: shouldEscape?"
 
 		failedConditions := refactoring failedApplicabilityPreconditions.
 		failedConditions do: [ :cond |
@@ -212,7 +212,6 @@ ReRenameMethodDriver >> runRefactoring [
 					message: cond errorString;
 					title: 'Invalid method name';
 					openModal ] ] doWhileFalse: [ failedConditions isEmpty ].
-
 	refactoring failedBreakingChangePreconditions ifEmpty: [ self applyChanges ] ifNotEmpty: [ self handleBreakingChanges ]
 ]
 

@@ -37,6 +37,8 @@ FFIFloat32 >> basicHandle: aHandle at: index put: value [
 
 { #category : 'accessing' }
 FFIFloat32 >> callbackReturnOn: callbackContext for: aFloat [
+
+	<ignoreNotImplementedSelectors: #( floatResult: singleFloatResult: )>
 	^ FFIArchitecture forCurrentArchitecture returnSingleFloatsAsDoubles
 		ifTrue: [ callbackContext floatResult: aFloat ]
 		ifFalse: [ callbackContext singleFloatResult: aFloat ]

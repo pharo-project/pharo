@@ -38,16 +38,20 @@ RBInlineTemporaryRefactoring class >> model: aRBSmalltalk inline: anInterval fro
 ]
 
 { #category : 'preconditions' }
-RBInlineTemporaryRefactoring >> applicabilityPreconditions [ 
-	
+RBInlineTemporaryRefactoring >> applicabilityPreconditions [
+
 	^ {
-		(ReDefinesSelectorsCondition new definesSelectors: (Array with: selector) in: class).
-		(ReIsValidInstanceVariableName new name: assignmentNode variable name).
-		(ReSingleAssignmentCondition new
-			variableName: assignmentNode variable name; definingNode: sourceTree).
-		(ReVariablesNotReadBeforeWrittenCondition new 
-			variables: {assignmentNode variable name}; subtree: sourceTree)
-	}
+		  (ReDefinesSelectorsCondition new definesSelectors: (Array with: selector) in: class).
+		  (ReIsValidInstanceVariableName new name: assignmentNode variable name).
+		  (ReSingleAssignmentCondition new
+			   variableName: assignmentNode variable name;
+			   definingNode: sourceTree).
+		  (ReSingleReadCondition new
+			   variableName: assignmentNode variable name;
+			   definingNode: sourceTree).
+		  (ReVariablesNotReadBeforeWrittenCondition new
+			   variables: { assignmentNode variable name };
+			   subtree: sourceTree) }
 ]
 
 { #category : 'transforming' }

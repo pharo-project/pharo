@@ -618,7 +618,7 @@ FilesSourcesManager >> writeComment: aString stamp: aStamp of: aClass [
 { #category : 'logging' }
 FilesSourcesManager >> writeMethodRemoved: aMethod from: aBehavior [
 
-	self logChange: aBehavior name , ' removeSelector: #' , aMethod selector
+	self logChange: aBehavior name , ' removeSelector: #' , aMethod selector asString
 ]
 
 { #category : 'logging' }

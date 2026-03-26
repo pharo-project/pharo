@@ -384,6 +384,12 @@ CompiledCode >> extensionPackage [
 ]
 
 { #category : 'accessing' }
+CompiledCode >> extensionPackages [
+
+	^ { self extensionPackage }
+]
+
+{ #category : 'accessing' }
 CompiledCode >> flag [
 	"Answer the user-level flag bit"
 
