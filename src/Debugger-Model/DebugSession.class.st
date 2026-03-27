@@ -514,11 +514,12 @@ DebugSession >> stepInto [
 DebugSession >> stepInto: aContext [
 	"Send the selected message in selectedContext, and take control in
 	the method invoked to allow further step or send."
-
-	(self isContextPostMortem: aContext) ifTrue: [^ self].
+	
+	(self isContextPostMortem: aContext) ifTrue: [ ^ self ].
 
 	interruptedProcess step: aContext.
-	self updateContextTo: (self stepToFirstInterestingBytecodeIn: interruptedProcess).
+	interruptedProcess suspendedContext isDead ifTrue: [ self error: 'Cannot step into dead context' ].
+	self updateContextTo: interruptedProcess suspendedContext.
 
 	self triggerEvent: #stepInto
 ]
