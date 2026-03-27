@@ -361,6 +361,13 @@ InstructionStream >> willJump [
 ]
 
 { #category : 'interpreting' }
+InstructionStream >> willJumpIfFalse [
+	"Answer whether the next bytecode is a jump-if-false."
+
+	^ self method encoderClass isBranchIfFalseAt: pc in: self method
+]
+
+{ #category : 'interpreting' }
 InstructionStream >> willJumpIfTrue [
 	"Answer whether the next bytecode is a jump-if-false."
 

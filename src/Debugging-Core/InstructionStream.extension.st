@@ -74,13 +74,6 @@ InstructionStream >> thirdByte [
 ]
 
 { #category : '*Debugging-Core' }
-InstructionStream >> willJumpIfFalse [
-	"Answer whether the next bytecode is a jump-if-false."
-
-	^ self method encoderClass isBranchIfFalseAt: pc in: self method
-]
-
-{ #category : '*Debugging-Core' }
 InstructionStream >> willJustPop [
 
 	^ self method encoderClass isJustPopAt: pc in: self method
