@@ -180,6 +180,13 @@ OnlineSourceDebugInfo >> isSourceBlockCreation: aBytecodePC [
 ]
 
 { #category : 'api' }
+OnlineSourceDebugInfo >> isSourceJump: aBytecodePC [
+	"Returns if the next bytecode will jump"
+
+	^ (InstructionStream on: compiledCode pc: aBytecodePC) willJump
+]
+
+{ #category : 'api' }
 OnlineSourceDebugInfo >> isSourceReturn: aBytecodePC [
 
 	"We should stop at all returns inserted by the compiler in the bytecode.
@@ -250,8 +257,7 @@ OnlineSourceDebugInfo >> shouldStopAt: aBytecodePC [
 
 	^ (self isSourceSend: aBytecodePC) or: [
 			  (self isSourceReturn: aBytecodePC) or: [
-				  (self isSourceStore: aBytecodePC)
-						or: [ self isSourceBlockCreation: aBytecodePC ] ] ]
+				  (self isSourceStore: aBytecodePC) or: [ (self isSourceBlockCreation: aBytecodePC) or: [ self isSourceJump: aBytecodePC ] ] ] ]
 ]
 
 { #category : 'accessing' }

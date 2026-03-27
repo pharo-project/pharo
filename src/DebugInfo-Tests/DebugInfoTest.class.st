@@ -110,6 +110,12 @@ DebugInfoTest >> methodWithOptimizedSend [
 ]
 
 { #category : 'tests - shouldStopAt' }
+DebugInfoTest >> methodWithRepeat [
+
+	[1] repeat
+]
+
+{ #category : 'tests - shouldStopAt' }
 DebugInfoTest >> methodWithReturn [
 
 	^ self
@@ -130,6 +136,18 @@ DebugInfoTest >> methodWithVariableReads [
 	testSelector.
 	ClassVar.
 	DebugInfoTest
+]
+
+{ #category : 'tests - shouldStopAt' }
+DebugInfoTest >> methodWithWhileFalse [
+
+	[false] whileFalse
+]
+
+{ #category : 'tests - shouldStopAt' }
+DebugInfoTest >> methodWithWhileTrue [
+
+	[true] whileTrue 
 ]
 
 { #category : 'helpers' }
@@ -1279,6 +1297,20 @@ DebugInfoTest >> testStopAtLocalVariableAssignment [
 ]
 
 { #category : 'tests - shouldStopAt' }
+DebugInfoTest >> testStopAtRepeat [
+	
+	| debugInfo methodToTest assignmentNode returnPC |
+	methodToTest := self class >> #methodWithRepeat.
+	debugInfo := self newDebugInfoFor: methodToTest.
+
+	assignmentNode := methodToTest ast statements first.
+	returnPC := (assignmentNode methodNode pcsForNode: assignmentNode)
+		            first.
+
+	self assert: (debugInfo shouldStopAt: returnPC)
+]
+
+{ #category : 'tests - shouldStopAt' }
 DebugInfoTest >> testStopAtSend [
 
 	| debugInfo methodToTest send sendPC |
@@ -1323,4 +1355,32 @@ DebugInfoTest >> testStopAtSendInInlinedBlock [
 		           sendInsideToDoBlock) first.
 
 	self assert: (debugInfo shouldStopAt: sendPC)
+]
+
+{ #category : 'tests - shouldStopAt' }
+DebugInfoTest >> testStopAtWhileFalse [
+
+	| debugInfo methodToTest assignmentNode returnPC |
+	methodToTest := self class >> #methodWithWhileFalse.
+	debugInfo := self newDebugInfoFor: methodToTest.
+
+	assignmentNode := methodToTest ast statements first.
+	returnPC := (assignmentNode methodNode pcsForNode: assignmentNode)
+		            first.
+
+	self assert: (debugInfo shouldStopAt: returnPC)
+]
+
+{ #category : 'tests - shouldStopAt' }
+DebugInfoTest >> testStopAtWhileTrue [
+
+	| debugInfo methodToTest assignmentNode returnPC |
+	methodToTest := self class >> #methodWithWhileTrue.
+	debugInfo := self newDebugInfoFor: methodToTest.
+
+	assignmentNode := methodToTest ast statements first.
+	returnPC := (assignmentNode methodNode pcsForNode: assignmentNode)
+		            first.
+
+	self assert: (debugInfo shouldStopAt: returnPC)
 ]
