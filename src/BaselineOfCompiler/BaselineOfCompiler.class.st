@@ -54,21 +54,19 @@ BaselineOfCompiler >> baseline: spec [
 
 				package: 'AST-Core';
 				package: 'OpalCompiler-Core';
-				package: 'DebugInfo';
 
 				package: 'Kernel-Extended-Tests' with: [ spec requires: #( 'KernelTests' 'CoreTraits' ) ];
 				package: 'Kernel-Tests-WithCompiler' with: [ spec requires: #( 'KernelTests' ) ];
 
 				package: 'AST-Core-Tests';
 
-				package: 'OpalCompiler-Tests' with: [ spec requires: #( 'AST-Core-Tests' ) ];
-				package: 'DebugInfo-Tests' with: [ spec requires: #( 'AST-Core-Tests' ) ].
+				package: 'OpalCompiler-Tests' with: [ spec requires: #( 'AST-Core-Tests' ) ].
 
 			spec
 				group: 'Core'
 				with: { 'AST-Core'. 'Collections-Arithmetic'. 'Collections-Atomic'. 'Collections-Stack'. 'ClassDefinitionPrinters'.
-					'CodeExport'. 'CodeImport'. 'CodeImport-Commands'. 'DebugInfo'. 'OpalCompiler-Core'. 'ParseTreeRewriter'. 'Deprecation' };
+					'CodeExport'. 'CodeImport'. 'CodeImport-Commands'. 'OpalCompiler-Core'. 'ParseTreeRewriter'. 'Deprecation' };
 				group: 'Tests'
 				with: { 'Collections-Atomic-Tests'. 'Collections-Stack-Tests'. 'Kernel-Extended-Tests'. 'Kernel-Tests-WithCompiler'.
-					'AST-Core-Tests'. 'OpalCompiler-Tests'. 'DebugInfo-Tests'. 'CodeImport-Tests' } ]
+					'AST-Core-Tests'. 'OpalCompiler-Tests'. 'CodeImport-Tests' } ]
 ]
