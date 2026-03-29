@@ -3,6 +3,7 @@ Extension { #name : 'String' }
 { #category : '*System-Time' }
 String >> asDateAndTime [
  	"Convert from UTC format"
+	
 	self deprecated: 'Use DateAndTime fromString: ' transformWith: '`@rec asDateAndTime' -> 'DateAndTime fromString: `@rec'.
 	^ DateAndTime fromString: self
 ]
