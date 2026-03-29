@@ -280,7 +280,7 @@ RBTransformationsTest >> testPushDownVariableTransform [
 RBTransformationsTest >> testRemoveClassTransform [
 
 	| transformation newClass superclass |
-	transformation := RBRemoveClassesTransformation classNames: { self changeMockClass name }.
+	transformation := ReRemoveClassesTransformation classNames: { self changeMockClass name }.
 	transformation generateChanges.
 	self assert: transformation model changes changes size equals: 1.
 	newClass := transformation model classNamed: self changeMockClass name.
@@ -393,7 +393,7 @@ RBTransformationsTest >> testRenameTemporaryTransform [
 		                  withProtocol: #accessing.
 	transformation generateChanges.
 
-	refactoring := RBRenameArgumentOrTemporaryRefactoring
+	refactoring := ReRenameArgumentOrTemporaryRefactoring
 		                  model: transformation model
 		                  rename: #temp
 		                  to: #temp2

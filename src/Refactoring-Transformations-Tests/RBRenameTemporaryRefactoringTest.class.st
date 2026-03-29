@@ -12,21 +12,21 @@ RBRenameTemporaryRefactoringTest >> testFailureBadIntervalAndVariableDoesNotExis
 	model := self modelOnClasses: { RBClassDataForRefactoringTest }.
 
 	self shouldFail:
-		(RBRenameArgumentOrTemporaryRefactoring
+		(ReRenameArgumentOrTemporaryRefactoring
     			model: model
     			renameTemporaryFrom: (14 to: 17)
     			to: 'asdf'
     			in: #RBClassDataForRefactoringTest
     			selector: #testMethod).
 	self shouldFail:
-		(RBRenameArgumentOrTemporaryRefactoring
+		(ReRenameArgumentOrTemporaryRefactoring
     			model: model
     			renameTemporaryFrom: (17 to: 14)
     			to: 'asdf'
     			in: #RBClassDataForRefactoringTest
     			selector: #testMethod).
 	self shouldFail:
-		(RBRenameArgumentOrTemporaryRefactoring
+		(ReRenameArgumentOrTemporaryRefactoring
     			model: model
     			renameTemporaryFrom: (19 to: 24)
     			to: 'asdf'
@@ -40,14 +40,14 @@ RBRenameTemporaryRefactoringTest >> testFailureBadName [
 				
 	self
 		shouldFail:
-			(RBRenameArgumentOrTemporaryRefactoring
+			(ReRenameArgumentOrTemporaryRefactoring
                 model: model
                 renameTemporaryFrom: (15 to: 19)
                 to: 'DependentFields'
                 in: #RBLintRuleTestData
                 selector: #openEditor);
 		shouldFail:
-			(RBRenameArgumentOrTemporaryRefactoring
+			(ReRenameArgumentOrTemporaryRefactoring
                 model: model
                 renameTemporaryFrom: (15 to: 19)
                 to: 'a b'
@@ -59,7 +59,7 @@ RBRenameTemporaryRefactoringTest >> testFailureBadName [
 RBRenameTemporaryRefactoringTest >> testFailureExistingTempVariable [
 
 	| refactoring |
-	refactoring := RBRenameArgumentOrTemporaryRefactoring
+	refactoring := ReRenameArgumentOrTemporaryRefactoring
             				model: model
             				renameTemporaryFrom: (15 to: 19)
             				to: 'rules'
@@ -80,14 +80,14 @@ RBRenameTemporaryRefactoringTest >> testFailureModelBadName [
 		classified: #( #accessing ).
 	self
 		shouldFail: (
-				RBRenameArgumentOrTemporaryRefactoring
+				ReRenameArgumentOrTemporaryRefactoring
                 model: model
                 renameTemporaryFrom: (20 to: 24)
                 to: 'temp3'
                 in: #Object
                 selector: #aMethod:);
 		shouldFail: (
-				RBRenameArgumentOrTemporaryRefactoring
+				ReRenameArgumentOrTemporaryRefactoring
                 model: model
                 renameTemporaryFrom: (20 to: 24)
                 to: 'temp1'
@@ -111,7 +111,7 @@ RBRenameTemporaryRefactoringTest >> testFailureModelExistingVariable [
 	transformation generateChanges.
 
 	self shouldFail: (
-			RBRenameArgumentOrTemporaryRefactoring
+			ReRenameArgumentOrTemporaryRefactoring
             model: transformation model
             renameTemporaryFrom: (16 to: 19)
             to: 'bar'
@@ -125,7 +125,7 @@ RBRenameTemporaryRefactoringTest >> testRenameArg [
 	model := self modelOnClasses: { RBLintRuleTestData }.
 	
 	refactoring := 
-			RBRenameArgumentOrTemporaryRefactoring
+			ReRenameArgumentOrTemporaryRefactoring
             model: model
             renameTemporaryFrom: (7 to: 13)
             to: 'asdf'
@@ -143,7 +143,7 @@ RBRenameTemporaryRefactoringTest >> testRenameTemporary [
 	model := self modelOnClasses: { RBLintRuleTestData }.
 	
 	refactoring := 
-			RBRenameArgumentOrTemporaryRefactoring
+			ReRenameArgumentOrTemporaryRefactoring
             model: model
             renameTemporaryFrom: (15 to: 19)
             to: 'asdf'
@@ -164,7 +164,7 @@ RBRenameTemporaryRefactoringTest >> testWarningExistingInstanceVariable [
 	| refactoring |
 	model := self modelOnClasses: { RBLintRuleTestData }.
 
-	refactoring := RBRenameArgumentOrTemporaryRefactoring
+	refactoring := ReRenameArgumentOrTemporaryRefactoring
 		               model: model
 		               renameTemporaryFrom: (15 to: 19)
 		               to: 'name'
@@ -172,7 +172,7 @@ RBRenameTemporaryRefactoringTest >> testWarningExistingInstanceVariable [
 		               selector: #openEditor.
 	self shouldWarn: refactoring.
 
-	refactoring := RBRenameArgumentOrTemporaryRefactoring
+	refactoring := ReRenameArgumentOrTemporaryRefactoring
 		               model: model
 		               rename: 'rules'
 		               to: 'name'

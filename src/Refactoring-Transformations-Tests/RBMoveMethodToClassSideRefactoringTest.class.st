@@ -11,7 +11,7 @@ RBMoveMethodToClassSideRefactoringTest >> testFailureExistsMethodInClassSide [
 
 	| method aMetaClass refactoring |
 	method := RBClassDataForRefactoringTest >> ('threeElement' , 'Point') asSymbol.
-	refactoring := RBMoveMethodToClassSideRefactoring
+	refactoring := ReMoveMethodToClassSideRefactoring
 		               method: method
 		               class: RBClassDataForRefactoringTest.
 	model := refactoring model.
@@ -32,7 +32,7 @@ RBMoveMethodToClassSideRefactoringTest >> testMoveMethodToClassSideIsOk [
 
 	| method refactoring changes |
 	method := RBClassDataForRefactoringTest >> ('threeElement' , 'Point') asSymbol.
-	refactoring := RBMoveMethodToClassSideRefactoring
+	refactoring := ReMoveMethodToClassSideRefactoring
 		               method: method
 		               class: RBClassDataForRefactoringTest.
 	changes := refactoring generateChanges changes.

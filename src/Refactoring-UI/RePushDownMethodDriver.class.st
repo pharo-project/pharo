@@ -107,7 +107,7 @@ RePushDownMethodDriver >> gatherUserInput [
 { #category : 'configuration' }
 RePushDownMethodDriver >> instantiateRefactoring [
 
-	^ RBPushDownMethodRefactoring
+	^ RePushDownMethodRefactoring
 		  model: model
 		  pushDown: (methods collect: [ :each | each selector ])
 		  from: class name

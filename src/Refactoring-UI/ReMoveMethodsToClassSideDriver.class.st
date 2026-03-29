@@ -4,6 +4,9 @@ I'm a model for user interaction for the rename method refactoring.
 Class {
 	#name : 'ReMoveMethodsToClassSideDriver',
 	#superclass : 'ReInteractionDriver',
+	#instVars : [
+		'selectors'
+	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',
 	#tag : 'Drivers'
@@ -67,13 +70,19 @@ ReMoveMethodsToClassSideDriver >> defaultSelectDialog [
 		  yourself
 ]
 
+{ #category : 'configuration' }
+ReMoveMethodsToClassSideDriver >> instantiateRefactoring [
+
+	^ ReCompositeRefactoring new
+		  model: model;
+		  refactorings: (selectors collect: [ :m | ReMoveMethodToClassSideRefactoring model: model method: m class: m origin ])
+]
+
 { #category : 'execution' }
 ReMoveMethodsToClassSideDriver >> runRefactoring [
-	
-	refactoring failedBreakingChangePreconditions
-		ifEmpty: [ self applyChanges ]
-		ifNotEmpty: [ self handleBreakingChanges ]
 
+	self configureRefactoring.
+	refactoring failedBreakingChangePreconditions ifEmpty: [ self applyChanges ] ifNotEmpty: [ self handleBreakingChanges ]
 ]
 
 { #category : 'execution' }
@@ -81,11 +90,6 @@ ReMoveMethodsToClassSideDriver >> scopes: scopesList methods: methods [
 
 	scopes := scopesList.
 	model := self refactoringScopeOn: scopesList first.
-	refactoring := ReCompositeRefactoring new
-		               model: model;
-		               refactorings: (methods collect: [ :m |
-					                RBMoveMethodToClassSideRefactoring
-						                model: model
-						                method: m
-						                class: m origin ])
+	selectors := methods.
+
 ]

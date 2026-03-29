@@ -37,7 +37,7 @@ ReTemporaryVariableCapitalizationRule >> critiqueFor: aNode [
 	crit
 		tinyHint: aNode name;
 		refactoring: (
-			RBRenameArgumentOrTemporaryRefactoring
+			ReRenameArgumentOrTemporaryRefactoring
 				renameTemporaryFrom: aNode sourceInterval
 				to: aNode name uncapitalized
 				in: aNode methodNode methodClass

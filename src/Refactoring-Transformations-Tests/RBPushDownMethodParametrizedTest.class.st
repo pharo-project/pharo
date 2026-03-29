@@ -9,7 +9,7 @@ Class {
 { #category : 'tests' }
 RBPushDownMethodParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
-		addCase: { #rbClass -> RBPushDownMethodRefactoring };
+		addCase: { #rbClass -> RePushDownMethodRefactoring };
 		addCase: { #rbClass -> RBPushDownMethodTransformation };
 		yourself
 ]
@@ -81,7 +81,7 @@ RBPushDownMethodParametrizedTest >> testPushDownMethodWithMethodThatRefersToSele
 	refactoring := self createRefactoringWithArguments: {
 			               #( #problemCount ).
 			               'RBLintRuleTestData' }.
-	(refactoring isKindOf: RBPushDownMethodRefactoring)
+	(refactoring isKindOf: RePushDownMethodRefactoring)
 		ifTrue: [ self shouldWarn: refactoring ]
 		ifFalse: [ self shouldntWarn: refactoring ]
 ]
@@ -107,7 +107,7 @@ RBPushDownMethodParametrizedTest >> testPushDownMethodWithSubclassesThatDefinesS
 	refactoring := self createRefactoringWithArguments: {
 			               #( #isEmpty ).
 			               'RBLintRuleTestData' }.
-	(refactoring isKindOf: RBPushDownMethodRefactoring)
+	(refactoring isKindOf: RePushDownMethodRefactoring)
 		ifTrue: [ self shouldWarn: refactoring ]
 		ifFalse: [ self shouldntWarn: refactoring ]
 ]

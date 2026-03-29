@@ -28,7 +28,7 @@ To view changes check `StRefactoringPreviewPresenter>>changes:scopes:`
 
 "
 Class {
-	#name : 'RBRemoveClassesTransformation',
+	#name : 'ReRemoveClassesTransformation',
 	#superclass : 'RBClassTransformation',
 	#instVars : [
 		'classesDictionary',
@@ -40,14 +40,14 @@ Class {
 }
 
 { #category : 'private' }
-RBRemoveClassesTransformation class >> cannotRemoveTopLevelClassErrorMesssage [
+ReRemoveClassesTransformation class >> cannotRemoveTopLevelClassErrorMesssage [
 
 	^ 'Cannot remove top level class' , String cr
 	  , 'when it has subclasses'
 ]
 
 { #category : 'api' }
-RBRemoveClassesTransformation class >> classNames: aCollection [
+ReRemoveClassesTransformation class >> classNames: aCollection [
 
 	^ self
 		model: ReTransformation new model
@@ -55,7 +55,7 @@ RBRemoveClassesTransformation class >> classNames: aCollection [
 ]
 
 { #category : 'api' }
-RBRemoveClassesTransformation class >> model: aRBModel classNames: aCollection [
+ReRemoveClassesTransformation class >> model: aRBModel classNames: aCollection [
 
 	^ self new
 		  model: aRBModel;
@@ -64,7 +64,7 @@ RBRemoveClassesTransformation class >> model: aRBModel classNames: aCollection [
 ]
 
 { #category : 'preconditions' }
-RBRemoveClassesTransformation >> applicabilityPreconditions [
+ReRemoveClassesTransformation >> applicabilityPreconditions [
 
 	^ {
 		  (ReClassesExistCondition new classes: classesDictionary).
@@ -72,25 +72,25 @@ RBRemoveClassesTransformation >> applicabilityPreconditions [
 ]
 
 { #category : 'preconditions' }
-RBRemoveClassesTransformation >> breakingChangePreconditions [
+ReRemoveClassesTransformation >> breakingChangePreconditions [
 
 	^ { self preconditionHaveNoReferences }
 ]
 
 { #category : 'accessing' }
-RBRemoveClassesTransformation >> classNames [
+ReRemoveClassesTransformation >> classNames [
 
 	^ classNames
 ]
 
 { #category : 'accessing' }
-RBRemoveClassesTransformation >> classNames: aClassNameCollection [
+ReRemoveClassesTransformation >> classNames: aClassNameCollection [
 
 	classNames := aClassNameCollection
 ]
 
 { #category : 'preconditions' }
-RBRemoveClassesTransformation >> preconditionAreNotMeta [
+ReRemoveClassesTransformation >> preconditionAreNotMeta [
 
 	^ ReClassesAreNotMetaClassCondition new
 		  classes: classesDictionary;
@@ -98,7 +98,7 @@ RBRemoveClassesTransformation >> preconditionAreNotMeta [
 ]
 
 { #category : 'preconditions' }
-RBRemoveClassesTransformation >> preconditionHaveNoReferences [
+ReRemoveClassesTransformation >> preconditionHaveNoReferences [
 
 	^ ReClassesHaveNoReferencesCondition new
 		  model: model;
@@ -106,20 +106,20 @@ RBRemoveClassesTransformation >> preconditionHaveNoReferences [
 ]
 
 { #category : 'preconditions' }
-RBRemoveClassesTransformation >> preconditions [
+ReRemoveClassesTransformation >> preconditions [
 	"We hope in the future to push up this method to RBRefactoring"
 
 	^ self applicabilityPreconditions & self breakingChangePreconditions
 ]
 
 { #category : 'transforming' }
-RBRemoveClassesTransformation >> prepareForExecution [
+ReRemoveClassesTransformation >> prepareForExecution [
 
 	classesDictionary := (classNames collect: [ :cl | cl -> (self model classNamed: cl) ]) asDictionary
 ]
 
 { #category : 'executing' }
-RBRemoveClassesTransformation >> privateTransform [
+ReRemoveClassesTransformation >> privateTransform [
 
 	self
 		reparentSubclasses;
@@ -127,7 +127,7 @@ RBRemoveClassesTransformation >> privateTransform [
 ]
 
 { #category : 'removing' }
-RBRemoveClassesTransformation >> removeClassChanges [
+ReRemoveClassesTransformation >> removeClassChanges [
 	"We know that the preconditions are ok! This should only be called by drivers when the preconditions have been met."
 
 	self privateTransform.
@@ -135,13 +135,13 @@ RBRemoveClassesTransformation >> removeClassChanges [
 ]
 
 { #category : 'removing' }
-RBRemoveClassesTransformation >> removeClasses [
+ReRemoveClassesTransformation >> removeClasses [
 
 	classNames do: [ :each | self model removeClassNamed: each ]
 ]
 
 { #category : 'private' }
-RBRemoveClassesTransformation >> reparentSubclasses [
+ReRemoveClassesTransformation >> reparentSubclasses [
 
 	classNames do: [ :each |
 			| cls |

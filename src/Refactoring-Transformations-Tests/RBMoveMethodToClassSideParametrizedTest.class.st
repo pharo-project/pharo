@@ -9,7 +9,7 @@ Class {
 { #category : 'tests' }
 RBMoveMethodToClassSideParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
-		addCase: { #rbClass -> RBMoveMethodToClassSideRefactoring };
+		addCase: { #rbClass -> ReMoveMethodToClassSideRefactoring };
 		addCase: { #rbClass -> RBMoveMethodToClassSideTransformation };
 		yourself
 ]

@@ -72,7 +72,7 @@ ReRenameArgumentOrTemporaryDriver >> defaultSelectDialog [
 { #category : 'configuration' }
 ReRenameArgumentOrTemporaryDriver >> instantiateRefactoring [
 
-	^ RBRenameArgumentOrTemporaryRefactoring
+	^ ReRenameArgumentOrTemporaryRefactoring
 		  renameTemporaryFrom: sourceNode sourceInterval
 		  in: method origin
 		  selector: method selector

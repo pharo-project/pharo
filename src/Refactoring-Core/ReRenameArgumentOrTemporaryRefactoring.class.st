@@ -7,7 +7,7 @@ The variable declaration and all references in this method are renamed.
 My precondition verifies that the new name is a valid variable name and not an existing instance or a class variable name
 "
 Class {
-	#name : 'RBRenameArgumentOrTemporaryRefactoring',
+	#name : 'ReRenameArgumentOrTemporaryRefactoring',
 	#superclass : 'RBMethodRefactoring',
 	#instVars : [
 		'selector',
@@ -23,7 +23,7 @@ Class {
 }
 
 { #category : 'api' }
-RBRenameArgumentOrTemporaryRefactoring class >> model: aRBModel rename: oldName to: newName in: aClass selector: aSelector [
+ReRenameArgumentOrTemporaryRefactoring class >> model: aRBModel rename: oldName to: newName in: aClass selector: aSelector [
 
 	^ self new
 		model: aRBModel;
@@ -34,7 +34,7 @@ RBRenameArgumentOrTemporaryRefactoring class >> model: aRBModel rename: oldName 
 ]
 
 { #category : 'instance creation' }
-RBRenameArgumentOrTemporaryRefactoring class >> model: aRBSmalltalk renameTemporaryFrom: anInterval to: newName in: aClass selector: aSelector [
+ReRenameArgumentOrTemporaryRefactoring class >> model: aRBSmalltalk renameTemporaryFrom: anInterval to: newName in: aClass selector: aSelector [
 	^ self new
 		model: aRBSmalltalk;
 		class: aClass
@@ -45,7 +45,7 @@ RBRenameArgumentOrTemporaryRefactoring class >> model: aRBSmalltalk renameTempor
 ]
 
 { #category : 'api' }
-RBRenameArgumentOrTemporaryRefactoring class >> rename: oldName to: newName in: aClass selector: aSelector [
+ReRenameArgumentOrTemporaryRefactoring class >> rename: oldName to: newName in: aClass selector: aSelector [
 
     ^ self new
         class: aClass selector: aSelector interval: nil;
@@ -55,13 +55,13 @@ RBRenameArgumentOrTemporaryRefactoring class >> rename: oldName to: newName in: 
 ]
 
 { #category : 'instance creation' }
-RBRenameArgumentOrTemporaryRefactoring class >> renameTemporaryFrom: anInterval in: aClass selector: aSelector [
+ReRenameArgumentOrTemporaryRefactoring class >> renameTemporaryFrom: anInterval in: aClass selector: aSelector [
 
 	^ self new class: aClass selector: aSelector interval: anInterval
 ]
 
 { #category : 'instance creation' }
-RBRenameArgumentOrTemporaryRefactoring class >> renameTemporaryFrom: anInterval to: newName in: aClass selector: aSelector [
+ReRenameArgumentOrTemporaryRefactoring class >> renameTemporaryFrom: anInterval to: newName in: aClass selector: aSelector [
 	^ self new
 		class: aClass
 		selector: aSelector
@@ -70,20 +70,20 @@ RBRenameArgumentOrTemporaryRefactoring class >> renameTemporaryFrom: anInterval 
 ]
 
 { #category : 'preconditions' }
-RBRenameArgumentOrTemporaryRefactoring >> applicabilityPreconditions [
+ReRenameArgumentOrTemporaryRefactoring >> applicabilityPreconditions [
 
 	^ self applicabilityPreconditionsIndependentOfTheNewName , self applicabilityPreconditionsOfTheNewName
 ]
 
 { #category : 'preconditions' }
-RBRenameArgumentOrTemporaryRefactoring >> applicabilityPreconditionsIndependentOfTheNewName [
+ReRenameArgumentOrTemporaryRefactoring >> applicabilityPreconditionsIndependentOfTheNewName [
 	"Those are the preconditions that should be checked before even asking to the user a new name for the temporary."
 
 	^ { (ReDefinesSelectorsCondition new definesSelectors: (Array with: selector) in: class) }
 ]
 
 { #category : 'preconditions' }
-RBRenameArgumentOrTemporaryRefactoring >> applicabilityPreconditionsOfTheNewName [
+ReRenameArgumentOrTemporaryRefactoring >> applicabilityPreconditionsOfTheNewName [
 	"Those are the preconditions that should be checked after asking to the user a new name for the temporary."
 
 	^ {
@@ -96,13 +96,13 @@ RBRenameArgumentOrTemporaryRefactoring >> applicabilityPreconditionsOfTheNewName
 ]
 
 { #category : 'preconditions' }
-RBRenameArgumentOrTemporaryRefactoring >> breakingChangePreconditions [
+ReRenameArgumentOrTemporaryRefactoring >> breakingChangePreconditions [
 
 	^ { self preconditionCheckVariableName }
 ]
 
 { #category : 'initialization' }
-RBRenameArgumentOrTemporaryRefactoring >> class: aClass selector: aSelector interval: anInterval [
+ReRenameArgumentOrTemporaryRefactoring >> class: aClass selector: aSelector interval: anInterval [
 
 	class := self classObjectFor: aClass.
 	selector := aSelector.
@@ -110,14 +110,14 @@ RBRenameArgumentOrTemporaryRefactoring >> class: aClass selector: aSelector inte
 ]
 
 { #category : 'initialization' }
-RBRenameArgumentOrTemporaryRefactoring >> class: aClass selector: aSelector interval: anInterval newName: aString [
+ReRenameArgumentOrTemporaryRefactoring >> class: aClass selector: aSelector interval: anInterval newName: aString [
 
 	self class: aClass selector: aSelector interval: anInterval.
 	newName := aString
 ]
 
 { #category : 'accessing' }
-RBRenameArgumentOrTemporaryRefactoring >> getExistingNameFromInterval [
+ReRenameArgumentOrTemporaryRefactoring >> getExistingNameFromInterval [
 
 	| methodSource |
 	interval first > interval last ifTrue: [
@@ -129,24 +129,24 @@ RBRenameArgumentOrTemporaryRefactoring >> getExistingNameFromInterval [
 ]
 
 { #category : 'accessing' }
-RBRenameArgumentOrTemporaryRefactoring >> newName: aString [
+ReRenameArgumentOrTemporaryRefactoring >> newName: aString [
 
 	newName := aString
 ]
 
 { #category : 'accessing' }
-RBRenameArgumentOrTemporaryRefactoring >> oldName: aString [
+ReRenameArgumentOrTemporaryRefactoring >> oldName: aString [
 	oldName := aString 
 ]
 
 { #category : 'preconditions' }
-RBRenameArgumentOrTemporaryRefactoring >> preconditionCheckVariableName [
+ReRenameArgumentOrTemporaryRefactoring >> preconditionCheckVariableName [
 
 	^ ReCheckVariableNameShadowingCondition class: class variableName: newName parseTree: parseTree
 ]
 
 { #category : 'transforming' }
-RBRenameArgumentOrTemporaryRefactoring >> prepareForExecution [
+ReRenameArgumentOrTemporaryRefactoring >> prepareForExecution [
 
  | variableNode |
 
@@ -180,20 +180,20 @@ RBRenameArgumentOrTemporaryRefactoring >> prepareForExecution [
 ]
 
 { #category : 'transforming' }
-RBRenameArgumentOrTemporaryRefactoring >> privateTransform [
+ReRenameArgumentOrTemporaryRefactoring >> privateTransform [
 
 	self renameNode: definingNode.
 	class compileTree: parseTree
 ]
 
 { #category : 'transforming' }
-RBRenameArgumentOrTemporaryRefactoring >> renameNode: aParseTree [
+ReRenameArgumentOrTemporaryRefactoring >> renameNode: aParseTree [
 
 	(self parseTreeRewriterClass rename: oldName to: newName) executeTree: aParseTree
 ]
 
 { #category : 'accessing' }
-RBRenameArgumentOrTemporaryRefactoring >> sourceClass [
+ReRenameArgumentOrTemporaryRefactoring >> sourceClass [
 
 	^ class
 ]

@@ -55,7 +55,7 @@ RBRemoveTemporaryVariableTransformation >> applicabilityPreconditions [
 
 	^ {
 		  self classExist.
-		  (RBCondition definesSelector: selector in: self definingClass).
+		 (ReDefinesSelectorsCondition new definesSelectors: (Array with: selector) in: self definingClass).
 		  (RBCondition
 			   withBlock: [
 			   self definingMethod allTemporaryVariables includes: variableName ]

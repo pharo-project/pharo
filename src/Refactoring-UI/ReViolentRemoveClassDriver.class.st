@@ -69,7 +69,7 @@ yourself
 { #category : 'configuration' }
 ReViolentRemoveClassDriver >> instantiateRefactoring [
 
-	^ RBRemoveClassesTransformation model: model classNames: (classes collect: [ :cl | cl name ])
+	^ ReRemoveClassesTransformation model: model classNames: (classes collect: [ :cl | cl name ])
 ]
 
 { #category : 'ui - dialogs' }

@@ -33,7 +33,7 @@ RBTransformationRuleTestData class >> rewriteUsing: searchReplacer
 ```
 "
 Class {
-	#name : 'RBMoveMethodToClassSideRefactoring',
+	#name : 'ReMoveMethodToClassSideRefactoring',
 	#superclass : 'RBMoveMethodToClassRefactoring',
 	#instVars : [
 		'parseTree'
@@ -44,7 +44,7 @@ Class {
 }
 
 { #category : 'refactoring' }
-RBMoveMethodToClassSideRefactoring >> accessorsFor: variableName [
+ReMoveMethodToClassSideRefactoring >> accessorsFor: variableName [
 
 	^ ReCreateAccessorsForVariableTransformation
 				model: self model
@@ -54,7 +54,7 @@ RBMoveMethodToClassSideRefactoring >> accessorsFor: variableName [
 ]
 
 { #category : 'transforming' }
-RBMoveMethodToClassSideRefactoring >> addMethod: rbMethod to: aClass toProtocol: protocol [
+ReMoveMethodToClassSideRefactoring >> addMethod: rbMethod to: aClass toProtocol: protocol [
 	aClass addMethod: rbMethod.
 	self generateChangesFor:
 		(RBAddMethodTransformation
@@ -64,20 +64,20 @@ RBMoveMethodToClassSideRefactoring >> addMethod: rbMethod to: aClass toProtocol:
 ]
 
 { #category : 'preconditions' }
-RBMoveMethodToClassSideRefactoring >> applicabilityPreconditions [
+ReMoveMethodToClassSideRefactoring >> applicabilityPreconditions [
 
 	^ { ReClassesAreNotMetaClassCondition new classes: { class } }.
 
 ]
 
 { #category : 'preconditions' }
-RBMoveMethodToClassSideRefactoring >> breakingChangePreconditions [
+ReMoveMethodToClassSideRefactoring >> breakingChangePreconditions [
 	
 	^ { (ReDefinesSelectorsCondition new definesSelectors: { method selector } in: class classSide) not }
 ]
 
 { #category : 'checking' }
-RBMoveMethodToClassSideRefactoring >> checkVariableNamed: aString [
+ReMoveMethodToClassSideRefactoring >> checkVariableNamed: aString [
 	(class whoDefinesInstanceVariable: aString) ifNotNil:
 			[^ true].
 	(class whoDefinesClassVariable: aString) ifNotNil:
@@ -86,7 +86,7 @@ RBMoveMethodToClassSideRefactoring >> checkVariableNamed: aString [
 ]
 
 { #category : 'transforming' }
-RBMoveMethodToClassSideRefactoring >> getNewInstSideSource [
+ReMoveMethodToClassSideRefactoring >> getNewInstSideSource [
 	| sender |
 	sender := ''.
 	method argumentNames isNotEmpty ifTrue: [
@@ -98,7 +98,7 @@ RBMoveMethodToClassSideRefactoring >> getNewInstSideSource [
 ]
 
 { #category : 'transforming' }
-RBMoveMethodToClassSideRefactoring >> getNewSource [
+ReMoveMethodToClassSideRefactoring >> getNewSource [
 
 	| rewriter node temp |
 	temp := 'newInstance'.
@@ -115,7 +115,7 @@ RBMoveMethodToClassSideRefactoring >> getNewSource [
 ]
 
 { #category : 'transforming' }
-RBMoveMethodToClassSideRefactoring >> getTempName [
+ReMoveMethodToClassSideRefactoring >> getTempName [
 	| aString counter tempName |
 	counter := 0.
 	aString := class canonicalArgumentName.
@@ -127,7 +127,7 @@ RBMoveMethodToClassSideRefactoring >> getTempName [
 ]
 
 { #category : 'accessing' }
-RBMoveMethodToClassSideRefactoring >> parseTree [
+ReMoveMethodToClassSideRefactoring >> parseTree [
 
 	parseTree
 		ifNil: [ parseTree := class parseTreeForSelector: method selector.
@@ -137,13 +137,13 @@ RBMoveMethodToClassSideRefactoring >> parseTree [
 ]
 
 { #category : 'preconditions' }
-RBMoveMethodToClassSideRefactoring >> preconditions [
+ReMoveMethodToClassSideRefactoring >> preconditions [
 
 	^ self applicabilityPreconditions & self breakingChangePreconditions
 ]
 
 { #category : 'transforming' }
-RBMoveMethodToClassSideRefactoring >> privateTransform [
+ReMoveMethodToClassSideRefactoring >> privateTransform [
 
 	| sourceClass targetClass rbMethod rbMethod2 newSource originalProtocol newSource2 |
 	newSource := self getNewInstSideSource.
@@ -162,7 +162,7 @@ RBMoveMethodToClassSideRefactoring >> privateTransform [
 ]
 
 { #category : 'transforming' }
-RBMoveMethodToClassSideRefactoring >> removeInstVariableReferences [
+ReMoveMethodToClassSideRefactoring >> removeInstVariableReferences [
 
 	| rbMethod references |
 	rbMethod := class methodFor: method selector.
@@ -180,7 +180,7 @@ RBMoveMethodToClassSideRefactoring >> removeInstVariableReferences [
 ]
 
 { #category : 'removing' }
-RBMoveMethodToClassSideRefactoring >> removeMethod: selector from: aRBClass [
+ReMoveMethodToClassSideRefactoring >> removeMethod: selector from: aRBClass [
 
 	self generateChangesFor: 
 		(RBRemoveMethodTransformation

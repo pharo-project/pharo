@@ -137,6 +137,13 @@ FFIValueHolder >> initializeType: aType handle: aHandle [
 ]
 
 { #category : 'converting' }
+FFIValueHolder >> packAsFloatToArity: aNumber [
+	"holders do not pack arity"
+
+	^ self
+]
+
+{ #category : 'converting' }
 FFIValueHolder >> packToArity: aNumber [
 	"holders do not pack arity"
 

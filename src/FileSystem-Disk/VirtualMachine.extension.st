@@ -10,7 +10,7 @@ VirtualMachine >> interpreterSourceDate [
 	dateString first isDigit
 		ifTrue: [
 			"most probably the date is in ISO 8601 Format"
-			^ DateAndTime fromString: dateString ].
+			^ dateString asDateAndTime ].
 
 	"Otherwise assume the old format: DDD MMM DD HH:MM:SS YYYY +TTTT ..."
 	parts := dateString substrings first: 6.

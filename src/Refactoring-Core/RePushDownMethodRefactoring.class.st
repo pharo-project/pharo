@@ -6,7 +6,7 @@ My preconditions verify that this method isn't refered  as a super send in the s
 
 "
 Class {
-	#name : 'RBPushDownMethodRefactoring',
+	#name : 'RePushDownMethodRefactoring',
 	#superclass : 'RBMethodRefactoring',
 	#instVars : [
 		'selectors',
@@ -18,7 +18,7 @@ Class {
 }
 
 { #category : 'instance creation' }
-RBPushDownMethodRefactoring class >> model: anEnvironment pushDown: selectorCollection from: aClassName [
+RePushDownMethodRefactoring class >> model: anEnvironment pushDown: selectorCollection from: aClassName [
 	^ self new
 		model: anEnvironment;
 		pushDown: selectorCollection from: aClassName;
@@ -26,7 +26,7 @@ RBPushDownMethodRefactoring class >> model: anEnvironment pushDown: selectorColl
 ]
 
 { #category : 'instance creation' }
-RBPushDownMethodRefactoring class >> model: anEnvironment pushDown: selectorCollection from: aClass in: classes [
+RePushDownMethodRefactoring class >> model: anEnvironment pushDown: selectorCollection from: aClass in: classes [
 	^ self new
 		model: anEnvironment;
 		pushDown: selectorCollection from: aClass in: classes;
@@ -34,25 +34,25 @@ RBPushDownMethodRefactoring class >> model: anEnvironment pushDown: selectorColl
 ]
 
 { #category : 'instance creation' }
-RBPushDownMethodRefactoring class >> pushDown: selectorCollection from: aClass [
+RePushDownMethodRefactoring class >> pushDown: selectorCollection from: aClass [
 	^ self new
 		pushDown: selectorCollection from: aClass
 ]
 
 { #category : 'instance creation' }
-RBPushDownMethodRefactoring class >> pushDown: selectorCollection from: aClass in: classes [
+RePushDownMethodRefactoring class >> pushDown: selectorCollection from: aClass in: classes [
 	^ self new
 		pushDown: selectorCollection from: aClass in: classes
 ]
 
 { #category : 'transforming' }
-RBPushDownMethodRefactoring >> allClasses [
+RePushDownMethodRefactoring >> allClasses [
 
 	^ classes ifNil: [ class subclasses ]
 ]
 
 { #category : 'preconditions' }
-RBPushDownMethodRefactoring >> applicabilityPreconditions [
+RePushDownMethodRefactoring >> applicabilityPreconditions [
 	"Check that all selectors are defined in `class`"
 
 	^ { (ReDefinesSelectorsCondition new
@@ -61,7 +61,7 @@ RBPushDownMethodRefactoring >> applicabilityPreconditions [
 ]
 
 { #category : 'preconditions' }
-RBPushDownMethodRefactoring >> breakingChangePreconditions [
+RePushDownMethodRefactoring >> breakingChangePreconditions [
 	"Check that that none of the subclasses of `class` is doing a supercall to any of the selectors
 	that will be pushed down.
 	
@@ -79,14 +79,14 @@ RBPushDownMethodRefactoring >> breakingChangePreconditions [
 ]
 
 { #category : 'transforming' }
-RBPushDownMethodRefactoring >> classes: aCollection [
+RePushDownMethodRefactoring >> classes: aCollection [
 	classes := aCollection collect: [ :cls |
 		self classObjectFor: cls.
 	]
 ]
 
 { #category : 'preconditions' }
-RBPushDownMethodRefactoring >> preconditionAllSubclassesDirectlyDefines [
+RePushDownMethodRefactoring >> preconditionAllSubclassesDirectlyDefines [
 
 	^ ReAllSubclassesDirectlyDefinesCondition new
 		  class: class
@@ -94,13 +94,13 @@ RBPushDownMethodRefactoring >> preconditionAllSubclassesDirectlyDefines [
 ]
 
 { #category : 'preconditions' }
-RBPushDownMethodRefactoring >> preconditionIsAbstract [
+RePushDownMethodRefactoring >> preconditionIsAbstract [
 
 	^ ReClassesAreAbstractCondition new classes: { class }
 ]
 
 { #category : 'preconditions' }
-RBPushDownMethodRefactoring >> preconditionMethodsReferToSelector [
+RePushDownMethodRefactoring >> preconditionMethodsReferToSelector [
 
 	^ ReMethodsReferToSelectorCondition new
 		  class: class
@@ -108,13 +108,13 @@ RBPushDownMethodRefactoring >> preconditionMethodsReferToSelector [
 ]
 
 { #category : 'preconditions' }
-RBPushDownMethodRefactoring >> preconditionSubclassesDirectlyDefines [
+RePushDownMethodRefactoring >> preconditionSubclassesDirectlyDefines [
 
 	^ ReSubclassesDirectlyDefinesCondition new class: class selectors: selectors
 ]
 
 { #category : 'preconditions' }
-RBPushDownMethodRefactoring >> preconditionSubclassesDontSendSuper [
+RePushDownMethodRefactoring >> preconditionSubclassesDontSendSuper [
 
 	^ ReSubclassesDontSendSuperCondition new
 		  class: class
@@ -122,14 +122,14 @@ RBPushDownMethodRefactoring >> preconditionSubclassesDontSendSuper [
 ]
 
 { #category : 'preconditions' }
-RBPushDownMethodRefactoring >> preconditions [
+RePushDownMethodRefactoring >> preconditions [
 
 	^ self applicabilityPreconditions & self breakingChangePreconditions 
 	
 ]
 
 { #category : 'transforming' }
-RBPushDownMethodRefactoring >> privateTransform [
+RePushDownMethodRefactoring >> privateTransform [
 
 	selectors do: [ :each | self pushDown: each ].
 	selectors do: [ :each |
@@ -138,7 +138,7 @@ RBPushDownMethodRefactoring >> privateTransform [
 ]
 
 { #category : 'transforming' }
-RBPushDownMethodRefactoring >> pushDown: aSelector [
+RePushDownMethodRefactoring >> pushDown: aSelector [
 
 	| code protocols refactoring |
 	code := class sourceCodeFor: aSelector.
@@ -154,36 +154,36 @@ RBPushDownMethodRefactoring >> pushDown: aSelector [
 ]
 
 { #category : 'initialization' }
-RBPushDownMethodRefactoring >> pushDown: selectorCollection from: aClassName [
+RePushDownMethodRefactoring >> pushDown: selectorCollection from: aClassName [
 	class := self model classNamed: aClassName.
 	selectors := selectorCollection
 ]
 
 { #category : 'initialization' }
-RBPushDownMethodRefactoring >> pushDown: selectorCollection from: aClass in: aCollection [
+RePushDownMethodRefactoring >> pushDown: selectorCollection from: aClass in: aCollection [
 	class := self classObjectFor: aClass.
 	selectors := selectorCollection.
 	self classes: aCollection
 ]
 
 { #category : 'transforming' }
-RBPushDownMethodRefactoring >> pushDownMethodChanges [
+RePushDownMethodRefactoring >> pushDownMethodChanges [
 
 	self privateTransform.
 	^ self changes
 ]
 
 { #category : 'transforming' }
-RBPushDownMethodRefactoring >> selectors [
+RePushDownMethodRefactoring >> selectors [
 	^ selectors
 ]
 
 { #category : 'transforming' }
-RBPushDownMethodRefactoring >> selectors: aList [
+RePushDownMethodRefactoring >> selectors: aList [
 	selectors := aList
 ]
 
 { #category : 'preconditions' }
-RBPushDownMethodRefactoring >> targetClass [
+RePushDownMethodRefactoring >> targetClass [
 	^ class
 ]
