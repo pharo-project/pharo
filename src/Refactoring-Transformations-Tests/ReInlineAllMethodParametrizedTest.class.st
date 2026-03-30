@@ -1,5 +1,5 @@
 Class {
-	#name : 'RBInlineAllMethodParametrizedTest',
+	#name : 'ReInlineAllMethodParametrizedTest',
 	#superclass : 'RBAbstractRefactoringTest',
 	#category : 'Refactoring-Transformations-Tests-SingleParametrized',
 	#package : 'Refactoring-Transformations-Tests',
@@ -7,19 +7,19 @@ Class {
 }
 
 { #category : 'tests' }
-RBInlineAllMethodParametrizedTest class >> testParameters [
+ReInlineAllMethodParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
-		addCase: { #rbClass -> RBInlineAllSendersRefactoring };
+		addCase: { #rbClass -> ReInlineAllSendersRefactoring };
 		yourself
 ]
 
 { #category : 'accessing' }
-RBInlineAllMethodParametrizedTest >> constructor [
+ReInlineAllMethodParametrizedTest >> constructor [
 	^ #sendersOf:in:
 ]
 
 { #category : 'failure tests' }
-RBInlineAllMethodParametrizedTest >> testFailureInlineMethodCanNotUnderstandSelectorInClass [
+ReInlineAllMethodParametrizedTest >> testFailureInlineMethodCanNotUnderstandSelectorInClass [
 
 	| refactoring |
 	refactoring := self createRefactoringWithArguments: {
@@ -29,7 +29,7 @@ RBInlineAllMethodParametrizedTest >> testFailureInlineMethodCanNotUnderstandSele
 ]
 
 { #category : 'tests' }
-RBInlineAllMethodParametrizedTest >> testInlineMethodCalledAsSuper [
+ReInlineAllMethodParametrizedTest >> testInlineMethodCalledAsSuper [
 	| class superclass |
 	model := RBNamespace new.
 	superclass := model classNamed: self class superclass name.
@@ -43,7 +43,7 @@ RBInlineAllMethodParametrizedTest >> testInlineMethodCalledAsSuper [
 ]
 
 { #category : 'tests' }
-RBInlineAllMethodParametrizedTest >> testInlineMethodWithMultipleArgs [
+ReInlineAllMethodParametrizedTest >> testInlineMethodWithMultipleArgs [
 	| class |
 	model := RBNamespace new.
 	class := model classNamed: self class name.
@@ -61,7 +61,7 @@ RBInlineAllMethodParametrizedTest >> testInlineMethodWithMultipleArgs [
 ]
 
 { #category : 'tests' }
-RBInlineAllMethodParametrizedTest >> testInlineMethodWithMultipleSendersInMethod [
+ReInlineAllMethodParametrizedTest >> testInlineMethodWithMultipleSendersInMethod [
 	| refactoring methodName |
 	methodName := #caller2.
 	refactoring := self createRefactoringWithArguments:
@@ -75,7 +75,7 @@ RBInlineAllMethodParametrizedTest >> testInlineMethodWithMultipleSendersInMethod
 ]
 
 { #category : 'tests' }
-RBInlineAllMethodParametrizedTest >> testRecursiveMethod [
+ReInlineAllMethodParametrizedTest >> testRecursiveMethod [
 	| class |
 	model := RBNamespace new.
 	class := model classNamed: self class name.
