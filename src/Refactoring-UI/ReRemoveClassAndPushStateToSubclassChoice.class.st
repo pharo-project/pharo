@@ -15,7 +15,7 @@ ReRemoveClassAndPushStateToSubclassChoice >> action [
 { #category : 'accessing' }
 ReRemoveClassAndPushStateToSubclassChoice >> description [
 
-	^ 'Remove it and push class state to subclasses'
+	^ 'Remove it, re-parent subclasses and push class state to subclasses'
 ]
 
 { #category : 'accessing' }
