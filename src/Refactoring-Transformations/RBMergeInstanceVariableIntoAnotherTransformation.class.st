@@ -24,10 +24,10 @@ RBMergeInstanceVariableIntoAnotherTransformation >> applicabilityPreconditions [
 			  conds , {
 				  (RBCondition isMetaclass: class) not.
 				  (RBCondition
-					   definesClassVariable: newVariableName asString
+					   hasClassVariableNamed: newVariableName asString
 					   in: class).
 				  (RBCondition
-					   definesClassVariable: variableName asString
+					   hasClassVariableNamed: variableName asString
 					   in: class) } ]
 		  ifFalse: [
 			  conds , {

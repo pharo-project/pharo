@@ -57,14 +57,6 @@ RBCondition class >> checkInstanceVariableName: aName in: aClass [
 ]
 
 { #category : 'instance creation' }
-RBCondition class >> definesClassVariable: aString in: aClass [
-	^self new
-		block: [aClass definesClassVariable: aString]
-		errorString: aClass printString
-				, ' <1?:does not >define<1?s:> class variable ' , aString
-]
-
-{ #category : 'instance creation' }
 RBCondition class >> definesInstanceVariable: aString in: aClass [
 	^self new
 		block: [aClass definesInstanceVariable: aString]
@@ -155,6 +147,14 @@ RBCondition class >> empty [
 	"Returns an empty condition"
 	self deprecated: 'Use RBCondition true instead' transformWith: '`@rec empty' -> '`@ true'.
 	^ self true
+]
+
+{ #category : 'instance creation' }
+RBCondition class >> hasClassVariableNamed: aString in: aClass [
+	^self new
+		block: [aClass hasClassVariableNamed: aString]
+		errorString: aClass printString
+				, ' <1?:does not >define<1?s:> class variable ' , aString
 ]
 
 { #category : 'instance creation' }

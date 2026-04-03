@@ -174,8 +174,8 @@ RBConditionTest >> testHierarchyOfReferencesSharedVariableFromClassSide [
 	root := rbNamespace classNamed: #MyClassARoot.
 	sub := rbNamespace classNamed: #MySubAccessingSuperclassState.
 	self assert: (root subclasses includes: sub).
-	self assert: (root definesClassVariable: #Shared2).
-	self assert: (sub definesClassVariable: #Shared2).
+	self assert: (root hasClassVariableNamed: #Shared2).
+	self assert: (sub hasClassVariableNamed: #Shared2).
 							
 	self assert: (ReSharedVariableHasReferences new
 			 				hierarchyOf: root
@@ -194,7 +194,7 @@ RBConditionTest >> testHierarchyOfReferencesSharedVariableFromSubclass [
 	root := rbNamespace classNamed: #MyClassARoot.
 	sub := rbNamespace classNamed: #MySubAccessingSuperclassState.
 	self assert: (root subclasses includes: sub).
-	self assert: (root definesClassVariable: #Shared2).
+	self assert: (root hasClassVariableNamed: #Shared2).
 
 	"We access the class var from the superclass only from a subclass."	
 	self assert: (ReSharedVariableHasReferences new

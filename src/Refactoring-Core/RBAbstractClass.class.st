@@ -256,16 +256,6 @@ RBAbstractClass >> convertMethod: selector using: searchReplacer [
 ]
 
 { #category : 'testing' }
-RBAbstractClass >> definesClassVariable: aSymbol [
-	"Returns whether the class or its superclasses define a shared variable named: aSymbol"
-
-	self realClass isTrait ifTrue: [ ^ false ].
-	(self directlyDefinesClassVariable: aSymbol) ifTrue: [ ^ true ].
-	^ self superclass isNotNil
-		and: [ self superclass definesClassVariable: aSymbol ]
-]
-
-{ #category : 'testing' }
 RBAbstractClass >> definesInstanceVariable: aString [
 
 	(self directlyDefinesInstanceVariable: aString) ifTrue: [^true].
@@ -289,7 +279,7 @@ RBAbstractClass >> definesPoolDictionary: aSymbol [
 
 { #category : 'testing' }
 RBAbstractClass >> definesVariable: aVariableName [
-	^(self definesClassVariable: aVariableName)
+	^(self hasClassVariableNamed: aVariableName)
 		or: [self definesInstanceVariable: aVariableName]
 ]
 
@@ -423,6 +413,16 @@ RBAbstractClass >> getterMethodFor: aVariableName [
 ]
 
 { #category : 'testing' }
+RBAbstractClass >> hasClassVariableNamed: aSymbol [
+	"Returns whether the class or its superclasses define a shared variable named: aSymbol"
+
+	self realClass isTrait ifTrue: [ ^ false ].
+	(self directlyDefinesClassVariable: aSymbol) ifTrue: [ ^ true ].
+	^ self superclass isNotNil
+		and: [ self superclass hasClassVariableNamed: aSymbol ]
+]
+
+{ #category : 'testing' }
 RBAbstractClass >> hasRemoved: aSelector [
 	^removedMethods isNotNil and: [removedMethods includes: aSelector]
 ]
@@ -434,7 +434,7 @@ RBAbstractClass >> hash [
 
 { #category : 'testing' }
 RBAbstractClass >> hierarchyDefinesClassVariable: aString [
-	(self definesClassVariable: aString)
+	(self hasClassVariableNamed: aString)
 		ifTrue: [ ^ true ].
 	^ self allSubclasses
 		anySatisfy: [ :each | each directlyDefinesClassVariable: aString ]

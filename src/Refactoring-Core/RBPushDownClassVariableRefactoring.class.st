@@ -14,7 +14,7 @@ Class {
 { #category : 'preconditions' }
 RBPushDownClassVariableRefactoring >> applicabilityPreconditions [
 
-	^ { (RBCondition definesClassVariable: variableName in: class) }
+	^ { (RBCondition hasClassVariableNamed: variableName in: class) }
 ]
 
 { #category : 'preconditions' }

@@ -562,6 +562,16 @@ Class >> hasClassVariable: aGlobal [
 	^ self classVariables identityIncludes: aGlobal
 ]
 
+{ #category : 'testing' }
+Class >> hasClassVariableNamed: aSymbol [
+	 "Return whether the receiver or any of its superclasses has a class variable named aSymbol."
+    <reflection: 'Class structural inspection - Class variable inspection'>
+
+	| var |
+	var := self lookupVar: aSymbol.
+	^ var notNil and: [ var isClassVariable ]
+]
+
 { #category : 'accessing - comment' }
 Class >> hasComment [
 	"Return whether this class truly has a comment other than the default"

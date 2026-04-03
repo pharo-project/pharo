@@ -109,7 +109,7 @@ RBRenameVariableTransformation >> applicabilityPreconditions [
 					          isValidClassVarName: newVariableName asString
 					          for: class).
 				         (RBCondition
-					          definesClassVariable: variableName asString
+					          hasClassVariableNamed: variableName asString
 					          in: class) } ]
 		         ifFalse: [
 			         {

@@ -58,19 +58,6 @@ RBClassTest >> testClassSide [
 ]
 
 { #category : 'tests - definition' }
-RBClassTest >> testDefinesClassVariable [
-
-	self deny:
-		(abstractTransformationClass definesClassVariable: #ClassVariable1).
-	self assert: (abstractTransformationClass definesClassVariable:
-			 self abstractTransformationClassVariable).
-	self assert: (newClass definesClassVariable: #ClassVariable1).
-	self deny: (refactoringClass definesClassVariable: #ClassVariable1).
-	self assert: (refactoringClass definesClassVariable:
-			 self abstractTransformationClassVariable)
-]
-
-{ #category : 'tests - definition' }
 RBClassTest >> testDefinesInstanceVariable [
 	self deny: (abstractTransformationClass definesInstanceVariable: 'instanceVariable1').
 	self assert: (newClass definesInstanceVariable: 'instanceVariable1').
@@ -103,10 +90,10 @@ RBClassTest >> testDefinesSharedVariable2 [
 	root := rbNamespace classNamed: #MyClassARoot.
 	sub := rbNamespace classNamed: #MySubAccessingSuperclassState.
 	self assert: (root subclasses includes: sub).
-	self assert: (root definesClassVariable: #Shared2).
+	self assert: (root hasClassVariableNamed: #Shared2).
 	
 	"a subclass is considered defining a variable even if it is defined by the superclass."
-	self assert: (sub definesClassVariable: #Shared2).
+	self assert: (sub hasClassVariableNamed: #Shared2).
 ]
 
 { #category : 'tests - definition' }
@@ -135,7 +122,7 @@ RBClassTest >> testDirectlyDefinesSharedVariable [
 	self assert: (root subclasses includes: sub).
 	self assert: (root directlyDefinesClassVariable: #Shared2).
 	
-	self assert: (sub definesClassVariable: #Shared2).
+	self assert: (sub hasClassVariableNamed: #Shared2).
 	self deny: (sub directlyDefinesClassVariable: #Shared2).
 ]
 
@@ -148,10 +135,23 @@ RBClassTest >> testDirectlyDefinesSharedVariable2 [
 	root := rbNamespace classNamed: #MyClassARoot.
 	sub := rbNamespace classNamed: #MySubAccessingSuperclassState.
 	self assert: (root subclasses includes: sub).
-	self assert: (root definesClassVariable: #Shared2).
+	self assert: (root hasClassVariableNamed: #Shared2).
 	
 	"a subclass is considered defining a variable even if it is defined by the superclass."
-	self assert: (sub definesClassVariable: #Shared2).
+	self assert: (sub hasClassVariableNamed: #Shared2).
+]
+
+{ #category : 'tests - definition' }
+RBClassTest >> testHasClassVariableNamed [
+
+	self deny:
+		(abstractTransformationClass hasClassVariableNamed: #ClassVariable1).
+	self assert: (abstractTransformationClass hasClassVariableNamed:
+			 self abstractTransformationClassVariable).
+	self assert: (newClass hasClassVariableNamed: #ClassVariable1).
+	self deny: (refactoringClass hasClassVariableNamed: #ClassVariable1).
+	self assert: (refactoringClass hasClassVariableNamed:
+			 self abstractTransformationClassVariable)
 ]
 
 { #category : 'method tests' }

@@ -45,17 +45,17 @@ RBSharedPoolTest >> setUp [
 ]
 
 { #category : 'method tests' }
-RBSharedPoolTest >> testDefinesClassVariable [
-
-	self assert: (defineOf definesClassVariable: #DayNames)
-]
-
-{ #category : 'method tests' }
 RBSharedPoolTest >> testDefinesPoolDictionary [
 	"Pay attention that definesPoolDictionary: is badly named, because in fact
 	it checks whether a class uses a sharedPool!!!!"
 
 	self assert: (userOf definesPoolDictionary: #ChronologyConstants)
+]
+
+{ #category : 'method tests' }
+RBSharedPoolTest >> testHasClassVariableNamed [
+
+	self assert: (defineOf hasClassVariableNamed: #DayNames)
 ]
 
 { #category : 'method tests' }

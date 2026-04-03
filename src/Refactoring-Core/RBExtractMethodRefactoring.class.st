@@ -533,7 +533,7 @@ RBExtractMethodRefactoring >> validateRenameNode: aParseTree withOldName: oldNam
 	conditions := ((RBCondition isValidInstanceVariableName: newName for: class)
 		& (RBCondition definesSelector: selector in: class)
 		& (RBCondition definesInstanceVariable: newName in: class) not
-		& (RBCondition definesClassVariable: newName in: class) not).
+		& (RBCondition hasClassVariableNamed: newName in: class) not).
 	conditions check
 		ifFalse: [ block := conditions errorBlock.
 			block
