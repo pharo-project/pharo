@@ -1,10 +1,9 @@
 Class {
 	#name : 'RePackageNamesAreDifferentCondition',
-	#superclass : 'RBNewAbstractCondition',
+	#superclass : 'RePackageCondition',
 	#instVars : [
 		'packageName',
-		'newName',
-		'violator'
+		'newName'
 	],
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',
@@ -34,11 +33,4 @@ RePackageNamesAreDifferentCondition >> violationMessageOn: aStream [
     aStream
         nextPutAll: 'The new package name is the same as the old package name.';
         nextPut: Character cr
-]
-
-{ #category : 'accessing' }
-RePackageNamesAreDifferentCondition >> violators [
-    ^ self check
-        ifFalse: [ { violator } ]
-        ifTrue: [ #() ]
 ]

@@ -1,10 +1,8 @@
 Class {
 	#name : 'ReTargetPackageDoesNotExistCondition',
-	#superclass : 'RBNewAbstractCondition',
+	#superclass : 'RePackageCondition',
 	#instVars : [
-		'packageOrganizer',
-		'newName',
-		'violator'
+		'newName'
 	],
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',
@@ -24,22 +22,10 @@ ReTargetPackageDoesNotExistCondition >> newName: aName [
     newName := aName
 ]
 
-{ #category : 'checking' }
-ReTargetPackageDoesNotExistCondition >> packageOrganizer: anOrganizer [
-    packageOrganizer := anOrganizer
-]
-
 { #category : 'displaying' }
 ReTargetPackageDoesNotExistCondition >> violationMessageOn: aStream [
     aStream
     	nextPutAll: 'The system already includes a package named ';
     	nextPutAll: violator;
     	nextPut: Character cr
-]
-
-{ #category : 'accessing' }
-ReTargetPackageDoesNotExistCondition >> violators [
-    ^ self check
-        ifFalse: [ { violator } ]
-        ifTrue: [ #() ]
 ]
