@@ -9,7 +9,7 @@ Class {
 { #category : 'tests' }
 RBRenamePackageParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
-		addCase: { #rbClass -> RBRenamePackageRefactoring };
+		addCase: { #rbClass -> ReRenamePackageRefactoring };
 		addCase: { #rbClass -> RBRenamePackageTransformation };
 		yourself
 ]
