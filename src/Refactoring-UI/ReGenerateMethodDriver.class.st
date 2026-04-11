@@ -28,14 +28,6 @@ ReGenerateMethodDriver class >> isAbstract [
 	^ self = ReGenerateMethodDriver
 ]
 
-{ #category : 'execution' }
-ReGenerateMethodDriver >> configureRefactoring [
-
-	refactoring := self refactoringClass 
-		className: self targetClass name
-		variables: selectedVariables
-]
-
 { #category : 'configuration' }
 ReGenerateMethodDriver >> dialogTitle [
 

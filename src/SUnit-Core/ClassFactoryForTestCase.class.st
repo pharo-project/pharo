@@ -253,7 +253,7 @@ ClassFactoryForTestCase >> silentlyCompile: aString in: aBehavior protocol: anot
 		  aBehavior
 			  compile: aString
 			  classified: anotherString
-			  withStamp: nil
+			  withStamp: DateAndTime now
 			  notifying: nil
 			  logSource: aBoolean ]
 ]

@@ -13,5 +13,7 @@ Class {
 CoClassImplementedMessagesFetcher >> entriesDo: aBlock [
 
 	self completionClass selectorsDo: [ :e |
-		aBlock value: ((NECSelectorEntry contents: e node: astNode) fetcher: self ; yourself)]
+			aBlock value: ((NECSelectorEntry contents: e node: astNode)
+					 fetcherName: self class name;
+					 yourself) ]
 ]

@@ -6,8 +6,7 @@ Class {
 	#superclass : 'ReInteractionDriver',
 	#instVars : [
 		'class',
-		'variable',
-		'isSharedVariable'
+		'variables'
 	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',
@@ -23,29 +22,21 @@ RePushUpVariableDriver class >> driverName [
 { #category : 'configuration' }
 RePushUpVariableDriver >> instantiateRefactoring [
 
-	" we should manage multiple instance variables"
-	^ self refactoringClass
-       model: model
-       variable: variable
-       class: class
+	^ ReCompositeRefactoring new
+		  model: model;
+		  refactorings: (variables collect: [ :var |
+						   | refactoringClass |
+						   refactoringClass := var isClassVariable
+							                       ifTrue: [ RePullUpSharedVariableRefactoring ]
+							                       ifFalse: [ RePullUpInstanceVariableRefactoring ].
+						   refactoringClass model: model variable: var name class: class ])
 ]
 
 { #category : 'factory method' }
-RePushUpVariableDriver >> refactoringClass [
+RePushUpVariableDriver >> scopes: aCollection variables: aVariableCollection to: aClass [
 
-	^ isSharedVariable
-		  ifTrue: [ RePullUpSharedVariableRefactoring ]
-		  ifFalse: [ RePullUpInstanceVariableRefactoring ]
-]
-
-{ #category : 'factory method' }
-RePushUpVariableDriver >> scopes: aCollection variable: varName shared: isSharedVar to: aClass [ 
-
-	"The driver is initialized in interactive mode (i.e. we will ask for the newName to the user while running the refactoring"
-	
 	scopes := aCollection.
-	model :=  self refactoringScopeOn: scopes first.
+	model := self refactoringScopeOn: scopes first.
 	class := aClass.
-	variable := varName.
-	isSharedVariable := isSharedVar
+	variables := aVariableCollection
 ]

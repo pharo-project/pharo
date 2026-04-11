@@ -344,9 +344,9 @@ Time >> asDuration [
 
 { #category : 'converting' }
 Time >> asMilliSeconds [
-	"Answer the number of milliseconds since midnight"
+	"Answer the number of milliseconds."
 
-	^ self asDuration asMilliSeconds
+ 	^ ((seconds * NanosInSecond) + nanos) // (10 raisedToInteger: 6)
 ]
 
 { #category : 'converting' }
@@ -357,9 +357,9 @@ Time >> asMonth [
 
 { #category : 'converting' }
 Time >> asNanoSeconds [
-	"Answer the number of nanoseconds since midnight"
+	"Answer the number of nanoseconds"
 
-	^ self asDuration asNanoSeconds
+ 	^ (seconds * NanosInSecond) + nanos
 ]
 
 { #category : 'converting' }
@@ -441,12 +441,10 @@ Time >> hours [
 Time >> intervalString [
 	"Treat the time as a difference.  Give it in hours and minutes with two digits of accuracy."
 
-	| d |
-	d := self asDuration.
 	^ String streamContents: [ :s |
-		d hours > 0 ifTrue: [s print: d hours; nextPutAll: ' hours'].
-		d minutes > 0 ifTrue: [s space; print: d minutes; nextPutAll: ' minutes'].
-		d seconds > 0 ifTrue: [s space; print: d seconds; nextPutAll: ' seconds'] ]
+		self hours > 0 ifTrue: [s print: self hours; nextPutAll: ' hours'].
+		self minutes > 0 ifTrue: [s space; print: self minutes; nextPutAll: ' minutes'].
+		self seconds > 0 ifTrue: [s space; print: self seconds; nextPutAll: ' seconds'] ]
 ]
 
 { #category : 'accessing' }

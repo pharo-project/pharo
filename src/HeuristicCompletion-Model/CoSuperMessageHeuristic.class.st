@@ -26,23 +26,19 @@ CoSuperMessageHeuristic >> appliesForNode: aNode inContext: aContext [
 
 { #category : 'requests' }
 CoSuperMessageHeuristic >> buildFetcherFor: aNode inContext: completionContext [
-	| completionClass fetcher entry |
 
+	| completionClass fetcher entry |
 	"When in the playground, the completion class is not available.
 	But self is bound to nil"
-	completionClass := completionContext completionClass ifNil: [ nil class ].
-	"In Traits, superclass is nil"
+	completionClass := completionContext completionClass ifNil: [ nil class ]. "In Traits, superclass is nil"
 	completionClass superclass ifNil: [ ^ CoEmptyFetcher new ].
-	
-	fetcher := self newMessageInHierarchyFetcherForClass: completionClass superclass inASTNode: aNode.
 
-	"Inject a synthetic fetcher with the expected full message send at first option because it is was is needed in most (>99%) situations"
+	fetcher := self newMessageInHierarchyFetcherForClass: completionClass superclass inASTNode: aNode. "Inject a synthetic fetcher with the expected full message send at first option because it is was is needed in most (>99%) situations"
 	aNode methodNode ifNotNil: [ :methodNode |
-		(completionClass superclass canUnderstand: methodNode selector) 
-			ifTrue: [ 
-			entry := (NECSelectorEntry contents: methodNode selectorAndArgumentNames node: aNode) 
-								fetcher: fetcher; 
-								selector: methodNode selector.
-			fetcher := (CoCollectionFetcher new collection: { entry }) , fetcher ] ].
+			(completionClass superclass canUnderstand: methodNode selector) ifTrue: [
+					entry := (NECSelectorEntry contents: methodNode selectorAndArgumentNames node: aNode)
+						         fetcherName: fetcher class name;
+						         selector: methodNode selector.
+					fetcher := (CoCollectionFetcher new collection: { entry }) , fetcher ] ].
 	^ fetcher
 ]

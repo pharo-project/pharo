@@ -164,7 +164,10 @@ FFITypesTest >> testSignedLong [
 		|ref|
 		ref := ByteArray new: FFIInt32 externalTypeSize.
 		ref signedLongAt: 1 put: int.
-		self assert: (ref signedLongAt: 1) equals: int ]
+		self assert: (ref signedLongAt: 1) equals: int.
+		self
+			assert: ((FFIExternalType resolveType: FFIInt32) handle: ref at: 1)
+			equals: int ]
 ]
 
 { #category : 'tests' }
@@ -173,7 +176,10 @@ FFITypesTest >> testSignedLongLong [
 		|ref|
 		ref := ByteArray new: FFIInt64 externalTypeSize.
 		ref signedLongLongAt: 1 put: int.
-		self assert: (ref signedLongLongAt: 1) equals: int ]
+		self assert: (ref signedLongLongAt: 1) equals: int.
+		self
+			assert: ((FFIExternalType resolveType: FFIInt64) handle: ref at: 1)
+			equals: int ]
 ]
 
 { #category : 'tests' }
@@ -227,7 +233,10 @@ FFITypesTest >> testUnsignedLong [
 		|ref|
 		ref := ByteArray new: FFIUInt32 externalTypeSize.
 		ref unsignedLongAt: 1 put: int.
-		self assert: (ref unsignedLongAt: 1) equals: int ]
+		self assert: (ref unsignedLongAt: 1) equals: int.
+		self
+			assert: ((FFIExternalType resolveType: FFIUInt32) handle: ref at: 1)
+			equals: int ]
 ]
 
 { #category : 'tests' }
@@ -236,7 +245,10 @@ FFITypesTest >> testUnsignedLongLong [
 		|ref|
 		ref := ByteArray new: FFIUInt64 externalTypeSize.
 		ref unsignedLongLongAt: 1 put: int.
-		self assert: (ref unsignedLongLongAt: 1) equals: int ]
+		self assert: (ref unsignedLongLongAt: 1) equals: int.
+		self
+			assert: ((FFIExternalType resolveType: FFIUInt64) handle: ref at: 1)
+			equals: int ]
 ]
 
 { #category : 'tests' }

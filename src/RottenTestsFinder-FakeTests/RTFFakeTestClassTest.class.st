@@ -1,32 +1,32 @@
 Class {
-	#name : 'RTFFakeTestClass',
-	#superclass : 'RTFFakeTestSuperClass',
+	#name : 'RTFFakeTestClassTest',
+	#superclass : 'RTFFakeTestSuperClassTest',
 	#category : 'RottenTestsFinder-FakeTests',
 	#package : 'RottenTestsFinder-FakeTests'
 }
 
 { #category : 'wrapper' }
-RTFFakeTestClass >> assertHelper [
+RTFFakeTestClassTest >> assertHelper [
 	self assert: true
 ]
 
 { #category : 'wrapper' }
-RTFFakeTestClass >> helperHelper [
+RTFFakeTestClassTest >> helperHelper [
 	self assertHelper
 ]
 
 { #category : 'wrapper' }
-RTFFakeTestClass >> rottenHelper [
+RTFFakeTestClassTest >> rottenHelper [
 	false ifTrue: [ self assert: true ]
 ]
 
 { #category : 'tests' }
-RTFFakeTestClass >> testCallingSuperHelper [
+RTFFakeTestClassTest >> testCallingSuperHelper [
 	self superAssertHelper
 ]
 
 { #category : 'tests' }
-RTFFakeTestClass >> testFailingButNotConsideredAsRotten [
+RTFFakeTestClassTest >> testFailingButNotConsideredAsRotten [
 
 	self assert: false.
 
@@ -34,43 +34,43 @@ RTFFakeTestClass >> testFailingButNotConsideredAsRotten [
 ]
 
 { #category : 'tests' }
-RTFFakeTestClass >> testHelperHelperAssertHelper [
+RTFFakeTestClassTest >> testHelperHelperAssertHelper [
 	
 	self helperHelper; assertHelper 
 ]
 
 { #category : 'tests' }
-RTFFakeTestClass >> testWithAssertionInHelperRun [
+RTFFakeTestClassTest >> testWithAssertionInHelperRun [
 	self assertHelper
 ]
 
 { #category : 'tests' }
-RTFFakeTestClass >> testWithAssertionInSuperHelperRun [
+RTFFakeTestClassTest >> testWithAssertionInSuperHelperRun [
 	self superAssertHelper
 ]
 
 { #category : 'tests' }
-RTFFakeTestClass >> testWithAssertionRun [
+RTFFakeTestClassTest >> testWithAssertionRun [
 	self assert: true
 ]
 
 { #category : 'tests' }
-RTFFakeTestClass >> testWithHelperHelper [
+RTFFakeTestClassTest >> testWithHelperHelper [
 	self helperHelper
 ]
 
 { #category : 'tests' }
-RTFFakeTestClass >> testWithNoAssertionInHelperRun [
+RTFFakeTestClassTest >> testWithNoAssertionInHelperRun [
 	self rottenHelper
 ]
 
 { #category : 'tests' }
-RTFFakeTestClass >> testWithNoAssertionInSuperHelperRun [
+RTFFakeTestClassTest >> testWithNoAssertionInSuperHelperRun [
 	self superNotAssertHelper
 ]
 
 { #category : 'tests' }
-RTFFakeTestClass >> testWithoutAssertionRun [
+RTFFakeTestClassTest >> testWithoutAssertionRun [
 	false
 		ifTrue: [ self assert: true ]
 ]

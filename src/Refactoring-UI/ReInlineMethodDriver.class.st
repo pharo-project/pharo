@@ -48,6 +48,16 @@ ReInlineMethodDriver >> defaultSelectDialog [
 		  yourself
 ]
 
+{ #category : 'initialization' }
+ReInlineMethodDriver >> hasFailedBehaviorPreservingPreconditions [
+
+	noOverridden := refactoring preconditionIsMethodOverridden.
+	notExecutionOrder := refactoring preconditionExecutionOrder.
+	noSuperMessage := refactoring preconditionSuperMessages.
+
+	^ refactoring failedBreakingChangePreconditions isNotEmpty
+]
+
 { #category : 'action' }
 ReInlineMethodDriver >> inlineMethod [
 
@@ -72,20 +82,6 @@ ReInlineMethodDriver >> labelBasedOnBreakingChanges [
 			  stream nextPutAll: 'Select a strategy' ]
 ]
 
-{ #category : 'execution' }
-ReInlineMethodDriver >> runRefactoring [
-
-	self configureRefactoring.
-	refactoring failedApplicabilityPreconditions ifNotEmpty: [ :conditions |
-			self informConditions: conditions.
-			^ false ].
-	self setBreakingChangesPreconditions.
-
-	noOverridden check & notExecutionOrder check & noSuperMessage check
-		ifTrue: [ self applyChanges ]
-		ifFalse: [ self handleBreakingChanges ]
-]
-
 { #category : 'instance creation' }
 ReInlineMethodDriver >> scopes: aScope interval: anInterval selector: aSelector class: aClass [
 
@@ -94,13 +90,4 @@ ReInlineMethodDriver >> scopes: aScope interval: anInterval selector: aSelector 
 	interval := anInterval.
 	selector := aSelector.
 	class := aClass
-]
-
-{ #category : 'initialization' }
-ReInlineMethodDriver >> setBreakingChangesPreconditions [
-
-	noOverridden := refactoring preconditionIsMethodOverridden.
-	notExecutionOrder := refactoring preconditionExecutionOrder.
-	noSuperMessage := refactoring  preconditionSuperMessages.
-
 ]

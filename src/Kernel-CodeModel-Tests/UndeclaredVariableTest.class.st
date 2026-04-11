@@ -9,6 +9,19 @@ Class {
 	#tag : 'UndeclaredVariables'
 }
 
+{ #category : 'tests' }
+UndeclaredVariableTest >> compile: source in: class [
+
+	| method compiler |
+	compiler := class compiler
+		            source: source;
+		            permitUndeclared: true;
+		            permitFaulty: false.
+	method := compiler compile.
+	class methodInstaller install: method into: class compiler: compiler.
+	^ method selector
+]
+
 { #category : 'instance creation' }
 UndeclaredVariableTest >> newClass: aName [
 
@@ -37,13 +50,14 @@ UndeclaredVariableTest >> tearDown [
 UndeclaredVariableTest >> testUsingDeclaredVariableCompilesUsingVariable [
 
 	| class1 |
-	
 	class1 := self newClass: #TestClass1.
 	self newClass: #TestClass2.
 
-	class1 compile: 'm 
-	  ^ TestClass2'.
-	
+	self
+		compile: 'm 
+	  ^ TestClass2'
+		in: class1.
+
 	self deny: ((class1 >> #m) literals includes: #runtimeUndeclaredReadInContext:)
 ]
 
@@ -51,11 +65,12 @@ UndeclaredVariableTest >> testUsingDeclaredVariableCompilesUsingVariable [
 UndeclaredVariableTest >> testUsingUndeclaredVariableCompilesMessageSendToVariable [
 
 	| class1 |
-	
 	class1 := self newClass: #TestClass1.
-	class1 compile: 'm 
-	  ^ TestClass2'.
-	
+	self
+		compile: 'm 
+	  ^ TestClass2'
+		in: class1.
+
 	self assert: ((class1 >> #m) literals includes: #runtimeUndeclaredReadInContext:)
 ]
 
@@ -63,26 +78,28 @@ UndeclaredVariableTest >> testUsingUndeclaredVariableCompilesMessageSendToVariab
 UndeclaredVariableTest >> testUsingUndeclaredVariableInABlockIsRecompiledWhenDefiningTheUndeclaredVariable [
 
 	| class1 |
-	
 	class1 := self newClass: #TestClass1.
-	class1 compile: 'm 
-	  ^ [TestClass2]'.
+	self
+		compile: 'm 
+	  ^ [TestClass2]'
+		in: class1.
 
 	self newClass: #TestClass2.
-		
-	self deny: (((class1 >> #m) literalAt: 1) literals includes: #runtimeUndeclaredReadInContext:)
+
+	self deny: ((class1 >> #m literalAt: 1) literals includes: #runtimeUndeclaredReadInContext:)
 ]
 
 { #category : 'tests' }
 UndeclaredVariableTest >> testUsingUndeclaredVariableIsRecompiledWhenDefiningTheUndeclaredVariable [
 
 	| class1 |
-	
 	class1 := self newClass: #TestClass1.
-	class1 compile: 'm 
-	  ^ TestClass2'.
+	self
+		compile: 'm 
+	  ^ TestClass2'
+		in: class1.
 
 	self newClass: #TestClass2.
-		
+
 	self deny: ((class1 >> #m) literals includes: #runtimeUndeclaredReadInContext:)
 ]

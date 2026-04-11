@@ -98,11 +98,11 @@ ReCreateAccessorsForVariableTransformation class >> variable: aVarName class: aC
 { #category : 'preconditions' }
 ReCreateAccessorsForVariableTransformation >> applicabilityPreconditions [
 
-	^ { (classVariable
-		   ifTrue: [
-				RBCondition definesClassVariable: variableName asSymbol in: class ]
-		   ifFalse: [
-				RBCondition definesInstanceVariable: variableName in: class ]) }
+	^ {
+		  (classVariable
+			   ifTrue: [ RBCondition definesClassVariable: variableName asSymbol in: class ]
+			   ifFalse: [ RBCondition definesInstanceVariable: variableName in: class ]).
+		  self preconditionMissingAccessor }
 ]
 
 { #category : 'printing' }
@@ -256,6 +256,14 @@ ReCreateAccessorsForVariableTransformation >> possibleGetterSelectors [
 { #category : 'private - accessing' }
 ReCreateAccessorsForVariableTransformation >> possibleSetterSelectors [
 	^self methodsReferencingVariable select: [:each | each numArgs == 1]
+]
+
+{ #category : 'preconditions' }
+ReCreateAccessorsForVariableTransformation >> preconditionMissingAccessor [
+
+	^ ReAccessorsMissingCondition new
+		  transformation: self;
+		  yourself
 ]
 
 { #category : 'transforming' }

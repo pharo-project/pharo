@@ -234,7 +234,7 @@ ReRuleManager class >> setDefaultProfile [
 ReRuleManager class >> subSettingsOn: aBuilder with: rules [
 
 	^ (rules sorted: [ :a :b | a name < b name ]) do: [ :rule |
-			  (aBuilder setting: rule enabledSettingID)
+			(aBuilder setting: rule enabledSettingID)
 				  selector: #enabled;
 				  target: rule;
 				  default: rule enabledByDefault;

@@ -32,90 +32,131 @@ DateAndTimeTest >> selectorsToBeIgnored [
 
 { #category : 'tests - arithmetic' }
 DateAndTimeTest >> testArithmeticAcrossDateBoundary [
+
 	| t1 t2 |
-	t1 := '2004-01-07T11:55:00+00:00' asDateAndTime.
+	t1 := DateAndTime fromString: '2004-01-07T11:55:00+00:00'.
 	t2 := t1 - (42900 + 1) seconds.
-	self assert: t2 equals: '2004-01-06T23:59:59+00:00' asDateAndTime
+	self assert: t2 equals: (DateAndTime fromString: '2004-01-06T23:59:59+00:00')
 ]
 
 { #category : 'tests' }
 DateAndTimeTest >> testAsDateAndTime [
+
 	| localOffset localOffsetSuffix |
-	#('-1199-01-05T20:33:14.321-05:00'
-		'2002-05-16T17:20:45.1+01:01'
-		'2002-05-16T17:20:45.02+01:01'
-		'2002-05-16T17:20:45.003+01:01'
-		'2002-05-16T17:20:45.0004+01:01'
-		'2002-05-16T17:20:45+01:57'
-		'2002-05-16T17:20:45.000006+01:01'
-		'2002-05-16T17:20:45.0000007+01:01'
-		'2002-05-16T17:20:45.00000008-01:01'
-		'2002-05-16T17:20:45.000000009+01:01'
- 		'2002-05-16T17:20:45+00:00'
- 		'2002-05-16T17:20:45-02:34'
-		'1997-04-26T01:02:03+01:02:3') do: [ :each |
-			self assert: each asDateAndTime printString equals: each ].
+	#( '-1199-01-05T20:33:14.321-05:00' '2002-05-16T17:20:45.1+01:01' '2002-05-16T17:20:45.02+01:01' '2002-05-16T17:20:45.003+01:01'
+	   '2002-05-16T17:20:45.0004+01:01' '2002-05-16T17:20:45+01:57' '2002-05-16T17:20:45.000006+01:01'
+	   '2002-05-16T17:20:45.0000007+01:01' '2002-05-16T17:20:45.00000008-01:01' '2002-05-16T17:20:45.000000009+01:01'
+	   '2002-05-16T17:20:45+00:00' '2002-05-16T17:20:45-02:34' '1997-04-26T01:02:03+01:02:3' ) do: [ :each |
+		self assert: (DateAndTime fromString: each) printString equals: each ].
 
 	localOffset := DateAndTime localOffset.
 	localOffsetSuffix := String streamContents: [ :out |
-		out nextPut: (localOffset positive ifTrue: [ $+ ] ifFalse: [ $- ]).
-		localOffset hours abs printOn: out base: 10 length: 2 padded: true.
-		out nextPut: $:.
-		localOffset minutes abs printOn: out base: 10 length: 2 padded: true.
-		localOffset seconds = 0 ifFalse: [ out nextPut: $: ; print: localOffset seconds rounded abs ] ].
+			                     out nextPut: (localOffset positive
+					                      ifTrue: [ $+ ]
+					                      ifFalse: [ $- ]).
+			                     localOffset hours abs
+				                     printOn: out
+				                     base: 10
+				                     length: 2
+				                     padded: true.
+			                     out nextPut: $:.
+			                     localOffset minutes abs
+				                     printOn: out
+				                     base: 10
+				                     length: 2
+				                     padded: true.
+			                     localOffset seconds = 0 ifFalse: [
+					                     out
+						                     nextPut: $:;
+						                     print: localOffset seconds rounded abs ] ].
 
-	#('2002-05-16T17:20:45.00005'
-		'2002-05-16T17:20:00'
-		'2002-05-16T17:20:45') do: [ :each |
-			self assert: each asDateAndTime printString equals: each , localOffsetSuffix ]
+	#( '2002-05-16T17:20:45.00005' '2002-05-16T17:20:00' '2002-05-16T17:20:45' ) do: [ :each |
+		self assert: (DateAndTime fromString: each) printString equals: each , localOffsetSuffix ]
 ]
 
 { #category : 'tests' }
 DateAndTimeTest >> testAsDos [
 
 	| remoteDatetime |
-	self assert: '2012-05-21T15:02:44' asDateAndTime asDosTimestamp equals: 16r40B57856.
-
-	"DOS times are in local time per http://blogs.msdn.com/b/oldnewthing/archive/2003/09/05/54806.aspx"
+	self assert: (DateAndTime fromString: '2012-05-21T15:02:44') asDosTimestamp equals: 16r40B57856. "DOS times are in local time per http://blogs.msdn.com/b/oldnewthing/archive/2003/09/05/54806.aspx"
 	remoteDatetime := DateAndTime current offset: DateAndTime localOffset + 2 hours.
 	self assert: remoteDatetime asDosTimestamp equals: remoteDatetime asLocal asDosTimestamp
 ]
 
 { #category : 'tests' }
 DateAndTimeTest >> testAsTime [
+
 	| dateAndTime |
-
-	dateAndTime := DateAndTime year: 1000 day: 100 hour: 1 minute: 2 second: 3 offset: 0 asDuration.
+	dateAndTime := DateAndTime
+		               year: 1000
+		               day: 100
+		               hour: 1
+		               minute: 2
+		               second: 3
+		               offset:  Duration zero.
 	self assert: dateAndTime asTime equals: (Time hour: 1 minute: 2 second: 3).
 
-	dateAndTime := DateAndTime year: 1000 day: 100 hour: 1 minute: 2 second: 3 offset: 5 hours.
+	dateAndTime := DateAndTime
+		               year: 1000
+		               day: 100
+		               hour: 1
+		               minute: 2
+		               second: 3
+		               offset: 5 hours.
 	self assert: dateAndTime asTime equals: (Time hour: 1 minute: 2 second: 3).
 
-	dateAndTime := DateAndTime year: 1000 day: 100 hour: 1 minute: 2 second: 3 offset: -5 hours.
+	dateAndTime := DateAndTime
+		               year: 1000
+		               day: 100
+		               hour: 1
+		               minute: 2
+		               second: 3
+		               offset: -5 hours.
 	self assert: dateAndTime asTime equals: (Time hour: 1 minute: 2 second: 3)
 ]
 
 { #category : 'tests' }
 DateAndTimeTest >> testAsTimeUTC [
-	| dateAndTime |
 
-	dateAndTime := DateAndTime year: 1000 day: 100 hour: 1 minute: 2 second: 3 offset: 0 asDuration.
+	| dateAndTime |
+	dateAndTime := DateAndTime
+		               year: 1000
+		               day: 100
+		               hour: 1
+		               minute: 2
+		               second: 3
+		               offset:  Duration zero.
 	self assert: dateAndTime asTimeUTC equals: (Time hour: 1 minute: 2 second: 3).
 
-	dateAndTime := DateAndTime year: 1000 day: 100 hour: 1 minute: 2 second: 3 offset: -5 hours.
+	dateAndTime := DateAndTime
+		               year: 1000
+		               day: 100
+		               hour: 1
+		               minute: 2
+		               second: 3
+		               offset: -5 hours.
 	self assert: dateAndTime asTimeUTC equals: (Time hour: 6 minute: 2 second: 3).
 
-	dateAndTime := DateAndTime year: 1000 day: 100 hour: 1 minute: 2 second: 3 offset: 5 hours.
-	self assert: dateAndTime asTimeUTC equals: (Time hour: 24+1-5 minute: 2 second: 3)
+	dateAndTime := DateAndTime
+		               year: 1000
+		               day: 100
+		               hour: 1
+		               minute: 2
+		               second: 3
+		               offset: 5 hours.
+	self assert: dateAndTime asTimeUTC equals: (Time hour: 24 + 1 - 5 minute: 2 second: 3)
 ]
 
 { #category : 'tests' }
 DateAndTimeTest >> testAsUnixTimeIndependentOfTimezone [
+
 	| datetimeWithOffset datetimeWithoutOffset |
 	datetimeWithoutOffset := DateAndTime current offset: Duration zero.
 	datetimeWithOffset := datetimeWithoutOffset offset: (Duration hours: 1).
 
-	self assert: datetimeWithOffset asUnixTime equals: datetimeWithoutOffset asUnixTime
+	self 
+		assert: datetimeWithOffset asUnixTime 
+		equals: datetimeWithoutOffset asUnixTime
 ]
 
 { #category : 'tests' }
@@ -159,16 +200,18 @@ DateAndTimeTest >> testDateTimeDenotation1 [
 
 	| twoPmInLondon twoPmUTCInLocalTimeOfDetroit nineAmInDetroit |
 	twoPmInLondon := DateAndTime
-		year: 2004
-		month: 11
-		day: 2
-		hour: 14
-		minute: 0
-		second: 0
-		offset: 0 hours.
-	twoPmUTCInLocalTimeOfDetroit := twoPmInLondon offset: -5 hours.
-	nineAmInDetroit := '2004-11-02T09:00:00-05:00' asDateAndTime.
-	self assert: twoPmUTCInLocalTimeOfDetroit equals: nineAmInDetroit
+		                 year: 2004
+		                 month: 11
+		                 day: 2
+		                 hour: 14
+		                 minute: 0
+		                 second: 0
+		                 offset: 0 hours.
+	twoPmUTCInLocalTimeOfDetroit := twoPmInLondon offset: (Duration hours: -5).
+	nineAmInDetroit := DateAndTime fromString: '2004-11-02T09:00:00-05:00'.
+	self 
+		assert: twoPmUTCInLocalTimeOfDetroit 
+		equals: nineAmInDetroit
 ]
 
 { #category : 'tests' }
@@ -179,16 +222,18 @@ DateAndTimeTest >> testDateTimeDenotation2 [
 
 	| lateEveningInLondon lateEveningInLocalTimeOfMoscow localMoscowTimeFromDenotation |
 	lateEveningInLondon := DateAndTime
-		year: 2004
-		month: 11
-		day: 30
-		hour: 23
-		minute: 30
-		second: 0
-		offset: 0 hours.
-	lateEveningInLocalTimeOfMoscow := lateEveningInLondon offset: 3 hours.
-	localMoscowTimeFromDenotation := '2004-12-01T02:30:00+03:00' asDateAndTime.
-	self assert: lateEveningInLocalTimeOfMoscow equals: localMoscowTimeFromDenotation
+		                       year: 2004
+		                       month: 11
+		                       day: 30
+		                       hour: 23
+		                       minute: 30
+		                       second: 0
+		                       offset: 0 hours.
+	lateEveningInLocalTimeOfMoscow := lateEveningInLondon offset: (Duration hours: 3).
+	localMoscowTimeFromDenotation := DateAndTime fromString: '2004-12-01T02:30:00+03:00'.
+	self 
+		assert: lateEveningInLocalTimeOfMoscow 
+		equals: localMoscowTimeFromDenotation
 ]
 
 { #category : 'tests' }
@@ -203,18 +248,18 @@ DateAndTimeTest >> testDayOfWeekWithUTC [
 
 { #category : 'tests - epoch' }
 DateAndTimeTest >> testDosEpoch [
-	self
-		useNonUtcTimeZoneDuring: [ | localEpoch |
-			localEpoch := '1980-01-01T00:00' asDateAndTime.
+
+	self useNonUtcTimeZoneDuring: [
+			| localEpoch |
+			localEpoch := DateAndTime fromString: '1980-01-01T00:00'.
 			self deny: DateAndTime dosEpoch equals: localEpoch ].
 
-	self
-		useTimeZone: 'UTC'
-		during: [ | localEpoch |
-			localEpoch := '1980-01-01T00:00' asDateAndTime.
+	self useTimeZone: 'UTC' during: [
+			| localEpoch |
+			localEpoch := DateAndTime fromString: '1980-01-01T00:00'.
 			self assert: DateAndTime dosEpoch equals: localEpoch ].
 
-	self assert: DateAndTime dosEpoch equals: '1980-01-01T00:00:00+00:00' asDateAndTime
+	self assert: DateAndTime dosEpoch equals: (DateAndTime fromString: '1980-01-01T00:00:00+00:00')
 ]
 
 { #category : 'tests - bogus date' }
@@ -235,16 +280,16 @@ DateAndTimeTest >> testFromDos [
 
 	| aDateAndTime |
 	aDateAndTime := DateAndTime fromDosTimestamp: 16r40B57856.
-	self assert: aDateAndTime equals:  '2012-05-21T15:02:44' asDateAndTime.
-
-	"DOS times are in local time per http://blogs.msdn.com/b/oldnewthing/archive/2003/09/05/54806.aspx"
+	self assert: aDateAndTime equals: (DateAndTime fromString: '2012-05-21T15:02:44'). "DOS times are in local time per http://blogs.msdn.com/b/oldnewthing/archive/2003/09/05/54806.aspx"
 	self assert: aDateAndTime offset equals: DateAndTime localOffset
 ]
 
 { #category : 'tests' }
 DateAndTimeTest >> testFromMethodTimestamp [
 
-	self assert: (DateAndTime fromMethodTimestamp: '2025-04-25T14:50:52.000000+02:00') equals: (DateAndTime year: 2025 month: 4 day: 25 hour: 14 minute: 50 second: 52 nanoSecond: 0 offset: 2 hours).
+	self 
+		assert: (DateAndTime fromMethodTimestamp: '2025-04-25T14:50:52.000000+02:00') 
+		equals: (DateAndTime year: 2025 month: 4 day: 25 hour: 14 minute: 50 second: 52 nanoSecond: 0 offset: (Duration hours: 2)).
 
 	self assert: (DateAndTime fromMethodTimestamp: '4/3/2025 23:17') isNil
 ]
@@ -271,7 +316,7 @@ DateAndTimeTest >> testInstanceCreation [
 		minute: 3
 		second: 4
 		nanoSecond: 5
-		offset: 6 hours.
+		offset: (Duration hours: 6).
 	self
 		assert: t julianDayNumber equals: 1721427;
 		assert: t offset equals: 6 hours;
@@ -319,7 +364,7 @@ DateAndTimeTest >> testNotSymmetricWithString [
 		minute: 3
 		second: 4
 		nanoSecond: 5
-		offset: 6 hours.
+		offset: (Duration hours: 6).
 	t2 := '0001-01-02T02:03:04.000000005+06:00'.
 	self deny: t1 equals: t2.
 	self deny: t2 equals: t1
@@ -335,140 +380,139 @@ DateAndTimeTest >> testOffset [
 		minute: 2
 		second: 3
 		offset: 1 hours.
-	dateAndTime2 := dateAndTime1 offset: 1 hour.
+	dateAndTime2 := dateAndTime1 offset: (Duration hours: 1).
 	self assert: dateAndTime1 equals: dateAndTime2.
-	self assert: dateAndTime1 localSeconds equals: dateAndTime2 localSeconds.
+	
+	self 
+		assert: dateAndTime1 localSeconds 
+		equals: dateAndTime2 localSeconds.
 
-	dateAndTime2 := dateAndTime1 offset: -1 hour.
+	dateAndTime2 := dateAndTime1 offset: (Duration hours: -1).
 	self assert: dateAndTime1 equals: dateAndTime2.
-	self deny: dateAndTime1 localSeconds identicalTo: dateAndTime2 localSeconds.
+	self 
+		deny: dateAndTime1 localSeconds 
+		identicalTo: dateAndTime2 localSeconds.
 
-	dateAndTime2 := dateAndTime1 offset: -2 hour.
+	dateAndTime2 := dateAndTime1 offset: (Duration hours: -2).
 	self assert: dateAndTime1 equals: dateAndTime2.
-	self deny: dateAndTime1 localSeconds identicalTo: dateAndTime2 localSeconds
+	self 
+		deny: dateAndTime1 localSeconds 
+		identicalTo: dateAndTime2 localSeconds
 ]
 
 { #category : 'tests - epoch' }
 DateAndTimeTest >> testPharoEpoch [
-	self
-		useNonUtcTimeZoneDuring: [ | localEpoch |
-			localEpoch := '1901-01-01T00:00:00' asDateAndTime.
+
+	self useNonUtcTimeZoneDuring: [
+			| localEpoch |
+			localEpoch := DateAndTime fromString: '1901-01-01T00:00:00'.
 			self deny: DateAndTime epoch equals: localEpoch.
-			self deny: ((DateAndTime fromSeconds: 0) offset: 0) equals: localEpoch ].
+			self 
+				deny: ((DateAndTime fromSeconds: 0) offset:  Duration zero)
+				equals: localEpoch ].
 
-	self
-		useTimeZone: 'UTC'
-		during: [ | localEpoch |
-			localEpoch := '1901-01-01T00:00:00' asDateAndTime.
+	self useTimeZone: 'UTC' during: [
+			| localEpoch |
+			localEpoch := DateAndTime fromString: '1901-01-01T00:00:00'.
 			self assert: DateAndTime epoch equals: localEpoch.
-			self assert: ((DateAndTime fromSeconds: 0) offset: 0) equals: localEpoch ].
+			self assert: ((DateAndTime fromSeconds: 0) offset:  Duration zero) equals: localEpoch ].
 
-	self assert: DateAndTime epoch equals: '1901-01-01T00:00:00+00:00' asDateAndTime.
-	self assert: ((DateAndTime fromSeconds: 0) offset: 0) equals: '1901-01-01T00:00:00+00:00' asDateAndTime
+	self 
+		assert: DateAndTime epoch 
+		equals: (DateAndTime fromString: '1901-01-01T00:00:00+00:00').
+	self 
+		assert: ((DateAndTime fromSeconds: 0) offset:  Duration zero) 
+		equals: (DateAndTime fromString: '1901-01-01T00:00:00+00:00')
 ]
 
 { #category : 'tests' }
 DateAndTimeTest >> testPrintString [
+
 	| dt dtNoOffset |
 	dt := DateAndTime
-		year: 2004
-		month: 11
-		day: 2
-		hour: 14
-		minute: 3
-		second: 5
-		nanoSecond: 12345
-		offset: (Duration seconds: 5 * 3600).
+		      year: 2004
+		      month: 11
+		      day: 2
+		      hour: 14
+		      minute: 3
+		      second: 5
+		      nanoSecond: 12345
+		      offset: (Duration seconds: 5 * 3600).
 	self assert: dt printString equals: '2004-11-02T14:03:05.000012345+05:00'.
-	self assert: '2002-05-16T17:20:45.1+01:01' asDateAndTime printString equals: '2002-05-16T17:20:45.1+01:01'.
-	self assert: '2002-05-16T17:20:45.02+01:01' asDateAndTime printString equals: '2002-05-16T17:20:45.02+01:01'.
-	self assert: '2002-05-16T17:20:45.000000009+01:01' asDateAndTime printString equals: '2002-05-16T17:20:45.000000009+01:01'.
-	self assert: '2002-05-16T17:20:45+00:00' asDateAndTime printString equals: '2002-05-16T17:20:45+00:00'.
-	self assert: '2002-05-16T17:20:45+01:57' asDateAndTime printString equals: '2002-05-16T17:20:45+01:57'.
-	self assert: '2002-05-16T17:20:45-02:34' asDateAndTime printString equals: '2002-05-16T17:20:45-02:34'.
-	self assert: '2002-05-16T17:20:45+00:00' asDateAndTime printString equals: '2002-05-16T17:20:45+00:00'.
-	self assert: '1997-04-26T01:02:03+01:02:3' asDateAndTime printString equals: '1997-04-26T01:02:03+01:02:3'.
-	"When no offset is provided, the local one is used"
-	dtNoOffset := '2002-05-16T17:20' asDateAndTime.
+	self assert: (DateAndTime fromString: '2002-05-16T17:20:45.1+01:01') printString equals: '2002-05-16T17:20:45.1+01:01'.
+	self assert: (DateAndTime fromString: '2002-05-16T17:20:45.02+01:01') printString equals: '2002-05-16T17:20:45.02+01:01'.
+	self
+		assert: (DateAndTime fromString: '2002-05-16T17:20:45.000000009+01:01') printString
+		equals: '2002-05-16T17:20:45.000000009+01:01'.
+	self assert: (DateAndTime fromString: '2002-05-16T17:20:45+00:00') printString equals: '2002-05-16T17:20:45+00:00'.
+	self assert: (DateAndTime fromString: '2002-05-16T17:20:45+01:57') printString equals: '2002-05-16T17:20:45+01:57'.
+	self assert: (DateAndTime fromString: '2002-05-16T17:20:45-02:34') printString equals: '2002-05-16T17:20:45-02:34'.
+	self assert: (DateAndTime fromString: '2002-05-16T17:20:45+00:00') printString equals: '2002-05-16T17:20:45+00:00'.
+	self assert: (DateAndTime fromString: '1997-04-26T01:02:03+01:02:3') printString equals: '1997-04-26T01:02:03+01:02:3'. "When no offset is provided, the local one is used"
+	dtNoOffset := DateAndTime fromString: '2002-05-16T17:20'.
 	self assert: (('2002-05-16T17:20:00*' match: dtNoOffset printString) and: [ dtNoOffset offset = DateAndTime localOffset ])
 ]
 
 { #category : 'tests - under design' }
 DateAndTimeTest >> testPrintStringNoOffset [
+
 	| localOffsetHours localOffsetMinutes signString |
-	signString := DateAndTime localOffset hours positive ifTrue: [ '+' ] ifFalse: [ '-' ].
+	signString := DateAndTime localOffset hours positive
+		              ifTrue: [ '+' ]
+		              ifFalse: [ '-' ].
 	localOffsetHours := DateAndTime localOffset hours abs printStringPadded: 2.
 	localOffsetMinutes := DateAndTime localOffset minutes printStringPadded: 2.
-	self
-		assert: '2002-05-16T17:20' asDateAndTime printString
-		equals: ('2002-05-16T17:20:00{1}{2}:{3}' format: {signString . localOffsetHours . localOffsetMinutes}).
-	self
-		assert: '2002-05-16T17:20:45' asDateAndTime printString
-		equals: ('2002-05-16T17:20:45{1}{2}:{3}' format: {signString . localOffsetHours . localOffsetMinutes})
+	self assert: (DateAndTime fromString: '2002-05-16T17:20') printString equals: ('2002-05-16T17:20:00{1}{2}:{3}' format: {
+				 signString.
+				 localOffsetHours.
+				 localOffsetMinutes }).
+	self assert: (DateAndTime fromString: '2002-05-16T17:20:45') printString equals: ('2002-05-16T17:20:45{1}{2}:{3}' format: {
+				 signString.
+				 localOffsetHours.
+				 localOffsetMinutes })
 ]
 
 { #category : 'tests - under design' }
 DateAndTimeTest >> testPrintStringSecond [
 
-	self assert: '-1199-01-05T20:33:14.321-05:00' asDateAndTime printString equals: '-1199-01-05T20:33:14.321-05:00'.
-	self assert: '2002-05-16T17:20:45.1+01:01' asDateAndTime printString equals: '2002-05-16T17:20:45.1+01:01'.
-	self assert: '2002-05-16T17:20:45.02+01:01' asDateAndTime printString equals: '2002-05-16T17:20:45.02+01:01'.
-	self assert: '2002-05-16T17:20:45.000000009+01:01' asDateAndTime printString equals: '2002-05-16T17:20:45.000000009+01:01'.
-	self assert: '2002-05-16T17:20:45+01:57' asDateAndTime printString equals: '2002-05-16T17:20:45+01:57'.
-	self assert: '2002-05-16T17:20:45-02:34' asDateAndTime printString equals: '2002-05-16T17:20:45-02:34'.
-	self assert: '2002-05-16T17:20:45+00:00' asDateAndTime printString equals: '2002-05-16T17:20:45+00:00'.
-	self assert: '1997-04-26T01:02:03+01:02:3' asDateAndTime printString equals: '1997-04-26T01:02:03+01:02:3'
+	self assert: (DateAndTime fromString: '-1199-01-05T20:33:14.321-05:00') printString equals: '-1199-01-05T20:33:14.321-05:00'.
+	self assert: (DateAndTime fromString: '2002-05-16T17:20:45.1+01:01') printString equals: '2002-05-16T17:20:45.1+01:01'.
+	self assert: (DateAndTime fromString: '2002-05-16T17:20:45.02+01:01') printString equals: '2002-05-16T17:20:45.02+01:01'.
+	self
+		assert: (DateAndTime fromString: '2002-05-16T17:20:45.000000009+01:01') printString
+		equals: '2002-05-16T17:20:45.000000009+01:01'.
+	self assert: (DateAndTime fromString: '2002-05-16T17:20:45+01:57') printString equals: '2002-05-16T17:20:45+01:57'.
+	self assert: (DateAndTime fromString: '2002-05-16T17:20:45-02:34') printString equals: '2002-05-16T17:20:45-02:34'.
+	self assert: (DateAndTime fromString: '2002-05-16T17:20:45+00:00') printString equals: '2002-05-16T17:20:45+00:00'.
+	self assert: (DateAndTime fromString: '1997-04-26T01:02:03+01:02:3') printString equals: '1997-04-26T01:02:03+01:02:3'
 ]
 
 { #category : 'tests' }
 DateAndTimeTest >> testReadFrom [
 
+	self assert: (DateAndTime fromString: '-1199-01-05T20:33:14.321-05:00') printString equals: '-1199-01-05T20:33:14.321-05:00'.
+	self assert: (DateAndTime fromString: '2002-05-16T17:20:45.1+01:01') printString equals: '2002-05-16T17:20:45.1+01:01'.
+	self assert: (DateAndTime fromString: '2002-05-16T17:20:45.02+01:01') printString equals: '2002-05-16T17:20:45.02+01:01'.
 	self
-		assert: '-1199-01-05T20:33:14.321-05:00' asDateAndTime printString
-		equals: '-1199-01-05T20:33:14.321-05:00'.
+		assert: (DateAndTime fromString: '2002-05-16T17:20:45.000000009+01:01') printString
+		equals: '2002-05-16T17:20:45.000000009+01:01'.
+	self assert: (DateAndTime fromString: '2002-05-16T17:20') translateToUTC printString equals: '2002-05-16T17:20:00+00:00'.
+	self assert: (DateAndTime fromString: '2002-05-16T17:20:45') translateToUTC printString equals: '2002-05-16T17:20:45+00:00'.
+	self assert: (DateAndTime fromString: '2002-05-16T17:20:45+01:57') printString equals: '2002-05-16T17:20:45+01:57'.
+	self assert: (DateAndTime fromString: '2002-05-16T17:20:45-02:34') equals: (DateAndTime fromString: '2002-05-16T17:20:45-02:34').
+	self assert: (DateAndTime fromString: '2002-05-16T17:20:45+00:00') equals: (DateAndTime fromString: '2002-05-16T17:20:45+00:00').
 	self
-		assert: '2002-05-16T17:20:45.1+01:01' asDateAndTime printString
-		equals:  '2002-05-16T17:20:45.1+01:01'.
-	self
-		assert:	'2002-05-16T17:20:45.02+01:01' asDateAndTime printString
-		equals:  '2002-05-16T17:20:45.02+01:01'.
-	self
-		assert:	'2002-05-16T17:20:45.000000009+01:01' asDateAndTime printString
-		equals:   '2002-05-16T17:20:45.000000009+01:01'.
-	self
-		assert: '2002-05-16T17:20' asDateAndTime translateToUTC printString
-		equals:  '2002-05-16T17:20:00+00:00'.
-	self
-		assert: '2002-05-16T17:20:45' asDateAndTime translateToUTC printString
-		equals:  '2002-05-16T17:20:45+00:00' .
-	self
-		assert: '2002-05-16T17:20:45+01:57' asDateAndTime printString
-		equals:  '2002-05-16T17:20:45+01:57'.
-	self
-		assert: '2002-05-16T17:20:45-02:34' asDateAndTime
-		equals:  '2002-05-16T17:20:45-02:34' asDateAndTime.
-	self
-		assert: '2002-05-16T17:20:45+00:00' asDateAndTime
-		equals:  '2002-05-16T17:20:45+00:00' asDateAndTime.
-	self
-		assert: '1997-04-26T01:02:03+01:02:3' asDateAndTime
-		equals:  '1997-04-26T01:02:03+01:02:3' asDateAndTime
+		assert: (DateAndTime fromString: '1997-04-26T01:02:03+01:02:3')
+		equals: (DateAndTime fromString: '1997-04-26T01:02:03+01:02:3')
 ]
 
 { #category : 'tests' }
 DateAndTimeTest >> testReadFromDateOnly [
-	self
-		assert: '2014-02-19' asDateAndTime translateToUTC printString
-		equals: '2014-02-19T00:00:00+00:00'.
-	self
-		assert: '2014-02-19Z' asDateAndTime printString
-		equals: '2014-02-19T00:00:00+00:00'.
-	self
-		assert: '2014-02-19T+07:00' asDateAndTime printString
-		equals:  '2014-02-19T00:00:00+07:00'.
-	self
-		assert: '2014-02-19 -05:00' asDateAndTime printString
-		equals:  '2014-02-19T00:00:00-05:00'
+
+	self assert: (DateAndTime fromString: '2014-02-19') translateToUTC printString equals: '2014-02-19T00:00:00+00:00'.
+	self assert: (DateAndTime fromString: '2014-02-19Z') printString equals: '2014-02-19T00:00:00+00:00'.
+	self assert: (DateAndTime fromString: '2014-02-19T+07:00') printString equals: '2014-02-19T00:00:00+07:00'.
+	self assert: (DateAndTime fromString: '2014-02-19 -05:00') printString equals: '2014-02-19T00:00:00-05:00'
 ]
 
 { #category : 'tests - offset' }
@@ -510,22 +554,26 @@ DateAndTimeTest >> testReadFromOffset [
 
 { #category : 'tests - under design' }
 DateAndTimeTest >> testReadFromSecond [
-	self assert: '-1199-01-05T20:33:14.321-05:00' asDateAndTime printString equals: '-1199-01-05T20:33:14.321-05:00'.
-	self assert: '2002-05-16T17:20:45.1+01:01' asDateAndTime printString equals: '2002-05-16T17:20:45.1+01:01'.
-	self assert: '2002-05-16T17:20:45.02+01:01' asDateAndTime printString equals: '2002-05-16T17:20:45.02+01:01'.
-	self assert: '2002-05-16T17:20:45.000000009+01:01' asDateAndTime printString equals: '2002-05-16T17:20:45.000000009+01:01'.
-	self assert: '2002-05-16T17:20' asDateAndTime translateToUTC printString equals: '2002-05-16T17:20:00+00:00'.
-	self assert: '2002-05-16T17:20:45' asDateAndTime translateToUTC printString equals: '2002-05-16T17:20:45+00:00'.
-	self assert: '2002-05-16T17:20:45+01:57' asDateAndTime printString equals: '2002-05-16T17:20:45+01:57'.
-	self assert: '2002-05-16T17:20:45-02:34' asDateAndTime printString equals: '2002-05-16T17:20:45-02:34'.
-	self assert: '2002-05-16T17:20:45+00:00' asDateAndTime printString equals: '2002-05-16T17:20:45+00:00'.
-	self assert: '1997-04-26T01:02:03+01:02:3' asDateAndTime printString equals: '1997-04-26T01:02:03+01:02:3'
+
+	self assert: (DateAndTime fromString: '-1199-01-05T20:33:14.321-05:00') printString equals: '-1199-01-05T20:33:14.321-05:00'.
+	self assert: (DateAndTime fromString: '2002-05-16T17:20:45.1+01:01') printString equals: '2002-05-16T17:20:45.1+01:01'.
+	self assert: (DateAndTime fromString: '2002-05-16T17:20:45.02+01:01') printString equals: '2002-05-16T17:20:45.02+01:01'.
+	self
+		assert: (DateAndTime fromString: '2002-05-16T17:20:45.000000009+01:01') printString
+		equals: '2002-05-16T17:20:45.000000009+01:01'.
+	self assert: (DateAndTime fromString: '2002-05-16T17:20') translateToUTC printString equals: '2002-05-16T17:20:00+00:00'.
+	self assert: (DateAndTime fromString: '2002-05-16T17:20:45') translateToUTC printString equals: '2002-05-16T17:20:45+00:00'.
+	self assert: (DateAndTime fromString: '2002-05-16T17:20:45+01:57' ) printString equals: '2002-05-16T17:20:45+01:57'.
+	self assert: (DateAndTime fromString: '2002-05-16T17:20:45-02:34') printString equals: '2002-05-16T17:20:45-02:34'.
+	self assert: (DateAndTime fromString: '2002-05-16T17:20:45+00:00') printString equals: '2002-05-16T17:20:45+00:00'.
+	self assert: (DateAndTime fromString: '1997-04-26T01:02:03+01:02:3') printString equals: '1997-04-26T01:02:03+01:02:3'
 ]
 
 { #category : 'tests - offset' }
 DateAndTimeTest >> testReadFromSpaceBeforeOffset [
-	self assert: '2012-07-26 16:38:48 +0200' asDateAndTime offset equals: 2 hour.
-	self assert: '2012-07-26 16:38:48 +02' asDateAndTime offset equals: 2 hour
+
+	self assert: (DateAndTime fromString: '2012-07-26 16:38:48 +0200') offset equals: 2 hour.
+	self assert: (DateAndTime fromString: '2012-07-26 16:38:48 +02') offset equals: 2 hour
 ]
 
 { #category : 'tests - offset' }
@@ -591,7 +639,7 @@ DateAndTimeTest >> testReflexive [
 	t := DateAndTime
 			year: 1 month: 1 day: 2
 			hour: 2 minute: 3 second: 4 nanoSecond: 5
-			offset: 6 hours.
+			offset: (Duration hours: 6).
 	self assert: t equals: t
 ]
 
@@ -599,18 +647,15 @@ DateAndTimeTest >> testReflexive [
 DateAndTimeTest >> testSecondsAcrossTimeZones [
 
 	| dateTime seconds dateTime2 utc |
-	dateTime := '2012-01-15T0000+00:00' asDateAndTime.
+	dateTime := DateAndTime fromString: '2012-01-15T0000+00:00'.
 	utc := TimeZone abbreviated: 'UTC'.
 
-	self useTimeZone: 'PDT' during: [ :pdt |
-		"Store a DateAndTime as seconds from the epoch"
-		seconds := dateTime asSeconds.
+	self useTimeZone: 'PDT' during: [ :pdt | "Store a DateAndTime as seconds from the epoch"
+			seconds := dateTime asSeconds. "Now move to Greenwich"
+			DateAndTime localTimeZone: utc.
+			dateTime2 := DateAndTime fromSeconds: seconds.
 
-		"Now move to Greenwich"
-		DateAndTime localTimeZone: utc.
-		dateTime2 := DateAndTime fromSeconds: seconds.
-
-		self assert: dateTime equals: dateTime2 ]
+			self assert: dateTime equals: dateTime2 ]
 ]
 
 { #category : 'tests' }
@@ -657,6 +702,7 @@ DateAndTimeTest >> testSecondsSinceMidnightLocalTime [
 
 { #category : 'tests' }
 DateAndTimeTest >> testSecondsSinceMidnightLocalTimeNormalization [
+
 	| dateAndTime|
 
 	"Check offset: changes from times defined in UTC"
@@ -708,7 +754,7 @@ DateAndTimeTest >> testSimpleAccessors [
 		minute: 3
 		second: 4
 		nanoSecond: 5
-		offset: 6 hours.
+		offset: (Duration hours: 6).
 	self
 		assert: t hours equals: t hours;
 		assert: t minutes equals: t minute;
@@ -719,16 +765,16 @@ DateAndTimeTest >> testSimpleAccessors [
 DateAndTimeTest >> testSubstracting [
 
 	| t |
-	t := '2004-01-07T11:55:00+00:00' asDateAndTime.
-	self assert: t - 5 equals: '2004-01-07T11:54:55+00:00' asDateAndTime
+	t := DateAndTime fromString: '2004-01-07T11:55:00+00:00'.
+	self assert: t - (Duration seconds: 5) equals: (DateAndTime fromString: '2004-01-07T11:54:55+00:00')
 ]
 
 { #category : 'tests - arithmetic' }
 DateAndTimeTest >> testSubstracting02 [
 
 	| t |
-	t := '2004-01-07T11:55:00+00:00' asDateAndTime.
-	self assert: t - '2004-01-07T1:00:00+00:00' equals: (Duration fromString: '0:10:55:00')
+	t := DateAndTime fromString: '2004-01-07T11:55:00+00:00'.
+	self assert: t - (DateAndTime fromString: '2004-01-07T1:00:00+00:00') equals: (Duration fromString: '0:10:55:00')
 ]
 
 { #category : 'tests - under design' }
@@ -742,7 +788,7 @@ DateAndTimeTest >> testSymmetric [
 		minute: 3
 		second: 4
 		nanoSecond: 5
-		offset: 6 hours.
+		offset: (Duration hours: 6).
 	t2 := DateAndTime
 		year: 1
 		month: 1
@@ -751,7 +797,7 @@ DateAndTimeTest >> testSymmetric [
 		minute: 3
 		second: 4
 		nanoSecond: 5
-		offset: 6 hours.
+		offset: (Duration hours: 6).
 	self assert: t2 equals: t1.
 	self assert: t1 equals: t2
 ]
@@ -767,8 +813,8 @@ DateAndTimeTest >> testTimeZoneEquivalence [
 	" Detroit is 5 hours behind UTC, this offset to UTC is therefore written with a minus sign. This example tests both the correct interpretation of the DateAndTime denotation and correct DateAndTime arithmetics. "
 
 	| twoPmInLondon nineAmInDetroit durationDifference |
-	twoPmInLondon := '2004-11-02T14:00:00+00:00' asDateAndTime.
-	nineAmInDetroit := '2004-11-02T09:00:00-05:00' asDateAndTime.
+	twoPmInLondon := DateAndTime fromString: '2004-11-02T14:00:00+00:00'.
+	nineAmInDetroit := DateAndTime fromString: '2004-11-02T09:00:00-05:00'.
 	durationDifference := twoPmInLondon - nineAmInDetroit.
 	self assert: durationDifference asSeconds equals: 0.
 	self assert: twoPmInLondon equals: nineAmInDetroit
@@ -801,22 +847,22 @@ DateAndTimeTest >> testTransitive [
 	t1 := DateAndTime
 			year: 1 month: 1 day: 2
 			hour: 2 minute: 3 second: 4 nanoSecond: 5
-			offset: 6 hours.
+			offset: (Duration hours: 6).
 	t2 := DateAndTime
 			year: 1 month: 1 day: 2
 			hour: 2 minute: 3 second: 4 nanoSecond: 5
-			offset: 6 hours.
+			offset: (Duration hours: 6).
 	t3 := DateAndTime
 			year: 1 month: 1 day: 2
 			hour: 2 minute: 3 second: 4 nanoSecond: 5
-			offset: 6 hours.
+			offset: (Duration hours: 6).
 	self assert: ((t1 = t2) & (t2 = t3) ==> (t1 = t3))
 ]
 
 { #category : 'tests - epoch' }
 DateAndTimeTest >> testUnixEpoch [
 
-	self assert: DateAndTime unixEpoch equals: '1970-01-01T00:00+00:00' asDateAndTime
+	self assert: DateAndTime unixEpoch equals: (DateAndTime fromString: '1970-01-01T00:00+00:00')
 ]
 
 { #category : 'tests' }

@@ -55,14 +55,6 @@ Behavior >> >> selector [
 	^self compiledMethodAt: selector
 ]
 
-{ #category : 'adding-removing methods' }
-Behavior >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: protocol [
-
-	<reflection: 'Class structural modification - Selector/Method modification'>
-
-	self addSelectorSilently: selector withMethod: compiledMethod.
-]
-
 { #category : 'obsolete subclasses' }
 Behavior >> addObsoleteSubclass: aClass [
 	"Weakly remember that aClass was a subclass of the receiver and is now obsolete"
@@ -76,20 +68,13 @@ Behavior >> addObsoleteSubclass: aClass [
 ]
 
 { #category : 'adding-removing methods' }
-Behavior >> addSelector: selector withMethod: compiledMethod [
-	<reflection: 'Class structural modification - Selector/Method modification'>
-	^ self addSelectorSilently: selector withMethod: compiledMethod
-]
-
-{ #category : 'adding-removing methods' }
 Behavior >> addSelectorSilently: selector withMethod: compiledMethod [
 	"Add the message selector with the corresponding compiled method to the
 	receiver's method dictionary.
 	Do this without sending system change notifications"
 	<reflection: 'Class structural modification - Selector/Method modification'>
 	self methodDict at: selector put: compiledMethod.
-	compiledMethod methodClass: self.
-	compiledMethod selector: selector.
+
 	"We record all selectors that are used as method names"
 	Symbol recordSelector: selector
 ]
@@ -1367,6 +1352,12 @@ Behavior >> methodDictionary: aDictionary [
 	self methodDict: aDictionary
 ]
 
+{ #category : 'organization' }
+Behavior >> methodInstaller [
+
+	^ OCMethodInstaller new
+]
+
 { #category : 'accessing' }
 Behavior >> methodNamed: aSelector [
 	<reflection: 'Class structural inspection - Selectors and methods inspection'>
@@ -1465,11 +1456,6 @@ Behavior >> nonObsoleteClass [
 	"Attempt to find and return the current version of this obsolete class"
 
 	^ self environment at: self originalName
-]
-
-{ #category : 'compiling' }
-Behavior >> noteCompilationOf: aSelector [
-	"A hook allowing some classes to react to recompilation of certain selectors"
 ]
 
 { #category : 'initialization' }

@@ -263,20 +263,21 @@ RGClassDefinitionTest >> testWithClassVariables [
 
 { #category : 'testing' }
 RGClassDefinitionTest >> testWithComment [
+
 	| newClass newComment |
 	newClass := RGClassDefinition named: #Object.
 	newComment := RGCommentDefinition new
-		parent: newClass;
-		content: 'This is a comment for test';
-		stamp: '2011-03-22T14:51';
-		yourself.
+		              parent: newClass;
+		              content: 'This is a comment for test';
+		              stamp: '2011-03-22T14:51';
+		              yourself.
 	newClass comment: newComment.
 
 	self assert: newClass hasComment.
 	self assert: newClass hasStamp.
 	self assert: newClass equals: newComment parent.
 	self assert: newComment content equals: 'This is a comment for test'.
-	self assert: newComment timeStamp equals: '2011-03-22T14:51' asDateAndTime.
+	self assert: newComment timeStamp equals: (DateAndTime fromString: '2011-03-22T14:51').
 
 	newClass comment: nil.
 	self assert: newClass hasComment not.

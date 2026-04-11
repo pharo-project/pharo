@@ -12,17 +12,17 @@ Class {
 { #category : 'tests-analyzing' }
 RottenTestsFinderTest >> testAnalyze [
 	| rottenTestsFound |
-	rottenTestsFound := RottenTestsFinder analyze: RTFFakeTestClass suite.
+	rottenTestsFound := RottenTestsFinder analyze: RTFFakeTestClassTest suite.
 
 	self
 		assert: rottenTestsFound rottenTests size equals: 3;
 		assert: (rottenTestsFound rottenCompiledMethods anySatisfy: [ :m |
-			m methodClass = RTFFakeTestSuperClass
+			m methodClass = RTFFakeTestSuperClassTest
 				and: [ m selector = #superNotAssertHelper ] ]);
 		assert: (rottenTestsFound rottenCompiledMethods anySatisfy: [ :m |
-			m methodClass = RTFFakeTestClass
+			m methodClass = RTFFakeTestClassTest
 				and: [ m selector = #rottenHelper ] ]);
 		assert: (rottenTestsFound rottenCompiledMethods anySatisfy: [ :m |
-			m methodClass = RTFFakeTestClass
+			m methodClass = RTFFakeTestClassTest
 				and: [ m selector = #testWithoutAssertionRun ] ])
 ]

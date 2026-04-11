@@ -15,5 +15,5 @@ RGStampParserTest >> testAuthor [
 { #category : 'tests' }
 RGStampParserTest >> testTime [
 
-	self assert: (RGStampParser parseTimestampFrom: '2015-10-11T18:13') equals: '2015-10-11T18:13:00' asDateAndTime
+	self assert: (RGStampParser parseTimestampFrom: '2015-10-11T18:13') equals: (DateAndTime fromString: '2015-10-11T18:13:00')
 ]

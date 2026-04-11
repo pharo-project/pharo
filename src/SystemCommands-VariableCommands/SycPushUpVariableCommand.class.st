@@ -4,9 +4,6 @@ I am a command to push up given variables
 Class {
 	#name : 'SycPushUpVariableCommand',
 	#superclass : 'SycRefactorVariableCommand',
-	#instVars : [
-		'variable'
-	],
 	#category : 'SystemCommands-VariableCommands',
 	#package : 'SystemCommands-VariableCommands'
 }
@@ -30,25 +27,9 @@ SycPushUpVariableCommand >> defaultMenuItemName [
 
 { #category : 'accessing' }
 SycPushUpVariableCommand >> executeRefactorings [
-	"Move this validation to the driver"
-
-	toolContext selectedVariables size > 1 ifTrue: [
-			SpAlertDialog new
-				label: 'Cannot pull up many variables at the same time';
-				openModal.
-			^ CmdCommandAborted signal ].
 
 	^ ((RePushUpVariableDriver newApplication: self application)
 		   scopes: refactoringScopes
-		   variable: variable actualVariable name
-		   shared: variable isClassVariable
-		   to: variable definingClass superclass) runRefactoring
-]
-
-{ #category : 'execution' }
-SycPushUpVariableCommand >> prepareFullExecutionInContext: aToolContext [
-
-	super prepareFullExecutionInContext: aToolContext.
-	toolContext := aToolContext.
-	variable := toolContext lastSelectedVariable
+		   variables: (variables collect: [ :v | v actualVariable ])
+		   to: variables first definingClass superclass) runRefactoring
 ]

@@ -43,10 +43,22 @@ Extension >> extendedClass: anObject [
 	extendedClass := anObject
 ]
 
+{ #category : 'initialization' }
+Extension >> hasUserPackages [
+
+	^ userPackages notNil and: [ userPackages notEmpty ]
+]
+
 { #category : 'accessing' }
 Extension >> internScopedSelector: aSymbol [
 
 	^ self package internScopedSelector: aSymbol
+]
+
+{ #category : 'organization' }
+Extension >> methodInstaller [
+
+	^ OCExtensionMethodInstaller new
 ]
 
 { #category : 'initialization' }

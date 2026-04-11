@@ -6,16 +6,18 @@ I have nanosecond precision.
 I am TimeZone aware. 
 I have zero duration.
 
-  DateAndTime now.
-  DateAndTime now asUTC rounded.
-  DateAndTime fromString: '1969-07-20T20:17:40.123+02:00'.
-  DateAndTime fromString: '1969-07-20T20:17:40Z'.
+```
+DateAndTime now.
+DateAndTime now asUTC rounded.
+DateAndTime fromString: '1969-07-20T20:17:40.123+02:00'.
+DateAndTime fromString: '1969-07-20T20:17:40Z'.
+```
 
 My implementation uses three SmallIntegers and a Duration:
-  julianDayNumber - julian day number (starting at midnight UTC rather than noon GMT).
-  seconds - number of seconds since midnight UTC. Always positive, between 0 and 86399.
-  nanos	 - the number of nanoseconds since the second. Always positive, between 0 and 999999999.
-  offset	- duration from UTC.
+-  julianDayNumber - julian day number (starting at midnight UTC rather than noon GMT).
+-  seconds - number of seconds since midnight UTC. Always positive, between 0 and 86399.
+-  nanos - the number of nanoseconds since the second. Always positive, between 0 and 999999999.
+-  offset - duration from UTC.
 
 The offset is used to print the date and time in a local time zone, but the date and time are handled in UTC internally.
 The nanosecond attribute is often zero but it defined for full ISO compliance and is suitable for timestamping.
@@ -108,7 +110,7 @@ DateAndTime class >> dosEpoch [
 DateAndTime class >> epoch [
   "Answer a DateAndTime representing the epoch: 1 January 1901"
 
-  ^ (self julianDayNumber: Epoch) offset: 0
+  ^ (self julianDayNumber: Epoch) offset: Duration zero
 ]
 
 { #category : 'instance creation' }
@@ -121,7 +123,8 @@ DateAndTime class >> fromDosTimestamp: anInteger [
 DateAndTime class >> fromInternalTime: anInteger [
 	"Answer an instance of the receiver with the time represented by anInteger. Pharo internal time is an integer representing time in the local timezone with an epoch of 1 Jan. 1901"
 
-	^(self fromSeconds: anInteger offset: 0) translateTo: self localOffset
+	^ (self fromSeconds: anInteger offset: Duration zero) 
+		translateTo: self localOffset
 ]
 
 { #category : 'instance creation' }
@@ -363,7 +366,7 @@ DateAndTime class >> readSeparateDateAndTimeFrom: stream [
 DateAndTime class >> readTimezoneOffsetFrom: stream [
 	"Read and return an optional timezone offset in the form of
 	[+|-]hh[[separator]mm[[separator]ss]] or Z from stream as a duration.
-	If there is no offset, return the local offset."
+	If there is no offset, return the local offset, a Duration."
 
 	^self readTimezoneOffsetFrom: stream default: self localOffset
 ]
@@ -372,7 +375,7 @@ DateAndTime class >> readTimezoneOffsetFrom: stream [
 DateAndTime class >> readTimezoneOffsetFrom: stream default: defaultOffset [
 	"Read and return an optional timezone offset in the form of
 	[+|-]hh[[separator]mm[[separator]ss]] or Z from stream as a duration.
-	If there is no offset, return the defaultOffset."
+	If there is no offset, return the defaultOffset, a Duration."
 
 	| sign hour minute second |
 	(stream peekFor: $Z) ifTrue: [ ^ Duration zero ].
@@ -617,15 +620,16 @@ DateAndTime >> + operand [
 DateAndTime >> - operand [
 	"operand conforms to protocol DateAndTime or protocol Duration"
 
-	^ (operand respondsTo: #asDateAndTime)
-		ifTrue: [
-			| other |
-			other := operand asDateAndTime.
-			Duration
-				seconds: (SecondsInDay * (julianDayNumber - other julianDayNumberUTC))
-							+ (seconds - other secondsSinceMidnightUTC)
-				nanoSeconds: nanos - other nanoSecond ]
-		ifFalse: [ self + operand negated ]
+	^ operand subtractReceiverToDateAndTime: self 
+	
+	"^ (operand respondsTo: #asDateAndTime)
+		  ifTrue: [
+				  | other |
+				  other := operand asDateAndTime.
+				  Duration
+					  seconds: SecondsInDay * (julianDayNumber - other julianDayNumberUTC) + (seconds - other secondsSinceMidnightUTC)
+					  nanoSeconds: nanos - other nanoSecond ]
+		  ifFalse: [ self + operand negated ]"
 ]
 
 { #category : 'arithmetic' }
@@ -704,7 +708,18 @@ DateAndTime >> asMonth [
 DateAndTime >> asNanoSeconds [
 	"Answer the number of nanoseconds since midnight"
 
-	^ self asDuration asNanoSeconds
+	"The current implementation is faster than 
+		^ (self hours * SecondsInHour * NanosInSecond) + (self minutes * SecondsInMinute * NanosInSecond) + nanos
+		263,638,393 iterations in 5 seconds. 52727678.600 per second
+		
+		^ self asDuration asNanoSeconds 
+			273,990,397 iterations in 5 seconds 3 milliseconds. 54765220.268 per second 
+		
+		current implementation: 
+			844,369,613 iterations in 5 seconds 2 milliseconds. 168806400.040 per second
+		"
+	
+	^ (self localSeconds * NanosInSecond) + nanos
 ]
 
 { #category : 'converting' }
@@ -731,7 +746,7 @@ DateAndTime >> asUTC [
 
 	^ offset isZero
 		ifTrue: [ self ]
-		ifFalse: [ self offset: 0 ]
+		ifFalse: [ self offset: Duration zero ]
 ]
 
 { #category : 'converting' }
@@ -1040,14 +1055,29 @@ DateAndTime >> offset [
 ]
 
 { #category : 'accessing' }
-DateAndTime >> offset: anOffset [
+DateAndTime >> offset: aDuration [
 	"Answer a <DateAndTime> equivalent to the receiver but with its local time
-	being offset from UTC by offset.
+	being offset from UTC by offset, a Duration.
 	Unlike #translateTo: this will NOT change the absolute in UTC "
 
-	^ self class basicNew
-		ticks: self ticks offset: anOffset asDuration;
-		yourself
+	"We want to remove asDuration from SmallInteger and friends.
+	so for now we explicit check."
+	
+	aDuration class = Duration 
+		ifTrue: [  
+		^ self class basicNew
+		 	 ticks: self ticks offset: aDuration;
+			  yourself ]
+		ifFalse: [  
+		^ self class basicNew
+		 	 ticks: self ticks offset: (Duration seconds: aDuration);
+			  yourself ]
+		"since asDuration was defined as
+			SmallInteger>>asDuration 
+				^ Duration seconds: self
+		
+		It feels to me that there is a bug the duration should not be in seconds but in hours.		
+				"
 ]
 
 { #category : 'accessing' }
@@ -1183,6 +1213,15 @@ DateAndTime >> setJdn: julDays seconds: secs nano: nanoSecs offset: anOffset [
 	self normalizeSecondsAndNanos
 ]
 
+{ #category : 'arithmetic' }
+DateAndTime >> subtractReceiverToDateAndTime: aDateAndTime [
+	"Subtract the receiver to the argument."
+	
+	^ Duration
+		  seconds: SecondsInDay * (aDateAndTime julianDayNumberUTC - julianDayNumber) + (aDateAndTime secondsSinceMidnightUTC - seconds)
+		  nanoSeconds: aDateAndTime nanoSecond - nanos
+]
+
 { #category : 'private' }
 DateAndTime >> ticks [
 	"Private - answer an array with our instance variables. Assumed to be UTC "
@@ -1218,7 +1257,7 @@ DateAndTime >> timeZoneName [
 DateAndTime >> to: anEnd [
 	"Answer a Timespan. anEnd conforms to protocol DateAndTime or protocol Timespan"
 
-	^ Timespan starting: self ending: (anEnd asDateAndTime)
+	^ Timespan starting: self ending: anEnd asDateAndTime
 ]
 
 { #category : 'accessing' }
@@ -1247,22 +1286,24 @@ DateAndTime >> translateTo: anOffset [
 	t = (t offset: 2 hours).
 	t = (t translateTo: 2 hours).
 	"
-	self dayMonthYearDo: [ :day :month :year|
-		^ self class
-			year: year
-			month: month
-			day: day
-			hour: self hour
-			minute: self minute
-			second: self second
-			nanoSecond: self  nanoSecond
-			offset: anOffset asDuration ]
+
+	self dayMonthYearDo: [ :day :month :year |
+			^ self class
+				  year: year
+				  month: month
+				  day: day
+				  hour: self hour
+				  minute: self minute
+				  second: self second
+				  nanoSecond: self nanoSecond
+				  offset: anOffset ]
 ]
 
 { #category : 'accessing' }
 DateAndTime >> translateToUTC [
 	" Move this represenation to UTC"
-	^ self translateTo: 0 asDuration
+	
+	^ self translateTo: Duration zero
 ]
 
 { #category : 'accessing' }
@@ -1275,7 +1316,7 @@ DateAndTime >> truncated [
 { #category : 'accessing' }
 DateAndTime >> withoutOffset [
 
-	^ self offset: 0
+	^ self offset: Duration zero
 ]
 
 { #category : 'accessing' }

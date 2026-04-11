@@ -17,13 +17,13 @@ Class {
 RTFLeadsToAssertPrimitiveCallCheckerTest >> setUp [
 	super setUp.
 	tree1 := RTFSelfCallRootNode new
-				compiledMethod: (RTFFakeTestClass lookupSelector: #testWithHelperHelper);
+				compiledMethod: (RTFFakeTestClassTest lookupSelector: #testWithHelperHelper);
 				subCalls: {
 					RTFSelfCallRootNode new
-						compiledMethod: (RTFFakeTestClass lookupSelector: #helperHelper);
+						compiledMethod: (RTFFakeTestClassTest lookupSelector: #helperHelper);
 						subCalls: {
 							RTFSelfCallRootNode new
-								compiledMethod: (RTFFakeTestClass lookupSelector: #assertHelper);
+								compiledMethod: (RTFFakeTestClassTest lookupSelector: #assertHelper);
 								subCalls: {
 									RTFSelfCallRootNode new
 										compiledMethod: (TestAsserter lookupSelector: #assert:);
@@ -35,10 +35,10 @@ RTFLeadsToAssertPrimitiveCallCheckerTest >> setUp [
 					};
 				yourself.
 	tree2 := RTFSelfCallRootNode new
-				compiledMethod: (RTFFakeTestClass lookupSelector: #testWithNoAssertionInHelperRun);
+				compiledMethod: (RTFFakeTestClassTest lookupSelector: #testWithNoAssertionInHelperRun);
 				subCalls: {
 					RTFSelfCallRootNode new
-						compiledMethod: (RTFFakeTestClass lookupSelector: #rottenHelper);
+						compiledMethod: (RTFFakeTestClassTest lookupSelector: #rottenHelper);
 						subCalls: #();
 						yourself
 					};

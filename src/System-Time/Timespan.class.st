@@ -62,7 +62,7 @@ Timespan >> - operand [
 
 	^ (operand respondsTo: #asDateAndTime)
 	 	ifTrue: [ self start - operand ]
-	 	ifFalse: [ self + (operand negated) ]
+	 	ifFalse: [ self + operand negated ]
 ]
 
 { #category : 'arithmetic' }
@@ -368,7 +368,7 @@ Timespan >> monthsDo: aBlock [
 
 { #category : 'accessing' }
 Timespan >> next [
-
+	
 	^ self class starting: (start + duration) duration: duration
 ]
 
@@ -378,13 +378,13 @@ Timespan >> offset [
 ]
 
 { #category : 'accessing' }
-Timespan >> offset: anOffset [
+Timespan >> offset: aDuration [
 	"Answer a <Timespan> equivalent to the receiver but with its local time
 	being offset from UTC by offset.
 	Unlike #translateTo: this will NOT change the absolute in UTC "
 
 	^ self class
-		starting: (self start offset: anOffset)
+		starting: (self start offset: aDuration)
 		duration: self duration
 ]
 
@@ -420,6 +420,12 @@ Timespan >> start: aDateAndTime [
 	start := aDateAndTime asDateAndTime
 ]
 
+{ #category : 'arithmetic' }
+Timespan >> subtractReceiverToDateAndTime: aDateAndTime [
+
+	^ aDateAndTime - self asDateAndTime
+]
+
 { #category : 'enumerating' }
 Timespan >> to: anEnd [
 	"Answer an Timespan. anEnd must be aDateAndTime or a Timespan"
@@ -442,7 +448,7 @@ Timespan >> translateTo: aTimeZone [
 { #category : 'enumerating' }
 Timespan >> translateToUTC [
 	" Move this represenation to UTC"
-	^ self translateTo: 0
+	^ self translateTo: (Duration zero)
 ]
 
 { #category : 'enumerating' }

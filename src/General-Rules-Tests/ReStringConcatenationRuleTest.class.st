@@ -9,7 +9,9 @@ Class {
 { #category : 'tests' }
 ReStringConcatenationRuleTest >> testRule [
 
-	self generateMethod: 'method #(1 2 3) do: [ :each | string := string, each asString].'.
+	self generateMethod: 'method
+		| string |
+		#(1 2 3) do: [ :each | string := string, each asString]'.
 	self assert: (self myCritiquesOnMethod: self class >> #method) size equals: 1
 ]
 

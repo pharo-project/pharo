@@ -159,23 +159,6 @@ FBDDecompiler >> decompile: aSelector in: aClass method: anInitialCompiledMethod
 				class: aClass)
 ]
 
-{ #category : 'public api' }
-FBDDecompiler >> decompileAll [
-	Smalltalk globals allClassesAndTraits
-		do: [ :classOrTrait | self decompileThenRecompileClass: classOrTrait ]
-		displayingProgress: 'Decompiling all classes and traits'
-]
-
-{ #category : 'recompilation' }
-FBDDecompiler >> decompileThenRecompileClass: aClass [
-	{aClass.
-	aClass class}
-		do: [ :class |
-			class localSelectors
-				do: [ :aMethod | self recompile: aMethod from: class ]
-				displayingProgress: [ :aMethod | 'Decompiling ' , class name , '>>#' , aMethod asString ] ]
-]
-
 { #category : 'data flow instructions' }
 FBDDecompiler >> directedSuperSend: selector numArgs: numberArguments [
 
@@ -584,18 +567,6 @@ FBDDecompiler >> quickMethod [
 			self pushReceiverVariable: instructionStream method returnField.
 			^ self methodReturnTop ].
 	self error: 'quick method inconsistency'
-]
-
-{ #category : 'recompilation' }
-FBDDecompiler >> recompile: selector from: oldClass [
-
-	| newMethod |
-	newMethod := oldClass compiler
-		             source: (self decompile: oldClass >> selector) formattedCode;
-		             failBlock: [ ^ self ];
-		             compile. "Assume OK after proceed from SyntaxError"
-	selector == newMethod selector ifFalse: [ self error: 'selector changed!' ].
-	oldClass addSelectorSilently: selector withMethod: newMethod
 ]
 
 { #category : 'data flow instructions' }

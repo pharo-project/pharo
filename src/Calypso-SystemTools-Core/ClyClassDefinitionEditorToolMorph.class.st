@@ -49,21 +49,22 @@ ClyClassDefinitionEditorToolMorph >> applyChangesAsClassDefinition [
 { #category : 'operations' }
 ClyClassDefinitionEditorToolMorph >> applyChangesAsMethodDefinition [
 
- 	| newMethod selector selectedClass |
- 	selectedClass := self editingClass.
+	| newMethod selector selectedClass |
+	selectedClass := self editingClass.
 
- 	selector := selectedClass
- 		            compile: self pendingText asString
- 		            notifying: textMorph.
+	selector := selectedClass
+		compile: self pendingText asString
+		classified: nil
+		notifying: textMorph.
 
- 	selector ifNil: [ ^ false ].
- 	newMethod := selectedClass >> selector.
- 	MethodClassifier classify: newMethod.
+	selector ifNil: [ ^ false ].
+	newMethod := selectedClass >> selector.
+	MethodClassifier classify: newMethod.
 
- 	self removeFromBrowser.
- 	browser tabManager desiredSelection: { ClyMethodCodeEditorToolMorph }.
- 	browser selectMethod: newMethod.
- 	^ true
+	self removeFromBrowser.
+	browser tabManager desiredSelection: { ClyMethodCodeEditorToolMorph }.
+	browser selectMethod: newMethod.
+	^ true
 ]
 
 { #category : 'operations' }

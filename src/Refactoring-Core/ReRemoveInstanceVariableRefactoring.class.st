@@ -39,9 +39,13 @@ ReRemoveInstanceVariableRefactoring >> applicabilityPreconditions [
 { #category : 'preconditions' }
 ReRemoveInstanceVariableRefactoring >> breakingChangePreconditions [
 
-	^ { (ReInstanceVariableHasReferences new
-		   hierarchyOf: class
-		   referencesInstanceVariable: variableName) not }
+	^ { self preconditionHasReferences }
+]
+
+{ #category : 'preconditions' }
+ReRemoveInstanceVariableRefactoring >> preconditionHasReferences [
+
+	^ (ReInstanceVariableHasNoReferences new hierarchyOf: class referencesInstanceVariable: variableName) 
 ]
 
 { #category : 'preconditions' }

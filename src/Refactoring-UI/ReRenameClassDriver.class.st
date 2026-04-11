@@ -70,12 +70,6 @@ ReRenameClassDriver >> gatherUserInput [
 	^ true
 ]
 
-{ #category : 'private exe' }
-ReRenameClassDriver >> hasFailedBehaviorPreservingPreconditions [ 
-
-	^ refactoring failedBreakingChangePreconditions isNotEmpty
-]
-
 { #category : 'initialization' }
 ReRenameClassDriver >> initialize [ 
 	

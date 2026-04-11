@@ -25,25 +25,21 @@ CoGlobalSelectorFetcher >> entriesDo: aBlock [
 			
 	- the last one is to look globally in the method implementors and try to match. 		
 	"
-	
+
 	astNode ifNotNil: [ :node |
 			node parent ifNotNil: [ :parent | "Try first to continue the parent keyword message"
 					(parent isMessage and: [ parent isKeyword ]) ifTrue: [
-						
-							self systemNavigation 
-								allSelectorsStartingWith: parent selector , filter completionString 
-								do: [ :e |
+							self systemNavigation allSelectorsStartingWith: parent selector , filter completionString do: [ :e |
 									aBlock value: (NECSelectorEntry new
-											  displayedContents:
-												  '(' , (e copyFrom: 1 to: parent selector size) , ')' , 
-													(e copyFrom: parent selector size + 1 to: e size); 
-												contents: (e copyFrom: parent selector size + 1 to: e size);
-											  	node: astNode; 
-											 fetcher: self;
+											 displayedContents:
+												 '(' , (e copyFrom: 1 to: parent selector size) , ')' , (e copyFrom: parent selector size + 1 to: e size);
+											 contents: (e copyFrom: parent selector size + 1 to: e size);
+											 node: astNode;
+											 fetcherName: self class name;
 											 selector: e) ] ] ] ]. "Otherwise, just go wide"
-							
+
 	self systemNavigation allSelectorsStartingWith: filter completionString do: [ :e |
 			aBlock value: ((NECSelectorEntry contents: e node: astNode)
-					 fetcher: self;
+					 fetcherName: self class name;
 					 yourself) ]
 ]

@@ -283,7 +283,7 @@ SHPreferences class >> settingsOn: aBuilder [
 				order: 0;
 				label: 'Syntax Highlight Table';
 				domainValues: self styleTableAvailableStylesMethodsWithNames;
-				description: 'Syntax Highlight stylb;e table selection'.
+				description: 'Syntax Highlight style table selection'.
 			(aBuilder setting: #selectorPatternsStyle)
 				label: 'Selector Patterns';
 				default: self defaultSelectorPatternsStyle;

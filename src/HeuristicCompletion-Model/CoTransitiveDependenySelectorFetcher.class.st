@@ -28,6 +28,6 @@ CoTransitiveDependenySelectorFetcher >> entriesDo: aBlock [
 	dependentSelectors do: [ :sel |
 		
 					aBlock value: ((NECSelectorEntry contents: sel node: astNode)
-							 fetcher: self;
+							 fetcherName: self class name;
 							 yourself) ] 
 ]

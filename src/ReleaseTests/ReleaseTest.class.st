@@ -579,8 +579,6 @@ ReleaseTest >> testThatThereAreNoSelectorsRemainingThatAreSentButNotImplemented 
 ReleaseTest >> testUndeclared [
 
 	| undeclaredVariables validExceptions remaining description |
-	[ "we compile a second method with the undeclared #undeclaredStubInstVar1 to trigger the code path of removing twice in #cleanOutUndeclared"
-	self class compile: 'methodForTest ^undeclaredStubInstVar1'.
 	Smalltalk cleanOutUndeclared.
 	undeclaredVariables := Undeclared associations select: [ :each | each isUndeclaredVariable ].
 
@@ -603,7 +601,7 @@ ReleaseTest >> testUndeclared [
 				               nextPutAll: '>>';
 				               print: method selector ] ].
 
-	self assert: remaining isEmpty description: description ] ensure: [ self class removeSelector: #methodForTest ]
+	self assert: remaining isEmpty description: description
 ]
 
 { #category : 'tests - package' }

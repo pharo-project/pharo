@@ -8,6 +8,20 @@ Class {
 	#package : 'SystemCommands-VariableCommands'
 }
 
+{ #category : 'activation' }
+SycMoveInstanceVariableToClassSideCommand class >> fullBrowserMenuActivation [
+
+	<classAnnotation>
+	^ CmdContextMenuActivation byRootGroupItemFor: ClyFullBrowserVariableContext
+]
+
+{ #category : 'activation' }
+SycMoveInstanceVariableToClassSideCommand class >> sourceCodeMenuActivation [
+	<classAnnotation>
+
+	^SycSourceCodeMenuActivation byRootGroupItemOrder: 1.6 for: ClySourceCodeContext
+]
+
 { #category : 'accessing' }
 SycMoveInstanceVariableToClassSideCommand >> defaultMenuIconName [
 	^ #smallRedo

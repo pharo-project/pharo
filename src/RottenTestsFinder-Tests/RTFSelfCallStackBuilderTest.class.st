@@ -15,7 +15,7 @@ Class {
 { #category : 'accessing' }
 RTFSelfCallStackBuilderTest >> fixtureClass [ 
 	
-	^ RTFFakeTestClass
+	^ RTFFakeTestClassTest
 ]
 
 { #category : 'running' }
@@ -38,7 +38,7 @@ RTFSelfCallStackBuilderTest >> testCallingSuperHelper [
 	self stackBuilder send: #testCallingSuperHelper fromClass: self fixtureClass.
 
 	self
-		assertCollection: self stackBuilder selfSentMethods hasSameElements: { RTFFakeTestSuperClass >> #superAssertHelper }
+		assertCollection: self stackBuilder selfSentMethods hasSameElements: { RTFFakeTestSuperClassTest >> #superAssertHelper }
 ]
 
 { #category : 'tests' }
@@ -74,5 +74,5 @@ RTFSelfCallStackBuilderTest >> testWithSuperHelper [
 	self stackBuilder send: #testWithAssertionInSuperHelperRun fromClass: self fixtureClass.
 
 	self
-		assertCollection: self stackBuilder selfSentMethods hasSameElements: { RTFFakeTestSuperClass >> #superAssertHelper }
+		assertCollection: self stackBuilder selfSentMethods hasSameElements: { RTFFakeTestSuperClassTest >> #superAssertHelper }
 ]

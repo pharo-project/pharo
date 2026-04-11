@@ -538,7 +538,7 @@ DurationTest >> testNanoSeconds [
 
 { #category : 'tests' }
 DurationTest >> testNegated [
-	self assert: aDuration + aDuration negated equals: (Duration seconds: 0)
+	self assert: aDuration + aDuration negated equals:  Duration zero
 ]
 
 { #category : 'tests' }
@@ -561,8 +561,8 @@ DurationTest >> testNormalizeNanoSeconds [
 	will be invalid."
 
 	| d t1 t2 |
-	t1 := '2004-01-07T11:55:01+00:00' asDateAndTime.
-	t2 := '2004-01-07T11:55:00.9+00:00' asDateAndTime.
+	t1 := DateAndTime fromString: '2004-01-07T11:55:01+00:00'.
+	t2 := DateAndTime fromString: '2004-01-07T11:55:00.9+00:00'.
 	d := t1 - t2.	"100 millisecond difference"
 	self assert: d nanoSeconds > 0.
 	self assert: d seconds equals: 0.
@@ -668,7 +668,7 @@ DurationTest >> testReadFromNoException [
 		'365:00:00:00'
 		'-7:09:12:06.10'
 		'+0:01:02:55'
-		'+0:01:02:3') do: [:each | each asDuration printString = each]
+		'+0:01:02:3') do: [:each | (Duration fromString: each) printString = each]
 ]
 
 { #category : 'tests' }

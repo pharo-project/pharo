@@ -390,7 +390,6 @@ Ring2ChunkImporterTest >> testStandardClassWithVariables [
 Ring2ChunkImporterTest >> testStandardComment [
 
 	| importer class comment code |
-
 	importer := RGChunkImporter new.
 
 	code := self testingCommentFor: #SomeClass.
@@ -403,11 +402,11 @@ Ring2ChunkImporterTest >> testStandardComment [
 	self assert: comment isNotNil.
 	self assert: comment isComment.
 	self assert: comment isRingResolved.
-	self assert: (comment hasResolvedAll: #(content author time)).
+	self assert: (comment hasResolvedAll: #( content author time )).
 
 	self assert: comment content equals: 'I''m a nice comment!, treat me well :).'.
 	self assert: comment author equals: 'GuillermoPolito'.
-	self assert: comment time equals: ('2012-05-02T13:35' asDateAndTime)
+	self assert: comment time equals: (DateAndTime fromString: '2012-05-02T13:35')
 ]
 
 { #category : 'tests' }
@@ -437,7 +436,6 @@ Ring2ChunkImporterTest >> testStandardMetaclass [
 Ring2ChunkImporterTest >> testStandardMetaclassMethod [
 
 	| importer class method code |
-
 	importer := RGChunkImporter new.
 
 	code := '!SomeClass class methodsFor: ''some protocol'' stamp: ''GuillermoPolito 2012-05-02T13:35''!someMethod
@@ -450,12 +448,12 @@ Ring2ChunkImporterTest >> testStandardMetaclassMethod [
 
 	self assert: class isMetaclass.
 	self assert: method isRingResolved.
-	self assert: (method hasResolvedAll: #(name tags sourceCode author time)).
+	self assert: (method hasResolvedAll: #( name tags sourceCode author time )).
 
 	self assert: method name equals: #someMethod.
 	self assert: method protocol equals: 'some protocol'.
 	self assert: method author equals: 'GuillermoPolito'.
-	self assert: method time equals: ('2012-05-02T13:35' asDateAndTime).
+	self assert: method time equals: (DateAndTime fromString: '2012-05-02T13:35').
 	self assert: method sourceCode equals: 'someMethod
 	^true'
 ]
@@ -514,7 +512,6 @@ Ring2ChunkImporterTest >> testStandardMetaclassTraitWithSingleTrait [
 Ring2ChunkImporterTest >> testStandardMethod [
 
 	| importer class method code |
-
 	importer := RGChunkImporter new.
 
 	code := '!SomeClass methodsFor: ''some protocol'' stamp: ''GuillermoPolito 2012-05-02T13:35''!someMethod
@@ -528,12 +525,12 @@ Ring2ChunkImporterTest >> testStandardMethod [
 	self assert: class isClass.
 	self assert: method isNotNil.
 	self assert: method isRingResolved.
-	self assert: (method hasResolvedAll: #(name sourceCode author time tags)).
+	self assert: (method hasResolvedAll: #( name sourceCode author time tags )).
 
 	self assert: method name equals: #someMethod.
 	self assert: method protocol equals: 'some protocol'.
 	self assert: method author equals: 'GuillermoPolito'.
-	self assert: method time equals: ('2012-05-02T13:35' asDateAndTime).
+	self assert: method time equals: (DateAndTime fromString: '2012-05-02T13:35').
 	self assert: method sourceCode equals: 'someMethod
 	^true'
 ]
@@ -542,7 +539,6 @@ Ring2ChunkImporterTest >> testStandardMethod [
 Ring2ChunkImporterTest >> testStandardMethodInExistingClass [
 
 	| importer class method code |
-
 	importer := RGChunkImporter new.
 	class := importer environment ensureClassNamed: #SomeClass.
 
@@ -556,12 +552,12 @@ Ring2ChunkImporterTest >> testStandardMethodInExistingClass [
 	self assert: class isClass.
 	self assert: method isNotNil.
 	self assert: method isRingResolved.
-	self assert: (method hasResolvedAll: #(name sourceCode author time tags)).
+	self assert: (method hasResolvedAll: #( name sourceCode author time tags )).
 
 	self assert: method name equals: #someMethod.
 	self assert: method protocol equals: 'some protocol'.
 	self assert: method author equals: 'GuillermoPolito'.
-	self assert: method time equals: ('2012-05-02T13:35' asDateAndTime).
+	self assert: method time equals: (DateAndTime fromString: '2012-05-02T13:35').
 	self assert: method sourceCode equals: 'someMethod
 	^true'
 ]
@@ -570,7 +566,6 @@ Ring2ChunkImporterTest >> testStandardMethodInExistingClass [
 Ring2ChunkImporterTest >> testStandardMethodInExistingMetaclassTrait [
 
 	| importer trait method code |
-
 	importer := RGChunkImporter new.
 
 	trait := importer environment ensureMetaclassTraitNamed: #'SomeTrait classTrait'.
@@ -582,15 +577,15 @@ Ring2ChunkImporterTest >> testStandardMethodInExistingMetaclassTrait [
 
 	method := trait methodNamed: #someMethod.
 
-	self assert: (trait isMetaclassTrait).
+	self assert: trait isMetaclassTrait.
 	self assert: method isNotNil.
 	self assert: method isRingResolved.
-	self assert: (method hasResolvedAll: #(name sourceCode author time tags)).
+	self assert: (method hasResolvedAll: #( name sourceCode author time tags )).
 
 	self assert: method name equals: #someMethod.
 	self assert: method protocol equals: 'some protocol'.
 	self assert: method author equals: 'GuillermoPolito'.
-	self assert: method time equals: ('2012-05-02T13:35' asDateAndTime).
+	self assert: method time equals: (DateAndTime fromString: '2012-05-02T13:35').
 	self assert: method sourceCode equals: 'someMethod
 	^true'
 ]
@@ -599,10 +594,9 @@ Ring2ChunkImporterTest >> testStandardMethodInExistingMetaclassTrait [
 Ring2ChunkImporterTest >> testStandardMethodInExistingTrait [
 
 	| importer trait method code |
-
 	importer := RGChunkImporter new.
 
-	trait := importer environment ensureTraitNamed: #'SomeTrait'.
+	trait := importer environment ensureTraitNamed: #SomeTrait.
 
 	code := '!SomeTrait methodsFor: ''some protocol'' stamp: ''GuillermoPolito 2012-05-02T13:35''!someMethod
 	^true'.
@@ -611,15 +605,15 @@ Ring2ChunkImporterTest >> testStandardMethodInExistingTrait [
 
 	method := trait methodNamed: #someMethod.
 
-	self assert: (trait isTrait and: [trait isMetaclassTrait not]).
+	self assert: (trait isTrait and: [ trait isMetaclassTrait not ]).
 	self assert: method isNotNil.
 	self assert: method isRingResolved.
-	self assert: (method hasResolvedAll: #(name sourceCode author time tags)).
+	self assert: (method hasResolvedAll: #( name sourceCode author time tags )).
 
 	self assert: method name equals: #someMethod.
 	self assert: method protocol equals: 'some protocol'.
 	self assert: method author equals: 'GuillermoPolito'.
-	self assert: method time equals: ('2012-05-02T13:35' asDateAndTime).
+	self assert: method time equals: (DateAndTime fromString: '2012-05-02T13:35').
 	self assert: method sourceCode equals: 'someMethod
 	^true'
 ]
@@ -628,7 +622,6 @@ Ring2ChunkImporterTest >> testStandardMethodInExistingTrait [
 Ring2ChunkImporterTest >> testStandardMethodInNewMetaclass [
 
 	| importer class method code |
-
 	importer := RGChunkImporter new.
 
 	code := '!SomeClass class methodsFor: ''some protocol'' stamp: ''GuillermoPolito 2012-05-02T13:35''!someMethod
@@ -642,12 +635,12 @@ Ring2ChunkImporterTest >> testStandardMethodInNewMetaclass [
 	self assert: class isClass.
 	self assert: method isNotNil.
 	self assert: method isRingResolved.
-	self assert: (method hasResolvedAll: #(name tags sourceCode author time)).
+	self assert: (method hasResolvedAll: #( name tags sourceCode author time )).
 
 	self assert: method name equals: #someMethod.
 	self assert: method protocol equals: 'some protocol'.
 	self assert: method author equals: 'GuillermoPolito'.
-	self assert: method time equals: ('2012-05-02T 13:35' asDateAndTime).
+	self assert: method time equals: (DateAndTime fromString: '2012-05-02T 13:35').
 	self assert: method sourceCode equals: 'someMethod
 	^true'
 ]

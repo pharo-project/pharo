@@ -10,8 +10,8 @@ Class {
 		'contents',
 		'node',
 		'description',
-		'fetcher',
-		'displayedContents'
+		'displayedContents',
+		'fetcherName'
 	],
 	#classVars : [
 		'OriginDisplayed',
@@ -122,15 +122,27 @@ NECEntry >> displayedContents: aString [
 { #category : 'accessing' }
 NECEntry >> fetcher [
 
-	^ fetcher
+	^ fetcherName
 ]
 
 { #category : 'accessing' }
 NECEntry >> fetcher: anObject [
-	"We store the name of the fetcher as a string 
-	to ease debugging when a dynamic fetcher returns a item from another one more static."
+	self 
+		deprecated: 'Use fetcherName: instead' 
+		transformWith: '`@rec fetcher: `@arg' -> '`@rec fetcherName: `@arg class name'.
+	self fetcherName: anObject class name
+]
+
+{ #category : 'accessing' }
+NECEntry >> fetcherName [
 	
-	fetcher := anObject class name
+	^ fetcherName
+]
+
+{ #category : 'accessing' }
+NECEntry >> fetcherName: aString [
+	
+	fetcherName := aString
 ]
 
 { #category : 'accessing' }

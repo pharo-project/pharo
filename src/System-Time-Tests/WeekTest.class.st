@@ -32,7 +32,6 @@ WeekTest >> selectorsToBeIgnored [
 
 { #category : 'running' }
 WeekTest >> setUp [
-	"June 1998, 5th week"
 
 	super setUp.
 	restoredStartDay := Week startDay.
@@ -140,7 +139,10 @@ WeekTest >> testOffset [
 
 { #category : 'tests' }
 WeekTest >> testPreviousNext [
+	
 	self
-		assert: week next equals: (Week starting: (Date readFrom: '6-7-1998' pattern: 'd-m-y'));
-		assert: week previous equals: (Week starting: (Date readFrom: '22-6-1998' pattern: 'd-m-y'))
+		assert: week next 
+		equals: (Week starting: (Date readFrom: '6-7-1998' pattern: 'd-m-y'));
+		assert: week previous 
+		equals: (Week starting: (Date readFrom: '22-6-1998' pattern: 'd-m-y'))
 ]

@@ -276,7 +276,7 @@ GrowlMorph >> defaultTextStyle [
 { #category : 'default' }
 GrowlMorph >> defaultVanishDelay [
 
-	^ 1  seconds
+	^ Duration seconds: 1
 ]
 
 { #category : 'accessing' }

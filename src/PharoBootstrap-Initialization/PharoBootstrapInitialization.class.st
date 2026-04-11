@@ -141,10 +141,6 @@ PharoBootstrapInitialization class >> initializeCommandLineHandlerAndErrorHandli
 	Behavior initialize.
 	Class initialize.
 	Package initialize.
-	"Next three lines are for the deprecated aliases. This should be removed in Pharo 13"
-	PackageTag initialize.
-	PackageOrganizer initialize.
-	PackageConflictError initialize.
 
 	'Initializing sources' traceCr.
 	SourcesManager initialize.
@@ -159,7 +155,8 @@ PharoBootstrapInitialization class >> initializeCommandLineHandlerAndErrorHandli
 	NonInteractiveTranscript initialize.
 	PerformMessageCommandLineHandler registerAsCommandLinehandler.
 	
-	self undeclaredRegistry ifNotEmpty: [ self error: 'There should be no undeclared after loading the BaselineOfKernel. List of undeclared: ', self undeclaredRegistry keys printString ].
+	self undeclaredRegistry ifNotEmpty: [ 
+		self error: 'There should be no undeclared after loading the BaselineOfKernel. List of undeclared: ', (self undeclaredRegistry keys collect: [ :k | k -> k usingMethods ]) printString ].
 
 	Smalltalk snapshot: true andQuit: true.
 	Processor terminateActive

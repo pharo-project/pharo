@@ -15,7 +15,7 @@ Class {
 { #category : 'accessing' }
 RTFSelfCallVisitorInterpreterTest >> fixtureClass [
 
-	^ RTFFakeTestClass
+	^ RTFFakeTestClassTest
 ]
 
 { #category : 'accessing' }

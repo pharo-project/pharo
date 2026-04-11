@@ -20,8 +20,9 @@ CoGlobalVariableFetcher >> entriesDo: aBlock [
 
 	self systemNavigation
 		allGlobalNamesStartingWith: filter completionString
-		do: [ :e | aBlock value:
-				((NECGlobalEntry contents: e node: astNode) 
-					fetcher: self; yourself) ]
-		caseSensitive: (NECPreferences caseSensitive)
+		do: [ :e |
+				aBlock value: ((NECGlobalEntry contents: e node: astNode)
+						 fetcherName: self class name;
+						 yourself) ]
+		caseSensitive: NECPreferences caseSensitive
 ]

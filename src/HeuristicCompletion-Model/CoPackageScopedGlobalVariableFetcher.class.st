@@ -41,16 +41,14 @@ CoPackageScopedGlobalVariableFetcher >> entriesDo: aBlock [
 CoPackageScopedGlobalVariableFetcher >> packageLocalClasses: aBlock [
 
 	| homePackageClassNames |
-	homePackageClassNames := SortedCollection sortUsing: [ :a :b | a <= b ]. 
-	
-	package definedClasses do: [ :cls |
-		homePackageClassNames add: cls name ].
-	
+	homePackageClassNames := SortedCollection sortUsing: [ :a :b | a <= b ].
+
+	package definedClasses do: [ :cls | homePackageClassNames add: cls name ].
+
 	homePackageClassNames do: [ :closeClassName |
-					aBlock value:
-						((NECGlobalEntry contents: closeClassName node: nil)
-							 fetcher: self;
-							 yourself) ].
-	
+			aBlock value: ((NECGlobalEntry contents: closeClassName node: nil)
+					 fetcherName: self class name;
+					 yourself) ].
+
 	^ homePackageClassNames
 ]

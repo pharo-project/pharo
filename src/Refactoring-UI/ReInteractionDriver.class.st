@@ -220,7 +220,7 @@ ReInteractionDriver >> hasFailedApplicabilityPreconditions [
 { #category : 'private exe' }
 ReInteractionDriver >> hasFailedBehaviorPreservingPreconditions [
 
-	^ false
+	^ refactoring failedBreakingChangePreconditions isNotEmpty
 ]
 
 { #category : 'ui - requests' }

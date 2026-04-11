@@ -96,7 +96,7 @@ UUIDTest >> testUUIDVersion1 [
 			 minute: 13
 			 second: 43
 			 nanoSecond: 231798000
-			 offset: 0 hours).
+			 offset: Duration zero).
 	self assert: uuid clockSequence equals: 14056
 ]
 

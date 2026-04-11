@@ -450,6 +450,14 @@ Duration >> storeOn: aStream [
  		nextPut: $)
 ]
 
+{ #category : 'arithmetic' }
+Duration >> subtractReceiverToDateAndTime: aDateAndTime [
+	"Pay attention the + here is not commutative.
+	Therefor self negated + aDateAndTime is not correct."
+	
+	^ aDateAndTime + self negated
+]
+
 { #category : 'private' }
 Duration >> ticks [
 	"Answer an array {days. seconds. nanoSeconds}. Used by DateAndTime and Time."

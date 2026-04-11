@@ -129,8 +129,7 @@ Package >> addExtensionImport: anExtension [
 			classified: m protocol
 			withStamp: m timeStamp
 			notifying: nil
-			logSource: true
-			recompileDependencies: false ]
+			logSource: true ]
 ]
 
 { #category : 'add method - compiled method' }

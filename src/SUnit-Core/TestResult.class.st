@@ -72,11 +72,12 @@ TestResult class >> newTestDictionary [
 
 { #category : 'history' }
 TestResult class >> removeFromTestHistory: aSelector in: aTestCaseClass [
-	| lastRun |
 
+	| lastRun |
 	lastRun := self historyFor: aTestCaseClass.
-	#(#passed #failures #errors) do:
-		[ :set | (lastRun at: set) remove: aSelector ifAbsent: []]
+
+	#( #passed #failures #errors ) do: [ :set | (lastRun at: set) remove: aSelector ifAbsent: [ ] ].
+	aTestCaseClass historyAnnouncer announce: (TestSuiteEnded result: aTestCaseClass)
 ]
 
 { #category : 'exceptions' }

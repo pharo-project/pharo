@@ -216,7 +216,7 @@ Date class >> yesterday [
 Date >> addDays: dayCount [
 	"((Date year: 2018 month: 9 day: 28) addDays: 3) printString >>> '1 October 2018'"
 
-	^ (self asDateAndTime + (dayCount days)) asDate
+	^ (self asDateAndTime + dayCount days) asDate
 ]
 
 { #category : 'adding' }
@@ -394,7 +394,7 @@ Date >> storeOn: aStream [
 { #category : 'adding' }
 Date >> subtractDate: aDate [
 	"Answer the number of days between self and aDate"
-	"((Date year: 2018 month: 9 day: 28) subtractDate: '2018-09-27') >>> 1"
+	"((Date year: 2018 month: 9 day: 28) subtractDate: (Date fromString: '2018-09-27')) >>> 1"
 
 	^ (self start - aDate asDateAndTime) days
 ]
@@ -402,8 +402,16 @@ Date >> subtractDate: aDate [
 { #category : 'adding' }
 Date >> subtractDays: dayCount [
 	"((Date year: 2018 month: 9 day: 28) subtractDays: 1) printString >>> '27 September 2018'"
+	"This implementation avoids the creation of a dateAndTime and a duration objects.
+	
+	[((Date year: 2018 month: 9 day: 28) subtractDays: 1)] bench  
+	new: 5,702,612 iterations in 5 seconds 2 milliseconds. 1140066.373 per second
+	old: 5,006,201 iterations in 5 seconds 3 milliseconds. 1000639.816 per second
 
-	^ (self asDateAndTime - (dayCount days)) asDate
+	"
+
+
+	^ Date newDay: (self dayOfYear - dayCount) year: self year
 ]
 
 { #category : 'adding' }

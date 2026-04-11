@@ -253,6 +253,12 @@ OpalCompiler >> callPlugins [
 ]
 
 { #category : 'accessing' }
+OpalCompiler >> changeStamp [
+
+	^ changeStamp
+]
+
+{ #category : 'accessing' }
 OpalCompiler >> changeStamp: aString [ 
 	changeStamp := aString
 ]
@@ -539,42 +545,17 @@ OpalCompiler >> generateMethod [
 OpalCompiler >> install [
 	"Compile and install a method in a class"
 
-	| class method logSource |
-	class := self methodClass.
-	self assert: class isNotNil.
-
-	method := self compile ifNil: [ ^ nil ]. "If the prior method was not set explicitly, we set it because we will need it if we are not in the first compilation"
-	self priorMethod ifNil: [ "In case the method comes from a trait, we ignore it because it means we are overriding the trait method in the class"
-		class compiledMethodAt: method selector ifPresent: [ :aMethod | aMethod isFromTrait ifFalse: [ self priorMethod: aMethod ] ] ]. "In case we are not compiling the method for the first time, we want to ensure that some properties are kept."
-	self priorMethod ifNotNil: [ priorMethod migratePersistingPropertiesIn: method ].
-
-	changeStamp ifNil: [ changeStamp := DateAndTime now printString ].
-	logSource := self logged ifNil: [ true ].
-	protocol := protocol ifNil: [
-			            self priorMethod ifNotNil: [
-				            self priorMethod protocol
-									ifNil: [ Protocol unclassified ]
-									ifNotNil: [ self priorMethod protocol name ] ]
-				            ifNil: [ Protocol unclassified ] ].
-
-	logSource ifTrue: [
-			method
-				putSource: source
-				withFooter: ''
-				protocol: (protocol isString
-						 ifTrue: [ protocol ]
-						 ifFalse: [ protocol name ]) asString
-				timestamp: changeStamp asString
-				priorSourcePointer: (self priorMethod ifNil: [ 0 ] ifNotNil: [ self priorMethod sourcePointer ]) ]. "Install the method and classify AFTER setting the source pointer.
-	If the method is a trait method, trait installation is hooked down here.
-	And it depends on having set the source pointer before.
+	| method |
 	
-	This is not the ideal order, because this means that a failure in writing the source code may prevent method installation in the system (and thus preventing further work/updates to code)."
-	class addAndClassifySelector: method selector withMethod: method inProtocol: protocol.
-	method cachePragmas.
+	method := self compile.
+	method ifNil: [ ^ nil ].
 
-	class noteCompilationOf: method.
-
+	(self methodClass methodInstaller
+		priorMethod: self priorMethod;
+		logged: self logged;
+		changeStamp: changeStamp;
+		protocol: protocol)
+			install: method into: self methodClass compiler: self.
 	^ method
 ]
 
@@ -747,6 +728,12 @@ OpalCompiler >> productionEnvironment: anObject [
 ]
 
 { #category : 'accessing' }
+OpalCompiler >> protocol [
+
+	^ protocol
+]
+
+{ #category : 'accessing' }
 OpalCompiler >> protocol: aProtocol [ 
 	protocol := aProtocol
 ]
@@ -794,6 +781,12 @@ OpalCompiler >> semanticScope [
 { #category : 'accessing' }
 OpalCompiler >> semanticScope: anObject [
 	self compilationContext semanticScope: anObject
+]
+
+{ #category : 'accessing' }
+OpalCompiler >> source [
+
+	^ source
 ]
 
 { #category : 'accessing' }

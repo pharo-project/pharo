@@ -61,9 +61,7 @@ GraphicFontSettings class >> fontSizeRowSettingsOn: aBuilder [
 { #category : 'fonts' }
 GraphicFontSettings class >> resetAllFontToDefault [
 
-	StandardFonts setAllStandardFontsTo: StandardFonts defaultFont.
-	SettingBrowser refreshAllSettingBrowsers.
-
+	StandardFonts setAllStandardFontsTo: StandardFonts defaultFont
 ]
 
 { #category : 'fonts' }
@@ -94,10 +92,7 @@ GraphicFontSettings class >> setFontsToStyleNamed: aSymbol [
 		ifTrue: [ (self environment at: #SourceCodeFonts) setFontsToStyleNamed: aSymbol ]
 		ifFalse: [ StandardFonts setFontsToStyleNamed: aSymbol ].
 
-	WorldMorph displayScaleFactor: (self displayScaleFactorForStyleNamed: aSymbol).
-
-	SettingBrowser refreshAllSettingBrowsers.
-
+	WorldMorph displayScaleFactor: (self displayScaleFactorForStyleNamed: aSymbol)
 ]
 
 { #category : 'fonts' }

@@ -397,7 +397,8 @@ RubAbstractTextArea class >> lineNumbersTextColor: aColor [
 { #category : 'settings' }
 RubAbstractTextArea class >> rubricSettingsOn: aBuilder [
 	<systemsettings>
-	(aBuilder group: #Rubric)
+	
+	(aBuilder group: #RubricEditor)
 		label: 'Rubric editor';
 		parent: #codeEditing;
 		with: [ (aBuilder setting: #backgroundColor)

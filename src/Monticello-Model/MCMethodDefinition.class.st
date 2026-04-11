@@ -247,8 +247,7 @@ MCMethodDefinition >> loadWithLoader: aLoader [
 						classified: m protocol
 						withStamp: m timeStamp
 						notifying: nil
-						logSource: false
-						recompileDependencies: false ] ].
+						logSource: false ] ].
 	].
 
 	method selector asSymbol = selector asSymbol ifTrue: [ ^ self ]. "This can happen if we provide a selector that does not match the source code. I (Cyril Ferlicot) personnaly do not like that. I would prefer even that the MCMethodDefinition would not have a selector variable at all. But this is used in some places of the system :("

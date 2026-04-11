@@ -16,12 +16,12 @@ RTFMetaTest class >> isAbstract [
 RTFMetaTest >> setUp [
 	super setUp.
 
-	RTFFakeTestSuperClass doNotIgnore 
+	RTFFakeTestSuperClassTest doNotIgnore 
 ]
 
 { #category : 'running' }
 RTFMetaTest >> tearDown [
 
-	RTFFakeTestSuperClass ignore.
+	RTFFakeTestSuperClassTest ignore.
 	super tearDown 
 ]

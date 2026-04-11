@@ -220,3 +220,7 @@ OCCodeReparator >> substituteWord: correctWord wordInterval: spot [
 					to: (spot last)
 					with: correctWord
 ]
+
+{ #category : 'correcting' }
+OCCodeReparator >> toto [
+]

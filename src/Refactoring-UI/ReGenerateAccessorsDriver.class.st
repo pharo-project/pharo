@@ -21,6 +21,12 @@ ReGenerateAccessorsDriver class >> driverName [
 	^ 'Generate accessors'
 ]
 
+{ #category : 'execution' }
+ReGenerateAccessorsDriver >> gatherUserInput [
+
+	^ true
+]
+
 { #category : 'configuration' }
 ReGenerateAccessorsDriver >> instantiateRefactoring [
 

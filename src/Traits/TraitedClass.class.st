@@ -54,17 +54,6 @@ TraitedClass class >> traitUsers [
 	^ #()
 ]
 
-{ #category : 'accessing - method dictionary' }
-TraitedClass >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: aProtocol [
-	"When a new methods is added, I add it to the localMethodDict and also propagate the changes to my users"
-	<reflection: 'Class structural modification - Selector/Method modification'>
-	self localMethodDict at: selector put: compiledMethod.
-
-	super addAndClassifySelector: selector withMethod: compiledMethod inProtocol: aProtocol.
-
-	TraitChange addSelector: selector on: self
-]
-
 { #category : 'querying' }
 TraitedClass >> allTraits [
 	<reflection: 'Class structural inspection - Traits'>
@@ -204,6 +193,12 @@ TraitedClass >> localMethods [
 TraitedClass >> localSelectors [
 	<reflection: 'Class structural inspection - Selectors and methods inspection'>
 	^ self localMethodDict keys
+]
+
+{ #category : 'organization' }
+TraitedClass >> methodInstaller [
+
+	^ OCTraitMethodInstaller new
 ]
 
 { #category : 'initialization' }

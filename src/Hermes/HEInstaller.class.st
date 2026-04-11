@@ -252,13 +252,12 @@ HEInstaller >> rebuildMethod: hermesMethod into: aClass [
 	hermesMethod bytecode doWithIndex: [ :e :idx |
 		newMethod at: idx + literalSpace put: e ].
 
-	aClass
-		addAndClassifySelector: hermesMethod name
-		withMethod: newMethod
-		inProtocol: hermesMethod protocol.
-	
-	"Move later to a common method installer"
-	newMethod cachePragmas.
+	aClass methodInstaller
+		logged: false;
+		protocol: hermesMethod protocol;
+			install: newMethod
+			into: aClass
+			compiler: nil
 ]
 
 { #category : 'reporting undeclared' }

@@ -54,7 +54,7 @@ ClyShowVariableWriterCommand >> description [
 { #category : 'execution' }
 ClyShowVariableWriterCommand >> execute [
 
-	browser spawnQueryBrowserOn: (ClyVariableWritersQuery ofAny: variables)
+	(Smalltalk tools toolNamed: #messageList) browseWritersOfVariables: variables 
 ]
 
 { #category : 'execution' }

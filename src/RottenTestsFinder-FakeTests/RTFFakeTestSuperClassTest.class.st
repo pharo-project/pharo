@@ -4,7 +4,7 @@ It should not be checked as a usual test case (critics, release tests), nor bein
 That's why it inherits from Object. We change the super class to TestCase when needed in RottenTestsFinder tests setUp.
 "
 Class {
-	#name : 'RTFFakeTestSuperClass',
+	#name : 'RTFFakeTestSuperClassTest',
 	#superclass : 'TestCase',
 	#classVars : [
 		'ShouldIgnore'
@@ -14,48 +14,48 @@ Class {
 }
 
 { #category : 'asserting' }
-RTFFakeTestSuperClass class >> doNotIgnore [ 
+RTFFakeTestSuperClassTest class >> doNotIgnore [ 
 
 	ShouldIgnore := false
 ]
 
 { #category : 'asserting' }
-RTFFakeTestSuperClass class >> ignore [ 
+RTFFakeTestSuperClassTest class >> ignore [ 
 
 	ShouldIgnore := true
 ]
 
 { #category : 'running' }
-RTFFakeTestSuperClass >> setUp [ 
+RTFFakeTestSuperClassTest >> setUp [ 
 
 	super setUp.
 	self shouldIgnore ifTrue: [ self skip ]
 ]
 
 { #category : 'accessing' }
-RTFFakeTestSuperClass >> shouldIgnore [
+RTFFakeTestSuperClassTest >> shouldIgnore [
 
 	^ ShouldIgnore ifNil: [ ShouldIgnore := true ]
 ]
 
 { #category : 'accessing' }
-RTFFakeTestSuperClass >> shouldIgnore: anObject [
+RTFFakeTestSuperClassTest >> shouldIgnore: anObject [
 
 	ShouldIgnore := anObject
 ]
 
 { #category : 'asserting' }
-RTFFakeTestSuperClass >> shouldLogWithEpicea [
+RTFFakeTestSuperClassTest >> shouldLogWithEpicea [
 
 	^ false
 ]
 
 { #category : 'wrappers' }
-RTFFakeTestSuperClass >> superAssertHelper [
+RTFFakeTestSuperClassTest >> superAssertHelper [
 	self assert: true
 ]
 
 { #category : 'wrappers' }
-RTFFakeTestSuperClass >> superNotAssertHelper [
+RTFFakeTestSuperClassTest >> superNotAssertHelper [
 	false ifTrue: [ self assert: true ]
 ]

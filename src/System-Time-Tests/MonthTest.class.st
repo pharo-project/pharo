@@ -127,18 +127,65 @@ MonthTest >> testNameOfMonth [
 ]
 
 { #category : 'tests' }
+MonthTest >> testNextApril [
+
+	| n |
+	month := Month year: 1998 month: 5.
+	n := month next.
+	self
+		assert: n year equals: 1998;
+		assert: n month equals: 6
+		
+]
+
+{ #category : 'tests' }
+MonthTest >> testNextDecember [
+
+	| n |
+	month := Month year: 1998 month: 12.
+	n := month next.
+	self
+		assert: n year equals: 1999;
+		assert: n month equals: 1
+		
+]
+
+{ #category : 'tests' }
 MonthTest >> testOffset [
 	"Check that the offset is maintained when creating a new instance of Month from a DateAndTime"
 
 	| dt newMonth |
-
 	dt := DateAndTime fromString: '2018-01-01T00:00:00+10'.
 	newMonth := Month starting: dt duration: 0. "duration is ignored"
 	self assert: newMonth asDateAndTime offset equals: dt offset
+	
+]
+
+{ #category : 'tests' }
+MonthTest >> testPrevious [
+	| p |
+	p := month previous.
+
+	self
+		assert: p year equals: 1998;
+		assert: p index equals: 6
 ]
 
 { #category : 'tests' }
 MonthTest >> testPreviousNext [
+	| n p |
+	n := month next.
+	p := month previous.
+
+	self
+		assert: n year equals: 1998;
+		assert: n index equals: 8;
+		assert: p year equals: 1998;
+		assert: p index equals: 6
+]
+
+{ #category : 'tests' }
+MonthTest >> testPreviousNextDecember [
 	| n p |
 	n := month next.
 	p := month previous.

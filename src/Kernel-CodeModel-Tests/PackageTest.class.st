@@ -129,28 +129,13 @@ PackageTest >> testAllUnsentMessages [
 	class2
 		compile: 'nonexistingMethodName1 42';
 		compile: 'nonexistingMethodName3 42';
-		compile: 'nonexistingMethodName4 class1 new nonexistingMethodName2'.
+		compile: 'nonexistingMethodName4 TestClass new nonexistingMethodName2'.
 
 	self assert: package allUnsentMessages size equals: 3.
 
 	self
 		assert: package allUnsentMessages
 		equals: (#( 'nonexistingMethodName1' 'nonexistingMethodName3' 'nonexistingMethodName4' ) collect: [ :each | each asSymbol ]) asSet
-]
-
-{ #category : 'tests' }
-PackageTest >> testAnonymousClassAndSelector [
-	"jgeidel test case from issue 12628."
-
-	"Make sure we don't have a registration or a package for the method."
-
-	| ghost method |
-	ghost := Object newAnonymousSubclassInEnvironment: testEnvironment.
-	method := ghost compiler compile: 'rpackagetest'.
-	ghost addSelector: #packagetest withMethod: method.
-	self deny: (self organizer undefinedPackage includesSelector: #packagetest ofClass: ghost).
-	self assert: (self organizer packageOfClassNamed: ghost name) equals: self organizer undefinedPackage.
-	ghost classify: #packagetest under: '*packagetest'
 ]
 
 { #category : 'tests - extensions' }

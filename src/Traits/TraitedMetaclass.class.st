@@ -26,17 +26,6 @@ TraitedMetaclass class >> traitedClassTrait [
 	^ (TaCompositionElement for: TraitedClass)
 ]
 
-{ #category : 'accessing - method dictionary' }
-TraitedMetaclass >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: aProtocol [
-	<reflection: 'Class structural modification - Selector/Method modification'>
-
-	self localMethodDict at: selector put: compiledMethod.
-
-	super addAndClassifySelector: selector withMethod: compiledMethod inProtocol: aProtocol.
-
-	TraitChange addSelector: selector on: self
-]
-
 { #category : 'querying' }
 TraitedMetaclass >> allTraits [
 	<reflection: 'Class structural inspection - Traits'>
@@ -247,6 +236,12 @@ TraitedMetaclass >> localMethods [
 TraitedMetaclass >> localSelectors [
 	<reflection: 'Class structural inspection - Selectors and methods inspection'>
 	^ localMethods keys
+]
+
+{ #category : 'organization' }
+TraitedMetaclass >> methodInstaller [
+
+	^ OCTraitMethodInstaller new forExtendedBehavior
 ]
 
 { #category : 'initialization' }

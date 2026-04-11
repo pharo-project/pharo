@@ -12,10 +12,10 @@ Date class >> fromSton: stonReader [
 		        continueAfterParsing;
 		        parse.
 	readStream atEnd ifFalse: [
-		| offset |
-		offset := DateAndTime readTimezoneOffsetFrom: readStream.
-		offset = date offset ifFalse: [
-			date start: (date start translateTo: offset) ] ].
+		| offsetDuration |
+		offsetDuration := DateAndTime readTimezoneOffsetFrom: readStream.
+		offsetDuration = date offset ifFalse: [
+			date start: (date start translateTo: offsetDuration) ] ].
 	^ date
 ]
 
