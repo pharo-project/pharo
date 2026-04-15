@@ -35,7 +35,7 @@ StdioStreamTest class >> manualStdinTest [
 	| stdin stdout atEndBefore atEndAfter contents |
 
 	stdin := Stdio stdin.
-	stdout := ZnNewLineWriterStream on: Stdio stdout.
+	stdout := Stdio stdout.
 	atEndBefore := stdin atEnd.
 	contents := stdin upToEnd.
 	atEndAfter := stdin atEnd.
