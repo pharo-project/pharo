@@ -9,8 +9,8 @@ Class {
 }
 
 { #category : 'tests' }
-RxParserTest >> DoesNotWorktestBackQuotesEscape [
-
+RxParserTest >> testBackQuotesEscape [
+	
 	"Regular expressions can also include the following backquote escapes
 to refer to popular classes of characters:
 	\w	any word constituent character (same as [a-zA-Z0-9:=])
@@ -23,9 +23,14 @@ These escapes are also allowed in character classes: '[\w+-]' means
 'any character that is either a word constituent, or a plus, or a
 minus'."
 
-	self assert: ('one word' matchesRegex: '\w').
+	"Correctly matching a word(s)"
+	self assert: ('one   word' matchesRegex: '\w+\s*\w+').
+	self assert: ('one' matchesRegex: '\w+').
 
-	self assert: ('one' matchesRegex: '\w')
+	"\w matches a character and not a word here!"
+	self assert: ('o' matchesRegex: '\w').
+	self deny: ('one word' matchesRegex: '\w').
+	self deny: ('one' matchesRegex: '\w')
 ]
 
 { #category : 'tests' }
