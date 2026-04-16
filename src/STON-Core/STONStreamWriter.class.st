@@ -6,8 +6,8 @@ Class {
 	#name : 'STONStreamWriter',
 	#superclass : 'Object',
 	#instVars : [
-		'writer',
-		'first'
+		#writer,
+		#first
 	],
 	#category : 'STON-Core-Writer',
 	#package : 'STON-Core',

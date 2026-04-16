@@ -19,8 +19,8 @@ Class {
 	#name : 'ClyScopeCompoBoxMorph',
 	#superclass : 'ClyBrowserToolbarItemMorph',
 	#instVars : [
-		'dropList',
-		'browser'
+		#dropList,
+		#browser
 	],
 	#category : 'Calypso-SystemTools-QueryBrowser-UI',
 	#package : 'Calypso-SystemTools-QueryBrowser',

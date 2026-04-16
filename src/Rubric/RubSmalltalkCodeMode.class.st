@@ -5,7 +5,7 @@ Class {
 	#name : 'RubSmalltalkCodeMode',
 	#superclass : 'RubAbstractSmalltalkMode',
 	#instVars : [
-		'classOrMetaclass'
+		#classOrMetaclass
 	],
 	#category : 'Rubric-Editing-Code',
 	#package : 'Rubric',

@@ -20,10 +20,10 @@ Class {
 	#name : 'DrTests',
 	#superclass : 'AbstractDrTestsPresenter',
 	#instVars : [
-		'pluginsDropList',
-		'statusLabel',
-		'plugins',
-		'pluginPresenter'
+		#pluginsDropList,
+		#statusLabel,
+		#plugins,
+		#pluginPresenter
 	],
 	#category : 'DrTests-Spec',
 	#package : 'DrTests',

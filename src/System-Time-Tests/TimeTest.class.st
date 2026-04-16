@@ -7,9 +7,9 @@ Class {
 	#name : 'TimeTest',
 	#superclass : 'ClassTestCase',
 	#instVars : [
-		'time',
-		'aTime',
-		'localTimeZoneToRestore'
+		#time,
+		#aTime,
+		#localTimeZoneToRestore
 	],
 	#category : 'System-Time-Tests',
 	#package : 'System-Time-Tests'

@@ -9,9 +9,9 @@ Class {
 	#name : 'WorkingSession',
 	#superclass : 'Object',
 	#instVars : [
-		'manager',
-		'deferredStartupActions',
-		'properties'
+		#manager,
+		#deferredStartupActions,
+		#properties
 	],
 	#category : 'System-SessionManager-Utilities',
 	#package : 'System-SessionManager',
@@ -69,25 +69,25 @@ WorkingSession >> install [
 { #category : 'testing' }
 WorkingSession >> isDisabledAccessMode [
 
-	^ self accessMode = #disabled
+	^ self accessMode sameContents: #disabled
 ]
 
 { #category : 'testing' }
 WorkingSession >> isReadOnlyAccessMode [
 
-	^ self accessMode = #readOnly
+	^ self accessMode sameContents: #readOnly
 ]
 
 { #category : 'testing' }
 WorkingSession >> isReadWriteAccessMode [
 
-	^ self accessMode = #readWrite
+	^ self accessMode sameContents: #readWrite
 ]
 
 { #category : 'testing' }
 WorkingSession >> isWriteOnlyAccessMode [
 
-	^ self accessMode = #writeOnly
+	^ self accessMode sameContents: #writeOnly
 ]
 
 { #category : 'accessing' }

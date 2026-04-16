@@ -2,9 +2,9 @@ Class {
 	#name : 'HEConstantBlock',
 	#superclass : 'HEExportedLiteral',
 	#instVars : [
-		'literal',
-		'numArgs',
-		'compiledBlock'
+		#literal,
+		#numArgs,
+		#compiledBlock
 	],
 	#category : 'Hermes-Model',
 	#package : 'Hermes',
@@ -39,5 +39,5 @@ HEConstantBlock >> doReadFrom: aReader [
 HEConstantBlock >> instVarNamesForEqualityComparison [
 
 	"Ignoring the value, as it is an object of the source environment"
-	^ self class allInstVarNames reject: [ :e | e = #value ]
+	^ self class allInstVarNames reject: [ :e | e sameContents: #value ]
 ]

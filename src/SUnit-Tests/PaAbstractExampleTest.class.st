@@ -5,8 +5,8 @@ Class {
 	#name : 'PaAbstractExampleTest',
 	#superclass : 'ParametrizedTestCase',
 	#instVars : [
-		'option2',
-		'option1'
+		#option2,
+		#option1
 	],
 	#category : 'SUnit-Tests-Parametrized',
 	#package : 'SUnit-Tests',
@@ -15,7 +15,7 @@ Class {
 
 { #category : 'private' }
 PaAbstractExampleTest class >> isAbstract [
-	^ self name = #PaAbstractExampleTest
+	^ self name sameContents: #PaAbstractExampleTest
 ]
 
 { #category : 'accessing' }

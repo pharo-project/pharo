@@ -5,8 +5,8 @@ Class {
 	#name : 'SimplestClassListExample',
 	#superclass : 'MorphTreeModel',
 	#instVars : [
-		'rootClass',
-		'selected'
+		#rootClass,
+		#selected
 	],
 	#category : 'Morphic-Examples-MorphTreeWidget',
 	#package : 'Morphic-Examples',

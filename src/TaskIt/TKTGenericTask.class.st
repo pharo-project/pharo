@@ -5,7 +5,7 @@ Class {
 	#name : 'TKTGenericTask',
 	#superclass : 'TKTTask',
 	#instVars : [
-		'valuable'
+		#valuable
 	],
 	#category : 'TaskIt-Kernel',
 	#package : 'TaskIt',

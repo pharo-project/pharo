@@ -12,10 +12,10 @@ Class {
 	#name : 'PopupChoiceDialogWindowWithMessage',
 	#superclass : 'PopupChoiceDialogWindow',
 	#instVars : [
-		'textMorph',
-		'iconMorph',
-		'textFont',
-		'message'
+		#textMorph,
+		#iconMorph,
+		#textFont,
+		#message
 	],
 	#category : 'Polymorph-Widgets-Windows',
 	#package : 'Polymorph-Widgets',

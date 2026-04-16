@@ -5,27 +5,27 @@ Class {
 	#name : 'FreeTypeNameParser',
 	#superclass : 'Object',
 	#instVars : [
-		'combinedName',
-		'familyNameIn',
-		'styleNameIn',
-		'delimiters',
-		'tokens',
-		'extractedSlant',
-		'extractedSlantValue',
-		'extractedUpright',
-		'extractedStretch',
-		'extractedWeight',
-		'italicFlag',
-		'boldFlag',
-		'extractedWeightValue',
-		'extractedStretchValue'
+		#combinedName,
+		#familyNameIn,
+		#styleNameIn,
+		#delimiters,
+		#tokens,
+		#extractedSlant,
+		#extractedSlantValue,
+		#extractedUpright,
+		#extractedStretch,
+		#extractedWeight,
+		#italicFlag,
+		#boldFlag,
+		#extractedWeightValue,
+		#extractedStretchValue
 	],
 	#classInstVars : [
-		'weightNames',
-		'stretchNames',
-		'obliqueNames',
-		'normalNames',
-		'italicNames'
+		#weightNames,
+		#stretchNames,
+		#obliqueNames,
+		#normalNames,
+		#italicNames
 	],
 	#category : 'FreeType-FontManager',
 	#package : 'FreeType',
@@ -49,11 +49,11 @@ FreeTypeNameParser class >> italicNames [
 
 	italicNames ifNotNil:[^italicNames].
 	^ italicNames := #(
-		'ita'
-		'ital'
-		'italic'
-		'cursive'
-		'kursiv')
+		#ita
+		#ital
+		#italic
+		#cursive
+		kursiv)
 ]
 
 { #category : 'known names' }
@@ -80,11 +80,11 @@ FreeTypeNameParser class >> obliqueNames [
 
 	obliqueNames ifNotNil:[^obliqueNames].
 	^ obliqueNames := #(
-		'inclined'
-		'oblique'
-		'backslanted'
-		'backslant'
-		'slanted')
+		#inclined
+		#oblique
+		#backslanted
+		#backslant
+		slanted)
 ]
 
 { #category : 'known names' }

@@ -5,14 +5,14 @@ Class {
 	#name : 'OSTouchFingerTracker',
 	#superclass : 'Object',
 	#instVars : [
-		'fingerId',
-		'deviceId',
-		'delta',
-		'pressure',
-		'timestamp',
-		'move',
-		'firstPosition',
-		'lastPosition'
+		#fingerId,
+		#deviceId,
+		#delta,
+		#pressure,
+		#timestamp,
+		#move,
+		#firstPosition,
+		#lastPosition
 	],
 	#category : 'OSWindow-Core-Gestures',
 	#package : 'OSWindow-Core',

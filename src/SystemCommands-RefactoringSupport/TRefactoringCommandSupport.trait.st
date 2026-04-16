@@ -1,7 +1,7 @@
 Trait {
 	#name : 'TRefactoringCommandSupport',
 	#instVars : [
-		'model'
+		#model
 	],
 	#category : 'SystemCommands-RefactoringSupport',
 	#package : 'SystemCommands-RefactoringSupport'

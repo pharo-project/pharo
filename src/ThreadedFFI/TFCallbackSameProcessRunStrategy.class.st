@@ -5,10 +5,10 @@ Class {
 	#name : 'TFCallbackSameProcessRunStrategy',
 	#superclass : 'TFCallbackForkRunStrategy',
 	#instVars : [
-		'callbackProcess'
+		#callbackProcess
 	],
 	#classVars : [
-		'Instance'
+		#Instance
 	],
 	#category : 'ThreadedFFI-Callbacks',
 	#package : 'ThreadedFFI',

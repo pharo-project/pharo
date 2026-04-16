@@ -2,7 +2,7 @@ Class {
 	#name : 'EpCodeChangeIntegrationTest',
 	#superclass : 'EpEnabledIntegrationTest',
 	#instVars : [
-		'aClass'
+		#aClass
 	],
 	#category : 'Epicea-Tests-Integration',
 	#package : 'Epicea-Tests',

@@ -5,7 +5,7 @@ Class {
 	#name : 'LazyMorphTreeNodeMorph',
 	#superclass : 'MorphTreeNodeMorph',
 	#instVars : [
-		'drawable'
+		#drawable
 	],
 	#category : 'Morphic-Widgets-Tree',
 	#package : 'Morphic-Widgets-Tree'

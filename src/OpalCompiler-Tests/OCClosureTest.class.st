@@ -2,7 +2,7 @@ Class {
 	#name : 'OCClosureTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'collection'
+		#collection
 	],
 	#category : 'OpalCompiler-Tests-FromOld',
 	#package : 'OpalCompiler-Tests',

@@ -5,7 +5,7 @@ Class {
 	#name : 'ClyBrowseCoveringTestCaseCommand',
 	#superclass : 'ClyBrowserCommand',
 	#instVars : [
-		'selectedClassItem'
+		#selectedClassItem
 	],
 	#category : 'Calypso-SystemPlugins-SUnit-Browser-Commands',
 	#package : 'Calypso-SystemPlugins-SUnit-Browser',

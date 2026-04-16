@@ -5,7 +5,7 @@ Class {
 	#name : 'EpMorphFactory',
 	#superclass : 'Object',
 	#classInstVars : [
-		'defaultInstance'
+		#defaultInstance
 	],
 	#category : 'EpiceaBrowsers-UI-Common',
 	#package : 'EpiceaBrowsers',

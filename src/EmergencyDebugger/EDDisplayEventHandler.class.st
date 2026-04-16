@@ -7,7 +7,7 @@ Class {
 	#name : 'EDDisplayEventHandler',
 	#superclass : 'OSWindowEventVisitor',
 	#instVars : [
-		'interface'
+		#interface
 	],
 	#category : 'EmergencyDebugger-View',
 	#package : 'EmergencyDebugger',

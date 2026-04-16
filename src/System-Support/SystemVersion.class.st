@@ -13,18 +13,18 @@ Class {
 	#name : 'SystemVersion',
 	#superclass : 'Object',
 	#instVars : [
-		'date',
-		'highestUpdate',
-		'type',
-		'major',
-		'minor',
-		'patch',
-		'suffix',
-		'build',
-		'commitHash'
+		#date,
+		#highestUpdate,
+		#type,
+		#major,
+		#minor,
+		#patch,
+		#suffix,
+		#build,
+		#commitHash
 	],
 	#classVars : [
-		'Current'
+		#Current
 	],
 	#category : 'System-Support-Image',
 	#package : 'System-Support',

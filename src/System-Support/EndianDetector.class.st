@@ -16,7 +16,7 @@ Class {
 	#superclass : 'Object',
 	#type : 'words',
 	#classVars : [
-		'EndianCache'
+		#EndianCache
 	],
 	#category : 'System-Support-Utilities',
 	#package : 'System-Support',

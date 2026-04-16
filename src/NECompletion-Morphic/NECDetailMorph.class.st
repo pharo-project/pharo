@@ -7,10 +7,10 @@ Class {
 	#name : 'NECDetailMorph',
 	#superclass : 'Morph',
 	#instVars : [
-		'title',
-		'description',
-		'arrowPosition',
-		'label'
+		#title,
+		#description,
+		#arrowPosition,
+		#label
 	],
 	#category : 'NECompletion-Morphic',
 	#package : 'NECompletion-Morphic'

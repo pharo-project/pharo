@@ -10,7 +10,7 @@ Class {
 	#name : 'ComposedSortFunction',
 	#superclass : 'SortFunction',
 	#instVars : [
-		'baseSortFunction'
+		#baseSortFunction
 	],
 	#category : 'SortFunctions-Core',
 	#package : 'SortFunctions-Core'

@@ -5,10 +5,10 @@ Class {
 	#name : 'MouseOverHandler',
 	#superclass : 'Object',
 	#instVars : [
-		'mouseOverMorphs',
-		'enteredMorphs',
-		'overMorphs',
-		'leftMorphs'
+		#mouseOverMorphs,
+		#enteredMorphs,
+		#overMorphs,
+		#leftMorphs
 	],
 	#category : 'Morphic-Core-Events',
 	#package : 'Morphic-Core',

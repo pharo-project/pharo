@@ -7,7 +7,7 @@ Class {
 	#name : 'FTIndentedCellMorph',
 	#superclass : 'FTCellMorph',
 	#instVars : [
-		'indentation'
+		#indentation
 	],
 	#category : 'Morphic-Widgets-FastTable-Base',
 	#package : 'Morphic-Widgets-FastTable',

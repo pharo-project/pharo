@@ -24,10 +24,10 @@ Class {
 	#name : 'CalendarMorph',
 	#superclass : 'BorderedMorph',
 	#instVars : [
-		'date',
-		'days',
-		'touchPoints',
-		'announcer'
+		#date,
+		#days,
+		#touchPoints,
+		#announcer
 	],
 	#category : 'Morphic-Widgets-Extra',
 	#package : 'Morphic-Widgets-Extra'

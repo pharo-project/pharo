@@ -2,7 +2,7 @@ Class {
 	#name : 'HiExamplesTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'example'
+		#example
 	],
 	#category : 'Hiedra-Tests-Model',
 	#package : 'Hiedra-Tests',

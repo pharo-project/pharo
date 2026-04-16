@@ -5,12 +5,12 @@ Class {
 	#name : 'RBTransformationRule',
 	#superclass : 'RBLintRule',
 	#instVars : [
-		'rewriteRule',
-		'builder',
-		'class'
+		#rewriteRule,
+		#builder,
+		#class
 	],
 	#classVars : [
-		'RecursiveSelfRule'
+		#RecursiveSelfRule
 	],
 	#category : 'Refactoring-Critics',
 	#package : 'Refactoring-Critics'
@@ -44,7 +44,7 @@ RBTransformationRule class >> initializeRecursiveSelfRule [
 
 { #category : 'testing' }
 RBTransformationRule class >> isVisible [
-	^ self name ~= #RBTransformationRule
+	^ (self name sameContents: #RBTransformationRule) not
 ]
 
 { #category : 'accessing' }

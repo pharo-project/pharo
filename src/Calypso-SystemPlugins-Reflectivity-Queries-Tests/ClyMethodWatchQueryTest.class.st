@@ -2,7 +2,7 @@ Class {
 	#name : 'ClyMethodWatchQueryTest',
 	#superclass : 'ClyMethodQueryTest',
 	#instVars : [
-		'installedWatchpoints'
+		#installedWatchpoints
 	],
 	#category : 'Calypso-SystemPlugins-Reflectivity-Queries-Tests-Watchpoints',
 	#package : 'Calypso-SystemPlugins-Reflectivity-Queries-Tests',

@@ -19,10 +19,10 @@ Class {
 	#name : 'BaselineOfMorphic',
 	#superclass : 'BaselineOf',
 	#instVars : [
-		'initializersEnabled'
+		#initializersEnabled
 	],
 	#classVars : [
-		'Initialized'
+		#Initialized
 	],
 	#category : 'BaselineOfMorphic',
 	#package : 'BaselineOfMorphic'
@@ -192,7 +192,7 @@ BaselineOfMorphic >> loadBitmapDejaVuSans [
 BaselineOfMorphic >> loadBitmapFontFamily: familyName sizes: pointSizes [
 	| fonts fileName directoryReference |
 	directoryReference := (Smalltalk os environment
-		                       at: 'BOOTSTRAP_REPOSITORY'
+		                       at: #'BOOTSTRAP_REPOSITORY'
 		                       ifAbsent: [ FileSystem workingDirectory ])
 		                      asFileReference / 'resources' / 'fonts'.
 	fonts := pointSizes collect: [ :pointSize | 

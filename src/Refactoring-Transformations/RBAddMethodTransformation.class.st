@@ -17,9 +17,9 @@ Class {
 	#name : 'RBAddMethodTransformation',
 	#superclass : 'RBMethodTransformation',
 	#instVars : [
-		'sourceCode',
-		'rbMethod',
-		'protocol'
+		#sourceCode,
+		#rbMethod,
+		#protocol
 	],
 	#category : 'Refactoring-Transformations-Model-Unused',
 	#package : 'Refactoring-Transformations',

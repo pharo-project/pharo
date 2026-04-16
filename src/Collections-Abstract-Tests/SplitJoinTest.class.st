@@ -63,7 +63,7 @@ or:
 	B join: C
 The result is normally the same type as the joiner. If the joiner (B) is of type S[T] and C is of type OC[S[T]] or Array[S[T]], the result is also of type S[T]. For example:"
 
-	'' loves '' join: #(''john'' ''jane'' ''jack'').
+	'' loves '' join: #(john jane jack).
 	"-> ''john loves jane loves jack''"
 
 "An object that is not a sequence can also be used as a joiner, in which case the final result is an array. Also the collection being joined may contain elements that are not sequences, in which case they are treated as singleton arrays."

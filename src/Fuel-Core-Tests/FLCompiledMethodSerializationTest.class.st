@@ -2,8 +2,8 @@ Class {
 	#name : 'FLCompiledMethodSerializationTest',
 	#superclass : 'FLSerializationTest',
 	#instVars : [
-		'theCompiledMethod',
-		'theClass'
+		#theCompiledMethod,
+		#theClass
 	],
 	#category : 'Fuel-Core-Tests-Base',
 	#package : 'Fuel-Core-Tests',

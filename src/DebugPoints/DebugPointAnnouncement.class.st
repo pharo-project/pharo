@@ -5,9 +5,9 @@ Class {
 	#name : 'DebugPointAnnouncement',
 	#superclass : 'SystemAnnouncement',
 	#instVars : [
-		'debugPoint',
-		'nodes',
-		'methods'
+		#debugPoint,
+		#nodes,
+		#methods
 	],
 	#category : 'DebugPoints-Announcements',
 	#package : 'DebugPoints',

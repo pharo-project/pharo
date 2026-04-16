@@ -5,7 +5,7 @@ Class {
 	#name : 'OupsDummyDebugRequest',
 	#superclass : 'OupsDebugRequest',
 	#instVars : [
-		'dummyPreDebugActionExecutedCount'
+		#dummyPreDebugActionExecutedCount
 	],
 	#category : 'Debugger-Oups-Tests-Utils',
 	#package : 'Debugger-Oups-Tests',

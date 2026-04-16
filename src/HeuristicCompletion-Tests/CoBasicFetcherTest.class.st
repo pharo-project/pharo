@@ -2,7 +2,7 @@ Class {
 	#name : 'CoBasicFetcherTest',
 	#superclass : 'CoBasicCompletionTest',
 	#instVars : [
-		'fetcher'
+		#fetcher
 	],
 	#category : 'HeuristicCompletion-Tests-Core',
 	#package : 'HeuristicCompletion-Tests',

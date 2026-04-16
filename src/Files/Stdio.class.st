@@ -27,10 +27,10 @@ Class {
 	#name : 'Stdio',
 	#superclass : 'Object',
 	#classVars : [
-		'CreateWriteStreamBlock',
-		'Stderr',
-		'Stdin',
-		'Stdout'
+		#CreateWriteStreamBlock,
+		#Stderr,
+		#Stdin,
+		#Stdout
 	],
 	#category : 'Files-Core',
 	#package : 'Files',

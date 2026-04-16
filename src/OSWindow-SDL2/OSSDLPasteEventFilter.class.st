@@ -2,12 +2,12 @@ Class {
 	#name : 'OSSDLPasteEventFilter',
 	#superclass : 'Object',
 	#instVars : [
-		'next',
-		'lastEvents',
-		'currentState'
+		#next,
+		#lastEvents,
+		#currentState
 	],
 	#pools : [
-		'SDL2Constants'
+		#SDL2Constants
 	],
 	#category : 'OSWindow-SDL2-Base',
 	#package : 'OSWindow-SDL2',

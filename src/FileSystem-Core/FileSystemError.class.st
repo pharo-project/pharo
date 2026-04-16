@@ -5,7 +5,7 @@ Class {
 	#name : 'FileSystemError',
 	#superclass : 'Error',
 	#instVars : [
-		'reference'
+		#reference
 	],
 	#category : 'FileSystem-Core-Kernel-Errors',
 	#package : 'FileSystem-Core',

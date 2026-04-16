@@ -8,7 +8,7 @@ Class {
 	#name : 'AthensPolygonTester',
 	#superclass : 'Object',
 	#instVars : [
-		'polygon'
+		#polygon
 	],
 	#category : 'Athens-Core-Paths',
 	#package : 'Athens-Core',

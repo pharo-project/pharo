@@ -7,8 +7,8 @@ Class {
 	#name : 'SimpleSwitchMorph',
 	#superclass : 'SimpleButtonMorph',
 	#instVars : [
-		'onColor',
-		'offColor'
+		#onColor,
+		#offColor
 	],
 	#category : 'Morphic-Widgets-Basic-Buttons',
 	#package : 'Morphic-Widgets-Basic',

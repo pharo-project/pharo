@@ -7,7 +7,7 @@ Class {
 	#name : 'Exit',
 	#superclass : 'Exception',
 	#instVars : [
-		'status'
+		#status
 	],
 	#category : 'System-CommandLine-Exceptions',
 	#package : 'System-CommandLine',

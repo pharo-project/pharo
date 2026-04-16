@@ -27,10 +27,10 @@ Class {
 	#name : 'TFProcessLocalWorker',
 	#superclass : 'TFRunner',
 	#instVars : [
-		'defaultWorker'
+		#defaultWorker
 	],
 	#classInstVars : [
-		'worker'
+		#worker
 	],
 	#category : 'ThreadedFFI-Worker',
 	#package : 'ThreadedFFI',

@@ -9,8 +9,8 @@ Class {
 	#name : 'OSEvent',
 	#superclass : 'Object',
 	#instVars : [
-		'window',
-		'suppressDefaultAction'
+		#window,
+		#suppressDefaultAction
 	],
 	#category : 'OSWindow-Core-Events',
 	#package : 'OSWindow-Core',

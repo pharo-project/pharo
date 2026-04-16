@@ -2,9 +2,9 @@ Class {
 	#name : 'ReSharedVariableHasReferences',
 	#superclass : 'RBNewAbstractCondition',
 	#instVars : [
-		'aClass',
-		'violators',
-		'sharedVariable'
+		#aClass,
+		#violators,
+		#sharedVariable
 	],
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',

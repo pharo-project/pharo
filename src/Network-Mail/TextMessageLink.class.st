@@ -5,7 +5,7 @@ Class {
 	#name : 'TextMessageLink',
 	#superclass : 'TextAttribute',
 	#instVars : [
-		'message'
+		#message
 	],
 	#category : 'Network-Mail',
 	#package : 'Network-Mail'

@@ -10,9 +10,9 @@ Class {
 	#name : 'DAPackageRelationGraph',
 	#superclass : 'Object',
 	#instVars : [
-		'packages',
-		'classMapping',
-		'shouldComputeMessageSendDependencies'
+		#packages,
+		#classMapping,
+		#shouldComputeMessageSendDependencies
 	],
 	#category : 'Tool-DependencyAnalyser-Core',
 	#package : 'Tool-DependencyAnalyser',
@@ -300,7 +300,7 @@ DAPackageRelationGraph >> initializeWithPackages: aListOfDAPackages [
 
 { #category : 'testing' }
 DAPackageRelationGraph >> isReference: aLiteral [
-	^ aLiteral isVariableBinding and: [ aLiteral value isBehavior and: [ aLiteral key = aLiteral value name ] ]
+	^ aLiteral isVariableBinding and: [ aLiteral value isBehavior and: [ aLiteral key sameContents: aLiteral value name ] ]
 ]
 
 { #category : 'adding' }

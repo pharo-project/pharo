@@ -5,9 +5,9 @@ Class {
 	#name : 'MorphicTransform',
 	#superclass : 'DisplayTransform',
 	#instVars : [
-		'offset',
-		'angle',
-		'scale'
+		#offset,
+		#angle,
+		#scale
 	],
 	#category : 'Graphics-Transformations',
 	#package : 'Graphics-Transformations'

@@ -6,7 +6,7 @@ Class {
 	#name : 'TranscriptBehavior',
 	#superclass : 'DebugPointSideEffectBehavior',
 	#instVars : [
-		'text'
+		#text
 	],
 	#category : 'DebugPoints-Behaviors',
 	#package : 'DebugPoints',

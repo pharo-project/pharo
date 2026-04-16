@@ -5,10 +5,10 @@ Class {
 	#name : 'RenrakuBaseTestCase',
 	#superclass : 'TestCase',
 	#instVars : [
-		'testPackage'
+		#testPackage
 	],
 	#classVars : [
-		'ScreamerRule'
+		#ScreamerRule
 	],
 	#category : 'Renraku-Tests',
 	#package : 'Renraku-Tests'

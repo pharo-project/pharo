@@ -5,8 +5,8 @@ Class {
 	#name : 'FileLocatorStoredSetting',
 	#superclass : 'AbstractStoredSetting',
 	#instVars : [
-		'origin',
-		'pathSegments'
+		#origin,
+		#pathSegments
 	],
 	#category : 'System-Settings-Core-Persistence-Ston-StoredSettings',
 	#package : 'System-Settings-Core',

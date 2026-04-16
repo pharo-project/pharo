@@ -34,13 +34,13 @@ Class {
 	#name : 'ZnMimeType',
 	#superclass : 'Object',
 	#instVars : [
-		'main',
-		'sub',
-		'parameters'
+		#main,
+		#sub,
+		#parameters
 	],
 	#classVars : [
-		'ExtensionsMap',
-		'TextSubTypeFragments'
+		#ExtensionsMap,
+		#TextSubTypeFragments
 	],
 	#category : 'Zinc-Resource-Meta-Core',
 	#package : 'Zinc-Resource-Meta-Core'
@@ -245,9 +245,9 @@ ZnMimeType class >> patchExtensionsMap [
 	"Patch the extension map that we read from the spec"
 
 	#('~' '%') do: [ :each | ExtensionsMap removeKey: each ].
-	(ExtensionsMap at: 'text') setCharSetUTF8.
-	(ExtensionsMap at: 'html') setCharSetUTF8.
-	ExtensionsMap at: 'asc' put: 'text/plain' asZnMimeType
+	(ExtensionsMap at: #'text') setCharSetUTF8.
+	(ExtensionsMap at: #'html') setCharSetUTF8.
+	ExtensionsMap at: #'asc' put: 'text/plain' asZnMimeType
 ]
 
 { #category : 'convenience' }
@@ -320,7 +320,7 @@ ZnMimeType >> charSet [
 
 { #category : 'parameters' }
 ZnMimeType >> charSet: aString [
-	self parameters at: 'charset' put: aString
+	self parameters at: #'charset' put: aString
 ]
 
 { #category : 'parameters' }

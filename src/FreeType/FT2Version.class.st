@@ -7,9 +7,9 @@ Class {
 	#name : 'FT2Version',
 	#superclass : 'Object',
 	#instVars : [
-		'major',
-		'minor',
-		'patch'
+		#major,
+		#minor,
+		#patch
 	],
 	#category : 'FreeType-Base',
 	#package : 'FreeType',

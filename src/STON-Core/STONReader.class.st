@@ -18,14 +18,14 @@ Class {
 	#name : 'STONReader',
 	#superclass : 'Object',
 	#instVars : [
-		'readStream',
-		'objects',
-		'classes',
-		'unresolvedReferences',
-		'stringStream',
-		'acceptUnknownClasses',
-		'newLine',
-		'convertNewLines'
+		#readStream,
+		#objects,
+		#classes,
+		#unresolvedReferences,
+		#stringStream,
+		#acceptUnknownClasses,
+		#newLine,
+		#convertNewLines
 	],
 	#category : 'STON-Core-Reader',
 	#package : 'STON-Core',

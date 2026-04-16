@@ -8,10 +8,10 @@ Class {
 	#name : 'EncodedCharSet',
 	#superclass : 'Object',
 	#classVars : [
-		'EncodedCharSets'
+		#EncodedCharSets
 	],
 	#classInstVars : [
-		'ucsTable'
+		#ucsTable
 	],
 	#category : 'Multilingual-Encodings-CharSets',
 	#package : 'Multilingual-Encodings',

@@ -22,7 +22,7 @@ Class {
 	#name : 'ShiftClassInstaller',
 	#superclass : 'Object',
 	#instVars : [
-		'builder'
+		#builder
 	],
 	#category : 'Shift-ClassBuilder-Installer',
 	#package : 'Shift-ClassBuilder',

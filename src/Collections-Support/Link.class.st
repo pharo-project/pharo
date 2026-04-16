@@ -5,7 +5,7 @@ Class {
 	#name : 'Link',
 	#superclass : 'Object',
 	#instVars : [
-		'nextLink'
+		#nextLink
 	],
 	#category : 'Collections-Support-Links',
 	#package : 'Collections-Support',

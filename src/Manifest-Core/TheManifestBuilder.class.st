@@ -8,7 +8,7 @@ Class {
 	#name : 'TheManifestBuilder',
 	#superclass : 'Model',
 	#instVars : [
-		'manifestClass'
+		#manifestClass
 	],
 	#category : 'Manifest-Core-Base',
 	#package : 'Manifest-Core',

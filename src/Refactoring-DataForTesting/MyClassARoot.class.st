@@ -2,14 +2,14 @@ Class {
 	#name : 'MyClassARoot',
 	#superclass : 'Object',
 	#instVars : [
-		'instVarName1',
-		'unusedVar1',
-		'unusedVar2'
+		#instVarName1,
+		#unusedVar1,
+		#unusedVar2
 	],
 	#classVars : [
-		'Shared1',
-		'Shared2',
-		'SharedOnlyInClassSideSubclass'
+		#Shared1,
+		#Shared2,
+		#SharedOnlyInClassSideSubclass
 	],
 	#category : 'Refactoring-DataForTesting-StaticModel',
 	#package : 'Refactoring-DataForTesting',

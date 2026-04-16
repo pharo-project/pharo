@@ -18,9 +18,9 @@ Class {
 	#name : 'SycAddNewPackageCommand',
 	#superclass : 'CmdCommand',
 	#instVars : [
-		'systemEnvironment',
-		'packageName',
-		'resultPackage'
+		#systemEnvironment,
+		#packageName,
+		#resultPackage
 	],
 	#category : 'SystemCommands-PackageCommands',
 	#package : 'SystemCommands-PackageCommands'

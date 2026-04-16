@@ -5,10 +5,10 @@ Class {
 	#name : 'TFCalloutMethodBuilder',
 	#superclass : 'FFICalloutMethodBuilder',
 	#classVars : [
-		'ABI_MAPPING'
+		#ABI_MAPPING
 	],
 	#pools : [
-		'TFAbiTypes'
+		#TFAbiTypes
 	],
 	#category : 'ThreadedFFI-UFFI',
 	#package : 'ThreadedFFI-UFFI'

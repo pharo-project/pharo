@@ -5,8 +5,8 @@ Class {
 	#name : 'ArchiveMember',
 	#superclass : 'Object',
 	#instVars : [
-		'fileName',
-		'isCorrupt'
+		#fileName,
+		#isCorrupt
 	],
 	#category : 'Compression-Archives',
 	#package : 'Compression',

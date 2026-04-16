@@ -5,8 +5,8 @@ Class {
 	#name : 'MutexTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'mutex',
-		'forkedProcesses'
+		#mutex,
+		#forkedProcesses
 	],
 	#category : 'Kernel-Extended-Tests-Processes',
 	#package : 'Kernel-Extended-Tests',

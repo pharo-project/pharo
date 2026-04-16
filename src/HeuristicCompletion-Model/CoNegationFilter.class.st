@@ -7,7 +7,7 @@ Class {
 	#name : 'CoNegationFilter',
 	#superclass : 'CoFilter',
 	#instVars : [
-		'negatedFilter'
+		#negatedFilter
 	],
 	#category : 'HeuristicCompletion-Model-Core',
 	#package : 'HeuristicCompletion-Model',

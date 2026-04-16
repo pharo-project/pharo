@@ -6,7 +6,7 @@ Class {
 	#name : 'ChainBehavior',
 	#superclass : 'DebugPointSideEffectBehavior',
 	#classVars : [
-		'Chains'
+		#Chains
 	],
 	#category : 'DebugPoints-Behaviors',
 	#package : 'DebugPoints',

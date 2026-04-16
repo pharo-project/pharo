@@ -7,11 +7,11 @@ Class {
 	#name : 'ScalingCanvas',
 	#superclass : 'PluggableCanvas',
 	#instVars : [
-		'formCanvas',
-		'scale'
+		#formCanvas,
+		#scale
 	],
 	#classVars : [
-		'FormMapping'
+		#FormMapping
 	],
 	#category : 'Graphics-Canvas-Canvases',
 	#package : 'Graphics-Canvas',

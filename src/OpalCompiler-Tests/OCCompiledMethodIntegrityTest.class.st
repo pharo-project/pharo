@@ -107,7 +107,7 @@ OCCompiledMethodIntegrityTest >> testUndeclaredVariable [
 		permitFaulty: true;
 		compile.
 
-	undeclaredBinding := newCompiledMethod literals detect: [ :each | each name = #undeclaredTestVar ].
+	undeclaredBinding := newCompiledMethod literals detect: [ :each | each name sameContents: #undeclaredTestVar ].
 	self assert: undeclaredBinding class equals: UndeclaredVariable.
 	self assert: undeclaredBinding identicalTo: (Undeclared associationAt: #undeclaredTestVar).
 	self assert: (undeclaredBinding registeredMethods includes: newCompiledMethod).
@@ -128,7 +128,7 @@ OCCompiledMethodIntegrityTest >> testUndeclaredVariableWhenItIsAlreadyRegistered
 		permitFaulty: true;
 		compile.
 
-	undeclaredBinding := newCompiledMethod literals detect: [ :each | each name = #undeclaredTestVar ].
+	undeclaredBinding := newCompiledMethod literals detect: [ :each | each name sameContents: #undeclaredTestVar ].
 	self assert: undeclaredBinding identicalTo: var.
 	undeclaredBinding unregister
 ]
@@ -150,7 +150,7 @@ OCCompiledMethodIntegrityTest >> testUndeclaredVariableWhenItIsAlreadyRegistered
 		permitFaulty: true;
 		compile.
 
-	undeclaredBinding := newCompiledMethod literals detect: [ :each | each name = #undeclaredTestVar ].
+	undeclaredBinding := newCompiledMethod literals detect: [ :each | each name sameContents: #undeclaredTestVar ].
 	self assert: undeclaredBinding class equals: UndeclaredVariable.
 	self assert: undeclaredBinding identicalTo: (Undeclared associationAt: #undeclaredTestVar).
 	undeclaredBinding unregister

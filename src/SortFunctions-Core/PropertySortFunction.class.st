@@ -17,7 +17,7 @@ Class {
 	#name : 'PropertySortFunction',
 	#superclass : 'ComposedSortFunction',
 	#instVars : [
-		'property'
+		#property
 	],
 	#category : 'SortFunctions-Core',
 	#package : 'SortFunctions-Core'

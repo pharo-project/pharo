@@ -2,7 +2,7 @@ Class {
 	#name : 'AnnotationUserExample',
 	#superclass : 'BaseAnnotationUserExample',
 	#instVars : [
-		'isSimulatedActiveAnnotation'
+		#isSimulatedActiveAnnotation
 	],
 	#category : 'ClassAnnotation-Tests-Examples-Annotation contexts',
 	#package : 'ClassAnnotation-Tests',

@@ -7,8 +7,8 @@ Class {
 	#name : 'SymbolNotFoundError',
 	#superclass : 'Error',
 	#instVars : [
-		'symbolName',
-		'moduleName'
+		#symbolName,
+		#moduleName
 	],
 	#category : 'FFI-Kernel',
 	#package : 'FFI-Kernel'

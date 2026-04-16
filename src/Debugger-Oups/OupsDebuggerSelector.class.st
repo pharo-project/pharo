@@ -13,10 +13,10 @@ Class {
 	#name : 'OupsDebuggerSelector',
 	#superclass : 'OupsDebuggerSelectionStrategy',
 	#instVars : [
-		'handlesDebuggerErrors'
+		#handlesDebuggerErrors
 	],
 	#classInstVars : [
-		'handleDebuggerErrors'
+		#handleDebuggerErrors
 	],
 	#category : 'Debugger-Oups-Strategies',
 	#package : 'Debugger-Oups',

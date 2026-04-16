@@ -10,7 +10,7 @@ Class {
 	#name : 'SycFormatSourceCodeCommand',
 	#superclass : 'CmdCommand',
 	#instVars : [
-		'sourceCodeEditor'
+		#sourceCodeEditor
 	],
 	#category : 'SystemCommands-SourceCodeCommands',
 	#package : 'SystemCommands-SourceCodeCommands'

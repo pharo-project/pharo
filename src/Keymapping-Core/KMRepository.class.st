@@ -8,12 +8,12 @@ Class {
 	#name : 'KMRepository',
 	#superclass : 'Object',
 	#instVars : [
-		'categories',
-		'categoryHolders',
-		'globalCategories'
+		#categories,
+		#categoryHolders,
+		#globalCategories
 	],
 	#classVars : [
-		'Singleton'
+		#Singleton
 	],
 	#category : 'Keymapping-Core-Base',
 	#package : 'Keymapping-Core',

@@ -16,7 +16,7 @@ MetacelloMCPackagesSpecTestCase >> testAddPackageA [
 			(self packageSpec
 				name: 'Package';
 				requires: 'AnotherPackage';
-				includes: 'IncludedPackage';
+				includes: #IncludedPackage;
 				answers: #(#('preload' 'preload answer') #('postload' 'postload answer'));
 				file: 'Package-dkh.1';
 				preLoadDoIt: #preLoadDoIt;
@@ -27,7 +27,7 @@ MetacelloMCPackagesSpecTestCase >> testAddPackageA [
 			(self packageSpec
 				name: 'Package';
 				requires: 'AndAnotherPackage';
-				includes: 'AndIncludedPackage';
+				includes: #AndIncludedPackage;
 				answers: #(#('postload' 'postload answer'));
 				file: 'Package-dkh.2';
 				yourself).
@@ -52,7 +52,7 @@ MetacelloMCPackagesSpecTestCase >> testAddPackageB [
 			{(self packageSpec
 				name: 'Package';
 				requires: 'AnotherPackage';
-				includes: 'IncludedPackage';
+				includes: #IncludedPackage;
 				answers: #(#('preload' 'preload answer') #('postload' 'postload answer'));
 				file: 'Package-dkh.1';
 				preLoadDoIt: #preLoadDoIt;
@@ -60,7 +60,7 @@ MetacelloMCPackagesSpecTestCase >> testAddPackageB [
 				yourself) . (self packageSpec
 				name: 'Package';
 				requires: 'AndAnotherPackage';
-				includes: 'AndIncludedPackage';
+				includes: #AndIncludedPackage;
 				answers: #(#('postload' 'postload answer'));
 				file: 'Package-dkh.2';
 				yourself)}.
@@ -111,7 +111,7 @@ MetacelloMCPackagesSpecTestCase >> testCopyToPackage [
 			(self packageSpec
 				name: 'Package';
 				requires: 'AnotherPackage';
-				includes: 'IncludedPackage';
+				includes: #IncludedPackage;
 				answers: #(#('preload' 'preload answer') #('postload' 'postload answer'));
 				file: 'Package-dkh.1';
 				preLoadDoIt: #preLoadDoIt;
@@ -144,7 +144,7 @@ MetacelloMCPackagesSpecTestCase >> testMergePackageA [
 			(self packageSpec
 				name: 'Package';
 				requires: 'AnotherPackage';
-				includes: 'IncludedPackage';
+				includes: #IncludedPackage;
 				answers: #(#('preload' 'preload answer') #('postload' 'postload answer'));
 				file: 'Package-dkh.1';
 				preLoadDoIt: #preLoadDoIt;
@@ -155,7 +155,7 @@ MetacelloMCPackagesSpecTestCase >> testMergePackageA [
 			(self packageSpec
 				name: 'Package';
 				requires: 'AndAnotherPackage';
-				includes: 'AndIncludedPackage';
+				includes: #AndIncludedPackage;
 				answers: #(#('xpostload' 'xpostload answer'));
 				file: 'Package-dkh.2';
 				yourself).
@@ -180,7 +180,7 @@ MetacelloMCPackagesSpecTestCase >> testMergePackageB [
 			(self packageSpec
 				name: 'Package';
 				requires: 'AnotherPackage';
-				includes: 'IncludedPackage';
+				includes: #IncludedPackage;
 				answers: #(#('preload' 'preload answer') #('postload' 'postload answer'));
 				file: 'Package-dkh.1';
 				preLoadDoIt: #preLoadDoIt;
@@ -191,7 +191,7 @@ MetacelloMCPackagesSpecTestCase >> testMergePackageB [
 			{(self packageSpec
 				name: 'Package';
 				requires: 'AndAnotherPackage';
-				includes: 'AndIncludedPackage';
+				includes: #AndIncludedPackage;
 				answers: #(#('xpostload' 'xpostload answer'));
 				file: 'Package-dkh.2';
 				yourself)}.
@@ -229,7 +229,7 @@ MetacelloMCPackagesSpecTestCase >> testRemovePackageA [
             (self packageSpec
                 name: 'Package';
                 requires: 'AnotherPackage';
-                includes: 'IncludedPackage';
+                includes: #IncludedPackage;
                 answers: #(#('preload' 'preload answer') #('postload' 'postload answer'));
                 file: 'Package-dkh.1';
                 preLoadDoIt: #'preLoadDoIt';
@@ -256,7 +256,7 @@ MetacelloMCPackagesSpecTestCase >> testRemovePackageB [
             (self packageSpec
                 name: 'Package';
                 requires: 'AnotherPackage';
-                includes: 'IncludedPackage';
+                includes: #IncludedPackage;
                 answers: #(#('preload' 'preload answer') #('postload' 'postload answer'));
                 file: 'Package-dkh.1';
                 preLoadDoIt: #'preLoadDoIt';
@@ -283,7 +283,7 @@ MetacelloMCPackagesSpecTestCase >> testRemovePackageC [
             (self packageSpec
                 name: 'Package';
                 requires: 'AnotherPackage';
-                includes: 'IncludedPackage';
+                includes: #IncludedPackage;
                 answers: #(#('preload' 'preload answer') #('postload' 'postload answer'));
                 file: 'Package-dkh.1';
                 preLoadDoIt: #'preLoadDoIt';
@@ -306,7 +306,7 @@ MetacelloMCPackagesSpecTestCase >> testRemovePackageD [
             (self packageSpec
                 name: 'Package';
                 requires: 'AnotherPackage';
-                includes: 'IncludedPackage';
+                includes: #IncludedPackage;
                 answers: #(#('preload' 'preload answer') #('postload' 'postload answer'));
                 file: 'Package-dkh.1';
                 preLoadDoIt: #'preLoadDoIt';

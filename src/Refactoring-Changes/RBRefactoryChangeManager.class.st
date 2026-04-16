@@ -8,16 +8,16 @@ Class {
 	#name : 'RBRefactoryChangeManager',
 	#superclass : 'Object',
 	#instVars : [
-		'undo',
-		'redo',
-		'undoPointers',
-		'isPerformingRefactoring',
-		'changeFactory'
+		#undo,
+		#redo,
+		#undoPointers,
+		#isPerformingRefactoring,
+		#changeFactory
 	],
 	#classVars : [
-		'Counter',
-		'Instance',
-		'UndoSize'
+		#Counter,
+		#Instance,
+		#UndoSize
 	],
 	#category : 'Refactoring-Changes-Base',
 	#package : 'Refactoring-Changes',

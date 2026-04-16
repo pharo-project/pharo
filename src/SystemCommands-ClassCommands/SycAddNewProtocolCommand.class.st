@@ -11,8 +11,8 @@ Class {
 	#name : 'SycAddNewProtocolCommand',
 	#superclass : 'CmdCommand',
 	#instVars : [
-		'targetClass',
-		'protocol'
+		#targetClass,
+		#protocol
 	],
 	#category : 'SystemCommands-ClassCommands',
 	#package : 'SystemCommands-ClassCommands'

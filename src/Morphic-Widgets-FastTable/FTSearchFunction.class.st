@@ -10,9 +10,9 @@ Class {
 	#name : 'FTSearchFunction',
 	#superclass : 'FTFieldFunction',
 	#instVars : [
-		'currentSelIndex',
-		'currentHighlightedIndexes',
-		'pattern'
+		#currentSelIndex,
+		#currentHighlightedIndexes,
+		#pattern
 	],
 	#category : 'Morphic-Widgets-FastTable-Functions',
 	#package : 'Morphic-Widgets-FastTable',

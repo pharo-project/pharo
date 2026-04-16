@@ -515,7 +515,7 @@ Object >> caseOf: aBlockAssociationCollection otherwise: aBlock [
 	 of evaluating aBlock."
 
 	aBlockAssociationCollection associationsDo:
-		[:assoc | (assoc key value = self) ifTrue: [^assoc value value]].
+		[:assoc | (assoc key value sameContents: self) ifTrue: [^assoc value value]].
 	^ aBlock value
 
 "| z | z := {[#a]->[1+1]. ['b' asSymbol]->[2+2]. [#c]->[3+3]}. #b caseOf: z otherwise: [0]"
@@ -1622,6 +1622,11 @@ Object >> retryWithGC: execBlock until: testBlock [
 	(testBlock value: blockValue) ifTrue:[^blockValue].
 	Smalltalk garbageCollect.
 	^execBlock value
+]
+
+{ #category : 'comparing' }
+Object >> sameContents: anObject [
+	^ self = anObject
 ]
 
 { #category : 'write barrier' }

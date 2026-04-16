@@ -5,7 +5,7 @@ Class {
 	#name : 'UUIDGeneratorTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'generator'
+		#generator
 	],
 	#category : 'Network-Tests-UUID',
 	#package : 'Network-Tests',

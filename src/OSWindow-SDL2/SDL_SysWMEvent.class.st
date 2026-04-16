@@ -5,12 +5,12 @@ Class {
 	#name : 'SDL_SysWMEvent',
 	#superclass : 'SDL2MappedEvent',
 	#instVars : [
-		'windowId'
+		#windowId
 	],
 	#classVars : [
-		'OFFSET_MSG',
-		'OFFSET_TIMESTAMP',
-		'OFFSET_TYPE'
+		#OFFSET_MSG,
+		#OFFSET_TIMESTAMP,
+		#OFFSET_TYPE
 	],
 	#category : 'OSWindow-SDL2-Bindings',
 	#package : 'OSWindow-SDL2',

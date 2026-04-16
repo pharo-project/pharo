@@ -29,8 +29,8 @@ Class {
 	#name : 'GlobalIdentifierMerger',
 	#superclass : 'Object',
 	#instVars : [
-		'existing',
-		'stored'
+		#existing,
+		#stored
 	],
 	#category : 'System-Identification',
 	#package : 'System-Identification'

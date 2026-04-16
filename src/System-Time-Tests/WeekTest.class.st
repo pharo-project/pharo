@@ -5,8 +5,8 @@ Class {
 	#name : 'WeekTest',
 	#superclass : 'ClassTestCase',
 	#instVars : [
-		'week',
-		'restoredStartDay'
+		#week,
+		#restoredStartDay
 	],
 	#category : 'System-Time-Tests',
 	#package : 'System-Time-Tests'

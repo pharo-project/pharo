@@ -5,7 +5,7 @@ Class {
 	#name : 'GoferReference',
 	#superclass : 'Object',
 	#instVars : [
-		'name'
+		#name
 	],
 	#category : 'Gofer-Deprecated-References',
 	#package : 'Gofer-Deprecated',
@@ -35,7 +35,7 @@ GoferReference class >> new [
 { #category : 'comparing' }
 GoferReference >> = aReference [
 
-	^ self class = aReference class and: [ self name = aReference name ]
+	^ self class = aReference class and: [ self name sameContents: aReference name ]
 ]
 
 { #category : 'comparing' }
@@ -114,6 +114,6 @@ GoferReference >> workingCopyIfAbsent: aBlock [
 	"Answer a working copy or throw an error if not present."
 
 	^ MCWorkingCopy allWorkingCopies
-		  detect: [ :each | self packageName = each packageName ]
+		  detect: [ :each | self packageName sameContents: each packageName ]
 		  ifNone: aBlock
 ]

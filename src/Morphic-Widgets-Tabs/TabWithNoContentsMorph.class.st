@@ -5,7 +5,7 @@ Class {
 	#name : 'TabWithNoContentsMorph',
 	#superclass : 'Error',
 	#instVars : [
-		'tab'
+		#tab
 	],
 	#category : 'Morphic-Widgets-Tabs-Support',
 	#package : 'Morphic-Widgets-Tabs',

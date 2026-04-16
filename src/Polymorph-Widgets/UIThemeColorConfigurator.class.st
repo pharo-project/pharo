@@ -7,7 +7,7 @@ Class {
 	#name : 'UIThemeColorConfigurator',
 	#superclass : 'Object',
 	#instVars : [
-		'themeSettings'
+		#themeSettings
 	],
 	#category : 'Polymorph-Widgets-Themes',
 	#package : 'Polymorph-Widgets',

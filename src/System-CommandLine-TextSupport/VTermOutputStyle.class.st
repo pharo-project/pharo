@@ -7,9 +7,9 @@ Class {
 	#name : 'VTermOutputStyle',
 	#superclass : 'Object',
 	#instVars : [
-		'font',
-		'background',
-		'styles'
+		#font,
+		#background,
+		#styles
 	],
 	#category : 'System-CommandLine-TextSupport',
 	#package : 'System-CommandLine-TextSupport'

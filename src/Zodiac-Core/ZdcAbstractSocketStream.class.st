@@ -9,11 +9,11 @@ Class {
 	#name : 'ZdcAbstractSocketStream',
 	#superclass : 'Object',
 	#instVars : [
-		'socket',
-		'readBuffer',
-		'writeBuffer',
-		'timeout',
-		'debug'
+		#socket,
+		#readBuffer,
+		#writeBuffer,
+		#timeout,
+		#debug
 	],
 	#category : 'Zodiac-Core',
 	#package : 'Zodiac-Core'

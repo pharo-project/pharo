@@ -5,12 +5,12 @@ Class {
 	#name : 'JoinSide',
 	#superclass : 'Object',
 	#instVars : [
-		'range',
-		'offset',
-		'lineRange',
-		'highlights',
-		'color',
-		'text'
+		#range,
+		#offset,
+		#lineRange,
+		#highlights,
+		#color,
+		#text
 	],
 	#category : 'Tool-Diff-Joins',
 	#package : 'Tool-Diff',

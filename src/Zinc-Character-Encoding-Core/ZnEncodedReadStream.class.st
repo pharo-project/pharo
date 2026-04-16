@@ -7,7 +7,7 @@ Class {
 	#name : 'ZnEncodedReadStream',
 	#superclass : 'ZnEncodedStream',
 	#instVars : [
-		'peeked'
+		#peeked
 	],
 	#category : 'Zinc-Character-Encoding-Core',
 	#package : 'Zinc-Character-Encoding-Core'

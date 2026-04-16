@@ -5,8 +5,8 @@ Class {
 	#name : 'TreeColumnButtonMorph',
 	#superclass : 'SimpleButtonMorph',
 	#instVars : [
-		'model',
-		'icon'
+		#model,
+		#icon
 	],
 	#category : 'Morphic-Widgets-Tree',
 	#package : 'Morphic-Widgets-Tree'

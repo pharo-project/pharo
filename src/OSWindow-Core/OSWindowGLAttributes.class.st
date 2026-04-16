@@ -5,32 +5,32 @@ Class {
 	#name : 'OSWindowGLAttributes',
 	#superclass : 'Object',
 	#instVars : [
-		'redSize',
-		'blueSize',
-		'greenSize',
-		'alphaSize',
-		'depthSize',
-		'doubleBuffer',
-		'swapControl',
-		'stencilSize',
-		'minorVersion',
-		'majorVersion',
-		'profileType',
-		'srgbFramebuffer'
+		#redSize,
+		#blueSize,
+		#greenSize,
+		#alphaSize,
+		#depthSize,
+		#doubleBuffer,
+		#swapControl,
+		#stencilSize,
+		#minorVersion,
+		#majorVersion,
+		#profileType,
+		#srgbFramebuffer
 	],
 	#classVars : [
-		'DefaultAlphaSize',
-		'DefaultBlueSize',
-		'DefaultDepthSize',
-		'DefaultDoubleBuffer',
-		'DefaultGreenSize',
-		'DefaultMajorVersion',
-		'DefaultMinorVersion',
-		'DefaultProfileType',
-		'DefaultRedSize',
-		'DefaultSRGBFramebuffer',
-		'DefaultStencilSize',
-		'DefaultSwapControl'
+		#DefaultAlphaSize,
+		#DefaultBlueSize,
+		#DefaultDepthSize,
+		#DefaultDoubleBuffer,
+		#DefaultGreenSize,
+		#DefaultMajorVersion,
+		#DefaultMinorVersion,
+		#DefaultProfileType,
+		#DefaultRedSize,
+		#DefaultSRGBFramebuffer,
+		#DefaultStencilSize,
+		#DefaultSwapControl
 	],
 	#category : 'OSWindow-Core-OpenGL',
 	#package : 'OSWindow-Core',
@@ -175,17 +175,17 @@ OSWindowGLAttributes >> greenSize: anObject [
 
 { #category : 'profile selection' }
 OSWindowGLAttributes >> hasCompatibilityProfile [
-	^ self profileType = #compatibility
+	^ self profileType sameContents: #compatibility
 ]
 
 { #category : 'profile selection' }
 OSWindowGLAttributes >> hasCoreProfile [
-	^ self profileType = #core
+	^ self profileType sameContents: #core
 ]
 
 { #category : 'profile selection' }
 OSWindowGLAttributes >> hasESProfile [
-	^ self profileType = #es
+	^ self profileType sameContents: #es
 ]
 
 { #category : 'initialization' }

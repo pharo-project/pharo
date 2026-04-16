@@ -10,12 +10,12 @@ Class {
 	#name : 'ExecutionCounter',
 	#superclass : 'Object',
 	#instVars : [
-		'node',
-		'link',
-		'count'
+		#node,
+		#link,
+		#count
 	],
 	#classVars : [
-		'Counters'
+		#Counters
 	],
 	#category : 'Reflectivity-Breakpoints',
 	#package : 'Reflectivity',

@@ -2,7 +2,7 @@ Class {
 	#name : 'RGPointerLayout',
 	#superclass : 'RGLayout',
 	#instVars : [
-		'slots'
+		#slots
 	],
 	#category : 'Ring-Core-Kernel',
 	#package : 'Ring-Core',
@@ -119,7 +119,7 @@ RGPointerLayout >> removeSlot: anRGSlot [
 RGPointerLayout >> resolveSlot: aName ifFound: foundBlock ifNone: noneBlock [
 
 	self allSlots do: [ :slot |
-		slot name = aName ifTrue: [ ^ foundBlock cull: slot ] ].
+		(slot name sameContents: aName) ifTrue: [ ^ foundBlock cull: slot ] ].
 	^ noneBlock value
 ]
 

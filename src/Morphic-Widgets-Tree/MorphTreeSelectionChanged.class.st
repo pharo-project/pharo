@@ -5,7 +5,7 @@ Class {
 	#name : 'MorphTreeSelectionChanged',
 	#superclass : 'MorphTreeAnnounce',
 	#instVars : [
-		'selection'
+		#selection
 	],
 	#category : 'Morphic-Widgets-Tree-Announcements',
 	#package : 'Morphic-Widgets-Tree',

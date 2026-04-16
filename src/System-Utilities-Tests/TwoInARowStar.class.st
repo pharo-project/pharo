@@ -2,8 +2,8 @@ Class {
 	#name : 'TwoInARowStar',
 	#superclass : 'Object',
 	#instVars : [
-		'leave',
-		'fill'
+		#leave,
+		#fill
 	],
 	#category : 'System-Utilities-Tests',
 	#package : 'System-Utilities-Tests'

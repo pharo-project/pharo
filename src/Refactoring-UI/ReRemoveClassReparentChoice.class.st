@@ -2,8 +2,8 @@ Class {
 	#name : 'ReRemoveClassReparentChoice',
 	#superclass : 'ReRemoveClassChoice',
 	#instVars : [
-		'classesHaveSubclasses',
-		'emptyClasses'
+		#classesHaveSubclasses,
+		#emptyClasses
 	],
 	#category : 'Refactoring-UI-Choices',
 	#package : 'Refactoring-UI',

@@ -24,11 +24,11 @@ Class {
 	#traits : 'TTranscript',
 	#classTraits : 'TTranscript classTrait',
 	#instVars : [
-		'stream',
-		'accessSemaphore',
-		'deferredClear',
-		'deferredEndEntry',
-		'stepContents'
+		#stream,
+		#accessSemaphore,
+		#deferredClear,
+		#deferredEndEntry,
+		#stepContents
 	],
 	#category : 'Transcript-Core-Base',
 	#package : 'Transcript-Core',

@@ -5,7 +5,7 @@ Class {
 	#name : 'GZipReadStream',
 	#superclass : 'FastInflateStream',
 	#pools : [
-		'GZipConstants'
+		#GZipConstants
 	],
 	#category : 'Compression-Streams',
 	#package : 'Compression',

@@ -5,8 +5,8 @@ Class {
 	#name : 'FT2Error',
 	#superclass : 'Error',
 	#instVars : [
-		'errorCode',
-		'errorString'
+		#errorCode,
+		#errorString
 	],
 	#category : 'FreeType-Base',
 	#package : 'FreeType',

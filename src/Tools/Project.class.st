@@ -7,7 +7,7 @@ Class {
 	#name : 'Project',
 	#superclass : 'Object',
 	#instVars : [
-		'baseline'
+		#baseline
 	],
 	#category : 'Tools',
 	#package : 'Tools'

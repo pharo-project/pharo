@@ -7,10 +7,10 @@ Class {
 	#name : 'RTFMethodTracer',
 	#superclass : 'ProtoObject',
 	#instVars : [
-		'hasRun',
-		'methodClass',
-		'selector',
-		'method'
+		#hasRun,
+		#methodClass,
+		#selector,
+		#method
 	],
 	#category : 'RottenTestsFinder-Tracers',
 	#package : 'RottenTestsFinder',

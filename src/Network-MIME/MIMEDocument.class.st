@@ -5,10 +5,10 @@ Class {
 	#name : 'MIMEDocument',
 	#superclass : 'Object',
 	#instVars : [
-		'type',
-		'contents',
-		'contentStream',
-		'uri'
+		#type,
+		#contents,
+		#contentStream,
+		#uri
 	],
 	#category : 'Network-MIME-Base',
 	#package : 'Network-MIME',

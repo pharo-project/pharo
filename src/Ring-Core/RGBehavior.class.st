@@ -10,12 +10,12 @@ Class {
 	#name : 'RGBehavior',
 	#superclass : 'RGBehaviorStrategyUser',
 	#instVars : [
-		'superclass',
-		'localMethods',
-		'traitComposition',
-		'metaclass',
-		'tagsForMethods',
-		'tags'
+		#superclass,
+		#localMethods,
+		#traitComposition,
+		#metaclass,
+		#tagsForMethods,
+		#tags
 	],
 	#category : 'Ring-Core-Kernel',
 	#package : 'Ring-Core',
@@ -626,7 +626,7 @@ RGBehavior >> isWords [
 { #category : 'queries - methods' }
 RGBehavior >> localMethodNamed: aSymbol ifAbsent: aBlock [
 
-	self localMethodsDo: [ :each | (each name = aSymbol) ifTrue: [^ each]].
+	self localMethodsDo: [ :each | (each name sameContents: aSymbol) ifTrue: [^ each]].
 
 	^ aBlock value
 ]
@@ -697,7 +697,7 @@ RGBehavior >> methodNamed: aSymbol [
 
 	| allMethods |
 	allMethods := IdentitySet new.
-	self methods do: [ :each | each name = aSymbol ifTrue: [^ each]].
+	self methods do: [ :each | (each name sameContents: aSymbol) ifTrue: [^ each]].
 	^ nil
 ]
 

@@ -7,10 +7,10 @@ Class {
 	#name : 'RottenTestsFinder',
 	#superclass : 'SUnitVisitor',
 	#instVars : [
-		'rottenTests',
-		'visitableObject',
-		'testsVisitedCount',
-		'testsRunCount'
+		#rottenTests,
+		#visitableObject,
+		#testsVisitedCount,
+		#testsRunCount
 	],
 	#category : 'RottenTestsFinder-Core',
 	#package : 'RottenTestsFinder',

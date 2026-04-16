@@ -7,8 +7,8 @@ Class {
 	#traits : 'TEmptyTest - {#testIfNotEmptyifEmpty. #testIfEmpty. #testNotEmpty} + (TCloneTest - {#testCopyNonEmpty})',
 	#classTraits : 'TEmptyTest classTrait + TCloneTest classTrait',
 	#instVars : [
-		'empty',
-		'nonEmpty'
+		#empty,
+		#nonEmpty
 	],
 	#category : 'Collections-Stack-Tests-Base',
 	#package : 'Collections-Stack-Tests',

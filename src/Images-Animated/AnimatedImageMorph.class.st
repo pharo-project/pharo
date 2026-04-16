@@ -11,12 +11,12 @@ Class {
 	#name : 'AnimatedImageMorph',
 	#superclass : 'Morph',
 	#instVars : [
-		'frames',
-		'frameStream',
-		'currentFrame',
-		'activeForm',
-		'prevFrame',
-		'currentDisposal'
+		#frames,
+		#frameStream,
+		#currentFrame,
+		#activeForm,
+		#prevFrame,
+		#currentDisposal
 	],
 	#category : 'Images-Animated',
 	#package : 'Images-Animated'
@@ -175,7 +175,7 @@ AnimatedImageMorph >> updateActiveForm [
 			activeForm := canvas form.
 			^ self
 			].
-	prevFrame disposal = #leaveCurrent
+	(prevFrame disposal sameContents: #leaveCurrent)
 		ifTrue: [ ^ self leaveCurrent ].	"Otherwise we assume a restore background"
 	^ self restoreBackground
 ]

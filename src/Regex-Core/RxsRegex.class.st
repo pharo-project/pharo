@@ -11,8 +11,8 @@ Class {
 	#name : 'RxsRegex',
 	#superclass : 'RxsNode',
 	#instVars : [
-		'branch',
-		'regex'
+		#branch,
+		#regex
 	],
 	#category : 'Regex-Core-Nodes',
 	#package : 'Regex-Core',

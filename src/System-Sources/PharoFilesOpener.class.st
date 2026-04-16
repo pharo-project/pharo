@@ -5,10 +5,10 @@ Class {
 	#name : 'PharoFilesOpener',
 	#superclass : 'Object',
 	#instVars : [
-		'shouldInformAboutReadOnlyChanges'
+		#shouldInformAboutReadOnlyChanges
 	],
 	#classVars : [
-		'Default'
+		#Default
 	],
 	#category : 'System-Sources-Utilities',
 	#package : 'System-Sources',

@@ -15,9 +15,9 @@ Class {
 	#name : 'FLMaterializedObjects',
 	#superclass : 'Object',
 	#instVars : [
-		'objects',
-		'roots',
-		'headers'
+		#objects,
+		#roots,
+		#headers
 	],
 	#category : 'Fuel-Core-Base',
 	#package : 'Fuel-Core',

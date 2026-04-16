@@ -6,8 +6,8 @@ Class {
 	#name : 'RubFindReplaceService',
 	#superclass : 'FindReplaceService',
 	#instVars : [
-		'dialog',
-		'textAreaHolder'
+		#dialog,
+		#textAreaHolder
 	],
 	#category : 'Rubric-Editing-FindReplaceService',
 	#package : 'Rubric',

@@ -14,10 +14,10 @@ Class {
 	#name : 'BaselineOfDisplay',
 	#superclass : 'BaselineOf',
 	#instVars : [
-		'initializersEnabled'
+		#initializersEnabled
 	],
 	#classVars : [
-		'Initialized'
+		#Initialized
 	],
 	#category : 'BaselineOfDisplay',
 	#package : 'BaselineOfDisplay'

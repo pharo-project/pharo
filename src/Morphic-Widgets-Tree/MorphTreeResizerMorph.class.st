@@ -5,10 +5,10 @@ Class {
 	#name : 'MorphTreeResizerMorph',
 	#superclass : 'AbstractResizerMorph',
 	#instVars : [
-		'traceMorph',
-		'oldColor',
-		'index',
-		'container'
+		#traceMorph,
+		#oldColor,
+		#index,
+		#container
 	],
 	#category : 'Morphic-Widgets-Tree',
 	#package : 'Morphic-Widgets-Tree'

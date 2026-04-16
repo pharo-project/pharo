@@ -5,8 +5,8 @@ Class {
 	#name : 'CoPackageImplementedMessagesFetcher',
 	#superclass : 'CoFetcher',
 	#instVars : [
-		'completionPackage',
-		'astNode'
+		#completionPackage,
+		#astNode
 	],
 	#category : 'HeuristicCompletion-Model-Fetchers',
 	#package : 'HeuristicCompletion-Model',

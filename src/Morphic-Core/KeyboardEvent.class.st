@@ -5,11 +5,11 @@ Class {
 	#name : 'KeyboardEvent',
 	#superclass : 'UserInputEvent',
 	#instVars : [
-		'keyValue',
-		'charCode',
-		'scanCode',
-		'key',
-		'supressNextKeyPress'
+		#keyValue,
+		#charCode,
+		#scanCode,
+		#key,
+		#supressNextKeyPress
 	],
 	#category : 'Morphic-Core-Events',
 	#package : 'Morphic-Core',

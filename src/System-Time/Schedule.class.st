@@ -5,7 +5,7 @@ Class {
 	#name : 'Schedule',
 	#superclass : 'Timespan',
 	#instVars : [
-		'schedule'
+		#schedule
 	],
 	#category : 'System-Time',
 	#package : 'System-Time'

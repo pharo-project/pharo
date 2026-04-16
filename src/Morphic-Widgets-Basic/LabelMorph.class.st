@@ -5,11 +5,11 @@ Class {
 	#name : 'LabelMorph',
 	#superclass : 'StringMorph',
 	#instVars : [
-		'getEnabledSelector',
-		'getTextSelector',
-		'enabled',
-		'model',
-		'disabledStyle'
+		#getEnabledSelector,
+		#getTextSelector,
+		#enabled,
+		#model,
+		#disabledStyle
 	],
 	#category : 'Morphic-Widgets-Basic',
 	#package : 'Morphic-Widgets-Basic'
@@ -100,7 +100,7 @@ LabelMorph >> drawOn: aCanvas [
 
 	super drawOn: aCanvas.
 
-	(self enabled not and: [ self disabledStyle = #inset ])	ifTrue: [
+	(self enabled not and: [ self disabledStyle sameContents: #inset ])	ifTrue: [
 		aCanvas
 			drawString: self contents
 			in: (self stringBounds translateBy: 1)

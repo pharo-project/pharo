@@ -5,10 +5,10 @@ Class {
 	#name : 'OSSDL2GLRenderer',
 	#superclass : 'OSWindowGLRenderer',
 	#instVars : [
-		'context'
+		#context
 	],
 	#pools : [
-		'SDL2Constants'
+		#SDL2Constants
 	],
 	#category : 'OSWindow-SDL2-OpenGL',
 	#package : 'OSWindow-SDL2',

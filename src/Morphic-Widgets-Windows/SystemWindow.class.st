@@ -7,30 +7,30 @@ Class {
 	#name : 'SystemWindow',
 	#superclass : 'ModelMorph',
 	#instVars : [
-		'labelString',
-		'stripes',
-		'label',
-		'closeBox',
-		'collapseBox',
-		'paneMorphs',
-		'collapsedFrame',
-		'fullFrame',
-		'isCollapsed',
-		'menuBox',
-		'mustNotClose',
-		'labelWidgetAllowance',
-		'updatablePanes',
-		'labelArea',
-		'expandBox',
-		'embeddable',
-		'isResizeable',
-		'taskbarTask'
+		#labelString,
+		#stripes,
+		#label,
+		#closeBox,
+		#collapseBox,
+		#paneMorphs,
+		#collapsedFrame,
+		#fullFrame,
+		#isCollapsed,
+		#menuBox,
+		#mustNotClose,
+		#labelWidgetAllowance,
+		#updatablePanes,
+		#labelArea,
+		#expandBox,
+		#embeddable,
+		#isResizeable,
+		#taskbarTask
 	],
 	#classVars : [
-		'CloseBoxImage',
-		'CollapseBoxImage',
-		'FullscreenMargin',
-		'TopWindow'
+		#CloseBoxImage,
+		#CollapseBoxImage,
+		#FullscreenMargin,
+		#TopWindow
 	],
 	#category : 'Morphic-Widgets-Windows-Widgets',
 	#package : 'Morphic-Widgets-Windows',
@@ -486,7 +486,7 @@ SystemWindow class >> windowMenuOn: aBuilder [
 		ifTrue: [ #'Make closable' ].
 	(aBuilder item: closableLabel)
 		action: [
-			(closableLabel = #'Make unclosable')
+			(closableLabel sameContents: #'Make unclosable')
 				ifTrue: [ aBuilder model makeUnclosable ]
 				ifFalse:[ aBuilder model makeClosable] ].
 	draggableLabel := aBuilder model isSticky
@@ -1923,9 +1923,9 @@ SystemWindow >> updatablePanes [
 
 { #category : 'label' }
 SystemWindow >> update: aSymbol [
-	aSymbol = #relabel
+	(aSymbol sameContents: #relabel)
 		ifTrue: [^ model ifNotNil: [ self setLabel: model labelString ] ].
-	aSymbol = #close
+	(aSymbol sameContents: #close)
 		ifTrue: [self delete]
 ]
 

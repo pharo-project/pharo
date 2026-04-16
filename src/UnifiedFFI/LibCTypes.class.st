@@ -5,8 +5,8 @@ Class {
 	#name : 'LibCTypes',
 	#superclass : 'SharedPool',
 	#classVars : [
-		'pid_t',
-		'ssize_t'
+		#pid_t,
+		#ssize_t
 	],
 	#category : 'UnifiedFFI-Libraries',
 	#package : 'UnifiedFFI',

@@ -2,9 +2,9 @@ Class {
 	#name : 'CNSelectorExtractionOnPositionTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'sourceCode',
-		'ast',
-		'position'
+		#sourceCode,
+		#ast,
+		#position
 	],
 	#category : 'Tools-CodeNavigation-Tests',
 	#package : 'Tools-CodeNavigation-Tests'

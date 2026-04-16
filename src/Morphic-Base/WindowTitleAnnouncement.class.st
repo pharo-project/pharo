@@ -2,7 +2,7 @@ Class {
 	#name : 'WindowTitleAnnouncement',
 	#superclass : 'Announcement',
 	#instVars : [
-		'title'
+		#title
 	],
 	#category : 'Morphic-Base',
 	#package : 'Morphic-Base'

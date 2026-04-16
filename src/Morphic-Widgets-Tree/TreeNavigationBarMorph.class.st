@@ -9,11 +9,11 @@ Class {
 	#name : 'TreeNavigationBarMorph',
 	#superclass : 'BorderedMorph',
 	#instVars : [
-		'treeMorph',
-		'pageSize',
-		'computedHeight',
-		'withSearch',
-		'pageSearchText'
+		#treeMorph,
+		#pageSize,
+		#computedHeight,
+		#withSearch,
+		#pageSearchText
 	],
 	#category : 'Morphic-Widgets-Tree-Pagination',
 	#package : 'Morphic-Widgets-Tree',

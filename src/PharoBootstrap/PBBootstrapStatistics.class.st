@@ -2,8 +2,8 @@ Class {
 	#name : 'PBBootstrapStatistics',
 	#superclass : 'Object',
 	#instVars : [
-		'methodTimes',
-		'compilationTimes'
+		#methodTimes,
+		#compilationTimes
 	],
 	#category : 'PharoBootstrap',
 	#package : 'PharoBootstrap'

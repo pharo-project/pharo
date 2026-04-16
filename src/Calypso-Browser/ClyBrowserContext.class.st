@@ -23,7 +23,7 @@ Class {
 	#name : 'ClyBrowserContext',
 	#superclass : 'CmdToolContext',
 	#instVars : [
-		'selectedItems'
+		#selectedItems
 	],
 	#category : 'Calypso-Browser-Contexts',
 	#package : 'Calypso-Browser',
@@ -119,7 +119,7 @@ ClyBrowserContext >> isAboutSelectedItem: aDataSourceItem [
 	So here we first try simplified comparison. And then complete version is used"
 	(selectedItems anySatisfy: [ :each | each actualObject == aDataSourceItem actualObject])
 		ifTrue: [ ^true ].
-	(selectedItems anySatisfy: [ :each | each name = aDataSourceItem name])
+	(selectedItems anySatisfy: [ :each | each name sameContents: aDataSourceItem name])
 		ifFalse: [ ^false ].
 	^selectedItems anySatisfy: [ :each | each isEqualTo: aDataSourceItem  ]
 ]

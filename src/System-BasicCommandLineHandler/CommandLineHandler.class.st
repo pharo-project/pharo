@@ -20,10 +20,10 @@ Class {
 	#name : 'CommandLineHandler',
 	#superclass : 'Object',
 	#instVars : [
-		'commandLine',
-		'session',
-		'stdout',
-		'stderr'
+		#commandLine,
+		#session,
+		#stdout,
+		#stderr
 	],
 	#category : 'System-BasicCommandLineHandler-Base',
 	#package : 'System-BasicCommandLineHandler',

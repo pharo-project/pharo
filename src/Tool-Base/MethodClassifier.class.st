@@ -8,16 +8,16 @@ Class {
 	#name : 'MethodClassifier',
 	#superclass : 'Object',
 	#instVars : [
-		'protocol'
+		#protocol
 	],
 	#classVars : [
-		'ShouldAlwaysClassify'
+		#ShouldAlwaysClassify
 	],
 	#classInstVars : [
-		'prefixMapping',
-		'keywordSuffixMapping',
-		'pragmaMapping',
-		'exactMapping'
+		#prefixMapping,
+		#keywordSuffixMapping,
+		#pragmaMapping,
+		#exactMapping
 	],
 	#category : 'Tool-Base-Utilities',
 	#package : 'Tool-Base',
@@ -28,37 +28,37 @@ Class {
 MethodClassifier class >> buildExactMapping [
 
 	exactMapping := Dictionary new
-		                at: 'setUp' put: 'running';
-		                at: 'tearDown' put: 'running';
+		                at: #'setUp' put: 'running';
+		                at: #'tearDown' put: 'running';
 		                yourself
 ]
 
 { #category : 'private' }
 MethodClassifier class >> buildKeywordSuffixMapping [
 	keywordSuffixMapping := Dictionary new
-		at: 'Add:' put: 'adding';
-		at: 'AddAll:' put: 'adding';
-		at: 'Associations' put: 'accessing';
-		at: 'At:' put: 'accessing';
-		at: 'Collect:' put: 'enumerating';
-		at: 'Detect:' put: 'enumerating';
-		at: 'Do:' put: 'enumerating';
-		at: 'Includes:' put: 'testing';
-		at: 'Keys' put: 'accessing';
-		at: 'Reject:' put: 'enumerating';
-		at: 'Remove:' put: 'removing';
-		at: 'RemoveAll' put: 'removing';
-		at: 'RemoveKey:' put: 'removing';
-		at: 'Select:' put: 'enumerating';
-		at: 'Values' put: 'accessing';
+		at: #'Add:' put: 'adding';
+		at: #'AddAll:' put: 'adding';
+		at: #'Associations' put: 'accessing';
+		at: #'At:' put: 'accessing';
+		at: #'Collect:' put: 'enumerating';
+		at: #'Detect:' put: 'enumerating';
+		at: #'Do:' put: 'enumerating';
+		at: #'Includes:' put: 'testing';
+		at: #'Keys' put: 'accessing';
+		at: #'Reject:' put: 'enumerating';
+		at: #'Remove:' put: 'removing';
+		at: #'RemoveAll' put: 'removing';
+		at: #'RemoveKey:' put: 'removing';
+		at: #'Select:' put: 'enumerating';
+		at: #'Values' put: 'accessing';
 		yourself
 ]
 
 { #category : 'private' }
 MethodClassifier class >> buildPragmaMapping [
 	pragmaMapping := Dictionary new
-		at: 'example' put: 'examples';
-		at: 'symbolicVersion:' put: 'symbolic versions';
+		at: #'example' put: 'examples';
+		at: #'symbolicVersion:' put: 'symbolic versions';
 		yourself
 ]
 
@@ -66,51 +66,51 @@ MethodClassifier class >> buildPragmaMapping [
 MethodClassifier class >> buildPrefixMapping [
 
 	prefixMapping := Dictionary new
-		                 at: 'accept' put: 'visiting';
-		                 at: 'accepts' put: 'testing';
-		                 at: 'add' put: 'adding';
-		                 at: 'as' put: 'converting';
-		                 at: 'assert' put: 'asserting';
-		                 at: 'at' put: 'accessing';
-		                 at: 'baseline' put: 'baselines';
-		                 at: 'bench' put: 'benchmarking';
-		                 at: 'benchmark' put: 'benchmarking';
-		                 at: 'can' put: 'testing';
-		                 at: 'compile' put: 'compiling';
-		                 at: 'copy' put: 'copying';
-		                 at: 'deny' put: 'asserting';
-		                 at: 'first' put: 'accessing';
-		                 at: 'format' put: 'formatting';
-		                 at: 'from' put: 'instance creation';
-		                 at: 'has' put: 'testing';
-		                 at: 'includes' put: 'testing';
-		                 at: 'index' put: 'accessing';
-		                 at: 'initialize' put: 'initialization';
-		                 at: 'is' put: 'testing';
-		                 at: 'last' put: 'accessing';
-		                 at: 'matches' put: 'testing';
-		                 at: 'max' put: 'accessing';
-		                 at: 'maximum' put: 'accessing';
-		                 at: 'min' put: 'accessing';
-		                 at: 'minimum' put: 'accessing';
-		                 at: 'needs' put: 'testing';
-		                 at: 'new' put: 'instance creation';
-		                 at: 'parse' put: 'parsing';
-		                 at: 'print' put: 'printing';
-		                 at: 'remove' put: 'removing';
-		                 at: 'render' put: 'rendering';
-		                 at: 'requires' put: 'testing';
-		                 at: 'reset' put: 'initialization';
-		                 at: 'set' put: 'initialization';
-		                 at: 'should' put: 'asserting';
-		                 at: 'shouldnt' put: 'asserting';
-		                 at: 'signal' put: 'signalling';
-		                 at: 'sort' put: 'sorting';
-		                 at: 'test' put: 'tests';
-		                 at: 'total' put: 'accessing';
-		                 at: 'version' put: 'versions';
-		                 at: 'visit' put: 'visiting';
-		                 at: 'write' put: 'writing';
+		                 at: #'accept' put: 'visiting';
+		                 at: #'accepts' put: 'testing';
+		                 at: #'add' put: 'adding';
+		                 at: #'as' put: 'converting';
+		                 at: #'assert' put: 'asserting';
+		                 at: #'at' put: 'accessing';
+		                 at: #'baseline' put: 'baselines';
+		                 at: #'bench' put: 'benchmarking';
+		                 at: #'benchmark' put: 'benchmarking';
+		                 at: #'can' put: 'testing';
+		                 at: #'compile' put: 'compiling';
+		                 at: #'copy' put: 'copying';
+		                 at: #'deny' put: 'asserting';
+		                 at: #'first' put: 'accessing';
+		                 at: #'format' put: 'formatting';
+		                 at: #'from' put: 'instance creation';
+		                 at: #'has' put: 'testing';
+		                 at: #'includes' put: 'testing';
+		                 at: #'index' put: 'accessing';
+		                 at: #'initialize' put: 'initialization';
+		                 at: #'is' put: 'testing';
+		                 at: #'last' put: 'accessing';
+		                 at: #'matches' put: 'testing';
+		                 at: #'max' put: 'accessing';
+		                 at: #'maximum' put: 'accessing';
+		                 at: #'min' put: 'accessing';
+		                 at: #'minimum' put: 'accessing';
+		                 at: #'needs' put: 'testing';
+		                 at: #'new' put: 'instance creation';
+		                 at: #'parse' put: 'parsing';
+		                 at: #'print' put: 'printing';
+		                 at: #'remove' put: 'removing';
+		                 at: #'render' put: 'rendering';
+		                 at: #'requires' put: 'testing';
+		                 at: #'reset' put: 'initialization';
+		                 at: #'set' put: 'initialization';
+		                 at: #'should' put: 'asserting';
+		                 at: #'shouldnt' put: 'asserting';
+		                 at: #'signal' put: 'signalling';
+		                 at: #'sort' put: 'sorting';
+		                 at: #'test' put: 'tests';
+		                 at: #'total' put: 'accessing';
+		                 at: #'version' put: 'versions';
+		                 at: #'visit' put: 'visiting';
+		                 at: #'write' put: 'writing';
 		                 yourself
 ]
 

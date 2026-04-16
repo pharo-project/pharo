@@ -7,7 +7,7 @@ Class {
 	#name : 'DecoratorStream',
 	#superclass : 'Stream',
 	#instVars : [
-		'decoratedStream'
+		#decoratedStream
 	],
 	#category : 'Collections-Streams-Base',
 	#package : 'Collections-Streams',

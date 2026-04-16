@@ -2,7 +2,7 @@ Class {
 	#name : 'TextInputEvent',
 	#superclass : 'UserInputEvent',
 	#instVars : [
-		'text'
+		#text
 	],
 	#category : 'Morphic-Core-Events',
 	#package : 'Morphic-Core',

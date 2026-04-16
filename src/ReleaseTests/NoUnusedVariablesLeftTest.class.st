@@ -24,7 +24,7 @@ NoUnusedVariablesLeftTest >> testNoUnusedClassVariablesLeft [
 	variables := variables reject: [ :variable |
 		             variable isReferenced or: [
 			             variable definingClass pragmas anySatisfy: [ :pragma |
-				             pragma selector = #ignoreUnusedClassVariables: and: [ (pragma argumentAt: 1) includes: variable name ] ] ] ].
+				             (pragma selector sameContents: #ignoreUnusedClassVariables:) and: [ (pragma argumentAt: 1) includes: variable name ] ] ] ].
 
 	classes := variables collect: [ :each | each definingClass ] as: Set.
 
@@ -40,7 +40,7 @@ NoUnusedVariablesLeftTest >> testNoUnusedInstanceVariablesLeft [
 	variables := variables reject: [ :variable |
 		             variable isReferenced or: [
 			             variable definingClass pragmas anySatisfy: [ :pragma |
-				             pragma selector = #ignoreUnusedVariables: and: [ (pragma argumentAt: 1) includes: variable name ] ] ] ].
+				             (pragma selector sameContents: #ignoreUnusedVariables:) and: [ (pragma argumentAt: 1) includes: variable name ] ] ] ].
 
 	classes := variables collect: [ :each | each definingClass ] as: Set.
 

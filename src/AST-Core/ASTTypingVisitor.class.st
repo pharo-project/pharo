@@ -28,12 +28,12 @@ Class {
 	#name : 'ASTTypingVisitor',
 	#superclass : 'RBProgramNodeVisitor',
 	#instVars : [
-		'variableTypes',
-		'shortcutKernelMessages',
-		'returnTypes',
-		'dirty',
-		'cha',
-		'unknownMethods'
+		#variableTypes,
+		#shortcutKernelMessages,
+		#returnTypes,
+		#dirty,
+		#cha,
+		#unknownMethods
 	],
 	#category : 'AST-Core-Type',
 	#package : 'AST-Core',

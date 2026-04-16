@@ -14,11 +14,11 @@ Class {
 	#name : 'RBParseErrorNode',
 	#superclass : 'RBValueNode',
 	#instVars : [
-		'errorMessage',
-		'value',
-		'start',
-		'stop',
-		'errorPosition'
+		#errorMessage,
+		#value,
+		#start,
+		#stop,
+		#errorPosition
 	],
 	#category : 'AST-Core-Nodes - ErrorNodes',
 	#package : 'AST-Core',
@@ -29,7 +29,7 @@ Class {
 RBParseErrorNode >> = anObject [
 	self == anObject ifTrue: [^true].
 	self class = anObject class ifFalse: [^false].
-	^anObject value = value and: [ anObject errorMessage = errorMessage ]
+	^(anObject value sameContents: value) and: [ anObject errorMessage sameContents: errorMessage ]
 ]
 
 { #category : 'visiting' }

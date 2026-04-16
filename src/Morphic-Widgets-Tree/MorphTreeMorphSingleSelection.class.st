@@ -5,7 +5,7 @@ Class {
 	#name : 'MorphTreeMorphSingleSelection',
 	#superclass : 'MorphTreeMorphSelection',
 	#instVars : [
-		'selectedNodePath'
+		#selectedNodePath
 	],
 	#category : 'Morphic-Widgets-Tree',
 	#package : 'Morphic-Widgets-Tree'

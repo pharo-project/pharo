@@ -6,7 +6,7 @@ Class {
 	#name : 'STONReaderError',
 	#superclass : 'Error',
 	#instVars : [
-		'streamPosition'
+		#streamPosition
 	],
 	#category : 'STON-Core-Reader',
 	#package : 'STON-Core',

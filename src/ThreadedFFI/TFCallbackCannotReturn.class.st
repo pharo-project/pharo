@@ -5,7 +5,7 @@ Class {
 	#name : 'TFCallbackCannotReturn',
 	#superclass : 'Error',
 	#instVars : [
-		'callbackInvocation'
+		#callbackInvocation
 	],
 	#category : 'ThreadedFFI-Callbacks',
 	#package : 'ThreadedFFI',

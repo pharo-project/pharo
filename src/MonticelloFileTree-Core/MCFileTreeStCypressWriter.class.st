@@ -7,10 +7,10 @@ Class {
 	#name : 'MCFileTreeStCypressWriter',
 	#superclass : 'MCFileTreeStSnapshotWriter',
 	#instVars : [
-		'fileStream'
+		#fileStream
 	],
 	#classInstVars : [
-		'specials'
+		#specials
 	],
 	#category : 'MonticelloFileTree-Core',
 	#package : 'MonticelloFileTree-Core'
@@ -164,25 +164,25 @@ MCFileTreeStCypressWriter >> writeClassComment: definition [
 MCFileTreeStCypressWriter >> writeClassDefinition: definition [
     | properties |
     properties := Dictionary new.
-    properties at: 'name' put: definition className.
-    properties at: 'super' put: definition superclassName.
+    properties at: #'name' put: definition className.
+    properties at: #'super' put: definition superclassName.
     definition traitCompositionString
         ifNotNil: [ :property | 
             "Issue #48: https://github.com/dalehenrich/filetree/issues/48"
             property ~= '{}'
-                ifTrue: [ properties at: 'traitcomposition' put: property ] ].
+                ifTrue: [ properties at: #'traitcomposition' put: property ] ].
     definition classTraitCompositionString
         ifNotNil: [ :property | 
             "Issue #48: https://github.com/dalehenrich/filetree/issues/48"
             property ~= '{}'
-                ifTrue: [ properties at: 'classtraitcomposition' put: property ] ].
-    properties at: 'category' put: definition category.
-    properties at: 'instvars' put: definition instVarNames asArray.
-    properties at: 'classvars' put: definition classVarNames asArray.
-    properties at: 'pools' put: definition poolDictionaries asArray.
-    properties at: 'classinstvars' put: definition classInstVarNames asArray.
-    properties at: 'type' put: definition type asString.
-    properties at: 'commentStamp' put: definition commentStamp.
+                ifTrue: [ properties at: #'classtraitcomposition' put: property ] ].
+    properties at: #'category' put: definition category.
+    properties at: #'instvars' put: definition instVarNames asArray.
+    properties at: #'classvars' put: definition classVarNames asArray.
+    properties at: #'pools' put: definition poolDictionaries asArray.
+    properties at: #'classinstvars' put: definition classInstVarNames asArray.
+    properties at: #'type' put: definition type asString.
+    properties at: #'commentStamp' put: definition commentStamp.
     STON put: properties asJsonOnStreamPretty: fileStream
 ]
 
@@ -278,7 +278,7 @@ MCFileTreeStCypressWriter >> writeDefinitions: aCollection [
 MCFileTreeStCypressWriter >> writeExtensionClassDefinition: definition [
     | properties |
     properties := Dictionary new.
-    properties at: 'name' put: definition className.
+    properties at: #'name' put: definition className.
     STON put: properties asJsonOnStreamPretty: fileStream
 ]
 
@@ -320,8 +320,8 @@ MCFileTreeStCypressWriter >> writeMethodProperties: classMethodDefinitions [
 
     | properties classMethodsMap instanceMethodMap |
     properties := Dictionary new.
-    properties at: 'class' put: (classMethodsMap := Dictionary new).
-    properties at: 'instance' put: (instanceMethodMap := Dictionary new).
+    properties at: #'class' put: (classMethodsMap := Dictionary new).
+    properties at: #'instance' put: (instanceMethodMap := Dictionary new).
     classMethodDefinitions
         do: [ :methodDefinition | 
             (methodDefinition classIsMeta
@@ -334,9 +334,9 @@ MCFileTreeStCypressWriter >> writeMethodProperties: classMethodDefinitions [
 MCFileTreeStCypressWriter >> writePropertiesFile [
   | properties |
   properties := Dictionary new.
-  properties at: 'noMethodMetaData' put: true.
-  properties at: 'separateMethodMetaAndSource' put: false.
-  properties at: 'useCypressPropertiesFile' put: true.
+  properties at: #'noMethodMetaData' put: true.
+  properties at: #'separateMethodMetaAndSource' put: false.
+  properties at: #'useCypressPropertiesFile' put: true.
   self
     writeInDirectoryName: '.'
     fileName: ''
@@ -353,21 +353,21 @@ MCFileTreeStCypressWriter >> writePropertiesFile [
 MCFileTreeStCypressWriter >> writeTraitDefinition: definition [
     | properties compositionString |
     properties := Dictionary new.
-    properties at: 'name' put: definition className.
+    properties at: #'name' put: definition className.
     definition traitCompositionString
         ifNotNil: [ :property | 
             property ~= '{}'
-                ifTrue: [ properties at: 'traitcomposition' put: property ] ].
+                ifTrue: [ properties at: #'traitcomposition' put: property ] ].
     " handle the classTrait case "
     compositionString := self classTraitDefinitions at: definition className ifPresent: [:classTraitDefinition |
 	classTraitDefinition classTraitCompositionString ].
     compositionString ifNil: [ compositionString := definition classTraitCompositionString ].
     compositionString~= '{}'
-                ifTrue: [ properties at: 'classtraitcomposition' put: compositionString ] .
-    properties at: 'category' put: definition category.
-    properties at: 'commentStamp' put: definition commentStamp.
-    properties at: 'instvars' put: definition instVarNames asArray.
-    properties at: 'classinstvars' put: definition classInstVarNames asArray.
+                ifTrue: [ properties at: #'classtraitcomposition' put: compositionString ] .
+    properties at: #'category' put: definition category.
+    properties at: #'commentStamp' put: definition commentStamp.
+    properties at: #'instvars' put: definition instVarNames asArray.
+    properties at: #'classinstvars' put: definition classInstVarNames asArray.
     STON put: properties asJsonOnStreamPretty: fileStream
 ]
 

@@ -14,17 +14,17 @@ Class {
 	#name : 'ContextTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'aCompiledMethod',
-		'aReceiver',
-		'aMethodContext',
-		'aSender',
-		'instVarForTestLookupSymbol',
-		'nonActiveBlockContext',
-		'anArgument'
+		#aCompiledMethod,
+		#aReceiver,
+		#aMethodContext,
+		#aSender,
+		#instVarForTestLookupSymbol,
+		#nonActiveBlockContext,
+		#anArgument
 	],
 	#classVars : [
-		'Block',
-		'classVarForTestLookupSymbol'
+		#Block,
+		#classVarForTestLookupSymbol
 	],
 	#category : 'Kernel-Tests-Methods',
 	#package : 'Kernel-Tests',

@@ -5,8 +5,8 @@ Class {
 	#name : 'MCMczWriter',
 	#superclass : 'MCWriter',
 	#instVars : [
-		'zip',
-		'infoWriter'
+		#zip,
+		#infoWriter
 	],
 	#category : 'Monticello-Storing',
 	#package : 'Monticello',
@@ -102,19 +102,19 @@ MCMczWriter >> writeDefinitions: aVersion [
 
 { #category : 'visiting' }
 MCMczWriter >> writeFormat [
-"	self addString: self format at: 'format'."
+"	self addString: self format at: #'format'."
 ]
 
 { #category : 'visiting' }
 MCMczWriter >> writePackage: aPackage [
-	self addString: (self serializePackage: aPackage) at: 'package' encodedTo: 'utf8'
+	self addString: (self serializePackage: aPackage) at: #'package' encodedTo: 'utf8'
 ]
 
 { #category : 'visiting' }
 MCMczWriter >> writeSnapshot: aSnapshot [
 
-	self addString: (self serializeDefinitions: aSnapshot definitions) at: 'snapshot/source.' , self snapshotWriterClass extension encodedTo: 'utf8'.
-	self addString: (self serializeInBinary: aSnapshot) at: 'snapshot.bin'
+	self addString: (self serializeDefinitions: aSnapshot definitions) at: #'snapshot/source.' , self snapshotWriterClass extension encodedTo: 'utf8'.
+	self addString: (self serializeInBinary: aSnapshot) at: #'snapshot.bin'
 ]
 
 { #category : 'visiting' }
@@ -130,14 +130,14 @@ MCMczWriter >> writeVersion: aVersion [
 MCMczWriter >> writeVersionDependency: aVersionDependency [
 	| string |
 	string := (self serializeVersionInfo: aVersionDependency versionInfo).
-	self addString: string at: 'dependencies/', aVersionDependency package name encodedTo: 'utf8'
+	self addString: string at: #'dependencies/', aVersionDependency package name encodedTo: 'utf8'
 ]
 
 { #category : 'visiting' }
 MCMczWriter >> writeVersionInfo: aVersionInfo [
 	| string |
 	string := self serializeVersionInfo: aVersionInfo.
-	self addString: string at: 'version' encodedTo: 'utf8'.
+	self addString: string at: #'version' encodedTo: 'utf8'.
 
 ]
 

@@ -40,7 +40,7 @@ ReShouldSendSuperSetUpAsFirstMessage class >> superSetUpNotCalledFirstIn: aCompi
 { #category : 'running' }
 ReShouldSendSuperSetUpAsFirstMessage >> basicCheck: aMethod [
 
-	^ (self isClassToCheck: aMethod methodClass) and: [ aMethod selector = #setUp and: [ self class superSetUpNotCalledFirstIn: aMethod ] ]
+	^ (self isClassToCheck: aMethod methodClass) and: [ (aMethod selector sameContents: #setUp) and: [ self class superSetUpNotCalledFirstIn: aMethod ] ]
 ]
 
 { #category : 'testing' }

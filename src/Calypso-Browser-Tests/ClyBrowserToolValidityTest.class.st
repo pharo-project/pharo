@@ -2,8 +2,8 @@ Class {
 	#name : 'ClyBrowserToolValidityTest',
 	#superclass : 'ClyBrowserContextAbstractTest',
 	#instVars : [
-		'tool',
-		'context'
+		#tool,
+		#context
 	],
 	#category : 'Calypso-Browser-Tests',
 	#package : 'Calypso-Browser-Tests'

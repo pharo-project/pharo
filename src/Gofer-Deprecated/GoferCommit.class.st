@@ -5,7 +5,7 @@ Class {
 	#name : 'GoferCommit',
 	#superclass : 'GoferWorking',
 	#instVars : [
-		'message'
+		#message
 	],
 	#category : 'Gofer-Deprecated-Operations',
 	#package : 'Gofer-Deprecated',

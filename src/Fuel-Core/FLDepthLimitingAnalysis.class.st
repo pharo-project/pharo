@@ -9,9 +9,9 @@ Class {
 	#name : 'FLDepthLimitingAnalysis',
 	#superclass : 'FLAnalysis',
 	#instVars : [
-		'depthLimit',
-		'depth',
-		'previousStackSize'
+		#depthLimit,
+		#depth,
+		#previousStackSize
 	],
 	#category : 'Fuel-Core-Base',
 	#package : 'Fuel-Core',

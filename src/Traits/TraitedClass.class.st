@@ -14,7 +14,7 @@ Class {
 	#name : 'TraitedClass',
 	#superclass : 'Object',
 	#classInstVars : [
-		'users'
+		#users
 	],
 	#category : 'Traits-Base',
 	#package : 'Traits',

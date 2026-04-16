@@ -5,14 +5,14 @@ Class {
 	#name : 'SDL2',
 	#superclass : 'Object',
 	#classVars : [
-		'ModuleName',
-		'ModuleSession',
-		'Session'
+		#ModuleName,
+		#ModuleSession,
+		#Session
 	],
 	#pools : [
-		'SDL2Constants',
-		'SDL2ConstantsHint',
-		'SDL2Types'
+		#SDL2Constants,
+		#SDL2ConstantsHint,
+		#SDL2Types
 	],
 	#category : 'OSWindow-SDL2-Bindings',
 	#package : 'OSWindow-SDL2',

@@ -31,11 +31,11 @@ Class {
 	#name : 'FTTableContainerMorph',
 	#superclass : 'Morph',
 	#instVars : [
-		'needsRefreshExposedRows',
-		'headerRow',
-		'exposedRows',
-		'startColumnIndex',
-		'rowColors'
+		#needsRefreshExposedRows,
+		#headerRow,
+		#exposedRows,
+		#startColumnIndex,
+		#rowColors
 	],
 	#category : 'Morphic-Widgets-FastTable-Base',
 	#package : 'Morphic-Widgets-FastTable',

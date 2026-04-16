@@ -14,8 +14,8 @@ Class {
 	#name : 'OSTouchEvent',
 	#superclass : 'OSEvent',
 	#instVars : [
-		'deviceId',
-		'timestamp'
+		#deviceId,
+		#timestamp
 	],
 	#category : 'OSWindow-Core-Events-Touch',
 	#package : 'OSWindow-Core',

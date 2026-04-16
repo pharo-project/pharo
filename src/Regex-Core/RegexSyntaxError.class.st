@@ -5,7 +5,7 @@ Class {
 	#name : 'RegexSyntaxError',
 	#superclass : 'RegexError',
 	#instVars : [
-		'position'
+		#position
 	],
 	#category : 'Regex-Core-Exceptions',
 	#package : 'Regex-Core',

@@ -5,7 +5,7 @@ ShiftClassBuilder >> buildFromAST: aCDClassDefinitionNode [
 
 	self name: aCDClassDefinitionNode className.
 
-	aCDClassDefinitionNode superclassName = #nil
+	(aCDClassDefinitionNode superclassName sameContents: #nil)
 		ifFalse: [ self superclass: (superclassResolver resolve: aCDClassDefinitionNode superclassName inEnv: buildEnvironment) ]
 		ifTrue: [ self superclass: nil ].
 

@@ -5,8 +5,8 @@ Class {
 	#name : 'OSWindowGLRenderer',
 	#superclass : 'OSWindowRenderer',
 	#classVars : [
-		'CurrentContext',
-		'CurrentWindow'
+		#CurrentContext,
+		#CurrentWindow
 	],
 	#category : 'OSWindow-Core-OpenGL',
 	#package : 'OSWindow-Core',

@@ -23,19 +23,19 @@ Class {
 	#name : 'DebugSession',
 	#superclass : 'Object',
 	#instVars : [
-		'name',
-		'interruptedContext',
-		'interruptedProcess',
-		'errorWasInUIProcess',
-		'exception',
-		'stepThroughController'
+		#name,
+		#interruptedContext,
+		#interruptedProcess,
+		#errorWasInUIProcess,
+		#exception,
+		#stepThroughController
 	],
 	#classVars : [
 		'FastStepThroughMode',
 		'LogDebuggerStackToFile'
 	],
 	#classInstVars : [
-		'contextModelClass'
+		#contextModelClass
 	],
 	#category : 'Debugger-Model-Core',
 	#package : 'Debugger-Model',

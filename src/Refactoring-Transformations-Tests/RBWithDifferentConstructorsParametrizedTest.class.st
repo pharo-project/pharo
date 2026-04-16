@@ -2,7 +2,7 @@ Class {
 	#name : 'RBWithDifferentConstructorsParametrizedTest',
 	#superclass : 'RBAbstractRefactoringTest',
 	#instVars : [
-		'constructor'
+		#constructor
 	],
 	#category : 'Refactoring-Transformations-Tests-Parametrized',
 	#package : 'Refactoring-Transformations-Tests',

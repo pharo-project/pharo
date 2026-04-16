@@ -13,9 +13,9 @@ Class {
 	#name : 'RadialGradientPaint',
 	#superclass : 'GradientPaint',
 	#instVars : [
-		'center',
-		'radius',
-		'focalPoint'
+		#center,
+		#radius,
+		#focalPoint
 	],
 	#category : 'Athens-Core-Paints',
 	#package : 'Athens-Core',

@@ -21,7 +21,7 @@ Class {
 	#name : 'AthensCairoExportSurface',
 	#superclass : 'AthensCairoSurface',
 	#instVars : [
-		'extent'
+		#extent
 	],
 	#category : 'Athens-Cairo-Surface',
 	#package : 'Athens-Cairo',

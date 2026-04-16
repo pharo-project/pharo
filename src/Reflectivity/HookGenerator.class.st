@@ -8,10 +8,10 @@ Class {
 	#name : 'HookGenerator',
 	#superclass : 'Object',
 	#instVars : [
-		'entity',
-		'node',
-		'links',
-		'plugins'
+		#entity,
+		#node,
+		#links,
+		#plugins
 	],
 	#category : 'Reflectivity-Core',
 	#package : 'Reflectivity',
@@ -31,14 +31,14 @@ HookGenerator class >> node: aNode [
 { #category : 'results' }
 HookGenerator >> afterHooks [
 	^ links
-			select: [ :each | each control = #after ]
+			select: [ :each | each control sameContents: #after ]
 			thenCollect:  [ :link | (self hookFor: link) parent: node]
 ]
 
 { #category : 'results' }
 HookGenerator >> beforeHooks [
 	^links
-			select: [ :each | each control = #before ]
+			select: [ :each | each control sameContents: #before ]
 			thenCollect:  [ :link | (self hookFor: link) parent: node]
 ]
 
@@ -130,7 +130,7 @@ HookGenerator >> hookFor: aLink [
 { #category : 'results' }
 HookGenerator >> insteadHooks [
 	| insteadLinks |
-	insteadLinks := ((links select: [ :each | each control = #instead ])) asArray.
+	insteadLinks := ((links select: [ :each | each control sameContents: #instead ])) asArray.
 	insteadLinks isEmpty ifTrue: [ ^#()].
 	^(self hookFor: insteadLinks last) parent: node
 ]
@@ -165,7 +165,7 @@ HookGenerator >> preamble [
 	preamble := OrderedCollection new.
 	links do: [:link |
 		plugins do: [ :plugin | (link allReifications includes: plugin key) ifTrue: [preamble addAll: ((plugin entity: entity link: link) preamble: entity)]].
-		link control = #instead ifTrue: [
+		(link control sameContents: #instead) ifTrue: [
 				"for instead links, the preamble needs to clean the stack. For now just implemented for message sends"
 				((entity isKindOf: RBProgramNode) and: [node isMessage]) ifTrue: [
 					entity numArgs + 1 timesRepeat: [preamble add: (RFStorePopIntoTempNode named: #RFBalancestack)]]]].

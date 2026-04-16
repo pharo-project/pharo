@@ -5,10 +5,10 @@ Class {
 	#name : 'MetacelloPlatform',
 	#superclass : 'Object',
 	#instVars : [
-		'bypassProgressBars'
+		#bypassProgressBars
 	],
 	#classVars : [
-		'Current'
+		#Current
 	],
 	#category : 'Metacello-Core-Model',
 	#package : 'Metacello-Core',

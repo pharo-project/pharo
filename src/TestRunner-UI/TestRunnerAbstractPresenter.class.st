@@ -5,15 +5,15 @@ Class {
 	#name : 'TestRunnerAbstractPresenter',
 	#superclass : 'SpPresenter',
 	#instVars : [
-		'packagesPresenter',
-		'classesPresenter',
-		'actionBarPresenter',
-		'runner',
-		'selectedClasses',
-		'resultItemsPresenter',
-		'resultDescriptionPresenter',
-		'suitePreparationModesPresenter',
-		'suitePreparationMode'
+		#packagesPresenter,
+		#classesPresenter,
+		#actionBarPresenter,
+		#runner,
+		#selectedClasses,
+		#resultItemsPresenter,
+		#resultDescriptionPresenter,
+		#suitePreparationModesPresenter,
+		#suitePreparationMode
 	],
 	#category : 'TestRunner-UI',
 	#package : 'TestRunner-UI'

@@ -17,8 +17,8 @@ Class {
 	#name : 'PathShape',
 	#superclass : 'Shape',
 	#instVars : [
-		'bounds',
-		'vertices'
+		#bounds,
+		#vertices
 	],
 	#category : 'Graphics-Shapes',
 	#package : 'Graphics-Shapes'

@@ -7,9 +7,9 @@ Class {
 	#name : 'EFTest',
 	#superclass : 'ParametrizedTestCase',
 	#instVars : [
-		'configurationSelector',
-		'formatterClass',
-		'contextClass'
+		#configurationSelector,
+		#formatterClass,
+		#contextClass
 	],
 	#category : 'EnlumineurFormatter-Tests',
 	#package : 'EnlumineurFormatter-Tests'

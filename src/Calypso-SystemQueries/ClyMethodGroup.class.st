@@ -41,8 +41,8 @@ Class {
 	#name : 'ClyMethodGroup',
 	#superclass : 'ClyItemGroup',
 	#instVars : [
-		'methodQuery',
-		'subgroupsQuery'
+		#methodQuery,
+		#subgroupsQuery
 	],
 	#category : 'Calypso-SystemQueries-Domain',
 	#package : 'Calypso-SystemQueries',

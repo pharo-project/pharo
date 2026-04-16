@@ -5,7 +5,7 @@ Class {
 	#name : 'RFGlobalRead',
 	#superclass : 'RFVariableRead',
 	#instVars : [
-		'environment'
+		#environment
 	],
 	#category : 'Reflectivity-Operations',
 	#package : 'Reflectivity',

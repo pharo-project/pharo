@@ -5,11 +5,11 @@ Class {
 	#name : 'FBDExamples',
 	#superclass : 'Object',
 	#instVars : [
-		'iVar',
-		'collection'
+		#iVar,
+		#collection
 	],
 	#classVars : [
-		'CVar'
+		#CVar
 	],
 	#category : 'Flashback-Decompiler-Tests-Examples',
 	#package : 'Flashback-Decompiler-Tests',

@@ -17,5 +17,5 @@ RBBinarySelectorToken >> isBinary [
 
 { #category : 'testing' }
 RBBinarySelectorToken >> isBinary: aString [
-	^ value = aString
+	^ value sameContents: aString
 ]

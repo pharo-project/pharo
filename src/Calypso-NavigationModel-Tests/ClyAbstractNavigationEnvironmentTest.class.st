@@ -2,7 +2,7 @@ Class {
 	#name : 'ClyAbstractNavigationEnvironmentTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'environment'
+		#environment
 	],
 	#category : 'Calypso-NavigationModel-Tests',
 	#package : 'Calypso-NavigationModel-Tests'

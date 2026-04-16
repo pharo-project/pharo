@@ -2,7 +2,7 @@ Class {
 	#name : 'CoBasicFetcherWithElementsTest',
 	#superclass : 'CoBasicFetcherTest',
 	#instVars : [
-		'expectedElements'
+		#expectedElements
 	],
 	#category : 'HeuristicCompletion-Tests-Core',
 	#package : 'HeuristicCompletion-Tests',

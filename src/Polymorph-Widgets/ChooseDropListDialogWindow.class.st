@@ -5,8 +5,8 @@ Class {
 	#name : 'ChooseDropListDialogWindow',
 	#superclass : 'MessageDialogWindow',
 	#instVars : [
-		'listMorph',
-		'list'
+		#listMorph,
+		#list
 	],
 	#category : 'Polymorph-Widgets-Windows',
 	#package : 'Polymorph-Widgets',

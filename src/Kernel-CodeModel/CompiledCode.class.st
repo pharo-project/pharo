@@ -29,10 +29,10 @@ Class {
 	#superclass : 'ByteArray',
 	#type : 'compiledMethod',
 	#classVars : [
-		'LargeFrame',
-		'PrimaryBytecodeSetEncoderClass',
-		'SecondaryBytecodeSetEncoderClass',
-		'SmallFrame'
+		#LargeFrame,
+		#PrimaryBytecodeSetEncoderClass,
+		#SecondaryBytecodeSetEncoderClass,
+		#SmallFrame
 	],
 	#category : 'Kernel-CodeModel-Methods',
 	#package : 'Kernel-CodeModel',
@@ -912,7 +912,7 @@ CompiledCode >> sameLiteralsAs: method [
 	literal2 := method literalAt: numLits.
 	^literal1 class == literal2 class
 	     and: [literal1 isAssociation
-	                ifTrue: [literal1 key = literal2 key and: [literal1 value = literal2 value]]
+	                ifTrue: [(literal1 key sameContents: literal2 key) and: [literal1 value sameContents: literal2 value]]
 	                ifFalse: [literal1 = literal2]]
 ]
 

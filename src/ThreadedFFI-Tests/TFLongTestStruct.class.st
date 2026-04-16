@@ -5,13 +5,13 @@ Class {
 	#name : 'TFLongTestStruct',
 	#superclass : 'FFIExternalStructure',
 	#classVars : [
-		'Char100',
-		'OFFSET_A',
-		'OFFSET_B',
-		'OFFSET_C',
-		'OFFSET_D',
-		'OFFSET_E',
-		'OFFSET_F'
+		#Char100,
+		#OFFSET_A,
+		#OFFSET_B,
+		#OFFSET_C,
+		#OFFSET_D,
+		#OFFSET_E,
+		#OFFSET_F
 	],
 	#category : 'ThreadedFFI-Tests-Test-Structs',
 	#package : 'ThreadedFFI-Tests',

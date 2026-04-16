@@ -7,7 +7,7 @@ Class {
 	#name : 'BCFailingOnPurposeForTestBlock',
 	#superclass : 'MicAnnotationBlock',
 	#classVars : [
-		'FailOnPurpose'
+		#FailOnPurpose
 	],
 	#category : 'BeautifulComments-Tests',
 	#package : 'BeautifulComments',

@@ -10,8 +10,8 @@ Class {
 	#name : 'SycRemoveMessageArgumentCommand',
 	#superclass : 'SycChangeMessageSignatureCommand',
 	#instVars : [
-		'argumentName',
-		'methodName'
+		#argumentName,
+		#methodName
 	],
 	#category : 'SystemCommands-MessageCommands',
 	#package : 'SystemCommands-MessageCommands'

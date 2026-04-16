@@ -5,8 +5,8 @@ Class {
 	#name : 'SourceFileCharacterReadWriteStream',
 	#superclass : 'Object',
 	#instVars : [
-		'readStream',
-		'writeStream'
+		#readStream,
+		#writeStream
 	],
 	#category : 'System-Sources-Streams',
 	#package : 'System-Sources',

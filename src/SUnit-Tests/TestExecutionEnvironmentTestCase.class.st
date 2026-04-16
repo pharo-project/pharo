@@ -2,9 +2,9 @@ Class {
 	#name : 'TestExecutionEnvironmentTestCase',
 	#superclass : 'TestCase',
 	#instVars : [
-		'testService',
-		'executionEnvironment',
-		'processes'
+		#testService,
+		#executionEnvironment,
+		#processes
 	],
 	#category : 'SUnit-Tests-Core',
 	#package : 'SUnit-Tests',

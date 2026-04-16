@@ -27,8 +27,8 @@ Class {
 	#name : 'ClapCommand',
 	#superclass : 'ClapParameterized',
 	#instVars : [
-		'flags',
-		'subcommands'
+		#flags,
+		#subcommands
 	],
 	#category : 'Clap-Core-Specification',
 	#package : 'Clap-Core',

@@ -9,7 +9,7 @@ Class {
 	#name : 'CDTraitCompositionNode',
 	#superclass : 'CDAbstractTraitCompositionNode',
 	#instVars : [
-		'subject'
+		#subject
 	],
 	#category : 'ClassParser-Model',
 	#package : 'ClassParser',

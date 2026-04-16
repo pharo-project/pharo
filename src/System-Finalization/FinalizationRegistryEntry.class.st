@@ -36,8 +36,8 @@ Class {
 	#superclass : 'Association',
 	#type : 'ephemeron',
 	#instVars : [
-		'container',
-		'link'
+		#container,
+		#link
 	],
 	#category : 'System-Finalization-Registry',
 	#package : 'System-Finalization',

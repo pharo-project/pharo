@@ -21,7 +21,7 @@ Class {
 	#name : 'CDClassTagNode',
 	#superclass : 'CDNode',
 	#instVars : [
-		'name'
+		#name
 	],
 	#category : 'ClassParser-Model',
 	#package : 'ClassParser',

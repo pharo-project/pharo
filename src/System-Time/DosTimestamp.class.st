@@ -16,7 +16,7 @@ Class {
 	#name : 'DosTimestamp',
 	#superclass : 'Object',
 	#instVars : [
-		'value'
+		#value
 	],
 	#category : 'System-Time',
 	#package : 'System-Time'
@@ -67,7 +67,7 @@ DosTimestamp class >> timeValueFrom: aTime [
 { #category : 'comparing' }
 DosTimestamp >> = rhs [
 
-	^ self value = rhs value
+	^ self value sameContents: rhs value
 ]
 
 { #category : 'converting' }

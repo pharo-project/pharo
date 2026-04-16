@@ -12,11 +12,11 @@ Class {
 	#name : 'ProtocolClient',
 	#superclass : 'Object',
 	#instVars : [
-		'stream',
-		'connectInfo',
-		'lastResponse',
-		'pendingResponses',
-		'progressObservers'
+		#stream,
+		#connectInfo,
+		#lastResponse,
+		#pendingResponses,
+		#progressObservers
 	],
 	#category : 'Network-Protocols-Protocols',
 	#package : 'Network-Protocols',

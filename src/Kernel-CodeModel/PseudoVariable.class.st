@@ -5,7 +5,7 @@ Class {
 	#name : 'PseudoVariable',
 	#superclass : 'Variable',
 	#instVars : [
-		'environment'
+		#environment
 	],
 	#category : 'Kernel-CodeModel-Variables',
 	#package : 'Kernel-CodeModel',

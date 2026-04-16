@@ -2,7 +2,7 @@ Class {
 	#name : 'SUnitSuiteBuilderTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'visitor'
+		#visitor
 	],
 	#category : 'SUnit-Visitor-Tests',
 	#package : 'SUnit-Visitor-Tests'

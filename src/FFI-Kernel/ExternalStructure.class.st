@@ -46,7 +46,7 @@ For example, We can define a machine dependent 'unsigned long' like this:
 		category: 'garbage'.
 Then set the fields like this:
     UnsignedLong class compile: 'fields  ^(Smalltalk wordSize=4 or: [Smalltalk platformName=''Win64''])
-		ifTrue: [#(nil ''ulong'')] ifFalse: [#(nil ''ulonglong'')]' classified: 'garbage'.
+		ifTrue: [#(nil ulong)] ifFalse: [#(nil ulonglong)]' classified: 'garbage'.
 And verify the size on current platform:
 	UnsignedLong byteSize.
 	
@@ -64,13 +64,13 @@ Class {
 	#name : 'ExternalStructure',
 	#superclass : 'ExternalObject',
 	#classVars : [
-		'PreviousPlatform'
+		#PreviousPlatform
 	],
 	#pools : [
-		'FFIConstants'
+		#FFIConstants
 	],
 	#classInstVars : [
-		'compiledSpec'
+		#compiledSpec
 	],
 	#category : 'FFI-Kernel',
 	#package : 'FFI-Kernel'
@@ -159,10 +159,10 @@ ExternalStructure class >> compileFields: specArray withAccessors: aSymbol [
 	"Compile a type specification for the FFI machinery.
 	Return the newly compiled spec.
 	Eventually generate the field accessors according to following rules:
-	- aSymbol = #always always generate the accessors
-	- aSymbol = #never never generate the accessors
-	- aSymbol = #generated only generate the auto-generated accessors
-	- aSymbol = #absent only generate the absent accessors"
+	- aSymbol sameContents: #always always generate the accessors
+	- aSymbol sameContents: #never never generate the accessors
+	- aSymbol sameContents: #generated only generate the auto-generated accessors
+	- aSymbol sameContents: #absent only generate the absent accessors"
 
 	| byteOffset typeSpec newCompiledSpec |
 	(specArray size > 0 and: [ specArray first class ~~ Array ]) ifTrue: [ ^ self compileAlias: specArray withAccessors: aSymbol ].
@@ -396,17 +396,17 @@ ExternalStructure class >> rename: aString [
 ExternalStructure class >> shouldGenerate: fieldname policy: aSymbol [
 	"Answer true if the field accessors must be compiled.
 	Do so according to the following rules:
-	- aSymbol = #always always generate the accessors
-	- aSymbol = #never never generate the accessors
-	- aSymbol = #generated only re-generate the auto-generated accessors
-	- aSymbol = #absent only generate the absent accessors"
-	aSymbol = #never ifTrue: [^ false].
-	aSymbol = #always ifTrue: [^ true].
-	aSymbol = #absent ifTrue: [^ (self methodDictionary includesKey: fieldname) not].
-	aSymbol = #generated
+	- aSymbol sameContents: #always always generate the accessors
+	- aSymbol sameContents: #never never generate the accessors
+	- aSymbol sameContents: #generated only re-generate the auto-generated accessors
+	- aSymbol sameContents: #absent only generate the absent accessors"
+	(aSymbol sameContents: #never) ifTrue: [^ false].
+	(aSymbol sameContents: #always) ifTrue: [^ true].
+	(aSymbol sameContents: #absent) ifTrue: [^ (self methodDictionary includesKey: fieldname) not].
+	(aSymbol sameContents: #generated)
 		ifTrue: [^ (self methodDictionary includesKey: fieldname)
 				and: [(self methodDictionary at: fieldname) pragmas
-						anySatisfy: [:p | p selector = #generated]]].
+						anySatisfy: [:p | p selector sameContents: #generated]]].
 	self error: 'unknow generation policy'
 ]
 

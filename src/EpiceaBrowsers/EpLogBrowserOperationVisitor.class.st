@@ -5,7 +5,7 @@ Class {
 	#name : 'EpLogBrowserOperationVisitor',
 	#superclass : 'Object',
 	#instVars : [
-		'environment'
+		#environment
 	],
 	#category : 'EpiceaBrowsers-Visitors',
 	#package : 'EpiceaBrowsers',

@@ -5,13 +5,13 @@ Class {
 	#name : 'ExternalDropHandler',
 	#superclass : 'Object',
 	#instVars : [
-		'action',
-		'type',
-		'extension'
+		#action,
+		#type,
+		#extension
 	],
 	#classVars : [
-		'DefaultHandler',
-		'RegisteredHandlers'
+		#DefaultHandler,
+		#RegisteredHandlers
 	],
 	#category : 'Morphic-Core-Worlds',
 	#package : 'Morphic-Core',

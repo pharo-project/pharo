@@ -13,8 +13,8 @@ Class {
 	#name : 'ClyCritiqueCommand',
 	#superclass : 'CmdCommand',
 	#instVars : [
-		'critique',
-		'analyzedObject'
+		#critique,
+		#analyzedObject
 	],
 	#category : 'Calypso-SystemPlugins-Critic-Browser',
 	#package : 'Calypso-SystemPlugins-Critic-Browser'

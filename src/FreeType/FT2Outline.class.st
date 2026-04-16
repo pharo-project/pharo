@@ -18,11 +18,11 @@ Class {
 	#name : 'FT2Outline',
 	#superclass : 'Object',
 	#instVars : [
-		'contoursSize',
-		'pointsSize',
-		'points',
-		'tags',
-		'contours'
+		#contoursSize,
+		#pointsSize,
+		#points,
+		#tags,
+		#contours
 	],
 	#category : 'FreeType-Base',
 	#package : 'FreeType',

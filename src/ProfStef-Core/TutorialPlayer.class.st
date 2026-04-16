@@ -5,8 +5,8 @@ Class {
 	#name : 'TutorialPlayer',
 	#superclass : 'Object',
 	#instVars : [
-		'tutorialPosition',
-		'tutorial'
+		#tutorialPosition,
+		#tutorial
 	],
 	#category : 'ProfStef-Core',
 	#package : 'ProfStef-Core'

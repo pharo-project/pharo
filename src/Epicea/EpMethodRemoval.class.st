@@ -5,7 +5,7 @@ Class {
 	#name : 'EpMethodRemoval',
 	#superclass : 'EpMethodChange',
 	#instVars : [
-		'method'
+		#method
 	],
 	#category : 'Epicea-Model',
 	#package : 'Epicea',

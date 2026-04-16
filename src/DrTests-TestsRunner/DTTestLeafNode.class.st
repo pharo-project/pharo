@@ -7,7 +7,7 @@ Class {
 	#name : 'DTTestLeafNode',
 	#superclass : 'DTTreeLeafNode',
 	#instVars : [
-		'type'
+		#type
 	],
 	#category : 'DrTests-TestsRunner-Base',
 	#package : 'DrTests-TestsRunner',

@@ -5,7 +5,7 @@ Class {
 	#name : 'ShTestSharedPool',
 	#superclass : 'SharedPool',
 	#classVars : [
-		'FooValue1'
+		#FooValue1
 	],
 	#category : 'Shift-ClassBuilder-Tests-TestClasses',
 	#package : 'Shift-ClassBuilder-Tests',

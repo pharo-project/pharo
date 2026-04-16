@@ -5,7 +5,7 @@ Class {
 	#name : 'CmUICommandTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'command'
+		#command
 	],
 	#category : 'Commander2-UI-Tests-Core',
 	#package : 'Commander2-UI-Tests',
@@ -20,7 +20,7 @@ CmUICommandTest >> banana [
 
 { #category : 'helpers' }
 CmUICommandTest >> iconNamed: aSymbol [
-	aSymbol ~= #banana
+	(aSymbol sameContents: #banana) not
 		ifTrue: [ self error: 'Only #banana icon is needed for tests.' ].
 
 	^ self banana

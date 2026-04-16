@@ -16,17 +16,17 @@ Class {
 	#name : 'MCMethodDefinition',
 	#superclass : 'MCDefinition',
 	#instVars : [
-		'classIsMeta',
-		'source',
-		'category',
-		'selector',
-		'className',
-		'timeStamp',
-		'sortKey'
+		#classIsMeta,
+		#source,
+		#category,
+		#selector,
+		#className,
+		#timeStamp,
+		#sortKey
 	],
 	#classVars : [
-		'Definitions',
-		'InitializersEnabled'
+		#Definitions,
+		#InitializersEnabled
 	],
 	#category : 'Monticello-Model',
 	#package : 'Monticello-Model'
@@ -235,7 +235,19 @@ MCMethodDefinition >> isOverrideMethod [
 { #category : 'installing' }
 MCMethodDefinition >> load [
 
-	| method |
+	| method stream |
+	
+	stream := Stdio stdout.
+	Time now print24: true on: stream.
+
+	stream
+		nextPut: Character tab;
+		nextPutAll: category asString;
+		nextPut: Character tab;
+		nextPutAll: source asString;
+		lf;
+		flush.
+	
 	method := self actualClass compiler
 		          protocol: category;
 		          changeStamp: timeStamp;

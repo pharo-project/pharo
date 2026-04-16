@@ -8,8 +8,8 @@ Class {
 	#name : 'Protocol',
 	#superclass : 'Object',
 	#instVars : [
-		'name',
-		'methodSelectors'
+		#name,
+		#methodSelectors
 	],
 	#category : 'Kernel-CodeModel-Classes',
 	#package : 'Kernel-CodeModel',

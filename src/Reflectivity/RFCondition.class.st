@@ -11,8 +11,8 @@ Class {
 	#name : 'RFCondition',
 	#superclass : 'Object',
 	#instVars : [
-		'condition',
-		'originalLinkCondition'
+		#condition,
+		#originalLinkCondition
 	],
 	#category : 'Reflectivity-Core',
 	#package : 'Reflectivity',

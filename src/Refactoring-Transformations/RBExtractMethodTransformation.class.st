@@ -21,14 +21,14 @@ Class {
 	#name : 'RBExtractMethodTransformation',
 	#superclass : 'RBCompositeMethodTransformation',
 	#instVars : [
-		'sourceCode',
-		'newSelector',
-		'newMethod',
-		'parseTree',
-		'subtree',
-		'arguments',
-		'temporaries',
-		'assignments'
+		#sourceCode,
+		#newSelector,
+		#newMethod,
+		#parseTree,
+		#subtree,
+		#arguments,
+		#temporaries,
+		#assignments
 	],
 	#category : 'Refactoring-Transformations-Model-Unused',
 	#package : 'Refactoring-Transformations',

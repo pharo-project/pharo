@@ -12,8 +12,8 @@ Class {
 	#name : 'PasswordDialogWindow',
 	#superclass : 'TextEntryDialogWindow',
 	#instVars : [
-		'textEditor',
-		'showPassword'
+		#textEditor,
+		#showPassword
 	],
 	#category : 'Polymorph-Widgets-Windows',
 	#package : 'Polymorph-Widgets',

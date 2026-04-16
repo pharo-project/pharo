@@ -2,7 +2,7 @@ Class {
 	#name : 'ClyExampleScope',
 	#superclass : 'ClyTypedScope',
 	#instVars : [
-		'extraParameter'
+		#extraParameter
 	],
 	#category : 'Calypso-NavigationModel-Tests',
 	#package : 'Calypso-NavigationModel-Tests'

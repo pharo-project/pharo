@@ -2,7 +2,7 @@ Class {
 	#name : 'RBRenameMethodTransformation',
 	#superclass : 'RBChangeMethodNameTransformation',
 	#instVars : [
-		'hasPermutedArguments'
+		#hasPermutedArguments
 	],
 	#category : 'Refactoring-Transformations-Model-Unused',
 	#package : 'Refactoring-Transformations',

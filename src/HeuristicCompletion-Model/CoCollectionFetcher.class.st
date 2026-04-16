@@ -6,7 +6,7 @@ Class {
 	#name : 'CoCollectionFetcher',
 	#superclass : 'CoFetcher',
 	#instVars : [
-		'collection'
+		#collection
 	],
 	#category : 'HeuristicCompletion-Model-Core',
 	#package : 'HeuristicCompletion-Model',

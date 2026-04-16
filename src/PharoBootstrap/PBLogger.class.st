@@ -2,9 +2,9 @@ Class {
 	#name : 'PBLogger',
 	#superclass : 'Object',
 	#instVars : [
-		'queue',
-		'logging',
-		'depth'
+		#queue,
+		#logging,
+		#depth
 	],
 	#category : 'PharoBootstrap',
 	#package : 'PharoBootstrap'

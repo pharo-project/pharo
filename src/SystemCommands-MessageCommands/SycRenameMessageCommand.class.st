@@ -5,9 +5,9 @@ Class {
 	#name : 'SycRenameMessageCommand',
 	#superclass : 'SycChangeMessageSignatureCommand',
 	#instVars : [
-		'newSignature',
-		'driver',
-		'toolContext'
+		#newSignature,
+		#driver,
+		#toolContext
 	],
 	#category : 'SystemCommands-MessageCommands',
 	#package : 'SystemCommands-MessageCommands'

@@ -20,15 +20,15 @@ Class {
 	#name : 'MCWorkingCopy',
 	#superclass : 'Model',
 	#instVars : [
-		'ancestry',
-		'counter',
-		'repositoryGroup',
-		'requiredPackages',
-		'package',
-		'modified'
+		#ancestry,
+		#counter,
+		#repositoryGroup,
+		#requiredPackages,
+		#package,
+		#modified
 	],
 	#classInstVars : [
-		'registry'
+		#registry
 	],
 	#category : 'Monticello-Versioning',
 	#package : 'Monticello',
@@ -96,7 +96,7 @@ MCWorkingCopy class >> forPackage: aPackage [
 MCWorkingCopy class >> forPackageNamed: aPackageName [
 
 	^ self registry values
-		  detect: [ :workingCopy | workingCopy packageName = aPackageName ]
+		  detect: [ :workingCopy | workingCopy packageName sameContents: aPackageName ]
 		  ifNone: [ NotFound signalFor: aPackageName in: self ]
 ]
 
@@ -109,7 +109,7 @@ MCWorkingCopy class >> handleClassAndMethodsChange: anEvent [
 { #category : 'querying' }
 MCWorkingCopy class >> hasPackageNamed: aName [
 
-	^ self allWorkingCopies anySatisfy: [ :each | each packageName = aName ]
+	^ self allWorkingCopies anySatisfy: [ :each | each packageName sameContents: aName ]
 ]
 
 { #category : 'private' }

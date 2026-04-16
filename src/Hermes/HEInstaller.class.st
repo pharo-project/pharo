@@ -24,9 +24,9 @@ Class {
 	#name : 'HEInstaller',
 	#superclass : 'Object',
 	#instVars : [
-		'environment',
-		'originalUndeclareds',
-		'hasTraits'
+		#environment,
+		#originalUndeclareds,
+		#hasTraits
 	],
 	#category : 'Hermes-ClassInstaller',
 	#package : 'Hermes',

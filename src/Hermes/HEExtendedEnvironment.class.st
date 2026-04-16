@@ -10,11 +10,11 @@ Class {
 	#name : 'HEExtendedEnvironment',
 	#superclass : 'Object',
 	#instVars : [
-		'inner',
-		'newMethod',
-		'newClass',
-		'newSelector',
-		'newBlock'
+		#inner,
+		#newMethod,
+		#newClass,
+		#newSelector,
+		#newBlock
 	],
 	#category : 'Hermes-ClassInstaller',
 	#package : 'Hermes',
@@ -23,7 +23,7 @@ Class {
 
 { #category : 'accessing' }
 HEExtendedEnvironment >> classNamed: aClassName [
-	^ newClass name = aClassName
+	^ (newClass name sameContents: aClassName)
 		ifTrue: [ newClass ]
 		ifFalse: [ inner classNamed: aClassName ]
 ]

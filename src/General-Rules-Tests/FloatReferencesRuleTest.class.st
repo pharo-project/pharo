@@ -2,7 +2,7 @@ Class {
 	#name : 'FloatReferencesRuleTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'testClass'
+		#testClass
 	],
 	#category : 'General-Rules-Tests-Base',
 	#package : 'General-Rules-Tests',

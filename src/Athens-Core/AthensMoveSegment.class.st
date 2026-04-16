@@ -8,7 +8,7 @@ Class {
 	#name : 'AthensMoveSegment',
 	#superclass : 'AthensLineSegment',
 	#instVars : [
-		'closed'
+		#closed
 	],
 	#category : 'Athens-Core-Paths',
 	#package : 'Athens-Core',

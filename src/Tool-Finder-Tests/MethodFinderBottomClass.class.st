@@ -5,7 +5,7 @@ Class {
 	#name : 'MethodFinderBottomClass',
 	#superclass : 'MethodFinderTopClass',
 	#instVars : [
-		'instanceVariable'
+		#instanceVariable
 	],
 	#category : 'Tool-Finder-Tests-Support',
 	#package : 'Tool-Finder-Tests',

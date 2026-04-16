@@ -7,7 +7,7 @@ Class {
 	#name : 'RottenTestImplementedInTrait',
 	#superclass : 'RottenTest',
 	#instVars : [
-		'traitUsersInWhichTestIsRotten'
+		#traitUsersInWhichTestIsRotten
 	],
 	#category : 'RottenTestsFinder-Results',
 	#package : 'RottenTestsFinder',

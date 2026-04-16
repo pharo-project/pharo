@@ -23,7 +23,7 @@ Class {
 	#name : 'CoStatisticsHeuristicBuilder',
 	#superclass : 'CoHeuristicBuilder',
 	#instVars : [
-		'statistics'
+		#statistics
 	],
 	#category : 'HeuristicCompletion-Model-Statistics',
 	#package : 'HeuristicCompletion-Model',

@@ -16,7 +16,7 @@ Class {
 	#name : 'AnnouncementSetWithExclusions',
 	#superclass : 'AnnouncementSet',
 	#instVars : [
-		'exclusions'
+		#exclusions
 	],
 	#category : 'Announcements-Core-Collections',
 	#package : 'Announcements-Core',

@@ -2,8 +2,8 @@ Class {
 	#name : 'MCMczInstallerTest',
 	#superclass : 'MCTestCase',
 	#instVars : [
-		'expected',
-		'diff'
+		#expected,
+		#diff
 	],
 	#category : 'System-Installers-Tests',
 	#package : 'System-Installers-Tests'

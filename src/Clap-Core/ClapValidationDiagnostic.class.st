@@ -6,9 +6,9 @@ Class {
 	#name : 'ClapValidationDiagnostic',
 	#superclass : 'Object',
 	#instVars : [
-		'validation',
-		'subject',
-		'success'
+		#validation,
+		#subject,
+		#success
 	],
 	#category : 'Clap-Core-Validation',
 	#package : 'Clap-Core',

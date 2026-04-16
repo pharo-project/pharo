@@ -6,8 +6,8 @@ Class {
 	#name : 'TestWorkingSession',
 	#superclass : 'WorkingSession',
 	#instVars : [
-		'errors',
-		'errorHandler'
+		#errors,
+		#errorHandler
 	],
 	#category : 'System-SessionManager-Tests',
 	#package : 'System-SessionManager-Tests'

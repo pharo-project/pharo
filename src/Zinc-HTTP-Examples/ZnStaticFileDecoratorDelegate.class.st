@@ -13,8 +13,8 @@ Class {
 	#name : 'ZnStaticFileDecoratorDelegate',
 	#superclass : 'Object',
 	#instVars : [
-		'delegate',
-		'staticDelegate'
+		#delegate,
+		#staticDelegate
 	],
 	#category : 'Zinc-HTTP-Examples',
 	#package : 'Zinc-HTTP-Examples'

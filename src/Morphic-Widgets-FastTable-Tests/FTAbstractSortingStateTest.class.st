@@ -5,7 +5,7 @@ Class {
 	#name : 'FTAbstractSortingStateTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'state'
+		#state
 	],
 	#category : 'Morphic-Widgets-FastTable-Tests-Sorting',
 	#package : 'Morphic-Widgets-FastTable-Tests',

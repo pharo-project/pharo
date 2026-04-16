@@ -11,8 +11,8 @@ Class {
 	#name : 'RxmBranch',
 	#superclass : 'RxmLink',
 	#instVars : [
-		'loopback',
-		'alternative'
+		#loopback,
+		#alternative
 	],
 	#category : 'Regex-Core-Links',
 	#package : 'Regex-Core',

@@ -5,7 +5,7 @@ Class {
 	#name : 'WindowsStore',
 	#superclass : 'DiskStore',
 	#instVars : [
-		'disk'
+		#disk
 	],
 	#category : 'FileSystem-Disk-Store',
 	#package : 'FileSystem-Disk',

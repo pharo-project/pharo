@@ -7,9 +7,9 @@ Class {
 	#name : 'EpLogBrowserOperationFactory',
 	#superclass : 'Object',
 	#instVars : [
-		'entries',
-		'errorHandlerBlock',
-		'logBrowserModel'
+		#entries,
+		#errorHandlerBlock,
+		#logBrowserModel
 	],
 	#category : 'EpiceaBrowsers-Integration',
 	#package : 'EpiceaBrowsers',

@@ -20,8 +20,8 @@ Class {
 	#name : 'WideCharacterSet',
 	#superclass : 'Collection',
 	#instVars : [
-		'map',
-		'byteArrayMap'
+		#map,
+		#byteArrayMap
 	],
 	#category : 'Collections-Strings',
 	#package : 'Collections-Strings'

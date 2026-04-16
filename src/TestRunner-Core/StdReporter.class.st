@@ -5,10 +5,10 @@ Class {
 	#name : 'StdReporter',
 	#superclass : 'AbstractReporter',
 	#instVars : [
-		'stdout',
-		'stderr',
-		'maxTest',
-		'currentTest'
+		#stdout,
+		#stderr,
+		#maxTest,
+		#currentTest
 	],
 	#category : 'TestRunner-Core-Reporters',
 	#package : 'TestRunner-Core',

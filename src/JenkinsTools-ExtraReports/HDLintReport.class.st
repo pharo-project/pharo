@@ -5,8 +5,8 @@ Class {
 	#name : 'HDLintReport',
 	#superclass : 'HDReport',
 	#instVars : [
-		'environment',
-		'rules'
+		#environment,
+		#rules
 	],
 	#category : 'JenkinsTools-ExtraReports',
 	#package : 'JenkinsTools-ExtraReports'
@@ -102,11 +102,11 @@ HDLintReport >> generateViolations: aCollection source: aString offset: aPoint o
 		aStream tab; tab; nextPutAll: '<error'.
 		aStream nextPutAll: ' source="'; nextPutAll: (self encode: rule class name); nextPut: $".
 		aStream nextPutAll: ' message="'; nextPutAll: (self encode: rule group); nextPutAll: ' - '; nextPutAll: (self encode: rule name); nextPut: $".
-		aStream nextPutAll: ' severity="'; nextPutAll: (rule
-			severity = #information 
+		aStream nextPutAll: ' severity="'; nextPutAll: ((rule
+			severity sameContents: #information) 
 				ifTrue: [ 'info' ]
 				ifFalse: [ 
-					rule severity = #warning
+					(rule severity sameContents: #warning)
 						ifTrue: [ 'warning' ]
 						ifFalse: [ 'error' ] ]); nextPut: $".
 		aStream nextPutAll: ' line="'; print: aPoint x + start x; nextPut: $".

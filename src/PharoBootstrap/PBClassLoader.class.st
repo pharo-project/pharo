@@ -2,17 +2,17 @@ Class {
 	#name : 'PBClassLoader',
 	#superclass : 'Object',
 	#instVars : [
-		'nextClassIndex',
-		'builder',
-		'useClassBuilder',
-		'initializedClasses',
-		'compactClasses',
-		'mirrorDefinitionMap',
-		'definitionMirrorMap',
-		'shouldInitializeClassPool',
-		'environment',
-		'systemDefinition',
-		'fullyLoaded'
+		#nextClassIndex,
+		#builder,
+		#useClassBuilder,
+		#initializedClasses,
+		#compactClasses,
+		#mirrorDefinitionMap,
+		#definitionMirrorMap,
+		#shouldInitializeClassPool,
+		#environment,
+		#systemDefinition,
+		#fullyLoaded
 	],
 	#category : 'PharoBootstrap',
 	#package : 'PharoBootstrap'

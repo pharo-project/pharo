@@ -5,7 +5,7 @@ Class {
 	#name : 'FTColumnTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'column'
+		#column
 	],
 	#category : 'Morphic-Widgets-FastTable-Tests-Model',
 	#package : 'Morphic-Widgets-FastTable-Tests',

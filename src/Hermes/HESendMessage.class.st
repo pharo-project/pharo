@@ -10,9 +10,9 @@ Class {
 	#name : 'HESendMessage',
 	#superclass : 'HEExportedLiteral',
 	#instVars : [
-		'selector',
-		'receiver',
-		'arguments'
+		#selector,
+		#receiver,
+		#arguments
 	],
 	#category : 'Hermes-Model',
 	#package : 'Hermes',

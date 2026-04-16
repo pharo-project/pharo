@@ -7,14 +7,14 @@ Class {
 	#name : 'CoCompletionContext',
 	#superclass : 'Object',
 	#instVars : [
-		'engine',
-		'source',
-		'position',
-		'completionTokenStart',
-		'completionBuilder',
-		'completionClass',
-		'completion',
-		'completionToken'
+		#engine,
+		#source,
+		#position,
+		#completionTokenStart,
+		#completionBuilder,
+		#completionClass,
+		#completion,
+		#completionToken
 	],
 	#category : 'HeuristicCompletion-Model-SystemIntegration',
 	#package : 'HeuristicCompletion-Model',

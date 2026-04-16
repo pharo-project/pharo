@@ -5,8 +5,8 @@ Class {
 	#name : 'KMModifier',
 	#superclass : 'KMKeyCombination',
 	#instVars : [
-		'identifier',
-		'name'
+		#identifier,
+		#name
 	],
 	#category : 'Keymapping-KeyCombinations',
 	#package : 'Keymapping-KeyCombinations'

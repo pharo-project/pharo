@@ -142,9 +142,9 @@ Number >> adaptToFloat: rcvr andCompare: selector [
 			selector == #= ifTrue: [^false].
 			selector == #~= ifTrue: [^true].
 			rcvr isNaN ifTrue: [^ false].
-			(selector = #< or: [selector = #'<='])
+			(selector = #< or: [selector sameContents: #'<='])
 				ifTrue: [^ rcvr positive not].
-			(selector = #> or: [selector = #'>='])
+			(selector = #> or: [selector sameContents: #'>='])
 				ifTrue: [^ rcvr positive].
 			^self error: 'unknow comparison selector'].
 
@@ -349,7 +349,7 @@ Number >> isZero [
 { #category : 'comparing' }
 Number >> literalEqual: other [
 
-	^ self class == other class and: [self = other]
+	^ self class == other class and: [self sameContents: other]
 ]
 
 { #category : 'arithmetic' }

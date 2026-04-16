@@ -9,8 +9,8 @@ Class {
 	#name : 'AthensStrikeFontRenderer',
 	#superclass : 'Object',
 	#instVars : [
-		'font',
-		'canvas'
+		#font,
+		#canvas
 	],
 	#category : 'Athens-Cairo-Text',
 	#package : 'Athens-Cairo',

@@ -7,7 +7,7 @@ Class {
 	#traits : 'TCairoLibrary',
 	#classTraits : 'TCairoLibrary classTrait',
 	#instVars : [
-		'canvas'
+		#canvas
 	],
 	#category : 'Athens-Cairo-Transforms',
 	#package : 'Athens-Cairo',

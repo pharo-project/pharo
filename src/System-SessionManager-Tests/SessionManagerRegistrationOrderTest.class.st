@@ -5,7 +5,7 @@ Class {
 	#name : 'SessionManagerRegistrationOrderTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'manager'
+		#manager
 	],
 	#category : 'System-SessionManager-Tests',
 	#package : 'System-SessionManager-Tests'

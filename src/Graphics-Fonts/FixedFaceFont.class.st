@@ -6,8 +6,8 @@ Class {
 	#name : 'FixedFaceFont',
 	#superclass : 'AbstractFont',
 	#instVars : [
-		'baseFont',
-		'substitutionCharacter'
+		#baseFont,
+		#substitutionCharacter
 	],
 	#category : 'Graphics-Fonts',
 	#package : 'Graphics-Fonts'

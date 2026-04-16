@@ -5,7 +5,7 @@ Class {
 	#name : 'FT2Handle',
 	#superclass : 'FFIExternalObject',
 	#pools : [
-		'FT2Constants'
+		#FT2Constants
 	],
 	#category : 'FreeType-Base',
 	#package : 'FreeType',

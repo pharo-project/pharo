@@ -5,9 +5,9 @@ Class {
 	#name : 'PluggableButtonMorphExample',
 	#superclass : 'Model',
 	#instVars : [
-		'label',
-		'state',
-		'icon'
+		#label,
+		#state,
+		#icon
 	],
 	#category : 'Morphic-Examples-Widgets',
 	#package : 'Morphic-Examples',

@@ -27,7 +27,7 @@ Class {
 	#name : 'SimpleAnnotationContext',
 	#superclass : 'AnnotationContext',
 	#instVars : [
-		'annotationUserClass'
+		#annotationUserClass
 	],
 	#category : 'ClassAnnotation',
 	#package : 'ClassAnnotation'

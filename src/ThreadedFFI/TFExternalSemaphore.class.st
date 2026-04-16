@@ -13,8 +13,8 @@ Class {
 	#name : 'TFExternalSemaphore',
 	#superclass : 'Object',
 	#instVars : [
-		'semaphore',
-		'index'
+		#semaphore,
+		#index
 	],
 	#category : 'ThreadedFFI-Base',
 	#package : 'ThreadedFFI',

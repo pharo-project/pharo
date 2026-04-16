@@ -6,9 +6,9 @@ Class {
 	#name : 'CoEntryAcceptedEvent',
 	#superclass : 'CoUsageEvent',
 	#instVars : [
-		'completedEntry',
-		'source',
-		'index'
+		#completedEntry,
+		#source,
+		#index
 	],
 	#category : 'HeuristicCompletion-Model-Statistics',
 	#package : 'HeuristicCompletion-Model',

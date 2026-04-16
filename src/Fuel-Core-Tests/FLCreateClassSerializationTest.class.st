@@ -51,7 +51,7 @@ FLCreateClassSerializationTest >> testCreateByteArrayWithInstance [
 	
 	result := self resultOfSerializeAndMaterialize: (ByteArray with: 42).
 	
-	self assert: result class name = #ByteArray.
+	self assert: (result class name sameContents: #ByteArray).
 	self assert: result size = 1.
 	self assert: result first = 42."
 ]
@@ -96,7 +96,7 @@ FLCreateClassSerializationTest >> testCreateClassWithClassSideVariable [
 	materializedClass := self resultOfSerializeRemoveAndMaterialize: aClass.
 
 	self assert: 1 = materializedClass class instVarNames size.
-	self assert: (materializedClass class instVarNames includes: 'a').
+	self assert: (materializedClass class instVarNames includes: #a).
 	self assert: #test = (materializedClass instVarNamed: 'a').
 ]
 

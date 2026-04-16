@@ -5,9 +5,9 @@ Class {
 	#name : 'FileSystemHandleTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'filesystem',
-		'handle',
-		'reference'
+		#filesystem,
+		#handle,
+		#reference
 	],
 	#category : 'FileSystem-Core-Tests-Base',
 	#package : 'FileSystem-Core-Tests',
@@ -16,7 +16,7 @@ Class {
 
 { #category : 'testing' }
 FileSystemHandleTest class >> isAbstract [
-	^ self name = #FileSystemHandleTest
+	^ self name sameContents: #FileSystemHandleTest
 ]
 
 { #category : 'testing' }

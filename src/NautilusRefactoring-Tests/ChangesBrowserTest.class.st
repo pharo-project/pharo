@@ -5,7 +5,7 @@ Class {
 	#name : 'ChangesBrowserTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'browser'
+		#browser
 	],
 	#category : 'NautilusRefactoring-Tests-Utilities',
 	#package : 'NautilusRefactoring-Tests',

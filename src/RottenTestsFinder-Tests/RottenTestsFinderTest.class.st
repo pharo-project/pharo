@@ -30,11 +30,11 @@ RottenTestsFinderTest >> testAnalyze [
 		assert: rottenTestsFound rottenTests size equals: 3;
 		assert: (rottenTestsFound rottenCompiledMethods anySatisfy: [ :m |
 			m methodClass = RTFFakeTestSuperClass
-				and: [ m selector = #superNotAssertHelper ] ]);
+				and: [ m selector sameContents: #superNotAssertHelper ] ]);
 		assert: (rottenTestsFound rottenCompiledMethods anySatisfy: [ :m |
 			m methodClass = RTFFakeTestClass
-				and: [ m selector = #rottenHelper ] ]);
+				and: [ m selector sameContents: #rottenHelper ] ]);
 		assert: (rottenTestsFound rottenCompiledMethods anySatisfy: [ :m |
 			m methodClass = RTFFakeTestClass
-				and: [ m selector = #testWithoutAssertionRun ] ])
+				and: [ m selector sameContents: #testWithoutAssertionRun ] ])
 ]

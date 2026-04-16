@@ -5,7 +5,7 @@ Class {
 	#name : 'TickSelectionCheckboxMorph',
 	#superclass : 'CheckboxMorph',
 	#instVars : [
-		'index'
+		#index
 	],
 	#category : 'Morphic-Widgets-TickList',
 	#package : 'Morphic-Widgets-TickList'

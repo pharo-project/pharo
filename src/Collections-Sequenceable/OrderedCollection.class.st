@@ -67,9 +67,9 @@ Class {
 	#name : 'OrderedCollection',
 	#superclass : 'SequenceableCollection',
 	#instVars : [
-		'array',
-		'firstIndex',
-		'lastIndex'
+		#array,
+		#firstIndex,
+		#lastIndex
 	],
 	#category : 'Collections-Sequenceable-Ordered',
 	#package : 'Collections-Sequenceable',

@@ -13,8 +13,8 @@ Class {
 	#name : 'EditableDropListMorph',
 	#superclass : 'DropListMorph',
 	#instVars : [
-		'addToListSel',
-		'content'
+		#addToListSel,
+		#content
 	],
 	#category : 'Polymorph-Widgets-Base',
 	#package : 'Polymorph-Widgets',

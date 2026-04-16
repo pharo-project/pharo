@@ -2,7 +2,7 @@ Class {
 	#name : 'ClapContextTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'context'
+		#context
 	],
 	#category : 'Clap-Tests-Integration',
 	#package : 'Clap-Tests',

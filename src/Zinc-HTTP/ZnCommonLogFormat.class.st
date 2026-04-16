@@ -17,7 +17,7 @@ Class {
 	#name : 'ZnCommonLogFormat',
 	#superclass : 'Object',
 	#instVars : [
-		'combined'
+		#combined
 	],
 	#category : 'Zinc-HTTP-Logging',
 	#package : 'Zinc-HTTP',
@@ -59,8 +59,8 @@ ZnCommonLogFormat >> format: event on: stream [
 { #category : 'private' }
 ZnCommonLogFormat >> formatCombinedFields: request on: stream [
 	| referer userAgent |
-	referer := request headers at: 'Referer' ifAbsent: [ '-' ].
-	userAgent := request headers at: 'User-Agent' ifAbsent: [ '-' ].
+	referer := request headers at: #'Referer' ifAbsent: [ '-' ].
+	userAgent := request headers at: #'User-Agent' ifAbsent: [ '-' ].
 	stream space.
 	stream nextPut: $"; << referer; nextPut: $".
 	stream space.

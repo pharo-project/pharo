@@ -5,7 +5,7 @@ Class {
 	#name : 'MouseButtonEvent',
 	#superclass : 'MouseEvent',
 	#instVars : [
-		'whichButton'
+		#whichButton
 	],
 	#category : 'Morphic-Core-Events',
 	#package : 'Morphic-Core',

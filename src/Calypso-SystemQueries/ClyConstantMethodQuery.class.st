@@ -21,8 +21,8 @@ Class {
 	#name : 'ClyConstantMethodQuery',
 	#superclass : 'ClyMethodQuery',
 	#instVars : [
-		'description',
-		'methods'
+		#description,
+		#methods
 	],
 	#category : 'Calypso-SystemQueries-Queries',
 	#package : 'Calypso-SystemQueries',

@@ -19,9 +19,9 @@ Class {
 	#name : 'CollectionCombinator',
 	#superclass : 'Object',
 	#instVars : [
-		'resultProcessingBlock',
-		'collectionOfArrays',
-		'buffer'
+		#resultProcessingBlock,
+		#collectionOfArrays,
+		#buffer
 	],
 	#category : 'Kernel-Tests-Methods',
 	#package : 'Kernel-Tests',

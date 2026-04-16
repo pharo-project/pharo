@@ -5,10 +5,10 @@ Class {
 	#name : 'SHRBMockTextStyler',
 	#superclass : 'SHRBTextStyler',
 	#instVars : [
-		'declared'
+		#declared
 	],
 	#classVars : [
-		'PatternStyleDictionary'
+		#PatternStyleDictionary
 	],
 	#category : 'Shout-Tests-Styling',
 	#package : 'Shout-Tests',

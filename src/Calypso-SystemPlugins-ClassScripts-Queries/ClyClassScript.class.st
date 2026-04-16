@@ -38,7 +38,7 @@ Class {
 	#name : 'ClyClassScript',
 	#superclass : 'Object',
 	#instVars : [
-		'implementorMethod'
+		#implementorMethod
 	],
 	#category : 'Calypso-SystemPlugins-ClassScripts-Queries',
 	#package : 'Calypso-SystemPlugins-ClassScripts-Queries'

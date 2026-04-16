@@ -26,7 +26,7 @@ Class {
 	#name : 'FTFieldFunction',
 	#superclass : 'FTFunction',
 	#instVars : [
-		'field'
+		#field
 	],
 	#category : 'Morphic-Widgets-FastTable-Functions',
 	#package : 'Morphic-Widgets-FastTable',

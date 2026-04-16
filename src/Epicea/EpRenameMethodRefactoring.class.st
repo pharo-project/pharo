@@ -5,9 +5,9 @@ Class {
 	#name : 'EpRenameMethodRefactoring',
 	#superclass : 'EpRefactoring',
 	#instVars : [
-		'oldSelector',
-		'newSelector',
-		'affectedClassName'
+		#oldSelector,
+		#newSelector,
+		#affectedClassName
 	],
 	#category : 'Epicea-Model',
 	#package : 'Epicea',

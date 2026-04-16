@@ -5,8 +5,8 @@ Class {
 	#name : 'EpMonitorLogNode',
 	#superclass : 'EpLogNode',
 	#instVars : [
-		'theLog',
-		'headReference'
+		#theLog,
+		#headReference
 	],
 	#category : 'EpiceaBrowsers-UI-Graph',
 	#package : 'EpiceaBrowsers',

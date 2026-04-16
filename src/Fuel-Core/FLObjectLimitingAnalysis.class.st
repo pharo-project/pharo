@@ -9,8 +9,8 @@ Class {
 	#name : 'FLObjectLimitingAnalysis',
 	#superclass : 'FLAnalysis',
 	#instVars : [
-		'objectCounter',
-		'objectLimit'
+		#objectCounter,
+		#objectLimit
 	],
 	#category : 'Fuel-Core-Base',
 	#package : 'Fuel-Core',

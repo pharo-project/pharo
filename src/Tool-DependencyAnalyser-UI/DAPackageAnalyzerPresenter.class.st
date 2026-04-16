@@ -9,7 +9,7 @@ Class {
 	#name : 'DAPackageAnalyzerPresenter',
 	#superclass : 'SpPresenterWithModel',
 	#instVars : [
-		'browserWrapper'
+		#browserWrapper
 	],
 	#category : 'Tool-DependencyAnalyser-UI-Core',
 	#package : 'Tool-DependencyAnalyser-UI',

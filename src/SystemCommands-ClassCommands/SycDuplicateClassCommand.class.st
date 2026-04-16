@@ -13,9 +13,9 @@ Class {
 	#name : 'SycDuplicateClassCommand',
 	#superclass : 'SycClassCommand',
 	#instVars : [
-		'originalClass',
-		'newClassName',
-		'resultClass'
+		#originalClass,
+		#newClassName,
+		#resultClass
 	],
 	#category : 'SystemCommands-ClassCommands',
 	#package : 'SystemCommands-ClassCommands'

@@ -7,16 +7,16 @@ Class {
 	#name : 'OSTouchOneFingerDoubleTapDetector',
 	#superclass : 'OSTouchPunctualGestureDetector',
 	#instVars : [
-		'doubleTouchSpeed',
-		'maxDistanceBetweenEachTouch',
-		'position',
-		'timestamp',
-		'previousPosition',
-		'previousTimestamp'
+		#doubleTouchSpeed,
+		#maxDistanceBetweenEachTouch,
+		#position,
+		#timestamp,
+		#previousPosition,
+		#previousTimestamp
 	],
 	#classVars : [
-		'DoubleTouchSpeed',
-		'MaxDistance'
+		#DoubleTouchSpeed,
+		#MaxDistance
 	],
 	#category : 'OSWindow-Core-Gestures',
 	#package : 'OSWindow-Core',

@@ -5,8 +5,8 @@ Class {
 	#name : 'ReVariableNameCondition',
 	#superclass : 'RBNewAbstractCondition',
 	#instVars : [
-		'name',
-		'violator'
+		#name,
+		#violator
 	],
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',

@@ -5,7 +5,7 @@ Class {
 	#name : 'OSTouchPinchEvent',
 	#superclass : 'OSTouchComplexEvent',
 	#instVars : [
-		'dDist'
+		#dDist
 	],
 	#category : 'OSWindow-Core-Events-Touch',
 	#package : 'OSWindow-Core',

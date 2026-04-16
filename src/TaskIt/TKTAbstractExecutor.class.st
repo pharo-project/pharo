@@ -9,8 +9,8 @@ Class {
 	#traits : 'TTaskExecutor',
 	#classTraits : 'TTaskExecutor classTrait',
 	#instVars : [
-		'exceptionHandler',
-		'busy'
+		#exceptionHandler,
+		#busy
 	],
 	#category : 'TaskIt-Kernel',
 	#package : 'TaskIt',

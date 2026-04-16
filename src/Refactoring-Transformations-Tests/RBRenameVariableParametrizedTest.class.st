@@ -2,7 +2,7 @@ Class {
 	#name : 'RBRenameVariableParametrizedTest',
 	#superclass : 'RBWithDifferentConstructorsParametrizedTest',
 	#instVars : [
-		'extraArgument'
+		#extraArgument
 	],
 	#category : 'Refactoring-Transformations-Tests-Parametrized',
 	#package : 'Refactoring-Transformations-Tests',

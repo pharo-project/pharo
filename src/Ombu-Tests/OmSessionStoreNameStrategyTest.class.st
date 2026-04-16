@@ -5,8 +5,8 @@ Class {
 	#name : 'OmSessionStoreNameStrategyTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'strategy',
-		'name'
+		#strategy,
+		#name
 	],
 	#category : 'Ombu-Tests',
 	#package : 'Ombu-Tests'
@@ -15,7 +15,7 @@ Class {
 { #category : 'testing' }
 OmSessionStoreNameStrategyTest class >> isAbstract [
 
-	^ self name = #OmSessionStoreNameStrategyTest
+	^ self name sameContents: #OmSessionStoreNameStrategyTest
 ]
 
 { #category : 'private' }

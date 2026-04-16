@@ -18,8 +18,8 @@ Class {
 	#name : 'RBDeprecateClassDriver',
 	#superclass : 'RBInteractionDriver',
 	#instVars : [
-		'className',
-		'newClassName'
+		#className,
+		#newClassName
 	],
 	#category : 'Refactoring-UI-Drivers to migrate to new architecture',
 	#package : 'Refactoring-UI',

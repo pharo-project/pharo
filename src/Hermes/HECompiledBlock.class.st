@@ -2,12 +2,12 @@ Class {
 	#name : 'HECompiledBlock',
 	#superclass : 'HEExportedLiteral',
 	#instVars : [
-		'encoderClassName',
-		'numArgs',
-		'numTemps',
-		'hasPrimitive',
-		'bytecode',
-		'literals'
+		#encoderClassName,
+		#numArgs,
+		#numTemps,
+		#hasPrimitive,
+		#bytecode,
+		#literals
 	],
 	#category : 'Hermes-Model',
 	#package : 'Hermes',
@@ -75,5 +75,5 @@ HECompiledBlock >> headerFor: anEnvironment [
 { #category : 'comparing' }
 HECompiledBlock >> instVarNamesForEqualityComparison [
 
-	^ self class allInstVarNames reject: [ :e | e = #value ]
+	^ self class allInstVarNames reject: [ :e | e sameContents: #value ]
 ]

@@ -5,9 +5,9 @@ Class {
 	#name : 'MockSourceEditor',
 	#superclass : 'Object',
 	#instVars : [
-		'text',
-		'selectionStart',
-		'selectionEnd'
+		#text,
+		#selectionStart,
+		#selectionEnd
 	],
 	#category : 'OpalCompiler-Tests-FromOld',
 	#package : 'OpalCompiler-Tests',

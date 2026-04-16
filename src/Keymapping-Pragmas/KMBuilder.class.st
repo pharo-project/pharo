@@ -9,7 +9,7 @@ Class {
 	#name : 'KMBuilder',
 	#superclass : 'Object',
 	#instVars : [
-		'platform'
+		#platform
 	],
 	#category : 'Keymapping-Pragmas',
 	#package : 'Keymapping-Pragmas'

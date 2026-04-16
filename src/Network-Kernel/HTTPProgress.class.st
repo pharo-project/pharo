@@ -17,8 +17,8 @@ Class {
 	#name : 'HTTPProgress',
 	#superclass : 'Notification',
 	#instVars : [
-		'total',
-		'amount'
+		#total,
+		#amount
 	],
 	#category : 'Network-Kernel-Notifications',
 	#package : 'Network-Kernel',

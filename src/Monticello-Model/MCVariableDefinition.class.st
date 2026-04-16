@@ -5,7 +5,7 @@ Class {
 	#name : 'MCVariableDefinition',
 	#superclass : 'Object',
 	#instVars : [
-		'name'
+		#name
 	],
 	#category : 'Monticello-Model',
 	#package : 'Monticello-Model'

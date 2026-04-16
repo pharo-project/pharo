@@ -5,12 +5,12 @@ Class {
 	#name : 'OCOpalExamples',
 	#superclass : 'Object',
 	#instVars : [
-		'iVar',
-		'collection',
-		'result'
+		#iVar,
+		#collection,
+		#result
 	],
 	#classVars : [
-		'ExampleClassVariable'
+		#ExampleClassVariable
 	],
 	#category : 'OpalCompiler-Tests-Data',
 	#package : 'OpalCompiler-Tests',

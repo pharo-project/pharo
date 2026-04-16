@@ -48,10 +48,10 @@ Class {
 	#name : 'FilteredMorphTreeModel',
 	#superclass : 'MorphTreeModel',
 	#instVars : [
-		'patternModel',
-		'ghostString',
-		'initialRootItems',
-		'autoAccept'
+		#patternModel,
+		#ghostString,
+		#initialRootItems,
+		#autoAccept
 	],
 	#category : 'Morphic-Widgets-Tree',
 	#package : 'Morphic-Widgets-Tree'

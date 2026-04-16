@@ -24,7 +24,7 @@ Class {
 	#name : 'DeprecatedSlot',
 	#superclass : 'IndexedSlot',
 	#instVars : [
-		'message'
+		#message
 	],
 	#category : 'VariablesLibrary-DeprecatedSlot',
 	#package : 'VariablesLibrary',

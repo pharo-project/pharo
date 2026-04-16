@@ -27,8 +27,8 @@ Class {
 	#name : 'DiskDirectoryEntry',
 	#superclass : 'FileSystemDirectoryEntry',
 	#instVars : [
-		'statAttributes',
-		'accessAttributes'
+		#statAttributes,
+		#accessAttributes
 	],
 	#category : 'FileSystem-Core-Public',
 	#package : 'FileSystem-Core',

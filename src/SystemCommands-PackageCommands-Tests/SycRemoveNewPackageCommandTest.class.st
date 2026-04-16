@@ -2,7 +2,7 @@ Class {
 	#name : 'SycRemoveNewPackageCommandTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'mockPackage'
+		#mockPackage
 	],
 	#category : 'SystemCommands-PackageCommands-Tests',
 	#package : 'SystemCommands-PackageCommands-Tests'

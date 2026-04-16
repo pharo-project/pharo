@@ -78,12 +78,12 @@ ZnStaticFileServerDelegateTest >> testBasicGet [
 		self assert: client response contentType = ZnMimeType textHtml.
 		self assert: client contents equals: self smallHtml.
 		self
-			assert: (ZnUtils parseHttpDate: (client response headers at: 'Modification-Date'))
+			assert: (ZnUtils parseHttpDate: (client response headers at: #'Modification-Date'))
 			equals: (ZnFileSystemUtils modificationTimeFor: 'small.html') asUTC.
 		self
-			assert: (ZnUtils parseHttpDate: (client response headers at: 'Expires')) > (DateAndTime now + 10 days).
+			assert: (ZnUtils parseHttpDate: (client response headers at: #'Expires')) > (DateAndTime now + 10 days).
 		self
-			assert: (client response headers at: 'Cache-Control')
+			assert: (client response headers at: #'Cache-Control')
 			equals: (server delegate maxAgeFor: ZnMimeType textHtml) ]
 ]
 
@@ -99,12 +99,12 @@ ZnStaticFileServerDelegateTest >> testBasicGetLarge [
 		self assert: client response contentType = ZnMimeType textHtml.
 		self assert: client contents equals: self largeHtml.
 		self
-			assert: (ZnUtils parseHttpDate: (client response headers at: 'Modification-Date'))
+			assert: (ZnUtils parseHttpDate: (client response headers at: #'Modification-Date'))
 			equals: (ZnFileSystemUtils modificationTimeFor: 'large.html') asUTC.
 		self
-			assert: (ZnUtils parseHttpDate: (client response headers at: 'Expires')) > (DateAndTime now + 10 days).
+			assert: (ZnUtils parseHttpDate: (client response headers at: #'Expires')) > (DateAndTime now + 10 days).
 		self
-			assert: (client response headers at: 'Cache-Control')
+			assert: (client response headers at: #'Cache-Control')
 			equals: (server delegate maxAgeFor: ZnMimeType textHtml) ]
 ]
 
@@ -120,12 +120,12 @@ ZnStaticFileServerDelegateTest >> testBasicGetWide [
 		self assert: client response contentType = ZnMimeType textHtml.
 		self assert: client contents equals: self wideHtml.
 		self
-			assert: (ZnUtils parseHttpDate: (client response headers at: 'Modification-Date'))
+			assert: (ZnUtils parseHttpDate: (client response headers at: #'Modification-Date'))
 			equals: (ZnFileSystemUtils modificationTimeFor: 'large.html') asUTC.
 		self
-			assert: (ZnUtils parseHttpDate: (client response headers at: 'Expires')) > (DateAndTime now + 10 days).
+			assert: (ZnUtils parseHttpDate: (client response headers at: #'Expires')) > (DateAndTime now + 10 days).
 		self
-			assert: (client response headers at: 'Cache-Control')
+			assert: (client response headers at: #'Cache-Control')
 			equals: (server delegate maxAgeFor: ZnMimeType textHtml) ]
 ]
 
@@ -141,12 +141,12 @@ ZnStaticFileServerDelegateTest >> testBasicHead [
 		self assert: client response contentType = ZnMimeType textHtml.
 		self deny: client response hasEntity.
 		self
-			assert: (ZnUtils parseHttpDate: (client response headers at: 'Modification-Date'))
+			assert: (ZnUtils parseHttpDate: (client response headers at: #'Modification-Date'))
 			equals: (ZnFileSystemUtils modificationTimeFor: 'small.html') asUTC.
 		self
-			assert: (ZnUtils parseHttpDate: (client response headers at: 'Expires')) > (DateAndTime now + 10 days).
+			assert: (ZnUtils parseHttpDate: (client response headers at: #'Expires')) > (DateAndTime now + 10 days).
 		self
-			assert: (client response headers at: 'Cache-Control')
+			assert: (client response headers at: #'Cache-Control')
 			equals: (server delegate maxAgeFor: ZnMimeType textHtml) ]
 ]
 
@@ -178,9 +178,9 @@ ZnStaticFileServerDelegateTest >> testRedirect [
 			self assert: client isSuccess.
 			self assert: client response contentType equals: ZnMimeType textHtml.
 			self assert: client contents equals: self indexHtml.
-			self assert: (ZnUtils parseHttpDate: (client response headers at: 'Modification-Date')) equals: (ZnFileSystemUtils modificationTimeFor: 'index.html') asUTC.
-			self assert: (ZnUtils parseHttpDate: (client response headers at: 'Expires')) > (DateAndTime now + 10 days).
-			self assert: (client response headers at: 'Cache-Control') equals: (server delegate maxAgeFor: ZnMimeType textHtml) ]
+			self assert: (ZnUtils parseHttpDate: (client response headers at: #'Modification-Date')) equals: (ZnFileSystemUtils modificationTimeFor: 'index.html') asUTC.
+			self assert: (ZnUtils parseHttpDate: (client response headers at: #'Expires')) > (DateAndTime now + 10 days).
+			self assert: (client response headers at: #'Cache-Control') equals: (server delegate maxAgeFor: ZnMimeType textHtml) ]
 ]
 
 { #category : 'private' }

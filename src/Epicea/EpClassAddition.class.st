@@ -5,7 +5,7 @@ Class {
 	#name : 'EpClassAddition',
 	#superclass : 'EpClassChange',
 	#instVars : [
-		'class'
+		#class
 	],
 	#category : 'Epicea-Model',
 	#package : 'Epicea',

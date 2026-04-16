@@ -5,13 +5,13 @@ Class {
 	#name : 'FTBBox',
 	#superclass : 'FFIExternalStructure',
 	#classVars : [
-		'OFFSET_XMAX',
-		'OFFSET_XMIN',
-		'OFFSET_YMAX',
-		'OFFSET_YMIN'
+		#OFFSET_XMAX,
+		#OFFSET_XMIN,
+		#OFFSET_YMAX,
+		#OFFSET_YMIN
 	],
 	#pools : [
-		'FT2Types'
+		#FT2Types
 	],
 	#category : 'FreeType-Bindings',
 	#package : 'FreeType',

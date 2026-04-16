@@ -2,7 +2,7 @@ Class {
 	#name : 'ClapHelloWorldTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'hello'
+		#hello
 	],
 	#category : 'Clap-Tests-Integration',
 	#package : 'Clap-Tests',

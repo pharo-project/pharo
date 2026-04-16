@@ -6,8 +6,8 @@ Class {
 	#name : 'DABrowserToolMorph',
 	#superclass : 'ClyBrowserToolMorph',
 	#instVars : [
-		'presenter',
-		'analyzedPackage'
+		#presenter,
+		#analyzedPackage
 	],
 	#category : 'Tool-DependencyAnalyser-UI-Tab',
 	#package : 'Tool-DependencyAnalyser-UI-Tab'
@@ -70,7 +70,7 @@ DABrowserToolMorph >> isValidInContext: aClyFullBrowserContext [
 
 	self context class = aClyFullBrowserContext class ifFalse: [ ^ false ].
 
-	^ self analyzedPackage packageName = aClyFullBrowserContext lastSelectedClassGroup name
+	^ self analyzedPackage packageName sameContents: aClyFullBrowserContext lastSelectedClassGroup name
 ]
 
 { #category : 'initialization' }

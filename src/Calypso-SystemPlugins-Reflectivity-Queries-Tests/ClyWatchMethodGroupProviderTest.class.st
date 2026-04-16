@@ -2,7 +2,7 @@ Class {
 	#name : 'ClyWatchMethodGroupProviderTest',
 	#superclass : 'ClyMethodGroupProviderTest',
 	#instVars : [
-		'installedWatchpoint'
+		#installedWatchpoint
 	],
 	#category : 'Calypso-SystemPlugins-Reflectivity-Queries-Tests-Watchpoints',
 	#package : 'Calypso-SystemPlugins-Reflectivity-Queries-Tests',

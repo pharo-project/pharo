@@ -13,7 +13,7 @@ ZnEntityWriterTest >> testChunkedOnly [
 			cls allSubclassesDo: [ :each | out nextPutAll: each comment ] ] ]).
 	headers := ZnHeaders new
 		acceptEntityDescription: entity;
-		at: 'Transfer-Encoding' put: 'chunked';
+		at: #'Transfer-Encoding' put: 'chunked';
 		yourself.
 	output := ByteArray streamContents: [ :out |
 		writer := ZnEntityWriter new
@@ -37,8 +37,8 @@ ZnEntityWriterTest >> testGzippedAndChunked [
 			cls allSubclassesDo: [ :each | out nextPutAll: each comment ] ] ]).
 	headers := ZnHeaders new
 		acceptEntityDescription: entity;
-		at: 'Content-Encoding' put: 'gzip';
-		at: 'Transfer-Encoding' put: 'chunked';
+		at: #'Content-Encoding' put: 'gzip';
+		at: #'Transfer-Encoding' put: 'chunked';
 		yourself.
 	output := ByteArray streamContents: [ :out |
 		writer := ZnEntityWriter new

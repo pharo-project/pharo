@@ -12,11 +12,11 @@ Class {
 	#name : 'RBInsertNewClassRefactoring',
 	#superclass : 'RBClassRefactoring',
 	#instVars : [
-		'superclass',
-		'subclasses',
-		'comment',
-		'packageName',
-		'tagName'
+		#superclass,
+		#subclasses,
+		#comment,
+		#packageName,
+		#tagName
 	],
 	#category : 'Refactoring-Core-Refactorings',
 	#package : 'Refactoring-Core',

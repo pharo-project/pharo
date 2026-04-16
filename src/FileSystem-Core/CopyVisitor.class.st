@@ -5,8 +5,8 @@ Class {
 	#name : 'CopyVisitor',
 	#superclass : 'FileSystemVisitor',
 	#instVars : [
-		'source',
-		'dest'
+		#source,
+		#dest
 	],
 	#category : 'FileSystem-Core-Base-Visitors',
 	#package : 'FileSystem-Core',

@@ -8,7 +8,7 @@ Class {
 	#name : 'ProtocolClientError',
 	#superclass : 'Error',
 	#instVars : [
-		'protocolInstance'
+		#protocolInstance
 	],
 	#category : 'Network-Protocols-Exceptions',
 	#package : 'Network-Protocols',

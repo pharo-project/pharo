@@ -24,14 +24,14 @@ Class {
 	#name : 'MemoryLogger',
 	#superclass : 'SignalLogger',
 	#instVars : [
-		'recordings',
-		'announcer',
-		'mutex'
+		#recordings,
+		#announcer,
+		#mutex
 	],
 	#classVars : [
-		'WriteFilename',
-		'WritePeriod',
-		'WriteProcess'
+		#WriteFilename,
+		#WritePeriod,
+		#WriteProcess
 	],
 	#category : 'Beacon-Core-Loggers',
 	#package : 'Beacon-Core',

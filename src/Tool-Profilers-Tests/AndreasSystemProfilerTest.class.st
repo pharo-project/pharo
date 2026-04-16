@@ -5,7 +5,7 @@ Class {
 	#name : 'AndreasSystemProfilerTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'tally'
+		#tally
 	],
 	#category : 'Tool-Profilers-Tests-System',
 	#package : 'Tool-Profilers-Tests',

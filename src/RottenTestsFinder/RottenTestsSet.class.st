@@ -5,9 +5,9 @@ Class {
 	#name : 'RottenTestsSet',
 	#superclass : 'Object',
 	#instVars : [
-		'rottenTests',
-		'testsVisitedCount',
-		'testsRunCount'
+		#rottenTests,
+		#testsVisitedCount,
+		#testsRunCount
 	],
 	#category : 'RottenTestsFinder-Results',
 	#package : 'RottenTestsFinder',

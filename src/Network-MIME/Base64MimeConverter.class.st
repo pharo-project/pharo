@@ -28,11 +28,11 @@ Class {
 	#name : 'Base64MimeConverter',
 	#superclass : 'MimeConverter',
 	#instVars : [
-		'multiLine'
+		#multiLine
 	],
 	#classVars : [
-		'FromCharTable',
-		'ToCharTable'
+		#FromCharTable,
+		#ToCharTable
 	],
 	#category : 'Network-MIME-Converter',
 	#package : 'Network-MIME',

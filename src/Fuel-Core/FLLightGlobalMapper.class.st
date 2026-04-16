@@ -7,7 +7,7 @@ Class {
 	#name : 'FLLightGlobalMapper',
 	#superclass : 'FLMapper',
 	#instVars : [
-		'globals'
+		#globals
 	],
 	#category : 'Fuel-Core-Mappers',
 	#package : 'Fuel-Core',

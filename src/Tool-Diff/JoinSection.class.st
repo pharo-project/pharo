@@ -5,15 +5,15 @@ Class {
 	#name : 'JoinSection',
 	#superclass : 'Model',
 	#instVars : [
-		'src',
-		'dst',
-		'borderWidth',
-		'borderColor',
-		'type',
-		'width',
-		'shape',
-		'additionHighlightColor',
-		'removalHighlightColor'
+		#src,
+		#dst,
+		#borderWidth,
+		#borderColor,
+		#type,
+		#width,
+		#shape,
+		#additionHighlightColor,
+		#removalHighlightColor
 	],
 	#category : 'Tool-Diff-Joins',
 	#package : 'Tool-Diff',
@@ -153,20 +153,20 @@ JoinSection >> createHighlightsFrom: srcPara to: dstPara [
 		ifFalse: [ dstText := '' ].
 	self src text: srcText.
 	self dst text: dstText.
-	self type = #modification
+	(self type sameContents: #modification)
 		ifFalse: [ ^ self ].
 	s := self src highlights.
 	d := self dst highlights.
 	diffs := (InlineTextDiffBuilder from: srcText to: dstText) buildPatchSequence groupByRuns: [ :e | e key ].
 	diffs
 		do: [ :c |
-			c first key = #match
+			(c first key sameContents: #match)
 				ifTrue: [
 					c
 						do: [ :a |
 							si := si + a value size.
 							di := di + a value size ] ].
-			c first key = #insert
+			(c first key sameContents: #insert)
 				ifTrue: [
 					i := di.
 					c do: [ :a | di := di + a value size ].
@@ -177,7 +177,7 @@ JoinSection >> createHighlightsFrom: srcPara to: dstPara [
 						to: eb
 						to: d
 						color: self additionHighlightColor ].
-			c first key = #remove
+			(c first key sameContents: #remove)
 				ifTrue: [
 					i := si.
 					c do: [ :a | si := si + a value size ].
@@ -194,7 +194,7 @@ JoinSection >> createHighlightsFrom: srcPara to: dstPara [
 JoinSection >> drawMapOn: aCanvas in: rect scale: scale [
 	"Draw the join on the given canvas scaled into the given rectangle."
 
-	self type = #match ifTrue: [^self].
+	(self type sameContents: #match) ifTrue: [^self].
 	aCanvas
 		frameAndFillRectangle: (rect left @ (((self dst range first max: 0) * scale) truncated + rect top)
 						corner: (rect right @ ((self dst range last * scale) truncated + rect top)))

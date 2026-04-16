@@ -2,7 +2,7 @@ Class {
 	#name : 'RubTextSegmentIconDisplayer',
 	#superclass : 'RubScrolledTextSideRuler',
 	#instVars : [
-		'previouslyIn'
+		#previouslyIn
 	],
 	#category : 'Rubric-Editing-Widgets',
 	#package : 'Rubric',
@@ -222,7 +222,7 @@ RubTextSegmentIconDisplayer >> topRendererOrSelf [
 RubTextSegmentIconDisplayer >> verticalSeparatorBounds [
 	| bnds  |
 	bnds := self bounds.
-	^ self side = #left
+	^ (self side sameContents: #left)
 		ifTrue: [ (bnds topRight -  (self verticalSeparatorWidth @ 0)) corner: bnds bottomRight ]
 		ifFalse: [ (bnds topLeft corner: bnds bottomLeft + (self verticalSeparatorWidth @ 0)) ]
 ]

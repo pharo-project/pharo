@@ -5,9 +5,9 @@ Class {
 	#name : 'GlobalIdentifierPersistenceTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'preferences',
-		'persistence',
-		'checker'
+		#preferences,
+		#persistence,
+		#checker
 	],
 	#category : 'System-Identification-Tests',
 	#package : 'System-Identification-Tests'

@@ -7,8 +7,8 @@ Class {
 	#name : 'OSWindowRenderer',
 	#superclass : 'Object',
 	#instVars : [
-		'lastExposeTime',
-		'backendWindow'
+		#lastExposeTime,
+		#backendWindow
 	],
 	#category : 'OSWindow-Core-Renderer',
 	#package : 'OSWindow-Core',

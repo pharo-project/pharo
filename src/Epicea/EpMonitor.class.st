@@ -7,12 +7,12 @@ Class {
 	#name : 'EpMonitor',
 	#superclass : 'Object',
 	#instVars : [
-		'log',
-		'entryReferenceByEvent',
-		'announcer'
+		#log,
+		#entryReferenceByEvent,
+		#announcer
 	],
 	#classInstVars : [
-		'current'
+		#current
 	],
 	#category : 'Epicea-Monitor',
 	#package : 'Epicea',
@@ -209,7 +209,7 @@ EpMonitor >> behaviorRemovedImpliesMethodRemoved: aMethodInAnObsoleteBehavior de
 	packageName := (self packageOrganizer packageForProtocol: aMethodInAnObsoleteBehavior protocol from: aMethodInAnObsoleteBehavior methodClass) name.
 
 	"If the method is local, (belongs to the class being removed) then the package was wrong,  and we fix it"
-	packageName = UndefinedPackage undefinedPackageName ifTrue: [ packageName := aSymbol ].
+	(packageName sameContents: UndefinedPackage undefinedPackageName) ifTrue: [ packageName := aSymbol ].
 
 	self addEvent: (EpMethodRemoval method: (aMethodInAnObsoleteBehavior asEpiceaRingDefinition
 				  parentName: aMethodInAnObsoleteBehavior methodClass originalName;

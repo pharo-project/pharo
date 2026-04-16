@@ -5,8 +5,8 @@ Class {
 	#name : 'SocketStreamTest',
 	#superclass : 'ClassTestCase',
 	#instVars : [
-		'clientStream',
-		'serverStream'
+		#clientStream,
+		#serverStream
 	],
 	#category : 'Network-Tests-Kernel',
 	#package : 'Network-Tests',

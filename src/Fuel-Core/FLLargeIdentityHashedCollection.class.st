@@ -5,11 +5,11 @@ Class {
 	#name : 'FLLargeIdentityHashedCollection',
 	#superclass : 'Collection',
 	#instVars : [
-		'tally',
-		'tallies'
+		#tally,
+		#tallies
 	],
 	#classVars : [
-		'PermutationMap'
+		#PermutationMap
 	],
 	#category : 'Fuel-Core-Collections',
 	#package : 'Fuel-Core',

@@ -11,8 +11,8 @@ Class {
 	#name : 'TraitBuilderEnhancer',
 	#superclass : 'ShDefaultBuilderEnhancer',
 	#instVars : [
-		'builder',
-		'shouldUpdateSubclassesMethodDictionaries'
+		#builder,
+		#shouldUpdateSubclassesMethodDictionaries
 	],
 	#category : 'Traits-Class-Builder',
 	#package : 'Traits',

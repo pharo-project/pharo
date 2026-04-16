@@ -5,14 +5,14 @@ Class {
 	#name : 'PopupChoiceDialogWindow',
 	#superclass : 'ModelDependentDialogWindow',
 	#instVars : [
-		'choice',
-		'labels',
-		'lines',
-		'choicesMorph',
-		'choiceMenus',
-		'filter',
-		'filterMorph',
-		'updatingFilter'
+		#choice,
+		#labels,
+		#lines,
+		#choicesMorph,
+		#choiceMenus,
+		#filter,
+		#filterMorph,
+		#updatingFilter
 	],
 	#category : 'Polymorph-Widgets-Windows',
 	#package : 'Polymorph-Widgets',
@@ -182,9 +182,9 @@ PopupChoiceDialogWindow >> keyDown: anEvent [
 	(super keyDown: anEvent)
 		ifTrue: [ ^ true ].
 
-	(anEvent key = KeyboardKey enter or: [anEvent key = KeyboardKey keypadEnter])
+	((anEvent key sameContents: KeyboardKey enter) or: [anEvent key sameContents: KeyboardKey keypadEnter])
 		ifTrue: [ ^self processEnter: anEvent ].
-	anEvent key = KeyboardKey backspace
+	(anEvent key sameContents: KeyboardKey backspace)
 		ifTrue: [
 			self filter ifNotEmpty: [self filter: self filter allButLast].
 			^ true].

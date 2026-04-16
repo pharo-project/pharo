@@ -5,7 +5,7 @@ Class {
 	#name : 'MorphicEventDispatcher',
 	#superclass : 'Object',
 	#instVars : [
-		'morph'
+		#morph
 	],
 	#category : 'Morphic-Core-Events',
 	#package : 'Morphic-Core',

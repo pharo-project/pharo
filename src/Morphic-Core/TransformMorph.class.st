@@ -17,9 +17,9 @@ Class {
 	#name : 'TransformMorph',
 	#superclass : 'Morph',
 	#instVars : [
-		'transform',
-		'smoothing',
-		'localBounds'
+		#transform,
+		#smoothing,
+		#localBounds
 	],
 	#category : 'Morphic-Core-Support',
 	#package : 'Morphic-Core',

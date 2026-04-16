@@ -5,9 +5,9 @@ Class {
 	#name : 'LayoutProperties',
 	#superclass : 'Object',
 	#instVars : [
-		'hResizing',
-		'vResizing',
-		'disableLayout'
+		#hResizing,
+		#vResizing,
+		#disableLayout
 	],
 	#category : 'Morphic-Base-Layouts',
 	#package : 'Morphic-Base',

@@ -12,7 +12,7 @@ Class {
 	#name : 'ClyIcebergShowMethodVersionCommand',
 	#superclass : 'CmdCommand',
 	#instVars : [
-		'method'
+		#method
 	],
 	#category : 'Calypso-SystemPlugins-Monticello-Browser',
 	#package : 'Calypso-SystemPlugins-Monticello-Browser'

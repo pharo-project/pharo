@@ -5,21 +5,21 @@ Class {
 	#name : 'LogicalFont',
 	#superclass : 'AbstractFont',
 	#instVars : [
-		'realFont',
-		'emphasis',
-		'familyName',
-		'fallbackFamilyNames',
-		'pointSize',
-		'stretchValue',
-		'weightValue',
-		'slantValue',
-		'derivatives',
-		'boldDerivative',
-		'italicDerivative',
-		'boldItalicDerivative'
+		#realFont,
+		#emphasis,
+		#familyName,
+		#fallbackFamilyNames,
+		#pointSize,
+		#stretchValue,
+		#weightValue,
+		#slantValue,
+		#derivatives,
+		#boldDerivative,
+		#italicDerivative,
+		#boldItalicDerivative
 	],
 	#classInstVars : [
-		'all'
+		#all
 	],
 	#category : 'Fonts-Infrastructure-Logical',
 	#package : 'Fonts-Infrastructure',

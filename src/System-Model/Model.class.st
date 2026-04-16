@@ -5,8 +5,8 @@ Class {
 	#name : 'Model',
 	#superclass : 'Object',
 	#instVars : [
-		'dependents',
-		'announcer'
+		#dependents,
+		#announcer
 	],
 	#category : 'System-Model-Base',
 	#package : 'System-Model',

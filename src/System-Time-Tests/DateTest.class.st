@@ -5,9 +5,9 @@ Class {
 	#name : 'DateTest',
 	#superclass : 'ClassTestCase',
 	#instVars : [
-		'aTime',
-		'january23rd2004',
-		'june2nd1973'
+		#aTime,
+		#january23rd2004,
+		#june2nd1973
 	],
 	#category : 'System-Time-Tests',
 	#package : 'System-Time-Tests'

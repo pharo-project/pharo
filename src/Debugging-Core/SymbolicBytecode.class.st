@@ -9,10 +9,10 @@ Class {
 	#name : 'SymbolicBytecode',
 	#superclass : 'Object',
 	#instVars : [
-		'description',
-		'method',
-		'offset',
-		'bytes'
+		#description,
+		#method,
+		#offset,
+		#bytes
 	],
 	#category : 'Debugging-Core',
 	#package : 'Debugging-Core'

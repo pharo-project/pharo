@@ -13,7 +13,7 @@ Class {
 	#name : 'CmdOpenContextMenuCommand',
 	#superclass : 'CmdCommand',
 	#instVars : [
-		'context'
+		#context
 	],
 	#category : 'Commander-Activators-ContextMenu',
 	#package : 'Commander-Activators-ContextMenu'

@@ -8,11 +8,11 @@ Class {
 	#name : 'EpDashboardPresenter',
 	#superclass : 'SpPresenter',
 	#instVars : [
-		'monitor',
-		'createLogButton',
-		'enableMonitorButton',
-		'openSettingsButton',
-		'currentSessionInfoPresenter'
+		#monitor,
+		#createLogButton,
+		#enableMonitorButton,
+		#openSettingsButton,
+		#currentSessionInfoPresenter
 	],
 	#category : 'EpiceaBrowsers-UI-Dashboard',
 	#package : 'EpiceaBrowsers',

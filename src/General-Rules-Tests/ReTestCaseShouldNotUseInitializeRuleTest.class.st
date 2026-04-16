@@ -2,7 +2,7 @@ Class {
 	#name : 'ReTestCaseShouldNotUseInitializeRuleTest',
 	#superclass : 'ReAbstractRuleTestCase',
 	#instVars : [
-		'aDummyVar'
+		#aDummyVar
 	],
 	#category : 'General-Rules-Tests-Migrated',
 	#package : 'General-Rules-Tests',

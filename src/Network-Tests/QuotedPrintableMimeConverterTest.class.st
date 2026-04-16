@@ -5,7 +5,7 @@ Class {
 	#name : 'QuotedPrintableMimeConverterTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'coder'
+		#coder
 	],
 	#category : 'Network-Tests-MIME',
 	#package : 'Network-Tests',

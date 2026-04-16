@@ -51,12 +51,12 @@ Class {
 	#name : 'DisplayScanner',
 	#superclass : 'CharacterScanner',
 	#instVars : [
-		'lineY',
-		'foregroundColor',
-		'defaultTextColor',
-		'morphicOffset',
-		'lastDisplayableIndex',
-		'stopConditionsMustBeReset'
+		#lineY,
+		#foregroundColor,
+		#defaultTextColor,
+		#morphicOffset,
+		#lastDisplayableIndex,
+		#stopConditionsMustBeReset
 	],
 	#category : 'Text-Scanning-Base',
 	#package : 'Text-Scanning',

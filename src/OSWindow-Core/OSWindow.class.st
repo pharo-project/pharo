@@ -43,14 +43,14 @@ Class {
 	#name : 'OSWindow',
 	#superclass : 'Object',
 	#instVars : [
-		'initialAttributes',
-		'eventHandler',
-		'currentCursor',
-		'backendWindow',
-		'announcer'
+		#initialAttributes,
+		#eventHandler,
+		#currentCursor,
+		#backendWindow,
+		#announcer
 	],
 	#classVars : [
-		'TraceEvents'
+		#TraceEvents
 	],
 	#category : 'OSWindow-Core-Base',
 	#package : 'OSWindow-Core',

@@ -5,7 +5,7 @@ Class {
 	#name : 'FileAlreadyExistsException',
 	#superclass : 'FileException',
 	#instVars : [
-		'file'
+		#file
 	],
 	#category : 'Files-Core',
 	#package : 'Files',

@@ -5,8 +5,8 @@ Class {
 	#name : 'DAPackageAnalyzerDiffTreePresenter',
 	#superclass : 'SpPresenter',
 	#instVars : [
-		'treeDiff',
-		'packageRelationGraphDiff'
+		#treeDiff,
+		#packageRelationGraphDiff
 	],
 	#category : 'Tool-DependencyAnalyser-UI-Core',
 	#package : 'Tool-DependencyAnalyser-UI',

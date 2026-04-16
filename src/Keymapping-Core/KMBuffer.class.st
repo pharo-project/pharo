@@ -7,11 +7,11 @@ Class {
 	#name : 'KMBuffer',
 	#superclass : 'Object',
 	#instVars : [
-		'buffer',
-		'currentEvent'
+		#buffer,
+		#currentEvent
 	],
 	#classInstVars : [
-		'uniqueInstance'
+		#uniqueInstance
 	],
 	#category : 'Keymapping-Core-Base',
 	#package : 'Keymapping-Core',

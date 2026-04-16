@@ -12,8 +12,8 @@ Class {
 	#name : 'ClyTestedMethodProperty',
 	#superclass : 'ClyProperty',
 	#instVars : [
-		'coveringTest',
-		'testResult'
+		#coveringTest,
+		#testResult
 	],
 	#category : 'Calypso-SystemPlugins-SUnit-Queries',
 	#package : 'Calypso-SystemPlugins-SUnit-Queries'

@@ -5,17 +5,17 @@ Class {
 	#name : 'DebugPoint',
 	#superclass : 'Object',
 	#instVars : [
-		'name',
-		'enabled',
-		'checkBehaviors',
-		'sideEffectBehaviors',
-		'arguments',
-		'metaLink',
-		'properties',
-		'target'
+		#name,
+		#enabled,
+		#checkBehaviors,
+		#sideEffectBehaviors,
+		#arguments,
+		#metaLink,
+		#properties,
+		#target
 	],
 	#classVars : [
-		'AllDebugPoints'
+		#AllDebugPoints
 	],
 	#category : 'DebugPoints-Base',
 	#package : 'DebugPoints',

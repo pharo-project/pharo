@@ -5,7 +5,7 @@ Class {
 	#name : 'FLProxyThatBecomesItsContent',
 	#superclass : 'Object',
 	#instVars : [
-		'contents'
+		#contents
 	],
 	#category : 'Fuel-Core-Tests-Support-Mocks',
 	#package : 'Fuel-Core-Tests',

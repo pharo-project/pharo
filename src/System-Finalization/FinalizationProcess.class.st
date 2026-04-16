@@ -5,8 +5,8 @@ Class {
 	#name : 'FinalizationProcess',
 	#superclass : 'Object',
 	#classVars : [
-		'FinalizationSemaphore',
-		'TheFinalizationProcess'
+		#FinalizationSemaphore,
+		#TheFinalizationProcess
 	],
 	#category : 'System-Finalization-Base',
 	#package : 'System-Finalization',

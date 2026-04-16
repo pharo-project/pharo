@@ -2,7 +2,7 @@ Class {
 	#name : 'ReDirectlyDefinesInstanceVariableCondition',
 	#superclass : 'ReClassCondition',
 	#instVars : [
-		'instanceVariables'
+		#instanceVariables
 	],
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',

@@ -5,7 +5,7 @@ Class {
 	#name : 'OSWindowShownEvent',
 	#superclass : 'OSWindowEvent',
 	#instVars : [
-		'timestamp'
+		#timestamp
 	],
 	#category : 'OSWindow-Core-Events',
 	#package : 'OSWindow-Core',

@@ -9,8 +9,8 @@ Class {
 ZnEntityTest >> testApplicationUrlEncodingAddAll [
 	| entity bytes data |
 	data := Dictionary new.
-	data at: 'foo' put: 1 asString.
-	data at: 'bar' put: 2 asString.
+	data at: #'foo' put: 1 asString.
+	data at: #'bar' put: 2 asString.
 	entity := ZnApplicationFormUrlEncodedEntity new.
 	"Asking for the content length will force an internal computation of the representation"
 	self assert: entity contentLength equals: 0.
@@ -21,8 +21,8 @@ ZnEntityTest >> testApplicationUrlEncodingAddAll [
 		readFrom: bytes readStream
 		usingType: ZnApplicationFormUrlEncodedEntity designatedMimeType
 		andLength: bytes size.
-	self assert: (entity at: 'foo') equals: '1'.
-	self assert: (entity at: 'bar') equals: '2'
+	self assert: (entity at: #'foo') equals: '1'.
+	self assert: (entity at: #'bar') equals: '2'
 ]
 
 { #category : 'testing' }
@@ -30,15 +30,15 @@ ZnEntityTest >> testApplicationUrlEncodingWriteRead [
 	| originalEntity bytes parsedEntity |
 	originalEntity := ZnApplicationFormUrlEncodedEntity new.
 	originalEntity
-		at: 'Param1' put: 'ValueA';
-		at: 'Param2' put: 'ValueB'.
+		at: #'Param1' put: 'ValueA';
+		at: #'Param2' put: 'ValueB'.
 	bytes := originalEntity asByteArray.
 	parsedEntity := ZnEntity
 		readFrom: bytes readStream
 		usingType: ZnMimeType applicationFormUrlEncoded
 		andLength: bytes size.
-	self assert: (parsedEntity at: 'Param1') equals: 'ValueA'.
-	self assert: (parsedEntity at: 'Param2') equals: 'ValueB'
+	self assert: (parsedEntity at: #'Param1') equals: 'ValueA'.
+	self assert: (parsedEntity at: #'Param2') equals: 'ValueB'
 ]
 
 { #category : 'testing' }
@@ -111,8 +111,8 @@ ZnEntityTest >> testReadingApplicationFormUrlEncoding [
 	self deny: entity isEmpty.
 	self assert: (entity includesField: 'oauth_token_secret').
 	self assert: (entity includesField: 'oauth_token').
-	self assert: (entity at: 'oauth_token_secret') equals: 'byph9cmhj15ely8'.
-	self assert: (entity at: 'oauth_token') equals: '86epj3tvd1ksxo9'
+	self assert: (entity at: #'oauth_token_secret') equals: 'byph9cmhj15ely8'.
+	self assert: (entity at: #'oauth_token') equals: '86epj3tvd1ksxo9'
 ]
 
 { #category : 'testing' }
@@ -124,8 +124,8 @@ ZnEntityTest >> testReadingApplicationFormUrlEncodingNoLength [
 	self deny: entity isEmpty.
 	self assert: (entity includesField: 'oauth_token_secret').
 	self assert: (entity includesField: 'oauth_token').
-	self assert: (entity at: 'oauth_token_secret') equals: 'byph9cmhj15ely8'.
-	self assert: (entity at: 'oauth_token') equals: '86epj3tvd1ksxo9'
+	self assert: (entity at: #'oauth_token_secret') equals: 'byph9cmhj15ely8'.
+	self assert: (entity at: #'oauth_token') equals: '86epj3tvd1ksxo9'
 ]
 
 { #category : 'testing' }
@@ -245,7 +245,7 @@ ZnEntityTest >> testUnspecifiedEncoding [
 ZnEntityTest >> testWritingApplicationUrlEncoding [
 	| entity bytes |
 	entity := ZnApplicationFormUrlEncodedEntity new.
-	entity at: 'foo' put: 'bar'.
+	entity at: #'foo' put: 'bar'.
 	bytes := ByteArray streamContents: [ :stream | entity writeOn: stream ].
 	self assert: bytes equals: (ZnNullEncoder new encodeString: 'foo=bar').
 	self assert: entity contentLength equals: 7
@@ -256,7 +256,7 @@ ZnEntityTest >> testWritingApplicationUrlEncodingWithTextEncodingLatin1 [
 	| entity bytes |
 	entity := ZnApplicationFormUrlEncodedEntity new.
 	entity contentType charSet: 'iso-8859-1'.
-	entity at: 'foo' put: (Character value: 246) asString.
+	entity at: #'foo' put: (Character value: 246) asString.
 	bytes := ByteArray streamContents: [ :stream | entity writeOn: stream ].
 	self assert: bytes equals: (ZnNullEncoder new encodeString: 'foo=%F6').
 	self assert: entity contentLength equals: 7
@@ -267,7 +267,7 @@ ZnEntityTest >> testWritingApplicationUrlEncodingWithTextEncodingUtf8 [
 	| entity bytes |
 	entity := ZnApplicationFormUrlEncodedEntity new.
 	entity contentType charSet: 'utf-8'.
-	entity at: 'foo' put: (Character value: 246) asString.
+	entity at: #'foo' put: (Character value: 246) asString.
 	bytes := ByteArray streamContents: [ :stream | entity writeOn: stream ].
 	self assert: bytes equals: (ZnNullEncoder new encodeString: 'foo=%C3%B6').
 	self assert: entity contentLength equals: 10

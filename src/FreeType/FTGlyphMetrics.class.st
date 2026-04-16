@@ -5,17 +5,17 @@ Class {
 	#name : 'FTGlyphMetrics',
 	#superclass : 'FFIExternalStructure',
 	#classVars : [
-		'OFFSET_HEIGHT',
-		'OFFSET_HORIADVANCE',
-		'OFFSET_HORIBEARINGX',
-		'OFFSET_HORIBEARINGY',
-		'OFFSET_VERTADVANCE',
-		'OFFSET_VERTBEARINGX',
-		'OFFSET_VERTBEARINGY',
-		'OFFSET_WIDTH'
+		#OFFSET_HEIGHT,
+		#OFFSET_HORIADVANCE,
+		#OFFSET_HORIBEARINGX,
+		#OFFSET_HORIBEARINGY,
+		#OFFSET_VERTADVANCE,
+		#OFFSET_VERTBEARINGX,
+		#OFFSET_VERTBEARINGY,
+		#OFFSET_WIDTH
 	],
 	#pools : [
-		'FT2Types'
+		#FT2Types
 	],
 	#category : 'FreeType-Bindings',
 	#package : 'FreeType',

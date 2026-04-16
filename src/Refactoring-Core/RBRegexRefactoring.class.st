@@ -29,7 +29,7 @@ Class {
 	#name : 'RBRegexRefactoring',
 	#superclass : 'RBRefactoring',
 	#instVars : [
-		'matchers'
+		#matchers
 	],
 	#category : 'Refactoring-Core-Refactorings',
 	#package : 'Refactoring-Core',

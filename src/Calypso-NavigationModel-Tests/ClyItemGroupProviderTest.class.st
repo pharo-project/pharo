@@ -2,8 +2,8 @@ Class {
 	#name : 'ClyItemGroupProviderTest',
 	#superclass : 'ClyAbstractNavigationEnvironmentTest',
 	#instVars : [
-		'groupProvider',
-		'builtGroups'
+		#groupProvider,
+		#builtGroups
 	],
 	#category : 'Calypso-NavigationModel-Tests',
 	#package : 'Calypso-NavigationModel-Tests'

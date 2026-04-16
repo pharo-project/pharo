@@ -14,10 +14,10 @@ Class {
 	#name : 'ZdcSecureSocketStream',
 	#superclass : 'ZdcOptimizedSocketStream',
 	#instVars : [
-		'sslSession',
-		'in',
-		'out',
-		'connecting'
+		#sslSession,
+		#in,
+		#out,
+		#connecting
 	],
 	#category : 'Zodiac-Core',
 	#package : 'Zodiac-Core'

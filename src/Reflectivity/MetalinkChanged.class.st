@@ -5,9 +5,9 @@ Class {
 	#name : 'MetalinkChanged',
 	#superclass : 'SystemAnnouncement',
 	#instVars : [
-		'link',
-		'action',
-		'node'
+		#link,
+		#action,
+		#node
 	],
 	#category : 'Reflectivity-Core',
 	#package : 'Reflectivity',
@@ -56,12 +56,12 @@ MetalinkChanged >> action: anObject [
 
 { #category : 'testing' }
 MetalinkChanged >> isAdd [
-	^action = #add
+	^action sameContents: #add
 ]
 
 { #category : 'testing' }
 MetalinkChanged >> isRemove [
-	^action = #remove
+	^action sameContents: #remove
 ]
 
 { #category : 'accessing' }

@@ -5,7 +5,7 @@ Class {
 	#name : 'CommandLineArgumentsTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'commandLine'
+		#commandLine
 	],
 	#category : 'System-BasicCommandLineHandler-Tests-Utilities',
 	#package : 'System-BasicCommandLineHandler-Tests',

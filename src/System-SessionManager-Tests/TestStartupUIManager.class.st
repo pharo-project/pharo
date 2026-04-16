@@ -7,7 +7,7 @@ Class {
 	#name : 'TestStartupUIManager',
 	#superclass : 'StartupUIManager',
 	#instVars : [
-		'sessionManager'
+		#sessionManager
 	],
 	#category : 'System-SessionManager-Tests',
 	#package : 'System-SessionManager-Tests'

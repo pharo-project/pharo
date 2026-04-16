@@ -17,11 +17,11 @@ Class {
 	#name : 'MorphicWindowManager',
 	#superclass : 'Morph',
 	#instVars : [
-		'taskBar',
-		'taskBarWindow',
-		'rootSave',
-		'allAttributes',
-		'windows'
+		#taskBar,
+		#taskBarWindow,
+		#rootSave,
+		#allAttributes,
+		#windows
 	],
 	#category : 'Morphic-Base',
 	#package : 'Morphic-Base'

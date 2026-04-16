@@ -5,7 +5,7 @@ Class {
 	#name : 'AthensMorphScene',
 	#superclass : 'Object',
 	#instVars : [
-		'morph'
+		#morph
 	],
 	#category : 'Athens-Examples-Morphic',
 	#package : 'Athens-Examples',

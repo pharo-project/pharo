@@ -13,11 +13,11 @@ Class {
 	#name : 'TFWorker',
 	#superclass : 'TFRunner',
 	#instVars : [
-		'name',
-		'semaphorePoolHolder'
+		#name,
+		#semaphorePoolHolder
 	],
 	#classVars : [
-		'Default'
+		#Default
 	],
 	#category : 'ThreadedFFI-Worker',
 	#package : 'ThreadedFFI',

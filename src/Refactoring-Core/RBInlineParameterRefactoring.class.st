@@ -41,7 +41,7 @@ Class {
 	#name : 'RBInlineParameterRefactoring',
 	#superclass : 'RBParameterRemovalRefactoring',
 	#instVars : [
-		'expressions'
+		#expressions
 	],
 	#category : 'Refactoring-Core-Refactorings-Unused',
 	#package : 'Refactoring-Core',

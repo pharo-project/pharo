@@ -6,10 +6,10 @@ Class {
 	#name : 'FreeTypeGlyphRenderer',
 	#superclass : 'Object',
 	#pools : [
-		'FT2Constants'
+		#FT2Constants
 	],
 	#classInstVars : [
-		'current'
+		#current
 	],
 	#category : 'FreeType-Graphics-GlyphRendering',
 	#package : 'FreeType-Graphics',

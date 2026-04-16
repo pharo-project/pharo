@@ -5,8 +5,8 @@ Class {
 	#name : 'SycReplaceMessageCommand',
 	#superclass : 'SycChangeMessageSignatureCommand',
 	#instVars : [
-		'newSelector',
-		'selectedClass'
+		#newSelector,
+		#selectedClass
 	],
 	#category : 'SystemCommands-MessageCommands',
 	#package : 'SystemCommands-MessageCommands'

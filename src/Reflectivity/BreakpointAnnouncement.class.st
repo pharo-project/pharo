@@ -24,8 +24,8 @@ Class {
 	#name : 'BreakpointAnnouncement',
 	#superclass : 'SystemAnnouncement',
 	#instVars : [
-		'breakpoint',
-		'nodes'
+		#breakpoint,
+		#nodes
 	],
 	#category : 'Reflectivity-Breakpoints',
 	#package : 'Reflectivity',

@@ -15,7 +15,7 @@ Class {
 	#name : 'ClyAllProblemMethodQuery',
 	#superclass : 'ClyMethodQuery',
 	#instVars : [
-		'critiqueQuery'
+		#critiqueQuery
 	],
 	#category : 'Calypso-SystemPlugins-Critic-Queries',
 	#package : 'Calypso-SystemPlugins-Critic-Queries'

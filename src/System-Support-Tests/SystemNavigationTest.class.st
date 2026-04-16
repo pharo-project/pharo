@@ -7,8 +7,8 @@ Class {
 	#name : 'SystemNavigationTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'classFactory',
-		'oldSystemAnnouncer'
+		#classFactory,
+		#oldSystemAnnouncer
 	],
 	#category : 'System-Support-Tests-Image',
 	#package : 'System-Support-Tests',
@@ -80,15 +80,15 @@ SystemNavigationTest >> testAllGlobalNamesStartingWithDoCaseSensitive [
 	| result |
 	result := OrderedCollection new.
 	self systemNavigationToTest allGlobalNamesStartingWith: 'Sma' do: [ :name | result add: name ] caseSensitive: true.
-	self assert: (result includes: 'Smalltalk').
+	self assert: (result includes: #Smalltalk).
 
 	result := OrderedCollection new.
 	self systemNavigationToTest allGlobalNamesStartingWith: 'sma' do: [ :name | result add: name ] caseSensitive: true.
-	self deny: (result includes: 'Smalltalk').
+	self deny: (result includes: #Smalltalk).
 
 	result := OrderedCollection new.
 	self systemNavigationToTest allGlobalNamesStartingWith: 'sma' do: [ :name | result add: name ] caseSensitive: false.
-	self assert: (result includes: 'Smalltalk')
+	self assert: (result includes: #Smalltalk)
 ]
 
 { #category : 'tests' }

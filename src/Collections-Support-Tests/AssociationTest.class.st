@@ -5,8 +5,8 @@ Class {
 	#name : 'AssociationTest',
 	#superclass : 'ClassTestCase',
 	#instVars : [
-		'a',
-		'b'
+		#a,
+		#b
 	],
 	#category : 'Collections-Support-Tests-Associations',
 	#package : 'Collections-Support-Tests',

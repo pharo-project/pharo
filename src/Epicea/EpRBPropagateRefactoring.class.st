@@ -7,7 +7,7 @@ Class {
 	#name : 'EpRBPropagateRefactoring',
 	#superclass : 'RBRefactoring',
 	#instVars : [
-		'targetRefactoring'
+		#targetRefactoring
 	],
 	#category : 'Epicea-Support',
 	#package : 'Epicea',

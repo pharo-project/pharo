@@ -2,9 +2,9 @@ Class {
 	#name : 'RubUnderlinedSegmentMorph',
 	#superclass : 'RubTextSegmentMorph',
 	#instVars : [
-		'underlineColor',
-		'straight',
-		'underlineShape'
+		#underlineColor,
+		#straight,
+		#underlineShape
 	],
 	#category : 'Rubric-Editing-Core',
 	#package : 'Rubric',

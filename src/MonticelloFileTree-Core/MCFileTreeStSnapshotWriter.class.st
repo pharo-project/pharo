@@ -5,10 +5,10 @@ Class {
 	#name : 'MCFileTreeStSnapshotWriter',
 	#superclass : 'MCFileTreeAbstractStWriter',
 	#instVars : [
-		'classDefinitions',
-		'traitDefinitions',
-		'classTraitDefinitions',
-		'methodDefinitions'
+		#classDefinitions,
+		#traitDefinitions,
+		#classTraitDefinitions,
+		#methodDefinitions
 	],
 	#category : 'MonticelloFileTree-Core',
 	#package : 'MonticelloFileTree-Core'

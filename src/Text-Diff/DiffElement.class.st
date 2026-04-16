@@ -20,9 +20,9 @@ Class {
 	#name : 'DiffElement',
 	#superclass : 'Object',
 	#instVars : [
-		'string',
-		'hash',
-		'match'
+		#string,
+		#hash,
+		#match
 	],
 	#category : 'Text-Diff-Utilities',
 	#package : 'Text-Diff',

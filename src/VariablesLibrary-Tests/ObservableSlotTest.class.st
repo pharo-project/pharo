@@ -2,7 +2,7 @@ Class {
 	#name : 'ObservableSlotTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'point'
+		#point
 	],
 	#category : 'VariablesLibrary-Tests-Observable',
 	#package : 'VariablesLibrary-Tests',

@@ -5,8 +5,8 @@ Class {
 	#name : 'LabelClicked',
 	#superclass : 'Announcement',
 	#instVars : [
-		'source',
-		'stateChanged'
+		#source,
+		#stateChanged
 	],
 	#category : 'Morphic-Widgets-Basic',
 	#package : 'Morphic-Widgets-Basic'

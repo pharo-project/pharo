@@ -2,7 +2,7 @@ Class {
 	#name : 'OutOfMemoryTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'oldValue'
+		#oldValue
 	],
 	#category : 'Kernel-Tests-Exception',
 	#package : 'Kernel-Tests',

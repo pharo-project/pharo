@@ -5,10 +5,10 @@ Class {
 	#name : 'SDL_Keysym',
 	#superclass : 'SDL2Structure',
 	#classVars : [
-		'OFFSET_MOD',
-		'OFFSET_SCANCODE',
-		'OFFSET_SYM',
-		'OFFSET_UNUSED'
+		#OFFSET_MOD,
+		#OFFSET_SCANCODE,
+		#OFFSET_SYM,
+		#OFFSET_UNUSED
 	],
 	#category : 'OSWindow-SDL2-Bindings',
 	#package : 'OSWindow-SDL2',

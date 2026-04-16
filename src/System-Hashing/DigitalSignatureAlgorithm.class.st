@@ -29,12 +29,12 @@ Class {
 	#name : 'DigitalSignatureAlgorithm',
 	#superclass : 'Object',
 	#instVars : [
-		'randKey',
-		'randSeed'
+		#randKey,
+		#randSeed
 	],
 	#classVars : [
-		'HighBitOfByte',
-		'SmallPrimes'
+		#HighBitOfByte,
+		#SmallPrimes
 	],
 	#category : 'System-Hashing-DSA',
 	#package : 'System-Hashing',

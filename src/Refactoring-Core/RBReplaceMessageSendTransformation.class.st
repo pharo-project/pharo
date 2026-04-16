@@ -23,11 +23,11 @@ Class {
 	#name : 'RBReplaceMessageSendTransformation',
 	#superclass : 'RBMethodRefactoring',
 	#instVars : [
-		'replaceInAllClasses',
-		'oldSelector',
-		'newSelector',
-		'permutation',
-		'newArgs'
+		#replaceInAllClasses,
+		#oldSelector,
+		#newSelector,
+		#permutation,
+		#newArgs
 	],
 	#category : 'Refactoring-Core-Refactorings',
 	#package : 'Refactoring-Core',

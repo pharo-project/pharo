@@ -2,9 +2,9 @@ Class {
 	#name : 'RubCharacterBlock',
 	#superclass : 'Object',
 	#instVars : [
-		'surface',
-		'stringIndex',
-		'textLine'
+		#surface,
+		#stringIndex,
+		#textLine
 	],
 	#category : 'Rubric-TextScanning',
 	#package : 'Rubric',

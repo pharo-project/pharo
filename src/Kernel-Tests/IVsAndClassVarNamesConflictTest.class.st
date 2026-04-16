@@ -5,7 +5,7 @@ Class {
 	#name : 'IVsAndClassVarNamesConflictTest',
 	#superclass : 'AbstractEnvironmentTestCase',
 	#instVars : [
-		'classFactory'
+		#classFactory
 	],
 	#category : 'Kernel-Tests-Classes',
 	#package : 'Kernel-Tests',

@@ -17,12 +17,12 @@ Class {
 	#name : 'ExternalBrowser',
 	#superclass : 'SpPresenterWithModel',
 	#instVars : [
-		'classes',
-		'packages',
-		'protocols',
-		'selectors',
-		'method',
-		'showClassSide'
+		#classes,
+		#packages,
+		#protocols,
+		#selectors,
+		#method,
+		#showClassSide
 	],
 	#category : 'Tool-ExternalBrowser-Browsers',
 	#package : 'Tool-ExternalBrowser',

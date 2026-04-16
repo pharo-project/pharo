@@ -5,8 +5,8 @@ Class {
 	#name : 'SDL_Renderer',
 	#superclass : 'SDL2Handle',
 	#pools : [
-		'SDL2Constants',
-		'SDL2Types'
+		#SDL2Constants,
+		#SDL2Types
 	],
 	#category : 'OSWindow-SDL2-Bindings',
 	#package : 'OSWindow-SDL2',

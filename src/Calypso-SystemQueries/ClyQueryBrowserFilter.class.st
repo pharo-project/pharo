@@ -21,8 +21,8 @@ Class {
 	#name : 'ClyQueryBrowserFilter',
 	#superclass : 'ClyItemStringFilter',
 	#instVars : [
-		'scriptBlock',
-		'badScript'
+		#scriptBlock,
+		#badScript
 	],
 	#category : 'Calypso-SystemQueries-Queries',
 	#package : 'Calypso-SystemQueries',

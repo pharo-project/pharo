@@ -5,9 +5,9 @@ Class {
 	#name : 'MessageNotUnderstood',
 	#superclass : 'Error',
 	#instVars : [
-		'message',
-		'receiver',
-		'hasToResend'
+		#message,
+		#receiver,
+		#hasToResend
 	],
 	#category : 'Kernel-Exceptions',
 	#package : 'Kernel',

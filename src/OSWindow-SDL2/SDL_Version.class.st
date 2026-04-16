@@ -8,9 +8,9 @@ Class {
 	#name : 'SDL_Version',
 	#superclass : 'SDL2Structure',
 	#classVars : [
-		'OFFSET_MAJOR',
-		'OFFSET_MINOR',
-		'OFFSET_PATCH'
+		#OFFSET_MAJOR,
+		#OFFSET_MINOR,
+		#OFFSET_PATCH
 	],
 	#category : 'OSWindow-SDL2-Bindings',
 	#package : 'OSWindow-SDL2',

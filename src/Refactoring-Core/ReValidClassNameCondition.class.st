@@ -2,7 +2,7 @@ Class {
 	#name : 'ReValidClassNameCondition',
 	#superclass : 'ReReifiedCondition',
 	#instVars : [
-		'className'
+		#className
 	],
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',

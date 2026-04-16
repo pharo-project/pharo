@@ -13,20 +13,20 @@ Class {
 	#traits : 'TCairoLibrary',
 	#classTraits : 'TCairoLibrary classTrait',
 	#instVars : [
-		'handle',
-		'context',
-		'builder',
-		'id',
-		'ftFontRenderer',
-		'session'
+		#handle,
+		#context,
+		#builder,
+		#id,
+		#ftFontRenderer,
+		#session
 	],
 	#pools : [
-		'AthensCairoDefinitions'
+		#AthensCairoDefinitions
 	],
 	#classInstVars : [
-		'session',
-		'dispatch',
-		'dispatchStruct'
+		#session,
+		#dispatch,
+		#dispatchStruct
 	],
 	#category : 'Athens-Cairo-Surface',
 	#package : 'Athens-Cairo',

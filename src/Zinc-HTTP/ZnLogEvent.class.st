@@ -11,13 +11,13 @@ Class {
 	#name : 'ZnLogEvent',
 	#superclass : 'Announcement',
 	#instVars : [
-		'timestamp',
-		'id',
-		'processId'
+		#timestamp,
+		#id,
+		#processId
 	],
 	#classVars : [
-		'IdCounter',
-		'LogEventAnnouncer'
+		#IdCounter,
+		#LogEventAnnouncer
 	],
 	#category : 'Zinc-HTTP-Logging',
 	#package : 'Zinc-HTTP',

@@ -10,13 +10,13 @@ Class {
 	#name : 'RGEnvironment',
 	#superclass : 'RGObject',
 	#instVars : [
-		'announcer',
-		'behaviors',
-		'packages',
-		'globalVariables',
-		'backend',
-		'queryInterface',
-		'version'
+		#announcer,
+		#behaviors,
+		#packages,
+		#globalVariables,
+		#backend,
+		#queryInterface,
+		#version
 	],
 	#category : 'Ring-Core-Environment',
 	#package : 'Ring-Core',
@@ -94,7 +94,7 @@ RGEnvironment >> bindingOf: aSymbol [
 	PseudoVariable lookupDictionary at: aSymbol ifPresent: [ :val | ^ val ].
 	self globalVariablesBindings at: aSymbol ifPresent: [ :val | ^ val ].
 
-	self ask globalVariables detect: [ :each | each name = aSymbol  ] ifFound: [ :found |
+	self ask globalVariables detect: [ :each | each name sameContents: aSymbol  ] ifFound: [ :found |
 		self globalVariablesBindings at: aSymbol put: found.
 		^ found ].
 
@@ -487,7 +487,7 @@ RGEnvironment >> ensureMetaclassTraitNamed: aSymbol [
 RGEnvironment >> ensurePackageNamed: aSymbol [
 
 	^ self ask packages
-		detect: [:each | each name = aSymbol]
+		detect: [:each | each name sameContents: aSymbol]
 		ifNone: [ | newPackage |
 				newPackage := RGPackage named: aSymbol parent: self.
 				self addPackage: newPackage.

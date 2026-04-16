@@ -13,7 +13,7 @@ Class {
 	#superclass : 'AbstractAnnouncementSubscription',
 	#type : 'weak',
 	#instVars : [
-		'next'
+		#next
 	],
 	#category : 'Announcements-Core-Subscription',
 	#package : 'Announcements-Core',

@@ -5,7 +5,7 @@ Class {
 	#name : 'PharoBootstrapRule',
 	#superclass : 'ReAbstractRule',
 	#classVars : [
-		'DependencyChecker'
+		#DependencyChecker
 	],
 	#category : 'Specific-Rules',
 	#package : 'Specific-Rules'

@@ -5,9 +5,9 @@ Class {
 	#name : 'TFNestedTestStruct',
 	#superclass : 'FFIExternalStructure',
 	#classVars : [
-		'OFFSET_INNER',
-		'OFFSET_X',
-		'OFFSET_Y'
+		#OFFSET_INNER,
+		#OFFSET_X,
+		#OFFSET_Y
 	],
 	#category : 'ThreadedFFI-Tests-Test-Structs',
 	#package : 'ThreadedFFI-Tests',

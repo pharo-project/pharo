@@ -4,7 +4,7 @@ Class {
 	#traits : 'TRGReadOnlyTest',
 	#classTraits : 'TRGReadOnlyTest classTrait',
 	#classVars : [
-		'SharedVariableToTest'
+		#SharedVariableToTest
 	],
 	#category : 'Ring-Core-Tests',
 	#package : 'Ring-Core-Tests'
@@ -161,7 +161,7 @@ RGReadOnlyImageBackendTest >> testGlobalVariable [
 	env := RGEnvironment new.
 	env backend: (RGReadOnlyImageBackend for: env).
 
-	real := Smalltalk globals associations detect: [ :each | each key = #Smalltalk ].
+	real := Smalltalk globals associations detect: [ :each | each key sameContents: #Smalltalk ].
 	globalVariable := real asRingMinimalDefinitionIn: env.
 
 	self assert: globalVariable name equals: #Smalltalk

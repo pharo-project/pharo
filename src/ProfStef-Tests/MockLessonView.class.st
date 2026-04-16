@@ -5,8 +5,8 @@ Class {
 	#name : 'MockLessonView',
 	#superclass : 'Object',
 	#instVars : [
-		'lesson',
-		'title'
+		#lesson,
+		#title
 	],
 	#category : 'ProfStef-Tests-Mocks',
 	#package : 'ProfStef-Tests',

@@ -42,8 +42,8 @@ Class {
 	#name : 'WaitfreeQueue',
 	#superclass : 'AtomicCollection',
 	#instVars : [
-		'tail',
-		'dummy'
+		#tail,
+		#dummy
 	],
 	#category : 'Collections-Atomic-Base',
 	#package : 'Collections-Atomic',

@@ -6,7 +6,7 @@ Class {
 	#name : 'CoSystemEnvironment',
 	#superclass : 'Object',
 	#instVars : [
-		'systemDictionary'
+		#systemDictionary
 	],
 	#category : 'HeuristicCompletion-Model-SystemIntegration',
 	#package : 'HeuristicCompletion-Model',

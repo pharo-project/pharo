@@ -2,8 +2,8 @@ Class {
 	#name : 'ReBlockCondition',
 	#superclass : 'RBNewAbstractCondition',
 	#instVars : [
-		'errorMessage',
-		'block'
+		#errorMessage,
+		#block
 	],
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',

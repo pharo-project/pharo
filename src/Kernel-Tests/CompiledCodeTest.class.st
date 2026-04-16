@@ -2,7 +2,7 @@ Class {
 	#name : 'CompiledCodeTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'var'
+		#var
 	],
 	#category : 'Kernel-Tests-Classes',
 	#package : 'Kernel-Tests',

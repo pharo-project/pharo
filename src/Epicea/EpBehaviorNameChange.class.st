@@ -5,9 +5,9 @@ Class {
 	#name : 'EpBehaviorNameChange',
 	#superclass : 'EpBehaviorChange',
 	#instVars : [
-		'oldName',
-		'newName',
-		'behavior'
+		#oldName,
+		#newName,
+		#behavior
 	],
 	#category : 'Epicea-Model',
 	#package : 'Epicea',

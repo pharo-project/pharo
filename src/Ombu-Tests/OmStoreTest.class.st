@@ -5,10 +5,10 @@ Class {
 	#name : 'OmStoreTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'store',
-		'anEntry',
-		'aReference',
-		'otherStore'
+		#store,
+		#anEntry,
+		#aReference,
+		#otherStore
 	],
 	#category : 'Ombu-Tests',
 	#package : 'Ombu-Tests'
@@ -16,7 +16,7 @@ Class {
 
 { #category : 'testing' }
 OmStoreTest class >> isAbstract [
-	^ self name = #OmStoreTest
+	^ self name sameContents: #OmStoreTest
 ]
 
 { #category : 'running' }

@@ -44,7 +44,7 @@ Class {
 	#name : 'ExampleSlotWithState',
 	#superclass : 'Slot',
 	#instVars : [
-		'value'
+		#value
 	],
 	#category : 'Slot-Examples-Base',
 	#package : 'Slot-Examples',

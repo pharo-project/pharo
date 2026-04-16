@@ -19,7 +19,7 @@ ReCollectionMessagesToExternalObjectRule class >> uniqueIdentifierName [
 { #category : 'hooks' }
 ReCollectionMessagesToExternalObjectRule >> afterCheck: aNode mappings: mappingDict [
 	| collectionGetter collectionOwner |
-	collectionGetter := mappingDict at: '`@collectionGetter:'.
+	collectionGetter := mappingDict at: #'`@collectionGetter:'.
 	"Check selectors that assumes unowned result"
 	collectionGetter = 'copy' ifTrue: [ ^ false ].
 	(collectionGetter beginsWith: 'as') ifTrue: [ ^ false ].

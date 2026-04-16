@@ -8,8 +8,8 @@ Class {
 	#name : 'FileSystemTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'filesystem',
-		'toDelete'
+		#filesystem,
+		#toDelete
 	],
 	#category : 'FileSystem-Core-Tests-Base',
 	#package : 'FileSystem-Core-Tests',
@@ -18,7 +18,7 @@ Class {
 
 { #category : 'testing' }
 FileSystemTest class >> isAbstract [
-	^ self name = #FileSystemTest
+	^ self name sameContents: #FileSystemTest
 ]
 
 { #category : 'accessing' }
@@ -260,7 +260,7 @@ FileSystemTest >> testCopyWithCorrectBasename [
 	directory / 'gooly' copyTo: directory / 'plonk'.
 
 	self assert: (directory / 'plonk') exists.
- 	self assert: (directory childNames includes: 'plonk')
+ 	self assert: (directory childNames includes: #plonk)
 ]
 
 { #category : 'tests' }

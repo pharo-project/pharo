@@ -10,8 +10,8 @@ Class {
 	#name : 'TextEmphasis',
 	#superclass : 'TextAttribute',
 	#instVars : [
-		'emphasisCode',
-		'setMode'
+		#emphasisCode,
+		#setMode
 	],
 	#category : 'Text-Core-Attributes',
 	#package : 'Text-Core',
@@ -62,7 +62,7 @@ TextEmphasis class >> underlined [
 
 { #category : 'comparing' }
 TextEmphasis >> = other [
-	^ other value = self value
+	^ other value sameContents: self value
 ]
 
 { #category : 'combining' }

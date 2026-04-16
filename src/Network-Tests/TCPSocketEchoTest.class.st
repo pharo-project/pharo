@@ -89,7 +89,7 @@ TCPSocketEchoTest >> withTCPEchoServer: block [
 				ifNotNil: [ :clientSocket | | result |
 					[ [
 						result := clientSocket receiveData.
-						result asLowercase = #quit
+						(result asLowercase sameContents: #quit)
 							ifTrue: [ clientSocket sendData: 'Quiting'. serverLoop := false ]
 							ifFalse: [ clientSocket sendData: result ] ]
 						ensure: [ clientSocket closeAndDestroy ] ]

@@ -5,7 +5,7 @@ Class {
 	#name : 'CDTraitSlotRemoveNode',
 	#superclass : 'CDTraitCompositionNode',
 	#instVars : [
-		'removedSlots'
+		#removedSlots
 	],
 	#category : 'ClassParser-Model',
 	#package : 'ClassParser',

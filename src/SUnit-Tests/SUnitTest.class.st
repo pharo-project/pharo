@@ -10,10 +10,10 @@ Class {
 	#name : 'SUnitTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'hasRun',
-		'hasSetup',
-		'hasRanOnce',
-		'forkedProcesses'
+		#hasRun,
+		#hasSetup,
+		#hasRanOnce,
+		#forkedProcesses
 	],
 	#category : 'SUnit-Tests-Core',
 	#package : 'SUnit-Tests',
@@ -465,7 +465,7 @@ SUnitTest >> testHangedChildProcessTestWhenItIsAllowedToLeaveProcessesAfterTest 
 		failed: 0
 		errors: 0.
 
-	hangedProcess := forkedProcesses detect: [: each | each name = #hangedChildProcessTest].
+	hangedProcess := forkedProcesses detect: [: each | each name sameContents: #hangedChildProcessTest].
 	self assert: hangedProcess isTerminated
 ]
 

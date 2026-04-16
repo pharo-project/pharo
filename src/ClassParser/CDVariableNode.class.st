@@ -5,11 +5,11 @@ Class {
 	#name : 'CDVariableNode',
 	#superclass : 'CDNode',
 	#instVars : [
-		'node',
-		'start',
-		'stop',
-		'name',
-		'variableClassName'
+		#node,
+		#start,
+		#stop,
+		#name,
+		#variableClassName
 	],
 	#category : 'ClassParser-Model',
 	#package : 'ClassParser',

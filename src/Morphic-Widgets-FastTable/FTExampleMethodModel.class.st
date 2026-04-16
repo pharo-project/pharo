@@ -6,8 +6,8 @@ Class {
 	#name : 'FTExampleMethodModel',
 	#superclass : 'Object',
 	#instVars : [
-		'method',
-		'actionIcon'
+		#method,
+		#actionIcon
 	],
 	#category : 'Morphic-Widgets-FastTable-Examples',
 	#package : 'Morphic-Widgets-FastTable',

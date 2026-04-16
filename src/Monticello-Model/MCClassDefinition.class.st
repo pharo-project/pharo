@@ -5,16 +5,16 @@ Class {
 	#name : 'MCClassDefinition',
 	#superclass : 'MCDefinition',
 	#instVars : [
-		'name',
-		'superclassName',
-		'variables',
-		'packageName',
-		'type',
-		'comment',
-		'commentStamp',
-		'tagName',
-		'traitComposition',
-		'classTraitComposition'
+		#name,
+		#superclassName,
+		#variables,
+		#packageName,
+		#type,
+		#comment,
+		#commentStamp,
+		#tagName,
+		#traitComposition,
+		#classTraitComposition
 	],
 	#category : 'Monticello-Model',
 	#package : 'Monticello-Model'
@@ -34,7 +34,7 @@ MCClassDefinition >> = aDefinition [
 		and: [ superclassName = aDefinition superclassName
 		and: [ self traitCompositionString = aDefinition traitCompositionString
 		and: [ self classTraitCompositionString = aDefinition classTraitCompositionString
-		and: [ self packageName = aDefinition packageName
+		and: [ (self packageName sameContents: aDefinition packageName)
 		and: [  self tagName = aDefinition tagName
 		and: [ type = aDefinition type and: [ self sortedVariables = aDefinition sortedVariables and: [ comment = aDefinition comment ] ] ] ] ] ] ]]
 ]
@@ -182,11 +182,11 @@ MCClassDefinition >> createClass [
 
 	| superClass |
 	"Ignore Context definition because of troubles with class migration on bootstrapped image. Temporary solution."
-	name = #Context ifTrue: [
+	(name sameContents: #Context) ifTrue: [
 		Context comment = comment ifFalse: [ Context comment: comment stamp: self commentStamp ].
 		^ self ].
 
-	superClass := superclassName = #nil ifFalse: [ self class environment at: superclassName ].
+	superClass := (superclassName sameContents: #nil) ifFalse: [ self class environment at: superclassName ].
 	^ [
 	  self class classInstaller make: [ :builder |
 		  builder
@@ -318,16 +318,16 @@ MCClassDefinition >> isCodeDefinition [
 
 { #category : 'printing' }
 MCClassDefinition >> kindOfSubclass [
-	type = #normal ifTrue: [^ ' subclass: '].
-	type = #words ifTrue: [^ ' variableWordSubclass: '].
-	type = #variable ifTrue: [^ ' variableSubclass: '].
-	type = #bytes ifTrue: [^ ' variableByteSubclass: '].
-	type = #weak ifTrue: [^ ' weakSubclass: ' ].
-	type = #compiledMethod ifTrue: [^ ' variableByteSubclass: ' ].
-	type = #immediate ifTrue: [ ^ ' immediateSubclass: ' ].
-	type = #ephemeron ifTrue: [ ^ ' ephemeronSubclass: ' ].
-	type = #DoubleByteLayout ifTrue: [ ^' variableDoubleByteSubclass: ' ].
-	type = #DoubleWordLayout ifTrue: [ ^' variableDoubleWordSubclass: ' ].
+	(type sameContents: #normal) ifTrue: [^ ' subclass: '].
+	(type sameContents: #words) ifTrue: [^ ' variableWordSubclass: '].
+	(type sameContents: #variable) ifTrue: [^ ' variableSubclass: '].
+	(type sameContents: #bytes) ifTrue: [^ ' variableByteSubclass: '].
+	(type sameContents: #weak) ifTrue: [^ ' weakSubclass: ' ].
+	(type sameContents: #compiledMethod) ifTrue: [^ ' variableByteSubclass: ' ].
+	(type sameContents: #immediate) ifTrue: [ ^ ' immediateSubclass: ' ].
+	(type sameContents: #ephemeron) ifTrue: [ ^ ' ephemeronSubclass: ' ].
+	(type sameContents: #DoubleByteLayout) ifTrue: [ ^' variableDoubleByteSubclass: ' ].
+	(type sameContents: #DoubleWordLayout) ifTrue: [ ^' variableDoubleWordSubclass: ' ].
 	"To support user defined layouts (load them as normal classes), we just return the default"
 	^ ' subclass: '
 ]
@@ -335,16 +335,16 @@ MCClassDefinition >> kindOfSubclass [
 { #category : 'printing' }
 MCClassDefinition >> layoutClassName [
 
-	type = #normal ifTrue: [ ^ #FixedLayout ].
-	type = #words ifTrue: [ ^ #WordLayout ].
-	type = #variable ifTrue: [ ^ #VariableLayout ].
-	type = #bytes ifTrue: [ ^ #ByteLayout ].
-	type = #weak ifTrue: [ ^ #WeakLayout ].
-	type = #compiledMethod ifTrue: [ ^ #CompiledMethodLayout ].
-	type = #immediate ifTrue: [ ^ #ImmediateLayout ].
-	type = #ephemeron ifTrue: [ ^ #EphemeronLayout ].
-	type = #DoubleByteLayout ifTrue: [ ^ #DoubleByteLayout ].
-	type = #DoubleWordLayout ifTrue: [ ^ #DoubleWordLayout ].
+	(type sameContents: #normal) ifTrue: [ ^ #FixedLayout ].
+	(type sameContents: #words) ifTrue: [ ^ #WordLayout ].
+	(type sameContents: #variable) ifTrue: [ ^ #VariableLayout ].
+	(type sameContents: #bytes) ifTrue: [ ^ #ByteLayout ].
+	(type sameContents: #weak) ifTrue: [ ^ #WeakLayout ].
+	(type sameContents: #compiledMethod) ifTrue: [ ^ #CompiledMethodLayout ].
+	(type sameContents: #immediate) ifTrue: [ ^ #ImmediateLayout ].
+	(type sameContents: #ephemeron) ifTrue: [ ^ #EphemeronLayout ].
+	(type sameContents: #DoubleByteLayout) ifTrue: [ ^ #DoubleByteLayout ].
+	(type sameContents: #DoubleWordLayout) ifTrue: [ ^ #DoubleWordLayout ].
 	"To support user defined layouts (load them as normal classes), we just return the default"
 	^ #FixedLayout
 ]
@@ -489,7 +489,7 @@ MCClassDefinition >> provisions [
 { #category : 'comparing' }
 MCClassDefinition >> requirements [
 
-	^ (superclassName = #nil or: [ superclassName asString beginsWith: 'AnObsolete' ])
+	^ ((superclassName sameContents: #nil) or: [ superclassName asString beginsWith: 'AnObsolete' ])
 		  ifTrue: [ self poolDictionaries ]
 		  ifFalse: [ { superclassName } , self poolDictionaries ]
 ]

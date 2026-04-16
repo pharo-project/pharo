@@ -13,8 +13,8 @@ Class {
 	#name : 'HEAdditionalMethodState',
 	#superclass : 'HEExportedLiteral',
 	#instVars : [
-		'method',
-		'selector'
+		#method,
+		#selector
 	],
 	#category : 'Hermes-Model',
 	#package : 'Hermes',

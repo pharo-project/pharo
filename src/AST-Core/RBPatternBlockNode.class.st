@@ -10,7 +10,7 @@ Class {
 	#name : 'RBPatternBlockNode',
 	#superclass : 'RBBlockNode',
 	#instVars : [
-		'valueBlock'
+		#valueBlock
 	],
 	#category : 'AST-Core-Pattern',
 	#package : 'AST-Core',

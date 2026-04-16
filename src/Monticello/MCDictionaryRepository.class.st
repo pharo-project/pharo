@@ -5,8 +5,8 @@ Class {
 	#name : 'MCDictionaryRepository',
 	#superclass : 'MCRepository',
 	#instVars : [
-		'description',
-		'dict'
+		#description,
+		#dict
 	],
 	#category : 'Monticello-Repositories',
 	#package : 'Monticello',
@@ -68,7 +68,7 @@ MCDictionaryRepository >> hash [
 
 { #category : 'interface' }
 MCDictionaryRepository >> includesVersionNamed: aString [
-	^ dict anySatisfy: [:ea | ea info name = aString]
+	^ dict anySatisfy: [:ea | ea info name sameContents: aString]
 ]
 
 { #category : 'testing' }
@@ -95,7 +95,7 @@ MCDictionaryRepository >> sortedVersionInfos [
 
 { #category : 'accessing' }
 MCDictionaryRepository >> versionFrom: aVersionReferenceString [
-	^ self dictionary detect: [ :version | version info name = aVersionReferenceString ]
+	^ self dictionary detect: [ :version | version info name sameContents: aVersionReferenceString ]
 ]
 
 { #category : 'interface' }

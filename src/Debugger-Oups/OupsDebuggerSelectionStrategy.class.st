@@ -8,12 +8,12 @@ Class {
 	#name : 'OupsDebuggerSelectionStrategy',
 	#superclass : 'Object',
 	#instVars : [
-		'debuggers',
-		'handled',
-		'error'
+		#debuggers,
+		#handled,
+		#error
 	],
 	#classInstVars : [
-		'debuggerSelectionStrategy'
+		#debuggerSelectionStrategy
 	],
 	#category : 'Debugger-Oups-Strategies',
 	#package : 'Debugger-Oups',

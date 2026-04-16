@@ -8,9 +8,9 @@ Class {
 	#name : 'Array2D',
 	#superclass : 'Collection',
 	#instVars : [
-		'contents',
-		'numberOfColumns',
-		'numberOfRows'
+		#contents,
+		#numberOfColumns,
+		#numberOfRows
 	],
 	#category : 'Collections-Sequenceable-Ordered',
 	#package : 'Collections-Sequenceable',

@@ -7,12 +7,12 @@ Class {
 	#name : 'HEMethodContainer',
 	#superclass : 'HEAbstractExported',
 	#instVars : [
-		'methods',
-		'classSideMethods',
-		'traitComposition',
-		'classTraitComposition',
-		'packageName',
-		'tagName'
+		#methods,
+		#classSideMethods,
+		#traitComposition,
+		#classTraitComposition,
+		#packageName,
+		#tagName
 	],
 	#category : 'Hermes-Model',
 	#package : 'Hermes',

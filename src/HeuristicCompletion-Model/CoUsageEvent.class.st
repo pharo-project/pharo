@@ -6,9 +6,9 @@ Class {
 	#name : 'CoUsageEvent',
 	#superclass : 'Object',
 	#instVars : [
-		'typedToken',
-		'contextClassName',
-		'isDynamicContext'
+		#typedToken,
+		#contextClassName,
+		#isDynamicContext
 	],
 	#category : 'HeuristicCompletion-Model-Statistics',
 	#package : 'HeuristicCompletion-Model',

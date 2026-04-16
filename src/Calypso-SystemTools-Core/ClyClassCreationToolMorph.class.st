@@ -13,8 +13,8 @@ Class {
 	#name : 'ClyClassCreationToolMorph',
 	#superclass : 'ClyTextEditorToolMorph',
 	#instVars : [
-		'package',
-		'tag'
+		#package,
+		#tag
 	],
 	#category : 'Calypso-SystemTools-Core-Editors-Classes',
 	#package : 'Calypso-SystemTools-Core',

@@ -7,7 +7,7 @@ Class {
 	#name : 'KMKeyCombinationChoice',
 	#superclass : 'KMKeyCombination',
 	#instVars : [
-		'shortcuts'
+		#shortcuts
 	],
 	#category : 'Keymapping-KeyCombinations',
 	#package : 'Keymapping-KeyCombinations'
@@ -72,7 +72,7 @@ KMKeyCombinationChoice >> platformModifier [
 { #category : 'printing' }
 KMKeyCombinationChoice >> prettyPrintOn: aStream [
 
-	(shortcuts select:[ :e | e platform = Smalltalk os platformFamily or: [ e platform = #all ] ])
+	(shortcuts select:[ :e | e platform = Smalltalk os platformFamily or: [ e platform sameContents: #all ] ])
 		do: [ :e | e prettyPrintOn: aStream ]
 		separatedBy: [ aStream << ' | ' ]
 ]

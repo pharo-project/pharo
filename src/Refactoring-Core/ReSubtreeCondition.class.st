@@ -2,7 +2,7 @@ Class {
 	#name : 'ReSubtreeCondition',
 	#superclass : 'ReReifiedCondition',
 	#instVars : [
-		'subtree'
+		#subtree
 	],
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',
