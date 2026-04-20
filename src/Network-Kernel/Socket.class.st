@@ -15,6 +15,8 @@ Class {
 	#classVars : [
 		'Connected',
 		'DeadServer',
+		'IPv4SocketDomain',
+		'IPv6SocketDomain',
 		'InvalidSocket',
 		'OtherEndClosed',
 		'Registry',
@@ -22,6 +24,8 @@ Class {
 		'ThisEndClosed',
 		'UDPSocketType',
 		'Unconnected',
+		'UnixSocketDomain',
+		'UnspecSocketDomain',
 		'WaitingForConnection'
 	],
 	#category : 'Network-Kernel-Base',
@@ -62,6 +66,12 @@ Socket class >> initialize [
 	"Socket Types"
 	TCPSocketType := 0.
 	UDPSocketType := 1.
+	
+	"Socket Domains"
+	UnspecSocketDomain := 0.
+	UnixSocketDomain := 1.
+	IPv4SocketDomain := 2.
+	IPv6SocketDomain := 10.
 
 	"Socket Status Values"
 	InvalidSocket := -1.
@@ -174,6 +184,15 @@ Socket class >> newAcceptCheck [
 	] ifFalse: [
 		self inform: 'It appears that you DO NOT have support for the BSD style accept()'].
 	socket destroy
+]
+
+{ #category : 'instance creation' }
+Socket class >> newIPC [
+	"Create a Unix Domain Socket and initialize it for interprocess communication"
+
+	self initializeNetwork.
+	^ [ super new initialize: TCPSocketType withDomain: UnixSocketDomain ]
+		  repeatWithGCIf: [ :socket | socket isValid not ]
 ]
 
 { #category : 'instance creation' }
@@ -441,6 +460,19 @@ Socket >> closeAndDestroy: timeoutSeconds [
 ]
 
 { #category : 'connection open/close' }
+Socket >> connectNonBlockingTo: hostAddress [
+	"Initiate a connection to the given port at the given host address. This operation will return immediately; follow it with waitForConnectionUntil: to wait until the connection is established."
+
+	| status |
+	self initializeNetwork.
+	status := self primSocketConnectionStatus: socketHandle.
+	(status == Unconnected)
+		ifFalse: [InvalidSocketStatusException signal: 'Socket status must Unconnected before opening a new connection'].
+
+	self primSocket: socketHandle connectTo: hostAddress
+]
+
+{ #category : 'connection open/close' }
 Socket >> connectNonBlockingTo: hostAddress port: port [
 	"Initiate a connection to the given port at the given host address. This operation will return immediately; follow it with waitForConnectionUntil: to wait until the connection is established."
 
@@ -451,6 +483,13 @@ Socket >> connectNonBlockingTo: hostAddress port: port [
 		ifFalse: [InvalidSocketStatusException signal: 'Socket status must Unconnected before opening a new connection'].
 
 	self primSocket: socketHandle connectTo: hostAddress port: port
+]
+
+{ #category : 'public - line' }
+Socket >> connectTo: socketAddress [
+	"Connect method that can be used with Unix Domain Sockets."
+
+	self connectTo: socketAddress waitForConnectionFor: self class standardTimeout
 ]
 
 { #category : 'connection open/close' }
@@ -477,6 +516,17 @@ Socket >> connectTo: hostAddress port: port waitForConnectionFor: timeout [
 			ConnectionTimedOut signal: 'Cannot connect to '
 				, (NetNameResolver stringFromAddress: hostAddress) , ':'
 				, port asString ]
+]
+
+{ #category : 'connection open/close' }
+Socket >> connectTo: socketAddress waitForConnectionFor: timeout [
+	"Initiate a connection to the given socket address
+	Waits until the connection is established or time outs."
+
+	self connectNonBlockingTo: socketAddress.
+	self waitForConnectionFor: timeout ifTimedOut: [
+		ConnectionTimedOut signal: 'Cannot connect to ' ,
+			(NetNameResolver stringFromAddress: socketAddress) ]
 ]
 
 { #category : 'connection open/close' }
@@ -603,6 +653,11 @@ foo waitForConnectionUntil: (Socket standardDeadline).
 
 { #category : 'initialization' }
 Socket >> initialize: socketType [
+	self initialize: socketType withDomain: UnspecSocketDomain.
+]
+
+{ #category : 'initialization' }
+Socket >> initialize: socketType withDomain: socketDomain [
 	"Initialize a new socket handle. If socket creation fails, socketHandle will be set to nil."
 
 	| semaIndex readSemaIndex writeSemaIndex |
@@ -614,7 +669,7 @@ Socket >> initialize: socketType [
 	readSemaIndex := Smalltalk registerExternalObject: readSemaphore.
 	writeSemaIndex := Smalltalk registerExternalObject: writeSemaphore.
 	socketHandle := self
-		primSocketCreateNetwork: 0
+		primSocketCreateNetwork: socketDomain
 		type: socketType
 		receiveBufferSize: 8000
 		sendBufSize: 8000
