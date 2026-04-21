@@ -192,6 +192,7 @@ def bootstrapImage(){
         isoTesters['System-Platforms'] = { defineIsoTestStage("System-Platforms", "SystemPlatforms", "\'System-Platforms-Tests\'") }  
         isoTesters['Announcements-Core'] = { defineIsoTestStage("Announcements-Core", "Announcements", "\'Announcements-Core-Tests\'") } 
         isoTesters['Shift-ClassBuilder'] = { defineIsoTestStage("Shift-ClassBuilder", "Shift", "\'Shift-ClassBuilder-Tests\'") }        
+        isoTesters['System-Announcements'] = { defineIsoTestStage("System-Announcements", "Announcements", "\'Announcements-Core-Tests\'") }         
         parallel isoTesters
 
         stage ("Full Image") {
