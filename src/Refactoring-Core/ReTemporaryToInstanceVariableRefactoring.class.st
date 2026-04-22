@@ -161,12 +161,12 @@ ReTemporaryToInstanceVariableRefactoring >> prepareForExecution [
 { #category : 'transforming' }
 ReTemporaryToInstanceVariableRefactoring >> privateTransform [
 
+	class addInstanceVariable: temporaryVariableName.
 	self removeTemporaryOfClass: class.
 	class allSubclasses do: [ :cls |
-			(cls definesInstanceVariable: temporaryVariableName)
+			(cls directlyDefinesInstanceVariable: temporaryVariableName)
 				ifTrue: [ cls removeInstanceVariable: temporaryVariableName ]
-				ifFalse: [ self removeTemporaryOfClass: cls ] ].
-	class addInstanceVariable: temporaryVariableName 
+				ifFalse: [ self removeTemporaryOfClass: cls ] ]
 ]
 
 { #category : 'removing' }

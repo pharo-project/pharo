@@ -29,7 +29,7 @@ ReGenerateEqualAndHashDriverTest >> testGenerateEqualAndHashExistingImplementors
 	| driver rbClass driverChanges |
 
 	testingEnvironment := RBClassEnvironment class: self classForEqualAndHashExistingImplementors. 	
-	driver := ReGenerateEqualAndHashDriver basicNew. 
+	driver := ReGenerateEqualAndHashDriver new. 
 	self setUpDriver: driver.
 	driver scopes: { testingEnvironment }.
 	rbClass := testingEnvironment class.
@@ -60,7 +60,7 @@ ReGenerateEqualAndHashDriverTest >> testGenerateEqualAndHashFirstGen [
 	| driver rbClass driverChanges |
 
 	testingEnvironment := RBClassEnvironment class: self classForEqualAndHash.
-	driver := ReGenerateEqualAndHashDriver basicNew.
+	driver := ReGenerateEqualAndHashDriver new.
 	self setUpDriver: driver.
 	driver scopes: { testingEnvironment }.
 	rbClass := testingEnvironment class.

@@ -21,7 +21,8 @@ Class {
 		'requestDialog',
 		'informDialog',
 		'stoppedBeforeApplyingRefactoring',
-		'selectDialogForBreakingChanges'
+		'selectDialogForBreakingChanges',
+		'forTesting'
 	],
 	#classInstVars : [
 		'shouldPreviewChanges'
@@ -120,6 +121,7 @@ ReInteractionDriver >> applyChanges [
 
 	| applied |
 
+	forTesting ifTrue: [ ^ self ].
 	applied := self openPreviewWithChanges: self changes "it looks like there is a bug in Spec" "stoppedBeforeApplyingRefactoring := applied isCancelled not
 	isCancelled returns always true so I will use it when this will be fixed in spec."
 ]
@@ -183,6 +185,18 @@ ReInteractionDriver >> failedPreconditionsErrorString: conditions [
 		  conditions do: [ :cond |
 				  cond violationMessageOn: stream.
 				  stream cr ] ]
+]
+
+{ #category : 'accessing' }
+ReInteractionDriver >> forTesting [
+
+	^ forTesting
+]
+
+{ #category : 'accessing' }
+ReInteractionDriver >> forTesting: aBoolean [
+
+	forTesting := aBoolean
 ]
 
 { #category : 'execution' }
@@ -255,8 +269,8 @@ ReInteractionDriver >> informDialog: aDialog [
 ReInteractionDriver >> initialize [
 
 	super initialize.
-	stoppedBeforeApplyingRefactoring := false.
-	"for now unused but we should soon use it. Check applyChanges"
+	forTesting := false.
+	stoppedBeforeApplyingRefactoring := false "for now unused but we should soon use it. Check applyChanges"
 ]
 
 { #category : 'configuration' }

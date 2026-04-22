@@ -71,10 +71,11 @@ ReRenameClassDriver >> gatherUserInput [
 ]
 
 { #category : 'initialization' }
-ReRenameClassDriver >> initialize [ 
-	
+ReRenameClassDriver >> initialize [
+
 	super initialize.
-	shouldEscape := false.
+	requestDialog := self defaultRequestDialog.
+	shouldEscape := false
 ]
 
 { #category : 'configuration' }
@@ -109,7 +110,7 @@ ReRenameClassDriver >> renameClass [
 { #category : 'execution' }
 ReRenameClassDriver >> requestNewNameBasedOn: aName [
 
-	newName := self defaultRequestDialog
+	newName := requestDialog 
 		           title: 'Please provide a new class name';
 		           message: 'The new name should be valid and not the one of an existing class.';
 		           validateAnswer: [ :string :presenter | self validateName: string onPresenter: presenter ];

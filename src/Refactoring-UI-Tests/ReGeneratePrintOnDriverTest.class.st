@@ -21,7 +21,8 @@ ReGeneratePrintOnDriverTest >> testGeneratePrintOn [
 	| driver rbClass driverChanges |
 
 	testingEnvironment := RBClassEnvironment class: self classForPrintOn. 	
-	driver := ReGeneratePrintOnDriver basicNew. 
+
+	driver := ReGeneratePrintOnDriver new. 
 	self setUpDriver: driver.
 	driver scopes: { testingEnvironment }.
 	rbClass := testingEnvironment class.

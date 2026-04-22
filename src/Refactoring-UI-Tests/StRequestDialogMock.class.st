@@ -1,22 +1,42 @@
 Class {
 	#name : 'StRequestDialogMock',
 	#superclass : 'Object',
+	#instVars : [
+		'response'
+	],
 	#category : 'Refactoring-UI-Tests',
 	#package : 'Refactoring-UI-Tests'
 }
 
+{ #category : 'accessing' }
+StRequestDialogMock >> message: aString [
+
+	^ self
+]
+
 { #category : 'api - showing' }
 StRequestDialogMock >> openModal [
 
-	
+	^ response
+]
+
+{ #category : 'accessing' }
+StRequestDialogMock >> response: aString [
+	response := aString
 ]
 
 { #category : 'accessing' }
 StRequestDialogMock >> text: aString [ 
-	^ ' doesnothing '
+	^ self
 ]
 
 { #category : 'accessing' }
 StRequestDialogMock >> title: aString [ 
-	^ ' doesnothing '
+	^ self
+]
+
+{ #category : 'api' }
+StRequestDialogMock >> validateAnswer: aBlock [
+
+	^ self
 ]
