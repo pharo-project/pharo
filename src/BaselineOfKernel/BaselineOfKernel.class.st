@@ -44,12 +44,18 @@ BaselineOfKernel >> baseline: spec [
 						repository: repository;
 						loads: #( 'Tests' )];
 				
-
 				baseline: 'System-Platforms-Tests' with: [ 
 					spec
 						className: 'BaselineOfSystemPlatforms';
 						repository: (self packageRepositoryURLForSpec: spec);
 						loads: #( 'Tests' )];
+					
+				baseline: 'Collections-Native-Tests' with: [ 
+					spec
+						className: 'BaselineOfCollectionsNative';
+						repository: repository;
+						loads: #( 'Tests' )];
+						
 				package: 'Announcements-Core';
 				package: 'Collections-Abstract';
 				package: 'Collections-DoubleLinkedList';
@@ -88,7 +94,6 @@ BaselineOfKernel >> baseline: spec [
 				
 				package: 'Collections-Abstract-Tests';
 				package: 'Collections-DoubleLinkedList-Tests';
-				package: 'Collections-Native-Tests';
 				package: 'Collections-Sequenceable-Tests';
 				package: 'Collections-Streams-Tests';
 				package: 'Collections-Strings-Tests';
