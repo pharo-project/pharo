@@ -14,6 +14,12 @@ StRequestDialogMock >> message: aString [
 	^ self
 ]
 
+{ #category : 'api - events' }
+StRequestDialogMock >> onCancel: aBlock [
+
+	^ self
+]
+
 { #category : 'api - showing' }
 StRequestDialogMock >> openModal [
 
