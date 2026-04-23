@@ -1,8 +1,8 @@
 Class {
 	#name : 'BaselineOfCollectionsAbstract',
 	#superclass : 'BaselineOf',
-	#category : 'BaselineOfCollectionAbstract',
-	#package : 'BaselineOfCollectionAbstract'
+	#category : 'BaselineOfCollectionsAbstract',
+	#package : 'BaselineOfCollectionsAbstract'
 }
 
 { #category : 'baselines' }
@@ -10,8 +10,8 @@ BaselineOfCollectionsAbstract >> baseline: spec [
 
 	<baseline>
 	spec for: #common do: [
-			spec
-				package: 'Collections-Abstract';
+			spec 
+				package: 'Collections-Abstract' ; 
 				package: 'Collections-Abstract-Tests' with: [ spec requires: #( 'Collections-Abstract' ) ].
 
 			spec
