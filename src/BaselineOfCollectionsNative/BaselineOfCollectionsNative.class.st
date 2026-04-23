@@ -11,7 +11,7 @@ BaselineOfCollectionsNative >> baseline: spec [
 	<baseline>
 	spec for: #common do: [
 			spec
-			   baseline: 'Collections-Abstract' with: [ 
+			   baseline: 'CollectionsAbstract' with: [ 
             		spec repository: (self packageRepositoryURLForSpec: spec) ];
 	
 				package: 'Collections-Native';
