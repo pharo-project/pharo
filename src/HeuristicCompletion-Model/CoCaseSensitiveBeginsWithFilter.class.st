@@ -22,7 +22,15 @@ CoCaseSensitiveBeginsWithFilter class >> filterString: aString [
 { #category : 'testing' }
 CoCaseSensitiveBeginsWithFilter >> accepts: aCandidate [
 
-	^ aCandidate contents asString beginsWith: completionString
+	^ (self prefixAcceptsContents: aCandidate contents)
+		or: [ CoCompletionTolerance enabled
+			and: [ self fuzzyAcceptsContents: aCandidate contents ] ]
+]
+
+{ #category : 'testing' }
+CoCaseSensitiveBeginsWithFilter >> isCaseSensitive [ 
+
+	^ true
 ]
 
 { #category : 'testing' }
@@ -41,4 +49,10 @@ CoCaseSensitiveBeginsWithFilter >> isLessNarrowThanCaseSensitive: anotherFilter 
 CoCaseSensitiveBeginsWithFilter >> isMoreNarrowThan: anotherFilter [
 
 	^ anotherFilter isLessNarrowThanCaseSensitive: self
+]
+
+{ #category : 'testing' }
+CoCaseSensitiveBeginsWithFilter >> prefixAcceptsContents: aString [ 
+
+	^ aString beginsWith: completionString 
 ]

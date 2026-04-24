@@ -62,8 +62,44 @@ NECPreferences class >> caseSensitive: aBoolean [
 ]
 
 { #category : 'defaults' }
+NECPreferences class >> completionToleranceMinimumTokenSize [ 
+
+	^ CoCompletionTolerance minimumTokenSize
+]
+
+{ #category : 'defaults' }
+NECPreferences class >> completionToleranceMinimumTokenSize: anInteger [ 
+
+	CoCompletionTolerance minimumTokenSize: anInteger
+]
+
+{ #category : 'defaults' }
+NECPreferences class >> completionToleranceRate [ 
+
+	^ CoCompletionTolerance rate
+]
+
+{ #category : 'defaults' }
+NECPreferences class >> completionToleranceRate: aNumber [ 
+
+	CoCompletionTolerance rate: aNumber 
+]
+
+{ #category : 'defaults' }
 NECPreferences class >> defaultBackgroundColor [
 	^ self theme menuColor
+]
+
+{ #category : 'defaults' }
+NECPreferences class >> defaultCompletionToleranceMinimumTokenSize [ 
+
+	^ 2
+]
+
+{ #category : 'defaults' }
+NECPreferences class >> defaultCompletionToleranceRate [ 
+
+	^ 0.0
 ]
 
 { #category : 'defaults' }
@@ -224,6 +260,16 @@ NECPreferences class >> settingsOn: aBuilder [
 						label: 'Case Sensitive';
 						default: true;
 						description: 'Decide if you want eCompletion to be case sensitive or not.'.
+					(aBuilder setting: #completionToleranceRate)
+						target: self;
+						label: 'Typo tolerance rate';
+						default: self defaultCompletionToleranceRate;
+						description: '0.0 disables fuzzy typo tolerance. Higher values allow more edits.'.
+					(aBuilder setting: #completionToleranceMinimumTokenSize)
+						target: self;
+						label: 'Typo tolerance minimum token size';
+						default: self defaultCompletionToleranceMinimumTokenSize;
+						description: 'Minimum token length before fuzzy matching is allowed.'.
 					(aBuilder setting: #smartCharacters)
 						label: 'Smart Characters';
 						default: true;
@@ -256,7 +302,7 @@ NECPreferences class >> settingsOn: aBuilder [
 
 { #category : 'accessing' }
 NECPreferences class >> showCompletionDetails [
-	^ showCompletionDetails
+	^ showCompletionDetails 
 ]
 
 { #category : 'accessing' }

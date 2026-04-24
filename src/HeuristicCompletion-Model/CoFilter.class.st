@@ -53,3 +53,9 @@ CoFilter >> negated [
 		negatedFilter: self;
 		yourself
 ]
+
+{ #category : 'sorting' }
+CoFilter >> sortEntries: aCollection [ 
+
+	^ aCollection 
+]

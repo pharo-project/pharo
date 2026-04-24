@@ -22,7 +22,15 @@ CoCaseInsensitiveBeginsWithFilter class >> filterString: aString [
 { #category : 'testing' }
 CoCaseInsensitiveBeginsWithFilter >> accepts: aCandidate [
 
-	^ aCandidate contents asLowercase beginsWith: completionString asLowercase
+	^ (self prefixAcceptsContents: aCandidate contents)
+		or: [ CoCompletionTolerance enabled
+			and: [ self fuzzyAcceptsContents: aCandidate contents ] ]
+]
+
+{ #category : 'testing' }
+CoCaseInsensitiveBeginsWithFilter >> isCaseSensitive [ 
+
+	^ false
 ]
 
 { #category : 'testing' }
