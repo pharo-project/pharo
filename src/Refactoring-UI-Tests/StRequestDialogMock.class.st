@@ -8,10 +8,28 @@ Class {
 	#package : 'Refactoring-UI-Tests'
 }
 
+{ #category : 'visiting' }
+StRequestDialogMock >> acceptLabel: aLabel [
+
+	^ self
+]
+
+{ #category : 'visiting' }
+StRequestDialogMock >> cancelLabel: aLabel [
+
+	^ self
+]
+
 { #category : 'accessing' }
 StRequestDialogMock >> message: aString [
 
 	^ self
+]
+
+{ #category : 'visiting' }
+StRequestDialogMock >> onAccept: aBlock [
+
+	^ self 
 ]
 
 { #category : 'api - events' }

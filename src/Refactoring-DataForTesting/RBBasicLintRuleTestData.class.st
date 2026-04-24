@@ -377,6 +377,12 @@ RBBasicLintRuleTestData >> someDemoMethod [
 	^ self junk
 ]
 
+{ #category : 'accessing' }
+RBBasicLintRuleTestData >> useAccess [
+
+	self result + 3
+]
+
 { #category : 'private' }
 RBBasicLintRuleTestData >> viewResults [
 	result openEditor
