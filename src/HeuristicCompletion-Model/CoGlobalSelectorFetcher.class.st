@@ -17,15 +17,15 @@ CoGlobalSelectorFetcher >> entriesDo: aBlock [
 	astNode ifNotNil: [ :node |
 			node parent ifNotNil: [ :parent |
 					(parent isMessage and: [ parent isKeyword ]) ifTrue: [
-							self systemNavigation allSelectorsStartingWith: parent selector , self effectivePrefix do: [ :e |
+							self systemNavigation allSelectorsStartingWith: parent selector , filter completionString do: [ :e |
 									aBlock value: (CoSelectorEntry new
 											 displayedContents:
 												 '(' , (e copyFrom: 1 to: parent selector size) , ')' , (e copyFrom: parent selector size + 1 to: e size);
 											 contents: (e copyFrom: parent selector size + 1 to: e size);
 											 node: astNode;
-											 fetcherName: self class name;
+											 fetcher: self;
 											 selector: e) ] ] ] ].
-	self systemNavigation allSelectorsStartingWith: self effectivePrefix do: [ :e |
+	self systemNavigation allSelectorsStartingWith: filter completionString do: [ :e |
 			aBlock value: ((CoSelectorEntry contents: e node: astNode)
 					 fetcherName: self class name;
 					 yourself) ]

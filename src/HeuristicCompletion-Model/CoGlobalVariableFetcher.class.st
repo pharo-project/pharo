@@ -19,7 +19,7 @@ CoGlobalVariableFetcher >> completionClass: aClass [
 CoGlobalVariableFetcher >> entriesDo: aBlock [
 
 	self systemNavigation
-		allGlobalNamesStartingWith: self effectivePrefix 
+		allGlobalNamesStartingWith: filter completionString 
 		do: [ :e |
 				aBlock value: ((CoGlobalEntry contents: e node: astNode)
 						 fetcherName: self class name;

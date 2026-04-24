@@ -24,14 +24,6 @@ CoGlobalFetcher >> astNode: anObject [
 ]
 
 { #category : 'accessing' }
-CoGlobalFetcher >> effectivePrefix [ 
-	^(CoCompletionTolerance enabled 
-	and: [ filter completionString size >= CoCompletionTolerance minimumTokenSize ])
-	ifTrue: [ filter completionString first asString ]
-	ifFalse: [ filter completionString ]
-]
-
-{ #category : 'accessing' }
 CoGlobalFetcher >> systemNavigation [
 	^ systemNavigation ifNil: [ SystemNavigation new ]
 ]
