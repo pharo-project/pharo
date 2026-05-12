@@ -6,6 +6,14 @@ Class {
 	#tag : 'Core'
 }
 
+{ #category : 'running' }
+CoDependencyPackageScopedSelectorTest >> setUp [
+	super setUp.
+
+	"Put here a common initialization logic for tests"
+	CoToleranceFilter disable
+]
+
 { #category : 'tests' }
 CoDependencyPackageScopedSelectorTest >> testAppliesForMessageWithVariableReceiver [
     | heuristic node |

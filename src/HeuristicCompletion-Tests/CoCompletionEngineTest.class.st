@@ -17,6 +17,19 @@ CoCompletionEngineTest >> hasBindingOf: aSymbol [
 	^ false
 ]
 
+{ #category : 'running' }
+CoCompletionEngineTest >> setUp [
+	super setUp.
+
+	"Disable the CoToleranceFilter"
+	CoToleranceFilter disable.
+	editor := RubSmalltalkEditor forTextArea: RubEditingArea new beForSmalltalkCode.
+	interactionEngine := self newCompletionEngine.
+	interactionEngine setEditor: editor.
+	editor completionEngine: interactionEngine.
+	editor textArea model: self
+]
+
 { #category : 'tests - interaction' }
 CoCompletionEngineTest >> testCmdCtrlLeft [
 

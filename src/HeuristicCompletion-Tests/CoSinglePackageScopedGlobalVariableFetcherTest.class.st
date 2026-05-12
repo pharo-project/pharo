@@ -16,6 +16,7 @@ Class {
 CoSinglePackageScopedGlobalVariableFetcherTest >> setUp [
 	
 	super setUp.
+	CoToleranceFilter disable.
 	completionClass := CoMockClass new name: 'CoInP1'. 
 	a := CoMockClass new name: 'AInP1'.
 	b := CoMockClass new name: 'AAInP1'.

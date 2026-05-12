@@ -26,6 +26,11 @@ CoCaseSensitiveBeginsWithFilter >> accepts: aCandidate [
 ]
 
 { #category : 'testing' }
+CoCaseSensitiveBeginsWithFilter >> isCaseSensitive [ 
+	self shouldBeImplemented.
+]
+
+{ #category : 'testing' }
 CoCaseSensitiveBeginsWithFilter >> isLessNarrowThanCaseInsensitive: anotherFilter [
 
 	^ false

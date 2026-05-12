@@ -73,7 +73,7 @@ CoResultSet >> fetch: anInteger [
 
 	| newResults |
 	newResults := fetcher next: anInteger.
-	results addAll: "(sorter sortCompletionList:" newResults
+	results addAll: (filter complementResults: newResults )
 ]
 
 { #category : 'fetching' }
@@ -100,9 +100,9 @@ CoResultSet >> filter [
 ]
 
 { #category : 'accessing' }
-CoResultSet >> filter: anObject [
+CoResultSet >> filter: aFilter [
 
-	filter := anObject.
+	filter := aFilter.
 	fetcher filter: filter
 ]
 

@@ -37,6 +37,7 @@ CoRepositoryPackagedScopedGlobalVariableFetcherTest >> setUp [
 	
 	| classesInP1 classesInP2 classesInP3 dict |
 	super setUp.
+	CoToleranceFilter disable.
 	completionClass := CoMockClass new name: 'CoInP1'. 
 	ai12 := CoMockClass new name: 'Ai12'.
 	ai13 := CoMockClass new name: 'Ai13'.
