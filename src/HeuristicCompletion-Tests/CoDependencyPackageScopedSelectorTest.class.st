@@ -1,6 +1,10 @@
 Class {
 	#name : 'CoDependencyPackageScopedSelectorTest',
 	#superclass : 'CoMiniTestCase',
+	#instVars : [
+		'oldRate',
+		'oldMinimumTokenSize'
+	],
 	#category : 'HeuristicCompletion-Tests-Core',
 	#package : 'HeuristicCompletion-Tests',
 	#tag : 'Core'
@@ -11,7 +15,18 @@ CoDependencyPackageScopedSelectorTest >> setUp [
 	super setUp.
 
 	"Put here a common initialization logic for tests"
-	CoToleranceFilter disable
+	"Save the old configuration then Disable the CoToleranceFilter"
+	oldRate := CoToleranceFilter rate. 
+	oldMinimumTokenSize := CoToleranceFilter minimumTokenSize.
+	CoToleranceFilter disable.
+]
+
+{ #category : 'running' }
+CoDependencyPackageScopedSelectorTest >> tearDowm [ 
+	CoToleranceFilter rate: oldRate. 
+	CoToleranceFilter minimumTokenSize: oldMinimumTokenSize. 
+	
+	super tearDown
 ]
 
 { #category : 'tests' }

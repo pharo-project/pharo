@@ -17,7 +17,9 @@ Class {
 		'a33',
 		'blop',
 		'aiGlobal1',
-		'aiGlobal2'
+		'aiGlobal2',
+		'oldRate',
+		'oldMinimumTokenSize'
 	],
 	#category : 'HeuristicCompletion-Tests-Core',
 	#package : 'HeuristicCompletion-Tests',
@@ -37,7 +39,12 @@ CoRepositoryPackagedScopedGlobalVariableFetcherTest >> setUp [
 	
 	| classesInP1 classesInP2 classesInP3 dict |
 	super setUp.
+	
+	"Save the old configuration then Disable the CoToleranceFilter"
+	oldRate := CoToleranceFilter rate. 
+	oldMinimumTokenSize := CoToleranceFilter minimumTokenSize.
 	CoToleranceFilter disable.
+	
 	completionClass := CoMockClass new name: 'CoInP1'. 
 	ai12 := CoMockClass new name: 'Ai12'.
 	ai13 := CoMockClass new name: 'Ai13'.
@@ -101,6 +108,14 @@ CoRepositoryPackagedScopedGlobalVariableFetcherTest >> setUp [
 		CoGlobalEntry contents: 'Ai23' node: nil .
 		CoGlobalEntry contents: 'Ai3' node: nil 
 		}
+]
+
+{ #category : 'running' }
+CoRepositoryPackagedScopedGlobalVariableFetcherTest >> tearDown [  
+	CoToleranceFilter rate: oldRate. 
+	CoToleranceFilter minimumTokenSize: oldMinimumTokenSize.
+	
+	super tearDown 
 ]
 
 { #category : 'one local one global' }

@@ -1,6 +1,10 @@
 Class {
 	#name : 'CoCompletionEngineTest',
 	#superclass : 'CompletionEngineTest',
+	#instVars : [
+		'oldRate',
+		'oldMinimumTokenSize'
+	],
 	#category : 'HeuristicCompletion-Tests-Core',
 	#package : 'HeuristicCompletion-Tests',
 	#tag : 'Core'
@@ -21,13 +25,24 @@ CoCompletionEngineTest >> hasBindingOf: aSymbol [
 CoCompletionEngineTest >> setUp [
 	super setUp.
 
-	"Disable the CoToleranceFilter"
+	"Save the old configuration then Disable the CoToleranceFilter"
+	oldRate := CoToleranceFilter rate. 
+	oldMinimumTokenSize := CoToleranceFilter minimumTokenSize.
 	CoToleranceFilter disable.
+	
 	editor := RubSmalltalkEditor forTextArea: RubEditingArea new beForSmalltalkCode.
 	interactionEngine := self newCompletionEngine.
 	interactionEngine setEditor: editor.
 	editor completionEngine: interactionEngine.
 	editor textArea model: self
+]
+
+{ #category : 'running' }
+CoCompletionEngineTest >> tearDown [ 
+	CoToleranceFilter rate: oldRate. 
+	CoToleranceFilter minimumTokenSize: oldMinimumTokenSize. 
+	
+	super tearDown
 ]
 
 { #category : 'tests - interaction' }
