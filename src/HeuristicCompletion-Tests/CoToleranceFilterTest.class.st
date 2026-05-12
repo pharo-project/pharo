@@ -1,8 +1,15 @@
 Class {
 	#name : 'CoToleranceFilterTest',
 	#superclass : 'TestCase',
-	#category : 'HeuristicCompletion-Tests',
-	#package : 'HeuristicCompletion-Tests'
+	#instVars : [
+		'oldRate',
+		'oldMinimumTokenize',
+		'filter',
+		'entries'
+	],
+	#category : 'HeuristicCompletion-Tests-Core',
+	#package : 'HeuristicCompletion-Tests',
+	#tag : 'Core'
 }
 
 { #category : 'running' }
@@ -10,7 +17,77 @@ CoToleranceFilterTest >> setUp [
 	super setUp.
 
 	"Put here a common initialization logic for tests"
+	oldRate := CoToleranceFilter rate. 
+	oldMinimumTokenize := CoToleranceFilter minimumTokenSize. 
 	CoToleranceFilter enable.
+	
+	filter := CoToleranceFilter new.
+	
+	entries := OrderedCollection new.
+]
+
+{ #category : 'running' }
+CoToleranceFilterTest >> tearDown [ 
+	
+	CoToleranceFilter rate: oldRate. 
+	CoToleranceFilter minimumTokenSize: oldMinimumTokenize. 
+	
+	super tearDown 
+]
+
+{ #category : 'tests' }
+CoToleranceFilterTest >> testComplementResultExactAppearBeforeFuzzy [
+	| result |
+	entries add: 'foo'; add: 'for'; add: 'fuzzy'. 
+	filter decoree: (CoCaseSensitiveBeginsWithFilter new completionString: 'fo'). 
+	result := (filter complementResults: entries). 
+	self assert: result first equals: 'foo'.
+	self assert: result second equals: 'for'.
+	self assert: result third equals: 'fuzzy'.
+]
+
+{ #category : 'tests' }
+CoToleranceFilterTest >> testComplementResultSortFuzzy [
+	| result |
+	entries add: 'fuzzy'; add: 'fuzz'. 
+	filter decoree: (CoCaseSensitiveBeginsWithFilter new completionString: 'fo'). 
+	result := (filter complementResults: entries). 
+	"We should get fuzz before fuzzy since fuzz is closer to the token"
+	self assert: result first equals: 'fuzz'.
+	self assert: result second equals: 'fuzzy'.
+
+]
+
+{ #category : 'tests' }
+CoToleranceFilterTest >> testComplementResultWhenNoFallbackEnumerationBecauseDisabled [
+	CoToleranceFilter disable. 
+	
+	entries add: 'foo'; add: 'bar'.
+	
+	self assert: (filter complementResults: entries) equals: (entries).
+]
+
+{ #category : 'tests' }
+CoToleranceFilterTest >> testComplementResultWhenNoFallbackEnumerationBecauseSmallTokenSize [
+	filter decoree: (CoCaseSensitiveBeginsWithFilter new completionString: 'f').
+	
+	entries add: 'foo'; add: 'bar'.
+	
+	self assert: (filter complementResults: entries) equals: (entries).
+]
+
+{ #category : 'tests' }
+CoToleranceFilterTest >> testRequiresFallbackEnumerationWhenTokenSizeIsLessThanMinimumTokenSize [
+	filter decoree: CoCaseInsensitiveBeginsWithFilter new.
+	filter decoree completionString: 'a'.
+	self deny: (filter requiresFallbackEnumeration ) .
+	
+]
+
+{ #category : 'tests' }
+CoToleranceFilterTest >> testRequiresFallbackEnumerationWhenToleranceDisabled [
+	CoToleranceFilter disable. 
+	self deny: (filter requiresFallbackEnumeration )
 ]
 
 { #category : 'tests' }
