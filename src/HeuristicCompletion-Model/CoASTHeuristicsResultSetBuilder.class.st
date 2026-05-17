@@ -46,6 +46,7 @@ CoASTHeuristicsResultSetBuilder class >> initializeMessagesHeuristic [
 				                      CoSuperMessageHeuristic new.
 				                      CoDependencyMessageHeuristics new .
 				                      CoTypedReceiverMessageHeuristic  new .
+											CoInferredReceiverMessageHeuristic new.
 				                      CoInitializeInferencedMessageHeuristic  new .
 				                      CoLiteralMessageHeuristic  new . 
 				                      CoGlobalVariableMessageHeuristic new  .
