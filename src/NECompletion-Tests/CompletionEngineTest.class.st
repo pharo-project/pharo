@@ -6,7 +6,8 @@ Class {
 	#superclass : 'TestCase',
 	#instVars : [
 		'editor',
-		'interactionEngine'
+		'interactionEngine',
+		'toleranceRate'
 	],
 	#category : 'NECompletion-Tests',
 	#package : 'NECompletion-Tests'
@@ -144,12 +145,16 @@ CompletionEngineTest >> setEditorTextWithCaret: aString [
 { #category : 'running' }
 CompletionEngineTest >> setUp [
 	super setUp.
-
+	
+	
 	editor := RubSmalltalkEditor forTextArea: RubEditingArea new beForSmalltalkCode.
 	interactionEngine := self newCompletionEngine.
 	interactionEngine setEditor: editor.
 	editor completionEngine: interactionEngine.
-	editor textArea model: self
+	editor textArea model: self.
+	
+	toleranceRate := CoToleranceFilter rate.
+	CoToleranceFilter disable.
 ]
 
 { #category : 'running' }
@@ -157,6 +162,8 @@ CompletionEngineTest >> tearDown [
 
 	interactionEngine closeMenu.
 	editor textArea delete.
+	
+	CoToleranceFilter rate: toleranceRate.
 	super tearDown
 ]
 

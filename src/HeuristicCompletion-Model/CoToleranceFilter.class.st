@@ -96,7 +96,7 @@ CoToleranceFilter class >> enabled [
 	^ Rate > 0.0
 ]
 
-{ #category : 'class initialize' }
+{ #category : 'class initialization' }
 CoToleranceFilter class >> initialize [ 
 
 	self reset
@@ -128,7 +128,7 @@ CoToleranceFilter class >> rate: aNumber [
 	Rate := (value max: 0.0) min: 1.0
 ]
 
-{ #category : 'class initialize' }
+{ #category : 'class initialization' }
 CoToleranceFilter class >> reset [ 
 
 	Rate := self defaultRate.
