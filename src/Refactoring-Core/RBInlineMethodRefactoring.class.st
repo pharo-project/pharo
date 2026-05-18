@@ -320,7 +320,7 @@ RBInlineMethodRefactoring >> preconditionExecutionOrder [
 
     ^ ReInlineMethodExecutionOrderCondition new
         sourceMessage: sourceMessage
-        inlineParseTree: inlineParseTree
+        inlineParseTree: inlineParseTree 
 ]
 
 { #category : 'preconditions' }

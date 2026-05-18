@@ -24,6 +24,19 @@ ReInlineMethodDriver class >> driverName [
 ]
 
 { #category : 'execution' }
+ReInlineMethodDriver >> applyChanges [
+
+	self isLastSender ifTrue: [
+			| dialog selection |
+			dialog := self lastSenderSelectDialog.
+			selection := dialog openModal.
+			selection ifNil: [ ^ false ].
+			selection action.
+			^ self ].
+	super applyChanges
+]
+
+{ #category : 'execution' }
 ReInlineMethodDriver >> breakingChoices [
 
 	| items |
@@ -31,6 +44,8 @@ ReInlineMethodDriver >> breakingChoices [
 
 	(noOverridden check and: [ notExecutionOrder check and: [ noSuperMessage check ] ]) ifFalse: [
 		items add: (ReInlineMethodChoice new driver: self) ].
+	self isLastSender ifTrue: [ items add: (ReInlineAndRemoveMethodChoice new driver: self) ].
+
 
 	^ items
 ]
@@ -55,7 +70,19 @@ ReInlineMethodDriver >> hasFailedBehaviorPreservingPreconditions [
 	notExecutionOrder := refactoring preconditionExecutionOrder.
 	noSuperMessage := refactoring preconditionSuperMessages.
 
+
 	^ refactoring failedBreakingChangePreconditions isNotEmpty
+]
+
+{ #category : 'action' }
+ReInlineMethodDriver >> inlineAndRemoveMethod [
+
+	| removeRefactoring |
+	refactoring privateTransform.
+	removeRefactoring := ReRemoveMethodsRefactoring model: model classSelectorMapping: { (class -> selector) }.
+	removeRefactoring privateTransform.
+	removeRefactoring changes changes do: [ :change | refactoring changes addChange: change ].
+	self openPreviewWithChanges: refactoring changes
 ]
 
 { #category : 'action' }
@@ -71,6 +98,12 @@ ReInlineMethodDriver >> instantiateRefactoring [
 	^ RBInlineMethodRefactoring inline: interval inMethod: selector forClass: class
 ]
 
+{ #category : 'testing' }
+ReInlineMethodDriver >> isLastSender [
+
+	^ (refactoring model allReferencesTo: refactoring inlineSelector) size <= 1
+]
+
 { #category : 'ui - dialogs' }
 ReInlineMethodDriver >> labelBasedOnBreakingChanges [
 
@@ -78,8 +111,28 @@ ReInlineMethodDriver >> labelBasedOnBreakingChanges [
 			  refactoring failedBreakingChangePreconditions do: [ :cond |
 					  cond violationMessageOn: stream.
 					  stream cr ].
+			  self isLastSender ifTrue: [
+					  stream
+						  nextPutAll: 'This is the last sender of ';
+						  nextPutAll: refactoring inlineSelector;
+						  nextPutAll: '.' ].
 			  stream cr.
 			  stream nextPutAll: 'Select a strategy' ]
+]
+
+{ #category : 'configuration' }
+ReInlineMethodDriver >> lastSenderSelectDialog [
+
+	^ super defaultSelectDialog
+		  extent: 400 @ 300;
+		  title: 'Last sender detected';
+		  message: 'The method ' , refactoring inlineSelector , ' has no other senders. Do you want to remove it after inlining?';
+		  items: {
+				  (ReInlineMethodChoice new driver: self).
+				  (ReInlineAndRemoveMethodChoice new driver: self) };
+		  display: [ :each | each description ];
+		  displayIcon: [ :each | self iconNamed: each systemIconName ];
+		  yourself
 ]
 
 { #category : 'instance creation' }
