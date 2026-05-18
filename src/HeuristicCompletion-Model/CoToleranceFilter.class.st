@@ -92,12 +92,18 @@ CoToleranceFilter class >> reset [
 
 { #category : 'algorithms' }
 CoToleranceFilter class >> scoreForCandidate: aCandidateString token: aTokenString caseSensitive: aBoolean tolerance: aTolerance [
-	"Returns 1 if the candidate matches the tokenm 0 otherwise"
+	"Returns 1 if the candidate matches the token 
+	 Returns 0 if  * the candidate and the token don't start with the same caracter 
+						* Token or the candidate is empty
+						* The candidate start exactly with the token
+						* The tolerance is not enabled, or the token size does not exceed the minimum size
+						* The keyword arity is not stable
+						* The maximum allowed edits, calculated from the Tolerance, exceeed the difference between the candidate and token lengths
+	"
 	| candidate token maxSize maxEdits distance |
 	candidate := aCandidateString asString.
 	token := aTokenString asString.
 
-	token isEmpty ifTrue: [ ^ 0 ].
 	candidate = token ifTrue: [ ^ 0 ].
 
 	candidate := aBoolean
@@ -120,6 +126,14 @@ CoToleranceFilter class >> scoreForCandidate: aCandidateString token: aTokenStri
 
 { #category : 'algorithms' }
 CoToleranceFilter class >> shouldTryFuzzyFor: token candidate: candidate tolerance: aTolerance [ 
+	"I return false if : 	* Tolerance is disabled
+							 	* The Token or the candidate is empty
+								* The token size does not exceeed the minimum token length
+								* Thee keyword arity is not stable
+								* The first caracter of the candidate and the token does not match
+								* The maximum allowed edits exceed the difference between the token and the candidate
+	 Otherwise I return true
+	"
 
 	| maxSize maxEdits |
 	(self enabled not or: [ aTolerance <= 0.0 ]) ifTrue: [ ^ false ].
