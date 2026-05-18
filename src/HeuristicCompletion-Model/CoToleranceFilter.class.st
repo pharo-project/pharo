@@ -27,7 +27,7 @@ CoToleranceFilter class >> defaultMinimumTokenSize [
 { #category : 'default values' }
 CoToleranceFilter class >> defaultRate [
 
-	^ 0.75
+	^ 0.70
 
 	
 ]
@@ -211,7 +211,7 @@ CoToleranceFilter >> decoree: aFilter [
 { #category : 'testing' }
 CoToleranceFilter >> fuzzyAccepts: aCandidate [
 
-	^ (self fuzzyScoreFor: aCandidate) isZero not
+	^ (self fuzzyScoreFor: aCandidate) > self class rate 
 ]
 
 { #category : 'testing' }
