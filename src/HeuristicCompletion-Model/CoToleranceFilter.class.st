@@ -95,7 +95,7 @@ CoToleranceFilter class >> scoreForCandidate: aCandidateString token: aTokenStri
 	"Returns 1 if the candidate matches the token 
 	 Returns 0 if  * the candidate and the token don't start with the same caracter 
 						* Token or the candidate is empty
-						* The candidate start exactly with the token
+						* The candidate starts exactly with the token
 						* The tolerance is not enabled, or the token size does not exceed the minimum size
 						* The keyword arity is not stable
 	"
@@ -107,8 +107,7 @@ CoToleranceFilter class >> scoreForCandidate: aCandidateString token: aTokenStri
 
 	candidate := aBoolean
 		ifTrue: [ candidate ]
-		ifFalse: [ candidate asLowercase ]
-		.
+		ifFalse: [ candidate asLowercase ].
 	token := aBoolean
 		ifTrue: [ token ]
 		ifFalse: [ token asLowercase ].
@@ -116,8 +115,7 @@ CoToleranceFilter class >> scoreForCandidate: aCandidateString token: aTokenStri
 	(candidate beginsWith: token) ifTrue: [ ^ 0 ].
 	(self shouldTryFuzzyFor: token candidate: candidate ) ifFalse: [ ^ 0 ].
 
-
-	^ distance := AIJaroWinklerDistance new distanceBetween: token and: candidate.
+	^ distance := AIJaroWinklerDistance new distanceBetween: token and: candidate
 ]
 
 { #category : 'algorithms' }
@@ -204,7 +202,7 @@ CoToleranceFilter >> decoree: aFilter [
 { #category : 'testing' }
 CoToleranceFilter >> fuzzyAccepts: aCandidate [
 
-	^ (self fuzzyScoreFor: aCandidate) > self class rate 
+	^ (self fuzzyScoreFor: aCandidate) > Rate
 ]
 
 { #category : 'testing' }

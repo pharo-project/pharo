@@ -44,16 +44,16 @@ CoToleranceFilterTest >> testComplementResults [
 	
 	"the token ""Authe"" 
 		matches exactly : AuthenticationService and  AuthentificationManager
-	 	matches partially AuthService, 
+	 	matches partially AuthService, AuthorizationService
 		does not match DependencyInjector, ConfigurationLoader and ConfigurationManager
-		does not match AuthorizationService because it exceeds maxEdits, 20 -5 = 15 > 0.7 * 20 = 14
 	"
 	
 	results := filter complementResults: candidates.
 	self assert: results first equals: 'AuthenticationService'. 
 	self assert: results second equals: 'AuthentificationManager'. 
-	self assert: (results includes: ('AuthService')).
-	self deny: (results includes: ('AuthorizationService', 'DependencyInjector', 'ConfigurationLoader'))
+	self assert: (results includes: 'AuthService').
+	{'DependencyInjector' . 'ConfigurationLoader'}
+		do: [ :e | self deny: (results includes: e)]
 	 
 ]
 
@@ -83,6 +83,8 @@ CoToleranceFilterTest >> testFuzzyScoreForWhenCandidateIsEmpty [
 
 { #category : 'running' }
 CoToleranceFilterTest >> testFuzzyScoreForWhenCandidateStartExactlyWithToken [
+	"When there is an exact match, the fuzzy score is null."
+	
 	filter decoree completionString: 'Database'.
 	self assert: (filter fuzzyScoreFor: 'DatabaseConnection') equals: 0
 ]
@@ -98,6 +100,12 @@ CoToleranceFilterTest >> testFuzzyScoreForWhenKeywordArityIsChanged [
 CoToleranceFilterTest >> testFuzzyScoreForWhenTokenAndCandidateAreDifferent [
 	filter decoree completionString: 'core'.
 	self assert: (filter fuzzyScoreFor: 'database') equals: 0
+]
+
+{ #category : 'running' }
+CoToleranceFilterTest >> testFuzzyScoreForWhenTokenContainsTypo [
+	filter decoree completionString: 'Datebase'.
+	self assert: (filter fuzzyScoreFor: 'DatabaseConnection') > CoToleranceFilter rate
 ]
 
 { #category : 'running' }
