@@ -42,7 +42,7 @@ ReRenameClassDriver >> browseMethods [
 	references := refactoring violations.
 	(Smalltalk tools toolNamed: #messageList)
 		browse: (references collect: [ :ref | ref origin realClass lookupSelector: ref selector ])
-		title: 'Methods containing references to a shared var that will shadow class reference after renaming'
+		title: 'Methods containing references to a shared var that will shadow class reference after renaming' from: self class
 ]
 
 { #category : 'execution' }

@@ -41,6 +41,7 @@ ReRenameMethodDriver >> browseOverrides [
 	(Smalltalk tools toolNamed: #messageList)
 		browse: (overrides collect: [ :ref | ref realClass lookupSelector: newMessage selector ])
 		asImplementorsOf: newMessage selector
+		from: self class
 ]
 
 { #category : 'private - testing' }

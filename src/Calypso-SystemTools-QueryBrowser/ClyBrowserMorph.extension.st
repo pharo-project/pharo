@@ -49,7 +49,7 @@ ClyBrowserMorph >> browseReferencesTo: aSymbol inNameResolver: anEnvironment [
 { #category : '*Calypso-SystemTools-QueryBrowser' }
 ClyBrowserMorph >> browseSendersOf: aSymbol [
 
-	(Smalltalk tools toolNamed: #messageList) browseSendersOf: aSymbol 
+	(Smalltalk tools toolNamed: #messageList) browseSendersOf: aSymbol from: self class 
 ]
 
 { #category : '*Calypso-SystemTools-QueryBrowser' }
@@ -62,7 +62,7 @@ ClyBrowserMorph >> browseUppercasedReferencesTo: aSymbol inNameRespolver: anEnvi
 			^ (envBinding value isClass and: [ envBinding value isPool ])
 				  ifTrue: [
 						  {
-							  ((Smalltalk tools toolNamed: #messageList) browseUsersOfSharedPool: envBinding).
+							  ((Smalltalk tools toolNamed: #messageList) browseUsersOfSharedPool: envBinding value).
 							  #SendersWithEnvironment } ]
 				  ifFalse: [
 						  {

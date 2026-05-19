@@ -83,14 +83,15 @@ RePullUpMethodDriver >> browseOverrides [
 
 { #category : 'actions' }
 RePullUpMethodDriver >> browseSuperSendsSent [
+
 	| overrides |
 	overrides := notSupersendsSent violators.
-	
-	methods do: [:method | 
-		(Smalltalk tools toolNamed: #messageList)
-		browse: (overrides collect: [ :ref | ref compiledMethod ])
-		asImplementorsOf: method selector ]
-	
+
+	methods do: [ :method |
+			(Smalltalk tools toolNamed: #messageList)
+				browse: (overrides collect: [ :ref | ref compiledMethod ])
+				asImplementorsOf: method selector
+				from: self class ]
 ]
 
 { #category : 'execution' }
