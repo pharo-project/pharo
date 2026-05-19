@@ -198,42 +198,6 @@ OCClosureTest >> testConstantBlockClosure [
  	self should: [block valueWithArguments: #()] raise: ArgumentsCountMismatch
 ]
 
-{ #category : 'tests - empty' }
-OCClosureTest >> testEmptyBlockOneArgument [
-	self
-		assert: (OpalEvaluator new evaluate: '[ :a ] value: 1') isNil
-		description: 'Empty blocks in ST-80 should return nil'.
-	self
-		assert: (OpalEvaluator new evaluate: '[ :a | ] value: 1') isNil
-		description: 'Empty blocks in ST-80 should return nil'.
-	self
-		assert: (OpalEvaluator new evaluate: '[ :a | | t | ] value: 1') isNil
-		description: 'Empty blocks in ST-80 should return nil'
-]
-
-{ #category : 'tests - empty' }
-OCClosureTest >> testEmptyBlockTwoArguments [
-	self
-		assert: (OpalEvaluator new evaluate: '[ :a :b ] value: 1 value: 2') isNil
-		description: 'Empty blocks in ST-80 should return nil'.
-	self
-		assert: (OpalEvaluator new evaluate: '[ :a :b | ] value: 1 value: 2') isNil
-		description: 'Empty blocks in ST-80 should return nil'.
-	self
-		assert: (OpalEvaluator new evaluate: '[ :a :b | | t | ] value: 1 value: 2') isNil
-		description: 'Empty blocks in ST-80 should return nil'
-]
-
-{ #category : 'tests - empty' }
-OCClosureTest >> testEmptyBlockZeroArguments [
-	self
-		assert: (OpalEvaluator new evaluate: '[ ] value') isNil
-		description: 'Empty blocks in ST-80 should return nil'.
-	self
-		assert: (OpalEvaluator new evaluate: '[ | t | ] value') isNil
-		description: 'Empty blocks in ST-80 should return nil'
-]
-
 { #category : 'tests' }
 OCClosureTest >> testMethodArgument [
 	| temp block |

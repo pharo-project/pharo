@@ -19,6 +19,12 @@ OCScannerTest >> scannerClass [
 	^ OCScanner
 ]
 
+{ #category : 'tests - Error' }
+OCScannerTest >> testAmbiguousSelector [
+
+	self assert: ((OCParser parseLiterals: '1@-1') at: 2) asString equals: '@-'
+]
+
 { #category : 'tests - Comment' }
 OCScannerTest >> testCommentTokenHasTheRightValue [
 	| scanner token |

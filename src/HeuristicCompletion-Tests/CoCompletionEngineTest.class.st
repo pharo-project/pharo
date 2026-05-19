@@ -1,6 +1,9 @@
 Class {
 	#name : 'CoCompletionEngineTest',
 	#superclass : 'CompletionEngineTest',
+	#instVars : [
+    'rate'
+	],
 	#category : 'HeuristicCompletion-Tests-Core',
 	#package : 'HeuristicCompletion-Tests',
 	#tag : 'Core'
@@ -17,15 +20,21 @@ CoCompletionEngineTest >> hasBindingOf: aSymbol [
 	^ false
 ]
 
-{ #category : 'running' }
-CoCompletionEngineTest >> setUp [
+{ #category : 'tests' }
+CoCompletionEngineTest >> setUp [ 
+
 	super setUp.
-	 
-	editor := RubSmalltalkEditor forTextArea: RubEditingArea new beForSmalltalkCode.
-	interactionEngine := self newCompletionEngine.
-	interactionEngine setEditor: editor.
-	editor completionEngine: interactionEngine.
-	editor textArea model: self
+  
+  rate := CoToleranceFilter rate.
+	CoToleranceFilter disable.
+]
+
+{ #category : 'tests' }
+CoCompletionEngineTest >> tearDown [ 
+
+  CoToleranceFilter rate: rate. 
+	super tearDown.
+
 ]
 
 { #category : 'tests - interaction' }

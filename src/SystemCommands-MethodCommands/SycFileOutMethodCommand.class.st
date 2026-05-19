@@ -11,7 +11,6 @@ Class {
 { #category : 'executing' }
 SycFileOutMethodCommand >> applyCommandResult [
 
-	
 	| fileRef dialog ok |
 	StSaveFilePresenter new
 		defaultFolder: FileLocator workingDirectory;
@@ -21,18 +20,16 @@ SycFileOutMethodCommand >> applyCommandResult [
 				fileRef := fileReference.
 				fileouter := Fileouter new.
 				self methods do: [ :each | fileouter addMethod: each ].
-				fileouter fileoutOnFileReference: fileReference.
-				];
+				fileouter fileoutOnFileReference: fileReference ];
 		openModal.
 	dialog := SpConfirmDialog new.
 	ok := dialog
 		      title: 'Do you want to browse natively the fileout?';
-		      label: 'Are you sure?';
+		      message: 'Are you sure?';
 		      acceptLabel: 'Sure!';
 		      cancelLabel: 'No, forget it';
 		      openModal.
-	ok ifTrue: [ fileRef openInOSFileBrowser ]	
-	
+	ok ifTrue: [ fileRef openInOSFileBrowser ]
 ]
 
 { #category : 'accessing' }

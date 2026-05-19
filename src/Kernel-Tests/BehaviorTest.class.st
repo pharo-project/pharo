@@ -16,6 +16,18 @@ BehaviorTest >> classToBeTested [
 ]
 
 { #category : 'tests' }
+BehaviorTest >> method1 [
+
+	^ self subclassResponsibility
+]
+
+{ #category : 'tests' }
+BehaviorTest >> method2 [
+
+	^ 123
+]
+
+{ #category : 'tests' }
 BehaviorTest >> sampleMessageWithFirstArgument: firstArgument "This is a comment intended to explain arg1"
    andInterleavedCommentBeforeSecondArgument: secondArgument [
 
@@ -100,6 +112,22 @@ BehaviorTest >> testBinding [
 	"returns nil for Metaclasses... like Encoder>>#associationFor:"
 
 	self assert: Object class binding key isNil
+]
+
+{ #category : 'tests' }
+BehaviorTest >> testCanPerform [
+
+	self deny: (self class canPerform: #method1).
+	self assert: (self class canPerform: #method2).
+	self deny: (self class canPerform: #method3)
+]
+
+{ #category : 'tests' }
+BehaviorTest >> testCanUnderstand [
+
+	self assert: (self class canUnderstand: #method1).
+	self assert: (self class canUnderstand: #method2).
+	self deny: (self class canUnderstand: #method3)
 ]
 
 { #category : 'tests - instance names' }

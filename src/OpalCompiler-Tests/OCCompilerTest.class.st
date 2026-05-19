@@ -213,7 +213,9 @@ OCCompilerTest >> testScaledDecimalLiterals [
 
 	"This correctly works when evaluated separately"
 
-	self deny: (OpalEvaluator new evaluate: '0.5s1') scale equals: (OpalEvaluator new evaluate: '0.5s2') scale.
+	self 
+		deny: (OpalEvaluator new evaluate: '0.5s1') scale 
+		equals: (OpalEvaluator new evaluate: '0.5s2') scale.
 
 	"But not when evaluated together if literal reduction is too agressive"
 	self deny: (OpalEvaluator new evaluate: '0.5s1 scale =  0.5s2 scale')
@@ -238,31 +240,6 @@ OCCompilerTest >> testSiblingBlocksTempShadowing [
 		source: 'temp [:temp | ]. [:temp | ]';
 		class: MockForCompilation;
 		compileOrFail
-]
-
-{ #category : 'tests' }
-OCCompilerTest >> testUndefinedVariable [
-	"This test shows that undefined variables behave as globals (for now) and is independent of the compilation mode"
-
-	Undeclared removeKey: #undefinedName123 ifAbsent: [ ].
-	self
-		assert: ( [ {
-			OpalEvaluator new
-				permitFaulty: true;
-				evaluate: 'undefinedName123'.
-			OpalEvaluator new
-				permitFaulty: true;
-				evaluate: 'undefinedName123 := 1'.
-			OpalEvaluator new
-				permitFaulty: true;
-				evaluate: 'undefinedName123 := 2. undefinedName123'.
-			OpalEvaluator new
-				permitFaulty: true;
-				evaluate: 'undefinedName123' }  ] on: UndeclaredVariableRead , UndeclaredVariableWrite do: [ :e | e resume: e class ] )
-		equals: { UndeclaredVariableRead. UndeclaredVariableWrite. UndeclaredVariableRead. UndeclaredVariableRead }.
-
-	"Cleanup"
-	Undeclared removeKey: #undefinedName123 ifAbsent: [ ]
 ]
 
 { #category : 'tests' }

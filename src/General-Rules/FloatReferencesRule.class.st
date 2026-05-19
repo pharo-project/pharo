@@ -1,5 +1,5 @@
 "
-The rule detects if any Float system classes are refferenced by an AST
+The rule detects if any Float system classes are referenced in source code.
 "
 Class {
 	#name : 'FloatReferencesRule',

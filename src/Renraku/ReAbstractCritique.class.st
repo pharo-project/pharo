@@ -54,10 +54,11 @@ ReAbstractCritique class >> for: anEntity by: aRule [
 { #category : 'class initialization' }
 ReAbstractCritique class >> initialize [
 
+	"hardcoding the colors is a 'Bad Idea' Tm (SD) we should somehow refer to the theme or syntax highligther"
 	SeverityColors := Dictionary new.
-	SeverityColors at: 'error' put: Color red.
-	SeverityColors at: 'warning' put: Color yellow.
-	SeverityColors at: 'information' put: Color blue
+	SeverityColors at: 'error' put: (Color red alpha: 0.15).
+	SeverityColors at: 'warning' put: (Color yellow alpha: 0.15).
+	SeverityColors at: 'information' put: (Color blue alpha: 0.15)
 ]
 
 { #category : 'testing' }
@@ -142,7 +143,7 @@ ReAbstractCritique >> change [
 { #category : 'accessing' }
 ReAbstractCritique >> color [
 
-	^ SeverityColors at: rule severity ifAbsent: [ Color black alpha: 0.1 ]
+	^ SeverityColors at: rule severity ifAbsent: [ super color alpha: 0.1 ]
 ]
 
 { #category : 'accessing' }

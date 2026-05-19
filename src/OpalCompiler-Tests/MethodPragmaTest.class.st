@@ -184,7 +184,7 @@ MethodPragmaTest >> testAllNamedInSortedUsing [
 	self assert: pragmasDetected equals: (pragmasCompiled sort: [ :a :b | (a argumentAt: 1) > (b argumentAt: 1) ])
 ]
 
-{ #category : 'tests' }
+{ #category : 'tests - pragma instance' }
 MethodPragmaTest >> testArgumentAt [
 	| pragma |
 	pragma := Pragma selector: #value:value:value: arguments: #(3 2 1).
@@ -322,7 +322,7 @@ MethodPragmaTest >> testMethodSelector [
 	self assert: pragma methodSelector identicalTo: #bar
 ]
 
-{ #category : 'tests' }
+{ #category : 'tests - pragma instance' }
 MethodPragmaTest >> testNumArgs [
 	| pragma |
 	pragma := Pragma selector: #value arguments: #().
@@ -395,7 +395,7 @@ MethodPragmaTest >> testSelector [
 	self assert: pragma selector equals: #foo:
 ]
 
-{ #category : 'tests' }
+{ #category : 'tests - pragma instance' }
 MethodPragmaTest >> testSendTo [
 	| pragma wasHere |
 	pragma := Pragma selector: #value:value: arguments: #(1 2).
@@ -431,7 +431,7 @@ MethodPragmaTest >> testSourceNode [
 	self deny: node1 identicalTo: node2
 ]
 
-{ #category : 'tests' }
+{ #category : 'tests - pragma instance' }
 MethodPragmaTest >> testWithArgumentsDo [
 	| pragma wasHere |
 	pragma := Pragma selector: #add:after: arguments: #(1 2).

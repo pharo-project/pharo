@@ -27,5 +27,5 @@ Package >> packageComment: aDescription [
 Package >> packageManifest [
 
 	self definedClassesDo: [ :class | class isManifest ifTrue: [ ^ class ] ].
-	TheManifestBuilder new createManifestNamed: self name
+	^ TheManifestBuilder new createManifestNamed: self name
 ]

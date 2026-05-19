@@ -52,7 +52,7 @@ OverridesDeprecatedMethodRuleTest >> testBasicCheck1 [
 	testMethod := testSubclass >> (testSubclass compile: self methodName , '1').
 	self assert: testMethod overriddenMethods isEmpty description: 'No overridden methods'.
 	"the method does not override methods of the superclass"
-	self assertEmpty: (OverridesDeprecatedMethodRule new check: testMethod) description: 'Rule failed to detect violation'
+	self assertEmpty: (OverridesDeprecatedMethodRule new check: testMethod)
 ]
 
 { #category : 'tests' }

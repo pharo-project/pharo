@@ -345,7 +345,7 @@ InstructionStream >> scanFor: scanBlock [
 	^false
 ]
 
-{ #category : 'interpreting' }
+{ #category : 'should be packaged in sindarin' }
 InstructionStream >> willCreateBlock [
 	"next bytecode is a block creation"
 
@@ -353,7 +353,7 @@ InstructionStream >> willCreateBlock [
 		[ self method encoderClass isCreateFullBlockAt: pc in: self method]
 ]
 
-{ #category : 'interpreting' }
+{ #category : 'should be packaged in sindarin' }
 InstructionStream >> willJump [
 	"Answer whether the next bytecode will jump."
 
@@ -367,25 +367,41 @@ InstructionStream >> willJumpIfFalse [
 	^ self method encoderClass isBranchIfFalseAt: pc in: self method
 ]
 
-{ #category : 'interpreting' }
+{ #category : 'should be packaged in sindarin' }
 InstructionStream >> willJumpIfTrue [
 	"Answer whether the next bytecode is a jump-if-false."
 
 	^ self method encoderClass isBranchIfTrueAt: pc in: self method
 ]
 
-{ #category : 'interpreting' }
+{ #category : 'should be packaged in sindarin' }
 InstructionStream >> willJumpTo [
 	"Answer whether the next bytecode is a jump-if-false."
 
 	^ self method encoderClass isJumpAt: pc in: self method
 ]
 
-{ #category : 'interpreting' }
+{ #category : 'should be packaged in sindarin' }
+InstructionStream >> willReturn [
+	"Answer whether the next bytecode is a return."
+
+	^ self method encoderClass isReturnAt: pc in: self method
+]
+
+{ #category : 'should be packaged in sindarin' }
 InstructionStream >> willSend [
 	"Answer whether the next bytecode is a message-send."
 
 	^ self method encoderClass isSendAt: pc in: self method
+]
+
+{ #category : 'should be packaged in sindarin' }
+InstructionStream >> willSendOrReturnOrStoreOrCreateBlock [
+
+	"Answer whether the next bytecode will be interesting for the debugger to stop."
+
+	^ self willSend or: [ 
+		  self willReturn or: [ self willStore or: [ self willCreateBlock ] ] ]
 ]
 
 { #category : 'interpreting' }
@@ -393,4 +409,14 @@ InstructionStream >> willStore [
 	"Answer whether the next bytecode is a store or store-pop"
 
 	^ self method encoderClass isStoreAt: pc in: self method
+]
+
+{ #category : 'should be packaged in sindarin' }
+InstructionStream >> willStoreButNotPop [
+	"Answer whether the next bytecode is a store that are not store-pop"
+
+	| encoderClass byte |
+	encoderClass := self method encoderClass.
+	byte := encoderClass nonExtensionBytecodeAt: pc in: self method.
+	^ #( 243 244 245 252 ) includes: byte
 ]

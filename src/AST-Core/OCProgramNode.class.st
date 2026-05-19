@@ -1285,9 +1285,12 @@ OCProgramNode >> sourceCode [
 	interval := self sourceInterval.
 	interval ifEmpty: [ ^ '' ].
 
-	^ self source
-		copyFrom: interval first
-		to: interval last
+	^ self source 
+		ifNotNil: [ :s |
+			s
+			copyFrom: interval first
+			to: interval last]
+		ifNil: [ '' ]
 ]
 
 { #category : 'accessing' }

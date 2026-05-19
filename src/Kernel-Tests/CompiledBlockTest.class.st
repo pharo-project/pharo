@@ -43,3 +43,14 @@ CompiledBlockTest >> testPcInOuter [
 	"we should find different pcs for the blocks in the outer method"
 	self deny: compiledBlocks first pcInOuter equals: compiledBlocks second pcInOuter
 ]
+
+{ #category : 'tests' }
+CompiledBlockTest >> wrongHeightlightSingleValue [
+
+	| value |
+	value := 0.
+	"Do not use #to:do: because it is optimized and will prevent us of testing the behavior we want."
+	(1 to: 10) do: [self assert: value equals: 0].
+	value := 1.
+	(1 to: 10) do: [self assert: value equals: 0].
+]

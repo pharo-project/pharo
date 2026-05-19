@@ -1349,6 +1349,16 @@ OCParserTest >> testParseGivesMethod [
 	self assert: tree isMethod
 ]
 
+{ #category : 'tests - Pragma' }
+OCParserTest >> testParseIsPrimitive [
+
+	| aRBMethod |
+	aRBMethod := OpalCompiler new parse: 'methodPrimitive
+	
+	<primitive: 4>'.
+	self assert: aRBMethod isPrimitive
+]
+
 { #category : 'tests' }
 OCParserTest >> testParseLiterals [
 

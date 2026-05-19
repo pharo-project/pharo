@@ -1,26 +1,10 @@
 Class {
 	#name : 'FBIRBytecodeDecompilerTest',
 	#superclass : 'TestCase',
-	#instVars : [
-		'currentCompiler'
-	],
 	#category : 'Flashback-Decompiler-Tests-Bytecode',
 	#package : 'Flashback-Decompiler-Tests',
 	#tag : 'Bytecode'
 }
-
-{ #category : 'running' }
-FBIRBytecodeDecompilerTest >> setUp [
-	super setUp.
-	currentCompiler := SmalltalkImage compilerClass.
-	SmalltalkImage compilerClass: OpalCompiler
-]
-
-{ #category : 'running' }
-FBIRBytecodeDecompilerTest >> tearDown [
-	SmalltalkImage compilerClass: currentCompiler.
-	super tearDown
-]
 
 { #category : 'tests' }
 FBIRBytecodeDecompilerTest >> testBugOffset [
