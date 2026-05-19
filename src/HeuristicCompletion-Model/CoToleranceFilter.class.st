@@ -91,16 +91,15 @@ CoToleranceFilter class >> reset [
 ]
 
 { #category : 'algorithms' }
-CoToleranceFilter class >> scoreForCandidate: aCandidateString token: aTokenString caseSensitive: aBoolean tolerance: aTolerance [
+CoToleranceFilter class >> scoreForCandidate: aCandidateString token: aTokenString caseSensitive: aBoolean [
 	"Returns 1 if the candidate matches the token 
 	 Returns 0 if  * the candidate and the token don't start with the same caracter 
 						* Token or the candidate is empty
 						* The candidate start exactly with the token
 						* The tolerance is not enabled, or the token size does not exceed the minimum size
 						* The keyword arity is not stable
-						* The maximum allowed edits, calculated from the Tolerance, exceeed the difference between the candidate and token lengths
 	"
-	| candidate token maxSize maxEdits distance |
+	| candidate token distance |
 	candidate := aCandidateString asString.
 	token := aTokenString asString.
 
@@ -115,28 +114,23 @@ CoToleranceFilter class >> scoreForCandidate: aCandidateString token: aTokenStri
 		ifFalse: [ token asLowercase ].
 
 	(candidate beginsWith: token) ifTrue: [ ^ 0 ].
-	(self shouldTryFuzzyFor: token candidate: candidate tolerance: aTolerance) ifFalse: [ ^ 0 ].
+	(self shouldTryFuzzyFor: token candidate: candidate ) ifFalse: [ ^ 0 ].
 
-	maxSize := token size max: candidate size.
-	maxEdits := (aTolerance * maxSize) ceiling.
-	maxEdits <= 0 ifTrue: [ ^ 0 ].
 
 	^ distance := AIJaroWinklerDistance new distanceBetween: token and: candidate.
 ]
 
 { #category : 'algorithms' }
-CoToleranceFilter class >> shouldTryFuzzyFor: token candidate: candidate tolerance: aTolerance [ 
+CoToleranceFilter class >> shouldTryFuzzyFor: token candidate: candidate [
 	"I return false if : 	* Tolerance is disabled
 							 	* The Token or the candidate is empty
 								* The token size does not exceeed the minimum token length
 								* Thee keyword arity is not stable
 								* The first caracter of the candidate and the token does not match
-								* The maximum allowed edits exceed the difference between the token and the candidate
 	 Otherwise I return true
 	"
 
-	| maxSize maxEdits |
-	(self enabled not or: [ aTolerance <= 0.0 ]) ifTrue: [ ^ false ].
+	(self enabled not or: [ self rate <= 0.0 ]) ifTrue: [ ^ false ].
 	token isEmpty ifTrue: [ ^ false ].
 	candidate isEmpty ifTrue: [ ^ false ].
 	token size < self minimumTokenSize ifTrue: [ ^ false ].
@@ -148,9 +142,8 @@ CoToleranceFilter class >> shouldTryFuzzyFor: token candidate: candidate toleran
 
 	"Cheap guardrails to avoid noisy matches"
 	token first = candidate first ifFalse: [ ^ false ].
-	maxSize := token size max: candidate size.
-	maxEdits := (aTolerance * maxSize) ceiling.
-	^ (token size - candidate size) abs <= maxEdits
+	
+	^ true
 ]
 
 { #category : 'testing' }
@@ -220,7 +213,6 @@ CoToleranceFilter >> fuzzyScoreFor: aCandidate [
 	^ self class scoreForCandidate: aCandidate contents
 		token: decoree completionString
 		caseSensitive: (decoree class = CoCaseSensitiveBeginsWithFilter)
-		tolerance: Rate
 
 ]
 

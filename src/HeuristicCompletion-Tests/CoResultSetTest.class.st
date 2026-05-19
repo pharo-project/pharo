@@ -92,7 +92,7 @@ CoResultSetTest >> testFetchFuzzyMatches [
 			completionClass: self completionClass superclass).
 	c filter: (CoBeginsWithFilter caseSensitive: true filterString: 'SprC').
 	
-	result := (c fetchAll) results. 
+	result := (c fetch: 4) results. 
 	
 	
 	expected := OrderedCollection new 
