@@ -2,7 +2,8 @@ Class {
 	#name : 'CoResultSetTest',
 	#superclass : 'CoBasicCompletionTest',
 	#instVars : [
-		'completion'
+		'completion',
+		'expected'
 	],
 	#category : 'HeuristicCompletion-Tests-Core',
 	#package : 'HeuristicCompletion-Tests',
@@ -80,6 +81,29 @@ CoResultSetTest >> testCompletionWithNoElementsToFetchShouldNotHaveMore [
 CoResultSetTest >> testEnumerateShouldFetch [
 
 	self assertEntry: completion first equals: (CoInstVarEntry contents: 'a' node: nil)
+]
+
+{ #category : 'tests' }
+CoResultSetTest >> testFetchFuzzyMatches [ 
+	| c rate result |
+	rate := CoToleranceFilter rate. 
+	CoToleranceFilter enable.
+	c := CoResultSet fetcher: (CoClassVariableFetcher new
+			completionClass: self completionClass superclass).
+	c filter: (CoBeginsWithFilter caseSensitive: true filterString: 'SprC').
+	
+	result := (c fetchAll) results. 
+	
+	
+	expected := OrderedCollection new 
+						add: (CoClassVarEntry new contents: 'SuperCa'); 
+						add: (CoClassVarEntry new contents: 'SuperCb'); 
+						add: (CoClassVarEntry new contents: 'SuperCc'); yourself.
+						
+	1 to: result size do: [ :index | self assertEntry: (result at: index) equals: (expected at: index)].
+	
+	CoToleranceFilter rate: rate .
+	
 ]
 
 { #category : 'tests' }
