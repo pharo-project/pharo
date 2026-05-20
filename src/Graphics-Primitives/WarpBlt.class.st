@@ -135,18 +135,23 @@ WarpBlt >> deltaFrom: x1 to: x2 nSteps: n [
 			0 - ((x1 - x2 + fixedPtOne) // (n + 1) + 1) ]
 ]
 
-{ #category : 'smoothing' }
+{ #category : 'primitives' }
 WarpBlt >> mixPix: pix sourceMap: sourceMap destMap: destMap [
 	"Average the pixels in array pix to produce a destination pixel.
 	First average the RGB values either from the pixels directly,
 	or as supplied in the sourceMap.  Then return either the resulting
 	RGB value directly, or use it to index the destination color map."
 
-	| r g b rgb nPix bitsPerColor d |
+	"To see the impact of code modification on this method, 
+	comment the primitive pragma on method warpBitsSmoothing: n sourceMap: sourceMap and execute Color red inspect. 
+	you should get a color rectangle"
+
+	| r g b rgb nPix bitsPerColor d a |
 	nPix := pix size.
 	r := 0.
 	g := 0.
 	b := 0.
+	a := 0.
 	1 to: nPix do: [ :i |
 		"Sum R, G, B values for each pixel"
 		rgb := sourceForm depth <= 8
@@ -154,6 +159,7 @@ WarpBlt >> mixPix: pix sourceMap: sourceMap destMap: destMap [
 			ifFalse: [ sourceForm depth = 32
 					ifTrue: [ pix at: i ]
 					ifFalse: [ self rgbMap: (pix at: i) from: 5 to: 8 ] ].
+		a := a + ((rgb bitShift: -24) bitAnd: 255).
 		r := r + ((rgb bitShift: -16) bitAnd: 255).
 		g := g + ((rgb bitShift: -8) bitAnd: 255).
 		b := b + ((rgb bitShift: 0) bitAnd: 255) ].
@@ -165,7 +171,13 @@ WarpBlt >> mixPix: pix sourceMap: sourceMap destMap: destMap [
 			destMap size = 4096 ifTrue: [ bitsPerColor := 4 ].
 			destMap size = 32768 ifTrue: [ bitsPerColor := 5 ] ].
 	d := bitsPerColor - 8.
-	rgb := ((r // nPix bitShift: d) bitShift: bitsPerColor * 2) + ((g // nPix bitShift: d) bitShift: bitsPerColor) + ((b // nPix bitShift: d) bitShift: 0).
+	
+	rgb := 
+		((a // nPix bitShift: d) bitShift: bitsPerColor * 3)
+		+ ((r // nPix bitShift: d) bitShift: bitsPerColor * 2) 
+		+ ((g // nPix bitShift: d) bitShift: bitsPerColor) 
+		+ ((b // nPix bitShift: d) bitShift: 0).
+		
 	^ destMap
 		ifNil: [ rgb ]
 		ifNotNil: [ destMap at: rgb + 1 ]
@@ -264,6 +276,7 @@ WarpBlt >> warpBits [
 WarpBlt >> warpBitsSmoothing: n sourceMap: sourceMap [
 	| deltaP12 deltaP43 pA pB deltaPAB sp fixedPtOne picker poker pix nSteps |
 	<primitive: 'primitiveWarpBits' module: 'BitBltPlugin'>
+	
 	(sourceForm isForm and:
 		[ "Check for compressed source, destination or halftone forms"
 		sourceForm unhibernate ]) ifTrue:

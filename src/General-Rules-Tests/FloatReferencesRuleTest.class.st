@@ -1,9 +1,6 @@
 Class {
 	#name : 'FloatReferencesRuleTest',
 	#superclass : 'TestCase',
-	#instVars : [
-		'testClass'
-	],
 	#category : 'General-Rules-Tests-Bugs',
 	#package : 'General-Rules-Tests',
 	#tag : 'Bugs'
