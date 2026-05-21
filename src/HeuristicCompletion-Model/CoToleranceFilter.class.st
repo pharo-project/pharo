@@ -27,7 +27,7 @@ CoToleranceFilter class >> defaultMinimumTokenSize [
 { #category : 'default values' }
 CoToleranceFilter class >> defaultRate [
 
-	^ 0.70
+	^ 0.50
 
 	
 ]
@@ -99,7 +99,7 @@ CoToleranceFilter class >> scoreForCandidate: aCandidateString token: aTokenStri
 						* The tolerance is not enabled, or the token size does not exceed the minimum size
 						* The keyword arity is not stable
 	"
-	| candidate token distance |
+	| candidate token jaroDistance damerauLevenshteinDistance normalizedDamerauLevenshtein|
 	candidate := aCandidateString asString.
 	token := aTokenString asString.
 
@@ -115,7 +115,12 @@ CoToleranceFilter class >> scoreForCandidate: aCandidateString token: aTokenStri
 	(candidate beginsWith: token) ifTrue: [ ^ 0 ].
 	(self shouldTryFuzzyFor: token candidate: candidate ) ifFalse: [ ^ 0 ].
 
-	^ distance := AIJaroWinklerDistance new distanceBetween: token and: candidate
+
+	jaroDistance := AIJaroWinklerDistance new distanceBetween: token and: candidate.
+	damerauLevenshteinDistance := AIDamerauLevenshteinDistance new distanceBetween: token and: candidate.
+	
+	normalizedDamerauLevenshtein := 1 - (damerauLevenshteinDistance asFloat / (token size max: candidate size)). 
+	^ (jaroDistance * 0.4) + (normalizedDamerauLevenshtein * 0.6)
 ]
 
 { #category : 'algorithms' }
