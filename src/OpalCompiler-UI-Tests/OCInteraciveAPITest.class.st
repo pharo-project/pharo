@@ -4,8 +4,7 @@ Class {
 	#instVars : [
 		'node',
 		'text',
-		'requestor',
-		'x'
+		'requestor'
 	],
 	#category : 'OpalCompiler-UI-Tests',
 	#package : 'OpalCompiler-UI-Tests'
