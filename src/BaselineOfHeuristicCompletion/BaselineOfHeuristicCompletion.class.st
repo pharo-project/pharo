@@ -34,8 +34,33 @@ BaselineOfHeuristicCompletion >> baseline: spec [
 			spec requires: #('HeuristicCompletion-Benchmarks') 
 		].
 	
+	"Groups"
+		spec group: 'core' with: #(
+    		'HeuristicCompletion-Model'
+    		'HeuristicCompletion-Morphic'
+		).
+
+		spec group: 'data' with: #(
+    		'HeuristicCompletion-Analyser-Data'
+    		'HeuristicCompletion-Analyser-Data2'
+    		'HeuristicCompletion-Analyser-Data3'
+    		'HeuristicCompletion-Analyser-Data4'
+		).
+
+		spec group: 'tests' with: #(
+    		'HeuristicCompletion-Tests'
+    		'HeuristicCompletion-Benchmarks-Tests'
+		).
+
+		spec group: 'benchmarks' with: #(
+    		'HeuristicCompletion-Benchmarks'
+		).
+
 		spec group: 'default' with: #(
-			'HeuristicCompletion-Model'
+    		'core'
+    		'data'
+    		'tests'
+    		'benchmarks'
 		).
 	
 	].
