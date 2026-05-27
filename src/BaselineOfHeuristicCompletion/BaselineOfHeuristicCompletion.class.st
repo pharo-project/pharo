@@ -10,7 +10,7 @@ BaselineOfHeuristicCompletion >> baseline: spec [
 	<baseline>
 	
 	spec for: #common do: [ 
-		spec baseline: 'AIEditDistances' with: [ spec repository: 'github://pharo-ai/edit-distances:main' ].
+		spec baseline: 'AIEditDistances' with: [ spec repository: 'github://pharo-ai/edit-distances:main/src' ].
 		
 		spec package: 'HeuristicCompletion-Model' with: [
             spec requires: #('AIEditDistances') ].
