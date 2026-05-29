@@ -29,7 +29,9 @@ Integer class >> readFrom: aStringOrStream ifFail: aBlock [
 	"(self readFrom: '_1' ifFail: [nil]) >>> nil"
 	"(self readFrom: '1' ifFail: [nil]) >>> 1"
 	"(self readFrom: '\\\' ifFail: [false]) >>> false"
-	
+	"(Integer readFrom: '_1' ifFail: [nil]) >>> nil"
+	"(Integer readFrom: '1' ifFail: [nil]) >>> 1"
+	"(Integer readFrom: '\\\' ifFail: [false]) >>> false"
 	^(NumberParser on: aStringOrStream) nextIntegerBase: 10 ifFail: aBlock
 ]
 
