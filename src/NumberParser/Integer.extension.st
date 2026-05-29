@@ -26,9 +26,9 @@ Integer class >> readFrom: aStringOrStream ifFail: aBlock [
 	Imbedded radix specifiers not allowed;  use Number
 	class readFrom: for that.
 	Execute aBlock if there are no digits."
-	"self readFrom: '_1' ifFail: [nil] >>> nil"
-	"self readFrom: '1' ifFail: [nil] >>> 1"
-	"self readFrom: '\\\' ifFail: [false] >>> false"
+	"(self readFrom: '_1' ifFail: [nil]) >>> nil"
+	"(self readFrom: '1' ifFail: [nil]) >>> 1"
+	"(self readFrom: '\\\' ifFail: [false]) >>> false"
 	
 	^(NumberParser on: aStringOrStream) nextIntegerBase: 10 ifFail: aBlock
 ]
