@@ -314,7 +314,7 @@ NumberParser >> nextIntegerBase: aRadix ifFail: aBlock [
 	"Form an integer with optional sign and following digits from sourceStream."
 
 	| isNeg value |
-	failBlock := [ aBlock value ].
+	failBlock := [ ^ aBlock value ].
 	
 	isNeg := self peekSignIsMinus.
 	value := self nextUnsignedIntegerOrNilBase: aRadix.
