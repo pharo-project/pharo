@@ -50,9 +50,9 @@ TaPrecedenceComposition >> isConflictingSelector: aSelector [
 
 { #category : 'accessing' }
 TaPrecedenceComposition >> memberForSelector: aSelector [
-
 	"I look first in the prefered trait if not in the other member"
-	((preferedTrait selectors includes: aSelector) and: [ (preferedTrait compiledMethodAt: aSelector) isRequired not ]) ifTrue: [ ^ preferedTrait ].
+
+	((preferedTrait includesSelector: aSelector) and: [ (preferedTrait compiledMethodAt: aSelector) isRequired not ]) ifTrue: [ ^ preferedTrait ].
 
 	^ super memberForSelector: aSelector
 ]

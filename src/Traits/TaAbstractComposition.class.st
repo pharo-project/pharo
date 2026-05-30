@@ -262,6 +262,14 @@ TaAbstractComposition >> hash [
 ]
 
 { #category : 'testing' }
+TaAbstractComposition >> includesSelector: aSelector [
+
+	self selectorsDo: [ :selector | selector = aSelector ifTrue: [ ^ true ] ].
+
+	^ false
+]
+
+{ #category : 'testing' }
 TaAbstractComposition >> includesTrait: aTrait [
 	"Checks if the trait is used in the trait composition"
 

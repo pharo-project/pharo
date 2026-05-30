@@ -170,8 +170,8 @@ TaSequence >> memberForSelector: aSelector [
 	I first look for a valid member, if not, I will return the first"
 
 	^ members
-		  detect: [ :member | (member selectors includes: aSelector) and: [ (member compiledMethodAt: aSelector) isRequired not ] ]
-		  ifNone: [ members detect: [ :member | member selectors includes: aSelector ] ]
+		  detect: [ :member | (member includesSelector: aSelector) and: [ (member compiledMethodAt: aSelector) isRequired not ] ]
+		  ifNone: [ members detect: [ :member | member includesSelector: aSelector ] ]
 ]
 
 { #category : 'operations' }
