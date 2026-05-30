@@ -52,7 +52,7 @@ TaRemoveMethod >> removedSelectors: anObject [
 	removedSelectors := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : 'enumerating' }
 TaRemoveMethod >> selectorsDo: aBlock [
 
 	inner selectorsDo: [ :selector | (removedSelectors includes: selector) ifFalse: [ aBlock value: selector ] ]

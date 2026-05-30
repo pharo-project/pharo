@@ -122,7 +122,7 @@ TaEmptyComposition >> reverseAlias: aSelector [
 	^ #()
 ]
 
-{ #category : 'accessing' }
+{ #category : 'enumerating' }
 TaEmptyComposition >> selectorsDo: aBlock [
 	"Noop"
 

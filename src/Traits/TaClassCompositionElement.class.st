@@ -23,7 +23,7 @@ TaClassCompositionElement >> methods [
 		  (innerClassLocalMethods includes: methodSelector) not and: [ traitedClassSelectors anySatisfy: [ :x | x = methodSelector ] ] ]
 ]
 
-{ #category : 'accessing' }
+{ #category : 'enumerating' }
 TaClassCompositionElement >> selectorsDo: aBlock [
 	"As I am representing a ClassTrait I have to filter the methods that are in all the class traits"
 

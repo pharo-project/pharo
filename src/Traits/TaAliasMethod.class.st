@@ -141,7 +141,7 @@ TaAliasMethod >> reverseAlias: aSelector [
 	^ (inner reverseAlias: aSelector) , (aliases associations select: [ :a | a value = aSelector ] thenCollect: #key)
 ]
 
-{ #category : 'accessing' }
+{ #category : 'enumerating' }
 TaAliasMethod >> selectorsDo: aBlock [
 
 	inner selectorsDo: aBlock.

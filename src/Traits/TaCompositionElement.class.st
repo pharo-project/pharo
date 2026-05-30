@@ -163,18 +163,13 @@ TaCompositionElement >> reverseAlias: aSelector [
 	^ #()
 ]
 
-{ #category : 'accessing' }
+{ #category : 'enumerating' }
 TaCompositionElement >> selectorsDo: aBlock [
 	"As I am representing a ClassTrait I have to filter the methods that are in all the class traits"
 
-	| selectorsToExclude block |
-	selectorsToExclude := TraitedClass selectors \ innerClass localSelectors.
-
-	block := [ :selector | aBlock value: (self actualSelector: selector) ].
-	
 	"We do not rely on the methods of the innerclass because while removing a trait we might return the removed methods during the removal and I need to work properly during the method dictionary rebuild"
-	innerClass localSelectors do: block.
-	innerClass traitComposition selectorsDo: block
+	innerClass localSelectors do: [ :selector | aBlock value: (self actualSelector: selector) ].
+	innerClass traitComposition selectorsDo: [ :selector | aBlock value: (self actualSelector: selector) ]
 ]
 
 { #category : 'accessing' }

@@ -249,7 +249,7 @@ TaSequence >> selectorForConflict: selector [
 							space ] ]
 ]
 
-{ #category : 'accessing' }
+{ #category : 'enumerating' }
 TaSequence >> selectorsDo: aBlock [
 
 	members do: [ :member | member selectorsDo: aBlock ]
