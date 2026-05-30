@@ -410,13 +410,9 @@ TaAbstractComposition >> saveSourceCode: sourceCode ofMethod: newMethod [
 
 { #category : 'accessing' }
 TaAbstractComposition >> selectors [
-
-	| set |
-	set := OrderedCollection new: 60.
-	self selectorsDo: [ :selector | set add: selector ].
-	
 	"We return an array because this was the behavior before. Maybe we could directly return the set but that might break some code"
-	^ set removeDuplicates asArray
+
+	^ (OrderedCollection streamContents: [ :stream | self selectorsDo: [ :selector | stream nextPut: selector ] ]) removeDuplicates asArray
 ]
 
 { #category : 'enumerating' }
