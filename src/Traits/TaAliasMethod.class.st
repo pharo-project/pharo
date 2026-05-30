@@ -142,8 +142,10 @@ TaAliasMethod >> reverseAlias: aSelector [
 ]
 
 { #category : 'accessing' }
-TaAliasMethod >> selectors [
-	^ inner selectors , self existingAliasedSelectors.
+TaAliasMethod >> selectorsDo: aBlock [
+
+	inner selectorsDo: aBlock.
+	self existingAliasedSelectors do: aBlock
 ]
 
 { #category : 'accessing' }

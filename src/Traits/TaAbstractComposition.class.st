@@ -402,6 +402,20 @@ TaAbstractComposition >> saveSourceCode: sourceCode ofMethod: newMethod [
 
 { #category : 'accessing' }
 TaAbstractComposition >> selectors [
+
+	| set |
+	set := OrderedCollection new: 60.
+	self selectorsDo: [ :selector | set add: selector ].
+	
+	"We return an array because this was the behavior before. Maybe we could directly return the set but that might break some code"
+	^ set removeDuplicates asArray
+]
+
+{ #category : 'enumerating' }
+TaAbstractComposition >> selectorsDo: aBlock [
+	"Iterate over the selectors of the trait composition. Be careful, we might iterate multiple time on the same selectors if multiple members have the same selector. 
+	If you want to avoid this, use #selectors that filters duplicated selectors."
+
 	self subclassResponsibility
 ]
 

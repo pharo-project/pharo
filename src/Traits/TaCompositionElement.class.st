@@ -27,6 +27,14 @@ TaCompositionElement >> = aTrait [
 		ifFalse: [ ^ false ]
 ]
 
+{ #category : 'accessing' }
+TaCompositionElement >> actualSelector: selector [
+
+	^ selector = #initializeTalent
+		  ifTrue: [ self initializeSelectorForMe ]
+		  ifFalse: [ selector ]
+]
+
 { #category : 'users' }
 TaCompositionElement >> addUser: aClass [
 	"When a user is added to me I propagate to the real Trait, as I am the root of the TraitComposition"
@@ -156,15 +164,17 @@ TaCompositionElement >> reverseAlias: aSelector [
 ]
 
 { #category : 'accessing' }
-TaCompositionElement >> selectors [
-	" I get all the selectors of the methods in this talent, if there is a #initializeTalent selector I rename it to #initializeTalent_NameOfTalent"
+TaCompositionElement >> selectorsDo: aBlock [
+	"As I am representing a ClassTrait I have to filter the methods that are in all the class traits"
 
-	| originals |
+	| selectorsToExclude block |
+	selectorsToExclude := TraitedClass selectors \ innerClass localSelectors.
+
+	block := [ :selector | aBlock value: (self actualSelector: selector) ].
+	
 	"We do not rely on the methods of the innerclass because while removing a trait we might return the removed methods during the removal and I need to work properly during the method dictionary rebuild"
-	originals := innerClass localSelectors , innerClass traitComposition selectors.
-	^ (originals includes: #initializeTalent)
-		  ifTrue: [ (originals reject: [ :e | e = #initializeTalent ]) copyWith: self initializeSelectorForMe ]
-		  ifFalse: [ originals ]
+	innerClass localSelectors do: block.
+	innerClass traitComposition selectorsDo: block
 ]
 
 { #category : 'accessing' }

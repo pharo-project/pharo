@@ -24,16 +24,21 @@ TaClassCompositionElement >> methods [
 ]
 
 { #category : 'accessing' }
-TaClassCompositionElement >> selectors [
+TaClassCompositionElement >> selectorsDo: aBlock [
 	"As I am representing a ClassTrait I have to filter the methods that are in all the class traits"
 
-	| innerClassLocalMethods traitedClassSelectors |
-	innerClassLocalMethods := innerClass localMethods collect: [ :each | each selector ].
-	traitedClassSelectors := TraitedClass selectors.
-	^ super selectors reject: [ :selector |
-		  | methodSelector |
-		  methodSelector := selector.
-		  (innerClassLocalMethods includes: methodSelector) not and: [ traitedClassSelectors anySatisfy: [ :x | x = methodSelector ] ] ]
+	| selectorsToExclude block |
+	selectorsToExclude := TraitedClass selectors \ innerClass localSelectors.
+
+	block := [ :selector |
+		         | actualSelector |
+		         actualSelector := self actualSelector: selector.
+
+		         (selectorsToExclude includes: selector) ifFalse: [ aBlock value: actualSelector ] ].
+	
+	"We do not rely on the methods of the innerclass because while removing a trait we might return the removed methods during the removal and I need to work properly during the method dictionary rebuild"
+	innerClass localSelectors do: block.
+	innerClass traitComposition selectorsDo: block
 ]
 
 { #category : 'accessing' }

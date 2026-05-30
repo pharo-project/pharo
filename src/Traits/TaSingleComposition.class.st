@@ -122,8 +122,9 @@ TaSingleComposition >> reverseAlias: aSelector [
 ]
 
 { #category : 'accessing' }
-TaSingleComposition >> selectors [
-	^ inner selectors
+TaSingleComposition >> selectorsDo: aBlock [
+
+	inner selectorsDo: aBlock
 ]
 
 { #category : 'accessing' }

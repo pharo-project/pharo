@@ -53,8 +53,9 @@ TaRemoveMethod >> removedSelectors: anObject [
 ]
 
 { #category : 'accessing' }
-TaRemoveMethod >> selectors [
-	^ inner selectors reject: [ :selector | removedSelectors includes: selector ]
+TaRemoveMethod >> selectorsDo: aBlock [
+
+	inner selectorsDo: [ :selector | (removedSelectors includes: selector) ifFalse: [ aBlock value: selector ] ]
 ]
 
 { #category : 'printing' }

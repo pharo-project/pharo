@@ -250,9 +250,9 @@ TaSequence >> selectorForConflict: selector [
 ]
 
 { #category : 'accessing' }
-TaSequence >> selectors [
-	"We should really introduce a #removeDuplicates or #withoutDuplicates on Array..."
-	^ (members flatCollect: [ :member | member selectors ] as: Set) asArray
+TaSequence >> selectorsDo: aBlock [
+
+	members do: [ :member | member selectorsDo: aBlock ]
 ]
 
 { #category : 'accessing' }
