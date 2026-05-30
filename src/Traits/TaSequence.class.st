@@ -117,6 +117,13 @@ TaSequence >> copyWithoutTrait: aTrait [
 	^ self class withAll: newMembers
 ]
 
+{ #category : 'accessing' }
+TaSequence >> hasSlots [
+	"Overriding to implement a faster check to speed up trait recompilation."
+
+	^ members anySatisfy: #hasSlots
+]
+
 { #category : 'comparing' }
 TaSequence >> hash [
 	^ self class hash
