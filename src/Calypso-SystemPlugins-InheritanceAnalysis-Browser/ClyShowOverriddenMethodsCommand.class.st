@@ -25,9 +25,3 @@ ClyShowOverriddenMethodsCommand >> defaultMenuIconName [
 ClyShowOverriddenMethodsCommand >> defaultMenuItemName [
 	^'Overridden methods'
 ]
-
-{ #category : 'execution' }
-ClyShowOverriddenMethodsCommand >> selectMethodsIn: aQueryBrowser [
-
-	aQueryBrowser selectIndex: aQueryBrowser numberOfElements
-]

@@ -1432,6 +1432,36 @@ StringTest >> testIsAsciiString [
 	self assert: 'éÀ' isAsciiString equals: false
 ]
 
+{ #category : 'requirements' }
+StringTest >> testIsCapitalizedWhenStringIsEmpty [
+	self deny: '' isCapitalized. 
+]
+
+{ #category : 'requirements' }
+StringTest >> testIsCapitalizedWhenStringStartsWithDigit [
+	self deny: '1foo' isCapitalized. 
+]
+
+{ #category : 'requirements' }
+StringTest >> testIsCapitalizedWhenStringStartsWithLowerCase [
+	self deny: 'foo' isCapitalized. 
+]
+
+{ #category : 'requirements' }
+StringTest >> testIsCapitalizedWhenStringStartsWithSymbol [
+	self deny: '$foo' isCapitalized. 
+]
+
+{ #category : 'requirements' }
+StringTest >> testIsCapitalizedWhenStringStartsWithUpperCase [
+	self assert: 'Foo' isCapitalized. 
+]
+
+{ #category : 'requirements' }
+StringTest >> testIsCapitalizedWhenStringStartsWithWhitespace [
+	self deny: ' foo' isCapitalized. 
+]
+
 { #category : 'tests' }
 StringTest >> testIsLiteralSymbol [
 

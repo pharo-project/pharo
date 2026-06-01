@@ -41,8 +41,8 @@ OCInteractiveAPI >> checkNotice: aNotice requestor: aRequestor [
 			^ true ].
 			
 	"Quirks mode: otherwise, push the error message to the requestor"
-	((aRequestor respondsTo: #interactive)
-		and: [ aRequestor interactive ])
+	((aRequestor respondsTo: #interactive) not
+		or: [ aRequestor interactive ])
 			ifTrue: [
 				(aNotice reparatorFor: self) ifNotNil: [ :reparator |
 					| res |
@@ -63,7 +63,7 @@ OCInteractiveAPI >> checkNotice: aNotice requestor: aRequestor [
 			at: aNotice position
 			in: aNotice node source.
 
-	^ false
+	^ compiler failBlock isNil
 ]
 
 { #category : 'compiling' }

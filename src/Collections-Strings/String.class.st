@@ -1962,6 +1962,17 @@ String >> isByteString [
 	^false
 ]
 
+{ #category : 'verification' }
+String >> isCapitalized [
+	"Return true if the first letter is capitalized"
+	
+	"'abc' isCapitalized >>> false"
+	"'Abc' isCapitalized >>> true"
+	
+	self ifEmpty: [ ^ false ].
+	^ self first isUppercase
+]
+
 { #category : 'testing' }
 String >> isLiteral [
 

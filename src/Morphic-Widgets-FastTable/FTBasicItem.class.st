@@ -66,6 +66,19 @@ FTBasicItem class >> unexpandedFormSet [
 	^ self theme treeUnexpandedFormSet
 ]
 
+{ #category : 'expanding-collapsing' }
+FTBasicItem >> announceExpansion: aBoolean [
+	| table |
+
+	table := self dataSource table.
+	table ifNil: [ ^ self ].
+	table doAnnounce: (FTTreeExpansionChanged new
+		 fastTable: table;
+		 item: self data;
+		 expanded: aBoolean;
+		 yourself)
+]
+
 { #category : 'accessing' }
 FTBasicItem >> calculateChildren [
 	^ self getChildren
@@ -85,24 +98,27 @@ FTBasicItem >> children [
 { #category : 'expanding-collapsing' }
 FTBasicItem >> collapse [
 	"I do not refresh the table. Use collapseAndRefresh for that. I also do not
-	ensure that any selected element is visible after collapsing the element.
-	If any selected elements are within the childrens of the collapsed element,
-	I select the collapsed element."
+    ensure that any selected element is visible after collapsing the element.
+    If any selected elements are within the childrens of the collapsed element,
+    I select the collapsed element."
 
 	self isExpanded ifFalse: [ ^ self ].
 
 	recentlyChanged := true.
-	self dataSource
-		updateSelectionWithCollectBlock:
-			[ :indexOfCurrentSelection :indexOfCollapsedElement |
-			| changedBy |
-			changedBy := self numberOfVisibleChildren.
-			(indexOfCurrentSelection between: indexOfCollapsedElement and: indexOfCollapsedElement + changedBy)
-				ifTrue: [ indexOfCollapsedElement ]
-				ifFalse: [ indexOfCurrentSelection < indexOfCollapsedElement
-						ifTrue: [ indexOfCurrentSelection ]
-						ifFalse: [ indexOfCurrentSelection - changedBy ] ] ].
-	isExpanded := false
+	
+	self dataSource updateSelectionWithCollectBlock: [ :indexOfCurrentSelection :indexOfCollapsedElement |
+		| changedBy |
+		changedBy := self numberOfVisibleChildren.
+		(indexOfCurrentSelection between: indexOfCollapsedElement and: indexOfCollapsedElement + changedBy)
+			ifTrue: [ indexOfCollapsedElement ]
+			ifFalse: [
+				indexOfCurrentSelection < indexOfCollapsedElement
+					ifTrue: [ indexOfCurrentSelection ]
+					ifFalse: [ indexOfCurrentSelection - changedBy ] ] ].
+	
+	isExpanded := false.
+	
+	self announceExpansion: false
 ]
 
 { #category : 'expanding-collapsing' }
@@ -154,15 +170,17 @@ FTBasicItem >> depth: anObject [
 { #category : 'expanding-collapsing' }
 FTBasicItem >> expand [
 	"I do not refresh the table. Use expandAndRefresh for that. I also do not
-	ensure that any selected element is visible after expanding the element."
+    ensure that any selected element is visible after expanding the element."
 
 	isExpanded := true.
 	recentlyChanged := true.
-	self dataSource
-		updateSelectionWithCollectBlock: [ :indexOfCurrentSelection :indexOfCollapsedElement |
-			indexOfCurrentSelection <= indexOfCollapsedElement
-				ifTrue: [ indexOfCurrentSelection ]
-				ifFalse: [ indexOfCurrentSelection + self numberOfVisibleChildren ] ]
+	
+	self dataSource updateSelectionWithCollectBlock: [ :indexOfCurrentSelection :indexOfCollapsedElement |
+		indexOfCurrentSelection <= indexOfCollapsedElement
+			ifTrue: [ indexOfCurrentSelection ]
+			ifFalse: [ indexOfCurrentSelection + self numberOfVisibleChildren ] ].
+	
+	self announceExpansion: true
 ]
 
 { #category : 'expanding-collapsing' }

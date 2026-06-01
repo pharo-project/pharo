@@ -48,11 +48,3 @@ ClyShowMethodInheritanceCommand >> description [
 
 	^ 'Show all method implementors in full hierarchy of selected method classes.'
 ]
-
-{ #category : 'execution' }
-ClyShowMethodInheritanceCommand >> selectMethodsIn: aMethodBrowser [
-
-	| index |
-	index := aMethodBrowser methods indexOf: methods last.
-	aMethodBrowser selectIndex: index
-]
