@@ -161,7 +161,7 @@ TaCompositionElement >> selectors [
 
 	| originals |
 	"We do not rely on the methods of the innerclass because while removing a trait we might return the removed methods during the removal and I need to work properly during the method dictionary rebuild"
-	originals := innerClass localSelectors , innerClass traitComposition selectors.
+	originals := (innerClass localSelectors , innerClass traitComposition selectors) asSet asArray.
 	^ (originals includes: #initializeTalent)
 		  ifTrue: [ (originals reject: [ :e | e = #initializeTalent ]) copyWith: self initializeSelectorForMe ]
 		  ifFalse: [ originals ]
