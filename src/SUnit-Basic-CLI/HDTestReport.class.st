@@ -20,6 +20,7 @@ Class {
 	],
 	#classVars : [
 		'CurrentStageName',
+		'RunSeed',
 		'ShuffleSeed'
 	],
 	#category : 'SUnit-Basic-CLI',
@@ -41,7 +42,7 @@ HDTestReport class >> runClasses: aCollectionOfClasses named: packageName [
 
 	| suite classes time result |
 	suite := TestSuite named: packageName.
-	ShuffleSeed ifNotNil: [ suite shuffleSeed: ShuffleSeed asInteger ].
+	suite shuffleSeed: self seedForRun.
 	classes := (aCollectionOfClasses select: [ :class |
 		            class isTestCase and: [ class isAbstract not ] ])
 		           asSortedCollection: [ :a :b | a name <= b name ].
@@ -72,7 +73,34 @@ HDTestReport class >> runSuite: aTestSuite [
 
 { #category : 'running' }
 HDTestReport class >> shuffleSeed: aSeed [
-	ShuffleSeed := aSeed
+	ShuffleSeed := aSeed.
+	RunSeed := nil
+]
+
+{ #category : 'running' }
+HDTestReport class >> seedForRun [
+	"Return the seed to use for shuffling tests. If a seed was explicitly set via the command line, use it. Otherwise, generate a random seed once and reuse it for all suites in the same run, ensuring reproducibility."
+
+	^ RunSeed ifNil: [
+		RunSeed := ShuffleSeed
+			ifNotNil: [ :seed | seed asInteger ]
+			ifNil: [ Random new seed ] ]
+]
+
+{ #category : 'running' }
+HDTestReport class >> resetRunSeed [
+	"Reset the cached run seed. Should be called at the start of a new test run."
+
+	RunSeed := nil
+]
+
+{ #category : 'running' }
+HDTestReport class >> runPackages: aCollectionOfStrings [
+	"Override to reset and log the shared seed at the beginning of a full test run."
+
+	self resetRunSeed.
+	('Using shared shuffle seed for all suites: ' , self seedForRun asString , OSPlatform current lineEnding) traceCr.
+	^ aCollectionOfStrings collect: [ :packageName | self runPackage: packageName ]
 ]
 
 { #category : 'private' }
