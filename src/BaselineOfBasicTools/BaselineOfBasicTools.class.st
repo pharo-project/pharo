@@ -296,12 +296,14 @@ OCIRPushRemoteTemp deprecatedAliases: { #IRPushRemoteTemp }.
 OCIRPopIntoRemoteTemp deprecatedAliases: { #IRPopIntoRemoteTemp }.
 OCIRStoreRemoteTemp deprecatedAliases: { #IRStoreRemoteTemp }.
 OCIRInstruction deprecatedAliases: { #IRInstruction }.
-	OCASTCache deprecatedAliases: { #ASTCache }.
+OCASTCache deprecatedAliases: { #ASTCache }.
 
-
-
-
-
+OCIRPrinterVisitor deprecatedAliases: { #IRPrinter }.
+OCIRTranslatorVisitor deprecatedAliases: { #IRTranslator }.
+OCIRVisitor deprecatedAliases: { #IRVisitor }.
+OCIRBuilderTest deprecatedAliases: { #IRBuilderTest}.
+OCIRBytecodeGenerator deprecatedAliases: { #IRBytecodeGenerator}.
+OCIRBuilder deprecatedAliases: { #IRBuilder}.
 
 	 CompletionSorter register.
 	 RubSmalltalkEditor completionEngineClass: CompletionEngine.
