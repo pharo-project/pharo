@@ -246,24 +246,24 @@ TraitedMetaclass >> methodInstaller [
 
 { #category : 'initialization' }
 TraitedMetaclass >> rebuildMethodDictionary [
-	| selectors removedSelectors modified |
 
-		"During the creation of the class or after a change in the traitComposition, the whole method dictionary is calculated.
+	| selectors removedSelectors modified |
+	"During the creation of the class or after a change in the traitComposition, the whole method dictionary is calculated.
 	If I return true, my users should be updated.
 	Check the version in TraitedClass for more details."
-
 	modified := false.
 
-	self methodDict valuesDo: [ :m | m traitSource ifNil: [ localMethods at: m selector put: m ]].
+	self methodDict valuesDo: [ :m | m traitSource ifNil: [ localMethods at: m selector put: m ] ].
 
-	selectors := self traitComposition selectors reject: [ :e | self isRejectedMethod: e ].
-	selectors do: [ :e | modified := modified | (self traitComposition installSelector: e into: self replacing: false) ].
+	selectors := self traitComposition compilationInfoForSelectorsRejecting: [ :e | self isRejectedMethod: e ].
+	selectors do: [ :e | modified := modified | (self traitComposition installCompilationInfos: e into: self replacing: false) ].
 
-	removedSelectors := self methodDict keys reject: [ :aSelector | (selectors includes: aSelector) or: [ self isSelectorToKeep: aSelector ] ].
-	modified := modified | (removedSelectors isNotEmpty).
+	removedSelectors := self methodDict keys reject: [ :aSelector |
+		                    (selectors anySatisfy: [ :compilationInfo | compilationInfo selector = aSelector ]) or: [ self isSelectorToKeep: aSelector ] ].
+	modified := modified | removedSelectors isNotEmpty.
 	removedSelectors do: [ :aSelector |
-		self methodDict removeKey: aSelector.
-		self removeFromProtocols: aSelector  ].
+			self methodDict removeKey: aSelector.
+			self removeFromProtocols: aSelector ].
 
 	^ modified
 ]
