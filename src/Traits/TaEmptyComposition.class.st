@@ -69,6 +69,12 @@ TaEmptyComposition >> classComposition [
 ]
 
 { #category : 'accessing' }
+TaEmptyComposition >> compilationInfoForSelectorsRejecting: aBlock [
+
+	^ Array empty
+]
+
+{ #category : 'accessing' }
 TaEmptyComposition >> compiledMethodAt: aSelector [
 	NotFound signalFor: aSelector
 ]
