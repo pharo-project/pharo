@@ -69,7 +69,7 @@ TaEmptyComposition >> classComposition [
 ]
 
 { #category : 'accessing' }
-TaEmptyComposition >> compilationInfoForSelectorsRejecting: aBlock [
+TaEmptyComposition >> compilationInfoForSelectors [
 
 	^ Array empty
 ]

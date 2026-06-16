@@ -58,6 +58,19 @@ TaCompositionElement >> classComposition [
 ]
 
 { #category : 'accessing' }
+TaCompositionElement >> compilationInfoForSelectors [
+
+	| infos |
+	infos := (innerClass localSelectors collect: [ :selector |
+			          TraitMethodToCompileInfo new
+				          selector: selector;
+				          yourself ]) , innerClass traitComposition compilationInfoForSelectors.
+
+	infos do: [ :info | info selector: (self aliasSelector: info selector) ].
+	^ infos
+]
+
+{ #category : 'accessing' }
 TaCompositionElement >> compiledMethodAt: selector [
 	| newSelector |
 	newSelector := self dealiasSelector: selector.

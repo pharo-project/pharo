@@ -45,9 +45,9 @@ TaSingleComposition >> classComposition [
 ]
 
 { #category : 'accessing' }
-TaSingleComposition >> compilationInfoForSelectorsRejecting: aBlock [
+TaSingleComposition >> compilationInfoForSelectors [
 
-	^ inner compilationInfoForSelectorsRejecting: aBlock
+	^ inner compilationInfoForSelectors
 ]
 
 { #category : 'accessing' }
