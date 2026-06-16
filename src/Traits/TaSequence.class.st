@@ -98,6 +98,13 @@ TaSequence >> classComposition [
 ]
 
 { #category : 'accessing' }
+TaSequence >> compilationInfoForSelectorsRejecting: aBlock [
+
+	self flag: #todo. "Manage duplication + conflict"
+	^ members flatCollect: [ :member | member compilationInfoForSelectorsRejecting: aBlock ]
+]
+
+{ #category : 'accessing' }
 TaSequence >> compiledMethodAt: aSelector [
 
 	^ (self memberForSelector: aSelector) compiledMethodAt: aSelector
