@@ -133,14 +133,12 @@ TaAbstractComposition >> classComposition [
 ]
 
 { #category : 'accessing' }
-TaAbstractComposition >> compilationInfoForSelectorsRejecting: aBlock [
+TaAbstractComposition >> compilationInfoForSelectors [
 
-	^ self selectors
-		  reject: aBlock
-		  thenCollect: [ :selector |
-				  TraitMethodToCompileInfo new
-					  selector: selector;
-					  yourself ]
+	^ self selectors collect: [ :selector |
+			  TraitMethodToCompileInfo new
+				  selector: selector;
+				  yourself ]
 ]
 
 { #category : 'compiling' }

@@ -63,9 +63,9 @@ TaAliasMethod >> checkAssociations [
 ]
 
 { #category : 'accessing' }
-TaAliasMethod >> compilationInfoForSelectorsRejecting: aBlock [
+TaAliasMethod >> compilationInfoForSelectors [
 
-	^ (inner compilationInfoForSelectorsRejecting: aBlock) , (self existingAliasedSelectors collect: [ :selector |
+	^ inner compilationInfoForSelectors , (self existingAliasedSelectors collect: [ :selector |
 			   TraitMethodToCompileInfo new
 				   selector: selector;
 				   yourself ])
