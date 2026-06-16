@@ -14,6 +14,16 @@ Class {
 }
 
 { #category : 'accessing' }
+TraitMethodToCompileInfo >> definingTrait [
+	^ definingTrait
+]
+
+{ #category : 'accessing' }
+TraitMethodToCompileInfo >> definingTrait: anObject [
+	definingTrait := anObject
+]
+
+{ #category : 'accessing' }
 TraitMethodToCompileInfo >> selector [
 	^ selector
 ]

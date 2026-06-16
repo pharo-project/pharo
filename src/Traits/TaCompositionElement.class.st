@@ -61,9 +61,10 @@ TaCompositionElement >> classComposition [
 TaCompositionElement >> compilationInfoForSelectors [
 
 	| infos |
-	infos := (innerClass localSelectors collect: [ :selector |
+	infos := (innerClass localMethods collect: [ :method |
 			          TraitMethodToCompileInfo new
-				          selector: selector;
+				          selector: method selector;
+				          definingTrait: self;
 				          yourself ]) , innerClass traitComposition compilationInfoForSelectors.
 
 	infos do: [ :info | info selector: (self aliasSelector: info selector) ].
