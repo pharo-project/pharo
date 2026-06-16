@@ -177,7 +177,12 @@ TaAbstractComposition >> compileInfo: compilationInfo into: aClass [
 
 	| selector method newMethod sourceCode traitDefining |
 	selector := compilationInfo selector.
-	traitDefining := self traitDefining: selector.
+	traitDefining := compilationInfo definingTrait
+		                 ifNil: [ self traitDefining: selector ]
+		                 ifNotNil: [ :trait |
+				                 'Trait present' traceCr.
+				                 trait = (self traitDefining: selector) ifFalse: [ 1 halt ].
+				                 trait ].
 
 	method := self compiledMethodAt: selector.
 	sourceCode := self sourceCodeAt: selector.
@@ -186,7 +191,7 @@ TaAbstractComposition >> compileInfo: compilationInfo into: aClass [
 		             source: sourceCode;
 		             permitUndeclared: true;
 		             compileOrFail.
-		
+
 	selector == newMethod selector ifFalse: [ self error: 'selector changed!' ].
 
 	aClass addSelectorSilently: selector withMethod: newMethod.
