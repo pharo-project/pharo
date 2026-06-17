@@ -10,15 +10,18 @@ Class {
 
 { #category : 'testing' }
 StartsWithStringHandler >> canHandle: aString [
-    | rest |
-    
-    (aString beginsWith: '!!') ifTrue: [ ^ false ].
-    (aString beginsWith: '!?') ifTrue: [ ^ false ].
-    (aString beginsWith: '!') ifFalse: [ ^ false ].
-    
-    rest := aString allButFirst.
-    
-    ^ (rest startsWithDigit or: [ (rest beginsWith: '-') and: [ rest allButFirst startsWithDigit ] ]) not
+
+	| rest |
+	(aString beginsWith: '!!') ifTrue: [ ^ false ].
+	(aString beginsWith: '!?') ifTrue: [ ^ false ].
+	(aString beginsWith: '!') ifFalse: [ ^ false ].
+
+	rest := aString allButFirst.
+	
+	"to prevent having just a '!'"
+	rest isEmpty ifTrue: [ ^ false ].
+
+	^ (rest startsWithDigit or: [ (rest beginsWith: '-') and: [ rest allButFirst startsWithDigit ] ]) not
 ]
 
 { #category : 'testing' }

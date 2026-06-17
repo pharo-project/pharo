@@ -204,6 +204,7 @@ def bootstrapImage(){
         isoTesters['System-Support'] = { defineIsoTestStage("SystemSupport") }
         isoTesters['System-Version'] = { defineIsoTestStage("SystemVersion") }
         isoTesters['Collections'] = { defineIsoTestStage("Collections") }        
+        isoTesters['Refactoring'] = { defineIsoTestStage("Refactoring") }
         isoTesters['DebuggerCLI'] = { defineIsoTestStage("DebuggerCLI") }
         parallel isoTesters
 

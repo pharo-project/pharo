@@ -14,7 +14,7 @@ Class {
 		'Name1'
 	],
 	#pools : [
-		'TextConstants'
+		'RBSharedPoolForTestData'
 	],
 	#category : 'Refactoring-DataForTesting-LittleHierarchy',
 	#package : 'Refactoring-DataForTesting',
@@ -113,7 +113,7 @@ RBLintRuleTestData >> isEmpty [
 RBLintRuleTestData >> junk [
 	^ RBClassDataForRefactoringTest printString
 		copyFrom: 1
-		to: CR
+		to: Var1
 ]
 
 { #category : 'accessing' }

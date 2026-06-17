@@ -124,5 +124,5 @@ RBMethodName >> selector [
 { #category : 'accessing' }
 RBMethodName >> selector: aSymbol [
 	selector := aSymbol asSymbol.
-	self changed: #selector
+	
 ]

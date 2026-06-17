@@ -1,9 +1,8 @@
 Class {
 	#name : 'ReCompositeExtractSetUpMethodRefactoring',
 	#superclass : 'ReCompositeExtractMethodRefactoring',
-	#category : 'Refactoring-Transformations-Model-Unused',
-	#package : 'Refactoring-Transformations',
-	#tag : 'Model-Unused'
+	#category : 'Refactoring-Transformations',
+	#package : 'Refactoring-Transformations'
 }
 
 { #category : 'execution' }

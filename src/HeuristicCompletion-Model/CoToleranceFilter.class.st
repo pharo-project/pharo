@@ -73,7 +73,7 @@ CoToleranceFilter class >> defaultMinimumTokenSize [
 { #category : 'default values' }
 CoToleranceFilter class >> defaultRate [
 
-	^ 0.75
+	^ 0
 
 	
 ]

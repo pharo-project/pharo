@@ -36,9 +36,9 @@ PharoCommonTools class >> menuHistoryOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #LoadHistory)
 		parent: #Tools;
-		label: 'Load Compleshion History';
+		label: 'Load Complishon History';
 		icon: (self iconNamed: #smallLoadProject);
-		help: 'Load History (an extension of Compleshion)';
+		help: 'Load History (an extension of Complishon)';
 		order: 110;
 		action: [
 				Metacello new
@@ -56,6 +56,7 @@ PharoCommonTools class >> menuRitaOn: aBuilder [
 		parent: #Tools;
 		label: 'Load Git Changes Visualizer (Rita)';
 		icon: (self iconNamed: #smallLoadProject);
+		help: 'This action loads Rita, a tool to visualize the history of a git repository to get more insight instead of just reading code.';
 		order: 115;
 		action: [
 				Metacello new

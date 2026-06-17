@@ -128,9 +128,9 @@ ReExtractMethodDriver >> hasFailedBehaviorPreservingPreconditions [
 
 { #category : 'configuration' }
 ReExtractMethodDriver >> instantiateRefactoring [
-	"here we do not fully configure the refactoring because we are missing information such as the signature.
-	Since we want to let the refactoring validate input we need to create it upfront then configure later."
-
+    "here we do not fully configure the refactoring because we are missing information such as the signature.
+    Since we want to let the refactoring validate input we need to create it upfront then configure later."
+    
 	^ ReCompositeExtractMethodRefactoring new extract: body from: sourceMethod selector in: class name
 ]
 
@@ -181,9 +181,7 @@ ReExtractMethodDriver >> requestNewMessage [
 
 	| methodName dialog |
 	dialog := nil.
-	methodName := RBMethodName
-		              selector: (refactoring selectorStartingFrom: 'f' argumentsSize: refactoring arguments size)
-		              arguments: refactoring arguments.
+	methodName := refactoring newMethodName.
 	"Retry until the methodName is valid or the user cancels the dialog"
 	[ dialog isNil or: [ dialog methodName isValid not ] ] whileTrue: [
 			requestDialog := nil.

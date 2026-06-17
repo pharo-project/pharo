@@ -85,11 +85,13 @@ MCGitBasedNetworkRepository class >> downloadCacheKey: projectPath version: vers
 MCGitBasedNetworkRepository class >> downloadZipArchive: url to: outputFileName [
 	"download zip archive from <url> into <outputFileName>"
 
+	| client |
 	outputFileName asFileReference ensureDelete.
+	client := ZnClient new.
 	[ :bar |
 	bar title: 'Download: ' , url asString , ' to ' , outputFileName.
 	[
-	ZnClient new
+	client
 		url: url;
 		signalProgress: true;
 		downloadTo: outputFileName ]
@@ -97,6 +99,12 @@ MCGitBasedNetworkRepository class >> downloadZipArchive: url to: outputFileName 
 		do: [ :progress |
 			progress isEmpty ifFalse: [ bar current: progress percentage ].
 			progress resume ] ] asJob run.
+
+	client isSuccess ifFalse: [
+		self error: 'Could not download file from url: ', 
+			url asString, ' code: ', client response statusLine asString.
+	].
+
 	^ ZipArchive new readFrom: outputFileName asFileReference
 ]
 

@@ -76,6 +76,12 @@ DocCommentIconStyler >> shouldStyleNode: aNode [
 ]
 
 { #category : 'private' }
+DocCommentIconStyler >> stylerName [
+
+	^ 'doc-comment'
+]
+
+{ #category : 'private' }
 DocCommentIconStyler >> stylingEnabled [
 	^ PharoDocCommentNode docCommentEnabled
 ]

@@ -966,6 +966,17 @@ OCProgramNode >> match: aNode inContext: aDictionary [
 	^ self = aNode
 ]
 
+{ #category : 'testing - matching' }
+OCProgramNode >> match: aNode onSuccess: aBlock onFailure: anAlternativeBlock [
+	| context |
+
+	context := SmallDictionary new.
+
+	(self match: aNode inContext: context)
+		ifTrue: [ aBlock cull: context ]
+		ifFalse: anAlternativeBlock
+]
+
 { #category : 'matching' }
 OCProgramNode >> matchList: matchNodes against: programNodes inContext: aDictionary [
 	^self

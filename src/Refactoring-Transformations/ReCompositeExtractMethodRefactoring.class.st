@@ -35,9 +35,8 @@ Class {
 		'needsReturn',
 		'interval'
 	],
-	#category : 'Refactoring-Transformations-Model-Unused',
-	#package : 'Refactoring-Transformations',
-	#tag : 'Model-Unused'
+	#category : 'Refactoring-Transformations',
+	#package : 'Refactoring-Transformations'
 }
 
 { #category : 'api' }
@@ -357,30 +356,11 @@ ReCompositeExtractMethodRefactoring >> messageSendWith: aMethodName [
 { #category : 'executing' }
 ReCompositeExtractMethodRefactoring >> newMethodName [
 
-	| methodName newAttempt |
-	newAttempt := newSelector isNil.
-
+	| methodName |
+	
 	methodName := RBMethodName new.
 	methodName arguments: arguments.
 	newSelector ifNotNil: [ methodName selector: newSelector ].
-
-	[ newAttempt ] whileTrue: [
-		methodName := (StMethodNameEditorPresenter openOn: methodName) methodName.
-		methodName
-			ifNil: [ newAttempt := false ]
-			ifNotNil: [ :newMethodName |
-				newSelector := newMethodName selector.
-				newAttempt := newSelector isNil.
-
-				"it's a valid selector"
-				(newSelector isString and: [ self isValidSelector: newSelector])
-					ifFalse: [ InformativeNotification signal:  newSelector asString, ' is not a valid selector.'.
-								  newSelector := nil ].
-
-				"already exists in class"
-				(self definingClass directlyDefinesLocalMethod: newSelector)
-					ifTrue: [ InformativeNotification signal:  newSelector, ' is already defined in ', class asString.
-								 newSelector := nil ] ] ].
 
 	^ methodName
 ]

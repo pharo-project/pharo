@@ -44,6 +44,12 @@ UIThemePalette >> balloonTextColor [
 ]
 
 { #category : 'colors' }
+UIThemePalette >> baseBorderColor [
+
+	^ paletteDictionary at: #baseBorderColor ifAbsentPut: [ colorConfigurator baseBorderColor ]
+]
+
+{ #category : 'colors' }
 UIThemePalette >> baseColor [
 
 	^ paletteDictionary at: #baseColor ifAbsentPut: [ colorConfigurator baseColor ]
@@ -451,6 +457,12 @@ UIThemePalette >> secondarySelectionColor [
 UIThemePalette >> selectedItemListTextColor [
 
 	^ paletteDictionary at: #selectedItemListTextColor ifAbsentPut: [ colorConfigurator selectedItemListTextColor ]
+]
+
+{ #category : 'colors' }
+UIThemePalette >> selectedTabBorderColor [
+
+	^ paletteDictionary at: #selectedTabBorderColor ifAbsentPut: [ colorConfigurator selectedTabBorderColor ]
 ]
 
 { #category : 'colors' }

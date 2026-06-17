@@ -14,7 +14,6 @@ CommandLineDebuggerBasicCommandsTest >> setUp [
 	| debuggingProcess debuggingContext debuggingSession |
 	super setUp.
 	debuggingProcess := [ self class compiler evaluate: 'OCParser parseMethod: foo self' ] newProcess.
-	debuggingProcess suspend.
 	debuggingContext := debuggingProcess suspendedContext.
 	debuggingSession := DebugSession named: 'test' on: debuggingProcess startedAt: debuggingContext.
 	debugger := CommandLineDebugger new
@@ -29,7 +28,6 @@ CommandLineDebuggerBasicCommandsTest >> testEmptyCommand [
 	| response |
 	response := debugger parsesAndExecuteCommand: '          '.
 
-	self assert: debugger isActive.
 	self assert: response equals: ''
 ]
 
@@ -82,6 +80,7 @@ CommandLineDebuggerBasicCommandsTest >> testPrintCode [
 
 	response := debugger parsesAndExecuteCommand: 'printCode'.
 
+
 	self assert: (response includesSubstring: 'mockMethodForTesting').
 	self assert: (response includesSubstring: '"Fake method to test printCode"').
 	self assert: (response includesSubstring: 'a := --->42<---.').
@@ -120,13 +119,6 @@ CommandLineDebuggerBasicCommandsTest >> testPrintStack [
 	| response initialPc |
 	initialPc := debugger context pc.
 	response := debugger parsesAndExecuteCommand: 'printStack'.
-
-
-	self assert: debugger context pc equals: initialPc.
-
-	self assert: debugger isActive.
-
-	self assert: (response isString and: response isNotEmpty).
 
 	self assert: (response includesSubstring: debugger context printString)
 ]

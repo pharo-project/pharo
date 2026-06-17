@@ -1,0 +1,186 @@
+"
+I am a refactoring for changing a temporary variable to an instance variable.
+
+My preconditions verify that this variable is not yet used as an instance variable in this class.
+
+The temporary variable is added to the class definition and removed from the temporary declaration in this method .
+
+If this instance variable is already used in a subclass it will be removed from that class, because subclasses already inherit this attribute.
+
+The temporary variables with the same name in hierarchy will be removed, and replaced with the new instance variable.
+
+Example
+--------------------
+
+Script refactoring:
+```
+(RBTemporaryToInstanceVariableRefactoring 
+    class: MyClassA
+    selector: #someMethod
+    variable: 'log') execute
+```
+Before refactoring:
+```
+Object subclass: #MyClassA
+	instanceVariableNames: ''
+	classVariableNames: ''
+	package: 'example'
+
+MyClassA >> someMethod 
+    |log aNumber|
+    log := self newLog.
+    log isNil.
+    aNumber := 5.
+
+MyClassA >> anotherMethod
+    #(4 5 6 7) do: [:e | | log |
+        log := e ]
+
+MyClassA subclass: #MyClassB
+	instanceVariableNames: 'log'
+	classVariableNames: ''
+	package: 'example'
+```
+After refactoring:
+```
+Object subclass: #MyClassA
+	instanceVariableNames: 'log'
+	classVariableNames: ''
+	package: 'example'
+
+MyClassA >> someMethod 
+    | aNumber |
+    log := self newLog.
+    log isNil.
+    aNumber := 5.
+
+MyClassA >> anotherMethod
+    #(4 5 6 7) do: [:e | 
+        log := e ]
+
+MyClassA subclass: #MyClassB
+	instanceVariableNames: ''
+	classVariableNames: ''
+	package: 'example'
+```
+"
+Class {
+	#name : 'ReTemporaryToInstanceVariableRefactoring',
+	#superclass : 'RBMethodRefactoring',
+	#instVars : [
+		'selector',
+		'temporaryVariableName',
+		'parseTree'
+	],
+	#category : 'Refactoring-Transformations',
+	#package : 'Refactoring-Transformations'
+}
+
+{ #category : 'instance creation' }
+ReTemporaryToInstanceVariableRefactoring class >> class: aClass selector: aSelector variable: aVariableName [
+	^ self new
+		class: aClass
+		selector: aSelector
+		variable: aVariableName
+]
+
+{ #category : 'instance creation' }
+ReTemporaryToInstanceVariableRefactoring class >> model: aRBSmalltalk class: aClass selector: aSelector variable: aVariableName [
+	^ self new
+		model: aRBSmalltalk;
+		class: aClass
+			selector: aSelector
+			variable: aVariableName;
+		yourself
+]
+
+{ #category : 'preconditions' }
+ReTemporaryToInstanceVariableRefactoring >> applicabilityPreconditions [
+
+	^ {
+		  (RBCondition withBlock: [ parseTree isNotNil ]).
+		  (ReDefinesSelectorsCondition new definesSelectors: (Array with: selector) in: class).
+		  (RBCondition definesInstanceVariable: temporaryVariableName asString in: class) not.
+		  (RBCondition withBlock: [
+				   parseTree ifNotNil: [ self isTemporaryVariableNameValid ].
+				   true ]) }
+]
+
+{ #category : 'preconditions' }
+ReTemporaryToInstanceVariableRefactoring >> breakingChangePreconditions [
+
+	^ {
+		  self preconditionNoMultipleTempOccurences.
+		  self preconditionNoReadBeforeWritten }
+]
+
+{ #category : 'initialization' }
+ReTemporaryToInstanceVariableRefactoring >> class: aClass selector: aSelector variable: aVariableName [
+	class := self classObjectFor: aClass.
+	selector := aSelector.
+	temporaryVariableName := aVariableName
+]
+
+{ #category : 'preconditions' }
+ReTemporaryToInstanceVariableRefactoring >> isTemporaryVariableNameValid [
+
+	(parseTree allTemporaryVariables includes: temporaryVariableName) ifFalse: [
+		self refactoringError: temporaryVariableName , ' isn''t a valid temporary variable name' ].
+	(parseTree allArgumentVariables includes: temporaryVariableName) ifTrue: [
+		self refactoringError: temporaryVariableName , ' is a block parameter' ]
+]
+
+{ #category : 'preconditions' }
+ReTemporaryToInstanceVariableRefactoring >> preconditionNoMultipleTempOccurences [
+
+	^ ReMultipleMethodsDontReferToTempVarCondition name: temporaryVariableName class: class selector: selector 
+]
+
+{ #category : 'preconditions' }
+ReTemporaryToInstanceVariableRefactoring >> preconditionNoReadBeforeWritten [
+
+	^ ReVariablesNotReadBeforeWrittenCondition new
+		  subtree: parseTree;
+		  variables: { temporaryVariableName };
+		  checkForTemporaryVariables: true
+]
+
+{ #category : 'preconditions' }
+ReTemporaryToInstanceVariableRefactoring >> preconditions [
+
+	^ self applicabilityPreconditions & self breakingChangePreconditions
+]
+
+{ #category : 'transforming' }
+ReTemporaryToInstanceVariableRefactoring >> prepareForExecution [ 
+
+	parseTree := class parseTreeForSelector: selector.
+]
+
+{ #category : 'transforming' }
+ReTemporaryToInstanceVariableRefactoring >> privateTransform [
+
+	class addInstanceVariable: temporaryVariableName.
+	self removeTemporaryOfClass: class.
+	class allSubclasses do: [ :cls |
+			(cls directlyDefinesInstanceVariable: temporaryVariableName)
+				ifTrue: [ cls removeInstanceVariable: temporaryVariableName ]
+				ifFalse: [ self removeTemporaryOfClass: cls ] ]
+]
+
+{ #category : 'removing' }
+ReTemporaryToInstanceVariableRefactoring >> removeTemporaryOfClass: aClass [
+	aClass selectors do: [ :aSymbol | self removeTemporaryOfMethod: aSymbol in: aClass ]
+]
+
+{ #category : 'removing' }
+ReTemporaryToInstanceVariableRefactoring >> removeTemporaryOfMethod: aSelector in: aClass [
+
+	| methodParseTree matcher method |
+	method := aClass methodFor: aSelector.
+	methodParseTree := method parseTree.
+	methodParseTree ifNil: [ self refactoringError: 'Could not parse method' ].
+	(methodParseTree temporaryNames includes: temporaryVariableName) ifFalse: [ ^ self ].
+	(matcher := self parseTreeRewriterClass removeTemporaryNamed: temporaryVariableName) executeTree: methodParseTree.
+	method compileTree: matcher tree
+]

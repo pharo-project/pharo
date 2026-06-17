@@ -37,3 +37,9 @@ HaltIconStyler >> shouldStyleNode: aNode [
 	selectorsToBeHighlighted := { 'halt'. 'halt:'. 'haltIf:'. 'haltIfNil' }.
 	^aNode isMessage and: [ selectorsToBeHighlighted anySatisfy: [ :sel| sel = aNode selector ]]
 ]
+
+{ #category : 'private' }
+HaltIconStyler >> stylerName [
+
+	^ 'breakpoint'
+]
