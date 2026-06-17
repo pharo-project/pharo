@@ -135,10 +135,7 @@ TaAbstractComposition >> classComposition [
 { #category : 'accessing' }
 TaAbstractComposition >> compilationInfoForSelectors [
 
-	^ self selectors collect: [ :selector |
-			  TraitMethodToCompileInfo new
-				  selector: selector;
-				  yourself ]
+	^ self subclassResponsibility
 ]
 
 { #category : 'compiling' }
@@ -175,14 +172,8 @@ TaAbstractComposition >> compileInfo: compilationInfo into: aClass [
 	"Compile the method associated with selector in aClass's method dictionary.
 	This version classify the method in the class passed as parameter"
 
-	| selector method newMethod sourceCode traitDefining |
+	| selector method newMethod sourceCode |
 	selector := compilationInfo selector.
-	traitDefining := compilationInfo definingTrait
-		                 ifNil: [ self traitDefining: selector ]
-		                 ifNotNil: [ :trait |
-				                 'Trait present' traceCr.
-				                 trait = (self traitDefining: selector) ifFalse: [ 1 halt ].
-				                 trait ].
 
 	method := self compiledMethodAt: selector.
 	sourceCode := self sourceCodeAt: selector.
@@ -201,7 +192,7 @@ TaAbstractComposition >> compileInfo: compilationInfo into: aClass [
 		ifTrue: [ self saveSourceCode: sourceCode ofMethod: newMethod ]
 		ifFalse: [ newMethod sourcePointer: method sourcePointer ].
 
-	aClass >> selector propertyAt: #traitSource put: traitDefining.
+	aClass >> selector propertyAt: #traitSource put: compilationInfo definingTrait.
 	^ true
 ]
 
