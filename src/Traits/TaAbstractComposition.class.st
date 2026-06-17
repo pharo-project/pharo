@@ -172,10 +172,9 @@ TaAbstractComposition >> compileInfo: compilationInfo into: aClass [
 	"Compile the method associated with selector in aClass's method dictionary.
 	This version classify the method in the class passed as parameter"
 
-	| selector method newMethod sourceCode |
+	| selector newMethod sourceCode |
 	selector := compilationInfo selector.
 
-	method := self compiledMethodAt: selector.
 	sourceCode := self sourceCodeAt: selector.
 
 	newMethod := aClass compiler
@@ -187,10 +186,10 @@ TaAbstractComposition >> compileInfo: compilationInfo into: aClass [
 
 	aClass addSelectorSilently: selector withMethod: newMethod.
 
-	aClass classify: selector under: (self protocolForMethod: method).
-	(selector ~= method selector or: [ self changesSourceCode: selector ])
+	aClass classify: selector under: (self protocolForMethod: compilationInfo compiledMethod).
+	(selector ~= compilationInfo compiledMethod selector or: [ self changesSourceCode: selector ])
 		ifTrue: [ self saveSourceCode: sourceCode ofMethod: newMethod ]
-		ifFalse: [ newMethod sourcePointer: method sourcePointer ].
+		ifFalse: [ newMethod sourcePointer: compilationInfo compiledMethod sourcePointer ].
 
 	aClass >> selector propertyAt: #traitSource put: compilationInfo definingTrait.
 	^ true

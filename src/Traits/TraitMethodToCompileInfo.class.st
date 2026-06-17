@@ -14,6 +14,16 @@ Class {
 }
 
 { #category : 'accessing' }
+TraitMethodToCompileInfo >> compiledMethod [
+	^ compiledMethod
+]
+
+{ #category : 'accessing' }
+TraitMethodToCompileInfo >> compiledMethod: anObject [
+	compiledMethod := anObject
+]
+
+{ #category : 'accessing' }
 TraitMethodToCompileInfo >> definingTrait [
 	^ definingTrait
 ]

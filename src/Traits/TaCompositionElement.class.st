@@ -65,6 +65,7 @@ TaCompositionElement >> compilationInfoForSelectors [
 			          TraitMethodToCompileInfo new
 				          selector: method selector;
 				          definingTrait: self;
+				          compiledMethod: method;
 				          yourself ]) , innerClass traitComposition compilationInfoForSelectors.
 
 	infos do: [ :info | info selector: (self aliasSelector: info selector) ].
