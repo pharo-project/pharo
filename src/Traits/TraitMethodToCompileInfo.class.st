@@ -34,6 +34,17 @@ TraitMethodToCompileInfo >> definingTrait: anObject [
 ]
 
 { #category : 'accessing' }
+TraitMethodToCompileInfo >> protocol [
+
+	^ protocol ifNil: [ self compiledMethod protocolName ]
+]
+
+{ #category : 'accessing' }
+TraitMethodToCompileInfo >> protocol: anObject [
+	protocol := anObject
+]
+
+{ #category : 'accessing' }
 TraitMethodToCompileInfo >> selector [
 	^ selector
 ]
