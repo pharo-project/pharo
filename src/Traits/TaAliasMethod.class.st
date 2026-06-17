@@ -77,6 +77,7 @@ TaAliasMethod >> compilationInfoForSelectors [
 						aliassed add: (TraitMethodToCompileInfo new
 								 selector: association key;
 								 definingTrait: info definingTrait;
+								 compiledMethod: info compiledMethod;
 								 yourself) ] ].
 
 	^ innerInfos , aliassed
