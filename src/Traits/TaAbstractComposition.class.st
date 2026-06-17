@@ -186,7 +186,7 @@ TaAbstractComposition >> compileInfo: compilationInfo into: aClass [
 
 	aClass addSelectorSilently: selector withMethod: newMethod.
 
-	aClass classify: selector under: (self protocolForMethod: compilationInfo compiledMethod).
+	aClass classify: selector under: compilationInfo protocol.
 	(selector ~= compilationInfo compiledMethod selector or: [ self changesSourceCode: selector ])
 		ifTrue: [ self saveSourceCode: sourceCode ofMethod: newMethod ]
 		ifFalse: [ newMethod sourcePointer: compilationInfo compiledMethod sourcePointer ].

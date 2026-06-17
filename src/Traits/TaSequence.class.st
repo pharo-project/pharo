@@ -100,8 +100,17 @@ TaSequence >> classComposition [
 { #category : 'accessing' }
 TaSequence >> compilationInfoForSelectors [
 
-	self flag: #todo. "Manage duplication + conflict"
-	^ members flatCollect: [ :member | member compilationInfoForSelectors ]
+	| allInfos toRemove |
+	toRemove := OrderedCollection new.
+	allInfos := members flatCollect: [ :member | member compilationInfoForSelectors ].
+
+	(allInfos groupedBy: #selector) keysAndValuesDo: [ :selector :infos |
+			infos size > 1 ifTrue: [
+					infos first protocol: Protocol traitConflictName.
+					toRemove addAll: infos allButFirst ] ].
+
+	allInfos removeAll: toRemove.
+	^ allInfos
 ]
 
 { #category : 'accessing' }
