@@ -180,6 +180,13 @@ TraitTest >> testComposedBy [
 ]
 
 { #category : 'tests' }
+TraitTest >> testCompositionWithAnEmptyComposition [
+	"Adding a trait to an empty composition should not keep the empty composition"
+
+	self assert: (TaEmptyComposition new + Trait1) class equals: TaCompositionElement
+]
+
+{ #category : 'tests' }
 TraitTest >> testDefinedMethods [
 
 	[

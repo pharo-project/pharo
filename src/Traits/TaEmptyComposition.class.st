@@ -11,6 +11,13 @@ Class {
 }
 
 { #category : 'operations' }
+TaEmptyComposition >> + anotherTrait [
+	"Since I am a null entity, the trait composition can be my parameter"
+
+	^ anotherTrait asTraitComposition
+]
+
+{ #category : 'operations' }
 TaEmptyComposition >> , anotherTrait [
 	^ anotherTrait
 ]
