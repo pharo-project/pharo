@@ -102,7 +102,7 @@ TaSequence >> compilationInfoForSelectors [
 
 	| allInfos toRemove |
 	toRemove := OrderedCollection new.
-	allInfos := members flatCollect: [ :member | member compilationInfoForSelectors ].
+	allInfos := (members flatCollect: [ :member | member compilationInfoForSelectors ] as: Set) asOrderedCollection.
 
 	(allInfos groupedBy: #selector) keysAndValuesDo: [ :selector :infos |
 			infos size > 1 ifTrue: [
