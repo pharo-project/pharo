@@ -21,7 +21,7 @@ TraitMethodToCompileInfo >> = anObject [
 	self class = anObject class ifFalse: [ ^ false ].
 	^ selector = anObject selector and: [
 			  definingTrait = anObject definingTrait and: [
-				  compiledMethod = anObject compiledMethod and: [ sourceCode = anObject sourceCode and: [ protocol = anObject protocol ] ] ] ]
+				  compiledMethod = anObject compiledMethod and: [ sourceCode = anObject sourceCode and: [ self protocol = anObject protocol ] ] ] ]
 ]
 
 { #category : 'accessing' }

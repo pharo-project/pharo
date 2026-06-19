@@ -20,11 +20,12 @@ TraitMethodToCompileInfoTest >> testDiamond [
 
 	| c1 t1 t2 t3 infos |
 	t1 := self newTrait: #T1.
+	t1 compile: 'm1 ^1' classified: #proto.
+	
 	t2 := self newTrait: #T2 traits: t1.
 	t3 := self newTrait: #T3 traits: t1.
 	c1 := self newClass: #C1 traits: t2 + t3.
 
-	t1 compile: 'm1 ^1' classified: #proto.
 
 	infos := c1 traitComposition compilationInfoForSelectors sorted: #selector ascending.
 
