@@ -124,7 +124,7 @@ ClapDbgBasicCommandsTest >> testPrintCommandWithDivisionByZeroReturnsError [
 	response := debugger parsesAndExecuteCommand: 'print 1/0'.
 
 	self assert: debugger isActive.
-	self assert: response equals: 'Error evaluating: 1/0'
+	self assert: (response includesSubstring: 'ZeroDivide')
 ]
 
 { #category : 'tests' }
@@ -147,20 +147,19 @@ ClapDbgBasicCommandsTest >> testPrintCommandWithSyntaxErrorReturnsError [
 	response := debugger parsesAndExecuteCommand: 'print 1 + '.
 
 	self assert: debugger isActive.
-
-	self assert: response equals: 'Error evaluating: 1 +'
+	self assert: (response includesSubstring: 'OCSyntaxErrorNotice')
 ]
 
 { #category : 'tests' }
 ClapDbgBasicCommandsTest >> testPrintCommandWithUnknownVariableReturnsError [
 
-    | response |
-    self setUpContextForPrinting.
-    
-    response := debugger parsesAndExecuteCommand: 'print arg'.
+	| response |
+	self setUpContextForPrinting.
 
-    self assert: debugger isActive.
-    self assert: response equals: 'Error evaluating: arg'
+	response := debugger parsesAndExecuteCommand: 'print arg'.
+
+	self assert: debugger isActive.
+	self assert: (response includesSubstring: 'OCUndeclaredVariableNotice')
 ]
 
 { #category : 'tests' }

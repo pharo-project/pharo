@@ -16,7 +16,7 @@ ClapDbgPrintCommand >> executeOn: aDebugger with: args [
 			              evaluate: args.
 		^ args , ' : ' , evaluation asString ]
 		on: Error
-		do: [ :ex | ^ 'Error evaluating: ' , args ]
+		do: [ :ex | ^ ex stackTraceString ]
 ]
 
 { #category : 'initialization' }
