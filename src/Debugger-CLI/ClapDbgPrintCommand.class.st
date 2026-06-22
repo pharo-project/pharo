@@ -1,12 +1,12 @@
 Class {
-	#name : 'PrintCommand',
-	#superclass : 'DebuggerCommand',
+	#name : 'ClapDbgPrintCommand',
+	#superclass : 'ClapDbgCommand',
 	#category : 'Debugger-CLI',
 	#package : 'Debugger-CLI'
 }
 
 { #category : 'printing' }
-PrintCommand >> executeOn: aDebugger with: args [
+ClapDbgPrintCommand >> executeOn: aDebugger with: args [
 
 	| evaluation |
 	args trim ifEmpty: [ ^ 'Nothing to print' ].
@@ -20,7 +20,7 @@ PrintCommand >> executeOn: aDebugger with: args [
 ]
 
 { #category : 'initialization' }
-PrintCommand >> initialize [
+ClapDbgPrintCommand >> initialize [
 
 	super initialize.
 	self commandName: #( 'print' 'p' ).

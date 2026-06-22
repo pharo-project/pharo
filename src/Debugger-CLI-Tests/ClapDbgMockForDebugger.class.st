@@ -1,5 +1,5 @@
 Class {
-	#name : 'MockForDebugger',
+	#name : 'ClapDbgMockForDebugger',
 	#superclass : 'Object',
 	#category : 'Debugger-CLI-Tests-Mock',
 	#package : 'Debugger-CLI-Tests',
@@ -7,13 +7,13 @@ Class {
 }
 
 { #category : 'mock' }
-MockForDebugger >> methodForNavigationInACode [
+ClapDbgMockForDebugger >> methodForNavigationInACode [
 
 	self methodToStepInto
 ]
 
 { #category : 'mock' }
-MockForDebugger >> methodToPrintCode: arg1 withArgument: arg2 [
+ClapDbgMockForDebugger >> methodToPrintCode: arg1 withArgument: arg2 [
 	"Fake method to test printCode"
 
 	| a b |
@@ -23,13 +23,13 @@ MockForDebugger >> methodToPrintCode: arg1 withArgument: arg2 [
 ]
 
 { #category : 'mock' }
-MockForDebugger >> methodToStepInto [
+ClapDbgMockForDebugger >> methodToStepInto [
 
 	^ 42
 ]
 
 { #category : 'mock' }
-MockForDebugger >> methodeToPrintCode [
+ClapDbgMockForDebugger >> methodeToPrintCode [
 	"Fake method to test printCode"
 
 	| a b |

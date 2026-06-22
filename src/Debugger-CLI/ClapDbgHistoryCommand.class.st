@@ -1,12 +1,12 @@
 Class {
-	#name : 'HistoryCommand',
-	#superclass : 'DebuggerCommand',
+	#name : 'ClapDbgHistoryCommand',
+	#superclass : 'ClapDbgCommand',
 	#category : 'Debugger-CLI',
 	#package : 'Debugger-CLI'
 }
 
 { #category : 'printing' }
-HistoryCommand >> executeOn: aDebugger with: args [
+ClapDbgHistoryCommand >> executeOn: aDebugger with: args [
 
 	| lines |
 	lines := aDebugger commandsStack asArray reversed withIndexCollect: [ :command :index | index asString , ' : ' , command ].
@@ -14,7 +14,7 @@ HistoryCommand >> executeOn: aDebugger with: args [
 ]
 
 { #category : 'initialization' }
-HistoryCommand >> initialize [
+ClapDbgHistoryCommand >> initialize [
 
 	super initialize.
 	self commandName: #( 'history' 'hist' ).

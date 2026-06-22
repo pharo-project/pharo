@@ -1,6 +1,6 @@
 Class {
-	#name : 'UnknownCommand',
-	#superclass : 'DebuggerCommand',
+	#name : 'ClapDbgUnknownCommand',
+	#superclass : 'ClapDbgCommand',
 	#instVars : [
 		'command'
 	],
@@ -9,25 +9,25 @@ Class {
 }
 
 { #category : 'accessing' }
-UnknownCommand >> command [
+ClapDbgUnknownCommand >> command [
 
 	^ command
 ]
 
 { #category : 'accessing' }
-UnknownCommand >> command: anObject [
+ClapDbgUnknownCommand >> command: anObject [
 
 	command := anObject
 ]
 
 { #category : 'printing' }
-UnknownCommand >> executeOn: aDebugger with: args [
+ClapDbgUnknownCommand >> executeOn: aDebugger with: args [
 
 	^ 'Unknown command: ' , command
 ]
 
 { #category : 'initialization' }
-UnknownCommand >> initialize [
+ClapDbgUnknownCommand >> initialize [
 
 	super initialize.
 	self commandName: #( 'any other command' 'anUnknownCommand' ).

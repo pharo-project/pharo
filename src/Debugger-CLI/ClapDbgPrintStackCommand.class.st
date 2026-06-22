@@ -1,12 +1,12 @@
 Class {
-	#name : 'PrintStackCommand',
-	#superclass : 'DebuggerCommand',
+	#name : 'ClapDbgPrintStackCommand',
+	#superclass : 'ClapDbgCommand',
 	#category : 'Debugger-CLI',
 	#package : 'Debugger-CLI'
 }
 
 { #category : 'printing' }
-PrintStackCommand >> executeOn: aDebugger with: args [
+ClapDbgPrintStackCommand >> executeOn: aDebugger with: args [
 
 	| results remainingStackText firstOfStack |
 	results := aDebugger context contextStack collect: [ :ctx | ctx asString ].
@@ -18,7 +18,7 @@ PrintStackCommand >> executeOn: aDebugger with: args [
 ]
 
 { #category : 'initialization' }
-PrintStackCommand >> initialize [
+ClapDbgPrintStackCommand >> initialize [
 
 	super initialize.
 	self commandName: #( 'printStack' 'ps' ).

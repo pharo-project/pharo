@@ -1,12 +1,12 @@
 Class {
-	#name : 'StepRelatedCommand',
-	#superclass : 'DebuggerCommand',
+	#name : 'ClapDbgStepRelatedCommand',
+	#superclass : 'ClapDbgCommand',
 	#category : 'Debugger-CLI',
 	#package : 'Debugger-CLI'
 }
 
 { #category : 'execution' }
-StepRelatedCommand >> executeOn: aDebugger with: args [
+ClapDbgStepRelatedCommand >> executeOn: aDebugger with: args [
 
 	[ self performStepOn: aDebugger ]
 		on: ProcessAlreadyTerminating
@@ -20,11 +20,11 @@ StepRelatedCommand >> executeOn: aDebugger with: args [
 ]
 
 { #category : 'execution' }
-StepRelatedCommand >> performStepOn: aDebugger [
+ClapDbgStepRelatedCommand >> performStepOn: aDebugger [
     self subclassResponsibility
 ]
 
 { #category : 'execution' }
-StepRelatedCommand >> printResultFor: aDebugger [
+ClapDbgStepRelatedCommand >> printResultFor: aDebugger [
     self subclassResponsibility
 ]

@@ -1,12 +1,12 @@
 Class {
-	#name : 'HelpCommand',
-	#superclass : 'DebuggerCommand',
+	#name : 'ClapDbgHelpCommand',
+	#superclass : 'ClapDbgCommand',
 	#category : 'Debugger-CLI',
 	#package : 'Debugger-CLI'
 }
 
 { #category : 'printing' }
-HelpCommand >> executeOn: aDebugger with: args [
+ClapDbgHelpCommand >> executeOn: aDebugger with: args [
 
 	| helpArray informLine |
 	helpArray := aDebugger commands values collect: [ :command | String tab , command printHelp ].
@@ -16,7 +16,7 @@ HelpCommand >> executeOn: aDebugger with: args [
 ]
 
 { #category : 'initialization' }
-HelpCommand >> initialize [
+ClapDbgHelpCommand >> initialize [
 
 	super initialize.
 	self commandName: #( 'help' 'h' ).

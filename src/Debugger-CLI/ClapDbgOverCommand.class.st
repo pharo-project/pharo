@@ -1,12 +1,12 @@
 Class {
-	#name : 'OverCommand',
-	#superclass : 'StepRelatedCommand',
+	#name : 'ClapDbgOverCommand',
+	#superclass : 'ClapDbgStepRelatedCommand',
 	#category : 'Debugger-CLI',
 	#package : 'Debugger-CLI'
 }
 
 { #category : 'initialization' }
-OverCommand >> initialize [
+ClapDbgOverCommand >> initialize [
 
 	super initialize.
 	self commandName: #( 'over' 'o' ).
@@ -15,11 +15,11 @@ OverCommand >> initialize [
 ]
 
 { #category : 'printing' }
-OverCommand >> performStepOn: aDebugger [
+ClapDbgOverCommand >> performStepOn: aDebugger [
     aDebugger session stepOver
 ]
 
 { #category : 'printing' }
-OverCommand >> printResultFor: aDebugger [
+ClapDbgOverCommand >> printResultFor: aDebugger [
     ^ 'Stepped OVER to: ' , aDebugger context printString , ' (PC: ' , aDebugger context pc asString , ')'
 ]

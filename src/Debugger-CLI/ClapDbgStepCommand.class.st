@@ -1,12 +1,12 @@
 Class {
-	#name : 'StepCommand',
-	#superclass : 'StepRelatedCommand',
+	#name : 'ClapDbgStepCommand',
+	#superclass : 'ClapDbgStepRelatedCommand',
 	#category : 'Debugger-CLI',
 	#package : 'Debugger-CLI'
 }
 
 { #category : 'initialization' }
-StepCommand >> initialize [
+ClapDbgStepCommand >> initialize [
 
 	super initialize.
 	self commandName: #( 'step' 's' ).
@@ -15,12 +15,12 @@ StepCommand >> initialize [
 ]
 
 { #category : 'printing' }
-StepCommand >> performStepOn: aDebugger [
+ClapDbgStepCommand >> performStepOn: aDebugger [
     aDebugger session stepInto
 ]
 
 { #category : 'printing' }
-StepCommand >> printResultFor: aDebugger [
+ClapDbgStepCommand >> printResultFor: aDebugger [
 
 	^ 'Stepped to: ' , aDebugger context printString , '(PC: ' , aDebugger context pc printString , ')'
 ]

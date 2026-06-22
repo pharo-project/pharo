@@ -1,5 +1,5 @@
 Class {
-	#name : 'DebuggerCommand',
+	#name : 'ClapDbgCommand',
 	#superclass : 'Object',
 	#instVars : [
 		'commandName',
@@ -11,48 +11,48 @@ Class {
 }
 
 { #category : 'accessing' }
-DebuggerCommand >> arguments [
+ClapDbgCommand >> arguments [
 
 	^ arguments
 ]
 
 { #category : 'accessing' }
-DebuggerCommand >> arguments: anObject [
+ClapDbgCommand >> arguments: anObject [
 
 	arguments := anObject
 ]
 
 { #category : 'accessing' }
-DebuggerCommand >> commandHelp [
+ClapDbgCommand >> commandHelp [
 
 	^ commandHelp
 ]
 
 { #category : 'accessing' }
-DebuggerCommand >> commandHelp: anObject [
+ClapDbgCommand >> commandHelp: anObject [
 
 	commandHelp := anObject
 ]
 
 { #category : 'accessing' }
-DebuggerCommand >> commandName [
+ClapDbgCommand >> commandName [
 
 	^ commandName
 ]
 
 { #category : 'accessing' }
-DebuggerCommand >> commandName: anObject [
+ClapDbgCommand >> commandName: anObject [
 
 	commandName := anObject
 ]
 
 { #category : 'execution' }
-DebuggerCommand >> executeOn: aDebugger with: args [ 
+ClapDbgCommand >> executeOn: aDebugger with: args [ 
 	^ self subclassResponsibility
 ]
 
 { #category : 'printing' }
-DebuggerCommand >> printHelp [
+ClapDbgCommand >> printHelp [
 
 	^ '{1} ( or ''{2}'') {3} : {4}' format: {
 			  (commandName first).

@@ -1,12 +1,12 @@
 Class {
-	#name : 'PrintCodeCommand',
-	#superclass : 'DebuggerCommand',
+	#name : 'ClapDbgPrintCodeCommand',
+	#superclass : 'ClapDbgCommand',
 	#category : 'Debugger-CLI',
 	#package : 'Debugger-CLI'
 }
 
 { #category : 'printing' }
-PrintCodeCommand >> executeOn: aDebugger with: args [
+ClapDbgPrintCodeCommand >> executeOn: aDebugger with: args [
 
 	| codeOfCurrentMethod sne debugContext |
 	debugContext := aDebugger context.
@@ -21,7 +21,7 @@ PrintCodeCommand >> executeOn: aDebugger with: args [
 ]
 
 { #category : 'initialization' }
-PrintCodeCommand >> initialize [
+ClapDbgPrintCodeCommand >> initialize [
 
 	super initialize.
 	self commandName: #( 'printCode' 'pc' ).

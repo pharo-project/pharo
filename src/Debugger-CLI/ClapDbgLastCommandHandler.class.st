@@ -2,19 +2,19 @@
 ""Handles the command !! and return the most recent command typed ""
 "
 Class {
-	#name : 'LastCommandHandler',
-	#superclass : 'DebuggerHistoryHandler',
+	#name : 'ClapDbgLastCommandHandler',
+	#superclass : 'ClapDbgDebuggerHistoryHandler',
 	#category : 'Debugger-CLI',
 	#package : 'Debugger-CLI'
 }
 
 { #category : 'testing' }
-LastCommandHandler >> canHandle: aString [
+ClapDbgLastCommandHandler >> canHandle: aString [
 
 	^ aString beginsWith: '!!'
 ]
 
 { #category : 'testing' }
-LastCommandHandler >> handle: aString for: aDebugger [
+ClapDbgLastCommandHandler >> handle: aString for: aDebugger [
     ^ aDebugger lastCommand , (aString allButFirst: 2)
 ]

@@ -1,5 +1,5 @@
 Class {
-	#name : 'CommandLineDebuggerBasicCommandsTest',
+	#name : 'ClapDbgBasicCommandsTest',
 	#superclass : 'TestCase',
 	#instVars : [
 		'debugger'
@@ -9,48 +9,48 @@ Class {
 }
 
 { #category : 'running' }
-CommandLineDebuggerBasicCommandsTest >> setUp [
+ClapDbgBasicCommandsTest >> setUp [
 
 	| debuggingProcess debuggingContext debuggingSession |
 	super setUp.
 	debuggingProcess := [ self class compiler evaluate: 'OCParser parseMethod: foo self' ] newProcess.
 	debuggingContext := debuggingProcess suspendedContext.
 	debuggingSession := DebugSession named: 'test' on: debuggingProcess startedAt: debuggingContext.
-	debugger := CommandLineDebugger new
+	debugger := ClapDebugger new
 		            context: debuggingContext;
 		            process: debuggingProcess;
 		            session: debuggingSession
 ]
 
 { #category : 'tests' }
-CommandLineDebuggerBasicCommandsTest >> setUpContextForPrintCode [
+ClapDbgBasicCommandsTest >> setUpContextForPrintCode [
 
 	| currentContext |
 	currentContext := Context
 		                  sender: nil
-		                  receiver: MockForDebugger new
-		                  method: MockForDebugger >> #methodeToPrintCode
+		                  receiver: ClapDbgMockForDebugger new
+		                  method: ClapDbgMockForDebugger >> #methodeToPrintCode
 		                  arguments: #(  ).
 	debugger context: currentContext
 ]
 
 { #category : 'running' }
-CommandLineDebuggerBasicCommandsTest >> setUpContextForPrinting [
+ClapDbgBasicCommandsTest >> setUpContextForPrinting [
 
 	| currentContext |
 	currentContext := Context
 		                  sender: nil
-		                  receiver: MockForDebugger new
-		                  method: MockForDebugger >> #methodToPrintCode:withArgument:
+		                  receiver: ClapDbgMockForDebugger new
+		                  method: ClapDbgMockForDebugger >> #methodToPrintCode:withArgument:
 		                  arguments: #( 1 32 ).
 	debugger context: currentContext
 ]
 
 { #category : 'running' }
-CommandLineDebuggerBasicCommandsTest >> setUpDebuggerOnNavigationMock [
+ClapDbgBasicCommandsTest >> setUpDebuggerOnNavigationMock [
 
 	| process context session |
-	process := [ MockForDebugger new methodForNavigationInACode ] newProcess.
+	process := [ ClapDbgMockForDebugger new methodForNavigationInACode ] newProcess.
 	context := process suspendedContext.
 
 	session := DebugSession named: 'TestNav' on: process startedAt: context.
@@ -65,7 +65,7 @@ CommandLineDebuggerBasicCommandsTest >> setUpDebuggerOnNavigationMock [
 ]
 
 { #category : 'tests' }
-CommandLineDebuggerBasicCommandsTest >> testEmptyCommandDoesNothing [
+ClapDbgBasicCommandsTest >> testEmptyCommandDoesNothing [
 
 	| response |
 	response := debugger parsesAndExecuteCommand: '          '.
@@ -74,7 +74,7 @@ CommandLineDebuggerBasicCommandsTest >> testEmptyCommandDoesNothing [
 ]
 
 { #category : 'tests' }
-CommandLineDebuggerBasicCommandsTest >> testOverCommandAdvancesPCOnSameContext [
+ClapDbgBasicCommandsTest >> testOverCommandAdvancesPCOnSameContext [
 	
 	| initialContext initialPc |
 
@@ -86,7 +86,7 @@ CommandLineDebuggerBasicCommandsTest >> testOverCommandAdvancesPCOnSameContext [
 ]
 
 { #category : 'tests' }
-CommandLineDebuggerBasicCommandsTest >> testPrintCodeCommandShowsMethodSourceAndHighlightsCurrentInstruction [
+ClapDbgBasicCommandsTest >> testPrintCodeCommandShowsMethodSourceAndHighlightsCurrentInstruction [
 
     | response |
     self setUpContextForPrintCode.
@@ -103,7 +103,7 @@ CommandLineDebuggerBasicCommandsTest >> testPrintCodeCommandShowsMethodSourceAnd
 ]
 
 { #category : 'tests' }
-CommandLineDebuggerBasicCommandsTest >> testPrintCommandEvaluatesArgumentsCorrectly [
+ClapDbgBasicCommandsTest >> testPrintCommandEvaluatesArgumentsCorrectly [
 
 	| response1 response2 |
 	self setUpContextForPrinting.
@@ -116,7 +116,7 @@ CommandLineDebuggerBasicCommandsTest >> testPrintCommandEvaluatesArgumentsCorrec
 ]
 
 { #category : 'tests' }
-CommandLineDebuggerBasicCommandsTest >> testPrintCommandWithDivisionByZeroReturnsError [
+ClapDbgBasicCommandsTest >> testPrintCommandWithDivisionByZeroReturnsError [
 
 	| response |
 	self setUpContextForPrinting.
@@ -128,7 +128,7 @@ CommandLineDebuggerBasicCommandsTest >> testPrintCommandWithDivisionByZeroReturn
 ]
 
 { #category : 'tests' }
-CommandLineDebuggerBasicCommandsTest >> testPrintCommandWithNoArgumentsShowsNothingToPrint [
+ClapDbgBasicCommandsTest >> testPrintCommandWithNoArgumentsShowsNothingToPrint [
 
 	| response |
 	self setUpContextForPrinting.
@@ -139,7 +139,7 @@ CommandLineDebuggerBasicCommandsTest >> testPrintCommandWithNoArgumentsShowsNoth
 ]
 
 { #category : 'tests' }
-CommandLineDebuggerBasicCommandsTest >> testPrintCommandWithSyntaxErrorReturnsError [
+ClapDbgBasicCommandsTest >> testPrintCommandWithSyntaxErrorReturnsError [
 
 	| response |
 	self setUpContextForPrinting.
@@ -152,7 +152,7 @@ CommandLineDebuggerBasicCommandsTest >> testPrintCommandWithSyntaxErrorReturnsEr
 ]
 
 { #category : 'tests' }
-CommandLineDebuggerBasicCommandsTest >> testPrintCommandWithUnknownVariableReturnsError [
+ClapDbgBasicCommandsTest >> testPrintCommandWithUnknownVariableReturnsError [
 
     | response |
     self setUpContextForPrinting.
@@ -164,7 +164,7 @@ CommandLineDebuggerBasicCommandsTest >> testPrintCommandWithUnknownVariableRetur
 ]
 
 { #category : 'tests' }
-CommandLineDebuggerBasicCommandsTest >> testPrintStackCommandShowsCurrentContext [
+ClapDbgBasicCommandsTest >> testPrintStackCommandShowsCurrentContext [
 
 	| response |
 	response := debugger parsesAndExecuteCommand: 'printStack'.
@@ -173,7 +173,7 @@ CommandLineDebuggerBasicCommandsTest >> testPrintStackCommandShowsCurrentContext
 ]
 
 { #category : 'tests' }
-CommandLineDebuggerBasicCommandsTest >> testPrintStackUpdatesCorrectlyOnMethodEntryAfterStep [
+ClapDbgBasicCommandsTest >> testPrintStackUpdatesCorrectlyOnMethodEntryAfterStep [
 
 	| stackBefore stackInside |
 	self setUpDebuggerOnNavigationMock.
@@ -189,7 +189,7 @@ CommandLineDebuggerBasicCommandsTest >> testPrintStackUpdatesCorrectlyOnMethodEn
 ]
 
 { #category : 'tests' }
-CommandLineDebuggerBasicCommandsTest >> testPrintStackUpdatesCorrectlyOnMethodExitAfterStep [
+ClapDbgBasicCommandsTest >> testPrintStackUpdatesCorrectlyOnMethodExitAfterStep [
 
 	| stackInside stackAfter |
 	self setUpDebuggerOnNavigationMock.
@@ -208,7 +208,7 @@ CommandLineDebuggerBasicCommandsTest >> testPrintStackUpdatesCorrectlyOnMethodEx
 ]
 
 { #category : 'tests' }
-CommandLineDebuggerBasicCommandsTest >> testQuitDisactivateTheDebuggerAndAnnouncesIt [
+ClapDbgBasicCommandsTest >> testQuitDisactivateTheDebuggerAndAnnouncesIt [
 
 	| response |
 	self assert: debugger isActive.
@@ -218,7 +218,7 @@ CommandLineDebuggerBasicCommandsTest >> testQuitDisactivateTheDebuggerAndAnnounc
 ]
 
 { #category : 'tests' }
-CommandLineDebuggerBasicCommandsTest >> testStepCommandEntersCalledMethod [
+ClapDbgBasicCommandsTest >> testStepCommandEntersCalledMethod [
 
 	| initialContext newContext |
 
@@ -230,7 +230,7 @@ CommandLineDebuggerBasicCommandsTest >> testStepCommandEntersCalledMethod [
 ]
 
 { #category : 'tests' }
-CommandLineDebuggerBasicCommandsTest >> testUnknownCommandReturnsErrorMessage [
+ClapDbgBasicCommandsTest >> testUnknownCommandReturnsErrorMessage [
 
 	| response unknownCommand |
 	unknownCommand := 'thisIsAnUnknownCommand'.

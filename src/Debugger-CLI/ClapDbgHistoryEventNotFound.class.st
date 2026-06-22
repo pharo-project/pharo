@@ -1,5 +1,5 @@
 Class {
-	#name : 'HistoryEventNotFound',
+	#name : 'ClapDbgHistoryEventNotFound',
 	#superclass : 'Error',
 	#category : 'Debugger-CLI',
 	#package : 'Debugger-CLI'
