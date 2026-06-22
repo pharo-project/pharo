@@ -19,7 +19,7 @@ ClapDbgStepRelatedCommand >> executeOn: aDebugger with: args [
 	^ ClapDbgPrintCodeCommand new executeOn: aDebugger with: ''
 ]
 
-{ #category : 'execution' }
+{ #category : 'command execution' }
 ClapDbgStepRelatedCommand >> performStepOn: aDebugger [
     self subclassResponsibility
 ]

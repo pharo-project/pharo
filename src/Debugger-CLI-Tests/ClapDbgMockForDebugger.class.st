@@ -29,6 +29,14 @@ ClapDbgMockForDebugger >> methodToStepInto [
 ]
 
 { #category : 'mock' }
+ClapDbgMockForDebugger >> methodWithBlockForStepThrough [
+
+	| value |
+	value := [ 1 + 2 ] value.
+	^ value
+]
+
+{ #category : 'mock' }
 ClapDbgMockForDebugger >> methodeToPrintCode [
 	"Fake method to test printCode"
 

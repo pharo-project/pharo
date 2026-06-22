@@ -64,6 +64,26 @@ ClapDbgBasicCommandsTest >> setUpDebuggerOnNavigationMock [
 	^ debugger context
 ]
 
+{ #category : 'running' }
+ClapDbgBasicCommandsTest >> setUpDebuggerOnStepThroughMock [
+
+	| process context session |
+	process := [ ClapDbgMockForDebugger new methodWithBlockForStepThrough ] newProcess.
+	context := process suspendedContext.  
+
+	session := DebugSession named: 'TestStepThrough' on: process startedAt: context.
+
+	debugger
+		process: process;
+		session: session;
+		context: context.
+
+	[ debugger context method selector = #methodWithBlockForStepThrough ] whileFalse: [ debugger parsesAndExecuteCommand: 'step' ].
+	debugger parsesAndExecuteCommand: 'step'.
+
+	^ debugger context
+]
+
 { #category : 'tests' }
 ClapDbgBasicCommandsTest >> testEmptyCommandDoesNothing [
 
@@ -226,6 +246,19 @@ ClapDbgBasicCommandsTest >> testStepCommandEntersCalledMethod [
 	newContext := debugger context method.
 	self deny: newContext method equals: initialContext method.
 	self assert: newContext method selector equals: #methodToStepInto.
+]
+
+{ #category : 'tests' }
+ClapDbgBasicCommandsTest >> testStepThroughCommandEntersBlock [
+
+	| initialContext response codeBefore |
+	initialContext := self setUpDebuggerOnStepThroughMock.
+	codeBefore := debugger parsesAndExecuteCommand: 'pc'.
+
+	response := debugger parsesAndExecuteCommand: 'stepThrough'.
+	self assert: debugger context isBlockContext.
+
+	self assert: debugger context home method selector equals: #methodWithBlockForStepThrough
 ]
 
 { #category : 'tests' }
