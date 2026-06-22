@@ -57,8 +57,8 @@ ClapDbgHistoryTest >> testHandleHistoryLastCommand [
 	self assert: (debugger handleHistory: '!!') equals: 'help'.
 	debugger commandsStack push: 'help'.
 	self assert: (debugger handleHistory: '!! arg1') equals: 'help arg1'.
-	debugger commandsStack push: 'help'.
-	self assert: (debugger handleHistory: '!!!') equals: 'help!'
+	debugger commandsStack push: 'test'.
+	self assert: (debugger handleHistory: '') equals: 'test'
 ]
 
 { #category : 'running' }

@@ -11,10 +11,11 @@ Class {
 { #category : 'testing' }
 ClapDbgLastCommandHandler >> canHandle: aString [
 
-	^ aString beginsWith: '!!'
+	^ (aString beginsWith: '!!') or: [ aString isEmpty ]
 ]
 
 { #category : 'testing' }
 ClapDbgLastCommandHandler >> handle: aString for: aDebugger [
-    ^ aDebugger lastCommand , (aString allButFirst: 2)
+
+	^ aDebugger lastCommand , (aString copyReplaceAll: '!' with: '')
 ]
