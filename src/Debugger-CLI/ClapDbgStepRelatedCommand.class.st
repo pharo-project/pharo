@@ -16,15 +16,10 @@ ClapDbgStepRelatedCommand >> executeOn: aDebugger with: args [
 
 	aDebugger context ifNil: [ ^ aDebugger finishedDebugging ].
 
-	^ self printResultFor: aDebugger
+	^ ClapDbgPrintCodeCommand new executeOn: aDebugger with: ''
 ]
 
 { #category : 'execution' }
 ClapDbgStepRelatedCommand >> performStepOn: aDebugger [
-    self subclassResponsibility
-]
-
-{ #category : 'execution' }
-ClapDbgStepRelatedCommand >> printResultFor: aDebugger [
     self subclassResponsibility
 ]

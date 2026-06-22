@@ -18,8 +18,3 @@ ClapDbgOverCommand >> initialize [
 ClapDbgOverCommand >> performStepOn: aDebugger [
     aDebugger session stepOver
 ]
-
-{ #category : 'printing' }
-ClapDbgOverCommand >> printResultFor: aDebugger [
-    ^ 'Stepped OVER to: ' , aDebugger context printString , ' (PC: ' , aDebugger context pc asString , ')'
-]

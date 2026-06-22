@@ -18,9 +18,3 @@ ClapDbgStepCommand >> initialize [
 ClapDbgStepCommand >> performStepOn: aDebugger [
     aDebugger session stepInto
 ]
-
-{ #category : 'printing' }
-ClapDbgStepCommand >> printResultFor: aDebugger [
-
-	^ 'Stepped to: ' , aDebugger context printString , '(PC: ' , aDebugger context pc printString , ')'
-]
