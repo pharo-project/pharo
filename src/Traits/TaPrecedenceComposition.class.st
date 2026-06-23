@@ -49,6 +49,19 @@ TaPrecedenceComposition >> isConflictingSelector: aSelector [
 ]
 
 { #category : 'accessing' }
+TaPrecedenceComposition >> manageConflictBetween: implementations infosToRemove: toRemove [
+
+	| preferedInfos |
+	preferedInfos := self preferedTrait methodsCompilationInfo.
+
+	implementations
+		detect: [ :info | preferedInfos includes: info ]
+		ifFound: [ :info | ^ toRemove addAll: (implementations copyWithout: info) ].
+
+	^ super manageConflictBetween: implementations infosToRemove: toRemove
+]
+
+{ #category : 'accessing' }
 TaPrecedenceComposition >> memberForSelector: aSelector [
 
 	"I look first in the prefered trait if not in the other member"

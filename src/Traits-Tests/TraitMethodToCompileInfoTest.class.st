@@ -101,7 +101,7 @@ TraitMethodToCompileInfoTest >> testSequenceDoesNotConflictOnRequirement [
 	t2 compile: 'm1 ^2' classified: #proto.
 
 	infos := c1 traitComposition methodsCompilationInfo.
-	self skip.
+
 	self assert: infos size equals: 1.
 	self
 		check: infos first
@@ -120,7 +120,7 @@ TraitMethodToCompileInfoTest >> testSequenceWithConflict [
 	c1 := self newClass: #C1 traits: t1 + t2.
 
 	t1 compile: 'm1 ^1' classified: #proto.
-	t2 compile: 'm1 ^1' classified: #proto.
+	t2 compile: 'm1 ^2' classified: #proto2.
 
 	infos := c1 traitComposition methodsCompilationInfo sorted: #selector ascending.
 
@@ -153,9 +153,7 @@ TraitMethodToCompileInfoTest >> testSequenceWithTwoRequirements [
 		selector: #m1
 		protocol: Protocol traitConflictName
 		sourceCode: 'm1 self explicitRequirement'.
-	self assert: ({
-			 t1.
-			 t2 } includes: infos first definingTrait)
+	self assert: (c1 traitComposition members includes: infos first definingTrait)
 ]
 
 { #category : 'tests' }
