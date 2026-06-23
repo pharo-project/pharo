@@ -14,7 +14,7 @@ ClapDbgPrintCommand >> executeOn: aDebugger with: args [
 		evaluation := OpalEvaluator new
 			              context: aDebugger context;
 			              evaluate: args.
-		^ args , ' : ' , evaluation asString ]
+		^ evaluation asString ]
 		on: Error
 		do: [ :ex | ^ ex stackTraceString ]
 ]

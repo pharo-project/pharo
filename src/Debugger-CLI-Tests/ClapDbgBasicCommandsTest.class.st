@@ -129,10 +129,10 @@ ClapDbgBasicCommandsTest >> testPrintCommandEvaluatesArgumentsCorrectly [
 	self setUpContextForPrinting.
 
 	response1 := debugger parsesAndExecuteCommand: 'print arg1'.
-	self assert: response1 equals: 'arg1 : 1'.
+	self assert: response1 equals: '1'.
 
 	response2 := debugger parsesAndExecuteCommand: 'print arg2'.
-	self assert: response2 equals: 'arg2 : 32'
+	self assert: response2 equals: '32'
 ]
 
 { #category : 'tests' }
