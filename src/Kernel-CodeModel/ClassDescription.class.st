@@ -850,6 +850,16 @@ ClassDescription >> removeSelector: selector [
 	dictionary of the receiver, if it is there. Answer nil otherwise."
 
 	<reflection: 'Class structural modification - Selector/Method modification'>
+	
+	^ self removeSelector: selector logged: true
+]
+
+{ #category : 'accessing - method dictionary' }
+ClassDescription >> removeSelector: selector logged: aBoolean [
+	"Remove the message whose selector is given from the method
+	dictionary of the receiver, if it is there. Answer nil otherwise."
+
+	<reflection: 'Class structural modification - Selector/Method modification'>
 	| method origin |
 	method := self compiledMethodAt: selector.
 	origin := method origin.
@@ -861,7 +871,7 @@ ClassDescription >> removeSelector: selector [
 
 	super removeSelector: selector.
 
-	self codeChangeAnnouncer methodRemoved: method origin: origin
+	aBoolean ifTrue: [ self codeChangeAnnouncer methodRemoved: method origin: origin ].
 ]
 
 { #category : 'protocols' }

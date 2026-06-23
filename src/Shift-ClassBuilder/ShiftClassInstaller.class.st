@@ -22,7 +22,8 @@ Class {
 	#name : 'ShiftClassInstaller',
 	#superclass : 'Object',
 	#instVars : [
-		'builder'
+		'builder',
+		'sourcesManager'
 	],
 	#category : 'Shift-ClassBuilder-Installer',
 	#package : 'Shift-ClassBuilder',
@@ -192,6 +193,7 @@ ShiftClassInstaller >> make [
 		newClass := self oldClass.
 	].
 
+	self storeSourceCodeOf: newClass.
 	self updatePackage: newClass.
 	self comment: newClass.
 
@@ -211,6 +213,7 @@ ShiftClassInstaller >> make: aBlock [
 ShiftClassInstaller >> makeWithBuilder: aBuilder [
 
 	builder := aBuilder.
+	sourcesManager := aBuilder sourcesManager.
 	^ self make
 ]
 
@@ -294,6 +297,18 @@ ShiftClassInstaller >> oldClass: anObject [
 ShiftClassInstaller >> packageOrganizer [
 
 	^ builder installingEnvironment organization
+]
+
+{ #category : 'accessing' }
+ShiftClassInstaller >> sourcesManager [
+
+	^ sourcesManager ifNil: [ SourcesManager current ]
+]
+
+{ #category : 'building' }
+ShiftClassInstaller >> storeSourceCodeOf: newClass [
+
+	self sourcesManager ifNotNil: [ :instance | instance writeClassCreation: newClass ]
 ]
 
 { #category : 'building' }

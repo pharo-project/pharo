@@ -56,7 +56,8 @@ Class {
 		'superclassResolver',
 		'inRemake',
 		'package',
-		'tag'
+		'tag',
+		'sourcesManager'
 	],
 	#classVars : [
 		'BuilderEnhancer'
@@ -634,6 +635,17 @@ ShiftClassBuilder >> slots: aCollection [
 ShiftClassBuilder >> slotsFromString: aString [
 	"Note: this method should not be used outside of old style class definitions"
 	self slots: aString asSlotCollection
+]
+
+{ #category : 'accessing' }
+ShiftClassBuilder >> sourcesManager [
+	^ sourcesManager
+]
+
+{ #category : 'accessing' }
+ShiftClassBuilder >> sourcesManager: aNoSourcesManager [ 
+	
+	sourcesManager := aNoSourcesManager 
 ]
 
 { #category : 'accessing' }

@@ -1,11 +1,8 @@
 Class {
 	#name : 'ExtensionTest',
-	#superclass : 'TestCase',
+	#superclass : 'AbstractExtensionTest',
 	#instVars : [
-		'environment',
 		'userClass',
-		'userPackage',
-		'definerPackage',
 		'extensionOnObject',
 		'definerPackage2',
 		'objectClass',
@@ -20,50 +17,15 @@ Class {
 { #category : 'running' }
 ExtensionTest >> setUp [
 
-	| extendedPackage |
 	super setUp.
-	
-	environment := SystemEnvironment new.
-	extendedPackage := Package named: 'Extended'.
-	definerPackage := Package named: 'Definer'.
-	userPackage := Package named: 'User'.
 
-	objectClass := (Object << #MyObject
-		installingEnvironment: environment;
-		package: userPackage) install.
-	
-	pointClass := (Object << #MyPoint
-		superclass: objectClass;
-		installingEnvironment: environment;
-		package: userPackage) install.
+	objectClass := self createClassNamed: #MyObject superclass: isolatingRoot package: userPackage.
+	pointClass := self createClassNamed: #MyPoint superclass: objectClass package: userPackage.
 
-	extensionOnPoint := (Extension << #ExtensionOfPoint
-		extendedClass: pointClass;
-		installingEnvironment: environment;
-		package: definerPackage) install.
-	
-	extensionOnObject := (Extension << #ExtensionOfObject
-		extendedClass: objectClass;
-		installingEnvironment: environment;
-		package: definerPackage) install.
+	extensionOnPoint := self createExtensionNamed: #ExtensionOfPoint forBehavior: pointClass inPackage: definerPackage.
+	extensionOnObject := self createExtensionNamed: #ExtensionOfObject forBehavior: objectClass inPackage: definerPackage.
 
-	userClass := (Object << #MyUserClass
-		superclass: objectClass;
-		installingEnvironment: environment;
-		package: userPackage) install.
-]
-
-{ #category : 'running' }
-ExtensionTest >> tearDown [
-	"Make sure we did not pollute the global dictionaries"
-
-	self deny: (Point methodDictionary keys anySatisfy: [ :k | k isKindOf: ScopedSelector ]).
-	self deny: (Object methodDictionary keys anySatisfy: [ :k | k isKindOf: ScopedSelector ]).
-	self deny: (Integer methodDictionary keys anySatisfy: [ :k | k isKindOf: ScopedSelector ]).
-	
-	environment allClassesAndTraits do: [ :e | e removeFromSystem ].
-	
-	super tearDown
+	userClass := self createClassNamed: #MyUserClass superclass: objectClass package: userPackage
 ]
 
 { #category : 'tests - semantic' }
@@ -98,7 +60,7 @@ ExtensionTest >> test04LookupExtendedSelectorInDefinerReturnsScopedSelector [
 
 	| scopedSelector |
 	"We define a extension method, which defines a scoped selector in the selector namespace"
-	extensionOnObject compile: 'extensionMethod ^ 42'.
+	self compile: 'extensionMethod ^ 42' on: extensionOnObject.
 
 	scopedSelector := definerPackage visibleSelectorForSymbol: #extensionMethod.
 	self assert: scopedSelector isScopedSelector.
@@ -111,7 +73,7 @@ ExtensionTest >> test05LookupExtendedSelectorInUserReturnsScopedSelector [
 
 	| scopedSelector |
 	"We define a extension method, which defines a scoped selector in the selector namespace"
-	extensionOnObject compile: 'extensionMethod ^ 42'.
+	self compile: 'extensionMethod ^ 42' on: extensionOnObject.
 	userPackage addExtensionImport: extensionOnObject.
 
 	scopedSelector := userPackage visibleSelectorForSymbol: #extensionMethod.
@@ -124,8 +86,8 @@ ExtensionTest >> test05LookupExtendedSelectorInUserReturnsScopedSelector [
 ExtensionTest >> test06ExtensionsInTheSamePackageSeeEachOther [
 
 	| receiver |
-	extensionOnObject compile: 'extension2 ^ 42'.
-	extensionOnObject compile: 'extension1 ^ self extension2'.
+	self compile: 'extension2 ^ 42' on: extensionOnObject.
+	self compile: 'extension1 ^ self extension2' on: extensionOnObject.
 
 	receiver := objectClass new.
 	self assert: (receiver perform: (definerPackage visibleSelectorForSymbol: #extension1)) equals: 42
@@ -135,8 +97,8 @@ ExtensionTest >> test06ExtensionsInTheSamePackageSeeEachOther [
 ExtensionTest >> test07ExtensionsInTheSamePackageSeeEachOtherIfDefinedBackwards [
 
 	| receiver |
-	extensionOnObject compile: 'extension1 ^ self extension2'.
-	extensionOnObject compile: 'extension2 ^ 42'.
+	self compile: 'extension1 ^ self extension2' on: extensionOnObject.
+	self compile: 'extension2 ^ 42' on: extensionOnObject.
 
 	receiver := objectClass new.
 	self assert: (receiver perform: (definerPackage visibleSelectorForSymbol: #extension1)) equals: 42
@@ -146,7 +108,7 @@ ExtensionTest >> test07ExtensionsInTheSamePackageSeeEachOtherIfDefinedBackwards 
 ExtensionTest >> test08RecursiveExtensionSeesItself [
 
 	| receiver |
-	extensionOnObject compile: 'factorial: n ^ n == 0 ifTrue: [1] ifFalse: [n * (self factorial: n - 1)]'.
+	self compile: 'factorial: n ^ n == 0 ifTrue: [1] ifFalse: [n * (self factorial: n - 1)]' on: extensionOnObject.
 
 	receiver := objectClass new.
 	self assert: (receiver perform: (definerPackage visibleSelectorForSymbol: #factorial:) with: 5) equals: 120
@@ -156,22 +118,25 @@ ExtensionTest >> test08RecursiveExtensionSeesItself [
 ExtensionTest >> test09ExtensionIsNotVisibleIfNotImported [
 
 	| receiver |
-	extensionOnObject compile: 'extensionMethod ^ 42'.
-	userClass compile: 'userMethod ^ self extensionMethod'.
-	
+	self compile: 'extensionMethod ^ 42' on: extensionOnObject.
+	self compile: 'userMethod ^ self extensionMethod' on: userClass.
+
 	receiver := userClass new.
-	[receiver perform: #userMethod. self fail]
-		on: MessageNotUnderstood do: [ :dnu |
-			self assert: dnu receiver == receiver.
-			self assert: dnu message selector equals: #extensionMethod ]
+	[
+		receiver perform: #userMethod.
+		self fail ]
+		on: MessageNotUnderstood
+		do: [ :dnu |
+				self assert: dnu receiver == receiver.
+				self assert: dnu message selector equals: #extensionMethod ]
 ]
 
 { #category : 'tests - semantic' }
 ExtensionTest >> test10ExtensionIsVisibleIfImported [
 
 	| receiver |		
-	extensionOnObject compile: 'extensionMethod ^ 42'.
-	userClass compile: 'userMethod ^ self extensionMethod'.
+	self compile: 'extensionMethod ^ 42' on: extensionOnObject.
+	self compile: 'userMethod ^ self extensionMethod' on: userClass.
 
 	userPackage addExtensionImport: extensionOnObject.
 	
@@ -183,10 +148,10 @@ ExtensionTest >> test10ExtensionIsVisibleIfImported [
 ExtensionTest >> test11ExtensionsArePolymorphicWithBaseSelectors [
 
 	| userInstance |
-	objectClass compile: 'asString ^ ''This is not an extension'''.
-	extensionOnPoint compile: 'asString ^ ''youpiii'''.
-	userClass compile: 'scopedUser: anObject
-		^ anObject asString'.
+	self compile: 'asString ^ ''This is not an extension''' on: objectClass.
+	self compile: 'asString ^ ''youpiii''' on: extensionOnPoint.
+	self compile: 'scopedUser: anObject
+		^ anObject asString' on: userClass.
 
 	userPackage addExtensionImport: extensionOnPoint.
 	userInstance := userClass new.
@@ -202,7 +167,9 @@ ExtensionTest >> test11ExtensionsArePolymorphicWithBaseSelectors [
 { #category : 'tests - runtime' }
 ExtensionTest >> test12ExtensionDefinesSelectorWithExtendedClass [
 
-	extensionOnObject compile: 'extensionMethod ^ 42'. "Now userMethod has executed, and a scoped selector for #extensionMethod has been installed in Object"
+	self compile: 'extensionMethod ^ 42' on: extensionOnObject.
+	
+	"Now userMethod has executed, and a scoped selector for #extensionMethod has been installed in Object"
 	self assert: ((definerPackage visibleSelectorForSymbol: #extensionMethod) extendedBehaviors includes: objectClass)
 ]
 
@@ -210,18 +177,20 @@ ExtensionTest >> test12ExtensionDefinesSelectorWithExtendedClass [
 ExtensionTest >> test12ExtensionsArePolymorphicBetweenThem [
 
 	| userInstance |
-	definerPackage2 := Package named: 'Definer2'.	
-	extensionOnObject compile: 'foo ^ 10'.
-	extensionOnPoint compile: 'foo ^ 42'.
-	userClass compile: 'scopedUser: anObject
-		^ anObject foo'.
+	definerPackage2 := Package named: 'Definer2'.
+	self compile: 'foo ^ 10' on: extensionOnObject.
+	self compile: 'foo ^ 42' on: extensionOnPoint.
+	self
+		compile: 'scopedUser: anObject
+		^ anObject foo'
+		on: userClass.
 
 	userPackage addExtensionImport: extensionOnObject.
 	userPackage addExtensionImport: extensionOnPoint.
 	userInstance := userClass new.
 
 	self assert: (userInstance perform: #scopedUser: with: pointClass new) equals: 42.
-	self assert: (userInstance perform: #scopedUser: with: objectClass new) equals: 10.
+	self assert: (userInstance perform: #scopedUser: with: objectClass new) equals: 10
 ]
 
 { #category : 'tests - semantic' }
@@ -229,31 +198,35 @@ ExtensionTest >> test13ConflictingExtensionsThrowError [
 
 	| userInstance anotherExtensionOnObject |
 	definerPackage2 := Package named: 'Definer2'.
-	anotherExtensionOnObject := (Extension << #AnotherExtensionOnObject
-		extendedClass: objectClass;
-		installingEnvironment: environment;
-		package: definerPackage2) install.
-	
-	extensionOnObject compile: 'foo ^ 10'.
-	anotherExtensionOnObject compile: 'foo ^ 42'.
-	userClass compile: 'scopedUser: anObject
-		^ anObject foo'.
+	anotherExtensionOnObject := self
+		                            createExtensionNamed: #AnotherExtensionOnObject
+		                            forBehavior: objectClass
+		                            inPackage: definerPackage2.
+
+	self compile: 'foo ^ 10' on: extensionOnObject.
+	self compile: 'foo ^ 42' on: anotherExtensionOnObject.
+	self
+		compile: 'scopedUser: anObject
+		^ anObject foo'
+		on: userClass.
 
 	userPackage addExtensionImport: extensionOnObject.
 	userPackage addExtensionImport: anotherExtensionOnObject.
 	userInstance := userClass new.
 
-	self should: [(userInstance perform: #scopedUser: with: objectClass new)] raise: ExtensionConflictError with: [ :ex | self assert: ex messageText equals: 'Conflict: extension overwrites method #foo in MyObject' ].
-	
+	self
+		should: [ userInstance perform: #scopedUser: with: objectClass new ]
+		raise: ExtensionConflictError
+		with: [ :ex | self assert: ex messageText equals: 'Conflict: extension overwrites method #foo in MyObject' ]
 ]
 
 { #category : 'tests - runtime' }
 ExtensionTest >> test13ExtensionDoesNotDefineAliasBeforeSend [
 
 	| userInstance scopedSelector |
-	extensionOnPoint compile: 'asString ^ ''youpiii'''.
-	userClass compile: 'scopedUser: anObject
-		^ anObject asString'.
+	self compile: 'asString ^ ''youpiii''' on: extensionOnPoint.
+	self compile: 'scopedUser: anObject
+		^ anObject asString' on: userClass.
 
 	userPackage addExtensionImport: extensionOnPoint.
 	userInstance := userClass new.
@@ -267,7 +240,7 @@ ExtensionTest >> test13ExtensionDoesNotDefineAliasBeforeSend [
 ExtensionTest >> test14DefinerAndUserSelectorAreNotTheSame [
 
 	| definerScopedSelector userScopedSelector |
-	extensionOnPoint compile: 'asString ^ ''youpiii'''.
+	self compile: 'asString ^ ''youpiii''' on: extensionOnPoint.
 
 	userPackage addExtensionImport: extensionOnPoint.
 
@@ -282,10 +255,10 @@ ExtensionTest >> test14ExtensionSuperSends [
 
 	| userInstance |
 
-	extensionOnObject compile: 'foo ^ 10'.
-	extensionOnPoint compile: 'foo ^ super foo + 1'.
-	userClass compile: 'scopedUser: anObject
-		^ anObject foo'.
+	self compile: 'foo ^ 10' on: extensionOnObject.
+	self compile: 'foo ^ super foo + 1' on: extensionOnPoint.
+	self compile: 'scopedUser: anObject
+		^ anObject foo' on: userClass.
 
 	userPackage addExtensionImport: extensionOnObject.
 	userPackage addExtensionImport: extensionOnPoint.
@@ -299,10 +272,10 @@ ExtensionTest >> test14ExtensionSuperSends [
 ExtensionTest >> test15ExtensionsInHierarchySubclassBindingFirst [
 
 	| userInstance |
-	extensionOnObject compile: 'foo ^ 10'.
-	extensionOnPoint compile: 'foo ^ 42'.
-	userClass compile: 'scopedUser: anObject
-		^ anObject foo'.
+	self compile: 'foo ^ 10' on: extensionOnObject.
+	self compile: 'foo ^ 42' on: extensionOnPoint.
+	self compile: 'scopedUser: anObject
+		^ anObject foo' on: userClass.
 
 	userPackage addExtensionImport: extensionOnObject.
 	userPackage addExtensionImport: extensionOnPoint.
@@ -316,10 +289,10 @@ ExtensionTest >> test15ExtensionsInHierarchySubclassBindingFirst [
 ExtensionTest >> test15ExtensionsInHierarchySuperclassBindingFirst [
 
 	| userInstance |
-	extensionOnObject compile: 'foo ^ 10'.
-	extensionOnPoint compile: 'foo ^ 42'.
-	userClass compile: 'scopedUser: anObject
-		^ anObject foo'.
+	self compile: 'foo ^ 10' on: extensionOnObject.
+	self compile: 'foo ^ 42' on: extensionOnPoint.
+	self compile: 'scopedUser: anObject
+		^ anObject foo' on: userClass.
 
 	userPackage addExtensionImport: extensionOnObject.
 	userPackage addExtensionImport: extensionOnPoint.
@@ -334,15 +307,14 @@ ExtensionTest >> test15ExtensionsWithIsolatedSuperSends [
 
 	| userInstance extensionOnPoint2 superSenderSelector pointObject |
 	definerPackage2 := Package named: 'Definer2'.
-	extensionOnPoint2 := ((Extension << #ExtensionOfInteger)
-		                      extendedClass: pointClass;
-		                      installingEnvironment: environment;
-		                      package: definerPackage2) install.
+	extensionOnPoint2 := self createExtensionNamed: #ExtensionOfPoint2 forBehavior: pointClass inPackage: definerPackage2.
 
-	extensionOnObject compile: 'foo ^ 10'.
-	superSenderSelector := extensionOnPoint2 compile: 'foo ^ super foo + 1'.
-	userClass compile: 'scopedUser: anObject
-		^ anObject foo'.
+	self compile: 'foo ^ 10' on: extensionOnObject.
+	superSenderSelector := self compile: 'foo ^ super foo + 1' on: extensionOnPoint2.
+	self
+		compile: 'scopedUser: anObject
+		^ anObject foo'
+		on: userClass.
 
 	userPackage addExtensionImport: extensionOnObject.
 	userPackage addExtensionImport: extensionOnPoint2.
@@ -361,7 +333,7 @@ ExtensionTest >> test15ExtensionsWithIsolatedSuperSends [
 ExtensionTest >> test15LookupAliasedSelectorInUserReturnsExtendedClass [
 
 	| definerScopedSelector userScopedSelector extendedClass1 extendedClass2 |
-	extensionOnPoint compile: 'asString ^ ''youpiii'''.
+	self compile: 'asString ^ ''youpiii''' on: extensionOnPoint.
 
 	userPackage addExtensionImport: extensionOnPoint.
 
@@ -377,9 +349,11 @@ ExtensionTest >> test15LookupAliasedSelectorInUserReturnsExtendedClass [
 ExtensionTest >> test16ExtensionDoesNotTrackAliasedClassBeforeSend [
 
 	| userInstance scopedSelector |
-	extensionOnPoint compile: 'asString ^ ''youpiii'''.
-	userClass compile: 'scopedUser: anObject
-		^ anObject asString'.
+	self compile: 'asString ^ ''youpiii''' on: extensionOnPoint.
+	self
+		compile: 'scopedUser: anObject
+		^ anObject asString'
+		on: userClass.
 
 	userPackage addExtensionImport: extensionOnPoint.
 	userInstance := userClass new.
@@ -392,10 +366,12 @@ ExtensionTest >> test16ExtensionDoesNotTrackAliasedClassBeforeSend [
 ExtensionTest >> test17ExtensionSelectorDoesNotDefineAlias [
 
 	| userInstance definerScopedSelector |
-	objectClass compile: 'asString ^ ''this is not an extension'''.
-	extensionOnPoint compile: 'asString ^ ''youpiii'''.
-	userClass compile: 'scopedUser: anObject
-		^ anObject asString'.
+	self compile: 'asString ^ ''this is not an extension''' on: objectClass.
+	self compile: 'asString ^ ''youpiii''' on: extensionOnPoint.
+	self
+		compile: 'scopedUser: anObject
+		^ anObject asString'
+		on: userClass.
 
 	userPackage addExtensionImport: extensionOnPoint.
 	userInstance := userClass new. "This sends a scoped message to a non extended class.
@@ -412,13 +388,13 @@ ExtensionTest >> test17ExtensionSelectorDoesNotDefineAlias [
 ExtensionTest >> test18CleanExtendedBehaviorsCleansExtensionMethods [
 
 	| scopedSelector |
-	scopedSelector := extensionOnObject compile: 'extensionMethod ^ 42'.
+	scopedSelector := self compile: 'extensionMethod ^ 42' on: extensionOnObject.
 	self assert: scopedSelector isScopedSelector.
 
 	self assert: (objectClass new perform: scopedSelector) equals: 42.
-	
+
 	definerPackage cleanupExtendedBehaviors.
-	
+
 	self deny: (objectClass new respondsTo: scopedSelector)
 ]
 
@@ -426,14 +402,15 @@ ExtensionTest >> test18CleanExtendedBehaviorsCleansExtensionMethods [
 ExtensionTest >> test18ScopedSelectorTracksAliasedClassAfterSend [
 
 	| userInstance userScopedSelector |
-	objectClass compile: 'asString ^ ''this is not an extension'''.
-	extensionOnPoint compile: 'asString ^ ''youpiii'''.
-	userClass compile: 'scopedUser: anObject
-		^ anObject asString'.
+	self compile: 'asString ^ ''this is not an extension''' on: objectClass.
+	self compile: 'asString ^ ''youpiii''' on: extensionOnPoint.
+	self
+		compile: 'scopedUser: anObject
+		^ anObject asString'
+		on: userClass.
 
 	userPackage addExtensionImport: extensionOnPoint.
-	userInstance := userClass new.
-	"This sends a scoped message to a non extended class.
+	userInstance := userClass new. "This sends a scoped message to a non extended class.
 	The lookup will find the global selector and alias it to the scoped one."
 	self assert: (userInstance perform: #scopedUser: with: objectClass new) equals: 'this is not an extension'.
 
@@ -449,8 +426,8 @@ ExtensionTest >> test18ScopedSelectorTracksAliasedClassAfterSend [
 ExtensionTest >> test19CleanExtendedBehaviorsRemovesTrackedBehaviors [
 
 	| receiver scopedSelector |
-	extensionOnObject compile: 'extensionMethod ^ 42'.
-	userClass compile: 'userMethod ^ self extensionMethod'.
+	self compile: 'extensionMethod ^ 42' on: extensionOnObject.
+	self compile: 'userMethod ^ self extensionMethod' on: userClass.
 
 	userPackage addExtensionImport: extensionOnObject.
 
@@ -467,10 +444,12 @@ ExtensionTest >> test19CleanExtendedBehaviorsRemovesTrackedBehaviors [
 ExtensionTest >> test20CleanExtendedBehaviorsCleansAliases [
 
 	| userInstance scopedSelector |
-	objectClass compile: 'asString ^ ''this is not an extension'''.
-	extensionOnPoint compile: 'asString ^ ''youpiii'''.
-	userClass compile: 'scopedUser: anObject
-		^ anObject asString'.
+	self compile: 'asString ^ ''this is not an extension''' on: objectClass.
+	self compile: 'asString ^ ''youpiii''' on: extensionOnPoint.
+	self
+		compile: 'scopedUser: anObject
+		^ anObject asString'
+		on: userClass.
 
 	userPackage addExtensionImport: extensionOnPoint.
 	userInstance := userClass new.

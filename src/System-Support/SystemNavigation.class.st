@@ -90,6 +90,12 @@ SystemNavigation >> allExistingProtocolsFor: instanceSide [
 ]
 
 { #category : 'query' }
+SystemNavigation >> allGlobalNamesDo: aBlock [
+
+	self environment keysDo: [ :globalName | aBlock value: globalName ]
+]
+
+{ #category : 'query' }
 SystemNavigation >> allGlobalNamesStartingWith: aString do: aBlock caseSensitive: cs [
 
 	self environment keysDo: [ :globalName | (globalName beginsWith: aString caseSensitive: cs) ifTrue: [ aBlock value: globalName ] ]
@@ -211,6 +217,13 @@ SystemNavigation >> allReferencesToBinding: aVariablesBinding [
 ]
 
 { #category : 'query' }
+SystemNavigation >> allSelectorsDo: aBlock [
+
+	Symbol selectorTable do: [ :e |
+		aBlock value: e]
+]
+
+{ #category : 'query' }
 SystemNavigation >> allSelectorsStartingWith: aString do: aBlock [
 
 	Symbol selectorTable do: [ :e |
@@ -295,6 +308,13 @@ SystemNavigation >> allSentMessagesInPackage: aPackage do: aBlock [
 	"Answer the set of selectors which are sent somewhere in the system."
 
 	aPackage definedClasses do: [ :class | self allSentMessagesInClass: class do: aBlock ]
+]
+
+{ #category : 'query' }
+SystemNavigation >> allSymbolsDo: aBlock [
+
+	Symbol allSymbolTablesDo: [ :e |
+		aBlock value: e  ]
 ]
 
 { #category : 'query' }

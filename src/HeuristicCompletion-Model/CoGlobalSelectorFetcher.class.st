@@ -29,7 +29,7 @@ CoGlobalSelectorFetcher >> entriesDo: aBlock [
 	astNode ifNotNil: [ :node |
 			node parent ifNotNil: [ :parent | "Try first to continue the parent keyword message"
 					(parent isMessage and: [ parent isKeyword ]) ifTrue: [
-							self systemNavigation allSelectorsStartingWith: parent selector , filter completionString do: [ :e |
+							self systemNavigation allSelectorsStartingWith: parent selector do: [ :e |
 									aBlock value: (CoSelectorEntry new
 											 displayedContents:
 												 '(' , (e copyFrom: 1 to: parent selector size) , ')' , (e copyFrom: parent selector size + 1 to: e size);
@@ -38,7 +38,7 @@ CoGlobalSelectorFetcher >> entriesDo: aBlock [
 											 fetcherName: self class name;
 											 selector: e) ] ] ] ]. "Otherwise, just go wide"
 
-	self systemNavigation allSelectorsStartingWith: filter completionString do: [ :e |
+	self systemNavigation allSelectorsDo: [ :e |
 			aBlock value: ((CoSelectorEntry contents: e node: astNode)
 					 fetcherName: self class name;
 					 yourself) ]

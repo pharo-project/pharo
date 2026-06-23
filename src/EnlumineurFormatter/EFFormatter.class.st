@@ -130,7 +130,7 @@ EFFormatter class >> indentsForKeywords: anInteger [
 
 { #category : 'class initialization' }
 EFFormatter class >> initialize [
-	"self initialize"
+
 	FormatAsYouReadPolicy := false.
 	DefaultPrettyPrintContext := EFContext new
 ]
@@ -1340,7 +1340,7 @@ EFFormatter >> formatSelectorAndArguments: aMessageNode firstSeparator: firstBlo
   i := 0.
   separatorBlock := firstBlock.
   aMessageNode isUnary ifTrue: [ self indentAround: [ self handleLineForSelector: aMessageNode selector withSeparatorBlock: separatorBlock.
-              codeStream nextPutAll: aMessageNode selector ] ] ifFalse: [ aMessageNode selectorParts with: aMessageNode arguments do: [:selector :argument |  i := i + 1.
+              codeStream nextPutAll: aMessageNode selector asString ] ] ifFalse: [ aMessageNode selectorParts with: aMessageNode arguments do: [:selector :argument |  i := i + 1.
               self handleLineForSelector: selector withSeparatorBlock: separatorBlock.
               separatorBlock := restBlock.
               self indent: ((((self willBeMultiline: argument) and: [ i < aMessageNode selectorParts size or: [ self newLineBefore ] ]) or: [ self isInCascadeNode ]) ifTrue: [ 1 ] ifFalse: [ 0 ]) around: [ codeStream nextPutAll: selector.
@@ -1434,7 +1434,7 @@ EFFormatter >> handleLineForArgument: anArgument [
 
 { #category : 'private' }
 EFFormatter >> handleLineForSelector: selector withSeparatorBlock: aBlock [
-	(self isLineTooLongWithString: selector)
+	(self isLineTooLongWithString: selector asString)
 		ifTrue: [ self newLine ]
 		ifFalse: [ aBlock value ]
 ]
@@ -1620,7 +1620,7 @@ EFFormatter >> isMultiLineMessage: aMessageNode [
 	self numberOfArgumentsForMultiLine <= aMessageNode arguments size
 		ifTrue: [ ^ true ].
 	aMessageNode isUnary
-		ifTrue: [ ^ self isLineTooLongWithString: aMessageNode selector ].
+		ifTrue: [ ^ self isLineTooLongWithString: aMessageNode selector asString ].
 	^ self isLineTooLongWithString: (self formatMessageNode: aMessageNode) contents
 ]
 

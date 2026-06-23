@@ -6,9 +6,27 @@ Class {
 	#tag : 'ErrorAndSemanticStyling'
 }
 
+{ #category : 'styling' }
+ErrorNodeStyler >> addIconStyle: aNode from: start to: stop color: aColor [
+
+	(self shouldStyleNode: aNode) ifFalse: [ ^ self ].
+	
+	renderer addDecoration: (IconStylerDecoration new
+		name: self stylerName;
+		interval: (start to: stop);
+		highlightColor: aColor;
+		icon: (self iconFor: aNode);
+		iconBlock: (self iconBlock: aNode);
+		title: (self iconLabel: aNode);
+		underline: true;
+		underlineColor: Color red;
+		yourself)
+]
+
 { #category : 'defaults' }
 ErrorNodeStyler >> highlightColor [
-	^nil
+
+	^ Color gray alpha: 0.1
 ]
 
 { #category : 'defaults' }
@@ -42,7 +60,7 @@ ErrorNodeStyler >> visitEnglobingErrorNode: anEnglobingNode [
 			 name: self stylerName;
 			 interval: (anEnglobingNode errorPosition to: anEnglobingNode errorPosition);
 			 highlightColor: self highlightColor;
-			 isUnderline: true;
+			 underline: true;
 			 underlineColor: Color red;
 			 icon: (self iconFor: anEnglobingNode);
 			 iconBlock: (self iconBlock: anEnglobingNode);

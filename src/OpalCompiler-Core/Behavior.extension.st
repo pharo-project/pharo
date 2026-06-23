@@ -48,22 +48,26 @@ Behavior >> compile: selector from: oldClass [
 	"Compile the method associated with selector in the receiver's method dictionary."
 
 	| method newMethod compiler |
-	method := oldClass compiledMethodAt: selector.
-	
-	"The installer should not log the source code when recompiling.
+	method := oldClass compiledMethodAt: selector. "The installer should not log the source code when recompiling.
 	We will reuse the same source as the old method"
 	compiler := oldClass compiler
-		             source: method sourceCode;
-		             class: self;
-						 priorMethod: method;
-		             permitFaulty: true;
-		             logged: false.
+		            source: method sourceCode;
+		            class: self;
+		            priorMethod: method;
+		            permitFaulty: true;
+		            logged: false.
 
 	newMethod := compiler install.
-	
-	newMethod sourcePointer: method sourcePointer.
-	selector == newMethod selector ifFalse: [
-		self error: 'selector changed!' ]
+
+	method hasSourcePointer
+		ifTrue: [ newMethod sourcePointer: method sourcePointer ]
+		ifFalse: [ 
+			method
+				propertyAt: #source
+				ifPresent: [ :code | 
+					newMethod propertyAt: #source put: code ] ].
+
+	selector == newMethod selector ifFalse: [ self error: 'selector changed!' ]
 ]
 
 { #category : '*OpalCompiler-Core' }

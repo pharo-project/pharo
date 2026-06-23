@@ -12,6 +12,12 @@ Class {
 	#tag : 'Extensions'
 }
 
+{ #category : 'converting' }
+ScopedSelector >> <= another [
+
+	^ self asString <= another asString 
+]
+
 { #category : 'installing' }
 ScopedSelector >> addAliasedBehavior: aClass [
 
@@ -180,6 +186,12 @@ ScopedSelector >> isBinary [
 ScopedSelector >> isDoIt [
 
 	^ self symbol isDoIt
+]
+
+{ #category : 'testing' }
+ScopedSelector >> isKeyword [
+
+	^ self symbol isKeyword
 ]
 
 { #category : 'testing' }

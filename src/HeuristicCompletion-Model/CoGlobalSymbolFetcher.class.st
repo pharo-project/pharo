@@ -14,7 +14,7 @@ Class {
 { #category : 'enumerating' }
 CoGlobalSymbolFetcher >> entriesDo: aBlock [
 
-	self systemNavigation allSymbolsStartingWith: filter completionString do: [ :e |
+	self systemNavigation allSymbolsDo: [ :e |
 			aBlock value: ((CoSymbolEntry contents: e node: astNode)
 					 fetcherName: self class name;
 					 yourself) ]

@@ -76,12 +76,6 @@ IconStylerDecoration >> isUnderline [
 ]
 
 { #category : 'accessing' }
-IconStylerDecoration >> isUnderline: anObject [
-
-	isUnderline := anObject
-]
-
-{ #category : 'accessing' }
 IconStylerDecoration >> name [
 
 	^ name
@@ -103,6 +97,12 @@ IconStylerDecoration >> title [
 IconStylerDecoration >> title: anObject [
 
 	title := anObject
+]
+
+{ #category : 'accessing' }
+IconStylerDecoration >> underline: aBoolean [
+
+	isUnderline := aBoolean
 ]
 
 { #category : 'accessing' }

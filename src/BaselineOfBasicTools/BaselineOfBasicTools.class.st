@@ -48,6 +48,7 @@ BaselineOfBasicTools >> baseline: spec [
 				baseline: 'UI' with: [ spec repository: repository ];
 				baseline: 'Reflectivity' with: [ spec repository: repository ];
 				baseline: 'DebugPoints' with: [ spec repository: repository ];
+				baseline: 'DebuggerCLI' with: [ spec loads: #('Core' 'Tests') from: repository ];
 				baseline: 'Athens' with: [
 						spec
 							loads: 'Cairo-core';

@@ -23,7 +23,49 @@ CommandLineDebuggerBasicCommandsTest >> setUp [
 ]
 
 { #category : 'tests' }
-CommandLineDebuggerBasicCommandsTest >> testEmptyCommand [
+CommandLineDebuggerBasicCommandsTest >> setUpContextForPrintCode [
+
+	| currentContext |
+	currentContext := Context
+		                  sender: nil
+		                  receiver: MockForDebugger new
+		                  method: MockForDebugger >> #methodeToPrintCode
+		                  arguments: #(  ).
+	debugger context: currentContext
+]
+
+{ #category : 'running' }
+CommandLineDebuggerBasicCommandsTest >> setUpContextForPrinting [
+
+	| currentContext |
+	currentContext := Context
+		                  sender: nil
+		                  receiver: MockForDebugger new
+		                  method: MockForDebugger >> #methodToPrintCode:withArgument:
+		                  arguments: #( 1 32 ).
+	debugger context: currentContext
+]
+
+{ #category : 'running' }
+CommandLineDebuggerBasicCommandsTest >> setUpDebuggerOnNavigationMock [
+
+	| process context session |
+	process := [ MockForDebugger new methodForNavigationInACode ] newProcess.
+	context := process suspendedContext.
+
+	session := DebugSession named: 'TestNav' on: process startedAt: context.
+
+	debugger
+		process: process;
+		session: session;
+		context: context.
+
+	[ debugger context method selector = #methodForNavigationInACode ] whileFalse: [ debugger parsesAndExecuteCommand: 'step' ].
+	^ debugger context
+]
+
+{ #category : 'tests' }
+CommandLineDebuggerBasicCommandsTest >> testEmptyCommandDoesNothing [
 
 	| response |
 	response := debugger parsesAndExecuteCommand: '          '.
@@ -32,80 +74,52 @@ CommandLineDebuggerBasicCommandsTest >> testEmptyCommand [
 ]
 
 { #category : 'tests' }
-CommandLineDebuggerBasicCommandsTest >> testOver [
-	"testing that the Program Counter changed after executing step"
+CommandLineDebuggerBasicCommandsTest >> testOverCommandAdvancesPCOnSameContext [
+	
+	| initialContext initialPc |
 
-	| response initialPc |
-	initialPc := debugger context pc.
-
-	response := debugger parsesAndExecuteCommand: 'over'.
-
+	initialContext := self setUpDebuggerOnNavigationMock.
+	initialPc := initialContext pc.
+	debugger parsesAndExecuteCommand: 'over'.
+	self assert: debugger context method equals: initialContext method.
 	self deny: debugger context pc equals: initialPc.
-
-	self assert: debugger isActive.
-
-	self assert: (response beginsWith: 'Stepped OVER to:')
 ]
 
 { #category : 'tests' }
-CommandLineDebuggerBasicCommandsTest >> testPrint [
+CommandLineDebuggerBasicCommandsTest >> testPrintCodeCommandShowsMethodSourceAndHighlightsCurrentInstruction [
 
-	| currentContext response1 response2 |
-	currentContext := Context
-		                  sender: nil
-		                  receiver: self
-		                  method: MockToPrintCode >> #mockMethodForTesting:and:
-		                  arguments: #( 1 32 ).
-	debugger context: currentContext.
+    | response |
+    self setUpContextForPrintCode.
+    
+    response := debugger parsesAndExecuteCommand: 'printCode'.
+
+    self assert: (response includesSubstring: 'methodeToPrintCode').
+    self assert: (response includesSubstring: '"Fake method to test printCode"').
+    self assert: (response includesSubstring: 'a := --->42<---.').
+    self assert: (response includesSubstring: 'b := a + 1.').
+    self assert: (response includesSubstring: '^ b * 2').
+    
+    self assert: debugger isActive
+]
+
+{ #category : 'tests' }
+CommandLineDebuggerBasicCommandsTest >> testPrintCommandEvaluatesArgumentsCorrectly [
+
+	| response1 response2 |
+	self setUpContextForPrinting.
 
 	response1 := debugger parsesAndExecuteCommand: 'print arg1'.
-
 	self assert: response1 equals: 'arg1 : 1'.
 
 	response2 := debugger parsesAndExecuteCommand: 'print arg2'.
-
 	self assert: response2 equals: 'arg2 : 32'
 ]
 
 { #category : 'tests' }
-CommandLineDebuggerBasicCommandsTest >> testPrintCode [
+CommandLineDebuggerBasicCommandsTest >> testPrintCommandWithDivisionByZeroReturnsError [
 
-	| currentContext response |
-	currentContext := Context
-		                  sender: nil
-		                  receiver: self
-		                  method: MockToPrintCode >> #mockMethodForTesting
-		                  arguments: #(  ).
-	debugger context: currentContext.
-
-	response := debugger parsesAndExecuteCommand: 'printCode'.
-
-
-	self assert: (response includesSubstring: 'mockMethodForTesting').
-	self assert: (response includesSubstring: '"Fake method to test printCode"').
-	self assert: (response includesSubstring: 'a := --->42<---.').
-	self assert: (response includesSubstring: 'b := a + 1.').
-	self assert: (response includesSubstring: '^ b * 2').
-
-	self assert: debugger isActive
-]
-
-{ #category : 'tests' }
-CommandLineDebuggerBasicCommandsTest >> testPrintError [
-
-	| currentContext response |
-	currentContext := Context
-		                  sender: nil
-		                  receiver: self
-		                  method: MockToPrintCode >> #mockMethodForTesting:and:
-		                  arguments: #( 1 32 ).
-	debugger context: currentContext.
-
-	response := debugger parsesAndExecuteCommand: 'print arg'.
-
-	self assert: debugger isActive.
-	self assert: response equals: 'Error evaluating: arg'.
-
+	| response |
+	self setUpContextForPrinting.
 
 	response := debugger parsesAndExecuteCommand: 'print 1/0'.
 
@@ -114,37 +128,10 @@ CommandLineDebuggerBasicCommandsTest >> testPrintError [
 ]
 
 { #category : 'tests' }
-CommandLineDebuggerBasicCommandsTest >> testPrintStack [
+CommandLineDebuggerBasicCommandsTest >> testPrintCommandWithNoArgumentsShowsNothingToPrint [
 
-	| response initialPc |
-	initialPc := debugger context pc.
-	response := debugger parsesAndExecuteCommand: 'printStack'.
-
-	self assert: (response includesSubstring: debugger context printString)
-]
-
-{ #category : 'tests' }
-CommandLineDebuggerBasicCommandsTest >> testPrintStackAfterStep [
-
-	| response contextAfterStep |
-	debugger parsesAndExecuteCommand: 'step'.
-	contextAfterStep := debugger context.
-
-	response := debugger parsesAndExecuteCommand: 'printStack'.
-
-	self assert: (response includesSubstring: contextAfterStep printString)
-]
-
-{ #category : 'tests' }
-CommandLineDebuggerBasicCommandsTest >> testPrintWithoutArguments [
-
-	| currentContext response |
-	currentContext := Context
-		                  sender: nil
-		                  receiver: self
-		                  method: MockToPrintCode >> #mockMethodForTesting:and:
-		                  arguments: #( 1 32 ).
-	debugger context: currentContext.
+	| response |
+	self setUpContextForPrinting.
 
 	response := debugger parsesAndExecuteCommand: 'print '.
 
@@ -152,7 +139,76 @@ CommandLineDebuggerBasicCommandsTest >> testPrintWithoutArguments [
 ]
 
 { #category : 'tests' }
-CommandLineDebuggerBasicCommandsTest >> testQuit [
+CommandLineDebuggerBasicCommandsTest >> testPrintCommandWithSyntaxErrorReturnsError [
+
+	| response |
+	self setUpContextForPrinting.
+
+	response := debugger parsesAndExecuteCommand: 'print 1 + '.
+
+	self assert: debugger isActive.
+
+	self assert: response equals: 'Error evaluating: 1 +'
+]
+
+{ #category : 'tests' }
+CommandLineDebuggerBasicCommandsTest >> testPrintCommandWithUnknownVariableReturnsError [
+
+    | response |
+    self setUpContextForPrinting.
+    
+    response := debugger parsesAndExecuteCommand: 'print arg'.
+
+    self assert: debugger isActive.
+    self assert: response equals: 'Error evaluating: arg'
+]
+
+{ #category : 'tests' }
+CommandLineDebuggerBasicCommandsTest >> testPrintStackCommandShowsCurrentContext [
+
+	| response |
+	response := debugger parsesAndExecuteCommand: 'printStack'.
+
+	self assert: (response includesSubstring: debugger context printString)
+]
+
+{ #category : 'tests' }
+CommandLineDebuggerBasicCommandsTest >> testPrintStackUpdatesCorrectlyOnMethodEntryAfterStep [
+
+	| stackBefore stackInside |
+	self setUpDebuggerOnNavigationMock.
+
+	stackBefore := debugger parsesAndExecuteCommand: 'printStack'.
+
+	debugger parsesAndExecuteCommand: 'step'. 
+	stackInside := debugger parsesAndExecuteCommand: 'printStack'.
+
+	self assert: (stackInside includesSubstring: 'methodToStepInto').
+	self assert: (stackInside includesSubstring: 'methodForNavigationInACode').
+	self deny: stackInside equals: stackBefore
+]
+
+{ #category : 'tests' }
+CommandLineDebuggerBasicCommandsTest >> testPrintStackUpdatesCorrectlyOnMethodExitAfterStep [
+
+	| stackInside stackAfter |
+	self setUpDebuggerOnNavigationMock.
+
+	debugger parsesAndExecuteCommand: 'step'.
+
+	stackInside := debugger parsesAndExecuteCommand: 'printStack'.
+
+	[ debugger context method selector = #methodToStepInto ] whileTrue: [ debugger parsesAndExecuteCommand: 'step' ]. "Get out of the method to get back on methodForNavigationInACode"
+
+	stackAfter := debugger parsesAndExecuteCommand: 'printStack'.
+
+	self assert: (stackAfter includesSubstring: 'methodForNavigationInACode').
+	self deny: (stackAfter includesSubstring: 'methodToStepInto').
+	self deny: stackInside equals: stackAfter
+]
+
+{ #category : 'tests' }
+CommandLineDebuggerBasicCommandsTest >> testQuitDisactivateTheDebuggerAndAnnouncesIt [
 
 	| response |
 	self assert: debugger isActive.
@@ -162,23 +218,19 @@ CommandLineDebuggerBasicCommandsTest >> testQuit [
 ]
 
 { #category : 'tests' }
-CommandLineDebuggerBasicCommandsTest >> testStep [
-	"testing that the Program Counter changed after executing step"
+CommandLineDebuggerBasicCommandsTest >> testStepCommandEntersCalledMethod [
 
-	| response initialPc |
-	initialPc := debugger context pc.
+	| initialContext newContext |
 
-	response := debugger parsesAndExecuteCommand: 'step'.
-
-	self deny: debugger context pc equals: initialPc.
-
-	self assert: debugger isActive.
-
-	self assert: (response beginsWith: 'Stepped to:')
+	initialContext := self setUpDebuggerOnNavigationMock.
+	debugger parsesAndExecuteCommand: 'step'.
+	newContext := debugger context method.
+	self deny: newContext method equals: initialContext method.
+	self assert: newContext method selector equals: #methodToStepInto.
 ]
 
 { #category : 'tests' }
-CommandLineDebuggerBasicCommandsTest >> testUnknownCommand [
+CommandLineDebuggerBasicCommandsTest >> testUnknownCommandReturnsErrorMessage [
 
 	| response unknownCommand |
 	unknownCommand := 'thisIsAnUnknownCommand'.
