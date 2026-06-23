@@ -47,7 +47,7 @@ TraitMethodToCompileInfoTest >> testDiamond [
 	c1 := self newClass: #C1 traits: t2 + t3.
 
 
-	infos := c1 traitComposition compilationInfoForSelectors sorted: #selector ascending.
+	infos := c1 traitComposition methodsCompilationInfo sorted: #selector ascending.
 
 	self assert: infos size equals: 1.
 	self
@@ -70,7 +70,7 @@ TraitMethodToCompileInfoTest >> testSequence [
 	t1 compile: 'm1 ^1' classified: #proto.
 	t2 compile: 'm2 ^2' classified: #proto.
 
-	infos := c1 traitComposition compilationInfoForSelectors sorted: #selector ascending.
+	infos := c1 traitComposition methodsCompilationInfo sorted: #selector ascending.
 
 	self assert: infos size equals: 2.
 	self
@@ -100,7 +100,7 @@ TraitMethodToCompileInfoTest >> testSequenceDoesNotConflictOnRequirement [
 	t1 compile: 'm1 self explicitRequirement' classified: #proto2.
 	t2 compile: 'm1 ^2' classified: #proto.
 
-	infos := c1 traitComposition compilationInfoForSelectors.
+	infos := c1 traitComposition methodsCompilationInfo.
 	self skip.
 	self assert: infos size equals: 1.
 	self
@@ -122,7 +122,7 @@ TraitMethodToCompileInfoTest >> testSequenceWithConflict [
 	t1 compile: 'm1 ^1' classified: #proto.
 	t2 compile: 'm1 ^1' classified: #proto.
 
-	infos := c1 traitComposition compilationInfoForSelectors sorted: #selector ascending.
+	infos := c1 traitComposition methodsCompilationInfo sorted: #selector ascending.
 
 	self assert: infos size equals: 1.
 	self
@@ -144,7 +144,7 @@ TraitMethodToCompileInfoTest >> testSequenceWithTwoRequirements [
 	t1 compile: 'm1 self explicitRequirement' classified: #proto2.
 	t2 compile: 'm1 self explicitRequirement' classified: #proto.
 
-	infos := c1 traitComposition compilationInfoForSelectors.
+	infos := c1 traitComposition methodsCompilationInfo.
 
 	self skip.
 	self assert: infos size equals: 1.
@@ -167,7 +167,7 @@ TraitMethodToCompileInfoTest >> testUniqueTrait [
 
 	t1 compile: 'm1 ^1' classified: #proto.
 
-	infos := c1 traitComposition compilationInfoForSelectors.
+	infos := c1 traitComposition methodsCompilationInfo.
 
 	self assert: infos size equals: 1.
 	self

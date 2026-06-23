@@ -45,12 +45,6 @@ TaSingleComposition >> classComposition [
 ]
 
 { #category : 'accessing' }
-TaSingleComposition >> compilationInfoForSelectors [
-
-	^ inner compilationInfoForSelectors
-]
-
-{ #category : 'accessing' }
 TaSingleComposition >> compiledMethodAt: aSelector [
 	^ inner compiledMethodAt: aSelector
 ]
@@ -102,6 +96,12 @@ TaSingleComposition >> isLocalAliasSelector: aSymbol [
 { #category : 'accessing' }
 TaSingleComposition >> methods [
 	^ inner methods
+]
+
+{ #category : 'accessing' }
+TaSingleComposition >> methodsCompilationInfo [
+
+	^ inner methodsCompilationInfo
 ]
 
 { #category : 'accessing' }
