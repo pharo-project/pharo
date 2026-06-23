@@ -165,6 +165,15 @@ TaSequence >> isLocalAliasSelector: aSymbol [
 ]
 
 { #category : 'accessing' }
+TaSequence >> manageConflictBetween: implementations infosToRemove: toRemove [
+	"If protocols are different we create a conflict."
+
+	(implementations collectAsSet: #protocol) size > 1 ifTrue: [ implementations first protocol: Protocol traitConflictName ].
+	"implementations first sourceCode: (self sourceCodeForConflictFor: implementations first selector)."
+	toRemove addAll: implementations allButFirst
+]
+
+{ #category : 'accessing' }
 TaSequence >> memberForSelector: aSelector [
 	"I return the member that defines a given selector.
 	I first look for a valid member, if not, I will return the first"
@@ -189,12 +198,22 @@ TaSequence >> methodsCompilationInfo [
 
 	| allInfos toRemove |
 	toRemove := OrderedCollection new.
+
+	"We remove duplicated info in case a trait is used in diamond."
 	allInfos := (members flatCollect: [ :member | member methodsCompilationInfo ] as: Set) asOrderedCollection.
 
+	"In case we have multiple info for the same selector, we reject the explicit requirements and manage potentiel conflicts."
 	(allInfos groupedBy: #selector) keysAndValuesDo: [ :selector :infos |
 			infos size > 1 ifTrue: [
-					infos first protocol: Protocol traitConflictName.
-					toRemove addAll: infos allButFirst ] ].
+					"We do not take explicit requirement methods into account for conflicts except if we only have those."
+					(infos reject: #isExplicitRequirement)
+						ifEmpty: [
+								toRemove addAll: infos allButFirst.
+								(infos collectAsSet: #protocol) size > 1 ifTrue: [ infos first protocol: Protocol traitConflictName ] ]
+						ifNotEmpty: [ :implementations |
+								toRemove addAll: (infos copyWithoutAll: implementations).
+								implementations size = 1 ifFalse: [ self manageConflictBetween: implementations infosToRemove: toRemove ] ] ] ].
+
 
 	allInfos removeAll: toRemove.
 	^ allInfos

@@ -51,6 +51,29 @@ TraitMethodToCompileInfo >> hash [
 	^ selector hash bitXor: (definingTrait hash bitXor: (compiledMethod hash bitXor: (sourceCode hash bitXor: protocol hash)))
 ]
 
+{ #category : 'testing' }
+TraitMethodToCompileInfo >> isExplicitRequirement [
+
+	^ self compiledMethod isRequired
+]
+
+{ #category : 'printing' }
+TraitMethodToCompileInfo >> printOn: aStream [
+	"Generate a string representation of the receiver based on its instance variables."
+
+	super printOn: aStream.
+
+	aStream
+		nextPutAll: ' [ ';
+		print: definingTrait;
+		nextPutAll: '>>';
+		print: selector.
+
+	self compiledMethod ifNotNil: [ :cm | cm isRequired ifTrue: [ aStream nextPutAll: ' - Explicit requirement' ] ].
+
+	aStream nextPutAll: ']'
+]
+
 { #category : 'accessing' }
 TraitMethodToCompileInfo >> protocol [
 
