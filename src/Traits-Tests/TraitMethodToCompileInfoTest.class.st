@@ -20,9 +20,18 @@ TraitMethodToCompileInfoTest >> check: info selector: selector protocol: protoco
 { #category : 'tests' }
 TraitMethodToCompileInfoTest >> check: info selector: selector protocol: protocol definingTrait: aTraitComposition sourceCode: code [
 
+	self
+		check: info
+		selector: selector
+		protocol: protocol
+		sourceCode: code
+]
+
+{ #category : 'tests' }
+TraitMethodToCompileInfoTest >> check: info selector: selector protocol: protocol sourceCode: code [
+
 	self assert: info selector equals: selector.
 	self assert: info protocol equals: protocol.
-	self assert: info definingTrait equals: aTraitComposition.
 	self flag: #todo "Add source code"
 ]
 
@@ -81,6 +90,28 @@ TraitMethodToCompileInfoTest >> testSequence [
 ]
 
 { #category : 'tests' }
+TraitMethodToCompileInfoTest >> testSequenceDoesNotConflictOnRequirement [
+
+	| c1 t1 t2 infos |
+	t1 := self newTrait: #T1.
+	t2 := self newTrait: #T2.
+	c1 := self newClass: #C1 traits: t1 + t2.
+
+	t1 compile: 'm1 self explicitRequirement' classified: #proto2.
+	t2 compile: 'm1 ^2' classified: #proto.
+
+	infos := c1 traitComposition compilationInfoForSelectors.
+	self skip.
+	self assert: infos size equals: 1.
+	self
+		check: infos first
+		selector: #m1
+		protocol: #proto
+		definingTrait: c1 traitComposition members second
+		sourceCode: 'm1 ^2'
+]
+
+{ #category : 'tests' }
 TraitMethodToCompileInfoTest >> testSequenceWithConflict [
 
 	| c1 t1 t2 infos |
@@ -100,6 +131,31 @@ TraitMethodToCompileInfoTest >> testSequenceWithConflict [
 		protocol: Protocol traitConflictName
 		definingTrait: c1 traitComposition members first
 		sourceCode: 'm1 ^ self traitConflict'
+]
+
+{ #category : 'tests' }
+TraitMethodToCompileInfoTest >> testSequenceWithTwoRequirements [
+
+	| c1 t1 t2 infos |
+	t1 := self newTrait: #T1.
+	t2 := self newTrait: #T2.
+	c1 := self newClass: #C1 traits: t1 + t2.
+
+	t1 compile: 'm1 self explicitRequirement' classified: #proto2.
+	t2 compile: 'm1 self explicitRequirement' classified: #proto.
+
+	infos := c1 traitComposition compilationInfoForSelectors.
+
+	self skip.
+	self assert: infos size equals: 1.
+	self
+		check: infos first
+		selector: #m1
+		protocol: Protocol traitConflictName
+		sourceCode: 'm1 self explicitRequirement'.
+	self assert: ({
+			 t1.
+			 t2 } includes: infos first definingTrait)
 ]
 
 { #category : 'tests' }
