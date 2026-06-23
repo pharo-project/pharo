@@ -4,8 +4,8 @@ I am a driver to manage the interractions during a rename argument or temporary 
 I'll check that the interval selected by the user is right. I'll ask a new name and check that it is valid. If it is not, I'll ask again to the user except if they cancel.
 "
 Class {
-	#name : 'ReRenameArgumentOrTemporaryDriver',
-	#superclass : 'ReInteractionDriver',
+	#name : 'ReRenameArgumentOrTemporaryDriver2',
+	#superclass : 'ReInteractionDriver2',
 	#instVars : [
 		'sourceNode',
 		'newName',
@@ -18,19 +18,19 @@ Class {
 }
 
 { #category : 'accessing' }
-ReRenameArgumentOrTemporaryDriver class >> driverName [
+ReRenameArgumentOrTemporaryDriver2 class >> driverName [
 
 	^ 'Rename argument or temporary variable'
 ]
 
 { #category : 'accessing' }
-ReRenameArgumentOrTemporaryDriver class >> shouldPreviewChangesByDefault [
+ReRenameArgumentOrTemporaryDriver2 class >> shouldPreviewChangesByDefault [
 
-	^ false
+	^ true
 ]
 
 { #category : 'execution' }
-ReRenameArgumentOrTemporaryDriver >> breakingChoices [
+ReRenameArgumentOrTemporaryDriver2 >> breakingChoices [
 
 	| choices |
 
@@ -44,10 +44,27 @@ ReRenameArgumentOrTemporaryDriver >> breakingChoices [
 	^ choices
 ]
 
+{ #category : 'accessing' }
+ReRenameArgumentOrTemporaryDriver2 >> checkApplicabilityPreconditions [
+
+    | failedCondition |
+
+	 refactoring newName: newName.
+    failedCondition := refactoring applicabilityPreconditions
+        detect: [ :condition | condition check not ]
+        ifNone: [ nil ].
+
+    failedCondition ifNotNil: [
+        ^ failedCondition errorString ].
+
+    ^ nil
+]
+
 { #category : 'action' }
-ReRenameArgumentOrTemporaryDriver >> convertTemporaryToExistingVariable [
+ReRenameArgumentOrTemporaryDriver2 >> convertTemporaryToExistingVariable [
 
 	| transformation |
+	self halt.
 	self applyChanges.
 	transformation := RBRemoveTemporaryVariableTransformation
 		                  variable: notCheckVarName violators first
@@ -58,7 +75,7 @@ ReRenameArgumentOrTemporaryDriver >> convertTemporaryToExistingVariable [
 ]
 
 { #category : 'configuration' }
-ReRenameArgumentOrTemporaryDriver >> defaultSelectDialog [
+ReRenameArgumentOrTemporaryDriver2 >> defaultSelectDialog [
 
 	^ super defaultSelectDialog
 		  title: 'There are potential breaking changes!';
@@ -69,12 +86,19 @@ ReRenameArgumentOrTemporaryDriver >> defaultSelectDialog [
 		  yourself
 ]
 
-{ #category : 'execution' }
-ReRenameArgumentOrTemporaryDriver >> gatherUserInput [
+{ #category : 'accessing' }
+ReRenameArgumentOrTemporaryDriver2 >> failedConditionMessage: condition [
+    | stream |
+    stream := WriteStream on: String new.
+    condition violationMessageOn: stream.
+    ^ stream contents
+]
 
-	| cancelled |
+{ #category : 'accessing' }
+ReRenameArgumentOrTemporaryDriver2 >> gatherUserInput [
+ 
+	| cancelled | 
 	cancelled := false.
-"	self halt."
 	[
 		refactoring newName: ((requestDialog ifNil: [ self defaultRequestDialog ])
 				 title: 'Rename a temp variable';
@@ -95,7 +119,7 @@ ReRenameArgumentOrTemporaryDriver >> gatherUserInput [
 ]
 
 { #category : 'private ex' }
-ReRenameArgumentOrTemporaryDriver >> hasFailedApplicabilityPreconditions [
+ReRenameArgumentOrTemporaryDriver2 >> hasFailedApplicabilityPreconditions [
 
 	(refactoring applicabilityPreconditionsIndependentOfTheNewName reject: [ :condition | condition check ]) ifNotEmpty: [
 			self inform: 'The interval selected is not right to rename a temporary variable.'.
@@ -104,23 +128,23 @@ ReRenameArgumentOrTemporaryDriver >> hasFailedApplicabilityPreconditions [
 ]
 
 { #category : 'initialization' }
-ReRenameArgumentOrTemporaryDriver >> hasFailedBehaviorPreservingPreconditions [
+ReRenameArgumentOrTemporaryDriver2 >> hasFailedBehaviorPreservingPreconditions [
 
 	notCheckVarName := refactoring preconditionCheckVariableName.
 	^ refactoring failedBreakingChangePreconditions isNotEmpty 
 ]
 
 { #category : 'configuration' }
-ReRenameArgumentOrTemporaryDriver >> instantiateRefactoring [
+ReRenameArgumentOrTemporaryDriver2 >> instantiateRefactoring [
 
-	^ ReRenameArgumentOrTemporaryRefactoring
+	^ ReRenameArgumentOrTemporaryRefactoring 
 		  renameTemporaryFrom: sourceNode sourceInterval
 		  in: method origin
 		  selector: method selector
 ]
 
 { #category : 'ui - dialogs' }
-ReRenameArgumentOrTemporaryDriver >> labelBasedOnBreakingChanges [
+ReRenameArgumentOrTemporaryDriver2 >> labelBasedOnBreakingChanges [
 
 	^ String streamContents: [ :stream |
 			  refactoring failedBreakingChangePreconditions do: [ :cond |
@@ -131,43 +155,68 @@ ReRenameArgumentOrTemporaryDriver >> labelBasedOnBreakingChanges [
 ]
 
 { #category : 'accessing' }
-ReRenameArgumentOrTemporaryDriver >> method [
+ReRenameArgumentOrTemporaryDriver2 >> method [
 
 	^ method
 ]
 
 { #category : 'accessing' }
-ReRenameArgumentOrTemporaryDriver >> method: anObject [
+ReRenameArgumentOrTemporaryDriver2 >> method: anObject [
 
 	method := anObject
 ]
 
 { #category : 'accessing' }
-ReRenameArgumentOrTemporaryDriver >> newName [
+ReRenameArgumentOrTemporaryDriver2 >> newName [
 
 	^ newName
 ]
 
 { #category : 'accessing' }
-ReRenameArgumentOrTemporaryDriver >> newName: anObject [
+ReRenameArgumentOrTemporaryDriver2 >> newName: anObject [
 
 	newName := anObject
 ]
 
+{ #category : 'accessing' }
+ReRenameArgumentOrTemporaryDriver2 >> previewPresenterClass [
+
+	^ previewPresenterClass ifNil: [ previewPresenterClass := StRefactoringPreviewPresenter2 ] 
+]
+
 { #category : 'configuration' }
-ReRenameArgumentOrTemporaryDriver >> requestDialog [
+ReRenameArgumentOrTemporaryDriver2 >> requestDialog [
 
 	^ requestDialog
 ]
 
 { #category : 'accessing' }
-ReRenameArgumentOrTemporaryDriver >> sourceNode [
+ReRenameArgumentOrTemporaryDriver2 >> runRefactoring [
+
+	| presenter |
+	"self halt."
+	super configureRefactoring.
+	presenter := (self previewPresenterClass newApplication: self application)
+		              scopes: scopes;
+		              driver: self;
+		              name: sourceNode name;
+		              openModal
+]
+
+{ #category : 'accessing' }
+ReRenameArgumentOrTemporaryDriver2 >> sourceNode [
 
 	^ sourceNode
 ]
 
 { #category : 'accessing' }
-ReRenameArgumentOrTemporaryDriver >> sourceNode: anObject [
+ReRenameArgumentOrTemporaryDriver2 >> sourceNode: anObject [
 
 	sourceNode := anObject
+]
+
+{ #category : 'accessing' }
+ReRenameArgumentOrTemporaryDriver2 >> updateOldName [
+
+	refactoring oldName: newName 
 ]

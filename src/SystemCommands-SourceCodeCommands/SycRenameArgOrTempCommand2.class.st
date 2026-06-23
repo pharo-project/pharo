@@ -7,7 +7,7 @@ Internal Representation and Key Implementation Points.
 	newName:		<String>
 "
 Class {
-	#name : 'SycRenameArgOrTempCommand',
+	#name : 'SycRenameArgOrTempCommand2',
 	#superclass : 'SycSourceCodeRefactoringCommand',
 	#instVars : [
 		'newName',
@@ -18,39 +18,39 @@ Class {
 }
 
 { #category : 'testing' }
-SycRenameArgOrTempCommand class >> canBeExecutedInContext: aSourceCodeContext [
+SycRenameArgOrTempCommand2 class >> canBeExecutedInContext: aSourceCodeContext [
 
 	^ (super canBeExecutedInContext: aSourceCodeContext) and: [
 		  aSourceCodeContext isArgOrTempVariableSelected ]
 ]
 
 { #category : 'execution' }
-SycRenameArgOrTempCommand >> applyResultInContext: aSourceCodeContext [
+SycRenameArgOrTempCommand2 >> applyResultInContext: aSourceCodeContext [
 	super applyResultInContext: aSourceCodeContext.
 
 	aSourceCodeContext showVariableNamed: newName
 ]
 
 { #category : 'accessing' }
-SycRenameArgOrTempCommand >> defaultMenuIconName [
+SycRenameArgOrTempCommand2 >> defaultMenuIconName [
 	^ #edit
 ]
 
 { #category : 'accessing' }
-SycRenameArgOrTempCommand >> defaultMenuItemName [
-	^'(R) Rename temp'
+SycRenameArgOrTempCommand2 >> defaultMenuItemName [
+	^'(R) Rename temp2'
 ]
 
 { #category : 'accessing' }
-SycRenameArgOrTempCommand >> description [
+SycRenameArgOrTempCommand2 >> description [
 
 	^ 'Renames temp variable in given method.'
 ]
 
 { #category : 'execution' }
-SycRenameArgOrTempCommand >> execute [
-"self halt."
-	^ (ReRenameArgumentOrTemporaryDriver new
+SycRenameArgOrTempCommand2 >> execute [
+"self halt. "
+	^ (ReRenameArgumentOrTemporaryDriver2 new
 		   sourceNode: sourceNode;
 		   method: method;
 		   scopes: toolContext refactoringScopes;
@@ -58,7 +58,7 @@ SycRenameArgOrTempCommand >> execute [
 ]
 
 { #category : 'execution' }
-SycRenameArgOrTempCommand >> prepareFullExecutionInContext: aToolContext [
+SycRenameArgOrTempCommand2 >> prepareFullExecutionInContext: aToolContext [
 
 	super prepareFullExecutionInContext: aToolContext.
 

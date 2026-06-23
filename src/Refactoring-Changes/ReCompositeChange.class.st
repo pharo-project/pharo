@@ -296,6 +296,12 @@ ReCompositeChange >> renameInstanceVariable: oldNameLocal to: newNameLocal in: a
 			   in: aClass)
 ]
 
+{ #category : 'initialization' }
+ReCompositeChange >> resetChanges [
+
+	changes := OrderedCollection new
+]
+
 { #category : 'accessing' }
 ReCompositeChange >> selector: aSelector in: aClass classified: aProtocol [
 	self flag: #todo.

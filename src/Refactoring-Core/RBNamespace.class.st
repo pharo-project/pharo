@@ -718,6 +718,11 @@ RBNamespace >> reparentClasses: aRBClassCollection to: newClass [
 						classSlots: aClass classSide instanceVariableNames ] ]
 ]
 
+{ #category : 'initialization' }
+RBNamespace >> resetChanges [
+   changes := ReCompositeChange new
+]
+
 { #category : 'accessing' }
 RBNamespace >> rootClasses [
 	^ rootClasses ifNil: [ rootClasses := self privateRootClasses]
