@@ -209,7 +209,7 @@ TaSequence >> methodsCompilationInfo [
 					(infos reject: #isExplicitRequirement)
 						ifEmpty: [
 								toRemove addAll: infos allButFirst.
-								(infos collectAsSet: #protocol) size > 1 ifTrue: [ infos first protocol: Protocol traitConflictName ] ]
+								(infos collect: #protocol as: Set) size > 1 ifTrue: [ infos first protocol: Protocol traitConflictName ] ]
 						ifNotEmpty: [ :implementations |
 								toRemove addAll: (infos copyWithoutAll: implementations).
 								implementations size = 1 ifFalse: [ self manageConflictBetween: implementations infosToRemove: toRemove ] ] ] ].
