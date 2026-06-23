@@ -255,7 +255,7 @@ TraitedMetaclass >> rebuildMethodDictionary [
 
 	self methodDict valuesDo: [ :m | m traitSource ifNil: [ localMethods at: m selector put: m ] ].
 
-	selectors := self traitComposition compilationInfoForSelectors reject: [ :info | self isRejectedMethod: info selector ].
+	selectors := self traitComposition methodsCompilationInfo reject: [ :info | self isRejectedMethod: info selector ].
 	selectors do: [ :e | modified := modified | (self traitComposition installCompilationInfos: e into: self replacing: false) ].
 
 	removedSelectors := self methodDict keys reject: [ :aSelector |

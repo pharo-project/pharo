@@ -132,12 +132,6 @@ TaAbstractComposition >> classComposition [
 	^ self subclassResponsibility
 ]
 
-{ #category : 'accessing' }
-TaAbstractComposition >> compilationInfoForSelectors [
-
-	^ self subclassResponsibility
-]
-
 { #category : 'compiling' }
 TaAbstractComposition >> compile: selector into: aClass [
 	"Compile the method associated with selector in aClass's method dictionary.
@@ -395,6 +389,12 @@ TaAbstractComposition >> isTraitAlias [
 { #category : 'testing' }
 TaAbstractComposition >> isTraitExclusion [
 	^ false
+]
+
+{ #category : 'accessing' }
+TaAbstractComposition >> methodsCompilationInfo [
+
+	^ self subclassResponsibility
 ]
 
 { #category : 'accessing' }

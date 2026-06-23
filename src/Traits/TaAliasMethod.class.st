@@ -63,27 +63,6 @@ TaAliasMethod >> checkAssociations [
 ]
 
 { #category : 'accessing' }
-TaAliasMethod >> compilationInfoForSelectors [
-
-	| innerInfos aliassed |
-	"I calculate the new aliases selectors"
-	innerInfos := inner compilationInfoForSelectors.
-	aliassed := OrderedCollection new: self aliases size.
-
-	self aliases associations do: [ :association |
-			innerInfos
-				detect: [ :info | info selector = association value ]
-				ifFound: [ :info |
-						aliassed add: (TraitMethodToCompileInfo new
-								 selector: association key;
-								 definingTrait: info definingTrait;
-								 compiledMethod: info compiledMethod;
-								 yourself) ] ].
-
-	^ innerInfos , aliassed
-]
-
-{ #category : 'accessing' }
 TaAliasMethod >> compiledMethodAt: aSelector [
 
 	^ (self hasAliasForNew: aSelector)
@@ -139,6 +118,27 @@ TaAliasMethod >> isLocalAliasSelector: aSymbol [
 { #category : 'testing' }
 TaAliasMethod >> isTraitAlias [
 	^ true
+]
+
+{ #category : 'accessing' }
+TaAliasMethod >> methodsCompilationInfo [
+
+	| innerInfos aliassed |
+	"I calculate the new aliases selectors"
+	innerInfos := inner methodsCompilationInfo.
+	aliassed := OrderedCollection new: self aliases size.
+
+	self aliases associations do: [ :association |
+			innerInfos
+				detect: [ :info | info selector = association value ]
+				ifFound: [ :info |
+						aliassed add: (TraitMethodToCompileInfo new
+								 selector: association key;
+								 definingTrait: info definingTrait;
+								 compiledMethod: info compiledMethod;
+								 yourself) ] ].
+
+	^ innerInfos , aliassed
 ]
 
 { #category : 'instance creation' }

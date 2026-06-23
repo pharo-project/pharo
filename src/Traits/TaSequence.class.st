@@ -98,22 +98,6 @@ TaSequence >> classComposition [
 ]
 
 { #category : 'accessing' }
-TaSequence >> compilationInfoForSelectors [
-
-	| allInfos toRemove |
-	toRemove := OrderedCollection new.
-	allInfos := (members flatCollect: [ :member | member compilationInfoForSelectors ] as: Set) asOrderedCollection.
-
-	(allInfos groupedBy: #selector) keysAndValuesDo: [ :selector :infos |
-			infos size > 1 ifTrue: [
-					infos first protocol: Protocol traitConflictName.
-					toRemove addAll: infos allButFirst ] ].
-
-	allInfos removeAll: toRemove.
-	^ allInfos
-]
-
-{ #category : 'accessing' }
 TaSequence >> compiledMethodAt: aSelector [
 
 	^ (self memberForSelector: aSelector) compiledMethodAt: aSelector
@@ -198,6 +182,22 @@ TaSequence >> members [
 { #category : 'accessing' }
 TaSequence >> methods [
 	^ members flatCollect: #methods
+]
+
+{ #category : 'accessing' }
+TaSequence >> methodsCompilationInfo [
+
+	| allInfos toRemove |
+	toRemove := OrderedCollection new.
+	allInfos := (members flatCollect: [ :member | member methodsCompilationInfo ] as: Set) asOrderedCollection.
+
+	(allInfos groupedBy: #selector) keysAndValuesDo: [ :selector :infos |
+			infos size > 1 ifTrue: [
+					infos first protocol: Protocol traitConflictName.
+					toRemove addAll: infos allButFirst ] ].
+
+	allInfos removeAll: toRemove.
+	^ allInfos
 ]
 
 { #category : 'accessing' }

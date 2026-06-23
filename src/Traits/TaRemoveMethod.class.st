@@ -22,12 +22,6 @@ TaRemoveMethod class >> remove: anArrayOfSelectors to: aTrait [
 ]
 
 { #category : 'accessing' }
-TaRemoveMethod >> compilationInfoForSelectors [
-
-	^ inner compilationInfoForSelectors reject: [ :info | removedSelectors includes: info selector ]
-]
-
-{ #category : 'accessing' }
 TaRemoveMethod >> compiledMethodAt: aSelector [
 	(removedSelectors includes: aSelector ) ifTrue:[NotFound signalFor: aSelector].
 	^ inner compiledMethodAt: aSelector
@@ -46,6 +40,12 @@ TaRemoveMethod >> isTraitExclusion [
 { #category : 'accessing' }
 TaRemoveMethod >> methods [
 	^ inner methods reject: [ :e | removedSelectors includes: e selector ]
+]
+
+{ #category : 'accessing' }
+TaRemoveMethod >> methodsCompilationInfo [
+
+	^ inner methodsCompilationInfo reject: [ :info | removedSelectors includes: info selector ]
 ]
 
 { #category : 'accessing' }

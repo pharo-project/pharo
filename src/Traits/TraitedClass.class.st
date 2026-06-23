@@ -78,7 +78,7 @@ TraitedClass >> doRebuildMethodDictionary [
 
 	"2. I filter the selectors from the trait composition, rejecting the ones that are locally defined.
 	And then I install the methods in myself. The trait composition only install the method if it is needed."
-	selectors := self traitComposition compilationInfoForSelectors reject: [ :info | self localMethodDict includesKey: info selector ].
+	selectors := self traitComposition methodsCompilationInfo reject: [ :info | self localMethodDict includesKey: info selector ].
 	selectors do: [ :e | modified := modified | (self traitComposition installCompilationInfos: e into: self replacing: false) ].
 
 	"3. I handle the methods that I have and they are no more in the traitComposition."

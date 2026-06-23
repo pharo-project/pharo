@@ -58,21 +58,6 @@ TaCompositionElement >> classComposition [
 ]
 
 { #category : 'accessing' }
-TaCompositionElement >> compilationInfoForSelectors [
-
-	| infos |
-	infos := (innerClass localMethods collect: [ :method |
-			          TraitMethodToCompileInfo new
-				          selector: method selector;
-				          definingTrait: self;
-				          compiledMethod: method;
-				          yourself ]) , innerClass traitComposition compilationInfoForSelectors.
-
-	infos do: [ :info | info selector: (self aliasSelector: info selector) ].
-	^ infos
-]
-
-{ #category : 'accessing' }
 TaCompositionElement >> compiledMethodAt: selector [
 	| newSelector |
 	newSelector := self dealiasSelector: selector.
@@ -141,6 +126,21 @@ TaCompositionElement >> isAliasSelector: aString [
 { #category : 'accessing' }
 TaCompositionElement >> methods [
 	^innerClass methods
+]
+
+{ #category : 'accessing' }
+TaCompositionElement >> methodsCompilationInfo [
+
+	| infos |
+	infos := (innerClass localMethods collect: [ :method |
+			          TraitMethodToCompileInfo new
+				          selector: method selector;
+				          definingTrait: self;
+				          compiledMethod: method;
+				          yourself ]) , innerClass traitComposition methodsCompilationInfo.
+
+	infos do: [ :info | info selector: (self aliasSelector: info selector) ].
+	^ infos
 ]
 
 { #category : 'accessing' }

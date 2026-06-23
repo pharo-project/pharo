@@ -69,12 +69,6 @@ TaEmptyComposition >> classComposition [
 ]
 
 { #category : 'accessing' }
-TaEmptyComposition >> compilationInfoForSelectors [
-
-	^ Array empty
-]
-
-{ #category : 'accessing' }
 TaEmptyComposition >> compiledMethodAt: aSelector [
 	NotFound signalFor: aSelector
 ]
@@ -114,6 +108,12 @@ TaEmptyComposition >> isEmpty [
 { #category : 'accessing' }
 TaEmptyComposition >> methods [
 	^ #()
+]
+
+{ #category : 'accessing' }
+TaEmptyComposition >> methodsCompilationInfo [
+
+	^ Array empty
 ]
 
 { #category : 'users' }
