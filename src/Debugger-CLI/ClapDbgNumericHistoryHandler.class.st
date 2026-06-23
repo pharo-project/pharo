@@ -10,7 +10,7 @@ Class {
 	#package : 'Debugger-CLI'
 }
 
-{ #category : 'testing' }
+{ #category : 'execution' }
 ClapDbgNumericHistoryHandler >> canHandle: aString [
 
 	| rest |
@@ -20,7 +20,7 @@ ClapDbgNumericHistoryHandler >> canHandle: aString [
 	^ rest startsWithDigit or: [ (rest beginsWith: '-') and: [ rest allButFirst startsWithDigit ] ]
 ]
 
-{ #category : 'testing' }
+{ #category : 'execution' }
 ClapDbgNumericHistoryHandler >> handle: aString for: aDebugger [
 
 	| indexString targetIndex commandsArray |

@@ -106,7 +106,7 @@ ClapDbgBasicCommandsTest >> testOverCommandAdvancesPCOnSameContext [
 ]
 
 { #category : 'tests' }
-ClapDbgBasicCommandsTest >> testPrintCodeCommandShowsMethodSourceAndHighlightsCurrentInstruction [
+ClapDbgBasicCommandsTest >> testPrintCodeCommandShowsMethodSourceAndHighlightsNextInstruction [
 
     | response |
     self setUpContextForPrintCode.

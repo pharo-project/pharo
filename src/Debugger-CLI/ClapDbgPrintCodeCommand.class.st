@@ -5,19 +5,25 @@ Class {
 	#package : 'Debugger-CLI'
 }
 
-{ #category : 'printing' }
+{ #category : 'execution' }
+ClapDbgPrintCodeCommand >> executeOn: aDebugger [
+
+	^ self executeOn: aDebugger with: ''
+]
+
+{ #category : 'execution' }
 ClapDbgPrintCodeCommand >> executeOn: aDebugger with: args [
 
-	| codeOfCurrentMethod sne debugContext |
+	| codeOfCurrentMethod pcRange debugContext |
 	debugContext := aDebugger context.
 	codeOfCurrentMethod := debugContext method sourceCode asString.
 
-	sne := debugContext sourceNodeExecuted.
-
-	^ '{1}--->{2}<---{3}' format: {
-			  (codeOfCurrentMethod copyFrom: 1 to: sne start - 1).
-			  (codeOfCurrentMethod copyFrom: sne start to: sne stop).
-			  (codeOfCurrentMethod copyFrom: sne stop + 1 to: codeOfCurrentMethod size) }
+	pcRange := aDebugger session pcRangeForContext: debugContext.
+    
+    ^ '{1}--->{2}<---{3}' format: { 
+        (codeOfCurrentMethod copyFrom: 1 to: pcRange first - 1).
+        (codeOfCurrentMethod copyFrom: pcRange first to: pcRange last).
+        (codeOfCurrentMethod copyFrom: pcRange last + 1 to: codeOfCurrentMethod size) }
 ]
 
 { #category : 'initialization' }

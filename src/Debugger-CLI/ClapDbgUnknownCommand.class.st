@@ -20,7 +20,7 @@ ClapDbgUnknownCommand >> command: anObject [
 	command := anObject
 ]
 
-{ #category : 'printing' }
+{ #category : 'execution' }
 ClapDbgUnknownCommand >> executeOn: aDebugger with: args [
 
 	^ 'Unknown command: ' , command

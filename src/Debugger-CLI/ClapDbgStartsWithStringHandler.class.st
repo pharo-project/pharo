@@ -8,7 +8,7 @@ Class {
 	#package : 'Debugger-CLI'
 }
 
-{ #category : 'testing' }
+{ #category : 'execution' }
 ClapDbgStartsWithStringHandler >> canHandle: aString [
 
 	| rest |
@@ -24,7 +24,7 @@ ClapDbgStartsWithStringHandler >> canHandle: aString [
 	^ (rest startsWithDigit or: [ (rest beginsWith: '-') and: [ rest allButFirst startsWithDigit ] ]) not
 ]
 
-{ #category : 'testing' }
+{ #category : 'execution' }
 ClapDbgStartsWithStringHandler >> handle: aString for: aDebugger [
 
 	| unMot commandsArray |

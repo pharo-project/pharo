@@ -6,6 +6,12 @@ Class {
 }
 
 { #category : 'execution' }
+ClapDbgStepRelatedCommand >> executeOn: aDebugger [ 
+
+	^ self executeOn: aDebugger with: ''
+]
+
+{ #category : 'execution' }
 ClapDbgStepRelatedCommand >> executeOn: aDebugger with: args [
 
 	[ self performStepOn: aDebugger ]
@@ -16,10 +22,10 @@ ClapDbgStepRelatedCommand >> executeOn: aDebugger with: args [
 
 	aDebugger context ifNil: [ ^ aDebugger finishedDebugging ].
 
-	^ ClapDbgPrintCodeCommand new executeOn: aDebugger with: ''
+	^ ClapDbgPrintCodeCommand new executeOn: aDebugger
 ]
 
-{ #category : 'command execution' }
+{ #category : 'execution' }
 ClapDbgStepRelatedCommand >> performStepOn: aDebugger [
     self subclassResponsibility
 ]

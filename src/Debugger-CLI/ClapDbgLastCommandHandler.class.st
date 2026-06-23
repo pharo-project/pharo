@@ -8,13 +8,13 @@ Class {
 	#package : 'Debugger-CLI'
 }
 
-{ #category : 'testing' }
+{ #category : 'execution' }
 ClapDbgLastCommandHandler >> canHandle: aString [
 
 	^ (aString beginsWith: '!!') or: [ aString isEmpty ]
 ]
 
-{ #category : 'testing' }
+{ #category : 'execution' }
 ClapDbgLastCommandHandler >> handle: aString for: aDebugger [
 
 	^ aDebugger lastCommand , (aString copyReplaceAll: '!' with: '')

@@ -8,13 +8,13 @@ Class {
 	#package : 'Debugger-CLI'
 }
 
-{ #category : 'testing' }
+{ #category : 'execution' }
 ClapDbgContansStringHandler >> canHandle: aString [
 	
 	^ aString beginsWith: '!?'
 ]
 
-{ #category : 'testing' }
+{ #category : 'execution' }
 ClapDbgContansStringHandler >> handle: aString for: aDebugger [
 
 	| unMot commandsArray |

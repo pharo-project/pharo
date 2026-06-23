@@ -5,7 +5,13 @@ Class {
 	#package : 'Debugger-CLI'
 }
 
-{ #category : 'printing' }
+{ #category : 'execution' }
+ClapDbgHelpCommand >> executeOn: aDebugger [
+
+	^ self executeOn: aDebugger with: ''
+]
+
+{ #category : 'execution' }
 ClapDbgHelpCommand >> executeOn: aDebugger with: args [
 
 	| helpArray informLine |

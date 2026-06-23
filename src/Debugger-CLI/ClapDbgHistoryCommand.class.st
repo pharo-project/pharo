@@ -5,7 +5,13 @@ Class {
 	#package : 'Debugger-CLI'
 }
 
-{ #category : 'printing' }
+{ #category : 'execution' }
+ClapDbgHistoryCommand >> executeOn: aDebugger [
+
+	^ self executeOn: aDebugger with: ''
+]
+
+{ #category : 'execution' }
 ClapDbgHistoryCommand >> executeOn: aDebugger with: args [
 
 	| lines |

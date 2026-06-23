@@ -5,7 +5,7 @@ Class {
 	#package : 'Debugger-CLI'
 }
 
-{ #category : 'printing' }
+{ #category : 'execution' }
 ClapDbgPrintCommand >> executeOn: aDebugger with: args [
 
 	| evaluation |

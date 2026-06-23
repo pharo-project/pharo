@@ -5,12 +5,12 @@ Class {
 	#package : 'Debugger-CLI'
 }
 
-{ #category : 'testing' }
+{ #category : 'execution' }
 ClapDbgDebuggerHistoryHandler >> canHandle: aString [
 
 
 ]
 
-{ #category : 'testing' }
+{ #category : 'execution' }
 ClapDbgDebuggerHistoryHandler >> handle: aString for: aDebugger [
 ]

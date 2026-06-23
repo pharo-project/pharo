@@ -5,7 +5,13 @@ Class {
 	#package : 'Debugger-CLI'
 }
 
-{ #category : 'printing' }
+{ #category : 'execution' }
+ClapDbgPrintStackCommand >> executeOn: aDebugger [
+
+	^ self executeOn: aDebugger with: ''
+]
+
+{ #category : 'execution' }
 ClapDbgPrintStackCommand >> executeOn: aDebugger with: args [
 
 	| results remainingStackText firstOfStack |

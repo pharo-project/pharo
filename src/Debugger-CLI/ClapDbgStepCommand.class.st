@@ -14,7 +14,7 @@ ClapDbgStepCommand >> initialize [
 	self arguments: ''
 ]
 
-{ #category : 'command execution' }
+{ #category : 'execution' }
 ClapDbgStepCommand >> performStepOn: aDebugger [
     aDebugger session stepInto
 ]
