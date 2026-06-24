@@ -14,13 +14,20 @@ ClapDbgPrintStackCommand >> executeOn: aDebugger [
 { #category : 'execution' }
 ClapDbgPrintStackCommand >> executeOn: aDebugger with: args [
 
-	| results remainingStackText firstOfStack |
-	results := aDebugger context contextStack collect: [ :ctx | ctx asString ].
+	| stackText prefix currentContext |
+	currentContext := aDebugger process suspendedContext.
+	stackText := '==================== Call Stack ====================' , aDebugger lineEnding.
 
-	firstOfStack := '------> ' , results first asString.
-	remainingStackText := (results allButFirst collect: [ :res | String tab , res ]) joinUsing: aDebugger lineEnding.
-	^ '==================== Call Stack ====================' , aDebugger lineEnding , firstOfStack , aDebugger lineEnding
-	  , remainingStackText
+	[ currentContext isNil ] whileFalse: [
+			prefix := currentContext == aDebugger context
+				          ifTrue: [ '------> ' ]
+				          ifFalse: [ '        ' ].
+
+			stackText := stackText , prefix , currentContext printString , aDebugger lineEnding.
+
+			currentContext := currentContext sender ].
+
+	^ stackText
 ]
 
 { #category : 'initialization' }

@@ -85,6 +85,33 @@ ClapDbgBasicCommandsTest >> setUpDebuggerOnStepThroughMock [
 ]
 
 { #category : 'tests' }
+ClapDbgBasicCommandsTest >> testDownCommandAtBottomOfTheStackDoesNothing [
+
+	| response bottomContextInTheStack |
+	self setUpDebuggerOnNavigationMock.
+
+	bottomContextInTheStack := debugger context bottomContext.
+	debugger context: bottomContextInTheStack.
+	response := debugger parsesAndExecuteCommand: 'down'.
+
+	self assert: debugger context equals: bottomContextInTheStack.
+	self assert: response equals: 'Already at the bottom of the stack'
+]
+
+{ #category : 'tests' }
+ClapDbgBasicCommandsTest >> testDownCommandGoesDownInTheStackWhenNotAtTheBottom [
+    | topContext downContext |
+    topContext := self setUpDebuggerOnNavigationMock.
+    
+    debugger parsesAndExecuteCommand: 'down'.
+    downContext := debugger context.
+    
+    self deny: downContext equals: topContext.
+    self assert: downContext equals: topContext sender.
+    
+]
+
+{ #category : 'tests' }
 ClapDbgBasicCommandsTest >> testEmptyCommandDoesNothing [
 
 	| response |
@@ -270,4 +297,29 @@ ClapDbgBasicCommandsTest >> testUnknownCommandReturnsErrorMessage [
 
 	self assert: debugger isActive.
 	self assert: response equals: 'Unknown command: ' , unknownCommand
+]
+
+{ #category : 'tests' }
+ClapDbgBasicCommandsTest >> testUpCommandAfterDownCommandGoesBackToRecentContext [
+
+	| topContext |
+	topContext := self setUpDebuggerOnNavigationMock.
+
+	debugger parsesAndExecuteCommand: 'down'.
+
+	debugger parsesAndExecuteCommand: 'up'.
+
+	self assert: debugger context equals: topContext
+]
+
+{ #category : 'tests' }
+ClapDbgBasicCommandsTest >> testUpCommandAtTopOfTheStackDoesNothing [
+
+	| initialContext response |
+	initialContext := self setUpDebuggerOnNavigationMock.
+	response := debugger parsesAndExecuteCommand: 'up'.
+
+	self assert: debugger context equals: initialContext.
+
+	self assert: response equals: 'Already at the top of the stack'
 ]

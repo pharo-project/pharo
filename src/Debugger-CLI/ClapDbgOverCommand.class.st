@@ -16,5 +16,6 @@ ClapDbgOverCommand >> initialize [
 
 { #category : 'execution' }
 ClapDbgOverCommand >> performStepOn: aDebugger [
-    aDebugger session stepOver
+
+	aDebugger session stepOver
 ]
