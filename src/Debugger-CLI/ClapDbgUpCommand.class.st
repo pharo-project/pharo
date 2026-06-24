@@ -22,6 +22,6 @@ ClapDbgUpCommand >> initialize [
 
 	super initialize.
 	self commandName: #( 'up' 'u' ).
-	self commandHelp: 'Go up in the stack'.
+	self commandHelp: 'go up in the stack'.
 	self arguments: ''
 ]

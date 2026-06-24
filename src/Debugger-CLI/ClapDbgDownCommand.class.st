@@ -18,6 +18,6 @@ ClapDbgDownCommand >> initialize [
 
 	super initialize.
 	self commandName: #( 'down' 'd' ).
-	self commandHelp: 'Go down in the stack'.
+	self commandHelp: 'go down in the stack'.
 	self arguments: ''
 ]

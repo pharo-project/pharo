@@ -14,9 +14,17 @@ ClapDbgPrintCommand >> executeOn: aDebugger with: args [
 		evaluation := OpalEvaluator new
 			              context: aDebugger context;
 			              evaluate: args.
+
 		^ evaluation asString ]
 		on: Error
-		do: [ :ex | ^ ex stackTraceString ]
+		do: [ :ex |
+				| indexOfDoIt allLines usefulLines |
+				allLines := ex stackTraceString lines.
+				indexOfDoIt := allLines findFirst: [ :l | l includesSubstring: 'DoIt' ].
+				usefulLines := indexOfDoIt > 0
+					               ifTrue: [ allLines copyFrom: 1 to: indexOfDoIt ]
+					               ifFalse: [ allLines ].
+				^ usefulLines joinUsing: aDebugger lineEnding ]
 ]
 
 { #category : 'initialization' }
