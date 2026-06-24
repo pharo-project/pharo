@@ -121,6 +121,22 @@ ClapDbgBasicCommandsTest >> testEmptyCommandDoesNothing [
 ]
 
 { #category : 'tests' }
+ClapDbgBasicCommandsTest >> testFinishCommandExitsMethodAndPreservesReturnExecution [
+    | contextBeforeEntering |
+    self setUpDebuggerOnNavigationMock.
+    contextBeforeEntering := debugger context.
+    debugger parsesAndExecuteCommand: 'step'. "to enter the method"
+
+    debugger parsesAndExecuteCommand: 'finish'.
+    
+    self assert: debugger context equals: contextBeforeEntering.
+    
+    debugger parsesAndExecuteCommand: 'step'.
+
+    self assert: (debugger parsesAndExecuteCommand: 'print response') equals: '42'
+]
+
+{ #category : 'tests' }
 ClapDbgBasicCommandsTest >> testOverCommandAdvancesPCOnSameContext [
 	
 	| initialContext initialPc |
@@ -270,7 +286,7 @@ ClapDbgBasicCommandsTest >> testReturnExitTheFunctionReturningTheArgument [
 	self setUpDebuggerOnNavigationMock.
 	contextBeforeEntering := debugger context.
 
-	debugger parsesAndExecuteCommand: 's'. "to enter into the method methodToStepInto"
+	debugger parsesAndExecuteCommand: 's'. "to enter the method methodToStepInto"
 	debugger parsesAndExecuteCommand: 'return 12'.
 
 	self assert: debugger context equals: contextBeforeEntering.
