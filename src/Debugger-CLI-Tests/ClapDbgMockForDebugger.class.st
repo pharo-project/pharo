@@ -9,7 +9,10 @@ Class {
 { #category : 'mock' }
 ClapDbgMockForDebugger >> methodForNavigationInACode [
 
-	self methodToStepInto
+	| response |
+	response := self methodToStepInto.
+
+	^ response
 ]
 
 { #category : 'mock' }

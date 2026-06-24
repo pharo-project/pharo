@@ -264,6 +264,33 @@ ClapDbgBasicCommandsTest >> testQuitDisactivateTheDebuggerAndAnnouncesIt [
 ]
 
 { #category : 'tests' }
+ClapDbgBasicCommandsTest >> testReturnExitTheFunctionReturningTheArgument [
+
+	| contextBeforeEntering |
+	self setUpDebuggerOnNavigationMock.
+	contextBeforeEntering := debugger context.
+
+	debugger parsesAndExecuteCommand: 's'. "to enter into the method methodToStepInto"
+	debugger parsesAndExecuteCommand: 'return 12'.
+
+	self assert: debugger context equals: contextBeforeEntering.
+	debugger parsesAndExecuteCommand: 's'. "to assign the return value to response"
+	self assert: (debugger parsesAndExecuteCommand: 'print response') equals: '12'
+]
+
+{ #category : 'tests' }
+ClapDbgBasicCommandsTest >> testReturnWithInvalidExpressionReturnsEvaluationErrorWithoutReturning [
+
+	| response initialContext |
+	initialContext := self setUpDebuggerOnNavigationMock.
+
+	response := debugger parsesAndExecuteCommand: 'return 1/0'.
+
+	self assert: debugger context equals: initialContext.
+	self assert: (response includesSubstring: 'ZeroDivide' caseSensitive: false)
+]
+
+{ #category : 'tests' }
 ClapDbgBasicCommandsTest >> testStepCommandEntersCalledMethod [
 
 	| initialContext newContext |

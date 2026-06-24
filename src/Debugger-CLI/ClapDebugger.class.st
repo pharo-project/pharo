@@ -186,7 +186,8 @@ ClapDebugger >> initializeCommands [
 		                ClapDbgHistoryCommand new.
 		                ClapDbgStepThroughCommand new.
 		                ClapDbgDownCommand new.
-		                ClapDbgUpCommand new }.
+		                ClapDbgUpCommand new.
+		                ClapDbgReturnCommand new }.
 	commands := Dictionary new.
 	commandsList do: [ :aCommand |
 			commands at: aCommand commandName first put: aCommand.

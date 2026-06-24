@@ -51,6 +51,18 @@ ClapDbgCommand >> executeOn: aDebugger with: args [
 	^ self subclassResponsibility
 ]
 
+{ #category : 'execution' }
+ClapDbgCommand >> handleError: ex onDebugger: aDebugger [
+
+	| indexOfDoIt allLines usefulLines |
+	allLines := ex stackTraceString lines.
+	indexOfDoIt := allLines findFirst: [ :l | l includesSubstring: 'DoIt' ].
+	usefulLines := indexOfDoIt > 0
+		               ifTrue: [ allLines copyFrom: 1 to: indexOfDoIt ]
+		               ifFalse: [ allLines ].
+	^ usefulLines joinUsing: aDebugger lineEnding
+]
+
 { #category : 'printing' }
 ClapDbgCommand >> printHelp [
 
