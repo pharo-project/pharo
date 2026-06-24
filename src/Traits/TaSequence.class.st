@@ -168,7 +168,7 @@ TaSequence >> isLocalAliasSelector: aSymbol [
 TaSequence >> manageConflictBetween: implementations infosToRemove: toRemove [
 	"If protocols are different we create a conflict."
 
-	(implementations collectAsSet: #protocol) size > 1 ifTrue: [ implementations first protocol: Protocol traitConflictName ].
+	(implementations collect: #protocol as: Set) size > 1 ifTrue: [ implementations first protocol: Protocol traitConflictName ].
 	"implementations first sourceCode: (self sourceCodeForConflictFor: implementations first selector)."
 	toRemove addAll: implementations allButFirst
 ]
