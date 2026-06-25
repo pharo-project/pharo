@@ -6,13 +6,7 @@ Class {
 }
 
 { #category : 'execution' }
-ClapDbgPrintStackCommand >> executeOn: aDebugger [
-
-	^ self executeOn: aDebugger with: ''
-]
-
-{ #category : 'execution' }
-ClapDbgPrintStackCommand >> executeOn: aDebugger with: args [
+ClapDbgPrintStackCommand >> basicExecuteOn: aDebugger with: args [
 
 	| stackText prefix currentContext |
 	currentContext := aDebugger process suspendedContext.

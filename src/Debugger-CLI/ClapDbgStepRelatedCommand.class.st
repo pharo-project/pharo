@@ -6,13 +6,7 @@ Class {
 }
 
 { #category : 'execution' }
-ClapDbgStepRelatedCommand >> executeOn: aDebugger [ 
-
-	^ self executeOn: aDebugger with: ''
-]
-
-{ #category : 'execution' }
-ClapDbgStepRelatedCommand >> executeOn: aDebugger with: args [
+ClapDbgStepRelatedCommand >> basicExecuteOn: aDebugger with: args [
 
 	[ self performStepOn: aDebugger ]
 		on: ProcessAlreadyTerminating
@@ -22,7 +16,7 @@ ClapDbgStepRelatedCommand >> executeOn: aDebugger with: args [
 
 	aDebugger context ifNil: [ ^ aDebugger finishedDebugging ].
 
-	^ ClapDbgPrintCodeCommand new executeOn: aDebugger
+	^ ClapDbgPrintCodeCommand new basicExecuteOn: aDebugger
 ]
 
 { #category : 'execution' }

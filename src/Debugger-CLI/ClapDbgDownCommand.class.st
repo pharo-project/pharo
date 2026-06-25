@@ -6,7 +6,7 @@ Class {
 }
 
 { #category : 'execution' }
-ClapDbgDownCommand >> executeOn: aDebugger with: args [
+ClapDbgDownCommand >> basicExecuteOn: aDebugger with: args [
 
 	aDebugger context sender ifNil: [ ^ 'Already at the bottom of the stack' ] ifNotNil: [ :s | aDebugger context: s ].
 

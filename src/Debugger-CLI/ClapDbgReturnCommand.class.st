@@ -6,19 +6,16 @@ Class {
 }
 
 { #category : 'execution' }
-ClapDbgReturnCommand >> executeOn: aDebugger with: args [
+ClapDbgReturnCommand >> basicExecuteOn: aDebugger with: args [
 
 	| valueToReturn |
-	[
-		valueToReturn := OpalEvaluator new
-			                 context: aDebugger context;
-			                 evaluate: args.
-		aDebugger session returnValue: valueToReturn from: aDebugger context.
-		aDebugger context: aDebugger process suspendedContext.
+	valueToReturn := OpalEvaluator new
+		                 context: aDebugger context;
+		                 evaluate: args.
+	aDebugger session returnValue: valueToReturn from: aDebugger context.
+	aDebugger context: aDebugger process suspendedContext.
 
-		^ ClapDbgPrintCodeCommand new executeOn: aDebugger with: '' ]
-		on: Error
-		do: [ :ex | ^ self handleError: ex onDebugger: aDebugger ]
+	^ ClapDbgPrintCodeCommand new executeOn: aDebugger with: ''
 ]
 
 { #category : 'initialization' }

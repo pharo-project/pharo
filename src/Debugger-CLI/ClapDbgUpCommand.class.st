@@ -6,7 +6,7 @@ Class {
 }
 
 { #category : 'execution' }
-ClapDbgUpCommand >> executeOn: aDebugger with: args [
+ClapDbgUpCommand >> basicExecuteOn: aDebugger with: args [
 
 	| currentContext callee |
 	currentContext := aDebugger context.

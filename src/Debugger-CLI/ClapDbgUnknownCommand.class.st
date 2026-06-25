@@ -8,6 +8,12 @@ Class {
 	#package : 'Debugger-CLI'
 }
 
+{ #category : 'execution' }
+ClapDbgUnknownCommand >> basicExecuteOn: aDebugger with: args [
+
+	^ 'Unknown command: ' , command
+]
+
 { #category : 'accessing' }
 ClapDbgUnknownCommand >> command [
 
@@ -18,12 +24,6 @@ ClapDbgUnknownCommand >> command [
 ClapDbgUnknownCommand >> command: anObject [
 
 	command := anObject
-]
-
-{ #category : 'execution' }
-ClapDbgUnknownCommand >> executeOn: aDebugger with: args [
-
-	^ 'Unknown command: ' , command
 ]
 
 { #category : 'initialization' }

@@ -22,6 +22,18 @@ ClapDbgCommand >> arguments: anObject [
 	arguments := anObject
 ]
 
+{ #category : 'execution' }
+ClapDbgCommand >> basicExecuteOn: aDebugger [
+
+	^ self basicExecuteOn: aDebugger with: ''
+]
+
+{ #category : 'execution' }
+ClapDbgCommand >> basicExecuteOn: aDebugger with: args [
+
+	^ self subclassResponsibility
+]
+
 { #category : 'accessing' }
 ClapDbgCommand >> commandHelp [
 
@@ -47,8 +59,10 @@ ClapDbgCommand >> commandName: anObject [
 ]
 
 { #category : 'execution' }
-ClapDbgCommand >> executeOn: aDebugger with: args [ 
-	^ self subclassResponsibility
+ClapDbgCommand >> executeOn: aDebugger with: args [
+    [ ^ self basicExecuteOn: aDebugger with: args ]
+        on: Error
+        do: [ :ex | ^ self handleError: ex onDebugger: aDebugger ]
 ]
 
 { #category : 'execution' }

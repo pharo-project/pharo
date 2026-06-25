@@ -6,13 +6,7 @@ Class {
 }
 
 { #category : 'execution' }
-ClapDbgHelpCommand >> executeOn: aDebugger [
-
-	^ self executeOn: aDebugger with: ''
-]
-
-{ #category : 'execution' }
-ClapDbgHelpCommand >> executeOn: aDebugger with: args [
+ClapDbgHelpCommand >> basicExecuteOn: aDebugger with: args [
 
 	| helpArray informLine |
 	helpArray := aDebugger commands values collect: [ :command | String tab , command printHelp ].

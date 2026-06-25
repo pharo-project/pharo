@@ -6,13 +6,7 @@ Class {
 }
 
 { #category : 'execution' }
-ClapDbgHistoryCommand >> executeOn: aDebugger [
-
-	^ self executeOn: aDebugger with: ''
-]
-
-{ #category : 'execution' }
-ClapDbgHistoryCommand >> executeOn: aDebugger with: args [
+ClapDbgHistoryCommand >> basicExecuteOn: aDebugger with: args [
 
 	| lines |
 	lines := aDebugger commandsStack asArray reversed withIndexCollect: [ :command :index | index asString , ' : ' , command ].

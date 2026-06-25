@@ -6,18 +6,15 @@ Class {
 }
 
 { #category : 'execution' }
-ClapDbgPrintCommand >> executeOn: aDebugger with: args [
+ClapDbgPrintCommand >> basicExecuteOn: aDebugger with: args [
 
 	| evaluation |
 	args trim ifEmpty: [ ^ 'Nothing to print' ].
-	[
-		evaluation := OpalEvaluator new
-			              context: aDebugger context;
-			              evaluate: args.
+	evaluation := OpalEvaluator new
+		              context: aDebugger context;
+		              evaluate: args.
 
-		^ evaluation asString ]
-		on: Error
-		do: [ :ex | ^ self handleError: ex onDebugger: aDebugger ]
+	^ evaluation asString
 ]
 
 { #category : 'initialization' }

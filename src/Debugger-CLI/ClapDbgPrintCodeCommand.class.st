@@ -6,24 +6,18 @@ Class {
 }
 
 { #category : 'execution' }
-ClapDbgPrintCodeCommand >> executeOn: aDebugger [
-
-	^ self executeOn: aDebugger with: ''
-]
-
-{ #category : 'execution' }
-ClapDbgPrintCodeCommand >> executeOn: aDebugger with: args [
+ClapDbgPrintCodeCommand >> basicExecuteOn: aDebugger with: args [
 
 	| codeOfCurrentMethod pcRange debugContext |
 	debugContext := aDebugger context.
 	codeOfCurrentMethod := debugContext method sourceCode asString.
 
 	pcRange := aDebugger session pcRangeForContext: debugContext.
-    
-    ^ '{1}--->{2}<---{3}' format: { 
-        (codeOfCurrentMethod copyFrom: 1 to: pcRange first - 1).
-        (codeOfCurrentMethod copyFrom: pcRange first to: pcRange last).
-        (codeOfCurrentMethod copyFrom: pcRange last + 1 to: codeOfCurrentMethod size) }
+
+	^ '{1}--->{2}<---{3}' format: {
+			  (codeOfCurrentMethod copyFrom: 1 to: pcRange first - 1).
+			  (codeOfCurrentMethod copyFrom: pcRange first to: pcRange last).
+			  (codeOfCurrentMethod copyFrom: pcRange last + 1 to: codeOfCurrentMethod size) }
 ]
 
 { #category : 'initialization' }

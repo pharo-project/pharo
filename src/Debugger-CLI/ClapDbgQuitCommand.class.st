@@ -6,13 +6,7 @@ Class {
 }
 
 { #category : 'execution' }
-ClapDbgQuitCommand >> executeOn: aDebugger [
-
-	^ self executeOn: aDebugger with: ''
-]
-
-{ #category : 'execution' }
-ClapDbgQuitCommand >> executeOn: aDebugger with: args [
+ClapDbgQuitCommand >> basicExecuteOn: aDebugger with: args [
 
 	aDebugger disActivate.
 	^ 'Debugging finished'
