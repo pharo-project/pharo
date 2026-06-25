@@ -61,6 +61,6 @@ ClapDbgRunner >> runDebugger [
 					'Cannot create start debugger; Usage: debug <expression>.' , OSPlatform current lineEnding , 'Error details : ' , e asString.
 				^ self ].
 
-	debugger parsesAndExecuteCommand: 's'.
+	debugger step.
 	debugger run
 ]

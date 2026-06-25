@@ -60,7 +60,7 @@ ClapDbgBasicCommandsTest >> setUpDebuggerOnNavigationMock [
 		session: session;
 		context: context.
 
-	[ debugger context method selector = #methodForNavigationInACode ] whileFalse: [ debugger parsesAndExecuteCommand: 'step' ].
+	[ debugger context method selector = #methodForNavigationInACode ] whileFalse: [ debugger step ].
 	^ debugger context
 ]
 
@@ -78,8 +78,8 @@ ClapDbgBasicCommandsTest >> setUpDebuggerOnStepThroughMock [
 		session: session;
 		context: context.
 
-	[ debugger context method selector = #methodWithBlockForStepThrough ] whileFalse: [ debugger parsesAndExecuteCommand: 'step' ].
-	debugger parsesAndExecuteCommand: 'step'.
+	[ debugger context method selector = #methodWithBlockForStepThrough ] whileFalse: [ debugger step ].
+	debugger step.
 
 	^ debugger context
 ]
@@ -92,7 +92,7 @@ ClapDbgBasicCommandsTest >> testDownCommandAtBottomOfTheStackDoesNothing [
 
 	bottomContextInTheStack := debugger context bottomContext.
 	debugger context: bottomContextInTheStack.
-	response := debugger parsesAndExecuteCommand: 'down'.
+	response := debugger down.
 
 	self assert: debugger context equals: bottomContextInTheStack.
 	self assert: response equals: 'Already at the bottom of the stack'
@@ -103,7 +103,7 @@ ClapDbgBasicCommandsTest >> testDownCommandGoesDownInTheStackWhenNotAtTheBottom 
     | topContext downContext |
     topContext := self setUpDebuggerOnNavigationMock.
     
-    debugger parsesAndExecuteCommand: 'down'.
+    debugger down.
     downContext := debugger context.
     
     self deny: downContext equals: topContext.
@@ -112,28 +112,19 @@ ClapDbgBasicCommandsTest >> testDownCommandGoesDownInTheStackWhenNotAtTheBottom 
 ]
 
 { #category : 'tests' }
-ClapDbgBasicCommandsTest >> testEmptyCommandDoesNothing [
-
-	| response |
-	response := debugger parsesAndExecuteCommand: '          '.
-
-	self assert: response equals: ''
-]
-
-{ #category : 'tests' }
 ClapDbgBasicCommandsTest >> testFinishCommandExitsMethodAndPreservesReturnExecution [
     | contextBeforeEntering |
     self setUpDebuggerOnNavigationMock.
     contextBeforeEntering := debugger context.
-    debugger parsesAndExecuteCommand: 'step'. "to enter the method"
+    debugger step. "to enter the method"
 
-    debugger parsesAndExecuteCommand: 'finish'.
+    debugger finish.
     
     self assert: debugger context equals: contextBeforeEntering.
     
-    debugger parsesAndExecuteCommand: 'step'.
+    debugger step.
 
-    self assert: (debugger parsesAndExecuteCommand: 'print response') equals: '42'
+    self assert: (debugger print: 'response') equals: '42'
 ]
 
 { #category : 'tests' }
@@ -143,9 +134,18 @@ ClapDbgBasicCommandsTest >> testOverCommandAdvancesPCOnSameContext [
 
 	initialContext := self setUpDebuggerOnNavigationMock.
 	initialPc := initialContext pc.
-	debugger parsesAndExecuteCommand: 'over'.
+	debugger over.
 	self assert: debugger context method equals: initialContext method.
 	self deny: debugger context pc equals: initialPc.
+]
+
+{ #category : 'tests' }
+ClapDbgBasicCommandsTest >> testParsingAnEmptyCommandDoesNothing [
+
+	| response |
+	response := debugger parsesAndExecuteCommand: '          '.
+
+	self assert: response equals: ''
 ]
 
 { #category : 'tests' }
@@ -154,7 +154,7 @@ ClapDbgBasicCommandsTest >> testPrintCodeCommandShowsMethodSourceAndHighlightsNe
     | response |
     self setUpContextForPrintCode.
     
-    response := debugger parsesAndExecuteCommand: 'printCode'.
+    response := debugger printCode.
 
     self assert: (response includesSubstring: 'methodeToPrintCode').
     self assert: (response includesSubstring: '"Fake method to test printCode"').
@@ -171,10 +171,10 @@ ClapDbgBasicCommandsTest >> testPrintCommandEvaluatesArgumentsCorrectly [
 	| response1 response2 |
 	self setUpContextForPrinting.
 
-	response1 := debugger parsesAndExecuteCommand: 'print arg1'.
+	response1 := debugger print: 'arg1'.
 	self assert: response1 equals: '1'.
 
-	response2 := debugger parsesAndExecuteCommand: 'print arg2'.
+	response2 := debugger print: 'arg2'.
 	self assert: response2 equals: '32'
 ]
 
@@ -184,7 +184,7 @@ ClapDbgBasicCommandsTest >> testPrintCommandWithDivisionByZeroReturnsError [
 	| response |
 	self setUpContextForPrinting.
 
-	response := debugger parsesAndExecuteCommand: 'print 1/0'.
+	response := debugger print: '1/0'.
 
 	self assert: debugger isActive.
 	self assert: (response includesSubstring: 'ZeroDivide')
@@ -196,7 +196,7 @@ ClapDbgBasicCommandsTest >> testPrintCommandWithNoArgumentsShowsNothingToPrint [
 	| response |
 	self setUpContextForPrinting.
 
-	response := debugger parsesAndExecuteCommand: 'print '.
+	response := debugger print: ' '.
 
 	self assert: response equals: 'Nothing to print'
 ]
@@ -207,7 +207,7 @@ ClapDbgBasicCommandsTest >> testPrintCommandWithSyntaxErrorReturnsError [
 	| response |
 	self setUpContextForPrinting.
 
-	response := debugger parsesAndExecuteCommand: 'print 1 + '.
+	response := debugger print: '1+ '.
 
 	self assert: debugger isActive.
 	self assert: (response includesSubstring: 'OCSyntaxErrorNotice')
@@ -219,7 +219,7 @@ ClapDbgBasicCommandsTest >> testPrintCommandWithUnknownVariableReturnsError [
 	| response |
 	self setUpContextForPrinting.
 
-	response := debugger parsesAndExecuteCommand: 'print arg'.
+	response := debugger print: 'arg'.
 
 	self assert: debugger isActive.
 	self assert: (response includesSubstring: 'OCUndeclaredVariableNotice')
@@ -229,7 +229,7 @@ ClapDbgBasicCommandsTest >> testPrintCommandWithUnknownVariableReturnsError [
 ClapDbgBasicCommandsTest >> testPrintStackCommandShowsCurrentContext [
 
 	| response |
-	response := debugger parsesAndExecuteCommand: 'printStack'.
+	response := debugger printStack.
 
 	self assert: (response includesSubstring: debugger context printString)
 ]
@@ -240,10 +240,10 @@ ClapDbgBasicCommandsTest >> testPrintStackUpdatesCorrectlyOnMethodEntryAfterStep
 	| stackBefore stackInside |
 	self setUpDebuggerOnNavigationMock.
 
-	stackBefore := debugger parsesAndExecuteCommand: 'printStack'.
+	stackBefore := debugger printStack.
 
-	debugger parsesAndExecuteCommand: 'step'. 
-	stackInside := debugger parsesAndExecuteCommand: 'printStack'.
+	debugger step. 
+	stackInside := debugger printStack.
 
 	self assert: (stackInside includesSubstring: 'methodToStepInto').
 	self assert: (stackInside includesSubstring: 'methodForNavigationInACode').
@@ -256,13 +256,13 @@ ClapDbgBasicCommandsTest >> testPrintStackUpdatesCorrectlyOnMethodExitAfterStep 
 	| stackInside stackAfter |
 	self setUpDebuggerOnNavigationMock.
 
-	debugger parsesAndExecuteCommand: 'step'.
+	debugger step.
 
-	stackInside := debugger parsesAndExecuteCommand: 'printStack'.
+	stackInside := debugger printStack.
 
-	[ debugger context method selector = #methodToStepInto ] whileTrue: [ debugger parsesAndExecuteCommand: 'step' ]. "Get out of the method to get back on methodForNavigationInACode"
+	[ debugger context method selector = #methodToStepInto ] whileTrue: [ debugger step ]. "Get out of the method to get back on methodForNavigationInACode"
 
-	stackAfter := debugger parsesAndExecuteCommand: 'printStack'.
+	stackAfter := debugger printStack.
 
 	self assert: (stackAfter includesSubstring: 'methodForNavigationInACode').
 	self deny: (stackAfter includesSubstring: 'methodToStepInto').
@@ -274,7 +274,7 @@ ClapDbgBasicCommandsTest >> testQuitDisactivateTheDebuggerAndAnnouncesIt [
 
 	| response |
 	self assert: debugger isActive.
-	response := debugger parsesAndExecuteCommand: 'q'.
+	response := debugger quit.
 	self deny: debugger isActive.
 	self assert: response equals: 'Debugging finished'
 ]
@@ -286,12 +286,12 @@ ClapDbgBasicCommandsTest >> testReturnExitTheFunctionReturningTheArgument [
 	self setUpDebuggerOnNavigationMock.
 	contextBeforeEntering := debugger context.
 
-	debugger parsesAndExecuteCommand: 's'. "to enter the method methodToStepInto"
-	debugger parsesAndExecuteCommand: 'return 12'.
+	debugger step. "to enter the method methodToStepInto"
+	debugger return: '12'.
 
 	self assert: debugger context equals: contextBeforeEntering.
-	debugger parsesAndExecuteCommand: 's'. "to assign the return value to response"
-	self assert: (debugger parsesAndExecuteCommand: 'print response') equals: '12'
+	debugger step. "to assign the return value to response"
+	self assert: (debugger print: 'response') equals: '12'
 ]
 
 { #category : 'tests' }
@@ -300,7 +300,7 @@ ClapDbgBasicCommandsTest >> testReturnWithInvalidExpressionReturnsEvaluationErro
 	| response initialContext |
 	initialContext := self setUpDebuggerOnNavigationMock.
 
-	response := debugger parsesAndExecuteCommand: 'return 1/0'.
+	response := debugger return: '1/0'.
 
 	self assert: debugger context equals: initialContext.
 	self assert: (response includesSubstring: 'ZeroDivide' caseSensitive: false)
@@ -312,7 +312,7 @@ ClapDbgBasicCommandsTest >> testStepCommandEntersCalledMethod [
 	| initialContext newContext |
 
 	initialContext := self setUpDebuggerOnNavigationMock.
-	debugger parsesAndExecuteCommand: 'step'.
+	debugger step.
 	newContext := debugger context method.
 	self deny: newContext method equals: initialContext method.
 	self assert: newContext method selector equals: #methodToStepInto.
@@ -321,13 +321,11 @@ ClapDbgBasicCommandsTest >> testStepCommandEntersCalledMethod [
 { #category : 'tests' }
 ClapDbgBasicCommandsTest >> testStepThroughCommandEntersBlock [
 
-	| initialContext response codeBefore |
+	| initialContext response |
 	initialContext := self setUpDebuggerOnStepThroughMock.
-	codeBefore := debugger parsesAndExecuteCommand: 'pc'.
+	response := debugger stepThrough.
 
-	response := debugger parsesAndExecuteCommand: 'stepThrough'.
 	self assert: debugger context isBlockContext.
-
 	self assert: debugger context home method selector equals: #methodWithBlockForStepThrough
 ]
 
@@ -336,7 +334,7 @@ ClapDbgBasicCommandsTest >> testUnknownCommandReturnsErrorMessage [
 
 	| response unknownCommand |
 	unknownCommand := 'thisIsAnUnknownCommand'.
-	response := debugger parsesAndExecuteCommand: unknownCommand.
+	response := debugger executeCommand: unknownCommand arg: ''.
 
 	self assert: debugger isActive.
 	self assert: response equals: 'Unknown command: ' , unknownCommand
@@ -348,9 +346,9 @@ ClapDbgBasicCommandsTest >> testUpCommandAfterDownCommandGoesBackToRecentContext
 	| topContext |
 	topContext := self setUpDebuggerOnNavigationMock.
 
-	debugger parsesAndExecuteCommand: 'down'.
+	debugger down.
 
-	debugger parsesAndExecuteCommand: 'up'.
+	debugger up.
 
 	self assert: debugger context equals: topContext
 ]
@@ -360,7 +358,7 @@ ClapDbgBasicCommandsTest >> testUpCommandAtTopOfTheStackDoesNothing [
 
 	| initialContext response |
 	initialContext := self setUpDebuggerOnNavigationMock.
-	response := debugger parsesAndExecuteCommand: 'up'.
+	response := debugger up.
 
 	self assert: debugger context equals: initialContext.
 
