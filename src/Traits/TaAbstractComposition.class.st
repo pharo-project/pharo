@@ -220,48 +220,6 @@ TaAbstractComposition >> copyInfo: compileInfo into: aClass replacing: replacing
 	^ true
 ]
 
-{ #category : 'operations' }
-TaAbstractComposition >> copyMethod: aSelector into: aClass replacing: replacing [
-	"When the included method does not need to be source rewritten or recompiled,
-	it is query by using #changesSourceCode:, the method is inserted in aClass' method dictionary.
-	The compiled method is just copied and the source is stored in the change file
-
-	I check that the method is not already in the class
-	The method is only replaced if replacing is true.
-	"
-
-	| aCompiledMethod source newMethod traitDefining sourceHasChanged |
-	traitDefining := self traitDefining: aSelector.
-	aCompiledMethod := self compiledMethodAt: aSelector.
-	source := self getSourceCodeOf: aCompiledMethod usingSelector: aSelector.
-
-	"If the selectors are not the same I have to save the new source code"
-	sourceHasChanged := aSelector ~= aCompiledMethod selector.
-
-	"Check if the method should be replaced. It is replaced if:
-	 - replacing is true.
-	 - The trait defining the method is not the same.
-	 - If both methods have source code and if the source codes are not the same.
-	"
-	aClass compiledMethodAt: aSelector ifPresent: [ :originalMethod |
-		(replacing not and: [ originalMethod traitSource = traitDefining and: [ originalMethod hasSourceCode and: [ source isNotNil and: [ source = originalMethod sourceCode ] ] ] ]) ifTrue: [ ^ false ] ].
-
-	newMethod := aCompiledMethod copy.
-	newMethod selector: aSelector.
-	newMethod methodClass: aClass.
-
-	newMethod sourcePointer: aCompiledMethod sourcePointer.
-
-	"This step should not announce anything in the system."
-	self class codeChangeAnnouncer suspendAllWhile: [ aClass classify: aSelector under: aCompiledMethod protocolName ].
-
-	aClass addSelectorSilently: aSelector withMethod: newMethod.
-
-	aClass >> aSelector propertyAt: #traitSource put: traitDefining.
-
-	^ true
-]
-
 { #category : 'copying' }
 TaAbstractComposition >> copySlot: aSlot [
 	"This is a utitlity method to handle the copy of a slot. It is used for instance side and class side slots."
