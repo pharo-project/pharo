@@ -100,10 +100,9 @@ TraitChange >> initialize [
 { #category : 'operations' }
 TraitChange >> remove: aSelector into: aClass changes: results [
 
-	| isLocal inTrait |
+	| isLocal |
 	"I handle the removal of a selector. There are many cases to check."
 	isLocal := aClass localSelectors includes: aSelector.
-	inTrait := aClass traitComposition traitDefining: aSelector ifNone: [ nil ].
 
 	"This is only true when the update method is a propagation, so we have to avoid destroying a locally defined method.
 	Check TraitedClass >> #removeSelector: and you will see that the method is removed from the local method dict
@@ -113,10 +112,12 @@ TraitChange >> remove: aSelector into: aClass changes: results [
 
 	"If the removed method was shadowing a method from a trait composition, the method from the trait composition
 	should be installed. And the change propagated as an update, not as a removal."
-	inTrait ifNotNil: [
-		inTrait installSelector: aSelector into: aClass.
-		results updatedSelectors add: aSelector.
-		^ self ].
+	aClass traitComposition methodsCompilationInfo
+		detect: [ :info | info selector = aSelector ]
+		ifFound: [ :info |
+				info definingTrait installCompilationInfos: info into: aClass replacing: true.
+				results updatedSelectors add: aSelector.
+				^ self ].
 
 	"We have to remove the method that was removed in a used trait silently."
 	(aClass methodDict includesKey: aSelector) ifTrue: [ aClass removeSelectorSilently: aSelector ].
@@ -126,8 +127,8 @@ TraitChange >> remove: aSelector into: aClass changes: results [
 
 	"If the updated method is aliased (it has alias pointing to it), they should be removed also"
 	(aClass traitComposition reverseAlias: aSelector) do: [ :aliased |
-		aClass methodDict removeKey: aliased ifAbsent: [  ].
-		results removedSelectors add: aliased ]
+			aClass methodDict removeKey: aliased ifAbsent: [ ].
+			results removedSelectors add: aliased ]
 ]
 
 { #category : 'accessing' }
