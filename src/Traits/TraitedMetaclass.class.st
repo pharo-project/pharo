@@ -247,7 +247,7 @@ TraitedMetaclass >> methodInstaller [
 { #category : 'initialization' }
 TraitedMetaclass >> rebuildMethodDictionary [
 
-	| selectors removedSelectors modified |
+	| compilationInfos removedSelectors modified |
 	"During the creation of the class or after a change in the traitComposition, the whole method dictionary is calculated.
 	If I return true, my users should be updated.
 	Check the version in TraitedClass for more details."
@@ -255,11 +255,11 @@ TraitedMetaclass >> rebuildMethodDictionary [
 
 	self methodDict valuesDo: [ :m | m traitSource ifNil: [ localMethods at: m selector put: m ] ].
 
-	selectors := self traitComposition methodsCompilationInfo reject: [ :info | self isRejectedMethod: info selector ].
-	selectors do: [ :e | modified := modified | (self traitComposition installCompilationInfos: e into: self replacing: false) ].
+	compilationInfos := self traitComposition methodsCompilationInfo reject: [ :info | self isRejectedMethod: info selector ].
+	compilationInfos do: [ :info | modified := modified | (self traitComposition installCompilationInfos: info into: self replacing: false) ].
 
 	removedSelectors := self methodDict keys reject: [ :aSelector |
-		                    (selectors anySatisfy: [ :compilationInfo | compilationInfo selector = aSelector ]) or: [ self isSelectorToKeep: aSelector ] ].
+		                    (compilationInfos anySatisfy: [ :compilationInfo | compilationInfo selector = aSelector ]) or: [ self isSelectorToKeep: aSelector ] ].
 	modified := modified | removedSelectors isNotEmpty.
 	removedSelectors do: [ :aSelector |
 			self methodDict removeKey: aSelector.
