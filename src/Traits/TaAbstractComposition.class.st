@@ -133,37 +133,6 @@ TaAbstractComposition >> classComposition [
 ]
 
 { #category : 'compiling' }
-TaAbstractComposition >> compile: selector into: aClass [
-	"Compile the method associated with selector in aClass's method dictionary.
-	This version classify the method in the class passed as parameter"
-
-	| method newMethod sourceCode traitDefining |
-	traitDefining := self traitDefining: selector.
-
-	method := self compiledMethodAt: selector.
-	sourceCode := self sourceCodeAt: selector.
-
-	newMethod := aClass compiler
-		             source: sourceCode;
-		             permitUndeclared: true;
-		             compileOrFail.
-
-	selector == newMethod selector ifFalse: [ self error: 'selector changed!' ].
-
-	aClass addSelectorSilently: selector withMethod: newMethod.
-
-	"This step should not announce anything in the system since I am used to build method dictionaries of my users."
-	self class codeChangeAnnouncer suspendAllWhile: [ aClass classify: selector under: (self protocolForMethod: method) ].
-
-	(selector ~= method selector or: [ self changesSourceCode: selector ])
-		ifTrue: [ self saveSourceCode: sourceCode ofMethod: newMethod ]
-		ifFalse: [ newMethod sourcePointer: method sourcePointer ].
-
-	aClass >> selector propertyAt: #traitSource put: traitDefining.
-	^ true
-]
-
-{ #category : 'compiling' }
 TaAbstractComposition >> compileInfo: compilationInfo into: aClass [
 	"Compile the method associated with selector in aClass's method dictionary.
 	This version classify the method in the class passed as parameter"
@@ -331,32 +300,6 @@ TaAbstractComposition >> installCompilationInfos: compilationInfos into: aClass 
 	^ (self needsRecompilation: compilationInfos selector)
 			ifTrue:[ self compileInfo: compilationInfos into: aClass	]
 			ifFalse:[ self copyMethod: compilationInfos selector into: aClass replacing: replacing ].
-
-]
-
-{ #category : 'operations' }
-TaAbstractComposition >> installSelector: aSelector into: aClass [
-	"
-	This method tryies to install a selector in a given class.
-	If the method is already installed it does not perform nothing.
-	This may fail because this is used when recalculating the method dictionary.
-	It is probable the aliased method does not exists any more in the trait composition. This situation is checked when creating the trait composition."
-
-	^ self installSelector: aSelector into: aClass replacing: true
-]
-
-{ #category : 'operations' }
-TaAbstractComposition >> installSelector: aSelector into: aClass replacing: replacing [
-	"
-	This method tryies to install a selector in a given class.
-	If the method is already installed it does not perform nothing.
-	This may fail because this is used when recalculating the method dictionary.
-	It is probable the aliased method does not exists any more in the trait composition. This situation is checked when creating the trait composition."
-
-
-	^ (self needsRecompilation: aSelector)
-			ifTrue:[ self compile: aSelector into: aClass	]
-			ifFalse:[ self copyMethod: aSelector into: aClass replacing: replacing ].
 
 ]
 
