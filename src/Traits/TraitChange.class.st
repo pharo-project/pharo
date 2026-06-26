@@ -142,20 +142,20 @@ TraitChange >> removedSelectors: anObject [
 
 { #category : 'operations' }
 TraitChange >> update: aSelector into: aClass changes: changes [
-
 	"I am the responsible of propagating a change from an used trait"
 
 	"If the updated selector (from other trait) is in the local methods, nothing to do."
 
 	aClass localMethodDict at: aSelector ifPresent: [ ^ self ].
 
-	(aClass traitComposition selectors includes: aSelector)
-		ifTrue: [  	aClass traitComposition installSelector: aSelector into: aClass.
-						changes updatedSelectors add: aSelector ].
+	aClass traitComposition methodsCompilationInfo
+		detect: [ :info | info selector = aSelector ]
+		ifFound: [ :info |
+				aClass traitComposition installCompilationInfos: info into: aClass replacing: true.
+				changes updatedSelectors add: aSelector ].
 
 	"If the updated method is aliased, it should be updated also"
-	(aClass traitComposition reverseAlias: aSelector)
-		do: [ :aliased |
+	(aClass traitComposition reverseAlias: aSelector) do: [ :aliased |
 			aClass traitComposition installSelector: aliased into: aClass.
 			changes updatedSelectors add: aliased ]
 ]
