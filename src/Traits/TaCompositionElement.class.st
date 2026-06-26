@@ -137,9 +137,16 @@ TaCompositionElement >> methodsCompilationInfo [
 				          selector: method selector;
 				          definingTrait: self;
 				          compiledMethod: method;
+				          sourceCode: method sourceCode;
 				          yourself ]) , innerClass traitComposition methodsCompilationInfo.
 
-	infos do: [ :info | info selector: (self aliasSelector: info selector) ].
+	infos do: [ :info |
+			"Manage aliasing of talents"
+			info selector = #initializeTalent ifTrue: [
+					info
+						selector: self initializeSelectorForMe;
+						sourceCode: (info compiledMethod getSourceReplacingSelectorWith: self initializeSelectorForMe) ] ].
+
 	^ infos
 ]
 

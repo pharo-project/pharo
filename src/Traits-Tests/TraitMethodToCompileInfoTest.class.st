@@ -32,7 +32,7 @@ TraitMethodToCompileInfoTest >> check: info selector: selector protocol: protoco
 
 	self assert: info selector equals: selector.
 	self assert: info protocol equals: protocol.
-	self flag: #todo "Add source code"
+	self assert: info sourceCode equals: code
 ]
 
 { #category : 'tests' }
@@ -130,7 +130,8 @@ TraitMethodToCompileInfoTest >> testSequenceWithConflict [
 		selector: #m1
 		protocol: Protocol traitConflictName
 		definingTrait: c1 traitComposition members first
-		sourceCode: 'm1 ^ self traitConflict'
+		sourceCode: 'm1
+	self traitConflict'
 ]
 
 { #category : 'tests' }
@@ -146,7 +147,6 @@ TraitMethodToCompileInfoTest >> testSequenceWithTwoRequirements [
 
 	infos := c1 traitComposition methodsCompilationInfo.
 
-	self skip.
 	self assert: infos size equals: 1.
 	self
 		check: infos first

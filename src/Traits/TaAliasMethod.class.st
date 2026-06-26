@@ -136,6 +136,7 @@ TaAliasMethod >> methodsCompilationInfo [
 								 selector: association key;
 								 definingTrait: info definingTrait;
 								 compiledMethod: info compiledMethod;
+								 sourceCode: (info compiledMethod getSourceReplacingSelectorWith: association key);
 								 yourself) ] ].
 
 	^ innerInfos , aliassed

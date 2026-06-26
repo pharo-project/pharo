@@ -100,3 +100,8 @@ TraitMethodToCompileInfo >> sourceCode [
 
 	^ sourceCode
 ]
+
+{ #category : 'accessing' }
+TraitMethodToCompileInfo >> sourceCode: anObject [
+	sourceCode := anObject
+]
