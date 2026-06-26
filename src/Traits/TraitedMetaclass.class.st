@@ -149,13 +149,12 @@ TraitedMetaclass >> initialize [
 
 { #category : 'initialization' }
 TraitedMetaclass >> initializeBasicMethods [
-	| selectors |
-
 	"When a traited class is created, the methods from TraitedClass are inserted in the classSide of the new class.
 	So this new class can have traits. The methods are filtered using #isRejectedMethod:"
 
-	selectors := self class traitedClassTrait selectors reject: [ :e | self isRejectedMethod: e ].
-	selectors do: [ :e | self class traitedClassTrait copyMethod: e into: self replacing: true ]
+	self class traitedClassTrait methodsCompilationInfo
+		reject: [ :info | self isRejectedMethod: info selector ]
+		thenDo: [ :info | self class traitedClassTrait copyInfo: info into: self replacing: true ]
 ]
 
 { #category : 'testing' }
