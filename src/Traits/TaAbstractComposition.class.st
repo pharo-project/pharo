@@ -168,13 +168,11 @@ TaAbstractComposition >> compileInfo: compilationInfo into: aClass [
 	"Compile the method associated with selector in aClass's method dictionary.
 	This version classify the method in the class passed as parameter"
 
-	| selector newMethod sourceCode |
+	| selector newMethod |
 	selector := compilationInfo selector.
 
-	sourceCode := self sourceCodeAt: selector.
-
 	newMethod := aClass compiler
-		             source: sourceCode;
+		             source: compilationInfo sourceCode;
 		             permitUndeclared: true;
 		             compileOrFail.
 
@@ -182,9 +180,11 @@ TaAbstractComposition >> compileInfo: compilationInfo into: aClass [
 
 	aClass addSelectorSilently: selector withMethod: newMethod.
 
-	aClass classify: selector under: compilationInfo protocol.
+	"This step should not announce anything in the system since I am used to build method dictionaries of my users."
+	self class codeChangeAnnouncer suspendAllWhile: [ aClass classify: selector under: (self protocolForMethod: compilationInfo compiledMethod) ].
+
 	(selector ~= compilationInfo compiledMethod selector or: [ self changesSourceCode: selector ])
-		ifTrue: [ self saveSourceCode: sourceCode ofMethod: newMethod ]
+		ifTrue: [ self saveSourceCode: compilationInfo sourceCode ofMethod: newMethod ]
 		ifFalse: [ newMethod sourcePointer: compilationInfo compiledMethod sourcePointer ].
 
 	aClass >> selector propertyAt: #traitSource put: compilationInfo definingTrait.
@@ -395,6 +395,7 @@ TaAbstractComposition >> isTraitExclusion [
 
 { #category : 'accessing' }
 TaAbstractComposition >> methodsCompilationInfo [
+	"I return the compilation info for all my selectors. This is used to build the method dictionaries without visiting multiple times the trait composition"
 
 	^ self subclassResponsibility
 ]
