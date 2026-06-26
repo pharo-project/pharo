@@ -147,18 +147,17 @@ TraitChange >> update: aSelector into: aClass changes: changes [
 
 	"If the updated selector (from other trait) is in the local methods, nothing to do."
 
+	| aliases |
 	aClass localMethodDict at: aSelector ifPresent: [ ^ self ].
 
-	aClass traitComposition methodsCompilationInfo
-		detect: [ :info | info selector = aSelector ]
-		ifFound: [ :info |
-				aClass traitComposition installCompilationInfos: info into: aClass replacing: true.
-				changes updatedSelectors add: aSelector ].
-
 	"If the updated method is aliased, it should be updated also"
-	(aClass traitComposition reverseAlias: aSelector) do: [ :aliased |
-			aClass traitComposition installSelector: aliased into: aClass.
-			changes updatedSelectors add: aliased ]
+	aliases := aClass traitComposition reverseAlias: aSelector.
+
+	aClass traitComposition methodsCompilationInfo
+		select: [ :info | info selector = aSelector or: [ aliases includes: info selector ] ]
+		thenDo: [ :info |
+				aClass traitComposition installCompilationInfos: info into: aClass replacing: true.
+				changes updatedSelectors add: info selector ]
 ]
 
 { #category : 'accessing' }
