@@ -38,6 +38,56 @@ TraitMethodAnnouncementsTest >> testCompileMethodAnnounceAdditionOnlyInTrait [
 ]
 
 { #category : 'tests' }
+TraitMethodAnnouncementsTest >> testRebuildingMethodDictionaryDoesNotAnnounceMethodRecategorized [
+	"At some point, recompiling a method during the rebuild of a method dictionary was announcing protocol changes flooding Epicea with a lot of unecessary changes."
+
+	| trait |
+	[
+		trait := self class classInstaller make: [ :aBuilder |
+				         aBuilder
+					         beTrait;
+					         name: 'TraitForTest';
+					         package: self packageNameForTests , '2' ].
+
+		class := class classInstaller update: class to: [ :aBuilder | aBuilder traits: trait ].
+
+		trait compiler
+			protocol: #titan;
+			install: 'king ^ 1'.
+
+		self when: MethodRecategorized do: [ :ann | self fail: 'There should be no protocol announcement here.' ].
+
+		trait addSlot: #slot asSlot.
+
+		self assert: numberOfAnnouncements equals: 0 ] ensure: [ self packageOrganizer removePackage: self packageNameForTests , '2' ]
+]
+
+{ #category : 'tests' }
+TraitMethodAnnouncementsTest >> testRebuildingMethodDictionaryDoesNotAnnounceProtocolAdded [
+	"At some point, recompiling a method during the rebuild of a method dictionary was announcing protocol changes flooding Epicea with a lot of unecessary changes."
+
+	| trait |
+	[
+		trait := self class classInstaller make: [ :aBuilder |
+				         aBuilder
+					         beTrait;
+					         name: 'TraitForTest';
+					         package: self packageNameForTests , '2' ].
+
+		class := class classInstaller update: class to: [ :aBuilder | aBuilder traits: trait ].
+
+		trait compiler
+			protocol: #titan;
+			install: 'king ^ 1'.
+
+		self when: ProtocolAdded do: [ :ann | self fail: 'There should be no protocol announcement here.' ].
+
+		trait addSlot: #slot asSlot.
+
+		self assert: numberOfAnnouncements equals: 0 ] ensure: [ self packageOrganizer removePackage: self packageNameForTests , '2' ]
+]
+
+{ #category : 'tests' }
 TraitMethodAnnouncementsTest >> testRemoveMethodAnnounceRemovalOnlyInTrait [
 
 	| trait |

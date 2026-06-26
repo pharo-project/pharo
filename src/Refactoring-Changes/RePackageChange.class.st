@@ -16,6 +16,12 @@ RePackageChange >> asUndoOperation [
 	self subclassResponsibility
 ]
 
+{ #category : 'displaying' }
+RePackageChange >> displayString [
+
+	^ self changeString
+]
+
 { #category : 'private' }
 RePackageChange >> executeNotifying: aBlock [
 	| undo |

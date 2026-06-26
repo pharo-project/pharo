@@ -83,14 +83,10 @@ ClyTextEditor >> referencesToIt [
 { #category : '*Calypso-SystemTools-QueryBrowser' }
 ClyTextEditor >> sendersOf: selectedSelector [
 
-	self browser classSelection 
-		ifEmpty: [ ^ (Smalltalk tools 
-			toolNamed: #messageList) 
-			browseSendersOf: selectedSelector ].
-	
-	(Smalltalk tools toolNamed: #messageList) 
-		browseSendersOf: selectedSelector 
-		from: self browserTool selectedClassOrMetaClass
+	self browser classSelection ifEmpty: [
+		^ self browser browseReferencesTo: selectedSelector inNameResolver: self browserTool selectedClassOrMetaClass ].
+
+	self browser browseReferencesTo: selectedSelector inNameResolver: self browserTool selectedClassOrMetaClass 
 ]
 
 { #category : '*Calypso-SystemTools-QueryBrowser' }

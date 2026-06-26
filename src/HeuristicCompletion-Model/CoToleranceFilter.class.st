@@ -182,7 +182,6 @@ CoToleranceFilter class >> scoreForCandidate: aCandidateString token: aTokenStri
 { #category : 'algorithms' }
 CoToleranceFilter class >> shouldTryFuzzyFor: token candidate: candidate tolerance: aTolerance [ 
 
-	| maxSize maxEdits |
 	(self enabled not or: [ aTolerance <= 0.0 ]) ifTrue: [ ^ false ].
 	token isEmpty ifTrue: [ ^ false ].
 	candidate isEmpty ifTrue: [ ^ false ].
