@@ -187,13 +187,13 @@ TaAbstractComposition >> copyInfo: compileInfo into: aClass replacing: replacing
 	The method is only replaced if replacing is true.
 	"
 
-	| aCompiledMethod source newMethod traitDefining sourceHasChanged aSelector |
+	| aCompiledMethod source newMethod sourceHasChanged aSelector |
 	aSelector := compileInfo selector.
 
-	traitDefining := compileInfo definingTrait.
-
 	aCompiledMethod := self compiledMethodAt: aSelector.
-	source := self getSourceCodeOf: aCompiledMethod usingSelector: aSelector.
+	source := aCompiledMethod getSourceReplacingSelectorWith: aSelector.
+
+	"source = (compileInfo compiledMethod getSourceReplacingSelectorWith: aSelector) ifFalse: [ self halt ]."
 
 	"If the selectors are not the same I have to save the new source code"
 	sourceHasChanged := aSelector ~= aCompiledMethod selector.
@@ -205,8 +205,8 @@ TaAbstractComposition >> copyInfo: compileInfo into: aClass replacing: replacing
 	"
 	aClass compiledMethodAt: aSelector ifPresent: [ :originalMethod |
 			(replacing not and: [
-				 originalMethod traitSource = traitDefining and: [ originalMethod hasSourceCode and: [ source isNotNil and: [ source = originalMethod sourceCode ] ] ] ])
-				ifTrue: [ ^ false ] ].
+				 originalMethod traitSource = compileInfo definingTrait and: [
+					 originalMethod hasSourceCode and: [ source isNotNil and: [ source = originalMethod sourceCode ] ] ] ]) ifTrue: [ ^ false ] ].
 
 	newMethod := aCompiledMethod copy.
 	newMethod selector: aSelector.
@@ -219,7 +219,7 @@ TaAbstractComposition >> copyInfo: compileInfo into: aClass replacing: replacing
 
 	aClass addSelectorSilently: aSelector withMethod: newMethod.
 
-	aClass >> aSelector propertyAt: #traitSource put: traitDefining.
+	aClass >> aSelector propertyAt: #traitSource put: compileInfo definingTrait.
 
 	^ true
 ]
@@ -244,12 +244,6 @@ TaAbstractComposition >> copyTraitExpression [
 TaAbstractComposition >> copyWithoutTrait: aTrait [
 	"Returns a copy without the aTrait"
 	self subclassResponsibility
-]
-
-{ #category : 'operations' }
-TaAbstractComposition >> getSourceCodeOf: aCompiledMethod usingSelector: aSelector [
-
-	^ aCompiledMethod getSourceReplacingSelectorWith: aSelector
 ]
 
 { #category : 'accessing' }
