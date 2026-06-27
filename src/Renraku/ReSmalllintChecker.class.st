@@ -184,6 +184,11 @@ ReSmalllintChecker >> manifestBuilderOfPackage: aPackage [
 		  ifAbsentPut: [ self builderManifestClass ofPackage: aPackage ]
 ]
 
+{ #category : 'accessing' }
+ReSmalllintChecker >> packageRules [
+	^ packageRules
+]
+
 { #category : 'private' }
 ReSmalllintChecker >> reParseRule [
 
@@ -195,7 +200,8 @@ ReSmalllintChecker >> reParseRule [
 	self rule do: [ :r |
 		r class checksMethod ifTrue: [ methodRules add: r ].
 		r class checksNode ifTrue: [ nodeRules add: r ].
-		r class checksClass ifTrue: [ classRules add: r ] ]
+		r class checksClass ifTrue: [ classRules add: r ].
+		r class checksPackage ifTrue: [ packageRules add: r ] ]
 ]
 
 { #category : 'manifest' }

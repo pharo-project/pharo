@@ -1,9 +1,103 @@
 Class {
 	#name : 'TraitTestCase',
 	#superclass : 'AbstractTraitsOnPreparedModelTest',
+	#instVars : [
+		'c9',
+		'c10',
+		'c11',
+		't7',
+		't8',
+		't9',
+		't10'
+	],
 	#category : 'Traits-Tests',
 	#package : 'Traits-Tests'
 }
+
+{ #category : 'accessing' }
+TraitTestCase >> c10 [
+	^c10
+]
+
+{ #category : 'accessing' }
+TraitTestCase >> c10: anObject [
+	^c10 := anObject
+]
+
+{ #category : 'accessing' }
+TraitTestCase >> c11 [
+	^c11
+]
+
+{ #category : 'accessing' }
+TraitTestCase >> c11: anObject [
+	^c11 := anObject
+]
+
+{ #category : 'accessing' }
+TraitTestCase >> c9 [
+	^c9
+]
+
+{ #category : 'accessing' }
+TraitTestCase >> c9: anObject [
+	^c9 := anObject
+]
+
+{ #category : 'running' }
+TraitTestCase >> setUp [
+
+	super setUp.
+
+	self t7: (self newTrait: #T7 traits: {  }).
+	self t8: (self newTrait: #T8 traits: {  }).
+	self t10: (self newTrait: #T10 traits: {  }).
+	self t9: (self newTrait: #T9 traits: { self t10 }).
+
+	self c9: (self newClass: #C9 superclass: Object traits: self t7).
+	self c10: (self newClass: #C10 superclass: self c9 traits: self t8).
+	self c11: (self newClass: #C11 superclass: self c10 traits: self t9)
+]
+
+{ #category : 'accessing' }
+TraitTestCase >> t10 [
+	^t10
+]
+
+{ #category : 'accessing' }
+TraitTestCase >> t10: anObject [
+	^t10 := anObject
+]
+
+{ #category : 'accessing' }
+TraitTestCase >> t7 [
+	^t7
+]
+
+{ #category : 'accessing' }
+TraitTestCase >> t7: anObject [
+	^t7 := anObject
+]
+
+{ #category : 'accessing' }
+TraitTestCase >> t8 [
+	^t8
+]
+
+{ #category : 'accessing' }
+TraitTestCase >> t8: anObject [
+	^t8 := anObject
+]
+
+{ #category : 'accessing' }
+TraitTestCase >> t9 [
+	^t9
+]
+
+{ #category : 'accessing' }
+TraitTestCase >> t9: anObject [
+	^t9 := anObject
+]
 
 { #category : 'tests' }
 TraitTestCase >> testAddAndRemoveMethodsFromSubtraits [
@@ -82,9 +176,9 @@ TraitTestCase >> testExplicitRequirementDoesNotTakePrecedenceInDeepHierarchy [
 
 	"C9 inherits from Object. C10 inherits from C9. C11 inherits from C10. Each Ci uses the trait Ti."
 
-	self t11 compile: 'm ^self explicitRequirement'.
+	self t9 compile: 'm ^self explicitRequirement'.
 	self should: [ self c11 new m ] raise: Error.
-	self t9 compile: 'm ^2'.
+	self t7 compile: 'm ^2'.
 	self c9 new m.
 	self c10 new m.
 	self c11 new m.
@@ -106,8 +200,8 @@ TraitTestCase >> testExplicitRequirementInClassAlwaysTakesPrecedence [
 TraitTestCase >> testExplicitRequirementTakesPrecedenceOverTraitImplementation [
 
 	"If I create an explicit requirement method on a trait, the method has to be explicit requirement "
-	self t12 compile: 'm ^11'.
-	self t11 compile: 'm ^self explicitRequirement'.
+	self t10 compile: 'm ^11'.
+	self t9 compile: 'm ^self explicitRequirement'.
 
 	self should: [ self c11 new m ] raise: Error.
 
@@ -121,18 +215,18 @@ TraitTestCase >> testExplicitRequirementTakesPrecedenceOverTraitImplementation [
 TraitTestCase >> testExplicitRequirementWithSuperclassImplementation [
 	"Make sure that an explicitRequirement method from a trait does not take precedence over a superclass implementation."
 
-	self t10 compile: 'm ^self explicitRequirement'.
+	self t8 compile: 'm ^self explicitRequirement'.
 	self should: [ self c10 new m ] raise: Error.
 	self c9 compile: 'm ^123'.
 	self assert: self c10 new m equals: 123.
 	self c9 removeSelector: #m.
-	self t10 removeSelector: #m.	"The previous is still true even if we compile the superclass method before the trait method."
+	self t8 removeSelector: #m.	"The previous is still true even if we compile the superclass method before the trait method."
 	self c9 compile: 'm ^123'.
-	self t10 compile: 'm ^self explicitRequirement'.
+	self t8 compile: 'm ^self explicitRequirement'.
 	self c10 new m.
 	self c9 removeSelector: #m.
 	self should: [ self c10 new m ] raise: Error.
-	self t10 removeSelector: #m
+	self t8 removeSelector: #m
 ]
 
 { #category : 'tests' }
@@ -143,11 +237,11 @@ TraitTestCase >> testExplicitRequirementWithSuperclassImplementationAndAnotherTr
 
 	"C9 inherits from Object. C10 inherits from C9. C11 inherits from C10. Each Ci uses the trait Ti."
 
-	self t10 compile: 'm ^self explicitRequirement'.
-	self t11 compile: 'm ^self explicitRequirement'.
+	self t8 compile: 'm ^self explicitRequirement'.
+	self t9 compile: 'm ^self explicitRequirement'.
 	self should: [ self c10 new m ] raise: Error.
 	self should: [ self c11 new m ] raise: Error.
-	self t9 compile: 'm ^2'.
+	self t7 compile: 'm ^2'.
 	self assert: self c9 new m equals: 2.
 	self assert: self c10 new m equals: 2.
 	self assert: self c11 new m equals: 2
@@ -161,10 +255,10 @@ TraitTestCase >> testExplicitRequirementWithSuperclassImplementatiosAlwaysReturn
 
 
 	<ignoreNotImplementedSelectors: #(m1 m2)>
-	self t10 compile: 'm1 ^self explicitRequirement'.
-	self t10 compile: 'm2 self explicitRequirement'.
-	self t9 compile: 'm1 ^2'.
-	self t9 compile: 'm2 ^2'.
+	self t8 compile: 'm1 ^self explicitRequirement'.
+	self t8 compile: 'm2 self explicitRequirement'.
+	self t7 compile: 'm1 ^2'.
+	self t7 compile: 'm2 ^2'.
 
 	self assert: self c10 new m1 equals: 2.
 	self assert: self c10 new m2 equals: 2
