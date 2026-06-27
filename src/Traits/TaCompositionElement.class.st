@@ -131,17 +131,20 @@ TaCompositionElement >> methods [
 { #category : 'accessing' }
 TaCompositionElement >> methodsCompilationInfo [
 
-	| infos |
-	infos := (innerClass localMethods collect: [ :method |
-			          TraitMethodToCompileInfo new
-				          selector: method selector;
-				          definingTrait: self;
-				          compiledMethod: method;
-				          sourceCode: method sourceCode;
-				          yourself ]) , innerClass traitComposition methodsCompilationInfo.
+	| infos selectors |
+	infos := innerClass localMethods collect: [ :method |
+			         TraitMethodToCompileInfo new
+				         selector: method selector;
+				         definingTrait: self;
+				         compiledMethod: method;
+				         sourceCode: method sourceCode;
+				         yourself ].
 
-	infos do: [ :info |
-			"Manage aliasing of talents"
+	selectors := infos collect: [ :info | info selector ].
+
+	infos := infos , (innerClass traitComposition methodsCompilationInfo reject: [ :info | selectors includes: info selector ]).
+
+	infos do: [ :info | "Manage aliasing of talents"
 			info selector = #initializeTalent ifTrue: [
 					info
 						selector: self initializeSelectorForMe;

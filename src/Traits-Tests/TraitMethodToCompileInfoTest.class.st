@@ -157,6 +157,29 @@ TraitMethodToCompileInfoTest >> testSequenceWithTwoRequirements [
 ]
 
 { #category : 'tests' }
+TraitMethodToCompileInfoTest >> testTraitOverridingOtherTrait [
+
+	| c1 t1 t2 infos |
+	t1 := self newTrait: #T1.
+	t2 := self newTrait: #T2 traits: t1.
+	c1 := self newClass: #C1 traits: t2.
+
+	t1 compile: 'm1 ^1' classified: #proto.
+	t2 compile: 'm1 ^2' classified: #proto2.
+
+	infos := c1 traitComposition methodsCompilationInfo.
+
+	self assert: infos size equals: 1.
+	self
+		check: infos first
+		selector: #m1
+		protocol: #proto2
+		definingTrait: c1 traitComposition
+		method: t2 >> #m1
+		sourceCode: 'm1 ^2'
+]
+
+{ #category : 'tests' }
 TraitMethodToCompileInfoTest >> testUniqueTrait [
 
 	| c1 t1 infos |
