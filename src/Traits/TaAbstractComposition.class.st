@@ -189,7 +189,9 @@ TaAbstractComposition >> copyInfo: compileInfo into: aClass replacing: replacing
 
 	| aCompiledMethod source newMethod traitDefining sourceHasChanged aSelector |
 	aSelector := compileInfo selector.
-	traitDefining := self traitDefining: aSelector.
+
+	traitDefining := compileInfo definingTrait.
+
 	aCompiledMethod := self compiledMethodAt: aSelector.
 	source := self getSourceCodeOf: aCompiledMethod usingSelector: aSelector.
 
@@ -202,7 +204,9 @@ TaAbstractComposition >> copyInfo: compileInfo into: aClass replacing: replacing
 	 - If both methods have source code and if the source codes are not the same.
 	"
 	aClass compiledMethodAt: aSelector ifPresent: [ :originalMethod |
-		(replacing not and: [ originalMethod traitSource = traitDefining and: [ originalMethod hasSourceCode and: [ source isNotNil and: [ source = originalMethod sourceCode ] ] ] ]) ifTrue: [ ^ false ] ].
+			(replacing not and: [
+				 originalMethod traitSource = traitDefining and: [ originalMethod hasSourceCode and: [ source isNotNil and: [ source = originalMethod sourceCode ] ] ] ])
+				ifTrue: [ ^ false ] ].
 
 	newMethod := aCompiledMethod copy.
 	newMethod selector: aSelector.
