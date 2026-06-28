@@ -22,13 +22,23 @@ ReSmalllintCheckerTest >> testRun [
 
 { #category : 'tests' }
 ReSmalllintCheckerTest >> testSelectPackageRule [
-	| checker packageRule |
 
-	packageRule := RePackageRuleForTest new.
-	checker := ReSmalllintChecker new
-		rule: { packageRule };
-		environment: testPackage asEnvironment;
-		reParseRule.
+	| checker ruleClass packageRule |
+	[
+		ruleClass := self class classInstaller make: [ :aBuilder |
+				             aBuilder
+					             superclass: ReAbstractRule;
+					             name: 'RePackageRuleForTest';
+					             package: #'Generated-Rules-Tests-Generated' ].
+		ruleClass class compile: 'checksPackage
 
-	self assert: (checker packageRules includes: packageRule)
+	^ true'.
+
+		packageRule := ruleClass new.
+		checker := ReSmalllintChecker new
+			           rule: { packageRule };
+			           environment: testPackage asEnvironment;
+			           reParseRule.
+
+		self assert: (checker packageRules includes: packageRule) ] ensure: [ self packageOrganizer removePackage: #'Generated-Rules-Tests-Generated' ]
 ]
