@@ -20,8 +20,7 @@ TraitMethodToCompileInfo >> = anObject [
 	self == anObject ifTrue: [ ^ true ].
 	self class = anObject class ifFalse: [ ^ false ].
 	^ selector = anObject selector and: [
-			  definingTrait = anObject definingTrait and: [
-				  compiledMethod = anObject compiledMethod and: [ sourceCode = anObject sourceCode and: [ self protocol = anObject protocol ] ] ] ]
+		  definingTrait = anObject definingTrait and: [ sourceCode = anObject sourceCode and: [ self protocol = anObject protocol ] ] ]
 ]
 
 { #category : 'accessing' }
@@ -48,7 +47,7 @@ TraitMethodToCompileInfo >> definingTrait: anObject [
 TraitMethodToCompileInfo >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
-	^ selector hash bitXor: (definingTrait hash bitXor: (compiledMethod hash bitXor: (sourceCode hash bitXor: protocol hash)))
+	^ selector hash bitXor: (definingTrait hash bitXor: (sourceCode hash bitXor: protocol hash))
 ]
 
 { #category : 'testing' }
