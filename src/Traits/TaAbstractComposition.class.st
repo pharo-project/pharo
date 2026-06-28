@@ -190,10 +190,8 @@ TaAbstractComposition >> copyInfo: compileInfo into: aClass replacing: replacing
 	| aCompiledMethod source newMethod sourceHasChanged aSelector |
 	aSelector := compileInfo selector.
 
-	aCompiledMethod := self compiledMethodAt: aSelector.
+	aCompiledMethod := compileInfo compiledMethod.
 	source := aCompiledMethod getSourceReplacingSelectorWith: aSelector.
-
-	"source = (compileInfo compiledMethod getSourceReplacingSelectorWith: aSelector) ifFalse: [ self halt ]."
 
 	"If the selectors are not the same I have to save the new source code"
 	sourceHasChanged := aSelector ~= aCompiledMethod selector.
