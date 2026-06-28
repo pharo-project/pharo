@@ -46,7 +46,6 @@ TraitMethodToCompileInfoTest >> testDiamond [
 	t3 := self newTrait: #T3 traits: t1.
 	c1 := self newClass: #C1 traits: t2 + t3.
 
-
 	infos := c1 traitComposition methodsCompilationInfo sorted: #selector ascending.
 
 	self assert: infos size equals: 1.
@@ -54,8 +53,7 @@ TraitMethodToCompileInfoTest >> testDiamond [
 		check: infos first
 		selector: #m1
 		protocol: #proto
-		definingTrait: t2 traitComposition
-		method: t1 >> #m1
+		definingTrait: t1 traitComposition
 		sourceCode: 'm1 ^1'
 ]
 
@@ -177,6 +175,28 @@ TraitMethodToCompileInfoTest >> testTraitOverridingOtherTrait [
 		definingTrait: c1 traitComposition
 		method: t2 >> #m1
 		sourceCode: 'm1 ^2'
+]
+
+{ #category : 'tests' }
+TraitMethodToCompileInfoTest >> testTraitUsingTrait [
+
+	| c1 t1 t2 infos |
+	t1 := self newTrait: #T1.
+	t2 := self newTrait: #T2 traits: t1.
+	c1 := self newClass: #C1 traits: t2.
+
+	t1 compile: 'm1 ^1' classified: #proto.
+
+	infos := c1 traitComposition methodsCompilationInfo.
+
+	self assert: infos size equals: 1.
+	self
+		check: infos first
+		selector: #m1
+		protocol: #proto
+		definingTrait: t1 asTraitComposition 
+		method: t2 >> #m1
+		sourceCode: 'm1 ^1'
 ]
 
 { #category : 'tests' }

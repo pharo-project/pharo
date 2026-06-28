@@ -131,26 +131,36 @@ TaCompositionElement >> methods [
 { #category : 'accessing' }
 TaCompositionElement >> methodsCompilationInfo [
 
-	| infos selectors |
-	infos := innerClass localMethods collect: [ :method |
-			         TraitMethodToCompileInfo new
-				         selector: method selector;
-				         definingTrait: self;
-				         compiledMethod: method;
-				         sourceCode: method sourceCode;
-				         yourself ].
+	| innerInfos traitInfos localSelectors methods |
+	"We first collect the compilation info for the local methods I have."
+	innerInfos := innerClass localMethods collect: [ :method |
+			              TraitMethodToCompileInfo new
+				              selector: method selector;
+				              definingTrait: self;
+				              compiledMethod: method;
+				              sourceCode: method sourceCode;
+				              yourself ].
 
-	selectors := infos collect: [ :info | info selector ].
-
-	infos := infos , (innerClass traitComposition methodsCompilationInfo reject: [ :info | selectors includes: info selector ]).
-
-	infos do: [ :info | "Manage aliasing of talents"
+	"If I need to alias the talent initializer, I do it now."
+	innerInfos do: [ :info |
 			info selector = #initializeTalent ifTrue: [
 					info
 						selector: self initializeSelectorForMe;
 						sourceCode: (info compiledMethod getSourceReplacingSelectorWith: self initializeSelectorForMe) ] ].
 
-	^ infos
+
+	"Then I collect the ones of my trait composition "
+	localSelectors := innerInfos collect: [ :info | info selector ].
+	traitInfos := innerClass traitComposition methodsCompilationInfo reject: [ :info | localSelectors includes: info selector ].
+
+	"In order to copy methods right, I update the compiled methods of my trait composition to set my own compiled methods."
+	methods := innerClass methods.
+	traitInfos do: [ :info |
+			methods
+				detect: [ :method | method selector = info selector ]
+				ifFound: [ :method | info compiledMethod: method ] ].
+
+	^ innerInfos , traitInfos
 ]
 
 { #category : 'accessing' }
