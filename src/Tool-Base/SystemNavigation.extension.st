@@ -49,11 +49,13 @@ SystemNavigation >> browseAllImplementorsOf: selector [
 
 	"Create and schedule a senders browser for aSelector."
 
-	^ self
-		browseMessageList: (self allImplementorsOf: selector)
-		name: 'Implementors of ' , selector asString
-		autoSelect: selector
-		refreshingBlock: [:message | message selector = selector ]
+	^ (Smalltalk tools toolNamed: #messageList) browseImplementorsOfAll: { selector } from: nil
+]
+
+{ #category : '*Tool-Base' }
+SystemNavigation >> browseAllImplementorsOf: selector from: aCallerClass [
+
+	^ (Smalltalk tools toolNamed: #messageList) browseImplementorsOfAll: { selector } from: aCallerClass 
 ]
 
 { #category : '*Tool-Base' }
@@ -94,7 +96,13 @@ SystemNavigation >> browseAllSendersOf: aLiteral [
 	"Create and schedule a message browser on each method that refers to
 	aLiteral. For example, SystemNavigation new browseAllSendersOf: #printOn:."
 
-	^ self openBrowserFor: aLiteral withMethods: (self allCallsOn: aLiteral)
+	^ (Smalltalk tools toolNamed: #messageList) browseSendersOfAll: { aLiteral } from: nil
+]
+
+{ #category : '*Tool-Base' }
+SystemNavigation >> browseAllSendersOf: aLiteral from: aCallerClass [
+
+	^ (Smalltalk tools toolNamed: #messageList) browseSendersOfAll: { aLiteral } from: aCallerClass
 ]
 
 { #category : '*Tool-Base' }
