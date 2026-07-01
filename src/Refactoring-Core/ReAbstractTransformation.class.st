@@ -142,7 +142,7 @@ ReAbstractTransformation >> buildSelectorString: aSelector withPermuteMap: aPerm
 
 { #category : 'accessing' }
 ReAbstractTransformation >> changes [
-	self halt.
+"	self halt."
 	^ self model changes
 ]
 

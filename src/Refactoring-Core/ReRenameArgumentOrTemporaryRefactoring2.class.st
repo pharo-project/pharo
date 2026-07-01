@@ -166,8 +166,8 @@ ReRenameArgumentOrTemporaryRefactoring2 >> prepareForExecution [
 
 { #category : 'transforming' }
 ReRenameArgumentOrTemporaryRefactoring2 >> privateTransform [
-	self halt.
-"	self model resetChanges."
+"	self halt."
+	"self model resetChanges."
 	self renameNode: definingNode.
 	class compileTree: parseTree
 ]
