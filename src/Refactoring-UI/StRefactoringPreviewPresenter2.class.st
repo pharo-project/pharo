@@ -25,9 +25,7 @@ Class {
 		'name',
 		'newNameLabel',
 		'newNameInput',
-		'tempRefactoring',
 		'driver',
-		'validationMessage',
 		'validationLabel'
 	],
 	#category : 'Refactoring-UI-UI',
@@ -45,9 +43,6 @@ StRefactoringPreviewPresenter2 class >> withChanges: changes scopes: scopes [
 
 { #category : 'action' }
 StRefactoringPreviewPresenter2 >> accept [
-
-	(validationMessage notNil and: [ validationMessage ~= '' ])
-    	ifTrue: [ ^ self ].
 
 	(self okToChange not or: [ selectedChanges isEmptyOrNil ]) ifTrue: [
 		self application newInform 
@@ -134,20 +129,19 @@ StRefactoringPreviewPresenter2 >> defaultLayout [
 		               add: newNameInput expand: false;
 		               add: validationLabel height: 90;
 		               yourself.
-
 	nameLayout := SpBoxLayout newLeftToRight
-		              spacing: 5;
-		              add: newNameLabel expand: false;
-		              add: inputLayout;
-		              add: buttonUpdate expand: false;
-		              yourself.
+		               spacing: 5;
+		               add: newNameLabel expand: false;
+		               add: inputLayout;
+		               add: buttonUpdate expand: false;
+		               yourself.
 
 	selectorLayout := SpGridLayout new
-    						  borderWidth: 0;
-    						  beColumnNotHomogeneous;
-							  row: 2 expand: true;
-    						  column: 2 expand: true;
-    						  rowSpacing: 4;
+		                  borderWidth: 0;
+		                  beColumnNotHomogeneous;
+		                  row: 2 expand: true;
+		                  column: 2 expand: true;
+		                  rowSpacing: 4;
 		                  add: newNameLabel atPoint: 1 @ 1;
 		                  add: newNameInput atPoint: 2 @ 1;
 		                  add: buttonUpdate atPoint: 3 @ 1;
@@ -164,6 +158,7 @@ StRefactoringPreviewPresenter2 >> defaultLayout [
 
 { #category : 'accessing' }
 StRefactoringPreviewPresenter2 >> driver: aDriver [
+
    driver := aDriver 
 ]
 
@@ -221,7 +216,6 @@ StRefactoringPreviewPresenter2 >> initializePresenters [
 	buttonUpdate := self newButton
    		 label: 'Rename' .
 		
-	validationMessage := ''. 
 	validationLabel := self newLabel .
 	validationLabel label: ''
 ]
@@ -236,6 +230,12 @@ StRefactoringPreviewPresenter2 >> name [
 StRefactoringPreviewPresenter2 >> name: aName [
     name := aName.
     newNameInput text: aName
+]
+
+{ #category : 'accessing' }
+StRefactoringPreviewPresenter2 >> newNameInput [
+
+    ^ newNameInput
 ]
 
 { #category : 'action' }
@@ -258,10 +258,22 @@ StRefactoringPreviewPresenter2 >> refactoring: aRBRemoveMethodDriver [
 	
 ]
 
+{ #category : 'update' }
+StRefactoringPreviewPresenter2 >> removeAllChanges [
+"self halt."
+	changes ifNotNil: [  
+		changesInScope removeAll.
+		selectedChanges removeAll.
+	].
+	
+   changes := OrderedCollection new
+]
+
 { #category : 'accessing' }
-StRefactoringPreviewPresenter2 >> scopes: aCollection [ 
+StRefactoringPreviewPresenter2 >> scopes: aCollection [
+
 	scopes := aCollection.
-	self updateScopeList 
+	self updateScopeList
 ]
 
 { #category : 'accessing' }
@@ -290,16 +302,17 @@ StRefactoringPreviewPresenter2 >> updateChanges [
 
 { #category : 'update' }
 StRefactoringPreviewPresenter2 >> updateChangesWithName [
-self halt.
 
+	driver createAndSetNewRefactoring .
 	self updateName .
 	compositeChange:= driver changes .
 	"we keep the composite because we want to use it for performing changes later on."
 	changes := compositeChange changesToDisplayIn: self.
 	self updateChanges.
 	self updateTablePresenter.
-	driver updateOldName .
-	"changes ifNotNil: [ changes removeAll ]"
+	driver updateOldName 
+
+	
 
 	
 	
@@ -314,9 +327,10 @@ StRefactoringPreviewPresenter2 >> updateGlobalActiveScope [
 
 { #category : 'accessing' }
 StRefactoringPreviewPresenter2 >> updateName [
-"self halt."
+
 	 name:= newNameInput text.
 	 driver newName: name.
+
 
 	 
 
@@ -361,18 +375,6 @@ StRefactoringPreviewPresenter2 >> validateName: aString [
 		 buttonUpdate disable .
 		].
 	
-]
-
-{ #category : 'accessing' }
-StRefactoringPreviewPresenter2 >> validationMessage [
-
-	^ validationMessage 
-]
-
-{ #category : 'accessing' }
-StRefactoringPreviewPresenter2 >> validationMessage: aString [
-    validationMessage := aString.
-    self announce: #validationMessage
 ]
 
 { #category : 'accessing' }

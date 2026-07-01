@@ -23,7 +23,8 @@ Class {
 		'stoppedBeforeApplyingRefactoring',
 		'selectDialogForBreakingChanges',
 		'forTesting',
-		'name'
+		'name',
+		'currentRefactoring'
 	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',
@@ -100,6 +101,12 @@ ReInteractionDriver2 >> configureRefactoring [
 ReInteractionDriver2 >> confirm: aString [
 
 	^ self application confirm: aString
+]
+
+{ #category : 'resources' }
+ReInteractionDriver2 >> currentRefactoring [ 
+
+	^ currentRefactoring 
 ]
 
 { #category : 'private' }

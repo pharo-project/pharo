@@ -29,6 +29,12 @@ ReRenameArgumentOrTemporaryDriver2 class >> shouldPreviewChangesByDefault [
 	^ true
 ]
 
+{ #category : 'accessing' }
+ReRenameArgumentOrTemporaryDriver2 >> activeRefactoring [
+
+	^ currentRefactoring ifEmpty: [ nil ] ifNotEmpty: [ :c | c last ]
+]
+
 { #category : 'execution' }
 ReRenameArgumentOrTemporaryDriver2 >> breakingChoices [
 
@@ -64,7 +70,7 @@ ReRenameArgumentOrTemporaryDriver2 >> checkApplicabilityPreconditions [
 ReRenameArgumentOrTemporaryDriver2 >> convertTemporaryToExistingVariable [
 
 	| transformation |
-	self halt.
+
 	self applyChanges.
 	transformation := RBRemoveTemporaryVariableTransformation
 		                  variable: notCheckVarName violators first
@@ -72,6 +78,33 @@ ReRenameArgumentOrTemporaryDriver2 >> convertTemporaryToExistingVariable [
 		                  inClass: method methodClass name.
 	transformation privateTransform.
 	self openPreviewWithChanges: transformation changes
+]
+
+{ #category : 'configuration' }
+ReRenameArgumentOrTemporaryDriver2 >> createAndSetNewRefactoring [
+
+	"| base newRefactoring |
+	
+	currentRefactoring ifNil: [ currentRefactoring := OrderedCollection new ].
+	base := self activeRefactoring.
+	
+	base ifNil: [
+			newRefactoring := refactoring.
+			currentRefactoring add: newRefactoring .
+			^ refactoring ].
+
+	newRefactoring := base copy.
+	newRefactoring model changes changes removeAll.
+
+	currentRefactoring add: newRefactoring.
+	refactoring := newRefactoring."
+	
+"	1halt."
+	currentRefactoring := refactoring .
+	refactoring model changes changes removeAll
+	
+	
+
 ]
 
 { #category : 'configuration' }
@@ -137,7 +170,7 @@ ReRenameArgumentOrTemporaryDriver2 >> hasFailedBehaviorPreservingPreconditions [
 { #category : 'configuration' }
 ReRenameArgumentOrTemporaryDriver2 >> instantiateRefactoring [
 
-	^ ReRenameArgumentOrTemporaryRefactoring 
+	^ ReRenameArgumentOrTemporaryRefactoring2 
 		  renameTemporaryFrom: sourceNode sourceInterval
 		  in: method origin
 		  selector: method selector
@@ -194,7 +227,7 @@ ReRenameArgumentOrTemporaryDriver2 >> requestDialog [
 ReRenameArgumentOrTemporaryDriver2 >> runRefactoring [
 
 	| presenter |
-	"self halt."
+
 	super configureRefactoring.
 	presenter := (self previewPresenterClass newApplication: self application)
 		              scopes: scopes;

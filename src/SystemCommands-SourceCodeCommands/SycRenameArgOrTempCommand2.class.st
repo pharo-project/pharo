@@ -49,7 +49,7 @@ SycRenameArgOrTempCommand2 >> description [
 
 { #category : 'execution' }
 SycRenameArgOrTempCommand2 >> execute [
-"self halt. "
+
 	^ (ReRenameArgumentOrTemporaryDriver2 new
 		   sourceNode: sourceNode;
 		   method: method;
