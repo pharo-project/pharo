@@ -70,8 +70,8 @@ ReLocalNameConflictCondition >> violationMessageOn: aStream [
 
 	^ violators do: [ :violator |
 		aStream
-			nextPutAll: ('The variable name "{1}" is already defined in the current scope.' 
-         		format: { violator });
+			nextPutAll: ('The variable name "{1}" is already defined in the current scope.'
+			format: { violator });
 			nextPut: Character cr ].
 		
 	"The variable {1} is invalid in the context of the class {2}"
