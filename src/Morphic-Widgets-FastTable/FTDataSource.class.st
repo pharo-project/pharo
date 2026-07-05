@@ -10,12 +10,14 @@ My subclasses will store some values that will be use to feed a FTTableMorph.
 Public API and Key Messages
 --------------------
 
-- #elementAt: anIndex 		return an object to display for an index in the table.
-		
+- #hasElementAt: index		return true if there is an element at the given index. This is an important hook for lazy or paginated sources.
+
+- #elementAt: anIndex 		return an object to display for an index in the table. This is an important hook for lazy or paginated sources.
+
 - #numberOfRows 			return the max number of rows inside the table.
-			
+
 - #cellColumn: index1 row: idex2 		return a Morph (probably a FTCellMorph) that will be display in the table. The Morph need to contains the object at index2 and everything the user want to display for a data.
-		
+
 - #newDataSourceMatching: aRegex / #searchText: aString 		these methods are use with a FTFunction. For more information see FTSeachFunction or FTFilterFunction for mone information.
 
 Example
