@@ -600,7 +600,7 @@ String >> asCamelCase [
 String >> asComment [
 	"return this string, munged so that it can be treated as a comment in Smalltalk code.  Quote marks are added to the beginning and end of the string, and whenever a solitary quote mark appears within the string, it is doubled"
 
-	^ String streamContents: [ :str |
+	^ self class streamContents: [ :str |
 		  | quoteCount first |
 		  str nextPut: $".
 
@@ -974,7 +974,7 @@ String >> compare: string1 with: string2 collated: order [
 	(string1 isByteString and: [ string2 isByteString ]) ifTrue: [ ^ string1 compareWith: string2 collated: order ].
 
 	"Primitive does not fail properly right now"
-	^ String compare: string1 with: string2 collated: order
+	^ self class compare: string1 with: string2 collated: order
 ]
 
 { #category : 'converting' }
@@ -2250,8 +2250,8 @@ String >> numArgs [
 	"Answer either the number of arguments that the receiver would take if considered a selector.  Answer -1 if it couldn't be a selector. It is intended mostly for the assistance of spelling correction."
 
 	| firstChar numColons start ix |
-	self size = 0 ifTrue: [ ^ -1 ].
-	firstChar := self at: 1.
+	self isEmpty ifTrue: [ ^ -1 ].
+	firstChar := self first.
 	(firstChar isLetter or: [ firstChar = $_ ])
 		ifTrue: [ "Fast reject if any chars are non-alphanumeric
 		NOTE: fast only for Byte things - Broken for Wide"
