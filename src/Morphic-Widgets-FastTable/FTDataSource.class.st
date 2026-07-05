@@ -72,7 +72,8 @@ FTDataSource >> dropElements: aCollection index: rowIndex [
 { #category : 'private' }
 FTDataSource >> elementAt: rowIndex [
 	"I am a really important method for a DataSource. I take an index and I return an object
-	 that should be displayed in the table for the index."
+	 that should be displayed in the table for the index. I am a hook for lazy and paginated sources. Override me in subclasses."
+
 	self subclassResponsibility
 ]
 
