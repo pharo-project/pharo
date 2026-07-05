@@ -956,7 +956,7 @@ String >> compare: string1 with: string2 [
 		^ string1 compareWith: string2 "Not giving the order allows to use the jitted version of the primitive" ].
 
 	"Primitive does not fail properly right now"
-	^ String compare: string1 with: string2 collated: AsciiOrder
+	^ self class compare: string1 with: string2 collated: AsciiOrder
 ]
 
 { #category : 'comparing' }
