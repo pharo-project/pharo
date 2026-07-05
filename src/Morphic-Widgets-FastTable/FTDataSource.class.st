@@ -79,6 +79,7 @@ FTDataSource >> elementAt: rowIndex [
 
 { #category : 'testing' }
 FTDataSource >> hasElementAt: index [
+	"I take an index and return true if I have an element at that index. I am a hook for lazy and paginated sources."
 
 	^ self numberOfRows >= index
 ]
