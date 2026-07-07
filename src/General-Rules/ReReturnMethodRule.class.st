@@ -17,9 +17,10 @@ ReReturnMethodRule class >> checksMethod [
 	^ true
 ]
 
-{ #category : 'accessing' }
-ReReturnMethodRule class >> group [
-	^ self bugsGroup
+{ #category : 'as yet unclassified' }
+ReReturnMethodRule class >> groupSelector [
+
+	^ #bugsGroup
 ]
 
 { #category : 'accessing' }

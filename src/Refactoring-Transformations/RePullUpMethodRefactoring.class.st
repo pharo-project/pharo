@@ -185,7 +185,7 @@ RePullUpMethodRefactoring >> pullUpSharedVariable: aVariable [
 	refactoring := RePullUpSharedVariableRefactoring
 		               model: self model
 		               variable: aVariable
-		               class: targetSuperclass.
+		               class: targetSuperclass instanceSide.
 	self generateChangesFor: refactoring
 ]
 

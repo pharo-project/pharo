@@ -59,7 +59,6 @@ ScopedSelector >> asSymbol [
 { #category : 'matching' }
 ScopedSelector >> beginsWith: aString [
 
-	1halt.
 	^ self asString beginsWith: aString
 ]
 
@@ -282,6 +281,13 @@ ScopedSelector >> removeAliases [
 	aliasedBehaviors := nil
 ]
 
+{ #category : 'ston persistence' }
+ScopedSelector >> stonOn: stonWriter [
+	"Represent scoped selector as symbols when serialising"
+
+	stonWriter writeObject: self listSingleton: self asSymbol
+]
+
 { #category : 'accessing' }
 ScopedSelector >> symbol [
 
@@ -291,7 +297,7 @@ ScopedSelector >> symbol [
 { #category : 'accessing' }
 ScopedSelector >> symbol: anObject [
 
-	symbol := anObject
+	symbol := anObject asSymbol 
 ]
 
 { #category : 'accessing' }

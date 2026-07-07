@@ -9,9 +9,10 @@ Class {
 	#tag : 'Design Flaws'
 }
 
-{ #category : 'accessing' }
-ReSuperSendsRule class >> group [
-	^ self designFlawGroup
+{ #category : 'as yet unclassified' }
+ReSuperSendsRule class >> groupSelector [
+
+	^ #designFlawGroup
 ]
 
 { #category : 'accessing' }

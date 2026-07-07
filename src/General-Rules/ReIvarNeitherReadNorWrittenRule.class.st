@@ -16,9 +16,10 @@ ReIvarNeitherReadNorWrittenRule class >> checksClass [
 	^ true
 ]
 
-{ #category : 'accessing' }
-ReIvarNeitherReadNorWrittenRule class >> group [
-	^ self cleanCodeGroup
+{ #category : 'as yet unclassified' }
+ReIvarNeitherReadNorWrittenRule class >> groupSelector [
+
+	^ #cleanCodeGroup
 ]
 
 { #category : 'accessing' }

@@ -9,9 +9,10 @@ Class {
 	#tag : 'Potential Bugs'
 }
 
-{ #category : 'accessing' }
-ReEqualNotUsedRule class >> group [
-	^ self potentialBugsGroup
+{ #category : 'as yet unclassified' }
+ReEqualNotUsedRule class >> groupSelector [
+
+	^ #potentialBugsGroup
 ]
 
 { #category : 'accessing' }

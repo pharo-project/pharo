@@ -9,9 +9,10 @@ Class {
 	#tag : 'Coding Idiom Violation'
 }
 
-{ #category : 'accessing' }
-ReUseIsEmptyNotSizeRule class >> group [
-	^ self codingIdiomViolationGroup
+{ #category : 'as yet unclassified' }
+ReUseIsEmptyNotSizeRule class >> groupSelector [
+
+	^ #codingIdiomViolationGroup
 ]
 
 { #category : 'accessing' }

@@ -16,9 +16,10 @@ ReNoPrintStringInPrintOnRule class >> checksMethod [
 	^ true
 ]
 
-{ #category : 'accessing' }
-ReNoPrintStringInPrintOnRule class >> group [
-	^ self optimizationGroup
+{ #category : 'as yet unclassified' }
+ReNoPrintStringInPrintOnRule class >> groupSelector [
+
+	^ #optimizationGroup
 ]
 
 { #category : 'accessing' }

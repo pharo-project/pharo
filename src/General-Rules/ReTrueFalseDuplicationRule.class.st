@@ -20,9 +20,10 @@ Class {
 	#tag : 'Optimization'
 }
 
-{ #category : 'accessing' }
-ReTrueFalseDuplicationRule class >> group [
-	^ self optimizationGroup
+{ #category : 'as yet unclassified' }
+ReTrueFalseDuplicationRule class >> groupSelector [
+
+	^ #optimizationGroup
 ]
 
 { #category : 'accessing' }

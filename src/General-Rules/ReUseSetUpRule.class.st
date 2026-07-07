@@ -9,9 +9,10 @@ Class {
 	#tag : 'Design Flaws'
 }
 
-{ #category : 'accessing' }
-ReUseSetUpRule class >> group [
-	^ self designFlawGroup
+{ #category : 'as yet unclassified' }
+ReUseSetUpRule class >> groupSelector [
+
+	^ #designFlawGroup
 ]
 
 { #category : 'accessing' }

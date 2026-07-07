@@ -20,9 +20,10 @@ Class {
 	#tag : 'Coding Idiom Violation'
 }
 
-{ #category : 'accessing' }
-ReDetectIfNoneRule class >> group [
-	^ self codingIdiomViolationGroup
+{ #category : 'as yet unclassified' }
+ReDetectIfNoneRule class >> groupSelector [
+
+	^ #codingIdiomViolationGroup
 ]
 
 { #category : 'accessing' }

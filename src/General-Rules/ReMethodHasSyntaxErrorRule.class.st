@@ -14,9 +14,10 @@ ReMethodHasSyntaxErrorRule class >> checksMethod [
 	^ true
 ]
 
-{ #category : 'accessing' }
-ReMethodHasSyntaxErrorRule class >> group [
-	^ self bugsGroup
+{ #category : 'as yet unclassified' }
+ReMethodHasSyntaxErrorRule class >> groupSelector [
+
+	^ #bugsGroup
 ]
 
 { #category : 'accessing' }

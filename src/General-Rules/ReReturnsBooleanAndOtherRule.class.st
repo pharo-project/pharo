@@ -14,9 +14,10 @@ ReReturnsBooleanAndOtherRule class >> checksMethod [
 	^ true
 ]
 
-{ #category : 'accessing' }
-ReReturnsBooleanAndOtherRule class >> group [
-	^ self potentialBugsGroup
+{ #category : 'as yet unclassified' }
+ReReturnsBooleanAndOtherRule class >> groupSelector [
+
+	^ #potentialBugsGroup
 ]
 
 { #category : 'accessing' }

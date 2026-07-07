@@ -40,9 +40,10 @@ Class {
 	#tag : 'Coding Idiom Violation'
 }
 
-{ #category : 'accessing' }
-ReShouldntRaiseErrorRule class >> group [
-	^ self codingIdiomViolationGroup
+{ #category : 'as yet unclassified' }
+ReShouldntRaiseErrorRule class >> groupSelector [
+
+	^ #codingIdiomViolationGroup
 ]
 
 { #category : 'accessing' }

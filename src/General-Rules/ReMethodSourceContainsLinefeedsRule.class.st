@@ -14,9 +14,10 @@ ReMethodSourceContainsLinefeedsRule class >> checksMethod [
 	^ true
 ]
 
-{ #category : 'accessing' }
-ReMethodSourceContainsLinefeedsRule class >> group [
-	^ self bugsGroup
+{ #category : 'as yet unclassified' }
+ReMethodSourceContainsLinefeedsRule class >> groupSelector [
+
+	^ #bugsGroup
 ]
 
 { #category : 'accessing' }

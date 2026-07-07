@@ -15,10 +15,10 @@ Class {
 	#tag : 'API Change'
 }
 
-{ #category : 'accessing' }
-ReIconHardcodedMessageRule class >> group [
+{ #category : 'as yet unclassified' }
+ReIconHardcodedMessageRule class >> groupSelector [
 
-	^ self apiChangeGroup
+	^ #apiChangeGroup
 ]
 
 { #category : 'accessing' }

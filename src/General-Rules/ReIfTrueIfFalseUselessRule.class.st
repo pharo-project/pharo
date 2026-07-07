@@ -9,9 +9,10 @@ Class {
 	#tag : 'Design Flaws'
 }
 
-{ #category : 'accessing' }
-ReIfTrueIfFalseUselessRule class >> group [
-	^ self designFlawGroup
+{ #category : 'as yet unclassified' }
+ReIfTrueIfFalseUselessRule class >> groupSelector [
+
+	^ #designFlawGroup
 ]
 
 { #category : 'accessing' }

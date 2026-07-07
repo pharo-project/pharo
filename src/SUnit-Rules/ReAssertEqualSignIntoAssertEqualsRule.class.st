@@ -12,8 +12,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReAssertEqualSignIntoAssertEqualsRule class >> group [
-	^ self sunitGroup
+ReAssertEqualSignIntoAssertEqualsRule class >> groupSelector [
+
+	^ #sunitGroup
 ]
 
 { #category : 'accessing' }
@@ -36,6 +37,12 @@ ReAssertEqualSignIntoAssertEqualsRule >> afterCheck: aNode mappings: mappingDict
 	^ [ aNode methodNode methodClass canUnderstand: #assert:equals: ]
 		on: MessageNotUnderstood "methodNode or methodClass may be nil"
 		do: [ false ]
+]
+
+{ #category : 'as yet unclassified' }
+ReAssertEqualSignIntoAssertEqualsRule >> groupSelector [
+
+	^ #sunitGroup
 ]
 
 { #category : 'initialization' }

@@ -10,9 +10,10 @@ Class {
 	#tag : 'Bugs'
 }
 
-{ #category : 'accessing' }
-ReReferencesObsoleteClassRule class >> group [
-	^ self bugsGroup
+{ #category : 'as yet unclassified' }
+ReReferencesObsoleteClassRule class >> groupSelector [
+
+	^ #bugsGroup
 ]
 
 { #category : 'accessing' }

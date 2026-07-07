@@ -9,9 +9,10 @@ Class {
 	#tag : 'Style'
 }
 
-{ #category : 'accessing' }
-ReTemporaryVariableCapitalizationRule class >> group [
-	^ self styleGroup
+{ #category : 'as yet unclassified' }
+ReTemporaryVariableCapitalizationRule class >> groupSelector [
+
+	^ #styleGroup
 ]
 
 { #category : 'accessing' }

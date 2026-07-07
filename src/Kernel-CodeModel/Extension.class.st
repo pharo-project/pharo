@@ -18,6 +18,12 @@ Extension >> addUserPackage: aPackage [
 	self userPackages add: aPackage
 ]
 
+{ #category : 'accessing - method dictionary' }
+Extension >> compiledMethodAt: selector [
+
+	^ self methodDict at: (self package visibleSelectorForSymbol: selector) 
+]
+
 { #category : 'accessing' }
 Extension >> defineScopedSelector: aSymbol [
 
@@ -47,6 +53,14 @@ Extension >> extendedClass: anObject [
 Extension >> hasUserPackages [
 
 	^ userPackages notNil and: [ userPackages notEmpty ]
+]
+
+{ #category : 'testing - method dictionary' }
+Extension >> includesSelector: aSymbol [
+
+	(super includesSelector: aSymbol) ifTrue: [ ^ true ].
+
+	^ super includesSelector: (self package visibleSelectorForSymbol: aSymbol)
 ]
 
 { #category : 'accessing' }

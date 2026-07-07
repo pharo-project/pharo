@@ -14,9 +14,10 @@ ReMultiplePeriodsTerminatingStatementRule class >> checksMethod [
 	^ true
 ]
 
-{ #category : 'accessing' }
-ReMultiplePeriodsTerminatingStatementRule class >> group [
-	^ self potentialBugsGroup
+{ #category : 'as yet unclassified' }
+ReMultiplePeriodsTerminatingStatementRule class >> groupSelector [
+
+	^ #potentialBugsGroup
 ]
 
 { #category : 'accessing' }

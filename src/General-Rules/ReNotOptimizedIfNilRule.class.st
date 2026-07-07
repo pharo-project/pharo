@@ -15,9 +15,10 @@ Class {
 	#tag : 'Optimization'
 }
 
-{ #category : 'accessing' }
-ReNotOptimizedIfNilRule class >> group [
-	^ self optimizationGroup
+{ #category : 'as yet unclassified' }
+ReNotOptimizedIfNilRule class >> groupSelector [
+
+	^ #optimizationGroup
 ]
 
 { #category : 'accessing' }

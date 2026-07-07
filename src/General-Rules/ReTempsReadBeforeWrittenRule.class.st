@@ -26,9 +26,10 @@ ReTempsReadBeforeWrittenRule class >> checksMethod [
 	^ true
 ]
 
-{ #category : 'accessing' }
-ReTempsReadBeforeWrittenRule class >> group [
-	^ self potentialBugsGroup
+{ #category : 'as yet unclassified' }
+ReTempsReadBeforeWrittenRule class >> groupSelector [
+
+	^ #potentialBugsGroup
 ]
 
 { #category : 'accessing' }

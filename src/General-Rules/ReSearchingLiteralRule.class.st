@@ -15,9 +15,10 @@ Class {
 	#tag : 'Optimization'
 }
 
-{ #category : 'accessing' }
-ReSearchingLiteralRule class >> group [
-	^ self optimizationGroup
+{ #category : 'as yet unclassified' }
+ReSearchingLiteralRule class >> groupSelector [
+
+	^ #optimizationGroup
 ]
 
 { #category : 'accessing' }

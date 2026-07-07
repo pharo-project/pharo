@@ -324,9 +324,6 @@ ShiftClassInstaller >> updateBindings: aBinding of: newClass [
 { #category : 'notifications' }
 ShiftClassInstaller >> updatePackage: aClass [
 	"If the package is nil we leave the class unclassified"
-	builder package ifNotNil: [ :package | 
-		((self packageOrganizer
-			ensurePackage: package)
-				ensureTag: builder tag)
-					addClass: aClass ]
+
+	builder package ifNotNil: [ :package | ((self packageOrganizer ensurePackage: package) ensureTag: builder tag) addClass: aClass ]
 ]

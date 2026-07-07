@@ -21,9 +21,10 @@ ReSendsDifferentSuperRule class >> checksMethod [
 	^ true
 ]
 
-{ #category : 'accessing' }
-ReSendsDifferentSuperRule class >> group [
-	^ self designFlawGroup
+{ #category : 'as yet unclassified' }
+ReSendsDifferentSuperRule class >> groupSelector [
+
+	^ #designFlawGroup
 ]
 
 { #category : 'accessing' }

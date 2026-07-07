@@ -17,9 +17,10 @@ ReJustSendsSuperRule class >> checksMethod [
 	^ true
 ]
 
-{ #category : 'accessing' }
-ReJustSendsSuperRule class >> group [
-	^ self optimizationGroup
+{ #category : 'as yet unclassified' }
+ReJustSendsSuperRule class >> groupSelector [
+
+	^ #optimizationGroup
 ]
 
 { #category : 'accessing' }

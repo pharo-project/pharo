@@ -19,9 +19,10 @@ Class {
 	#tag : 'Potential Bugs'
 }
 
-{ #category : 'accessing' }
-ReDoNotSendSuperInitializeInClassSideRule class >> group [
-	^ self potentialBugsGroup
+{ #category : 'as yet unclassified' }
+ReDoNotSendSuperInitializeInClassSideRule class >> groupSelector [
+
+	^ #potentialBugsGroup
 ]
 
 { #category : 'accessing' }

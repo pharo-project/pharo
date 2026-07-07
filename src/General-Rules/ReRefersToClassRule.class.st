@@ -15,9 +15,10 @@ ReRefersToClassRule class >> checksMethod [
 	^ true
 ]
 
-{ #category : 'accessing' }
-ReRefersToClassRule class >> group [
-	^ self designFlawGroup
+{ #category : 'as yet unclassified' }
+ReRefersToClassRule class >> groupSelector [
+
+	^ #designFlawGroup
 ]
 
 { #category : 'accessing' }

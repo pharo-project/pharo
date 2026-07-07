@@ -15,10 +15,10 @@ ReNoUselessInitializeSlotsRule class >> checksClass [
 	^ true
 ]
 
-{ #category : 'accessing' }
-ReNoUselessInitializeSlotsRule class >> group [
+{ #category : 'as yet unclassified' }
+ReNoUselessInitializeSlotsRule class >> groupSelector [
 
-	^ self optimizationGroup
+	^ #optimizationGroup
 ]
 
 { #category : 'accessing' }

@@ -15,9 +15,10 @@ ReUnconditionalRecursionRule class >> checksMethod [
 	^ true
 ]
 
-{ #category : 'accessing' }
-ReUnconditionalRecursionRule class >> group [
-	^ self potentialBugsGroup
+{ #category : 'as yet unclassified' }
+ReUnconditionalRecursionRule class >> groupSelector [
+
+	^ #potentialBugsGroup
 ]
 
 { #category : 'accessing' }

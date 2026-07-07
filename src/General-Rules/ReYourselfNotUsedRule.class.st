@@ -9,9 +9,10 @@ Class {
 	#tag : 'Optimization'
 }
 
-{ #category : 'accessing' }
-ReYourselfNotUsedRule class >> group [
-	^ self optimizationGroup
+{ #category : 'as yet unclassified' }
+ReYourselfNotUsedRule class >> groupSelector [
+
+	^ #optimizationGroup
 ]
 
 { #category : 'accessing' }

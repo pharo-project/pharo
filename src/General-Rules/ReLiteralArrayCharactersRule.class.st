@@ -9,9 +9,10 @@ Class {
 	#tag : 'Optimization'
 }
 
-{ #category : 'accessing' }
-ReLiteralArrayCharactersRule class >> group [
-	^ self optimizationGroup
+{ #category : 'as yet unclassified' }
+ReLiteralArrayCharactersRule class >> groupSelector [
+
+	^ #optimizationGroup
 ]
 
 { #category : 'accessing' }

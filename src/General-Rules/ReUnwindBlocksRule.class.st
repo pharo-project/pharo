@@ -22,9 +22,10 @@ Class {
 	#tag : 'Optimization'
 }
 
-{ #category : 'accessing' }
-ReUnwindBlocksRule class >> group [
-	^ self optimizationGroup
+{ #category : 'as yet unclassified' }
+ReUnwindBlocksRule class >> groupSelector [
+
+	^ #optimizationGroup
 ]
 
 { #category : 'accessing' }

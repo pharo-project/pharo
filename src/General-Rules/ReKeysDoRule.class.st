@@ -16,9 +16,10 @@ Class {
 	#tag : 'Optimization'
 }
 
-{ #category : 'accessing' }
-ReKeysDoRule class >> group [
-	^ self optimizationGroup
+{ #category : 'as yet unclassified' }
+ReKeysDoRule class >> groupSelector [
+
+	^ #optimizationGroup
 ]
 
 { #category : 'accessing' }

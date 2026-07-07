@@ -91,6 +91,8 @@ SpIconPacksFetchPresenter class >> settingsOn: aBuilder [
 		parent: #appearance;
 		order: 2;
 		target: self;
+		"Should not be stored"
+		isTransient: true;
 		label: 'Icons Pack';
 		buttonLabel: 'Open'
 ]

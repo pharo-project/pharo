@@ -259,7 +259,7 @@ SystemNavigation >> browseMessageList: messageList name: labelString autoSelect:
 		  methods: methods;
 		  title: labelString;
 		  highlight: autoSelectString;
-		  refreshingBlock: aBlock;
+		  acceptBlock: aBlock;
 		  open
 ]
 

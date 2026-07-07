@@ -9,9 +9,10 @@ Class {
 	#tag : 'Bugs'
 }
 
-{ #category : 'accessing' }
-ReNotEqualityOperatorsRule class >> group [
-	^ self bugsGroup
+{ #category : 'as yet unclassified' }
+ReNotEqualityOperatorsRule class >> groupSelector [
+
+	^ #bugsGroup
 ]
 
 { #category : 'accessing' }

@@ -9,10 +9,10 @@ Class {
 	#tag : 'API Hints'
 }
 
-{ #category : 'accessing' }
-SettingDontTranslateDescriptionRule class >> group [
+{ #category : 'as yet unclassified' }
+SettingDontTranslateDescriptionRule class >> groupSelector [
 
-	^ self apiHintsGroup
+	^ #apiHintsGroup
 ]
 
 { #category : 'accessing' }

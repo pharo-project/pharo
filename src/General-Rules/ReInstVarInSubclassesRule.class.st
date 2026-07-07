@@ -16,9 +16,10 @@ ReInstVarInSubclassesRule class >> checksClass [
 	^ true
 ]
 
-{ #category : 'accessing' }
-ReInstVarInSubclassesRule class >> group [
-	^ self designFlawGroup
+{ #category : 'as yet unclassified' }
+ReInstVarInSubclassesRule class >> groupSelector [
+
+	^ #designFlawGroup
 ]
 
 { #category : 'accessing' }

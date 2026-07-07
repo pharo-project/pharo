@@ -14,9 +14,10 @@ ReSendsMethodDictRule class >> checksMethod [
 	^ true
 ]
 
-{ #category : 'accessing' }
-ReSendsMethodDictRule class >> group [
-	^ self bugsGroup
+{ #category : 'as yet unclassified' }
+ReSendsMethodDictRule class >> groupSelector [
+
+	^ #bugsGroup
 ]
 
 { #category : 'accessing' }

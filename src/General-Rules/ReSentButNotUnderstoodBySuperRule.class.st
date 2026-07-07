@@ -15,9 +15,10 @@ ReSentButNotUnderstoodBySuperRule class >> checksMethod [
 	^ true
 ]
 
-{ #category : 'accessing' }
-ReSentButNotUnderstoodBySuperRule class >> group [
-	^ self bugsGroup
+{ #category : 'as yet unclassified' }
+ReSentButNotUnderstoodBySuperRule class >> groupSelector [
+
+	^ #bugsGroup
 ]
 
 { #category : 'accessing' }

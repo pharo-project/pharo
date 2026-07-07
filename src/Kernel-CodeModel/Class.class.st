@@ -504,10 +504,8 @@ Class >> duplicateClassWithNewName: aSymbol [
 	copysName := aSymbol asSymbol.
 	copysName = self name ifTrue: [ ^ self ].
 	(self environment includesKey: copysName) ifTrue: [ ^ self error: copysName , ' already exists' ].
-	
-	^ self classInstaller 
-		update: self 
-		to: [ :builder | builder name: copysName ]
+
+	^ self classInstaller update: self to: [ :builder | builder name: copysName ]
 ]
 
 { #category : 'organization' }

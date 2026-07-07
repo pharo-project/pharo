@@ -17,9 +17,10 @@ ReTestClassNotInPackageWithTestEndingNameRule class >> checksClass [
 	^ true
 ]
 
-{ #category : 'accessing' }
-ReTestClassNotInPackageWithTestEndingNameRule class >> group [
-	^ self sunitGroup
+{ #category : 'as yet unclassified' }
+ReTestClassNotInPackageWithTestEndingNameRule class >> groupSelector [
+
+	^ #sunitGroup
 ]
 
 { #category : 'accessing' }
@@ -36,4 +37,10 @@ ReTestClassNotInPackageWithTestEndingNameRule class >> ruleName [
 ReTestClassNotInPackageWithTestEndingNameRule >> basicCheck: aClass [
 
 	^ (aClass inheritsFrom: TestCase) and: [(aClass package name asString endsWith: '-Tests') not]
+]
+
+{ #category : 'as yet unclassified' }
+ReTestClassNotInPackageWithTestEndingNameRule >> groupSelector [
+
+	^ #sunitGroup
 ]

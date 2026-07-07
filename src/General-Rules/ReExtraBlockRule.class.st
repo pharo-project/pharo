@@ -10,9 +10,10 @@ Class {
 	#tag : 'Optimization'
 }
 
-{ #category : 'accessing' }
-ReExtraBlockRule class >> group [
-	^ self optimizationGroup
+{ #category : 'as yet unclassified' }
+ReExtraBlockRule class >> groupSelector [
+
+	^ #optimizationGroup
 ]
 
 { #category : 'accessing' }

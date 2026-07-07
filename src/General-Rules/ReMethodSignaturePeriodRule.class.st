@@ -14,9 +14,10 @@ ReMethodSignaturePeriodRule class >> checksMethod [
 	^ true
 ]
 
-{ #category : 'accessing' }
-ReMethodSignaturePeriodRule class >> group [
-	^ self potentialBugsGroup
+{ #category : 'as yet unclassified' }
+ReMethodSignaturePeriodRule class >> groupSelector [
+
+	^ #potentialBugsGroup
 ]
 
 { #category : 'accessing' }

@@ -15,9 +15,10 @@ Class {
 	#tag : 'Optimization'
 }
 
-{ #category : 'accessing' }
-ReUnoptimizedToDoRule class >> group [
-	^ self optimizationGroup
+{ #category : 'as yet unclassified' }
+ReUnoptimizedToDoRule class >> groupSelector [
+
+	^ #optimizationGroup
 ]
 
 { #category : 'accessing' }

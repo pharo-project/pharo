@@ -9,9 +9,10 @@ Class {
 	#tag : 'Potential Bugs'
 }
 
-{ #category : 'accessing' }
-ReEmptyExceptionHandlerRule class >> group [
-	^ self potentialBugsGroup
+{ #category : 'as yet unclassified' }
+ReEmptyExceptionHandlerRule class >> groupSelector [
+
+	^ #potentialBugsGroup
 ]
 
 { #category : 'accessing' }

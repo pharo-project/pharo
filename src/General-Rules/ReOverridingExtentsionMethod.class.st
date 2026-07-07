@@ -9,9 +9,10 @@ Class {
 	#tag : 'Migrated'
 }
 
-{ #category : 'accessing' }
-ReOverridingExtentsionMethod class >> group [
-	^ self potentialBugsGroup
+{ #category : 'as yet unclassified' }
+ReOverridingExtentsionMethod class >> groupSelector [
+
+	^ #potentialBugsGroup
 ]
 
 { #category : 'accessing' }

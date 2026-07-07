@@ -19,9 +19,9 @@ PharoBootstrapRule class >> checksPackage [
 ]
 
 { #category : 'accessing' }
-PharoBootstrapRule class >> group [
+PharoBootstrapRule class >> groupSelector [
 
-	^ self architecturalGroup
+	^ #architecturalGroup
 ]
 
 { #category : 'accessing' }

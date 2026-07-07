@@ -15,8 +15,9 @@ ReCollectionCopyEmptyRule class >> checksClass [
 ]
 
 { #category : 'accessing' }
-ReCollectionCopyEmptyRule class >> group [
-	^ self potentialBugsGroup
+ReCollectionCopyEmptyRule class >> groupSelector [
+
+	^ #potentialBugsGroup
 ]
 
 { #category : 'accessing' }

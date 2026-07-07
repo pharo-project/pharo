@@ -10,9 +10,10 @@ Class {
 	#tag : 'Bugs'
 }
 
-{ #category : 'accessing' }
-ReSuperSendsNewRule class >> group [
-	^ self bugsGroup
+{ #category : 'as yet unclassified' }
+ReSuperSendsNewRule class >> groupSelector [
+
+	^ #bugsGroup
 ]
 
 { #category : 'accessing' }

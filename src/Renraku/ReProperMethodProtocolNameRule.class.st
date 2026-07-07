@@ -34,10 +34,10 @@ ReProperMethodProtocolNameRule class >> goodMethodProtocolName [
 	^self protocolIdiom key
 ]
 
-{ #category : 'accessing' }
-ReProperMethodProtocolNameRule class >> group [
+{ #category : 'as yet unclassified' }
+ReProperMethodProtocolNameRule class >> groupSelector [
 
-	^ self methodProtocolNameGroup
+	^ #methodProtocolNameGroup
 ]
 
 { #category : 'testing' }

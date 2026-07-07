@@ -14,9 +14,10 @@ ReUnaryAccessingMethodWithoutReturnRule class >> checksMethod [
 	^ true
 ]
 
-{ #category : 'accessing' }
-ReUnaryAccessingMethodWithoutReturnRule class >> group [
-	^ self potentialBugsGroup
+{ #category : 'as yet unclassified' }
+ReUnaryAccessingMethodWithoutReturnRule class >> groupSelector [
+
+	^ #potentialBugsGroup
 ]
 
 { #category : 'accessing' }

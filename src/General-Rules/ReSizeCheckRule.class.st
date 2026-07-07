@@ -9,9 +9,10 @@ Class {
 	#tag : 'Optimization'
 }
 
-{ #category : 'accessing' }
-ReSizeCheckRule class >> group [
-	^ self optimizationGroup
+{ #category : 'as yet unclassified' }
+ReSizeCheckRule class >> groupSelector [
+
+	^ #optimizationGroup
 ]
 
 { #category : 'accessing' }

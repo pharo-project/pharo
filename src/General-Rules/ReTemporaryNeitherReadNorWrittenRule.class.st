@@ -9,9 +9,10 @@ Class {
 	#tag : 'Optimization'
 }
 
-{ #category : 'accessing' }
-ReTemporaryNeitherReadNorWrittenRule class >> group [
-	^ self optimizationGroup
+{ #category : 'as yet unclassified' }
+ReTemporaryNeitherReadNorWrittenRule class >> groupSelector [
+
+	^ #optimizationGroup
 ]
 
 { #category : 'accessing' }

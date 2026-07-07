@@ -12,3 +12,9 @@ Trait {
 ReTSUnitGroupedRule >> group [
 	^ ReAbstractRule sunitGroup
 ]
+
+{ #category : 'as yet unclassified' }
+ReTSUnitGroupedRule >> groupSelector [
+
+	^ #sunitGroup
+]

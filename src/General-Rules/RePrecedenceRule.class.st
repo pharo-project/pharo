@@ -9,9 +9,10 @@ Class {
 	#tag : 'Potential Bugs'
 }
 
-{ #category : 'accessing' }
-RePrecedenceRule class >> group [
-	^ self potentialBugsGroup
+{ #category : 'as yet unclassified' }
+RePrecedenceRule class >> groupSelector [
+
+	^ #potentialBugsGroup
 ]
 
 { #category : 'accessing' }

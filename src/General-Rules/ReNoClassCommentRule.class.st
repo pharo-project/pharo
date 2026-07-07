@@ -14,9 +14,10 @@ ReNoClassCommentRule class >> checksClass [
 	^ true
 ]
 
-{ #category : 'accessing' }
-ReNoClassCommentRule class >> group [
-	^ self codingIdiomViolationGroup
+{ #category : 'as yet unclassified' }
+ReNoClassCommentRule class >> groupSelector [
+
+	^ #codingIdiomViolationGroup
 ]
 
 { #category : 'accessing' }

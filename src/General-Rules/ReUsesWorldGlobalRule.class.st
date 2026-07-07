@@ -10,9 +10,10 @@ Class {
 	#tag : 'Bugs'
 }
 
-{ #category : 'accessing' }
-ReUsesWorldGlobalRule class >> group [
-	^ self bugsGroup
+{ #category : 'as yet unclassified' }
+ReUsesWorldGlobalRule class >> groupSelector [
+
+	^ #bugsGroup
 ]
 
 { #category : 'accessing' }

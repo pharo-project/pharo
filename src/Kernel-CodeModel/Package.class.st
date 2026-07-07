@@ -454,7 +454,7 @@ Package >> internScopedSelector: aSymbol [
 
 	| found |
 	found := self visibleSelectorForSymbol: aSymbol asSymbol.
-	found == aSymbol ifFalse: [ ^ found ].
+	found == aSymbol asSymbol ifFalse: [ ^ found ].
 
 	^ self defineScopedSelector: aSymbol
 ]

@@ -16,9 +16,10 @@ ReExcessiveVariablesRule class >> checksClass [
 	^ true
 ]
 
-{ #category : 'accessing' }
-ReExcessiveVariablesRule class >> group [
-	^ self designFlawGroup
+{ #category : 'as yet unclassified' }
+ReExcessiveVariablesRule class >> groupSelector [
+
+	^ #designFlawGroup
 ]
 
 { #category : 'accessing' }

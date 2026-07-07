@@ -9,9 +9,10 @@ Class {
 	#tag : 'Potential Bugs'
 }
 
-{ #category : 'accessing' }
-ReThreeElementPointRule class >> group [
-	^ self potentialBugsGroup
+{ #category : 'as yet unclassified' }
+ReThreeElementPointRule class >> groupSelector [
+
+	^ #potentialBugsGroup
 ]
 
 { #category : 'accessing' }

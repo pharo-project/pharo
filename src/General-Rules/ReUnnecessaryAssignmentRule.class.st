@@ -9,9 +9,10 @@ Class {
 	#tag : 'Optimization'
 }
 
-{ #category : 'accessing' }
-ReUnnecessaryAssignmentRule class >> group [
-	^ self optimizationGroup
+{ #category : 'as yet unclassified' }
+ReUnnecessaryAssignmentRule class >> groupSelector [
+
+	^ #optimizationGroup
 ]
 
 { #category : 'accessing' }

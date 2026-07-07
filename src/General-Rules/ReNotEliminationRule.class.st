@@ -30,9 +30,10 @@ Class {
 	#tag : 'Optimization'
 }
 
-{ #category : 'accessing' }
-ReNotEliminationRule class >> group [
-	^ self optimizationGroup
+{ #category : 'as yet unclassified' }
+ReNotEliminationRule class >> groupSelector [
+
+	^ #optimizationGroup
 ]
 
 { #category : 'accessing' }

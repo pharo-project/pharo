@@ -25,9 +25,10 @@ Class {
 	#tag : 'Optimization'
 }
 
-{ #category : 'accessing' }
-ReStringConcatenationRule class >> group [
-	^ self optimizationGroup
+{ #category : 'as yet unclassified' }
+ReStringConcatenationRule class >> groupSelector [
+
+	^ #optimizationGroup
 ]
 
 { #category : 'accessing' }

@@ -16,9 +16,10 @@ Class {
 	#tag : 'Potential Bugs'
 }
 
-{ #category : 'accessing' }
-ReStatementsAfterReturnConditionalRule class >> group [
-	^ self potentialBugsGroup
+{ #category : 'as yet unclassified' }
+ReStatementsAfterReturnConditionalRule class >> groupSelector [
+
+	^ #potentialBugsGroup
 ]
 
 { #category : 'accessing' }

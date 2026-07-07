@@ -15,8 +15,9 @@ ReAddRemoveDependentsRule class >> checksClass [
 ]
 
 { #category : 'accessing' }
-ReAddRemoveDependentsRule class >> group [
-	^ self potentialBugsGroup
+ReAddRemoveDependentsRule class >> groupSelector [
+
+	^ #potentialBugsGroup
 ]
 
 { #category : 'accessing' }

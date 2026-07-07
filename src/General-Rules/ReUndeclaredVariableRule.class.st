@@ -9,9 +9,10 @@ Class {
 	#tag : 'Bugs'
 }
 
-{ #category : 'accessing' }
-ReUndeclaredVariableRule class >> group [
-	^ self bugsGroup
+{ #category : 'as yet unclassified' }
+ReUndeclaredVariableRule class >> groupSelector [
+
+	^ #bugsGroup
 ]
 
 { #category : 'accessing' }

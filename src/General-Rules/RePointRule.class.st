@@ -15,9 +15,10 @@ Class {
 	#tag : 'Optimization'
 }
 
-{ #category : 'accessing' }
-RePointRule class >> group [
-	^ self optimizationGroup
+{ #category : 'as yet unclassified' }
+RePointRule class >> groupSelector [
+
+	^ #optimizationGroup
 ]
 
 { #category : 'accessing' }

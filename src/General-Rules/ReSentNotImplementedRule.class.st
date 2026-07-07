@@ -14,9 +14,10 @@ ReSentNotImplementedRule class >> checksMethod [
 	^ true
 ]
 
-{ #category : 'accessing' }
-ReSentNotImplementedRule class >> group [
-	^ self bugsGroup
+{ #category : 'as yet unclassified' }
+ReSentNotImplementedRule class >> groupSelector [
+
+	^ #bugsGroup
 ]
 
 { #category : 'accessing' }

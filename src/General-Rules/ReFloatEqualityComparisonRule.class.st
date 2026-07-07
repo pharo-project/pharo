@@ -9,9 +9,10 @@ Class {
 	#tag : 'Potential Bugs'
 }
 
-{ #category : 'accessing' }
-ReFloatEqualityComparisonRule class >> group [
-	^ self potentialBugsGroup
+{ #category : 'as yet unclassified' }
+ReFloatEqualityComparisonRule class >> groupSelector [
+
+	^ #potentialBugsGroup
 ]
 
 { #category : 'accessing' }

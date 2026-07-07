@@ -11,9 +11,10 @@ Class {
 	#tag : 'Potential Bugs'
 }
 
-{ #category : 'accessing' }
-RePlatformDependentUserInteractionRule class >> group [
-	^ self potentialBugsGroup
+{ #category : 'as yet unclassified' }
+RePlatformDependentUserInteractionRule class >> groupSelector [
+
+	^ #potentialBugsGroup
 ]
 
 { #category : 'accessing' }

@@ -16,9 +16,10 @@ ReEquivalentSuperclassMethodsRule class >> checksMethod [
 	^ true
 ]
 
-{ #category : 'accessing' }
-ReEquivalentSuperclassMethodsRule class >> group [
-	^ self designFlawGroup
+{ #category : 'as yet unclassified' }
+ReEquivalentSuperclassMethodsRule class >> groupSelector [
+
+	^ #designFlawGroup
 ]
 
 { #category : 'accessing' }

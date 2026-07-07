@@ -9,9 +9,10 @@ Class {
 	#tag : 'Design Flaws'
 }
 
-{ #category : 'accessing' }
-ReNilBranchRule class >> group [
-	^ self designFlawGroup
+{ #category : 'as yet unclassified' }
+ReNilBranchRule class >> groupSelector [
+
+	^ #designFlawGroup
 ]
 
 { #category : 'accessing' }

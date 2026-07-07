@@ -14,9 +14,10 @@ Class {
 	#tag : 'Design Flaws'
 }
 
-{ #category : 'accessing' }
-ReSuperWithoutSend class >> group [
-	^ self designFlawGroup
+{ #category : 'as yet unclassified' }
+ReSuperWithoutSend class >> groupSelector [
+
+	^ #designFlawGroup
 ]
 
 { #category : 'accessing' }

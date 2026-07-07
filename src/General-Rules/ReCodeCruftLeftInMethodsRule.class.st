@@ -10,8 +10,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReCodeCruftLeftInMethodsRule class >> group [
-	^ self bugsGroup
+ReCodeCruftLeftInMethodsRule class >> groupSelector [
+
+	^ #bugsGroup
 ]
 
 { #category : 'accessing' }

@@ -43,10 +43,32 @@ Class {
 		'generator',
 		'filter'
 	],
+	#classVars : [
+		'TokenSizes'
+	],
 	#category : 'HeuristicCompletion-Model-Core',
 	#package : 'HeuristicCompletion-Model',
 	#tag : 'Core'
 }
+
+{ #category : 'class initialization' }
+CoFetcher class >> fillTokenSizes [
+	"self fillTokenSizes"
+	
+	TokenSizes := Array new: 200 withAll: 1.
+	
+	2 to: TokenSizes size  do: [ :i | 
+		TokenSizes at: i put: (i - ((i-1) log: 2)) floor ].
+	TokenSizes at: 2 put: 1.
+	^ TokenSizes
+]
+
+{ #category : 'class initialization' }
+CoFetcher class >> initialize [ 
+	"self initialize"
+	
+	self fillTokenSizes
+]
 
 { #category : 'composing' }
 CoFetcher >> , anotherFetcher [
@@ -154,6 +176,14 @@ CoFetcher >> next: anInteger [
 CoFetcher >> reset [
 
 	generator := nil
+]
+
+{ #category : 'helpers' }
+CoFetcher >> tokenToCheckFrom: compl withSize: size [
+
+	compl isEmpty ifTrue: [ ^ compl ].
+	^  (compl copyFrom: 1 to: (TokenSizes at: size))
+				
 ]
 
 { #category : 'composing' }

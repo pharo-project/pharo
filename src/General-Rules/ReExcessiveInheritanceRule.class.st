@@ -22,9 +22,10 @@ ReExcessiveInheritanceRule class >> checksClass [
 	^ true
 ]
 
-{ #category : 'accessing' }
-ReExcessiveInheritanceRule class >> group [
-	^ self designFlawGroup
+{ #category : 'as yet unclassified' }
+ReExcessiveInheritanceRule class >> groupSelector [
+
+	^ #designFlawGroup
 ]
 
 { #category : 'accessing' }

@@ -17,9 +17,10 @@ ReShouldSendSuperSetUpAsFirstMessage class >> checksMethod [
 	^ true
 ]
 
-{ #category : 'accessing' }
-ReShouldSendSuperSetUpAsFirstMessage class >> group [
-	^ self sunitGroup
+{ #category : 'as yet unclassified' }
+ReShouldSendSuperSetUpAsFirstMessage class >> groupSelector [
+
+	^ #sunitGroup
 ]
 
 { #category : 'utilities' }
@@ -52,6 +53,12 @@ ReShouldSendSuperSetUpAsFirstMessage class >> superSetUpNotCalledFirstIn: aCompi
 ReShouldSendSuperSetUpAsFirstMessage >> basicCheck: aMethod [
 
 	^ (self isClassToCheck: aMethod methodClass) and: [ aMethod selector = #setUp and: [ self class superSetUpNotCalledFirstIn: aMethod ] ]
+]
+
+{ #category : 'as yet unclassified' }
+ReShouldSendSuperSetUpAsFirstMessage >> groupSelector [
+
+	^ #sunitGroup
 ]
 
 { #category : 'testing' }

@@ -14,9 +14,10 @@ ReThemeAccessRule class >> checksMethod [
 	^ true
 ]
 
-{ #category : 'accessing' }
-ReThemeAccessRule class >> group [
-	^ self apiHintsGroup
+{ #category : 'as yet unclassified' }
+ReThemeAccessRule class >> groupSelector [
+
+	^ #apiHintsGroup
 ]
 
 { #category : 'accessing' }

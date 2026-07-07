@@ -9,9 +9,10 @@ Class {
 	#tag : 'Potential Bugs'
 }
 
-{ #category : 'accessing' }
-ReReturnInEnsureRule class >> group [
-	^ self potentialBugsGroup
+{ #category : 'as yet unclassified' }
+ReReturnInEnsureRule class >> groupSelector [
+
+	^ #potentialBugsGroup
 ]
 
 { #category : 'accessing' }

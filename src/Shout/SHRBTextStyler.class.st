@@ -846,7 +846,7 @@ SHRBTextStyler >> visitMessageNode: aMessageNode [
 
 	| style link |
 	
-	style := (self formatIncompleteSelector: aMessageNode selector) ifNil: [
+	style := (self formatIncompleteSelector: aMessageNode selector asSymbol) ifNil: [
 		aMessageNode isAnnotation ifTrue: [ #pragma ] ifFalse: [ #selector ] ].
 
 	link := TextMethodLink sourceNode: aMessageNode.
