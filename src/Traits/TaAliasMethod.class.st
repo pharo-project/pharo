@@ -132,7 +132,7 @@ TaAliasMethod >> methodsCompilationInfo [
 			innerInfos
 				detect: [ :info | info selector = association value ]
 				ifFound: [ :info |
-						aliassed add: (TraitMethodToCompileInfo new
+						aliassed add: (TraitMethodCompilationInfo new
 								 selector: association key;
 								 definingTrait: info definingTrait;
 								 compiledMethod: info compiledMethod;

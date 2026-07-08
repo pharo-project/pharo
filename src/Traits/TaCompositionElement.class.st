@@ -134,7 +134,7 @@ TaCompositionElement >> methodsCompilationInfo [
 	| innerInfos traitInfos localSelectors methods |
 	"We first collect the compilation info for the local methods I have."
 	innerInfos := innerClass localMethods collect: [ :method |
-			              TraitMethodToCompileInfo new
+			              TraitMethodCompilationInfo new
 				              selector: method selector;
 				              definingTrait: self;
 				              compiledMethod: method;

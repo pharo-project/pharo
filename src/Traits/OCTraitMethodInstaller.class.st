@@ -1,8 +1,9 @@
 Class {
 	#name : 'OCTraitMethodInstaller',
 	#superclass : 'OCAnnouncingMethodInstaller',
-	#category : 'Traits',
-	#package : 'Traits'
+	#category : 'Traits-Class-Builder',
+	#package : 'Traits',
+	#tag : 'Class-Builder'
 }
 
 { #category : 'installing' }
