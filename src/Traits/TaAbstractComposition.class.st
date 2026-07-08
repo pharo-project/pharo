@@ -121,8 +121,9 @@ TaAbstractComposition >> asTraitComposition [
 ]
 
 { #category : 'testing' }
-TaAbstractComposition >> changesSourceCode: aSelector [
-	"Checks if a selector should be compiled because its code has been rewritten."
+TaAbstractComposition >> changesSourceCode: compilationInfo [
+	"Checks if a method to recompile should be compiled because its code has been rewritten."
+
 	self subclassResponsibility
 ]
 
@@ -152,7 +153,7 @@ TaAbstractComposition >> compileInfo: compilationInfo into: aClass [
 	"This step should not announce anything in the system since I am used to build method dictionaries of my users."
 	self class codeChangeAnnouncer suspendAllWhile: [ aClass classify: selector under: compilationInfo protocol ].
 
-	(selector ~= compilationInfo compiledMethod selector or: [ self changesSourceCode: selector ])
+	(selector ~= compilationInfo compiledMethod selector or: [ self changesSourceCode: compilationInfo ])
 		ifTrue: [ self saveSourceCode: compilationInfo sourceCode ofMethod: newMethod ]
 		ifFalse: [ newMethod sourcePointer: compilationInfo compiledMethod sourcePointer ].
 
@@ -286,18 +287,16 @@ TaAbstractComposition >> initializeSelectorForMe [
 ]
 
 { #category : 'operations' }
-TaAbstractComposition >> installCompilationInfos: compilationInfos into: aClass replacing: replacing [
+TaAbstractComposition >> installCompilationInfos: compilationInfo into: aClass replacing: replacing [
 	"
 	This method tryies to install a selector in a given class.
 	If the method is already installed it does not perform nothing.
 	This may fail because this is used when recalculating the method dictionary.
 	It is probable the aliased method does not exists any more in the trait composition. This situation is checked when creating the trait composition."
 
-
-	^ (self needsRecompilation: compilationInfos selector)
-			ifTrue:[ self compileInfo: compilationInfos into: aClass	]
-			ifFalse:[ self copyInfo: compilationInfos into: aClass replacing: replacing ].
-
+	^ (self needsRecompilation: compilationInfo)
+		  ifTrue: [ self compileInfo: compilationInfo into: aClass ]
+		  ifFalse: [ self copyInfo: compilationInfo into: aClass replacing: replacing ]
 ]
 
 { #category : 'testing' }
@@ -346,10 +345,10 @@ TaAbstractComposition >> name [
 ]
 
 { #category : 'testing' }
-TaAbstractComposition >> needsRecompilation: aSelector [
+TaAbstractComposition >> needsRecompilation: compilationInfo [
 	"Checks if a selector should be compiled because it uses new slots or if its code has been rewritten."
 
-	^ self slots isNotEmpty or: [ self changesSourceCode: aSelector ]
+	^ self slots isNotEmpty or: [ self changesSourceCode: compilationInfo ]
 ]
 
 { #category : 'querying' }

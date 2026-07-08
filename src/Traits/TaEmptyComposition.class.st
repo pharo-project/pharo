@@ -58,7 +58,7 @@ TaEmptyComposition >> allTraits [
 ]
 
 { #category : 'testing' }
-TaEmptyComposition >> changesSourceCode: aString [
+TaEmptyComposition >> changesSourceCode: compilationInfo [
 
 	^ false
 ]

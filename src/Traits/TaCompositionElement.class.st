@@ -46,7 +46,7 @@ TaCompositionElement >> allTraits [
 ]
 
 { #category : 'testing' }
-TaCompositionElement >> changesSourceCode: aSelector [
+TaCompositionElement >> changesSourceCode: compilationInfo [
 
 	^ false
 ]
@@ -169,12 +169,12 @@ TaCompositionElement >> name [
 ]
 
 { #category : 'testing' }
-TaCompositionElement >> needsRecompilation: aSelector [
+TaCompositionElement >> needsRecompilation: compilationInfo [
 	"We need to recompile if there is a supersend"
 
 	^ innerClass
-		  compiledMethodAt: aSelector
-		  ifPresent: [ :aMethod | aMethod sendsToSuper or: [ super needsRecompilation: aSelector ] ]
+		  compiledMethodAt: compilationInfo selector
+		  ifPresent: [ :aMethod | aMethod sendsToSuper or: [ super needsRecompilation: compilationInfo ] ]
 		  ifAbsent: [ true ]
 ]
 
