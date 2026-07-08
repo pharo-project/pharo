@@ -341,14 +341,41 @@ FFIStructure class >> resetAllStructures [
 	Manage nested structures with a recursive approach.
 	Stop recursing using a tracking collection of already reset structures."
 
-	| alreadyReset currentCompilationPlatform |
-	currentCompilationPlatform := { OSPlatform current family . Smalltalk vm wordSize }.
-	LastCompilationPlatform = currentCompilationPlatform
-		ifTrue: [ ^ self ].
-
-	LastCompilationPlatform := currentCompilationPlatform.
+	| alreadyReset |
 	alreadyReset := IdentitySet new.
 	self allSubclassesDo: [ :each | each resetStructureIfNotIn: alreadyReset ]
+]
+
+{ #category : 'class management' }
+FFIStructure class >> resetAllStructuresIfPlatformChanged [
+	"Reset the offsets of all structures.
+	This is required when there is a platform change since type sizes and padding rules change.
+
+	Manage nested structures with a recursive approach.
+	Stop recursing using a tracking collection of already reset structures."
+
+	| currentCompilationPlatform |
+	currentCompilationPlatform := {
+		                              OSPlatform current family.
+		                              Smalltalk vm wordSize }.
+	LastCompilationPlatform = currentCompilationPlatform ifTrue: [ ^ self ].
+
+	LastCompilationPlatform := currentCompilationPlatform.
+	self resetAllStructures
+]
+
+{ #category : 'initialization' }
+FFIStructure class >> resetCompiledSpec [
+
+	compiledSpec := nil
+]
+
+{ #category : 'initialization' }
+FFIStructure class >> resetLastCompilationPlatform [
+	
+	"needed to reset compilation while building, to force a reset of structures
+	 even if bootstrap platform = current platform"
+	LastCompilationPlatform := nil
 ]
 
 { #category : 'class management' }
