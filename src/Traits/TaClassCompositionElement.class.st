@@ -51,10 +51,12 @@ TaClassCompositionElement >> selectors [
 
 { #category : 'accessing' }
 TaClassCompositionElement >> slots [
-	^ innerClass allSlots
-		reject: [ :e |
-			(Trait slots ,
-			TraitedClass allSlots) anySatisfy: [ :x | x name = e name ] ]
+
+	| slotNamesToReject |
+	"Save in a variable to not recomcatenate for each slot"
+	slotNamesToReject := Trait slots , TraitedClass allSlots collect: [ :slot | slot name ].
+
+	^ innerClass allSlots reject: [ :e | slotNamesToReject includes: e name ]
 ]
 
 { #category : 'printing' }

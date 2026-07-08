@@ -253,6 +253,12 @@ TaAbstractComposition >> hasMethod: aSelector [
 		do: [ ^ false ]
 ]
 
+{ #category : 'testing' }
+TaAbstractComposition >> hasSlots [
+
+	^ self slots isNotEmpty
+]
+
 { #category : 'comparing' }
 TaAbstractComposition >> hash [
 	^ self subclassResponsibility
@@ -348,7 +354,7 @@ TaAbstractComposition >> name [
 TaAbstractComposition >> needsRecompilation: compilationInfo [
 	"Checks if a selector should be compiled because it uses new slots or if its code has been rewritten."
 
-	^ self slots isNotEmpty or: [ self changesSourceCode: compilationInfo ]
+	^ self hasSlots or: [ self changesSourceCode: compilationInfo ]
 ]
 
 { #category : 'querying' }

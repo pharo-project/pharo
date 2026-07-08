@@ -117,6 +117,13 @@ TaSequence >> copyWithoutTrait: aTrait [
 	^ self class withAll: newMembers
 ]
 
+{ #category : 'testing' }
+TaSequence >> hasSlots [
+	"Speeding up my parent implementation to not gather all the slots of my members."
+
+	^ members anySatisfy: [ :member | member hasSlots ]
+]
+
 { #category : 'comparing' }
 TaSequence >> hash [
 	^ self class hash
