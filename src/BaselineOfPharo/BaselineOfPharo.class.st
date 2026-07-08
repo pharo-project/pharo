@@ -210,6 +210,14 @@ BaselineOfPharo >> postload: loader package: packageSpec [
 		credential := (Smalltalk classNamed: #IceCredentialStore) current plaintextCredentialForHostname: 'github.com'.
 		credential password = token ifTrue: [ (Smalltalk classNamed: #IceCredentialStore) current removePlainTextCredential: credential ].
 		'Removing credential.' traceCr ].
+	
+	"Reset all ffi structures that may have been initialised durying bootstrap"
+	(Smalltalk classNamed: #FFIStructure) 
+		ifNotNil: [ :aClass | aClass resetLastCompilationPlatform ].
+	"Also force a reset of libgit2, because it will be annoying otherwise. 
+	 THIS IS FOR TEST. Esteban will implement correctly if it works."
+	(Smalltalk classNamed: #LGitExternalStructure) ifNotNil: [ :aClass | 
+		aClass allSubclasses do: #resetCompiledSpec ].
 
 	"Open the WelcomeBrowser as last step"
 	(self class environment classNamed: #StWelcomeBrowser)
