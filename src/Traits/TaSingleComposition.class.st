@@ -34,9 +34,9 @@ TaSingleComposition >> allTraits [
 ]
 
 { #category : 'testing' }
-TaSingleComposition >> changesSourceCode: aSelector [
+TaSingleComposition >> changesSourceCode: compilationInfo [
 
-	^ inner changesSourceCode: aSelector
+	^ inner changesSourceCode: compilationInfo
 ]
 
 { #category : 'accessing' }

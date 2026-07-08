@@ -86,10 +86,10 @@ TaSequence >> allTraits [
 ]
 
 { #category : 'testing' }
-TaSequence >> changesSourceCode: aSelector [
+TaSequence >> changesSourceCode: compilationInfo [
 	"If the selector has conflicts it should be recompiled"
-	^ (self isConflictingSelector: aSelector)
-		or: [ self members anySatisfy: [ :e | e changesSourceCode: aSelector ] ]
+
+	^ compilationInfo isConflicting or: [ self members anySatisfy: [ :e | e changesSourceCode: compilationInfo ] ]
 ]
 
 { #category : 'accessing' }
@@ -170,6 +170,7 @@ TaSequence >> manageConflictBetween: implementations infosToRemove: toRemove [
 
 	(implementations collect: #protocol as: Set) size > 1 ifTrue: [ implementations first protocol: Protocol traitConflictName ].
 	implementations first sourceCode: (self sourceCodeForConflictFor: implementations first selector).
+	implementations first isConflicting: true.
 	toRemove addAll: implementations allButFirst
 ]
 

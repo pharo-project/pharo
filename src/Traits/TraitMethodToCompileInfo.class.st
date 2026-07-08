@@ -6,7 +6,8 @@ Class {
 		'definingTrait',
 		'compiledMethod',
 		'sourceCode',
-		'protocol'
+		'protocol',
+		'isConflicting'
 	],
 	#category : 'Traits-Compositions',
 	#package : 'Traits',
@@ -48,6 +49,24 @@ TraitMethodToCompileInfo >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
 	^ selector hash bitXor: (definingTrait hash bitXor: (sourceCode hash bitXor: protocol hash))
+]
+
+{ #category : 'initialization' }
+TraitMethodToCompileInfo >> initialize [
+
+	super initialize.
+	isConflicting := false
+]
+
+{ #category : 'testing' }
+TraitMethodToCompileInfo >> isConflicting [
+
+	^ isConflicting
+]
+
+{ #category : 'accessing' }
+TraitMethodToCompileInfo >> isConflicting: anObject [
+	isConflicting := anObject
 ]
 
 { #category : 'testing' }

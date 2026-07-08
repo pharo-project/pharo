@@ -40,10 +40,10 @@ TaAliasMethod >> aliases: anObject [
 	aliases := anObject
 ]
 
-{ #category : 'transforming selectors' }
-TaAliasMethod >> changesSourceCode: aSelector [
+{ #category : 'testing' }
+TaAliasMethod >> changesSourceCode: compilationInfo [
 
-	^ self hasAliasForNew: aSelector
+	^ self hasAliasForNew: compilationInfo selector
 ]
 
 { #category : 'validation' }

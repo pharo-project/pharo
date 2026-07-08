@@ -13,7 +13,7 @@ Class {
 }
 
 { #category : 'testing' }
-TaDeepAliasMethod >> changesSourceCode: aSelector [
+TaDeepAliasMethod >> changesSourceCode: compilationInfo [
 
 	^ true
 ]
