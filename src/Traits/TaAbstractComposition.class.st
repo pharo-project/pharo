@@ -150,7 +150,7 @@ TaAbstractComposition >> compileInfo: compilationInfo into: aClass [
 	aClass addSelectorSilently: selector withMethod: newMethod.
 
 	"This step should not announce anything in the system since I am used to build method dictionaries of my users."
-	self class codeChangeAnnouncer suspendAllWhile: [ aClass classify: selector under: (self protocolForMethod: compilationInfo compiledMethod) ].
+	self class codeChangeAnnouncer suspendAllWhile: [ aClass classify: selector under: compilationInfo protocol ].
 
 	(selector ~= compilationInfo compiledMethod selector or: [ self changesSourceCode: selector ])
 		ifTrue: [ self saveSourceCode: compilationInfo sourceCode ofMethod: newMethod ]
