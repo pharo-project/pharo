@@ -18,7 +18,7 @@ StRefactoringPreviewPresenter2Test >> setUpDriver [
     method := ReClassToConvertTemporaryToInstanceVariable >> #doAction1.
 
     sourceNode := method ast allChildren
-        detect: [ :each | each isVariable and: [ each name = 'tmp1' ] ].
+        detect: [ :each | each isVariable and: [ each name = 'temp' ] ].
 
     driver
         sourceNode: sourceNode;
@@ -40,7 +40,7 @@ StRefactoringPreviewPresenter2Test >> testAcceptAppliesRefactoringChanges [
     method := ReClassToConvertTemporaryToInstanceVariable >> #doAction1.
 
     sourceNode := method ast allChildren
-        detect: [ :each | each isVariable and: [ each name = 'tmp1' ] ].
+        detect: [ :each | each isVariable and: [ each name = 'temp' ] ].
 
     driver
         sourceNode: sourceNode;
@@ -52,7 +52,7 @@ StRefactoringPreviewPresenter2Test >> testAcceptAppliesRefactoringChanges [
     presenter
         driver: driver;
         scopes: { RBBrowserEnvironment default };
-        name: 'tmp1';
+        name: 'temp';
 	  	  initializePresenters.
 
 	 presenter newNameInput text: 'tmp2'.
@@ -84,7 +84,7 @@ StRefactoringPreviewPresenter2Test >> testInvalidNameFailsApplicabilityPrecondit
 	presenter
 		driver: driver;
 		scopes: { RBBrowserEnvironment default };
-		name: 'tmp1'.
+		name: 'temp'.
 
 	presenter initializePresenters.
 
@@ -109,7 +109,7 @@ StRefactoringPreviewPresenter2Test >> testRunRefactoringCreatesAndConfiguresPres
 
 	self assert: presenter opened.
 	self assert: presenter driver identicalTo: driver.
-	self assert: presenter name equals: 'tmp1'.
+	self assert: presenter name equals: 'temp'.
 	self assert: presenter scopes equals: { RBBrowserEnvironment default }.
 ]
 
@@ -125,7 +125,7 @@ StRefactoringPreviewPresenter2Test >> testUpdateChangesWithValidNameGeneratesPre
     presenter
         driver: driver;
         scopes: { RBBrowserEnvironment default };
-        name: 'tmp1'.
+        name: 'temp'.
 
     presenter initializePresenters.
 

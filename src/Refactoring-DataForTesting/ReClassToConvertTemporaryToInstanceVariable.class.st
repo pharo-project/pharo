@@ -12,10 +12,10 @@ Class {
 { #category : 'action' }
 ReClassToConvertTemporaryToInstanceVariable >> doAction1 [
 
-	| tmp1 |
-	tmp1 := 35.
+	| temp |
+	temp := 35.
 
-	^ tmp1
+	^ temp
 ]
 
 { #category : 'action' }

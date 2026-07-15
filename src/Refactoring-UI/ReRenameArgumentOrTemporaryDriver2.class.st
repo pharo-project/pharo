@@ -29,12 +29,6 @@ ReRenameArgumentOrTemporaryDriver2 class >> shouldPreviewChangesByDefault [
 	^ true
 ]
 
-{ #category : 'accessing' }
-ReRenameArgumentOrTemporaryDriver2 >> activeRefactoring [
-
-	^ currentRefactoring ifEmpty: [ nil ] ifNotEmpty: [ :c | c last ]
-]
-
 { #category : 'execution' }
 ReRenameArgumentOrTemporaryDriver2 >> breakingChoices [
 
@@ -81,27 +75,9 @@ ReRenameArgumentOrTemporaryDriver2 >> convertTemporaryToExistingVariable [
 ]
 
 { #category : 'configuration' }
-ReRenameArgumentOrTemporaryDriver2 >> createAndSetNewRefactoring [
-
-	"| base newRefactoring |
-	
-	currentRefactoring ifNil: [ currentRefactoring := OrderedCollection new ].
-	base := self activeRefactoring.
-	
-	base ifNil: [
-			newRefactoring := refactoring.
-			currentRefactoring add: newRefactoring .
-			^ refactoring ].
-
-	newRefactoring := base copy.
-	newRefactoring model changes changes removeAll.
-
-	currentRefactoring add: newRefactoring.
-	refactoring := newRefactoring."
-	
-"	1halt."
-	currentRefactoring := refactoring .
-	refactoring model changes changes removeAll
+ReRenameArgumentOrTemporaryDriver2 >> createAndSetNewRefactoring [	
+	super configureRefactoring .
+	refactoring newName: newName 
 	
 	
 
@@ -170,7 +146,7 @@ ReRenameArgumentOrTemporaryDriver2 >> hasFailedBehaviorPreservingPreconditions [
 { #category : 'configuration' }
 ReRenameArgumentOrTemporaryDriver2 >> instantiateRefactoring [
 
-	^ ReRenameArgumentOrTemporaryRefactoring2 
+	^ ReRenameArgumentOrTemporaryRefactoring
 		  renameTemporaryFrom: sourceNode sourceInterval
 		  in: method origin
 		  selector: method selector

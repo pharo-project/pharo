@@ -92,7 +92,7 @@ ReInteractionDriver2 >> changes [
 
 { #category : 'configuration' }
 ReInteractionDriver2 >> configureRefactoring [
-"self halt."
+
 	refactoring := self instantiateRefactoring.
 	refactoring prepareForExecution
 ]

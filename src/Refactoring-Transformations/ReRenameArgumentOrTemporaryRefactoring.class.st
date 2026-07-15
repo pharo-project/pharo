@@ -54,9 +54,9 @@ ReRenameArgumentOrTemporaryRefactoring class >> rename: oldName to: newName in: 
 ]
 
 { #category : 'instance creation' }
-ReRenameArgumentOrTemporaryRefactoring class >> renameTemporaryFrom: anInterval in: aClass selector: aSelector [
+ReRenameArgumentOrTemporaryRefactoring class >> renameTemporaryFrom: anInterval in: aClassName selector: aSelector [
 
-	^ self new class: aClass selector: aSelector interval: anInterval
+	^ self new class: aClassName selector: aSelector interval: anInterval
 ]
 
 { #category : 'instance creation' }
@@ -113,6 +113,11 @@ ReRenameArgumentOrTemporaryRefactoring >> class: aClass selector: aSelector inte
 
 	self class: aClass selector: aSelector interval: anInterval.
 	newName := aString
+]
+
+{ #category : 'as yet unclassified' }
+ReRenameArgumentOrTemporaryRefactoring >> classNamed: aString selector: aString2 interval: aCollection [ 
+	self shouldBeImplemented.
 ]
 
 { #category : 'accessing' }

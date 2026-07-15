@@ -67,9 +67,8 @@ StRefactoringPreviewPresenter2 >> buildDiffFor: aChange [
 { #category : 'initialization' }
 StRefactoringPreviewPresenter2 >> changesFrom: aCompositeChange [
 
-	compositeChange := aCompositeChange.
-	"we keep the composite because we want to use it for performing changes later on."
-	
+	compositeChange := aCompositeChange. "we keep the composite because we want to use it for performing changes later on."
+
 	changes := aCompositeChange changesToDisplayIn: self.
 	self updateScopeList.
 	self updateChanges.
@@ -78,7 +77,7 @@ StRefactoringPreviewPresenter2 >> changesFrom: aCompositeChange [
 
 { #category : 'initialization' }
 StRefactoringPreviewPresenter2 >> changesFrom: aCompositeChange scopes: aCollection [
-self halt.
+
 	scopes := aCollection.
 	self changesFrom: aCompositeChange.
 ]
@@ -258,17 +257,6 @@ StRefactoringPreviewPresenter2 >> refactoring: aRBRemoveMethodDriver [
 	
 ]
 
-{ #category : 'update' }
-StRefactoringPreviewPresenter2 >> removeAllChanges [
-"self halt."
-	changes ifNotNil: [  
-		changesInScope removeAll.
-		selectedChanges removeAll.
-	].
-	
-   changes := OrderedCollection new
-]
-
 { #category : 'accessing' }
 StRefactoringPreviewPresenter2 >> scopes: aCollection [
 
@@ -289,12 +277,10 @@ StRefactoringPreviewPresenter2 >> updateActiveScope [
 
 { #category : 'update' }
 StRefactoringPreviewPresenter2 >> updateChanges [
-"self halt."
+
 	changes ifNil: [ changesInScope := OrderedCollection new.
 		selectedChanges := OrderedCollection new   ]
 	ifNotNil: [  
-	"changesInScope removeAll.
-	selectedChanges removeAll."
 	changesInScope := changes select: [ :change |
 							change isInScope: activeScope ].
 	selectedChanges := OrderedCollection withAll: changesInScope]
@@ -303,14 +289,14 @@ StRefactoringPreviewPresenter2 >> updateChanges [
 { #category : 'update' }
 StRefactoringPreviewPresenter2 >> updateChangesWithName [
 
-	driver createAndSetNewRefactoring .
 	self updateName .
-	compositeChange:= driver changes .
+	driver createAndSetNewRefactoring .
+	compositeChange:= driver refactoring generateChanges.
 	"we keep the composite because we want to use it for performing changes later on."
 	changes := compositeChange changesToDisplayIn: self.
 	self updateChanges.
 	self updateTablePresenter.
-	driver updateOldName 
+	"driver updateOldName "
 
 	
 
