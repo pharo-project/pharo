@@ -32,12 +32,17 @@ CompiledBlock >> sourceNode [
 CompiledBlock >> sourceNodeForPC: aPC [
 
 	| blockNode |
+
 	blockNode := self outerCode sourceNodeForPC: self pcInOuter.
+
 	self method
 		propertyAt: self bcToASTCacheKey asSymbol
 		ifPresent: [ :bcToASTCache |
 			^ bcToASTCache nodeForPC: aPC ].
-	^ blockNode sourceNodeForPC: aPC
+
+	^ blockNode isBlock 
+		ifTrue: [ blockNode sourceNodeForPC: aPC]
+		ifFalse: [ blockNode ]
 ]
 
 { #category : '*OpalCompiler-Core' }
