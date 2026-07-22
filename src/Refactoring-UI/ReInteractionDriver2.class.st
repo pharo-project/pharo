@@ -23,8 +23,7 @@ Class {
 		'stoppedBeforeApplyingRefactoring',
 		'selectDialogForBreakingChanges',
 		'forTesting',
-		'name',
-		'currentRefactoring'
+		'name'
 	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',
@@ -101,12 +100,6 @@ ReInteractionDriver2 >> configureRefactoring [
 ReInteractionDriver2 >> confirm: aString [
 
 	^ self application confirm: aString
-]
-
-{ #category : 'resources' }
-ReInteractionDriver2 >> currentRefactoring [ 
-
-	^ currentRefactoring 
 ]
 
 { #category : 'private' }
@@ -335,7 +328,7 @@ ReInteractionDriver2 >> requestDialog: aDialog [
 ReInteractionDriver2 >> runRefactoring [
 
 	self configureRefactoring.
-	self gatherUserInput ifFalse: [ ^ self "user abandons" ].
+
 	self hasFailedApplicabilityPreconditions ifTrue: [ ^ self "applicability failed" ].
 	self hasFailedBehaviorPreservingPreconditions
 		ifTrue: [ self handleBreakingChanges ]

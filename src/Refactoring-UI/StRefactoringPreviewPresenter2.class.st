@@ -64,6 +64,16 @@ StRefactoringPreviewPresenter2 >> buildDiffFor: aChange [
 		  rightText: aChange textToDisplay
 ]
 
+{ #category : 'accessing' }
+StRefactoringPreviewPresenter2 >> buttonOk [
+	^ buttonOk 
+]
+
+{ #category : 'accessing' }
+StRefactoringPreviewPresenter2 >> buttonOk: aButton [
+	buttonOk := aButton 
+]
+
 { #category : 'initialization' }
 StRefactoringPreviewPresenter2 >> changesFrom: aCompositeChange [
 
@@ -102,8 +112,24 @@ StRefactoringPreviewPresenter2 >> connectPresenters [
 				updateTablePresenter ].
 
 	buttonCancel action: [ self closeWindow ].
-	buttonOk action: [ self accept ].
-	buttonUpdate action: [ self updateChangesWithName ].
+	buttonOk action: [
+    	self accept
+	].
+	buttonUpdate action: [
+    self updateChangesWithName.
+   	 buttonUpdate disable.
+    self defer: [
+   		buttonOk takeKeyboardFocus .
+	 ]
+	].
+	newNameInput eventHandler
+    whenKeyDownDo: [ :event |
+        event key = KeyboardKey enter ifTrue: [
+				event wasHandled: true.
+            buttonUpdate performAction.
+				self defer: [ buttonOk takeKeyboardFocus ]
+        ]
+    ]
 ]
 
 { #category : 'api - focus' }
@@ -169,14 +195,28 @@ StRefactoringPreviewPresenter2 >> globalActiveScope [
 
 { #category : 'initialization' }
 StRefactoringPreviewPresenter2 >> initializeDialogWindow: aDialogWindowPresenter [
-	"Used to initialize the model in the case of the use into a dialog window.
-	 Override this to set buttons other than the default (Ok, Cancel)."
+
+	| applyButton |
 	
 	aDialogWindowPresenter
-		addButton: 'Cancel' do: [ :presenter | presenter close ];
+		addButton: 'Cancel' do: [ :presenter | presenter close ].
+
+	applyButton := aDialogWindowPresenter
 		addDefaultButton: 'Apply' do: [ :presenter | 
 			self accept.
-			presenter close ]
+			presenter close ].
+
+	self buttonOk: applyButton
+]
+
+{ #category : 'accessing' }
+StRefactoringPreviewPresenter2 >> initializeFocusOrder [
+
+    self focusOrder
+        add: newNameInput;
+        add: buttonUpdate;
+        add: buttonOk;
+        add: buttonCancel
 ]
 
 { #category : 'initialization' }
@@ -213,7 +253,8 @@ StRefactoringPreviewPresenter2 >> initializePresenters [
 	newNameInput whenTextChangedDo: [ :text |
     self validateName: text ].
 	buttonUpdate := self newButton
-   		 label: 'Rename' .
+   		 label: 'Rename' ;
+		 enabled: false.
 		
 	validationLabel := self newLabel .
 	validationLabel label: ''
@@ -226,9 +267,9 @@ StRefactoringPreviewPresenter2 >> name [
 ]
 
 { #category : 'accessing' }
-StRefactoringPreviewPresenter2 >> name: aName [
-    name := aName.
-    newNameInput text: aName
+StRefactoringPreviewPresenter2 >> name: aName4 [
+    name := aName4.
+    newNameInput text: aName4
 ]
 
 { #category : 'accessing' }
@@ -295,14 +336,8 @@ StRefactoringPreviewPresenter2 >> updateChangesWithName [
 	"we keep the composite because we want to use it for performing changes later on."
 	changes := compositeChange changesToDisplayIn: self.
 	self updateChanges.
-	self updateTablePresenter.
-	"driver updateOldName "
+	self updateTablePresenter
 
-	
-
-	
-	
-	
 ]
 
 { #category : 'update' }
@@ -317,12 +352,6 @@ StRefactoringPreviewPresenter2 >> updateName [
 	 name:= newNameInput text.
 	 driver newName: name.
 
-
-	 
-
-	 
-	
-    
 ]
 
 { #category : 'update' }

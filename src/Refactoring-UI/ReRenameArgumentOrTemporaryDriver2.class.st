@@ -95,38 +95,6 @@ ReRenameArgumentOrTemporaryDriver2 >> defaultSelectDialog [
 		  yourself
 ]
 
-{ #category : 'accessing' }
-ReRenameArgumentOrTemporaryDriver2 >> failedConditionMessage: condition [
-    | stream |
-    stream := WriteStream on: String new.
-    condition violationMessageOn: stream.
-    ^ stream contents
-]
-
-{ #category : 'accessing' }
-ReRenameArgumentOrTemporaryDriver2 >> gatherUserInput [
- 
-	| cancelled | 
-	cancelled := false.
-	[
-		refactoring newName: ((requestDialog ifNil: [ self defaultRequestDialog ])
-				 title: 'Rename a temp variable';
-				 message: 'New name of the variable';
-				 text: sourceNode name;
-				 "We cannot return in this block so we save the result as a boolean to check it later."onCancel: [ cancelled := true ];
-				 openModal).
-
-		cancelled ifTrue: [
-				self inform: 'Refactoring cancelled'.
-				^ false ].
-
-		refactoring applicabilityPreconditionsOfTheNewName allSatisfy: [ :condition | condition check ] ] whileFalse: [
-			refactoring applicabilityPreconditionsOfTheNewName
-				detect: [ :condition | condition check not ]
-				ifFound: [ :condition | self inform: condition errorString ] ].
-	^ true
-]
-
 { #category : 'private ex' }
 ReRenameArgumentOrTemporaryDriver2 >> hasFailedApplicabilityPreconditions [
 
@@ -222,10 +190,4 @@ ReRenameArgumentOrTemporaryDriver2 >> sourceNode [
 ReRenameArgumentOrTemporaryDriver2 >> sourceNode: anObject [
 
 	sourceNode := anObject
-]
-
-{ #category : 'accessing' }
-ReRenameArgumentOrTemporaryDriver2 >> updateOldName [
-
-	refactoring oldName: newName 
 ]
