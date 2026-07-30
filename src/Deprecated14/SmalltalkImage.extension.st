@@ -4,7 +4,7 @@ Extension { #name : 'SmalltalkImage' }
 SmalltalkImage >> os [
 	"Answer the object to query about os."
 
-	self deprecated: 'Use `OSPlatform current` instead' transformWith: '`@rcv os' -> 'OSPlatform current'.
+	self deprecated: 'Use `OSPlatform current` instead'.
 	^ OSPlatform current
 ]
 
