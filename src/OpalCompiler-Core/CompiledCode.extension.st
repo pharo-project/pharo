@@ -38,7 +38,7 @@ CompiledCode >> sourceNodeForPC: aPC [
 		ifPresent: [ :bcToASTCache |
 			^ bcToASTCache nodeForPC: aPC ].
 
-	^ sourceNode isBlock 
-		ifTrue: [sourceNode sourceNodeForPC: aPC]
-		ifFalse: [ sourceNode ]
+	^ sourceNode isBlock
+		ifTrue: [ sourceNode ]
+		ifFalse: [ sourceNode sourceNodeForPC: aPC ]
 ]
