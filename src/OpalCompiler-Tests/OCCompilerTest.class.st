@@ -107,7 +107,7 @@ OCCompilerTest >> testAssignmentOfGlobalVarBinding [
 { #category : 'tests - reserved variables' }
 OCCompilerTest >> testBlockArgumentCannotBeReservedWord [
 
-	#( #self #super #thisContext #thisProcess ) do: [ :name |
+	Symbol reservedLiterals do: [ :name |
 		self
 			should: [
 				OpalCompiler new
@@ -120,7 +120,7 @@ OCCompilerTest >> testBlockArgumentCannotBeReservedWord [
 { #category : 'tests - reserved variables' }
 OCCompilerTest >> testBlockTempCannotBeReservedWord [
 
-	#( #self #super #thisContext #thisProcess ) do: [ :name |
+	Symbol reservedLiterals do: [ :name |
 		self
 			should: [
 				OpalCompiler new
@@ -162,11 +162,9 @@ OCCompilerTest >> testInBlockArgumentInstanceVariableShadowing [
 ]
 
 { #category : 'tests - shadowing' }
-OCCompilerTest >> testInBlockArgumentPseudoVariableShadowing [
+OCCompilerTest >> testInBlockArgumentReservedWordsShadowing [
 
-	| pseudoVariables |
-	pseudoVariables := #( #self #thisProcess #thisContext #super ).
-	pseudoVariables do: [ :thePseudoVar |
+	Symbol reservedLiterals do: [ :thePseudoVar |
 			text := 'temp [:' , thePseudoVar asString , ' | ]'.
 			self compileWithFailBlock: [ :result | self assert: result isError ] ]
 ]
@@ -210,7 +208,7 @@ OCCompilerTest >> testInstanceVariableShadowing [
 { #category : 'tests - reserved variables' }
 OCCompilerTest >> testMethodArgumentCannotBeReservedWord [
 
-	#( #self #super #thisContext #thisProcess ) do: [ :name |
+	Symbol reservedLiterals do: [ :name |
 			text := 'method: ' , name , ' ^ ' , name.
 			self compileWithFailBlock: [ :result | self assert: result isError ] ]
 ]
@@ -218,7 +216,7 @@ OCCompilerTest >> testMethodArgumentCannotBeReservedWord [
 { #category : 'tests - reserved variables' }
 OCCompilerTest >> testMethodTempCannotBeReservedWord [
 
-	#( #self #super #thisContext #thisProcess ) do: [ :name |
+	Symbol reservedLiterals do: [ :name |
 		self
 			should: [
 				OpalCompiler new
@@ -250,9 +248,7 @@ OCCompilerTest >> testNoShadowing [
 { #category : 'tests - shadowing' }
 OCCompilerTest >> testPseudoVariableShadowing [
 
-	| pseudoVariables |
-	pseudoVariables := #( #self #thisProcess #thisContext #super ).
-	pseudoVariables do: [ :thePseudoVar |
+	Symbol reservedLiterals do: [ :thePseudoVar |
 			text := 'method |' , thePseudoVar asString , '| ^' , thePseudoVar asString.
 			self compileWithFailBlock: [ :result | self assert: result isError ] ]
 ]
@@ -276,11 +272,11 @@ OCCompilerTest >> testReservedWordErrorMessage [
 OCCompilerTest >> testReservedWordErrorMessageForTemp [
 
 	| error |
-	text := 'method |thisContext| ^ thisContext'.
+	text := 'method |self| ^ self'.
 	self
 		compileWithFailBlock: [ :result |
 			error := result ast allNotices first.
-			self assert: error messageText equals: 'thisContext is a reserved word and cannot be used as a temporary variable name'. 
+			self assert: error messageText equals: 'self is a reserved word and cannot be used as a temporary variable name'. 
 			^ self ].
 	self fail
 ]
