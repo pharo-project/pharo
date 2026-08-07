@@ -26,7 +26,13 @@ Class {
 		'newNameLabel',
 		'newNameInput',
 		'driver',
-		'validationLabel'
+		'validationLabel',
+		'behaviorWarningTitle',
+		'behaviorMessageLabel',
+		'buttonApplyAnyway',
+		'behaviorWarningIcon',
+		'buttonApplyTransformation',
+		'applyAnyway'
 	],
 	#category : 'Refactoring-UI-UI',
 	#package : 'Refactoring-UI',
@@ -54,6 +60,21 @@ StRefactoringPreviewPresenter2 >> accept [
 	self performChanges.
 	self updateGlobalActiveScope.
 	self closeWindow
+]
+
+{ #category : 'accessing' }
+StRefactoringPreviewPresenter2 >> applyTransformation [
+
+	self updateName .
+	driver createAndSetNewRefactoring .
+
+	compositeChange := driver refactoring generateTransformChanges.
+	driver prepareTransformation: driver refactoring parseTree.
+	compositeChange := driver refactoring privateTransform.
+	changes := compositeChange changesToDisplayIn: self.
+
+	self updateChanges.
+	self updateTablePresenter
 ]
 
 { #category : 'private' }
@@ -129,7 +150,10 @@ StRefactoringPreviewPresenter2 >> connectPresenters [
             buttonUpdate performAction.
 				self defer: [ buttonOk takeKeyboardFocus ]
         ]
-    ]
+    ].
+
+	buttonApplyAnyway whenActivatedDo: [ self updateChangesWithName ].
+	buttonApplyTransformation whenActivatedDo: [ self applyTransformation ]
 ]
 
 { #category : 'api - focus' }
@@ -141,7 +165,7 @@ StRefactoringPreviewPresenter2 >> defaultKeyboardFocus [
 { #category : 'layout' }
 StRefactoringPreviewPresenter2 >> defaultLayout [
 
-	| scopesLayout nameLayout inputLayout selectorLayout |
+	| scopesLayout nameLayout inputLayout selectorLayout behaviorLayout behaviorHeaderLayout behaviorOptionsLayout |
 	scopesLayout := SpBoxLayout newLeftToRight
 		                vAlignCenter;
 		                spacing: 5;
@@ -152,12 +176,13 @@ StRefactoringPreviewPresenter2 >> defaultLayout [
 	inputLayout := SpBoxLayout newTopToBottom
 		               spacing: 2;
 		               add: newNameInput expand: false;
-		               add: validationLabel height: 90;
+							add: validationLabel expand: false;
 		               yourself.
+		
 	nameLayout := SpBoxLayout newLeftToRight
 		               spacing: 5;
 		               add: newNameLabel expand: false;
-		               add: inputLayout;
+		               add: inputLayout ;
 		               add: buttonUpdate expand: false;
 		               yourself.
 
@@ -168,29 +193,56 @@ StRefactoringPreviewPresenter2 >> defaultLayout [
 		                  column: 2 expand: true;
 		                  rowSpacing: 4;
 		                  add: newNameLabel atPoint: 1 @ 1;
-		                  add: newNameInput atPoint: 2 @ 1;
+		                  add: inputLayout atPoint: 2 @ 1;
 		                  add: buttonUpdate atPoint: 3 @ 1;
-		                  add: validationLabel atPoint: 2 @ 2;
 		                  yourself.
+		
+	behaviorHeaderLayout := SpBoxLayout newLeftToRight 
+										vAlignCenter;
+										spacing: 5;
+										add: behaviorWarningIcon expand: false;
+										add: behaviorWarningTitle expand: false;
+										yourself.
+										
+	behaviorOptionsLayout := SpBoxLayout newTopToBottom
+    									spacing: 2;
+    									add: buttonApplyAnyway expand: false;
+    									add: buttonApplyTransformation expand: false;
+    									yourself.
+		
+	behaviorLayout := SpBoxLayout newTopToBottom
+								spacing: 4;
+								add: behaviorHeaderLayout expand: false;
+								add: behaviorMessageLabel expand: false;
+								add: behaviorOptionsLayout expand: false;
+								yourself.
+								
+
 	^ SpBoxLayout newTopToBottom
-		  spacing: 10;
-		  add: selectorLayout expand: true;
-		  add: scopesLayout expand: false;
-		  add: table;
-		  add: diffPresenter;
-		  yourself
+		spacing: 10;
+		add: selectorLayout expand: true;
+		add: behaviorLayout expand: false;
+		add: scopesLayout expand: false;
+		add: table expand: true;
+		add: diffPresenter expand: true;
+		yourself
 ]
 
 { #category : 'accessing' }
 StRefactoringPreviewPresenter2 >> driver: aDriver [
 
-   driver := aDriver 
+   driver := aDriver
 ]
 
 { #category : 'accessing' }
 StRefactoringPreviewPresenter2 >> globalActiveScope [
 
 	^ ScopesManager activeScope
+]
+
+{ #category : 'accessing' }
+StRefactoringPreviewPresenter2 >> hasWarning [
+	^ driver notNil and: [ driver hasFailedBehaviorPreservingPreconditions ]
 ]
 
 { #category : 'initialization' }
@@ -249,15 +301,32 @@ StRefactoringPreviewPresenter2 >> initializePresenters [
 		
 	newNameLabel := self newLabel 
 		label: 'Selector'.
+		
 	newNameInput := self newTextInput.
 	newNameInput whenTextChangedDo: [ :text |
-    self validateName: text ].
+    self validateName: text.
+	 self updateBehaviorPanelVisibility: text ]. 
+
 	buttonUpdate := self newButton
    		 label: 'Rename' ;
 		 enabled: false.
 		
-	validationLabel := self newLabel .
-	validationLabel label: ''
+	validationLabel := self newLabel label: ''.
+	
+	behaviorWarningTitle := self newLabel label: 'Behavior-preserving warnings'.
+	behaviorWarningIcon := self newImage image: (self iconNamed: #warningIcon).
+	
+	behaviorMessageLabel := self newLabel label: ''.
+	
+	buttonApplyAnyway := self instantiate: SpRadioButtonPresenter.
+	buttonApplyAnyway label: 'Apply anyway'.
+	
+	buttonApplyTransformation := self instantiate: SpRadioButtonPresenter.
+	buttonApplyTransformation label: 'Apply transformations'.
+	
+	buttonApplyAnyway associatedRadioButtons: { buttonApplyTransformation  }.
+	buttonApplyTransformation associatedRadioButtons: { buttonApplyAnyway  }.
+	buttonApplyTransformation state: true
 ]
 
 { #category : 'accessing' }
@@ -267,9 +336,9 @@ StRefactoringPreviewPresenter2 >> name [
 ]
 
 { #category : 'accessing' }
-StRefactoringPreviewPresenter2 >> name: aName4 [
-    name := aName4.
-    newNameInput text: aName4
+StRefactoringPreviewPresenter2 >> name: aName [
+    name := aName.
+    newNameInput text: aName
 ]
 
 { #category : 'accessing' }
@@ -314,6 +383,23 @@ StRefactoringPreviewPresenter2 >> selectorInput [
 StRefactoringPreviewPresenter2 >> updateActiveScope [
 
 	activeScope := scopeDropList selectedItem asRBEnvironment
+]
+
+{ #category : 'accessing' }
+StRefactoringPreviewPresenter2 >> updateBehaviorPanelVisibility: aString [
+
+	driver newName: aString.
+	self hasWarning 
+		ifTrue: [ 
+			behaviorMessageLabel label: driver checkBehaviorPreservingPreconditions.
+			self applyTransformation ].
+	
+	behaviorWarningTitle visible: self hasWarning.
+	behaviorMessageLabel visible: self hasWarning.
+	buttonApplyAnyway visible: self hasWarning.
+	behaviorWarningIcon visible: self hasWarning.
+	buttonApplyTransformation visible: self hasWarning
+	
 ]
 
 { #category : 'update' }

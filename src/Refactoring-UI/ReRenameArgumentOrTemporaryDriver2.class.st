@@ -10,7 +10,8 @@ Class {
 		'sourceNode',
 		'newName',
 		'method',
-		'notCheckVarName'
+		'notCheckVarName',
+		'temporaryVariableToRemove'
 	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',
@@ -29,21 +30,6 @@ ReRenameArgumentOrTemporaryDriver2 class >> shouldPreviewChangesByDefault [
 	^ true
 ]
 
-{ #category : 'execution' }
-ReRenameArgumentOrTemporaryDriver2 >> breakingChoices [
-
-	| choices |
-
-	choices := OrderedCollection new.
-	notCheckVarName isFalse ifTrue: [
-			choices add: (ReRenameTemporaryVariableChoice new driver: self).
-			choices add: (ReNewVariableNameChoice new driver: self).
-			choices add: (ReConvertTemporaryToExistingVariableChoice new driver: self) ].
-
- 
-	^ choices
-]
-
 { #category : 'accessing' }
 ReRenameArgumentOrTemporaryDriver2 >> checkApplicabilityPreconditions [
 
@@ -60,18 +46,21 @@ ReRenameArgumentOrTemporaryDriver2 >> checkApplicabilityPreconditions [
     ^ nil
 ]
 
-{ #category : 'action' }
-ReRenameArgumentOrTemporaryDriver2 >> convertTemporaryToExistingVariable [
+{ #category : 'accessing' }
+ReRenameArgumentOrTemporaryDriver2 >> checkBehaviorPreservingPreconditions [
 
-	| transformation |
+    | failedCondition |
 
-	self applyChanges.
-	transformation := RBRemoveTemporaryVariableTransformation
-		                  variable: notCheckVarName violators first
-		                  inMethod: (method methodClass compiledMethodAt: method selector) selector
-		                  inClass: method methodClass name.
-	transformation privateTransform.
-	self openPreviewWithChanges: transformation changes
+	 refactoring newName: newName.
+    failedCondition := refactoring breakingChangePreconditions 
+        detect: [ :condition | condition check not ]
+        ifNone: [ nil ].
+
+    failedCondition ifNotNil: [
+		  temporaryVariableToRemove := failedCondition violators first.
+        ^ failedCondition errorString ].
+
+    ^ nil
 ]
 
 { #category : 'configuration' }
@@ -81,18 +70,6 @@ ReRenameArgumentOrTemporaryDriver2 >> createAndSetNewRefactoring [
 	
 	
 
-]
-
-{ #category : 'configuration' }
-ReRenameArgumentOrTemporaryDriver2 >> defaultSelectDialog [
-
-	^ super defaultSelectDialog
-		  title: 'There are potential breaking changes!';
-		  message: self labelBasedOnBreakingChanges;
-		  items: self breakingChoices;
-		  display: [ :each | each description ];
-		  displayIcon: [ :each | self iconNamed: each systemIconName ];
-		  yourself
 ]
 
 { #category : 'private ex' }
@@ -107,7 +84,7 @@ ReRenameArgumentOrTemporaryDriver2 >> hasFailedApplicabilityPreconditions [
 { #category : 'initialization' }
 ReRenameArgumentOrTemporaryDriver2 >> hasFailedBehaviorPreservingPreconditions [
 
-	notCheckVarName := refactoring preconditionCheckVariableName.
+	notCheckVarName := refactoring preconditionCheckVariableName.		
 	^ refactoring failedBreakingChangePreconditions isNotEmpty 
 ]
 
@@ -118,17 +95,6 @@ ReRenameArgumentOrTemporaryDriver2 >> instantiateRefactoring [
 		  renameTemporaryFrom: sourceNode sourceInterval
 		  in: method origin
 		  selector: method selector
-]
-
-{ #category : 'ui - dialogs' }
-ReRenameArgumentOrTemporaryDriver2 >> labelBasedOnBreakingChanges [
-
-	^ String streamContents: [ :stream |
-			  refactoring failedBreakingChangePreconditions do: [ :cond |
-					  cond check ifFalse: [
-							  cond violationMessageOn: stream.
-							  stream cr ] ].
-			  stream nextPutAll: 'Select the strategies to apply' ]
 ]
 
 { #category : 'accessing' }
@@ -153,6 +119,20 @@ ReRenameArgumentOrTemporaryDriver2 >> newName [
 ReRenameArgumentOrTemporaryDriver2 >> newName: anObject [
 
 	newName := anObject
+]
+
+{ #category : 'action' }
+ReRenameArgumentOrTemporaryDriver2 >> prepareTransformation: aTree [
+
+	| transformation |
+
+	transformation := RBRemoveTemporaryVariableTransformation2
+		                  variable: temporaryVariableToRemove
+		                  inMethod: (method methodClass compiledMethodAt: method selector) selector
+		                  inClass: method methodClass.
+	transformation privateTransform: aTree.
+	
+	^ transformation 
 ]
 
 { #category : 'accessing' }

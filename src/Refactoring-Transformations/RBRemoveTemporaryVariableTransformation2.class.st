@@ -1,0 +1,107 @@
+"
+RBRemoveTemporaryVariableRefactoring is responsible for removing temporary variables inside a method. In Pharo, temporary variables can be declared inside blocks as well.
+
+Example:
+```
+| transformation |
+transformation := (RBRemoveTemporaryVariableTransformation
+	variable: 'methodTree'
+	inMethod: #privateTransform
+	inClass: #RBRemoveTemporaryVariableTransformation)
+			generateChanges.
+(StRefactoringPreviewPresenter for: transformation) open
+```
+	
+Preconditions:
+- Check whether this method has a temporary variable with the given name.
+
+Observations about the transformation:
+- The transformation looks for the variable inside blocks too
+"
+Class {
+	#name : 'RBRemoveTemporaryVariableTransformation2',
+	#superclass : 'RBMethodTransformation',
+	#instVars : [
+		'variableName'
+	],
+	#category : 'Refactoring-Transformations-Model-Unused',
+	#package : 'Refactoring-Transformations',
+	#tag : 'Model-Unused'
+}
+
+{ #category : 'api' }
+RBRemoveTemporaryVariableTransformation2 class >> model: aRBModel variable: aString inMethod: aSelector inClass: aClass [
+
+	^ self new
+		model: aRBModel;
+		variable: aString
+		inMethod: aSelector
+		inClass: aClass;
+		yourself
+]
+
+{ #category : 'api' }
+RBRemoveTemporaryVariableTransformation2 class >> variable: aString inMethod: aSelector inClass: aClass [
+
+	^ self new
+		variable: aString
+		inMethod: aSelector
+		inClass: aClass;
+		yourself
+]
+
+{ #category : 'preconditions' }
+RBRemoveTemporaryVariableTransformation2 >> applicabilityPreconditions [
+
+	^ {
+		  self classExist.
+		 (ReDefinesSelectorsCondition new definesSelectors: (Array with: selector) in: self definingClass).
+		  (RBCondition
+			   withBlock: [
+			   self definingMethod allTemporaryVariables includes: variableName ]
+			   errorString: 'Method named ' , selector
+				   , ' does not define a temporary variable named ' , variableName).
+		  (RBCondition
+			   withBlock: [
+				   (self definingMethod allArgumentVariables includes:
+					    variableName) not ]
+			   errorString: 'Variable named ' , variableName
+				   , ' cannot be removed because it is an argument in this method') }
+]
+
+{ #category : 'scripting api - conditions' }
+RBRemoveTemporaryVariableTransformation2 >> checkPreconditions [ 
+
+	self eagerlyCheckApplicabilityPreconditions 
+]
+
+{ #category : 'preconditions' }
+RBRemoveTemporaryVariableTransformation2 >> classExist [
+
+	^ RBCondition
+		  withBlock: [ self definingClass isNotNil ]
+		  errorString: 'No such class or trait named ' , className asString
+]
+
+{ #category : 'executing' }
+RBRemoveTemporaryVariableTransformation2 >> privateTransform: methodTree [
+
+	| modifiedNode |
+
+	self definingClass.
+	modifiedNode := (methodTree withAllChildren select: [:each | each isSequence])
+						detect: [ :sequence | sequence exactNodeDefines: variableName ]
+						ifNone: [ nil ].
+
+	modifiedNode ifNotNil: [ modifiedNode removeTemporaryNamed: variableName ].
+
+	class compileTree: methodTree
+]
+
+{ #category : 'api' }
+RBRemoveTemporaryVariableTransformation2 >> variable: aVariableName inMethod: aSelector inClass: aClass [
+
+	self className: aClass.
+	selector := aSelector.
+	variableName := aVariableName
+]

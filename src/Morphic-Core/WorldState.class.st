@@ -204,21 +204,6 @@ WorldState class >> pharoItemsOn: aBuilder [
 					iconName: #smallQuit ]
 ]
 
-{ #category : 'world menu items' }
-WorldState class >> quitSession [
-	| response |
-	response := MorphicUIManager new
-						confirm: 'Save changes before quitting?'
-						trueChoice: 'Save'
-						falseChoice: 'Discard'
-						cancelChoice: 'Cancel'
-						default: nil.
-	response ifNil: [ ^self ].
-	response
-		ifTrue: [Smalltalk snapshot: true andQuit: true]
-		ifFalse: [Smalltalk snapshot: false andQuit: true]
-]
-
 { #category : 'cleanup' }
 WorldState class >> restartMethods [
 
@@ -226,13 +211,6 @@ WorldState class >> restartMethods [
 		ws
 			convertAlarms;
 			cleanStepList ]
-]
-
-{ #category : 'world menu items' }
-WorldState class >> saveAndQuit [
-	Cursor write showWhile: [
-		Smalltalk snapshot: true andQuit: true
-	]
 ]
 
 { #category : 'world menu items' }

@@ -143,6 +143,18 @@ ReRenameArgumentOrTemporaryRefactoring >> oldName: aString [
 	oldName := aString 
 ]
 
+{ #category : 'accessing' }
+ReRenameArgumentOrTemporaryRefactoring >> parseTree [
+
+	^ parseTree
+]
+
+{ #category : 'accessing' }
+ReRenameArgumentOrTemporaryRefactoring >> parseTree: aTree [
+
+	parseTree := aTree
+]
+
 { #category : 'preconditions' }
 ReRenameArgumentOrTemporaryRefactoring >> preconditionCheckVariableName [
 
