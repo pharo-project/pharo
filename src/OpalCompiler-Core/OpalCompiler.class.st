@@ -35,6 +35,7 @@ Class {
 		'compilationContextClass',
 		'permitFaulty',
 		'permitUndeclared',
+		'permitShadowing',
 		'logged',
 		'changeStamp',
 		'protocol',
@@ -631,6 +632,28 @@ OpalCompiler >> permitUndeclared [
 OpalCompiler >> permitUndeclared: aBoolean [
 
 	permitUndeclared := aBoolean
+]
+
+{ #category : 'public access' }
+OpalCompiler >> permitShadowing [
+
+	^ permitShadowing
+]
+
+{ #category : 'public access' }
+OpalCompiler >> permitShadowing: aBoolean [
+
+	permitShadowing := aBoolean
+]
+
+{ #category : 'public access' }
+OpalCompiler >> strict [
+	"Set all permit flags to false, so any fault (syntax, undeclared variable, shadowing) is an error"
+
+	self permitFaulty: false.
+	self permitUndeclared: false.
+	self permitShadowing: false.
+	^ self
 ]
 
 { #category : 'accessing' }

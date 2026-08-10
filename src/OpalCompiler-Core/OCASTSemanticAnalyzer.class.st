@@ -143,13 +143,13 @@ OCASTSemanticAnalyzer >> checkReservedName: aVariableNode as: aVariable [
 	kind := aVariable isArgumentVariable
 		ifTrue: [ 'a parameter' ]
 		ifFalse: [ 'a temporary variable' ].
-	aVariableNode addError: name, ' is a reserved word and cannot be used as ', kind, ' name'
+	aVariableNode addNotice: (OCReservedVariableNotice new messageText: name, ' is a reserved word and cannot be used as ', kind, ' name')
 ]
 
 { #category : 'error handling' }
 OCASTSemanticAnalyzer >> shadowing: var withVariable: aNode [
 
-	aNode addWarning: 'Name already defined'
+	aNode addNotice: (OCShadowingNotice new messageText: 'Name already defined')
 ]
 
 { #category : 'error handling' }

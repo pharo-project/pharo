@@ -138,6 +138,81 @@ OCCompilerTest >> testDoItTempCanShadowReservedWord [
 		equals: 42
 ]
 
+{ #category : 'tests - reserved variables' }
+OCCompilerTest >> testReservedWordAllowedInFaultyMode [
+
+	| method |
+	method := OpalCompiler new
+		          source: 'foo: self ^ self + 1';
+		          permitFaulty: true;
+		          compileOrFail.
+	self assert: method isCompiledMethod
+]
+
+{ #category : 'tests - reserved variables' }
+OCCompilerTest >> testReservedWordAllowedWithPermitShadowing [
+
+	| method |
+	method := OpalCompiler new
+		          source: 'foo: self ^ self + 1';
+		          permitShadowing: true;
+		          compileOrFail.
+	self assert: method isCompiledMethod.
+	self
+		assert: (method ast allNotices anySatisfy: [ :n |
+				 n messageText = 'self is a reserved word and cannot be used as a parameter name' ])
+]
+
+{ #category : 'tests - flags' }
+OCCompilerTest >> testStrictSetsAllPermits [
+
+	| compiler |
+	compiler := OpalCompiler new strict.
+	self deny: compiler permitFaulty.
+	self deny: compiler permitUndeclared.
+	self deny: compiler permitShadowing
+]
+
+{ #category : 'tests - shadowing' }
+OCCompilerTest >> testGeneralShadowingErrorsUnderStrict [
+
+	self
+		should: [
+			OpalCompiler new
+				source: 'method: a [ :a | |a| ]';
+				class: MockForCompilation;
+				strict;
+				compileOrFail ]
+		raise: OCCompilationError
+]
+
+{ #category : 'tests - shadowing' }
+OCCompilerTest >> testGeneralShadowingErrorsWithPermitShadowingFalse [
+
+	self
+		should: [
+			OpalCompiler new
+				source: 'method: a [ :a | |a| ]';
+				class: MockForCompilation;
+				permitShadowing: false;
+				compileOrFail ]
+		raise: OCCompilationError
+]
+
+{ #category : 'tests - shadowing' }
+OCCompilerTest >> testGeneralShadowingWarnsByDefault [
+
+	| compiler compilationResult notices |
+	compiler := OpalCompiler new
+		            source: 'method: a [ :a | |a| ]';
+		            class: MockForCompilation.
+	compilationResult := compiler doCompile.
+	self deny: compilationResult isError.
+	notices := compiler ast allNotices select: [ :n | n messageText = 'Name already defined' ].
+	self assert: notices isNotEmpty.
+	self assert: (notices allSatisfy: [ :n | n isWarning ])
+]
+
 { #category : 'tests' }
 OCCompilerTest >> testErrorOrders [
 
