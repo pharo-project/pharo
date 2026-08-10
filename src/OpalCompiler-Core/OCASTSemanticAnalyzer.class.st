@@ -53,6 +53,19 @@ OCASTSemanticAnalyzer >> blockCounter [
 	^blockCounter ifNil: [0]
 ]
 
+{ #category : 'error handling' }
+OCASTSemanticAnalyzer >> checkReservedName: aVariableNode as: aVariable [
+
+	| name kind |
+	self compilationContext isScripting ifTrue: [ ^ self ].
+	name := aVariableNode name.
+	(Symbol reservedLiterals includes: name) ifFalse: [ ^ self ].
+	kind := aVariable isArgumentVariable
+		ifTrue: [ 'a parameter' ]
+		ifFalse: [ 'a temporary variable' ].
+	aVariableNode addNotice: (OCReservedVariableNotice new messageText: name, ' is a reserved word and cannot be used as ', kind, ' name')
+]
+
 { #category : 'accessing' }
 OCASTSemanticAnalyzer >> compilationContext [
 	^ compilationContext
@@ -131,19 +144,6 @@ OCASTSemanticAnalyzer >> resolveVariableNode: aVariableNode [
 { #category : 'initialization' }
 OCASTSemanticAnalyzer >> scope: aSemScope [
 	scope := aSemScope
-]
-
-{ #category : 'error handling' }
-OCASTSemanticAnalyzer >> checkReservedName: aVariableNode as: aVariable [
-
-	| name kind |
-	self compilationContext isScripting ifTrue: [ ^ self ].
-	name := aVariableNode name.
-	(Symbol reservedLiterals includes: name) ifFalse: [ ^ self ].
-	kind := aVariable isArgumentVariable
-		ifTrue: [ 'a parameter' ]
-		ifFalse: [ 'a temporary variable' ].
-	aVariableNode addNotice: (OCReservedVariableNotice new messageText: name, ' is a reserved word and cannot be used as ', kind, ' name')
 ]
 
 { #category : 'error handling' }

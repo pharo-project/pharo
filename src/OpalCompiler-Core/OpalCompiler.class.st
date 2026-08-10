@@ -623,18 +623,6 @@ OpalCompiler >> permitFaulty: aBoolean [
 ]
 
 { #category : 'public access' }
-OpalCompiler >> permitUndeclared [
-
-	^ permitUndeclared
-]
-
-{ #category : 'public access' }
-OpalCompiler >> permitUndeclared: aBoolean [
-
-	permitUndeclared := aBoolean
-]
-
-{ #category : 'public access' }
 OpalCompiler >> permitShadowing [
 
 	^ permitShadowing
@@ -647,13 +635,15 @@ OpalCompiler >> permitShadowing: aBoolean [
 ]
 
 { #category : 'public access' }
-OpalCompiler >> strict [
-	"Set all permit flags to false, so any fault (syntax, undeclared variable, shadowing) is an error"
+OpalCompiler >> permitUndeclared [
 
-	self permitFaulty: false.
-	self permitUndeclared: false.
-	self permitShadowing: false.
-	^ self
+	^ permitUndeclared
+]
+
+{ #category : 'public access' }
+OpalCompiler >> permitUndeclared: aBoolean [
+
+	permitUndeclared := aBoolean
 ]
 
 { #category : 'accessing' }
@@ -748,4 +738,14 @@ OpalCompiler >> source: aString [
 OpalCompiler >> storeSourcesAsProperty: aBoolean [ 
 	
 	compilationContext storeSourcesAsProperty: aBoolean
+]
+
+{ #category : 'public access' }
+OpalCompiler >> strict [
+	"Set all permit flags to false, so any fault (syntax, undeclared variable, shadowing) is an error"
+
+	self permitFaulty: false.
+	self permitUndeclared: false.
+	self permitShadowing: false.
+	^ self
 ]

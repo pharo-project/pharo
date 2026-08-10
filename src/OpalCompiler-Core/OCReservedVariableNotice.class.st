@@ -14,8 +14,7 @@ Class {
 { #category : 'testing' }
 OCReservedVariableNotice >> isErrorOn: anOpalCompiler [ 
 
-	| permitShadowing permitFaulty |
-	permitShadowing := anOpalCompiler permitShadowing ifNil: [ false ].
-	permitFaulty := anOpalCompiler permitFaulty ifNil: [ false ].
-	^ permitShadowing not and: [ permitFaulty not ]
+	anOpalCompiler permitShadowing ifNil: [ ^ false ].
+	anOpalCompiler permitFaulty ifNil: [ ^ false ].
+	^ anOpalCompiler permitShadowing not and: [ anOpalCompiler permitFaulty not ]
 ]
