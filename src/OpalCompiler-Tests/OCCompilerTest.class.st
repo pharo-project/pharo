@@ -179,7 +179,8 @@ OCCompilerTest >> testGeneralShadowingWarnsByDefault [
 	| compiler compilationResult notices |
 	compiler := OpalCompiler new
 		            source: 'method: a [ :a | |a| ]';
-		            class: MockForCompilation.
+		            class: MockForCompilation;
+						permitShadowing: true.
 	compilationResult := compiler doCompile.
 	self deny: compilationResult isError.
 	notices := compiler ast allNotices select: [ :n | n messageText = 'Name already defined' ].
@@ -365,6 +366,7 @@ OCCompilerTest >> testSiblingBlocksInstanceVariableShadowing [
 	OpalCompiler new
 		source: 'temp [:temp | ].[:temp | |var1|]';
 		class: MockForCompilation;
+		permitShadowing: true;
 		compileOrFail
 ]
 

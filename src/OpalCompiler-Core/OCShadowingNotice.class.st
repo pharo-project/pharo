@@ -14,7 +14,5 @@ Class {
 { #category : 'testing' }
 OCShadowingNotice >> isErrorOn: anOpalCompiler [
 
-	anOpalCompiler permitFaulty ifNil: [ ^ false ].
-	anOpalCompiler permitShadowing ifNil: [ ^ false ].
-	^ anOpalCompiler permitShadowing not and: [ anOpalCompiler permitFaulty not ]
+	^ anOpalCompiler isStrict
 ]

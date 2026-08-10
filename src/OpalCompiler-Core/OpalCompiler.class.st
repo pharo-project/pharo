@@ -475,6 +475,10 @@ OpalCompiler >> generateMethod [
 ]
 
 { #category : 'actions' }
+OpalCompiler >> initialize [ 
+]
+
+{ #category : 'actions' }
 OpalCompiler >> install [
 	"Compile and install a method in a class"
 
@@ -508,6 +512,12 @@ OpalCompiler >> isScripting [
 OpalCompiler >> isScripting: aBoolean [
 
 	self compilationContext isScripting: aBoolean
+]
+
+{ #category : 'public access' }
+OpalCompiler >> isStrict [
+
+	^ permitFaulty not and: [ permitUndeclared not and: [ permitShadowing not ] ]
 ]
 
 { #category : 'accessing' }

@@ -12,9 +12,7 @@ Class {
 }
 
 { #category : 'testing' }
-OCReservedVariableNotice >> isErrorOn: anOpalCompiler [ 
+OCReservedVariableNotice >> isErrorOn: anOpalCompiler [
 
-	anOpalCompiler permitShadowing ifNil: [ ^ false ].
-	anOpalCompiler permitFaulty ifNil: [ ^ false ].
-	^ anOpalCompiler permitShadowing not and: [ anOpalCompiler permitFaulty not ]
+	^ anOpalCompiler isStrict
 ]
