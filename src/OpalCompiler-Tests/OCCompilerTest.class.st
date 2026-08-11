@@ -25,8 +25,7 @@ OCCompilerTest >> compileWithFailBlock: aBlock [
 
 	| result compiler |
 	compiler := MockForCompilation compiler
-		            source: text;
-		            strict.
+		            source: text.
 	result := compiler doCompile.
 	result isError ifTrue: [ aBlock cull: result ]
 ]
