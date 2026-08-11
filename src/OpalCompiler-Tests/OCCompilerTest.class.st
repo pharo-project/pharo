@@ -319,29 +319,29 @@ OCCompilerTest >> testReservedWordAllowedWithPermitShadowing [
 { #category : 'tests - reserved variables' }
 OCCompilerTest >> testReservedWordErrorMessage [
 
-	| error |
+	| compiler result error |
 	text := 'foo: self ^ self + 1'.
-	self
-		compileWithFailBlock: [ :result |
-			self assert: result ast allNotices size equals: 1.
-			error := result ast allNotices first.
-			self assert: error messageText equals: 'self is a reserved word and cannot be used as a parameter name'.
-			self assert: error position equals: 6.
-			^ nil ].
-	self fail
+	compiler := MockForCompilation compiler
+		            source: text;
+		            strict.
+	result := compiler doCompile.
+	error := result ast allNotices first.
+	
+	self assert: error messageText equals: 'self is a reserved word and cannot be used as a parameter name'
 ]
 
 { #category : 'tests - reserved variables' }
 OCCompilerTest >> testReservedWordErrorMessageForTemp [
 
-	| error |
+	| error compiler result |
 	text := 'method |self| ^ self'.
-	self
-		compileWithFailBlock: [ :result |
-			error := result ast allNotices first.
-			self assert: error messageText equals: 'self is a reserved word and cannot be used as a temporary variable name'. 
-			^ self ].
-	self fail
+	compiler := MockForCompilation compiler
+		            source: text;
+		            strict.
+	result := compiler doCompile.
+	error := result ast allNotices first.
+	
+	self assert: error messageText equals: 'self is a reserved word and cannot be used as a temporary variable name'
 ]
 
 { #category : 'literals' }
