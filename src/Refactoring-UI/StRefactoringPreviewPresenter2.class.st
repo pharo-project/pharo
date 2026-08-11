@@ -32,7 +32,11 @@ Class {
 		'buttonApplyAnyway',
 		'behaviorWarningIcon',
 		'buttonApplyTransformation',
-		'applyAnyway'
+		'applyAnyway',
+		'mainLayout',
+		'behaviorLayout',
+		'behaviorPanel',
+		'topLayout'
 	],
 	#category : 'Refactoring-UI-UI',
 	#package : 'Refactoring-UI',
@@ -165,7 +169,7 @@ StRefactoringPreviewPresenter2 >> defaultKeyboardFocus [
 { #category : 'layout' }
 StRefactoringPreviewPresenter2 >> defaultLayout [
 
-	| scopesLayout nameLayout inputLayout selectorLayout behaviorLayout behaviorHeaderLayout behaviorOptionsLayout |
+	| scopesLayout nameLayout inputLayout behaviorHeaderLayout behaviorOptionsLayout |
 	scopesLayout := SpBoxLayout newLeftToRight
 		                vAlignCenter;
 		                spacing: 5;
@@ -176,56 +180,52 @@ StRefactoringPreviewPresenter2 >> defaultLayout [
 	inputLayout := SpBoxLayout newTopToBottom
 		               spacing: 2;
 		               add: newNameInput expand: false;
-							add: validationLabel expand: false;
+		               add: validationLabel expand: false;
 		               yourself.
-		
+
 	nameLayout := SpBoxLayout newLeftToRight
-		               spacing: 5;
-		               add: newNameLabel expand: false;
-		               add: inputLayout ;
-		               add: buttonUpdate expand: false;
-		               yourself.
+		              spacing: 5;
+		              add: newNameLabel expand: false;
+		              add: inputLayout;
+		              add: buttonUpdate expand: false;
+		              yourself.
 
-	selectorLayout := SpGridLayout new
-		                  borderWidth: 0;
-		                  beColumnNotHomogeneous;
-		                  row: 2 expand: true;
-		                  column: 2 expand: true;
-		                  rowSpacing: 4;
-		                  add: newNameLabel atPoint: 1 @ 1;
-		                  add: inputLayout atPoint: 2 @ 1;
-		                  add: buttonUpdate atPoint: 3 @ 1;
-		                  yourself.
-		
-	behaviorHeaderLayout := SpBoxLayout newLeftToRight 
-										vAlignCenter;
-										spacing: 5;
-										add: behaviorWarningIcon expand: false;
-										add: behaviorWarningTitle expand: false;
-										yourself.
-										
+	behaviorHeaderLayout := SpBoxLayout newLeftToRight
+		                        vAlignCenter;
+		                        spacing: 5;
+		                        add: behaviorWarningIcon expand: false;
+		                        add: behaviorWarningTitle expand: false;
+		                        yourself.
+
 	behaviorOptionsLayout := SpBoxLayout newTopToBottom
-    									spacing: 2;
-    									add: buttonApplyAnyway expand: false;
-    									add: buttonApplyTransformation expand: false;
-    									yourself.
-		
-	behaviorLayout := SpBoxLayout newTopToBottom
-								spacing: 4;
-								add: behaviorHeaderLayout expand: false;
-								add: behaviorMessageLabel expand: false;
-								add: behaviorOptionsLayout expand: false;
-								yourself.
-								
+		                         spacing: 2;
+		                         add: buttonApplyAnyway expand: false;
+		                         add: buttonApplyTransformation expand: false;
+		                         yourself.
 
-	^ SpBoxLayout newTopToBottom
-		spacing: 10;
-		add: selectorLayout expand: true;
-		add: behaviorLayout expand: false;
-		add: scopesLayout expand: false;
-		add: table expand: true;
-		add: diffPresenter expand: true;
-		yourself
+	behaviorLayout := SpBoxLayout newTopToBottom
+		                  spacing: 4;
+		                  add: behaviorHeaderLayout;
+		                  add: behaviorMessageLabel expand: false;
+		                  add: behaviorOptionsLayout;
+		                  yourself.
+	behaviorPanel layout: behaviorLayout.
+
+	topLayout := SpBoxLayout newTopToBottom
+		             spacing: 10;
+		             add: nameLayout expand: false;
+		             yourself.
+	self hasWarning ifTrue: [ topLayout add: behaviorPanel expand: false ].
+	
+	mainLayout := SpBoxLayout newTopToBottom
+		              spacing: 10;
+		              add: topLayout expand: false;
+		              add: scopesLayout expand: false;
+		              add: table expand: true;
+		              add: diffPresenter expand: true;
+		              yourself.
+
+	^ mainLayout
 ]
 
 { #category : 'accessing' }
@@ -277,56 +277,56 @@ StRefactoringPreviewPresenter2 >> initializePresenters [
 	diffPresenter := self newDiff.
 
 	table := self newTable
-		hideColumnHeaders;
-		addColumn: (SpCompositeTableColumn new
-			addColumn: ((SpCheckBoxTableColumn evaluated: [ :change | selectedChanges includes: change ])
-				onActivation: [ :change | selectedChanges add: change ];
-				onDeactivation: [ :change | selectedChanges remove: change ];
-				beNotExpandable);
-			addColumn: (SpStringTableColumn evaluated: #name);
-			yourself);
-	yourself.
+		         hideColumnHeaders;
+		         addColumn: (SpCompositeTableColumn new
+				          addColumn: ((SpCheckBoxTableColumn evaluated: [ :change | selectedChanges includes: change ])
+						           onActivation: [ :change | selectedChanges add: change ];
+						           onDeactivation: [ :change | selectedChanges remove: change ];
+						           beNotExpandable);
+				          addColumn: (SpStringTableColumn evaluated: #name);
+				          yourself);
+		         yourself.
 
 	scopeLabel := self newLabel label: 'Scope '.
 	scopeDropList := self newDropList.
 	scopeDropList display: [ :scope | scope description ].
-	
+
 	buttonOk := self newButton
-		label: 'Apply';
-		icon: (self iconNamed: #smallOk).
+		            label: 'Apply';
+		            icon: (self iconNamed: #smallOk).
 
 	buttonCancel := self newButton
-		label: 'Cancel';
-		icon: (self iconNamed: #smallCancel).
-		
-	newNameLabel := self newLabel 
-		label: 'Selector'.
-		
+		                label: 'Cancel';
+		                icon: (self iconNamed: #smallCancel).
+
+	newNameLabel := self newLabel label: 'Selector'.
+
 	newNameInput := self newTextInput.
 	newNameInput whenTextChangedDo: [ :text |
-    self validateName: text.
-	 self updateBehaviorPanelVisibility: text ]. 
+			self validateName: text.
+			self updateBehaviorPanelVisibility: text ].
 
 	buttonUpdate := self newButton
-   		 label: 'Rename' ;
-		 enabled: false.
-		
+		                label: 'Rename';
+		                enabled: false.
+
 	validationLabel := self newLabel label: ''.
-	
+
 	behaviorWarningTitle := self newLabel label: 'Behavior-preserving warnings'.
 	behaviorWarningIcon := self newImage image: (self iconNamed: #warningIcon).
-	
+
 	behaviorMessageLabel := self newLabel label: ''.
-	
+	behaviorPanel := SpPresenter new.
+
 	buttonApplyAnyway := self instantiate: SpRadioButtonPresenter.
 	buttonApplyAnyway label: 'Apply anyway'.
-	
+
 	buttonApplyTransformation := self instantiate: SpRadioButtonPresenter.
-	buttonApplyTransformation label: 'Apply transformations'.
-	
-	buttonApplyAnyway associatedRadioButtons: { buttonApplyTransformation  }.
-	buttonApplyTransformation associatedRadioButtons: { buttonApplyAnyway  }.
-	buttonApplyTransformation state: true
+	buttonApplyTransformation label: 'Migrate it to existing instance variable'.
+
+	buttonApplyAnyway associatedRadioButtons: { buttonApplyTransformation }.
+	buttonApplyTransformation associatedRadioButtons: { buttonApplyAnyway }.
+	buttonApplyAnyway state: true
 ]
 
 { #category : 'accessing' }
@@ -388,18 +388,19 @@ StRefactoringPreviewPresenter2 >> updateActiveScope [
 { #category : 'accessing' }
 StRefactoringPreviewPresenter2 >> updateBehaviorPanelVisibility: aString [
 
-	driver newName: aString.
-	self hasWarning 
-		ifTrue: [ 
-			behaviorMessageLabel label: driver checkBehaviorPreservingPreconditions.
-			self applyTransformation ].
-	
-	behaviorWarningTitle visible: self hasWarning.
-	behaviorMessageLabel visible: self hasWarning.
-	buttonApplyAnyway visible: self hasWarning.
-	behaviorWarningIcon visible: self hasWarning.
-	buttonApplyTransformation visible: self hasWarning
-	
+    mainLayout ifNil: [ ^ self ].
+
+    driver newName: aString.
+
+    self hasWarning
+        ifTrue: [
+            behaviorMessageLabel label: driver checkBehaviorPreservingPreconditions.
+            self applyTransformation.
+            (topLayout children includes: behaviorPanel)
+                ifFalse: [ topLayout add: behaviorPanel expand: false ] ]
+        ifFalse: [
+            (topLayout children includes: behaviorPanel)
+                ifTrue: [ topLayout remove: behaviorPanel ] ].
 ]
 
 { #category : 'update' }
