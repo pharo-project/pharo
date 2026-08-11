@@ -475,10 +475,6 @@ OpalCompiler >> generateMethod [
 ]
 
 { #category : 'actions' }
-OpalCompiler >> initialize [ 
-]
-
-{ #category : 'actions' }
 OpalCompiler >> install [
 	"Compile and install a method in a class"
 
@@ -516,6 +512,10 @@ OpalCompiler >> isScripting: aBoolean [
 
 { #category : 'public access' }
 OpalCompiler >> isStrict [
+
+	permitShadowing ifNil: [ ^ false ].
+	permitFaulty ifNil: [ ^ false ].
+	permitUndeclared ifNil: [ ^ false ].
 
 	^ permitFaulty not and: [ permitUndeclared not and: [ permitShadowing not ] ]
 ]
@@ -752,10 +752,8 @@ OpalCompiler >> storeSourcesAsProperty: aBoolean [
 
 { #category : 'public access' }
 OpalCompiler >> strict [
-	"Set all permit flags to false, so any fault (syntax, undeclared variable, shadowing) is an error"
 
 	self permitFaulty: false.
 	self permitUndeclared: false.
-	self permitShadowing: false.
-	^ self
+	self permitShadowing: false
 ]
