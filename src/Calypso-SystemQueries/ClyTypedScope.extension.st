@@ -12,15 +12,13 @@ ClyTypedScope >> canDetectAffectOnClassesBy: aSystemAnnouncement [
 { #category : '*Calypso-SystemQueries' }
 ClyTypedScope >> includesClassesAffectedBy: aSystemAnnouncement [
 
-	^basisObjects anySatisfy: [ :each |
-		each includesClassesAffectedBy: aSystemAnnouncement ]
+	^ self basisObjects anySatisfy: [ :each | each includesClassesAffectedBy: aSystemAnnouncement ]
 ]
 
 { #category : '*Calypso-SystemQueries' }
 ClyTypedScope >> includesMethodsAffectedBy: aSystemAnnouncement [
 
-	^basisObjects anySatisfy: [ :each |
-		each includesMethodsAffectedBy: aSystemAnnouncement ]
+	^ self basisObjects anySatisfy: [ :each | each includesMethodsAffectedBy: aSystemAnnouncement ]
 ]
 
 { #category : '*Calypso-SystemQueries' }

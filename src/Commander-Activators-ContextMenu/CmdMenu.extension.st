@@ -6,7 +6,7 @@ CmdMenu >> buildContextMenuFor: aMorph [
 	| menu |
 	menu := MorphicUIManager new newMenuIn: aMorph for: aMorph.
 
-	rootGroup buildContextMenu: menu.
+	self rootGroup buildContextMenu: menu.
 
 	menu hasSubmorphs ifTrue: [
 		menu lastSubmorph isMenuLineMorph ifTrue: [

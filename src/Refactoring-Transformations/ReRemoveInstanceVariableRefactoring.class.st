@@ -40,6 +40,13 @@ ReRemoveInstanceVariableRefactoring >> breakingChangePreconditions [
 	^ { self preconditionHasReferences }
 ]
 
+{ #category : 'accessing' }
+ReRemoveInstanceVariableRefactoring >> model: aRBNamespace [
+
+	super model: aRBNamespace.
+	transformation ifNotNil: [ transformation model: aRBNamespace ]
+]
+
 { #category : 'preconditions' }
 ReRemoveInstanceVariableRefactoring >> preconditionHasReferences [
 
@@ -73,13 +80,6 @@ ReRemoveInstanceVariableRefactoring >> privateTransform [
 { #category : 'accessing' }
 ReRemoveInstanceVariableRefactoring >> refactoredClass [
 	^ class
-]
-
-{ #category : 'accessing' }
-ReRemoveInstanceVariableRefactoring >> model: aRBNamespace [
-
-	super model: aRBNamespace.
-	transformation ifNotNil: [ transformation model: aRBNamespace ]
 ]
 
 { #category : 'initialization' }

@@ -13,11 +13,12 @@ MethodRepackaged >> affectsClassesExtendedInPackage: aPackage [
 
 { #category : '*Calypso-SystemQueries' }
 MethodRepackaged >> affectsMethodsDefinedInPackage: aPackage [
-	^(super affectsMethodsDefinedInPackage: aPackage)
-		or: [ oldPackage = aPackage ]
+
+	^ (super affectsMethodsDefinedInPackage: aPackage) or: [ self oldPackage = aPackage ]
 ]
 
 { #category : '*Calypso-SystemQueries' }
 MethodRepackaged >> affectsPackage: aPackage [
-	^newPackage == aPackage or: [ oldPackage == aPackage ]
+
+	^ self newPackage == aPackage or: [ self oldPackage == aPackage ]
 ]

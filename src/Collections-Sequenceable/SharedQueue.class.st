@@ -78,6 +78,30 @@ SharedQueue >> isEmpty [
 ]
 
 { #category : 'accessing' }
+SharedQueue >> items [
+
+	^ items
+]
+
+{ #category : 'accessing' }
+SharedQueue >> items: anObject [
+
+	items := anObject
+]
+
+{ #category : 'accessing' }
+SharedQueue >> monitor [
+
+	^ monitor
+]
+
+{ #category : 'accessing' }
+SharedQueue >> monitor: anObject [
+
+	monitor := anObject
+]
+
+{ #category : 'accessing' }
 SharedQueue >> next [
 	^monitor critical: [
 		monitor waitWhile: [ items isEmpty ].

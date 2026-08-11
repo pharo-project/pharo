@@ -370,6 +370,13 @@ BitBlt >> colorMap: map [
 ]
 
 { #category : 'accessing' }
+BitBlt >> combinationRule [
+	"Answer the receiver's combinationRule"
+
+	^ combinationRule
+]
+
+{ #category : 'accessing' }
 BitBlt >> combinationRule: anInteger [
 	"Set the receiver's combination rule to be the argument, anInteger, a
 	number in the range 0-15."
@@ -585,6 +592,12 @@ BitBlt >> destForm [
 ]
 
 { #category : 'accessing' }
+BitBlt >> destForm: anObject [
+
+	destForm := anObject
+]
+
+{ #category : 'accessing' }
 BitBlt >> destOrigin: aPoint [
 	"Set the receiver's destination top left coordinates to be those of the
 	argument, aPoint."
@@ -611,6 +624,12 @@ BitBlt >> destRect: aRectangle [
 ]
 
 { #category : 'accessing' }
+BitBlt >> destX [
+
+	^ destX
+]
+
+{ #category : 'accessing' }
 BitBlt >> destX: anInteger [
 	"Set the top left x coordinate of the receiver's destination form to be the
 	argument, anInteger."
@@ -624,6 +643,12 @@ BitBlt >> destX: x destY: y width: w height: h [
 	destY := y.
 	width := w.
 	height := h
+]
+
+{ #category : 'accessing' }
+BitBlt >> destY [
+
+	^ destY
 ]
 
 { #category : 'accessing' }
@@ -786,6 +811,12 @@ BitBlt >> halftoneForm: aBitmap [
 	"Sets the receivers half tone form. See class commment."
 
 	halftoneForm := aBitmap
+]
+
+{ #category : 'accessing' }
+BitBlt >> height [
+
+	^ height
 ]
 
 { #category : 'accessing' }
@@ -980,9 +1011,21 @@ BitBlt >> sourceRect: aRectangle [
 ]
 
 { #category : 'accessing' }
+BitBlt >> sourceX [
+
+	^ sourceX
+]
+
+{ #category : 'accessing' }
 BitBlt >> sourceX: anInteger [
 	"Set the receiver's source form top left x to be the argument, anInteger."
 	sourceX := anInteger
+]
+
+{ #category : 'accessing' }
+BitBlt >> sourceY [
+
+	^ sourceY
 ]
 
 { #category : 'accessing' }
@@ -1001,6 +1044,12 @@ BitBlt >> tallyMap [
 BitBlt >> tallyMap: aBitmap [
 	"Install the map used for tallying pixels"
 	colorMap := aBitmap
+]
+
+{ #category : 'accessing' }
+BitBlt >> width [
+
+	^ width
 ]
 
 { #category : 'accessing' }

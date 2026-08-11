@@ -198,6 +198,12 @@ FreeTypeFontProvider >> fontInfoFor: aLogicalFont familyName: familyName [
 	^member fileInfo
 ]
 
+{ #category : 'accessing' }
+FreeTypeFontProvider >> fontInstallers [
+
+	^ fontInstallers
+]
+
 { #category : 'file paths' }
 FreeTypeFontProvider >> getWindowsFontFolderPath [
 	"Answer the windows font folder path.

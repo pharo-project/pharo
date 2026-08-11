@@ -1867,6 +1867,12 @@ SystemWindow >> isCollapsed [
 	^ isCollapsed
 ]
 
+{ #category : 'resize/collapse' }
+SystemWindow >> isCollapsed: anObject [
+
+	isCollapsed := anObject
+]
+
 { #category : 'testing' }
 SystemWindow >> isDisplayed [
 	"Answer true if I am currently displayed in the World"

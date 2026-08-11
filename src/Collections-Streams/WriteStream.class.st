@@ -343,3 +343,15 @@ WriteStream >> withAttributes: attributes do: strmBlock [
 	"No-op here is overriden in TextStream for font emphasis"
 	^ strmBlock value
 ]
+
+{ #category : 'accessing' }
+WriteStream >> writeLimit [
+
+	^ writeLimit
+]
+
+{ #category : 'accessing' }
+WriteStream >> writeLimit: anObject [
+
+	writeLimit := anObject
+]
