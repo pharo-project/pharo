@@ -911,6 +911,12 @@ UITheme >> classExtensionColor [
 	^ colorPalette classExtensionColor
 ]
 
+{ #category : 'accessing' }
+UITheme >> colorPalette [
+
+	^ colorPalette
+]
+
 { #category : 'label-styles' }
 UITheme >> configureDialogWindowLabelAreaFrameFor: aWindow [
 	"Configure the layout frame for the label area for the given dialog window."

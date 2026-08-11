@@ -190,6 +190,13 @@ Class >> allSharedPools [
 			aSet addAll: self sharedPools; yourself]
 ]
 
+{ #category : 'accessing' }
+Class >> basicClassPool [
+	"Answer nil or the dictionary of class variables."
+
+	^classPool
+]
+
 { #category : 'class variables' }
 Class >> basicDeclareClassVariable: aClassVariable [
 	"Add aClassVariable to the receiver. Two cases are handled here:
@@ -214,6 +221,31 @@ Class >> basicDeclareClassVariable: aClassVariable [
 		self undeclaredRegistry removeKey: existingVar name.
 		existingVar becomeForward: aClassVariable ].
 	self classPool add: aClassVariable
+]
+
+{ #category : 'accessing' }
+Class >> basicEnvironment [
+
+	^ environment
+]
+
+{ #category : 'accessing' }
+Class >> basicSharedPools [
+	"Answer nil or a Set of the pool dictionaries declared in the receiver."
+
+	^sharedPools
+]
+
+{ #category : 'accessing' }
+Class >> basicSubclasses [
+
+	^ subclasses
+]
+
+{ #category : 'accessing' }
+Class >> basicSubclasses: anArray [
+
+	subclasses := anArray
 ]
 
 { #category : 'accessing' }

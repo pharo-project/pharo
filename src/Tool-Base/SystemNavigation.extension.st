@@ -242,8 +242,13 @@ SystemNavigation >> browseMessageList: messageList name: label [
 
 { #category : '*Tool-Base' }
 SystemNavigation >> browseMessageList: messageList name: labelString autoSelect: autoSelectString [
-	"By default it never refreshes"
-	^self browseMessageList: messageList name: labelString autoSelect: autoSelectString refreshingBlock: [ :method | false ]
+
+	^ self
+		  browseMessageList: messageList
+		  name: labelString
+		  autoSelect: autoSelectString
+		  refreshingBlock: [ :method |
+			  autoSelectString ifNil: [ true ] ifNotNil: [ method sourceCode includesSubstring: autoSelectString caseSensitive: false ] ]
 ]
 
 { #category : '*Tool-Base' }

@@ -3,11 +3,11 @@ Extension { #name : 'CmdMenu' }
 { #category : '*Calypso-Browser' }
 CmdMenu >> buildBrowserNotebookActions [
 
-	^ rootGroup buildBrowserNotebookActions
+	^ self rootGroup buildBrowserNotebookActions
 ]
 
 { #category : '*Calypso-Browser' }
 CmdMenu >> buildBrowserToolbar: aToolbar [
 
-	rootGroup buildBrowserToolbar: aToolbar
+	self rootGroup buildBrowserToolbar: aToolbar
 ]

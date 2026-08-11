@@ -28,15 +28,23 @@ RePullUpInstanceVariableRefactoring >> breakingChangePreconditions [
 			   true ]) }
 ]
 
+{ #category : 'initialization' }
+RePullUpInstanceVariableRefactoring >> model: aRBNamespace [
+	super model: aRBNamespace.
+	transformation ifNotNil: [ transformation model: aRBNamespace ]
+]
+
 { #category : 'transforming' }
 RePullUpInstanceVariableRefactoring >> privateTransform [
 	^ transformation privateTransform
 ]
 
-{ #category : 'initialization' }
-RePullUpInstanceVariableRefactoring >> model: aRBNamespace [
-	super model: aRBNamespace.
-	transformation ifNotNil: [ transformation model: aRBNamespace ]
+{ #category : 'preconditions' }
+RePullUpInstanceVariableRefactoring >> subclassesNotDefiningTheVariable [
+	
+	^ class allSubclasses 
+			reject: [ :each | each directlyDefinesInstanceVariable: variableName ]
+			 
 ]
 
 { #category : 'initialization' }
@@ -46,12 +54,4 @@ RePullUpInstanceVariableRefactoring >> variable: aVarName class: aClassName [
 		model: self model
 		instanceVariable: aVarName
 		class: aClassName
-]
-
-{ #category : 'preconditions' }
-RePullUpInstanceVariableRefactoring >> subclassesNotDefiningTheVariable [
-	
-	^ class allSubclasses 
-			reject: [ :each | each directlyDefinesInstanceVariable: variableName ]
-			 
 ]

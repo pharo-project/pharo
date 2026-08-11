@@ -15,5 +15,6 @@ CmdCommandMenuItem >> addToMenuPresenter: aSpMenuPresenter [
 
 { #category : '*Commander-Spec2-Compatibility' }
 CmdCommandMenuItem >> getShortcutTipForMenuItem [
- 	^activator getShortcutTipForMenuItem
+
+	^ self activator getShortcutTipForMenuItem
 ]

@@ -5,18 +5,15 @@ PolygonMorph >> adjustSegmentPointsForArrows [
 	" In the list of vertices, adjust first and last entry if this polygon uses arrows."
 
 	| verts |
-	(self isClosed or: [ self hasArrows not ])
-		ifTrue: [ ^ self vertices ].
+	(self isClosed or: [ self hasArrows not ]) ifTrue: [ ^ self vertices ].
 	verts := self vertices copy.
-	(arrows == #back or: [ arrows == #both ])
-		ifTrue: [
+	(self arrows == #back or: [ self arrows == #both ]) ifTrue: [
 			| arrow |
 			arrow := self arrowBoundsAt: verts first from: verts second.
 			arrow size = 4
 				ifTrue: [ verts at: 1 put: arrow third ]
 				ifFalse: [ verts at: 1 put: (arrow copyFrom: 2 to: 3) average ] ].
-	(arrows == #forward or: [ arrows == #both ])
-		ifTrue: [
+	(self arrows == #forward or: [ self arrows == #both ]) ifTrue: [
 			| arrow |
 			arrow := self arrowBoundsAt: verts last from: verts nextToLast.
 			arrow size = 4
@@ -141,21 +138,17 @@ PolygonMorph >> drawArrowOnAthensCanvas: anAthensCanvas at: endPoint from: prior
 	| pts spec wingBase path |
 	pts := self arrowBoundsAt: endPoint from: priorPoint.
 	wingBase := pts size = 4
-		ifTrue: [ pts third ]
-		ifFalse: [ (pts copyFrom: 2 to: 3) average ].
+		            ifTrue: [ pts third ]
+		            ifFalse: [ (pts copyFrom: 2 to: 3) average ].
 	spec := self valueOfProperty: #arrowSpec ifAbsent: [ PolygonMorph defaultArrowSpec ].
-	path := anAthensCanvas
-		createPath: [ :builder |
-			builder absolute.
-			builder moveTo: pts first.
-			pts allButFirst do: [ :p | builder lineTo: p ]. builder close. ].
+	path := anAthensCanvas createPath: [ :builder |
+			        builder absolute.
+			        builder moveTo: pts first.
+			        pts allButFirst do: [ :p | builder lineTo: p ].
+			        builder close ].
 	spec x sign = spec y sign
-		ifTrue: [
-			anAthensCanvas setPaint: self borderColor]
-		ifFalse: [
-			(anAthensCanvas
-				setStrokePaint: self borderColor)
-				width: (borderWidth + 1) // 2].
+		ifTrue: [ anAthensCanvas setPaint: self borderColor ]
+		ifFalse: [ (anAthensCanvas setStrokePaint: self borderColor) width: self borderWidth + 1 // 2 ].
 	anAthensCanvas drawShape: path.
 	^ wingBase
 ]
@@ -163,32 +156,25 @@ PolygonMorph >> drawArrowOnAthensCanvas: anAthensCanvas at: endPoint from: prior
 { #category : '*Athens-Morphic' }
 PolygonMorph >> drawArrowsOnAthensCanvas: aAthensCanvas [
 	"Answer (possibly modified) endpoints for border drawing"
-	"ArrowForms are computed only upon demand"
-	| array |
 
-	self hasArrows
-		ifFalse: [^ #() ].
+	"ArrowForms are computed only upon demand"
+
+	| array |
+	self hasArrows ifFalse: [ ^ #(  ) ].
 	"Nothing to do"
 
-	array := Array with: vertices first with: vertices last.
+	array := Array with: self vertices first with: self vertices last.
 
 	"Prevent crashes for #raised or #inset borders"
-	borderColor isColor
-		ifFalse: [ ^array ].
+	self borderColor isColor ifFalse: [ ^ array ].
 
-	(arrows == #forward or: [arrows == #both])
-		ifTrue: [ array at: 2 put: (self
-				drawArrowOnAthensCanvas: aAthensCanvas
-				at: vertices last
-				from: self nextToLastPoint) ].
+	(self arrows == #forward or: [ self arrows == #both ]) ifTrue: [
+		array at: 2 put: (self drawArrowOnAthensCanvas: aAthensCanvas at: self vertices last from: self nextToLastPoint) ].
 
-	(arrows == #back or: [arrows == #both])
-		ifTrue: [ array at: 1 put: (self
-				drawArrowOnAthensCanvas: aAthensCanvas
-				at: vertices first
-				from: self nextToFirstPoint) ].
+	(self arrows == #back or: [ self arrows == #both ]) ifTrue: [
+		array at: 1 put: (self drawArrowOnAthensCanvas: aAthensCanvas at: self vertices first from: self nextToFirstPoint) ].
 
-	^array
+	^ array
 ]
 
 { #category : '*Athens-Morphic' }

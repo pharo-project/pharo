@@ -2,7 +2,8 @@ Extension { #name : 'ClassRemoved' }
 
 { #category : '*Calypso-SystemQueries' }
 ClassRemoved >> affectsMethod: aMethod [
-	^classRemoved == aMethod origin
+
+	^ self classRemoved == aMethod origin
 ]
 
 { #category : '*Calypso-SystemQueries' }
@@ -26,7 +27,7 @@ ClassRemoved >> affectsMethodsDefinedInPackage: aPackage [
 { #category : '*Calypso-SystemQueries' }
 ClassRemoved >> affectsMethodsInProtocol: protocol [
 
-	^ classRemoved protocolNames includes: protocol
+	^ self classRemoved protocolNames includes: protocol
 ]
 
 { #category : '*Calypso-SystemQueries' }

@@ -2,5 +2,6 @@ Extension { #name : 'SettingTreeBuilder' }
 
 { #category : '*System-Settings-Tests' }
 SettingTreeBuilder >> mocksystemsettings [
-	currentPragma methodClass instanceSide perform: currentPragma methodSelector with: self
+
+	self currentPragma methodClass instanceSide perform: self currentPragma methodSelector with: self
 ]

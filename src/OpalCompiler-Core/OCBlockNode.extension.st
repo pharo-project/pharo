@@ -68,7 +68,7 @@ OCBlockNode >> pcsForNode: aNode [
 { #category : '*OpalCompiler-Core' }
 OCBlockNode >> resetBcToASTCache [
 
-	bcToASTCache := nil
+	self basicBcToASTCache: nil
 ]
 
 { #category : '*OpalCompiler-Core' }

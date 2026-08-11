@@ -122,6 +122,18 @@ LogicalFontManager >> bestFontFor: aLogicalFont whenFindingAlternativeIgnoreAll:
 	^nil
 ]
 
+{ #category : 'accessing' }
+LogicalFontManager >> fontProviders [
+
+	^ fontProviders
+]
+
+{ #category : 'accessing' }
+LogicalFontManager >> fontProviders: anObject [
+
+	fontProviders := anObject
+]
+
 { #category : 'initialization' }
 LogicalFontManager >> initialize [
 	super initialize.

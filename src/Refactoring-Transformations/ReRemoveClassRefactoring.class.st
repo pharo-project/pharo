@@ -73,18 +73,18 @@ ReRemoveClassRefactoring >> classNames: aClassNameCollection [
 				  classNames: classNames
 ]
 
-{ #category : 'accessing' }
-ReRemoveClassRefactoring >> model: aRBNamespace [
-
-	super model: aRBNamespace.
-	transformation ifNotNil: [ transformation model: aRBNamespace ]
-]
-
 { #category : 'preconditions' }
 ReRemoveClassRefactoring >> environmentWithUsersOf: aClassable [
 	^ RBClassEnvironment
 		onEnvironment: RBBrowserEnvironment new
 		classes: (self model classesReferencingClass: aClassable)
+]
+
+{ #category : 'accessing' }
+ReRemoveClassRefactoring >> model: aRBNamespace [
+
+	super model: aRBNamespace.
+	transformation ifNotNil: [ transformation model: aRBNamespace ]
 ]
 
 { #category : 'preconditions' }

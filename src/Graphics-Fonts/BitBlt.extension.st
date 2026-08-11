@@ -4,21 +4,23 @@ Extension { #name : 'BitBlt' }
 BitBlt >> basicDisplayString: aString from: startIndex to: stopIndex at: aPoint strikeFont: font kern: kernDelta scale: scale [
 
 	| xTable |
-
-	destY := aPoint y.
-	destX := aPoint x.
+	self destY: aPoint y.
+	self destX: aPoint x.
 
 	"the following are not really needed, but theBitBlt primitive will fail if not set"
-	sourceX ifNil: [sourceX := 100].
-	width ifNil: [width := 100].
+	self sourceX ifNil: [ self sourceX: 100 ].
+	self width ifNil: [ self width: 100 ].
 	xTable := font xTable.
-	scale = 1 ifFalse: [
-		xTable := xTable collect: [ :x | x * scale ] ].
+	scale = 1 ifFalse: [ xTable := xTable collect: [ :x | x * scale ] ].
 
-	self primDisplayString: aString from: startIndex to: stopIndex
-			map: font characterToGlyphMap xTable: xTable
-			kern: kernDelta * scale.
-	^ destX@destY
+	self
+		primDisplayString: aString
+		from: startIndex
+		to: stopIndex
+		map: font characterToGlyphMap
+		xTable: xTable
+		kern: kernDelta * scale.
+	^ self destX @ self destY
 ]
 
 { #category : '*Graphics-Fonts' }
@@ -56,21 +58,42 @@ BitBlt >> displayString: aString from: startIndex to: stopIndex at: aPoint strik
 	| answer prevRule secondPassMap |
 	"If combinationRule is rgbMul, we might need the special two-pass technique for component alpha blending.
 	If not, do it simply"
-	combinationRule = 37 "rgbMul" ifFalse: [
-		^self basicDisplayString: aString from: startIndex to: stopIndex at: aPoint strikeFont: font kern: kernDelta scale: scale ].
+	self combinationRule = 37 ifFalse: [
+			^ self
+				  basicDisplayString: aString
+				  from: startIndex
+				  to: stopIndex
+				  at: aPoint
+				  strikeFont: font
+				  kern: kernDelta
+				  scale: scale ]. "rgbMul"
 
 	"We need to do a second pass. The colormap set is for use in the second pass."
-	secondPassMap := colorMap.
-	colorMap := sourceForm depth ~= destForm depth
-		ifTrue: [ self cachedFontColormapFrom: sourceForm depth to: destForm depth ].
-	answer := self basicDisplayString: aString from: startIndex to: stopIndex at: aPoint strikeFont: font kern: kernDelta scale: scale.
-	colorMap := secondPassMap.
+	secondPassMap := self colorMap.
+	self colorMap: (self sourceForm depth ~= self destForm depth ifTrue: [
+			 self cachedFontColormapFrom: self sourceForm depth to: self destForm depth ]).
+	answer := self
+		          basicDisplayString: aString
+		          from: startIndex
+		          to: stopIndex
+		          at: aPoint
+		          strikeFont: font
+		          kern: kernDelta
+		          scale: scale.
+	self colorMap: secondPassMap.
 	secondPassMap ifNotNil: [
-		prevRule := combinationRule.
-		combinationRule := 20. "rgbAdd"
-		self basicDisplayString: aString from: startIndex to: stopIndex at: aPoint strikeFont: font kern: kernDelta scale: scale.
-		combinationRule := prevRule ].
-	^answer
+			prevRule := self combinationRule.
+			self combinationRule: 20. "rgbAdd"
+			self
+				basicDisplayString: aString
+				from: startIndex
+				to: stopIndex
+				at: aPoint
+				strikeFont: font
+				kern: kernDelta
+				scale: scale.
+			self combinationRule: prevRule ].
+	^ answer
 ]
 
 { #category : '*Graphics-Fonts' }
@@ -81,39 +104,42 @@ BitBlt >> installFont: aFont foregroundColor: foregroundColor backgroundColor: b
 
 { #category : '*Graphics-Fonts' }
 BitBlt >> installStrikeFont: aStrikeFont foregroundColor: foregroundColor backgroundColor: backgroundColor scale: scale [
+
 	| lastSourceDepth targetColor |
-	sourceForm ifNotNil:[lastSourceDepth := sourceForm depth].
-	sourceForm := aStrikeFont glyphs.
-	scale = 1 ifFalse: [
-		sourceForm := sourceForm scaledToSize: sourceForm extent * scale ].
+	self sourceForm ifNotNil: [ lastSourceDepth := self sourceForm depth ].
+	self sourceForm: aStrikeFont glyphs.
+	scale = 1 ifFalse: [ self sourceForm: (self sourceForm scaledToSize: self sourceForm extent * scale) ].
 
 	"Ignore any halftone pattern since we use a color map approach here"
-	halftoneForm := nil.
-	sourceY := 0.
-	height := aStrikeFont height * scale.
+	self halftoneForm: nil.
+	self sourceY: 0.
+	self height: aStrikeFont height * scale.
 
-	sourceForm depth = 1 ifTrue: [
-		self combinationRule: Form paint.
-		(colorMap isNotNil and:[lastSourceDepth = sourceForm depth]) ifFalse: [
-			"Set up color map for a different source depth (color font)"
-			"Uses caching for reasonable efficiency"
-			colorMap := self cachedFontColormapFrom: sourceForm depth to: destForm depth.
-			colorMap at: 1 put: (destForm pixelValueFor: backgroundColor)].
-		colorMap at: 2 put: (destForm pixelValueFor: foregroundColor).
-	]
-	ifFalse: [
-			destForm depth > 8 ifTrue: [
-				"rgbMul is equivalent to component alpha blend if text is black (only faster, hehe)"
-				self combinationRule: 37.		"RGBMul"
-				colorMap := (destForm depth = 32 or: [ (foregroundColor = Color black) not ]) ifTrue: [
-					"rgbMul / rgbAdd IS component alpha blend for any color of text (neat trick, eh!)"
-					"This colorMap is to be used on the second pass with rule 20 (rgbAdd)
-					See #displayString:from:to:at:strikeFont:kern:"
-					"Note: In 32bpp we always need the second pass, as the source could have transparent pixels, and we need to add to the alpha channel"
-					self colorConvertingMap: foregroundColor from: sourceForm depth to: destForm depth keepSubPixelAA: true]]
-			ifFalse: [
-				self combinationRule: 25.		"Paint"
-				targetColor := foregroundColor = Color black ifFalse: [ foregroundColor ].
-				colorMap := self colorConvertingMap: targetColor from: sourceForm depth to: destForm depth keepSubPixelAA: true]
-		]
+	self sourceForm depth = 1
+		ifTrue: [
+				self combinationRule: Form paint.
+				(self colorMap isNotNil and: [ lastSourceDepth = self sourceForm depth ]) ifFalse: [ "Set up color map for a different source depth (color font)""Uses caching for reasonable efficiency"
+						self colorMap: (self cachedFontColormapFrom: self sourceForm depth to: self destForm depth).
+						self colorMap at: 1 put: (self destForm pixelValueFor: backgroundColor) ].
+				self colorMap at: 2 put: (self destForm pixelValueFor: foregroundColor) ]
+		ifFalse: [
+				self destForm depth > 8
+					ifTrue: [ "rgbMul is equivalent to component alpha blend if text is black (only faster, hehe)"
+							self combinationRule: 37. "RGBMul"
+							self colorMap:
+								((self destForm depth = 32 or: [ (foregroundColor = Color black) not ]) ifTrue: [ "rgbMul / rgbAdd IS component alpha blend for any color of text (neat trick, eh!)""This colorMap is to be used on the second pass with rule 20 (rgbAdd)
+					See #displayString:from:to:at:strikeFont:kern:""Note: In 32bpp we always need the second pass, as the source could have transparent pixels, and we need to add to the alpha channel"
+										 self
+											 colorConvertingMap: foregroundColor
+											 from: self sourceForm depth
+											 to: self destForm depth
+											 keepSubPixelAA: true ]) ]
+					ifFalse: [
+							self combinationRule: 25. "Paint"
+							targetColor := foregroundColor = Color black ifFalse: [ foregroundColor ].
+							self colorMap: (self
+									 colorConvertingMap: targetColor
+									 from: self sourceForm depth
+									 to: self destForm depth
+									 keepSubPixelAA: true) ] ]
 ]

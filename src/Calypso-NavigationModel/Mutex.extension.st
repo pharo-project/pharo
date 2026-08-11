@@ -5,8 +5,10 @@ Mutex >> tryEnterCritical: criticalBlock ifLocked: lockedBlock [
 
 	| activeProcess |
 	activeProcess := Processor activeProcess.
-	activeProcess == owner ifTrue:[^criticalBlock value].
-	^semaphore critical:[
-		owner := activeProcess.
-		criticalBlock ensure:[owner := nil]] ifLocked: lockedBlock
+	activeProcess == self owner ifTrue: [ ^ criticalBlock value ].
+	^ self semaphore
+		  critical: [
+				  self owner: activeProcess.
+				  criticalBlock ensure: [ self owner: nil ] ]
+		  ifLocked: lockedBlock
 ]

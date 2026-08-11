@@ -2,10 +2,8 @@ Extension { #name : 'RBRenameInstanceVariableRefactoring' }
 
 { #category : '*Epicea-Refactorings' }
 RBRenameInstanceVariableRefactoring >> asEpiceaEvent [
-	^ EpRenameInstanceVariableRefactoring
-		rename: variableName
-		to: newName
-		in: class name
+
+	^ EpRenameInstanceVariableRefactoring rename: self variableName to: self newName in: self class name
 ]
 
 { #category : '*Epicea-Refactorings' }

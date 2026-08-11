@@ -24,6 +24,12 @@ RBPushDownInstanceVariableRefactoring >> breakingChangePreconditions [
 	^ { self preconditionReferencesInstanceVariable }
 ]
 
+{ #category : 'initialization' }
+RBPushDownInstanceVariableRefactoring >> model: aRBNamespace [
+	super model: aRBNamespace.
+	transformation ifNotNil: [ transformation model: aRBNamespace ]
+]
+
 { #category : 'preconditions' }
 RBPushDownInstanceVariableRefactoring >> preconditionReferencesInstanceVariable [
 
@@ -39,12 +45,6 @@ RBPushDownInstanceVariableRefactoring >> preconditions [
 { #category : 'transforming' }
 RBPushDownInstanceVariableRefactoring >> privateTransform [
 	^ transformation privateTransform
-]
-
-{ #category : 'initialization' }
-RBPushDownInstanceVariableRefactoring >> model: aRBNamespace [
-	super model: aRBNamespace.
-	transformation ifNotNil: [ transformation model: aRBNamespace ]
 ]
 
 { #category : 'initialization' }

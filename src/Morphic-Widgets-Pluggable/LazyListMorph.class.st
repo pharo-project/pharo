@@ -295,6 +295,12 @@ LazyListMorph >> listChanged [
 ]
 
 { #category : 'initialization' }
+LazyListMorph >> listSource [
+
+	^ listSource
+]
+
+{ #category : 'initialization' }
 LazyListMorph >> listSource: aListSource [
 	"set the source of list items -- typically a PluggableListMorph"
 	listSource := aListSource.

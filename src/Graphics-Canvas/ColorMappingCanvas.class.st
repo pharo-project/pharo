@@ -156,6 +156,18 @@ ColorMappingCanvas >> mapColor: aColor [
 	^aColor
 ]
 
+{ #category : 'accessing' }
+ColorMappingCanvas >> myCanvas [
+
+	^ myCanvas
+]
+
+{ #category : 'accessing' }
+ColorMappingCanvas >> myCanvas: anObject [
+
+	myCanvas := anObject
+]
+
 { #category : 'initialization' }
 ColorMappingCanvas >> on: aCanvas [
 	myCanvas := aCanvas

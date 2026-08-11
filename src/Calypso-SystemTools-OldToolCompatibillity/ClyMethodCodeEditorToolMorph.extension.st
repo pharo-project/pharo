@@ -50,7 +50,7 @@ ClyMethodCodeEditorToolMorph >> findString: searchedString asSelectorIn: aString
 ClyMethodCodeEditorToolMorph >> selectStringAsInMessageBrowser: criteriaString [
 
 	| interval |
-	interval := (self findAnySelectorInSourceCode: {criteriaString})
-			ifEmpty: [ self findString: criteriaString asSelectorIn: self pendingText].
-	textMorph setSelection: interval
+	interval := (self findAnySelectorInSourceCode: { criteriaString }) ifEmpty: [
+		            self findString: criteriaString asSelectorIn: self pendingText ].
+	self textMorph setSelection: interval
 ]

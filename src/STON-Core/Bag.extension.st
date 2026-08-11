@@ -15,7 +15,5 @@ Bag class >> fromSton: stonReader [
 Bag >> stonOn: stonWriter [
 	"Use a map with element-occurrences pairs as representation"
 
-	stonWriter
-		writeObject: self
-		do: [ stonWriter encodeMap: contents ]
+	stonWriter writeObject: self do: [ stonWriter encodeMap: self contents ]
 ]

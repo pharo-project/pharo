@@ -44,3 +44,27 @@ Mutex >> initialize [
 	super initialize.
 	semaphore := Semaphore forMutualExclusion
 ]
+
+{ #category : 'accessing' }
+Mutex >> owner [
+
+	^ owner
+]
+
+{ #category : 'accessing' }
+Mutex >> owner: anObject [
+
+	owner := anObject
+]
+
+{ #category : 'accessing' }
+Mutex >> semaphore [
+
+	^ semaphore
+]
+
+{ #category : 'accessing' }
+Mutex >> semaphore: anObject [
+
+	semaphore := anObject
+]
