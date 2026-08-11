@@ -21,7 +21,7 @@ OCCodeSnippet >> doSemanticAnalysisOnError: aBlock [
 	^ [
 		  OpalCompiler new
 			  isScripting: isScripting;
-			  permitFaulty: false;
+			  strict;
 			  source: self source;
 			  newParse ]
 		  on: OCCompilationError

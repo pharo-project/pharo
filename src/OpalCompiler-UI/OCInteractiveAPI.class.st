@@ -110,8 +110,8 @@ OCInteractiveAPI >> compilerFor: behavior [
 
 	^ compiler ifNil: [
 			  compiler := behavior compiler
-				              permitUndeclared: self permitUndeclared;
-				              permitFaulty: self permitFaulty ]
+				              permitFaulty: self permitFaulty;
+				              permitUndeclared: self permitUndeclared ]
 ]
 
 { #category : 'initialization' }

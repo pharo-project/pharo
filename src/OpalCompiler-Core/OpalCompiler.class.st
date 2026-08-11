@@ -753,7 +753,15 @@ OpalCompiler >> storeSourcesAsProperty: aBoolean [
 { #category : 'public access' }
 OpalCompiler >> strict [
 
-	self permitFaulty: false.
-	self permitUndeclared: false.
-	self permitShadowing: false
+	self strict: true
+]
+
+{ #category : 'public access' }
+OpalCompiler >> strict: aBoolean [
+
+	"self strict: true should set permitFaulty:, permitUndeclared:, and permitShadowing: to false"
+
+	self permitFaulty: aBoolean not.
+	self permitUndeclared: aBoolean not.
+	self permitShadowing: aBoolean not
 ]

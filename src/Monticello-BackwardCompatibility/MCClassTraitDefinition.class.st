@@ -137,8 +137,7 @@ MCClassTraitDefinition >> loadWithLoader: aLoader [
 
 	| compiler |
 	compiler := self class compiler
-		permitFaulty: aLoader isStrict not;
-		permitUndeclared: aLoader isStrict not.
+		strict: aLoader isStrict.
 	
 	aLoader targetEnvironment ifNotNil: [
 		compiler environment: aLoader targetEnvironment ].
