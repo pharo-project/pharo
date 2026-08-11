@@ -1,7 +1,7 @@
 "
 I am a notice raised when a reserved word (e.g. self, super, thisContext) is used as a parameter or temporary variable name.
 
-I am an error by default, and I become a warning when the compiler permits shadowing or faults.
+I am an a warning by default. I become an error when the compiler is in strict mode.
 "
 Class {
 	#name : 'OCReservedVariableNotice',
