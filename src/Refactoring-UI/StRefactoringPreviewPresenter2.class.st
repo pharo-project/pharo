@@ -21,7 +21,6 @@ Class {
 		'buttonCancel',
 		'compositeChange',
 		'refactoring',
-		'buttonUpdate',
 		'name',
 		'newNameLabel',
 		'newNameInput',
@@ -36,7 +35,9 @@ Class {
 		'mainLayout',
 		'behaviorLayout',
 		'behaviorPanel',
-		'topLayout'
+		'topLayout',
+		'previewUpdateDelay',
+		'nameIsValid'
 	],
 	#category : 'Refactoring-UI-UI',
 	#package : 'Refactoring-UI',
@@ -117,6 +118,14 @@ StRefactoringPreviewPresenter2 >> changesFrom: aCompositeChange scopes: aCollect
 	self changesFrom: aCompositeChange.
 ]
 
+{ #category : 'private' }
+StRefactoringPreviewPresenter2 >> clearDiff [
+
+    diffPresenter
+        leftText: '';
+        rightText: ''
+]
+
 { #category : 'action' }
 StRefactoringPreviewPresenter2 >> closeWindow [
 
@@ -126,38 +135,28 @@ StRefactoringPreviewPresenter2 >> closeWindow [
 { #category : 'initialization' }
 StRefactoringPreviewPresenter2 >> connectPresenters [
 
-	table whenSelectionChangedDo: [ :selection |
-		selection selectedItem ifNotNil: [
-			self buildDiffFor: selection selectedItem ] ].
+	table whenSelectionChangedDo: [ :selection | selection selectedItem ifNotNil: [ self buildDiffFor: selection selectedItem ] ].
 
-	scopeDropList whenSelectedItemChangedDo: [ :scope | 
-			self 
-				updateActiveScope; 
-				updateChanges; 
+	scopeDropList whenSelectedItemChangedDo: [ :scope |
+			self
+				updateActiveScope;
+				updateChanges;
 				updateTablePresenter ].
 
 	buttonCancel action: [ self closeWindow ].
-	buttonOk action: [
-    	self accept
-	].
-	buttonUpdate action: [
-    self updateChangesWithName.
-   	 buttonUpdate disable.
-    self defer: [
-   		buttonOk takeKeyboardFocus .
-	 ]
-	].
-	newNameInput eventHandler
-    whenKeyDownDo: [ :event |
-        event key = KeyboardKey enter ifTrue: [
-				event wasHandled: true.
-            buttonUpdate performAction.
-				self defer: [ buttonOk takeKeyboardFocus ]
-        ]
-    ].
+	buttonOk action: [ self accept ].
 
-	buttonApplyAnyway whenActivatedDo: [ self updateChangesWithName ].
-	buttonApplyTransformation whenActivatedDo: [ self applyTransformation ]
+	newNameInput whenTextChangedDo: [ :text |
+			self validateName: text.
+			self updateBehaviorPanelVisibility: text.
+			self schedulePreviewUpdate ].
+
+
+	buttonApplyAnyway  whenActivatedDo: [ self updateChangesWithName ];
+							associatedRadioButtons: { buttonApplyTransformation }.
+	buttonApplyTransformation   whenActivatedDo: [ self applyTransformation ];
+										associatedRadioButtons: { buttonApplyAnyway }.
+	buttonApplyAnyway state: true
 ]
 
 { #category : 'api - focus' }
@@ -170,6 +169,7 @@ StRefactoringPreviewPresenter2 >> defaultKeyboardFocus [
 StRefactoringPreviewPresenter2 >> defaultLayout [
 
 	| scopesLayout nameLayout inputLayout behaviorHeaderLayout behaviorOptionsLayout |
+	
 	scopesLayout := SpBoxLayout newLeftToRight
 		                vAlignCenter;
 		                spacing: 5;
@@ -187,7 +187,6 @@ StRefactoringPreviewPresenter2 >> defaultLayout [
 		              spacing: 5;
 		              add: newNameLabel expand: false;
 		              add: inputLayout;
-		              add: buttonUpdate expand: false;
 		              yourself.
 
 	behaviorHeaderLayout := SpBoxLayout newLeftToRight
@@ -208,15 +207,15 @@ StRefactoringPreviewPresenter2 >> defaultLayout [
 		                  add: behaviorHeaderLayout;
 		                  add: behaviorMessageLabel expand: false;
 		                  add: behaviorOptionsLayout;
-		                  yourself.
+		                  yourself. 
 	behaviorPanel layout: behaviorLayout.
 
 	topLayout := SpBoxLayout newTopToBottom
 		             spacing: 10;
 		             add: nameLayout expand: false;
 		             yourself.
-	self hasWarning ifTrue: [ topLayout add: behaviorPanel expand: false ].
-	
+
+
 	mainLayout := SpBoxLayout newTopToBottom
 		              spacing: 10;
 		              add: topLayout expand: false;
@@ -261,16 +260,6 @@ StRefactoringPreviewPresenter2 >> initializeDialogWindow: aDialogWindowPresenter
 	self buttonOk: applyButton
 ]
 
-{ #category : 'accessing' }
-StRefactoringPreviewPresenter2 >> initializeFocusOrder [
-
-    self focusOrder
-        add: newNameInput;
-        add: buttonUpdate;
-        add: buttonOk;
-        add: buttonCancel
-]
-
 { #category : 'initialization' }
 StRefactoringPreviewPresenter2 >> initializePresenters [
 
@@ -302,13 +291,6 @@ StRefactoringPreviewPresenter2 >> initializePresenters [
 	newNameLabel := self newLabel label: 'Selector'.
 
 	newNameInput := self newTextInput.
-	newNameInput whenTextChangedDo: [ :text |
-			self validateName: text.
-			self updateBehaviorPanelVisibility: text ].
-
-	buttonUpdate := self newButton
-		                label: 'Rename';
-		                enabled: false.
 
 	validationLabel := self newLabel label: ''.
 
@@ -322,11 +304,7 @@ StRefactoringPreviewPresenter2 >> initializePresenters [
 	buttonApplyAnyway label: 'Apply anyway'.
 
 	buttonApplyTransformation := self instantiate: SpRadioButtonPresenter.
-	buttonApplyTransformation label: 'Migrate it to existing instance variable'.
-
-	buttonApplyAnyway associatedRadioButtons: { buttonApplyTransformation }.
-	buttonApplyTransformation associatedRadioButtons: { buttonApplyAnyway }.
-	buttonApplyAnyway state: true
+	buttonApplyTransformation label: 'Migrate it to existing instance variable'
 ]
 
 { #category : 'accessing' }
@@ -368,6 +346,17 @@ StRefactoringPreviewPresenter2 >> refactoring: aRBRemoveMethodDriver [
 ]
 
 { #category : 'accessing' }
+StRefactoringPreviewPresenter2 >> schedulePreviewUpdate [
+
+	previewUpdateDelay ifNotNil: [ previewUpdateDelay unschedule ].
+
+	previewUpdateDelay := Delay forMilliseconds: 350.
+
+	[ previewUpdateDelay wait.
+		self updateChangesWithName ] fork
+]
+
+{ #category : 'accessing' }
 StRefactoringPreviewPresenter2 >> scopes: aCollection [
 
 	scopes := aCollection.
@@ -388,19 +377,22 @@ StRefactoringPreviewPresenter2 >> updateActiveScope [
 { #category : 'accessing' }
 StRefactoringPreviewPresenter2 >> updateBehaviorPanelVisibility: aString [
 
-    mainLayout ifNil: [ ^ self ].
+	mainLayout ifNil: [ ^ self ].
 
-    driver newName: aString.
-
-    self hasWarning
-        ifTrue: [
-            behaviorMessageLabel label: driver checkBehaviorPreservingPreconditions.
-            self applyTransformation.
-            (topLayout children includes: behaviorPanel)
-                ifFalse: [ topLayout add: behaviorPanel expand: false ] ]
-        ifFalse: [
-            (topLayout children includes: behaviorPanel)
-                ifTrue: [ topLayout remove: behaviorPanel ] ].
+	driver newName: aString.
+	
+	self hasWarning
+		ifTrue: [
+			behaviorMessageLabel label: driver checkBehaviorPreservingPreconditions.
+			self applyTransformation.
+			
+			(topLayout children includes: behaviorPanel)
+				ifFalse: [ topLayout add: behaviorPanel expand: false ] ]
+		ifFalse: [
+			(topLayout children includes: behaviorPanel)
+				ifTrue: [ 
+					topLayout remove: behaviorPanel.
+					self rebuildLayout ] ]
 ]
 
 { #category : 'update' }
@@ -417,14 +409,20 @@ StRefactoringPreviewPresenter2 >> updateChanges [
 { #category : 'update' }
 StRefactoringPreviewPresenter2 >> updateChangesWithName [
 
-	self updateName .
-	driver createAndSetNewRefactoring .
-	compositeChange:= driver refactoring generateChanges.
-	"we keep the composite because we want to use it for performing changes later on."
+	nameIsValid ifFalse: [
+			changes := nil.
+			compositeChange := nil.
+			self updateChanges.
+			self updateTablePresenter.
+			self clearDiff.
+			^ self ].
+
+	self updateName.
+	driver createAndSetNewRefactoring.
+	compositeChange := driver refactoring generateChanges.
 	changes := compositeChange changesToDisplayIn: self.
 	self updateChanges.
 	self updateTablePresenter
-
 ]
 
 { #category : 'update' }
@@ -460,23 +458,20 @@ StRefactoringPreviewPresenter2 >> updateTablePresenter [
 { #category : 'accessing' }
 StRefactoringPreviewPresenter2 >> validateName: aString [
 
-    | message |
+	| message |
 
-    driver newName: aString.
-    message := driver checkApplicabilityPreconditions.
+	driver newName: aString.
+	message := driver checkApplicabilityPreconditions.
 
-    message ifNil: [
-    	validationLabel label: ''.
-		buttonUpdate enable .
-	] ifNotNil: [
-   		 validationLabel label: 
-        (message asText
-            addAttribute: (TextColor color:
-                (Color r: 1.0 g: 0.5 b: 0.31));
-            yourself).
-		 buttonUpdate disable .
-		].
-	
+	message
+		ifNil: [
+				nameIsValid := true.
+				validationLabel label: '' ]
+		ifNotNil: [
+				nameIsValid := false.
+				validationLabel label: (message asText
+						 addAttribute: (TextColor color: (Color r: 1.0 g: 0.5 b: 0.31));
+						 yourself) ]
 ]
 
 { #category : 'accessing' }
