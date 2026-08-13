@@ -137,7 +137,8 @@ MCClassTraitDefinition >> loadWithLoader: aLoader [
 
 	| compiler |
 	compiler := self class compiler
-		strict: aLoader isStrict.
+		strict: aLoader isStrict;
+		permitShadowing: true.
 	
 	aLoader targetEnvironment ifNotNil: [
 		compiler environment: aLoader targetEnvironment ].

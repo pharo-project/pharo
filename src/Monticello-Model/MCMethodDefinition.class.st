@@ -227,6 +227,7 @@ MCMethodDefinition >> loadWithLoader: aLoader [
 
 	compiler := actualClass compiler
 		            strict: aLoader isStrict;
+						permitShadowing: true;
 		            source: source.
 
 	method := compiler compileOrFail.
