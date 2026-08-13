@@ -474,6 +474,13 @@ OpalCompiler >> generateMethod [
 	^ method
 ]
 
+{ #category : 'initialization' }
+OpalCompiler >> initialize [
+
+	super initialize.
+	permitShadowing := true
+]
+
 { #category : 'actions' }
 OpalCompiler >> install [
 	"Compile and install a method in a class"
@@ -513,7 +520,6 @@ OpalCompiler >> isScripting: aBoolean [
 { #category : 'public access' }
 OpalCompiler >> isStrict [
 
-	permitShadowing ifNil: [ ^ false ].
 	permitFaulty ifNil: [ ^ false ].
 	permitUndeclared ifNil: [ ^ false ].
 
