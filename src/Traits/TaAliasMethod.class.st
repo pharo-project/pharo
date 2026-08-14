@@ -123,23 +123,23 @@ TaAliasMethod >> isTraitAlias [
 { #category : 'accessing' }
 TaAliasMethod >> methodsCompilationInfo [
 
-	| innerInfos aliassed |
+	| innerInfos aliased |
 	"I calculate the new aliases selectors"
 	innerInfos := inner methodsCompilationInfo.
-	aliassed := OrderedCollection new: self aliases size.
+	aliased := OrderedCollection new: self aliases size.
 
-	self aliases associationsDo: [ :association |
+	self aliases associations do: [ :association |
 			innerInfos
 				detect: [ :info | info selector = association value ]
 				ifFound: [ :info |
-						aliassed add: (TraitMethodCompilationInfo new
+						aliased add: (TraitMethodCompilationInfo new
 								 selector: association key;
 								 definingTrait: info definingTrait;
 								 compiledMethod: info compiledMethod;
 								 sourceCode: (info compiledMethod getSourceReplacingSelectorWith: association key);
 								 yourself) ] ].
 
-	^ innerInfos , aliassed
+	^ innerInfos , aliased
 ]
 
 { #category : 'instance creation' }
