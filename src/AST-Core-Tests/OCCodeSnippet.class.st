@@ -1778,7 +1778,6 @@ OCCodeSnippet class >> badSemantic [
 			         source: '| self | self := 1. ^ self';
 			         nodeAt: '00111100044442222300556666';
 			         styled: '| TTTT | tttt    n. ^ tttt';
-			         isScripting: false;
 			         isFaulty: true;
 			         value: 1;
 			         notices:
@@ -1787,7 +1786,6 @@ OCCodeSnippet class >> badSemantic [
 			         source: '| super | super := 1. ^ super';
 			         nodeAt: '00111110004444422223005566666';
 			         styled: '| TTTTT | ttttt    n. ^ ttttt';
-			         isScripting: false;
 			         isFaulty: true;
 			         value: 1;
 			         notices:
@@ -1796,7 +1794,6 @@ OCCodeSnippet class >> badSemantic [
 			         source: '| thisContext | thisContext := 1. ^ thisContext';
 			         nodeAt: '00111111111110004444444444422223005566666666666';
 			         styled: '| TTTTTTTTTTT | ttttttttttt    n. ^ ttttttttttt';
-			         isScripting: false;
 			         isFaulty: true;
 			         value: 1;
 			         notices:
@@ -1845,7 +1842,6 @@ OCCodeSnippet class >> badSemantic [
 			         source: '[ :self | self + 1 ]';
 			         nodeAt: '00011110004444333500';
 			         styled: '0 :BBBB | bbbb s n 0';
-			         isScripting: false;
 			         isFaulty: true;
 			         value: 2;
 			         notices:
@@ -1854,7 +1850,6 @@ OCCodeSnippet class >> badSemantic [
 			         source: '[ :super | super + 1 ]';
 			         nodeAt: '0001111100044444333500';
 			         styled: '0 :BBBBB | bbbbb s n 0';
-			         isScripting: false;
 			         isFaulty: true;
 			         value: 2;
 			         notices:
@@ -1863,7 +1858,6 @@ OCCodeSnippet class >> badSemantic [
 			         source: '[ :thisContext | thisContext + 1 ]';
 			         nodeAt: '0001111111111100044444444444333500';
 			         styled: '0 :BBBBBBBBBBB | bbbbbbbbbbb s n 0';
-			         isScripting: false;
 			         isFaulty: true;
 			         value: 2;
 			         notices:
