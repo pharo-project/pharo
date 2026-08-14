@@ -33,7 +33,7 @@ StRefactoringPreviewPresenter2Test >> setUpDriver [
 StRefactoringPreviewPresenter2Test >> testAcceptAppliesRefactoringChanges [
     "Verify that accepting the preview performs the selected refactoring changes and closes the presenter."
 
-	| driver presenter method sourceNode |
+    | driver presenter method sourceNode |
 
     driver := ReRenameArgumentOrTemporaryDriver2 new.
 
@@ -46,30 +46,49 @@ StRefactoringPreviewPresenter2Test >> testAcceptAppliesRefactoringChanges [
         sourceNode: sourceNode;
         method: method;
         scopes: { RBBrowserEnvironment default };
-		  configureRefactoring .
+        configureRefactoring.
 
     presenter := StRefactoringPreviewPresenterMock lastInstance.
     presenter
         driver: driver;
         scopes: { RBBrowserEnvironment default };
         name: 'temp';
-	  	  initializePresenters.
+        initializePresenters.
 
-	 presenter newNameInput text: 'tmp2'.
+    presenter
+        instVarNamed: #activeScope
+        put: RBBrowserEnvironment default.
+
+    presenter newNameInput text: 'tmp2'.
+	 presenter validateName: 'tmp2'.
+    presenter updateName.
+    presenter accept.
+
+    self assert: presenter performed.
+    self assert: presenter closed.
+]
+
+{ #category : 'tests' }
+StRefactoringPreviewPresenter2Test >> testApplyTransformationRemovesTemporaryVariableFromParseTree [
+"Verify that applying the transformation removes the temporary variable from the parse tree."
+
+	| driver presenter parseTree |
 	
-	 presenter
-   		instVarNamed: #activeScope
-    	put: RBBrowserEnvironment default.
-
+	driver := self setUpDriver.
+	driver newName: 'instVar'.
+	
+	presenter := StRefactoringPreviewPresenter2 new.
 	presenter
-    	instVarNamed: #selectedChanges
-    	put: (OrderedCollection with: Object new).
+		driver: driver;
+		scopes: { RBBrowserEnvironment default };
+		name: 'temp'.
+		
+	presenter initializePresenters;
+				 applyTransformation.
+				
+	parseTree := driver refactoring parseTree.
 
-	presenter updateName;
-			    accept.
-
-	self assert: presenter performed .
-	self assert: presenter closed.
+	self deny: (parseTree withAllChildren anySatisfy: [:each | each exactNodeDefines: 'temp'])
 ]
 
 { #category : 'tests' }
@@ -91,6 +110,20 @@ StRefactoringPreviewPresenter2Test >> testInvalidNameFailsApplicabilityPrecondit
 	presenter newNameInput text: 'Tmp2'.
 
 	self assert: driver checkApplicabilityPreconditions notNil
+]
+
+{ #category : 'tests' }
+StRefactoringPreviewPresenter2Test >> testRenameTemporaryToInstanceVariableNameFailsBehaviorPreservingPreconditions [
+"Verify that renaming a temporary variable to an existing instance/class variable fails the behavior-preserving preconditions."
+
+	| driver message |
+	
+	driver := self setUpDriver .
+	driver newName: 'instVar'.
+	
+	message := driver checkBehaviorPreservingPreconditions.
+	self assert: message 
+		  equals: 'The variable "instVar" is already defined as a class/instance variable in the given context', 	         		String cr
 ]
 
 { #category : 'accessing' }
@@ -130,7 +163,8 @@ StRefactoringPreviewPresenter2Test >> testUpdateChangesWithValidNameGeneratesPre
     presenter initializePresenters.
 
     presenter newNameInput text: 'tmp2'.
-
+	 presenter validateName: 'tmp2'.
+   
     presenter updateName.
 
     self assert: driver newName equals: 'tmp2'.
