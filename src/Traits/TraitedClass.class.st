@@ -72,7 +72,8 @@ TraitedClass >> doRebuildMethodDictionary [
 
 	| compilationInfos removedSelectors modified |
 	"During the creation of the class or after a change in the traitComposition, the whole method dictionary is calculated.
-	If I return true, my users should be updated""1. I recreate the local methodDict"
+	If I return true, my users should be updated"
+	"1. I recreate the local methodDict"
 	modified := false.
 	self methodDict valuesDo: [ :m | m traitSource ifNil: [ self localMethodDict at: m selector put: m ] ].
 

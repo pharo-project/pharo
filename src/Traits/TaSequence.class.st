@@ -172,13 +172,13 @@ TaSequence >> isLocalAliasSelector: aSymbol [
 ]
 
 { #category : 'accessing' }
-TaSequence >> manageConflictBetween: implementations infosToRemove: toRemove [
+TaSequence >> manageConflictBetween: infos infosToRemove: toRemove [
 	"If protocols are different we create a conflict."
 
-	(implementations collect: #protocol as: Set) size > 1 ifTrue: [ implementations first protocol: Protocol traitConflictName ].
-	implementations first sourceCode: (self sourceCodeForConflictFor: implementations first selector).
-	implementations first isConflicting: true.
-	toRemove addAll: implementations allButFirst
+	(infos collect: #protocol as: Set) size > 1 ifTrue: [ infos first protocol: Protocol traitConflictName ].
+	infos first sourceCode: (self sourceCodeForConflictFor: infos first selector).
+	infos first isConflicting: true.
+	toRemove addAll: infos allButFirst
 ]
 
 { #category : 'accessing' }
@@ -219,7 +219,7 @@ TaSequence >> methodsCompilationInfo [
 								toRemove addAll: infos allButFirst.
 								(infos collect: #protocol as: Set) size > 1 ifTrue: [ infos first protocol: Protocol traitConflictName ] ]
 						ifNotEmpty: [ :implementations |
-								toRemove addAll: (infos copyWithoutAll: implementations).
+								toRemove addAll: (infos select: #isExplicitRequirement).
 								implementations size = 1 ifFalse: [ self manageConflictBetween: implementations infosToRemove: toRemove ] ] ] ].
 
 

@@ -143,7 +143,7 @@ TraitChange >> removedSelectors: anObject [
 
 { #category : 'operations' }
 TraitChange >> update: aSelector into: aClass changes: changes [
-	"I am the responsible of propagating a change from an used trait"
+	"I am responsible of propagating a change from a used trait."
 
 	"If the updated selector (from other trait) is in the local methods, nothing to do."
 
