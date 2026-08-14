@@ -65,7 +65,7 @@ StRefactoringPreviewPresenter2Test >> testAcceptAppliesRefactoringChanges [
     	instVarNamed: #selectedChanges
     	put: (OrderedCollection with: Object new).
 
-	presenter updateChangesWithName;
+	presenter updateName;
 			    accept.
 
 	self assert: presenter performed .
@@ -131,7 +131,7 @@ StRefactoringPreviewPresenter2Test >> testUpdateChangesWithValidNameGeneratesPre
 
     presenter newNameInput text: 'tmp2'.
 
-    presenter updateChangesWithName.
+    presenter updateName.
 
     self assert: driver newName equals: 'tmp2'.
 	 self deny: driver refactoring changes changes isEmpty.

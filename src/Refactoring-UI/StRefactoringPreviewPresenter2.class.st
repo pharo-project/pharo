@@ -68,9 +68,16 @@ StRefactoringPreviewPresenter2 >> accept [
 ]
 
 { #category : 'accessing' }
+StRefactoringPreviewPresenter2 >> applyAnyway [
+
+	driver createAndSetNewRefactoring.
+	driver refactoring prepareForExecution.
+	self updateName
+]
+
+{ #category : 'accessing' }
 StRefactoringPreviewPresenter2 >> applyTransformation [
 
-	self updateName .
 	driver createAndSetNewRefactoring .
 
 	compositeChange := driver refactoring generateTransformChanges.
@@ -145,14 +152,11 @@ StRefactoringPreviewPresenter2 >> connectPresenters [
 
 	buttonCancel action: [ self closeWindow ].
 	buttonOk action: [ self accept ].
-
+		
 	newNameInput whenTextChangedDo: [ :text |
-			self validateName: text.
-			self updateBehaviorPanelVisibility: text.
-			self schedulePreviewUpdate ].
+		self schedulePreviewUpdate: text ].
 
-
-	buttonApplyAnyway  whenActivatedDo: [ self updateChangesWithName ];
+	buttonApplyAnyway  whenActivatedDo: [ self applyAnyway ];
 							associatedRadioButtons: { buttonApplyTransformation }.
 	buttonApplyTransformation   whenActivatedDo: [ self applyTransformation ];
 										associatedRadioButtons: { buttonApplyAnyway }.
@@ -346,14 +350,16 @@ StRefactoringPreviewPresenter2 >> refactoring: aRBRemoveMethodDriver [
 ]
 
 { #category : 'accessing' }
-StRefactoringPreviewPresenter2 >> schedulePreviewUpdate [
+StRefactoringPreviewPresenter2 >> schedulePreviewUpdate: aString [
 
 	previewUpdateDelay ifNotNil: [ previewUpdateDelay unschedule ].
 
-	previewUpdateDelay := Delay forMilliseconds: 350.
+	previewUpdateDelay := Delay forMilliseconds: 300.
 
 	[ previewUpdateDelay wait.
-		self updateChangesWithName ] fork
+		self validateName: aString.
+		self updateBehaviorPanelVisibility: aString .
+		self updateName ] fork
 ]
 
 { #category : 'accessing' }
@@ -384,7 +390,6 @@ StRefactoringPreviewPresenter2 >> updateBehaviorPanelVisibility: aString [
 	self hasWarning
 		ifTrue: [
 			behaviorMessageLabel label: driver checkBehaviorPreservingPreconditions.
-			self applyTransformation.
 			
 			(topLayout children includes: behaviorPanel)
 				ifFalse: [ topLayout add: behaviorPanel expand: false ] ]
@@ -407,36 +412,27 @@ StRefactoringPreviewPresenter2 >> updateChanges [
 ]
 
 { #category : 'update' }
-StRefactoringPreviewPresenter2 >> updateChangesWithName [
-
-	nameIsValid ifFalse: [
-			changes := nil.
-			compositeChange := nil.
-			self updateChanges.
-			self updateTablePresenter.
-			self clearDiff.
-			^ self ].
-
-	self updateName.
-	driver createAndSetNewRefactoring.
-	compositeChange := driver refactoring generateChanges.
-	changes := compositeChange changesToDisplayIn: self.
-	self updateChanges.
-	self updateTablePresenter
-]
-
-{ #category : 'update' }
 StRefactoringPreviewPresenter2 >> updateGlobalActiveScope [
 
 	ScopesManager activeScope: scopeDropList selectedItem asRBEnvironment
 ]
 
-{ #category : 'accessing' }
+{ #category : 'update' }
 StRefactoringPreviewPresenter2 >> updateName [
 
-	 name:= newNameInput text.
-	 driver newName: name.
+	name:= newNameInput text.
+	
+	nameIsValid 
+		ifFalse: [
+			changes := nil.
+			compositeChange := nil.
+			self clearDiff ]
+		ifTrue: [
+			compositeChange := driver refactoring generateChanges. 
+			changes := compositeChange changesToDisplayIn: self ].
 
+	self updateChanges.
+	self updateTablePresenter
 ]
 
 { #category : 'update' }
@@ -461,6 +457,7 @@ StRefactoringPreviewPresenter2 >> validateName: aString [
 	| message |
 
 	driver newName: aString.
+	driver createAndSetNewRefactoring.
 	message := driver checkApplicabilityPreconditions.
 
 	message

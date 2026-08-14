@@ -33,17 +33,13 @@ ReRenameArgumentOrTemporaryDriver2 class >> shouldPreviewChangesByDefault [
 { #category : 'accessing' }
 ReRenameArgumentOrTemporaryDriver2 >> checkApplicabilityPreconditions [
 
-    | failedCondition |
+	| failedCondition |
+	refactoring newName: newName.
+	failedCondition := refactoring applicabilityPreconditions detect: [ :condition | condition check not ] ifNone: [ nil ].
 
-	 refactoring newName: newName.
-    failedCondition := refactoring applicabilityPreconditions
-        detect: [ :condition | condition check not ]
-        ifNone: [ nil ].
+	failedCondition ifNotNil: [ ^ failedCondition errorString ].
 
-    failedCondition ifNotNil: [
-        ^ failedCondition errorString ].
-
-    ^ nil
+	^ nil
 ]
 
 { #category : 'accessing' }
