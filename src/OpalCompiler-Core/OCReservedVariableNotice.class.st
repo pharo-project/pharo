@@ -5,7 +5,7 @@ I am an a warning by default. I become an error when the compiler is in strict m
 "
 Class {
 	#name : 'OCReservedVariableNotice',
-	#superclass : 'OCErrorNotice',
+	#superclass : 'OCWarningNotice',
 	#category : 'OpalCompiler-Core-FrontEnd',
 	#package : 'OpalCompiler-Core',
 	#tag : 'FrontEnd'

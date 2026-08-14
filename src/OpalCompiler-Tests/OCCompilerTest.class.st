@@ -203,8 +203,14 @@ OCCompilerTest >> testInBlockArgumentInstanceVariableShadowing [
 OCCompilerTest >> testInBlockArgumentReservedWordsShadowing [
 
 	Symbol reservedLiterals do: [ :thePseudoVar |
-			text := 'temp [:' , thePseudoVar asString , ' | ]'.
-			self compileWithFailBlock: [ :result | self assert: result isError ] ]
+		self
+			should: [
+				OpalCompiler new
+					source: 'temp [:' , thePseudoVar asString , ' | ]';
+					class: MockForCompilation;
+					strict;
+					compileOrFail ]
+			raise: OCCompilationError ]
 ]
 
 { #category : 'tests - shadowing' }
@@ -247,8 +253,14 @@ OCCompilerTest >> testInstanceVariableShadowing [
 OCCompilerTest >> testMethodArgumentCannotBeReservedWord [
 
 	Symbol reservedLiterals do: [ :name |
-			text := 'method: ' , name , ' ^ ' , name.
-			self compileWithFailBlock: [ :result | self assert: result isError ] ]
+		self
+			should: [
+				OpalCompiler new
+					source: 'method: ' , name , ' ^ ' , name;
+					class: MockForCompilation;
+					strict;
+					compileOrFail ]
+			raise: OCCompilationError ]
 ]
 
 { #category : 'tests - reserved variables' }
@@ -287,8 +299,14 @@ OCCompilerTest >> testNoShadowing [
 OCCompilerTest >> testPseudoVariableShadowing [
 
 	Symbol reservedLiterals do: [ :thePseudoVar |
-			text := 'method |' , thePseudoVar asString , '| ^' , thePseudoVar asString.
-			self compileWithFailBlock: [ :result | self assert: result isError ] ]
+		self
+			should: [
+				OpalCompiler new
+					source: 'method |' , thePseudoVar asString , '| ^' , thePseudoVar asString;
+					class: MockForCompilation;
+					strict;
+					compileOrFail ]
+			raise: OCCompilationError ]
 ]
 
 { #category : 'tests - reserved variables' }
