@@ -128,7 +128,7 @@ TaAliasMethod >> methodsCompilationInfo [
 	innerInfos := inner methodsCompilationInfo.
 	aliassed := OrderedCollection new: self aliases size.
 
-	self aliases associations do: [ :association |
+	self aliases associationsDo: [ :association |
 			innerInfos
 				detect: [ :info | info selector = association value ]
 				ifFound: [ :info |

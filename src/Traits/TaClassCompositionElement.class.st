@@ -53,7 +53,7 @@ TaClassCompositionElement >> selectors [
 TaClassCompositionElement >> slots [
 
 	| slotNamesToReject |
-	"Save in a variable to not recomcatenate for each slot"
+	"Save in a variable to not re-concatenate for each slot"
 	slotNamesToReject := Trait slots , TraitedClass allSlots collect: [ :slot | slot name ].
 
 	^ innerClass allSlots reject: [ :e | slotNamesToReject includes: e name ]

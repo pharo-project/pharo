@@ -51,11 +51,11 @@ TaPrecedenceComposition >> isConflictingSelector: aSelector [
 { #category : 'accessing' }
 TaPrecedenceComposition >> manageConflictBetween: implementations infosToRemove: toRemove [
 
-	| preferedInfos |
-	preferedInfos := self preferedTrait methodsCompilationInfo.
+	| preferredInfos |
+	preferredInfos := self preferedTrait methodsCompilationInfo.
 
 	implementations
-		detect: [ :info | preferedInfos includes: info ]
+		detect: [ :info | preferredInfos includes: info ]
 		ifFound: [ :info | ^ toRemove addAll: (implementations copyWithout: info) ].
 
 	^ super manageConflictBetween: implementations infosToRemove: toRemove

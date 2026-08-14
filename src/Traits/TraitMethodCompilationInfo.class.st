@@ -41,7 +41,7 @@ TraitMethodCompilationInfo >> = anObject [
 	self == anObject ifTrue: [ ^ true ].
 	self class = anObject class ifFalse: [ ^ false ].
 	^ selector = anObject selector and: [
-		  definingTrait = anObject definingTrait and: [ sourceCode = anObject sourceCode and: [ self protocol = anObject protocol ] ] ]
+		  definingTrait = anObject definingTrait and: [ self protocol = anObject protocol and: [ sourceCode = anObject sourceCode ] ] ]
 ]
 
 { #category : 'accessing' }
@@ -102,7 +102,7 @@ TraitMethodCompilationInfo >> printOn: aStream [
 	super printOn: aStream.
 
 	aStream
-		nextPutAll: ' [ ';
+		nextPutAll: '[';
 		print: definingTrait;
 		nextPutAll: '>>';
 		print: selector.

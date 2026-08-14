@@ -131,7 +131,7 @@ TaCompositionElement >> methods [
 { #category : 'accessing' }
 TaCompositionElement >> methodsCompilationInfo [
 
-	| innerInfos traitInfos localSelectors methods |
+	| innerInfos selector traitInfos localSelectors methods |
 	"We first collect the compilation info for the local methods I have."
 	innerInfos := innerClass localMethods collect: [ :method |
 			              TraitMethodCompilationInfo new
@@ -142,12 +142,12 @@ TaCompositionElement >> methodsCompilationInfo [
 				              yourself ].
 
 	"If I need to alias the talent initializer, I do it now."
+	selector := self initializeSelectorForMe.
 	innerInfos do: [ :info |
 			info selector = #initializeTalent ifTrue: [
 					info
-						selector: self initializeSelectorForMe;
-						sourceCode: (info compiledMethod getSourceReplacingSelectorWith: self initializeSelectorForMe) ] ].
-
+						selector: selector;
+						sourceCode: (info compiledMethod getSourceReplacingSelectorWith: selector) ] ].
 
 	"Then I collect the ones of my trait composition "
 	localSelectors := innerInfos collect: [ :info | info selector ].
