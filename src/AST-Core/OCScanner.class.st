@@ -36,7 +36,8 @@ Class {
 		'classificationTable',
 		'comments',
 		'nextToken',
-		'state'
+		'state',
+		'alreadySeenHash'
 	],
 	#classVars : [
 		'CascadePatternCharacter',
@@ -307,7 +308,8 @@ OCScanner >> on: aStream [
 	buffer := (String new: 60) writeStream.
 	stream := aStream.
 	classificationTable := self class classificationTable.
-	comments := OrderedCollection new
+	comments := OrderedCollection new.
+	alreadySeenHash := false
 ]
 
 { #category : 'private' }
@@ -424,6 +426,7 @@ OCScanner >> scanLiteral [
 	"Do not allow number literals after the #"
 
 	"This scan accepts keywords as well as binaries and Identifiers."
+
 	self step.
 	characterType = #alphabetic
 		ifTrue: [ ^ self scanSymbol ].
@@ -434,8 +437,12 @@ OCScanner >> scanLiteral [
 	(currentCharacter = $( or: [ currentCharacter = $[ ])
 		ifTrue: [ ^ self scanLiteralArrayToken ].
 	"Accept multiple #."
+	(currentCharacter = $# and: [ alreadySeenHash ])
+		ifTrue: [ ^ self scanError: 'Multiple # sequence is forbidden' ].
 	currentCharacter = $#
-		ifTrue: [ ^ self scanLiteral ].
+		ifTrue: [ 
+			alreadySeenHash := true.
+			^ self scanLiteral ].
 	^ self scanError: 'Literal expected'
 ]
 
@@ -631,7 +638,7 @@ OCScanner >> scanToken [
 			ifFalse: [ self scanBinarySelector]].
 	characterType = #special ifTrue: [^self scanSpecialCharacter].
 	currentCharacter = $' ifTrue: [^self scanLiteralString].
-	currentCharacter = $# ifTrue: [^self scanLiteral].
+	currentCharacter = $# ifTrue: [ alreadySeenHash := true. ^self scanLiteral].
 	currentCharacter = $$ ifTrue: [^self scanLiteralCharacter].
 	currentCharacter = $" ifTrue: [^self scanComment]. "Assume a bad comment (as they are usually stripped)"
 	^self scanUnknownCharacter
