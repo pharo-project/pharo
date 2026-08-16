@@ -59,73 +59,36 @@ def shellOutput(params){
   return (isWindows())? bat(returnStdout: true, script: params).trim() : sh(returnStdout: true, script: params).trim()
 }
 
-def notifyBuild(status){
-  node('unix'){ stage('notify'){
-  try{
-  
-  //If this is development, we send the email to the beta list
-  def toMail = "log-ci-beta@lists.pharo.org"
-  def buildKind = env.BRANCH_NAME
-  if (env.CHANGE_ID != null){
-    buildKind = "PR ${env.CHANGE_ID}"
-  }
-  if( isDevelopmentBranch() ) {
-    toMail = "log-ci@lists.pharo.org"
-    buildKind = getPharoVersionFromBranch()
-  }
-  
-  //We checkout scm to have access to the log information
-  checkout scm
-  def owner = "pharo-project"
-  def title = status
-  
-  //Get the merge information from the last commit
-  def logMessage = shellOutput('git log -1 --format="%B"')
-  def logSHA = shellOutput('git log -1 --format="%p"')
-  
-  def mailMessage = "Could not extract further issue information from commit message: ${logMessage}"
-  
-  //If there is no pull request information, we will send a log with the last commit message only
-  def isPRMergeCommit = logMessage.startsWith("Merge pull request ")  
-  if (isPRMergeCommit) {
-    def pullRequestId = logMessage.split(' ')[3].substring(1)
-    def githubPullRequestHttpRequest = "https://api.github.com/repos/${owner}/pharo/pulls/${pullRequestId}"
-    def response = httpRequest githubPullRequestHttpRequest
-    if (response.status == 200) { 
-      def pullRequestJSON = readJSON text: response.content
-      def pullRequestTitle = pullRequestJSON['title']
-      
-      def pullRequestUrl = "https://github.com/${owner}/pharo/pull/${pullRequestId}"
-      mailMessage = """The Pull Request #${pullRequestId} was integrated: \"${pullRequestTitle}\"
-Pull request url: ${pullRequestUrl}
-"""
-      title = pullRequestTitle
-      def issueNumber = pullRequestJSON['head']['ref'].split('-')[0]
-      def issueUrl = "https://github.com/pharo-project/pharo/issues/${issueNumber}"
-      
-      mailMessage += """
-Issue Url: ${issueUrl}"""
-    } else {
-      mailMessage += """
-No associated issue found"""
+def notifyBuild(status) {
+    node('unix') { 
+        stage('Notify Build') {
+            try {
+                def toMail = "log-ci-beta@lists.pharo.org"
+                def buildKind = env.BRANCH_NAME
+                if (env.CHANGE_ID != null) {
+                    buildKind = "PR ${env.CHANGE_ID}"
+                }
+                if (isDevelopmentBranch()) {
+                    toMail = "log-ci@lists.pharo.org"
+                    buildKind = getPharoVersionFromBranch()
+                }
+
+                checkout scm
+                def owner = "pharo-project"
+                def title = status
+
+                def logMessage = shellOutput('git log -1 --format="%B"')
+                def mailMessage = "Build Status: ${status}\n\nLog Message: ${logMessage}\n\nBuild URL: ${env.BUILD_URL}"
+
+                // Send email notification
+                mail to: toMail, subject: "[Pharo ${buildKind}] Build #${env.BUILD_NUMBER}: ${title}", body: mailMessage
+            } catch (e) {
+                echo 'Error while sending email: ' + e.toString()
+            } finally {
+                cleanWs()
+            }
+        }
     }
-  }
-  
-  def body = """There is a new Pharo build available!
-  
-The status of the build #${env.BUILD_NUMBER} was: ${status}.
-
-${mailMessage}
-Build Url: ${env.BUILD_URL}
-"""
-
-  mail to: toMail, cc: 'guillermopolito@gmail.com', subject: "[Pharo ${buildKind}] Build #${env.BUILD_NUMBER}: ${title}", body: body
-  } catch (e) {
-    //If there is an error during mail send, just print it and continue
-    echo 'Error while sending email: ' + e.toString()
-  } finally {
-    cleanWs()
-  }}}
 }
 
 def bootstrapImage(architectures){
