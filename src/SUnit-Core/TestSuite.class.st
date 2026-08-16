@@ -138,7 +138,7 @@ TestSuite >> runWith: aBlock [
 		do: [ :each |
 			aBlock value: each.
 			self announceTest: each.
-			self changed: each ] ]
+			self changed: each ] displayingProgress: [ :currentTest | currentTest className ] ]
 		ensure: [ self tearDown ]
 ]
 
