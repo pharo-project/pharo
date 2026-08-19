@@ -20,8 +20,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReDoNotSendSuperInitializeInClassSideRule class >> group [
-	^ self potentialBugsGroup
+ReDoNotSendSuperInitializeInClassSideRule class >> groupSelector [
+
+	^ #potentialBugsGroup
 ]
 
 { #category : 'accessing' }

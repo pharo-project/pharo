@@ -147,12 +147,14 @@ TaAbstractComposition >> compile: selector into: aClass [
 		             source: sourceCode;
 		             permitUndeclared: true;
 		             compileOrFail.
-		
+
 	selector == newMethod selector ifFalse: [ self error: 'selector changed!' ].
 
 	aClass addSelectorSilently: selector withMethod: newMethod.
 
-	aClass classify: selector under: (self protocolForMethod: method).
+	"This step should not announce anything in the system since I am used to build method dictionaries of my users."
+	self class codeChangeAnnouncer suspendAllWhile: [ aClass classify: selector under: (self protocolForMethod: method) ].
+
 	(selector ~= method selector or: [ self changesSourceCode: selector ])
 		ifTrue: [ self saveSourceCode: sourceCode ofMethod: newMethod ]
 		ifFalse: [ newMethod sourcePointer: method sourcePointer ].

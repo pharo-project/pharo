@@ -10,8 +10,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReUnoptimizedAndOrRule class >> group [
-	^ self optimizationGroup
+ReUnoptimizedAndOrRule class >> groupSelector [
+
+	^ #optimizationGroup
 ]
 
 { #category : 'accessing' }

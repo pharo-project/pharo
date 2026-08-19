@@ -19,8 +19,9 @@ ReTestCaseShouldNotUseInitializeRule class >> checksClass [
 ]
 
 { #category : 'accessing' }
-ReTestCaseShouldNotUseInitializeRule class >> group [
-	^ self cleanCodeGroup
+ReTestCaseShouldNotUseInitializeRule class >> groupSelector [
+
+	^ #cleanCodeGroup
 ]
 
 { #category : 'accessing' }

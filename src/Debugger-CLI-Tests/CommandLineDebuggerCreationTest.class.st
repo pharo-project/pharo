@@ -29,7 +29,6 @@ CommandLineDebuggerCreationTest >> testForProcessCreation [
 	| blockToDebug testProcess newDebugger |
 	blockToDebug := [ 1 + 1 ].
 	testProcess := blockToDebug newProcess.
-	testProcess suspend.
 
 	newDebugger := CommandLineDebugger forProcess: testProcess.
 

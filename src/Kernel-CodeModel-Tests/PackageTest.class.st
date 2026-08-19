@@ -484,9 +484,9 @@ PackageTest >> testPackageCanNotContainSpaceEitherAtBeginingOrEnd [
 PackageTest >> testPackageCanNotContainSpaces [
 
 
-	self ensurePackage: ' toto'.
-	self ensurePackage: 'toto '.
-	self ensurePackage: ' toto '.
+	self ensurePackage: ' Toto'.
+	self ensurePackage: 'Toto '.
+	self ensurePackage: ' Toto '.
 
 	self assert: (self organizer packages reject: #isUndefined) size equals: 1.
 

@@ -272,6 +272,24 @@ PackageOrganizerTest >> testRegisterPackageTagConflictWithPackage [
 ]
 
 { #category : 'tests' }
+PackageOrganizerTest >> testRegisterPackageWithLowercaseName [
+
+	self
+		should: [ self organizer addPackage: (Package named: 'p1') ]
+		raise: Error
+		with: [ :e | self assert: e messageText equals: 'Package names should be uppercase' ]
+]
+
+{ #category : 'tests' }
+PackageOrganizerTest >> testRegisterPackageWithLowercaseNameFromName [
+
+	self
+		should: [ self organizer addPackage: 'p1' ]
+		raise: Error
+		with: [ :e | self assert: e messageText equals: 'Package names should be uppercase' ]
+]
+
+{ #category : 'tests' }
 PackageOrganizerTest >> testRegisteredNumberOfPackageIsOk [
 	| p1 p2 p3 |
 	p1 := self ensurePackage: 'P1'.

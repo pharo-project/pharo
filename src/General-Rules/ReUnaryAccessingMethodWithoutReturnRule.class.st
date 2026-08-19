@@ -15,8 +15,9 @@ ReUnaryAccessingMethodWithoutReturnRule class >> checksMethod [
 ]
 
 { #category : 'accessing' }
-ReUnaryAccessingMethodWithoutReturnRule class >> group [
-	^ self potentialBugsGroup
+ReUnaryAccessingMethodWithoutReturnRule class >> groupSelector [
+
+	^ #potentialBugsGroup
 ]
 
 { #category : 'accessing' }

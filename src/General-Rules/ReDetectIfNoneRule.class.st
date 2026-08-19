@@ -21,8 +21,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReDetectIfNoneRule class >> group [
-	^ self codingIdiomViolationGroup
+ReDetectIfNoneRule class >> groupSelector [
+
+	^ #codingIdiomViolationGroup
 ]
 
 { #category : 'accessing' }

@@ -84,24 +84,32 @@ MetacelloMonticelloLoader >> loadAtomicPackageDirectives: packageDirectives engi
 
 { #category : 'loading' }
 MetacelloMonticelloLoader >> loadProject: aMetacelloProjectSpec engine: anEngine [
-	"Loads the project BaselineOf and creates a project from it"
-	"There is no need at loading a project twice as long as it has the same version."
-
+	"Loads the project BaselineOf and creates a project from it 
+	 There is no need at loading a project twice as long as it has the same version.
+	 But if ignoreImage is true, then we want to load it anyway."
 	| projectClass projectClassInstance project |
-	projectCache
-		at: aMetacelloProjectSpec className
-		ifPresent: [ :found | ^ found ].
+	
+	anEngine ignoreImage ifFalse: [ 
+		projectCache 
+			at: aMetacelloProjectSpec className 
+			ifPresent: [ :found | ^ found ] ].
 
-	(self lookupProjectClassNamed: aMetacelloProjectSpec className) ifNil: [
-		self loadAtomicPackageDirectives: { (MetacelloPackageLoadDirective spec: aMetacelloProjectSpec projectPackage) } engine: anEngine ].
+	(anEngine ignoreImage 
+		or: [ (self lookupProjectClassNamed: aMetacelloProjectSpec className) isNil ]) 
+		ifTrue: [
+			self
+				loadAtomicPackageDirectives: { (MetacelloPackageLoadDirective spec: aMetacelloProjectSpec projectPackage) }
+				engine: anEngine ].
 
-	projectClass := self lookupProjectClassNamed:  aMetacelloProjectSpec className asSymbol.
-	projectClassInstance := projectClass new.
+	projectClass := self lookupProjectClassNamed: aMetacelloProjectSpec className asSymbol.
+	
+	projectClassInstance := projectClass new. 
 	"Subclasses typically change the load type of the project to #atomic"
 	projectClassInstance initalizeProjectWithRepositoryDescription: aMetacelloProjectSpec repositoryDescriptions.
 	project := projectClassInstance project.
-	projectCache
-		at: aMetacelloProjectSpec className
+	
+	projectCache 
+		at: aMetacelloProjectSpec className 
 		put: project.
 	^ project
 ]

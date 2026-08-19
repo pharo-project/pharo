@@ -35,7 +35,7 @@ RBMoveMethodParametrizedTest >> testFailureMovePrimitiveMethod [
 ]
 
 { #category : 'tests' }
-RBMoveMethodParametrizedTest >> testMoveMethodIntoArgument [
+RBMoveMethodParametrizedTest >> testMoveMethodIntoArgument [ 
 	| refactoring class |
 	self proceedThroughWarning:
 		[ refactoring := self createRefactoringWithArguments:
@@ -43,14 +43,14 @@ RBMoveMethodParametrizedTest >> testMoveMethodIntoArgument [
 		refactoring selfArgumentName:  'transformationRule'.
 		self
 			setupVariableTypesFor: refactoring
-			toReturn: (Array with: (refactoring model classNamed: #RBSmalllintContext)).
+			toReturn: (Array with: (refactoring model classNamed: #RBLintRuleTestData)).
 		self
 			setupMethodNameFor: refactoring
 			toReturn: #foo:.
 		self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBTransformationRuleTestData.
 	self assert: (class parseTreeForSelector: #checkMethod:) equals: (self parseMethod: 'checkMethod: aSmalllintContext aSmalllintContext foo: self').
-	self assert: ((refactoring model classNamed: #RBSmalllintContext) parseTreeForSelector: #foo:) equals: (self parseMethod: 'foo: transformationRule
+	self assert: ((refactoring model classNamed: #RBLintRuleTestData) parseTreeForSelector: #foo:) equals: (self parseMethod: 'foo: transformationRule
 	transformationRule class: self selectedClass.
 	(transformationRule rewriteRule executeTree: self parseTree) ifTrue:
 			[(transformationRule class recursiveSelfRule executeTree: transformationRule rewriteRule tree initialAnswer: false)
@@ -177,6 +177,6 @@ RBMoveMethodParametrizedTest >> testMoveMethodThatReferencesPoolDictionary [
 	class := refactoring model classNamed: #RBLintRuleTestData.
 	self assert: (class parseTreeForSelector: #junk) equals: (self parseMethod: 'junk ^RBClassDataForRefactoringTest junk1').
 	self assert: ((refactoring model metaclassNamed: #RBClassDataForRefactoringTest) parseTreeForSelector: #junk1) equals: (self parseMethod: 'junk1
-	^self printString copyFrom: 1 to: CR').
-	self assert: (class directlyDefinesPoolDictionary: 'TextConstants' asSymbol)
+	^self printString copyFrom: 1 to: Var1').
+	self assert: (class directlyDefinesPoolDictionary: 'RBSharedPoolForTestData' asSymbol)
 ]

@@ -39,31 +39,31 @@ OCInteractiveAPI >> checkNotice: aNotice requestor: aRequestor [
 				notice: aNotice;
 				signal.
 			^ true ].
-			
-	"Quirks mode: otherwise, push the error message to the requestor"
-	((aRequestor respondsTo: #interactive) not
-		or: [ aRequestor interactive ])
-			ifTrue: [
-				(aNotice reparatorFor: self) ifNotNil: [ :reparator |
-					| res |
-					res := reparator
-						       requestor: aRequestor;
-						       repair.
-					res ifNil: [ 
-						^ true "reparation unneded, let AST as is" ].
-					res ifFalse: [
-						^ false "operation cancelled, fail" ].
-					
-					"code was \repared\, we need to restart the compilation process"
-					^ nil ]].
 
-	"Quirks mode: Then leave"
-	aRequestor
-			notify: aNotice messageText , ' ->'
-			at: aNotice position
-			in: aNotice node source.
+	aRequestor ifNotNil: [ "Quirks mode: otherwise, push the error message to the requestor"
+			((aRequestor respondsTo: #interactive) not or: [ aRequestor interactive ]) ifTrue: [
+					(aNotice reparatorFor: self) ifNotNil: [ :reparator |
+							| res |
+							res := reparator
+								       requestor: aRequestor;
+								       repair.
+							res ifNil: [ ^ true "reparation unneded, let AST as is" ].
+							res ifFalse: [ ^ false "operation cancelled, fail" ].
 
-	^ compiler failBlock isNil
+							"code was \repared\, we need to restart the compilation process"
+							^ nil ] ].
+
+			"Quirks mode: Then leave"
+			aRequestor notify: aNotice messageText , ' ->' at: aNotice position in: aNotice node source.
+			^ true ].
+
+	"If a failBlock is provided in non-requestor mode,
+	we honor it and do not signal exceptions"
+	compiler failBlock ifNotNil: [ ^ false ].
+
+	aNotice signalError.
+
+	^ true "Error was resumed, so we consider it's OK to continue"
 ]
 
 { #category : 'compiling' }
@@ -83,12 +83,12 @@ OCInteractiveAPI >> compile: sourceCode notifying: requestor in: behavior [
 					| check |
 					shouldSignalErrors ifTrue: [ n signalError ].
 
-					requestor ifNil: [ n signalError ] ifNotNil: [
-							check := self checkNotice: n requestor: requestor.
-							check ifNil: [ "Flush the AST and restart"
-									theCompiler source: requestor text asString.
-									^ self compile: requestor text asString notifying: requestor in: behavior ].
-							check ifFalse: [ ^ theCompiler failBlock ifNotNil: [ theCompiler failBlock cull: n ] ifNil: [ nil ] ] ] ].
+					check := self checkNotice: n requestor: requestor.
+					check ifNil: [ "Flush the AST and restart"
+							theCompiler source: requestor text asString.
+							^ self compile: requestor text asString notifying: requestor in: behavior ].
+					check ifFalse: [ 
+						^ theCompiler failBlock ifNotNil: [ theCompiler failBlock cull: n ] ifNil: [ nil ] ] ].
 			^ nil ].
 
 	^ compilationResult compiledMethod

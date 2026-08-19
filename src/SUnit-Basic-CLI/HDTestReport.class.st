@@ -19,11 +19,11 @@ Class {
 		'isErrorBeenLogged'
 	],
 	#classVars : [
-		'CurrentStageName',
-		'ShuffleSeed'
+		'CurrentStageName'
 	],
-	#category : 'SUnit-Basic-CLI',
-	#package : 'SUnit-Basic-CLI'
+	#category : 'SUnit-Basic-CLI-Core',
+	#package : 'SUnit-Basic-CLI',
+	#tag : 'Core'
 }
 
 { #category : 'running' }
@@ -41,21 +41,17 @@ HDTestReport class >> runClasses: aCollectionOfClasses named: packageName [
 
 	| suite classes time result |
 	suite := TestSuite named: packageName.
-	ShuffleSeed ifNotNil: [ suite shuffleSeed: ShuffleSeed asInteger ].
-	classes := (aCollectionOfClasses select: [ :class |
-		            class isTestCase and: [ class isAbstract not ] ])
-		           asSortedCollection: [ :a :b | a name <= b name ].
+	suite shuffleRandom: self shuffleRandom.
+	classes := aCollectionOfClasses select: [ :class | class isTestCase and: [ class isAbstract not ] ].
 	classes ifEmpty: [ ^ nil ].
 	classes do: [ :class | suite addTests: class buildSuite tests ].
 	time := DateAndTime now.
-	('Beginning to run tests of ' , packageName , ' with random seed '
-	 , suite shuffleSeed asString , OSPlatform current lineEnding)
+	('Beginning to run tests of ' , packageName , ' with random seed ' , self shuffleSeed asString , OSPlatform current lineEnding)
 		traceCr.
 	result := self runSuite: suite.
-	('Finished to run tests of ' , packageName , ' in '
-	 , (DateAndTime now - time) humanReadablePrintString
+	('Finished to run tests of ' , packageName , ' in ' , (DateAndTime now - time) humanReadablePrintString
 	 , OSPlatform current lineEnding) traceCr.
-	^ result 
+	^ result
 ]
 
 { #category : 'running' }
@@ -68,11 +64,6 @@ HDTestReport class >> runPackage: aString [
 HDTestReport class >> runSuite: aTestSuite [
 
 	^ self new runSuite: aTestSuite
-]
-
-{ #category : 'running' }
-HDTestReport class >> shuffleSeed: aSeed [
-	ShuffleSeed := aSeed
 ]
 
 { #category : 'private' }

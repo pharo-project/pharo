@@ -58,7 +58,7 @@ RBPushDownMethodParametrizedTest >> testPushDownMethodThatReferencesPoolDictiona
 	self deny: (class directlyDefinesMethod: #junk).
 	class subclasses do: [ :each |
 		self assert: (each parseTreeForSelector: #junk) equals: parseTree.
-		self assert: (each definesPoolDictionary: 'TextConstants' asSymbol) ]
+		self assert: (each definesPoolDictionary: 'RBSharedPoolForTestData' asSymbol) ]
 ]
 
 { #category : 'tests' }

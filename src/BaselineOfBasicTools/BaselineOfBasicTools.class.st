@@ -48,6 +48,7 @@ BaselineOfBasicTools >> baseline: spec [
 				baseline: 'UI' with: [ spec repository: repository ];
 				baseline: 'Reflectivity' with: [ spec repository: repository ];
 				baseline: 'DebugPoints' with: [ spec repository: repository ];
+				baseline: 'DebuggerCLI' with: [ spec loads: #('Core' 'Tests') from: repository ];
 				baseline: 'Athens' with: [
 						spec
 							loads: 'Cairo-core';
@@ -68,13 +69,15 @@ BaselineOfBasicTools >> baseline: spec [
 			spec package: 'ClassDefinitionPrinters-Tests'.
 			spec package: 'Network-Mail'.
 			spec package: 'Network-Mail-Tests'.
-
-			spec package: 'OpalCompiler-ToolFeatures'.
-			spec package: 'OpalCompiler-ToolFeatures-Tests'.
 			spec baseline: 'Refactoring' with: [
 					spec
 						repository: repository;
-						loads: #( 'Core' ) ].
+						loads: #( 'Core' 'Refactoring-CompilerSupport' 'Refactoring-CompilerSupport-Tests' ) ].
+					
+			spec baseline: 'RefactoringUI' with: [
+					spec
+						repository: repository;
+						loads: #( 'Core' 'Tests' ) ].		
 
 			spec package: 'Monticello-BackwardCompatibility'.
 			spec package: 'MonticelloFileServices'.
@@ -233,7 +236,14 @@ BaselineOfBasicTools >> postload: loader package: packageSpec [
 	"Next line is added in Pharo14 and should be removed in Pharo 15 or 16 or even 17"
 	FileException deprecatedAliases: { #FileSystemError }.
 
-	
+	OCASTCache deprecatedAliases: { #ASTCache }.
+
+OCIRPrinterVisitor deprecatedAliases: { #IRPrinter }.
+OCIRTranslatorVisitor deprecatedAliases: { #IRTranslator }.
+OCIRVisitor deprecatedAliases: { #IRVisitor }.
+OCIRBuilderTest deprecatedAliases: { #IRBuilderTest}.
+OCIRBytecodeGenerator deprecatedAliases: { #IRBytecodeGenerator}.
+OCIRBuilder deprecatedAliases: { #IRBuilder}.
 
 	Initialized := true
 ]

@@ -25,8 +25,9 @@ ReDefinesEqualNotHashRule class >> checksClass [
 ]
 
 { #category : 'accessing' }
-ReDefinesEqualNotHashRule class >> group [
-	^ self potentialBugsGroup
+ReDefinesEqualNotHashRule class >> groupSelector [
+
+	^ #potentialBugsGroup
 ]
 
 { #category : 'accessing' }

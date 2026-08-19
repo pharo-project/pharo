@@ -27,17 +27,18 @@ ReAddPackageChange >> asUndoOperation [
 	^ changeFactory removePackageNamed: packageName
 ]
 
+{ #category : 'printing' }
+ReAddPackageChange >> changeString [
+
+	^ String streamContents: [ :aStream |
+			aStream
+				nextPutAll: 'self packageOrganizer ';
+				nextPutAll: #ensurePackage:;
+				nextPutAll: packageName ]
+]
+
 { #category : 'private' }
 ReAddPackageChange >> generateChanges [
 
 	self packageOrganizer ensurePackage: packageName
-]
-
-{ #category : 'printing' }
-ReAddPackageChange >> printOn: aStream [
-
-	aStream
-		nextPutAll: 'self packageOrganizer ';
-		nextPutAll: #ensurePackage:;
-		nextPutAll: packageName
 ]

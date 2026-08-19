@@ -15,8 +15,9 @@ ReSubclassResponsibilityNotDefinedRule class >> checksClass [
 ]
 
 { #category : 'accessing' }
-ReSubclassResponsibilityNotDefinedRule class >> group [
-	^ self bugsGroup
+ReSubclassResponsibilityNotDefinedRule class >> groupSelector [
+
+	^ #bugsGroup
 ]
 
 { #category : 'accessing' }

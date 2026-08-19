@@ -29,7 +29,9 @@ Class {
 		'cachedClassNames',
 		'cachedNonClassNames',
 		'cachedBehaviors',
-		'pseudoVariables'
+		'pseudoVariables',
+		'undeclaredRegistry',
+		'codeChangeAnnouncer'
 	],
 	#category : 'System-Support-Utilities',
 	#package : 'System-Support',
@@ -211,16 +213,14 @@ SystemEnvironment >> codeChangeAnnouncer [
 
 	"This should not be hardcoded in the futurebut I should have my own instance."
 
-	^ SystemAnnouncer uniqueInstance
+	^ codeChangeAnnouncer ifNil: [SystemAnnouncer uniqueInstance]
 ]
 
 { #category : 'accessing' }
 SystemEnvironment >> codeChangeAnnouncer: anAnnouncer [
-	"For now the announcer is still saved in SystemAnnouncer so we access it there. In the future we should save it in the environment.
-	
-	codeChangeAnnouncer := anAnnouncer"
+	"For now the announcer is still saved in SystemAnnouncer so we access it there. In the future we should save it in the environment."
 
-	SystemAnnouncer announcer: anAnnouncer
+	codeChangeAnnouncer := anAnnouncer
 ]
 
 { #category : 'accessing' }
@@ -470,5 +470,11 @@ SystemEnvironment >> traitNames [
 SystemEnvironment >> undeclaredRegistry [
 	"For now we are referencing a global variable of the default environment of Pharo. But in the future each environments should have their undeclared registry, else we have memory leaks of the environments."
 
-	^ Undeclared
+	^ undeclaredRegistry ifNil: [ Undeclared ]
+]
+
+{ #category : 'accessing' }
+SystemEnvironment >> undeclaredRegistry: anObject [
+
+	undeclaredRegistry := anObject
 ]

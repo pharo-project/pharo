@@ -61,12 +61,15 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'Morphic-Widgets-Scrolling'.
 		spec package: 'Morphic-Widgets-Tabs'.
 		spec package: 'Morphic-Widgets-Taskbar'.
+		spec package: 'Morphic-Widgets-MissionControl'.
+		
 		spec package: 'Morphic-Widgets-Menubar'.
 		spec package: 'Morphic-Widgets-Tree'.
 		spec package: 'Morphic-Widgets-Windows'.
 		spec package: 'Morphic-Widgets-FastTable'.
 
 		spec package: 'Morphic-Widgets-Taskbar-Tests'.
+		spec package: 'Morphic-Widgets-MissionControl-Tests'.
 
 		"Several packages depend on Rubric as a basic Morphic component"
 		spec package: 'Rubric'.

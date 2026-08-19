@@ -10,8 +10,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReDetectContainsRule class >> group [
-	^ self codingIdiomViolationGroup
+ReDetectContainsRule class >> groupSelector [
+
+	^ #codingIdiomViolationGroup
 ]
 
 { #category : 'accessing' }

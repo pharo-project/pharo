@@ -10,8 +10,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReEqualsTrueRule class >> group [
-	^ self optimizationGroup
+ReEqualsTrueRule class >> groupSelector [
+
+	^ #optimizationGroup
 ]
 
 { #category : 'accessing' }

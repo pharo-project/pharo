@@ -8,34 +8,24 @@ Class {
 	#package : 'SystemCommands-MethodCommands'
 }
 
-{ #category : 'executing' }
-SycFileOutMethodCommand >> applyCommandResult [
-
-	| fileRef dialog ok |
-	StSaveFilePresenter new
-		defaultFolder: FileLocator workingDirectory;
-		nameText: 'methodsfileout.st';
-		okAction: [ :fileReference |
-				| fileouter |
-				fileRef := fileReference.
-				fileouter := Fileouter new.
-				self methods do: [ :each | fileouter addMethod: each ].
-				fileouter fileoutOnFileReference: fileReference ];
-		openModal.
-	dialog := SpConfirmDialog new.
-	ok := dialog
-		      title: 'Do you want to browse natively the fileout?';
-		      message: 'Are you sure?';
-		      acceptLabel: 'Sure!';
-		      cancelLabel: 'No, forget it';
-		      openModal.
-	ok ifTrue: [ fileRef openInOSFileBrowser ]
-]
-
 { #category : 'accessing' }
 SycFileOutMethodCommand >> description [
 
 	^ 'Requests to save a textual version of the selected class to a new file in chunk format and .st extension. Instance and class side methods are both saved'
+]
+
+{ #category : 'executing' }
+SycFileOutMethodCommand >> executeRefactoring [
+
+	| filename |
+	filename := self methods size = 1
+		            ifTrue: [ self methods first name ]
+		            ifFalse: [ 'methodsfileout' ].
+
+	^ Fileouter
+		fileoutNamed: filename
+		cofigureWith: [ :fileouter | 
+			self methods do: [ :each | fileouter addMethod: each ] ]
 ]
 
 { #category : 'accessing' }

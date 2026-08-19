@@ -10,8 +10,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReCollectionProtocolRule class >> group [
-	^ self codingIdiomViolationGroup
+ReCollectionProtocolRule class >> groupSelector [
+
+	^ #codingIdiomViolationGroup
 ]
 
 { #category : 'accessing' }

@@ -905,15 +905,15 @@ DebugPointTest >> testTestEnvironmentBehavior [
 
 { #category : 'tests' }
 DebugPointTest >> testTranscriptDebugPoint [
-
-	self skipOnPharoCITestingEnvironment.
-	dp := DebugPointManager
-		      installNew: DebugPoint
-		      on: node
-		      withBehaviors: { TranscriptBehavior }.
-	dp text: 'string'.
-	dp hitWithContext: context.
-	self assert: Transcript contents equals: 'string'
+    self skipOnPharoCITestingEnvironment.
+    Transcript clear.
+    dp := DebugPointManager
+          installNew: DebugPoint
+          on: node
+          withBehaviors: { TranscriptBehavior }.
+    dp text: 'string'.
+    dp hitWithContext: context.
+    self assert: Transcript contents equals: 'string'
 ]
 
 { #category : 'tests' }

@@ -35,9 +35,9 @@ ReProperMethodProtocolNameRule class >> goodMethodProtocolName [
 ]
 
 { #category : 'accessing' }
-ReProperMethodProtocolNameRule class >> group [
+ReProperMethodProtocolNameRule class >> groupSelector [
 
-	^ self methodProtocolNameGroup
+	^ #methodProtocolNameGroup
 ]
 
 { #category : 'testing' }

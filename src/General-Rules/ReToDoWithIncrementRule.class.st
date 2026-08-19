@@ -13,8 +13,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReToDoWithIncrementRule class >> group [
-	^ self codingIdiomViolationGroup
+ReToDoWithIncrementRule class >> groupSelector [
+
+	^ #codingIdiomViolationGroup
 ]
 
 { #category : 'accessing' }

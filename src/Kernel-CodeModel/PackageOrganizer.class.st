@@ -37,9 +37,11 @@ PackageOrganizer >> addPackage: aPackage [
 		           ifTrue: [ Package named: aPackage organizer: self ]
 		           ifFalse: [ aPackage organizer: self ].
 
+	package name first isUppercase ifFalse: [ self error: 'Package names should be uppercase' ].
+
 	self basicRegisterPackage: package.
 
-	self codeChangeAnnouncer  announce: (PackageAdded to: package).
+	self codeChangeAnnouncer announce: (PackageAdded to: package).
 
 	^ package
 ]
@@ -136,7 +138,7 @@ PackageOrganizer >> initialize [
 
 	packages := IdentityDictionary new.
 	undefinedPackage := UndefinedPackage new.
-	self ensurePackage: undefinedPackage
+	self basicRegisterPackage: undefinedPackage
 ]
 
 { #category : 'testing' }

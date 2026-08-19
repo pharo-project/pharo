@@ -14,8 +14,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReNotOptimizedIfRule class >> group [
-	^ self optimizationGroup
+ReNotOptimizedIfRule class >> groupSelector [
+
+	^ #optimizationGroup
 ]
 
 { #category : 'accessing' }

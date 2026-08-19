@@ -42,7 +42,8 @@ Class {
 		'setSelector',
 		'type',
 		'default',
-		'ghostHelp'
+		'ghostHelp',
+		'isTransient'
 	],
 	#classVars : [
 		'UniqueObject',
@@ -148,11 +149,16 @@ SettingDeclaration >> emptyList [
 
 { #category : 'export' }
 SettingDeclaration >> exportSettingAction [
-	"Export settings for those configured with a target <Symbol>. Otherwise we ignore the export for now"
+	"Return the startup actions that set this setting when the value differs from the default.
+	
+	Returns: a StartupAction or nil if no changes
+	
+	It is up to the caller to filter nil results"
 
-	^ (self targetSymbolOrObject isSymbol and: [
-		   self hasDefault not or: [
-			   self default ~= self findCurrentSettingValue ] ])
+	target isClass ifFalse: [ ^ nil ].
+	self isTransient ifTrue: [ ^ nil ].
+
+	^ (self hasDefault not or: [ self default ~= self findCurrentSettingValue ])
 		  ifTrue: [ self startupAction ]
 		  ifFalse: [ "We do nothing" nil ]
 ]
@@ -160,11 +166,9 @@ SettingDeclaration >> exportSettingAction [
 { #category : 'export' }
 SettingDeclaration >> findCurrentSettingValue [
 
-	| targetSymbolOrObject |
-	targetSymbolOrObject := self targetSymbolOrObject.
 	^ self targetSelector
-		ifNil: [ (Smalltalk at: targetSymbolOrObject) perform: self getSelector ]
-		ifNotNil: [ : s | ((Smalltalk at: targetSymbolOrObject) perform: s) perform: self getSelector].
+		  ifNil: [ target perform: self getSelector withEnoughArguments: { nil } ]
+		  ifNotNil: [ :s | (target perform: s) perform: self getSelector withEnoughArguments: { nil } ]
 ]
 
 { #category : 'accessing' }
@@ -241,6 +245,18 @@ SettingDeclaration >> initialize [
 	super initialize.
 
 	default := UniqueObject
+]
+
+{ #category : 'accessing' }
+SettingDeclaration >> isTransient [
+
+	^ isTransient ifNil: [ false ]
+]
+
+{ #category : 'accessing' }
+SettingDeclaration >> isTransient: anObject [
+
+	isTransient := anObject
 ]
 
 { #category : 'user interface' }
@@ -335,25 +351,24 @@ SettingDeclaration >> startupActionCode [
 	| currentValue |
 	currentValue := self findCurrentSettingValue.
 	^ String streamContents: [ :s |
-		  self targetSelector ifNotNil: [ s << '(' ].
-		  s << '(Smalltalk at: '.
-		  self targetSymbolOrObject asSymbol printOn: s.
-		  self targetSelector ifNotNil: [ :ts |
+			  self targetSelector ifNotNil: [ s << '(' ].
+			  s << '(Smalltalk globals at: '.
+			  self targetName printOn: s.
+			  self targetSelector ifNotNil: [ :ts |
+					  s << ') perform: '.
+					  ts printOn: s ].
 			  s << ') perform: '.
-			  ts printOn: s ].
-		  s << ') perform: '.
-		  self setSelector asSymbol printOn: s.
-		  s << ' with: ('.
-		  currentValue settingStoreOn: s.
-		  s << ')' ]
+			  self setSelector asSymbol printOn: s.
+			  s << ' with: ('.
+			  currentValue settingStoreOn: s.
+			  s << ')' ]
 ]
 
-{ #category : 'export' }
-SettingDeclaration >> targetSymbolOrObject [
+{ #category : 'accessing' }
+SettingDeclaration >> targetName [
 
-	^ self target isSymbol
-		  ifTrue: [ self target ]
-		  ifFalse: [ self target exportSettingAction ]
+	self assert: self target isClass.
+	^ self target name
 ]
 
 { #category : 'accessing' }

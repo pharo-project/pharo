@@ -15,8 +15,9 @@ ReClassNotReferencedRule class >> checksClass [
 ]
 
 { #category : 'accessing' }
-ReClassNotReferencedRule class >> group [
-	^ self designFlawGroup
+ReClassNotReferencedRule class >> groupSelector [
+
+	^ #designFlawGroup
 ]
 
 { #category : 'accessing' }

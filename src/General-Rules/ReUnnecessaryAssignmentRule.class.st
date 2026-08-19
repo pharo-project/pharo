@@ -10,8 +10,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReUnnecessaryAssignmentRule class >> group [
-	^ self optimizationGroup
+ReUnnecessaryAssignmentRule class >> groupSelector [
+
+	^ #optimizationGroup
 ]
 
 { #category : 'accessing' }

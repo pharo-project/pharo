@@ -43,7 +43,7 @@ ReChangeTest >> exampleClasses [
 { #category : 'accessing' }
 ReChangeTest >> exampleTraits [
     <sampleInstance>
-	^ { TSortable. TAssertable }
+	^ { RBRefactoringTestTrait. TAssertable }
 ]
 
 { #category : 'utilities' }

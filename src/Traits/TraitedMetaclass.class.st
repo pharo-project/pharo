@@ -298,12 +298,12 @@ TraitedMetaclass >> removeFromComposition: aTrait [
 ]
 
 { #category : 'accessing - method dictionary' }
-TraitedMetaclass >> removeSelector: aSelector [
+TraitedMetaclass >> removeSelector: aSelector logged: logged [
 
 	"When a selector is removed it should be notified to my users.
 	Check the class TraitChange for more details"
 	<reflection: 'Class structural modification - Selector/Method modification'>
-	super removeSelector: aSelector.
+	super removeSelector: aSelector logged: logged.
 	self localMethodDict removeKey: aSelector ifAbsent: [  ].
 
 	TraitChange removeSelector: aSelector on: self

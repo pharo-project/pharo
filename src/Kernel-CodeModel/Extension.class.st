@@ -18,6 +18,12 @@ Extension >> addUserPackage: aPackage [
 	self userPackages add: aPackage
 ]
 
+{ #category : 'accessing - method dictionary' }
+Extension >> compiledMethodAt: selector [
+
+	^ self methodDict at: (self package visibleSelectorForSymbol: selector) 
+]
+
 { #category : 'accessing' }
 Extension >> defineScopedSelector: aSymbol [
 
@@ -49,6 +55,14 @@ Extension >> hasUserPackages [
 	^ userPackages notNil and: [ userPackages notEmpty ]
 ]
 
+{ #category : 'testing - method dictionary' }
+Extension >> includesSelector: aSymbol [
+
+	(super includesSelector: aSymbol) ifTrue: [ ^ true ].
+
+	^ super includesSelector: (self package visibleSelectorForSymbol: aSymbol)
+]
+
 { #category : 'accessing' }
 Extension >> internScopedSelector: aSymbol [
 
@@ -71,14 +85,14 @@ Extension >> methodInstaller [
 Extension >> removeFromSystem: logged [
 
 	self selectors do: [ :e |
-		self removeSelector: e ].
+		self removeSelector: e logged: logged ].
 	super removeFromSystem: logged
 ]
 
 { #category : 'accessing - method dictionary' }
-Extension >> removeSelector: aSelector [
+Extension >> removeSelector: aSelector logged: logged [
 
-	super removeSelector: aSelector.
+	super removeSelector: aSelector logged: logged.
 	
 	"In some tests we removed the extension method by hand, breaking some invariants.
 	We should take a look a that"

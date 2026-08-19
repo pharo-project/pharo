@@ -151,7 +151,7 @@ EFContext >> initialize [
 	self periodAtEndOfBlock: false.
 	self periodAtEndOfMethod: false.
 	self retainBlankLinesBetweenStatements: true.
-	self retainBlankLinesBeforeComments: false.
+	self retainBlankLinesBeforeComments: true.
 	self selectorAndArgumentCombinedMaxSize: 40.
 	self numberOfSpacesInsideBlock: 1.
 	self numberOfSpacesInsideParentheses: 0.

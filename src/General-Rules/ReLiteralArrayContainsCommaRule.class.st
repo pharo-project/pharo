@@ -10,8 +10,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReLiteralArrayContainsCommaRule class >> group [
-	^ self codingIdiomViolationGroup
+ReLiteralArrayContainsCommaRule class >> groupSelector [
+
+	^ #codingIdiomViolationGroup
 ]
 
 { #category : 'accessing' }

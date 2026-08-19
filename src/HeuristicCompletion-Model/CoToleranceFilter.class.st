@@ -73,7 +73,7 @@ CoToleranceFilter class >> defaultMinimumTokenSize [
 { #category : 'default values' }
 CoToleranceFilter class >> defaultRate [
 
-	^ 0
+	^ 0.4
 
 	
 ]
@@ -99,7 +99,8 @@ CoToleranceFilter class >> enabled [
 { #category : 'class initialization' }
 CoToleranceFilter class >> initialize [ 
 
-	self reset
+	self reset.
+	self disable
 ]
 
 { #category : 'configuration' }
@@ -141,10 +142,11 @@ CoToleranceFilter class >> scoreForCandidate: aCandidateString token: aTokenStri
 	"Return zero if the candidate matches the token.
 	
 	"
-	| candidate token maxSize maxEdits distance |
+	| candidate token maxSize maxEdits distance candidatePrefix|
+
 	candidate := aCandidateString asString.
 	token := aTokenString asString.
-
+	
 	token isEmpty ifTrue: [ ^ 0 ].
 	candidate = token ifTrue: [ ^ 0 ].
 
@@ -159,13 +161,18 @@ CoToleranceFilter class >> scoreForCandidate: aCandidateString token: aTokenStri
 	(candidate beginsWith: token) ifTrue: [ ^ 0 ].
 	(self shouldTryFuzzyFor: token candidate: candidate tolerance: aTolerance) ifFalse: [ ^ 0 ].
 
-	maxSize := token size max: candidate size.
-	maxEdits := (aTolerance * maxSize) ceiling.
+	maxSize := token size.
+	maxEdits := (aTolerance * maxSize) floor .
 	maxEdits <= 0 ifTrue: [ ^ 0 ].
+	
+	"Fuzzy matching is applied only to the first n characters of the candidate,
+ 	 where n = min(token size, candidate size).
+ 	 The untyped suffix of the candidate is irrelevant to edit distance."
+	candidatePrefix := candidate copyFrom: 1 to: (token size min: candidate size).
 
 	distance := self
 		damerauLevenshteinDistanceBetween: token
-		and: candidate
+		and: candidatePrefix
 		maxDistance: maxEdits.
 
 	distance ifNil: [ ^ 0 ].
@@ -175,7 +182,6 @@ CoToleranceFilter class >> scoreForCandidate: aCandidateString token: aTokenStri
 { #category : 'algorithms' }
 CoToleranceFilter class >> shouldTryFuzzyFor: token candidate: candidate tolerance: aTolerance [ 
 
-	| maxSize maxEdits |
 	(self enabled not or: [ aTolerance <= 0.0 ]) ifTrue: [ ^ false ].
 	token isEmpty ifTrue: [ ^ false ].
 	candidate isEmpty ifTrue: [ ^ false ].
@@ -185,12 +191,8 @@ CoToleranceFilter class >> shouldTryFuzzyFor: token candidate: candidate toleran
 	((token includes: $:) or: [ candidate includes: $: ]) ifTrue: [
 		(token occurrencesOf: $:) = (candidate occurrencesOf: $:)
 			ifFalse: [ ^ false ] ].
-
-	"Cheap guardrails to avoid noisy matches"
-	token first = candidate first ifFalse: [ ^ false ].
-	maxSize := token size max: candidate size.
-	maxEdits := (aTolerance * maxSize) ceiling.
-	^ (token size - candidate size) abs <= maxEdits
+		
+	^ true
 ]
 
 { #category : 'testing' }

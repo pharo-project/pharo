@@ -56,7 +56,8 @@ Class {
 		'superclassResolver',
 		'inRemake',
 		'package',
-		'tag'
+		'tag',
+		'sourcesManager'
 	],
 	#classVars : [
 		'BuilderEnhancer'
@@ -123,9 +124,14 @@ ShiftClassBuilder >> build [
 
 	self installSlotsAndVariables.
 
-	self oldClass ifNotNil: [ self builderEnhancer compileMethodsFor: self ].
+	self oldClass ifNotNil: [ :old |
+			"I do not like this check. We do it because #duplicateClassWithNewName: is using the builder to make a new class but defining an old class that does nto have the same name to copy all methods.
+			This seems bad to me because them we do not announce any method creation while we create methods."
+			old name = newClass name ifTrue: [ newClass basicTag: old packageTag ].
+			self builderEnhancer compileMethodsFor: self ].
 
 	self builderEnhancer afterMethodsCompiled: self.
+
 	^ newClass
 ]
 
@@ -634,6 +640,17 @@ ShiftClassBuilder >> slots: aCollection [
 ShiftClassBuilder >> slotsFromString: aString [
 	"Note: this method should not be used outside of old style class definitions"
 	self slots: aString asSlotCollection
+]
+
+{ #category : 'accessing' }
+ShiftClassBuilder >> sourcesManager [
+	^ sourcesManager
+]
+
+{ #category : 'accessing' }
+ShiftClassBuilder >> sourcesManager: aNoSourcesManager [ 
+	
+	sourcesManager := aNoSourcesManager 
 ]
 
 { #category : 'accessing' }

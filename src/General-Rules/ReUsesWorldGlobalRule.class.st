@@ -11,8 +11,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReUsesWorldGlobalRule class >> group [
-	^ self bugsGroup
+ReUsesWorldGlobalRule class >> groupSelector [
+
+	^ #bugsGroup
 ]
 
 { #category : 'accessing' }

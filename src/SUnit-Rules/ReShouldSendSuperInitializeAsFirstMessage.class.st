@@ -20,8 +20,9 @@ ReShouldSendSuperInitializeAsFirstMessage class >> checksMethod [
 ]
 
 { #category : 'accessing' }
-ReShouldSendSuperInitializeAsFirstMessage class >> group [
-	^ self cleanCodeGroup
+ReShouldSendSuperInitializeAsFirstMessage class >> groupSelector [
+
+	^ #cleanCodeGroup
 ]
 
 { #category : 'utilities' }

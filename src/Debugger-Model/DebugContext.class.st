@@ -141,7 +141,11 @@ DebugContext >> recompileCurrentMethodTo: aText notifying: aNotifyer inSession: 
 	classOrTraitOfMethod := self confirmOnTraitOverwrite: selector inClass: self selectedClass inSession: aSession.
 	classOrTraitOfMethod ifNil: [ ^ nil ].
 
-	^ classOrTraitOfMethod compile: aText classified: self selectedMessageCategoryName notifying: aNotifyer
+	selector := classOrTraitOfMethod
+		compile: aText
+		classified: self selectedMessageCategoryName
+		notifying: aNotifyer.
+	^ classOrTraitOfMethod >> selector
 ]
 
 { #category : 'accessing' }

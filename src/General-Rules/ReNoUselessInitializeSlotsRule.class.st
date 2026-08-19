@@ -16,9 +16,9 @@ ReNoUselessInitializeSlotsRule class >> checksClass [
 ]
 
 { #category : 'accessing' }
-ReNoUselessInitializeSlotsRule class >> group [
+ReNoUselessInitializeSlotsRule class >> groupSelector [
 
-	^ self optimizationGroup
+	^ #optimizationGroup
 ]
 
 { #category : 'accessing' }

@@ -29,6 +29,12 @@ ShiftAnonymousClassInstaller >> installSubclassInSuperclass: newClass [
 ShiftAnonymousClassInstaller >> notifyChanges [
 ]
 
+{ #category : 'building' }
+ShiftAnonymousClassInstaller >> storeSourceCodeOf: aClass [
+
+	"Nothing"
+]
+
 { #category : 'notifications' }
 ShiftAnonymousClassInstaller >> updatePackage: newClass [
 ]

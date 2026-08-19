@@ -10,8 +10,9 @@ Class {
 }
 
 { #category : 'accessing' }
-FloatReferencesRule class >> group [
-	^ self bugsGroup
+FloatReferencesRule class >> groupSelector [
+
+	^ #bugsGroup
 ]
 
 { #category : 'accessing' }

@@ -124,11 +124,7 @@ Package >> addExtensionImport: anExtension [
 	"Recompile dependencies, so they can see the extension.
 	For now, we recompile the entire package, since every callsite may now become a scoped callsite"
 	self methods do: [ :m |
-		m methodClass
-			compile: m sourceCode
-			classified: m protocol
-			withStamp: m timeStamp
-			logSource: true ]
+		m methodClass compile: m selector from: m methodClass ]
 ]
 
 { #category : 'add method - compiled method' }
@@ -458,7 +454,7 @@ Package >> internScopedSelector: aSymbol [
 
 	| found |
 	found := self visibleSelectorForSymbol: aSymbol asSymbol.
-	found == aSymbol ifFalse: [ ^ found ].
+	found == aSymbol asSymbol ifFalse: [ ^ found ].
 
 	^ self defineScopedSelector: aSymbol
 ]
@@ -565,8 +561,7 @@ Package >> moveClass: aClass toTag: aTag [
 
 	"If the tag is undefined, this means we are adding the class. Else we are updating the package or tag."
 	oldTag isUndefined
-		ifTrue: [ SourcesManager current ifNotNil: [ :instance | "can be nil during the bootstrap" instance writeClassCreation: aClass ].
-				self codeChangeAnnouncer  announce: (ClassAdded class: aClass) ]
+		ifTrue: [ self codeChangeAnnouncer  announce: (ClassAdded class: aClass) ]
 		ifFalse: [ self codeChangeAnnouncer  announce: (ClassRepackaged classRepackaged: aClass oldTag: oldTag newTag: newTag) ]
 ]
 
@@ -688,7 +683,7 @@ Package >> removeExtensionImport: anExtension [
 		localScopedSelector := self visibleSelectorForSymbol: e symbol.
 		(anExtension extendedClass includesSelector: localScopedSelector) ifTrue: [
 			self assert: anExtension extendedClass >> localScopedSelector == (anExtension extendedClass >> e).
-			anExtension extendedClass removeSelector: localScopedSelector ]
+			anExtension extendedClass removeSelector: localScopedSelector logged: false ]
 	]
 ]
 

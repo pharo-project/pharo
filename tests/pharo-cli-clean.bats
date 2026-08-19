@@ -37,16 +37,16 @@ teardown() {
 @test "clean can run release clean" {
   copy_image "test-clean.image"
   # create an empty package that should be cleaned by the command
-  run_pharo eval --save 'PackageOrganizer default addPackage: #empty'
+  run_pharo eval --save 'PackageOrganizer default addPackage: #Empty'
   assert_success
-  run_pharo eval 'PackageOrganizer default hasPackage: #empty'
+  run_pharo eval 'PackageOrganizer default hasPackage: #Empty'
   assert_success
   assert_line "true"
 
   run_pharo_with_timeout 30 clean --release
   assert_success
   # ensure packages are cleaned
-  run_pharo eval 'PackageOrganizer default hasPackage: #empty'
+  run_pharo eval 'PackageOrganizer default hasPackage: #Empty'
   assert_success
   assert_line "false"
 }

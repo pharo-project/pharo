@@ -56,7 +56,6 @@ CoBasicFetcherWithElementsTest >> testNextManyShouldReturnCollection [
 
 { #category : 'tests' }
 CoBasicFetcherWithElementsTest >> testNextNextShouldReturnSecondExpectedElement [
-
 	self fetcher next.
 	self assertEntry: self fetcher next equals: self secondExpectedElement
 ]

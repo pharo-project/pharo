@@ -33,19 +33,20 @@ ReRenamePackageChange >> changePackage [
 		  browserEnvironment packageAt: newName ifAbsent: [ nil ] ]
 ]
 
+{ #category : 'printing' }
+ReRenamePackageChange >> changeString [
+
+	^ String streamContents: [ :aStream |
+			aStream
+				nextPutAll: oldName;
+				nextPutAll: ' renameTo: ';
+				print: newName ]
+]
+
 { #category : 'private' }
 ReRenamePackageChange >> generateChanges [
 
 	self changePackage renameTo: newName
-]
-
-{ #category : 'printing' }
-ReRenamePackageChange >> printOn: aStream [
-
-	aStream
-		nextPutAll: oldName;
-		nextPutAll: ' renameTo: ';
-		print: newName
 ]
 
 { #category : 'instance creation' }

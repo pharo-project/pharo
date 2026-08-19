@@ -34,3 +34,9 @@ FlagIconStyler >> iconFor: aNode [
 FlagIconStyler >> shouldStyleNode: aNode [
 	^aNode isMessage and: [aNode selector = #flag:]
 ]
+
+{ #category : 'private' }
+FlagIconStyler >> stylerName [
+
+	^ 'flag'
+]

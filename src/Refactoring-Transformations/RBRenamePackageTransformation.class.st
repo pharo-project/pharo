@@ -21,9 +21,8 @@ Class {
 	#instVars : [
 		'package'
 	],
-	#category : 'Refactoring-Transformations-Model-Unused',
-	#package : 'Refactoring-Transformations',
-	#tag : 'Model-Unused'
+	#category : 'Refactoring-Transformations',
+	#package : 'Refactoring-Transformations'
 }
 
 { #category : 'instance creation' }

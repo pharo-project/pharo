@@ -17,8 +17,9 @@ ReUsesTrueRule class >> checksMethod [
 ]
 
 { #category : 'accessing' }
-ReUsesTrueRule class >> group [
-	^ self bugsGroup
+ReUsesTrueRule class >> groupSelector [
+
+	^ #bugsGroup
 ]
 
 { #category : 'accessing' }

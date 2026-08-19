@@ -10,9 +10,9 @@ Class {
 }
 
 { #category : 'accessing' }
-SettingDontTranslateDescriptionRule class >> group [
+SettingDontTranslateDescriptionRule class >> groupSelector [
 
-	^ self apiHintsGroup
+	^ #apiHintsGroup
 ]
 
 { #category : 'accessing' }

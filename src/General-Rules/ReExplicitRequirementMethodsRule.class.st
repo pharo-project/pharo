@@ -15,8 +15,9 @@ ReExplicitRequirementMethodsRule class >> checksClass [
 ]
 
 { #category : 'accessing' }
-ReExplicitRequirementMethodsRule class >> group [
-	^ self codingIdiomViolationGroup
+ReExplicitRequirementMethodsRule class >> groupSelector [
+
+	^ #codingIdiomViolationGroup
 ]
 
 { #category : 'accessing' }

@@ -37,3 +37,9 @@ SemanticWarningIconStyler >> iconLabel: aNode [
 SemanticWarningIconStyler >> shouldStyleNode: aNode [
 	^aNode warningNotices isNotEmpty
 ]
+
+{ #category : 'private' }
+SemanticWarningIconStyler >> stylerName [
+
+	^ 'warning'
+]

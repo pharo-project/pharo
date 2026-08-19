@@ -218,7 +218,7 @@ SDLOSXPharoMenu >> doCreatePharoMenu [
 { #category : 'menu options' }
 SDLOSXPharoMenu >> doPreferences [
 
-	UIManager default defer: [ SettingBrowser open ]
+	UIManager default defer: [ (StSettingsBrowser newApplication: StPharoApplication current) open ]
 ]
 
 { #category : 'menu options' }

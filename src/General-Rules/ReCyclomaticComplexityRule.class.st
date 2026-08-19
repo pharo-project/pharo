@@ -16,8 +16,9 @@ ReCyclomaticComplexityRule class >> checksMethod [
 ]
 
 { #category : 'accessing' }
-ReCyclomaticComplexityRule class >> group [
-	^ self optimizationGroup
+ReCyclomaticComplexityRule class >> groupSelector [
+
+	^ #optimizationGroup
 ]
 
 { #category : 'accessing' }

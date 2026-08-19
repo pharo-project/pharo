@@ -10,8 +10,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReIfNotNilDoRule class >> group [
-	^ self codingIdiomViolationGroup
+ReIfNotNilDoRule class >> groupSelector [
+
+	^ #codingIdiomViolationGroup
 ]
 
 { #category : 'accessing' }

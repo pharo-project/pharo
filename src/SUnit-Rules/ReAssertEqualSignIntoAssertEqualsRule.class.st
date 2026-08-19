@@ -12,8 +12,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReAssertEqualSignIntoAssertEqualsRule class >> group [
-	^ self sunitGroup
+ReAssertEqualSignIntoAssertEqualsRule class >> groupSelector [
+
+	^ #sunitGroup
 ]
 
 { #category : 'accessing' }

@@ -16,7 +16,7 @@ Class {
 RBConditionTest >> setUp [
 	| classenv classes |
 	super setUp.
-	classes := { Object . OCMessageNode . TextConstants } asOrderedCollection addAll: self class withAllSuperclasses; yourself.
+	classes := { Object . OCMessageNode . RBSharedPoolForTestData } asOrderedCollection addAll: self class withAllSuperclasses; yourself.
 	classenv := RBClassEnvironment classes: classes.
 	rbNamespace := RBNamespace onEnvironment: classenv.
 	
@@ -28,7 +28,7 @@ RBConditionTest >> setUp [
 			name: #SomeClassName;
 			slots: { #instanceVariable1. #instanceVariable2 };
 			sharedVariables: { #ClassVariable1 };
-			sharedPools: { #TextConstants };
+			sharedPools: { #RBSharedPoolForTestData };
 			package: #'Refactory-Testing' ].
 	newClass := rbNamespace classNamed: #SomeClassName
 ]
@@ -151,18 +151,18 @@ RBConditionTest >> testHierarchyOfReferencesInstanceVariable2 [
 { #category : 'tests - references' }
 RBConditionTest >> testHierarchyOfReferencesSharedVariableAccessing [
 
-	| textConstantClass |
-	textConstantClass := rbNamespace classNamed: #TextConstants.
+	| myPoolClass |
+	myPoolClass := rbNamespace classNamed: #RBSharedPoolForTestData.
 	"only the class side is accessing the shared variable. But the query should 
 	check both sides."
 
 	self assert: (RBCondition
-			 hierarchyOf: textConstantClass
-			 referencesSharedVariable: #Basal) check.
+			 hierarchyOf: myPoolClass
+			 referencesSharedVariable: #Var1) check.
 
 	self assert: (RBCondition
-			 hierarchyOf: textConstantClass classSide
-			 referencesSharedVariable: #Basal) check
+			 hierarchyOf: myPoolClass classSide
+			 referencesSharedVariable: #Var1) check
 ]
 
 { #category : 'tests - references' }

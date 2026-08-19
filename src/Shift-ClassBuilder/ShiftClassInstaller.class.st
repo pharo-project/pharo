@@ -22,7 +22,8 @@ Class {
 	#name : 'ShiftClassInstaller',
 	#superclass : 'Object',
 	#instVars : [
-		'builder'
+		'builder',
+		'sourcesManager'
 	],
 	#category : 'Shift-ClassBuilder-Installer',
 	#package : 'Shift-ClassBuilder',
@@ -187,11 +188,17 @@ ShiftClassInstaller >> make [
 
 		builder builderEnhancer propagateChangesToRelatedClasses: newClass builder: builder.
 		
+		"In the case we update the trait composition of the class, we might have to remove empty protocols. We do that after rebuilding the dictionaries so that all selectors are present."
+
+		newClass removeEmptyProtocols.
+		newClass class removeEmptyProtocols.
+		
 	] on: ShNoChangesInClass do:[
 		"If there are no changes in the building, I am not building or replacing nothing"
 		newClass := self oldClass.
 	].
 
+	self storeSourceCodeOf: newClass.
 	self updatePackage: newClass.
 	self comment: newClass.
 
@@ -211,6 +218,7 @@ ShiftClassInstaller >> make: aBlock [
 ShiftClassInstaller >> makeWithBuilder: aBuilder [
 
 	builder := aBuilder.
+	sourcesManager := aBuilder sourcesManager.
 	^ self make
 ]
 
@@ -296,6 +304,18 @@ ShiftClassInstaller >> packageOrganizer [
 	^ builder installingEnvironment organization
 ]
 
+{ #category : 'accessing' }
+ShiftClassInstaller >> sourcesManager [
+
+	^ sourcesManager ifNil: [ SourcesManager current ]
+]
+
+{ #category : 'building' }
+ShiftClassInstaller >> storeSourceCodeOf: newClass [
+
+	self sourcesManager ifNotNil: [ :instance | instance writeClassCreation: newClass ]
+]
+
 { #category : 'building' }
 ShiftClassInstaller >> updateBindings: aBinding of: newClass [
 	newClass methods do: [ :e | e classBinding: aBinding ]
@@ -304,9 +324,6 @@ ShiftClassInstaller >> updateBindings: aBinding of: newClass [
 { #category : 'notifications' }
 ShiftClassInstaller >> updatePackage: aClass [
 	"If the package is nil we leave the class unclassified"
-	builder package ifNotNil: [ :package | 
-		((self packageOrganizer
-			ensurePackage: package)
-				ensureTag: builder tag)
-					addClass: aClass ]
+
+	builder package ifNotNil: [ :package | ((self packageOrganizer ensurePackage: package) ensureTag: builder tag) addClass: aClass ]
 ]

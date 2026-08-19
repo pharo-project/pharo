@@ -18,8 +18,9 @@ ReClassNotCategorizedRule class >> checksClass [
 ]
 
 { #category : 'accessing' }
-ReClassNotCategorizedRule class >> group [
-	^ self designFlawGroup
+ReClassNotCategorizedRule class >> groupSelector [
+
+	^ #designFlawGroup
 ]
 
 { #category : 'accessing' }
