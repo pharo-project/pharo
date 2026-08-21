@@ -56,22 +56,23 @@ ChainBehavior class >> rootFor: aDebugPoint [
 
 { #category : 'private' }
 ChainBehavior >> checkCircularChain: aDebugPoint withParent: aParent [
-	"should return true if there is a circular dependency so that the child will not be added"
+	"Return true if there is a circular dependency so that the child will not be added"
+	
 	| parent |
-	(aParent = aDebugPoint) ifTrue: [ 
+	aParent = aDebugPoint ifTrue: [ 
 		self notifyCircularChain.
-		^true ].
+		^ true ].
 	
-	parent := (self class parentFor: aParent) ifNil: [ ^false ].
+	parent := (self class parentFor: aParent) ifNil: [ ^ false ].
 	
-	^self checkCircularChain: aDebugPoint withParent: parent.
+	^ self checkCircularChain: aDebugPoint withParent: parent
 
 
 ]
 
 { #category : 'accessing' }
 ChainBehavior >> child [
-	^self class childFor: self debugPoint.
+	^ self class childFor: self debugPoint
 
 ]
 
@@ -85,12 +86,12 @@ ChainBehavior >> execute [
 { #category : 'private' }
 ChainBehavior >> notifyCircularChain [
 
-	InformativeNotification signal: 'Circular Dependency: Adding this child would result in a circular chain, which is not allowed.'
+	InformativeNotification signal: 'Circular Dependency: Adding this child results in a circular chain, which is not allowed.'
 ]
 
 { #category : 'accessing' }
 ChainBehavior >> parent [
-	^self class parentFor: self debugPoint.
+	^ self class parentFor: self debugPoint
 ]
 
 { #category : 'API' }
@@ -108,7 +109,8 @@ ChainBehavior >> putChild: aDebugPoint [
 
 { #category : 'cleanup' }
 ChainBehavior >> remove [ 
-	"removing element as child and as parent of other debug points"
+	"Removing element as child and as parent of other debug points"
+	
 	self class allChains removeKey: self debugPoint ifAbsent: [].
 	self class removeChild: self debugPoint.
 
@@ -126,9 +128,9 @@ ChainBehavior >> resetChain [
 { #category : 'private' }
 ChainBehavior >> resetSubChain: aDebugPoint [
 	| child |
-	child := 	self class allChains at: aDebugPoint ifAbsent: [ ^nil. ].
+	child := 	self class allChains at: aDebugPoint ifAbsent: [ ^ nil ].
 	child ifNotNil: [ child enabled: false.
-		self resetSubChain: child].
+		self resetSubChain: child ]
 
 	
 ]

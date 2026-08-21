@@ -19,8 +19,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReCascadedNextPutAllsRule class >> group [
-	^ self codingIdiomViolationGroup
+ReCascadedNextPutAllsRule class >> groupSelector [
+
+	^ #codingIdiomViolationGroup
 ]
 
 { #category : 'accessing' }

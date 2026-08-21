@@ -19,33 +19,40 @@ BaselineOfCompiler class >> testsPackageNames [
 
 { #category : 'baselines' }
 BaselineOfCompiler >> baseline: spec [
+	<baseline>	
+	| repository |
+	repository := self packageRepositoryURLForSpec: spec.
 
-	<baseline>
 	spec for: #common do: [
-			
 			spec baseline: 'CollectionsTests' with: [
             spec
-                repository: (self packageRepositoryURLForSpec: spec);
+                repository: repository;
                 className: 'BaselineOfCollections';
                 loads: #( 'Collections-Abstract-Tests' 'Collections-Unordered-Tests' 'Collections-Support-Tests' ) ].
 
 			spec baseline: 'Collections' with: [
             spec
-                repository: (self packageRepositoryURLForSpec: spec);
+                repository: repository;
                 className: 'BaselineOfCollections';
                 loads: #( 'Collections-Stack' 'Collections-Atomic' 'Collections-Arithmetic' ) ].
 		
 			spec baseline: 'KernelTests' with: [
 				spec
-					repository: (self packageRepositoryURLForSpec: spec);
+					repository: repository;
 					className: 'BaselineOfKernel';
 					loads: #(  'Kernel-Tests' 'System-Time-Tests') ].
 
 			spec baseline: 'CoreTraits' with: [
 				spec
-					repository: (self packageRepositoryURLForSpec: spec);
+					repository: repository;
 					className: 'BaselineOfTraits';
 					loads: #( 'core-traits' ) ].
+			
+			spec baseline: 'ClapTests' with: [
+            spec
+                repository: repository;
+					 className: 'BaselineOfClap';
+                loads: #( 'Tests' ) ].
 
 			spec
 				package: 'ClassDefinitionPrinters';
@@ -53,7 +60,7 @@ BaselineOfCompiler >> baseline: spec [
 				package: 'CodeExport';
 				package: 'CodeImport';
 				package: 'CodeImport-Commands';
-				package: 'CodeImport-Tests' with: [ spec requires: #( 'AST-Core-Tests' ) ];
+				package: 'CodeImport-Tests' with: [ spec requires: #( 'AST-Core-Tests' 'ClapTests' ) ];
 
 				package: 'ParseTreeRewriter';
 				package: 'Deprecation';

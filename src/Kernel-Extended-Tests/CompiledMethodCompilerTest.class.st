@@ -95,22 +95,6 @@ CompiledMethodCompilerTest >> testBytecode [
 	self assertCollection: (Object>>#halt) bytecodes equals: expectedResult
 ]
 
-{ #category : 'tests - copying' }
-CompiledMethodCompilerTest >> testClone [
-	<pragma: #pragma> "for testing"
-	| method copy |
-	method := thisContext method.
-	self assert: method pragmas notEmpty.
-	copy := method clone.
-	self assert: (method equivalentTo: copy).
-	self assert: method header equals: copy header.
-	self assert: method equals: copy.
-	self assert: method ~~ copy.
-	"this is a shallow copy"
-	self deny: copy penultimateLiteral method identicalTo: copy.
-	copy pragmas do: [ :p | self deny: p method identicalTo: copy ]
-]
-
 { #category : 'tests - accessing' }
 CompiledMethodCompilerTest >> testComments [
 	"I am the first comment to be found in this test"
@@ -471,6 +455,22 @@ CompiledMethodCompilerTest >> testSelector [
 CompiledMethodCompilerTest >> testSendsSelector [
 	self assert: ((CompiledCode >> #sendsSelector:) sendsSelector: #includes:).
 	self deny: ((CompiledCode >> #sendsSelector:) sendsSelector: #doBreakfastForMe)
+]
+
+{ #category : 'tests - copying' }
+CompiledMethodCompilerTest >> testShallowCopy [
+	<pragma: #pragma> "for testing"
+	| method copy |
+	method := thisContext method.
+	self assert: method pragmas notEmpty.
+	copy := method shallowCopy.
+	self assert: (method equivalentTo: copy).
+	self assert: method header equals: copy header.
+	self assert: method equals: copy.
+	self assert: method ~~ copy.
+	"this is a shallow copy"
+	self deny: copy penultimateLiteral method identicalTo: copy.
+	copy pragmas do: [ :p | self deny: p method identicalTo: copy ]
 ]
 
 { #category : 'tests - literals' }

@@ -102,7 +102,7 @@ StandardFonts class >> fixSmallDejaVuPunctuationMarks [
 	"For each punctuation mark, replace the corresponding glyph with the one found in the bold font"
 	#($. $: $; $' $` $, $")
 		do: [:ch |
-			StandardFonts defaultFont characterFormAt: ch put: (fb characterFormAt: ch) deepCopy]
+			StandardFonts defaultFont characterFormAt: ch put: (fb characterFormAt: ch) copy]
 ]
 
 { #category : 'styles' }

@@ -10,8 +10,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReToDoCollectRule class >> group [
-	^ self codingIdiomViolationGroup
+ReToDoCollectRule class >> groupSelector [
+
+	^ #codingIdiomViolationGroup
 ]
 
 { #category : 'accessing' }

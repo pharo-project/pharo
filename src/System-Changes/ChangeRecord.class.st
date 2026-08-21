@@ -28,6 +28,12 @@ ChangeRecord >> <= anotherOne [
 	^ self timeStamp <= anotherOne timeStamp
 ]
 
+{ #category : 'accessing' }
+ChangeRecord >> class: anObject [
+
+	class := anObject
+]
+
 { #category : 'testing' }
 ChangeRecord >> classIncludesSelector [
 
@@ -44,6 +50,18 @@ ChangeRecord >> commentClass [
 	commentClass := Smalltalk at: class asSymbol.
 	^meta ifTrue: [commentClass class]
 		ifFalse: [commentClass]
+]
+
+{ #category : 'accessing' }
+ChangeRecord >> file [
+
+	^ file
+]
+
+{ #category : 'accessing' }
+ChangeRecord >> file: anObject [
+
+	file := anObject
 ]
 
 { #category : 'initialization' }
@@ -140,6 +158,12 @@ ChangeRecord >> isMethodNotDefinedInImage [
 ]
 
 { #category : 'accessing' }
+ChangeRecord >> meta: anObject [
+
+	meta := anObject
+]
+
+{ #category : 'accessing' }
 ChangeRecord >> methodClass [
 	| methodClass |
 	type == #method
@@ -170,6 +194,12 @@ ChangeRecord >> position [
 	^ position
 ]
 
+{ #category : 'accessing' }
+ChangeRecord >> position: anObject [
+
+	position := anObject
+]
+
 { #category : 'printing' }
 ChangeRecord >> printOn: aStream [
 
@@ -181,6 +211,12 @@ ChangeRecord >> printOn: aStream [
 ChangeRecord >> protocol [
 
 	^ protocol
+]
+
+{ #category : 'accessing' }
+ChangeRecord >> protocol: anObject [
+
+	protocol := anObject
 ]
 
 { #category : 'accessing' }
@@ -234,4 +270,10 @@ ChangeRecord >> timeStamp [
 { #category : 'accessing' }
 ChangeRecord >> type [
 	^ type
+]
+
+{ #category : 'accessing' }
+ChangeRecord >> type: anObject [
+
+	type := anObject
 ]

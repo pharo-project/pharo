@@ -10,8 +10,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReSendsUnknownMessageToGlobalRule class >> group [
-	^ self bugsGroup
+ReSendsUnknownMessageToGlobalRule class >> groupSelector [
+
+	^ #bugsGroup
 ]
 
 { #category : 'accessing' }

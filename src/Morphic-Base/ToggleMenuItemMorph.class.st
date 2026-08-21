@@ -65,7 +65,7 @@ ToggleMenuItemMorph >> basicDrawOn: aCanvas [
 		subMenuMarkerFormSet := self subMenuMarkerFormSet.
 		colorMappedFormSet := FormSet extent: subMenuMarkerFormSet extent depth: subMenuMarkerFormSet depth
 			forms: (subMenuMarkerFormSet forms collect: [ :subMenuMarkerForm |
-				subMenuMarkerForm deepCopy mapColor: Color black to: stringColor ]).
+				subMenuMarkerForm copy mapColor: Color black to: stringColor ]).
 		self drawSubMenuMarker: colorMappedFormSet on: aCanvas in: stringBounds]
 ]
 

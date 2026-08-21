@@ -30,10 +30,12 @@ ClyBrowserMorph >> confirmEmptySystemQuery: aQuery [
 ClyBrowserMorph >> confirmUnusedVariablesInDefiningClass: variables [
 
 	| refQuery classScope |
-	classScope := ClyBothMetaLevelClassScope ofAll: (variables collect: [:each | each definingClass]) in: navigationEnvironment.
+	classScope := ClyBothMetaLevelClassScope
+		              ofAll: (variables collect: [ :each | each definingClass ])
+		              in: self navigationEnvironment.
 	refQuery := ClyVariableReferencesQuery ofAny: variables from: classScope.
 
-	^self confirmEmptySystemQuery: refQuery
+	^ self confirmEmptySystemQuery: refQuery
 ]
 
 { #category : '*Calypso-SystemTools-Core' }

@@ -12,6 +12,12 @@ Class {
 	#tag : 'Extensions'
 }
 
+{ #category : 'converting' }
+ScopedSelector >> <= another [
+
+	^ self asString <= another asString 
+]
+
 { #category : 'installing' }
 ScopedSelector >> addAliasedBehavior: aClass [
 
@@ -53,7 +59,6 @@ ScopedSelector >> asSymbol [
 { #category : 'matching' }
 ScopedSelector >> beginsWith: aString [
 
-	1halt.
 	^ self asString beginsWith: aString
 ]
 
@@ -66,11 +71,14 @@ ScopedSelector >> bindAliasIn: aClass [
 	If many extensions are available on the same class, with the same name => conflict.
 	If there is an extension"
 
-	| theAliasedMethod allVisibleExtensionsForThisClass locallyDefined methodsInConflict |
+	| theAliasedMethod allVisibleExtensionsForThisClass locallyDefined methodsInConflict existingMethod isLegacyExtension |
 	allVisibleExtensionsForThisClass := self visibleExtensionsOn: aClass.
 
 	"Prevent conflicts!"
-	locallyDefined := aClass includesSelector: self symbol.
+	existingMethod := aClass methodDict at: self symbol ifAbsent: [ nil ].
+	isLegacyExtension := Extension allowMigration and: [existingMethod notNil and: [ existingMethod isExtension ] ].
+
+	locallyDefined := (aClass includesSelector: self symbol) and: [ isLegacyExtension not ].
 	methodsInConflict := locallyDefined
 		ifTrue: [ 1 ]
 		ifFalse: [ 0 ].
@@ -183,6 +191,12 @@ ScopedSelector >> isDoIt [
 ]
 
 { #category : 'testing' }
+ScopedSelector >> isKeyword [
+
+	^ self symbol isKeyword
+]
+
+{ #category : 'testing' }
 ScopedSelector >> isScopedSelector [
 
 	^ true
@@ -192,6 +206,12 @@ ScopedSelector >> isScopedSelector [
 ScopedSelector >> keywords [
 
 	^ symbol keywords
+]
+
+{ #category : 'accessing' }
+ScopedSelector >> localizedForPresenter: aSpLabelPresenter [
+
+	^ self asString localizedForPresenter: aSpLabelPresenter
 ]
 
 { #category : 'accessing' }
@@ -270,6 +290,13 @@ ScopedSelector >> removeAliases [
 	aliasedBehaviors := nil
 ]
 
+{ #category : 'ston persistence' }
+ScopedSelector >> stonOn: stonWriter [
+	"Represent scoped selector as symbols when serialising"
+
+	stonWriter writeObject: self listSingleton: self asSymbol
+]
+
 { #category : 'accessing' }
 ScopedSelector >> symbol [
 
@@ -279,7 +306,7 @@ ScopedSelector >> symbol [
 { #category : 'accessing' }
 ScopedSelector >> symbol: anObject [
 
-	symbol := anObject
+	symbol := anObject asSymbol 
 ]
 
 { #category : 'accessing' }

@@ -85,6 +85,12 @@ FFICallback >> beNull [
 ]
 
 { #category : 'accessing' }
+FFICallback >> block [
+
+	^ block
+]
+
+{ #category : 'accessing' }
 FFICallback >> calloutAPIClass [
 
 	^ calloutAPIClass ifNil: [ super calloutAPIClass ]

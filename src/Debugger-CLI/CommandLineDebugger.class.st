@@ -28,7 +28,6 @@ CommandLineDebugger class >> forCode: aString [
     | blockToDebug process |
     blockToDebug := OpalEvaluator new evaluate: '[ ' , aString , ' ]'.
     process := blockToDebug newProcess.
-    process suspend.
     
     ^ self forProcess: process
 ]
@@ -67,11 +66,8 @@ CommandLineDebugger >> commandClassInstanceFor: aString [
 	"Gives an instance of the right command class to use"
 
 	[ ^ commands at: aString ]
-		on: Error
-		do: [ :ex |
-				ex class name = #KeyNotFound
-					ifTrue: [ ^ UnknownCommand new command: aString ]
-					ifFalse: [ ex pass ] ]
+		on: KeyNotFound
+		do: [ ^ UnknownCommand new command: aString ]
 ]
 
 { #category : 'accessing' }
@@ -303,6 +299,7 @@ CommandLineDebugger >> run [
 			self askTyping.
 			input := self readNextLine.
 			[
+
 				input := self handleHistory: input trim.
 				tempRes := self parsesAndExecuteCommand: input.
 				self printOutput: tempRes ]

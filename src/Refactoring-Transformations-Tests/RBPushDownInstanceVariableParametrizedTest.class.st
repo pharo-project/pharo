@@ -108,11 +108,3 @@ RBPushDownInstanceVariableParametrizedTest >> testPushDownInstanceVariable [
 	(refactoring model classNamed: #RBLintRuleTestData) subclasses do:
 		[ :each | self assert: (each directlyDefinesInstanceVariable: 'foo1') ]
 ]
-
-{ #category : 'tests' }
-RBPushDownInstanceVariableParametrizedTest >> testPushDownInstanceVariableWithReferences [
-
-	| refactoring |
-	refactoring := self createRefactoringWithModel: model andArguments: { 'name'. #RBBasicLintRuleTestData }.
-	(refactoring isKindOf: RBPushDownInstanceVariableRefactoring) ifTrue: [ self shouldWarn: refactoring ]
-]

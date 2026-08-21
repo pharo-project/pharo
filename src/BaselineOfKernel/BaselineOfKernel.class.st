@@ -47,22 +47,32 @@ BaselineOfKernel >> baseline: spec [
 						className: 'BaselineOfSystemPlatforms';
 						repository: repository;
 						loads: #( 'Tests' ) ];
-				baseline: 'Collections-Tests' with: [ 
-					spec 
+				baseline: 'Collections-Tests' with: [
+					spec
 						className: 'BaselineOfCollections';
 						repository: repository;
 						loads: #('KernelTests') ];
-					
-					
+
 				baseline: 'Announcements-Core-Tests' with: [
 					spec
 						className: 'BaselineOfAnnouncements';
 						repository: repository;
 						loads: #( 'Tests' ) ];
+
 				baseline: 'SystemFinalization' with: [
 					spec
 						repository: repository;
 						loads: #( 'Tests' ) ];
+
+				baseline: 'System-Version' with: [
+					spec
+						className: 'BaselineOfSystemVersion';
+						repository: repository;
+						loads: 'Core' ];
+				project: 'System-Version-Tests'
+					copyFrom: 'System-Version'
+					with: [ spec loads: 'Tests' ];
+
 				package: 'Announcements-Core';
 				package: 'Collections-Abstract';
 				package: 'Collections-DoubleLinkedList';
@@ -89,6 +99,7 @@ BaselineOfKernel >> baseline: spec [
 				package: 'System-Support';
 				package: 'Zinc-Character-Encoding-Core';
 				package: 'Hermes-Extensions';
+				package: 'Hermes-Extensions-Tests' with: [ spec requires: #( 'Hermes-Extensions' ) ];
 				package: 'Clap-Core';
 				package: 'Clap-Commands-Pharo';
 				package: 'NumberParser';
@@ -96,7 +107,6 @@ BaselineOfKernel >> baseline: spec [
 				package: 'System-Time';
 				package: 'Math-Operations-Extensions';
 				package: 'System-NumberPrinting';
-				package: 'System-Version';
 				package: 'Multilingual-Encodings';
 				package: 'Kernel-Tests';
 				package: 'Kernel-CodeModel-Tests';
@@ -115,5 +125,5 @@ BaselineOfKernel >> baseline: spec [
 				group: 'Tests'
 				with:
 					{ 'Collections-Tests'. 'Kernel-Tests'. 'Kernel-CodeModel-Tests'. 'Announcements-Core-Tests'. 'System-Platforms-Tests'.
-					 'Files-Tests'. 'SystemFinalization'. 'Zinc-Character-Encoding-Tests'. 'System-Time-Tests' } ]
+					 'Files-Tests'. 'SystemFinalization'. 'Zinc-Character-Encoding-Tests'. 'System-Time-Tests' . 'Hermes-Extensions-Tests' . 'System-Version-Tests' } ]
 ]

@@ -1,9 +1,9 @@
 Class {
 	#name : 'RBTrueCondition',
 	#superclass : 'RBNewAbstractCondition',
-	#category : 'Refactoring-Core-Conditions',
+	#category : 'Refactoring-Core-OldConditions',
 	#package : 'Refactoring-Core',
-	#tag : 'Conditions'
+	#tag : 'OldConditions'
 }
 
 { #category : 'checking' }

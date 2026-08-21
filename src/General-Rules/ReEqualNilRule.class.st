@@ -10,8 +10,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReEqualNilRule class >> group [
-	^ self codingIdiomViolationGroup
+ReEqualNilRule class >> groupSelector [
+
+	^ #codingIdiomViolationGroup
 ]
 
 { #category : 'accessing' }

@@ -82,6 +82,8 @@ CoSelectorEntry >> label [
 { #category : 'accessing' }
 CoSelectorEntry >> rawLabel [
 
+	self node isMethod 
+		ifTrue: [ ^ 'method' ].
 	^ self node receiver
 		propertyAt: #type
 		ifPresent:  [ 'method' ]

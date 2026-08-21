@@ -44,6 +44,12 @@ UIThemePalette >> balloonTextColor [
 ]
 
 { #category : 'colors' }
+UIThemePalette >> baseBorderColor [
+
+	^ paletteDictionary at: #baseBorderColor ifAbsentPut: [ colorConfigurator baseBorderColor ]
+]
+
+{ #category : 'colors' }
 UIThemePalette >> baseColor [
 
 	^ paletteDictionary at: #baseColor ifAbsentPut: [ colorConfigurator baseColor ]
@@ -119,6 +125,12 @@ UIThemePalette >> caretColor [
 UIThemePalette >> classExtensionColor [
 
 	^ paletteDictionary at: #classExtensionColor ifAbsentPut: [ colorConfigurator classExtensionColor ]
+]
+
+{ #category : 'accessing' }
+UIThemePalette >> colorConfigurator [
+
+	^ colorConfigurator
 ]
 
 { #category : 'accessing' }
@@ -393,6 +405,12 @@ UIThemePalette >> paginatorSelectionColor [
 	^ paletteDictionary at: #paginatorSelectionColor ifAbsentPut: [ colorConfigurator paginatorSelectionColor ]
 ]
 
+{ #category : 'accessing' }
+UIThemePalette >> paletteDictionary [
+
+	^ paletteDictionary
+]
+
 { #category : 'colors' }
 UIThemePalette >> patchworkUIThemeColorFor: anObject [
 
@@ -451,6 +469,12 @@ UIThemePalette >> secondarySelectionColor [
 UIThemePalette >> selectedItemListTextColor [
 
 	^ paletteDictionary at: #selectedItemListTextColor ifAbsentPut: [ colorConfigurator selectedItemListTextColor ]
+]
+
+{ #category : 'colors' }
+UIThemePalette >> selectedTabBorderColor [
+
+	^ paletteDictionary at: #selectedTabBorderColor ifAbsentPut: [ colorConfigurator selectedTabBorderColor ]
 ]
 
 { #category : 'colors' }

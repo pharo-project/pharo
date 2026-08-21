@@ -17,6 +17,18 @@ Class {
 }
 
 { #category : 'accessing' }
+GrafPort >> alpha [
+
+	^ alpha
+]
+
+{ #category : 'accessing' }
+GrafPort >> alpha: anObject [
+
+	alpha := anObject
+]
+
+{ #category : 'accessing' }
 GrafPort >> alphaBits: a [
 	alpha := a
 ]
@@ -205,8 +217,32 @@ GrafPort >> image: aForm at: aPoint sourceRect: sourceRect rule: rule alpha: sou
 ]
 
 { #category : 'accessing' }
+GrafPort >> lastFont [
+
+	^ lastFont
+]
+
+{ #category : 'accessing' }
+GrafPort >> lastFont: anObject [
+
+	lastFont := anObject
+]
+
+{ #category : 'accessing' }
+GrafPort >> lastFontBackgroundColor: anObject [
+
+	lastFontBackgroundColor := anObject
+]
+
+{ #category : 'accessing' }
 GrafPort >> lastFontForegroundColor [
 	^lastFontForegroundColor
+]
+
+{ #category : 'accessing' }
+GrafPort >> lastFontForegroundColor: anObject [
+
+	lastFontForegroundColor := anObject
 ]
 
 { #category : 'drawing support' }

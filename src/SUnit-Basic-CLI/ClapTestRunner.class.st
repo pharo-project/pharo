@@ -7,8 +7,9 @@ Class {
 	#instVars : [
 		'environment'
 	],
-	#category : 'SUnit-Basic-CLI',
-	#package : 'SUnit-Basic-CLI'
+	#category : 'SUnit-Basic-CLI-Core',
+	#package : 'SUnit-Basic-CLI',
+	#tag : 'Core'
 }
 
 { #category : 'command line' }
@@ -205,7 +206,8 @@ ClapTestRunner >> testPackagesForProject: aProjectName [
 ClapTestRunner >> testRunner [
 
 	self shouldOutputJunitXml ifTrue: [
-		HDTestReport shuffleSeed: self shuffleSeed.
+		self shuffleSeed ifNotNil: [ :seed |
+			HDTestReport shuffleSeed: seed ].
 		HDTestReport currentStageName: self stageName.
 		^ HDTestReport ].
 

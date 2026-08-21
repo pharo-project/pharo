@@ -17,8 +17,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReStatementsAfterReturnConditionalRule class >> group [
-	^ self potentialBugsGroup
+ReStatementsAfterReturnConditionalRule class >> groupSelector [
+
+	^ #potentialBugsGroup
 ]
 
 { #category : 'accessing' }

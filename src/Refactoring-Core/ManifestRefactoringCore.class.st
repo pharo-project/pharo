@@ -9,13 +9,6 @@ Class {
 	#tag : 'Manifest'
 }
 
-{ #category : 'meta-data - dependency analyser' }
-ManifestRefactoringCore class >> manuallyResolvedDependencies [
-
-	<ignoreForCoverage>
-	^ #(#'SUnit-Core')
-]
-
 { #category : 'code-critics' }
 ManifestRefactoringCore class >> ruleNoUnusedInstanceVariableRuleV1FalsePositive [
 

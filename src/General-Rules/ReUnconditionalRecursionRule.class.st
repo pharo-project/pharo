@@ -16,8 +16,9 @@ ReUnconditionalRecursionRule class >> checksMethod [
 ]
 
 { #category : 'accessing' }
-ReUnconditionalRecursionRule class >> group [
-	^ self potentialBugsGroup
+ReUnconditionalRecursionRule class >> groupSelector [
+
+	^ #potentialBugsGroup
 ]
 
 { #category : 'accessing' }

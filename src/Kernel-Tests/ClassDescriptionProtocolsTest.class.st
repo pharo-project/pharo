@@ -370,7 +370,7 @@ ClassDescriptionProtocolsTest >> testRemoveNonexistentSelectorsFromProtocols [
 		removeKey: #king.
 	class removeNonexistentSelectorsFromProtocols.
 
-	self assertCollection: class protocolNames hasSameElements: #( human ).
+	self assertCollection: class protocolNames hasSameElements: #( human titan ). "We do not remove empty protocols because this method is a private method used by the class builder to remove selectors from Traits. If we remove the empty protocold, we will announce wrong protocol removed announcements."
 	self assertCollection: (class protocolNamed: #human) methodSelectors hasSameElements: #( luz )
 ]
 

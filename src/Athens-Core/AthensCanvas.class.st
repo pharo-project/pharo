@@ -169,6 +169,11 @@ AthensCanvas >> pathTransform [
 	^ surface pathTransform
 ]
 
+{ #category : 'accessing' }
+AthensCanvas >> privatePaint: anObject [
+	paint := anObject
+]
+
 { #category : 'drawing text' }
 AthensCanvas >> setFont: aFont [
 	"Set the current font of receiver. Font object should answer a glyph renderer instance,

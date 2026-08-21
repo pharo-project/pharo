@@ -412,6 +412,7 @@ Symbol >> capitalized [
 { #category : 'copying' }
 Symbol >> copy [
 	"Answer with the receiver, because Symbols are unique."
+	^ self
 ]
 
 { #category : 'converting' }

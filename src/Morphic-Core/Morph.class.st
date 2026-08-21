@@ -2031,12 +2031,6 @@ Morph >> debugDrawError [
 	(self valueOfProperty: #drawError) debug
 ]
 
-{ #category : 'copying' }
-Morph >> deepCopy [
-
-	self error: 'Please use veryDeepCopy'
-]
-
 { #category : 'accessing - defaults' }
 Morph >> defaultBackgroundColor [
 	"Answer the color to be used as the base window color for a window whose model is an object of the receiver's class"

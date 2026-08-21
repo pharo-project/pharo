@@ -190,6 +190,13 @@ Class >> allSharedPools [
 			aSet addAll: self sharedPools; yourself]
 ]
 
+{ #category : 'accessing' }
+Class >> basicClassPool [
+	"Answer nil or the dictionary of class variables."
+
+	^classPool
+]
+
 { #category : 'class variables' }
 Class >> basicDeclareClassVariable: aClassVariable [
 	"Add aClassVariable to the receiver. Two cases are handled here:
@@ -214,6 +221,31 @@ Class >> basicDeclareClassVariable: aClassVariable [
 		self undeclaredRegistry removeKey: existingVar name.
 		existingVar becomeForward: aClassVariable ].
 	self classPool add: aClassVariable
+]
+
+{ #category : 'accessing' }
+Class >> basicEnvironment [
+
+	^ environment
+]
+
+{ #category : 'accessing' }
+Class >> basicSharedPools [
+	"Answer nil or a Set of the pool dictionaries declared in the receiver."
+
+	^sharedPools
+]
+
+{ #category : 'accessing' }
+Class >> basicSubclasses [
+
+	^ subclasses
+]
+
+{ #category : 'accessing' }
+Class >> basicSubclasses: anArray [
+
+	subclasses := anArray
 ]
 
 { #category : 'accessing' }
@@ -504,10 +536,8 @@ Class >> duplicateClassWithNewName: aSymbol [
 	copysName := aSymbol asSymbol.
 	copysName = self name ifTrue: [ ^ self ].
 	(self environment includesKey: copysName) ifTrue: [ ^ self error: copysName , ' already exists' ].
-	
-	^ self classInstaller 
-		update: self 
-		to: [ :builder | builder name: copysName ]
+
+	^ self classInstaller update: self to: [ :builder | builder name: copysName ]
 ]
 
 { #category : 'organization' }
@@ -868,8 +898,9 @@ Class >> removeSubclass: aSubclass [
 
 	<reflection: 'Class structural modification - Hierarchy modification'>
 	self subclasses ifNotNil: [ :classes |
-		self subclasses: (classes copyWithout: aSubclass).
-		self subclasses ifEmpty: [ self subclasses: nil ] ]
+		classes ifNotEmpty: [
+			self subclasses: (classes copyWithout: aSubclass).
+			self subclasses ifEmpty: [ self subclasses: nil ] ] ]
 ]
 
 { #category : 'class name' }
@@ -983,6 +1014,7 @@ Class >> subclasses [
 { #category : 'accessing - class hierarchy' }
 Class >> subclasses: aCollection [
 	<reflection: 'Class structural inspection - Hierarchy modification'>
+	
 	subclasses := aCollection
 ]
 

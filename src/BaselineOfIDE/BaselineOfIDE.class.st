@@ -56,7 +56,7 @@ BaselineOfIDE >> baseline: spec [
 			load: 'Shift' group: 'shift-tests' spec: spec;
 			load: 'Traits' group: 'traits-tests' spec: spec;
 			load: 'Slot' group: 'slot-tests' spec: spec;
-			load: 'Clap' group: 'development' spec: spec.
+			load: 'Clap' group: 'Development' spec: spec.
 
 		spec
 			baseline: 'SUnit' with: [
@@ -131,7 +131,7 @@ BaselineOfIDE >> baseline: spec [
 		self newTools: spec.
 		self drTests: spec.
 
-		spec project: 'Clap-UI' copyFrom: 'Clap' with: [ spec loads: #('ui') ].
+		spec project: 'Clap-UI' copyFrom: 'Clap' with: [ spec loads: #('UI') ].
 
 		spec package: #'BeautifulComments'  with: [ spec requires:  #( 'Microdown') ].
 		

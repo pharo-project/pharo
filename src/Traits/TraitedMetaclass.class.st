@@ -60,6 +60,12 @@ TraitedMetaclass >> basicTraitComposition [
 ]
 
 { #category : 'fileout' }
+TraitedMetaclass >> composition: anObject [
+
+	composition := anObject
+]
+
+{ #category : 'fileout' }
 TraitedMetaclass >> definitionStringFor: aConfiguredPrinter [
 
 	^ aConfiguredPrinter traitedMetaclassDefinitionString
@@ -233,6 +239,12 @@ TraitedMetaclass >> localMethods [
 ]
 
 { #category : 'accessing' }
+TraitedMetaclass >> localMethods: anObject [
+
+	localMethods := anObject
+]
+
+{ #category : 'accessing' }
 TraitedMetaclass >> localSelectors [
 	<reflection: 'Class structural inspection - Selectors and methods inspection'>
 	^ localMethods keys
@@ -298,12 +310,12 @@ TraitedMetaclass >> removeFromComposition: aTrait [
 ]
 
 { #category : 'accessing - method dictionary' }
-TraitedMetaclass >> removeSelector: aSelector [
+TraitedMetaclass >> removeSelector: aSelector logged: logged [
 
 	"When a selector is removed it should be notified to my users.
 	Check the class TraitChange for more details"
 	<reflection: 'Class structural modification - Selector/Method modification'>
-	super removeSelector: aSelector.
+	super removeSelector: aSelector logged: logged.
 	self localMethodDict removeKey: aSelector ifAbsent: [  ].
 
 	TraitChange removeSelector: aSelector on: self

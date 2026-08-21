@@ -19,13 +19,37 @@ TaskMorphTest >> newTaskFor: window [
 		  label: 'a Label'
 ]
 
+{ #category : 'builders' }
+TaskMorphTest >> newTaskWithLabel: label [
+
+	^ TaskbarTask
+		morph: Morph new
+		state: #aNilState
+		icon: nil
+		label: label
+]
+
+{ #category : 'builders' }
+TaskMorphTest >> newTasks: numberOfTasks [
+
+	^ self newTasks: numberOfTasks labelled: 'Task'
+]
+
+{ #category : 'builders' }
+TaskMorphTest >> newTasks: numberOfTasks labelled: label [
+
+	^ (1 to: numberOfTasks) collect: [ :i | self newTaskWithLabel: label, ' ', i printString ]
+]
+
 { #category : 'mocking taskbar' }
 TaskMorphTest >> registerTaskFor: window [
 
 	| task |
+
 	task := self newTaskFor: window.
 	windows add: window.
 	tasks add: task.
+
 	^ task
 ]
 
@@ -53,4 +77,16 @@ TaskMorphTest >> task2 [
 TaskMorphTest >> task3 [
 
 	^ tasks third
+]
+
+{ #category : 'builders' }
+TaskMorphTest >> taskListWithTasks: someTasks [ 
+
+	| taskList |
+
+	taskList := TaskListMorph new.
+	taskList removeAllMorphs.
+	taskList tasks: someTasks asOrderedCollection.
+
+	^ taskList
 ]

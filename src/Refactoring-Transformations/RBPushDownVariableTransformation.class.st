@@ -17,17 +17,28 @@ overriden from RBAddVariableTransformation and RBRemoveVariableAccessorTransform
 Class {
 	#name : 'RBPushDownVariableTransformation',
 	#superclass : 'RBCompositeVariableTransformation',
-	#category : 'Refactoring-Transformations-Model-Unused',
+	#category : 'Refactoring-Transformations-Model',
 	#package : 'Refactoring-Transformations',
-	#tag : 'Model-Unused'
+	#tag : 'Model'
 }
+
+{ #category : 'preconditions' }
+RBPushDownVariableTransformation >> applicabilityPreconditions [
+
+	^ isClassVariable
+		  ifTrue: [ self applicabilityPreconditionsForClassVariable ]
+		  ifFalse: [ self applicabilityPreconditionsForInstanceVariable ]
+]
 
 { #category : 'preconditions' }
 RBPushDownVariableTransformation >> applicabilityPreconditionsForClassVariable [
 
-	^ { RBCondition
-		  definesClassVariable: variableName
-		  in: self definingClass }
+	^ {
+		  (ReDirectlyDefinesSharedVariableCondition
+			   class: self definingClass
+			   sharedVariables: { variableName }).
+		  (ReClassesHaveNoSubclassesCondition new
+			   classes: { self definingClass }) not }
 ]
 
 { #category : 'preconditions' }
@@ -60,9 +71,7 @@ RBPushDownVariableTransformation >> buildTransformations [
 { #category : 'preconditions' }
 RBPushDownVariableTransformation >> preconditions [
 
-	^ isClassVariable
-		ifTrue: [ self applicabilityPreconditionsForClassVariable ]
-		ifFalse: [ self applicabilityPreconditionsForInstanceVariable ]
+	^ self applicabilityPreconditions
 ]
 
 { #category : 'api' }

@@ -254,13 +254,6 @@ Point >> crossProduct: aPoint [
 	^ (x * aPoint y) - (y * aPoint x)
 ]
 
-{ #category : 'copying' }
-Point >> deepCopy [
-	"Implemented here for better performance."
-
-	^ x deepCopy @ y deepCopy
-]
-
 { #category : 'point functions' }
 Point >> directionToLineFrom: p1 to: p2 [
 	"Answer the direction of the line from the receiver position.
@@ -768,9 +761,21 @@ Point >> x [
 ]
 
 { #category : 'accessing' }
+Point >> x: anObject [
+
+	x := anObject
+]
+
+{ #category : 'accessing' }
 Point >> y [
 	"Answer the y coordinate."
 	"(100@200) y >>> 200"
 
 	^ y
+]
+
+{ #category : 'accessing' }
+Point >> y: anObject [
+
+	y := anObject
 ]

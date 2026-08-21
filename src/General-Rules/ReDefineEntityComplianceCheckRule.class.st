@@ -21,8 +21,9 @@ ReDefineEntityComplianceCheckRule class >> complianceMethods [
 ]
 
 { #category : 'accessing' }
-ReDefineEntityComplianceCheckRule class >> group [
-	^ self codingIdiomViolationGroup
+ReDefineEntityComplianceCheckRule class >> groupSelector [
+
+	^ #codingIdiomViolationGroup
 ]
 
 { #category : 'accessing' }

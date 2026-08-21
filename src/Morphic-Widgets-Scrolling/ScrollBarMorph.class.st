@@ -753,6 +753,11 @@ ScrollBarMorph >> normalThumbFillStyle [
 	^self theme scrollbarNormalThumbFillStyleFor: self
 ]
 
+{ #category : 'accessing' }
+ScrollBarMorph >> pageDelta [
+	^ pageDelta
+]
+
 { #category : 'private - accessing' }
 ScrollBarMorph >> pagingArea [
 	^pagingArea

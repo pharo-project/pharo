@@ -33,7 +33,7 @@ DebugPointTarget >> hitAnnouncementOn: aDebugPoint inContext: aContext [
 DebugPointTarget >> initialize [
 
 	self class initializeSlots: self.
-	super initialize.
+	super initialize
 ]
 
 { #category : 'installing' }

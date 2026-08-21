@@ -1,10 +1,7 @@
 Class {
 	#name : 'ExtensionHotUpdateCompilationTest',
-	#superclass : 'TestCase',
+	#superclass : 'AbstractExtensionTest',
 	#instVars : [
-		'environment',
-		'definerPackage',
-		'userPackage',
 		'objectClass',
 		'pointClass',
 		'coloredPointClass',
@@ -32,142 +29,83 @@ ExtensionHotUpdateCompilationTest >> assertDNU: scopedSelector on: selector to: 
 { #category : 'running' }
 ExtensionHotUpdateCompilationTest >> setUp [
 
-	| extendedPackage |
 	super setUp.
-	
-	environment := SystemEnvironment new.
-	extendedPackage := Package named: 'Extended'.
-	definerPackage := Package named: 'Definer'.
-	userPackage := Package named: 'User'.
 
-	objectClass := (Object << #MyObject
-		installingEnvironment: environment;
-		package: userPackage) install.
-	
-	pointClass := (Object << #MyPoint
-		superclass: objectClass;
-		installingEnvironment: environment;
-		package: userPackage) install.
-
-	coloredPointClass := (Object << #MyColoredPoint
-		superclass: pointClass;
-		installingEnvironment: environment;
-		package: userPackage) install.
+	objectClass := self createClassNamed: #MyObject superclass: isolatingRoot package: userPackage.
+	pointClass := self createClassNamed: #MyPoint superclass: objectClass package: userPackage.
+	coloredPointClass := self createClassNamed: #MyColoredPoint superclass: pointClass package: userPackage.
 	
 	"String will have no extensions. It's here just for polymorphism.
 	It will thus contain aliases only"
-	stringClass := (Object << #MyString
-		superclass: objectClass;
-		installingEnvironment: environment;
-		package: userPackage) install.
-	
-	nicerStringClass := (Object << #MyNicerString
-		superclass: stringClass;
-		installingEnvironment: environment;
-		package: userPackage) install.
+	stringClass := self createClassNamed: #MyString superclass: objectClass package: userPackage.
+	nicerStringClass := self createClassNamed: #MyNicerString superclass: stringClass package: userPackage.
+	userClass := self createClassNamed: #MyUserClass superclass: objectClass package: userPackage.
 
-	userClass := (Object << #MyUserClass
-		superclass: objectClass;
-		installingEnvironment: environment;
-		package: userPackage) install.
-	
-	extensionOnObject := (Extension << #ExtensionOfObject
-		extendedClass: objectClass;
-		installingEnvironment: environment;
-		package: definerPackage) install.
-
-	extensionOnPoint := (Extension << #ExtensionOfPoint
-		extendedClass: pointClass;
-		installingEnvironment: environment;
-		package: definerPackage) install.
-
-	extensionOnColoredPoint := (Extension << #ExtensionOfColoredPoint
-		extendedClass: coloredPointClass;
-		installingEnvironment: environment;
-		package: definerPackage) install.
-]
-
-{ #category : 'running' }
-ExtensionHotUpdateCompilationTest >> tearDown [
-	"Make sure we did not pollute the global dictionaries"
-
-	self deny: (Point methodDictionary keys anySatisfy: [ :k | k isKindOf: ScopedSelector ]).
-	self deny: (Object methodDictionary keys anySatisfy: [ :k | k isKindOf: ScopedSelector ]).
-	self deny: (Integer methodDictionary keys anySatisfy: [ :k | k isKindOf: ScopedSelector ]).
-	
-	environment allClassesAndTraits do: [ :e | e removeFromSystem ].
-	
-	super tearDown
+	extensionOnObject := self createExtensionNamed: #ExtensionOfObject forBehavior: objectClass inPackage: definerPackage.
+	extensionOnPoint := self createExtensionNamed: #ExtensionOfPoint forBehavior: pointClass inPackage: definerPackage.
+	extensionOnColoredPoint := self
+		                           createExtensionNamed: #ExtensionOfColoredPoint
+		                           forBehavior: coloredPointClass
+		                           inPackage: definerPackage
 ]
 
 { #category : 'tests' }
 ExtensionHotUpdateCompilationTest >> test01CompileNewExtensionMethod01IsVisibleForNewMethods [
-
 	"A normal method sends the (non scoped) extension message"
-	| classInDefinerPackage |
-	classInDefinerPackage := (Object << #ClassInDefinerPackage
-		superclass: objectClass;
-		installingEnvironment: environment;
-		package: definerPackage) install.
 
+	| classInDefinerPackage |
+	classInDefinerPackage := self createClassNamed: #ClassInDefinerPackage superclass: objectClass package: definerPackage.
+	
 	"Now we define an extension in the scope.
 	=> the method above (foo) should see the extension!"
-	extensionOnObject compile: 'extension ^ 11'.
-
-	classInDefinerPackage compile: 'foo ^ self extension'.	
+	self compile: 'extension ^ 11' on: extensionOnObject.
+	self compile: 'foo ^ self extension' on: classInDefinerPackage.
 	self assert: classInDefinerPackage new foo equals: 11
 ]
 
 { #category : 'tests' }
 ExtensionHotUpdateCompilationTest >> test01CompileNewExtensionMethod02RecompilesSendersInScope [
-
 	"A normal method sends the (non scoped) extension message"
-	| classInDefinerPackage |
-	classInDefinerPackage := (Object << #ClassInDefinerPackage
-		superclass: objectClass;
-		installingEnvironment: environment;
-		package: definerPackage) install.
-	classInDefinerPackage compile: 'foo ^ self extension'.
 
+	| classInDefinerPackage |
+	classInDefinerPackage := self createClassNamed: #ClassInDefinerPackage superclass: objectClass package: definerPackage.
+
+	self compile: 'foo ^ self extension' on: classInDefinerPackage.
+	
 	"Before compiling the extension, we do not see a scoped selector. We DNU on the global selector"
 	self assertDNU: #extension on: #foo to: classInDefinerPackage new.
-
+	
 	"Now we define an extension in the scope.
 	=> the method above (foo) should see the extension!"
-	extensionOnObject compile: 'extension ^ 11'.
-	
+	self compile: 'extension ^ 11' on: extensionOnObject.
+
 	self assert: classInDefinerPackage new foo equals: 11
 ]
 
 { #category : 'tests' }
 ExtensionHotUpdateCompilationTest >> test02ImportNewExtensionMethod01IsVisibleForNewMethods [
-
 	"A normal method sends the (non scoped) extension message"
+
 	| scopedSelector |
 	"Now we import an extension in the scope.
 	=> the method above (foo) should see the extension!"
-	scopedSelector := extensionOnObject compile: 'extension ^ 11'.
-	
-	userClass package addExtensionImport: extensionOnObject.
+	scopedSelector := self compile: 'extension ^ 11' on: extensionOnObject.
 
-	userClass compile: 'foo ^ self extension'.
+	userClass package addExtensionImport: extensionOnObject.
+	self compile: 'foo ^ self extension' on: userClass.
 	self assert: userClass new foo equals: 11
 ]
 
 { #category : 'tests' }
 ExtensionHotUpdateCompilationTest >> test02ImportNewExtensionMethod02RecompilesSendersInScope [
-
 	"A normal method sends the (non scoped) extension message"
-	| scopedSelector |
-	userClass compile: 'foo ^ self extension'.
 
-	"Now we import an extension in the scope.
+	| scopedSelector |
+	self compile: 'foo ^ self extension' on: userClass. "Now we import an extension in the scope.
 	=> the method above (foo) should see the extension!"
-	scopedSelector := extensionOnObject compile: 'extension ^ 11'.
-	
-	"Before importing the extension, we do not see a scoped selector. We DNU on the global selector"
+	scopedSelector := self compile: 'extension ^ 11' on: extensionOnObject. "Before importing the extension, we do not see a scoped selector. We DNU on the global selector"
 	self assertDNU: #extension on: #foo to: userClass new.
-	
+
 	userClass package addExtensionImport: extensionOnObject.
 
 	self assert: userClass new foo equals: 11
@@ -175,196 +113,158 @@ ExtensionHotUpdateCompilationTest >> test02ImportNewExtensionMethod02RecompilesS
 
 { #category : 'tests' }
 ExtensionHotUpdateCompilationTest >> test03CompileNewExtensionMethodAfterImport01IsVisibleForNewMethods [
-
 	"A normal method sends the (non scoped) extension message"
-	| scopedSelector |	
-	
+
+	| scopedSelector |
 	"We import an extension in the scope. The extension is empty"
-	userClass package addExtensionImport: extensionOnObject.
-
-	"=> the method above (foo) should see the extension!"
-	scopedSelector := extensionOnObject compile: 'extension ^ 11'.
-
-	userClass compile: 'foo ^ self extension'.
+	userClass package addExtensionImport: extensionOnObject. "=> the method above (foo) should see the extension!"
+	scopedSelector := self compile: 'extension ^ 11' on: extensionOnObject.
+	self compile: 'foo ^ self extension' on: userClass.
 	self assert: userClass new foo equals: 11
 ]
 
 { #category : 'tests' }
 ExtensionHotUpdateCompilationTest >> test03CompileNewExtensionMethodAfterImport02RecompilesSendersInScope [
-
 	"A normal method sends the (non scoped) extension message"
-	| scopedSelector |	
-	
+
+	| scopedSelector |
 	"We import an extension in the scope. The extension is empty"
 	userClass package addExtensionImport: extensionOnObject.
-
-	userClass compile: 'foo ^ self extension'.
-
-	"=> the method above (foo) should see the extension!"
-	scopedSelector := extensionOnObject compile: 'extension ^ 11'.
+	self compile: 'foo ^ self extension' on: userClass. "=> the method above (foo) should see the extension!"
+	scopedSelector := self compile: 'extension ^ 11' on: extensionOnObject.
 	self assert: userClass new foo equals: 11
 ]
 
 { #category : 'tests' }
 ExtensionHotUpdateCompilationTest >> test04ReCompileNewExtensionMethod01IsVisibleForNewMethods [
-
 	"A normal method sends the (non scoped) extension message"
-	| classInDefinerPackage |
-	classInDefinerPackage := (Object << #ClassInDefinerPackage
-		superclass: objectClass;
-		installingEnvironment: environment;
-		package: definerPackage) install.
 
+	| classInDefinerPackage |
+	classInDefinerPackage := self createClassNamed: #ClassInDefinerPackage superclass: objectClass package: definerPackage.
+	
 	"Now we define an extension in the scope.
 	=> the method above (foo) should see the extension!"
-	extensionOnObject compile: 'extension ^ 11'.
+	self compile: 'extension ^ 11' on: extensionOnObject.
 	
 	"Recompilation should not change anything"
-	extensionOnObject compile: 'extension ^ 11'.
-
-	classInDefinerPackage compile: 'foo ^ self extension'.	
+	self compile: 'extension ^ 11' on: extensionOnObject.
+	
+	self compile: 'foo ^ self extension' on: classInDefinerPackage.
+	
 	self assert: classInDefinerPackage new foo equals: 11
 ]
 
 { #category : 'tests' }
 ExtensionHotUpdateCompilationTest >> test04ReCompileNewExtensionMethod02RecompilesSendersInScope [
-
 	"A normal method sends the (non scoped) extension message"
-	| classInDefinerPackage |
-	classInDefinerPackage := (Object << #ClassInDefinerPackage
-		superclass: objectClass;
-		installingEnvironment: environment;
-		package: definerPackage) install.
-	classInDefinerPackage compile: 'foo ^ self extension'.
 
+	| classInDefinerPackage |
+	classInDefinerPackage := self createClassNamed: #ClassInDefinerPackage superclass: objectClass package: definerPackage.
+	
+	self compile: 'foo ^ self extension' on: classInDefinerPackage.
+	
 	"Before compiling the extension, we do not see a scoped selector. We DNU on the global selector"
 	self assertDNU: #extension on: #foo to: classInDefinerPackage new.
-
+	
 	"Now we define an extension in the scope.
 	=> the method above (foo) should see the extension!"
-	extensionOnObject compile: 'extension ^ 11'.
+	self compile: 'extension ^ 11' on: extensionOnObject.
 	
 	"Recompilation should not change anything"
-	extensionOnObject compile: 'extension ^ 11'.
-	
+	self compile: 'extension ^ 11' on: extensionOnObject.
+
 	self assert: classInDefinerPackage new foo equals: 11
 ]
 
 { #category : 'tests' }
 ExtensionHotUpdateCompilationTest >> test05ReCompileNewExtensionMethodAfterImport01IsVisibleForNewMethods [
-
 	"A normal method sends the (non scoped) extension message"
-	| scopedSelector |	
-	
+
+	| scopedSelector |
 	"We import an extension in the scope. The extension is empty"
-	userClass package addExtensionImport: extensionOnObject.
-
-	"=> the method above (foo) should see the extension!"
-	scopedSelector := extensionOnObject compile: 'extension ^ 11'.
-
-	userClass compile: 'foo ^ self extension'.
-	
-	"Recompilation should not change anything"
-	scopedSelector := extensionOnObject compile: 'extension ^ 11'.
+	userClass package addExtensionImport: extensionOnObject. "=> the method above (foo) should see the extension!"
+	scopedSelector := self compile: 'extension ^ 11' on: extensionOnObject.
+	self compile: 'foo ^ self extension' on: userClass. "Recompilation should not change anything"
+	scopedSelector := self compile: 'extension ^ 11' on: extensionOnObject.
 	self assert: userClass new foo equals: 11
 ]
 
 { #category : 'tests' }
 ExtensionHotUpdateCompilationTest >> test05ReCompileNewExtensionMethodAfterImport02RecompilesSendersInScope [
-
 	"A normal method sends the (non scoped) extension message"
-	| scopedSelector |	
-	
+
+	| scopedSelector |
 	"We import an extension in the scope. The extension is empty"
 	userClass package addExtensionImport: extensionOnObject.
-
-	userClass compile: 'foo ^ self extension'.
-
-	"=> the method above (foo) should see the extension!"
-	scopedSelector := extensionOnObject compile: 'extension ^ 11'.
-	
-	"Recompilation should not change anything"
-	scopedSelector := extensionOnObject compile: 'extension ^ 11'.
+	self compile: 'foo ^ self extension' on: userClass. "=> the method above (foo) should see the extension!"
+	scopedSelector := self compile: 'extension ^ 11' on: extensionOnObject. "Recompilation should not change anything"
+	scopedSelector := self compile: 'extension ^ 11' on: extensionOnObject.
 	self assert: userClass new foo equals: 11
 ]
 
 { #category : 'tests' }
 ExtensionHotUpdateCompilationTest >> test06RedefineExtensionMethod01IsVisibleForNewMethods [
-
 	"A normal method sends the (non scoped) extension message"
-	| classInDefinerPackage |
-	classInDefinerPackage := (Object << #ClassInDefinerPackage
-		superclass: objectClass;
-		installingEnvironment: environment;
-		package: definerPackage) install.
 
+	| classInDefinerPackage |
+	classInDefinerPackage := self createClassNamed: #ClassInDefinerPackage superclass: objectClass package: definerPackage.
+	
 	"Now we define an extension in the scope.
 	=> the method above (foo) should see the extension!"
-	extensionOnObject compile: 'extension ^ 11'.
+	self compile: 'extension ^ 11' on: extensionOnObject.
 	
 	"We redefine it, and this new version should be taken into account"
-	extensionOnObject compile: 'extension ^ 12'.
-
-	classInDefinerPackage compile: 'foo ^ self extension'.	
+	self compile: 'extension ^ 12' on: extensionOnObject.
+	
+	self compile: 'foo ^ self extension' on: classInDefinerPackage.
+	
 	self assert: classInDefinerPackage new foo equals: 12
 ]
 
 { #category : 'tests' }
 ExtensionHotUpdateCompilationTest >> test06RedefineExtensionMethod02RecompilesSendersInScope [
-
 	"A normal method sends the (non scoped) extension message"
-	| classInDefinerPackage |
-	classInDefinerPackage := (Object << #ClassInDefinerPackage
-		superclass: objectClass;
-		installingEnvironment: environment;
-		package: definerPackage) install.
-	classInDefinerPackage compile: 'foo ^ self extension'.
 
+	| classInDefinerPackage |
+	classInDefinerPackage := self createClassNamed: #ClassInDefinerPackage superclass: objectClass package: definerPackage.
+	
+	self compile: 'foo ^ self extension' on: classInDefinerPackage.
+	
 	"Before compiling the extension, we do not see a scoped selector. We DNU on the global selector"
 	self assertDNU: #extension on: #foo to: classInDefinerPackage new.
-
+	
 	"Now we define an extension in the scope.
 	=> the method above (foo) should see the extension!"
-	extensionOnObject compile: 'extension ^ 11'.
+	self compile: 'extension ^ 11' on: extensionOnObject.
 	
 	"We redefine it, and this new version should be taken into account"
-	extensionOnObject compile: 'extension ^ 12'.
-	
+	self compile: 'extension ^ 12' on: extensionOnObject.
+
 	self assert: classInDefinerPackage new foo equals: 12
 ]
 
 { #category : 'tests' }
 ExtensionHotUpdateCompilationTest >> test07RedefineExtensionMethodAfterImport01IsVisibleForNewMethods [
-
 	"A normal method sends the (non scoped) extension message"
-	| scopedSelector |	
 
-	scopedSelector := extensionOnObject compile: 'extension ^ 11'.
-	
-	"We import an extension in the scope. The extension is empty"
-	userClass package addExtensionImport: extensionOnObject.
-
-	"We redefine it, and this new version should be taken into account"
-	extensionOnObject compile: 'extension ^ 12'.
-
-	userClass compile: 'foo ^ self extension'.
+	| scopedSelector |
+	scopedSelector := self compile: 'extension ^ 11' on: extensionOnObject. "We import an extension in the scope. The extension is empty"
+	userClass package addExtensionImport: extensionOnObject. "We redefine it, and this new version should be taken into account"
+	self compile: 'extension ^ 12' on: extensionOnObject.
+	self compile: 'foo ^ self extension' on: userClass.
 	self assert: userClass new foo equals: 12
 ]
 
 { #category : 'tests' }
 ExtensionHotUpdateCompilationTest >> test07RedefineExtensionMethodAfterImport02RecompilesSendersInScope [
-
 	"A normal method sends the (non scoped) extension message"
-	| scopedSelector |	
-	"=> the method above (foo) should see the extension!"
-	scopedSelector := extensionOnObject compile: 'extension ^ 11'.
-	
-	"We import an extension in the scope. The extension is empty"
-	userClass package addExtensionImport: extensionOnObject.
 
-	userClass compile: 'foo ^ self extension'.
-	
-	extensionOnObject compile: 'extension ^ 12'.
+	| scopedSelector |
+	"=> the method above (foo) should see the extension!"
+	scopedSelector := self compile: 'extension ^ 11' on: extensionOnObject. "We import an extension in the scope. The extension is empty"
+	userClass package addExtensionImport: extensionOnObject.
+	self compile: 'foo ^ self extension' on: userClass.
+	self compile: 'extension ^ 12' on: extensionOnObject.
 
 	self assert: userClass new foo equals: 12
 ]

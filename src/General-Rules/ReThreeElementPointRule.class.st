@@ -10,8 +10,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReThreeElementPointRule class >> group [
-	^ self potentialBugsGroup
+ReThreeElementPointRule class >> groupSelector [
+
+	^ #potentialBugsGroup
 ]
 
 { #category : 'accessing' }

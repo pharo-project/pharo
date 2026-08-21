@@ -44,6 +44,12 @@ UIThemeColorConfigurator >> balloonTextColor [
 	^ self textColor
 ]
 
+{ #category : 'custom' }
+UIThemeColorConfigurator >> baseBorderColor [
+
+	^ Color veryLightGray
+]
+
 { #category : 'colors' }
 UIThemeColorConfigurator >> baseColor [
 
@@ -466,6 +472,12 @@ UIThemeColorConfigurator >> secondarySelectionColor [
 UIThemeColorConfigurator >> selectedItemListTextColor [
 
 	^ self textColor
+]
+
+{ #category : 'custom' }
+UIThemeColorConfigurator >> selectedTabBorderColor [
+
+	^ Color R: 55 G: 140 B: 240
 ]
 
 { #category : 'colors' }

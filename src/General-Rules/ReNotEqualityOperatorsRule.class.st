@@ -10,8 +10,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReNotEqualityOperatorsRule class >> group [
-	^ self bugsGroup
+ReNotEqualityOperatorsRule class >> groupSelector [
+
+	^ #bugsGroup
 ]
 
 { #category : 'accessing' }

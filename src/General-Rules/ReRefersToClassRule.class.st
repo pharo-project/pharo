@@ -16,8 +16,9 @@ ReRefersToClassRule class >> checksMethod [
 ]
 
 { #category : 'accessing' }
-ReRefersToClassRule class >> group [
-	^ self designFlawGroup
+ReRefersToClassRule class >> groupSelector [
+
+	^ #designFlawGroup
 ]
 
 { #category : 'accessing' }

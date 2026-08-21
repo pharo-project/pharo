@@ -136,7 +136,7 @@ PackageOrganizer >> initialize [
 
 	packages := IdentityDictionary new.
 	undefinedPackage := UndefinedPackage new.
-	self ensurePackage: undefinedPackage
+	self basicRegisterPackage: undefinedPackage
 ]
 
 { #category : 'testing' }

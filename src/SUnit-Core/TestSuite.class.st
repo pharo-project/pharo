@@ -205,6 +205,18 @@ TestSuite >> setUp [
 ]
 
 { #category : 'accessing' }
+TestSuite >> shuffleRandom [
+
+	^ randomGenerator
+]
+
+{ #category : 'accessing' }
+TestSuite >> shuffleRandom: aRandomGenerator [
+
+	randomGenerator := aRandomGenerator
+]
+
+{ #category : 'accessing' }
 TestSuite >> shuffleSeed [
 
 	^ randomGenerator seed
@@ -219,7 +231,11 @@ TestSuite >> shuffleSeed: aSeed [
 { #category : 'accessing' }
 TestSuite >> shuffledTests [
 
-	^ self tests shuffledBy: randomGenerator
+	"Sort before shuffling so order is reproducible between different environments.
+
+	This happens because tests are extracted from the hashed method dictionary, so the original order is not guaranteed."
+	^ (self tests sorted: [ :a :b | a asString < b asString ])
+			shuffledBy: self shuffleRandom
 ]
 
 { #category : 'accessing' }

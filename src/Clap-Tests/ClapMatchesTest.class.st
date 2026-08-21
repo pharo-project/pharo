@@ -121,13 +121,13 @@ ClapMatchesTest >> testMultiplePositional [
 { #category : 'tests' }
 ClapMatchesTest >> testParameterizedFlagValue [
 	| match |
-	dirFlag meaning: [ :flag | Path from: (flag at: #DIR) value ].
+	dirFlag meaning: [ :flag | (flag at: #DIR) value, 'END' ].
 	
 	match := clap match: #('clap' '--directory' 'foo/bar/baz').
 	
 	self
 		assert: (match at: dirFlag) value
-		equals: (Path * 'foo' / 'bar' / 'baz').
+		equals: ('foo/bar/bazEND').
 ]
 
 { #category : 'tests' }

@@ -82,7 +82,7 @@ Array >> asArray [
 { #category : 'converting' }
 Array >> asNewArray [
 
-	^ self clone
+	^ self shallowCopy 
 ]
 
 { #category : 'converting' }

@@ -15,8 +15,9 @@ ReMethodSourceContainsLinefeedsRule class >> checksMethod [
 ]
 
 { #category : 'accessing' }
-ReMethodSourceContainsLinefeedsRule class >> group [
-	^ self bugsGroup
+ReMethodSourceContainsLinefeedsRule class >> groupSelector [
+
+	^ #bugsGroup
 ]
 
 { #category : 'accessing' }

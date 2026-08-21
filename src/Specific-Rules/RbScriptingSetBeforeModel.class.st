@@ -10,8 +10,9 @@ Class {
 }
 
 { #category : 'accessing' }
-RbScriptingSetBeforeModel class >> group [
-	^ self rubricGroup
+RbScriptingSetBeforeModel class >> groupSelector [
+
+	^ #rubricGroup
 ]
 
 { #category : 'initialization' }

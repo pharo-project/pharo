@@ -174,6 +174,12 @@ MCMethodDefinition >> hash [
 	^ hash
 ]
 
+{ #category : 'testing' }
+MCMethodDefinition >> isAlreadyDefined [
+
+	^ self actualClass compiledMethodAt: self selector ifPresent: [ true ] ifAbsent: [ false ]
+]
+
 { #category : 'installing' }
 MCMethodDefinition >> isExtensionMethod [
 	^ category beginsWith: '*'

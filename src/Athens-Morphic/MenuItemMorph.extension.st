@@ -2,8 +2,8 @@ Extension { #name : 'MenuItemMorph' }
 
 { #category : '*Athens-Morphic' }
 MenuItemMorph >> drawBackgroundOnAthensCanvas: anAthensCanvas [
-	(isSelected and: [ isEnabled ])
-		ifFalse: [ ^ self ].
+
+	(self isSelected and: [ self isEnabled ]) ifFalse: [ ^ self ].
 	anAthensCanvas setPaint: self selectionFillStyle.
 	anAthensCanvas drawShape: (0 @ 0 extent: self extent)
 ]
@@ -27,11 +27,12 @@ MenuItemMorph >> drawIconOnAthensCanvas: anAthensCanvas [
 
 { #category : '*Athens-Morphic' }
 MenuItemMorph >> drawLabelOnAthensCanvas: anAthensCanvas [
+
 	anAthensCanvas pathTransform translateX: 0 Y: self fontToUse getPreciseAscent.
-			anAthensCanvas
-				setPaint: self color;
-				setFont: self fontToUse;
-				drawString: contents
+	anAthensCanvas
+		setPaint: self color;
+		setFont: self fontToUse;
+		drawString: self contents
 ]
 
 { #category : '*Athens-Morphic' }

@@ -21,8 +21,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReTrueFalseDuplicationRule class >> group [
-	^ self optimizationGroup
+ReTrueFalseDuplicationRule class >> groupSelector [
+
+	^ #optimizationGroup
 ]
 
 { #category : 'accessing' }

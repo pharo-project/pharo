@@ -41,3 +41,9 @@ DisabledBreakpointIconStyler >> iconLabel: aNode [
 DisabledBreakpointIconStyler >> shouldStyleNode: aNode [
 	^aNode hasBreakpoint and: [ aNode breakpoints noneSatisfy: [:brkpt | brkpt isEnabled ]]
 ]
+
+{ #category : 'private' }
+DisabledBreakpointIconStyler >> stylerName [
+
+	^ 'breakpoint'
+]

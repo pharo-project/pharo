@@ -21,8 +21,9 @@ ReExcessiveMethodsRule class >> checksClass [
 ]
 
 { #category : 'accessing' }
-ReExcessiveMethodsRule class >> group [
-	^ self designFlawGroup
+ReExcessiveMethodsRule class >> groupSelector [
+
+	^ #designFlawGroup
 ]
 
 { #category : 'accessing' }

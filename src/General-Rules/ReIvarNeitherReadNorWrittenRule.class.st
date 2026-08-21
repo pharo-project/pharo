@@ -17,8 +17,9 @@ ReIvarNeitherReadNorWrittenRule class >> checksClass [
 ]
 
 { #category : 'accessing' }
-ReIvarNeitherReadNorWrittenRule class >> group [
-	^ self cleanCodeGroup
+ReIvarNeitherReadNorWrittenRule class >> groupSelector [
+
+	^ #cleanCodeGroup
 ]
 
 { #category : 'accessing' }

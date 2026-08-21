@@ -4,6 +4,6 @@ Extension { #name : 'OCVariableNode' }
 OCVariableNode >> styleName [
 
 	^ self variable
-		  ifNil: [ #default ]
+		  ifNil: [ 'default' ]
 		  ifNotNil: [ :var | var styleNameIn: self ]
 ]

@@ -10,8 +10,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReLiteralArrayCharactersRule class >> group [
-	^ self optimizationGroup
+ReLiteralArrayCharactersRule class >> groupSelector [
+
+	^ #optimizationGroup
 ]
 
 { #category : 'accessing' }

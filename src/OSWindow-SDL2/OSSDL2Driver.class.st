@@ -66,15 +66,14 @@ OSSDL2Driver >> beforeMainPharoWindowClosed: osWindow [
 OSSDL2Driver >> closeRemovedController: index [
 	"TODO: What should I do here?"
 
-	self
-		traceCr: ('Game controller <1s> removed' expandMacrosWith: index asString)
+	
 ]
 
 { #category : 'private' }
 OSSDL2Driver >> closeRemovedJoystick: index [
 	"TODO: What should I do here?"
 
-	self traceCr: ('Joystick <1s> removed' expandMacrosWith: index asString)
+	
 ]
 
 { #category : 'window creation and deletion' }

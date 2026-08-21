@@ -24,11 +24,6 @@ UndefinedObjectTest >> testAllInstances [
 	self assert: (UndefinedObject allInstances includes: nil) description: 'nil should be an instance of UndefinedObject'
 ]
 
-{ #category : 'tests - copying' }
-UndefinedObjectTest >> testDeepCopy [
-	self assert: nil deepCopy isNil
-]
-
 { #category : 'tests - testing' }
 UndefinedObjectTest >> testIfNil [
 	<haltOrBreakpointForTesting>

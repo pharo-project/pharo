@@ -82,12 +82,6 @@ Boolean >> asBit [
 	self subclassResponsibility
 ]
 
-{ #category : 'copying' }
-Boolean >> deepCopy [
-	"Receiver has two concrete subclasses, True and False.
-	Only one instance of each should be made, so return self."
-]
-
 { #category : 'logical operations' }
 Boolean >> eqv: aBoolean [
 	"Answer true if the receiver is equivalent to aBoolean."

@@ -1,7 +1,7 @@
 "
 I am the base class for different behaviors that can be added to all debug points.
 
-In which order the behaviors are executed is decided by the priority variable.
+The priority slot value defines the order in which behaviors are executed.
 The highest value is executed first.
 However, all debug point check behaviors will be executed before all debug point side effect behaviors. Those are different types of debug points defined by subclasses.
 
@@ -58,6 +58,8 @@ DebugPointBehavior >> debugPoint: aDebugPoint [
 
 { #category : 'execution' }
 DebugPointBehavior >> execute [
+	"Should return true if execution should continue and false if it should interrupt."
+
 	self subclassResponsibility
 ]
 
@@ -67,7 +69,9 @@ DebugPointBehavior >> getArgument: aSymbol [
 ]
 
 { #category : 'initialization' }
-DebugPointBehavior >> initialize [ 
+DebugPointBehavior >> initialize [
+
+	super initialize.
 	self priority: 0
 ]
 
@@ -83,8 +87,10 @@ DebugPointBehavior >> priority: anInteger [
 
 { #category : 'cleanup' }
 DebugPointBehavior >> remove [
-	"cleanup actions should be taken here"
-	^self.
+	"When a behavior is removed from a debug point, this method is invoked.
+	By default do nothing."
+	
+	^ self
 ]
 
 { #category : 'removing' }

@@ -10,8 +10,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReReturnsIfTrueRule class >> group [
-	^ self potentialBugsGroup
+ReReturnsIfTrueRule class >> groupSelector [
+
+	^ #potentialBugsGroup
 ]
 
 { #category : 'accessing' }

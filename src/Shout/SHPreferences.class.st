@@ -1,404 +1,159 @@
 "
-Preferences for Shout
+I manage the settings for Shout.
+
+This includes:
+  - Turning syntax highlighting on / off
+  - Choosing a predefined style
+  - Editing the custom style table
 "
 Class {
 	#name : 'SHPreferences',
 	#superclass : 'Object',
-	#classVars : [
-		'CustomStyleTable',
-		'Groups'
-	],
 	#classInstVars : [
-		'enabled'
+		'enabled',
+		'activeStyleTable',
+		'syntaxHighlightingEnabled'
 	],
 	#category : 'Shout-Styling',
 	#package : 'Shout',
 	#tag : 'Styling'
 }
 
-{ #category : 'private' }
-SHPreferences class >> applyStyle [
-	| table |
-	
-	table := Groups values flatCollect: [:group | group styleForTable ].
-	SHRBTextStyler styleTable: table
+{ #category : 'accessing' }
+SHPreferences class >> activeStyleTable [
+
+	^ activeStyleTable ifNil: [
+			  activeStyleTable := 'Default'.
+			  activeStyleTable ]
 ]
 
-{ #category : 'accessing - styles' }
-SHPreferences class >> argsStyle [
-	^ Groups at: #args
+{ #category : 'accessing' }
+SHPreferences class >> activeStyleTable: aStyleTableName [
+
+	(self styleTableNames includes: aStyleTableName) ifFalse: [ 
+		self error: 'Trying to activate unknown style table' ].
+	(Pragma allNamed: #styleTable: in: SHRBTextStyler class)
+		detect: [ :pragma | (pragma argumentAt: 1) = aStyleTableName ]
+		ifFound: [ :pragma |
+			self styleTable: (SHRBTextStyler styleTableNamed: aStyleTableName) ]
+		ifNone: [ "ignore" ].
+	'Custom' = aStyleTableName ifTrue: [
+		self styleTable: SHCustomStyle styleTable ].
+	'Default' = aStyleTableName ifTrue: [
+			self styleTable:
+				(SHRBTextStyler perform: Smalltalk ui theme shStyleTableName) ].
+	activeStyleTable := aStyleTableName
 ]
 
-{ #category : 'accessing - styles' }
-SHPreferences class >> argsStyle: aGroupStyle [
-	^ Groups at: #args put: aGroupStyle
+{ #category : 'updating' }
+SHPreferences class >> customStyleChanged [
+
+	activeStyleTable = 'Custom' ifTrue: [
+		self styleTable: SHCustomStyle styleTable ]
 ]
 
-{ #category : 'accessing - styles' }
-SHPreferences class >> commentStyle [
-	^ Groups at: #comment
-]
+{ #category : 'reflective operations' }
+SHPreferences class >> doesNotUnderstand: aMessage [
+	"Handles messages of the form #defaultStyle or #argumentStyle: "
 
-{ #category : 'accessing - styles' }
-SHPreferences class >> commentStyle: aGroupStyle [
-	^ Groups at: #comment put: aGroupStyle
-]
-
-{ #category : 'private' }
-SHPreferences class >> customStyleTable [
-	^ CustomStyleTable
-]
-
-{ #category : 'private' }
-SHPreferences class >> customStyleTable: anArray [
-	CustomStyleTable := anArray.
-	self initializeGroups
-]
-
-{ #category : 'accessing - style defaults' }
-SHPreferences class >> defaultArgsStyle [
-
-	^ SHStyleElement 
-		color: (Color r: 0.0 g: 0.0 b: 0.5004887585532747 alpha: 1.0) 
-		tokens: #(#patternArg #blockPatternArg #blockArg #argument)
-]
-
-{ #category : 'accessing - style defaults' }
-SHPreferences class >> defaultBaseStyle [
-
-	^ SHStyleElement 
-		color: Color black 
- 		tokens: #(#default)
-]
-
-{ #category : 'accessing - style defaults' }
-SHPreferences class >> defaultCommentStyle [
-
-	^ SHStyleElement 
-		color: (Color r: 0.4203323558162268 g: 0.4203323558162268 b: 0.4203323558162268 alpha: 1.0) 
-		tokens: #(#comment)
-]
-
-{ #category : 'accessing - style defaults' }
-SHPreferences class >> defaultErrorStyle [
-
-	^ SHStyleElement 
-		color: Color red 
-		tokens: #(#invalid #undefinedSelector #undefinedIdentifier)
-]
-
-{ #category : 'accessing - style defaults' }
-SHPreferences class >> defaultGlobalVarStyle [
-
-	^ SHStyleElement 
-		color: (Color r: 0.0 g: 0.0 b: 0.5004887585532747 alpha: 1.0) 
-		tokens: #(#globalVar #poolConstant)
-]
-
-{ #category : 'accessing - style defaults' }
-SHPreferences class >> defaultInstanceVarStyle [
-
-	^ SHStyleElement 
-		color: (Color r: 0.0 g: 0.0 b: 0.5004887585532747 alpha: 1.0) 
-		tokens: #(#instVar #classVar)
-]
-
-{ #category : 'accessing - style defaults' }
-SHPreferences class >> defaultMessageSendsStyle [
-
-	^ SHStyleElement color: Color black tokens: #(selector #incompleteSelector)
-]
-
-{ #category : 'accessing - style defaults' }
-SHPreferences class >> defaultPrimitiveTypesStyle [
-
-	^ SHStyleElement 
-		color: (Color r: 0.5004887585532747 g: 0.0 b: 0.0 alpha: 1.0) 
-		tokens: #(#character #number #symbol #string)
-]
-
-{ #category : 'accessing - style defaults' }
-SHPreferences class >> defaultReservedWordsStyle [
-
-	^ SHStyleElement 
-		color: (Color r: 0.0 g: 0.5004887585532747 b: 0.5004887585532747 alpha: 1.0) 
-		tokens: #(#self #super #true #false #nil #thisContext)
-]
-
-{ #category : 'accessing - style defaults' }
-SHPreferences class >> defaultSelectorPatternsStyle [
-
-	^ SHStyleElement 
-		emphasis: #bold 
-		tokens: #(#patternSelector)
-]
-
-{ #category : 'accessing - styles' }
-SHPreferences class >> defaultStyle [
-
-	^ Groups at: #default
-]
-
-{ #category : 'accessing - styles' }
-SHPreferences class >> defaultStyle: aGroupStyle [
-	^ Groups at: #default put: aGroupStyle
-]
-
-{ #category : 'accessing - style defaults' }
-SHPreferences class >> defaultSyntaxStyle [
-
-	^ SHStyleElement tokens: #(#return #blockArgColon #parenthesis #parenthesis1 #parenthesis2 #parenthesis3 #parenthesis4 #parenthesis5 #parenthesis6 #parenthesis7 #block #block1 #block2 #block3 #block4 #block5 #block6 #block7 #byteArrayStart #byteArrayEnd #byteArrayStart1 #byteArrayEnd1 #brace #brace1 #brace2 #brace3 #brace4 #brace5 #brace6 #brace7 #cascadeSeparator #statementSeparator #methodTempBar #blockTempBar #blockArgsBar)
-]
-
-{ #category : 'accessing - style defaults' }
-SHPreferences class >> defaultVariableStyle [
-
-	^ SHStyleElement 
-		color: (Color r: 0.0 g: 0.0 b: 0.5004887585532747 alpha: 1.0) 
-		tokens: #(#blockTempVar #blockPatternTempVar #tempVar #patternTempVar #incompleteIdentifier)
+	(aMessage selector endsWith: 'Style') ifTrue: [
+			^ SHStyleElement group:
+				  (aMessage selector withoutSuffix: 'Style') asSymbol ].
+	(aMessage selector endsWith: 'Style:') ifTrue: [
+		| style |
+		style := aMessage argument.
+		(SHStyleElement group: (style at: 'group'))
+			color: (style at: 'color') ;
+			emphasis: (style at: 'emphasis').
+		^ self ].
+	^ super doesNotUnderstand: aMessage
 ]
 
 { #category : 'accessing' }
 SHPreferences class >> enabled [
-	^ enabled
-		ifNil: [enabled := true]
+
+	^ syntaxHighlightingEnabled ifNil: [ ^ true ]
 ]
 
 { #category : 'accessing' }
 SHPreferences class >> enabled: aBoolean [
-	enabled := aBoolean
+
+	syntaxHighlightingEnabled := aBoolean.
+	self informUI
 ]
 
-{ #category : 'accessing - styles' }
-SHPreferences class >> errorStyle [
-	^ Groups at: #error
-]
-
-{ #category : 'accessing - styles' }
-SHPreferences class >> errorStyle: aGroupStyle [
-	^ Groups at: #error put: aGroupStyle
-]
-
-{ #category : 'accessing - styles' }
-SHPreferences class >> globalVarStyle [
-	^ Groups at: #globalVar
-]
-
-{ #category : 'accessing - styles' }
-SHPreferences class >> globalVarStyle: aGroupStyle [
-	^ Groups at: #globalVar put: aGroupStyle
-]
-
-{ #category : 'class initialization' }
-SHPreferences class >> initialize [
-
-	self customStyleTable: SHRBTextStyler styleTable
-]
-
-{ #category : 'private - initialization' }
-SHPreferences class >> initializeGroups [
-	Groups := Dictionary new.
-	#(#default #(#default ) #reservedWords #(#self #super #true #false #nil #thisContext ) #primitiveTypes #(#character #number #symbol #string ) #selectorPatterns #(#patternSelector) #messageSends #(selector #incompleteSelector ) #args #(#patternArg #blockPatternArg #blockArg #argument ) #variable #(#blockTempVar #blockPatternTempVar #tempVar #patternTempVar #incompleteIdentifier ) #instanceVar #(#instVar #classVar ) #globalVar #(#globalVar #poolConstant ) #comment #(#comment ) #error #(#invalid #undefinedSelector #undefinedIdentifier ) #syntax #(#return #blockArgColon #parenthesis #parenthesis1 #parenthesis2 #parenthesis3 #parenthesis4 #parenthesis5 #parenthesis6 #parenthesis7 #block #block1 #block2 #block3 #block4 #block5 #block6 #block7 #byteArrayStart #byteArrayEnd #byteArrayStart1 #byteArrayEnd1 #brace #brace1 #brace2 #brace3 #brace4 #brace5 #brace6 #brace7 #cascadeSeparator #statementSeparator #methodTempBar #blockTempBar #blockArgsBar ) )
-		pairsDo: [:gname :tokens | Groups
-				at: gname
-				put: (SHStyleElement withTokens: tokens)]
-]
-
-{ #category : 'accessing - styles' }
-SHPreferences class >> instanceVarStyle [
-	^ Groups at: #instanceVar
-]
-
-{ #category : 'accessing - styles' }
-SHPreferences class >> instanceVarStyle: aGroupStyle [
-	^ Groups at: #instanceVar put: aGroupStyle
-]
-
-{ #category : 'accessing - styles' }
-SHPreferences class >> messageSendsStyle [
-	^ Groups at: #messageSends
-]
-
-{ #category : 'accessing - styles' }
-SHPreferences class >> messageSendsStyle: aGroupStyle [
-	^ Groups at: #messageSends put: aGroupStyle
-]
-
-{ #category : 'accessing - styles' }
-SHPreferences class >> primitiveTypesStyle [
-	^ Groups at: #primitiveTypes
-]
-
-{ #category : 'accessing - styles' }
-SHPreferences class >> primitiveTypesStyle: aGroupStyle [
-	^ Groups at: #primitiveTypes put: aGroupStyle
-]
-
-{ #category : 'accessing - styles' }
-SHPreferences class >> reservedWordsStyle [
-	^ Groups at: #reservedWords
-]
-
-{ #category : 'accessing - styles' }
-SHPreferences class >> reservedWordsStyle: aGroupStyle [
-	^ Groups at: #reservedWords put: aGroupStyle
-]
-
-{ #category : 'accessing - styles' }
-SHPreferences class >> selectorPatternsStyle [
-	^ Groups at: #selectorPatterns
-]
-
-{ #category : 'accessing - styles' }
-SHPreferences class >> selectorPatternsStyle: aGroupStyle [
-	^ Groups at: #selectorPatterns put: aGroupStyle
-]
-
-{ #category : 'settings' }
-SHPreferences class >> setStyleTable: anArray [
-
-	SHRBTextStyler styleTable: anArray
-]
-
-{ #category : 'settings' }
-SHPreferences class >> setStyleTableNamed: aString [
-
-	self setStyleTable: (SHRBTextStyler styleTableNamed: aString)
+{ #category : 'private' }
+SHPreferences class >> informUI [
+	"Update all editor panes using syntax highlighting"
+	self currentWorld themeChanged
 ]
 
 { #category : 'settings' }
 SHPreferences class >> settingsOn: aBuilder [
+	
 	<systemsettings>
-	
-	(aBuilder setting: #'Syntax Highlighting')
+	(aBuilder group: 'Syntax Highlighting')
+		parentName: 'codeBrowsing';
 		target: self;
-		"dialog: [ self styleTableRow ];"
-		parentName: #codeBrowsing;
-		description: 'Syntax Highlighting As You Type: Enable syntax highlighting in browsers, debuggers and workspaces and set patterns style.';
-		selector: #enabled;
-		default: true;
 		iconName: #smallConfiguration;
+		noOrdering;
 		with: [
-			(aBuilder pickOne: #styleTableSelector)
-				order: 0;
-				label: 'Syntax Highlight Table';
-				domainValues: self styleTableAvailableStylesMethodsWithNames;
-				description: 'Syntax Highlight style table selection'.
-			(aBuilder setting: #selectorPatternsStyle)
-				label: 'Selector Patterns';
-				default: self defaultSelectorPatternsStyle;
-				description: 'Selector patterns in method pane'.
-			(aBuilder setting: #errorStyle)
-				default: self defaultErrorStyle;
-				label: 'Syntactic error';
-				description: 'Invalid and undefined code' .
-			(aBuilder setting: #argsStyle)
-				label: 'Parameters';
-				default: self defaultArgsStyle;
-				description: 'Parameters in patterns, message sends, and blocks' .
-			(aBuilder setting: #commentStyle)
-				label: 'Comments';
-				default: self defaultCommentStyle;
-				description: 'Comments in code pane' .
-			(aBuilder setting: #defaultBaseStyle)
-				label: 'Default' ;
-				default: self defaultStyle;
-				description: 'Default style' .
-			(aBuilder setting: #globalVarStyle)
-				label: 'Global variables' ;
-				default: self defaultGlobalVarStyle;
-				description: 'References to global variables, including classes' .
-			(aBuilder setting: #instanceVarStyle)
-				label: 'Instance/class variables' ;
-				default: self defaultInstanceVarStyle;
-				description: 'References to instance and class variables' .
-			(aBuilder setting: #messageSendsStyle)
-				default: self defaultMessageSendsStyle;
-				label: 'Message sends' ;
-				description: 'Message sends' .
-			(aBuilder setting: #primitiveTypesStyle)
-				label: 'Primitive types';
-				default: self defaultPrimitiveTypesStyle;
-				description: 'Literal data' .
-			(aBuilder setting: #reservedWordsStyle)
-				label: 'Reserved words';
-				default: self defaultReservedWordsStyle;
-				description: 'Reserved words of the Smalltalk language' .
-			(aBuilder setting: #syntaxStyle)
-				label: 'Syntax';
-				default: self defaultSyntaxStyle;
-				description: 'Any other syntactic element' .
-			(aBuilder setting: #variableStyle)
-				label: 'Variable';
-				default: self defaultVariableStyle;
-				description: 'Temporary variable']
+				(aBuilder setting: 'Enable Syntax Highlighting')
+					target: self;
+					default: true;
+					selector: #enabled;
+					description:
+						'Syntax Highlighting As You Type: Enable syntax highlighting in browsers, debuggers and workspaces and set patterns style.'.
+				(aBuilder setting: #formatIncompleteIdentifiers)
+					target: SHRBTextStyler;
+					default: false;
+					label: 'Format Incomplete Identifiers';
+					parentName: 'Syntax Highlighting';
+					description:
+						'If the code highlighter tryies to format incomplete identifiers and selectors or not. This is not recommended for big images, as it traverse all the image to get the information'.
+				(aBuilder pickOne: #activeStyleTable)
+					label: 'Predefined styles';
+					target: self;
+					domainValues: self styleTableNames;
+					description: 'Choose between the different styles.  Default changes according to the UI Theme and Custom can be modified by you.' ;
+					default: 'Default'.
+				(aBuilder group: 'Edit Custom Style')
+					description: 'Change the Custom style to your liking.  You have to activate it for your changes to take effect.' ;
+					dialog: [
+							Smalltalk ui theme
+								newButtonIn: self
+								for: SHCustomStyle
+								getState: nil
+								action: #copyFromCurrentStyle
+								arguments: nil
+								getEnabled: nil
+								label: 'Copy from current style'
+								help:
+									'Initialize custom style to colors of the currently selected them' ];
+					with: [
+							SHCustomStyle groups keysAndValuesDo: [ :group :info |
+										(aBuilder setting: group , 'Style')
+											target: self;
+											label: (info at: 'label');
+											description: (info at: 'description' ifAbsent: [ '' ]) ] ] ]
 ]
 
-{ #category : 'settings' }
-SHPreferences class >> styleTableAvailableStyles [
-	
-	^ Pragma allNamed: #styleTable: in: SHRBTextStyler class
+{ #category : 'private' }
+SHPreferences class >> styleTable: anArray [
+
+	SHRBTextStyler styleTable: anArray.
+	self informUI
 ]
 
-{ #category : 'settings' }
-SHPreferences class >> styleTableAvailableStylesMethodsWithNames [
-	
-	^ self styleTableAvailableStyles 
-		collect: [ :eachPragma | (eachPragma argumentAt: 1) -> eachPragma methodSelector ]
+{ #category : 'accessing' }
+SHPreferences class >> styleTableNames [
+
+	^ { 'Custom'. 'Default' }
+	  , ((Pragma allNamed: #styleTable: in: SHRBTextStyler class) collect: [:pragma | pragma argumentAt: 1])
 ]
 
-{ #category : 'settings' }
-SHPreferences class >> styleTableRow [
-	| allStyles |
+{ #category : 'updating' }
+SHPreferences class >> themeChanged [
 
-	allStyles := self styleTableAvailableStyles.
-	^Smalltalk ui theme
-		newRowIn: self
-		for: (
-			{ Smalltalk ui theme buttonLabelForText: 'Predefined styles: ' translated },
-			(allStyles collect: [ :eachPragma |
-				(Smalltalk ui theme
-					newButtonIn: self
-					for:  self
-					getState: nil
-					action: #setStyleTableNamed:
-					arguments:  { eachPragma argumentAt: 1 }
-					getEnabled: nil
-					getLabel: nil
-					help: ('Change style table to ', (eachPragma argumentAt: 1)) translated)
-						label: (eachPragma argumentAt: 1);
-						yourself ] ))
-]
-
-{ #category : 'settings' }
-SHPreferences class >> styleTableSelector [
-
-	^ SHRBTextStyler styleTableSelector
-]
-
-{ #category : 'settings' }
-SHPreferences class >> styleTableSelector: aName [
-
-	SHRBTextStyler styleTableSelector: aName
-	
-]
-
-{ #category : 'accessing - styles' }
-SHPreferences class >> syntaxStyle [
-	^ Groups at: #syntax
-]
-
-{ #category : 'accessing - styles' }
-SHPreferences class >> syntaxStyle: aGroupStyle [
-	^ Groups at: #syntax put: aGroupStyle
-]
-
-{ #category : 'accessing - styles' }
-SHPreferences class >> variableStyle [
-	^ Groups at: #variable
-]
-
-{ #category : 'accessing - styles' }
-SHPreferences class >> variableStyle: aGroupStyle [
-	^ Groups at: #variable put: aGroupStyle
+	activeStyleTable = 'Default' ifTrue: [ self activeStyleTable: 'Default' ]
 ]

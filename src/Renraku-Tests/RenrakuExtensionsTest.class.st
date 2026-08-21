@@ -1,8 +1,9 @@
 Class {
 	#name : 'RenrakuExtensionsTest',
 	#superclass : 'TestCase',
-	#category : 'Renraku-Tests',
-	#package : 'Renraku-Tests'
+	#category : 'Renraku-Tests-Rules',
+	#package : 'Renraku-Tests',
+	#tag : 'Rules'
 }
 
 { #category : 'tests' }

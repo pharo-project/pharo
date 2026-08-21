@@ -10,20 +10,20 @@ def isWindows(){
 
 // Answers if we are in a development branch (we assume is a development branch if it starts with "Pharo")
 def isDevelopmentBranch() {
-	def branchName =  env.BRANCH_NAME 
+	def branchName =  env.BRANCH_NAME
 	def baseName = branchName.substring(0, 5)
-	
+
 	return baseName == "Pharo"
 }
 
 // Extracts Pharo version from the development branch (if it is "Pharo7.0" it will answer "7.0")
 def getPharoVersionFromBranch() {
-	def branchName =  env.BRANCH_NAME 
+	def branchName =  env.BRANCH_NAME
 	return branchName.substring(5)
 }
 
 def shell(params){
-    if(isWindows()) bat(params) 
+    if(isWindows()) bat(params)
     else sh(params)
 }
 
@@ -75,7 +75,7 @@ def shellOutput(params){
 def notifyBuild(status){
   node('unix'){ stage('notify'){
   try{
-  
+
   //If this is development, we send the email to the beta list
   def toMail = "log-ci-beta@lists.pharo.org"
   def buildKind = env.BRANCH_NAME
@@ -86,28 +86,28 @@ def notifyBuild(status){
     toMail = "log-ci@lists.pharo.org"
     buildKind = getPharoVersionFromBranch()
   }
-  
+
   //We checkout scm to have access to the log information
   checkout scm
   def owner = "pharo-project"
   def title = status
-  
+
   //Get the merge information from the last commit
   def logMessage = shellOutput('git log -1 --format="%B"')
   def logSHA = shellOutput('git log -1 --format="%p"')
-  
+
   def mailMessage = "Could not extract further issue information from commit message: ${logMessage}"
-  
+
   //If there is no pull request information, we will send a log with the last commit message only
-  def isPRMergeCommit = logMessage.startsWith("Merge pull request ")  
+  def isPRMergeCommit = logMessage.startsWith("Merge pull request ")
   if (isPRMergeCommit) {
     def pullRequestId = logMessage.split(' ')[3].substring(1)
     def githubPullRequestHttpRequest = "https://api.github.com/repos/${owner}/pharo/pulls/${pullRequestId}"
     def response = httpRequest githubPullRequestHttpRequest
-    if (response.status == 200) { 
+    if (response.status == 200) {
       def pullRequestJSON = readJSON text: response.content
       def pullRequestTitle = pullRequestJSON['title']
-      
+
       def pullRequestUrl = "https://github.com/${owner}/pharo/pull/${pullRequestId}"
       mailMessage = """The Pull Request #${pullRequestId} was integrated: \"${pullRequestTitle}\"
 Pull request url: ${pullRequestUrl}
@@ -115,7 +115,7 @@ Pull request url: ${pullRequestUrl}
       title = pullRequestTitle
       def issueNumber = pullRequestJSON['head']['ref'].split('-')[0]
       def issueUrl = "https://github.com/pharo-project/pharo/issues/${issueNumber}"
-      
+
       mailMessage += """
 Issue Url: ${issueUrl}"""
     } else {
@@ -123,9 +123,9 @@ Issue Url: ${issueUrl}"""
 No associated issue found"""
     }
   }
-  
+
   def body = """There is a new Pharo build available!
-  
+
 The status of the build #${env.BUILD_NUMBER} was: ${status}.
 
 ${mailMessage}
@@ -157,7 +157,7 @@ def defineIsoTestStage(projectName, testPackages=""){
                 shell "bash -c './bootstrap/scripts/getPharoVM.sh ${PHARO_SHORT}'"
                 shell "bash -c './pharo metacello.image metacello install --save --strict --signalErrorOnWarning \"filetree://../src\" SUnit --groups Core'"
                 shell "bash -c './pharo metacello.image metacello install --save --strict --signalErrorOnWarning \"filetree://../src\" " + projectName + " --groups " + testGroup + "'"
-                /* 
+                /*
                 Some Baselines do specify tests in the Tests group that do not run on isolation.
                 For that scenario, users can define an explicit list of packages as `testPackages`.
                 In that case, take the packages specified by the user instead of the project packages.
@@ -173,7 +173,7 @@ def defineIsoTestStage(projectName, testPackages=""){
 def bootstrapImage(){
     cleanWs()
     try {
-        stage ("Fetch Requirements") {  
+        stage ("Fetch Requirements") {
             checkout scm
             // Stage 1 is to remove any artefacts, not required for Jenkins
             shell "BUILD_NUMBER=${BUILD_NUMBER} BOOTSTRAP_ARCH=64 bash ./bootstrap/scripts/2-download.sh"
@@ -187,7 +187,7 @@ def bootstrapImage(){
             shell "BUILD_NUMBER=${BUILD_NUMBER} BOOTSTRAP_ARCH=64 bash ./bootstrap/scripts/4-installMetacello.sh"
             stash includes: "build/bootstrap-cache/*.zip,build/bootstrap-cache/*.sources,bootstrap/scripts/**,tests/**", name: "bootstrap64"
         }
-        
+
         def isoTesters = [:]
         isoTesters['SUnit'] = { defineIsoTestStage("SUnit") }
         isoTesters['Kernel'] = { defineIsoTestStage("Kernel", "\'Kernel-Tests\'  \'Kernel-CodeModel-Tests\'") }
@@ -203,8 +203,10 @@ def bootstrapImage(){
         isoTesters['System-Finalization'] = { defineIsoTestStage("SystemFinalization") }
         isoTesters['System-Support'] = { defineIsoTestStage("SystemSupport") }
         isoTesters['System-Version'] = { defineIsoTestStage("SystemVersion") }
-        isoTesters['Collections'] = { defineIsoTestStage("Collections") }        
+        isoTesters['Collections'] = { defineIsoTestStage("Collections") }
+        isoTesters['Refactoring'] = { defineIsoTestStage("Refactoring") }
         isoTesters['DebuggerCLI'] = { defineIsoTestStage("DebuggerCLI") }
+        isoTesters['Clap'] = { defineIsoTestStage("Clap") }
         parallel isoTesters
 
         stage ("Full Image") {
@@ -239,17 +241,17 @@ def bootstrapImage(){
 }
 
 def launchBenchmark(){
-    node('unix'){ 
+    node('unix'){
 		stage('launchBenchmark'){
 		  cleanWs()
-	
+
 			projectName = env.JOB_NAME
 		  //We checkout scm to have access to the log information
-		  checkout scm	
-	
+		  checkout scm
+
 		  if (env.CHANGE_ID != null) {
 				//If I am in a PR the head of the repository is a merge of the base commit (the development branch) and the PR commit.
-				//I take the first parent of this commit. It is the commit in the PR 
+				//I take the first parent of this commit. It is the commit in the PR
 				commit = shellOutput('git log HEAD^1 -1 --format="%H"')
 				isPR = true
 			} else {
@@ -257,7 +259,7 @@ def launchBenchmark(){
 				commit = shellOutput('git log -1 --format="%H"')
 				isPR = false
 			}
-	
+
 			build job: 'pharo-benchmarks', parameters: [text(name: 'originProjectName', value: projectName), booleanParam(name: 'isPR', value: isPR), text(name: 'commit', value: commit)], wait: false
 		}
 	}
@@ -288,7 +290,7 @@ try{
       // Disabling the test of 32bits
       if (arch != '32') {
         testers["${platform}-${architecture}"] = {
-          node(platform) { 
+          node(platform) {
             stage("Tests-${platform}-${architecture}") {
               timeout(35) {
                 runTests(architecture)

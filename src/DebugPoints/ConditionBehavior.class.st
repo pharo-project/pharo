@@ -46,13 +46,15 @@ ConditionBehavior >> evaluate: expression withContext: aContext [
 
 { #category : 'execution' }
 ConditionBehavior >> execute [
+	"Should return true if execution should continue and false if it should interrupt."
+	
 	self condition ifNil: [ ^true ].
-	^(self evaluate: self condition withContext: self context).
+	^ self evaluate: self condition withContext: self context
 ]
 
 { #category : 'initialization' }
 ConditionBehavior >> initialize [
-	"should be executed before once and count etc."
+	"Executed before once and count etc."
 
 	super initialize.
 	self condition: 'false'
@@ -60,6 +62,7 @@ ConditionBehavior >> initialize [
 
 { #category : 'cleanup' }
 ConditionBehavior >> remove [ 
-	"saving the condition in case the condition behavior is added again later"
+	"Saving the condition in case the condition behavior is added again later."
+	
 	self debugPoint properties at: #Condition put: self condition.
 ]

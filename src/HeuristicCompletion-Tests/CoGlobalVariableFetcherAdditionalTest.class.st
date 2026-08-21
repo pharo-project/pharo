@@ -1,6 +1,9 @@
 Class {
 	#name : 'CoGlobalVariableFetcherAdditionalTest',
 	#superclass : 'CoBasicFetcherWithElementsTest',
+	#instVars : [
+		'rate'
+	],
 	#category : 'HeuristicCompletion-Tests-Core',
 	#package : 'HeuristicCompletion-Tests',
 	#tag : 'Core'
@@ -10,6 +13,8 @@ Class {
 CoGlobalVariableFetcherAdditionalTest >> setUp [
 
 	super setUp.
+	rate := CoToleranceFilter rate.
+	CoToleranceFilter disable.
 	systemNavigation := CoMockSystemNavigation new
 		globals: {'Ab' . 'B' . 'AIGlobal' . 'AIa' };
 		yourself.
@@ -25,6 +30,12 @@ CoGlobalVariableFetcherAdditionalTest >> setUp [
 		CoGlobalEntry contents: 'AIGlobal' node: nil .
 		CoGlobalEntry contents: 'AIa' node: nil.
 		  }
+]
+
+{ #category : 'running' }
+CoGlobalVariableFetcherAdditionalTest >> tearDown [ 
+	CoToleranceFilter rate: rate.
+	super tearDown 
 ]
 
 { #category : 'running' }

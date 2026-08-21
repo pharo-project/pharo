@@ -425,6 +425,18 @@ Form >> balancedPatternFor: aColor depth: aDepth [
 		with: mask1 * pv3 + (mask2 * pv1)
 ]
 
+{ #category : 'accessing' }
+Form >> basicDepth [
+
+	^ depth
+]
+
+{ #category : 'accessing' }
+Form >> basicDepth: anObject [
+
+	depth := anObject
+]
+
 { #category : 'color mapping' }
 Form >> bitPatternFor: aColor [
 	"Return the pixel word for representing the given color on the receiver"
@@ -797,7 +809,7 @@ Form >> copyWithColorsReducedTo: nColors [
 		[:i | | pc closest | pc := Color colorFromPixelValue: i-1 depth: depth.
 		closest := palette detectMin: [:c | c diff: pc].
 		closest pixelValueForDepth: depth].
-	^ self deepCopy copyBits: self boundingBox from: self at: 0@0 colorMap: (colorMap as: Bitmap)
+	^ self copy copyBits: self boundingBox from: self at: 0@0 colorMap: (colorMap as: Bitmap)
 ]
 
 { #category : 'converting' }
@@ -816,14 +828,6 @@ Form >> darker: aFactor [
 
 	^ self collectColors: [ :color |
 				color adjustBrightness: aFactor negated]
-]
-
-{ #category : 'copying' }
-Form >> deepCopy [
-
-	^ self shallowCopy
-		bits: bits copy;
-		offset: offset copy
 ]
 
 { #category : 'accessing' }
@@ -1147,7 +1151,7 @@ Form >> findShapeAroundSeedBlock: seedBlock [
 	smearPort := BitBlt toForm: smearForm.
 	seedBlock value: smearForm.		"Blacken seeds to be smeared"
 	smearPort copyForm: self to: 0 @ 0 rule: Form erase.  "Clear any in black"
-	previousSmear := smearForm deepCopy.
+	previousSmear := smearForm copy.
 	count := 1.
 	[count = 10 and:   "check for no change every 10 smears"
 		[count := 1.
@@ -1303,6 +1307,12 @@ Form >> hasBeenModified: aBool [
 { #category : 'accessing' }
 Form >> height [
 	^ height
+]
+
+{ #category : 'accessing' }
+Form >> height: anObject [
+
+	height := anObject
 ]
 
 { #category : 'file in/out' }
@@ -1586,7 +1596,7 @@ Form >> mergeWith: aForm [
 Form >> mergeWith: aForm at: aPoint [
 	| mergedForm |
 
-	mergedForm := self deepCopy.
+	mergedForm := self copy.
 	mergedForm getCanvas
 		translucentImage: aForm
 		at: aPoint.
@@ -1740,6 +1750,14 @@ Form >> pixelWordFor: aColor [
 	"Return the pixel word for representing the given color on the receiver"
 
 	^ aColor pixelWordForDepth: self depth
+]
+
+{ #category : 'copying' }
+Form >> postCopy [
+
+	^ self
+		bits: bits copy;
+		offset: offset copy
 ]
 
 { #category : 'other' }
@@ -2383,6 +2401,12 @@ Form >> veryDeepCopyWith: deepCopier [
 { #category : 'accessing' }
 Form >> width [
 	^ width
+]
+
+{ #category : 'accessing' }
+Form >> width: anObject [
+
+	width := anObject
 ]
 
 { #category : 'transitions' }

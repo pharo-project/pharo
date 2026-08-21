@@ -75,7 +75,7 @@ TextContainer >> computeShadow [
 			ifTrue: [tempCanvas fullDrawMorph: (theText owner copyWithoutSubmorph: theText)]
 			ifFalse: [tempCanvas fillRectangle: textMorph bounds color: Color black].
 		self avoidsOcclusions ifTrue:
-			[back := tempCanvas form deepCopy.
+			[back := tempCanvas form copy.
 			tempCanvas form fillWhite.
 			theText owner submorphsInFrontOf: theText do:
 				[:m | (textMorph isLinkedTo: m)

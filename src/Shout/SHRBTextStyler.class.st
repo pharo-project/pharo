@@ -45,7 +45,7 @@ SHRBTextStyler class >> attributeArrayForColor: colorOrNil backgroundColor: back
 					stream nextPut: (TextEmphasis perform: emphasisSymbolOrArrayorNil) ]
 				ifFalse: [
 					emphasisSymbolOrArrayorNil do: [ :each | 
-						stream nextPut: (TextEmphasis perform: emphasisSymbolOrArrayorNil) ] ] ] ]
+						stream nextPut: (TextEmphasis perform: each) ] ] ] ]
 ]
 
 { #category : 'attributes' }
@@ -83,79 +83,79 @@ SHRBTextStyler class >> blueStyleTable [
 
 	"(symbol color [emphasisSymbolOrArray [textStyleName [pixelHeight]]])"
  	^ #(
-			(default 								black)
-			(invalid 									red)
+			('default' 								black)
+			('invalid' 									red)
 
-			(comment 								(gray darker))
+			('comment' 								(gray darker))
 
-			(character 								(red muchDarker))
-			(number 								(red muchDarker))
-			(symbol 								(magenta muchDarker))
-			(string 									(magenta muchDarker) normal)
+			('character' 								(red muchDarker))
+			('number' 								(red muchDarker))
+			('symbol' 								(magenta muchDarker))
+			('string' 									(magenta muchDarker) normal)
 
-			(selector 								(black))
+			('selector' 								(black))
 
-			(#self 									(cyan muchDarker ))
-			(#super 								(cyan muchDarker ))
-			(#true 									(red muchDarker))
-			(#false 									(red muchDarker))
-			(#nil 									(red muchDarker))
-			(#thisContext 							(cyan muchDarker ))
-			(#thisProcess 							(cyan muchDarker ))
-			(#return 								(cyan muchDarker ) bold)
-			(patternArg 							(blue muchDarker))
-			(blockPatternArg 						(blue muchDarker))
-			(blockArg 								(blue muchDarker))
-			(argument 								(blue muchDarker))
-			(blockTempVar 						(blue muchDarker))
-			(blockPatternTempVar 					(blue muchDarker))
-			(instVar 								(cyan muchDarker))
+			('self' 									(cyan muchDarker ))
+			('super' 								(cyan muchDarker ))
+			('true' 									(red muchDarker))
+			('false' 									(red muchDarker))
+			('nil' 									(red muchDarker))
+			('thisContext' 							(cyan muchDarker ))
+			('thisProcess' 							(cyan muchDarker ))
+			('return' 								(cyan muchDarker ) bold)
+			('patternArg' 							(blue muchDarker))
+			('blockPatternArg' 						(blue muchDarker))
+			('blockArg' 								(blue muchDarker))
+			('argument' 								(blue muchDarker))
+			('blockTempVar' 						(blue muchDarker))
+			('blockPatternTempVar' 					(blue muchDarker))
+			('instVar' 								(cyan muchDarker))
 
-			(tempVar 								(blue muchDarker))
-			(patternTempVar 						(blue muchDarker))
-			(poolConstant 							(cyan muchDarker))
-			(classVar 								(cyan muchDarker))
-			(globalVar 								(purple muchDarker))
+			('tempVar' 								(blue muchDarker))
+			('patternTempVar' 						(blue muchDarker))
+			('poolConstant' 							(cyan muchDarker))
+			('classVar' 								(cyan muchDarker))
+			('globalVar' 								(purple muchDarker))
 
-			(incompleteIdentifier 					blue italic)
-			(incompleteSelector 					nil  italic)
+			('incompleteIdentifier' 					blue italic)
+			('incompleteSelector' 					nil  italic)
 
-			(undefinedIdentifier 					red)
-			(undefinedSelector 					red)
+			('undefinedIdentifier' 					red)
+			('undefinedSelector' 					red)
 
-			(patternSelector 						nil bold)
-			(blockArgColon 						black)
-			(parenthesis 						black)
-			(parenthesis1 						(green muchDarker))
-			(parenthesis2 						(magenta muchDarker))
-			(parenthesis3 						(red muchDarker))
-			(parenthesis4 						(green darker))
-			(parenthesis5 						(orange darker))
-			(parenthesis6 						(magenta darker))
-			(parenthesis7 						blue)
-			(block 								black)
-			(block1 							(green muchDarker))
-			(block2 							(magenta muchDarker))
-			(block3 							(red muchDarker))
-			(block4 							(green darker))
-			(block5 							(orange darker))
-			(block6 							(magenta darker))
-			(block7 							blue)
-			(brace 								black)
-			(brace1 								(green muchDarker))
-			(brace2 								(magenta muchDarker))
-			(brace3 								(red muchDarker))
-			(brace4 								(green darker))
-			(brace5 								(orange darker))
-			(brace6 								(magenta darker))
-			(brace7 								blue)
-			(cascadeSeparator 					black)
-			(statementSeparator 					black)
-			(methodTempBar 						(black))
-			(blockTempBar 						(black))
-			(blockArgsBar 							(black))
+			('patternSelector' 						nil bold)
+			('blockArgColon' 						black)
+			('parenthesis' 						black)
+			('parenthesis1' 						(green muchDarker))
+			('parenthesis2' 						(magenta muchDarker))
+			('parenthesis3' 						(red muchDarker))
+			('parenthesis4' 						(green darker))
+			('parenthesis5' 						(orange darker))
+			('parenthesis6' 						(magenta darker))
+			('parenthesis7' 						blue)
+			('block' 								black)
+			('block1' 							(green muchDarker))
+			('block2' 							(magenta muchDarker))
+			('block3' 							(red muchDarker))
+			('block4' 							(green darker))
+			('block5' 							(orange darker))
+			('block6' 							(magenta darker))
+			('block7' 							blue)
+			('brace' 								black)
+			('brace1' 								(green muchDarker))
+			('brace2' 								(magenta muchDarker))
+			('brace3' 								(red muchDarker))
+			('brace4' 								(green darker))
+			('brace5' 								(orange darker))
+			('brace6' 								(magenta darker))
+			('brace7' 								blue)
+			('cascadeSeparator' 					black)
+			('statementSeparator' 					black)
+			('methodTempBar' 						(black))
+			('blockTempBar' 						(black))
+			('blockArgsBar' 							(black))
 
-			(pragma 						(green muchDarker)))
+			('pragma' 						(green muchDarker)))
 ]
 
 { #category : 'styles' }
@@ -164,79 +164,79 @@ SHRBTextStyler class >> darkBlueStyleTable [
 
 			"(symbol color [emphasisSymbolOrArray [textStyleName [pixelHeight]]])"
  	^ #(
-			(default 								white)
-			(invalid 								'FF8A80') 
+			('default' 								white)
+			('invalid' 								'FF8A80') 
 
-			(comment 								'7D8C93')
+			('comment' 								'7D8C93')
 
-			(character 							('E38C1E' lighter))
-			(number 								('FFE54B'))
-			(symbol 								('E38C1E'))
-			(string 								('E38C1E'))
+			('character' 							('E38C1E' lighter))
+			('number' 								('FFE54B'))
+			('symbol' 								('E38C1E'))
+			('string' 								('E38C1E'))
 
-			(selector 								white)
+			('selector' 								white)
 
-			(#true 								('00CC6E' darker))
-			(#false 								('00CC6E' darker))
-			(#nil 									('00CC6E' darker))
+			('true' 								('00CC6E' darker))
+			('false' 								('00CC6E' darker))
+			('nil' 									('00CC6E' darker))
 
-			(#self 								'00CC6E')
-			(#super								'00CC6E')
-			(#thisContext 						'00CC6E')
-			(#return 								'00CC6E' bold)
+			('self' 								'00CC6E')
+			('super'								'00CC6E')
+			('thisContext' 						'00CC6E')
+			('return' 								'00CC6E' bold)
 
-			(patternArg 							'03a9f4' bold)
-			(argument 							'03a9f4')
+			('patternArg' 							'03a9f4' bold)
+			('argument' 							'03a9f4')
 										
-			(instVar 								'ffa000')										
+			('instVar' 								'ffa000')										
 
-			(patternTempVar 					'00acc1')
-			(tempVar 								'00acc1')
+			('patternTempVar' 					'00acc1')
+			('tempVar' 								'00acc1')
 																					
-			(blockPatternArg 					'0091ea' italic)
-			(blockArg 							'0091ea' italic)
+			('blockPatternArg' 					'0091ea' italic)
+			('blockArg' 							'0091ea' italic)
 
-			(blockPatternTempVar 				'00838f' italic)
-			(blockTempVar 						'00838f' italic)
+			('blockPatternTempVar' 				'00838f' italic)
+			('blockTempVar' 						'00838f' italic)
 
-			(poolConstant 						'A7E2ED' bold)
-			(classVar 							'A7E2ED' bold)
-			(globalVar 							white bold)
+			('poolConstant' 						'A7E2ED' bold)
+			('classVar' 							'A7E2ED' bold)
+			('globalVar' 							white bold)
 
 
-			(incompleteIdentifier 			'E8E2B7' italic)
-			(incompleteSelector				'E8E2B7' italic)
+			('incompleteIdentifier' 			'E8E2B7' italic)
+			('incompleteSelector'				'E8E2B7' italic)
 
-			(undefinedIdentifier 				'FF8A80')
-			(undefinedSelector 					'FF8A80')
+			('undefinedIdentifier' 				'FF8A80')
+			('undefinedSelector' 					'FF8A80')
 
-			(patternSelector 						nil bold)
-			(blockArgColon 						white)
-			(parenthesis 					white)
-			(parenthesis1 					(green muchLighter))
-			(parenthesis2 					(magenta muchLighter))
-			(parenthesis3 					('FF8A80' muchLighter))
-			(parenthesis4 					(green lighter))
-			(parenthesis5 					(orange lighter))
-			(parenthesis6 					(magenta lighter))
-			(parenthesis7 					blue)
-			(block 							white)
-			(block1 						(green muchLighter))
-			(block2 						(magenta muchLighter))
-			(block3 						(red muchLighter))
-			(block4 						(green lighter))
-			(block5 						(orange lighter))
-			(block6 						(magenta lighter))
-			(block7 						blue)
-			(brace 							white)
-			(cascadeSeparator 					white bold)
-			(statementSeparator 				white bold)
-			(methodTempBar 						white)
-			(blockTempBar 						white)
-			(blockArgsBar 						white)
+			('patternSelector' 						nil bold)
+			('blockArgColon' 						white)
+			('parenthesis' 					white)
+			('parenthesis1' 					(green muchLighter))
+			('parenthesis2' 					(magenta muchLighter))
+			('parenthesis3' 					('FF8A80' muchLighter))
+			('parenthesis4' 					(green lighter))
+			('parenthesis5' 					(orange lighter))
+			('parenthesis6' 					(magenta lighter))
+			('parenthesis7' 					blue)
+			('block' 							white)
+			('block1' 						(green muchLighter))
+			('block2' 						(magenta muchLighter))
+			('block3' 						(red muchLighter))
+			('block4' 						(green lighter))
+			('block5' 						(orange lighter))
+			('block6' 						(magenta lighter))
+			('block7' 						blue)
+			('brace' 							white)
+			('cascadeSeparator' 					white bold)
+			('statementSeparator' 				white bold)
+			('methodTempBar' 						white)
+			('blockTempBar' 						white)
+			('blockArgsBar' 						white)
 
 			
-			(pragma 									'B4DD6E'))
+			('pragma' 									'B4DD6E'))
 ]
 
 { #category : 'styles' }
@@ -253,84 +253,84 @@ SHRBTextStyler class >> darkStyleTable [
 
 			"(symbol color [emphasisSymbolOrArray [textStyleName [pixelHeight]]])"
  ^ #(
-			(default 								white)
-			(invalid 								'FF8A80')
+			('default' 								white)
+			('invalid' 								'FF8A80')
 
-			(comment 								'7D8C93')
+			('comment' 								'7D8C93')
 
-			(character 							('E38C1E' lighter))
-			(number 								('FFE54B'))
-			(symbol 								('E38C1E'))
-			(string 								('E38C1E'))
+			('character' 							('E38C1E' lighter))
+			('number' 								('FFE54B'))
+			('symbol' 								('E38C1E'))
+			('string' 								('E38C1E'))
 
-			(selector 								white)
+			('selector' 								white)
 
-			(#true 								('00CC6E' darker))
-			(#false 								('00CC6E' darker))
-			(#nil 									('00CC6E' darker))
+			('true' 								('00CC6E' darker))
+			('false' 								('00CC6E' darker))
+			('nil' 									('00CC6E' darker))
 
-			(#self 								'00CC6E')
-			(#super								'00CC6E')
-			(#thisContext 						'00CC6E')
-			(#thisProcess 						'00CC6E')
-			(#return 								'00CC6E' bold)
+			('self' 								'00CC6E')
+			('super'								'00CC6E')
+			('thisContext' 						'00CC6E')
+			('thisProcess' 						'00CC6E')
+			('return' 								'00CC6E' bold)
 
-			(patternArg 							'A7E2ED')
-			(blockPatternArg 					'A7E2ED' italic)
-			(blockArg 							'A7E2ED' italic)
-			(argument 							'A7E2ED')
-			(blockTempVar 						'A7E2ED')
-			(blockPatternTempVar 				'A7E2ED')
+			('patternArg' 							'A7E2ED')
+			('blockPatternArg' 					'A7E2ED' italic)
+			('blockArg' 							'A7E2ED' italic)
+			('argument' 							'A7E2ED')
+			('blockTempVar' 						'A7E2ED')
+			('blockPatternTempVar' 				'A7E2ED')
 
-			(instVar 								'A7E2ED')
+			('instVar' 								'A7E2ED')
 
-			(tempVar 								'A7E2ED')
-			(patternTempVar 					'A7E2ED')
+			('tempVar' 								'A7E2ED')
+			('patternTempVar' 					'A7E2ED')
 
-			(poolConstant 						'A7E2ED' bold)
-			(classVar 							'A7E2ED' bold)
-			(globalVar 							white bold)
+			('poolConstant' 						'A7E2ED' bold)
+			('classVar' 							'A7E2ED' bold)
+			('globalVar' 							white bold)
 
 
-			(incompleteIdentifier 			'E8E2B7' italic)
-			(incompleteSelector 				'E8E2B7' italic)
+			('incompleteIdentifier' 			'E8E2B7' italic)
+			('incompleteSelector' 				'E8E2B7' italic)
 
-			(undefinedIdentifier 				'FF8A80')
-			(undefinedSelector 					'FF8A80')
+			('undefinedIdentifier' 				'FF8A80')
+			('undefinedSelector' 					'FF8A80')
 
-			(patternSelector 					nil bold)
-			(blockArgColon 						white)
-			(parenthesis 					white)
-			(parenthesis1 					(green muchLighter))
-			(parenthesis2 					(magenta muchLighter))
-			(parenthesis3 					('FF8A80' muchLighter))
-			(parenthesis4 					(green lighter))
-			(parenthesis5 					(orange lighter))
-			(parenthesis6 					(magenta lighter))
-			(parenthesis7 					blue)
-			(block 							white)
-			(block1 						(green muchLighter))
-			(block2 						(magenta muchLighter))
-			(block3 						(red muchLighter))
-			(block4 						(green lighter))
-			(block5 						(orange lighter))
-			(block6 						(magenta lighter))
-			(block7 						blue)
-			(brace 							white)
-			(brace1 						(green muchLighter))
-			(brace2 						(magenta muchLighter))
-			(brace3 						(red muchLighter))
-			(brace4 						(green lighter))
-			(brace5 						(orange lighter))
-			(brace6 						(magenta lighter))
-			(brace7 						blue)
-			(cascadeSeparator 					white bold)
-			(statementSeparator 				white bold)
-			(methodTempBar 						white)
-			(blockTempBar 						white)
-			(blockArgsBar 						white)
+			('patternSelector' 					nil bold)
+			('blockArgColon' 						white)
+			('parenthesis' 					white)
+			('parenthesis1' 					(green muchLighter))
+			('parenthesis2' 					(magenta muchLighter))
+			('parenthesis3' 					('FF8A80' muchLighter))
+			('parenthesis4' 					(green lighter))
+			('parenthesis5' 					(orange lighter))
+			('parenthesis6' 					(magenta lighter))
+			('parenthesis7' 					blue)
+			('block' 							white)
+			('block1' 						(green muchLighter))
+			('block2' 						(magenta muchLighter))
+			('block3' 						(red muchLighter))
+			('block4' 						(green lighter))
+			('block5' 						(orange lighter))
+			('block6' 						(magenta lighter))
+			('block7' 						blue)
+			('brace' 							white)
+			('brace1' 						(green muchLighter))
+			('brace2' 						(magenta muchLighter))
+			('brace3' 						(red muchLighter))
+			('brace4' 						(green lighter))
+			('brace5' 						(orange lighter))
+			('brace6' 						(magenta lighter))
+			('brace7' 						blue)
+			('cascadeSeparator' 					white bold)
+			('statementSeparator' 				white bold)
+			('methodTempBar' 						white)
+			('blockTempBar' 						white)
+			('blockArgsBar' 						white)
 
-			(pragma 									'B4DD6E'))
+			('pragma' 									'B4DD6E'))
 ]
 
 { #category : 'styles' }
@@ -361,25 +361,20 @@ SHRBTextStyler class >> initialTextAttributes [
 { #category : 'attributes' }
 SHRBTextStyler class >> initialTextAttributesForStyleTable: aStyleTable [
 	"Parses aStyleTable and answer a dictionary of attributes, with attribute name as key."
-	| dictionary |
-	
-	dictionary := IdentityDictionary new.
-	aStyleTable do: [ :each |
-		| element emphasis color backgroundColor |
-		
-		element := each at: 1.
-		color := each at: 2 ifAbsent: [ ].
-		color := color ifNotNil: [ Color colorFrom: color ].
-		emphasis := each at: 3 ifAbsent: [  ].
-		backgroundColor := each at: 4 ifAbsent: [ ].
-		backgroundColor := backgroundColor ifNotNil: [ Color colorFrom: backgroundColor ].
 
-		(self 
-			attributeArrayForColor: color 
-			backgroundColor: backgroundColor
-			emphasis: emphasis)
-		ifNotEmpty: [ :attrArray | 
-			dictionary at: element put: attrArray ] ].
+	| dictionary |
+	dictionary := Dictionary new.
+	aStyleTable do: [ :each |
+			| element emphasis color backgroundColor |
+			element := each at: 1.
+			color := each at: 2 ifAbsent: [ ].
+			color := color ifNotNil: [ Color colorFrom: color ].
+			emphasis := each at: 3 ifAbsent: [ ].
+			backgroundColor := each at: 4 ifAbsent: [ ].
+			backgroundColor := backgroundColor ifNotNil: [ Color colorFrom: backgroundColor ].
+
+			(self attributeArrayForColor: color backgroundColor: backgroundColor emphasis: emphasis) ifNotEmpty: [ :attrArray |
+				dictionary at: element put: attrArray ] ].
 
 	^ dictionary
 ]
@@ -415,19 +410,6 @@ SHRBTextStyler class >> resetTextAttributesCaches [
 ]
 
 { #category : 'styles' }
-SHRBTextStyler class >> settingsOn: aBuilder [
-	<systemsettings>
-
-	(aBuilder setting: #formatIncompleteIdentifiers)
-		target: self;
-		default: false;
-		order: 1;
-		label: 'Format Incomplete Identifiers';
-		parentName: #'Syntax Highlighting';
-		description: 'If the code highlighter tryies to format incomplete identifiers and selectors or not. This is not recommended for big images, as it traverse all the image to get the information'
-]
-
-{ #category : 'styles' }
 SHRBTextStyler class >> solarizedStyleTable [
 	"color can be a valid argument to Color class>>colorFrom: , or nil to
 	use the editor text color.
@@ -441,82 +423,82 @@ SHRBTextStyler class >> solarizedStyleTable [
 
 			"(symbol color [emphasisSymbolOrArray [textStyleName [pixelHeight]]])"
  ^ #(
-			(default 								('657A81' muchDarker))
-			(invalid 									red)
+			('default' 								('657A81' muchDarker))
+			('invalid' 									red)
 
-			(comment 								'586E75')
+			('comment' 								'586E75')
 
-			(character 								('268BD2' lighter))
-			(number 								('2AA198'))
-			(symbol 								('268BD2'))
-			(string 									('268BD2'))
+			('character' 								('268BD2' lighter))
+			('number' 								('2AA198'))
+			('symbol' 								('268BD2'))
+			('string' 									('268BD2'))
 
 
-			(selector 								nil)
+			('selector' 								nil)
 
-			(#true 									('CB4B16' darker))
-			(#false 									('CB4B16' darker))
-			(#nil 									('CB4B16' darker))
+			('true' 									('CB4B16' darker))
+			('false' 									('CB4B16' darker))
+			('nil' 									('CB4B16' darker))
 
-			(#self 									'B58900')
-			(#super								'B58900')
-			(#thisContext 							'B58900')
-			(#thisProcess 							'B58900')
-			(#return 								'B58900' bold)
+			('self' 									'B58900')
+			('super'								'B58900')
+			('thisContext' 							'B58900')
+			('thisProcess' 							'B58900')
+			('return' 								'B58900' bold)
 
-			(patternArg 							('D33682'))
-			(blockPatternArg 						('D33682'))
-			(blockArg 								('D33682'))
-			(argument 								('D33682'))
-			(blockTempVar 						('D33682'))
-			(blockPatternTempVar 					('D33682'))
+			('patternArg' 							('D33682'))
+			('blockPatternArg' 						('D33682'))
+			('blockArg' 								('D33682'))
+			('argument' 								('D33682'))
+			('blockTempVar' 						('D33682'))
+			('blockPatternTempVar' 					('D33682'))
 
-			(instVar 								('D33682'))
+			('instVar' 								('D33682'))
 
-			(tempVar 								('D33682'))
-			(patternTempVar 						('D33682'))
+			('tempVar' 								('D33682'))
+			('patternTempVar' 						('D33682'))
 
-			(poolConstant 							('D33682') bold)
-			(classVar 								('D33682') bold)
-			(globalVar 								('268BD2' muchDarker) bold)
+			('poolConstant' 							('D33682') bold)
+			('classVar' 								('D33682') bold)
+			('globalVar' 								('268BD2' muchDarker) bold)
 
-			(undefinedIdentifier 					red)
-			(incompleteIdentifier 					'D33682' italic)
-			(incompleteSelector 					nil  italic)
-			(undefinedSelector 					red)
-			(patternSelector 						'657A81' bold)
-			(blockArgColon 						black)
-			(parenthesis 						black)
-			(parenthesis1 						(green muchDarker))
-			(parenthesis2 						(magenta muchDarker))
-			(parenthesis3 						(red muchDarker))
-			(parenthesis4 						(green darker))
-			(parenthesis5 						(orange darker))
-			(parenthesis6 						(magenta darker))
-			(parenthesis7 						blue)
-			(block 								black)
-			(block1 							(green muchDarker))
-			(block2 							(magenta muchDarker))
-			(block3 							(red muchDarker))
-			(block4 							(green darker))
-			(block5 							(orange darker))
-			(block6 							(magenta darker))
-			(block7 							blue)
-			(brace 								black)
-			(brace1 								(green muchDarker))
-			(brace2 								(magenta muchDarker))
-			(brace3 								(red muchDarker))
-			(brace4 								(green darker))
-			(brace5 								(orange darker))
-			(brace6 								(magenta darker))
-			(brace7 								blue)
-			(cascadeSeparator 					black bold)
-			(statementSeparator 					black bold)
-			(methodTempBar 						black)
-			(blockTempBar 						black)
-			(blockArgsBar 							black)
+			('undefinedIdentifier' 					red)
+			('incompleteIdentifier' 					'D33682' italic)
+			('incompleteSelector' 					nil  italic)
+			('undefinedSelector' 					red)
+			('patternSelector' 						'657A81' bold)
+			('blockArgColon' 						black)
+			('parenthesis' 						black)
+			('parenthesis1' 						(green muchDarker))
+			('parenthesis2' 						(magenta muchDarker))
+			('parenthesis3' 						(red muchDarker))
+			('parenthesis4' 						(green darker))
+			('parenthesis5' 						(orange darker))
+			('parenthesis6' 						(magenta darker))
+			('parenthesis7' 						blue)
+			('block' 								black)
+			('block1' 							(green muchDarker))
+			('block2' 							(magenta muchDarker))
+			('block3' 							(red muchDarker))
+			('block4' 							(green darker))
+			('block5' 							(orange darker))
+			('block6' 							(magenta darker))
+			('block7' 							blue)
+			('brace' 								black)
+			('brace1' 								(green muchDarker))
+			('brace2' 								(magenta muchDarker))
+			('brace3' 								(red muchDarker))
+			('brace4' 								(green darker))
+			('brace5' 								(orange darker))
+			('brace6' 								(magenta darker))
+			('brace7' 								blue)
+			('cascadeSeparator' 					black bold)
+			('statementSeparator' 					black bold)
+			('methodTempBar' 						black)
+			('blockTempBar' 						black)
+			('blockArgsBar' 							black)
 
-			(pragma 						(cyan muchDarker)))
+			('pragma' 						(cyan muchDarker)))
 ]
 
 { #category : 'accessing' }
@@ -591,84 +573,84 @@ SHRBTextStyler class >> tangoStyleTable [
 
 			"(symbol color [emphasisSymbolOrArray [textStyleName [pixelHeight]]])"
  ^ #(
-			(default 								black)
-			(invalid 									red)
+			('default' 								black)
+			('invalid' 									red)
 
-			(comment 								'888a85')
+			('comment' 								'888a85')
 
-			(character 								'ce5c00')
-			(number 								'8f5902')
-			(symbol 								'c4a000')
-			(string 									'ce5c00')
-
-
-			(selector 								(black))
-
-			(#true 									'8F5902')
-			(#false 									'8F5902')
-			(#nil 									'8F5902')
-
-			(#self 									'4d9a06')
-			(#super 								'4d9a06')
-			(#thisContext 							'4d9a06')
-			(#thisProcess 							'4d9a06')
-			(#return 								black bold)
-
-			(patternArg 							'2e3426' italic)
-			(blockPatternArg 						'888a85' bold)
-			(blockArg 								'555753' italic)
-			(argument 								'555753' italic)
-			(blockTempVar 						'555753' italic)
-			(blockPatternTempVar 					'888a85' italic)
-
-			(instVar 								'204a87')
-
-			(tempVar 								'555753' italic)
-			(patternTempVar 						'888a85' italic)
-
-			(poolConstant 							'ad7fa8' bold)
-			(classVar 								'ad7fa8' bold)
-			(globalVar 								'5c3566' bold)
+			('character' 								'ce5c00')
+			('number' 								'8f5902')
+			('symbol' 								'c4a000')
+			('string' 									'ce5c00')
 
 
-			(incompleteIdentifier 					blue italic)
-			(incompleteSelector 					blue italic)
+			('selector' 								(black))
 
-			(undefinedIdentifier 					red)
-			(undefinedSelector 					red)
-			(patternSelector 						nil bold)
-			(blockArgColon 						black)
-			(parenthesis 						black)
-			(parenthesis1 						(green muchDarker))
-			(parenthesis2 						(magenta muchDarker))
-			(parenthesis3 						(red muchDarker))
-			(parenthesis4 						(green darker))
-			(parenthesis5 						(orange darker))
-			(parenthesis6 						(magenta darker))
-			(parenthesis7 						blue)
-			(block 								black)
-			(block1 							(green muchDarker))
-			(block2 							(magenta muchDarker))
-			(block3 							(red muchDarker))
-			(block4 							(green darker))
-			(block5 							(orange darker))
-			(block6 							(magenta darker))
-			(block7 							blue)
-			(brace 								black)
-			(brace1 								(green muchDarker))
-			(brace2 								(magenta muchDarker))
-			(brace3 								(red muchDarker))
-			(brace4 								(green darker))
-			(brace5 								(orange darker))
-			(brace6 								(magenta darker))
-			(brace7 								blue)
-			(cascadeSeparator 					black)
-			(statementSeparator 					black)
-			(methodTempBar 						black)
-			(blockTempBar 						black)
-			(blockArgsBar 							black)
+			('true' 									'8F5902')
+			('false' 									'8F5902')
+			('nil' 									'8F5902')
 
-			(pragma 						(green muchDarker)))
+			('self' 									'4d9a06')
+			('super' 								'4d9a06')
+			('thisContext' 							'4d9a06')
+			('thisProcess' 							'4d9a06')
+			('return' 								black bold)
+
+			('patternArg' 							'2e3426' italic)
+			('blockPatternArg' 						'888a85' bold)
+			('blockArg' 								'555753' italic)
+			('argument' 								'555753' italic)
+			('blockTempVar' 						'555753' italic)
+			('blockPatternTempVar' 					'888a85' italic)
+
+			('instVar' 								'204a87')
+
+			('tempVar' 								'555753' italic)
+			('patternTempVar' 						'888a85' italic)
+
+			('poolConstant' 							'ad7fa8' bold)
+			('classVar' 								'ad7fa8' bold)
+			('globalVar' 								'5c3566' bold)
+
+
+			('incompleteIdentifier' 					blue italic)
+			('incompleteSelector' 					blue italic)
+
+			('undefinedIdentifier' 					red)
+			('undefinedSelector' 					red)
+			('patternSelector' 						nil bold)
+			('blockArgColon' 						black)
+			('parenthesis' 						black)
+			('parenthesis1' 						(green muchDarker))
+			('parenthesis2' 						(magenta muchDarker))
+			('parenthesis3' 						(red muchDarker))
+			('parenthesis4' 						(green darker))
+			('parenthesis5' 						(orange darker))
+			('parenthesis6' 						(magenta darker))
+			('parenthesis7' 						blue)
+			('block' 								black)
+			('block1' 							(green muchDarker))
+			('block2' 							(magenta muchDarker))
+			('block3' 							(red muchDarker))
+			('block4' 							(green darker))
+			('block5' 							(orange darker))
+			('block6' 							(magenta darker))
+			('block7' 							blue)
+			('brace' 								black)
+			('brace1' 								(green muchDarker))
+			('brace2' 								(magenta muchDarker))
+			('brace3' 								(red muchDarker))
+			('brace4' 								(green darker))
+			('brace5' 								(orange darker))
+			('brace6' 								(magenta darker))
+			('brace7' 								blue)
+			('cascadeSeparator' 					black)
+			('statementSeparator' 					black)
+			('methodTempBar' 						black)
+			('blockTempBar' 						black)
+			('blockArgsBar' 							black)
+
+			('pragma' 						(green muchDarker)))
 ]
 
 { #category : 'accessing' }
@@ -691,85 +673,85 @@ SHRBTextStyler class >> vintageStyleTable [
 
 			"(symbol color [emphasisSymbolOrArray [textStyleName [pixelHeight]]])"
  ^ #(
-			(default 								black)
-			(invalid 									red)
+			('default' 								black)
+			('invalid' 									red)
 
-			(comment 								'006400')
+			('comment' 								'006400')
 
-			(character 								('801f91' lighter))
-			(number 								('801f91'))
-			(symbol 								('801f91'))
-			(string 									('801f91'))
-
-
-			(selector 								black)
-
-			(#true 									('A31515' darker))
-			(#false 									('A31515' darker))
-			(#nil 									('A31515' darker))
-
-			(#self 									'A31515')
-			(#super								'A31515')
-			(#thisContext 							'A31515')
-			(#thisProcess 							'A31515')
-			(#return 								'A31515' bold)
-
-			(patternArg 							(blue muchDarker))
-			(blockPatternArg 						(blue muchDarker))
-			(blockArg 								(blue muchDarker))
-			(argument 								(blue muchDarker))
-			(blockTempVar 						(blue muchDarker))
-			(blockPatternTempVar 					(blue muchDarker))
-
-			(instVar 								(blue muchDarker))
-
-			(tempVar 								(blue muchDarker))
-			(patternTempVar 						(blue muchDarker))
-
-			(poolConstant 							(blue muchDarker) bold)
-			(classVar 								(blue muchDarker) bold)
-			(globalVar 								black bold)
+			('character' 								('801f91' lighter))
+			('number' 								('801f91'))
+			('symbol' 								('801f91'))
+			('string' 									('801f91'))
 
 
-			(incompleteIdentifier 					blue italic)
-			(incompleteSelector 					blue italic)
+			('selector' 								black)
 
-			(undefinedIdentifier 					red)
-			(undefinedSelector 					red)
+			('true' 									('A31515' darker))
+			('false' 									('A31515' darker))
+			('nil' 									('A31515' darker))
 
-			(patternSelector 						nil bold)
-			(blockArgColon 						black)
-			(parenthesis 						black)
-			(parenthesis1 						(green muchDarker))
-			(parenthesis2 						(magenta muchDarker))
-			(parenthesis3 						(red muchDarker))
-			(parenthesis4 						(green darker))
-			(parenthesis5 						(orange darker))
-			(parenthesis6 						(magenta darker))
-			(parenthesis7 						blue)
-			(block 								black)
-			(block1 							(green muchDarker))
-			(block2 							(magenta muchDarker))
-			(block3 							(red muchDarker))
-			(block4 							(green darker))
-			(block5 							(orange darker))
-			(block6 							(magenta darker))
-			(block7 							blue)
-			(brace 								black)
-			(brace1 								(green muchDarker))
-			(brace2 								(magenta muchDarker))
-			(brace3 								(red muchDarker))
-			(brace4 								(green darker))
-			(brace5 								(orange darker))
-			(brace6 								(magenta darker))
-			(brace7 								blue)
-			(cascadeSeparator 					black bold)
-			(statementSeparator 					black bold)
-			(methodTempBar 						black)
-			(blockTempBar 						black)
-			(blockArgsBar 							black)
+			('self' 									'A31515')
+			('super'								'A31515')
+			('thisContext' 							'A31515')
+			('thisProcess' 							'A31515')
+			('return' 								'A31515' bold)
 
-			(pragma 						(cyan muchDarker)))
+			('patternArg' 							(blue muchDarker))
+			('blockPatternArg' 						(blue muchDarker))
+			('blockArg' 								(blue muchDarker))
+			('argument' 								(blue muchDarker))
+			('blockTempVar' 						(blue muchDarker))
+			('blockPatternTempVar' 					(blue muchDarker))
+
+			('instVar' 								(blue muchDarker))
+
+			('tempVar' 								(blue muchDarker))
+			('patternTempVar' 						(blue muchDarker))
+
+			('poolConstant' 							(blue muchDarker) bold)
+			('classVar' 								(blue muchDarker) bold)
+			('globalVar' 								black bold)
+
+
+			('incompleteIdentifier' 					blue italic)
+			('incompleteSelector' 					blue italic)
+
+			('undefinedIdentifier' 					red)
+			('undefinedSelector' 					red)
+
+			('patternSelector' 						nil bold)
+			('blockArgColon' 						black)
+			('parenthesis' 						black)
+			('parenthesis1' 						(green muchDarker))
+			('parenthesis2' 						(magenta muchDarker))
+			('parenthesis3' 						(red muchDarker))
+			('parenthesis4' 						(green darker))
+			('parenthesis5' 						(orange darker))
+			('parenthesis6' 						(magenta darker))
+			('parenthesis7' 						blue)
+			('block' 								black)
+			('block1' 							(green muchDarker))
+			('block2' 							(magenta muchDarker))
+			('block3' 							(red muchDarker))
+			('block4' 							(green darker))
+			('block5' 							(orange darker))
+			('block6' 							(magenta darker))
+			('block7' 							blue)
+			('brace' 								black)
+			('brace1' 								(green muchDarker))
+			('brace2' 								(magenta muchDarker))
+			('brace3' 								(red muchDarker))
+			('brace4' 								(green darker))
+			('brace5' 								(orange darker))
+			('brace6' 								(magenta darker))
+			('brace7' 								blue)
+			('cascadeSeparator' 					black bold)
+			('statementSeparator' 					black bold)
+			('methodTempBar' 						black)
+			('blockTempBar' 						black)
+			('blockArgsBar' 							black)
+
+			('pragma' 						(cyan muchDarker)))
 ]
 
 { #category : 'private' }
@@ -847,7 +829,8 @@ SHRBTextStyler >> visitMessageNode: aMessageNode [
 	| style link |
 	
 	style := (self formatIncompleteSelector: aMessageNode selector) ifNil: [
-		aMessageNode isAnnotation ifTrue: [ #pragma ] ifFalse: [ #selector ] ].
+		aMessageNode isAnnotation ifTrue: [ 'pragma' ] ifFalse: [ 'selector' ] ].
+
 
 	link := TextMethodLink sourceNode: aMessageNode.
 

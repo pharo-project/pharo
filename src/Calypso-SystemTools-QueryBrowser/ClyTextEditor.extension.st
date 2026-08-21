@@ -25,8 +25,14 @@ ClyTextEditor >> classNamesContainingIt [
 { #category : '*Calypso-SystemTools-QueryBrowser' }
 ClyTextEditor >> implementorsOf: selectedSelector [
 
-(Smalltalk tools toolNamed: #messageList) browseImplementorsOf: selectedSelector from: self browser classSelection lastSelectedItem actualObject.
- 
+	self browser classSelection 
+		ifEmpty: [ ^ (Smalltalk tools 
+			toolNamed: #messageList) 
+			browseImplementorsOf: selectedSelector ].
+	
+	(Smalltalk tools toolNamed: #messageList) 
+		browseImplementorsOf: selectedSelector 
+		from: self browser classSelection lastSelectedItem actualObject.
 ]
 
 { #category : '*Calypso-SystemTools-QueryBrowser' }
@@ -77,9 +83,10 @@ ClyTextEditor >> referencesToIt [
 { #category : '*Calypso-SystemTools-QueryBrowser' }
 ClyTextEditor >> sendersOf: selectedSelector [
 
-	self browser
-		browseReferencesTo: selectedSelector
-		inNameResolver: self browserTool selectedClassOrMetaClass
+	self browser classSelection ifEmpty: [
+		^ self browser browseReferencesTo: selectedSelector inNameResolver: self browserTool selectedClassOrMetaClass ].
+
+	self browser browseReferencesTo: selectedSelector inNameResolver: self browserTool selectedClassOrMetaClass 
 ]
 
 { #category : '*Calypso-SystemTools-QueryBrowser' }

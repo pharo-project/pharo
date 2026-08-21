@@ -59,7 +59,7 @@ DebugPointTest >> setUp [
 	cls := self newDummyClass.
 	
 	"For those tests hitting on the transcript..."
-	Transcript clear.
+	Transcript clear
 ]
 
 { #category : 'initialization' }
@@ -74,7 +74,7 @@ DebugPointTest >> setUpContext [
 		                  sender: aSender
 		                  receiver: aReceiver
 		                  method: aCompiledMethod
-		                  arguments: { anArgument }.
+		                  arguments: { anArgument }
 ]
 
 { #category : 'running' }
@@ -172,15 +172,16 @@ DebugPointTest >> testBehaviorPriority [
 	
 	set := OrderedCollection new add: c; add: a; add: b; yourself.
 	
-	self assertCollection: (dp behaviors asOrderedCollection ) equals: set.
+	self assertCollection: (dp behaviors asOrderedCollection ) equals: set
 
 ]
 
 { #category : 'tests' }
 DebugPointTest >> testBreakDebugPoint [
+
 	dp := DebugPointManager installNew: BreakDebugPoint on: node.
 	self should: [dp hitWithContext: context] raise: Break.
-	self should: [DummyTestClass new id:2 ] raise: Break.
+	self should: [DummyTestClass new id:2 ] raise: Break
 ]
 
 { #category : 'tests' }
@@ -353,7 +354,7 @@ DebugPointTest >> testChainBehaviorPutChild [
 	
 	self assert: (dp child) equals: dp2.
 	self assert: (dp parent) equals: nil.
-	self assert: (dp2 parent) equals: dp.
+	self assert: (dp2 parent) equals: dp
 	
 	
 ]
@@ -389,7 +390,7 @@ DebugPointTest >> testChainBehaviorRemoveBehavior [
 	self assert: dp2 child equals: nil.
 	
 	self deny: dp enabled.
-	self assert: dp2 enabled.
+	self assert: dp2 enabled
 
 ]
 
@@ -509,7 +510,7 @@ DebugPointTest >> testCountBehavior [
 	dp hitWithContext: context.
 	self assert: ( cbh count ) equals: 1.
 	dp hitWithContext: context.
-	self assert:  ( cbh count ) equals: 2.
+	self assert:  ( cbh count ) equals: 2
 	
 	
 
@@ -678,7 +679,7 @@ DebugPointTest >> testOnceBreakBehavior [
 	self assert: (dp enabled) equals: true.
 	self should: [dp hitWithContext: context] raise: Break.
 	self assert: (dp enabled) equals: false.
-	self shouldnt: [dp hitWithContext: context] raise: Break.
+	self shouldnt: [dp hitWithContext: context] raise: Break
 
 ]
 
@@ -879,7 +880,7 @@ DebugPointTest >> testScriptDebugPoint [
 	self shouldnt: [DummyTestClass new id:2 ] raise: Break.
 	dp script: 'Break signal'.
 	self should: [dp hitWithContext: context] raise: Break.
-	self should: [DummyTestClass new id:2 ] raise: Break.
+	self should: [DummyTestClass new id:2 ] raise: Break
 ]
 
 { #category : 'tests' }
@@ -905,15 +906,15 @@ DebugPointTest >> testTestEnvironmentBehavior [
 
 { #category : 'tests' }
 DebugPointTest >> testTranscriptDebugPoint [
-
-	self skipOnPharoCITestingEnvironment.
-	dp := DebugPointManager
-		      installNew: DebugPoint
-		      on: node
-		      withBehaviors: { TranscriptBehavior }.
-	dp text: 'string'.
-	dp hitWithContext: context.
-	self assert: Transcript contents equals: 'string'
+    self skipOnPharoCITestingEnvironment.
+    Transcript clear.
+    dp := DebugPointManager
+          installNew: DebugPoint
+          on: node
+          withBehaviors: { TranscriptBehavior }.
+    dp text: 'string'.
+    dp hitWithContext: context.
+    self assert: Transcript contents equals: 'string'
 ]
 
 { #category : 'tests' }

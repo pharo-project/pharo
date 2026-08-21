@@ -23,6 +23,16 @@ ReRemovePackageChange >> asUndoOperation [
 	^ changeFactory addPackageNamed: packageName
 ]
 
+{ #category : 'printing' }
+ReRemovePackageChange >> changeString [
+
+	^ String streamContents: [ :aStream |
+			aStream
+				nextPutAll: '(self packageOrganizer packageNamed: ';
+				nextPutAll: packageName;
+				nextPutAll: ') removeFromSystem' ]
+]
+
 { #category : 'private' }
 ReRemovePackageChange >> generateChanges [
 

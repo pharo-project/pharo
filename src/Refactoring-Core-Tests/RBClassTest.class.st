@@ -17,18 +17,33 @@ Class {
 RBClassTest >> setUp [
 
 	super setUp.
-	rbNamespace := RBNamespace onEnvironment: (RBClassEnvironment classes:  {Behavior. Class. ClassDescription. MOPTestClassD. Model. MyClassB. Object. Object. Object class. ProtoObject class. ReAbstractTransformation. ReAbstractTransformation. RBClassRefactoring. ReRefactoring. Trait2}).
+	rbNamespace := RBNamespace onEnvironment: (RBClassEnvironment classes: {
+				                Behavior.
+				                Class.
+				                ClassDescription.
+				                MyClassB.
+				                Object.
+				                Object.
+				                Object class.
+				                ProtoObject class.
+				                ReAbstractTransformation.
+				                ReAbstractTransformation.
+				                RBClassRefactoring.
+				                ReRefactoring.
+				                RBSharedPoolForTestData.
+				                RBRefactoringTestTrait.
+				                RBRefactoringTestTraitUser }).
 	abstractTransformationClass := rbNamespace classNamed: #ReAbstractTransformation.
 	objectClass := rbNamespace classNamed: #Object.
 	refactoringClass := rbNamespace classNamed: #RBClassRefactoring.
 	rbNamespace defineClass: [ :aBuilder |
-		aBuilder
-			name: #SomeClassName;
-			superclass: Object;
-			slots: { #instanceVariable1. #instanceVariable2 };
-			sharedVariables: { #ClassVariable1 };
-			sharedPools: { #TextConstants };
-			package: #'Refactory-Testing' ].
+			aBuilder
+				name: #SomeClassName;
+				superclass: Object;
+				slots: { #instanceVariable1. #instanceVariable2 };
+				sharedVariables: { #ClassVariable1 };
+				sharedPools: { #RBSharedPoolForTestData };
+				package: #'Refactory-Testing' ].
 	newClass := rbNamespace classNamed: #SomeClassName
 ]
 
@@ -88,10 +103,10 @@ RBClassTest >> testDefinesMethod [
 { #category : 'tests - definition' }
 RBClassTest >> testDefinesPoolDictionary [
 	self deny: (abstractTransformationClass definesPoolDictionary: #OpcodePool).
-	self assert: (newClass definesPoolDictionary: #TextConstants).
+	self assert: (newClass definesPoolDictionary: #RBSharedPoolForTestData).
 	self deny: (refactoringClass definesPoolDictionary: #OpcodePool).
-	self assert: ((RBNamespace new classNamed: #Text)
-				definesPoolDictionary: #TextConstants)
+	self assert: ((RBNamespace new classNamed: #RBDummyLintRuleTest)
+				definesPoolDictionary: #RBSharedPoolForTestData)
 ]
 
 { #category : 'tests - definition' }
@@ -112,14 +127,14 @@ RBClassTest >> testDefinesSharedVariable2 [
 { #category : 'tests - definition' }
 RBClassTest >> testDefinesTraitMethod [
 	| user trait |
-	user := rbNamespace classNamed: #MOPTestClassD.
+	user := rbNamespace classNamed: #RBRefactoringTestTraitUser.
 	self assert: (user definesMethod: #c3).
 	self assert: (user definesMethod: #c).
 	self assert: (user definesMethod: #c2).
 	self assert: (user methodFor: #c2) modelClass ~= user.
 	self assert: (user methodFor: #c) modelClass ~= user.
 	self assert: (user methodFor: #c3) isNil. "we use nil to represent alias"
-	trait := rbNamespace classNamed: #Trait2.
+	trait := rbNamespace classNamed: #RBRefactoringTestTrait.
 	self assert: (user methodFor: #c2) modelClass equals: trait.
 	self assert: (user methodFor: #c) modelClass equals: trait
 ]
@@ -263,7 +278,7 @@ RBClassTest >> testWhichClassIncludesSelectorGoingUp [
 
 	self
 		assert:
-			((rbNamespace classNamed: #Model) whichClassIncludesSelector:
+			((rbNamespace classNamed: #Object) whichClassIncludesSelector:
 				 #'~~>')
 		equals: objectClass
 ]
@@ -273,7 +288,7 @@ RBClassTest >> testWhichClassIncludesSelectorGoingUpAndDoNotFind [
 
 	self
 		assert:
-			((rbNamespace classNamed: #Model) whichClassIncludesSelector:
+			((rbNamespace classNamed: #Object) whichClassIncludesSelector:
 				 #doesNotExistAtAll)
 		equals: nil
 ]

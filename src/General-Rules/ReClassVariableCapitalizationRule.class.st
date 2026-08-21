@@ -15,8 +15,9 @@ ReClassVariableCapitalizationRule class >> checksClass [
 ]
 
 { #category : 'accessing' }
-ReClassVariableCapitalizationRule class >> group [
-	^ self styleGroup
+ReClassVariableCapitalizationRule class >> groupSelector [
+
+	^ #styleGroup
 ]
 
 { #category : 'accessing' }

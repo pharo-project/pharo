@@ -28,7 +28,7 @@ BaselineOfPharo class >> documentBrowser [
 		newName: 'DocumentBrowser' 
 		owner: 'pharo-spec' 
 		project: 'NewTools-DocumentBrowser' 
-		version: 'Pharo14'
+		version: 'Pharo15'
 ]
 
 { #category : 'repository urls' }
@@ -78,7 +78,7 @@ BaselineOfPharo class >> microdown [
 		newName: 'Microdown' 
 		owner: 'pillar-markup' 
 		project: 'Microdown' 
-		version: 'Pharo14' 
+		version: 'Pharo15' 
 ]
 
 { #category : 'repository urls' }
@@ -95,7 +95,7 @@ BaselineOfPharo class >> newTools [
 		newName: 'NewTools' 
 		owner: 'pharo-spec' 
 		project: 'NewTools' 
-		version: 'Pharo14'
+		version: 'Pharo15'
 ]
 
 { #category : 'repository urls' }
@@ -116,10 +116,10 @@ BaselineOfPharo class >> roassal [
 	<externalProject>
 
 	^ PharoExternalProject
-		  newName: 'Roassal'
-		  owner: 'pharo-graphics'
-		  project: 'Roassal'
-		  version: 'Pharo14'
+		newName: 'Roassal'
+		owner: 'pharo-graphics'
+		project: 'Roassal'
+		version: 'Pharo15'
 ]
 
 { #category : 'repository urls' }
@@ -136,7 +136,7 @@ BaselineOfPharo class >> scriptableDebugger [
 		newName: 'ScriptableDebugger' 
 		owner: 'pharo-spec' 
 		project: 'ScriptableDebugger' 
-		version: 'Pharo14'
+		version: 'Pharo15'
 ]
 
 { #category : 'repository urls' }
@@ -153,7 +153,7 @@ BaselineOfPharo class >> spec [
 		newName: 'Spec2' 
 		owner: 'pharo-spec' 
 		project:'Spec' 
-		version: 'Pharo14'
+		version: 'Pharo15'
 ]
 
 { #category : 'repository urls' }
@@ -170,7 +170,7 @@ BaselineOfPharo class >> toplo [
 		newName: 'Toplo' 
 		owner: 'pharo-graphics' 
 		project: 'Toplo' 
-		version: 'Pharo14'
+		version: 'Pharo15'
 ]
 
 { #category : 'repository urls' }

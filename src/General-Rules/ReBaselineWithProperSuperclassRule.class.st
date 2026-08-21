@@ -16,8 +16,9 @@ ReBaselineWithProperSuperclassRule class >> checksClass [
 ]
 
 { #category : 'accessing' }
-ReBaselineWithProperSuperclassRule class >> group [
-	^ self designFlawGroup
+ReBaselineWithProperSuperclassRule class >> groupSelector [
+
+	^ #designFlawGroup
 ]
 
 { #category : 'accessing' }

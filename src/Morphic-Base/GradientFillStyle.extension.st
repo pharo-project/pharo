@@ -26,23 +26,26 @@ GradientFillStyle >> beRadialGradientIn: aMorph [
 
 { #category : '*Morphic-Base-Balloon' }
 GradientFillStyle >> changeColorAt: rampIndex to: aColor [
+
 	| ramp |
-	ramp := colorRamp deepCopy.
+	ramp := self colorRamp copy.
 	(ramp at: rampIndex) value: aColor.
 
-	colorRamp := ramp.
-	isTranslucent := nil.
-	pixelRamp := nil
+	self colorRamp: ramp
 ]
 
 { #category : '*Morphic-Base-Balloon' }
 GradientFillStyle >> changeColorOf: aMorph rampIndex: rampIndex [
+
 	| originalColor |
-	originalColor := (colorRamp at: rampIndex) value.
+	originalColor := (self colorRamp at: rampIndex) value.
 	Smalltalk ui theme
-		chooseColorIn: self currentWorld title: 'Color' color: originalColor for: [:color |
-		self changeColorAt: rampIndex  to:  color.
-		aMorph changed]
+		chooseColorIn: self currentWorld
+		title: 'Color'
+		color: originalColor
+		for: [ :color |
+				self changeColorAt: rampIndex to: color.
+				aMorph changed ]
 ]
 
 { #category : '*Morphic-Base-Balloon' }
@@ -57,13 +60,14 @@ GradientFillStyle >> changeSecondColorIn: aMorph event: evt [
 
 { #category : '*Morphic-Base-Balloon' }
 GradientFillStyle >> copyWith: aColor atRamp: rampIndex [
+
 	| ramp |
-	ramp := colorRamp deepCopy.
+	ramp := self colorRamp copy.
 	(ramp at: rampIndex) value: aColor.
-	^(self class ramp: ramp)
-			origin: self origin;
-			direction: self direction;
-			normal: self normal;
-			radial: self radial;
-			yourself
+	^ (self class ramp: ramp)
+		  origin: self origin;
+		  direction: self direction;
+		  normal: self normal;
+		  radial: self radial;
+		  yourself
 ]

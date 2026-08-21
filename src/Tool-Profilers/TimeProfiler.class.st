@@ -9,23 +9,14 @@ TimeProfiler new openOnBlock: [ClassTreeExample new openOn: Object]
 "
 Class {
 	#name : 'TimeProfiler',
-	#superclass : 'MorphTreeModel',
+	#superclass : 'Object',
 	#instVars : [
-		'win',
 		'rootMessageTally',
 		'threshold',
-		'minPercentageToExpand',
-		'treeMorph',
 		'block',
-		'blockCodePane',
-		'withBlockCodePane',
-		'blockSource',
 		'reportOtherProcesses',
 		'showLeavesOnly',
-		'codeTabPane',
-		'resultPane',
-		'result',
-		'withToolBar'
+		'result'
 	],
 	#category : 'Tool-Profilers-Time',
 	#package : 'Tool-Profilers',
@@ -48,32 +39,6 @@ TimeProfiler class >> exampleOnBlock [
 ]
 
 { #category : 'opening' }
-TimeProfiler class >> fullReportMenuOn: aBuilder [
-	"Specify the menu with a specific pragma. Try it with:
-	(PragmaMenuBuilder
-		pragmaKeyword: 'TimeProfilerFullReportMenu'
-		model: nil) menu popUpInWorld"
-
-	<contextMenu>
-	<TimeProfilerFullReportMenu>
-	(aBuilder item: #'Find...' translated)
-		keyText: 'f';
-		selector: #find;
-		iconName: #smallFind.
-	(aBuilder item: #'Find again' translated)
-		keyText: 'g';
-		selector: #findAgain;
-		iconNamed: #smallFind.
-	(aBuilder item: #'Set search string' translated)
-		keyText: 'h';
-		selector: #setSearchString.
-	(aBuilder item: #Copy translated)
-		keyText: 'c';
-		selector: #copySelection;
-		iconName: #smallCopy
-]
-
-{ #category : 'opening' }
 TimeProfiler class >> onBlock: block [
 	"Open a profile browser on the given block, thereby running the block and
 	 collecting the message tally."
@@ -88,11 +53,11 @@ TimeProfiler class >> onBlock: block [
 { #category : 'opening' }
 TimeProfiler class >> spyAllOn: aBlock [
 	"Spy on all the processes in the system"
+
 	| inst result |
 	inst := self new.
 	result := inst spyAllOn: aBlock.
 	inst open.
-	inst showResult: result.
 	^ result
 ]
 
@@ -105,8 +70,8 @@ TimeProfiler class >> spyFor: seconds [
 
 { #category : 'opening' }
 TimeProfiler class >> spyOn: aBlock [
-	^ (self new withBlockCodePane: false; withToolBar: false; yourself)
-		openOnBlock: aBlock
+
+	^ self new openOnBlock: aBlock
 ]
 
 { #category : 'opening' }
@@ -115,7 +80,6 @@ TimeProfiler class >> spyOnProcess: aProcess forMilliseconds: msecDuration [
 
 	| inst |
 	inst := self new.
-	inst withBlockCodePane: false.
 	inst runProcess: aProcess forMilliseconds: msecDuration pollingEvery: MessageTally defaultPollPeriod.
 	inst open.
 	^ inst
@@ -126,112 +90,19 @@ TimeProfiler class >> taskbarIconName [
 	^#smallProfile
 ]
 
-{ #category : 'actions' }
-TimeProfiler >> blockCode [
-	^ block
-		ifNil: ['']
-		ifNotNil: [ blockSource ifNil: [ blockSource := block asString ]]
-]
-
-{ #category : 'actions' }
-TimeProfiler >> browseItem [
-	self selectedNode ifNotNil: [:current | current browseItem ]
-]
-
-{ #category : 'ui specific' }
-TimeProfiler >> codePaneMenu: aMenu shifted: shifted [
-	"Note that unless we override perform:orSendTo:,
-	PluggableTextController will respond to all menu items in a
-	text pane"
-	| donorMenu |
-   donorMenu := (PragmaMenuBuilder pragmaKeyword: RubSmalltalkCodeMode menuKeyword model: codeTabPane) menu.
-	^ aMenu addAllFrom: donorMenu
-]
-
-{ #category : 'ui specific' }
-TimeProfiler >> contentsSelection [
-	"Return the interval of text in the code pane to select when I set the pane's contents"
-
-	^ 1 to: 0		"null selection"
-]
-
-{ #category : 'ui specific' }
-TimeProfiler >> correctFrom: start to: stop with: aString [
-	^ blockCodePane correctFrom: start to: stop with: aString
-]
-
-{ #category : 'actions' }
-TimeProfiler >> deselect [
-	blockCodePane deselect
-]
-
-{ #category : 'actions' }
-TimeProfiler >> doItContext [
-	"Answer the context in which a text selection can be evaluated."
-
-	^nil
-]
-
-{ #category : 'actions' }
-TimeProfiler >> doItReceiver [
-	"This class's classPool has been jimmied to be the classPool of the class
-	being browsed. A doIt in the code pane will let the user see the value of
-	the class variables."
-
-	^ self selectedClass
-]
-
-{ #category : 'actions' }
-TimeProfiler >> expandAll [
-	treeMorph expandAllSuchThat: [:node | node percentage > self minPercentageToExpand]
-]
-
-{ #category : 'accessing - computed' }
+{ #category : 'accessing' }
 TimeProfiler >> fullReport [
 	"Return the full report of the tally "
-	^ String streamContents: [:strm |
-		rootMessageTally
-			ifNotNil: [ rootMessageTally report: strm ] ]
+
+	^ String streamContents: [ :strm | rootMessageTally ifNotNil: [ rootMessageTally report: strm ] ]
 ]
 
-{ #category : 'ui specific' }
-TimeProfiler >> fullReportMenu: aMenuMorph shift: aBoolean [
-	^ (PragmaMenuBuilder
-		pragmaKeyword: 'TimeProfilerFullReportMenu'
-		model: self) menu
-]
-
-{ #category : 'configuration' }
-TimeProfiler >> helpMessage [
-
-^'You can edit some code in the top editor and accept to profile it.
-The result consists in a tree of method calls shown in the middle panel.
-Select a method call to see or change its implementation in the bottom editor.
-
-Tallies building:
-The tallies are built according to the time threshold value that you can change at the top right (Treshold input field).
-
-Tree expanding:
-A tree node is expanded only if its duration percentage is greater that the minimum value that you can change at the top left (Min duration percentage input field).
-'
-]
-
-{ #category : 'configuration' }
-TimeProfiler >> initialExtent [
-	^ 750 @ 700
-]
-
-{ #category : 'ui specific' }
-TimeProfiler >> keyDown: anEvent from: aTreeMorph [
-	self selectedNode ifNotNil: [:current | current keyDown: anEvent from: aTreeMorph ]
-]
-
-{ #category : 'accessing - computed' }
+{ #category : 'accessing' }
 TimeProfiler >> leaveItems [
-	| res  |
+
+	| res |
 	res := OrderedCollection new.
-	rootMessageTally
-		ifNotNil: [
+	rootMessageTally ifNotNil: [
 			| dict |
 			dict := IdentityDictionary new: 100.
 			rootMessageTally leavesInto: dict fromSender: nil.
@@ -239,67 +110,22 @@ TimeProfiler >> leaveItems [
 	^ res
 ]
 
-{ #category : 'ui specific' }
-TimeProfiler >> menu: menu shifted: b [
-	"Set up the menu to apply to the receiver's, honoring the #shifted boolean"
-
-	self selectedNode
-		ifNotNil: [ :current |
-			current menu: menu shifted: b.
-			menu addLine.
-			menu
-				add: 'Expand all from here'
-				target: self
-				selector: #expandAllFromNode:
-				argument: current ].
-	^ menu
-]
-
-{ #category : 'ui specific' }
-TimeProfiler >> minPercentageToExpand [
-	^ minPercentageToExpand ifNil: [minPercentageToExpand := 3.0]
-]
-
-{ #category : 'ui specific' }
-TimeProfiler >> minPercentageToExpand: aPercentage [
-	minPercentageToExpand := aPercentage.
-	self changed: #minPercentageToExpand
-]
-
-{ #category : 'ui specific' }
-TimeProfiler >> notify: aString at: anInteger in: aStream [
-	blockCodePane notify: aString at: anInteger - 'self runBlock: [' size in: aStream
-]
-
-{ #category : 'public opening' }
-TimeProfiler >> openOnBlock: aBlock [
-	self runBlock: aBlock pollingEvery: MessageTally defaultPollPeriod.
-	self open.
-	^ self
-]
-
-{ #category : 'public opening' }
-TimeProfiler >> openPathFrom: aNode [
-	self expandNodePath: aNode path
-]
-
 { #category : 'actions' }
-TimeProfiler >> profileIt [
-	blockCodePane accept
+TimeProfiler >> openOnBlock: aBlock [
+
+	self runBlock: aBlock pollingEvery: MessageTally defaultPollPeriod.
+	^ self open
 ]
 
-{ #category : 'ui specific' }
+{ #category : 'accessing' }
 TimeProfiler >> reportOtherProcesses [
 	^ reportOtherProcesses ifNil: [reportOtherProcesses := true]
 ]
 
-{ #category : 'ui specific' }
+{ #category : 'accessing' }
 TimeProfiler >> reportOtherProcesses: aBoolean [
-	self reportOtherProcesses ~= aBoolean
-		ifFalse: [ ^ self ].
-	reportOtherProcesses := aBoolean.
-	self changed: #reportOtherProcesses.
-	self updateList
+
+	reportOtherProcesses := aBoolean
 ]
 
 { #category : 'accessing' }
@@ -307,12 +133,7 @@ TimeProfiler >> result: anObject [
 	result := anObject
 ]
 
-{ #category : 'accessing - computed' }
-TimeProfiler >> resultText [
-	^ result printString
-]
-
-{ #category : 'accessing - computed' }
+{ #category : 'accessing' }
 TimeProfiler >> rootItems [
 	^ rootMessageTally
 		ifNil: [#()]
@@ -323,20 +144,14 @@ TimeProfiler >> rootItems [
 ]
 
 { #category : 'accessing' }
-TimeProfiler >> rootNodeClassFromItem: anItem [
-	^ TimeProfilerNode
-]
-
-{ #category : 'accessing - computed' }
 TimeProfiler >> rootTallyItems [
+
 	| res sons groups |
 	res := OrderedCollection new.
-	rootMessageTally
-		ifNotNil: [
+	rootMessageTally ifNotNil: [
 			sons := rootMessageTally sonsOver: self threshold.
 			groups := sons groupedBy: [ :aTally | aTally process ] having: [ :g | true ].
-			groups
-				do: [ :g |
+			groups do: [ :g |
 					self reportOtherProcesses
 						ifTrue: [ res addAll: g ]
 						ifFalse: [ res addAll: (g asSortedCollection reject: [ :gg | gg process isNil ]) ] ] ].
@@ -384,91 +199,22 @@ TimeProfiler >> runProcess: aProcess forMilliseconds: msecDuration pollingEvery:
 	^result
 ]
 
-{ #category : 'ui specific' }
-TimeProfiler >> select [
-	blockCodePane select
-]
-
-{ #category : 'ui specific' }
-TimeProfiler >> selectFrom: start to: stop [
-	blockCodePane  selectFrom: start to: stop
-]
-
-{ #category : 'ui specific' }
-TimeProfiler >> selectInvisiblyFrom:  first to:  last [
-	blockCodePane selectInvisiblyFrom: first to: last
-]
-
 { #category : 'accessing' }
 TimeProfiler >> selectedClass [
 	^ self selectedNode
 		ifNotNil: [ :currNode | currNode methodClass ]
 ]
 
-{ #category : 'accessing - computed' }
-TimeProfiler >> selectedMethodCode [
-	| node method |
-	node := self selectedNode.
-	node ifNil: [ ^ self helpMessage ].
-	method := (node methodClass lookupSelector: node selector) ifNil: [ ^'Method not found' ].
-	^method sourceCode
+{ #category : 'accessing' }
+TimeProfiler >> showLeavesOnly [
+
+	^ showLeavesOnly ifNil: [ showLeavesOnly := false ]
 ]
 
 { #category : 'accessing' }
-TimeProfiler >> selection: aSelection [
-	super selection: aSelection.
-	self changed: #selectedMethodCode
-]
-
-{ #category : 'ui specific' }
-TimeProfiler >> selectionInterval [
-	^ 1 to: 0
-]
-
-{ #category : 'ui specific' }
-TimeProfiler >> shoutAboutToStyle: aPluggableShoutMorphOrView [
-	self selectedNode
-		ifNotNil: [ :currNode |
-			aPluggableShoutMorphOrView getTextSelector = #selectedMethodCode
-				ifTrue: [aPluggableShoutMorphOrView classOrMetaClass: currNode methodClass.
-					^ true]].
-	aPluggableShoutMorphOrView getTextSelector = #summaryText
-			ifTrue: [^ false].
-	aPluggableShoutMorphOrView getTextSelector = #blockCode
-			ifTrue: [^ true].
-	 ^ false
-]
-
-{ #category : 'ui specific' }
-TimeProfiler >> showLeavesOnly [
-	^ showLeavesOnly ifNil: [showLeavesOnly := false]
-]
-
-{ #category : 'ui specific' }
 TimeProfiler >> showLeavesOnly: aBoolean [
-	self showLeavesOnly ~= aBoolean
-		ifFalse: [ ^ self ].
-	treeMorph
-		treeLineWidth:
-			(aBoolean
-				ifTrue: [ 0 ]
-				ifFalse: [ 1 ]).
-	showLeavesOnly := aBoolean.
-	self changed: #showLeavesOnly.
-	self updateList
-]
 
-{ #category : 'ui specific' }
-TimeProfiler >> showResult: anObject [
-	self result: anObject.
-	resultPane
-		ifNil: [resultPane := win
-			newTextEditorFor: self
-			getText: #resultText
-			setText: nil
-			getEnabled: nil.
-			codeTabPane addPage: resultPane label: 'Result']
-		ifNotNil: [self changed: #resultText]
+	showLeavesOnly := aBoolean
 ]
 
 { #category : 'actions' }
@@ -485,174 +231,26 @@ TimeProfiler >> spyAllOn: aBlock [
 	^ result
 ]
 
-{ #category : 'configuration' }
-TimeProfiler >> startMinPercentageToExpand [
-	^ 20
-]
-
-{ #category : 'ui specific' }
-TimeProfiler >> startState [
-	treeMorph expandAllSuchThat: [:node | node percentage > self startMinPercentageToExpand]
-]
-
-{ #category : 'accessing - computed' }
-TimeProfiler >> summaryText [
-	^ String streamContents: [:strm | rootMessageTally
-		ifNotNil: [rootMessageTally time > 0
-			ifTrue: [strm nextPutAll: ' - '; print: rootMessageTally tally; nextPutAll: ' tallies, ', rootMessageTally time printString, ' msec.'; cr.
-				rootMessageTally reportGCStatsOn: strm]]]
-]
-
 { #category : 'accessing' }
 TimeProfiler >> tally [
 	^ rootMessageTally tally
 ]
 
 { #category : 'accessing' }
-TimeProfiler >> text [
-	^ blockSource
-]
-
-{ #category : 'accessing' }
 TimeProfiler >> threshold [
-	^ threshold ifNil: [threshold := 0]
+
+	^ threshold ifNil: [ threshold := 0 ]
 ]
 
 { #category : 'accessing' }
 TimeProfiler >> threshold: aTreshold [
-	(aTreshold ~= threshold and: [ aTreshold between: 0 and: 1000 ])
-		ifFalse: [ ^ self ].
-	threshold := aTreshold.
-	self updateList.
-	self changed: #threshold
+
+	(aTreshold between: 0 and: 1000) ifFalse: [ ^ self ].
+
+	threshold := aTreshold
 ]
 
 { #category : 'accessing' }
 TimeProfiler >> time [
 	^ rootMessageTally time
-]
-
-{ #category : 'ui specific' }
-TimeProfiler >> toolBarOn: aWindow [
-	| uiTheme toolBar |
-	uiTheme :=self theme.
-	toolBar := toolBar := aWindow
-		newToolbar:
-			{((uiTheme
-				newButtonIn: self
-				for: self
-				getState: nil
-				action: #profileIt
-				arguments: {}
-				getEnabled: nil
-				getLabel: nil
-				help: nil)
-				label:
-					(uiTheme
-						newRowIn: self
-						for:
-							{(AlphaImageMorph new
-								image: (self iconNamed: #smallDoIt)).
-							(uiTheme buttonLabelForText: 'Profile it' translated)});
-				yourself).
-			aWindow newToolSpacer.
-			aWindow newToolSpacer.
-			(aWindow newLabel: 'Min time % ' translated).
-			(uiTheme
-				newTextEntryIn: aWindow
-				for: self
-				get: #minPercentageToExpand
-				set: #minPercentageToExpand:
-				class: Float
-				getEnabled: nil
-				help: nil).
-			aWindow newToolSpacer.
-			aWindow newToolSpacer.
-			(aWindow newLabel: 'Threshold: ' translated).
-			(uiTheme
-				newTextEntryIn: aWindow
-				for: self
-				get: #threshold
-				set: #threshold:
-				class: Integer
-				getEnabled: nil
-				help: nil).
-			aWindow newToolSpacer.
-			aWindow newToolSpacer.
-			(aWindow
-				newDropListFor: self
-				list: #whatToShowList
-				getSelected: #whatToShow
-				setSelected: #whatToShow:
-				getEnabled: nil
-				useIndex: false
-				help: 'Which kind of result').
-			aWindow newToolSpacer.
-			aWindow newToolSpacer.
-			(uiTheme
-				newCheckboxIn: self
-				for: self
-				getSelected: #reportOtherProcesses
-				setSelected: #reportOtherProcesses:
-				getEnabled: nil
-				label: 'All processes'
-				help: nil).
-			aWindow newToolSpacer}.
-	^ toolBar
-]
-
-{ #category : 'configuration' }
-TimeProfiler >> toolName [
-	^ 'Time profiler'
-]
-
-{ #category : 'ui specific' }
-TimeProfiler >> treeMorph [
-	^ (self treeMorphClass on: self)
-		rowInset: 2;
-		columnInset: 4;
-		autoDeselection: true;
-		getMenuSelector:#menu:shifted:;
-		keyDownActionSelector: #keyDown:from:;
-		treeLineWidth: 1;
-		treeLineDashes: {5. 1};
-		lineColorBlock: [:node | {Color gray. Color orange. Color brown. Color magenta. Color blue} at: ((node level \\ 5) + 1)];
-		doubleClickSelector: #browseItem;
-		rowColorForEven: self theme lightBackgroundColor;
-		yourself
-]
-
-{ #category : 'ui specific' }
-TimeProfiler >> whatToShow [
-	^ self showLeavesOnly ifTrue: [#'Leaves'] ifFalse: [#'Full tree']
-]
-
-{ #category : 'ui specific' }
-TimeProfiler >> whatToShow: aSymbol [
-	self showLeavesOnly: aSymbol = #'Leaves'
-]
-
-{ #category : 'configuration' }
-TimeProfiler >> whatToShowList [
-	^ #(#'Full tree' #'Leaves')
-]
-
-{ #category : 'ui specific' }
-TimeProfiler >> withBlockCodePane [
-	^ withBlockCodePane ifNil: [withBlockCodePane := true]
-]
-
-{ #category : 'ui specific' }
-TimeProfiler >> withBlockCodePane: aBoolean [
-	withBlockCodePane := aBoolean
-]
-
-{ #category : 'ui specific' }
-TimeProfiler >> withToolBar [
-	^ withToolBar ifNil: [withToolBar := true]
-]
-
-{ #category : 'ui specific' }
-TimeProfiler >> withToolBar: aBoolean [
-	withToolBar := aBoolean
 ]

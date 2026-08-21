@@ -16,8 +16,9 @@ ReMethodSelectorKeywordCasingRule class >> checksMethod [
 ]
 
 { #category : 'accessing' }
-ReMethodSelectorKeywordCasingRule class >> group [
-	^ self designFlawGroup
+ReMethodSelectorKeywordCasingRule class >> groupSelector [
+
+	^ #designFlawGroup
 ]
 
 { #category : 'accessing' }

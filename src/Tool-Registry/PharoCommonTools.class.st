@@ -36,9 +36,9 @@ PharoCommonTools class >> menuHistoryOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #LoadHistory)
 		parent: #Tools;
-		label: 'Load Compleshion History';
+		label: 'Load Complishon History';
 		icon: (self iconNamed: #smallLoadProject);
-		help: 'Load History (an extension of Compleshion)';
+		help: 'Load History (an extension of Complishon)';
 		order: 110;
 		action: [
 				Metacello new

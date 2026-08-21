@@ -31,10 +31,24 @@ CommandLineDebuggerHistoryTest >> testHandleContainingStringHistory [
 { #category : 'running' }
 CommandLineDebuggerHistoryTest >> testHandleHistoryInvalidInputs [
 
-	self should: [ debugger handleHistory: '!-9' ] raise: HistoryEventNotFound withExceptionDo: [ :ex | self assert: ex messageText equals: '!-9: event not found' ].
-	self should: [ debugger handleHistory: '!9' ] raise: HistoryEventNotFound withExceptionDo: [ :ex | self assert: ex messageText equals: '!9: event not found' ].
-	self should: [ debugger handleHistory: '!abc' ] raise: HistoryEventNotFound withExceptionDo: [ :ex | self assert: ex messageText equals: '!abc: event not found' ].
-	self should: [ debugger handleHistory: '!?wontfind' ] raise: HistoryEventNotFound withExceptionDo: [ :ex | self assert: ex messageText equals: '!?wontfind: event not found' ]
+	self
+		should: [ debugger handleHistory: '!-9' ]
+		raise: HistoryEventNotFound
+		withExceptionDo: [ :ex | self assert: ex messageText equals: '!-9: event not found' ].
+	self
+		should: [ debugger handleHistory: '!9' ]
+		raise: HistoryEventNotFound
+		withExceptionDo: [ :ex | self assert: ex messageText equals: '!9: event not found' ].
+	self
+		should: [ debugger handleHistory: '!abc' ]
+		raise: HistoryEventNotFound
+		withExceptionDo: [ :ex | self assert: ex messageText equals: '!abc: event not found' ].
+	self
+		should: [ debugger handleHistory: '!?wontfind' ]
+		raise: HistoryEventNotFound
+		withExceptionDo: [ :ex | self assert: ex messageText equals: '!?wontfind: event not found' ].
+
+	self assert: (debugger handleHistory: '!') equals: '!'
 ]
 
 { #category : 'running' }

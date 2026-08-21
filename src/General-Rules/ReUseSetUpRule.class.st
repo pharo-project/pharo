@@ -10,8 +10,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReUseSetUpRule class >> group [
-	^ self designFlawGroup
+ReUseSetUpRule class >> groupSelector [
+
+	^ #designFlawGroup
 ]
 
 { #category : 'accessing' }

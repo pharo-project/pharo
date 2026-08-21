@@ -255,9 +255,11 @@ ExternalAddress >> char8AtOffset: zeroBasedOffset put: value [
 
 { #category : 'copying' }
 ExternalAddress >> clone [
-
+	
 	<primitive: 148>
-	self primitiveFailed
+	self deprecated: 'Use shallowCopy'.
+	self primitiveFailed.
+	
 ]
 
 { #category : 'copying' }
@@ -493,13 +495,6 @@ ExternalAddress >> replaceFrom: start to: stop with: replacement startingAt: rep
 		ifTrue: [ replacement ]
 		ifFalse: [ replacement copyFrom: repStart to: repStart + repSize ].
 	LibC memCopy: srcAddress to: dstAddress size: repSize
-]
-
-{ #category : 'copying' }
-ExternalAddress >> shallowCopy [
-	"Re-implemented to avoid superclass call to #new:"
-	"But superclass's shallowCopy sends basicNew: and basicNew: is ok. eem 2/21/2016 15:31"
-	^self clone
 ]
 
 { #category : 'accessing' }

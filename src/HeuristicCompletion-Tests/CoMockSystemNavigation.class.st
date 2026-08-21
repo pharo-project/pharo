@@ -14,11 +14,24 @@ Class {
 }
 
 { #category : 'query' }
+CoMockSystemNavigation >> allGlobalNamesDo: aBlock [
+
+	globals do: [ :e | aBlock value: e  ]
+]
+
+{ #category : 'query' }
 CoMockSystemNavigation >> allGlobalNamesStartingWith: aString do: aBlock caseSensitive: cs [
 
 	globals do: [ :e |
 		(aString isEmpty or: [ e beginsWith: aString caseSensitive: cs ])
 			ifTrue: [ aBlock value: e ] ]
+]
+
+{ #category : 'accessing' }
+CoMockSystemNavigation >> allSelectorsDo: aBlock [
+
+	selectors do: [ :e |
+		aBlock value: e ]
 ]
 
 { #category : 'accessing' }

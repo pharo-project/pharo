@@ -16,8 +16,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReSearchingLiteralRule class >> group [
-	^ self optimizationGroup
+ReSearchingLiteralRule class >> groupSelector [
+
+	^ #optimizationGroup
 ]
 
 { #category : 'accessing' }

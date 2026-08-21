@@ -89,11 +89,7 @@ UITheme class >> current: aUITheme [
 	SystemProgressMorph reset. "reset to use new fill styles"
 	ScrollBarMorph initializeImagesCache. "reset to use new arrows"
 
-	self class environment 
-		at: #SHPreferences 
-		ifPresent: [ :shPreferences | 
-			aUITheme shStyleTable 
-				ifNotNil: [ :aName | shPreferences styleTableSelector: aName ] ].
+	self class environment at: #SHPreferences ifPresent: [ :shPreferences | shPreferences themeChanged ].
 
 	self class environment at: #PolymorphSystemSettings ifPresent: [ :polymorphSystemSettings | polymorphSystemSettings desktopColor: aUITheme desktopColor ].
 
@@ -231,6 +227,12 @@ UITheme >> balloonBackgroundColor [
 UITheme >> balloonTextColor [
 
 	^ colorPalette balloonTextColor
+]
+
+{ #category : 'accessing - colors' }
+UITheme >> baseBorderColor [
+
+	^ colorPalette baseBorderColor
 ]
 
 { #category : 'accessing - colors' }
@@ -907,6 +909,12 @@ UITheme >> chooseOrRequestIn: aThemedMorph title: title labels: labels values: v
 UITheme >> classExtensionColor [
 
 	^ colorPalette classExtensionColor
+]
+
+{ #category : 'accessing' }
+UITheme >> colorPalette [
+
+	^ colorPalette
 ]
 
 { #category : 'label-styles' }
@@ -4054,6 +4062,12 @@ UITheme >> selectedItemListTextColor [
 ]
 
 { #category : 'accessing - colors' }
+UITheme >> selectedTabBorderColor [
+
+	^ colorPalette selectedTabBorderColor
+]
+
+{ #category : 'accessing - colors' }
 UITheme >> selectionBarColor [
 
 	^ colorPalette selectionBarColor
@@ -4447,10 +4461,16 @@ UITheme >> taskbarMinimizedButtonColorFor: aButton [
 ]
 
 { #category : 'border-styles' }
+UITheme >> taskbarThumbnailBorderWidthFor: aMorph [
+
+	^ 0
+]
+
+{ #category : 'border-styles' }
 UITheme >> taskbarThumbnailCornerStyleFor: aMorph [
 	"Answer the corner style for the taskbar thumbnail/tasklist."
 
-	^#square
+	^ #rounded
 ]
 
 { #category : 'border-styles' }

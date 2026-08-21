@@ -85,6 +85,36 @@ QSystemTally >> copyWithTally: hitCount [
 ]
 
 { #category : 'report' }
+QSystemTally >> ffiMethodPrintOn: aStream tallyExact: isExact orThreshold: threshold time: totalTime [
+	"@TODO: Apparently, providing true as isExact will always produce an error "
+
+	| dict |
+	dict := IdentityDictionary new: 100.
+	self ffiMethodsInto: dict fromSender: nil.
+
+	((self asSortedCollection: dict) select: [ :node | node tally > threshold ]) do: [ :node |
+			node
+				printOn: aStream
+				total: tally
+				totalTime: totalTime
+				tallyExact: isExact ]
+]
+
+{ #category : 'report' }
+QSystemTally >> ffiMethodsInto: dict fromSender: senderTally [
+
+	| rcvrs |
+
+	rcvrs := self sonsOver: 0.
+
+	(method isCompiledMethod and: [ method isFFIMethod ])
+		ifTrue: [ self into: dict fromSender: senderTally ].
+
+	rcvrs do: [ :node |
+		node ffiMethodsInto: dict fromSender: senderTally ].
+]
+
+{ #category : 'report' }
 QSystemTally >> fullPrintOn: aStream tallyExact: isExact orThreshold: perCent time: totalTime [
 	| threshold |
 	isExact ifFalse: [threshold := (perCent asFloat / 100 * tally) rounded].
@@ -97,8 +127,21 @@ QSystemTally >> fullPrintOn: aStream tallyExact: isExact orThreshold: perCent ti
 		tallyExact: isExact
 		orThreshold: threshold.
 	aStream nextPut: Character newPage; cr.
+
 	aStream nextPutAll: '**Leaves**'; cr.
+
 	self leavesPrintOn: aStream
+		tallyExact: isExact
+		orThreshold: threshold
+		time: totalTime.
+		
+	
+	aStream 
+		cr;
+		nextPutAll: '**FFI Methods**'; 
+		cr.
+
+	self ffiMethodPrintOn: aStream
 		tallyExact: isExact
 		orThreshold: threshold
 		time: totalTime
@@ -163,7 +206,7 @@ QSystemTally >> maxClassNameSize [
 { #category : 'accessing' }
 QSystemTally >> maxClassPlusSelectorSize [
 	"Return the default maximum width of the class plus selector together (not counting the '>>')"
-	^60
+	^100
 ]
 
 { #category : 'accessing' }
@@ -228,14 +271,29 @@ QSystemTally >> printOn: aStream total: total totalTime: totalTime tallyExact: i
 	] ifFalse:[
 		aClass := method methodClass.
 		className := aClass name contractTo: self maxClassNameSize.
+				
 		aStream nextPutAll: class name;
 				nextPutAll: (aClass = class
 							ifTrue: ['  ']
 							ifFalse: [' [' , aClass name , ']  ']);
-				nextPutAll: (method selector
+				nextPutAll: (self selectorToPrint
 							contractTo: self maxClassPlusSelectorSize - className size);
 				cr.
 	]
+]
+
+{ #category : 'printing' }
+QSystemTally >> selectorToPrint [
+	
+	| ffiFunctionName |
+	
+	method isCompiledBlock ifTrue: [ ^ method selector ].
+	method isFFIMethod ifFalse: [ ^ method selector ].
+	
+	ffiFunctionName := (method literals detect: [ :e | e isKindOf: TFExternalFunction ]) functionName.
+	
+	^ method selector , ' (' , ffiFunctionName , ')'
+
 ]
 
 { #category : 'report' }

@@ -75,6 +75,6 @@ WatchDebugPoint >> name [
 
 { #category : 'accessing' }
 WatchDebugPoint >> type [
-
+	"Mainly used for UI concerns."
 	^ #Watchpoint
 ]

@@ -7,7 +7,8 @@ Class {
 	#superclass : 'OCProgramNodeVisitor',
 	#instVars : [
 		'textModel',
-		'stylerClasses'
+		'stylerClasses',
+		'renderer'
 	],
 	#category : 'Reflectivity-Tools-Breakpoints',
 	#package : 'Reflectivity-Tools',
@@ -34,14 +35,16 @@ IconStyler class >> withStaticStylers [
 		  yourself
 ]
 
-{ #category : 'styling' }
+{ #category : 'private' }
 IconStyler >> addIconMethodStyle: aMethodNode [
-	self addIconStyle: aMethodNode from: 1 to: 0
+
+	self addIconStyle: aMethodNode from: 1 to: 1
 ]
 
-{ #category : 'styling' }
+{ #category : 'private' }
 IconStyler >> addIconStyle: aNode [
-	self addIconStyle: aNode from: aNode start to: aNode stop
+
+	self addIconStyle: aNode from: aNode start to: aNode stop + 1
 ]
 
 { #category : 'styling' }
@@ -50,27 +53,18 @@ IconStyler >> addIconStyle: aNode from: start to: stop [
 	self addIconStyle: aNode from: start to: stop color: self highlightColor
 ]
 
-{ #category : 'styling' }
+{ #category : 'private' }
 IconStyler >> addIconStyle: aNode from: start to: stop color: aColor [
 
-	| conf |
 	(self shouldStyleNode: aNode) ifFalse: [ ^ self ].
-	conf := RubConfigurationChange new.
-	conf configurationBlock: [ :text |
-		| r |
-		r := self segmentMorphClass from: start to: stop + 1.
-		text addSegment: r.
-		r label: (self iconLabelBlock: aNode).
-		r icon: (self iconFor: aNode).
-		r iconBlock: (self iconBlock: aNode).
-		r color: aColor.
-		r borderColor: self borderColor ].
-	textModel announce: conf
-]
-
-{ #category : 'defaults' }
-IconStyler >> borderColor [
-	^Color gray
+	renderer addDecoration: (IconStylerDecoration new
+			 name: self stylerName;
+			 interval: (start to: stop);
+			 highlightColor: aColor;
+			 icon: (self iconFor: aNode);
+			 iconBlock: (self iconBlock: aNode);
+			 title: (self iconLabel: aNode);
+			 yourself)
 ]
 
 { #category : 'defaults' }
@@ -100,19 +94,27 @@ IconStyler >> iconLabelBlock: aNode [
 
 { #category : 'initialization' }
 IconStyler >> initialize [
+
 	super initialize.
-	self resetStylerClasses
+	self resetStylerClasses.
+	renderer := RubricIconStylerRenderer new
+]
+
+{ #category : 'accessing' }
+IconStyler >> renderer [
+
+	^ renderer
+]
+
+{ #category : 'accessing' }
+IconStyler >> renderer: anObject [
+
+	renderer := anObject
 ]
 
 { #category : 'initialization' }
 IconStyler >> resetStylerClasses [
 	stylerClasses := OrderedCollection new
-]
-
-{ #category : 'hooks' }
-IconStyler >> segmentMorphClass [
-
-	^ RubTextSegmentMorph
 ]
 
 { #category : 'testing' }
@@ -124,16 +126,17 @@ IconStyler >> shouldStyleNode: aNode [
 IconStyler >> styleAst: ast [
 	"Style the AST using the textmodel of the receiver. Ask all the registered stylers to act."
 
-	stylerClasses do: [ :styleClass |
-			ast acceptVisitor: (styleClass new textModel: textModel) ]
+	renderer clearDecorations.
+	stylerClasses do: [ :styleClass | ast acceptVisitor: (styleClass new renderer: renderer) ]
 ]
 
 { #category : 'styling' }
 IconStyler >> styleText: aTextModel withAst: ast [
-	"style the AST using the textmodel passed as first argument. Ask all the registered stylers to act."
+	"Style the AST using the text model passed as first argument. Ask all the registered stylers to act."
 
-	stylerClasses do: [ :styleClass |
-		 ast acceptVisitor: (styleClass new textModel: aTextModel) ]
+	renderer textModel: aTextModel.
+	renderer clearDecorations.
+	stylerClasses do: [ :styleClass | ast acceptVisitor: (styleClass new renderer: renderer) ]
 ]
 
 { #category : 'accessing' }
@@ -146,6 +149,12 @@ IconStyler >> stylerClasses: anObject [
 	stylerClasses := anObject
 ]
 
+{ #category : 'private' }
+IconStyler >> stylerName [
+
+	^ 'icon'
+]
+
 { #category : 'accessing' }
 IconStyler >> textModel [
 	^ textModel
@@ -153,7 +162,9 @@ IconStyler >> textModel [
 
 { #category : 'accessing' }
 IconStyler >> textModel: anObject [
-	textModel := anObject
+
+	textModel := anObject.
+	renderer textModel: anObject
 ]
 
 { #category : 'accessing' }

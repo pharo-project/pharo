@@ -17,8 +17,9 @@ ReNoPrintStringInPrintOnRule class >> checksMethod [
 ]
 
 { #category : 'accessing' }
-ReNoPrintStringInPrintOnRule class >> group [
-	^ self optimizationGroup
+ReNoPrintStringInPrintOnRule class >> groupSelector [
+
+	^ #optimizationGroup
 ]
 
 { #category : 'accessing' }

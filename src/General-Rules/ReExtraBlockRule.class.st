@@ -11,8 +11,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReExtraBlockRule class >> group [
-	^ self optimizationGroup
+ReExtraBlockRule class >> groupSelector [
+
+	^ #optimizationGroup
 ]
 
 { #category : 'accessing' }

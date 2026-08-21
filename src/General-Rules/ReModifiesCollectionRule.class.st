@@ -18,8 +18,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReModifiesCollectionRule class >> group [
-	^ self potentialBugsGroup
+ReModifiesCollectionRule class >> groupSelector [
+
+	^ #potentialBugsGroup
 ]
 
 { #category : 'accessing' }

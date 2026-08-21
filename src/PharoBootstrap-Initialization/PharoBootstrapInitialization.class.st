@@ -154,9 +154,8 @@ PharoBootstrapInitialization class >> initializeCommandLineHandlerAndErrorHandli
 	"Initialize basic command line behaviour"
 	NonInteractiveTranscript initialize.
 	PerformMessageCommandLineHandler registerAsCommandLinehandler.
-	
-	self undeclaredRegistry ifNotEmpty: [ 
-		self error: 'There should be no undeclared after loading the BaselineOfKernel. List of undeclared: ', (self undeclaredRegistry keys collect: [ :k | k -> k usingMethods ]) printString ].
+
+	self undeclaredRegistry verifyEmpty.
 
 	Smalltalk snapshot: true andQuit: true.
 	Processor terminateActive

@@ -29,8 +29,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReGuardClauseRule class >> group [
-	^ self codingIdiomViolationGroup
+ReGuardClauseRule class >> groupSelector [
+
+	^ #codingIdiomViolationGroup
 ]
 
 { #category : 'accessing' }

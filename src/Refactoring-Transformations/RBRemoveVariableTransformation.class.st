@@ -20,9 +20,9 @@ Preconditions:
 Class {
 	#name : 'RBRemoveVariableTransformation',
 	#superclass : 'RBVariableTransformation',
-	#category : 'Refactoring-Transformations-Model-Unused',
+	#category : 'Refactoring-Transformations-Model',
 	#package : 'Refactoring-Transformations',
-	#tag : 'Model-Unused'
+	#tag : 'Model'
 }
 
 { #category : 'preconditions' }
@@ -38,15 +38,21 @@ RBRemoveVariableTransformation >> applicabilityPreconditions [
 { #category : 'preconditions' }
 RBRemoveVariableTransformation >> applicabilityPreconditionsForClassVariable [
 
-	^ { (RBCondition isMetaclass: class) not.
-	    (RBCondition definesClassVariable: variableName in: class) }
+	^ {
+		  (ReClassesAreNotMetaClassCondition new classes: { class }).
+		  (ReDirectlyDefinesSharedVariableCondition
+			   class: class
+			   sharedVariables: { variableName }) }
 ]
 
 { #category : 'preconditions' }
 RBRemoveVariableTransformation >> applicabilityPreconditionsForInstanceVariable [
 	"For now only remove an instance variable that is locally defined in a class."
 	
-	^ { (ReDirectlyDefinesInstanceVariableCondition class: class inModel: self model instanceVariables: { variableName }) }
+	^ { (ReDirectlyDefinesInstanceVariableCondition
+		   class: class
+		   inModel: self model
+		   instanceVariables: { variableName }) }
 ]
 
 { #category : 'executing' }

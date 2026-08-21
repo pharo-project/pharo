@@ -1,0 +1,36 @@
+Class {
+	#name : 'ReValidClassNameCondition',
+	#superclass : 'ReReifiedCondition',
+	#instVars : [
+		'className'
+	],
+	#category : 'Refactoring-Conditions',
+	#package : 'Refactoring-Conditions'
+}
+
+{ #category : 'checking' }
+ReValidClassNameCondition >> check [ 
+
+	^ self class checkClassVarName: className in: self
+]
+
+{ #category : 'accessing' }
+ReValidClassNameCondition >> className: aSymbol [
+
+	className := aSymbol asSymbol 
+]
+
+{ #category : 'accessing' }
+ReValidClassNameCondition >> violationMessageOn: aStream [
+
+	self violators do: [ :violator |
+		aStream
+			nextPutAll: violator;
+			nextPutAll: ' is <1?:not >a valid class name.' ]
+]
+
+{ #category : 'accessing' }
+ReValidClassNameCondition >> violators [
+
+	^ self check ifFalse: [ { className } ] ifTrue: [ #() ]
+]

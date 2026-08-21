@@ -28,6 +28,42 @@ ClyQueryTest >> executeQuery [
 ]
 
 { #category : 'running' }
+ClyQueryTest >> query [
+
+	^ query
+]
+
+{ #category : 'accessing' }
+ClyQueryTest >> query: anObject [
+
+	query := anObject
+]
+
+{ #category : 'accessing' }
+ClyQueryTest >> result [
+
+	^ result
+]
+
+{ #category : 'accessing' }
+ClyQueryTest >> result: anObject [
+
+	result := anObject
+]
+
+{ #category : 'accessing' }
+ClyQueryTest >> resultItems [
+
+	^ resultItems
+]
+
+{ #category : 'accessing' }
+ClyQueryTest >> resultItems: anObject [
+
+	resultItems := anObject
+]
+
+{ #category : 'running' }
 ClyQueryTest >> setUp [
 	super setUp.
 

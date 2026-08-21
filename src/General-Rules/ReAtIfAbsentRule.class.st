@@ -12,8 +12,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReAtIfAbsentRule class >> group [
-	^ self codingIdiomViolationGroup
+ReAtIfAbsentRule class >> groupSelector [
+
+	^ #codingIdiomViolationGroup
 ]
 
 { #category : 'accessing' }

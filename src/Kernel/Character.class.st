@@ -432,12 +432,6 @@ Character >> copy [
 	^self
 ]
 
-{ #category : 'copying' }
-Character >> deepCopy [
-	"Answer the receiver, because Characters are unique."
-	^self
-]
-
 { #category : 'accessing' }
 Character >> digitValue [
 	self asInteger > 255

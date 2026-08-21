@@ -5,8 +5,8 @@ DateTest >> testStoring [
 
 	| expected actual |
 	expected := '''2 June 1973'' asDate'.
-	actual := june2nd1973 storeString.
+	actual := self june2nd1973 storeString.
 	self
 		assert: actual equals: expected;
-		assert: (Smalltalk compiler evaluate: expected) equals: june2nd1973. "Evaluating expected to avoid surprises when evaluating"
+		assert: (OpalEvaluator new evaluate: expected) equals: self june2nd1973. "Evaluating expected to avoid surprises when evaluating"
 ]

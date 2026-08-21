@@ -35,6 +35,12 @@ MCServerRegistry >> on: repositoryUrl beUser: nameString withPassword: passwordS
 	registry at: repositoryUrl put: credentials.
 ]
 
+{ #category : 'accessing' }
+MCServerRegistry >> registry [
+
+	^ registry
+]
+
 { #category : 'private' }
 MCServerRegistry >> repositoryAt: urlString credentialsDo: aBlock [
 
