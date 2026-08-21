@@ -53,20 +53,32 @@ RBRemoveTemporaryVariableTransformation class >> variable: aString inMethod: aSe
 { #category : 'preconditions' }
 RBRemoveTemporaryVariableTransformation >> applicabilityPreconditions [
 
-	^ {
-		  self classExist.
-		 (ReDefinesSelectorsCondition new definesSelectors: (Array with: selector) in: self definingClass).
-		  (RBCondition
-			   withBlock: [
-			   self definingMethod allTemporaryVariables includes: variableName ]
-			   errorString: 'Method named ' , selector
-				   , ' does not define a temporary variable named ' , variableName).
-		  (RBCondition
-			   withBlock: [
-				   (self definingMethod allArgumentVariables includes:
-					    variableName) not ]
-			   errorString: 'Variable named ' , variableName
-				   , ' cannot be removed because it is an argument in this method') }
+	^ { 
+		self classExist.
+		(RBCondition definesSelector: selector in: self definingClass).
+		(RBCondition
+			withBlock: [ 
+				self definingMethod allTemporaryVariables includes: variableName ]
+			errorString: 'Method named ' , selector
+				, ' does not define a temporary variable named ' , variableName).
+		(RBCondition
+			withBlock: [ 
+				(self definingMethod allArgumentVariables includes: variableName) not ]
+			errorString: 'Variable named ' , variableName
+				, ' cannot be removed because it is an argument in this method').
+		(RBCondition
+			withBlock: [ 
+				| sequence hasShadowedVar hasUsages |
+				sequence := (self definingMethod allChildren select: [ :each | each isSequence ])
+					detect: [ :each | each defines: variableName ]
+					ifNone: [ nil ].
+				hasUsages := sequence isNotNil and: [ 
+					sequence allChildren anySatisfy: [ :node | 
+						node isVariable and: [ node name = variableName ] ] ].
+				hasShadowedVar := self definingClass definesInstanceVariable: variableName.
+				hasUsages not or: [ hasShadowedVar ] ]
+			errorString: 'Variable named ' , variableName
+				, ' cannot be removed because it is used in the method') }
 ]
 
 { #category : 'scripting api - conditions' }
