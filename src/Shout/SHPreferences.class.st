@@ -23,10 +23,9 @@ Class {
 SHPreferences class >> activeStyleTable [
 
 	^ activeStyleTable ifNil: [
-			  activeStyleTable := 'Default'.
-			  activeStyleTable ]
+			self activeStyleTable: 'Default'.
+			activeStyleTable ]
 ]
-
 { #category : 'accessing' }
 SHPreferences class >> activeStyleTable: aStyleTableName [
 
@@ -46,10 +45,9 @@ SHPreferences class >> activeStyleTable: aStyleTableName [
 ]
 
 { #category : 'updating' }
-SHPreferences class >> customStyleChanged [
+SHPreferences class >> themeChanged [
 
-	activeStyleTable = 'Custom' ifTrue: [
-		self styleTable: SHCustomStyle styleTable ]
+	self activeStyleTable: self activeStyleTable
 ]
 
 { #category : 'reflective operations' }
