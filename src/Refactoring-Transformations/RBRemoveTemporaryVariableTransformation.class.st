@@ -68,19 +68,19 @@ RBRemoveTemporaryVariableTransformation >> applicabilityPreconditions [
 				, ' cannot be removed because it is an argument in this method').
 		(RBCondition
 			withBlock: [ 
-				| sequence hasShadowedVar hasUsages |
-				sequence := (self definingMethod allChildren select: [ :each | each isSequence ])
+				| targetSequence hasRealUsages hasShadowedVar |
+				targetSequence := (self definingMethod allChildren select: [ :each | each isSequence ])
 					detect: [ :each | each defines: variableName ]
 					ifNone: [ nil ].
-				hasUsages := sequence isNotNil and: [ 
-					sequence allChildren anySatisfy: [ :node | 
-						node isVariable and: [ node name = variableName ] ] ].
+				hasRealUsages := targetSequence isNotNil and: [ 
+					targetSequence statements anySatisfy: [ :statement | 
+						statement allChildren anySatisfy: [ :node | 
+							node isVariable and: [ node name = variableName ] ] ] ].
 				hasShadowedVar := self definingClass definesInstanceVariable: variableName.
-				hasUsages not or: [ hasShadowedVar ] ]
+				hasRealUsages not or: [ hasShadowedVar ] ]
 			errorString: 'Variable named ' , variableName
 				, ' cannot be removed because it is used in the method') }
 ]
-
 { #category : 'scripting api - conditions' }
 RBRemoveTemporaryVariableTransformation >> checkPreconditions [ 
 
