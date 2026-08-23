@@ -23,11 +23,13 @@ Behavior >> basicNewPinned: requestedSize [
 { #category : '*ThreadedFFI-UFFI' }
 Behavior >> newPinned [
 
-	^ self basicNewPinned initialize
+	^ ObjectAllocator value: PinnedAllocator during: [ self new ]
 ]
 
 { #category : '*ThreadedFFI-UFFI' }
-Behavior >> newPinned: sizeRequested [
+Behavior >> newPinned: requestedSize [
 
-	^ (self basicNewPinned: sizeRequested) initialize
+	^ ObjectAllocator
+		  value: PinnedAllocator
+		  during: [ self new: requestedSize ]
 ]
