@@ -29,7 +29,13 @@ Class {
 		'previewUpdateDelay',
 		'nameIsValid',
 		'mainLayout',
-		'topLayout'
+		'topLayout',
+		'behaviorWarningIcon',
+		'behaviorLayout',
+		'behaviorPanel',
+		'behaviorWarningTitle',
+		'behaviorMessageLabel',
+		'buttonBrowseMethod'
 	],
 	#category : 'Refactoring-UI-UI',
 	#package : 'Refactoring-UI',
@@ -57,6 +63,21 @@ StRenameClassPreviewPresenter >> accept [
 	self performChanges.
 	self updateGlobalActiveScope.
 	self closeWindow
+]
+
+{ #category : 'action' }
+StRenameClassPreviewPresenter >> addBehaviorPanel [
+
+	behaviorMessageLabel label: driver checkBehaviorPreconditions.
+	
+	(topLayout children includes: behaviorPanel)
+		ifFalse: [ topLayout add: behaviorPanel expand: false ]
+]
+
+{ #category : 'private' }
+StRenameClassPreviewPresenter >> browseMethods [
+
+	 driver browseMethods
 ]
 
 { #category : 'private' }
@@ -115,6 +136,7 @@ StRenameClassPreviewPresenter >> connectPresenters [
 
 	buttonCancel action: [ self closeWindow ].
 	buttonOk action: [ self accept ] .
+	buttonBrowseMethod action: [ self browseMethods ].
 	
 	newNameInput whenTextChangedDo: [ :text |
 		self schedulePreviewUpdate: text ] 
@@ -128,7 +150,7 @@ StRenameClassPreviewPresenter >> defaultKeyboardFocus [
 
 { #category : 'layout' }
 StRenameClassPreviewPresenter >> defaultLayout [
-	| scopesLayout nameLayout inputLayout |
+	| scopesLayout nameLayout inputLayout behaviorHeaderLayout |
 	
 	scopesLayout := SpBoxLayout newLeftToRight
 		vAlignCenter;
@@ -153,8 +175,23 @@ StRenameClassPreviewPresenter >> defaultLayout [
 		spacing: 10;
 		add: nameLayout expand: false;
 		yourself.
+		
+	behaviorHeaderLayout := SpBoxLayout newLeftToRight 
+		vAlignCenter;
+		spacing: 5;
+		add: behaviorWarningIcon expand: false;
+		add: behaviorWarningTitle expand: false;
+		yourself.
+		
+	behaviorLayout := SpBoxLayout newTopToBottom
+		spacing: 4;
+		add: behaviorHeaderLayout;
+		add: behaviorMessageLabel expand: false;
+		add: buttonBrowseMethod expand: false;
+		yourself.
+	behaviorPanel layout: behaviorLayout.
 	
-	^ SpBoxLayout newTopToBottom
+	mainLayout := SpBoxLayout newTopToBottom
 		spacing: 10;
 		add: topLayout expand: false;
 		add: scopesLayout expand: false;
@@ -162,6 +199,7 @@ StRenameClassPreviewPresenter >> defaultLayout [
 		add: diffPresenter;
 		yourself.
 
+	^ mainLayout
 ]
 
 { #category : 'accessing' }
@@ -175,6 +213,21 @@ StRenameClassPreviewPresenter >> globalActiveScope [
 	^ ScopesManager activeScope
 ]
 
+{ #category : 'action' }
+StRenameClassPreviewPresenter >> hasWarning [
+
+	^ driver notNil and: [ driver hasFailedBehaviorPreservingPreconditions ]
+]
+
+{ #category : 'action' }
+StRenameClassPreviewPresenter >> hideBehaviorPanel [
+	
+	(topLayout children includes: behaviorPanel)
+		ifFalse: [ ^ self ].
+	topLayout remove: behaviorPanel.
+		self rebuildLayout 
+]
+
 { #category : 'initialization' }
 StRenameClassPreviewPresenter >> initializeDialogWindow: aDialogWindowPresenter [
 	"Used to initialize the model in the case of the use into a dialog window.
@@ -182,7 +235,7 @@ StRenameClassPreviewPresenter >> initializeDialogWindow: aDialogWindowPresenter 
 	
 	aDialogWindowPresenter
 		addButton: 'Cancel' do: [ :presenter | presenter close ];
-		addDefaultButton: 'Ok' do: [ :presenter | 
+		addDefaultButton: 'Accept' do: [ :presenter | 
 			self accept.
 			presenter close ]
 ]
@@ -208,7 +261,7 @@ StRenameClassPreviewPresenter >> initializePresenters [
 	scopeDropList display: [ :scope | scope description ].
 	
 	buttonOk := self newButton
-		label: 'Ok';
+		label: 'Accept';
 		icon: (self iconNamed: #smallOk).
 
 	buttonCancel := self newButton
@@ -218,7 +271,16 @@ StRenameClassPreviewPresenter >> initializePresenters [
 	newNameLabel := self newLabel label: 'Selector'.
 	newNameInput := self newTextInput.
 	
-	validationLabel := self newLabel label: ''
+	validationLabel := self newLabel label: '' .
+	
+	behaviorWarningIcon := self newImage image: (self iconNamed: #warningIcon) .
+	behaviorWarningTitle := self newLabel label: 'Behavior-preserving warnings' .
+	behaviorMessageLabel := self newLabel label: ''.
+	behaviorPanel := SpPresenter new .
+	
+	buttonBrowseMethod := self newButton
+		label: 'Browse affected methods';
+		icon: (self iconNamed: #search)
 ]
 
 { #category : 'accessing' }
@@ -266,7 +328,8 @@ StRenameClassPreviewPresenter >> schedulePreviewUpdate: aString [
 	
 	[ previewUpdateDelay wait. 
 		self validateName: aString.
-		self updateName  ] fork
+		self updateBehaviorPanelVisibility: aString.
+		self updateName ] fork
 ]
 
 { #category : 'accessing' }
@@ -286,6 +349,18 @@ StRenameClassPreviewPresenter >> selectorInput [
 StRenameClassPreviewPresenter >> updateActiveScope [
 
 	activeScope := scopeDropList selectedItem asRBEnvironment
+]
+
+{ #category : 'action' }
+StRenameClassPreviewPresenter >> updateBehaviorPanelVisibility: aString [
+
+	mainLayout ifNil: [ ^ self ].
+	
+	driver newName: aString .
+	
+	self hasWarning 
+		ifTrue: [ self addBehaviorPanel ]
+		ifFalse: [ self hideBehaviorPanel ]
 ]
 
 { #category : 'update' }

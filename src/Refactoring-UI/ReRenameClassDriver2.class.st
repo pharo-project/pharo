@@ -39,7 +39,8 @@ ReRenameClassDriver2 >> breakingChoices [
 ReRenameClassDriver2 >> browseMethods [
 
 	| references |
-	references := refactoring violations.
+	references := refactoring violations .
+	
 	(Smalltalk tools toolNamed: #messageList)
 		browse: (references collect: [ :ref | ref origin realClass lookupSelector: ref selector ])
 		title: 'Methods containing references to a shared var that will shadow class reference after renaming' 
@@ -56,10 +57,21 @@ ReRenameClassDriver2 >> checkApplicabilityPreconditions [
 		detect: [ :condition | condition check not ]
 		ifNone: [ nil ].
 		
-	failedCondition ifNotNil: [ 
-		^ failedCondition errorString ].
+	^ failedCondition ifNotNil: [ :condition | condition errorString ]
 	
-	^ nil
+]
+
+{ #category : 'actions' }
+ReRenameClassDriver2 >> checkBehaviorPreconditions [
+
+	| condition stream | 1halt.
+	
+	condition := self refactoring breakingChangePreconditions first.
+	condition check ifTrue: [ ^ nil ].
+	
+	stream := String new writeStream.
+	condition violationMessageOn: stream.
+	^ stream contents
 ]
 
 { #category : 'actions' }
@@ -92,6 +104,13 @@ ReRenameClassDriver2 >> gatherUserInput [
 			newName := self requestNewNameBasedOn: newName.
 			shouldEscape ifTrue: [ ^ false ] ].
 	^ true
+]
+
+{ #category : 'actions' }
+ReRenameClassDriver2 >> hasFailedBehaviorPreservingPreconditions [
+
+	^ self refactoring breakingChangePreconditions
+		anySatisfy: [ :each | each check not ]
 ]
 
 { #category : 'initialization' }
