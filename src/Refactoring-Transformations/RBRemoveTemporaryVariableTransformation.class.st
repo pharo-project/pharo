@@ -68,20 +68,28 @@ RBRemoveTemporaryVariableTransformation >> applicabilityPreconditions [
 				, ' cannot be removed because it is an argument in this method').
 		(RBCondition
 			withBlock: [ 
-				| targetSequence hasRealUsages hasShadowedVar |
-				targetSequence := (self definingMethod allChildren select: [ :each | each isSequence ])
+				| definingSeq usages hasShadowedVar |
+				definingSeq := (self definingMethod allChildren select: [ :each | each isSequence ])
 					detect: [ :each | each exactNodeDefines: variableName ]
 					ifNone: [ nil ].
-				hasRealUsages := targetSequence isNotNil and: [ 
-					targetSequence statements anySatisfy: [ :statement | 
-						statement allChildren anySatisfy: [ :node | 
-							node isVariable and: [ node name = variableName ] ] ] ].
+				usages := definingSeq
+					ifNil: [ #() ]
+					ifNotNil: [ 
+						definingSeq statements flatCollect: [ :stmt | 
+							stmt allChildren select: [ :node | 
+								node isVariable and: [ 
+									node name = variableName and: [ 
+										| innerSeq |
+										innerSeq := node parent.
+										[ innerSeq isNotNil and: [ innerSeq isSequence not ] ] 
+											whileTrue: [ innerSeq := innerSeq parent ].
+										innerSeq == definingSeq or: [ 
+											innerSeq isNil or: [ (innerSeq exactNodeDefines: variableName) not ] ] ] ] ] ] ].
 				hasShadowedVar := self definingClass definesInstanceVariable: variableName.
-				hasRealUsages not or: [ hasShadowedVar ] ]
+				usages isEmpty or: [ hasShadowedVar ] ]
 			errorString: 'Variable named ' , variableName
 				, ' cannot be removed because it is used in the method') }
 ]
-
 
 { #category : 'scripting api - conditions' }
 RBRemoveTemporaryVariableTransformation >> checkPreconditions [ 
