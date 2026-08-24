@@ -70,7 +70,7 @@ RBRemoveTemporaryVariableTransformation >> applicabilityPreconditions [
 			withBlock: [ 
 				| targetSequence hasRealUsages hasShadowedVar |
 				targetSequence := (self definingMethod allChildren select: [ :each | each isSequence ])
-					detect: [ :each | each defines: variableName ]
+					detect: [ :each | each exactNodeDefines: variableName ]
 					ifNone: [ nil ].
 				hasRealUsages := targetSequence isNotNil and: [ 
 					targetSequence statements anySatisfy: [ :statement | 
@@ -81,6 +81,8 @@ RBRemoveTemporaryVariableTransformation >> applicabilityPreconditions [
 			errorString: 'Variable named ' , variableName
 				, ' cannot be removed because it is used in the method') }
 ]
+
+
 { #category : 'scripting api - conditions' }
 RBRemoveTemporaryVariableTransformation >> checkPreconditions [ 
 
