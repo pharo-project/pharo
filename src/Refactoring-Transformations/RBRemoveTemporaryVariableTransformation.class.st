@@ -50,7 +50,7 @@ RBRemoveTemporaryVariableTransformation class >> variable: aString inMethod: aSe
 		yourself
 ]
 
-{ #category : 'preconditions' }
+{ #category : #preconditions }
 RBRemoveTemporaryVariableTransformation >> applicabilityPreconditions [
 
 	^ { 
@@ -68,29 +68,38 @@ RBRemoveTemporaryVariableTransformation >> applicabilityPreconditions [
 				, ' cannot be removed because it is an argument in this method').
 		(RBCondition
 			withBlock: [ 
-				| definingSeq usages hasShadowedVar |
-				definingSeq := (self definingMethod allChildren select: [ :each | each isSequence ])
-					detect: [ :each | each exactNodeDefines: variableName ]
-					ifNone: [ nil ].
-				usages := definingSeq
-					ifNil: [ #() ]
-					ifNotNil: [ 
-						definingSeq statements flatCollect: [ :stmt | 
-							stmt allChildren select: [ :node | 
-								node isVariable and: [ 
-									node name = variableName and: [ 
-										| innerSeq |
-										innerSeq := node parent.
-										[ innerSeq isNotNil and: [ innerSeq isSequence not ] ] 
-											whileTrue: [ innerSeq := innerSeq parent ].
-										innerSeq == definingSeq or: [ 
-											innerSeq isNil or: [ (innerSeq exactNodeDefines: variableName) not ] ] ] ] ] ] ].
-				hasShadowedVar := self definingClass definesInstanceVariable: variableName.
-				usages isEmpty or: [ hasShadowedVar ] ]
+				self hasUsagesInScope not or: [ 
+					self definingClass definesInstanceVariable: variableName ] ]
 			errorString: 'Variable named ' , variableName
 				, ' cannot be removed because it is used in the method') }
 ]
 
+{ #category : #'private - accessing' }
+RBRemoveTemporaryVariableTransformation >> definingSequenceNode [
+
+	^ (self definingMethod allChildren select: [ :each | each isSequence ])
+		detect: [ :each | each exactNodeDefines: variableName ]
+		ifNone: [ nil ]
+]
+
+{ #category : #'private - testing' }
+RBRemoveTemporaryVariableTransformation >> hasUsagesInScope [
+
+	| definingSeq |
+	definingSeq := self definingSequenceNode.
+	definingSeq ifNil: [ ^ false ].
+
+	^ definingSeq statements anySatisfy: [ :stmt | 
+		stmt allChildren anySatisfy: [ :node | 
+			node isVariable and: [ 
+				node name = variableName and: [ 
+					| innerSeq |
+					innerSeq := node parent.
+					[ innerSeq isNotNil and: [ innerSeq isSequence not ] ] 
+						whileTrue: [ innerSeq := innerSeq parent ].
+					innerSeq == definingSeq or: [ 
+						innerSeq isNil or: [ (innerSeq exactNodeDefines: variableName) not ] ] ] ] ] ]
+]
 { #category : 'scripting api - conditions' }
 RBRemoveTemporaryVariableTransformation >> checkPreconditions [ 
 
