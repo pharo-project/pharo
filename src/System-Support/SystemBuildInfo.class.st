@@ -51,3 +51,9 @@ SystemBuildInfo >> systemPackages [
 
 	^ self packageOrganizer packages select: [ :package | self systemPackageNames includes: package name ]
 ]
+
+{ #category : 'accessing' }
+SystemBuildInfo >> systemPackagesIncludes: aPackage [
+
+	^ self systemPackageNames includes: aPackage name
+]
