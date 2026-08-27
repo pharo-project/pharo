@@ -40,7 +40,7 @@ ReLocalNameConflictCondition >> check [
     (definingNode exactNodeDefines: variableName) ifTrue: [
         violators addIfNotPresent: variableName ].
 
-	"check if there is exting temp either above or below in AST"
+	"check if there is existing temp either above or below in AST"
     (parseTree withAllChildren anySatisfy: [ :node |
         (node exactNodeDefines: variableName) and: [
             (node withAllChildren includes: definingNode) 

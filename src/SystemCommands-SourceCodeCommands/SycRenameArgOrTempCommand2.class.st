@@ -38,7 +38,7 @@ SycRenameArgOrTempCommand2 >> defaultMenuIconName [
 
 { #category : 'accessing' }
 SycRenameArgOrTempCommand2 >> defaultMenuItemName [
-	^'(R) Rename temp2'
+	^'(R) Rename temp'
 ]
 
 { #category : 'accessing' }

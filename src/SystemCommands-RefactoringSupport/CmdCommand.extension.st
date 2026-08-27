@@ -4,7 +4,7 @@ Extension { #name : 'CmdCommand' }
 CmdCommand >> confirmRefactoringInContext: aToolContext by: aCommandActivator [
 
 	| submitDialog |
-	submitDialog := SycRefactoringPreviewPresenter for: self scopes: aToolContext refactoringScopes.
+	submitDialog := SycRenameArgumentOrTemporaryPresenter for: self scopes: aToolContext refactoringScopes.
 	submitDialog existChanges
 		ifTrue: [
 			submitDialog openDialog

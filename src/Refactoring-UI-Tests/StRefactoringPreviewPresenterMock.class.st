@@ -1,6 +1,6 @@
 Class {
 	#name : 'StRefactoringPreviewPresenterMock',
-	#superclass : 'StRefactoringPreviewPresenter2',
+	#superclass : 'StRenameTempOrArgPreviewPresenter',
 	#instVars : [
 		'lastInstance',
 		'openModal',

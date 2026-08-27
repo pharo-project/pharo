@@ -2,7 +2,7 @@
 A StRefactoringPreviewPresenter2Test is a test class for testing the behavior of StRefactoringPreviewPresenter2
 "
 Class {
-	#name : 'StRefactoringPreviewPresenter2Test',
+	#name : 'StRenameTempOrArgPreviewPresenterTest',
 	#superclass : 'TestCase',
 	#category : 'Refactoring-UI-Tests-UI',
 	#package : 'Refactoring-UI-Tests',
@@ -10,7 +10,7 @@ Class {
 }
 
 { #category : 'running' }
-StRefactoringPreviewPresenter2Test >> setUpDriver [ 
+StRenameTempOrArgPreviewPresenterTest >> setUpDriver [ 
    | driver method sourceNode |
 
 	 driver := ReRenameArgumentOrTemporaryDriver2 new.
@@ -30,7 +30,7 @@ StRefactoringPreviewPresenter2Test >> setUpDriver [
 ]
 
 { #category : 'tests' }
-StRefactoringPreviewPresenter2Test >> testAcceptAppliesRefactoringChanges [
+StRenameTempOrArgPreviewPresenterTest >> testAcceptAppliesRefactoringChanges [
     "Verify that accepting the preview performs the selected refactoring changes and closes the presenter."
 
     | driver presenter method sourceNode |
@@ -69,37 +69,14 @@ StRefactoringPreviewPresenter2Test >> testAcceptAppliesRefactoringChanges [
 ]
 
 { #category : 'tests' }
-StRefactoringPreviewPresenter2Test >> testApplyTransformationRemovesTemporaryVariableFromParseTree [
-"Verify that applying the transformation removes the temporary variable from the parse tree."
-
-	| driver presenter parseTree |
-	
-	driver := self setUpDriver.
-	driver newName: 'instVar'.
-	
-	presenter := StRefactoringPreviewPresenter2 new.
-	presenter
-		driver: driver;
-		scopes: { RBBrowserEnvironment default };
-		name: 'temp'.
-		
-	presenter initializePresenters;
-				 applyTransformation.
-				
-	parseTree := driver refactoring parseTree.
-
-	self deny: (parseTree withAllChildren anySatisfy: [:each | each exactNodeDefines: 'temp'])
-]
-
-{ #category : 'tests' }
-StRefactoringPreviewPresenter2Test >> testInvalidNameFailsApplicabilityPreconditions [
+StRenameTempOrArgPreviewPresenterTest >> testInvalidNameFailsApplicabilityPreconditions [
 	"Verify that entering an invalid name fails the applicability preconditions."
 
-	| driver presenter |
+	| driver presenter failedCondition |
 	
 	driver := self setUpDriver .
 
-	presenter := StRefactoringPreviewPresenter2 new.
+	presenter := StRenameTempOrArgPreviewPresenter new.
 	presenter
 		driver: driver;
 		scopes: { RBBrowserEnvironment default };
@@ -108,12 +85,16 @@ StRefactoringPreviewPresenter2Test >> testInvalidNameFailsApplicabilityPrecondit
 	presenter initializePresenters.
 
 	presenter newNameInput text: 'Tmp2'.
+	presenter validateName: 'Tmp2'.
 
-	self assert: driver checkApplicabilityPreconditions notNil
+	failedCondition := driver checkApplicabilityPreconditions .
+	
+	self assert: failedCondition
+		  equals: 'Tmp2 the name musn''t start in uppercase or be a reserved word.'
 ]
 
 { #category : 'tests' }
-StRefactoringPreviewPresenter2Test >> testRenameTemporaryToInstanceVariableNameFailsBehaviorPreservingPreconditions [
+StRenameTempOrArgPreviewPresenterTest >> testRenameTemporaryToInstanceVariableNameFailsBehaviorPreservingPreconditions [
 "Verify that renaming a temporary variable to an existing instance/class variable fails the behavior-preserving preconditions."
 
 	| driver message |
@@ -121,13 +102,15 @@ StRefactoringPreviewPresenter2Test >> testRenameTemporaryToInstanceVariableNameF
 	driver := self setUpDriver .
 	driver newName: 'instVar'.
 	
+	driver createAndSetNewRefactoring.
 	message := driver checkBehaviorPreservingPreconditions.
+	
 	self assert: message 
 		  equals: 'The variable "instVar" is already defined as a class/instance variable in the given context', 	         		String cr
 ]
 
 { #category : 'accessing' }
-StRefactoringPreviewPresenter2Test >> testRunRefactoringCreatesAndConfiguresPresenter [
+StRenameTempOrArgPreviewPresenterTest >> testRunRefactoringCreatesAndConfiguresPresenter [
 "Verify that #runRefactoring initializes the preview presenter with the expected data and opens it."
 
    | driver presenter |
@@ -147,14 +130,14 @@ StRefactoringPreviewPresenter2Test >> testRunRefactoringCreatesAndConfiguresPres
 ]
 
 { #category : 'tests' }
-StRefactoringPreviewPresenter2Test >> testUpdateChangesWithValidNameGeneratesPreview [
-"Verify that entering a valid name and clicking Rename generates the preview of the refactoring changes."
+StRenameTempOrArgPreviewPresenterTest >> testUpdateChangesWithValidNameGeneratesPreview [
+"Verify that entering a valid name generates the preview of the refactoring changes."
 
 | driver presenter |
 
     driver := self setUpDriver .
 
-    presenter := StRefactoringPreviewPresenter2 new.
+    presenter := StRenameTempOrArgPreviewPresenter new.
     presenter
         driver: driver;
         scopes: { RBBrowserEnvironment default };

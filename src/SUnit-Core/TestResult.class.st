@@ -177,6 +177,16 @@ TestResult >> diff: aTestResult [
 		errors1Selectors copyWithoutAll: errors2Selectors}
 ]
 
+{ #category : 'history' }
+TestResult >> dispatchResultsIntoHistory [
+
+	self classesTested do:
+		[ :testClass |
+		self class
+			historyAt: testClass
+			put: (self selectResultsForTestCase: testClass) ]
+]
+
 { #category : 'accessing' }
 TestResult >> errorCount [
 	"I return the numbers of tests which raise error"

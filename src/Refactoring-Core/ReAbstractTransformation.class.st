@@ -262,17 +262,6 @@ ReAbstractTransformation >> generateChangesFor: aRefactoring [
 	aRefactoring generateChanges
 ]
 
-{ #category : 'scripting api - executing' }
-ReAbstractTransformation >> generateTransformChanges [
-	"Prepare, check the preconditions, perform the actual transformation (i.e., creating a list of changes that can be accessible using the changes message), and return the changes. This method should not be invoked from drivers since drivers usually check in finer grained mode the preconditions - and that this stage they already checked the preconditions."
-	
-	self prepareForExecution.
-	self privateTransform.
-	^ self changes
-	
-	
-]
-
 { #category : 'testing' }
 ReAbstractTransformation >> isValidSelector: aString [
 	"Returns the boolean true if aString is a valid selector (name of method).

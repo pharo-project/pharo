@@ -29,8 +29,7 @@ Class {
 		'selectedRefactorings',
 		'diffPresenter',
 		'existsChanges',
-		'buttonOk',
-		'name'
+		'buttonOk'
 	],
 	#category : 'SystemCommands-RefactoringSupport',
 	#package : 'SystemCommands-RefactoringSupport'
@@ -89,12 +88,6 @@ SycRenameArgumentOrTemporaryPresenter >> buildDiffFor: aChange [
 	^ diffPresenter
 		leftText: aChange oldVersionTextToDisplay;
 		rightText: aChange textToDisplay
-]
-
-{ #category : 'accessing' }
-SycRenameArgumentOrTemporaryPresenter >> changeName: aText [
-	name := aText .
-	self generateChanges
 ]
 
 { #category : 'accessing' }
@@ -226,12 +219,6 @@ SycRenameArgumentOrTemporaryPresenter >> initializeWidgets [
 ]
 
 { #category : 'accessing' }
-SycRenameArgumentOrTemporaryPresenter >> name: aText [
-	name := aText .
-	self generateChanges
-]
-
-{ #category : 'accessing' }
 SycRenameArgumentOrTemporaryPresenter >> pickedChanges [
 	^ table items select: [ :item | selectedRefactorings at: item ]
 ]
@@ -265,8 +252,7 @@ SycRenameArgumentOrTemporaryPresenter >> setFocus [
 	self focusOrder
 		add: table;
 		add: scopeDropList;
-		add: diffPresenter;
-		add: name
+		add: diffPresenter
 ]
 
 { #category : 'accessing' }

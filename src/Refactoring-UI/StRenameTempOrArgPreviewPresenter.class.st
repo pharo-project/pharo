@@ -5,7 +5,7 @@ I am responsible for keeping track of `selectedChanges` (which changes to apply)
 
 "
 Class {
-	#name : 'StRefactoringPreviewPresenter2',
+	#name : 'StRenameTempOrArgPreviewPresenter',
 	#superclass : 'SpPresenter',
 	#instVars : [
 		'changes',
@@ -36,8 +36,9 @@ Class {
 		'behaviorLayout',
 		'behaviorPanel',
 		'topLayout',
-		'previewUpdateDelay',
-		'nameIsValid'
+		'nameIsValid',
+		'behaviorOptionsLayout',
+		'behaviorOptionsPanel'
 	],
 	#category : 'Refactoring-UI-UI',
 	#package : 'Refactoring-UI',
@@ -45,7 +46,7 @@ Class {
 }
 
 { #category : 'instance creation' }
-StRefactoringPreviewPresenter2 class >> withChanges: changes scopes: scopes [
+StRenameTempOrArgPreviewPresenter class >> withChanges: changes scopes: scopes [
 	
 	^ self new
 		  changesFrom: changes scopes: scopes;
@@ -53,7 +54,7 @@ StRefactoringPreviewPresenter2 class >> withChanges: changes scopes: scopes [
 ]
 
 { #category : 'action' }
-StRefactoringPreviewPresenter2 >> accept [
+StRenameTempOrArgPreviewPresenter >> accept [
 
 	(self okToChange not or: [ selectedChanges isEmptyOrNil ]) ifTrue: [
 		self application newInform 
@@ -68,21 +69,28 @@ StRefactoringPreviewPresenter2 >> accept [
 ]
 
 { #category : 'accessing' }
-StRefactoringPreviewPresenter2 >> applyAnyway [
+StRenameTempOrArgPreviewPresenter >> addBehaviorPanel [
+
+	behaviorMessageLabel label: driver checkBehaviorPreservingPreconditions.
+	
+	driver isTemporaryVariable ifTrue: [ behaviorLayout add: behaviorOptionsPanel ].
+	
+	(topLayout children includes: behaviorPanel)
+		ifFalse: [ topLayout add: behaviorPanel expand: false ] 
+]
+
+{ #category : 'accessing' }
+StRenameTempOrArgPreviewPresenter >> applyAnyway [
 
 	driver createAndSetNewRefactoring.
-	driver refactoring prepareForExecution.
 	self updateName
 ]
 
 { #category : 'accessing' }
-StRefactoringPreviewPresenter2 >> applyTransformation [
+StRenameTempOrArgPreviewPresenter >> applyTransformation [
 
 	driver createAndSetNewRefactoring .
-
-	compositeChange := driver refactoring generateTransformChanges.
-	driver prepareTransformation: driver refactoring parseTree.
-	compositeChange := driver refactoring privateTransform.
+	compositeChange := driver generateTransformationChanges.
 	changes := compositeChange changesToDisplayIn: self.
 
 	self updateChanges.
@@ -90,27 +98,37 @@ StRefactoringPreviewPresenter2 >> applyTransformation [
 ]
 
 { #category : 'private' }
-StRefactoringPreviewPresenter2 >> buildDiffFor: aChange [
+StRenameTempOrArgPreviewPresenter >> buildDiffFor: aChange [
 
 	^ diffPresenter
 		  leftText: aChange oldVersionTextToDisplay;
 		  rightText: aChange textToDisplay
 ]
 
+{ #category : 'private' }
+StRenameTempOrArgPreviewPresenter >> buildLeftSideDiff [
+
+	^ diffPresenter
+		  leftText:  driver method sourceCode ;
+		  rightText: ''
+]
+
 { #category : 'accessing' }
-StRefactoringPreviewPresenter2 >> buttonOk [
+StRenameTempOrArgPreviewPresenter >> buttonOk [
 	^ buttonOk 
 ]
 
 { #category : 'accessing' }
-StRefactoringPreviewPresenter2 >> buttonOk: aButton [
-	buttonOk := aButton 
+StRenameTempOrArgPreviewPresenter >> buttonOk: aButton [
+	buttonOk := aButton .
+	self updateOkButtonState.
 ]
 
 { #category : 'initialization' }
-StRefactoringPreviewPresenter2 >> changesFrom: aCompositeChange [
+StRenameTempOrArgPreviewPresenter >> changesFrom: aCompositeChange [
 
-	compositeChange := aCompositeChange. "we keep the composite because we want to use it for performing changes later on."
+	compositeChange := aCompositeChange. 
+	"we keep the composite because we want to use it for performing changes later on."
 
 	changes := aCompositeChange changesToDisplayIn: self.
 	self updateScopeList.
@@ -119,28 +137,20 @@ StRefactoringPreviewPresenter2 >> changesFrom: aCompositeChange [
 ]
 
 { #category : 'initialization' }
-StRefactoringPreviewPresenter2 >> changesFrom: aCompositeChange scopes: aCollection [
+StRenameTempOrArgPreviewPresenter >> changesFrom: aCompositeChange scopes: aCollection [
 
 	scopes := aCollection.
 	self changesFrom: aCompositeChange.
 ]
 
-{ #category : 'private' }
-StRefactoringPreviewPresenter2 >> clearDiff [
-
-    diffPresenter
-        leftText: '';
-        rightText: ''
-]
-
 { #category : 'action' }
-StRefactoringPreviewPresenter2 >> closeWindow [
+StRenameTempOrArgPreviewPresenter >> closeWindow [
 
 	self withWindowDo: [ :window | window close ]
 ]
 
 { #category : 'initialization' }
-StRefactoringPreviewPresenter2 >> connectPresenters [
+StRenameTempOrArgPreviewPresenter >> connectPresenters [
 
 	table whenSelectionChangedDo: [ :selection | selection selectedItem ifNotNil: [ self buildDiffFor: selection selectedItem ] ].
 
@@ -154,25 +164,29 @@ StRefactoringPreviewPresenter2 >> connectPresenters [
 	buttonOk action: [ self accept ].
 		
 	newNameInput whenTextChangedDo: [ :text |
-		self schedulePreviewUpdate: text ].
+		self validateName: text.
+		self updateBehaviorPanelVisibility: text.
+		self updateName ].
+	
+	newNameInput whenSubmitDo: [ :text | self accept ].
 
 	buttonApplyAnyway  whenActivatedDo: [ self applyAnyway ];
 							associatedRadioButtons: { buttonApplyTransformation }.
-	buttonApplyTransformation   whenActivatedDo: [ self applyTransformation ];
-										associatedRadioButtons: { buttonApplyAnyway }.
+	buttonApplyTransformation whenActivatedDo: [ self applyTransformation ];
+									  associatedRadioButtons: { buttonApplyAnyway }.
 	buttonApplyAnyway state: true
 ]
 
 { #category : 'api - focus' }
-StRefactoringPreviewPresenter2 >> defaultKeyboardFocus [
+StRenameTempOrArgPreviewPresenter >> defaultKeyboardFocus [
 
 	^ buttonOk
 ]
 
 { #category : 'layout' }
-StRefactoringPreviewPresenter2 >> defaultLayout [
+StRenameTempOrArgPreviewPresenter >> defaultLayout [
 
-	| scopesLayout nameLayout inputLayout behaviorHeaderLayout behaviorOptionsLayout |
+	| scopesLayout nameLayout inputLayout behaviorHeaderLayout |
 	
 	scopesLayout := SpBoxLayout newLeftToRight
 		                vAlignCenter;
@@ -195,7 +209,7 @@ StRefactoringPreviewPresenter2 >> defaultLayout [
 
 	behaviorHeaderLayout := SpBoxLayout newLeftToRight
 		                        vAlignCenter;
-		                        spacing: 5;
+		                        spacing: 3;
 		                        add: behaviorWarningIcon expand: false;
 		                        add: behaviorWarningTitle expand: false;
 		                        yourself.
@@ -205,20 +219,19 @@ StRefactoringPreviewPresenter2 >> defaultLayout [
 		                         add: buttonApplyAnyway expand: false;
 		                         add: buttonApplyTransformation expand: false;
 		                         yourself.
+	behaviorOptionsPanel layout: behaviorOptionsLayout.
 
 	behaviorLayout := SpBoxLayout newTopToBottom
-		                  spacing: 4;
+		                  spacing: 2;
 		                  add: behaviorHeaderLayout;
 		                  add: behaviorMessageLabel expand: false;
-		                  add: behaviorOptionsLayout;
 		                  yourself. 
 	behaviorPanel layout: behaviorLayout.
 
 	topLayout := SpBoxLayout newTopToBottom
-		             spacing: 10;
+		             spacing: 5;
 		             add: nameLayout expand: false;
 		             yourself.
-
 
 	mainLayout := SpBoxLayout newTopToBottom
 		              spacing: 10;
@@ -232,24 +245,35 @@ StRefactoringPreviewPresenter2 >> defaultLayout [
 ]
 
 { #category : 'accessing' }
-StRefactoringPreviewPresenter2 >> driver: aDriver [
+StRenameTempOrArgPreviewPresenter >> driver: aDriver [
 
    driver := aDriver
 ]
 
 { #category : 'accessing' }
-StRefactoringPreviewPresenter2 >> globalActiveScope [
+StRenameTempOrArgPreviewPresenter >> globalActiveScope [
 
 	^ ScopesManager activeScope
 ]
 
 { #category : 'accessing' }
-StRefactoringPreviewPresenter2 >> hasWarning [
+StRenameTempOrArgPreviewPresenter >> hasWarning [
+
 	^ driver notNil and: [ driver hasFailedBehaviorPreservingPreconditions ]
 ]
 
+{ #category : 'accessing' }
+StRenameTempOrArgPreviewPresenter >> hideBehaviorPanel [
+
+	(topLayout children includes: behaviorPanel)
+		ifFalse: [ ^ self].
+		
+	topLayout remove: behaviorPanel.
+			self rebuildLayout
+]
+
 { #category : 'initialization' }
-StRefactoringPreviewPresenter2 >> initializeDialogWindow: aDialogWindowPresenter [
+StRenameTempOrArgPreviewPresenter >> initializeDialogWindow: aDialogWindowPresenter [
 
 	| applyButton |
 	
@@ -265,7 +289,7 @@ StRefactoringPreviewPresenter2 >> initializeDialogWindow: aDialogWindowPresenter
 ]
 
 { #category : 'initialization' }
-StRefactoringPreviewPresenter2 >> initializePresenters [
+StRenameTempOrArgPreviewPresenter >> initializePresenters [
 
 	diffPresenter := self newDiff.
 
@@ -303,6 +327,7 @@ StRefactoringPreviewPresenter2 >> initializePresenters [
 
 	behaviorMessageLabel := self newLabel label: ''.
 	behaviorPanel := SpPresenter new.
+	behaviorOptionsPanel := SpPresenter new.
 
 	buttonApplyAnyway := self instantiate: SpRadioButtonPresenter.
 	buttonApplyAnyway label: 'Apply anyway'.
@@ -312,25 +337,25 @@ StRefactoringPreviewPresenter2 >> initializePresenters [
 ]
 
 { #category : 'accessing' }
-StRefactoringPreviewPresenter2 >> name [
+StRenameTempOrArgPreviewPresenter >> name [
 
 	^ name
 ]
 
 { #category : 'accessing' }
-StRefactoringPreviewPresenter2 >> name: aName [
+StRenameTempOrArgPreviewPresenter >> name: aName [
     name := aName.
     newNameInput text: aName
 ]
 
 { #category : 'accessing' }
-StRefactoringPreviewPresenter2 >> newNameInput [
+StRenameTempOrArgPreviewPresenter >> newNameInput [
 
     ^ newNameInput
 ]
 
 { #category : 'action' }
-StRefactoringPreviewPresenter2 >> performChanges [
+StRenameTempOrArgPreviewPresenter >> performChanges [
 	"the following behavior should not be kept in the UI. 
 	It should be moved to the driver or the refactoring itself because the driver is a model of interaction.
 	May be this should be in the refactoring."
@@ -343,65 +368,45 @@ StRefactoringPreviewPresenter2 >> performChanges [
 ]
 
 { #category : 'accessing' }
-StRefactoringPreviewPresenter2 >> refactoring: aRBRemoveMethodDriver [ 
+StRenameTempOrArgPreviewPresenter >> refactoring: aRBRemoveMethodDriver [ 
 	refactoring := aRBRemoveMethodDriver
 	
 	
 ]
 
 { #category : 'accessing' }
-StRefactoringPreviewPresenter2 >> schedulePreviewUpdate: aString [
-
-	previewUpdateDelay ifNotNil: [ previewUpdateDelay unschedule ].
-
-	previewUpdateDelay := Delay forMilliseconds: 300.
-
-	[ previewUpdateDelay wait.
-		self validateName: aString.
-		self updateBehaviorPanelVisibility: aString .
-		self updateName ] fork
-]
-
-{ #category : 'accessing' }
-StRefactoringPreviewPresenter2 >> scopes: aCollection [
+StRenameTempOrArgPreviewPresenter >> scopes: aCollection [
 
 	scopes := aCollection.
 	self updateScopeList
 ]
 
 { #category : 'accessing' }
-StRefactoringPreviewPresenter2 >> selectorInput [
+StRenameTempOrArgPreviewPresenter >> selectorInput [
     ^ newNameInput
 ]
 
 { #category : 'update' }
-StRefactoringPreviewPresenter2 >> updateActiveScope [
+StRenameTempOrArgPreviewPresenter >> updateActiveScope [
 
 	activeScope := scopeDropList selectedItem asRBEnvironment
 ]
 
 { #category : 'accessing' }
-StRefactoringPreviewPresenter2 >> updateBehaviorPanelVisibility: aString [
+StRenameTempOrArgPreviewPresenter >> updateBehaviorPanelVisibility: aString [
 
 	mainLayout ifNil: [ ^ self ].
 
 	driver newName: aString.
 	
 	self hasWarning
-		ifTrue: [
-			behaviorMessageLabel label: driver checkBehaviorPreservingPreconditions.
-			
-			(topLayout children includes: behaviorPanel)
-				ifFalse: [ topLayout add: behaviorPanel expand: false ] ]
-		ifFalse: [
-			(topLayout children includes: behaviorPanel)
-				ifTrue: [ 
-					topLayout remove: behaviorPanel.
-					self rebuildLayout ] ]
+		ifTrue: [ self addBehaviorPanel ]
+		ifFalse: [ self hideBehaviorPanel ]
+		
 ]
 
 { #category : 'update' }
-StRefactoringPreviewPresenter2 >> updateChanges [
+StRenameTempOrArgPreviewPresenter >> updateChanges [
 
 	changes ifNil: [ changesInScope := OrderedCollection new.
 		selectedChanges := OrderedCollection new   ]
@@ -411,32 +416,45 @@ StRefactoringPreviewPresenter2 >> updateChanges [
 	selectedChanges := OrderedCollection withAll: changesInScope]
 ]
 
+{ #category : 'private' }
+StRenameTempOrArgPreviewPresenter >> updateDiff [
+
+	nameIsValid
+		ifFalse: [
+			compositeChange := nil.
+			changes := nil.
+			self buildLeftSideDiff  ]
+		ifTrue: [
+			compositeChange := driver refactoring generateChanges.
+			changes := compositeChange changesToDisplayIn: self ].
+	self updateChanges
+]
+
 { #category : 'update' }
-StRefactoringPreviewPresenter2 >> updateGlobalActiveScope [
+StRenameTempOrArgPreviewPresenter >> updateGlobalActiveScope [
 
 	ScopesManager activeScope: scopeDropList selectedItem asRBEnvironment
 ]
 
 { #category : 'update' }
-StRefactoringPreviewPresenter2 >> updateName [
+StRenameTempOrArgPreviewPresenter >> updateName [
 
-	name:= newNameInput text.
-	
-	nameIsValid 
-		ifFalse: [
-			changes := nil.
-			compositeChange := nil.
-			self clearDiff ]
-		ifTrue: [
-			compositeChange := driver refactoring generateChanges. 
-			changes := compositeChange changesToDisplayIn: self ].
-
-	self updateChanges.
+	name := newNameInput text.
+	self updateDiff.
+	self updateOkButtonState.
 	self updateTablePresenter
 ]
 
+{ #category : 'accessing' }
+StRenameTempOrArgPreviewPresenter >> updateOkButtonState [
+
+	nameIsValid
+		ifTrue: [ buttonOk enable ]
+		ifFalse: [ buttonOk disable ]
+]
+
 { #category : 'update' }
-StRefactoringPreviewPresenter2 >> updateScopeList [
+StRenameTempOrArgPreviewPresenter >> updateScopeList [
 
 	scopeDropList items: scopes.
 	self globalActiveScope 
@@ -445,34 +463,34 @@ StRefactoringPreviewPresenter2 >> updateScopeList [
 ]
 
 { #category : 'update' }
-StRefactoringPreviewPresenter2 >> updateTablePresenter [
+StRenameTempOrArgPreviewPresenter >> updateTablePresenter [
 
 	table items: changesInScope.
 	table items ifNotEmpty: [ table selectIndex: 1 ]
 ]
 
 { #category : 'accessing' }
-StRefactoringPreviewPresenter2 >> validateName: aString [
+StRenameTempOrArgPreviewPresenter >> validateName: aString [
 
-	| message |
+	| newName |
 
 	driver newName: aString.
 	driver createAndSetNewRefactoring.
-	message := driver checkApplicabilityPreconditions.
+	newName := driver checkApplicabilityPreconditions.
 
-	message
+	newName
 		ifNil: [
 				nameIsValid := true.
 				validationLabel label: '' ]
 		ifNotNil: [
 				nameIsValid := false.
-				validationLabel label: (message asText
+				validationLabel label: (newName asText
 						 addAttribute: (TextColor color: (Color r: 1.0 g: 0.5 b: 0.31));
 						 yourself) ]
 ]
 
 { #category : 'accessing' }
-StRefactoringPreviewPresenter2 >> windowTitle [ 
+StRenameTempOrArgPreviewPresenter >> windowTitle [ 
 	
 	^ 'Refactoring changes'
 ]

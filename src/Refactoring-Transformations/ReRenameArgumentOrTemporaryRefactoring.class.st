@@ -115,11 +115,6 @@ ReRenameArgumentOrTemporaryRefactoring >> class: aClass selector: aSelector inte
 	newName := aString
 ]
 
-{ #category : 'as yet unclassified' }
-ReRenameArgumentOrTemporaryRefactoring >> classNamed: aString selector: aString2 interval: aCollection [ 
-	self shouldBeImplemented.
-]
-
 { #category : 'accessing' }
 ReRenameArgumentOrTemporaryRefactoring >> getExistingNameFromInterval [
 
@@ -197,7 +192,7 @@ ReRenameArgumentOrTemporaryRefactoring >> prepareForExecution [
 
 { #category : 'transforming' }
 ReRenameArgumentOrTemporaryRefactoring >> privateTransform [
-self model resetChanges.
+
 	self renameNode: definingNode.
 	class compileTree: parseTree
 ]

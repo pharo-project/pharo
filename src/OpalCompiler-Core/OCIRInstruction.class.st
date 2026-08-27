@@ -349,12 +349,12 @@ OCIRInstruction >> isStore [
 ]
 
 { #category : 'testing' }
-OCIRInstruction >> isTemp [
+OCIRInstruction >> isTempVector [
 	^false
 ]
 
 { #category : 'testing' }
-OCIRInstruction >> isTempVector [
+OCIRInstruction >> isTemporaryVariable [
 	^false
 ]
 

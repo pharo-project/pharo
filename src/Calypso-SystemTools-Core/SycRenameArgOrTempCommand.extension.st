@@ -9,7 +9,7 @@ SycRenameArgOrTempCommand class >> sourceCodeMenuActivation [
 
 { #category : '*Calypso-SystemTools-Core' }
 SycRenameArgOrTempCommand class >> sourceCodeShortcutActivation [
-	<classAnnotation>
+"	<classAnnotation>"
 
 	^CmdShortcutActivation renamingFor: ClyMethodSourceCodeContext
 ]

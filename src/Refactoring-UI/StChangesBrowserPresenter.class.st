@@ -135,7 +135,7 @@ StChangesBrowserPresenter >> updateChanges [
 	| aCompositeChange |
 	aCompositeChange := ReChangeManager changeFactory
 		compositeRefactoryChange.
-1 halt.	self changes do: [ :each | aCompositeChange addChange: each ].
+	self changes do: [ :each | aCompositeChange addChange: each ].
 
 	"Later we could filter the shown changes depending on the selected scope"
 
