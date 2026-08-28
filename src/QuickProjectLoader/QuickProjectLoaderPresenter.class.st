@@ -218,11 +218,12 @@ QuickProjectLoaderPresenter >> defaultLayout [
 ]
 
 { #category : 'private' }
-QuickProjectLoaderPresenter >> displayLabelFor: anEntry [
+QuickProjectLoaderPresenter >> labelMorphFor: anEntry [
 
-	^ anEntry isLoadedInImage
-		ifTrue: [ anEntry name ]
-		ifFalse: [ '○ ' , anEntry name , '  (not loaded)' ]
+	| label |
+	label := anEntry name asStringMorph.
+	anEntry isLoadedInImage ifFalse: [ label alpha: 0.35 ].
+	^ label
 ]
 
 { #category : 'actions' }
@@ -245,7 +246,7 @@ QuickProjectLoaderPresenter >> iconFor: anEntry [
 
 	^ anEntry isLoadedInImage
 		ifTrue: [ self iconNamed: #smallOk ]
-		ifFalse: [ (self iconNamed: #smallLoadProject) asGrayScale ]
+		ifFalse: [ nil ]
 ]
 
 { #category : 'initialization' }
@@ -288,10 +289,10 @@ QuickProjectLoaderPresenter >> initializePresenters [
 			width: 22;
 			evaluated: [ :entry | self iconFor: entry ];
 			yourself);
-		addColumn: (SpStringTableColumn new
+		addColumn: (SpImageTableColumn new
 			title: 'Project';
-			evaluated: [ :entry | self displayLabelFor: entry ];
-			beSortable;
+			evaluated: [ :entry | self labelMorphFor: entry ];
+			sortFunction: [ :entry | entry name ] ascending;
 			yourself);
 		contextMenu: [ 
 			self newMenu
