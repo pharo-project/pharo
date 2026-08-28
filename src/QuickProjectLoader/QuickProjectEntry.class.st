@@ -1,14 +1,15 @@
 "
 I represent a single loadable project entry in the Quick Project Loader.
 
-I hold all necessary metadata to load a project via Metacello from a GitHub repository:
+I hold metadata to load a project via Metacello from a repository:
 - name: a human-readable display name
 - repositoryUrl: the full Metacello repository URL (e.g., 'github://owner/repo:branch/src')
-- baselineName: the baseline name without the 'BaselineOf' prefix
+- baselineName: optional baseline name (without 'BaselineOf' prefix)
 - groups: an optional array of group names to load (empty means default group)
 - loadCount: how many times this project has been loaded (used for sorting)
+- useIncomingOnConflict: boolean indicating whether to send #onConflictUseIncoming to Metacello (default: true)
 
-Equality is based on repositoryUrl and baselineName, so the same project cannot be added twice.
+Equality is based on repositoryUrl and baselineName.
 
 ## Examples
 
@@ -21,7 +22,7 @@ QuickProjectEntry
 QuickProjectEntry 
     name: 'Roassal'
     repositoryUrl: 'github://ObjectProfile/Roassal/src'
-    baseline: 'Roassal'
+    baseline: ''
     groups: #('Full')
 ```
 "
@@ -33,12 +34,23 @@ Class {
 		'repositoryUrl',
 		'baselineName',
 		'groups',
-		'loadCount'
+		'loadCount',
+		'useIncomingOnConflict'
 	],
 	#category : 'QuickProjectLoader-Model',
 	#package : 'QuickProjectLoader',
 	#tag : 'Model'
 }
+
+{ #category : 'instance creation' }
+QuickProjectEntry class >> name: aName repositoryUrl: aUrl [
+
+	^ self new
+		name: aName;
+		repositoryUrl: aUrl;
+		baselineName: '';
+		yourself
+]
 
 { #category : 'instance creation' }
 QuickProjectEntry class >> name: aName repositoryUrl: aUrl baseline: aBaselineName [
@@ -73,13 +85,13 @@ QuickProjectEntry >> = anObject [
 { #category : 'accessing' }
 QuickProjectEntry >> baselineName [
 
-	^ baselineName
+	^ baselineName ifNil: [ baselineName := '' ]
 ]
 
 { #category : 'accessing' }
 QuickProjectEntry >> baselineName: aString [
 
-	baselineName := aString
+	baselineName := aString ifNil: [ '' ]
 ]
 
 { #category : 'accessing' }
@@ -111,19 +123,24 @@ QuickProjectEntry >> initialize [
 
 	super initialize.
 	loadCount := 0.
-	groups := #()
+	groups := #().
+	baselineName := ''.
+	useIncomingOnConflict := true
 ]
 
 { #category : 'actions' }
 QuickProjectEntry >> load [
 	"Execute the Metacello load for this project entry.
-	Uses groups if specified, otherwise loads the default group."
+	Uses baselineName if present, sends #onConflictUseIncoming if requested, and loads specified groups."
 
 	| metacello |
 	metacello := Metacello new
 		repository: self repositoryUrl;
-		baseline: self baselineName;
 		yourself.
+	self baselineName isNotEmpty ifTrue: [ 
+		metacello baseline: self baselineName ].
+	self useIncomingOnConflict ifTrue: [ 
+		metacello onConflictUseIncoming ].
 	self groups
 		ifEmpty: [ metacello load ]
 		ifNotEmpty: [ :g | metacello load: g ]
@@ -143,26 +160,26 @@ QuickProjectEntry >> loadCount: anInteger [
 
 { #category : 'accessing' }
 QuickProjectEntry >> metacelloLoadScript [
-	"Answer a String with the Metacello load expression for this entry.
-	Useful for display and debugging purposes."
+	"Answer a String with the Metacello load expression for this entry."
 
 	^ String streamContents: [ :stream |
 		stream
 			<< 'Metacello new'; cr;
-			<< '  repository: '; << self repositoryUrl printString; << ';'; cr;
-			<< '  baseline: '; << self baselineName printString; << ';'; cr.
+			<< '  repository: '; << self repositoryUrl printString; << ';'; cr.
+		self baselineName isNotEmpty ifTrue: [ 
+			stream << '  baseline: '; << self baselineName printString; << ';'; cr ].
+		self useIncomingOnConflict ifTrue: [ 
+			stream << '  onConflictUseIncoming;'; cr ].
 		self groups 
-			ifNotEmpty: [ :g |
-				stream << '  load: '; << g printString ]
-			ifEmpty: [ 
-				stream << '  load' ].
+			ifNotEmpty: [ :g | stream << '  load: '; << g printString ]
+			ifEmpty: [ stream << '  load' ].
 		stream << '.' ]
 ]
 
 { #category : 'accessing' }
 QuickProjectEntry >> name [
 
-	^ name
+	^ name ifNil: [ name := '' ]
 ]
 
 { #category : 'accessing' }
@@ -174,23 +191,32 @@ QuickProjectEntry >> name: aString [
 { #category : 'printing' }
 QuickProjectEntry >> printOn: aStream [
 
-	aStream
-		<< self name;
-		<< ' (';
-		<< self baselineName;
-		<< ' - loaded ';
-		<< self loadCount printString;
-		<< ' times)'
+	aStream << self name.
+	self baselineName isNotEmpty ifTrue: [ 
+		aStream << ' (' << self baselineName << ')' ].
+	aStream << ' - loaded ' << self loadCount printString << ' times'
 ]
 
 { #category : 'accessing' }
 QuickProjectEntry >> repositoryUrl [
 
-	^ repositoryUrl
+	^ repositoryUrl ifNil: [ repositoryUrl := '' ]
 ]
 
 { #category : 'accessing' }
 QuickProjectEntry >> repositoryUrl: aString [
 
 	repositoryUrl := aString
+]
+
+{ #category : 'accessing' }
+QuickProjectEntry >> useIncomingOnConflict [
+
+	^ useIncomingOnConflict ifNil: [ useIncomingOnConflict := true ]
+]
+
+{ #category : 'accessing' }
+QuickProjectEntry >> useIncomingOnConflict: aBoolean [
+
+	useIncomingOnConflict := aBoolean
 ]

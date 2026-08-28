@@ -2,13 +2,15 @@
 I am the main Spec2 UI presenter for the Quick Project Loader.
 
 I display a list of commonly-used Metacello projects sorted by usage frequency (most-used first).
-Each entry can be loaded with a single click or button press.
+I am designed to be thin and positioned on the right side of the screen.
 
-I also register:
-- A World Menu item (<worldMenu>) under Tools
-- A global keyboard shortcut (<keymap>) (Ctrl+Shift+L / Cmd+Shift+L)
-- A startup action via SessionManager to optionally show the popup when Pharo starts
-- System settings entry (<systemsettings>) to toggle auto-open on startup
+Features:
+- Single-click or double-click to load projects
+- Automatic inference of installed image projects ('Infer' button)
+- Manual project entry ('Add Project' button)
+- World menu integration (<worldMenu>)
+- Global keyboard shortcut (<keymap>) (Cmd+Shift+L / Ctrl+Shift+L)
+- Auto-startup via SessionManager and Pharo Settings (<systemsettings>)
 
 ## Usage
 
@@ -22,6 +24,7 @@ Class {
 	#instVars : [
 		'projectList',
 		'addButton',
+		'inferButton',
 		'removeButton',
 		'loadButton',
 		'closeButton',
@@ -38,7 +41,7 @@ Class {
 { #category : 'accessing' }
 QuickProjectLoaderPresenter class >> defaultPreferredExtent [
 
-	^ 450 @ 500
+	^ 280 @ 450
 ]
 
 { #category : 'class initialization' }
@@ -64,8 +67,24 @@ QuickProjectLoaderPresenter class >> menuCommandOn: aBuilder [
 
 { #category : 'instance creation' }
 QuickProjectLoaderPresenter class >> open [
+	"Open the presenter and position it at the top-right corner of the World screen."
 
-	^ (self newApplication: StPharoApplication current) open
+	| presenter window worldBounds windowWidth windowHeight topX topY morphWindow |
+	presenter := self newApplication: StPharoApplication current.
+	window := presenter open.
+
+	worldBounds := self currentWorld bounds.
+	windowWidth := self defaultPreferredExtent x.
+	windowHeight := self defaultPreferredExtent y.
+	topX := (worldBounds right - windowWidth - 5) max: 0.
+	topY := (worldBounds top + 35) max: 0.
+
+	(window respondsTo: #window) ifTrue: [ 
+		morphWindow := window window.
+		morphWindow ifNotNil: [ 
+			morphWindow extent: windowWidth @ windowHeight.
+			morphWindow position: topX @ topY ] ].
+	^ window
 ]
 
 { #category : 'keymapping' }
@@ -143,16 +162,34 @@ QuickProjectLoaderPresenter >> closeButton [
 QuickProjectLoaderPresenter >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom
-		spacing: 5;
+		spacing: 4;
 		add: projectList;
 		add: (SpBoxLayout newLeftToRight
-			spacing: 5;
+			spacing: 3;
 			add: addButton;
+			add: inferButton;
 			add: removeButton;
+			yourself) expand: false;
+		add: (SpBoxLayout newLeftToRight
+			spacing: 3;
 			add: loadButton;
-			addLast: closeButton;
+			add: closeButton;
 			yourself) expand: false;
 		yourself
+]
+
+{ #category : 'accessing' }
+QuickProjectLoaderPresenter >> inferButton [
+
+	^ inferButton
+]
+
+{ #category : 'actions' }
+QuickProjectLoaderPresenter >> inferProjects [
+
+	self repository inferProjects.
+	self refreshList.
+	self inform: 'Inferred projects from current image!'
 ]
 
 { #category : 'initialization' }
@@ -166,22 +203,28 @@ QuickProjectLoaderPresenter >> initialize [
 QuickProjectLoaderPresenter >> initializeButtons [
 
 	addButton := self newButton
-		label: 'Add Project';
+		label: 'Add';
 		icon: (self iconNamed: #add);
-		help: 'Add a new Metacello project entry';
+		help: 'Add a new project entry by hand';
 		action: [ self addProject ];
+		yourself.
+	inferButton := self newButton
+		label: 'Infer';
+		icon: (self iconNamed: #smallUpdate);
+		help: 'Infer projects automatically from image';
+		action: [ self inferProjects ];
 		yourself.
 	removeButton := self newButton
 		label: 'Remove';
 		icon: (self iconNamed: #remove);
-		help: 'Remove selected project entry';
+		help: 'Remove selected project';
 		action: [ self removeSelectedProject ];
 		disable;
 		yourself.
 	loadButton := self newButton
-		label: 'Load';
+		label: 'Load Selected';
 		icon: (self iconNamed: #smallLoadProject);
-		help: 'Load selected project using Metacello';
+		help: 'Load selected project';
 		action: [ self loadSelectedProject ];
 		disable;
 		yourself.
@@ -197,8 +240,12 @@ QuickProjectLoaderPresenter >> initializePresenters [
 
 	projectList := self newList.
 	projectList
-		headerTitle: 'Commonly Used Projects (Most Used First)';
-		display: [ :entry | entry name , ' (loaded ' , entry loadCount printString , 'x) — ' , entry baselineName ];
+		headerTitle: 'Common Projects (Most Used)';
+		display: [ :entry | 
+			| label |
+			label := entry name.
+			entry baselineName isNotEmpty ifTrue: [ label := label , ' (', entry baselineName, ')' ].
+			label , ' [' , entry loadCount printString , 'x]' ];
 		whenSelectionChangedDo: [ :selection | self updateButtonStates ];
 		whenActivatedDo: [ :selection | self loadSelectedProject ];
 		yourself.
@@ -211,7 +258,7 @@ QuickProjectLoaderPresenter >> initializePresenters [
 QuickProjectLoaderPresenter >> loadProject: anEntry [
 
 	| confirmMessage |
-	confirmMessage := 'Are you sure you want to load project ''', anEntry name, ''' (BaselineOf', anEntry baselineName, ')?'.
+	confirmMessage := 'Load project ''', anEntry name, '''?'.
 	(self confirm: confirmMessage) ifFalse: [ ^ self ].
 
 	self repository recordLoadOf: anEntry.
@@ -293,5 +340,5 @@ QuickProjectLoaderPresenter >> updateButtonStates [
 { #category : 'initialization' }
 QuickProjectLoaderPresenter >> windowTitle [
 
-	^ 'Quick Project Loader'
+	^ 'Quick Loader'
 ]

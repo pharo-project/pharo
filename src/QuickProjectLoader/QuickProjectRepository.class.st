@@ -4,19 +4,13 @@ I manage the persistent collection of QuickProjectEntry objects.
 I am a singleton that stores project entries in a STON file at:
   FileLocator preferences / 'pharo' / 'quickProjectLoader.ston'
 
-I answer entries sorted by loadCount (most-used first), persist on every mutation, and gracefully handle a missing file on first load.
+I answer entries sorted by loadCount (most-used first), persist on every mutation, and can infer registered projects directly from the Pharo image.
 
 ## Usage
 
 ```
-QuickProjectRepository default 
-    addEntryNamed: 'Roassal' 
-    repository: 'github://ObjectProfile/Roassal/src' 
-    baseline: 'Roassal'.
-
+QuickProjectRepository default inferProjects. ""Auto-populate entries from image""
 QuickProjectRepository default entries. ""sorted by usage""
-
-QuickProjectRepository default recordLoadOf: anEntry.
 ```
 "
 Class {
@@ -42,7 +36,6 @@ QuickProjectRepository class >> default [
 
 { #category : 'accessing' }
 QuickProjectRepository class >> default: aRepository [
-	"Set the default instance. Primarily useful for testing."
 
 	Default := aRepository
 ]
@@ -61,8 +54,6 @@ QuickProjectRepository class >> reset [
 
 { #category : 'adding' }
 QuickProjectRepository >> addEntry: aQuickProjectEntry [
-	"Add an entry to the repository. If a duplicate (same URL + baseline) exists, do nothing.
-	Saves to disk after adding."
 
 	(self rawEntries anySatisfy: [ :each | each = aQuickProjectEntry ])
 		ifTrue: [ ^ aQuickProjectEntry ].
@@ -73,7 +64,6 @@ QuickProjectRepository >> addEntry: aQuickProjectEntry [
 
 { #category : 'adding' }
 QuickProjectRepository >> addEntryNamed: aName repository: aUrl baseline: aBaselineName [
-	"Convenience method to create and add a new entry."
 
 	^ self addEntry: (QuickProjectEntry
 		name: aName
@@ -83,7 +73,6 @@ QuickProjectRepository >> addEntryNamed: aName repository: aUrl baseline: aBasel
 
 { #category : 'adding' }
 QuickProjectRepository >> addEntryNamed: aName repository: aUrl baseline: aBaselineName groups: anArray [
-	"Convenience method to create and add a new entry with groups."
 
 	^ self addEntry: (QuickProjectEntry
 		name: aName
@@ -94,8 +83,9 @@ QuickProjectRepository >> addEntryNamed: aName repository: aUrl baseline: aBasel
 
 { #category : 'accessing' }
 QuickProjectRepository >> entries [
-	"Answer entries sorted by loadCount descending (most-used first)."
 
+	self rawEntries ifEmpty: [ self load ].
+	self rawEntries ifEmpty: [ self inferProjects ].
 	^ self rawEntries sorted: [ :a :b | a loadCount > b loadCount ]
 ]
 
@@ -103,6 +93,50 @@ QuickProjectRepository >> entries [
 QuickProjectRepository >> hasEntries [
 
 	^ self rawEntries isNotEmpty
+]
+
+{ #category : 'inference' }
+QuickProjectRepository >> inferProjects [
+	"Infer projects automatically from MetacelloProjectRegistry and BaselineOf subclasses in the Pharo image."
+
+	"1. From MetacelloProjectRegistry registrations"
+	[ 
+		(MetacelloProjectRegistry registry registrations) do: [ :reg |
+			| spec repoUrl baseName projName |
+			spec := reg projectSpec.
+			spec ifNotNil: [
+				projName := spec name.
+				baseName := (projName beginsWith: 'BaselineOf')
+					ifTrue: [ projName copyFrom: 11 to: projName size ]
+					ifFalse: [ projName ].
+				repoUrl := (spec respondsTo: #repositorySpecs)
+					ifTrue: [ 
+						spec repositorySpecs 
+							ifNotEmpty: [ :repos | repos first description ]
+							ifEmpty: [ '' ] ]
+					ifFalse: [ '' ].
+				repoUrl ifNotEmpty: [ 
+					self addEntry: (QuickProjectEntry
+						name: baseName
+						repositoryUrl: repoUrl
+						baseline: baseName) ] ] ]
+	] on: Error do: [ :ex | "Ignore inference errors" ].
+
+	"2. From loaded BaselineOf subclasses"
+	[
+		BaselineOf allSubclasses do: [ :cls |
+			| baseName |
+			baseName := (cls name beginsWith: 'BaselineOf')
+				ifTrue: [ cls name copyFrom: 11 to: cls name size ]
+				ifFalse: [ cls name ].
+			(self rawEntries anySatisfy: [ :e | e baselineName = baseName ]) ifFalse: [ 
+				self addEntry: (QuickProjectEntry
+					name: baseName
+					repositoryUrl: 'github://pharo-project/' , baseName
+					baseline: baseName) ] ]
+	] on: Error do: [ :ex | "Ignore inference errors" ].
+
+	self save
 ]
 
 { #category : 'initialization' }
@@ -115,8 +149,6 @@ QuickProjectRepository >> initialize [
 
 { #category : 'persistence' }
 QuickProjectRepository >> load [
-	"Load entries from the STON file on disk. 
-	If the file does not exist, start with an empty collection."
 
 	| file |
 	file := self persistencePath asFileReference.
@@ -132,8 +164,6 @@ QuickProjectRepository >> load [
 
 { #category : 'reordering' }
 QuickProjectRepository >> moveEntry: aQuickProjectEntry toIndex: anInteger [
-	"Move an entry to a specific position in the raw (unsorted) list.
-	This allows manual reordering that overrides the loadCount sort."
 
 	| index |
 	index := self rawEntries indexOf: aQuickProjectEntry.
@@ -151,21 +181,18 @@ QuickProjectRepository >> persistencePath [
 
 { #category : 'accessing' }
 QuickProjectRepository >> persistencePath: aFileReference [
-	"Set the persistence path. Primarily useful for testing with temporary files."
 
 	persistencePath := aFileReference
 ]
 
 { #category : 'private' }
 QuickProjectRepository >> rawEntries [
-	"Answer the unsorted entries collection."
 
 	^ entries
 ]
 
 { #category : 'actions' }
 QuickProjectRepository >> recordLoadOf: aQuickProjectEntry [
-	"Increment the load count of the given entry and save."
 
 	aQuickProjectEntry incrementLoadCount.
 	self save
@@ -173,7 +200,6 @@ QuickProjectRepository >> recordLoadOf: aQuickProjectEntry [
 
 { #category : 'removing' }
 QuickProjectRepository >> removeEntry: aQuickProjectEntry [
-	"Remove an entry from the repository and save."
 
 	self rawEntries remove: aQuickProjectEntry ifAbsent: [].
 	self save
@@ -181,7 +207,6 @@ QuickProjectRepository >> removeEntry: aQuickProjectEntry [
 
 { #category : 'persistence' }
 QuickProjectRepository >> save [
-	"Persist all entries to disk as STON."
 
 	| file |
 	file := self persistencePath asFileReference.

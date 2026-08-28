@@ -1,19 +1,14 @@
 "
 I am a Spec2 dialog for entering new project details to add to the Quick Project Loader.
 
-I provide text inputs for:
+Inputs:
 - Project name (required)
 - Repository URL (required, e.g., 'github://owner/repo/src')
-- Baseline name (required, without 'BaselineOf' prefix)
+- Baseline name (optional, e.g. 'MyProject' without BaselineOf)
 - Groups (optional, comma-separated)
+- Use incoming on conflict checkbox (default: checked)
 
-On accept, I answer a new QuickProjectEntry. On cancel, I answer nil.
-
-## Usage
-
-```
-QuickProjectAddPresenter new open.
-```
+On accept, I answer a new QuickProjectEntry.
 "
 Class {
 	#name : 'QuickProjectAddPresenter',
@@ -23,6 +18,7 @@ Class {
 		'urlInput',
 		'baselineInput',
 		'groupsInput',
+		'useIncomingCheckBox',
 		'acceptButton',
 		'cancelButton'
 	],
@@ -34,7 +30,7 @@ Class {
 { #category : 'accessing' }
 QuickProjectAddPresenter class >> defaultPreferredExtent [
 
-	^ 500 @ 350
+	^ 400 @ 380
 ]
 
 { #category : 'instance creation' }
@@ -57,15 +53,16 @@ QuickProjectAddPresenter >> baselineInput [
 
 { #category : 'actions' }
 QuickProjectAddPresenter >> createEntry [
-	"Create and answer a new QuickProjectEntry from the current form values."
 
 	| parsedGroups |
 	parsedGroups := self parseGroups: groupsInput text.
-	^ QuickProjectEntry
-		name: nameInput text trimmed
-		repositoryUrl: urlInput text trimmed
-		baseline: baselineInput text trimmed
-		groups: parsedGroups
+	^ QuickProjectEntry new
+		name: nameInput text trimmed;
+		repositoryUrl: urlInput text trimmed;
+		baselineName: baselineInput text trimmed;
+		groups: parsedGroups;
+		useIncomingOnConflict: useIncomingCheckBox state;
+		yourself
 ]
 
 { #category : 'layout' }
@@ -73,14 +70,15 @@ QuickProjectAddPresenter >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom
 		spacing: 5;
-		add: 'Project Name:' expand: false;
+		add: 'Project Name (required):' expand: false;
 		add: nameInput expand: false;
-		add: 'Repository URL (e.g., github://owner/repo/src):' expand: false;
+		add: 'Repository URL (required):' expand: false;
 		add: urlInput expand: false;
-		add: 'Baseline Name (without BaselineOf prefix):' expand: false;
+		add: 'Baseline Name (optional):' expand: false;
 		add: baselineInput expand: false;
-		add: 'Groups (comma-separated, leave empty for default):' expand: false;
+		add: 'Groups (comma-separated, optional):' expand: false;
 		add: groupsInput expand: false;
+		add: useIncomingCheckBox expand: false;
 		add: (SpBoxLayout newLeftToRight
 			addLast: cancelButton;
 			addLast: acceptButton;
@@ -106,11 +104,14 @@ QuickProjectAddPresenter >> initializePresenters [
 		whenTextChangedDo: [ :text | self updateAcceptButton ];
 		yourself.
 	baselineInput := self newTextInput
-		placeholder: 'MyProject';
-		whenTextChangedDo: [ :text | self updateAcceptButton ];
+		placeholder: 'MyProject (optional)';
 		yourself.
 	groupsInput := self newTextInput
 		placeholder: 'default, tests (optional)';
+		yourself.
+	useIncomingCheckBox := self newCheckBox
+		label: 'Use incoming on conflict (onConflictUseIncoming)';
+		state: true;
 		yourself.
 	acceptButton := self newButton
 		label: 'OK';
@@ -127,11 +128,9 @@ QuickProjectAddPresenter >> initializePresenters [
 
 { #category : 'testing' }
 QuickProjectAddPresenter >> isFormValid [
-	"Answer true if all required fields have non-empty values."
 
 	^ nameInput text trimmed isNotEmpty
-		and: [ urlInput text trimmed isNotEmpty
-		and: [ baselineInput text trimmed isNotEmpty ] ]
+		and: [ urlInput text trimmed isNotEmpty ]
 ]
 
 { #category : 'accessing' }
@@ -142,10 +141,9 @@ QuickProjectAddPresenter >> nameInput [
 
 { #category : 'actions' }
 QuickProjectAddPresenter >> onAccept [
-	"Validate form, create the entry, and close the dialog."
 
 	self isFormValid ifFalse: [ 
-		self inform: 'Please fill in all required fields'.
+		self inform: 'Please fill in required fields (Name and Repository URL)'.
 		^ self ].
 	self owner 
 		ifNotNil: [ :o | 
@@ -166,8 +164,6 @@ QuickProjectAddPresenter >> onCancel [
 
 { #category : 'private' }
 QuickProjectAddPresenter >> parseGroups: aString [
-	"Parse a comma-separated groups string into an array of trimmed strings.
-	Answer an empty array if the input is blank."
 
 	| trimmed |
 	trimmed := aString trimmed.
@@ -187,6 +183,12 @@ QuickProjectAddPresenter >> updateAcceptButton [
 QuickProjectAddPresenter >> urlInput [
 
 	^ urlInput
+]
+
+{ #category : 'accessing' }
+QuickProjectAddPresenter >> useIncomingCheckBox [
+
+	^ useIncomingCheckBox
 ]
 
 { #category : 'initialization' }

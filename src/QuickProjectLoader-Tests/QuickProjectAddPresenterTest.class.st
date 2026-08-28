@@ -33,6 +33,7 @@ QuickProjectAddPresenterTest >> testCreatesEntryOnAccept [
 	presenter urlInput text: 'github://ObjectProfile/Roassal/src'.
 	presenter baselineInput text: 'Roassal'.
 	presenter groupsInput text: 'Core, Tests'.
+	presenter useIncomingCheckBox state: true.
 
 	self assert: presenter isFormValid.
 	entry := presenter createEntry.
@@ -40,7 +41,24 @@ QuickProjectAddPresenterTest >> testCreatesEntryOnAccept [
 	self assert: entry name equals: 'Roassal'.
 	self assert: entry repositoryUrl equals: 'github://ObjectProfile/Roassal/src'.
 	self assert: entry baselineName equals: 'Roassal'.
-	self assert: entry groups equals: #('Core' 'Tests')
+	self assert: entry groups equals: #('Core' 'Tests').
+	self assert: entry useIncomingOnConflict
+]
+
+{ #category : 'tests' }
+QuickProjectAddPresenterTest >> testCreatesEntryWithOptionalBaselineEmpty [
+
+	| entry |
+	presenter nameInput text: 'MyRepo'.
+	presenter urlInput text: 'github://owner/repo'.
+	presenter baselineInput text: ''.
+
+	self assert: presenter isFormValid.
+	entry := presenter createEntry.
+
+	self assert: entry name equals: 'MyRepo'.
+	self assert: entry repositoryUrl equals: 'github://owner/repo'.
+	self assert: entry baselineName isEmpty
 ]
 
 { #category : 'tests' }
@@ -50,6 +68,7 @@ QuickProjectAddPresenterTest >> testPresenterInitializes [
 	self assert: presenter urlInput text isEmpty.
 	self assert: presenter baselineInput text isEmpty.
 	self assert: presenter groupsInput text isEmpty.
+	self assert: presenter useIncomingCheckBox state.
 	self deny: presenter acceptButton isEnabled
 ]
 
@@ -63,9 +82,6 @@ QuickProjectAddPresenterTest >> testValidationRejectsEmpty [
 	self deny: presenter isFormValid.
 
 	presenter urlInput text: 'github://a/b'.
-	self deny: presenter isFormValid.
-
-	presenter baselineInput text: 'Baseline'.
 	self assert: presenter isFormValid.
 	self assert: presenter acceptButton isEnabled
 ]

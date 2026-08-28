@@ -68,7 +68,7 @@ QuickProjectLoaderPresenterTest >> testPresenterShowsEntries [
 QuickProjectLoaderPresenterTest >> testPresenterSortsEntries [
 
 	| seaside |
-	seaside := repository entries detect: [ :e | e name = 'Seaside' ].
+	seaside := repository rawEntries detect: [ :e | e name = 'Seaside' ].
 	repository recordLoadOf: seaside.
 	presenter refreshList.
 

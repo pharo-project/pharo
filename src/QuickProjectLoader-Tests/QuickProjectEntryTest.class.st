@@ -21,7 +21,21 @@ QuickProjectEntryTest >> testCreation [
 	self assert: entry repositoryUrl equals: 'github://ObjectProfile/Roassal/src'.
 	self assert: entry baselineName equals: 'Roassal'.
 	self assert: entry loadCount equals: 0.
+	self assert: entry useIncomingOnConflict.
 	self assert: entry groups isEmpty
+]
+
+{ #category : 'tests' }
+QuickProjectEntryTest >> testCreationWithoutBaseline [
+
+	| entry |
+	entry := QuickProjectEntry
+		name: 'MyRepo'
+		repositoryUrl: 'github://owner/repo'.
+
+	self assert: entry name equals: 'MyRepo'.
+	self assert: entry repositoryUrl equals: 'github://owner/repo'.
+	self assert: entry baselineName isEmpty
 ]
 
 { #category : 'tests' }
@@ -82,6 +96,7 @@ QuickProjectEntryTest >> testMetacelloLoadScript [
 	script := entry metacelloLoadScript.
 	self assert: (script includesSubstring: 'repository: ''github://ObjectProfile/Roassal/src''').
 	self assert: (script includesSubstring: 'baseline: ''Roassal''').
+	self assert: (script includesSubstring: 'onConflictUseIncoming').
 	self assert: (script includesSubstring: 'load.')
 ]
 
@@ -100,6 +115,19 @@ QuickProjectEntryTest >> testMetacelloLoadScriptWithGroups [
 ]
 
 { #category : 'tests' }
+QuickProjectEntryTest >> testMetacelloLoadScriptWithoutBaseline [
+
+	| entry script |
+	entry := QuickProjectEntry
+		name: 'MyRepo'
+		repositoryUrl: 'github://owner/repo'.
+
+	script := entry metacelloLoadScript.
+	self deny: (script includesSubstring: 'baseline:').
+	self assert: (script includesSubstring: 'onConflictUseIncoming')
+]
+
+{ #category : 'tests' }
 QuickProjectEntryTest >> testPrintOn [
 
 	| entry |
@@ -109,7 +137,7 @@ QuickProjectEntryTest >> testPrintOn [
 		baseline: 'MyProject'.
 	entry incrementLoadCount.
 
-	self assert: entry printString equals: 'MyProject (MyProject - loaded 1 times)'
+	self assert: entry printString equals: 'MyProject (MyProject) - loaded 1 times'
 ]
 
 { #category : 'tests' }
@@ -121,6 +149,7 @@ QuickProjectEntryTest >> testStonSerialization [
 		repositoryUrl: 'github://ObjectProfile/Roassal/src'
 		baseline: 'Roassal'
 		groups: #('Full').
+	entry useIncomingOnConflict: true.
 	entry incrementLoadCount.
 
 	stonString := STON toStringPretty: entry.
@@ -131,5 +160,6 @@ QuickProjectEntryTest >> testStonSerialization [
 	self assert: restored baselineName equals: 'Roassal'.
 	self assert: restored groups equals: #('Full').
 	self assert: restored loadCount equals: 1.
+	self assert: restored useIncomingOnConflict.
 	self assert: restored equals: entry
 ]
