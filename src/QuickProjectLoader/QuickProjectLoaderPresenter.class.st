@@ -5,20 +5,20 @@ I display a modern list/table of commonly-used Metacello projects sorted by usag
 I am designed to be thin (320px wide), tall (600px high), and positioned on the right side of the screen.
 
 Features:
+- Global shortcut Cmd+Shift+L / Ctrl+Shift+L to toggle (open & close) the window from anywhere in Pharo
 - Live search/filtering bar
-- Loaded vs Unloaded status distinction (loaded items shown with full opacity and checkmark, unloaded items shown with reduced opacity desaturated icon and indicator)
+- Loaded vs Unloaded status distinction
 - Auto-infer projects from image on startup & open
 - Table view with icons, project names, baseline subtitles, and context menu
 - Single/double-click loading
 - Manual project entry ('Add Project' button)
 - World menu integration (<worldMenu>)
-- Global keyboard shortcut (<keymap>) (Cmd+Shift+L / Ctrl+Shift+L)
 - Auto-startup via SessionManager and Pharo Settings (<systemsettings>)
 
 ## Usage
 
 ```
-QuickProjectLoaderPresenter open.
+QuickProjectLoaderPresenter toggle.
 ```
 "
 Class {
@@ -34,12 +34,21 @@ Class {
 		'repository'
 	],
 	#classVars : [
+		'CurrentWindow',
 		'ShowOnStartup'
 	],
 	#category : 'QuickProjectLoader-UI',
 	#package : 'QuickProjectLoader',
 	#tag : 'UI'
 }
+
+{ #category : 'instance creation' }
+QuickProjectLoaderPresenter class >> closeWindow [
+
+	CurrentWindow ifNotNil: [ 
+		[ CurrentWindow close ] on: Error do: [].
+		CurrentWindow := nil ]
+]
 
 { #category : 'accessing' }
 QuickProjectLoaderPresenter class >> defaultPreferredExtent [
@@ -50,6 +59,7 @@ QuickProjectLoaderPresenter class >> defaultPreferredExtent [
 { #category : 'class initialization' }
 QuickProjectLoaderPresenter class >> initialize [
 
+	KMRepository default setAsGlobalCategory: #QuickProjectLoaderCategory.
 	SessionManager default
 		register: (ClassSessionHandler forClassNamed: self name)
 		inCategory: SessionManager default userCategory
@@ -61,11 +71,11 @@ QuickProjectLoaderPresenter class >> menuCommandOn: aBuilder [
 	<worldMenu>
 
 	(aBuilder item: #QuickProjectLoader)
-		action: [ self open ];
+		action: [ self toggle ];
 		order: 1;
 		parent: #Tools;
 		icon: (self iconNamed: #smallLoadProject);
-		help: 'Open the Quick Project Loader to load commonly-used projects with one click'
+		help: 'Open or close the Quick Project Loader'
 ]
 
 { #category : 'instance creation' }
@@ -73,6 +83,8 @@ QuickProjectLoaderPresenter class >> open [
 	"Open the presenter, auto-infer projects, and position it at the top-right corner of the World screen."
 
 	| presenter window worldBounds windowWidth windowHeight topX topY morphWindow |
+	self closeWindow.
+
 	presenter := self newApplication: StPharoApplication current.
 	window := presenter open.
 
@@ -87,6 +99,8 @@ QuickProjectLoaderPresenter class >> open [
 		morphWindow ifNotNil: [ 
 			morphWindow extent: windowWidth @ windowHeight.
 			morphWindow position: topX @ topY ] ].
+
+	CurrentWindow := window.
 	^ window
 ]
 
@@ -94,10 +108,10 @@ QuickProjectLoaderPresenter class >> open [
 QuickProjectLoaderPresenter class >> quickLoadShortcutOn: aBuilder [
 	<keymap>
 
-	(aBuilder shortcut: #openQuickProjectLoader)
-		category: #CmdWorldShortcutsCategory
+	(aBuilder shortcut: #toggleQuickProjectLoader)
+		category: #QuickProjectLoaderCategory
 		default: $l shift meta | $l shift ctrl
-		do: [ :target :morph :event | self open ]
+		do: [ :target :morph :event | self toggle ]
 ]
 
 { #category : 'settings' }
@@ -135,6 +149,17 @@ QuickProjectLoaderPresenter class >> startUp: isImageStarting [
 	isImageStarting ifTrue: [
 		self showOnStartup ifTrue: [
 			self open ] ]
+]
+
+{ #category : 'instance creation' }
+QuickProjectLoaderPresenter class >> toggle [
+	"Toggle the presenter window: open if closed, close if open."
+
+	(CurrentWindow notNil and: [ 
+		(CurrentWindow respondsTo: #isBuilt) and: [ CurrentWindow isBuilt ] ]) ifTrue: [ 
+			self closeWindow.
+			^ self ].
+	self open
 ]
 
 { #category : 'accessing' }

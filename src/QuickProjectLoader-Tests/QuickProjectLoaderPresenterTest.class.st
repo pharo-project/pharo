@@ -32,6 +32,7 @@ QuickProjectLoaderPresenterTest >> setUp [
 QuickProjectLoaderPresenterTest >> tearDown [
 
 	presenter window ifNotNil: [ :w | w close ].
+	QuickProjectLoaderPresenter closeWindow.
 	QuickProjectRepository reset.
 	tempFile deleteIfAbsent: [].
 	super tearDown
@@ -54,7 +55,7 @@ QuickProjectLoaderPresenterTest >> testKeymapRegistration [
 	| builder |
 	builder := KMKeymapBuilder new.
 	QuickProjectLoaderPresenter quickLoadShortcutOn: builder.
-	self assert: builder shortcut name equals: #openQuickProjectLoader
+	self assert: builder shortcut name equals: #toggleQuickProjectLoader
 ]
 
 { #category : 'tests' }
