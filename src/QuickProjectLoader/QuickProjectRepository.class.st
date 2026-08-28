@@ -42,6 +42,12 @@ QuickProjectRepository class >> default: aRepository [
 	Default := aRepository
 ]
 
+{ #category : 'class initialization' }
+QuickProjectRepository class >> defaultPersistencePath [
+
+	^ FileLocator preferences / 'pharo' / 'quickProjectLoader.ston'
+]
+
 { #category : 'accessing' }
 QuickProjectRepository class >> recentImagesWindowSize [
 
@@ -52,12 +58,6 @@ QuickProjectRepository class >> recentImagesWindowSize [
 QuickProjectRepository class >> recentImagesWindowSize: anInteger [
 
 	RecentImagesWindowSize := anInteger
-]
-
-{ #category : 'class initialization' }
-QuickProjectRepository class >> defaultPersistencePath [
-
-	^ FileLocator preferences / 'pharo' / 'quickProjectLoader.ston'
 ]
 
 { #category : 'class initialization' }
@@ -104,6 +104,18 @@ QuickProjectRepository >> addEntryNamed: aName repository: aUrl baseline: aBasel
 ]
 
 { #category : 'accessing' }
+QuickProjectRepository >> currentSessionMarker [
+
+	^ currentSessionMarker
+]
+
+{ #category : 'accessing' }
+QuickProjectRepository >> currentSessionMarker: anObject [
+
+	currentSessionMarker := anObject
+]
+
+{ #category : 'accessing' }
 QuickProjectRepository >> entries [
 	"Answer all deduplicated entries in the store, most-loaded first."
 
@@ -112,48 +124,6 @@ QuickProjectRepository >> entries [
 	self rawEntries ifEmpty: [ self inferProjects ].
 	self sanitizeEntries.
 	^ self rawEntries sorted: [ :a :b | a loadCount > b loadCount ]
-]
-
-{ #category : 'accessing' }
-QuickProjectRepository >> visibleEntries [
-	"Answer the entries to suggest: manually added ones plus those loaded in one of the last N image sessions, most-recently-used first."
-
-	self entries.
-	^ (self rawEntries select: [ :entry | self isEntryVisible: entry ])
-		sorted: [ :a :b |
-			| rankA rankB |
-			rankA := self rankOf: a.
-			rankB := self rankOf: b.
-			rankA < rankB or: [ rankA = rankB and: [ a name <= b name ] ] ]
-]
-
-{ #category : 'private' }
-QuickProjectRepository >> rankOf: anEntry [
-	"1 = most recent load. Entries are ranked by the most recent session in which they were loaded; entries never loaded in a recent session sink to the bottom."
-
-	^ self recentSessionMarkers
-		detectIndex: [ :marker | anEntry loadedInSessions includes: marker ]
-		ifNone: [ self recentSessionMarkers size + 1 ]
-]
-
-{ #category : 'private' }
-QuickProjectRepository >> isEntryVisible: anEntry [
-
-	^ anEntry isManual
-		or: [ anEntry loadedInSessions anySatisfy: [ :m | self recentSessionMarkers includes: m ] ]
-]
-
-{ #category : 'private' }
-QuickProjectRepository >> recentSessionMarkers [
-	"Answer the markers of the last N distinct sessions seen across all entries, newest-first."
-
-	| seenMarkers |
-	seenMarkers := OrderedCollection new.
-	self rawEntries do: [ :entry |
-		entry loadedInSessions do: [ :marker |
-			(seenMarkers includes: marker) ifFalse: [ seenMarkers add: marker ] ] ].
-	seenMarkers sort: [ :a :b | a >= b ].
-	^ seenMarkers first: (seenMarkers size min: self class recentImagesWindowSize)
 ]
 
 { #category : 'testing' }
@@ -215,16 +185,11 @@ QuickProjectRepository >> initialize [
 	currentSessionMarker := DateAndTime now
 ]
 
-{ #category : 'accessing' }
-QuickProjectRepository >> currentSessionMarker [
+{ #category : 'private' }
+QuickProjectRepository >> isEntryVisible: anEntry [
 
-	^ currentSessionMarker
-]
-
-{ #category : 'accessing' }
-QuickProjectRepository >> currentSessionMarker: anObject [
-
-	currentSessionMarker := anObject
+	^ anEntry isManual
+		or: [ anEntry loadedInSessions anySatisfy: [ :m | self recentSessionMarkers includes: m ] ]
 ]
 
 { #category : 'persistence' }
@@ -267,9 +232,31 @@ QuickProjectRepository >> persistencePath: aFileReference [
 ]
 
 { #category : 'private' }
+QuickProjectRepository >> rankOf: anEntry [
+	"1 = most recent load. Entries are ranked by the most recent session in which they were loaded; entries never loaded in a recent session sink to the bottom."
+
+	^ self recentSessionMarkers
+		detectIndex: [ :marker | anEntry loadedInSessions includes: marker ]
+		ifNone: [ self recentSessionMarkers size + 1 ]
+]
+
+{ #category : 'private' }
 QuickProjectRepository >> rawEntries [
 
 	^ entries
+]
+
+{ #category : 'private' }
+QuickProjectRepository >> recentSessionMarkers [
+	"Answer the markers of the last N distinct sessions seen across all entries, newest-first."
+
+	| seenMarkers |
+	seenMarkers := OrderedCollection new.
+	self rawEntries do: [ :entry |
+		entry loadedInSessions do: [ :marker |
+			(seenMarkers includes: marker) ifFalse: [ seenMarkers add: marker ] ] ].
+	seenMarkers sort: [ :a :b | a >= b ].
+	^ seenMarkers first: (seenMarkers size min: self class recentImagesWindowSize)
 ]
 
 { #category : 'actions' }
@@ -307,4 +294,17 @@ QuickProjectRepository >> save [
 	file parent ensureCreateDirectory.
 	file writeStreamDo: [ :stream |
 		stream nextPutAll: (STON toStringPretty: self rawEntries asArray) ]
+]
+
+{ #category : 'accessing' }
+QuickProjectRepository >> visibleEntries [
+	"Answer the entries to suggest: manually added ones plus those loaded in one of the last N image sessions, most-recently-used first."
+
+	self entries.
+	^ (self rawEntries select: [ :entry | self isEntryVisible: entry ])
+		sorted: [ :a :b |
+			| rankA rankB |
+			rankA := self rankOf: a.
+			rankB := self rankOf: b.
+			rankA < rankB or: [ rankA = rankB and: [ a name <= b name ] ] ]
 ]

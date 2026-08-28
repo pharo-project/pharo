@@ -114,6 +114,12 @@ QuickProjectLoaderPresenter class >> quickLoadShortcutOn: aBuilder [
 		do: [ :target :morph :event | self toggle ]
 ]
 
+{ #category : 'accessing' }
+QuickProjectLoaderPresenter class >> recentImagesWindowSize [
+
+	^ QuickProjectRepository recentImagesWindowSize
+]
+
 { #category : 'keymapping' }
 QuickProjectLoaderPresenter class >> registerWorldShortcut [
 	<script>
@@ -149,12 +155,6 @@ QuickProjectLoaderPresenter class >> showOnStartup [
 QuickProjectLoaderPresenter class >> showOnStartup: aBoolean [
 
 	ShowOnStartup := aBoolean
-]
-
-{ #category : 'accessing' }
-QuickProjectLoaderPresenter class >> recentImagesWindowSize [
-
-	^ QuickProjectRepository recentImagesWindowSize
 ]
 
 { #category : 'system startup' }
@@ -317,7 +317,7 @@ QuickProjectLoaderPresenter >> initializePresenters [
 	self initializeButtons.
 	self refreshList.
 
-	self whenOpenedDo: [ projectList takeKeyboardFocus ]
+	self whenDisplayDo: [ projectList takeKeyboardFocus ]
 ]
 
 { #category : 'private' }

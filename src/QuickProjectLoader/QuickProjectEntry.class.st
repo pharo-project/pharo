@@ -161,6 +161,18 @@ QuickProjectEntry >> isLoadedInImage [
 		ifAbsent: [ false ]
 ]
 
+{ #category : 'accessing' }
+QuickProjectEntry >> isManual [
+
+	^ isManual ifNil: [ isManual := false ]
+]
+
+{ #category : 'accessing' }
+QuickProjectEntry >> isManual: aBoolean [
+
+	isManual := aBoolean
+]
+
 { #category : 'actions' }
 QuickProjectEntry >> load [
 
@@ -187,6 +199,18 @@ QuickProjectEntry >> loadCount [
 QuickProjectEntry >> loadCount: anInteger [
 
 	loadCount := anInteger
+]
+
+{ #category : 'accessing' }
+QuickProjectEntry >> loadedInSessions [
+
+	^ loadedInSessions ifNil: [ loadedInSessions := #() ]
+]
+
+{ #category : 'accessing' }
+QuickProjectEntry >> loadedInSessions: aCollection [
+
+	loadedInSessions := aCollection
 ]
 
 { #category : 'accessing' }
@@ -227,6 +251,16 @@ QuickProjectEntry >> printOn: aStream [
 	aStream << ' - loaded ' << self loadCount printString << ' times'
 ]
 
+{ #category : 'actions' }
+QuickProjectEntry >> recordLoadInSession: aSessionMarker [
+
+	(self loadedInSessions includes: aSessionMarker) ifTrue: [ ^ self ].
+	loadedInSessions := (self loadedInSessions copyWith: aSessionMarker)
+		last: 30;
+		yourself.
+	^ self
+]
+
 { #category : 'accessing' }
 QuickProjectEntry >> repositoryUrl [
 
@@ -249,38 +283,4 @@ QuickProjectEntry >> useIncomingOnConflict [
 QuickProjectEntry >> useIncomingOnConflict: aBoolean [
 
 	useIncomingOnConflict := aBoolean
-]
-
-{ #category : 'accessing' }
-QuickProjectEntry >> isManual [
-
-	^ isManual ifNil: [ isManual := false ]
-]
-
-{ #category : 'accessing' }
-QuickProjectEntry >> isManual: aBoolean [
-
-	isManual := aBoolean
-]
-
-{ #category : 'accessing' }
-QuickProjectEntry >> loadedInSessions [
-
-	^ loadedInSessions ifNil: [ loadedInSessions := #() ]
-]
-
-{ #category : 'accessing' }
-QuickProjectEntry >> loadedInSessions: aCollection [
-
-	loadedInSessions := aCollection
-]
-
-{ #category : 'actions' }
-QuickProjectEntry >> recordLoadInSession: aSessionMarker [
-
-	(self loadedInSessions includes: aSessionMarker) ifTrue: [ ^ self ].
-	loadedInSessions := (self loadedInSessions copyWith: aSessionMarker)
-		last: 30;
-		yourself.
-	^ self
 ]
