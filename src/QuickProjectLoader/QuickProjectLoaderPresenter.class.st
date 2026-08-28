@@ -73,8 +73,8 @@ QuickProjectLoaderPresenter class >> quickLoadShortcutOn: aBuilder [
 	<keymap>
 
 	(aBuilder shortcut: #openQuickProjectLoader)
-		category: #MorphCtrlNavigation
-		default: $l shift ctrl asKeyCombination
+		category: #CmdWorldShortcutsCategory
+		default: $l shift meta | $l shift ctrl
 		do: [ :target :morph :event | self open ]
 ]
 
