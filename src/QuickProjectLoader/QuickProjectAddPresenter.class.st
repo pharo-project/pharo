@@ -8,7 +8,7 @@ Inputs:
 - Groups (optional, comma-separated)
 - Use incoming on conflict checkbox (default: checked)
 
-On accept, I answer a new QuickProjectEntry.
+On accept (main dialog OK button), I answer a new QuickProjectEntry.
 "
 Class {
 	#name : 'QuickProjectAddPresenter',
@@ -18,9 +18,7 @@ Class {
 		'urlInput',
 		'baselineInput',
 		'groupsInput',
-		'useIncomingCheckBox',
-		'acceptButton',
-		'cancelButton'
+		'useIncomingCheckBox'
 	],
 	#category : 'QuickProjectLoader-UI',
 	#package : 'QuickProjectLoader',
@@ -30,19 +28,13 @@ Class {
 { #category : 'accessing' }
 QuickProjectAddPresenter class >> defaultPreferredExtent [
 
-	^ 400 @ 380
+	^ 400 @ 320
 ]
 
 { #category : 'instance creation' }
 QuickProjectAddPresenter class >> open [
 
 	^ (self newApplication: StPharoApplication current) open
-]
-
-{ #category : 'accessing' }
-QuickProjectAddPresenter >> acceptButton [
-
-	^ acceptButton
 ]
 
 { #category : 'accessing' }
@@ -79,10 +71,6 @@ QuickProjectAddPresenter >> defaultLayout [
 		add: 'Groups (comma-separated, optional):' expand: false;
 		add: groupsInput expand: false;
 		add: useIncomingCheckBox expand: false;
-		add: (SpBoxLayout newLeftToRight
-			addLast: cancelButton;
-			addLast: acceptButton;
-			yourself) expand: false;
 		yourself
 ]
 
@@ -93,15 +81,26 @@ QuickProjectAddPresenter >> groupsInput [
 ]
 
 { #category : 'initialization' }
+QuickProjectAddPresenter >> initializeDialogWindow: aDialogPresenter [
+
+	aDialogPresenter
+		addButton: 'Cancel' do: [ :dialog | dialog close ];
+		addButton: 'OK' do: [ :dialog | 
+			self isFormValid ifFalse: [ 
+				self inform: 'Please fill in required fields (Name and Repository URL)'.
+				^ self ].
+			dialog beOk.
+			dialog close ]
+]
+
+{ #category : 'initialization' }
 QuickProjectAddPresenter >> initializePresenters [
 
 	nameInput := self newTextInput
 		placeholder: 'My Project';
-		whenTextChangedDo: [ :text | self updateAcceptButton ];
 		yourself.
 	urlInput := self newTextInput
 		placeholder: 'github://owner/repo/src';
-		whenTextChangedDo: [ :text | self updateAcceptButton ];
 		yourself.
 	baselineInput := self newTextInput
 		placeholder: 'MyProject (optional)';
@@ -112,17 +111,6 @@ QuickProjectAddPresenter >> initializePresenters [
 	useIncomingCheckBox := self newCheckBox
 		label: 'Use incoming on conflict (onConflictUseIncoming)';
 		state: true;
-		yourself.
-	acceptButton := self newButton
-		label: 'OK';
-		icon: (self iconNamed: #smallOk);
-		action: [ self onAccept ];
-		disable;
-		yourself.
-	cancelButton := self newButton
-		label: 'Cancel';
-		icon: (self iconNamed: #smallCancel);
-		action: [ self onCancel ];
 		yourself
 ]
 
@@ -139,29 +127,6 @@ QuickProjectAddPresenter >> nameInput [
 	^ nameInput
 ]
 
-{ #category : 'actions' }
-QuickProjectAddPresenter >> onAccept [
-
-	self isFormValid ifFalse: [ 
-		self inform: 'Please fill in required fields (Name and Repository URL)'.
-		^ self ].
-	self owner 
-		ifNotNil: [ :o | 
-			o close.
-			^ self createEntry ]
-		ifNil: [ 
-			self delete.
-			^ self createEntry ]
-]
-
-{ #category : 'actions' }
-QuickProjectAddPresenter >> onCancel [
-
-	self owner
-		ifNotNil: [ :o | o close ]
-		ifNil: [ self delete ]
-]
-
 { #category : 'private' }
 QuickProjectAddPresenter >> parseGroups: aString [
 
@@ -169,14 +134,6 @@ QuickProjectAddPresenter >> parseGroups: aString [
 	trimmed := aString trimmed.
 	trimmed ifEmpty: [ ^ #() ].
 	^ (trimmed substrings: $,) collect: [ :each | each trimmed ]
-]
-
-{ #category : 'private' }
-QuickProjectAddPresenter >> updateAcceptButton [
-
-	self isFormValid
-		ifTrue: [ acceptButton enable ]
-		ifFalse: [ acceptButton disable ]
 ]
 
 { #category : 'accessing' }

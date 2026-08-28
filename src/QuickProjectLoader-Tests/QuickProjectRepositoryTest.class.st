@@ -34,12 +34,25 @@ QuickProjectRepositoryTest >> testAddDuplicateEntry [
 
 	| entry1 entry2 |
 	entry1 := QuickProjectEntry name: 'Proj' repositoryUrl: 'github://a/b' baseline: 'P'.
-	entry2 := QuickProjectEntry name: 'Proj Different Name' repositoryUrl: 'github://a/b' baseline: 'P'.
+	entry2 := QuickProjectEntry name: 'Proj' repositoryUrl: 'github://a/b' baseline: 'P'.
 
 	repository addEntry: entry1.
 	repository addEntry: entry2.
 
 	self assert: repository rawEntries size equals: 1
+]
+
+{ #category : 'tests' }
+QuickProjectRepositoryTest >> testDeduplicationByName [
+
+	| entry1 entry2 |
+	entry1 := QuickProjectEntry name: 'Roassal' repositoryUrl: 'github://ObjectProfile/Roassal/src' baseline: 'Roassal'.
+	entry2 := QuickProjectEntry name: 'Roassal' repositoryUrl: 'github://pharo-project/Roassal' baseline: 'Roassal'.
+
+	repository addEntry: entry1.
+	repository addEntry: entry2.
+
+	self assert: repository entries size equals: 1
 ]
 
 { #category : 'tests' }

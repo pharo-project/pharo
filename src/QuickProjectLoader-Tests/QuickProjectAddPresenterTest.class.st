@@ -68,20 +68,17 @@ QuickProjectAddPresenterTest >> testPresenterInitializes [
 	self assert: presenter urlInput text isEmpty.
 	self assert: presenter baselineInput text isEmpty.
 	self assert: presenter groupsInput text isEmpty.
-	self assert: presenter useIncomingCheckBox state.
-	self deny: presenter acceptButton isEnabled
+	self assert: presenter useIncomingCheckBox state
 ]
 
 { #category : 'tests' }
 QuickProjectAddPresenterTest >> testValidationRejectsEmpty [
 
 	self deny: presenter isFormValid.
-	self deny: presenter acceptButton isEnabled.
 
 	presenter nameInput text: 'Name'.
 	self deny: presenter isFormValid.
 
 	presenter urlInput text: 'github://a/b'.
-	self assert: presenter isFormValid.
-	self assert: presenter acceptButton isEnabled
+	self assert: presenter isFormValid
 ]

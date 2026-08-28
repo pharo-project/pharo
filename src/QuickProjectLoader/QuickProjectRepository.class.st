@@ -4,7 +4,7 @@ I manage the persistent collection of QuickProjectEntry objects.
 I am a singleton that stores project entries in a STON file at:
   FileLocator preferences / 'pharo' / 'quickProjectLoader.ston'
 
-I answer entries sorted by loadCount (most-used first), persist on every mutation, and can infer registered projects directly from the Pharo image.
+I answer entries sorted by loadCount (most-used first), deduplicated by project name/baseline, persist on every mutation, and can infer registered projects directly from the Pharo image.
 
 ## Usage
 
@@ -54,9 +54,16 @@ QuickProjectRepository class >> reset [
 
 { #category : 'adding' }
 QuickProjectRepository >> addEntry: aQuickProjectEntry [
+	"Add an entry to the repository. If a duplicate exists, update missing info instead of duplicating."
 
-	(self rawEntries anySatisfy: [ :each | each = aQuickProjectEntry ])
-		ifTrue: [ ^ aQuickProjectEntry ].
+	| existing |
+	existing := self rawEntries detect: [ :each | each = aQuickProjectEntry ] ifNone: [ nil ].
+	existing ifNotNil: [ 
+		existing repositoryUrl ifEmpty: [ existing repositoryUrl: aQuickProjectEntry repositoryUrl ].
+		existing baselineName ifEmpty: [ existing baselineName: aQuickProjectEntry baselineName ].
+		self save.
+		^ existing ].
+
 	self rawEntries add: aQuickProjectEntry.
 	self save.
 	^ aQuickProjectEntry
@@ -84,8 +91,10 @@ QuickProjectRepository >> addEntryNamed: aName repository: aUrl baseline: aBasel
 { #category : 'accessing' }
 QuickProjectRepository >> entries [
 
+	self sanitizeEntries.
 	self rawEntries ifEmpty: [ self load ].
 	self rawEntries ifEmpty: [ self inferProjects ].
+	self sanitizeEntries.
 	^ self rawEntries sorted: [ :a :b | a loadCount > b loadCount ]
 ]
 
@@ -129,13 +138,13 @@ QuickProjectRepository >> inferProjects [
 			baseName := (cls name beginsWith: 'BaselineOf')
 				ifTrue: [ cls name copyFrom: 11 to: cls name size ]
 				ifFalse: [ cls name ].
-			(self rawEntries anySatisfy: [ :e | e baselineName = baseName ]) ifFalse: [ 
-				self addEntry: (QuickProjectEntry
-					name: baseName
-					repositoryUrl: 'github://pharo-project/' , baseName
-					baseline: baseName) ] ]
+			self addEntry: (QuickProjectEntry
+				name: baseName
+				repositoryUrl: 'github://pharo-project/' , baseName
+				baseline: baseName) ]
 	] on: Error do: [ :ex | "Ignore inference errors" ].
 
+	self sanitizeEntries.
 	self save
 ]
 
@@ -159,7 +168,8 @@ QuickProjectRepository >> load [
 		on: Error
 		do: [ :ex | 
 			entries := OrderedCollection new.
-			ex return ]
+			ex return ].
+	self sanitizeEntries
 ]
 
 { #category : 'reordering' }
@@ -203,6 +213,18 @@ QuickProjectRepository >> removeEntry: aQuickProjectEntry [
 
 	self rawEntries remove: aQuickProjectEntry ifAbsent: [].
 	self save
+]
+
+{ #category : 'private' }
+QuickProjectRepository >> sanitizeEntries [
+	"Remove duplicate entries that match by name, baselineName, or repositoryUrl."
+
+	| unique |
+	unique := OrderedCollection new.
+	self rawEntries do: [ :entry |
+		(unique anySatisfy: [ :existing | existing = entry ])
+			ifFalse: [ unique add: entry ] ].
+	entries := unique
 ]
 
 { #category : 'persistence' }

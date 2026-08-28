@@ -9,7 +9,7 @@ I hold metadata to load a project via Metacello from a repository:
 - loadCount: how many times this project has been loaded (used for sorting)
 - useIncomingOnConflict: boolean indicating whether to send #onConflictUseIncoming to Metacello (default: true)
 
-Equality is based on repositoryUrl and baselineName.
+Equality is based on matching name, baselineName, or repositoryUrl (case-insensitive) to prevent duplicate projects.
 
 ## Examples
 
@@ -18,12 +18,6 @@ QuickProjectEntry
     name: 'Roassal'
     repositoryUrl: 'github://ObjectProfile/Roassal/src'
     baseline: 'Roassal'
-
-QuickProjectEntry 
-    name: 'Roassal'
-    repositoryUrl: 'github://ObjectProfile/Roassal/src'
-    baseline: ''
-    groups: #('Full')
 ```
 "
 Class {
@@ -75,11 +69,20 @@ QuickProjectEntry class >> name: aName repositoryUrl: aUrl baseline: aBaselineNa
 
 { #category : 'comparing' }
 QuickProjectEntry >> = anObject [
+	"Two entries are equal if they share the same name, baselineName, or repositoryUrl."
 
 	self == anObject ifTrue: [ ^ true ].
 	self class = anObject class ifFalse: [ ^ false ].
-	^ self repositoryUrl = anObject repositoryUrl
-		and: [ self baselineName = anObject baselineName ]
+
+	(self name isNotEmpty and: [ anObject name isNotEmpty and: [ self name asLowercase = anObject name asLowercase ] ])
+		ifTrue: [ ^ true ].
+
+	(self baselineName isNotEmpty and: [ anObject baselineName isNotEmpty and: [ self baselineName asLowercase = anObject baselineName asLowercase ] ])
+		ifTrue: [ ^ true ].
+
+	^ self repositoryUrl isNotEmpty 
+		and: [ anObject repositoryUrl isNotEmpty 
+		and: [ self repositoryUrl asLowercase = anObject repositoryUrl asLowercase ] ]
 ]
 
 { #category : 'accessing' }
@@ -109,7 +112,9 @@ QuickProjectEntry >> groups: anArray [
 { #category : 'comparing' }
 QuickProjectEntry >> hash [
 
-	^ self repositoryUrl hash bitXor: self baselineName hash
+	self name isNotEmpty ifTrue: [ ^ self name asLowercase hash ].
+	self baselineName isNotEmpty ifTrue: [ ^ self baselineName asLowercase hash ].
+	^ self repositoryUrl asLowercase hash
 ]
 
 { #category : 'actions' }
@@ -139,6 +144,13 @@ QuickProjectEntry >> isLoadedInImage [
 			ifFalse: [ 'BaselineOf' , self baselineName ].
 		(self class environment hasClassNamed: clsName asSymbol) ifTrue: [ ^ true ] ].
 
+	self name isNotEmpty ifTrue: [ 
+		| clsName |
+		clsName := (self name beginsWith: 'BaselineOf')
+			ifTrue: [ self name ]
+			ifFalse: [ 'BaselineOf' , self name ].
+		(self class environment hasClassNamed: clsName asSymbol) ifTrue: [ ^ true ] ].
+
 	^ MetacelloProjectRegistry
 		registrationNamed: self name
 		ifPresent: [ :reg | reg loadedInImage ]
@@ -147,8 +159,6 @@ QuickProjectEntry >> isLoadedInImage [
 
 { #category : 'actions' }
 QuickProjectEntry >> load [
-	"Execute the Metacello load for this project entry.
-	Uses baselineName if present, sends #onConflictUseIncoming if requested, and loads specified groups."
 
 	| metacello |
 	metacello := Metacello new
@@ -177,7 +187,6 @@ QuickProjectEntry >> loadCount: anInteger [
 
 { #category : 'accessing' }
 QuickProjectEntry >> metacelloLoadScript [
-	"Answer a String with the Metacello load expression for this entry."
 
 	^ String streamContents: [ :stream |
 		stream
