@@ -1779,25 +1779,19 @@ OCCodeSnippet class >> badSemantic [
 			         nodeAt: '00111100044442222300556666';
 			         styled: '| TTTT | tttt    n. ^ tttt';
 			         isFaulty: false;
-			         value: 1;
-			         notices:
-				         #( #( 3 6 3 'self is a reserved word and cannot be used as a temporary variable name' ) )).
+			         value: 1).
 		        (self new
 			         source: '| super | super := 1. ^ super';
 			         nodeAt: '00111110004444422223005566666';
 			         styled: '| TTTTT | ttttt    n. ^ ttttt';
 			         isFaulty: false;
-			         value: 1;
-			         notices:
-				         #( #( 3 7 3 'super is a reserved word and cannot be used as a temporary variable name' ) )).
+			         value: 1).
 		        (self new
 			         source: '| thisContext | thisContext := 1. ^ thisContext';
 			         nodeAt: '00111111111110004444444444422223005566666666666';
 			         styled: '| TTTTTTTTTTT | ttttttttttt    n. ^ ttttttttttt';
 			         isFaulty: false;
-			         value: 1;
-			         notices:
-				         #( #( 3 13 3 'thisContext is a reserved word and cannot be used as a temporary variable name' ) )).
+			         value: 1).
 		        (self new
 			         source: '| Object | Object := 1. ^ Object';
 			         nodeAt: '00111111000444444222230055666666';
@@ -1843,25 +1837,19 @@ OCCodeSnippet class >> badSemantic [
 			         nodeAt: '00011110004444333500';
 			         styled: '0 :BBBB | bbbb s n 0';
 			         isFaulty: false;
-			         value: 2;
-			         notices:
-				         #( #( 4 7 4 'self is a reserved word and cannot be used as a parameter name' ) )).
+			         value: 2).
 		        (self new
 			         source: '[ :super | super + 1 ]';
 			         nodeAt: '0001111100044444333500';
 			         styled: '0 :BBBBB | bbbbb s n 0';
 			         isFaulty: false;
-			         value: 2;
-			         notices:
-				         #( #( 4 8 4 'super is a reserved word and cannot be used as a parameter name' ) )).
+			         value: 2).
 		        (self new
 			         source: '[ :thisContext | thisContext + 1 ]';
 			         nodeAt: '0001111111111100044444444444333500';
 			         styled: '0 :BBBBBBBBBBB | bbbbbbbbbbb s n 0';
 			         isFaulty: false;
-			         value: 2;
-			         notices:
-				         #( #( 4 14 4 'thisContext is a reserved word and cannot be used as a parameter name' ) )).
+			         value: 2).
 		        (self new
 			         source: '[ :Object | Object + 1 ]';
 			         nodeAt: '000111111000444444333500';
