@@ -6,8 +6,9 @@ I am designed to be thin (320px wide), tall (600px high), and positioned on the 
 
 Features:
 - Live search/filtering bar
-- Auto-infer projects from image on startup & open (no Infer button needed)
-- Table view with icons, project names, baseline subtitles, load count badges, and context menu
+- Loaded vs Unloaded status distinction (loaded items shown with full opacity and checkmark, unloaded items shown with reduced opacity desaturated icon and indicator)
+- Auto-infer projects from image on startup & open
+- Table view with icons, project names, baseline subtitles, and context menu
 - Single/double-click loading
 - Manual project entry ('Add Project' button)
 - World menu integration (<worldMenu>)
@@ -185,6 +186,18 @@ QuickProjectLoaderPresenter >> defaultLayout [
 		yourself
 ]
 
+{ #category : 'private' }
+QuickProjectLoaderPresenter >> displayLabelFor: anEntry [
+
+	| label |
+	label := anEntry name.
+	anEntry baselineName isNotEmpty ifTrue: [ 
+		label := label , ' (' , anEntry baselineName , ')' ].
+	^ anEntry isLoadedInImage
+		ifTrue: [ label ]
+		ifFalse: [ '○ ' , label , '  (not loaded)' ]
+]
+
 { #category : 'actions' }
 QuickProjectLoaderPresenter >> filterProjects: aString [
 
@@ -198,6 +211,14 @@ QuickProjectLoaderPresenter >> filterProjects: aString [
 			or: [ (entry baselineName asLowercase includesSubstring: query)
 			or: [ (entry repositoryUrl asLowercase includesSubstring: query) ] ] ].
 	projectList items: filtered
+]
+
+{ #category : 'private' }
+QuickProjectLoaderPresenter >> iconFor: anEntry [
+
+	^ anEntry isLoadedInImage
+		ifTrue: [ self iconNamed: #smallOk ]
+		ifFalse: [ (self iconNamed: #smallLoadProject) asGrayScale ]
 ]
 
 { #category : 'initialization' }
@@ -250,20 +271,11 @@ QuickProjectLoaderPresenter >> initializePresenters [
 	projectList
 		addColumn: (SpImageTableColumn new
 			width: 22;
-			evaluated: [ :entry | self iconNamed: #smallLoadProject ];
+			evaluated: [ :entry | self iconFor: entry ];
 			yourself);
 		addColumn: (SpStringTableColumn new
 			title: 'Project';
-			evaluated: [ :entry | 
-				entry baselineName isNotEmpty
-					ifTrue: [ entry name , ' (' , entry baselineName , ')' ]
-					ifFalse: [ entry name ] ];
-			beSortable;
-			yourself);
-		addColumn: (SpStringTableColumn new
-			title: 'Loads';
-			width: 45;
-			evaluated: [ :entry | entry loadCount printString , 'x' ];
+			evaluated: [ :entry | self displayLabelFor: entry ];
 			beSortable;
 			yourself);
 		contextMenu: [ 

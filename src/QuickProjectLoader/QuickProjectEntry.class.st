@@ -128,6 +128,23 @@ QuickProjectEntry >> initialize [
 	useIncomingOnConflict := true
 ]
 
+{ #category : 'testing' }
+QuickProjectEntry >> isLoadedInImage [
+	"Answer true if this project (baseline class or registered project) is currently loaded in the image."
+
+	self baselineName isNotEmpty ifTrue: [ 
+		| clsName |
+		clsName := (self baselineName beginsWith: 'BaselineOf')
+			ifTrue: [ self baselineName ]
+			ifFalse: [ 'BaselineOf' , self baselineName ].
+		(self class environment hasClassNamed: clsName asSymbol) ifTrue: [ ^ true ] ].
+
+	^ MetacelloProjectRegistry
+		registrationNamed: self name
+		ifPresent: [ :reg | reg loadedInImage ]
+		ifAbsent: [ false ]
+]
+
 { #category : 'actions' }
 QuickProjectEntry >> load [
 	"Execute the Metacello load for this project entry.
