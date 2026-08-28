@@ -19,3 +19,25 @@ ReEquivalentSuperclassMethodsRuleTest >> testRuleNotViolated [
 	self generateMethod: 'myCritiques ^true'.
 	self assertEmpty: (self myCritiquesOnMethod: self class >> #myCritiques)
 ]
+
+{ #category : 'tests' }
+ReEquivalentSuperclassMethodsRuleTest >> testRuleNotViolatedWithTrait [
+
+	| classFactory superclass class trait |
+	classFactory := ClassFactoryForTestCase environment: SystemEnvironment new.
+	[
+		superclass := classFactory make: [ :builder | builder name: 'ASuperclass' ].
+		trait := classFactory make: [ :builder |
+				         builder
+					         beTrait;
+					         name: 'ATraitForTests' ].
+		class := classFactory make: [ :builder |
+				         builder
+					         superclass: superclass;
+					         name: 'AClassWithATrait';
+					         traits: trait ].
+
+		self generateMethod: 'method ^ 1' classified: #accessing in: superclass.
+		self generateMethod: 'method ^ 1' classified: #accessing in: trait.
+		self assertEmpty: (self myCritiquesOnMethod: class >> #method) ] ensure: [ classFactory cleanUp ]
+]

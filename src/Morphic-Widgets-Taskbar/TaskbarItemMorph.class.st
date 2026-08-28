@@ -35,6 +35,13 @@ TaskbarItemMorph >> buildLabelMorph [
 	^ self theme buttonLabelForText: self model taskbarLabel
 ]
 
+{ #category : 'event handling' }
+TaskbarItemMorph >> click: event [
+	"The user clicked (short press) on this button. Activate or minimize the window."
+
+	self performAction: event
+]
+
 { #category : 'style - border' }
 TaskbarItemMorph >> disabledBorderStyle [
 	"Return the disabled borderStyle of the receiver."
@@ -81,6 +88,7 @@ TaskbarItemMorph >> initializeFor: aTaskbar [
 		hResizing: #rigid;
 		vResizing: #rigid;
 		useSquareCorners;
+		dropEnabled: true;
 		getMenuSelector: #taskbarButtonMenu:.
 		
 	"The following code works like this:
@@ -95,6 +103,36 @@ TaskbarItemMorph >> initializeFor: aTaskbar [
 			(self model isCollapsed
 				ifTrue: [ self theme taskbarItemLabelColorForCollapsed: self ]
 				ifFalse: [ self theme taskbarItemLabelColorForExpanded: self ])
+]
+
+{ #category : 'event handling' }
+TaskbarItemMorph >> mouseDown: event [
+	"Set up click-or-drag handling. A short click activates the window;
+	a drag beyond the threshold initiates task reordering."
+
+	event yellowButtonPressed ifTrue: [ ^ super mouseDown: event ].
+	event hand
+		waitForClicksOrDrag: self
+		event: event
+		selectors: #( click: doubleClick: doubleClickTimeout: startDrag: )
+		threshold: 5
+]
+
+{ #category : 'event handling' }
+TaskbarItemMorph >> mouseEnterDragging: event [
+	"The hand is dragging a morph over us. Show a drop indicator bar."
+
+	| taskbar taskIndex |
+	(event hand hasSubmorphs and: [ self dropEnabled ]) ifFalse: [ ^ super mouseEnterDragging: event ].
+
+	taskbar := self owner.
+
+	taskIndex := (taskbar submorphIndexOf: self) ifNil: [ ^ self ]. "In case we close the task really close to the time we move it?"
+
+	"We check that the x position of the morph is before or after half my width to know which index to use."
+	taskbar showDropIndicatorAfterIndex: (event position x - self fullBounds left < (self width / 2)
+			 ifTrue: [ taskIndex - 1 ]
+			 ifFalse: [ taskIndex ]) 
 ]
 
 { #category : 'style - border' }
@@ -193,6 +231,21 @@ TaskbarItemMorph >> selectedPressedFillStyle [
 	"Return the selected pressed fillStyle of the receiver."
 
 	^ self theme taskbarItemSelectedPressedFillStyleFor: self
+]
+
+{ #category : 'drag and drop' }
+TaskbarItemMorph >> startDrag: event [
+	"Initiate a drag operation. Create a TransferMorph carrying the TaskbarTask."
+
+	| taskbar task transferMorph |
+	taskbar := self owner ifNil: [ ^ self ].
+	task := taskbar taskOf: self model.
+	task ifNil: [ ^ self ].
+	transferMorph := self model transferFor: task from: self.
+	transferMorph align: transferMorph center with: event position.
+	event hand
+		grabMorph: transferMorph;
+		releaseMouseFocus: self
 ]
 
 { #category : 'menu' }
