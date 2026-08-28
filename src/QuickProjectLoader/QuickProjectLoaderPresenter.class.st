@@ -217,15 +217,6 @@ QuickProjectLoaderPresenter >> defaultLayout [
 		yourself
 ]
 
-{ #category : 'private' }
-QuickProjectLoaderPresenter >> labelMorphFor: anEntry [
-
-	| label |
-	label := anEntry name asStringMorph.
-	anEntry isLoadedInImage ifFalse: [ label alpha: 0.35 ].
-	^ label
-]
-
 { #category : 'actions' }
 QuickProjectLoaderPresenter >> filterProjects: aString [
 
@@ -318,6 +309,17 @@ QuickProjectLoaderPresenter >> initializePresenters [
 
 	self initializeButtons.
 	self refreshList
+]
+
+{ #category : 'private' }
+QuickProjectLoaderPresenter >> labelMorphFor: anEntry [
+
+	| label |
+	label := anEntry name asStringMorph.
+	anEntry isLoadedInImage ifFalse: [
+		label disableLabel
+	].
+	^ label
 ]
 
 { #category : 'actions' }
