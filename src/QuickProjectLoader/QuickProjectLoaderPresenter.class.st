@@ -5,7 +5,7 @@ I display a modern list/table of commonly-used Metacello projects sorted by usag
 I am designed to be thin (320px wide), tall (600px high), and positioned on the right side of the screen.
 
 Features:
-- Global shortcut Cmd+Shift+L / Ctrl+Shift+L to toggle (open & close) the window from anywhere in Pharo
+- Global keyboard shortcut (<keymap>) (Cmd+Shift+P / Ctrl+Shift+P) to toggle (open & close) the window from anywhere in Pharo
 - Live search/filtering bar
 - Loaded vs Unloaded status distinction
 - Auto-infer projects from image on startup & open
@@ -110,7 +110,7 @@ QuickProjectLoaderPresenter class >> quickLoadShortcutOn: aBuilder [
 
 	(aBuilder shortcut: #toggleQuickProjectLoader)
 		category: #QuickProjectLoaderCategory
-		default: $l shift meta | $l shift ctrl
+		default: $p shift meta | $p shift ctrl
 		do: [ :target :morph :event | self toggle ]
 ]
 
