@@ -308,7 +308,9 @@ QuickProjectLoaderPresenter >> initializePresenters [
 		yourself.
 
 	self initializeButtons.
-	self refreshList
+	self refreshList.
+
+	self whenOpenedDo: [ projectList takeKeyboardFocus ]
 ]
 
 { #category : 'private' }
