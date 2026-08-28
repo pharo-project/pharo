@@ -5,7 +5,7 @@ I display a modern list/table of commonly-used Metacello projects sorted by usag
 I am designed to be thin (320px wide), tall (600px high), and positioned on the right side of the screen.
 
 Features:
-- Global shortcut Option+P (Mac) / Alt+P (Win/Unix) to toggle (open & close) the window from anywhere in Pharo
+- Global shortcut bound directly to World (Option+P / Cmd+Shift+P) to toggle (open & close) the window from anywhere in Pharo
 - Live search/filtering bar
 - Loaded vs Unloaded status distinction
 - Auto-infer projects from image on startup & open
@@ -60,6 +60,8 @@ QuickProjectLoaderPresenter class >> defaultPreferredExtent [
 QuickProjectLoaderPresenter class >> initialize [
 
 	KMRepository default setAsGlobalCategory: #QuickProjectLoaderCategory.
+	self registerWorldShortcut.
+
 	SessionManager default
 		register: (ClassSessionHandler forClassNamed: self name)
 		inCategory: SessionManager default userCategory
@@ -110,8 +112,21 @@ QuickProjectLoaderPresenter class >> quickLoadShortcutOn: aBuilder [
 
 	(aBuilder shortcut: #toggleQuickProjectLoader)
 		category: #QuickProjectLoaderCategory
-		default: $p alt
+		default: $p alt | $p command shift mac | $p ctrl shift win | $p ctrl shift unix
 		do: [ :target :morph :event | self toggle ]
+]
+
+{ #category : 'keymapping' }
+QuickProjectLoaderPresenter class >> registerWorldShortcut [
+	<script>
+	"Binds the toggle shortcut directly to the World Morph so it works everywhere on macOS."
+
+	[ 
+		self currentWorld ifNotNil: [ :w |
+			w bindKeyCombination: $p alt toAction: [ self toggle ].
+			w bindKeyCombination: $p meta shift toAction: [ self toggle ].
+			w bindKeyCombination: $o meta shift toAction: [ self toggle ] ]
+	] on: Error do: [ :ex | "Ignore if World is not ready" ]
 ]
 
 { #category : 'settings' }
@@ -147,6 +162,7 @@ QuickProjectLoaderPresenter class >> shutDown: isQuitting [
 QuickProjectLoaderPresenter class >> startUp: isImageStarting [
 
 	isImageStarting ifTrue: [
+		self registerWorldShortcut.
 		self showOnStartup ifTrue: [
 			self open ] ]
 ]
