@@ -29,8 +29,6 @@ Class {
 		'projectList',
 		'addButton',
 		'removeButton',
-		'loadButton',
-		'closeButton',
 		'repository'
 	],
 	#classVars : [
@@ -197,12 +195,6 @@ QuickProjectLoaderPresenter >> addProject [
 ]
 
 { #category : 'accessing' }
-QuickProjectLoaderPresenter >> closeButton [
-
-	^ closeButton
-]
-
-{ #category : 'actions' }
 QuickProjectLoaderPresenter >> copySelectedScript [
 
 	projectList selectedItem ifNotNil: [ :entry |
@@ -221,8 +213,6 @@ QuickProjectLoaderPresenter >> defaultLayout [
 			spacing: 4;
 			add: addButton;
 			add: removeButton;
-			add: loadButton;
-			addLast: closeButton;
 			yourself) expand: false;
 		yourself
 ]
@@ -230,13 +220,9 @@ QuickProjectLoaderPresenter >> defaultLayout [
 { #category : 'private' }
 QuickProjectLoaderPresenter >> displayLabelFor: anEntry [
 
-	| label |
-	label := anEntry name.
-	anEntry baselineName isNotEmpty ifTrue: [ 
-		label := label , ' (' , anEntry baselineName , ')' ].
 	^ anEntry isLoadedInImage
-		ifTrue: [ label ]
-		ifFalse: [ '○ ' , label , '  (not loaded)' ]
+		ifTrue: [ anEntry name ]
+		ifFalse: [ '○ ' , anEntry name , '  (not loaded)' ]
 ]
 
 { #category : 'actions' }
@@ -286,18 +272,7 @@ QuickProjectLoaderPresenter >> initializeButtons [
 		action: [ self removeSelectedProject ];
 		disable;
 		yourself.
-	loadButton := self newButton
-		label: 'Load';
-		icon: (self iconNamed: #smallLoadProject);
-		help: 'Load selected project';
-		action: [ self loadSelectedProject ];
-		disable;
-		yourself.
-	closeButton := self newButton
-		label: 'Close';
-		icon: (self iconNamed: #smallCancel);
-		action: [ self delete ];
-		yourself
+	yourself
 ]
 
 { #category : 'initialization' }
@@ -371,12 +346,6 @@ QuickProjectLoaderPresenter >> loadSelectedProject [
 ]
 
 { #category : 'accessing' }
-QuickProjectLoaderPresenter >> loadButton [
-
-	^ loadButton
-]
-
-{ #category : 'accessing' }
 QuickProjectLoaderPresenter >> projectList [
 
 	^ projectList
@@ -426,12 +395,8 @@ QuickProjectLoaderPresenter >> searchInput [
 QuickProjectLoaderPresenter >> updateButtonStates [
 
 	projectList selectedItem
-		ifNotNil: [ 
-			removeButton enable.
-			loadButton enable ]
-		ifNil: [ 
-			removeButton disable.
-			loadButton disable ]
+		ifNotNil: [ removeButton enable ]
+		ifNil: [ removeButton disable ]
 ]
 
 { #category : 'initialization' }

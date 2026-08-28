@@ -62,8 +62,7 @@ QuickProjectLoaderPresenterTest >> testKeymapRegistration [
 QuickProjectLoaderPresenterTest >> testPresenterInitializes [
 
 	self assert: presenter projectList items size equals: 2.
-	self deny: presenter removeButton isEnabled.
-	self deny: presenter loadButton isEnabled
+	self deny: presenter removeButton isEnabled
 ]
 
 { #category : 'tests' }
@@ -91,12 +90,10 @@ QuickProjectLoaderPresenterTest >> testPresenterSortsEntries [
 QuickProjectLoaderPresenterTest >> testSelectionEnablesButtons [
 
 	self deny: presenter removeButton isEnabled.
-	self deny: presenter loadButton isEnabled.
 
 	presenter projectList selectIndex: 1.
 
-	self assert: presenter removeButton isEnabled.
-	self assert: presenter loadButton isEnabled
+	self assert: presenter removeButton isEnabled
 ]
 
 { #category : 'tests' }
