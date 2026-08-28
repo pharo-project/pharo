@@ -21,8 +21,8 @@ QuickProjectLoaderPresenterTest >> setUp [
 	repository := QuickProjectRepository new.
 	repository persistencePath: tempFile.
 
-	repository addEntryNamed: 'Roassal' repository: 'github://ObjectProfile/Roassal/src' baseline: 'Roassal'.
-	repository addEntryNamed: 'Seaside' repository: 'github://SeasideSt/Seaside:v3.4.6/repository' baseline: 'Seaside'.
+	(repository addEntryNamed: 'Roassal' repository: 'github://ObjectProfile/Roassal/src' baseline: 'Roassal') isManual: true.
+	(repository addEntryNamed: 'Seaside' repository: 'github://SeasideSt/Seaside:v3.4.6/repository' baseline: 'Seaside') isManual: true.
 
 	presenter := QuickProjectLoaderPresenter new.
 	presenter repository: repository

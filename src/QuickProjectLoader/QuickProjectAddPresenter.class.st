@@ -54,6 +54,7 @@ QuickProjectAddPresenter >> createEntry [
 		baselineName: baselineInput text trimmed;
 		groups: parsedGroups;
 		useIncomingOnConflict: useIncomingCheckBox state;
+		isManual: true;
 		yourself
 ]
 

@@ -125,9 +125,83 @@ QuickProjectRepositoryTest >> testRecordLoad [
 	| e1 |
 	e1 := repository addEntryNamed: 'Proj 1' repository: 'github://a/1' baseline: 'P1'.
 	self assert: e1 loadCount equals: 0.
+	self assert: e1 loadedInSessions isEmpty.
 
 	repository recordLoadOf: e1.
-	self assert: e1 loadCount equals: 1
+	self assert: e1 loadCount equals: 1.
+	self assert: (e1 loadedInSessions includes: repository currentSessionMarker)
+]
+
+{ #category : 'tests' }
+QuickProjectRepositoryTest >> testVisibleEntriesShowsManualEntries [
+
+	| e1 e2 |
+	e1 := repository addEntryNamed: 'Proj 1' repository: 'github://a/1' baseline: 'P1'.
+	e1 isManual: true.
+	e2 := repository addEntryNamed: 'Proj 2' repository: 'github://a/2' baseline: 'P2'.
+
+	self assert: (repository visibleEntries includes: e1).
+	self deny: (repository visibleEntries includes: e2)
+]
+
+{ #category : 'tests' }
+QuickProjectRepositoryTest >> testVisibleEntriesShowsRecentLoadedEntries [
+
+	| e1 e2 |
+	e1 := repository addEntryNamed: 'Proj 1' repository: 'github://a/1' baseline: 'P1'.
+	e2 := repository addEntryNamed: 'Proj 2' repository: 'github://a/2' baseline: 'P2'.
+
+	repository recordLoadOf: e1.
+
+	self assert: (repository visibleEntries includes: e1).
+	self deny: (repository visibleEntries includes: e2)
+]
+
+{ #category : 'tests' }
+QuickProjectRepositoryTest >> testVisibleEntriesHidesOldSessions [
+
+	| e1 e2 recentMarker oldMarker |
+	e1 := repository addEntryNamed: 'Proj 1' repository: 'github://a/1' baseline: 'P1'.
+	e2 := repository addEntryNamed: 'Proj 2' repository: 'github://a/2' baseline: 'P2'.
+
+	oldMarker := DateAndTime now - 10 days.
+	recentMarker := DateAndTime now.
+	QuickProjectRepository recentImagesWindowSize: 1.
+	e1 recordLoadInSession: oldMarker.
+	e2 recordLoadInSession: recentMarker.
+
+	self deny: (repository visibleEntries includes: e1).
+	self assert: (repository visibleEntries includes: e2)
+]
+
+{ #category : 'tests' }
+QuickProjectRepositoryTest >> testRecentSessionMarkersLimitedToWindow [
+
+	| e1 e2 |
+	e1 := repository addEntryNamed: 'Proj 1' repository: 'github://a/1' baseline: 'P1'.
+	e2 := repository addEntryNamed: 'Proj 2' repository: 'github://a/2' baseline: 'P2'.
+
+	QuickProjectRepository recentImagesWindowSize: 2.
+	e1 recordLoadInSession: (DateAndTime now - 10 days).
+	e2 recordLoadInSession: (DateAndTime now - 9 days).
+	e1 recordLoadInSession: DateAndTime now.
+	e2 recordLoadInSession: DateAndTime now.
+
+	self assert: repository recentSessionMarkers size equals: 2
+]
+
+{ #category : 'tests' }
+QuickProjectRepositoryTest >> testVisibleEntriesOrdersRecentFirst [
+
+	| e1 e2 e3 |
+	e1 := repository addEntryNamed: 'Proj 1' repository: 'github://a/1' baseline: 'P1'.
+	e2 := repository addEntryNamed: 'Proj 2' repository: 'github://a/2' baseline: 'P2'.
+	e3 := repository addEntryNamed: 'Proj 3' repository: 'github://a/3' baseline: 'P3'.
+
+	e2 recordLoadInSession: (DateAndTime now - 2 days).
+	e3 recordLoadInSession: (DateAndTime now - 1 day).
+
+	self assert: (repository visibleEntries asArray) equals: { e3. e2 }
 ]
 
 { #category : 'tests' }

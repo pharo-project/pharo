@@ -151,6 +151,12 @@ QuickProjectLoaderPresenter class >> showOnStartup: aBoolean [
 	ShowOnStartup := aBoolean
 ]
 
+{ #category : 'accessing' }
+QuickProjectLoaderPresenter class >> recentImagesWindowSize [
+
+	^ QuickProjectRepository recentImagesWindowSize
+]
+
 { #category : 'system startup' }
 QuickProjectLoaderPresenter class >> shutDown: isQuitting [
 	"Nothing to do on shutdown."
@@ -160,6 +166,7 @@ QuickProjectLoaderPresenter class >> shutDown: isQuitting [
 QuickProjectLoaderPresenter class >> startUp: isImageStarting [
 
 	isImageStarting ifTrue: [
+		QuickProjectRepository default currentSessionMarker: DateAndTime now.
 		self registerWorldShortcut.
 		self showOnStartup ifTrue: [
 			self open ] ]
@@ -225,7 +232,7 @@ QuickProjectLoaderPresenter >> filterProjects: aString [
 	query ifEmpty: [
 			self refreshList.
 			^ self ].
-	filtered := self repository entries select: [ :entry |
+	filtered := self repository visibleEntries select: [ :entry |
 			            (entry name asLowercase includesSubstring: query) or: [
 				            (entry baselineName asLowercase includesSubstring: query) or: [
 					            entry repositoryUrl asLowercase includesSubstring: query ] ] ].
@@ -358,7 +365,7 @@ QuickProjectLoaderPresenter >> projectList [
 { #category : 'actions' }
 QuickProjectLoaderPresenter >> refreshList [
 
-	projectList items: self repository entries
+	projectList items: self repository visibleEntries
 ]
 
 { #category : 'accessing' }

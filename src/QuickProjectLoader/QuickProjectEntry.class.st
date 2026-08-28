@@ -29,7 +29,9 @@ Class {
 		'baselineName',
 		'groups',
 		'loadCount',
-		'useIncomingOnConflict'
+		'useIncomingOnConflict',
+		'loadedInSessions',
+		'isManual'
 	],
 	#category : 'QuickProjectLoader-Model',
 	#package : 'QuickProjectLoader',
@@ -130,7 +132,9 @@ QuickProjectEntry >> initialize [
 	loadCount := 0.
 	groups := #().
 	baselineName := ''.
-	useIncomingOnConflict := true
+	useIncomingOnConflict := true.
+	loadedInSessions := #().
+	isManual := false
 ]
 
 { #category : 'testing' }
@@ -245,4 +249,38 @@ QuickProjectEntry >> useIncomingOnConflict [
 QuickProjectEntry >> useIncomingOnConflict: aBoolean [
 
 	useIncomingOnConflict := aBoolean
+]
+
+{ #category : 'accessing' }
+QuickProjectEntry >> isManual [
+
+	^ isManual ifNil: [ isManual := false ]
+]
+
+{ #category : 'accessing' }
+QuickProjectEntry >> isManual: aBoolean [
+
+	isManual := aBoolean
+]
+
+{ #category : 'accessing' }
+QuickProjectEntry >> loadedInSessions [
+
+	^ loadedInSessions ifNil: [ loadedInSessions := #() ]
+]
+
+{ #category : 'accessing' }
+QuickProjectEntry >> loadedInSessions: aCollection [
+
+	loadedInSessions := aCollection
+]
+
+{ #category : 'actions' }
+QuickProjectEntry >> recordLoadInSession: aSessionMarker [
+
+	(self loadedInSessions includes: aSessionMarker) ifTrue: [ ^ self ].
+	loadedInSessions := (self loadedInSessions copyWith: aSessionMarker)
+		last: 30;
+		yourself.
+	^ self
 ]
