@@ -1,12 +1,14 @@
 "
 I am the main Spec2 UI presenter for the Quick Project Loader.
 
-I display a list of commonly-used Metacello projects sorted by usage frequency (most-used first).
-I am designed to be thin and positioned on the right side of the screen.
+I display a modern list/table of commonly-used Metacello projects sorted by usage frequency (most-used first).
+I am designed to be thin (320px wide), tall (600px high), and positioned on the right side of the screen.
 
 Features:
-- Single-click or double-click to load projects
-- Automatic inference of installed image projects ('Infer' button)
+- Live search/filtering bar
+- Auto-infer projects from image on startup & open (no Infer button needed)
+- Table view with icons, project names, baseline subtitles, load count badges, and context menu
+- Single/double-click loading
 - Manual project entry ('Add Project' button)
 - World menu integration (<worldMenu>)
 - Global keyboard shortcut (<keymap>) (Cmd+Shift+L / Ctrl+Shift+L)
@@ -22,9 +24,9 @@ Class {
 	#name : 'QuickProjectLoaderPresenter',
 	#superclass : 'SpPresenter',
 	#instVars : [
+		'searchInput',
 		'projectList',
 		'addButton',
-		'inferButton',
 		'removeButton',
 		'loadButton',
 		'closeButton',
@@ -41,7 +43,7 @@ Class {
 { #category : 'accessing' }
 QuickProjectLoaderPresenter class >> defaultPreferredExtent [
 
-	^ 280 @ 450
+	^ 320 @ 600
 ]
 
 { #category : 'class initialization' }
@@ -67,7 +69,7 @@ QuickProjectLoaderPresenter class >> menuCommandOn: aBuilder [
 
 { #category : 'instance creation' }
 QuickProjectLoaderPresenter class >> open [
-	"Open the presenter and position it at the top-right corner of the World screen."
+	"Open the presenter, auto-infer projects, and position it at the top-right corner of the World screen."
 
 	| presenter window worldBounds windowWidth windowHeight topX topY morphWindow |
 	presenter := self newApplication: StPharoApplication current.
@@ -158,44 +160,51 @@ QuickProjectLoaderPresenter >> closeButton [
 	^ closeButton
 ]
 
+{ #category : 'actions' }
+QuickProjectLoaderPresenter >> copySelectedScript [
+
+	projectList selectedItem ifNotNil: [ :entry |
+		Clipboard clipboardText: entry metacelloLoadScript.
+		self inform: 'Metacello load script copied to clipboard!' ]
+]
+
 { #category : 'layout' }
 QuickProjectLoaderPresenter >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom
-		spacing: 4;
+		spacing: 5;
+		add: searchInput expand: false;
 		add: projectList;
 		add: (SpBoxLayout newLeftToRight
-			spacing: 3;
+			spacing: 4;
 			add: addButton;
-			add: inferButton;
 			add: removeButton;
-			yourself) expand: false;
-		add: (SpBoxLayout newLeftToRight
-			spacing: 3;
 			add: loadButton;
-			add: closeButton;
+			addLast: closeButton;
 			yourself) expand: false;
 		yourself
 ]
 
-{ #category : 'accessing' }
-QuickProjectLoaderPresenter >> inferButton [
-
-	^ inferButton
-]
-
 { #category : 'actions' }
-QuickProjectLoaderPresenter >> inferProjects [
+QuickProjectLoaderPresenter >> filterProjects: aString [
 
-	self repository inferProjects.
-	self refreshList.
-	self inform: 'Inferred projects from current image!'
+	| query filtered |
+	query := aString trimmed asLowercase.
+	query ifEmpty: [ 
+		self refreshList.
+		^ self ].
+	filtered := self repository entries select: [ :entry |
+		(entry name asLowercase includesSubstring: query)
+			or: [ (entry baselineName asLowercase includesSubstring: query)
+			or: [ (entry repositoryUrl asLowercase includesSubstring: query) ] ] ].
+	projectList items: filtered
 ]
 
 { #category : 'initialization' }
 QuickProjectLoaderPresenter >> initialize [
 
 	repository := QuickProjectRepository default.
+	repository inferProjects.
 	super initialize
 ]
 
@@ -205,14 +214,8 @@ QuickProjectLoaderPresenter >> initializeButtons [
 	addButton := self newButton
 		label: 'Add';
 		icon: (self iconNamed: #add);
-		help: 'Add a new project entry by hand';
+		help: 'Add a new project entry manually';
 		action: [ self addProject ];
-		yourself.
-	inferButton := self newButton
-		label: 'Infer';
-		icon: (self iconNamed: #smallUpdate);
-		help: 'Infer projects automatically from image';
-		action: [ self inferProjects ];
 		yourself.
 	removeButton := self newButton
 		label: 'Remove';
@@ -222,7 +225,7 @@ QuickProjectLoaderPresenter >> initializeButtons [
 		disable;
 		yourself.
 	loadButton := self newButton
-		label: 'Load Selected';
+		label: 'Load';
 		icon: (self iconNamed: #smallLoadProject);
 		help: 'Load selected project';
 		action: [ self loadSelectedProject ];
@@ -238,14 +241,49 @@ QuickProjectLoaderPresenter >> initializeButtons [
 { #category : 'initialization' }
 QuickProjectLoaderPresenter >> initializePresenters [
 
-	projectList := self newList.
+	searchInput := self newSearchInput
+		placeholder: 'Search projects...';
+		whenTextChangedDo: [ :text | self filterProjects: text ];
+		yourself.
+
+	projectList := self newTable.
 	projectList
-		headerTitle: 'Common Projects (Most Used)';
-		display: [ :entry | 
-			| label |
-			label := entry name.
-			entry baselineName isNotEmpty ifTrue: [ label := label , ' (', entry baselineName, ')' ].
-			label , ' [' , entry loadCount printString , 'x]' ];
+		addColumn: (SpImageTableColumn new
+			width: 22;
+			evaluated: [ :entry | self iconNamed: #smallLoadProject ];
+			yourself);
+		addColumn: (SpStringTableColumn new
+			title: 'Project';
+			evaluated: [ :entry | 
+				entry baselineName isNotEmpty
+					ifTrue: [ entry name , ' (' , entry baselineName , ')' ]
+					ifFalse: [ entry name ] ];
+			beSortable;
+			yourself);
+		addColumn: (SpStringTableColumn new
+			title: 'Loads';
+			width: 45;
+			evaluated: [ :entry | entry loadCount printString , 'x' ];
+			beSortable;
+			yourself);
+		contextMenu: [ 
+			self newMenu
+				addItem: [ :item | 
+					item 
+						name: 'Load Project';
+						icon: (self iconNamed: #smallLoadProject);
+						action: [ self loadSelectedProject ] ];
+				addItem: [ :item | 
+					item 
+						name: 'Copy Metacello Script';
+						icon: (self iconNamed: #smallCopy);
+						action: [ self copySelectedScript ] ];
+				addItem: [ :item | 
+					item 
+						name: 'Remove';
+						icon: (self iconNamed: #remove);
+						action: [ self removeSelectedProject ] ];
+				yourself ];
 		whenSelectionChangedDo: [ :selection | self updateButtonStates ];
 		whenActivatedDo: [ :selection | self loadSelectedProject ];
 		yourself.
@@ -323,6 +361,12 @@ QuickProjectLoaderPresenter >> repository: aRepository [
 
 	repository := aRepository.
 	self refreshList
+]
+
+{ #category : 'accessing' }
+QuickProjectLoaderPresenter >> searchInput [
+
+	^ searchInput
 ]
 
 { #category : 'private' }

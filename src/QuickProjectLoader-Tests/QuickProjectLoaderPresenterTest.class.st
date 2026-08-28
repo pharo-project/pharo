@@ -38,6 +38,17 @@ QuickProjectLoaderPresenterTest >> tearDown [
 ]
 
 { #category : 'tests' }
+QuickProjectLoaderPresenterTest >> testFilterProjects [
+
+	presenter filterProjects: 'Seaside'.
+	self assert: presenter projectList items size equals: 1.
+	self assert: presenter projectList items first name equals: 'Seaside'.
+
+	presenter filterProjects: ''.
+	self assert: presenter projectList items size equals: 2
+]
+
+{ #category : 'tests' }
 QuickProjectLoaderPresenterTest >> testKeymapRegistration [
 
 	| builder |
