@@ -229,14 +229,14 @@ QuickProjectLoaderPresenter >> displayLabelFor: anEntry [
 QuickProjectLoaderPresenter >> filterProjects: aString [
 
 	| query filtered |
-	query := aString trimmed asLowercase.
-	query ifEmpty: [ 
-		self refreshList.
-		^ self ].
+	query := aString trimBoth asLowercase.
+	query ifEmpty: [
+			self refreshList.
+			^ self ].
 	filtered := self repository entries select: [ :entry |
-		(entry name asLowercase includesSubstring: query)
-			or: [ (entry baselineName asLowercase includesSubstring: query)
-			or: [ (entry repositoryUrl asLowercase includesSubstring: query) ] ] ].
+			            (entry name asLowercase includesSubstring: query) or: [
+				            (entry baselineName asLowercase includesSubstring: query) or: [
+					            entry repositoryUrl asLowercase includesSubstring: query ] ] ].
 	projectList items: filtered
 ]
 
@@ -272,7 +272,6 @@ QuickProjectLoaderPresenter >> initializeButtons [
 		action: [ self removeSelectedProject ];
 		disable;
 		yourself.
-	yourself
 ]
 
 { #category : 'initialization' }
