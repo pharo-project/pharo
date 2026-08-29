@@ -1,6 +1,6 @@
 Extension { #name : 'Array' }
 
-{ #category : '*System-Model' }
+{ #category : '*DeepCopier' }
 Array >> copyWithDependent: newElement [
 
 	self isEmpty ifTrue: [ ^ DependentsArray with: newElement ].

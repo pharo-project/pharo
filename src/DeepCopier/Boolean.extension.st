@@ -1,6 +1,6 @@
 Extension { #name : 'Boolean' }
 
-{ #category : '*System-Model' }
+{ #category : '*DeepCopier' }
 Boolean >> veryDeepCopyWith: deepCopier [
 	"Return self.  I can't be copied.  Do not record me."
 ]
