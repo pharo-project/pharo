@@ -4,22 +4,25 @@ Class {
 	#instVars : [
 		'var'
 	],
+	#classVars : [
+		'MyTestSharedVariable'
+	],
 	#category : 'Kernel-Tests-Classes',
 	#package : 'Kernel-Tests',
 	#tag : 'Classes'
 }
 
-{ #category : 'examples' }
+{ #category : 'private - test support' }
 CompiledCodeTest >> compiledMethod1 [
 	^ self class >> #method1
 ]
 
-{ #category : 'examples' }
+{ #category : 'private - test support' }
 CompiledCodeTest >> compiledMethod1Copy [
 	^ self compiledMethod1 copy
 ]
 
-{ #category : 'examples' }
+{ #category : 'private - test support' }
 CompiledCodeTest >> method1 [
 
 	<pragma1: 123 foo: 'bar' >
@@ -29,10 +32,110 @@ CompiledCodeTest >> method1 [
 	#(#add #at: #remove) do: #printOn:
 ]
 
-{ #category : 'examples' }
+{ #category : 'private - test support' }
+CompiledCodeTest >> methodFFI [
+
+	"For testing, not intended to be called"
+	^ self ffiCall: 'int gitpid()'
+]
+
+{ #category : 'private - test support' }
+CompiledCodeTest >> methodForTest2 [
+
+	<pragma: #pragma>
+
+	| test |
+
+	test := 1 + 2.
+
+	self do: [
+			test := 1 - 2.
+			test := #( arrayInBlock ).
+			self name ].
+	^ #( #array )
+]
+
+{ #category : 'private - test support' }
+CompiledCodeTest >> methodForTest3 [
+
+	<pragma: #pragma>
+
+	MyTestSharedVariable := 1 + 2.
+
+	self doIt: [
+			MyTestSharedVariable := 1 - 2.
+			MyTestSharedVariable := #( arrayInBlock ).
+			self name ].
+
+	^ #( #array )
+]
+
+{ #category : 'private - test support' }
+CompiledCodeTest >> methodForTest4 [
+
+	<pragma: #pragma>
+
+	MyTestSharedVariable := 1 + 2.
+
+	Class.
+
+	self doIt: [
+			MyTestSharedVariable := 1 - 2.
+			MyTestSharedVariable := #( arrayInBlock ).
+			Object.
+			self name ].
+
+	^ #( #array )
+]
+
+{ #category : 'private - test support' }
+CompiledCodeTest >> methodForTest5 [
+
+	<compilerOptions: #( #+ optionCleanBlockClosure )>
+	| b |
+	b := 1.
+	^ [ thisContext tempNamed: 'b' ] value
+]
+
+{ #category : 'private - test support' }
 CompiledCodeTest >> methodReturnOne [
 
 	^ 1
+]
+
+{ #category : 'private - test support' }
+CompiledCodeTest >> methodReturningBlock [
+
+	^ [
+		MyTestSharedVariable := 1 - 2.
+		MyTestSharedVariable := #(arrayInBlock).
+		Object.
+		self name ]
+]
+
+{ #category : 'private - test support' }
+CompiledCodeTest >> methodReturningSelf [
+
+	^ self
+]
+
+{ #category : 'private - test support' }
+CompiledCodeTest >> methodReturningThisContext [
+
+	^ thisContext
+]
+
+{ #category : 'private - test support' }
+CompiledCodeTest >> methodSendingDoitToSelf [
+
+	^ self doit
+]
+
+{ #category : 'private - test support' }
+CompiledCodeTest >> methodSendingDoitToSelfWithUnusedBloc [
+
+	self doit.
+	[ Object class ]
 ]
 
 { #category : 'tests - testing' }
@@ -122,15 +225,9 @@ CompiledCodeTest >> testFlag [
 CompiledCodeTest >> testHasLiteral [
 
 	| method |
-	method := self class compiler permitFaulty: true; source: 'method
-		<pragma: #pragma>
-		test := 1+2.
-		self doIt: [
-		test := 1 - 2.
-		test := #(arrayInBlock).
-		self name ].
-		^#(#array) '; compileOrFail.
-	"simpe case: normal send in the method itself"
+	method := method := self class >> #methodForTest3.
+
+	"simple case: normal send in the method itself"
 	self assert: (method hasLiteral: #doIt:).
 	"special selector in the method is not found"
 	self deny: (method hasLiteral: #+).
@@ -168,15 +265,9 @@ CompiledCodeTest >> testHasLiteral2 [
 CompiledCodeTest >> testHasLiteralSuchThat [
 
 	| method |
-	method := self class compiler permitFaulty: true; source: 'method
-		<pragma: #pragma>
-		test := 1+2.
-		self doIt: [
-		test := 1 - 2.
-		test := #(arrayInBlock).
-		self name ].
-		^#(#array) '; compileOrFail.
-	"simpe case: normal send in the method itself"
+	method := self class >> #methodForTest3.
+	
+	"simple case: normal send in the method itself"
 	self assert: (method hasLiteralSuchThat: [:literal | literal == #doIt:]).
 	"special selector in the method is not found"
 	self deny: (method hasLiteralSuchThat: [:literal | literal == #+]).
@@ -200,15 +291,10 @@ CompiledCodeTest >> testHasLiteralSuchThat [
 CompiledCodeTest >> testHasSelector [
 
 	| method |
-	method := self class compiler permitFaulty: true; source: 'method
-		<pragma: #pragma>
-		test := 1+2.
-		self doIt: [
-		test := 1 - 2.
-		test := #(arrayInBlock).
-		self name ].
-		^#(#array) '; compileOrFail.
-	"simpe case: normal send in the method itself"
+	
+	method := self class >> #methodForTest3.
+	
+	"simple case: normal send in the method itself"
 	self assert: (method hasSelector: #doIt:).
 	"special selector in the method"
 	self assert: (method hasSelector: #+).
@@ -232,14 +318,8 @@ CompiledCodeTest >> testHasSelector [
 CompiledCodeTest >> testHasSelectorSpecialSelectorIndex [
 
 	| method specialIndex |
-	method := self class compiler permitFaulty: true; source: 'method
-		<pragma: #pragma>
-		test := 1+2.
-		self do: [
-		test := 1 - 2.
-		test := #(arrayInBlock).
-		self name ].
-		^#(#array) '; compileOrFail.
+	method := self class >> #methodForTest2.
+	
 	"simpe case: normal send in the method itself"
 	specialIndex := Smalltalk specialSelectorIndexOrNil: #do:.
 	self assert: (method hasSelector: #do: specialSelectorIndex: specialIndex).
@@ -284,25 +364,11 @@ CompiledCodeTest >> testHasTemporaries [
 CompiledCodeTest >> testLiteralsDoNotConsiderTheInnerBlockLiterals [
 
 	| method block |
-	method := self class compiler permitFaulty: true; source: 'method
-		<pragma: #pragma>
-		test := 1+2.
-		Class.
-		self doIt: [
-		test := 1 - 2.
-		test := #(arrayInBlock).
-		Object.
-		self name ].
-		^#(#array) '; compileOrFail.
-	block := (OpalEvaluator new permitFaulty: true; evaluate: '[
-		test := 1 - 2.
-		test := #(arrayInBlock).
-		Object.
-		self name ]') compiledBlock.
+	method := self class >> #methodForTest4.
+	block := self methodReturningBlock compiledBlock.
 	self assertCollection: method literals equals: {
 			2.
-			(UndeclaredVariable key: #test value: nil).
-			#runtimeUndeclaredWrite:inContext:.
+			(ClassVariable key: #MyTestSharedVariable value: nil).
 			(GlobalVariable key: #Class value: Class).
 			block.
 			#doIt:.
@@ -328,30 +394,20 @@ CompiledCodeTest >> testLiteralsDoesNotContainMethodName [
 CompiledCodeTest >> testLiteralsEvenTheOnesInTheInnerBlocks [
 	"The behavior is different than literals"
 	| method |
-	method := self class compiler permitFaulty: true; source: 'method
-		<pragma: #pragma>
-		test := 1+2.
-		Class.
-		self doIt: [
-		test := 1 - 2.
-		test := #(arrayInBlock).
-		Object.
-		self name ].
-		^#(#array) '; compileOrFail.
+	method := self class >> #methodForTest4.
+	
 	"Next assertion is expected: literals have a different behavior more close to the system"
 	self deny: method literalsEvenTheOnesInTheInnerBlocks equals: method literals.
 	self
 		assertCollection: method literalsEvenTheOnesInTheInnerBlocks
 		equals: {
 				2.
-				(UndeclaredVariable key: #test value: nil).
-				#runtimeUndeclaredWrite:inContext:.
-				(GlobalVariable key: #Class value: Class).
+				ClassVariable key: #MyTestSharedVariable value: nil.
+				GlobalVariable key: #Class value: Class.
 				2.
-				(UndeclaredVariable key: #test value: nil).
-				#runtimeUndeclaredWrite:inContext:.
+				ClassVariable key: #MyTestSharedVariable value: nil.
 				#( #arrayInBlock ).
-				(GlobalVariable key: #Object value: Object).
+				GlobalVariable key: #Object value: Object.
 				#name.
 				#doIt:.
 				#( #array ). }
@@ -363,12 +419,8 @@ CompiledCodeTest >> testLiteralsEvenTheOnesInTheInnerCleanBlocks [
 	"The behavior is different than literals"
 
 	| method |
-	method := self class compiler source:
-		          'exampleAccessOuterFromCleanBlock
-	<compilerOptions: #(+ optionCleanBlockClosure)>
-	| b |
-	b := 1.
-	^[ thisContext tempNamed: ''b'' ] value'; compileOrFail.
+	method := self class >> #methodForTest5.
+	
 	self
 		assertCollection: method literalsEvenTheOnesInTheInnerBlocks
 		equals: #( 'b' #tempNamed: )
@@ -377,7 +429,7 @@ CompiledCodeTest >> testLiteralsEvenTheOnesInTheInnerCleanBlocks [
 { #category : 'tests - scanning' }
 CompiledCodeTest >> testLocalMessages [
 	| method |
-	method := self class compiler source: 'method self doit. [Object class]'; compileOrFail.
+	method := self class >> #methodSendingDoitToSelfWithUnusedBloc.
 	self assert: method localMessages asArray equals: #(#doit) .
 	
 ]
@@ -385,7 +437,7 @@ CompiledCodeTest >> testLocalMessages [
 { #category : 'tests - scanning' }
 CompiledCodeTest >> testMessages [
 	| method |
-	method := self class compiler source: 'method self doit. [Object class]'; compileOrFail.
+	method := self class >> #methodSendingDoitToSelfWithUnusedBloc.
 	self assertCollection: method messages asArray hasSameElements: #(#doit #class).
 ]
 
@@ -437,25 +489,25 @@ CompiledCodeTest >> testReadsRef [
 { #category : 'tests - scanning' }
 CompiledCodeTest >> testReadsSelf [
 	| method |
-	method := self class compiler source: 'method self doit'; compileOrFail.
+	method := self class >> #methodSendingDoitToSelf.
 	self assert: method readsSelf.
-	method := self class compiler source: 'method ^self'; compileOrFail.
+	method := self class >> #methodReturningSelf.
 	self assert: method readsSelf.
-	method := self class compiler source: 'method ^thisContext'; compileOrFail.
+	method := self class >> #methodReturningThisContext.
 	self deny: method readsSelf.
 	"take care! FFI methods have a self send, but they do not have self bytecode after the first call
 	Here we test just the case of a FFI method that was not yet called to not make this test depend on FFI
 	calls"
-	method := self class compiler source: 'status ^ self ffiCall: #(int cairo_scaled_font_status (self))'; compileOrFail.
+	method := self class >> #methodFFI.
 	self assert: method readsSelf
 ]
 
 { #category : 'tests - scanning' }
 CompiledCodeTest >> testReadsThisContext [
 	| method |
-	method := self class compiler source: 'method ^thisContext'; compileOrFail.
+	method := self class >> #methodReturningThisContext.
 	self assert: method readsThisContext.
-	method := self class compiler source: 'method ^self'; compileOrFail.
+	method := self class >> #methodReturningSelf.
 	self deny: method readsThisContext
 ]
 
