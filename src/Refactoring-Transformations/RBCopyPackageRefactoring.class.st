@@ -156,7 +156,10 @@ RBCopyPackageRefactoring >> reparent: classes with: copyClasses [
 		dict := Dictionary newFromKeys: classes andValues: copyClasses.
 		subclasses := copyClasses
 			              collect: [ :cls | self model classNamed: cls ]
-			              thenSelect: [ :rb | classes includes: rb superclass name ].
+			              thenSelect: [ :rb |
+				              rb isTrait not and: [
+					              rb superclass isNotNil and: [
+						              classes includes: rb superclass name ] ] ].
 		subclasses do: [ :cls |
 				self model reparentClasses: { cls } to: (self model classNamed: (dict at: cls superclass name)).
 				job currentValue: jobIndex title: (String streamContents: [ :stream |
