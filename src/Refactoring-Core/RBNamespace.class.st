@@ -346,20 +346,29 @@ RBNamespace >> defineClass: aBlock [
 	newClass ifNil: [
 		| newMetaclass |
 		self unmarkAsRemoved: newClassName.
-		newClass := RBClass named: newClassName.
-		newMetaclass := RBMetaclass named: newClassName.
+		change builder isTrait
+			ifTrue: [
+				newClass := self rbTraitClass named: newClassName.
+				newMetaclass := self rbTraitedMetaclassClass named: newClassName ]
+			ifFalse: [
+				newClass := self rbClassClass named: newClassName.
+				newMetaclass := self rbMetaclassClass named: newClassName ].
 		newClass model: self.
 		newMetaclass model: self.
 		newClasses at: newClassName put: (Array with: newClass with: newMetaclass) ].
 	newClass superclass: (self classNamed: change superclassName).
-	newClass superclass
-		ifNil: [
-			self rootClasses add: newClass.
-			newClass classSide superclass: (self classFor: Object class superclass) ]
-		ifNotNil: [ newClass classSide superclass: newClass superclass classSide ].
+	newClass isTrait
+		ifTrue: [ newClass classSide superclass: (self classFor: Trait) ]
+		ifFalse: [
+			newClass superclass
+				ifNil: [
+					self rootClasses add: newClass.
+					newClass classSide superclass: (self classFor: Object class superclass) ]
+				ifNotNil: [ newClass classSide superclass: newClass superclass classSide ] ].
 	newClass instanceVariableNames: (change instanceVariableNames ifNil: [ '' ]).
 	newClass classVariableNames: (change classVariableNames ifNil: [ '' ]).
 	newClass poolDictionaryNames: (change sharedPoolNames ifNil: [ '' ]).
+	newClass traitComposition: change traitComposition.
 	change comment ifNotNil: [ :comment | newClass comment: comment ].
 	newClass packageName: change package.
 	newClass tagName: change tag.
