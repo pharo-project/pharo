@@ -96,9 +96,29 @@ ReDuplicateClassRefactoring >> classMethods: anObject [
 { #category : 'transforming' }
 ReDuplicateClassRefactoring >> copyClass [
 
+	aClass isTrait ifTrue: [ ^ self copyTraitDefinition ].
+
+	self copyClassDefinition
+]
+
+{ #category : 'transforming' }
+ReDuplicateClassRefactoring >> copyClassDefinition [
+
 	self generateChangesFor:
 		((RBInsertNewClassRefactoring model: self model className: className)
 			 superclass: aClass superclass;
+			 traitComposition: aClass traitComposition;
+			 packageName: self packageName;
+			 comment: aClass comment;
+			 tagName: self packageTagName;
+			 yourself)
+]
+
+{ #category : 'transforming' }
+ReDuplicateClassRefactoring >> copyTraitDefinition [
+
+	self generateChangesFor:
+		((RBInsertNewTraitRefactoring model: self model className: className)
 			 traitComposition: aClass traitComposition;
 			 packageName: self packageName;
 			 comment: aClass comment;
