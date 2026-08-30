@@ -197,6 +197,23 @@ RBNamespaceTest >> testDefineClassChange [
 ]
 
 { #category : 'tests - classes' }
+RBNamespaceTest >> testDefineTraitChange [
+
+	| trait |
+	namespace defineClass: [ :aBuilder |
+		aBuilder
+			beTrait;
+			name: #TRefactoringNamespaceTest;
+			package: #'Refactoring-Core-Tests' ].
+
+	trait := namespace classNamed: #TRefactoringNamespaceTest.
+	self assert: trait class equals: RBTrait.
+	self assert: trait classSide class equals: RBTraitedMetaclass.
+	self assert: trait superclass isNil.
+	self deny: (namespace rootClasses includes: trait)
+]
+
+{ #category : 'tests - classes' }
 RBNamespaceTest >> testImplementors [
 
 	self assert: ((namespace allImplementorsOf: #printString)
