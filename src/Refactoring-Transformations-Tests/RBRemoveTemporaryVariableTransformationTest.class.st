@@ -15,6 +15,40 @@ RBRemoveTemporaryVariableTransformationTest >> testClassDoesNotExist [
 			 inClass: #RBTemporaryVariableTransformationTest)
 ]
 
+{ #category : 'tests' }
+RBRemoveTemporaryVariableTransformationTest >> testDefiningSequenceNodeAndHasUsagesInScope [
+
+	| transformation |
+	transformation := RBAddMethodTransformation
+		sourceCode: 'foo
+			| unused used |
+			used := 1.
+			^used'
+		in: self changeMockClass name
+		withProtocol: #accessing.
+	transformation generateChanges.
+
+	"Test helper methods on unused temp"
+	transformation := RBRemoveTemporaryVariableTransformation
+		model: transformation model
+		variable: 'unused'
+		inMethod: #foo
+		inClass: self changeMockClass name.
+
+	self assert: transformation definingSequenceNode isNotNil.
+	self deny: transformation hasUsagesInScope.
+
+	"Test helper methods on used temp"
+	transformation := RBRemoveTemporaryVariableTransformation
+		model: transformation model
+		variable: 'used'
+		inMethod: #foo
+		inClass: self changeMockClass name.
+
+	self assert: transformation definingSequenceNode isNotNil.
+	self assert: transformation hasUsagesInScope
+]
+
 { #category : 'tests - failures' }
 RBRemoveTemporaryVariableTransformationTest >> testMethodDoesNotExist [
 
@@ -22,6 +56,30 @@ RBRemoveTemporaryVariableTransformationTest >> testMethodDoesNotExist [
 			 variable: 'temp'
 			 inMethod: #foofoo
 			 inClass: #RBRemoveTemporaryVariableTransformationTest)
+]
+
+{ #category : 'tests' }
+RBRemoveTemporaryVariableTransformationTest >> testRemoveOuterUnusedTemporaryWhenInnerBlockShadowsSameName [
+
+	| transformation class |
+	transformation := RBAddMethodTransformation
+		sourceCode: 'foo
+			| sameName |
+			[ :x | | sameName | sameName := x * 2. sameName ] value: 5.
+			^42'
+		in: self changeMockClass name
+		withProtocol: #accessing.
+	transformation generateChanges.
+
+	transformation := RBRemoveTemporaryVariableTransformation
+		model: transformation model
+		variable: 'sameName'
+		inMethod: #foo
+		inClass: self changeMockClass name.
+	transformation generateChanges.
+
+	class := transformation model classNamed: self changeMockClass name.
+	self assert: (class parseTreeForSelector: #foo) temporaries isEmpty
 ]
 
 { #category : 'tests' }
@@ -61,29 +119,6 @@ RBRemoveTemporaryVariableTransformationTest >> testVariableDoesNotExist [
 ]
 
 { #category : 'tests' }
-RBRemoveTemporaryVariableTransformationTest >> testVariableHasUsagesWithoutShadowing [
-
-	| transformation |
-	transformation := RBAddMethodTransformation
-		sourceCode: 'foo
-			| temp bar |
-			bar := 5.
-			temp := bar * bar.
-			^temp'
-		in: self changeMockClass name
-		withProtocol: #accessing.
-	transformation generateChanges.
-
-	transformation := RBRemoveTemporaryVariableTransformation
-		model: transformation model
-		variable: 'temp'
-		inMethod: #foo
-		inClass: self changeMockClass name.
-		
-	self should: [ transformation generateChanges ] raise: RBRefactoringError
-]
-
-{ #category : 'tests' }
 RBRemoveTemporaryVariableTransformationTest >> testVariableHasUsagesWithShadowing [
 
 	| transformation class |
@@ -115,13 +150,36 @@ RBRemoveTemporaryVariableTransformationTest >> testVariableHasUsagesWithShadowin
 ]
 
 { #category : 'tests' }
-RBRemoveTemporaryVariableTransformationTest >> testRemoveOuterUnusedTemporaryWhenInnerBlockShadowsSameName [
+RBRemoveTemporaryVariableTransformationTest >> testVariableHasUsagesWithoutShadowing [
+
+	| transformation |
+	transformation := RBAddMethodTransformation
+		sourceCode: 'foo
+			| temp bar |
+			bar := 5.
+			temp := bar * bar.
+			^temp'
+		in: self changeMockClass name
+		withProtocol: #accessing.
+	transformation generateChanges.
+
+	transformation := RBRemoveTemporaryVariableTransformation
+		model: transformation model
+		variable: 'temp'
+		inMethod: #foo
+		inClass: self changeMockClass name.
+		
+	self should: [ transformation generateChanges ] raise: RBRefactoringError
+]
+
+{ #category : 'tests' }
+RBRemoveTemporaryVariableTransformationTest >> testVariableShadowedByBlockArgumentNotUsed [
 
 	| transformation class |
 	transformation := RBAddMethodTransformation
 		sourceCode: 'foo
-			| sameName |
-			[ :x | | sameName | sameName := x * 2. sameName ] value: 5.
+			| temp |
+			[ :temp | temp ] value: 1.
 			^42'
 		in: self changeMockClass name
 		withProtocol: #accessing.
@@ -129,9 +187,11 @@ RBRemoveTemporaryVariableTransformationTest >> testRemoveOuterUnusedTemporaryWhe
 
 	transformation := RBRemoveTemporaryVariableTransformation
 		model: transformation model
-		variable: 'sameName'
+		variable: 'temp'
 		inMethod: #foo
 		inClass: self changeMockClass name.
+
+	self deny: transformation hasUsagesInScope.
 	transformation generateChanges.
 
 	class := transformation model classNamed: self changeMockClass name.
@@ -139,35 +199,23 @@ RBRemoveTemporaryVariableTransformationTest >> testRemoveOuterUnusedTemporaryWhe
 ]
 
 { #category : 'tests' }
-RBRemoveTemporaryVariableTransformationTest >> testDefiningSequenceNodeAndHasUsagesInScope [
+RBRemoveTemporaryVariableTransformationTest >> testVariableUsedDirectly [
 
 	| transformation |
 	transformation := RBAddMethodTransformation
 		sourceCode: 'foo
-			| unused used |
-			used := 1.
-			^used'
+			| temp |
+			temp'
 		in: self changeMockClass name
 		withProtocol: #accessing.
 	transformation generateChanges.
 
-	"Test helper methods on unused temp"
 	transformation := RBRemoveTemporaryVariableTransformation
 		model: transformation model
-		variable: 'unused'
+		variable: 'temp'
 		inMethod: #foo
 		inClass: self changeMockClass name.
 
-	self assert: transformation definingSequenceNode isNotNil.
-	self deny: transformation hasUsagesInScope.
-
-	"Test helper methods on used temp"
-	transformation := RBRemoveTemporaryVariableTransformation
-		model: transformation model
-		variable: 'used'
-		inMethod: #foo
-		inClass: self changeMockClass name.
-
-	self assert: transformation definingSequenceNode isNotNil.
-	self assert: transformation hasUsagesInScope
+	self assert: transformation hasUsagesInScope.
+	self should: [ transformation generateChanges ] raise: RBRefactoringError
 ]
