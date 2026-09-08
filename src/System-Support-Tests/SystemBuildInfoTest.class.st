@@ -20,6 +20,15 @@ SystemBuildInfoTest >> testIsBuildFinished [
 ]
 
 { #category : 'tests' }
+SystemBuildInfoTest >> testIsSystemPackage [
+
+	| newPackage |
+	self assert: self class package isSystemPackage.
+	newPackage := self packageOrganizer ensurePackage: 'GeneratedPackageForTestsOfSystemBuildInfo'.
+	[ self deny: newPackage isSystemPackage ] ensure: [ newPackage ifNotNil: [ :package | package removeFromSystem ] ]
+]
+
+{ #category : 'tests' }
 SystemBuildInfoTest >> testSystemPackageNames [
 
 	| buildInfo newPackage |

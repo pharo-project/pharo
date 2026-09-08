@@ -479,6 +479,13 @@ Package >> isPackage [
 ]
 
 { #category : 'testing' }
+Package >> isSystemPackage [
+	"I return true if I (the package) is a package from the basic Pharo image. It means that I was present in the Pharo image during its build."
+
+	^ SystemBuildInfo current systemPackagesIncludes: self
+]
+
+{ #category : 'testing' }
 Package >> isTestPackage [
 	"1. Test package ends with suffix -Tests. Suffix is case sensitive.
 	 2. Or test package contains '-Tests-' in middle.
