@@ -73,7 +73,10 @@ StRenameTempOrArgPreviewPresenter >> addBehaviorPanel [
 
 	behaviorMessageLabel label: driver checkBehaviorPreservingPreconditions.
 	
-	driver isTemporaryVariable ifTrue: [ behaviorLayout add: behaviorOptionsPanel ].
+	driver isTemporaryVariable ifTrue: [ 
+		(behaviorLayout children includes: behaviorOptionsPanel) 
+			ifFalse: [ behaviorLayout add: behaviorOptionsPanel expand: false ]
+	].
 	
 	(topLayout children includes: behaviorPanel)
 		ifFalse: [ topLayout add: behaviorPanel expand: false ] 
@@ -174,7 +177,8 @@ StRenameTempOrArgPreviewPresenter >> connectPresenters [
 							associatedRadioButtons: { buttonApplyTransformation }.
 	buttonApplyTransformation whenActivatedDo: [ self applyTransformation ];
 									  associatedRadioButtons: { buttonApplyAnyway }.
-	buttonApplyAnyway state: true
+	buttonApplyAnyway state: true.
+	buttonApplyTransformation state: false
 ]
 
 { #category : 'api - focus' }
