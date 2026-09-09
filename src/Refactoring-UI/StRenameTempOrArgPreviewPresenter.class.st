@@ -1,7 +1,9 @@
 "
-I am a tool that previews refactoring changes to the user. User can change the scope of the refactoring (default scopes are: class, hierarchy, package and image) and manually pick which changes to apply and which ones to skip. I am usually opened by `RBDriver` subclasses.
+I am a presenter for renaming an argument or a temporary variable. I allow the user to enter a new name, choose the refactoring scope, and inspect the resulting changes. The preview is updated live as the user edits the new name. The Apply button is enabled only when the name is valid and the refactoring can be applied.
 
-I am responsible for keeping track of `selectedChanges` (which changes to apply). When user selects a change from the list of all changes, I display a diff between old and new version of that change. When user accepts changes he wants to execute, I am responsible for invoking `RBRefactoryChangeManager` to perform them.
+I am responsible for keeping track of the selected changes. When the user selects a change, I display a diff between its old and new versions.
+
+When renaming a temporary variable may change the behavior of the code, I inform the user and allow them to choose whether to apply the rename anyway or apply the suggested transformations. When renaming an argument, I display a message to inform the user about the potential issue.
 
 "
 Class {

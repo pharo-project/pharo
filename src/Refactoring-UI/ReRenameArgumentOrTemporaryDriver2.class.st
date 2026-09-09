@@ -1,7 +1,7 @@
 "
-I am a driver to manage the interractions during a rename argument or temporary refactoring. 
+I am a driver to manage the interactions during an argument or temporary variable rename refactoring.
 
-I'll check that the interval selected by the user is right. I'll ask a new name and check that it is valid. If it is not, I'll ask again to the user except if they cancel.
+I receive the new name from the presenter and use it to configure the refactoring. I ask the refactoring to check its applicability and behavior-preserving preconditions and pass the results to the presenter. I start the rename workflow and provide the changes used to update the preview.
 "
 Class {
 	#name : 'ReRenameArgumentOrTemporaryDriver2',
