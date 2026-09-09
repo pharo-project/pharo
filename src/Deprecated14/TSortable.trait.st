@@ -9,8 +9,8 @@ To get the behavior I define, my users should implement:
 "
 Trait {
 	#name : 'TSortable',
-	#category : 'Deprecated13',
-	#package : 'Deprecated13'
+	#category : 'Deprecated14',
+	#package : 'Deprecated14'
 }
 
 { #category : 'testing' }
