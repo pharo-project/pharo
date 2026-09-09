@@ -21,13 +21,13 @@ FLVariableObjectCluster >> add: anObject traceWith: aAnalysis [
 		referencesOf: anObject 
 		do: [ :aChild |
 			self addReferenceFrom: anObject to: aChild.
-			aAnalysis trace: aChild ].
+			aAnalysis traceObject: aChild ].
 		
 	self
 		variablePartReferencesOf: anObject
 		do: [ :aChild |
 			self addVariableReferenceFrom: anObject to: aChild.
-			aAnalysis trace: aChild ]
+			aAnalysis traceObject: aChild ]
 ]
 
 { #category : 'analyzing' }
@@ -38,6 +38,17 @@ FLVariableObjectCluster >> addVariableReferenceFrom: anObject to: anotherObject 
 		ifAbsent: [ nil ].
 	list ifNil: [ self variableReferences at: anObject put: (list := OrderedCollection new) ].	
 	list add: anotherObject
+]
+
+{ #category : 'serialize/materialize' }
+FLVariableObjectCluster >> afterMaterializationStepWith: aDecoder [
+
+	aDecoder configuration isMethodChangedWarningDisabled ifTrue: [
+		^ self ].
+
+	objects do: [ :obj |
+		(obj class == CleanBlockClosure and: [ obj compiledBlock isNil ])
+			ifTrue: [ FLMethodChanged signalWithBlock: obj ] ]
 ]
 
 { #category : 'serialize/materialize' }
@@ -88,5 +99,5 @@ FLVariableObjectCluster >> variablePartReferencesOf: anObject do: aBlock [
 
 { #category : 'accessing' }
 FLVariableObjectCluster >> variableReferences [
-	^ variableReferences ifNil: [ variableReferences := FLLargeIdentityDictionary new ]
+	^ variableReferences ifNil: [ variableReferences := IdentityDictionary new ]
 ]

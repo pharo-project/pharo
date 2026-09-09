@@ -63,16 +63,6 @@ LayoutClassScope >> flattenIn: aCollection [
 	^ aCollection
 ]
 
-{ #category : 'enumerating' }
-LayoutClassScope >> hasBindingThatBeginsWith: aString [
-	"Answer true if there is a Slot name that begins with aString, false otherwise"
-
-	self allSlotsDo: [:each |
-		(each name beginsWith: aString)
-			ifTrue:[^true]].
-	^false
-]
-
 { #category : 'testing' }
 LayoutClassScope >> hasFields [
 	self do: [ :slot |

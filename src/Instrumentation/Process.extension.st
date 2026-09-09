@@ -3,9 +3,9 @@ Extension { #name : 'Process' }
 { #category : '*Instrumentation' }
 Process >> isActiveInMetaLevel: n [
 
-	<metaLinkOptions: #( #+ optionDisabledLink )>
-	<noInstrumentation>
-	^ level = n or: [ level == nil ]
+    <metaLinkOptions: #( #+ optionDisabledLink )>
+    <noInstrumentation>
+    ^ (level insIsEqual: n) or: [ level insIsEqual: nil ]
 ]
 
 { #category : '*Instrumentation' }
@@ -14,7 +14,7 @@ Process >> isMeta [
 	<metaLinkOptions: #( #+ optionDisabledLink )>
 	<noInstrumentation>
 	level ifNil: [ level := 0 ].
-	^ level ~= 0
+	^ level insInequality: 0
 ]
 
 { #category : '*Instrumentation' }

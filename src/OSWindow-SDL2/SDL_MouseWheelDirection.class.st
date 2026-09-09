@@ -51,6 +51,6 @@ SDL_MouseWheelDirection class >> enumDecl [
 
 { #category : 'class initialization' }
 SDL_MouseWheelDirection class >> initialize [
-
+	"Duplicate to ensure being called at load time"
 	self initializeEnumeration.
 ]

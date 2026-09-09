@@ -108,7 +108,7 @@ SDL_RendererInfo >> name [
 { #category : 'accessing - structure variables' }
 SDL_RendererInfo >> name: anObject [
 	"This method was automatically generated"
-	handle pointerAt: OFFSET_NAME put: anObject getHandle
+	handle pointerAt: OFFSET_NAME put: anObject getHandle.
 ]
 
 { #category : 'accessing - structure variables' }
@@ -126,7 +126,7 @@ SDL_RendererInfo >> num_texture_formats: anObject [
 { #category : 'accessing - structure variables' }
 SDL_RendererInfo >> texture_formats [
 	"This method was automatically generated"
-	^(FFITypeArray ofType: #FFIUInt32 size: 16) fromHandle: (handle copyFrom: OFFSET_TEXTURE_FORMATS to: OFFSET_TEXTURE_FORMATS + 63)
+	^(FFIArray ofType: #FFIUInt32 size: 16) fromHandle: (handle copyFrom: OFFSET_TEXTURE_FORMATS to: OFFSET_TEXTURE_FORMATS + 63)
 ]
 
 { #category : 'accessing - structure variables' }

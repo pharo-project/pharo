@@ -13,6 +13,12 @@ Class {
 }
 
 { #category : 'accessing' }
+BytecodeEncoder class >> arraySizeLimitForPushArrayInstruction [
+
+	^ 127
+]
+
+{ #category : 'accessing' }
 BytecodeEncoder class >> instructionSizeAt: pc of: aMehtod [
 
 	self subclassResponsibility

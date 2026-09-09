@@ -41,9 +41,8 @@ EpTraitRemoval >> behaviorAffectedName [
 { #category : 'accessing' }
 EpTraitRemoval >> fileOutEntryOn: aWriteStream [
 
-	aWriteStream 
-		nextPutAll: self behaviorAffectedName;
-		nextChunkPut: ' removeFromSystem'
+	aWriteStream nextPutAll: self behaviorAffectedName.
+	(ChunkWriteStream on: aWriteStream) nextPut: ' removeFromSystem'
 ]
 
 { #category : 'initialization' }

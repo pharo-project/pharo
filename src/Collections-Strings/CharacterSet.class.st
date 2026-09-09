@@ -29,19 +29,6 @@ CharacterSet class >> allByteCharacters [
 	^ set
 ]
 
-{ #category : 'instance creation' }
-CharacterSet class >> allCharacters [
-
-	"This name is obsolete since only the characters that will fit in a byte can be queried"
-
-	self
-		deprecated:
-			'This name is obsolete since only the characters that will fit in a byte can be queried'
-		transformWith: '`@rec allCharacters' -> '`@rec allByteCharacters'.
-
-	^ self allByteCharacters
-]
-
 { #category : 'accessing' }
 CharacterSet class >> crlf [
 	CrLf ifNil: [CrLf := self with: Character cr with: Character lf].

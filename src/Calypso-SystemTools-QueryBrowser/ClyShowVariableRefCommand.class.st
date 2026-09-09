@@ -45,10 +45,16 @@ ClyShowVariableRefCommand >> defaultMenuItemName [
 	^'References'
 ]
 
+{ #category : 'accessing' }
+ClyShowVariableRefCommand >> description [
+
+	^ 'Show all variable references.'
+]
+
 { #category : 'execution' }
 ClyShowVariableRefCommand >> execute [
 
-	browser spawnQueryBrowserOn: (ClyVariableReferencesQuery ofAny: variables)
+	(Smalltalk tools toolNamed: #messageList) browseReferencesToVariables: variables 
 ]
 
 { #category : 'execution' }

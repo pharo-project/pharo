@@ -17,6 +17,18 @@ Class {
 	#tag : 'Spec'
 }
 
+{ #category : 'api - actions' }
+DTFilterableListPresenter >> actions [
+
+	^ self listPresenter actions
+]
+
+{ #category : 'api - actions' }
+DTFilterableListPresenter >> actions: aCommandGroup [
+
+	self listPresenter actions: aCommandGroup
+]
+
 { #category : 'accessing' }
 DTFilterableListPresenter >> allItems [
 
@@ -74,6 +86,12 @@ DTFilterableListPresenter >> displayColor: aBlock [
 DTFilterableListPresenter >> displayIcon: aFullBlockClosure [
 
 	self listPresenter displayIcon: aFullBlockClosure
+]
+
+{ #category : 'private - actions' }
+DTFilterableListPresenter >> ensureActions [
+
+	^ self listPresenter ensureActions
 ]
 
 { #category : 'private' }
@@ -192,6 +210,12 @@ DTFilterableListPresenter >> selectAll [
 DTFilterableListPresenter >> selectItems: aBlock [
 
 	^ self listPresenter selectItems: aBlock
+]
+
+{ #category : 'accessing' }
+DTFilterableListPresenter >> selectedItem [
+
+	^ listPresenter selectedItem
 ]
 
 { #category : 'accessing' }

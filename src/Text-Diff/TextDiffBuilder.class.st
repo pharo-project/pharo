@@ -184,7 +184,7 @@ TextDiffBuilder >> findMatches [
 			lcs := lcs at: 3 ]
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 TextDiffBuilder >> from: xString to: yString [
 
 	xLines := (self split: xString asString) replace: [ :each | DiffElement string: each ].

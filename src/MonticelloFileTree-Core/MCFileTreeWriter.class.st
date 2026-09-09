@@ -21,70 +21,30 @@ MCFileTreeWriter class >> readerClass [
 ]
 
 { #category : 'writing' }
-MCFileTreeWriter >> addString: string at: fileNameOrPath [
-    "fileNameOrPath may have one or two elements"
-
-    | utils fullPath path |
-    utils := MCFileTreeFileUtils current.
-    path := MCFileTreePackageStructureStWriter useCypressWriter
-        ifTrue: [ 
-            fullPath := utils
-                buildPathFrom:
-                    {(MCFileTreeStCypressWriter monticelloMetaDirName).
-                    fileNameOrPath}.
-            utils ensureFilePathExists: fullPath relativeTo: self packageFileDirectory.
-            fullPath ]
-        ifFalse: [ fileNameOrPath ].
-    string isEmpty
-        ifFalse: [ utils writeStreamFor: path in: self packageFileDirectory do: [ :file | file nextPutAll: string ] ]
-]
-
-{ #category : 'writing' }
 MCFileTreeWriter >> addString: string at: fileNameOrPath encodedTo: ignored [
-    "fileNameOrPath may have one or two elements"
-    "encodeTo: arg, because FileTree uses UTF8 by default"
+	"fileNameOrPath may have one or two elements"
 
-    | utils fullPath path |
-    utils := MCFileTreeFileUtils current.
-    path := MCFileTreePackageStructureStWriter useCypressWriter
-        ifTrue: [ 
-            fullPath := utils
-                buildPathFrom:
-                    {(MCFileTreeStCypressWriter monticelloMetaDirName).
-                    fileNameOrPath}.
-            utils ensureFilePathExists: fullPath relativeTo: self packageFileDirectory.
-            fullPath ]
-        ifFalse: [ fileNameOrPath ].
-    string isEmpty
-        ifFalse: [ utils writeStreamFor: path in: self packageFileDirectory do: [ :file | file nextPutAll: string ] ]
+	"encodeTo: arg, because FileTree uses UTF8 by default"
+
+	| fullPath path |
+	path := fullPath := self fileUtils buildPathFrom: {
+			                    MCFileTreeStCypressWriter monticelloMetaDirName.
+			                    fileNameOrPath }.
+	self fileUtils ensureFilePathExists: fullPath relativeTo: self packageFileDirectory.
+	fullPath.
+	string isEmpty ifFalse: [ self fileUtils writeStreamFor: path in: self packageFileDirectory do: [ :file | file nextPutAll: string ] ]
 ]
 
 { #category : 'visiting' }
 MCFileTreeWriter >> deleteExistingPackageStructureFor: members [
-    "destroy .tree and .pkg directory structure .. otherwise it won't be pretty"
 
-    | alternateDirName alternateDir packageDirectoryName |
-    (self fileUtils directoryExists: self packageFileDirectory)
-        ifTrue: [ self fileUtils deleteAll: self packageFileDirectory ].
-    packageDirectoryName := self fileUtils directoryName: self packageFileDirectory.
-    alternateDirName := (packageDirectoryName endsWith: '.pkg')
-        ifTrue: [ members first , '.tree' ]
-        ifFalse: [ 
-            (packageDirectoryName endsWith: '.tree')
-                ifTrue: [ members first , '.pkg' ]
-                ifFalse: [ 
-                    (packageDirectoryName endsWith: '.package')
-                        ifTrue: [ members first , '.pkg' ] ] ].
-    alternateDirName
-        ifNotNil: [ 
-            alternateDir := self fileUtils directoryFromPath: alternateDirName relativeTo: stream directory.
-            (self fileUtils directoryExists: alternateDir)
-                ifTrue: [ self fileUtils deleteAll: alternateDir ] ]
+	(self fileUtils directoryExists: self packageFileDirectory) ifTrue: [ self fileUtils deleteAll: self packageFileDirectory ]
 ]
 
 { #category : 'accessing' }
 MCFileTreeWriter >> fileUtils [
-    ^ MCFileTreeFileUtils current
+
+	^ MCFileTreeFileUtils
 ]
 
 { #category : 'writing' }
@@ -113,17 +73,10 @@ MCFileTreeWriter >> repository [
   ^ stream
 ]
 
-{ #category : 'serializing' }
-MCFileTreeWriter >> serializeVersionInfo: aVersionInfo [
-	infoWriter ifNil: [infoWriter := MCFileTreeVersionInfoWriter new].
-	^ String streamContents: [:s |
-		infoWriter stream: s.
-		infoWriter writeVersionInfo: aVersionInfo]
-]
-
 { #category : 'accessing' }
 MCFileTreeWriter >> snapshotWriterClass [
-	^ MCFileTreeAbstractStWriter
+
+	^ MCFileTreeStCypressWriter
 ]
 
 { #category : 'visiting' }

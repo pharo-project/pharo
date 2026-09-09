@@ -1,6 +1,6 @@
 Class {
 	#name : 'MetacelloPostLoadDirective',
-	#superclass : 'MetacelloPrePostLoadDirective',
+	#superclass : 'MetacelloDirective',
 	#category : 'Metacello-Core-Directives',
 	#package : 'Metacello-Core',
 	#tag : 'Directives'
@@ -15,17 +15,17 @@ MetacelloPostLoadDirective >> acceptVisitor: aTarget [
 { #category : 'actions' }
 MetacelloPostLoadDirective >> addTo: aLoaderDirective [
 
-	spec postLoadDoIt value ifNotNil: [ aLoaderDirective add: self ]
+	spec postLoadDoIt ifNotNil: [ aLoaderDirective add: self ]
 ]
 
 { #category : 'printing' }
 MetacelloPostLoadDirective >> label [
 
-	^super label, ' >> ', self spec postLoadDoIt value asString
+	^ super label , ' >> ' , self spec postLoadDoIt value asString
 ]
 
 { #category : 'accessing' }
 MetacelloPostLoadDirective >> title [
 
-	^'postload'
+	^ 'postload'
 ]

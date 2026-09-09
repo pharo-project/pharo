@@ -15,11 +15,24 @@ Class {
 { #category : 'decoration' }
 ClyClassTableDecorator class >> decorateTableCell: anItemCellMorph of: aDataSourceItem [
 
-	| labelMorphExtension |
+	| labelMorphExtension cmt |
 	labelMorphExtension := anItemCellMorph label assureExtension.
-	labelMorphExtension balloonText:
-		(aDataSourceItem actualObject comment ifEmpty: [
-			 ClyUncommentedItemTableDecorator balloonText ])
+	"This datasourceitem actual object may be either a class or a ring class
+	and guess what? their comments are not compatible!
+	"
+	
+	cmt := aDataSourceItem actualObject isClassOrTrait
+		ifTrue: [ aDataSourceItem actualObject comment]
+		ifFalse: [ aDataSourceItem actualObject comment content ].
+	cmt 
+		ifEmpty: [ cmt := ClyUncommentedItemTableDecorator balloonText ]
+		ifNotEmpty: [ | lines |
+				lines := cmt lines. 
+				cmt := lines first: (lines size min: 3).
+				cmt := String cr join: cmt. ].
+	labelMorphExtension balloonText: cmt 
+		
+		
 ]
 
 { #category : 'decoration' }

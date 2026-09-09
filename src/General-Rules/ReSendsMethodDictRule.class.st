@@ -15,8 +15,9 @@ ReSendsMethodDictRule class >> checksMethod [
 ]
 
 { #category : 'accessing' }
-ReSendsMethodDictRule class >> group [
-	^ 'Bugs'
+ReSendsMethodDictRule class >> groupSelector [
+
+	^ #bugsGroup
 ]
 
 { #category : 'accessing' }
@@ -31,7 +32,7 @@ ReSendsMethodDictRule class >> ruleName [
 
 { #category : 'accessing' }
 ReSendsMethodDictRule class >> severity [
-	^ #error
+	^ 'error'
 ]
 
 { #category : 'accessing' }

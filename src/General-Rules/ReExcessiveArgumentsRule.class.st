@@ -19,8 +19,9 @@ ReExcessiveArgumentsRule class >> checksMethod [
 ]
 
 { #category : 'accessing' }
-ReExcessiveArgumentsRule class >> group [
-	^ 'Design Flaws'
+ReExcessiveArgumentsRule class >> groupSelector [
+
+	^ #designFlawGroup
 ]
 
 { #category : 'accessing' }
@@ -47,9 +48,6 @@ ReExcessiveArgumentsRule >> argumentsCount [
 
 { #category : 'running' }
 ReExcessiveArgumentsRule >> basicCheck: aMethod [
-
-	"If method includes UFFI calls then it is OK to have high number of arguments"
-	aMethod isFFIMethod ifTrue: [ ^false ].
 
 	^ aMethod numArgs >= self argumentsCount
 ]

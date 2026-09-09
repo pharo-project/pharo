@@ -60,7 +60,7 @@ ZnServerSession >> id [
 	^ id
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnServerSession >> id: anObject [
 	id := anObject
 ]

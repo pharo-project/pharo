@@ -2,12 +2,14 @@
 I am responsible for moving a method from one class to another existing class
 
 Usage:
+```
 | transformation |
 transformation := (RBMoveMethodToClassTransformation
-				method: #method
-				class: #RBMoveMethodTransformationTest)
-				transform.
-(ChangesBrowser changes: transformation model changes changes) open
+				method: RBMoveMethodToClassTransformation>>#storeOn:
+				class: #RBMoveMethodParametrizedTest)
+				generateChanges.
+(StRefactoringPreviewPresenter for: transformation) open
+```
 
 "
 Class {
@@ -52,31 +54,16 @@ RBMoveMethodToClassTransformation >> method: aMethod class: aClass [
 
 { #category : 'transforming' }
 RBMoveMethodToClassTransformation >> privateTransform [
+
 	| oldClass newClass rbMethod originalProtocol |
 	oldClass := self classModelOf: method methodClass.
 	newClass := self classModelOf: class.
-	rbMethod := model rbMethodClass for: newClass source: method sourceCode selector: method selector.
+	rbMethod := RBMethod for: newClass source: method sourceCode selector: method selector.
 	originalProtocol := method protocolName.
-
-	self generateChangesFor: (RBRemoveMethodTransformation 
-		selector: method selector
-		from: oldClass).
 	self generateChangesFor: (RBAddMethodTransformation
-		model: self model
-		sourceCode: rbMethod
-		in: newClass
-		withProtocol: originalProtocol)
-]
-
-{ #category : 'storing' }
-RBMoveMethodToClassTransformation >> storeOn: aStream [
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream
-		nextPutAll: ' selector: #';
-		nextPutAll:  method selector;
-		nextPutAll: ' class: '.
-	class storeOn: aStream.
-	aStream
-		nextPutAll: ''')'
+			 model: self model
+			 sourceCode: rbMethod
+			 in: newClass 
+			 withProtocol: originalProtocol).
+	self generateChangesFor: (RBRemoveMethodTransformation selector: method selector from: oldClass)
 ]

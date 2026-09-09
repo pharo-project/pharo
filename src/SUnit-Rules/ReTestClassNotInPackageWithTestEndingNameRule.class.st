@@ -18,9 +18,9 @@ ReTestClassNotInPackageWithTestEndingNameRule class >> checksClass [
 ]
 
 { #category : 'accessing' }
-ReTestClassNotInPackageWithTestEndingNameRule class >> group [
+ReTestClassNotInPackageWithTestEndingNameRule class >> groupSelector [
 
-	^ 'SUnit'
+	^ #sunitGroup
 ]
 
 { #category : 'accessing' }

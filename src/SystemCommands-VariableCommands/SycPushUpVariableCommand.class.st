@@ -16,20 +16,20 @@ SycPushUpVariableCommand class >> sourceCodeMenuActivation [
 ]
 
 { #category : 'execution' }
-SycPushUpVariableCommand >> asRefactorings [
-
-	^self
-		createRefactorings: RBPullUpInstanceVariableRefactoring
-		using: [ :refactoring :var |
-			refactoring variable: var name class: var definingClass superclass]
-]
-
-{ #category : 'accessing' }
 SycPushUpVariableCommand >> defaultMenuIconName [
 	^ #up
 ]
 
 { #category : 'accessing' }
 SycPushUpVariableCommand >> defaultMenuItemName [
-	^'Push up'
+	^'(R) Push up'
+]
+
+{ #category : 'accessing' }
+SycPushUpVariableCommand >> executeRefactorings [
+
+	^ ((RePushUpVariableDriver newApplication: self application)
+		   scopes: refactoringScopes
+		   variables: (variables collect: [ :v | v actualVariable ])
+		   to: variables first definingClass superclass) runRefactoring
 ]

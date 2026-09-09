@@ -85,12 +85,15 @@ ReflectivityExamples2 >> modifyMethodWithInstVarAccess [
 
 { #category : 'removing' }
 ReflectivityExamples2 >> removeModifiedMethodWithInstVarAccess [
-	self class removeSelector: #modifiedMethodWithInstVarAccess
+
+	(self class includesSelector: #modifiedMethodWithInstVarAccess) ifTrue: [
+		self class removeSelector: #modifiedMethodWithInstVarAccess ]
 ]
 
 { #category : 'removing' }
 ReflectivityExamples2 >> removeNewMethodWithInstVarAccess [
-	self class removeSelector: #newMethodWithInstVarAccess
+	(self class includesSelector: #newMethodWithInstVarAccess)
+		ifTrue: [self class removeSelector: #newMethodWithInstVarAccess]
 ]
 
 { #category : 'generation' }

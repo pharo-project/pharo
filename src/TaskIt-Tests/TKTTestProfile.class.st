@@ -18,7 +18,7 @@ TKTTestProfile class >> priority [
 { #category : 'accessing' }
 TKTTestProfile class >> profileName [
 
-	^ #test
+	^ #testProfile
 ]
 
 { #category : 'private' }

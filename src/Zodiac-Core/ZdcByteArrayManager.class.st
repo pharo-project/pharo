@@ -72,7 +72,7 @@ ZdcByteArrayManager >> initialize [
 	access := Monitor new
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 ZdcByteArrayManager >> limit: newLimit [
 	access critical: [
 		limit := newLimit.

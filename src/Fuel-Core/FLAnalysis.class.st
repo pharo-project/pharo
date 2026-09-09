@@ -131,7 +131,7 @@ FLAnalysis >> substitutionMappers [
 ]
 
 { #category : 'tracing' }
-FLAnalysis >> trace: anObject [
+FLAnalysis >> traceObject: anObject [
 	"It's possible to get here from #privateMapAndTrace: but then #mapAndTrace: will
 	not be sent again (see #run)"
 	objectStack

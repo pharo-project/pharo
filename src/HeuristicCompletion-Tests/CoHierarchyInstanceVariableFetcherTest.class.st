@@ -14,10 +14,10 @@ CoHierarchyInstanceVariableFetcherTest >> setUp [
 		completionClass: self completionClass;
 		forHierarchy.
 	expectedElements := {
-		NECInstVarEntry contents: 'a' node: nil.
-		NECInstVarEntry contents: 'b' node: nil.
-		NECInstVarEntry contents: 'c' node: nil.
-		NECInstVarEntry contents: 'supera' node: nil.
-		NECInstVarEntry contents: 'superb' node: nil.
-		NECInstVarEntry contents: 'superc' node: nil. }
+		CoInstVarEntry contents: 'a' node: nil.
+		CoInstVarEntry contents: 'b' node: nil.
+		CoInstVarEntry contents: 'c' node: nil.
+		CoInstVarEntry contents: 'supera' node: nil.
+		CoInstVarEntry contents: 'superb' node: nil.
+		CoInstVarEntry contents: 'superc' node: nil. }
 ]

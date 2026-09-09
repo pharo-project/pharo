@@ -536,6 +536,18 @@ Integer >> romanDigits: digits for: base on: aStream [
 ]
 
 { #category : '*Math-Operations-Extensions' }
+Integer >> round: numberOfWishedDecimal [
+	"Round the decimal part of the receiver to be limited to the number of wished decimal. Only leave a fixed amount of decimal. Integers there are already rounded."
+
+	^self
+]
+
+{ #category : '*Math-Operations-Extensions' }
+Integer >> rounded [
+	"Refer to the comment in Number#rounded."
+]
+
+{ #category : '*Math-Operations-Extensions' }
 Integer >> slidingLeftRightRaisedTo: n modulo: m [
 	"Private - compute (self raisedTo: n) \\ m,
 	Note: this method has to be fast because it is generally used with large integers in cryptography.

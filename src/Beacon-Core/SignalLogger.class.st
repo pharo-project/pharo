@@ -9,7 +9,6 @@ For example, consider:
 ```
    TranscriptLogger start.
    StringSignal emit: 'test'.
-   ...
    TranscriptLogger stop.
 ```	
 Passing stop, unsubscribes the global instance of `TranscriptLogger` from the central `Beacon` instance without having to remember the `TranscriptLogger` object.
@@ -21,7 +20,7 @@ One can get signals go to a given logger during the execution of a block with:
        runDuring: [ 
          'Hello' asBeaconSignal emit.
          42 asBeaconSignal emit.
-         ContextStackSignal emit.
+         Object new emit.
          ];
        recordings.
 ```		
@@ -94,9 +93,12 @@ SignalLogger class >> resetAllInstances [
 
 { #category : 'class initialization' }
 SignalLogger class >> resetInstance [
+
 	<script>
 
-	instance := nil
+	instance ifNotNil: [
+		Beacon instance unsubscribe: instance.
+		instance := nil ]
 ]
 
 { #category : 'registration' }
@@ -166,14 +168,15 @@ SignalLogger >> beacon: anAnnouncer [
 SignalLogger >> initialize [
 
 	super initialize.
-	"by default we hook to the central ==Beacon== instance"
+	"by default we hook to the central `Beacon` instance"
 	beacon := Beacon instance.
 	name := 'unnamed'
 ]
 
 { #category : 'testing' }
 SignalLogger >> isRunning [
-	Beacon instance announcer subscriptions
+
+	beacon announcer subscriptions
 		subscriptionsOf: self do: [ :x | ^ true ].
 	^ false
 ]
@@ -190,14 +193,14 @@ SignalLogger >> name: aString [
 	name := aString
 ]
 
-{ #category : 'utilities' }
+{ #category : 'logging' }
 SignalLogger >> nextPut: aSignal [
 	"Gets a BeaconSignal into the logger"
 
 	self subclassResponsibility
 ]
 
-{ #category : 'utilities' }
+{ #category : 'logging' }
 SignalLogger >> nextPutAll: aCollection [
 
 	aCollection do: [ :each | self nextPut: each ]

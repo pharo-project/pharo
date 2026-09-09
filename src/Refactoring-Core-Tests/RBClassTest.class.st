@@ -8,26 +8,42 @@ Class {
 		'refactoringClass',
 		'objectClass'
 	],
-	#category : 'Refactoring-Core-Tests',
-	#package : 'Refactoring-Core-Tests'
+	#category : 'Refactoring-Core-Tests-Model',
+	#package : 'Refactoring-Core-Tests',
+	#tag : 'Model'
 }
 
 { #category : 'running' }
 RBClassTest >> setUp [
 
 	super setUp.
-	rbNamespace := RBNamespace new.
-	abstractTransformationClass := rbNamespace classNamed: #RBAbstractTransformation.
+	rbNamespace := RBNamespace onEnvironment: (RBClassEnvironment classes: {
+				                Behavior.
+				                Class.
+				                ClassDescription.
+				                MyClassB.
+				                Object.
+				                Object.
+				                Object class.
+				                ProtoObject class.
+				                ReAbstractTransformation.
+				                ReAbstractTransformation.
+				                RBClassRefactoring.
+				                ReRefactoring.
+				                RBSharedPoolForTestData.
+				                RBRefactoringTestTrait.
+				                RBRefactoringTestTraitUser }).
+	abstractTransformationClass := rbNamespace classNamed: #ReAbstractTransformation.
 	objectClass := rbNamespace classNamed: #Object.
 	refactoringClass := rbNamespace classNamed: #RBClassRefactoring.
 	rbNamespace defineClass: [ :aBuilder |
-		aBuilder
-			name: #SomeClassName;
-			superclass: Object;
-			slots: { #instanceVariable1. #instanceVariable2 };
-			sharedVariables: { #ClassVariable1 };
-			sharedPools: { #TextConstants };
-			package: #'Refactory-Testing' ].
+			aBuilder
+				name: #SomeClassName;
+				superclass: Object;
+				slots: { #instanceVariable1. #instanceVariable2 };
+				sharedVariables: { #ClassVariable1 };
+				sharedPools: { #RBSharedPoolForTestData };
+				package: #'Refactory-Testing' ].
 	newClass := rbNamespace classNamed: #SomeClassName
 ]
 
@@ -87,10 +103,10 @@ RBClassTest >> testDefinesMethod [
 { #category : 'tests - definition' }
 RBClassTest >> testDefinesPoolDictionary [
 	self deny: (abstractTransformationClass definesPoolDictionary: #OpcodePool).
-	self assert: (newClass definesPoolDictionary: #TextConstants).
+	self assert: (newClass definesPoolDictionary: #RBSharedPoolForTestData).
 	self deny: (refactoringClass definesPoolDictionary: #OpcodePool).
-	self assert: ((RBNamespace new classNamed: #Text)
-				definesPoolDictionary: #TextConstants)
+	self assert: ((RBNamespace new classNamed: #RBDummyLintRuleTest)
+				definesPoolDictionary: #RBSharedPoolForTestData)
 ]
 
 { #category : 'tests - definition' }
@@ -111,14 +127,14 @@ RBClassTest >> testDefinesSharedVariable2 [
 { #category : 'tests - definition' }
 RBClassTest >> testDefinesTraitMethod [
 	| user trait |
-	user := rbNamespace classNamed: #MOPTestClassD.
+	user := rbNamespace classNamed: #RBRefactoringTestTraitUser.
 	self assert: (user definesMethod: #c3).
 	self assert: (user definesMethod: #c).
 	self assert: (user definesMethod: #c2).
 	self assert: (user methodFor: #c2) modelClass ~= user.
 	self assert: (user methodFor: #c) modelClass ~= user.
 	self assert: (user methodFor: #c3) isNil. "we use nil to represent alias"
-	trait := rbNamespace classNamed: #Trait2.
+	trait := rbNamespace classNamed: #RBRefactoringTestTrait.
 	self assert: (user methodFor: #c2) modelClass equals: trait.
 	self assert: (user methodFor: #c) modelClass equals: trait
 ]
@@ -178,6 +194,49 @@ RBClassTest >> testIsInstanceSide [
 ]
 
 { #category : 'tests - navigation' }
+RBClassTest >> testIsManifest [
+
+	| pmNamespace packageManifestClass |
+
+	pmNamespace := RBNamespace new.
+	pmNamespace defineClass: [ :aBuilder |
+		aBuilder
+			name: #PackageManifestForRBClassTest;
+			superclass: PackageManifest ;
+			package: #'Refactory-Testing' ].
+	packageManifestClass := pmNamespace classNamed: #PackageManifestForRBClassTest.
+
+	self assert: packageManifestClass isManifest.
+]
+
+{ #category : 'tests - navigation' }
+RBClassTest >> testIsManifestTransformationClass [
+
+	self 
+		deny: abstractTransformationClass classSide isManifest
+		description: 'It tests that a transformation class is not manifest'.
+	self 
+		deny: abstractTransformationClass isManifest
+		description: 'It tests that a transformation is not manifest'.		
+]
+
+{ #category : 'tests - navigation' }
+RBClassTest >> testIsManifestWhenSuperclassIsUndefined [
+
+	| pmNamespace packageManifestClass |
+
+	pmNamespace := RBNamespace new.
+	pmNamespace defineClass: [ :aBuilder |
+		aBuilder
+			name: #PackageManifestForRBClassTest;
+			superclass: nil ;
+			package: #'Refactory-Testing' ].
+	packageManifestClass := pmNamespace classNamed: #PackageManifestForRBClassTest.
+	
+	self deny: packageManifestClass isManifest.
+]
+
+{ #category : 'tests - navigation' }
 RBClassTest >> testIsMeta [
 
 	self assert: abstractTransformationClass classSide isMeta.
@@ -219,7 +278,7 @@ RBClassTest >> testWhichClassIncludesSelectorGoingUp [
 
 	self
 		assert:
-			((rbNamespace classNamed: #Model) whichClassIncludesSelector:
+			((rbNamespace classNamed: #Object) whichClassIncludesSelector:
 				 #'~~>')
 		equals: objectClass
 ]
@@ -229,7 +288,7 @@ RBClassTest >> testWhichClassIncludesSelectorGoingUpAndDoNotFind [
 
 	self
 		assert:
-			((rbNamespace classNamed: #Model) whichClassIncludesSelector:
+			((rbNamespace classNamed: #Object) whichClassIncludesSelector:
 				 #doesNotExistAtAll)
 		equals: nil
 ]

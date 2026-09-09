@@ -15,8 +15,9 @@ ReMethodHasSyntaxErrorRule class >> checksMethod [
 ]
 
 { #category : 'accessing' }
-ReMethodHasSyntaxErrorRule class >> group [
-	^ 'Bugs'
+ReMethodHasSyntaxErrorRule class >> groupSelector [
+
+	^ #bugsGroup
 ]
 
 { #category : 'accessing' }
@@ -26,7 +27,7 @@ ReMethodHasSyntaxErrorRule class >> ruleName [
 
 { #category : 'accessing' }
 ReMethodHasSyntaxErrorRule class >> severity [
-	^ #error
+	^ 'error'
 ]
 
 { #category : 'accessing' }

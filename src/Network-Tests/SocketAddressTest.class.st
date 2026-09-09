@@ -11,18 +11,18 @@ Class {
 
 { #category : 'testing' }
 SocketAddressTest >> testByteArrayConversionErrors [
-	self should: [ #[ ] asSocketAddress ] raise: Error.
-	self should: [ #[ 1 ] asSocketAddress ] raise: Error.
-	self should: [ #[ 1 2 ] asSocketAddress ] raise: Error.
-	self should: [ #[ 1 2 3 ] asSocketAddress ] raise: Error.
-	self should: [ #[ 1 2 3 4 5] asSocketAddress ] raise: Error
+	self should: [ SocketAddress fromOldByteAddress: #[ ] ] raise: Error.
+	self should: [ SocketAddress fromOldByteAddress: #[ 1 ] ] raise: Error.
+	self should: [ SocketAddress fromOldByteAddress: #[ 1 2 ] ] raise: Error.
+	self should: [ SocketAddress fromOldByteAddress: #[ 1 2 3 ] ] raise: Error.
+	self should: [ SocketAddress fromOldByteAddress: #[ 1 2 3 4 5] ] raise: Error
 ]
 
 { #category : 'testing' }
 SocketAddressTest >> testDottedRepresentation [
 	| address |
 	address := SocketAddress fromDottedString: '104.28.27.35'.
-	self assert: address equals: #[ 104 28 27 35 ] asSocketAddress.
+	self assert: address equals: (SocketAddress fromOldByteAddress: #[ 104 28 27 35 ]).
 	self assert: address printString equals: '104.28.27.35'
 ]
 
@@ -52,6 +52,6 @@ SocketAddressTest >> testZero [
 	self assert: address size equals: 4.
 	address do: [ :each | self assert: each isZero ].
 	self assert: address equals: (SocketAddress fromDottedString: '0.0.0.0').
-	self assert: address equals: (#[0 0 0 0] asSocketAddress).
+	self assert: address equals: (SocketAddress fromOldByteAddress: #[0 0 0 0]).
 	self assert: address printString equals: '0.0.0.0'
 ]

@@ -1,6 +1,6 @@
 "
 Deprecated classes and methods of Pharo 13. 
-I will be removed in Pharo 14
+I will be removed in Pharo 15
 "
 Class {
 	#name : 'ManifestDeprecated13',

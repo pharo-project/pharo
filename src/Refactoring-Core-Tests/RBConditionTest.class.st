@@ -7,24 +7,28 @@ Class {
 		'messageNodeClass',
 		'newClass'
 	],
-	#category : 'Refactoring-Core-Tests',
-	#package : 'Refactoring-Core-Tests'
+	#category : 'Refactoring-Core-Tests-Conditions',
+	#package : 'Refactoring-Core-Tests',
+	#tag : 'Conditions'
 }
 
 { #category : 'running' }
 RBConditionTest >> setUp [
-
+	| classenv classes |
 	super setUp.
-	rbNamespace := RBNamespace new.
+	classes := { Object . OCMessageNode . RBSharedPoolForTestData } asOrderedCollection addAll: self class withAllSuperclasses; yourself.
+	classenv := RBClassEnvironment classes: classes.
+	rbNamespace := RBNamespace onEnvironment: classenv.
+	
 	objectClass := rbNamespace classNamed: #Object.
-	messageNodeClass := rbNamespace classNamed: #RBMessageNode.
+	messageNodeClass := rbNamespace classNamed: #OCMessageNode.
 	rbNamespace defineClass: [ :aBuilder |
 		aBuilder
 			superclass: Object;
 			name: #SomeClassName;
 			slots: { #instanceVariable1. #instanceVariable2 };
 			sharedVariables: { #ClassVariable1 };
-			sharedPools: { #TextConstants };
+			sharedPools: { #RBSharedPoolForTestData };
 			package: #'Refactory-Testing' ].
 	newClass := rbNamespace classNamed: #SomeClassName
 ]
@@ -50,19 +54,19 @@ RBConditionTest >> testCheckFailEarlyAndDoesNotCoverEveryConditions [
 RBConditionTest >> testCheckInvalidMethodName [
 	"Usually used to validate input."
 
-	self deny: (RBCondition checkMethodName: 'fofo fo').
-	self deny: (RBCondition checkMethodName: '123fofo').
-	self deny: (RBCondition checkMethodName: 'foo::').
-	self deny: (RBCondition checkMethodName: 'agr:goo:aa').
-	self deny: (RBCondition checkMethodName: 'foo:123:').
-	self deny: (RBCondition checkMethodName: 'foo[arg]').
-	self deny: (RBCondition checkMethodName: 'foo:=arg').
-	self deny: (RBCondition checkMethodName: 'foo:arg)').
-	self deny: (RBCondition checkMethodName: 'foo:(arg)').
-	self deny: (RBCondition checkMethodName: 'foo:+arg)').
-	self deny: (RBCondition checkMethodName: '<<foo:<<arg)').
-	self deny: (RBCondition checkMethodName: 'foo:agr^:').
-	self deny: (RBCondition checkMethodName: 'foo:agr')
+	self deny: (RBCondition isValidSelector: 'fofo fo') check.
+	self deny: (RBCondition isValidSelector: '123fofo') check.
+	self deny: (RBCondition isValidSelector: 'foo::') check.
+	self deny: (RBCondition isValidSelector: 'agr:goo:aa') check.
+	self deny: (RBCondition isValidSelector: 'foo:123:') check.
+	self deny: (RBCondition isValidSelector: 'foo[arg]') check.
+	self deny: (RBCondition isValidSelector: 'foo:=arg') check.
+	self deny: (RBCondition isValidSelector: 'foo:arg)') check.
+	self deny: (RBCondition isValidSelector: 'foo:(arg)') check.
+	self deny: (RBCondition isValidSelector: 'foo:+arg)') check.
+	self deny: (RBCondition isValidSelector: '<<foo:<<arg)') check.
+	self deny: (RBCondition isValidSelector: 'foo:agr^:') check.
+	self deny: (RBCondition isValidSelector: 'foo:agr') check
 ]
 
 { #category : 'tests' }
@@ -114,10 +118,10 @@ RBConditionTest >> testCheckThatOnlyFailingConditionErrorIsReportedTrueCaseFirst
 { #category : 'tests' }
 RBConditionTest >> testCheckValidMethodName [
 	"Usually used to validate input."
-	self assert: (RBCondition checkMethodName: 'foo').
-	self assert: (RBCondition checkMethodName: #foo).
-
-	self assert: (RBCondition checkMethodName: #+)
+	
+	self assert: (RBCondition isValidSelector: 'foo') check.
+	self assert: (RBCondition isValidSelector: #foo) check.
+	self assert: (RBCondition isValidSelector: #+) check
 ]
 
 { #category : 'tests - references' }
@@ -147,18 +151,18 @@ RBConditionTest >> testHierarchyOfReferencesInstanceVariable2 [
 { #category : 'tests - references' }
 RBConditionTest >> testHierarchyOfReferencesSharedVariableAccessing [
 
-	| textConstantClass |
-	textConstantClass := rbNamespace classNamed: #TextConstants.
+	| myPoolClass |
+	myPoolClass := rbNamespace classNamed: #RBSharedPoolForTestData.
 	"only the class side is accessing the shared variable. But the query should 
 	check both sides."
 
 	self assert: (RBCondition
-			 hierarchyOf: textConstantClass
-			 referencesSharedVariable: #Basal) check.
+			 hierarchyOf: myPoolClass
+			 referencesSharedVariable: #Var1) check.
 
 	self assert: (RBCondition
-			 hierarchyOf: textConstantClass classSide
-			 referencesSharedVariable: #Basal) check
+			 hierarchyOf: myPoolClass classSide
+			 referencesSharedVariable: #Var1) check
 ]
 
 { #category : 'tests - references' }

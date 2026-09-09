@@ -68,6 +68,7 @@ SycCmCommand >> applyCommandResult [
 
 { #category : 'executing' }
 SycCmCommand >> execute [
+	
 	[self prepareFullExecution.
 	self executeRefactoring.
 	self applyCommandResult]

@@ -10,7 +10,9 @@ In inspector it means that users can execute or debug the code containing instan
 
 My instances can be created using following expression:
 
+```
 	OCReceiverDoItSemanticScope targetingReceiver: anObject
+```
 "
 Class {
 	#name : 'OCReceiverDoItSemanticScope',

@@ -41,7 +41,8 @@ PackageTestCase >> ensurePackage: aName [
 { #category : 'helpers' }
 PackageTestCase >> ensureTagYinX [
 
-	^ self organizer ensureTag: #YYYY inPackage: #XXXXX
+	^ (self organizer ensurePackage: #XXXXX)
+			ensureTag: #YYYY
 ]
 
 { #category : 'helpers' }

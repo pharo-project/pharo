@@ -26,17 +26,6 @@ TraitedMetaclass class >> traitedClassTrait [
 	^ (TaCompositionElement for: TraitedClass)
 ]
 
-{ #category : 'accessing - method dictionary' }
-TraitedMetaclass >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: aProtocol [
-	<reflection: 'Class structural modification - Selector/Method modification'>
-
-	self localMethodDict at: selector put: compiledMethod.
-
-	super addAndClassifySelector: selector withMethod: compiledMethod inProtocol: aProtocol.
-
-	TraitChange addSelector: selector on: self
-]
-
 { #category : 'querying' }
 TraitedMetaclass >> allTraits [
 	<reflection: 'Class structural inspection - Traits'>
@@ -95,7 +84,7 @@ TraitedMetaclass >> findOriginClassOf: aMethod [
 	<reflection: 'Class structural inspection - Selectors and methods inspection'>
 
 	(aMethod hasProperty: #traitSource)
-		ifTrue: [ ^ aMethod traitSource innerClass ].
+		ifTrue: [ ^ (aMethod propertyAt: #traitSource) innerClass ].
 
 	(self isLocalSelector: aMethod selector)
 		ifTrue: [ ^ self ].
@@ -249,6 +238,12 @@ TraitedMetaclass >> localSelectors [
 	^ localMethods keys
 ]
 
+{ #category : 'organization' }
+TraitedMetaclass >> methodInstaller [
+
+	^ OCTraitMethodInstaller new forExtendedBehavior
+]
+
 { #category : 'initialization' }
 TraitedMetaclass >> rebuildMethodDictionary [
 	| selectors removedSelectors modified |
@@ -303,12 +298,12 @@ TraitedMetaclass >> removeFromComposition: aTrait [
 ]
 
 { #category : 'accessing - method dictionary' }
-TraitedMetaclass >> removeSelector: aSelector [
+TraitedMetaclass >> removeSelector: aSelector logged: logged [
 
 	"When a selector is removed it should be notified to my users.
 	Check the class TraitChange for more details"
 	<reflection: 'Class structural modification - Selector/Method modification'>
-	super removeSelector: aSelector.
+	super removeSelector: aSelector logged: logged.
 	self localMethodDict removeKey: aSelector ifAbsent: [  ].
 
 	TraitChange removeSelector: aSelector on: self

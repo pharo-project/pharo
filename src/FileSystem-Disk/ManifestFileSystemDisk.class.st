@@ -15,5 +15,5 @@ Class {
 
 { #category : 'meta-data - dependency analyser' }
 ManifestFileSystemDisk class >> manuallyResolvedDependencies [
-	^ #(#'Collections-Abstract' #'Collections-Strings' #'System-Support')
+	^ #(#'Collections-Abstract')
 ]

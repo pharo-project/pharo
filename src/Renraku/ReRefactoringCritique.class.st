@@ -1,5 +1,5 @@
 "
-A critique which has a refactoring needed to solve the issue
+A critique which has a refactoring needed to solve the issue.
 "
 Class {
 	#name : 'ReRefactoringCritique',

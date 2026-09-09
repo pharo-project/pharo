@@ -44,7 +44,7 @@ OSSDL2GLRenderer >> createContext [
 	]
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 OSSDL2GLRenderer >> destroy [
 	self onRenderThreadBlocking: [
 		context ifNotNil: [ context delete ].
@@ -71,13 +71,14 @@ OSSDL2GLRenderer >> makeCurrent: aBackendWindow [
 
 { #category : 'clipping' }
 OSSDL2GLRenderer >> pixelExtent [
-	| w h |
+
 	backendWindow ifNil: [ ^ super pixelExtent ].
 
-	w := ByteArray new: 4.
-	h := ByteArray new: 4.
-	backendWindow sdl2Window glGetDrawableSizeW: w h: h.
-	^ (w signedLongAt: 1) @ (h signedLongAt: 1)
+	^ ExternalAddress allocate: 4 allocate: 4 during: [ :w :h | 
+		backendWindow sdl2Window glGetDrawableSizeW: w h: h.
+		(w signedLongAt: 1) @ (h signedLongAt: 1) ].
+
+
 ]
 
 { #category : 'misc' }

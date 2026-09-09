@@ -47,22 +47,29 @@ MethodChunk >> displayStringOn: stream [
 MethodChunk >> handleMissingBehavior [
 	"self error: ('Cannot install method in unexistent behavior {1}' format: {(behaviorName asString)})"
 
-	(MissingClassError
-		className: behaviorName asString)
-		signal: 'Cannot install method in non-existent behavior ', behaviorName asString
+	(MissingClassError className: behaviorName asString) signal:
+		'Cannot install method from "' , protocol asString , '" in non-existent behavior ' , behaviorName asString , ':' , String crlf
+		, contents
 ]
 
 { #category : 'importing' }
-MethodChunk >> importFor: requestor logSource: logSource [
+MethodChunk >> importWithLogSource: logSource [
 
+	| compiler method |
 	self existsBehavior ifFalse: [ self handleMissingBehavior ].
 
-	^ (self targetClass compiler
-		   permitUndeclared: true;
-		   protocol: protocol;
-		   changeStamp: stamp;
-		   logged: logSource;
-		   install: contents) selector
+	compiler := self targetClass compiler.
+	compiler source: contents.
+	
+	method := compiler compileOrFail.
+
+	(self targetClass methodInstaller
+		logged: logSource;
+		changeStamp: stamp;
+		protocol: protocol)
+			install: method into: self targetClass compiler: compiler.
+
+	^ method selector
 ]
 
 { #category : 'testing' }
@@ -74,7 +81,7 @@ MethodChunk >> isMethodDeclaration [
 { #category : 'accessing' }
 MethodChunk >> methodSelector [
 
-	^ RBParser parseMethodPattern: self contents
+	^ OCParser parseMethodPattern: self contents
 ]
 
 { #category : 'accessing' }

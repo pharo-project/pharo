@@ -20,25 +20,25 @@ Class {
 }
 
 { #category : 'requests' }
-CoASTNodeFetcherHeuristic >> appliesForNode: aRBMessageNode inContext: aContext [
+CoASTNodeFetcherHeuristic >> appliesForNode: aMessageNode inContext: aContext [
 
 	^ false
 ]
 
 { #category : 'requests' }
-CoASTNodeFetcherHeuristic >> buildFetcherFor: aRBMessageNode inContext: aContext [
+CoASTNodeFetcherHeuristic >> buildFetcherFor: aMessageNode inContext: aContext [
 
 	^ CoEmptyFetcher new
 ]
 
 { #category : 'requests' }
-CoASTNodeFetcherHeuristic >> fetcherFor: aRBMessageNode inContext: aContext [
+CoASTNodeFetcherHeuristic >> fetcherFor: aMessageNode inContext: aContext [
 
 	| nextFetcher |
-	nextFetcher := self next fetcherFor: aRBMessageNode inContext: aContext.
-	^ (self appliesForNode: aRBMessageNode inContext: aContext)
+	nextFetcher := self next fetcherFor: aMessageNode inContext: aContext.
+	^ (self appliesForNode: aMessageNode inContext: aContext)
 		ifTrue: [
-			(self buildFetcherFor: aRBMessageNode inContext: aContext),
+			(self buildFetcherFor: aMessageNode inContext: aContext),
 				nextFetcher ]
 		ifFalse: [ nextFetcher ]
 ]

@@ -10,10 +10,12 @@ Example
 
 Script:
 ```
-	(RBDeprecateMethodTransformation 
+| transformation |
+transformation :=  (RBDeprecateMethodTransformation 
 		deprecateMethod: #called:on: 
-		in: RBRefactoryTestDataApp 
-		using: #callFoo) asRefactoring; execute
+		in: RBClassDataForRefactoringTest 
+		using: #callFoo) generateChanges.
+(StRefactoringPreviewPresenter for: transformation) open
 ```
 
 Before
@@ -95,8 +97,7 @@ RBDeprecateMethodTransformation >> applicabilityPreconditions [
 
 	^ {
 		  (RBCondition withBlock: [ selector ~= newSelector ]).
-		  (RBCondition withBlock: [
-			   RBCondition checkMethodName: newSelector ]).
+		 	(RBCondition isValidSelector: newSelector).
 		  (RBCondition definesSelector: selector in: class) }
 ]
 
@@ -142,19 +143,4 @@ RBDeprecateMethodTransformation >> deprecateMethod: aSelector in: aClass using: 
 RBDeprecateMethodTransformation >> newSelector: aSymbol [
 
 	newSelector := aSymbol
-]
-
-{ #category : 'storing' }
-RBDeprecateMethodTransformation >> storeOn: aStream [
-
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream nextPutAll: ' deprecateMethod: #';
-		nextPutAll: selector asString;
-		nextPutAll: ' in: '.
-	class storeOn: aStream.
-	aStream
-		nextPutAll: ' using: #';
-		nextPutAll: newSelector asString.
-	aStream nextPut: $)
 ]

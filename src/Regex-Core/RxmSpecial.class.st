@@ -15,7 +15,7 @@ Class {
 	#tag : 'Links'
 }
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 RxmSpecial >> beBeginningOfLine [
 
 	matchSelector := #atBeginningOfLine

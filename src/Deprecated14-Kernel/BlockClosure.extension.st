@@ -1,0 +1,68 @@
+Extension { #name : 'BlockClosure' }
+
+{ #category : '*Deprecated14-Kernel' }
+BlockClosure >> sender [	
+	self deprecated: 'Blocks do not have senders. As the outerContext or home context instead, but take care: clean blocks do not know the context!'.
+	^ self subclassResponsibility
+]
+
+{ #category : '*Deprecated14-Kernel' }
+BlockClosure >> valueSupplyingAnswer: anObject [
+	
+	self deprecated: 'Do not use this anymore! This is a bad idea.'.
+	^ (anObject isCollection and: [anObject isString not])
+		ifTrue: [self valueSupplyingAnswers: {anObject}]
+		ifFalse: [self valueSupplyingAnswers: {{'*'. anObject}}]
+]
+
+{ #category : '*Deprecated14-Kernel' }
+BlockClosure >> valueSupplyingAnswers: aListOfPairs [
+	"evaluate the block using a list of questions / answers that might be called upon to
+	automatically respond to Object>>confirm: or FillInTheBlank requests"
+	self deprecated: 'This method is deprecated. It pushes bad architecture'.
+	
+	^ self
+		on: ProvideAnswerNotification
+		do: [ :notify |
+			| caption |
+			caption := notify messageText withSeparatorsCompacted.	"to remove new lines"
+			aListOfPairs
+				detect: [ :each |
+					caption = each first
+						or: [ (caption includesSubstring: each first caseSensitive: false)
+								or: [ (each first match: caption)
+										or: [ (String includesSelector: #matchesRegex:)
+												and: [ [ caption matchesRegex: each first ]
+														on: Error
+														do: [ :ignored | false ] ] ] ] ] ]
+				ifFound: [ :answer | notify resume: answer second ]
+				ifNone: [ | outerAnswer |
+					outerAnswer := ProvideAnswerNotification
+						signal: notify messageText.
+					outerAnswer
+						ifNil: [ notify resume ]
+						ifNotNil: [ notify resume: outerAnswer ] ] ]
+]
+
+{ #category : '*Deprecated14-Kernel' }
+BlockClosure >> valueSuppressingAllMessages [
+	
+	self deprecated: 'This method is deprecated. It pushes bad architecture'.
+	^ self valueSuppressingMessages: #('*')
+]
+
+{ #category : '*Deprecated14-Kernel' }
+BlockClosure >> valueSuppressingMessages: aListOfStrings [
+	
+	self deprecated: 'This method is deprecated. It pushes bad architecture'.
+	^ self
+		valueSuppressingMessages: aListOfStrings
+		supplyingAnswers: #()
+]
+
+{ #category : '*Deprecated14-Kernel' }
+BlockClosure >> valueSuppressingMessages: aListOfStrings supplyingAnswers: aListOfPairs [
+	
+	self deprecated: 'This method is deprecated. It pushes bad architecture'.
+	^ self valueSupplyingAnswers: aListOfPairs, (aListOfStrings collect: [:each | {each . true}])
+]

@@ -38,19 +38,6 @@ ClassDescriptionTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : 'tests - compilation' }
-ClassDescriptionTest >> testAddSelectorWithMethodClassifyMethod [
-
-	| class method |
-	class := self createTestClass.
-	class addSelector: #wammawink withMethod: (class compiler compile: 'wammawink ^ self').
-	method := class >> #wammawink.
-
-	self assert: method sourceCode equals: 'wammawink ^ self'.
-	self deny: method isClassified.
-	self assert: (class protocolOfSelector: #wammawink) name equals: Protocol unclassified
-]
-
 { #category : 'tests - slots' }
 ClassDescriptionTest >> testAllSlots [
 	self assert: Context allSlots size equals: 6

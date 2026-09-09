@@ -13,7 +13,7 @@ CoClassVariableFetcherTest >> setUp [
 	fetcher := CoClassVariableFetcher new.
 	fetcher completionClass: self completionClass.
 	expectedElements := {
-		NECClassVarEntry contents: 'Ca' node: nil.
-		NECClassVarEntry contents: 'Cb' node: nil.
-		NECClassVarEntry contents: 'Cc' node: nil.}
+		CoClassVarEntry contents: 'Ca' node: nil.
+		CoClassVarEntry contents: 'Cb' node: nil.
+		CoClassVarEntry contents: 'Cc' node: nil.}
 ]

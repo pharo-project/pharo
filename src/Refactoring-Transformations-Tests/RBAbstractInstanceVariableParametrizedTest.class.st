@@ -9,7 +9,7 @@ Class {
 { #category : 'tests' }
 RBAbstractInstanceVariableParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
-		addCase: { #rbClass -> RBAbstractInstanceVariableRefactoring .
+		addCase: { #rbClass -> ReAbstractInstanceVariableRefactoring .
 					  #constructor -> #variable:class: };
 		addCase: { #rbClass -> RBRemoveDirectAccessToVariableTransformation .
 					  #constructor -> #instanceVariable:class: };
@@ -19,13 +19,14 @@ RBAbstractInstanceVariableParametrizedTest class >> testParameters [
 { #category : 'running' }
 RBAbstractInstanceVariableParametrizedTest >> setUp [
 	super setUp.
-	model := self rbModelForVariableTest
+	model := self modelOnClasses: { Object . RBLintRuleTestData . RBBasicLintRuleTestData  }.
+	self defineFooBarIn: model
 ]
 
 { #category : 'tests' }
 RBAbstractInstanceVariableParametrizedTest >> testAbstractInstanceVariable [
 	| refactoring class |
-	refactoring := self createRefactoringWithArguments:
+	refactoring := self createRefactoringWithModel: model andArguments:
 		{ 'name' . #RBLintRuleTestData}.
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #RBLintRuleTestData.
@@ -100,14 +101,14 @@ RBAbstractInstanceVariableParametrizedTest >> testAbstractWithDefaultNamesUsed [
 { #category : 'failure tests' }
 RBAbstractInstanceVariableParametrizedTest >> testFailureInheritedName [
 
-	self shouldFail: (self createRefactoringWithArguments:
+	self shouldFail: (self createRefactoringWithModel: model andArguments:
 			 { 'name'. #RBBasicLintRuleTestData })
 ]
 
 { #category : 'failure tests' }
 RBAbstractInstanceVariableParametrizedTest >> testFailureNonExistantName [
 
-	self shouldFail: (self createRefactoringWithArguments:
+	self shouldFail: (self createRefactoringWithModel: model andArguments:
 			 { 'foo'. #RBBasicLintRuleTestData })
 ]
 

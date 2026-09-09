@@ -1,14 +1,16 @@
 "
 I am responsible for changing the protocol (or category) of a method. If the protocol does not exist in the class protocols list, the transformation will create it automatically.
 
-Usage: 
+Usage:
+```
 | transformation |
 transformation := (RBMethodProtocolTransformation
 				protocol: 'transforming'
 				inMethod: #someMethod
 				inClass: #RBDummyEmptyClass)
-				transform.
-(ChangesBrowser changes: transformation model changes changes) open
+		generateChanges.
+(StRefactoringPreviewPresenter for: transformation) open
+```
 
 Preconditions:
 - the method exists.
@@ -94,19 +96,4 @@ RBMethodProtocolTransformation >> protocol: aString inMethod: aSelector inClass:
 	self className: aClassName.
 	selector := aSelector.
 	protocol := aString
-]
-
-{ #category : 'storing' }
-RBMethodProtocolTransformation >> storeOn: aStream [
-
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream
-		nextPutAll: ' protocol ''';
-		nextPutAll: protocol;
-		nextPutAll: ''' inMethod: ''';
-		nextPutAll: selector;
-		nextPutAll: ''' inClass: '.
-	class storeOn: aStream.
-	aStream nextPut: $)
 ]

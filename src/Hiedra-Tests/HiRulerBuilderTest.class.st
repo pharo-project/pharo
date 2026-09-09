@@ -104,15 +104,14 @@ HiRulerBuilderTest >> debugShowingRulerInPresenter: valuesAndParentsAsDictionary
 	hiedraColumnController reset.
 
 	"Show the ruler in a Spec tree."
-	SpTablePresenter new
+	(SpTablePresenter new
 		addColumn:
 			((SpStringTableColumn evaluated: #value)
 				width: 15;
 				yourself);
 		addColumn: (SpImageTableColumn evaluated: [ :item | hiedraColumnController cellMorphAtValue: item ]);
 		items: values;
-		title: testSelector asString;
-		open
+		open) title: testSelector asString
 ]
 
 { #category : 'tests' }

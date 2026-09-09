@@ -3,7 +3,7 @@ I'm a transformation whose focus is class.
 "
 Class {
 	#name : 'RBClassTransformation',
-	#superclass : 'RBTransformation',
+	#superclass : 'ReTransformation',
 	#instVars : [
 		'className',
 		'class',

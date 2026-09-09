@@ -1,21 +1,19 @@
 "
-I am an abstract critique class.
+I am an abstract critique class. A critique links a quality rule to a source code target. It is the main unit that should be used to provide information to the user.
 
-A critique links a quality rule to a source code target. It is the main unit that should be used to provide information to the user.
+I specialize the `ReProperty` class by extracting information from the rule that reported the violation. 
+The `#title` is extracted from the rule's `#ruleName`, the `#icon` based on the rule's `#severity` and a `#description` is provided based on the rule's #rationale.
 
-I specialize the ReProperty class by extracting information from the rule that reported the violation. 
-The #title is extracted from the rule's #name, the #icon based on the rule's #severity and a #description is provided based on the rule's #rationale.
+A critique has the `#providesChange` method which returns a boolean value specifying whether the critique can provide a change which will resolve the issue. The `#change` method can be used to obtain an object of RBRefactoryChange kind.
 
-A critique has the #providesChange method which returns a boolean value specifying whether the critique can provide a change which will resolve the issue. The #change method can be used to obtain an object of RBRefactoryChange kind.
-
-The reference to the critized entity is established through ReSourceAnchor.
+The reference to the critized entity is established through `ReSourceAnchor`.
 A critique has a reference to the criticized entity.
 
-This link is established through ReSourceAnchor. A source anchor has a reference to the actual class, method, or other entity that is criticized. An anchor also has a #providesInterval method that returns a boolean indicating if the anchor provides a selection interval to the actual source of the critique. The interval can be accessed through the #interval method.
+This link is established through `ReSourceAnchor`. A source anchor has a reference to the actual class, method, or other entity that is criticized. An anchor also has a `#providesInterval` method that returns a boolean indicating if the anchor provides a selection interval to the actual source of the critique. The interval can be accessed through the `#interval` method.
 
-There are two subclasses of ReSourceAnchor.
-ReIntervalSourceAnchor stores the actual interval object which is set during initialization.
-ReSearchStringSourceAnchor stores a searchString which will be searched for in the entities source code on demand to find an interval of substring
+There are two subclasses of `ReSourceAnchor`.
+- `ReIntervalSourceAnchor` stores the actual interval object which is set during initialization.
+- `ReSearchStringSourceAnchor` stores a searchString which will be searched for in the entities source code on demand to find an interval of substring
 "
 Class {
 	#name : 'ReAbstractCritique',
@@ -24,10 +22,25 @@ Class {
 		'rule',
 		'tinyHint'
 	],
+	#classVars : [
+		'SeverityColors'
+	],
 	#category : 'Renraku-Critiques',
 	#package : 'Renraku',
 	#tag : 'Critiques'
 }
+
+{ #category : 'item decoration' }
+ReAbstractCritique class >> decorateBrowserItem: aBrowserItem by: anEnvironmentPlugin [
+	| critique |
+	critique := aBrowserItem actualObject.
+
+	aBrowserItem addProperty: (ClyCritiqueSeverityProperty of: critique).
+	critique sourceAnchor ifNotNil: [ :anchor |
+		anchor providesInterval ifTrue: [
+			aBrowserItem addProperty: (ClySourceNodeCritiqueIntervalProperty from: anchor interval)]].
+	critique providesChange	ifTrue: [ aBrowserItem markWith: ClyCritiqueFixableTag ]
+]
 
 { #category : 'instance creation' }
 ReAbstractCritique class >> for: anEntity by: aRule [
@@ -36,6 +49,16 @@ ReAbstractCritique class >> for: anEntity by: aRule [
 		initializeRule: aRule
 		target: anEntity;
 		yourself
+]
+
+{ #category : 'class initialization' }
+ReAbstractCritique class >> initialize [
+
+	"hardcoding the colors is a 'Bad Idea' Tm (SD) we should somehow refer to the theme or syntax highligther"
+	SeverityColors := Dictionary new.
+	SeverityColors at: 'error' put: (Color red alpha: 0.15).
+	SeverityColors at: 'warning' put: (Color yellow alpha: 0.15).
+	SeverityColors at: 'information' put: (Color blue alpha: 0.15)
 ]
 
 { #category : 'testing' }
@@ -120,11 +143,7 @@ ReAbstractCritique >> change [
 { #category : 'accessing' }
 ReAbstractCritique >> color [
 
-	^ ({
-	#error -> Color red .
-	#warning -> Color yellow .
-	#information -> Color blue
-	 } asDictionary at: rule severity ifAbsent: [ super color ]) alpha: 0.1
+	^ SeverityColors at: rule severity ifAbsent: [ super color alpha: 0.1 ]
 ]
 
 { #category : 'accessing' }
@@ -141,7 +160,7 @@ ReAbstractCritique >> guidedBan [
 { #category : 'accessing' }
 ReAbstractCritique >> icon [
 
-	^ self iconNamed: ('small', rule severity capitalized, 'Icon') asSymbol
+	^ self iconNamed: ('small' , rule severity capitalized) asSymbol
 ]
 
 { #category : 'initialization' }

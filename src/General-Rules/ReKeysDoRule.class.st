@@ -17,8 +17,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReKeysDoRule class >> group [
-	^ 'Optimization'
+ReKeysDoRule class >> groupSelector [
+
+	^ #optimizationGroup
 ]
 
 { #category : 'accessing' }

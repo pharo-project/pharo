@@ -10,9 +10,9 @@ Class {
 }
 
 { #category : 'accessing' }
-SettingDontTranslateDescriptionRule class >> group [
+SettingDontTranslateDescriptionRule class >> groupSelector [
 
-	^ 'API Hints'
+	^ #apiHintsGroup
 ]
 
 { #category : 'accessing' }
@@ -22,7 +22,9 @@ SettingDontTranslateDescriptionRule class >> ruleName [
 
 { #category : 'running' }
 SettingDontTranslateDescriptionRule >> basicCheck: aNode [
-	^ aNode methodNode ifNil: [ false ] ifNotNil: [ :methNode | self checkPreconditionOn: methNode ]
+	^ aNode methodNode 
+		ifNil: [ false ] 
+		ifNotNil: [ :methNode | self checkPreconditionOn: methNode ]
 ]
 
 { #category : 'helpers' }

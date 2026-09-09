@@ -3,7 +3,7 @@ Aplhabetical sorting
 "
 Class {
 	#name : 'AlphabeticSorter',
-	#superclass : 'CompletionSorter',
+	#superclass : 'CoCompletionSorter',
 	#category : 'NECompletion-Sorting',
 	#package : 'NECompletion',
 	#tag : 'Sorting'

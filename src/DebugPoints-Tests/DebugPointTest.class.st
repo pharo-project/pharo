@@ -56,7 +56,10 @@ DebugPointTest >> setUp [
 	node := (DummyTestClass methods select: [ :method |
 		         method name = 'DummyTestClass>>#id:' ]) first ast.
 	context := self setUpContext.
-	cls := self newDummyClass
+	cls := self newDummyClass.
+	
+	"For those tests hitting on the transcript..."
+	Transcript clear.
 ]
 
 { #category : 'initialization' }
@@ -80,7 +83,9 @@ DebugPointTest >> tearDown [
 	dp ifNotNil: [ dp remove ].
 	dp2 ifNotNil: [ dp2 remove ].
 
-	DummyTestClass removeSelector: #dummy.
+	(DummyTestClass includesSelector: #dummy)
+		ifTrue: [ DummyTestClass removeSelector: #dummy ].
+
 	cls ifNotNil: [ cls isObsolete ifFalse: [ cls removeFromSystem ] ].
 	self packageOrganizer removePackage: 'DummyPackage'.
 	super tearDown
@@ -116,7 +121,7 @@ DebugPointTest >> testAddRemoveBreakpointKeepTimestamp [
 	| method |
 	DummyTestClass compile: 'dummy ^42'.
 	method := DummyTestClass >> #dummy.
-	self assertEmpty: Breakpoint all.
+	self assertEmpty: DebugPoint all.
 	dp := DebugPointManager
 		      installNew: BreakDebugPoint
 		      on: (DummyTestClass >> #dummy) ast.
@@ -519,9 +524,17 @@ DebugPointTest >> testModifyMethodWithBreakpoint [
 		      on: (DummyTestClass >> #dummy) ast.
 	self assertCollection: DebugPoint all includesAll: { dp }.
 	self should: [ DummyTestClass new dummy ] raise: Break.
+	self
+		assert: (DummyTestClass >> #dummy) sourceCode
+		equals: 'dummy ^42'.
+
 	DummyTestClass compile: 'dummy ^43'.
+
 	self denyCollection: DebugPoint all includesAll: { dp }.
-	self shouldnt: [ DummyTestClass new dummy ] raise: Break
+	self shouldnt: [ DummyTestClass new dummy ] raise: Break.
+	self
+		assert: (DummyTestClass >> #dummy) sourceCode
+		equals: 'dummy ^43'
 ]
 
 { #category : 'tests' }
@@ -730,7 +743,7 @@ DebugPointTest >> testRemoveAfterClassRemoved [
 	| testClassNodes |
 	self compileTestClass.
 	self compileTestClass2.
-	testClassNodes := (testSubclass >> #accessingV4) ast allChildren.
+	testClassNodes := (testSubclass >> #accessingV4) ast withAllChildren.
 
 	dp := DebugPointManager
 		      installNew: BreakDebugPoint
@@ -752,7 +765,7 @@ DebugPointTest >> testRemoveAfterSuperclassRemoved [
 	| testClassNodes |
 	self compileTestClass.
 	self compileTestClass2.
-	testClassNodes := (testSubclass >> #accessingV4) ast allChildren.
+	testClassNodes := (testSubclass >> #accessingV4) ast withAllChildren.
 
 	dp := DebugPointManager
 		      installNew: BreakDebugPoint
@@ -818,20 +831,36 @@ DebugPointTest >> testRemoveBehavior [
 DebugPointTest >> testRemoveClassWithBreakpoint [
 
 	cls compile: 'dummy ^42'.
-	self assertEmpty: Breakpoint all.
+	self assertEmpty: DebugPoint all.
 	dp := DebugPointManager
 		      installNew: BreakDebugPoint
 		      on: (cls >> #dummy) ast.
 	self assertCollection: DebugPoint all includesAll: { dp }.
 	cls removeFromSystem.
-	self assertEmpty: Breakpoint all
+	self assertEmpty: DebugPoint all
+]
+
+{ #category : 'tests' }
+DebugPointTest >> testRemoveMethodWithBreakpoint [
+
+	cls compile: 'dummy ^42'.
+	dp := DebugPointManager
+		      installNew: BreakDebugPoint
+		      on: (cls >> #dummy) ast.
+	self assertCollection: DebugPoint all includesAll: { dp }.
+	self should: [ cls new dummy ] raise: Break.
+
+	(cls >> #dummy) removeFromSystem.
+
+	self denyCollection: DebugPoint all includesAll: { dp }.
+	self should: [ cls new dummy ] raise: MessageNotUnderstood
 ]
 
 { #category : 'tests' }
 DebugPointTest >> testRemovePackageWithBreakpoint [
 
 	cls compile: 'dummy ^42'.
-	self assertEmpty: Breakpoint all.
+	self assertEmpty: DebugPoint all.
 	dp := DebugPointManager
 		      installNew: BreakDebugPoint
 		      on: (cls >> #dummy) ast.
@@ -876,16 +905,15 @@ DebugPointTest >> testTestEnvironmentBehavior [
 
 { #category : 'tests' }
 DebugPointTest >> testTranscriptDebugPoint [
-
-	self skipOnPharoCITestingEnvironment.
-	dp := DebugPointManager
-		      installNew: DebugPoint
-		      on: node
-		      withBehaviors: { TranscriptBehavior }.
-	dp text: 'string'.
-	dp hitWithContext: context.
-	Transcript stepGlobal.
-	self assert: Transcript contents equals: 'string'
+    self skipOnPharoCITestingEnvironment.
+    Transcript clear.
+    dp := DebugPointManager
+          installNew: DebugPoint
+          on: node
+          withBehaviors: { TranscriptBehavior }.
+    dp text: 'string'.
+    dp hitWithContext: context.
+    self assert: Transcript contents equals: 'string'
 ]
 
 { #category : 'tests' }
@@ -915,7 +943,7 @@ DebugPointTest >> testUpdateNodesForVariableDebugPointAfterRecompilingMethod [
 
 	| ast |
 	"We get the variable node one which the variable breakpoint will be installed"
-	ast := (DummyTestClass >> #id) ast allChildren last.
+	ast := (DummyTestClass >> #id) ast withAllChildren last.
 
 	"Removing a variable breakpoint should not uninstall the breakpoint"
 	dp := DebugPointManager
@@ -943,8 +971,8 @@ DebugPointTest >> testVariableDebugPointNoRemoveAfterSubclassRemoved [
 	<ignoreNotImplementedSelectors: #(accessingId)>
 	self compileTestClass.
 	self compileTestClass2.
-	testClassNode := (testClass >> #accessingId) ast allChildren detect:[:n| n isVariable].
-	testSubclassNode := (testSubclass >> #accessingId) ast allChildren detect:[:n| n isVariable].
+	testClassNode := (testClass >> #accessingId) ast withAllChildren detect:[:n| n isVariable].
+	testSubclassNode := (testSubclass >> #accessingId) ast withAllChildren detect:[:n| n isVariable].
 
 	dp := DebugPointManager
 		      installNew: BreakDebugPoint

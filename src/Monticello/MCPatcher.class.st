@@ -30,6 +30,11 @@ MCPatcher >> addDefinition: aDefinition [
 	definitions add: aDefinition
 ]
 
+{ #category : 'accessing' }
+MCPatcher >> definitions [
+	^ definitions
+]
+
 { #category : 'initialization' }
 MCPatcher >> initializeWithSnapshot: aSnapshot [
 	definitions := MCDefinitionIndex definitions: aSnapshot definitions

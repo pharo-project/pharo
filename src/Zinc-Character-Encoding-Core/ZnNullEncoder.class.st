@@ -98,6 +98,13 @@ ZnNullEncoder >> ensureAtBeginOfCodePointOnStream: stream [
 	"Nothing to be done, I am a byte encoding: each code point is encoded in a single byte"
 ]
 
+{ #category : 'encoding - decoding' }
+ZnNullEncoder >> forwardOnStream: aStream [
+	"I should move from 1 character forward on the stream. The stream is over a ByteArray."
+
+	aStream next
+]
+
 { #category : 'accessing' }
 ZnNullEncoder >> identifier [
 	^ #ascii

@@ -1,5 +1,5 @@
 "
-This property represents exceptions that occured during other properties computation. This way tools can work witout interuptions, but users will be aware the there were some exceptions.
+This property represents exceptions that occured during other properties computation. This way tools can work without interuptions, but users will be aware that there were some exceptions.
 "
 Class {
 	#name : 'ReExceptionProperty',

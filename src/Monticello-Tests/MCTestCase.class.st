@@ -206,6 +206,15 @@ MCTestCase >> runCase [
 	MCCacheRepository disableCacheDuring: [ ^ super runCase ].
 ]
 
+{ #category : 'running' }
+MCTestCase >> setUp [
+
+	super setUp.
+	"Monticello tests need to run for now on the global environment.
+	Ideally they should work on an isolated one, but that requires refactoring/rewriting all tests"
+	testingEnvironment := Smalltalk globals
+]
+
 { #category : 'mocks' }
 MCTestCase >> treeFrom: anArray [
 

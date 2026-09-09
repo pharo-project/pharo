@@ -190,7 +190,7 @@ RGMethodDefinition >> ast [
 
 { #category : 'private' }
 RGMethodDefinition >> astFromSource [
-	^ RBParser parseMethod: self sourceCode
+	^ OCParser parseMethod: self sourceCode
 ]
 
 { #category : 'stamp values' }
@@ -262,11 +262,6 @@ RGMethodDefinition >> fullName [
 		ifAbsentPut: [ (self parentName, '>>', self selector) asSymbol ]
 ]
 
-{ #category : 'source pointers' }
-RGMethodDefinition >> getPreambleFrom: aFileStream at: position [
-	^ SourceFiles getPreambleFrom: aFileStream at: position
-]
-
 { #category : 'testing' }
 RGMethodDefinition >> hasStamp [
 
@@ -309,6 +304,12 @@ RGMethodDefinition >> isDefined [
 	self selector isDoIt ifTrue:[ ^false ].
 	rClass := self realClass.
 	^rClass isNotNil and: [ rClass includesSelector: self selector ]
+]
+
+{ #category : 'testing' }
+RGMethodDefinition >> isDeprecated [
+
+	^ self compiledMethod ifNotNil: [ :cm | cm isDeprecated ] ifNil: [ false ]
 ]
 
 { #category : 'testing' }
@@ -503,6 +504,14 @@ RGMethodDefinition >> origin [
 ]
 
 { #category : 'accessing' }
+RGMethodDefinition >> originMethod [
+	"Return the original version of this method."
+	^ self compiledMethod
+		ifNil: [ self ]
+		ifNotNil: [ :compileMethod| compileMethod originMethod ]
+]
+
+{ #category : 'accessing' }
 RGMethodDefinition >> package [
 	"Retrieves the package in which this class is contained, if exists"
 
@@ -542,7 +551,7 @@ RGMethodDefinition >> protocolAtPointer [
 	"A RGMethodDefinition that was set as historical will retrieve the protocol using the sourcePointer"
 
 	^ self sourcePointer
-		  ifNotNil: [ SourceFiles protocolAt: self sourcePointer ]
+		  ifNotNil: [ SourcesManager current protocolAt: self sourcePointer ]
 		  ifNil: [ nil ]
 ]
 
@@ -598,7 +607,7 @@ RGMethodDefinition >> sourceCodeAtPointer [
 	"A RGMethodDefinition that was set as historical will retrieve the sourceCode using the sourcePointer"
 
 	^ self sourcePointer
-		  ifNotNil: [ SourceFiles sourceCodeAt: self sourcePointer ]
+		  ifNotNil: [ SourcesManager current sourceCodeAt: self sourcePointer ]
 		  ifNil: [ nil ]
 ]
 
@@ -639,7 +648,7 @@ RGMethodDefinition >> stampAtPointer [
 	"A RGMethodDefinition that was set as historical will retrieve the stamp using the sourcePointer"
 
 	^ self sourcePointer
-		  ifNotNil: [ SourceFiles timeStampAt: self sourcePointer ]
+		  ifNotNil: [ SourcesManager current timeStampAt: self sourcePointer ]
 		  ifNil: [ nil ]
 ]
 
@@ -654,17 +663,6 @@ RGMethodDefinition >> storeOn: aStream [
 	aStream nextPutAll: ' isMeta: '.
 	aStream nextPutAll: self isMeta printString.
 	aStream nextPut: $)
-]
-
-{ #category : 'backward compatibility' }
-RGMethodDefinition >> symbolic [
-
-	^ self method symbolic
-]
-
-{ #category : 'accessing' }
-RGMethodDefinition >> symbolicBytecodes [
-	^self compiledMethod symbolicBytecodes
 ]
 
 { #category : 'stamp values' }

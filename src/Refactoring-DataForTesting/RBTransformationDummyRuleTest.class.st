@@ -148,6 +148,8 @@ RBTransformationDummyRuleTest class >> guardClause [
 
 { #category : 'class initialization' }
 RBTransformationDummyRuleTest class >> initializeAfterLoad1 [
+
+	<ignoreNotImplementedSelectors: #(addMethodSearches:)>
 	RecursiveSelfRule := self parseTreeSearcher.
 	RecursiveSelfRule
 		addMethodSearches: #('`@methodName: `@args | `@temps | self `@methodName: `@args' '`@methodName: `@args | `@temps | ^self `@methodName: `@args')
@@ -223,8 +225,10 @@ RBTransformationDummyRuleTest class >> nuke [
 
 { #category : 'instance creation' }
 RBTransformationDummyRuleTest class >> rewrite: stringArrays methods: aBoolean name: aName [
+	
+	<ignoreNotImplementedSelectors: #(addMethodSearch:)>
 	| rewriteRule |
-	rewriteRule := RBParseTreeRewriter new.
+	rewriteRule := OCParseTreeRewriter new.
 	stringArrays do:
 			[:each |
 			aBoolean
@@ -300,7 +304,7 @@ RBTransformationDummyRuleTest >> justAUnreferencedMethodForTesting [
 
 { #category : 'rules' }
 RBTransformationDummyRuleTest >> parseTreeRewriter [
-	^ RBParseTreeRewriter new
+	^ OCParseTreeRewriter new
 ]
 
 { #category : 'accessing' }
@@ -310,7 +314,7 @@ RBTransformationDummyRuleTest >> problemCount [
 
 { #category : 'accessing' }
 RBTransformationDummyRuleTest >> resetResult [
-	builder := RBRefactoryChangeManager changeFactory compositeRefactoryChange
+	builder := ReChangeManager changeFactory compositeRefactoryChange
 ]
 
 { #category : 'initialization' }

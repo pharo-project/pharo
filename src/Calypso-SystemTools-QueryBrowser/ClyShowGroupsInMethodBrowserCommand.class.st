@@ -36,7 +36,7 @@ ClyShowGroupsInMethodBrowserCommand class >> fullBrowserMethodGroupMenuActivatio
 
 { #category : 'accessing' }
 ClyShowGroupsInMethodBrowserCommand >> defaultMenuIconName [
-	^#glamorousBrowse
+	^#browse
 ]
 
 { #category : 'accessing' }
@@ -47,11 +47,7 @@ ClyShowGroupsInMethodBrowserCommand >> defaultMenuItemName [
 { #category : 'execution' }
 ClyShowGroupsInMethodBrowserCommand >> execute [
 
-	| queries fullQuery |
-	queries := methodGroups collect: [:each | each methodQuery].
-	fullQuery := ClyQuery unionFrom: queries.
-
-	browser spawnQueryBrowserOn: fullQuery
+	(Smalltalk tools toolNamed: #messageList) browse: methodGroups first methods 
 ]
 
 { #category : 'execution' }

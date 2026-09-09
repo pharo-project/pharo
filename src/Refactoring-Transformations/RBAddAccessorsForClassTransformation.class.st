@@ -2,11 +2,13 @@
 Adds accessors (getters and setters) for all the variables in a class, if each of them do not exist.
 
 Usage:
+```
+| transformation |
 transformation := (RBAddAccessorsForClassTransformation
 	className: #RBVariableTransformation)
-	transform.
-(ChangesBrowser changes: transformation model changes changes) open
-
+	generateChanges.
+(StRefactoringPreviewPresenter for: transformation) open
+```
 Preconditions:
 overridden from RBAddVariableAccessorRefactoring
 "
@@ -54,14 +56,4 @@ RBAddAccessorsForClassTransformation >> buildTransformations [
 RBAddAccessorsForClassTransformation >> className: aClassName [
 
 	className := aClassName
-]
-
-{ #category : 'storing' }
-RBAddAccessorsForClassTransformation >> storeOn: aStream [
-
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream nextPutAll: ' className: '.
-	className storeOn: aStream.
-	aStream nextPut: $)
 ]

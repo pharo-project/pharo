@@ -15,8 +15,9 @@ ReTempVarOverridesInstVarRule class >> checksMethod [
 ]
 
 { #category : 'accessing' }
-ReTempVarOverridesInstVarRule class >> group [
-	^ 'Potential Bugs'
+ReTempVarOverridesInstVarRule class >> groupSelector [
+
+	^ #potentialBugsGroup
 ]
 
 { #category : 'accessing' }

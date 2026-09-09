@@ -11,7 +11,7 @@ Class {
 
 { #category : 'meta-data - dependency analyser' }
 ManifestCompression class >> manuallyResolvedDependencies [
-	^ #(#Jobs #'System-Support' #'System-Changes' #'Collections-Abstract')
+	^ #(#'Collections-Abstract')
 ]
 
 { #category : 'code-critics' }

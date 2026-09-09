@@ -24,14 +24,17 @@ DateAndTimeLeapTest >> setUp [
 	aDateAndTime := (DateAndTime
 		year: 2004 month: 2 day: 29
 		hour: 13 minute: 33 second: 0
-		offset: 2 hours).
+		offset: (Duration hours: 2)).
 	aTimeZone := TimeZone default.
 	aDuration := Duration days: 0 hours: 13 minutes: 33 seconds: 0 nanoSeconds: 0
 ]
 
 { #category : 'tests' }
 DateAndTimeLeapTest >> testAsDate [
-	self assert: aDateAndTime asDate equals:  ((Date readFrom: '29-2-2004' pattern: 'd-m-y') translateTo: 2 hours)
+
+	self 
+		assert: aDateAndTime asDate 
+		equals: ((Date readFrom: '29-2-2004' pattern: 'd-m-y') translateTo: (Duration hours: 2))
 ]
 
 { #category : 'tests' }
@@ -41,21 +44,33 @@ DateAndTimeLeapTest >> testAsDuration [
 
 { #category : 'tests' }
 DateAndTimeLeapTest >> testAsLocal [
-	self assert: aDateAndTime asLocal equals: aDateAndTime.
-	self assert: aDateAndTime asLocal equals: (aDateAndTime offset: aDateAndTime class localOffset)
+
+
+	self 
+		assert: aDateAndTime asLocal 
+		equals: aDateAndTime.
+	self 
+		assert: aDateAndTime asLocal 
+		equals: (aDateAndTime offset: aDateAndTime class localOffset)
 ]
 
 { #category : 'tests' }
 DateAndTimeLeapTest >> testAsMonth [
+
 	self
 		assert: aDateAndTime asMonth
-		equals: ((Month year: 2004 month: 'February') translateTo: 2 hours)
+		equals: ((Month year: 2004 month: 'February') translateTo: (Duration hours: 2))
 ]
 
 { #category : 'tests' }
 DateAndTimeLeapTest >> testAsNanoSeconds [
-	self assert: aDateAndTime asNanoSeconds equals: aDuration asNanoSeconds.
-	self assert: aDateAndTime asNanoSeconds equals: 48780000000000
+	
+	self 
+		assert: aDateAndTime asNanoSeconds
+		equals: aDuration asNanoSeconds.
+	self 
+		assert: aDateAndTime asNanoSeconds 
+		equals: 48780000000000
 ]
 
 { #category : 'tests' }
@@ -76,7 +91,10 @@ DateAndTimeLeapTest >> testAsUTC [
 
 { #category : 'tests' }
 DateAndTimeLeapTest >> testAsWeek [
-	self assert: aDateAndTime asWeek equals: ((Week starting: (Date readFrom: '29-2-2004' pattern: 'd-m-y')) translateTo: 2 hours)
+
+	self 
+		assert: aDateAndTime asWeek 
+		equals: ((Week starting: (Date readFrom: '29-2-2004' pattern: 'd-m-y')) translateTo: 2 hours)
 ]
 
 { #category : 'tests' }
@@ -165,8 +183,8 @@ DateAndTimeLeapTest >> testIsLeapYear [
 
 { #category : 'tests' }
 DateAndTimeLeapTest >> testLessThan [
-	self assert: aDateAndTime < (aDateAndTime + '1:00:00:00').
-	self assert: aDateAndTime + -1 < aDateAndTime
+	self assert: aDateAndTime  < (aDateAndTime + (Duration fromString: '1:00:00:00')).
+	self assert: aDateAndTime + (Duration seconds: -1) < aDateAndTime
 ]
 
 { #category : 'tests' }
@@ -176,15 +194,29 @@ DateAndTimeLeapTest >> testMeridianAbbreviation [
 
 { #category : 'tests' }
 DateAndTimeLeapTest >> testMiddleOf [
-	self assert: (aDateAndTime middleOf: aDuration)
-		  equals:
-	 (Timespan starting: (DateAndTime year: 2004 month: 2 day: 29 hour: 6 minute: 46 second: 30 offset: 2 hours)
-				  duration: (Duration days: 0 hours: 13 minutes: 33 seconds: 0 nanoSeconds: 0 ))
+
+	self 
+		assert: (aDateAndTime middleOf: aDuration) 
+		equals: (Timespan
+			 starting: (DateAndTime
+					  year: 2004
+					  month: 2
+					  day: 29
+					  hour: 6
+					  minute: 46
+					  second: 30
+					  offset: (Duration hours: 2))
+			 duration: (Duration
+					  days: 0
+					  hours: 13
+					  minutes: 33
+					  seconds: 0
+					  nanoSeconds: 0))
 ]
 
 { #category : 'tests' }
 DateAndTimeLeapTest >> testMidnight [
-	self assert: aDateAndTime midnight equals: '2004-02-29T00:00:00+02:00' asDateAndTime
+	self assert: aDateAndTime midnight equals: (DateAndTime fromString:  '2004-02-29T00:00:00+02:00')
 ]
 
 { #category : 'tests' }
@@ -212,15 +244,21 @@ DateAndTimeLeapTest >> testNanoSecond [
 
 { #category : 'tests' }
 DateAndTimeLeapTest >> testNoon [
-	self assert: aDateAndTime noon equals: '2004-02-29T12:00:00+02:00' asDateAndTime
+	self assert: aDateAndTime noon equals: (DateAndTime fromString: '2004-02-29T12:00:00+02:00')
 ]
 
 { #category : 'tests' }
 DateAndTimeLeapTest >> testOffset [
 
-	self assert: aDateAndTime offset equals: '0:02:00:00' asDuration.
-	self assert: (aDateAndTime offset: '-0:12:00:00') equals: '2004-02-28T23:33:00-12:00' asDateAndTime.
-	self assert: (aDateAndTime offset: '0:12:00:00') equals:  '2004-02-29T23:33:00+12:00' asDateAndTime
+	self 
+		assert: aDateAndTime offset 
+		equals: (Duration fromString: '0:02:00:00').
+	self 
+		assert: (aDateAndTime offset: (Duration fromString:'-0:12:00:00'))
+		equals: (DateAndTime fromString: '2004-02-28T23:33:00-12:00').
+	self 
+		assert: (aDateAndTime offset: (Duration fromString: '0:12:00:00')) 
+		equals: (DateAndTime fromString: '2004-02-29T23:33:00+12:00')
 ]
 
 { #category : 'tests' }
@@ -256,14 +294,18 @@ DateAndTimeLeapTest >> testTicksOffset [
 
 { #category : 'tests' }
 DateAndTimeLeapTest >> testTimeZone [
-	aDateAndTime := '2004-02-29T13:33:00+00:00' asDateAndTime.
+
+	aDateAndTime := (DateAndTime fromString: '2004-02-29T13:33:00+00:00').
 	self assert: aDateAndTime timeZone name equals: 'Universal Time'.
 	self assert: aDateAndTime timeZone abbreviation 	equals: 'UTC'
 ]
 
 { #category : 'tests' }
 DateAndTimeLeapTest >> testUtcOffset [
-     self assert: (aDateAndTime offset: '0:02:00:00') equals: '2004-02-29T13:33:00+02:00' asDateAndTime
+	
+	self 
+		assert: (aDateAndTime offset: (Duration fromString: '0:02:00:00')) 
+		equals: (DateAndTime fromString: '2004-02-29T13:33:00+02:00')
 ]
 
 { #category : 'tests' }

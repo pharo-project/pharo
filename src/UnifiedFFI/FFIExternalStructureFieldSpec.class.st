@@ -31,6 +31,11 @@ FFIExternalStructureFieldSpec >> fieldNames [
 ]
 
 { #category : 'accessing' }
+FFIExternalStructureFieldSpec >> fields [
+	^ fields
+]
+
+{ #category : 'accessing' }
 FFIExternalStructureFieldSpec >> fieldsAndTypesDo: aBlock [
 	^ fields keysAndValuesDo: aBlock
 ]

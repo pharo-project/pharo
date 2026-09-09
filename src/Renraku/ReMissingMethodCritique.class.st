@@ -1,5 +1,8 @@
 "
-This kind of critiques occur when a method is missing. The critique knows what is the selector of the missing method, and it's perspective class. The critique provides a change which is a creation of the missing method. Also a sourcecode of a method can be specified. For now there are two shortcuts for the source code, that set it to either subclassResponsability or shouldBeImplemented 
+This kind of critiques occurs when a method is missing. The critique knows what is the selector of the missing method, and its perspective class. The critique provides a change which is a creation of the missing method. 
+
+Also a sourcecode of a method can be specified. 
+For now there are two shortcuts for the source code, that set it to either 'subclassResponsability' or 'shouldBeImplemented'. 
 "
 Class {
 	#name : 'ReMissingMethodCritique',
@@ -40,7 +43,7 @@ ReMissingMethodCritique >> beSubclassResponsibility [
 ReMissingMethodCritique >> change [
 	"an 'add method' change that create the missing method"
 
-	^ (RBRefactoryChangeFactory instance)
+	^ ReChangeFactory instance
 		addMethodSource: (self methodHeader), String cr, String tab, source
 		in: class
 ]

@@ -182,9 +182,21 @@ Month >> name [
 ]
 
 { #category : 'accessing' }
-Month >> previous [
+Month >> next [ 
 
-	^ self class starting: (self start - 1)
+	^ self month = 12 
+		ifTrue: [ self class month: 1 year: self year + 1 ]
+		ifFalse: [ self class month: self month + 1 year: self year ]
+
+]
+
+{ #category : 'accessing' }
+Month >> previous [
+	
+	^ self month = 1 
+		ifTrue: [ self class month: 12 year: self year - 1 ]
+		ifFalse: [ self class month: self month - 1 year: self year ]
+
 ]
 
 { #category : 'printing' }

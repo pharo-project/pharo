@@ -157,45 +157,9 @@ ScaledDecimal >> negated [
 	^self class newFromNumber: super negated scale: scale
 ]
 
-{ #category : 'printing' }
-ScaledDecimal >> printOn: aStream [
-	"Append an approximated representation of the receiver on aStream.
-	Use prescribed number of digits after decimal point (the scale) using a rounding operation if not exact"
-
-	self printOn: aStream showingDecimalPlaces: scale.
-
-	"Append a scale specification so that the number can be recognized as a ScaledDecimal"
-	aStream nextPut: $s; print: scale
-]
-
-{ #category : 'printing' }
-ScaledDecimal >> printOn: aStream base: base [
-	base = 10 ifFalse: [self error: 'ScaledDecimals should be printed only in base 10'].
-	self printOn: aStream
-]
-
 { #category : 'mathematical functions' }
 ScaledDecimal >> raisedTo: aNumber [
 	^self coerce: (super raisedTo: aNumber)
-]
-
-{ #category : 'mathematical functions' }
-ScaledDecimal >> raisedToFraction: aFraction [
-	| result |
-	result := self asFraction raisedToFraction: aFraction.
-	^result isFloat
-		ifTrue: [result]
-		ifFalse: [result asScaledDecimal: scale]
-]
-
-{ #category : 'mathematical functions' }
-ScaledDecimal >> raisedToInteger: aNumber [
-	^self class newFromNumber: (super raisedToInteger: aNumber) scale: scale
-]
-
-{ #category : 'arithmetic' }
-ScaledDecimal >> reciprocal [
-	^self class newFromNumber: super reciprocal scale: scale
 ]
 
 { #category : 'accessing' }

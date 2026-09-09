@@ -312,7 +312,7 @@ FFICalloutAPITest >> testLongLongs [
 
 	"This test fails in windows, but it is expected (is because the funtion used is in
 	 another library)"
-	Smalltalk os isWindows ifTrue: [ ^ self skip ].
+	OSPlatform current isWindows ifTrue: [ ^ self skip ].
 
 	long1 := 16r123456789012.
 	long2 := (-1 << 31).

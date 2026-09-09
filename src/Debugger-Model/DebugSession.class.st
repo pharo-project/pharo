@@ -26,9 +26,12 @@ Class {
 		'name',
 		'interruptedContext',
 		'interruptedProcess',
-		'exception'
+		'exception',
+		'stepThroughController',
+		'debugCallBack'
 	],
 	#classVars : [
+		'FastStepThroughMode',
 		'LogDebuggerStackToFile'
 	],
 	#classInstVars : [
@@ -57,13 +60,25 @@ DebugSession class >> defaultContextModelClass [
 	^ DebugContext
 ]
 
-{ #category : 'settings' }
+{ #category : 'accessing' }
+DebugSession class >> fastStepThroughMode [
+
+	^ FastStepThroughMode ifNil: [ FastStepThroughMode := false ]
+]
+
+{ #category : 'accessing' }
+DebugSession class >> fastStepThroughMode: aBoolean [
+
+	^ FastStepThroughMode := aBoolean
+]
+
+{ #category : 'accessing' }
 DebugSession class >> logDebuggerStackToFile [
 	^ LogDebuggerStackToFile 
 		ifNil: [ LogDebuggerStackToFile := false ]
 ]
 
-{ #category : 'settings' }
+{ #category : 'accessing' }
 DebugSession class >> logDebuggerStackToFile: aBoolean [
 	LogDebuggerStackToFile := aBoolean
 ]
@@ -76,6 +91,28 @@ DebugSession class >> named: aString on: aProcess startedAt: aContext [
 		  process: aProcess context: aContext
 ]
 
+{ #category : 'accessing' }
+DebugSession >> blockContextNotFoundForMethod: aMethod withSourceCode: sourceCode inContext: aContext [
+
+	| result newMethod |
+	result := self debugCallBack wantsToBroweAndRecompileMethodNotFoundInStack: aMethod. 
+	
+	"possible return values are true | false | nil"
+	result ifNil: [ ^ self ].
+	result ifFalse: [ ^ self ].
+	
+	newMethod := aContext recompileCurrentMethodTo: sourceCode notifying: nil inSession: self.
+	newMethod ifNotNil: [ aContext browseMethod: newMethod ]
+]
+
+{ #category : 'callbacks' }
+DebugSession >> chooseTraitOverwriteFor: aClass trait: aTrait [
+	"call back method to avoid dependencies in debugger-model"
+	"By default, it returns aClass"
+
+	^ aClass
+]
+
 { #category : 'debugging actions' }
 DebugSession >> clear [
 	"If after resuming the process the user does plan to reuse this session with
@@ -85,6 +122,15 @@ DebugSession >> clear [
 	self updateContextTo: nil.
 	
 	self triggerEvent: #clear
+]
+
+{ #category : 'debugging actions' }
+DebugSession >> completeTo: aContext [
+	"Send the selected message in selectedContext, and take control in
+	the method invoked to allow further step or send."
+
+	interruptedProcess completeTo: aContext.
+	self updateContextTo: (self stepToFirstInterestingBytecodeIn: interruptedProcess).
 ]
 
 { #category : 'accessing' }
@@ -106,13 +152,59 @@ DebugSession >> createModelForContext: aContext [
 ]
 
 { #category : 'accessing' }
+DebugSession >> debugCallBack [
+
+	^ debugCallBack
+]
+
+{ #category : 'accessing' }
+DebugSession >> debugCallBack: anObject [
+
+	debugCallBack := anObject
+]
+
+{ #category : 'accessing' }
 DebugSession >> exception [
-	^ exception
+
+	^ (thisProcess
+		   evaluate: [ LocalProcessException value ]
+		   onBehalfOf: interruptedProcess) ifNil: [ exception ]
 ]
 
 { #category : 'accessing' }
 DebugSession >> exception: anObject [
 	exception := anObject
+]
+
+{ #category : 'debugging actions' }
+DebugSession >> fastStepThrough: aContext [
+	"Send messages until you return to aContext.
+	 Used to step into a block in the method."
+	|  ctrl originContext targetContext |
+	ctrl := self stepThroughController.	
+		
+	aContext stepIntoQuickMethod: false.
+	(self isContextPostMortem: aContext) ifTrue: [ ^ self ].
+	"Wrap blocks in aContext with HaltingBlocks"
+	ctrl prepareContextForStepThrough: aContext.
+	
+	originContext := ctrl completeStep: aContext inProcess: interruptedProcess.
+	targetContext := ctrl findNextContext: originContext 
+								 having: aContext home 
+					  			 fixing: interruptedProcess suspendedContext .
+	
+	targetContext == originContext 
+		ifTrue: [ "Step through is equivalent to Step over"
+			interruptedProcess suspendedContext: originContext.
+			interruptedProcess isTerminated
+					ifTrue: [ aContext terminateTo: nil ]
+					ifFalse: [ self updateContextTo: 
+									(self stepToFirstInterestingBytecodeIn: interruptedProcess) ] ]
+		ifFalse: [ "Step through either enters of exits the block"
+			interruptedProcess suspendedContext: targetContext.
+			self updateContextTo: targetContext ].
+			
+	self triggerEvent: #stepThrough
 ]
 
 { #category : 'evaluating' }
@@ -132,23 +224,24 @@ DebugSession >> implement: aMessage classified: aSymbol inClass: aClass forConte
 	self contextChanged
 ]
 
-{ #category : 'debug - session' }
-DebugSession >> implement: aMessage inClass: aClass forContext: aContext [
-	| method |
-	aClass compile: (DynamicMessageImplementor for: aMessage in: aClass) value.
-	method := aClass lookupSelector: aMessage selector.
+{ #category : 'callbacks' }
+DebugSession >> informCannotRecompileWithDifferentSelector [ 
 
-	MethodClassifier classify: method.
+	"Do nothing. There are no notifications by default"
+]
 
-	aContext privRefreshWith: method.
-	aContext method numArgs > 0 ifTrue:
-		[aMessage arguments withIndexDo:
-			[:arg :index|
-				aContext tempAt: index put: arg]].
+{ #category : 'callbacks' }
+DebugSession >> informCannotRewindStack [
 
-	self updateContextTo: aContext.
-	self contextChanged.
-	^ method
+	"Do nothing. There are no notifications by default"
+]
+
+{ #category : 'initialization' }
+DebugSession >> initialize [
+
+	super initialize.
+
+	debugCallBack := self
 ]
 
 { #category : 'private' }
@@ -197,7 +290,7 @@ DebugSession >> isInterruptedContextATest [
 { #category : 'testing' }
 DebugSession >> isInterruptedContextDoesNotUnderstand [
 
-	^ self interruptedContext selector == #doesNotUnderstand:
+	^ self interruptedContext selector == #handleDoesNotUnderstand:to:
 ]
 
 { #category : 'context' }
@@ -281,25 +374,49 @@ DebugSession >> process: aProcess context: aContext [
 ]
 
 { #category : 'debugging actions' }
-DebugSession >> recompileMethodTo: text inContext: aContext notifying: aNotifyer [
+DebugSession >> recompileMethodTo: aString inContext: aContext notifying: aNotifyer [
+	"The retrieved information has changed and its source must now be updated.
+	 In this case, the retrieved information is the method of the given context.
+	 NOTE: I am letting this method as a 'weak deprecate', but it should not be used 
+	 as it plugs UI concerns (the confirm call) deep down the debugging mechanism.
+	 Please use DebugSession>>recompileMethodTo:inContext:notifying:force: instead"
+	| force |
+
+	force := false.
+	^ [ 
+		self 
+			recompileMethodTo: aString
+			inContext: aContext 
+			notifying: aNotifyer 
+			force: force ] 
+		on: DebugAttemptToRewindPostMortemError 
+		do: [ :e | 
+			force := ConfirmationRequest signal: 'Can not rewind post mortem context for new method.\ Accept anyway ?' withCRs.
+			force ifTrue: [ e retry ].
+			false ]
+]
+
+{ #category : 'debugging actions' }
+DebugSession >> recompileMethodTo: sourceCode inContext: aContext notifying: aNotifyer force: aBoolean [
 	"The retrieved information has changed and its source must now be updated.
 	 In this case, the retrieved information is the method of the given context."
 
 	| newMethod recompilationContext canRewind |
 	canRewind := (self isContextPostMortem: self interruptedContext) not.
-	(recompilationContext := (self createModelForContext: aContext) locateClosureHomeWithContent: text) ifNil: [ ^ false ].
-	canRewind
-		ifFalse: [ (self confirm: 'Can not rewind post mortem context for new method.\ Accept anyway ?' withCRs) or: [ ^ false ] ].
+	canRewind ifFalse: [ aBoolean ifFalse: [ DebugAttemptToRewindPostMortemError signal ] ].
 
-	newMethod := (self createModelForContext: recompilationContext) recompileCurrentMethodTo: text notifying: aNotifyer.
+	recompilationContext := (self createModelForContext: aContext) locateClosureHomeWithContent: sourceCode inSession: self.
+	recompilationContext ifNil: [ ^ false ].
+
+	newMethod := (self createModelForContext: recompilationContext) recompileCurrentMethodTo: sourceCode notifying: aNotifyer inSession: self.
 	newMethod ifNil: [ ^ false ].
 
-	(self isContextPostMortem: self interruptedContext)
-		ifFalse: [ self rewindContextToMethod: newMethod fromContext: recompilationContext ].
-
+	(self isContextPostMortem: self interruptedContext) ifFalse: [
+		self rewindContextToMethod: newMethod fromContext: recompilationContext ]. 
 	"Use an alarm instead of triggering the notification directly, as the content of
 	the editor can still be unaccepted. "
 	self installAlarm: #contextChanged.
+
 	^ true
 ]
 
@@ -391,18 +508,16 @@ DebugSession >> returnValue: anObject from: aContext [
 DebugSession >> rewindContextToMethod: aMethod fromContext: aContext [
 	"this method is typically to be used after a hot compilation of a method from the stack.
 	in order to return to the context containg the compiled method."
+
 	| ctxt |
-	ctxt :=  interruptedProcess popTo: aContext.
+	ctxt := interruptedProcess popTo: aContext.
 
 	ctxt == aContext
-		ifFalse: [
-			self inform: 'Method saved, but current context unchanged\because of unwind error. Click OK to see error' withCRs ]
+		ifFalse: [ self debugCallBack informCannotRewindStack ]
 		ifTrue: [
-			interruptedProcess restartTopWith: aMethod.
-			self stepToFirstInterestingBytecodeIn: interruptedProcess ].
-	self updateContextTo:  ctxt.
-
-	"Issue 3015 - Hernan"
+				interruptedProcess restartTopWith: aMethod.
+				self stepToFirstInterestingBytecodeIn: interruptedProcess ].
+	self updateContextTo: ctxt.
 	self isInterruptedContextATest ifTrue: [ self prepareTestToRunAgain ]
 ]
 
@@ -427,20 +542,11 @@ DebugSession >> selectedCodeRangeForContext: selectedContext [
 	^ self pcRangeForContext: selectedContext
 ]
 
-{ #category : 'testing' }
-DebugSession >> shouldDisplayContext: aContext basedOnFilters: stackFilters [
-	"Return true if all filters match the given context, or false otherwise.
-	True is returned if there are no filters."
-
-	^stackFilters allSatisfy: [ :aFilter | aFilter shouldDisplay: aContext ]
-]
-
 { #category : 'logging' }
 DebugSession >> signalDebuggerError: anError [
 
-	DebuggerSettings emergencyDebugger
-		debugError: anError
-		fromSession: self
+	DebuggerEmergencyLogger new logError: anError forSession: self
+		
 ]
 
 { #category : 'accessing' }
@@ -453,54 +559,6 @@ DebugSession >> stack [
 DebugSession >> stackOfSize: size [
 
 	^ interruptedContext stackOfSize: size
-]
-
-{ #category : 'accessing' }
-DebugSession >> stackOfSize: limit usingFilters: stackFilters [
-	"Answer an OrderedCollection of the top 'limit' contexts on the receiver's sender chain, according to the given filters.
-
-	Consider the following stack:
-		a <-- top of the stack
-		b
-		a
-		c
-		a
-		b
-		d
-		e
-		a <-- bottom of the stack
-
-	If the given filters do not match context 'a' and 'b' the following stack will be returned:
-		a <-- top of the stack
-		b
-		a
-		c
-		d
-		e <-- bottom of the stack
-
-	First all consecutive contexts starting from the top of the stack for which a filter does not match are
-	added to the result (a b a in the example). Then from the remaining stack only the context for which all
-	filters match are added to the  result.
-	"
-
-	| stack context |
-	stack := OrderedCollection new.
-	context := interruptedContext.
-
-	"Starting from the top of the stack add all consecutive contexts that should not be displayed."
-	[ context ~~ nil
-	 	and: [(stack size < limit)
-			and: [ (self shouldDisplayContext: context basedOnFilters:  stackFilters) not ] ] ]  whileTrue: [
-				stack addLast: context.
-				context := context sender ].
-
-	"Add all contexts that should be displayed. (the current context is checked again)"
-	[context ~~ nil
-		and: [stack size < limit ] ] whileTrue: [
-			(self shouldDisplayContext: context basedOnFilters: stackFilters)
-				ifTrue: [ stack addLast: context ].
-			context := context sender ].
-	^ stack
 ]
 
 { #category : 'debugging actions' }
@@ -562,6 +620,9 @@ DebugSession >> stepThrough [
 DebugSession >> stepThrough: aContext [
 	"Send messages until you return to selectedContext.
 	 Used to step into a block in the method."
+	
+	self class fastStepThroughMode ifTrue: [ ^ self fastStepThrough: aContext ].
+	
 	aContext stepIntoQuickMethod: false.
 	(self isContextPostMortem: aContext) ifTrue: [^ self].
 
@@ -569,6 +630,12 @@ DebugSession >> stepThrough: aContext [
 	self updateContextTo: (self stepToFirstInterestingBytecodeIn: interruptedProcess).
 
 	self triggerEvent: #stepThrough
+]
+
+{ #category : 'accessing' }
+DebugSession >> stepThroughController [
+	^ stepThroughController ifNil: [
+		  stepThroughController := FastStepThroughController new ]
 ]
 
 { #category : 'private' }
@@ -582,12 +649,49 @@ DebugSession >> stepToFirstInterestingBytecodeIn: aProcess [
 
 	"If we are are stepping into a quick method,
 	make sure that we step correctly over the first primitive bytecode"
+
 	| suspendedContext |
 	suspendedContext := aProcess suspendedContext.
-	(suspendedContext method isQuick and: [ suspendedContext pc == suspendedContext method initialPC ])
+	(suspendedContext method isQuick and: [
+		 suspendedContext pc == suspendedContext method initialPC ])
 		ifTrue: [ ^ suspendedContext updatePCForQuickPrimitiveRestart ].
 
-	^ aProcess stepToSendOrReturn
+	^ Processor activeProcess
+		  evaluate: [
+			  | newContext |
+			  newContext := self stepToFirstInterestingBytecodeInContext: aProcess suspendedContext.
+			  aProcess suspendedContext: newContext.
+			  newContext ]
+		  onBehalfOf: aProcess
+]
+
+{ #category : 'private' }
+DebugSession >> stepToFirstInterestingBytecodeInContext: aContext [
+
+	| bytecodeInterpreter context debugInfo |
+	aContext isDead ifTrue: [
+		self error: 'Cannot step into dead context' ].
+
+	debugInfo := aContext method debugInfo.
+	bytecodeInterpreter := InstructionStream
+		                       on: aContext method
+		                       pc: aContext pc.
+	[ debugInfo shouldStopAt: aContext pc ] whileFalse: [
+			context := bytecodeInterpreter interpretNextInstructionFor:
+				           aContext.
+			context == aContext ifFalse: [ "Caused all non-send, non-store, non-return instructions
+				that may activate a method. This is today the case of mustBeBoolean.
+				
+				If a mustBeBoolean has been activated, we need to change contexts"
+				^ context ] ].
+
+	^ aContext
+]
+
+{ #category : 'accessing' }
+DebugSession >> suspendedContext: aContext [ 
+	
+	interruptedContext := aContext
 ]
 
 { #category : 'debugging actions' }
@@ -599,6 +703,10 @@ DebugSession >> terminate [
 	
 	"Assume the user closed the debugger. 
 	Simply kill the interrupted process."
+	
+	(exception isKindOf: MessageNotUnderstood)
+		ifTrue: [ exception stopResendingMessage ].
+	
 	self interruptedProcess terminate.
 	self clear.
 	Smalltalk installLowSpaceWatcher "restart low space handler"
@@ -626,4 +734,12 @@ DebugSession >> updateContextTo: aContext [
 DebugSession >> updateWithContext: newContext fromProcess: aProcess [
 
 	self process: aProcess context: newContext
+]
+
+{ #category : 'callbacks' }
+DebugSession >> wantsToBroweAndRecompileMethodNotFoundInStack: message [
+	"call back method to avoid dependencies in debugger-model"
+	"by default it returns false the modified code is not recompiled"
+	
+	^ false
 ]

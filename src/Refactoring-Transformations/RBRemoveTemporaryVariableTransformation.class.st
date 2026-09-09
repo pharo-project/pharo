@@ -1,14 +1,16 @@
 "
 RBRemoveTemporaryVariableRefactoring is responsible for removing temporary variables inside a method. In Pharo, temporary variables can be declared inside blocks as well.
 
-Example: 
+Example:
+```
 | transformation |
 transformation := (RBRemoveTemporaryVariableTransformation
-	variable: 'transformation'
-	inMethod: #testTransform
-	inClass: #RBAddTemporaryVariableTransformationTest)
-	transform.
-(ChangesBrowser changes: transformation model changes changes) open
+	variable: 'methodTree'
+	inMethod: #privateTransform
+	inClass: #RBRemoveTemporaryVariableTransformation)
+			generateChanges.
+(StRefactoringPreviewPresenter for: transformation) open
+```
 	
 Preconditions:
 - Check whether this method has a temporary variable with the given name.
@@ -53,7 +55,7 @@ RBRemoveTemporaryVariableTransformation >> applicabilityPreconditions [
 
 	^ {
 		  self classExist.
-		  (RBCondition definesSelector: selector in: self definingClass).
+		 (ReDefinesSelectorsCondition new definesSelectors: (Array with: selector) in: self definingClass).
 		  (RBCondition
 			   withBlock: [
 			   self definingMethod allTemporaryVariables includes: variableName ]
@@ -87,28 +89,13 @@ RBRemoveTemporaryVariableTransformation >> privateTransform [
 	| methodTree modifiedNode |
 	methodTree := self definingMethod.
 
-	modifiedNode := (methodTree allChildren select: [:each | each isSequence])
-						detect: [ :sequence | sequence defines: variableName ]
+	modifiedNode := (methodTree withAllChildren select: [:each | each isSequence])
+						detect: [ :sequence | sequence exactNodeDefines: variableName ]
 						ifNone: [ nil ].
 
 	modifiedNode ifNotNil: [ modifiedNode removeTemporaryNamed: variableName ].
 
 	class compileTree: methodTree
-]
-
-{ #category : 'storing' }
-RBRemoveTemporaryVariableTransformation >> storeOn: aStream [
-
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream
-		nextPutAll: ' variable: ''';
-		nextPutAll: variableName;
-		nextPutAll: ''' inMethod: ''';
-		nextPutAll: selector;
-		nextPutAll: ''' inClass: '.
-	class storeOn: aStream.
-	aStream nextPut: $)
 ]
 
 { #category : 'api' }

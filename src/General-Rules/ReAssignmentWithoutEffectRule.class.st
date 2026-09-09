@@ -10,8 +10,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReAssignmentWithoutEffectRule class >> group [
-	^ 'Optimization'
+ReAssignmentWithoutEffectRule class >> groupSelector [
+
+	^ #optimizationGroup
 ]
 
 { #category : 'accessing' }
@@ -21,7 +22,7 @@ ReAssignmentWithoutEffectRule class >> ruleName [
 
 { #category : 'accessing' }
 ReAssignmentWithoutEffectRule class >> severity [
-	^ #information
+	^ 'information'
 ]
 
 { #category : 'accessing' }

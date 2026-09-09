@@ -41,6 +41,7 @@ DrTestsTestRunnerTest >> testAllSelectedClassesAreTestCases [
 { #category : 'tests' }
 DrTestsTestRunnerTest >> testReRunResultIsDTTestRunnerResult [
 	| pluginResult |
+
 	pluginResult := plugin runForConfiguration: conf.
 	reRunconf := DTReRunConfiguration new
 		previousResult: pluginResult;
@@ -75,6 +76,6 @@ DrTestsTestRunnerTest >> testSelectedPackagesContainTestCases [
 
 { #category : 'tests' }
 DrTestsTestRunnerTest >> testTestResultIsNotEmpty [
-	self
-		deny: (plugin runForConfiguration: conf) testResults passed isEmpty
+
+	self deny: (plugin runForConfiguration: conf) testResults passed isEmpty
 ]

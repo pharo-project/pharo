@@ -16,14 +16,14 @@ EpPackageTagAddition >> accept: aVisitor [
 ]
 
 { #category : 'accessing' }
-EpPackageTagAddition >> fileOutEntryOn: aWriteStream [ 
+EpPackageTagAddition >> fileOutEntryOn: aWriteStream [
 	"Write a code chunk to create a package tag"
 
 	aWriteStream
 		nextPutAll: 'self packageOrganizer ensureTag: ';
 		nextPutAll: self tagName;
-		nextPutAll: ' inPackage: ';
-		nextChunkPut: self packageName;
-		cr.
-
+		nextPutAll: ' inPackage: '.
+	(ChunkWriteStream on: aWriteStream)
+		nextPut: self packageName;
+		cr
 ]

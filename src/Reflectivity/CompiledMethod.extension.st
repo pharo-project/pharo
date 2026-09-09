@@ -11,11 +11,6 @@ CompiledMethod >> blockNodes [
 ]
 
 { #category : '*Reflectivity' }
-CompiledMethod >> compiledMethod [
-	^self
-]
-
-{ #category : '*Reflectivity' }
 CompiledMethod >> createTwin [
 	self reflectiveMethod: (ReflectiveMethod on: self)
 ]
@@ -23,11 +18,6 @@ CompiledMethod >> createTwin [
 { #category : '*Reflectivity' }
 CompiledMethod >> destroyTwin [
 	self reflectiveMethod ifNotNil: [:rf| rf destroyTwin ]
-]
-
-{ #category : '*Reflectivity' }
-CompiledMethod >> hasBreakpoint [
-	^ Breakpoint isInstalledIn: self
 ]
 
 { #category : '*Reflectivity' }
@@ -57,14 +47,17 @@ CompiledMethod >> instanceVariableWriteNodes [
 
 { #category : '*Reflectivity' }
 CompiledMethod >> invalidate [
+
 	| reflectiveMethod |
-	self reflectivityDisabled ifTrue: [ ^self ].
+	self reflectivityDisabled ifTrue: [ ^ self ].
 
 	reflectiveMethod := self reflectiveMethod.
-	reflectiveMethod ifNil: [^self "do nothing"].
-	(self isRealPrimitive or: (reflectiveMethod ast metaLinkOptionsFromClassAndMethod includes: #optionCompileOnLinkInstallation))
-					ifTrue: [reflectiveMethod compileAndInstallCompiledMethod ]
-					ifFalse: [reflectiveMethod installReflectiveMethod]
+	reflectiveMethod ifNil: [ ^ self "do nothing" ].
+	(self isRealPrimitive or:
+		 (reflectiveMethod ast metaLinkOptionsFromClassAndMethod
+			  includesOption: #optionCompileOnLinkInstallation))
+		ifTrue: [ reflectiveMethod compileAndInstallCompiledMethod ]
+		ifFalse: [ reflectiveMethod installReflectiveMethod ]
 ]
 
 { #category : '*Reflectivity' }
@@ -87,17 +80,6 @@ CompiledMethod >> metaLinkOptions [
 	#literalAt: -> #( + optionCompileOnLinkInstallation).
 	#metaLinkOptions -> #( + optionCompileOnLinkInstallation)
 	}
-]
-
-{ #category : '*Reflectivity' }
-CompiledMethod >> newBreakpointForVariable: aVariableName [
-	^ (self tempNames includes: aVariableName)
-		ifTrue: [ VariableBreakpoint
-				newBreakpointForVariable: aVariableName
-				forMethod: self ]
-		ifFalse: [ VariableBreakpoint
-				newBreakpointForVariable: aVariableName
-				inClass: self methodClass ]
 ]
 
 { #category : '*Reflectivity' }

@@ -13,7 +13,7 @@ Class {
 ReClassNotCategorizedRuleTest >> setUp [
 
 	super setUp.
-	classFactory := ClassFactoryForTestCase new
+	classFactory := ClassFactoryForTestCase environment: SystemEnvironment new
 ]
 
 { #category : 'running' }
@@ -26,43 +26,37 @@ ReClassNotCategorizedRuleTest >> tearDown [
 { #category : 'tests' }
 ReClassNotCategorizedRuleTest >> testAllClassesAreNotTagged [
 
-	| critiques aClass anotherClass |
-	aClass := classFactory make: [ :builder |
-		          builder package: 'aPackage' ].
-	anotherClass := classFactory make: [ :builder |
-		                builder package: 'aPackage' ].
-	critiques := self myCritiquesOnClass: aClass.
-	self assertEmpty: critiques.
-	critiques := self myCritiquesOnClass: anotherClass.
-	self assertEmpty: critiques
+	| aClass anotherClass |
+	aClass := classFactory make: [ :builder | builder package: 'APackage' ].
+	anotherClass := classFactory make: [ :builder | builder package: 'APackage' ].
+
+	self assertEmpty: (self myCritiquesOnClass: aClass).
+	self assertEmpty: (self myCritiquesOnClass: anotherClass)
 ]
 
 { #category : 'tests' }
 ReClassNotCategorizedRuleTest >> testRule [
 
-	| classCategorized classNotCategorized critiques |
+	| classCategorized classNotCategorized |
 	classCategorized := classFactory make: [ :builder |
-		                  builder
-			                  tag: 'aTag';
-			                  package: 'aPackage' ].
-	classNotCategorized := classFactory make: [ :builder |
-		                     builder package: 'aPackage' ].
-	critiques := self myCritiquesOnClass: classNotCategorized.
-	self assert: critiques size equals: 1
+		                    builder
+			                    tag: 'aTag';
+			                    package: 'APackage' ].
+	classNotCategorized := classFactory make: [ :builder | builder package: 'APackage' ].
+	self assert: (self myCritiquesOnClass: classNotCategorized) size equals: 1
 ]
 
 { #category : 'tests' }
 ReClassNotCategorizedRuleTest >> testRuleNotViolated [
 
-	| classCategorized anotherClassCategorized critiques |
+	| classCategorized anotherClassCategorized |
 	classCategorized := classFactory make: [ :builder |
-		                  builder
-			                  tag: 'aTag';
-			                  package: 'aPackage' ].
+		                    builder
+			                    tag: 'aTag';
+			                    package: 'APackage' ].
 	anotherClassCategorized := classFactory make: [ :builder |
-		                     builder
-			                     tag: 'aTag';
-			                     package: 'aPackage' ].
-	critiques := self myCritiquesOnClass: anotherClassCategorized.
-	self assertEmpty: critiques
+		                           builder
+			                           tag: 'aTag';
+			                           package: 'APackage' ].
+	self assertEmpty: (self myCritiquesOnClass: anotherClassCategorized)
 ]

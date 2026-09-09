@@ -14,19 +14,27 @@ SycConvertTempToInstVarCommand class >> canBeExecutedInContext: aSourceCodeConte
 ]
 
 { #category : 'execution' }
-SycConvertTempToInstVarCommand >> asRefactorings [
-	^ { RBTemporaryToInstanceVariableRefactoring
-		class: method origin
-		selector: method selector
-		variable: sourceNode name }
-]
-
-{ #category : 'execution' }
 SycConvertTempToInstVarCommand >> defaultMenuIconName [
 	^ #smallRedo
 ]
 
 { #category : 'execution' }
 SycConvertTempToInstVarCommand >> defaultMenuItemName [
-	^'Convert to Instance Var'
+	^'(R) Convert to Instance Var'
+]
+
+{ #category : 'execution' }
+SycConvertTempToInstVarCommand >> execute [
+	
+	self executeRefactorings 
+]
+
+{ #category : 'execution' }
+SycConvertTempToInstVarCommand >> executeRefactorings [
+
+	^ ((ReConvertTemporaryToInstanceVariableDriver newApplication: self application)
+		   scopes: refactoringScopes
+		   class: method origin
+		   selector: method selector
+		   variable: sourceNode name) runRefactoring
 ]

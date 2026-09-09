@@ -4,6 +4,9 @@ I am a command to protect given variables
 Class {
 	#name : 'SycProtectVariableCommand',
 	#superclass : 'SycRefactorVariableCommand',
+	#instVars : [
+		'selectedClass'
+	],
 	#category : 'SystemCommands-VariableCommands',
 	#package : 'SystemCommands-VariableCommands'
 }
@@ -15,15 +18,6 @@ SycProtectVariableCommand class >> sourceCodeMenuActivation [
 	^SycSourceCodeMenuActivation byRootGroupItemOrder: 1.2 for: ClySourceCodeContext
 ]
 
-{ #category : 'execution' }
-SycProtectVariableCommand >> asRefactorings [
-
-	^self
-		createRefactorings: RBProtectInstanceVariableRefactoring
-		using: [ :refactoring :var |
-			refactoring variable: var name class: var definingClass ]
-]
-
 { #category : 'accessing' }
 SycProtectVariableCommand >> defaultMenuIconName [
 	^ #group
@@ -32,4 +26,20 @@ SycProtectVariableCommand >> defaultMenuIconName [
 { #category : 'accessing' }
 SycProtectVariableCommand >> defaultMenuItemName [
 	^'Protect'
+]
+
+{ #category : 'execution' }
+SycProtectVariableCommand >> execute [ 
+
+	^ ((ReProtectInstanceVariableDriver newApplication: self application)
+		   scopes: refactoringScopes 
+		   variable: variables first
+		   class: selectedClass) runRefactoring
+]
+
+{ #category : 'execution' }
+SycProtectVariableCommand >> prepareFullExecutionInContext: aToolContext [
+
+	super prepareFullExecutionInContext: aToolContext.
+	selectedClass := aToolContext selectedVariables first definingClass.
 ]

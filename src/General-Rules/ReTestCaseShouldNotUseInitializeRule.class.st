@@ -19,8 +19,9 @@ ReTestCaseShouldNotUseInitializeRule class >> checksClass [
 ]
 
 { #category : 'accessing' }
-ReTestCaseShouldNotUseInitializeRule class >> group [
-	^ 'Clean Code'
+ReTestCaseShouldNotUseInitializeRule class >> groupSelector [
+
+	^ #cleanCodeGroup
 ]
 
 { #category : 'accessing' }
@@ -39,7 +40,7 @@ ReTestCaseShouldNotUseInitializeRule >> basicCheck: aClass [
 	(aClass selectors includes: #initialize)
 		ifFalse: [ ^ false ].
 
-	alteredVariables := (aClass >> #initialize) ast allChildren
+	alteredVariables := (aClass >> #initialize) ast withAllChildren
 					select: [ :e | e isAssignment and: [ e variable isInstanceVariable ] ]
 					thenCollect: [ :e | e variable ].
 

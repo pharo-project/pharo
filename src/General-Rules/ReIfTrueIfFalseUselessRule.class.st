@@ -10,9 +10,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReIfTrueIfFalseUselessRule class >> group [
+ReIfTrueIfFalseUselessRule class >> groupSelector [
 
-	^ 'Design Flaws'
+	^ #designFlawGroup
 ]
 
 { #category : 'accessing' }

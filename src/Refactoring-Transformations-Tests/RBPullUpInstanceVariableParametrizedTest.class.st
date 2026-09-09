@@ -9,22 +9,29 @@ Class {
 { #category : 'tests' }
 RBPullUpInstanceVariableParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
-		addCase: { #rbClass -> RBPullUpInstanceVariableRefactoring .
+		addCase: { #rbClass -> RePullUpInstanceVariableRefactoring .
 					  #constructor -> #variable:class: };
 		yourself
+]
+
+{ #category : 'running' }
+RBPullUpInstanceVariableParametrizedTest >> setUp [
+
+	super setUp.
+	model := self modelOnClasses: { RBLintRuleTestData . RBBasicLintRuleTestData . RBFooLintRuleTestData }
 ]
 
 { #category : 'failure tests' }
 RBPullUpInstanceVariableParametrizedTest >> testFailurePullUpVariableNotDefined [
 
-	self shouldFail: (self createRefactoringWithArguments:
+	self shouldFail: (self createRefactoringWithModel: model andArguments:
 			 { 'notDefinedVariable'. #RBLintRuleTestData })
 ]
 
 { #category : 'tests' }
 RBPullUpInstanceVariableParametrizedTest >> testPullUpInstVar [
 	| refactoring |
-	refactoring := self createRefactoringWithArguments:
+	refactoring := self createRefactoringWithModel: model andArguments:
 			{'result' . #RBLintRuleTestData}.
 	[self executeRefactoring: refactoring]
 		on: RBRefactoringWarning

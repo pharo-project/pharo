@@ -11,9 +11,9 @@ Class {
 
 { #category : 'activation' }
 ClyShowMethodInheritanceCommand class >> browserContextMenuActivation [
-	<classAnnotation>
 
-	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup for: ClyMethod asCalypsoItemContext
+	<classAnnotation>
+	^ CmdContextMenuActivation byRootGroupItemOrder: 2 for: ClyMethod asCalypsoItemContext
 ]
 
 { #category : 'activation' }
@@ -33,12 +33,18 @@ ClyShowMethodInheritanceCommand >> createInheritanceScopeFrom: classes [
 ]
 
 { #category : 'accessing' }
-ClyShowMethodInheritanceCommand >> defaultMenuItemName [
-	^'Inheritance'
+ClyShowMethodInheritanceCommand >> defaultMenuIconName [
+
+	^ #browse
 ]
 
-{ #category : 'execution' }
-ClyShowMethodInheritanceCommand >> selectMethodsIn: aQueryBrowser [
+{ #category : 'accessing' }
+ClyShowMethodInheritanceCommand >> defaultMenuItemName [
+	^'Hierarchical implementors'
+]
 
-	aQueryBrowser selectObject: methods last
+{ #category : 'accessing' }
+ClyShowMethodInheritanceCommand >> description [
+
+	^ 'Show all method implementors in full hierarchy of selected method classes.'
 ]

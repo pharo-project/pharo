@@ -246,7 +246,7 @@ ReflectiveMethodTest >> testSetLinkOnGlobalVariable [
 	| globalVar link |
 	selector := #exampleGlobalRead.
 	link := MetaLink new.
-	globalVar := (testingEnvironment at: #GlobalForTesting) binding.
+	globalVar := GlobalForTesting binding.
 	globalVar link: link.
 	self assert: (globalVar links includes: link).
 	self assert: (ReflectivityExamples >> #exampleGlobalRead) class equals: ReflectiveMethod.
@@ -259,7 +259,7 @@ ReflectiveMethodTest >> testSetLinkOnGlobalVariableAndUninstall [
 	| global link |
 	selector := #exampleGlobalRead.
 	link := MetaLink new.
-	global := (testingEnvironment at: #GlobalForTesting) binding.
+	global := GlobalForTesting binding.
 	global link: link.
 	self assert: (global links includes: link).
 	self assert: (ReflectivityExamples >> #exampleGlobalRead) class equals: ReflectiveMethod.

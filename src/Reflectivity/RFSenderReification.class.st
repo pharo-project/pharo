@@ -11,7 +11,7 @@ Class {
 
 { #category : 'plugin interface' }
 RFSenderReification class >> entities [
-	^{RBMessageNode . RBMethodNode}
+	^{OCMessageNode . OCMethodNode}
 ]
 
 { #category : 'plugin interface' }
@@ -20,15 +20,15 @@ RFSenderReification class >> key [
 ]
 
 { #category : 'generate' }
-RFSenderReification >> genForRBMessageNode [
-	^RBVariableNode selfNode
+RFSenderReification >> genForASTMessageNode [
+	^OCVariableNode selfNode
 ]
 
 { #category : 'generate' }
-RFSenderReification >> genForRBMethodNode [
-	^RBMessageNode
-		receiver: (RBMessageNode
-			receiver: RBVariableNode thisContextNode
+RFSenderReification >> genForASTMethodNode [
+	^OCMessageNode
+		receiver: (OCMessageNode
+			receiver: OCVariableNode thisContextNode
 			selector: #sender)
 		selector: #receiver
 ]

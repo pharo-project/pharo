@@ -22,7 +22,7 @@ ReflectivityTest >> increase [
 ReflectivityTest >> setUp [
 	super setUp.
 	count := 0.
-	cache := ASTCache default
+	cache := OCASTCache default
 ]
 
 { #category : 'tagging' }
@@ -41,7 +41,7 @@ ReflectivityTest >> tearDown [
 	link2 ifNotNil: [link2 uninstall].
 	tag := nil.
 	count := 0.
-	ASTCache default: cache.
+	OCASTCache default: cache.
 	super tearDown
 ]
 
@@ -76,7 +76,7 @@ ReflectivityTest >> testDisableThenCleanASTCacheThenEnableLink [
 	self assert: (instance exampleWithArg: 3) equals: 5.
 	self assert: count equals: 1.
 	"Clean the AST cache"
-	ASTCache default reset.
+	OCASTCache default reset.
 	link enable.
 	self assert: (instance exampleWithArg: 3) equals: 5.
 	self assert: count equals: 2

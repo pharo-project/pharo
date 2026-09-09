@@ -25,7 +25,7 @@ Package >> packageComment: aDescription [
 
 { #category : '*Manifest-Core' }
 Package >> packageManifest [
-	^ self definedClasses
-		detect: [ :each | each isManifest ]
-		ifNone: [ TheManifestBuilder new createManifestNamed: self name]
+
+	self definedClassesDo: [ :class | class isManifest ifTrue: [ ^ class ] ].
+	^ TheManifestBuilder new createManifestNamed: self name
 ]

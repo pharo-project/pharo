@@ -39,7 +39,13 @@ ClyMethodCodeEditorToolMorph >> applyChanges [
 
 	| selector methodClass currentMethod |
 	methodClass := self chooseClassForNewMethodIfNone: [ ^ false ].
-	selector := methodClass compile: self pendingText asString classified: editingMethod protocol notifying: textMorph.
+	selector := methodClass 
+						compile: self pendingText asString
+		            classified: editingMethod protocol
+		            withStamp: DateAndTime now
+		            notifying: textMorph
+		            logSource: methodClass shouldLogSource.
+
 	selector ifNil: [ ^ false ].
 	currentMethod := methodClass >> selector.
 	self setMethodProtocol: currentMethod.
@@ -72,7 +78,7 @@ ClyMethodCodeEditorToolMorph >> applyDecorations [
 ClyMethodCodeEditorToolMorph >> attachToSystem [
 
 	browser system when: (ClyMethodChange of: self editingMethod) send: #triggerUpdate to: self.
-	self class codeSupportAnnouncer weak when: ASTCacheReset send: #resetASTCache to: self
+	self class codeSupportAnnouncer weak when: OCASTCacheReset send: #resetASTCache to: self
 ]
 
 { #category : 'testing' }
@@ -96,10 +102,11 @@ ClyMethodCodeEditorToolMorph >> belongsToRemovedBrowserContext [
 
 { #category : 'building' }
 ClyMethodCodeEditorToolMorph >> buildLeftSideBar [
+
 	super buildLeftSideBar.
 
-	self leftSideBar enableMouseCommands: CmdTextLeftBarClickActivation withContextFrom: self.
-	self leftSideBar enableMouseCommands: CmdTextLeftBarDoubleClickActivation withContextFrom: self
+	CmdTextLeftBarClickActivation enableInMorph: self leftSideBar withCommandsFrom: self.
+	CmdTextLeftBarDoubleClickActivation enableInMorph: self leftSideBar withCommandsFrom: self
 ]
 
 { #category : 'operations' }
@@ -129,7 +136,7 @@ ClyMethodCodeEditorToolMorph >> createTextContext [
 ClyMethodCodeEditorToolMorph >> decorateContainerTab [
 	| title |
 	super decorateContainerTab.
-	title := editingMethod selector.
+	title := editingMethod selector asString.
 
 	editingMethod origin isClassSide ifTrue: [
 		title := title asText allBold ].
@@ -155,11 +162,13 @@ ClyMethodCodeEditorToolMorph >> editingMethod [
 
 { #category : 'accessing' }
 ClyMethodCodeEditorToolMorph >> editingMethod: aMethod [
+
 	editingMethod := aMethod
 ]
 
 { #category : 'accessing' }
 ClyMethodCodeEditorToolMorph >> editingText [
+
 	^editingMethod sourceCode
 ]
 
@@ -185,7 +194,7 @@ ClyMethodCodeEditorToolMorph >> findAnySelectorInSourceCode: selectors [
 	foundNode := ast sendNodes
 		detect: [:each | selectors includes: (foundSelector := each selector) ]
 		ifNone: [
-			ast allChildren
+			ast withAllChildren
 				detect: [:each | each isLiteralNode and: [ selectors includes: each value ]]
 				ifFound: [:literal | ^ literal sourceInterval ].
 			^0 to: -1].
@@ -287,7 +296,7 @@ ClyMethodCodeEditorToolMorph >> resetASTCache [
 	| cm |
 	cm := ast compiledMethod.
 	cm ifNil: [  ^ self ].
-	ASTCache default at: cm ifAbsentPut: ast
+	OCASTCache default at: cm ifAbsentPut: ast
 ]
 
 { #category : 'selecting text' }
@@ -368,13 +377,6 @@ ClyMethodCodeEditorToolMorph >> switchToMethod: aMethod [
 	self update
 ]
 
-{ #category : 'operations' }
-ClyMethodCodeEditorToolMorph >> toggleExtendingPackage [
-	super toggleExtendingPackage.
-
-	self hasUnacceptedEdits ifFalse: [self packageEditingMethod: editingMethod]
-]
-
 { #category : 'updating' }
 ClyMethodCodeEditorToolMorph >> update [
 
@@ -389,12 +391,6 @@ ClyMethodCodeEditorToolMorph >> update [
 { #category : 'updating' }
 ClyMethodCodeEditorToolMorph >> updateProtocolAndPackage [
 
-	| realMethod |
-	
-	realMethod := editingMethod isRGObject 
-		ifTrue: [ editingMethod realMethod ]
-		ifFalse: [ editingMethod ].
-
-	self methodProtocol: realMethod protocolName.
-	realMethod isExtension ifTrue: [ extendingPackage := realMethod package ]
+	self methodProtocol: editingMethod protocolName.
+	editingMethod isExtension ifTrue: [ extendingPackage := editingMethod package ]
 ]

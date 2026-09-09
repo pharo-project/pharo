@@ -48,7 +48,8 @@ Class {
 		'needToggleAtMouseUp',
 		'function',
 		'resizable',
-		'selectionModeStrategy'
+		'selectionModeStrategy',
+		'lastIndexOnMouseDown'
 	],
 	#category : 'Morphic-Widgets-FastTable-Base',
 	#package : 'Morphic-Widgets-FastTable',
@@ -225,6 +226,16 @@ FTTableMorph >> click: event [
 		ifTrue: [ self showMenuForPosition: event cursorPoint ]
 ]
 
+{ #category : 'event handling' }
+FTTableMorph >> clickOnColumnHeaderAt: anIndex [
+	| header |
+	header := self container headerRow submorphs at: anIndex.
+	header click: (MouseButtonEvent basicNew 
+							setType: #mouseDown;
+							yourself).
+		
+]
+
 { #category : 'accessing - colors' }
 FTTableMorph >> colorForSelection: primarySelection [
 
@@ -297,27 +308,11 @@ FTTableMorph >> disableFunction [
 
 { #category : 'event handling' }
 FTTableMorph >> doubleClick: event [
-
-	(self selectionModeStrategy selectableIndexContainingPoint:
-		 event cursorPoint) ifNotNil: [ :firstClickedIndex |
-		| pdcEvent |
-		pdcEvent := event asPseudoDoubleClickEvent.
-		(self selectionModeStrategy selectableIndexContainingPoint:
-			 pdcEvent secondEvent position) ifNotNil: [ :secondClickedIndex |
-			firstClickedIndex = secondClickedIndex
-				ifFalse: [
-					self selectionStrategy
-						selectIndex: secondClickedIndex
-						event: pdcEvent secondEvent ]
-				ifTrue: [
-					self selectedIndexes
-						detect: [ :i | i = secondClickedIndex ]
-						ifNone: [
-							self selectionStrategy
-								selectIndex: secondClickedIndex
-								event: pdcEvent secondEvent ].
-					self doAnnounce:
-						(FTStrongSelectionChanged index: secondClickedIndex event: event) ] ] ]
+	
+	(self selectionModeStrategy selectableIndexContainingPoint: event cursorPoint) 
+		ifNotNil: [ :index | 
+			lastIndexOnMouseDown = index ifTrue: [ 
+				self doAnnounce: (FTStrongSelectionChanged index: index event: event) ] ]
 ]
 
 { #category : 'drawing' }
@@ -434,6 +429,13 @@ FTTableMorph >> handlesMouseWheel: event [
 FTTableMorph >> hasDataSource [
 
 	^ self dataSource isNotNil
+]
+
+{ #category : 'testing' }
+FTTableMorph >> hasFilter [
+
+	function ifNil: [ ^ false ].
+	^ function isKindOf: FTFilterFunction
 ]
 
 { #category : 'testing' }
@@ -653,12 +655,6 @@ FTTableMorph >> isResizable [
 ]
 
 { #category : 'testing' }
-FTTableMorph >> isRowIndexVisible: rowIndex [
-	self deprecated: 'Use #isIndexVisible: instead' transformWith: '`@receiver isRowIndexVisible: `@statements1' -> '`@receiver isIndexVisible: `@statements1'.
-	^ self isIndexVisible: rowIndex
-]
-
-{ #category : 'testing' }
 FTTableMorph >> isShowColumnHeaders [
 	^ showColumnHeaders
 ]
@@ -676,9 +672,7 @@ FTTableMorph >> isYellowButtonReallyPressed: anEvent [
 	then you will got right mouse button event.
 	Interesting that it is not a problem in case of external SDL2 window.
 	Try check it from OSWindowWorldMorph new open"
-	^ (Smalltalk os isMacOS)
-		ifTrue: [ anEvent commandKeyPressed not]
-		ifFalse: [ anEvent controlKeyPressed not]
+	^ anEvent metaKeyPressed not
 ]
 
 { #category : 'event handling' }
@@ -782,6 +776,14 @@ FTTableMorph >> minWidth [
 FTTableMorph >> mouseDown: event [
 	"perform the click"
 
+	"I need to keep the index of the selected cell (row, most of the times) on mousedown 
+	 because there is a bug: rapid click on two different items in a list gets interpreted 
+	 as a double-click on the first item. This works because mouseDown: is triggered the 
+	 first time, but not the second (that goes directly to doubleClick:)
+	 https://github.com/pharo-project/pharo/issues/14168"
+	lastIndexOnMouseDown :=  self selectionModeStrategy 
+		selectableIndexContainingPoint: event cursorPoint.
+		
 	needToggleAtMouseUp ifTrue: [ ^ self ].
 
 	(self selectionModeStrategy selectableIndexContainingPoint: event cursorPoint)
@@ -966,8 +968,8 @@ FTTableMorph >> resizeAllSubviews [
 { #category : 'private' }
 FTTableMorph >> resizeContainer [
 	| topLeft bottomRight |
-	topLeft := (self bounds left - self borderWidth) @ self bounds top - self borderWidth.
-	bottomRight := (self bounds right  - self verticalScrollBarWidth    - self borderWidth)
+	topLeft := (self bounds left + self borderWidth) @ (self bounds top + self borderWidth).
+	bottomRight := (self bounds right - self verticalScrollBarWidth - self borderWidth)
 					 @ (self bounds bottom - self horizontalScrollBarHeight - self borderWidth).
 	self container
 		bounds:
@@ -1093,12 +1095,6 @@ FTTableMorph >> selectLast [
 ]
 
 { #category : 'accessing - selection' }
-FTTableMorph >> selectRowIndex: aNumber [
-	self deprecated: 'Use #selectIndex: instead' transformWith: '`@receiver selectRowIndex: `@statements1' -> '`@receiver selectIndex: `@statements1'.
-	self selectIndex: aNumber
-]
-
-{ #category : 'accessing - selection' }
 FTTableMorph >> selectedIndex [
 	^ self selectedIndexes ifNotEmpty: #first ifEmpty: [ self selectionModeStrategy nullIndex ]
 ]
@@ -1208,7 +1204,8 @@ FTTableMorph >> startDrag: event [
 
 	passengers := self selectedIndexes collect: [ :each | self dataSource passengerAt: each ].
 	transferMorph := self dataSource transferFor: passengers from: self.
-	transferMorph align: transferMorph draggedMorph topLeft with: event position.
+	transferMorph align: transferMorph draggedMorph topLeft with: ((self transformedFrom: event hand owner)
+		localPointToGlobal: event position).
 	transferMorph dragTransferType: self dataSource dragTransferType.
 
 	event hand grabMorph: transferMorph

@@ -22,20 +22,26 @@ Class {
 
 { #category : 'settings' }
 PolymorphSystemSettings class >> appearanceSettingsOn: aBuilder [
+
 	<systemsettings>
 	(aBuilder group: #appearance)
-		label: 'Appearance' ;
+		label: 'Appearance';
 		description: 'All settings concerned with the look''n feel of your system';
 		with: [
 			(aBuilder pickOne: #uiThemeClass)
 				label: 'User interface theme';
 				target: self;
-				default: (Smalltalk at: #PharoLightTheme);
+				default: self defaultTheme;
 				order: 1;
 				domainValues: self uiThemeClassChoices.
 			self morphicSettingsOn: aBuilder.
-			self desktopSettingsOn: aBuilder.
-			self soundSettingsOn: aBuilder]
+			self desktopSettingsOn: aBuilder ]
+]
+
+{ #category : 'settings' }
+PolymorphSystemSettings class >> defaultTheme [
+
+	^ DarkBlueTheme
 ]
 
 { #category : 'desktop' }
@@ -98,10 +104,17 @@ PolymorphSystemSettings class >> desktopColor: aColor [
 
 { #category : 'desktop' }
 PolymorphSystemSettings class >> desktopColorSettingsOn: aBuilder [
-	(aBuilder setting: #desktopColor) label: 'Color';
-		 description: 'This is the only color of your desktop if no gradient is used. If you make use of a gradient, then this color is the first one of the gradient';
-		 default: PharoDarkTheme current desktopColor;
-		with: [(aBuilder setting: #useDesktopGradientFill) label: 'Gradient';
+
+	(aBuilder group: #desktopColorGroup) 
+		label: 'Desktop Color';
+		target: self;
+		with: [
+			(aBuilder setting: #desktopColor) 
+				label: 'Color';
+				description: 'This is the only color of your desktop if no gradient is used. If you make use of a gradient, then this color is the first one of the gradient';
+				default: PharoDarkTheme current desktopColor.
+
+			(aBuilder setting: #useDesktopGradientFill) label: 'Gradient';
 				description: 'If true, then more settings will be available in order to define the desktop background color gradient';
 				noOrdering;
 				default: false;
@@ -121,7 +134,7 @@ PolymorphSystemSettings class >> desktopColorSettingsOn: aBuilder [
 							'Bottom' translated -> #bottomCenter.
 							'Bottom left' translated -> #bottomLeft.
 							'Left' translated -> #leftCenter.
-							'Center' translated -> #center}]]
+							'Center' translated -> #center} ] ]
 ]
 
 { #category : 'desktop' }
@@ -184,6 +197,29 @@ PolymorphSystemSettings class >> desktopImageLayout: aSymbol [
 ]
 
 { #category : 'desktop' }
+PolymorphSystemSettings class >> desktopImageSettingsOn: aBuilder [
+
+	(aBuilder group: #desktopImageFileNameGroup)
+		label: 'Desktop background image';
+		target: self;
+		with: [
+			(aBuilder setting: #desktopImageFileName)
+				type: #FilePathEncoder;
+				default: '';
+				description: 'The path of an image file which will be imported as a form and displayed as your desktop background';
+				label: 'Image file name'.
+			(aBuilder pickOne: #desktopImageLayout) label: 'Layout';
+				 description: 'Size and placement of the background image';
+				 target: self;
+				 order: 0;
+				 default: #scaled;
+				 domainValues: #(#center #tiled #scaled #scaledAspect
+		#topLeft #topCenter #topRight #rightCenter
+		#bottomRight #bottomCenter #bottomLeft #leftCenter).
+			]
+]
+
+{ #category : 'desktop' }
 PolymorphSystemSettings class >> desktopLogo [
 	^ DesktopLogo ifNil: [self showDesktopLogo ifTrue: [DesktopLogo := self pharoLogo]]
 ]
@@ -220,37 +256,26 @@ PolymorphSystemSettings class >> desktopLogoFileName: aFileName [
 
 { #category : 'desktop' }
 PolymorphSystemSettings class >> desktopSettingsOn: aBuilder [
+
 	(aBuilder group: #desktopSettings)
 		label: 'Desktop';
 		target: self;
 		noOrdering;
 		with: [
-			(aBuilder setting: #showDesktopLogo)
-				label: 'Show logo' ;
-				description: 'If true, then a logo if shown on the top left of the desktop' ;
-				default: true;
+			(aBuilder group: #desktopLogo)
+				label: 'Logo' ;
+				target: self;
 				with: [
+					(aBuilder setting: #showDesktopLogo)
+						label: 'Show logo' ;
+						description: 'If true, then a logo if shown on the top left of the desktop' ;
+						default: true.
 					(aBuilder setting: #desktopLogoFileName)
 						type: #FilePathEncoder;
-						default: '';
 						description: 'The path of an image file for your own logo, the default pharo logo is used if empty.' ;
-						label: 'Logo image file name'].
-			self desktopColorSettingsOn: aBuilder.
-			(aBuilder setting: #desktopImageFileName)
-				type: #FilePathEncoder;
-				default: '';
-				description: 'The path of an image file which will be imported as a form and displayed as your desktop background';
-				label: 'Desktop background image file name';
-			with: [
-				(aBuilder pickOne: #desktopImageLayout) label: 'Layout';
-				 description: 'Size and placement of the background image';
-				 target: self;
-				 order: 0;
-				 default: #scaled;
-				 domainValues: #(#center #tiled #scaled #scaledAspect
-		#topLeft #topCenter #topRight #rightCenter
-		#bottomRight #bottomCenter #bottomLeft #leftCenter).
-				]]
+						label: 'Logo image file name' ].
+			self desktopColorSettingsOn: aBuilder.	
+			self desktopImageSettingsOn: aBuilder ]
 ]
 
 { #category : 'morphic' }
@@ -279,6 +304,11 @@ PolymorphSystemSettings class >> morphicHaloSettingsOn: aBuilder [
 		description: 'All halo settings';
 		noOrdering;
 		with: [
+			(aBuilder setting: #cmdGesturesEnabled)
+				label: 'Enable Gesture to Open Halo';
+				target: Morph;
+				default: true;
+				description: 'Enables or Disables the gestures to open the Halo or the meta menu. The Halo is open with Alt+Shift+Click and the Menu with Ctrl+Alt+Shift+Click'.
 			(aBuilder setting: #cycleHalosBothDirections)
 				label: 'Cycle both directions';
 				target: Morph;
@@ -1203,42 +1233,6 @@ PolymorphSystemSettings class >> showDesktopLogo: aBoolean [
 	ShowDesktopLogo = aBoolean ifTrue: [^ self].
 	ShowDesktopLogo := aBoolean.
 	self desktopLogoChanged
-]
-
-{ #category : 'sound' }
-PolymorphSystemSettings class >> soundSettingsOn: aBuilder [
-	(aBuilder setting: #soundEnabled)
-		label: 'Sound';
-		target: SoundSystem;
-		default: false;
-		noOrdering;
-		with: [
-			(aBuilder setting: #useThemeSounds)
-				label: 'Use theme sounds';
-				target: SoundTheme;
-				default: true;
-				with: [
-					(aBuilder pickOne: #soundThemeClass)
-						label: 'Sound theme' ;
-						target: self;
-						domainValues: self soundThemeClassChoices]]
-]
-
-{ #category : 'sound' }
-PolymorphSystemSettings class >> soundThemeClass [
-	^ SoundTheme current class
-]
-
-{ #category : 'sound' }
-PolymorphSystemSettings class >> soundThemeClass: aSoundThemeClass [
-	aSoundThemeClass ifNil: [^ self].
-	self soundThemeClass ~= aSoundThemeClass
-		ifTrue: [aSoundThemeClass beCurrent]
-]
-
-{ #category : 'sound' }
-PolymorphSystemSettings class >> soundThemeClassChoices [
-	^ SoundTheme allThemeClasses collect: [:c | c themeName -> c]
 ]
 
 { #category : 'morphic' }

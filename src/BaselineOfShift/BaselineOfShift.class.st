@@ -19,7 +19,7 @@ BaselineOfShift >> baseline: spec [
 				group: 'core' with: #('Shift-ClassBuilder');
 				group: 'dev' with: #('core' 'tests');
 				group: 'shift-tests' with: #('Shift-ClassBuilder-Tests');
-				group: 'tests' with: #('shift-tests');
+				group: 'Tests' with: #('shift-tests');
 				group: 'default' with: #('core')
 			]
 ]

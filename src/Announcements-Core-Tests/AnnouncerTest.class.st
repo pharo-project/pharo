@@ -99,6 +99,44 @@ AnnouncerTest >> testAnnouncingReentrant [
 	self assert: ok
 ]
 
+{ #category : 'tests' }
+AnnouncerTest >> testConcurrentSuspendAllWhile [
+
+	| p1Resume p2Resume p1End p2End p1 isSuspended1 p2 isSuspended2 |
+	
+	p1Resume := Semaphore new.
+	p2Resume := Semaphore new.
+	p1End := Semaphore new.
+	p2End := Semaphore new.
+	
+	p1 := [ 
+		isSuspended1 := announcer isSuspended.
+		announcer suspendAllWhile: [ 
+			p2Resume signal.
+			p1Resume wait.].
+			p1End signal.
+		] fork .
+
+	p2 := [ 
+		isSuspended2 := announcer isSuspended.
+		p2Resume wait.
+		announcer suspendAllWhile: [ 
+			p1Resume signal.
+			p2Resume wait. ].
+		p2End signal.
+		
+		] fork.
+	
+	p1End wait.
+	p2Resume signal.
+	p2End wait.
+
+	self deny: isSuspended1.
+	self assert: isSuspended2.
+	self assert: announcer suspendedCount equals: 0.
+	self deny: announcer isSuspended.	
+]
+
 { #category : 'tests - subscribers' }
 AnnouncerTest >> testHandleSubscriberClass [
 

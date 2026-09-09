@@ -100,6 +100,14 @@ RubPluggableTextFieldMorph >> default: anObject [
 	default := anObject
 ]
 
+{ #category : 'drawing' }
+RubPluggableTextFieldMorph >> drawOnAthensCanvas: anAthensCanvas [
+	"Eventually draw the helpText"
+	super drawOnAthensCanvas: anAthensCanvas.
+	entryCompletion
+		ifNotNil: [entryCompletion closeIfNotNeeded: self]
+]
+
 { #category : 'accessing' }
 RubPluggableTextFieldMorph >> getColorSelector [
 	^ self getBackgroundColorSelector

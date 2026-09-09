@@ -26,8 +26,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReStringConcatenationRule class >> group [
-	^ 'Optimization'
+ReStringConcatenationRule class >> groupSelector [
+
+	^ #optimizationGroup
 ]
 
 { #category : 'accessing' }

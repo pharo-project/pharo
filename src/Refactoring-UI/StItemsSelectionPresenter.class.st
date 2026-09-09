@@ -42,10 +42,29 @@ StItemsSelectionPresenter class >> defaultLayout [
 
 { #category : 'specs' }
 StItemsSelectionPresenter class >> label: aString withItems: items selecting: selectedItems [
+
+	self deprecated: 'Do not use, this method does not respect the rule of: all presenters should belong 
+	to a POM or application. Instead, create with newApplication: and set the elements on instance side'.
+	
 	^ self new
 		label: aString withItems: items selecting: selectedItems;
 		openBlockedDialog;
 		yourself 
+]
+
+{ #category : 'specs' }
+StItemsSelectionPresenter class >> title: aTitle label: aString withItems: items selecting: selectedItems [
+
+	self deprecated: 'Do not use, this method does not respect the rule of: all presenters should belong 
+	to a POM or application. Instead, create with newApplication: and set the elements on instance side'.
+
+	^ self new
+		  title: aTitle
+		  label: aString
+		  withItems: items
+		  selecting: selectedItems; 
+		  openBlockedDialog;
+		  yourself
 ]
 
 { #category : 'actions' }
@@ -86,11 +105,14 @@ StItemsSelectionPresenter >> components [
 { #category : 'initialization' }
 StItemsSelectionPresenter >> connectPresenters [
 
-	table bindKeyCombination: Character backspace asShortcut
-		toAction: [ table toggleSelection ].
+	table addShortcutWith: [ :action | action 
+		shortcutKey: Character backspace asShortcut;
+		action: [ table toggleSelection ] ].
+	
 	self components do: [ :each |
-	each bindKeyCombination: Character cr asKeyCombination
-		toAction: [ :presenter | self accept: presenter] ]
+		each addShortcutWith: [ :action | action 
+			shortcutKey: Character cr asKeyCombination;
+			action: [ self accept: each ] ] ]
 ]
 
 { #category : 'initialization' }
@@ -109,14 +131,25 @@ StItemsSelectionPresenter >> initializeWidgets [
 ]
 
 { #category : 'initialization' }
-StItemsSelectionPresenter >> label: aString withItems: coll1 selecting: coll2 [
-	label label: aString.
+StItemsSelectionPresenter >> label: aString withItems: itemsCollection selecting: selectedItemsCollection [
 
-	table items: coll1;
-		selectItems: coll2
+	label label: aString.
+	table 
+		items: itemsCollection;
+		selectItems: selectedItemsCollection
 ]
 
 { #category : 'accessing' }
 StItemsSelectionPresenter >> selectedItems [
 	^ selectedItems
+]
+
+{ #category : 'initialization' }
+StItemsSelectionPresenter >> title: aTitle label: aString withItems: coll1 selecting: coll2 [
+
+	titleHolder := aTitle.
+	label label: aString.
+	table
+		items: coll1;
+		selectItems: coll2
 ]

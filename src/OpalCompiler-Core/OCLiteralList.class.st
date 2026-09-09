@@ -10,9 +10,9 @@ Class {
 		'literalsDict',
 		'first'
 	],
-	#category : 'OpalCompiler-Core-Extras',
+	#category : 'OpalCompiler-Core-DataStructures',
 	#package : 'OpalCompiler-Core',
-	#tag : 'Extras'
+	#tag : 'DataStructures'
 }
 
 { #category : 'adding' }

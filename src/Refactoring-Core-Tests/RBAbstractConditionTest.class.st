@@ -1,8 +1,9 @@
 Class {
 	#name : 'RBAbstractConditionTest',
 	#superclass : 'TestCase',
-	#category : 'Refactoring-Core-Tests',
-	#package : 'Refactoring-Core-Tests'
+	#category : 'Refactoring-Core-Tests-Conditions',
+	#package : 'Refactoring-Core-Tests',
+	#tag : 'Conditions'
 }
 
 { #category : 'testing' }

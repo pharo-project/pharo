@@ -24,7 +24,7 @@ EncodedCharSet class >> charsetAt: encoding [
 	^ EncodedCharSets at: encoding + 1 ifAbsent: [Unicode]
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 EncodedCharSet class >> declareEncodedCharSet: anEncodedCharSetOrLanguageEnvironmentClass atIndex: aNumber [
 
 	EncodedCharSets at: aNumber put: anEncodedCharSetOrLanguageEnvironmentClass

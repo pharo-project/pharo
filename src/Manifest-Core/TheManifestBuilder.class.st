@@ -351,9 +351,10 @@ TheManifestBuilder >> createManifestOf: elem [
 TheManifestBuilder >> dateOf: ringobject forSelector: aSelector [
 
 	| critics |
-
 	critics := self manifest perform: aSelector.
-	^ ((critics detect: [:each | ((self definitionClassFor: each first first) manifestReadOn: (each first at: 2)) = ringobject ]) at: 2) asDateAndTime
+	^ DateAndTime fromString: (
+			(critics detect: [:each | ((self definitionClassFor: each first first) manifestReadOn: (each first at: 2)) = ringobject ]) 
+				at: 2)
 ]
 
 { #category : 'manifest' }

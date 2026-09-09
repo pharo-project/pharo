@@ -430,16 +430,16 @@ STONWriterTest >> testTime [
 { #category : 'tests' }
 STONWriterTest >> testURL [
 	self
-		assert: (self serialize: 'https://pharo.org/files/pharo.png' asUrl)
+		assert: (self serialize: 'https://pharo.org/files/pharo.png' asZnUrl)
 		equals: 'URL[''https://pharo.org/files/pharo.png'']'.
 	self
-		assert: (self serialize: 'mailto:sven@stfx.eu' asUrl)
+		assert: (self serialize: 'mailto:sven@stfx.eu' asZnUrl)
 		equals: 'URL[''mailto:sven@stfx.eu'']'.
 	self
-		assert: (self serialize: 'file:///var/log/system.log' asUrl)
+		assert: (self serialize: 'file:///var/log/system.log' asZnUrl)
 		equals: 'URL[''file:///var/log/system.log'']'.
 	self
-		assert: (self serialize: 'scheme://user:password@host:123/var/log/system.log?foo=1&bar#frag' asUrl)
+		assert: (self serialize: 'scheme://user:password@host:123/var/log/system.log?foo=1&bar#frag' asZnUrl)
 		equals: 'URL[''scheme://user:password@host:123/var/log/system.log?foo=1&bar#frag'']'
 ]
 

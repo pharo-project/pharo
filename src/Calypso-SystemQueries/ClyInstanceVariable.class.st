@@ -57,9 +57,9 @@ ClyInstanceVariable >> isLive [
 ]
 
 { #category : 'operations' }
-ClyInstanceVariable >> openInspector [
-	definingClass isClassSide ifTrue: [
-		^(actualVariable read: definingClass instanceSide) inspect].
+ClyInstanceVariable >> openValueInspector [
+
+	definingClass isClassSide ifTrue: [ ^ (actualVariable read: definingClass instanceSide) inspect ].
 
 	super openInspector
 ]

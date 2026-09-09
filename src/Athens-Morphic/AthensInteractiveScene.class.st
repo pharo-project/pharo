@@ -20,6 +20,7 @@ Class {
 { #category : 'event handling' }
 AthensInteractiveScene >> eventHandledByScene: evt [
 
+	<ignoreNotImplementedSelectors: #(handleEvent:in:at:)>
 	^  true == (scene handleEvent: evt in: self at: (self eventPositionInScene:evt))
 ]
 

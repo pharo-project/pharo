@@ -31,22 +31,24 @@ Class {
 
 { #category : 'instance creation' }
 ClyClassChange class >> of: aClass [
-	^self new
-		affectedClass: aClass
+
+	^ self new affectedClass: aClass
 ]
 
 { #category : 'accessing' }
 ClyClassChange >> affectedClass [
+
 	^ affectedClass
 ]
 
 { #category : 'accessing' }
 ClyClassChange >> affectedClass: anObject [
+
 	affectedClass := anObject
 ]
 
 { #category : 'testing' }
 ClyClassChange >> handlesAnnouncement: anAnnouncement [
 
-	^anAnnouncement affectsClass: affectedClass
+	^ anAnnouncement affectsClass: affectedClass
 ]

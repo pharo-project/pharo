@@ -10,13 +10,10 @@ Class {
 }
 
 { #category : 'meta-data - dependency analyser' }
-ManifestPharoBootstrapInitialization class >> ignoredDependencies [
-	^ #(#'SUnit-Core')
-]
-
-{ #category : 'meta-data - dependency analyser' }
 ManifestPharoBootstrapInitialization class >> manuallyResolvedDependencies [
-	^ #(#'System-Finalization')
+
+	<ignoreForCoverage>
+	^ #(#'Collections-Abstract' #'Collections-Sequenceable')
 ]
 
 { #category : 'meta-data - dependency analyser' }

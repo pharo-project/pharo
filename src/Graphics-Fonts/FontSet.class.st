@@ -50,9 +50,8 @@ FontSet class >> fontNamed: fontName fromMimeLiteral: aString [
 FontSet class >> installAsDefault [
 	"FontSetNewYork installAsDefault"
 
-	(self confirm: 'Do you want to install' translated, '
-''' , self fontName , ''' as default font?' translated)
-		ifFalse: [^ self].
+	(ConfirmationRequest signal: 'Do you want to install
+''' , self fontName , ''' as default font?') ifFalse: [ ^ self ].
 	self installAsTextStyle.
 	TextSharedInformation at: #DefaultTextStyle put: (TextStyle named: self fontName)
 ]
@@ -60,12 +59,11 @@ FontSet class >> installAsDefault [
 { #category : 'installing' }
 FontSet class >> installAsTextStyle [
 	"FontSetNewYork installAsTextStyle"
+
 	| selectors |
-	(TextSharedInformation includesKey: self fontName) ifTrue:
-		[ (self confirm: self fontName , ' is already defined in TextSharedInformation.
+	(TextSharedInformation includesKey: self fontName) ifTrue: [
+			(ConfirmationRequest signal: self fontName , ' is already defined in TextSharedInformation.
 Do you want to replace that definition?') ifFalse: [ ^ self ] ].
 	selectors := (self class selectors select: [ :s | s beginsWith: 'size' ]) asSortedCollection.
-	TextSharedInformation
-		at: self fontName
-		put: (TextStyle fontArray: (selectors collect: [ :each | self perform: each ]))
+	TextSharedInformation at: self fontName put: (TextStyle fontArray: (selectors collect: [ :each | self perform: each ]))
 ]

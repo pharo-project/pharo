@@ -4,9 +4,6 @@ A Metacello repository
 Class {
 	#name : 'MCRepository',
 	#superclass : 'Object',
-	#instVars : [
-		'creationTemplate'
-	],
 	#classVars : [
 		'Settings'
 	],
@@ -21,11 +18,6 @@ MCRepository class >> allConcreteSubclasses [
 ]
 
 { #category : 'accessing' }
-MCRepository class >> creationTemplate [
-	self subclassResponsibility.
-]
-
-{ #category : 'accessing' }
 MCRepository class >> description [
 	^ nil
 ]
@@ -33,7 +25,7 @@ MCRepository class >> description [
 { #category : 'instance creation' }
 MCRepository class >> fromUrl: aUrlOrString [ 
 	| url |
-	url := aUrlOrString asUrl.
+	url := aUrlOrString asZnUrl.
 
 	^ self allSubclasses 
 		detect: [ :each | 
@@ -64,34 +56,9 @@ MCRepository >> addTo: aRepository [
 	^ aRepository addBasicRepository: self
 ]
 
-{ #category : 'converting' }
-MCRepository >> asCreationTemplate [
-	^ self creationTemplate
-]
-
 { #category : 'storing' }
 MCRepository >> basicStoreVersion: aVersion [
 	self subclassResponsibility
-]
-
-{ #category : 'accessing' }
-MCRepository >> closestAncestorVersionFor: anAncestry ifNone: errorBlock [
-	anAncestry breadthFirstAncestorsDo:
-		[:ancestorInfo |
-		(self versionWithInfo: ancestorInfo) ifNotNil: [:v | ^ v]].
-	^ errorBlock value
-]
-
-{ #category : 'accessing' }
-MCRepository >> creationTemplate [
-	^ creationTemplate
-]
-
-{ #category : 'accessing' }
-MCRepository >> creationTemplate: aString [
-	self creationTemplate ifNotNil: [ self error: 'Creation template already set for this MCRepository instance.' ].
-	
-	creationTemplate := aString.
 ]
 
 { #category : 'accessing' }
@@ -164,24 +131,9 @@ MCRepository >> printOn: aStream [
 ]
 
 { #category : 'storing' }
-MCRepository >> storeDependencies: aVersion [
-	MCCacheRepository uniqueInstance cacheAllFileNamesDuring: 
-		[self cacheAllFileNamesDuring: 
-			[aVersion allAvailableDependenciesDo:
-				[:dep |
-					(self includesVersionNamed: dep info name)
-						ifFalse: [self storeVersion: dep]]]]
-]
-
-{ #category : 'storing' }
 MCRepository >> storeVersion: aVersion [
 
 	self basicStoreVersion: aVersion
-]
-
-{ #category : 'accessing' }
-MCRepository >> versionFrom: aVersionReferenceString [
-	self error: 'Unable to load from ' , self printString
 ]
 
 { #category : 'interface' }

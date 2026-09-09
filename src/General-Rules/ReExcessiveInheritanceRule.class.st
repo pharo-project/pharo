@@ -23,8 +23,9 @@ ReExcessiveInheritanceRule class >> checksClass [
 ]
 
 { #category : 'accessing' }
-ReExcessiveInheritanceRule class >> group [
-	^ 'Design Flaws'
+ReExcessiveInheritanceRule class >> groupSelector [
+
+	^ #designFlawGroup
 ]
 
 { #category : 'accessing' }

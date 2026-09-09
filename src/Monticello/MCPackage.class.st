@@ -88,11 +88,11 @@ MCPackage >> snapshot [
 	^ MCSnapshot fromDefinitions: (self systemPackage
 			   ifNil: [ #(  ) ]
 			   ifNotNil: [ :systemPackage |
-				   OrderedCollection new
-					   add: systemPackage asMCOrganizationDefinition;
-					   addAll: (systemPackage methods collect: [ :method | method asMCMethodDefinition ]);
-					   addAll: (systemPackage definedClasses collect: [ :class | class asClassDefinition ]);
-					   yourself ])
+					   OrderedCollection new
+						   add: (MCOrganizationDefinition packageName: systemPackage name tagNames: systemPackage tagNames);
+						   addAll: (systemPackage methods collect: [ :method | method asMCMethodDefinition ]);
+						   addAll: (systemPackage definedClasses collect: [ :class | class asClassDefinition ]);
+						   yourself ])
 ]
 
 { #category : 'storing' }

@@ -9,7 +9,7 @@ Class {
 { #category : 'tests' }
 RBRenamePackageParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
-		addCase: { #rbClass -> RBRenamePackageRefactoring };
+		addCase: { #rbClass -> ReRenamePackageRefactoring };
 		addCase: { #rbClass -> RBRenamePackageTransformation };
 		yourself
 ]
@@ -19,16 +19,24 @@ RBRenamePackageParametrizedTest >> constructor [
 	^ #rename:to:
 ]
 
-{ #category : 'failure tests' }
-RBRenamePackageParametrizedTest >> testFailureBadName [
+{ #category : 'tests' }
+RBRenamePackageParametrizedTest >> testFailPackageMissing [
 
-	self shouldFail: (self createRefactoringWithArguments: { #'Refactoring-Core-Tests'. #'Refactoring-Core-Tests' })
+	self shouldFail:
+    	(self createRefactoringWithArguments:
+        	{ #'Refactoring-Core-DoesNotExist'. #'Refactoring-Core-Renamed'})
 ]
 
 { #category : 'failure tests' }
 RBRenamePackageParametrizedTest >> testFailureExistingPackage [
 
 	self shouldFail: (self createRefactoringWithArguments: { #'Refactoring-Core-Tests'. #'Refactoring-Changes-Tests' })
+]
+
+{ #category : 'failure tests' }
+RBRenamePackageParametrizedTest >> testFailureSameName [
+
+	self shouldFail: (self createRefactoringWithArguments: { #'Refactoring-Core-Tests'. #'Refactoring-Core-Tests' })
 ]
 
 { #category : 'tests' }

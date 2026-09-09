@@ -112,7 +112,7 @@ RGMethod >> ast [
 { #category : 'private' }
 RGMethod >> astFromSource [
 
-	^ RBParser parseMethod: self sourceCode
+	^ OCParser parseMethod: self sourceCode
 ]
 
 { #category : 'accessing - backend' }
@@ -198,10 +198,34 @@ RGMethod >> fullName [
 	^ (self parent name, '>>#', self selector) asSymbol
 ]
 
+{ #category : 'testing' }
+RGMethod >> hasPragmaNamed: aSymbol [
+	^ self pragmas anySatisfy: [ :pragma | pragma selector = aSymbol ]
+]
+
+{ #category : 'testing' }
+RGMethod >> hasSelector: aSelector [
+	"Answers true if the method refers to the selector"
+	(self selector = aSelector) ifTrue: [ ^ true ].
+	^ self sendsSelector: aSelector
+]
+
+{ #category : 'testing' }
+RGMethod >> hasSelector: selector specialSelectorIndex: specialOrNil [
+
+	^ self ast sentMessages includes: selector
+]
+
 { #category : 'accessing' }
 RGMethod >> hasSourceCode [
 
 	^ self backend forMethod hasSourceCodeFor: self
+]
+
+{ #category : 'private' }
+RGMethod >> implementors [
+
+	^ #()
 ]
 
 { #category : 'initialization' }
@@ -228,6 +252,12 @@ RGMethod >> initializeUnresolved [
 	time := self unresolvedValue: self defaultTime
 ]
 
+{ #category : 'testing' }
+RGMethod >> isClassified [
+
+	^ self protocol ~= Protocol unclassified
+]
+
 { #category : 'accessing' }
 RGMethod >> isExtension [
 	"The receiver is an extension when is defined in a different package to the one of its parent"
@@ -238,6 +268,11 @@ RGMethod >> isExtension [
 { #category : 'testing' }
 RGMethod >> isFromTrait [
 	^ self parent isTrait
+]
+
+{ #category : 'testing' }
+RGMethod >> isInstalled [
+	^ true
 ]
 
 { #category : 'testing' }
@@ -253,14 +288,6 @@ RGMethod >> isMeta [
 ]
 
 { #category : 'testing' }
-RGMethod >> isMetaSide [
-	self
-		deprecated: 'Use isMeta instead'
-		transformWith: '`@receiver isMetaSide' -> '`@receiver isMeta'.
-	^ self isMeta
-]
-
-{ #category : 'testing' }
 RGMethod >> isMethod [
 
 	^true
@@ -270,6 +297,12 @@ RGMethod >> isMethod [
 RGMethod >> isTaggedWith: aSymbol [
 
 	^self tags includes: aSymbol
+]
+
+{ #category : 'accessing' }
+RGMethod >> literalAt: anIndex [
+
+	^ self ast literals at: anIndex
 ]
 
 { #category : 'resolving' }
@@ -284,6 +317,12 @@ RGMethod >> makeResolved [
 	tags := self tags markAsRingResolved
 ]
 
+{ #category : 'accessing' }
+RGMethod >> messages [
+
+	^ self ast sentMessages
+]
+
 { #category : 'queries - class' }
 RGMethod >> methodClass [
 
@@ -293,6 +332,12 @@ RGMethod >> methodClass [
 { #category : 'accessing' }
 RGMethod >> numArgs [
 	^ self selector asString numArgs
+]
+
+{ #category : 'accessing' }
+RGMethod >> origin [
+
+	^ self parent
 ]
 
 { #category : 'accessing - backend' }
@@ -313,11 +358,17 @@ RGMethod >> package: anRGPackage [
 { #category : 'accessing' }
 RGMethod >> parseTree [
 	| tree |
-	tree := RBParser
+	tree := OCParser
 		  parseMethod: self sourceCode
 		  onError: [ :str :pos | ^ nil ].
 	tree ifNotNil: [ tree doSemanticAnalysis ].
 	^ tree
+]
+
+{ #category : 'accessing - pragmas & properties' }
+RGMethod >> pragmas [
+
+	^ self ast pragmas
 ]
 
 { #category : 'printing' }
@@ -345,6 +396,12 @@ RGMethod >> protocol: aSymbol [
 
 	self cleanTagsWithoutAnnouncemnt.
 	self tagWith: aSymbol
+]
+
+{ #category : 'accessing - backend' }
+RGMethod >> protocolName [
+
+	^ self protocol
 ]
 
 { #category : 'private - backend interface' }
@@ -454,6 +511,28 @@ RGMethod >> pvtUntagFrom: aSymbol [
 	"TODO:Announce"
 ]
 
+{ #category : 'scanning' }
+RGMethod >> readsRef: literalAssociation [
+	"Answer whether the receiver loads the argument."
+	^ self ast withAllChildren anySatisfy: [:each |
+		each isVariable and: [ each name = literalAssociation key ]]
+
+	"self ast nodesDo: [ :node |
+		node isVariable and: [
+			node parent isAssignment not and: [
+				(node binding =  literalAssociation)
+					 		ifTrue: [^true]]]].
+	^false"
+]
+
+{ #category : 'scanning' }
+RGMethod >> readsSlot: aSlot [
+	| nodes |
+	nodes := self ast instanceVariableNodes select: [:each | each isInstanceVariable].
+	nodes := nodes reject: [ :node | node parent isAssignment and: [ node parent variable = node ] ].
+	^ nodes anySatisfy: [ :node | node binding == aSlot ]
+]
+
 { #category : 'removing' }
 RGMethod >> removeFromSystem [
 
@@ -465,6 +544,17 @@ RGMethod >> selector [
 	"Retrieves the name of the method"
 
 	^ self name asSymbol
+]
+
+{ #category : 'accessing' }
+RGMethod >> sendNodes [
+	^self ast sendNodes
+]
+
+{ #category : 'testing' }
+RGMethod >> sendsSelector: aSymbol [
+	"Answer whether the method sends a particular selector"
+	^ self messages includes: aSymbol
 ]
 
 { #category : 'accessing' }
@@ -491,7 +581,7 @@ RGMethod >> sourceCodeForNoSelector [
 { #category : 'accessing' }
 RGMethod >> sourceCodeForNoSource [
 
-	^ self selector asMethodPreamble, String cr, String tab, '"source code for the method model not set"'
+	^ self selector asMethodSignature, String cr, String tab, '"source code for the method model not set"'
 ]
 
 { #category : 'accessing - backend' }
@@ -533,4 +623,33 @@ RGMethod >> time: aDateAndTime [
 RGMethod >> untagFrom: aSymbol [
 
 	self backend forMethod untagMethod: self from: aSymbol
+]
+
+{ #category : 'querying' }
+RGMethod >> variableNodes [
+	^self ast variableNodes
+]
+
+{ #category : 'scanning' }
+RGMethod >> writesRef: literalAssociation [
+	"Answer whether the receiver stores into the argument."
+	self ast nodesDo: [ :node |
+		node isVariable and: [
+			node parent isAssignment and: [
+				(node parent variable = node) and: [
+					(node binding =  literalAssociation)
+					 		ifTrue: [^true]]]]].
+	^false
+]
+
+{ #category : 'scanning' }
+RGMethod >> writesSlot: aSlot [
+	self ast nodesDo: [ :node |
+		node isVariable and: [
+			node parent isAssignment and: [
+				(node parent variable = node) and: [
+					node isInstanceVariable and: [
+						(node binding ==  aSlot)
+					 		ifTrue: [^true]]]]]].
+	^false
 ]

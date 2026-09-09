@@ -58,7 +58,7 @@ ZnKeyValueStoreClient >> at: key put: value [
 		contents: value asString
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnKeyValueStoreClient >> close [
 	httpClient ifNotNil: [
 		httpClient close.

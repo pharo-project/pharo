@@ -46,7 +46,7 @@ FLObjectCluster >> clusterSerializeStepWith: anEncoder [
 	anEncoder encodeReferenceToClusterObjectClass: theClass
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 FLObjectCluster >> initializeAnalyzing: aClass [
 
 	self initializeAnalyzing.

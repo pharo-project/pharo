@@ -12,27 +12,77 @@ Behavior >> compile: code [
 	The argument is either a string or an object that converts to a string or a
 	PositionableStream on an object that converts to a string."
 
-	^self compile: code notifying: nil
+	^ self
+		  compile: code
+		  classified: nil
+		  withStamp: DateAndTime now
+		  logSource: self shouldLogSource
 ]
 
 { #category : '*OpalCompiler-Core' }
-Behavior >> compile: code notifying: requestor [
-	"Compile the argument, code, as source code in the context of the
-	receiver and insEtall the result in the receiver's method dictionary. The
-	second argument, requestor, is to be notified if an error occurs. The
-	argument code is either a string or an object that converts to a string or
-	a PositionableStream. This method also saves the source code."
+Behavior >> compile: sourceCode classified: protocol [
+	"Compile the source code in the context of the receiver and install the result in the receiver's method dictionary under the given protocol (this can be a protocol or a protocol name).
+	Return the selector of the compiled method.
+		
+	The argument sourceCode is either a string or an object that converts to a string or a PositionableStream on an object that converts to a string."
 
-	| method |
-	method  := self compiler
-		source: code;
-		requestor: requestor;
-		failBlock: (requestor ifNotNil: [ [ ^ nil ] ]); "no failblock if no requestor"
-		compile.
+	^ self
+		  compile: sourceCode
+		  classified: protocol
+		  withStamp: DateAndTime now
+		  logSource: self shouldLogSource
+]
 
-	method putSource: code
-			withPreamble: [:f | f cr; nextPut: $!; nextChunkPut: 'Behavior method'; cr].
-	self addSelector: method selector withMethod: method.
+{ #category : '*OpalCompiler-Core' }
+Behavior >> compile: sourceCode classified: protocol withStamp: changeStamp logSource: logSource [
+	"Return the selector of the compiled method"
+
+	^ self compile: sourceCode methodInstaller: (self methodInstaller
+			   logged: logSource;
+			   changeStamp: changeStamp;
+			   protocol: protocol)
+]
+
+{ #category : '*OpalCompiler-Core' }
+Behavior >> compile: selector from: oldClass [
+	"Compile the method associated with selector in the receiver's method dictionary."
+
+	| method newMethod compiler |
+	method := oldClass compiledMethodAt: selector. "The installer should not log the source code when recompiling.
+	We will reuse the same source as the old method"
+	compiler := oldClass compiler
+		            source: method sourceCode;
+		            class: self;
+		            priorMethod: method;
+		            permitFaulty: true;
+		            logged: false.
+
+	newMethod := compiler install.
+
+	method hasSourcePointer
+		ifTrue: [ newMethod sourcePointer: method sourcePointer ]
+		ifFalse: [ 
+			method
+				propertyAt: #source
+				ifPresent: [ :code | 
+					newMethod propertyAt: #source put: code ] ].
+
+	selector == newMethod selector ifFalse: [ self error: 'selector changed!' ]
+]
+
+{ #category : '*OpalCompiler-Core' }
+Behavior >> compile: sourceCode methodInstaller: methodInstaller [
+	"Return the selector of the compiled method"
+
+	| method compiler |
+	sourceCode ifEmpty: [ Error signal: 'The source code should not be empty' ].
+	compiler := self compiler
+		            source: sourceCode;
+		            "compatibility: permit undeclared if no requestor"
+		            permitUndeclared: false;
+		            permitFaulty: false.
+	method := compiler compileOrFail.
+	methodInstaller install: method into: self compiler: compiler.
 	^ method selector
 ]
 
@@ -46,7 +96,26 @@ Behavior >> compileAllFrom: oldClass [
 	"Compile all the methods in the receiver's method dictionary.
 	This validates sourceCode and variable references and forces
 	all methods to use the current bytecode set"
-	oldClass localSelectors do: [:sel | self recompile: sel from: oldClass]
+	oldClass localSelectors do: [:sel | self compile: sel from: oldClass]
+]
+
+{ #category : '*OpalCompiler-Core' }
+Behavior >> compileSilently: sourceCode [
+	"Compile the code and classify the resulting method in the given protocol, leaving no trail in the system log, nor in any change set, nor in the 'recent submissions' list. This should only be used when you know for sure that the compilation will succeed."
+
+	^ self compileSilently: sourceCode classified: 'not defined protocol'
+]
+
+{ #category : '*OpalCompiler-Core' }
+Behavior >> compileSilently: sourceCode classified: protocolName [
+	"Compile the code and classify the resulting method in the given protocol, leaving no trail in the system log, nor in any change set, nor in the 'recent submissions' list. This should only be used when you know for sure that the compilation will succeed."
+
+	^ self codeChangeAnnouncer suspendAllWhile: [
+			  self
+				  compile: sourceCode
+				  classified: protocolName
+				  withStamp: DateAndTime now
+				  logSource: self shouldLogSource ]
 ]
 
 { #category : '*OpalCompiler-Core' }
@@ -72,7 +141,7 @@ Behavior >> outerScope [
 
 { #category : '*OpalCompiler-Core' }
 Behavior >> recompile [
-	self compileAll
+	 ^ self recompileAllFrom: self
 ]
 
 { #category : '*OpalCompiler-Core' }
@@ -83,30 +152,18 @@ Behavior >> recompile: selector [
 
 { #category : '*OpalCompiler-Core' }
 Behavior >> recompile: selector from: oldClass [
-	"Compile the method associated with selector in the receiver's method dictionary."
 
-	| newMethod |
-	newMethod := self recompileBasic: selector from: oldClass.
-	self addSelectorSilently: selector withMethod: newMethod
+	"Recompilation should be done silently, to avoid putting noise in the system"
+	self codeChangeAnnouncer suspendAllWhile: [
+		self compile: selector from: oldClass 
+	]
 ]
 
 { #category : '*OpalCompiler-Core' }
-Behavior >> recompileBasic: selector from: oldClass [
-	"Compile the method associated with selector in the receiver's context.
-	The resulting compiled method is not installed.
-	If the original method is faulty, the result will be also faulty (silently)."
+Behavior >> recompileAllFrom: oldClass [
+	"Compile silently all the methods in the receiver's method dictionary.
+	This validates sourceCode and variable references and forces
+	all methods to use the current bytecode set"
 
-	| method newMethod |
-	method := oldClass compiledMethodAt: selector.
-	newMethod := oldClass compiler
-				source: (oldClass sourceCodeAt: selector);
-				priorMethod: method;
-				class: self;
-				permitFaulty: true;
-				logged: false; "No need to log recompilation in the sources."
-				compile.   "Assume OK after proceed from SyntaxError"
-	newMethod sourcePointer: method sourcePointer.
-
-	selector == newMethod selector ifFalse: [self error: 'selector changed!'].
-	^ newMethod
+	self codeChangeAnnouncer suspendAllWhile: [ self compileAllFrom: oldClass ]
 ]

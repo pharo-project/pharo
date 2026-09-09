@@ -3,7 +3,8 @@ Extension { #name : 'Number' }
 { #category : '*System-Time' }
 Number >> asDuration [
 
- 	^ Duration seconds: self asInteger
+	self deprecated: 'Rewrite `aNumber asDuration` as `Duration seconds: aNumber`'.
+	^ Duration seconds: self asInteger
 ]
 
 { #category : '*System-Time' }

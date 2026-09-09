@@ -204,7 +204,7 @@ Bezier2Segment >> degree [
 	^2
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 Bezier2Segment >> from: startPoint to: endPoint [
 	"Initialize the receiver as straight line"
 	start := startPoint.
@@ -212,7 +212,7 @@ Bezier2Segment >> from: startPoint to: endPoint [
 	via := (start + end) // 2
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 Bezier2Segment >> from: startPoint to: endPoint via: viaPoint [
 	"Initialize the receiver"
 	start := startPoint.
@@ -220,7 +220,7 @@ Bezier2Segment >> from: startPoint to: endPoint via: viaPoint [
 	via := viaPoint
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 Bezier2Segment >> from: startPoint to: endPoint withMidPoint: pointOnCurve [
 	"Initialize the receiver with the pointOnCurve assumed at the parametric value 0.5"
 	start := startPoint.
@@ -229,7 +229,7 @@ Bezier2Segment >> from: startPoint to: endPoint withMidPoint: pointOnCurve [
 	via := (pointOnCurve * 2) - (start + end * 0.5)
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 Bezier2Segment >> from: startPoint to: endPoint withMidPoint: pointOnCurve at: parameter [
 	"Initialize the receiver with the pointOnCurve at the given parametric value"
 	| t1 t2 t3 |
@@ -248,7 +248,7 @@ Bezier2Segment >> hasZeroLength [
 	^start = end and:[start = via]
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 Bezier2Segment >> initializeFrom: controlPoints [
 	controlPoints size = 3 ifFalse:[self error:'Wrong number of control points'].
 	start := controlPoints at: 1.

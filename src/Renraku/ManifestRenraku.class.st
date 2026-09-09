@@ -18,9 +18,23 @@ Class {
 	#tag : 'Manifest'
 }
 
+{ #category : 'meta-data - dependency analyser' }
+ManifestRenraku class >> manuallyResolvedDependencies [
+
+	<ignoreForCoverage>
+	^ #(#'System-Localization')
+]
+
 { #category : 'code-critics' }
 ManifestRenraku class >> ruleBadMessageRule2V1FalsePositive [
 
 	<ignoreForCoverage>
 	^ #(#(#(#RGMethodDefinition #(#'ReAbstractRule class' #isVisible #true)) #'2023-09-22T10:50:00.890614+02:00') )
+]
+
+{ #category : 'code-critics' }
+ManifestRenraku class >> ruleCollectionProtocolRuleV1FalsePositive [
+
+	<ignoreForCoverage>
+	^ #(#(#(#RGMethodDefinition #(#ReSmalllintChecker #reParseRule #false)) #'2026-06-26T11:55:40.660161+02:00') )
 ]

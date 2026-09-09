@@ -30,7 +30,7 @@ RxmSubstring >> beCaseSensitive [
 	compare := [:char1 :char2 | char1 = char2]
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 RxmSubstring >> character: aCharacter ignoreCase: aBoolean [
 	"Match exactly this character."
 

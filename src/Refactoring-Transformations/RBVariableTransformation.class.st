@@ -73,20 +73,6 @@ RBVariableTransformation class >> variable: aVariableName class: aClassName clas
 		yourself
 ]
 
-{ #category : 'storing' }
-RBVariableTransformation >> storeOn: aStream [
-
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream nextPutAll: ' variable: '.
-	variableName storeOn: aStream.
-	aStream nextPutAll: ' class: '.
-	class storeOn: aStream.
-	aStream nextPutAll: ' classVariable: '.
-	isClassVariable storeOn: aStream.
-	aStream nextPut: $)
-]
-
 { #category : 'api' }
 RBVariableTransformation >> variable: aVariableName class: aClassName classVariable: aBoolean [
 

@@ -234,9 +234,9 @@ ReflectivityExamples >> initialize [
 { #category : 'initialization' }
 ReflectivityExamples >> removeTemporaryMethods [
 
-	self class removeSelector: #methodToBeRemoved.
-	self class removeSelector: #methodToBeModified.
-	self class removeSelector: #stubMethod
+	(self class includesSelector: #methodToBeRemoved) ifTrue: [ self class removeSelector: #methodToBeRemoved ].
+	(self class includesSelector: #methodToBeModified) ifTrue: [ self class removeSelector: #methodToBeModified ].
+	(self class includesSelector: #stubMethod) ifTrue: [ self class removeSelector: #stubMethod ]
 ]
 
 { #category : 'tagging' }

@@ -60,8 +60,9 @@ EpBehaviorCommentChange >> fileOutEntryOn: aWriteStream [
 	aWriteStream
 		nextPutAll: '(self class environment at: #';
 		nextPutAll: self behaviorAffectedName;
-		nextPutAll: ') comment: ';
-		nextChunkPut: self newComment surroundedBySingleQuotes;
+		nextPutAll: ') comment: '.
+	(ChunkWriteStream on: aWriteStream)
+		nextPut: self newComment surroundedBySingleQuotes;
 		cr
 ]
 

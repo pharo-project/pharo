@@ -15,8 +15,9 @@ ReMissingSubclassResponsibilityRule class >> checksClass [
 ]
 
 { #category : 'accessing' }
-ReMissingSubclassResponsibilityRule class >> group [
-	^ 'Design Flaws'
+ReMissingSubclassResponsibilityRule class >> groupSelector [
+
+	^ #designFlawGroup
 ]
 
 { #category : 'accessing' }

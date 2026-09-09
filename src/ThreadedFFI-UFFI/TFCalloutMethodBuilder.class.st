@@ -83,26 +83,50 @@ TFCalloutMethodBuilder >> abiConstantFor: aSelector [
 
 { #category : 'private' }
 TFCalloutMethodBuilder >> createFFICalloutLiteralFromSpec: functionSpec [
+	| externalFunction |
 
-	^ TFExternalFunction
+	externalFunction := TFExternalFunction
 		  name: functionSpec functionName
 		  moduleName: self libraryName
 		  parameterTypes:
 		  (functionSpec arguments collect: #tfExternalTypeWithArity)
 		  returnType: functionSpec returnType tfExternalTypeWithArity
 		  fixedArgumentCount: fixedArgumentCount
-		  abi: (self abiConstantFor: calloutAPI callingConvention)
+		  abi: (self abiConstantFor: calloutAPI callingConvention).
+		  
+	functionResolutionStrategies
+		detect: [ :each | each isApplicableFor: self requestor ]
+		ifFound: [ :each | each resolve: externalFunction ].
+		
+	^ externalFunction
+]
+
+{ #category : 'private' }
+TFCalloutMethodBuilder >> emitArgument: anFFIFunctionArgument optimizingIn: builder [
+
+	| tfExternalTypeWithArity |
+	tfExternalTypeWithArity := anFFIFunctionArgument resolvedType tfExternalTypeWithArity.
+
+	tfExternalTypeWithArity
+		optimizeFor: anFFIFunctionArgument
+		in: builder
+		ifCannot: [
+			anFFIFunctionArgument
+				emitResolvedTypeArgument: builder
+				context: sender
+				inCallout: self requestor.
+			tfExternalTypeWithArity emitMarshallToPrimitive: builder ]
 ]
 
 { #category : 'private' }
 TFCalloutMethodBuilder >> generateFFICallout: builder spec: functionSpec ffiLibrary: ffiLibrary [
 
 	TFCalloutAPI isTracing ifTrue: [
-		TFCalloutAPI trace: sender.
+		TFCalloutAPI traceSender: sender.
 		builder
 			pushLiteral: TFCalloutAPI;
 			pushLiteral: sender;
-			send: #trace: ].
+			send: #traceSender: ].
 
 	builder
 		pushLiteral: (ffiLibrary uniqueInstance runner).
@@ -112,9 +136,7 @@ TFCalloutMethodBuilder >> generateFFICallout: builder spec: functionSpec ffiLibr
 	"iterate arguments in order (in the function) to create the function call"
 
 	functionSpec arguments
-		do: [ :each |
-			each emitArgument: builder context: sender inCallout: self requestor.
-			each resolvedType tfExternalTypeWithArity emitMarshallToPrimitive: builder ].
+		do: [ :each | self emitArgument: each optimizingIn:builder ].
 
 	"create the array"
 	builder pushConsArray: functionSpec arguments size.

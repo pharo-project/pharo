@@ -56,7 +56,8 @@ Class {
 		'superclassResolver',
 		'inRemake',
 		'package',
-		'tag'
+		'tag',
+		'sourcesManager'
 	],
 	#classVars : [
 		'BuilderEnhancer'
@@ -93,6 +94,14 @@ ShiftClassBuilder >> allSlots [
 ]
 
 { #category : 'building' }
+ShiftClassBuilder >> beExtension [
+
+	self
+		superclass: nil;
+		metaSuperclass: Extension
+]
+
+{ #category : 'building' }
 ShiftClassBuilder >> build [
 
 	self tryToFillOldClass.
@@ -111,17 +120,18 @@ ShiftClassBuilder >> build [
 	self createMetaclass.
 	self createClass.
 
-	self oldClass ifNotNil: [
-		self copyProtocols.
-		self newClass commentSourcePointer: self oldClass commentSourcePointer ].
-
 	self createSharedVariables.
 
 	self installSlotsAndVariables.
 
-	self oldClass ifNotNil: [ self builderEnhancer compileMethodsFor: self ].
+	self oldClass ifNotNil: [ :old |
+			"I do not like this check. We do it because #duplicateClassWithNewName: is using the builder to make a new class but defining an old class that does nto have the same name to copy all methods.
+			This seems bad to me because them we do not announce any method creation while we create methods."
+			old name = newClass name ifTrue: [ newClass basicTag: old packageTag ].
+			self builderEnhancer compileMethodsFor: self ].
 
 	self builderEnhancer afterMethodsCompiled: self.
+
 	^ newClass
 ]
 
@@ -212,7 +222,7 @@ ShiftClassBuilder >> compareWithOldClass [
 ShiftClassBuilder >> compileMethods [
 
 	newClass
-		compileAllFrom: self oldClass;
+		recompileAllFrom: self oldClass;
 		removeNonexistentSelectorsFromProtocols
 ]
 
@@ -236,6 +246,13 @@ ShiftClassBuilder >> createClass [
 		slots: (self withAdditionalSlots: self slots).
 
 	newClass environment: self installingEnvironment.
+	
+	"Since Traits might add some methods in #classCreated:, we need to copy the protocols before we add them."
+	self oldClass ifNotNil: [
+		"Initialize the method dictionary at the right size to avoid growing it later."
+		newClass methodDict: (MethodDictionary new: oldClass methodDict size). 
+		self copyProtocols.
+		self newClass commentSourcePointer: self oldClass commentSourcePointer ].
 
 	self builderEnhancer classCreated: self
 ]
@@ -300,6 +317,18 @@ ShiftClassBuilder >> environment [
 ShiftClassBuilder >> environment: anObject [
 
 	^ self buildEnvironment: anObject
+]
+
+{ #category : 'accessing' }
+ShiftClassBuilder >> extendedClass [
+
+	^ extensibleProperties at: #extendedClass
+]
+
+{ #category : 'accessing' }
+ShiftClassBuilder >> extendedClass: aClass [
+
+	extensibleProperties at: #extendedClass put: aClass
 ]
 
 { #category : 'copying' }
@@ -408,6 +437,11 @@ ShiftClassBuilder >> installingEnvironment [
 ShiftClassBuilder >> installingEnvironment: anObject [
 
 	installingEnvironment := anObject
+]
+
+{ #category : 'testing' }
+ShiftClassBuilder >> isExtension [
+	^ self metaSuperclass isKindOf: Extension class
 ]
 
 { #category : 'accessing' }
@@ -609,6 +643,17 @@ ShiftClassBuilder >> slotsFromString: aString [
 ]
 
 { #category : 'accessing' }
+ShiftClassBuilder >> sourcesManager [
+	^ sourcesManager
+]
+
+{ #category : 'accessing' }
+ShiftClassBuilder >> sourcesManager: aNoSourcesManager [ 
+	
+	sourcesManager := aNoSourcesManager 
+]
+
+{ #category : 'accessing' }
 ShiftClassBuilder >> superclass [
 
 	^ superclass ifNil: [ superclassName ifNotNil: [ self classNamed: self superclassName ] ]
@@ -629,6 +674,7 @@ ShiftClassBuilder >> superclassName [
 { #category : 'accessing' }
 ShiftClassBuilder >> superclassName: anObject [
 
+	superclass := nil. "In the case we update a class and use #superclassName:, we should flush the superclass saved."
 	superclassName := anObject ifNotNil: [ anObject asSymbol ]
 ]
 
@@ -654,7 +700,7 @@ ShiftClassBuilder >> tryToFillOldClass [
 
 	oldClass ifNotNil: [ ^ self ].
 	name ifNil: [ ^ self ].
-	self oldClass: (self classNamed: self name)
+	self oldClass: (self installingEnvironment at: name ifAbsent: [ nil ])
 ]
 
 { #category : 'building' }

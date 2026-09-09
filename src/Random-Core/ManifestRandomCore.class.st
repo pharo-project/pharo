@@ -10,8 +10,10 @@ Class {
 }
 
 { #category : 'meta-data - dependency analyser' }
-ManifestRandomCore class >> ignoredDependencies [
-	^ #(#Transcript)
+ManifestRandomCore class >> manuallyResolvedDependencies [
+
+	<ignoreForCoverage>
+	^ #(#'System-NumberPrinting' #NumberParser)
 ]
 
 { #category : 'accessing' }

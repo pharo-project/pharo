@@ -4,7 +4,7 @@ I support the general protocol for listing files in a remote repository.
 "
 Class {
 	#name : 'MCHttpRepository',
-	#superclass : 'MCFileBasedRepository',
+	#superclass : 'MCRemoteFileBasedRepository',
 	#instVars : [
 		'location',
 		'user',
@@ -22,10 +22,14 @@ MCHttpRepository class >> baseURL [
 
 { #category : 'instance creation' }
 MCHttpRepository class >> basicFromUrl: aZnUrl [
+
+	| locationFromZnUrl |
+	locationFromZnUrl := self locationFromZnUrl: aZnUrl.
+
 	^ aZnUrl hasUsername
-		ifFalse: [ self location: aZnUrl location ]
-		ifTrue: [ (self repositoryClassFor: aZnUrl location) new
-				location: aZnUrl location;
+		ifFalse: [ self location: locationFromZnUrl ]
+		ifTrue: [ (self repositoryClassFor: locationFromZnUrl) new
+				location: locationFromZnUrl;
 				user: aZnUrl username;
 				password: aZnUrl password;
 				yourself  ]
@@ -37,26 +41,20 @@ MCHttpRepository class >> clearPasswords [
 
 ]
 
-{ #category : 'creation template' }
-MCHttpRepository class >> creationTemplate [
-	^self creationTemplateLocation: self baseURL
-		user: ''
-		password: ''
+{ #category : 'instance creation' }
+MCHttpRepository class >> createRepositoryFromSpec: aRepositorySpec [
 
-]
-
-{ #category : 'creation template' }
-MCHttpRepository class >> creationTemplateLocation: location user: user password: password [
-	^
-self name, '
-	location: {1}
-	user: {2}
-	password: {3}' format: {location printString. user printString. password printString}
+	^ self location: aRepositorySpec description user: aRepositorySpec username password: aRepositorySpec password
 ]
 
 { #category : 'accessing' }
 MCHttpRepository class >> description [
 	^ 'HTTP'
+]
+
+{ #category : 'testing' }
+MCHttpRepository class >> isAvailableFor: type [
+	^ self = MCHttpRepository and: [ type = 'http' ]
 ]
 
 { #category : 'testing' }
@@ -89,13 +87,16 @@ MCHttpRepository class >> location: aUrl user: user password: password [
 ]
 
 { #category : 'instance creation' }
-MCHttpRepository class >> pharoInboxRepository [
-	^ self location: 'http://smalltalkhub.com/mc/Pharo/Pharo60Inbox/main'.
-]
+MCHttpRepository class >> locationFromZnUrl: aZnUrl [
 
-{ #category : 'instance creation' }
-MCHttpRepository class >> pharoRepository [
-	^ self location: 'http://smalltalkhub.com/mc/Pharo/Pharo60/main'.
+	"Returns the URL location string without username and password"
+	^ String streamContents: [ :stream |
+		aZnUrl hasScheme ifTrue: [ 
+			stream nextPutAll: aZnUrl scheme; nextPut: $:.
+		aZnUrl isSchemeUsingDoubleSlash ifTrue: [ stream nextPut: $/; nextPut: $/ ] ].
+		aZnUrl hasHost ifTrue: [ aZnUrl encode: aZnUrl host on: stream ].
+		aZnUrl hasPort ifTrue: [ stream nextPut: $:; print: aZnUrl port ].
+		aZnUrl printPathQueryFragmentOn: stream ]
 ]
 
 { #category : 'instance creation' }
@@ -117,8 +118,11 @@ MCHttpRepository class >> urlSchemes [
 ]
 
 { #category : 'converting' }
-MCHttpRepository >> asCreationTemplate [
-	^self class creationTemplateLocation: self location user: user password: password
+MCHttpRepository >> asRepositorySpec [
+
+	^ (MetacelloRepositorySpec description: self description)
+		  type: 'http';
+		  yourself
 ]
 
 { #category : 'private' }
@@ -138,10 +142,8 @@ MCHttpRepository >> assertNonBinaryResponse: response [
 MCHttpRepository >> cacheRawVersionNamed: aString stream: contents [
 	"directly forward the contents to the cache repository. 
 	this avoids and unnecessary serialization step"
-	MCCacheRepository uniqueInstance 
-		writeStreamForFileNamed: aString 
-		replace: true 
-		do: [ :s| s nextPutAll: contents ]
+
+	MCCacheRepository uniqueInstance writeStreamWithReplacingForFileNamed: aString do: [ :s | s nextPutAll: contents ]
 ]
 
 { #category : 'accessing' }
@@ -398,16 +400,16 @@ MCHttpRepository >> versionReaderForFileNamed: aString do: aBlock [
 ]
 
 { #category : 'i/o' }
-MCHttpRepository >> writeStreamForFileNamed: aString replace: ignoreBoolean do: aBlock [
+MCHttpRepository >> writeStreamForFileNamed: aString do: aBlock [
+
 	| entity |
 	entity := self entityStreamContents: aBlock.
-	self displayProgress: 'Uploading ', aString during: [
+	self displayProgress: 'Uploading ' , aString during: [
 		self httpClient
 			entity: entity;
-			ifFail: [ :exception | 
-				(exception isKindOf: ZnHttpUnsuccessful) 
-					ifTrue: [ ^ self handleUnsuccessfulResponse: exception response ].
-				self error: 'Could not save ', aString, ': ', exception printString ];
+			ifFail: [ :exception |
+				(exception isKindOf: ZnHttpUnsuccessful) ifTrue: [ ^ self handleUnsuccessfulResponse: exception response ].
+				self error: 'Could not save ' , aString , ': ' , exception printString ];
 			url: (self urlForFileNamed: aString);
 			put ]
 ]

@@ -50,7 +50,7 @@ InstructionStream >> compiledCode [
 ]
 
 { #category : 'interpreting' }
-InstructionStream >> interpretNext2ByteSistaV1Instruction: bytecode for: client extA: extA extB: extB startPC: startPC [
+InstructionStream >> interpretNext2ByteSistaV1Instruction: bytecode for: client extA: extA extB: extB [
 	"Send to the argument, client, a message that specifies the next instruction.
 	 This method handles the two-byte codes.
 	 For a table of the bytecode set, see EncoderForV1's class comment."
@@ -114,15 +114,16 @@ InstructionStream >> interpretNext2ByteSistaV1Instruction: bytecode for: client 
 	bytecode = 245 ifTrue:
 		[^client storeIntoTemporaryVariable: byte].
 	"246-247	1111011 i	xxxxxxxx	UNASSIGNED"
-	^self interpretUnusedBytecode: client at: startPC
+	^ client unusedBytecode
 ]
 
 { #category : 'interpreting' }
-InstructionStream >> interpretNext3ByteSistaV1Instruction: bytecode for: client extA: extA extB: extB startPC: startPC [
+InstructionStream >> interpretNext3ByteSistaV1Instruction: bytecode for: client extA: extA extB: extB [
 	"Send to the argument, client, a message that specifies the next instruction.
 	 This method handles the three-byte codes.
 	 For a table of the bytecode set, see EncoderForSistaV1's class comment."
 
+	<ignoreNotImplementedSelectors: #( jumpOrPopIfNotInstanceOf:distance: )>
 	| method byte2 byte3 |
 	method := self compiledCode.
 	byte2 := method at: pc.
@@ -151,7 +152,7 @@ InstructionStream >> interpretNext3ByteSistaV1Instruction: bytecode for: client 
 			numCopied: (byte3 bitAnd: 16r3F)
 			receiverOnStack: (byte3 bitAt: 7) = 1
 			ignoreOuterContext: (byte3 bitAt: 8) = 1 ].
-	^self interpretUnusedBytecode: client at: startPC
+	^ client unusedBytecode
 ]
 
 { #category : 'interpreting' }
@@ -165,12 +166,11 @@ InstructionStream >> interpretNextInstructionFor: client [
 InstructionStream >> interpretNextSistaV1InstructionFor: client [
 	"Send to the argument, client, a message that specifies the next instruction."
 
-	| byte div16 offset method extA extB savedPC |
+	| byte div16 offset method extA extB |
 	method := self compiledCode.
 	"For a table of the bytecode set, see EncoderForSistaV1's class comment."
 	"consume and compute any extensions first."
 	extA := extB := 0.
-	savedPC := pc.
 	[byte := self compiledCode at: pc.
 	 pc := pc + 1.
 	 byte between: 16rE0 and: 16rE1] whileTrue:
@@ -231,7 +231,7 @@ InstructionStream >> interpretNextSistaV1InstructionFor: client [
 				[^client blockReturnTop].
 			 offset = 15 ifTrue:
 				[^client doNop].
-			 ^self interpretUnusedBytecode: client at: savedPC].
+			 ^ client unusedBytecode ].
 		"short sends"
 		div16 = 6 ifTrue:
 			[^client
@@ -263,11 +263,11 @@ InstructionStream >> interpretNextSistaV1InstructionFor: client [
 		 	[^client popIntoTemporaryVariable: offset].
 		 offset = 8 ifTrue: [ ^ client doPop ].
 		 offset = 9 ifTrue: [ ^ client trap ].
-		^self interpretUnusedBytecode: client at: savedPC].
+		^ client unusedBytecode ].
 	"2 byte and 3 byte codes"
 	byte < 248 ifTrue:
-		[^self interpretNext2ByteSistaV1Instruction: byte for: client extA: extA extB: extB startPC: savedPC].
-	^self interpretNext3ByteSistaV1Instruction: byte for: client extA: extA extB: extB startPC: savedPC
+		[^self interpretNext2ByteSistaV1Instruction: byte for: client extA: extA extB: extB ].
+	^self interpretNext3ByteSistaV1Instruction: byte for: client extA: extA extB: extB
 ]
 
 { #category : 'interpreting' }
@@ -283,8 +283,10 @@ InstructionStream >> interpretSistaV1ExtendedPush: extB for: client [
 ]
 
 { #category : 'interpreting' }
-InstructionStream >> interpretUnusedBytecode: client at: startPC [
-	^ client unusedBytecode
+InstructionStream >> interpretWithClient: aClient [
+	| endPC |
+	endPC := self method endPC.
+	[pc > endPC] whileFalse: [self interpretNextInstructionFor: aClient]
 ]
 
 { #category : 'scanning' }
@@ -313,4 +315,108 @@ InstructionStream >> pc [
 InstructionStream >> pc: anInteger [
 
 	pc := anInteger
+]
+
+{ #category : 'accessing' }
+InstructionStream >> peekInstruction [
+	"Return the next bytecode instruction as a message that an InstructionClient would understand.  The pc remains unchanged."
+
+	| currentPc instruction |
+	currentPc := self pc.
+	instruction := self decodeNextInstruction.
+	self pc: currentPc.
+	^ instruction
+]
+
+{ #category : 'scanning' }
+InstructionStream >> scanFor: scanBlock [
+	"Check all bytecode instructions with scanBlock, answer true if scanBlock answers true.
+	This can be used to, e.g., check whether a method contains 'push closure' bytecodes like this:
+	aMethod scanFor: [ :b | b = 143 ]"
+
+	| method encoderClass end byte |
+	method := self method.
+	end := method endPC.
+	encoderClass := method encoderClass.
+	[pc <= end] whileTrue: 
+		[(scanBlock value: (byte := method at: pc)) ifTrue:
+			[^true].
+		 pc := pc + (encoderClass instructionSizeAt: pc of: method)].
+	^false
+]
+
+{ #category : 'should be packaged in sindarin' }
+InstructionStream >> willCreateBlock [
+	"next bytecode is a block creation"
+
+	^ (self method encoderClass isCreateBlockAt: pc in: self method) or: 
+		[ self method encoderClass isCreateFullBlockAt: pc in: self method]
+]
+
+{ #category : 'should be packaged in sindarin' }
+InstructionStream >> willJump [
+	"Answer whether the next bytecode will jump."
+
+	^ self willJumpIfFalse or:[ self willJumpIfTrue or: [ self willJumpTo ] ]
+]
+
+{ #category : 'interpreting' }
+InstructionStream >> willJumpIfFalse [
+	"Answer whether the next bytecode is a jump-if-false."
+
+	^ self method encoderClass isBranchIfFalseAt: pc in: self method
+]
+
+{ #category : 'should be packaged in sindarin' }
+InstructionStream >> willJumpIfTrue [
+	"Answer whether the next bytecode is a jump-if-false."
+
+	^ self method encoderClass isBranchIfTrueAt: pc in: self method
+]
+
+{ #category : 'should be packaged in sindarin' }
+InstructionStream >> willJumpTo [
+	"Answer whether the next bytecode is a jump-if-false."
+
+	^ self method encoderClass isJumpAt: pc in: self method
+]
+
+{ #category : 'should be packaged in sindarin' }
+InstructionStream >> willReturn [
+	"Answer whether the next bytecode is a return."
+
+	^ self method encoderClass isReturnAt: pc in: self method
+]
+
+{ #category : 'should be packaged in sindarin' }
+InstructionStream >> willSend [
+	"Answer whether the next bytecode is a message-send."
+
+	^ self method encoderClass isSendAt: pc in: self method
+]
+
+{ #category : 'should be packaged in sindarin' }
+InstructionStream >> willSendOrReturnOrStoreOrCreateBlock [
+
+	"Answer whether the next bytecode will be interesting for the debugger to stop."
+
+	^ self willSend or: [ 
+		  self willReturn or: [ self willStore or: [ self willCreateBlock ] ] ]
+]
+
+{ #category : 'interpreting' }
+InstructionStream >> willStore [
+	"Answer whether the next bytecode is a store or store-pop"
+
+	^ self method encoderClass isStoreAt: pc in: self method
+]
+
+{ #category : 'should be packaged in sindarin' }
+InstructionStream >> willStoreButNotPop [
+	"Answer whether the next bytecode is a store that are not store-pop"
+
+	| encoderClass byte |
+	encoderClass := self method encoderClass.
+	byte := encoderClass nonExtensionBytecodeAt: pc in: self method.
+	^ #( 243 244 245 252 ) includes: byte
 ]

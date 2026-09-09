@@ -15,7 +15,7 @@ ObjectFinalizer >> finalize [
 	self value
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 ObjectFinalizer >> receiver: anObject selector: aSymbol argument: aParameter [
 	"Not really necessary now that we're a subclass of MessageSend, but we keep it around because existing code might expect it."
 	self

@@ -45,7 +45,9 @@ EpMonitorIntegrationTest >> setUp [
 	logBuilder := EpTestLogBuilder new
 		useLogWithSessionStore;
 		yourself.
-	classFactory := ClassFactoryForTestCase new.
+	
+	"Epicea works, sadly, with the global environment only"
+	classFactory := ClassFactoryForTestCase environment: self class environment.
 	monitor := EpMonitor newWithLog: logBuilder log
 ]
 

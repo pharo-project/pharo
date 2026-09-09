@@ -10,8 +10,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReYourselfNotUsedRule class >> group [
-	^ 'Optimization'
+ReYourselfNotUsedRule class >> groupSelector [
+
+	^ #optimizationGroup
 ]
 
 { #category : 'accessing' }

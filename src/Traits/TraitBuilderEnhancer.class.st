@@ -142,8 +142,9 @@ TraitBuilderEnhancer >> classTraitCompositionOf: aBuilder [
 
 { #category : 'utilities' }
 TraitBuilderEnhancer >> classTraitCompositionOfClass: aClass [
+	"We are using #basicTraitComposition and not #traitCompostion because #traitComposition adds TraitedClass to the trait composition and we do not have it in the builder's trait."
 
-	^ aClass class traitComposition asTraitComposition
+	^ aClass class basicTraitComposition asTraitComposition
 ]
 
 { #category : 'class modifications' }

@@ -22,4 +22,4 @@ scp -o StrictHostKeyChecking=no -v \
   ${PACKAGED_VERSIONS} \
   ${PHARO_NAME_PREFIX}.build.*.zip \
   ${PHARO_NAME_PREFIX}-metacello.build.*.zip \
-    pharoorgde@ssh.cluster023.hosting.ovh.net:files/image/${PHARO_SHORT_VERSION}/
+    pharo-ci@files.pharo.org:image/${PHARO_SHORT_VERSION}/

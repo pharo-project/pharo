@@ -21,5 +21,7 @@ ClyUntaggedClassesQuery >> selectsClass: aClass [
 	We ask the realClass so we can send packageTag without getting an error.
 	See issue #15931 for details"
 
-	^ aClass realClass packageTag isRoot
+	^ aClass isRGObject
+		  ifTrue: [ aClass packageTag isNotNil ]
+		  ifFalse: [ aClass packageTag isRoot ]
 ]

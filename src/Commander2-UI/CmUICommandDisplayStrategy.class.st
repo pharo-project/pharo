@@ -8,3 +8,9 @@ Class {
 	#package : 'Commander2-UI',
 	#tag : 'Strategies'
 }
+
+{ #category : 'controlling' }
+CmUICommandDisplayStrategy >> ifVisible: aCmSpecCommand do: aBlock [
+
+	self subclassResponsibility
+]

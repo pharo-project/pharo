@@ -17,8 +17,9 @@ ReGlobalVariablesUsageRule class >> checksMethod [
 ]
 
 { #category : 'accessing' }
-ReGlobalVariablesUsageRule class >> group [
-	^ 'Design Flaws'
+ReGlobalVariablesUsageRule class >> groupSelector [
+
+	^ #designFlawGroup
 ]
 
 { #category : 'accessing' }
@@ -45,7 +46,7 @@ ReGlobalVariablesUsageRule class >> ruleName [
 
 { #category : 'running' }
 ReGlobalVariablesUsageRule >> check: aMethod forCritiquesDo: aCriticBlock [
-	aMethod ast allChildren
+	aMethod ast withAllChildren
 		select: [ :node |
 				node isGlobalVariable and: [
 					node variable isGlobalClassNameBinding not and: [
@@ -66,7 +67,6 @@ ReGlobalVariablesUsageRule >> isKnownGlobal: aString [
 			Display
 			Processor
 			Smalltalk
-			SourceFiles
 			Transcript
 			Undeclared
 			World

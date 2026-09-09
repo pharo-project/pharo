@@ -10,8 +10,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReSendsUnknownMessageToGlobalRule class >> group [
-	^ 'Bugs'
+ReSendsUnknownMessageToGlobalRule class >> groupSelector [
+
+	^ #bugsGroup
 ]
 
 { #category : 'accessing' }
@@ -21,7 +22,7 @@ ReSendsUnknownMessageToGlobalRule class >> ruleName [
 
 { #category : 'accessing' }
 ReSendsUnknownMessageToGlobalRule class >> severity [
-	^ #error
+	^ 'error'
 ]
 
 { #category : 'accessing' }

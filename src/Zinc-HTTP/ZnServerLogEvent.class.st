@@ -32,7 +32,7 @@ ZnServerLogEvent >> serverId [
 	^ serverId
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 ZnServerLogEvent >> serverId: anObject [
 	serverId := anObject
 ]

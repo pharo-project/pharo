@@ -46,18 +46,23 @@ RBMethod class >> for: aRBClass source: aString selector: aSelector [
 
 { #category : 'accessing' }
 RBMethod >> argumentNames [
+	"Return the arguments of the receiver, aMethod."
+	
 	^ self ast argumentNames
 ]
 
 { #category : 'accessing' }
 RBMethod >> ast [
+	"Returns a semantical AST based on the source code of the receiver, aMethod."
+	
 	^ self parseTree
 ]
 
 { #category : 'compiling' }
-RBMethod >> compileTree: aBRMethodNode [
+RBMethod >> compileTree: aMethodNode [
+	"Define the method specified by the AST aMethodNode."
 	| method sourceCode change |
-	sourceCode := aBRMethodNode newSource.
+	sourceCode := aMethodNode newSource.
 	change := self modelClass model
 		compile: sourceCode
 		in: self modelClass
@@ -65,17 +70,17 @@ RBMethod >> compileTree: aBRMethodNode [
 	method := self class
 		for: self modelClass
 		source: sourceCode
-		selector: aBRMethodNode selector.
+		selector: aMethodNode selector.
 	self modelClass addMethod: method.
 	^ change
 ]
 
-{ #category : 'accessing' }
+{ #category : 'accessing - implementation' }
 RBMethod >> compiledMethod [
 	^compiledMethod
 ]
 
-{ #category : 'accessing' }
+{ #category : 'accessing - implementation' }
 RBMethod >> compiledMethod: aCompiledMethod [
 	compiledMethod := aCompiledMethod.
 	self isFromTrait: compiledMethod isFromTrait
@@ -83,6 +88,8 @@ RBMethod >> compiledMethod: aCompiledMethod [
 
 { #category : 'accessing' }
 RBMethod >> isFromTrait [
+	"Returns whether the receiver, a Method, is defined in a trait."
+	
 	^ isFromTrait ifNil: [ isFromTrait := false ]
 ]
 
@@ -98,19 +105,6 @@ RBMethod >> literal: anObject containsReferenceTo: aSymbol [
 	anObject class = Array
 		ifFalse: [ ^ false ].
 	^ anObject anySatisfy: [ :each | self literal: each containsReferenceTo: aSymbol ]
-]
-
-{ #category : 'accessing' }
-RBMethod >> method [
-	self deprecated: 'Use compiledMethod' transformWith: '`@rec method' -> '`@rec compiledMethod'.
-	^compiledMethod
-]
-
-{ #category : 'accessing' }
-RBMethod >> method: aCompiledMethod [
-	self deprecated: 'Use compiledMethod' transformWith: '`@rec method: `@arg' -> '`@rec compiledMethod: `@arg'.
-	
-	self compiledMethod: aCompiledMethod
 ]
 
 { #category : 'accessing' }
@@ -131,20 +125,22 @@ RBMethod >> modelClass: aRBClass [
 
 { #category : 'accessing' }
 RBMethod >> origin [
-
+	"Returns the origin of the receiver, aMethod. The origin can be a class or a trait."
+	
 	^ class
 ]
 
 { #category : 'accessing' }
 RBMethod >> package [
-
+	"Return the package name of the receiver, aMethod."
 	compiledMethod ifNotNil: [ ^ compiledMethod package name ].
-
 	^ class packageName
 ]
 
 { #category : 'accessing' }
 RBMethod >> parseTree [
+	"Returns a semantical AST based on the source code of the receiver, aMethod."
+
 	| tree |
 	tree := self parserClass
 		  parseMethod: self source
@@ -153,12 +149,12 @@ RBMethod >> parseTree [
 	^ tree
 ]
 
-{ #category : 'testing' }
+{ #category : 'private' }
 RBMethod >> parseTreeSearcherClass [
-	^ RBParseTreeSearcher
+	^ OCParseTreeSearcher
 ]
 
-{ #category : 'testing' }
+{ #category : 'private' }
 RBMethod >> parserTreeSearcher [
 	^ self parseTreeSearcherClass new
 ]
@@ -176,8 +172,10 @@ RBMethod >> protocols [
 	^ self modelClass protocolsFor: self selector
 ]
 
-{ #category : 'testing' }
+{ #category : 'cross reference testing' }
 RBMethod >> refersToClassNamed: aSymbol [
+	"Returns whether the receiver, a method, refers to the class named aSymbol."
+	
 	| searcher |
 	searcher := self parserTreeSearcher.
 	searcher matches: aSymbol asString do: [ :node :answer | true ].
@@ -185,8 +183,10 @@ RBMethod >> refersToClassNamed: aSymbol [
 		or: [ self refersToSymbol: aSymbol ]
 ]
 
-{ #category : 'testing' }
+{ #category : 'cross reference testing' }
 RBMethod >> refersToSymbol: aSymbol [
+	"Returns whether the receiver, a Method, refers to the symbol, aSymbol."
+	
 	| searcher |
 	searcher := self parserTreeSearcher.
 	searcher
@@ -194,7 +194,7 @@ RBMethod >> refersToSymbol: aSymbol [
 		matches: '`#literal'
 			do:
 				[ :node :answer | answer or: [ self literal: node value containsReferenceTo: aSymbol ] ].
-	aSymbol isValidSelector
+	(OCScanner isSelector: aSymbol)
 		ifTrue: [ searcher
 				matches:
 					'`@object '
@@ -203,11 +203,13 @@ RBMethod >> refersToSymbol: aSymbol [
 	^ searcher executeTree: self parseTree initialAnswer: false
 ]
 
-{ #category : 'testing' }
+{ #category : 'cross reference testing' }
 RBMethod >> refersToVariable: aString [
+	"Returns whether the receiver, aMethod, refers to the variable named aString."
+	
 	| searcher tree |
 	tree := self parseTree.
-	((tree defines: aString) or: [ tree body defines: aString ])
+	((tree exactNodeDefines: aString) or: [ tree body exactNodeDefines: aString ])
 		ifTrue: [ ^ false ].
 	searcher := self parserTreeSearcher.
 	searcher
@@ -215,7 +217,7 @@ RBMethod >> refersToVariable: aString [
 		matches: '[:`@vars | | `@temps | `@.Stmts]'
 			do: [ :node :answer |
 			answer
-				or: [ ((node defines: aString) or: [ node body defines: aString ]) not
+				or: [ ((node exactNodeDefines: aString) or: [ node body exactNodeDefines: aString ]) not
 						and: [ searcher executeTree: node body initialAnswer: false ] ] ].
 	^ searcher executeTree: self parseTree initialAnswer: false
 ]
@@ -232,7 +234,9 @@ RBMethod >> selector: aSymbol [
 
 { #category : 'accessing' }
 RBMethod >> source [
-	^ source ifNil: [ source := (class realClass sourceCodeAt: selector) asString ]
+	"Returns the source code of the method receiver."
+	
+	^ source ifNil: [ source := (class realClass >> selector) sourceCode ]
 ]
 
 { #category : 'accessing' }

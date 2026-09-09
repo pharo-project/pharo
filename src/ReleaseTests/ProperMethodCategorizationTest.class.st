@@ -164,12 +164,14 @@ ProperMethodCategorizationTest >> testNoUncategorizedMethods [
 	"Check that we have no #'as yet unclassified' protocols left"
 
 	| violating validExceptions remaining |
-	violating := Smalltalk globals allBehaviors select: [ :class | class protocolNames includes: Protocol unclassified ].
+	"We reject protocols containing only methods from Traits because in some rare cases with traits and extension methods we can have methods we cannot categorize."
+	violating := Smalltalk globals allBehaviors select: [ :class |
+		             class protocols anySatisfy: [ :protocol |
+			             protocol isUnclassifiedProtocol and: [ protocol methods anySatisfy: [ :method | method isFromTrait not ] ] ] ].
 
 
 	validExceptions := #( ClyClass2FromP1Mock #MCMock #'MCMock class' #'MCMockASubclass class' #'MCMockClassA class' #MCMockASubclass #MCMockClassD #'MCMockClassE class'
-	                      MFClassA MFClassB RBSmalllintTestObject
-	                      'RBTransformationRuleTestData1' StInspectorMockObjectSubclass StDebuggerCommand ).
+	                      MFClassA MFClassB RBSmalllintTestObject 'RBTransformationRuleTestData1' StInspectorMockObjectSubclass ).
 
 	remaining := violating asOrderedCollection reject: [ :each | validExceptions includes: each name ].
 

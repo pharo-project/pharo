@@ -345,7 +345,7 @@ ZipArchiveTest >> testParsePharoZipTimestamp [
 	"This was the error-causing timestamp from http://code.google.com/p/pharo/issues/detail?id=6054#c1 . It was the 'package' file inside Balloon-CamilloBruni.85.mcz"
 	dosTimestamp := 1001728866.
 	dateAndTime := ZipFileMember new unzipTimestamp: dosTimestamp.
-	self assert: dateAndTime equals: '2011-09-29T04:01:06+00:00' asDateAndTime
+	self assert: dateAndTime equals: (DateAndTime fromString: '2011-09-29T04:01:06+00:00')
 ]
 
 { #category : 'tests' }

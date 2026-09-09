@@ -59,8 +59,12 @@ ClyClassCreationToolMorph >> belongsToCurrentBrowserContext [
 
 { #category : 'template' }
 ClyClassCreationToolMorph >> classTemplate [
-
-	^ ClassDefinitionPrinter fluid compactClassDefinitionTemplateInPackage:self packageName tag: self tag
+	"Return the default class template and make sure that the package is not an empty string in the template."
+	
+	| packageName  |
+	packageName := self packageName.
+	packageName ifEmpty: [ packageName := '_Unpackaged' ].
+	^ ClassDefinitionPrinter fluid compactClassDefinitionTemplateInPackage: packageName tag: self tag
 ]
 
 { #category : 'initialization' }

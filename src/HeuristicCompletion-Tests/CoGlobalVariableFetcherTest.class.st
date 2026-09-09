@@ -14,7 +14,7 @@ CoGlobalVariableFetcherTest >> setUp [
 	fetcher systemNavigation: self systemNavigation.
 
 	expectedElements := {
-		NECGlobalEntry contents: 'A' node: nil.
-		NECGlobalEntry contents: 'B' node: nil.
-		NECGlobalEntry contents: 'C' node: nil. }
+		CoGlobalEntry contents: 'A' node: nil.
+		CoGlobalEntry contents: 'B' node: nil.
+		CoGlobalEntry contents: 'C' node: nil. }
 ]

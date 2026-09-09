@@ -17,8 +17,9 @@ ReIvarNeitherReadNorWrittenRule class >> checksClass [
 ]
 
 { #category : 'accessing' }
-ReIvarNeitherReadNorWrittenRule class >> group [
-	^ 'Clean Code'
+ReIvarNeitherReadNorWrittenRule class >> groupSelector [
+
+	^ #cleanCodeGroup
 ]
 
 { #category : 'accessing' }
@@ -28,7 +29,7 @@ ReIvarNeitherReadNorWrittenRule class >> ruleName [
 
 { #category : 'accessing' }
 ReIvarNeitherReadNorWrittenRule class >> severity [
-	^ #information
+	^ 'information'
 ]
 
 { #category : 'running' }

@@ -46,6 +46,12 @@ RGPackage >> addoptToParentStub [
 ]
 
 { #category : 'accessing' }
+RGPackage >> calypsoName [
+
+	^ self name
+]
+
+{ #category : 'accessing' }
 RGPackage >> categories [
 
 	^ self definedBehaviors collect: #category as: Set
@@ -198,6 +204,12 @@ RGPackage >> extendedSelectors [
 RGPackage >> extendedTraits [
 
 	^ (self extensionMethods collect: [:each | each parent]) select: [:each | each isTrait]
+]
+
+{ #category : 'testing' }
+RGPackage >> extendsClass: aClass [
+
+	^ self extendedClasses includes: aClass
 ]
 
 { #category : 'accessing' }
@@ -440,4 +452,11 @@ RGPackage >> traits [
 	"Retrieves a collection of classes defined in the receiver and classes holding extension methods"
 
 	^self definedTraits, self extendedTraits
+]
+
+{ #category : 'extensions' }
+RGPackage >> visibleSelectorForSymbol: aString [
+	"Ring does not support scoped selectors"
+
+	^ aString
 ]

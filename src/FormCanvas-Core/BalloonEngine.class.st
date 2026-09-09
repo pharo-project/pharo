@@ -427,7 +427,7 @@ BalloonEngine >> edgeTransform: aTransform [
 	edgeTransform := aTransform
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 BalloonEngine >> flush [
 	"Force all pending primitives onscreen"
 	workBuffer ifNil:[^self].
@@ -452,7 +452,7 @@ BalloonEngine >> initialize [
 	deferred := false
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 BalloonEngine >> postFlushIfNeeded [
 	"Force all pending primitives onscreen"
 	workBuffer ifNil:[^self].
@@ -719,6 +719,7 @@ BalloonEngine >> registerFill: fill1 and: fill2 [
 { #category : 'drawing' }
 BalloonEngine >> registerFills: fills [
 
+	<ignoreNotImplementedSelectors: #(isAlphaTransform)>
 	| fillIndexList index fillIndex |
 	((colorTransform isNotNil and:[colorTransform isAlphaTransform]) or:[
 		fills anySatisfy: [:any| any isNotNil and:[any isTranslucent]]])
@@ -737,7 +738,7 @@ BalloonEngine >> registerFills: fills [
 	^fillIndexList
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 BalloonEngine >> release [
 
 	self class recycleBuffer: workBuffer.
@@ -757,7 +758,7 @@ BalloonEngine >> reset [
 	forms := #()
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 BalloonEngine >> resetIfNeeded [
 	workBuffer ifNil:[self reset].
 	self primSetEdgeTransform: edgeTransform.

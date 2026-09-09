@@ -16,5 +16,5 @@ ReRenameAndBrowseMethodOverridesChoice >> action [
 { #category : 'accessing' }
 ReRenameAndBrowseMethodOverridesChoice >> description [
 
-	^ 'Rename method and browse existing methods that will then be overriden'
+	^ description ifNil: [ description := 'Rename method and browse existing methods that will then be overriden' ]
 ]

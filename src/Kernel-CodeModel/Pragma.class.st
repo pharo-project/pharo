@@ -109,6 +109,13 @@ Pragma class >> allNamed: aSymbol in: aClass sortedUsing: aSortBlock [
 	^ (self allNamed: aSymbol in: aClass) sort: aSortBlock
 ]
 
+{ #category : 'cache' }
+Pragma class >> buildCache [
+
+	pragmaCache := Dictionary new.
+	CompiledMethod allInstancesDo: [ :method | method cachePragmas ]
+]
+
 { #category : 'instance creation' }
 Pragma class >> for: aMethod selector: aSelector arguments: anArray [
 	^self new

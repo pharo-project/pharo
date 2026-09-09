@@ -13,5 +13,5 @@ Class {
 ManifestKernelExtendedTests class >> manuallyResolvedDependencies [
 
 	<ignoreForCoverage>
-	^ #(#'Math-Operations-Extensions')
+	^ #(#'Transcript-NonInteractive' #'Math-Operations-Extensions')
 ]

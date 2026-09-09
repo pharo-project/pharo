@@ -15,12 +15,12 @@ CoSequenceFetcherTest >> setUp [
 				, (CoGlobalVariableFetcher new
 					systemNavigation: self systemNavigation).
 	expectedElements := {
-		NECInstVarEntry contents: 'a' node: nil.
-		NECInstVarEntry contents: 'b' node: nil.
-		NECInstVarEntry contents: 'c' node: nil.
-		NECGlobalEntry contents: 'A' node: nil.
-		NECGlobalEntry contents: 'B' node: nil.
-		NECGlobalEntry contents: 'C' node: nil. }
+		CoInstVarEntry contents: 'a' node: nil.
+		CoInstVarEntry contents: 'b' node: nil.
+		CoInstVarEntry contents: 'c' node: nil.
+		CoGlobalEntry contents: 'A' node: nil.
+		CoGlobalEntry contents: 'B' node: nil.
+		CoGlobalEntry contents: 'C' node: nil. }
 ]
 
 { #category : 'tests' }
@@ -34,7 +34,7 @@ CoSequenceFetcherTest >> testCompletionCompositionNextShouldReturnValuesOfSecond
 
 	"Consume instance variables"
 	self fetcher next: 3.
-	self assertEntry: self fetcher next equals: (NECGlobalEntry contents: 'A' node: nil)
+	self assertEntry: self fetcher next equals: (CoGlobalEntry contents: 'A' node: nil)
 ]
 
 { #category : 'tests' }

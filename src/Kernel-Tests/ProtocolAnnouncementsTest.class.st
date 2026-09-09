@@ -25,6 +25,7 @@ ProtocolAnnouncementsTest >> testAddProtocolAnnouncement2 [
 
 	self when: ProtocolAdded do: [ :ann |
 		self assert: ann protocol name equals: #king.
+		self assert: ann protocol owningClass equals: class.
 		self assert: ann classReorganized name equals: self classNameForTests ].
 
 	class addProtocol: (Protocol named: #king).
@@ -87,7 +88,8 @@ ProtocolAnnouncementsTest >> testRemoveProtocolAnnouncement3 [
 	class addProtocol: #titan.
 	class compiler
 		protocol: #titan;
-		install: 'king ^ 1'.
+		source: 'king ^ 1';
+		install.
 
 	self when: ProtocolRemoved do: [ :ann |
 		self assert: ann protocol name equals: #titan.
@@ -132,7 +134,8 @@ ProtocolAnnouncementsTest >> testRemoveProtocolIfEmptyWithNonEmptyProtocolDoesNo
 	class addProtocol: #titan.
 	class compiler
 		protocol: #titan;
-		install: 'king ^ 1'.
+		source: 'king ^ 1';
+		install.
 
 	self when: ProtocolRemoved do: [ :ann | self fail ].
 

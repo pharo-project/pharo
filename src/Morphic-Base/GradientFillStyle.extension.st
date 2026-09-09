@@ -13,11 +13,6 @@ GradientFillStyle >> addFillStyleMenuItems: aMenu hand: aHand from: aMorph [
 ]
 
 { #category : '*Morphic-Base-Balloon' }
-GradientFillStyle >> addNewColorIn: aMorph event: evt [
-	^self inform:'not yet implemented'
-]
-
-{ #category : '*Morphic-Base-Balloon' }
 GradientFillStyle >> beLinearGradientIn: aMorph [
 	self radial: false.
 	aMorph changed

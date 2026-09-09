@@ -17,7 +17,10 @@ ColorArray >> asColorArray [
 
 { #category : 'accessing' }
 ColorArray >> at: index [
-	^(super at: index) asColorOfDepth: 32
+
+	| colorInteger |
+	colorInteger := super at: index.
+	^ Color colorFromPixelValue: colorInteger depth: 32
 ]
 
 { #category : 'accessing' }

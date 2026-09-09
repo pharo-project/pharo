@@ -61,7 +61,7 @@ ShClassInstallerTest >> testBuildingClassesWithSlotsClassifiesItsMethods [
 	"This is a regression test. 
 	What was happening before was that the slots were generating a method to initialize themselves and after that the old class organization was copied. The problem is that during the first class creation, this was reseting the protocol of the generated slot methods."
 
-	newClass := self newClass: #ShCITestClass slots: { (#anInstanceVariable => BooleanSlot) }.
+	newClass := self newClass: #ShCITestClass slots: { (#anInstanceVariable => SlotWithInitForTest) }.
 
 	self assertCollection: newClass selectors hasSameElements: { #initialize }.
 	self assert: (newClass protocolOfSelector: #initialize) isNotNil.
@@ -70,6 +70,7 @@ ShClassInstallerTest >> testBuildingClassesWithSlotsClassifiesItsMethods [
 
 	self assertCollection: newClass2 selectors hasSameElements: { #initialize }.
 	self assert: (newClass2 protocolOfSelector: #initialize) isNotNil
+	
 ]
 
 { #category : 'tests' }
@@ -202,7 +203,7 @@ ShClassInstallerTest >> testClassWithSlotHasInitializeMethodWithInitializeSlots 
 	className := #ShClassWithNormalSlots.
 	newClass := self newClass: className slots: { (#someSlot => ShTestSlot) }.
 
-	self assert: ((newClass >> #initialize) ast statements includes: (RBParser parseExpression: 'self class initializeSlots: self'))
+	self assert: ((newClass >> #initialize) ast statements includes: (OCParser parseExpression: 'self class initializeSlots: self'))
 ]
 
 { #category : 'tests' }
@@ -216,7 +217,7 @@ ShClassInstallerTest >> testCreatedClassWithAllElements [
 			            layout: WeakLayout;
 			            traits: { TViewModelMock };
 			            sharedVariables: { #AAA };
-			            sharedPools: { #TextConstants };
+			            sharedPools: { #TestPool };
 			            tag: 'boring';
 			            package: self generatedClassesPackageName ].
 
@@ -227,7 +228,7 @@ ShClassInstallerTest >> testCreatedClassWithAllElements [
 	self assert: newClass traitComposition equals: { TViewModelMock } asTraitComposition.
 	self assert: newClass class traitComposition equals: { TViewModelMock classSide } asTraitComposition.
 	self assert: newClass classVarNames equals: #( AAA ).
-	self assertCollection: newClass sharedPools hasSameElements: { TextConstants }.
+	self assertCollection: newClass sharedPools hasSameElements: { TestPool }.
 	self assert: newClass package name equals: self generatedClassesPackageName.
 	self assert: newClass packageTag name equals: 'boring'
 ]
@@ -235,7 +236,7 @@ ShClassInstallerTest >> testCreatedClassWithAllElements [
 { #category : 'tests' }
 ShClassInstallerTest >> testDuplicateClassError [
 
- 	newClass := self newClass: #ShCITestClass slots: {#anInstanceVariable => BooleanSlot}.
+ 	newClass := self newClass: #ShCITestClass slots: {#anInstanceVariable => InstanceVariableSlot}.
  	self should: [ newClass duplicateClassWithNewName: #OrderedDictionary ] raise: TestResult error
 ]
 
@@ -258,7 +259,7 @@ ShClassInstallerTest >> testDuplicateClassPreserveClassSlots [
 { #category : 'tests' }
 ShClassInstallerTest >> testDuplicateClassPreserveMethods [
 
-	newClass := self newClass: #ShCITestClass slots: {#anInstanceVariable => BooleanSlot}.
+	newClass := self newClass: #ShCITestClass slots: {#anInstanceVariable => InstanceVariableSlot}.
 	newClass compile: 'm1 ^ 42'.
 	newClass class compile: 'm2 ^ 42'.
 
@@ -305,11 +306,11 @@ ShClassInstallerTest >> testDuplicateClassPreserveSharedVariables [
 { #category : 'tests' }
 ShClassInstallerTest >> testDuplicateClassPreserveSlots [
 
-	newClass := self newClass: #ShCITestClass slots: {#anInstanceVariable => BooleanSlot}.
+	newClass := self newClass: #ShCITestClass slots: {#anInstanceVariable => SlotWithInitForTest}.
 	newClass2 := newClass duplicateClassWithNewName: #ShCITestClass2.
 
 	self assert: (newClass2 hasSlotNamed: #anInstanceVariable).
-	self assert: (newClass2 slotNamed: #anInstanceVariable) class equals: BooleanSlot.
+	self assert: (newClass2 slotNamed: #anInstanceVariable) class equals: SlotWithInitForTest.
 	"Make sure the slots are copied"
 	self assert: (newClass slotNamed: #anInstanceVariable) definingClass equals: newClass.
 	self assert: (newClass2 slotNamed: #anInstanceVariable) definingClass equals: newClass2
@@ -404,8 +405,8 @@ ShClassInstallerTest >> testModifyingClassKeepsOrganizationOfMethods [
 
 	newClass := self newClass: #ShCITestClass superclass: subClass slots: #(  ).
 
-	newClass compile: 'aMethod ^ 42' classified: #'useful-message' notifying: nil.
-	newClass class compile: 'aClassMethod ^ 21' classified: #'useful-message' notifying: nil.
+	newClass compile: 'aMethod ^ 42' classified: #'useful-message'.
+	newClass class compile: 'aClassMethod ^ 21' classified: #'useful-message'.
 
 	self assert: (newClass >> #aMethod) protocolName equals: #'useful-message'.
 	self assert: (newClass class >> #aClassMethod) protocolName equals: #'useful-message'.

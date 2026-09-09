@@ -31,7 +31,7 @@ FBIRBytecodeDecompiler >> checkIfJumpTarget [
 { #category : 'public access' }
 FBIRBytecodeDecompiler >> decompile: aCompiledMethod [
 	instructionStream := InstructionStream on: aCompiledMethod.
-	irBuilder := IRReconstructor new.
+	irBuilder := OCIRReconstructorBuilder new.
 	scopeStack := Stack new.
 	self pushScope: #() numArgs: aCompiledMethod numArgs.
 	irBuilder irPrimitive: aCompiledMethod irPrimitive.
@@ -231,7 +231,7 @@ FBIRBytecodeDecompiler >> pushLiteralVariable: assoc [
 
 { #category : 'instruction decoding' }
 FBIRBytecodeDecompiler >> pushNewArrayOfSize: size [
-	newTempVector := IRRemoteArray new size: size
+	newTempVector := OCIRRemoteArray new size: size
 ]
 
 { #category : 'instruction decoding' }
@@ -255,7 +255,7 @@ FBIRBytecodeDecompiler >> pushRemoteTemp: remoteIndex inVectorAt: tempIndex [
 { #category : 'scope' }
 FBIRBytecodeDecompiler >> pushScope: copiedValues numArgs: numArgs [
 	|scope |
-	scope := IRBytecodeScope new numArgs: numArgs.
+	scope := OCIRBytecodeScope new numArgs: numArgs.
 	scopeStack push: scope.
 	scope copiedValues: copiedValues
 ]

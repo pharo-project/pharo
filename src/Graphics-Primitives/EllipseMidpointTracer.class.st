@@ -20,7 +20,7 @@ Class {
 	#tag : 'Utilities'
 }
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 EllipseMidpointTracer >> on: aRectangle [
 	a := aRectangle width // 2.
 	b := aRectangle height // 2.

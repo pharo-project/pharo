@@ -64,6 +64,8 @@ LazyListMorph >> athensHighlightPotentialDropRow: row on: anAthensCanvas [
 
 { #category : '*Athens-Morphic' }
 LazyListMorph >> drawOnAthensCanvas: aCanvas [
+
+	<ignoreNotImplementedSelectors: #( athensDrawSeparatorAfter:on: )>
 	listItems isEmpty
 		ifTrue: [^ self].
 	"self drawSelectionOn: aCanvas."

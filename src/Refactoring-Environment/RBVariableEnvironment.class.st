@@ -114,6 +114,17 @@ RBVariableEnvironment class >> writersOfInstanceVariable: aString in: aClass [
 		in: aClass
 ]
 
+{ #category : 'comparing' }
+RBVariableEnvironment >> = anObject [
+	"Answer whether the receiver and anObject represent the same object."
+
+	self == anObject ifTrue: [ ^ true ].
+	self class = anObject class ifFalse: [ ^ false ].
+	^ environment = anObject environment and: [
+			  instanceVariables = anObject instanceVariables and: [
+				  classVariables = anObject classVariables ] ]
+]
+
 { #category : 'private' }
 RBVariableEnvironment >> accessorMethods [
 	^#(#instanceVariables #instanceVariableReaders #instanceVariableWriters #classVariables)
@@ -306,6 +317,13 @@ RBVariableEnvironment >> flushCachesFor: aClass [
 			]
 ]
 
+{ #category : 'comparing' }
+RBVariableEnvironment >> hash [
+	"Answer an integer value that is related to the identity of the receiver."
+
+	^ instanceVariables hash bitXor: classVariables hash
+]
+
 { #category : 'testing' }
 RBVariableEnvironment >> includesClass: aClass [
 	(super includesClass: aClass) ifFalse: [^false].
@@ -473,19 +491,4 @@ RBVariableEnvironment >> selectorCache [
 { #category : 'private' }
 RBVariableEnvironment >> selectorCacheFor: aClass [
 	^self selectorCache at: aClass name ifAbsentPut: [ self computeSelectorCacheFor: aClass ]
-]
-
-{ #category : 'storing' }
-RBVariableEnvironment >> storeOn: aStream [
-	aStream
-		nextPut: $(;
-		nextPutAll: self class name;
-		nextPutAll: ' new '.
-	self accessorMethods do: [ :each |
-		aStream
-			nextPutAll: each;
-			nextPutAll: ': '.
-		(self perform: each) storeOn: aStream.
-		aStream nextPutAll: '; '].
-	aStream nextPutAll: 'yourself)'
 ]

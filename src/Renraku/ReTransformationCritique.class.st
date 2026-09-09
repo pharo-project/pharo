@@ -26,7 +26,7 @@ ReTransformationCritique class >> for: anEntity by: aRule tree: newAST [
 ReTransformationCritique >> change [
 	"re-add the method compiled from the new AST"
 
-	^ (RBRefactoryChangeFactory instance)
+	^ ReChangeFactory instance
 		addMethodSource: newTree newSource
 		in: self entity methodClass
 ]

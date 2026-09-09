@@ -34,3 +34,9 @@ SycOpenDebuggingPointsInMethodMenuCommand >> defaultMenuItemName [
 
 	^ 'Break' 
 ]
+
+{ #category : 'accessing' }
+SycOpenDebuggingPointsInMethodMenuCommand >> description [
+
+	^ 'Defines how the debugging point menu group should activate inside the calypso method view.'
+]

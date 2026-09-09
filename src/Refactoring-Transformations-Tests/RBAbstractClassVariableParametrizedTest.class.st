@@ -19,13 +19,15 @@ RBAbstractClassVariableParametrizedTest class >> testParameters [
 { #category : 'running' }
 RBAbstractClassVariableParametrizedTest >> setUp [
 	super setUp.
-	model := self rbModelForVariableTest
+	
+	model := self modelOnClasses: { Object . RBLintRuleTestData . RBBasicLintRuleTestData . RBTransformationRuleTestData class }.
+	self defineFooBarIn: model
 ]
 
 { #category : 'tests' }
 RBAbstractClassVariableParametrizedTest >> testAbstractClassVariable [
 	| refactoring |
-	refactoring := self createRefactoringWithArguments:
+	refactoring := self createRefactoringWithModel: model andArguments:
 		{'RecursiveSelfRule' . #RBTransformationRuleTestData}.
 	self flag: 'There are some errors or different behavior bwt ref and transformation'.
 "	self executeRefactoring: refactoring.
@@ -53,7 +55,7 @@ RBAbstractClassVariableParametrizedTest >> testAbstractClassVariable [
 { #category : 'failure tests' }
 RBAbstractClassVariableParametrizedTest >> testFailureInheritedName [
 
-	self shouldFail: (self createRefactoringWithArguments:
+	self shouldFail: (self createRefactoringWithModel: model andArguments:
 			 { #DependentsFields. #RBBasicLintRuleTestData })
 ]
 
@@ -61,21 +63,21 @@ RBAbstractClassVariableParametrizedTest >> testFailureInheritedName [
 RBAbstractClassVariableParametrizedTest >> testFailureInvalidClass [
 
 	self shouldFail:
-		(self createRefactoringWithArguments: { #DependentsFields.
+		(self createRefactoringWithModel: model andArguments: { #DependentsFields.
 		 #Object })
 ]
 
 { #category : 'failure tests' }
 RBAbstractClassVariableParametrizedTest >> testFailureMetaClassFailure [
 
-	self shouldFail: (self createRefactoringWithArguments:
+	self shouldFail: (self createRefactoringWithModel: model andArguments:
 			 { #RecursiveSelfRule. #'RBTransformationRuleTestData class' })
 ]
 
 { #category : 'failure tests' }
 RBAbstractClassVariableParametrizedTest >> testFailureNonExistantName [
 
-	self shouldFail: (self createRefactoringWithArguments:
+	self shouldFail: (self createRefactoringWithModel: model andArguments:
 			 { #Foo. #RBBasicLintRuleTestData })
 ]
 

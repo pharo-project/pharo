@@ -131,16 +131,18 @@ FreeTypeFontFamilyMember >> slantValue: anObject [
 
 { #category : 'comparing' }
 FreeTypeFontFamilyMember >> sortValue [
+
 	| v normalizedWeight |
 	normalizedWeight := weightValue.
-	normalizedWeight = LogicalFont weightMedium
-		ifTrue:["sort medium and regular weights as though they were the same"
-			normalizedWeight := LogicalFont weightRegular].
-	v :=self isSimulatedStyle ifTrue:[ 10000 ] ifFalse:[ 0 ].
+	normalizedWeight = LogicalFont weightMedium ifTrue: [ "sort medium and regular weights as though they were the same"
+		normalizedWeight := LogicalFont weightRegular ].
+	v := self isSimulatedStyle
+		     ifTrue: [ 10000 ]
+		     ifFalse: [ 0 ].
 	v := v + (stretchValue * 1000).
-	v := v + (normalizedWeight).
-	v := v + (slantValue).
-	^v
+	v := v + normalizedWeight.
+	v := v + slantValue.
+	^ v
 ]
 
 { #category : 'accessing' }

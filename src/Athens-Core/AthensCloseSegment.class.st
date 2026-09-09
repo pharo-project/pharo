@@ -11,10 +11,17 @@ Class {
 
 { #category : 'visitor' }
 AthensCloseSegment >> accept: aVisitor [
+
+	<ignoreNotImplementedSelectors: #(closeSegment:)>
 	^ aVisitor closeSegment: self
 ]
 
 { #category : 'visitor' }
 AthensCloseSegment >> sendCommandTo: aBuilder [
 	^ aBuilder close
+]
+
+{ #category : 'visitor' }
+AthensCloseSegment >> visitWith: visitor [
+	visitor visitCloseSegment:  self
 ]

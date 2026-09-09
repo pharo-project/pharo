@@ -3,38 +3,26 @@ A RottenTestsFinderTest is a test class for testing the behavior of RottenTestsF
 "
 Class {
 	#name : 'RottenTestsFinderTest',
-	#superclass : 'TestCase',
-	#category : 'RottenTestsFinder-Tests',
-	#package : 'RottenTestsFinder-Tests'
+	#superclass : 'RTFMetaTest',
+	#category : 'RottenTestsFinder-Tests-Core',
+	#package : 'RottenTestsFinder-Tests',
+	#tag : 'Core'
 }
-
-{ #category : 'running' }
-RottenTestsFinderTest >> setUp [
-	"See RTFFakeTestSuperClass comment for more information."
-	super setUp.
-	RTFFakeTestSuperClass superclass: TestCase
-]
-
-{ #category : 'running' }
-RottenTestsFinderTest >> tearDown [
-	RTFFakeTestSuperClass superclass: Object.
-	super tearDown
-]
 
 { #category : 'tests-analyzing' }
 RottenTestsFinderTest >> testAnalyze [
 	| rottenTestsFound |
-	rottenTestsFound := RottenTestsFinder analyze: RTFFakeTestClass suite.
+	rottenTestsFound := RottenTestsFinder analyze: RTFFakeTestClassTest suite.
 
 	self
 		assert: rottenTestsFound rottenTests size equals: 3;
 		assert: (rottenTestsFound rottenCompiledMethods anySatisfy: [ :m |
-			m methodClass = RTFFakeTestSuperClass
+			m methodClass = RTFFakeTestSuperClassTest
 				and: [ m selector = #superNotAssertHelper ] ]);
 		assert: (rottenTestsFound rottenCompiledMethods anySatisfy: [ :m |
-			m methodClass = RTFFakeTestClass
+			m methodClass = RTFFakeTestClassTest
 				and: [ m selector = #rottenHelper ] ]);
 		assert: (rottenTestsFound rottenCompiledMethods anySatisfy: [ :m |
-			m methodClass = RTFFakeTestClass
+			m methodClass = RTFFakeTestClassTest
 				and: [ m selector = #testWithoutAssertionRun ] ])
 ]

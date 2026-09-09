@@ -36,6 +36,15 @@ ImageFillStyle >> = anOrientedFillStyle [
 ]
 
 { #category : 'converting' }
+ImageFillStyle >> asAthensPaintOn: anAthensCanvas [
+
+	^ (anAthensCanvas cacheAt: self ifAbsentPut: [
+		anAthensCanvas surface
+		createFormPaint: self form ])
+		origin: origin
+]
+
+{ #category : 'converting' }
 ImageFillStyle >> asColor [
 	"Answer transparent, no other reasonable interpretation."
 
@@ -54,6 +63,20 @@ ImageFillStyle >> extent: anObject [
 	"Set the value of extent"
 
 	extent := anObject
+]
+
+{ #category : 'drawing' }
+ImageFillStyle >> fillRectangle: aRectangle on: aCanvas [
+	"Fill the given rectangle on the given canvas with the receiver."
+
+	self extent
+		ifNil: [aCanvas
+				translucentFormSet: self formSet
+				at: self origin]
+		ifNotNil: [aCanvas clipBy: (self origin + self offset extent: self extent) during: [:c |
+					c
+						translucentFormSet: self formSet
+						at: self origin]]
 ]
 
 { #category : 'accessing' }

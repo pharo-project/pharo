@@ -499,15 +499,11 @@ File class >> deleteFile: fullPathString [
 	"Delete the supplied UTF8 encoded path.  Answer nil on failure."
 
 	| utf8Path |
-
 	utf8Path := fullPathString utf8Encoded.
-	self
-		retryWithGC: [ self primDeleteFile: utf8Path ]
-		until: [ :result | result isNotNil ]
-		forFileNamed: fullPathString.
-	(self primExists: utf8Path) ifTrue:
-		[ (CannotDeleteFileException new messageText: 'Could not delete file ' , name,
-			'. Check the file is not open.') signal ]
+	self retryWithGC: [ self primDeleteFile: utf8Path ] until: [ :result | result isNotNil ] forFileNamed: fullPathString.
+
+	(self primExists: utf8Path) ifTrue: [
+		(CannotDeleteFileException new messageText: 'Could not delete file "' , fullPathString , '". Check the file is not open.') signal ]
 ]
 
 { #category : 'primitives - path' }
@@ -528,6 +524,13 @@ File class >> encodePathString: aString [
 File class >> exists: aString [
 
 	^self primExists: (self encodePathString: aString)
+]
+
+{ #category : 'primitives - path' }
+File class >> extensionDelimiter [
+	"This method makes more sens on Path but it is needed in the minimal version of Pharo for now so it needs to be in Files."
+
+	^ $.
 ]
 
 { #category : 'attributes' }
@@ -1396,8 +1399,6 @@ File >> basename [
 File >> basicOpenForWrite: writeMode [
 	"Open the file with the given name. If writeMode is true, allow writing, otherwise open the file in read-only mode."
 
-	writeMode ifTrue: [ self checkWritableFilesystem ].
-
 	^ self class
 		retryWithGC: [ self class open: name utf8Encoded writable: writeMode ]
 		until:[ :id | id isNotNil ]
@@ -1416,15 +1417,6 @@ File >> checkDoesNotExist [
 	"
 	self exists ifTrue: [
 		^ FileAlreadyExistsException signalOnFile: self ]
-]
-
-{ #category : 'private' }
-File >> checkWritableFilesystem [
-
-	"We need to check if the image is in the read-only mode"
-
-	SessionManager default currentSession isReadOnlyAccessMode ifTrue: [
-		ReadOnlyFileException signal: 'Attempt to open file ', name, ' as writable on a read-only file system']
 ]
 
 { #category : 'open/close' }

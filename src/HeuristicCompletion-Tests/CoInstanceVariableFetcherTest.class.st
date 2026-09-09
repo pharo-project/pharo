@@ -13,7 +13,7 @@ CoInstanceVariableFetcherTest >> setUp [
 	fetcher := CoInstanceVariableFetcher new.
 	fetcher completionClass: self completionClass.
 	expectedElements := {
-		NECInstVarEntry contents: 'a' node: nil.
-		NECInstVarEntry contents: 'b' node: nil.
-		NECInstVarEntry contents: 'c' node: nil. }
+		CoInstVarEntry contents: 'a' node: nil.
+		CoInstVarEntry contents: 'b' node: nil.
+		CoInstVarEntry contents: 'c' node: nil. }
 ]

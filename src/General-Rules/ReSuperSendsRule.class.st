@@ -10,8 +10,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReSuperSendsRule class >> group [
-	^ 'Design Flaws'
+ReSuperSendsRule class >> groupSelector [
+
+	^ #designFlawGroup
 ]
 
 { #category : 'accessing' }

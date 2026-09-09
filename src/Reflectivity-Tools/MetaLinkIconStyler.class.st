@@ -41,3 +41,9 @@ MetaLinkIconStyler >> shouldStyleNode: aNode [
 	^ aNode hasMetaLinks and: [
 		  aNode links anySatisfy: [ :link | link hasOption: #optionStyler ] ]
 ]
+
+{ #category : 'private' }
+MetaLinkIconStyler >> stylerName [
+
+	^ 'metalink'
+]

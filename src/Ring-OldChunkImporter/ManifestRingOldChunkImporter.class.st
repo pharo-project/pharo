@@ -11,5 +11,5 @@ Class {
 
 { #category : 'meta-data - dependency analyser' }
 ManifestRingOldChunkImporter class >> manuallyResolvedDependencies [
-	^ #(#'OpalCompiler-Core' #'FileSystem-Core' #'Collections-Abstract' #'Collections-Strings' #'System-Support')
+	^ #(#'OpalCompiler-Core' #'FileSystem-Core' #'Collections-Strings' #'Collections-Sequenceable')
 ]

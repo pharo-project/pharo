@@ -9,6 +9,13 @@ Class {
 	#tag : 'Manifest'
 }
 
+{ #category : 'meta-data - dependency analyser' }
+ManifestReferenceFinderCore class >> manuallyResolvedDependencies [
+
+	<ignoreForCoverage>
+	^ #(#'Transcript-NonInteractive')
+]
+
 { #category : 'code-critics' }
 ManifestReferenceFinderCore class >> ruleRBBadMessageRuleV1FalsePositive [
 	^ #(#(#(#RGMethodDefinition #(#ReferenceFinder #_object:instVarAt: #false)) #'2019-07-13T17:57:52.391956+02:00') )

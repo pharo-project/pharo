@@ -142,6 +142,17 @@ RBSelectorEnvironment class >> referencesTo: aLiteral in: anEnvironment [
 		yourself
 ]
 
+{ #category : 'comparing' }
+RBSelectorEnvironment >> = anObject [
+	"Answer whether the receiver and anObject represent the same object."
+
+	self == anObject ifTrue: [ ^ true ].
+	self class = anObject class ifFalse: [ ^ false ].
+	^ environment = anObject environment and: [
+			  classSelectors = anObject classSelectors and: [
+				  metaClassSelectors = anObject metaClassSelectors ] ]
+]
+
 { #category : 'adding' }
 RBSelectorEnvironment >> addClass: aClass [
 	aClass isMeta
@@ -177,7 +188,13 @@ RBSelectorEnvironment >> classNames [
 		yourself
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'accessing' }
+RBSelectorEnvironment >> classSelectors [
+
+	^ classSelectors
+]
+
+{ #category : 'initialization' }
 RBSelectorEnvironment >> classSelectors: classSelectorDictionary metaClassSelectors: metaClassSelectorDictionary [
 	classSelectors := classSelectorDictionary.
 	metaClassSelectors := metaClassSelectorDictionary
@@ -214,6 +231,13 @@ RBSelectorEnvironment >> defaultLabel [
 	^'some methods'
 ]
 
+{ #category : 'comparing' }
+RBSelectorEnvironment >> hash [
+	"Answer an integer value that is related to the identity of the receiver."
+
+	^ classSelectors hash bitXor: metaClassSelectors hash
+]
+
 { #category : 'testing' }
 RBSelectorEnvironment >> includesClass: aClass [
 	^(self privateSelectorsForClass: aClass) isNotEmpty
@@ -248,6 +272,12 @@ RBSelectorEnvironment >> isEmpty [
 { #category : 'testing' }
 RBSelectorEnvironment >> isSelectorEnvironment [
 	^ true
+]
+
+{ #category : 'accessing' }
+RBSelectorEnvironment >> metaClassSelectors [
+
+	^ metaClassSelectors
 ]
 
 { #category : 'initialization' }
@@ -309,35 +339,4 @@ RBSelectorEnvironment >> selectorsForClass: aClass do: aBlock [
 
 	^ (self privateSelectorsForClass: aClass) copy do: [ :each |
 		  (aClass includesSelector: each) ifTrue: [ aBlock value: each ] ]
-]
-
-{ #category : 'storing' }
-RBSelectorEnvironment >> storeOn: aStream [
-	| classBlock |
-	aStream
-		nextPutAll: '((';
-		nextPutAll: self class name;
-		nextPutAll: ' onEnvironment: '.
-	environment storeOn: aStream.
-	aStream
-		nextPut: $);
-		nextPutAll: ' classes: #('.
-	classBlock :=
-			[:key :value |
-			aStream
-				nextPutAll: '#(';
-				nextPutAll: key;
-				nextPutAll: ' #('.
-			value do:
-					[:each |
-					aStream
-						nextPutAll: each;
-						nextPut: $ ].
-			aStream
-				nextPutAll: '))';
-				cr].
-	classSelectors keysAndValuesDo: classBlock.
-	aStream nextPutAll: ') metaClasses: #('.
-	metaClassSelectors keysAndValuesDo: classBlock.
-	aStream nextPutAll: '))'
 ]

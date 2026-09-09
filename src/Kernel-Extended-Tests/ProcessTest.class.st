@@ -9,6 +9,13 @@ Class {
 	#tag : 'Processes'
 }
 
+{ #category : 'tests' }
+ProcessTest >> recursive [
+
+	"To test stack overflow"
+	self recursive
+]
+
 { #category : 'running' }
 ProcessTest >> setUp [
 	super setUp.
@@ -749,6 +756,28 @@ ProcessTest >> testSchedulingSamePriorityFirstComeFirstServed [
 
 	checkAssert wait.
 	self assert: whichRan=2 description: 'Second scheduled process should run after'
+]
+
+{ #category : 'tests' }
+ProcessTest >> testStackOverflow [
+
+	| p interceptedError versionNumber |
+	versionNumber := Smalltalk vm interpreterSourceVersion substrings.
+	versionNumber first < 'v12' ifTrue: [ ^ self skip ].
+	
+	p := [ self recursive ] newProcess.
+	p shouldOverflow: true.
+	p
+		on: Error
+		do: [ :err | interceptedError := err ].
+	p resume.
+	
+	"This should overflow FAR before 1 second, independent of the architecture"
+	1 second wait.
+	p suspend.
+
+	self assert: interceptedError messageText equals: 'Stack overflow'.
+
 ]
 
 { #category : 'tests - termination' }

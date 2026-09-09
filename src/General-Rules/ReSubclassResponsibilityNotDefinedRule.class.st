@@ -15,8 +15,9 @@ ReSubclassResponsibilityNotDefinedRule class >> checksClass [
 ]
 
 { #category : 'accessing' }
-ReSubclassResponsibilityNotDefinedRule class >> group [
-	^ 'Bugs'
+ReSubclassResponsibilityNotDefinedRule class >> groupSelector [
+
+	^ #bugsGroup
 ]
 
 { #category : 'accessing' }
@@ -31,7 +32,7 @@ ReSubclassResponsibilityNotDefinedRule class >> ruleName [
 
 { #category : 'accessing' }
 ReSubclassResponsibilityNotDefinedRule class >> severity [
-	^ #error
+	^ 'error'
 ]
 
 { #category : 'accessing' }

@@ -10,8 +10,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReCodeCruftLeftInMethodsRule class >> group [
-	^ 'Bugs'
+ReCodeCruftLeftInMethodsRule class >> groupSelector [
+
+	^ #bugsGroup
 ]
 
 { #category : 'accessing' }
@@ -26,7 +27,7 @@ ReCodeCruftLeftInMethodsRule class >> ruleName [
 
 { #category : 'accessing' }
 ReCodeCruftLeftInMethodsRule class >> severity [
-	^ #error
+	^ 'error'
 ]
 
 { #category : 'accessing' }

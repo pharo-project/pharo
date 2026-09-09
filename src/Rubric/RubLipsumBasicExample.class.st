@@ -19,25 +19,26 @@ Class {
 
 { #category : 'examples' }
 RubLipsumBasicExample class >> openNotWrapped [
-	"self openNotWrapped"
 
-	self openScrolledText: self new newScrolledTextNotWrapped
+	<example>
+	^ self openScrolledText: self new newScrolledTextNotWrapped
 ]
 
 { #category : 'examples' }
 RubLipsumBasicExample class >> openScrolledText: aScrolledText [
 
-	|  window |
+	| window |
 	window := StandardWindow new.
 	window addMorph: aScrolledText fullFrame: LayoutFrame identity.
 	window title: self title.
-	window openInWorld
+	^ window openInWorld
 ]
 
 { #category : 'examples' }
 RubLipsumBasicExample class >> openWrapped [
-	"self openWrapped"
-	self openScrolledText: self new newScrolledTextWrapped
+
+	<example>
+	^ self openScrolledText: self new newScrolledTextWrapped
 ]
 
 { #category : 'examples' }
@@ -76,5 +77,9 @@ RubLipsumBasicExample >> newScrolledTextWrapped [
 
 { #category : 'accessing' }
 RubLipsumBasicExample >> textModel [
-	^ textModel ifNil: [textModel := RubScrolledTextModel new text: self loremIpsum ]
+
+	^ textModel ifNil: [
+			  textModel := RubScrolledTextModel new
+				               setText: self loremIpsum;
+				               yourself ]
 ]

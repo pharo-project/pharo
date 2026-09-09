@@ -37,18 +37,18 @@ ClapParameter class >> isAbstract [
 	^ self == ClapParameter
 ]
 
-{ #category : 'activation' }
+{ #category : 'activating' }
 ClapParameter >> activateWith: arguments [
 	"Convenience method for activating in an interactive context"
 	^ (self activationWith: arguments) execute
 ]
 
-{ #category : 'activation' }
+{ #category : 'activating' }
 ClapParameter >> activation [
 	^ ClapContext specification: self
 ]
 
-{ #category : 'activation' }
+{ #category : 'activating' }
 ClapParameter >> activationWith: arguments [
 	^ self activation
 		arguments: arguments;
@@ -130,8 +130,23 @@ ClapParameter >> implicitMeaning: aBlock [
 ClapParameter >> initialize [
 	description := ''.
 	multiple := false.
-	meaningBlock := self basicMeaning.
-	implicitMeaningBlock := meaningBlock
+]
+
+{ #category : 'testing' }
+ClapParameter >> isCommand [
+
+	^ false
+]
+
+{ #category : 'testing' }
+ClapParameter >> isFlag [ 
+
+	^ false
+]
+
+{ #category : 'testing' }
+ClapParameter >> isMatchableIn: aCompositeMatch [
+	^ self isMultiple or: [ (aCompositeMatch includesMatchOf: self) not ]
 ]
 
 { #category : 'testing' }
@@ -139,9 +154,16 @@ ClapParameter >> isMultiple [
 	^ multiple
 ]
 
+{ #category : 'testing' }
+ClapParameter >> isPositional [ 
+
+	^ false
+]
+
 { #category : 'matching' }
-ClapParameter >> match: aStreamOrSequenceable [
-	^ self matchOn: aStreamOrSequenceable readStream
+ClapParameter >> match: aSequenceable [
+	"Convenience for tests; this creates an adhoc context."
+	^ (self activationWith: aSequenceable) match
 ]
 
 { #category : 'accessing' }
@@ -150,8 +172,8 @@ ClapParameter >> matchClass [
 ]
 
 { #category : 'matching' }
-ClapParameter >> matchOn: aStream [
-	^ (self newMatchAt: aStream)
+ClapParameter >> matchOn: aStream in: aContext [
+	^ (self newMatchAt: aStream in: aContext)
 		completeMatchOn: aStream;
 		yourself
 ]
@@ -172,11 +194,11 @@ ClapParameter >> multiple: aBoolean [
 ]
 
 { #category : 'matching' }
-ClapParameter >> newMatchAt: aStream [
+ClapParameter >> newMatchAt: aStream in: aContext [
 	^ ((self canMatchAt: aStream)
 				ifTrue: [ self matchClass ]
 				ifFalse: [ ClapMismatch ])
-			specification: self
+			of: self in: aContext
 ]
 
 { #category : 'printing' }
@@ -204,6 +226,16 @@ ClapParameter >> validate: aMatch on: aReport [
 ]
 
 { #category : 'validation' }
+ClapParameter >> validate: aClapValidationClass on: aReport match: aMatch [
+
+	| diagnostics |
+	diagnostics := aClapValidationClass
+		ifNil: [ self validationDiagnosticsFor: aMatch ]
+		ifNotNil: [ { aClapValidationClass new validate: aMatch } ].
+	aReport addAll: (diagnostics reject: [ :diagnostic | diagnostic isSuccess ])
+]
+
+{ #category : 'validation' }
 ClapParameter >> validationDiagnosticsFor: aMatch [
 	^ validationBlock
 		ifNil: [ #() ]
@@ -218,11 +250,10 @@ ClapParameter >> validations: aBlock [
 { #category : 'accessing' }
 ClapParameter >> valueFor: aMatch with: arg [
 	^ self meaning
-		cull: aMatch
-		cull: arg
+		ifNotNil: [ :meaning | meaning cull: aMatch cull: arg ]
 ]
 
 { #category : 'accessing' }
 ClapParameter >> valueForImplicit: aMatch with: arg [
-	^ self implicitMeaning cull: aMatch cull: arg
+	^ self implicitMeaning ifNotNil: [ :block | block cull: aMatch cull: arg ]
 ]

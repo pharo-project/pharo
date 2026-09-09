@@ -44,7 +44,7 @@ HaloMorph class >> classicHaloSpecifications [
 	"  	selector				horiz		vert			color info						icon key
 		---------				------		-----------		-------------------------------		---------------"
 	(addMenuHandle:		left			top				(red)							none)
-	(addDismissHandle:		leftCenter	top				(red		muchLighter)			#haloDismissIcon)
+	(addDismissHandle:		leftCenter	top				(red		muchLighter)			#haloDismiss)
 	(addGrabHandle:			center		top				(gray)							none)
 	(addDragHandle:			rightCenter	top				(brown)							none)
 	(addDupHandle:			right		top				(green)							none)
@@ -605,7 +605,7 @@ HaloMorph >> addSimpleHandlesTo: aHaloMorph box: aBox [
 		to: self.
 
 	aHandle := self
-		           addGraphicalHandle: #rotateIcon
+		           addGraphicalHandle: #rotate
 		           at: aBox bottomLeft
 		           on: #mouseDown
 		           send: #startRot:with:
@@ -758,7 +758,6 @@ HaloMorph >> doDebug: evt with: menuHandle [
 	"Ask hand to invoke the a debugging menu for my inner target.  If shift key is down, immediately put up an inspector on the inner target"
 
 	| menu |
-	"self obtainHaloForEvent: evt andRemoveAllHandlesBut: nil."
 	self world displayWorld.
 	evt shiftPressed ifTrue:
 		[self delete.
@@ -767,7 +766,6 @@ HaloMorph >> doDebug: evt with: menuHandle [
 	menu := innerTarget buildDebugMenu: evt hand.
 	menu buildTitle: [ :menuTitle | menuTitle
 		title: (innerTarget externalName asString truncateWithElipsisTo: 40);
-		"icon: Smalltalk ui icons smallDebugIcon;"
 		withCloseBox;
 		withPinBox
 	];
@@ -908,15 +906,6 @@ HaloMorph >> dragTarget: event [
 	event hand newMouseFocus: self
 ]
 
-{ #category : 'drawing' }
-HaloMorph >> drawSubmorphsOn: aCanvas [
-
-	| alpha |
-	(alpha := self magicAlpha) = 1.0 ifTrue: [
-		^ super drawSubmorphsOn: aCanvas ].
-	^ super drawSubmorphsOn: (aCanvas asAlphaBlendingCanvas: alpha)
-]
-
 { #category : 'private' }
 HaloMorph >> endInteraction [
 	"Clean up after a user interaction with the a halo control"
@@ -1028,19 +1017,6 @@ HaloMorph >> localHaloBoundsFor: aMorph [
 	^ (self transformFromOutermostWorld globalBoundsToLocal: r) truncated
 ]
 
-{ #category : 'accessing' }
-HaloMorph >> magicAlpha [
-
-	^ self valueOfProperty: #magicAlpha ifAbsent: [ 1.0 ]
-]
-
-{ #category : 'accessing' }
-HaloMorph >> magicAlpha: alpha [
-
-	self setProperty: #magicAlpha toValue: alpha.
-	self changed
-]
-
 { #category : 'private' }
 HaloMorph >> maybeCollapse: evt with: collapseHandle [
 	"Ask hand to collapse my target if mouse comes up in it."
@@ -1056,19 +1032,16 @@ HaloMorph >> maybeCollapse: evt with: collapseHandle [
 HaloMorph >> maybeDismiss: evt with: dismissHandle [
 	"Ask hand to dismiss my target if mouse comes up in it."
 
-	| confirmed |
 	evt hand obtainHalo: self.
 	(dismissHandle containsPoint: evt cursorPoint)
 		ifTrue: [
-			target resistsRemoval ifTrue: [
-				confirmed := self confirm: 'Really throw this away?' translated.
-				confirmed ifFalse: [ ^ self ] ].
-			evt hand removeHalo.
-			self delete.
-			target dismissViaHalo ]
+				target resistsRemoval ifTrue: [ (ConfirmationRequest signal: 'Really throw this away?') ifFalse: [ ^ self ] ].
+				evt hand removeHalo.
+				self delete.
+				target dismissViaHalo ]
 		ifFalse: [
-			self delete.
-			target addHalo: evt ]
+				self delete.
+				target addHalo: evt ]
 ]
 
 { #category : 'private' }

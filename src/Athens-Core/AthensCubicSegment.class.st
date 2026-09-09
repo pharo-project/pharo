@@ -16,6 +16,8 @@ Class {
 
 { #category : 'visitor' }
 AthensCubicSegment >> accept: aVisitor [
+	
+	<ignoreNotImplementedSelectors: #(cubicBezierSegment:)>
 	^ aVisitor cubicBezierSegment: self
 ]
 
@@ -65,4 +67,9 @@ AthensCubicSegment >> via2 [
 { #category : 'accessing' }
 AthensCubicSegment >> via2reflected [
 	^self endPoint * 2 - via2
+]
+
+{ #category : 'visitor' }
+AthensCubicSegment >> visitWith: visitor [
+	visitor visitCubicSegment: self
 ]

@@ -45,8 +45,3 @@ MCWorkingAncestry >> lazy [
 MCWorkingAncestry >> name [
 	^ '<working copy>'
 ]
-
-{ #category : 'accessing' }
-MCWorkingAncestry >> summary [
-	^ 'Ancestors: ', self ancestorString
-]

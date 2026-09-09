@@ -17,22 +17,34 @@ RePushDownMethodDriverTest >> createHierarchySubclassesReferToSelector [
 	model := RBNamespace onEnvironment: environment.
 	model
 		defineClass: [ :aBuilder |
-			aBuilder
-				superclass: Object;
-				name: #Superclass;
-				package: #'Refactory-Test data' ];
+				aBuilder
+					superclass: Object;
+					name: #Superclass;
+					package: #'Refactory-Test data' ];
 		defineClass: [ :aBuilder |
-			aBuilder
-				superclassName: #Superclass;
-				name: #Foo1;
-				package: #'Refactory-Test data' ];
+				aBuilder
+					superclassName: #Superclass;
+					name: #Foo1;
+					package: #'Refactory-Test data' ];
 		defineClass: [ :aBuilder |
-			aBuilder
-				superclassName: #Superclass;
-				name: #Foo2;
-				package: #'Refactory-Test data' ].
+				aBuilder
+					superclassName: #Superclass;
+					name: #Foo2;
+					package: #'Refactory-Test data' ];
+		defineClass: [ :aBuilder |
+				aBuilder
+					superclassName: #Foo1;
+					name: #FooSub;
+					package: #'Refactory-Test data' ];
+		defineClass: [ :aBuilder |
+				aBuilder
+					superclassName: #Foo1;
+					name: #FooSub2;
+					package: #'Refactory-Test data' ].
 	(model classNamed: #Superclass) compile: 'yourself ^1' classified: #( #accessing ).
+	(model classNamed: #FooSub) compile: 'method1 ^33' classified: #( #accessing ).
 	(model classNamed: #Foo1) compile: 'method1 ^super yourself' classified: #( #accessing ).
+	(model classNamed: #FooSub2) compile: 'method2 ^54' classified: #( #accessing )
 ]
 
 { #category : 'initialization' }
@@ -58,7 +70,7 @@ RePushDownMethodDriverTest >> testPushDownMethodDriverWhenAbstractClassExpectBre
 	
 	driver runRefactoring.
 	self assert: driver refactoring model changes changes size equals: 0.
-	self assert: driver refactoring failedBreakingChangePreconditions size equals: 1
+	self assert: driver refactoring failedBreakingChangePreconditions size equals: 2
 ]
 
 { #category : 'tests' }
@@ -75,7 +87,26 @@ RePushDownMethodDriverTest >> testPushDownMethodDriverWhenHappyPathExpectChanges
 	self setUpDriver: driver.
 	
 	driver runRefactoring.
-	self assert: driver refactoring model changes changes size equals: 4
+	self assert: driver refactoring model changes changes size equals: 5
+]
+
+{ #category : 'tests' }
+RePushDownMethodDriverTest >> testPushDownMethodDriverWhenSubclassesDefinesSelectorExpectBreakingChanges [
+
+	| driver method class |
+	
+	self createHierarchySubclassesReferToSelector.
+	class := model classNamed: 'Foo1'.
+	method := class methodFor: #method1.
+	
+	driver := RePushDownMethodDriver new
+					model: model scopes: { environment } pushDownMethods: { method }.
+
+	self setUpDriver: driver.
+	
+	driver runRefactoring.
+	self assert: driver refactoring model changes changes size equals: 9.
+	self assert: driver refactoring failedBreakingChangePreconditions size equals: 1
 ]
 
 { #category : 'tests' }
@@ -93,6 +124,6 @@ RePushDownMethodDriverTest >> testPushDownMethodDriverWhenSubclassesReferToSelec
 	self setUpDriver: driver.
 	
 	driver runRefactoring.
-	self assert: driver refactoring model changes changes size equals: 5.
+	self assert: driver refactoring model changes changes size equals: 9.
 	self assert: driver refactoring failedBreakingChangePreconditions size equals: 1
 ]

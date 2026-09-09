@@ -21,7 +21,8 @@ FlagIconStyler class >> isStaticStyler [
 
 { #category : 'defaults' }
 FlagIconStyler >> highlightColor [
-	^(Color yellow alpha: 0.3)
+
+	^ self theme warningBackgroundColor alpha: 0.1
 ]
 
 { #category : 'defaults' }
@@ -32,4 +33,10 @@ FlagIconStyler >> iconFor: aNode [
 { #category : 'testing' }
 FlagIconStyler >> shouldStyleNode: aNode [
 	^aNode isMessage and: [aNode selector = #flag:]
+]
+
+{ #category : 'private' }
+FlagIconStyler >> stylerName [
+
+	^ 'flag'
 ]

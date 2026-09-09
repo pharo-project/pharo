@@ -15,6 +15,12 @@ Class {
 	#tag : 'Core'
 }
 
+{ #category : 'class initialization' }
+CoCompletionEngine class >> initialize [ 
+	
+	RubSmalltalkEditor completionEngineClass: CoCompletionEngine.
+]
+
 { #category : 'accessing' }
 CoCompletionEngine >> completionBuilder [
 

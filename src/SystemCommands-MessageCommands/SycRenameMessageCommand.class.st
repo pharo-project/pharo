@@ -51,6 +51,12 @@ SycRenameMessageCommand >> defaultMenuItemName [
 	^ '(R) Rename'
 ]
 
+{ #category : 'accessing' }
+SycRenameMessageCommand >> description [
+
+	^ 'Rename method'
+]
+
 { #category : 'execution' }
 SycRenameMessageCommand >> execute [
 
@@ -61,12 +67,6 @@ SycRenameMessageCommand >> execute [
 		          in: originalMessage methodClass.
 	driver runRefactoring.
 	
-]
-
-{ #category : 'execution' }
-SycRenameMessageCommand >> isComplexRefactoring [ 
-
-	^ false
 ]
 
 { #category : 'accessing' }

@@ -45,13 +45,14 @@ EpBehaviorNameChange >> classAffected [
 ]
 
 { #category : 'accessing' }
-EpBehaviorNameChange >> fileOutEntryOn: aWriteStream [ 
+EpBehaviorNameChange >> fileOutEntryOn: aWriteStream [
 
 	aWriteStream
 		nextPutAll: '(self class environment at: #';
 		nextPutAll: self oldName;
-		nextPutAll: ') rename: ';
-		nextChunkPut: self newName;
+		nextPutAll: ') rename: '.
+	(ChunkWriteStream on: aWriteStream)
+		nextPut: self newName;
 		cr
 ]
 

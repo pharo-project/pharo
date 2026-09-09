@@ -9,13 +9,24 @@ Class {
 	#tag : 'Bugs'
 }
 
+{ #category : 'utilities' }
+ReSentButNotUnderstoodBySuperRuleTest >> myCritiquesOnMethod: method [
+
+	| methodCopy newProperties |
+	methodCopy := method copy.
+	newProperties := methodCopy properties copyWithout: methodCopy pragmas first.
+	methodCopy properties: newProperties.
+
+	^ super myCritiquesOnMethod: methodCopy
+]
+
 { #category : 'accessing' }
 ReSentButNotUnderstoodBySuperRuleTest >> sampleMethod [
 	"This method sends a message the superclass does not understand"
+	<ignoreNotImplementedSelectors: #( someMessageThatSuperDoesNotUnderstand )>
 	
 	self asString.
 	^ super someMessageThatSuperDoesNotUnderstand
-.
 ]
 
 { #category : 'tests' }

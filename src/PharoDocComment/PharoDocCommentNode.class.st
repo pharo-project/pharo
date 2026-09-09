@@ -1,6 +1,6 @@
 "
 I represent a example expression (expression and value) within a method
-comment (RBCommentNode). Every pair of Pharo expression and a separator (default "">>>"") can be styled as Pharo code and the editor iconstyler  can highlight the code and evaluate the expression.
+comment (ASTCommentNode). Every pair of Pharo expression and a separator (default "">>>"") can be styled as Pharo code and the editor iconstyler  can highlight the code and evaluate the expression.
 
 Example, within a method comment:
 
@@ -36,19 +36,19 @@ PharoDocCommentNode class >> docCommentEnabled: aBoolean [
 ]
 
 { #category : 'instance creation' }
-PharoDocCommentNode class >> expression: aDocExpression inComment: aRBComment [
+PharoDocCommentNode class >> expression: aDocExpression inComment: aCommentNode [
 	^ self new
 		expression: aDocExpression;
-		sourceNode: aRBComment
+		sourceNode: aCommentNode
 		yourself
 ]
 
 { #category : 'parsing' }
-PharoDocCommentNode class >> parseDocComments: aRBCommentNode [
+PharoDocCommentNode class >> parseDocComments: aCommentNode [
 
 	| expression |
-	expression := PharoDocCommentExpression new source: aRBCommentNode contents.
-	^ { (self expression: expression inComment: aRBCommentNode) }
+	expression := PharoDocCommentExpression new source: aCommentNode contents.
+	^ { (self expression: expression inComment: aCommentNode) }
 ]
 
 { #category : 'settings' }

@@ -41,8 +41,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReShouldntRaiseErrorRule class >> group [
-	^ 'Coding Idiom Violation'
+ReShouldntRaiseErrorRule class >> groupSelector [
+
+	^ #codingIdiomViolationGroup
 ]
 
 { #category : 'accessing' }

@@ -13,14 +13,14 @@ DosTimestampTest >> testAsDateAndTime [
 
 	| timestamp |
 	timestamp := DosTimestamp on: 16r40B57856.
-	self assert: timestamp asDateAndTime equals: '2012-05-21T15:02:44' asDateAndTime
+	self assert: timestamp asDateAndTime equals: (DateAndTime fromString: '2012-05-21T15:02:44')
 ]
 
 { #category : 'tests' }
 DosTimestampTest >> testFromDateAndTime [
 
 	| timestamp |
-	timestamp := DosTimestamp fromDateAndTime: '2012-05-21T15:02:44pm' asDateAndTime.
+	timestamp := DosTimestamp fromDateAndTime: (DateAndTime fromString: '2012-05-21T15:02:44pm').
 
 	self assert: timestamp value equals: 16r40B57856
 ]

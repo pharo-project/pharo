@@ -28,8 +28,8 @@ When the preconditions expressed as RBConditions are true, the refactoring is ex
 Here is a brief overview of the core components.
 
 - `RBScanner` and `RBParser`. The `RBScanner` and `RBParser` are used by Pharo to create an abstract syntax tree (AST) from the methods source code.
-- `RBProgramNode` and subclasses. These are the base and concrete subclasses for all RB-Nodes representing a syntax node class, like `RBMethodNode`, `RBAssignmentNode`, et cetera.
-- `RBParseTreeSearcher` and `RBParseTreeRewriter`. Some refactoring operations use the tree searcher and rewriter for applying a transformation on the abstract syntax tree. They implement a program node visitor.
+- `ASTProgramNode` and subclasses. These are the base and concrete subclasses for all RB-Nodes representing a syntax node class, like `ASTMethodNode`, `ASTAssignmentNode`, et cetera.
+- `ASTParseTreeSearcher` and `ASTParseTreeRewriter`. Some refactoring operations use the tree searcher and rewriter for applying a transformation on the abstract syntax tree. They implement a program node visitor.
 - `RBClass`, `RBMetaclass`, `RBMethod`. Class and Method meta-models representing a class or method created, removed or modified during a refactoring
 operation.
 - `RBNamespace`. A namespace is an environment for resolving class and method entities by name and collects all changes resp. changed entities.

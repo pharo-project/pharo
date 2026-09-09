@@ -25,14 +25,15 @@ SettingTreeBuilder >> buildPragma: aPragma [
 	^ nodeList
 ]
 
-{ #category : 'tree building' }
-SettingTreeBuilder >> group: aSymbol [
-	^ self nodeClass: PragmaSetting name: aSymbol
+{ #category : 'accessing - structure variables' }
+SettingTreeBuilder >> button: aSymbol [
+
+	^ self nodeClass: ActionSettingDeclaration name: aSymbol
 ]
 
 { #category : 'tree building' }
-SettingTreeBuilder >> launcher: aSymbol [
-	^ self nodeClass: SystemSettingLauncher name: aSymbol
+SettingTreeBuilder >> group: aSymbol [
+	^ self nodeClass: PragmaSetting name: aSymbol
 ]
 
 { #category : 'accessing' }

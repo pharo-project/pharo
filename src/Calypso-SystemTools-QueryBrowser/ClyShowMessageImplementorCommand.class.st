@@ -66,12 +66,19 @@ ClyShowMessageImplementorCommand >> defaultMenuItemName [
 	^'Implementors'
 ]
 
+{ #category : 'accessing' }
+ClyShowMessageImplementorCommand >> description [
+
+	^ 'Show all message implementors.'
+]
+
 { #category : 'execution' }
 ClyShowMessageImplementorCommand >> execute [
 
 	| selectors |
-	selectors := messages collect: [ :each | each selector].
-	browser spawnQueryBrowserOn: (ClyMessageImplementorsQuery ofAny: selectors)
+
+	selectors := messages collect: [ :each | each selector ].
+	(Smalltalk tools toolNamed: #messageList) browseImplementorsOfAll: selectors
 ]
 
 { #category : 'execution' }

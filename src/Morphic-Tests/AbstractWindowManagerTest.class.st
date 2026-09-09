@@ -8,13 +8,6 @@ Class {
 	#package : 'Morphic-Tests'
 }
 
-{ #category : 'tests' }
-AbstractWindowManagerTest >> runCaseManaged [
-
-	super runCaseManaged .
-	self runCase
-]
-
 { #category : 'running' }
 AbstractWindowManagerTest >> setUp [
 

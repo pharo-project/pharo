@@ -8,17 +8,26 @@ Class {
 	#package : 'SystemCommands-ClassCommands'
 }
 
+{ #category : 'activation' }
+SycAbstractAllInstVarAccessorsCommand class >> sourceCodeMenuActivation [
+
+	<classAnnotation>
+	^ SycSourceCodeMenuActivation byRootGroupItemFor: ClySourceCodeContext
+]
+
 { #category : 'accessing' }
 SycAbstractAllInstVarAccessorsCommand >> asRefactorings [
+
 	| refactorings env |
-	refactorings := classes flatCollect: [:each |
-		each value collect: [:var |
-			| refactoring |
-			env
-				ifNil: [ refactoring := var createRefactoring: RBAbstractInstanceVariableRefactoring for: each key.
-							env := refactoring model ]
-				ifNotNil: [refactoring := var createRefactoring: RBAbstractInstanceVariableRefactoring for: each key in: env ].
-			refactoring ]].
+	refactorings := classes flatCollect: [ :each |
+		                each value collect: [ :var |
+			                | refactoring |
+			                refactoring := var
+				                               createRefactoring:
+				                               ReAbstractInstanceVariableRefactoring
+				                               for: each key.
+			                env := refactoring model.
+			                refactoring ] ].
 	^ refactorings
 ]
 
@@ -47,13 +56,16 @@ SycAbstractAllInstVarAccessorsCommand >> prepareFullExecutionInContext: aToolCon
 
 { #category : 'execution' }
 SycAbstractAllInstVarAccessorsCommand >> selectVariables [
-	classes := classes collect: [:aClass | | vars dialog |
-		vars := aClass slots asOrderedCollection.
-		dialog := StVariablesSelectionPresenter
-		   label: aClass name,' - Select all variables to convert abstract'
-			withItems: vars
-			selecting: vars.
-		dialog cancelled ifTrue: [ CmdCommandAborted signal ].
-		aClass -> dialog selectedItems
-		]
+
+	classes := classes collect: [ :aClass |
+			           | vars dialog selectedVars |
+			           vars := aClass slots asOrderedCollection.
+			           dialog := StVariablesSelectionPresenter
+				                     title: 'Select variables'
+				                     label: aClass name , ' - Select all variables to convert abstract'
+				                     withItems: vars
+				                     selecting: vars
+				                     acceptBlock: [ :items | selectedVars := items ].
+			           dialog cancelled ifTrue: [ CmdCommandAborted signal ].
+			           aClass -> selectedVars ]
 ]

@@ -130,7 +130,7 @@ ShiftTraitBuilderTest >> testFillShiftClassBuilder [
 ShiftTraitBuilderTest >> testInstallMinimalMockClass [
 
 	| installedClass |
-	builder := self class compilerClass new evaluate: 'Trait << #TMyClass
+	builder := OpalEvaluator new evaluate: 'Trait << #TMyClass
 	traits: {};
 	slots: {};
 	tag: '''' ;

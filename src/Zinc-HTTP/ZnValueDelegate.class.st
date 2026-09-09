@@ -31,7 +31,7 @@ ZnValueDelegate >> handleRequest: request [
 	^ object value: request
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnValueDelegate >> object: anObject [
 	object := anObject
 ]

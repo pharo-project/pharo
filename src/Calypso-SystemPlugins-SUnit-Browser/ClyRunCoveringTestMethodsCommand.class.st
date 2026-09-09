@@ -16,6 +16,12 @@ ClyRunCoveringTestMethodsCommand class >> canBeExecutedInContext: aToolContext [
 		each hasProperty: ClyTestedMethodProperty ]
 ]
 
+{ #category : 'accessing' }
+ClyRunCoveringTestMethodsCommand >> description [
+
+	^ 'Runs all covering tests of selected methods.'
+]
+
 { #category : 'execution' }
 ClyRunCoveringTestMethodsCommand >> readParametersFromContext: aToolContext [
 	super readParametersFromContext: aToolContext.

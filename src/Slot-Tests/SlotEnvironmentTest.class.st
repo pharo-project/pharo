@@ -9,7 +9,7 @@ Class {
 { #category : 'tests' }
 SlotEnvironmentTest >> testBasicEnvironment [
 	| environment |
-	environment := SystemDictionary new.
+	environment := SystemEnvironment new.
 
 	aClass := self make: [ :builder | builder environment: environment ].
 

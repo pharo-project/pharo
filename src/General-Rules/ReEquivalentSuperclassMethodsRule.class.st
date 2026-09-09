@@ -17,8 +17,9 @@ ReEquivalentSuperclassMethodsRule class >> checksMethod [
 ]
 
 { #category : 'accessing' }
-ReEquivalentSuperclassMethodsRule class >> group [
-	^ 'Design Flaws'
+ReEquivalentSuperclassMethodsRule class >> groupSelector [
+
+	^ #designFlawGroup
 ]
 
 { #category : 'accessing' }
@@ -43,9 +44,7 @@ ReEquivalentSuperclassMethodsRule >> basicCheck: aMethod [
 
 	(self ignoredSelectors includes: aMethod selector) ifTrue: [ ^ false ].
 
-	^ aMethod overriddenMethod
-		  ifNotNil: [ :overridenMethod | aMethod equivalentTo: overridenMethod ]
-		  ifNil: [ false ]
+	^ aMethod hasEquivalentMethodInSuperclass
 ]
 
 { #category : 'accessing' }

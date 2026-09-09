@@ -31,13 +31,13 @@ RBRemoveProtocolTransformationTest >> testTransform [
 	transformation := (RBAddProtocolTransformation
 		                   protocol: 'transforming'
 		                   inClass: #RBDummyEmptyClass).
-	transformation generateChanges.
+	transformation execute.
 
 	transformation := (RBRemoveProtocolTransformation
 		                   model: transformation model
 		                   protocol: 'transforming'
 		                   inClass: #RBDummyEmptyClass).
-	transformation generateChanges.
+	transformation execute.
 
 	self assert: transformation model changes changes size equals: 2
 ]

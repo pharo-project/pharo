@@ -20,13 +20,14 @@ ReOverridesSpecialMessageRule class >> classShouldNotOverride [
 ]
 
 { #category : 'accessing' }
-ReOverridesSpecialMessageRule class >> group [
-	^ 'Bugs'
+ReOverridesSpecialMessageRule class >> groupSelector [
+
+	^ #bugsGroup
 ]
 
 { #category : 'private' }
 ReOverridesSpecialMessageRule class >> metaclassShouldNotOverride [
-	^ #( #basicNew #basicNew #class #comment #name )
+	^ #( #basicNew #basicNew #class #comment #name #preferredExtent )
 ]
 
 { #category : 'accessing' }
@@ -44,7 +45,7 @@ ReOverridesSpecialMessageRule class >> ruleName [
 
 { #category : 'accessing' }
 ReOverridesSpecialMessageRule class >> severity [
-	^ #error
+	^ 'error'
 ]
 
 { #category : 'accessing' }

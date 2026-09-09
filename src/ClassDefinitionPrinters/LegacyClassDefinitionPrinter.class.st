@@ -12,6 +12,12 @@ Class {
 	#package : 'ClassDefinitionPrinters'
 }
 
+{ #category : 'internal' }
+LegacyClassDefinitionPrinter >> applyCustomizersOn: stream [
+
+	self class customizers do: [ :customizer | customizer legacyClassDefinitionFor: forClass on: stream ]
+]
+
 { #category : 'public API' }
 LegacyClassDefinitionPrinter >> classDefinitionString [
 
@@ -31,9 +37,7 @@ LegacyClassDefinitionPrinter >> classDefinitionString [
 		ifNotNil: [aStream nextPutAll: forClass superclass name].
 	aStream nextPutAll: forClass kindOfSubclass;
 			store: forClass name.
-	(forClass hasTraitComposition) ifTrue: [
-		aStream cr; tab; nextPutAll: 'uses: ';
-			nextPutAll: forClass traitCompositionString].
+	self applyCustomizersOn: aStream.
 	aStream cr; tab; nextPutAll: 'instanceVariableNames: ';
 			store: forClass instanceVariablesString.
 	aStream cr; tab; nextPutAll: 'classVariableNames: ';
@@ -60,27 +64,4 @@ LegacyClassDefinitionPrinter >> metaclassDefinitionString [
 			crtab;
 			nextPutAll: 'instanceVariableNames: ';
 			store: forClass instanceVariablesString ]
-]
-
-{ #category : 'public API' }
-LegacyClassDefinitionPrinter >> traitDefinitionString [
-
-	^ String streamContents: [ :s |
-		s
-			nextPutAll: 'Trait named: ';
-			nextPutAll:	forClass name printString;
-			cr; tab;
-			nextPutAll: ' uses: ';
-			nextPutAll: forClass traitComposition traitCompositionExpression;
-			cr;
-			tab;
-			nextPutAll: ' package: ';
-			nextPutAll: forClass category asString printString
-	]
-]
-
-{ #category : 'public API' }
-LegacyClassDefinitionPrinter >> traitedMetaclassDefinitionString [
-
-	^ self metaclassDefinitionString
 ]

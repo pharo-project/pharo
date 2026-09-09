@@ -240,10 +240,10 @@ Bezier3Segment >> bezier2SegmentCount [
 Bezier3Segment >> bezier2SegmentCount: pixelError [
 	"Compute the number of quadratic bezier segments needed to approximate
 	this cubic with no more than a specified error"
+
 	| a |
-	a := (start x negated @ start y negated) + (3 * via1) - (3 * via2) +
-(end).
-	^ (((a r / (20.0 * pixelError)) raisedTo: 0.333333) ceiling) max: 1
+	a := start x negated @ start y negated + (3 * via1) - (3 * via2) + end.
+	^ (a r / (20.0 * pixelError) raisedTo: 0.333333) ceiling max: 1
 ]
 
 { #category : 'bezier clipping' }
@@ -395,8 +395,8 @@ Bezier3Segment >> tangentAtStart [
 
 { #category : 'accessing' }
 Bezier3Segment >> valueAt: t [
-	| a b c d |
 
+	| a b c d |
 	"| p1 p2 p3 |
 	p1 := start interpolateTo: via1 at: t.
 	p2 := via1 interpolateTo: via2 at: t.
@@ -404,12 +404,12 @@ Bezier3Segment >> valueAt: t [
 	p1 := p1 interpolateTo: p2 at: t.
 	p2 := p2 interpolateTo: p3 at: t.
 	^ p1 interpolateTo: p2 at: t"
-
-	a := (start negated) + (3 * via1) - (3 * via2) + (end).
-	b := (3 * start) - (6 * via1) + (3 * via2).
-	c := (3 * start negated) + (3 * via1).
+	
+	a := start negated + (3 * via1) - (3 * via2) + end.
+	b := 3 * start - (6 * via1) + (3 * via2).
+	c := 3 * start negated + (3 * via1).
 	d := start.
-	^ ((a * t + b) * t + c) * t + d
+	^ a * t + b * t + c * t + d
 ]
 
 { #category : 'accessing' }

@@ -15,5 +15,5 @@ Class {
 
 { #category : 'meta-data - dependency analyser' }
 ManifestFileSystemPath class >> manuallyResolvedDependencies [
-	^ #(#'Collections-Streams' #'Collections-Abstract')
+	^ #(#'Collections-Abstract')
 ]

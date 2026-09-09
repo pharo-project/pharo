@@ -36,15 +36,6 @@ RBRealizeClassTransformation >> privateTransform [
 	self transform: self theClass classSide
 ]
 
-{ #category : 'storing' }
-RBRealizeClassTransformation >> storeOn: aStream [
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream nextPutAll: ' className: '.
-	className storeOn: aStream.
-	aStream nextPut: $)
-]
-
 { #category : 'accessing' }
 RBRealizeClassTransformation >> theClass [
 	^ (self model classObjectFor: className) instanceSide
@@ -66,9 +57,9 @@ RBRealizeClassTransformation >> transform: aClass [
 				parseTree body
 					temporaries: OrderedCollection new;
 					statements: OrderedCollection new;
-					addNode: (RBMessageNode
-							 receiver: RBVariableNode selfNode
-							 selector: #shouldBeImplemented).
+					addNode: (OCMessageNode
+							 receiver: OCVariableNode selfNode
+							 selector: (OCSelectorNode value: #shouldBeImplemented)).
 				"Note that we compile in the class (a subclass compared to superclass having abstract methods) 
 				so we are doing a kind of copy-down but transforming a self subclassResp into shouldBe"
 				aClass compile: parseTree newSource withAttributesFrom: method ] ] ]

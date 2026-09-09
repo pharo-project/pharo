@@ -17,14 +17,14 @@ Class {
 }
 
 { #category : 'enumerating' }
-CoNarrowHistoryFetcher >> entriesDo: aBlock [
+CoNarrowHistoryFetcher >> filteredEntriesDo: aBlock [
 
 	currentResults do: aBlock.
 
 	"If previously I have detected that the decoree has not found entries, we need to avoid getting them again"
 	currentFinished ifTrue: [ ^ self ].
 
-	decoree entriesDo: [ :elem |
+	decoree filteredEntriesDo: [ :elem |
 		currentResults add: elem.
 		aBlock value: elem ].
 

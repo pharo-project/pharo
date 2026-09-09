@@ -36,7 +36,7 @@ RGTraitTransformation >> initialize [
 	subject := self unresolvedValue: self defaultSubject
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 RGTraitTransformation >> initializeUnresolved [
 
 	super initializeUnresolved.

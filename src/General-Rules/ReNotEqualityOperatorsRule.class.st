@@ -10,8 +10,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReNotEqualityOperatorsRule class >> group [
-	^ 'Bugs'
+ReNotEqualityOperatorsRule class >> groupSelector [
+
+	^ #bugsGroup
 ]
 
 { #category : 'accessing' }
@@ -21,7 +22,8 @@ ReNotEqualityOperatorsRule class >> ruleName [
 
 { #category : 'accessing' }
 ReNotEqualityOperatorsRule class >> severity [
-	^#error
+
+	^'error'
 ]
 
 { #category : 'initialization' }

@@ -33,9 +33,15 @@ SycShowMethodVersionCommand >> defaultMenuItemName [
 	^'Versions'
 ]
 
+{ #category : 'accessing' }
+SycShowMethodVersionCommand >> description [
+
+	^ 'Show local method version.'
+]
+
 { #category : 'execution' }
 SycShowMethodVersionCommand >> execute [
-	Smalltalk tools versionBrowser browseVersionsForMethod: method
+	(Smalltalk tools toolNamed: #versionBrowser) browseVersionsForMethod: method
 ]
 
 { #category : 'execution' }

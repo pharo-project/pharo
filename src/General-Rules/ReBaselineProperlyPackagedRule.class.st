@@ -18,8 +18,9 @@ ReBaselineProperlyPackagedRule class >> checksClass [
 ]
 
 { #category : 'accessing' }
-ReBaselineProperlyPackagedRule class >> group [
-	^ 'Design Flaws'
+ReBaselineProperlyPackagedRule class >> groupSelector [
+
+	^ #designFlawGroup
 ]
 
 { #category : 'accessing' }
@@ -29,7 +30,7 @@ ReBaselineProperlyPackagedRule class >> ruleName [
 
 { #category : 'accessing' }
 ReBaselineProperlyPackagedRule class >> severity [
-	^ #information
+	^ 'information'
 ]
 
 { #category : 'manifest' }
@@ -43,7 +44,6 @@ ReBaselineProperlyPackagedRule class >> uniqueIdentifierName [
 ReBaselineProperlyPackagedRule >> basicCheck: aClass [
 
 	aClass isClassSide ifTrue: [ ^ false ].
-	 
-	^(aClass name beginsWith: 'BaselineOf') 
-		and: [ aClass package name ~= aClass name ]
+
+	^ (MetacelloProjectRegistry baselineClasses includes: aClass) and: [ aClass package name ~= aClass name ]
 ]

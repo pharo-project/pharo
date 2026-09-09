@@ -314,7 +314,10 @@ EncoderForSistaV1 class >> bindingWriteScanBlockFor: litVarIndex using: scanner 
 
 { #category : 'instruction stream support' }
 EncoderForSistaV1 class >> bytecodeSize: bytecode [
-	"Answer the number of bytes in the bytecode."
+	"Answer the number of bytes in the bytecode.
+	
+	This method does not take extensions into account.
+	Use #instructionsSizeAt:of:"
 	bytecode < 224 ifTrue: [^1].
 	bytecode < 248 ifTrue: [^2].
 	^3
@@ -487,8 +490,7 @@ EncoderForSistaV1 class >> isCreateBlockAt: pc in: method [
 	| byte |
 	byte := self nonExtensionBytecodeAt: pc in: method.
 	^ byte = 250 or: [
-		  (method sourceNodeForPC: pc) in: [ :node | "Clean blocks are created as PushConstant"
-			  node isBlock and: [ node isClean ] ] ]
+		  (method sourceNodeForPC: pc) in: [ :node | "Clean blocks are created as PushConstant" node isBlock and: [ node scope isClean ] ] ]
 ]
 
 { #category : 'block closure support' }
@@ -777,11 +779,6 @@ EncoderForSistaV1 class >> nonExtensionBytecodeAt: pc in: method [
 	^ byte
 ]
 
-{ #category : 'compiled method support' }
-EncoderForSistaV1 class >> prepareMethod: compiledMethod forSimulationWith: numArgs [
-	self shouldBeImplemented
-]
-
 { #category : 'bytecode decoding' }
 EncoderForSistaV1 class >> pushNilByte [
 	^ 79
@@ -1036,10 +1033,13 @@ EncoderForSistaV1 >> genPushCharacter: aCharacterOrCode [
 
 { #category : 'bytecode generation' }
 EncoderForSistaV1 >> genPushConsArray: size [
-	(size < 0 or: [size > 127]) ifTrue:
-		[^self outOfRangeError: 'size' index: size range: 0 to: 127].
 	"231		11100111	jkkkkkkk	Push (Array new: kkkkkkk) (j = 0)
 									&	Pop kkkkkkk elements into: (Array new: kkkkkkk) (j = 1)"
+	| limit |
+	limit := self class arraySizeLimitForPushArrayInstruction.
+	(size < 0 or: [size > limit]) ifTrue:
+		[^self outOfRangeError: 'size' index: size range: 0 to: limit].
+
 	stream
 		nextPut: 231;
 		nextPut: size + 128

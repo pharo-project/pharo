@@ -21,6 +21,26 @@ TFIntType >> emitMarshallToPrimitive: builder [
 	builder send: #asInteger
 ]
 
+{ #category : 'marshalling' }
+TFIntType >> optimizeFor: aFFIFunctionArgument in: anIRBuilder ifCannot: aFullBlockClosure [
+
+	| literalValue |
+	
+	aFFIFunctionArgument loader isLiteralArgument 
+		ifTrue: [
+			literalValue := aFFIFunctionArgument loader value.
+
+			((literalValue isKindOf: Boolean) or: [ (literalValue isKindOf: Number) or: [ literalValue isKindOf: Character ] ])
+				ifTrue: [ 
+					anIRBuilder pushLiteral: literalValue asInteger.
+					^ self ]].
+
+	super
+		optimizeFor: aFFIFunctionArgument
+		in: anIRBuilder
+		ifCannot: aFullBlockClosure
+]
+
 { #category : 'reading' }
 TFIntType >> readValue: anExternalAddress offset: offset [
 

@@ -13,5 +13,5 @@ Class {
 CoSharedPoolVariableFetcher >> entriesDo: aBlock [
 
 	self completionClass instanceSide sharedPools do: [ :e |
-		e allClassVarNames do: [ :name | aBlock value: (NECClassVarEntry contents: name node: astNode) ] ]
+		e allClassVarNames do: [ :name | aBlock value: (CoClassVarEntry contents: name node: astNode) ] ]
 ]

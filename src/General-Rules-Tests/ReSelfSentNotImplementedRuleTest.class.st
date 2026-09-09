@@ -21,9 +21,11 @@ ReSelfSentNotImplementedRuleTest >> sampleMethod [
 
 { #category : 'tests' }
 ReSelfSentNotImplementedRuleTest >> testRule [
-	| critiques|
-	critiques := self myCritiques .
 
+	| critiques|
+	critiques := self myCritiques.
 	self assert: critiques size equals: 4.
-	self assert: (self sourceAtChritique: critiques first) equals: 'self bar'
+	self 
+		assert: (self sourceAtChritique: critiques first) 
+		equals: 'self bar'
 ]

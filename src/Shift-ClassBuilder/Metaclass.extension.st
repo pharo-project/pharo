@@ -15,7 +15,20 @@ Metaclass >> << aMetaclass [
 ]
 
 { #category : '*Shift-ClassBuilder' }
+Metaclass >> addSlot: aClassSlot [
+
+	<reflection: 'Class structural modification - Slot modification'>
+	^self instanceSide addClassSlot: aClassSlot
+]
+
+{ #category : '*Shift-ClassBuilder' }
 Metaclass >> instanceVariableNames: instVarString [
 
 	^ self slots: instVarString asSlotCollection
+]
+
+{ #category : '*Shift-ClassBuilder' }
+Metaclass >> removeSlot: aClassSlot [
+	<reflection: 'Class structural modification - Slot modification'>
+	^self instanceSide removeClassSlot: aClassSlot
 ]

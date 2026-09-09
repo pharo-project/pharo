@@ -18,8 +18,7 @@ RBRemoveMethodRefactoringTest >> testFailureRemoveReferenced [
 { #category : 'failure tests' }
 RBRemoveMethodRefactoringTest >> testFailureRemoveSameMethodButSendsSuper [
 
-	<expectedFailure>
-	self shouldWarn: (RBRemoveMethodRefactoring
+	self shouldFail: (RBRemoveMethodRefactoring
 			 model: model
 			 selector: #new
 			 from: #'RBBasicLintRuleTestData class')

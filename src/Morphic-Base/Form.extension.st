@@ -22,9 +22,24 @@ Form >> floodFillTolerance [
 ]
 
 { #category : '*Morphic-Base' }
-Form >> iconOrThumbnailOfSize: aNumberOrPoint [
-	"Answer an appropiate form to represent the receiver"
-	^ self scaledIntoFormOfSize: aNumberOrPoint
+Form >> listRenderOn: aCanvas atRow: index bounds: aRectangle color: aColor backgroundColor: backgroundColor from: aList [
+	self asMorph
+		listRenderOn: aCanvas
+		atRow: index
+		bounds: aRectangle
+		color: aColor
+		backgroundColor: backgroundColor
+		from: aList
+]
+
+{ #category : '*Morphic-Base' }
+Form class >> openImageInWindow: fullName [
+	"Handle five file formats: GIF, JPG, PNG, Form storeOn: (run coded), and
+	BMP. Fail if file format is not recognized."
+
+	| image |
+	image := self fromFileNamed: fullName.
+	(ImageMorph withForm: image) openInWorld
 ]
 
 { #category : '*Morphic-Base' }
@@ -56,6 +71,18 @@ Form >> scaledIntoFormOfSize: aNumberOrPoint [
 		at: extent - scaledForm extent // 2.
 
 	^ result
+]
+
+{ #category : '*Morphic-Base' }
+Form class >> serviceOpenImageInWindow [
+	"Answer a service for opening a graphic in a window"
+	<formService>
+	^ FileServiceEntry
+		provider: self
+		label: 'Open graphic in a window'
+		selector: #openImageInWindow:
+		description: 'Open a graphic file in a window'
+		buttonLabel: 'Open'
 ]
 
 { #category : '*Morphic-Base-Support' }

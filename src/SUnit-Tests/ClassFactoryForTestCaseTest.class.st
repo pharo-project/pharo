@@ -33,7 +33,7 @@ ClassFactoryForTestCaseTest >> organization [
 { #category : 'running' }
 ClassFactoryForTestCaseTest >> setUp [
 	super setUp.
-	factory := ClassFactoryForTestCase new
+	factory := ClassFactoryForTestCase environment: testingEnvironment
 ]
 
 { #category : 'running' }
@@ -76,6 +76,20 @@ ClassFactoryForTestCaseTest >> testPackageCleanUp [
 	allClasses := self environment allClasses.
 	self assert: (factory createdClasses noneSatisfy: [ :class | allClasses includes: class ]).
 	self assertEmpty: (self organization packages select: [ :package | package name beginsWith: factory packageName ])
+]
+
+{ #category : 'testing' }
+ClassFactoryForTestCaseTest >> testPackageOfCreatedClassIsCleanedUp [
+
+	| class |
+	class := factory make: [ :aBuilder |
+		         aBuilder
+			         superclass: Object;
+			         package: 'ClassFactoryForTestCaseGeneratedPackage' ].
+	self assert: class package name equals: 'ClassFactoryForTestCaseGeneratedPackage'.
+	self assert: (self organization packages anySatisfy: [ :package | package name = 'ClassFactoryForTestCaseGeneratedPackage' ]).
+	factory cleanUp.
+	self deny: (self organization packages anySatisfy: [ :package | package name = 'ClassFactoryForTestCaseGeneratedPackage' ])
 ]
 
 { #category : 'testing' }

@@ -34,7 +34,7 @@ OCASTTranslatorMappingForFullBlockClosuresTest >> setUp [
 { #category : 'tests' }
 OCASTTranslatorMappingForFullBlockClosuresTest >> testBlockWithParametersASTMapping [
 	|method blockNode|
-	method := compiler compile: 'm ^[:i :j|i+j] value: 41 value: 1'.
+	method := compiler source: 'm ^[:i :j|i+j] value: 41 value: 1'; compileOrFail.
 	blockNode := method ast statements first value receiver.
 	self assertBlockNodeHasCorrectIR: blockNode.
 	self assertMethodReturnValue: method
@@ -43,7 +43,7 @@ OCASTTranslatorMappingForFullBlockClosuresTest >> testBlockWithParametersASTMapp
 { #category : 'tests' }
 OCASTTranslatorMappingForFullBlockClosuresTest >> testSimpleBlockASTMapping [
 	|method blockNode|
-	method := compiler compile: 'm ^[40 + 2] value'.
+	method := compiler source: 'm ^[40 + 2] value'; compileOrFail.
 	blockNode := method ast statements first value receiver.
 	self assertBlockNodeHasCorrectIR: blockNode.
 	self assertMethodReturnValue: method

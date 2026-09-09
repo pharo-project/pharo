@@ -29,16 +29,10 @@ ProperlyImplementedSUnitClassesTest >> testAndMakeSureSuperSetupIsCalledAsFirstM
 ProperlyImplementedSUnitClassesTest >> testAndMakeSureSuperTearDownIsCalledAsLastMessageInTearDownMethodsOfTestCases [
 	"Verify that each tearDown method in a unit test ends with a call to super tearDown as last message sent"
 
-	| violating |
+	| violating rule |
 	violating := OrderedCollection new.
-	TestCase
-		allSubclassesDo: [ :each |
-			each
-				compiledMethodAt: #tearDown
-				ifPresent: [ :method |
-					(ReShouldSendSuperTearDownAsLastMessage
-						superTearDownNotCalledLastIn: method)
-						ifTrue: [ violating add: method ] ] ].
+	rule := ReShouldSendSuperTearDownAsLastMessage new.
+	TestCase allSubclassesDo: [ :each | each compiledMethodAt: #tearDown ifPresent: [ :method | (rule basicCheck: method) ifTrue: [ violating add: method ] ] ].
 	self assertEmpty: violating
 ]
 

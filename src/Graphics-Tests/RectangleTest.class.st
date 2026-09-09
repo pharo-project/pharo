@@ -648,7 +648,7 @@ RectangleTest >> testSideNearestTo [
 RectangleTest >> testStoreOn [
 	| assoc assoc2 |
 	assoc := (0 @ 0 extent: 1 @ 1) -> 0.
-	assoc2 := self class compiler evaluate: assoc storeString.
+	assoc2 := OpalEvaluator new evaluate: assoc storeString.
 	self assert: assoc key equals: assoc2 key.
 	self assert: assoc value equals: assoc2 value
 ]

@@ -34,6 +34,13 @@ Clipboard class >> clipboardText: aTextOrString [
 ]
 
 { #category : 'accessing' }
+Clipboard class >> clipboardText: aText informing: aString [
+
+	InformativeNotification signal: aString.
+	^ self clipboardText: aText
+]
+
+{ #category : 'accessing' }
 Clipboard class >> default [
 
 	^ Default ifNil: [ Default := self new ]
@@ -49,8 +56,9 @@ Clipboard class >> hasRecentClippings [
 { #category : 'class initialization' }
 Clipboard class >> initialize [
 
-	self startUp: true.
-	SessionManager default registerSystemClassNamed: self name
+	self startUp: true. 
+	"The priority is set because I need to be initialized before the UIManager. The UIManager will launch the world and this will install another clipboard, so this need to be done after I initialize myself."
+	SessionManager default registerSystemClassNamed: self name atPriority: 90
 ]
 
 { #category : 'accessing' }
@@ -95,7 +103,7 @@ Clipboard >> clipboardText: text [
 { #category : 'testing' }
 Clipboard >> hasRecentClippings [
 
-	^ self recentClippings notEmpty
+	^ self recentClippings isNotEmpty
 ]
 
 { #category : 'initialization' }

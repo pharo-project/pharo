@@ -11,40 +11,44 @@ Class {
 
 { #category : 'events' }
 TestCaseTest >> testAnnouncement [
-
-	| announcements oldCollection suite unitTest result |
-	unitTest := ClassFactoryForTestCaseTest.
+	| announcements oldCollection suite unitTestClass result |
+	
+	unitTestClass := ClassFactoryForTestCaseTest.
 	announcements := Dictionary new.
-	unitTest resetAnnouncer.
+	unitTestClass resetAnnouncer.
 
-	self deny: unitTest shouldAnnounce.
-	self deny: unitTest new shouldAnnounce.
+	self deny: unitTestClass shouldAnnounce.
+	self deny: unitTestClass new shouldAnnounce.
 
-	unitTest announcer when: TestCaseAnnouncement do: [ :ann | (announcements at: ann class ifAbsentPut: [ OrderedCollection new ]) add: ann ] for: self.
+	unitTestClass announcer 
+		when: TestCaseAnnouncement 
+		do: [ :ann | (announcements at: ann class ifAbsentPut: [ OrderedCollection new ]) add: ann ] 
+		for: self.
 
-	self assert: unitTest shouldAnnounce.
-	self assert: unitTest new shouldAnnounce.
+	self assert: unitTestClass shouldAnnounce.
+	self assert: unitTestClass new shouldAnnounce.
 
 	"We run SUnitTest"
-	suite := unitTest buildSuite.
+	suite := unitTestClass buildSuite.
 	result := suite run.
 
 	self assertEmpty: result failures.
 	self assertEmpty: result errors.
 
 	self
-		assert: (announcements at: TestCaseStarted ifAbsent: [ self fail: 'We should have received some TestCaseStarted announcements.' ]) size
+		assert: (announcements at: TestCaseStarted ifAbsent: [ #() ]) size
 		equals: suite tests size.
 	self
-		assert: (announcements at: TestCaseEnded ifAbsent: [ self fail: 'We should have received some TestCaseEnded announcements.' ]) size
+		assert: (announcements at: TestCaseEnded ifAbsent: [ #() ]) size
 		equals: suite tests size.
+	
 	self assertCollection: announcements keys hasSameElements: {
 			TestCaseStarted.
 			TestCaseEnded }.
 
 	oldCollection := announcements copy.
-	unitTest resetAnnouncer.
-	unitTest debug: #testClassCreationInDifferentTags.
+	unitTestClass resetAnnouncer.
+	unitTestClass debug: #testClassCreationInDifferentTags.
 	self assert: announcements equals: oldCollection
 ]
 

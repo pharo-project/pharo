@@ -3,15 +3,16 @@ Checks code using the do: method instead of using the collect: or select: method
 "
 Class {
 	#name : 'ReCollectionProtocolRule',
-	#superclass : 'ReNodeMatchRule',
+	#superclass : 'ReNodeRewriteRule',
 	#category : 'General-Rules-Coding Idiom Violation',
 	#package : 'General-Rules',
 	#tag : 'Coding Idiom Violation'
 }
 
 { #category : 'accessing' }
-ReCollectionProtocolRule class >> group [
-	^ 'Coding Idiom Violation'
+ReCollectionProtocolRule class >> groupSelector [
+
+	^ #codingIdiomViolationGroup
 ]
 
 { #category : 'accessing' }
@@ -28,23 +29,42 @@ ReCollectionProtocolRule class >> uniqueIdentifierName [
 
 { #category : 'initialization' }
 ReCollectionProtocolRule >> initialize [
+
 	super initialize.
-	self matchesAny: #(
-		'`@collection do: [:`each | | `@temps | `@.Statements1. `@object add: `@arg. `@.Statements2]'
+	self
+		replace: '`@collection
+					do: [:`each |
+						| `@temps |
+						`@.Statements.
+						`@object add: `@arg ]'
+		with: '`@object
+					addAll: (`@collection
+									collect: [:`each |
+										| `@temps |
+										`@.Statements.
+										`@arg ])';
 
-		'`@collection do: [:`each | | `@temps |
-			`@.Statements1.
-			`@condition ifTrue: [| `@blockTemps |
-					`@.BlockStatements1.
-					`@object add: `each.
-					`@.BlockStatements2].
-			`@.Statements2]'
+		replace: '`@collection
+						do: [ :`each |
+							| `@temps |
+							`@.Statements.
+							`@condition ifTrue: [ `@object add: `@arg ] ]'
+		with: '`@object
+					addAll: (`@collection
+								select: [ :`each |
+									| `@temps |
+									`@.Statements.
+									`@condition ] )';
 
-		'`@collection do: [:`each | | `@temps |
-			`@.Statements1.
-			`@condition ifFalse: [| `@blockTemps |
-					`@.BlockStatements1.
-					`@object add: `each.
-					`@.BlockStatements2].
-			`@.Statements2]' )
+		replace: '`@collection
+						do: [ :`each |
+							| `@temps |
+							`@.Statements.
+							`@condition ifFalse: [ `@object add: `@arg ] ]'
+		with: '`@object
+					addAll: (`@collection
+								reject: [ :`each |
+									| `@temps |
+									`@.Statements.
+									`@condition ] )'
 ]

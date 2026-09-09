@@ -27,6 +27,21 @@ BlockClosureTest >> setUp [
 	contextOfaBlock := thisContext
 ]
 
+{ #category : 'tests' }
+BlockClosureTest >> testCannotReturn [
+
+	| block p semaphore |
+	semaphore := Semaphore new.
+	p := [ 
+		block := self blockWithNonLocalReturn: #result.
+		semaphore signal ] fork.
+	semaphore wait.
+
+	self should: [ block value ] raise: BlockCannotReturn withExceptionDo: [ :err |
+		self assert: err result equals: #result.
+		self assert: err home equals: block home ]
+]
+
 { #category : 'tests - evaluating' }
 BlockClosureTest >> testCull [
 	[  ] cull: 1.
@@ -216,10 +231,12 @@ BlockClosureTest >> testHomeMethod [
 
 { #category : 'tests - testing' }
 BlockClosureTest >> testIsClean [
+
 	| local |
 	local := #testIsClean.
 	self assert: [] isClean. "closes over nothing at all"
 	self assert: [thisContext] isClean. "we can access the context"
+	self assert: [BlockClosure] isClean. "we can access globals"
 	self assert: [
 		| local2 | true ifTrue: [local2 := 1 ] ] isClean. "optimized blocks are clean"
 	self assert: [:a :b| a < b] isClean. "accesses only arguments"
@@ -246,12 +263,13 @@ BlockClosureTest >> testLiteralEqual [
 	| methodToTest compiledBlocks |
 	methodToTest := self class compiler
 		options: #(+ optionCleanBlockClosure);
-		compile: 'twoCleanBlocks
+		source: 'twoCleanBlocks
 
 	| value |
 	[3].
 	"just two clean blocks"
-	[3].'.
+	[3].';
+		compileOrFail.
 
 	compiledBlocks := methodToTest literals select: [ :each | each isBlock ].
 	self assert: compiledBlocks size equals: 2.
@@ -356,7 +374,7 @@ BlockClosureTest >> testOnForkErrorTakesLessThanOneSecond [
 		skip.
 
 	self flag: 'The following line makes the test pass under headless linux. Everywhere else this test works'.
-	Smalltalk os isUnix ifTrue: [ (Delay forMilliseconds: 1) wait ].
+	OSPlatform current isUnix ifTrue: [ (Delay forMilliseconds: 1) wait ].
 
 	sema := Semaphore new.
 	[ 1 / 0 ] on: Exception fork: [ sema signal ].
@@ -403,19 +421,8 @@ BlockClosureTest >> testOneArgument [
 
 { #category : 'tests - printing' }
 BlockClosureTest >> testPrintOn [
-	self assert: (RBParser parseExpression: [ 1 + 2 ] printString) equals: (RBParser parseExpression: '[ 1 + 2 ]')
-]
 
-{ #category : 'tests - printing' }
-BlockClosureTest >> testPrintOnBlockDefinedInMethodWithoutSourceCode [
-	| method block |
-	method := OpalCompiler new compile: 'method ^ [ 1 + 2 ]'.
-	method removeProperty: #source.
-	self deny: method hasSourceCode.
-	
-	block := method valueWithReceiver: nil.
-	"we compare the ast to not depend on pretty printer settings"
-	self assert: (RBParser parseExpression: block printString) equals: (RBParser parseExpression: '[ 1 + 2 ]').
+	self assert: [ 1 + 2 ] printString equals: '[ ] in BlockClosureTest>>#testPrintOn'
 ]
 
 { #category : 'tests' }
@@ -426,99 +433,6 @@ BlockClosureTest >> testSetUp [
 	self assert: aBlock receiver equals: self.
 	"Depending on the closure implementation, it's either a compiled block, a compiled method or nil."
 	self assert: (aBlock method isNil or: [ aBlock method isKindOf: CompiledCode ])
-]
-
-{ #category : 'tests' }
-BlockClosureTest >> testSupplyAnswerOfFillInTheBlank [
-
-	self
-		assert:
-			([ ProvideAnswerNotification signal: 'Your favorite color?' ]
-				 valueSupplyingAnswer: #( 'Your favorite color?'
-				    'blue' ))
-		equals: 'blue'
-]
-
-{ #category : 'tests' }
-BlockClosureTest >> testSupplyAnswerOfFillInTheBlankUsingDefaultAnswer [
-
-	self
-		assert: ([
-			 (ProvideAnswerNotification signal: 'Your favorite color?')
-			 == #default ifTrue: [ 'red' ] ] valueSupplyingAnswer:
-				 #( 'Your favorite color?' #default ))
-		equals: 'red'
-]
-
-{ #category : 'tests' }
-BlockClosureTest >> testSupplyAnswerThroughNestedBlocks [
-
-	self should: [true = ([[self confirm: 'You like Smalltalk?']
-		valueSupplyingAnswer: #('Blub' false)] valueSupplyingAnswer: #('Smalltalk' true))]
-]
-
-{ #category : 'tests' }
-BlockClosureTest >> testSupplyAnswerUsingOnlySubstringOfQuestion [
-
-	self should: [false = ([self confirm: 'You like Smalltalk?']
-		valueSupplyingAnswer: #('like' false))]
-]
-
-{ #category : 'tests' }
-BlockClosureTest >> testSupplyAnswerUsingRegexMatchOfQuestion [
-
-	(String includesSelector: #matchesRegex:) ifFalse: [^ self].
-
-	self should: [true = ([self confirm: 'You like Smalltalk?']
-		valueSupplyingAnswer: #('.*Smalltalk\?' true))]
-]
-
-{ #category : 'tests' }
-BlockClosureTest >> testSupplyAnswerUsingTraditionalMatchOfQuestion [
-
-	self should: [true = ([self confirm: 'You like Smalltalk?']
-		valueSupplyingAnswer: #('*Smalltalk#' true))]
-]
-
-{ #category : 'tests' }
-BlockClosureTest >> testSupplySameAnswerToAllQuestions [
-
-	self should: [true = ([self confirm: 'You like Smalltalk?'] valueSupplyingAnswer: true)].
-
-	self should: [#(true true) = ([{self confirm: 'One'. self confirm: 'Two'}] valueSupplyingAnswer: true)]
-]
-
-{ #category : 'tests' }
-BlockClosureTest >> testSupplySeveralAnswersToSeveralQuestions [
-
-	self should: [#(false true) = ([{self confirm: 'One'. self confirm: 'Two'}]
-		valueSupplyingAnswers: #( ('One' false) ('Two' true) ))].
-
-	self should: [#(true false) = ([{self confirm: 'One'. self confirm: 'Two'}]
-		valueSupplyingAnswers: #( ('One' true) ('Two' false) ))]
-]
-
-{ #category : 'tests' }
-BlockClosureTest >> testSupplySpecificAnswerToQuestion [
-
-	self should: [false = ([self confirm: 'You like Smalltalk?']
-		valueSupplyingAnswer: #('You like Smalltalk?' false))]
-]
-
-{ #category : 'tests' }
-BlockClosureTest >> testSuppressInform [
-
-	self should: [[nil inform: 'Should not see this message or this test failed!'] valueSuppressingAllMessages isNil]
-]
-
-{ #category : 'tests' }
-BlockClosureTest >> testSuppressInformUsingStringMatchOptions [
-
-	self should: [([nil inform: 'Should not see this message or this test failed!'] valueSuppressingMessages: #('Should not see this message or this test failed!')) isNil].
-
-	self should: [([nil inform: 'Should not see this message or this test failed!'] valueSuppressingMessages: #('not see this message')) isNil].
-
-	self should: [([nil inform: 'Should not see this message or this test failed!'] valueSuppressingMessages: #('*message*failed#')) isNil]
 ]
 
 { #category : 'tests - evaluating' }

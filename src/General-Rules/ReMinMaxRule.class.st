@@ -24,8 +24,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReMinMaxRule class >> group [
-	^ 'Coding Idiom Violation'
+ReMinMaxRule class >> groupSelector [
+
+	^ #codingIdiomViolationGroup
 ]
 
 { #category : 'accessing' }

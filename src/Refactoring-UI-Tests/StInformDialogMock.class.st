@@ -7,6 +7,13 @@ Class {
 
 { #category : 'accessing' }
 StInformDialogMock >> label: aString [
+	"Spec is migrating its API from #label: to message:. Delete me once all users will be updated."
+
+	^ self message: aString
+]
+
+{ #category : 'accessing' }
+StInformDialogMock >> message: aString [
 
 	^ 'nothing'
 ]

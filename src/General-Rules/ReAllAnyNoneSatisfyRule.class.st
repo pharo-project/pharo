@@ -24,8 +24,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReAllAnyNoneSatisfyRule class >> group [
-	^ 'Coding Idiom Violation'
+ReAllAnyNoneSatisfyRule class >> groupSelector [
+
+	^ #codingIdiomViolationGroup
 ]
 
 { #category : 'accessing' }

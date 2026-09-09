@@ -49,6 +49,14 @@ CmCommandGroup >> commandOrGroupNamed: aString [
 ]
 
 { #category : 'public-api' }
+CmCommandGroup >> commandOrGroupNamed: aString ifFound: aBlock [
+
+	^ entries
+		  detect: [ :commandOrRegister | commandOrRegister name = aString ]
+		  ifFound: aBlock
+]
+
+{ #category : 'public-api' }
 CmCommandGroup >> commands [
 	^ entries select: [ :entry | entry isCommand ]
 ]

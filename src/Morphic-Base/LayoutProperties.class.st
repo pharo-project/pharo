@@ -72,7 +72,7 @@ LayoutProperties >> initialize [
 	disableLayout := false
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 LayoutProperties >> initializeFrom: defaultProvider [
 	"Initialize the receiver from a default provider"
 	self hResizing: defaultProvider hResizing.

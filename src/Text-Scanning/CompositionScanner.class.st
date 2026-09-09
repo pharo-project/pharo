@@ -270,7 +270,7 @@ CompositionScanner >> tab [
 	^false
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 CompositionScanner >> wantsColumnBreaks: aBoolean [
 
 	wantsColumnBreaks := aBoolean

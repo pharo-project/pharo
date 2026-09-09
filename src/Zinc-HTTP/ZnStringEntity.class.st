@@ -170,7 +170,7 @@ ZnStringEntity >> printContentsOn: stream [
 			nextPutAll: self string ]
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnStringEntity >> readFrom: stream [
 	| buffer totalRead read readStream stringStream total |
 	total := self contentLength.

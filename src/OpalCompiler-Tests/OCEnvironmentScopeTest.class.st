@@ -13,23 +13,25 @@ Class {
 OCEnvironmentScopeTest >> testCompileWithEnvironment [
 	"testing compiling with environments other then Smalltalk globals. Note: the class in the environment has to point to the environment. And we have to compile for a class in the environment"
 
-
 	| environment method return |
-	environment := SystemDictionary new.
+	environment := SystemEnvironment new.
 	environment at: #MyClass put: Point copy.
 	(environment at: #MyClass) environment: environment.
 	method := OpalCompiler new
 					environment: environment;
 					class: (environment at: #MyClass);
-					compile: 'tt ^MyClass'.
+					source: 'tt ^MyClass';
+					compileOrFail.
 	return := method valueWithReceiver: nil.
 	self assert: return name equals: 'Point'.
+
 	"I d not know about anything else"
 	method := OpalCompiler new
 					environment: environment;
 					class: (environment at: #MyClass);
 					permitFaulty: true;
-					compile: 'tt ^Object'.
+					source: 'tt ^Object';
+					compileOrFail.
 	self should: [ method valueWithReceiver: nil ] raise: UndeclaredVariableRead
 ]
 
@@ -37,9 +39,10 @@ OCEnvironmentScopeTest >> testCompileWithEnvironment [
 OCEnvironmentScopeTest >> testCompileWithProductionEnvironment [
 	| environment method return |
 	environment := {#CompiledMethod -> MyCompiledMethodForTesting} asDictionary.
-	method := Smalltalk compiler
+	method := OpalCompiler new
 					productionEnvironment: environment;
-					compile: 'tt ^1+2'.
+					source: 'tt ^1+2';
+					compileOrFail.
 
 	self assert: method class equals: MyCompiledMethodForTesting.
 	return := method valueWithReceiver: nil.

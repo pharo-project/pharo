@@ -25,32 +25,6 @@ ClassDescription class >> isAbstract [
 	^ self == ClassDescription
 ]
 
-{ #category : 'accessing - method dictionary' }
-ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: protocol [
-
-	<reflection: 'Class structural modification - Selector/Method modification'>
-	| priorMethod priorOrigin oldProtocol newProtocol |
-	self compiledMethodAt: selector ifPresent: [ :method |
-		priorMethod := method.
-		priorOrigin := method origin ].
-
-	oldProtocol := self protocolOfSelector: selector.
-	self codeChangeAnnouncer prevent: MethodRecategorized during: [ self classify: selector under: protocol ].
-	newProtocol := self protocolOfSelector: selector.
-
-	self addSelectorSilently: selector withMethod: compiledMethod.
-
-	self isAnonymous ifTrue: [ ^ self ].
-
-	(priorMethod isNil or: [ priorOrigin ~= compiledMethod origin ])
-		ifTrue: [
-			(self packageOrganizer packageForProtocol: newProtocol from: self) addMethod: compiledMethod.
-			self codeChangeAnnouncer announce: (MethodAdded method: compiledMethod) ]
-		ifFalse: [ "If protocol changed and someone is from different package, I need to throw a method recategorized"
-			newProtocol = oldProtocol ifFalse: [ self announceRecategorizationOf: compiledMethod oldProtocol: oldProtocol ].
-			self codeChangeAnnouncer announce: (MethodModified methodChangedFrom: priorMethod to: compiledMethod oldProtocol: oldProtocol) ]
-]
-
 { #category : 'instance variables' }
 ClassDescription >> addInstVarNamed: aString [
 	"Add the argument, aString, as one of the receiver's instance variables."
@@ -62,11 +36,11 @@ ClassDescription >> addInstVarNamed: aString [
 ClassDescription >> addProtocol: aProtocol [
 
 	| oldProtocols protocol protocolName |
-	protocolName := aProtocol isString ifTrue: [ aProtocol ] ifFalse: [ aProtocol name ].
+	protocolName := aProtocol isString ifTrue: [ aProtocol trimBoth ] ifFalse: [ aProtocol name ].
+	protocolName ifEmpty: [ protocolName := Protocol unclassified ].
+	(self hasProtocol: protocolName) ifTrue: [ ^ self protocolNamed: protocolName ].
 
-	(self hasProtocol: aProtocol) ifTrue: [ ^ self protocolNamed: protocolName ].
-
-	protocol := Protocol named: protocolName.
+	protocol := Protocol named: protocolName class: self.
 
 	oldProtocols := self protocolNames copy.
 
@@ -76,27 +50,6 @@ ClassDescription >> addProtocol: aProtocol [
 	protocol isExtensionProtocol ifTrue: [ self packageOrganizer ensurePackageOfExtensionProtocol: protocol ].
 	self codeChangeAnnouncer  announce: (ProtocolAdded in: self protocol: protocol).
 	^ protocol
-]
-
-{ #category : 'accessing - method dictionary' }
-ClassDescription >> addSelector: selector withMethod: compiledMethod [
-	<reflection: 'Class structural modification - Selector/Method modification'>
-	self addAndClassifySelector: selector withMethod: compiledMethod inProtocol: nil
-]
-
-{ #category : 'accessing - method dictionary' }
-ClassDescription >> addSelectorSilently: selector withMethod: compiledMethod [
-
-	<reflection: 'Class structural modification - Selector/Method modification'>
-	super addSelectorSilently: selector withMethod: compiledMethod.
-	self instanceSide noteAddedSelector: selector meta: self isMeta
-]
-
-{ #category : 'instance variables' }
-ClassDescription >> addSlot: aSlot [
-
-	<reflection: 'Class structural modification - Slot modification'>
-	^self subclassResponsibility
 ]
 
 { #category : 'accessing - instances and variables' }
@@ -151,8 +104,8 @@ ClassDescription >> allUnreferencedInstanceVariables [
 
 { #category : 'accessing - method dictionary' }
 ClassDescription >> announceRecategorizationOf: compiledMethod oldProtocol: oldProtocol [
-
 	"We do not want to do anything when it comes from Traits."
+
 	compiledMethod isFromTrait ifTrue: [ ^ self ].
 
 	self packageOrganizer repackageMethod: compiledMethod oldProtocol: oldProtocol newProtocol: compiledMethod protocol.
@@ -216,6 +169,15 @@ Internal Representation and Key Implementation Points.'.
 	^ stream contents
 ]
 
+{ #category : 'subclass creation' }
+ClassDescription >> classInstaller [
+	"Answer the class responsible of creating subclasses of myself in the system."
+
+	^ self isAnonymous
+		  ifTrue: [ Smalltalk anonymousClassInstaller ]
+		  ifFalse: [ Smalltalk classInstaller ]
+]
+
 { #category : 'accessing - parallel hierarchy' }
 ClassDescription >> classSide [
 	"Return the metaclass of the couple class/metaclass. Useful to avoid explicit test."
@@ -261,7 +223,6 @@ ClassDescription >> classify: selector under: aProtocol [
 	
 	"If we try to classify the method as an extension of its own package, just unclassify the method to avoid any weird state where the method could be considered as an extension or not depending on the interpretation."
 	(self isProtocolExtensionFromTheSamePackage: aProtocol) ifTrue: [
-		ExtensionPointsOwningPackageNotification signalFor: self package name.
 		^ self classify: selector under: Protocol unclassified ].
 
 	(newProtocol := self ensureProtocol: aProtocol) = oldProtocol ifTrue: [ ^ self ].
@@ -276,94 +237,23 @@ ClassDescription >> classify: selector under: aProtocol [
 	oldProtocol ifNotNil: [ self notifyOfRecategorizedSelector: selector from: oldProtocol to: newProtocol ]
 ]
 
-{ #category : 'compiling' }
-ClassDescription >> compile: sourceCode classified: protocol [
-	"Compile the source code in the context of the receiver and install the result in the receiver's method dictionary under the given protocol (this can be a protocol or a protocol name).
+{ #category : 'accessing - comment' }
+ClassDescription >> comment [
+
+	self subclassResponsibility
+]
+
+{ #category : 'accessing - comment' }
+ClassDescription >> commentStamp [
 	
-	The argument sourceCode is either a string or an object that converts to a string or a PositionableStream on an object that converts to a string."
-
-	^ self compile: sourceCode classified: protocol notifying: nil
+	self subclassResponsibility
 ]
 
-{ #category : 'compiling' }
-ClassDescription >> compile: sourceCode classified: protcol notifying: requestor [
-
-	^ self
-		  compile: sourceCode
-		  classified: protcol
-		  withStamp: nil
-		  notifying: requestor
-]
-
-{ #category : 'compiling' }
-ClassDescription >> compile: sourceCode classified: protocol withStamp: changeStamp notifying: requestor [
-
-	^ self
-		  compile: sourceCode
-		  classified: protocol
-		  withStamp: changeStamp
-		  notifying: requestor
-		  logSource: true
-]
-
-{ #category : 'compiling' }
-ClassDescription >> compile: sourceCode classified: protocol withStamp: changeStamp notifying: requestor logSource: logSource [
-
-	| method |
-
-	method := self compiler
-		source: sourceCode;
-		requestor: requestor;
-		failBlock: (requestor ifNotNil: [ [ ^ nil ] ]); "no failblock if no requestor"
-		permitUndeclared: (requestor isNil); "compatibility: permit undeclared if no requestor"
-		protocol: protocol;
-		changeStamp: changeStamp;
-		logged: logSource;
-		install.
-
-	^ method selector
-]
-
-{ #category : 'compiling' }
-ClassDescription >> compile: sourceCode notifying: requestor [
-	"Refer to the comment in Behavior|compile:notifying:."
-
-	^ self compile: sourceCode classified: nil notifying: requestor
-]
-
-{ #category : 'compiling' }
-ClassDescription >> compileSilently: sourceCode [
-	"Compile the code and classify the resulting method in the given protocol, leaving no trail in the system log, nor in any change set, nor in the 'recent submissions' list. This should only be used when you know for sure that the compilation will succeed."
-
-	^ self compileSilently: sourceCode classified: 'not defined protocol' notifying: nil
-]
-
-{ #category : 'compiling' }
-ClassDescription >> compileSilently: sourceCode classified: protocolName [
-	"Compile the code and classify the resulting method in the given protocol, leaving no trail in the system log, nor in any change set, nor in the 'recent submissions' list. This should only be used when you know for sure that the compilation will succeed."
-
-	^ self compileSilently: sourceCode classified: protocolName notifying: nil
-]
-
-{ #category : 'compiling' }
-ClassDescription >> compileSilently: sourceCode classified: protocolName notifying: requestor [
-	"Compile the code and classify the resulting method in the given protocol, leaving no trail in the system log, nor in any change set, nor in the 'recent submissions' list."
-
-	^ self codeChangeAnnouncer suspendAllWhile: [ self compile: sourceCode classified: protocolName notifying: requestor ]
-]
-
-{ #category : 'copying' }
-ClassDescription >> copyAllMethodsFrom: originClass [
-	"Install a copy of each methods of originClass in myself under the same protocol."
-
-	originClass methods do: [ :aMethod |
-		(self includesLocalSelector: aMethod selector) ifTrue: [
-			aMethod sourceCode asString = (self sourceCodeAt: aMethod selector) asString ifFalse: [
-				self error: ('{1}>>{2} will be redefined if you proceed.' format: {
-							 self name.
-							 aMethod selector }) ] ].
-
-		self compile: aMethod sourceCode classified: aMethod protocol ]
+{ #category : 'accessing - class hierarchy' }
+ClassDescription >> commonSuperclassWith: aClass [
+	"return the next common superclass between me and aClass. If I am the superclass of aClass, that is me"
+	<reflection: 'Class structural inspection - Iterating and querying hierarchy'>
+	^ self withAllSuperclasses detect: [ :class | (aClass allSuperclasses includes: class) ] ifNone: nil
 ]
 
 { #category : 'slots' }
@@ -450,9 +340,9 @@ ClassDescription >> ensureProtocol: aProtocol [
 ClassDescription >> extendingPackages [
 	"the extending packages of a class are the packages that extend it."
 
-	^ (self localMethods , self classSide localMethods
-		   select: [ :each | each isExtension ]
-		   thenCollect: [ :each | each extensionPackage ]) asIdentitySet
+	^ (self localMethods , self classSide localMethods select: [ :each | each isExtension ])
+		  flatCollect: [ :each | each extensionPackages ]
+		  as: IdentitySet
 ]
 
 { #category : 'protocols' }
@@ -582,7 +472,7 @@ ClassDescription >> instanceVariablesOn: aStream [
 	"Write my instance variable names separated by spaces on the argument."
 
 	self localSlots
-		do: [ :each | aStream nextPutAll: each name asString]
+		do: [ :each | aStream nextPutAll: each name ]
 		separatedBy: [ aStream space ]
 ]
 
@@ -693,6 +583,12 @@ ClassDescription >> localSlots [
 	^ self slots select: [ :aSlot | aSlot isDefinedByOwningClass ]
 ]
 
+{ #category : 'organization' }
+ClassDescription >> methodInstaller [
+
+	^ OCAnnouncingMethodInstaller new forExtendedBehavior
+]
+
 { #category : 'protocols' }
 ClassDescription >> methodsInProtocol: protocol [
 
@@ -736,11 +632,6 @@ ClassDescription >> noteAddedSelector: aSelector meta: isMeta [
 	"A hook allowing some classes to react to adding of certain selectors"
 ]
 
-{ #category : 'compiling' }
-ClassDescription >> noteCompilationOf: aSelector meta: isMeta [
-	"A hook allowing some classes to react to recompilation of certain selectors"
-]
-
 { #category : 'organization updating' }
 ClassDescription >> notifyOfRecategorizedSelector: selector from: oldProtocol to: newProtocol [
 	"If compiled method is not there, it meens it has been removed, not recategorized... so I skip
@@ -781,7 +672,8 @@ ClassDescription >> package: aPackage [
 { #category : 'accessing - packages' }
 ClassDescription >> package: aPackage tag: aTag [
 
-	^ (self packageOrganizer ensureTag: aTag inPackage: aPackage) addClass: self
+	self deprecated: 'Please use directly the package organizer'.
+	^ ((self packageOrganizer ensurePackage: aPackage) ensureTag: aTag) addClass: self
 ]
 
 { #category : 'accessing - packages' }
@@ -907,12 +799,14 @@ ClassDescription >> removeInstVarNamed: aString [
 
 { #category : 'protocols' }
 ClassDescription >> removeNonexistentSelectorsFromProtocols [
-	"For each protocol, remove the selectors that are not present in the class."
+	"For each protocol, remove the selectors that are not present in the class.
+	
+	This is used when rebuilding a class. I remove all selectors coming from traits."
 
 	self protocols do: [ :protocol |
-		protocol methodSelectors
-			reject: [ :selector | self includesSelector: selector ]
-			thenDo: [ :selector | self removeFromProtocols: selector ] ]
+			protocol methodSelectors
+				reject: [ :selector | self includesSelector: selector ]
+				thenDo: [ :selector | protocol removeMethodSelector: selector ] ]
 ]
 
 { #category : 'accessing - packages' }
@@ -958,8 +852,18 @@ ClassDescription >> removeSelector: selector [
 	dictionary of the receiver, if it is there. Answer nil otherwise."
 
 	<reflection: 'Class structural modification - Selector/Method modification'>
+	
+	^ self removeSelector: selector logged: true
+]
+
+{ #category : 'accessing - method dictionary' }
+ClassDescription >> removeSelector: selector logged: aBoolean [
+	"Remove the message whose selector is given from the method
+	dictionary of the receiver, if it is there. Answer nil otherwise."
+
+	<reflection: 'Class structural modification - Selector/Method modification'>
 	| method origin |
-	method := self compiledMethodAt: selector ifAbsent: [ ^ nil ].
+	method := self compiledMethodAt: selector.
 	origin := method origin.
 
 	"Save the protocol in the properties so that method can still answer their protocol after been removed."
@@ -969,13 +873,7 @@ ClassDescription >> removeSelector: selector [
 
 	super removeSelector: selector.
 
-	self codeChangeAnnouncer methodRemoved: method origin: origin
-]
-
-{ #category : 'instance variables' }
-ClassDescription >> removeSlot: aSlot [
-	<reflection: 'Class structural modification - Slot modification'>
-	^self subclassResponsibility
+	aBoolean ifTrue: [ self codeChangeAnnouncer methodRemoved: method origin: origin ].
 ]
 
 { #category : 'protocols' }
@@ -988,7 +886,6 @@ ClassDescription >> renameProtocol: anOldProtocol as: aNewProtocol [
 	
 	"We should not be able to have a protocol that is an extension of the same class so let's skip the rename."
 	(self isProtocolExtensionFromTheSamePackage: aNewProtocol) ifTrue: [ 
-		ExtensionPointsOwningPackageNotification signalFor: self package name.
 		^ self ].
 
 		oldProtocol := self ensureProtocol: anOldProtocol.

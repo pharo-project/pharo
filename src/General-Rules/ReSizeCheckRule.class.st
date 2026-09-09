@@ -10,8 +10,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReSizeCheckRule class >> group [
-	^ 'Optimization'
+ReSizeCheckRule class >> groupSelector [
+
+	^ #optimizationGroup
 ]
 
 { #category : 'accessing' }

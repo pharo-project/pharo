@@ -209,21 +209,6 @@ SequenceableCollection >> asDigitsToPower: anInteger do: aBlock [
 	self asDigitsAt: 1 in: aCollection do: aBlock
 ]
 
-{ #category : 'converting' }
-SequenceableCollection >> asStringWithCr [
-	"Convert to a string with returns between items.  Elements are
-usually strings.
-	 Useful for labels for PopUpMenus."
-	| labelStream |
-	labelStream := (String new: 200) writeStream.
-	self do: [:each |
-		each isString
-			ifTrue: [labelStream nextPutAll: each; cr]
-			ifFalse: [each printOn: labelStream. labelStream cr]].
-	self size > 0 ifTrue: [labelStream skip: -1].
-	^ labelStream contents
-]
-
 { #category : 'accessing' }
 SequenceableCollection >> at: index ifAbsent: exceptionBlock [
 	"Answer the element at my position index. If I do not contain an element
@@ -398,17 +383,6 @@ SequenceableCollection >> beginsWith: aSequenceableCollection [
 SequenceableCollection >> beginsWithAnyOf: aCollection [
 	"Return true if the receiver starts with any of the elements in aCollection."
 	^aCollection anySatisfy:[:prefix| self beginsWith: prefix]
-]
-
-{ #category : 'enumerating' }
-SequenceableCollection >> bind: aBlock [
-
-	"Extract items from the receiver and use them as arguments of aBlock. Signal an error
-	(ArgumentsCountMismatch) when the arguments count of aBlock does not match the receiver size."
-
-	"(#(1 2 3) bind: [ :first :second :third | first + second + third ]) >>> 6"
-
-	^ aBlock valueWithArguments: self
 ]
 
 { #category : 'enumerating' }
@@ -1272,6 +1246,16 @@ SequenceableCollection >> indexOf: anElement ifAbsent: exceptionBlock [
 ]
 
 { #category : 'accessing' }
+SequenceableCollection >> indexOf: anElement ifAbsent: exceptionBlock using: comparisonBlock [
+	"Answer the index of the first occurrence of anElement within the receiver. If the receiver does not contain anElement, answer the
+	result of evaluating the argument, exceptionBlock."	
+	"	(#(a b c d e) indexOf: #c ifAbsent: 7 using: [ : a : b | a = b ]) >>> 3. "
+	" 	(#(a b c d e) indexOf: #x ifAbsent: 7 using: [ : a : b | a = b ]) >>> 7 "
+
+	^ self indexOf: anElement startingAt: 1 ifAbsent: exceptionBlock using: comparisonBlock
+]
+
+{ #category : 'accessing' }
 SequenceableCollection >> indexOf: anElement startingAt: start [
        "Answer the index of the first occurrence of anElement after start within the receiver. If the receiver does not contain anElement, answer 0."
 	"(#(a b c d e) indexOf: #c startingAt: 2) >>> 3"
@@ -1291,6 +1275,21 @@ SequenceableCollection >> indexOf: anElement startingAt: start ifAbsent: excepti
 	start to: self size do:
 		[:index |
 		(self at: index) = anElement ifTrue: [^ index]].
+	^ exceptionBlock value
+]
+
+{ #category : 'accessing' }
+SequenceableCollection >> indexOf: anElement startingAt: start ifAbsent: exceptionBlock using: comparisonBlock [
+	"Answer the index of the first occurrence of anElement after start
+	within the receiver. If the receiver does not contain anElement,
+	answer the 	result of evaluating the argument, exceptionBlock."
+	"	(#(a b c d e) indexOf: #c startingAt: 2 ifAbsent: 7 using: [ : a : b | a = b ]) >>> 3. "
+	" 	(#(a b c d e) indexOf: #x startingAt: 2 ifAbsent: 7 using: [ : a : b | a = b ]) >>> 7 "
+
+
+	start to: self size do: [ : index | 
+		(comparisonBlock value: (self at: index) value: anElement) 
+			ifTrue: [ ^ index ] ].
 	^ exceptionBlock value
 ]
 
@@ -1535,6 +1534,11 @@ SequenceableCollection >> lastIndexOfAnyOf: aCollection startingAt: lastIndex if
 	^ exceptionBlock value
 ]
 
+{ #category : 'comparing' }
+SequenceableCollection >> max: aSelectorOrOneArgBlock [
+	^ (self collect: aSelectorOrOneArgBlock) max
+]
+
 { #category : 'sorting' }
 SequenceableCollection >> mergeFirst: first middle: middle last: last into: dst by: aBlock [
 	"Private. Merge the sorted ranges [first..middle] and [middle+1..last]
@@ -1608,6 +1612,11 @@ SequenceableCollection >> middle [
 	"#(a b c d) middle >>> #c"
 
 	^ self at: self size // 2 + 1
+]
+
+{ #category : 'comparing' }
+SequenceableCollection >> min: aSelectorOrOneArgBlock [
+	^ (self collect: aSelectorOrOneArgBlock) min
 ]
 
 { #category : 'accessing' }

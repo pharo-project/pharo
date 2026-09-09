@@ -115,14 +115,16 @@ CharacterTest >> testPrintString [
 	self assert: Character space printString equals: 'Character space'.
 
 	self assert: (Character value: 0) printString equals: 'Character null'.
-	self assert: (Character value: 17) printString equals: 'Character value: 17'
+	self assert: (Character value: 17) printString equals: 'Character value: 17'.
+	self assert: (Character value: 16rD800) printString equals: 'Character value: 55296'.
+	self assert: (Character value: 16rDFFF) printString equals: 'Character value: 57343'.
 ]
 
 { #category : 'tests' }
 CharacterTest >> testPrintStringAll [
 
 	Character allByteCharacters do: [ :each |
-		self assert: (self class compiler evaluate: each printString) equals: each ]
+		self assert: (OpalEvaluator new evaluate: each printString) equals: each ]
 ]
 
 { #category : 'tests' }
@@ -142,12 +144,14 @@ CharacterTest >> testStoreString [
 	self assert: Character space storeString equals: 'Character space'.
 	self assert: (Character value: 0) storeString equals: 'Character null'.
 
-	self assert: (Character value: 17) storeString equals: '(Character value: 17)'
+	self assert: (Character value: 17) storeString equals: '(Character value: 17)'.
+	self assert: (Character value: 16rD800) storeString equals: '(Character value: 55296)'.
+	self assert: (Character value: 16rDFFF) storeString equals: '(Character value: 57343)'.
 ]
 
 { #category : 'tests' }
 CharacterTest >> testStoreStringAll [
 
 	Character allByteCharacters do: [ :each |
-		self assert: (self class compiler evaluate: each storeString) equals: each ]
+		self assert: (OpalEvaluator new evaluate: each storeString) equals: each ]
 ]

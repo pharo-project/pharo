@@ -35,11 +35,3 @@ SycCmNewClassCreationCommand >> isApplicable [
 
 	^ false
 ]
-
-{ #category : 'preparation' }
-SycCmNewClassCreationCommand >> prepareFullExecution [
-
-	super prepareFullExecution.
-	newClassName := UIManager default request: 'Name of new class'.
-	newClassName isEmptyOrNil | (newClassName = targetClass name) ifTrue: [ CmdCommandAborted signal]
-]

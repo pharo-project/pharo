@@ -37,7 +37,7 @@ SDL_Palette >> colors [
 { #category : 'accessing - structure variables' }
 SDL_Palette >> colors: anObject [
 	"This method was automatically generated"
-	handle pointerAt: OFFSET_COLORS put: anObject getHandle
+	handle pointerAt: OFFSET_COLORS put: anObject getHandle.
 ]
 
 { #category : 'accessing - structure variables' }

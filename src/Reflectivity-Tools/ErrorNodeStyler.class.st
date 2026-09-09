@@ -6,9 +6,27 @@ Class {
 	#tag : 'ErrorAndSemanticStyling'
 }
 
+{ #category : 'styling' }
+ErrorNodeStyler >> addIconStyle: aNode from: start to: stop color: aColor [
+
+	(self shouldStyleNode: aNode) ifFalse: [ ^ self ].
+	
+	renderer addDecoration: (IconStylerDecoration new
+		name: self stylerName;
+		interval: (start to: stop);
+		highlightColor: aColor;
+		icon: (self iconFor: aNode);
+		iconBlock: (self iconBlock: aNode);
+		title: (self iconLabel: aNode);
+		underline: true;
+		underlineColor: Color red;
+		yourself)
+]
+
 { #category : 'defaults' }
 ErrorNodeStyler >> highlightColor [
-	^nil
+
+	^ Color gray alpha: 0.1
 ]
 
 { #category : 'defaults' }
@@ -23,36 +41,30 @@ ErrorNodeStyler >> iconLabel: aNode [
 	^ aNode errorNotices first messageText
 ]
 
-{ #category : 'hooks' }
-ErrorNodeStyler >> segmentMorphClass [
-
-	^ RubUnderlinedSegmentMorph
-]
-
 { #category : 'visiting' }
 ErrorNodeStyler >> shouldStyleNode: aNode [
 	^ aNode isError and: [ aNode errorNotices isNotEmpty ]
 ]
 
+{ #category : 'private' }
+ErrorNodeStyler >> stylerName [
+
+	^ 'error'
+]
+
 { #category : 'visiting' }
 ErrorNodeStyler >> visitEnglobingErrorNode: anEnglobingNode [
 
-	| conf |
-
 	(self shouldStyleNode: anEnglobingNode) ifFalse: [ ^ super visitEnglobingErrorNode: anEnglobingNode ].
-
-	"Only add red underline at the error position (instead on the whole node)"
-	conf := RubConfigurationChange new.
-	conf configurationBlock: [ :text |
-		| r |
-		r := self segmentMorphClass from: anEnglobingNode errorPosition to: anEnglobingNode errorPosition.
-		text addSegment: r.
-		r label: (self iconLabelBlock: anEnglobingNode).
-		r icon: (self iconFor: anEnglobingNode).
-		r iconBlock: (self iconBlock: anEnglobingNode).
-		r color: self highlightColor.
-		r borderColor: self borderColor ].
-	textModel announce: conf.
-
+	renderer addDecoration: (IconStylerDecoration new
+			 name: self stylerName;
+			 interval: (anEnglobingNode errorPosition to: anEnglobingNode errorPosition);
+			 highlightColor: self highlightColor;
+			 underline: true;
+			 underlineColor: Color red;
+			 icon: (self iconFor: anEnglobingNode);
+			 iconBlock: (self iconBlock: anEnglobingNode);
+			 title: (self iconLabel: anEnglobingNode);
+			 yourself).
 	anEnglobingNode contents do: [ :each | self visitNode: each ]
 ]

@@ -33,7 +33,9 @@ ReflectiveMethod >> ast [
 
 { #category : 'evaluation' }
 ReflectiveMethod >> compileAST [
+
 	| method |
+	compiledMethod saveBcToASTCacheWithAST: ast.
 	OCASTSemanticCleaner clean: ast.
 	ast compilationContext
 		semanticAnalyzerClass: RFSemanticAnalyzer;
@@ -43,7 +45,7 @@ ReflectiveMethod >> compileAST [
 	"#generateMethod sets the generated method as a property, put back the old"
 	ast compiledMethod: compiledMethod.
 	method sourcePointer: compiledMethod sourcePointer.
-	^method.
+	^ method
 ]
 
 { #category : 'evaluation' }
@@ -103,18 +105,18 @@ ReflectiveMethod >> generatePrimitiveWrapper [
 	| wrappedMethod send wrapperMethod assignmentNode |
 	wrappedMethod := self compileAST.
 
-	send := RBMessageNode
-		        receiver: RBVariableNode selfNode
-		        selector: #rFwithArgs:executeMethod:
+	send := OCMessageNode
+		        receiver: OCVariableNode selfNode
+		        selector: (OCSelectorNode value: #rFwithArgs:executeMethod:)
 		        arguments: {
-				        (RBArrayNode statements: ast arguments).
-				        (RBLiteralNode value: self compiledMethod) }.
+				        (OCArrayNode statements: ast arguments).
+				        (OCLiteralNode value: self compiledMethod) }.
 
-	assignmentNode := RBAssignmentNode
-		                  variable: (RBVariableNode named: #RFReifyValueVar)
+	assignmentNode := OCAssignmentNode
+		                  variable: (OCVariableNode named: #RFReifyValueVar)
 		                  value: send.
 
-	wrapperMethod := RBMethodNode
+	wrapperMethod := OCMethodNode
 		                 selector: ast selector
 		                 arguments: ast arguments
 		                 body: assignmentNode asSequenceNode.
@@ -139,7 +141,7 @@ ReflectiveMethod >> increaseLinkCount [
 { #category : 'invalidate' }
 ReflectiveMethod >> installCompiledMethod [
 	self installMethod: compiledMethod.
-	ASTCache default at: compiledMethod put: ast
+	OCASTCache default at: compiledMethod put: ast
 ]
 
 { #category : 'invalidate' }
@@ -229,6 +231,10 @@ ReflectiveMethod >> printOn: aStream [
 ReflectiveMethod >> recompileAST [
 
 	compiledMethod := self compileAST.
+	"This is bad.
+	Reflectivity has its own method installation process
+	This makes us duplicate behavior in here to pass the properties of old methods to ones"
+	ast compiledMethod migratePersistingPropertiesIn: compiledMethod.
 	ast compiledMethod: compiledMethod.
 	compiledMethod reflectiveMethod: self
 ]

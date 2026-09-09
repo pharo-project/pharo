@@ -6,7 +6,7 @@ Class {
 	#tag : 'Test'
 }
 
-{ #category : 'tests' }
+{ #category : 'failure checking' }
 RBMoveTemporaryVariableDefinitionTransformationTest >> testMethodDoesNotExist [
 
 	self shouldFail: (RBMoveTemporaryVariableDefinitionTransformation
@@ -69,7 +69,7 @@ RBMoveTemporaryVariableDefinitionTransformationTest >> testMoveDefinitionIntoBlo
 							yourself')
 ]
 
-{ #category : 'tests' }
+{ #category : 'failure checking' }
 RBMoveTemporaryVariableDefinitionTransformationTest >> testNowhereToMove [
 
 	| transformation |
@@ -86,6 +86,32 @@ RBMoveTemporaryVariableDefinitionTransformationTest >> testNowhereToMove [
 ]
 
 { #category : 'tests' }
+RBMoveTemporaryVariableDefinitionTransformationTest >> testTempAccessedInTwoBlocksCannotSeeItsDefinitionMoved [
+
+	| transformation |
+	transformation := RBMoveTemporaryVariableDefinitionTransformation
+		                  variable: #temp
+		                  inMethod: #tempAccessedInTwoBlocksCannotSeeItsDefinitionMoved 
+		                  inClass: #RBClassDataForRefactoringTest.
+	self should: [ transformation generateChanges ] raise: RBRefactoringError.
+
+
+]
+
+{ #category : 'tests' }
+RBMoveTemporaryVariableDefinitionTransformationTest >> testTempDefCannotBeMoveInEachBlock2 [
+
+	| transformation |
+	transformation := RBMoveTemporaryVariableDefinitionTransformation
+		                  variable: #temp
+		                  inMethod: #tempDefCannotBeMoveInEachBlock2 
+		                  inClass: #RBClassDataForRefactoringTest.
+	self should: [ transformation generateChanges ] raise: RBRefactoringError.
+
+
+]
+
+{ #category : 'failure checking' }
 RBMoveTemporaryVariableDefinitionTransformationTest >> testVariableDoesNotExist [
 
 	self shouldFail: (RBMoveTemporaryVariableDefinitionTransformation

@@ -18,44 +18,6 @@ Class {
 	#tag : 'Streams'
 }
 
-{ #category : 'tests - manual' }
-StdioStreamTest class >> manualStdinTest [
-	"This test can be run headless to manually to check actual stdin.
-	It reads the input and confirms that #atEnd answers as expected and the number of characters read.
-
-	Example execution (from the shell prompt):
-
-		echo 'hello world' | pharo --headless Pharo.image eval 'StdioStreamTest manualStdinTest'
-
-		pharo --headless Pharo.image eval 'StdioStreamTest manualStdinTest' < /proc/cpuinfo
-
-		pharo --headless Pharo.image eval 'StdioStreamTest manualStdinTest'
-		# Type some text, enter and Ctrl-D"
-
-	| stdin stdout atEndBefore atEndAfter contents |
-
-	stdin := Stdio stdin.
-	stdout := ZnNewLineWriterStream on: Stdio stdout.
-	atEndBefore := stdin atEnd.
-	contents := stdin upToEnd.
-	atEndAfter := stdin atEnd.
-	stdout
-		<< '#atEnd (before): ';
-		<< atEndBefore displayString;
-		cr;
-		<< '#atEnd (after): ';
-		<< atEndAfter displayString;
-		cr;
-		<< 'Size: ';
-		<< contents size displayString;
-		cr;
-		<< 'Contents:';
-		cr; cr.
-	contents hexDumpOn: stdout max: 128.
-	stdout cr.
-	SmalltalkImage current snapshot: false andQuit: true
-]
-
 { #category : 'accessing' }
 StdioStreamTest class >> resources [
 

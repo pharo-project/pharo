@@ -794,6 +794,7 @@ Cursor class >> initXeq [
 { #category : 'class initialization' }
 Cursor class >> initialize [
 
+	self webLink. "Set the weblink cursor shape"
 	self createStandardCursors.
 	SessionManager default registerGuiClassNamed: self name
 ]

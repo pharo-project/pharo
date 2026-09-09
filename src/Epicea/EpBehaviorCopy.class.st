@@ -33,7 +33,7 @@ EpBehaviorCopy >> definition [
 	^ definition
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 EpBehaviorCopy >> initializeWithBehavior: aClass newName: aName [
 	self initialize.
 

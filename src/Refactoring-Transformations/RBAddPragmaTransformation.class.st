@@ -2,13 +2,15 @@
 I am responsible for adding a pragma inside a method. In this implementation, all pragma definition, e.g., '<selector: args>' must be described.
 
 Usage:
+```
 | transformation |
 transformation := (RBAddPragmaTransformation
 				pragma: '<pragaForTesting: 213>'
 				inMethod: #methodBefore
 				inClass: #RBAddPragmaTransformationTest)
-				transform.
-(ChangesBrowser changes: transformation model changes changes) open
+				generateChanges.
+(StRefactoringPreviewPresenter for: transformation) open
+```
 
 Preconditions:
 - the class exists,
@@ -101,19 +103,4 @@ RBAddPragmaTransformation >> privateTransform [
 	pragmaNode := self parserClass parsePragma: pragma.
 	methodTree addPragma: pragmaNode.
 	self definingClass compileTree: methodTree
-]
-
-{ #category : 'storing' }
-RBAddPragmaTransformation >> storeOn: aStream [
-
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream
-		nextPutAll: ' pragma: ''';
-		nextPutAll: pragma;
-		nextPutAll: ''' inMethod: ''';
-		nextPutAll: selector;
-		nextPutAll: ''' inClass: '.
-	class storeOn: aStream.
-	aStream nextPut: $)
 ]

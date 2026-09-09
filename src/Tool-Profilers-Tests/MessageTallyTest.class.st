@@ -48,6 +48,24 @@ MessageTallyTest >> testSampling1 [
 	self assert: tally process isNil
 ]
 
+{ #category : 'tests' }
+MessageTallyTest >> testSmokeTestExample [
+
+	[ self shouldnt: [ MessageTally example ] raise: Error ] ensure: [
+			self currentWorld submorphs
+				select: [ :m | m isSystemWindow and: [ m label includesSubstring: 'Spy Results' ] ]
+				thenDo: #delete ]
+]
+
+{ #category : 'tests' }
+MessageTallyTest >> testSmokeTestExampleSpyForSeconds [
+
+	[ self shouldnt: [ MessageTally exampleSpyForSeconds ] raise: Error ] ensure: [
+			self currentWorld submorphs
+				select: [ :m | m isSystemWindow and: [ m label includesSubstring: 'Spy Results' ] ]
+				thenDo: #delete ]
+]
+
 { #category : 'tallying' }
 MessageTallyTest >> testTallySends [
 	| tally thisMethod allProcesses processUsedByTally tallyForPrintString tallyForPrintStringBase blockToTest|

@@ -32,12 +32,6 @@ RGPackage >> extendedClassNames [
 ]
 
 { #category : '*Calypso-Ring' }
-RGPackage >> extendsClass: aClass [
-
-	^ self extendedClasses includes: aClass
-]
-
-{ #category : '*Calypso-Ring' }
 RGPackage >> extensionSelectorsForClass: aClass [
 
 	^ (self extensionMethods select: [ :each | each parent = aClass ]) collect: [:each | each name]

@@ -29,7 +29,7 @@ ReGenerateEqualAndHashDriverTest >> testGenerateEqualAndHashExistingImplementors
 	| driver rbClass driverChanges |
 
 	testingEnvironment := RBClassEnvironment class: self classForEqualAndHashExistingImplementors. 	
-	driver := ReGenerateEqualAndHashDriver basicNew. 
+	driver := ReGenerateEqualAndHashDriver new. 
 	self setUpDriver: driver.
 	driver scopes: { testingEnvironment }.
 	rbClass := testingEnvironment class.
@@ -37,13 +37,16 @@ ReGenerateEqualAndHashDriverTest >> testGenerateEqualAndHashExistingImplementors
 	self assert: (driver targetClass definesMethod: #hash).
 	self assert: (driver targetClass definesMethod: #=).
 
-	driver selectDialog selectedItems: #(#iVarA #iVarB).
-	driver runRefactoring.
+	SpWindowSimulateOpenModal 
+		value: [ :aDiag | 
+				aDiag presenter selectedItems: #(#name #iVarB). 
+				aDiag triggerOkAction ]
+		during: [ driver runRefactoring ].
 	driverChanges := driver refactoring changes.
 
 	self 
 		assert: driverChanges changes size 
-		equals: 4.
+		equals: 2.
 	self assertEmpty: driver refactoring failedApplicabilityPreconditions.
 	self 
 		assert: (driverChanges changes select: [ : amc | amc selector = #hash or: [ amc selector = #= ] ]) size
@@ -57,17 +60,22 @@ ReGenerateEqualAndHashDriverTest >> testGenerateEqualAndHashFirstGen [
 	| driver rbClass driverChanges |
 
 	testingEnvironment := RBClassEnvironment class: self classForEqualAndHash.
-	driver := ReGenerateEqualAndHashDriver basicNew.
+	driver := ReGenerateEqualAndHashDriver new.
 	self setUpDriver: driver.
 	driver scopes: { testingEnvironment }.
 	rbClass := testingEnvironment class.
 
 	self deny: (driver targetClass definesMethod: #hash).
-	driver runRefactoring.
+	
+	SpWindowSimulateOpenModal 
+		value: [ :aDiag | 
+				aDiag presenter selectedItems: #(#iVar2 #iVar1). 
+				aDiag triggerOkAction ]
+		during: [ driver runRefactoring ].
 	driverChanges := driver refactoring changes.
 	self 
 		assert: driverChanges changes size 
-		equals: 4.
+		equals: 2.
 	self assertEmpty: driver refactoring failedApplicabilityPreconditions.
 	self 
 		assert: (driverChanges changes select: [ : amc | amc selector = #hash or: [ amc selector = #= ] ]) size

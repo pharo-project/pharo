@@ -50,7 +50,7 @@ ZnLineReader >> nextLine [
 	^ buffer copyFrom: 1 to: position
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnLineReader >> on: readStream [
 	stream := readStream.
 	buffer := String new: 64.

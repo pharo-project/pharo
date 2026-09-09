@@ -1,9 +1,8 @@
 Class {
 	#name : 'ReCompositeExtractSetUpMethodRefactoring',
 	#superclass : 'ReCompositeExtractMethodRefactoring',
-	#category : 'Refactoring-Transformations-Model-Unused',
-	#package : 'Refactoring-Transformations',
-	#tag : 'Model-Unused'
+	#category : 'Refactoring-Transformations',
+	#package : 'Refactoring-Transformations'
 }
 
 { #category : 'execution' }
@@ -40,7 +39,7 @@ ReCompositeExtractSetUpMethodRefactoring >> buildTransformationFor: newMethodNam
 					model: self model
 					methodTree: newMethod
 					inClass: class);
-		  addAll: (assignments collect: [ :var | RBTemporaryToInstanceVariableRefactoring
+		  addAll: (assignments collect: [ :var | ReTemporaryToInstanceVariableRefactoring
 					model: self model
 					class: class
 					selector: selector
@@ -64,28 +63,4 @@ ReCompositeExtractSetUpMethodRefactoring >> extractSetUpCode: sourceCodeString f
 	selector := aSelector.
 	class := self model classNamed: aClassName.
 	newSelector := #setUp
-]
-
-{ #category : 'instance creation' }
-ReCompositeExtractSetUpMethodRefactoring >> extractSetUpInterval: anInterval fromMethod: aSelector inClass: aClassName [ 
-	
-	class := self model classNamed: aClassName.
-	selector := aSelector.
-	sourceCode := self getSourceFromInterval: anInterval.
-	newSelector := #setUp
-]
-
-{ #category : 'storing' }
-ReCompositeExtractSetUpMethodRefactoring >> storeOn: aStream [
-
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream nextPutAll: ' extractSetUpCode: '''.
-	sourceCode storeOn: aStream.
-	aStream
-		nextPutAll: ''' fromMethod: #';
-		nextPutAll: selector asString;
-		nextPutAll: ' inClass: '.
-	class storeOn: aStream.
-	aStream nextPut: $)
 ]

@@ -10,9 +10,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReUseSetUpRule class >> group [
+ReUseSetUpRule class >> groupSelector [
 
-	^ 'Design Flaws'
+	^ #designFlawGroup
 ]
 
 { #category : 'accessing' }
@@ -23,7 +23,7 @@ ReUseSetUpRule class >> ruleName [
 { #category : 'accessing' }
 ReUseSetUpRule class >> severity [
 
-	^ #error 
+	^ 'error'
 ]
 
 { #category : 'manifest' }

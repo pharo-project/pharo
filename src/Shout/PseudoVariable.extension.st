@@ -1,7 +1,7 @@
 Extension { #name : 'PseudoVariable' }
 
 { #category : '*Shout' }
-PseudoVariable >> styleNameIn: aRBVariableNode [
+PseudoVariable >> styleNameIn: aVariableNode [
 
 	^ self class variableName
 ]

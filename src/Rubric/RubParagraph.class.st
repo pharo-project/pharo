@@ -216,22 +216,6 @@ RubParagraph >> disableDrawingWhile: aBlock [
 ]
 
 { #category : 'drawing' }
-RubParagraph >> displayTextOnAthensCanvas: anAthensCanvas in: aRectangle [
-	| athensDisplayScanner offset leftInRun |
-	anAthensCanvas clipBy: aRectangle during:[
-	anAthensCanvas pathTransform
-		restoreAfter: [
-			offset := aRectangle topLeft - self position.
-			athensDisplayScanner := AthensDisplayScanner for: self on: anAthensCanvas.
-			leftInRun := 0.
-			self
-				forLinesIn: anAthensCanvas clipRect
-				do: [ :line |
-					line first <= line last
-						ifTrue: [ leftInRun := athensDisplayScanner displayLine: line offset: offset leftInRun: leftInRun ] ] ] ]
-]
-
-{ #category : 'drawing' }
 RubParagraph >> drawOn: aCanvas using: aDisplayScanner at: aPosition [
 	"Send all visible lines to the displayScanner for display"
 
@@ -245,12 +229,6 @@ RubParagraph >> drawOn: aCanvas using: aDisplayScanner at: aPosition [
 		line := self lines at: i.
 		line first <= line last
 			ifTrue: [ leftInRun := aDisplayScanner displayLine: line offset: offset leftInRun: leftInRun ] ]
-]
-
-{ #category : 'drawing' }
-RubParagraph >> drawOnAthensCanvas: aCanvas bounds: aRectangle color: aColor [
-	aCanvas setPaint: aColor.
-	self displayTextOnAthensCanvas: aCanvas in: aRectangle
 ]
 
 { #category : 'drawing' }

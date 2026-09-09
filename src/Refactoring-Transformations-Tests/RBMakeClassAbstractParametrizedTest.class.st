@@ -21,14 +21,14 @@ RBMakeClassAbstractParametrizedTest >> setUp [
 	super setUp.
 	model := self rbModelForVariableTest.
 
-	testClass := RBBasicLintRuleTestData.
-	testClass class removeSelector: #isAbstract
+	testClass := RBBasicLintRuleTestData
 ]
 
 { #category : 'running' }
 RBMakeClassAbstractParametrizedTest >> tearDown [
 
-	testClass class removeSelector: #isAbstract.
+	(testClass class includesSelector: #isAbstract)
+		ifTrue: [testClass class removeSelector: #isAbstract].
 	super tearDown
 ]
 

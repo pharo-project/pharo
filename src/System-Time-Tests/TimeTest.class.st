@@ -99,7 +99,10 @@ TimeTest >> testAsDate [
 
 { #category : 'tests' }
 TimeTest >> testAsDateAndTime [
-	self assert: aTime asDateAndTime equals: DateAndTime current midnight + aTime
+	
+	self 
+		assert: aTime asDateAndTime 
+		equals: DateAndTime current midnight + aTime
 ]
 
 { #category : 'tests' }
@@ -112,6 +115,14 @@ TimeTest >> testAsDuration [
 				hours: 12
 				minutes: 34
 				seconds: 56)
+]
+
+{ #category : 'tests' }
+TimeTest >> testAsMilliSeconds [
+
+	self 
+		assert: aTime asMilliSeconds
+	 	equals: 45296000
 ]
 
 { #category : 'tests' }
@@ -205,7 +216,7 @@ TimeTest >> testHour [
 
 { #category : 'tests' }
 TimeTest >> testLessThan [
-	self assert: aTime < (Time readFrom: '12:34:57' readStream)
+	self assert: aTime < (Time fromString: '12:34:57')
 ]
 
 { #category : 'tests' }

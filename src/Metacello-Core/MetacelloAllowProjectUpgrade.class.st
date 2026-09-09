@@ -15,11 +15,6 @@ MetacelloAllowProjectUpgrade >> defaultAction [
 ]
 
 { #category : 'handlers' }
-MetacelloAllowProjectUpgrade >> handleOnDownGrade: onDownGradeBlock onUpgrade: onUpgradeBlock [
-    ^ onUpgradeBlock cull: self cull: self existingProjectRegistration cull: self newProjectRegistration
-]
-
-{ #category : 'handlers' }
 MetacelloAllowProjectUpgrade >> handleResolutionFor: aScriptEngine [
     ^ aScriptEngine handleUpgrade: self
 ]

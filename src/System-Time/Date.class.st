@@ -109,14 +109,6 @@ Date class >> fromSeconds: seconds [
 ]
 
 { #category : 'instance creation' }
-Date class >> fromString: aString [
-	"Answer an instance of created from a string with format mm.dd.yyyy or mm-dd-yyyy or mm/dd/yyyy"
-	self deprecated: 'Use Date>>#readFrom:pattern: specifying a concrete pattern instead.'.
-
-	^ self readFrom: aString readStream
-]
-
-{ #category : 'instance creation' }
 Date class >> indexOfMonth: aMonthName [
 
 	^ Month indexOfMonth: aMonthName
@@ -162,73 +154,6 @@ Date class >> newDay: day month: month year: year [
 Date class >> newDay: dayCount year: yearInteger [
 
 	^ self year: yearInteger day: dayCount
-]
-
-{ #category : 'instance creation' }
-Date class >> readFrom: aStream [
-	"Read a Date from the stream in any of the forms:
-		<day> <month> <year>		(15 April 1982; 15-APR-82; 15.4.82; 15APR82)
-		<month> <day> <year>		(April 15, 1982; 4/15/82)
-		<year>-<month>-<day>			(1982-04-15) (ISO8601)"
-	| day month year parsedNumber prefix |
-	
-	self deprecated: 'Use Date>>#readFrom:pattern: specifying a concrete pattern instead.'.
-
-	
-	aStream peek = $-
-		ifTrue: [prefix := -1]
-		ifFalse: [prefix := 1].
-	[aStream peek isAlphaNumeric]
-		whileFalse: [aStream skip: 1].
-	aStream peek isDigit
-		ifTrue: [
-			parsedNumber := (Integer readFrom: aStream) * prefix.
-			(parsedNumber < 0 or: [parsedNumber > 31])
-				ifTrue: [year := parsedNumber]].
-	[aStream peek isAlphaNumeric]
-		whileFalse: [aStream skip: 1].
-	aStream peek isLetter
-		ifTrue: ["MM-DD-YY or DD-MM-YY or YY-MM-DD"
-			month := (String new: 10) writeStream.
-			[aStream peek isLetter]
-				whileTrue: [month nextPut: aStream next].
-			month := month contents.
-			[aStream peek isAlphaNumeric]
-				whileFalse: [aStream skip: 1].
-			parsedNumber
-				ifNil: ["MM DD YY"
-					day := Integer readFrom: aStream]
-				ifNotNil: [
-					year
-						ifNil: ["DD MM YY"
-							day := parsedNumber]]]
-		ifFalse: ["MM-DD-YY or DD-MM-YY or YY-MM-DD"
-			year
-				ifNil: ["MM-DD-YY or DD-MM-YY"
-					parsedNumber > 12
-						ifTrue: ["DD-MM-YY"
-							day := parsedNumber.
-							month := Month nameOfMonth: (Integer readFrom: aStream) ]
-						ifFalse: ["MM-DD-YY"
-							month := Month nameOfMonth: parsedNumber.
-							day := Integer readFrom: aStream]]
-				ifNotNil: ["YY-MM-DD"
-					month := Month nameOfMonth: (Integer readFrom: aStream)]].
-	[aStream peek isAlphaNumeric]
-		whileFalse: [aStream skip: 1].
-	year
-		ifNil: [year := Integer readFrom: aStream]
-		ifNotNil: [day := Integer readFrom: aStream].
-	(year < 100 and: [year >= 0])
-		ifTrue: [
-			year < 69
-				ifTrue: [year := 2000 + year]
-				ifFalse: [year := 1900 + year]].
-
-	^ self
-		year: year
-		month: month
-		day: day
 ]
 
 { #category : 'instance creation' }
@@ -291,7 +216,7 @@ Date class >> yesterday [
 Date >> addDays: dayCount [
 	"((Date year: 2018 month: 9 day: 28) addDays: 3) printString >>> '1 October 2018'"
 
-	^ (self asDateAndTime + (dayCount days)) asDate
+	^ (self asDateAndTime + dayCount days) asDate
 ]
 
 { #category : 'adding' }
@@ -469,7 +394,7 @@ Date >> storeOn: aStream [
 { #category : 'adding' }
 Date >> subtractDate: aDate [
 	"Answer the number of days between self and aDate"
-	"((Date year: 2018 month: 9 day: 28) subtractDate: '2018-09-27') >>> 1"
+	"((Date year: 2018 month: 9 day: 28) subtractDate: (Date fromString: '2018-09-27')) >>> 1"
 
 	^ (self start - aDate asDateAndTime) days
 ]
@@ -477,8 +402,16 @@ Date >> subtractDate: aDate [
 { #category : 'adding' }
 Date >> subtractDays: dayCount [
 	"((Date year: 2018 month: 9 day: 28) subtractDays: 1) printString >>> '27 September 2018'"
+	"This implementation avoids the creation of a dateAndTime and a duration objects.
+	
+	[((Date year: 2018 month: 9 day: 28) subtractDays: 1)] bench  
+	new: 5,702,612 iterations in 5 seconds 2 milliseconds. 1140066.373 per second
+	old: 5,006,201 iterations in 5 seconds 3 milliseconds. 1000639.816 per second
 
-	^ (self asDateAndTime - (dayCount days)) asDate
+	"
+
+
+	^ Date newDay: (self dayOfYear - dayCount) year: self year
 ]
 
 { #category : 'adding' }

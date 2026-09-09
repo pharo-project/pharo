@@ -22,6 +22,7 @@ CompiledBlock class >> trailerSize [
 
 { #category : 'displaying' }
 CompiledBlock >> displayStringOn: stream [
+
 	self printOn: stream
 ]
 
@@ -31,7 +32,7 @@ CompiledBlock >> endPC [
 	^ self size
 ]
 
-{ #category : 'scanning' }
+{ #category : 'testing' }
 CompiledBlock >> hasMethodReturn [
 	"Answer whether the receiver has a method-return ('^') in its code."
 	^ (InstructionStream on: self) scanFor: [:byte |
@@ -49,7 +50,7 @@ CompiledBlock >> hasProperties [
 	^false
 ]
 
-{ #category : 'properties' }
+{ #category : 'accessing - pragmas & properties' }
 CompiledBlock >> hasProperty: aString [
 
 	^ false
@@ -80,6 +81,32 @@ CompiledBlock >> hash [
 	"(CompiledMethod>>#hash) hash"
 ]
 
+{ #category : 'accessing' }
+CompiledBlock >> indexInOuter [
+
+	| index |
+	index := self outerCode literals indexOf: self.
+	index > 0 ifTrue: [ ^ index ].
+
+	"If not found, look for clean blocks with myself as their code"
+	^ self outerCode literals detectIndex: [ :lit |
+		  lit isBlock and: [ lit compiledBlock == self ] ]
+]
+
+{ #category : 'accessing' }
+CompiledBlock >> indexesInOuter [
+
+	| index |
+	index := self outerCode literals indexOf: self.
+	index > 0 ifTrue: [ ^ ByteArray with: index ].
+
+	"If not found, look for clean blocks with myself as their code.
+	Use a final zero marker to indicate this is a clean block"
+	index := self outerCode literals detectIndex: [ :lit |
+		         lit isBlock and: [ lit compiledBlock == self ] ].
+	^ ByteArray with: index with: 0
+]
+
 { #category : 'testing' }
 CompiledBlock >> isCompiledBlock [
 	^ true
@@ -96,18 +123,15 @@ CompiledBlock >> isInstalled [
 	^ self method isInstalled
 ]
 
-{ #category : 'testing' }
-CompiledBlock >> isTestMethod [
-	^ false
-]
-
 { #category : 'comparing' }
 CompiledBlock >> literalEqual: other [
-	"when there are two blocks with the same code, we want to still have both in the literal array"
-	^self == other
+	"Two compiled blocks should be unified in the literal frame only if they are the same block.
+	If they are two different blocks with the same code, do not unify them: we want to have both in the literal array"
+
+	^ self == other
 ]
 
-{ #category : 'literals' }
+{ #category : 'accessing - literals' }
 CompiledBlock >> literalsToSkip [
 
 	^ 1
@@ -126,11 +150,6 @@ CompiledBlock >> methodClass [
 ]
 
 { #category : 'accessing' }
-CompiledBlock >> methodNode [
-	^ self outerCode methodNode
-]
-
-{ #category : 'accessing' }
 CompiledBlock >> outerCode [
 	"answer the compiled code that I am installed in, or nil if none."
 	^self literalAt: self numLiterals
@@ -141,40 +160,21 @@ CompiledBlock >> outerCode: aCompiledCode [
 	^self literalAt: self numLiterals put: aCompiledCode
 ]
 
-{ #category : 'scanning' }
-CompiledBlock >> pcInOuter [
-	| outer end instructionStream |
-	outer := self outerCode.
-	instructionStream := InstructionStream on: outer.
-	end := outer endPC.
-	[instructionStream pc <= end] whileTrue:
-		[ (self encoderClass isCreateFullBlock: self code: outer at: instructionStream pc)
-			ifTrue: [ ^ instructionStream pc ].
-			instructionStream pc: (instructionStream nextPc: (outer at: instructionStream pc))].
-	"scan for clean block"
-	instructionStream := InstructionStream on: outer.
-	[instructionStream pc <= end] whileTrue: [
-			| literalOffset |
-			literalOffset := self encoderClass literalIndexOfBytecodeAt: instructionStream pc in: outer.
-			literalOffset ifNotNil: [
-				| literal |
-				literal := (self outerCode literalAt: literalOffset + 1).
-				((literal isKindOf: CleanBlockClosure) and: [literal compiledBlock == self  ])ifTrue: [ ^ instructionStream pc ].  ].
-			instructionStream pc: (instructionStream nextPc: (outer at: instructionStream pc))].
-
-	self error: 'block not installed in outer code'
+{ #category : 'accessing' }
+CompiledBlock >> pathOfLiteralIndexes [
+	
+	"Return the path of this compiled block inside the method literal frame.
+	The path is a list of indexes.
+	The user must interpret this list as a tree path, where nodes are methods/blocks and edges are literal indexes.
+	
+	This is useful among other things to serialize a symbolic version of this block"
+	^ self outerCode pathOfLiteralIndexes copyWithAll: self indexesInOuter
 ]
 
-{ #category : 'accessing' }
+{ #category : 'accessing - pragmas & properties' }
 CompiledBlock >> pragmas [
 	<reflection: 'Class structural inspection - Pragma'>
 	^ #()
-]
-
-{ #category : 'accessing' }
-CompiledBlock >> primitive [
-	"for now we do not compile Quick CompiedBlocks, see IRBytecodeGenerator>>#compiledBlockWith:"
-	^0
 ]
 
 { #category : 'printing' }
@@ -190,7 +190,7 @@ CompiledBlock >> properties [
 	^ nil->nil
 ]
 
-{ #category : 'properties' }
+{ #category : 'accessing - pragmas & properties' }
 CompiledBlock >> propertyAt: aString [
 
 	^ nil
@@ -220,7 +220,7 @@ CompiledBlock >> selector [
 	^ self outerCode selector
 ]
 
-{ #category : 'accessing' }
+{ #category : 'source code management' }
 CompiledBlock >> sourceCode [
 	^ self outerCode sourceCode
 ]

@@ -9,27 +9,27 @@ This way any use of #next will be done step by step.
 My subclasses implement the following method entriesDo: aBlock which defines the semantics of element fetching
 Here is a simple example where a generic fetcher is used on a collection, and wrapped by a fetcher that avoids returning duplicate elements.
 
-[[[
+```
 fetcher := AvoidRepeatedComplishonFetcher new
 	complishonFetcher: (GenericComplishonFetcher onCollection: #( a b b a c )).
-]]]
+```
 	
 Here are two examples of definition
 
-[[[
+```
 AvoidRepeatedComplishonFecther >> entriesDo: aBlock
 	decoree
 		entriesDo: [ :elem | 
 			(self hasAlreadyReturned: elem)
 				ifFalse: [ elements add: elem.
 					aBlock value: elem ] ]
-]]]
+```
 
-[[[
+```
 GenericComplishonFetcher >> entriesDo: aBlock
 
 	collection do: aBlock
-]]]
+```
 
 
 
@@ -43,10 +43,32 @@ Class {
 		'generator',
 		'filter'
 	],
+	#classVars : [
+		'TokenSizes'
+	],
 	#category : 'HeuristicCompletion-Model-Core',
 	#package : 'HeuristicCompletion-Model',
 	#tag : 'Core'
 }
+
+{ #category : 'class initialization' }
+CoFetcher class >> fillTokenSizes [
+	"self fillTokenSizes"
+	
+	TokenSizes := Array new: 200 withAll: 1.
+	
+	2 to: TokenSizes size  do: [ :i | 
+		TokenSizes at: i put: (i - ((i-1) log: 2)) floor ].
+	TokenSizes at: 2 put: 1.
+	^ TokenSizes
+]
+
+{ #category : 'class initialization' }
+CoFetcher class >> initialize [ 
+	"self initialize"
+	
+	self fillTokenSizes
+]
 
 { #category : 'composing' }
 CoFetcher >> , anotherFetcher [
@@ -94,13 +116,24 @@ CoFetcher >> filter: newFilter [
 	filter := newFilter
 ]
 
+{ #category : 'enumerating' }
+CoFetcher >> filteredEntriesDo: aBlock [
+	"Each fetcher has the possibility to filter the entry.
+	 A key point is also that the composite fetchers do not filter.
+	Note that the filter is shared amongst fetcher but one filter may decide 
+	to ignore it."
+	
+	self entriesDo: [ :entry | 
+		(self acceptsEntry: entry) 
+			ifTrue: [ aBlock value: entry ] ]
+]
+
 { #category : 'private' }
 CoFetcher >> generator [
-	^ generator ifNil: [
-		generator := Generator on: [ :g |
-			self entriesDo: [ :entry |
-				(self acceptsEntry: entry)
-					ifTrue: [ g yield: entry ] ] ] ]
+
+	^ generator ifNil: [ 
+			generator := Generator on: [ :g | 
+				self filteredEntriesDo: [ :entry | g yield: entry ] ] ]
 ]
 
 { #category : 'initialization' }
@@ -143,6 +176,14 @@ CoFetcher >> next: anInteger [
 CoFetcher >> reset [
 
 	generator := nil
+]
+
+{ #category : 'helpers' }
+CoFetcher >> tokenToCheckFrom: compl withSize: size [
+
+	compl isEmpty ifTrue: [ ^ compl ].
+	^  (compl copyFrom: 1 to: (TokenSizes at: size))
+				
 ]
 
 { #category : 'composing' }

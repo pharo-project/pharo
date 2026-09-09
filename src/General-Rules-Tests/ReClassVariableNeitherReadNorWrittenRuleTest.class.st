@@ -14,7 +14,6 @@ ReClassVariableNeitherReadNorWrittenRuleTest >> testRule [
 
 { #category : 'tests' }
 ReClassVariableNeitherReadNorWrittenRuleTest >> testRuleDoesNotAppear [
-	| critiques |
-	critiques := self myCritiquesOnClass: self class.
-	self assert: critiques size equals: 0
+
+	self assertEmpty: (self myCritiquesOnClass: self class)
 ]

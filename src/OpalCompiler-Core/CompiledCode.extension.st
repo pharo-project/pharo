@@ -18,17 +18,19 @@ CompiledCode >> compilerClass [
 ]
 
 { #category : '*OpalCompiler-Core' }
-CompiledCode >> ir [
-	"We as the AST for the IR... for decompiling ir from bytecode, look at IRBytecodeDecompiler"
-	^ self ast ir
+CompiledCode >> methodNode [
+	^ self subclassResponsibility
 ]
 
 { #category : '*OpalCompiler-Core' }
-CompiledCode >> irPrimitive [
+CompiledCode >> sourceNode [
+	^ self subclassResponsibility
+]
 
-	| primNode n |
-	primNode := IRPrimitive new num: (n := self primitive).
-	(n = 117 or: [n = 120]) ifTrue: [
-		primNode spec: (self literalAt: 1)].
-	^ primNode
+{ #category : '*OpalCompiler-Core' }
+CompiledCode >> sourceNodeForPC: aPC [
+
+	| sourceNode |
+	sourceNode := self sourceNode.
+	^ sourceNode sourceNodeForPC: aPC
 ]

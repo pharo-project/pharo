@@ -1,15 +1,17 @@
 "
 I am responsible for adding an assignment statement (variable := anExpression) inside a method. Both variable and expression are passed as arguments separately.
 
-Usage: 
+Usage:
+```
 | transformation |
 transformation := (RBAddAssignmentTransformation
 				variable: 'variable'
 				value: '1 asString'
 				inMethod: #methodBefore
 				inClass: #RBAddAssignmentTransformationTest)
-				transform.
-(ChangesBrowser changes: transformation model changes changes) open
+				generateChanges.
+(StRefactoringPreviewPresenter for: transformation) open
+```
 
 Preconditions:
 - Checks whether there is a variable in this environment with the given name.
@@ -64,7 +66,7 @@ RBAddAssignmentTransformation >> applicabilityPreconditions [
 			   ('Method named <1s> does not exist' expandMacrosWith: selector)).
 		  (RBCondition
 			   withBlock: [
-				   (self definingMethod allChildren
+				   (self definingMethod withAllChildren
 					    select: [ :each | each isVariable ]
 					    thenCollect: [ :each | each name ]) anySatisfy: [ :e |
 					   e asString = variableName ] ]
@@ -96,35 +98,18 @@ RBAddAssignmentTransformation >> privateTransform [
 
 	| methodTree assignmentNode assignments previousNode |
 	methodTree := self definingMethod.
-	assignmentNode := RBAssignmentNode
-		variable: (RBVariableNode named: variableName)
+	assignmentNode := OCAssignmentNode
+		variable: (OCVariableNode named: variableName)
 		value: (self parserClass parseExpression: value).
 
 	"check whether there are some dependencies in the expression"
-	assignments := (methodTree allChildren select: #isAssignment)
+	assignments := (methodTree withAllChildren select: #isAssignment)
 		select: [ :each | each variable name asString = variableName ].
 	previousNode := assignments detectMax: #stop.
 	previousNode
 		ifNil: [ methodTree body addNodeFirst: assignmentNode ]
 		ifNotNil: [ previousNode parent addNode: assignmentNode after: previousNode ].
 	class compileTree: methodTree
-]
-
-{ #category : 'storing' }
-RBAddAssignmentTransformation >> storeOn: aStream [
-
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream
-		nextPutAll: ' variable: ''';
-		nextPutAll: variableName;
-		nextPutAll: ' value: ''';
-		nextPutAll: value;
-		nextPutAll: ' inMethod: ''';
-		nextPutAll: selector;
-		nextPutAll: ''' inClass: ''';
-		nextPutAll: className.
-	aStream nextPut: $)
 ]
 
 { #category : 'api' }

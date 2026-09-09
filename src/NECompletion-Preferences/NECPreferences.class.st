@@ -38,7 +38,7 @@ NECPreferences class >> availablePopupShortcuts [
 
 { #category : 'private' }
 NECPreferences class >> availableSorters [
-	^ CompletionSorter subclasses
+	^ CoCompletionSorter subclasses
 ]
 
 { #category : 'accessing' }
@@ -141,7 +141,7 @@ NECPreferences class >> initialize [
 	popupShowAutomatic := self defaultPopupShowAutomatic.
 	popupAutomaticDelay := self defaultPopupDelay.
 	showCompletionDetails := self defaultShowCompletionDetails.
-	NECEntry spaceAfterCompletion: true
+	CoEntry spaceAfterCompletion: true
 ]
 
 { #category : 'accessing' }
@@ -197,7 +197,7 @@ NECPreferences class >> settingsOn: aBuilder [
 								setSelector: #completionEngineClass:;
 								default: (Smalltalk at: #CoCompletionEngine);
 								domainValues: availableControllers ].
-					availableSorters := self availableSorters.
+					"availableSorters := self availableSorters.
 					availableSorters size > 1
 						ifTrue: [
 							(aBuilder pickOne: #completionSorter)
@@ -206,7 +206,7 @@ NECPreferences class >> settingsOn: aBuilder [
 								target: CompletionContext;
 								getSelector: #sorterClass;
 								setSelector: #sorterClass:;
-								domainValues: availableSorters ].
+								domainValues: availableSorters ]."
 					(aBuilder setting: #backgroundColor)
 						default: (Color
 							r: 0.823069403714565
@@ -243,11 +243,12 @@ NECPreferences class >> settingsOn: aBuilder [
 						default: self defaultPopupDelay;
 						label: 'Popup appearance delay'.
 					(aBuilder pickOne: #popupShowWithShortcut)
+						target: self;
 						default: self defaultPopupShortcut;
 						label: 'Popup appears with this shortcut';
 						domainValues: self availablePopupShortcuts.
 					(aBuilder setting: #spaceAfterCompletion)
-						target: NECEntry;
+						target: CoEntry;
 						default: self defaultSpaceAfterCompletion;
 						label: 'Put a space after completion'
 					 ]
@@ -306,7 +307,7 @@ NECPreferences class >> smartCharactersWithSingleSpace: aString [
 { #category : 'accessing' }
 NECPreferences class >> spaceAfterCompletion [
 
-	^ NECEntry spaceAfterCompletion
+	^ CoEntry spaceAfterCompletion
 ]
 
 { #category : 'accessing' }

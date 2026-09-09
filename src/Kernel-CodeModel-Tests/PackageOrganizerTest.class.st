@@ -1,5 +1,5 @@
 "
-RPackageOrganizerTest tests the behavior of PackageOrganizer. 
+PackageOrganizerTest tests the behavior of PackageOrganizer. 
 Note that it does not rely on announcement to be emitted to maintain invariants.
 Therefore the new created PackageOrganizer is not registered to listen to event.
 
@@ -269,6 +269,24 @@ PackageOrganizerTest >> testRegisterPackageTagConflictWithPackage [
 	self assert: package2 name equals: #'P1-T1'.
 	self assert: package1 name equals: #P1.
 	self assert: tag name equals: #T1
+]
+
+{ #category : 'tests' }
+PackageOrganizerTest >> testRegisterPackageWithLowercaseName [
+
+	self
+		should: [ self organizer addPackage: (Package named: 'p1') ]
+		raise: Error
+		with: [ :e | self assert: e messageText equals: 'Package names should be uppercase' ]
+]
+
+{ #category : 'tests' }
+PackageOrganizerTest >> testRegisterPackageWithLowercaseNameFromName [
+
+	self
+		should: [ self organizer addPackage: 'p1' ]
+		raise: Error
+		with: [ :e | self assert: e messageText equals: 'Package names should be uppercase' ]
 ]
 
 { #category : 'tests' }

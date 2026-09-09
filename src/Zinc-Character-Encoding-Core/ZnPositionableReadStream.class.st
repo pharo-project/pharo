@@ -79,7 +79,7 @@ ZnPositionableReadStream >> bufferSize [
 	^ buffer size
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnPositionableReadStream >> close [
 	"Close me after which I can no longer be accessed. I delegate this to the stream that I wrap."
 
@@ -254,7 +254,7 @@ ZnPositionableReadStream >> savingPositionDo: block [
 	^ block ensure: [ self position: savedPosition ]
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnPositionableReadStream >> sizeBuffer: size [
 	"Change the buffer size. This should be done when I am still in my initial state."
 

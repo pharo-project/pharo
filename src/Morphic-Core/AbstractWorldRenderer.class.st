@@ -273,6 +273,11 @@ AbstractWorldRenderer >> formatRenderingTimeMeasurement: measurement [
 			  (measurement value printPaddedWith: Character space to: 5) }
 ]
 
+{ #category : 'operations' }
+AbstractWorldRenderer >> fullscreenMode: aValue [
+	"We ignore the value by default - subclasses might handle fullscreen mode"
+]
+
 { #category : 'accessing' }
 AbstractWorldRenderer >> icon: aForm [
 
@@ -318,14 +323,18 @@ AbstractWorldRenderer >> restoreMorphicDisplay [
 	world
 		extent: self actualScreenSize;
 		viewBox: self viewBox;
-		handsDo: [:h | h visible: true; showTemporaryCursor: nil];
+		handsDo: [ :h |
+				h
+					visible: true;
+					showTemporaryCursor: nil ];
 		resizeBackgroundMorph;
 		submorphsDo: [ :each | each displayExtentChanged ];
 		fullRepaintNeeded.
 
-	world defer: [Cursor normal show].
+	world defer: [ Cursor normal show ].
 
-	world layoutChanged
+	world layoutChanged.
+	WorldMorph executeResizeBlock
 ]
 
 { #category : 'system startup' }

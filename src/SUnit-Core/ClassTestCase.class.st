@@ -15,7 +15,7 @@ They should also implement to confirm that all methods have been tested.
 "
 Class {
 	#name : 'ClassTestCase',
-	#superclass : 'AbstractEnvironmentTestCase',
+	#superclass : 'TestCase',
 	#category : 'SUnit-Core-Utilities',
 	#package : 'SUnit-Core',
 	#tag : 'Utilities'
@@ -38,7 +38,12 @@ ClassTestCase class >> mustTestCoverage [
 { #category : 'coverage' }
 ClassTestCase >> classToBeTested [
 
-	^ self subclassResponsibility
+	| className |
+	
+	"By default look for the class we are testing having the same name as me but without the Test suffix"
+	
+	className := self class name asString copyFrom: 1 to: self class name size - 4.
+	^ self class environment at: className asString asSymbol
 ]
 
 { #category : 'utilities' }
@@ -89,14 +94,7 @@ ClassTestCase >> selectorsToBeTested [
 { #category : 'private' }
 ClassTestCase >> targetClass [
 
-	[ ^ self classToBeTested ]
-		on: Error
-		do: [
-			| className |
-			className := self class name asString
-				             copyFrom: 1
-				             to: self class name size - 4.
-			^ testingEnvironment at: className asString asSymbol ]
+	^ self classToBeTested
 ]
 
 { #category : 'tests' }

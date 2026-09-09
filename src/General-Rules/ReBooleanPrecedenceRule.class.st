@@ -10,8 +10,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReBooleanPrecedenceRule class >> group [
-	^ 'Potential Bugs'
+ReBooleanPrecedenceRule class >> groupSelector [
+
+	^ #potentialBugsGroup
 ]
 
 { #category : 'accessing' }
@@ -21,7 +22,7 @@ ReBooleanPrecedenceRule class >> ruleName [
 
 { #category : 'accessing' }
 ReBooleanPrecedenceRule class >> severity [
-	^ #error
+	^ 'error'
 ]
 
 { #category : 'accessing' }

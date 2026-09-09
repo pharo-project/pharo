@@ -109,7 +109,7 @@ UserInputEvent >> controlKeyPressed [
 	^ buttons anyMask: CTRL_KEY_MASK
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 UserInputEvent >> copyHandlerState: anEvent [
 	"Copy the handler state from anEvent. Used for quickly transferring handler information between transformed events."
 	handler := anEvent handler.
@@ -124,6 +124,14 @@ UserInputEvent >> handler [
 { #category : 'accessing' }
 UserInputEvent >> handler: anObject [
 	handler := anObject
+]
+
+{ #category : 'modifier state' }
+UserInputEvent >> metaKeyPressed [
+
+	^ OSPlatform current isMacOS
+		  ifTrue: [ self commandKeyPressed ]
+		  ifFalse: [ self controlKeyPressed ]
 ]
 
 { #category : 'printing' }
@@ -150,7 +158,7 @@ UserInputEvent >> position [
 	^position
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 UserInputEvent >> resetHandlerFields [
 	"Reset anything that is used to cross-communicate between two eventual handlers during event dispatch"
 	handler := nil.

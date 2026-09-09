@@ -43,16 +43,23 @@ CodeChunk >> contents: anObject [
 
 { #category : 'importing' }
 CodeChunk >> import [
-	self importFor: nil logSource: true
+
+	self importWithLogSource: true
 ]
 
 { #category : 'importing' }
-CodeChunk >> importFor: aRequestor logSource: logSource [
+CodeChunk >> importWithLogSource: logSource [
 	self import
 ]
 
 { #category : 'testing' }
 CodeChunk >> isClassCommentDeclaration [
+
+	^ false
+]
+
+{ #category : 'testing' }
+CodeChunk >> isClassDeclaration [
 
 	^ false
 ]
@@ -71,6 +78,12 @@ CodeChunk >> isDoItDeclaration [
 
 { #category : 'testing' }
 CodeChunk >> isMethodDeclaration [
+
+	^ false
+]
+
+{ #category : 'testing' }
+CodeChunk >> isPackageDeclaration [
 
 	^ false
 ]

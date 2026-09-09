@@ -161,7 +161,7 @@ RGClassDefinition >> comment: anObject [
 { #category : 'compiling' }
 RGClassDefinition >> compile: aString classified: aCategory notifying: aController [
 
-	self realClass compile: aString classified: aCategory notifying: aController
+	self realClass compile: aString classified: aCategory
 ]
 
 { #category : 'testing' }

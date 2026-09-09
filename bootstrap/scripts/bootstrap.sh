@@ -43,6 +43,7 @@ ${SCRIPTS}/3-prepare.sh
 #
 # Build the new image
 #
-${SCRIPTS}/4-build.sh
+${SCRIPTS}/4-installMetacello.sh
+${SCRIPTS}/5-installIDE.sh
 
 echo $(date -u) "Bootstrap: End of the bootstrap"

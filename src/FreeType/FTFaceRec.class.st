@@ -103,168 +103,145 @@ FTFaceRec class >> fieldsDesc [
 { #category : 'accessing - structure variables' }
 FTFaceRec >> ascender [
 	"This method was automatically generated"
-
-	^ handle signedShortAt: OFFSET_ASCENDER
+	^handle signedShortAt: OFFSET_ASCENDER
 ]
 
 { #category : 'accessing - structure variables' }
 FTFaceRec >> ascender: anObject [
 	"This method was automatically generated"
-
 	handle signedShortAt: OFFSET_ASCENDER put: anObject
 ]
 
 { #category : 'accessing - structure variables' }
 FTFaceRec >> autohint [
 	"This method was automatically generated"
-
 	^ FTGeneric fromHandle: (handle referenceStructAt: OFFSET_AUTOHINT length: FTGeneric byteSize)
 ]
 
 { #category : 'accessing - structure variables' }
 FTFaceRec >> autohint: anObject [
 	"This method was automatically generated"
-
 	handle structAt: OFFSET_AUTOHINT put: anObject getHandle length: FTGeneric byteSize
 ]
 
 { #category : 'accessing - structure variables' }
 FTFaceRec >> available_sizes [
 	"This method was automatically generated"
-
-	^ FTBitmapSize fromHandle: (handle pointerAt: OFFSET_AVAILABLE_SIZES)
+	^FTBitmapSize fromHandle: (handle pointerAt: OFFSET_AVAILABLE_SIZES)
 ]
 
 { #category : 'accessing - structure variables' }
 FTFaceRec >> available_sizes: anObject [
 	"This method was automatically generated"
-
-	handle pointerAt: OFFSET_AVAILABLE_SIZES put: anObject getHandle
+	handle pointerAt: OFFSET_AVAILABLE_SIZES put: anObject getHandle.
 ]
 
 { #category : 'accessing - structure variables' }
 FTFaceRec >> bbox [
 	"This method was automatically generated"
-
 	^ FTBBox fromHandle: (handle referenceStructAt: OFFSET_BBOX length: FTBBox byteSize)
 ]
 
 { #category : 'accessing - structure variables' }
 FTFaceRec >> bbox: anObject [
 	"This method was automatically generated"
-
 	handle structAt: OFFSET_BBOX put: anObject getHandle length: FTBBox byteSize
 ]
 
 { #category : 'accessing - structure variables' }
 FTFaceRec >> charmap [
 	"This method was automatically generated"
-
-	^ FTCharMapRec fromHandle: (handle pointerAt: OFFSET_CHARMAP)
+	^FTCharMapRec fromHandle: (handle pointerAt: OFFSET_CHARMAP)
 ]
 
 { #category : 'accessing - structure variables' }
 FTFaceRec >> charmap: anObject [
 	"This method was automatically generated"
-
-	handle pointerAt: OFFSET_CHARMAP put: anObject getHandle
+	handle pointerAt: OFFSET_CHARMAP put: anObject getHandle.
 ]
 
 { #category : 'accessing - structure variables' }
 FTFaceRec >> charmaps [
 	"This method was automatically generated"
-
-	^ ExternalData fromHandle: (handle pointerAt: OFFSET_CHARMAPS) type: ExternalType void asPointerType
+	^ExternalData fromHandle: (handle pointerAt: OFFSET_CHARMAPS) type: ExternalType void asPointerType
 ]
 
 { #category : 'accessing - structure variables' }
 FTFaceRec >> charmaps: anObject [
 	"This method was automatically generated"
-
-	handle pointerAt: OFFSET_CHARMAPS put: anObject getHandle
+	handle pointerAt: OFFSET_CHARMAPS put: anObject getHandle.
 ]
 
 { #category : 'accessing - structure variables' }
 FTFaceRec >> descender [
 	"This method was automatically generated"
-
-	^ handle signedShortAt: OFFSET_DESCENDER
+	^handle signedShortAt: OFFSET_DESCENDER
 ]
 
 { #category : 'accessing - structure variables' }
 FTFaceRec >> descender: anObject [
 	"This method was automatically generated"
-
 	handle signedShortAt: OFFSET_DESCENDER put: anObject
 ]
 
 { #category : 'accessing - structure variables' }
 FTFaceRec >> driver [
 	"This method was automatically generated"
-
-	^ ExternalData fromHandle: (handle pointerAt: OFFSET_DRIVER) type: ExternalType void asPointerType
+	^ExternalData fromHandle: (handle pointerAt: OFFSET_DRIVER) type: ExternalType void asPointerType
 ]
 
 { #category : 'accessing - structure variables' }
 FTFaceRec >> driver: anObject [
 	"This method was automatically generated"
-
-	handle pointerAt: OFFSET_DRIVER put: anObject getHandle
+	handle pointerAt: OFFSET_DRIVER put: anObject getHandle.
 ]
 
 { #category : 'accessing - structure variables' }
 FTFaceRec >> extensions [
 	"This method was automatically generated"
-
-	^ ExternalData fromHandle: (handle pointerAt: OFFSET_EXTENSIONS) type: ExternalType void asPointerType
+	^ExternalData fromHandle: (handle pointerAt: OFFSET_EXTENSIONS) type: ExternalType void asPointerType
 ]
 
 { #category : 'accessing - structure variables' }
 FTFaceRec >> extensions: anObject [
 	"This method was automatically generated"
-
-	handle pointerAt: OFFSET_EXTENSIONS put: anObject getHandle
+	handle pointerAt: OFFSET_EXTENSIONS put: anObject getHandle.
 ]
 
 { #category : 'accessing - structure variables' }
 FTFaceRec >> face_flags [
 	"This method was automatically generated"
-
-	^ handle platformLongAt: OFFSET_FACE_FLAGS
+	^handle platformLongAt: OFFSET_FACE_FLAGS
 ]
 
 { #category : 'accessing - structure variables' }
 FTFaceRec >> face_flags: anObject [
 	"This method was automatically generated"
-
-	^ handle platformLongAt: OFFSET_FACE_FLAGS put: anObject
+	^handle platformLongAt: OFFSET_FACE_FLAGS put: anObject
 ]
 
 { #category : 'accessing - structure variables' }
 FTFaceRec >> face_index [
 	"This method was automatically generated"
-
-	^ handle platformLongAt: OFFSET_FACE_INDEX
+	^handle platformLongAt: OFFSET_FACE_INDEX
 ]
 
 { #category : 'accessing - structure variables' }
 FTFaceRec >> face_index: anObject [
 	"This method was automatically generated"
-
-	^ handle platformLongAt: OFFSET_FACE_INDEX put: anObject
+	^handle platformLongAt: OFFSET_FACE_INDEX put: anObject
 ]
 
 { #category : 'accessing - structure variables' }
 FTFaceRec >> family_name [
 	"This method was automatically generated"
-
-	^ ExternalData fromHandle: (handle pointerAt: OFFSET_FAMILY_NAME) type: ExternalType char asPointerType
+	^ExternalData fromHandle: (handle pointerAt: OFFSET_FAMILY_NAME) type: ExternalType char asPointerType
 ]
 
 { #category : 'accessing - structure variables' }
 FTFaceRec >> family_name: anObject [
 	"This method was automatically generated"
-	handle pointerAt: OFFSET_FAMILY_NAME put: anObject getHandle
+	handle pointerAt: OFFSET_FAMILY_NAME put: anObject getHandle.
 ]
 
 { #category : 'accessing - structure variables' }
@@ -288,7 +265,7 @@ FTFaceRec >> glyph [
 { #category : 'accessing - structure variables' }
 FTFaceRec >> glyph: anObject [
 	"This method was automatically generated"
-	handle pointerAt: OFFSET_GLYPH put: anObject getHandle
+	handle pointerAt: OFFSET_GLYPH put: anObject getHandle.
 ]
 
 { #category : 'accessing - structure variables' }
@@ -312,7 +289,7 @@ FTFaceRec >> internal [
 { #category : 'accessing - structure variables' }
 FTFaceRec >> internal: anObject [
 	"This method was automatically generated"
-	handle pointerAt: OFFSET_INTERNAL put: anObject getHandle
+	handle pointerAt: OFFSET_INTERNAL put: anObject getHandle.
 ]
 
 { #category : 'accessing - structure variables' }
@@ -348,7 +325,7 @@ FTFaceRec >> memory [
 { #category : 'accessing - structure variables' }
 FTFaceRec >> memory: anObject [
 	"This method was automatically generated"
-	handle pointerAt: OFFSET_MEMORY put: anObject getHandle
+	handle pointerAt: OFFSET_MEMORY put: anObject getHandle.
 ]
 
 { #category : 'accessing - structure variables' }
@@ -408,7 +385,7 @@ FTFaceRec >> size [
 { #category : 'accessing - structure variables' }
 FTFaceRec >> size: anObject [
 	"This method was automatically generated"
-	handle pointerAt: OFFSET_SIZE put: anObject getHandle
+	handle pointerAt: OFFSET_SIZE put: anObject getHandle.
 ]
 
 { #category : 'accessing - structure variables' }
@@ -432,7 +409,7 @@ FTFaceRec >> stream [
 { #category : 'accessing - structure variables' }
 FTFaceRec >> stream: anObject [
 	"This method was automatically generated"
-	handle pointerAt: OFFSET_STREAM put: anObject getHandle
+	handle pointerAt: OFFSET_STREAM put: anObject getHandle.
 ]
 
 { #category : 'accessing - structure variables' }
@@ -456,7 +433,7 @@ FTFaceRec >> style_name [
 { #category : 'accessing - structure variables' }
 FTFaceRec >> style_name: anObject [
 	"This method was automatically generated"
-	handle pointerAt: OFFSET_STYLE_NAME put: anObject getHandle
+	handle pointerAt: OFFSET_STYLE_NAME put: anObject getHandle.
 ]
 
 { #category : 'accessing - structure variables' }

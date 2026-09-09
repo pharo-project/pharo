@@ -79,8 +79,8 @@ CmdShortcutSetting >> realValue: aShortcutActivation [
 CmdShortcutSetting >> setToDefault [
 
 	shortcutActivation := shortcutActivation revertRedefinedInstanceIfAbsent: [
-		self inform: 'Annotation not exists anymore'.
-		^self].
+		InformativeNotification signal: 'Annotation does not exist anymore'.
+		^ self ].
 
 	self updated
 ]

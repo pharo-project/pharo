@@ -24,5 +24,6 @@ ReExclusivelyBeginnersRule class >> isBeginnerRule [
 
 { #category : 'manifest' }
 ReExclusivelyBeginnersRule class >> isDefaultRule [
+
 	^ false
 ]

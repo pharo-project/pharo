@@ -22,7 +22,7 @@ FLIndexStream class >> on: aStream digits: aNumberOfDigits [
 		yourself.
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 FLIndexStream >> initializeOn: aStream digits: aNumberOfDigits [
 
 	self initialize.

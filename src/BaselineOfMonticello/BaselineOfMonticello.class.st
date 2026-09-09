@@ -28,24 +28,35 @@ BaselineOfMonticello >> baseline: spec [
 		spec 
 			package: 'Ring-Definitions-Core';
 			package: 'Ring-OldChunkImporter' with: [ spec requires: #('Ring-Definitions-Core') ];
-			package: 'Zinc-Resource-Meta-Core';
-			package: 'System-Changes';
 			package: 'Jobs';
+			package: 'Random-Core';
+			package: 'System-Hashing';
 			package: 'Compression';
 			package: 'Monticello-Model';
 			package: 'Monticello';
+			package: 'STON-Core';
+			package: 'MonticelloFileTree-Core';
 			package: 'Ring-Definitions-Monticello';
-			package: 'System-Model';
 			
 			package: 'Network-Kernel';
-			package: 'Network-MIME';
 			package: 'Network-Protocols';
-			package: 'MonticelloRemoteRepositories';
+			package: 'Network-MIME';
+			package: 'Zinc-Resource-Meta-Core';
 			package: 'Zinc-HTTP';
-			package: 'Zodiac-Core'.
-		spec 
-			group: 'Core' with: #('Ring-OldChunkImporter' 'Zinc-Resource-Meta-Core' 'System-Changes' 'Ring-Definitions-Core' 'Jobs' 'Compression' 'Monticello-Model' 'Monticello' 'Ring-Definitions-Monticello' 'System-Model');
-			group: 'RemoteRepositories' with: #( 'Network-Kernel' 'Network-MIME' 'Network-Protocols' 'MonticelloRemoteRepositories' 'Zinc-HTTP' 'Zodiac-Core' );
+			package: 'MonticelloRemoteRepositories';
+			package: 'Zodiac-Core';
+			
+			package: 'Compression-Tests';
+			package: 'Jobs-Tests';
+			package: 'Random-Tests';
+			package: 'Ring-Definitions-Core-Tests';
+			package: 'Monticello-Tests';
+			package: 'MonticelloMocks';
+			package: 'Ring-Definitions-Monticello-Tests';
+			package: 'Ring-Definitions-Tests-Containers'.
 
-			group: 'default' with: #('Core' 'RemoteRepositories' ). ].
+		spec 
+			group: 'Core' with: #('Ring-Definitions-Core' 'Ring-OldChunkImporter' 'Jobs' 'Random-Core' 'System-Hashing' 'Compression' 'Monticello-Model' 'Monticello' 'STON-Core' 'MonticelloFileTree-Core' 'Ring-Definitions-Monticello');
+			group: 'RemoteRepositories' with: #( 'Network-Kernel' 'Network-Protocols' 'Network-MIME' 'Zinc-Resource-Meta-Core' 'Zinc-HTTP' 'MonticelloRemoteRepositories' 'Zodiac-Core' );
+			group: 'Tests' with: #( 'Compression-Tests' 'Jobs-Tests' 'Random-Tests' 'Ring-Definitions-Core-Tests' 'Monticello-Tests' 'MonticelloMocks' 'Ring-Definitions-Monticello-Tests' 'Ring-Definitions-Tests-Containers') ].
 ]

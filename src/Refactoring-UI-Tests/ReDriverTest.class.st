@@ -9,6 +9,6 @@ Class {
 ReDriverTest >> setUpDriver: driver [
 
 	driver previewPresenterClass: StRefactoringPreviewPresenterMock.
-	driver selectDialog: StSelectDialogMock new.
+	driver selectDialogForBreakingChanges: StSelectDialogMock new.
 	driver informDialog: StInformDialogMock new.
 ]

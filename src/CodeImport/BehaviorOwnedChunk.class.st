@@ -6,7 +6,8 @@ Class {
 	#superclass : 'CodeChunk',
 	#instVars : [
 		'behaviorName',
-		'isMeta'
+		'isMeta',
+		'metadata'
 	],
 	#category : 'CodeImport-Chunks',
 	#package : 'CodeImport',
@@ -47,6 +48,18 @@ BehaviorOwnedChunk >> isMeta [
 BehaviorOwnedChunk >> isMeta: aBoolean [
 
 	isMeta := aBoolean
+]
+
+{ #category : 'accessing' }
+BehaviorOwnedChunk >> metadata [
+
+	^ metadata
+]
+
+{ #category : 'accessing' }
+BehaviorOwnedChunk >> metadata: anObject [
+
+	metadata := anObject
 ]
 
 { #category : 'accessing' }

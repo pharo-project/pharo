@@ -239,6 +239,18 @@ RGBehavior >> canMergeWith: anRGObject visited: visitedDefinitions [
 	^ true
 ]
 
+{ #category : 'testing' }
+RGBehavior >> canUnderstand: selector [
+	"Answer whether the receiver can respond to the message whose selector
+	is the argument."
+
+	self allSuperclassesDo: [ :each |
+		(each methods anySatisfy: [ :method | method name = selector ])
+			ifTrue: [ ^ true ] ].
+
+	^ self methods anySatisfy: [ :method | method name = selector ]
+]
+
 { #category : 'accessing - definition' }
 RGBehavior >> classVariablesBindings [
 
@@ -459,6 +471,14 @@ RGBehavior >> extensions [
 ]
 
 { #category : 'testing' }
+RGBehavior >> hasAbstractMethods [
+	"Tells whether the receiver locally defines an abstract method, i.e., a method sending subclassResponsibility"
+
+
+	^ false
+]
+
+{ #category : 'testing' }
 RGBehavior >> hasComment [
 
 	^ self comment isEmptyOrNil not
@@ -483,9 +503,16 @@ RGBehavior >> hasTraitComposition [
 	^	self traitComposition transformations isEmpty not
 ]
 
+{ #category : 'testing' }
+RGBehavior >> includesLocalSelector: aSymbol [
+	^self localMethods anySatisfy: [ :each | each name = aSymbol ]
+]
+
 { #category : 'queries - methods' }
 RGBehavior >> includesSelector: aString [
-
+	"Answer whether the message whose selector is the argument is in the
+	method dictionary of the receiver's class."
+	
 	^ self selectors includes: aString
 ]
 
@@ -586,6 +613,12 @@ RGBehavior >> isImmediateClass [
 ]
 
 { #category : 'testing' }
+RGBehavior >> isObsolete [
+
+	^ false
+]
+
+{ #category : 'testing' }
 RGBehavior >> isPointers [
 
 	^ self isBits not
@@ -660,6 +693,23 @@ RGBehavior >> localSelectors [
 ]
 
 { #category : 'lookup' }
+RGBehavior >> lookupSelector: selector [
+	"Look up the given selector in my methodDictionary.
+	Return the corresponding method if found.
+	Otherwise chase the superclass chain and try again.
+	Return nil if no method is found."
+	| lookupClass |
+	lookupClass := self.
+	[lookupClass == nil]
+		whileFalse: [
+			lookupClass methodDict
+				at: selector
+				ifPresent: [ :method | ^ method ].
+			lookupClass := lookupClass superclass].
+	^ nil
+]
+
+{ #category : 'lookup' }
 RGBehavior >> lookupVar: aName [
 
 	^ self allSlots
@@ -690,6 +740,12 @@ RGBehavior >> metaclass [
 RGBehavior >> metaclass: anRGMetaclass [
 
 	self backend forBehavior setMetaclassFor: self to: anRGMetaclass
+]
+
+{ #category : 'accessing - class hierarchy' }
+RGBehavior >> methodDict [
+
+	^ Dictionary newFrom: (self methods collect: [ :each | each name asSymbol -> each ])
 ]
 
 { #category : 'queries - methods' }
@@ -739,8 +795,7 @@ RGBehavior >> name: aString [
 
 	subclassesWithOldDefinitions do: [ :assoc |
 		self announcer behaviorDefinitionChangedFrom: assoc value to: assoc key.
-		self announcer behaviorModificationAppliedTo: assoc key.
-		self announcer behaviorParentRenamed: assoc key from: oldName ]
+		self announcer behaviorModificationAppliedTo: assoc key ]
 ]
 
 { #category : 'testing' }
@@ -758,6 +813,12 @@ RGBehavior >> oldDefinition [
 ]
 
 { #category : 'accessing' }
+RGBehavior >> organization [
+
+	^ self
+]
+
+{ #category : 'accessing' }
 RGBehavior >> packageTag [
 
 	^ self tags ifEmpty: [ nil ] ifNotEmpty: [ :tgs | tgs anyOne ]
@@ -766,6 +827,12 @@ RGBehavior >> packageTag [
 { #category : 'printing' }
 RGBehavior >> printOn: aStream [
 	aStream nextPutAll: self name
+]
+
+{ #category : 'protocols' }
+RGBehavior >> protocolNamed: aString [
+
+	^ self protocols detect: [ :each | each name = aString ]
 ]
 
 { #category : 'queries - protocols' }
@@ -987,6 +1054,12 @@ RGBehavior >> pvtUntagFrom: aSymbol [
 	"TODO:Announce"
 ]
 
+{ #category : 'removing' }
+RGBehavior >> removeFromSystem [
+
+	self parent removeBehavior: self
+]
+
 { #category : 'accessing - backend' }
 RGBehavior >> removeLocalMethod: anRGMethod [
 
@@ -1076,6 +1149,27 @@ RGBehavior >> slots [
 RGBehavior >> slotsNeedFullDefinition [
 	"return true if we define something else than InstanceVariableSlots"
 	^self slots anySatisfy: [ :each | each needsFullDefinition ]
+]
+
+{ #category : 'accessing' }
+RGBehavior >> sourceCodeAt: aSymbol [
+
+	| method |
+	method :=  self localMethodNamed: aSymbol
+						 ifAbsent: [ self error: 'Selector #', aSymbol asString, ' not found in RGClass "', self name, '"' ].
+	^ method sourceCode
+]
+
+{ #category : 'compiling' }
+RGBehavior >> sourceCodeTemplate [
+	"Answer an expression to be edited and evaluated in order to define
+	methods in this class or trait."
+
+	^ 'messageSelectorAndArgumentNames
+	"comment stating purpose of message"
+
+	| temporary variable names |
+	statements'
 ]
 
 { #category : 'accessing - class hierarchy' }
@@ -1192,8 +1286,7 @@ RGBehavior >> unresolveName [
 
 	subclassesWithOldDefinitions do: [ :assoc |
 		self announcer behaviorDefinitionChangedFrom: assoc value to: assoc key.
-		self announcer behaviorModificationAppliedTo: assoc key.
-		self announcer behaviorParentRenamed: assoc key from: oldName ]
+		self announcer behaviorModificationAppliedTo: assoc key ]
 ]
 
 { #category : 'accessing - backend' }

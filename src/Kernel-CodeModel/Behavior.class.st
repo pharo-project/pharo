@@ -68,20 +68,13 @@ Behavior >> addObsoleteSubclass: aClass [
 ]
 
 { #category : 'adding-removing methods' }
-Behavior >> addSelector: selector withMethod: compiledMethod [
-	<reflection: 'Class structural modification - Selector/Method modification'>
-	^ self addSelectorSilently: selector withMethod: compiledMethod
-]
-
-{ #category : 'adding-removing methods' }
 Behavior >> addSelectorSilently: selector withMethod: compiledMethod [
 	"Add the message selector with the corresponding compiled method to the
 	receiver's method dictionary.
 	Do this without sending system change notifications"
 	<reflection: 'Class structural modification - Selector/Method modification'>
 	self methodDict at: selector put: compiledMethod.
-	compiledMethod methodClass: self.
-	compiledMethod selector: selector.
+
 	"We record all selectors that are used as method names"
 	Symbol recordSelector: selector
 ]
@@ -414,7 +407,10 @@ Behavior >> basicNewTenured [
 	See more information in the newTenured method comment."
 
 	<primitive: 596 error: ec>
-	self error: 'Could not allocated object in the old space. Primitive error'
+	ec == #'insufficient object memory' ifTrue: [
+		^ self handleFailingBasicNewTenured ].
+	self isVariable ifTrue: [ ^ self basicNewTenured: 0 ].
+	self primitiveFailed
 ]
 
 { #category : 'instance creation' }
@@ -424,7 +420,11 @@ Behavior >> basicNewTenured: sizeRequested [
 	See more information in the newTenured method comment."
 
 	<primitive: 597 error: ec>
-	self error: 'Could not allocated object in the old space. Primitive error'
+	ec == #'insufficient object memory' ifTrue: [
+		^ self handleFailingBasicNewTenured: sizeRequested ].
+	self isVariable ifFalse: [
+		self error: self printString , ' cannot have variable sized instances' ].
+	self primitiveFailed
 ]
 
 { #category : 'obsolete subclasses' }
@@ -764,6 +764,61 @@ Behavior >> handleFailingBasicNew: sizeRequested [
 ]
 
 { #category : 'private' }
+Behavior >> handleFailingBasicNewTenured [
+	"handleFailingBasicNew gets sent after basicNew has failed and allowed
+	 a scavenging garbage collection to occur.  The scavenging collection
+	 will have happened as the VM is activating the (failing) basicNew.  If
+	 handleFailingBasicNew fails then the scavenge failed to reclaim sufficient
+	 space and a global garbage collection is required.  Retry after garbage
+	 collecting and growing memory if necessary.
+
+	 Primitive. Answer an instance of this class with the number of indexable
+	 variables specified by the argument, sizeRequested.  Fail if this class is not
+	 indexable or if the argument is not a positive Integer, or if there is not
+	 enough memory available. Essential. See Object documentation whatIsAPrimitive."
+
+	<primitive: 596>
+	Smalltalk garbageCollect < 1048576 ifTrue: [ Smalltalk growMemoryByAtLeast: 1048576 ].
+	^ self handleFailingFailingBasicNewTenured "retry after global garbage collect"
+]
+
+{ #category : 'private' }
+Behavior >> handleFailingBasicNewTenured: sizeRequested [
+	"handleFailingBasicNew: gets sent after basicNew: has failed and allowed
+	 a scavenging garbage collection to occur.  The scavenging collection
+	 will have happened as the VM is activating the (failing) basicNew:.  If
+	 handleFailingBasicNew: fails then the scavenge failed to reclaim sufficient
+	 space and a global garbage collection is required.  Retry after garbage
+	 collecting and growing memory if necessary.
+
+	 Primitive. Answer an instance of this class with the number of indexable
+	 variables specified by the argument, sizeRequested.  Fail if this class is not
+	 indexable or if the argument is not a positive Integer, or if there is not
+	 enough memory available. Essential. See Object documentation whatIsAPrimitive."
+
+	<primitive: 597>
+	| bytesRequested |
+	bytesRequested := self byteSizeOfInstanceOfSize: sizeRequested.
+	^ Smalltalk garbageCollect < bytesRequested
+		  ifTrue: [
+			  Smalltalk growMemoryByAtLeast: bytesRequested
+			  "retry after global garbage collect and possible grow".
+			  self handleFailingFailingBasicNewTenured: sizeRequested ]
+		  ifFalse: [ self handleFailingBasicNewTenuredWithGC: sizeRequested ]
+]
+
+{ #category : 'private' }
+Behavior >> handleFailingBasicNewTenuredWithGC: sizeRequested [
+	"handleFailingBasicNewWithGC: gets sent after basicNew: has failed, a GC has been	performed and the allocation still fails even though enough memory was reported 	as available. Given that this has happened when there is plenty of virtual memory available, assume that the GC has reported incorrectly and try one more time anyway.	 Primitive. Answer an instance of this class with the number of indexable	 variables specified by the argument, sizeRequested.  Fail if this class is not	 indexable or if the argument is not a positive Integer, or if there is not	 enough memory available. Essential. See Object documentation whatIsAPrimitive."
+
+	<primitive: 597>
+	| bytesRequested |
+	bytesRequested := self byteSizeOfInstanceOfSize: sizeRequested.
+	Smalltalk growMemoryByAtLeast: bytesRequested.
+	^ self handleFailingFailingBasicNewTenured: sizeRequested
+]
+
+{ #category : 'private' }
 Behavior >> handleFailingBasicNewWithGC: sizeRequested [
 	"handleFailingBasicNewWithGC: gets sent after basicNew: has failed, a GC has been	performed and the allocation still fails even though enough memory was reported 	as available. Given that this has happened when there is plenty of virtual memory available, assume that the GC has reported incorrectly and try one more time anyway.	 Primitive. Answer an instance of this class with the number of indexable	 variables specified by the argument, sizeRequested.  Fail if this class is not	 indexable or if the argument is not a positive Integer, or if there is not	 enough memory available. Essential. See Object documentation whatIsAPrimitive."
 
@@ -806,6 +861,41 @@ Behavior >> handleFailingFailingBasicNew: sizeRequested [
 	"space must be low."
 	OutOfMemory signal.
 	^self basicNew: sizeRequested  "retry if user proceeds"
+]
+
+{ #category : 'private' }
+Behavior >> handleFailingFailingBasicNewTenured [
+	"This basicNew gets sent after handleFailingBasicNew: has done a full
+	 garbage collection and possibly grown memory.  If this basicNew fails
+	 then the system really is low on space, so raise the OutOfMemory signal.
+
+	 Primitive. Answer an instance of this class with the number of indexable
+	 variables specified by the argument, sizeRequested.  Fail if this class is not
+	 indexable or if the argument is not a positive Integer, or if there is not
+	 enough memory available. Essential. See Object documentation whatIsAPrimitive."
+
+	"space must be low"
+
+	<primitive: 596>
+	OutOfMemory signal.
+	^ self basicNewTenured "retry if user proceeds"
+]
+
+{ #category : 'private' }
+Behavior >> handleFailingFailingBasicNewTenured: sizeRequested [
+	"This basicNew: gets sent after handleFailingBasicNew: has done a full
+	 garbage collection and possibly grown memory.  If this basicNew: fails
+	 then the system really is low on space, so raise the OutOfMemory signal.
+
+	 Primitive. Answer an instance of this class with the number of indexable
+	 variables specified by the argument, sizeRequested.  Fail if this class is not
+	 indexable or if the argument is not a positive Integer, or if there is not
+	 enough memory available. Essential. See Object documentation whatIsAPrimitive."
+
+	<primitive: 597>
+	"space must be low."
+	OutOfMemory signal.
+	^self basicNewTenured: sizeRequested  "retry if user proceeds"
 ]
 
 { #category : 'testing' }
@@ -1086,6 +1176,12 @@ Behavior >> isEphemeronClass [
 ]
 
 { #category : 'testing' }
+Behavior >> isExtension [
+
+	^ false
+]
+
+{ #category : 'testing' }
 Behavior >> isFixed [
 	"Answer whether the receiver does not have a variable (indexable) part."
 
@@ -1101,6 +1197,13 @@ Behavior >> isImmediateClass [
 	 system SmallIntegers are 31-bit signed integers and Characters are 30-bit
 	 unsigned character codes."
 	^self instSpec = 7
+]
+
+{ #category : 'testing - class hierarchy' }
+Behavior >> isInClassHierarchyOf: aClass [
+
+	^ (self includesBehavior: aClass) or: [
+		  aClass includesBehavior: self ]
 ]
 
 { #category : 'testing' }
@@ -1194,13 +1297,15 @@ Behavior >> isWords [
 Behavior >> localMethods [
 	"returns the methods of classes excluding the ones of the traits that the class uses"
 
-	^ self methods
+	^ self localSelectors collect: [ :e | self >> e ]
 ]
 
 { #category : 'accessing - method dictionary' }
 Behavior >> localSelectors [
 	<reflection: 'Class structural inspection - Selectors and methods inspection'>
-	^ self methodDict keys
+	^ self methodDict keys select: [ :s | 
+		(s isKindOf: ScopedSelector) not
+			or: [ s owner == self package ] ]
 ]
 
 { #category : 'accessing - method dictionary' }
@@ -1253,6 +1358,18 @@ Behavior >> methodDictionary: aDictionary [
 	self methodDict: aDictionary
 ]
 
+{ #category : 'organization' }
+Behavior >> methodInstaller [
+
+	^ OCMethodInstaller new
+]
+
+{ #category : 'accessing' }
+Behavior >> methodNamed: aSelector [
+	<reflection: 'Class structural inspection - Selectors and methods inspection'>
+	^ self methodDict at: aSelector
+]
+
 { #category : 'accessing - method dictionary' }
 Behavior >> methods [
 	<reflection: 'Class structural inspection - Selectors and methods inspection'>
@@ -1299,7 +1416,8 @@ Behavior >> methodsWritingSlot: aSlot [
 { #category : 'accessing' }
 Behavior >> name [
 	"Answer a String that is the name of the receiver."
-	^'a subclass of ', self superclass name
+	
+	^ ('ASubclassOf', self superclass name) asSymbol
 ]
 
 { #category : 'instance creation' }
@@ -1424,7 +1542,7 @@ Behavior >> propertyAt: propName ifAbsent: aBlock [
 Behavior >> propertyAt: propName put: propValue [
 	^ self ensureProperties
 		at: propName
-		ifAbsentPut: propValue
+		put: propValue
 ]
 
 { #category : 'accessing' }
@@ -1438,6 +1556,21 @@ Behavior >> removeAllObsoleteSubclasses [
 	"Remove all the obsolete subclasses of the receiver"
 	<reflection: 'Class structural modification - Hierarchy modification'>
 	self basicObsoleteSubclasses removeKey: self ifAbsent: [  ]
+]
+
+{ #category : 'accessing - method dictionary' }
+Behavior >> removeMethod: aMethod [
+	" Remove a method from the method dictionary including the original definition (if any) and all its aliases.
+	Low-level: it removes a method regardless of where it comes from or where it was defined"
+
+	<reflection: 'Class structural modification - Selector/Method modification'>
+
+	| aliasKeys |	
+	"Obtain all keys that alias to the same method"
+	aliasKeys := self methodDict keys select: [ :e |
+			(self methodDict at: e) == aMethod ].
+
+	aliasKeys do: [ :k | self methodDict removeKey: k ]
 ]
 
 { #category : 'accessing - properties' }
@@ -1466,10 +1599,17 @@ Behavior >> removeProperty: propName ifAbsent: aBlock [
 
 { #category : 'accessing - method dictionary' }
 Behavior >> removeSelector: aSelector [
-	"Assuming that the argument, selector (a Symbol), is a message selector in my method dictionary, remove it and its method."
+	" Remove a method defined locally.
+	That is, the method should be defined in this class and not be imported from other source (a trait or an extension).
+	
+	Assuming that the argument, selector (a Symbol), is a message selector in my method dictionary, remove it and its method. Fail if it is not the case.
+	
+	If a method with this selector has aliases, remove all aliases too."
 	<reflection: 'Class structural modification - Selector/Method modification'>
 
-	self methodDict removeKey: aSelector ifAbsent: []
+	| methodToRemove |
+	methodToRemove := self methodDict at: aSelector.
+	self removeMethod: methodToRemove
 ]
 
 { #category : 'adding-removing methods' }
@@ -1544,6 +1684,7 @@ Behavior >> selectorsDo: selectorBlock [
 Behavior >> selectorsWithArgs: numberOfArgs [
 	"Return all selectors defined in this class that take this number of arguments"
 	<reflection: 'Class structural inspection - Selectors and methods inspection'>
+	self deprecated: 'issue #19467'.
 	^ self selectors select: [:selector | selector numArgs = numberOfArgs]
 ]
 
@@ -1554,6 +1695,13 @@ Behavior >> setFormat: aFormatInstanceDescription [
      compact, variable sized"
 
 	format := aFormatInstanceDescription
+]
+
+{ #category : 'compiling' }
+Behavior >> shouldLogSource [
+
+	"By default anonymous behaviors do not log source"
+	^ self isAnonymous not
 ]
 
 { #category : 'testing' }
@@ -1677,11 +1825,6 @@ Behavior >> superclass: aClass [
 	"Note: Do not use 'aClass isKindOf: Behavior' here
 		in case we recompile from Behavior itself."
 		<reflection: 'Class structural modification - Hierarchy modification'>
-	aClass
-		ifNil: [ self basicSuperclass: aClass.
-			Object flushCache.
-			^ self
-			].	"If the class is not nil it should update the class hierarchy correctly, using the classs builder"
 	^ self classInstaller
 		update: self
 		to: [ :builder | builder superclass: aClass ]

@@ -11,8 +11,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReAsOrderedCollectionNotNeededRule class >> group [
-	^ 'Optimization'
+ReAsOrderedCollectionNotNeededRule class >> groupSelector [
+
+	^ #optimizationGroup
 ]
 
 { #category : 'accessing' }

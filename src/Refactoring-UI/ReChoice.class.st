@@ -3,12 +3,25 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'refactoring',
-		'driver'
+		'driver',
+		'description'
 	],
 	#category : 'Refactoring-UI-Choices',
 	#package : 'Refactoring-UI',
 	#tag : 'Choices'
 }
+
+{ #category : 'accessing' }
+ReChoice >> description [
+
+	^ description
+]
+
+{ #category : 'accessing' }
+ReChoice >> description: aString [
+
+	description := aString
+]
 
 { #category : 'accessing' }
 ReChoice >> driver [

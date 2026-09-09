@@ -19,7 +19,15 @@ NewTestRunnerTest >> classForRunner [
 NewTestRunnerTest >> setUp [
 
 	super setUp.
-	runner := self classForRunner new
+	runner := self classForRunner new.
+	MockTest doNotIgnore
+]
+
+{ #category : 'running' }
+NewTestRunnerTest >> tearDown [
+
+	MockTest ignore.
+	super tearDown 
 ]
 
 { #category : 'tests' }
@@ -33,8 +41,6 @@ NewTestRunnerTest >> testFailedTestFaildWhileRerunningDoesNotChangeTheResult [
 
 	"first execution"
 
-	[ 
-	YellowTest doNotIgnoreTest.
 	runner runClass: YellowTest.
 	self
 		assert: runner testsCount equals: 2;
@@ -44,8 +50,7 @@ NewTestRunnerTest >> testFailedTestFaildWhileRerunningDoesNotChangeTheResult [
 	runner runFailures.
 	self
 		assert: runner testsCount equals: 2;
-		assert: runner failureCount equals: 1 ] ensure: [ 
-		YellowTest ignoreTest ]
+		assert: runner failureCount equals: 1 
 ]
 
 { #category : 'tests' }
@@ -83,27 +88,22 @@ NewTestRunnerTest >> testOnRunnerResultWithGreenTest [
 { #category : 'tests' }
 NewTestRunnerTest >> testOnRunnerResultWithRedTest [
 
-	[ 
-	RedTest doNotIgnoreTest.
 	runner runClass: RedTest.
 	self
 		assert: runner runCount equals: 3;
 		assert: runner passedCount equals: 1;
 		assert: runner failureCount equals: 1;
-		assert: runner errorCount equals: 1 ] ensure: [ RedTest ignoreTest ]
+		assert: runner errorCount equals: 1
 ]
 
 { #category : 'tests' }
 NewTestRunnerTest >> testOnRunnerResultWithYellowTest [
 
-	[ 
-	YellowTest doNotIgnoreTest.
 	runner runClass: YellowTest.
 	self
 		assert: runner testsCount equals: 2;
 		assert: runner passedCount equals: 1;
-		assert: runner failureCount equals: 1 ] ensure: [ 
-		YellowTest ignoreTest ]
+		assert: runner failureCount equals: 1 
 ]
 
 { #category : 'tests' }
@@ -112,18 +112,14 @@ NewTestRunnerTest >> testRerunningFailedTest [
 	"we will run a test who fail only during the first execution"
 
 	"first execution"
-
-	[ 
-	FailThenPass doNotIgnoreTest.
-	runner runClass: FailThenPass.
+	runner runClass: FailThenPassTest.
 	self assert: runner runCount equals: 2.
 	self assert: runner failureCount equals: 1.
 
 	"second execution"
 	runner runFailures.
 	self assert: runner runCount equals: 2.
-	self assert: runner failureCount equals: 0 ] ensure: [ 
-		FailThenPass ignoreTest ]
+	self assert: runner failureCount equals: 0
 ]
 
 { #category : 'tests' }
@@ -132,9 +128,6 @@ NewTestRunnerTest >> testRerunningFailedTest2 [
 	"we will run a test who fail only during the first execution"
 
 	"first execution"
-
-	[ 
-	RedTest doNotIgnoreTest.
 	runner runClass: RedTest.
 	self
 		assert: runner runCount equals: 3;
@@ -147,23 +140,51 @@ NewTestRunnerTest >> testRerunningFailedTest2 [
 	self
 		assert: runner runCount equals: 3;
 		assert: runner failureCount equals: 1;
-		assert: runner errorCount equals: 1 ] ensure: [ RedTest ignoreTest ]
+		assert: runner errorCount equals: 1
+]
+
+{ #category : 'tests' }
+NewTestRunnerTest >> testRunCasesAccumulatesResults [
+
+	runner 
+		accumulateResult;
+		runCase: GreenTest suite tests first;
+		runCase: GreenTest suite tests second.
+
+	self assert: runner runCount equals: 2
+]
+
+{ #category : 'tests' }
+NewTestRunnerTest >> testRunCasesDontAccumulatesResults [
+
+	| firstRunningCount |
+	firstRunningCount := runner 
+		doNotAccumulateResult;
+		runCase: GreenTest suite tests first;
+		runCase: GreenTest suite tests second.
+
+	self 
+		assert: runner runCount equals: 0;
+		assert: firstRunningCount passedCount equals: 1
+]
+
+{ #category : 'tests' }
+NewTestRunnerTest >> testRunCountOnNew [
+
+	self assert: runner runCount equals: 0
 ]
 
 { #category : 'tests' }
 NewTestRunnerTest >> testRunnerCanAccumulateResult [
 
 	| firstRunningCount secondRunningCount |
-	[ 
-	YellowTest doNotIgnoreTest.
 	runner accumulateResult.
 	runner runClass: GreenTest. "2 tests"
 	firstRunningCount := runner runCount.
 
 	runner runClass: YellowTest. "2 tests"
 	secondRunningCount := runner runCount.
-	self assert: secondRunningCount equals: firstRunningCount + 2 ] 
-		ensure: [ YellowTest ignoreTest ]
+	self assert: secondRunningCount equals: firstRunningCount + 2
 ]
 
 { #category : 'tests' }
@@ -180,15 +201,11 @@ NewTestRunnerTest >> testRunnerDoesNotAccumulateRsult [
 NewTestRunnerTest >> testRunningACollectionOfTestCases [
 
 	"first execution"
-
-	[ 
-	YellowTest doNotIgnoreTest.
 	runner runClasses: { 
 			GreenTest.
 			YellowTest }.
 	self assert: runner runCount equals: 4.
-	self assert: runner passedCount equals: 3 ] ensure: [ 
-		YellowTest ignoreTest ]
+	self assert: runner passedCount equals: 3
 ]
 
 { #category : 'tests' }
@@ -275,17 +292,11 @@ NewTestRunnerTest >> testSuiteWithMultipleTestCase [
 	                         + GreenTest suite tests size
 	                         + RedTest suite tests size.
 
-	[ 
-	YellowTest doNotIgnoreTest.
-	RedTest doNotIgnoreTest.
 	runner testSuitesFromClasses: { 
 			GreenTest.
 			YellowTest.
 			RedTest }.
-	self assert: runner suite tests size equals: exepectedNumberOfTest ] 
-		ensure: [ 
-			YellowTest ignoreTest.
-			RedTest ignoreTest ]
+	self assert: runner suite tests size equals: exepectedNumberOfTest
 ]
 
 { #category : 'tests' }
@@ -305,15 +316,10 @@ NewTestRunnerTest >> testSuitesFromAnAbstractTestCaseIsEmpty [
 { #category : 'tests' }
 NewTestRunnerTest >> testTryingToRunFailuresAfterRunningMultipleTestCaseClass [
 
-	[ 
-	FailThenPass reset.
-	FailThenPass doNotIgnoreTest.
-	YellowTest doNotIgnoreTest.
-
 	runner
 		accumulateResult;
 		runClasses: { 
-				FailThenPass.
+				FailThenPassTest.
 				YellowTest }.
 
 	self assert: runner runCount equals: 4.
@@ -321,7 +327,5 @@ NewTestRunnerTest >> testTryingToRunFailuresAfterRunningMultipleTestCaseClass [
 
 	runner runFailures.
 	self assert: runner runCount equals: 4.
-	self assert: runner failureCount equals: 1 ] ensure: [ 
-		FailThenPass ignoreTest.
-		YellowTest ignoreTest ]
+	self assert: runner failureCount equals: 1
 ]

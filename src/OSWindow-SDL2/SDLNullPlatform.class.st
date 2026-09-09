@@ -17,6 +17,10 @@ SDLNullPlatform >> afterMainPharoWindowCreated: aOSSDLWindow [
 SDLNullPlatform >> afterSetWindowTitle: aString onWindow: aOSSDLWindow [
 ]
 
+{ #category : 'operations' }
+SDLNullPlatform >> beforeMainPharoWindowClosed: aOSSDLWindow [
+]
+
 { #category : 'initialization' }
 SDLNullPlatform >> initPlatformSpecific [
 

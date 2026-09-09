@@ -48,6 +48,11 @@ FTAbstractSortingState >> executeSortingOn: aDataSource [
 	self subclassResponsibility
 ]
 
+{ #category : 'testing' }
+FTAbstractSortingState >> isSorted [ 
+	^ true
+]
+
 { #category : 'accessing' }
 FTAbstractSortingState >> nextState [
 	^ self subclassResponsibility

@@ -55,8 +55,8 @@ SycGenerateVariableAccessorsWithLazyInitializationCommand >> isComplexRefactorin
 SycGenerateVariableAccessorsWithLazyInitializationCommand >> prepareFullExecutionInContext: aToolContext [
 
 	super prepareFullExecutionInContext: aToolContext.
-	variable := aToolContext lastSelectedVariable.
-	value := self uiManager
+	variable := aToolContext lastSelectedVariable. 
+	value := aToolContext tool morphicUIManager
 		           request: 'Default value of variable accessor'
 		           initialAnswer: 'nil'
 		           title: 'Default variable''s value'.

@@ -253,6 +253,8 @@ RBClassDataForRefactoringTest >> inlineBar: aSymbol [
 
 { #category : 'inline' }
 RBClassDataForRefactoringTest >> inlineComponent [
+
+	<ignoreNotImplementedSelectors: #(hasImmediateInstances)>
 	| a |
 	a := 5.
 	^a class
@@ -263,6 +265,8 @@ RBClassDataForRefactoringTest >> inlineComponent [
 
 { #category : 'inline' }
 RBClassDataForRefactoringTest >> inlineFailed [
+
+	<ignoreNotImplementedSelectors: #(fooMax:)>
 	| x y q |
 	x := 5.
 	y := 10.
@@ -331,6 +335,12 @@ RBClassDataForRefactoringTest >> inlineTemporary [
 ]
 
 { #category : 'lint' }
+RBClassDataForRefactoringTest >> justExpression [
+
+	^ 2 + 3
+]
+
+{ #category : 'lint' }
 RBClassDataForRefactoringTest >> justSendsSuper [
 	super justSendsSuper
 ]
@@ -394,7 +404,7 @@ RBClassDataForRefactoringTest >> modifiesCollection [
 	^collection
 ]
 
-{ #category : 'tests' }
+{ #category : 'temp definition move' }
 RBClassDataForRefactoringTest >> moveDefinition [
 	| temp |
 	^(self collect:
@@ -407,13 +417,27 @@ RBClassDataForRefactoringTest >> moveDefinition [
 			temp odd]
 ]
 
+{ #category : 'temp definition move' }
+RBClassDataForRefactoringTest >> moveDefinition2 [
+	| temp |
+	(#(1 2 3) collect:
+			[ :each |
+			temp := each printString.
+			temp , temp])
+		select:
+			[:each |
+			temp := each size, temp.
+			].
+		^ temp
+]
+
 { #category : 'inline' }
 RBClassDataForRefactoringTest >> multipleCalls [
 	self caller2.
 	self caller2
 ]
 
-{ #category : 'tests' }
+{ #category : 'temp definition move' }
 RBClassDataForRefactoringTest >> noMoveDefinition [
 	| temp |
 	^(self collect:
@@ -426,6 +450,12 @@ RBClassDataForRefactoringTest >> noMoveDefinition [
 { #category : 'lint' }
 RBClassDataForRefactoringTest >> precedence [
 	^self isArray ifFalse: [self block + 5 * 34] ifTrue: [self printString = 10]
+]
+
+{ #category : 'inline' }
+RBClassDataForRefactoringTest >> provideInlineMethod [
+
+	^ RBBasicLintRuleTestData new classBlock + 3
 ]
 
 { #category : 'accessing' }
@@ -464,6 +494,8 @@ RBClassDataForRefactoringTest >> renameThisMethod: anArg [
 
 { #category : 'rendering' }
 RBClassDataForRefactoringTest >> renderContentOn: html [
+
+	<ignoreNotImplementedSelectors: #(on:of: contact)>
 	html
 		form: [ html text: 'Name:'.
 			html textInput on: #name of: self contact.
@@ -532,7 +564,7 @@ RBClassDataForRefactoringTest >> sendsDifferentSuper [
 { #category : 'lint' }
 RBClassDataForRefactoringTest >> sizeCheck [
 
-	self isEmpty 
+	self isEmpty
 		ifFalse: [ self do: [ :each | each traceCr ] ]
 ]
 
@@ -547,6 +579,61 @@ RBClassDataForRefactoringTest >> stringConcatenation [
 { #category : 'tests' }
 RBClassDataForRefactoringTest >> symbolReference [
 	^#(#renameThisMethod: #(4 #renameThisMethod:))
+]
+
+{ #category : 'temp definition move' }
+RBClassDataForRefactoringTest >> tempAccessedInTwoBlocksCannotSeeItsDefinitionMoved [
+	| temp |
+	(#(1 2 3) collect:
+			[ :each |
+			temp := each printString.
+			temp , temp])
+		select:
+			[:each |
+			temp := each size, temp.
+			].
+		^ temp
+]
+
+{ #category : 'temp definition move' }
+RBClassDataForRefactoringTest >> tempDefCanBeMoveInEachBlock [
+	| temp |
+	^(self collect:
+			[:each |
+			temp := each printString.
+			temp , temp])
+		select:
+			[:each |
+			temp := each size.
+			temp odd]
+]
+
+{ #category : 'temp definition move' }
+RBClassDataForRefactoringTest >> tempDefCannotBeMoveInEachBlock2 [
+	| temp y |
+	^(#(1 2 3) collect:
+			[:each |
+			temp := each , temp.
+			])
+		select:
+			[:each |
+			y := temp.
+			temp := each printString.
+			temp , temp.
+			]
+]
+
+{ #category : 'tests' }
+RBClassDataForRefactoringTest >> tempDefinitionCanBePlacedInTwoBlockSinceNoAccessInSecond [
+	| temp |
+	^(self collect:
+			[:each |
+			temp := each printString.
+			temp , temp])
+		select:
+			[:each |
+			temp := each size.
+			temp odd]
 ]
 
 { #category : 'lint' }
@@ -581,6 +668,8 @@ RBClassDataForRefactoringTest >> testMethod1 [
 
 { #category : 'rendering' }
 RBClassDataForRefactoringTest >> textInput: html name: aString symbol: aSymbol [
+
+	<ignoreNotImplementedSelectors: #(on:of: contact)>
 	html text: aString.
 	html textInput on: aSymbol of: self contact.
 	html break

@@ -148,6 +148,8 @@ RBTransformationRuleTestData class >> guardClause [
 
 { #category : 'class initialization' }
 RBTransformationRuleTestData class >> initializeAfterLoad1 [
+
+	<ignoreNotImplementedSelectors: #(addMethodSearches:)>
 	RecursiveSelfRule := self parseTreeSearcher.
 	RecursiveSelfRule
 		addMethodSearches: #('`@methodName: `@args | `@temps | self `@methodName: `@args' '`@methodName: `@args | `@temps | ^self `@methodName: `@args')
@@ -223,8 +225,10 @@ RBTransformationRuleTestData class >> nuke [
 
 { #category : 'instance creation' }
 RBTransformationRuleTestData class >> rewrite: stringArrays methods: aBoolean name: aName [
+
+	<ignoreNotImplementedSelectors: #(addMethodSearch:)>
 	| rewriteRule |
-	rewriteRule := RBParseTreeRewriter new.
+	rewriteRule := OCParseTreeRewriter new.
 	stringArrays do:
 			[:each |
 			aBoolean
@@ -305,7 +309,7 @@ RBTransformationRuleTestData >> problemCount [
 
 { #category : 'accessing' }
 RBTransformationRuleTestData >> resetResult [
-	builder := RBRefactoryChangeManager changeFactory compositeRefactoryChange
+	builder := ReChangeManager changeFactory compositeRefactoryChange
 ]
 
 { #category : 'accessing' }
@@ -322,7 +326,7 @@ RBTransformationRuleTestData >> rewriteUsing: searchReplacer [
 { #category : 'rules' }
 RBTransformationRuleTestData >> superSends [
 	| rule |
-	rule := RBParseTreeRewriter new.
+	rule := OCParseTreeRewriter new.
 	rule addSearch: 'super `@message: ``@args'
 				-> (
 					[:aNode |

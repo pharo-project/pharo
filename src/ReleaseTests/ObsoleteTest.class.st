@@ -21,7 +21,9 @@ ObsoleteTest class >> defaultTimeLimit [
 { #category : 'running' }
 ObsoleteTest >> setUp [
 	super setUp.
-	classFactory := ClassFactoryForTestCase new
+	"These tests are written to work on the global environment"
+	testingEnvironment := Smalltalk globals.
+	classFactory := ClassFactoryForTestCase environment: testingEnvironment
 ]
 
 { #category : 'running' }
@@ -59,7 +61,8 @@ ObsoleteTest >> testFixObsoleteSharedPools [
 	poolClass := nil.
 	3 timesRepeat: [ Smalltalk garbageCollect ].
 
-	preFixObsoleteClassNames := SystemNavigation default obsoleteClasses collect: [ :each | each name ].
+	preFixObsoleteClassNames := (SystemNavigation new environment: classFactory environment) obsoleteClasses collect: [ :each |
+		                            each name ].
 	self assert: (preFixObsoleteClassNames includes: obsoletePoolName).
 	self assert: testClass sharedPoolNames size equals: 1.
 	self assert: (testClass sharedPoolNames includes: obsoletePoolName).
@@ -67,7 +70,7 @@ ObsoleteTest >> testFixObsoleteSharedPools [
 
 	Smalltalk fixObsoleteSharedPools.
 
-	postFixObsoleteClassNames := SystemNavigation default obsoleteClasses collect: #name.
+	postFixObsoleteClassNames := (SystemNavigation new environment: classFactory environment) obsoleteClasses collect: #name.
 	self deny: (postFixObsoleteClassNames includes: obsoletePoolName).
 	self assertEmpty: testClass sharedPoolNames.
 	self assertEmpty: testClass sharedPoolsString

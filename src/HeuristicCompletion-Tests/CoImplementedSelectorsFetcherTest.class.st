@@ -13,7 +13,13 @@ CoImplementedSelectorsFetcherTest >> setUp [
 	fetcher := CoClassImplementedMessagesFetcher new.
 	fetcher completionClass: self completionClass.
 	expectedElements := {
-		NECSelectorEntry contents: 'ma' node: nil.
-		NECSelectorEntry contents: 'mb' node: nil.
-		NECSelectorEntry contents: 'mc' node: nil.}
+		                    ((CoSelectorEntry contents: 'ma' node: nil)
+			                     fetcherName: fetcher class name;
+			                     yourself).
+		                    ((CoSelectorEntry contents: 'mb' node: nil)
+			                     fetcherName: fetcher class name;
+			                     yourself).
+		                    ((CoSelectorEntry contents: 'mc' node: nil)
+			                     fetcherName: fetcher class name;
+			                     yourself) }
 ]

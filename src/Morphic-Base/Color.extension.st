@@ -12,12 +12,3 @@ Color >> changeColorIn: aMorph event: evt [
 	"Note: This is just a workaround to make sure we don't use the old color inst var"
 	aMorph changeColorTarget: aMorph selector: #fillStyle: originalColor: self hand: evt hand
 ]
-
-{ #category : '*Morphic-Base' }
-Color >> iconOrThumbnailOfSize: aNumberOrPoint [
-	"Answer an appropiate form to represent the receiver"
-	| form |
-	form := Form extent: aNumberOrPoint asPoint asPoint depth: 32.
-	form fillColor: self.
-	^ form
-]

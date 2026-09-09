@@ -10,8 +10,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReUsesAddRule class >> group [
-	^ 'Potential Bugs'
+ReUsesAddRule class >> groupSelector [
+
+	^ #potentialBugsGroup
 ]
 
 { #category : 'accessing' }

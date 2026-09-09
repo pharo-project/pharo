@@ -10,8 +10,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReDetectContainsRule class >> group [
-	^ 'Coding Idiom Violation'
+ReDetectContainsRule class >> groupSelector [
+
+	^ #codingIdiomViolationGroup
 ]
 
 { #category : 'accessing' }

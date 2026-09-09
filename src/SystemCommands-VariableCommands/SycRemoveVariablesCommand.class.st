@@ -33,6 +33,12 @@ SycRemoveVariablesCommand >> defaultMenuItemName [
 	^ 'Remove'
 ]
 
+{ #category : 'accessing' }
+SycRemoveVariablesCommand >> description [
+
+	^ 'Removes Variables.'
+]
+
 { #category : 'execution' }
 SycRemoveVariablesCommand >> execute [
 	"Clearly from the UI we do not accept variables mixed from different classes and kinds"
@@ -48,10 +54,4 @@ SycRemoveVariablesCommand >> execute [
 				 scopes: toolContext refactoringScopes
 				 variables: (variables collect: [:each | each name])
 				 for: variables first definingClass) runRefactoring ]
-]
-
-{ #category : 'testing' }
-SycRemoveVariablesCommand >> isComplexRefactoring [
-
-	^false
 ]

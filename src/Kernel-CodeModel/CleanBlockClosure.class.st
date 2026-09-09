@@ -37,20 +37,20 @@ CleanBlockClosure class >> compiledBlock: aCompiledBlock [
 		compiledBlock: aCompiledBlock
 ]
 
-{ #category : 'printing' }
-CleanBlockClosure >> doPrintOn: aStream [
-
-	aStream nextPutAll: self sourceNode value sourceCode
-]
-
-{ #category : 'accessing' }
+{ #category : 'testing' }
 CleanBlockClosure >> hasLiteral: aLiteral [
 	^self compiledBlock hasLiteral: aLiteral
 ]
 
-{ #category : 'accessing' }
+{ #category : 'testing' }
 CleanBlockClosure >> hasLiteralSuchThat: aLiteral [
 	^self compiledBlock hasLiteralSuchThat: aLiteral
+]
+
+{ #category : 'testing' }
+CleanBlockClosure >> hasPrimitive [
+	
+	^ self compiledBlock hasPrimitive
 ]
 
 { #category : 'accessing' }
@@ -82,6 +82,12 @@ CleanBlockClosure >> literal [
 ]
 
 { #category : 'accessing' }
+CleanBlockClosure >> literals [
+
+	^ self compiledBlock literals
+]
+
+{ #category : 'accessing' }
 CleanBlockClosure >> literalsEvenTheOnesInTheInnerBlocks [
 	^self compiledBlock literalsEvenTheOnesInTheInnerBlocks
 ]
@@ -99,6 +105,14 @@ CleanBlockClosure >> outerCode [
 { #category : 'accessing' }
 CleanBlockClosure >> outerCode: aCompiledCode [
 	self compiledBlock outerCode: aCompiledCode
+]
+
+{ #category : 'accessing' }
+CleanBlockClosure >> pathOfLiteralIndexes [
+	
+	"Return the path of this compiled block inside the method literal frame.
+	See CompiledBlock>>#pathOfLiteralIndexes for more details"
+	^ self compiledBlock pathOfLiteralIndexes allButLast
 ]
 
 { #category : 'scanning' }
@@ -128,13 +142,6 @@ CleanBlockClosure >> receiver [
 { #category : 'accessing' }
 CleanBlockClosure >> refersToLiteral: aLiteral [
 	^self compiledBlock refersToLiteral: aLiteral
-]
-
-{ #category : 'debugger access' }
-CleanBlockClosure >> sender [
-	" clean blocks do not know the sender"
-	<reflection: 'Message sending and code execution - Message send reification'>
-	^nil
 ]
 
 { #category : 'accessing' }

@@ -2,13 +2,15 @@
 I am responsible for adding a message send inside a method. In this implementation, all the message send, e.g., 'variable message: (arg)' shall be described as a string. It was implemented this way to avoid having another transformation just to add the receiver as a literal node.
 
 Usage:
+```
 | transformation |
 transformation := (RBAddMessageSendTransformation
 				messageSend: 'variable byteAt: 1'
 				inMethod: #methodBefore
 				inClass: #RBAddMessageSendTransformationTest)
-				transform.
-(ChangesBrowser changes: transformation model changes changes) open
+				generateChanges.
+(StRefactoringPreviewPresenter for: transformation) open
+```
 
 Preconditions:
 - the method exists.
@@ -102,26 +104,11 @@ RBAddMessageSendTransformation >> privateTransform [
 
 	"if the message requires variables, look for the right variables in this context"
 	variables := messageNode allVariables.
-	assignments := (methodTree allChildren select: #isAssignment)
+	assignments := (methodTree withAllChildren select: #isAssignment)
 		select: [ :each | variables includes: each variable ].
 	previousNode := assignments detectMax: #stop.
 	previousNode
 		ifNil: [ methodTree body addNodeFirst: messageNode ]
 		ifNotNil: [ previousNode parent addNode: messageNode after: previousNode ].
 	class compileTree: methodTree
-]
-
-{ #category : 'storing' }
-RBAddMessageSendTransformation >> storeOn: aStream [
-
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream
-		nextPutAll: ' messageSend: ''';
-		nextPutAll: message;
-		nextPutAll: ''' inMethod: ''';
-		nextPutAll: selector;
-		nextPutAll: ''' inClass: '.
-	class storeOn: aStream.
-	aStream nextPut: $)
 ]

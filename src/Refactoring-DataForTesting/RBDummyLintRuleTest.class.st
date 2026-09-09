@@ -9,7 +9,7 @@ Class {
 		'Foo1'
 	],
 	#pools : [
-		'TextConstants'
+		'RBSharedPoolForTestData'
 	],
 	#category : 'Refactoring-DataForTesting-LittleHierarchy',
 	#package : 'Refactoring-DataForTesting',
@@ -23,7 +23,7 @@ RBDummyLintRuleTest class >> parseTreeSearcher [
 
 { #category : 'parsing' }
 RBDummyLintRuleTest class >> parseTreeSearcherClass [
-	^ RBParseTreeSearcher
+	^ OCParseTreeSearcher
 ]
 
 { #category : 'foo' }
@@ -90,7 +90,7 @@ RBDummyLintRuleTest >> isEmpty [
 RBDummyLintRuleTest >> junk [
 	^ RBClassDataForRefactoringTest printString
 		copyFrom: 1
-		to: CR
+		to: Var1
 ]
 
 { #category : 'accessing' }

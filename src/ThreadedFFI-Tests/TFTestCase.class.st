@@ -12,15 +12,19 @@ Class {
 TFTestCase class >> testParameters [
 
 	^ ParametrizedTestMatrix new
-		forSelector: #runner addOptions: { [ TFSameThreadRunner uniqueInstance ]. [ TFWorker named: 'fortest' ]. }
+		forSelector: #runner 
+		addOptions: { 
+			[ TFSameThreadRunner uniqueInstance ]. 
+			[ TFWorker named: 'fortest-', UUID new asString ]. 
+		}
 ]
 
 { #category : 'accessing' }
 TFTestCase >> libraryPath [
 
-	Smalltalk os isUnix ifTrue: [ ^ 'libTestLibrary.so' ].
-	Smalltalk os isMacOS ifTrue: [ ^ 'libTestLibrary.dylib' ].
-	Smalltalk os isWindows ifTrue: [ ^ 'TestLibrary.dll' ].
+	OSPlatform current isUnix ifTrue: [ ^ 'libTestLibrary.so' ].
+	OSPlatform current isMacOS ifTrue: [ ^ 'libTestLibrary.dylib' ].
+	OSPlatform current isWindows ifTrue: [ ^ 'TestLibrary.dll' ].
 
 	self error: 'Unsupported Platform'
 ]
@@ -40,8 +44,9 @@ TFTestCase >> runner [
 ]
 
 { #category : 'accessing' }
-TFTestCase >> runner: anObject [
-	runner := anObject
+TFTestCase >> runner: aWorker [
+
+	runner := aWorker
 ]
 
 { #category : 'tests' }

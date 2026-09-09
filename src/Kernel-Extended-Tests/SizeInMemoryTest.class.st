@@ -60,7 +60,7 @@ SizeInMemoryTest >> testSizeInMemoryNormalClasses [
 		equals: (self align64Bits: 1 "forwarding pointer" * Smalltalk wordSize + self headerSize).
 	self
 		assert: TestCase new sizeInMemory
-		equals: (self align64Bits: 2 * Smalltalk wordSize + self headerSize)
+		equals: (self align64Bits: 3 * Smalltalk wordSize + self headerSize)
 ]
 
 { #category : 'tests' }

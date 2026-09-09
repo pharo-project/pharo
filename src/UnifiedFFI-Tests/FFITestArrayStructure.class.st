@@ -33,7 +33,7 @@ FFITestArrayStructure class >> initialize [
 { #category : 'accessing - structure variables' }
 FFITestArrayStructure >> byte10 [
 	"This method was automatically generated"
-	^(FFITypeArray ofType: #FFIUInt8 size: 10) fromHandle: (handle copyFrom: OFFSET_BYTE10 to: OFFSET_BYTE10 + 9)
+	^(FFIArray ofType: #FFIUInt8 size: 10) fromHandle: (handle copyFrom: OFFSET_BYTE10 to: OFFSET_BYTE10 + 9)
 ]
 
 { #category : 'accessing - structure variables' }
@@ -45,7 +45,7 @@ FFITestArrayStructure >> byte10: anObject [
 { #category : 'accessing - structure variables' }
 FFITestArrayStructure >> char5 [
 	"This method was automatically generated"
-	^(FFITypeArray ofType: #FFICharacterType size: 5) fromHandle: (handle copyFrom: OFFSET_CHAR5 to: OFFSET_CHAR5 + 4)
+	^(FFIArray ofType: #FFICharacterType size: 5) fromHandle: (handle copyFrom: OFFSET_CHAR5 to: OFFSET_CHAR5 + 4)
 ]
 
 { #category : 'accessing - structure variables' }

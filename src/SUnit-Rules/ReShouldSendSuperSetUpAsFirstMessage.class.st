@@ -18,15 +18,15 @@ ReShouldSendSuperSetUpAsFirstMessage class >> checksMethod [
 ]
 
 { #category : 'accessing' }
-ReShouldSendSuperSetUpAsFirstMessage class >> group [
+ReShouldSendSuperSetUpAsFirstMessage class >> groupSelector [
 
-	^ 'SUnit'
+	^ #sunitGroup
 ]
 
 { #category : 'utilities' }
 ReShouldSendSuperSetUpAsFirstMessage class >> parseTreeSearcher [
 
-	^ RBParseTreeSearcher new
+	^ OCParseTreeSearcher new
 ]
 
 { #category : 'accessing' }

@@ -21,8 +21,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReTrueFalseDuplicationRule class >> group [
-	^ 'Optimization'
+ReTrueFalseDuplicationRule class >> groupSelector [
+
+	^ #optimizationGroup
 ]
 
 { #category : 'accessing' }
@@ -37,7 +38,7 @@ ReTrueFalseDuplicationRule class >> ruleName [
 
 { #category : 'accessing' }
 ReTrueFalseDuplicationRule class >> severity [
-	^ #information
+	^ 'information'
 ]
 
 { #category : 'accessing' }

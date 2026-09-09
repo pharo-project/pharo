@@ -9,7 +9,7 @@ Class {
 { #category : 'tests' }
 RBMoveMethodToClassSideParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
-		addCase: { #rbClass -> RBMoveMethodToClassSideRefactoring };
+		addCase: { #rbClass -> ReMoveMethodToClassSideRefactoring };
 		addCase: { #rbClass -> RBMoveMethodToClassSideTransformation };
 		yourself
 ]
@@ -65,8 +65,9 @@ RBMoveMethodToClassSideParametrizedTest >> testMoveMethodToClassSideWithInsAndMe
 	someClass := model classNamed: className name, ' class'.
 	self assert: (someClass parseTreeForSelector: ('rewrite', 'Using:') asSymbol) equals: (self parseMethod: 'rewriteUsing: searchReplacer
 
-	| aRBTransformationRuleTestData |
-	aRBTransformationRuleTestData := self new.
-	aRBTransformationRuleTestData rewriteRule: searchReplacer.
-	aRBTransformationRuleTestData resetResult')
+	| newInstance |
+	newInstance := self new.
+
+	newInstance rewriteRule: searchReplacer.
+	newInstance resetResult')
 ]

@@ -298,6 +298,14 @@ MultistateButtonMorph >> over: anObject [
 	self changed
 ]
 
+{ #category : 'activate' }
+MultistateButtonMorph >> passivate [
+	"Make passive."
+
+	super passivate.
+	self active: false
+]
+
 { #category : 'visual properties' }
 MultistateButtonMorph >> passiveDisabledNotOverDownFillStyle: aFillStyle [
 	"Set the passive, disabled, notOver, down fill style."

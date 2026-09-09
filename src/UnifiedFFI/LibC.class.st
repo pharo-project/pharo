@@ -121,7 +121,7 @@ LibC >> parentProcessId [
 LibC >> pipe: command mode: mode [
 	"Initiate pipe streams to or from a process."
 
-	^self ffiCall: (Smalltalk os isWindows
+	^self ffiCall: (OSPlatform current isWindows
 							ifTrue:  [ #(void* _popen(char* command, char* mode)) ]
 							ifFalse: [ #(void* popen(char* command, char* mode)) ])
 ]
@@ -130,7 +130,7 @@ LibC >> pipe: command mode: mode [
 LibC >> pipeClose: stream [
 	"Close the given pipe stream."
 
-	^self ffiCall: (Smalltalk os isWindows
+	^self ffiCall: (OSPlatform current isWindows
 							ifTrue: [ #(int* _pclose(void* stream)) ]
 							ifFalse: [ #(int* pclose(void* stream)) ])
 ]

@@ -10,9 +10,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReIsNilAndConditionalRule class >> group [
+ReIsNilAndConditionalRule class >> groupSelector [
 
-	^ 'Coding Idiom Violation'
+	^ #codingIdiomViolationGroup
 ]
 
 { #category : 'accessing' }

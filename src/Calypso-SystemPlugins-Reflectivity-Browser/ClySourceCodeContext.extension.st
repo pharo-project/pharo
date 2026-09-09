@@ -4,13 +4,3 @@ Extension { #name : 'ClySourceCodeContext' }
 ClySourceCodeContext >> isSelectedItemHasBreakpoint [
 	^selectedSourceNode hasBreakpoint
 ]
-
-{ #category : '*Calypso-SystemPlugins-Reflectivity-Browser' }
-ClySourceCodeContext >> isSelectedItemHasExecutionCounter [
-	^selectedSourceNode hasExecutionCounter
-]
-
-{ #category : '*Calypso-SystemPlugins-Reflectivity-Browser' }
-ClySourceCodeContext >> isSelectedItemHasWatch [
-	^selectedSourceNode hasWatch
-]

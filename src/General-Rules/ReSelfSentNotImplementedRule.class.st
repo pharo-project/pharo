@@ -15,8 +15,9 @@ ReSelfSentNotImplementedRule class >> checksMethod [
 ]
 
 { #category : 'accessing' }
-ReSelfSentNotImplementedRule class >> group [
-	^ 'Bugs'
+ReSelfSentNotImplementedRule class >> groupSelector [
+
+	^ #bugsGroup
 ]
 
 { #category : 'accessing' }
@@ -31,7 +32,7 @@ ReSelfSentNotImplementedRule class >> ruleName [
 
 { #category : 'accessing' }
 ReSelfSentNotImplementedRule class >> severity [
-	^ #error
+	^ 'error'
 ]
 
 { #category : 'accessing' }

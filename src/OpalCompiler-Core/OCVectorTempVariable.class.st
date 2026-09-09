@@ -23,6 +23,20 @@ Class {
 	#tag : 'Semantics'
 }
 
+{ #category : 'debugging' }
+OCVectorTempVariable >> descriptionArrayForScope: aScope [
+
+	| vectorVariable lexicalDistance |
+	vectorVariable := aScope lookupVar: vectorName.
+	lexicalDistance := aScope nonOptimizedDistanceTo: vectorVariable scope.
+	^ {
+		  name.
+		  self isArgumentVariable.
+		  lexicalDistance.
+		  vectorVariable index.
+		  index }
+]
+
 { #category : 'emitting' }
 OCVectorTempVariable >> emitStore: methodBuilder [
 

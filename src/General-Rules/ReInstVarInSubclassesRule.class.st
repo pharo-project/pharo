@@ -17,8 +17,9 @@ ReInstVarInSubclassesRule class >> checksClass [
 ]
 
 { #category : 'accessing' }
-ReInstVarInSubclassesRule class >> group [
-	^ 'Design Flaws'
+ReInstVarInSubclassesRule class >> groupSelector [
+
+	^ #designFlawGroup
 ]
 
 { #category : 'accessing' }
@@ -33,7 +34,7 @@ ReInstVarInSubclassesRule class >> ruleName [
 
 { #category : 'accessing' }
 ReInstVarInSubclassesRule class >> severity [
-	^ #information
+	^ 'information'
 ]
 
 { #category : 'accessing' }
@@ -59,7 +60,7 @@ ReInstVarInSubclassesRule >> check: aClass forCritiquesDo: aCritiqueBlock [
 			(self critiqueFor: aClass)
 				tinyHint: sel;
 				refactoring: (
-					RBPullUpInstanceVariableRefactoring
+					RePullUpInstanceVariableRefactoring
 						variable: sel
 						class: aClass);
 				yourself) ]

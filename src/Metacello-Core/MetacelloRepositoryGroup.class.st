@@ -4,9 +4,9 @@ Class {
 	#instVars : [
 		'repositories'
 	],
-	#category : 'Metacello-Core-Gofer',
+	#category : 'Metacello-Core-Monticello',
 	#package : 'Metacello-Core',
-	#tag : 'Gofer'
+	#tag : 'Monticello'
 }
 
 { #category : 'instance creation' }
@@ -15,6 +15,12 @@ MetacelloRepositoryGroup class >> onRepositories: aRepositoryCollection [
 	^ self new
 		repositories: aRepositoryCollection;
 		yourself
+]
+
+{ #category : 'fetching' }
+MetacelloRepositoryGroup >> fetchPackageNamed: aString [
+
+	self uniqueRepository fetchPackageNamed: aString
 ]
 
 { #category : 'accessing' }
@@ -31,4 +37,26 @@ MetacelloRepositoryGroup >> loadPackageNamed: aName intoLoader: aLoader [
 { #category : 'accessing' }
 MetacelloRepositoryGroup >> repositories: aCollection [ 
 	repositories := aCollection
+]
+
+{ #category : 'accessing' }
+MetacelloRepositoryGroup >> repositoryDescription [
+
+	^ self uniqueRepository repositoryDescription
+]
+
+{ #category : 'accessing' }
+MetacelloRepositoryGroup >> repositoryVersionString [
+
+	^ self uniqueRepository repositoryVersionString
+]
+
+{ #category : 'accessing' }
+MetacelloRepositoryGroup >> uniqueRepository [
+
+	repositories asSet isEmpty ifTrue: [
+		self error: 'No repositories found!' ].
+	repositories asSet size > 1 ifTrue: [
+		self error: 'Conflicting repositories!' ].
+	^ repositories anyOne
 ]

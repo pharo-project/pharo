@@ -86,6 +86,20 @@ Object >> ffiCall: fnSpec module: aModuleName [
 ]
 
 { #category : '*UnifiedFFI' }
+Object >> ffiCall: fnSpec module: aLibrary fixedArgumentCount: fixedArgumentsCount [
+	<ffiCalloutTranslator>
+
+	"This message allows to call variadic functions.
+	It is required to set the number of fixed arguments in the call as different calling conventions handle them differently"
+
+	self
+		ffiCall: fnSpec
+		library: aLibrary
+		options: #()
+		fixedArgumentCount: fixedArgumentsCount
+]
+
+{ #category : '*UnifiedFFI' }
 Object >> ffiCall: fnSpec module: aModuleName options: callOptions [
 	<ffiCalloutTranslator>
 

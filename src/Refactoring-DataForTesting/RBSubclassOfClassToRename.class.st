@@ -22,6 +22,7 @@ RBSubclassOfClassToRename >> calls1 [
 { #category : 'performing' }
 RBSubclassOfClassToRename >> equallyDefinedInSubclass [
 
+	"Duplicate here on purpose for testing purposes"
 	^ self method1 + 33
 ]
 

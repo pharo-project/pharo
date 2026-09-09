@@ -13,9 +13,9 @@ ReNoUnusedInstanceVariableRule class >> checksClass [
 ]
 
 { #category : 'accessing' }
-ReNoUnusedInstanceVariableRule class >> group [
+ReNoUnusedInstanceVariableRule class >> groupSelector [
 
-	^ 'Optimization'
+	^ #optimizationGroup
 ]
 
 { #category : 'accessing' }

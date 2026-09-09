@@ -1,16 +1,28 @@
 Class {
 	#name : 'EquivalentTreeTest',
 	#superclass : 'TestCase',
+	#instVars : [
+		'model'
+	],
 	#category : 'Refactoring-Transformations-Tests-Test',
 	#package : 'Refactoring-Transformations-Tests',
 	#tag : 'Test'
 }
 
+{ #category : 'running' }
+EquivalentTreeTest >> setUp [
+
+	super setUp.
+	model := RBNamespace onEnvironment: (RBClassEnvironment classes: {
+				          Object.
+				          RBEquivalentMethodRootHolder.
+				          RBEquivalentMethodSubclassHolder })
+]
+
 { #category : 'tests' }
 EquivalentTreeTest >> testAllMethodsInHierarchy [
 
-	| checker allMethods model |
-	model := RBNamespace new.
+	| checker allMethods  |
 	checker := EquivalentTreeChecker new.
 	checker model: model.
 	checker on: RBEquivalentMethodSubclassHolder.
@@ -40,11 +52,11 @@ EquivalentTreeTest >> testEquivalentTreeWithMethodContainingSuperSendInSameClass
 	| checker methodNode equivalentTree |
 
 	checker := EquivalentTreeChecker new.
-	checker model: RBNamespace new.
+	checker model: model.
 	checker on: RBEquivalentMethodSubclassHolder.
 	checker extractedFromSelector: #methodToExtractFrom.
 	"Here we have equivalent method in the same class as #methodToExtractFrom, and we can replace with it"
-	methodNode := RBParser parseMethod: 'testtest ^ 7 raisedTo: super someNumber'.
+	methodNode := OCParser parseMethod: 'testtest ^ 7 raisedTo: super someNumber'.
 	equivalentTree := checker findEquivalentTreeFor: methodNode.
 	self assert: equivalentTree isNotNil
 ]
@@ -55,12 +67,12 @@ EquivalentTreeTest >> testEquivalentTreeWithMethodHasSuperSendInSuperClassExpect
 	| checker methodNode equivalentTree |
 
 	checker := EquivalentTreeChecker new.
-	checker model: RBNamespace new.
+	checker model: model.
 	checker on: RBEquivalentMethodSubclassHolder.
 	checker extractedFromSelector: #methodToExtractFromWithSuperAndSimilarMethodInSuper.
 	"Thre is equivalent method, but it is in super class, and we cannot replace it since 
 	it has super sends and we're not sure that it will preserve MRO."
-	methodNode := RBParser parseMethod: 'testtest ^ 11 raisedTo: super someNumber factorial'.
+	methodNode := OCParser parseMethod: 'testtest ^ 11 raisedTo: super someNumber factorial'.
 	equivalentTree := checker findEquivalentTreeFor: methodNode.
 	self assert: equivalentTree isNil
 ]
@@ -70,11 +82,11 @@ EquivalentTreeTest >> testEquivalentTreeWithMethodNodeWhenUniqueMethodExpectNil 
 
 	| checker  methodNode equivalentTree |
 	checker := EquivalentTreeChecker new.
-	checker model: RBNamespace new.
+	checker model: model.
 	checker on: RBEquivalentMethodSubclassHolder.
 	checker extractedFromSelector: #simpleLocalMethodReturn.
 	"There is no method similar to this one."
-	methodNode := RBParser parseMethod: 'testMethod: anArg ^ anArg + 7 raisedTo: 2'.
+	methodNode := OCParser parseMethod: 'testMethod: anArg ^ anArg + 7 raisedTo: 2'.
 	equivalentTree := checker findEquivalentTreeFor: methodNode.
 	
 	self assert: equivalentTree isNil
@@ -87,11 +99,11 @@ EquivalentTreeTest >> testEquivalentTreeWithMethodNodeWithDuplicateMethodExpectF
 	| checker methodNode equivalentTree |
 
 	checker := EquivalentTreeChecker new.
-	checker model: RBNamespace new.
+	checker model: model.
 	checker on: RBEquivalentMethodSubclassHolder.
 	checker extractedFromSelector: #simpleLocalMethodReturn.
 	"Equivalent method exists in EquivalentMethodSubclassHolder superclass"
-	methodNode := RBParser parseMethod: 'testtest ^ 42'.
+	methodNode := OCParser parseMethod: 'testtest ^ 42'.
 	equivalentTree := checker findEquivalentTreeFor: methodNode.
 	self assert: equivalentTree isNotNil
 ]
@@ -99,8 +111,7 @@ EquivalentTreeTest >> testEquivalentTreeWithMethodNodeWithDuplicateMethodExpectF
 { #category : 'tests' }
 EquivalentTreeTest >> testMethodsToBeCheckedExceptSelector [
 
-	| checker methodsToBeChecked model |
-	model := RBNamespace new.
+	| checker methodsToBeChecked |
 	
 	checker := EquivalentTreeChecker new.
 	checker model: model.

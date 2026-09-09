@@ -440,6 +440,8 @@ Dictionary >> at: key ifPresent: aPresentBlock ifAbsentPut: anAbsentBlock [
 Dictionary >> at: key put: anObject [
 	"Set the value at key to be anObject.  If key is not found, create a
 	new entry for key and set is value to anObject. Answer anObject."
+	"(Dictionary new at: #color put: #blue; yourself) >>> (Dictionary new add: #color->#blue; yourself)"
+	"(Dictionary new at: #color put: #blue; at: #color put: #red; yourself) >>> (Dictionary new add: #color->#red; yourself)"
 
 	| index assoc |
 	index := self findElementOrNil: key.
@@ -457,16 +459,16 @@ Dictionary >> at: key update: updateBlock [
 ]
 
 { #category : 'accessing' }
-Dictionary >> at: key update: updateBlock initial: initBlocktOrValue [
+Dictionary >> at: key update: updateBlock initial: initBlockOrValue [
 	"I am used to update the value at a given key. The updateBlock is passed
 	the existing value, and the result of the block is stored back.
-	If the key does not exist, store the value of the initBlocktOrValue.
-	initBlocktOrValue can be a block in case the initial value is expencive to compute.
+	If the key does not exist, store the value of the initBlockOrValue.
+	initBlocktOrValue can be a block in case the initial value is expensive to compute.
 	I use findElementOrNil: to avoid looking up the key twice."
 	| index |
 	index := self findElementOrNil: key.
 	(array at: index)
-		ifNil: [ self atNewIndex: index put: key -> initBlocktOrValue value]
+		ifNil: [ self atNewIndex: index put: key -> initBlockOrValue value]
 		ifNotNil: [ :assoc | assoc value: (updateBlock value: assoc value) ]
 ]
 
@@ -548,16 +550,6 @@ Dictionary >> flatCollect: aBlock [
 	"If you want to have keys use associations collect: or associations flatCollect: "
 
 	^ self flatCollect: aBlock as: OrderedCollection
-]
-
-{ #category : 'testing' }
-Dictionary >> hasBindingThatBeginsWith: aString [
-	"Answer true if the receiver has a key that begins with aString, false otherwise"
-
-	self keysDo:[:each |
-		(each beginsWith: aString)
-			ifTrue:[^true]].
-	^false
 ]
 
 { #category : 'testing' }
@@ -858,16 +850,6 @@ Dictionary >> removeKey: key ifAbsent: aBlock [
 	tally := tally - 1.
 	self fixCollisionsFrom: index.
 	^ assoc value
-]
-
-{ #category : 'undeclared' }
-Dictionary >> removeUnreferencedKeys [
-	"This is private code for the Undeclared handling, not a general API."
-
-	self
-		deprecated: 'Use "Smalltalk image cleanOutUndeclared" instead'
-		transformWith: '`@rcv removeUnreferencedKeys' -> 'Smalltalk image cleanOutUndeclared'.
-	Smalltalk image cleanOutUndeclared
 ]
 
 { #category : 'private' }

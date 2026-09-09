@@ -10,8 +10,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReReturnInEnsureRule class >> group [
-	^ 'Potential Bugs'
+ReReturnInEnsureRule class >> groupSelector [
+
+	^ #potentialBugsGroup
 ]
 
 { #category : 'accessing' }

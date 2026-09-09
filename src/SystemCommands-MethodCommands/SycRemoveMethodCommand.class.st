@@ -32,18 +32,18 @@ SycRemoveMethodCommand >> defaultMenuItemName [
 	^'(R) Remove'
 ]
 
+{ #category : 'accessing' }
+SycRemoveMethodCommand >> description [
+
+	^ 'Removes methods.'
+]
+
 { #category : 'execution' }
 SycRemoveMethodCommand >> execute [
 	
 	(ReRemoveMethodDriver new
 				 scopes: toolContext refactoringScopes
 				 methods: methods) runRefactoring
-]
-
-{ #category : 'execution' }
-SycRemoveMethodCommand >> isComplexRefactoring [ 
-
-	^ false
 ]
 
 { #category : 'execution' }

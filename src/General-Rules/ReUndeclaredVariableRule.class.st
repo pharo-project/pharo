@@ -10,8 +10,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReUndeclaredVariableRule class >> group [
-	^ 'Bugs'
+ReUndeclaredVariableRule class >> groupSelector [
+
+	^ #bugsGroup
 ]
 
 { #category : 'accessing' }
@@ -21,7 +22,7 @@ ReUndeclaredVariableRule class >> ruleName [
 
 { #category : 'accessing' }
 ReUndeclaredVariableRule class >> severity [
-	^ #error
+	^ 'error'
 ]
 
 { #category : 'running' }

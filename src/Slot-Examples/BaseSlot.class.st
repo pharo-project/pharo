@@ -19,12 +19,12 @@ BaseSlot >> = other [
 	^ super = other and: [default = other default]
 ]
 
-{ #category : 'initalize' }
+{ #category : 'initialization' }
 BaseSlot >> default [
 	^ default
 ]
 
-{ #category : 'initalize' }
+{ #category : 'initialization' }
 BaseSlot >> default: anObject [
 	default := anObject
 ]
@@ -34,7 +34,7 @@ BaseSlot >> hash [
 	^super hash bitXor: default hash
 ]
 
-{ #category : 'initalize' }
+{ #category : 'initialization' }
 BaseSlot >> initialize: anObject [
 	self write: default copy to: anObject
 ]

@@ -1,9 +1,0 @@
-Extension { #name : 'WeakLayout' }
-
-{ #category : '*ClassDefinitionPrinters' }
-WeakLayout class >> subclassDefiningSymbol [
-	"Answer a keyword that describes the receiver's kind of subclass
-	Note: this is for printing the ST80 style class definiton, usage makes no sense for anything
-	else!"
-	^#weakSubclass:
-]

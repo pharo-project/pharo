@@ -9,14 +9,15 @@ Class {
 	#tag : 'Style'
 }
 
-{ #category : 'testing-interest' }
+{ #category : 'testing - interest' }
 ReInstanceVariableCapitalizationRule class >> checksClass [
 	^ true
 ]
 
 { #category : 'accessing' }
-ReInstanceVariableCapitalizationRule class >> group [
-	^ 'Style'
+ReInstanceVariableCapitalizationRule class >> groupSelector [
+
+	^ #styleGroup
 ]
 
 { #category : 'accessing' }

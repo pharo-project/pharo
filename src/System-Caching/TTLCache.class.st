@@ -96,7 +96,7 @@ TTLCache >> now [
 { #category : 'printing' }
 TTLCache >> printElementsOn: stream [
 	super printElementsOn: stream.
-	stream space; print: timeToLive asDuration
+	stream space; print: (Duration seconds: timeToLive)
 ]
 
 { #category : 'removing' }
@@ -114,7 +114,7 @@ TTLCache >> removeStaleValues [
 		keysToRemove ]
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 TTLCache >> timeToLive: duration [
 	"Set how old computed values can be before they become stale.
 	When stale, a value will be computed again based on the block passed in.

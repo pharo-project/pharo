@@ -27,7 +27,8 @@ FFICalloutMethodBuilderTestContext >> argumentNames: anObject [
 
 { #category : 'accessing' }
 FFICalloutMethodBuilderTestContext >> compiledCode [
-	^ self
+
+	^ FFIMockMethod new
 ]
 
 { #category : 'accessing' }

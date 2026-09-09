@@ -3,7 +3,7 @@ I'm a model for user interaction for the remove instance variable refactoring.
 "
 Class {
 	#name : 'ReRemoveInstanceVariablesDriver',
-	#superclass : 'RBInteractionDriver',
+	#superclass : 'ReInteractionDriver',
 	#instVars : [
 		'class',
 		'variables'
@@ -12,6 +12,18 @@ Class {
 	#package : 'Refactoring-UI',
 	#tag : 'Drivers'
 }
+
+{ #category : 'accessing' }
+ReRemoveInstanceVariablesDriver class >> driverName [
+
+	^ 'Remove instance variable(s)'
+]
+
+{ #category : 'accessing' }
+ReRemoveInstanceVariablesDriver class >> shouldPreviewChangesByDefault [
+
+	^ false
+]
 
 { #category : 'execution' }
 ReRemoveInstanceVariablesDriver >> breakingChoices [
@@ -27,62 +39,50 @@ ReRemoveInstanceVariablesDriver >> breakingChoices [
 { #category : 'execution' }
 ReRemoveInstanceVariablesDriver >> browseInstanceVariableReferences [
 
-	StMessageBrowser
-		browse: refactoring violators
-		
+	| violators |
+	violators := refactoring refactorings flatCollect: [ :each | each preconditionHasReferences violators ].
+
+	(Smalltalk tools toolNamed: #messageList) browse: violators
 ]
 
-{ #category : 'execution' }
-ReRemoveInstanceVariablesDriver >> changes [
-	"We only perform the changes."
-	
-	^ refactoring privateTransform; changes
-]
-
-{ #category : 'resources' }
+{ #category : 'configuration' }
 ReRemoveInstanceVariablesDriver >> configureRefactoring [
 
-	refactoring := ReUpFrontPreconditionCheckingCompositeRefactoring new
-							model: model; 
-							refactorings: (variables collect: [:each | 
-									ReRemoveInstanceVariableRefactoring model: model remove: each from: class]);
-								yourself.
+	super configureRefactoring.
 	refactoring prepareForInteractiveMode
 ]
 
-{ #category : 'execution' }
+{ #category : 'configuration' }
 ReRemoveInstanceVariablesDriver >> defaultSelectDialog [
 
-	^ SpSelectDialog new
+	^ super defaultSelectDialog
 		  title: 'There are references to variables!';
+		  message: self labelBasedOnBreakingChanges;
 		  items: self breakingChoices;
 		  display: [ :each | each description ];
 		  displayIcon: [ :each | self iconNamed: each systemIconName ];
-		  openModal
+		  yourself
 ]
 
-{ #category : 'execution' }
-ReRemoveInstanceVariablesDriver >> handleBreakingChanges [
+{ #category : 'configuration' }
+ReRemoveInstanceVariablesDriver >> instantiateRefactoring [
 
-	| select |
-	select := self selectDialog.
-	select ifNotNil: [ select action ]
+	^ ReUpFrontPreconditionCheckingCompositeRefactoring new
+		model: model; 
+		refactorings: (variables collect: [:each | 
+				ReRemoveInstanceVariableRefactoring model: model remove: each from: class]);
+		yourself
 ]
 
-{ #category : 'execution' }
-ReRemoveInstanceVariablesDriver >> runRefactoring [
+{ #category : 'ui - dialogs' }
+ReRemoveInstanceVariablesDriver >> labelBasedOnBreakingChanges [
 
-	self configureRefactoring.
-	
-	"Normally from the IDE we should not get bogus variables."
-	"we could call the violatorMessages here to let the applicability preconditions do the job."
-	refactoring failedApplicabilityPreconditions 
-		ifNotEmpty: [ ^ self inform: 'The variable ', refactoring variable,  ' does not exist' ].
-	
-	(refactoring breakingChangePreconditions allSatisfy: [:each | each check])
-		ifTrue: [ self applyChanges ]
-		ifFalse: [ self handleBreakingChanges ]
-
+	^ String streamContents: [ :stream |
+			  refactoring failedBreakingChangePreconditions do: [ :cond |
+					  cond check ifFalse: [
+							  cond violationMessageOn: stream.
+							  stream cr ] ].
+			  stream nextPutAll: 'Select the strategies to apply' ]
 ]
 
 { #category : 'initialization' }
@@ -92,11 +92,4 @@ ReRemoveInstanceVariablesDriver >> scopes: refactoringScopes variables: aCollect
 	model := self refactoringScopeOn: scopes first.
 	variables := aCollection.
 	class := aClass
-]
-
-{ #category : 'execution' }
-ReRemoveInstanceVariablesDriver >> selectDialog [
-	
-	^ selectDialog ifNil: [ selectDialog := self defaultSelectDialog ].
-	
 ]

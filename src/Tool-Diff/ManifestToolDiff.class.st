@@ -8,3 +8,10 @@ Class {
 	#package : 'Tool-Diff',
 	#tag : 'Manifest'
 }
+
+{ #category : 'meta-data - dependency analyser' }
+ManifestToolDiff class >> manuallyResolvedDependencies [
+
+	<ignoreForCoverage>
+	^ #(#'System-Object Events' #'System-Localization')
+]

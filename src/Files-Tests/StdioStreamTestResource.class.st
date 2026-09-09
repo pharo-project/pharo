@@ -61,19 +61,19 @@ StdioStreamTestResource >> fileStream [
 StdioStreamTestResource >> setUp [
 	"Create the temporary file and StdioStream"
 
-	| handle |
+	| handle path |
 
-	fileReference := FileReference newTempFilePrefix: 'StdioStreamTest.' suffix: '.bin'.
+	path := 'StdioStreamTest.bin'.
 	contents := '01234567890123456789'.
 
-	fileStream := (File named: fileReference pathString) openForWrite.
+	fileStream := (File named: path) openForWrite.
 	fileStream
 		nextPutAll: contents;
 		position: 0.
 	"NOTE: This makes assumptions about the internal structure of BinaryFileStream.
 	This shouldn't be done in general."
 	handle := fileStream instVarNamed: 'handle'.
-	stdioStream := StdioStream handle: handle file: (File named: #stdio) forWrite: true
+	stdioStream := StdioStream handle: handle file: (File named: path) forWrite: true
 ]
 
 { #category : 'accessing' }
@@ -87,5 +87,6 @@ StdioStreamTestResource >> tearDown [
 
 	stdioStream := nil.
 	fileStream close.
-	fileReference ensureDelete
+	(File exists: 'StdioStreamTest.bin') 
+        ifTrue: [ File deleteFile: 'StdioStreamTest.bin' ]
 ]

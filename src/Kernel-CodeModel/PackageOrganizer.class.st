@@ -1,16 +1,19 @@
 "
 I am responsible for providing all the package currently defined in an environment.
 
-The system currently hold a global environment with a default package organizer but it is possible to create new enviornemnt with `SystemDictionary new` and they will come with a new package organizer.
+The system currently hold a global environment with a default package organizer but it is possible to create new enviornemnt with `SystemEnvironment new` and they will come with a new package organizer.
 
 I am used as en entry point to access packages and tags and update the model.
+
+I am saving the undefined package in my list of packages and in a variable for performance reasons because it can take some time to find the unpackaged package in the middle of all other packages.
 "
 Class {
 	#name : 'PackageOrganizer',
 	#superclass : 'Object',
 	#instVars : [
 		'packages',
-		'environment'
+		'environment',
+		'undefinedPackage'
 	],
 	#category : 'Kernel-CodeModel-Packages',
 	#package : 'Kernel-CodeModel',
@@ -34,9 +37,11 @@ PackageOrganizer >> addPackage: aPackage [
 		           ifTrue: [ Package named: aPackage organizer: self ]
 		           ifFalse: [ aPackage organizer: self ].
 
+	package name first isUppercase ifFalse: [ self error: 'Package names should be uppercase' ].
+
 	self basicRegisterPackage: package.
 
-	self codeChangeAnnouncer  announce: (PackageAdded to: package).
+	self codeChangeAnnouncer announce: (PackageAdded to: package).
 
 	^ package
 ]
@@ -91,9 +96,9 @@ PackageOrganizer >> ensurePackageOfExtensionProtocol: aProtocol [
 ]
 
 { #category : 'registration' }
-PackageOrganizer >> ensureTag: aTagName inPackage: aPackageName [
+PackageOrganizer >> ensureTag: aTagOrString inPackage: aPackageOrString [
 
-	^ (self ensurePackage: aPackageName) ensureTag: aTagName
+	^ (self ensurePackage: aPackageOrString) ensureTag: aTagOrString
 ]
 
 { #category : 'accessing' }
@@ -103,8 +108,8 @@ PackageOrganizer >> environment [
 ]
 
 { #category : 'accessing' }
-PackageOrganizer >> environment: aSystemDictionary [
-	 environment := aSystemDictionary
+PackageOrganizer >> environment: aSystemEnvironment [
+	 environment := aSystemEnvironment
 ]
 
 { #category : 'testing' }
@@ -132,7 +137,8 @@ PackageOrganizer >> initialize [
 	super initialize.
 
 	packages := IdentityDictionary new.
-	self ensurePackage: UndefinedPackage new
+	undefinedPackage := UndefinedPackage new.
+	self basicRegisterPackage: undefinedPackage
 ]
 
 { #category : 'testing' }
@@ -337,7 +343,7 @@ PackageOrganizer >> testPackages [
 { #category : 'accessing' }
 PackageOrganizer >> undefinedPackage [
 
-	^ self packages detect: [ :package | package isUndefined ]
+	^ undefinedPackage
 ]
 
 { #category : 'private' }

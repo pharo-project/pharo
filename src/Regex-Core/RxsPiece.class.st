@@ -68,7 +68,7 @@ RxsPiece >> initializeOptionalAtom: anAtom [
 	self initializeAtom: anAtom min: 0 max: 1
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 RxsPiece >> initializePlusAtom: anAtom [
 	"This piece is one or more occurrences of the specified RxsAtom."
 

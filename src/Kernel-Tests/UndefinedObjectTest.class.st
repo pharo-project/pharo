@@ -68,12 +68,6 @@ UndefinedObjectTest >> testIsEmptyOrNil [
 ]
 
 { #category : 'tests - testing' }
-UndefinedObjectTest >> testIsLiteral [
-
-	self assert: (nil isLiteral)
-]
-
-{ #category : 'tests - testing' }
 UndefinedObjectTest >> testIsNil [
 
 	self assert: (nil isNil)
@@ -101,9 +95,4 @@ UndefinedObjectTest >> testPrintOn [
 { #category : 'tests - copying' }
 UndefinedObjectTest >> testShallowCopy [
 	self assert: nil shallowCopy isNil
-]
-
-{ #category : 'tests - copying' }
-UndefinedObjectTest >> testVeryDeepCopyWith [
-	self assert: (nil veryDeepCopyWith: nil) isNil
 ]

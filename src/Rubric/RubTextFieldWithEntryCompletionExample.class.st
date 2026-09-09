@@ -47,13 +47,12 @@ RubTextFieldWithEntryCompletionExample >> newScrolledText [
 
 { #category : 'accessing' }
 RubTextFieldWithEntryCompletionExample >> packagesEntryCompletion [
+
 	| applicants |
-	applicants := PackageOrganizer default packages
-		collect: [ :package | package packageName asString ].
+	applicants := PackageOrganizer default packages collect: [ :package | package name asString ].
 	^ EntryCompletion new
-		dataSourceBlock: [ :currText | applicants ];
-		filterBlock: [ :currApplicant :currText |
-			 currApplicant asUppercase includesSubstring: currText asString asUppercase ]
+		  dataSourceBlock: [ :currText | applicants ];
+		  filterBlock: [ :currApplicant :currText | currApplicant asUppercase includesSubstring: currText asString asUppercase ]
 ]
 
 { #category : 'accessing' }

@@ -1,50 +1,29 @@
 Class {
 	#name : 'FloatReferencesRuleTest',
 	#superclass : 'TestCase',
-	#instVars : [
-		'testClass'
-	],
 	#category : 'General-Rules-Tests-Bugs',
 	#package : 'General-Rules-Tests',
 	#tag : 'Bugs'
 }
 
-{ #category : 'running' }
-FloatReferencesRuleTest >> setUp [
-	super setUp.
-	testClass := Object newAnonymousSubclass
-]
-
-{ #category : 'running' }
-FloatReferencesRuleTest >> tearDown [
-
-	testClass := nil.
-	super tearDown
-]
-
 { #category : 'tests' }
 FloatReferencesRuleTest >> testBasicCheck [
 
-	| testMethod |
-	testMethod := testClass >> (testClass compile: 'testMethod BoxedFloat64').
-
-	self assert: (FloatReferencesRule new basicCheck: testMethod ast body statements first )
+	self assert: (FloatReferencesRule new basicCheck: (GlobalVariable new
+				  name: 'BoxedFloat64';
+				  yourself))
 ]
 
 { #category : 'tests' }
 FloatReferencesRuleTest >> testBasicCheck1 [
 
-	| testMethod |
-	testMethod := testClass >> (testClass compile: 'testMethod SmallFloat64').
-
-	self assert: (FloatReferencesRule new basicCheck: testMethod ast body statements first)
+	self assert: (FloatReferencesRule new basicCheck: (GlobalVariable new
+				  name: 'SmallFloat64';
+				  yourself))
 ]
 
 { #category : 'tests' }
 FloatReferencesRuleTest >> testBasicCheck2 [
 
-	| testMethod |
-	testMethod := testClass >> (testClass compile: 'testMethod').
-
-	self deny: (FloatReferencesRule new basicCheck: testMethod ast)
+	self deny: (FloatReferencesRule new basicCheck: (OCMethodNode new selector: (OCSelectorNode new value: #testMethod; yourself)) )
 ]

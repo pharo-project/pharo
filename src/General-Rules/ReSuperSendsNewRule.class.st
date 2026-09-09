@@ -11,8 +11,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReSuperSendsNewRule class >> group [
-	^ 'Bugs'
+ReSuperSendsNewRule class >> groupSelector [
+
+	^ #bugsGroup
 ]
 
 { #category : 'accessing' }

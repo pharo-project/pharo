@@ -18,7 +18,7 @@ AbstractSessionHandler class >> isAbstract [
 ]
 
 { #category : 'accessing' }
-AbstractSessionHandler >> handledId [
+AbstractSessionHandler >> handlerId [
 	self subclassResponsibility
 ]
 
@@ -27,7 +27,7 @@ AbstractSessionHandler >> printOn: aStream [
 	super printOn: aStream.
 	aStream
 		nextPut: $(;
-		nextPutAll: self handledId;
+		nextPutAll: self handlerId;
 		nextPut: $)
 ]
 

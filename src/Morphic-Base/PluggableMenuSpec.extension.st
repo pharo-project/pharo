@@ -39,21 +39,6 @@ PluggableMenuSpec class >> exampleWithOneSingleItem [
 ]
 
 { #category : '*Morphic-Base-Examples' }
-PluggableMenuSpec class >> exampleWithSubMenu [
-	"
-	self exampleWithSubMenu
-	"
-	| s i sub |
-	s := (self withModel: nil ) label: 'Tools'.
-	i := s add: 'Tools'.
-	sub := (self withModel: nil ).
-	sub add: 'System browser'  target: Smalltalk tools selector: #openClassBrowser argumentList: #().
-	sub add: 'Playground'  target: Smalltalk tools selector: #openPlayground argumentList: #().
-	i subMenu: sub.
-	s asMenuMorph popUpInWorld
-]
-
-{ #category : '*Morphic-Base-Examples' }
 PluggableMenuSpec class >> exampleWithTwoSimpleItems [
 	"self exampleWithTwoSimpleItems"
 

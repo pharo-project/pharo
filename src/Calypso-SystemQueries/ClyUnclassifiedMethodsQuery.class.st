@@ -25,11 +25,5 @@ ClyUnclassifiedMethodsQuery >> isResult: aQueryResult affectedBy: aSystemAnnounc
 ClyUnclassifiedMethodsQuery >> selectsMethod: aMethod [
 	"The protocol can be nil if the method was removed from the system"
 
-	| realMethod |
-	
-	realMethod := aMethod isRGObject
-		ifTrue: [ aMethod realMethod ]
-		ifFalse: [ aMethod ].
-
-	^ realMethod protocol isNotNil and: [ realMethod isClassified not ]
+	^ aMethod protocol isNotNil and: [ aMethod isClassified not ]
 ]

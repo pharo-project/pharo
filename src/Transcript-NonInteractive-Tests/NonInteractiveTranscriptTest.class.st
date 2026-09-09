@@ -28,17 +28,21 @@ NonInteractiveTranscriptTest >> testAppend [
 
 { #category : 'tests' }
 NonInteractiveTranscriptTest >> testSimple [
+
 	| log transcript |
 	log := 'test.log' asFileReference.
 	log ensureDelete.
 	transcript := NonInteractiveTranscript onFileNamed: log basename.
 	transcript
-		show: 'One'; cr;
-		show: 'Two'; cr;
-		show: 'Three'; cr;
+		show: 'One';
+		cr;
+		show: 'Two';
+		cr;
+		show: 'Three';
+		cr;
 		close.
-	self assert: log contents lines equals: #('One' 'Two' 'Three').
-	log ensureDelete
+	self assert: log contents lines equals: #( 'One' 'Two' 'Three' ).
+	log ensureDelete 
 ]
 
 { #category : 'tests' }

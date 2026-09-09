@@ -22,37 +22,6 @@ DebugPointAnnouncement class >> on: aDebugPoint nodes: nodes [
 		yourself
 ]
 
-{ #category : 'testing' }
-DebugPointAnnouncement >> affectsMethod: aMethod [
-
-	^ self methods anySatisfy: [:each |  each compiledMethod == aMethod compiledMethod.  ]
-]
-
-{ #category : 'testing' }
-DebugPointAnnouncement >> affectsMethods [
-	^true
-]
-
-{ #category : 'testing' }
-DebugPointAnnouncement >> affectsMethodsDefinedInClass: aClass [
-	^ self methods
-		anySatisfy: [ :each | each methodClass isNotNil and: [ each origin == aClass ] ]
-]
-
-{ #category : 'testing' }
-DebugPointAnnouncement >> affectsMethodsDefinedInPackage: aPackage [
-	^ self methods
-		anySatisfy:
-			[ :each | each methodClass isNotNil and: [ each package == aPackage ] ]
-]
-
-{ #category : 'testing' }
-DebugPointAnnouncement >> canAffectResultOfMethodQuery: aMethodQuery [
-
-	^ self methods anySatisfy: [:each | 
-		aMethodQuery isAffectedByChangedMethod: each ]
-]
-
 { #category : 'accessing' }
 DebugPointAnnouncement >> debugPoint [
 	^debugPoint 

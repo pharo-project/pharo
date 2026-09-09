@@ -9,38 +9,20 @@ Class {
 { #category : 'tests' }
 ReNilBranchRuleTest >> testRuleNotViolated [
 
-	| critiques |
-	self class
-		compile: 'method 1 < 0 ifTrue: [ 1 ]'
-		classified: 'test-helper'.
-	[
-	critiques := self myCritiquesOnMethod: self class >> #method.
-	self assertEmpty: critiques ] ensure: [
-		(self class >> #method) removeFromSystem ]
+	self generateMethod: 'method 1 < 0 ifTrue: [ 1 ]'.
+	self assertEmpty: (self myCritiquesOnMethod: self class >> #method)
 ]
 
 { #category : 'tests' }
 ReNilBranchRuleTest >> testRuleWithIfFalse [
 
-	| critiques |
-	self class
-		compile: 'method 1 < 0 ifFalse: [ 1 ] ifTrue: [ nil ]'
-		classified: 'test-helper'.
-	[
-	critiques := self myCritiquesOnMethod: self class >> #method.
-	self assert: critiques size equals: 1 ] ensure: [
-		(self class >> #method) removeFromSystem ]
+	self generateMethod: 'method 1 < 0 ifFalse: [ 1 ] ifTrue: [ nil ]'.
+	self assert: (self myCritiquesOnMethod: self class >> #method) size equals: 1
 ]
 
 { #category : 'tests' }
 ReNilBranchRuleTest >> testRuleWithIfTrue [
 
-	| critiques |
-	self class
-		compile: 'method 1 < 0 ifTrue: [ 1 ] ifFalse: [ nil ]'
-		classified: 'test-helper'.
-	[
-	critiques := self myCritiquesOnMethod: self class >> #method.
-	self assert: critiques size equals: 1 ] ensure: [
-		(self class >> #method) removeFromSystem ]
+	self generateMethod: 'method 1 < 0 ifTrue: [ 1 ] ifFalse: [ nil ]'.
+	self assert: (self myCritiquesOnMethod: self class >> #method) size equals: 1
 ]

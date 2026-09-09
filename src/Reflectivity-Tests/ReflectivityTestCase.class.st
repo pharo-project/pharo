@@ -1,6 +1,6 @@
 Class {
 	#name : 'ReflectivityTestCase',
-	#superclass : 'AbstractEnvironmentTestCase',
+	#superclass : 'TestCase',
 	#category : 'Reflectivity-Tests-Base',
 	#package : 'Reflectivity-Tests',
 	#tag : 'Base'

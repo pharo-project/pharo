@@ -4,9 +4,18 @@ Settings for the fonts
 Class {
 	#name : 'GraphicFontSettings',
 	#superclass : 'Model',
+	#classVars : [
+		'FontSize'
+	],
 	#category : 'Settings-Graphics',
 	#package : 'Settings-Graphics'
 }
+
+{ #category : 'fonts' }
+GraphicFontSettings class >> defaulFontSize [
+
+	^ #medium
+]
 
 { #category : 'fonts' }
 GraphicFontSettings class >> displayScaleFactorForStyleNamed: aSymbol [
@@ -16,43 +25,67 @@ GraphicFontSettings class >> displayScaleFactorForStyleNamed: aSymbol [
 			ifNotNil: [:info | info second]
 ]
 
-{ #category : 'fonts' }
-GraphicFontSettings class >> fontChoiceButtonForStyle: aSymbol label: aLabel [
-	| label |
-	label := StringMorph
-				contents: aLabel asString
-				font: (TextStyle default fontOfPointSize: (StandardFonts pointSizeForStyleNamed: aSymbol)).
-	^ (self theme
-		newButtonIn: self
-		for: self
-		getState: nil
-		action: #setFontsToStyleNamed:
-		arguments: { aSymbol }
-		getEnabled: nil
-		getLabel: nil
-		help: ('Change font style to ', aLabel) translated)
-			label: label;
-			yourself
+{ #category : 'private' }
+GraphicFontSettings class >> font [
+
+	^ StandardFonts defaultFont
+]
+
+{ #category : 'private' }
+GraphicFontSettings class >> font: aFont [
+
+	^ self resetAllFontsTo: aFont
 ]
 
 { #category : 'fonts' }
-GraphicFontSettings class >> fontSizeRow [
-	^ self theme newRowIn: self for: {
-			self theme buttonLabelForText: 'Predefined styles: ' translated.
-			self fontChoiceButtonForStyle: #small label: 'Small' translated.
-			self fontChoiceButtonForStyle: #medium label: 'Medium' translated.
-			self fontChoiceButtonForStyle: #large label: 'Large' translated.
-			self fontChoiceButtonForStyle: #veryLarge label: 'Very large' translated.
-			self fontChoiceButtonForStyle: #huge label: 'Huge' translated.
-	}
+GraphicFontSettings class >> fontSize [
+
+	^ FontSize
+		ifNil: [ FontSize := self defaulFontSize ]
+]
+
+{ #category : 'fonts' }
+GraphicFontSettings class >> fontSize: aSymbol [
+
+	FontSize := aSymbol.
+	self setFontsToStyleNamed: aSymbol.
+]
+
+{ #category : 'fonts' }
+GraphicFontSettings class >> fontSizeRowSettingsOn: aBuilder [
+	<systemsettings>
+
+	(aBuilder pickOne: #fontSize)
+		parent: #standardFonts;
+		label: 'Predefined Styles';
+		description: '';
+		target: GraphicFontSettings;		
+		selector: #fontSize;
+		default: self fontSize;
+		order: -1;
+		domainValues: {
+				('Small' -> #small).
+				('Medium' -> #medium).
+				('Large' -> #large).
+				('Very large' -> #veryLarge).
+				('Huge' -> #huge) }
+]
+
+{ #category : 'private' }
+GraphicFontSettings class >> pickFont: aPresenter [
+
+	FontChooser
+		openModalWithTitle: 'Font for all font'
+		initialFont: StandardFonts defaultFont
+		onAcceptDo: [ :aFont | self resetAllFontsTo: aFont ].
+
+	aPresenter ifNotNil: [ aPresenter window presenter announce: StSettingModelChanged ]
 ]
 
 { #category : 'fonts' }
 GraphicFontSettings class >> resetAllFontToDefault [
 
-	StandardFonts setAllStandardFontsTo: StandardFonts defaultFont.
-	SettingBrowser refreshAllSettingBrowsers.
-
+	StandardFonts setAllStandardFontsTo: StandardFonts defaultFont
 ]
 
 { #category : 'fonts' }
@@ -76,6 +109,13 @@ GraphicFontSettings class >> resetAllFontToDefaultButton [
 		yourself
 ]
 
+{ #category : 'private' }
+GraphicFontSettings class >> resetAllFontsTo: aFont [
+
+	StandardFonts defaultFont: aFont.
+	self resetAllFontToDefault
+]
+
 { #category : 'fonts' }
 GraphicFontSettings class >> setFontsToStyleNamed: aSymbol [
 
@@ -83,10 +123,7 @@ GraphicFontSettings class >> setFontsToStyleNamed: aSymbol [
 		ifTrue: [ (self environment at: #SourceCodeFonts) setFontsToStyleNamed: aSymbol ]
 		ifFalse: [ StandardFonts setFontsToStyleNamed: aSymbol ].
 
-	WorldMorph displayScaleFactor: (self displayScaleFactorForStyleNamed: aSymbol).
-
-	SettingBrowser refreshAllSettingBrowsers.
-
+	WorldMorph displayScaleFactor: (self displayScaleFactorForStyleNamed: aSymbol)
 ]
 
 { #category : 'fonts' }
@@ -95,10 +132,17 @@ GraphicFontSettings class >> standardFontsSettingsOn: aBuilder [
 	(aBuilder group: #standardFonts)
 		label: 'Standard fonts';
 		target: StandardFonts;
-		dialog: [self fontSizeRow];
 		parent: #appearance;
 		order: 4;
 		with: [
+			(aBuilder button: #pickFont:)
+				order: 0;
+				description: 'Pick an unique font for all fonts of this category' ;
+				target: self;
+				getSelector: #font;
+				setSelector: #font:;
+				label: 'Pick font for all';
+				buttonLabel: 'Pick'.
 			(aBuilder setting: #defaultFont)
 				order: 1;
 				description: 'The default text font' ;

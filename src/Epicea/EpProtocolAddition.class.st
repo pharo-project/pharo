@@ -17,8 +17,5 @@ EpProtocolAddition >> accept: aVisitor [
 { #category : 'accessing' }
 EpProtocolAddition >> fileOutEntryOn: aWriteStream [ 
 
-	self behaviorAffected realClass 
-		fileOutProtocol: self protocol 
-		on: aWriteStream.
-
+	self error: 'Cannot file out protocol additions. Importing a single protocol addition will reset the entire organization.'
 ]

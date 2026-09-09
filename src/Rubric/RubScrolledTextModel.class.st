@@ -218,14 +218,3 @@ RubScrolledTextModel >> text [
 
 	^ text ifNil: [ text := '' asText ]
 ]
-
-{ #category : 'private' }
-RubScrolledTextModel >> text: atextOrString [
-
-	self
-		deprecated: 'You should use setText: or privateText: if you are really in the same class'
-		transformWith: '`@receiver text: `@arg' -> '`@receiver setText: `@arg'.
-		
-			
-	^ self setText: atextOrString
-]

@@ -10,8 +10,9 @@ Class {
 }
 
 { #category : 'accessing' }
-SendsDeprecatedMethodToGlobalRule class >> group [
-	^ 'Design Flaws'
+SendsDeprecatedMethodToGlobalRule class >> groupSelector [
+
+	^ #designFlawGroup
 ]
 
 { #category : 'accessing' }
@@ -21,7 +22,7 @@ SendsDeprecatedMethodToGlobalRule class >> ruleName [
 
 { #category : 'accessing' }
 SendsDeprecatedMethodToGlobalRule class >> severity [
-	^ #error
+	^ 'error'
 ]
 
 { #category : 'accessing' }

@@ -1253,15 +1253,22 @@ FBDExamples >> exampleToDo4 [
 
 { #category : 'examples - loops' }
 FBDExamples >> exampleToDo5 [
-	<sampleInstance>
 
+	<sampleInstance>
 	| tmp1 |
-	tmp1 := {true.
-				true.
-				true}.
-	[ 1 to: 3 do: [ :index | tmp1 at: index put: false ] ] 
-	valueWithinMilliseconds: 50 
-	onTimeout: [ ].
+	tmp1 := { true. true. true }.
+	1 to: 3 do: [ :index | tmp1 at: index put: false ].
+	^ tmp1
+]
+
+{ #category : 'examples - loops' }
+FBDExamples >> exampleToDo6 [
+
+	<sampleInstance>
+	| tmp1 |
+	tmp1 := { true. true. true }.
+	1 to: 3 do: [ :index | tmp1 at: index put: false ].
+	1 to: 3 do: [ :index | tmp1 at: index put: false ].
 	^ tmp1
 ]
 
@@ -1510,6 +1517,16 @@ FBDExamples >> exampleWhileTrue4 [
 			tmp2 := tmp2 + 1 ]
 ]
 
+{ #category : 'examples - loops' }
+FBDExamples >> exampleWhileTrue5 [
+
+	| a  |
+	a := 1.
+	[ a <= 7 ] whileTrue: [ a := a + 1 ].
+	[ a <= 7 ] whileTrue: [ a := a + 1 ].
+
+]
+
 { #category : 'examples - blocks-optimized' }
 FBDExamples >> exampleWhileTrueSameJumpTarget [
 
@@ -1755,6 +1772,12 @@ FBDExamples >> optimizedBlockWrittenAfterClosedOverCase2 [
 ]
 
 { #category : 'examples' }
+FBDExamples >> simpleThisProcess [
+
+	^ thisProcess
+]
+
+{ #category : 'examples' }
 FBDExamples >> singleRemoteDifferentBlocksSameArgumentName [
 
 	| b c z |
@@ -1810,6 +1833,16 @@ FBDExamples >> singleRemoteTempVarWrittenAfterClosedOver [
 FBDExamples >> superCallInBlock [
 
 	^ [ super yourself ] value
+]
+
+{ #category : 'examples' }
+FBDExamples >> usingThisProcess [
+
+	| x y |
+	
+	x := thisProcess.
+	y := thisProcess priority.
+	^ thisProcess
 ]
 
 { #category : 'examples' }

@@ -29,11 +29,10 @@ String >> unzipped [
 
 { #category : '*Compression' }
 String >> zipped [
-	| gzstream |
 
+	| gzstream |
 	^ String streamContents: [ :stream |
 		gzstream := GZipWriteStream on: stream.
 		gzstream nextPutAll: self.
-		gzstream close.
- 	]
+		gzstream close ]
 ]

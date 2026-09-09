@@ -64,9 +64,52 @@ RBAbstractEnvTestCase >> defaultNamespaceClass [
 	^ RBNamespace
 ]
 
+{ #category : 'mocking' }
+RBAbstractEnvTestCase >> defineFooBarIn: aRBNamespace [
+	aRBNamespace
+		defineClass: [ :aBuilder |
+			aBuilder
+				superclass: Object;
+				name: #Foo;
+				slots: { #instVarName1. #instVarName2 };
+				sharedVariables: { #ClassVarName1. #ClassVarName2 };
+				package: 'Testing' ];
+		defineClass: [ :aBuilder |
+			aBuilder
+				superclassName: #Foo;
+				name: #Bar;
+				package: 'Testing' ].
+
+	self
+		addMethodsToModelClasses: #( #( #Bar #( #( 'instVarName1
+				^1242321' #tests ) #( 'foo
+				instVarName1 := instVarName1 + instVarName2 + ClassVarName1' #tests ) ) ) #( #Foo #( #( 'foo
+				^instVarName2 := 3' #tests ) #( 'bar
+				"Add one to instVarName1"
+				instVarName1 := instVarName1 + 1' #tests ) #( 'classVarName1
+				^ClassVarName1' #tests ) #( 'instVarName1: anObject
+				^anObject' #tests ) #( 'asdf
+				^self classVarName1: (ClassVarName1 := ClassVarName1 + 1)' #tests ) #( 'instVarName2
+				^instVarName2' #tests ) #( 'instVarName2: anObject
+				instVarName2 := anObject' #tests ) #( 'classVarName1: anObject
+				^ClassVarName1 := anObject' #tests ) ) ) #( 'Bar class' #( #( 'classVarName2: anObject
+				ClassVarName2 := anObject' #tests ) #( 'classVarName2
+				^ClassVarName2' #tests ) ) ) #( 'Foo class' #( #( 'foo
+				^ClassVarName1 := ClassVarName1 * ClassVarName1 * ClassVarName1' #tests ) ) ) )
+		in: aRBNamespace.
+		^ aRBNamespace
+]
+
 { #category : 'accessing' }
 RBAbstractEnvTestCase >> environmentOfTest [
 	^ testingEnvironment
+]
+
+{ #category : 'utilities' }
+RBAbstractEnvTestCase >> modelOnClasses: aCollection [
+
+	^ self defaultNamespaceClass onEnvironment:
+		  (RBClassEnvironment classes: aCollection)
 ]
 
 { #category : 'mocking helpers' }
@@ -171,39 +214,9 @@ RBAbstractEnvTestCase >> rbModelForExtractMethodTest [
 RBAbstractEnvTestCase >> rbModelForVariableTest [
 
 	| newModel |
+	
 	newModel := self modelWithoutRealClasses: #( Foo Bar ).
-
-	newModel
-		defineClass: [ :aBuilder |
-			aBuilder
-				superclass: Object;
-				name: #Foo;
-				slots: { #instVarName1. #instVarName2 };
-				sharedVariables: { #ClassVarName1. #ClassVarName2 };
-				package: 'Testing' ];
-		defineClass: [ :aBuilder |
-			aBuilder
-				superclassName: #Foo;
-				name: #Bar;
-				package: 'Testing' ].
-
-	self
-		addMethodsToModelClasses: #( #( #Bar #( #( 'instVarName1
-				^1242321' #tests ) #( 'foo
-				instVarName1 := instVarName1 + instVarName2 + ClassVarName1' #tests ) ) ) #( #Foo #( #( 'foo
-				^instVarName2 := 3' #tests ) #( 'bar
-				"Add one to instVarName1"
-				instVarName1 := instVarName1 + 1' #tests ) #( 'classVarName1
-				^ClassVarName1' #tests ) #( 'instVarName1: anObject
-				^anObject' #tests ) #( 'asdf
-				^self classVarName1: (ClassVarName1 := ClassVarName1 + 1)' #tests ) #( 'instVarName2
-				^instVarName2' #tests ) #( 'instVarName2: anObject
-				instVarName2 := anObject' #tests ) #( 'classVarName1: anObject
-				^ClassVarName1 := anObject' #tests ) ) ) #( 'Bar class' #( #( 'classVarName2: anObject
-				ClassVarName2 := anObject' #tests ) #( 'classVarName2
-				^ClassVarName2' #tests ) ) ) #( 'Foo class' #( #( 'foo
-				^ClassVarName1 := ClassVarName1 * ClassVarName1 * ClassVarName1' #tests ) ) ) )
-		in: newModel.
+	self defineFooBarIn: newModel.
 
 	^ newModel
 ]

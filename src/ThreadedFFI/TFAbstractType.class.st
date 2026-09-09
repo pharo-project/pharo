@@ -34,6 +34,13 @@ TFAbstractType >> isValid [
 	^ handle isNull not
 ]
 
+{ #category : 'marshalling' }
+TFAbstractType >> optimizeFor: aFFIFunctionArgument in: anIRBuilder ifCannot: aFullBlockClosure [ 
+	
+	"Just doing the non-optimized version"
+	aFullBlockClosure value
+]
+
 { #category : 'reading' }
 TFAbstractType >> readReturnValue: anExternalAddress [
 

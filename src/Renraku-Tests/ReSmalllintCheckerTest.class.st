@@ -1,8 +1,9 @@
 Class {
 	#name : 'ReSmalllintCheckerTest',
 	#superclass : 'ReCodeBasedTestCase',
-	#category : 'Renraku-Tests',
-	#package : 'Renraku-Tests'
+	#category : 'Renraku-Tests-Rules',
+	#package : 'Renraku-Tests',
+	#tag : 'Rules'
 }
 
 { #category : 'tests' }
@@ -17,4 +18,27 @@ ReSmalllintCheckerTest >> testRun [
 	checker run.
 
 	self assert: (checker criticsOf: ScreamerRule new) notEmpty
+]
+
+{ #category : 'tests' }
+ReSmalllintCheckerTest >> testSelectPackageRule [
+
+	| checker ruleClass packageRule |
+	[
+		ruleClass := self class classInstaller make: [ :aBuilder |
+				             aBuilder
+					             superclass: ReAbstractRule;
+					             name: 'RePackageRuleForTest';
+					             package: #'Generated-Rules-Tests-Generated' ].
+		ruleClass class compile: 'checksPackage
+
+	^ true'.
+
+		packageRule := ruleClass new.
+		checker := ReSmalllintChecker new
+			           rule: { packageRule };
+			           environment: testPackage asEnvironment;
+			           reParseRule.
+
+		self assert: (checker packageRules includes: packageRule) ] ensure: [ self packageOrganizer removePackage: #'Generated-Rules-Tests-Generated' ]
 ]

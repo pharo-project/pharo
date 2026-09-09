@@ -89,9 +89,7 @@ ZnReadEvalPrintDelegate >> evaluate: string [
 			out print: result; cr ]
 			on: Error
 			do: [ :exception |
-				out print: exception; cr.
-				exception signalerContext printDetails: out.
-				exception signalerContext sender debugStack: 8 on: out ].
+				out nextPutAll: exception stackTraceString ].
 		out cr ].
 	^ String lf join: output lines
 ]

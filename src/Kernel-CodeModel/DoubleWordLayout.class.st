@@ -16,6 +16,14 @@ DoubleWordLayout class >> extending: superLayout scope: aScope host: aClass [
 		yourself
 ]
 
+{ #category : 'description' }
+DoubleWordLayout class >> subclassDefiningSymbol [
+	"Answer a keyword that describes the receiver's kind of subclass
+	Note: this is for printing the ST80 style class definiton, usage makes no sense for anything
+	else!"
+	^#variableDoubleWordSubclass:
+]
+
 { #category : 'extending' }
 DoubleWordLayout >> extendDoubleWord [
 	^ DoubleWordLayout new

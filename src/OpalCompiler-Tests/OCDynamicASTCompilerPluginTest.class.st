@@ -13,14 +13,14 @@ OCDynamicASTCompilerPluginTest >> testCreateAndUseDynamicCompilerPlugin [
 
 	plugin := OCDynamicASTCompilerPlugin
 		          newFromTransformBlock: [ :ast |
-			          (RBParseTreeRewriter
+			          (OCParseTreeRewriter
 				           replaceLiteral: 42
 				           with: 'meaning of life') executeTree: ast.
 			          ast ]
 		          andPriority: 0.
 
 	"Use plugin with compiler"
-	result := Object compiler
+	result := OpalEvaluator new
 		          addPlugin: plugin;
 		          evaluate: '42'.
 	self assert: result equals: 'meaning of life'

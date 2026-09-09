@@ -25,6 +25,12 @@ FFIBackend class >> detectFFIBackend [
 		ifNone: [ ^ NullFFIBackend ]) new
 ]
 
+{ #category : 'class initialization' }
+FFIBackend class >> initialize [
+
+	SessionManager default registerSystemClassNamed: self name atPriority: 60
+]
+
 { #category : 'testing' }
 FFIBackend class >> isAvailable [
 

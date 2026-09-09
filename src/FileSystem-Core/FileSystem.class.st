@@ -68,12 +68,6 @@ FileSystem >> accessTimeOf: aResolvable [
 ]
 
 { #category : 'public' }
-FileSystem >> beReadOnly [
-
-	store := store asReadOnlyStore
-]
-
-{ #category : 'public' }
 FileSystem >> beWritable [
 
 	store := store asWritableStore
@@ -397,11 +391,6 @@ FileSystem >> exists: aResolvable [
 ]
 
 { #category : 'public' }
-FileSystem >> extensionDelimiter [
-	^ $.
-]
-
-{ #category : 'public' }
 FileSystem >> file: aResolvable posixPermissions: anInteger [
 	"Set the mode of aResolvable to anInteger (as defined by chmod())"
 
@@ -719,9 +708,10 @@ FileSystem >> readStreamOn: aResolvable [
 
 { #category : 'public' }
 FileSystem >> referenceTo: aResolvable [
-	"Answer a reference to the argument from the context of the receiver filesystem.
-		Example: Filesystem disk referenceTo: 'plonk.taz'"
+	"Answer a reference to the argument from the context of the receiver filesystem."
 
+	" (FileSystem disk referenceTo: 'plonk.taz') class >>> FileReference "
+	
 	^ FileReference
 		fileSystem: self
 		path: (self pathFromObject: aResolvable)

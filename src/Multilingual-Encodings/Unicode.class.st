@@ -730,12 +730,6 @@ Unicode class >> isUppercase: char [
 	^ (GeneralCategory at: index) = Lu
 ]
 
-{ #category : 'class methods' }
-Unicode class >> leadingChar [
-	self deprecated: 'not supported anymore' on: '6 September 2022' in: 'Pharo11'.
-	^ 0
-]
-
 { #category : 'sizing' }
 Unicode class >> maxValue [
 	"The maximum value of a character in this character set"

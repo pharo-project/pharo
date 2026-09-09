@@ -1,6 +1,6 @@
 Class {
 	#name : 'MetacelloConflictingProjectError',
-	#superclass : 'MetacelloScriptingError',
+	#superclass : 'Error',
 	#category : 'Metacello-Core-Scripts',
 	#package : 'Metacello-Core',
 	#tag : 'Scripts'

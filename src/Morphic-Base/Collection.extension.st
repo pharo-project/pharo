@@ -7,3 +7,9 @@ Collection >> asDraggableMorph [
 			do: [ :each | s print: each ]
 			separatedBy: [ s space ]]) asStringMorph
 ]
+
+{ #category : '*Morphic-Base' }
+Collection class >> systemIconName [
+
+	^ #collection
+]

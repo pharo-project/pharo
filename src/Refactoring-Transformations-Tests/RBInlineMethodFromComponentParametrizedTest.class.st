@@ -32,7 +32,8 @@ RBInlineMethodFromComponentParametrizedTest >> testInlineComponentIntoCascadedMe
 	| refactoring |
 	self proceedThroughWarning:
 		[ refactoring := self createRefactoringWithArguments:
-				{(35 to: 79) . #inlineComponent . RBClassDataForRefactoringTest}.
+				{(95 to: 139) . #inlineComponent . RBClassDataForRefactoringTest}.
+		refactoring classOfTheMethodToInline: (refactoring model classNamed: #Behavior).
 		(refactoring model classNamed: #Behavior)
 			compile: 'hasImmediateInstances ^self format = 0'
 			classified: #(#accessing ).
@@ -43,6 +44,8 @@ RBInlineMethodFromComponentParametrizedTest >> testInlineComponentIntoCascadedMe
 	self assert: ((refactoring model classNamed: #RBClassDataForRefactoringTest)
 		parseTreeForSelector: #inlineComponent)
 		equals: (self parseMethod: 'inlineComponent
+		
+	<ignoreNotImplementedSelectors: #(hasImmediateInstances)>
 	| a aBehavior |
 	a := 5.
 	aBehavior := a class.
@@ -55,12 +58,15 @@ RBInlineMethodFromComponentParametrizedTest >> testInlineComponentIntoCascadedMe
 RBInlineMethodFromComponentParametrizedTest >> testInlineComponentMethodMax [
 	| refactoring |
 	self proceedThroughWarning: [ | class |
+			
 			refactoring := self createRefactoringWithArguments:
 				{ (47 to: 58) . #inlineMax . RBClassDataForRefactoringTest }.
+			class := refactoring model classNamed: #Magnitude.
+			refactoring classOfTheMethodToInline: class.
 			self flag: #todo. "Should be removed when inline will create extra binding when
 								  the expression is used multiple times."
 			self setupInlineExpressionFor: refactoring toReturn: false.
-			class := refactoring model classNamed: #Magnitude.
+			
 			class
 				compile:
 					'max: aMagnitude
@@ -74,6 +80,7 @@ RBInlineMethodFromComponentParametrizedTest >> testInlineComponentMethodMax [
 		self
 			setupImplementorToInlineFor: refactoring
 			toReturn: class.
+	
 		self executeRefactoring: refactoring ].
 	self assert: ((refactoring model classNamed: #RBClassDataForRefactoringTest) parseTreeForSelector: #inlineMax) equals: (self parseMethod: 'inlineMax
 				| x y q aMagnitude1 |
@@ -92,7 +99,8 @@ RBInlineMethodFromComponentParametrizedTest >> testInlineEmptyComponentMethod [
 
 	self proceedThroughWarning:
 		[ refactoring := self createRefactoringWithArguments:
-			 { (35 to: 91) . #inlineComponent . RBClassDataForRefactoringTest }.
+			 { (95 to: 151) . #inlineComponent . RBClassDataForRefactoringTest }.
+			refactoring classOfTheMethodToInline: (refactoring model classNamed: #Object).
 		self
 			setupInlineExpressionFor: refactoring
 			toReturn: false.
@@ -104,6 +112,7 @@ RBInlineMethodFromComponentParametrizedTest >> testInlineEmptyComponentMethod [
 	self assert: ((refactoring model classNamed: #RBClassDataForRefactoringTest)
 		parseTreeForSelector: #inlineComponent)
 		equals: (self parseMethod: 'inlineComponent
+	<ignoreNotImplementedSelectors: #(hasImmediateInstances)>
 	| a anObject |
 	a := 5.
 	anObject := a class.
@@ -124,6 +133,7 @@ RBInlineMethodFromComponentParametrizedTest >> testModelInlineMethodWithSameVari
 	self proceedThroughWarning:
 			[refactoring := self createRefactoringWithModel: model andArguments:
 				{ (72 to: 84) . #foo . (model classNamed: #Object)}.
+			refactoring classOfTheMethodToInline: class.
 			self setupInlineExpressionFor: refactoring toReturn: false.
 			self executeRefactoring: refactoring].
 	self assert: ((refactoring model classNamed: #Object) parseTreeForSelector: #foo)
@@ -145,6 +155,7 @@ RBInlineMethodFromComponentParametrizedTest >> testModelInlineMethodWithSameVari
 	self proceedThroughWarning:
 			[refactoring := self createRefactoringWithModel: model andArguments:
 				 { (77 to: 112) . #foo . (model classNamed: #Object)}.
+			refactoring classOfTheMethodToInline: class.
 			self setupInlineExpressionFor: refactoring toReturn: false.
 			self setupImplementorToInlineFor: refactoring toReturn: class.
 			self executeRefactoring: refactoring].
@@ -165,6 +176,7 @@ RBInlineMethodFromComponentParametrizedTest >> testModelInlineMethodWithSameVari
 	self proceedThroughWarning:
 			[refactoring := self createRefactoringWithModel: model andArguments:
 				{ (72 to: 84) . #foo . (model classNamed: #Object) }.
+				refactoring classOfTheMethodToInline: class.
 			self setupInlineExpressionFor: refactoring toReturn: false.
 			self executeRefactoring: refactoring].
 	self assert: ((refactoring model classNamed: #Object) parseTreeForSelector: #foo)

@@ -5,13 +5,11 @@ Internal Representation and Key Implementation Points.
 
     Instance Variables
 	method:		<CompiledMethod>
-	sourceNode:		<RBProgramNode>
+	sourceNode:		<ASTProgramNode>
 "
 Class {
 	#name : 'SycSourceCodeCommand',
 	#superclass : 'CmdCommand',
-	#traits : 'TRefactoringCommandSupport',
-	#classTraits : 'TRefactoringCommandSupport classTrait',
 	#instVars : [
 		'method',
 		'sourceNode'
@@ -26,30 +24,10 @@ SycSourceCodeCommand class >> isAbstract [
 ]
 
 { #category : 'instance creation' }
-SycSourceCodeCommand class >> method: aMethod node: aRBProgramNode [
+SycSourceCodeCommand class >> method: aMethod node: aProgramNode [
 	^self new
 		method: aMethod;
-		sourceNode: aRBProgramNode
-]
-
-{ #category : 'converting' }
-SycSourceCodeCommand >> asRefactorings [
-	self subclassResponsibility
-]
-
-{ #category : 'execution' }
-SycSourceCodeCommand >> execute [
-
-	self executeRefactoring: self asRefactorings
-]
-
-{ #category : 'private' }
-SycSourceCodeCommand >> executeRefactoring: refactoring [
-
-	self initializeDefaultOptionsOf: refactoring.
-	[ refactoring execute ]
-		on: RBRefactoringError
-		do: [ :e | self morphicUIManager alert: e messageText ]
+		sourceNode: aProgramNode
 ]
 
 { #category : 'accessing' }

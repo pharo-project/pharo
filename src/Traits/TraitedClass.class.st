@@ -54,21 +54,17 @@ TraitedClass class >> traitUsers [
 	^ #()
 ]
 
-{ #category : 'accessing - method dictionary' }
-TraitedClass >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: aProtocol [
-	"When a new methods is added, I add it to the localMethodDict and also propagate the changes to my users"
-	<reflection: 'Class structural modification - Selector/Method modification'>
-	self localMethodDict at: selector put: compiledMethod.
-
-	super addAndClassifySelector: selector withMethod: compiledMethod inProtocol: aProtocol.
-
-	TraitChange addSelector: selector on: self
-]
-
 { #category : 'querying' }
 TraitedClass >> allTraits [
 	<reflection: 'Class structural inspection - Traits'>
 	^ self traitComposition allTraits
+]
+
+{ #category : 'organization' }
+TraitedClass >> dependencies [
+	"Return the (transitive) set of behaviors that I depend on"
+	
+	^ super dependencies copyWithAll: self traitComposition allTraits
 ]
 
 { #category : 'initialization' }
@@ -103,7 +99,7 @@ TraitedClass >> findOriginClassOf: aMethod [
 	<reflection: 'Class structural inspection - Selectors and methods inspection'>
 	
 	(aMethod hasProperty: #traitSource)
-		ifTrue: [ ^ aMethod traitSource innerClass ].
+		ifTrue: [ ^ (aMethod propertyAt: #traitSource) innerClass ].
 
 	(self includesLocalSelector: aMethod selector)
 		ifTrue: [ ^ self ].
@@ -199,6 +195,12 @@ TraitedClass >> localSelectors [
 	^ self localMethodDict keys
 ]
 
+{ #category : 'organization' }
+TraitedClass >> methodInstaller [
+
+	^ OCTraitMethodInstaller new
+]
+
 { #category : 'initialization' }
 TraitedClass >> rebuildMethodDictionary [
 
@@ -255,12 +257,12 @@ TraitedClass >> removeFromSystem: logged [
 ]
 
 { #category : 'removing' }
-TraitedClass >> removeSelector: aSelector [
+TraitedClass >> removeSelector: aSelector logged: logged [
 
 	"When a selector is removed it should be notified to my users.
 	Check the class TraitChange for more details"
 	<reflection: 'Class structural modification - Selector/Method modification'>
-	super removeSelector: aSelector.
+	super removeSelector: aSelector logged: logged.
 	self localMethodDict removeKey: aSelector ifAbsent: [  ].
 
 	TraitChange removeSelector: aSelector on: self

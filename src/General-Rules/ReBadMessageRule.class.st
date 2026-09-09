@@ -12,8 +12,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReBadMessageRule class >> group [
-	^ 'Coding Idiom Violation'
+ReBadMessageRule class >> groupSelector [
+
+	^ #codingIdiomViolationGroup
 ]
 
 { #category : 'accessing' }

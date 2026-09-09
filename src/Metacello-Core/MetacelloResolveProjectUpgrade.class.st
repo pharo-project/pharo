@@ -16,15 +16,6 @@ MetacelloResolveProjectUpgrade >> allow [
     self resume: self newProjectRegistration
 ]
 
-{ #category : 'exception handling' }
-MetacelloResolveProjectUpgrade >> allowEvenIfLocked [
-  "for internal ScriptEngine use only. from the Scripting API use:
-		onLocked: [:ex | ex allow]
-		"
-
-  self resume: self newProjectRegistration
-]
-
 { #category : 'private' }
 MetacelloResolveProjectUpgrade >> checkAllowed [
   self existingProjectRegistration locked
@@ -60,11 +51,6 @@ MetacelloResolveProjectUpgrade >> existingProjectRegistration [
 { #category : 'accessing' }
 MetacelloResolveProjectUpgrade >> existingProjectRegistration: anObject [
 	existingProjectRegistration := anObject
-]
-
-{ #category : 'handlers' }
-MetacelloResolveProjectUpgrade >> handleOnDownGrade: onDownGradeBlock onUpgrade: onUpgradeBlock [
-    self subclassResponsibility
 ]
 
 { #category : 'accessing' }

@@ -10,12 +10,13 @@ Context >> astScope [
 	we still end up getting the scope we want"
 
 	| node |
+
 	node :=  self sourceNodeExecuted.
 	"if we get back a block, this is a block that just got pushed. We are not interested in
 	that but it's outer block"
 	^node isBlock
 		ifTrue: [ node parent methodOrBlockNode scope ]
-		ifFalse: [node methodOrBlockNode scope ]
+		ifFalse: [ node methodOrBlockNode scope ]
 ]
 
 { #category : '*OpalCompiler-Core' }
@@ -24,39 +25,6 @@ Context >> compiler [
 	The compiler is also setup according to the class of the receiver"
 
 	^ self receiver class compiler context: self
-]
-
-{ #category : '*OpalCompiler-Core' }
-Context >> executedPC [
-	"Deeper in the stack the pc was already advanced one bytecode, so we need to go back
-	this one bytecode, which can consist of multiple bytes. But on IR, we record the *last*
-	bytecode offset as the offset of the IR instruction, which means we can just go back one"
-
-	"if we are at the start, return the startpc"
-	(pc == self startpc) ifTrue: [ ^self startpc ].
-
-	"we need to guard for dead contexts (pc is nil)"
-	^self isDead ifTrue: [ self endPC - 1] ifFalse: [ pc - 1]
-]
-
-{ #category : '*OpalCompiler-Core' }
-Context >> isBlockReturn: aPC [
-	^method encoderClass isBlockReturnAt: aPC in: method
-]
-
-{ #category : '*OpalCompiler-Core' }
-Context >> isPushLiteralNil: aPC [
-	^ (self compiledCode at: aPC) = method encoderClass pushNilByte
-]
-
-{ #category : '*OpalCompiler-Core' }
-Context >> isPushTemp: aPC [
-	^ self compiledCode encoderClass isPushTempAt: aPC in: method
-]
-
-{ #category : '*OpalCompiler-Core' }
-Context >> isReturnAt: aPC [
-	^method encoderClass isReturnAt: aPC in: method
 ]
 
 { #category : '*OpalCompiler-Core' }

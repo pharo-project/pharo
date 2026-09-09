@@ -3,7 +3,7 @@ I am an monticello repository implementation for the FTP protocol.
 "
 Class {
 	#name : 'MCFtpRepository',
-	#superclass : 'MCFileBasedRepository',
+	#superclass : 'MCRemoteFileBasedRepository',
 	#instVars : [
 		'host',
 		'directory',
@@ -23,15 +23,19 @@ MCFtpRepository class >> basicFromUrl: aZnUrl [
 		password: (aZnUrl password ifNil: [ '' ])
 ]
 
-{ #category : 'accessing' }
-MCFtpRepository class >> creationTemplate [
-	^
-'MCFtpRepository
-	host: ''modules.blopy.org''
-	directory: ''mc''
-	user: ''blop''
-	password: ''pilou'''
-	
+{ #category : 'instance creation' }
+MCFtpRepository class >> createRepositoryFromSpec: aRepositorySpec [
+
+	| description headerSize index |
+	description := aRepositorySpec description.
+	headerSize := 'ftp://' size.
+	index := description indexOf: $/ startingAt: headerSize + 1.
+
+	^ self
+		  host: (description copyFrom: headerSize + 1 to: index - 1)
+		  directory: (description copyFrom: index + 1 to: description size)
+		  user: aRepositorySpec username
+		  password: aRepositorySpec password
 ]
 
 { #category : 'accessing' }
@@ -48,14 +52,27 @@ MCFtpRepository class >> host: host directory: directory user: user password: pa
 		password: password
 ]
 
-{ #category : 'accessing' }
-MCFtpRepository class >> templateCreationSelector [
-	^ #host:directory:user:password: 
+{ #category : 'testing' }
+MCFtpRepository class >> isAvailableFor: type [
+	^ type = 'ftp'
 ]
 
 { #category : 'accessing' }
 MCFtpRepository class >> urlSchemes [
 	^ #(ftp)
+]
+
+{ #category : 'converting' }
+MCFtpRepository >> asRepositorySpec [
+
+	| dir |
+	dir := directory.
+	(directory at: 1) = $/ ifFalse: [ dir := '/' , dir ].
+	^ (MetacelloRepositorySpec description: 'ftp://' , host , dir)
+		  type: 'ftp';
+		  username: user;
+		  password: password;
+		  yourself
 ]
 
 { #category : 'enumerating' }
@@ -132,10 +149,9 @@ MCFtpRepository >> user: userString [
 ]
 
 { #category : 'required' }
-MCFtpRepository >> writeStreamForFileNamed: aString replace: ignoreBoolean do: aBlock [
+MCFtpRepository >> writeStreamForFileNamed: aString do: aBlock [
 
-	self clientDo:
-			[:client |
-			client binary.
-			client putFileStreamContents: (ByteArray streamContents: aBlock) readStream as: aString]
+	self clientDo: [ :client |
+		client binary.
+		client putFileStreamContents: (ByteArray streamContents: aBlock) readStream as: aString ]
 ]

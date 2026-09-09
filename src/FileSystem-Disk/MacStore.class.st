@@ -11,11 +11,5 @@ Class {
 
 { #category : 'current' }
 MacStore class >> isActiveClass [
-	^ Smalltalk os isMacOS
-]
-
-{ #category : 'current' }
-MacStore class >> readOnlyVariant [
-
-	^ ReadOnlyMacStore
+	^ OSPlatform current isMacOS
 ]

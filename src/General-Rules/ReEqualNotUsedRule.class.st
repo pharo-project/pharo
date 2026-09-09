@@ -10,8 +10,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReEqualNotUsedRule class >> group [
-	^ 'Potential Bugs'
+ReEqualNotUsedRule class >> groupSelector [
+
+	^ #potentialBugsGroup
 ]
 
 { #category : 'accessing' }

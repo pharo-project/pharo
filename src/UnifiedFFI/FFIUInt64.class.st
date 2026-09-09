@@ -27,10 +27,10 @@ FFIUInt64 class >> externalTypeSize [
 
 { #category : 'private' }
 FFIUInt64 >> basicHandle: aHandle at: index [
-	^ aHandle signedLongLongAt: index
+	^ aHandle unsignedLongLongAt: index
 ]
 
 { #category : 'private' }
 FFIUInt64 >> basicHandle: aHandle at: index put: value [
-	^ aHandle signedLongLongAt: index	put: value
+	^ aHandle unsignedLongLongAt: index	put: value
 ]

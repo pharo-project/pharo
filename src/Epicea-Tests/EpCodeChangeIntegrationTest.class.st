@@ -293,7 +293,8 @@ EpCodeChangeIntegrationTest >> testPackageTagAddition [
 
 	self assert: (self countLogEventsWith: EpPackageTagAddition) equals: 0.
 
-	self packageOrganizer ensureTag: self packageTagNameForTesting inPackage: self packageNameForTesting.
+	(self packageOrganizer ensurePackage: self packageNameForTesting)
+		ensureTag: self packageTagNameForTesting.
 
 	self assert: (self countLogEventsWith: EpPackageTagAddition) equals: 1.
 	self assert: (self allLogEventsWith: EpPackageTagAddition) first packageName equals: self packageNameForTesting.
@@ -303,7 +304,8 @@ EpCodeChangeIntegrationTest >> testPackageTagAddition [
 { #category : 'tests' }
 EpCodeChangeIntegrationTest >> testPackageTagRemoval [
 
-	self packageOrganizer ensureTag: self packageTagNameForTesting inPackage: self packageNameForTesting.
+	(self packageOrganizer ensurePackage: self packageNameForTesting)
+		ensureTag: self packageTagNameForTesting.
 	self assert: (self countLogEventsWith: EpPackageTagRemoval) equals: 0.
 
 	self packageOrganizer removeTag: self packageTagNameForTesting fromPackage: self packageNameForTesting.

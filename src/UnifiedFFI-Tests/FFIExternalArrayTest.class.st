@@ -66,6 +66,20 @@ FFIExternalArrayTest >> testExternalAtPutFloat [
 ]
 
 { #category : 'tests' }
+FFIExternalArrayTest >> testReadArrayOfSize [
+
+	| integers externalArray |
+	integers := (100 to: 200) asArray.
+	[ externalArray := FFIExternalArray externalNewType: #int size: integers size.
+	integers withIndexDo: [ :each :index | externalArray at: index put: each ].
+
+	self
+		assert: (externalArray getHandle readArrayOf: #int size: 70)
+		equals: (integers first: 70) ]
+		ensure: [ externalArray free ]
+]
+
+{ #category : 'tests' }
 FFIExternalArrayTest >> testReadArrayOfUntil [
 	| n interval externalArray |
 	n := 10.

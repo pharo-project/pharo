@@ -3,7 +3,7 @@ A MCVersionLoader is responsible for loading a given version.
 "
 Class {
 	#name : 'MCVersionLoader',
-	#superclass : 'Object',
+	#superclass : 'MCAbstractLoader',
 	#instVars : [
 		'versions'
 	],
@@ -63,6 +63,8 @@ MCVersionLoader >> basicLoad [
 	loader := versions size > 1
 		          ifTrue: [ MCMultiPackageLoader new ]
 		          ifFalse: [ MCPackageLoader new ].
+	loader isStrict: self isStrict.
+
 	versions do: [ :ea |
 		loader updatePackage: ea package withSnapshot: ea snapshot ].
 
@@ -72,52 +74,31 @@ MCVersionLoader >> basicLoad [
 
 { #category : 'checking' }
 MCVersionLoader >> checkForModificationsIfCancel: cancelBlock ifMerge: mergeBlock [
-	| modifications |
-	
-	"first check if there are local packages which are dirty"
-	modifications := self localModifications.
-	modifications isEmpty ifTrue: [ ^ self].
-	
-	"ask the user what to do.. merge | overwrite | abort"
-	^ self warnAboutLosingChangesTo: modifications ifCancel: cancelBlock ifMerge: mergeBlock
-]
 
-{ #category : 'checking' }
-MCVersionLoader >> checkIfDepIsOlder: aDependency [
-	^ aDependency isOlder not 
-		or: [self confirm: 'load older dependency ', aDependency versionInfo name , '?']
+	"first check if there are local packages which are dirty"
+	self localModifications ifNotEmpty: [ :modifications |
+		"ask the user what to do.. merge | overwrite | abort"
+		^ self warnAboutLosingChangesTo: modifications ifCancel: cancelBlock ifMerge: mergeBlock ]
 ]
 
 { #category : 'checking' }
 MCVersionLoader >> confirmMissingDependency: aDependency [
+
 	| name |
 	name := aDependency versionInfo name.
-	(self confirm: 'Can''t find dependency ', name, '. ignore?')
-		ifFalse: [self error: 'Can''t find dependency ', name]
+	(ConfirmationRequest signal: 'Can''t find dependency ' , name , '. ignore?') ifFalse: [ self error: 'Can''t find dependency ' , name ]
 ]
 
 { #category : 'checking' }
 MCVersionLoader >> depAgeIsOk: aDependency [
-	^ aDependency isOlder not 
-		or: [self confirm: 'load older dependency ', aDependency versionInfo name , '?']
+
+	^ aDependency isOlder not or: [ ConfirmationRequest signal: 'load older dependency ' , aDependency versionInfo name , '?' ]
 ]
 
 { #category : 'private' }
 MCVersionLoader >> ensurePackage: mcPackage [ 
 	self packageOrganizer ensurePackage: mcPackage name 
 		
-]
-
-{ #category : 'testing' }
-MCVersionLoader >> hasLocalModifications [
-
-	^ self localModifications isNotEmpty
-]
-
-{ #category : 'testing' }
-MCVersionLoader >> hasVersions [
-
-	^ versions isEmpty not
 ]
 
 { #category : 'initialization' }
@@ -153,10 +134,16 @@ MCVersionLoader >> localModifications [
 
 { #category : 'loading' }
 MCVersionLoader >> mergeVersions [
-	|merger|
-	merger :=  MCVersionMerger new.
-	merger addVersions: self localModifications.
-	merger merge.
+
+	MCVersionMerger new
+		addVersions: self localModifications;
+		merge
+]
+
+{ #category : 'accessing' }
+MCVersionLoader >> versions [
+
+	^versions
 ]
 
 { #category : 'checking' }

@@ -19,9 +19,28 @@ ClapParameterizedTest >> testAddPositional [
 		canonicalName: 'ARG';
 		yourself.
 	subject add: pos.
-
+	
 	self assert: (subject at: #myPositional) identicalTo: pos.
-	self assert: (subject positionals includes: pos)
+	self assert: (subject positionals includes: pos).
+]
+
+{ #category : 'tests' }
+ClapParameterizedTest >> testAddPositionals [
+	| subject pos1 pos2 |
+	subject := self namedSubject.
+	pos1 := (ClapPositional id: #positional1)
+		canonicalName: 'ARG1';
+		yourself.
+	pos2 := (ClapPositional id: #positional2)
+		canonicalName: 'ARG2';
+		yourself.
+	subject addAll: { pos1 . pos2 }.
+	
+	self assert: (subject at: #positional1) identicalTo: pos1.
+	self assert: (subject at: #positional2) identicalTo: pos2.
+	self assert: (subject positionals includes: pos1).
+	self assert: (subject positionals includes: pos2).
+
 ]
 
 { #category : 'tests' }

@@ -15,6 +15,12 @@ ReProperInstanceMethodProtocolRule class >> checksClassMethod [
 	^ false
 ]
 
+{ #category : 'accessing' }
+ReProperInstanceMethodProtocolRule class >> groupSelector [
+
+	^ #instanceMethodProtocolGroup
+]
+
 { #category : 'testing' }
 ReProperInstanceMethodProtocolRule class >> isAbstract [
 

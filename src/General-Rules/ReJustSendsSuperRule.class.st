@@ -18,8 +18,9 @@ ReJustSendsSuperRule class >> checksMethod [
 ]
 
 { #category : 'accessing' }
-ReJustSendsSuperRule class >> group [
-	^ 'Optimization'
+ReJustSendsSuperRule class >> groupSelector [
+
+	^ #optimizationGroup
 ]
 
 { #category : 'accessing' }
@@ -34,7 +35,8 @@ ReJustSendsSuperRule class >> ruleName [
 
 { #category : 'accessing' }
 ReJustSendsSuperRule class >> severity [
-	^ #information
+
+	^ 'information'
 ]
 
 { #category : 'accessing' }
@@ -58,5 +60,5 @@ ReJustSendsSuperRule >> basicCheck: aMethod [
 { #category : 'initialization' }
 ReJustSendsSuperRule >> initialize [
 	super initialize.
-	matcher := RBParseTreeSearcher justSendsSuper
+	matcher := OCParseTreeSearcher justSendsSuper
 ]

@@ -280,6 +280,12 @@ ByteArray >> shortPointerAt: byteIndex put: value [
 ]
 
 { #category : '*FFI-Kernel' }
+ByteArray >> signedByteAt: byteOffset [
+    "Return a 8bit signed integer starting at the given byte offset"
+    ^self integerAt: byteOffset size: 1 signed: true
+]
+
+{ #category : '*FFI-Kernel' }
 ByteArray >> signedCharAt: byteOffset [
 	^ self char8AtOffset: byteOffset - 1
 ]

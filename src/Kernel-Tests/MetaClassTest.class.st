@@ -7,15 +7,6 @@ Class {
 }
 
 { #category : 'tests' }
-MetaClassTest >> testHasBindingThatBeginsWith [
-	self assert: (SmalltalkImage class hasBindingThatBeginsWith: 'Compiler').
-	self assert: (SmalltalkImage class hasBindingThatBeginsWith: 'Object').
-
-	"Pools are looked up, too"
-	self assert: (PoolDefiner class hasBindingThatBeginsWith: 'AnAu')
-]
-
-{ #category : 'tests' }
 MetaClassTest >> testHasClassVarNamed [
 
 	self assert: (Character class hasClassVarNamed: #CharSet).

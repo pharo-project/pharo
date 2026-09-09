@@ -16,11 +16,15 @@ Class {
 }
 
 { #category : 'native' }
-SDL2Structure class >> ffiLibraryName [
-	^ SDL2 ffiLibraryName
+SDL2Structure class >> ffiLibrary [
+	
+	^ SDL2Library 
+
 ]
 
 { #category : 'native' }
-SDL2Structure >> ffiLibraryName [
-	^self class ffiLibraryName
+SDL2Structure >> ffiLibrary [
+	
+	^ SDL2Library 
+
 ]

@@ -12,9 +12,3 @@ ProtoObject >> fuelPointsTo: anObject [
 		[:i | (self basicAt: i) == anObject ifTrue: [^ true]].
 	^ false"
 ]
-
-{ #category : '*Fuel-Core-Collections' }
-ProtoObject >> largeIdentityHash [
-
-	^ self basicIdentityHash
-]

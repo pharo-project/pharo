@@ -6,11 +6,10 @@ Class {
 	#tag : 'Parametrized'
 }
 
-{ #category : 'tests' }
+{ #category : 'building suites' }
 RBExtractToTemporaryParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBExtractToTemporaryRefactoring };
-		addCase: { #rbClass -> RBExtractToTemporaryTransformation };
 		yourself
 ]
 
@@ -129,4 +128,14 @@ RBExtractToTemporaryParametrizedTest >> testFailureNonExistantSelector [
 	self shouldFail:
 		( self createRefactoringWithArguments:
 			{ (14 to: 23) . 'asdf' . #checkClass1: . RBClassDataForRefactoringTest })
+]
+
+{ #category : 'tests' }
+RBExtractToTemporaryParametrizedTest >> testWarningExistingInstanceVariable [
+
+	self shouldWarn: (self createRefactoringWithArguments: {
+				 (20 to: 24).
+				 'instanceVariable'.
+				 #justExpression .
+				 RBClassDataForRefactoringTest })
 ]

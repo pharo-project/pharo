@@ -52,18 +52,18 @@ ZnSimplifiedClientTransactionEvent >> printContentsOn: stream [
 	stream space; print: duration; nextPutAll: 'ms'
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 ZnSimplifiedClientTransactionEvent >> request: aZnRequest [
 	method := aZnRequest method.
 	url := aZnRequest url
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 ZnSimplifiedClientTransactionEvent >> requestDuration: requestDuration [
 	duration := duration + requestDuration
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 ZnSimplifiedClientTransactionEvent >> response: aZnResponse [
 	response := aZnResponse code.
 	aZnResponse hasEntity
@@ -75,7 +75,7 @@ ZnSimplifiedClientTransactionEvent >> responseCode [
 	^ response
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 ZnSimplifiedClientTransactionEvent >> responseDuration: responseDuration [
 	duration := duration + responseDuration
 ]

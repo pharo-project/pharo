@@ -111,6 +111,14 @@ CodeImporter class >> readStream: aReadStream [
 		yourself
 ]
 
+{ #category : 'instance creation' }
+CodeImporter class >> withParserClass: aClass [
+
+	^ self new
+		  parserClass: aClass;
+		  yourself
+]
+
 { #category : 'accessing' }
 CodeImporter >> codeDeclarations [
 	^codeDeclarations
@@ -119,12 +127,11 @@ CodeImporter >> codeDeclarations [
 { #category : 'public access' }
 CodeImporter >> evaluate [
 	" stripped down version of evaluateDeclarations"
-	| value |
-	self codeDeclarations do: [ :declaration |
-		value := declaration importFor: nil logSource: logSource  ].
-	self flushChangesFile.
 
-	^value
+	| value |
+	self codeDeclarations do: [ :declaration | value := declaration importWithLogSource: logSource ].
+	self flushChangesFile.
+	^ value
 ]
 
 { #category : 'evaluating' }
@@ -142,15 +149,14 @@ CodeImporter >> file: aFileStream [
 
 { #category : 'evaluating' }
 CodeImporter >> flushChangesFile [
-	"Yes, we need to do this in order to flush the file, puaj"
-	logSource ifTrue: [
-		ChangesLog default logChange: '----End fileIn----']
+
+	logSource ifTrue: [ SourcesManager current ensureFlushing ]
 ]
 
 { #category : 'initialization' }
 CodeImporter >> initialize [
 	codeDeclarations := OrderedCollection new.
-	parserClass := ChunkFileFormatParser.
+	parserClass := ChunkFileFormatParserV100.
 	logSource := true
 ]
 
@@ -162,7 +168,22 @@ CodeImporter >> logSource: aBoolean [
 
 { #category : 'evaluating' }
 CodeImporter >> parseChunks [
-	^ codeDeclarations := (parserClass for: readStream) parseChunks
+
+	codeDeclarations := (parserClass for: readStream) parseChunks.
+	readStream close. "On windows we cannot manipulate a file if it is open, and this caused random failures in our CI depending on how things are garbage collected. So now I'm closing explicitly the stream after reading it."
+	^ codeDeclarations
+]
+
+{ #category : 'accessing' }
+CodeImporter >> parserClass [
+
+	^ parserClass
+]
+
+{ #category : 'accessing' }
+CodeImporter >> parserClass: anObject [
+
+	parserClass := anObject
 ]
 
 { #category : 'accessing' }

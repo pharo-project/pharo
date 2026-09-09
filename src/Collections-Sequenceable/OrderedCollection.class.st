@@ -894,6 +894,15 @@ OrderedCollection >> speciesForTransform [
 	^ self species
 ]
 
+{ #category : 'truncate' }
+OrderedCollection >> truncateTo: smallSize [
+	"return myself or a copy shortened to smallSize."
+
+	^ self size <= smallSize
+		ifTrue: [ self ]
+		ifFalse: [ self copyFrom: 1 to: smallSize ]
+]
+
 { #category : 'enumerating' }
 OrderedCollection >> with: otherCollection collect: twoArgBlock [
 	"Collect and return the result of evaluating twoArgBlock with

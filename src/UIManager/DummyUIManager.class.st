@@ -33,15 +33,12 @@ DummyUIManager >> chooseFrom: labelList values: valueList lines: linesArray titl
 { #category : 'ui requests' }
 DummyUIManager >> confirm: queryString [
 
-	(ProvideAnswerNotification signal: queryString) ifNotNil: [:answer |
-		^answer].
-
+	self deprecated: 'Use ConfirmationRequest signal: instead.'.
 	self error: 'No user response possible'
 ]
 
 { #category : 'ui requests' }
 DummyUIManager >> confirm: queryString label: title trueChoice: trueChoice falseChoice: falseChoice cancelChoice: cancelChoice default: defaultOption [
-	(ProvideAnswerNotification signal: queryString) ifNotNil: [:answer | ^ answer].
 
 	self error: 'No user response possible'
 ]
@@ -49,15 +46,7 @@ DummyUIManager >> confirm: queryString label: title trueChoice: trueChoice false
 { #category : 'ui requests' }
 DummyUIManager >> confirm: aString orCancel: cancelBlock [
 
-	(ProvideAnswerNotification signal: aString) ifNotNil: [:answer |
-		^answer == #cancel ifTrue: [cancelBlock value] ifFalse: [answer]].
-
 	self error: 'No user response possible'
-]
-
-{ #category : 'debug' }
-DummyUIManager >> debugProcess: process context: context label: title fullView: bool notification: notificationString [
-	Warning signal: 'Trying to debug the process ', title
 ]
 
 { #category : 'ui requests' }
@@ -66,37 +55,18 @@ DummyUIManager >> edit: aText label: labelString accept: aBlockOrNil [
 	^ nil
 ]
 
-{ #category : 'error handling' }
-DummyUIManager >> handleError: anError log: shouldLog [
-
-	self traceCr: '*** EXCEPTION ***'.
-	self traceCr: anError.
-	self trace: (String streamContents: [ :stream |
-			 anError signalerContext errorReportOn: stream ]).
-	Smalltalk exitFailure
-]
-
-{ #category : 'error handling' }
-DummyUIManager >> handleWarning: aWarning [
-
-	^ self handleError: aWarning
-]
-
 { #category : 'ui requests' }
 DummyUIManager >> inform: aString [
 	"Nothing to be done here"
 ]
 
-{ #category : 'ui requests' }
-DummyUIManager >> informUserDuring: aBlock [
-
-	aBlock value: DummySystemProgressItem new
-]
-
 { #category : 'default actions' }
 DummyUIManager >> lowSpaceWatcherDefaultAction [
 
-	self traceCr: '*** LOW SPACE ***'
+	Smalltalk logStdOutDuring: [ :logger |
+			logger
+				nextPutAll: '*** LOW SPACE ***';
+				cr ]
 ]
 
 { #category : 'ui requests' }
@@ -134,33 +104,5 @@ DummyUIManager >> request: aStringOrText initialAnswer: defaultAnswer entryCompl
 { #category : 'ui requests' }
 DummyUIManager >> request: aStringOrText initialAnswer: defaultAnswer title: aTitle entryCompletion: anEntryCompletion [
 
-	(ProvideAnswerNotification signal: aStringOrText) ifNotNil: [:answer |
-		^ answer == #default ifTrue: [defaultAnswer] ifFalse: [answer]].
-
 	self error: 'No user response possible'
-]
-
-{ #category : 'ui requests' }
-DummyUIManager >> requestPassword: queryString [
-
-	^ self request: queryString initialAnswer: ''
-]
-
-{ #category : 'default actions' }
-DummyUIManager >> traceCr: aString [
-
-	Smalltalk logStdOutDuring: [:logger |
-		logger nextPutAll: aString;
-				 cr ]
-]
-
-{ #category : 'default actions' }
-DummyUIManager >> unhandledErrorDefaultAction: anException [
-	self traceCr: '*** EXCEPTION ***'.
-	self traceCr: anException.
-	self
-		trace:
-			(String
-				streamContents: [ :stream | anException signalerContext errorReportOn: stream ]).
-	Smalltalk exitFailure
 ]

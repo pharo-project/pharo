@@ -14,10 +14,10 @@ CoSharedPoolVariableFetcherTest >> setUp [
 	fetcher completionClass: self completionClass.
 	fetcher := fetcher forHierarchy.
 	expectedElements := {
-		NECClassVarEntry contents: 'Sa' node: nil.
-		NECClassVarEntry contents: 'Sb' node: nil.
-		NECClassVarEntry contents: 'SSupera' node: nil.
-		NECClassVarEntry contents: 'SSuperb' node: nil.
-		NECClassVarEntry contents: 'Sc' node: nil.
-		NECClassVarEntry contents: 'SSuperc' node: nil.}
+		CoClassVarEntry contents: 'Sa' node: nil.
+		CoClassVarEntry contents: 'Sb' node: nil.
+		CoClassVarEntry contents: 'SSupera' node: nil.
+		CoClassVarEntry contents: 'SSuperb' node: nil.
+		CoClassVarEntry contents: 'Sc' node: nil.
+		CoClassVarEntry contents: 'SSuperc' node: nil.}
 ]

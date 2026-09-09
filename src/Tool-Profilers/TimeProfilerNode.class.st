@@ -16,7 +16,7 @@ TimeProfilerNode >> asString [
 
 { #category : 'actions' }
 TimeProfilerNode >> browseItem [
-	Smalltalk tools browser
+	(Smalltalk tools toolNamed: #browser)
 		openOnClass: self methodClass  selector: self selector
 ]
 

@@ -2,12 +2,14 @@
 I am responsible to add a protocol to a class.
 
 Usage:
+```
 | transformation |
 transformation := (RBAddProtocolTransformation
 				protocol: 'transforming'
 				inClass: #RBDummyEmptyClass)
-				transform.
-(ChangesBrowser changes: transformation model changes changes) open
+				generateChanges.
+(StRefactoringPreviewPresenter for: transformation) open
+```
 
 Preconditions:
 - The class exists;
@@ -86,17 +88,4 @@ RBAddProtocolTransformation >> protocolExist [
 			  ((model environment protocolsFor: self definingClass realClass)
 				   includes: protocol) not ]
 		  errorString: 'Protocol named ' , protocol , ' already exists'
-]
-
-{ #category : 'storing' }
-RBAddProtocolTransformation >> storeOn: aStream [
-
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream
-		nextPutAll: ' protocol: ''';
-		nextPutAll: protocol;
-		nextPutAll: ''' inClass: ''';
-		nextPutAll: className.
-	aStream nextPut: $)
 ]

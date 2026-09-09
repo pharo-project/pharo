@@ -78,13 +78,12 @@ DTTestCoverageResult >> percent: anObject [
 DTTestCoverageResult >> summarizeInfo [
 	"Text showed in miniDrTests with info of the result "
 
-	^ String
-		streamContents: [ :s |
-			s
-				<< (percent*100 printShowingDecimalPlaces: 2);
-				<< ' % Code Coverage';
-				<< String cr;
-				<< 'Uncovered methods:';
-				<< String cr;
-				<< self methodList size asString ]
+	^ String streamContents: [ :s |
+			  s
+				  << (percent * 100 printShowingDecimalPlaces: 2);
+				  << ' % Code Coverage';
+				  << String cr;
+				  << 'Uncovered methods:';
+				  << String cr;
+				  print: self methodList size ]
 ]

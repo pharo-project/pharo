@@ -60,6 +60,12 @@ ClyJumpToTestMethodCommand >> defaultMenuItemName [
 	^ 'Jump to test method'
 ]
 
+{ #category : 'accessing' }
+ClyJumpToTestMethodCommand >> description [
+
+^ 'Jump on the test method corresponding to the method. If the method does not exists I will create it in the corresponding class.'
+]
+
 { #category : 'execution' }
 ClyJumpToTestMethodCommand >> execute [
 	self methods do: [ :method | self generateTestMethodFor: method ].

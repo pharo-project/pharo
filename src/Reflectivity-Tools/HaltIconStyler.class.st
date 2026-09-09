@@ -17,7 +17,8 @@ HaltIconStyler class >> isStaticStyler [
 
 { #category : 'defaults' }
 HaltIconStyler >> highlightColor [
-	^(Color red alpha: 0.1)
+
+	^ self theme dangerBackgroundColor alpha: 0.1
 ]
 
 { #category : 'defaults' }
@@ -35,4 +36,10 @@ HaltIconStyler >> shouldStyleNode: aNode [
 	| selectorsToBeHighlighted |
 	selectorsToBeHighlighted := { 'halt'. 'halt:'. 'haltIf:'. 'haltIfNil' }.
 	^aNode isMessage and: [ selectorsToBeHighlighted anySatisfy: [ :sel| sel = aNode selector ]]
+]
+
+{ #category : 'private' }
+HaltIconStyler >> stylerName [
+
+	^ 'breakpoint'
 ]

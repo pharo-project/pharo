@@ -10,7 +10,8 @@ Class {
 		'tempVector',
 		'id',
 		'tempVectorVar',
-		'node'
+		'node',
+		'isClean'
 	],
 	#category : 'OpalCompiler-Core-Semantics',
 	#package : 'OpalCompiler-Core',
@@ -76,7 +77,8 @@ OCAbstractMethodScope >> allTemps [
 
 { #category : 'temp vars - copying' }
 OCAbstractMethodScope >> copiedVarNames [
-	^ copiedVars keys
+
+	^ copiedVars values collect: [ :var | var originalVar name ]
 ]
 
 { #category : 'temp vars - copying' }
@@ -90,16 +92,6 @@ OCAbstractMethodScope >> copyEscapingReads [
 	self tempVars values
 		select: [ :each | each isEscapingRead ]
 		thenDo: [ :each | self addCopyingTemp: each ]
-]
-
-{ #category : 'lookup' }
-OCAbstractMethodScope >> hasBindingThatBeginsWith: aString [
-	"check weather there are any temporaries defined that start with aString"
-	(copiedVars hasBindingThatBeginsWith: aString) ifTrue: [ ^true ].
-	(tempVector hasBindingThatBeginsWith: aString) ifTrue: [ ^true ].
-	(tempVars hasBindingThatBeginsWith: aString) ifTrue: [ ^true ].
-
-	^ self outerScope hasBindingThatBeginsWith: aString
 ]
 
 { #category : 'temp vars - vector' }
@@ -118,7 +110,22 @@ OCAbstractMethodScope >> initialize [
 	tempVars :=  OrderedDictionary new.
 	tempVector  := OrderedDictionary new.
 	copiedVars := OrderedDictionary new.
-	id := 0
+	id := 0.
+	
+	"Closures are not clean unless proven otherwise"
+	isClean := false.
+]
+
+{ #category : 'accessing' }
+OCAbstractMethodScope >> isClean [
+
+	^ isClean
+]
+
+{ #category : 'accessing' }
+OCAbstractMethodScope >> isClean: anObject [
+
+	isClean := anObject
 ]
 
 { #category : 'temp vars' }
@@ -142,18 +149,33 @@ OCAbstractMethodScope >> localTemps [
 OCAbstractMethodScope >> lookupDefiningContextForVariable: var startingFrom: aContext [
 	"Is this the definition context for var? If it not, we look in the outer context using the corresponding outer scope. If found, we return the context"
 
-	^self = var scope
-		ifFalse: [ self outerScope lookupDefiningContextForVariable: var startingFrom: (self nextOuterScopeContextOf: aContext) ]
-		ifTrue: [ aContext ]
+	| nextContext |
+	self = var scope ifTrue: [ ^ aContext ].
+	
+	nextContext := self nextOuterScopeContextOf: aContext.
+	nextContext ifNil: [ self error: var name, ' optimized out' ].
+	
+	^ self outerScope lookupDefiningContextForVariable: var startingFrom: nextContext
 ]
 
 { #category : 'lookup' }
 OCAbstractMethodScope >> lookupVar: name [
 
+	"Return a variable or nil if not found"
+
+	"Be aware that this method is used in two different phases:
+	 - at compile time, it's first called to do name resolution. 
+	   During this phase, no block scope is marked as clean, so we do a full name resolution.
+	   We return self/super/instvars/outer vars even if the block *will* be clean.	
+	 - at runtime, after block scopes are marked as clean/not clean, we cut the variable lookup"
+
+
+	"If the variable is defined locally, just return it"
 	copiedVars at: name ifPresent: [:v | ^ v].
 	tempVector at: name ifPresent: [:v | ^ v].
 	tempVars at: name ifPresent: [:v | ^ v].
 	name = self tempVectorName ifTrue: [ ^ self tempVectorVar ].
+	
 	^ super lookupVar: name
 ]
 

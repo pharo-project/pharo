@@ -8,9 +8,8 @@ Class {
 		'mockMessage',
 		'testStream'
 	],
-	#category : 'SUnit-MockObjects-Tests-Core',
-	#package : 'SUnit-MockObjects-Tests',
-	#tag : 'Core'
+	#category : 'SUnit-MockObjects-Tests',
+	#package : 'SUnit-MockObjects-Tests'
 }
 
 { #category : 'running' }

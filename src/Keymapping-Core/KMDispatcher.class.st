@@ -216,12 +216,12 @@ KMDispatcher >> reset [
 	self resetPerInstanceTarget
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 KMDispatcher >> resetPerInstanceTarget [
 	directKeymaps := nil
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 KMDispatcher >> resetTargets [
     targets := nil
 ]

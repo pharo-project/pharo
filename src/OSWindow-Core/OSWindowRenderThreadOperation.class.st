@@ -49,13 +49,13 @@ OSWindowRenderThreadOperation >> failed [
 	^ failed
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 OSWindowRenderThreadOperation >> initWithOperation: anOperation [
 	semaphore := Semaphore new.
 	operation := anOperation
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 OSWindowRenderThreadOperation >> initWithOperation: anOperation blocking: isBlocking [
 	semaphore := Semaphore new.
 	operation := anOperation.

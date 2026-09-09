@@ -13,5 +13,5 @@ Class {
 CoClassVariableFetcher >> entriesDo: aBlock [
 
 	self completionClass instanceSide classVarNames do: [ :e |
-		aBlock value: (NECClassVarEntry contents: e node: astNode)]
+		aBlock value: (CoClassVarEntry contents: e node: astNode)]
 ]

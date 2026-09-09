@@ -10,6 +10,20 @@ Class {
 }
 
 { #category : 'tests' }
+ClassDescriptionProtocolsTest >> testAddEmptyProtocolIsTurnedIntoAsYetUnclassified [
+
+	(class removeProtocol: Protocol unclassified).
+	self deny: (class hasProtocol: Protocol unclassified).
+	
+	"an empty protocol is turned into a yet unclassified one"
+	class addProtocol: ''.
+	self deny: (class hasProtocol: '').
+	
+	self assert: (class hasProtocol: Protocol unclassified).
+	
+]
+
+{ #category : 'tests' }
 ClassDescriptionProtocolsTest >> testAddProtocol [
 
 	class addProtocol: #titan.
@@ -40,7 +54,8 @@ ClassDescriptionProtocolsTest >> testAddProtocolWithProtocolFromOtherClass [
 
 	"The class should have created a new protocol of the same name."
 	self assert: (class hasProtocol: #titan).
-	self deny: (class protocolNamed: #titan) identicalTo: titan
+	self deny: (class protocolNamed: #titan) identicalTo: titan.
+	self assert: (class protocolNamed: #titan) owningClass equals: class
 ]
 
 { #category : 'tests' }
@@ -88,18 +103,9 @@ ClassDescriptionProtocolsTest >> testClassifyUnder [
 ClassDescriptionProtocolsTest >> testClassifyUnderExtensionFromTheSamePackage [
 	"If we classify a method as an extension of it's own package, we expect it to end up unclassified."
 
-	self
-		should: [
-			class compiler
-				protocol: ('*' , class package name) asSymbol;
-				install: 'king ^ 1' ]
-		raise: ExtensionPointsOwningPackageNotification.
-	[
 	class compiler
 		protocol: ('*' , class package name) asSymbol;
-		install: 'king ^ 1' ]
-		on: ExtensionPointsOwningPackageNotification
-		do: [ :e | e resume ].
+		install: 'king ^ 1'.
 
 	self deny: (class >> #king) isClassified.
 	self deny: (class >> #king) protocol isExtensionProtocol
@@ -180,7 +186,8 @@ ClassDescriptionProtocolsTest >> testClassifyUnderWithProtocolFromOtherClass [
 	self assertCollection: (class selectorsInProtocol: #which) hasSameElements: #( #luz ).
 
 	"Since the protocol was not from the class, it should not be the same instance."
-	self deny: (class protocolNamed: #which) identicalTo: which
+	self deny: (class protocolNamed: #which) identicalTo: which.
+	self assert: (class protocolNamed: #which) owningClass equals: class
 ]
 
 { #category : 'tests' }
@@ -193,6 +200,7 @@ ClassDescriptionProtocolsTest >> testEnsureProtocol [
 
 	self assertCollection: class protocolNames hasSameElements: { #titan }.
 	self assert: (class ensureProtocol: #titan) equals: protocol.
+	self assert: (class ensureProtocol: #titan) owningClass equals: class.
 	self assert: (class ensureProtocol: protocol) equals: protocol.
 	self assert: (class ensureProtocol: outsideProtocol) equals: protocol.
 	self deny: (class ensureProtocol: outsideProtocol) identicalTo: outsideProtocol.
@@ -362,7 +370,7 @@ ClassDescriptionProtocolsTest >> testRemoveNonexistentSelectorsFromProtocols [
 		removeKey: #king.
 	class removeNonexistentSelectorsFromProtocols.
 
-	self assertCollection: class protocolNames hasSameElements: #( human ).
+	self assertCollection: class protocolNames hasSameElements: #( human titan ). "We do not remove empty protocols because this method is a private method used by the class builder to remove selectors from Traits. If we remove the empty protocold, we will announce wrong protocol removed announcements."
 	self assertCollection: (class protocolNamed: #human) methodSelectors hasSameElements: #( luz )
 ]
 
@@ -515,10 +523,7 @@ ClassDescriptionProtocolsTest >> testRenameProtocolAsAnExtensionOfThePackageCont
 	self deny: (class hasProtocol: extension).
 	self assertCollection: (class selectorsInProtocol: #demon) hasSameElements: #( #king ).
 
-	self should: [ class renameProtocol: #demon as: extension ] raise: ExtensionPointsOwningPackageNotification.
-	[ class renameProtocol: #demon as: extension ]
-		on: ExtensionPointsOwningPackageNotification
-		do: [ :e | e resume ].
+	class renameProtocol: #demon as: extension.
 
 	self assert: (class hasProtocol: #demon).
 	self deny: (class hasProtocol: extension).

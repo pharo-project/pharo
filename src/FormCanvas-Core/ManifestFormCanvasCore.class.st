@@ -8,3 +8,10 @@ Class {
 	#package : 'FormCanvas-Core',
 	#tag : 'Manifest'
 }
+
+{ #category : 'meta-data - dependency analyser' }
+ManifestFormCanvasCore class >> manuallyResolvedDependencies [
+
+	<ignoreForCoverage>
+	^ #(#'Transcript-NonInteractive')
+]

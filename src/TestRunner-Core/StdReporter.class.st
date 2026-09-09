@@ -3,7 +3,7 @@ I am a test result reporter in the console
 "
 Class {
 	#name : 'StdReporter',
-	#superclass : 'AbstractReporter',
+	#superclass : 'Reporter',
 	#instVars : [
 		'stdout',
 		'stderr',

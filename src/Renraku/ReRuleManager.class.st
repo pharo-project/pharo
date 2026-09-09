@@ -82,7 +82,7 @@ ReRuleManager class >> doesNotUnderstand: aMessage [
 			| ruleName rules |
 			ruleName := (aMessage selector allButFirst: 16) withoutSuffix: ':'.
 			rules := self visibleRuleClasses select: [ :class |
-				         class group = ruleName ].
+				         class groupSelector = ruleName ].
 			^ (aMessage selector endsWith: ':')
 				  ifTrue: [ rules do: [ :rule | rule enabled: aMessage arguments first] ]
 				  ifFalse: [ rules anySatisfy: [ :rule | rule enabled] ] ]
@@ -155,7 +155,7 @@ ReRuleManager class >> reset [
 ReRuleManager class >> resetWithInform [
 
 	self reset.
-	self inform: 'Cache of the Renraku rule manager has been reset'
+	InformativeNotification signal: 'Cache of the Renraku rule manager has been reset'
 ]
 
 { #category : 'accessing' }
@@ -185,22 +185,21 @@ ReRuleManager class >> ruleToggleSettingsOn: aBuilder [
 	(aBuilder group: self ruleToggleGroupID)
 		order: 1;
 		label: 'Toggle rules to run';
-		description:
-			'Select which rules do you want to see in the live feedback';
+		description: 'Select which rules do you want to see in the live feedback';
 		parent: #qualityAssistant;
 		with: [
-			(self visibleRuleClasses groupedBy: [ :class | class group ])
-				keysAndValuesDo: [ :groupName :rules |
-					(aBuilder setting: groupName asSymbol)
-						target: self;
-						selector: #toggleGroupNamed , groupName capitalized;
-						default: true;
-						noOrdering;
-						iconName: #smallConfiguration;
-						label: groupName , ' rules';
-						description: 'select ', groupName , ' rules';
-						with: [ self subSettingsOn: aBuilder with: rules] ] ]
-
+				(self visibleRuleClasses groupedBy: [ :class | class groupSelector ]) keysAndValuesDo: [ :groupNameSelector :rules |
+							| groupName |
+							groupName := ReAbstractRule perform: groupNameSelector.
+							(aBuilder setting: groupNameSelector asSymbol)
+								target: self;
+								selector: #toggleGroupNamed , groupNameSelector capitalized;
+								default: true;
+								noOrdering;
+								iconName: #smallConfiguration;
+								label: groupName , ' rules';
+								description: 'select ' , groupName , ' rules';
+								with: [ self subSettingsOn: aBuilder with: rules ] ] ]
 ]
 
 { #category : 'accessing' }
@@ -226,26 +225,25 @@ ReRuleManager class >> setBeginnerProfile [
 { #category : 'accessing' }
 ReRuleManager class >> setDefaultProfile [
 
-	self visibleRuleClasses do: [ :rule | rule enabled: rule isDefaultRule ].
+	self visibleRuleClasses do: [ :ruleClass | ruleClass enabled: ruleClass isDefaultRule ].
 	self reset
 ]
 
 { #category : 'settings' }
-ReRuleManager class >> subSettingsOn: aBuilder with: rules [ 
+ReRuleManager class >> subSettingsOn: aBuilder with: rules [
 
-	 ^ (rules sorted: [ :a :b | a name < b name ]) do: [ :rule |
-		  (aBuilder setting: rule enabledSettingID)
-			  selector: #enabled;
-			  target: rule;
-			  default: rule enabled;
-			  label: rule name;
-			  description: rule rationale ]
+	^ (rules sorted: [ :a :b | a name < b name ]) do: [ :rule |
+			(aBuilder setting: rule enabledSettingID)
+				  selector: #enabled;
+				  target: rule;
+				  default: rule enabledByDefault;
+				  label: rule ruleName;
+				  description: rule rationale ]
 ]
 
 { #category : 'event subscriptions' }
 ReRuleManager class >> subscribe [
 
-	<systemEventRegistration>
 	self unsubscribe.
 
 	self codeChangeAnnouncer weak
@@ -261,7 +259,7 @@ ReRuleManager class >> uniqueInstance [
 	^ self default
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'class initialization' }
 ReRuleManager class >> unload [
 
 	self reset
@@ -293,6 +291,19 @@ ReRuleManager >> classRules [
 	^ self allRules select: [ :rule | rule class checksClass ]
 ]
 
+{ #category : 'accessing' }
+ReRuleManager >> groupedRules [
+
+	| rulesByGroup |
+	(self visibleRuleClasses collect: [ :aClass |
+		          aClass new ]) sorted: [ :a :b | a ruleName < b ruleName ].
+	rulesByGroup := (rules groupedBy: [:each | each group]) associations collect: [ :as |
+		                CBCritiquesRuleGroup
+			                named: as key
+			                rules: as value ].
+	^ rulesByGroup
+]
+
 { #category : 'initialization' }
 ReRuleManager >> initializeRules: aCollection [
 
@@ -315,4 +326,17 @@ ReRuleManager >> nodeRules [
 ReRuleManager >> packageRules [
 
 	^ self allRules select: [ :rule | rule class checksPackage ]
+]
+
+{ #category : 'accessing' }
+ReRuleManager >> sortedGroupedRules [
+
+	^ self groupedRules sort: [ :a :b | a name < b name ]
+]
+
+{ #category : 'accessing' }
+ReRuleManager >> visibleRuleClasses [
+
+	^ (ReAbstractRule withAllSubclasses select: [:each | each isVisible])
+	"remove this in the future ->", RBLintRule withAllSubclasses select: [:each | each isVisible]
 ]

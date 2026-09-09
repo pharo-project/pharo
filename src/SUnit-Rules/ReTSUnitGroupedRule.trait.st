@@ -10,6 +10,11 @@ Trait {
 
 { #category : 'accessing' }
 ReTSUnitGroupedRule >> group [
+	^ ReAbstractRule sunitGroup
+]
 
-	^ 'SUnit'
+{ #category : 'accessing' }
+ReTSUnitGroupedRule >> groupSelector [
+
+	^ #sunitGroup
 ]

@@ -14,65 +14,46 @@ DebugPointIconStyler class >> isStaticStyler [
 	^ true
 ]
 
-{ #category : 'styling' }
+{ #category : 'private' }
 DebugPointIconStyler >> addIconStyle: aNode from: start to: stop color: aColor [
-	"there probably is a better way that just adding a second row but i couldn't figure out rubric"
-	| conf |
-	(self shouldStyleNode: aNode) ifFalse: [ ^ self ].
 
-	"list options for each debug point"
+	(self shouldStyleNode: aNode) ifFalse: [ ^ self ].
 	(self allDebugPointsOn: aNode) do: [ :dp |
-		
-		conf := RubConfigurationChange new.
-	conf configurationBlock: [ :text | 
-		| r r2 |
-		r := self segmentMorphClass from: start to: stop + 1.
-		text addSegment: r.
-		r label: (self iconLabelBlock: dp).
-		r icon: (self iconFor: dp).
-		r iconBlock: (self iconBlock: dp).
-		r color: aColor.
-		r borderColor: self borderColor .
-		r2 := self segmentMorphClass from: start to: stop + 1.
-		text addSegment: r2.
-		r2 label: 'Remove'.
-		r2 icon: (self iconFor: dp ).
-		r2 iconBlock: (self iconBlockEdit: dp).
-		r2 color: aColor.
-		r2 borderColor: self borderColor .
-		].
-	
-	textModel announce: conf 
-	].
-	
-	
-	
-	"conf := RubConfigurationChange new.
-	conf configurationBlock: [ :text | 
-		| r r2 |
-		r := self segmentMorphClass from: start to: stop + 1.
-		text addSegment: r.
-		r label: (self iconLabelBlock: aNode).
-		r icon: (self iconFor: aNode).
-		r iconBlock: (self iconBlock: aNode).
-		r color: aColor.
-		r borderColor: self borderColor .
-		r2 := self segmentMorphClass from: start to: stop + 1.
-		text addSegment: r2.
-		r2 label: 'Remove'.
-		r2 icon: (self iconFor: aNode).
-		r2 iconBlock: (self iconBlockEdit: aNode).
-		r2 color: aColor.
-		r2 borderColor: self borderColor .
-		].
-	
-	textModel announce: conf"
+			renderer addDecoration: (IconStylerDecoration new
+					 name: self stylerName;
+					 interval: (start to: stop);
+					 highlightColor: aColor;
+					 icon: (self iconFor: dp);
+					 iconBlock: (self iconBlock: dp);
+					 title: (self iconLabel: dp);
+					 yourself).
+			renderer addDecoration: (IconStylerDecoration new
+					 name: self stylerName;
+					 interval: (start to: stop);
+					 highlightColor: aColor;
+					 icon: (self iconFor: dp);
+					 iconBlock: (self iconBlockEdit: dp);
+					 title: 'Remove';
+					 yourself) ]
 ]
 
 { #category : 'private' }
 DebugPointIconStyler >> allDebugPointsOn: aNode [
 
 	^(aNode links select: [ :link | link metaObject isKindOf: self forClass ]) collect: [:link | link metaObject].
+]
+
+{ #category : 'building' }
+DebugPointIconStyler >> buildIconStyleFor: dp to: aNode [
+
+	^ IconStylerDecoration new
+		  name: self stylerName;
+		  interval: (aNode start to: aNode stop + 1);
+		  highlightColor: self highlightColor;
+		  icon: (self iconFor: dp);
+		  iconBlock: (self iconBlock: dp);
+		  title: (self iconLabel: dp);
+		  yourself
 ]
 
 { #category : 'styling' }
@@ -144,4 +125,10 @@ DebugPointIconStyler >> iconLabel: dp [
 DebugPointIconStyler >> shouldStyleNode: aNode [
 
 	^aNode hasDebugPointOfType: self forClass
+]
+
+{ #category : 'private' }
+DebugPointIconStyler >> stylerName [
+
+	^ 'debug-point'
 ]

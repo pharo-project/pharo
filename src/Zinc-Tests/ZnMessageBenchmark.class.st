@@ -77,7 +77,7 @@ ZnMessageBenchmark class >> responses [
 		binaryResponse8k binaryResponse64k binaryResponse256k )
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnMessageBenchmark >> asciiResponse256k [
 	message := ZnResponse ok:
 		(ZnEntity
@@ -85,7 +85,7 @@ ZnMessageBenchmark >> asciiResponse256k [
 			type: 'text/plain;charset=ascii')
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnMessageBenchmark >> asciiResponse64k [
 	message := ZnResponse ok:
 		(ZnEntity
@@ -93,7 +93,7 @@ ZnMessageBenchmark >> asciiResponse64k [
 			type: 'text/plain;charset=ascii')
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnMessageBenchmark >> asciiResponse8k [
 	message := ZnResponse ok:
 		(ZnEntity
@@ -111,17 +111,17 @@ ZnMessageBenchmark >> benchWrite [
 	^ [ self write ] bench
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnMessageBenchmark >> binaryResponse256k [
 	message := ZnResponse ok: (ZnEntity with: (self randomBytes: 256 * 1024))
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnMessageBenchmark >> binaryResponse64k [
 	message := ZnResponse ok: (ZnEntity with: (self randomBytes: 64 * 1024))
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnMessageBenchmark >> binaryResponse8k [
 	message := ZnResponse ok: (ZnEntity with: (self randomBytes: 8 * 1024))
 ]
@@ -136,7 +136,7 @@ ZnMessageBenchmark >> message [
 	^ message
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnMessageBenchmark >> postRequest [
 	message := (ZnRequest post: 'http://zn.stfx.eu/echo/one/two/three?param1=123&param2=foobar')
 		setAcceptEncodingGzip;
@@ -195,12 +195,12 @@ ZnMessageBenchmark >> read: count [
 	count timesRepeat: [ self read ]
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnMessageBenchmark >> simpleRequest [
 	message := ZnRequest get: 'http://zn.stfx.eu/dw-bench'
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnMessageBenchmark >> simpleResponse [
 	message := ZnResponse ok: (ZnEntity html: ZnDefaultServerDelegate new generateDWBench)
 ]
@@ -210,7 +210,7 @@ ZnMessageBenchmark >> sizeBuffer: size [
 	buffer := ByteArray new: size
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnMessageBenchmark >> standardRequest [
 	message := (ZnRequest get: 'http://zn.stfx.eu/echo/one/two/three?param1=123&param2=foobar')
 		setAcceptEncodingGzip;
@@ -218,32 +218,32 @@ ZnMessageBenchmark >> standardRequest [
 		yourself
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnMessageBenchmark >> textResponse256k [
 	message := ZnResponse ok: (ZnEntity with: (self randomUnicodeString: 256 * 1024))
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnMessageBenchmark >> textResponse64k [
 	message := ZnResponse ok: (ZnEntity with: (self randomUnicodeString: 64 * 1024))
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnMessageBenchmark >> textResponse8k [
 	message := ZnResponse ok: (ZnEntity with: (self randomUnicodeString: 8 * 1024))
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnMessageBenchmark >> textResponseWide256k [
 	message := ZnResponse ok: (ZnEntity with: (self randomUnicodeWideString: 256 * 1024))
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnMessageBenchmark >> textResponseWide64k [
 	message := ZnResponse ok: (ZnEntity with: (self randomUnicodeWideString: 64 * 1024))
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnMessageBenchmark >> textResponseWide8k [
 	message := ZnResponse ok: (ZnEntity with: (self randomUnicodeWideString: 8 * 1024))
 ]
@@ -261,13 +261,13 @@ ZnMessageBenchmark >> write: count [
 	count timesRepeat: [ self write ]
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnMessageBenchmark >> writeRepresentation [
 	representation := self write contents.
 	self sizeBuffer: representation size + 1024
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnMessageBenchmark >> writeUsingGzipEncodingAndChunkingRepresentation [
 	message
 		setContentEncodingGzip;

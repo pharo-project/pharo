@@ -136,7 +136,7 @@ ZnLogEvent >> processId [
 	^ processId
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 ZnLogEvent >> processId: anObject [
 	processId := anObject
 ]

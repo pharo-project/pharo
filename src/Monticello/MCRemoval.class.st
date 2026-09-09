@@ -37,7 +37,7 @@ MCRemoval >> fromSource [
 	^ definition diffSource
 ]
 
-{ #category : 'initializing' }
+{ #category : 'initialization' }
 MCRemoval >> intializeWithDefinition: aDefinition [
 	definition := aDefinition
 ]
@@ -55,11 +55,6 @@ MCRemoval >> isClassPatch [
 { #category : 'testing' }
 MCRemoval >> isRemoval [
 	^ true
-]
-
-{ #category : 'accessing' }
-MCRemoval >> summarySuffix [
-	^ ' (removed)'
 ]
 
 { #category : 'accessing' }

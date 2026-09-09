@@ -50,5 +50,11 @@ ClyGlobalVariable >> openBrowser [
 { #category : 'operations' }
 ClyGlobalVariable >> openInspector [
 
+	actualVariable inspect
+]
+
+{ #category : 'operations' }
+ClyGlobalVariable >> openValueInspector [
+
 	actualVariable value inspect
 ]

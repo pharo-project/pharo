@@ -65,7 +65,7 @@ RubCursor class >> period: anInteger [
 RubCursor class >> rubricSettingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder group: #'Rubric cursor')
-		parent: #Rubric;
+		parent: #RubricEditor;
 		label: 'Cursor';
 		with: [
 					(aBuilder setting: #cursorWithFixedColor)

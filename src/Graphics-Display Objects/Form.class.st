@@ -1002,21 +1002,21 @@ Form >> fadeImageCoarse: otherImage at: topLeft [
 { #category : 'transitions' }
 Form >> fadeImageFine: otherImage at: topLeft [
 	"Display fadeImageFine: (Form fromDisplay: (40@40 extent: 300@300)) reverse at: 40@40"
-	| d pix|
+
+	| d pix |
 	d := self depth.
-	^ self fadeImage: otherImage at: topLeft indexAndMaskDo:
-		[:i :mask | | j ii  |
-		i=1 ifTrue: [pix := (1 bitShift: d) - 1.
-					1 to: 8//d-1 do:
-						[:q | pix := pix bitOr: (pix bitShift: d*4)]].
-		i <= 16 ifTrue:
-		[ii := #(0 10 2 8 7 13 5 15 1 11 3 9 6 12 4 14) at: i.
-		j := ii//4+1.
-		(0 to: 28 by: 4) do:
-			[:k | mask bits at: j+k put:
-				((mask bits at: j+k) bitOr: (pix))].
-		true]
-		ifFalse: [false]]
+	^ self fadeImage: otherImage at: topLeft indexAndMaskDo: [ :i :mask |
+			  | j ii |
+			  i = 1 ifTrue: [
+					  pix := (1 bitShift: d) - 1.
+					  1 to: 8 // d - 1 do: [ :q | pix := pix bitOr: (pix bitShift: d * 4) ] ].
+			  i <= 16
+				  ifTrue: [
+						  ii := #( 0 10 2 8 7 13 5 15 1 11 3 9 6 12 4 14 ) at: i.
+						  j := ii // 4 + 1.
+						  (0 to: 28 by: 4) do: [ :k | mask bits at: j + k put: ((mask bits at: j + k) bitOr: pix) ].
+						  true ]
+				  ifFalse: [ false ] ]
 ]
 
 { #category : 'transitions' }
@@ -1457,9 +1457,8 @@ Form >> lighter: aFactor [
 Form >> magnify: aRectangle by: scale [
 	"Answer a Form created as a scaling of the receiver.
 	Scale may be a Float, and may be greater or less than 1.0."
-	self deprecated: 'This method will be removed in a future version of Pharo, you can use #magnifyBy: if your rectangle is the boundingBox of the receiver instead'.
-	^ self magnify: aRectangle by: scale smoothing: 1
 
+	^ self magnify: aRectangle by: scale smoothing: 1
 ]
 
 { #category : 'scaling, rotation' }
@@ -1468,22 +1467,17 @@ Form >> magnify: aRectangle by: scale smoothing: cellSize [
         Scale may be a Float or even a Point, and may be greater or less than 1.0."
 
 	| newForm |
-	self deprecated: 'This method will be removed in a future version of Pharo, you can use #magnifyBy:smoothing: if your rectangle is the boundingBox of the receiver instead'.
 	newForm := self blankCopyOf: aRectangle scaledBy: scale.
 	(WarpBlt toForm: newForm)
 		sourceForm: self;
 		colorMap: (self colormapIfNeededFor: newForm);
 		cellSize: cellSize;
-		"installs a new colormap if cellSize > 1"
-			combinationRule: 3;
+		"installs a new colormap if cellSize > 1"combinationRule: 3;
 		copyQuad: aRectangle innerCorners toRect: newForm boundingBox.
-	^ newForm
-
-	"Dynamic test...
+	^ newForm "Dynamic test...
 [Sensor anyButtonPressed] whileFalse:
         [(Display magnify: (Sensor cursorPoint extent: 131@81) by: 0.5 smoothing: 2) display]
-"
-	"Scaling test...
+" "Scaling test...
 | f cp | f := Form fromDisplay: (Rectangle originFromUser: 100@100).
 Display restoreAfter: [Sensor waitNoButton.
 [Sensor anyButtonPressed] whileFalse:
@@ -1574,6 +1568,30 @@ Form >> mapColors: oldColorBitsCollection to: newColorBits [
 Form >> maskingMap [
 	"Return a color map that maps all colors except transparent to words of all ones. Used to create a mask for a Form whose transparent pixel value is zero."
 	^Color maskingMap: self depth
+]
+
+{ #category : 'merging' }
+Form >> mergeBottomRightWith: aForm [
+	^ self
+		mergeWith: aForm
+		at: self extent - aForm extent
+]
+
+{ #category : 'merging' }
+Form >> mergeWith: aForm [
+	^ self mergeWith: aForm at: 0@0
+]
+
+{ #category : 'merging' }
+Form >> mergeWith: aForm at: aPoint [
+	| mergedForm |
+
+	mergedForm := self deepCopy.
+	mergedForm getCanvas
+		translucentImage: aForm
+		at: aPoint.
+
+	^ mergedForm
 ]
 
 { #category : 'testing' }
@@ -2091,6 +2109,16 @@ Form >> scaledToSize: newExtent [
 	^self magnifyBy: scale smoothing: 2
 ]
 
+{ #category : 'accessing' }
+Form >> setAsBackground [
+	"Set this form as a background image."
+	| world |
+	world := self currentWorld.
+	world backgroundMorph: ((Smalltalk ui theme builder newAlphaImage: self help: nil) autoSize: false;
+			 layout: #scaled;
+			 lock)
+]
+
 { #category : 'private' }
 Form >> setExtent: extent depth: bitsPerPixel [
 	"Create a virtual bit map with the given extent and bitsPerPixel."
@@ -2130,10 +2158,10 @@ Form >> shouldPreserveContents [
 
 { #category : 'scaling, rotation' }
 Form >> shrink: aRectangle by: scale [
+
 	| scalePt |
-	self deprecated: 'this method will be deleted in a future Pharo version'.
 	scalePt := scale asPoint.
-	^ self magnify: aRectangle by: (1.0 / scalePt x asFloat) @ (1.0 / scalePt y asFloat)
+	^ self magnify: aRectangle by: 1.0 / scalePt x asFloat @ (1.0 / scalePt y asFloat)
 ]
 
 { #category : 'initialization' }
@@ -2515,26 +2543,29 @@ Form >> yTallyPixelValue: pv orNot: not [
 Form >> zoomIn: goingIn orOutTo: otherImage at: topLeft vanishingPoint: vp [
 	"Display zoomInTo: (Form fromDisplay: (40@40 extent: 300@300)) reverse at: 40@40.
 	Display zoomOutTo: (Form fromDisplay: (40@40 extent: 300@300)) reverse at: 40@40."
+
 	| nSteps minTime startTime |
 	nSteps := 16.
-	minTime := 500.  "milliseconds"
+	minTime := 500. "milliseconds"
 	startTime := Time millisecondClockValue.
-	^ self wipeImage: otherImage at: topLeft clippingBox: nil rectForIndex:
-		[:i | | bigR j lilR lead | "i runs from 1 to nsteps"
-		i > nSteps
-			ifTrue: [nil "indicates all done"]
-			ifFalse:
-			["If we are going too fast, delay for a bit"
-			lead := startTime + (i-1*minTime//nSteps) - Time millisecondClockValue.
-			lead > 10 ifTrue: [(Delay forMilliseconds: lead) wait].
-
-			"Return an array with the difference rectangles for this step."
-			j := goingIn ifTrue: [i] ifFalse: [nSteps+1-i].
-			bigR := vp - (vp*(j)//nSteps) corner:
-				vp + (otherImage extent-vp*(j)//nSteps).
-			lilR := vp - (vp*(j-1)//nSteps) corner:
-				vp + (otherImage extent-vp*(j-1)//nSteps).
-			bigR areasOutside: lilR]]
+	^ self
+		  wipeImage: otherImage
+		  at: topLeft
+		  clippingBox: nil
+		  rectForIndex: [ :i |
+				  | bigR j lilR lead |
+				  "i runs from 1 to nsteps"
+				  i > nSteps
+					  ifTrue: [ nil "indicates all done" ]
+					  ifFalse: [ "If we are going too fast, delay for a bit"
+							  lead := startTime + (i - 1 * minTime // nSteps) - Time millisecondClockValue.
+							  lead > 10 ifTrue: [ (Delay forMilliseconds: lead) wait ]. "Return an array with the difference rectangles for this step."
+							  j := goingIn
+								       ifTrue: [ i ]
+								       ifFalse: [ nSteps + 1 - i ].
+							  bigR := vp - (vp * j // nSteps) corner: vp + (otherImage extent - vp * j // nSteps).
+							  lilR := vp - (vp * (j - 1) // nSteps) corner: vp + (otherImage extent - vp * (j - 1) // nSteps).
+							  bigR areasOutside: lilR ] ]
 ]
 
 { #category : 'transitions' }

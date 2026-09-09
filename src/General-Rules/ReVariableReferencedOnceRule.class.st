@@ -15,8 +15,9 @@ ReVariableReferencedOnceRule class >> checksClass [
 ]
 
 { #category : 'accessing' }
-ReVariableReferencedOnceRule class >> group [
-	^ 'Design Flaws'
+ReVariableReferencedOnceRule class >> groupSelector [
+
+	^ #designFlawGroup
 ]
 
 { #category : 'accessing' }
@@ -26,7 +27,7 @@ ReVariableReferencedOnceRule class >> ruleName [
 
 { #category : 'accessing' }
 ReVariableReferencedOnceRule class >> severity [
-	^ #information
+	^ 'information'
 ]
 
 { #category : 'accessing' }
@@ -42,7 +43,7 @@ ReVariableReferencedOnceRule >> check: aClass forCritiquesDo: aCriticBlock [
 		  | usingMethods |
 		  usingMethods := slot usingMethods.
 		  usingMethods size = 1 ifFalse:  [ ^ self ].
-		  (RBReadBeforeWrittenTester
+		  (OCReadBeforeWrittenTester
 				  isVariable: slot name
 				  writtenBeforeReadIn: usingMethods first ast) ifTrue: [aCriticBlock cull: (self critiqueFor: aClass about: slot  name)   ]]
 ]

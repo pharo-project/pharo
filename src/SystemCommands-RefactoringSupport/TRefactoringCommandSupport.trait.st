@@ -22,12 +22,6 @@ TRefactoringCommandSupport >> computeInvalidArgNamesForSelector: aSymbol [
 ]
 
 { #category : 'initialization' }
-TRefactoringCommandSupport >> initializeDefaultOptionsOf: refactoring [
-
-	NautilusRefactoring new refactoringOptions: refactoring
-]
-
-{ #category : 'initialization' }
 TRefactoringCommandSupport >> setUpModelFromContext: aContext [
 	| browser scope |
 	

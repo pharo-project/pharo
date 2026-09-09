@@ -3,7 +3,7 @@ I'm a model for user interaction for the remove method refactoring.
 "
 Class {
 	#name : 'ReRemoveMethodDriver',
-	#superclass : 'RBInteractionDriver',
+	#superclass : 'ReInteractionDriver',
 	#instVars : [
 		'methods',
 		'haveNoSenders'
@@ -12,6 +12,18 @@ Class {
 	#package : 'Refactoring-UI',
 	#tag : 'Drivers'
 }
+
+{ #category : 'accessing' }
+ReRemoveMethodDriver class >> driverName [
+
+	^ 'Remove method(s)'
+]
+
+{ #category : 'accessing' }
+ReRemoveMethodDriver class >> shouldPreviewChangesByDefault [
+
+	^ false
+]
 
 { #category : 'execution' }
 ReRemoveMethodDriver >> breakingChoices [
@@ -27,10 +39,8 @@ ReRemoveMethodDriver >> breakingChoices [
 { #category : 'execution' }
 ReRemoveMethodDriver >> browseSenders [
 
-	StMessageBrowser  
-		browse: (haveNoSenders violators collect: [ :each | each value methodClass realClass >> each value selector ]) 
-		asSendersOf: (refactoring allSelectors )
-	"this does not work for multiple selectors remove."
+	(Smalltalk tools toolNamed: #messageList)
+		browseImplementorsOfAll: (haveNoSenders violators collect: [ :each | each value selector ])
 ]
 
 { #category : 'execution' }
@@ -39,37 +49,34 @@ ReRemoveMethodDriver >> changes [
 	^ refactoring removeMethodChanges
 ]
 
-{ #category : 'resources' }
-ReRemoveMethodDriver >> configureRefactoring [
+{ #category : 'configuration' }
+ReRemoveMethodDriver >> defaultSelectDialog [
+
+	^ super defaultSelectDialog
+		title: 'There are ' , haveNoSenders violators size asString , ' methods calling method(s) you want to delete';
+		message: 'Select a strategy';
+		items: self breakingChoices;
+		display: [ :each | each description ];
+		displayIcon: [ :each | self iconNamed: each systemIconName ]; 
+		yourself
+]
+
+{ #category : 'execution' }
+ReRemoveMethodDriver >> hasFailedBehaviorPreservingPreconditions [
+
+	haveNoSenders := refactoring preconditionHaveNoSenders.
+	^ refactoring failedBreakingChangePreconditions isNotEmpty 
+]
+
+{ #category : 'configuration' }
+ReRemoveMethodDriver >> instantiateRefactoring [
 
 	| classSelectorMapping |
 	classSelectorMapping := methods collect: [ :m | m origin -> m selector ].
 
-	refactoring := ReRemoveMethodsRefactoring
-			            model: model
-			            classSelectorMapping: classSelectorMapping
-]
-
-{ #category : 'execution' }
-ReRemoveMethodDriver >> handleBreakingChanges [
-
-	| select |
-	select := self selectDialog.
-	select ifNotNil: [ select action ]
-]
-
-{ #category : 'execution' }
-ReRemoveMethodDriver >> runRefactoring [
-
-	self configureRefactoring.
-	refactoring failedApplicabilityPreconditions 
-		ifNotEmpty: [ ^ self inform: 'The method does not exist' ].
-	
-	haveNoSenders := refactoring preconditionHaveNoSenders.
-
-	haveNoSenders check
-			ifTrue: [ self applyChanges ]
-			ifFalse: [ self handleBreakingChanges ]
+	^ ReRemoveMethodsRefactoring
+       model: model
+       classSelectorMapping: classSelectorMapping
 ]
 
 { #category : 'initialization' }
@@ -86,17 +93,4 @@ ReRemoveMethodDriver >> scopes: refactoringScopes methods: aMethods [
 	scopes := refactoringScopes.
 	model := self refactoringScopeOn: scopes first.
 	methods := aMethods
-]
-
-{ #category : 'execution' }
-ReRemoveMethodDriver >> selectDialog [
-
-	^ SpSelectDialog new
-		  title: 'There are ' , haveNoSenders violators size asString
-			  , ' methods calling method(s) you want to delete';
-		  label: 'Select a strategy';
-		  items: self breakingChoices;
-		  display: [ :each | each description ];
-		  displayIcon: [ :each | self iconNamed: each systemIconName ];
-		  openModal
 ]

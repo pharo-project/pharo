@@ -119,3 +119,12 @@ PluggableMenuSpec >> model: anObject [
 PluggableMenuSpec >> newMenuItem [
 	^ PluggableMenuItemSpec new
 ]
+
+{ #category : 'printing' }
+PluggableMenuSpec >> printOn: aStream [
+
+	super printOn: aStream. 
+	aStream << ' ('.
+	aStream print: self label.
+	aStream << ')'.
+]

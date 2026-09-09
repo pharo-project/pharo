@@ -18,15 +18,15 @@ ReShouldSendSuperTearDownAsLastMessage class >> checksMethod [
 ]
 
 { #category : 'accessing' }
-ReShouldSendSuperTearDownAsLastMessage class >> group [
+ReShouldSendSuperTearDownAsLastMessage class >> groupSelector [
 
-	^ 'SUnit'
+	^ #sunitGroup
 ]
 
 { #category : 'utilities' }
 ReShouldSendSuperTearDownAsLastMessage class >> parseTreeSearcher [
 
-	^ RBParseTreeSearcher new
+	^ OCParseTreeSearcher new
 ]
 
 { #category : 'accessing' }
@@ -52,7 +52,14 @@ ReShouldSendSuperTearDownAsLastMessage class >> superTearDownNotCalledLastIn: aC
 { #category : 'running' }
 ReShouldSendSuperTearDownAsLastMessage >> basicCheck: aMethod [
 
-	^ (self isClassToCheck: aMethod methodClass) and: [ aMethod selector = #tearDown and: [ self class superTearDownNotCalledLastIn: aMethod ] ]
+	(self isClassToCheck: aMethod methodClass) ifFalse: [ ^ false ].
+
+	aMethod selector = #tearDown ifFalse: [ ^ false ].
+
+	"Allow the user to declare some false positives. In some cases we need to execute the super tear down before."
+	(aMethod hasPragmaNamed: #tearDownIsNotLast) ifTrue: [ ^ false ].
+
+	^ self class superTearDownNotCalledLastIn: aMethod
 ]
 
 { #category : 'testing' }

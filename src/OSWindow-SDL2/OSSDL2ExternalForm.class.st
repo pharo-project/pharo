@@ -28,7 +28,7 @@ Class {
 	#tag : 'Base'
 }
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 OSSDL2ExternalForm >> allocateSpace [
 	"Convenient way to allocate space for the pixels.  This isn't done by default, because it is common to use a pointer obtained from elsewhere."
 	| addr |
@@ -37,7 +37,7 @@ OSSDL2ExternalForm >> allocateSpace [
 	self setManualSurfacePointer: addr
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 OSSDL2ExternalForm >> destroySurface [
 	"Users must call this explicitly when this object is no longer needed; otherwise, resource-leakage will occur in the SurfacePlugin"
 	bits ifNotNil: [:surfaceID |
@@ -56,25 +56,6 @@ OSSDL2ExternalForm >> magnifyBy: scale smoothing: cellSize [
 	^ form magnifyBy: scale smoothing: cellSize
 ]
 
-{ #category : 'old - ffi backend support' }
-OSSDL2ExternalForm >> oldPrimCreateManualSurfaceWidth: aWidth height: aHeight rowPitch: rowPitch depth: aDepth isMSB: isMSB [
-	<primitive: 'primitiveCreateManualSurface' module: 'SqueakFFIPrims'>
-	self primitiveFailed
-]
-
-{ #category : 'old - ffi backend support' }
-OSSDL2ExternalForm >> oldPrimDestroyManualSurface: surfaceID [
-	<primitive: 'primitiveDestroyManualSurface' module: 'SqueakFFIPrims'>
-	self primitiveFailed
-]
-
-{ #category : 'old - ffi backend support' }
-OSSDL2ExternalForm >> oldPrimManualSurface: surfaceID setPointer: aPointer [
-	"The 'surfaceID' is a handle returned by #primitiveCreateManualSurface from SurfacePlugin. The pointer is a 32-bit unsigned integer that SurfacePlugin casts to a void*."
-	<primitive: 'primitiveSetManualSurfacePointer' module: 'SqueakFFIPrims'>
-	self primitiveFailed
-]
-
 { #category : 'accessing' }
 OSSDL2ExternalForm >> pointer [
 	^pointer
@@ -84,14 +65,14 @@ OSSDL2ExternalForm >> pointer [
 OSSDL2ExternalForm >> primCreateManualSurfaceWidth: aWidth height: aHeight rowPitch: rowPitch depth: aDepth isMSB: isMSB [
 	<primitive: 'primitiveCreateManualSurface' module: 'SurfacePlugin'>
 
-	^ self oldPrimCreateManualSurfaceWidth: aWidth height: aHeight rowPitch: rowPitch depth: aDepth isMSB: isMSB
+	^ self primitiveFailed
 ]
 
 { #category : 'primitives' }
 OSSDL2ExternalForm >> primDestroyManualSurface: surfaceID [
 	<primitive: 'primitiveDestroyManualSurface' module: 'SurfacePlugin'>
 
-	^ self oldPrimDestroyManualSurface: surfaceID
+	^ self primitiveFailed
 ]
 
 { #category : 'primitives' }
@@ -99,10 +80,10 @@ OSSDL2ExternalForm >> primManualSurface: surfaceID setPointer: aPointer [
 	"The 'surfaceID' is a handle returned by #primitiveCreateManualSurface from SurfacePlugin. The pointer is a 32-bit unsigned integer that SurfacePlugin casts to a void*."
 	<primitive: 'primitiveSetManualSurfacePointer' module: 'SurfacePlugin'>
 
-	^ self oldPrimManualSurface: surfaceID setPointer: aPointer
+	^ self primitiveFailed
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 OSSDL2ExternalForm >> setExtent: extent depth: bitsPerPixel [
 	bits ifNotNil: [self error: 'bits are already set'].
 	bitsPerPixel == 32 ifFalse: [self error: 'only 32 bits for now'.  "see 'rowPitch' below"].
@@ -119,13 +100,13 @@ OSSDL2ExternalForm >> setExtent: extent depth: bitsPerPixel [
 		isMSB: true
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 OSSDL2ExternalForm >> setExtent: extent depth: bitsPerPixel bits: aPointer [
 	self setExtent: extent depth: bitsPerPixel.
 	self setManualSurfacePointer: aPointer
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 OSSDL2ExternalForm >> setManualSurfacePointer: newPointer [ "ExternalStructure, ExternalAddress, or nil"
 	"Set the memory-location of the image data.  It is OK to set a NULL pointer;
 	 in this case, any attempt to BitBlt to or from the form will result in a primitive-failure."

@@ -25,9 +25,13 @@ ClyTextEditor >> classNamesContainingIt [
 { #category : '*Calypso-SystemTools-QueryBrowser' }
 ClyTextEditor >> implementorsOf: selectedSelector [
 
-	self browser
+	self browser classSelection 
+		ifEmpty: [ ^ (Smalltalk tools 
+			toolNamed: #messageList) 
+			browseImplementorsOf: selectedSelector ].
+	
+	(Smalltalk tools toolNamed: #messageList) 
 		browseImplementorsOf: selectedSelector
-		inNameResolver: self browserTool selectedClassOrMetaClass
 ]
 
 { #category : '*Calypso-SystemTools-QueryBrowser' }
@@ -43,25 +47,24 @@ ClyTextEditor >> implementorsOfIt [
 ClyTextEditor >> methodSourceContainingIt [
 	"Open a browser class comments which contain the current selection somewhere in them."
 
-	| query pattern |
-	
-	self lineSelectAndEmptyCheck: [^ self].
+	| pattern |
+	self lineSelectAndEmptyCheck: [ ^ self ].
 	pattern := self selection string.
-	query := (ClyMethodSourcesQuery withString: pattern), (ClyClassCommentsQuery withString: pattern).
-	self browser spawnQueryBrowserOn: query
+	(Smalltalk tools toolNamed: #messageList) browseMethodsWithSourceString: pattern
 ]
 
 { #category : '*Calypso-SystemTools-QueryBrowser' }
 ClyTextEditor >> referencesTo: aVariableName [
 	"Open a references browser on the given symbol"
-	| class var |
+
+	| class |
 	" ugly dispatch, but current Browser protocol names aren't really cool "
 	class := self modelCurrentSelectedClass.
-
+ 
 	class isBehavior ifTrue: [
-		class slotNamed: aVariableName ifFound: [:slot |
-			var := ClyInstanceVariable on: slot visibleFrom: class.
-			^self browser spawnQueryBrowserOn: (ClyVariableReferencesQuery of: var)]].
+			class
+				slotNamed: aVariableName
+				ifFound: [ :slot | ^ (Smalltalk tools toolNamed: #messageList) browseReferencesToVariable: slot inClass: class ] ].
 
 	self browser browseReferencesTo: aVariableName asSymbol inNameResolver: class
 ]
@@ -79,9 +82,10 @@ ClyTextEditor >> referencesToIt [
 { #category : '*Calypso-SystemTools-QueryBrowser' }
 ClyTextEditor >> sendersOf: selectedSelector [
 
-	self browser
-		browseReferencesTo: selectedSelector
-		inNameResolver: self browserTool selectedClassOrMetaClass
+	self browser classSelection ifEmpty: [
+		^ self browser browseReferencesTo: selectedSelector inNameResolver: self browserTool selectedClassOrMetaClass ].
+
+	self browser browseReferencesTo: selectedSelector inNameResolver: self browserTool selectedClassOrMetaClass 
 ]
 
 { #category : '*Calypso-SystemTools-QueryBrowser' }

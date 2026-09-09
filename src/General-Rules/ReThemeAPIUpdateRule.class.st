@@ -11,8 +11,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReThemeAPIUpdateRule class >> group [
-	^ 'Coding Idiom Violation'
+ReThemeAPIUpdateRule class >> groupSelector [
+
+	^ #codingIdiomViolationGroup
 ]
 
 { #category : 'accessing' }

@@ -2,12 +2,14 @@
 I am responsible for removing a protocol in a class
 
 Usage:
+```
 | transformation |
 transformation := (RBRemoveProtocolTransformation
-			protocol: 'empty protocol'
+			protocol: 'empty protocol 1'
 			inClass: #RBDummyEmptyClass)
-			transform.
-(ChangesBrowser changes: transformation model changes changes) open
+			generateChanges.
+(StRefactoringPreviewPresenter for: transformation) open
+```
 	
 Preconditions:
 - The class exists;
@@ -86,17 +88,4 @@ RBRemoveProtocolTransformation >> protocol: aString inClass: aClassName [
 
 	self className: aClassName.
 	protocol := aString
-]
-
-{ #category : 'storing' }
-RBRemoveProtocolTransformation >> storeOn: aStream [
-
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream
-		nextPutAll: ' protocol: ''';
-		nextPutAll: protocol;
-		nextPutAll: ''' inClass: ''';
-		nextPutAll: className.
-	aStream nextPut: $)
 ]

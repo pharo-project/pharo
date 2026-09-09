@@ -13,5 +13,5 @@ TimeProfiler class >> menuProfilingOn: aBuilder [
 		parent: #Profiling;
 		help: 'Profile the UI process of Pharo.';
 		order: 20;
-		action: [ self currentWorld worldState startThenBrowseMessageTally ]
+		action: [ self currentWorld startThenBrowseMessageTally ]
 ]

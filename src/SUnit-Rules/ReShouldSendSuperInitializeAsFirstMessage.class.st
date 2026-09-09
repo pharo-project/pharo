@@ -20,15 +20,15 @@ ReShouldSendSuperInitializeAsFirstMessage class >> checksMethod [
 ]
 
 { #category : 'accessing' }
-ReShouldSendSuperInitializeAsFirstMessage class >> group [
+ReShouldSendSuperInitializeAsFirstMessage class >> groupSelector [
 
-	^ 'Clean Code'
+	^ #cleanCodeGroup
 ]
 
 { #category : 'utilities' }
 ReShouldSendSuperInitializeAsFirstMessage class >> parseTreeSearcher [
 
-	^ RBParseTreeSearcher new
+	^ OCParseTreeSearcher new
 ]
 
 { #category : 'accessing' }

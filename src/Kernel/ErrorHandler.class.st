@@ -1,8 +1,11 @@
+"
+I am an abstract class delegating error management of unhandled errors to one of my subclass depending on the image state (starting, non interactive, interactive..)
+"
 Class {
 	#name : 'ErrorHandler',
 	#superclass : 'Object',
 	#classVars : [
-		'DefaultErrorHandler'
+		'Default'
 	],
 	#category : 'Kernel-Exceptions',
 	#package : 'Kernel',
@@ -10,31 +13,63 @@ Class {
 }
 
 { #category : 'accessing' }
-ErrorHandler class >> defaultErrorHandler [
+ErrorHandler class >> default [
 
-	^ DefaultErrorHandler ifNil: [ self ]
+	^ Default ifNil: [
+			  self default: self forCurrentSystemConfiguration new.
+			  Default ]
 ]
 
 { #category : 'accessing' }
-ErrorHandler class >> defaultErrorHandler: anErrorHandler [
+ErrorHandler class >> default: anErrorManager [
 
-	DefaultErrorHandler := anErrorHandler
+	Default := anErrorManager
+]
+
+{ #category : 'initialization' }
+ErrorHandler class >> forCurrentSystemConfiguration [
+
+	^ (self allSubclasses
+		   detect: [ :any | any isValidForCurrentSystemConfiguration and: [ any subclasses noneSatisfy: #isValidForCurrentSystemConfiguration ] ]
+		   ifNone: [ NonInteractiveErrorHandler ]) new
+]
+
+{ #category : 'testing' }
+ErrorHandler class >> isValidForCurrentSystemConfiguration [
+
+	^ self subclassResponsibility
 ]
 
 { #category : 'error handling' }
-ErrorHandler class >> handleError: anError [
+ErrorHandler >> handleError: anError [
 
-	Smalltalk exit: 1
+	self handleError: anError log: true
 ]
 
 { #category : 'error handling' }
-ErrorHandler class >> handleNotification: aNotification [
+ErrorHandler >> handleError: anError log: shouldLog [
+	"Provide a default handling for unhandled error."
+
+	self subclassResponsibility
+]
+
+{ #category : 'error handling' }
+ErrorHandler >> handleNotification: aNotification [
+
+	"by default, do nothing"
 
 	aNotification resume
 ]
 
 { #category : 'error handling' }
-ErrorHandler class >> handleWarning: aWarning [
+ErrorHandler >> handleWarning: aWarning [
+	"Handle warning notification. Should be overidden by subclass."
 
-	aWarning resume
+	self subclassResponsibility
+]
+
+{ #category : 'error handling' }
+ErrorHandler >> logError: anError [
+
+	Smalltalk logError: anError messageText inContext: anError signalerContext
 ]

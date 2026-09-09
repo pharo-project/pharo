@@ -11,7 +11,7 @@ RBRenameClassRefactoringTest >> testFailureBadName [
 
 	self shouldFail: (ReRenameClassRefactoring
 			 rename: #RBLintRuleTestData
-			 to: #TextConstants).
+			 to: #RBFooDummyLintRuleTest1).
 	self shouldFail:
 		(ReRenameClassRefactoring rename: #RBLintRuleTestData to: #'Ob ject')
 ]
@@ -123,6 +123,13 @@ RBRenameClassRefactoringTest >> testRenameClassFromTrait [
 				equals: (self parseMethod: 'methodFromTrait
 	RBNewClassName justForTest').
 	self assert: ((refactoring model classNamed: #RBClassUsingSharedPoolForTestData) methodFor: #methodFromTrait) modelClass name equals: #RBTDummy
+]
+
+{ #category : 'failure tests' }
+RBRenameClassRefactoringTest >> testSharedVariableNameExpectWarning [
+
+	self shouldWarn:
+		(ReRenameClassRefactoring rename: #ReClassToBeRenamed to: #SharedVariableWithRef)
 ]
 
 { #category : 'tests' }

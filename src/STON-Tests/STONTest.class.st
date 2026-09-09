@@ -16,7 +16,6 @@ STONTest class >> fastReadFromFileNamed: path [
 		readStreamDo: [ :stream |
 			STON reader
 				on: (ZnBufferedReadStream on: stream);
-				optimizeForLargeStructures;
 				next ]
 ]
 
@@ -29,7 +28,6 @@ STONTest class >> fastWrite: object toFileNamed: path [
 				do: [ :stream |
 					STON writer
 						on: stream;
-						optimizeForLargeStructures;
 						nextPut: object ] ]
 ]
 

@@ -1,0 +1,41 @@
+"
+Command to execute a Transformation for generating the #printOn: method. The printOn: method in Pharo is typically used to provide a textual representation of an object intended for developers or debugging purposes. It is often implemented by classes to print the class name and relevant instance variable values of the object.
+"
+Class {
+	#name : 'SycCmGeneratePrintOnCommand',
+	#superclass : 'SycCmGenerateCommand',
+	#category : 'SystemCommands-ClassCommands-Creation',
+	#package : 'SystemCommands-ClassCommands',
+	#tag : 'Creation'
+}
+
+{ #category : 'private - contents' }
+SycCmGeneratePrintOnCommand class >> printIconContents [
+	"Private - Print icons created by bqlqn - Flaticon"
+	^ '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'
+]
+
+{ #category : 'executing' }
+SycCmGeneratePrintOnCommand >> driverClass [
+
+	^ ReGeneratePrintOnDriver 
+]
+
+{ #category : 'accessing' }
+SycCmGeneratePrintOnCommand >> icon [
+
+	^ Form fromBinaryStream: self class printIconContents base64Decoded asByteArray readStream
+]
+
+{ #category : 'testing' }
+SycCmGeneratePrintOnCommand >> isApplicable [
+	"Answer <true> if the receiver has any variables"
+
+	^ context lastSelectedClass realClass slots notEmpty
+]
+
+{ #category : 'accessing' }
+SycCmGeneratePrintOnCommand >> order [
+
+	^ 42
+]

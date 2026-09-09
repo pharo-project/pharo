@@ -13,6 +13,12 @@ Class {
 	#tag : 'Tests'
 }
 
+{ #category : 'accessing' }
+FFIMockCalloutMethodBuilder >> compiledCode [
+
+	^ FFIMockMethod new
+]
+
 { #category : 'compatibility' }
 FFIMockCalloutMethodBuilder >> createFFICalloutLiteralFromSpec: functionSpec [
 

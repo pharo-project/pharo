@@ -1,5 +1,5 @@
 "
-A critique which know which node should be replaced by another one. This critiques are used first of all in rewrite rules.
+A critique which know which node should be replaced by another one. These critiques are used first of all in rewrite rules.
 "
 Class {
 	#name : 'ReReplaceNodeCritique',
@@ -35,7 +35,7 @@ ReReplaceNodeCritique >> change [
 
 	newTreeNode replaceMethodSource: newNode.
 	newTreeNode becomeForward: newNode.
-	^ (RBRefactoryChangeFactory instance)
+	^ ReChangeFactory instance
 		addMethodSource: newTree methodNode newSource
 		in: self entity  methodClass
 ]

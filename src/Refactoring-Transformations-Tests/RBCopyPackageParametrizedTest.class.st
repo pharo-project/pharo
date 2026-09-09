@@ -40,8 +40,8 @@ RBCopyPackageParametrizedTest >> setUp [
 { #category : 'running' }
 RBCopyPackageParametrizedTest >> tearDown [
 
-	(RBRefactoryChangeFactory instance removePackageNamed: #RefactoringSmallPackageForTest) execute.
-	(RBRefactoryChangeFactory instance removePackageNamed: #RefactoringCOPYSmallPackageForTest) execute.
+	(ReChangeFactory instance removePackageNamed: #RefactoringSmallPackageForTest) execute.
+	(ReChangeFactory instance removePackageNamed: #RefactoringCOPYSmallPackageForTest) execute.
 	super tearDown
 ]
 

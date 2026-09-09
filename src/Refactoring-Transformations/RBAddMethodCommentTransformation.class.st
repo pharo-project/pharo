@@ -2,13 +2,15 @@
 Adds a comment in the beginning of the method (after its signature).
 
 Usage:
+```
 | transformation |
 transformation := (RBAddMethodCommentTransformation
 		comment: 'New comment'
-		inMethod: #testTransform
-		inClass: #RBAddClassTransformationTest)
-		transform.
-(ChangesBrowser changes: transformation model changes changes) open
+		inMethod: #storeOn:
+		inClass: #RBAddMethodCommentTransformation)
+		generateChanges.
+(StRefactoringPreviewPresenter for: transformation) open
+```
 "
 Class {
 	#name : 'RBAddMethodCommentTransformation',
@@ -60,19 +62,4 @@ RBAddMethodCommentTransformation >> privateTransform [
 	              , tree body sourceCode.
 	self definingClass compileTree:
 		(self parserClass parseMethod: sourceCode)
-]
-
-{ #category : 'storing' }
-RBAddMethodCommentTransformation >> storeOn: aStream [
-
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream
-		nextPutAll: ' comment: ''';
-		nextPutAll: comment;
-		nextPutAll: ''' inMethod: ''';
-		nextPutAll: selector;
-		nextPutAll: ''' inClass: '.
-	class storeOn: aStream.
-	aStream nextPut: $)
 ]

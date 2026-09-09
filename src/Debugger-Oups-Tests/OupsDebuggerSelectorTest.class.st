@@ -10,14 +10,6 @@ Class {
 	#tag : 'Tests - strategies'
 }
 
-{ #category : 'private' }
-OupsDebuggerSelectorTest >> performTest [
-	"Temporary printing to find more information about https://github.com/pharo-project/pharo/issues/12502"
-
-	('Running: ' , testSelector asString , ' from ' , self class name) traceCr.
-	self perform: testSelector asSymbol
-]
-
 { #category : 'helper' }
 OupsDebuggerSelectorTest >> session [
 	^OupsDummyDebugger dummySession
@@ -30,7 +22,8 @@ OupsDebuggerSelectorTest >> setUp [
 	super setUp.
 	debuggers := OupsDummyDebugger dummyDebuggerList.
 	debuggerSelector := OupsDebuggerSelector with: debuggers copy.
-	debuggerSelector handlesDebuggerErrors: false
+	debuggerSelector handlesDebuggerErrors: false.
+	('Running: ' , testSelector asString , ' from ' , self class name) traceCr.
 ]
 
 { #category : 'running' }

@@ -38,9 +38,6 @@ FLTraitCluster >> materializePostInstance: aTrait with: aDecoder [
 
 	aTrait
 		initialize;
-		"#initialize sets Object as the superclass
-		but the superclass of traits is nil"
-		superclass: nil;
 		setName: name;
 		environment: environment.
 

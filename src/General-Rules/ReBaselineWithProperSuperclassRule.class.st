@@ -16,9 +16,9 @@ ReBaselineWithProperSuperclassRule class >> checksClass [
 ]
 
 { #category : 'accessing' }
-ReBaselineWithProperSuperclassRule class >> group [
+ReBaselineWithProperSuperclassRule class >> groupSelector [
 
-	^ 'Design Flaws'
+	^ #designFlawGroup
 ]
 
 { #category : 'accessing' }
@@ -29,7 +29,7 @@ ReBaselineWithProperSuperclassRule class >> ruleName [
 { #category : 'accessing' }
 ReBaselineWithProperSuperclassRule class >> severity [
 
-	^ #information
+	^ 'information'
 ]
 
 { #category : 'manifest' }

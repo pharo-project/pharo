@@ -40,13 +40,6 @@ OSPlatform class >> determineActivePlatform [
 	^ self allSubclasses detect: [ :any | any isActivePlatform ]
 ]
 
-{ #category : 'examples' }
-OSPlatform class >> example [
-
-	<example>
-	Smalltalk os current inspect
-]
-
 { #category : 'testing' }
 OSPlatform class >> isActivePlatform [
 	"Answer whether the receiver is the active platform"

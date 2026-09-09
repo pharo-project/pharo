@@ -63,12 +63,6 @@ JobProgressMorph >> current: aNumber [
 	self changed
 ]
 
-{ #category : 'action' }
-JobProgressMorph >> debug [
-
-	job isRunning ifTrue: [ job debug ]
-]
-
 { #category : 'API' }
 JobProgressMorph >> decrement [
 
@@ -125,7 +119,7 @@ JobProgressMorph >> initializeJob: aJob [
 		font: StandardFonts defaultFont.
 	bar := JobProgressBarMorph new.
 	bar
-		on: #mouseUp send: #debug to: self;
+		on: #mouseUp send: #interrupt to: aJob;
 		hResizing: #spaceFill.
 	self updateLayout
 ]
@@ -145,20 +139,17 @@ JobProgressMorph >> label [
 { #category : 'API' }
 JobProgressMorph >> label: aString [
 
-	self label isEmpty ifTrue: [
-		aString isEmptyOrNil
-			ifTrue: [ ^self ].
-		self removeAllMorphs.
-		self labelMorph contents: aString.
-		self updateLayout.
-		self changed: #width ].
+	self label = aString ifTrue: [ ^ self ].
 
-	self labelMorph contents = aString
-		ifFalse: [
+	self label ifEmpty: [
+			aString isEmptyOrNil ifTrue: [ ^ self ].
+			self removeAllMorphs.
 			self labelMorph contents: aString.
-			aString isEmptyOrNil
-				ifTrue: [ self removeMorph: self labelMorph ].
-			self changed: #width ].
+			self updateLayout ].
+
+	aString isEmptyOrNil
+		ifTrue: [ self removeMorph: self labelMorph ]
+		ifFalse: [ self labelMorph contents: aString ].
 
 	self changed: #width
 ]
@@ -191,8 +182,35 @@ JobProgressMorph >> progress [
 JobProgressMorph >> progress: aNormalizedNumber [
 
 	bar progress = aNormalizedNumber ifFalse: [
-		bar progress: aNormalizedNumber.
-		self changed: #progressValue ]
+			bar progress: aNormalizedNumber.
+			self changed ]
+]
+
+{ #category : 'API' }
+JobProgressMorph >> progress: aNormalizedNumber label: aString [
+	"I am here to have a version updating only once the progress bar when we change label and progress. This method should call #change: or #change only once."
+
+	| changed |
+	changed := false.
+
+	bar progress = aNormalizedNumber ifFalse: [
+			bar progress: aNormalizedNumber.
+			changed := true ].
+
+	self label = aString
+		ifTrue: [ changed ifTrue: [ self changed ] ]
+		ifFalse: [
+				self label ifEmpty: [
+						aString isEmptyOrNil ifTrue: [ ^ self ].
+						self removeAllMorphs.
+						self labelMorph contents: aString.
+						self updateLayout ].
+
+				aString isEmptyOrNil
+					ifTrue: [ self removeMorph: self labelMorph ]
+					ifFalse: [ self labelMorph contents: aString ].
+
+				self changed: #width ]
 ]
 
 { #category : 'private' }

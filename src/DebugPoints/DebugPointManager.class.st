@@ -351,7 +351,6 @@ DebugPointManager class >> notifyDebugPointRemoved: aDebugPoint fromNodes: nodes
 { #category : 'announcements - registration' }
 DebugPointManager class >> registerInterestToSystemAnnouncement [
 
-	<systemEventRegistration>
 	self codeChangeAnnouncer unsubscribe: self.
 	self codeChangeAnnouncer weak
 		when: MethodRemoved send: #handleMethodRemoved: to: self;

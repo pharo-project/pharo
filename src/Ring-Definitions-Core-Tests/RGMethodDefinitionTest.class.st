@@ -18,7 +18,9 @@ RGMethodDefinitionTest >> runCase [
 { #category : 'running' }
 RGMethodDefinitionTest >> tearDown [
 
-	self class removeSelectorSilently: #foo.
+	(self class includesSelector: #foo)
+		ifTrue: [ self class removeSelectorSilently: #foo ].
+
 	self class removeProtocol: 'test'.
 	super tearDown
 ]
@@ -55,7 +57,7 @@ RGMethodDefinitionTest >> testASTNonExistingMethodWithSource [
 	newMethod := (RGMethodDefinition named: #foo) parent: newClass.
 	newMethod sourceCode: source.
 	self assert: newMethod isPassive.
-	self assert: newMethod ast equals: (RBParser parseMethod: source)
+	self assert: newMethod ast equals: (OCParser parseMethod: source)
 ]
 
 { #category : 'test - accessing source' }
@@ -339,6 +341,15 @@ RGMethodDefinitionTest >> testIsAbstractNonExistingMethod [
 	newMethod := (RGMethodDefinition named: #foo:) parent: newClass.
 	self assert: newMethod isPassive.
 	self deny: newMethod isAbstract
+]
+
+{ #category : 'test - accessing source' }
+RGMethodDefinitionTest >> testIsDeprecatedExistingMethod [
+
+	| method |
+	method := (SUnitTest >> #deprecatedMessage) asRingDefinition.
+	self assert: method isDeprecated .
+
 ]
 
 { #category : 'test - accessing source' }

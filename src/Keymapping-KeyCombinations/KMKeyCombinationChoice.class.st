@@ -72,7 +72,7 @@ KMKeyCombinationChoice >> platformModifier [
 { #category : 'printing' }
 KMKeyCombinationChoice >> prettyPrintOn: aStream [
 
-	(shortcuts select:[ :e | e platform = Smalltalk os platformFamily or: [ e platform = #all ] ])
+	(shortcuts select:[ :e | e platform = OSPlatform current platformFamily or: [ e platform = #all ] ])
 		do: [ :e | e prettyPrintOn: aStream ]
 		separatedBy: [ aStream << ' | ' ]
 ]

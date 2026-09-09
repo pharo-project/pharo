@@ -9,6 +9,13 @@ Class {
 	#tag : 'Manifest'
 }
 
+{ #category : 'meta-data - dependency analyser' }
+ManifestNetworkKernel class >> manuallyResolvedDependencies [
+
+	<ignoreForCoverage>
+	^ #(#'System-Localization' #'Transcript-NonInteractive' #'Zinc-Character-Encoding-Core')
+]
+
 { #category : 'code-critics' }
 ManifestNetworkKernel class >> ruleRBRefersToClassRuleV1FalsePositive [
 	^ #(#(#(#RGMethodDefinition #(#'HTTPProgress class' #example #true)) #'2019-07-05T10:28:44.466329+02:00') )

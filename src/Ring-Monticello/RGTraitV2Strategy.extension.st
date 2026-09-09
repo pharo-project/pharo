@@ -42,9 +42,3 @@ RGTraitV2Strategy >> mcType [
 
 	^ self layout mcType
 ]
-
-{ #category : '*Ring-Monticello' }
-RGTraitV2Strategy >> referencedPackages [
-
-	^ Array with: self package
-]

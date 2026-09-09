@@ -1,4 +1,6 @@
 "
+Checks for ifTrue: or ifFalse: conditions at end of methods that have two or more statements inside their blocks. Such code might better represent the true meaning of the code if they returned self instead.
+
 Transforms single branch conditionals with multi-statement bodies into a sequence of statements guarded by a conditional return.
 For example
 
@@ -27,13 +29,25 @@ Class {
 }
 
 { #category : 'accessing' }
-ReGuardClauseRule class >> group [
-	^ 'Coding Idiom Violation'
+ReGuardClauseRule class >> groupSelector [
+
+	^ #codingIdiomViolationGroup
+]
+
+{ #category : 'accessing' }
+ReGuardClauseRule class >> rationale [
+	^ 'Checks for ifTrue: or ifFalse: conditions at end of methods that have two or more statements inside their blocks. Such code might better represent the true meaning of the code if they returned self instead.'
 ]
 
 { #category : 'accessing' }
 ReGuardClauseRule class >> ruleName [
 	^ 'Replace single branch conditional with guard clause'
+]
+
+{ #category : 'accessing' }
+ReGuardClauseRule class >> severity [
+
+	^ 'information'
 ]
 
 { #category : 'initialization' }

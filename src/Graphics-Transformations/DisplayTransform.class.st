@@ -161,7 +161,7 @@ DisplayTransform >> localPointsToGlobal: inArray [
 	^inArray collect:[:pt| self localPointToGlobal: pt]
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 DisplayTransform >> setIdentity [
 	"Initialize the receiver to the identity transformation (e.g., not affecting points)"
 	^self subclassResponsibility

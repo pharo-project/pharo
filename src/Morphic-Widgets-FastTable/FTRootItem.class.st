@@ -57,8 +57,19 @@ FTRootItem >> expandAllTo: aDepth [
 	children do: [ :each | each expandAllTo: aDepth ]
 ]
 
-{ #category : 'accessing' }
+{ #category : 'testing' }
 FTRootItem >> isExpanded [
+	^ true
+]
+
+{ #category : 'testing' }
+FTRootItem >> isRoot [
+	^ true
+]
+
+{ #category : 'testing' }
+FTRootItem >> isRootItem [
+	
 	^ true
 ]
 

@@ -8,3 +8,10 @@ Class {
 	#package : 'System-Announcements',
 	#tag : 'Manifest'
 }
+
+{ #category : 'meta-data - dependency analyser' }
+ManifestSystemAnnouncements class >> manuallyResolvedDependencies [
+
+	<ignoreForCoverage>
+	^ #(#'Transcript-NonInteractive')
+]

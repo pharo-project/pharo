@@ -5,17 +5,20 @@ If the name of the new method is not provided (i.e., nil), it prompts a dialog w
 Similarly, if the number of arguments in the new method provided by the developer is higher than the number of arguments as calculated by the transformation, it prompts a dialog window so the developer selects which values must be passed as arguments.
 
 Usage:
-transformation := (RBExtractMethodTransformation
-	extract: '(RecursiveSelfRule executeTree: rewriteRule tree initialAnswer: false)
+```
+| transformation |
+transformation := (ReCompositeExtractMethodRefactoring
+	extractSource: '(RecursiveSelfRule executeTree: rewriteRule tree initialAnswer: false)
 		ifFalse: [builder
 					compile: rewriteRule tree printString
 					in: class
 					classified: aSmalllintContext protocols]'
 	from: #checkMethod:
 	to: #foo:
-	in: #RBTransformationRuleTest)
-	transform.
-(ChangesBrowser changes: transformation model changes changes) open
+	in: #RBTransformationDummyRuleTest)
+	generateChanges.
+(StRefactoringPreviewPresenter for: transformation) open
+```
 "
 Class {
 	#name : 'ReCompositeExtractMethodRefactoring',
@@ -29,11 +32,11 @@ Class {
 		'arguments',
 		'temporaries',
 		'assignments',
-		'needsReturn'
+		'needsReturn',
+		'interval'
 	],
-	#category : 'Refactoring-Transformations-Model-Unused',
-	#package : 'Refactoring-Transformations',
-	#tag : 'Model-Unused'
+	#category : 'Refactoring-Transformations',
+	#package : 'Refactoring-Transformations'
 }
 
 { #category : 'api' }
@@ -96,9 +99,9 @@ ReCompositeExtractMethodRefactoring >> addReturnIfNeeded: newMethodNode [
 	
 	assignments size = 1
 		ifTrue: [
-			newMethodNode addNode: (RBReturnNode value:
-					 (RBVariableNode named: assignments first asString)) ]
-		ifFalse: [ RBReturnNodeAdderVisitor new visit: newMethodNode ].
+			newMethodNode addNode: (OCReturnNode value:
+					 (OCVariableNode named: assignments first asString)) ]
+		ifFalse: [ OCReturnNodeAdderVisitor new visit: newMethodNode ].
 ]
 
 { #category : 'preconditions' }
@@ -115,13 +118,14 @@ ReCompositeExtractMethodRefactoring >> applicabilityPreconditions [
 
 { #category : 'accessing' }
 ReCompositeExtractMethodRefactoring >> arguments [
-	^ arguments
+	^ arguments ifNil: [ arguments:=#(  ) ]
 ]
 
 { #category : 'preconditions' }
-ReCompositeExtractMethodRefactoring >> breakingChangePreconditions [ 
+ReCompositeExtractMethodRefactoring >> breakingChangePreconditions [
 
-	^ { self preconditionHasSameExitPoint }
+	^ { self preconditionNoOverrides.
+		 self preconditionHasSameExitPoint }
 ]
 
 { #category : 'executing' }
@@ -145,7 +149,7 @@ ReCompositeExtractMethodRefactoring >> buildTransformationFor: newMethodName [
 		  add: (ReRemoveUnusedTemporaryVariableRefactoring
 				   model: self model
 				   inMethod: selector
-				   inClass: class name);
+				   inClass: (class realClass ifNil: [ class name ] ifNotNil: [ :rc | rc name ]));
 		  yourself
 ]
 
@@ -195,24 +199,25 @@ ReCompositeExtractMethodRefactoring >> calculateAssignments [
 	
 	^ assignments ifNil: [
 		| sequenceNode whoDefinesTemp |
-		sequenceNode := (self sourceMethodTree allChildren select: [ :each | each isSequence ]) last.
+		sequenceNode := (self sourceMethodTree withAllChildren select: [ :each | each isSequence ]) last.
 
 		assignments := temporaries select: [ :temp |
-			whoDefinesTemp := (sequenceNode whoDefines: temp).
+			whoDefinesTemp := (sequenceNode whichUpNodeDefines: temp).
 			whoDefinesTemp statements anySatisfy: [ :statement |
 				(statement references: temp)
-				and: [ (subtree allChildren includes: statement) not ] ] ] ]
+				and: [ (subtree withAllChildren includes: statement) not ] ] ] ]
 ]
 
 { #category : 'querying' }
 ReCompositeExtractMethodRefactoring >> calculateIfReturnIsNeededInCaller [
 
 	| searcher |
+	subtree isBlock ifTrue: [ ^ false ].
 	searcher := self parseTreeSearcher.
 	searcher
-		matches: '^self' do: [:aNode :answer | answer];
-		matches: '^`@anything' do: [:aNode :answer | true].
-	^ (searcher executeTree: subtree initialAnswer: false)
+		matches: '^self' do: [ :aNode :answer | answer ];
+		matches: '^`@anything' do: [ :aNode :answer | true ].
+	^ searcher executeTree: subtree initialAnswer: false
 ]
 
 { #category : 'querying' }
@@ -265,12 +270,12 @@ ReCompositeExtractMethodRefactoring >> extractInterval: anInterval from: aSelect
 	
 	class := self model classNamed: aClassName.
 	selector := aSelector.
-	sourceCode := self getSourceFromInterval: anInterval
+	interval := anInterval.
 ]
 
 { #category : 'api' }
 ReCompositeExtractMethodRefactoring >> extractInterval: anInterval from: aSelector to: aNewSelector in: aClassName [
-	
+
 	self extractInterval: anInterval from: aSelector in: aClassName.
 	newSelector := aNewSelector.
 	
@@ -284,20 +289,27 @@ ReCompositeExtractMethodRefactoring >> extractSource: aString from: aSelector to
 	
 ]
 
+{ #category : 'preconditions' }
+ReCompositeExtractMethodRefactoring >> failedBreakingChangePreconditions [
+	"Return the failed preconditions without raising error. It should only be called by drivers."
+	
+	^ self breakingChangePreconditions reject: [ :cond | cond check ]
+]
+
 { #category : 'executing' }
 ReCompositeExtractMethodRefactoring >> generateNewMethodWith: aMethodName [
 
 	| args newMethodNode |
 	args := aMethodName arguments collect: [ :p |
-		        RBVariableNode named: p ].
+		        OCVariableNode named: p ].
 
-	newMethodNode := RBMethodNode
+	newMethodNode := OCMethodNode
 		                 selector: newSelector
 		                 arguments: args asArray
 		                 body: (subtree isSequence
 				                  ifTrue: [ subtree ]
 				                  ifFalse: [
-					                  RBSequenceNode
+					                  OCSequenceNode
 						                  temporaries: #(  )
 						                  statements: (OrderedCollection with: subtree) ]).
 	temporaries do: [ :each | newMethodNode body addTemporaryNamed: each ].
@@ -308,33 +320,13 @@ ReCompositeExtractMethodRefactoring >> generateNewMethodWith: aMethodName [
 ]
 
 { #category : 'instance creation' }
-ReCompositeExtractMethodRefactoring >> getSourceFromInterval: anInterval [
+ReCompositeExtractMethodRefactoring >> getSourceFromInterval [
 	| source |
 	source := class sourceCodeFor: selector.
-	((anInterval first between: 1 and: source size)
-		and: [anInterval last between: 1 and: source size])
+	((interval first between: 1 and: source size)
+		and: [interval last between: 1 and: source size])
 			ifFalse: [self refactoringError: 'Invalid interval'].
-	^source copyFrom: anInterval first to: anInterval last
-]
-
-{ #category : 'utilities' }
-ReCompositeExtractMethodRefactoring >> mapArguments: args toValues: values in: aTree [
-	self flag: #toRemove.
-	^ (args size = values size)
-		"map directly"
-		ifTrue: [
-			| argsAndValues |
-			argsAndValues := OrderedCollection new.
-			args with: values do: [ :arg :val |
-				argsAndValues add: (arg name asString -> val value storeString) ].
-			argsAndValues ]
-		"open browser"
-		ifFalse: [
-			(RBMethodArgumentsSelector
-				openOn: (args collect: [:e | e name asString])
-				and: (values collect: [ :e | e value storeString ])
-				in: aTree)
-				argumentsAndValues ]
+	^source copyFrom: interval first to: interval last
 ]
 
 { #category : 'executing' }
@@ -364,30 +356,11 @@ ReCompositeExtractMethodRefactoring >> messageSendWith: aMethodName [
 { #category : 'executing' }
 ReCompositeExtractMethodRefactoring >> newMethodName [
 
-	| methodName newAttempt |
-	newAttempt := newSelector isNil.
-
+	| methodName |
+	
 	methodName := RBMethodName new.
 	methodName arguments: arguments.
 	newSelector ifNotNil: [ methodName selector: newSelector ].
-
-	[ newAttempt ] whileTrue: [
-		methodName := (RBMethodNameEditor openOn: methodName) methodName.
-		methodName
-			ifNil: [ newAttempt := false ]
-			ifNotNil: [ :newMethodName |
-				newSelector := newMethodName selector.
-				newAttempt := newSelector isNil.
-
-				"it's a valid selector"
-				(newSelector isString and: [newSelector isValidSelector])
-					ifFalse: [ self inform: newSelector asString, ' is not a valid selector.'.
-								  newSelector := nil ].
-
-				"already exists in class"
-				(self definingClass directlyDefinesLocalMethod: newSelector)
-					ifTrue: [ self inform: newSelector, ' is already defined in ', class asString.
-								 newSelector := nil ] ] ].
 
 	^ methodName
 ]
@@ -409,9 +382,15 @@ ReCompositeExtractMethodRefactoring >> preconditionAssignmentsNotReadBeforeWritt
 { #category : 'preconditions' }
 ReCompositeExtractMethodRefactoring >> preconditionHasSameExitPoint [
 
-	^ RBCondition
-		withBlock: [ subtree hasSameExitPoint ]
-		errorString: 'You cannot extract guard clauses and other expressions that directly impact the methods execution flow.'
+	^ ReHasSameExitPointAsItsMethodCondition new subtree: subtree
+]
+
+{ #category : 'preconditions' }
+ReCompositeExtractMethodRefactoring >> preconditionNoOverrides [
+
+	^ ReUpToRootDoesNotDefinesMethod new
+		  class: class;
+		  selector: newSelector
 ]
 
 { #category : 'preconditions' }
@@ -457,6 +436,7 @@ ReCompositeExtractMethodRefactoring >> preconditionTemporariesAreNotReadBeforeWr
 { #category : 'transforming' }
 ReCompositeExtractMethodRefactoring >> prepareForExecution [
 
+	sourceCode ifNil: [ sourceCode := self getSourceFromInterval ].
 	subtree := self calculateSubtree.
 	subtree ifNotNil: [  
 		temporaries := self calculateTemporaries.
@@ -483,21 +463,4 @@ ReCompositeExtractMethodRefactoring >> selectorStartingFrom: aString argumentsSi
 ReCompositeExtractMethodRefactoring >> sourceMethodTree [
 
 	^ parseTree ifNil: [ parseTree := self definingMethod ]
-]
-
-{ #category : 'storing' }
-ReCompositeExtractMethodRefactoring >> storeOn: aStream [
-
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream nextPutAll: ' extract: '''.
-	sourceCode storeOn: aStream.
-	aStream
-		nextPutAll: ''' from: #';
-		nextPutAll: selector asString;
-		nextPutAll: ' to: #';
-		nextPutAll: newSelector asString;
-		nextPutAll: ' in: '.
-	class storeOn: aStream.
-	aStream nextPut: $)
 ]

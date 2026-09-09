@@ -47,8 +47,8 @@ EpClassModification >> fileOutEntryOn: aWriteStream [
 		ifNotNil: [ : realClass | realClass definitionString ]
 		ifNil: [ self newClass definitionSource ].
 
-	aWriteStream
-		nextChunkPut: defString;
+	(ChunkWriteStream on: aWriteStream)
+		nextPut:  defString;
 		cr
 ]
 

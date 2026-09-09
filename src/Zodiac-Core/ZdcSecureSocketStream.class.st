@@ -56,7 +56,7 @@ ZdcSecureSocketStream >> atEnd [
 	^ self isConnected not
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZdcSecureSocketStream >> close [
 	"Close the stream, flush if necessary.
 	Destory the SSLSession object."
@@ -152,7 +152,7 @@ ZdcSecureSocketStream >> initialize [
 	connecting := false
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZdcSecureSocketStream >> initializeBuffers [
 	"The maximum payload message length of a TLS record is 16Kb,
 	add a margin for the header and trailer."

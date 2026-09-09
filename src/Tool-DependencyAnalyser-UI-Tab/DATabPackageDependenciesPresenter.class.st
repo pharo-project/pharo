@@ -14,11 +14,17 @@ Class {
 	#package : 'Tool-DependencyAnalyser-UI-Tab'
 }
 
+{ #category : 'accessing' }
+DATabPackageDependenciesPresenter class >> defaultPreferredExtent [ 
+
+	^ 800 @ 400
+]
+
 { #category : 'examples' }
 DATabPackageDependenciesPresenter class >> example [
 
 	| analyzedPackage |
-	analyzedPackage := DADependencyChecker new daPackageFor: 'Tool-Diff'.
+	analyzedPackage := StDependencyChecker new daPackageFor: 'Tool-Diff'.
 	(self on: analyzedPackage) open
 ]
 
@@ -95,12 +101,6 @@ DATabPackageDependenciesPresenter >> initializePresenters [
 ]
 
 { #category : 'initialization' }
-DATabPackageDependenciesPresenter >> initializeWindow: aWindowPresenter [
-
-	aWindowPresenter initialExtent: 800 @ 400
-]
-
-{ #category : 'initialization' }
 DATabPackageDependenciesPresenter >> modelChanged [
 
 	packageList items: self packageDependencies
@@ -109,7 +109,7 @@ DATabPackageDependenciesPresenter >> modelChanged [
 { #category : 'actions' }
 DATabPackageDependenciesPresenter >> openDependencyAnalyzer [
 
-	(DAPackageDependenciesPresenter
+	(StPackageDependenciesPresenter
 			onPackagesNamed: {self analyzedPackage packageName}) open
 ]
 

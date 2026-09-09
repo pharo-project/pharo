@@ -27,6 +27,12 @@ RBBrowserEnvironmentWrapper class >> onEnvironment: anEnvironment [
 		yourself
 ]
 
+{ #category : 'comparing' }
+RBBrowserEnvironmentWrapper >> = anotherEnvironment [
+
+	^ self == anotherEnvironment or: [anotherEnvironment class = self class and: [ environment = anotherEnvironment environment ]]
+]
+
 { #category : 'visiting' }
 RBBrowserEnvironmentWrapper >> acceptVisitor: aProgramNodeVisitor [
 
@@ -67,6 +73,12 @@ RBBrowserEnvironmentWrapper >> descriptionBasis [
 { #category : 'private' }
 RBBrowserEnvironmentWrapper >> environment [
 	^ environment
+]
+
+{ #category : 'comparing' }
+RBBrowserEnvironmentWrapper >> hash [ 
+
+	^ environment hash
 ]
 
 { #category : 'testing' }
@@ -136,16 +148,6 @@ RBBrowserEnvironmentWrapper >> selectionIntervalFor: aString [
 	interval := super selectionIntervalFor: aString.
 	^interval ifNotNil: [interval]
 		ifNil: [environment selectionIntervalFor: aString]
-]
-
-{ #category : 'storing' }
-RBBrowserEnvironmentWrapper >> storeOn: aStream [
-	aStream
-		nextPutAll: '(';
-		nextPutAll: self class name;
-		nextPutAll: ' onEnvironment: '.
-	environment storeOn: aStream.
-	aStream nextPut: $)
 ]
 
 { #category : 'private' }

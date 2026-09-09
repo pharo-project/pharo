@@ -91,7 +91,7 @@ PNGReadWriter class >> computeSwizzleMapForDepth: depth [
 	self error: 'Unrecognized depth'
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 PNGReadWriter class >> debugging: aBoolean [
 	Debugging := aBoolean
 ]
@@ -1149,11 +1149,10 @@ PNGReadWriter >> rgbaDecoderMapForDepth: decoderDepth [
 		ifFalse: [ "Little endian, 32 -> 32 color mapping" ColorMap shifts: #(-16 0 16 0) masks: #(16rFF0000 16rFF00 16rFF 16rFF000000) ]
 ]
 
-{ #category : 'accessing' }
+{ #category : 'testing' }
 PNGReadWriter >> understandsImageFormat [
-	#(137 80 78 71 13 10 26 10) do: [ :byte |
-		stream next = byte ifFalse: [^ false]].
-	^ true
+	^ #( 137 80 78 71 13 10 26 10 ) allSatisfy: [ :byte |
+		  stream next = byte ]
 ]
 
 { #category : 'writing' }

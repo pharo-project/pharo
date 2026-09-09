@@ -21,7 +21,7 @@ Class {
 	#tag : 'SystemIntegration'
 }
 
-{ #category : 'initialize-release' }
+{ #category : 'class initialization' }
 CoCompletionContext class >> engine: aCompletionEngine class: aClass source: aString position: anInteger [
 
 	^ self new
@@ -59,7 +59,7 @@ CoCompletionContext >> completionAt: aNumber [
 	| entry |
 
 	entry := (self entries at: aNumber) contents asSymbol separateKeywords.
-	^ NECEntry spaceAfterCompletion
+	^ CoEntry spaceAfterCompletion
 		ifTrue: [ entry, ' ' ]
 		ifFalse: [ entry ]
 ]

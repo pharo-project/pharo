@@ -74,7 +74,7 @@ FFICallbackFunctionResolution >> isApplicableFor: aRequestor [
 FFICallbackFunctionResolution >> resolveFunction: anExternalFunction [
 	| callback |
 	callback := self class
-		callbackNamed: anExternalFunction name
-		ifAbsent: [ self error: 'Callback #', anExternalFunction name, ' not registered!' ].
+		callbackNamed: anExternalFunction functionName
+		ifAbsent: [ self error: 'Callback #', anExternalFunction functionName, ' not registered!' ].
 	^ callback thunk asExternalAddress
 ]

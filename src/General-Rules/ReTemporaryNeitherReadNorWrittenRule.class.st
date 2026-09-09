@@ -10,8 +10,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReTemporaryNeitherReadNorWrittenRule class >> group [
-	^ 'Optimization'
+ReTemporaryNeitherReadNorWrittenRule class >> groupSelector [
+
+	^ #optimizationGroup
 ]
 
 { #category : 'accessing' }

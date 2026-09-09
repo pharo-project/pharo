@@ -27,16 +27,12 @@ Class {
 { #category : 'instance creation' }
 ClyMethodDefinitionProperty class >> of: aMethod [
 	"Answer a <ClyMethodDefinitionProperty>."
-	| methodPackage methodClass realMethod |
-	
-	realMethod := aMethod isRGObject 
-		ifTrue: [ aMethod realMethod ]
-		ifFalse: [ aMethod ].
 
-	methodClass := realMethod origin.
-	methodPackage := realMethod package ifNil: [ methodClass package ]. "it happens when creation new method in trait. It should be fixed in system"
+	| methodPackage methodClass |
+	methodClass := aMethod origin.
+	methodPackage := aMethod package ifNil: [ methodClass package ]. "it happens when creation new method in trait. It should be fixed in system"
 
-	^ self package: methodPackage class: methodClass protocol: realMethod protocolName
+	^ self package: methodPackage class: methodClass protocol: aMethod protocolName
 ]
 
 { #category : 'instance creation' }

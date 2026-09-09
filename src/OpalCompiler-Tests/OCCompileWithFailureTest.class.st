@@ -13,11 +13,6 @@ Class {
 	#tag : 'Source'
 }
 
-{ #category : 'interactive error protocol' }
-OCCompileWithFailureTest >> notify: aMessage at: positon in: object [
-	"ingnore, for testEmptyBlockArg"
-]
-
 { #category : 'tests' }
 OCCompileWithFailureTest >> testEmptyBlockArg [
 	| result |
@@ -25,7 +20,6 @@ OCCompileWithFailureTest >> testEmptyBlockArg [
 	result := UndefinedObject compiler
     source: '^[ :]';
     isScripting: true;
-    requestor: self;
     parse.
 	self assert: result isDoIt.
 	self assert: result statements first isReturn
@@ -37,12 +31,12 @@ OCCompileWithFailureTest >> testEvalSimpleMethodWithError [
 	cm := (compiler := OpalCompiler new)
 				source: 'method 3+';
 				permitFaulty: true;
-				compile.
+				compileOrFail.
 
 	self assert: compiler ast isMethod.
 	self assert: compiler ast isFaulty.
 
-	self should: [cm valueWithReceiver: nil] raise: RuntimeSyntaxError
+	self should: [cm valueWithReceiver: nil] raise: OCRuntimeSyntaxError
 ]
 
 { #category : 'tests' }
@@ -51,10 +45,9 @@ OCCompileWithFailureTest >> testParenthesis [
 	cm := (compiler := UndefinedObject compiler)
     source: 'self assert: pragma( numArgs equals: 0.';
     isScripting: true;
-    requestor: self;
     permitFaulty: true;
-    compile.
+    compileOrFail.
 	self assert: compiler ast isDoIt.
 	self assert: compiler ast isFaulty.
-	self should: [cm valueWithReceiver: nil] raise: RuntimeSyntaxError
+	self should: [cm valueWithReceiver: nil] raise: OCRuntimeSyntaxError
 ]

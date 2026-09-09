@@ -9,12 +9,13 @@ Class {
 	#tag : 'Tests - infrastructure'
 }
 
-{ #category : 'private' }
-OupsDebugRequestTest >> performTest [
+{ #category : 'running' }
+OupsDebugRequestTest >> setUp [
 	"Temporary printing to find more information about https://github.com/pharo-project/pharo/issues/12502"
 
+	super setUp.
 	('Running: ' , testSelector asString , ' from ' , self class name) traceCr.
-	self perform: testSelector asSymbol
+	
 ]
 
 { #category : 'tests' }

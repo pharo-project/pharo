@@ -98,6 +98,22 @@ PackageTest >> testAddTraitSettingPackage [
 ]
 
 { #category : 'tests' }
+PackageTest >> testAddingAnExtensionMethodCrushingAMethodFromATrait [
+	"This is a regression test. In the past adding an extension methods that was crushing a method from a used trait was not marking the method as an extension."
+
+	| class trait |
+	class := self newClassNamed: #X in: self xPackageName.
+	trait := self newTraitNamed: #XT in: self xPackageName.
+
+	class classInstaller update: class to: [ :builder | builder traits: trait ].
+	trait compile: 'extension ^2'.
+
+	self createMethodNamed: 'extension' inClass: class asExtensionOf: self yPackageName.
+
+	self assert: (class >> #extension) isExtension
+]
+
+{ #category : 'tests' }
 PackageTest >> testAllUnsentMessages [
 
 	| package class1 class2 |
@@ -113,28 +129,13 @@ PackageTest >> testAllUnsentMessages [
 	class2
 		compile: 'nonexistingMethodName1 42';
 		compile: 'nonexistingMethodName3 42';
-		compile: 'nonexistingMethodName4 class1 new nonexistingMethodName2'.
+		compile: 'nonexistingMethodName4 TestClass new nonexistingMethodName2'.
 
 	self assert: package allUnsentMessages size equals: 3.
 
 	self
 		assert: package allUnsentMessages
 		equals: (#( 'nonexistingMethodName1' 'nonexistingMethodName3' 'nonexistingMethodName4' ) collect: [ :each | each asSymbol ]) asSet
-]
-
-{ #category : 'tests' }
-PackageTest >> testAnonymousClassAndSelector [
-	"jgeidel test case from issue 12628."
-
-	"Make sure we don't have a registration or a package for the method."
-
-	| ghost method |
-	ghost := Object newAnonymousSubclassInEnvironment: testEnvironment.
-	method := ghost compiler compile: 'rpackagetest'.
-	ghost addSelector: #packagetest withMethod: method.
-	self deny: (self organizer undefinedPackage includesSelector: #packagetest ofClass: ghost).
-	self assert: (self organizer packageOfClassNamed: ghost name) equals: self organizer undefinedPackage.
-	ghost classify: #packagetest under: '*packagetest'
 ]
 
 { #category : 'tests - extensions' }
@@ -356,6 +357,12 @@ PackageTest >> testIncludesMethodOfClassInPresenceOfOtherPackageExtensions [
 	self deny: (yPackage includesSelector: #methodDefinedInP1 ofClass: a2)
 ]
 
+{ #category : 'tests - extensions' }
+PackageTest >> testIsPackage [
+
+	self assert: self class package name asPackage isPackage
+]
+
 { #category : 'tests' }
 PackageTest >> testIsTestPackage [
 
@@ -449,6 +456,42 @@ PackageTest >> testMoveClassToTagName [
 	self assert: class packageTag package equals: yPackage
 ]
 
+{ #category : 'tests' }
+PackageTest >> testPackageCanNotContainSpaceAtBegining [
+
+	self assert: (self ensurePackage: #'   Test1') name equals: #Test1.
+
+	
+]
+
+{ #category : 'tests' }
+PackageTest >> testPackageCanNotContainSpaceAtEnd [
+
+	self assert: (self ensurePackage: #'Test1   ') name equals: #Test1.
+
+	
+]
+
+{ #category : 'tests' }
+PackageTest >> testPackageCanNotContainSpaceEitherAtBeginingOrEnd [
+
+	self assert: (self ensurePackage: #'      Test1   ') name equals: #Test1.
+
+	
+]
+
+{ #category : 'tests' }
+PackageTest >> testPackageCanNotContainSpaces [
+
+
+	self ensurePackage: ' Toto'.
+	self ensurePackage: 'Toto '.
+	self ensurePackage: ' Toto '.
+
+	self assert: (self organizer packages reject: #isUndefined) size equals: 1.
+
+]
+
 { #category : 'tests - properties' }
 PackageTest >> testPropertyAtPut [
 
@@ -464,6 +507,47 @@ PackageTest >> testPropertyAtPut [
 
 	package removeProperty: #testKeySelector.
 	self assert: package properties isNil
+]
+
+{ #category : 'tests - extensions' }
+PackageTest >> testRecompilingClassWithExtensionMethods [
+	"This is a regression test. In the past recompiling a class with extension methods was duplicating the entries in the extension map of the packages."
+
+	| class1 class2 |
+	class1 := self newClassNamed: #X in: self xPackageName.
+	class2 := self newClassNamed: #Y in: self yPackageName.
+
+	self createMethodNamed: 'extension' inClass: class1 asExtensionOf: self yPackageName.
+
+	class1 classInstaller update: class1 to: [ :builder | builder slots: { #slot } ].
+
+	"With the bug, we had 2 entries for the class1."
+	self assert: class2 package extendedClasses size equals: 1.
+	self assert: (class2 package instVarNamed: #extensionSelectors) size equals: 1.
+
+	class1 package removeFromSystem.
+
+	self assertEmpty: (class2 package instVarNamed: #extensionSelectors).
+	self assertEmpty: class2 package extendedClasses
+]
+
+{ #category : 'tests' }
+PackageTest >> testRecompilingClassWithExtensionMethodsCrushingMethodsFromATrait [
+	"This is a regression test. In the past recompiling a class  with extension methods that was crushing a method from a used trait was not marking the method as an extension."
+
+	| class1 class2 trait |
+	class1 := self newClassNamed: #X in: self xPackageName.
+	trait := self newTraitNamed: #XT in: self xPackageName.
+	class2 := self newClassNamed: #Y in: self yPackageName.
+
+	class1 classInstaller update: class1 to: [ :builder | builder traits: trait ].
+	trait compile: 'extension ^2'.
+
+	self createMethodNamed: 'extension' inClass: class1 asExtensionOf: self yPackageName.
+
+	class1 classInstaller update: class1 to: [ :builder | builder slots: { #slot } ].
+
+	self assert: (class1 >> #extension) isExtension
 ]
 
 { #category : 'tests' }

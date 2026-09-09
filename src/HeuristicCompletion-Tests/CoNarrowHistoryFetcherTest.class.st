@@ -20,8 +20,14 @@ CoNarrowHistoryFetcherTest >> testNarrowingAndUnnarrowingReturnsSameResult [
 
 	| f1Result f2Result f3Result |
 
-	fetcher := (CoCollectionFetcher onCollection: Symbol selectorTable)
-		           withNarrowHistory.
+	fetcher := (CoCollectionFetcher onCollection: #((
+		as1
+		asCol
+		as2
+		asCC
+		as3
+		asCCC
+	) collect: [ :s | #CoSelectorEntry new contents: s ])) withNarrowHistory.
 	fetcher := fetcher
 		           narrowFilter: (CoCaseSensitiveBeginsWithFilter filterString: 'as')
 		           narrowKey: 'as'.
@@ -43,18 +49,29 @@ CoNarrowHistoryFetcherTest >> testNarrowingAndUnnarrowingReturnsSameResult [
 { #category : 'tests' }
 CoNarrowHistoryFetcherTest >> testNarrowingReturnsSameElementsThatCallingDirectly [
 
-	| originalSearch narrowedResults selectors |
-	"using the array intead of the set leads to the test failing randomly
-	du to duplicate first entry in narrowedResults"
-	selectors := Symbol selectorTable asArray asSet.
+	| originalSearch narrowedResults |
 
 	"First execution with complete query"
-	fetcher := (CoCollectionFetcher onCollection: selectors) withNarrowHistory.
+	fetcher := (CoCollectionFetcher onCollection: #((
+		as1
+		asCol
+		as2
+		asCC
+		as3
+		asCCC
+	) collect: [ :s | #CoSelectorEntry new contents: s ])) withNarrowHistory.
 	fetcher := fetcher narrowFilter: (CoCaseSensitiveBeginsWithFilter filterString: 'asL') narrowKey: 'as'.
 	originalSearch := fetcher next: 10.
 
 	"Second execution with query using narrowing"
-	fetcher := (CoCollectionFetcher onCollection: selectors) withNarrowHistory.
+	fetcher := (CoCollectionFetcher onCollection: #((
+		as1
+		asCol
+		as2
+		asCC
+		as3
+		asCCC
+	) collect: [ :s | #CoSelectorEntry new contents: s ])) withNarrowHistory.
 	fetcher := fetcher narrowFilter: (CoCaseSensitiveBeginsWithFilter filterString: 'as') narrowKey: 'as'.
 	fetcher next: 10.
 	fetcher := fetcher narrowFilter: (CoCaseSensitiveBeginsWithFilter filterString: 'asL') narrowKey: 'asL'.
@@ -69,8 +86,14 @@ CoNarrowHistoryFetcherTest >> testUnnarrowingAndThenNarrowingReturnsSameResult [
 
 
 	| originalResults newResults |
-	fetcher := (CoCollectionFetcher onCollection: Symbol selectorTable)
-		           withNarrowHistory.
+	fetcher := (CoCollectionFetcher onCollection: #((
+		as1
+		asCol
+		as2
+		asCC
+		as3
+		asCCC
+	) collect: [ :s | #CoSelectorEntry new contents: s ])) withNarrowHistory.
 	fetcher := fetcher
 		           narrowFilter: (CoCaseSensitiveBeginsWithFilter filterString: 'as')
 		           narrowKey: 'as'.

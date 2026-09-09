@@ -81,27 +81,24 @@ MessageSend >> collectArguments: anArgArray [
 ]
 
 { #category : 'evaluating' }
-MessageSend >> cull: arg [
+MessageSend >> cull: arg1 [
+
 	<reflection: 'Message sending and code execution - Runtime and Evaluation'>
-	^ selector numArgs = 0
-		ifTrue: [ self value ]
-		ifFalse: [ self value: arg ]
+	^ self valueWithEnoughArguments: { arg1 }
 ]
 
 { #category : 'evaluating' }
 MessageSend >> cull: arg1 cull: arg2 [
+
 	<reflection: 'Message sending and code execution - Runtime and Evaluation'>
-	^ selector numArgs < 2
-		ifTrue: [ self cull: arg1]
-		ifFalse: [ self value: arg1 value: arg2 ]
+	^ self valueWithEnoughArguments: { arg1. arg2 }
 ]
 
 { #category : 'evaluating' }
 MessageSend >> cull: arg1 cull: arg2 cull: arg3 [
+
 	<reflection: 'Message sending and code execution - Runtime and Evaluation'>
-	^ selector numArgs < 3
-		ifTrue: [ self cull: arg1 cull: arg2 ]
-		ifFalse: [ self value: arg1 value: arg2 value: arg3 ]
+	^ self valueWithEnoughArguments: { arg1. arg2. arg3 }
 ]
 
 { #category : 'comparing' }
@@ -201,17 +198,17 @@ MessageSend >> valueWithArguments: anArray [
 MessageSend >> valueWithEnoughArguments: anArray [
 	"call the selector with enough arguments from arguments and anArray"
 	<reflection: 'Message sending and code execution - Runtime and Evaluation'>
-	| args |
-	args := Array new: selector numArgs.
-	args replaceFrom: 1
-		to: (arguments size min: args size)
+	| newArgs |
+	newArgs := Array new: selector numArgs.
+	newArgs replaceFrom: 1
+		to: (arguments size min: newArgs size)
 		with: arguments
 		startingAt: 1.
-	args size > arguments size ifTrue: [
-		args replaceFrom: arguments size + 1
-			to: (arguments size + anArray size min: args size)
+	newArgs size > arguments size ifTrue: [
+		newArgs replaceFrom: arguments size + 1
+			to: (arguments size + anArray size min: newArgs size)
 			with: anArray
 			startingAt: 1.
 	].
-	^ receiver perform: selector withArguments: args
+	^ receiver perform: selector withArguments: newArgs
 ]

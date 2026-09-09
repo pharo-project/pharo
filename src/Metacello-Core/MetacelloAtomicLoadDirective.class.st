@@ -6,6 +6,12 @@ Class {
 	#tag : 'Directives'
 }
 
+{ #category : 'visiting' }
+MetacelloAtomicLoadDirective >> acceptVisitor: aVisitor [
+
+	aVisitor visitAtomicLoadDirective: self
+]
+
 { #category : 'testing' }
 MetacelloAtomicLoadDirective >> includes: aMetacelloPackageLoadDirective [ 
 	

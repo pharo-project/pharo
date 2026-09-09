@@ -16,8 +16,9 @@ ReRefersToClassRule class >> checksMethod [
 ]
 
 { #category : 'accessing' }
-ReRefersToClassRule class >> group [
-	^ 'Design Flaws'
+ReRefersToClassRule class >> groupSelector [
+
+	^ #designFlawGroup
 ]
 
 { #category : 'accessing' }
@@ -27,7 +28,7 @@ ReRefersToClassRule class >> rationale [
 
 { #category : 'accessing' }
 ReRefersToClassRule class >> ruleName [
-	^ 'Refers to class name instead of "self class"'
+	^ 'Refers to class name instead of "self class" (or "self" on the class side)'
 ]
 
 { #category : 'accessing' }
@@ -46,7 +47,7 @@ ReRefersToClassRule >> check: aMethod forCritiquesDo: aCriticBlock [
 	(aMethod isClassSide and: [ aMethod selector = #isAbstract ]) ifTrue: [ ^ self ].
 
 	class := aMethod methodClass instanceSide.
-	problemLiterals := (aMethod ast allChildren
+	problemLiterals := (aMethod ast withAllChildren
 			select: [ :node | node isGlobalVariable ])
 			select: [ :var | var name = class name].
 

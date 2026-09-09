@@ -16,8 +16,9 @@ ReUnconditionalRecursionRule class >> checksMethod [
 ]
 
 { #category : 'accessing' }
-ReUnconditionalRecursionRule class >> group [
-	^ 'Potential Bugs'
+ReUnconditionalRecursionRule class >> groupSelector [
+
+	^ #potentialBugsGroup
 ]
 
 { #category : 'accessing' }
@@ -27,7 +28,7 @@ ReUnconditionalRecursionRule class >> ruleName [
 
 { #category : 'accessing' }
 ReUnconditionalRecursionRule class >> severity [
-	^ #error
+	^ 'error'
 ]
 
 { #category : 'accessing' }

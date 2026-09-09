@@ -27,6 +27,12 @@ ClyRequestMethodPackageForEditorCommand >> defaultMenuItemName [
 	^'Select method package'
 ]
 
+{ #category : 'accessing' }
+ClyRequestMethodPackageForEditorCommand >> description [ 
+
+^'Requests package to be used as editing method package.'
+]
+
 { #category : 'execution' }
 ClyRequestMethodPackageForEditorCommand >> execute [
 	| packageEditor |

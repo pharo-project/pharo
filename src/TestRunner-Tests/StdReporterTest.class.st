@@ -18,9 +18,9 @@ StdReporterTest >> testCurrentTestIsIncrementAfterEachTestCaseExecution [
 
 	| runner |
 	runner := NewCommandLineRunner new reporter: reporter.
-	runner runCase: (GreenTest suite tests at: 1).
+	runner runCase: (GreenTest suite tests first).
 	self assert: reporter currentTest equals: 2.
-	runner runCase: (GreenTest suite tests at: 1).
+	runner runCase: (GreenTest suite tests first).
 	self assert: reporter currentTest equals: 3
 ]
 

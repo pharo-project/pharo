@@ -22,7 +22,7 @@ CoMappingFetcher >> collectBlock: aBlockClosure [
 ]
 
 { #category : 'enumerating' }
-CoMappingFetcher >> entriesDo: aBlockClosure [
+CoMappingFetcher >> filteredEntriesDo: aBlockClosure [
 
-	decoree entriesDo: [ :each | aBlockClosure value: (collectBlock value: each) ]
+	decoree filteredEntriesDo: [ :each | aBlockClosure value: (collectBlock value: each) ]
 ]

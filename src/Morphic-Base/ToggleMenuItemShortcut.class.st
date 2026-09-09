@@ -140,6 +140,13 @@ ToggleMenuItemShortcut >> keyText [
 ]
 
 { #category : 'accessing' }
+ToggleMenuItemShortcut >> normalizedKeyText: aString [
+	"Pass directly a normalised keytext"
+
+	keyText := aString
+]
+
+{ #category : 'accessing' }
 ToggleMenuItemShortcut >> owner [
 	^ owner
 ]

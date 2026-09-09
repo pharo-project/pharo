@@ -10,7 +10,8 @@ Class {
 	#name : 'SycMoveMethodsToClassCommand',
 	#superclass : 'SycMethodCommand',
 	#instVars : [
-		'targetClass'
+		'targetClass',
+		'refactoringScopes'
 	],
 	#category : 'SystemCommands-MethodCommands',
 	#package : 'SystemCommands-MethodCommands'
@@ -36,24 +37,28 @@ SycMoveMethodsToClassCommand >> defaultMenuItemName [
 SycMoveMethodsToClassCommand >> execute [
 
 	methods
-		collect: [ :each | RBMoveMethodToClassRefactoring model: model method: each class: targetClass ]
-		thenDo: [ :each | each execute ].
+		collect: [ :each |(ReMoveMethodToClassDriver newApplication: self application) scopes: refactoringScopes method: each class: targetClass ]
+		thenDo: [ :each | each runRefactoring ].
 	methods do: [ :each | each origin removeEmptyProtocols ]
 ]
 
 { #category : 'drag and drop support' }
 SycMoveMethodsToClassCommand >> prepareExecutionInDropContext: aToolContext [
+
 	super prepareExecutionInDropContext: aToolContext.
 	targetClass := aToolContext lastSelectedClass.
-	targetClass := aToolContext currentMetaLevelOf: targetClass
+	targetClass := aToolContext currentMetaLevelOf: targetClass.
+	refactoringScopes := aToolContext refactoringScopes
 ]
 
 { #category : 'execution' }
 SycMoveMethodsToClassCommand >> prepareFullExecutionInContext: aToolContext [
+
 	super prepareFullExecutionInContext: aToolContext.
 
 	targetClass := aToolContext requestSingleClass: 'Choose class'.
-	targetClass := aToolContext currentMetaLevelOf: targetClass
+	targetClass := aToolContext currentMetaLevelOf: targetClass.
+	refactoringScopes := aToolContext refactoringScopes
 ]
 
 { #category : 'accessing' }

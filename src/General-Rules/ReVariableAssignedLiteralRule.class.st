@@ -16,8 +16,9 @@ ReVariableAssignedLiteralRule class >> checksClass [
 ]
 
 { #category : 'accessing' }
-ReVariableAssignedLiteralRule class >> group [
-	^ 'Design Flaws'
+ReVariableAssignedLiteralRule class >> groupSelector [
+
+	^ #designFlawGroup
 ]
 
 { #category : 'accessing' }

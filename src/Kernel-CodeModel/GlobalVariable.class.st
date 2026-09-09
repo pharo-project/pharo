@@ -11,11 +11,6 @@ Class {
 	#tag : 'Variables'
 }
 
-{ #category : 'visiting' }
-GlobalVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
-	^ aProgramNodeVisitor visitGlobalVariableNode: aNode
-]
-
 { #category : 'queries' }
 GlobalVariable >> definingClass [
 	"The class defining the variable. For Globals, return nil"

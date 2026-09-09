@@ -1,5 +1,5 @@
 "
-I'm a class tag for an RPackage. 
+I'm a class tag for a Package. 
 Class tags can be any kind of metadata the user needs, but they are for now equivalent to class categories. 
 "
 Class {
@@ -60,6 +60,12 @@ PackageTag >> classes [
 ]
 
 { #category : 'accessing' }
+PackageTag >> classesDo: aBlock [
+
+	^ classes do: aBlock
+]
+
+{ #category : 'accessing' }
 PackageTag >> codeChangeAnnouncer [
 
 	^ self environment codeChangeAnnouncer
@@ -92,7 +98,7 @@ PackageTag >> initialize [
 
 { #category : 'testing' }
 PackageTag >> isEmpty [
-	^ self classNames isEmpty
+	^ self classes isEmpty
 ]
 
 { #category : 'testing' }

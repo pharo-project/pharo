@@ -1,5 +1,5 @@
 "
-I am a critic that provides a selection interval by searching a 'faulty substring' in the target's source code. I also use the 'faulty substring' to enhence the critic's title
+I am a critique that provides a selection interval by searching a 'faulty substring' in the target's source code. I also use the 'faulty substring' to enhance the critic's title.
 "
 Class {
 	#name : 'ReStringBasedCritique',

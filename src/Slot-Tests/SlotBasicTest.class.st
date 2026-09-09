@@ -233,9 +233,12 @@ SlotBasicTest >> testWithSharedPool [
 
 { #category : 'tests - shared variables' }
 SlotBasicTest >> testWithSharedVariable [
-	<ignoreNotImplementedSelectors: #(var:)>
+
+	<ignoreNotImplementedSelectors: #(var var:)>
+
 	aClass := self make: [ :builder |
 		builder sharedVariables: #(Var) ].
+
 	aClass class
 		compile: 'var:x  Var:=x';
 		compile: 'var  ^Var'.

@@ -125,6 +125,28 @@ FinalizationRegistryTest >> testFinalizationWithOnFork2 [
 	self assert: finalizationCount equals: 1
 ]
 
+{ #category : 'tests' }
+FinalizationRegistryTest >> testIntegrityWhenAlreadyRemovedElement [
+
+	| registry objects ephemeronOne1 ephemeronOne2 ephemeronFirst extraObjects |
+	registry := FinalizationRegistry new.
+	objects := {'One' . 'Two' . 'Three' . 'Four' . 'Five' . 'Six' . 'Seven'} 
+		collect: [ :each | each printString].
+	objects do: [ :each |  
+		registry add: each ].
+	ephemeronOne1 := registry ephemeronAtKey: objects second ifAbsent: [  ].
+	ephemeronOne2 := registry ephemeronAtKey: objects second ifAbsent: [  ].
+	ephemeronFirst := registry ephemeronAtKey: objects first ifAbsent: [  ].
+	registry removeEphemeron: ephemeronOne1.
+	registry removeEphemeron: ephemeronOne2.
+	extraObjects := {'Eight' . 'Nine' . 'Ten'} collect: [ :each | each printString].
+	extraObjects do: [ :each |  
+		registry add: each ].
+	registry removeEphemeron: ephemeronFirst.
+	
+	self assert: registry hasIntegrity
+]
+
 { #category : 'helpers' }
 FinalizationRegistryTest >> triggerFinalization [
 

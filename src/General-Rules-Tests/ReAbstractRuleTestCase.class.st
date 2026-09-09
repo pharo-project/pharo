@@ -1,6 +1,9 @@
 Class {
 	#name : 'ReAbstractRuleTestCase',
 	#superclass : 'TestCase',
+	#instVars : [
+		'compiledMethods'
+	],
 	#category : 'General-Rules-Tests-Migrated',
 	#package : 'General-Rules-Tests',
 	#tag : 'Migrated'
@@ -19,6 +22,27 @@ ReAbstractRuleTestCase >> critiguesFor: ruleClass onMethod: method [
 	ruleClass new
 		check: method forCritiquesDo:[:critique | critiques add: critique].
 	^critiques
+]
+
+{ #category : 'utilities' }
+ReAbstractRuleTestCase >> generateMethod: code [ 
+
+	^ self generateMethod: code classified: 'testing'
+]
+
+{ #category : 'utilities' }
+ReAbstractRuleTestCase >> generateMethod: code classified: protocol [
+
+    ^ self generateMethod: code classified: protocol in: self class
+]
+
+{ #category : 'utilities' }
+ReAbstractRuleTestCase >> generateMethod: code classified: protocol in: aBehavior [
+
+    | method |
+    method := aBehavior >> (aBehavior compile: code classified: protocol).
+    compiledMethods add: method.
+    ^ method
 ]
 
 { #category : 'utilities' }
@@ -59,6 +83,12 @@ ReAbstractRuleTestCase >> myCritiquesOnMethod: method [
 	^ critiques
 ]
 
+{ #category : 'running' }
+ReAbstractRuleTestCase >> setUp [
+	super setUp.
+	compiledMethods := OrderedCollection new
+]
+
 { #category : 'utilities' }
 ReAbstractRuleTestCase >> sourceAtChritique: critique [
 
@@ -72,4 +102,11 @@ ReAbstractRuleTestCase >> subjectUnderTest [
 
 	^ (self class name allButLast: 4) asClassInEnvironment:
 		  self class environment
+]
+
+{ #category : 'running' }
+ReAbstractRuleTestCase >> tearDown [
+
+	compiledMethods do: [ :method | method removeFromSystem ].
+	super tearDown
 ]

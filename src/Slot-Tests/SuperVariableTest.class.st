@@ -19,14 +19,10 @@ SuperVariableTest >> testReadInContext [
 { #category : 'tests' }
 SuperVariableTest >> testReadInContextClean [
 	<compilerOptions: #( +optionCleanBlockClosure)>
-	| var block |
-	"if context is one stack we can read"
-	block := [ (thisContext lookupVar: #super) readInContext: thisContext ].
-	self assert: block value equals: super.
-	"but no chance if not, then it is nil"
-	var := self class lookupVar: #self.
-	block :=  [ thisContext ].
-	self assert: (var readInContext: block value ) equals: nil
+	| block |
+
+	block := [ (thisContext lookupVar: #super) ].
+	self assert: block value equals: nil
 ]
 
 { #category : 'tests' }

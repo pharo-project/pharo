@@ -16,14 +16,14 @@ EpPackageTagRemoval >> accept: aVisitor [
 ]
 
 { #category : 'accessing' }
-EpPackageTagRemoval >> fileOutEntryOn: aWriteStream [ 
+EpPackageTagRemoval >> fileOutEntryOn: aWriteStream [
 	"Write a code chunk to rename a package tag"
 
 	aWriteStream
 		nextPutAll: 'self packageOrganizer removeTag: ';
 		nextPutAll: self tagName;
-		nextPutAll: ' fromPackage: ';
-		nextChunkPut: self packageName;
-		cr.
-
+		nextPutAll: ' fromPackage: '.
+	(ChunkWriteStream on: aWriteStream)
+		nextPut: self packageName;
+		cr
 ]

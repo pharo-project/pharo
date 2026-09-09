@@ -11,8 +11,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReReferencesObsoleteClassRule class >> group [
-	^ 'Bugs'
+ReReferencesObsoleteClassRule class >> groupSelector [
+
+	^ #bugsGroup
 ]
 
 { #category : 'accessing' }
@@ -22,7 +23,8 @@ ReReferencesObsoleteClassRule class >> ruleName [
 
 { #category : 'accessing' }
 ReReferencesObsoleteClassRule class >> severity [
-	^ #error
+
+	^ 'error'
 ]
 
 { #category : 'helpers' }

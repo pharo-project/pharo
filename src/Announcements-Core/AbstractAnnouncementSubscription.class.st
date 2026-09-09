@@ -12,10 +12,31 @@ Class {
 		'announcementClass',
 		'action'
 	],
+	#classVars : [
+		'ShouldForkDelivery'
+	],
 	#category : 'Announcements-Core-Subscription',
 	#package : 'Announcements-Core',
 	#tag : 'Subscription'
 }
+
+{ #category : 'class initialization' }
+AbstractAnnouncementSubscription class >> initialize [
+
+	self shouldForkDelivery: true
+]
+
+{ #category : 'accessing' }
+AbstractAnnouncementSubscription class >> shouldForkDelivery [
+
+	^ ShouldForkDelivery
+]
+
+{ #category : 'accessing' }
+AbstractAnnouncementSubscription class >> shouldForkDelivery: anObject [
+
+	ShouldForkDelivery := anObject
+]
 
 { #category : 'accessing' }
 AbstractAnnouncementSubscription >> action [
@@ -58,9 +79,11 @@ AbstractAnnouncementSubscription >> deliver: anAnnouncement [
 	"Deliver an announcement to receiver. In case of failure, it will be handled in separate process"
 
 	(self handlesAnnouncement: anAnnouncement) ifTrue: [
-		[ action cull: anAnnouncement cull: announcer ]
-			on: UnhandledError
-			fork: [ :ex | ex pass ] ]
+		self class shouldForkDelivery 
+			ifTrue: [ [ action cull: anAnnouncement cull: announcer ]
+							on: UnhandledError
+							fork: [ :ex | ex pass ] ]
+			ifFalse: [ action cull: anAnnouncement cull: announcer ] ]
 ]
 
 { #category : 'error handling' }
@@ -104,6 +127,12 @@ AbstractAnnouncementSubscription >> subscriber [
 AbstractAnnouncementSubscription >> subscriber: aSubscriber [
 
 	^ self subclassResponsibility
+]
+
+{ #category : 'finalization' }
+AbstractAnnouncementSubscription >> unregister [
+
+	"Nothing, for compatibility with weak subscriptions"
 ]
 
 { #category : 'accessing' }

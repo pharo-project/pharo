@@ -153,6 +153,13 @@ OmSessionStore >> imagePathString [
 	^ SmalltalkImage current imagePath
 ]
 
+{ #category : 'private' }
+OmSessionStore >> imageRestarted [
+	"I am called on the current session store at startup. If the path changed we need to reset the store."
+
+	currentImagePathString ~= self imagePathString ifTrue: [ self resetWithNextStoreName ]
+]
+
 { #category : 'initialization' }
 OmSessionStore >> initializeWithBaseLocator: aDirectoryFileLocator [
 
@@ -176,7 +183,6 @@ OmSessionStore >> lowLevelFileStoreIfNone: aBlock [
 OmSessionStore >> needsReset [
 
 	^ currentSession ~~ Smalltalk session
-		or: [ currentImagePathString ~= self imagePathString ]
 ]
 
 { #category : 'writing' }

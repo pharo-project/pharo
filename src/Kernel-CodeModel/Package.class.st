@@ -1,5 +1,5 @@
 "
-A RPackage is a new implementation of package.
+I am an implementation of package.
 
 
 Instance Variables
@@ -50,7 +50,9 @@ Class {
 		'extensionSelectors',
 		'name',
 		'organizer',
-		'tags'
+		'tags',
+		'importedExtensions',
+		'scopedSelectors'
 	],
 	#classVars : [
 		'Properties'
@@ -77,10 +79,10 @@ Package class >> initializeProperties [
 ]
 
 { #category : 'instance creation' }
-Package class >> named: aString [
+Package class >> named: aPackageName [
 
 	^ self new
-		  name: aString;
+		  name: aPackageName;
 		  yourself
 ]
 
@@ -99,9 +101,9 @@ Package class >> rootTagName [
 ]
 
 { #category : 'comparing' }
-Package >> <= aRPackage [
+Package >> <= aPackage [
 
-	^ self name <= aRPackage name
+	^ self name <= aPackage name
 ]
 
 { #category : 'add class' }
@@ -109,6 +111,20 @@ Package >> addClass: aClass [
 	"If no tag is given we put the class in the root tag"
 
 	self moveClass: aClass toTag: self rootTag
+]
+
+{ #category : 'extensions' }
+Package >> addExtensionImport: anExtension [
+
+	self importedExtensions add: anExtension.
+	anExtension addUserPackage: self.
+
+	self importSelectors: anExtension scopedSelectors.
+	
+	"Recompile dependencies, so they can see the extension.
+	For now, we recompile the entire package, since every callsite may now become a scoped callsite"
+	self methods do: [ :m |
+		m methodClass compile: m selector from: m methodClass ]
 ]
 
 { #category : 'add method - compiled method' }
@@ -139,10 +155,38 @@ Package >> classesTaggedWith: aSymbol [
 	^ (self tagNamed: aSymbol ifAbsent: [ ^ #(  ) ]) classes
 ]
 
+{ #category : 'extensions' }
+Package >> cleanupExtendedBehaviors [
+	
+	"This package is about to be removed.
+	Remove the extensions defined by this package in all extended behaviors.
+	
+	CRITICAL: this both removes cached aliases AND removes normal extensions methods.
+	This package becomes unusable after this operation"
+	
+	scopedSelectors ifNil: [ ^ self ].
+
+	scopedSelectors do: [ :e |
+		e cleanupExtendedBehaviors ].
+	scopedSelectors := nil
+]
+
 { #category : 'accessing' }
 Package >> codeChangeAnnouncer [
 
 	^ self environment codeChangeAnnouncer
+]
+
+{ #category : 'extensions' }
+Package >> defineScopedSelector: aSymbol [
+
+	| scopedSelector |
+	scopedSelector := ScopedSelector new
+		                  symbol: aSymbol;
+		                  owner: self;
+		                  yourself.
+	self scopedSelectors at: aSymbol asSymbol put: scopedSelector.
+	^ scopedSelector
 ]
 
 { #category : 'accessing' }
@@ -156,6 +200,12 @@ Package >> definedClassNames [
 Package >> definedClasses [
 
 	^ self tags flatCollect: [ :tag | tag classes ]
+]
+
+{ #category : 'accessing' }
+Package >> definedClassesDo: aBlock [
+
+	^ self tags do: [ :tag | tag classesDo: aBlock ]
 ]
 
 { #category : 'accessing' }
@@ -182,7 +232,7 @@ Package >> definesOrExtendsClass: aClass [
 	"Returns true whether the class, aClass, is one of the locally defined classes of the receiver or
 	if the receiver extends such class (that is defined in another package)"
 
-	^ (self includesClass: aClass instanceSide) or: [ self extendedClasses includes: aClass instanceSide ]
+	^ (self includesClass: aClass instanceSide) or: [ self extendsClass: aClass ]
 ]
 
 { #category : 'converting' }
@@ -253,9 +303,12 @@ Package >> extendedClasses [
 Package >> extendsClass: aClass [
 	"Returns true if the receiver extends aClass (that is defined in another package)"
 
-	| canonizedName |
-	canonizedName := aClass instanceSide name.
-	^ self extendedClassNames includes: canonizedName
+	| class |
+	class := aClass instanceSide.
+
+	extensionSelectors keysDo: [ :extendedClass | extendedClass instanceSide = class ifTrue: [ ^ true ] ].
+
+	^ false
 ]
 
 { #category : 'accessing' }
@@ -329,6 +382,18 @@ Package >> importProtocol: aProtocol forClass: aClass [
 		thenDo: [ :method | self addMethod: method ]
 ]
 
+{ #category : 'extensions' }
+Package >> importSelectors: aCollection [ 
+	
+	aCollection do: [ :e | self internScopedSelector: e symbol ]
+]
+
+{ #category : 'extensions' }
+Package >> importedExtensions [
+	
+	^ importedExtensions ifNil: [ importedExtensions := Set new ]
+]
+
 { #category : 'testing' }
 Package >> includesClass: aClass [
 	"Returns true if the receiver includes aClass in the classes that are defined within it: only class definition are considered - not class extensions"
@@ -344,7 +409,8 @@ Package >> includesClass: aClass [
 Package >> includesClassNamed: aSymbol [
 	"Returns true if the receiver includes class named aSymbol in the classes that are defined within it: only class definition are considered - not class extensions"
 
-	^ self definedClasses anySatisfy: [ :class | class name = aSymbol ]
+	self definedClassesDo: [ :class | class name = aSymbol ifTrue: [ ^ true ] ].
+	^ false
 ]
 
 { #category : 'testing' }
@@ -383,6 +449,16 @@ Package >> initialize [
 	tags := Set new
 ]
 
+{ #category : 'extensions' }
+Package >> internScopedSelector: aSymbol [
+
+	| found |
+	found := self visibleSelectorForSymbol: aSymbol asSymbol.
+	found == aSymbol asSymbol ifFalse: [ ^ found ].
+
+	^ self defineScopedSelector: aSymbol
+]
+
 { #category : 'testing' }
 Package >> isDeprecated [
 	^ self packageManifestOrNil
@@ -394,6 +470,12 @@ Package >> isDeprecated [
 Package >> isEmpty [
 
 	^ self classes isEmpty and: [ self extensionSelectors isEmpty ]
+]
+
+{ #category : 'testing' }
+Package >> isPackage [
+
+	^ true
 ]
 
 { #category : 'testing' }
@@ -493,9 +575,10 @@ Package >> name [
 Package >> name: aSymbol [
 	"Set the name of a package. This method is private and should not be used.
 	If you wish to rename a package, use #renameTo: instead"
-
+	
+	
 	aSymbol isEmptyOrNil ifTrue: [ self error: 'Cannot have empty or nil package name.' ].
-	name := aSymbol asSymbol
+	name := (self sanitizeName: aSymbol) asSymbol
 ]
 
 { #category : 'private' }
@@ -512,9 +595,10 @@ Package >> organizer: anObject [
 
 { #category : 'accessing' }
 Package >> packageManifestOrNil [
-	^ self definedClasses
-		detect: [ :each | each isManifest ]
-		ifNone: [ nil ]
+
+	self definedClassesDo: [ :class | class isManifest ifTrue: [ ^ class ] ].
+
+	^ nil
 ]
 
 { #category : 'system compatibility' }
@@ -588,12 +672,30 @@ Package >> removeEmptyTags [
 	(self tags select: [ :tag | tag isEmpty ]) do: [ :emptyTag | self removeTag: emptyTag ]
 ]
 
+{ #category : 'extensions' }
+Package >> removeExtensionImport: anExtension [
+
+	self importedExtensions remove: anExtension.
+	anExtension removeUserPackage: self.
+
+	"Now we remove the local aliases to that extension"
+	anExtension scopedSelectors do: [ :e | | localScopedSelector |
+		localScopedSelector := self visibleSelectorForSymbol: e symbol.
+		(anExtension extendedClass includesSelector: localScopedSelector) ifTrue: [
+			self assert: anExtension extendedClass >> localScopedSelector == (anExtension extendedClass >> e).
+			anExtension extendedClass removeSelector: localScopedSelector logged: false ]
+	]
+]
+
 { #category : 'removing' }
 Package >> removeFromSystem [
 	"Copy to not remove collection over which we are iterating."
 
-	self tags copy do: [ :tag | tag removeFromSystem ].
-	self extensionMethods do: [ :method | method removeFromSystem ].
+	SourcesManager current deferFlushDuring: [
+			self tags copy do: [ :tag | tag removeFromSystem ].
+			self extensionMethods do: [ :method | method removeFromSystem ].
+			self cleanupExtendedBehaviors.
+	].
 
 	self organizer unregisterPackage: self
 ]
@@ -650,11 +752,11 @@ Package >> removeTag: aTag [
 		       ifTrue: [ self tagNamed: aTag ifAbsent: [ ^ self ] ]
 		       ifFalse: [ aTag ].
 
-	"The #asArray is there to not remove elements from the #classes inst var while iterating it."
-	tag classes asArray do: [ :class | class removeFromSystem ].
+	"Make a topo sort of traits and classes"
+	(self sortTopologically: tag classes)
+		do: [ :class | class removeFromSystem ].
 
 	tags remove: tag ifAbsent: [ ^ self ].
-
 	self codeChangeAnnouncer announce: (PackageTagRemoved to: tag)
 ]
 
@@ -674,7 +776,7 @@ Package >> renameTo: aSymbol [
 
 	| oldName newName |
 	oldName := self name.
-	newName := aSymbol asSymbol.
+	newName := (self sanitizeName: aSymbol) asSymbol.
 	self organizer validatePackageDoesNotExist: aSymbol.
 
 	self organizer basicUnregisterPackage: self.
@@ -710,6 +812,18 @@ Package >> roots [
 ]
 
 { #category : 'accessing' }
+Package >> sanitizeName: aName [
+
+	^ aName trimBoth
+]
+
+{ #category : 'extensions' }
+Package >> scopedSelectors [
+	
+	^ scopedSelectors ifNil: [ scopedSelectors := IdentityDictionary new ]
+]
+
+{ #category : 'accessing' }
 Package >> selectors [
 
 	| allSelectors |
@@ -729,6 +843,30 @@ Package >> selectorsForClass: aClass [
 	^ (self includesClass: aClass)
 		ifFalse: [self extensionSelectorsForClass: aClass]
 		ifTrue: [self definedSelectorsForClass: aClass]
+]
+
+{ #category : 'private' }
+Package >> sortTopologically: allBehaviors [
+
+	| toSort sorted changed |
+	toSort := allBehaviors copy asSet.
+	sorted := OrderedCollection new.
+	changed := true.
+
+	[ changed ] whileTrue: [
+		| behaviorsWithoutInternalDependencies |
+		behaviorsWithoutInternalDependencies := toSort select: [ :e |
+			e dependencies noneSatisfy: [ :d | toSort includes: d ] ].
+		sorted addAllLast: behaviorsWithoutInternalDependencies.
+		toSort removeAll: behaviorsWithoutInternalDependencies.
+
+		behaviorsWithoutInternalDependencies ifEmpty: [ changed := false ].
+	].
+
+	"If the final set is not empty, this means we have cycles"
+	self assert: toSort isEmpty.
+
+	^ sorted
 ]
 
 { #category : 'tags' }
@@ -776,4 +914,16 @@ Package >> tags [
 	"Returns the tags of the receiver"
 
 	^ tags
+]
+
+{ #category : 'extensions' }
+Package >> visibleExtensions [
+
+	^ (self definedClasses select: [ :e | e isKindOf: Extension ]), self importedExtensions
+]
+
+{ #category : 'extensions' }
+Package >> visibleSelectorForSymbol: aSymbol [
+
+	^ self scopedSelectors at: aSymbol asSymbol ifAbsent: [ aSymbol ]
 ]

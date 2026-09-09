@@ -33,8 +33,9 @@ NECDetailMorph >> bounds [
 
 { #category : 'drawing' }
 NECDetailMorph >> contentBounds [
+
 	| factor rectangle |
-	factor := self itemHeight.
+	factor := self itemHeight + 10.
 	rectangle := self bounds top: self bounds top + 3.
 	rectangle := rectangle left: rectangle left + (factor * 2.0).
 	rectangle := rectangle bottom: rectangle bottom.
@@ -43,51 +44,54 @@ NECDetailMorph >> contentBounds [
 
 { #category : 'drawing' }
 NECDetailMorph >> defaultColor [
+
 	^ NECMenuMorph backgroundColor
 ]
 
-{ #category : 'accessing' }
+{ #category : 'drawing' }
 NECDetailMorph >> descriptionBounds [
-	^ self contentBounds top: self contentBounds top + 30
+
+	
+	^ self contentBounds top: self contentBounds top + 40
 ]
 
 { #category : 'drawing' }
 NECDetailMorph >> drawArrowOn: aCanvas [
-	| point factor poligon |
+
+	| point factor polygon |
 	factor := self itemHeight.
 	point := arrowPosition.
-	poligon := OrderedCollection new.
-	poligon add: point.
-	poligon add: (point := point translateBy: (factor / 2) @ 0).
-	poligon add: (point := point translateBy: 0 @ (factor * -0.5)).
-	poligon add: (point := point translateBy: factor @ factor).
-	poligon add: (point := point translateBy: (factor * -1) @ factor).
-	poligon add: (point := point translateBy: 0 @ (factor * -0.5)).
-	poligon add: (point := point translateBy: (factor * -0.5) @ 0).
-	aCanvas drawPolygon: poligon fillStyle: self scrollColor
+	polygon := OrderedCollection new.
+	polygon add: point.
+	polygon add: (point := point translateBy: (factor / 2) @ 0).
+	polygon add: (point := point translateBy: 0 @ (factor * -0.5)).
+	polygon add: (point := point translateBy: factor @ factor).
+	polygon add: (point := point translateBy: (factor * -1) @ factor).
+	polygon add: (point := point translateBy: 0 @ (factor * -0.5)).
+	polygon add: (point := point translateBy: (factor * -0.5) @ 0).
+	aCanvas drawPolygon: polygon fillStyle: self scrollColor
 ]
 
 { #category : 'drawing' }
 NECDetailMorph >> drawOn: aCanvas [
+
 	super drawOn: aCanvas.
 	arrowPosition ifNotNil: [ self drawArrowOn: aCanvas ]
 ]
 
 { #category : 'accessing' }
 NECDetailMorph >> entryDescription: anECEntryDescription [
-	| categoryContents entryDescription |
-	entryDescription := anECEntryDescription.
+
 	title
-		contents: (entryDescription title
+		contents: (anECEntryDescription title
 				ifNil: [
 					description bounds: self titleBounds.
 					String new]
 				ifNotNil: [
 					description bounds: self descriptionBounds.
-					entryDescription title]).
-	description contentsWrapped: entryDescription description.
-	categoryContents := entryDescription label.
-	label contents: categoryContents
+					anECEntryDescription title]).
+	description contentsWrapped: anECEntryDescription description.
+	label contents: anECEntryDescription label.
 ]
 
 { #category : 'initialization' }
@@ -100,13 +104,16 @@ NECDetailMorph >> initialize [
 	label := StringMorph
 		contents: ''
 		font: self messageFont.
+		
 	label bounds: childBounds.
 	self addMorph: label.
+	
 	title := StringMorph
 		contents: ''
-		font: NECMenuMorph titleFont.
+		font: self titleFont.
 	title bounds: self titleBounds.
 	self addMorph: title.
+	
 	description := TextMorph new.
 	description autoFit: false.
 	description bounds: self descriptionBounds.
@@ -114,13 +121,15 @@ NECDetailMorph >> initialize [
 	self addMorph: description
 ]
 
-{ #category : 'drawing' }
+{ #category : 'visual parameters' }
 NECDetailMorph >> itemHeight [
+
 	^ NECMenuMorph itemHeight
 ]
 
-{ #category : 'drawing' }
+{ #category : 'fonts' }
 NECDetailMorph >> messageFont [
+
 	^ NECMenuMorph messageFont
 ]
 
@@ -144,15 +153,23 @@ NECDetailMorph >> position: aPoint menuWidth: anInteger [
 
 { #category : 'private' }
 NECDetailMorph >> positionOnLeft: anInteger [
+
 	^ arrowPosition x - self class width - anInteger
 ]
 
-{ #category : 'drawing' }
+{ #category : 'visual parameters' }
 NECDetailMorph >> scrollColor [
+
 	^ NECMenuMorph scrollColor
 ]
 
-{ #category : 'accessing' }
+{ #category : 'drawing' }
 NECDetailMorph >> titleBounds [
-	^ self contentBounds top: self contentBounds top + 10
+	^ self contentBounds top: self contentBounds top + 20
+]
+
+{ #category : 'fonts' }
+NECDetailMorph >> titleFont [ 
+
+	^ NECMenuMorph titleFont
 ]

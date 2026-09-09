@@ -35,23 +35,19 @@ SessionErrorHandlingTest >> testErrorCaughtAndDefferedIfExceptionSignaledAtStart
 	| finished startupProcess error |
 	finished := Semaphore new.
 	startupProcess := [
-	                  [
-	                  manager register:
-		                  (TestSessionHandler onStartup: [ Halt now ]).
-	                  session start: false ]
-		                  on: Error
-		                  do: [ :e | error := e ].
-	                  finished signal ] newProcess.
-	session errorHandler:
-		(TestStartupUIManager new sessionManager: manager).
+		                  [
+			                  manager register: (TestSessionHandler onStartup: [ Halt now ]).
+			                  session start: false ]
+			                  on: Error
+			                  do: [ :e | error := e ].
+		                  finished signal ] newProcess.
+	session errorHandler: (TestSessionManagerErrorHandler new sessionManager: manager).
 
 	startupProcess resume.
 	finished wait.
 
 	self assert: error isNil.
-	self
-		assert: (session instVarNamed: 'deferredStartupActions') size
-		equals: 1
+	self assert: (session instVarNamed: 'deferredStartupActions') size equals: 1
 ]
 
 { #category : 'tests' }
@@ -73,16 +69,11 @@ SessionErrorHandlingTest >> testErrorCaughtIfExceptionSignaledAtShutdownWhenDefa
 SessionErrorHandlingTest >> testErrorHandledIfExceptionSignaledAtShutdownWhenStartupUiManagerActive [
 
 	<haltOrBreakpointForTesting>
-	manager register:
-		(TestSessionHandler onShutdown: [ ZeroDivide signal ]).
-	session errorHandler: (TestStartupUIManager new
-			 sessionManager: manager;
-			 yourself).
+	manager register: (TestSessionHandler onShutdown: [ ZeroDivide signal ]).
+	session errorHandler: (TestSessionManagerErrorHandler new sessionManager: manager).
 
 	self shouldnt: [ session stop: false ] raise: ZeroDivide.
-	self
-		assert: (session instVarNamed: 'deferredStartupActions') size
-		equals: 1
+	self assert: (session instVarNamed: 'deferredStartupActions') size equals: 1
 ]
 
 { #category : 'tests' }

@@ -10,8 +10,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReLiteralArrayContainsCommaRule class >> group [
-	^ 'Coding Idiom Violation'
+ReLiteralArrayContainsCommaRule class >> groupSelector [
+
+	^ #codingIdiomViolationGroup
 ]
 
 { #category : 'accessing' }
@@ -33,7 +34,7 @@ ReLiteralArrayContainsCommaRule >> basicCheck: aNode [
 
 	"ffiCall: parameters and other UFFI call variants contain a $, so do not warn in this case"
 	(aNode parent parent isMessage and: [
-		 FFICompilerPlugin ffiCalloutSelectors includes: aNode parent parent selector ]) ifTrue: [ ^ false ].
+		 FFIMethodIdentifier ffiCalloutSelectors includes: aNode parent parent selector ]) ifTrue: [ ^ false ].
 
 	^ aNode value includes: #,
 ]

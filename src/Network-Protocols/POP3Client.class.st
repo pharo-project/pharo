@@ -118,7 +118,7 @@ POP3Client >> getMultilineResponse [
 	[done] whileFalse: [
 		chunk := self stream nextLine.
 		(chunk beginsWith: '.')
-			ifTrue: [response nextPutAll: (chunk copyFrom: 2 to: chunk size); cr ]
+			ifTrue: [response nextPutAll: (chunk allButFirst); cr ]
 			ifFalse: [response nextPutAll: chunk; cr ].
 		done := (chunk = '.') ].
 

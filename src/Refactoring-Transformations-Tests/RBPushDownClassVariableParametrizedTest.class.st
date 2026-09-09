@@ -16,6 +16,13 @@ RBPushDownClassVariableParametrizedTest class >> testParameters [
 		yourself
 ]
 
+{ #category : 'running' }
+RBPushDownClassVariableParametrizedTest >> setUp [
+
+	super setUp.
+	model := self modelOnClasses: { Object . RBBasicLintRuleTestData . RBLintRuleTestData }
+]
+
 { #category : 'failure tests' }
 RBPushDownClassVariableParametrizedTest >> testFailureModelNonExistantName [
 
@@ -30,7 +37,7 @@ RBPushDownClassVariableParametrizedTest >> testFailureModelNonExistantName [
 { #category : 'failure tests' }
 RBPushDownClassVariableParametrizedTest >> testFailureNonExistantName [
 	
-	self shouldFail: (self createRefactoringWithArguments:
+	self shouldFail: (self createRefactoringWithModel: model andArguments:
 			 { #NOTDefinedVariable. #RBBasicLintRuleTestData })
 ]
 
@@ -148,7 +155,7 @@ RBPushDownClassVariableParametrizedTest >> testModelRemoveUnusedVariable [
 { #category : 'tests' }
 RBPushDownClassVariableParametrizedTest >> testPushDownUnusedClassVariable [
 	| refactoring class |
-	refactoring := self createRefactoringWithArguments:
+	refactoring := self createRefactoringWithModel: model andArguments:
 		{ #Foo1 . #RBLintRuleTestData }.
 		
 	class := (refactoring model classNamed: #RBLintRuleTestData).

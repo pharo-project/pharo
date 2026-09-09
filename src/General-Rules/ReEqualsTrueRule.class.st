@@ -10,8 +10,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReEqualsTrueRule class >> group [
-	^ 'Optimization'
+ReEqualsTrueRule class >> groupSelector [
+
+	^ #optimizationGroup
 ]
 
 { #category : 'accessing' }
@@ -21,7 +22,7 @@ ReEqualsTrueRule class >> ruleName [
 
 { #category : 'accessing' }
 ReEqualsTrueRule class >> severity [
-	^ #information
+	^ 'information'
 ]
 
 { #category : 'accessing' }

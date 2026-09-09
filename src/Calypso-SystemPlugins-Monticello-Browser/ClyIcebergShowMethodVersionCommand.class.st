@@ -47,7 +47,8 @@ ClyIcebergShowMethodVersionCommand >> defaultMenuIconName [
 
 { #category : 'accessing' }
 ClyIcebergShowMethodVersionCommand >> defaultMenuItemName [
-	^'History'
+
+	^ 'Commit history'
 ]
 
 { #category : 'execution' }

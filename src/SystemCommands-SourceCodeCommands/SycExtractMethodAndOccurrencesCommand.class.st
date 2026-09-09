@@ -4,8 +4,6 @@ I am a command to extract selected ast node into separate method
 Class {
 	#name : 'SycExtractMethodAndOccurrencesCommand',
 	#superclass : 'SycSourceCodeRefactoringCommand',
-	#traits : 'TRefactoringCommandSupport',
-	#classTraits : 'TRefactoringCommandSupport classTrait',
 	#instVars : [
 		'selectedTextInterval'
 	],
@@ -31,7 +29,7 @@ SycExtractMethodAndOccurrencesCommand class >> methodEditorShortcutActivation [
 SycExtractMethodAndOccurrencesCommand >> asRefactorings [
 
 	| selectedInterval refactoring |
-	selectedInterval := selectedTextInterval ifEmpty: [
+	selectedInterval := (selectedTextInterval ifNil: [ (1 to: 0) ]) ifEmpty: [
 		                    sourceNode sourceInterval ].
 	refactoring := RBExtractMethodAndOccurrences
 		               extract: selectedInterval
@@ -43,12 +41,18 @@ SycExtractMethodAndOccurrencesCommand >> asRefactorings [
 
 { #category : 'accessing' }
 SycExtractMethodAndOccurrencesCommand >> defaultMenuIconName [
-	^ #glamorousRestart
+	^ #restart
 ]
 
 { #category : 'accessing' }
 SycExtractMethodAndOccurrencesCommand >> defaultMenuItemName [
-	^ '(R) Extract method'
+	^ '(Old refactor) Extract method with occurrences'
+]
+
+{ #category : 'accessing' }
+SycExtractMethodAndOccurrencesCommand >> description [
+
+	^ 'Extracts selected ast node into separate method.'
 ]
 
 { #category : 'execution' }
@@ -82,7 +86,7 @@ SycExtractMethodAndOccurrencesCommand >> setUpOptionToChangeMethodNameDuring: re
 	| dialog |
 	refactoring setOption: #methodName toUse: [ :methodName :ref | | invalidArgs |
 		invalidArgs := self computeInvalidArgNamesForSelector: method selector.
-		dialog := SycMethodNameEditorPresenter
+		dialog := StMethodNameEditorPresenter
 			openOn: methodName
 			withInvalidArgs: invalidArgs
 			canRenameArgs: true
@@ -102,8 +106,7 @@ SycExtractMethodAndOccurrencesCommand >> setUpOptionToOverrideExistingMethodDuri
 { #category : 'execution' }
 SycExtractMethodAndOccurrencesCommand >> setUpOptionsOf: refactoring [
 
-	self initializeDefaultOptionsOf: refactoring.
 	self setUpOptionToChangeExtractionClass: refactoring.
 	self setUpOptionToOverrideExistingMethodDuring: refactoring.
-	self setUpOptionToChangeMethodNameDuring: refactoring
+	self setUpOptionToChangeMethodNameDuring: refactoring.
 ]

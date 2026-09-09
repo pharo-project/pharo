@@ -9,28 +9,18 @@ Class {
 	#tag : 'Directives'
 }
 
-{ #category : 'instance creation' }
-MetacelloDirective class >> loadPackage: aPackageSpec repositorySpecs: externalReference [
+{ #category : 'accessing' }
+MetacelloDirective class >> spec: aSpec [
 
-	^ MetacelloPackageLoadDirective new spec: aPackageSpec repositorySpecs: externalReference
-]
-
-{ #category : 'instance creation' }
-MetacelloDirective class >> postLoadSpec: packageOrVersionSpec [
-
-	^ MetacelloPostLoadDirective new spec: packageOrVersionSpec
-]
-
-{ #category : 'instance creation' }
-MetacelloDirective class >> preLoadSpec: packageOrVersionSpec [
-
-	^ MetacelloPreLoadDirective new spec: packageOrVersionSpec
+	^ self new
+		  spec: aSpec;
+		  yourself
 ]
 
 { #category : 'visiting' }
 MetacelloDirective >> acceptVisitor: aVisitor [
-	
-	aVisitor visitAtomicLoadDirective: self
+
+	self subclassResponsibility
 ]
 
 { #category : 'actions' }
@@ -42,17 +32,11 @@ MetacelloDirective >> addTo: aLoaderDirective [
 { #category : 'printing' }
 MetacelloDirective >> label [
 
-	^self spec label
+	^ self spec label
 ]
 
 { #category : 'enumerating' }
 MetacelloDirective >> packageDirectivesDo: aBlock [
-]
-
-{ #category : 'accessing' }
-MetacelloDirective >> packages [
-	
-	self subclassResponsibility
 ]
 
 { #category : 'printing' }
@@ -75,19 +59,19 @@ MetacelloDirective >> printOn: aStream indent: indent [
 MetacelloDirective >> printString [
 	"Explicit override of superclass implementation. When you are printing a loadDirective it is annoying to have it truncated."
 
-	^String streamContents: [:s | self printOn: s]
+	^ String streamContents: [ :s | self printOn: s ]
 ]
 
 { #category : 'accessing' }
 MetacelloDirective >> spec [
 
-	^spec
+	^ spec
 ]
 
 { #category : 'initialization' }
 MetacelloDirective >> spec: packageOrVersionSpec [
 
-	spec := packageOrVersionSpec.
+	spec := packageOrVersionSpec
 ]
 
 { #category : 'accessing' }

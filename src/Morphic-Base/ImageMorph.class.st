@@ -59,15 +59,7 @@ ImageMorph class >> fromString: aString font: aFont [
 { #category : 'class initialization' }
 ImageMorph class >> initialize [
 
-	| h p d |
-	DefaultForm := (Form extent: 80@40 depth: 16).
-	h := DefaultForm height // 2.
-	0 to: h - 1 do: [:i |
-		p := (i * 2)@i.
-		d := i asFloat / h asFloat.
-		DefaultForm fill:
-			(p corner: DefaultForm extent - p)
-			fillColor: (Color r: d g: 0.5 b: 1.0 - d)]
+	DefaultForm := Form extent: 1 @ 1 depth: 1
 ]
 
 { #category : 'instance creation' }
@@ -86,15 +78,6 @@ ImageMorph class >> withFormSet: aFormSet [
 ImageMorph >> addCustomMenuItems: aMenu hand: aHand [
 	super addCustomMenuItems: aMenu hand: aHand.
 	aMenu addUpdating: #opacityString selector: #changeOpacity
-]
-
-{ #category : 'geometry' }
-ImageMorph >> adoptPaneColor: paneColor [
-	"Change our border color too."
-
-	super adoptPaneColor: paneColor.
-	paneColor ifNil: [^self].
-	self borderStyle baseColor: paneColor twiceDarker
 ]
 
 { #category : 'testing' }

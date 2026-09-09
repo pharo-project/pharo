@@ -464,6 +464,8 @@ RubSegmentMorph >> initialize [
 
 { #category : 'geometry' }
 RubSegmentMorph >> intersects: aRectangle [
+
+	<ignoreNotImplementedSelectors: #(intersectsLineFrom:to:)>
 	"Answer whether any of my segments intersects aRectangle, which is in World coordinates."
 	| rect |
 	(super intersects: aRectangle) ifFalse: [ ^false ].

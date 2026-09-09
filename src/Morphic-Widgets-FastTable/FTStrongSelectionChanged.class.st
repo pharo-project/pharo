@@ -64,9 +64,3 @@ FTStrongSelectionChanged >> selectedIndex [
 FTStrongSelectionChanged >> selectedIndex: anObject [
 	selectedIndex := anObject
 ]
-
-{ #category : 'accessing' }
-FTStrongSelectionChanged >> selectedRowIndex [
-	self deprecated: 'Use #selectedIndex instead' transformWith: '`@receiver selectedRowIndex' -> '`@receiver selectedIndex'.
-	^ self selectedIndex
-]

@@ -1,7 +1,7 @@
 "
-Checks for uses of the classes True and False instead of the objects true and false.
+Checks for uses of the classes `True` and `False` instead of the objects `true` and `false`.
 
-true is the object true, while True is the class whose true is the sole instance.
+`true` is the object `true`, while `True` is the class whose `true` is the sole instance.
 "
 Class {
 	#name : 'ReUsesTrueRule',
@@ -17,8 +17,9 @@ ReUsesTrueRule class >> checksMethod [
 ]
 
 { #category : 'accessing' }
-ReUsesTrueRule class >> group [
-	^ 'Bugs'
+ReUsesTrueRule class >> groupSelector [
+
+	^ #bugsGroup
 ]
 
 { #category : 'accessing' }
@@ -28,7 +29,7 @@ ReUsesTrueRule class >> ruleName [
 
 { #category : 'accessing' }
 ReUsesTrueRule class >> severity [
-	^ #error
+	^ 'error'
 ]
 
 { #category : 'accessing' }

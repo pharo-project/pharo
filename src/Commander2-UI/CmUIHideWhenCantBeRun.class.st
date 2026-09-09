@@ -8,3 +8,10 @@ Class {
 	#package : 'Commander2-UI',
 	#tag : 'Strategies'
 }
+
+{ #category : 'controlling' }
+CmUIHideWhenCantBeRun >> ifVisible: aCmSpecCommand do: aBlock [
+	"Visible if #canBeExecuted"
+
+	aCmSpecCommand canBeExecuted ifTrue: aBlock
+]

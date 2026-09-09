@@ -9,7 +9,7 @@ OSPlatform current.
 "
 Class {
 	#name : 'UnixPlatform',
-	#superclass : 'OSPlatform',
+	#superclass : 'AbstractUnixPlatform',
 	#category : 'System-Platforms-Unix',
 	#package : 'System-Platforms',
 	#tag : 'Unix'

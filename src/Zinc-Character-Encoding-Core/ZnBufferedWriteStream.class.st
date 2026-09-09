@@ -59,7 +59,7 @@ ZnBufferedWriteStream >> bufferSize [
 	^ buffer ifNil: [ self defaultBufferSize ] ifNotNil: [ buffer size ]
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnBufferedWriteStream >> close [
 	self flushBuffer.
 	stream close
@@ -91,7 +91,7 @@ ZnBufferedWriteStream >> discardBuffer [
 	position := 0
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnBufferedWriteStream >> finish [
 	self flushBuffer
 ]
@@ -240,7 +240,7 @@ ZnBufferedWriteStream >> nextWordPut: integer [
 	^ self nextIntegerOfSize: 2 signed: false bigEndian: true put: integer
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnBufferedWriteStream >> on: writeStream [
 	stream := writeStream.
 	position := 0

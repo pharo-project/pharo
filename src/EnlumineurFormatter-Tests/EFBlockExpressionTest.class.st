@@ -231,25 +231,25 @@ EFBlockExpressionTest >> newLineBeforeEndBracketConfiguration [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
+			EFContext new storeOn: s]"
 
 	^ self contextClass basicNew
-		numberOfSpacesInsideBlock:1;
-		periodAtEndOfBlock: false;
-		periodAtEndOfMethod: false;
-		lineUpBlockBrackets: true;
-		indentStyle: #tabulation;
-		keepBlockInMessage: true;
-		retainBlankLinesBetweenStatements: false;
-		minimumNewLinesBetweenStatements: 1;
-		multiLineMessages: Array new;
-		oneLineMessages: Array new;
-		numberOfArgumentsForMultiLine: 5;
-		indentsForKeywords: 1;
-		newLineBeforeFirstKeyword: false;
-		formatCommentCloseToStatements: true;
-		maxLineLength: 50;
-		indentExtraSpaces:0
+		  numberOfSpacesInsideBlock: 1;
+		  periodAtEndOfBlock: false;
+		  periodAtEndOfMethod: false;
+		  lineUpBlockBrackets: true;
+		  indentStyle: #tabulation;
+		  keepBlockInMessage: true;
+		  retainBlankLinesBetweenStatements: false;
+		  minimumNewLinesBetweenStatements: 1;
+		  multiLineMessages: Array new;
+		  oneLineMessages: Array new;
+		  numberOfArgumentsForMultiLine: 5;
+		  indentsForKeywords: 1;
+		  newLineBeforeFirstKeyword: false;
+		  formatCommentCloseToStatements: true;
+		  maxLineLength: 50;
+		  indentExtraSpaces: 0
 ]
 
 { #category : 'configurations' }
@@ -257,25 +257,25 @@ EFBlockExpressionTest >> noNewLineBeforeEndBracketConfiguration [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
+			EFContext new storeOn: s]"
 
 	^ self contextClass basicNew
-		numberOfSpacesInsideBlock:1;
-		periodAtEndOfBlock: false;
-		periodAtEndOfMethod: false;
-		lineUpBlockBrackets: false;
-		indentStyle: #tabulation;
-		keepBlockInMessage: true;
-		retainBlankLinesBetweenStatements: false;
-		minimumNewLinesBetweenStatements: 1;
-		multiLineMessages: Array new;
-		oneLineMessages: Array new;
-		numberOfArgumentsForMultiLine: 5;
-		indentsForKeywords: 1;
-		newLineBeforeFirstKeyword: false;
-		formatCommentCloseToStatements: true;
-		maxLineLength: 50;
-		indentExtraSpaces:0
+		  numberOfSpacesInsideBlock: 1;
+		  periodAtEndOfBlock: false;
+		  periodAtEndOfMethod: false;
+		  lineUpBlockBrackets: false;
+		  indentStyle: #tabulation;
+		  keepBlockInMessage: true;
+		  retainBlankLinesBetweenStatements: false;
+		  minimumNewLinesBetweenStatements: 1;
+		  multiLineMessages: Array new;
+		  oneLineMessages: Array new;
+		  numberOfArgumentsForMultiLine: 5;
+		  indentsForKeywords: 1;
+		  newLineBeforeFirstKeyword: false;
+		  formatCommentCloseToStatements: true;
+		  maxLineLength: 50;
+		  indentExtraSpaces: 0
 ]
 
 { #category : 'configurations' }
@@ -338,25 +338,25 @@ EFBlockExpressionTest >> periodAtEndConfiguration [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
+			EFContext new storeOn: s]"
 
 	^ self contextClass basicNew
-		numberOfSpacesInsideBlock:1;
-		periodAtEndOfBlock: true;
-		periodAtEndOfMethod: false;
-		lineUpBlockBrackets: false;
-		indentStyle: #tabulation;
-		keepBlockInMessage: false;
-		retainBlankLinesBetweenStatements: false;
-		minimumNewLinesBetweenStatements: 1;
-		multiLineMessages: Array new;
-		oneLineMessages: Array new;
-		numberOfArgumentsForMultiLine: 5;
-		indentsForKeywords: 1;
-		newLineBeforeFirstKeyword: false;
-		formatCommentCloseToStatements: true;
-		maxLineLength: 50;
-		indentExtraSpaces:0
+		  numberOfSpacesInsideBlock: 1;
+		  periodAtEndOfBlock: true;
+		  periodAtEndOfMethod: false;
+		  lineUpBlockBrackets: false;
+		  indentStyle: #tabulation;
+		  keepBlockInMessage: false;
+		  retainBlankLinesBetweenStatements: false;
+		  minimumNewLinesBetweenStatements: 1;
+		  multiLineMessages: Array new;
+		  oneLineMessages: Array new;
+		  numberOfArgumentsForMultiLine: 5;
+		  indentsForKeywords: 1;
+		  newLineBeforeFirstKeyword: false;
+		  formatCommentCloseToStatements: true;
+		  maxLineLength: 50;
+		  indentExtraSpaces: 0
 ]
 
 { #category : 'configurations' }
@@ -436,10 +436,10 @@ EFBlockExpressionTest >> testDoNotKeepBlockInMessageConfiguration [
 	
 	self validate: ':i | i to: 10 do: [:j | Transcript show:i. Transcript show: j]'
 		isFormattedAs: ' :i |
-i to: 10 do:
-	[ :j |
-	Transcript show: i.
-	Transcript show: j ] '
+	i to: 10 do:
+		[ :j |
+			Transcript show: i.
+			Transcript show: j ] '
 	with: #doNotKeepBlockInMessageConfiguration.
 ]
 
@@ -449,8 +449,8 @@ EFBlockExpressionTest >> testDontFormatCommentWithStatement [
 		validate: '1 factorial. "aComment" 2 factorial'
 		isFormattedAs:
 '
-1 factorial "aComment".
-2 factorial '
+	1 factorial "aComment".
+	2 factorial '
 		with: #dontFormatCommentWithStatementConfiguration
 ]
 
@@ -469,8 +469,8 @@ EFBlockExpressionTest >> testFormatBody [
 		validate: ' [1]. [ a:=1] '
 		isFormattedAs:
 '
-[ 1 ].
-[ a := 1 ] '
+	[ 1 ].
+	[ a := 1 ] '
 ]
 
 { #category : 'tests' }
@@ -479,8 +479,8 @@ EFBlockExpressionTest >> testFormatCommentWithStatement [
 		validate: '1 factorial. "aComment" 2 factorial'
 		isFormattedAs:
 '
-1 factorial. "aComment"
-2 factorial '
+	1 factorial. "aComment"
+	2 factorial '
 		with: #formatCommentWithStatementConfiguration
 ]
 
@@ -490,10 +490,10 @@ EFBlockExpressionTest >> testFourSpaceIndent [
 		validate: ':i | i to: 10 do: [:j | Transcript show:i; show: j]'
 		isFormattedAs:
 ' :i |
-i to: 10 do: [ :j |
-    Transcript
-        show: i;
-        show: j ] '
+    i to: 10 do: [ :j |
+            Transcript
+                show: i;
+                show: j ] '
 		with: #fourSpaceIndentConfiguration
 ]
 
@@ -504,9 +504,9 @@ EFBlockExpressionTest >> testLongMultipleArguments [
 		validate: ' :superlong :longlong :long | Transcript show: longlong ; show: long'
 		isFormattedAs: 
 ' :superlong :longlong :long |
-Transcript
-	show: longlong;
-	show: long '
+	Transcript
+		show: longlong;
+		show: long '
 		with: #numberOfSpaceChangedAfterIndentCharacterConfiguration
 ]
 
@@ -517,10 +517,10 @@ EFBlockExpressionTest >> testLongSingleArgument [
 		validate: ' [:superlonglonglong | Transcript show:i; show: j]'
 		isFormattedAs: 
 '
-[ :superlonglonglong |
-Transcript
-	show: i;
-	show: j ] '
+	[ :superlonglonglong |
+		Transcript
+			show: i;
+			show: j ] '
 		with: #numberOfSpaceChangedAfterIndentCharacterConfiguration
 ]
 
@@ -531,8 +531,8 @@ EFBlockExpressionTest >> testMultiline [
 		validate: '1+3. 6 factorial '
 		isFormattedAs: 
 '
-1 + 3.
-6 factorial '
+	1 + 3.
+	6 factorial '
 ]
 
 { #category : 'tests' }
@@ -542,8 +542,8 @@ EFBlockExpressionTest >> testNewLineAfterFirstBracketWhenMultilineWithArguments 
 		validate: ':i | i+3. i factorial '
 		isFormattedAs: 
 ' :i |
-i + 3.
-i factorial '
+	i + 3.
+	i factorial '
 ]
 
 { #category : 'tests' }
@@ -553,9 +553,9 @@ EFBlockExpressionTest >> testNewLineAfterFirstBracketWhenMultilineWithTemporarie
 		validate: '| tmp | 1+3. 6 factorial '
 		isFormattedAs: 
 '
-| tmp |
-1 + 3.
-6 factorial '
+	| tmp |
+	1 + 3.
+	6 factorial '
 with: #blockWithTemporariesConfiguration
 ]
 
@@ -566,9 +566,9 @@ EFBlockExpressionTest >> testNewLineBeforeEndBrackets [
 		validate:'3. 4'  
 		isFormattedAs:
 '
-3.
-4
-'  		with: #newLineBeforeEndBracketConfiguration.
+	3.
+	4
+	'  		with: #newLineBeforeEndBracketConfiguration.
 ]
 
 { #category : 'tests' }
@@ -583,7 +583,7 @@ EFBlockExpressionTest >> testNoExtraSpaceAroundBlock [
 	| expr source |
 	expr := self parserClass parseExpression: '   ', self openBracket, '2', self closeBracket, '   '.
 	configurationSelector := #basicConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals: self openBracket, ' 2 ', self closeBracket
 ]
 
@@ -600,8 +600,8 @@ EFBlockExpressionTest >> testNoNewLineBeforeEndBrackets [
 		validate: '3. 4'  
 		isFormattedAs:
 '
-3.
-4 '  with: #noNewLineBeforeEndBracketConfiguration.
+	3.
+	4 '  with: #noNewLineBeforeEndBracketConfiguration.
 ]
 
 { #category : 'tests' }
@@ -620,10 +620,10 @@ EFBlockExpressionTest >> testOneSpaceIndent [
 	
 	self validate: ':i | i to: 10 do: [:j | Transcript show:i; show: j]'
 	isFormattedAs: ' :i |
-i to: 10 do: [ :j |
- Transcript
-  show: i;
-  show: j ] '
+ i to: 10 do: [ :j |
+   Transcript
+    show: i;
+    show: j ] '
 	with: #oneSpaceIndentConfiguration.
 ]
 
@@ -657,10 +657,10 @@ x doSomethingExceptional doSomethingExceptional '
 EFBlockExpressionTest >> testTabIndent [
 	self validate: ':i | i to: 10 do: [:j | Transcript show:i; show: j]'
 	isFormattedAs: ' :i |
-i to: 10 do: [ :j |
-	Transcript
-		show: i;
-		show: j ] '
+	i to: 10 do: [ :j |
+			Transcript
+				show: i;
+				show: j ] '
 	 with: #tabIndentConfiguration
 ]
 
@@ -669,10 +669,10 @@ EFBlockExpressionTest >> testTabIndentIsNotAffectedByNumberOfSpace [
 
 	self validate: ':i | i to: 10 do: [:j | Transcript show:i; show: j]'
 	 isFormattedAs: ' :i |
-i to: 10 do: [ :j |
-	Transcript
-		show: i;
-		show: j ] '
+	i to: 10 do: [ :j |
+			Transcript
+				show: i;
+				show: j ] '
 	 with: #tabIndentIsnotAffectedConfiguration
 ]
 
@@ -695,10 +695,10 @@ EFBlockExpressionTest >> testTwoSpaceIndent [
 
 	self validate: ':i | i to: 10 do: [:j | Transcript show:i; show: j]'
 	isFormattedAs: ' :i |
-i to: 10 do: [ :j |
-  Transcript
-    show: i;
-    show: j ] '
+  i to: 10 do: [ :j |
+      Transcript
+        show: i;
+        show: j ] '
 	with: #twoSpacesIndentConfiguration
 ]
 
@@ -744,6 +744,6 @@ EFBlockExpressionTest >> validate: stringInsideBlock isFormattedAs: expectedStri
 	| expr source |
 	expr := self parserClass parseExpression: self openBracket , stringInsideBlock, self closeBracket.
 	configurationSelector := aConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals: self openBracket , expectedStringInsideBlock , self closeBracket
 ]

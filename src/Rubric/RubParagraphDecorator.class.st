@@ -137,15 +137,6 @@ RubParagraphDecorator >> drawOnAthensCanvas: anAthensCanvas [
 	"do nothing by default"
 ]
 
-{ #category : 'drawing' }
-RubParagraphDecorator >> drawOnAthensCanvas: aCanvas bounds: aRectangle color: aColor [
-
-   (self canDrawDecoratorsOn: aCanvas) ifFalse: [ ^self ].
-
-	self drawOnAthensCanvas: aCanvas.
-	next drawOnAthensCanvas: aCanvas bounds: aRectangle color: aColor
-]
-
 { #category : 'delegating' }
 RubParagraphDecorator >> drawingEnabled [
 

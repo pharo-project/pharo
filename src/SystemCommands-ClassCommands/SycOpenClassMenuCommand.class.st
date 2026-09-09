@@ -23,3 +23,9 @@ SycOpenClassMenuCommand >> cmCommandClass [
 SycOpenClassMenuCommand >> defaultMenuItemName [
 	^'Refactorings'
 ]
+
+{ #category : 'accessing' }
+SycOpenClassMenuCommand >> description [
+
+	^ 'Opens special class menu.'
+]

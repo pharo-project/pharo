@@ -17,20 +17,10 @@ MCPatch class >> fromBase: baseSnapshot target: targetSnapshot [
 	^ self new initializeWithBase: baseSnapshot target: targetSnapshot
 ]
 
-{ #category : 'instance creation' }
-MCPatch class >> operations: aCollection [
-	^ self basicNew initializeWithOperations: aCollection
-]
-
 { #category : 'applying' }
 MCPatch >> applyTo: anObject [
 	operations do: [:ea | ea applyTo: anObject].
 
-]
-
-{ #category : 'accessing' }
-MCPatch >> hasConflict [
-	^ self operations anySatisfy: [ :change| change isConflict ]
 ]
 
 { #category : 'intializing' }
@@ -53,11 +43,6 @@ MCPatch >> initializeWithBase: baseSnapshot target: targetSnapshot [
 			definitionLike: b
 			ifPresent: [:t |]
 			ifAbsent: [operations add: (MCRemoval of: b)]]		
-]
-
-{ #category : 'intializing' }
-MCPatch >> initializeWithOperations: aCollection [
-	operations := aCollection
 ]
 
 { #category : 'querying' }

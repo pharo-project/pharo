@@ -8,11 +8,14 @@ This way client code using A will be able to load and get all the behavior of An
 
 
 Usage:
+```
+| transformation |
 transformation := (RBRenameAndDeprecateClassTransformation 
 				rename: #DANode
 				to: #DANodePresenter)
-				transform. 
-(ChangesBrowser changes: transformation model changes changes) open
+			generateChanges.
+(StRefactoringPreviewPresenter for: transformation) open
+```
 
 
 "
@@ -23,9 +26,8 @@ Class {
 		'className',
 		'newClassName'
 	],
-	#category : 'Refactoring-Transformations-Model-Unused',
-	#package : 'Refactoring-Transformations',
-	#tag : 'Model-Unused'
+	#category : 'Refactoring-Transformations',
+	#package : 'Refactoring-Transformations'
 }
 
 { #category : 'api' }
@@ -68,7 +70,7 @@ RBRenameAndDeprecateClassTransformation >> applicabilityPreconditions [
 	| class |
 	class := self model classNamed: className.
 	^ {
-		  (ReClassesExistCondition new classes: { class }).
+		  (ReClassesExistCondition new classes: { class name -> class } asDictionary).
 		  (ReClassesAreNotMetaClassCondition new classes: { class }).
 		  (ReNameIsGlobalCondition new
 			   model: self model
@@ -112,19 +114,6 @@ RBRenameAndDeprecateClassTransformation >> className: aClassName newClassName: a
 RBRenameAndDeprecateClassTransformation >> newClassName: aNewClassName [
 
 	newClassName := aNewClassName asSymbol 
-]
-
-{ #category : 'storing' }
-RBRenameAndDeprecateClassTransformation >> storeOn: aStream [
-
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream
-		nextPutAll: ' className ''';
-		nextPutAll: className;
-		nextPutAll: ''' newClassName: ''';
-		nextPutAll: newClassName.
-	aStream nextPut: $)
 ]
 
 { #category : 'private' }

@@ -34,6 +34,11 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.'
 ]
 
+{ #category : 'comparing' }
+QSystemTally >> <= aQSystemTally [
+	^ tally <= aQSystemTally tally
+]
+
 { #category : 'converting' }
 QSystemTally >> asArray [
 	| link |
@@ -67,7 +72,7 @@ QSystemTally >> bumpBy: count [
 	tally := tally + count
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 QSystemTally >> class: aClass method: aCompiledMethod [
 	class := aClass.
 	method := aCompiledMethod.
@@ -77,6 +82,36 @@ QSystemTally >> class: aClass method: aCompiledMethod [
 { #category : 'copying' }
 QSystemTally >> copyWithTally: hitCount [
 	^ (QSystemTally new class: class method: method) bumpBy: hitCount
+]
+
+{ #category : 'report' }
+QSystemTally >> ffiMethodPrintOn: aStream tallyExact: isExact orThreshold: threshold time: totalTime [
+	"@TODO: Apparently, providing true as isExact will always produce an error "
+
+	| dict |
+	dict := IdentityDictionary new: 100.
+	self ffiMethodsInto: dict fromSender: nil.
+
+	((self asSortedCollection: dict) select: [ :node | node tally > threshold ]) do: [ :node |
+			node
+				printOn: aStream
+				total: tally
+				totalTime: totalTime
+				tallyExact: isExact ]
+]
+
+{ #category : 'report' }
+QSystemTally >> ffiMethodsInto: dict fromSender: senderTally [
+
+	| rcvrs |
+
+	rcvrs := self sonsOver: 0.
+
+	(method isCompiledMethod and: [ method isFFIMethod ])
+		ifTrue: [ self into: dict fromSender: senderTally ].
+
+	rcvrs do: [ :node |
+		node ffiMethodsInto: dict fromSender: senderTally ].
 ]
 
 { #category : 'report' }
@@ -92,8 +127,21 @@ QSystemTally >> fullPrintOn: aStream tallyExact: isExact orThreshold: perCent ti
 		tallyExact: isExact
 		orThreshold: threshold.
 	aStream nextPut: Character newPage; cr.
+
 	aStream nextPutAll: '**Leaves**'; cr.
+
 	self leavesPrintOn: aStream
+		tallyExact: isExact
+		orThreshold: threshold
+		time: totalTime.
+		
+	
+	aStream 
+		cr;
+		nextPutAll: '**FFI Methods**'; 
+		cr.
+
+	self ffiMethodPrintOn: aStream
 		tallyExact: isExact
 		orThreshold: threshold
 		time: totalTime
@@ -158,7 +206,7 @@ QSystemTally >> maxClassNameSize [
 { #category : 'accessing' }
 QSystemTally >> maxClassPlusSelectorSize [
 	"Return the default maximum width of the class plus selector together (not counting the '>>')"
-	^60
+	^100
 ]
 
 { #category : 'accessing' }
@@ -173,7 +221,26 @@ QSystemTally >> method [
 	^method
 ]
 
-{ #category : 'initialize' }
+{ #category : 'accessing' }
+QSystemTally >> methodClassName [
+	^ class ifNil: [ 'nil' ] ifNotNil: [ class name ]
+]
+
+{ #category : 'accessing' }
+QSystemTally >> methodOrBlock [
+	^ method
+]
+
+{ #category : 'accessing' }
+QSystemTally >> originMethod [
+	| methodOrBlock |
+	methodOrBlock := self methodOrBlock.
+	^ methodOrBlock isCompiledBlock
+		  ifTrue: [ methodOrBlock method ]
+		  ifFalse: [ methodOrBlock ]
+]
+
+{ #category : 'initialization' }
 QSystemTally >> primitives: anInteger [
 	"Make the receiver be a node of unassigned primitives"
 	tally := anInteger.
@@ -204,14 +271,29 @@ QSystemTally >> printOn: aStream total: total totalTime: totalTime tallyExact: i
 	] ifFalse:[
 		aClass := method methodClass.
 		className := aClass name contractTo: self maxClassNameSize.
+				
 		aStream nextPutAll: class name;
 				nextPutAll: (aClass = class
 							ifTrue: ['  ']
 							ifFalse: [' [' , aClass name , ']  ']);
-				nextPutAll: (method selector
+				nextPutAll: (self selectorToPrint
 							contractTo: self maxClassPlusSelectorSize - className size);
 				cr.
 	]
+]
+
+{ #category : 'printing' }
+QSystemTally >> selectorToPrint [
+	
+	| ffiFunctionName |
+	
+	method isCompiledBlock ifTrue: [ ^ method selector ].
+	method isFFIMethod ifFalse: [ ^ method selector ].
+	
+	ffiFunctionName := (method literals detect: [ :e | e isKindOf: TFExternalFunction ]) functionName.
+	
+	^ method selector , ' (' , ffiFunctionName , ')'
+
 ]
 
 { #category : 'report' }

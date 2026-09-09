@@ -3,7 +3,7 @@ A global variable definition
 "
 Class {
 	#name : 'RGGlobalVariable',
-	#superclass : 'RGObject',
+	#superclass : 'RGVariable',
 	#category : 'Ring-Core-Kernel',
 	#package : 'Ring-Core',
 	#tag : 'Kernel'
@@ -23,7 +23,7 @@ RGGlobalVariable >> addoptToParentStub [
 ]
 
 { #category : 'analyzing' }
-RGGlobalVariable >> analyzeRead: aRBVariableNode by: anOCASTSemanticAnalyzer [
+RGGlobalVariable >> analyzeRead: aVariableNode by: anOCASTSemanticAnalyzer [
 ]
 
 { #category : 'managing container' }
@@ -36,16 +36,4 @@ RGGlobalVariable >> defaultParentStub [
 RGGlobalVariable >> isGlobalVariable [
 
 	^true
-]
-
-{ #category : 'testing' }
-RGGlobalVariable >> isInstanceVariable [
-
-	^ false
-]
-
-{ #category : 'testing' }
-RGGlobalVariable >> isSuperVariable [
-
-	^ false
 ]

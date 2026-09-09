@@ -99,12 +99,6 @@ FFIExternalValueHolder >> initialize [
 	super initialize
 ]
 
-{ #category : 'converting' }
-FFIExternalValueHolder >> tfPointerAddress [
-
-	^ data tfPointerAddress
-]
-
 { #category : 'accessing' }
 FFIExternalValueHolder >> type [
 	^ self class type

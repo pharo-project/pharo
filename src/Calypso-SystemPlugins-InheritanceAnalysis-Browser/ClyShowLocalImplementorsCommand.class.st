@@ -51,12 +51,12 @@ ClyShowLocalImplementorsCommand >> createQueryScope [
 { #category : 'execution' }
 ClyShowLocalImplementorsCommand >> execute [
 
-	| selectors query |
-	selectors := methods collect: [ :each | each selector].
+	| selectors query scopedMethods |
+	selectors := methods collect: [ :each | each selector ].
+	query := ClyMessageImplementorsQuery ofAny: selectors from: self createQueryScope.
+	scopedMethods := query execute.
 
-	query := 	ClyMessageImplementorsQuery ofAny: selectors from: self createQueryScope.
-	browser spawnQueryBrowserOn: query withState: [:queryBrowser |
-		self selectMethodsIn: queryBrowser ]
+	(Smalltalk tools toolNamed: #messageList) browse: scopedMethods items
 ]
 
 { #category : 'execution' }
@@ -64,8 +64,4 @@ ClyShowLocalImplementorsCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 
 	browser := aToolContext browser
-]
-
-{ #category : 'execution' }
-ClyShowLocalImplementorsCommand >> selectMethodsIn: aQueryBrowser [
 ]

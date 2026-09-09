@@ -26,12 +26,9 @@ ClyRichTextClassCommentEditorToolMorph class >> classCommentTabActivation [
 { #category : 'operations' }
 ClyRichTextClassCommentEditorToolMorph >> applyChanges [
 
-	self pendingText asString = self editingText asString 
-		ifFalse: [ editingClass 
-						comment: self pendingText 
-						stamp: Author changeStamp].
+	self pendingText asString = self editingText asString ifFalse: [ editingClass comment: self pendingText stamp: self editionTimestamp ].
 
-	^true
+	^ true
 ]
 
 { #category : 'rendering' }
@@ -95,6 +92,12 @@ ClyRichTextClassCommentEditorToolMorph >> initialize [
 { #category : 'printing' }
 ClyRichTextClassCommentEditorToolMorph >> printContext [
 	^super printContext , ' / ', editingClass name
+]
+
+{ #category : 'event handling' }
+ClyRichTextClassCommentEditorToolMorph >> reactToRubTextAreaDoubleClick: anEvent [
+
+	self switchToEditMode
 ]
 
 { #category : 'initialization' }

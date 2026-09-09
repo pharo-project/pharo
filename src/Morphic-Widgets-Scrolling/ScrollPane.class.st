@@ -83,6 +83,18 @@ ScrollPane class >> example2 [
 	window openInWorld
 ]
 
+{ #category : 'accessing' }
+ScrollPane >> adoptPaneColor: paneColor [
+	"Match the pane colour."
+
+	super adoptPaneColor: paneColor.
+	scrollBar adoptPaneColor: paneColor.
+	hScrollBar adoptPaneColor: paneColor.
+	paneColor ifNil: [^self].
+	self borderWidth > 0 ifTrue: [
+		self borderStyle: self borderStyleToUse]
+]
+
 { #category : 'settings' }
 ScrollPane >> alwaysHideHScrollbar [
 	^ self class alwaysHideHScrollbar
@@ -118,6 +130,24 @@ ScrollPane >> alwaysShowVScrollBar: bool [
 { #category : 'settings' }
 ScrollPane >> alwaysShowVScrollbar [
 	^ self class alwaysShowVScrollbar
+]
+
+{ #category : 'accessing' }
+ScrollPane >> borderStyle: aBorderStyle [
+	"Optimised when no change."
+
+	self borderStyle = aBorderStyle ifTrue: [^self].
+	super borderStyle: aBorderStyle.
+	self setScrollDeltas
+]
+
+{ #category : 'accessing' }
+ScrollPane >> borderStyleToUse [
+	"Answer the borderStyle that should be used for the receiver."
+
+	^self enabled
+		ifTrue: [self theme scrollPaneNormalBorderStyleFor: self]
+		ifFalse: [self theme scrollPaneDisabledBorderStyleFor: self]
 ]
 
 { #category : 'accessing' }
@@ -221,6 +251,19 @@ ScrollPane >> getMenu: shiftKeyState [
 		aTitle ifNotNil: [ aMenu addTitle: aTitle ].
 		^ aMenu ].
 	^ self error: 'The getMenuSelector must be a 1- or 2-keyword symbol'
+]
+
+{ #category : 'accessing' }
+ScrollPane >> getMenuSelector [
+
+	^ getMenuSelector
+]
+
+{ #category : 'accessing' }
+ScrollPane >> getMenuSelector: aSymbol [
+	"Set the menu selector."
+
+	getMenuSelector := aSymbol
 ]
 
 { #category : 'geometry' }
@@ -351,6 +394,13 @@ ScrollPane >> hScrollBarWidth [
 	^w
 ]
 
+{ #category : 'accessing' }
+ScrollPane >> hScrollValue: scrollValue [
+	"Set the horizontal scroll value via the scrollbar itself."
+
+	hScrollBar setValue: scrollValue
+]
+
 { #category : 'geometry' }
 ScrollPane >> hSetScrollDelta [
 	"Set the ScrollBar deltas, value and interval, based on the current scroll pane size, offset and range."
@@ -420,6 +470,13 @@ ScrollPane >> handlesMouseOver: evt [
 "
 ]
 
+{ #category : 'event handling' }
+ScrollPane >> handlesMouseWheel: evt [
+	"Do I want to receive mouseWheel events?"
+
+	^self vIsScrollable or: [ self hIsScrollable ]
+]
+
 { #category : 'accessing' }
 ScrollPane >> hasFocus [
 	"hasFocus is currently set by mouse enter/leave events.
@@ -434,6 +491,17 @@ ScrollPane >> hideHScrollBarIndefinitely: bool [
 
 	self setProperty: #noHScrollBarPlease toValue: bool.
 	self hHideOrShowScrollBar
+]
+
+{ #category : 'scrollbar managing' }
+ScrollPane >> hideOrShowScrollBar [
+	"Hide or show the scrollbar depending on if the pane is scrolled/scrollable."
+
+	"Don't show it if we were told not to."
+	(self valueOfProperty: #noScrollBarPlease ifAbsent: [false]) ifTrue: [^self].
+
+	(self vIsScrollbarNeeded not and: [ self isScrolledFromTop not ]) ifTrue: [self vHideScrollBar].
+	(self vIsScrollbarNeeded or: [ self isScrolledFromTop ]) ifTrue: [self vShowScrollBar]
 ]
 
 { #category : 'scrolling' }
@@ -601,6 +669,42 @@ ScrollPane >> menuTitleSelector: aSelector [
 	getMenuTitleSelector := aSelector
 ]
 
+{ #category : 'accessing' }
+ScrollPane >> minHeight [
+	"Answer the minimum height."
+
+	| noVPlease noHPlease minH |
+	noVPlease := self valueOfProperty: #noVScrollBarPlease ifAbsent: [ false ].
+	noHPlease := self valueOfProperty: #noHScrollBarPlease ifAbsent: [ false ].
+	minH := noVPlease
+		ifTrue: [
+			noHPlease
+				ifTrue: [ 1 ]
+				ifFalse: [ self scrollBarThickness ] ]
+		ifFalse: [
+			noHPlease
+				ifTrue: [ self scrollBarThickness * 3 ]
+				ifFalse: [ self scrollBarThickness * 4 + 2 ] ].
+	^ minH max: super minHeight
+]
+
+{ #category : 'accessing' }
+ScrollPane >> minWidth [
+	"Answer the minimum width."
+
+	|noVPlease noHPlease minW|
+	noVPlease := self valueOfProperty: #noVScrollBarPlease ifAbsent: [false].
+	noHPlease := self valueOfProperty: #noHScrollBarPlease ifAbsent: [false].
+	minW := noVPlease
+		ifTrue: [noHPlease
+					ifTrue: [1]
+					ifFalse: [self scrollBarThickness * 3]]
+		ifFalse: [noHPlease
+					ifTrue: [self scrollBarThickness + 20]
+					ifFalse: [self scrollBarThickness * 3 + 2]].
+	^minW max: super minWidth
+]
+
 { #category : 'event handling' }
 ScrollPane >> mouseDown: evt [
 	self flag: #todo. "This is a quick fix for ensure cmd+click works.
@@ -646,6 +750,16 @@ ScrollPane >> mouseUp: evt [
 		[scroller submorphs last mouseUp: (evt transformedBy: (scroller transformFrom: self))]
 ]
 
+{ #category : 'event handling' }
+ScrollPane >> mouseWheel: event [
+	"Handle a mouseWheel event."
+
+	event isUp ifTrue: [ ^ scrollBar scrollUp: 3 ].
+	event isDown ifTrue: [ ^ scrollBar scrollDown: 3 ].
+	event isLeft  ifTrue: [ ^ hScrollBar scrollLeft: 3 ].
+	event isRight  ifTrue: [ ^ hScrollBar scrollRight: 3 ]
+]
+
 { #category : 'initialization' }
 ScrollPane >> newTransformMorph [
 	^TransformMorph new
@@ -683,6 +797,12 @@ ScrollPane >> scrollBar [
 { #category : 'scroll bar events' }
 ScrollPane >> scrollBarMenuButtonPressed: event [
 	^ self yellowButtonActivity: event shiftPressed
+]
+
+{ #category : 'accessing' }
+ScrollPane >> scrollBarThickness [
+	"Includes border"
+	^ self theme scrollbarThickness
 ]
 
 { #category : 'scrolling' }
@@ -746,6 +866,20 @@ ScrollPane >> scrollToShow: aRectangle [
 		ifTrue: [ (visibleRect bottom - aRectangle bottom) min: 0 max: (visibleRect top - aRectangle top) ]
 		ifFalse: [ (visibleRect top - aRectangle top) min: 0 max: (visibleRect bottom - aRectangle bottom) ].
 	self scrollBy: dx@dy
+]
+
+{ #category : 'accessing' }
+ScrollPane >> scrollValue [
+	"Answer the values of the scrollbars as a point."
+
+	^hScrollBar value @ scrollBar value
+]
+
+{ #category : 'accessing' }
+ScrollPane >> scrollValue: aPoint [
+	self
+		hScrollValue: aPoint x;
+		vScrollValue: aPoint y
 ]
 
 { #category : 'accessing' }
@@ -814,6 +948,16 @@ ScrollPane >> showVScrollBarOnlyWhenNeeded: bool [
 	self setProperty: #noVScrollBarPlease toValue: bool.
 	self setProperty: #vScrollBarAlways toValue: bool.
 	self vHideOrShowScrollBar
+]
+
+{ #category : 'theme' }
+ScrollPane >> themeChanged [
+	"The current theme has changed.
+	Update any dependent visual aspects."
+
+	scrollBar theme: self theme.
+	hScrollBar theme: self theme.
+	super themeChanged
 ]
 
 { #category : 'scroll bar events' }
@@ -926,6 +1070,13 @@ ScrollPane >> vScrollBarValue: scrollValue [
 		step: 0@scrollValue;
 		scrollPane: self;
 		yourself)
+]
+
+{ #category : 'accessing' }
+ScrollPane >> vScrollValue: scrollValue [
+	"Set the vertical scroll value via the scrollbar itself."
+
+	scrollBar setValue: scrollValue
 ]
 
 { #category : 'geometry' }

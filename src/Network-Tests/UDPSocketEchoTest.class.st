@@ -56,7 +56,10 @@ UDPSocketEchoTest >> receiveUDPDataFrom: socket [
 	buffer := String new: 256.
 	socket waitForData.
 	result := socket receiveUDPDataInto: buffer.
-	^ { buffer copyFrom: 1 to: result first. result second asSocketAddress. result third }
+	^ {
+		  (buffer copyFrom: 1 to: result first).
+		  (SocketAddress fromOldByteAddress: result second).
+		  result third }
 ]
 
 { #category : 'testing' }

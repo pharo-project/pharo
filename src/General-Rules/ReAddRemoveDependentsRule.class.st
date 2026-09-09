@@ -15,8 +15,9 @@ ReAddRemoveDependentsRule class >> checksClass [
 ]
 
 { #category : 'accessing' }
-ReAddRemoveDependentsRule class >> group [
-	^ 'Potential Bugs'
+ReAddRemoveDependentsRule class >> groupSelector [
+
+	^ #potentialBugsGroup
 ]
 
 { #category : 'accessing' }
@@ -39,7 +40,7 @@ ReAddRemoveDependentsRule >> basicCheck: aClass [
 	methods := (aClass whichMethodsReferTo: #addDependent:) asSet, (aClass whichMethodsReferTo: #removeDependent:).
 
 	methods do: [ :method | | messages |
-			messages := method ast allChildren select: [ :each | each isMessage ].
+			messages := method ast withAllChildren select: [ :each | each isMessage ].
 				addSends := addSends + (messages count: [ :each | each selector == #addDependent:]).
 				removeSends := removeSends + (messages count: [ :each | each selector == #removeDependent:])].
 	^ addSends > removeSends

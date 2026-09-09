@@ -30,6 +30,12 @@ SycOpenSourceCodeMenuCommand >> defaultMenuItemName [
 	^'Source code'
 ]
 
+{ #category : 'accessing' }
+SycOpenSourceCodeMenuCommand >> description [
+
+	^ 'Opens special source code menu.'
+]
+
 { #category : 'execution' }
 SycOpenSourceCodeMenuCommand >> execute [
 

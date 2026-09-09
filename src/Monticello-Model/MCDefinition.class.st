@@ -15,7 +15,8 @@ MCDefinition >> <= other [
 
 { #category : 'comparing' }
 MCDefinition >> = aDefinition [
-	^(aDefinition isKindOf: MCDefinition) and: [self isRevisionOf: aDefinition]
+
+	^ self class = aDefinition class and: [ self isRevisionOf: aDefinition ]
 ]
 
 { #category : 'accessing' }
@@ -54,11 +55,6 @@ MCDefinition >> fullClassName [
 	"Answer the className by default."
 	
 	^self className
-]
-
-{ #category : 'comparing' }
-MCDefinition >> fullTimeStamp [
-	^ DateAndTime current
 ]
 
 { #category : 'comparing' }
@@ -108,30 +104,12 @@ MCDefinition >> isTraitDefinition [
 ]
 
 { #category : 'installing' }
-MCDefinition >> load [
-	
-]
-
-{ #category : 'installing' }
-MCDefinition >> loadOver: aDefinition [
-	self load
-	
-]
-
-{ #category : 'installing' }
 MCDefinition >> postload [
 ]
 
 { #category : 'installing' }
 MCDefinition >> postloadOver: aDefinition [
 	self postload
-]
-
-{ #category : 'annotations' }
-MCDefinition >> printAnnotations: requests on: aStream [
-	"Add a string for an annotation pane, trying to fulfill the browser annotationRequests."
-
-	aStream nextPutAll: 'not yet implemented'
 ]
 
 { #category : 'printing' }

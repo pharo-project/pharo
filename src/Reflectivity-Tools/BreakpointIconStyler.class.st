@@ -17,7 +17,8 @@ BreakpointIconStyler class >> isStaticStyler [
 
 { #category : 'defaults' }
 BreakpointIconStyler >> highlightColor [
-	^(Color red alpha: 0.1)
+
+	^ self theme dangerBackgroundColor alpha: 0.1
 ]
 
 { #category : 'defaults' }
@@ -40,4 +41,10 @@ BreakpointIconStyler >> iconLabel: aNode [
 { #category : 'testing' }
 BreakpointIconStyler >> shouldStyleNode: aNode [
 	^aNode hasBreakpoint and: [ aNode breakpoints anySatisfy: [:brkpt | brkpt isEnabled ]]
+]
+
+{ #category : 'private' }
+BreakpointIconStyler >> stylerName [
+
+	^ 'breakpoint'
 ]

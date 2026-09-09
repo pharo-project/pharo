@@ -383,7 +383,7 @@ RubSmalltalkEditorTest >> testBestNodeWithInvalidPlaygroundParsableError [
 
 	self
 		positionAfter: 'isSymbol ]';
-		assertPlaygroundNodeValue: 'RBBlockNode([ node isSymbol ])'
+		assertPlaygroundNodeValue: 'OCBlockNode([ node isSymbol ])'
 ]
 
 { #category : 'tests - bestNodeIn' }
@@ -538,16 +538,24 @@ RubSmalltalkEditorTest >> testBestNodeWithValidValueMidSource [
 ]
 
 { #category : 'tests' }
-RubSmalltalkEditorTest >> testCompileForIn [
+RubSmalltalkEditorTest >> testCompletionEngineInstanceIsNotUsedIfNil [
+	
+	| current |
+	[ current := RubSmalltalkEditor completionEngineInstance.
+	RubSmalltalkEditor completionEngineInstance: nil.
+	RubSmalltalkEditor completionEngineClass: CoStatisticsCompletionEngine.
+	self assert: RubSmalltalkEditor new completionEngine class equals: CoStatisticsCompletionEngine ]
+		ensure: [ RubSmalltalkEditor completionEngineInstance: current ]
+]
 
-	| editor method |
-	editor := RubSmalltalkEditor new.
-
-	method := editor compile: '40+2' for: nil in: nil.
-	self assert: (nil executeMethod: method) equals: 42.
-
-	method := editor compile: '40+¿' for: nil in: nil.
-	self should: [ nil executeMethod: method ] raise: RuntimeSyntaxError
+{ #category : 'tests' }
+RubSmalltalkEditorTest >> testCompletionEngineInstanceIsUsedIfSpecified [
+	
+	| current |
+	[ current := RubSmalltalkEditor completionEngineInstance.
+	RubSmalltalkEditor completionEngineInstance: CoStatisticsCompletionEngine new.
+	self assert: RubSmalltalkEditor new completionEngine class equals: CoStatisticsCompletionEngine ]
+		ensure: [ RubSmalltalkEditor completionEngineInstance: current ]
 ]
 
 { #category : 'tests - copy' }
@@ -591,16 +599,11 @@ RubSmalltalkEditorTest >> testEvaluateAndDo [
 	editor textArea: RubEditingArea new.
 
 	result := editor evaluate: '40+2' andDo: [ :value |
-		          self assert: value equals: 42.
-		          #flag ].
-	self assert: result equals: #flag.
-
-	"We for now ignore errors and return nil"
-	self
-		shouldnt: [
-		result := editor evaluate: '40+¿' andDo: [ :value | value ] ]
-		raise: RuntimeSyntaxError.
-	self assert: result isNil.
+			          self assert: value equals: 42.
+			          #flag ].
+	self assert: result equals: #flag. "We for now ignore errors and return nil"
+	self shouldnt: [ result := editor evaluate: '40+¿' andDo: [ :value | value ] ] raise: OCRuntimeSyntaxError.
+	self assert: result isNil
 ]
 
 { #category : 'tests - completion' }

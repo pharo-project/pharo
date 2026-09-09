@@ -9,7 +9,7 @@ Class {
 { #category : 'tests' }
 RBInlineAllMethodParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
-		addCase: { #rbClass -> RBInlineAllSendersRefactoring };
+		addCase: { #rbClass -> ReInlineIntoLocalSendersRefactoring };
 		yourself
 ]
 

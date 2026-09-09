@@ -44,7 +44,12 @@ ClyMethodCreationToolMorph >> applyChanges [
 	| newMethod selector selectedClass |
 	selectedClass := self chooseClassForNewMethodIfNone: [^false].
 
-	selector := selectedClass compile: self pendingText asString classified: methodProtocol notifying: textMorph.
+	selector := selectedClass 
+						compile: self pendingText asString
+		            classified: methodProtocol
+		            withStamp: DateAndTime now
+		            notifying: textMorph
+		            logSource: selectedClass shouldLogSource.
 
 	selector ifNil: [ ^false ].
 

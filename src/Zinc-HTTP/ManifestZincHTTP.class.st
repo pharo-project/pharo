@@ -9,6 +9,13 @@ Class {
 	#tag : 'Manifest'
 }
 
+{ #category : 'meta-data - dependency analyser' }
+ManifestZincHTTP class >> manuallyResolvedDependencies [
+
+	<ignoreForCoverage>
+	^ #(#'Transcript-NonInteractive')
+]
+
 { #category : 'code-critics' }
 ManifestZincHTTP class >> ruleNotEliminationRuleV1FalsePositive [
 

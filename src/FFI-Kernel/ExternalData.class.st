@@ -46,6 +46,27 @@ ExternalData class >> new [
 	^self shouldNotImplement
 ]
 
+{ #category : 'arithmetic' }
+ExternalData >> + offset [
+	"Pointer aritmetic, it allows to move the pointer as in C.
+	 But obviously, it only applies to actual external addresses."
+	self getHandle isExternalAddress
+		ifFalse: [ self error: 'You cannot apply pointer aritmetic to a non external address' ].
+	^ self species
+		fromHandle: (self getHandle + offset)
+		type: type
+]
+
+{ #category : 'converting' }
+ExternalData >> asInteger [
+	^ self getHandle asInteger
+]
+
+{ #category : 'converting' }
+ExternalData >> beNull [
+	^ self getHandle beNull
+]
+
 { #category : 'accessing' }
 ExternalData >> bytesFromCString [
 	"Assume that the receiver represents a C string and convert it to a Smalltalk string."
@@ -54,6 +75,11 @@ ExternalData >> bytesFromCString [
 	type isPointerType ifFalse: [self error: 'External object is not a pointer type.'].
 
 	^ handle bytesFromCString
+]
+
+{ #category : 'copying' }
+ExternalData >> copyFrom: start to: stop [
+	^ self getHandle copyFrom: start to: stop
 ]
 
 { #category : 'printing' }
@@ -78,4 +104,9 @@ ExternalData >> utf8StringFromCString [
 	 it to a Smalltalk string."
 
 	^ self bytesFromCString ifNotNil: [ :bytes | bytes utf8Decoded ]
+]
+
+{ #category : 'accessing' }
+ExternalData >> value [
+	^ self asInteger
 ]

@@ -1,8 +1,9 @@
 Class {
 	#name : 'RenrakuTest',
 	#superclass : 'ReCodeBasedTestCase',
-	#category : 'Renraku-Tests',
-	#package : 'Renraku-Tests'
+	#category : 'Renraku-Tests-Rules',
+	#package : 'Renraku-Tests',
+	#tag : 'Rules'
 }
 
 { #category : 'tests' }
@@ -16,7 +17,7 @@ RenrakuTest >> testAsClassRuleTransformation [
 	critique := asClassMethod critiques detect: [ :crit |
 		crit rule class = ReAsClassRule ].
 
-	self assert: critique change class equals: RBAddMethodChange.
+	self assert: critique change class equals: ReAddMethodChange.
 	self assert: (critique change source includesSubstring: 'self class environment at:')
 ]
 

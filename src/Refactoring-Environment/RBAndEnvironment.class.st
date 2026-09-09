@@ -113,12 +113,3 @@ RBAndEnvironment >> selectorsForClass: aClass do: aBlock [
 			(self andedEnvironment includesSelector: each in: aClass)
 				ifTrue: [aBlock value: each]]
 ]
-
-{ #category : 'storing' }
-RBAndEnvironment >> storeOn: aStream [
-	aStream nextPut: $(.
-	environment storeOn: aStream.
-	aStream nextPutAll: ' & '.
-	self andedEnvironment storeOn: aStream.
-	aStream nextPut: $)
-]

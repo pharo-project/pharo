@@ -42,9 +42,13 @@ Bitmap class >> decompressFromByteArray: byteArray [
 
 { #category : 'class initialization' }
 Bitmap class >> initialize [
-	Smalltalk specialObjectsArray
-		at: 5
-		put: self
+	"Put BitMap in the special object array. But maybe this is useless? We should check if the VM still needs this entry."
+
+	| array |
+	array := Smalltalk specialObjectsArray copy.
+	array at: 5 put: self.
+
+	Smalltalk specialObjectsArray becomeForward: array
 ]
 
 { #category : 'instance creation' }
@@ -131,13 +135,6 @@ Bitmap >> atAllPut: value [
 	"Fill the receiver, an indexable bytes or words object, with the given positive integer. The range of possible fill values is [0..255] for byte arrays and [0..(2^32 - 1)] for word arrays."
 	<primitive: 145>
 	super atAllPut: value
-]
-
-{ #category : 'accessing' }
-Bitmap >> bitPatternForDepth: depth [
-	"The raw call on BitBlt needs a Bitmap to represent this color.  I already am Bitmap like. I am already adjusted for a specific depth.  Interpret me as an array of (32/depth) Color pixelValues. BitBlt aligns the first element of this array with the top scanline of the destinationForm, the second with the second, and so on, cycling through the color array as necessary."
-
-	^ self
 ]
 
 { #category : 'accessing' }
@@ -396,7 +393,7 @@ Bitmap >> encodeInt: anInt in: ba at: i [
 	^ self encodeBytesOf: anInt in: ba at: i + 1
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 Bitmap >> fromByteStream: aStream [
 	"Initialize the array of bits by reading integers from the argument,
 	aStream."
@@ -504,11 +501,6 @@ Bitmap >> replaceFrom: start to: stop with: replacement startingAt: repStart [
 	super replaceFrom: start to: stop with: replacement startingAt: repStart
 ]
 
-{ #category : 'converting' }
-Bitmap >> restoreEndianness [
-	"nothing to do here?"
-]
-
 { #category : 'filing' }
 Bitmap >> storeBits: startBit to: stopBit on: aStream [
 	"Store my bits as a hex string, breaking the lines every 100 bytes or
@@ -528,6 +520,13 @@ Bitmap >> storeBits: startBit to: stopBit on: aStream [
 				ifTrue: [aStream cr.
 					lineWidth := 0]].
 	lineWidth > 0 ifTrue: [ aStream cr ]
+]
+
+{ #category : 'converting' }
+Bitmap >> tfPointerAddress [
+
+	self pinInMemory.
+	^ PointerUtils oopForObject: self
 ]
 
 { #category : 'filing' }

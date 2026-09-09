@@ -15,6 +15,11 @@ CompiledCodeTest >> compiledMethod1 [
 ]
 
 { #category : 'examples' }
+CompiledCodeTest >> compiledMethod1Copy [
+	^ self compiledMethod1 copy
+]
+
+{ #category : 'examples' }
 CompiledCodeTest >> method1 [
 
 	<pragma1: 123 foo: 'bar' >
@@ -28,17 +33,6 @@ CompiledCodeTest >> method1 [
 CompiledCodeTest >> methodReturnOne [
 
 	^ 1
-]
-
-{ #category : 'tests - scanning' }
-CompiledCodeTest >> testAccessesRef [
-	| readMethod writeMethod classVar |
-	readMethod := SmalltalkImage class>>#compilerClass.
-	writeMethod := SmalltalkImage class>>#compilerClass:.
-	classVar := SmalltalkImage classVariableNamed: #CompilerClass.
-
-	self assert: (readMethod accessesRef: classVar).
-	self assert: (writeMethod accessesRef: classVar)
 ]
 
 { #category : 'tests - testing' }
@@ -56,6 +50,20 @@ CompiledCodeTest >> testBlockReturnSpecial [
 	self deny: [ ^ 3 ] compiledBlock isReturnSpecial.
 	self deny: [ ^ var ] compiledBlock isReturnSpecial.
 	self deny: [ ^ Object ] compiledBlock isReturnSpecial
+]
+
+{ #category : 'tests' }
+CompiledCodeTest >> testChangeProperties [
+
+	| method methodCopy newProperties |
+	method := self compiledMethod1Copy.
+	methodCopy := method copy.
+	
+	newProperties := method properties copyWith: (Pragma for: methodCopy selector: #toto arguments: #()).
+	methodCopy properties: newProperties.
+	
+	self deny: (method hasPragmaNamed: #toto).
+	self assert: (methodCopy hasPragmaNamed: #toto).
 ]
 
 { #category : 'tests - flag' }
@@ -110,18 +118,18 @@ CompiledCodeTest >> testFlag [
 
 ]
 
-{ #category : 'tests - literals' }
+{ #category : 'tests - scanning' }
 CompiledCodeTest >> testHasLiteral [
 
 	| method |
-	method := self class compiler permitFaulty: true; compile: 'method
+	method := self class compiler permitFaulty: true; source: 'method
 		<pragma: #pragma>
 		test := 1+2.
 		self doIt: [
 		test := 1 - 2.
 		test := #(arrayInBlock).
 		self name ].
-		^#(#array) '.
+		^#(#array) '; compileOrFail.
 	"simpe case: normal send in the method itself"
 	self assert: (method hasLiteral: #doIt:).
 	"special selector in the method is not found"
@@ -144,18 +152,30 @@ CompiledCodeTest >> testHasLiteral [
 	self deny: (method hasLiteral: #method)
 ]
 
+{ #category : 'tests - scanning' }
+CompiledCodeTest >> testHasLiteral2 [
+
+	| readMethod writeMethod classVar |
+	readMethod := SmalltalkImage class >> #compilerClass.
+	writeMethod := SmalltalkImage class >> #compilerClass:.
+	classVar := SmalltalkImage classVariableNamed: #CompilerClass.
+
+	self assert: (readMethod hasLiteral: classVar).
+	self assert: (writeMethod hasLiteral: classVar)
+]
+
 { #category : 'tests - literals' }
 CompiledCodeTest >> testHasLiteralSuchThat [
 
 	| method |
-	method := self class compiler permitFaulty: true; compile: 'method
+	method := self class compiler permitFaulty: true; source: 'method
 		<pragma: #pragma>
 		test := 1+2.
 		self doIt: [
 		test := 1 - 2.
 		test := #(arrayInBlock).
 		self name ].
-		^#(#array) '.
+		^#(#array) '; compileOrFail.
 	"simpe case: normal send in the method itself"
 	self assert: (method hasLiteralSuchThat: [:literal | literal == #doIt:]).
 	"special selector in the method is not found"
@@ -180,14 +200,14 @@ CompiledCodeTest >> testHasLiteralSuchThat [
 CompiledCodeTest >> testHasSelector [
 
 	| method |
-	method := self class compiler permitFaulty: true; compile: 'method
+	method := self class compiler permitFaulty: true; source: 'method
 		<pragma: #pragma>
 		test := 1+2.
 		self doIt: [
 		test := 1 - 2.
 		test := #(arrayInBlock).
 		self name ].
-		^#(#array) '.
+		^#(#array) '; compileOrFail.
 	"simpe case: normal send in the method itself"
 	self assert: (method hasSelector: #doIt:).
 	"special selector in the method"
@@ -212,14 +232,14 @@ CompiledCodeTest >> testHasSelector [
 CompiledCodeTest >> testHasSelectorSpecialSelectorIndex [
 
 	| method specialIndex |
-	method := self class compiler permitFaulty: true; compile: 'method
+	method := self class compiler permitFaulty: true; source: 'method
 		<pragma: #pragma>
 		test := 1+2.
 		self do: [
 		test := 1 - 2.
 		test := #(arrayInBlock).
 		self name ].
-		^#(#array) '.
+		^#(#array) '; compileOrFail.
 	"simpe case: normal send in the method itself"
 	specialIndex := Smalltalk specialSelectorIndexOrNil: #do:.
 	self assert: (method hasSelector: #do: specialSelectorIndex: specialIndex).
@@ -264,7 +284,7 @@ CompiledCodeTest >> testHasTemporaries [
 CompiledCodeTest >> testLiteralsDoNotConsiderTheInnerBlockLiterals [
 
 	| method block |
-	method := self class compiler permitFaulty: true; compile: 'method
+	method := self class compiler permitFaulty: true; source: 'method
 		<pragma: #pragma>
 		test := 1+2.
 		Class.
@@ -273,8 +293,8 @@ CompiledCodeTest >> testLiteralsDoNotConsiderTheInnerBlockLiterals [
 		test := #(arrayInBlock).
 		Object.
 		self name ].
-		^#(#array) '.
-	block := (self class compiler permitFaulty: true; evaluate: '[
+		^#(#array) '; compileOrFail.
+	block := (OpalEvaluator new permitFaulty: true; evaluate: '[
 		test := 1 - 2.
 		test := #(arrayInBlock).
 		Object.
@@ -308,7 +328,7 @@ CompiledCodeTest >> testLiteralsDoesNotContainMethodName [
 CompiledCodeTest >> testLiteralsEvenTheOnesInTheInnerBlocks [
 	"The behavior is different than literals"
 	| method |
-	method := self class compiler permitFaulty: true; compile: 'method
+	method := self class compiler permitFaulty: true; source: 'method
 		<pragma: #pragma>
 		test := 1+2.
 		Class.
@@ -317,7 +337,7 @@ CompiledCodeTest >> testLiteralsEvenTheOnesInTheInnerBlocks [
 		test := #(arrayInBlock).
 		Object.
 		self name ].
-		^#(#array) '.
+		^#(#array) '; compileOrFail.
 	"Next assertion is expected: literals have a different behavior more close to the system"
 	self deny: method literalsEvenTheOnesInTheInnerBlocks equals: method literals.
 	self
@@ -343,12 +363,12 @@ CompiledCodeTest >> testLiteralsEvenTheOnesInTheInnerCleanBlocks [
 	"The behavior is different than literals"
 
 	| method |
-	method := self class compiler compile:
+	method := self class compiler source:
 		          'exampleAccessOuterFromCleanBlock
 	<compilerOptions: #(+ optionCleanBlockClosure)>
 	| b |
 	b := 1.
-	^[ thisContext tempNamed: ''b'' ] value'.
+	^[ thisContext tempNamed: ''b'' ] value'; compileOrFail.
 	self
 		assertCollection: method literalsEvenTheOnesInTheInnerBlocks
 		equals: #( 'b' #tempNamed: )
@@ -357,7 +377,7 @@ CompiledCodeTest >> testLiteralsEvenTheOnesInTheInnerCleanBlocks [
 { #category : 'tests - scanning' }
 CompiledCodeTest >> testLocalMessages [
 	| method |
-	method := self class compiler compile: 'method self doit. [Object class]'.
+	method := self class compiler source: 'method self doit. [Object class]'; compileOrFail.
 	self assert: method localMessages asArray equals: #(#doit) .
 	
 ]
@@ -365,7 +385,7 @@ CompiledCodeTest >> testLocalMessages [
 { #category : 'tests - scanning' }
 CompiledCodeTest >> testMessages [
 	| method |
-	method := self class compiler compile: 'method self doit. [Object class]'.
+	method := self class compiler source: 'method self doit. [Object class]'; compileOrFail.
 	self assertCollection: method messages asArray hasSameElements: #(#doit #class).
 ]
 
@@ -417,25 +437,25 @@ CompiledCodeTest >> testReadsRef [
 { #category : 'tests - scanning' }
 CompiledCodeTest >> testReadsSelf [
 	| method |
-	method := self class compiler compile: 'method self doit'.
+	method := self class compiler source: 'method self doit'; compileOrFail.
 	self assert: method readsSelf.
-	method := self class compiler compile: 'method ^self'.
+	method := self class compiler source: 'method ^self'; compileOrFail.
 	self assert: method readsSelf.
-	method := self class compiler compile: 'method ^thisContext'.
+	method := self class compiler source: 'method ^thisContext'; compileOrFail.
 	self deny: method readsSelf.
 	"take care! FFI methods have a self send, but they do not have self bytecode after the first call
 	Here we test just the case of a FFI method that was not yet called to not make this test depend on FFI
 	calls"
-	method := self class compiler compile: 'status ^ self ffiCall: #(int cairo_scaled_font_status (self))'.
+	method := self class compiler source: 'status ^ self ffiCall: #(int cairo_scaled_font_status (self))'; compileOrFail.
 	self assert: method readsSelf
 ]
 
 { #category : 'tests - scanning' }
 CompiledCodeTest >> testReadsThisContext [
 	| method |
-	method := self class compiler compile: 'method ^thisContext'.
+	method := self class compiler source: 'method ^thisContext'; compileOrFail.
 	self assert: method readsThisContext.
-	method := self class compiler compile: 'method ^self'.
+	method := self class compiler source: 'method ^self'; compileOrFail.
 	self deny: method readsThisContext
 ]
 

@@ -36,25 +36,9 @@ OSSDL2Driver class >> eventLoopProcess [
 ]
 
 { #category : 'testing' }
-OSSDL2Driver class >> hasPlugin [
-	<primitive: #primitiveHasDisplayPlugin module: #SDL2DisplayPlugin>
-	^ false
-]
-
-{ #category : 'testing' }
 OSSDL2Driver class >> isSuitable [
-	^ self isSupported
-]
 
-{ #category : 'testing' }
-OSSDL2Driver class >> isSupported [
 	^ SDL2 isAvailable
-]
-
-{ #category : 'testing' }
-OSSDL2Driver class >> isVMDisplayUsingSDL2 [
-	<primitive: #primitiveIsVMDisplayUsingSDL2>
-	^ false
 ]
 
 { #category : 'events' }
@@ -71,19 +55,25 @@ OSSDL2Driver >> afterSetWindowTitle: windowTitle onWindow: osWindow [
 		afterSetWindowTitle: windowTitle onWindow: osWindow
 ]
 
+{ #category : 'events' }
+OSSDL2Driver >> beforeMainPharoWindowClosed: osWindow [
+
+	OSPlatform current sdlPlatform
+		beforeMainPharoWindowClosed: osWindow
+]
+
 { #category : 'private' }
 OSSDL2Driver >> closeRemovedController: index [
 	"TODO: What should I do here?"
 
-	self
-		traceCr: ('Game controller <1s> removed' expandMacrosWith: index asString)
+	
 ]
 
 { #category : 'private' }
 OSSDL2Driver >> closeRemovedJoystick: index [
 	"TODO: What should I do here?"
 
-	self traceCr: ('Joystick <1s> removed' expandMacrosWith: index asString)
+	
 ]
 
 { #category : 'window creation and deletion' }
@@ -152,6 +142,16 @@ OSSDL2Driver >> dispatchEvent: mappedEvent [
 ]
 
 { #category : 'events-processing' }
+OSSDL2Driver >> ensureEventLoop [
+
+	"Make sure an event loop is running.
+	If there is already an event loop, do nothing"
+	EventLoopProcess ifNotNil: [ ^ self ].
+
+	self setupEventLoop
+]
+
+{ #category : 'events-processing' }
 OSSDL2Driver >> evaluateUserInterrupt: anSDLEvent [
 
 	anSDLEvent isUserInterrupt
@@ -164,49 +164,8 @@ OSSDL2Driver >> eventFilter [
 	^ eventFilter ifNil: [ eventFilter := OSSDLPasteEventFilter new next: self; yourself ]
 ]
 
-{ #category : 'accessing' }
-OSSDL2Driver >> eventLoopProcess [
-
-	^ self class eventLoopProcess
-]
-
 { #category : 'events-processing' }
-OSSDL2Driver >> eventLoopProcessWithPlugin [
-	| event session semaIndex |
-	event := SDL_Event new.
-	session := Smalltalk session.
-
-	semaIndex := (Smalltalk registerExternalObject: inputSemaphore).
-	self primSetupInputSemaphore: semaIndex.
-	[
-		[ inputSemaphore wait; consumeAllSignals. session  == Smalltalk session] whileTrue: [
-			[ (SDL2 pollEvent: event) > 0 ] whileTrue: [
-				self processEvent: event
-			].
-		]
-	] ensure:  [ Smalltalk unregisterExternalObject: inputSemaphore ]
-]
-
-{ #category : 'events-processing' }
-OSSDL2Driver >> eventLoopProcessWithVMWindow [
-	| event session semaIndex eventBuffer |
-	event := SDL_Event new.
-	eventBuffer := event getHandle.
-	session := Smalltalk session.
-
-	semaIndex := (Smalltalk registerExternalObject: inputSemaphore).
-	self primitiveSetVMSDL2Input: semaIndex.
-	[
-		[ inputSemaphore wait; consumeAllSignals. session  == Smalltalk session] whileTrue: [
-			[ self primitivePollVMSDL2Event: eventBuffer size: eventBuffer size ] whileTrue: [
-				self processEvent: event
-			].
-		]
-	] ensure:  [ Smalltalk unregisterExternalObject: inputSemaphore ]
-]
-
-{ #category : 'events-processing' }
-OSSDL2Driver >> eventLoopProcessWithoutPlugin [
+OSSDL2Driver >> eventLoop [
 	| event session |
 	event := SDL_Event new.
 	session := Smalltalk session.
@@ -217,6 +176,23 @@ OSSDL2Driver >> eventLoopProcessWithoutPlugin [
 		whileTrue: [ self processEvent: event ].
 
 		(Delay forMilliseconds: 5) wait ]
+]
+
+{ #category : 'accessing' }
+OSSDL2Driver >> eventLoopProcess [
+
+	^ self class eventLoopProcess
+]
+
+{ #category : 'events-processing' }
+OSSDL2Driver >> forceNewEventLoop [
+
+	"Force the (re)creation of an event loop.
+	If one was available, shut it down first.
+	Start a new event loop afterwards"
+
+	self shutdownEventLoop.
+	self setupEventLoop
 ]
 
 { #category : 'initialization' }
@@ -267,24 +243,6 @@ OSSDL2Driver >> openAddedJoystick: index [
 	| joystick |
 	joystick := SDL2 joystickOpen: index.
 	JoystickMap at: index put: joystick
-]
-
-{ #category : 'events-processing' }
-OSSDL2Driver >> primSetupInputSemaphore: semaIndex [
-	<primitive: #primitiveSetSDL2Input module: #SDL2DisplayPlugin>
-	^ nil
-]
-
-{ #category : 'events-processing' }
-OSSDL2Driver >> primitivePollVMSDL2Event: eventBuffer size: size [
-	<primitive: #primitivePollVMSDL2Event>
-	^ false
-]
-
-{ #category : 'events-processing' }
-OSSDL2Driver >> primitiveSetVMSDL2Input: semaIndex [
-	<primitive: #primitiveSetVMSDL2Input>
-	^ nil
 ]
 
 { #category : 'events-processing' }
@@ -360,27 +318,14 @@ OSSDL2Driver >> setGLAttributes: glAttributes [
 { #category : 'events-processing' }
 OSSDL2Driver >> setupEventLoop [
 
-	EventLoopProcess ifNotNil: [
-		EventLoopProcess isTerminating ifFalse: [
-			EventLoopProcess terminate.
-			EventLoopProcess := nil ] ].
+	"Create a new event loop.
+	Precondition: there is no pre-existing event loop"
+	
+	EventLoopProcess ifNotNil: [ self error: 'Cannot launch new event loop. One event loop is in progress' ].
 
-	EventLoopProcess := self class isVMDisplayUsingSDL2
-		ifTrue: [
-			[ self eventLoopProcessWithVMWindow ]
-			forkAt: Processor lowIOPriority ]
-		ifFalse: [
-			self class hasPlugin
-				ifTrue: [
-					[ self eventLoopProcessWithPlugin ]
-					forkAt: Processor lowIOPriority ]
-				ifFalse: [
-					[ self eventLoopProcessWithoutPlugin ]
-					forkAt: Processor lowIOPriority ] ].
-
-	EventLoopProcess
-		name: 'SDL2 Event loop';
-		resume
+	EventLoopProcess := [ self eventLoop ] forkAt:
+		                    Processor lowIOPriority.
+	EventLoopProcess name: 'SDL2 Event loop'
 ]
 
 { #category : 'system startup' }
@@ -398,6 +343,8 @@ OSSDL2Driver >> shutDown: quitting [
 { #category : 'events-processing' }
 OSSDL2Driver >> shutdownEventLoop [
 
+	"Kills the current event loop if any"
+
 	EventLoopProcess ifNil: [ ^ self ].
 	EventLoopProcess terminate.
 	EventLoopProcess := nil
@@ -406,7 +353,9 @@ OSSDL2Driver >> shutdownEventLoop [
 { #category : 'system startup' }
 OSSDL2Driver >> startUp: resuming [
 
-	self setupEventLoop
+	resuming 
+		ifTrue: [ self forceNewEventLoop ]
+		ifFalse: [ self ensureEventLoop ]
 ]
 
 { #category : 'global events' }
@@ -491,23 +440,6 @@ OSSDL2Driver >> visitControllerDeviceRemovedEvent: controllerEvent [
 		which: controllerEvent which;
 		mapped: true;
 		hasMapping: true
-]
-
-{ #category : 'global events' }
-OSSDL2Driver >> visitDropEvent: dropEvent [
-
-	"The dragged file name comes as a C-string of utf8 encoded bytes.
-	Get the string, and decode it to a string using a utf8 decoder"
-	| fileName |
-	fileName := dropEvent file utf8StringFromCString.
-
-	"Free the file handle after it has been read, as specified by SDL2
-	https://wiki.libsdl.org/SDL_DropEvent"
-	dropEvent file free.
-
-	^ OSWindowDropEvent new
-		timestamp: dropEvent timestamp;
-		filePath: fileName
 ]
 
 { #category : 'events-processing' }
@@ -596,5 +528,23 @@ OSSDL2Driver >> visitJoyDeviceRemovedEvent: joyEvent [
 
 { #category : 'global events' }
 OSSDL2Driver >> visitQuitEvent: quitEvent [
+	^ nil
+]
+
+{ #category : 'global events' }
+OSSDL2Driver >> visitSystemWindowEvent: systemWindowEvent [
+
+	systemWindowEvent isWindows ifFalse: [ ^ nil ].	
+
+	systemWindowEvent windowsMessage isWTSessionChange 
+		ifTrue: [ 
+			^ OSPlatform current sdlPlatform handleWTSessionChange: 
+				systemWindowEvent windowsMessage].
+
+
+	systemWindowEvent windowsMessage isSysCommand ifTrue: [
+			^ OSPlatform current sdlPlatform handleSystemCommand:
+				systemWindowEvent windowsMessage ].
+
 	^ nil
 ]

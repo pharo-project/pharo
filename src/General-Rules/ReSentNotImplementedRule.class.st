@@ -15,8 +15,9 @@ ReSentNotImplementedRule class >> checksMethod [
 ]
 
 { #category : 'accessing' }
-ReSentNotImplementedRule class >> group [
-	^ 'Bugs'
+ReSentNotImplementedRule class >> groupSelector [
+
+	^ #bugsGroup
 ]
 
 { #category : 'accessing' }
@@ -31,7 +32,7 @@ ReSentNotImplementedRule class >> ruleName [
 
 { #category : 'accessing' }
 ReSentNotImplementedRule class >> severity [
-	^ #error
+	^ 'error'
 ]
 
 { #category : 'accessing' }
@@ -49,7 +50,7 @@ ReSentNotImplementedRule >> check: aMethod forCritiquesDo: aCriticBlock [
 	ignored := ignored , #(!= !== <>). "See ReNotEqualityOperatorsRule"
 
 	problemSends := aMethod sendNodes reject: [ :msgSend |
-		                msgSend selector isSelectorSymbol ].
+		                msgSend selector isUsedAsSelectorSymbol ].
 	problemSends := problemSends reject: [:each | ignored includes: each selector].
 
 	problemSends do: [ :msgSend |

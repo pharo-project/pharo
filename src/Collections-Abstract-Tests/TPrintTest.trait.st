@@ -81,30 +81,3 @@ TPrintTest >> testPrintOn [
 			self prefix.
 			self nonEmpty class name } , allElementsAsString
 ]
-
-{ #category : 'tests - printing' }
-TPrintTest >> testPrintOnDelimiter [
-
-	| result allElementsAsString expectedelements |
-	result := String streamContents: [ :aStream |
-		          self nonEmpty printOn: aStream delimiter: ', ' ].
-
-	allElementsAsString := result findBetweenSubstrings: ', '.
-	expectedelements := self nonEmpty
-		                    collect: [ :e |
-		                    String streamContents: [ :aStream |
-			                    e printOn: aStream ] ]
-		                    as: OrderedCollection.
-		
-	self assert: allElementsAsString equals: expectedelements
-]
-
-{ #category : 'tests - printing' }
-TPrintTest >> testPrintOnDelimiterLast [
-
-	| result |
-	result := String streamContents: [ :aStream |
-		          self nonEmpty printOn: aStream delimiter: ', ' last: ' and ' ].
-
-	self assert: (result occurrencesOf: $,) equals: self elements size - 2
-]

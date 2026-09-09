@@ -20,14 +20,13 @@ SycExtractSetUpCommand >> asRefactorings [
 		extract: selectedInterval
 		from: method selector
 		in: method origin.
-	self initializeDefaultOptionsOf: refactoring.
-
+	
 	^ { refactoring }
 ]
 
 { #category : 'accessing' }
 SycExtractSetUpCommand >> defaultMenuIconName [
-	^ #glamorousRestart
+	^ #restart
 ]
 
 { #category : 'accessing' }

@@ -17,13 +17,23 @@ Class {
 CoBeginsWithFilter class >> caseSensitive: aBoolean filterString: aString [
 
 	aBoolean ifTrue: [
-		^ CoCaseSensitiveBeginsWithFilter new
-			completionString: aString;
-			yourself ]
+		^ CoToleranceFilter new 
+			decoree: (CoCaseSensitiveBeginsWithFilter new
+				completionString: aString; yourself) 
+				; yourself ]
 		ifFalse: [
-		^ CoCaseInsensitiveBeginsWithFilter new
+		^ CoToleranceFilter new 
+			decoree: (CoCaseInsensitiveBeginsWithFilter new
 			completionString: aString;
-			yourself	]
+			yourself); yourself 	]
+]
+
+{ #category : 'testing' }
+CoBeginsWithFilter >> complementResults: aCollection [
+	"give a chance to the filter to complement results after the fact.
+	Called by fetch:. By default do nothing."
+	
+	^ aCollection
 ]
 
 { #category : 'accessing' }

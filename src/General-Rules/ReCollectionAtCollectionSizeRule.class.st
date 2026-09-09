@@ -1,22 +1,24 @@
 "
-Checks for code using  ""collection at: collection size"" instead of ""collection last"".
+Instead of accessing to an element of a sequenceable collection using the index `1` or using the collection size, it is more readable to use `first` or `last`.
+This does not change the behavior but provides a better abstraction in the code.
 "
 Class {
 	#name : 'ReCollectionAtCollectionSizeRule',
-	#superclass : 'ReNodeMatchRule',
+	#superclass : 'ReNodeRewriteRule',
 	#category : 'General-Rules-Coding Idiom Violation',
 	#package : 'General-Rules',
 	#tag : 'Coding Idiom Violation'
 }
 
 { #category : 'accessing' }
-ReCollectionAtCollectionSizeRule class >> group [
-	^ 'Coding Idiom Violation'
+ReCollectionAtCollectionSizeRule class >> groupSelector [
+
+	^ #codingIdiomViolationGroup
 ]
 
 { #category : 'accessing' }
 ReCollectionAtCollectionSizeRule class >> ruleName [
-	^ 'Uses "collection at: collection size" instead of "collection last"'
+	^ 'Use "collection last"/"collection first" instead of "collection at: collection size"/"collection at: 1" '
 ]
 
 { #category : 'accessing' }
@@ -28,6 +30,9 @@ ReCollectionAtCollectionSizeRule class >> uniqueIdentifierName [
 
 { #category : 'initialization' }
 ReCollectionAtCollectionSizeRule >> initialize [
+
 	super initialize.
-	self  matchesAny: #('`@collection at: `@collection size')
+	self
+		replace: '`@collection at: `@collection size' with: '`@collection last';
+		replace: '`@collection at: 1' with: '`@collection first'
 ]

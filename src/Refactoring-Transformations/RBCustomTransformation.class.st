@@ -1,7 +1,9 @@
 "
 Performs a custom transformation. With this class, the developer can manipulate the model (a RBNamespace) directly, i.e., adding classes, transforming them etc.
 
-Usage: 
+Usage:
+```
+| transformation |
 transformation := (RBCustomTransformation with: [ :model |
 	model defineClass: ('Object subclass: #Bla
 		instanceVariableNames: ''''
@@ -10,12 +12,13 @@ transformation := (RBCustomTransformation with: [ :model |
 		category: ',  'Refactoring2-Transformations' surroundedBySingleQuotes ).
 	(model classNamed: #Bla)
 		comment: 'Deprecated!!! Use super class' ])
-	transform.
-(ChangesBrowser changes: transformation model changes changes) open
+		generateChanges.
+(StRefactoringPreviewPresenter for: transformation) open
+```
 "
 Class {
 	#name : 'RBCustomTransformation',
-	#superclass : 'RBTransformation',
+	#superclass : 'ReTransformation',
 	#instVars : [
 		'transformationBlock'
 	],
@@ -45,16 +48,6 @@ RBCustomTransformation class >> with: aBlockWithOneArg [
 RBCustomTransformation >> privateTransform [
 
 	transformationBlock value: self model
-]
-
-{ #category : 'storing' }
-RBCustomTransformation >> storeOn: aStream [
-
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream nextPutAll: ' with: '.
-	transformationBlock storeOn: aStream.
-	aStream nextPut: $)
 ]
 
 { #category : 'api' }

@@ -17,7 +17,8 @@ SemanticWarningIconStyler class >> isStaticStyler [
 
 { #category : 'defaults' }
 SemanticWarningIconStyler >> highlightColor [
-	^(Color yellow alpha: 0.3)
+
+	^ self theme warningBackgroundColor alpha: 0.1
 ]
 
 { #category : 'defaults' }
@@ -35,4 +36,10 @@ SemanticWarningIconStyler >> iconLabel: aNode [
 { #category : 'testing' }
 SemanticWarningIconStyler >> shouldStyleNode: aNode [
 	^aNode warningNotices isNotEmpty
+]
+
+{ #category : 'private' }
+SemanticWarningIconStyler >> stylerName [
+
+	^ 'warning'
 ]

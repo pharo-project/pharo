@@ -16,9 +16,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReIconHardcodedMessageRule class >> group [
+ReIconHardcodedMessageRule class >> groupSelector [
 
-	^ 'API Change'
+	^ #apiChangeGroup
 ]
 
 { #category : 'accessing' }
@@ -29,7 +29,7 @@ ReIconHardcodedMessageRule class >> ruleName [
 { #category : 'accessing' }
 ReIconHardcodedMessageRule class >> severity [
 
-	^ #error
+	^ 'error'
 ]
 
 { #category : 'initialization' }
@@ -38,6 +38,6 @@ ReIconHardcodedMessageRule >> initialize [
 	self
 		replace: 'Smalltalk ui icons `iconName'
 		byEvaluating: [ :node :matchMap |
-			RBParser
+			OCParser
 				parseExpression: 'self iconNamed: #' , (matchMap at: #'`iconName') ]
 ]

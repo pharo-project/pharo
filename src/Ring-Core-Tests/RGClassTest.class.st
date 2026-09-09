@@ -63,6 +63,16 @@ RGClassTest >> testClassVariablesCollection [
 ]
 
 { #category : 'tests' }
+RGClassTest >> testCompile [
+
+	| newBehavior |
+	newBehavior := self behaviorClass named: #SomeClass.
+	newBehavior compile: 'toto 1 message' classified: 'bla'.
+
+	self assert: (newBehavior includesLocalSelector: #toto)
+]
+
+{ #category : 'tests' }
 RGClassTest >> testConversionToTrait [
 
 	| env behavior trait |

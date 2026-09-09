@@ -27,7 +27,7 @@ CoResultSetTest >> testBroadenFilterAfterFetchCompletionShouldBroadenResults [
 	completion fetch: 1.
 	completion replaceFilterWith: (CoCaseSensitiveBeginsWithFilter filterString: 'b').
 
-	self assertEntry: completion first equals: (NECInstVarEntry contents: 'b' node: nil)
+	self assertEntry: completion first equals: (CoInstVarEntry contents: 'b' node: nil)
 ]
 
 { #category : 'tests' }
@@ -39,7 +39,7 @@ CoResultSetTest >> testBroadenFilterAfterFetchCompletionShouldBroadenResultsWhen
 
 	self
 		assertEntry: completion first
-		equals: (NECInstVarEntry contents: 'b' node: nil)
+		equals: (CoInstVarEntry contents: 'b' node: nil)
 ]
 
 { #category : 'tests' }
@@ -48,7 +48,7 @@ CoResultSetTest >> testBroaderFilterCompletionShouldBroadenResults [
 	completion replaceFilterWith: (CoCaseSensitiveBeginsWithFilter filterString: 'ba').
 	completion replaceFilterWith: (CoCaseSensitiveBeginsWithFilter filterString: 'b').
 
-	self assertEntry: completion first equals: (NECInstVarEntry contents: 'b' node: nil)
+	self assertEntry: completion first equals: (CoInstVarEntry contents: 'b' node: nil)
 ]
 
 { #category : 'tests' }
@@ -57,7 +57,7 @@ CoResultSetTest >> testBroaderFilterCompletionShouldBroadenResultsWhenCaseInsens
 	completion replaceFilterWith: (CoCaseInsensitiveBeginsWithFilter filterString: 'ba').
 	completion replaceFilterWith: (CoCaseInsensitiveBeginsWithFilter filterString: 'B').
 
-	self assertEntry: completion first equals: (NECInstVarEntry contents: 'b' node: nil)
+	self assertEntry: completion first equals: (CoInstVarEntry contents: 'b' node: nil)
 ]
 
 { #category : 'tests' }
@@ -79,7 +79,7 @@ CoResultSetTest >> testCompletionWithNoElementsToFetchShouldNotHaveMore [
 { #category : 'tests' }
 CoResultSetTest >> testEnumerateShouldFetch [
 
-	self assertEntry: completion first equals: (NECInstVarEntry contents: 'a' node: nil)
+	self assertEntry: completion first equals: (CoInstVarEntry contents: 'a' node: nil)
 ]
 
 { #category : 'tests' }
@@ -88,7 +88,7 @@ CoResultSetTest >> testFilterCompletionAfterFetchingShouldNarrowResults [
 	completion fetch: 1.
 	completion replaceFilterWith: (CoCaseSensitiveBeginsWithFilter filterString: 'b').
 
-	self assertEntry: completion first equals: (NECInstVarEntry contents: 'b' node: nil)
+	self assertEntry: completion first equals: (CoInstVarEntry contents: 'b' node: nil)
 ]
 
 { #category : 'tests' }
@@ -98,7 +98,7 @@ CoResultSetTest >> testFilterTwiceWithSameCompletionShouldReturnSameResults [
 	completion fetch: 2.
 	completion replaceFilterWith: (CoCaseSensitiveBeginsWithFilter filterString: 'ba').
 
-	self assertCollectionOfEntry: (completion first: 2) equals: { NECInstVarEntry contents: 'ba' node: nil }
+	self assertCollectionOfEntry: (completion first: 2) equals: { CoInstVarEntry contents: 'ba' node: nil }
 ]
 
 { #category : 'tests' }
@@ -108,7 +108,7 @@ CoResultSetTest >> testNarrowFilterAfterFetchCompletionShouldNarrowResults [
 	completion fetch: 1.
 	completion replaceFilterWith: (CoCaseSensitiveBeginsWithFilter filterString: 'ba').
 
-	self assertEntry: completion first equals: (NECInstVarEntry contents: 'ba' node: nil)
+	self assertEntry: completion first equals: (CoInstVarEntry contents: 'ba' node: nil)
 ]
 
 { #category : 'tests' }
@@ -117,7 +117,7 @@ CoResultSetTest >> testNarrowerFilterCompletionShouldNarrowResults [
 	completion replaceFilterWith: (CoCaseSensitiveBeginsWithFilter filterString: 'b').
 	completion replaceFilterWith: (CoCaseSensitiveBeginsWithFilter filterString: 'ba').
 
-	self assertEntry: completion first equals: (NECInstVarEntry contents: 'ba' node: nil)
+	self assertEntry: completion first equals: (CoInstVarEntry contents: 'ba' node: nil)
 ]
 
 { #category : 'tests' }
@@ -127,7 +127,7 @@ CoResultSetTest >> testResetFilterShouldRetrievePreviousResults [
 	completion fetch: 5.
 	completion resetFilter.
 
-	self assertEntry: completion first equals: (NECInstVarEntry contents: 'a' node: nil)
+	self assertEntry: completion first equals: (CoInstVarEntry contents: 'a' node: nil)
 ]
 
 { #category : 'tests' }
@@ -135,5 +135,5 @@ CoResultSetTest >> testResetFilterWithNoFilterSetShouldNotAlterResults [
 
 	completion resetFilter.
 
-	self assertEntry: completion first equals: (NECInstVarEntry contents: 'a' node: nil)
+	self assertEntry: completion first equals: (CoInstVarEntry contents: 'a' node: nil)
 ]

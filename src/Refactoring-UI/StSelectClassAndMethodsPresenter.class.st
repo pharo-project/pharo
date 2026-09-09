@@ -14,7 +14,8 @@ StSelectClassAndMethodsPresenter class >> example [
 		withItems: self class methods
 		selecting: OrderedCollection new
 		dropItems: self class allSubclasses
-		acceptBlock: [ :item :items |  ] )
+		acceptBlock: [ :item :items |  ] ).
+
 ]
 
 { #category : 'specs' }

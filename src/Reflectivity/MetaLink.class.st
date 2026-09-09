@@ -120,7 +120,7 @@ MetaLink >> arguments [
 { #category : 'link api' }
 MetaLink >> arguments: anArray [
 	"anArray - elements can be either:
-		- aSymbol, which will be converted into an instance of RFReification. For a list of reifications available to the node to which you wish to link, do: `aNode availableReifications`. If you don't have the particular node handy, since the reifications depend only on the node's class, you can also do e.g. `RBMethodNode new availableReifications`
+		- aSymbol, which will be converted into an instance of RFReification. For a list of reifications available to the node to which you wish to link, do: `aNode availableReifications`. If you don't have the particular node handy, since the reifications depend only on the node's class, you can also do e.g. `ASTMethodNode new availableReifications`
 		- anASTNode"
 
 	arguments := anArray.
@@ -152,12 +152,14 @@ MetaLink >> condition [
 
 { #category : 'link api' }
 MetaLink >> condition: aCondition [
-	condition:= aCondition.
-	self optionInlineCondition ifTrue: [^self invalidate].
-	nodes do: [ :node |  | methodNode |
+
+	condition := aCondition.
+	self optionInlineCondition ifTrue: [ ^ self invalidate ].
+	nodes do: [ :node |
+		| methodNode |
 		methodNode := node methodNode.
-		(methodNode metaLinkOptionsFromClassAndMethod includes: #optionInlineCondition)
-			 ifTrue: [ methodNode method invalidate ] ]
+		(methodNode metaLinkOptionsFromClassAndMethod includesOption:
+			 #optionInlineCondition) ifTrue: [ methodNode method invalidate ] ]
 ]
 
 { #category : 'link api' }
@@ -182,31 +184,6 @@ MetaLink >> control: aRFLinkControl [
 	self invalidate
 ]
 
-{ #category : 'printing' }
-MetaLink >> definitionString [
-	^String streamContents: [ :str |
-		str nextPutAll: 'MetaLink new'.
-		str cr;tab.
-		str nextPutAll: 'metaObject: '; nextPutAll: metaObject printString; nextPut: $;.
-		str cr;tab.
-		str nextPutAll: 'selector: '; nextPutAll: selector printString; nextPut: $;.
-		str cr;tab.
-		str nextPutAll: 'arguments: '; nextPutAll: arguments printString; nextPut: $;.
-		str cr;tab.
-		str nextPutAll: 'control: '; nextPutAll: control printString; nextPut: $;.
-		self hasMetaLevel ifTrue: [
-			str cr;tab.
-			str nextPutAll: 'level: '; nextPutAll: level printString; nextPut: $;.
-			].
-		self hasCondition ifTrue: [
-			str cr;tab.
-			str nextPutAll: 'condition: '; nextPutAll: condition printString; nextPut: $;.
-			].
-		str cr;tab.
-		str nextPutAll: 'options: '; nextPutAll: options asArray printString; nextPut: $..
-	]
-]
-
 { #category : 'reflective api' }
 MetaLink >> disable [
 	"turn off link reflectively while keeping the condition"
@@ -218,8 +195,9 @@ MetaLink >> disable [
 { #category : 'private' }
 MetaLink >> doesNotUnderstand: message [
 
-	(message selector isUnary and: [ message selector beginsWith: 'option'] )
-		ifTrue: [ ^ options includes: message selector ].
+	(message selector isUnary and: [
+		 message selector beginsWith: 'option' ]) ifTrue: [
+		^ options includesOption: message selector ].
 
 	^ super doesNotUnderstand: message
 ]
@@ -251,7 +229,8 @@ MetaLink >> hasNodes [
 
 { #category : 'options' }
 MetaLink >> hasOption: aSymbol [
-	^options includes: aSymbol
+
+	^ options options includes: aSymbol
 ]
 
 { #category : 'testing' }
@@ -266,7 +245,7 @@ MetaLink >> initialize [
 	control := #before.
 	selector := #value.
 	arguments := #().
-	options := Set new.
+	options := OCCompilationContext new.
 	self parseOptions: self class defaultOptions
 ]
 
@@ -337,18 +316,20 @@ MetaLink >> metaObject [
 
 { #category : 'link api' }
 MetaLink >> metaObject: anObject [
+
 	metaObject := anObject.
-	self optionInlineMetaObject ifTrue: [^self invalidate].
-	nodes do: [ :node | | methodNode |
+	self optionInlineMetaObject ifTrue: [ ^ self invalidate ].
+	nodes do: [ :node |
+		| methodNode |
 		methodNode := node methodNode.
-		(methodNode metaLinkOptionsFromClassAndMethod includes: #optionInlineMetaObject)
-			 ifTrue: [ methodNode method invalidate ] ]
+		(methodNode metaLinkOptionsFromClassAndMethod includesOption:
+			 #optionInlineMetaObject) ifTrue: [ methodNode method invalidate ] ]
 ]
 
 { #category : 'accessing' }
 MetaLink >> methods [
 	^nodes flatCollect: [ :entity |
-		(entity isKindOf: RBProgramNode)
+		(entity isKindOf: OCProgramNode)
 			ifTrue: [ {entity methodNode compiledMethod}  ]
 			ifFalse: [ entity usingMethods ] ]
 ]
@@ -365,7 +346,8 @@ MetaLink >> option: anArray [
 
 { #category : 'options' }
 MetaLink >> optionAnnounce [
-	^ options includes: #optionAnnounce
+
+	^ options includesOption: #optionAnnounce
 ]
 
 { #category : 'options' }
@@ -390,7 +372,8 @@ MetaLink >> optionArgsAsArray: aBoolean [
 
 { #category : 'options' }
 MetaLink >> optionCompileOnLinkInstallation [
-	^ options includes: #optionCompileOnLinkInstallation
+
+	^ options includesOption: #optionCompileOnLinkInstallation
 ]
 
 { #category : 'options' }
@@ -414,7 +397,8 @@ MetaLink >> optionDisabledLink: aBoolean [
 
 { #category : 'options' }
 MetaLink >> optionInlineCondition [
-	^ options includes: #optionInlineCondition
+
+	^ options includesOption: #optionInlineCondition
 ]
 
 { #category : 'options' }
@@ -426,7 +410,8 @@ MetaLink >> optionInlineCondition: aBoolean [
 
 { #category : 'options' }
 MetaLink >> optionInlineMetaObject [
-	^ options includes: #optionInlineMetaObject
+
+	^ options includesOption: #optionInlineMetaObject
 ]
 
 { #category : 'options' }

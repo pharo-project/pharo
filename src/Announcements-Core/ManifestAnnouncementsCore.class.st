@@ -11,7 +11,9 @@ Class {
 
 { #category : 'meta-data - dependency analyser' }
 ManifestAnnouncementsCore class >> manuallyResolvedDependencies [
-	^ #(#'Collections-Abstract')
+
+	<ignoreForCoverage>
+	^ #(#'Collections-Streams' #'Kernel-CodeModel' #'System-Finalization' #'Collections-Abstract')
 ]
 
 { #category : 'code-critics' }

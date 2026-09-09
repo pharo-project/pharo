@@ -8,10 +8,16 @@ Class {
 		'globals',
 		'selectors'
 	],
-	#category : 'HeuristicCompletion-Tests-Core',
+	#category : 'HeuristicCompletion-Tests-Mocks',
 	#package : 'HeuristicCompletion-Tests',
-	#tag : 'Core'
+	#tag : 'Mocks'
 }
+
+{ #category : 'query' }
+CoMockSystemNavigation >> allGlobalNamesDo: aBlock [
+
+	globals do: [ :e | aBlock value: e  ]
+]
 
 { #category : 'query' }
 CoMockSystemNavigation >> allGlobalNamesStartingWith: aString do: aBlock caseSensitive: cs [
@@ -19,6 +25,13 @@ CoMockSystemNavigation >> allGlobalNamesStartingWith: aString do: aBlock caseSen
 	globals do: [ :e |
 		(aString isEmpty or: [ e beginsWith: aString caseSensitive: cs ])
 			ifTrue: [ aBlock value: e ] ]
+]
+
+{ #category : 'accessing' }
+CoMockSystemNavigation >> allSelectorsDo: aBlock [
+
+	selectors do: [ :e |
+		aBlock value: e ]
 ]
 
 { #category : 'accessing' }
@@ -43,6 +56,12 @@ CoMockSystemNavigation >> globals [
 { #category : 'accessing' }
 CoMockSystemNavigation >> globals: anObject [
 	globals := anObject
+]
+
+{ #category : 'accessing' }
+CoMockSystemNavigation >> keys [ 
+	"because sometimes we have to extract the keys of the global environment so the Mock should expose the same API."
+	^ globals
 ]
 
 { #category : 'accessing' }

@@ -74,11 +74,3 @@ MagnitudeTest >> testMinMax [
 	self assert: (42 min: 50 max: 45) equals: 45.
 	self assert: (42 min: 40 max: 30) equals: 40
 ]
-
-{ #category : 'tests' }
-MagnitudeTest >> testThreeWayCompareTo [
-
-	self assert: ($b threeWayCompareTo: $a) equals: 1.
-	self assert: ($a threeWayCompareTo: $b) equals: -1.
-	self assert: ($b threeWayCompareTo: $b ) equals: 0
-]

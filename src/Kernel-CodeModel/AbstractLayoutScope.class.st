@@ -77,11 +77,6 @@ AbstractLayoutScope >> flattenIn: aCollection [
 	self subclassResponsibility
 ]
 
-{ #category : 'accessing' }
-AbstractLayoutScope >> hasBindingThatBeginsWith: arg1 [
-	^ self subclassResponsibility
-]
-
 { #category : 'testing' }
 AbstractLayoutScope >> hasFields [
 	self subclassResponsibility

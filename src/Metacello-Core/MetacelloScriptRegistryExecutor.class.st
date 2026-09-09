@@ -7,18 +7,15 @@ Class {
 }
 
 { #category : 'actions api' }
-MetacelloScriptRegistryExecutor >> prime [
-]
-
-{ #category : 'execution callback' }
-MetacelloScriptRegistryExecutor >> projectSpecSelectBlock [
-  ^ [ :projectSpec | projectSpec isNotNil ]
-]
-
-{ #category : 'actions api' }
 MetacelloScriptRegistryExecutor >> remove [
 ]
 
 { #category : 'initialization' }
 MetacelloScriptRegistryExecutor >> reset [
+]
+
+{ #category : 'execution callback' }
+MetacelloScriptRegistryExecutor >> shouldBeExecutedFor: projectSpec [
+
+	^ projectSpec isNotNil
 ]

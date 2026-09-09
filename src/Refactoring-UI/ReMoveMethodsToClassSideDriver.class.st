@@ -1,0 +1,85 @@
+"
+I'm a model for user interaction for the rename method refactoring.
+"
+Class {
+	#name : 'ReMoveMethodsToClassSideDriver',
+	#superclass : 'ReInteractionDriver',
+	#instVars : [
+		'selectors'
+	],
+	#category : 'Refactoring-UI-Drivers',
+	#package : 'Refactoring-UI',
+	#tag : 'Drivers'
+}
+
+{ #category : 'accessing' }
+ReMoveMethodsToClassSideDriver class >> driverName [
+
+	^ 'Move method(s) to class side'
+]
+
+{ #category : 'initialization' }
+ReMoveMethodsToClassSideDriver class >> scopes: scopesList methods: aCollectionOfMethods [
+
+	^ self new scopes: scopesList methods: aCollectionOfMethods
+]
+
+{ #category : 'execution' }
+ReMoveMethodsToClassSideDriver >> breakingChoices [
+	
+	| items |
+	items := OrderedCollection new.
+	items add: (ReBrowseMethodChoice new driver: self).
+	items add: (ReMoveClassSideChoice new driver: self).
+	^ items
+]
+
+{ #category : 'execution' }
+ReMoveMethodsToClassSideDriver >> browseMethod [
+
+	| methods names |
+	methods := refactoring refactorings collect: [ :each | each method ].
+	names := methods collect: [ :method | method selector ].
+
+	(Smalltalk tools toolNamed: #messageList) browseImplementorsOfAll: names
+]
+
+{ #category : 'execution' }
+ReMoveMethodsToClassSideDriver >> changes [
+	"Here we are experimenting about the protocol to composite.
+	Indeed ReCompositeRefactoring >> #privateTransform should not call generateChanges
+	and for now this is the case."
+	
+	refactoring privateTransform2.
+	^ refactoring changes
+
+]
+
+{ #category : 'configuration' }
+ReMoveMethodsToClassSideDriver >> defaultSelectDialog [
+
+	^ super defaultSelectDialog
+		  title: 'Warning you may break your code';
+		  message: 'One or more methods are already defined on the class side!';
+		  items: self breakingChoices;
+		  display: [ :each | each description ];
+		  displayIcon: [ :each | self iconNamed: each systemIconName ];
+		  yourself
+]
+
+{ #category : 'configuration' }
+ReMoveMethodsToClassSideDriver >> instantiateRefactoring [
+
+	^ ReCompositeRefactoring new
+		  model: model;
+		  refactorings: (selectors collect: [ :m | ReMoveMethodToClassSideRefactoring model: model method: m class: m origin ])
+]
+
+{ #category : 'execution' }
+ReMoveMethodsToClassSideDriver >> scopes: scopesList methods: methods [
+
+	scopes := scopesList.
+	model := self refactoringScopeOn: scopesList first.
+	selectors := methods.
+
+]

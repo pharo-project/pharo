@@ -30,7 +30,7 @@ TestSessionHandler class >> onStartup: aBlockClosure [
 ]
 
 { #category : 'accessing' }
-TestSessionHandler >> handledId [
+TestSessionHandler >> handlerId [
 	^ 'testSessionHandler'
 ]
 

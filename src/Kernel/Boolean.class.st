@@ -82,11 +82,6 @@ Boolean >> asBit [
 	self subclassResponsibility
 ]
 
-{ #category : 'converting' }
-Boolean >> asInteger [
-	^ self subclassResponsibility
-]
-
 { #category : 'copying' }
 Boolean >> deepCopy [
 	"Receiver has two concrete subclasses, True and False.
@@ -207,11 +202,6 @@ Boolean >> storeOn: aStream [
 	"Refer to the comment in Object|storeOn:."
 
 	self printOn: aStream
-]
-
-{ #category : 'copying' }
-Boolean >> veryDeepCopyWith: deepCopier [
-	"Return self.  I can't be copied.  Do not record me."
 ]
 
 { #category : 'controlling' }

@@ -76,9 +76,9 @@ TCPSocketTest >> testLocalAddress [
 	"Tests the various localAddress values for sockets"
 
 	self testServerAccept.
-	self assert: listenerSocket localAddress asSocketAddress equals: self listenerAddress.
-	self assert: clientSocket localAddress asSocketAddress equals: self listenerAddress.
-	self assert: serverSocket localAddress asSocketAddress equals: self listenerAddress
+	self assert: (SocketAddress fromOldByteAddress: listenerSocket localAddress) equals: self listenerAddress.
+	self assert: (SocketAddress fromOldByteAddress: clientSocket localAddress) equals: self listenerAddress.
+	self assert: (SocketAddress fromOldByteAddress: serverSocket localAddress) equals: self listenerAddress
 ]
 
 { #category : 'tests' }
@@ -97,8 +97,8 @@ TCPSocketTest >> testRemoteAddress [
 
 	self testServerAccept.
 	self assert: listenerSocket remoteAddress equals: #[0 0 0 0].
-	self assert: clientSocket remoteAddress asSocketAddress equals: self listenerAddress.
-	self assert: serverSocket remoteAddress asSocketAddress equals: self listenerAddress
+	self assert: (SocketAddress fromOldByteAddress: clientSocket remoteAddress) equals: self listenerAddress.
+	self assert: (SocketAddress fromOldByteAddress: serverSocket remoteAddress) equals: self listenerAddress
 ]
 
 { #category : 'tests' }

@@ -20,10 +20,22 @@ SpRubFindReplaceService >> caseSensitive [
 	^ caseSensitive ifNil: [caseSensitive := RubAbstractTextArea caseSensitiveFinds]
 ]
 
+{ #category : 'accessing' }
+SpRubFindReplaceService >> dialog [
+
+	^ dialog
+]
+
 { #category : 'services' }
 SpRubFindReplaceService >> dialogIsActiveFor: aTextArea [
 
  ^ false
+]
+
+{ #category : 'accessing' }
+SpRubFindReplaceService >> dialogWindow [
+
+	^ dialogWindow
 ]
 
 { #category : 'events handling' }
@@ -95,12 +107,13 @@ SpRubFindReplaceService >> initialize [
 { #category : 'events handling' }
 SpRubFindReplaceService >> openDialog [
 
-	dialogWindow ifNotNil: [ dialogWindow close ].
-
+	| text |
+	text := findText asString.
 	dialog := SpRubFindReplaceDialog on: self.
 	dialog updateFromModel.
-
-	dialogWindow := dialog openDialog
+	(text isNotEmpty and: [ text ~= dialog findInput text ]) ifTrue: [
+		dialog findInput text: text ].
+	dialogWindow := dialog openDialog 
 ]
 
 { #category : 'services' }

@@ -11,5 +11,5 @@ Class {
 
 { #category : 'meta-data - dependency analyser' }
 ManifestSystemPlatforms class >> manuallyResolvedDependencies [
-	^ #(#'Collections-Streams' #'Collections-Abstract')
+	^ #( #'Collections-Abstract')
 ]

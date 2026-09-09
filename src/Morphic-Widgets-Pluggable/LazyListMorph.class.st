@@ -386,6 +386,12 @@ LazyListMorph >> selectionFrameForRow: row [
 	^frame
 ]
 
+{ #category : 'theme' }
+LazyListMorph >> themeChanged [
+	self color: self theme textColor.
+	super themeChanged
+]
+
 { #category : 'drawing' }
 LazyListMorph >> topVisibleRowForCanvas: aCanvas [
         "return the top visible row in aCanvas's clip rectangle"

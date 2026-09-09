@@ -248,61 +248,54 @@ SystemWindow >> taskbarButtonMenu: aMenu [
 { #category : '*Morphic-Widgets-Taskbar' }
 SystemWindow >> taskbarCloseAllLikeThis [
 
-	(self confirm: 'Do you really want to close all windows like this?') ifFalse: [
-		^ self ].
-	(self class allSubInstances select: [ :w | w labelString = self labelString]) do: [ :w | w delete ]
+	(ConfirmationRequest signal: 'Do you really want to close all windows like this?') ifFalse: [ ^ self ].
+	(self class allSubInstances select: [ :w | w labelString = self labelString ]) do: [ :w | w delete ]
 ]
 
 { #category : '*Morphic-Widgets-Taskbar' }
 SystemWindow >> taskbarCloseAllToLeft [
 
-	(self confirm: 'Do you really want to close all windows to left ?')
-		ifFalse: [ ^ self ].
+	(ConfirmationRequest signal: 'Do you really want to close all windows to left ?') ifFalse: [ ^ self ].
 	self worldTaskbar ifNotNil: [ :worldTaskbar |
-		worldTaskbar orderedTasks copy do: [ :task |
-			task morph == self ifTrue: [ ^ self ].
-			task morph delete ] ]
+			worldTaskbar orderedTasks copy do: [ :task |
+					task morph == self ifTrue: [ ^ self ].
+					task morph delete ] ]
 ]
 
 { #category : '*Morphic-Widgets-Taskbar' }
 SystemWindow >> taskbarCloseAllToRight [
 
 	| wasFound |
-	(self confirm: 'Do you really want to close all windows to right ?')
-		ifFalse: [ ^ self ].
+	(ConfirmationRequest signal: 'Do you really want to close all windows to right ?') ifFalse: [ ^ self ].
 	wasFound := false.
 	self worldTaskbar ifNotNil: [ :worldTaskbar |
-		worldTaskbar orderedTasks copy do: [ :task |
-			wasFound
-				ifTrue: [ task morph delete ]
-				ifFalse: [ wasFound := task morph == self ] ] ]
+			worldTaskbar orderedTasks copy do: [ :task |
+					wasFound
+						ifTrue: [ task morph delete ]
+						ifFalse: [ wasFound := task morph == self ] ] ]
 ]
 
 { #category : '*Morphic-Widgets-Taskbar' }
 SystemWindow >> taskbarCloseAllWindows [
 
-	(self confirm: 'Do you really want to close all windows ?') ifFalse: [
-		^ self ].
+	(ConfirmationRequest signal: 'Do you really want to close all windows ?') ifFalse: [ ^ self ].
 
-	self worldTaskbar ifNotNil: [ :worldTaskbar |
-		worldTaskbar tasks do: [ :task | task morph delete ] ]
+	self worldTaskbar ifNotNil: [ :worldTaskbar | worldTaskbar tasks do: [ :task | task morph delete ] ]
 ]
 
 { #category : '*Morphic-Widgets-Taskbar' }
 SystemWindow >> taskbarCloseHiddenWindows [
 
 	| windows invisible parts other |
-	(self confirm: 'Do you really want to close all windows hidden behind other windows?') ifFalse: [
-		^ self ].
-	windows := (self world submorphs select: [:each | each isSystemWindow ]) reversed.
-invisible := windows withIndexSelect: [ :win :index |
-	bounds := win fullBoundsInWorld.
-	parts := OrderedCollection new.
-	other := (windows copyFrom: index+1 to: windows size) collect: [:each | each fullBoundsInWorld] .
-	bounds allAreasOutsideList: other do: [ :each | parts add: each  ].
-	parts isEmpty
-].
-invisible do: [ :each | each close ].
+	(ConfirmationRequest signal: 'Do you really want to close all windows hidden behind other windows?') ifFalse: [ ^ self ].
+	windows := (self world submorphs select: [ :each | each isSystemWindow ]) reversed.
+	invisible := windows withIndexSelect: [ :win :index |
+			             bounds := win fullBoundsInWorld.
+			             parts := OrderedCollection new.
+			             other := (windows copyFrom: index + 1 to: windows size) collect: [ :each | each fullBoundsInWorld ].
+			             bounds allAreasOutsideList: other do: [ :each | parts add: each ].
+			             parts isEmpty ].
+	invisible do: [ :each | each close ]
 ]
 
 { #category : '*Morphic-Widgets-Taskbar' }

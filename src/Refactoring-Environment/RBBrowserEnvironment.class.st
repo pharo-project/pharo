@@ -57,6 +57,16 @@ RBBrowserEnvironment >> & anEnvironment [
 	^RBAndEnvironment onEnvironment: self and: anEnvironment
 ]
 
+{ #category : 'comparing' }
+RBBrowserEnvironment >> = anotherObject [
+
+	self == anotherObject ifTrue: [ ^ true ].
+
+	"The default browser environment is always equals to other default"
+
+	^ self class = anotherObject class
+]
+
 { #category : 'accessing' }
 RBBrowserEnvironment >> accessGuard [
 	^ accessGuard ifNil: [ accessGuard := Mutex new ]
@@ -92,13 +102,9 @@ RBBrowserEnvironment >> allClasses [
 
 { #category : 'accessing - classes' }
 RBBrowserEnvironment >> allClassesAndTraits [
-	" compatibility method with SystemDictionary "
+	"compatibility method with SystemEnvironment"
 
-	| allClassesAndTraits |
-	allClassesAndTraits := OrderedCollection new: 4096.
-	self allClassesAndTraitsDo: [ :each |
-		allClassesAndTraits add: each ].
-	^ allClassesAndTraits asArray
+	^ self allClasses
 ]
 
 { #category : 'private' }
@@ -229,23 +235,6 @@ RBBrowserEnvironment >> classesAndSelectorsDo: aBlock [
 ]
 
 { #category : 'accessing - classes' }
-RBBrowserEnvironment >> classesAndTraits [
-
-	| classesAndTraits |
-	classesAndTraits := OrderedCollection new: 4096.
-	self classesAndTraitsDo: [ :each |
-		classesAndTraits add: each ].
-	^ classesAndTraits asArray
-]
-
-{ #category : 'accessing - classes' }
-RBBrowserEnvironment >> classesAndTraitsDo: aBlock [
-	self allClassesAndTraitsDo: [ :each |
-		(self includesClass: each)
-			ifTrue: [ aBlock value: each ] ]
-]
-
-{ #category : 'accessing - classes' }
 RBBrowserEnvironment >> classesDo: aBlock [
 	self systemDictionaryClassesDo: [ :each |
 		(self includesClass: each)
@@ -284,6 +273,11 @@ RBBrowserEnvironment >> defaultName [
 RBBrowserEnvironment >> defaultPlugins [
 
 	^ OrderedCollection new
+]
+
+{ #category : 'accessing' }
+RBBrowserEnvironment >> definedClasses [
+	^ self allClasses
 ]
 
 { #category : 'testing' }
@@ -373,6 +367,12 @@ RBBrowserEnvironment >> handleSystemChange: aSystemAnnouncement [
 		todoList remove: anyResult]
 ]
 
+{ #category : 'comparing' }
+RBBrowserEnvironment >> hash [ 
+	
+	^ self class hash
+]
+
 { #category : 'environments' }
 RBBrowserEnvironment >> implementorsMatching: aString [
 	^RBSelectorEnvironment implementorsMatching: aString in: self
@@ -408,14 +408,6 @@ RBBrowserEnvironment >> includesProtocol: aProtocol in: aClass [
 { #category : 'testing' }
 RBBrowserEnvironment >> includesSelector: aSelector in: aClass [
 	^ true
-]
-
-{ #category : 'actions' }
-RBBrowserEnvironment >> inspectIn: spec [
-
-	^ (spec instantiate: SpFilteringListPresenter)
-		  items: self basisObjects asArray;
-		  yourself
 ]
 
 { #category : 'environments' }
@@ -708,20 +700,20 @@ RBBrowserEnvironment >> selectionIntervalFor: aString [
 { #category : 'accessing' }
 RBBrowserEnvironment >> selectionParseTreeIntervalFor: aString [
 	| parseTree answerBlock |
-	parseTree := RBParser
+	parseTree := OCParser
 		parseMethod: aString
 		onError: [ :str :pos | ^ nil ].
 	answerBlock := [ :aNode :answer | ^ aNode sourceInterval ].
 	self searchStrings do: [ :each |
 		| matcher tree |
-		matcher := RBParseTreeSearcher new.
-		matcher matchesTree: (RBLiteralNode value: each) do: answerBlock.
+		matcher := OCParseTreeSearcher new.
+		matcher matchesTree: (OCLiteralNode value: each) do: answerBlock.
 		each isSymbol
 			ifTrue: [
-				tree := RBParseTreeSearcher buildSelectorTree: each.
+				tree := OCParseTreeSearcher buildSelectorTree: each.
 				tree ifNotNil: [ matcher matchesTree: tree do: answerBlock ] ]
 			ifFalse: [
-				tree := RBVariableNode named: each.
+				tree := OCVariableNode named: each.
 				matcher
 					matchesTree: tree do: answerBlock;
 					matchesArgumentTree: tree do: answerBlock ].
@@ -767,13 +759,6 @@ RBBrowserEnvironment >> selectorsForClass: aClass do: aBlock [
 RBBrowserEnvironment >> shortDescription [
 
 	^ self description contractTo: 50
-]
-
-{ #category : 'storing' }
-RBBrowserEnvironment >> storeOn: aStream [
-	aStream
-		nextPutAll: self class name;
-		nextPutAll: ' new'
 ]
 
 { #category : 'testing' }

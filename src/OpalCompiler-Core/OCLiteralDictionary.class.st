@@ -4,9 +4,9 @@ I am special version of a dictionary that compares the keys using the #literalEq
 Class {
 	#name : 'OCLiteralDictionary',
 	#superclass : 'Dictionary',
-	#category : 'OpalCompiler-Core-Extras',
+	#category : 'OpalCompiler-Core-DataStructures',
 	#package : 'OpalCompiler-Core',
-	#tag : 'Extras'
+	#tag : 'DataStructures'
 }
 
 { #category : 'accessing' }

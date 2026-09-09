@@ -44,3 +44,9 @@ StringSignal >> printOneLineContentsOn: stream [
 
 	stream nextPutAll: self message
 ]
+
+{ #category : 'accessing' }
+StringSignal >> target [
+	"make sure that String signal is polymorph with WrapperSignal"
+	^ message 
+]

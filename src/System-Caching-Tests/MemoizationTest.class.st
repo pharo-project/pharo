@@ -1,0 +1,39 @@
+Class {
+	#name : 'MemoizationTest',
+	#superclass : 'TestCase',
+	#category : 'System-Caching-Tests',
+	#package : 'System-Caching-Tests'
+}
+
+{ #category : 'tests' }
+MemoizationTest >> testMemoizedDictionary [
+
+	| cache factorial result |
+	cache := Dictionary new.
+	factorial := 0. "avoid not-initialized warning when saving method source"
+	factorial := [ :n |
+	             n = 1
+		             ifTrue: [ 1 ]
+		             ifFalse: [ (factorial value: n - 1) * n ] ]
+		             memoizedUsing: cache.
+	result := (1 to: 5) collect: factorial.
+	self assert: result equals: #( 1 2 6 24 120 ).
+	"Compare sets since order of associations in a dictionary is not guaranteed."
+	self assert: cache associations asSet equals: {
+			(1 -> 1).
+			(2 -> 2).
+			(3 -> 6).
+			(4 -> 24).
+			(5 -> 120) } asSet
+]
+
+{ #category : 'tests' }
+MemoizationTest >> testMemoizedLRUCache [
+	| cache factorial result |
+	cache := LRUCache new maximumWeight: 3.
+	factorial := 0. "avoid not-initialized warning when saving method source"
+	factorial := [ :n | n = 1 ifTrue: [1] ifFalse: [(factorial value: n - 1) * n] ] memoizedUsing: cache.
+	result := (1 to: 5) collect: factorial.
+	self assert: result equals: #(1 2 6 24 120).
+	self assert: cache cachedAssociations equals: { 3->6.   4->24.   5->120 }
+]

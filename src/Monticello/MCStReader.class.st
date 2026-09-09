@@ -37,26 +37,22 @@ MCStReader >> addDefinitionsFromDoit: aString [
 ]
 
 { #category : 'reading' }
-MCStReader >> categoryFromDoIt: aString [
-	| tokens  |
-	tokens := aString parseLiterals.
-	tokens size = 3 ifFalse: [self error: 'Unrecognized category definition'].
-	^ tokens at: 3
-]
-
-{ #category : 'reading' }
 MCStReader >> classDefinitionFrom: aRingClass [
 
 	| tokens traitCompositionString lastIndex classTraitCompositionString converter |
-	tokens := aRingClass definitionSource parseLiterals.
+	tokens := OCParser parseLiterals: aRingClass definitionSource.
 	traitCompositionString := (aRingClass definitionSource readStream
 		                           match: 'uses:';
-		                           upToAll: 'instanceVariableNames:') trimBoth.
-	classTraitCompositionString := (aRingClass classSide definitionSource asString readStream
+		                           upToAll: 'instanceVariableNames:')
+		                          trimBoth.
+	classTraitCompositionString := (aRingClass classSide definitionSource
+		                                asString readStream
 		                                match: 'uses:';
-		                                upToAll: 'instanceVariableNames:') trimBoth.
+		                                upToAll: 'instanceVariableNames:')
+		                               trimBoth.
 	traitCompositionString ifEmpty: [ traitCompositionString := '{}' ].
-	classTraitCompositionString ifEmpty: [ classTraitCompositionString := '{}' ].
+	classTraitCompositionString ifEmpty: [
+		classTraitCompositionString := '{}' ].
 	lastIndex := tokens size.
 	converter := CategoryConverter category: (tokens at: lastIndex).
 	^ (MCClassDefinition named: (tokens at: 3))
@@ -77,11 +73,11 @@ MCStReader >> classDefinitionFrom: aRingClass [
 
 { #category : 'reading' }
 MCStReader >> classInstVarNamesFor: aRingClass [
+
 	| tokens |
-	
 	self flag: #traits.
-	aRingClass classSide hasDefinitionSource ifFalse: [^ #()].
-	tokens := aRingClass classSide definitionSource parseLiterals.
+	aRingClass classSide hasDefinitionSource ifFalse: [ ^ #(  ) ].
+	tokens := OCParser parseLiterals: aRingClass classSide definitionSource.
 	"tokens size = 4 ifFalse: [self error: 'Unrecognized metaclass definition']."
 	^ tokens last findTokens: ' '
 ]
@@ -146,8 +142,5 @@ MCStReader >> snapshot [
 MCStReader >> typeOfSubclass: aSymbol [
 	| layoutClass |
 	layoutClass := ObjectLayout layoutForSubclassDefiningSymbol: aSymbol.
-	"if we get back CompiledMethodLayout, we put ByteLayout as CompiledMethodLayout.
-	The actual class creation methods have a hack to create the right format in this case"
-	layoutClass = CompiledMethodLayout ifTrue: [ layoutClass := ByteLayout ].
 	^layoutClass mcTypeSymbol
 ]

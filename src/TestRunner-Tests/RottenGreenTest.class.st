@@ -1,9 +1,6 @@
 Class {
 	#name : 'RottenGreenTest',
 	#superclass : 'TestCase',
-	#instVars : [
-		'runner'
-	],
 	#category : 'TestRunner-Tests-Utilities-Test',
 	#package : 'TestRunner-Tests',
 	#tag : 'Utilities-Test'

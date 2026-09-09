@@ -36,7 +36,7 @@ TKTTestCase >> setUp [
 	super setUp.
 	TKTConfiguration
 		resetSoleInstance;
-		profileNamed: #test
+		profileNamed: #testProfile
 ]
 
 { #category : 'running' }

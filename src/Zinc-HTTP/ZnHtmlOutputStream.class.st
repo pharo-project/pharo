@@ -68,7 +68,7 @@ ZnHtmlOutputStream >> << anObject [
  	anObject putOn: self
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnHtmlOutputStream >> close [
 	stream close
 ]
@@ -182,7 +182,7 @@ ZnHtmlOutputStream >> nextPutAll: collection [
 		startingAt: 1
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnHtmlOutputStream >> on: writeStream [
 	stream := writeStream
 ]

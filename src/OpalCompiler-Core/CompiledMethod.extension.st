@@ -1,17 +1,37 @@
 Extension { #name : 'CompiledMethod' }
 
 { #category : '*OpalCompiler-Core' }
+CompiledMethod >> ast [
+	"return an AST for this method. The AST is cached. see class comment of ASTCache"
+	
+	"Workaround, see https://github.com/pharo-project/pharo/issues/14871
+	We force recompile to make sure the next call creates a correct BC to AST mapping"
+	
+	 ((self hasLiteral: #runtimeUndeclaredReadInContext:) or: [self hasLiteral: #runtimeUndeclaredWrite:inContext:])
+ 			ifTrue: [self isInstalled ifTrue: [self recompile]].
+	
+	^ OCASTCache at: self
+]
+
+{ #category : '*OpalCompiler-Core' }
+CompiledMethod >> bcToASTCacheKey [
+
+	^ #bcToASTCache
+]
+
+{ #category : '*OpalCompiler-Core' }
 CompiledMethod >> decompile [
 	^Smalltalk globals
 		at: #FBDDecompiler
 		ifPresent: [ :decompiler | decompiler new  decompile: self]
-		ifAbsent: [ RBParser parseMethod: self selector asMethodPreamble, '
+		ifAbsent: [ OCParser parseMethod: self selector asMethodSignature, '
 	self noSourceAvailable' ]
 ]
 
 { #category : '*OpalCompiler-Core' }
-CompiledMethod >> hasTemporaryVariableNamed: aName [
-	^ self tempNames includes: aName
+CompiledMethod >> flushBytecodeToASTMapping [
+	
+	self method removeProperty: self bcToASTCacheKey
 ]
 
 { #category : '*OpalCompiler-Core' }
@@ -37,32 +57,25 @@ CompiledMethod >> reformat [
 ]
 
 { #category : '*OpalCompiler-Core' }
+CompiledMethod >> saveBcToASTCacheWithAST: aMethodAST [
+
+	| compiledBlockAST |
+	self propertyAt: #bcToASTCache ifPresent: [ :bcToASTCache | ^ self ].
+	self propertyAt: #bcToASTCache put: aMethodAST bcToASTCache.
+
+	self allBlocks
+		select: [ :compiledBlock | "Installing metalinks in certain situations (e.g: installing a metalink after on a sequence node of a block node) may create other compiled blocks, which are not attached to a block node (e.g: a sequence node). We just ignore these blocks."
+			(compiledBlockAST := compiledBlock ast) isBlock and: [ "In other cases, installing metalinks create compiled blocks that are associated to invisible block nodes that are children of an `RFMessageNode`. In this case, its start index and stop index are equal to 0 in the source code. Its source code interval goes from 0 to 0 but is not considered empty because the method `Interval>>#isEmpty` does not consider these extreme bounds. We ignore these blocks too"
+				compiledBlockAST start ~= 0 ] ]
+		thenDo: [ :compiledBlock |
+			self
+				propertyAt: compiledBlock bcToASTCacheKey
+				put: compiledBlockAST bcToASTCache ]
+]
+
+{ #category : '*OpalCompiler-Core' }
 CompiledMethod >> sourceNode [
 	^self ast
-]
-
-{ #category : '*OpalCompiler-Core' }
-CompiledMethod >> sourceNodeForPC: aPC [
-	^self sourceNode sourceNodeForPC: aPC
-]
-
-{ #category : '*OpalCompiler-Core' }
-CompiledMethod >> symbolic [
-	"List of all the byte codes in a method with a short description of each"
-
-	^ String streamContents: [ :aStream |
-		self isQuick ifTrue: [
-			self isReturnSpecial ifTrue: [ ^ aStream nextPutAll: 'Quick return ' , (#( 'self' 'true' 'false' 'nil' '-1' '0' '1' '2' ) at: self primitive - 255) ].
-			^ aStream nextPutAll: 'Quick return field ' , self returnField printString , ' (0-based)' ].
-
-		self isPrimitive ifTrue: [ self printPrimitiveOn: aStream ].
-		self symbolicBytecodes do: [ :each | each printOn: aStream ] separatedBy: [ aStream cr ] ]
-]
-
-{ #category : '*OpalCompiler-Core' }
-CompiledMethod >> temporaryVariableNamed: aName [
-	(self hasTemporaryVariableNamed: aName) ifFalse: [ ^nil ].
-	^self sourceNode scope lookupVar: aName
 ]
 
 { #category : '*OpalCompiler-Core' }

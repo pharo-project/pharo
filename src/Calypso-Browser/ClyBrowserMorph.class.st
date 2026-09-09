@@ -125,6 +125,12 @@ Class {
 		'navigationEnvironment',
 		'systemScope'
 	],
+	#classVars : [
+		'NavigationHistoryClass'
+	],
+	#classInstVars : [
+		'postOpeningBlock'
+	],
 	#category : 'Calypso-Browser-UI',
 	#package : 'Calypso-Browser',
 	#tag : 'UI'
@@ -141,6 +147,25 @@ ClyBrowserMorph class >> canBeDefault [
 	^self class includesSelector: #beDefaultBrowser
 ]
 
+{ #category : 'class initialization' }
+ClyBrowserMorph class >> initialize [
+
+	postOpeningBlock := [ :w |  ]
+]
+
+{ #category : 'settings' }
+ClyBrowserMorph class >> navigationHistoryClass [
+
+	^ NavigationHistoryClass
+		ifNil: [ NavigationHistoryClass := ClyNavigationHistory ]
+]
+
+{ #category : 'settings' }
+ClyBrowserMorph class >> navigationHistoryClass: aClyNavigationHistory [
+
+	NavigationHistoryClass := aClyNavigationHistory
+]
+
 { #category : 'instance creation' }
 ClyBrowserMorph class >> on: aNavigationEnvironment [
 	^self new
@@ -152,6 +177,31 @@ ClyBrowserMorph class >> on: aNavigationEnvironment [
 ClyBrowserMorph class >> on: aNavigationEnvironment systemScope: aSystemScope [
 	^(self on: aNavigationEnvironment)
 		systemScope: aSystemScope
+]
+
+{ #category : 'accessing' }
+ClyBrowserMorph class >> postOpeningBlock [
+
+	^ postOpeningBlock
+]
+
+{ #category : 'accessing' }
+ClyBrowserMorph class >> postOpeningBlock: aBlock [
+
+	postOpeningBlock := aBlock
+]
+
+{ #category : 'settings' }
+ClyBrowserMorph class >> settingsNavigationHistoryOn: aBuilder [
+	<systemsettings>
+
+	(aBuilder pickOne: #navigationHistoryClass)
+		parent: #Calypso;
+		label: 'Navigation History';
+		domainValues: ClyNavigationHistory withAllSubclasses;
+		default: self navigationHistoryClass;
+		description: 'Enable to set a custom navigation history to handle how collection of visited items is managed';
+		target: self
 ]
 
 { #category : 'accessing' }
@@ -198,6 +248,12 @@ ClyBrowserMorph >> allNavigationScopes [
 	^self systemScope = defaultScope
 		ifTrue: [ {self systemScope} ]
 		ifFalse: [ { self systemScope. defaultScope } ]
+]
+
+{ #category : 'accessing' }
+ClyBrowserMorph >> application [ 
+
+	^ StPharoApplication current
 ]
 
 { #category : 'opening/closing' }
@@ -248,12 +304,9 @@ ClyBrowserMorph >> close [
 	| currentWindow |
 	currentWindow := self window.
 
-	(currentWindow ownerThatIsA: GroupWindowMorph) ifNotNil: [:group |
-		^self okToChange ifTrue: [
-			[group removeWindow: currentWindow]
-				on: ProvideAnswerNotification do: [:notification |
-					"We already got answer from okToChange check above"
-					notification resume: true]]].
+	(currentWindow ownerThatIsA: GroupWindowMorph) ifNotNil: [ :group |
+		^ self okToChange ifTrue: [
+			  group removeWindow: currentWindow ]].
 
 	currentWindow close
 ]
@@ -261,7 +314,7 @@ ClyBrowserMorph >> close [
 { #category : 'tools support' }
 ClyBrowserMorph >> confirmDiscardChanges [
 
-	^self confirm: 'Changes have not been saved.
+	^ self application confirm: 'Changes have not been saved.
 Is it OK to discard changes?'
 ]
 
@@ -357,7 +410,7 @@ ClyBrowserMorph >> initialExtent [
 ClyBrowserMorph >> initialize [
 	super initialize.
 	navigationStarted := false.
-	navigationHistory := ClyNavigationHistory new.
+	navigationHistory := self class navigationHistoryClass new.
 	plugins := SortedCollection sortBlock: [ :a :b | a priority <= b priority ].
 	self extent: self initialExtent.
 	self changeProportionalLayout.
@@ -415,6 +468,22 @@ ClyBrowserMorph >> itemsChanged [
 	navigationStarted := true.
 
 	[self rebuildToolsForChangedEnvironment] ensure: [ navigationStarted := false ]
+]
+
+{ #category : 'accessing' }
+ClyBrowserMorph >> itemsForQuery: aQuery [
+
+	^ (aQuery isBoundToEnvironment
+		   ifTrue: [ aQuery ]
+		   ifFalse: [ aQuery withScope: self systemScope ]) execute items
+]
+
+{ #category : 'accessing' }
+ClyBrowserMorph >> itemsForQuery: aQuery inScope: aScope [
+
+	aScope bindTo: self navigationEnvironment.
+
+	^ self itemsForQuery: (aScope adoptQuery: aQuery)
 ]
 
 { #category : 'keymapping' }
@@ -521,13 +590,14 @@ ClyBrowserMorph >> okToChange [
 
 { #category : 'opening/closing' }
 ClyBrowserMorph >> open [
-	| window |
 
+	| window |
 	self ensureInitialState.
 	window := self openInWindow.
 	window model: self.
 	self updateWindowTitle.
-	window minimumExtent: (650@500.0) scaledByDisplayScaleFactor
+	window minimumExtent: (650 @ 500.0) scaledByDisplayScaleFactor.
+	ClyBrowserMorph postOpeningBlock value: window
 ]
 
 { #category : 'opening/closing' }
@@ -603,11 +673,6 @@ ClyBrowserMorph >> recordNavigationState: aBrowserNavigationState [
 ClyBrowserMorph >> removePlugin: aBrowserPlugin [
 
 	plugins removeAllSuchThat: [ :each | each class = aBrowserPlugin class ]
-]
-
-{ #category : 'tools support' }
-ClyBrowserMorph >> searchDialog [
-	^ClyBrowserSearchDialogWindow for: self
 ]
 
 { #category : 'initialization' }

@@ -19,6 +19,8 @@ Class {
 
 { #category : 'computing' }
 BalloonFillData >> computeFill [
+
+	<ignoreNotImplementedSelectors: #(computeFillFrom:to:at:in:)>
 	(destForm isNil or:[destForm width < self width]) ifTrue:[
 		destForm := Form extent: (self width + 10) @ 1 depth: 32.
 	].

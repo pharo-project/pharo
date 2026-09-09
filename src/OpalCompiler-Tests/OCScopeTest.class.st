@@ -24,36 +24,24 @@ OCScopeTest >> ivarForTesting [
 	^ ivarForTesting
 ]
 
-{ #category : 'tests' }
-OCScopeTest >> testHasBindingThatBeginsWithClassVar [
-	self assert: (thisContext astScope hasBindingThatBeginsWith: 'MyClass').
-	self deny: (thisContext astScope hasBindingThatBeginsWith: 'NonExMYCL')
+{ #category : 'tests - scope from contexts' }
+OCScopeTest >> testASTContextFromACleanBlockShouldNotExposeOuterVariables [
+
+	| myVariable ctx |
+	myVariable := 27.
+	
+	ctx := [ Object new ] asContext.
+	
+	self assert: (ctx astScope lookupVar: 'myVariable') isNil.
 ]
 
-{ #category : 'tests' }
-OCScopeTest >> testHasBindingThatBeginsWithGlobal [
-	self assert: (thisContext astScope hasBindingThatBeginsWith: 'Obj').
-	self deny: (thisContext astScope hasBindingThatBeginsWith: 'OBj')
-]
+{ #category : 'tests - scope from contexts' }
+OCScopeTest >> testASTContextFromANonCleanBlockShouldExposeOuterVariables [
 
-{ #category : 'tests' }
-OCScopeTest >> testHasBindingThatBeginsWithSlot [
-	self assert: (thisContext astScope hasBindingThatBeginsWith: 'ivarFo').
-	self deny: (thisContext astScope hasBindingThatBeginsWith: 'ivarForDoesNotExist').
-
-	"super and self, too"
-	self assert: (thisContext astScope hasBindingThatBeginsWith: 'sel').
-	self assert: (thisContext astScope hasBindingThatBeginsWith: 'sup')
-]
-
-{ #category : 'tests' }
-OCScopeTest >> testHasBindingThatBeginsWithTemp [
-	| tempForTesting |
-	tempForTesting := 'only',  'forTest'.
-	self assert: (thisContext astScope hasBindingThatBeginsWith: 'tempFor').
-	self deny: (thisContext astScope hasBindingThatBeginsWith: 'TempForTest').
-
-	"thisContext is known, too"
-	self assert: (thisContext astScope hasBindingThatBeginsWith: 'thisC').
-	^tempForTesting
+	| myVariable ctx |
+	myVariable := 27.
+	
+	ctx := [ Object new. self ] asContext.
+	
+	self assert: (ctx astScope lookupVar: 'myVariable') isNotNil.
 ]

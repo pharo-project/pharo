@@ -15,8 +15,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReSuperWithoutSend class >> group [
-	^ 'Design Flaws'
+ReSuperWithoutSend class >> groupSelector [
+
+	^ #designFlawGroup
 ]
 
 { #category : 'accessing' }

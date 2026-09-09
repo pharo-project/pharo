@@ -1,8 +1,6 @@
 "
 I am a command to inspect given variable.
-For live variables lile globals or class variables I open inspector on variable value.
-Also I open inspector on instance variable of class side because they also have live values.
-For instance side instance variable I inspect slot definition instance.
+
 "
 Class {
 	#name : 'SycInspectVariableCommand',
@@ -11,25 +9,32 @@ Class {
 	#package : 'SystemCommands-VariableCommands'
 }
 
-{ #category : 'testing' }
-SycInspectVariableCommand class >> canBeExecutedInContext: aToolContext [
-	(super canBeExecutedInContext: aToolContext) ifFalse: [ ^false ].
+{ #category : 'activation' }
+SycInspectVariableCommand class >> browserContextMenuActivation [
 
-	^aToolContext lastSelectedVariable isLive
+	<classAnnotation>
+	^ CmdContextMenuActivation byItemOf: CmdExtraMenuGroup for: ClyVariableMethodGroup asCalypsoItemContext
 ]
 
 { #category : 'accessing' }
 SycInspectVariableCommand >> defaultMenuIconName [
-	^#glamorousInspect
+
+	^ #inspect
 ]
 
 { #category : 'accessing' }
 SycInspectVariableCommand >> defaultMenuItemName [
-	^'Inspect'
+	^'Inspect variable'
+]
+
+{ #category : 'accessing' }
+SycInspectVariableCommand >> description [
+
+	^ 'Inspect variable'
 ]
 
 { #category : 'execution' }
 SycInspectVariableCommand >> execute [
 
-	variables last openInspector
+	variables last openInspector 
 ]

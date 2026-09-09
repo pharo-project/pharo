@@ -5,3 +5,9 @@ OCUndeclaredVariableNotice >> reparator [
 
 	^ OCCodeReparator new node: self node
 ]
+
+{ #category : '*OpalCompiler-UI' }
+OCUndeclaredVariableNotice >> reparatorFor: anInteractiveAPI [
+
+	^ anInteractiveAPI undeclaredVariableReparatorWithNode: self node
+]

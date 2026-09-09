@@ -28,6 +28,21 @@ ByteArrayTest >> setUp [
 ]
 
 { #category : 'tests' }
+ByteArrayTest >> testAsByteArrayOfSize [
+	self assert: (#[51 52 53] asByteArrayOfSize: 10 ) equals: #[0 0 0 0 0 0 0 51 52 53].
+	self assert: (#[51 52 53] asByteArrayOfSize: 3 ) equals: #[51 52 53]
+]
+
+{ #category : 'tests' }
+ByteArrayTest >> testAsInteger [ 
+	self assert: #[122] asInteger equals: 122.
+	self assert: #[122 8] asInteger equals: 31240.
+	self assert: #[0] asInteger equals: 0.
+	self assert: #[255] asInteger equals: 255.
+	self assert: #[] asInteger equals: 0
+]
+
+{ #category : 'tests' }
 ByteArrayTest >> testBooleanAt [
 	"Checking the result of ByteArray>>#booleanAt on a few instances of ByteArray. It should return false on 0-valued bytes and true on all other bytes (according to the integer to boolean C convention)."
 
@@ -107,12 +122,6 @@ ByteArrayTest >> testHexDumponmax [
 00000010  36 37 38 39                                       |6789            |
 '.
 	self assert: display equals: expected
-]
-
-{ #category : 'tests' }
-ByteArrayTest >> testIsLiteral [
-	self assert: #[122 43 213 7] isLiteral description: 'ByteArray instances are literal'.
-	self deny: thisContext method isLiteral description: 'ByteArray sub instances are not literal'
 ]
 
 { #category : 'tests' }

@@ -7,12 +7,6 @@ Character >> fuelAccept: aGeneralMapper [
 ]
 
 { #category : '*Fuel-Core' }
-Character >> largeIdentityHash [
-
-	^ self identityHash
-]
-
-{ #category : '*Fuel-Core' }
 Character class >> materializeFrom: aDecoder [
 
 	^self value: aDecoder nextEncodedUint32

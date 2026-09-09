@@ -37,17 +37,13 @@ RubScrolledTextMorph >> accept [
 
 { #category : 'model protocol' }
 RubScrolledTextMorph >> acceptContents [
-	(self autoAccept not and: [ self canDiscardEdits and: [ self alwaysAccept not ] ])
-		ifTrue: [ ^ self flash ].
-	self hasEditingConflicts
-		ifTrue: [ (self
-				confirm:
-					'Caution! This method may have been
+
+	(self autoAccept not and: [ self canDiscardEdits and: [ self alwaysAccept not ] ]) ifTrue: [ ^ self flash ].
+	self hasEditingConflicts ifTrue: [
+			(ConfirmationRequest signal: 'Caution! This method may have been
 changed elsewhere since you started
-editing it here.  Accept anyway?' translated)
-				ifFalse: [ ^ self flash ] ].
-	self acceptTextInModel == true
-		ifFalse: [ ^ self ].
+editing it here.  Accept anyway?') ifFalse: [ ^ self flash ] ].
+	self acceptTextInModel == true ifFalse: [ ^ self ].
 	self hasUnacceptedEdits: false.
 	self rulers do: [ :r | r textAccepted ].
 	self announcer announce: (RubTextAccepted morph: self)
@@ -897,6 +893,12 @@ RubScrolledTextMorph >> position: aPoint [
 	self manageLayout
 ]
 
+{ #category : 'accessing - scrollbars' }
+RubScrolledTextMorph >> registerScrollChanges: aSelector [
+
+	self scrollPane announcer when: PaneScrolling send: aSelector to: self model
+]
+
 { #category : 'rulers handling' }
 RubScrolledTextMorph >> removeAllRulers [
 	[ self rulers notEmpty ] whileTrue: [ self withoutRuler: self rulers first ]
@@ -1013,6 +1015,11 @@ RubScrolledTextMorph >> setSelection: aSelectionInterval [
 	aSelectionInterval ifNil: [ ^ self ].
 	self setTextAreaSelection: aSelectionInterval.
 	self selectionChanged
+]
+
+{ #category : 'model protocol' }
+RubScrolledTextMorph >> setSelectionSelector: aSelector [
+	setSelectionSelector := aSelector
 ]
 
 { #category : 'mock for spec' }

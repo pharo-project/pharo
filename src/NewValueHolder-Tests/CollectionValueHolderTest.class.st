@@ -16,8 +16,8 @@ Class {
 { #category : 'running' }
 CollectionValueHolderTest >> setUp [
 	super setUp.
-	empty := OrderedCollection new asValueHolder.
-	withItems := #(1 2 3) asOrderedCollection asValueHolder.
+	empty := CollectionValueHolder value: OrderedCollection new.
+	withItems := CollectionValueHolder value: #(1 2 3) asOrderedCollection.
 	fired := false
 ]
 

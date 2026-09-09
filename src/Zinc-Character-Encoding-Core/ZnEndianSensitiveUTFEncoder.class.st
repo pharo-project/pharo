@@ -14,13 +14,6 @@ Class {
 	#package : 'Zinc-Character-Encoding-Core'
 }
 
-{ #category : 'accessing' }
-ZnEndianSensitiveUTFEncoder class >> handlesEncoding: string [
-	"Return true when my instances handle the encoding described by string"
-
-	^ false
-]
-
 { #category : 'instance creation' }
 ZnEndianSensitiveUTFEncoder class >> newForEncoding: string [
 	"Return a new character encoder object for an encoding described by string.

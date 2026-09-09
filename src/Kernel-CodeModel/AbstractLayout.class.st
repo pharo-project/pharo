@@ -95,12 +95,6 @@ AbstractLayout >> fieldSize [
 ]
 
 { #category : 'testing' }
-AbstractLayout >> hasBindingThatBeginsWith: aString [
-	"Answer true if there is a Slot that begins with aString, false otherwise"
-	^false
-]
-
-{ #category : 'testing' }
 AbstractLayout >> hasFields [
 	^ false
 ]
@@ -114,7 +108,9 @@ AbstractLayout >> hasSlot: aSlot [
 AbstractLayout >> hasSlotNamed: aString [
 	"Return true whether the receiver defines an instance variable named aString.
 	this includs non-visible slots"
-	^self allSlots anySatisfy: [:slot | slot name = aString  ]
+
+	self allSlotsDo: [ :slot | slot name = aString ifTrue: [ ^ true ] ].
+	^ false
 ]
 
 { #category : 'testing' }

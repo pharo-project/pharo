@@ -94,6 +94,9 @@ OrderedDictionary >> = anObject [
 	(self species == anObject species
 		and: [self size = anObject size])
 		ifFalse: [^ false].
+	
+	dictionary keysDo: [:key | 
+        ((self indexOfKey: key) = (anObject indexOfKey: key)) ifFalse: [ ^ false ] ].
 
 	dictionary associationsDo: [:each |
 		(anObject at: each key ifAbsent: [^ false]) = each value
@@ -263,7 +266,7 @@ OrderedDictionary >> at: key update: updateBlock initial: initBlocktOrValue [
 	"I am used to update the value at a given key. The updateBlock is passed
 	the existing value, and the result of the block is stored back.
 	If the key does not exist, store the value of the initBlocktOrValue.
-	initBlocktOrValue can be a block in case the initial value is expencive to compute."
+	initBlocktOrValue can be a block in case the initial value is expensive to compute."
 	| val |
 	val := self at: key ifAbsent: [ nil ].
 	val
@@ -303,6 +306,16 @@ OrderedDictionary >> errorInvalidIndex: anIndex [
 	SubscriptOutOfBounds signalFor: anIndex
 ]
 
+{ #category : 'enumerating' }
+OrderedDictionary >> flatCollect: aBlock [
+	"Evaluate aBlock for each of the receiver's values (by opposition to keys) and answer the
+	list of all resulting values flatten one level. Assumes that aBlock returns some kind
+	of collection for each element. Equivalent to the lisp's mapcan"
+	"If you want to have keys use associations collect: or associations flatCollect: "
+
+	^ self flatCollect: aBlock as: OrderedCollection
+]
+
 { #category : 'private' }
 OrderedDictionary >> growOrderedKeys [
 	orderedKeys :=
@@ -311,11 +324,6 @@ OrderedDictionary >> growOrderedKeys [
 			to: orderedKeys size
 			with: orderedKeys
 			startingAt: 1
-]
-
-{ #category : 'testing' }
-OrderedDictionary >> hasBindingThatBeginsWith: aString [
-	^ dictionary hasBindingThatBeginsWith: aString
 ]
 
 { #category : 'comparing' }

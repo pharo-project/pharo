@@ -13,6 +13,25 @@ ScaledDecimal >> nthRoot: anInteger [
 ]
 
 { #category : '*Math-Operations-Extensions' }
+ScaledDecimal >> raisedToFraction: aFraction [
+	| result |
+	result := self asFraction raisedToFraction: aFraction.
+	^result isFloat
+		ifTrue: [result]
+		ifFalse: [result asScaledDecimal: scale]
+]
+
+{ #category : '*Math-Operations-Extensions' }
+ScaledDecimal >> raisedToInteger: aNumber [
+	^self class newFromNumber: (super raisedToInteger: aNumber) scale: scale
+]
+
+{ #category : '*Math-Operations-Extensions' }
+ScaledDecimal >> reciprocal [
+	^self class newFromNumber: super reciprocal scale: scale
+]
+
+{ #category : '*Math-Operations-Extensions' }
 ScaledDecimal >> round: numberOfWishedDecimal [
 	"Round the decimal part of the receiver to be limited to the number of wished decimal. Only leave a fixed amount of decimal."
 

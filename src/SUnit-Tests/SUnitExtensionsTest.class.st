@@ -4,9 +4,6 @@ SUnit tests for extensions to SUnit
 Class {
 	#name : 'SUnitExtensionsTest',
 	#superclass : 'TestCase',
-	#instVars : [
-		'stream'
-	],
 	#category : 'SUnit-Tests-Core',
 	#package : 'SUnit-Tests',
 	#tag : 'Core'
@@ -27,28 +24,12 @@ SUnitExtensionsTest >> assertionFailedInRaiseWithExceptionDoTest [
 ]
 
 { #category : 'real tests' }
-SUnitExtensionsTest >> differentExceptionInShouldRaiseWithExceptionDoTest [
-
-	[ self
-		should: [ Error signal ]
-		raise: Halt
-		withExceptionDo: [ :anException | self assert: false description: 'should:raise:withExceptionDo: handled an exception that should not handle'] ]
-	on: Error
-	do: [ :anException | anException return: nil ]
-]
-
-{ #category : 'real tests' }
 SUnitExtensionsTest >> errorInRaiseWithExceptionDoTest [
 
 	self
 		should: [ Error  signal ]
 		raise: Error
 		withExceptionDo: [ :anException | Error signal: 'A forced error' ]
-]
-
-{ #category : 'test support' }
-SUnitExtensionsTest >> failureLog [
-	^self stream
 ]
 
 { #category : 'real tests' }
@@ -87,17 +68,16 @@ SUnitExtensionsTest >> shouldFixTest [
 
 { #category : 'real tests' }
 SUnitExtensionsTest >> shouldRaiseWithExceptionDoTest [
-	self should: [ Error signal: '1' ] raise: Error withExceptionDo: [ :anException | self assert: anException messageText equals: '1' ]
+	self 
+		should: [ Error signal: '1' ] 
+		raise: Error withExceptionDo: [ :anException | self assert: anException messageText equals: '1' ]
 ]
 
 { #category : 'real tests' }
 SUnitExtensionsTest >> shouldRaiseWithSignalDoTest [
-	self should: [ Error signal: '1' ] raise: Error withExceptionDo: [ :anException | self assert: anException messageText equals: '1' ]
-]
-
-{ #category : 'accessing' }
-SUnitExtensionsTest >> stream [
-	^stream ifNil: [stream := String new writeStream]
+	self 
+		should: [ Error signal: '1' ] 
+		raise: Error withExceptionDo: [ :anException | self assert: anException messageText equals: '1' ]
 ]
 
 { #category : 'tests' }
@@ -114,11 +94,15 @@ SUnitExtensionsTest >> testAssertionFailedInRaiseWithExceptionDo [
 
 { #category : 'tests' }
 SUnitExtensionsTest >> testAutoAssertFalse [
-	| booleanCondition |
+	
 	self assert: self isLogging.
-	self should: [ self assert: 1 = 2 description: 'self assert: 1 = 2' ] raise: self defaultTestFailure.
-	booleanCondition := (self stream contents substrings: {Character cr}) last = 'self assert: 1 = 2'.
-	self assert: booleanCondition
+	self 
+		should: [ self assert: 1 = 2 description: 'self assert: 1 = 2' ] 
+		raise: self defaultTestFailure.
+	self 
+		assert: (self failureLog contents substrings: {Character cr}) last 
+		equals: 'self assert: 1 = 2'.
+
 ]
 
 { #category : 'tests' }
@@ -129,29 +113,21 @@ SUnitExtensionsTest >> testAutoAssertTrue [
 
 { #category : 'tests' }
 SUnitExtensionsTest >> testAutoDenyFalse [
-	| booleanCondition |
+
 	self assert: self isLogging.
-	self should: [ self deny: 1 = 1 description: 'self deny: 1 = 1'.] raise: self defaultTestFailure.
-	booleanCondition := (self stream contents substrings:  {Character cr}) last = 'self deny: 1 = 1'.
-	self assert: booleanCondition
+	self 
+		should: [ self deny: 1 = 1 description: 'self deny: 1 = 1' ] 
+		raise: self defaultTestFailure.
+	self 
+		assert: (self failureLog contents substrings:  {Character cr}) last 
+		equals: 'self deny: 1 = 1'.
+	
 ]
 
 { #category : 'tests' }
 SUnitExtensionsTest >> testAutoDenyTrue [
 	self deny: 1 equals: 2.
 	self deny: false
-]
-
-{ #category : 'tests' }
-SUnitExtensionsTest >> testDifferentExceptionInShouldRaiseWithExceptionDo [
-	| testCase testResult |
-	testCase := self class selector: #differentExceptionInShouldRaiseWithExceptionDoTest.
-	testResult := testCase run.
-
-	self assert: (testResult passed includes: testCase).
-	self assertEmpty: testResult errors.
-	self assertEmpty: testResult failures.
-	self assert: testResult passed size equals: 1
 ]
 
 { #category : 'tests' }

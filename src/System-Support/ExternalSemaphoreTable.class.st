@@ -1,6 +1,6 @@
 "
 By John M McIntosh johnmci@smalltalkconsulting.com
-This class was written to mange the external semaphore table. When I was writing a Socket test server I discovered various race conditions on the access to the externalSemaphore table. This new class uses class side methods to restrict access using two mutex semaphores, one for removal and one for additions to the table. It seemed cleaner to delegate the responsibility here versus adding more code and another class variable to SystemDictionary 
+This class was written to mange the external semaphore table. When I was writing a Socket test server I discovered various race conditions on the access to the externalSemaphore table. This new class uses class side methods to restrict access using two mutex semaphores, one for removal and one for additions to the table. It seemed cleaner to delegate the responsibility here versus adding more code and another class variable to SystemEnvironment 
 
 Note that in Smalltalk recreateSpecialObjectsArray we still directly play with the table.
 
@@ -77,7 +77,7 @@ ExternalSemaphoreTable class >> freedSlotsIn: externalObjects ratherThanIncrease
 
 				needToGrow
 					ifTrue: ["If we did GC, warn we had to gc so actions could be taken if appropriate."
-						self traceCr: DateAndTime now printString;
+						self
 							traceCr:  'WARNING:  Had to GC to make room for more external objects.';
 							traceCr: 'If this happens often, it would be a good idea to either:';
 							traceCr: '- Raise the maxExternalSemaphores size.';

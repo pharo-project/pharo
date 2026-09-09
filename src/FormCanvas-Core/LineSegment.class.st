@@ -238,7 +238,7 @@ LineSegment >> end: aPoint [
 	end := aPoint
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 LineSegment >> from: startPoint to: endPoint [
 	"Initialize the receiver"
 	start := startPoint.
@@ -251,7 +251,7 @@ LineSegment >> hasZeroLength [
 	^start = end
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 LineSegment >> initializeFrom: controlPoints [
 	controlPoints size = 2 ifFalse:[self error:'Wrong number of control points'].
 	start := controlPoints at: 1.

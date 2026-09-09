@@ -17,8 +17,9 @@ ReInconsistentMethodClassificationRule class >> checksMethod [
 ]
 
 { #category : 'accessing' }
-ReInconsistentMethodClassificationRule class >> group [
-	^ 'Design Flaws'
+ReInconsistentMethodClassificationRule class >> groupSelector [
+
+	^ #designFlawGroup
 ]
 
 { #category : 'accessing' }
@@ -28,7 +29,8 @@ ReInconsistentMethodClassificationRule class >> ruleName [
 
 { #category : 'accessing' }
 ReInconsistentMethodClassificationRule class >> severity [
-	^ #information
+
+	^ 'information'
 ]
 
 { #category : 'accessing' }

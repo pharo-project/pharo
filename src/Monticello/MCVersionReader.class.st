@@ -22,6 +22,12 @@ MCVersionReader class >> file: fileName streamDo: aBlock [
 		readStreamDo: [ :file | aBlock value: file]
 ]
 
+{ #category : 'testing' }
+MCVersionReader class >> isAbstract [
+
+	^ self = MCVersionReader
+]
+
 { #category : 'actions - file' }
 MCVersionReader class >> loadVersionFile: fileName [
 	| version |

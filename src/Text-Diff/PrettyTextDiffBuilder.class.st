@@ -24,12 +24,12 @@ PrettyTextDiffBuilder class >> from: srcString to: dstString inClass: srcClass [
 	^ (self new sourceClass: srcClass) from: srcString to: dstString
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 PrettyTextDiffBuilder >> sourceClass: aClass [
 	sourceClass := aClass
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 PrettyTextDiffBuilder >> split: aString [
 	| formatted trimmed |
 	trimmed := aString asString trimBoth.

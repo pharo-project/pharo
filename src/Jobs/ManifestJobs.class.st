@@ -20,3 +20,10 @@ Class {
 	#package : 'Jobs',
 	#tag : 'Manifest'
 }
+
+{ #category : 'meta-data - dependency analyser' }
+ManifestJobs class >> manuallyResolvedDependencies [
+
+	<ignoreForCoverage>
+	^ #(#'System-Benchmark')
+]

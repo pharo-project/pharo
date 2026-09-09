@@ -238,10 +238,12 @@ TestExecutionEnvironment >> maxTimeForTest [
 
 { #category : 'accessing' }
 TestExecutionEnvironment >> maxTimeForTest: aDuration [
+
+	aDuration < 0.1 second ifTrue: [
+			self error:
+				'The maximum time limit of a test cannot be inferior to 0.1second because a watchdog process of the test is running in testing environment with high timing priority which requires a sleep time to time to allow other processed to run. If the watch dog does not have the time to sleep, the image will crash.' ].
 	maxTimeForTest := aDuration.
-	watchDogSemaphore ifNotNil: [
-		"we need restart watch dog timer for new timeout"
-		watchDogSemaphore signal ]
+	watchDogSemaphore ifNotNil: [ "we need restart watch dog timer for new timeout" watchDogSemaphore signal ]
 ]
 
 { #category : 'controlling' }

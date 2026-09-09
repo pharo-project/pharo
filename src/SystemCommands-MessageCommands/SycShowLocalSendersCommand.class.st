@@ -17,7 +17,7 @@ SycShowLocalSendersCommand class >> canBeExecutedInContext: aToolContext [
 { #category : 'accessing' }
 SycShowLocalSendersCommand >> defaultMenuIconName [
 
-	^ #edit
+	^ #browse
 ]
 
 { #category : 'accessing' }
@@ -26,16 +26,16 @@ SycShowLocalSendersCommand >> defaultMenuItemName [
 	^ 'Hierarchical senders'
 ]
 
+{ #category : 'accessing' }
+SycShowLocalSendersCommand >> description [
+
+	^ 'Finds Hierarchical senders of a method'
+]
+
 { #category : 'execution' }
 SycShowLocalSendersCommand >> execute [
 
-	Smalltalk tools messageList browse: self searchInTheWholeHierarchy.
-]
-
-{ #category : 'testing' }
-SycShowLocalSendersCommand >> isComplexRefactoring [
-
-	^ false
+	(Smalltalk tools toolNamed: #messageList) browse: self searchInTheWholeHierarchy.
 ]
 
 { #category : 'execution' }

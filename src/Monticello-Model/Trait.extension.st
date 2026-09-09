@@ -14,8 +14,7 @@ Trait >> asClassDefinition [
 		              traitComposition: self traitCompositionString;
 		              packageName: self package name;
 		              classTraitComposition: self class traitCompositionString;
-		              comment: self comment;
-		              commentStamp: self commentStamp.
+		              comment: self comment.
 
 	"We do not export the tag if this is the root."
 	self packageTag ifNotNil: [ :tag | tag isRoot ifFalse: [ definition tagName: tag name ] ].

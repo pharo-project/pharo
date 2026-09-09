@@ -5,8 +5,6 @@ Class {
 	#name : 'OupsDummyDebuggerSystem',
 	#superclass : 'OupsDebuggerSystem',
 	#instVars : [
-		'newUIProcessSpawned',
-		'customUIManager',
 		'debugRequestSentToHandleDebugRequest',
 		'callsToHandleDebugRequest'
 	],
@@ -25,11 +23,6 @@ OupsDummyDebuggerSystem >> callsToHandleDebugRequest: aValue [
 	callsToHandleDebugRequest := aValue
 ]
 
-{ #category : 'default values' }
-OupsDummyDebuggerSystem >> customUIManager: aUIManager [
-	customUIManager := aUIManager
-]
-
 { #category : 'accessing' }
 OupsDummyDebuggerSystem >> debugRequestSentToHandleDebugRequest [
 	^ debugRequestSentToHandleDebugRequest
@@ -38,18 +31,6 @@ OupsDummyDebuggerSystem >> debugRequestSentToHandleDebugRequest [
 { #category : 'default values' }
 OupsDummyDebuggerSystem >> debuggerSelectionStrategy [
 	^ OupsDummySelectionStrategy new
-]
-
-{ #category : 'default values' }
-OupsDummyDebuggerSystem >> defaultUIManager [
-	customUIManager ifNil: [ ^ super defaultUIManager ].
-	^ customUIManager
-]
-
-{ #category : 'open debugger' }
-OupsDummyDebuggerSystem >> logDebugRequest: aDebugRequest withUIManager: aCommandLineUIManager [
-
-	self openDebuggerOnRequest: aDebugRequest
 ]
 
 { #category : 'open debugger' }
@@ -66,7 +47,7 @@ OupsDummyDebuggerSystem >> suspendDebuggedProcess: aDebugRequest [
 ]
 
 { #category : 'open debugger' }
-OupsDummyDebuggerSystem >> warningRequest: aDebugRequest withUIManager: aCommandLineUIManager [
+OupsDummyDebuggerSystem >> warningRequest: aDebugRequest withErrorHandler: errorHandler [
 
 	self openDebuggerOnRequest: aDebugRequest
 ]

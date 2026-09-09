@@ -32,7 +32,7 @@ DropEvent >> contents [
 	^contents
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 DropEvent >> copyHandlerState: anEvent [
 	"Copy the handler state from anEvent. Used for quickly transferring handler information between transformed events."
 	wasHandled := anEvent wasHandled
@@ -64,7 +64,7 @@ DropEvent >> printOn: aStream [
 	aStream nextPut: $]
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 DropEvent >> resetHandlerFields [
 	"Reset anything that is used to cross-communicate between two eventual handlers during event dispatch"
 	wasHandled := false

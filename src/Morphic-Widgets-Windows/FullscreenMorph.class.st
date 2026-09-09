@@ -16,7 +16,7 @@ FullscreenMorph >> contentMorph [
 	^self submorphs first
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 FullscreenMorph >> defaultColor [
 	"Return the receiver's default color."
 
@@ -48,7 +48,7 @@ FullscreenMorph >> layoutChanged [
 	self layoutPolicy ifNotNil:[:l | l flushLayoutCache]
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 FullscreenMorph >> postOpenInWorld: aWorld [
 
 	(self submorphs notEmpty and: [ self submorphs first isSystemWindow ])
@@ -56,7 +56,7 @@ FullscreenMorph >> postOpenInWorld: aWorld [
 	super postOpenInWorld: aWorld
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 FullscreenMorph >> preOpenInWorld: aWorld [
 
 	"Do nothing"

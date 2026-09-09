@@ -25,6 +25,12 @@ ClyRequestProtocolForEditorCommand >> defaultMenuItemName [
 	^ menuItemName
 ]
 
+{ #category : 'accessing' }
+ClyRequestProtocolForEditorCommand >> description [
+
+	^ 'Requests a protocol to reclassify a method.'
+]
+
 { #category : 'execution' }
 ClyRequestProtocolForEditorCommand >> execute [
 	| protocolEditor |

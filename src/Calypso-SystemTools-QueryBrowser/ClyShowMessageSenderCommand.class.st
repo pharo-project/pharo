@@ -84,12 +84,18 @@ ClyShowMessageSenderCommand >> defaultMenuItemName [
 	^'Senders'
 ]
 
+{ #category : 'accessing' }
+ClyShowMessageSenderCommand >> description [
+
+	^ 'Show all message senders.'
+]
+
 { #category : 'execution' }
 ClyShowMessageSenderCommand >> execute [
 
 	| selectors |
-	selectors := messages collect: [ :each | each selector].
-	browser spawnQueryBrowserOn: (ClyMessageSendersQuery ofAny: selectors)
+	selectors := messages collect: [ :each | each selector ].
+	(Smalltalk tools toolNamed: #messageList) browseSendersOfAll: selectors
 ]
 
 { #category : 'execution' }

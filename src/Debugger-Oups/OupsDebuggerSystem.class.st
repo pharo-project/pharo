@@ -36,11 +36,6 @@ OupsDebuggerSystem >> debuggerSelectionStrategy [
 		  self availableDebuggers
 ]
 
-{ #category : 'default values' }
-OupsDebuggerSystem >> defaultUIManager [
-	^ UIManager default
-]
-
 { #category : 'exceptions' }
 OupsDebuggerSystem >> ensureExceptionIn: aDebugSession [
 
@@ -64,20 +59,9 @@ OupsDebuggerSystem >> handleWarningDebugRequest: aWarningDebugRequest [
 	"A WarningDebugRequest has been submitted. Ask what to do to the default UIManager. Typically, the UIManager will call back my #openDebuggerOnRequest: method to open a debugger"
 
 	[
-	self defaultUIManager handleWarningDebugRequest: aWarningDebugRequest fromDebuggerSystem: self]
+	ErrorHandler default handleWarningDebugRequest: aWarningDebugRequest fromDebuggerSystem: self]
 		on: Error
 		do: [ self signalDebuggerError: aWarningDebugRequest ]
-]
-
-{ #category : 'open debugger' }
-OupsDebuggerSystem >> logDebugRequest: aDebugRequest withUIManager: aCommandLineUIManager [
-
-	aCommandLineUIManager
-		debugProcess: aDebugRequest process
-		context: aDebugRequest exception signalerContext
-		label: aDebugRequest exception description
-		fullView: false
-		notification: aDebugRequest exception description
 ]
 
 { #category : 'open debugger' }
@@ -104,11 +88,12 @@ OupsDebuggerSystem >> performPreDebugActionsIn: aDebugRequest [
 
 { #category : 'error management' }
 OupsDebuggerSystem >> signalDebuggerError: aDebugRequest [
+
 	| failingSession |
 	failingSession := aDebugRequest debugSession
-		name: self signalDebuggerErrorMessage;
-		yourself.
-	self inform: 'failingSession signalDebuggerError: aDebugRequest exception'
+		                  name: self signalDebuggerErrorMessage;
+		                  yourself.
+	InformativeNotification signal: 'failingSession signalDebuggerError: aDebugRequest exception'
 ]
 
 { #category : 'error management' }
@@ -122,7 +107,7 @@ OupsDebuggerSystem >> suspendDebuggedProcess: aDebugRequest [
 ]
 
 { #category : 'open debugger' }
-OupsDebuggerSystem >> warningRequest: aDebugRequest withUIManager: aCommandLineUIManager [
+OupsDebuggerSystem >> warningRequest: aDebugRequest withErrorHandler: errorHandler [
 
-	aCommandLineUIManager handleWarning: aDebugRequest exception
+	errorHandler handleWarning: aDebugRequest exception
 ]

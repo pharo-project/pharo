@@ -27,6 +27,12 @@ TFUFFIDerivedTypeMarshallingTest >> intToBoolean: int [
 ]
 
 { #category : 'ffi-calls' }
+TFUFFIDerivedTypeMarshallingTest >> pointerConstantToInt [
+
+	^ self ffiCall: #(int id_int(void* 0))
+]
+
+{ #category : 'ffi-calls' }
 TFUFFIDerivedTypeMarshallingTest >> pointerToString: cString [
 
 	^ self ffiCall: #(String dup_string(char *cString))
@@ -198,6 +204,12 @@ TFUFFIDerivedTypeMarshallingTest >> testMarshallingTrueArgument [
 TFUFFIDerivedTypeMarshallingTest >> testMarshallingTrueReturnValue [
 
 	self assert: (self intToBoolean: 17) equals: true
+]
+
+{ #category : 'tests' }
+TFUFFIDerivedTypeMarshallingTest >> testPointerConstantCorrectlyMarshalled [
+
+	self assert: (self pointerConstantToInt) equals: 0
 ]
 
 { #category : 'tests' }

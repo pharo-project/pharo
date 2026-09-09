@@ -6,8 +6,8 @@ Some of the assertions are quite complicated and use a lot of collection protoco
 Class {
 	#name : 'OrderedCollectionTest',
 	#superclass : 'CollectionRootTest',
-	#traits : 'TSortTest + TEmptySequenceableTest + TAddTest + TSequencedElementAccessTest + TIncludesWithIdentityCheckTest + TCloneTest + TSetArithmetic + TRemoveForMultiplenessTest + TCreationWithTest + TCopyTest + TPutBasicTest + TIterateSequencedReadableTest + TSubCollectionAccess + TIndexAccess + TCopySequenceableWithReplacement + TCopyPartOfSequenceable + TCopySequenceableSameContents + (TCopySequenceableWithOrWithoutSpecificElements - {#testForceToPaddingWith. #testForceToPaddingStartWith}) + TPrintOnSequencedTest + TAsStringCommaAndDelimiterSequenceableTest + TConvertTest + TConvertAsSetForMultiplinessIdentityTest + TSequencedConcatenationTest + TBeginsEndsWith + TReplacementSequencedTest + TIndexAccessForMultipliness + TCopyPartOfSequenceableForMultipliness + TConvertAsSortedTest + TPutTest + TSequencedStructuralEqualityTest + TOccurrencesForMultiplinessTest + TEnumeratingTest + TSequenceableTruncatedToSize',
-	#classTraits : 'TSortTest classTrait + TEmptySequenceableTest classTrait + TAddTest classTrait + TSequencedElementAccessTest classTrait + TIncludesWithIdentityCheckTest classTrait + TCloneTest classTrait + TSetArithmetic classTrait + TRemoveForMultiplenessTest classTrait + TCreationWithTest classTrait + TCopyTest classTrait + TPutBasicTest classTrait + TIterateSequencedReadableTest classTrait + TSubCollectionAccess classTrait + TIndexAccess classTrait + TCopySequenceableWithReplacement classTrait + TCopyPartOfSequenceable classTrait + TCopySequenceableSameContents classTrait + TCopySequenceableWithOrWithoutSpecificElements classTrait + TPrintOnSequencedTest classTrait + TAsStringCommaAndDelimiterSequenceableTest classTrait + TConvertTest classTrait + TConvertAsSetForMultiplinessIdentityTest classTrait + TSequencedConcatenationTest classTrait + TBeginsEndsWith classTrait + TReplacementSequencedTest classTrait + TIndexAccessForMultipliness classTrait + TCopyPartOfSequenceableForMultipliness classTrait + TConvertAsSortedTest classTrait + TPutTest classTrait + TSequencedStructuralEqualityTest classTrait + TOccurrencesForMultiplinessTest classTrait + TEnumeratingTest classTrait + TSequenceableTruncatedToSize classTrait',
+	#traits : 'TSortTest + TEmptySequenceableTest + TAddTest + TSequencedElementAccessTest + TIncludesWithIdentityCheckTest + TCloneTest + TSetArithmetic + TRemoveForMultiplenessTest + TCreationWithTest + TCopyTest + TPutBasicTest + TIterateSequencedReadableTest + TSubCollectionAccess + TIndexAccess + TCopySequenceableWithReplacement + TCopyPartOfSequenceable + TCopySequenceableSameContents + (TCopySequenceableWithOrWithoutSpecificElements - {#testForceToPaddingWith. #testForceToPaddingStartWith}) + TPrintOnSequencedTest + TConvertTest + TConvertAsSetForMultiplinessIdentityTest + TSequencedConcatenationTest + TBeginsEndsWith + TReplacementSequencedTest + TIndexAccessForMultipliness + TCopyPartOfSequenceableForMultipliness + TConvertAsSortedTest + TPutTest + TSequencedStructuralEqualityTest + TOccurrencesForMultiplinessTest + TEnumeratingTest + TSequenceableTruncatedToSize',
+	#classTraits : 'TSortTest classTrait + TEmptySequenceableTest classTrait + TAddTest classTrait + TSequencedElementAccessTest classTrait + TIncludesWithIdentityCheckTest classTrait + TCloneTest classTrait + TSetArithmetic classTrait + TRemoveForMultiplenessTest classTrait + TCreationWithTest classTrait + TCopyTest classTrait + TPutBasicTest classTrait + TIterateSequencedReadableTest classTrait + TSubCollectionAccess classTrait + TIndexAccess classTrait + TCopySequenceableWithReplacement classTrait + TCopyPartOfSequenceable classTrait + TCopySequenceableSameContents classTrait + TCopySequenceableWithOrWithoutSpecificElements classTrait + TPrintOnSequencedTest classTrait + TConvertTest classTrait + TConvertAsSetForMultiplinessIdentityTest classTrait + TSequencedConcatenationTest classTrait + TBeginsEndsWith classTrait + TReplacementSequencedTest classTrait + TIndexAccessForMultipliness classTrait + TCopyPartOfSequenceableForMultipliness classTrait + TConvertAsSortedTest classTrait + TPutTest classTrait + TSequencedStructuralEqualityTest classTrait + TOccurrencesForMultiplinessTest classTrait + TEnumeratingTest classTrait + TSequenceableTruncatedToSize classTrait',
 	#instVars : [
 		'empty',
 		'nonEmpty',
@@ -364,12 +364,6 @@ OrderedCollectionTest >> newElement [
 OrderedCollectionTest >> nonEmpty [
 
 	^ nonEmpty
-]
-
-{ #category : 'requirements' }
-OrderedCollectionTest >> nonEmpty1Element [
-" return a collection of size 1 including one element"
-	^ OrderedCollection new add:( self nonEmpty anyOne); yourself
 ]
 
 { #category : 'requirements' }
@@ -773,21 +767,6 @@ OrderedCollectionTest >> testBeginsWithAnyOf [
 	self deny: (la beginsWithAnyOf: #()).
 	self assert: (la beginsWithAnyOf: #(())).
 	self deny: (la beginsWithAnyOf: #((42)))
-]
-
-{ #category : 'tests - enumerating' }
-OrderedCollectionTest >> testBind [
-
-	| aCollection |
-
-	aCollection := #(1 2 3).
-
-	self assertCollection: (aCollection bind: [ :first :second :third | { first. second. third } ]) equals: aCollection.
-
-	self assert: (#() bind: [ #blockResult ]) equals: #blockResult .
-
-	self should: [#() bind: [ :arg | #blockResult ]] raise: ArgumentsCountMismatch.
-	self should: [#(1 2) bind: [ :arg | #blockResult ]] raise: ArgumentsCountMismatch
 ]
 
 { #category : 'tests - accessing' }

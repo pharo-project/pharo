@@ -52,7 +52,7 @@ ReInvocationSequenceRule class >> noteCompilationOf: aSelector meta: isMeta [
 
 { #category : 'accessing' }
 ReInvocationSequenceRule class >> ruleName [
-	^ 'Invocation order incorect'
+	^ 'Invocation order incorrect'
 ]
 
 { #category : 'adding' }

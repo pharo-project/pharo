@@ -52,15 +52,16 @@ TIterateSequencedReadableTest >> testAllButFirstDo [
 TIterateSequencedReadableTest >> testAllButLastDo [
 
 	| result |
-	result:= OrderedCollection  new.
+	result := OrderedCollection new.
 
-	self nonEmptyMoreThan1Element  allButLastDo: [:each | result add: each].
+	self nonEmptyMoreThan1Element allButLastDo: [ :each | result add: each ].
 
-	1 to: (result size) do:
-		[:i|
-		self assert: (self nonEmptyMoreThan1Element  at:(i ))=(result at:i)].
+	1 to: result size do: [ :i | 
+		self 
+			assert: (self nonEmptyMoreThan1Element at: i) 
+			equals: (result at: i) ].
 
-	self assert: result size=(self nonEmptyMoreThan1Element  size-1)
+	self assert: result size = (self nonEmptyMoreThan1Element size - 1)
 ]
 
 { #category : 'tests - iterate on sequenced reable collections' }
@@ -178,10 +179,10 @@ TIterateSequencedReadableTest >> testKeysAndValuesDo [
 
 	self nonEmptyMoreThan1Element  keysAndValuesDo:
 		[:i :value|
-		indexes  add: (i).
+		indexes  add: i.
 		elements add: value].
 
-	(1 to: self nonEmptyMoreThan1Element size )do:
+	(1 to: self nonEmptyMoreThan1Element size) do:
 		[ :i |
 		self assert: (indexes at: i) equals: i.
 		self assert: (elements at: i) equals: (self nonEmptyMoreThan1Element at: i).
@@ -340,7 +341,7 @@ TIterateSequencedReadableTest >> testWithIndexDo [
 
 	self nonEmptyMoreThan1Element withIndexDo:
 		[:value :i  |
-			indexes  add: (i).
+			indexes  add: i.
 			elements add: value ].
 
 	self nonEmptyMoreThan1Element withIndexDo:

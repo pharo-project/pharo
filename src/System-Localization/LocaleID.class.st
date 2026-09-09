@@ -97,7 +97,7 @@ LocaleID >> isoLanguage [
 	^isoLanguage
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 LocaleID >> isoLanguage: langString isoCountry: countryStringOrNil [
 	isoLanguage := langString.
 	isoCountry := countryStringOrNil

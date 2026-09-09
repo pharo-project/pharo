@@ -13,7 +13,6 @@ Class {
 		'passenger',
 		'draggedMorph',
 		'source',
-		'dropNotifyRecipient',
 		'accepted',
 		'copy',
 		'dragHand'
@@ -83,8 +82,7 @@ TransferMorph >> defaultColor [
 { #category : 'submorphs - add/remove' }
 TransferMorph >> delete [
 	"See also >>justDroppedInto:event:."
-	accepted ifFalse: [
-		self dropNotifyRecipient ifNotNil: [ self dropNotifyRecipient dropRejectedMorph: self ]].
+
 	self changed: #deleted.
 	self breakDependents.
 	super delete
@@ -121,16 +119,6 @@ TransferMorph >> draggedMorph [
 { #category : 'accessing' }
 TransferMorph >> draggedMorph: aMorph [
 	draggedMorph := aMorph
-]
-
-{ #category : 'accessing' }
-TransferMorph >> dropNotifyRecipient [
-	^dropNotifyRecipient
-]
-
-{ #category : 'accessing' }
-TransferMorph >> dropNotifyRecipient: anObject [
-	dropNotifyRecipient := anObject
 ]
 
 { #category : 'private' }
@@ -180,9 +168,6 @@ TransferMorph >> justDroppedInto: targetMorph event: anEvent [
 	self formerPosition: formerPosition.
 	accepted := targetMorph ~= self world.
 
-	accepted ifTrue: [
-		self dropNotifyRecipient ifNotNil: [
-			self dropNotifyRecipient dropAcceptedMorph: self from: targetMorph ] ].
 	self delete
 ]
 

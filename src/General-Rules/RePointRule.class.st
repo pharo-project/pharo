@@ -1,9 +1,11 @@
 "
-This smell arise when a method contains a creation of an instance Point in this way : 
+This smell arises when a method contains a creation of an instance Point in this way: 
 
+```
 Point x: y:
+```
 
-prefer use x@y to create an instance of Point.
+prefer use `x@y` to create an instance of `Point`.
 "
 Class {
 	#name : 'RePointRule',
@@ -14,9 +16,9 @@ Class {
 }
 
 { #category : 'accessing' }
-RePointRule class >> group [
+RePointRule class >> groupSelector [
 
-	^ 'Optimization'
+	^ #optimizationGroup
 ]
 
 { #category : 'accessing' }

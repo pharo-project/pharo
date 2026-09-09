@@ -24,16 +24,6 @@ MCMergeOrLoadWarning >> cancel [
 	^ self resume: nil
 ]
 
-{ #category : 'exceptionDescription' }
-MCMergeOrLoadWarning >> defaultAction [
-	^ ( UIManager default
-		confirm: self messageText
-		trueChoice: 'Load'
-		falseChoice: 'Merge'
-		cancelChoice: 'Cancel'
-		default: nil ).
-]
-
 { #category : 'actions' }
 MCMergeOrLoadWarning >> load [
 	^ self resume: true

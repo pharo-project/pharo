@@ -19,12 +19,12 @@ RBRemoveDirectAccessToVariableTransformationTest >> testClassVariable [
 	| refactoring class |
 	refactoring := RBRemoveDirectAccessToVariableTransformation
 		               classVariable: 'UndoSize'
-		               class: #RBRefactoryChangeManager.
+		               class: #ReChangeManager.
 	refactoring generateChanges.
 
 	self assert: refactoring model changes changes size equals: 2.
 
-	class := (refactoring model classNamed: #RBRefactoryChangeManager)
+	class := (refactoring model classNamed: #ReChangeManager)
 		         classSide.
 	self
 		assert: (class parseTreeForSelector: #initialize)
@@ -103,7 +103,7 @@ RBRemoveDirectAccessToVariableTransformationTest >> testRefactoring [
 		assert: (class parseTreeForSelector: #initialize)
 		equals: (self parseMethod: 'initialize
 	super initialize.
-	changes := changeFactory compositeRefactoryChange onSystemDictionary: self environment.
+	changes := changeFactory compositeRefactoryChange onSystemEnvironment: self environment.
 	newClasses := IdentityDictionary new.
 	newPackages := IdentityDictionary new.
 	changedClasses := IdentityDictionary new.
@@ -129,7 +129,7 @@ RBRemoveDirectAccessToVariableTransformationTest >> testTransform [
 		assert: (class parseTreeForSelector: #superSends)
 		equals: (self parseMethod: 'superSends
 		| rule |
-		rule := RBParseTreeRewriter new.
+		rule := OCParseTreeRewriter new.
 		rule addSearch: ''super `@message: ``@args''
 			-> (
 				[:aNode |

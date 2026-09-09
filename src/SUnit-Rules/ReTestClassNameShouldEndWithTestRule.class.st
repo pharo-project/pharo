@@ -18,9 +18,9 @@ ReTestClassNameShouldEndWithTestRule class >> checksClass [
 ]
 
 { #category : 'accessing' }
-ReTestClassNameShouldEndWithTestRule class >> group [
+ReTestClassNameShouldEndWithTestRule class >> groupSelector [
 
-	^ 'SUnit'
+	^ #sunitGroup
 ]
 
 { #category : 'accessing' }

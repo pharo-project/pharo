@@ -6,20 +6,26 @@ Class {
 	#tag : 'Parametrized'
 }
 
-{ #category : 'tests' }
+{ #category : 'building suites' }
 RBMergeInstanceVariableIntoAnotherParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBMergeInstanceVariableIntoAnother .
 					  #constructor -> #rename:to:in: };
 		addCase: { #rbClass -> RBMergeInstanceVariableIntoAnotherTransformation .
-					  #constructor -> #renameInstanceVarible:to:in: };
+					  #constructor -> #renameInstanceVariable:to:in: };
 		yourself
+]
+
+{ #category : 'running' }
+RBMergeInstanceVariableIntoAnotherParametrizedTest >> setUp [
+	super setUp.
+	model := self modelOnClasses: { RBLintRuleTestData . RBBasicLintRuleTestData }.
 ]
 
 { #category : 'failure tests' }
 RBMergeInstanceVariableIntoAnotherParametrizedTest >> testFailureEqualsVariables [
 
-	self shouldFail: (self createRefactoringWithArguments: {
+	self shouldFail: (self createRefactoringWithModel: model andArguments: {
 				 'classBlock'.
 				 'classBlock'.
 				 RBBasicLintRuleTestData })
@@ -28,7 +34,7 @@ RBMergeInstanceVariableIntoAnotherParametrizedTest >> testFailureEqualsVariables
 { #category : 'failure tests' }
 RBMergeInstanceVariableIntoAnotherParametrizedTest >> testFailureNonExistingVariable [
 
-	self shouldFail: (self createRefactoringWithArguments: {
+	self shouldFail: (self createRefactoringWithModel: model andArguments: {
 				 'classBlock'.
 				 'anInstVar1'.
 				 RBBasicLintRuleTestData })
@@ -37,7 +43,7 @@ RBMergeInstanceVariableIntoAnotherParametrizedTest >> testFailureNonExistingVari
 { #category : 'tests' }
 RBMergeInstanceVariableIntoAnotherParametrizedTest >> testReplaceVariableIntoAnother [
 	| refactoring class |
-	refactoring := self createRefactoringWithArguments:
+	refactoring := self createRefactoringWithModel: model andArguments:
 		{ 'classBlock' . 'anInstVar' . RBBasicLintRuleTestData }.
 	class := refactoring model classNamed: #RBBasicLintRuleTestData.
 	self assert: (class whichSelectorsReferToInstanceVariable: 'classBlock') isNotEmpty.
@@ -49,7 +55,7 @@ RBMergeInstanceVariableIntoAnotherParametrizedTest >> testReplaceVariableIntoAno
 { #category : 'tests' }
 RBMergeInstanceVariableIntoAnotherParametrizedTest >> testReplaceVariableIntoSupeclassVariable [
 	| refactoring class |
-	refactoring := self createRefactoringWithArguments:
+	refactoring := self createRefactoringWithModel: model andArguments:
 		{ 'name' . 'classBlock' . RBBasicLintRuleTestData }.
 	class := refactoring model classNamed: #RBBasicLintRuleTestData.
 	self assert: (class whichSelectorsReferToInstanceVariable: 'name') isNotEmpty.

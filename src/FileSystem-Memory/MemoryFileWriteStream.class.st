@@ -81,6 +81,12 @@ MemoryFileWriteStream >> position: anInteger [
 	self stream position: anInteger
 ]
 
+{ #category : 'accessing' }
+MemoryFileWriteStream >> readInto: aCollection startingAt: startIndex count: n [
+	
+	^ stream readInto: aCollection startingAt: startIndex count: n
+]
+
 { #category : 'positioning' }
 MemoryFileWriteStream >> setToEnd [
 	^ self stream setToEnd
@@ -93,5 +99,5 @@ MemoryFileWriteStream >> size [
 
 { #category : 'accessing' }
 MemoryFileWriteStream >> stream [
-	^ stream ifNil: [ stream := WriteStream on: file bytes from: 1 to: file size ]
+	^ stream ifNil: [ stream := ReadWriteStream on: file bytes from: 1 to: file size ]
 ]

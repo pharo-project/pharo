@@ -7,11 +7,3 @@ MultistateButtonMorph >> activate [
 	super activate.
 	self active: true
 ]
-
-{ #category : '*Morphic-Widgets-Windows' }
-MultistateButtonMorph >> passivate [
-	"Make passive."
-
-	super passivate.
-	self active: false
-]

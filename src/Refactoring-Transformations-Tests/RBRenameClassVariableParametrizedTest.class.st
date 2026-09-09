@@ -23,7 +23,7 @@ RBRenameClassVariableParametrizedTest >> testFailureAlreadyExistingName [
 
 	self shouldFail: (self createRefactoringWithArguments: {
 				 #RecursiveSelfRule.
-				 #TextConstants.
+				 #RBFooDummyLintRuleTest1.
 				 #RBTransformationRuleTestData })
 ]
 
@@ -60,6 +60,7 @@ RBRenameClassVariableParametrizedTest >> testRenameClassVar [
 			(self
 				parseMethod:
 					'initializeAfterLoad1
+								<ignoreNotImplementedSelectors: #(addMethodSearches:)>
 								RSR := self parseTreeSearcher.
 								RSR
 									addMethodSearches: #(''`@methodName: `@args | `@temps | self `@methodName: `@args'' ''`@methodName: `@args | `@temps | ^self `@methodName: `@args'')

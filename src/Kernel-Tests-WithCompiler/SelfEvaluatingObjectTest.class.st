@@ -12,7 +12,7 @@ Class {
 SelfEvaluatingObjectTest >> assertCode: code print: aString [
 
 	self
-		assert: (self class compiler evaluate: code) printString
+		assert: (OpalEvaluator new evaluate: code) printString
 		equals: aString
 ]
 
@@ -56,6 +56,5 @@ SelfEvaluatingObjectTest >> testObjects [
 	self assert: nil isSelfEvaluating.
 
 	self assert: (1 to: 10) isSelfEvaluating.
-	self assert: (1 -> 2) isSelfEvaluating.
-	self assert: Color red isSelfEvaluating
+	self assert: (1 -> 2) isSelfEvaluating
 ]

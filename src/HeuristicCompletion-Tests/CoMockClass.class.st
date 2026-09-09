@@ -5,15 +5,17 @@ Class {
 	#name : 'CoMockClass',
 	#superclass : 'Object',
 	#instVars : [
+		'package',
 		'instanceVariables',
 		'classVariables',
 		'superclass',
 		'methodDictionary',
-		'sharedPools'
+		'sharedPools',
+		'name'
 	],
-	#category : 'HeuristicCompletion-Tests-Core',
+	#category : 'HeuristicCompletion-Tests-Mocks',
 	#package : 'HeuristicCompletion-Tests',
-	#tag : 'Core'
+	#tag : 'Mocks'
 }
 
 { #category : 'configuration' }
@@ -103,6 +105,30 @@ CoMockClass >> methodAt: aString put: aCoMockMethod [
 
 	methodDictionary at: aString asSymbol put: aCoMockMethod.
 	aCoMockMethod methodClass: self
+]
+
+{ #category : 'accessing' }
+CoMockClass >> name [
+
+	^ name
+]
+
+{ #category : 'accessing' }
+CoMockClass >> name: aString [
+
+	name := aString
+]
+
+{ #category : 'accessing' }
+CoMockClass >> package [
+
+	^ package
+]
+
+{ #category : 'accessing' }
+CoMockClass >> package: anObject [
+
+	package := anObject
 ]
 
 { #category : 'accessing' }

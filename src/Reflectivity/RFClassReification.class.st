@@ -11,12 +11,17 @@ Class {
 
 { #category : 'plugin interface' }
 RFClassReification class >> entities [
-	^{RBProgramNode. Variable}
+	^{OCProgramNode. Variable}
 ]
 
 { #category : 'plugin interface' }
 RFClassReification class >> key [
 	^#class
+]
+
+{ #category : 'generate' }
+RFClassReification >> genForASTProgramNode [
+	^self generate
 ]
 
 { #category : 'generate' }
@@ -30,13 +35,8 @@ RFClassReification >> genForLiteralVariable [
 ]
 
 { #category : 'generate' }
-RFClassReification >> genForRBProgramNode [
-	^self generate
-]
-
-{ #category : 'generate' }
 RFClassReification >> generate [
-	^RBMessageNode
-		receiver: RBVariableNode selfNode
-		selector: #class
+	^OCMessageNode
+		receiver: OCVariableNode selfNode
+		selector: (OCSelectorNode value: #class)
 ]

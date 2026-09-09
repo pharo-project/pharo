@@ -15,12 +15,12 @@ MCGemstoneRepository class >> baseURL [
 
 { #category : 'accessing' }
 MCGemstoneRepository class >> description [
-	^ 'ss3.gemstone.com'
+	^ 'ss3.gemtalksystems.com'
 ]
 
 { #category : 'testing' }
 MCGemstoneRepository class >> isResponsibleFor: aUrl [
-	^ (aUrl includesSubstring: 'ss3.gemstone.com/') or: [  aUrl includesSubstring: 'ss3.gemtalksystems.com/' ]
+	^ (aUrl includesSubstring: 'ss3.gemtalksystems.com/') or: [  aUrl includesSubstring: 'ss3.gemtalksystems.com/' ]
 ]
 
 { #category : 'interface' }

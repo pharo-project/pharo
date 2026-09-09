@@ -39,8 +39,8 @@ SelectionValueHolder >> index: anIndex [
 SelectionValueHolder >> initialize [
 
 	super initialize.
-	index := 0 asValueHolder.
-	selection := nil asValueHolder.
+	index := NewValueHolder value: 0.
+	selection := NewValueHolder value: nil.
 
 	index whenChangedSend: #valueChanged to: self.
 	selection whenChangedSend: #valueChanged to: self

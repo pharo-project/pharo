@@ -28,3 +28,9 @@ MyClassA >> stupidMethodForStupidRule [
 
 	instVarName1 := instVarName2 := ClassVarName1 := ClassVarName2 := 0
 ]
+
+{ #category : 'accessing - structure variables' }
+MyClassA >> x [
+
+	^ 33
+]

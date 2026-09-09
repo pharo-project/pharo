@@ -16,10 +16,17 @@ RBPushDownInstanceVariableParametrizedTest class >> testParameters [
 		yourself
 ]
 
+{ #category : 'running' }
+RBPushDownInstanceVariableParametrizedTest >> setUp [
+
+	super setUp.
+	model := self modelOnClasses: { RBBasicLintRuleTestData . RBLintRuleTestData }
+]
+
 { #category : 'failure tests' }
 RBPushDownInstanceVariableParametrizedTest >> testFailureNonExistantName [
 
-	self shouldFail: (self createRefactoringWithArguments:
+	self shouldFail: (self createRefactoringWithModel: model andArguments:
 			 { 'foo'. #RBBasicLintRuleTestData })
 ]
 
@@ -95,9 +102,17 @@ RBPushDownInstanceVariableParametrizedTest >> testModelRemoveUnusedVariable [
 { #category : 'tests' }
 RBPushDownInstanceVariableParametrizedTest >> testPushDownInstanceVariable [
 	| refactoring |
-	refactoring := self createRefactoringWithArguments:
+	refactoring := self createRefactoringWithModel: model andArguments:
 		{'foo1' . #RBLintRuleTestData}.
 	self executeRefactoring: refactoring.
 	(refactoring model classNamed: #RBLintRuleTestData) subclasses do:
 		[ :each | self assert: (each directlyDefinesInstanceVariable: 'foo1') ]
+]
+
+{ #category : 'tests' }
+RBPushDownInstanceVariableParametrizedTest >> testPushDownInstanceVariableWithReferences [
+
+	| refactoring |
+	refactoring := self createRefactoringWithModel: model andArguments: { 'name'. #RBBasicLintRuleTestData }.
+	(refactoring isKindOf: RBPushDownInstanceVariableRefactoring) ifTrue: [ self shouldWarn: refactoring ]
 ]

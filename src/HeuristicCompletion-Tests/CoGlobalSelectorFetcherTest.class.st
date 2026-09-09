@@ -10,13 +10,19 @@ Class {
 CoGlobalSelectorFetcherTest >> setUp [
 
 	super setUp.
-	self systemNavigation selectors: #(ma mb mc ab xx).
+	self systemNavigation selectors: #( ma mb mc ab xx ).
 	fetcher := CoGlobalSelectorFetcher new.
 	fetcher systemNavigation: self systemNavigation.
 	fetcher filter: (CoCaseSensitiveBeginsWithFilter filterString: 'm').
 
 	expectedElements := {
-		NECSelectorEntry contents: 'ma' node: nil.
-		NECSelectorEntry contents: 'mb' node: nil.
-		NECSelectorEntry contents: 'mc' node: nil. }
+		                    ((CoSelectorEntry contents: 'ma' node: nil)
+			                     fetcherName: fetcher class name;
+			                     yourself).
+		                    ((CoSelectorEntry contents: 'mb' node: nil)
+			                     fetcherName: fetcher class name;
+			                     yourself).
+		                    ((CoSelectorEntry contents: 'mc' node: nil)
+			                     fetcherName: fetcher class name;
+			                     yourself) }
 ]

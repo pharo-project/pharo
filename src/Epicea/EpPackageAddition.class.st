@@ -20,8 +20,9 @@ EpPackageAddition >> fileOutEntryOn: aWriteStream [
 	"Write a code chunk to create a package"
 
 	aWriteStream
-		nextPutAll: 'self packageOrganizer ensurePackage: ';
-		nextChunkPut: packageName;
+		nextPutAll: 'self packageOrganizer ensurePackage: '.
+	(ChunkWriteStream on: aWriteStream)
+		nextPut: packageName;
 		cr.
 
 ]

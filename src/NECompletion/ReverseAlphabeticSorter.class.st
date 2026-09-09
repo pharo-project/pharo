@@ -3,7 +3,7 @@ Reverse alphabetic sorting
 "
 Class {
 	#name : 'ReverseAlphabeticSorter',
-	#superclass : 'CompletionSorter',
+	#superclass : 'CoCompletionSorter',
 	#category : 'NECompletion-Sorting',
 	#package : 'NECompletion',
 	#tag : 'Sorting'

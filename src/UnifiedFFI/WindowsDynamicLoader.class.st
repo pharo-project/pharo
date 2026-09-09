@@ -11,7 +11,13 @@ Class {
 
 { #category : 'testing' }
 WindowsDynamicLoader class >> isAvailable [
-	^ Smalltalk os isWindows
+	^ OSPlatform current isWindows
+]
+
+{ #category : 'private' }
+WindowsDynamicLoader >> basicLoadLibrary: lpFileName [
+	
+	^ self ffiCall: #(void *LoadLibraryW(Win32WideString lpFileName))
 ]
 
 { #category : 'misc' }
@@ -21,11 +27,13 @@ WindowsDynamicLoader >> lastError [
 
 { #category : 'misc' }
 WindowsDynamicLoader >> loadLibrary: lpFileName [
-	^ self ffiCall: #(void *LoadLibrary(String lpFileName))
+
+	^ self basicLoadLibrary: lpFileName asWin32WideString
 ]
 
 { #category : 'misc' }
 WindowsDynamicLoader >> loadSymbolFrom: hModule name: lpProcName [
+
 	^ self ffiCall: #(void *GetProcAddress(void *hModule, String lpProcName))
 ]
 

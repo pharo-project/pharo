@@ -10,23 +10,50 @@ Class {
 	#tag : 'Validation'
 }
 
-{ #category : 'validation' }
+{ #category : 'accessing' }
 ClapValidation >> description [
 	^ self subclassResponsibility
 ]
 
-{ #category : 'validation' }
+{ #category : 'accessing' }
 ClapValidation >> failureDescriptionFor: anObject [
-	^ String streamContents: [ :str |
-		str nextPutAll: 'Unrecognized arguments: '.
-		anObject context leftovers
-			do: [ :each | str nextPutAll: each ]
-			separatedBy: [ str nextPutAll: ', ' ] ]
+	self subclassResponsibility
+]
+
+{ #category : 'validation' }
+ClapValidation >> isValidCompositeMatch: aClapCompositeMatch [ 
+	^ true
+]
+
+{ #category : 'validation' }
+ClapValidation >> isValidContext: aClapContext [
+	^ true
+]
+
+{ #category : 'validation' }
+ClapValidation >> isValidImplicit: aClapImplicit [
+	^ true
+]
+
+{ #category : 'validation' }
+ClapValidation >> isValidMismatch: aClapMisatch [ 
+	^ false
+]
+
+{ #category : 'validation' }
+ClapValidation >> isValidNamedMatch: aClapNamedMatch [ 
+	^ true
+]
+
+{ #category : 'validation' }
+ClapValidation >> isValidWordMatch: aClapWordMatch [ 
+	^ true
 ]
 
 { #category : 'validation' }
 ClapValidation >> matches: aClapExpression [
-	^ self subclassResponsibility
+
+	^ aClapExpression isValid: self
 ]
 
 { #category : 'validation' }

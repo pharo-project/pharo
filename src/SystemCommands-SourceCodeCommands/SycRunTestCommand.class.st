@@ -25,6 +25,12 @@ SycRunTestCommand >> defaultMenuItemName [
 	^ 'Run test'
 ]
 
+{ #category : 'accessing' }
+SycRunTestCommand >> description [
+
+	^ 'Runs test.'
+]
+
 { #category : 'converting' }
 SycRunTestCommand >> execute [
 
@@ -39,10 +45,4 @@ SycRunTestCommand >> execute [
 		testResult := concreteClass debug: selector.
 		testResult updateResultsInHistory.
 		GrowlMorph showTestResult: testResult with: selector ]
-]
-
-{ #category : 'testing' }
-SycRunTestCommand >> isComplexRefactoring [
-
-	^ false
 ]

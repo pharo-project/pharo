@@ -15,8 +15,9 @@ ReClassNotReferencedRule class >> checksClass [
 ]
 
 { #category : 'accessing' }
-ReClassNotReferencedRule class >> group [
-	^ 'Design Flaws'
+ReClassNotReferencedRule class >> groupSelector [
+
+	^ #designFlawGroup
 ]
 
 { #category : 'accessing' }
@@ -31,7 +32,7 @@ ReClassNotReferencedRule class >> ruleName [
 
 { #category : 'accessing' }
 ReClassNotReferencedRule class >> severity [
-	^ #information
+	^ 'information'
 ]
 
 { #category : 'accessing' }

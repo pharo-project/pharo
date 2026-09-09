@@ -11,8 +11,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReExtraBlockRule class >> group [
-	^ 'Optimization'
+ReExtraBlockRule class >> groupSelector [
+
+	^ #optimizationGroup
 ]
 
 { #category : 'accessing' }
@@ -22,7 +23,7 @@ ReExtraBlockRule class >> ruleName [
 
 { #category : 'accessing' }
 ReExtraBlockRule class >> severity [
-	^ #information
+	^ 'information'
 ]
 
 { #category : 'accessing' }

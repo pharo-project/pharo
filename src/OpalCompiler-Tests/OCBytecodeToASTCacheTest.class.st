@@ -184,3 +184,43 @@ OCBytecodeToASTCacheTest >> testPcsForNode [
 		 pcsForAimedNode includes: value ]) do: [ :pc |
 		self deny: (cache nodeForPC: pc) identicalTo: aimedNode ]
 ]
+
+{ #category : 'tests' }
+OCBytecodeToASTCacheTest >> testPcsForNodeWithDoubleHoisting [
+
+	| ifNotNilBlockNode pcsForAimedNode |
+	compiledMethod := MethodMapExamples >> #exampleWithDoubleHoisting.
+	cache := OCBytecodeToASTCache generateForNode: compiledMethod ast.
+	
+	ifNotNilBlockNode := compiledMethod ast statements second arguments first.
+	pcsForAimedNode := cache pcsForNode: ifNotNilBlockNode statements first.
+
+	self deny: pcsForAimedNode isEmpty
+]
+
+{ #category : 'tests' }
+OCBytecodeToASTCacheTest >> testPcsForNodeWithHoisting [
+
+	| ifNotNilBlockNode pcsForAimedNode |
+	compiledMethod := MethodMapExamples >> #exampleWithHoisting.
+	cache := OCBytecodeToASTCache generateForNode: compiledMethod ast.
+	
+	ifNotNilBlockNode := compiledMethod ast statements first arguments second.
+	pcsForAimedNode := cache pcsForNode: ifNotNilBlockNode statements first.
+
+	self deny: pcsForAimedNode isEmpty
+]
+
+{ #category : 'tests' }
+OCBytecodeToASTCacheTest >> testPcsForNodeWithNestedHoisting [
+
+	| ifNotNilBlockNode pcsForAimedNode innerIfNotNilBlockNode |
+	compiledMethod := MethodMapExamples >> #exampleWithNestedHoisting.
+	cache := OCBytecodeToASTCache generateForNode: compiledMethod ast.
+	
+	ifNotNilBlockNode := compiledMethod ast statements first arguments second.
+	innerIfNotNilBlockNode := ifNotNilBlockNode statements first arguments first.
+	pcsForAimedNode := cache pcsForNode: innerIfNotNilBlockNode statements first.
+
+	self deny: pcsForAimedNode isEmpty
+]

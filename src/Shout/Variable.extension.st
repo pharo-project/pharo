@@ -1,7 +1,7 @@
 Extension { #name : 'Variable' }
 
 { #category : '*Shout' }
-Variable >> styleNameIn: aRBVariableNode [
+Variable >> styleNameIn: aVariableNode [
 
 	^ #invalid
 ]

@@ -8,8 +8,7 @@ Class {
 		'errorMessage',
 		'errorLocation',
 		'errorSource',
-		'text',
-		'interactive'
+		'text'
 	],
 	#category : 'OpalCompiler-Tests-FromOld',
 	#package : 'OpalCompiler-Tests',
@@ -23,12 +22,15 @@ OCCompilerTest >> compile [
 
 { #category : 'running' }
 OCCompilerTest >> compileWithFailBlock: aBlock [
-	^ OpalCompiler new
-		source: text;
-		class: MockForCompilation;
-		requestor: self;
-		failBlock: aBlock;
-		compile
+
+	| result compiler |
+	compiler := MockForCompilation compiler
+		            source: text;
+		            "compatibility: permit undeclared if no requestor"
+		            permitUndeclared: false;
+		            permitFaulty: false.
+	result := compiler doCompile.
+	result isError ifTrue: [ aBlock cull: result ]
 ]
 
 { #category : 'mocking' }
@@ -36,12 +38,6 @@ OCCompilerTest >> initializeErrorMessage [
 	errorMessage := nil.
 	errorLocation := nil.
 	errorSource := nil
-]
-
-{ #category : 'accessing' }
-OCCompilerTest >> interactive [
-
-	^ interactive ifNil: [ true ]
 ]
 
 { #category : 'mocking' }
@@ -53,7 +49,8 @@ OCCompilerTest >> notify: aString at: aSmallInteger in: aReadStream [
 
 { #category : 'running' }
 OCCompilerTest >> runCase [
-	SystemAnnouncer uniqueInstance suspendAllWhile: [ super runCase ]
+
+	self class codeChangeAnnouncer suspendAllWhile: [ super runCase ]
 ]
 
 { #category : 'running' }
@@ -82,25 +79,29 @@ OCCompilerTest >> testAssignmentOfClassNameBinding [
 	text := 'temp | | MockForCompilation := nil'.
 
 	self
-		compileWithFailBlock: [ self assert: errorMessage equals: 'Assignment to read-only variable ->'.
-			self assert: errorLocation equals: 10.
-			self assert: errorSource contents equals: 'temp | | MockForCompilation := nil'.
+		compileWithFailBlock: [ :result | | error |
+			self assert: result ast allNotices size equals: 1.
+			error := result ast allNotices first.
+			self assert: error messageText equals: 'Assignment to read-only variable'.
+			self assert: error position equals: 10.
+			self assert: error node parent sourceCode equals: 'MockForCompilation := nil'.
 			^ nil ].
 	self fail
 ]
 
 { #category : 'tests - readonly vars' }
 OCCompilerTest >> testAssignmentOfGlobalVarBinding [
-	self initializeErrorMessage.
+
 	text := 'temp | | OCCompilerTestTestVar := 2'.
-	self initializeErrorMessage.
-	OpalCompiler new
-		source: text;
-		class: MockForCompilation;
-		requestor: self;
-		failBlock: [ self fail.
-			^ nil ];
-		compile
+
+	self
+		should: [
+				OpalCompiler new
+					source: text;
+					class: MockForCompilation;
+					compileOrFail ]
+		raise: OCCompilationError
+		with: [ :err | self assert: (err messageText beginsWith: 'Compilation failed with following errors:') ]
 ]
 
 { #category : 'tests' }
@@ -108,14 +109,10 @@ OCCompilerTest >> testErrorOrders [
 
 	| ast notices |
 	ast := OpalCompiler new parse: 'foo | b | ^ a + ¿. 5 "what'.
-	notices := ast allNotices sorted
-		           collect: [ :e |
-		           e position asString , ':' , e messageText ]
-		           as: Array.
+	notices := ast allNotices sorted collect: [ :e | e position asString , ':' , e messageText ] as: Array.
 	self
 		assertCollection: notices
-		equals: #( '17:Unknown character' '27:Unmatched " in comment.'
-			   '13:Undeclared variable' '7:Unused variable' '20:Unreachable statement' )
+		equals: #( '17:Unknown character' '27:Unmatched " in comment.' '13:Undeclared variable named a in foo' '20:Unreachable statement' '7:Unused variable' )
 ]
 
 { #category : 'tests - shadowing' }
@@ -182,9 +179,8 @@ OCCompilerTest >> testInstanceVariableShadowing [
 OCCompilerTest >> testNegativeZero [
 	self
 		assert:
-			(OpalCompiler new
-				source: '-0.0';
-				evaluate) hex
+			(OpalEvaluator new
+				evaluate: '-0.0') hex
 		equals: Float negativeZero hex
 ]
 
@@ -213,15 +209,16 @@ OCCompilerTest >> testPseudoVariableShadowing [
 
 { #category : 'literals' }
 OCCompilerTest >> testScaledDecimalLiterals [
-	"Equal ScaledDecimal with different scales should use different slots
-	This is related to http://bugs.squeak.org/view.php?id=6797"
+	"Equal ScaledDecimal with different scales should use different slots"
 
 	"This correctly works when evaluated separately"
 
-	self deny: (Smalltalk compiler evaluate: '0.5s1') scale equals: (Smalltalk compiler evaluate: '0.5s2') scale.
+	self 
+		deny: (OpalEvaluator new evaluate: '0.5s1') scale 
+		equals: (OpalEvaluator new evaluate: '0.5s2') scale.
 
 	"But not when evaluated together if literal reduction is too agressive"
-	self deny: (Smalltalk compiler evaluate: '0.5s1 scale =  0.5s2 scale')
+	self deny: (OpalEvaluator new evaluate: '0.5s1 scale =  0.5s2 scale')
 ]
 
 { #category : 'tests - shadowing' }
@@ -231,9 +228,7 @@ OCCompilerTest >> testSiblingBlocksInstanceVariableShadowing [
 	OpalCompiler new
 		source: 'temp [:temp | ].[:temp | |var1|]';
 		class: MockForCompilation;
-		requestor: self;
-		failBlock: [ ^ self fail ];
-		compile
+		compileOrFail
 ]
 
 { #category : 'tests - shadowing' }
@@ -244,32 +239,7 @@ OCCompilerTest >> testSiblingBlocksTempShadowing [
 	OpalCompiler new
 		source: 'temp [:temp | ]. [:temp | ]';
 		class: MockForCompilation;
-		compile
-]
-
-{ #category : 'tests' }
-OCCompilerTest >> testUndefinedVariable [
-	"This test shows that undefined variables behave as globals (for now) and is independent of the compilation mode"
-
-	Undeclared removeKey: #undefinedName123 ifAbsent: [ ].
-	self
-		assert: ( [ {
-			OpalCompiler new
-				permitFaulty: true;
-				evaluate: 'undefinedName123'.
-			OpalCompiler new
-				permitFaulty: true;
-				evaluate: 'undefinedName123 := 1'.
-			OpalCompiler new
-				permitFaulty: true;
-				evaluate: 'undefinedName123 := 2. undefinedName123'.
-			OpalCompiler new
-				permitFaulty: true;
-				evaluate: 'undefinedName123' }  ] on: UndeclaredVariableRead , UndeclaredVariableWrite do: [ :e | e resume: e class ] )
-		equals: { UndeclaredVariableRead. UndeclaredVariableWrite. UndeclaredVariableRead. UndeclaredVariableRead }.
-
-	"Cleanup"
-	Undeclared removeKey: #undefinedName123 ifAbsent: [ ]
+		compileOrFail
 ]
 
 { #category : 'tests' }
@@ -279,9 +249,9 @@ OCCompilerTest >> testUndefinedVariableFrontend [
 	Undeclared removeKey: #undefinedName123 ifAbsent: [ ].
 	OpalCompiler new parse: 'foo ^undefinedName123'.
 	self deny: (Undeclared includesKey: #undefinedName123).
-	self should: [ OpalCompiler new compile: 'foo ^undefinedName123 ¿ 2' ] raise: CodeError.
+	self should: [ OpalCompiler new source: 'foo ^undefinedName123 ¿ 2'; compileOrFail ] raise: OCCompilationError.
 	self deny: (Undeclared includesKey: #undefinedName123).
-	OpalCompiler new permitFaulty: true; compile: 'foo ^undefinedName123'.
+	OpalCompiler new permitFaulty: true; source: 'foo ^undefinedName123'; compileOrFail.
 	self assert: (Undeclared includesKey: #undefinedName123).
 
 	"Cleanup"

@@ -4,6 +4,9 @@ Class {
 	#instVars : [
 		'context'
 	],
+	#classVars : [
+		'TestValue'
+	],
 	#category : 'Clap-Tests-Commands',
 	#package : 'Clap-Tests',
 	#tag : 'Commands'
@@ -19,9 +22,31 @@ ClapPharoCommandsTest class >> shouldInheritSelectors [
 	^ true
 ]
 
+{ #category : 'accessing' }
+ClapPharoCommandsTest class >> testValue [
+
+	^ TestValue
+]
+
+{ #category : 'accessing' }
+ClapPharoCommandsTest class >> testValue: aValue [
+
+	TestValue := aValue 
+]
+
+{ #category : 'asserting' }
+ClapPharoCommandsTest >> assertFailure [
+	self deny: context exitStatus equals: 0
+]
+
 { #category : 'asserting' }
 ClapPharoCommandsTest >> assertSuccess [
 	self assert: context exitStatus equals: 0
+]
+
+{ #category : 'accessing' }
+ClapPharoCommandsTest >> errorString [
+	^ context stdio stderr contents utf8Decoded
 ]
 
 { #category : 'tests - fixture' }

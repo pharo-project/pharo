@@ -51,7 +51,7 @@ FallbackMenu >> fallbackMenuExplanations [
 	"This is bad because to goes deep into the playground implementation but to improve this the playground should be improved..."
 
 	| playground |
-	playground := Smalltalk tools workspace openContents: '"Something is wrong with this menu.
+	playground := (Smalltalk tools toolNamed: #workspace) openContents: '"Something is wrong with this menu.
 To investigate just debug following expression:"
 menu debug'.
 	playground title: 'Fallback menu explanations'.

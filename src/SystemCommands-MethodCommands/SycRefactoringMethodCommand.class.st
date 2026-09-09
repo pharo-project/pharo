@@ -11,11 +11,6 @@ SycRefactoringMethodCommand >> execute [
 	self executeRefactorings
 ]
 
-{ #category : 'testing' }
-SycRefactoringMethodCommand >> isComplexRefactoring [
-	^true
-]
-
 { #category : 'execution' }
 SycRefactoringMethodCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.

@@ -129,25 +129,6 @@ RGAnnouncementsTest >> testBehaviorDefinitionModifiedForSuperclass [
 ]
 
 { #category : 'tests' }
-RGAnnouncementsTest >> testBehaviorParentRenamed [
-
-	| env announcements class superclass |
-
-	env := RGEnvironment new.
-	class := env ensureClassNamed: #SomeClass.
-	superclass := env ensureClassNamed: #SomeSuperclass.
-
-	class superclass: superclass.
-
-	announcements := self installAnnouncementsFor: class in: env when: ClassParentRenamed. 
-
-	class name: #NewName.
-	self assert: announcements size equals: 0.
-	superclass name: #NewSuperclass1.
-	self assert: announcements size equals: 1
-]
-
-{ #category : 'tests' }
 RGAnnouncementsTest >> testDirectAnnouncement [
 
 	| def announcements |

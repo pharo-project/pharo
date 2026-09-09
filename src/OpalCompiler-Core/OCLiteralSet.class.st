@@ -9,9 +9,9 @@ Example:
 Class {
 	#name : 'OCLiteralSet',
 	#superclass : 'Set',
-	#category : 'OpalCompiler-Core-Extras',
+	#category : 'OpalCompiler-Core-DataStructures',
 	#package : 'OpalCompiler-Core',
-	#tag : 'Extras'
+	#tag : 'DataStructures'
 }
 
 { #category : 'adding' }

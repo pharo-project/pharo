@@ -31,8 +31,9 @@ AthensParagraph >> characterBlockForIndex: index [
 
 { #category : 'composition' }
 AthensParagraph >> compose: aText style: aTextStyle from: startingIndex in: aRectangle [
+
 	text := aText.
-	textStyle := aTextStyle
+	textStyle := aTextStyle.
 
 	self shouldBeImplemented
 ]

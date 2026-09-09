@@ -26,3 +26,23 @@ TFCharType >> marshallToPrimitive: aValue [
 
 	^ aValue asInteger
 ]
+
+{ #category : 'marshalling' }
+TFCharType >> optimizeFor: aFFIFunctionArgument in: anIRBuilder ifCannot: aFullBlockClosure [
+
+	| literalValue |
+	
+	aFFIFunctionArgument loader isLiteralArgument 
+		ifTrue: [
+			literalValue := aFFIFunctionArgument loader value.
+
+			((literalValue isKindOf: Character) or: [ literalValue isKindOf: Integer ])
+				ifTrue: [ 
+					anIRBuilder pushLiteral: literalValue asCharacter.
+					^ self ]].
+
+	super
+		optimizeFor: aFFIFunctionArgument
+		in: anIRBuilder
+		ifCannot: aFullBlockClosure
+]

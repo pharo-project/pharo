@@ -12,7 +12,7 @@ You can create my instance and execute the refactoring by running:
 "
 Class {
 	#name : 'RBDeprecateMethodDriver',
-	#superclass : 'RBInteractionDriver',
+	#superclass : 'ReInteractionDriver',
 	#instVars : [
 		'useInsteadSelector',
 		'selectorToDeprecate'
@@ -26,6 +26,12 @@ Class {
 RBDeprecateMethodDriver class >> deprecateMethod: aString in: aClass scopes: aCollection [
 
 	^ self new deprecateMethod: aString in: aClass  scopes: aCollection
+]
+
+{ #category : 'accessing' }
+RBDeprecateMethodDriver class >> driverName [
+
+	^ 'Deprecate method'
 ]
 
 { #category : 'initialization' }
@@ -52,7 +58,7 @@ RBDeprecateMethodDriver >> runRefactoring [
 							"the user pressed cancel"
 							useInsteadSelector ifNil: [ ^ self ].
 							refactoring newSelector: useInsteadSelector.
-							isValid := refactoring applicabilityPreconditions check.
+							isValid := refactoring failedApplicabilityPreconditions isEmpty.
 							isValid ifFalse: [ self selectorToReplaceDeprecatedSelector ].
 							isValid ] whileFalse.
 							
@@ -72,14 +78,12 @@ RBDeprecateMethodDriver >> runRefactoring [
 { #category : 'ui - requests' }
 RBDeprecateMethodDriver >> selectorToReplaceDeprecatedSelector [
 
-	useInsteadSelector := SpRequestDialog new
-		                      title:
-			                      'Selector to replace ' , selectorToDeprecate;
-		                      label:
-			                      'The new selector should not be empty or same as the deprecated one.';
-		                      text: selectorToDeprecate;
-		                      acceptLabel: 'Accept';
-		                      cancelLabel: 'Cancel';
-		                      openModal.
+	useInsteadSelector := self defaultRequestDialog
+		title: 'Selector to replace ' , selectorToDeprecate;
+		message: 'The new selector should not be empty or same as the deprecated one.';
+		text: selectorToDeprecate;
+		acceptLabel: 'Accept';
+		cancelLabel: 'Cancel';
+		openModal.
 	"we should check that the selector is valid here!!!"
 ]

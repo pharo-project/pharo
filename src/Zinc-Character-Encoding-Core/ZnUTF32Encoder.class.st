@@ -60,6 +60,12 @@ ZnUTF32Encoder >> errorIncomplete [
 	self error: 'Incomplete utf-32 encoding'
 ]
 
+{ #category : 'encoding - decoding' }
+ZnUTF32Encoder >> forwardOnStream: aStream [
+
+	aStream skip: 4
+]
+
 { #category : 'accessing' }
 ZnUTF32Encoder >> identifier [
 	^ #utf32

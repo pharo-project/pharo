@@ -16,16 +16,6 @@ Class {
 	#package : 'SystemCommands-ClassCommands'
 }
 
-{ #category : 'converting' }
-SycMigrateReferencesOfClassCommand >> asRefactorings [
-	| refactoring |
-	refactoring :=  RBDeprecateClassRefactoring deprecate: targetClass name in: newName name.
-	refactoring shouldFixSubclasses: false.
-	refactoring shouldCopyExtensions: false.
-	refactoring shouldRemoveExtensions: false.
-	^ { refactoring }
-]
-
 { #category : 'accessing' }
 SycMigrateReferencesOfClassCommand >> defaultMenuIconName [
 	^ #source
@@ -51,8 +41,5 @@ SycMigrateReferencesOfClassCommand >> isComplexRefactoring [
 SycMigrateReferencesOfClassCommand >> prepareFullExecutionInContext: aToolContext [
 
 	super prepareFullExecutionInContext: aToolContext.
-	newName := aToolContext browser searchDialog
-		requestSingleObject: 'Choose new class'
-		from: ClyAllClassesQuery sorted.
-	newName ifNil: [ CmdCommandAborted signal]
+	newName := aToolContext requestSingleClass: 'Choose new class'
 ]

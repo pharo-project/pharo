@@ -50,7 +50,8 @@ ClyTextEditor >> notify: aString at: anInteger in: aStream [
 		ifTrue: [ aString allButLast: 3 ]
 		ifFalse: [ aString ].
 
-	self inform: message.
+	InformativeNotification signal: message.
+	
 	pos := self selectionInterval notEmpty
 		ifTrue: [ self startIndex + anInteger - 1 ]
 		ifFalse: [ anInteger ].

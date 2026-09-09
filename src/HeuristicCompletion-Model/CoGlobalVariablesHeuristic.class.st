@@ -6,6 +6,9 @@ See my superclass for details.
 Class {
 	#name : 'CoGlobalVariablesHeuristic',
 	#superclass : 'CoASTNodeFetcherHeuristic',
+	#instVars : [
+		'globalVariableFetcherClass'
+	],
 	#category : 'HeuristicCompletion-Model-Heuristics',
 	#package : 'HeuristicCompletion-Model',
 	#tag : 'Heuristics'
@@ -19,8 +22,21 @@ CoGlobalVariablesHeuristic >> appliesForNode: aNode inContext: aContext [
 
 { #category : 'requests' }
 CoGlobalVariablesHeuristic >> buildFetcherFor: aNode inContext: completionContext [
-
-	^ CoGlobalVariableFetcher new
+	
+	^ self globalVariableFetcherClass new
+			completionClass: completionContext completionClass;
 			astNode: aNode;
 			yourself
+]
+
+{ #category : 'requests' }
+CoGlobalVariablesHeuristic >> globalVariableFetcherClass [
+
+	^ globalVariableFetcherClass ifNil: [  globalVariableFetcherClass := CoGlobalVariableFetcher ]
+]
+
+{ #category : 'requests' }
+CoGlobalVariablesHeuristic >> globalVariableFetcherClass: aClass [
+
+	globalVariableFetcherClass := aClass
 ]

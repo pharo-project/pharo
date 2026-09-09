@@ -89,6 +89,12 @@ KMCategory >> hasKeymapNamed: aKeymapEntryName at: aPlatform [
 	^ (self entriesAt: aPlatform) hasKeymapNamed: aKeymapEntryName
 ]
 
+{ #category : 'accessing' }
+KMCategory >> icon [
+
+	^ self iconNamed: #keymapBrowser
+]
+
 { #category : 'initialization' }
 KMCategory >> initialize [
 
@@ -138,6 +144,11 @@ KMCategory >> matchesCompletely: aString [
 ]
 
 { #category : 'accessing' }
+KMCategory >> model [
+	^ self
+]
+
+{ #category : 'accessing' }
 KMCategory >> name [
 	^ name
 ]
@@ -157,7 +168,7 @@ KMCategory >> onMatchWith: anEventBuffer notify: aMatchListener andDo: aBlock [
 
 { #category : 'associating' }
 KMCategory >> platformEntries [
-	^self entriesAt: Smalltalk os platformFamily
+	^self entriesAt: OSPlatform current platformFamily
 ]
 
 { #category : 'associating' }

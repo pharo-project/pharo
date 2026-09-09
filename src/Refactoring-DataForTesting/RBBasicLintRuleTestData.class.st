@@ -5,7 +5,8 @@ Class {
 		'methodBlock',
 		'result',
 		'classBlock',
-		'anInstVar'
+		'anInstVar',
+		'accessor'
 	],
 	#category : 'Refactoring-DataForTesting-LittleHierarchy',
 	#package : 'Refactoring-DataForTesting',
@@ -14,6 +15,8 @@ Class {
 
 { #category : 'private' }
 RBBasicLintRuleTestData class >> canCall: aSelector in: aClass from: anApplication [
+	
+	<ignoreNotImplementedSelectors: #(rootApplication)>
 	"This method contains on purpose not implemented messages, such as rootApplication "
 	| methodApp root |
 	(aClass canUnderstand: aSelector) ifFalse: [^false].
@@ -30,6 +33,8 @@ RBBasicLintRuleTestData class >> classShouldNotOverride [
 
 { #category : 'private' }
 RBBasicLintRuleTestData class >> createMatcherFor: codeStrings method: aBoolean [
+	
+	<ignoreNotImplementedSelectors: #(addMethodSearches:)>
 	| matcher |
 	matcher := self parseTreeSearcher.
 	aBoolean
@@ -118,6 +123,8 @@ RBBasicLintRuleTestData class >> protocolsToCheck [
 
 { #category : 'possible bugs' }
 RBBasicLintRuleTestData class >> sentNotImplementedInApplication [
+
+	<ignoreNotImplementedSelectors: #(isItem:in:)>
 	| detector |
 	detector := self new.
 	detector name: 'Messages sent but not implemented in application'.
@@ -229,6 +236,8 @@ RBBasicLintRuleTestData class >> toDo [
 
 { #category : 'miscellaneous' }
 RBBasicLintRuleTestData class >> utilityMethods [
+
+	<ignoreNotImplementedSelectors: #(references:in:)>
 	| detector |
 	detector := self new.
 	detector name: 'Utility methods'.
@@ -264,7 +273,7 @@ RBBasicLintRuleTestData >> anInstVar [
 	^ anInstVar
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 RBBasicLintRuleTestData >> anInstVar: anObject [
 	anInstVar := anObject
 ]
@@ -325,6 +334,12 @@ RBBasicLintRuleTestData >> newResultClass: aClass [
 	result := aClass new
 ]
 
+{ #category : 'initialization' }
+RBBasicLintRuleTestData >> noUnused [
+
+	accessor := 'toto'
+]
+
 { #category : 'accessing' }
 RBBasicLintRuleTestData >> onlyReferenceToSomeDemoMethod [
 
@@ -336,7 +351,7 @@ RBBasicLintRuleTestData >> problemCount [
 	^result problemCount
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 RBBasicLintRuleTestData >> resetResult [
 	result := result copyEmpty.
 	result label: name
@@ -347,7 +362,7 @@ RBBasicLintRuleTestData >> result [
 	^result
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 RBBasicLintRuleTestData >> result: aResult [
 	result := aResult copyEmpty
 ]
@@ -360,6 +375,12 @@ RBBasicLintRuleTestData >> resultClass: aClass [
 { #category : 'accessing' }
 RBBasicLintRuleTestData >> someDemoMethod [
 	^ self junk
+]
+
+{ #category : 'accessing' }
+RBBasicLintRuleTestData >> useAccess [
+
+	self result + 3
 ]
 
 { #category : 'private' }

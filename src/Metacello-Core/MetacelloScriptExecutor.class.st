@@ -8,13 +8,9 @@ Class {
 		'options',
 		'roots',
 		'singleRoot',
-		'projectSpecGenerator',
 		'actionArg',
-		'configurationArg',
 		'baselineArg',
-		'projectArg',
 		'classNameArg',
-		'versionArg',
 		'repositoryArg'
 	],
 	#category : 'Metacello-Core-Scripts',
@@ -25,7 +21,6 @@ Class {
 { #category : 'execution' }
 MetacelloScriptExecutor >> applyArgsToProjectSpec: aProjectSpec [
     classNameArg ifNotNil: [ aProjectSpec className: classNameArg ].
-    versionArg ifNotNil: [ aProjectSpec versionString: versionArg ].
     repositoryArg ifNotNil: [ aProjectSpec repository: repositoryArg ].
     ^ aProjectSpec
 ]
@@ -40,6 +35,12 @@ MetacelloScriptExecutor >> baselineArg: anObject [
 	baselineArg := anObject
 ]
 
+{ #category : 'configuration' }
+MetacelloScriptExecutor >> beStrict: aBoolean [
+
+	self options at: #strict put: aBoolean
+]
+
 { #category : 'args' }
 MetacelloScriptExecutor >> classNameArg [
     ^ classNameArg
@@ -50,57 +51,35 @@ MetacelloScriptExecutor >> classNameArg: anObject [
     classNameArg := anObject
 ]
 
-{ #category : 'args' }
-MetacelloScriptExecutor >> configurationArg [
-    ^ configurationArg
-]
-
-{ #category : 'args' }
-MetacelloScriptExecutor >> configurationArg: anObject [
-    configurationArg := anObject
-]
-
 { #category : 'execution' }
-MetacelloScriptExecutor >> execute: statements [
+MetacelloScriptExecutor >> execute [
 
-	statements do: [ :assoc |
-		assoc value
-			ifNil: [ self perform: assoc key ]
-			ifNotNil: [ self perform: assoc key withArguments: assoc value ] ].
-	projectSpecGenerator := self projectSpecGenerator.
-	self executeString: projectSpecGenerator target do: [ :projectReferenceSpec |
-		| engine |
-		engine := MetacelloScriptEngine new
-			          options: self options copy;
-			          projectReferenceSpec: projectReferenceSpec;
-			          yourself.
-		engine perform: actionArg key withArguments: actionArg value.
-		engine root ifNotNil: [ :root | self roots add: root ] ].
+	baselineArg ifNil: [ self error: 'Baseline not specified' ].
+
+	self executeString: baselineArg do: [ :projectReferenceSpec |
+			| engine |
+			engine := MetacelloScriptEngine new
+				          options: self options copy;
+				          projectSpec: projectReferenceSpec;
+				          yourself.
+			[
+				self class codeSupportAnnouncer announce: (MetacelloExecutionStartAnnouncement executor: self).
+				engine perform: actionArg key withArguments: actionArg value ] ensure: [
+				self class codeSupportAnnouncer announce: (MetacelloExecutionEndAnnouncement executor: self) ].
+			engine root ifNotNil: [ :root | self roots add: root ] ].
 	^ (self singleRoot and: [ self roots size == 1 ])
 		  ifTrue: [ self roots first ]
 		  ifFalse: [ self roots ]
 ]
 
 { #category : 'execution callback' }
-MetacelloScriptExecutor >> executeBlock: selectBlock do: projectSpecBlock [
-    ((projectSpecGenerator projectSpecListBlock value select: selectBlock) select: self projectSpecSelectBlock)
-        do: [ :projectSpec | projectSpecBlock value: (self applyArgsToProjectSpec: projectSpec copy) ]
-]
-
-{ #category : 'execution callback' }
-MetacelloScriptExecutor >> executeCollection: aCollection do: projectSpecBlock [
-    aCollection
-        do: [ :projectName | 
-            ((projectSpecGenerator projectSpecLookupBlock value: projectName) select: self projectSpecSelectBlock)
-                do: [ :projectSpec | projectSpecBlock value: (self applyArgsToProjectSpec: projectSpec copy) ] ]
-]
-
-{ #category : 'execution callback' }
 MetacelloScriptExecutor >> executeString: aString do: projectSpecBlock [
-  singleRoot ifNil: [ self singleRoot: true ].
-  ((projectSpecGenerator projectSpecLookupBlock value: aString)
-    select: self projectSpecSelectBlock)
-    do: [ :projectSpec | projectSpecBlock value: (self applyArgsToProjectSpec: projectSpec copy) ]
+
+	| projectSpec |
+	singleRoot ifNil: [ self singleRoot: true ].
+	projectSpec := MetacelloProjectRegistration projectSpecForClassNamed: aString ifAbsent: [ ].
+
+	(self shouldBeExecutedFor: projectSpec) ifTrue: [ projectSpecBlock value: (self applyArgsToProjectSpec: projectSpec copy) ]
 ]
 
 { #category : 'actions api' }
@@ -171,45 +150,11 @@ MetacelloScriptExecutor >> options [
     ^ options
 ]
 
-{ #category : 'args' }
-MetacelloScriptExecutor >> projectArg [
-    ^ projectArg
-]
+{ #category : 'copying' }
+MetacelloScriptExecutor >> postCopy [
 
-{ #category : 'args' }
-MetacelloScriptExecutor >> projectArg: anObject [
-    projectArg := anObject
-]
-
-{ #category : 'execution' }
-MetacelloScriptExecutor >> projectSpecGenerator [
-    baselineArg
-        ifNotNil: [ 
-            configurationArg ifNotNil: [ self error: ' baseline: and configuration: are both be specified' ].
-            projectArg ifNotNil: [ self error: ' baseline: and project are both be specified' ].
-            ^ MetacelloBaselineSpecGenerator new
-                target: baselineArg;
-                yourself ].
-    configurationArg
-        ifNotNil: [ 
-            baselineArg ifNotNil: [ self error: ' baseline: and configuration: are both be specified' ].
-            projectArg ifNotNil: [ self error: ' configuration and project are both be specified' ].
-            ^ MetacelloConfigurationSpecGenerator new
-                target: configurationArg;
-                yourself ].
-    projectArg
-        ifNotNil: [ 
-            configurationArg ifNotNil: [ self error: ' project and configuration: are both be specified' ].
-            baselineArg ifNotNil: [ self error: ' baseline: and project are both be specified' ].
-            ^ MetacelloProjectSpecGenerator new
-                target: projectArg;
-                yourself ].
-    self error: 'project, baseline, or configuration not specified'
-]
-
-{ #category : 'execution callback' }
-MetacelloScriptExecutor >> projectSpecSelectBlock [
-    ^ [ :projectSpec | true ]
+	super postCopy.
+	options := options copy
 ]
 
 { #category : 'actions api' }
@@ -234,24 +179,26 @@ MetacelloScriptExecutor >> repositoryArg: anObject [
 
 { #category : 'accessing' }
 MetacelloScriptExecutor >> roots [
-    roots ifNil: [ roots := OrderedCollection new ].
-    ^ roots
+
+	^ roots ifNil: [ roots := OrderedCollection new ]
 ]
 
-{ #category : 'options api' }
-MetacelloScriptExecutor >> silently: aBool [
-    self options at: #'silently' put: aBool
+{ #category : 'execution callback' }
+MetacelloScriptExecutor >> shouldBeExecutedFor: aSpec [
+
+	^ true
 ]
 
 { #category : 'accessing' }
 MetacelloScriptExecutor >> singleRoot [
-  singleRoot ifNil: [ singleRoot := false ].
-  ^ singleRoot
+
+	^ singleRoot ifNil: [ singleRoot := false ]
 ]
 
 { #category : 'accessing' }
-MetacelloScriptExecutor >> singleRoot: aBool [
-  singleRoot := aBool
+MetacelloScriptExecutor >> singleRoot: aBoolean [
+
+	singleRoot := aBoolean
 ]
 
 { #category : 'actions api' }
@@ -262,14 +209,4 @@ MetacelloScriptExecutor >> unlock [
 { #category : 'actions api' }
 MetacelloScriptExecutor >> unregister [
   actionArg := #'unregister' -> #()
-]
-
-{ #category : 'args' }
-MetacelloScriptExecutor >> versionArg [
-    ^ versionArg
-]
-
-{ #category : 'args' }
-MetacelloScriptExecutor >> versionArg: anObject [
-    versionArg := anObject
 ]

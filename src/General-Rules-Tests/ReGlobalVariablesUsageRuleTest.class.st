@@ -21,17 +21,19 @@ ReGlobalVariablesUsageRuleTest >> sampleMethod [
 
 { #category : 'running' }
 ReGlobalVariablesUsageRuleTest >> setUp [
+
 	super setUp.
-
+	
 	"Register a new unknown global"
-	Smalltalk globals
-		at: #MyGlobal
-		put: (self class >> #sampleMethod) sourceCode.
+	Smalltalk globals at: #MyGlobal put: (self class >> #sampleMethod) sourceCode.
 
-	self class compiler permitFaulty: true; install: 'sampleMethod
+	self class compiler
+		permitFaulty: true;
+		source: 'sampleMethod
 	sampleMethod
 		Smalltalk value.
-		MyGlobal value'
+		MyGlobal value';
+		install
 ]
 
 { #category : 'running' }

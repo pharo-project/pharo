@@ -41,6 +41,7 @@ KMRepository class >> reset [
 	KMCategory allSubclasses
 		select: [ :c | c isGlobalCategory ]
 		thenDo: [ :c | c new installAsGlobalCategory ].
+	"I should not depend on KMPragmaKeymapBuilder since it's this class that should depend on me..."
 	KMPragmaKeymapBuilder uniqueInstance reset
 ]
 

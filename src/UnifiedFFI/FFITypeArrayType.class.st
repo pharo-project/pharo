@@ -13,7 +13,7 @@ Class {
 FFITypeArrayType >> annonymousClassCreator [
 	^ String streamContents: [ :stream |
 		stream
-			nextPutAll: '(FFITypeArray ofType: ';
+			nextPutAll: '(FFIArray ofType: ';
 			print: (self objectClass type isPointer
 				ifTrue: [ self externalTypeWithArity printString ]
 				ifFalse: [ self objectClass type class name ]);

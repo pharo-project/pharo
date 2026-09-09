@@ -12,7 +12,7 @@ Class {
 { #category : 'coverage' }
 TrueTest >> classToBeTested [
 
-	^ True new
+	^ True
 ]
 
 { #category : 'tests - logical operations' }

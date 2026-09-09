@@ -3,9 +3,10 @@ Command to execute a Transformation for generating #hash and #= comparing method
 "
 Class {
 	#name : 'SycCmGenerateEqualAndHashCommand',
-	#superclass : 'SycClassCmCommand',
-	#category : 'SystemCommands-ClassCommands',
-	#package : 'SystemCommands-ClassCommands'
+	#superclass : 'SycCmGenerateCommand',
+	#category : 'SystemCommands-ClassCommands-Creation',
+	#package : 'SystemCommands-ClassCommands',
+	#tag : 'Creation'
 }
 
 { #category : 'private - contents' }
@@ -20,14 +21,6 @@ SycCmGenerateEqualAndHashCommand >> driverClass [
 	^ ReGenerateEqualAndHashDriver
 ]
 
-{ #category : 'executing' }
-SycCmGenerateEqualAndHashCommand >> executeRefactoring [
-
-	(self driverClass new
-		 targetClass: targetClass name;
-		 scopes: refactoringScopes) runRefactoring
-]
-
 { #category : 'accessing' }
 SycCmGenerateEqualAndHashCommand >> icon [
 
@@ -39,12 +32,6 @@ SycCmGenerateEqualAndHashCommand >> isApplicable [
 	"Answer <true> if the receiver has any variables"
 
 	^ context lastSelectedClass realClass slots notEmpty
-]
-
-{ #category : 'accessing' }
-SycCmGenerateEqualAndHashCommand >> name [
-
-	^ self driverClass menuItemString
 ]
 
 { #category : 'accessing' }

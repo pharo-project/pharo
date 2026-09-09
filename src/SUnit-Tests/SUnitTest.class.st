@@ -126,11 +126,11 @@ SUnitTest >> hangedChildProcessTest [
 
 { #category : 'private' }
 SUnitTest >> hangedTestDueToFailedChildProcess [
-	self timeLimit: 10 milliSeconds.
+	self timeLimit: 100 milliSeconds.
 
 	self failedChildProcessTest.
 
-	20 milliSeconds wait
+	150 milliSeconds wait
 ]
 
 { #category : 'accessing' }
@@ -636,11 +636,6 @@ SUnitTest >> testRunningLongTime [
 ]
 
 { #category : 'testing' }
-SUnitTest >> testSelectorWithArg: anObject [
-	"should not result in error"
-]
-
-{ #category : 'testing' }
 SUnitTest >> testShould [
 
 	self
@@ -653,9 +648,9 @@ SUnitTest >> testShouldIgnoreTimeLimitWhenTestProcessIsSuspended [
 	"If you open debugger on test (by halt or error) and will not close it more then test time limit then following interaction with debugger will fail.
 	As simple fix watch dog should check that test process is not suspended. It of course will open possibility to hang test execution when tested code will suspend active process by incident. But we could live with it and probably it could be addressed too in future"
 	| testProcess |
-	self timeLimit: 30 milliSeconds.
+	self timeLimit: 100 milliSeconds.
 	testProcess := Processor activeProcess.
-	[ 50 milliSeconds wait. testProcess resume ] fork.
+	[ 150 milliSeconds wait. testProcess resume ] fork.
 	testProcess suspend.
 	self assert: true
 ]

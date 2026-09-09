@@ -26,3 +26,9 @@ HaltOnCountIconStyler >> shouldStyleNode: aNode [
 	^ aNode isMessage
 		and: [ #(#haltOnCount: #haltFromCount:) includes: aNode selector ]
 ]
+
+{ #category : 'private' }
+HaltOnCountIconStyler >> stylerName [
+
+	^ 'breakpoint'
+]

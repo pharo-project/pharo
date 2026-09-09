@@ -39,10 +39,7 @@ ClyShowTraitUsersCommand >> defaultMenuItemName [
 { #category : 'execution' }
 ClyShowTraitUsersCommand >> execute [
 
-	classes first isTrait ifTrue: [
-		browser spawnQueryBrowserOn: (ClyConstantQuery
-				 returning: classes first traitUsers
-				 as: (ClySortedQueryResult using: ClySortByNameFunction ascending)) ]
+	classes first isTrait ifTrue: [ (Smalltalk tools toolNamed: #messageList) browseUsersOfTrait: classes first ]
 ]
 
 { #category : 'execution' }

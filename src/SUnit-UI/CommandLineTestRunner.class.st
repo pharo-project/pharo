@@ -95,12 +95,9 @@ CommandLineTestRunner >> setUp [
 ]
 
 { #category : 'helper' }
-CommandLineTestRunner >> shortStackDescriptionFor: anError [
-	^ (String streamContents: [ :s|
-			s << anError printString; cr.
-			anError signalerContext shortDebugStackOn: s ])
-		copyReplaceAll: String cr
-		with: OSPlatform current lineEnding
+CommandLineTestRunner >> stackTraceFor: anError [
+
+	^ anError stackTraceString copyReplaceAll: String cr with: OSPlatform current lineEnding
 ]
 
 { #category : 'accessing' }
@@ -123,18 +120,18 @@ CommandLineTestRunner >> tearDown [
 	self printReport
 ]
 
-{ #category : 'helper' }
+{ #category : 'private' }
 CommandLineTestRunner >> writeError: anError of: aTestCase [
 	self
-		print: (self shortStackDescriptionFor: anError)
+		print: (self stackTraceFor: anError)
 		short: ' [ERROR]'
 		of: aTestCase
 ]
 
-{ #category : 'helper' }
+{ #category : 'private' }
 CommandLineTestRunner >> writeFailure: anError of: aTestCase [
 	self
-		print: (self shortStackDescriptionFor: anError)
+		print: (self stackTraceFor: anError)
 		short: ' [FAIL]'
 		of: aTestCase
 ]

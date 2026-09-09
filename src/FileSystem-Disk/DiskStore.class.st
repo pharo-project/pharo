@@ -21,20 +21,16 @@ Class {
 DiskStore class >> activeClass [
 
 	| writableClass |
+	writableClass := self allSubclasses detect: [ :each | each isActiveClass ] ifNone: [ ^ self ].
 
-	writableClass := self allSubclasses detect: [:each |
-		each isActiveClass ] ifNone: [ ^ self ].
-
-	^ SessionManager default currentSession isReadOnlyAccessMode
-		ifFalse: [ writableClass ]
-		ifTrue: [ writableClass readOnlyVariant ]
+	^ writableClass
 ]
 
 { #category : 'system startup' }
 DiskStore class >> checkVMVersion [
 	"Display a warning if the VM is too old"
 	| displayError |
-	displayError := [ ^ self inform: 'Your VM is too old for this image. Please download the latest VM.' ].
+	displayError := [ ^ InformativeNotification signal: 'Your VM is too old for this image. Please download the latest VM.' ].
 	[(Smalltalk vm interpreterSourceDate >= (Date readFrom: '5-1-2019' pattern: 'd-m-y'))
 		ifFalse: [ displayError value ]
 	] on: Error do: [ :e| displayError value ]
@@ -89,24 +85,10 @@ DiskStore class >> maxFileNameLength [
 	self subclassResponsibility
 ]
 
-{ #category : 'public' }
-DiskStore class >> readOnlyVariant [
-
-	"return a class variant for read-only store. It should be properly defined in my subclasses"
-
-	^ self subclassResponsibility
-]
-
 { #category : 'class initialization' }
 DiskStore class >> reset [
 	DefaultWorkingDirectory := nil.
 	CurrentFS := nil
-]
-
-{ #category : 'current' }
-DiskStore class >> resetAsReadOnly [
-
-	self currentFileSystem beReadOnly
 ]
 
 { #category : 'current' }
@@ -147,12 +129,6 @@ DiskStore >> accessTimeOf: aPath [
 	"Return the date of last access of the File described by aPath"
 
 	^DateAndTime fromInternalTime: (File fileAttribute: (self stringFromPath: aPath) number: 9)
-]
-
-{ #category : 'public' }
-DiskStore >> asReadOnlyStore [
-
-	^ self class readOnlyVariant createDefault
 ]
 
 { #category : 'public' }

@@ -19,7 +19,8 @@ MethodAnnouncement >> classAffected [
 
 { #category : 'testing' }
 MethodAnnouncement >> isProvidedByExtension [
-	^self methodOrigin package ~= self methodPackage
+
+	^ self method isExtension
 ]
 
 { #category : 'accessing' }
@@ -57,7 +58,9 @@ MethodAnnouncement >> methodPackage [
 
 { #category : 'accessing' }
 MethodAnnouncement >> packagesAffected [
-	^{self methodPackage}
+
+	self methodPackage ifNil: [ ^ #(  ) ].
+	^ { self methodPackage }
 ]
 
 { #category : 'accessing' }

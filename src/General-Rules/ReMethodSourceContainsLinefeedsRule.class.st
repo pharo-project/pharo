@@ -15,8 +15,9 @@ ReMethodSourceContainsLinefeedsRule class >> checksMethod [
 ]
 
 { #category : 'accessing' }
-ReMethodSourceContainsLinefeedsRule class >> group [
-	^ 'Bugs'
+ReMethodSourceContainsLinefeedsRule class >> groupSelector [
+
+	^ #bugsGroup
 ]
 
 { #category : 'accessing' }
@@ -26,7 +27,7 @@ ReMethodSourceContainsLinefeedsRule class >> ruleName [
 
 { #category : 'accessing' }
 ReMethodSourceContainsLinefeedsRule class >> severity [
-	^ #error
+	^ 'error'
 ]
 
 { #category : 'accessing' }

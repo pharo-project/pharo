@@ -41,21 +41,23 @@ Class {
 
 { #category : 'examples' }
 RubFloatingEditorBuilder class >> exampleCommandLauncher [
+
 	<sampleInstance>
 	<example>
- 	^RubFloatingEditorBuilder new
-		acceptOnCR: false;
-		customizeEditorWith: [ :editor |
-			editor
-				width: 300;
-				height: 50;
-				center: self currentWorld center ];
-		withEditedContentsDo: [ :newContents | self inform: newContents ];
-		openEditorWithContents: 'self inspect'
+	^ self new
+		  acceptOnCR: false;
+		  customizeEditorWith: [ :editor |
+				  editor
+					  width: 300;
+					  height: 50;
+					  center: self currentWorld center ];
+		  withEditedContentsDo: [ :newContents | InformativeNotification signal: newContents ];
+		  openEditorWithContents: 'self inspect'
 ]
 
 { #category : 'examples' }
 RubFloatingEditorBuilder class >> exampleEditableStringMorph [
+
 	<example>
 	| pane stringMorph edBuilder |
 	pane := Morph new.
@@ -64,33 +66,23 @@ RubFloatingEditorBuilder class >> exampleEditableStringMorph [
 		hResizing: #spaceFill;
 		vResizing: #spaceFill;
 		borderWidth: 5.
-	stringMorph := StringMorph
-		contents: 'Open the mini editor: [Shift+mouseDown on the string]; Update: [Enter|Cmd+s]; Abort: [Escape]'.
-	stringMorph
-		position: 5 asPoint.
-		pane addMorph: stringMorph.
-	edBuilder := RubFloatingEditorBuilder new.
+	stringMorph := StringMorph contents: 'Open the mini editor: [Shift+mouseDown on the string]; Update: [Enter|Cmd+s]; Abort: [Escape]'.
+	stringMorph position: 5 asPoint.
+	pane addMorph: stringMorph.
+	edBuilder := self new.
 	edBuilder
 		customizeEditorWith: [ :editor |
-			editor
-				color: Color veryLightGray veryMuchLighter;
-				bounds:
-					(((stringMorph bounds withRight: pane right) withBottom: stringMorph bottom + 40)
-						translateBy: 2 negated asPoint) ];
-		withEditedContentsDo:
-				[ :editedContents |
-			| newContents |
-			newContents := editedContents ifEmpty: [ 'Ahem! I need something here...' ].
-			stringMorph contents: newContents.
-			self inform: newContents ].
-	stringMorph
-		on: #mouseDown
-		send: #value:
-		to: [ :event |
-			event shiftPressed
-				ifTrue: [ edBuilder openEditorWithContents: stringMorph contents ] ].
+				editor
+					color: Color veryLightGray veryMuchLighter;
+					bounds: (((stringMorph bounds withRight: pane right) withBottom: stringMorph bottom + 40) translateBy: 2 negated asPoint) ];
+		withEditedContentsDo: [ :editedContents |
+				| newContents |
+				newContents := editedContents ifEmpty: [ 'Ahem! I need something here...' ].
+				stringMorph contents: newContents.
+				InformativeNotification signal: newContents ].
+	stringMorph on: #mouseDown send: #value: to: [ :event | event shiftPressed ifTrue: [ edBuilder openEditorWithContents: stringMorph contents ] ].
 	(pane embeddedInMorphicWindowLabeled: 'Editable sm example')
-		extent: (stringMorph extent translateBy:  30 @ 30);
+		extent: (stringMorph extent translateBy: 30 @ 30);
 		openInWorld
 ]
 
@@ -117,6 +109,7 @@ RubFloatingEditorBuilder >> autoAccept: aBoolean [
 
 { #category : 'private' }
 RubFloatingEditorBuilder >> buildEditor [
+
 	editor := RubScrolledTextMorph new forbidMenu.
 	editor
 		autoAccept: autoAccept;
@@ -130,11 +123,18 @@ RubFloatingEditorBuilder >> buildEditor [
 	editor
 		beWrapped;
 		font: font;
-		margins: (Margin left: 2 right: 2 top: 0 bottom: 1);
+		margins: (Margin
+				 left: 2
+				 right: 2
+				 top: 0
+				 bottom: 1);
 		selectFrom: initialContents size + 1 to: initialContents size.
 
 	"until we have better a rub text editor for text field like components"
-	editor textArea on: PharoShortcuts current findShortcut do:[:x | "nothing, we don't need a search within a floating editor widget"].
+	editor textArea
+		bindKeyCombination: PharoShortcuts current findShortcut
+		toAction: [ :x | "nothing, we don't need a search within a floating editor widget"
+			 ].
 	editor textArea withoutSelectionBar.
 	^ self customizedEditor
 ]

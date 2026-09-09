@@ -35,7 +35,7 @@ FLMigration >> applyTo: aVariablesMapping [
 			to: link value ]
 ]
 
-{ #category : 'initializing' }
+{ #category : 'initialization' }
 FLMigration >> initializeClassNamed: aSymbol toClass: aClass variables: anArray [ 
 	
 	self initialize.

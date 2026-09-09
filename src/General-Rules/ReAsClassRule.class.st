@@ -15,9 +15,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReAsClassRule class >> group [
+ReAsClassRule class >> groupSelector [
 
-	^ 'Design Flaws'
+	^ #designFlawGroup
 ]
 
 { #category : 'accessing' }
@@ -28,7 +28,7 @@ ReAsClassRule class >> ruleName [
 { #category : 'accessing' }
 ReAsClassRule class >> severity [
 
-	^ #error
+	^ 'error'
 ]
 
 { #category : 'initialization' }

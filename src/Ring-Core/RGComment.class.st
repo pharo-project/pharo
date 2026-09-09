@@ -80,6 +80,12 @@ RGComment >> fullName [
 	^ (self parent name, ' comment') asSymbol
 ]
 
+{ #category : 'testing' }
+RGComment >> ifEmpty: aBlock [
+
+	^ content ifEmpty: aBlock
+]
+
 { #category : 'initialization' }
 RGComment >> initialize [
 

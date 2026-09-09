@@ -12,6 +12,11 @@ Class {
 }
 
 { #category : 'accessing' }
+SycMockRBRefactoring >> changesToDisplayIn: aBrowser [
+	^ aBrowser scopeDropList selectedItem content
+]
+
+{ #category : 'accessing' }
 SycMockRBRefactoring >> environment [
 	^ environment
 ]
@@ -35,9 +40,4 @@ SycMockRBRefactoring >> model [
 { #category : 'accessing' }
 SycMockRBRefactoring >> model: aRBNamespace [
 	^ self
-]
-
-{ #category : 'accessing' }
-SycMockRBRefactoring >> whatToDisplayIn: aBrowser [
-	^ aBrowser scopeDropList selectedItem content
 ]

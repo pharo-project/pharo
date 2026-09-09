@@ -38,9 +38,6 @@ MenuMorph class >> chooseFrom: aList lines: linesArray title: queryString [
 		title: 'What''s up?'"
 
 	| menu result |
-	(ProvideAnswerNotification signal: queryString) ifNotNil:[:answer |
-		1 to: aList size do:[:i| (aList at: i) = answer ifTrue:[^i]].
-		^0].
 	result := 0.
 	menu := self new.
 	menu addTitle: queryString.
@@ -63,9 +60,6 @@ MenuMorph class >> chooseFrom: aList values: valueList lines: linesArray title: 
 		title: 'What''s up?'"
 
 	| menu result |
-	(ProvideAnswerNotification signal: queryString) ifNotNil:[:answer |
-		1 to: aList size do:[:i| (aList at: i) = answer ifTrue:[^answer]].
-		^nil].
 	result := nil.
 	menu := self new.
 	menu addTitle: queryString.
@@ -116,8 +110,6 @@ MenuMorph class >> confirm: queryString trueChoice: trueChoice falseChoice: fals
 		falseChoice: 'no, I just thought'"
 
 	| menu aBlock result |
-	(ProvideAnswerNotification signal: queryString)
-		ifNotNil: [ :answer | ^ trueChoice = answer ].
 	aBlock := [ :v | result := v ].
 	menu := self new.
 	menu addTitle: queryString icon: (self iconNamed: #confirm).

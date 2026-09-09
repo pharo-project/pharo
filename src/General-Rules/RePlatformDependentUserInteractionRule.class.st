@@ -12,8 +12,9 @@ Class {
 }
 
 { #category : 'accessing' }
-RePlatformDependentUserInteractionRule class >> group [
-	^ 'Potential Bugs'
+RePlatformDependentUserInteractionRule class >> groupSelector [
+
+	^ #potentialBugsGroup
 ]
 
 { #category : 'accessing' }
@@ -28,7 +29,8 @@ RePlatformDependentUserInteractionRule class >> ruleName [
 
 { #category : 'accessing' }
 RePlatformDependentUserInteractionRule class >> severity [
-	^ #error
+
+	^ 'error'
 ]
 
 { #category : 'accessing' }

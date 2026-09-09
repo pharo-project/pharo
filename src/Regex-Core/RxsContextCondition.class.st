@@ -17,7 +17,7 @@ Class {
 	#tag : 'Nodes'
 }
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 RxsContextCondition >> beAny [
 	"Matches anything but a newline."
 

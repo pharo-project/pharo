@@ -23,7 +23,7 @@ FLSystemGlobalsTestResource >> globals [
 FLSystemGlobalsTestResource >> setUp [
 	super setUp.
 
-	globals := SystemDictionary new: Smalltalk globals size.
+	globals := SystemEnvironment new: Smalltalk globals size.
 	"Can't use #newFrom: because associations must be unique"
 	Smalltalk globals keysAndValuesDo: [ :key :value |
 		globals

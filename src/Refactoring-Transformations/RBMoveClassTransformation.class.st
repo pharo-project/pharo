@@ -7,10 +7,10 @@ Usage:
 | transformation |
 transformation := (RBMoveClassTransformation
 	move: #RBMoveClassTransformation
-	toPackage: #'Refactoring2-Refactorings-Tests'
+	toPackage: #'Refactoring-Transformations-Tests'
 	inTag: #Utilities) ""The tag is optional""
-	transform.
-(ChangesBrowser changes: transformation model changes changes) open
+	generateChanges.
+(StRefactoringPreviewPresenter for: transformation) open
 ```
 
 Preconditions:
@@ -98,25 +98,6 @@ RBMoveClassTransformation >> privateTransform [
 		packageName: self packageName;
 		tagName: self tagName.
 	self model repackage: self definingClass in: self packageName tag: self tagName
-]
-
-{ #category : 'storing' }
-RBMoveClassTransformation >> storeOn: aStream [
-
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream
-		nextPutAll: ' move: ''';
-		nextPutAll: className;
-		nextPutAll: ''' toPackage: ''';
-		nextPutAll: packageName;
-		nextPutAll: ''''.
-	self tagName ifNotNil: [
-		aStream
-			nextPutAll: ' inTag: ''';
-			nextPutAll: tagName;
-			nextPutAll: '''' ].
-	aStream nextPut: $)
 ]
 
 { #category : 'accessing' }

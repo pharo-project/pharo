@@ -119,6 +119,9 @@ OSSDL2AthensRenderer >> resetResources [
 	self checkSession.
 	extent := renderer outputExtent.
 	athensSurface := AthensCairoSurface extent: extent.
+	"See: https://github.com/pharo-project/pharo/issues/18468"
+	athensSurface deviceScale: extent / backendWindow extent.
+
 	texture ifNotNil: [
 		texture destroy.
 		texture := nil.

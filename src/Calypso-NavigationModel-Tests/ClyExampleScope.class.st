@@ -17,6 +17,11 @@ ClyExampleScope >> = anObject [
 	^ extraParameter = anObject extraParameter
 ]
 
+{ #category : 'converting' }
+ClyExampleScope >> adoptLocalScopeClassTo: aLocalScopeClass [
+	"To fix abstract test covering scope convertion"
+]
+
 { #category : 'accessing' }
 ClyExampleScope >> extraParameter [
 	^ extraParameter

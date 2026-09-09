@@ -16,6 +16,9 @@ Class {
 BuilderManifestTest >> setUp [
 
 	super setUp.
+	
+	"These tests are written to have side effects in the global environment"
+	testingEnvironment := Smalltalk globals.
 	manifestBuilder := TheManifestBuilder of: MFClassA
 ]
 

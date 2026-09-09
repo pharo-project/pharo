@@ -361,24 +361,6 @@ RGBehaviorStrategyUser >> storeOn: aStream [
 	^ self behaviorStrategy storeOn: aStream
 ]
 
-{ #category : 'accessing' }
-RGBehaviorStrategyUser >> theMetaClass [
-	self
-		deprecated: 'Please use #classSide instead'
-		transformWith: '`@receiver theMetaClass' -> '`@receiver classSide'.
-
-	^ self classSide
-]
-
-{ #category : 'accessing' }
-RGBehaviorStrategyUser >> theNonMetaClass [
-
-	self
-		deprecated: 'Please use #instanceSide instead'
-		transformWith: '`@receiver theNonMetaClass' -> '`@receiver instanceSide'.
-	^self instanceSide
-]
-
 { #category : 'variables' }
 RGBehaviorStrategyUser >> trait [
 

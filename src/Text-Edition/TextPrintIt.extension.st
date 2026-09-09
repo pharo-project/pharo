@@ -5,6 +5,6 @@ TextPrintIt >> actOnClick: anEvent for: anObject in: paragraph editor: editor [
 
 	| result |
 	result := Smalltalk compiler receiver: anObject; evaluate: evalString.
-	self inform: result printString.
+	InformativeNotification signal: result printString.
 	^ true
 ]

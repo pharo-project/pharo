@@ -2,13 +2,15 @@
 I am responsible for adding a return statement inside a method. In this implementation, all the return value (including the '^') shall be described.
 
 Usage: 
+```
 | transformation |
 transformation := (RBAddReturnStatementTransformation
 				return: '^ variable'
 				inMethod: #methodBefore
 				inClass: #RBAddReturnStatementTransformationTest)
-				transform.
-(ChangesBrowser changes: transformation model changes changes) open
+				generateChanges.
+(StRefactoringPreviewPresenter for: transformation) open
+```
 
 Preconditions:
 - the method does not have a return statement
@@ -106,19 +108,4 @@ RBAddReturnStatementTransformation >> return: anExpression inMethod: aSelector i
 	self className: aClassName.
 	selector := aSelector.
 	returnValue := anExpression
-]
-
-{ #category : 'storing' }
-RBAddReturnStatementTransformation >> storeOn: aStream [
-
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream
-		nextPutAll: ' return: ''';
-		nextPutAll: returnValue;
-		nextPutAll: ''' inMethod: ''';
-		nextPutAll: selector;
-		nextPutAll: ''' inClass: '.
-	class storeOn: aStream.
-	aStream nextPut: $)
 ]

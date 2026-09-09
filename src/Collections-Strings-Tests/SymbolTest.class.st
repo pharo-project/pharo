@@ -7,8 +7,8 @@ This is the unit test for the class Symbol. Unit tests are a good way to exercis
 Class {
 	#name : 'SymbolTest',
 	#superclass : 'CollectionRootTest',
-	#traits : 'TSortTest - {#testSort. #testSortUsingSortBlock} + TIncludesTest + (TCloneTest - {#testCopyCreatesNewObject}) + TCopyPreservingIdentityTest + TCopyTest + (TSetArithmetic - {#testDifferenceWithNonNullIntersection}) + TIterateSequencedReadableTest + TSequencedConcatenationTest + TPrintOnSequencedTest + TAsStringCommaAndDelimiterSequenceableTest + TIndexAccess + (TIndexAccessForMultipliness - {#testIdentityIndexOfIAbsentDuplicate. #testIdentityIndexOfDuplicate. #collectionWithNonIdentitySameAtEndAndBegining}) + TSequencedElementAccessTest + TSubCollectionAccess + (TCopySequenceableSameContents - {#testShuffled}) + (TCopyPartOfSequenceable - {#testCopyEmptyMethod. #integerCollectionWithoutEqualElements}) + TCopyPartOfSequenceableForMultipliness + TCopySequenceableWithReplacement + TBeginsEndsWith + TConvertAsSortedTest + (TConvertTest - {#testAsByteArray. #integerCollectionWithoutEqualElements}) + TCopySequenceableWithOrWithoutSpecificElements + TConvertAsSetForMultiplinessTest + TSequencedStructuralEqualityTest + TOccurrencesForMultiplinessTest',
-	#classTraits : 'TSortTest classTrait + TIncludesTest classTrait + TCloneTest classTrait + TCopyPreservingIdentityTest classTrait + TCopyTest classTrait + TSetArithmetic classTrait + TIterateSequencedReadableTest classTrait + TSequencedConcatenationTest classTrait + TPrintOnSequencedTest classTrait + TAsStringCommaAndDelimiterSequenceableTest classTrait + TIndexAccess classTrait + TIndexAccessForMultipliness classTrait + TSequencedElementAccessTest classTrait + TSubCollectionAccess classTrait + TCopySequenceableSameContents classTrait + TCopyPartOfSequenceable classTrait + TCopyPartOfSequenceableForMultipliness classTrait + TCopySequenceableWithReplacement classTrait + TBeginsEndsWith classTrait + TConvertAsSortedTest classTrait + TConvertTest classTrait + TCopySequenceableWithOrWithoutSpecificElements classTrait + TConvertAsSetForMultiplinessTest classTrait + TSequencedStructuralEqualityTest classTrait + TOccurrencesForMultiplinessTest classTrait',
+	#traits : 'TSortTest - {#testSort. #testSortUsingSortBlock} + TIncludesTest + (TCloneTest - {#testCopyCreatesNewObject}) + TCopyPreservingIdentityTest + TCopyTest + (TSetArithmetic - {#testDifferenceWithNonNullIntersection}) + TIterateSequencedReadableTest + TSequencedConcatenationTest + TPrintOnSequencedTest + TIndexAccess + (TIndexAccessForMultipliness - {#testIdentityIndexOfIAbsentDuplicate. #testIdentityIndexOfDuplicate. #collectionWithNonIdentitySameAtEndAndBegining}) + TSequencedElementAccessTest + TSubCollectionAccess + (TCopySequenceableSameContents - {#testShuffled}) + (TCopyPartOfSequenceable - {#testCopyEmptyMethod. #integerCollectionWithoutEqualElements}) + TCopyPartOfSequenceableForMultipliness + TCopySequenceableWithReplacement + TBeginsEndsWith + TConvertAsSortedTest + (TConvertTest - {#testAsByteArray. #integerCollectionWithoutEqualElements}) + TCopySequenceableWithOrWithoutSpecificElements + TConvertAsSetForMultiplinessTest + TSequencedStructuralEqualityTest + TOccurrencesForMultiplinessTest',
+	#classTraits : 'TSortTest classTrait + TIncludesTest classTrait + TCloneTest classTrait + TCopyPreservingIdentityTest classTrait + TCopyTest classTrait + TSetArithmetic classTrait + TIterateSequencedReadableTest classTrait + TSequencedConcatenationTest classTrait + TPrintOnSequencedTest classTrait + TIndexAccess classTrait + TIndexAccessForMultipliness classTrait + TSequencedElementAccessTest classTrait + TSubCollectionAccess classTrait + TCopySequenceableSameContents classTrait + TCopyPartOfSequenceable classTrait + TCopyPartOfSequenceableForMultipliness classTrait + TCopySequenceableWithReplacement classTrait + TBeginsEndsWith classTrait + TConvertAsSortedTest classTrait + TConvertTest classTrait + TCopySequenceableWithOrWithoutSpecificElements classTrait + TConvertAsSetForMultiplinessTest classTrait + TSequencedStructuralEqualityTest classTrait + TOccurrencesForMultiplinessTest classTrait',
 	#instVars : [
 		'emptySymbol',
 		'nonEmptySymbol5ElementsNoDuplicates',
@@ -223,12 +223,6 @@ SymbolTest >> nonEmpty [
 ]
 
 { #category : 'requirements' }
-SymbolTest >> nonEmpty1Element [
-" return a collection of size 1 including one element"
-	^collection1Element
-]
-
-{ #category : 'requirements' }
 SymbolTest >> nonEmptyMoreThan1Element [
 " return a collection that don't includes equal elements'"
 	^nonEmptySymbol5ElementsNoDuplicates
@@ -286,6 +280,36 @@ SymbolTest >> subCollectionNotIn [
 ]
 
 { #category : 'tests' }
+SymbolTest >> testArgumentCountInfixSymbol [
+
+	| symbol |
+
+	symbol := #+.
+
+	self assert: symbol argumentCount equals: 2
+]
+
+{ #category : 'tests' }
+SymbolTest >> testArgumentCountManyArgs [
+
+	| symbol |
+
+	symbol := #test:bla123:.
+
+	self assert: symbol argumentCount equals: 3
+]
+
+{ #category : 'tests' }
+SymbolTest >> testArgumentCountOneArg [
+
+	| symbol |
+
+	symbol := #test.
+
+	self assert: symbol argumentCount equals: 1
+]
+
+{ #category : 'tests' }
 SymbolTest >> testAsAccessor [
 	self assert: #x: asAccessor equals: #x.
 	self assert: #x asAccessor equals: #x.
@@ -295,12 +319,26 @@ SymbolTest >> testAsAccessor [
 	self should: [ self assert: #'' asAccessor ] raise: Error.	
 ]
 
+{ #category : 'tests - converting' }
+SymbolTest >> testAsByteArray [
+	self assert: #a asByteArray equals: #[97].
+	self assert: #A asByteArray equals: #[65].
+	self assert: #ABA asByteArray equals: #[65 66 65].
+	self assert: #'' asByteArray equals: #[]
+]
+
 { #category : 'tests' }
 SymbolTest >> testAsMutator [
 	self assert: #x asMutator equals: #x:.
 	"return receiver if it is already a mutator"
 	self assert: #x: asMutator equals: #x:.
 	self assert: #x asMutator isSymbol
+]
+
+{ #category : 'tests' }
+SymbolTest >> testAsMutatorOnBinarySymbolRaisesAnError [
+
+	self should: [ #+ asMutator ] raise: Error
 ]
 
 { #category : 'tests' }
@@ -378,9 +416,16 @@ SymbolTest >> testIsLiteralSymbol [
 ]
 
 { #category : 'tests - selectors' }
-SymbolTest >> testIsSelectorSymbol [
-	self deny: #'no selector exist with spaces' isSelectorSymbol.
-	self assert: #assert:equals: isSelectorSymbol
+SymbolTest >> testIsUsedAsSelectorSymbol [
+	self deny: #'no selector exist with spaces' isUsedAsSelectorSymbol.
+	
+	"a valid selector used in the system"
+	self assert: #assert:equals: isUsedAsSelectorSymbol.
+	
+
+	"a valid selector not used in the system"
+	self deny: #assert:equals1942: isUsedAsSelectorSymbol.
+	self assert: (OCScanner isSelector: #assert:equals1942:) 
 ]
 
 { #category : 'tests' }
@@ -560,6 +605,48 @@ SymbolTest >> testUncapitalized [
 	lc := #mElViN.
 	self assert: uc uncapitalized equals: lc.
 	self assert: lc uncapitalized equals: lc
+]
+
+{ #category : 'tests' }
+SymbolTest >> testValueValue [
+
+	| symbol |
+	
+	symbol := #+.
+	
+	self assert: (symbol value: 1 value: 4) equals: 5
+]
+
+{ #category : 'tests' }
+SymbolTest >> testValueWithArguments [
+
+	| symbol |
+	
+	symbol := #+.
+	
+	self assert: (symbol valueWithArguments: {1. 4}) equals: 5
+]
+
+{ #category : 'tests' }
+SymbolTest >> testValueWithEnoughArguments [
+
+	| symbol |
+	symbol := #+.
+
+	self assert: (symbol valueWithEnoughArguments: { 1. 4 }) equals: 5.
+	self assert: (symbol valueWithEnoughArguments: { 1. 4. 5 }) equals: 5.
+	self should: [ symbol valueWithEnoughArguments: { 1 } ] raise: Error
+]
+
+{ #category : 'tests' }
+SymbolTest >> testValueWithOneArg [
+
+	| symbol rcvr |
+	
+	symbol := #abs.
+	rcvr := -1.
+	
+	self assert: (symbol value: rcvr) equals: 1
 ]
 
 { #category : 'requirements' }

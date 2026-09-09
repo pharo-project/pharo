@@ -9,7 +9,7 @@ execution? In addition imagine other scenario where you want to transform that e
 Changing code, removing, or replacing deprecated methods is costly for a developer by doing it manually instead of using an automated feature.
 
 We explain how to find a specific piece of code we may look for inside a Pharo program, and make it easy for the developers to 
-deal with pattern matching and `RBParseTreeSearcher` class.
+deal with pattern matching and `ASTParseTreeSearcher` class.
 
 You can find tools to help you in the Library menu of Pharo. 
 
@@ -21,5 +21,5 @@ These tools have been maintained and redesigned by Sebastian Jordan-Montano.
 We explain some fundamental definitions in the following sections:
 
 - Pattern code description
-- RBParseTreeSearcher description
-- RBParseTreeSearcher examples with pattern code
+- ASTParseTreeSearcher description
+- ASTParseTreeSearcher examples with pattern code

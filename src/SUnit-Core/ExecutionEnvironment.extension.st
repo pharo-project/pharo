@@ -1,6 +1,13 @@
 Extension { #name : 'ExecutionEnvironment' }
 
 { #category : '*SUnit-Core' }
+ExecutionEnvironment >> maxTimeForTest: aDuration [
+	"just for compatibility with TestExecutionEnvironment"
+
+	
+]
+
+{ #category : '*SUnit-Core' }
 ExecutionEnvironment >> runTestCase: aTestCase [
 
 	self subclassResponsibility

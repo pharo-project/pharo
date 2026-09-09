@@ -2,10 +2,13 @@
 Marks a class as deprecated and suggests the use of the superclass.
 
 Usage:
+```
+| transformation |
 transformation := (RBDeprecateClassTransformation 
-		class: #RBRemoveClassTransformation)
-		transform. 
-(ChangesBrowser changes: transformation model changes changes) open
+		className: #RBRemoveClassTransformation)
+		generateChanges. 
+(StRefactoringPreviewPresenter for: transformation) open
+```
 "
 Class {
 	#name : 'RBDeprecateClassTransformation',
@@ -36,7 +39,7 @@ RBDeprecateClassTransformation class >> model: aRBModel className: aClassName [
 RBDeprecateClassTransformation >> applicabilityPreconditions [
 
 	^ {
-		  (ReClassesExistCondition new classes: { class }).
+		  (ReClassesExistCondition new classes: { class name -> class } asDictionary).
 		  (ReClassesAreNotMetaClassCondition new classes: { class }) }
 ]
 
@@ -58,14 +61,4 @@ RBDeprecateClassTransformation >> privateTransform [
 						  nextPutAll: '^ true' ])
 			 in: (className , ' class') asSymbol
 			 withProtocol: #deprecation)
-]
-
-{ #category : 'storing' }
-RBDeprecateClassTransformation >> storeOn: aStream [
-
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream nextPutAll: ' className: '.
-	className storeOn: aStream.
-	aStream nextPut: $)
 ]

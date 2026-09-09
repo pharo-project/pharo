@@ -9,7 +9,7 @@ Class {
 { #category : 'tests - bindings' }
 OpalCompilerTest >> testArrayBindingsWithUppercaseNameDoOverwriteGlobals [
 	| result |
-	result := Smalltalk compiler
+	result := OpalEvaluator new
 		bindings: {(#UndefinedObject -> Object)};
 		evaluate: 'UndefinedObject class'.
 	self assert: result equals: Object class
@@ -18,7 +18,7 @@ OpalCompilerTest >> testArrayBindingsWithUppercaseNameDoOverwriteGlobals [
 { #category : 'tests - bindings' }
 OpalCompilerTest >> testArrayBindingsWriteGlobals [
 	| result |
-	result := Smalltalk compiler
+	result := OpalEvaluator new
 		 bindings: {(#Object -> Point)};
        evaluate: 'Object := 42'.
 	self assert: result equals: 42
@@ -27,7 +27,7 @@ OpalCompilerTest >> testArrayBindingsWriteGlobals [
 { #category : 'tests - bindings' }
 OpalCompilerTest >> testArrayEvaluateWithBindings [
 	| result |
-	result := Smalltalk compiler
+	result := OpalEvaluator new
 		bindings: {(#a -> 3)};
 		evaluate: '1+a'.
 	self assert: result equals: 4
@@ -36,7 +36,7 @@ OpalCompilerTest >> testArrayEvaluateWithBindings [
 { #category : 'tests - bindings' }
 OpalCompilerTest >> testArrayEvaluateWithBindingsReadGlobal [
 | result |
-	result := Smalltalk compiler
+	result := OpalEvaluator new
 	bindings: {(#a -> 3)};
 	evaluate: 'OrderedCollection'.
 	self assert: result equals: OrderedCollection
@@ -45,7 +45,7 @@ OpalCompilerTest >> testArrayEvaluateWithBindingsReadGlobal [
 { #category : 'tests - bindings' }
 OpalCompilerTest >> testArrayEvaluateWithBindingsWithUppercaseName [
 	| result |
-	result := Smalltalk compiler
+	result := OpalEvaluator new
 		bindings: {(#MyVar -> 3)};
 		evaluate: '1+MyVar'.
 	self assert: result equals: 4
@@ -54,7 +54,7 @@ OpalCompilerTest >> testArrayEvaluateWithBindingsWithUppercaseName [
 { #category : 'tests - bindings' }
 OpalCompilerTest >> testBindingsWithUppercaseNameDoOverwriteGlobals [
 	| result |
-	result := Smalltalk compiler
+	result := OpalEvaluator new
 		bindings: {(#UndefinedObject -> Object)} asDictionary;
 		evaluate: 'UndefinedObject class'.
 	self assert: result equals: Object class
@@ -63,32 +63,10 @@ OpalCompilerTest >> testBindingsWithUppercaseNameDoOverwriteGlobals [
 { #category : 'tests - bindings' }
 OpalCompilerTest >> testBindingsWriteGlobals [
 	| result |
-	result := Smalltalk compiler
+	result := OpalEvaluator new
 		 bindings: {(#Object -> Point)} asDictionary;
        evaluate: 'Object := 42'.
 	self assert: result equals: 42
-]
-
-{ #category : 'tests' }
-OpalCompilerTest >> testCompileFromAnalysedAST [
-
-	| source ast value |
-	source := 'foo |a| a := 3. ^a+4'.
-	
-	ast := MockForCompilation compiler parse: source.
-	value := MockForCompilation compiler ast: ast; evaluate.
-	self assert: value equals: 7.
-]
-
-{ #category : 'tests' }
-OpalCompilerTest >> testCompileFromText [
-
-	| source result |
-	source := 'tt ^3+4' asText.
-
-	result := MockForCompilation compiler compile: source.
-	self assert: result sourceCode isString.
-	self assert: result sourceCode equals: source asString
 ]
 
 { #category : 'tests' }
@@ -97,7 +75,7 @@ OpalCompilerTest >> testCompileSource [
 	source := 'tt ^3+4'.
 
 	"Compiled but uninstalled methods have a #source but no sourcePointer"
-	result := MockForCompilation compiler compile: source.
+	result := MockForCompilation compiler source: source; compileOrFail.
 	self assert: (result valueWithReceiver: nil) equals: 7.
 	self deny: result hasSourcePointer. "no sourcePointer"
 	self assert: (result propertyAt: #source) equals: source.
@@ -126,7 +104,7 @@ OpalCompilerTest >> testCompileSource [
 OpalCompilerTest >> testCompileWithNilClass [
 	"we shoud use UndefinedObject if the class is nil"
 	| method |
-	method := Smalltalk compiler compile: 'tst 1+2'.
+	method := OpalCompiler new source: 'tst 1+2'; compileOrFail.
 	self assert: method methodClass equals: UndefinedObject
 ]
 
@@ -134,11 +112,11 @@ OpalCompilerTest >> testCompileWithNilClass [
 OpalCompilerTest >> testCompilerUsingCleanBlockClosureHasBlockAsLiteral [
 
 	| compiler method |
-	compiler := Smalltalk compiler.
+	compiler := OpalCompiler new.
 	compiler compilationContext compilerOptions:
 		#(+ optionCleanBlockClosure ).
 
-	method := compiler compile: 'test #(1 2 3) do: [:e | e + 1]'.
+	method := compiler source: 'test #(1 2 3) do: [:e | e + 1]'; compileOrFail.
 
 	self assert: method literals second isEmbeddedBlock.
 	self assert: method literals second class equals: CleanBlockClosure
@@ -147,7 +125,7 @@ OpalCompilerTest >> testCompilerUsingCleanBlockClosureHasBlockAsLiteral [
 { #category : 'tests - bindings' }
 OpalCompilerTest >> testEvaluateWithBindings [
 	| result |
-	result := Smalltalk compiler
+	result := OpalEvaluator new
 		bindings: {(#a -> 3)} asDictionary;
 		evaluate: '1+a'.
 	self assert: result equals: 4
@@ -158,22 +136,22 @@ OpalCompilerTest >> testEvaluateWithBindingsSelfSuperThisContext [
 	| result |
 
 	"via #bindings: we can overwrite even self, super and thisContext"
-	result := Smalltalk compiler
+	result := OpalEvaluator new
 		bindings: {(#self -> 3)} asDictionary;
 		evaluate: '1+self'.
 	self assert: result equals: 4.
 
-	result := Smalltalk compiler
+	result := OpalEvaluator new
 		bindings: {(#super -> 3)} asDictionary;
 		evaluate: '1+super'.
 	self assert: result equals: 4.
 
-	result := Smalltalk compiler
+	result := OpalEvaluator new
 		bindings: {(#thisContext -> 3)} asDictionary;
 		evaluate: '1+thisContext'.
 	self assert: result equals: 4.
 	
-	result := Smalltalk compiler
+	result := OpalEvaluator new
 		bindings: {(#thisProcess -> 3)} asDictionary;
 		evaluate: '1+thisProcess'.
 	self assert: result equals: 4
@@ -182,7 +160,7 @@ OpalCompilerTest >> testEvaluateWithBindingsSelfSuperThisContext [
 { #category : 'tests - bindings' }
 OpalCompilerTest >> testEvaluateWithBindingsWithUppercaseName [
 	| result |
-	result := Smalltalk compiler
+	result := OpalEvaluator new
 		bindings: {(#MyVar -> 3)} asDictionary;
 		evaluate: '1+MyVar'.
 	self assert: result equals: 4
@@ -200,7 +178,7 @@ OpalCompilerTest >> testInstall [
 
 	method := MockForCompilation compiler
 		          source: 'foo ^42';
-		          changeStamp: 'JP 4/01/2023 01:23';
+		          changeStamp: '2025-04-25T14:42:06.014486+02:00';
 		          protocol: 'hitching';
 		          install.
 
@@ -213,51 +191,32 @@ OpalCompilerTest >> testInstall [
 ]
 
 { #category : 'tests' }
-OpalCompilerTest >> testInstallException [
-
-	| method message |
+OpalCompilerTest >> testSavedProtocolInChangesFileIsRight [
+	"Regression test, the saved protocol was wrong when we provided a Protocol instance during compilation.."
+	
+	| method |
+	"Cleanup"
+	(MockForCompilation includesSelector: #foo) ifTrue: [
+		MockForCompilation removeSelector: #foo ].
 	"Precond"
 	self deny: (MockForCompilation includesSelector: #foo).
 
-	[ method := MockForCompilation compiler install: 'foo ^¿' ]
-		on: CodeError
-		do: [ :error | message := error messageText , ' :(' ].
-
-	self deny: (MockForCompilation includesSelector: #foo).
-	self assert: method isNil.
-	self assert: message equals: 'Unknown character :('
-]
-
-{ #category : 'tests' }
-OpalCompilerTest >> testInstallRequestor [
-
-	| method requestor |
-	"precond"
-	self deny: (MockForCompilation includesSelector: #foo).
-
-	requestor := OCMockRequestor new.
-
-	[
 	method := MockForCompilation compiler
-		          source: 'foo ^¿';
-		          requestor: requestor;
-		          failBlock: [  ];
-		          changeStamp: 'JP 3/24/2023 18:39';
-		          protocol: 'hitching';
-		          install ]
-		on: CodeError
-		do: [  ].
+		          source: 'foo ^42';
+		          protocol: (Protocol named: 'hitching');
+		          install.
 
-	self deny: (MockForCompilation includesSelector: #foo).
-	self assert: method isNil.
-	self assert: requestor notifyList first first equals: 'Unknown character ->'
+	self assert: (SourcesManager current protocolAt: method sourcePointer) equals: 'hitching'.
+	"Cleanup"
+	method removeFromSystem.
+	self deny: (MockForCompilation includesSelector: #foo)
 ]
 
 { #category : 'tests' }
 OpalCompilerTest >> testShadowPseudoVariable [
 	"We can shadw PseudoVariables (here thisContext) and it works"
 	| result |
-	result := Smalltalk compiler
+	result := OpalEvaluator new
        evaluate: '| thisContext | thisContext := 42. ^thisContext'.
 	self assert: result equals: 42
 ]

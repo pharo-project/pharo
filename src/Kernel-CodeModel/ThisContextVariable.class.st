@@ -14,11 +14,6 @@ ThisContextVariable class >> variableName [
 	^#thisContext
 ]
 
-{ #category : 'visiting' }
-ThisContextVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
-	^ aProgramNodeVisitor visitThisContextNode: aNode
-]
-
 { #category : 'code generation' }
 ThisContextVariable >> emitValue: methodBuilder [
 

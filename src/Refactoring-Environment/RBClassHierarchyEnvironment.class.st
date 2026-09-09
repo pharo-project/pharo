@@ -34,6 +34,17 @@ RBClassHierarchyEnvironment class >> onEnvironment: anEnvironment class: aClass 
 		yourself
 ]
 
+{ #category : 'comparing' }
+RBClassHierarchyEnvironment >> = anotherEnvironment [
+
+	self == anotherEnvironment 
+		ifTrue: [ ^ true ].
+	
+	anotherEnvironment class = self class ifFalse: [ ^ false ].
+	
+	^ environment = anotherEnvironment environment and: [ class = anotherEnvironment hierarchyClass ]
+]
+
 { #category : 'accessing' }
 RBClassHierarchyEnvironment >> basisObjects [
 	^ { class }
@@ -51,18 +62,21 @@ RBClassHierarchyEnvironment >> definesClass: aClass [
 			[ aClass inheritsFrom: class ] ]) and: [super definesClass: aClass]
 ]
 
+{ #category : 'comparing' }
+RBClassHierarchyEnvironment >> hash [
+
+	^ super hash bitXor: class hash
+]
+
+{ #category : 'accessing' }
+RBClassHierarchyEnvironment >> hierarchyClass [
+
+	^ class
+]
+
 { #category : 'testing' }
 RBClassHierarchyEnvironment >> includesClass: aClass [
 	^ (aClass == class or:
 		[ (class inheritsFrom: aClass) or:
 			[ aClass inheritsFrom: class ] ]) and: [super includesClass: aClass]
-]
-
-{ #category : 'printing' }
-RBClassHierarchyEnvironment >> storeOn: aStream [
-	aStream nextPut: $(.
-	super storeOn: aStream.
-	aStream nextPutAll: ' class: (('.
-	class storeOn: aStream.
-	aStream nextPutAll: ')))'
 ]

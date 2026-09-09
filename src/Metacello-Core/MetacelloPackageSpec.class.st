@@ -1,141 +1,32 @@
 Class {
 	#name : 'MetacelloPackageSpec',
-	#superclass : 'MetacelloAbstractPackageSpec',
+	#superclass : 'MetacelloLoadableSpec',
 	#instVars : [
-		'file',
+		'requires',
+		'project',
+		'name',
 		'repositories',
-		'goferPackage',
 		'preLoadDoIt',
-		'postLoadDoIt'
+		'postLoadDoIt',
+		'strict'
 	],
-	#category : 'Metacello-Core-Specs',
+	#category : 'Metacello-Core-Model',
 	#package : 'Metacello-Core',
-	#tag : 'Specs'
+	#tag : 'Model'
 }
+
+{ #category : 'instance creation' }
+MetacelloPackageSpec class >> project: aMetacelloProject [
+
+	^ self new
+		  project: aMetacelloProject;
+		  yourself
+]
 
 { #category : 'visiting' }
 MetacelloPackageSpec >> acceptVisitor: aVisitor [
 
 	^ aVisitor visitPackageSpec: self
-]
-
-{ #category : 'printing' }
-MetacelloPackageSpec >> configMethodBodyOn: aStream hasName: hasName indent: indent [
-
-	| hasFile hasRepositories hasPreLoadDoIt hasPostLoadDoIt hasRequiresOrIncludesOrAnswers |
-	hasFile := file isNotNil.
-	hasRepositories := self repositorySpecs size > 0.
-	hasPreLoadDoIt := self getPreLoadDoIt isNotNil.
-	hasPostLoadDoIt := self getPostLoadDoIt isNotNil.
-	hasRequiresOrIncludesOrAnswers := (self requires isEmpty and: [ self includes isEmpty and: [ self answers isEmpty ] ]) not.
-	hasRequiresOrIncludesOrAnswers ifTrue: [
-		self
-			configMethodBodyOn: aStream
-			hasName: hasName
-			cascading: hasFile | hasRepositories | hasPreLoadDoIt | hasPostLoadDoIt
-			indent: indent ].
-	self
-		configMethodOn: aStream
-		for: file
-		selector: 'file: '
-		cascading: hasName | hasRepositories | hasPreLoadDoIt | hasPostLoadDoIt | hasRequiresOrIncludesOrAnswers
-		cascade: hasRepositories | hasPreLoadDoIt | hasPostLoadDoIt
-		indent: indent.
-	hasRepositories ifTrue: [
-		self repositorySpecs size > 1
-			ifTrue: [
-				hasName | hasFile | hasPreLoadDoIt | hasPostLoadDoIt | hasRequiresOrIncludesOrAnswers ifTrue: [
-					aStream
-						cr;
-						tab: indent ].
-				aStream
-					nextPutAll: 'repositories: [';
-					cr;
-					tab: indent + 1;
-					nextPutAll: 'spec';
-					cr.
-				self repositories configMethodCascadeOn: aStream indent: indent + 1.
-				aStream nextPutAll: ' ]' ]
-			ifFalse: [
-				hasName | hasFile | hasPreLoadDoIt | hasPostLoadDoIt | hasRequiresOrIncludesOrAnswers ifTrue: [
-					aStream
-						cr;
-						tab: indent ].
-				self repositories configMethodCascadeOn: aStream indent: indent ].
-		hasPreLoadDoIt | hasPostLoadDoIt ifTrue: [ aStream nextPut: $; ] ].
-	self
-		configMethodOn: aStream
-		for: self getPreLoadDoIt
-		selector: 'preLoadDoIt: '
-		cascading: hasName | hasFile | hasRepositories | hasPostLoadDoIt | hasRequiresOrIncludesOrAnswers
-		cascade: hasPostLoadDoIt
-		indent: indent.
-	self
-		configMethodOn: aStream
-		for: self getPostLoadDoIt
-		selector: 'postLoadDoIt: '
-		cascading: hasName | hasFile | hasRepositories | hasPreLoadDoIt | hasRequiresOrIncludesOrAnswers
-		cascade: false
-		indent: indent.
-	aStream nextPut: $.
-]
-
-{ #category : 'printing' }
-MetacelloPackageSpec >> configMethodCascadeOn: aStream member: aMember last: lastCascade indent: indent [
-
-	aMember methodUpdateSelector  == #remove:
-		ifTrue: [ aStream  nextPutAll: 'removePackage: ', self name printString ]
-		ifFalse: [ self configShortCutMethodBodyOn: aStream member: aMember indent: indent ].
-	lastCascade
-		ifTrue: [ aStream nextPut: $. ]
-		ifFalse: [ aStream nextPut: $;; cr ]
-]
-
-{ #category : 'printing' }
-MetacelloPackageSpec >> configMethodOn: aStream indent: indent [
-
-	| hasRepositories hasPreLoadDoIt hasPostLoadDoIt hasRequiresOrIncludesOrAnswers hasFile |
-	hasFile := file isNotNil.
-	hasRepositories := self repositorySpecs size > 0.
-	hasPreLoadDoIt := self getPreLoadDoIt isNotNil.
-	hasPostLoadDoIt := self getPostLoadDoIt isNotNil.
-	hasRequiresOrIncludesOrAnswers := (self requires isEmpty and: [ self includes isEmpty and: [ self answers isEmpty ] ]) not.
-	aStream
-		tab: indent;
-		nextPutAll: 'spec '.
-	hasFile | hasRepositories | hasPreLoadDoIt | hasPostLoadDoIt | hasRequiresOrIncludesOrAnswers
-		ifTrue: [
-			aStream
-				cr;
-				tab: indent + 1;
-				nextPutAll: 'name: ' , self name printString;
-				nextPut: $;.
-			self configMethodBodyOn: aStream hasName: true indent: indent + 1 ]
-		ifFalse: [ aStream nextPutAll: 'name: ' , self name printString ]
-]
-
-{ #category : 'printing' }
-MetacelloPackageSpec >> configShortCutMethodBodyOn: aStream member: aMember indent: indent [
-
-	| hasFile hasRepositories hasPreLoadDoIt hasPostLoadDoIt hasRequiresOrIncludesOrAnswers |
-	hasFile := file isNotNil.
-	hasRepositories := self repositorySpecs size > 0.
-	hasPreLoadDoIt := self getPreLoadDoIt isNotNil.
-	hasPostLoadDoIt := self getPostLoadDoIt isNotNil.
-	hasRequiresOrIncludesOrAnswers := (self requires isEmpty and: [ self includes isEmpty and: [ self answers isEmpty ] ]) not.
-	hasRepositories | hasPreLoadDoIt | hasPostLoadDoIt | hasRequiresOrIncludesOrAnswers ifTrue: [
-		aStream
-			nextPutAll: 'package: ' , self name printString , ' ';
-			nextPutAll: aMember methodUpdateSelector asString , ' [';
-			cr.
-		aStream
-			tab: indent + 1;
-			nextPutAll: 'spec '.
-		self configMethodBodyOn: aStream hasName: false indent: indent + 2.
-		aStream nextPutAll: ' ]'.
-		^ self ].
-	aStream nextPutAll: 'package: ' , self name printString.
-	hasFile ifTrue: [ aStream nextPutAll: ' with: ' , file printString ]
 ]
 
 { #category : 'loading' }
@@ -152,51 +43,6 @@ MetacelloPackageSpec >> ensureLoadedForDevelopmentUsing: aTarget ithEngine: anEn
 	
 ]
 
-{ #category : 'private' }
-MetacelloPackageSpec >> extractNameFromFile [
-
-	^ file
-]
-
-{ #category : 'querying' }
-MetacelloPackageSpec >> file [
-
-	file ifNil: [ ^ self name ].
-	^ file
-]
-
-{ #category : 'accessing' }
-MetacelloPackageSpec >> file: aString [
-
-	file := aString
-]
-
-{ #category : 'accessing' }
-MetacelloPackageSpec >> getFile [
-	"raw access to iv"
-	
-	^file
-]
-
-{ #category : 'accessing' }
-MetacelloPackageSpec >> getName [
-    "raw access to iv"
-
-    ^ name
-]
-
-{ #category : 'querying' }
-MetacelloPackageSpec >> getPostLoadDoIt [
-
-	^postLoadDoIt
-]
-
-{ #category : 'querying' }
-MetacelloPackageSpec >> getPreLoadDoIt [
-
-	^preLoadDoIt
-]
-
 { #category : 'accessing' }
 MetacelloPackageSpec >> getRepositories [
     "raw access to iv"
@@ -204,9 +50,10 @@ MetacelloPackageSpec >> getRepositories [
     ^ repositories
 ]
 
-{ #category : 'testing' }
-MetacelloPackageSpec >> hasRepository [
-    ^ self repositorySpecs notEmpty
+{ #category : 'private' }
+MetacelloPackageSpec >> includeSpecNamesForPackageOrdering: aVersionSpec [
+
+	^ self specs: self includesForPackageOrdering forPackageOrdering: aVersionSpec
 ]
 
 { #category : 'private' }
@@ -221,43 +68,42 @@ MetacelloPackageSpec >> info [
 	^self
 ]
 
+{ #category : 'testing' }
+MetacelloPackageSpec >> isPackageSpec [
+
+	^ true
+]
+
 { #category : 'merging' }
 MetacelloPackageSpec >> mergeMap [
 
 	| map |
 	map := super mergeMap.
-	map at: #file put: file.
-	map at: #repositories put: self repositories.
 	map at: #preLoadDoIt put: preLoadDoIt.
 	map at: #postLoadDoIt put: postLoadDoIt.
-	^map
+	^ map
 ]
 
 { #category : 'merging' }
 MetacelloPackageSpec >> mergeSpec: anotherSpec [
 
-	| newSpec map anotherRepositories |
-	newSpec := super mergeSpec: anotherSpec.
-	map := anotherSpec mergeMap.
-	(anotherRepositories := map at: #repositories) notEmpty
-		ifTrue: [ 
-			newSpec 
-				repositories: (self repositories isEmpty
-					ifTrue: [ anotherRepositories ]
-					ifFalse: [ self repositories mergeSpec: anotherRepositories ]) ].
-	^newSpec
+	super mergeSpec: anotherSpec.
+	anotherSpec requires ifNotEmpty: [ :anotherRequires | self requires: self requires , anotherRequires ].
+	self repositories: (self repositories mergeSpec: anotherSpec repositories).
+
+	anotherSpec name ifNotNil: [ self name: anotherSpec name ]
 ]
 
 { #category : 'querying' }
 MetacelloPackageSpec >> name [
 
-	^ name ifNil: [ name := self extractNameFromFile ]
+	^name
 ]
 
-{ #category : 'merging' }
-MetacelloPackageSpec >> nonOverridable [
+{ #category : 'accessing' }
+MetacelloPackageSpec >> name: aString [
 
-	^super nonOverridable, #( repositories)
+	name := aString trim
 ]
 
 { #category : 'loading' }
@@ -266,18 +112,12 @@ MetacelloPackageSpec >> packageSpecsInLoadOrder [
 	^ { self }
 ]
 
-{ #category : 'loading' }
-MetacelloPackageSpec >> packageSpecsInLoadOrderWithEngine: anObject [
-
-	^ { self }
-]
-
 { #category : 'copying' }
 MetacelloPackageSpec >> postCopy [
 
 	super postCopy.
-	goferPackage := nil.
 	repositories := repositories copy.
+	requires := requires copy
 ]
 
 { #category : 'querying' }
@@ -287,9 +127,10 @@ MetacelloPackageSpec >> postLoadDoIt [
 ]
 
 { #category : 'loading' }
-MetacelloPackageSpec >> postLoadDoIt: anObject [
+MetacelloPackageSpec >> postLoadDoIt: aSymbol [
 
-	anObject setPostLoadDoItInMetacelloSpec: self
+	self validateDoItSelector: aSymbol.
+	postLoadDoIt := aSymbol
 ]
 
 { #category : 'querying' }
@@ -299,21 +140,28 @@ MetacelloPackageSpec >> preLoadDoIt [
 ]
 
 { #category : 'accessing' }
-MetacelloPackageSpec >> preLoadDoIt: anObject [
+MetacelloPackageSpec >> preLoadDoIt: aSymbol [
 
-	anObject setPreLoadDoItInMetacelloSpec: self
+	self validateDoItSelector: aSymbol.
+	preLoadDoIt := aSymbol
 ]
 
-{ #category : 'visiting' }
-MetacelloPackageSpec >> projectDo: projectBlock packageDo: packageBlock groupDo: groupBlock [
+{ #category : 'accessing' }
+MetacelloPackageSpec >> project [
 
-	packageBlock value: self
+	^ project
+]
+
+{ #category : 'accessing' }
+MetacelloPackageSpec >> project: aMetacelloProject [
+
+	project := aMetacelloProject
 ]
 
 { #category : 'querying' }
 MetacelloPackageSpec >> repositories [
 
-	^ repositories ifNil: [ repositories := self project repositoriesSpec ]
+	^ repositories ifNil: [ repositories := MetacelloRepositoriesSpec new ]
 ]
 
 { #category : 'querying' }
@@ -341,18 +189,33 @@ MetacelloPackageSpec >> repositoryDescriptions [
 { #category : 'loading' }
 MetacelloPackageSpec >> repositorySpecs [
 
-	^self repositories map values
+	^self repositories repositorySpecs
+]
+
+{ #category : 'private' }
+MetacelloPackageSpec >> requiredSpecNamesForPackageOrdering: aVersionSpec [
+
+	^ (self specs: self requires forPackageOrdering: aVersionSpec) collect: [ :spec | spec name ]
+]
+
+{ #category : 'querying' }
+MetacelloPackageSpec >> requires [
+
+	^ requires ifNil: [ requires := #(  ) ]
 ]
 
 { #category : 'accessing' }
-MetacelloPackageSpec >> requiredPackageSpecsWithEngine: anEngine [
+MetacelloPackageSpec >> requires: aCollection [
 
-	| specs requiredSpec |
-	self project ifNil: [ ^ #(  ) ].
-	specs := self project version spec packageSpecsInLoadOrder.
-	^ self requires flatCollect: [ :required |
-		  requiredSpec := specs detect: [ :e | e name = required ].
-		  requiredSpec packageSpecsInLoadOrder ]
+	requires := aCollection isString
+		            ifTrue: [ { aCollection } ]
+		            ifFalse: [ aCollection asArray ]
+]
+
+{ #category : 'private' }
+MetacelloPackageSpec >> resolveToPackagesAndProjectsIn: aVersionSpec [
+
+	^ { self }
 ]
 
 { #category : 'private' }
@@ -361,25 +224,32 @@ MetacelloPackageSpec >> resolveToPackagesIn: aVersionSpec visited: visited [
 	^{ self }
 ]
 
-{ #category : 'fetching' }
-MetacelloPackageSpec >> searchCacheRepositoryForPackage: searchBlock [
-  "evaluate the <searchBlock> if you want to search for the package in a local package cache"
+{ #category : 'asserting' }
+MetacelloPackageSpec >> shouldLoadStrict [
 
-  "for standard mcz repositories the answer is YES!"
+	^ strict ifNil: [ project ifNotNil: [ :p | p strict ] ]
+]
 
-  searchBlock value
+{ #category : 'private' }
+MetacelloPackageSpec >> specs: specNames forPackageOrdering: aVersionSpec [
+
+	| packageOrProjectSpecs |
+	packageOrProjectSpecs := Set new.
+	specNames do: [ :specName |
+			| spec |
+			"get project/group/package specs"
+			spec := aVersionSpec packageNamed: specName ifAbsent: [
+					        MetacelloNameNotDefinedError signal:
+						        'project group, or package named: ' , specName printString , ' not found when used in requires: or includes: field of package: '
+						        , self name printString , ' of ' , aVersionSpec projectLabel , '.'.
+					        nil "return nil if resumed" ].
+			spec ifNotNil: [ packageOrProjectSpecs addAll: (spec resolveSpecsForPackageOrdering: aVersionSpec) ] ].
+	^ packageOrProjectSpecs
 ]
 
 { #category : 'accessing' }
-MetacelloPackageSpec >> setPostLoadDoIt: aSymbol [
-
-	postLoadDoIt := aSymbol
-]
-
-{ #category : 'accessing' }
-MetacelloPackageSpec >> setPreLoadDoIt: aSymbol [
-
-	preLoadDoIt := aSymbol
+MetacelloPackageSpec >> strict: aBoolean [ 
+	strict := aBoolean
 ]
 
 { #category : 'accessing' }

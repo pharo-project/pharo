@@ -58,6 +58,25 @@ ShCreateClassTest >> testClassWithSlots [
 ]
 
 { #category : 'tests' }
+ShCreateClassTest >> testClassWithSlotsWithStringShouldBeTurnedIntoSymbols [
+	"This test check that we do not give string as slot names."
+	
+	builder
+		name: #SHTestClassWithSlots;
+		slots: #( 'anSlot' 'anotherSlot' ).
+
+	result := builder build.
+
+	self validateResult.
+	self validateSuperclass: Object.
+	self validateSlots: {
+			(#anSlot => InstanceVariableSlot).
+			(#anotherSlot => InstanceVariableSlot) }.
+	self assert: result allSlots first name class equals: ByteSymbol.
+	self assert: result allSlots second name class equals: ByteSymbol
+]
+
+{ #category : 'tests' }
 ShCreateClassTest >> testClassWithSuperclassNameAsString [
 
 	builder

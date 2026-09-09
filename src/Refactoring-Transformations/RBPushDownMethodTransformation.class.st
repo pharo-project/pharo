@@ -108,20 +108,6 @@ RBPushDownMethodTransformation >> removeSelectors [
 		from: class
 ]
 
-{ #category : 'storing' }
-RBPushDownMethodTransformation >> storeOn: aStream [
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream
-		nextPutAll: ' pushDown: ';
-		nextPutAll: selectors asString;
-		nextPutAll: ' from: ';
-		nextPutAll: class name;
-		nextPutAll: ' in: '.
-	(classes collect: [ :e | e name ]) storeOn: aStream.
-	aStream nextPut: $)
-]
-
 { #category : 'accessing' }
 RBPushDownMethodTransformation >> targetClass [
 	^ class

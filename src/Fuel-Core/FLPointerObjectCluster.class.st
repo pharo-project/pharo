@@ -33,7 +33,7 @@ FLPointerObjectCluster >> clusterSerializeStepWith: anEncoder [
 	variablesMapping serializeOn: anEncoder
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 FLPointerObjectCluster >> initializeAnalyzing: aClass [
 
 	super initializeAnalyzing: aClass.

@@ -49,7 +49,9 @@ AbstractDrTestsPresenter >> currentPlugin: anObject [
 	currentPlugin announcer
 		when: DTUpdateResults
 		send: #handlePluginResultUpdate:
-		to: self
+		to: self.
+
+	titleHolder := self windowTitle.
 ]
 
 { #category : 'events' }
@@ -193,4 +195,10 @@ AbstractDrTestsPresenter >> updateWithPluginResult: aPluginResult [
 AbstractDrTestsPresenter >> updateWithResults: results [
 
 	self subclassResponsibility
+]
+
+{ #category : 'TOREMOVE' }
+AbstractDrTestsPresenter >> windowIcon [
+	
+	^ self application iconNamed: #testRunner
 ]

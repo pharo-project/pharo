@@ -5,3 +5,10 @@ Class {
 	#package : 'Reflectivity-Tests',
 	#tag : 'Manifest'
 }
+
+{ #category : 'meta-data - dependency analyser' }
+ManifestReflectivityTests class >> manuallyResolvedDependencies [
+
+	<ignoreForCoverage>
+	^ #(#'Transcript-NonInteractive')
+]

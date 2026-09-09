@@ -8,11 +8,6 @@ String >> addedToZnUrl: url [
 ]
 
 { #category : '*Zinc-Resource-Meta-Core' }
-String >> asUrl [
-	^ self asZnUrl
-]
-
-{ #category : '*Zinc-Resource-Meta-Core' }
 String >> asZnMimeType [
 	^ ZnMimeType fromString: self
 ]

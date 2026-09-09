@@ -22,8 +22,9 @@ ReSendsDifferentSuperRule class >> checksMethod [
 ]
 
 { #category : 'accessing' }
-ReSendsDifferentSuperRule class >> group [
-	^ 'Design Flaws'
+ReSendsDifferentSuperRule class >> groupSelector [
+
+	^ #designFlawGroup
 ]
 
 { #category : 'accessing' }

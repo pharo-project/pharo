@@ -56,11 +56,15 @@ BalloonEdgeData >> source: anObject [
 
 { #category : 'computing' }
 BalloonEdgeData >> stepToFirstScanLine [
+
+	<ignoreNotImplementedSelectors: #(stepToFirstScanLineAt:in:)>
 	source stepToFirstScanLineAt: yValue in: self
 ]
 
 { #category : 'computing' }
 BalloonEdgeData >> stepToNextScanLine [
+
+	<ignoreNotImplementedSelectors: #(stepToNextScanLineAt:in:)>
 	source stepToNextScanLineAt: yValue in: self
 ]
 

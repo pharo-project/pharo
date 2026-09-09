@@ -52,7 +52,7 @@ ZnUrlShortenerDelegate class >> shorten: urlOrString [
 	"self shorten: 'https://pharo.org'."
 
 	| key url |
-	url := urlOrString asUrl.
+	url := urlOrString asZnUrl.
 	key := MD5 hashMessage: url printString.
 	key := (key asInteger \\ (36 ** 6)) printStringBase: 36.
 	self database at: key put: url.

@@ -76,14 +76,20 @@ SessionCategory >> renamedClass: aClass from: oldName to: newName [
 
 	priorityLists do: [ :handlers |
 		handlers
-			detect: [ :handler | handler handledId = oldName ]
+			detect: [ :handler | handler handlerId = oldName ]
 			ifFound: [ :handler | handler registeredClassName: newName ] ]
 ]
 
 { #category : 'registration' }
-SessionCategory >> unregisterHandler: anHandlerId [
+SessionCategory >> unregisterHandler: aHandlerId [
+
+	| found |
+	found := false.
 	priorityLists valuesDo: [ :handlers |
-				handlers
-					detect: [ :handler | handler handledId = anHandlerId ]
-					ifFound: [ :handler | handlers remove: handler ] ]
+		handlers
+			detect: [ :handler | handler handlerId = aHandlerId ]
+			ifFound: [ :handler | 
+				found := true.
+				handlers remove: handler ] ].
+	^ found
 ]

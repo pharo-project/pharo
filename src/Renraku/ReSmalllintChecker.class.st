@@ -68,6 +68,22 @@ ReSmalllintChecker >> checkPackage: aPackage [
 	(environment includesPackage: aPackage) ifTrue: [ self getCritiquesAbout: aPackage by: packageRules ]
 ]
 
+{ #category : 'accessing' }
+ReSmalllintChecker >> classRules [
+
+	^ classRules
+]
+
+{ #category : 'accessing' }
+ReSmalllintChecker >> classRules: aCollectionOfRules [
+	"Select and set class rules from aCollectionOfRules"
+
+	classRules := Set new.
+	aCollectionOfRules
+		select: [ :r | r class checksClass ]
+		thenDo: [ : r | classRules add: r ]
+]
+
 { #category : 'manifest' }
 ReSmalllintChecker >> cleanAllManifest [
 	| manifests |
@@ -168,6 +184,11 @@ ReSmalllintChecker >> manifestBuilderOfPackage: aPackage [
 		  ifAbsentPut: [ self builderManifestClass ofPackage: aPackage ]
 ]
 
+{ #category : 'accessing' }
+ReSmalllintChecker >> packageRules [
+	^ packageRules
+]
+
 { #category : 'private' }
 ReSmalllintChecker >> reParseRule [
 
@@ -179,7 +200,8 @@ ReSmalllintChecker >> reParseRule [
 	self rule do: [ :r |
 		r class checksMethod ifTrue: [ methodRules add: r ].
 		r class checksNode ifTrue: [ nodeRules add: r ].
-		r class checksClass ifTrue: [ classRules add: r ] ]
+		r class checksClass ifTrue: [ classRules add: r ].
+		r class checksPackage ifTrue: [ packageRules add: r ] ]
 ]
 
 { #category : 'manifest' }

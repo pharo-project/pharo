@@ -12,6 +12,14 @@ Class {
 	#tag : 'Activation'
 }
 
+{ #category : 'accessing' }
+ClapNamedMatch >> child [
+	"Warning: onyl use this method if you are sure there is at least one child.
+	This method is used to get a positional value"
+
+	^ children first
+]
+
 { #category : 'matching' }
 ClapNamedMatch >> completeMatchOn: aStream [
 	keyword := aStream next.
@@ -19,7 +27,27 @@ ClapNamedMatch >> completeMatchOn: aStream [
 	self matchChildrenOn: aStream
 ]
 
+{ #category : 'testing' }
+ClapNamedMatch >> isFullMatch [
+
+	^ (self specification isFlag and: [ self specification hasPositional ])
+		ifTrue: [ "When positional is multiple, there is only one positional spec but potentially many positionals" 
+					children size >= self specification positionals size ]
+		ifFalse: [ true ]
+]
+
+{ #category : 'testing' }
+ClapNamedMatch >> isValid: aValidation [
+
+	^ aValidation isValidNamedMatch: self
+]
+
 { #category : 'matching' }
 ClapNamedMatch >> word [
 	^ keyword
+]
+
+{ #category : 'matching' }
+ClapNamedMatch >> words [
+	^ { self word }
 ]

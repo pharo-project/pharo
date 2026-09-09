@@ -20,7 +20,6 @@ Class >> asClassDefinition [
 		              poolDictionaryNames: self sharedPoolNames;
 		              type: self mcType;
 		              comment: self comment;
-		              commentStamp: self commentStamp;
 		              yourself.
 
 	"We do not export the tag if this is the root."

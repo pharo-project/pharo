@@ -5,7 +5,8 @@ Class {
 	#name : 'CmCommandAborted',
 	#superclass : 'CmCommandError',
 	#instVars : [
-		'reason'
+		'reason',
+		'application'
 	],
 	#category : 'Commander2-Errors',
 	#package : 'Commander2',
@@ -17,6 +18,12 @@ CmCommandAborted >> initialize [
 	super initialize.
 	self
 		reason: 'Unkown reason'
+]
+
+{ #category : 'notification' }
+CmCommandAborted >> notifyUserOfCommand: aCommand [
+
+	
 ]
 
 { #category : 'accessing' }

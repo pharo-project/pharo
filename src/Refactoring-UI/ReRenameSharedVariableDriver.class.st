@@ -9,6 +9,12 @@ Class {
 	#tag : 'Drivers'
 }
 
+{ #category : 'accessing' }
+ReRenameSharedVariableDriver class >> driverName [
+
+	^ 'Rename shared variable'
+]
+
 { #category : 'factory method' }
 ReRenameSharedVariableDriver >> refactoringClass [
 

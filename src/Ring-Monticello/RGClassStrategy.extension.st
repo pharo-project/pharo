@@ -42,9 +42,3 @@ RGClassStrategy >> mcType [
 
 	^ self layout mcType
 ]
-
-{ #category : '*Ring-Monticello' }
-RGClassStrategy >> referencedPackages [
-
-	^ Array with: self package
-]

@@ -769,6 +769,12 @@ TraitTest >> testTraitHaveUsersInstanceVariable [
 ]
 
 { #category : 'tests' }
+TraitTest >> testTraitInitialize [
+	"this tests that #intialize is correctly setting the superclass to nil"
+	self assert: Trait new superclass isNil
+]
+
+{ #category : 'tests' }
 TraitTest >> testTraitRemoval [
 
 	| aClass aTrait |
@@ -851,6 +857,7 @@ TraitTest >> testTraitUsingTraitsPreserveSourceCode [
 	t2 := self newTrait: #T2 traits: t1.
 
 	source := 'aMethod: aString
+	| aMethod |
 	^ aMethod'.
 	t1 compile: source.
 
@@ -866,6 +873,7 @@ TraitTest >> testTraitUsingTraitsPreserveSourceCodeOnClassSide [
 	t2 := self newTrait: #T2 traits: t1.
 
 	source := 'aMethod: aString
+	| aMethod |
 	^ aMethod'.
 	t1 class compile: source.
 

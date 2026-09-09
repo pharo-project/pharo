@@ -9,15 +9,15 @@ Class {
 	#instVars : [
 		'resetingCount'
 	],
-	#category : 'HeuristicCompletion-Tests-Core',
+	#category : 'HeuristicCompletion-Tests-Mocks',
 	#package : 'HeuristicCompletion-Tests',
-	#tag : 'Core'
+	#tag : 'Mocks'
 }
 
 { #category : 'enumerating' }
 CoMockFetcherToRecordResets >> entriesDo: aBlock [
 
-	1 to: 1000 do: [ :anIndex | (NECGlobalEntry contents: anIndex printString node: nil) ]
+	1 to: 1000 do: [ :anIndex | (CoGlobalEntry contents: anIndex printString node: nil) ]
 ]
 
 { #category : 'initialization' }

@@ -102,7 +102,7 @@ RottenTestsFinder >> visitTestCase: aTestCase [
 	testsVisitedCount := testsVisitedCount + 1.
 	compiledMethod := aTestCase class lowestCompiledMethodInInheritanceChainNamed: aTestCase selector.
 
-	rootCallNode := (RTFSelfCallInterpreter new
+	rootCallNode := (RTFSelfCallStackBuilder new
 							considerClassesThat: [ :class | class inheritsFrom: TestAsserter ];
 							send: compiledMethod selector fromClass: aTestCase class;
 							rootSelfCall) cleanSubTreesNotLeadingToAssertPrimitive.

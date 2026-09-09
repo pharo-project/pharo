@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'message',
 		'receiver',
-		'reachedDefaultHandler'
+		'hasToResend'
 	],
 	#category : 'Kernel-Exceptions',
 	#package : 'Kernel',
@@ -17,7 +17,7 @@ Class {
 { #category : 'accessing' }
 MessageNotUnderstood >> defaultAction [
 
-	reachedDefaultHandler := true.
+	hasToResend := true.
 	super defaultAction
 ]
 
@@ -34,11 +34,17 @@ MessageNotUnderstood >> description [
 	  , ' did not understand ' , message selector printString
 ]
 
+{ #category : 'accessing' }
+MessageNotUnderstood >> hasToResend [
+
+	^ hasToResend 
+]
+
 { #category : 'initialization' }
 MessageNotUnderstood >> initialize [
 
 	super initialize.
-	reachedDefaultHandler := false
+	hasToResend := false
 ]
 
 { #category : 'private - testing' }
@@ -76,11 +82,6 @@ MessageNotUnderstood >> messageText [
 ]
 
 { #category : 'accessing' }
-MessageNotUnderstood >> reachedDefaultHandler [
-	^reachedDefaultHandler
-]
-
-{ #category : 'accessing' }
 MessageNotUnderstood >> receiver [
 	"Answer the receiver that did not understand the message"
 
@@ -91,4 +92,10 @@ MessageNotUnderstood >> receiver [
 MessageNotUnderstood >> receiver: obj [
 
 	receiver := obj
+]
+
+{ #category : 'accessing' }
+MessageNotUnderstood >> stopResendingMessage [
+
+	hasToResend := false
 ]

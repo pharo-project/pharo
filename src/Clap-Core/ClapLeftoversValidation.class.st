@@ -15,6 +15,15 @@ ClapLeftoversValidation >> description [
 ]
 
 { #category : 'validation' }
+ClapLeftoversValidation >> failureDescriptionFor: anObject [
+	^ String streamContents: [ :str |
+		str nextPutAll: 'Unrecognized arguments: '.
+		anObject context leftovers
+			do: [ :each | str nextPutAll: each ]
+			separatedBy: [ str nextPutAll: ', ' ] ]
+]
+
+{ #category : 'validation' }
 ClapLeftoversValidation >> matches: aClapExpression [
 	^ aClapExpression context leftovers isEmpty
 ]

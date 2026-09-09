@@ -16,6 +16,34 @@ Class {
 	#tag : 'Compiler'
 }
 
+{ #category : 'system annoucements' }
+RFReflectivityASTCacheStrategy class >> handleMethodModified: aMethodModified [
+
+	"A method has been modified.
+	Remove it from the AST cache if there.
+	If absent do nothing
+
+	BC-AST mapping will be recomputed on demand"
+	
+	OCASTCache default removeKey: aMethodModified oldMethod ifAbsent: nil
+]
+
+{ #category : 'class initialization' }
+RFReflectivityASTCacheStrategy class >> initialize [
+
+	self subscribeToMethodModified
+]
+
+{ #category : 'system annoucements' }
+RFReflectivityASTCacheStrategy class >> subscribeToMethodModified [
+
+	<script>
+	self codeChangeAnnouncer weak
+		when: MethodModified
+		send: #handleMethodModified:
+		to: self
+]
+
 { #category : 'accessing' }
 RFReflectivityASTCacheStrategy >> getASTFor: aCompiledMethod [
 	^ aCompiledMethod reflectiveMethod

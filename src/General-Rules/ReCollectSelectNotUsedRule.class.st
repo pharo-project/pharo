@@ -12,8 +12,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReCollectSelectNotUsedRule class >> group [
-	^ 'Optimization'
+ReCollectSelectNotUsedRule class >> groupSelector [
+
+	^ #optimizationGroup
 ]
 
 { #category : 'accessing' }

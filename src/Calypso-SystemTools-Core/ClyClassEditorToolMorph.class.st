@@ -45,8 +45,7 @@ ClyClassEditorToolMorph class >> tabOrder [
 { #category : 'controlling' }
 ClyClassEditorToolMorph >> attachToSystem [
 
-	browser system
-		when: (ClyClassChange of: editingClass) send: #triggerUpdate to: self
+	browser system when: (ClyClassChange of: editingClass) send: #triggerUpdate to: self
 ]
 
 { #category : 'testing' }

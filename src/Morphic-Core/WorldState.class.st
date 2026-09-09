@@ -123,6 +123,7 @@ WorldState class >> easySelectingWorld: aBoolean [
 
 { #category : 'world menu items' }
 WorldState class >> helpOn: aBuilder [
+
 	<worldMenu>
 	(aBuilder item: #Help)
 		order: 99;
@@ -130,12 +131,7 @@ WorldState class >> helpOn: aBuilder [
 		with: [
 			(aBuilder group: #PharoHelp)
 				order: 2;
-				withSeparatorAfter.
-			(aBuilder item: #'About...')
-				order: 99;
-				iconName: #smallInfo;
-				help: 'Informations about this version of Pharo.';
-				action: [ Smalltalk aboutThisSystem ] ]
+				withSeparatorAfter ]
 ]
 
 { #category : 'class initialization' }
@@ -188,7 +184,7 @@ WorldState class >> pharoItemsOn: aBuilder [
 						keyText: 'S';
 						iconName: #smallSave.
 					(aBuilder item: #'Save as...')
-						target: self;
+						target: aBuilder model;
 						selector: #saveAs;
 						help: 'Save the current version of the image on disk under a new name.';
 						order: 2;
@@ -206,6 +202,21 @@ WorldState class >> pharoItemsOn: aBuilder [
 					help: 'Quit Pharo without saving the image on disk.';
 					order: 99;
 					iconName: #smallQuit ]
+]
+
+{ #category : 'world menu items' }
+WorldState class >> quitSession [
+	| response |
+	response := MorphicUIManager new
+						confirm: 'Save changes before quitting?'
+						trueChoice: 'Save'
+						falseChoice: 'Discard'
+						cancelChoice: 'Cancel'
+						default: nil.
+	response ifNil: [ ^self ].
+	response
+		ifTrue: [Smalltalk snapshot: true andQuit: true]
+		ifFalse: [Smalltalk snapshot: false andQuit: true]
 ]
 
 { #category : 'cleanup' }
@@ -555,7 +566,15 @@ WorldState >> fallbackMenuOn: menu [
 	menu addLine.
 	menu
 		defaultTarget: Smalltalk tools;
-		addList: Smalltalk tools menuItems.
+		addList: #(
+		('System Browser' 			#openClassBrowser)
+		-
+		('Transcript' 				#openTranscript)
+		('File Browser'				#openFileList)
+		-
+		('Test Runner'				#openTestRunner)
+		('Process Browser' 			#openProcessBrowser)
+	).
 	menu addLine.
 	menu add: 'Save'
 		target: self class
@@ -742,8 +761,17 @@ WorldState >> runStepMethodsIn: aWorld [
 	[(nextInQueue := queue nextOrNil) isNil]
 		whileFalse: [ nextInQueue value].
 	self runLocalStepMethodsIn: aWorld.
-	"The multi-threaded global Transcript needs to be updated periodically and synchronously with the UI."
-	Smalltalk tools transcript stepGlobal
+]
+
+{ #category : 'menu actions' }
+WorldState >> saveAs [
+
+	| reference |
+	reference := worldRenderer world morphicUIManager
+		             chooseForSaveFileReference: 'Save Image as?'
+		             extensions: #( 'image' )
+		             path: Smalltalk imageFile nextVersion.
+	reference ifNotNil: [ Smalltalk saveAs: reference parent / (reference basenameWithoutExtension: 'image') ]
 ]
 
 { #category : 'hands' }

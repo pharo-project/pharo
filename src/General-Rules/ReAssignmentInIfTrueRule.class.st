@@ -18,8 +18,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReAssignmentInIfTrueRule class >> group [
-	^ 'Optimization'
+ReAssignmentInIfTrueRule class >> groupSelector [
+
+	^ #optimizationGroup
 ]
 
 { #category : 'accessing' }

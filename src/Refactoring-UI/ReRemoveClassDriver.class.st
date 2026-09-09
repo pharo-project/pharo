@@ -7,7 +7,7 @@ In particular I propose different refactorings based on the situation:
 "
 Class {
 	#name : 'ReRemoveClassDriver',
-	#superclass : 'RBInteractionDriver',
+	#superclass : 'ReInteractionDriver',
 	#instVars : [
 		'classes',
 		'haveNoReferences',
@@ -18,6 +18,18 @@ Class {
 	#package : 'Refactoring-UI',
 	#tag : 'Drivers'
 }
+
+{ #category : 'accessing' }
+ReRemoveClassDriver class >> driverName [
+
+	^ 'Remove class(es)'
+]
+
+{ #category : 'accessing' }
+ReRemoveClassDriver class >> shouldPreviewChangesByDefault [
+
+	^ false
+]
 
 { #category : 'execution' }
 ReRemoveClassDriver >> breakingChoices [
@@ -39,10 +51,7 @@ ReRemoveClassDriver >> breakingChoices [
 { #category : 'actions' }
 ReRemoveClassDriver >> browseReferences [
 
-	haveNoReferences violators keysAndValuesDo: [ :violator :references | "we should pass the application! "
-		StMessageBrowser
-			browse: (references collect: [ :ref | ref compiledMethod ])
-			asSendersOf: violator realClass ]
+	(application toolNamed: #messageList) browse: (haveNoReferences violators collect: [ :ref | ref compiledMethod ])
 ]
 
 { #category : 'actions' }
@@ -52,34 +61,37 @@ ReRemoveClassDriver >> changes [
 
 ]
 
-{ #category : 'initialization' }
-ReRemoveClassDriver >> configureRefactoring [
-
-	refactoring := ReRemoveClassRefactoring
-		               model: model
-		               classNames: (classes collect: [ :cl | cl name ]).
-	refactoring prepareForInteractiveMode
-]
-
 { #category : 'configuration' }
 ReRemoveClassDriver >> defaultSelectDialog [
 
-	^ SpSelectDialog new
-		    title: 'There are potential breaking changes!';
-		          label: self labelBasedOnBreakingChanges;
-		          items: self breakingChoices;
-		          display: [ :each | each description ];
-		          displayIcon: [ :each | self iconNamed: each systemIconName ];
-		          openModal
-	
+	^ super defaultSelectDialog
+		extent: 400 @ 1200;
+		title: 'There are potential breaking changes!';
+		message: self labelBasedOnBreakingChanges;
+		items: self breakingChoices;
+		display: [ :each | each description ];
+		displayIcon: [ :each | self iconNamed: each systemIconName ]; 
+		yourself
 ]
 
-{ #category : 'execution' }
-ReRemoveClassDriver >> handleBreakingChanges [
+{ #category : 'private ex' }
+ReRemoveClassDriver >> hasFailedBehaviorPreservingPreconditions [
 
-	| select |
-	select := self selectDialog.
-	select ifNotNil: [ select action ]
+	haveNoReferences := refactoring preconditionHaveNoReferences.
+	emptyClasses := refactoring preconditionEmptyClasses.
+	noSubclasses := refactoring preconditionHaveNoSubclasses.
+	haveNoReferences check.
+	emptyClasses check.
+	noSubclasses check.
+	^ refactoring failedBreakingChangePreconditions isNotEmpty
+]
+
+{ #category : 'configuration' }
+ReRemoveClassDriver >> instantiateRefactoring [
+
+	^ ReRemoveClassRefactoring
+       model: model
+       classNames: (classes collect: [ :cl | cl name ])
 ]
 
 { #category : 'ui - dialogs' }
@@ -104,33 +116,10 @@ ReRemoveClassDriver >> removeClassAndPushStateToSubclasses [
 	self openPreviewWithChanges: refactoring removeClassesChanges
 ]
 
-{ #category : 'execution' }
-ReRemoveClassDriver >> runRefactoring [
-	
-	self configureRefactoring.
-	refactoring failedApplicabilityPreconditions 
-		ifNotEmpty: [ ^ self inform: 'The class should exist and not be a metaclass' ].
-	self setBreakingChangesPreconditions.
-	haveNoReferences check & emptyClasses check & noSubclasses check
-			ifTrue: [ self applyChanges ]
-			ifFalse: [ self handleBreakingChanges ]
-
-]
-
 { #category : 'initialization' }
 ReRemoveClassDriver >> scopes: refactoringScopes classes: aColclasses [
 
 	scopes := refactoringScopes.
 	model := self refactoringScopeOn: scopes first.
 	classes := aColclasses
-]
-
-{ #category : 'private execution' }
-ReRemoveClassDriver >> setBreakingChangesPreconditions [
-	
-	haveNoReferences := refactoring preconditionHaveNoReferences.
-	emptyClasses := refactoring preconditionEmptyClasses.
-	noSubclasses := refactoring preconditionHaveNoSubclasses
-
-	
 ]

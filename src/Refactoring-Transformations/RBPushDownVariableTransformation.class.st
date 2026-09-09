@@ -2,11 +2,14 @@
 Removes this variable from the given class, then adds this variable in all the subclasses of this class.
 
 Usage:
+```
+| transformation |
 transformation := (RBPushDownVariableTransformation 
 		instanceVariable: 'foo1'
-		class: #RBLintRuleTest)
-		transform.
-(ChangesBrowser changes: transformation model changes changes) open
+		class: #RBLintRuleTestData)
+		generateChanges.
+(StRefactoringPreviewPresenter for: transformation) open
+```
 
 Preconditions:
 overriden from RBAddVariableTransformation and RBRemoveVariableAccessorTransformation
@@ -60,20 +63,6 @@ RBPushDownVariableTransformation >> preconditions [
 	^ isClassVariable
 		ifTrue: [ self applicabilityPreconditionsForClassVariable ]
 		ifFalse: [ self applicabilityPreconditionsForInstanceVariable ]
-]
-
-{ #category : 'storing' }
-RBPushDownVariableTransformation >> storeOn: aStream [
-
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream nextPutAll: ' variable: '.
-	variableName storeOn: aStream.
-	aStream nextPutAll: ' class: '.
-	className storeOn: aStream.
-	aStream nextPutAll: ' classVariable: '.
-	isClassVariable storeOn: aStream.
-	aStream nextPut: $)
 ]
 
 { #category : 'api' }

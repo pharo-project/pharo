@@ -16,9 +16,9 @@ ReSentButNotUnderstoodBySuperRule class >> checksMethod [
 ]
 
 { #category : 'accessing' }
-ReSentButNotUnderstoodBySuperRule class >> group [
+ReSentButNotUnderstoodBySuperRule class >> groupSelector [
 
-	^ 'Bugs'
+	^ #bugsGroup
 ]
 
 { #category : 'accessing' }
@@ -35,7 +35,7 @@ ReSentButNotUnderstoodBySuperRule class >> ruleName [
 { #category : 'accessing' }
 ReSentButNotUnderstoodBySuperRule class >> severity [
 
-	^ #error
+	^ 'error'
 ]
 
 { #category : 'accessing' }

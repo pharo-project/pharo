@@ -31,6 +31,12 @@ CoverageDemoPresenter class >> defaultLayout [
 		yourself
 ]
 
+{ #category : 'accessing' }
+CoverageDemoPresenter class >> defaultPreferredExtent [
+
+	^ 700 @ 600
+]
+
 { #category : 'examples' }
 CoverageDemoPresenter class >> exampleIfTrueIfFalse [
 	| t |
@@ -47,12 +53,7 @@ CoverageDemoPresenter class >> exampleMethod [
 { #category : 'open' }
 CoverageDemoPresenter class >> open [
 	<script>
-	self new open
-]
-
-{ #category : 'specs' }
-CoverageDemoPresenter class >> title [
-	^'Coverage Demo'
+	(self newApplication: StPharoApplication current) open
 ]
 
 { #category : 'adding' }
@@ -124,9 +125,9 @@ CoverageDemoPresenter >> initializeWidgets [
 
 { #category : 'initialization' }
 CoverageDemoPresenter >> initializeWindow: aWindowPresenter [
+
+	super initializeWindow: aWindowPresenter.
 	aWindowPresenter
-		title: self title;
-		initialExtent: 700 @ 600;
 		whenClosedDo: [ self removeMetalink ]
 ]
 
@@ -182,4 +183,9 @@ CoverageDemoPresenter >> updateRubricStyle [
 			"add new styling"
 			ast := card compiledMethod ast.
 			(ast children anySatisfy: [ :node | node hasBeenExecuted ]) ifTrue: [ ast acceptVisitor: (CoverageRubricStyler new textModel: card textModel) ] ]
+]
+
+{ #category : 'initialization' }
+CoverageDemoPresenter >> windowTitle [
+	^'Coverage Demo'
 ]

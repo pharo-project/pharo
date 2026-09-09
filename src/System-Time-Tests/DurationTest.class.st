@@ -55,9 +55,10 @@ DurationTest >> testAsDay [
 
 { #category : 'tests' }
 DurationTest >> testAsDays [
+
 	self assert: (Duration days: 2) asDays equals: 2.
 	self assert: (Duration weeks: 1) asDays equals: 7.
-	self assert: (aDuration asDays closeTo: 1.08546)
+	self assert: aDuration asDays closeTo: 1.08546296296
 ]
 
 { #category : 'tests' }
@@ -87,9 +88,10 @@ DurationTest >> testAsHour [
 
 { #category : 'tests' }
 DurationTest >> testAsHours [
+
 	self assert: (Duration hours: 2) asHours equals: 2.
 	self assert: (Duration days: 1) asHours equals: 24.
-	self assert: (aDuration asHours closeTo: 26.0511)
+	self assert: aDuration asHours closeTo: 26.051111111
 ]
 
 { #category : 'tests' }
@@ -149,10 +151,11 @@ DurationTest >> testAsMinute [
 
 { #category : 'tests' }
 DurationTest >> testAsMinutes [
+
 	self assert: (Duration seconds: 60) asMinutes equals: 1.
 	self assert: (Duration hours: 1) asMinutes equals: 60.
-	self assert: (aDuration asMinutes closeTo: 1563.0666).
-	self assert: ((Duration milliSeconds: 100) asMinutes closeTo: 1 / 600)
+	self assert: aDuration asMinutes closeTo: 1563.06666666.
+	self assert: (Duration milliSeconds: 100) asMinutes closeTo: 1 / 600
 ]
 
 { #category : 'tests' }
@@ -535,7 +538,7 @@ DurationTest >> testNanoSeconds [
 
 { #category : 'tests' }
 DurationTest >> testNegated [
-	self assert: aDuration + aDuration negated equals: (Duration seconds: 0)
+	self assert: aDuration + aDuration negated equals:  Duration zero
 ]
 
 { #category : 'tests' }
@@ -558,8 +561,8 @@ DurationTest >> testNormalizeNanoSeconds [
 	will be invalid."
 
 	| d t1 t2 |
-	t1 := '2004-01-07T11:55:01+00:00' asDateAndTime.
-	t2 := '2004-01-07T11:55:00.9+00:00' asDateAndTime.
+	t1 := DateAndTime fromString: '2004-01-07T11:55:01+00:00'.
+	t2 := DateAndTime fromString: '2004-01-07T11:55:00.9+00:00'.
 	d := t1 - t2.	"100 millisecond difference"
 	self assert: d nanoSeconds > 0.
 	self assert: d seconds equals: 0.
@@ -665,7 +668,7 @@ DurationTest >> testReadFromNoException [
 		'365:00:00:00'
 		'-7:09:12:06.10'
 		'+0:01:02:55'
-		'+0:01:02:3') do: [:each | each asDuration printString = each]
+		'+0:01:02:3') do: [:each | (Duration fromString: each) printString = each]
 ]
 
 { #category : 'tests' }

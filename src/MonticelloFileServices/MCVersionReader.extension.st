@@ -2,12 +2,12 @@ Extension { #name : 'MCVersionReader' }
 
 { #category : '*MonticelloFileServices' }
 MCVersionReader class >> fileReaderServicesForFile: fullName suffix: suffix [
+
 	<fileService>
-	self subclassesDo:[:class |
-	^ ((suffix = class extension) or: [ suffix = '*' ])
-		ifTrue: [class services]
-		ifFalse: [Array new: 0]]
-		
+	^ self allSubclasses flatCollect: [ :class |
+			  (class isAbstract not and: [ suffix = class extension or: [ suffix = '*' ] ])
+				  ifTrue: [ class services ]
+				  ifFalse: [ #(  ) ] ]
 ]
 
 { #category : '*MonticelloFileServices' }
@@ -32,7 +32,7 @@ MCVersionReader class >> openVersionFromStream: stream [
 
 { #category : '*MonticelloFileServices' }
 MCVersionReader class >> serviceLoadVersion [
-	^ (SimpleServiceEntry
+	^ (FileServiceEntry
 		provider: self
 		label: 'Load version'
 		selector: #loadVersionStream:fromDirectory:
@@ -43,7 +43,7 @@ MCVersionReader class >> serviceLoadVersion [
 
 { #category : '*MonticelloFileServices' }
 MCVersionReader class >> serviceMergeVersion [
-	^ (SimpleServiceEntry
+	^ (FileServiceEntry
 		provider: self
 		label: 'Merge version'
 		selector: #mergeVersionStream:
@@ -54,7 +54,7 @@ MCVersionReader class >> serviceMergeVersion [
 
 { #category : '*MonticelloFileServices' }
 MCVersionReader class >> serviceOpenVersion [
-	^ (SimpleServiceEntry
+	^ (FileServiceEntry
 		provider: self
 		label: 'Open version'
 		selector: #openVersionFromStream:

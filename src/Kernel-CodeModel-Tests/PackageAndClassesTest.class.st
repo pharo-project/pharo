@@ -1,5 +1,5 @@
 "
-SUnit tests for RPackage classes synchronisation
+SUnit tests for Package classes synchronisation
 "
 Class {
 	#name : 'PackageAndClassesTest',
@@ -56,6 +56,17 @@ PackageAndClassesTest >> testAddNewProtocolDoesNothing [
 	self assert: (class >> #newMethod) package equals: xPackage.
 	self deny: (class >> #newMethod) isExtension.
 	self assertEmpty: xPackage extensionMethods
+]
+
+{ #category : 'tests' }
+PackageAndClassesTest >> testAddNewProtocolNameIsTrimmedByBothSides [
+
+	| xPackage class |
+	xPackage := self ensureXPackage.
+	class := self newClassNamed: 'NewClass' in: xPackage.
+	self createMethodNamed: 'newMethod' inClass: class asExtensionOf: xPackage.
+	class classify: #newMethod under: ' accessing '.
+	self assert: (class >> #newMethod) protocolName equals: 'accessing'
 ]
 
 { #category : 'tests' }

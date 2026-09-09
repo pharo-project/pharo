@@ -17,6 +17,8 @@ Class {
 
 { #category : 'visitor' }
 AthensLineSegment >> accept: aVisitor [
+
+	<ignoreNotImplementedSelectors: #(lineSegment:)>
 	^ aVisitor lineSegment: self
 ]
 

@@ -17,8 +17,9 @@ ReExcessiveVariablesRule class >> checksClass [
 ]
 
 { #category : 'accessing' }
-ReExcessiveVariablesRule class >> group [
-	^ 'Design Flaws'
+ReExcessiveVariablesRule class >> groupSelector [
+
+	^ #designFlawGroup
 ]
 
 { #category : 'accessing' }

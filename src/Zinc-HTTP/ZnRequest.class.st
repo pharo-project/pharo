@@ -165,7 +165,7 @@ ZnRequest >> method [
 	^ self requestLine method
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnRequest >> method: method [
 	self requestLine method: method
 ]
@@ -184,7 +184,7 @@ ZnRequest >> printOn: stream [
 	stream nextPut: $)
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnRequest >> readHeaderFrom: stream [
 	self requestLine: (ZnRequestLine readFrom: stream).
 	super readHeaderFrom: stream
@@ -271,7 +271,7 @@ ZnRequest >> url [
 	^ self uri
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnRequest >> url: url [
 	self requestLine uri: url.
 	self headers request: self url

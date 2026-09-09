@@ -5,7 +5,7 @@ For example, the propagation of a 'message rename' is to change the senders of t
 "
 Class {
 	#name : 'EpRBPropagateRefactoring',
-	#superclass : 'RBRefactoring',
+	#superclass : 'ReRefactoring',
 	#instVars : [
 		'targetRefactoring'
 	],
@@ -26,6 +26,11 @@ EpRBPropagateRefactoring >> asEpiceaEvent [
 	^ EpPropagateRefactoring target: targetRefactoring asEpiceaEvent
 ]
 
+{ #category : 'accessing' }
+EpRBPropagateRefactoring >> changesToDisplayIn: aChangesBrowser [
+	^ targetRefactoring changesToDisplayIn: aChangesBrowser
+]
+
 { #category : 'executing' }
 EpRBPropagateRefactoring >> generateChanges [
 	targetRefactoring propagateTransformation
@@ -40,9 +45,4 @@ EpRBPropagateRefactoring >> initializeWith: aRefactoring [
 { #category : 'accessing' }
 EpRBPropagateRefactoring >> setOption: aString toUse: aBlockClosure [
 	targetRefactoring setOption: aString toUse: aBlockClosure
-]
-
-{ #category : 'accessing' }
-EpRBPropagateRefactoring >> whatToDisplayIn: aNautilusChangesBrowser [
-	^ targetRefactoring whatToDisplayIn: aNautilusChangesBrowser
 ]

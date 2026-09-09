@@ -14,7 +14,7 @@ Class {
 		'Name1'
 	],
 	#pools : [
-		'TextConstants'
+		'RBSharedPoolForTestData'
 	],
 	#category : 'Refactoring-DataForTesting-LittleHierarchy',
 	#package : 'Refactoring-DataForTesting',
@@ -40,7 +40,7 @@ RBLintRuleTestData class >> parseTreeSearcher [
 
 { #category : 'parsing' }
 RBLintRuleTestData class >> parseTreeSearcherClass [
-	^ RBParseTreeSearcher
+	^ OCParseTreeSearcher
 ]
 
 { #category : 'foo' }
@@ -51,6 +51,12 @@ RBLintRuleTestData class >> someFooMethod [
 { #category : 'foo' }
 RBLintRuleTestData class >> someOtherFooMethod [
 	^ 'does nothing here even better:)'
+]
+
+{ #category : 'accessing' }
+RBLintRuleTestData >> accessor [
+
+	^ nil
 ]
 
 { #category : 'accessing' }
@@ -107,7 +113,14 @@ RBLintRuleTestData >> isEmpty [
 RBLintRuleTestData >> junk [
 	^ RBClassDataForRefactoringTest printString
 		copyFrom: 1
-		to: CR
+		to: Var1
+]
+
+{ #category : 'accessing' }
+RBLintRuleTestData >> methodWithBlockContainingReturn [
+    | b |
+    b := [ ^ 42 ].
+    ^ b value 
 ]
 
 { #category : 'accessing' }
@@ -150,6 +163,8 @@ RBLintRuleTestData >> run [
 
 { #category : 'accessing' }
 RBLintRuleTestData >> runOnEnvironment: anEnvironment [
+
+	<ignoreNotImplementedSelectors: #(printOn:onEnvironment:)>
 	^Object printOn: self onEnvironment: anEnvironment
 ]
 
