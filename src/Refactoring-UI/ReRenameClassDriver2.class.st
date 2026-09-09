@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'oldName',
 		'newName',
-		'shouldEscape'
+		'shouldEscape',
+		'hasShadowing'
 	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',
@@ -39,7 +40,7 @@ ReRenameClassDriver2 >> breakingChoices [
 ReRenameClassDriver2 >> browseMethods [
 
 	| references |
-	references := refactoring violations .
+	references := hasShadowing violator .
 	
 	(Smalltalk tools toolNamed: #messageList)
 		browse: (references collect: [ :ref | ref origin realClass lookupSelector: ref selector ])
@@ -64,13 +65,13 @@ ReRenameClassDriver2 >> checkApplicabilityPreconditions [
 { #category : 'actions' }
 ReRenameClassDriver2 >> checkBehaviorPreconditions [
 
-	| condition stream | 1halt.
+	| stream | 
 	
-	condition := self refactoring breakingChangePreconditions first.
-	condition check ifTrue: [ ^ nil ].
+	hasShadowing := self refactoring breakingChangePreconditions first.
+	hasShadowing check ifTrue: [ ^ nil ].
 	
 	stream := String new writeStream.
-	condition violationMessageOn: stream.
+	hasShadowing violationMessageOn: stream.
 	^ stream contents
 ]
 

@@ -88,6 +88,18 @@ StRenameClassPreviewPresenter >> buildDiffFor: aChange [
 		  rightText: aChange textToDisplay
 ]
 
+{ #category : 'accessing' }
+StRenameClassPreviewPresenter >> buttonOk [
+	^ buttonOk
+]
+
+{ #category : 'accessing' }
+StRenameClassPreviewPresenter >> buttonOk: aButton [
+
+	buttonOk := aButton.
+	self updateOkButtonState
+]
+
 { #category : 'initialization' }
 StRenameClassPreviewPresenter >> changesFrom: aCompositeChange [
 
@@ -111,7 +123,7 @@ StRenameClassPreviewPresenter >> changesFrom: aCompositeChange scopes: aCollecti
 StRenameClassPreviewPresenter >> clearDiff [
 
 	diffPresenter 
-		leftText: '';
+		leftText: (driver refactoring class realClass) definitionString;
 		rightText: ''
 ]
 
@@ -230,14 +242,18 @@ StRenameClassPreviewPresenter >> hideBehaviorPanel [
 
 { #category : 'initialization' }
 StRenameClassPreviewPresenter >> initializeDialogWindow: aDialogWindowPresenter [
-	"Used to initialize the model in the case of the use into a dialog window.
-	 Override this to set buttons other than the default (Ok, Cancel)."
+
+	| applyButton |
 	
 	aDialogWindowPresenter
-		addButton: 'Cancel' do: [ :presenter | presenter close ];
-		addDefaultButton: 'Accept' do: [ :presenter | 
+		addButton: 'Cancel' do: [ :presenter | presenter close ].
+
+	applyButton := aDialogWindowPresenter
+		addDefaultButton: 'Apply' do: [ :presenter | 
 			self accept.
-			presenter close ]
+			presenter close ].
+
+	self buttonOk: applyButton
 ]
 
 { #category : 'initialization' }
@@ -277,6 +293,7 @@ StRenameClassPreviewPresenter >> initializePresenters [
 	behaviorWarningTitle := self newLabel label: 'Behavior-preserving warnings' .
 	behaviorMessageLabel := self newLabel label: ''.
 	behaviorPanel := SpPresenter new .
+	nameIsValid := false. 
 	
 	buttonBrowseMethod := self newButton
 		label: 'Browse affected methods';
@@ -324,7 +341,7 @@ StRenameClassPreviewPresenter >> schedulePreviewUpdate: aString [
 
 	previewUpdateDelay ifNotNil: [ previewUpdateDelay unschedule ].
 	
-	previewUpdateDelay := Delay forMilliseconds: 300.
+	previewUpdateDelay := Delay forMilliseconds: 250.
 	
 	[ previewUpdateDelay wait. 
 		self validateName: aString.
@@ -391,14 +408,24 @@ StRenameClassPreviewPresenter >> updateName [
 		ifFalse: [ 
 			changes := nil.
 			compositeChange := nil.
-			self clearDiff ]
+			self clearDiff .
+			buttonOk disable]
 		
 		ifTrue: [ 
-			compositeChange := driver refactoring generateChanges .
-			changes := compositeChange changesToDisplayIn: self ] .
+			compositeChange := driver refactoring privateTransform .
+			changes := compositeChange changesToDisplayIn: self .
+			buttonOk enable] .
 		
 	self updateChanges .
 	self updateTablePresenter
+]
+
+{ #category : 'initialization' }
+StRenameClassPreviewPresenter >> updateOkButtonState [
+
+	nameIsValid
+		ifTrue: [ buttonOk enable ]
+		ifFalse: [ buttonOk disable ]
 ]
 
 { #category : 'update' }
