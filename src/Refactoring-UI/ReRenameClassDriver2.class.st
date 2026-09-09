@@ -4,7 +4,6 @@ Class {
 	#instVars : [
 		'oldName',
 		'newName',
-		'shouldEscape',
 		'hasShadowing'
 	],
 	#category : 'Refactoring-UI-Drivers',
@@ -24,16 +23,6 @@ ReRenameClassDriver2 class >> rename: oldName [
 	^ self new 
 		oldName: oldName;
 		yourself
-]
-
-{ #category : 'execution' }
-ReRenameClassDriver2 >> breakingChoices [
-
-	| items |
-	items := OrderedCollection new.
-	items add: (ReRenameClassChoice new driver: self).
-	items add: (ReBrowseMethodsChoice new driver: self).
-	^ items
 ]
 
 { #category : 'actions' }
@@ -82,31 +71,6 @@ ReRenameClassDriver2 >> createAndSetNewRefactoring [
 	refactoring newName: newName
 ]
 
-{ #category : 'execution' }
-ReRenameClassDriver2 >> defaultSelectDialog [
-
-	^ super defaultSelectDialog
-		title: 'There are potential breaking changes!';
-		message: 'Watchout potential reference shadowing detected!';
-		items: self breakingChoices;
-		display: [ :each | each description ];
-		displayIcon: [ :each | self iconNamed: each systemIconName ];
-		yourself
-]
-
-{ #category : 'execution' }
-ReRenameClassDriver2 >> gatherUserInput [ 
-	"usually we do not spawn a dialog out of the blue but we should ask the application.
-	It means that the driver should get the application from the tool that invoked it."
-	newName := self requestNewNameBasedOn: oldName.
-	shouldEscape ifTrue: [ ^ false "user wants to exit" ].
-
-	[ refactoring isValidClassName check & refactoring isNotGlobal check ] whileFalse: [ 
-			newName := self requestNewNameBasedOn: newName.
-			shouldEscape ifTrue: [ ^ false ] ].
-	^ true
-]
-
 { #category : 'actions' }
 ReRenameClassDriver2 >> hasFailedBehaviorPreservingPreconditions [
 
@@ -117,8 +81,7 @@ ReRenameClassDriver2 >> hasFailedBehaviorPreservingPreconditions [
 { #category : 'initialization' }
 ReRenameClassDriver2 >> initialize [
 
-	super initialize.
-	shouldEscape := false
+	super initialize
 ]
 
 { #category : 'configuration' }
@@ -166,29 +129,6 @@ ReRenameClassDriver2 >> renameClass [
 	self applyChanges 
 ]
 
-{ #category : 'execution' }
-ReRenameClassDriver2 >> requestNewNameBasedOn: aName [
-
-	newName := self requestDialog 
-		title: 'Please provide a new class name';
-		message: 'The new name should be valid and not the one of an existing class.';
-		validateAnswer: [ :string :presenter | 
-			self validateName: string onPresenter: presenter ];
-		text: aName;
-		openModal.
-
-	newName ifNil: [
-		shouldEscape := true.
-		^ self ].
-	newName = oldName ifTrue: [
-		shouldEscape := true.
-		^ self ].
-
-	refactoring newName: newName.
-	
-	^ newName
-]
-
 { #category : 'accessing' }
 ReRenameClassDriver2 >> runRefactoring [
 
@@ -201,18 +141,4 @@ ReRenameClassDriver2 >> runRefactoring [
 		driver: self;
 		name: oldName;
 		openModal
-]
-
-{ #category : 'validation' }
-ReRenameClassDriver2 >> validateName: aName onPresenter: presenter [
-
-	| condition result |
-	condition := RBCondition isValidClassName: aName.
-	result := condition check.
-
-	result
-		ifFalse: [ presenter setErrorText: condition errorString ]
-		ifTrue: [ presenter errorText: '' ].
-
-	^ result
 ]

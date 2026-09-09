@@ -236,6 +236,7 @@ StRenameClassPreviewPresenter >> hideBehaviorPanel [
 	
 	(topLayout children includes: behaviorPanel)
 		ifFalse: [ ^ self ].
+		
 	topLayout remove: behaviorPanel.
 		self rebuildLayout 
 ]
@@ -464,11 +465,6 @@ StRenameClassPreviewPresenter >> validateName: aString [
             		addAttribute: (TextColor color:
                 	(Color r: 1.0 g: 0.5 b: 0.31));
             		yourself) ]
-]
-
-{ #category : 'accessing' }
-StRenameClassPreviewPresenter >> validationLabel [
-	^ validationLabel
 ]
 
 { #category : 'accessing' }
