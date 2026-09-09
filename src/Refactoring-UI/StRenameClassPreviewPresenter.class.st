@@ -1,8 +1,7 @@
 "
-I am a tool that previews refactoring changes to the user. User can change the scope of the refactoring (default scopes are: class, hierarchy, package and image) and manually pick which changes to apply and which ones to skip. I am usually opened by `RBDriver` subclasses.
+I am a tool for previewing the changes produced by a class rename refactoring. I allow the user to enter a new name, choose the refactoring scope, and inspect the resulting changes. The preview is updated live as the user edits the new name and enables the Apply button only when the name is valid and the refactoring can be applied.
 
-I am responsible for keeping track of `selectedChanges` (which changes to apply). When user selects a change from the list of all changes, I display a diff between old and new version of that change. When user accepts changes he wants to execute, I am responsible for invoking `RBRefactoryChangeManager` to perform them.
-
+I am responsible for keeping track of the selected changes. When the user selects a change, I display a diff between its old and new versions. When behavior-preserving preconditions are detected, I display the corresponding warning and provide the user with a way to browse the affected methods.
 "
 Class {
 	#name : 'StRenameClassPreviewPresenter',

@@ -1,3 +1,6 @@
+"
+I coordinate the class rename workflow between the user interface and the rename refactoring. I am responsible for creating and configuring the refactoring with the new class name and selected scope, checking its applicability and behavior-preserving preconditions, and generating the changes used by the preview. I make the results of these checks available to the presenter so that the user can be informed about potential breaking changes.
+"
 Class {
 	#name : 'ReRenameClassDriver2',
 	#superclass : 'ReInteractionDriver',
