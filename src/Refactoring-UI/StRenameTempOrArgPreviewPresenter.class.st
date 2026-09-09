@@ -73,7 +73,7 @@ StRenameTempOrArgPreviewPresenter >> addBehaviorPanel [
 
 	behaviorMessageLabel label: driver checkBehaviorPreservingPreconditions.
 	
-	driver isTemporaryVariable ifTrue: [ 
+	driver isTemp ifTrue: [ 
 		(behaviorLayout children includes: behaviorOptionsPanel) 
 			ifFalse: [ behaviorLayout add: behaviorOptionsPanel expand: false ]
 	].

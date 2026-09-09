@@ -107,7 +107,7 @@ ReRenameArgumentOrTemporaryDriver2 >> instantiateRefactoring [
 ]
 
 { #category : 'accessing' }
-ReRenameArgumentOrTemporaryDriver2 >> isTemporaryVariable [ 
+ReRenameArgumentOrTemporaryDriver2 >> isTemp [ 
 
 	^ sourceNode isTempVariable
 ]

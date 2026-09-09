@@ -18,7 +18,7 @@ OCIRTempAccess >> isRemoteTemp [
 ]
 
 { #category : 'testing' }
-OCIRTempAccess >> isTemporaryVariable [
+OCIRTempAccess >> isTemp [
 	^true
 ]
 
