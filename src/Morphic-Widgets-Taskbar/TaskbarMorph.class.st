@@ -1,6 +1,5 @@
 "
-Themed synchronous taskbar (not using #step to poll windows). The buttons provide visual feedback as to whether a window is active or minimised (collapsed) plus a popup menu with options to restore, minimise, maximise and close the associated window. Optional (via settings) preview of the window while mouse is over a taskbar button.
-
+Themed synchronous taskbar. It does not use #step to poll the state of the windows but creates task buttons providing visual feedback as to whether a window is active or minimised (collapsed) plus a popup menu with options to restore, minimise, maximise and close the associated window. The task buttons can be reordered with a drag and drop (polled through #step). Optional (via settings) preview of the window while mouse is over a taskbar button.
 "
 Class {
 	#name : 'TaskbarMorph',
@@ -405,15 +404,13 @@ TaskbarMorph >> showWindowPreview [
 TaskbarMorph >> step [
 	"If the hand is dragging a TaskbarTask, update the drop indicator.	When the drag ends, perform the move. We do not do it by overriding a drop event handling of the taskbar because we want to still apply the moving of the task if it's in the world above the bar."
 
-	| hand isDragging task indicatorIndex |
+	| hand task indicatorIndex |
+	self world ifNil: [ ^ self ].
 	hand := self world activeHand ifNil: [ ^ self ].
-	isDragging := hand submorphs anySatisfy: [ :submorph |
-			              (submorph passenger isKindOf: TaskbarTask)
-				              ifTrue: [
-						              task := submorph passenger.
-						              true ]
-				              ifFalse: [ false ] ].
-	isDragging ifFalse: [
+
+	task := self taskBeingDraggedBy: hand.
+
+	task ifNil: [
 			| targetIndex |
 			targetIndex := dropTargetIndex.
 			self removeDropIndicator.
@@ -426,11 +423,25 @@ TaskbarMorph >> step [
 	indicatorIndex := self dropIndicatorIndexForX: hand cursorPoint x.
 	indicatorIndex = dropTargetIndex ifTrue: [ ^ self ].
 	self showDropIndicatorAfterIndex: indicatorIndex - 1
+
 ]
 
 { #category : 'stepping and presenter' }
 TaskbarMorph >> stepTime [
 	^ 50
+]
+
+{ #category : 'drag and drop' }
+TaskbarMorph >> taskBeingDraggedBy: aHand [
+	"Answer the TaskbarTask dragged by the given hand, or nil if the hand is not dragging a task.
+	 We check that the morph carried by the hand is a TransferMorph because the hand can also carry morphs that do not understand #passenger, like a window being dragged."
+
+	| draggedMorph |
+	draggedMorph := aHand submorphs
+		                detect: [ :morph | morph isTransferMorph and: [ morph passenger isKindOf: TaskbarTask ] ]
+		                ifNone: [ ^ nil ].
+	^ draggedMorph passenger
+
 ]
 
 { #category : 'taskbar' }

@@ -120,12 +120,15 @@ TaskbarItemMorph >> mouseDown: event [
 
 { #category : 'event handling' }
 TaskbarItemMorph >> mouseEnterDragging: event [
-	"The hand is dragging a morph over us. Show a drop indicator bar."
+	"The hand is dragging a task over us. Show a drop indicator bar.
+	 We ignore the drags of other morphs, like windows, because we can only reorder tasks."
 
 	| taskbar taskIndex |
 	(event hand hasSubmorphs and: [ self dropEnabled ]) ifFalse: [ ^ super mouseEnterDragging: event ].
 
 	taskbar := self owner.
+
+	(taskbar taskBeingDraggedBy: event hand) ifNil: [ ^ self ].
 
 	taskIndex := (taskbar submorphIndexOf: self) ifNil: [ ^ self ]. "In case we close the task really close to the time we move it?"
 
@@ -133,6 +136,7 @@ TaskbarItemMorph >> mouseEnterDragging: event [
 	taskbar showDropIndicatorAfterIndex: (event position x - self fullBounds left < (self width / 2)
 			 ifTrue: [ taskIndex - 1 ]
 			 ifFalse: [ taskIndex ]) 
+
 ]
 
 { #category : 'style - border' }
