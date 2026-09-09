@@ -3,7 +3,7 @@ A class to execute commands from command Line.
 We can parse commands and arguments, and execute the dedicated method
 "
 Class {
-	#name : 'CommandLineDebugger',
+	#name : 'ClapDebugger',
 	#superclass : 'Object',
 	#instVars : [
 		'isActive',
@@ -22,7 +22,7 @@ Class {
 }
 
 { #category : 'instance creation' }
-CommandLineDebugger class >> forCode: aString [
+ClapDebugger class >> forCode: aString [
     "Compiles the code, create a process from it then build the debugger"
     
     | blockToDebug process |
@@ -33,7 +33,7 @@ CommandLineDebugger class >> forCode: aString [
 ]
 
 { #category : 'instance creation' }
-CommandLineDebugger class >> forProcess: aProcess [
+ClapDebugger class >> forProcess: aProcess [
     "Create a debugger from a given process"
     
     | debuggingContext debuggingSession |
@@ -48,13 +48,13 @@ CommandLineDebugger class >> forProcess: aProcess [
 ]
 
 { #category : 'initialization' }
-CommandLineDebugger >> activate [
+ClapDebugger >> activate [
 
 	isActive := true
 ]
 
 { #category : 'reading' }
-CommandLineDebugger >> askTyping [
+ClapDebugger >> askTyping [
 
 	outStream 
         << '(debug) '; 
@@ -62,71 +62,83 @@ CommandLineDebugger >> askTyping [
 ]
 
 { #category : 'execution' }
-CommandLineDebugger >> commandClassInstanceFor: aString [
+ClapDebugger >> commandClassInstanceFor: aString [
 	"Gives an instance of the right command class to use"
 
 	[ ^ commands at: aString ]
 		on: KeyNotFound
-		do: [ ^ UnknownCommand new command: aString ]
+		do: [ ^ ClapDbgUnknownCommand new command: aString ]
 ]
 
 { #category : 'accessing' }
-CommandLineDebugger >> commands [
+ClapDebugger >> commands [
 
 	^ commands
 ]
 
 { #category : 'accessing' }
-CommandLineDebugger >> commands: anObject [
+ClapDebugger >> commands: anObject [
 
 	commands := anObject
 ]
 
 { #category : 'accessing' }
-CommandLineDebugger >> commandsStack [
+ClapDebugger >> commandsStack [
 
 	^ commandsStack
 ]
 
 { #category : 'accessing' }
-CommandLineDebugger >> commandsStack: anObject [
+ClapDebugger >> commandsStack: anObject [
 
 	commandsStack := anObject
 ]
 
 { #category : 'accessing' }
-CommandLineDebugger >> context [
+ClapDebugger >> context [
 
 	^ context
 ]
 
 { #category : 'accessing' }
-CommandLineDebugger >> context: aDebugContext [
+ClapDebugger >> context: aDebugContext [
     context := aDebugContext
 ]
 
 { #category : 'initialization' }
-CommandLineDebugger >> disActivate [
+ClapDebugger >> disActivate [
 
 	isActive := false
 ]
 
+{ #category : 'command shortcut' }
+ClapDebugger >> down [
+	
+	^ self executeCommand: 'down' arg: ''
+]
+
 { #category : 'execution' }
-CommandLineDebugger >> executeCommand: aCommandString arg: arguments [
+ClapDebugger >> executeCommand: aCommandString arg: arguments [
 	"executes the command with potential arguments"
 
 	^ (self commandClassInstanceFor: aCommandString) executeOn: self with: arguments
 ]
 
+{ #category : 'command shortcut' }
+ClapDebugger >> finish [
+
+	^ self executeCommand: 'finish' arg: ''
+]
+
 { #category : 'execution' }
-CommandLineDebugger >> finishedDebugging [
+ClapDebugger >> finishedDebugging [
 
 	isActive := false.
 	^ 'Execution finished. The program has ended.'
 ]
 
 { #category : 'history' }
-CommandLineDebugger >> handleHistory: aString [
+ClapDebugger >> handleHistory: aString [
 	"Processes the input by applying history command handling through a chain of responsibility. Returns the command if a handler matches, or the original input otherwise"
 
 	| trimmed handler |
@@ -137,7 +149,7 @@ CommandLineDebugger >> handleHistory: aString [
 ]
 
 { #category : 'execution' }
-CommandLineDebugger >> handleZnIncompleteErrorInInput: ex [
+ClapDebugger >> handleZnIncompleteErrorInInput: ex [
 	"The Stdin stream is wrapped by a Utf8 decoder, and assumes all input is encoded.
 	However, this is not always the case. Sometimes we consume the buffer that has partial information, and sometimes the terminal sends not encoded text, typically for control characters (e.g., arrows and such). If we are in one of these cases, let's wait for more input and retry.
 	
@@ -149,19 +161,19 @@ CommandLineDebugger >> handleZnIncompleteErrorInInput: ex [
 ]
 
 { #category : 'accessing' }
-CommandLineDebugger >> inStream [
+ClapDebugger >> inStream [
 
 	^ inStream
 ]
 
 { #category : 'accessing' }
-CommandLineDebugger >> inStream: anObject [
+ClapDebugger >> inStream: anObject [
 
 	inStream := anObject
 ]
 
 { #category : 'initialization' }
-CommandLineDebugger >> initialize [
+ClapDebugger >> initialize [
 
 	super initialize.
 	isActive := true.
@@ -172,18 +184,24 @@ CommandLineDebugger >> initialize [
 ]
 
 { #category : 'initialization' }
-CommandLineDebugger >> initializeCommands [
+ClapDebugger >> initializeCommands [
 
 	| commandsList |
 	commandsList := {
-		                QuitCommand new.
-		                HelpCommand new.
-		                StepCommand new.
-		                OverCommand new.
-		                PrintCodeCommand new.
-		                PrintCommand new.
-		                PrintStackCommand new.
-		                HistoryCommand new }.
+		                ClapDbgQuitCommand new.
+		                ClapDbgHelpCommand new.
+		                ClapDbgStepCommand new.
+		                ClapDbgOverCommand new.
+		                ClapDbgPrintCodeCommand new.
+		                ClapDbgPrintCommand new.
+		                ClapDbgPrintStackCommand new.
+		                ClapDbgHistoryCommand new.
+		                ClapDbgStepThroughCommand new.
+		                ClapDbgDownCommand new.
+		                ClapDbgUpCommand new.
+		                ClapDbgReturnCommand new.
+		                ClapDbgFinishCommand new.
+		                ClapDbgProceedCommand new }.
 	commands := Dictionary new.
 	commandsList do: [ :aCommand |
 			commands at: aCommand commandName first put: aCommand.
@@ -191,22 +209,22 @@ CommandLineDebugger >> initializeCommands [
 ]
 
 { #category : 'initialization' }
-CommandLineDebugger >> initializeHistoryHandlers [
+ClapDebugger >> initializeHistoryHandlers [
 
 	^ historyHandlers := {
-		                     LastCommandHandler new.
-		                     ContansStringHandler new.
-		                     NumericHistoryHandler new.
-		                     StartsWithStringHandler new }
+		                     ClapDbgLastCommandHandler new.
+		                     ClapDbgContansStringHandler new.
+		                     ClapDbgNumericHistoryHandler new.
+		                     ClapDbgStartsWithStringHandler new }
 ]
 
 { #category : 'accessing' }
-CommandLineDebugger >> isActive [
+ClapDebugger >> isActive [
     ^ isActive
 ]
 
 { #category : 'history' }
-CommandLineDebugger >> lastCommand [
+ClapDebugger >> lastCommand [
 	"returns the last command in history and pops it"
 	
 	commandsStack ifNotEmpty: [ ^ commandsStack pop ]
@@ -215,35 +233,41 @@ CommandLineDebugger >> lastCommand [
 ]
 
 { #category : 'accessing' }
-CommandLineDebugger >> lineEnding [
+ClapDebugger >> lineEnding [
 
 	^ lineEnding
 ]
 
 { #category : 'accessing' }
-CommandLineDebugger >> lineEnding: anObject [
+ClapDebugger >> lineEnding: anObject [
 
 	lineEnding := anObject
 ]
 
 { #category : 'accessing' }
-CommandLineDebugger >> outStream [
+ClapDebugger >> outStream [
 
 	^ outStream
 ]
 
 { #category : 'accessing' }
-CommandLineDebugger >> outStream: anObject [
+ClapDebugger >> outStream: anObject [
 
 	outStream := anObject
 ]
 
+{ #category : 'command shortcut' }
+ClapDebugger >> over [
+
+	^ self executeCommand: 'over' arg: ''
+]
+
 { #category : 'execution' }
-CommandLineDebugger >> parsesAndExecuteCommand: aString [
+ClapDebugger >> parsesAndExecuteCommand: aString [
 	"Parses a string to change it into an executable command and executes it"
 
 	| subString command arguments |
-	commandsStack push: aString. 
+	commandsStack push: aString.
 	subString := aString substrings.
 	subString ifEmpty: [ ^ '' ].
 
@@ -253,8 +277,19 @@ CommandLineDebugger >> parsesAndExecuteCommand: aString [
 	^ self executeCommand: command arg: arguments
 ]
 
+{ #category : 'command shortcut' }
+ClapDebugger >> print: aString [ 
+	^ self executeCommand: 'print' arg: aString 
+]
+
+{ #category : 'command shortcut' }
+ClapDebugger >> printCode [
+
+	^ self executeCommand: 'printCode' arg: ''
+]
+
 { #category : 'printing' }
-CommandLineDebugger >> printOutput: output [
+ClapDebugger >> printOutput: output [
 
 	outStream
 		<< output;
@@ -262,20 +297,56 @@ CommandLineDebugger >> printOutput: output [
 		flush
 ]
 
+{ #category : 'command shortcut' }
+ClapDebugger >> printStack [
+
+	^ self executeCommand: 'printStack' arg: ''
+]
+
+{ #category : 'command shortcut' }
+ClapDebugger >> proceed [
+
+	^ self executeCommand: 'proceed' arg: ''
+]
+
 { #category : 'accessing' }
-CommandLineDebugger >> process [
+ClapDebugger >> process [
 
 	^ process
 ]
 
 { #category : 'accessing' }
-CommandLineDebugger >> process: aProcess [
+ClapDebugger >> process: aProcess [
 
-	process := aProcess
+	process := aProcess.
+	process errorHandler: self.
+]
+
+{ #category : 'command shortcut' }
+ClapDebugger >> quit [
+
+	^ self executeCommand: 'quit' arg: ''
 ]
 
 { #category : 'reading' }
-CommandLineDebugger >> readNextLine [
+ClapDebugger >> readMultiLine [
+
+	| stream currentLine |
+	stream := WriteStream on: String new.
+
+	currentLine := self readNextLine.
+
+	[ currentLine endsWith: '\' ] whileTrue: [
+			stream nextPutAll: (currentLine copyFrom: 1 to: currentLine size - 1) trimRight.
+			stream nextPutAll: self lineEnding.
+			currentLine := self readNextLine ].
+	stream nextPutAll: currentLine.
+
+	^ stream contents
+]
+
+{ #category : 'reading' }
+ClapDebugger >> readNextLine [
 	"create a nil input waiting for the user to type something, handling ZnIncomplete Error. Returns the input"
 
 	| input |
@@ -284,11 +355,17 @@ CommandLineDebugger >> readNextLine [
 			[ input := inStream nextLine ]
 				on: Error
 				do: [ :ex | self handleZnIncompleteErrorInInput: ex ] ].
-	^ input
+	^ input trimRight
+]
+
+{ #category : 'command shortcut' }
+ClapDebugger >> return: anInteger [
+
+	^ self executeCommand: 'return' arg: anInteger
 ]
 
 { #category : 'execution' }
-CommandLineDebugger >> run [
+ClapDebugger >> run [
 	"Start debug phase, starting a loop, waiting for user's commands"
 
 	| input tempRes |
@@ -297,24 +374,44 @@ CommandLineDebugger >> run [
 
 	[ self isActive ] whileTrue: [
 			self askTyping.
-			input := self readNextLine.
+			input := self readMultiLine.
 			[
-
 				input := self handleHistory: input trim.
 				tempRes := self parsesAndExecuteCommand: input.
+				self isActive ifFalse: [
+						self printOutput: tempRes.
+						^ self ].
 				self printOutput: tempRes ]
-				on: HistoryEventNotFound
+				on: ClapDbgHistoryEventNotFound
 				do: [ :e | self printOutput: e messageText ] ]
 ]
 
 { #category : 'accessing' }
-CommandLineDebugger >> session [
+ClapDebugger >> session [
 
 	^ session
 ]
 
 { #category : 'accessing' }
-CommandLineDebugger >> session: anObject [
+ClapDebugger >> session: anObject [
 
 	session := anObject
+]
+
+{ #category : 'command shortcut' }
+ClapDebugger >> step [
+
+	^ self executeCommand: 'step' arg: ''
+]
+
+{ #category : 'command shortcut' }
+ClapDebugger >> stepThrough [
+
+	^ self executeCommand: 'stepThrough' arg: ''
+]
+
+{ #category : 'command shortcut' }
+ClapDebugger >> up [
+
+	^ self executeCommand: 'up' arg: ''
 ]

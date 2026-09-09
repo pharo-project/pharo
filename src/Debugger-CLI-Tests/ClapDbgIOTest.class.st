@@ -1,5 +1,5 @@
 Class {
-	#name : 'CommandLineDebuggerIOTest',
+	#name : 'ClapDbgIOTest',
 	#superclass : 'TestCase',
 	#instVars : [
 		'debugger'
@@ -9,16 +9,16 @@ Class {
 }
 
 { #category : 'running' }
-CommandLineDebuggerIOTest >> setUp [
+ClapDbgIOTest >> setUp [
 
 	super setUp.
-	debugger := CommandLineDebugger new.
+	debugger := ClapDebugger new.
 
 	debugger lineEnding: String lf
 ]
 
 { #category : 'running' }
-CommandLineDebuggerIOTest >> testAskTypingWritesToOutStream [
+ClapDbgIOTest >> testAskTypingWritesToOutStream [
 
 	| tempStream |
 	tempStream := String new writeStream. 
@@ -29,7 +29,7 @@ CommandLineDebuggerIOTest >> testAskTypingWritesToOutStream [
 ]
 
 { #category : 'running' }
-CommandLineDebuggerIOTest >> testInformResultsWritesToOutStream [
+ClapDbgIOTest >> testInformResultsWritesToOutStream [
 
 	| tempWriteStream |
 	tempWriteStream := String new writeStream.
@@ -39,7 +39,7 @@ CommandLineDebuggerIOTest >> testInformResultsWritesToOutStream [
 ]
 
 { #category : 'running' }
-CommandLineDebuggerIOTest >> testReadNextLine [
+ClapDbgIOTest >> testReadNextLine [
 
 	| tempReadStream |
 	tempReadStream := ReadStream on: 'step' , String lf , 'p a' , String lf.
@@ -50,7 +50,7 @@ CommandLineDebuggerIOTest >> testReadNextLine [
 ]
 
 { #category : 'running' }
-CommandLineDebuggerIOTest >> testRunLoopSimulation [
+ClapDbgIOTest >> testRunLoopSimulation [
 
 	| tempReadStream tempWriteStream |
 	tempReadStream := ReadStream on: 'help' , String lf , 'quit' , String lf.

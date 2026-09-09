@@ -1,5 +1,5 @@
 Class {
-	#name : 'ClapDebugRunner',
+	#name : 'ClapDbgRunner',
 	#superclass : 'ClapPharoApplication',
 	#instVars : [
 		'debugger'
@@ -9,7 +9,7 @@ Class {
 }
 
 { #category : 'command line' }
-ClapDebugRunner class >> commandSpecification [
+ClapDbgRunner class >> commandSpecification [
 
 	<commandline>
 	| spec |
@@ -30,7 +30,7 @@ ClapDebugRunner class >> commandSpecification [
 ]
 
 { #category : 'execution' }
-ClapDebugRunner >> execute [
+ClapDbgRunner >> execute [
 
 	self prepareImageAndExit.
 
@@ -40,19 +40,19 @@ ClapDebugRunner >> execute [
 ]
 
 { #category : 'execution' }
-ClapDebugRunner >> expressionToDebug [
+ClapDbgRunner >> expressionToDebug [
 
 	^ self positional: #EXPR 
 ]
 
 { #category : 'execution' }
-ClapDebugRunner >> runDebugger [
+ClapDbgRunner >> runDebugger [
 	"Create a debugger and run it"
 
 	| codeString |
 	codeString := self expressionToDebug joinUsing: ' '.
 	[
-		debugger := (CommandLineDebugger forCode: codeString)
+		debugger := (ClapDebugger forCode: codeString)
 			            inStream: self context stdin;
 			            outStream: self context stdout ]
 		on: Error
@@ -61,6 +61,6 @@ ClapDebugRunner >> runDebugger [
 					'Cannot create start debugger; Usage: debug <expression>.' , OSPlatform current lineEnding , 'Error details : ' , e asString.
 				^ self ].
 
-	debugger parsesAndExecuteCommand: 's'.
+	debugger step.
 	debugger run
 ]
