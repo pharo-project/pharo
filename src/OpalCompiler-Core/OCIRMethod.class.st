@@ -98,7 +98,7 @@ OCIRMethod >> allSequences [
 
 { #category : 'enumerating' }
 OCIRMethod >> allTempAccessInstructions [
-	^self allInstructionsMatching: [:bc | bc isTemp]
+	^self allInstructionsMatching: [:bc | bc isTemporaryVariable]
 ]
 
 { #category : 'inspector' }

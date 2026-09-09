@@ -49,6 +49,6 @@ ReCheckVariableNameShadowingCondition >> violationMessageOn: aStream [
 
 	^ violators do: [ :violator |
 			  aStream
-				  nextPutAll: ('The variable {1} is already defined as a class/instance variable in the given context' format: { violator });
+				  nextPutAll: ('The variable "{1}" is already defined as a class/instance variable in the given context' format: { violator });
 				  nextPut: Character cr ]
 ]

@@ -206,17 +206,21 @@ WorldState class >> pharoItemsOn: aBuilder [
 
 { #category : 'world menu items' }
 WorldState class >> quitSession [
+
 	| response |
 	response := MorphicUIManager new
-						confirm: 'Save changes before quitting?'
-						trueChoice: 'Save'
-						falseChoice: 'Discard'
-						cancelChoice: 'Cancel'
-						default: nil.
-	response ifNil: [ ^self ].
+		confirm: 'Save changes before quitting?'
+		trueChoice: 'Save'
+		falseChoice: 'Discard'
+		cancelChoice: 'Cancel'
+		default: nil.
+
+	response ifNil: [ ^ self ].
+
+	CoPCImageCloseSurvey promptBeforeImageQuit.
 	response
-		ifTrue: [Smalltalk snapshot: true andQuit: true]
-		ifFalse: [Smalltalk snapshot: false andQuit: true]
+		ifTrue: [ Smalltalk snapshot: true andQuit: true ]
+		ifFalse: [ Smalltalk snapshot: false andQuit: true ]
 ]
 
 { #category : 'cleanup' }
@@ -230,9 +234,10 @@ WorldState class >> restartMethods [
 
 { #category : 'world menu items' }
 WorldState class >> saveAndQuit [
+
+	CoPCImageCloseSurvey promptBeforeImageQuit.
 	Cursor write showWhile: [
-		Smalltalk snapshot: true andQuit: true
-	]
+		Smalltalk snapshot: true andQuit: true ]
 ]
 
 { #category : 'world menu items' }

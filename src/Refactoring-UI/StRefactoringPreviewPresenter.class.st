@@ -37,7 +37,7 @@ StRefactoringPreviewPresenter class >> withChanges: changes scopes: scopes [
 
 { #category : 'action' }
 StRefactoringPreviewPresenter >> accept [
-	
+
 	(self okToChange not or: [ selectedChanges isEmptyOrNil ]) ifTrue: [
 		self application newInform 
 				title: 'No changes to apply.';
@@ -201,6 +201,7 @@ StRefactoringPreviewPresenter >> updateChanges [
 
 	changesInScope := changes select: [ :change |
 							change isInScope: activeScope ].
+						
 	selectedChanges := OrderedCollection withAll: changesInScope
 ]
 

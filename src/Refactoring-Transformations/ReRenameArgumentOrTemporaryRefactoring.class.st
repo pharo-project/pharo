@@ -54,9 +54,9 @@ ReRenameArgumentOrTemporaryRefactoring class >> rename: oldName to: newName in: 
 ]
 
 { #category : 'instance creation' }
-ReRenameArgumentOrTemporaryRefactoring class >> renameTemporaryFrom: anInterval in: aClass selector: aSelector [
+ReRenameArgumentOrTemporaryRefactoring class >> renameTemporaryFrom: anInterval in: aClassName selector: aSelector [
 
-	^ self new class: aClass selector: aSelector interval: anInterval
+	^ self new class: aClassName selector: aSelector interval: anInterval
 ]
 
 { #category : 'instance creation' }
@@ -136,6 +136,18 @@ ReRenameArgumentOrTemporaryRefactoring >> newName: aString [
 { #category : 'accessing' }
 ReRenameArgumentOrTemporaryRefactoring >> oldName: aString [
 	oldName := aString 
+]
+
+{ #category : 'accessing' }
+ReRenameArgumentOrTemporaryRefactoring >> parseTree [
+
+	^ parseTree
+]
+
+{ #category : 'accessing' }
+ReRenameArgumentOrTemporaryRefactoring >> parseTree: aTree [
+
+	parseTree := aTree
 ]
 
 { #category : 'preconditions' }

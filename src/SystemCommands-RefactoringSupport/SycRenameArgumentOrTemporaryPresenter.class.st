@@ -19,7 +19,7 @@ Instance Variables
 	
 "
 Class {
-	#name : 'SycRefactoringPreviewPresenter',
+	#name : 'SycRenameArgumentOrTemporaryPresenter',
 	#superclass : 'SpPresenter',
 	#instVars : [
 		'changes',
@@ -36,7 +36,7 @@ Class {
 }
 
 { #category : 'layout' }
-SycRefactoringPreviewPresenter class >> defaultLayout [
+SycRenameArgumentOrTemporaryPresenter class >> defaultLayout [
 	^ SpBoxLayout newTopToBottom
 		add: #table;
 		add: #scopeDropList withConstraints: [ :constraints | constraints height: 30 ];
@@ -45,19 +45,19 @@ SycRefactoringPreviewPresenter class >> defaultLayout [
 ]
 
 { #category : 'instance creation' }
-SycRefactoringPreviewPresenter class >> for: aCommand scopes: scopes [
+SycRenameArgumentOrTemporaryPresenter class >> for: aCommand scopes: scopes [
 	^ self new
 		command: aCommand;
 		scopes: scopes
 ]
 
 { #category : 'specs' }
-SycRefactoringPreviewPresenter class >> title [
+SycRenameArgumentOrTemporaryPresenter class >> title [
 	^ 'Refactoring changes'
 ]
 
 { #category : 'controlling' }
-SycRefactoringPreviewPresenter >> accept [
+SycRenameArgumentOrTemporaryPresenter >> accept [
 	self okToChange ifFalse: [ ^ self ].
 	
 	[ ReChangeManager instance
@@ -67,49 +67,49 @@ SycRefactoringPreviewPresenter >> accept [
 ]
 
 { #category : 'accessing' }
-SycRefactoringPreviewPresenter >> activeRBEnvironment [
+SycRenameArgumentOrTemporaryPresenter >> activeRBEnvironment [
 	^ self activeScope asRBEnvironment
 ]
 
 { #category : 'accessing' }
-SycRefactoringPreviewPresenter >> activeScope [
+SycRenameArgumentOrTemporaryPresenter >> activeScope [
 	^ scopeDropList selectedItem
 ]
 
 { #category : 'services' }
-SycRefactoringPreviewPresenter >> alert: aString [
+SycRenameArgumentOrTemporaryPresenter >> alert: aString [
 	"Display a message for the user to read and then dismiss."
 
 	aString isEmptyOrNil ifFalse: [ self inform: aString ]
 ]
 
 { #category : 'private' }
-SycRefactoringPreviewPresenter >> buildDiffFor: aChange [
+SycRenameArgumentOrTemporaryPresenter >> buildDiffFor: aChange [
 	^ diffPresenter
 		leftText: aChange oldVersionTextToDisplay;
 		rightText: aChange textToDisplay
 ]
 
 { #category : 'accessing' }
-SycRefactoringPreviewPresenter >> changes [
+SycRenameArgumentOrTemporaryPresenter >> changes [
 	^ changes
 ]
 
 { #category : 'accessing' }
-SycRefactoringPreviewPresenter >> changes: aCollection [
+SycRenameArgumentOrTemporaryPresenter >> changes: aCollection [
 	changes := aCollection.
 	self generateChanges
 ]
 
 { #category : 'utilities' }
-SycRefactoringPreviewPresenter >> changesFrom: aCompositeChange forEnvironment: anEnvironment [
+SycRenameArgumentOrTemporaryPresenter >> changesFrom: aCompositeChange forEnvironment: anEnvironment [
 
 	^ (aCompositeChange changesToDisplayIn: self) select: [ :change |
 		  anEnvironment includesClass: change changeClass ]
 ]
 
 { #category : 'initialization' }
-SycRefactoringPreviewPresenter >> columns [
+SycRenameArgumentOrTemporaryPresenter >> columns [
 
 	^ { (SpCompositeTableColumn new
 		   addColumn:
@@ -122,12 +122,12 @@ SycRefactoringPreviewPresenter >> columns [
 ]
 
 { #category : 'accessing' }
-SycRefactoringPreviewPresenter >> command: aCommand [
+SycRenameArgumentOrTemporaryPresenter >> command: aCommand [
 	command := aCommand
 ]
 
 { #category : 'initialization' }
-SycRefactoringPreviewPresenter >> connectPresenters [
+SycRenameArgumentOrTemporaryPresenter >> connectPresenters [
 
 	table addShortcutWith: [ :action |
 			action
@@ -158,12 +158,12 @@ SycRefactoringPreviewPresenter >> connectPresenters [
 ]
 
 { #category : 'accessing' }
-SycRefactoringPreviewPresenter >> existChanges [
+SycRenameArgumentOrTemporaryPresenter >> existChanges [
 	^ existsChanges ifNil: [ existsChanges := false ]
 ]
 
 { #category : 'actions' }
-SycRefactoringPreviewPresenter >> generateChanges [
+SycRenameArgumentOrTemporaryPresenter >> generateChanges [
 
 	| rbEnvironment |
 	changes := command asRefactorings.
@@ -174,7 +174,7 @@ SycRefactoringPreviewPresenter >> generateChanges [
 ]
 
 { #category : 'initialization' }
-SycRefactoringPreviewPresenter >> initializeDialogWindow: aDialogWindowPresenter [
+SycRenameArgumentOrTemporaryPresenter >> initializeDialogWindow: aDialogWindowPresenter [
 
 	aDialogWindowPresenter
 		title: self title;
@@ -186,7 +186,7 @@ SycRefactoringPreviewPresenter >> initializeDialogWindow: aDialogWindowPresenter
 ]
 
 { #category : 'initialization - deprecated' }
-SycRefactoringPreviewPresenter >> initializePresenter [
+SycRenameArgumentOrTemporaryPresenter >> initializePresenter [
 
 	super initializePresenter.
 	table whenSelectionChangedDo: [ :selection | selection selectedItem ifNotNil: [ self buildDiffFor: selection selectedItem ] ].
@@ -201,7 +201,7 @@ SycRefactoringPreviewPresenter >> initializePresenter [
 ]
 
 { #category : 'initialization' }
-SycRefactoringPreviewPresenter >> initializeWidgets [
+SycRenameArgumentOrTemporaryPresenter >> initializeWidgets [
 
 	diffPresenter := self newDiff.
 	scopeDropList := self newDropList.
@@ -219,22 +219,22 @@ SycRefactoringPreviewPresenter >> initializeWidgets [
 ]
 
 { #category : 'accessing' }
-SycRefactoringPreviewPresenter >> pickedChanges [
+SycRenameArgumentOrTemporaryPresenter >> pickedChanges [
 	^ table items select: [ :item | selectedRefactorings at: item ]
 ]
 
 { #category : 'accessing' }
-SycRefactoringPreviewPresenter >> scopeDropList [
+SycRenameArgumentOrTemporaryPresenter >> scopeDropList [
 	^ scopeDropList
 ]
 
 { #category : 'accessing' }
-SycRefactoringPreviewPresenter >> scopes: aCollectionOfScopes [
+SycRenameArgumentOrTemporaryPresenter >> scopes: aCollectionOfScopes [
 	scopeDropList items: aCollectionOfScopes "It also sets up first item as selection"
 ]
 
 { #category : 'private' }
-SycRefactoringPreviewPresenter >> selectItemBelow: aRefactoring [
+SycRenameArgumentOrTemporaryPresenter >> selectItemBelow: aRefactoring [
 
 	| nextIndex |
 	nextIndex := (self table items indexOf: aRefactoring) + 1.
@@ -242,13 +242,13 @@ SycRefactoringPreviewPresenter >> selectItemBelow: aRefactoring [
 ]
 
 { #category : 'actions' }
-SycRefactoringPreviewPresenter >> selectectAllCheckBox [
+SycRenameArgumentOrTemporaryPresenter >> selectectAllCheckBox [
 	selectedRefactorings := Dictionary new.
 	table items do: [ :refactoring | selectedRefactorings at: refactoring put: true ]
 ]
 
 { #category : 'initialization' }
-SycRefactoringPreviewPresenter >> setFocus [
+SycRenameArgumentOrTemporaryPresenter >> setFocus [
 	self focusOrder
 		add: table;
 		add: scopeDropList;
@@ -256,31 +256,31 @@ SycRefactoringPreviewPresenter >> setFocus [
 ]
 
 { #category : 'accessing' }
-SycRefactoringPreviewPresenter >> table [
+SycRenameArgumentOrTemporaryPresenter >> table [
 	^ table
 ]
 
 { #category : 'accessing' }
-SycRefactoringPreviewPresenter >> title [
+SycRenameArgumentOrTemporaryPresenter >> title [
 	^ self class title
 ]
 
 { #category : 'private' }
-SycRefactoringPreviewPresenter >> toggleSelectionOf: aRefactoring [
+SycRenameArgumentOrTemporaryPresenter >> toggleSelectionOf: aRefactoring [
 	"it's normal it's impossible that anItem doesn't store in dictionary because at initialize I fill the dictionary and at each scope change"
 	selectedRefactorings at: aRefactoring put: (selectedRefactorings at: aRefactoring) not.
 	self selectItemBelow: aRefactoring
 ]
 
 { #category : 'update' }
-SycRefactoringPreviewPresenter >> updateChanges [
+SycRenameArgumentOrTemporaryPresenter >> updateChanges [
 	self generateChanges.
 	self updateTablePresenter.
 	self selectectAllCheckBox
 ]
 
 { #category : 'update' }
-SycRefactoringPreviewPresenter >> updateTablePresenter [
+SycRenameArgumentOrTemporaryPresenter >> updateTablePresenter [
 
 	| aCompositeChange anEnvironment |
 	"We get the environment to apply the changes from any element in the changes instance variable"
