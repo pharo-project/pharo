@@ -41,7 +41,6 @@ ReRemoveMethodDriver >> browseSenders [
 
 	(Smalltalk tools toolNamed: #messageList)
 		browseImplementorsOfAll: (haveNoSenders violators collect: [ :each | each value selector ])
-		from: self class
 ]
 
 { #category : 'execution' }

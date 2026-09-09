@@ -41,7 +41,7 @@ ReMoveMethodsToClassSideDriver >> browseMethod [
 	methods := refactoring refactorings collect: [ :each | each method ].
 	names := methods collect: [ :method | method selector ].
 
-	(Smalltalk tools toolNamed: #messageList) browseImplementorsOfAll: names from: methods anyOne methodClass
+	(Smalltalk tools toolNamed: #messageList) browseImplementorsOfAll: names
 ]
 
 { #category : 'execution' }
