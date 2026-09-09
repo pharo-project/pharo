@@ -73,6 +73,11 @@ StRenameClassPreviewPresenter >> addBehaviorPanel [
 		ifFalse: [ topLayout add: behaviorPanel expand: false ]
 ]
 
+{ #category : 'accessing' }
+StRenameClassPreviewPresenter >> behaviorPanel [
+	^ behaviorPanel
+]
+
 { #category : 'private' }
 StRenameClassPreviewPresenter >> browseMethods [
 
@@ -97,6 +102,11 @@ StRenameClassPreviewPresenter >> buttonOk: aButton [
 
 	buttonOk := aButton.
 	self updateOkButtonState
+]
+
+{ #category : 'accessing' }
+StRenameClassPreviewPresenter >> changes [
+ 	^ changes
 ]
 
 { #category : 'initialization' }
@@ -362,6 +372,11 @@ StRenameClassPreviewPresenter >> selectorInput [
 	^ newNameInput
 ]
 
+{ #category : 'accessing' }
+StRenameClassPreviewPresenter >> topLayout [
+	^ topLayout
+]
+
 { #category : 'update' }
 StRenameClassPreviewPresenter >> updateActiveScope [
 
@@ -464,6 +479,11 @@ StRenameClassPreviewPresenter >> validateName: aString [
             		addAttribute: (TextColor color:
                 	(Color r: 1.0 g: 0.5 b: 0.31));
             		yourself) ]
+]
+
+{ #category : 'accessing' }
+StRenameClassPreviewPresenter >> validationLabel [
+	^ validationLabel
 ]
 
 { #category : 'accessing' }
