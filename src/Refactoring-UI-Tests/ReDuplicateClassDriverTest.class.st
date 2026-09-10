@@ -87,9 +87,10 @@ ReDuplicateClassDriverTest >> testDuplicateClassInIncompleteModelFails [
 	self setUpMocksOn: driver.
 
 	driver informDialog: StInformDialogMock new.
+	driver application: StApplicationForRefactorDriverMock new.
 	driver scopes: { testingEnvironment }.
 	driver runRefactoring.
-	self assert: (driver informDialog shownMessage includesSubstring: 'missing from the model')
+	self assert: (driver application shownMessage includesSubstring: 'missing from the model')
 ]
 
 { #category : 'tests' }

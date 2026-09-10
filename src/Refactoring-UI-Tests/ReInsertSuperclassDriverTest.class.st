@@ -52,40 +52,43 @@ ReInsertSuperclassDriverTest >> testInsertSuperclass [
 
 { #category : 'tests' }
 ReInsertSuperclassDriverTest >> testInsertSuperclassWithExistingClassNameInformsUser [
+
 	| driver |
-	
 	driver := ReInsertSuperclassDriver new.
-	
+
 	self setUpDriver: driver.
-	
+
+	driver application: StApplicationForRefactorDriverMock new.
+
 	driver
 		superclass: self theClassToAddASuperclass;
 		scopes: { testingEnvironment };
 		subclass: self theClassToAddASuperclass name.
-	
+
 	driver runRefactoring.
-	
+
 	self assert: driver refactoring failedApplicabilityPreconditions size equals: 1.
-	self assert: (driver informDialog shownMessage includesSubstring: 'already exists').
+	self assert: (driver application shownMessage includesSubstring: 'already exists').
 	self assert: self theClassToAddASuperclass superclass name equals: #RBRootClassForInsertingSubclasses
 ]
 
 { #category : 'tests' }
 ReInsertSuperclassDriverTest >> testInsertSuperclassWithInvalidClassNameInformsUser [
+
 	| driver |
-	
 	driver := ReInsertSuperclassDriver new.
 	self setUpDriver: driver.
-	
+	driver application: StApplicationForRefactorDriverMock new.
+
 	driver
 		superclass: self theClassToAddASuperclass;
 		scopes: { testingEnvironment };
 		subclass: 'noCapital'.
-	
+
 	driver runRefactoring.
-	
+
 	self assert: driver refactoring failedApplicabilityPreconditions size equals: 1.
-	self assert: (driver informDialog shownMessage includesSubstring: 'is not a valid class name').
+	self assert: (driver application shownMessage includesSubstring: 'is not a valid class name').
 	self assert: self theClassToAddASuperclass superclass name equals: #RBRootClassForInsertingSubclasses
 ]
 
