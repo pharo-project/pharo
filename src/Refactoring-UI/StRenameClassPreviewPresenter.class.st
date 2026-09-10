@@ -25,7 +25,6 @@ Class {
 		'newNameInput',
 		'driver',
 		'validationLabel',
-		'previewUpdateDelay',
 		'nameIsValid',
 		'mainLayout',
 		'topLayout',
@@ -350,14 +349,14 @@ StRenameClassPreviewPresenter >> refactoring: aRBRemoveMethodDriver [
 { #category : 'initialization' }
 StRenameClassPreviewPresenter >> schedulePreviewUpdate: aString [
 
-	previewUpdateDelay ifNotNil: [ previewUpdateDelay unschedule ].
-	
-	previewUpdateDelay := Delay forMilliseconds: 250.
-	
-	[ previewUpdateDelay wait. 
-		self validateName: aString.
-		self updateBehaviorPanelVisibility: aString.
-		self updateName ] fork
+	previewUpdateToken := Object new.
+
+	"Use a short delay to avoid updating the preview on every keystroke while keeping the UI responsive."
+	MorphicUIManager currentWorld
+		addAlarm: #updatePreviewAfterDelay:token:
+		withArguments: { aString. previewUpdateToken }
+		for: self
+		at: Time millisecondClockValue + 200
 ]
 
 { #category : 'accessing' }
@@ -442,6 +441,16 @@ StRenameClassPreviewPresenter >> updateOkButtonState [
 	nameIsValid
 		ifTrue: [ buttonOk enable ]
 		ifFalse: [ buttonOk disable ]
+]
+
+{ #category : 'accessing' }
+StRenameClassPreviewPresenter >> updatePreviewAfterDelay: aString token: aToken [
+
+	aToken == previewUpdateToken ifFalse: [ ^ self ].
+
+	self validateName: aString.
+	self updateBehaviorPanelVisibility: aString.
+	self updateName
 ]
 
 { #category : 'update' }

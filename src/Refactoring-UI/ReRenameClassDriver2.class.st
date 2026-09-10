@@ -116,6 +116,11 @@ ReRenameClassDriver2 >> newName: aString [
 ]
 
 { #category : 'accessing' }
+ReRenameClassDriver2 >> oldName [
+	^ oldName
+]
+
+{ #category : 'accessing' }
 ReRenameClassDriver2 >> oldName: aString [ 
 	oldName := aString
 ]
