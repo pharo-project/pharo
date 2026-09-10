@@ -18,6 +18,15 @@ StRefactoringAddClassPresenterTest >> newPresenter [
 ]
 
 { #category : 'tests' }
+StRefactoringAddClassPresenterTest >> testClassNameInputIsRecordedInDriver [
+	| driver |
+	
+	driver := presenter instVarNamed: 'driver'.
+	(presenter instVarNamed: 'textInput') text: 'Object'.
+	self assert: driver subclass equals: 'Object'
+]
+
+{ #category : 'tests' }
 StRefactoringAddClassPresenterTest >> testCommentTemplateActivationFillsComment [
 
 	| checkbox comment |
