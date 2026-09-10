@@ -288,7 +288,7 @@ ProcessMonitorTestService >> handleBackgroundException: anUnhandledException [
 
 	self handleException: anUnhandledException.
 
-	anUnhandledException pass
+	self shouldPassBackgroundFailures ifTrue: [ anUnhandledException pass ]
 ]
 
 { #category : 'controlling' }

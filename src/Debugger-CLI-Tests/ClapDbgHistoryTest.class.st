@@ -1,5 +1,5 @@
 Class {
-	#name : 'CommandLineDebuggerHistoryTest',
+	#name : 'ClapDbgHistoryTest',
 	#superclass : 'TestCase',
 	#instVars : [
 		'debugger'
@@ -9,9 +9,9 @@ Class {
 }
 
 { #category : 'running' }
-CommandLineDebuggerHistoryTest >> setUp [
+ClapDbgHistoryTest >> setUp [
     super setUp.
-    debugger := CommandLineDebugger new. 
+    debugger := ClapDebugger new. 
 
     debugger commandsStack push: 'print a'. 
     debugger commandsStack push: 'step'.     
@@ -20,7 +20,7 @@ CommandLineDebuggerHistoryTest >> setUp [
 ]
 
 { #category : 'running' }
-CommandLineDebuggerHistoryTest >> testHandleContainingStringHistory [
+ClapDbgHistoryTest >> testHandleContainingStringHistory [
 
 	self assert: (debugger handleHistory: '!?ste') equals: 'step'.
 	self assert: (debugger handleHistory: '!?int') equals: 'print a'.
@@ -29,47 +29,47 @@ CommandLineDebuggerHistoryTest >> testHandleContainingStringHistory [
 ]
 
 { #category : 'running' }
-CommandLineDebuggerHistoryTest >> testHandleHistoryInvalidInputs [
+ClapDbgHistoryTest >> testHandleHistoryInvalidInputs [
 
 	self
 		should: [ debugger handleHistory: '!-9' ]
-		raise: HistoryEventNotFound
+		raise: ClapDbgHistoryEventNotFound
 		withExceptionDo: [ :ex | self assert: ex messageText equals: '!-9: event not found' ].
 	self
 		should: [ debugger handleHistory: '!9' ]
-		raise: HistoryEventNotFound
+		raise: ClapDbgHistoryEventNotFound
 		withExceptionDo: [ :ex | self assert: ex messageText equals: '!9: event not found' ].
 	self
 		should: [ debugger handleHistory: '!abc' ]
-		raise: HistoryEventNotFound
+		raise: ClapDbgHistoryEventNotFound
 		withExceptionDo: [ :ex | self assert: ex messageText equals: '!abc: event not found' ].
 	self
 		should: [ debugger handleHistory: '!?wontfind' ]
-		raise: HistoryEventNotFound
+		raise: ClapDbgHistoryEventNotFound
 		withExceptionDo: [ :ex | self assert: ex messageText equals: '!?wontfind: event not found' ].
 
 	self assert: (debugger handleHistory: '!') equals: '!'
 ]
 
 { #category : 'running' }
-CommandLineDebuggerHistoryTest >> testHandleHistoryLastCommand [
+ClapDbgHistoryTest >> testHandleHistoryLastCommand [
 
 	self assert: (debugger handleHistory: '!!') equals: 'help'.
 	debugger commandsStack push: 'help'.
 	self assert: (debugger handleHistory: '!! arg1') equals: 'help arg1'.
-	debugger commandsStack push: 'help'.
-	self assert: (debugger handleHistory: '!!!') equals: 'help!'
+	debugger commandsStack push: 'test'.
+	self assert: (debugger handleHistory: '') equals: 'test'
 ]
 
 { #category : 'running' }
-CommandLineDebuggerHistoryTest >> testHandleHistoryLeavesStandardCommandsIntact [
+ClapDbgHistoryTest >> testHandleHistoryLeavesStandardCommandsIntact [
 
 	self assert: (debugger handleHistory: 'step') equals: 'step'.
 	self assert: (debugger handleHistory: 'p 10') equals: 'p 10'
 ]
 
 { #category : 'running' }
-CommandLineDebuggerHistoryTest >> testHandleNumericHistoryNegative [
+ClapDbgHistoryTest >> testHandleNumericHistoryNegative [
 
 	self assert: (debugger handleHistory: '!-1') equals: 'help'.
 	self assert: (debugger handleHistory: '!-2') equals: 'over'.
@@ -77,7 +77,7 @@ CommandLineDebuggerHistoryTest >> testHandleNumericHistoryNegative [
 ]
 
 { #category : 'running' }
-CommandLineDebuggerHistoryTest >> testHandleNumericHistoryPositive [
+ClapDbgHistoryTest >> testHandleNumericHistoryPositive [
 
 	self assert: (debugger handleHistory: '!1') equals: 'print a'.
 	self assert: (debugger handleHistory: '!2') equals: 'step'.
@@ -85,7 +85,7 @@ CommandLineDebuggerHistoryTest >> testHandleNumericHistoryPositive [
 ]
 
 { #category : 'running' }
-CommandLineDebuggerHistoryTest >> testHandleStartingWithStringHistory [
+ClapDbgHistoryTest >> testHandleStartingWithStringHistory [
 
 	self assert: (debugger handleHistory: '!ste') equals: 'step'.
 	self assert: (debugger handleHistory: '!pr') equals: 'print a'.

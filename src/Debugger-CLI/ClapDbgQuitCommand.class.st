@@ -1,19 +1,19 @@
 Class {
-	#name : 'QuitCommand',
-	#superclass : 'DebuggerCommand',
+	#name : 'ClapDbgQuitCommand',
+	#superclass : 'ClapDbgCommand',
 	#category : 'Debugger-CLI',
 	#package : 'Debugger-CLI'
 }
 
-{ #category : 'initialization' }
-QuitCommand >> executeOn: aDebugger with: args [
+{ #category : 'execution' }
+ClapDbgQuitCommand >> basicExecuteOn: aDebugger with: args [
 
 	aDebugger disActivate.
 	^ 'Debugging finished'
 ]
 
 { #category : 'initialization' }
-QuitCommand >> initialize [
+ClapDbgQuitCommand >> initialize [
 
 	super initialize.
 	self commandName: #( 'quit' 'q' ).

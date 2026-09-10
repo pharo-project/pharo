@@ -85,14 +85,14 @@ ClapMetacello >> repositoryUrl [
 	^ self positional: #repository
 ]
 
-{ #category : 'accessing' }
-ClapMetacello >> shouldSignalErrorOnWarning [
-	^ self hasFlag: #signalErrorOnWarning
-]
-
 { #category : 'testing' }
 ClapMetacello >> shouldSave [
 	^ (self hasFlag: #'no-save') not
+]
+
+{ #category : 'accessing' }
+ClapMetacello >> shouldSignalErrorOnWarning [
+	^ self hasFlag: #signalErrorOnWarning
 ]
 
 { #category : 'accessing' }

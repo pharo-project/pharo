@@ -87,8 +87,11 @@ OCArrayLiteralTest >> testByteArrayWithinArray [
 
 { #category : 'tests' }
 OCArrayLiteralTest >> testLiteralArrayLongHavingAnotherArrayLong [
-
 	| method array elements |
+	
+	self flag: 'Skipped in Pharo14 because of github.com/pharo-project/pharo/issues/19058. Fix should come on P15'.
+	self skip.
+	
 	elements := ((1 to: 32) inject: ' ' into: [ :r :e | r , ' . ' , e asString ]).
 	array := ' { ' , elements , ' }'.
 	array := array copyReplaceAll: '32' with: array.

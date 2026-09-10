@@ -55,7 +55,7 @@ OCInteractiveAPI >> checkNotice: aNotice requestor: aRequestor [
 
 			"Quirks mode: Then leave"
 			aRequestor notify: aNotice messageText , ' ->' at: aNotice position in: aNotice node source.
-			^ true ].
+			^ false ].
 
 	"If a failBlock is provided in non-requestor mode,
 	we honor it and do not signal exceptions"
