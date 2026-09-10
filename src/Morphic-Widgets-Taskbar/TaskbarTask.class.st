@@ -44,6 +44,11 @@ TaskbarTask >> activate [
 		ifTrue: [self morph restoreAndActivate]
 ]
 
+{ #category : 'drag and drop' }
+TaskbarTask >> asDraggableMorph [
+	^ StringMorph contents: self label
+]
+
 { #category : 'user-interface' }
 TaskbarTask >> buttonClickedForTaskList: aTasklist [
 	"Notify the tasklist."

@@ -144,6 +144,60 @@ TaskbarMorphTest >> testIfTheTestedMethodIstheSameThatTheOneUsedInProd [
 	self assert: self theMethodInProdThatShouldBeTested bytecodes equals: (self class >> #updateOrderedTasksFrom:) bytecodes
 ]
 
+{ #category : 'tests - drag and drop' }
+TaskbarMorphTest >> testMoveNonExistentTaskIsNoOp [
+	| taskbarMorph task1 task2 unknownTask |
+	taskbarMorph := TaskbarMorph new.
+	task1 := self newTaskWithLabel: 'Task 1'.
+	task2 := self newTaskWithLabel: 'Task 2'.
+	unknownTask := self newTaskWithLabel: 'Unknown'.
+	taskbarMorph orderedTasks: { task1. task2 } asOrderedCollection.
+	taskbarMorph moveTask: unknownTask toIndex: 1.
+
+	self assert: taskbarMorph orderedTasks first equals: task1.
+	self assert: taskbarMorph orderedTasks second equals: task2
+]
+
+{ #category : 'tests - drag and drop' }
+TaskbarMorphTest >> testMoveTaskToIndexChangesOrder [
+	| taskbarMorph task1 task2 task3 |
+	taskbarMorph := TaskbarMorph new.
+	task1 := self newTaskWithLabel: 'Task 1'.
+	task2 := self newTaskWithLabel: 'Task 2'.
+	task3 := self newTaskWithLabel: 'Task 3'.
+	taskbarMorph orderedTasks: { task1. task2. task3 } asOrderedCollection.
+	taskbarMorph moveTask: task3 toIndex: 1.
+
+	self assert: taskbarMorph orderedTasks first equals: task3.
+	self assert: taskbarMorph orderedTasks second equals: task1.
+	self assert: taskbarMorph orderedTasks third equals: task2
+]
+
+{ #category : 'tests - drag and drop' }
+TaskbarMorphTest >> testMoveTaskToOutOfBoundsIndexClamps [
+	| taskbarMorph task1 task2 |
+	taskbarMorph := TaskbarMorph new.
+	task1 := self newTaskWithLabel: 'Task 1'.
+	task2 := self newTaskWithLabel: 'Task 2'.
+	taskbarMorph orderedTasks: { task1. task2 } asOrderedCollection.
+	taskbarMorph moveTask: task1 toIndex: 999.
+
+	self assert: taskbarMorph orderedTasks last equals: task1
+]
+
+{ #category : 'tests - drag and drop' }
+TaskbarMorphTest >> testMoveTaskToSameIndexIsNoOp [
+	| taskbarMorph task1 task2 |
+	taskbarMorph := TaskbarMorph new.
+	task1 := self newTaskWithLabel: 'Task 1'.
+	task2 := self newTaskWithLabel: 'Task 2'.
+	taskbarMorph orderedTasks: { task1. task2 } asOrderedCollection.
+	taskbarMorph moveTask: task1 toIndex: 1.
+
+	self assert: taskbarMorph orderedTasks first equals: task1.
+	self assert: taskbarMorph orderedTasks second equals: task2
+]
+
 { #category : 'tests' }
 TaskbarMorphTest >> testMoveTaskbarTaskLeftDoesNothingOnFirstTask [
 	| firstTask taskbarMorph |

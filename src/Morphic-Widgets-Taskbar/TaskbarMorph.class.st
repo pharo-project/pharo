@@ -1,13 +1,15 @@
 "
-Themed synchronous taskbar (not using #step to poll windows). The buttons provide visual feedback as to whether a window is active or minimised (collapsed) plus a popup menu with options to restore, minimise, maximise and close the associated window. Optional (via settings) preview of the window while mouse is over a taskbar button.
-
+Themed synchronous taskbar. It does not use #step to poll the state of the windows but creates task buttons providing visual feedback as to whether a window is active or minimised (collapsed) plus a popup menu with options to restore, minimise, maximise and close the associated window. The task buttons can be reordered with a drag and drop (polled through #step). Optional (via settings) preview of the window while mouse is over a taskbar button.
 "
 Class {
 	#name : 'TaskbarMorph',
 	#superclass : 'Morph',
 	#instVars : [
 		'tasks',
-		'orderedTasks'
+		'orderedTasks',
+		'dropIndicator',
+		'dropTargetIndex',
+		'lastDraggedTask'
 	],
 	#classVars : [
 		'MaximumButtons',
@@ -137,6 +139,21 @@ TaskbarMorph >> displayExtentChanged [
 	self updateBounds
 ]
 
+{ #category : 'drag and drop' }
+TaskbarMorph >> dropIndicatorIndexForX: xPosition [
+	"Answer the submorph index before which to place the drop indicator,
+	based on mouseX compared to button positions. Ignores y-position."
+
+	| buttons |
+	buttons := self submorphs reject: [ :morph | morph = dropIndicator ].
+
+	buttons ifEmpty: [ ^ 1 ].
+
+	buttons doWithIndex: [ :button :index | xPosition < button center x ifTrue: [ ^ index ] ].
+
+	^ buttons size + 1
+]
+
 { #category : 'private - accessing' }
 TaskbarMorph >> edgeToAdhereTo [
 	"Must implement. Answer #bottom."
@@ -167,6 +184,7 @@ TaskbarMorph >> initialize [
 	self
 		initializeLayout;
 		initializeAppearance;
+		dropEnabled: true;
 		tasks: #();
 		orderedTasks: OrderedCollection new
 ]
@@ -277,6 +295,30 @@ TaskbarMorph >> move: task withOffset: offset [
 	^ self updateTaskButtons
 ]
 
+{ #category : 'taskbar' }
+TaskbarMorph >> moveTask: aTask toIndex: targetIndex [
+	"Move aTask to the given index in orderedTasks. Used by drag-and-drop."
+
+	| currentIndex newOrderedTasks adjustedIndex |
+	currentIndex := self orderedTasks indexOf: aTask.
+
+	(currentIndex = 0 or: [ currentIndex = targetIndex ]) ifTrue: [ ^ self ].
+
+	newOrderedTasks := self orderedTasks copy.
+
+	newOrderedTasks removeAt: currentIndex.
+
+	adjustedIndex := targetIndex > currentIndex
+		                 ifTrue: [ targetIndex - 1 ]
+		                 ifFalse: [ targetIndex ].
+
+	newOrderedTasks add: aTask beforeIndex: (adjustedIndex clampBetween: 1 and: newOrderedTasks size + 1).
+
+	self
+		orderedTasks: newOrderedTasks;
+		updateTaskButtons
+]
+
 { #category : 'accessing' }
 TaskbarMorph >> orderedTasks [
 	"Answer the value of orderedTasks"
@@ -312,6 +354,15 @@ TaskbarMorph >> rejectsEvent: anEvent [
 	^ super rejectsEvent: anEvent
 ]
 
+{ #category : 'drag and drop' }
+TaskbarMorph >> removeDropIndicator [
+	"Remove the drop indicator bar."
+
+	dropIndicator ifNotNil: [ :ind | ind delete ].
+	dropIndicator := nil.
+	dropTargetIndex := nil
+]
+
 { #category : 'taskbar' }
 TaskbarMorph >> removeFromWorld [
 	"Delete the receiver from its world after restoring minimized tasks.
@@ -328,9 +379,69 @@ TaskbarMorph >> removeFromWorld [
 	mins do: [ :t | t morph minimize ]
 ]
 
+{ #category : 'drag and drop' }
+TaskbarMorph >> showDropIndicatorAfterIndex: anInteger [
+	"Show a thin vertical bar after the button at the given submorph index."
+
+	| buttonHeight |
+	self removeDropIndicator.
+	self submorphs ifEmpty: [ ^ self ].
+	buttonHeight := self submorphs first height.
+	dropIndicator := Morph new
+		                 color: (self theme taskbarItemLabelColorForExpanded: self);
+		                 extent: 4 @ buttonHeight;
+		                 yourself.
+	dropTargetIndex := anInteger + 1.
+	self addMorph: dropIndicator asElementNumber: dropTargetIndex
+]
+
 { #category : 'setting' }
 TaskbarMorph >> showWindowPreview [
 	^ self class showWindowPreview
+]
+
+{ #category : 'stepping and presenter' }
+TaskbarMorph >> step [
+	"If the hand is dragging a TaskbarTask, update the drop indicator.	When the drag ends, perform the move. We do not do it by overriding a drop event handling of the taskbar because we want to still apply the moving of the task if it's in the world above the bar."
+
+	| hand task indicatorIndex |
+	self world ifNil: [ ^ self ].
+	hand := self world activeHand ifNil: [ ^ self ].
+
+	task := self taskBeingDraggedBy: hand.
+
+	task ifNil: [
+			| targetIndex |
+			targetIndex := dropTargetIndex.
+			self removeDropIndicator.
+			(lastDraggedTask isNotNil and: [ targetIndex isNotNil ]) ifTrue: [ self moveTask: lastDraggedTask toIndex: targetIndex ].
+			lastDraggedTask := nil.
+			^ self ].
+
+	self submorphs ifEmpty: [ ^ self ].
+	lastDraggedTask := task.
+	indicatorIndex := self dropIndicatorIndexForX: hand cursorPoint x.
+	indicatorIndex = dropTargetIndex ifTrue: [ ^ self ].
+	self showDropIndicatorAfterIndex: indicatorIndex - 1
+
+]
+
+{ #category : 'stepping and presenter' }
+TaskbarMorph >> stepTime [
+	^ 50
+]
+
+{ #category : 'drag and drop' }
+TaskbarMorph >> taskBeingDraggedBy: aHand [
+	"Answer the TaskbarTask dragged by the given hand, or nil if the hand is not dragging a task.
+	 We check that the morph carried by the hand is a TransferMorph because the hand can also carry morphs that do not understand #passenger, like a window being dragged."
+
+	| draggedMorph |
+	draggedMorph := aHand submorphs
+		                detect: [ :morph | morph isTransferMorph and: [ morph passenger isKindOf: TaskbarTask ] ]
+		                ifNone: [ ^ nil ].
+	^ draggedMorph passenger
+
 ]
 
 { #category : 'taskbar' }
@@ -404,7 +515,7 @@ TaskbarMorph >> updateTaskButtons [
 	"Make buttons for the ordered tasks."
 
 	| oldButtons size |
-	oldButtons := self submorphs copy.
+	oldButtons := self submorphs reject: [ :morph | morph = dropIndicator ].
 	self removeAllMorphs.
 	self defer: [ oldButtons do: [ :b | b model: nil ] ]. "release dependency after event handling"
 

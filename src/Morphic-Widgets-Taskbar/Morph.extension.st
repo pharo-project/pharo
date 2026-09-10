@@ -15,6 +15,14 @@ Morph >> isTaskbar [
 ]
 
 { #category : '*Morphic-Widgets-Taskbar' }
+Morph >> isTransferMorph [
+	"Answer false because the receiver is not a drag transfer morph."
+
+	^false
+
+]
+
+{ #category : '*Morphic-Widgets-Taskbar' }
 Morph >> taskThumbnailOfSize: thumbExtent [
 	"Answer a new task thumbnail for the receiver."
 
