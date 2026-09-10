@@ -36,15 +36,10 @@ ReSharedVariableShadowingClassNameCondition >> oldName: oldClassNameString model
 
 { #category : 'displaying' }
 ReSharedVariableShadowingClassNameCondition >> violationMessageOn: aStream [
+		
+	aStream
+    nextPutAll: 'This name conflicts with an existing shared variable and would change symbol lookup.'
 
-	aStream nextPutAll: 'There is existing shared variable with name:';
-		nextPutAll: name;
-		cr;
-		nextPutAll: 'Renaming the class to this name will change existing symbol lookup,';
-		cr;
-		nextPutAll: 'since following classes and their methods reference the renaming class.';
-		cr.
-	self violator do: [ :v | aStream nextPutAll: v asString; cr. ].
 
 ]
 
