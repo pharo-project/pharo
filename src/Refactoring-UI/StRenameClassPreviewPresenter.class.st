@@ -160,7 +160,8 @@ StRenameClassPreviewPresenter >> connectPresenters [
 	buttonBrowseMethod action: [ self browseMethods ].
 	
 	newNameInput whenTextChangedDo: [ :text |
-		self schedulePreviewUpdate: text ] 
+		self schedulePreviewUpdate: text ] .
+	newNameInput whenSubmitDo: [ :text | self accept ]
 ]
 
 { #category : 'api - focus' }
