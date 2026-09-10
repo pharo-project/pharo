@@ -1,15 +1,15 @@
 Class {
-	#name : 'CommandLineDebuggerCreationTest',
+	#name : 'ClapDbgCreationTest',
 	#superclass : 'TestCase',
 	#category : 'Debugger-CLI-Tests',
 	#package : 'Debugger-CLI-Tests'
 }
 
 { #category : 'tests' }
-CommandLineDebuggerCreationTest >> testForCodeCreation [
+ClapDbgCreationTest >> testForCodeCreation [
 
 	| newDebugger |
-	newDebugger := CommandLineDebugger forCode: '3 + 4'.
+	newDebugger := ClapDebugger forCode: '3 + 4'.
 
 	self assert: newDebugger process isNotNil.
 	self assert: newDebugger process isSuspended.
@@ -18,19 +18,19 @@ CommandLineDebuggerCreationTest >> testForCodeCreation [
 ]
 
 { #category : 'tests' }
-CommandLineDebuggerCreationTest >> testForCodeCreationWithSyntaxError [
+ClapDbgCreationTest >> testForCodeCreationWithSyntaxError [
 
-	self should: [ CommandLineDebugger forCode: '1 + ' ] raise: Error 
+	self should: [ ClapDebugger forCode: '1 + ' ] raise: Error 
 ]
 
 { #category : 'tests' }
-CommandLineDebuggerCreationTest >> testForProcessCreation [
+ClapDbgCreationTest >> testForProcessCreation [
 
 	| blockToDebug testProcess newDebugger |
 	blockToDebug := [ 1 + 1 ].
 	testProcess := blockToDebug newProcess.
 
-	newDebugger := CommandLineDebugger forProcess: testProcess.
+	newDebugger := ClapDebugger forProcess: testProcess.
 
 	self assert: newDebugger process equals: testProcess.
 	self assert: newDebugger context equals: testProcess suspendedContext.
@@ -39,10 +39,10 @@ CommandLineDebuggerCreationTest >> testForProcessCreation [
 ]
 
 { #category : 'tests' }
-CommandLineDebuggerCreationTest >> testInStreamAndOutStreamAtCreation [
+ClapDbgCreationTest >> testInStreamAndOutStreamAtCreation [
 
 	| newDebugger fakeInStream fakeOutStream result |
-	newDebugger := CommandLineDebugger new.
+	newDebugger := ClapDebugger new.
 	fakeInStream := ReadStream on: 'test'.
 	fakeOutStream := String new writeStream. 
 	result := newDebugger

@@ -49,7 +49,7 @@ ClyBrowserMorph >> browseReferencesTo: aSymbol inNameResolver: anEnvironment [
 { #category : '*Calypso-SystemTools-QueryBrowser' }
 ClyBrowserMorph >> browseSendersOf: aSymbol [
 
-	(Smalltalk tools toolNamed: #messageList) browseSendersOf: aSymbol from: self classSelection lastSelectedItem actualObject
+	(Smalltalk tools toolNamed: #messageList) browseSendersOf: aSymbol
 ]
 
 { #category : '*Calypso-SystemTools-QueryBrowser' }
