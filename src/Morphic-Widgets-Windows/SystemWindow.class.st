@@ -3163,6 +3163,12 @@ SystemWindow >> useHideForClose [
 	^ self class useHideForClose
 ]
 
+{ #category : 'accessing' }
+SystemWindow >> viewType [
+	
+	^ model class
+]
+
 { #category : 'resize/collapse' }
 SystemWindow >> wantsExpandBox [
 	"Answer whether I'd like an expand box"
