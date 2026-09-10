@@ -34,7 +34,8 @@ Class {
 		'behaviorPanel',
 		'behaviorWarningTitle',
 		'behaviorMessageLabel',
-		'buttonBrowseMethod'
+		'buttonBrowseMethod',
+		'previewUpdateToken'
 	],
 	#category : 'Refactoring-UI-UI',
 	#package : 'Refactoring-UI',
@@ -93,6 +94,14 @@ StRenameClassPreviewPresenter >> buildDiffFor: aChange [
 ]
 
 { #category : 'accessing' }
+StRenameClassPreviewPresenter >> buildLeftSideDiff [
+
+	diffPresenter
+		leftText: (Smalltalk classNamed: driver oldName) definitionString;
+		rightText: ''
+]
+
+{ #category : 'accessing' }
 StRenameClassPreviewPresenter >> buttonOk [
 	^ buttonOk
 ]
@@ -126,14 +135,6 @@ StRenameClassPreviewPresenter >> changesFrom: aCompositeChange scopes: aCollecti
 
 	scopes := aCollection.
 	self changesFrom: aCompositeChange.
-]
-
-{ #category : 'accessing' }
-StRenameClassPreviewPresenter >> clearDiff [
-
-	diffPresenter 
-		leftText: (driver refactoring class realClass) definitionString;
-		rightText: ''
 ]
 
 { #category : 'action' }
@@ -423,7 +424,7 @@ StRenameClassPreviewPresenter >> updateName [
 		ifFalse: [ 
 			changes := nil.
 			compositeChange := nil.
-			self clearDiff .
+			self buildLeftSideDiff .
 			buttonOk disable]
 		
 		ifTrue: [ 
