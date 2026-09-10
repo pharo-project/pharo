@@ -51,6 +51,7 @@ BaselineOfCompiler >> baseline: spec [
 				package: 'ClassDefinitionPrinters';
 
 				package: 'CodeExport';
+				package: 'CodeExport-Tests' with: [ spec requires: #( 'CodeExport' ) ];
 				package: 'CodeImport';
 				package: 'CodeImport-Commands';
 				package: 'CodeImport-Tests' with: [ spec requires: #( 'AST-Core-Tests' ) ];
@@ -76,5 +77,5 @@ BaselineOfCompiler >> baseline: spec [
 					'CodeExport'. 'CodeImport'. 'CodeImport-Commands'. 'DebugInfo'. 'OpalCompiler-Core'. 'ParseTreeRewriter'. 'Deprecation' };
 				group: 'Tests'
 				with: { 'Kernel-Extended-Tests'. 'Kernel-Tests-WithCompiler'.
-					'AST-Core-Tests'. 'OpalCompiler-Tests'. 'DebugInfo-Tests'. 'CodeImport-Tests' } ]
+					'AST-Core-Tests'. 'OpalCompiler-Tests'. 'DebugInfo-Tests'. 'CodeImport-Tests'. 'CodeExport-Tests' } ]
 ]
