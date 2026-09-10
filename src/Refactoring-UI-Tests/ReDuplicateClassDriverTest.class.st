@@ -80,19 +80,16 @@ ReDuplicateClassDriverTest >> testDuplicateClass [
 { #category : 'tests' }
 ReDuplicateClassDriverTest >> testDuplicateClassInIncompleteModelFails [
 
-	| driver rbClass |
+	| driver |
 	testingEnvironment := RBClassEnvironment classes: { ReClassToBeDuplicated }.
-	driver := ReDuplicateClassDriver className:
-		          ReClassToBeDuplicated name.
+	driver := ReDuplicateClassDriver className: ReClassToBeDuplicated name.
 
 	self setUpMocksOn: driver.
 
+	driver informDialog: StInformDialogMock new.
 	driver scopes: { testingEnvironment }.
-	rbClass := testingEnvironment classes anyOne.
-
-	self
-		should: [ driver runRefactoring ]
-		raise: RBRefactoringError
+	driver runRefactoring.
+	self assert: (driver informDialog shownMessage includesSubstring: 'missing from the model')
 ]
 
 { #category : 'tests' }
