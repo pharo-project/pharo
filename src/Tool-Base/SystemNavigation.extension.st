@@ -405,9 +405,8 @@ SystemNavigation >> classFromPattern: pattern withCaption: aCaption [
 			(Character cr).
 			(Character tab)}) isEmpty
 		ifTrue: [ ^ nil ].
-	Symbol
-		hasInterned: toMatch
-		ifTrue: [ :patternSymbol |
+	(SymbolTable system findInterned: toMatch)
+		ifNotNil: [ :patternSymbol |
 			self environment
 				at: patternSymbol
 				ifPresent: [ :maybeClass |
