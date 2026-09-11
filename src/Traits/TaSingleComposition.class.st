@@ -34,9 +34,9 @@ TaSingleComposition >> allTraits [
 ]
 
 { #category : 'testing' }
-TaSingleComposition >> changesSourceCode: aSelector [
+TaSingleComposition >> changesSourceCode: compilationInfo [
 
-	^ inner changesSourceCode: aSelector
+	^ inner changesSourceCode: compilationInfo
 ]
 
 { #category : 'accessing' }
@@ -96,6 +96,12 @@ TaSingleComposition >> isLocalAliasSelector: aSymbol [
 { #category : 'accessing' }
 TaSingleComposition >> methods [
 	^ inner methods
+]
+
+{ #category : 'accessing' }
+TaSingleComposition >> methodsCompilationInfo [
+
+	^ inner methodsCompilationInfo
 ]
 
 { #category : 'accessing' }

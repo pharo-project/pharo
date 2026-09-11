@@ -46,7 +46,7 @@ TaCompositionElement >> allTraits [
 ]
 
 { #category : 'testing' }
-TaCompositionElement >> changesSourceCode: aSelector [
+TaCompositionElement >> changesSourceCode: compilationInfo [
 
 	^ false
 ]
@@ -129,17 +129,52 @@ TaCompositionElement >> methods [
 ]
 
 { #category : 'accessing' }
+TaCompositionElement >> methodsCompilationInfo [
+
+	| innerInfos selector traitInfos localSelectors methods |
+	"We first collect the compilation info for the local methods I have."
+	innerInfos := innerClass localMethods collect: [ :method |
+			              TraitMethodCompilationInfo new
+				              selector: method selector;
+				              definingTrait: self;
+				              compiledMethod: method;
+				              sourceCode: method sourceCode;
+				              yourself ].
+
+	"If I need to alias the talent initializer, I do it now."
+	selector := self initializeSelectorForMe.
+	innerInfos do: [ :info |
+			info selector = #initializeTalent ifTrue: [
+					info
+						selector: selector;
+						sourceCode: (info compiledMethod getSourceReplacingSelectorWith: selector) ] ].
+
+	"Then I collect the ones of my trait composition "
+	localSelectors := innerInfos collect: [ :info | info selector ].
+	traitInfos := innerClass traitComposition methodsCompilationInfo reject: [ :info | localSelectors includes: info selector ].
+
+	"In order to copy methods right, I update the compiled methods of my trait composition to set my own compiled methods."
+	methods := innerClass methods.
+	traitInfos do: [ :info |
+			methods
+				detect: [ :method | method selector = info selector ]
+				ifFound: [ :method | info compiledMethod: method ] ].
+
+	^ innerInfos , traitInfos
+]
+
+{ #category : 'accessing' }
 TaCompositionElement >> name [
 	^ innerClass name
 ]
 
 { #category : 'testing' }
-TaCompositionElement >> needsRecompilation: aSelector [
+TaCompositionElement >> needsRecompilation: compilationInfo [
 	"We need to recompile if there is a supersend"
 
 	^ innerClass
-		  compiledMethodAt: aSelector
-		  ifPresent: [ :aMethod | aMethod sendsToSuper or: [ super needsRecompilation: aSelector ] ]
+		  compiledMethodAt: compilationInfo selector
+		  ifPresent: [ :aMethod | aMethod sendsToSuper or: [ super needsRecompilation: compilationInfo ] ]
 		  ifAbsent: [ true ]
 ]
 
@@ -157,14 +192,9 @@ TaCompositionElement >> reverseAlias: aSelector [
 
 { #category : 'accessing' }
 TaCompositionElement >> selectors [
-	" I get all the selectors of the methods in this talent, if there is a #initializeTalent selector I rename it to #initializeTalent_NameOfTalent"
-
-	| originals |
 	"We do not rely on the methods of the innerclass because while removing a trait we might return the removed methods during the removal and I need to work properly during the method dictionary rebuild"
-	originals := innerClass localSelectors , innerClass traitComposition selectors.
-	^ (originals includes: #initializeTalent)
-		  ifTrue: [ (originals reject: [ :e | e = #initializeTalent ]) copyWith: self initializeSelectorForMe ]
-		  ifFalse: [ originals ]
+
+	^ innerClass localSelectors , innerClass traitComposition selectors collect: [ :selector | self aliasSelector: selector ]
 ]
 
 { #category : 'accessing' }
