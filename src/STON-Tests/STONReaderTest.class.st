@@ -379,7 +379,7 @@ STONReaderTest >> testNewSymbol [
 
 	"Find a name that has not yet been interned"
 	n := 0.
-	[ Symbol hasInterned: (notASymbol := 'notASymbol', n printString) ifTrue: [ :symbol | symbol ] ]
+	[ (SymbolTable system findInterned: (notASymbol := 'notASymbol', n printString)) ifNotNil: [ :symbol | symbol ] ]
 		whileTrue: [ n := n + 1 ].
 	"Parsing the new, not yet interned name should create a new Symbol"
 	shouldBeSymbol := self materialize: '#', notASymbol.
