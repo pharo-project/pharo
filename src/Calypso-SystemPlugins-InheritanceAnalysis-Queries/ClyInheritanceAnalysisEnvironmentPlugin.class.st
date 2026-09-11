@@ -58,7 +58,7 @@ ClyInheritanceAnalysisEnvironmentPlugin >> attachToSystem [
 ClyInheritanceAnalysisEnvironmentPlugin >> cacheAllImplementors [
 
 	cacheGuard critical: [
-		allImplementorsCache := IdentityDictionary new: Symbol selectorTable size.
+		allImplementorsCache := IdentityDictionary new: SymbolTable system selectorTable size.
 		environment systemScope methodsDo: [ :each |
 			self cacheMethod: each ]
 	]

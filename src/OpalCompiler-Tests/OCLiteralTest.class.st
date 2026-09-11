@@ -146,9 +146,11 @@ OCLiteralTest >> testTwoEqualStringsShareSameLiteralEntry [
 { #category : 'tests' }
 OCLiteralTest >> testTwoEqualSymbolsShareSameLiteralEntry [
 
+	| table |
+	table := SymbolTable new.
 	self
-		assertObject: (Symbol intern: 'symbol')
-		isLiteralIdenticalTo: (Symbol intern: 'symbol')
+		assertObject: (table intern: 'symbol')
+		isLiteralIdenticalTo: (table intern: 'symbol')
 ]
 
 { #category : 'tests' }

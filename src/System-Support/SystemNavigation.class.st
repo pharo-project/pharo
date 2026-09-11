@@ -9,9 +9,6 @@ Class {
 	#instVars : [
 		'environment'
 	],
-	#classInstVars : [
-		'navigationClass'
-	],
 	#category : 'System-Support-Image',
 	#package : 'System-Support',
 	#tag : 'Image'
@@ -373,16 +370,8 @@ SystemNavigation >> allSentMessagesInPackage: aPackage do: aBlock [
 { #category : 'query' }
 SystemNavigation >> allSymbolsDo: aBlock [
 
-	Symbol allSymbolTablesDo: [ :e |
+	SymbolTable system allSymbolsDo: [ :e |
 		aBlock value: e  ]
-]
-
-{ #category : 'query' }
-SystemNavigation >> allSymbolsStartingWith: aString do: aBlock [
-
-	Symbol allSymbolTablesDo: [ :e |
-		(e beginsWith: aString)
-			ifTrue: [ aBlock value: e  ] ]
 ]
 
 { #category : 'query' }
