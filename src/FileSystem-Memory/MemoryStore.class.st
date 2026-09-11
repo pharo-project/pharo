@@ -25,6 +25,11 @@ MemoryStore class >> delimiter [
 	^ $/
 ]
 
+{ #category : 'public' }
+MemoryStore class >> delimiterString [
+	^ '/'
+]
+
 { #category : 'class initialization' }
 MemoryStore class >> initialize [
 

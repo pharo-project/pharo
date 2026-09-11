@@ -394,6 +394,13 @@ Integer >> asSmallerPowerOfTwo [
 						ifFalse: [DomainError signal: 'Value outside (0 , infinity)' from: 0]]
 ]
 
+{ #category : 'to be removed' }
+Integer >> asString [
+	"This method is placed here because we are currently chasing wrong subclasses of Object that receive the messages asString."
+	
+	^ self printString
+]
+
 { #category : 'bit manipulation' }
 Integer >> bitAnd: n [
 	"Answer an Integer whose bits are the logical AND of the receiver's bits

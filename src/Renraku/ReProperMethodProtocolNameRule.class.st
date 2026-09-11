@@ -62,7 +62,7 @@ ReProperMethodProtocolNameRule class >> rationale [
 { #category : 'accessing' }
 ReProperMethodProtocolNameRule class >> ruleName [
 
-	^ 'Method categorization: use ''' , self goodMethodProtocolName , ''' as protocol name instead of ''' , self badMethodProtocolNames asString , ''''
+	^ 'Method categorization: use ''' , self goodMethodProtocolName , ''' as protocol name instead of ''' , self badMethodProtocolNames displayString , ''''
 ]
 
 { #category : 'private - utilities' }
@@ -93,6 +93,14 @@ ReProperMethodProtocolNameRule >> critiqueFor: aMethod [
 			   protocol: { proposedProtocol }
 			   inMethod: aMethod selector
 			   inClass: aMethod methodClass name)
+]
+
+{ #category : 'accessing' }
+ReProperMethodProtocolNameRule >> initialize [ 
+	
+
+	super initialize.
+	self methodProtocolName: #''
 ]
 
 { #category : 'accessing' }

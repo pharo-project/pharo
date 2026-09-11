@@ -18,7 +18,7 @@ MultipleSettingDeclaration >> fixedDomainValueNodeForAssociation: anAssociation 
 { #category : '*System-Settings-Browser' }
 MultipleSettingDeclaration >> fixedDomainValueNodeForObject: anObject [
 	| s |
-	^ (s := (SettingDeclaration new name: anObject asString))
+	^ (s := (SettingDeclaration new name: anObject displayString))
 		target: s;
 		selector: #default;
 		default: anObject

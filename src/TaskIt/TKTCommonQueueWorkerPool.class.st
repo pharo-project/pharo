@@ -22,7 +22,7 @@ Class {
 { #category : 'current' }
 TKTCommonQueueWorkerPool class >> createDefault [
 	^ self new
-		name: 'CommonPool-' , UUID new asString;
+		name: 'CommonPool-' , UUID new displayString;
 		poolMaxSize: 4;
 		yourself
 ]

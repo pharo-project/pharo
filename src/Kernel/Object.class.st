@@ -318,8 +318,11 @@ Object >> asLinkPrepend: anObject [
 { #category : 'converting' }
 Object >> asString [
 	"Answer a string that represents the receiver."
+	self deprecated: 'Do not use asString when you need displayString. The message asString is to convert string/symbol/text like objects between themselves. A domain object should not define asString.
+	This method will be removed!'.
+	
+	^ self displayString
 
-	^ self printString
 ]
 
 { #category : 'asserting' }
@@ -598,7 +601,7 @@ Object >> deepCopy [
 Object >> displayString [
 	"While printString is about to give a detailled information about an object, displayString is a message that should return a short string-based representation to be used by list and related UI frameworks. By default, simply return printString. Subclasses should not override this method but instead stream based method #displayStringOn:"
 
-	^ self displayStringLimitedTo: 1000
+	^ self displayStringLimitedTo: 100000
 ]
 
 { #category : 'displaying' }
@@ -1378,7 +1381,9 @@ Object >> printString [
 	"Answer a String whose characters are a description of the receiver.
 	If you want to print without a character limit, use fullPrintString."
 
-	^ self printStringLimitedTo: 50000
+	^ [ self printStringLimitedTo: 50000 ]
+			on: Error 
+			do: [ 'printOn: or printString failing' ]
 ]
 
 { #category : 'printing' }

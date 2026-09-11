@@ -245,7 +245,7 @@ AthensCanvasWrapper >> drawString: aString from: firstIndex to: lastIndex in: bo
 			self canvas pathTransform scaleBy: 1.0000001 @ 1.0000001.
 			self canvas setPaint: aColor.
 			self canvas setFont: font.
-			advance := self canvas drawString: aString asString from: 1 to: aString size.
+			advance := self canvas drawString: aString from: 1 to: aString size.
 			underline ifTrue:[
 				self canvas setPaint: uc.
 				self canvas drawShape:(0@1 extent: advance x @1).
@@ -275,7 +275,7 @@ AthensCanvasWrapper >> drawString: aString in: bounds font: aFontOrNil color: aC
 { #category : 'canvas drawing - text' }
 AthensCanvasWrapper >> drawString: s in: boundsRect font: fontOrNil color: c underline: underline underlineColor: uc strikethrough: strikethrough strikethroughColor: sc [
 	^ self
-		drawString: s asString
+		drawString: s
 		from: 1
 		to: s size
 		in: boundsRect

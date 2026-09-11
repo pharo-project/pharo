@@ -398,7 +398,7 @@ TaAbstractComposition >> saveSourceCode: sourceCode ofMethod: newMethod [
 		putSource: sourceCode
 		withFooter: ''
 		protocol: newMethod protocol name asString
-		timestamp: DateAndTime new asString
+		timestamp: DateAndTime new printString
 		priorSourcePointer: 0
 ]
 

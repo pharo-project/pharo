@@ -31,7 +31,7 @@ Context >> errorReportOn: stream [
 	self class environment at: #SystemVersion ifPresent: [ :class |
 		stream
 			nextPutAll: 'Image: ';
-			nextPutAll: class current asString;
+			print: class current;
 			cr.
  ].
 

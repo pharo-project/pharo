@@ -104,13 +104,17 @@ FreeTypeFileInfo >> printOn: aStream [
 				ifFalse:['{',locationType asString,'}']);
 		nextPutAll: absoluteOrRelativePath asString;
 		nextPutAll: '[',index asString,'] ';
-		nextPutAll: familyName asString;
-		nextPutAll: ' - ', styleName asString;
-		nextPutAll: ' - ', postscriptName asString;
+		print: familyName ;
+		nextPutAll: ' - ';
+		print:  styleName;
+		nextPutAll: ' - ';
+		print: postscriptName;
 		nextPutAll: ' ',(bold ifTrue:['B'] ifFalse:['']);
 		nextPutAll: ' ',(italic ifTrue:['I'] ifFalse:['']);
 		nextPutAll: ' ',(fixedWidth ifTrue:['Monospaced'] ifFalse:['']);
-		nextPutAll: ' ',(stretchValue asString);
-		nextPutAll: ' ',(weightValue asString);
+		nextPutAll: ' ';
+		print: stretchValue;
+		nextPutAll: ' ';
+		print: weightValue;
 		cr
 ]

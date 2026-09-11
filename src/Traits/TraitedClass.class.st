@@ -286,7 +286,7 @@ TraitedClass >> traitComposition: aComposition [
 
 { #category : 'accessing' }
 TraitedClass >> traitCompositionString [
-	^ self traitComposition asString
+	^ self traitComposition displayString
 ]
 
 { #category : 'accessing' }
