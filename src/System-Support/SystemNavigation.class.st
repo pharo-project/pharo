@@ -172,7 +172,7 @@ SystemNavigation >> allGlobalRefsOn: aSymbol [
 SystemNavigation >> allImplementedMessages [
 	"Answer a Collection of all the messages that are implemented in the system."
 
-	^Symbol selectorTable
+	^SymbolTable system selectorTable
 ]
 
 { #category : 'query' }
@@ -279,14 +279,14 @@ SystemNavigation >> allReferencesToBinding: aVariablesBinding [
 { #category : 'query' }
 SystemNavigation >> allSelectorsDo: aBlock [
 
-	Symbol selectorTable do: [ :e |
+	SymbolTable system selectorTable do: [ :e |
 		aBlock value: e]
 ]
 
 { #category : 'query' }
 SystemNavigation >> allSelectorsStartingWith: aString do: aBlock [
 
-	Symbol selectorTable do: [ :e |
+	SymbolTable system selectorTable do: [ :e |
 		(e asString beginsWith: aString)
 			ifTrue: [ aBlock value: e  ] ]
 ]

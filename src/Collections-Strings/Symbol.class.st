@@ -29,11 +29,6 @@ Comparing Symbols takes less time than comparing Strings.
 Class {
 	#name : 'Symbol',
 	#superclass : 'String',
-	#classVars : [
-		'NewSymbols',
-		'SelectorTable',
-		'SymbolTable'
-	],
 	#category : 'Collections-Strings-Base',
 	#package : 'Collections-Strings',
 	#tag : 'Base'
@@ -41,47 +36,35 @@ Class {
 
 { #category : 'symbol table' }
 Symbol class >> allSymbolTablesDo: aBlock [
-
-	NewSymbols do: aBlock.
-	SymbolTable do: aBlock
-]
-
-{ #category : 'symbol table' }
-Symbol class >> allSymbolTablesDo: aBlock after: aSymbol [
-
-	NewSymbols do: aBlock after: aSymbol.
-	SymbolTable do: aBlock after: aSymbol
+	
+	SymbolTable system allSymbolsDo: aBlock
 ]
 
 { #category : 'accessing' }
 Symbol class >> allSymbols [
 	"Answer all interned symbols"
-	^Array streamContents:[:s|
-		s nextPutAll: NewSymbols.
-		s nextPutAll: SymbolTable.
-	]
+
+	^ Array streamContents: [ :s | self allSymbolTablesDo: [ :symbol | s nextPut: symbol ] ]
 ]
 
 { #category : 'cleanup' }
 Symbol class >> cleanUp [
 	"Flush caches"
 
-	self rehash
+	 SymbolTable system rehash
 ]
 
 { #category : 'symbol table' }
 Symbol class >> findInterned: aStringOrSymbol [
-
-	^(SymbolTable like: aStringOrSymbol) ifNil: [
-		NewSymbols like: aStringOrSymbol
-	]
+ 
+	^ SymbolTable system findInterned: aStringOrSymbol
 ]
 
 { #category : 'symbol table' }
 Symbol class >> hasInterned: aStringOrSymbol [
 	"Answer with false if aString hasnt been interned (into a Symbol)"
 
-	^(SymbolTable includes: aStringOrSymbol) or: [ NewSymbols includes: aStringOrSymbol ]
+	^ (self findInterned: aStringOrSymbol) notNil
 ]
 
 { #category : 'symbol table' }
@@ -97,18 +80,10 @@ Symbol class >> hasInterned: aString ifTrue: symBlock [
 			true ]
 ]
 
-{ #category : 'class initialization' }
-Symbol class >> initialize [
-
-	self rehash
-]
-
 { #category : 'symbol table' }
 Symbol class >> intern: aStringOrSymbol [
 
-	SymbolTableSemaphore enabled ifFalse: [
-		^ self rawIntern: aStringOrSymbol ].
-	^ SymbolTableSemaphore singleInstance critical: [ self rawIntern: aStringOrSymbol ]
+	^ SymbolTable system intern: aStringOrSymbol
 ]
 
 { #category : 'instance creation' }
@@ -128,63 +103,10 @@ Symbol class >> newFrom: aCollection [
 "
 ]
 
-{ #category : 'selector table' }
-Symbol class >> possibleSelectorsFor: misspelled [
-	"Answer an ordered collection of possible corrections
-	for the misspelled selector in order of likelyhood"
-
-	| numArgs candidates lookupString best binary short long first |
-	lookupString := misspelled asLowercase. "correct uppercase selectors to lowercase"
-	numArgs := lookupString numArgs.
-	(numArgs < 0 or: [lookupString size < 2]) ifTrue: [^ OrderedCollection new: 0].
-	first := lookupString first.
-	short := lookupString size - (lookupString size // 4 max: 3) max: 2.
-	long := lookupString size + (lookupString size // 4 max: 3).
-
-	"First assemble candidates for detailed scoring"
-	candidates := OrderedCollection new.
-	self allSymbolTablesDo: [:s | | ss | (((ss := s size) >= short	"not too short"
-			and: [ss <= long			"not too long"
-					or: [(s at: 1) = first]])	"well, any length OK if starts w/same letter"
-			and: [s numArgs = numArgs])	"and numArgs is the same"
-			ifTrue: [candidates add: s]].
-
-	"Then further prune these by correctAgainst:"
-	best := lookupString correctAgainst: candidates.
-	((misspelled last ~~ $:) and: [misspelled size > 1]) ifTrue: [
-		binary := misspelled, ':'.		"try for missing colon"
-		Symbol hasInterned: binary ifTrue: [:him | best addFirst: him]].
-	^ best
-]
-
-{ #category : 'symbol table' }
-Symbol class >> rawIntern: aStringOrSymbol [
-
-	^ (self findInterned: aStringOrSymbol) ifNil: [
-		  NewSymbols add: aStringOrSymbol createSymbol ]
-]
-
-{ #category : 'selector table' }
-Symbol class >> rebuildSelectorTable [
-
-	^ SystemNavigation new allMethods
-		  collect: [ :method | method selector ]
-		  as: WeakIdentitySet
-]
-
-{ #category : 'selector table' }
-Symbol class >> recordSelector: aSymbol [
-	self selectorTable add: aSymbol
-]
-
 { #category : 'cleanup' }
 Symbol class >> rehash [
-   "Symbol rehash"
-	"Rebuild the hash table, reclaiming unreferenced Symbols."
 
-	SymbolTable := WeakSet withAll: self allSubInstances.
-	NewSymbols := WeakSet new.
-	self resetSelectorTable
+	 SymbolTable system rehash
 ]
 
 { #category : 'accessing' }
@@ -193,104 +115,15 @@ Symbol class >> reservedLiterals [
 	^ PseudoVariable lookupDictionary keys union: #( #nil #true #false )
 ]
 
-{ #category : 'cleanup' }
-Symbol class >> resetSelectorTable [
-	^ SelectorTable := nil
-]
-
-{ #category : 'selector table' }
-Symbol class >> selectorTable [
-	^SelectorTable ifNil: [SelectorTable := self rebuildSelectorTable]
-]
-
-{ #category : 'selector table' }
-Symbol class >> selectorThatStartsCaseSensitive: leadingCharacters skipping: skipSym [
-	"Same as thatStartsCaseSensitive:skipping: but on the SelectorTable only"
-	| size firstMatch key |
-
-	size := leadingCharacters size.
-	size = 0 ifTrue: [^skipSym ifNil: [#''] ifNotNil: [nil]].
-	firstMatch := leadingCharacters at: 1.
-	size > 1 ifTrue: [key := leadingCharacters copyFrom: 2 to: size].
-	self selectorTable do: [:each |
-			(each isNotNil and: [each size >= size]) ifTrue:
-				[
-					((each at: 1) == firstMatch and:
-						[key == nil or:
-							[(each findString: key startingAt: 2 caseSensitive: true) = 2]])
-								ifTrue: [^each]
-				]
-		] after: skipSym.
-
-	^nil
-]
-
 { #category : 'system startup' }
 Symbol class >> shutDown: aboutToQuit [
 
-	SymbolTable addAll: NewSymbols.
-	NewSymbols := WeakSet new
+	SymbolTable system compactSymbols
 ]
 
 { #category : 'accessing' }
 Symbol class >> streamSpecies [
 	^ String
-]
-
-{ #category : 'symbol table' }
-Symbol class >> thatStarts: leadingCharacters skipping: skipSym [
-	"Answer a selector symbol that starts with leadingCharacters.
-	Symbols beginning with a lower-case letter handled directly here.
-	Ignore case after first char.
-	If skipSym is not nil, it is a previous answer; start searching after it.
-	If no symbols are found, answer nil.
-	Used by Alt-q (Command-q) routines"
-
-	| size firstMatch key |
-
-	size := leadingCharacters size.
-	size = 0 ifTrue: [^skipSym ifNil: [#''] ifNotNil: [nil]].
-
-	firstMatch := leadingCharacters at: 1.
-	size > 1 ifTrue: [key := leadingCharacters copyFrom: 2 to: size].
-
-	self allSymbolTablesDo: [:each |
-			each size >= size ifTrue:
-				[
-					((each at: 1) == firstMatch and:
-						[key == nil or:
-							[(each findString: key startingAt: 2 caseSensitive: false) = 2]])
-								ifTrue: [^each]
-				]
-		] after: skipSym.
-
-	^nil
-
-"Symbol thatStarts: 'sf' skipping: nil"
-"Symbol thatStarts: 'sf' skipping: #sfpGetFile:with:with:with:with:with:with:with:with:"
-"Symbol thatStarts: 'candidate' skipping: nil"
-]
-
-{ #category : 'symbol table' }
-Symbol class >> thatStartsCaseSensitive: leadingCharacters skipping: skipSym [
-	"Same as thatStarts:skipping: but caseSensitive"
-	| size firstMatch key |
-
-	size := leadingCharacters size.
-	size = 0 ifTrue: [^skipSym ifNil: [#''] ifNotNil: [nil]].
-	firstMatch := leadingCharacters at: 1.
-	size > 1 ifTrue: [key := leadingCharacters copyFrom: 2 to: size].
-	self allSymbolTablesDo: [:each |
-			each size >= size ifTrue:
-				[
-					((each at: 1) == firstMatch and:
-						[key == nil or:
-							[(each findString: key startingAt: 2 caseSensitive: true) = 2]])
-								ifTrue: [^each]
-				]
-		] after: skipSym.
-
-	^nil
 ]
 
 { #category : 'instance creation' }
@@ -531,7 +364,7 @@ Symbol >> isUsedAsSelectorSymbol [
 	"Returns whether the receiver is currently used as a method selector.
 	Notice that a symbol representing a valid method selector could return false if there are no method installed with such selector."
 	
-	^ self class selectorTable includes: self
+	^ SymbolTable system selectorTable includes: self
 ]
 
 { #category : 'sorting' }

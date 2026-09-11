@@ -76,7 +76,7 @@ Behavior >> addSelectorSilently: selector withMethod: compiledMethod [
 	self methodDict at: selector put: compiledMethod.
 
 	"We record all selectors that are used as method names"
-	Symbol recordSelector: selector
+	SymbolTable system recordSelector: selector
 ]
 
 { #category : 'adding-removing methods' }
@@ -1891,7 +1891,7 @@ Behavior >> usingMethods [
 { #category : 'queries' }
 Behavior >> whichClassDefinesClassVar: aString [
 	<reflection: 'Class structural inspection - Class variable inspection'>
-	Symbol hasInterned: aString ifTrue: [ :aSymbol |
+	(SymbolTable system findInterned: aString) ifNotNil: [ :aSymbol |
 		^self whichSuperclassSatisfies:
 			[:aClass |
 			aClass classVarNames anySatisfy: [:each | each = aSymbol]]].

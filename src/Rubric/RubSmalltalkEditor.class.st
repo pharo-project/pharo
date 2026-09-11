@@ -1036,7 +1036,7 @@ RubSmalltalkEditor >> selectedSymbol [
 	aString := self selection string copyWithoutAll:
 		{Character space.  Character cr.  Character tab}.
 	aString size = 0 ifTrue: [^ nil].
-	Symbol hasInterned: aString ifTrue: [:sym | ^sym].
+	(SymbolTable system findInterned: aString) ifNotNil: [:sym | ^sym].
 
 	^ nil
 ]
