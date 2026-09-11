@@ -21,8 +21,11 @@ TranscriptBehavior class >> isAbstract [
 
 { #category : 'execution' }
 TranscriptBehavior >> execute [
-	self text trace.
-	^true
+
+	(self text isNil or: [ self text isEmpty ]) ifTrue: [ ^ true ].
+	(self debugPoint evaluateInContext: self text) traceCr.
+
+	^ true
 ]
 
 { #category : 'cleanup' }

@@ -27,8 +27,7 @@ ClyAddBreakPointCommand >> defaultMenuIconName [
 
 { #category : 'accessing' }
 ClyAddBreakPointCommand >> defaultMenuItemName [
-
-	^ String streamContents: [ :stream | stream << 'Break on "' << sourceNode displaySourceCode << '"' ]
+	^' Break on ',  sourceNode displaySourceCode
 ]
 
 { #category : 'execution' }

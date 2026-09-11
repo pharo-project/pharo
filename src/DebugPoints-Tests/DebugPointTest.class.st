@@ -499,7 +499,7 @@ DebugPointTest >> testCountBehavior [
 	cbh := dp getBehavior: CountBehavior.
 	
 	self
-		assertCollection: dp sideEffectBehaviors 
+		assertCollection: dp metaBehaviors 
 		hasSameElements: { cbh }.
 	self
 		assertCollection: dp behaviors
@@ -662,7 +662,7 @@ DebugPointTest >> testOnceBehavior [
 	behavior := dp getBehavior: OnceBehavior.
 
 	self
-		assertCollection: dp sideEffectBehaviors
+		assertCollection: dp metaBehaviors
 		hasSameElements: { behavior }.
 	self assertCollection: dp behaviors hasSameElements: { behavior }.
 
@@ -709,7 +709,7 @@ DebugPointTest >> testOnceEvaluatesAfterConditionBehavior [
 	onceBehavior := dp getBehavior: OnceBehavior.
 
 	self
-		assertCollection: dp sideEffectBehaviors
+		assertCollection: dp metaBehaviors
 		hasSameElements: { onceBehavior }.
 	self
 		assertCollection: dp checkBehaviors
@@ -794,7 +794,7 @@ DebugPointTest >> testRemoveBehavior [
 	onceBehavior := dp getBehavior: OnceBehavior.
 
 	self
-		assertCollection: dp sideEffectBehaviors
+		assertCollection: dp metaBehaviors
 		hasSameElements: { onceBehavior }.
 	self
 		assertCollection: dp checkBehaviors
@@ -811,14 +811,14 @@ DebugPointTest >> testRemoveBehavior [
 	dp removeBehavior: ConditionBehavior.
 
 	self
-		assertCollection: dp sideEffectBehaviors
+		assertCollection: dp metaBehaviors
 		hasSameElements: { onceBehavior }.
 	self assertCollection: dp checkBehaviors hasSameElements: {  }.
 	self assertCollection: dp behaviors hasSameElements: { onceBehavior }.
 
 	dp removeBehavior: OnceBehavior.
 
-	self assertCollection: dp sideEffectBehaviors hasSameElements: {  }.
+	self assertCollection: dp metaBehaviors hasSameElements: {  }.
 	self assertCollection: dp checkBehaviors hasSameElements: {  }.
 	self assertCollection: dp behaviors hasSameElements: {  }.
 

@@ -8,11 +8,11 @@ Class {
 		'name',
 		'enabled',
 		'checkBehaviors',
-		'sideEffectBehaviors',
 		'arguments',
 		'properties',
 		'target',
-		'link'
+		'link',
+		'metaBehaviors'
 	],
 	#classVars : [
 		'AllDebugPoints'
@@ -96,9 +96,15 @@ DebugPoint >> addCheckBehavior: aConditionBehavior [
 ]
 
 { #category : 'adding' }
-DebugPoint >> addSideEffectBehavior: aSideEffectBehavior [
+DebugPoint >> addMetaBehavior: aSideEffectBehavior [
 
-	sideEffectBehaviors add: aSideEffectBehavior
+	metaBehaviors add: aSideEffectBehavior
+]
+
+{ #category : 'default values' }
+DebugPoint >> args [
+
+	^ #( context )
 ]
 
 { #category : 'accessing' }
@@ -116,13 +122,19 @@ DebugPoint >> arguments: aDictionary [
 { #category : 'accessing' }
 DebugPoint >> behaviors [
 
-	^ checkBehaviors , sideEffectBehaviors
+	^ checkBehaviors , metaBehaviors
 ]
 
 { #category : 'accessing' }
 DebugPoint >> checkBehaviors [
 
 	^ checkBehaviors
+]
+
+{ #category : 'default values' }
+DebugPoint >> control [
+
+	^ #before
 ]
 
 { #category : 'protocol' }
@@ -165,6 +177,18 @@ DebugPoint >> enabled: aBoolean [
 ]
 
 { #category : 'accessing' }
+DebugPoint >> evaluateInContext: expression [ 
+	|currentContext|
+	currentContext := self getArgument: #context.
+	^ Smalltalk compiler
+		  source: expression;
+		  context: currentContext;
+		  receiver: currentContext receiver;
+		  bindings: { (#thisContext -> currentContext) };
+		  evaluate
+]
+
+{ #category : 'accessing' }
 DebugPoint >> getArgument: aSymbol [
 
 	^ self arguments at: aSymbol
@@ -192,9 +216,10 @@ DebugPoint >> hitWithContext: aContext [
 	DebugPointManager notifyDebugPointHit: self inContext: aContext.
 	self enabled ifFalse: [ ^ false ].
 	self saveContext: aContext.
+	
 	(self checkBehaviors allSatisfy: [ :behavior | behavior execute ])
 		ifFalse: [ ^ false ].
-	self sideEffectBehaviors do: [ :behavior | behavior execute ].
+	self metaBehaviors do: [ :behavior | behavior execute ].
 	^ true
 ]
 
@@ -204,7 +229,7 @@ DebugPoint >> initialize [
 	enabled := true.
 	checkBehaviors := SortedCollection sortUsing: [ :elem1 :elem2 |
 		                  elem1 priority >= elem2 priority ].
-	sideEffectBehaviors := SortedCollection sortUsing: [ :elem1 :elem2 |
+	metaBehaviors := SortedCollection sortUsing: [ :elem1 :elem2 |
 		                       elem1 priority >= elem2 priority ]
 ]
 
@@ -241,14 +266,21 @@ DebugPoint >> link: aMetaLink [
 	link := aMetaLink
 ]
 
+{ #category : 'accessing' }
+DebugPoint >> metaBehaviors [
+
+	^ metaBehaviors
+]
+
 { #category : 'default values' }
 DebugPoint >> metaLink [
 
 	^ MetaLink new
 		  metaObject: self;
 		  options: #( #+ optionCompileOnLinkInstallation );
-		  selector: #hitWithContext:;
-		  arguments: #( context )
+		  selector: self selector;
+		  control: self control;
+		  arguments: self args
 ]
 
 { #category : 'accessing' }
@@ -333,15 +365,15 @@ DebugPoint >> removeFromMethod: aMethod [
 ]
 
 { #category : 'removing' }
-DebugPoint >> removeNode: aNode [
+DebugPoint >> removeMetaBehavior: aSideEffectBehavior [
 
-	self link removeNode: aNode
+	metaBehaviors remove: aSideEffectBehavior
 ]
 
 { #category : 'removing' }
-DebugPoint >> removeSideEffectBehavior: aSideEffectBehavior [
+DebugPoint >> removeNode: aNode [
 
-	sideEffectBehaviors remove: aSideEffectBehavior
+	self link removeNode: aNode
 ]
 
 { #category : 'removing' }
@@ -379,10 +411,10 @@ DebugPoint >> scopeString [
 	^ self target scopeString
 ]
 
-{ #category : 'accessing' }
-DebugPoint >> sideEffectBehaviors [
+{ #category : 'default values' }
+DebugPoint >> selector [
 
-	^ sideEffectBehaviors
+	^ #hitWithContext:
 ]
 
 { #category : 'accessing' }
