@@ -169,19 +169,6 @@ ReInteractionDriver >> defaultSelectDialog [
 	^ self application newSelect
 ]
 
-{ #category : 'execution' }
-ReInteractionDriver >> executeRefactoring [
-	"Configures the refactoring, gathers user input and applies the changes."
-
-	self configureRefactoring.
-	self gatherUserInput ifFalse: [ ^ self "user abandons" ].
-	self hasFailedApplicabilityPreconditions ifTrue: [ ^ self "applicability failed" ].
-
-	self hasFailedBehaviorPreservingPreconditions
-		ifTrue: [ self handleBreakingChanges ]
-		ifFalse: [ self applyChanges ]
-]
-
 { #category : 'ui - dialogs' }
 ReInteractionDriver >> failedPreconditionsErrorString [
 
@@ -362,10 +349,18 @@ ReInteractionDriver >> requestDialog: aDialog [
 
 { #category : 'execution' }
 ReInteractionDriver >> runRefactoring [
+	"Configures the refactoring, gathers user input and applies the changes."
 
-	[ self executeRefactoring ]
-		on: Error
-		do: [ :e | self inform: 'The refactoring could not be executed: ' , e messageText ]
+	[ 
+		self configureRefactoring.
+		self gatherUserInput ifFalse: [ ^ self "user abandons" ].
+		self hasFailedApplicabilityPreconditions ifTrue: [ ^ self "applicability failed" ].
+
+		self hasFailedBehaviorPreservingPreconditions
+			ifTrue: [ self handleBreakingChanges ]
+			ifFalse: [ self applyChanges ] ]
+	on: Error
+	do: [ :e | self inform: 'The refactoring could not be executed: ' , e messageText ]
 ]
 
 { #category : 'accessing' }

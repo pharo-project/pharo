@@ -21,6 +21,12 @@ StRefactoringAddClassPresenter class >> defaultPreferredExtent [
 	^ 500 @ 450
 ]
 
+{ #category : 'private - accessing' }
+StRefactoringAddClassPresenter >> commentPresenter [
+
+	^ commentPresenter
+]
+
 { #category : 'accessing' }
 StRefactoringAddClassPresenter >> commentPresenterText [
 
@@ -130,6 +136,12 @@ StRefactoringAddClassPresenter >> updateTagItems: item [
 											orderedTags addFirst: superclassTag ] ].
 							tagPresenter items: orderedTags ] ].
 	tagPresenter selectIndex: 1
+]
+
+{ #category : 'private - accessing' }
+StRefactoringAddClassPresenter >> useTemplateCheckPresenter [
+
+	^ useTemplateCheckPresenter
 ]
 
 { #category : 'accessing' }
