@@ -21,6 +21,12 @@ StRefactoringAddClassPresenter class >> defaultPreferredExtent [
 	^ 500 @ 450
 ]
 
+{ #category : 'private - accessing' }
+StRefactoringAddClassPresenter >> commentPresenter [
+
+	^ commentPresenter
+]
+
 { #category : 'accessing' }
 StRefactoringAddClassPresenter >> commentPresenterText [
 
@@ -53,11 +59,8 @@ StRefactoringAddClassPresenter >> defaultLayout [
 StRefactoringAddClassPresenter >> initializeClassNamePresenter [
 
 	textInput := self newTextInput
-		whenTextChangedDo: [ : text | 
-			(Smalltalk globals hasClassNamed: text asSymbol)
-				ifTrue: [ self inform: 'Class ' , text asString , ' already exists' ]
-				ifFalse: [ driver subclass: self newClassName ] ];
-		yourself.
+		whenTextChangedDo: [ :text | driver subclass: self newClassName ];
+		yourself
 ]
 
 { #category : 'initialization' }
@@ -133,6 +136,12 @@ StRefactoringAddClassPresenter >> updateTagItems: item [
 											orderedTags addFirst: superclassTag ] ].
 							tagPresenter items: orderedTags ] ].
 	tagPresenter selectIndex: 1
+]
+
+{ #category : 'private - accessing' }
+StRefactoringAddClassPresenter >> useTemplateCheckPresenter [
+
+	^ useTemplateCheckPresenter
 ]
 
 { #category : 'accessing' }
