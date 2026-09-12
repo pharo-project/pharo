@@ -3,24 +3,26 @@ Extension { #name : 'Fileouter' }
 { #category : '*SystemCommands-SourceCodeCommands' }
 Fileouter class >> fileoutNamed: filename cofigureWith: aBlock [
 
-	| fileRef dialog ok |
 	StSaveFilePresenter new
 		defaultFolder: FileLocator workingDirectory;
 		nameText: filename , '.st';
 		okAction: [ :fileReference |
-				| fileouter |
-				fileRef := fileReference.
+				| fileouter message |
 				fileouter := self new.
 				aBlock value: fileouter.
 				fileouter fileoutOnFileReference: fileReference.
 
-				dialog := SpConfirmDialog new.
-				ok := dialog
-					      title: 'Do you want to browse natively the fileout?';
-					      message: 'Are you sure?';
-					      acceptLabel: 'Sure!';
-					      cancelLabel: 'No, forget it';
-					      openModal.
-				ok ifTrue: [ fileRef openInOSFileBrowser ] ];
+				message := String streamContents: [ :s |
+					s
+						nextPutAll: 'Filed out to: ';
+						cr;
+						nextPutAll: fileReference pathString;
+						cr;
+						cr;
+						nextPutAll: 'Click to open location' ].
+
+				UIManager default
+					inform: message
+					actionOnClick: [ fileReference openInOSFileBrowser ] ];
 		openModal
 ]
