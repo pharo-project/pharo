@@ -1778,20 +1778,20 @@ OCCodeSnippet class >> badSemantic [
 			         source: '| self | self := 1. ^ self';
 			         nodeAt: '00111100044442222300556666';
 			         styled: '| TTTT | tttt    n. ^ tttt';
-			         value: 1;
-			         notices: #( #( 3 6 3 'Name already defined' ) )).
+			         isFaulty: false;
+			         value: 1).
 		        (self new
 			         source: '| super | super := 1. ^ super';
 			         nodeAt: '00111110004444422223005566666';
 			         styled: '| TTTTT | ttttt    n. ^ ttttt';
-			         value: 1;
-			         notices: #( #( 3 7 3 'Name already defined' ) )).
+			         isFaulty: false;
+			         value: 1).
 		        (self new
 			         source: '| thisContext | thisContext := 1. ^ thisContext';
 			         nodeAt: '00111111111110004444444444422223005566666666666';
 			         styled: '| TTTTTTTTTTT | ttttttttttt    n. ^ ttttttttttt';
-			         value: 1;
-			         notices: #( #( 3 13 3 'Name already defined' ) )).
+			         isFaulty: false;
+			         value: 1).
 		        (self new
 			         source: '| Object | Object := 1. ^ Object';
 			         nodeAt: '00111111000444444222230055666666';
@@ -1803,22 +1803,28 @@ OCCodeSnippet class >> badSemantic [
 			         nodeAt: '00000111103355554446';
 			         styled: 'pppp AAAA ^ aaaa s n';
 			         isScripting: false;
+			         isFaulty: false;
 			         value: 2;
-			         notices: #( #( 6 9 6 'Name already defined' ) )).
+			         notices:
+				         #( #( 6 9 6 'self is a reserved word and cannot be used as a parameter name' ) )).
 		        (self new
 			         source: 'foo: super ^ super + 1';
 			         nodeAt: '0000011111033555554446';
 			         styled: 'pppp AAAAA ^ aaaaa s n';
 			         isScripting: false;
+			         isFaulty: false;
 			         value: 2;
-			         notices: #( #( 6 10 6 'Name already defined' ) )).
+			         notices:
+				         #( #( 6 10 6 'super is a reserved word and cannot be used as a parameter name' ) )).
 		        (self new
 			         source: 'foo: thisContext ^ thisContext + 1';
 			         nodeAt: '0000011111111111033555555555554446';
 			         styled: 'pppp AAAAAAAAAAA ^ aaaaaaaaaaa s n';
 			         isScripting: false;
+			         isFaulty: false;
 			         value: 2;
-			         notices: #( #( 6 16 6 'Name already defined' ) )).
+			         notices:
+				         #( #( 6 16 6 'thisContext is a reserved word and cannot be used as a parameter name' ) )).
 		        (self new
 			         source: 'foo: Object ^ Object + 1';
 			         nodeAt: '000001111110335555554446';
@@ -1830,20 +1836,20 @@ OCCodeSnippet class >> badSemantic [
 			         source: '[ :self | self + 1 ]';
 			         nodeAt: '00011110004444333500';
 			         styled: '0 :BBBB | bbbb s n 0';
-			         value: 2;
-			         notices: #( #( 4 7 4 'Name already defined' ) )).
+			         isFaulty: false;
+			         value: 2).
 		        (self new
 			         source: '[ :super | super + 1 ]';
 			         nodeAt: '0001111100044444333500';
 			         styled: '0 :BBBBB | bbbbb s n 0';
-			         value: 2;
-			         notices: #( #( 4 8 4 'Name already defined' ) )).
+			         isFaulty: false;
+			         value: 2).
 		        (self new
 			         source: '[ :thisContext | thisContext + 1 ]';
 			         nodeAt: '0001111111111100044444444444333500';
 			         styled: '0 :BBBBBBBBBBB | bbbbbbbbbbb s n 0';
-			         value: 2;
-			         notices: #( #( 4 14 4 'Name already defined' ) )).
+			         isFaulty: false;
+			         value: 2).
 		        (self new
 			         source: '[ :Object | Object + 1 ]';
 			         nodeAt: '000111111000444444333500';

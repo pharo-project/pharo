@@ -25,10 +25,7 @@ OCCompilerTest >> compileWithFailBlock: aBlock [
 
 	| result compiler |
 	compiler := MockForCompilation compiler
-		            source: text;
-		            "compatibility: permit undeclared if no requestor"
-		            permitUndeclared: false;
-		            permitFaulty: false.
+		            source: text.
 	result := compiler doCompile.
 	result isError ifTrue: [ aBlock cull: result ]
 ]
@@ -104,6 +101,40 @@ OCCompilerTest >> testAssignmentOfGlobalVarBinding [
 		with: [ :err | self assert: (err messageText beginsWith: 'Compilation failed with following errors:') ]
 ]
 
+{ #category : 'tests - reserved variables' }
+OCCompilerTest >> testBlockArgumentCannotBeReservedWord [
+
+	Symbol reservedLiterals do: [ :name |
+		self
+			should: [
+				OpalCompiler new
+					source: 'method ^ [ :', name, ' | ', name, ' ]';
+					strict;
+					compileOrFail ]
+			raise: OCCompilationError ]
+]
+
+{ #category : 'tests - reserved variables' }
+OCCompilerTest >> testBlockTempCannotBeReservedWord [
+
+	Symbol reservedLiterals do: [ :name |
+		self
+			should: [
+				OpalCompiler new
+					source: 'method ^ [ | ', name, ' | ', name, ' ]';
+					strict;
+					compileOrFail ]
+			raise: OCCompilationError ]
+]
+
+{ #category : 'tests - reserved variables' }
+OCCompilerTest >> testDoItTempCanShadowReservedWord [
+
+	self
+		assert: (OpalEvaluator new evaluate: '| self | self := 42. ^ self')
+		equals: 42
+]
+
 { #category : 'tests' }
 OCCompilerTest >> testErrorOrders [
 
@@ -113,6 +144,47 @@ OCCompilerTest >> testErrorOrders [
 	self
 		assertCollection: notices
 		equals: #( '17:Unknown character' '27:Unmatched " in comment.' '13:Undeclared variable named a in foo' '20:Unreachable statement' '7:Unused variable' )
+]
+
+{ #category : 'tests - shadowing' }
+OCCompilerTest >> testGeneralShadowingErrorsUnderStrict [
+
+	self
+		should: [
+			OpalCompiler new
+				source: 'method: a [ :a | |a| ]';
+				class: MockForCompilation;
+				strict;
+				compileOrFail ]
+		raise: OCCompilationError
+]
+
+{ #category : 'tests - shadowing' }
+OCCompilerTest >> testGeneralShadowingErrorsWithPermitShadowingFalse [
+
+	self
+		should: [
+			OpalCompiler new
+				source: 'method: a [ :a | |a| ]';
+				class: MockForCompilation;
+				permitShadowing: false;
+				compileOrFail ]
+		raise: OCCompilationError
+]
+
+{ #category : 'tests - shadowing' }
+OCCompilerTest >> testGeneralShadowingWarnsByDefault [
+
+	| compiler compilationResult notices |
+	compiler := OpalCompiler new
+		            source: 'method: a [ :a | |a| ]';
+		            class: MockForCompilation;
+						permitShadowing: true.
+	compilationResult := compiler doCompile.
+	self deny: compilationResult isError.
+	notices := compiler ast allNotices select: [ :n | n messageText = 'Name already defined' ].
+	self assert: notices isNotEmpty.
+	self assert: (notices allSatisfy: [ :n | n isWarning ])
 ]
 
 { #category : 'tests - shadowing' }
@@ -128,15 +200,17 @@ OCCompilerTest >> testInBlockArgumentInstanceVariableShadowing [
 ]
 
 { #category : 'tests - shadowing' }
-OCCompilerTest >> testInBlockArgumentPseudoVariableShadowing [
-	self initializeErrorMessage.
-	text := 'temp [:thisProcess | ]'.
+OCCompilerTest >> testInBlockArgumentReservedWordsShadowing [
 
-	self compile.
-
-	self assert: errorMessage equals: nil.
-	self assert: errorLocation equals: nil.
-	self assert: errorSource equals: nil
+	Symbol reservedLiterals do: [ :thePseudoVar |
+		self
+			should: [
+				OpalCompiler new
+					source: 'temp [:' , thePseudoVar asString , ' | ]';
+					class: MockForCompilation;
+					strict;
+					compileOrFail ]
+			raise: OCCompilationError ]
 ]
 
 { #category : 'tests - shadowing' }
@@ -175,6 +249,33 @@ OCCompilerTest >> testInstanceVariableShadowing [
 	self compileWithFailBlock: [ ^ self fail ]
 ]
 
+{ #category : 'tests - reserved variables' }
+OCCompilerTest >> testMethodArgumentCannotBeReservedWord [
+
+	Symbol reservedLiterals do: [ :name |
+		self
+			should: [
+				OpalCompiler new
+					source: 'method: ' , name , ' ^ ' , name;
+					class: MockForCompilation;
+					strict;
+					compileOrFail ]
+			raise: OCCompilationError ]
+]
+
+{ #category : 'tests - reserved variables' }
+OCCompilerTest >> testMethodTempCannotBeReservedWord [
+
+	Symbol reservedLiterals do: [ :name |
+		self
+			should: [
+				OpalCompiler new
+					source: 'method: x | ', name, ' | ', name, ' := 33';
+					strict;
+					compileOrFail ]
+			raise: OCCompilationError ]
+]
+
 { #category : 'literals' }
 OCCompilerTest >> testNegativeZero [
 	self
@@ -197,14 +298,68 @@ OCCompilerTest >> testNoShadowing [
 { #category : 'tests - shadowing' }
 OCCompilerTest >> testPseudoVariableShadowing [
 
-	self initializeErrorMessage.
-	text := 'var1 |thisContext| ^thisContext'.
+	Symbol reservedLiterals do: [ :thePseudoVar |
+		self
+			should: [
+				OpalCompiler new
+					source: 'method |' , thePseudoVar asString , '| ^' , thePseudoVar asString;
+					class: MockForCompilation;
+					strict;
+					compileOrFail ]
+			raise: OCCompilationError ]
+]
 
-	self compile.
+{ #category : 'tests - reserved variables' }
+OCCompilerTest >> testReservedWordAllowedInFaultyMode [
 
-	self assert: errorMessage equals: nil.
-	self assert: errorLocation equals: nil.
-	self assert: errorSource equals: nil
+	| method |
+	method := OpalCompiler new
+		          source: 'foo: self ^ self + 1';
+		          permitFaulty: true;
+		          compileOrFail.
+	self assert: method isCompiledMethod
+]
+
+{ #category : 'tests - reserved variables' }
+OCCompilerTest >> testReservedWordAllowedWithPermitShadowing [
+
+	| method |
+	method := OpalCompiler new
+		          source: 'foo: self ^ self + 1';
+		          permitShadowing: true;
+		          compileOrFail.
+	self assert: method isCompiledMethod.
+	self
+		assert: (method ast allNotices anySatisfy: [ :n |
+				 n messageText = 'self is a reserved word and cannot be used as a parameter name' ])
+]
+
+{ #category : 'tests - reserved variables' }
+OCCompilerTest >> testReservedWordErrorMessage [
+
+	| compiler result error |
+	text := 'foo: self ^ self + 1'.
+	compiler := MockForCompilation compiler
+		            source: text;
+		            strict.
+	result := compiler doCompile.
+	error := result ast allNotices first.
+	
+	self assert: error messageText equals: 'self is a reserved word and cannot be used as a parameter name'
+]
+
+{ #category : 'tests - reserved variables' }
+OCCompilerTest >> testReservedWordErrorMessageForTemp [
+
+	| error compiler result |
+	text := 'method |self| ^ self'.
+	compiler := MockForCompilation compiler
+		            source: text;
+		            strict.
+	result := compiler doCompile.
+	error := result ast allNotices first.
+	
+	self assert: error messageText equals: 'self is a reserved word and cannot be used as a temporary variable name'
 ]
 
 { #category : 'literals' }
@@ -228,6 +383,7 @@ OCCompilerTest >> testSiblingBlocksInstanceVariableShadowing [
 	OpalCompiler new
 		source: 'temp [:temp | ].[:temp | |var1|]';
 		class: MockForCompilation;
+		permitShadowing: true;
 		compileOrFail
 ]
 
@@ -240,6 +396,16 @@ OCCompilerTest >> testSiblingBlocksTempShadowing [
 		source: 'temp [:temp | ]. [:temp | ]';
 		class: MockForCompilation;
 		compileOrFail
+]
+
+{ #category : 'tests - flags' }
+OCCompilerTest >> testStrictSetsAllPermits [
+
+	| compiler |
+	compiler := OpalCompiler new strict.
+	self deny: compiler permitFaulty.
+	self deny: compiler permitUndeclared.
+	self deny: compiler permitShadowing
 ]
 
 { #category : 'tests' }
