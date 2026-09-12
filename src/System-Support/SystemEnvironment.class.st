@@ -297,9 +297,8 @@ SystemEnvironment >> forgetClass: aClass [
 SystemEnvironment >> hasClassNamed: aString [
 	"Answer whether there is a class of the given name, but don't intern aString if it's not already interned."
 
-	Symbol
-		hasInterned: aString
-		ifTrue: [ :aSymbol | ^ (self at: aSymbol ifAbsent: [ nil ]) isClass ].
+	(SymbolTable system findInterned: aString)
+		ifNotNil: [ :aSymbol | ^ (self at: aSymbol ifAbsent: [ nil ]) isClass ].
 	^ false
 ]
 
@@ -307,9 +306,8 @@ SystemEnvironment >> hasClassNamed: aString [
 SystemEnvironment >> hasClassOrTraitNamed: aString [
 	"Answer whether there is a class of the given name, but don't intern aString if it's not already interned."
 
-	Symbol
-		hasInterned: aString
-		ifTrue: [ :aSymbol |
+	(SymbolTable system findInterned: aString)
+		ifNotNil: [ :aSymbol |
 		^ (self at: aSymbol ifAbsent: [ nil ]) isClassOrTrait ].
 	^ false
 ]

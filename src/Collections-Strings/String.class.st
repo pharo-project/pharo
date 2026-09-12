@@ -1478,7 +1478,7 @@ String >> findSelector [
 
 	sel isEmpty ifTrue: [^ nil].
 	sel isOctetString ifTrue: [sel := sel asOctetString].
-	Symbol hasInterned: sel ifTrue:
+	(SymbolTable system findInterned: sel) ifNotNil:
 		[:aSymbol | ^ aSymbol].
 	^ nil
 ]

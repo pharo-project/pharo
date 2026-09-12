@@ -20,11 +20,11 @@ ByteSymbolTest >> testAs [
 	| tStr |
 	tStr := DateAndTime now asString.
 	tStr as: ByteSymbol.
-	self assert: (Symbol allSymbols select: [ :e | e asString = tStr ]) size equals: 1.
+	self assert: (SymbolTable system allSymbols select: [ :e | e asString = tStr ]) size equals: 1.
 	self assert: (ByteSymbol allInstances select: [ :e | e asString = tStr ]) size equals: 1.
-	self assert: (ByteSymbol allInstances select: [ :e | e asString = tStr ]) equals: (Symbol allSymbols select: [ :e | e asString = tStr ]).
+	self assert: (ByteSymbol allInstances select: [ :e | e asString = tStr ]) equals: (SymbolTable system allSymbols select: [ :e | e asString = tStr ]).
 	tStr as: ByteSymbol.
-	self assert: (Symbol allSymbols select: [ :e | e asString = tStr ]) size equals: 1.
+	self assert: (SymbolTable system allSymbols select: [ :e | e asString = tStr ]) size equals: 1.
 	self assert: (ByteSymbol allInstances select: [ :e | e asString = tStr ]) size equals: 1
 ]
 
@@ -39,11 +39,11 @@ ByteSymbolTest >> testNewFrom [
 	| dt |
 	dt := DateAndTime now asString.
 	ByteSymbol newFrom: dt.
-	self assert: (Symbol allSymbols select: [ :e | e asString = dt ]) size equals: 1.
+	self assert: (SymbolTable system allSymbols select: [ :e | e asString = dt ]) size equals: 1.
 	self assert: (ByteSymbol allInstances select: [ :e | e = dt ]) size equals: 1.
-	self assert: (Symbol allSymbols select: [ :e | e asString = dt ]) equals: (ByteSymbol allInstances select: [ :e | e = dt ]).
+	self assert: (SymbolTable system allSymbols select: [ :e | e asString = dt ]) equals: (ByteSymbol allInstances select: [ :e | e = dt ]).
 	ByteSymbol newFrom: dt.
-	self assert: (Symbol allSymbols select: [ :e | e asString = dt ]) size equals: 1.
+	self assert: (SymbolTable system allSymbols select: [ :e | e asString = dt ]) size equals: 1.
 	self assert: (ByteSymbol allInstances select: [ :e | e = dt ]) size equals: 1
 ]
 
@@ -52,14 +52,14 @@ ByteSymbolTest >> testReadFromString [
 	| str strWithPound |
 	Smalltalk garbageCollect.
 	str := 'notYetExisting'.
-	self assert: (Symbol allSymbols select: [ :e | e asString = str ]) size equals: 0.
+	self assert: (SymbolTable system allSymbols select: [ :e | e asString = str ]) size equals: 0.
 	self assert: (ByteSymbol allInstances select: [ :e | e asString = str ]) size equals: 0.
 	strWithPound := '#' , str.
 	ByteSymbol readFromString: strWithPound.
-	self assert: (Symbol allSymbols select: [ :e | e asString = str ]) size equals: 1.
+	self assert: (SymbolTable system allSymbols select: [ :e | e asString = str ]) size equals: 1.
 	self assert: (ByteSymbol allInstances select: [ :e | e = str ]) size equals: 1.
-	self assert: (Symbol allSymbols select: [ :e | e asString = str ]) equals: (ByteSymbol allInstances select: [ :e | e = str ]).
+	self assert: (SymbolTable system allSymbols select: [ :e | e asString = str ]) equals: (ByteSymbol allInstances select: [ :e | e = str ]).
 	ByteSymbol readFromString: strWithPound.
-	self assert: (Symbol allSymbols select: [ :e | e asString = str ]) size equals: 1.
+	self assert: (SymbolTable system allSymbols select: [ :e | e asString = str ]) size equals: 1.
 	self assert: (ByteSymbol allInstances select: [ :e | e = str ]) size equals: 1
 ]

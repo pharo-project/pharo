@@ -9,9 +9,6 @@ Class {
 	#instVars : [
 		'environment'
 	],
-	#classInstVars : [
-		'navigationClass'
-	],
 	#category : 'System-Support-Image',
 	#package : 'System-Support',
 	#tag : 'Image'
@@ -172,7 +169,7 @@ SystemNavigation >> allGlobalRefsOn: aSymbol [
 SystemNavigation >> allImplementedMessages [
 	"Answer a Collection of all the messages that are implemented in the system."
 
-	^Symbol selectorTable
+	^SymbolTable system selectorTable
 ]
 
 { #category : 'query' }
@@ -279,14 +276,14 @@ SystemNavigation >> allReferencesToBinding: aVariablesBinding [
 { #category : 'query' }
 SystemNavigation >> allSelectorsDo: aBlock [
 
-	Symbol selectorTable do: [ :e |
+	SymbolTable system selectorTable do: [ :e |
 		aBlock value: e]
 ]
 
 { #category : 'query' }
 SystemNavigation >> allSelectorsStartingWith: aString do: aBlock [
 
-	Symbol selectorTable do: [ :e |
+	SymbolTable system selectorTable do: [ :e |
 		(e asString beginsWith: aString)
 			ifTrue: [ aBlock value: e  ] ]
 ]
@@ -373,16 +370,8 @@ SystemNavigation >> allSentMessagesInPackage: aPackage do: aBlock [
 { #category : 'query' }
 SystemNavigation >> allSymbolsDo: aBlock [
 
-	Symbol allSymbolTablesDo: [ :e |
+	SymbolTable system allSymbolsDo: [ :e |
 		aBlock value: e  ]
-]
-
-{ #category : 'query' }
-SystemNavigation >> allSymbolsStartingWith: aString do: aBlock [
-
-	Symbol allSymbolTablesDo: [ :e |
-		(e beginsWith: aString)
-			ifTrue: [ aBlock value: e  ] ]
 ]
 
 { #category : 'query' }
