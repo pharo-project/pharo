@@ -51,7 +51,7 @@ if [ ! -e "${BOOTSTRAP_DOWNLOADS}/vmBootstrap/pharo" ]; then
 fi 
 
 if [ ! -e "${BOOTSTRAP_DOWNLOADS}/bootstrapImage.zip" ]; then
-	download_to https://github.com/guillep/PharoBootstrap/releases/download/v1.7.10/bootstrapImage.zip ${BOOTSTRAP_DOWNLOADS}/bootstrapImage.zip
+	download_to https://github.com/pharo-project/PharoBootstrap/releases/download/v2.0.0/bootstrapImage.zip ${BOOTSTRAP_DOWNLOADS}/bootstrapImage.zip
 fi 
 
 # checking for icons
