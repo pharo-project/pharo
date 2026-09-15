@@ -40,7 +40,8 @@ Class {
 		'topLayout',
 		'nameIsValid',
 		'behaviorOptionsLayout',
-		'behaviorOptionsPanel'
+		'behaviorOptionsPanel',
+		'updateProcess'
 	],
 	#category : 'Refactoring-UI-UI',
 	#package : 'Refactoring-UI',
@@ -168,10 +169,7 @@ StRenameTempOrArgPreviewPresenter >> connectPresenters [
 	buttonCancel action: [ self closeWindow ].
 	buttonOk action: [ self accept ].
 		
-	newNameInput whenTextChangedDo: [ :text |
-		self validateName: text.
-		self updateBehaviorPanelVisibility: text.
-		self updateName ].
+	newNameInput whenTextChangedDo: [ :text | self schedulePreviewUpdate: text ].
 	
 	newNameInput whenSubmitDo: [ :text | self accept ].
 
@@ -282,14 +280,14 @@ StRenameTempOrArgPreviewPresenter >> hideBehaviorPanel [
 StRenameTempOrArgPreviewPresenter >> initializeDialogWindow: aDialogWindowPresenter [
 
 	| applyButton |
-	
-	aDialogWindowPresenter
-		addButton: 'Cancel' do: [ :presenter | presenter close ].
-
-	applyButton := aDialogWindowPresenter
-		addDefaultButton: 'Apply' do: [ :presenter | 
-			self accept.
+	aDialogWindowPresenter addButton: 'Cancel' do: [ :presenter |
+			self terminateUpdateProcess.
 			presenter close ].
+
+	applyButton := aDialogWindowPresenter addDefaultButton: 'Apply' do: [ :presenter |
+			               self terminateUpdateProcess.
+			               self accept.
+			               presenter close ].
 
 	self buttonOk: applyButton
 ]
@@ -334,6 +332,7 @@ StRenameTempOrArgPreviewPresenter >> initializePresenters [
 	behaviorMessageLabel := self newLabel label: ''.
 	behaviorPanel := SpPresenter new.
 	behaviorOptionsPanel := SpPresenter new.
+	nameIsValid := false.
 
 	buttonApplyAnyway := self instantiate: SpRadioButtonPresenter.
 	buttonApplyAnyway label: 'Apply anyway'.
@@ -381,6 +380,20 @@ StRenameTempOrArgPreviewPresenter >> refactoring: aRBRemoveMethodDriver [
 ]
 
 { #category : 'accessing' }
+StRenameTempOrArgPreviewPresenter >> schedulePreviewUpdate: aString [
+	"Use a short delay to avoid updating the preview on every keystroke while keeping the UI responsive."
+
+	updateProcess ifNotNil: [ updateProcess terminate ].
+
+	updateProcess := [
+		                 200 milliSeconds wait.
+		                 self application defer: [
+				                 self validateName: aString.
+				                 self updateBehaviorPanelVisibility: aString.
+				                 self updateName ] ] fork
+]
+
+{ #category : 'accessing' }
 StRenameTempOrArgPreviewPresenter >> scopes: aCollection [
 
 	scopes := aCollection.
@@ -390,6 +403,14 @@ StRenameTempOrArgPreviewPresenter >> scopes: aCollection [
 { #category : 'accessing' }
 StRenameTempOrArgPreviewPresenter >> selectorInput [
     ^ newNameInput
+]
+
+{ #category : 'accessing' }
+StRenameTempOrArgPreviewPresenter >> terminateUpdateProcess [
+
+	updateProcess ifNotNil: [ 
+		updateProcess terminate.
+		updateProcess := nil ]
 ]
 
 { #category : 'update' }
@@ -422,20 +443,6 @@ StRenameTempOrArgPreviewPresenter >> updateChanges [
 	selectedChanges := OrderedCollection withAll: changesInScope]
 ]
 
-{ #category : 'private' }
-StRenameTempOrArgPreviewPresenter >> updateDiff [
-
-	nameIsValid
-		ifFalse: [
-			compositeChange := nil.
-			changes := nil.
-			self buildLeftSideDiff  ]
-		ifTrue: [
-			compositeChange := driver refactoring generateChanges.
-			changes := compositeChange changesToDisplayIn: self ].
-	self updateChanges
-]
-
 { #category : 'update' }
 StRenameTempOrArgPreviewPresenter >> updateGlobalActiveScope [
 
@@ -446,8 +453,19 @@ StRenameTempOrArgPreviewPresenter >> updateGlobalActiveScope [
 StRenameTempOrArgPreviewPresenter >> updateName [
 
 	name := newNameInput text.
-	self updateDiff.
-	self updateOkButtonState.
+	
+	nameIsValid
+		ifFalse: [
+			compositeChange := nil.
+			changes := nil.
+			self buildLeftSideDiff .
+			buttonOk disable ]
+		ifTrue: [
+			compositeChange := driver refactoring generateChanges.
+			changes := compositeChange changesToDisplayIn: self .
+			buttonOk enable ].
+		
+	self updateChanges .
 	self updateTablePresenter
 ]
 
@@ -491,7 +509,7 @@ StRenameTempOrArgPreviewPresenter >> validateName: aString [
 		ifNotNil: [
 				nameIsValid := false.
 				validationLabel label: (newName asText
-						 addAttribute: (TextColor color: (Color r: 1.0 g: 0.5 b: 0.31));
+						 addAttribute: (TextColor color: Smalltalk ui theme dangerTextColor);
 						 yourself) ]
 ]
 
