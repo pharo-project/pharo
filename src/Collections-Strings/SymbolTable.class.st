@@ -100,6 +100,8 @@ SymbolTable >> initialize [
 	super initialize.
 	symbolTable := WeakSet new.
 	newSymbols := WeakSet new.
+	
+	selectorTable := WeakIdentitySet new
 ]
 
 { #category : 'interning' }
