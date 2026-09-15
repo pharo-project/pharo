@@ -34,7 +34,7 @@ Class {
 		'behaviorWarningTitle',
 		'behaviorMessageLabel',
 		'buttonBrowseMethod',
-		'previewUpdateToken'
+		'updateProcess'
 	],
 	#category : 'Refactoring-UI-UI',
 	#package : 'Refactoring-UI',
@@ -255,14 +255,14 @@ StRenameClassPreviewPresenter >> hideBehaviorPanel [
 StRenameClassPreviewPresenter >> initializeDialogWindow: aDialogWindowPresenter [
 
 	| applyButton |
-	
-	aDialogWindowPresenter
-		addButton: 'Cancel' do: [ :presenter | presenter close ].
-
-	applyButton := aDialogWindowPresenter
-		addDefaultButton: 'Apply' do: [ :presenter | 
-			self accept.
+	aDialogWindowPresenter addButton: 'Cancel' do: [ :presenter |
+			self terminateUpdateProcess.
 			presenter close ].
+
+	applyButton := aDialogWindowPresenter addDefaultButton: 'Apply' do: [ :presenter |
+			               self terminateUpdateProcess.
+			               self accept.
+			               presenter close ].
 
 	self buttonOk: applyButton
 ]
@@ -349,15 +349,16 @@ StRenameClassPreviewPresenter >> refactoring: aRBRemoveMethodDriver [
 
 { #category : 'initialization' }
 StRenameClassPreviewPresenter >> schedulePreviewUpdate: aString [
-
-	previewUpdateToken := Object new.
-
 	"Use a short delay to avoid updating the preview on every keystroke while keeping the UI responsive."
-	MorphicUIManager currentWorld
-		addAlarm: #updatePreviewAfterDelay:token:
-		withArguments: { aString. previewUpdateToken }
-		for: self
-		at: Time millisecondClockValue + 200
+
+	updateProcess ifNotNil: [ updateProcess terminate ].
+
+	updateProcess := [
+		                 200 milliSeconds wait.
+		                 self application defer: [
+				                 self validateName: aString.
+				                 self updateBehaviorPanelVisibility: aString.
+				                 self updateName ] ] fork
 ]
 
 { #category : 'accessing' }
@@ -371,6 +372,14 @@ StRenameClassPreviewPresenter >> scopes: aCollection [
 StRenameClassPreviewPresenter >> selectorInput [
 
 	^ newNameInput
+]
+
+{ #category : 'accessing' }
+StRenameClassPreviewPresenter >> terminateUpdateProcess [
+
+	updateProcess ifNotNil: [ 
+		updateProcess terminate.
+		updateProcess := nil ]
 ]
 
 { #category : 'accessing' }
@@ -447,7 +456,7 @@ StRenameClassPreviewPresenter >> updateOkButtonState [
 { #category : 'accessing' }
 StRenameClassPreviewPresenter >> updatePreviewAfterDelay: aString token: aToken [
 
-	aToken == previewUpdateToken ifFalse: [ ^ self ].
+
 
 	self validateName: aString.
 	self updateBehaviorPanelVisibility: aString.
