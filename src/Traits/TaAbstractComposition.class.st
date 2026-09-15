@@ -148,7 +148,8 @@ TaAbstractComposition >> compile: selector into: aClass [
 		ifTrue: [ self saveSourceCode: sourceCode ofMethod: newMethod ]
 		ifFalse: [ newMethod sourcePointer: method sourcePointer ].
 
-	aClass classify: selector under: (self protocolForMethod: method).
+	"This step should not announce anything in the system since I am used to build method dictionaries of my users."
+	self class codeChangeAnnouncer suspendAllWhile: [ aClass classify: selector under: (self protocolForMethod: method) ].
 
 	aClass addSelectorSilently: selector withMethod: newMethod.
 
