@@ -15,6 +15,23 @@ Class {
 }
 
 { #category : 'instance creation' }
+SymbolTable class >> bootstrapFromSymbols: aListOfSymbols [
+
+	"Create a new symbol table with a new list of existing symbols.
+	Add them to the table, do not intern them.
+	Interning will create new symbols in the table if not there.
+	
+	Used for image bootstrapping only"
+	
+	| table |
+	table := self new.
+	aListOfSymbols do: [ :e | table unsafeAdd: e ].
+	table compactSymbols.
+	^ table
+		
+]
+
+{ #category : 'instance creation' }
 SymbolTable class >> fromSymbols: aListOfSymbols [
 
 	| table |
@@ -162,6 +179,14 @@ SymbolTable >> selectorThatStartsCaseSensitive: leadingCharacters skipping: skip
 		] after: skipSym.
 
 	^nil
+]
+
+{ #category : 'private' }
+SymbolTable >> unsafeAdd: aSymbol [
+
+	"Add the argument unconditionally to the symbol table.
+	Do not validate if this is a symbol or not."
+	^ newSymbols add: aSymbol
 ]
 
 { #category : 'adding' }

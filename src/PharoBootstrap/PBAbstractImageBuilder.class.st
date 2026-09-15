@@ -370,7 +370,7 @@ PBAbstractImageBuilder >> createInitialObjects [
 			self log: 'Installing symbol table'.
 			self bootstrapInterpreter evaluateCode: 'SymbolTableSemaphore disable'.
 			self bootstrapInterpreter evaluateCode: 'Symbol initialize.
-	SymbolTable classPool at: #SystemSymbolTable put: (SymbolTable bootrapFromSymbols: ByteSymbol allInstances)'.
+	SymbolTable classPool at: #SystemSymbolTable put: (SymbolTable bootstrapFromSymbols: ByteSymbol allInstances)'.
 			objectSpace symbolTable: (EPInternalSymbolTable new objectSpace: objectSpace).
 
 
