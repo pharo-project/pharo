@@ -23,8 +23,8 @@ Class {
 SHPreferences class >> activeStyleTable [
 
 	^ activeStyleTable ifNil: [
-			  activeStyleTable := 'Default'.
-			  activeStyleTable ]
+		self activeStyleTable: 'Default'.
+		activeStyleTable ]
 ]
 
 { #category : 'accessing' }
