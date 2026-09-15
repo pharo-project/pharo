@@ -452,16 +452,6 @@ StRenameClassPreviewPresenter >> updateOkButtonState [
 		ifFalse: [ buttonOk disable ]
 ]
 
-{ #category : 'accessing' }
-StRenameClassPreviewPresenter >> updatePreviewAfterDelay: aString token: aToken [
-
-
-
-	self validateName: aString.
-	self updateBehaviorPanelVisibility: aString.
-	self updateName
-]
-
 { #category : 'update' }
 StRenameClassPreviewPresenter >> updateScopeList [
 
