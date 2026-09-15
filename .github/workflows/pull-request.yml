@@ -1,0 +1,263 @@
+name: Pull Request Validation
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+  checks: write
+  pull-requests: write
+
+jobs:
+  bootstrap:
+    name: Bootstrap image
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Fetch requirements
+        run: |
+          set -eux
+          BUILD_NUMBER="${GITHUB_RUN_NUMBER}" BOOTSTRAP_ARCH=64 bash ./bootstrap/scripts/2-download.sh
+
+      - name: Bootstrap
+        run: |
+          set -eux
+          BUILD_NUMBER="${GITHUB_RUN_NUMBER}" BOOTSTRAP_ARCH=64 bash ./bootstrap/scripts/3-prepare.sh
+
+      - name: Metacello
+        run: |
+          set -eux
+          BUILD_NUMBER="${GITHUB_RUN_NUMBER}" BOOTSTRAP_ARCH=64 bash ./bootstrap/scripts/4-installMetacello.sh
+
+      - name: Upload bootstrap artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: bootstrap64-base
+          path: |
+            build/bootstrap-cache/*.zip
+            build/bootstrap-cache/*.sources
+            bootstrap/scripts/**
+            tests/**
+          if-no-files-found: error
+
+  iso-tests:
+    name: ISO tests (${{ matrix.project }})
+    needs: bootstrap
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - project: SUnit
+          - project: Kernel
+            packages: "'Kernel-Tests' 'Kernel-CodeModel-Tests'"
+          - project: Compiler
+            packages: "'OpalCompiler-Tests' 'DebugInfo-Tests' 'Kernel-Extended-Tests' 'Kernel-Tests-WithCompiler'"
+          - project: Files
+          - project: Zinc-Character-Encoding
+          - project: System-SessionManager
+          - project: System-Platforms
+          - project: Announcements-Core
+          - project: Shift-ClassBuilder
+          - project: System-CommandLineHandler
+          - project: FileSystem
+          - project: System-Finalization
+          - project: System-Support
+          - project: System-Version
+          - project: Collections
+          - project: Refactoring
+          - project: DebuggerCLI
+          - project: Clap
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Download bootstrap image
+        uses: actions/download-artifact@v4
+        with:
+          name: bootstrap64-base
+          path: .
+
+      - name: Run ISO test stage
+        shell: bash
+        run: |
+          set -eux
+
+          unzip -o build/bootstrap-cache/metacello.zip
+
+          PHARO_MAJOR=$(git describe --tags --first-parent | cut -d'-' -f 1 | cut -c 2- | cut -d'.' -f 1-1)
+          PHARO_MINOR=$(git describe --tags --first-parent | cut -d'-' -f 1 | cut -c 2- | cut -d'.' -f 2-2)
+          PHARO_SHORT="${PHARO_MAJOR}${PHARO_MINOR}"
+
+          bash ./bootstrap/scripts/getPharoVM.sh "${PHARO_SHORT}"
+
+          ./pharo metacello.image metacello install --save --strict --signalErrorOnWarning "filetree://../src" SUnit --groups Core
+
+          if [ -n "${{ matrix.packages }}" ]; then
+            ./pharo metacello.image metacello install --save --strict --signalErrorOnWarning "filetree://../src" "${{ matrix.project }}" --groups Tests
+            ./pharo metacello.image test --junit-xml-output --stage-name "Tests-ISO-${{ matrix.project }}" ${{ matrix.packages }}
+          else
+            ./pharo metacello.image metacello install --save --strict --signalErrorOnWarning "filetree://../src" "${{ matrix.project }}" --groups Tests
+            ./pharo metacello.image test --junit-xml-output --stage-name "Tests-ISO-${{ matrix.project }}" --project-name "${{ matrix.project }}"
+          fi
+
+      - name: Publish ISO test results
+        if: always()
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        with:
+          check_name: "ISO tests (${{ matrix.project }})"
+          files: |
+            **/*.xml
+            **/test-results/**/*.xml
+            **/test-reports/**/*.xml
+
+      - name: Upload ISO test artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: iso-tests-${{ matrix.project }}
+          path: |
+            **/*.xml
+            **/test-results/**
+            **/test-reports/**
+          if-no-files-found: ignore
+
+  full-image:
+    name: Full image
+    needs: [bootstrap, iso-tests]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Download bootstrap image
+        uses: actions/download-artifact@v4
+        with:
+          name: bootstrap64-base
+          path: .
+
+      - name: Install full image
+        run: |
+          set -eux
+          BUILD_NUMBER="${GITHUB_RUN_NUMBER}" BOOTSTRAP_ARCH=64 bash ./bootstrap/scripts/5-installIDE.sh
+
+      - name: Upload full image artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: bootstrap64-full
+          path: |
+            build/bootstrap-cache/*.zip
+            build/bootstrap-cache/*.sources
+            bootstrap/scripts/**
+            tests/**
+          if-no-files-found: error
+
+  platform-tests:
+    name: ${{ matrix.os }}
+    needs: full-image
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    defaults:
+      run:
+        shell: bash
+
+    env:
+      STAGE_NAME: "Tests-${{ matrix.os }}-64"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Download full image
+        uses: actions/download-artifact@v4
+        with:
+          name: bootstrap64-full
+          path: .
+
+      - name: Run bootstrapped image tests
+        run: |
+          set -eux
+          bash ./bootstrap/scripts/runTests.sh 64 "${STAGE_NAME}"
+
+      - name: Publish test results
+        if: always()
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        with:
+          check_name: "Pharo tests (${{ matrix.os }})"
+          files: |
+            **/*.xml
+            **/test-results/**/*.xml
+            **/test-reports/**/*.xml
+
+      - name: Upload test artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pharo-test-results-${{ matrix.os }}
+          path: |
+            **/*.xml
+            **/*.fuel
+            **/PharoDebug*.log
+            **/crash*.dmp
+            **/progress*.log
+          if-no-files-found: ignore
+
+  cli-tests:
+    name: Command line tests
+    needs: full-image
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Download full image
+        uses: actions/download-artifact@v4
+        with:
+          name: bootstrap64-full
+          path: .
+
+      - name: Run command line tests
+        run: |
+          set -eux
+          bash ./bootstrap/scripts/runPharoCommandLineTests.sh
+
+      - name: Publish CLI test results
+        if: always()
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        with:
+          check_name: "CLI tests"
+          files: |
+            **/*.xml
+            **/report.xml
+
+      - name: Upload CLI test artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pharo-cli-test-results
+          path: |
+            **/*.xml
+            **/report.xml
+          if-no-files-found: ignore
