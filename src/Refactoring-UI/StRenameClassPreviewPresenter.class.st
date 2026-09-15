@@ -159,8 +159,7 @@ StRenameClassPreviewPresenter >> connectPresenters [
 	buttonOk action: [ self accept ] .
 	buttonBrowseMethod action: [ self browseMethods ].
 	
-	newNameInput whenTextChangedDo: [ :text |
-		self schedulePreviewUpdate: text ] .
+	newNameInput whenTextChangedDo: [ :text | self schedulePreviewUpdate: text ] .
 	newNameInput whenSubmitDo: [ :text | self accept ]
 ]
 
@@ -481,24 +480,21 @@ StRenameClassPreviewPresenter >> updateTablePresenter [
 
 { #category : 'accessing' }
 StRenameClassPreviewPresenter >> validateName: aString [
-	
+
 	| message |
-	
 	driver newName: aString.
 	driver createAndSetNewRefactoring.
 	message := driver checkApplicabilityPreconditions.
-	
-	message 
-		ifNil: [ 
-			nameIsValid := true.
-			validationLabel label: '' ]
-		ifNotNil: [ 
-			nameIsValid := false.
-			validationLabel label: 
-				(message asText
-            		addAttribute: (TextColor color:
-                	(Color r: 1.0 g: 0.5 b: 0.31));
-            		yourself) ]
+
+	message
+		ifNil: [
+				nameIsValid := true.
+				validationLabel label: '' ]
+		ifNotNil: [
+				nameIsValid := false.
+				validationLabel label: (message asText
+						 addAttribute: (TextColor color: Smalltalk ui theme dangerTextColor);
+						 yourself) ]
 ]
 
 { #category : 'accessing' }
