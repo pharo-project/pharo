@@ -226,8 +226,8 @@ MCMethodDefinition >> loadWithLoader: aLoader [
 	actualClass ifNil: [ Error signal: 'Class not found: ' , className printString ].
 
 	compiler := actualClass compiler
-		            permitFaulty: aLoader isStrict not;
-		            permitUndeclared: aLoader isStrict not;
+		            strict: aLoader isStrict;
+						permitShadowing: true;
 		            source: source.
 
 	method := compiler compileOrFail.
