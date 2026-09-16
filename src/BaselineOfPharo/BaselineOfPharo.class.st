@@ -104,6 +104,23 @@ BaselineOfPharo class >> newToolsRepository [
 	^ (self externalProjectNamed: 'NewTools') repository
 ]
 
+{ #category : 'accessing - external projects' }
+BaselineOfPharo class >> pastels [
+	<externalProject>
+	
+	^ PharoExternalProject 
+		newName: 'Pastels' 
+		owner: 'Ducasse' 
+		project: 'Pastels'
+		version: 'master' 
+]
+
+{ #category : 'repository urls' }
+BaselineOfPharo class >> pastelsRepository [
+
+	^ (self externalProjectNamed: 'Pastels') repository
+]
+
 { #category : 'class initialization' }
 BaselineOfPharo class >> reset [
 	<script>
