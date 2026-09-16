@@ -4,7 +4,7 @@ Extension { #name : 'TEasilyThemed' }
 TEasilyThemed >> deny: aStringOrText [
 	"Open a denial dialog."
 
-	^self deny: aStringOrText title: 'Access Denied' translated
+	^self deny: aStringOrText title: 'Access Denied'
 ]
 
 { #category : '*Morphic-Deprecated' }

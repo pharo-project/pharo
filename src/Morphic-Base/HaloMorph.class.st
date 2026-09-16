@@ -288,7 +288,7 @@ HaloMorph >> addDirectionHandles [
 		borderWidth: 2; borderColor: (Color green orColorUnlike: patchColor).
 	self positionDirectionShaft: directionShaft.
 	self addMorphFront: directionShaft.
-	directionShaft setCenteredBalloonText: 'Set forward direction' translated;
+	directionShaft setCenteredBalloonText: 'Set forward direction' ;
 		on: #mouseDown send: #doDirection:with: to: self;
 		on: #mouseMove send: #trackDirectionArrow:with: to: self;
 		on: #mouseUp send: #setDirection:with: to: self.
@@ -302,7 +302,7 @@ HaloMorph >> addDirectionHandles [
 			align: centerHandle bounds center with: directionArrowAnchor.
 	centerHandle wantsYellowButtonMenu: false.
 	self addMorph: centerHandle.
-	centerHandle setCenteredBalloonText: 'Rotation center (hold down the shift key and drag from here to change it)' translated;
+	centerHandle setCenteredBalloonText: 'Rotation center (hold down the shift key and drag from here to change it)' ;
 			on: #mouseDown send: #prepareToTrackCenterOfRotation:with: to: self;
 			on: #mouseMove send: #trackCenterOfRotation:with: to: self;
 			on: #mouseUp send: #setCenterOfRotation:with: to: self
@@ -403,7 +403,7 @@ HaloMorph >> addGraphicalHandle: formKey at: aPoint on: eventName send: selector
 	| handle |
 	handle := self addGraphicalHandleFrom: formKey at: aPoint.
 	handle on: eventName send: selector to: recipient.
-	handle setBalloonText: (target balloonHelpTextForHandle: handle) translated.
+	handle setBalloonText: (target balloonHelpTextForHandle: handle) .
 	^ handle
 ]
 
@@ -463,7 +463,7 @@ HaloMorph >> addHandleAt: aPoint color: aColor icon: iconName on: eventName send
 
 	handle on: #mouseUp send: #endInteraction to: self.
 	handle on: eventName send: selector to: recipient.
-	handle setBalloonText: (target balloonHelpTextForHandle: handle) translated.
+	handle setBalloonText: (target balloonHelpTextForHandle: handle).
 
 	^ handle
 ]

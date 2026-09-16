@@ -98,14 +98,14 @@ GraphicFontSettings class >> resetAllFontToDefaultButton [
 		arguments: {}
 		getEnabled: nil
 		getLabel: nil
-		help: 'Force all system fonts to be the default one' translated)
+		help: 'Force all system fonts to be the default one')
 		label:
 			(self theme
 				newRowIn: self
 				for:
 					{(AlphaImageMorph new
 						image: (self iconNamed: #smallRedo)).
-					(self theme buttonLabelForText: 'Force all' translated)});
+					(self theme buttonLabelForText: 'Force all')});
 		yourself
 ]
 

@@ -43,7 +43,7 @@ RubFindReplaceDialogWindow >> buildWindowMenu [
 	| aMenu |
 	aMenu := self theme newMenuIn: self for: self.
 	aMenu
-		addToggle: 'Close' translated
+		addToggle: 'Close'
 		target: self
 		selector: #closeBoxHit
 		getStateSelector: nil
@@ -200,18 +200,18 @@ RubFindReplaceDialogWindow >> newContentMorph [
 					self newFindTextEntryMorph.
 					(self newRow: {
 						(self newColumn: {
-							(self newCheckboxFor: self getSelected: #isRegex setSelected: #isRegex: getEnabled: nil label: 'Regular expression' translated help: nil).
-							(self newCheckboxFor: self getSelected: #caseSensitive setSelected: #caseSensitive: getEnabled: nil label: 'Case sensitive' translated help: nil).
-							(self newCheckboxFor: self getSelected: #entireWordsOnly setSelected: #entireWordsOnly: getEnabled: nil label: 'Entire words only'  translated help: nil) }
+							(self newCheckboxFor: self getSelected: #isRegex setSelected: #isRegex: getEnabled: nil label: 'Regular expression'  help: nil).
+							(self newCheckboxFor: self getSelected: #caseSensitive setSelected: #caseSensitive: getEnabled: nil label: 'Case sensitive' help: nil).
+							(self newCheckboxFor: self getSelected: #entireWordsOnly setSelected: #entireWordsOnly: getEnabled: nil label: 'Entire words only'  help: nil) }
 						).
 						(self newColumn: {
-							(self newCheckboxFor: self getSelected: #searchBackwards setSelected: #searchBackwards: getEnabled: nil label: 'Search backwards'  translated help: nil).
-							(self newCheckboxFor: self getSelected: #wrapAround setSelected: #wrapAround: getEnabled: nil label: 'Wrap around'  translated help: nil) }
+							(self newCheckboxFor: self getSelected: #searchBackwards setSelected: #searchBackwards: getEnabled: nil label: 'Search backwards'  help: nil).
+							(self newCheckboxFor: self getSelected: #wrapAround setSelected: #wrapAround: getEnabled: nil label: 'Wrap around'  help: nil) }
 						) }
 					) }
 				)
 			).
-			(self newLabelGroup: {'Replace with: ' translated -> self newReplaceTextEntryMorph}) vResizing: #shrinkWrap}
+			(self newLabelGroup: {'Replace with: ' -> self newReplaceTextEntryMorph}) vResizing: #shrinkWrap}
 		)
 ]
 
@@ -224,8 +224,8 @@ RubFindReplaceDialogWindow >> newFindButton [
 			action: #find
 			arguments: nil
 			getEnabled: #findEnabled
-			label: 'Find' translated
-			help: 'Find the next occurrence' translated)
+			label: 'Find' 
+			help: 'Find the next occurrence')
 		hResizing: #rigid;
 		vResizing: #rigid
 ]
@@ -242,7 +242,7 @@ RubFindReplaceDialogWindow >> newFindTextEntryMorph [
 			set: #findText:
 			class: String
 			getEnabled: nil
-			help: 'Enter the text to find' translated
+			help: 'Enter the text to find'
 			entryCompletion: entryCompletion)
 		acceptOnCR: false;
 		ghostText: 'Text to find';
@@ -272,8 +272,8 @@ RubFindReplaceDialogWindow >> newReplaceAllButton [
 		action: #replaceAll
 		arguments: nil
 		getEnabled: #replaceAllEnabled
-		label: 'Replace all' translated
-		help: 'Replace all occurrences' translated) hResizing: #rigid;
+		label: 'Replace all'
+		help: 'Replace all occurrences') hResizing: #rigid;
 		 vResizing: #rigid
 ]
 
@@ -286,8 +286,8 @@ RubFindReplaceDialogWindow >> newReplaceButton [
 		action: #replace
 		arguments: nil
 		getEnabled: #replaceEnabled
-		label: 'Replace' translated
-		help: 'Replace the next occurrence' translated) hResizing: #rigid;
+		label: 'Replace'
+		help: 'Replace the next occurrence') hResizing: #rigid;
 		 vResizing: #rigid
 ]
 
@@ -305,7 +305,7 @@ RubFindReplaceDialogWindow >> newReplaceTextEntryMorph [
 		set: #replaceText:
 		class: String
 		getEnabled: nil
-		help: 'Enter the replacement text' translated
+		help: 'Enter the replacement text'
 		entryCompletion: entryCompletion)
 			acceptOnCR: true;
 			crAction: [:t | self replace];
@@ -400,7 +400,7 @@ RubFindReplaceDialogWindow >> textView [
 
 { #category : 'user-interface' }
 RubFindReplaceDialogWindow >> title [
-	^ 'Find & Replace' translated
+	^ 'Find & Replace' 
 ]
 
 { #category : 'updating' }

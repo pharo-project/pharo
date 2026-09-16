@@ -4,7 +4,7 @@ Extension { #name : 'BorderedMorph' }
 BorderedMorph >> changeBorderColor: evt [
 	self theme
 		chooseColorIn: self
-		title: 'Choose Color' translated
+		title: 'Choose Color' 
 		color: self borderStyle color
 		for: [ :newColor | self borderColor: newColor ]
 ]
@@ -28,7 +28,7 @@ BorderedMorph >> changeBorderWidth: evt [
 	handle showBalloon:
 'Move cursor farther from
 this point to increase border width.
-Click when done.' translated hand: evt hand.
+Click when done.'  hand: evt hand.
 	handle startStepping
 ]
 

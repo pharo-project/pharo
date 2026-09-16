@@ -18,7 +18,7 @@ RubSmalltalkCodeMode class >> editingModeMenuOn: aBuilder [
 
 	<contextMenu>
 	<RubEditingModeMenu>
-	(aBuilder item: self label translated)
+	(aBuilder item: self label)
 		action: [:model | model textArea editingMode: self new]
 ]
 
@@ -38,88 +38,88 @@ RubSmalltalkCodeMode class >> menuOn: aBuilder [
 
 	<contextMenu>
 	<RubSmalltalkCodeMenu>
-	(aBuilder item: #'Do it' translated)
+	(aBuilder item: #'Do it')
 		order: 1;
 		keyText: 'd';
 		selector: #doIt;
 		help: nil;
 		iconName: #smallDoIt.
-	(aBuilder item: #'Do & print it' translated)
+	(aBuilder item: #'Do & print it')
 		keyText: 'p';
 		selector: #printIt;
 		help: nil;
 		iconName: #smallPrintIt.
-	(aBuilder item: #'Do & inspect it' translated)
+	(aBuilder item: #'Do & inspect it')
 		keyText: 'i';
 		selector: #inspectIt;
 		help: nil;
 		iconName: #smallInspectIt.
-	(aBuilder item: #'Do & browse its class' translated)
+	(aBuilder item: #'Do & browse its class')
 		keyText: 'b';
 		selector: #browseFullClass;
 		help: nil;
 		iconName: #smallSystemBrowser.
-	(aBuilder item: #'Debug it' translated)
+	(aBuilder item: #'Debug it')
 		keyText: 'D';
 		selector: #debugIt;
 		help: nil;
 		iconName: #smallDebug;
 		withSeparatorAfter.
-	(aBuilder item: #'Find...' translated)
+	(aBuilder item: #'Find...')
 		keyText: 'f';
 		selector: #find;
 		help: nil;
 		iconName: #smallFind.
-	(aBuilder item: #'Find again' translated)
+	(aBuilder item: #'Find again')
 		keyText: 'g';
 		selector: #findAgain;
 		help: nil;
 		iconName: #smallFind.
 	self extendedSearchMenuOn: aBuilder.
-	(aBuilder item: #'Redo' translated)
+	(aBuilder item: #'Redo')
 		keyText: 'Z';
 		selector: #redo;
 		help: nil;
 		iconName: #smallRedo.
-	(aBuilder item: #Undo translated)
+	(aBuilder item: #Undo)
 		keyText: 'z';
 		selector: #undo;
 		help: nil;
 		iconName: #smallUndo;
 		withSeparatorAfter.
-	(aBuilder item: #Copy translated)
+	(aBuilder item: #Copy)
 		keyText: 'c';
 		selector: #copySelection;
 		help: nil;
 		iconName: #smallCopy.
-	(aBuilder item: #Cut translated)
+	(aBuilder item: #Cut)
 		keyText: 'x';
 		selector: #cut;
 		help: nil;
 		iconName: #smallCut.
-	(aBuilder item: #Paste translated)
+	(aBuilder item: #Paste)
 		keyText: 'v';
 		selector: #paste;
 		help: nil;
 		iconName: #smallPaste.
-	(aBuilder item: #'Paste Recent' translated)
+	(aBuilder item: #'Paste Recent')
 		selector: #pasteRecent;
 		help: nil;
 		iconName: #smallCopy.
-	(aBuilder item: #'Indent' translated)
+	(aBuilder item: #'Indent')
 		keyText: 'R';
 		selector: #indent;
 		help: nil.
-	(aBuilder item: #'Outdent' translated)
+	(aBuilder item: #'Outdent')
 		keyText: 'L';
 		selector: #outdent;
 		help: nil.
-	(aBuilder item: #'Widen selection' translated)
+	(aBuilder item: #'Widen selection')
 		keyText: '2';
 		selector: #widenSelectionOfIt;
 		help: nil;
 		iconName: #smallFullscreen.
-	(aBuilder item: #'Compare selection to clipboard' translated)
+	(aBuilder item: #'Compare selection to clipboard')
 		keyText: 'C';
 		selector: #compareToClipboard;
 		help: nil;
@@ -128,11 +128,11 @@ RubSmalltalkCodeMode class >> menuOn: aBuilder [
 	aBuilder model
 		ifNotNil: [ :mod |
 			mod model
-				ifNotNil: [ (aBuilder item: #Accept translated)
+				ifNotNil: [ (aBuilder item: #Accept)
 						keyText: 's';
 						selector: #accept;
 						iconName: #smallOk.
-					(aBuilder item: #Cancel translated)
+					(aBuilder item: #Cancel)
 						keyText: 'l';
 						selector: #cancel;
 						iconName: #smallCancel ] ]

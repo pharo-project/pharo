@@ -96,7 +96,7 @@ PragmaSetting >> description [
 
 	^ description
 		ifNil: [description := '']
-		ifNotNil: [ description translated ]
+		ifNotNil: [ description ]
 ]
 
 { #category : 'accessing' }
@@ -154,7 +154,7 @@ PragmaSetting >> icon: aForm [
 
 { #category : 'accessing' }
 PragmaSetting >> label [
-	^ label ifNil: [self name translated] ifNotNil: [label translated]
+	^ label ifNil: [self name] ifNotNil: [label]
 ]
 
 { #category : 'accessing' }

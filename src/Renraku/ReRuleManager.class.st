@@ -168,8 +168,8 @@ ReRuleManager class >> ruleProfileSettingsOn: aBuilder [
 		parent: #qualityAssistant;
 		target: self;
 		default: #setDefaultProfile;
-		domainValues: {'Default' translated -> #setDefaultProfile .
-							'Beginner' translated -> #setBeginnerProfile }
+		domainValues: {'Default' -> #setDefaultProfile .
+							'Beginner' -> #setBeginnerProfile }
 ]
 
 { #category : 'settings' }

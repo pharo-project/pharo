@@ -476,16 +476,16 @@ Morph >> addHaloActionsTo: aMenu [
 		bigTitle: self externalName
 	];
 	add: 'delete' selector: #dismissViaHalo.
-	subMenu balloonTextForLastItem: 'Delete this object -- warning -- can be destructive!' translated.
+	subMenu balloonTextForLastItem: 'Delete this object -- warning -- can be destructive!'.
 
 	self maybeAddCollapseItemTo: subMenu.
 	subMenu add: 'grab' selector: #openInHand.
-	subMenu balloonTextForLastItem: 'Pick this object up -- warning, since this removes it from its container, it can have adverse effects.' translated.
+	subMenu balloonTextForLastItem: 'Pick this object up -- warning, since this removes it from its container, it can have adverse effects.'.
 
 	subMenu addLine.
 
 	subMenu add: 'resize'  selector: #resizeFromMenu.
-	subMenu balloonTextForLastItem: 'Change the size of this object' translated.
+	subMenu balloonTextForLastItem: 'Change the size of this object' .
 
 	subMenu add: 'duplicate'  selector: #maybeDuplicateMorph.
 	subMenu balloonTextForLastItem: 'Hand me a copy of this object'.
@@ -809,11 +809,11 @@ Morph >> addToggleItemsToHaloMenu: aMenu [
 	#(#(#resistsRemovalString #toggleResistsRemoval 'whether I should be reistant to easy deletion via the pink X handle' true) #(#stickinessString #toggleStickiness 'whether I should be resistant to a drag done by mousing down on me' true) #(#lockedString #lockUnlockMorph 'when "locked", I am inert to all user interactions' true) #(#hasClipSubmorphsString #changeClipSubmorphs 'whether the parts of objects within me that are outside my bounds should be masked.' false) #(#hasDirectionHandlesString #changeDirectionHandles 'whether direction handles are shown with the halo' false) #(#hasDragAndDropEnabledString #changeDragAndDrop 'whether I am open to having objects dropped into me' false))
 		do: [ :each |
 			aMenu addUpdating: each first selector: each second.
-			aMenu balloonTextForLastItem: each third translated ].
+			aMenu balloonTextForLastItem: each third  ].
 	self couldHaveRoundedCorners
 		ifFalse: [ ^ self ].
 	aMenu addUpdating: #roundedCornersString selector: #toggleCornerRounding.
-	aMenu balloonTextForLastItem: 'whether my corners should be rounded' translated
+	aMenu balloonTextForLastItem: 'whether my corners should be rounded' 
 ]
 
 { #category : 'utilities' }
@@ -1186,11 +1186,11 @@ Morph >> balloonHelpTextForHandle: aHandle [
 	"Answer a string providing balloon help for the
 	given halo handle"
 	(aHandle eventHandler mouseSelectorsInclude: #doRecolor:with:) ifTrue: [^ 'Change color'].
-	(aHandle eventHandler mouseSelectorsInclude: #mouseDownInDimissHandle:with:) ifTrue: [^ 'Remove from screen' translated].
+	(aHandle eventHandler mouseSelectorsInclude: #mouseDownInDimissHandle:with:) ifTrue: [^ 'Remove from screen' ].
 	#(#(#addFullHandles 'More halo handles')  #(#chooseEmphasisOrAlignment 'Emphasis & alignment') #(#chooseFont 'Change font') #(#chooseNewGraphicFromHalo 'Choose a new graphic') #(#chooseStyle 'Change style') #(#doDebug:with: 'Debug') #(#doDirection:with: 'Choose forward direction') #(#doDup:with: 'Duplicate')  #(#doMenu:with: 'Menu') #(#doGrab:with: 'Pick up')  #(#mouseDownInCollapseHandle:with: 'Collapse') #(#mouseDownOnHelpHandle: 'Help')  #(#prepareToTrackCenterOfRotation:with: 'Move object or set center of rotation') #(#startDrag:with: 'Move') #(#startGrow:with: 'Change size') #(#startRot:with: 'Rotate') #(#startScale:with: 'Change scale')#(#trackCenterOfRotation:with: 'Set center of rotation') )
 		do: [:pair | (aHandle eventHandler mouseSelectorsInclude: pair first)
 				ifTrue: [^ pair last]].
-	^ 'unknown halo handle' translated
+	^ 'unknown halo handle' 
 ]
 
 { #category : 'accessing' }
@@ -2410,7 +2410,7 @@ Morph >> duplicateMorph: evt [
 Morph >> editBalloonHelpContent: aString [
 	| reply |
 	reply := self morphicUIManager
-		multiLineRequest: 'Edit the balloon help text for ' translated, self externalName
+		multiLineRequest: 'Edit the balloon help text for ' , self externalName
 		initialAnswer: (aString ifNil: [self noHelpString] ifNotNil: [aString])
 		answerHeight: 200.
 	reply ifNil: [^ self].  "User cancelled out of the dialog"
@@ -3297,35 +3297,35 @@ Morph >> handlesTextInputEvent: evt [
 
 { #category : 'layout - menu' }
 Morph >> hasClipLayoutCellsString [
-	^ (self clipLayoutCells) -> 'clip to cell size' translated
+	^ (self clipLayoutCells) -> 'clip to cell size' 
 ]
 
 { #category : 'drawing' }
 Morph >> hasClipSubmorphsString [
 	"Answer a string that represents the clip-submophs checkbox"
-	^ (self clipSubmorphs) -> 'provide clipping' translated
+	^ (self clipSubmorphs) -> 'provide clipping' 
 ]
 
 { #category : 'menus' }
 Morph >> hasDirectionHandlesString [
-	^ (self wantsDirectionHandles) ->  'direction handles' translated
+	^ (self wantsDirectionHandles) ->  'direction handles' 
 ]
 
 { #category : 'layout - menu' }
 Morph >> hasDisableTableLayoutString [
-	^ (self disableTableLayout) -> 'disable layout in tables' translated
+	^ (self disableTableLayout) -> 'disable layout in tables' 
 ]
 
 { #category : 'text-anchor' }
 Morph >> hasDocumentAnchorString [
-	^ (self textAnchorType == #document) ->  'Document' translated
+	^ (self textAnchorType == #document) ->  'Document' 
 ]
 
 { #category : 'menus' }
 Morph >> hasDragAndDropEnabledString [
 	"Answer a string to characterize the drag & drop status of the
 	receiver"
-	^ (self dragNDropEnabled) -> 'accept drops' translated
+	^ (self dragNDropEnabled) -> 'accept drops' 
 ]
 
 { #category : 'drop shadows' }
@@ -3347,7 +3347,7 @@ Morph >> hasDropShadow: aBool [
 
 { #category : 'drop shadows' }
 Morph >> hasDropShadowString [
-	^ (self hasDropShadow) ->  'show shadow' translated
+	^ (self hasDropShadow) ->  'show shadow' 
 ]
 
 { #category : 'accessing - extension' }
@@ -3375,7 +3375,7 @@ Morph >> hasHalo: aBool [
 
 { #category : 'text-anchor' }
 Morph >> hasInlineAnchorString [
-	^ (self textAnchorType == #inline)-> 'Inline' translated
+	^ (self textAnchorType == #inline)-> 'Inline' 
 ]
 
 { #category : 'testing' }
@@ -3388,7 +3388,7 @@ Morph >> hasKeyboardFocus [
 
 { #category : 'layout - menu' }
 Morph >> hasNoLayoutString [
-	^ (self layoutPolicy isNil) -> 'no layout' translated
+	^ (self layoutPolicy isNil) -> 'no layout' 
 ]
 
 { #category : 'structure' }
@@ -3401,7 +3401,7 @@ Morph >> hasOwner: aMorph [
 
 { #category : 'text-anchor' }
 Morph >> hasParagraphAnchorString [
-	^ (self textAnchorType == #paragraph) -> 'Paragraph' translated
+	^ (self textAnchorType == #paragraph) -> 'Paragraph' 
 ]
 
 { #category : 'accessing - properties' }
@@ -3418,17 +3418,17 @@ Morph >> hasProperty: aSymbol [
 Morph >> hasProportionalLayoutString [
 	| layout |
 	^ ((layout := self layoutPolicy) isNotNil
-			and: [layout isProportionalLayout]) -> 'proportional layout' translated
+			and: [layout isProportionalLayout]) -> 'proportional layout' 
 ]
 
 { #category : 'layout - menu' }
 Morph >> hasReverseCellsString [
-	^ (self reverseTableCells) -> 'reverse table cells' translated
+	^ (self reverseTableCells) -> 'reverse table cells' 
 ]
 
 { #category : 'layout - menu' }
 Morph >> hasRubberBandCellsString [
-	^ (self rubberBandCells) -> 'rubber band cells' translated
+	^ (self rubberBandCells) -> 'rubber band cells' 
 ]
 
 { #category : 'submorphs - accessing' }
@@ -3440,7 +3440,7 @@ Morph >> hasSubmorphs [
 Morph >> hasTableLayoutString [
 	| layout |
 	^ ((layout := self layoutPolicy) isNotNil
-			and: [layout isTableLayout]) ->   'table layout' translated
+			and: [layout isTableLayout]) ->   'table layout' 
 ]
 
 { #category : 'menu' }
@@ -3637,7 +3637,7 @@ Morph >> inspectAt: aPoint event: evt [
 				chooseFrom: (morphs
 						collect: [:t |t class name asString])
 				values: morphs
-				title: ('inspect whom? (deepest at top)' translated).
+				title: ('inspect whom? (deepest at top)' ).
 	target ifNil:[^self].
 	target inspectInMorphic: evt
 ]
@@ -3977,7 +3977,7 @@ Morph >> layoutMenuPropertyString: aSymbol from: currentSetting [
 										index := idx]].
 					index < aSymbol size
 						ifTrue: [stream nextPutAll: (aSymbol copyFrom: index to: aSymbol size) asLowercase]].
-	^ (aSymbol == currentSetting) -> wording translated
+	^ (aSymbol == currentSetting) -> wording 
 ]
 
 { #category : 'layout - properties' }
@@ -4163,7 +4163,7 @@ Morph >> lockUnlockMorph [
 { #category : 'menus' }
 Morph >> lockedString [
 	"Answer the string to be shown in a menu to represent the 'locked' status"
-	^ (self isLocked) -> 'be locked' translated
+	^ (self isLocked) -> 'be locked' 
 ]
 
 { #category : 'submorphs - accessing' }
@@ -4611,7 +4611,7 @@ Morph >> nearestOwnerThat: conditionBlock [
 
 { #category : 'halos and balloon help' }
 Morph >> noHelpString [
-	^ 'Help not yet supplied' translated
+	^ 'Help not yet supplied' 
 ]
 
 { #category : 'submorphs - accessing' }
@@ -5511,7 +5511,7 @@ Morph >> resistsRemoval: aBoolean [
 Morph >> resistsRemovalString [
 	"Answer the string to be shown in a menu to represent the
 	'resistsRemoval' status"
-	^ (self resistsRemoval) -> 'resist being deleted' translated
+	^ (self resistsRemoval) -> 'resist being deleted' 
 ]
 
 { #category : 'meta-actions' }
@@ -5640,9 +5640,9 @@ Morph >> roundedCornersString [
 	"Answer the string to put in a menu that will invite the user to
 	switch to the opposite corner-rounding mode"
 	^ (self wantsRoundedCorners
-		ifTrue: ['<yes>' translated]
-		ifFalse: ['<no>' translated])
-		, ('round corners' translated)
+		ifTrue: ['<yes>' ]
+		ifFalse: ['<no>' ])
+		, ('round corners' )
 ]
 
 { #category : 'layout - properties' }
@@ -6169,7 +6169,7 @@ Morph >> stepTime [
 Morph >> stickinessString [
 	"Answer the string to be shown in a menu to represent the stickiness status"
 
-	^ (self isSticky) ->  'resist being picked up' translated
+	^ (self isSticky) ->  'resist being picked up' 
 ]
 
 { #category : 'accessing' }
@@ -6372,7 +6372,7 @@ Morph >> targetWith: evt [
 				chooseFrom: (self potentialTargets
 						collect: [:t | t class name asString])
 				values: self potentialTargets
-				title: (self externalName, ' targets...' translated).
+				title: (self externalName, ' targets...' ).
 	newTarget ifNil:[^self].
 	self target: newTarget
 ]

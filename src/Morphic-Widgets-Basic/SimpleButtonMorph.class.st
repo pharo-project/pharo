@@ -110,7 +110,7 @@ SimpleButtonMorph >> addTargetingMenuItems: aCustomMenu hand: aHandMorph [
 	aCustomMenu addLine.
 	aCustomMenu add: 'set target' selector: #targetWith:.
 	target
-		ifNotNil: [aCustomMenu add: 'clear target' translated selector: #clearTarget]
+		ifNotNil: [aCustomMenu add: 'clear target' selector: #clearTarget]
 ]
 
 { #category : 'accessing' }
@@ -286,9 +286,9 @@ SimpleButtonMorph >> setActWhen [
 	| selections |
 	selections := #(#buttonDown #buttonUp #whilePressed #startDrag ).
 	actWhen := self morphicUIManager
-				chooseFrom: (selections collect: [:t | t translated])
+				chooseFrom: (selections collect: [:t | t ])
 				values: selections
-				title: 'Choose one of the following conditions' translated
+				title: 'Choose one of the following conditions'
 ]
 
 { #category : 'menu' }
@@ -298,7 +298,7 @@ SimpleButtonMorph >> setActionSelector [
 	newSel := self morphicUIManager
 		request:
 'Please type the selector to be sent to
-the target when this button is pressed' translated
+the target when this button is pressed'
 		initialAnswer: actionSelector.
 	newSel isEmptyOrNil ifFalse: [self actionSelector: newSel]
 ]
@@ -309,7 +309,7 @@ SimpleButtonMorph >> setArguments [
 	newArgs := self morphicUIManager
 		request:
 			'Please type the arguments to be sent to the target
-when this button is pressed separated by periods' translated
+when this button is pressed separated by periods'
 		initialAnswer: (String streamContents: [ :str | arguments do: [ :arg | arg printOn: str. str nextPutAll: '. ' ] ]).
 	newArgs isEmptyOrNil ifFalse: [
 			newArgsArray := self class compiler
@@ -329,7 +329,7 @@ SimpleButtonMorph >> setLabel [
 
 	| newLabel |
 	newLabel := self morphicUIManager
-		request: 'Please enter a new label for this button' translated
+		request: 'Please enter a new label for this button'
 		initialAnswer: self label.
 	newLabel isEmptyOrNil ifFalse: [self labelString: newLabel]
 ]

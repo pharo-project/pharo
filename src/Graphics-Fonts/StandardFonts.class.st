@@ -301,7 +301,7 @@ StandardFonts class >> systemFontAspects [
 
 { #category : 'font accessing' }
 StandardFonts class >> systemFontAspectsAndLabels [
-	^ {#defaultFont -> 'Default font' translated. #listFont -> 'List font'  translated. #menuFont -> 'Menu font'  translated. #windowTitleFont -> 'Window title'  translated. #balloonFont -> 'Balloon help font'  translated. #codeFont -> 'Code font'  translated. #buttonFont -> 'Button font'  translated. #haloFont -> 'Halo font'  translated }
+	^ {#defaultFont -> 'Default font' . #listFont -> 'List font'  . #menuFont -> 'Menu font'  . #windowTitleFont -> 'Window title'  . #balloonFont -> 'Balloon help font' . #codeFont -> 'Code font' . #buttonFont -> 'Button font' . #haloFont -> 'Halo font'  }
 ]
 
 { #category : 'font accessing' }

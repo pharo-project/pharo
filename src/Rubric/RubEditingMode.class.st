@@ -21,34 +21,34 @@ RubEditingMode class >> buildTabKeymapOn: aBuilder [
 
 { #category : 'menu' }
 RubEditingMode class >> extendedSearchMenuOn: aBuilder [
-	(aBuilder item: #'extendedSearch' translated)
-		label: 'Code search...' translated;
+	(aBuilder item: #'extendedSearch')
+		label: 'Code search...';
 		withSeparatorAfter;
 		with: [
-					(aBuilder item: #'Senders of it' translated)
+					(aBuilder item: #'Senders of it')
 						keyText: 'n';
 						selector: #sendersOfIt.
-					(aBuilder item: #'Implementors of it' translated)
+					(aBuilder item: #'Implementors of it')
 						keyText: 'm';
 						selector: #implementorsOfIt.
-					(aBuilder item: #'References to it' translated)
+					(aBuilder item: #'References to it')
 						keyText: 'N';
 						selector: #referencesToIt;
 						withSeparatorAfter.
-					(aBuilder item: #'Selectors containing it' translated)
+					(aBuilder item: #'Selectors containing it')
 						keyText: 'W';
 						selector: #methodNamesContainingIt.
-					(aBuilder item: #'Case insensitive method literal strings with it' translated)
+					(aBuilder item: #'Case insensitive method literal strings with it')
 						keyText: 'E';
 						selector: #methodStringsContainingit.
-					(aBuilder item: #'Case sensitive method literal strings with it' translated)
+					(aBuilder item: #'Case sensitive method literal strings with it')
 						keyText: 'U';
 						selector: #methodCaseSensitiveStringsContainingIt.
-					(aBuilder item: #'Method source with it' translated)
+					(aBuilder item: #'Method source with it')
 						selector: #methodSourceContainingIt;
 						withSeparatorAfter.
-					(aBuilder item: #'Class names containing it' translated) selector: #classNamesContainingIt.
-					(aBuilder item: #'Class comments with it' translated) selector: #classCommentsContainingIt ]
+					(aBuilder item: #'Class names containing it') selector: #classNamesContainingIt.
+					(aBuilder item: #'Class comments with it') selector: #classCommentsContainingIt ]
 ]
 
 { #category : 'menu' }
