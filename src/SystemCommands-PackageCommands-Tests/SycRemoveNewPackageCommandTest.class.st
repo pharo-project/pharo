@@ -4,8 +4,9 @@ Class {
 	#instVars : [
 		'mockPackage'
 	],
-	#category : 'SystemCommands-PackageCommands-Tests',
-	#package : 'SystemCommands-PackageCommands-Tests'
+	#category : 'SystemCommands-PackageCommands-Tests-Tests',
+	#package : 'SystemCommands-PackageCommands-Tests',
+	#tag : 'Tests'
 }
 
 { #category : 'accessing' }
