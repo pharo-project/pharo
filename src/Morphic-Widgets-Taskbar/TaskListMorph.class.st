@@ -16,9 +16,45 @@ Class {
 }
 
 { #category : 'testing' }
-TaskListMorph class >> isNavigationEvent: aKeyboardEvent [
+TaskListMorph class >> isAltLeftArrow: event [
 
-	^ aKeyboardEvent asKeyCombination = Character tab alt or: [ aKeyboardEvent asKeyCombination = Character tab alt shift ]
+	^ event asKeyCombination = Character arrowLeft alt
+]
+
+{ #category : 'testing' }
+TaskListMorph class >> isAltRightArrow: event [
+
+	^ event asKeyCombination = Character arrowRight alt
+]
+
+{ #category : 'testing' }
+TaskListMorph class >> isAltTab: event [
+
+	^ event asKeyCombination = Character tab alt
+]
+
+{ #category : 'testing' }
+TaskListMorph class >> isAltTabShift: event [
+
+	^ event asKeyCombination = Character tab alt shift
+]
+
+{ #category : 'testing' }
+TaskListMorph class >> isNavigationEvent: event [
+
+	^ (self isNextTab: event) or: [ self isPreviousTab: event ]
+]
+
+{ #category : 'testing' }
+TaskListMorph class >> isNextTab: event [
+
+	^ (self isAltTab: event) or: [ self isAltRightArrow: event ]
+]
+
+{ #category : 'testing' }
+TaskListMorph class >> isPreviousTab: event [
+
+	^ (self isAltTabShift: event) or: [ self isAltLeftArrow: event ]
 ]
 
 { #category : 'settings' }
@@ -238,9 +274,9 @@ TaskListMorph >> minimumExtent [
 { #category : 'event handling' }
 TaskListMorph >> moveTabSelection: event [
 
-	event shiftPressed
-		ifTrue: [ self selectPreviousTask ]
-		ifFalse: [ self selectNextTask ]
+	(self class isNextTab: event)
+		ifTrue: [ self selectNextTask ]
+		ifFalse: [ self selectPreviousTask ]
 ]
 
 { #category : 'open/close' }
@@ -263,6 +299,7 @@ TaskListMorph >> postOpenInWorld: aWorld [
 TaskListMorph >> preOpenInWorld: aWorld [
 
 	"Nothing to do"
+	tasks do: [ :task | task cleanCachedThumb ]
 ]
 
 { #category : 'cycling' }
@@ -405,7 +442,7 @@ TaskListMorph >> updateTask: task extent: previewExtent [
 	scaleFactor := previewExtent x / self defaultPreviewExtent x.
 	labelTruncation := (25 * scaleFactor) asInteger max: 8.
 	fontSize := (11 * scaleFactor) asInteger max: 8.
-	thumb := task morph taskThumbnailOfSize: previewExtent.
+	thumb := task taskThumbnailOfSize: previewExtent.
 	thumb extent: previewExtent.
 
 	thumbWrapper := (self thumbWrapper: task) addMorphBack: thumb; yourself.
