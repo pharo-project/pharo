@@ -32,7 +32,7 @@ SycOpenDebuggingPointsInMethodMenuCommand >> defaultMenuIconName [
 { #category : 'accessing' }
 SycOpenDebuggingPointsInMethodMenuCommand >> defaultMenuItemName [
 
-	^ 'Debug Points' 
+	^ 'Break' 
 ]
 
 { #category : 'accessing' }
