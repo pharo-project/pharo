@@ -29,6 +29,15 @@ jobs:
           set -eux
           BUILD_NUMBER="${GITHUB_RUN_NUMBER}" BOOTSTRAP_ARCH=64 bash ./bootstrap/scripts/3-prepare.sh
 
+      - name: Upload bootstrap artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bootstrap64-base
+          path: |
+            build/bootstrap-cache/*.image
+          if-no-files-found: error
+
       - name: Metacello
         run: |
           set -eux
