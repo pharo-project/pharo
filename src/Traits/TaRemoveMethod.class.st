@@ -43,6 +43,12 @@ TaRemoveMethod >> methods [
 ]
 
 { #category : 'accessing' }
+TaRemoveMethod >> methodsCompilationInfo [
+
+	^ inner methodsCompilationInfo reject: [ :info | removedSelectors includes: info selector ]
+]
+
+{ #category : 'accessing' }
 TaRemoveMethod >> removedSelectors [
 	^ removedSelectors
 ]
