@@ -75,7 +75,7 @@ ScrollPane class >> example2 [
 		[:x | 0 to: 1000 by: 100 do:
 			[:y |
 				point :=  x@y.
-				textMorph := TextMorph new contents: point asString.
+				textMorph := TextMorph new contents: point displayString.
 				textMorph position: point.
 				pasteUpMorph addMorph: textMorph
 			]

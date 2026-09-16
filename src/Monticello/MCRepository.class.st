@@ -32,7 +32,7 @@ MCRepository class >> fromUrl: aUrlOrString [
 			(each class includesSelector: #urlSchemes)
 			and: [ each urlSchemes includes: url scheme ] ]
 		ifFound: [ :repositoryClass | repositoryClass basicFromUrl: url ]
-		ifNone: [ MCRepositoryError signal: 'Cannot instantiate a repository from the url: ', url asString ]
+		ifNone: [ MCRepositoryError signal: 'Cannot instantiate a repository from the url: ', url displayString ]
 ]
 
 { #category : 'testing' }

@@ -69,7 +69,7 @@ KMCategory >> displayStringOn: stream [
 	super displayStringOn: stream.
 	^ stream
 		nextPut: $(;
-		nextPutAll: self name asString;
+		print: self name;
 		nextPut: $)
 ]
 
