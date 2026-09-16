@@ -108,6 +108,21 @@ MockSettings class >> defaultDirectoryName: aFileReference [
 ]
 
 { #category : 'settings' }
+MockSettings class >> mockAction [ 
+	"Mimics a real action setting: a unary action method with no matching
+	 keyword setter — this is the shape that #19869 exported incorrectly."
+
+	^ self
+]
+
+{ #category : 'settings' }
+MockSettings class >> mockActionNodeOn: aBuilder [ 
+	<mocksystemsettings>
+	(aBuilder button: #mockAction)
+		label: 'Mock action setting'
+]
+
+{ #category : 'settings' }
 MockSettings class >> monticelloSettingsOn: aBuilder [
 	<mocksystemsettings>
 	(aBuilder group: #monticello)

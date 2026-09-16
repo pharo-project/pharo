@@ -88,6 +88,25 @@ SystemSettingsPersistenceTest >> testAccessibleRealValues [
 ]
 
 { #category : 'tests' }
+SystemSettingsPersistenceTest >> testActionSettingIsNotExported [
+	"An action/button setting has no persistable value, so #exportSettingAction
+	 answers nil for it. Exporting one invokes the action as a side effect through
+	 #findCurrentSettingValue, and emits a keyword selector that does not exist
+	 (see #19869)."
+
+	| actionNode |
+	actionNode := systemSettings nodeNamed: #mockAction.
+
+	"Guard: make sure a nil result really comes from #hasValue and not from an
+	 earlier guard in #exportSettingAction, which would make this test vacuous."
+	self assert: actionNode item target isClass.
+	self deny: actionNode item isTransient.
+
+	self deny: actionNode item hasValue.
+	self assert: actionNode item exportSettingAction isNil
+]
+
+{ #category : 'tests' }
 SystemSettingsPersistenceTest >> testAllStoredSettings [
 	"There is no preference file. It should not generate an error."
 
@@ -299,6 +318,19 @@ SystemSettingsPersistenceTest >> testUpdateAllSettings [
 	systemSettings updateSettingNodes.
 	self assert: self booleanSettingNode realValue equals: false.
 	self assert: self rangeSettingNode realValue equals: 55
+]
+
+{ #category : 'tests' }
+SystemSettingsPersistenceTest >> testValueHoldingSettingIsStillExported [ 
+	"A setting that does hold a value still exports. This is the other side of the
+	 #hasValue guard, which must filter out action settings and nothing else.
+	 #booleanSetting is declared without a #default:, so #hasDefault is false and it
+	 exports unconditionally."
+
+	| node |
+	node := systemSettings nodeNamed: #booleanSetting.
+	self assert: node item hasValue.
+	self assert: node item exportSettingAction isNotNil
 ]
 
 { #category : 'tests - loading' }

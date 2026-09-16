@@ -232,10 +232,14 @@ StartupPreferencesLoader >> add: anAction [
 	^ action
 ]
 
-{ #category : 'private' }
+{ #category : 'adding' }
 StartupPreferencesLoader >> addAtStartup: aCollection inDirectory: aFileReference named: fileName [
+
+	| file |
 	aFileReference ensureCreateDirectory.
-	aFileReference / fileName writeStreamDo: [ :stream | stream nextPutAll: (self buildStreamFor: aCollection) ]
+	file := aFileReference / fileName.
+	self backUpAndRemove: file.
+	file writeStreamDo: [ :stream | stream nextPutAll: (self buildStreamFor: aCollection) ]
 ]
 
 { #category : 'script generation' }
@@ -288,6 +292,34 @@ StartupPreferencesLoader >> addTemplateForStartupInDirectory: aFileReference nam
 					stream nextPutAll: self templateString ] ]
 		ifTrue: [ InformativeNotification signal: 'This file already exists' ].
 	(aFileReference / fileName) inspect
+]
+
+{ #category : 'adding' }
+StartupPreferencesLoader >> backUpAndRemove: aFileReference [
+	"Move an existing startup script aside before it gets rewritten, keeping the
+	 previous version as a backup.
+
+	 #writeStreamDo: does not truncate, so writing shorter content over a longer
+	 existing file leaves the previous tail on disk. That tail then fails to parse
+	 at startup and takes every setting in the file down with it (see #19869).
+
+	 The backup deliberately drops the .st extension. StartupPreferencesHandler
+	 collects startup scripts with #filesMatching: '*.st', so a backup still named
+	 .st would be loaded on the next startup alongside the current file, and would
+	 replay exactly the entries it exists to preserve a copy of.
+
+	 Mirrors SystemSettingsPersistence>>removeFileReference, which solves the same
+	 problem for the 'Store Settings' pipeline and picks 'old.txt' for the same
+	 reason."
+
+	| backup |
+	aFileReference ifAbsent: [ ^ self ].
+	backup := aFileReference withExtension: 'old.txt'.
+	"#renameTo: fails if the destination already exists."
+	backup ensureDelete.
+	"#renameTo: mutates its receiver's path, so rename a copy and leave
+	 aFileReference pointing at the now-free original path."
+	aFileReference copy renameTo: backup basename
 ]
 
 { #category : 'private' }

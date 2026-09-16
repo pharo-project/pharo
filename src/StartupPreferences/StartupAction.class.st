@@ -62,8 +62,14 @@ StartupAction >> execute [
 				ifFalse: [[ self class compiler evaluate: self code ]].
 	correctlyExecuted := true.
 	block on: Halt, Error do: [ :ex |
+		"A broken StartupAction -- e.g. one referencing a selector that does not
+		 exist, see #19869 -- must never interrupt the rest of the startup
+		 sequence nor open a blocking Debugger on an end user's machine. Record
+		 it for diagnosis, mark it as not executed so a later corrected export
+		 can still apply, and move on."
 		StartupPreferencesLoader default errors add: {ex. self}.
-		ex pass ].
+		correctlyExecuted := false.
+		ex return ].
 	self hasBeenExecuted: correctlyExecuted
 ]
 

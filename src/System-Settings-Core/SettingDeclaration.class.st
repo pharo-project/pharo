@@ -150,13 +150,14 @@ SettingDeclaration >> emptyList [
 { #category : 'export' }
 SettingDeclaration >> exportSettingAction [
 	"Return the startup actions that set this setting when the value differs from the default.
-	
+
 	Returns: a StartupAction or nil if no changes
-	
+
 	It is up to the caller to filter nil results"
 
 	target isClass ifFalse: [ ^ nil ].
 	self isTransient ifTrue: [ ^ nil ].
+	self hasValue ifFalse: [ ^ nil ].
 
 	^ (self hasDefault not or: [ self default ~= self findCurrentSettingValue ])
 		  ifTrue: [ self startupAction ]
