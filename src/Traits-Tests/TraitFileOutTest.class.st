@@ -32,8 +32,10 @@ TraitFileOutTest >> setUp [
 
 	td := self newTrait: #TD traits: {  }.
 	td compile: 'd' classified: #cat1.
+	td class compile: 'dClass'classified: #cat1.
 	tc := self newTrait: #TC traits: td.
 	tc compile: 'c' classified: #cat1.
+	tc class compile: 'cClass'classified: #cat1.
 	tb := self newTrait: #TB traits: td.
 	tb compile: 'b' classified: #cat1.
 	ta := self newTrait: #TA traits: tb + tc @ { (#cc -> #c) } - { #c }.
@@ -45,7 +47,7 @@ TraitFileOutTest >> setUp [
 	cb compile: 'cb' classified: #cat1.
 
 	"make the class of cb also use tc:"
-	cb class trait: ta classTrait + tc
+	cb class trait: ta classTrait + tc classTrait
 ]
 
 { #category : 'running' }
@@ -79,8 +81,8 @@ TraitFileOutTest >> testFileOutCategory [
 	cb := self class environment at: #CB.
 	self assert: cb traitComposition asString equals: 'TA'.
 	self assertCollection: cb selectors asSet includesAll: #( #cb #a #b #cc ). "test classSide traitComposition of CB"
-	self assert: cb classSide traitComposition asString equals: 'TA classTrait + TC'.
-	self assertCollection: cb classSide selectors asSet includesAll: #( #d #c )
+	self assert: cb classSide traitComposition asString equals: 'TA classTrait + TC classTrait'.
+	self assertCollection: cb classSide selectors asSet includesAll: #( #dClass #cClass )
 ]
 
 { #category : 'tests' }
