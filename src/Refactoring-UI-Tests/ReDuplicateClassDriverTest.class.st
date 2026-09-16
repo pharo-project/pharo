@@ -127,3 +127,19 @@ ReDuplicateClassDriverTest >> testDuplicateClassWithTrait [
 		assert: classAddition traitComposition asString
 		equals: ReClassToBeDuplicatedWithTraits traitCompositionString
 ]
+{ #category : 'tests' }
+ReDuplicateClassDriverTest >> testDuplicateClassWithoutTagDoesNotCrash [
+
+	| driver dialog |
+	testingEnvironment := RBClassEnvironment classes: {
+		                      ReChangeMock.
+		                      ReChangeMock superclass }.
+
+	driver := ReDuplicateClassDriver className: ReChangeMock name.
+	driver scopes: { testingEnvironment }.
+
+	self
+		shouldnt: [ dialog := driver newRequestClassDialog ]
+		raise: NotFound.
+	self assert: dialog isNotNil
+]
