@@ -62,7 +62,8 @@ StClassAndMethodsSelectionPresenter >> basePackageName: aString [
 { #category : 'accessing' }
 StClassAndMethodsSelectionPresenter >> basePackageTagName: aString [
 
-	tagPresenter selectItem: aString
+	(aString isNotNil and: [ tagPresenter items includes: aString ])
+		ifTrue: [ tagPresenter selectItem: aString ]
 ]
 
 { #category : 'accessing' }
