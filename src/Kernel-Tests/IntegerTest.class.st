@@ -1223,6 +1223,14 @@ IntegerTest >> testReadFrom [
 	self assert: '.s could be confused with a ScaledDecimal' equals: s
 ]
 
+{ #category : 'tests - converting' }
+IntegerTest >> testReadFromFail [ 
+
+	self assert: (Integer readFrom: '_1' ifFail: [nil]) isNil.
+	self assert: (Integer readFrom: '\\\' ifFail: [nil]) isNil.
+	self assert: (Integer readFrom: 'hey' ifFail: [false]) not.
+]
+
 { #category : 'tests - instance creation' }
 IntegerTest >> testReadFromWithError [
 	"Ensure that a string that does not represent an integer raises an error."
