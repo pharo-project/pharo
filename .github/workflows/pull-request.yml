@@ -35,14 +35,14 @@ jobs:
           BUILD_NUMBER="${GITHUB_RUN_NUMBER}" BOOTSTRAP_ARCH=64 bash ./bootstrap/scripts/4-installMetacello.sh
 
       - name: Upload bootstrap artifacts
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: bootstrap64-base
           path: |
             build/bootstrap-cache/*.zip
+            build/bootstrap-cache/*.image
             build/bootstrap-cache/*.sources
-            bootstrap/scripts/**
-            tests/**
           if-no-files-found: error
 
   iso-tests:
