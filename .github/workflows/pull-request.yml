@@ -87,6 +87,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        path: repo
         with:
           fetch-depth: 0
 
@@ -109,13 +110,13 @@ jobs:
 
           bash ./bootstrap/scripts/getPharoVM.sh "${PHARO_SHORT}"
 
-          ./pharo metacello.image metacello install --save --strict --signalErrorOnWarning "filetree://../src" SUnit --groups Core
+          ./pharo metacello.image metacello install --save --strict --signalErrorOnWarning "filetree://repo/src" SUnit --groups Core
 
           if [ -n "${{ matrix.packages }}" ]; then
-            ./pharo metacello.image metacello install --save --strict --signalErrorOnWarning "filetree://../src" "${{ matrix.project }}" --groups Tests
+            ./pharo metacello.image metacello install --save --strict --signalErrorOnWarning "filetree://repo/src" "${{ matrix.project }}" --groups Tests
             ./pharo metacello.image test --junit-xml-output --stage-name "Tests-ISO-${{ matrix.project }}" ${{ matrix.packages }}
           else
-            ./pharo metacello.image metacello install --save --strict --signalErrorOnWarning "filetree://../src" "${{ matrix.project }}" --groups Tests
+            ./pharo metacello.image metacello install --save --strict --signalErrorOnWarning "filetree://repo/src" "${{ matrix.project }}" --groups Tests
             ./pharo metacello.image test --junit-xml-output --stage-name "Tests-ISO-${{ matrix.project }}" --project-name "${{ matrix.project }}"
           fi
 
