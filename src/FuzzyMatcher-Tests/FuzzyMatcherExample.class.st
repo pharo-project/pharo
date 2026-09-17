@@ -68,7 +68,7 @@ FuzzyMatcherExample class >> exampleSelectors [
 
 	^ self new
 		pattern: '::::::::::';
-		elements: Symbol selectorTable asArray;
+		elements: SymbolTable system selectorTable asArray;
 		open
 ]
 

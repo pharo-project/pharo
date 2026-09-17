@@ -488,7 +488,7 @@ ReAbstractTransformation >> uniqueMethodNameFor: anInteger [
 	index := 0.
 
 	[name := before , index printString , after.
-	(Symbol findInterned: name) isNotNil]
+	(SymbolTable system findInterned: name) isNotNil]
 			whileTrue: [index := index + 1].
 	^name asSymbol
 ]

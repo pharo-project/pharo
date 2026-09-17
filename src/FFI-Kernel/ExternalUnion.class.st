@@ -60,7 +60,7 @@ ExternalUnion class >> compileFields: specArray withAccessors: aSymbol [
 		selfRefering
 			ifTrue: [ externalType := ExternalType void asPointerType ]
 			ifFalse: [
-				externalType ifNil: [ "non-atomic" Symbol hasInterned: fieldType ifTrue: [ :sym | externalType := ExternalType structTypeNamed: sym ] ].
+				externalType ifNil: [ "non-atomic" (SymbolTable system findInterned: fieldType) ifNotNil: [ :sym | externalType := ExternalType structTypeNamed: sym ] ].
 				externalType ifNil: [
 					self trace: '(' , fieldType , ' is void)'.
 					externalType := ExternalType void ].
