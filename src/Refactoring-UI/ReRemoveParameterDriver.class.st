@@ -8,7 +8,6 @@ Class {
 		'originalMessage',
 		'newMessage',
 		'class',
-		'shouldEscape',
 		'removerPresenterClass'
 	],
 	#category : 'Refactoring-UI-Drivers',
@@ -44,9 +43,10 @@ ReRemoveParameterDriver >> breakingChoices [
 
 { #category : 'breaking changes' }
 ReRemoveParameterDriver >> browseOverrides [
-
 	| overrides |
+
 	overrides := refactoring violations.
+	
 	(Smalltalk tools toolNamed: #messageList)
 		browse: (overrides collect: [ :ref | ref realClass lookupSelector: newMessage selector ])
 		asImplementorsOf: newMessage selector
@@ -73,28 +73,22 @@ ReRemoveParameterDriver >> defaultSelectDialog [
 
 { #category : 'user interface' }
 ReRemoveParameterDriver >> gatherUserInput [
-
 	| failedConditions |
+	
 	failedConditions := OrderedCollection empty.
 	[
 		newMessage := self requestNewMessage.
-		shouldEscape ifTrue: [ ^ false ].
+		newMessage ifNil: [ ^ false ].
 		self configureMessage.
 		self isMethodDefinitionUnchanged ifTrue: [ ^ false ].
 		failedConditions := refactoring failedApplicabilityPreconditions.
-		failedConditions do: [ :cond |
-				self informDialog
-					message: cond errorString;
-					title: 'Invalid method signature';
-					openModal ] ] doWhileFalse: [ failedConditions isEmpty ].
+		failedConditions do: [ :condition |
+			self inform: condition errorString ] 
+	] 
+	doWhileFalse: [ 
+		failedConditions isEmpty ].
+	
 	^ true
-]
-
-{ #category : 'initialization' }
-ReRemoveParameterDriver >> initialize [
-
-	super initialize.
-	shouldEscape := false
 ]
 
 { #category : 'refactoring' }
@@ -136,11 +130,12 @@ ReRemoveParameterDriver >> removeParameter [
 { #category : 'accessing' }
 ReRemoveParameterDriver >> removedArgumentName [
 	"The argument that is not in the resulting signature, neither as itself nor renamed."
-
 	| renamedNames |
+	
 	renamedNames := newMessage renameMap collect: [ :each | each name ].
 	^ originalMessage argumentNames detect: [ :each |
-		  (newMessage arguments includes: each) not and: [ (renamedNames includes: each) not ] ]
+		  (newMessage arguments includes: each) not 
+		  	and: [ (renamedNames includes: each) not ] ]
 ]
 
 { #category : 'accessing' }
@@ -166,14 +161,14 @@ ReRemoveParameterDriver >> requestDialogWith: methodName [
 
 { #category : 'user interface' }
 ReRemoveParameterDriver >> requestNewMessage [
-
 	| parameters methodName dialog |
+	
 	parameters := originalMessage argumentNames.
 	methodName := RBMethodName selector: originalMessage selector arguments: parameters.
 	dialog := self requestDialogWith: methodName.
 	dialog cancelled ifTrue: [
-			shouldEscape := true.
-			^ self ].
+		^ nil ].
+	
 	^ dialog methodName
 ]
 

@@ -30,19 +30,24 @@ StMethodArgumentsRemoverPresenter >> argumentsListActions [
 		  yourself
 ]
 
+{ #category : 'TOREMOVE' }
+StMethodArgumentsRemoverPresenter >> cancelled [
+	
+	^ self withWindowDo: #cancelled
+]
+
 { #category : 'initialization' }
 StMethodArgumentsRemoverPresenter >> connectPresenters [
 
 	selectorInput whenTextChangedDo: [ :text | self updateLabel ].
 	argumentsList whenSelectionChangedDo: [ :selection |
-		selection selectedItem ifNotNil: [ selectorInput text: (self defaultSelectorAfterRemoving: selection selectedItem name) ] ].
-	argumentsList displayColor: [ :arg |
-			arg = argumentsList selection selectedItem
-				ifTrue: [ Color lightGray ]
-				ifFalse: [ self theme textColor ] ].
+		selection selectedItem ifNotNil: [ 
+			selectorInput text: (self defaultSelectorAfterRemoving: selection selectedItem name) ] ].
+	
 	argumentsList
 		items: (methodName arguments collect: [ :arg | RBArgumentName name: arg ]);
 		actions: self argumentsListActions.
+	
 	argumentsList items ifNotEmpty: [ argumentsList selectIndex: 1 ]
 ]
 
@@ -75,7 +80,9 @@ StMethodArgumentsRemoverPresenter >> defaultSelectorAfterRemoving: argumentName 
 { #category : 'accessing' }
 StMethodArgumentsRemoverPresenter >> getParametersOrder [
 
-	^ argumentsList items reject: [ :arg | arg = argumentsList selection selectedItem ] thenCollect: [ :arg | arg newName ]
+	^ argumentsList items 
+		reject: [ :arg | arg = argumentsList selection selectedItem ] 
+		thenCollect: [ :arg | arg newName ]
 ]
 
 { #category : 'accessing' }
@@ -90,10 +97,7 @@ StMethodArgumentsRemoverPresenter >> initializeDialogWindow: aModalPresenter [
 	aModalPresenter
 		initialExtent: 300 @ 300;
 		title: 'Remove argument';
-		addButton: 'Cancel' do: [ :presenter |
-				presenter
-					beCancel;
-					close ];
+		addButton: 'Cancel' do: [ :presenter | presenter beCancel; close ];
 		addDefaultButton: 'Accept' do: [ :presenter | self renameMethodAndClose: presenter ]
 ]
 
@@ -106,9 +110,7 @@ StMethodArgumentsRemoverPresenter >> initializePresenters [
 
 	selectorInput autoAccept: true.
 	selectorInput text: methodName selector.
-	previewResult label: methodName methodName.
-
-	self setFocus
+	previewResult label: methodName methodName
 ]
 
 { #category : 'accessing' }
@@ -121,6 +123,12 @@ StMethodArgumentsRemoverPresenter >> invalidArgNames [
 StMethodArgumentsRemoverPresenter >> invalidArgNames: aSet [
 
 	invalidArgNames := aSet
+]
+
+{ #category : 'accessing' }
+StMethodArgumentsRemoverPresenter >> methodName [
+
+	^ methodName
 ]
 
 { #category : 'actions' }
@@ -177,14 +185,6 @@ StMethodArgumentsRemoverPresenter >> request: aString initialAnswer: aSecondStri
 StMethodArgumentsRemoverPresenter >> requestor: aMockObject [
 
 	requestor := aMockObject
-]
-
-{ #category : 'initialization' }
-StMethodArgumentsRemoverPresenter >> setFocus [
-
-	self focusOrder
-		add: argumentsList;
-		add: selectorInput
 ]
 
 { #category : 'initialization' }
