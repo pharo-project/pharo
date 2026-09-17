@@ -101,7 +101,7 @@ jobs:
         run: |
           set -eux
 
-          unzip -o build/bootstrap-cache/metacello.zip
+          unzip -o metacello.zip
 
           PHARO_MAJOR=$(git describe --tags --first-parent | cut -d'-' -f 1 | cut -c 2- | cut -d'.' -f 1-1)
           PHARO_MINOR=$(git describe --tags --first-parent | cut -d'-' -f 1 | cut -c 2- | cut -d'.' -f 2-2)
@@ -124,6 +124,7 @@ jobs:
         uses: EnricoMi/publish-unit-test-result-action@v2
         with:
           check_name: "ISO tests (${{ matrix.project }})"
+		  comment_mode: off
           files: |
             **/*.xml
             **/test-results/**/*.xml
@@ -212,6 +213,7 @@ jobs:
         uses: EnricoMi/publish-unit-test-result-action@v2
         with:
           check_name: "Pharo tests (${{ matrix.os }})"
+		  comment_mode: off
           files: |
             **/*.xml
             **/test-results/**/*.xml
@@ -257,6 +259,7 @@ jobs:
         uses: EnricoMi/publish-unit-test-result-action@v2
         with:
           check_name: "CLI tests"
+		  comment_mode: off
           files: |
             **/*.xml
             **/report.xml
