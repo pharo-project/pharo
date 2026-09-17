@@ -351,7 +351,7 @@ ReInteractionDriver >> requestDialog: aDialog [
 ReInteractionDriver >> runRefactoring [
 	"Configures the refactoring, gathers user input and applies the changes."
 
-	[ 
+	[
 		self configureRefactoring.
 		self gatherUserInput ifFalse: [ ^ self "user abandons" ].
 		self hasFailedApplicabilityPreconditions ifTrue: [ ^ self "applicability failed" ].
@@ -359,8 +359,8 @@ ReInteractionDriver >> runRefactoring [
 		self hasFailedBehaviorPreservingPreconditions
 			ifTrue: [ self handleBreakingChanges ]
 			ifFalse: [ self applyChanges ] ]
-	on: Error
-	do: [ :e | self inform: 'The refactoring could not be executed: ' , e messageText ]
+		on: Error
+		do: [ :e | self inform: 'The refactoring could not be executed: ' , e messageText ]
 ]
 
 { #category : 'accessing' }

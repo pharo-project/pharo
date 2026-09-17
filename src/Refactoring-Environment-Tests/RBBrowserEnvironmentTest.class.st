@@ -246,19 +246,24 @@ RBBrowserEnvironmentTest >> testBrowserEnvironment [
 { #category : 'tests - environments' }
 RBBrowserEnvironmentTest >> testClassEnvironment [
 	| aClassEnvironment |
+	
 	aClassEnvironment := RBClassEnvironment
 		onEnvironment: universalEnvironment
 		classes: (Array with: Object with: Object class).
+	
 	self universalTestFor: aClassEnvironment.
+	
 	self deny: universalEnvironment isClassEnvironment.
 	self assert: aClassEnvironment isClassEnvironment.
 	self assert: (aClassEnvironment packages size) equals: 1.
 	self assert: (aClassEnvironment implementorsOf: #printString) numberSelectors equals: 1.
 
-	self assert: (RBClassEnvironment class: Class) selectors size
-    	  equals: Class methods size.
-	self assert: (RBClassEnvironment class: RBRefactoringTestTrait) selectors size
-    	  equals: RBRefactoringTestTrait methods size
+	self 
+		assert: (RBClassEnvironment class: Class) selectors size
+    	  	equals: Class methods size.
+	self 
+		assert: (RBClassEnvironment class: RBRefactoringTestTrait) selectors size
+    	  	equals: RBRefactoringTestTrait methods size
 ]
 
 { #category : 'tests' }
