@@ -124,7 +124,7 @@ jobs:
         uses: EnricoMi/publish-unit-test-result-action@v2
         with:
           check_name: "ISO tests (${{ matrix.project }})"
-		  comment_mode: off
+          comment_mode: off
           files: |
             **/*.xml
             **/test-results/**/*.xml
@@ -213,7 +213,7 @@ jobs:
         uses: EnricoMi/publish-unit-test-result-action@v2
         with:
           check_name: "Pharo tests (${{ matrix.os }})"
-		  comment_mode: off
+          comment_mode: off
           files: |
             **/*.xml
             **/test-results/**/*.xml
@@ -259,7 +259,7 @@ jobs:
         uses: EnricoMi/publish-unit-test-result-action@v2
         with:
           check_name: "CLI tests"
-		  comment_mode: off
+          comment_mode: off
           files: |
             **/*.xml
             **/report.xml
