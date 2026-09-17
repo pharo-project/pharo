@@ -17,6 +17,12 @@ Class {
 	#package : 'Refactoring-UI'
 }
 
+{ #category : 'accessing' }
+StMethodArgumentsRemoverPresenter >> argumentsList [
+
+	^ argumentsList
+]
+
 { #category : 'actions' }
 StMethodArgumentsRemoverPresenter >> argumentsListActions [
 
@@ -30,6 +36,15 @@ StMethodArgumentsRemoverPresenter >> argumentsListActions [
 		  yourself
 ]
 
+{ #category : 'testing' }
+StMethodArgumentsRemoverPresenter >> canRemoveArgumentAt: anIndex [
+	"Answer whether the argument at anIndex can be removed. The first argument
+	carries the method name, so it can only be removed when it is the sole
+	argument (the method then becomes unary)."
+
+	^ anIndex > 1 or: [ methodName arguments size <= 1 ]
+]
+
 { #category : 'TOREMOVE' }
 StMethodArgumentsRemoverPresenter >> cancelled [
 	
@@ -41,29 +56,36 @@ StMethodArgumentsRemoverPresenter >> connectPresenters [
 
 	selectorInput whenTextChangedDo: [ :text | self updateLabel ].
 	argumentsList whenSelectionChangedDo: [ :selection |
-		selection selectedItem ifNotNil: [ 
-			selectorInput text: (self defaultSelectorAfterRemoving: selection selectedItem name) ] ].
-	
+		selection selectedItem ifNotNil: [ selectorInput text: (self defaultSelectorAfterRemoving: selection selectedItem name) ] ].
+
 	argumentsList
 		items: (methodName arguments collect: [ :arg | RBArgumentName name: arg ]);
 		actions: self argumentsListActions.
-	
-	argumentsList items ifNotEmpty: [ argumentsList selectIndex: 1 ]
+
+	argumentsList items ifNotEmpty: [ argumentsList selectIndex: self defaultRemovalIndex ]
 ]
 
 { #category : 'layout' }
 StMethodArgumentsRemoverPresenter >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom
-		add: (SpBoxLayout newTopToBottom
-			add: 'Argument to be removed';
-			add: argumentsList;
-			yourself);
-		add: 'Modified selector';
-		add: selectorInput;
-		add: 'Preview';
-		add: previewResult;
+		add: 'Argument to be removed' expand: false;
+		add: argumentsList;
+		add: 'Modified selector' expand: false;
+		add: selectorInput expand: false;
+		add: 'Preview' expand: false;
+		add: previewResult expand: false;
 		yourself
+]
+
+{ #category : 'accessing' }
+StMethodArgumentsRemoverPresenter >> defaultRemovalIndex [
+	"The first argument cannot be removed for keyword methods, so default to
+	the second one; for a single-argument method the only argument is removable."
+
+	^ methodName arguments size <= 1
+		  ifTrue: [ 1 ]
+		  ifFalse: [ 2 ]
 ]
 
 { #category : 'accessing' }
@@ -108,7 +130,6 @@ StMethodArgumentsRemoverPresenter >> initializePresenters [
 	argumentsList := self newList.
 	previewResult := self newLabel.
 
-	selectorInput autoAccept: true.
 	selectorInput text: methodName selector.
 	previewResult label: methodName methodName
 ]
@@ -129,6 +150,24 @@ StMethodArgumentsRemoverPresenter >> invalidArgNames: aSet [
 StMethodArgumentsRemoverPresenter >> methodName [
 
 	^ methodName
+]
+
+{ #category : 'accessing' }
+StMethodArgumentsRemoverPresenter >> previewLabel [
+
+	| selectedIndex |
+	selectedIndex := argumentsList selection selectedIndex.
+	(self canRemoveArgumentAt: selectedIndex) ifFalse: [ ^ '(invalid)' ].
+	^ (RBMethodName
+		   selector: (selectorInput text ifNil: [ '' ])
+		   arguments: (argumentsList items reject: [ :arg | argumentsList selection selectedItem = arg ] thenCollect: #newName))
+		  methodName
+]
+
+{ #category : 'accessing' }
+StMethodArgumentsRemoverPresenter >> previewResult [
+
+	^ previewResult
 ]
 
 { #category : 'actions' }
@@ -156,6 +195,9 @@ StMethodArgumentsRemoverPresenter >> renameMap [
 { #category : 'actions' }
 StMethodArgumentsRemoverPresenter >> renameMethodAndClose: presenter [
 
+	| selectedIndex |
+	selectedIndex := argumentsList selection selectedIndex.
+	(self canRemoveArgumentAt: selectedIndex) ifFalse: [ ^ self inform: 'The first argument (method name) cannot be removed.' ].
 	^ previewResult label = '(invalid)'
 		  ifTrue: [ self inform: 'Invalid method name' ]
 		  ifFalse: [
@@ -187,6 +229,12 @@ StMethodArgumentsRemoverPresenter >> requestor: aMockObject [
 	requestor := aMockObject
 ]
 
+{ #category : 'accessing' }
+StMethodArgumentsRemoverPresenter >> selectorInput [
+
+	^ selectorInput
+]
+
 { #category : 'initialization' }
 StMethodArgumentsRemoverPresenter >> setModelBeforeInitialization: aRBMethodName [
 
@@ -196,10 +244,8 @@ StMethodArgumentsRemoverPresenter >> setModelBeforeInitialization: aRBMethodName
 
 { #category : 'updating' }
 StMethodArgumentsRemoverPresenter >> updateLabel [
-	"Update the new method name to display to the user when the user change its name or order of the arguments."
+	"Update the new method name to display to the user when the user change 
+	 its name or order of the arguments."
 
-	previewResult label: (RBMethodName
-			 selector: (selectorInput text ifNil: [ '' ])
-			 arguments: (argumentsList items reject: [ :arg | argumentsList selection selectedItem = arg ] thenCollect: #newName))
-			methodName
+	previewResult label: self previewLabel
 ]
