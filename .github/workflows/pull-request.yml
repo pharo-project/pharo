@@ -104,11 +104,13 @@ jobs:
 
           unzip -o metacello.zip
 
+          cd repo
           PHARO_MAJOR=$(git describe --tags --first-parent | cut -d'-' -f 1 | cut -c 2- | cut -d'.' -f 1-1)
           PHARO_MINOR=$(git describe --tags --first-parent | cut -d'-' -f 1 | cut -c 2- | cut -d'.' -f 2-2)
           PHARO_SHORT="${PHARO_MAJOR}${PHARO_MINOR}"
+          cd ..
 
-          bash ./bootstrap/scripts/getPharoVM.sh "${PHARO_SHORT}"
+          bash ./repo/bootstrap/scripts/getPharoVM.sh "${PHARO_SHORT}"
 
           ./pharo metacello.image metacello install --save --strict --signalErrorOnWarning "filetree://repo/src" SUnit --groups Core
 
