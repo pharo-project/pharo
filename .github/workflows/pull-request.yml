@@ -157,17 +157,18 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          path: repo
 
       - name: Download bootstrap image
         uses: actions/download-artifact@v4
         with:
           name: bootstrap64-base
-          path: .
+          path: bootstrap-cache
 
       - name: Install full image
         run: |
           set -eux
-          BUILD_NUMBER="${GITHUB_RUN_NUMBER}" BOOTSTRAP_ARCH=64 bash ./bootstrap/scripts/5-installIDE.sh
+          BUILD_NUMBER="${GITHUB_RUN_NUMBER}" BOOTSTRAP_ARCH=64 bash ./repo/bootstrap/scripts/5-installIDE.sh
 
       - name: Upload full image artifacts
         uses: actions/upload-artifact@v4
@@ -202,17 +203,18 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          path: repo
 
       - name: Download full image
         uses: actions/download-artifact@v4
         with:
           name: bootstrap64-full
-          path: .
+          path: bootstrap-cache
 
       - name: Run bootstrapped image tests
         run: |
           set -eux
-          bash ./bootstrap/scripts/runTests.sh 64 "${STAGE_NAME}"
+          bash ./repo/bootstrap/scripts/runTests.sh 64 "${STAGE_NAME}"
 
       - name: Publish test results
         if: always()
@@ -248,17 +250,18 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          path: repo
 
       - name: Download full image
         uses: actions/download-artifact@v4
         with:
           name: bootstrap64-full
-          path: .
+          path: bootstrap-cache
 
       - name: Run command line tests
         run: |
           set -eux
-          bash ./bootstrap/scripts/runPharoCommandLineTests.sh
+          bash ./repo/bootstrap/scripts/runPharoCommandLineTests.sh
 
       - name: Publish CLI test results
         if: always()
