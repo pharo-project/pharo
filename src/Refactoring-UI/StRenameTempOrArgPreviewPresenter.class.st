@@ -96,7 +96,7 @@ StRenameTempOrArgPreviewPresenter >> applyAnyway [
 StRenameTempOrArgPreviewPresenter >> applyTransformation [
 
 	driver createAndSetNewRefactoring .
-	compositeChange := driver generateTransformationChanges.
+	compositeChange := driver generateRemoveVariableChanges.
 	changes := compositeChange changesToDisplayIn: self.
 
 	self updateChanges.
@@ -373,8 +373,8 @@ StRenameTempOrArgPreviewPresenter >> performChanges [
 ]
 
 { #category : 'accessing' }
-StRenameTempOrArgPreviewPresenter >> refactoring: aRBRemoveMethodDriver [ 
-	refactoring := aRBRemoveMethodDriver
+StRenameTempOrArgPreviewPresenter >> refactoring: aRenameArgOrTempRefactoring [ 
+	refactoring := aRenameArgOrTempRefactoring
 	
 	
 ]
@@ -511,6 +511,12 @@ StRenameTempOrArgPreviewPresenter >> validateName: aString [
 				validationLabel label: (newName asText
 						 addAttribute: (TextColor color: Smalltalk ui theme dangerTextColor);
 						 yourself) ]
+]
+
+{ #category : 'accessing' }
+StRenameTempOrArgPreviewPresenter >> validationLabel [
+
+	^ validationLabel
 ]
 
 { #category : 'accessing' }
