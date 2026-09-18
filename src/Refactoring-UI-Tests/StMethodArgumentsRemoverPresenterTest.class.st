@@ -16,9 +16,9 @@ Class {
 { #category : 'helpers' }
 StMethodArgumentsRemoverPresenterTest >> presenterFor: aSelector arguments: aCollection [
 
-	^ StMethodArgum
-
-
+	^ StMethodArgumentsRemoverPresenter on: (RBMethodName 
+		selector: aSelector 
+		arguments: aCollection)
 ]
 
 { #category : 'running' }
