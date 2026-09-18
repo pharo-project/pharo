@@ -69,16 +69,16 @@ jobs:
           - project: Compiler
             packages: "'OpalCompiler-Tests' 'DebugInfo-Tests' 'Kernel-Extended-Tests' 'Kernel-Tests-WithCompiler'"
           - project: Files
-          - project: Zinc-Character-Encoding
-          - project: System-SessionManager
-          - project: System-Platforms
-          - project: Announcements-Core
-          - project: Shift-ClassBuilder
-          - project: System-CommandLineHandler
+          - project: ZincCharacterEncoding
+          - project: SystemSessionManager
+          - project: SystemPlatforms
+          - project: Announcements
+          - project: Shift
+          - project: SystemCommandLineHandler
           - project: FileSystem
-          - project: System-Finalization
-          - project: System-Support
-          - project: System-Version
+          - project: SystemFinalization
+          - project: SystemSupport
+          - project: SystemVersion
           - project: Collections
           - project: Refactoring
           - project: DebuggerCLI
@@ -115,6 +115,9 @@ jobs:
           ./pharo metacello.image metacello install --save --strict --signalErrorOnWarning "filetree://repo/src" SUnit --groups Core
 
           if [ -n "${{ matrix.packages }}" ]; then
+            # Some Baselines do specify tests in the Tests group that do not run on isolation.
+            # For that scenario, users can define an explicit list of packages as `testPackages`.
+            # In that case, take the packages specified by the user instead of the project packages.
             ./pharo metacello.image metacello install --save --strict --signalErrorOnWarning "filetree://repo/src" "${{ matrix.project }}" --groups Tests
             ./pharo metacello.image test --junit-xml-output --stage-name "Tests-ISO-${{ matrix.project }}" ${{ matrix.packages }}
           else
