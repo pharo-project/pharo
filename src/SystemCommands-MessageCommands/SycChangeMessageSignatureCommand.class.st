@@ -110,24 +110,25 @@ SycChangeMessageSignatureCommand >> refactoredClass: aClass [
 
 { #category : 'requesting' }
 SycChangeMessageSignatureCommand >> requestNewMessageIn: aToolContext [
-
 	| methodName dialog invalidArgNames |
+	
 	invalidArgNames := self computeInvalidArgNamesForSelector: originalMessage selector.
 	methodName := RBMethodName
-		              selector: originalMessage selector
-		              arguments: originalMessage argumentNames.
-	dialog := StMethodNameEditorPresenter
-		          openOn: methodName
-		          withInvalidArgs: invalidArgNames
-		          canRenameArgs: self canRenameArgs
-		          canRemoveArgs: self canRemoveArgs
-		          canAddArgs: self canAddArgs
-		          canEditName: self canEditName.
+		selector: originalMessage selector
+		arguments: originalMessage argumentNames.
+	
+	dialog := (StMethodNameEditorPresenter newApplication: StPharoApplication current model: methodName)
+		invalidArgNames: invalidArgNames;
+		canRenameArgs: self canRenameArgs;
+		canRemoveArgs: self canRemoveArgs;
+		canAddArgs: self canAddArgs;
+		canEditName: self canEditName.
 	dialog cancelled ifTrue: [ CmdCommandAborted signal ].
 
-	originalMessage selector = methodName selector
-	& (originalMessage argumentNames = methodName arguments) ifTrue: [
-		CmdCommandAborted signal ].
+	((originalMessage selector = methodName selector) 
+		and: [ originalMessage argumentNames = methodName arguments ]) 
+		ifTrue: [ CmdCommandAborted signal ].
+	
 	^ methodName
 ]
 
