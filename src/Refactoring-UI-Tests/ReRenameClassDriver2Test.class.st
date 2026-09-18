@@ -44,7 +44,7 @@ ReRenameClassDriver2Test >> testInvalidNewClassNameFails [
 
 	self
 		should: [ refactoring checkApplicabilityPreconditions ]
-		raise: Error
+		raise: RBRefactoringError 
 ]
 
 { #category : 'tests' }
@@ -63,5 +63,5 @@ ReRenameClassDriver2Test >> testValidRenameClassPreconditions [
 	refactoring := driver instantiateRefactoring.
 	refactoring newName: driver newName .
 
-	self assert: driver checkApplicabilityPreconditions isNil
+	self assert: driver applicabilityPreconditionsAreSatisfied 
 ]

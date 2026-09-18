@@ -34,9 +34,8 @@ StRenameClassPreviewPresenterTest >> testBehaviorPanelIsHiddenWhenBehaviorPrecon
 
     self assert: (presenter topLayout children includes: presenter behaviorPanel).
 
-    driver newName: #NewClassName.
-    driver createAndSetNewRefactoring.
-
+    presenter name: #NewClassName.
+    presenter validateName: 'NewClassName'.
     presenter updateBehaviorPanelVisibility: 'NewClassName'.
 
     self deny: (presenter topLayout children includes: presenter behaviorPanel)

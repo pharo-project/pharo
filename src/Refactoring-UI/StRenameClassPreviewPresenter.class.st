@@ -342,8 +342,8 @@ StRenameClassPreviewPresenter >> performChanges [
 ]
 
 { #category : 'accessing' }
-StRenameClassPreviewPresenter >> refactoring: aRBRemoveMethodDriver [ 
-	refactoring := aRBRemoveMethodDriver
+StRenameClassPreviewPresenter >> refactoring: aRenameClassRefactoring [ 
+	refactoring := aRenameClassRefactoring
 ]
 
 { #category : 'initialization' }

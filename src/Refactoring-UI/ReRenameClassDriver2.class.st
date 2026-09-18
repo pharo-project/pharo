@@ -28,6 +28,12 @@ ReRenameClassDriver2 class >> rename: oldName [
 		yourself
 ]
 
+{ #category : 'initialization' }
+ReRenameClassDriver2 >> applicabilityPreconditionsAreSatisfied [
+
+	^ self checkApplicabilityPreconditions isNil
+]
+
 { #category : 'actions' }
 ReRenameClassDriver2 >> browseMethods [
 
@@ -41,17 +47,10 @@ ReRenameClassDriver2 >> browseMethods [
 
 { #category : 'actions' }
 ReRenameClassDriver2 >> checkApplicabilityPreconditions [
-
-	| failedCondition |
 	
-	refactoring newName: newName.
+	refactoring newName: newName. 
 	
-	failedCondition := refactoring applicabilityPreconditions
-		detect: [ :condition | condition check not ]
-		ifNone: [ nil ].
-		
-	^ failedCondition ifNotNil: [ :condition | condition errorString ]
-	
+	^ refactoring failedApplicabilityMessage
 ]
 
 { #category : 'actions' }
@@ -59,7 +58,7 @@ ReRenameClassDriver2 >> checkBehaviorPreconditions [
 
 	| stream | 
 	
-	hasShadowing := self refactoring breakingChangePreconditions first.
+	hasShadowing := self refactoring hasShadowingPrecondition .
 	hasShadowing check ifTrue: [ ^ nil ].
 	
 	stream := String new writeStream.
@@ -76,9 +75,8 @@ ReRenameClassDriver2 >> createAndSetNewRefactoring [
 
 { #category : 'actions' }
 ReRenameClassDriver2 >> hasFailedBehaviorPreservingPreconditions [
-
-	^ self refactoring breakingChangePreconditions
-		anySatisfy: [ :each | each check not ]
+		
+	^ refactoring failedBreakingChangePreconditions notEmpty 
 ]
 
 { #category : 'initialization' }
