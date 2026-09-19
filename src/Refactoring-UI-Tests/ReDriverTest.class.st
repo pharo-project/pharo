@@ -10,5 +10,5 @@ ReDriverTest >> setUpDriver: driver [
 
 	driver previewPresenterClass: StRefactoringPreviewPresenterMock.
 	driver selectDialogForBreakingChanges: StSelectDialogMock new.
-	driver informDialog: StInformDialogMock new.
+	driver informDialog: StInformDialogMock new
 ]

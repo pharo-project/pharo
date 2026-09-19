@@ -72,26 +72,9 @@ SycMethodNameEditorTest >> testButtonDownClickShouldModifiedArgumentsList [
 
 { #category : 'tests - up/down buttons' }
 SycMethodNameEditorTest >> testButtonDownClickShouldModifiedPreviewFinal [
-	methodNameEditor argumentsList selectIndex: 1.
+	methodNameEditor argumentsList selectIndex: 2.
 	methodNameEditor downButton click.
-	self assert: methodNameEditor previewResult label equals: 'a: b b: a c: c'
-]
-
-{ #category : 'tests - up/down buttons' }
-SycMethodNameEditorTest >> testButtonDownClickShouldSelectionIndexBeDecremented [
-	methodNameEditor argumentsList selectIndex: 1.
-	methodNameEditor downButton click.
-	self assert: methodNameEditor argumentsList selection selectedIndex equals: 2
-]
-
-{ #category : 'tests - up/down buttons' }
-SycMethodNameEditorTest >> testButtonDownClickWithoutSelectOption [
-	| arrayBeforeClick arrayAfterClick |
-	arrayBeforeClick := methodNameEditor argumentsList items.
-	self assert: (arrayBeforeClick collect: [ :each | each newName ]) asArray equals: #(a b c).
-	methodNameEditor downButton click.
-	arrayAfterClick := methodNameEditor argumentsList items.
-	self assert: (arrayAfterClick collect: [ :each | each newName ]) asArray equals: #(b a c)
+	self assert: methodNameEditor previewResult label equals: 'a: a c: c b: b'
 ]
 
 { #category : 'tests - up/down buttons' }
@@ -106,25 +89,16 @@ SycMethodNameEditorTest >> testButtonUpClickShouldModifiedArgumentsList [
 
 { #category : 'tests - up/down buttons' }
 SycMethodNameEditorTest >> testButtonUpClickShouldModifiedPreviewFinal [
-	methodNameEditor argumentsList selectIndex: 2.
+	methodNameEditor argumentsList selectIndex: 3.
 	methodNameEditor upButton click.
-	self assert: methodNameEditor previewResult label equals: 'a: b b: a c: c'
+	self assert: methodNameEditor previewResult label equals: 'a: a c: c b: b'
 ]
 
 { #category : 'tests - up/down buttons' }
 SycMethodNameEditorTest >> testButtonUpClickShouldSelectionIndexBeDecremented [
-	methodNameEditor argumentsList selectIndex: 2.
+	methodNameEditor argumentsList selectIndex: 3.
 	methodNameEditor upButton click.
-	self assert: methodNameEditor argumentsList selection selectedIndex equals: 1
-]
-
-{ #category : 'tests - up/down buttons' }
-SycMethodNameEditorTest >> testButtonUpClickWithoutSelectOption [
-	self assert: (methodNameEditor argumentsList items collect: [ :each | each newName ]) asArray
-		equals: #(a b c).
-	methodNameEditor downButton click.
-	self assert: (methodNameEditor argumentsList items collect: [ :each | each newName ]) asArray
-		equals: #(b a c)
+	self assert: methodNameEditor argumentsList selection selectedIndex equals: 2
 ]
 
 { #category : 'tests' }

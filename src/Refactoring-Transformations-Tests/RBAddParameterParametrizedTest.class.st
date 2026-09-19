@@ -352,13 +352,16 @@ RBAddParameterParametrizedTest >> testFailurePrimitiveMethods [
 
 { #category : 'failure tests' }
 RBAddParameterParametrizedTest >> testFailureUseExistingNewSelector [
-
+	"Adding an argument whose resulting selector is already defined in the class must fail."
 	| newArg |
+	
 	newArg := RBArgumentName name: 'anObject' value: 'nil'.
-	self shouldFail: (self createRefactoringWithArguments: {
-				 #checkSendersAccessTo:.
-				 RBLintRuleTestData.
-				 #safeVariableNameFor:temporaries:.
-				 #( 1 -1 ).
-				 { newArg } })
+	self shouldFail: (self 
+		createRefactoringWithModel: model 
+		andArguments: {
+			#called:on:.
+			RBClassDataForRefactoringTest.
+			#textInput:name:symbol:.
+			#( 1 2 -1 ).
+			{ newArg } })
 ]

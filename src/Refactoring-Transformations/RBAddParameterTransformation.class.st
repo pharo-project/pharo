@@ -43,19 +43,17 @@ RBAddParameterTransformation >> addParameterToMethod: aSelector in: aClass newSe
 ]
 
 { #category : 'preconditions' }
-RBAddParameterTransformation >> applicabilityPreconditions [ 
-	
-	^ super applicabilityPreconditions ,
-		{ (RBCondition withBlock:
-			[ oldSelector numArgs < newSelector numArgs
-				ifFalse:
-					[ self refactoringError: newSelector printString,
-					' doesn''t have the proper number of arguments.'].
-			permutation size = newSelector numArgs ifFalse: [ 
-				self refactoringError: newSelector printString
-					, ' doesn''t have the proper number of permutations.' ].
-			self newArgs do: [	:arg | self verifyInitializationExpressionOf: arg argValue ].
-			true]) }
+RBAddParameterTransformation >> applicabilityPreconditions [
+
+	^ super applicabilityPreconditions , { (RBCondition withBlock: [
+			   oldSelector numArgs < newSelector numArgs ifFalse: [
+				   self refactoringError: newSelector printString , ' doesn''t have the proper number of arguments.' ].
+			   permutation size = newSelector numArgs ifFalse: [
+				   self refactoringError: newSelector printString , ' doesn''t have the proper number of permutations.' ].
+			   (class directlyDefinesMethod: newSelector) ifTrue: [
+				   self refactoringError: newSelector printString , ' is already defined in ' , class name ].
+			   self newArgs do: [ :arg | self verifyInitializationExpressionOf: arg argValue ].
+			   true ]) }
 ]
 
 { #category : 'adding' }
