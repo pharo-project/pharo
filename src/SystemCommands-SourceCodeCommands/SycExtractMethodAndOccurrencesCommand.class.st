@@ -82,16 +82,16 @@ SycExtractMethodAndOccurrencesCommand >> setUpOptionToChangeExtractionClass: ref
 
 { #category : 'execution' }
 SycExtractMethodAndOccurrencesCommand >> setUpOptionToChangeMethodNameDuring: refactoring [
-
 	| dialog |
+	
 	refactoring setOption: #methodName toUse: [ :methodName :ref | | invalidArgs |
 		invalidArgs := self computeInvalidArgNamesForSelector: method selector.
-		dialog := StMethodNameEditorPresenter
-			openOn: methodName
-			withInvalidArgs: invalidArgs
-			canRenameArgs: true
-			canRemoveArgs: false
-			canAddArgs: false.
+		dialog := (StMethodNameEditorPresenter newApplication: StPharoApplication current model: methodName)
+			invalidArgNames: invalidArgs;
+			canRenameArgs: true;
+			canRemoveArgs: false;
+			canAddArgs: false;
+			openModal.
 		dialog cancelled ifTrue: [ CmdCommandAborted signal ].
 		methodName ]
 ]

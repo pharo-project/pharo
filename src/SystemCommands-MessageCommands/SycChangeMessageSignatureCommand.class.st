@@ -122,7 +122,8 @@ SycChangeMessageSignatureCommand >> requestNewMessageIn: aToolContext [
 		canRenameArgs: self canRenameArgs;
 		canRemoveArgs: self canRemoveArgs;
 		canAddArgs: self canAddArgs;
-		canEditName: self canEditName.
+		canEditName: self canEditName;
+		openModal.
 	dialog cancelled ifTrue: [ CmdCommandAborted signal ].
 
 	((originalMessage selector = methodName selector) 
