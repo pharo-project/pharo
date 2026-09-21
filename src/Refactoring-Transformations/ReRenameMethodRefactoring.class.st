@@ -86,9 +86,9 @@ ReRenameMethodRefactoring >> areNamesTheSame [
 { #category : 'preconditions' }
 ReRenameMethodRefactoring >> breakingChangePreconditions [
 
-	^ { (ReUpToRootDoesNotDefinesMethod new
-		   classes: self implementors;
-		   selector: newSelector) }
+	self areNamesTheSame ifTrue: [ ^ #() ] . 
+
+	^ { self superclassesDoNotDefineNewSelectorCondition }
 ]
 
 { #category : 'preconditions' }
@@ -178,6 +178,14 @@ ReRenameMethodRefactoring >> selectorsHaveSameArity [
 		block: [ self haveSelectorsSameArity ];
 		violatorErrorString: newSelector printString
 				, ' doesn''t have the same number of arguments as ', oldSelector printString
+]
+
+{ #category : 'instance creation' }
+ReRenameMethodRefactoring >> superclassesDoNotDefineNewSelectorCondition [
+
+	^ ReUpToRootDoesNotDefinesMethod 
+		   classes: self implementors
+		   selector: newSelector
 ]
 
 { #category : 'preconditions' }

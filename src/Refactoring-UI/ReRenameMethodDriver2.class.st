@@ -11,7 +11,8 @@ Class {
 		'shouldEscape',
 		'methodNameEditorPresenterClass',
 		'oldName',
-		'newName'
+		'newName',
+		'conflictingImplementors'
 	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',
@@ -39,7 +40,7 @@ ReRenameMethodDriver2 >> breakingChoices [
 ReRenameMethodDriver2 >> browseOverrides [
 
 	| overrides |
-	overrides := refactoring violations.
+	overrides := conflictingImplementors violators.
 	(Smalltalk tools toolNamed: #messageList)
 		browse: (overrides collect: [ :ref | ref realClass lookupSelector: newMessage selector ])
 		asImplementorsOf: newMessage selector
@@ -92,6 +93,19 @@ ReRenameMethodDriver2 >> checkApplicabilityPreconditions [
 	^ nil
 ]
 
+{ #category : 'private - testing' }
+ReRenameMethodDriver2 >> checkBehaviorPreconditions [
+
+	| stream |
+	
+	conflictingImplementors := self refactoring superclassesDoNotDefineNewSelectorCondition .
+	conflictingImplementors check ifTrue: [ ^ nil ].
+	
+	stream := String new writeStream .
+	conflictingImplementors violationMessageOn: stream .
+	^ stream contents 
+]
+
 { #category : 'execution' }
 ReRenameMethodDriver2 >> configureMessage [
 
@@ -128,6 +142,12 @@ ReRenameMethodDriver2 >> gatherUserInput [
 					openModal ] ] doWhileFalse: [ failedConditions isEmpty ].
 
 	^ true
+]
+
+{ #category : 'initialization' }
+ReRenameMethodDriver2 >> hasFailedBehaviorPreservingPreconditions [
+		
+	^ refactoring failedBreakingChangePreconditions notEmpty 
 ]
 
 { #category : 'initialization' }

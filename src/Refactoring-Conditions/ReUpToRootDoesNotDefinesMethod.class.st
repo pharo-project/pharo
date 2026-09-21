@@ -8,6 +8,14 @@ Class {
 	#package : 'Refactoring-Conditions'
 }
 
+{ #category : 'as yet unclassified' }
+ReUpToRootDoesNotDefinesMethod class >> classes: classes selector: selector [
+
+	^ self new
+		classes: classes;
+		selector: selector
+]
+
 { #category : 'instance creation' }
 ReUpToRootDoesNotDefinesMethod >> class: aRBClass [ 
 
