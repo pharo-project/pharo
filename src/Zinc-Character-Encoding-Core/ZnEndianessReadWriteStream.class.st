@@ -30,7 +30,7 @@ ZnEndianessReadWriteStream class >> on: writeStream do: block [
 	^ result
 ]
 
-{ #category : 'endianess' }
+{ #category : 'endianness' }
 ZnEndianessReadWriteStream >> nextLittleEndianNumber: n [
 	"Answer the next n bytes as a positive Integer or LargePositiveInteger, where the bytes are ordered from least significant to most significant."
 
@@ -41,7 +41,7 @@ ZnEndianessReadWriteStream >> nextLittleEndianNumber: n [
 	^ s
 ]
 
-{ #category : 'endianess' }
+{ #category : 'endianness' }
 ZnEndianessReadWriteStream >> nextLittleEndianNumber: n put: value [
 	"Answer the next n bytes as a positive Integer or LargePositiveInteger, where the bytes are ordered from least significant to most significant."
 	| bytes |

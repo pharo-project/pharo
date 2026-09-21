@@ -337,7 +337,7 @@ MethodClassifier >> protocolInSuperclassProtocol: aMethod [
 	protocol := self superclassProtocol: aMethod
 ]
 
-{ #category : 'reseting' }
+{ #category : 'resetting' }
 MethodClassifier >> resetProtocol [
 	protocol := nil
 ]
