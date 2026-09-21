@@ -35,7 +35,13 @@ Class {
 		'buttonDown',
 		'buttonAdd',
 		'arguments',
-		'updateProcess'
+		'updateProcess',
+		'behaviorWarningIcon',
+		'behaviorLayout',
+		'behaviorPanel',
+		'behaviorWarningTitle',
+		'behaviorMessageLabel',
+		'buttonBrowseMethod'
 	],
 	#category : 'Refactoring-UI-UI',
 	#package : 'Refactoring-UI',
@@ -63,6 +69,21 @@ StRenameMethodPreviewPresenter >> accept [
 	self performChanges.
 	self updateGlobalActiveScope.
 	self closeWindow
+]
+
+{ #category : 'action' }
+StRenameMethodPreviewPresenter >> addBehaviorPanel [
+
+	behaviorMessageLabel label: driver checkBehaviorPreconditions.
+	
+	(topLayout children includes: behaviorPanel)
+		ifFalse: [ topLayout add: behaviorPanel expand: false ]
+]
+
+{ #category : 'action' }
+StRenameMethodPreviewPresenter >> browseOverrides [ 
+
+	driver browseOverrides 
 ]
 
 { #category : 'private' }
@@ -128,6 +149,7 @@ StRenameMethodPreviewPresenter >> connectPresenters [
 
 	buttonCancel action: [ self closeWindow ].
 	buttonOk action: [ self accept ] .
+	buttonBrowseMethod action: [ self browseOverrides ] .
 	
 	newNameInput whenTextChangedDo: [ :text |
 		self schedulePreviewUpdate: text ] .
@@ -141,7 +163,7 @@ StRenameMethodPreviewPresenter >> defaultKeyboardFocus [
 
 { #category : 'layout' }
 StRenameMethodPreviewPresenter >> defaultLayout [
-	| scopesLayout nameLayout inputLayout argsLayout argumentLayout argButtonsLayout|
+	| scopesLayout nameLayout inputLayout argsLayout argumentLayout argButtonsLayout behaviorHeaderLayout |
 	
 	scopesLayout := SpBoxLayout newLeftToRight
 		vAlignCenter;
@@ -181,6 +203,21 @@ StRenameMethodPreviewPresenter >> defaultLayout [
 		add: argButtonsLayout expand: false;
 		yourself .
 		
+	behaviorHeaderLayout := SpBoxLayout newLeftToRight 
+		vAlignCenter;
+		spacing: 5;
+		add: behaviorWarningIcon expand: false;
+		add: behaviorWarningTitle expand: false;
+		yourself.
+		
+	behaviorLayout := SpBoxLayout newTopToBottom
+		spacing: 4;
+		add: behaviorHeaderLayout;
+		add: behaviorMessageLabel expand: false;
+		add: buttonBrowseMethod expand: false;
+		yourself.
+	behaviorPanel layout: behaviorLayout.
+		
 	topLayout := SpBoxLayout newTopToBottom 
 		spacing: 10; 
 		add: nameLayout expand: false;
@@ -208,6 +245,22 @@ StRenameMethodPreviewPresenter >> driver: aDriver [
 StRenameMethodPreviewPresenter >> globalActiveScope [
 
 	^ ScopesManager activeScope
+]
+
+{ #category : 'accessing' }
+StRenameMethodPreviewPresenter >> hasWarning [
+
+	^ driver notNil and: [ driver hasFailedBehaviorPreservingPreconditions ]
+]
+
+{ #category : 'action' }
+StRenameMethodPreviewPresenter >> hideBehaviorPanel [
+	
+	(topLayout children includes: behaviorPanel)
+		ifFalse: [ ^ self ].
+		
+	topLayout remove: behaviorPanel.
+		self rebuildLayout 
 ]
 
 { #category : 'initialization' }
@@ -265,6 +318,15 @@ StRenameMethodPreviewPresenter >> initializePresenters [
 	buttonAdd := self newButton label: '+'.
 	argumentsList := self newList .
 	nameIsValid := false. 
+	
+	behaviorWarningIcon := self newImage image: (self iconNamed: #warningIcon) .
+	behaviorWarningTitle := self newLabel label: 'Behavior-preserving warnings' .
+	behaviorMessageLabel := self newLabel label: ''.
+	behaviorPanel := SpPresenter new .
+	
+	buttonBrowseMethod := self newButton
+		label: 'Browse affected methods';
+		icon: (self iconNamed: #search)
 ]
 
 { #category : 'accessing' }
