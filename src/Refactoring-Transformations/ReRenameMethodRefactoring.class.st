@@ -91,6 +91,17 @@ ReRenameMethodRefactoring >> breakingChangePreconditions [
 		   selector: newSelector) }
 ]
 
+{ #category : 'preconditions' }
+ReRenameMethodRefactoring >> checkApplicabilityPreconditions [
+
+	^ { self validNewNameCondition . self validSelectorCondition . self selectorsHaveSameArity } 
+]
+
+{ #category : 'accessing' }
+ReRenameMethodRefactoring >> className: aClass [ 
+	class := aClass 
+]
+
 { #category : 'torevisit' }
 ReRenameMethodRefactoring >> hasPermutedArguments [
 	"We will have to unify with areArgumentsPermuted"
@@ -167,6 +178,14 @@ ReRenameMethodRefactoring >> selectorsHaveSameArity [
 		block: [ self haveSelectorsSameArity ];
 		violatorErrorString: newSelector printString
 				, ' doesn''t have the same number of arguments as ', oldSelector printString
+]
+
+{ #category : 'preconditions' }
+ReRenameMethodRefactoring >> validNewNameCondition [
+ 
+	^ (ReBlockCondition new 
+			block: [ (class includesSelector: newSelector) not ];
+			violatorErrorString: newSelector ,' is already defined in this class')
 ]
 
 { #category : 'preconditions' }
