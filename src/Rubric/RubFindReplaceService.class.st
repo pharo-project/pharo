@@ -19,13 +19,13 @@ RubFindReplaceService >> caseSensitive [
 	^ caseSensitive ifNil: [caseSensitive := RubAbstractTextArea caseSensitiveFinds]
 ]
 
-{ #category : 'user-interface' }
+{ #category : 'user interface' }
 RubFindReplaceService >> dialog [
 	^ dialog ifNil: [
 		dialog := self newDialog ]
 ]
 
-{ #category : 'user-interface' }
+{ #category : 'user interface' }
 RubFindReplaceService >> dialogIsActiveFor: aTextArea [
 
 	dialog ifNil: [ ^ false ].
@@ -105,7 +105,7 @@ RubFindReplaceService >> initialize [
 	textAreaHolder := WeakArray new: 1
 ]
 
-{ #category : 'user-interface' }
+{ #category : 'user interface' }
 RubFindReplaceService >> newDialog [
 	| d |
 	d := RubFindReplaceDialogWindow new model: self.
@@ -169,12 +169,12 @@ RubFindReplaceService >> updateFindStartIndex [
 			self findStartIndex: (self searchBackwards ifTrue: [si first - 1] ifFalse: [si last + 1]) ]
 ]
 
-{ #category : 'user-interface' }
+{ #category : 'user interface' }
 RubFindReplaceService >> whenDialogDeleted [
 	dialog := nil
 ]
 
-{ #category : 'events handling' }
+{ #category : 'event handling' }
 RubFindReplaceService >> whenFindReplaceWindowRequired: anAnnouncement [
 	self findText
 		ifEmpty: [
@@ -183,7 +183,7 @@ RubFindReplaceService >> whenFindReplaceWindowRequired: anAnnouncement [
 	self dialog open
 ]
 
-{ #category : 'events handling' }
+{ #category : 'event handling' }
 RubFindReplaceService >> whenTextAreaGotFocus: anAnnounce [
 	self textArea: anAnnounce morph.
 	self findText: self findText.
@@ -192,13 +192,13 @@ RubFindReplaceService >> whenTextAreaGotFocus: anAnnounce [
 	self changed: #replaceEnabled
 ]
 
-{ #category : 'events handling' }
+{ #category : 'event handling' }
 RubFindReplaceService >> whenTextAreaLostFocus: anAnnounce [
 	self dialog isInWorld ifFalse: [ ^self ].
 	self textArea whenFindTextChanged: RubFindTextChanged new
 ]
 
-{ #category : 'events handling' }
+{ #category : 'event handling' }
 RubFindReplaceService >> whenTextAreaSelectionChanged: anAnnouncement [
 	self updateFindStartIndex
 ]

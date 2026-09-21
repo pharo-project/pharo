@@ -260,7 +260,7 @@ SimpleButtonMorph >> mouseStillDown: evt [
 	(self containsPoint: evt cursorPoint) ifTrue:[self doButtonAction]
 ]
 
-{ #category : 'events-processing' }
+{ #category : 'events - processing' }
 SimpleButtonMorph >> mouseStillDownStepRate [
 	"Answer how often I want the #handleMouseStillDown: stepped"
 	^200

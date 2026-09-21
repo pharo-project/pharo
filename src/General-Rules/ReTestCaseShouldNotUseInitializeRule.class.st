@@ -12,7 +12,7 @@ Class {
 	#tag : 'Clean Code'
 }
 
-{ #category : 'testing-interest' }
+{ #category : 'testing - interest' }
 ReTestCaseShouldNotUseInitializeRule class >> checksClass [
 
 	^ true

@@ -13,7 +13,7 @@ Class {
 	#tag : 'Implementations'
 }
 
-{ #category : 'API' }
+{ #category : 'api' }
 WatchDebugPoint >> addValue: aValue [
 
 	self history addFirst: aValue.
@@ -33,7 +33,7 @@ WatchDebugPoint >> history: anOrderedCollection [
 	history := anOrderedCollection
 ]
 
-{ #category : 'API' }
+{ #category : 'api' }
 WatchDebugPoint >> hitWithContext: aContext value: aValue [
 
 	(self hitWithContext: aContext) ifFalse: [ ^ self ].

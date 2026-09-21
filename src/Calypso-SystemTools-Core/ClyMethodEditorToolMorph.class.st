@@ -80,7 +80,7 @@ ClyMethodEditorToolMorph >> chooseClassForNewMethodIfNone: aBlock [
 		  do: [ :err | aBlock value ]
 ]
 
-{ #category : 'events handling' }
+{ #category : 'event handling' }
 ClyMethodEditorToolMorph >> currentEditedAST [
 
 	^ self methodClass compiler
@@ -224,7 +224,7 @@ ClyMethodEditorToolMorph >> setUpTargetClasses [
 	self subclassResponsibility
 ]
 
-{ #category : 'events handling' }
+{ #category : 'event handling' }
 ClyMethodEditorToolMorph >> textChanged: aTextChanged [
 
 	super textChanged: aTextChanged.

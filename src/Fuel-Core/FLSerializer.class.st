@@ -11,17 +11,17 @@ Class {
 	#tag : 'Public'
 }
 
-{ #category : 'accessing-defaults' }
+{ #category : 'accessing - defaults' }
 FLSerializer class >> defaultDepthLimit [
 	^ -1
 ]
 
-{ #category : 'accessing-defaults' }
+{ #category : 'accessing - defaults' }
 FLSerializer class >> defaultLimitObjectsExceptionEnabled [
 	^ false
 ]
 
-{ #category : 'accessing-defaults' }
+{ #category : 'accessing - defaults' }
 FLSerializer class >> defaultObjectsLimit [
 	^ -1
 ]

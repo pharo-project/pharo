@@ -75,7 +75,7 @@ RBDeprecateMethodDriver >> runRefactoring [
 	self openPreviewWithChanges: compositeChange
 ]
 
-{ #category : 'ui - requests' }
+{ #category : 'ui requests' }
 RBDeprecateMethodDriver >> selectorToReplaceDeprecatedSelector [
 
 	useInsteadSelector := self defaultRequestDialog
