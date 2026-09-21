@@ -431,7 +431,7 @@ RGReadOnlyBackend >> setSourceCodeFor: anRGMethod to: anObject [
 	self readOnlyError
 ]
 
-{ #category : 'trait transormation' }
+{ #category : 'trait transformation' }
 RGReadOnlyBackend >> setSubjectFor: anRGTraitComposition to: anRGTrait [
 
 	self readOnlyError

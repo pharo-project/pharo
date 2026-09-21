@@ -26,13 +26,13 @@ SystemProgressItemMorph class >> labeled: aString from: startValue to: endValue 
 	^ self new initializeLabel: aString start: startValue end: endValue
 ]
 
-{ #category : 'API' }
+{ #category : 'api' }
 SystemProgressItemMorph >> beComplete [
 
 	self close
 ]
 
-{ #category : 'API' }
+{ #category : 'api' }
 SystemProgressItemMorph >> changed [
 
 	| msRefreshRate isTimeForRefresh |
@@ -48,20 +48,20 @@ SystemProgressItemMorph >> close [
 	SystemProgressMorph uniqueInstance close: self
 ]
 
-{ #category : 'API' }
+{ #category : 'api' }
 SystemProgressItemMorph >> current [
 
 	^ bar value
 ]
 
-{ #category : 'API' }
+{ #category : 'api' }
 SystemProgressItemMorph >> current: aNumber [
 
 	bar value: aNumber.
 	self changed
 ]
 
-{ #category : 'API' }
+{ #category : 'api' }
 SystemProgressItemMorph >> decrement [
 
 	bar decrement
@@ -80,7 +80,7 @@ SystemProgressItemMorph >> forceRefreshOnNextChange [
 	lastRefresh := 0
 ]
 
-{ #category : 'API' }
+{ #category : 'api' }
 SystemProgressItemMorph >> increment [
 
 	bar increment
@@ -110,13 +110,13 @@ SystemProgressItemMorph >> initializeLabel: aString start: startNumber end: endN
 	self addMorphBack: bar
 ]
 
-{ #category : 'API' }
+{ #category : 'api' }
 SystemProgressItemMorph >> label [
 
 	^ self labelMorph contents
 ]
 
-{ #category : 'API' }
+{ #category : 'api' }
 SystemProgressItemMorph >> label: aString [
 
 	self label isEmpty ifTrue: [ self forceRefreshOnNextChange ].

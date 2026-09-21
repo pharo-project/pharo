@@ -11,7 +11,7 @@ Class {
 	#tag : 'Design Flaws'
 }
 
-{ #category : 'testing-interest' }
+{ #category : 'testing - interest' }
 ReGlobalVariablesUsageRule class >> checksMethod [
 	^ true
 ]

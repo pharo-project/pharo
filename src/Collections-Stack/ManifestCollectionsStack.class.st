@@ -9,12 +9,12 @@ Class {
 	#tag : 'Manifest'
 }
 
-{ #category : 'meta-data' }
+{ #category : 'meta data' }
 ManifestCollectionsStack class >> dependencies [
 	^ #(#'Collections-Sequenceable')
 ]
 
-{ #category : 'meta-data' }
+{ #category : 'meta data' }
 ManifestCollectionsStack class >> packageName [
 	^ #'Collections-Stack'
 ]

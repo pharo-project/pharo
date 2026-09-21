@@ -99,7 +99,7 @@ AthensCurveFlattener >> distanceToleranceSquared [
 AthensCurveFlattener >> flattenCubicBezier: x1 y1: y1 x2: x2 y2: y2 x3: x3 y3: y3 x4: x4 y4: y4 [
 ]
 
-{ #category : 'public API' }
+{ #category : 'public api' }
 AthensCurveFlattener >> flattenPath: aPath transform: aTransformation [
 
 	"This is an entry point for flattening path.
@@ -109,7 +109,7 @@ AthensCurveFlattener >> flattenPath: aPath transform: aTransformation [
 	^ self flattenPath: aPath transform: aTransformation toleranceMultiplier: 1
 ]
 
-{ #category : 'public API' }
+{ #category : 'public api' }
 AthensCurveFlattener >> flattenPath: aPath transform: aTransform toleranceMultiplier: aToleranceMultiplier [
 
 	"This is an entry point for flattening path (converting all curves into line segments by approximating them).

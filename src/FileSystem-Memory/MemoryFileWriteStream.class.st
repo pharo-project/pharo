@@ -21,14 +21,14 @@ MemoryFileWriteStream class >> on: aFile [
 		yourself
 ]
 
-{ #category : 'opening-closing' }
+{ #category : 'opening/closing' }
 MemoryFileWriteStream >> close [
 	self flush.
 	self stream close.
 	file close
 ]
 
-{ #category : 'opening-closing' }
+{ #category : 'opening/closing' }
 MemoryFileWriteStream >> closed [
 	^ file closed
 ]

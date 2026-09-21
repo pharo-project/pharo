@@ -52,7 +52,7 @@ MemoryHandle >> close [
 	entry := nil
 ]
 
-{ #category : 'stream-protocol' }
+{ #category : 'stream protocol' }
 MemoryHandle >> copyFrom: from to: position [
 	^ entry copyFrom: from to: position
 ]
@@ -67,7 +67,7 @@ MemoryHandle >> grow [
 	entry grow
 ]
 
-{ #category : 'stream-protocol' }
+{ #category : 'stream protocol' }
 MemoryHandle >> grownBy: length [
 	entry grownBy: length
 ]

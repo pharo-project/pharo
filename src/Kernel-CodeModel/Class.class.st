@@ -521,7 +521,7 @@ Class >> definesClassVariableNamed: aString [
 	^ self classVarNames includes: aString
 ]
 
-{ #category : 'meta-data' }
+{ #category : 'meta data' }
 Class >> dependencies [
 	"Return the (transitive) set of behaviors that I depend on"
 	

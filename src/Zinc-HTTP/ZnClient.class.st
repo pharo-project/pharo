@@ -1308,7 +1308,7 @@ ZnClient >> receiveCookies [
 		self session cookieJar add: each ]
 ]
 
-{ #category : 'private protocol' }
+{ #category : 'private - protocol' }
 ZnClient >> redirectUrl [
 	"We support both absolute and relative locations (http://en.wikipedia.org/wiki/HTTP_location)"
 

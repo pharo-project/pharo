@@ -343,7 +343,7 @@ TabManagerMorph >> setTabContentFrom: aTab [
 	process ifNotNil: [ processes add: process ]
 ]
 
-{ #category : 'compatbility' }
+{ #category : 'compatibility' }
 TabManagerMorph >> setTabs: aBlock [
 	self tabs: aBlock value
 ]

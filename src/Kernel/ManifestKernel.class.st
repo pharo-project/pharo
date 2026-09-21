@@ -9,7 +9,7 @@ Class {
 	#tag : 'Manifest'
 }
 
-{ #category : 'meta-data' }
+{ #category : 'meta data' }
 ManifestKernel class >> dependencies [
 	^ #(#'System-Announcements' #'Collections-Strings' #'Collections-Unordered' #'Collections-Streams' #Files #'System-Object Events' #'Collections-Abstract' #'Collections-Native' #'Collections-Support' #'System-Support' #'Multilingual-Encodings' #'Collections-Sequenceable' #'NewValueHolder-Core' #Compiler #'OpalCompiler-Core' #'System-Finalization' #Traits #'Collections-Weak' #UIManager)
 ]
@@ -20,7 +20,7 @@ ManifestKernel class >> manuallyResolvedDependencies [
 	^ #( #'Shift-ClassBuilder' )
 ]
 
-{ #category : 'meta-data' }
+{ #category : 'meta data' }
 ManifestKernel class >> packageName [
 	^ #Kernel
 ]
