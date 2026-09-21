@@ -34,7 +34,8 @@ Class {
 		'buttonUp',
 		'buttonDown',
 		'buttonAdd',
-		'arguments'
+		'arguments',
+		'updateProcess'
 	],
 	#category : 'Refactoring-UI-UI',
 	#package : 'Refactoring-UI',
@@ -81,6 +82,13 @@ StRenameMethodPreviewPresenter >> buildLeftSideDiff [
 ]
 
 { #category : 'initialization' }
+StRenameMethodPreviewPresenter >> buttonOk: aButton [
+
+	buttonOk := aButton.
+	self updateOkButtonState
+]
+
+{ #category : 'initialization' }
 StRenameMethodPreviewPresenter >> changesFrom: aCompositeChange [
 
 	compositeChange := aCompositeChange.
@@ -122,8 +130,7 @@ StRenameMethodPreviewPresenter >> connectPresenters [
 	buttonOk action: [ self accept ] .
 	
 	newNameInput whenTextChangedDo: [ :text |
-		self validateName: text .
-		self updateName ] .
+		self schedulePreviewUpdate: text ] .
 ]
 
 { #category : 'api - focus' }
@@ -205,14 +212,18 @@ StRenameMethodPreviewPresenter >> globalActiveScope [
 
 { #category : 'initialization' }
 StRenameMethodPreviewPresenter >> initializeDialogWindow: aDialogWindowPresenter [
-	"Used to initialize the model in the case of the use into a dialog window.
-	 Override this to set buttons other than the default (Ok, Cancel)."
-	
-	aDialogWindowPresenter
-		addButton: 'Cancel' do: [ :presenter | presenter close ];
-		addDefaultButton: 'Ok' do: [ :presenter | 
-			self accept.
-			presenter close ]
+
+	| applyButton |
+	aDialogWindowPresenter addButton: 'Cancel' do: [ :presenter |
+			self terminateUpdateProcess.
+			presenter close ].
+
+	applyButton := aDialogWindowPresenter addDefaultButton: 'Apply' do: [ :presenter |
+			               self terminateUpdateProcess.
+			               self accept.
+			               presenter close ].
+
+	self buttonOk: applyButton
 ]
 
 { #category : 'initialization' }
@@ -252,7 +263,8 @@ StRenameMethodPreviewPresenter >> initializePresenters [
 	buttonUp := self newButton label: 'Up'; addStyle: 'small'.
 	buttonDown := self newButton label: 'Dn'.
 	buttonAdd := self newButton label: '+'.
-	argumentsList := self newList
+	argumentsList := self newList .
+	nameIsValid := false. 
 ]
 
 { #category : 'accessing' }
@@ -303,6 +315,14 @@ StRenameMethodPreviewPresenter >> updateChanges [
 StRenameMethodPreviewPresenter >> updateGlobalActiveScope [
 
 	ScopesManager activeScope: scopeDropList selectedItem asRBEnvironment
+]
+
+{ #category : 'initialization' }
+StRenameMethodPreviewPresenter >> updateOkButtonState [
+
+	nameIsValid
+		ifTrue: [ buttonOk enable ]
+		ifFalse: [ buttonOk disable ]
 ]
 
 { #category : 'update' }
