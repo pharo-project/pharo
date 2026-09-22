@@ -163,11 +163,14 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: bootstrap64-base
-          path: bootstrap-cache
+          path: bootstrap-cache/build
 
       - name: Install full image
         run: |
           set -eux
+          pwd
+          ls -al
+          tree -a
           BUILD_NUMBER="${GITHUB_RUN_NUMBER}" BOOTSTRAP_ARCH=64 bash ./repo/bootstrap/scripts/5-installIDE.sh
 
       - name: Upload full image artifacts
