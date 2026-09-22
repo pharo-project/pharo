@@ -193,7 +193,7 @@ ReRenameMethodRefactoring >> validNewNameCondition [
  
 	^ (ReBlockCondition new 
 			block: [ (class includesSelector: newSelector) not ];
-			violatorErrorString: newSelector ,' is already defined in this class')
+			violatorErrorString: newSelector printString,' is already defined in this class')
 ]
 
 { #category : 'preconditions' }
@@ -201,7 +201,7 @@ ReRenameMethodRefactoring >> validSelectorCondition [
 
 	^ (ReBlockCondition new 
 			block: [ self isValidSelector: newSelector ];
-			violatorErrorString: newSelector ,' is not a valid selector').
+			violatorErrorString: newSelector printString, ' is not a valid selector').
 ]
 
 { #category : 'accessing' }

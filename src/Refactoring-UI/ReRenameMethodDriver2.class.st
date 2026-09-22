@@ -25,6 +25,12 @@ ReRenameMethodDriver2 class >> driverName [
 	^ 'Rename method'
 ]
 
+{ #category : 'initialization' }
+ReRenameMethodDriver2 >> applicabilityPreconditionsAreSatisfied [
+
+	^ self checkApplicabilityPreconditions isNil
+]
+
 { #category : 'execution' }
 ReRenameMethodDriver2 >> breakingChoices [
 
@@ -206,6 +212,11 @@ ReRenameMethodDriver2 >> newRequestMethodDialogOn: methodName [
 		canRemoveArgs: self canRemoveArgs;
 		canAddArgs: self canAddArgs;
 		canEditName: self canEditName
+]
+
+{ #category : 'accessing' }
+ReRenameMethodDriver2 >> oldName: aString [ 
+	oldName := aString
 ]
 
 { #category : 'initialization' }
