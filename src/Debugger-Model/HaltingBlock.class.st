@@ -17,9 +17,7 @@ Class {
 HaltingBlock >> haltIfStepping [
 
 	<debuggerCompleteToSender>
-	DebuggerSteppingState value ifNotNil: [ :state |
-		(state shouldHaltInStepThroughForBlock: self)
-			ifTrue: [ Break break ]]
+	DebuggerSteppingState value ifTrue: [ Break break ]
 ]
 
 { #category : 'accessing' }
