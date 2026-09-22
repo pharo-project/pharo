@@ -33,7 +33,7 @@ if [ ! -e "${BOOTSTRAP_VMTARGET}" ]; then
 
 	#Odd PR builds use the the latest VM, else use the stable VM
 	set_version_variables
-	TEST_VM_KIND="vmLatest"
+	TEST_VM_KIND="vm"
 	${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/getPharoVM.sh ${PHARO_SHORT_VERSION} ${TEST_VM_KIND} $BOOTSTRAP_ARCH
 
   cd -
