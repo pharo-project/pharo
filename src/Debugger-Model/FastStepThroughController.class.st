@@ -96,14 +96,14 @@ FastStepThroughController >> findNextContext: aContext [
 ]
 
 { #category : 'context operations' }
-FastStepThroughController >> findNextContext: originContext having: homeContext fixing: buggyContext [
+FastStepThroughController >> findNextContext: originContext having: context fixing: buggyContext [
 
 	| blockContext fixedContext |
 	"Find the next context, restoring blocks, removing HaltingBlocks"
 	blockContext := self findNextContext: originContext.
 	
 	"a. Here step through exits the block is being evaluated."
-	(self stepOutOfBlock: blockContext from: originContext to: homeContext) 
+	(self stepOutOfBlock: blockContext from: originContext to: context) 
 		ifNotNil: [:targetContext | ^ targetContext ].
 
 	"b. Here step through behaves like step over."
@@ -167,7 +167,8 @@ FastStepThroughController >> revertBlocks [
 FastStepThroughController >> shouldHaltInStepThroughForBlock: aHaltingBlock [
 
 	"We only halt if the context where we did step through is the home of the halting block"
-	^ aHaltingBlock home == homeContext 
+
+	^ aHaltingBlock compiledBlock outerCode == homeContext method
 ]
 
 { #category : 'context operations' }
