@@ -222,6 +222,7 @@ ShiftClassInstaller >> migrateClassTo: newClass [
 	self assert: newClass isNotNil.
 
 	self oldClass superclass removeSubclass: self oldClass.
+	self oldClass package removeClass: self oldClass.
 
 	newClass subclasses: self oldClass subclasses.
 
