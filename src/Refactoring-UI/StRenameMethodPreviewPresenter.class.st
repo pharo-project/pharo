@@ -80,6 +80,11 @@ StRenameMethodPreviewPresenter >> addBehaviorPanel [
 		ifFalse: [ topLayout add: behaviorPanel expand: false ]
 ]
 
+{ #category : 'initialization' }
+StRenameMethodPreviewPresenter >> behaviorMessageLabel [
+	^ behaviorMessageLabel
+]
+
 { #category : 'action' }
 StRenameMethodPreviewPresenter >> browseOverrides [ 
 
@@ -401,6 +406,11 @@ StRenameMethodPreviewPresenter >> updateTablePresenter [
 
 	table items: changesInScope.
 	table items ifNotEmpty: [ table selectIndex: 1 ]
+]
+
+{ #category : 'initialization' }
+StRenameMethodPreviewPresenter >> validationLabel [
+	^ validationLabel 
 ]
 
 { #category : 'accessing' }
