@@ -57,18 +57,31 @@ RBAddParameterRefactoring >> addParameterToMethod: aSelector in: aClass newSelec
 { #category : 'preconditions' }
 RBAddParameterRefactoring >> applicabilityPreconditions [
 
-	^ super applicabilityPreconditions,
-		  { (RBCondition withBlock: [
-		   oldSelector numArgs < newSelector numArgs ifFalse: [
-				   self refactoringError: newSelector printString
-						   , ' doesn''t have the proper number of arguments.' ].
-			permutation size = newSelector numArgs ifFalse: [ 
-				self refactoringError: newSelector printString
-					, ' doesn''t have the proper number of permutations.' ].
-		   self newArgs do: [ :arg |
-				   self verifyInitializationExpressionOf: arg argValue ].
-		   true ]) }
-	
+	^ super applicabilityPreconditions, 
+	{
+		  self newSelectorIsNotDefinedInTargetClassPrecondition.
+		  (ReBlockCondition new
+			   block: [ oldSelector numArgs <= newSelector numArgs ];
+			   violatorErrorString: newSelector printString , ' doesn''t have the proper number of arguments.').
+		  (ReBlockCondition new
+			   block: [ permutation size = newSelector numArgs ];
+			   violatorErrorString: newSelector printString , ' doesn''t have the proper number of permutations.') 
+	}, 
+	(self newArgs collect: [ :arg |
+		ReBlockCondition new
+		   block: [ self isValidInitializationExpressionFor: arg ];
+		   violatorErrorString: 'Illegal initialization code for argument ' , arg name printString ])
+]
+
+{ #category : 'preconditions' }
+RBAddParameterRefactoring >> breakingChangePreconditions [
+
+	^ { 
+	ReUpToRootDoesNotDefinesMethod new
+		classes: self implementors;
+		selector: newSelector;
+		yourself
+	}
 ]
 
 { #category : 'preconditions' }
@@ -99,6 +112,16 @@ RBAddParameterRefactoring >> checkVariableReferencesIn: aParseTree [
 	searcher executeTree: aParseTree
 ]
 
+{ #category : 'preconditions' }
+RBAddParameterRefactoring >> isValidInitializationExpressionFor: anArgument [
+
+	[
+		self verifyInitializationExpressionOf: anArgument argValue.
+		^ true ]
+	on: RBRefactoringError
+	do: [ :e | ^ false ]
+]
+
 { #category : 'private' }
 RBAddParameterRefactoring >> modifyImplementorParseTree: parseTree in: aClass [
 	| argNames index |
@@ -118,6 +141,21 @@ RBAddParameterRefactoring >> modifyImplementorParseTree: parseTree in: aClass [
 { #category : 'accessing' }
 RBAddParameterRefactoring >> newArgs [
 	^ newArgs ifNil: [ newArgs := { } ]
+]
+
+{ #category : 'accessing' }
+RBAddParameterRefactoring >> newArgs: aCollection [
+
+	newArgs := aCollection
+]
+
+{ #category : 'preconditions' }
+RBAddParameterRefactoring >> newSelectorIsNotDefinedInTargetClassPrecondition [
+
+	^ ReBlockCondition new
+		  block: [ (class directlyDefinesMethod: newSelector) not ];
+		  violatorErrorString: newSelector printString , ' is already defined in ' , class name;
+		  yourself
 ]
 
 { #category : 'action' }
@@ -179,4 +217,10 @@ RBAddParameterRefactoring >> verifyInitializationExpressionOf: initializer [
 	tree isValue
 		ifFalse: [ self refactoringError: 'The initialization code cannot be a return node or a list of statements' ].
 	self checkVariableReferencesIn: tree
+]
+
+{ #category : 'preconditions' }
+RBAddParameterRefactoring >> violations [
+
+	^ self breakingChangePreconditions flatCollect: [ :each | each violators ]
 ]
