@@ -6,8 +6,7 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'originalBlocks',
-		'newBlocks',
-		'homeContext'
+		'newBlocks'
 	],
 	#category : 'Debugger-Model-Core',
 	#package : 'Debugger-Model',
@@ -33,13 +32,13 @@ FastStepThroughController >> completeStep: aContext inProcess: aProcess [
 
 	" Enable process interruptions triggered by HaltingBlocks. "
 	| newContext |
-	aProcess psValueAt: DebuggerSteppingState soleInstance index put: self. 
+	aProcess psValueAt: DebuggerSteppingState soleInstance index put: true. 
 
 	" Run until aContext is on top, a return is reached, or an Error is signaled. "
 	newContext := aProcess completeStep: aContext. 
 
 	" Disable process interruptions triggered by HaltingBlocks. "
-	aProcess psValueAt: DebuggerSteppingState soleInstance index put: nil.
+	aProcess psValueAt: DebuggerSteppingState soleInstance index put: false.
 
 	^ newContext
 ]
@@ -146,9 +145,6 @@ FastStepThroughController >> prepareContextForStepThrough: aContext [
 	 Replace references to the originals by the wrappers in aContext. "
 	
 	| maybeABlock |
-	
-	homeContext := aContext.
-	
 	1 to: aContext size do: [ :idx | self updateFullBlocksOf: aContext withIndex: idx ].
 
 	aContext receiver class allSlots do: [ :aSlot |
@@ -161,13 +157,6 @@ FastStepThroughController >> prepareContextForStepThrough: aContext [
 FastStepThroughController >> revertBlocks [
 
 	newBlocks asArray elementsForwardIdentityTo: originalBlocks asArray
-]
-
-{ #category : 'asserting' }
-FastStepThroughController >> shouldHaltInStepThroughForBlock: aHaltingBlock [
-
-	"We only halt if the context where we did step through is the home of the halting block"
-	^ aHaltingBlock home == homeContext 
 ]
 
 { #category : 'context operations' }
