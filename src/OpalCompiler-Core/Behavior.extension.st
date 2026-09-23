@@ -78,9 +78,7 @@ Behavior >> compile: sourceCode methodInstaller: methodInstaller [
 	sourceCode ifEmpty: [ Error signal: 'The source code should not be empty' ].
 	compiler := self compiler
 		            source: sourceCode;
-		            "compatibility: permit undeclared if no requestor"
-		            permitUndeclared: false;
-		            permitFaulty: false.
+		            strict.
 	method := compiler compileOrFail.
 	methodInstaller install: method into: self compiler: compiler.
 	^ method selector
