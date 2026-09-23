@@ -6,7 +6,8 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'originalBlocks',
-		'newBlocks'
+		'newBlocks',
+		'homeContext'
 	],
 	#category : 'Debugger-Model-Core',
 	#package : 'Debugger-Model',
@@ -32,13 +33,13 @@ FastStepThroughController >> completeStep: aContext inProcess: aProcess [
 
 	" Enable process interruptions triggered by HaltingBlocks. "
 	| newContext |
-	aProcess psValueAt: DebuggerSteppingState soleInstance index put: true. 
+	aProcess psValueAt: DebuggerSteppingState soleInstance index put: self. 
 
 	" Run until aContext is on top, a return is reached, or an Error is signaled. "
 	newContext := aProcess completeStep: aContext. 
 
 	" Disable process interruptions triggered by HaltingBlocks. "
-	aProcess psValueAt: DebuggerSteppingState soleInstance index put: false.
+	aProcess psValueAt: DebuggerSteppingState soleInstance index put: nil.
 
 	^ newContext
 ]
@@ -95,14 +96,14 @@ FastStepThroughController >> findNextContext: aContext [
 ]
 
 { #category : 'context operations' }
-FastStepThroughController >> findNextContext: originContext having: homeContext fixing: buggyContext [
+FastStepThroughController >> findNextContext: originContext having: operationContext fixing: buggyContext [
 
 	| blockContext fixedContext |
 	"Find the next context, restoring blocks, removing HaltingBlocks"
 	blockContext := self findNextContext: originContext.
 	
 	"a. Here step through exits the block is being evaluated."
-	(self stepOutOfBlock: blockContext from: originContext to: homeContext) 
+	(self stepOutOfBlock: blockContext from: originContext to: operationContext) 
 		ifNotNil: [:targetContext | ^ targetContext ].
 
 	"b. Here step through behaves like step over."
@@ -145,6 +146,9 @@ FastStepThroughController >> prepareContextForStepThrough: aContext [
 	 Replace references to the originals by the wrappers in aContext. "
 	
 	| maybeABlock |
+	
+	homeContext := aContext.
+	
 	1 to: aContext size do: [ :idx | self updateFullBlocksOf: aContext withIndex: idx ].
 
 	aContext receiver class allSlots do: [ :aSlot |
@@ -157,6 +161,14 @@ FastStepThroughController >> prepareContextForStepThrough: aContext [
 FastStepThroughController >> revertBlocks [
 
 	newBlocks asArray elementsForwardIdentityTo: originalBlocks asArray
+]
+
+{ #category : 'asserting' }
+FastStepThroughController >> shouldHaltInStepThroughForBlock: aHaltingBlock [
+
+	"We only halt if the context where we did step through is the home of the halting block"
+
+	^ aHaltingBlock compiledBlock outerCode == homeContext method
 ]
 
 { #category : 'context operations' }
