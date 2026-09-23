@@ -265,16 +265,19 @@ FLTCreateClassOrTraitSerializationTest >> testCreateWithTraitOnClassSide [
 	self classFactory
 		silentlyCompile:  'fortyTwo ^42'
 		in: aTrait.
+	self classFactory
+		silentlyCompile:  'fortyTwoClass ^42'
+		in: aTrait classTrait.
 	aClass := self classFactory silentlyNewClass.
-	aClass classSide addToComposition: aTrait.
+	aClass classSide addToComposition: aTrait classTrait.
 
 	materializedClassOrTrait := self resultOfSerializeRemoveAndMaterialize: aClass.
 
 	self assert: 1 equals: materializedClassOrTrait classSide traits size.
-	self assert: (materializedClassOrTrait classSide traits includes: aTrait).
-	self assert: (aTrait users includes: materializedClassOrTrait classSide).
+	self assert: (materializedClassOrTrait classSide traits includes: aTrait classTrait).
+	self assert: (aTrait classTrait users includes: materializedClassOrTrait classSide).
 	self assert: materializedClassOrTrait classSide localSelectors isEmpty.
-	self assert: 42 equals: ((self newInstanceFrom: materializedClassOrTrait) class perform: #fortyTwo)
+	self assert: 42 equals: ((self newInstanceFrom: materializedClassOrTrait) class perform: #fortyTwoClass)
 ]
 
 { #category : 'tests' }
