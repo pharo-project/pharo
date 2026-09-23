@@ -1,6 +1,6 @@
 Extension { #name : 'HashedCollection' }
 
-{ #category : '*System-Model' }
+{ #category : '*DeepCopier' }
 HashedCollection >> veryDeepCopyWith: deepCopier [
 	| copyOfSelf|
 	copyOfSelf := super veryDeepCopyWith: deepCopier.

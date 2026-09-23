@@ -1,6 +1,6 @@
 Extension { #name : 'Float' }
 
-{ #category : '*System-Model' }
+{ #category : '*DeepCopier' }
 Float >> veryDeepCopyWith: deepCopier [
 	"Return self.  Do not record me."
 
