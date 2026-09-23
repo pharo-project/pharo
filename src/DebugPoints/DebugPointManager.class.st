@@ -98,6 +98,7 @@ DebugPointManager class >> installNew: aDebugPointClass forObject: anObject onVa
 	| dp instanceVariable |
 	instanceVariable := anObject class slotNamed: aSlotNameSymbol.
 	dp := aDebugPointClass new
+		      targetClass: anObject class
 		      instanceVariable: instanceVariable
 		      accessStrategy: anAccessStrategySymbol;
 		      targetInstance: anObject;
@@ -213,7 +214,8 @@ DebugPointManager class >> installNew: aDebugPointClass inClass: aClass onVariab
 	| dp instanceVariable |
 	instanceVariable := aClass lookupVar: aSlotNameSymbol.
 	dp := aDebugPointClass new
-		      instanceVariable: instanceVariable
+		      targetClass: aClass
+		      instanceVariable: instanceVariable 
 		      accessStrategy: anAccessStrategySymbol;
 		      yourself.
 
