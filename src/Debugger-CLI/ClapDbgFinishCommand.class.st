@@ -5,7 +5,7 @@ Class {
 	#package : 'Debugger-CLI'
 }
 
-{ #category : 'execution' }
+{ #category : 'initialization' }
 ClapDbgFinishCommand >> initialize [
 
 	super initialize.
