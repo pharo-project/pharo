@@ -11,3 +11,13 @@ Class {
 	#package : 'Slot-Tests',
 	#tag : 'Data'
 }
+
+{ #category : 'as yet unclassified' }
+TestRootClass >> methodUsingSharedPoolVariable [
+	^ One
+]
+
+{ #category : 'as yet unclassified' }
+TestRootClass >> methodUsingSomeSharedVariable [
+	^ SomeSharedVariable
+]

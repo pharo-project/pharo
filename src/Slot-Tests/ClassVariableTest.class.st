@@ -168,7 +168,10 @@ ClassVariableTest >> testScope [
 
 { #category : 'tests' }
 ClassVariableTest >> testUsingClasses [
-	self assert: (Character classVariableNamed: #CharSet) usingClasses anyOne identicalTo: Character class
+	| variable |
+	variable := TestRootClass classVariableNamed: #SomeSharedVariable.
+	self assertCollection: variable usingClasses hasSameElements: { TestRootClass. TestClass. TestClass class }
+
 ]
 
 { #category : 'tests' }
@@ -176,13 +179,16 @@ ClassVariableTest >> testUsingMethods [
 	| variable |
 	"The semantics of where to search is tested as part of #testPossiblyUsingClasses"
 
-	variable := CharacterScanner classVariableNamed: #CompositionStopConditions.
-	self assert: (variable usingMethods includes: CompositionScanner>>#setStopConditions).
+	variable := TestRootClass classVariableNamed: #SomeSharedVariable.
+	self assert: (variable usingMethods includes: TestRootClass>>#methodUsingSomeSharedVariable).
+	self assert: (variable usingMethods includes: TestClass>>#methodUsingSomeSharedVariable).
+	self assert: (variable usingMethods includes: TestClass>>#anotherMethodUsingSomeSharedVariable).
 
-	variable := TextConstants classVariableNamed: #DefaultMarginTabsArray.
+	variable := TestSharedPool classVariableNamed: #One.
 	self assert: variable isPoolVariable.
-	self assert: (variable usingMethods includes: TextConstants class>>#DefaultMarginTabsArray).
-	self assert: (variable usingMethods includes: TextStyle>>#newFontArray:)
+	self assert: (variable usingMethods includes: TestSharedPool class>>#initialize).
+	self assert: (variable usingMethods includes: TestRootClass>>#methodUsingSharedPoolVariable).
+	self assert: (variable usingMethods includes: TestClass>>#methodUsingInheritedSharedPoolVariable)
 ]
 
 { #category : 'tests - properties' }
@@ -198,8 +204,8 @@ ClassVariableTest >> testWritingToContext [
 { #category : 'tests' }
 ClassVariableTest >> testisPoolVariable [
 	| variable |
-	variable := SmalltalkImage classVariableNamed: #CompilerClass.
+	variable := TestRootClass classVariableNamed: #SomeSharedVariable.
 	self deny: variable isPoolVariable.
-	variable := TextConstants classVariableNamed: #Basal.
+	variable := TestSharedPool classVariableNamed: #ReferencedInTest.
 	self assert: variable isPoolVariable
 ]
