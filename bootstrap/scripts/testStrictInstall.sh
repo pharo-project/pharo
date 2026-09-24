@@ -53,14 +53,14 @@ if [ ! -e "${BOOTSTRAP_CACHE}/metacello.image" ]; then
     # unzip metacello.zip
 fi
 
+cd ${BOOTSTRAP_CACHE}
+
 if [ ! -e "${BOOTSTRAP_CACHE}/sunit.image" ]; then
     myLog "Loading Sunit Core"
     rm -fr sunit.{image,changes}
     ${VM_TARGET} metacello.image save sunit
     ${VM_TARGET} sunit.image metacello install --save --strict --signalErrorOnWarning filetree://${SRC_DIR} SUnit --groups Core
 fi
-
-cd ${BOOTSTRAP_CACHE}
 
 rm -fr ${PROJECT_NAME}.{image,changes}
 ${VM_TARGET} sunit.image save ${PROJECT_NAME}

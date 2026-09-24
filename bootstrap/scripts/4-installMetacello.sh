@@ -107,7 +107,7 @@ cd "${BOOTSTRAP_CACHE}"
 
 # Initializing bootstrap image
 echo $(date -u) "[Compiler] Initializing Bootstraped Image and fixing the code"
-${VM} "${BOOTSTRAP_IMAGE_NAME}.image" # I have to run once the image so the next time it starts the CommandLineHandler.
+# ${VM} "${BOOTSTRAP_IMAGE_NAME}.image" # I have to run once the image so the next time it starts the CommandLineHandler.
 ${VM} "${BOOTSTRAP_IMAGE_NAME}.image" perform --save PharoBootstrapInitialization fixMethodsIn: protocolsKernel.txt # Fixing some things espell does not handel well
 ${VM} "${BOOTSTRAP_IMAGE_NAME}.image" perform --save PharoBootstrapInitialization fixExtensionMethods
 
