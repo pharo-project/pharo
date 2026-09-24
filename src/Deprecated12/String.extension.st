@@ -1,6 +1,16 @@
 Extension { #name : 'String' }
 
 { #category : '*Deprecated12' }
+String >> asFileName [
+	"Answer a String made up from the receiver that is an acceptable file
+	name."
+
+	| string checkedString |
+	string := FileSystem disk checkName: self fixErrors: true.
+	checkedString := FilePathEncoder encode: string.
+	^ FilePathEncoder decode: checkedString
+]
+
 String >> asClass [
 	"Returns a global class with my name"
 
