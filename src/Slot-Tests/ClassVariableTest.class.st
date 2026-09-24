@@ -78,27 +78,27 @@ ClassVariableTest >> testPossiblyUsingClasses [
 	| variable |
 
 	"this is a normal class var"
-	variable := CharacterScanner classVariableNamed: #CompositionStopConditions.
+	variable := TestRootClass classVariableNamed: #SomeSharedVariable.
 
 	"it can be accessed from the class and the meta class"
-	self assert: (variable possiblyUsingClasses includes: CharacterScanner).
-	self assert: (variable possiblyUsingClasses includes: CharacterScanner class).
+	self assert: (variable possiblyUsingClasses includes: TestRootClass).
+	self assert: (variable possiblyUsingClasses includes: TestRootClass class).
 	"and subclasses"
-	self assert: (variable possiblyUsingClasses includes: CompositionScanner).
-	self assert: (variable possiblyUsingClasses includes: CompositionScanner class).
+	self assert: (variable possiblyUsingClasses includes: TestClass).
+	self assert: (variable possiblyUsingClasses includes: TestClass class).
 
 	"Pools are more complex"
-	variable := TextConstants classVariableNamed: #Basal.
+	variable := TestSharedPool classVariableNamed: #ReferencedInTest.
 	self assert: variable isPoolVariable.
 	"same for pool var: class and meta class of the defining class"
-	self assert: (variable possiblyUsingClasses includes: TextConstants).
-	self assert: (variable possiblyUsingClasses includes: TextConstants class).
+	self assert: (variable possiblyUsingClasses includes: TestSharedPool).
+	self assert: (variable possiblyUsingClasses includes: TestSharedPool class).
 	"but in addition the all the users"
-	self assert: (variable possiblyUsingClasses includes: CharacterScanner).
-	self assert: (variable possiblyUsingClasses includes: CharacterScanner class).
+	self assert: (variable possiblyUsingClasses includes: TestRootClass).
+	self assert: (variable possiblyUsingClasses includes: TestRootClass class).
 	"and subclasses"
-	self assert: (variable possiblyUsingClasses includes: CompositionScanner).
-	self assert: (variable possiblyUsingClasses includes: CompositionScanner class)
+	self assert: (variable possiblyUsingClasses includes: TestClass).
+	self assert: (variable possiblyUsingClasses includes: TestClass class)
 ]
 
 { #category : 'tests' }
