@@ -17,15 +17,27 @@ MissionControlShortcutsCategory class >> isGlobalCategory [
 ]
 
 { #category : 'keymaps' }
+MissionControlShortcutsCategory >> isAlreadyOpen: world [
+	
+	^ world submorphs anySatisfy: [ :m | m isKindOf: MissionControlMorph ]
+]
+
+{ #category : 'keymaps' }
 MissionControlShortcutsCategory >> missionControlDismiss [
 
 	<shortcut>
-	^ KMKeymap shortcut: Character arrowDown meta action: [ WorldMorph allInstances first dismissMissionControl ]
+	^ KMKeymap shortcut: Character arrowDown meta action: [ :target :morph :event | | world |
+		world := WorldMorph allInstances first.
+		(self isAlreadyOpen: world) ifTrue: [ world dismissMissionControl ]
+			ifFalse: [ world missionControlWithSameType ]
+	]
 ]
 
 { #category : 'keymaps' }
 MissionControlShortcutsCategory >> missionControlToggle [
 
 	<shortcut>
-	^ KMKeymap shortcut: Character arrowUp meta action: [ WorldMorph allInstances first missionControl ]
+	^ KMKeymap shortcut: Character arrowUp meta action: [
+		WorldMorph allInstances first missionControl
+	]
 ]
