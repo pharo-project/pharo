@@ -55,7 +55,7 @@ fi
 
 cd ${BOOTSTRAP_CACHE}
 
-if [ ! -e "${BOOTSTRAP_CACHE}/sunit.image" ]; then
+if [ ! -e "sunit.image" ]; then
     myLog "Loading Sunit Core"
     rm -fr sunit.{image,changes}
     ${VM_TARGET} metacello.image save sunit
@@ -67,6 +67,9 @@ ${VM_TARGET} sunit.image save ${PROJECT_NAME}
 
 myLog "Loading ${PROJECT_NAME} Core"
 ${VM_TARGET} ${PROJECT_NAME}.image metacello install --save --strict --signalErrorOnWarning filetree://${SRC_DIR} ${PROJECT_NAME} --groups Core
+
+rm -fr ${PROJECT_NAME}.{image,changes}
+${VM_TARGET} sunit.image save ${PROJECT_NAME}
 
 myLog "Loading ${PROJECT_NAME} Tests"
 ${VM_TARGET} ${PROJECT_NAME}.image metacello install --save --strict --signalErrorOnWarning filetree://${SRC_DIR} --groups Tests ${PROJECT_NAME}
