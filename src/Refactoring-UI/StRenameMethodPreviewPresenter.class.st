@@ -256,7 +256,7 @@ StRenameMethodPreviewPresenter >> defaultLayout [
 	topLayout := SpBoxLayout newTopToBottom 
 		spacing: 10; 
 		add: nameLayout expand: false;
-		add: argumentLayout;
+		add: argumentLayout expand: false;
 		yourself.
 	
 	mainLayout := SpBoxLayout newTopToBottom
