@@ -55,7 +55,7 @@ BaselineOfIDE >> baseline: spec [
 		self
 			load: 'Shift' group: 'shift-tests' spec: spec;
 			load: 'Traits' group: 'traits-tests' spec: spec;
-			load: 'Slot' group: 'slot-tests' spec: spec;
+			load: 'Slot' group: 'Tests' spec: spec;
 			load: 'Clap' group: 'Development' spec: spec.
 
 		spec
