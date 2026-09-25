@@ -102,7 +102,7 @@ PanelMorph >> enabled: aBoolean [
 	self submorphsDo: [:m | m enabled: aBoolean]
 ]
 
-{ #category : 'events-processing' }
+{ #category : 'events - processing' }
 PanelMorph >> handleMouseOver: anEvent [
 	"System level event handling."
 

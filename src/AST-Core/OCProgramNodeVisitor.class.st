@@ -17,7 +17,7 @@ OCProgramNodeVisitor class >> isAbstract [
 	^ self == OCProgramNodeVisitor
 ]
 
-{ #category : 'API' }
+{ #category : 'api' }
 OCProgramNodeVisitor >> visit: aMessageNode [
 	^ aMessageNode acceptVisitor: self
 ]

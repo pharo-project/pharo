@@ -78,7 +78,7 @@ DebugPoint class >> removeAll [
 	self all copy do: #remove
 ]
 
-{ #category : 'API' }
+{ #category : 'api' }
 DebugPoint >> addBehavior: aDebugPointBehavior [
 	"adding a new behavior"
 
@@ -184,7 +184,7 @@ DebugPoint >> hitAnnouncementOn: aDebugPoint inContext: aContext [
 	^ self target hitAnnouncementOn: aDebugPoint inContext: aContext
 ]
 
-{ #category : 'API' }
+{ #category : 'api' }
 DebugPoint >> hitWithContext: aContext [
 	"executes side effect behaviors if and only if this debug point is enabled and if all check behaviors return true"
 
@@ -216,7 +216,7 @@ DebugPoint >> install [
 	self target install: self link
 ]
 
-{ #category : 'API' }
+{ #category : 'api' }
 DebugPoint >> instanceVariable: aSlot accessStrategy: aSymbol [
 
 	target := DebugPointInstanceVariableTarget new
@@ -263,7 +263,7 @@ DebugPoint >> name: aSymbol [
 	name := aSymbol
 ]
 
-{ #category : 'API' }
+{ #category : 'api' }
 DebugPoint >> node: aNode [
 
 	target := DebugPointNodeTarget new
@@ -290,7 +290,7 @@ DebugPoint >> remove [
 	self link ifNotNil: [ self link uninstall ]
 ]
 
-{ #category : 'API' }
+{ #category : 'api' }
 DebugPoint >> removeBehavior: aDebugPointBehaviorClass [
 	"removing a behavior"
 
@@ -361,7 +361,7 @@ DebugPoint >> resetObjectScope [
 	self install
 ]
 
-{ #category : 'API' }
+{ #category : 'api' }
 DebugPoint >> saveContext: aContext [
 
 	self arguments at: #context put: aContext

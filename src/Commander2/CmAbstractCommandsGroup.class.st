@@ -11,7 +11,7 @@ Class {
 	#tag : 'Groups'
 }
 
-{ #category : 'public-api' }
+{ #category : 'public api' }
 CmAbstractCommandsGroup >> / aString [
 	"Alias for #commandOrRegisterNamed:."
 	^ self commandOrGroupNamed: aString
@@ -27,22 +27,22 @@ CmAbstractCommandsGroup >> allCommands [
 	^ self subclassResponsibility
 ]
 
-{ #category : 'public-api' }
+{ #category : 'public api' }
 CmAbstractCommandsGroup >> commandOrGroupNamed: aString [
 	^ self subclassResponsibility
 ]
 
-{ #category : 'public-api' }
+{ #category : 'public api' }
 CmAbstractCommandsGroup >> commands [
 	^ self subclassResponsibility
 ]
 
-{ #category : 'public-api' }
+{ #category : 'public api' }
 CmAbstractCommandsGroup >> entries [
 	^ self subclassResponsibility
 ]
 
-{ #category : 'public-api' }
+{ #category : 'public api' }
 CmAbstractCommandsGroup >> groups [
 	^ self subclassResponsibility
 ]
@@ -62,12 +62,12 @@ CmAbstractCommandsGroup >> isGroup [
 	^ true
 ]
 
-{ #category : 'public-api' }
+{ #category : 'public api' }
 CmAbstractCommandsGroup >> register: aCmCommandsOrRegister [
 	^ self subclassResponsibility
 ]
 
-{ #category : 'public-api' }
+{ #category : 'public api' }
 CmAbstractCommandsGroup >> unregister: aCmCommandOrRegister [
 	^ self subclassResponsibility
 ]

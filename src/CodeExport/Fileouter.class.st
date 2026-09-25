@@ -15,7 +15,7 @@ Class {
 	#tag : 'Base'
 }
 
-{ #category : 'API' }
+{ #category : 'api' }
 Fileouter class >> fileoutPackage: aPackage [
 
 	^ self new
@@ -97,13 +97,13 @@ Fileouter >> fileoutMethod: aMethod [
 	exporter writeMethod: aMethod
 ]
 
-{ #category : 'API' }
+{ #category : 'api' }
 Fileouter >> fileoutOnFileReference: aFileReference [
 
 	aFileReference writeStreamDo: [ :stream | self fileoutOnStream: stream ]
 ]
 
-{ #category : 'API' }
+{ #category : 'api' }
 Fileouter >> fileoutOnStream: aStream [
 
 	exporter := CodeExporterV100 onStream: aStream.

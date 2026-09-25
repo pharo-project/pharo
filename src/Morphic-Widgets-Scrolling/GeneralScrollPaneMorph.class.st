@@ -247,7 +247,7 @@ GeneralScrollPaneMorph >> handlesKeyboard: evt [
 	^true
 ]
 
-{ #category : 'events-processing' }
+{ #category : 'events - processing' }
 GeneralScrollPaneMorph >> handlesMouseWheel: evt [
 	"Do I want to receive mouseWheel events?."
 

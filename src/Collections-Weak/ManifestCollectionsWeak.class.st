@@ -9,7 +9,7 @@ Class {
 	#tag : 'Manifest'
 }
 
-{ #category : 'meta-data' }
+{ #category : 'meta data' }
 ManifestCollectionsWeak class >> dependencies [
 	^ #(#'System-Finalization' #'Collections-Support' #'Collections-Sequenceable' #'Collections-Unordered' #'Collections-Abstract' #Kernel)
 ]
@@ -19,7 +19,7 @@ ManifestCollectionsWeak class >> manuallyResolvedDependencies [
 	^ #('Collections-Streams')
 ]
 
-{ #category : 'meta-data' }
+{ #category : 'meta data' }
 ManifestCollectionsWeak class >> packageName [
 	^ #'Collections-Weak'
 ]

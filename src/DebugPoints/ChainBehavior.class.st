@@ -94,7 +94,7 @@ ChainBehavior >> parent [
 	^ self class parentFor: self debugPoint
 ]
 
-{ #category : 'API' }
+{ #category : 'api' }
 ChainBehavior >> putChild: aDebugPoint [
 
 	(self checkCircularChain: aDebugPoint withParent: self debugPoint)
@@ -116,7 +116,7 @@ ChainBehavior >> remove [
 
 ]
 
-{ #category : 'API' }
+{ #category : 'api' }
 ChainBehavior >> resetChain [
 	| root |
 	root := (self class rootFor: self debugPoint).

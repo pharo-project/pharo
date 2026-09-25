@@ -24,7 +24,8 @@ Class {
 		'expandBox',
 		'embeddable',
 		'isResizeable',
-		'taskbarTask'
+		'taskbarTask',
+		'wasClosedFromShortcut'
 	],
 	#classVars : [
 		'CloseBoxImage',
@@ -1164,8 +1165,9 @@ SystemWindow >> closeBoxHit [
 	For Mac users only, the Mac convention of option-click-on-close-box is obeyed if the mac option key is down.
 	If we have a modal child then don't delete."
 
-	self allowedToClose ifFalse: [^self].
-	self close
+	self allowedToClose ifFalse: [ ^ self ].
+	self setWasClosedFromShortcut: false.
+	[ self close ] ensure: [ self setWasClosedFromShortcut: nil ]
 ]
 
 { #category : 'keymapping' }
@@ -2972,6 +2974,15 @@ SystemWindow >> setUpdatablePanesFrom: getSelectors [
 	updatablePanes := aList asArray
 ]
 
+{ #category : 'initialization' }
+SystemWindow >> setWasClosedFromShortcut: aBoolean [
+	"Records whether the close currently in progress was
+	triggered by a keyboard shortcut. Reset once the close completes
+	(see #closeBoxHit)."
+
+	wasClosedFromShortcut := aBoolean
+]
+
 { #category : 'menu actions' }
 SystemWindow >> setWindowColor [
 	"Allow the user to select a new basic color for the window"
@@ -3250,6 +3261,15 @@ SystemWindow >> wantsToBeDroppedInto: aMorph [
 SystemWindow >> wantsYellowButtonMenu [
 	"Answer true if the receiver wants a yellow button menu"
 	^ false
+]
+
+{ #category : 'accessing' }
+SystemWindow >> wasClosedFromShortcut [
+	"Answer whether the current (or most recent) close operation on this
+	window was triggered via a keyboard shortcut rather than
+	by clicking the close box."
+
+	^ wasClosedFromShortcut ifNil: [ true ]
 ]
 
 { #category : 'accessing' }

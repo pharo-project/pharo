@@ -9,7 +9,7 @@ Class {
 	#tag : 'Manifest'
 }
 
-{ #category : 'metadata' }
+{ #category : 'meta data' }
 ManifestKernelTests class >> dependencies [
 
 	^ #( #'Graphics-Primitives' #'System-Announcements' #'Morphic-Core' #'Morphic-Base' #'System-Changes' #'Collections-Strings' #'Collections-Unordered'
@@ -24,7 +24,7 @@ ManifestKernelTests class >> manuallyResolvedDependencies [
 	^ #(#'Transcript-NonInteractive')
 ]
 
-{ #category : 'metadata' }
+{ #category : 'meta data' }
 ManifestKernelTests class >> packageName [
 	^ #KernelTests
 ]

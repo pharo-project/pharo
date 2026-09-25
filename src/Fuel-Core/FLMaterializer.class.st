@@ -11,12 +11,12 @@ Class {
 	#tag : 'Public'
 }
 
-{ #category : 'accessing-defaults' }
+{ #category : 'accessing - defaults' }
 FLMaterializer class >> defaultMethodChangedWarningDisabled [
 	^ false
 ]
 
-{ #category : 'accessing-defaults' }
+{ #category : 'accessing - defaults' }
 FLMaterializer class >> defaultShouldMaterializeHeaderOnly [
 	^ false
 ]

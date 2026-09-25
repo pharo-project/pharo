@@ -59,7 +59,7 @@ MetacelloRecordTarget >> packageSpecsInLoadOrderFrom: aVersionSpec [
 
 	| loadOrder specsToLoad packageNames importNames importSpec importProjectSpecs importProjectNameMap |
 	loadOrder := aVersionSpec packageSpecsInLoadOrder.
-	importNames := packageNames := ((self listLoadableSpecsFrom: aVersionSpec) collect: [ :spec | spec name ]) asSet.
+	importNames := (packageNames := ((self listLoadableSpecsFrom: aVersionSpec) collect: [ :spec | spec name ]) asSet) copy.
 
 	aVersionSpec hasImports ifFalse: [ ^ loadOrder select: [ :spec | packageNames includes: spec name ] ].
 
@@ -93,13 +93,13 @@ MetacelloRecordTarget >> packageSpecsInLoadOrderFrom: aVersionSpec [
 	^ specsToLoad
 ]
 
-{ #category : 'doits' }
+{ #category : 'do-its' }
 MetacelloRecordTarget >> postLoad: packageOrVersionSpec [
 
 	(MetacelloPostLoadDirective spec: packageOrVersionSpec) addTo: self specBuilder currentLoadDirective
 ]
 
-{ #category : 'doits' }
+{ #category : 'do-its' }
 MetacelloRecordTarget >> preLoad: packageOrVersionSpec [
 
 	(MetacelloPreLoadDirective spec: packageOrVersionSpec) addTo: self specBuilder currentLoadDirective
