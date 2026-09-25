@@ -6,16 +6,16 @@ Context >> assertWellMaterializedInto: aMethodContext in: aTestCase [
 	aTestCase assert: self ~~ aMethodContext.
 	aTestCase assert: self class == aMethodContext class.
 	aTestCase assert: self temporaryVariableNames = aMethodContext temporaryVariableNames.
-	aTestCase assert: pc = aMethodContext pc.
-	aTestCase assert: stackp = aMethodContext stackPtr.
-	closureOrNil
+	aTestCase assert: self pc = aMethodContext pc.
+	aTestCase assert: self stackp = aMethodContext stackPtr.
+	self closure
 		ifNil: [ aTestCase assert: aMethodContext closure isNil ]
-		ifNotNil: [ closureOrNil assertWellMaterializedInto: aMethodContext closure in: aTestCase ].
-	aTestCase assert: receiver = aMethodContext receiver.
-	aTestCase assert: (method isEqualRegardlessTrailerTo: aMethodContext compiledCode).
-	sender
+		ifNotNil: [ self closure assertWellMaterializedInto: aMethodContext closure in: aTestCase ].
+	aTestCase assert: self receiver = aMethodContext receiver.
+	aTestCase assert: (self method isEqualRegardlessTrailerTo: aMethodContext compiledCode).
+	self sender
 		ifNil: [ aTestCase assert: aMethodContext sender isNil ]
-		ifNotNil: [ sender assertWellMaterializedInto: aMethodContext sender in: aTestCase ]
+		ifNotNil: [ self sender assertWellMaterializedInto: aMethodContext sender in: aTestCase ]
 ]
 
 { #category : '*Fuel-Core-Tests' }

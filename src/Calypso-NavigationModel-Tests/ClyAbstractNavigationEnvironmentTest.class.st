@@ -14,6 +14,12 @@ ClyAbstractNavigationEnvironmentTest class >> isAbstract [
 ]
 
 { #category : 'running' }
+ClyAbstractNavigationEnvironmentTest >> environment [
+
+	^ environment
+]
+
+{ #category : 'running' }
 ClyAbstractNavigationEnvironmentTest >> setUp [
 	super setUp.
 	self setUpEnvironment

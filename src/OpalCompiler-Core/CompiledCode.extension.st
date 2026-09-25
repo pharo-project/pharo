@@ -32,13 +32,5 @@ CompiledCode >> sourceNodeForPC: aPC [
 
 	| sourceNode |
 	sourceNode := self sourceNode.
-
-	self method
-		propertyAt: self bcToASTCacheKey asSymbol
-		ifPresent: [ :bcToASTCache |
-			^ bcToASTCache nodeForPC: aPC ].
-
-	^ sourceNode isBlock 
-		ifTrue: [sourceNode sourceNodeForPC: aPC]
-		ifFalse: [ sourceNode ]
+	^ sourceNode sourceNodeForPC: aPC
 ]

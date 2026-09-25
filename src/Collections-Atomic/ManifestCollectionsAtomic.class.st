@@ -9,7 +9,7 @@ Class {
 	#tag : 'Manifest'
 }
 
-{ #category : 'meta-data' }
+{ #category : 'meta data' }
 ManifestCollectionsAtomic class >> dependencies [
 	^ #(#Kernel)
 ]
@@ -19,7 +19,7 @@ ManifestCollectionsAtomic class >> manuallyResolvedDependencies [
 	^ #(#'Collections-Streams')
 ]
 
-{ #category : 'meta-data' }
+{ #category : 'meta data' }
 ManifestCollectionsAtomic class >> packageName [
 	^ #'Collections-Atomic'
 ]

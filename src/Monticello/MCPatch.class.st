@@ -23,7 +23,7 @@ MCPatch >> applyTo: anObject [
 
 ]
 
-{ #category : 'intializing' }
+{ #category : 'initialization' }
 MCPatch >> initializeWithBase: baseSnapshot target: targetSnapshot [
 	| base target |	
 	operations := OrderedCollection new.

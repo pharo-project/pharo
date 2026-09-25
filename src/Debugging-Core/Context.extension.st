@@ -20,8 +20,7 @@ Context >> findSecondToOldestSimilarSender [
 Context >> findSimilarSender [
 	"Return the closest sender with the same method, return nil if none found"
 
-	^ self sender findContextSuchThat: [ :context | 
-		context compiledCode == method ]
+	^ self sender findContextSuchThat: [ :context | context compiledCode == self method ]
 ]
 
 { #category : '*Debugging-Core' }

@@ -43,6 +43,13 @@ ReRemoveSharedVariableRefactoring >> breakingChangePreconditions [
 		   referencesSharedVariable: variableName) not }
 ]
 
+{ #category : 'accessing' }
+ReRemoveSharedVariableRefactoring >> model: aRBNamespace [
+
+	super model: aRBNamespace.
+	transformation ifNotNil: [ transformation model: aRBNamespace ]
+]
+
 { #category : 'preconditions' }
 ReRemoveSharedVariableRefactoring >> preconditions [
 
@@ -59,13 +66,6 @@ ReRemoveSharedVariableRefactoring >> privateTransform [
 ReRemoveSharedVariableRefactoring >> refactoredClass [
 
 	^ class
-]
-
-{ #category : 'accessing' }
-ReRemoveSharedVariableRefactoring >> model: aRBNamespace [
-
-	super model: aRBNamespace.
-	transformation ifNotNil: [ transformation model: aRBNamespace ]
 ]
 
 { #category : 'initialization' }

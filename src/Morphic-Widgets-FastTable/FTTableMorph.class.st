@@ -396,6 +396,12 @@ FTTableMorph >> firstVisibleRowIndex [
 ]
 
 { #category : 'event handling' }
+FTTableMorph >> function [
+
+	^ function
+]
+
+{ #category : 'event handling' }
 FTTableMorph >> handleMouseMove: anEvent [
 	"Reimplemented because we really want #mouseMove when a morph is dragged around"
 	anEvent wasHandled ifTrue:[^self]. "not interested"

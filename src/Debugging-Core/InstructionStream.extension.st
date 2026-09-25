@@ -41,7 +41,7 @@ InstructionStream >> followingBytecode [
 InstructionStream >> followingPc [
 	"Answer the pc of the following bytecode."
 
-	^self nextPc: (self method at: pc)
+	^ self nextPc: (self method at: self pc)
 ]
 
 { #category : '*Debugging-Core' }
@@ -70,7 +70,7 @@ InstructionStream >> previousPc [
 InstructionStream >> thirdByte [
 	"Answer the third byte of the current bytecode."
 
-	^self method at: pc + 2
+	^ self method at: self pc + 2
 ]
 
 { #category : '*Debugging-Core' }

@@ -43,14 +43,11 @@ Text >> embeddedMorphsFrom: start to: stop [
 
 	| morphs |
 	morphs := IdentitySet new.
-	runs
+	self runs
 		runsFrom: start
 		to: stop
-		do:
-			[:attribs |
-			attribs
-				do: [:attr | attr anchoredMorph ifNotNil: [morphs add: attr anchoredMorph]]].
-	^morphs select: [:m | m isMorph]
+		do: [ :attribs | attribs do: [ :attr | attr anchoredMorph ifNotNil: [ morphs add: attr anchoredMorph ] ] ].
+	^ morphs select: [ :m | m isMorph ]
 ]
 
 { #category : '*Morphic-Base-Widgets' }

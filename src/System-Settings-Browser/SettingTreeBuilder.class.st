@@ -31,6 +31,30 @@ SettingTreeBuilder >> button: aSymbol [
 	^ self nodeClass: ActionSettingDeclaration name: aSymbol
 ]
 
+{ #category : 'accessing' }
+SettingTreeBuilder >> currentParent [
+
+	^ currentParent
+]
+
+{ #category : 'accessing' }
+SettingTreeBuilder >> currentParent: anObject [
+
+	currentParent := anObject
+]
+
+{ #category : 'accessing' }
+SettingTreeBuilder >> currentPragma [
+
+	^ currentPragma
+]
+
+{ #category : 'accessing' }
+SettingTreeBuilder >> currentPragma: anObject [
+
+	currentPragma := anObject
+]
+
 { #category : 'tree building' }
 SettingTreeBuilder >> group: aSymbol [
 	^ self nodeClass: PragmaSetting name: aSymbol
@@ -55,6 +79,12 @@ SettingTreeBuilder >> nodeClass: aClass name: aSymbol [
 { #category : 'accessing' }
 SettingTreeBuilder >> nodeList [
 	^ nodeList ifNil: [nodeList := OrderedCollection new]
+]
+
+{ #category : 'accessing' }
+SettingTreeBuilder >> nodeList: anObject [
+
+	nodeList := anObject
 ]
 
 { #category : 'private - tree building' }

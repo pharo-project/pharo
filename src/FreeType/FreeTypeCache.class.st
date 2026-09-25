@@ -81,7 +81,7 @@ FreeTypeCache class >> startUp: isImageStarting [
 	current := nil
 ]
 
-{ #category : 'add-remove' }
+{ #category : 'adding-removing' }
 FreeTypeCache >> atFont: aFreeTypeFont charCode: charCodeInteger type: typeFlag scale: scale [
 
 	^ self
@@ -92,7 +92,7 @@ FreeTypeCache >> atFont: aFreeTypeFont charCode: charCodeInteger type: typeFlag 
 		ifAbsentPut: [ self error: 'Not found' ]
 ]
 
-{ #category : 'add-remove' }
+{ #category : 'adding-removing' }
 FreeTypeCache >> atFont: aFreeTypeFont charCode: charCodeInteger type: typeFlag scale: scale ifAbsentPut: aBlock [
 
 	| charCodeTable typeTable scaleTable entry v vSize |
@@ -130,7 +130,7 @@ FreeTypeCache >> atFont: aFreeTypeFont charCode: charCodeInteger type: typeFlag 
 		^ v ]
 ]
 
-{ #category : 'add-remove' }
+{ #category : 'adding-removing' }
 FreeTypeCache >> atFont: aFreeTypeFont charCode: charCodeInteger type: typeFlag scale: scale put: anObject [
 
 	| charCodeTable typeTable scaleTable anObjectSize oldEntry oldEntrySize entry |
@@ -235,14 +235,14 @@ FreeTypeCache >> maximumSize: anIntegerOrNil [
 					self shrinkTo: maximumSize]]]
 ]
 
-{ #category : 'add-remove' }
+{ #category : 'adding-removing' }
 FreeTypeCache >> removeAll [
 
 	mutex criticalReleasingOnError: [
 		self basicRemoveAll ]
 ]
 
-{ #category : 'add-remove' }
+{ #category : 'adding-removing' }
 FreeTypeCache >> removeAllForFont: aFreeTypeFont [
 
 	mutex criticalReleasingOnError: [
@@ -254,7 +254,7 @@ FreeTypeCache >> removeAllForFont: aFreeTypeFont [
 		toRemove do: [ :entry | self removeEntry: entry ] ]
 ]
 
-{ #category : 'add-remove' }
+{ #category : 'adding-removing' }
 FreeTypeCache >> removeAllForType: typeFlag [
 
 	mutex criticalReleasingOnError: [

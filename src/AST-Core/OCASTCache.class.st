@@ -174,6 +174,18 @@ OCASTCache >> printOn: aStream [
 		nextPut: $%
 ]
 
+{ #category : 'accessing' }
+OCASTCache >> removeKey: aCompiledMethod [
+
+	self weakDictionary removeKey: aCompiledMethod
+]
+
+{ #category : 'accessing' }
+OCASTCache >> removeKey: aCompiledMethod ifAbsent: aBlock [
+	
+	self weakDictionary removeKey: aCompiledMethod ifAbsent: aBlock
+]
+
 { #category : 'initialization' }
 OCASTCache >> reset [
 	self weakDictionary removeAll.

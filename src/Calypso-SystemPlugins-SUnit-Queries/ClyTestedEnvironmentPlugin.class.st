@@ -97,7 +97,7 @@ ClyTestedEnvironmentPlugin >> normalizeSelectorForComparison: aString [
 	| selectorString selectorStringSize normalizedSelectorString normalizedSelectorStringSize |
 	"asString to convert Symbols"
 	selectorString := aString asString.
-	selectorStringSize := aString size.
+	selectorStringSize := selectorString size.
 	normalizedSelectorString := selectorString class new: selectorStringSize.
 	normalizedSelectorStringSize := 0.
 	"this inlined to:do: loop with direct string manipulation is faster than

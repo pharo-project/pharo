@@ -188,6 +188,56 @@ SlotMigrationTest >> testChangingFormatKeepsMethod [
 ]
 
 { #category : 'tests' }
+SlotMigrationTest >> testClassSlotOffsetsAfterChangeSuperclass [
+	"Checks the behaviour described in issue #19476
+	Class side slots should update their index when the superclass changes"
+
+	| superclass1 superclass2 class subclass |
+	superclass1 := self make: [ :builder |
+			               builder
+				               name: self aClassName;
+				               superclass: Object;
+				               classSlots: #( a b ) ].
+
+	superclass2 := self make: [ :builder |
+			               builder
+				               name: self anotherClassName;
+				               superclass: Object;
+				               classSlots: #( c ) ].
+
+
+	class := self make: [ :builder |
+			         builder
+				         name: self yetAnotherClassName;
+				         superclass: superclass1;
+				         classSlots: #( x ) ].
+
+	subclass := self make: [ :builder |
+			            builder
+				            name: self yetYetAnotherClassName;
+				            superclass: class;
+				            classSlots: #( y z ) ].
+
+
+	self assert: ((class class allSlots last: 3) collect: #name) equals: #( a b x ) asOrderedCollection.
+	self assert: ((subclass class allSlots last: 5) collect: #name) equals: #( a b x y z ) asOrderedCollection.
+
+
+	1 to: class class allSlots size do: [ :each | self assert: (class class allSlots at: each) index equals: each ].
+	1 to: subclass class allSlots size do: [ :each | self assert: (subclass class allSlots at: each) index equals: each ].
+
+	class superclass: superclass2.
+
+	"Superclass slots should change from a b -> c"
+	self assert: ((class class allSlots last: 2) collect: #name) equals: #( c x ) asOrderedCollection.
+	self assert: ((subclass class allSlots last: 4) collect: #name) equals: #( c x y z ) asOrderedCollection.
+
+	"Check that the index of the slots is consistent"
+	1 to: class class allSlots size do: [ :each | self assert: (class class allSlots at: each) index equals: each ].
+	1 to: subclass class allSlots size do: [ :each | self assert: (subclass class allSlots at: each) index equals: each ]
+]
+
+{ #category : 'tests' }
 SlotMigrationTest >> testMigrateSlotWithInitialize [
 	"We create a class without slots, instantiate, then add a lot that wants to intialize the instance"
 	aClass := self makeWithLayout: FixedLayout andSlots: { }.

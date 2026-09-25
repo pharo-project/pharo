@@ -1927,6 +1927,12 @@ Context >> stackTraceString [
 ]
 
 { #category : 'private' }
+Context >> stackp [
+
+	^ stackp
+]
+
+{ #category : 'private' }
 Context >> stackp: newStackp [
 	"Storing into the stack pointer is a potentially dangerous thing.
 	This primitive stores nil into any cells that become accessible as a result,

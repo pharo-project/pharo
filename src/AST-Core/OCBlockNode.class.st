@@ -128,6 +128,18 @@ OCBlockNode >> bar: anInteger [
 ]
 
 { #category : 'accessing' }
+OCBlockNode >> basicBcToASTCache [
+
+	^ bcToASTCache
+]
+
+{ #category : 'accessing' }
+OCBlockNode >> basicBcToASTCache: anObject [
+
+	bcToASTCache := anObject
+]
+
+{ #category : 'accessing' }
 OCBlockNode >> blockVariables [
 	| vars |
 	vars := super blockVariables asOrderedCollection.

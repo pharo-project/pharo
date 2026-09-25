@@ -95,7 +95,7 @@ NewTestRunner class >> runSuite: aTestSuite [
 		  result
 ]
 
-{ #category : 'API' }
+{ #category : 'api' }
 NewTestRunner >> accumulateResult [
 	"activate the results accumulation behavior"
 
@@ -144,7 +144,7 @@ NewTestRunner >> debugFailure: failure [
 	self executionMode debugFailure: failure
 ]
 
-{ #category : 'API' }
+{ #category : 'api' }
 NewTestRunner >> doNotAccumulateResult [
 	"disable the results accumulation behavior"
 
@@ -232,7 +232,7 @@ NewTestRunner >> resultDescription [
 	^ result asString
 ]
 
-{ #category : 'API' }
+{ #category : 'api' }
 NewTestRunner >> run: aRunnable [
 
 	aRunnable runBy: self.
@@ -422,13 +422,13 @@ NewTestRunner >> suitePreparatorClass [
 	^ SuitePreparator 
 ]
 
-{ #category : 'API' }
+{ #category : 'api' }
 NewTestRunner >> switchToDebugMode [
 
 	self executionMode: self executionModeClass debugMode
 ]
 
-{ #category : 'API' }
+{ #category : 'api' }
 NewTestRunner >> switchToRunMode [
 
 	self executionMode: self executionModeClass runTestsMode

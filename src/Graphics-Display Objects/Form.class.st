@@ -425,6 +425,18 @@ Form >> balancedPatternFor: aColor depth: aDepth [
 		with: mask1 * pv3 + (mask2 * pv1)
 ]
 
+{ #category : 'accessing' }
+Form >> basicDepth [
+
+	^ depth
+]
+
+{ #category : 'accessing' }
+Form >> basicDepth: anObject [
+
+	depth := anObject
+]
+
 { #category : 'color mapping' }
 Form >> bitPatternFor: aColor [
 	"Return the pixel word for representing the given color on the receiver"
@@ -1295,6 +1307,12 @@ Form >> hasBeenModified: aBool [
 { #category : 'accessing' }
 Form >> height [
 	^ height
+]
+
+{ #category : 'accessing' }
+Form >> height: anObject [
+
+	height := anObject
 ]
 
 { #category : 'file in/out' }
@@ -2383,6 +2401,12 @@ Form >> veryDeepCopyWith: deepCopier [
 { #category : 'accessing' }
 Form >> width [
 	^ width
+]
+
+{ #category : 'accessing' }
+Form >> width: anObject [
+
+	width := anObject
 ]
 
 { #category : 'transitions' }

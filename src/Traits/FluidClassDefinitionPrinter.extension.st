@@ -28,9 +28,9 @@ FluidClassDefinitionPrinter >> expandedTraitClassDefinitionString [
 
 	^ String streamContents: [ :s |
 			  s nextPutAll: 'Trait << '.
-			  s nextPutAll: forClass name.
+			  s nextPutAll: self forClass name.
 
-			  self class customizers do: [ :customizer | customizer extendedFluidClassDefinitionFor: forClass on: s ].
+			  self class customizers do: [ :customizer | customizer extendedFluidClassDefinitionFor: self forClass on: s ].
 			  s crtab.
 			  s nextPutAll: 'slots: '.
 			  self slotDefinitionsOn: s ]
@@ -45,13 +45,13 @@ FluidClassDefinitionPrinter >> expandedTraitDefinitionString [
 			  self msgAndClassNameOn: s.
 
 
-			  self class customizers do: [ :customizer | customizer extendedFluidClassDefinitionFor: forClass on: s ].
+			  self class customizers do: [ :customizer | customizer extendedFluidClassDefinitionFor: self forClass on: s ].
 			  self slotsOn: s.
 			  s crtab.
 
-			  forClass packageTag ifNotNil: [ :t |
+			  self forClass packageTag ifNotNil: [ :t |
 					  tag := t name.
-					  tag = forClass package name ifFalse: [
+					  tag = self forClass package name ifFalse: [
 							  s
 								  nextPutAll: 'tag: ';
 								  nextPut: $';
@@ -61,34 +61,33 @@ FluidClassDefinitionPrinter >> expandedTraitDefinitionString [
 
 			  s
 				  nextPutAll: 'package: ''';
-				  nextPutAll: forClass package name;
+				  nextPutAll: self forClass package name;
 				  nextPutAll: '''' ]
 ]
 
 { #category : '*Traits' }
 FluidClassDefinitionPrinter >> expandedTraitedMetaclassDefinitionString [
 
-	^ String streamContents:
-		[:strm |
-		strm
-			nextPutAll: forClass superclass name;
-			nextPutAll: ' << ';
-			nextPutAll: forClass name.
-		self class customizers do: [ :customizer | customizer fluidClassDefinitionFor: forClass on: strm ].
-		self lastSlotsOn: strm]
+	^ String streamContents: [ :strm |
+			  strm
+				  nextPutAll: self forClass superclass name;
+				  nextPutAll: ' << ';
+				  nextPutAll: self forClass name.
+			  self class customizers do: [ :customizer | customizer fluidClassDefinitionFor: self forClass on: strm ].
+			  self lastSlotsOn: strm ]
 ]
 
 { #category : '*Traits' }
 FluidClassDefinitionPrinter >> traitDefinitionString [
 
 	^ String streamContents: [ :strm |
-			strm nextPutAll: 'Trait'.
-			self msgAndClassNameOn: strm.
-			self class customizers do: [ :customizer | customizer fluidClassDefinitionFor: forClass on: strm ].
+			  strm nextPutAll: 'Trait'.
+			  self msgAndClassNameOn: strm.
+			  self class customizers do: [ :customizer | customizer fluidClassDefinitionFor: self forClass on: strm ].
 
-		   forClass slots ifNotEmpty: [ self slotsOn: strm ].
-			self tagOn: strm.
-			self packageOn: strm ]
+			  self forClass slots ifNotEmpty: [ self slotsOn: strm ].
+			  self tagOn: strm.
+			  self packageOn: strm ]
 ]
 
 { #category : '*Traits' }
@@ -115,13 +114,12 @@ FluidClassDefinitionPrinter >> traitDefinitionTemplateInPackage: aPackageName ta
 { #category : '*Traits' }
 FluidClassDefinitionPrinter >> traitedMetaclassDefinitionString [
 
-	^ String streamContents:
-		[:strm |
-		strm
-			nextPutAll: forClass superclass name;
-			nextPutAll: ' << ';
-			nextPutAll: forClass name.
-		
-		self class customizers do: [ :customizer | customizer fluidMetaclassDefinitionFor: forClass on: strm ].
-		forClass slots ifNotEmpty: [ self lastSlotsOn: strm ]]
+	^ String streamContents: [ :strm |
+			  strm
+				  nextPutAll: self forClass superclass name;
+				  nextPutAll: ' << ';
+				  nextPutAll: self forClass name.
+
+			  self class customizers do: [ :customizer | customizer fluidMetaclassDefinitionFor: self forClass on: strm ].
+			  self forClass slots ifNotEmpty: [ self lastSlotsOn: strm ] ]
 ]

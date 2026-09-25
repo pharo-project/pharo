@@ -25,9 +25,8 @@ OCPragmaNode >> asIRPrimitive [
 
 { #category : '*OpalCompiler-Core' }
 OCPragmaNode >> asPragma [
-	^ Pragma
-		selector: selector
-		arguments: (arguments collect: [ :each | each value ]) asArray
+
+	^ Pragma selector: self selector arguments: (self arguments collect: [ :each | each value ]) asArray
 ]
 
 { #category : '*OpalCompiler-Core' }

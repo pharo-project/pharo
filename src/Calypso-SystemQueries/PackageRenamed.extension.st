@@ -2,12 +2,14 @@ Extension { #name : 'PackageRenamed' }
 
 { #category : '*Calypso-SystemQueries' }
 PackageRenamed >> affectsClass: aClass [
-	^package == aClass package
+
+	^ self package == aClass package
 ]
 
 { #category : '*Calypso-SystemQueries' }
 PackageRenamed >> affectsMethod: aMethod [
-	^package == aMethod package
+
+	^ self package == aMethod package
 ]
 
 { #category : '*Calypso-SystemQueries' }
@@ -25,7 +27,7 @@ PackageRenamed >> affectsMethodsDefinedInClass: aClass [
 { #category : '*Calypso-SystemQueries' }
 PackageRenamed >> affectsMethodsDefinedInPackage: aPackage [
 
-	^package == aPackage
+	^ self package == aPackage
 ]
 
 { #category : '*Calypso-SystemQueries' }

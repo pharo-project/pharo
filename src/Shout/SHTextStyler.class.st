@@ -72,6 +72,18 @@ SHTextStyler >> attributesFor: aSymbol [
 ]
 
 { #category : 'accessing' }
+SHTextStyler >> braceLevel [
+
+	^ braceLevel
+]
+
+{ #category : 'accessing' }
+SHTextStyler >> braceLevel: anObject [
+
+	braceLevel := anObject
+]
+
+{ #category : 'accessing' }
 SHTextStyler >> braceStyleName [
 
 	| level |
@@ -82,6 +94,18 @@ SHTextStyler >> braceStyleName [
 ]
 
 { #category : 'accessing' }
+SHTextStyler >> bracketLevel [
+
+	^ bracketLevel
+]
+
+{ #category : 'accessing' }
+SHTextStyler >> bracketLevel: anObject [
+
+	bracketLevel := anObject
+]
+
+{ #category : 'accessing' }
 SHTextStyler >> bracketStyleName [
 
 	| level |
@@ -89,6 +113,24 @@ SHTextStyler >> bracketStyleName [
 	^ ('block' , (level isZero
 		    ifTrue: [ '' ]
 		    ifFalse: [ level asString ]))
+]
+
+{ #category : 'accessing' }
+SHTextStyler >> charAttr [
+
+	^ charAttr
+]
+
+{ #category : 'accessing' }
+SHTextStyler >> charAttr: anObject [
+
+	charAttr := anObject
+]
+
+{ #category : 'accessing' }
+SHTextStyler >> classOrMetaClass [
+
+	^ classOrMetaClass
 ]
 
 { #category : 'accessing' }
@@ -155,6 +197,18 @@ SHTextStyler >> maximumImbricationStyleSupported [
 	"We style up to 8 level of imbricated parenthesis/brackets/braces."
 
 	^ 8
+]
+
+{ #category : 'accessing' }
+SHTextStyler >> parentheseLevel [
+
+	^ parentheseLevel
+]
+
+{ #category : 'accessing' }
+SHTextStyler >> parentheseLevel: anObject [
+
+	parentheseLevel := anObject
 ]
 
 { #category : 'accessing' }
@@ -285,6 +339,12 @@ SHTextStyler >> styleTempBars: aSequenceNode [
 SHTextStyler >> styledTextFor: aText [
 
 	^ self privateStyle: aText
+]
+
+{ #category : 'accessing' }
+SHTextStyler >> view [
+
+	^ view
 ]
 
 { #category : 'accessing' }
@@ -445,6 +505,12 @@ SHTextStyler >> visitSequenceNode: aSequenceNode [
 SHTextStyler >> visitVariableNode: aVariableNode [
 
 	self addStyle: (self resolveStyleFor: aVariableNode) attributes: (self resolveVariableAttributesFor: aVariableNode) forNode: aVariableNode.
+]
+
+{ #category : 'accessing' }
+SHTextStyler >> workspace [
+
+	^ workspace
 ]
 
 { #category : 'accessing' }

@@ -5,5 +5,5 @@ RecursionStopperTest >> testThreadSafe [
 
 	self threadSafe.
 
-	self assert: fork isNil
+	self assert: self fork isNil
 ]

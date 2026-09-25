@@ -10,12 +10,12 @@ Class {
 	#tag : 'Manifest'
 }
 
-{ #category : 'meta-data' }
+{ #category : 'meta data' }
 ManifestCollectionsArithmetic class >> dependencies [
 	^ #(#'Collections-Native' #'Collections-Unordered' #'Collections-Sequenceable' #Kernel #'Collections-Abstract')
 ]
 
-{ #category : 'meta-data' }
+{ #category : 'meta data' }
 ManifestCollectionsArithmetic class >> packageName [
 	^ #'Collections-Arithmetic'
 ]

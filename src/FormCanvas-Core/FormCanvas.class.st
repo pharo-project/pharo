@@ -507,6 +507,12 @@ FormCanvas >> paragraph: para bounds: bounds color: c scale: scale [
 	para displayOn: (self copyClipRect: bounds) using: scanner at: origin+ bounds topLeft
 ]
 
+{ #category : 'accessing' }
+FormCanvas >> port [
+
+	^ port
+]
+
 { #category : 'copying' }
 FormCanvas >> postCopy [
 	"The copy share same underlying Form but with its own grafPort."

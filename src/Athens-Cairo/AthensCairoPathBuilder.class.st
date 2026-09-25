@@ -213,6 +213,18 @@ AthensCairoPathBuilder >> cwArcTo: newEndPoint angle: angle [
 	^ self arcTo: newEndPoint angle: angle cw: true
 ]
 
+{ #category : 'accessing' }
+AthensCairoPathBuilder >> endPoint [
+
+	^ endPoint
+]
+
+{ #category : 'accessing' }
+AthensCairoPathBuilder >> endPoint: anObject [
+
+	endPoint := anObject
+]
+
 { #category : 'private' }
 AthensCairoPathBuilder >> getCurrentPoint [
 	^ context getCurrentPoint
@@ -233,6 +245,12 @@ AthensCairoPathBuilder >> glyphPath: glyphs size: numGlyphs [
 { #category : 'path commands' }
 AthensCairoPathBuilder >> hLineTo: x [
 	^ self lineTo: (absolute ifTrue: [ x @ endPoint y] ifFalse: [ x @ 0 ])
+]
+
+{ #category : 'accessing' }
+AthensCairoPathBuilder >> lastControlPoint [
+
+	^ lastControlPoint
 ]
 
 { #category : 'path commands' }

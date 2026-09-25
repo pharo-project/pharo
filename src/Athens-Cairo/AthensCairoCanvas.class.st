@@ -77,6 +77,18 @@ AthensCairoCanvas >> copyPage [
 	self ffiCall: #( void cairo_copy_page (self) )
 ]
 
+{ #category : 'accessing' }
+AthensCairoCanvas >> currentClipRect [
+
+	^ currentClipRect
+]
+
+{ #category : 'accessing' }
+AthensCairoCanvas >> currentClipRect: anObject [
+
+	currentClipRect := anObject
+]
+
 { #category : 'drawing' }
 AthensCairoCanvas >> draw [
 	"Fill the shape (anObject) using currently selected paint
@@ -147,6 +159,12 @@ AthensCairoCanvas >> handle [
 	^ handle value
 ]
 
+{ #category : 'accessing' }
+AthensCairoCanvas >> handle: anObject [
+
+	handle := anObject
+]
+
 { #category : 'initialization' }
 AthensCairoCanvas >> initializeWithSurface: anAthensSurface [
 	super initializeWithSurface: anAthensSurface.
@@ -175,8 +193,20 @@ AthensCairoCanvas >> paintTransform [
 ]
 
 { #category : 'accessing' }
+AthensCairoCanvas >> paintTransform: anObject [
+
+	paintTransform := anObject
+]
+
+{ #category : 'accessing' }
 AthensCairoCanvas >> pathTransform [
 	^ pathTransform
+]
+
+{ #category : 'accessing' }
+AthensCairoCanvas >> pathTransform: anObject [
+
+	pathTransform := anObject
 ]
 
 { #category : 'private' }

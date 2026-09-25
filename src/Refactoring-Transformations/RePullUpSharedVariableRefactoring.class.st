@@ -29,15 +29,15 @@ RePullUpSharedVariableRefactoring >> breakingChangePreconditions [
 		   true ]) }
 ]
 
-{ #category : 'transforming' }
-RePullUpSharedVariableRefactoring >> privateTransform [
-	^ transformation privateTransform
-]
-
 { #category : 'initialization' }
 RePullUpSharedVariableRefactoring >> model: aRBNamespace [
 	super model: aRBNamespace.
 	transformation ifNotNil: [ transformation model: aRBNamespace ]
+]
+
+{ #category : 'transforming' }
+RePullUpSharedVariableRefactoring >> privateTransform [
+	^ transformation privateTransform
 ]
 
 { #category : 'initialization' }

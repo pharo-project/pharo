@@ -15,5 +15,5 @@ CmdCommandMenuItem >> registerContextMenuItemsWithBuilder: aBuilder [
 { #category : '*Commander-Activators-ContextMenu' }
 CmdCommandMenuItem >> setUpShortcutTipForMenuItem: aMenuItemMorph [
 
-	activator setUpShortcutTipForMenuItem: aMenuItemMorph
+	self activator setUpShortcutTipForMenuItem: aMenuItemMorph
 ]

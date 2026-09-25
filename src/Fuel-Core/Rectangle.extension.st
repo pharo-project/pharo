@@ -10,6 +10,7 @@ Rectangle >> fuelAccept: aGeneralMapper [
 
 { #category : '*Fuel-Core' }
 Rectangle >> fuelSetOrigin: originPoint corner: cornerPoint [
-	origin := originPoint.
-	corner := cornerPoint
+
+	self origin: originPoint.
+	self corner: cornerPoint
 ]

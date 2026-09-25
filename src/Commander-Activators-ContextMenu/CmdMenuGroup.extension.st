@@ -16,7 +16,7 @@ CmdMenuGroup >> buildContextSubMenuIn: aMenu [
 		           newMenuIn: aMenu defaultTarget
 		           for: aMenu defaultTarget.
 
-	contents do: [ :each | each buildContextMenu: submenu ].
+	self contents do: [ :each | each buildContextMenu: submenu ].
 
 	submenu hasItems ifTrue: [
 		aMenu add: self name icon: self icon subMenu: submenu.
@@ -28,7 +28,7 @@ CmdMenuGroup >> inlineContextMenuItemsInto: aMenu [
 
 	aMenu addLine.
 
-	contents do: [ :each | each buildContextMenu: aMenu ].
+	self contents do: [ :each | each buildContextMenu: aMenu ].
 
 	aMenu addLine
 ]
@@ -54,7 +54,7 @@ CmdMenuGroup >> registerContextSubMenuWithBuilder: aBuilder [
 
 	(aBuilder item: self name)
 		order: self order;
-		parent: parentGroup name;
+		parent: self parentGroup name;
 		target: self;
 		icon: self icon;
 		help: self description

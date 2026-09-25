@@ -150,6 +150,12 @@ ClassDefinitionPrinter >> for: aClass [
 	forClass := aClass
 ]
 
+{ #category : 'accessing' }
+ClassDefinitionPrinter >> forClass [
+
+	^ forClass
+]
+
 { #category : 'public api' }
 ClassDefinitionPrinter >> metaclassDefinitionString [
 	^ self subclassResponsibility

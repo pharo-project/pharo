@@ -210,6 +210,12 @@ RGElementDefinition >> actualClass [
 	^ self realClass
 ]
 
+{ #category : 'generic parent api' }
+RGElementDefinition >> basicParent: aRGBehaviorDefinition [
+
+	parent := aRGBehaviorDefinition
+]
+
 { #category : 'class element specific api' }
 RGElementDefinition >> className [
 

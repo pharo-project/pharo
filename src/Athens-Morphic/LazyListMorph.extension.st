@@ -34,23 +34,23 @@ LazyListMorph >> athensDrawBackgroundForRow: row on: aCanvas color: aColor [
 { #category : '*Athens-Morphic' }
 LazyListMorph >> athensDrawBackgroundForSearchedRow: row on: aCanvas [
 
-	aCanvas setPaint: listSource secondarySelectionColor.
+	aCanvas setPaint: self listSource secondarySelectionColor.
 	aCanvas drawShape: (self selectionFrameForRow: row)
 ]
 
 { #category : '*Athens-Morphic' }
 LazyListMorph >> athensDrawBackgroundForSelectedRow: row on: aCanvas [
 
-	aCanvas setPaint: listSource selectionColorToUse.
+	aCanvas setPaint: self listSource selectionColorToUse.
 	aCanvas drawShape: (self selectionFrameForRow: row)
 ]
 
 { #category : '*Athens-Morphic' }
 LazyListMorph >> athensDrawSelectionOn: anAthensCanvas [
 
-	selectedRow ifNil: [ ^self ].
-	selectedRow = 0 ifTrue: [ ^self ].
-	self athensDrawBackgroundForSelectedRow: selectedRow on: anAthensCanvas
+	self selectedRow ifNil: [ ^ self ].
+	self selectedRow = 0 ifTrue: [ ^ self ].
+	self athensDrawBackgroundForSelectedRow: self selectedRow on: anAthensCanvas
 ]
 
 { #category : '*Athens-Morphic' }

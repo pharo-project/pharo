@@ -4,7 +4,7 @@ Extension { #name : 'InstructionStream' }
 InstructionStream >> secondByte [
 	"Answer the second byte of the current bytecode."
 
-	^self method at: pc + 1
+	^ self method at: self pc + 1
 ]
 
 { #category : '*Kernel-BytecodeEncoders' }

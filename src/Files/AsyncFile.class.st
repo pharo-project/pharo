@@ -46,6 +46,24 @@ AsyncFile >> fileHandle [
 	^ fileHandle
 ]
 
+{ #category : 'accessing' }
+AsyncFile >> fileHandle: anObject [
+
+	fileHandle := anObject
+]
+
+{ #category : 'accessing' }
+AsyncFile >> name [
+
+	^ name
+]
+
+{ #category : 'accessing' }
+AsyncFile >> name: anObject [
+
+	name := anObject
+]
+
 { #category : 'open/close' }
 AsyncFile >> open: fullFileName forWrite: aBoolean [
 	"Open a file of the given name, and return a handle for that file. Answer the receiver if the primitive succeeds, nil otherwise.
@@ -156,6 +174,18 @@ AsyncFile >> readByteCount: byteCount fromFilePosition: fPosition onCompletionDo
 	] forkAt: Processor userInterruptPriority
 ]
 
+{ #category : 'accessing' }
+AsyncFile >> semaphore [
+
+	^ semaphore
+]
+
+{ #category : 'accessing' }
+AsyncFile >> semaphore: anObject [
+
+	semaphore := anObject
+]
+
 { #category : 'write and read' }
 AsyncFile >> waitForCompletion [
 
@@ -181,4 +211,16 @@ AsyncFile >> writeBuffer: buffer atFilePosition: fPosition onCompletionDo: aBloc
 		n = buffer size ifFalse: [^ self error: 'did not write the entire buffer'].
 		aBlock value.
 	] forkAt: Processor userInterruptPriority
+]
+
+{ #category : 'accessing' }
+AsyncFile >> writeable [
+
+	^ writeable
+]
+
+{ #category : 'accessing' }
+AsyncFile >> writeable: anObject [
+
+	writeable := anObject
 ]

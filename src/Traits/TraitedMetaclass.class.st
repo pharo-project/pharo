@@ -60,6 +60,12 @@ TraitedMetaclass >> basicTraitComposition [
 ]
 
 { #category : 'fileout' }
+TraitedMetaclass >> composition: anObject [
+
+	composition := anObject
+]
+
+{ #category : 'fileout' }
 TraitedMetaclass >> definitionStringFor: aConfiguredPrinter [
 
 	^ aConfiguredPrinter traitedMetaclassDefinitionString
@@ -230,6 +236,12 @@ TraitedMetaclass >> localMethods [
 	"returns the methods of classes excluding the ones of the traits that the class uses"
 
 	^ localMethods values
+]
+
+{ #category : 'accessing' }
+TraitedMetaclass >> localMethods: anObject [
+
+	localMethods := anObject
 ]
 
 { #category : 'accessing' }

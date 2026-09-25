@@ -5,8 +5,8 @@ Using it inside a #printOn: will imply a useless creation of stream and its pass
 Class {
 	#name : 'ReNoPrintStringInPrintOnRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Tests-Optimization',
-	#package : 'General-Rules-Tests',
+	#category : 'General-Rules-Optimization',
+	#package : 'General-Rules',
 	#tag : 'Optimization'
 }
 

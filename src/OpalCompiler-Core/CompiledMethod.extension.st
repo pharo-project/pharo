@@ -29,6 +29,12 @@ CompiledMethod >> decompile [
 ]
 
 { #category : '*OpalCompiler-Core' }
+CompiledMethod >> flushBytecodeToASTMapping [
+	
+	self method removeProperty: self bcToASTCacheKey
+]
+
+{ #category : '*OpalCompiler-Core' }
 CompiledMethod >> lookupVar: aString [
 	^self ast scope lookupVar: aString
 ]

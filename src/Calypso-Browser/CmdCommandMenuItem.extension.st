@@ -3,11 +3,11 @@ Extension { #name : 'CmdCommandMenuItem' }
 { #category : '*Calypso-Browser' }
 CmdCommandMenuItem >> buildBrowserNotebookActions [
 
-	^ activator buildBrowserNotebookActions
+	^ self activator buildBrowserNotebookActions
 ]
 
 { #category : '*Calypso-Browser' }
 CmdCommandMenuItem >> buildBrowserToolbar: toolbarMorph [
 
-	activator buildBrowserToolbar: toolbarMorph
+	self activator buildBrowserToolbar: toolbarMorph
 ]

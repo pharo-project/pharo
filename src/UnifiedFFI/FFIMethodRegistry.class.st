@@ -120,7 +120,7 @@ FFIMethodRegistry >> resetMethod: ffiMethod [
 		put: originalMethod
 ]
 
-{ #category : 'reseting' }
+{ #category : 'resetting' }
 FFIMethodRegistry >> resetSingleClass: aClass [
 
 	self compiledMethods

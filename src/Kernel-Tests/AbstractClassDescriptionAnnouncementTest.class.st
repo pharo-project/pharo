@@ -9,6 +9,18 @@ Class {
 	#tag : 'Classes'
 }
 
+{ #category : 'accessing' }
+AbstractClassDescriptionAnnouncementTest >> numberOfAnnouncements [
+
+	^ numberOfAnnouncements
+]
+
+{ #category : 'accessing' }
+AbstractClassDescriptionAnnouncementTest >> numberOfAnnouncements: anObject [
+
+	numberOfAnnouncements := anObject
+]
+
 { #category : 'running' }
 AbstractClassDescriptionAnnouncementTest >> setUp [
 

@@ -238,7 +238,7 @@ HandMorph >> colorForInsets [
 	^ owner colorForInsets
 ]
 
-{ #category : 'meta-actions' }
+{ #category : 'meta actions' }
 HandMorph >> copyToPasteBuffer: aMorph [
 	"Save this morph in the paste buffer. This is mostly useful for copying morphs between projects."
 	aMorph ifNil:[^PasteBuffer := nil].
@@ -429,7 +429,7 @@ HandMorph >> fullDrawOn: aCanvas [
 	self drawOn: aCanvas	"draw the hand itself in front of morphs"
 ]
 
-{ #category : 'meta-actions' }
+{ #category : 'meta actions' }
 HandMorph >> grabMorph: aMorph [
 	"Grab the given morph (i.e., add it to this hand and remove it from its current owner) without changing its position. This is used to pick up a morph under the hand's current position, versus attachMorph: which is used to pick up a morph that may not be near this hand."
 

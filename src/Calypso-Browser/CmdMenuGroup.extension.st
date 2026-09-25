@@ -3,16 +3,15 @@ Extension { #name : 'CmdMenuGroup' }
 { #category : '*Calypso-Browser' }
 CmdMenuGroup >> buildBrowserNotebookActions [
 
-	self isActive ifFalse: [ ^#()] .
+	self isActive ifFalse: [ ^ #(  ) ].
 
-	^contents flatCollect: [ :each | each buildBrowserNotebookActions ]
+	^ self contents flatCollect: [ :each | each buildBrowserNotebookActions ]
 ]
 
 { #category : '*Calypso-Browser' }
 CmdMenuGroup >> buildBrowserToolbar: toolbarMorph [
 
-	self isActive ifFalse: [ ^self].
-	toolbarMorph submorphs ifNotEmpty: [
-		toolbarMorph addNewItem: ClyToolbarSeparatorMorph new].
-	contents do: [ :each | each buildBrowserToolbar: toolbarMorph ]
+	self isActive ifFalse: [ ^ self ].
+	toolbarMorph submorphs ifNotEmpty: [ toolbarMorph addNewItem: ClyToolbarSeparatorMorph new ].
+	self contents do: [ :each | each buildBrowserToolbar: toolbarMorph ]
 ]

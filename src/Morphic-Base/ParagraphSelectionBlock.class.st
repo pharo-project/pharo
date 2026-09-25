@@ -19,6 +19,12 @@ ParagraphSelectionBlock class >> first: firstCharBlock last: lastCharBlock color
 	^ self new first: firstCharBlock last: lastCharBlock color: aColor
 ]
 
+{ #category : 'accessing' }
+ParagraphSelectionBlock >> color [
+
+	^ color
+]
+
 { #category : 'displaying' }
 ParagraphSelectionBlock >> displayInLine: line on: aCanvas [
 	"Display myself in the passed line."

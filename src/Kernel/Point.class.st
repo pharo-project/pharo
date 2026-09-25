@@ -761,9 +761,21 @@ Point >> x [
 ]
 
 { #category : 'accessing' }
+Point >> x: anObject [
+
+	x := anObject
+]
+
+{ #category : 'accessing' }
 Point >> y [
 	"Answer the y coordinate."
 	"(100@200) y >>> 200"
 
 	^ y
+]
+
+{ #category : 'accessing' }
+Point >> y: anObject [
+
+	y := anObject
 ]

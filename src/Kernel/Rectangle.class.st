@@ -371,6 +371,13 @@ Rectangle >> corner [
 ]
 
 { #category : 'accessing' }
+Rectangle >> corner: anObject [
+	"Answer the point at the bottom right corner of the receiver."
+
+	corner := anObject
+]
+
+{ #category : 'accessing' }
 Rectangle >> corners [
 	"Return an array of corner points in the order of a quadrilateral spec for WarpBlt."
 
@@ -658,6 +665,13 @@ Rectangle >> origin [
 	"Answer the point at the top left corner of the receiver."
 
 	^origin
+]
+
+{ #category : 'accessing' }
+Rectangle >> origin: anObject [
+	"Answer the point at the top left corner of the receiver."
+
+	origin := anObject
 ]
 
 { #category : 'accessing' }

@@ -355,7 +355,7 @@ WorldMorph >> becomeActiveDuring: aBlock [
 	ActiveWorld := priorWorld
 ]
 
-{ #category : 'meta-actions' }
+{ #category : 'meta actions' }
 WorldMorph >> buildMetaMenu: evt [
 	| menu |
 	menu := self morphicUIManager newMenuIn: self for: self.

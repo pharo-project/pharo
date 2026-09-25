@@ -3,7 +3,7 @@ Extension { #name : 'MetalinkChanged' }
 { #category : '*Calypso-SystemQueries' }
 MetalinkChanged >> affectsMethod: aMethod [
 
-	^link methods anySatisfy: [:each | each compiledMethod == aMethod compiledMethod ]
+	^ self link methods anySatisfy: [ :each | each compiledMethod == aMethod compiledMethod ]
 ]
 
 { #category : '*Calypso-SystemQueries' }
@@ -19,7 +19,6 @@ MetalinkChanged >> affectsMethodsDefinedInClass: aClass [
 
 { #category : '*Calypso-SystemQueries' }
 MetalinkChanged >> affectsMethodsDefinedInPackage: aPackage [
-	^ link methods
-		anySatisfy:
-			[ :each | each methodClass isNotNil and: [ each package == aPackage ] ]
+
+	^ self link methods anySatisfy: [ :each | each methodClass isNotNil and: [ each package == aPackage ] ]
 ]

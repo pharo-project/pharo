@@ -182,12 +182,12 @@ OSPlatform >> name [
 	^ Smalltalk vm operatingSystemName
 ]
 
-{ #category : 'compatbility' }
+{ #category : 'compatibility' }
 OSPlatform >> platformFamily [
 	^ self family
 ]
 
-{ #category : 'compatbility' }
+{ #category : 'compatibility' }
 OSPlatform >> platformName [
 	^ self name
 ]
