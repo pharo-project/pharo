@@ -1741,7 +1741,7 @@ String >> format: collection [
 						ifTrue: [ | expression index |
 							expression := stream upTo: $}.
 							index := Integer readFrom: expression ifFail: [ expression ].
-							result nextPutAll: (collection at: index) asString ]
+							result nextPutAll: (collection at: index) displayString ]
 						ifFalse: [ currentChar == $\
 								ifTrue: [ stream atEnd
 										ifFalse: [ result nextPut: stream next ] ]

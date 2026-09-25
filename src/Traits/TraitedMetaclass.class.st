@@ -356,7 +356,7 @@ TraitedMetaclass >> traitComposition: aComposition [
 { #category : 'accessing' }
 TraitedMetaclass >> traitCompositionString [
 
-	^ composition asString
+	^ composition displayString
 ]
 
 { #category : 'accessing' }

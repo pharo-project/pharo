@@ -112,7 +112,7 @@ MIMEDocument class >> contents: content mimeType: aMimeType uri: aURL [
 
 { #category : 'compatibility' }
 MIMEDocument class >> defaultContentType [
-	^self defaultMIMEType asString
+	^self defaultMIMEType displayString
 ]
 
 { #category : 'accessing' }
@@ -137,7 +137,7 @@ MIMEDocument class >> guessTypeFromName: url [
 	"guesses a content type from the url"
 
 	| extension |
-	extension := url asString copyAfterLast: $..
+	extension := url displayString copyAfterLast: $..
 	^ ZnMimeType
 		forFilenameExtension: extension
 		ifAbsent: [ nil ]
