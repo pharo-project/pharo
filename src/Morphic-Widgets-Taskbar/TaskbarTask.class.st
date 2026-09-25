@@ -8,7 +8,9 @@ Class {
 		'morph',
 		'state',
 		'label',
-		'icon'
+		'icon',
+		'lastCachedExtent',
+		'lastCachedThumb'
 	],
 	#category : 'Morphic-Widgets-Taskbar',
 	#package : 'Morphic-Widgets-Taskbar'
@@ -49,6 +51,13 @@ TaskbarTask >> buttonClickedForTaskList: aTasklist [
 	"Notify the tasklist."
 
 	aTasklist taskClicked: self
+]
+
+{ #category : 'initialization' }
+TaskbarTask >> cleanCachedThumb [
+
+	lastCachedExtent := nil.
+	lastCachedThumb := nil.
 ]
 
 { #category : 'comparing' }
@@ -138,6 +147,17 @@ TaskbarTask >> taskListButtonFor: aTasklist [
 	^self theme
 		newTaskListButtonIn: aTasklist
 		for: self
+]
+
+{ #category : 'accessing' }
+TaskbarTask >> taskThumbnailOfSize: extent [ 
+
+	((lastCachedThumb isNil) or: [ lastCachedExtent ~= extent ]) ifTrue: [
+		lastCachedExtent := extent.
+		lastCachedThumb := self morph taskThumbnailOfSize: extent
+	].
+
+	^ lastCachedThumb
 ]
 
 { #category : 'user-interface' }
