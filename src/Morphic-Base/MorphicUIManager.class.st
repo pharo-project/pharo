@@ -71,7 +71,7 @@ MorphicUIManager >> chooseDirectory: label from: dir [
 	"Answer the user choice of a directory."
 
 	| modalMorph realLabel |
-	realLabel := label ifNil: ['Choose Directory' translated].
+	realLabel := label ifNil: ['Choose Directory'].
 	(ProvideAnswerNotification signal: realLabel) ifNotNil: [:answer |
 		^answer ].
 	modalMorph := self modalMorph.
@@ -139,7 +139,7 @@ MorphicUIManager >> chooseFullFileNameMatching: patterns label: label [
 	modalMorph := self modalMorph.
 	^modalMorph theme
 		chooseFullFileNameIn: modalMorph
-		title: (label ifNil: ['Choose File' translated])
+		title: (label ifNil: ['Choose File'])
 		patterns: patterns
 		path: nil
 		preview: false
@@ -183,7 +183,7 @@ MorphicUIManager >> confirm: aStringOrText [
 	This is a modal question--the user must respond yes or no."
 
 	self deprecated: 'Use ConfirmationRequest signal: instead.'.
-	^ self confirm: aStringOrText label: 'Question' translated
+	^ self confirm: aStringOrText label: 'Question'
 ]
 
 { #category : 'ui requests' }
@@ -229,7 +229,7 @@ MorphicUIManager >> confirm: aStringOrText orCancel: cancelBlock [
 	^(modalMorph theme
 		questionIn: modalMorph
 		text: aStringOrText
-		title: 'Question' translated) ifNil: cancelBlock
+		title: 'Question') ifNil: cancelBlock
 ]
 
 { #category : 'services' }
@@ -254,7 +254,7 @@ MorphicUIManager >> confirm: queryString trueChoice: trueChoice falseChoice: fal
 
 	^ self
 		confirm: queryString
-		label: 'Question' translated
+		label: 'Question'
 		trueChoice: trueChoice
 		falseChoice: falseChoice
 		cancelChoice: cancelChoice
@@ -330,7 +330,7 @@ MorphicUIManager >> inform: aStringOrText [
 	"Display a message for the user to read and then dismiss."
 
 	GrowlMorph
-		openWithLabel: 'Information' translated
+		openWithLabel: 'Information'
 		contents: aStringOrText
 ]
 
@@ -391,7 +391,7 @@ MorphicUIManager >> multiLineRequest: queryString  initialAnswer: defaultAnswer 
 	^(modalMorph theme
 		textEditorIn: modalMorph
 		text: queryString
-		title: 'Information Required' translated
+		title: 'Information Required'
 		entryText: defaultAnswer
 		entryHeight: answerHeight)
 			ifNotNil: [:text | text asString]
@@ -422,7 +422,7 @@ MorphicUIManager >> request: queryString initialAnswer: defaultAnswer [
 
 { #category : 'ui requests' }
 MorphicUIManager >> request: aStringOrText initialAnswer: defaultAnswer entryCompletion: anEntryCompletion [
-	^ self request: aStringOrText initialAnswer: defaultAnswer title: 'Information Required' translated entryCompletion: anEntryCompletion
+	^ self request: aStringOrText initialAnswer: defaultAnswer title: 'Information Required' entryCompletion: anEntryCompletion
 ]
 
 { #category : 'ui requests' }

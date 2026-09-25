@@ -351,10 +351,10 @@ RubTextEditor >> changeEmphasis [
 	align := self text alignmentAt: startIndex ifAbsent: [ 0 ].
 	code := self text emphasisAt: startIndex.
 	menuList := WriteStream on: Array new.
-	menuList nextPut: code isZero -> 'normal' translated.
-	menuList nextPutAll: (choices collect: [ :emph | (code anyMask: (TextEmphasis perform: emph) emphasisCode) -> emph asString translated ]).
+	menuList nextPut: code isZero -> 'normal'.
+	menuList nextPutAll: (choices collect: [ :emph | (code anyMask: (TextEmphasis perform: emph) emphasisCode) -> emph asString ]).
 
-	menuList nextPut: ((self text attributesAt: startIndex) anySatisfy: [ :attr | attr isKern and: [ attr kern < 0 ] ]) -> 'narrow' translated.
+	menuList nextPut: ((self text attributesAt: startIndex) anySatisfy: [ :attr | attr isKern and: [ attr kern < 0 ] ]) -> 'narrow'.
 	(self morphicUIManager chooseFrom: choices values: choices) ifNotNil: [ :reply | self applyAttribute: (TextEmphasis perform: reply) ].
 	^ true
 ]
@@ -411,13 +411,13 @@ RubTextEditor >> changeEmphasisOrAlignment [
 	align := self text alignmentAt: startIndex ifAbsent: [ 0 ].
 	code := self text emphasisAt: startIndex.
 	menuList := WriteStream on: Array new.
-	menuList nextPut: code isZero -> 'normal' translated.
+	menuList nextPut: code isZero -> 'normal'.
 	menuList nextPutAll:
-		(#( bold italic underlined struckOut ) collect: [ :emph | (code anyMask: (TextEmphasis perform: emph) emphasisCode) -> emph asString translated ]).
+		(#( bold italic underlined struckOut ) collect: [ :emph | (code anyMask: (TextEmphasis perform: emph) emphasisCode) -> emph asString ]).
 
-	menuList nextPut: ((self text attributesAt: startIndex) anySatisfy: [ :attr | attr isKern and: [ attr kern < 0 ] ]) -> 'narrow' translated.
+	menuList nextPut: ((self text attributesAt: startIndex) anySatisfy: [ :attr | attr isKern and: [ attr kern < 0 ] ]) -> 'narrow'.
 
-	self alignmentChoices collectWithIndex: [ :type :i | menuList nextPut: align = (i - 1) -> type asString translated ].
+	self alignmentChoices collectWithIndex: [ :type :i | menuList nextPut: align = (i - 1) -> type asString ].
 
 	aList := #( normal bold italic underlined struckOut narrow leftFlush centered rightFlush justified ).
 	(self morphicUIManager chooseFrom: aList values: aList) ifNotNil: [ :reply |

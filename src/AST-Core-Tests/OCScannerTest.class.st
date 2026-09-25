@@ -969,7 +969,7 @@ OCScannerTest >> testNextLiteralCharacterWithAMissingCharacter [
 	source := '$'.
 	scanner := self buildScannerForText: source.
 	scannedToken := scanner next.
-	self verifyErrorToken: scannedToken message: 'Character expected' translated valueExpected: '$'
+	self verifyErrorToken: scannedToken message: 'Character expected' valueExpected: '$'
 ]
 
 { #category : 'tests - Start' }
@@ -1540,7 +1540,7 @@ OCScannerTest >> testNextWithAWrongSymbolGetError [
 	source := '#^'.
 	scanner := self buildScannerForText: source.
 	scannedToken := scanner next.
-	self verifyErrorToken: scannedToken message: 'Literal Array, ByteArray or Symbol expected' translated valueExpected: '#'
+	self verifyErrorToken: scannedToken message: 'Literal Array, ByteArray or Symbol expected' valueExpected: '#'
 ]
 
 { #category : 'tests' }
@@ -1578,7 +1578,7 @@ OCScannerTest >> testNextWithAnOpeningStringsGetError [
 	| source scannedToken |
 	source := '''only the opening'.
 	scannedToken := (self buildScannerForText: source) next.
-	self verifyErrorToken: scannedToken message: 'Unmatched '' in string literal.' translated valueExpected: source
+	self verifyErrorToken: scannedToken message: 'Unmatched '' in string literal.'  valueExpected: source
 ]
 
 { #category : 'tests' }
@@ -1587,7 +1587,7 @@ OCScannerTest >> testNextWithAnUnknownCharacterGetError [
 	source := '¿'.
 	scanner := self buildScannerForText: source.
 	scannedToken := scanner next.
-	self verifyErrorToken: scannedToken message: 'Unknown character' translated valueExpected: source
+	self verifyErrorToken: scannedToken message: 'Unknown character' valueExpected: source
 ]
 
 { #category : 'tests - Comment' }

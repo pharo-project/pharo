@@ -150,7 +150,7 @@ DialogWindowMorph >> defaultIsResizeable [
 DialogWindowMorph >> defaultLabel [
 	"Answer the default label for the receiver."
 
-	^'Dialog' translated
+	^'Dialog'
 ]
 
 { #category : 'event handling' }

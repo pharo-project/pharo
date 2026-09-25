@@ -1220,7 +1220,7 @@ PolygonMorph >> handlesMouseDown: evt [
 PolygonMorph >> handlesShowingPhrase [
 	^ (self showingHandles
 		ifTrue: ['hide handles']
-		ifFalse: ['show handles']) translated
+		ifFalse: ['show handles'])
 ]
 
 { #category : 'testing' }
@@ -1786,10 +1786,10 @@ PolygonMorph >> openOrClosePhrase [
 	| curveName |
 	curveName := (self isCurve
 				ifTrue: ['curve']
-				ifFalse: ['polygon']) translated.
+				ifFalse: ['polygon']).
 	^ closed
-		ifTrue: ['make open {1}' translated format: {curveName}]
-		ifFalse: ['make closed {1}' translated format: {curveName}]
+		ifTrue: ['make open {1}' format: {curveName}]
+		ifFalse: ['make closed {1}' format: {curveName}]
 ]
 
 { #category : 'rotate scale and flex' }
@@ -1977,10 +1977,10 @@ PolygonMorph >> smoothOrSegmentedPhrase [
 	| lineName |
 	lineName := (closed
 					ifTrue: ['outline']
-					ifFalse: ['line']) translated.
+					ifFalse: ['line']).
 	^ self isCurve
-		ifTrue: [ 'make segmented {1}' translated format: {lineName} ]
-		ifFalse: [ 'make smooth {1}' translated format: {lineName} ]
+		ifTrue: [ 'make segmented {1}' format: {lineName} ]
+		ifFalse: [ 'make smooth {1}' format: {lineName} ]
 ]
 
 { #category : 'menu' }
@@ -1995,7 +1995,7 @@ The major dash will have the normal border color.
 A blank response will remove the dash specification.
 [Note: You may give 5 items as, eg, {10. 5. Color white. 0. 3}
 where the 4th ityem is zero, and the 5th is the number of pixels
-by which the dashes will move in each step of animation]' translated
+by which the dashes will move in each step of animation]'
 		initialAnswer: '{ 10. 5. Color red }'.
 	executableSpec isEmptyOrNil ifTrue:
 		[^ self stopStepping; dashedBorder: nil].

@@ -5,7 +5,7 @@ WorldState class >> startMessageTally [
 
 	(self confirm: 'MessageTally will start now,
 and stop when the cursor goes
-to the top of the screen' translated)
+to the top of the screen')
 		ifFalse: [ ^ self ].
 
 	TimeProfiler spyAllOn: [

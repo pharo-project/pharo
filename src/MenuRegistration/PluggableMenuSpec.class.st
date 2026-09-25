@@ -30,7 +30,7 @@ PluggableMenuSpec >> add: aString [
 PluggableMenuSpec >> add: aString action: aMessageSend [
 	| item |
 	item := self addMenuItem.
-	item label: aString translated.
+	item label: aString.
 	item action: aMessageSend.
 	^item
 ]
@@ -39,7 +39,7 @@ PluggableMenuSpec >> add: aString action: aMessageSend [
 PluggableMenuSpec >> add: aString selector: aMessageSend [
 	| item |
 	item := self addMenuItem.
-	item label: aString translated.
+	item label: aString .
 	item action: aMessageSend.
 	^item
 ]
@@ -51,7 +51,7 @@ PluggableMenuSpec >> add: aString selector: aSelector argumentList: anArray [
 
 { #category : 'construction' }
 PluggableMenuSpec >> add: aString target: anObject selector: aSelector argumentList: anArray [
-	^ self add: aString translated action: (MessageSend receiver: anObject selector: aSelector arguments: anArray)
+	^ self add: aString action: (MessageSend receiver: anObject selector: aSelector arguments: anArray)
 ]
 
 { #category : 'construction' }

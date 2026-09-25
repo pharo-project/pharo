@@ -104,5 +104,5 @@ DTCommentToTestPlugin >> startButtonHelp [
 
 { #category : 'api' }
 DTCommentToTestPlugin >> startButtonLabel [
-	^ 'Run Tests' translated
+	^ 'Run Tests'
 ]

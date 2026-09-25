@@ -38,7 +38,7 @@ TreeChunkPagerMorph >> buildPanel [
 				textEntryLabel: 'Page size'
 				get: #pageSizeToString
 				set: #chunkSizeFromString:
-				help: 'Change the page size or the number of pages if the input begins with "/"' translated
+				help: 'Change the page size or the number of pages if the input begins with "/"'
 				class: String.
 			pageSizeEditor hResizing: #rigid.
 			pageSizeEditor width: (self preferedFont widthOfString: '1000000').
@@ -63,7 +63,7 @@ TreeChunkPagerMorph >> buildPanel [
 				textEntryLabel: ''
 				get: #pageSearchText
 				set: #pageSearchText:
-				help: 'Enter a text correspondig to your search' translated
+				help: 'Enter a text correspondig to your search'
 				class: String.
 			searchEditor ghostText: 'Searched text'.
 			widgets add: searchEditor.

@@ -403,7 +403,7 @@ SelectionMorph >> extent: newExtent [
 
 { #category : 'viewer' }
 SelectionMorph >> externalName [
-	^ 'Selected {1} objects' translated format:{self selectedItems size}
+	^ 'Selected {1} objects' format:{self selectedItems size}
 ]
 
 { #category : 'visual properties' }
