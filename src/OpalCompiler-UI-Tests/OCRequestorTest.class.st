@@ -4,9 +4,8 @@ Class {
 	#instVars : [
 		'requestorBlock'
 	],
-	#category : 'OpalCompiler-Tests-Requestor',
-	#package : 'OpalCompiler-Tests',
-	#tag : 'Requestor'
+	#category : 'OpalCompiler-UI-Tests',
+	#package : 'OpalCompiler-UI-Tests'
 }
 
 { #category : 'tests' }
