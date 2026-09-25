@@ -77,6 +77,25 @@ RBCopyPackageParametrizedTest >> testCopyPackageWithParameters [
 	self assert: (aModel includesClassNamed: #RBFTTest2) description: 'It test that original class where we copied from is still there'
 ]
 
+{ #category : 'tests' }
+RBCopyPackageParametrizedTest >> testCopyPackageWithTrait [
+
+	| duplicate refactoring |
+	refactoring := self createRefactoringWithArguments: {
+		               TReTraitToBeUsedInDuplication packageName.
+		               #RefactoringCOPYSmallPackageForTest }.
+	self executeRefactoring: (refactoring classMappings: {
+			 #TReTraitToBeUsedInDuplication -> #TReDuplicatedTrait } asDictionary).
+
+	duplicate := refactoring model classNamed: #TReDuplicatedTrait.
+	self assert: duplicate class equals: RBTrait.
+	self assert: duplicate superclass isNil.
+	self assert: (duplicate directlyDefinesMethod: #methodInTrait).
+	self
+		assert: duplicate packageName
+		equals: #RefactoringCOPYSmallPackageForTest
+]
+
 { #category : 'failure tests' }
 RBCopyPackageParametrizedTest >> testFailureBadName [
 
