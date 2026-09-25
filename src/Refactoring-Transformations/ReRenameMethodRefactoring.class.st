@@ -62,7 +62,7 @@ ReRenameMethodRefactoring class >> renameMethod: aSelector in: aClass to: newSel
 { #category : 'preconditions' }
 ReRenameMethodRefactoring >> applicabilityPreconditions [
 
-	^ { self validSelectorCondition . self selectorsHaveSameArity }
+	^ { self validNewNameCondition . self validSelectorCondition . self selectorsHaveSameArity }
 ]
 
 { #category : 'torevisit' }

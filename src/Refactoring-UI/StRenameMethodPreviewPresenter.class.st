@@ -33,7 +33,6 @@ Class {
 		'argLabel',
 		'buttonUp',
 		'buttonDown',
-		'buttonAdd',
 		'arguments',
 		'updateProcess',
 		'behaviorWarningIcon',
@@ -41,7 +40,8 @@ Class {
 		'behaviorPanel',
 		'behaviorWarningTitle',
 		'behaviorMessageLabel',
-		'buttonBrowseMethod'
+		'buttonBrowseMethod',
+		'permutation'
 	],
 	#category : 'Refactoring-UI-UI',
 	#package : 'Refactoring-UI',
@@ -71,6 +71,13 @@ StRenameMethodPreviewPresenter >> accept [
 	self closeWindow
 ]
 
+{ #category : 'initialization' }
+StRenameMethodPreviewPresenter >> acceptValidName [
+
+	nameIsValid := true.
+	validationLabel label: ''
+]
+
 { #category : 'action' }
 StRenameMethodPreviewPresenter >> addBehaviorPanel [
 
@@ -78,6 +85,21 @@ StRenameMethodPreviewPresenter >> addBehaviorPanel [
 	
 	(topLayout children includes: behaviorPanel)
 		ifFalse: [ topLayout add: behaviorPanel expand: false ]
+]
+
+{ #category : 'private' }
+StRenameMethodPreviewPresenter >> argumentPermutationChanged [
+	driver setPermutation: permutation.
+	self schedulePreviewUpdate
+]
+
+{ #category : 'accessing' }
+StRenameMethodPreviewPresenter >> argumentsListHeight [
+    | rowHeight |
+
+    rowHeight := 25.
+
+    ^ (arguments size max: 1) * rowHeight
 ]
 
 { #category : 'initialization' }
@@ -112,6 +134,12 @@ StRenameMethodPreviewPresenter >> buttonOk: aButton [
 
 	buttonOk := aButton.
 	self updateOkButtonState
+]
+
+{ #category : 'initialization' }
+StRenameMethodPreviewPresenter >> canPermuteArguments [
+
+	^ driver hasPrimitiveImplementor not
 ]
 
 { #category : 'initialization' }
@@ -155,9 +183,10 @@ StRenameMethodPreviewPresenter >> connectPresenters [
 	buttonCancel action: [ self closeWindow ].
 	buttonOk action: [ self accept ] .
 	buttonBrowseMethod action: [ self browseOverrides ] .
+	buttonUp action: [ self pushUpSelectedArgument ].
+	buttonDown action: [ self pushDownSelectedArgument ].
 	
-	newNameInput whenTextChangedDo: [ :text |
-		self schedulePreviewUpdate: text ] .
+	newNameInput whenTextChangedDo: [ self schedulePreviewUpdate ] .
 ]
 
 { #category : 'api - focus' }
@@ -198,15 +227,16 @@ StRenameMethodPreviewPresenter >> defaultLayout [
 		spacing: 2;
 		add: buttonUp  expand: false;
 		add: buttonDown expand: false;
-		add: buttonAdd expand: false;
 		yourself .
 		
-	argumentLayout := SpBoxLayout newLeftToRight 
-		spacing: 5;
-		add: argLabel expand: false;
-		add: argumentsList;
-		add: argButtonsLayout expand: false;
-		yourself .
+	argumentLayout := SpBoxLayout newLeftToRight
+   		spacing: 5;
+    	add: argLabel expand: false;
+    	add: argumentsList withConstraints: [ :constraints |
+        	constraints
+            height: self argumentsListHeight ];
+    	add: argButtonsLayout expand: false;
+    	yourself.
 		
 	behaviorHeaderLayout := SpBoxLayout newLeftToRight 
 		vAlignCenter;
@@ -226,7 +256,7 @@ StRenameMethodPreviewPresenter >> defaultLayout [
 	topLayout := SpBoxLayout newTopToBottom 
 		spacing: 10; 
 		add: nameLayout expand: false;
-		add: argumentLayout expand: false;
+		add: argumentLayout;
 		yourself.
 	
 	mainLayout := SpBoxLayout newTopToBottom
@@ -320,8 +350,6 @@ StRenameMethodPreviewPresenter >> initializePresenters [
 	argLabel := self newLabel label: 'Arguments'.
 	buttonUp := self newButton label: 'Up'; addStyle: 'small'.
 	buttonDown := self newButton label: 'Dn'.
-	buttonAdd := self newButton label: '+'.
-	argumentsList := self newList .
 	nameIsValid := false. 
 	
 	behaviorWarningIcon := self newImage image: (self iconNamed: #warningIcon) .
@@ -331,7 +359,14 @@ StRenameMethodPreviewPresenter >> initializePresenters [
 	
 	buttonBrowseMethod := self newButton
 		label: 'Browse affected methods';
-		icon: (self iconNamed: #search)
+		icon: (self iconNamed: #search).
+		
+]
+
+{ #category : 'initialization' }
+StRenameMethodPreviewPresenter >> isValidNameChange [
+	^ driver refactoring areArgumentsPermuted
+		or: [ driver newName ~= driver refactoring oldSelector ]
 ]
 
 { #category : 'accessing' }
@@ -354,14 +389,91 @@ StRenameMethodPreviewPresenter >> performChanges [
 ]
 
 { #category : 'accessing' }
+StRenameMethodPreviewPresenter >> pushDownSelectedArgument [
+	| selectedIndex |
+
+	self canPermuteArguments ifFalse: [ ^ self ].
+
+	selectedIndex := argumentsList selection selectedIndex.
+
+	selectedIndex >= argumentsList items size ifTrue: [ ^ self ].
+
+	argumentsList items
+		swap: selectedIndex
+		with: selectedIndex + 1.
+
+	permutation
+		swap: selectedIndex
+		with: selectedIndex + 1.
+
+	argumentsList selectIndex: selectedIndex + 1.
+	self argumentPermutationChanged
+]
+
+{ #category : 'accessing' }
+StRenameMethodPreviewPresenter >> pushUpSelectedArgument [
+    | selectedIndex |
+
+	 self canPermuteArguments ifFalse: [ ^ self ].
+
+    selectedIndex := argumentsList selection selectedIndex.
+
+    selectedIndex <= 1 ifTrue: [ ^ self ].
+
+    argumentsList items
+        swap: selectedIndex
+        with: selectedIndex - 1.
+
+	 permutation
+		swap: selectedIndex
+		with: selectedIndex - 1.
+
+    argumentsList selectIndex: selectedIndex - 1.
+	 self argumentPermutationChanged
+]
+
+{ #category : 'accessing' }
 StRenameMethodPreviewPresenter >> refactoring: aRBRemoveMethodDriver [ 
 	refactoring := aRBRemoveMethodDriver
+]
+
+{ #category : 'initialization' }
+StRenameMethodPreviewPresenter >> showValidationError: message [
+
+	nameIsValid := false.
+	validationLabel label:
+		(message asText
+			addAttribute: (TextColor color: Smalltalk ui theme dangerTextColor);
+			yourself)
 ]
 
 { #category : 'update' }
 StRenameMethodPreviewPresenter >> updateActiveScope [
 
 	activeScope := scopeDropList selectedItem asRBEnvironment
+]
+
+{ #category : 'accessing' }
+StRenameMethodPreviewPresenter >> updateArgumentButtons [
+
+	| selectedIndex |
+
+	self canPermuteArguments ifFalse: [
+		buttonUp disable.
+		buttonDown disable.
+		^ self ].
+
+	selectedIndex := argumentsList selection selectedIndex.
+
+	selectedIndex <= 1
+		ifTrue: [ buttonUp disable ]
+		ifFalse: [ buttonUp enable ].
+
+	selectedIndex >= argumentsList items size
+		ifTrue: [ buttonDown disable ]
+		ifFalse: [ buttonDown enable ].
+
+	^ self
 ]
 
 { #category : 'update' }

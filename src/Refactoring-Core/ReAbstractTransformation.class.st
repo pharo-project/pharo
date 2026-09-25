@@ -232,19 +232,7 @@ ReAbstractTransformation >> execute [
 	self performChanges
 ]
 
-{ #category : 'accessing' }
-ReAbstractTransformation >> failedApplicabilityMessage [
-
-	| failedConditions |
-	
-	failedConditions := self failedApplicabilityPreconditions.
-	failedConditions ifEmpty: [ ^ nil ].
-	
-	^ String cr join:
-		(failedConditions collect: [ :condition | condition errorString ])
-]
-
-{ #category : 'preconditions' }
+{ #category : 'condition definitions' }
 ReAbstractTransformation >> failedApplicabilityMessage [
 
 	| failedConditions |

@@ -12,7 +12,9 @@ Class {
 		'methodNameEditorPresenterClass',
 		'oldName',
 		'newName',
-		'conflictingImplementors'
+		'conflictingImplementors',
+		'hasPrimitiveImplementor',
+		'permutation'
 	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',
@@ -84,19 +86,10 @@ ReRenameMethodDriver2 >> changes [
 { #category : 'actions' }
 ReRenameMethodDriver2 >> checkApplicabilityPreconditions [
 
-	| failedCondition |
-	
 	refactoring newName: newName.
 	refactoring className: class .
 	
-	failedCondition := refactoring checkApplicabilityPreconditions
-		detect: [ :condition | condition check not ]
-		ifNone: [ nil ].
-		
-	failedCondition ifNotNil: [ 
-		^ failedCondition errorString ].
-	
-	^ nil
+	^ refactoring failedApplicabilityMessage
 ]
 
 { #category : 'private - testing' }
@@ -124,7 +117,7 @@ ReRenameMethodDriver2 >> configureMessage [
 ReRenameMethodDriver2 >> createAndSetNewRefactoring [
 
 	super configureRefactoring .
-	refactoring newName: newName
+	refactoring newName: newName.
 ]
 
 { #category : 'execution' }
@@ -156,11 +149,26 @@ ReRenameMethodDriver2 >> hasFailedBehaviorPreservingPreconditions [
 	^ refactoring failedBreakingChangePreconditions notEmpty 
 ]
 
+{ #category : 'private - testing' }
+ReRenameMethodDriver2 >> hasPrimitiveImplementor [
+    ^ hasPrimitiveImplementor
+]
+
 { #category : 'initialization' }
 ReRenameMethodDriver2 >> initialize [ 
 	
 	super initialize.
 	shouldEscape := false.
+]
+
+{ #category : 'private - testing' }
+ReRenameMethodDriver2 >> initializePrimitiveStatus [
+    hasPrimitiveImplementor :=
+        self refactoring implementors anySatisfy: [ :implementorClass |
+            | method |
+            method := implementorClass methodFor: self refactoring oldSelector.
+            method notNil and: [ method compiledMethod isPrimitive ] ].
+    ^ self
 ]
 
 { #category : 'configuration' }
@@ -171,6 +179,13 @@ ReRenameMethodDriver2 >> instantiateRefactoring [
 	^ ReRenameMethodRefactoring new 
 		renameMethod: originalMessage selector 
 		in: class
+]
+
+{ #category : 'actions' }
+ReRenameMethodDriver2 >> isValidPermutation [
+
+	^ refactoring areArgumentsPermuted
+		and: [ refactoring validNewNameCondition check not ]
 ]
 
 { #category : 'for mocks' }
@@ -224,6 +239,11 @@ ReRenameMethodDriver2 >> originalMessage [
 	^ originalMessage 
 ]
 
+{ #category : 'accessing' }
+ReRenameMethodDriver2 >> permutation: aPermutation [
+	permutation := aPermutation
+]
+
 { #category : 'actions' }
 ReRenameMethodDriver2 >> previewPresenterClass [
 
@@ -248,9 +268,8 @@ ReRenameMethodDriver2 >> requestDialogWith: methodName [
 
 { #category : 'interaction' }
 ReRenameMethodDriver2 >> requestNewMessage [
+	| methodName parameters |
 
-	| methodName parameters permutation |
-	
 	parameters := originalMessage selector implementors
 		ifNotEmpty: [ :m | m first argumentNames ]
 		ifEmpty: [ refactoring buildParametersForSelector: originalMessage selector ].
@@ -259,8 +278,8 @@ ReRenameMethodDriver2 >> requestNewMessage [
 		selector: originalMessage selector
 		arguments: parameters.
 
-	permutation := (1 to: parameters size) asArray.
-	methodName permutation: permutation.
+	methodName permutation:
+		(permutation ifNil: [ (1 to: parameters size) asArray ]).
 
 	^ methodName
 ]
@@ -273,6 +292,7 @@ ReRenameMethodDriver2 >> runRefactoring [
 	super configureRefactoring .
 	
 	newMessage := self requestNewMessage.
+	self initializePrimitiveStatus.
 	
 	presenter := (self previewPresenterClass newApplication: self application)
 		scopes: scopes;
@@ -296,5 +316,12 @@ ReRenameMethodDriver2 >> setNewMessage: aSymbol [
 
 	refactoring newSelector: aSymbol .
 	newMessage selector: aSymbol .
+	self configureMessage
+]
+
+{ #category : 'actions' }
+ReRenameMethodDriver2 >> setPermutation: aPermutation [
+
+	newMessage permutation: aPermutation.
 	self configureMessage
 ]
