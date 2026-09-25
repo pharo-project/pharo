@@ -11,8 +11,9 @@ Class {
 	#instVars : [
 		'flushChanges'
 	],
-	#category : 'CodeExport',
-	#package : 'CodeExport'
+	#category : 'CodeExport-Utilities',
+	#package : 'CodeExport',
+	#tag : 'Utilities'
 }
 
 { #category : 'writing' }
