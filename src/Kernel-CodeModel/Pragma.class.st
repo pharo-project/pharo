@@ -39,7 +39,7 @@ Pragma class >> addToCache: aPragma [
 Pragma class >> all [
 	"all pragmas whose methods are currently installed in the system"
 	^ self pragmaCache values flattened select: [ :each |
-		  each method isInstalled ]
+		  each method isInstalled and: [ each method methodClass isObsolete not ]]
 ]
 
 { #category : 'finding' }
@@ -53,7 +53,7 @@ Pragma class >> allNamed: aSymbol [
 	pragmas ifEmpty: [ self pragmaCache removeKey: aSymbol ifAbsent: [  ] ].
 	"we check if the pragma is really from an installed method
 	(others will be cleaned up by the gc when the method is garbadge collected)"
-	^ (pragmas select: [ :each | each method isInstalled ]) asArray
+	^ (pragmas select: [ :each | each method isInstalled and: [ each method methodClass isObsolete not ]]) asArray
 ]
 
 { #category : 'finding' }
