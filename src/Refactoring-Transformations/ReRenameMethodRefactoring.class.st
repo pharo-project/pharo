@@ -62,7 +62,7 @@ ReRenameMethodRefactoring class >> renameMethod: aSelector in: aClass to: newSel
 { #category : 'preconditions' }
 ReRenameMethodRefactoring >> applicabilityPreconditions [
 
-	^ { self validSelectorCondition . self selectorsHaveSameArity }
+	^ { self validNewNameCondition . self validSelectorCondition . self selectorsHaveSameArity }
 ]
 
 { #category : 'torevisit' }
@@ -86,9 +86,20 @@ ReRenameMethodRefactoring >> areNamesTheSame [
 { #category : 'preconditions' }
 ReRenameMethodRefactoring >> breakingChangePreconditions [
 
-	^ { (ReUpToRootDoesNotDefinesMethod new
-		   classes: self implementors;
-		   selector: newSelector) }
+	self areNamesTheSame ifTrue: [ ^ #() ] . 
+
+	^ { self superclassesDoNotDefineNewSelectorCondition }
+]
+
+{ #category : 'preconditions' }
+ReRenameMethodRefactoring >> checkApplicabilityPreconditions [
+
+	^ { self validNewNameCondition . self validSelectorCondition . self selectorsHaveSameArity } 
+]
+
+{ #category : 'accessing' }
+ReRenameMethodRefactoring >> className: aClass [ 
+	class := aClass 
 ]
 
 { #category : 'torevisit' }
@@ -169,12 +180,28 @@ ReRenameMethodRefactoring >> selectorsHaveSameArity [
 				, ' doesn''t have the same number of arguments as ', oldSelector printString
 ]
 
+{ #category : 'instance creation' }
+ReRenameMethodRefactoring >> superclassesDoNotDefineNewSelectorCondition [
+
+	^ ReUpToRootDoesNotDefinesMethod 
+		   classes: self implementors
+		   selector: newSelector
+]
+
+{ #category : 'preconditions' }
+ReRenameMethodRefactoring >> validNewNameCondition [
+ 
+	^ (ReBlockCondition new 
+			block: [ (class includesSelector: newSelector) not ];
+			violatorErrorString: newSelector printString,' is already defined in this class')
+]
+
 { #category : 'preconditions' }
 ReRenameMethodRefactoring >> validSelectorCondition [
 
 	^ (ReBlockCondition new 
 			block: [ self isValidSelector: newSelector ];
-			violatorErrorString: newSelector ,' is not a valid selector').
+			violatorErrorString: newSelector printString, ' is not a valid selector').
 ]
 
 { #category : 'accessing' }
