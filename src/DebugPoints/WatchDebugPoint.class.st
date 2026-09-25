@@ -21,6 +21,18 @@ WatchDebugPoint >> addValue: aValue [
 		self history size > self limit ifTrue: [ self history removeLast ] ]
 ]
 
+{ #category : 'default values' }
+WatchDebugPoint >> args [
+
+	^ #( context value )
+]
+
+{ #category : 'default values' }
+WatchDebugPoint >> control [
+
+	^ #after
+]
+
 { #category : 'accessing' }
 WatchDebugPoint >> history [
 
@@ -59,18 +71,21 @@ WatchDebugPoint >> limit: anInteger [
 { #category : 'default values' }
 WatchDebugPoint >> metaLink [
 
-	^ MetaLink new
-		  metaObject: self;
-		  selector: #hitWithContext:value:;
-		  arguments: #( context value );
-		  control: #after;
-		  option: #( #+ optionWeakAfter #+ optionCompileOnLinkInstallation )
+	^ super metaLink
+		  option: #( #+ optionWeakAfter #+ optionCompileOnLinkInstallation );
+		  yourself
 ]
 
 { #category : 'accessing' }
 WatchDebugPoint >> name [
 
 	^ name ifNil: [ #WatchPoint ]
+]
+
+{ #category : 'default values' }
+WatchDebugPoint >> selector [
+
+	^ #hitWithContext:value:
 ]
 
 { #category : 'accessing' }
