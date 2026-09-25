@@ -11,7 +11,7 @@ Class {
 	#name : 'GLMOSWindowWorldMorph',
 	#superclass : 'OSWindowWorldMorphWithModel',
 	#instVars : [
-		'toolbarBox'
+		#toolbarBox
 	],
 	#category : 'OSWindow-Core-Morphic',
 	#package : 'OSWindow-Core',

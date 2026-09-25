@@ -16,9 +16,9 @@ Class {
 	#name : 'SettingNode',
 	#superclass : 'MorphTreeNodeModel',
 	#instVars : [
-		'parentName',
-		'pragma',
-		'contents'
+		#parentName,
+		#pragma,
+		#contents
 	],
 	#category : 'System-Settings-Browser',
 	#package : 'System-Settings-Browser'

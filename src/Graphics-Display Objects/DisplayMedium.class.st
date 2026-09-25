@@ -5,7 +5,7 @@ Class {
 	#name : 'DisplayMedium',
 	#superclass : 'DisplayObject',
 	#classVars : [
-		'HighLightBitmaps'
+		#HighLightBitmaps
 	],
 	#category : 'Graphics-Display Objects-Common',
 	#package : 'Graphics-Display Objects',

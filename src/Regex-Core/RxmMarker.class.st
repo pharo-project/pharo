@@ -10,7 +10,7 @@ Class {
 	#name : 'RxmMarker',
 	#superclass : 'RxmLink',
 	#instVars : [
-		'index'
+		#index
 	],
 	#category : 'Regex-Core-Links',
 	#package : 'Regex-Core',

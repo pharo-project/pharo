@@ -5,7 +5,7 @@ Class {
 	#name : 'CairoUTF8ConverterTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'encoder'
+		#encoder
 	],
 	#category : 'Athens-Cairo-Tests-Text',
 	#package : 'Athens-Cairo-Tests',

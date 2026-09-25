@@ -5,10 +5,10 @@ Class {
 	#name : 'SDL_SysWMinfo_UIKitInfo',
 	#superclass : 'SDL2Structure',
 	#classVars : [
-		'OFFSET_COLORBUFFER',
-		'OFFSET_FRAMEBUFFER',
-		'OFFSET_RESOLVEFRAMEBUFFER',
-		'OFFSET_WINDOW'
+		#OFFSET_COLORBUFFER,
+		#OFFSET_FRAMEBUFFER,
+		#OFFSET_RESOLVEFRAMEBUFFER,
+		#OFFSET_WINDOW
 	],
 	#category : 'OSWindow-SDL2-Bindings',
 	#package : 'OSWindow-SDL2',

@@ -64,8 +64,8 @@ CollectionTest >> testGroupedByGroupsOrderSimple [
 	keys := grouped keys.
 	self assert: (keys at: 1) equals: 'k'.
 	self assert: (keys at: 2) equals: 'f'.
-	self assert: (grouped at: 'k') asArray equals: #(#('k' 1) #('k' 3) #('k' 4) #('k' 5) #('k' 8)).
-	self assert: (grouped at: 'f') asArray equals: #(#('f' 2) #('f' 6) #('f' 7))
+	self assert: (grouped at: #'k') asArray equals: #(#('k' 1) #('k' 3) #('k' 4) #('k' 5) #('k' 8)).
+	self assert: (grouped at: #'f') asArray equals: #(#('f' 2) #('f' 6) #('f' 7))
 ]
 
 { #category : 'tests' }

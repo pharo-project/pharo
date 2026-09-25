@@ -2,8 +2,8 @@ Class {
 	#name : 'RBBreakingChangeReport',
 	#superclass : 'Object',
 	#instVars : [
-		'environment',
-		'refactoring'
+		#environment,
+		#refactoring
 	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',

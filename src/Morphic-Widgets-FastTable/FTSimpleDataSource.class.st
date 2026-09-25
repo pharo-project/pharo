@@ -7,8 +7,8 @@ Class {
 	#name : 'FTSimpleDataSource',
 	#superclass : 'FTDataSource',
 	#instVars : [
-		'elements',
-		'unsortedElements'
+		#elements,
+		#unsortedElements
 	],
 	#category : 'Morphic-Widgets-FastTable-DataSource',
 	#package : 'Morphic-Widgets-FastTable',

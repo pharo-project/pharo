@@ -19,16 +19,16 @@ Class {
 	#name : 'StandardFonts',
 	#superclass : 'Object',
 	#classVars : [
-		'BalloonFont',
-		'ButtonFont',
-		'CodeFont',
-		'HaloFont',
-		'ListFont',
-		'MenuFont',
-		'WindowTitleFont'
+		#BalloonFont,
+		#ButtonFont,
+		#CodeFont,
+		#HaloFont,
+		#ListFont,
+		#MenuFont,
+		#WindowTitleFont
 	],
 	#pools : [
-		'TextConstants'
+		#TextConstants
 	],
 	#category : 'Graphics-Fonts',
 	#package : 'Graphics-Fonts'
@@ -307,7 +307,7 @@ StandardFonts class >> systemFontAspectsAndLabels [
 { #category : 'font accessing' }
 StandardFonts class >> systemFontLabelOf: aSelector [
 	^ self systemFontAspectsAndLabels
-		detect: [ :assoc | assoc key = aSelector ]
+		detect: [ :assoc | assoc key sameContents: aSelector ]
 		ifFound: [ :assoc | assoc value ]
 		ifNone: [ '' ]
 ]

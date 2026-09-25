@@ -2,7 +2,7 @@ Class {
 	#name : 'AnyEffectSuitePreparatorTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'runner'
+		#runner
 	],
 	#category : 'TestRunner-Tests-Preparators',
 	#package : 'TestRunner-Tests',

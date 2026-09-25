@@ -5,7 +5,7 @@ Class {
 	#name : 'TKTCancelledTaskState',
 	#superclass : 'TKTTaskState',
 	#instVars : [
-		'reason'
+		#reason
 	],
 	#category : 'TaskIt-Kernel',
 	#package : 'TaskIt',

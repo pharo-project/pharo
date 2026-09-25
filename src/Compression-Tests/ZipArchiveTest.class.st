@@ -5,11 +5,11 @@ Class {
 	#name : 'ZipArchiveTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'fileToZip',
-		'zip',
-		'subdir',
-		'zipFile',
-		'fs'
+		#fileToZip,
+		#zip,
+		#subdir,
+		#zipFile,
+		#fs
 	],
 	#category : 'Compression-Tests-Archives',
 	#package : 'Compression-Tests',

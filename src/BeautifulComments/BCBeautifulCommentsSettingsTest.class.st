@@ -5,7 +5,7 @@ Class {
 	#name : 'BCBeautifulCommentsSettingsTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'subject'
+		#subject
 	],
 	#category : 'BeautifulComments-Tests',
 	#package : 'BeautifulComments',

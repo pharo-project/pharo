@@ -5,9 +5,9 @@ Class {
 	#name : 'ClapParameterized',
 	#superclass : 'ClapParameter',
 	#instVars : [
-		'parameters',
-		'positionals',
-		'aliases'
+		#parameters,
+		#positionals,
+		#aliases
 	],
 	#category : 'Clap-Core-Specification',
 	#package : 'Clap-Core',

@@ -5,10 +5,10 @@ Class {
 	#name : 'Week',
 	#superclass : 'Timespan',
 	#classVars : [
-		'StartDay'
+		#StartDay
 	],
 	#pools : [
-		'ChronologyConstants'
+		#ChronologyConstants
 	],
 	#category : 'System-Time',
 	#package : 'System-Time'

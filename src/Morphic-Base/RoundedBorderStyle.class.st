@@ -5,7 +5,7 @@ Class {
 	#name : 'RoundedBorderStyle',
 	#superclass : 'SimpleBorderStyle',
 	#instVars : [
-		'cornerRadius'
+		#cornerRadius
 	],
 	#category : 'Morphic-Base-Borders',
 	#package : 'Morphic-Base',

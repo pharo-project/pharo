@@ -5,8 +5,8 @@ Class {
 	#name : 'CoGlobalFetcher',
 	#superclass : 'CoFetcher',
 	#instVars : [
-		'astNode',
-		'systemNavigation'
+		#astNode,
+		#systemNavigation
 	],
 	#category : 'HeuristicCompletion-Model-Fetchers',
 	#package : 'HeuristicCompletion-Model',

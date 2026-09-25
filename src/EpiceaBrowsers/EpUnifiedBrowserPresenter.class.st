@@ -8,10 +8,10 @@ Class {
 	#name : 'EpUnifiedBrowserPresenter',
 	#superclass : 'SpPresenter',
 	#instVars : [
-		'refreshDeferrer',
-		'logPresenter',
-		'logNodesPresenter',
-		'toolbarPresenter'
+		#refreshDeferrer,
+		#logPresenter,
+		#logNodesPresenter,
+		#toolbarPresenter
 	],
 	#category : 'EpiceaBrowsers-UI-Unified',
 	#package : 'EpiceaBrowsers',

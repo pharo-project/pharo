@@ -11,6 +11,6 @@ ReProperty class >> decorateBrowserItem: aBrowserItem by: anEnvironmentPlugin [
 	Pharo 6 has not this class. So this special trick is used"
 	| property |
 	property := aBrowserItem actualObject.
-	property class name = #ReExceptionProperty ifTrue: [
+	(property class name sameContents: #ReExceptionProperty) ifTrue: [
 		aBrowserItem markWith: ClyBrokenCritiqueTag]
 ]

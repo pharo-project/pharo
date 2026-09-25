@@ -5,7 +5,7 @@ Class {
 	#name : 'MorphicCoreUIManager',
 	#superclass : 'DummyUIManager',
 	#classVars : [
-		'UIProcess'
+		#UIProcess
 	],
 	#category : 'Morphic-Core-Support',
 	#package : 'Morphic-Core',

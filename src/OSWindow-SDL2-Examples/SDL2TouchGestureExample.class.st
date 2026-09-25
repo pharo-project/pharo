@@ -5,8 +5,8 @@ Class {
 	#name : 'SDL2TouchGestureExample',
 	#superclass : 'SDL2TouchExample',
 	#instVars : [
-		'circleCenter',
-		'circleSize'
+		#circleCenter,
+		#circleSize
 	],
 	#category : 'OSWindow-SDL2-Examples-Gesture',
 	#package : 'OSWindow-SDL2-Examples',

@@ -12,8 +12,8 @@ Class {
 	#name : 'SycPromotePackageFromTagCommand',
 	#superclass : 'CmdCommand',
 	#instVars : [
-		'package',
-		'classTag'
+		#package,
+		#classTag
 	],
 	#category : 'SystemCommands-PackageCommands',
 	#package : 'SystemCommands-PackageCommands'

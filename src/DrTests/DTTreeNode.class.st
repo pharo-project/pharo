@@ -6,13 +6,13 @@ Class {
 	#name : 'DTTreeNode',
 	#superclass : 'DTAbstractTreeNode',
 	#instVars : [
-		'name',
-		'subResults',
-		'contextMenuBlock',
-		'subResultsAggregator',
-		'browseBlock',
-		'shouldStartExpanded',
-		'displayColor'
+		#name,
+		#subResults,
+		#contextMenuBlock,
+		#subResultsAggregator,
+		#browseBlock,
+		#shouldStartExpanded,
+		#displayColor
 	],
 	#category : 'DrTests-Model',
 	#package : 'DrTests',

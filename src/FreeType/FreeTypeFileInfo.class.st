@@ -5,11 +5,11 @@ Class {
 	#name : 'FreeTypeFileInfo',
 	#superclass : 'AbstractFreeTypeFileInfo',
 	#instVars : [
-		'absoluteOrRelativePath',
-		'absolutePath',
-		'locationType',
-		'modificationTime',
-		'fileSize'
+		#absoluteOrRelativePath,
+		#absolutePath,
+		#locationType,
+		#modificationTime,
+		#fileSize
 	],
 	#category : 'FreeType-FontManager',
 	#package : 'FreeType',
@@ -97,7 +97,7 @@ FreeTypeFileInfo >> printOn: aStream [
 	aStream
 		nextPutAll: familyGroupName asString, '::',styleNameExtracted asString, ' ';
 		nextPutAll:
-			(locationType = #absolute
+			((locationType sameContents: #absolute)
 				ifTrue:['']
 				ifFalse:['{',locationType asString,'}']);
 		nextPutAll: absoluteOrRelativePath asString;

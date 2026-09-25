@@ -8,9 +8,9 @@ Class {
 	#name : 'AbstractAnnouncementSubscription',
 	#superclass : 'Object',
 	#instVars : [
-		'announcer',
-		'announcementClass',
-		'action'
+		#announcer,
+		#announcementClass,
+		#action
 	],
 	#category : 'Announcements-Core-Subscription',
 	#package : 'Announcements-Core',

@@ -93,17 +93,17 @@ BaselineOfTaskIt >> baselineForCommon: spec [
 		group: 'core' with: #('TaskIt');
 		group: 'coreTests' with: #('TaskIt' 'TaskIt-Tests');
 		group: 'default' with: #(
-			'core' 
-			'TaskItProcesses' 
-			'TaskItRetry' 
-			'TaskItDebugger' 
+			core 
+			TaskItProcesses 
+			TaskItRetry 
+			TaskItDebugger 
 			'TaskIt-Tests' 
 			'TaskItRetry-Tests' 
 			'TaskItProcesses-Tests' 
 			'TaskItDebugger-Tests');
 		group: 'debug' with: #('minimal' 'TaskItDebugger');
 		group: 'tests' with: #(
-			'default' 
+			default 
 			'TaskIt-Tests' 
 			'TaskItRetry-Tests' 
 			'TaskItProcesses-Tests' 
@@ -131,13 +131,13 @@ BaselineOfTaskIt >> baselineForPharo6: spec [
 	spec
 		group: 'minimal' with: #( 'TaskIt' );
 		group: 'default'
-		with: #( 'minimal' 'TaskItProcesses' 'TaskItRetry' 'TaskItDebugger'
+		with: #( minimal TaskItProcesses TaskItRetry TaskItDebugger
 			   'TaskIt-Tests' 'TaskItRetry-Tests' 'TaskItProcesses-Tests'
 			   'TaskItDebugger-Tests' );
 		group: 'debug' with: #( 'minimal' 'TaskItDebugger' );
 		group: 'tests'
 		with:
-			#( 'default' 'TaskIt-Tests' 'TaskItRetry-Tests' 'TaskItProcesses-Tests'
+			#( default 'TaskIt-Tests' 'TaskItRetry-Tests' 'TaskItProcesses-Tests'
 			   'TaskItDebugger-Tests' );
 		group: 'development' with: #( 'default' 'debug' 'tests' )
 ]

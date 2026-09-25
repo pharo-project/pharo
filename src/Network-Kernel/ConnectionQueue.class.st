@@ -6,12 +6,12 @@ Class {
 	#name : 'ConnectionQueue',
 	#superclass : 'Object',
 	#instVars : [
-		'portNumber',
-		'maxQueueLength',
-		'connections',
-		'accessSema',
-		'socket',
-		'process'
+		#portNumber,
+		#maxQueueLength,
+		#connections,
+		#accessSema,
+		#socket,
+		#process
 	],
 	#category : 'Network-Kernel-Utilities',
 	#package : 'Network-Kernel',

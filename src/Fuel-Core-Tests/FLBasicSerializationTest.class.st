@@ -5,7 +5,7 @@ Class {
 	#name : 'FLBasicSerializationTest',
 	#superclass : 'FLSerializationTest',
 	#instVars : [
-		'currentTimeZone'
+		#currentTimeZone
 	],
 	#category : 'Fuel-Core-Tests-Base',
 	#package : 'Fuel-Core-Tests',

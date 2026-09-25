@@ -2,7 +2,7 @@ Class {
 	#name : 'ClapPharoCommandsTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'context'
+		#context
 	],
 	#category : 'Clap-Tests-Commands',
 	#package : 'Clap-Tests',

@@ -23,7 +23,7 @@ Class {
 	#name : 'ImageCleaner',
 	#superclass : 'Object',
 	#instVars : [
-		'literalTable'
+		#literalTable
 	],
 	#category : 'Tool-ImageCleaner',
 	#package : 'Tool-ImageCleaner'

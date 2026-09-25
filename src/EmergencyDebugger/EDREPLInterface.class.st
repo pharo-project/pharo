@@ -9,9 +9,9 @@ Class {
 	#name : 'EDREPLInterface',
 	#superclass : 'ReadWriteStream',
 	#instVars : [
-		'debugger',
-		'inputBufferStream',
-		'waitSemaphore'
+		#debugger,
+		#inputBufferStream,
+		#waitSemaphore
 	],
 	#category : 'EmergencyDebugger-View',
 	#package : 'EmergencyDebugger',

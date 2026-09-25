@@ -7,8 +7,8 @@ Class {
 	#name : 'RFReification',
 	#superclass : 'Object',
 	#instVars : [
-		'link',
-		'entity'
+		#link,
+		#entity
 	],
 	#category : 'Reflectivity-Reifications',
 	#package : 'Reflectivity',
@@ -35,7 +35,7 @@ RFReification class >> entity: aNodeOrVar link: aLink [
 
 { #category : 'plugin interface' }
 RFReification class >> for: aSelector [
-	^ self subclasses detect: [ :class | class key = aSelector ]
+	^ self subclasses detect: [ :class | class key sameContents: aSelector ]
 ]
 
 { #category : 'testing' }

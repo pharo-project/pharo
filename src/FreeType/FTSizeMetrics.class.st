@@ -5,17 +5,17 @@ Class {
 	#name : 'FTSizeMetrics',
 	#superclass : 'FFIExternalStructure',
 	#classVars : [
-		'OFFSET_ASCENDER',
-		'OFFSET_DESCENDER',
-		'OFFSET_HEIGHT',
-		'OFFSET_MAX_ADVANCE',
-		'OFFSET_X_PPEM',
-		'OFFSET_X_SCALE',
-		'OFFSET_Y_PPEM',
-		'OFFSET_Y_SCALE'
+		#OFFSET_ASCENDER,
+		#OFFSET_DESCENDER,
+		#OFFSET_HEIGHT,
+		#OFFSET_MAX_ADVANCE,
+		#OFFSET_X_PPEM,
+		#OFFSET_X_SCALE,
+		#OFFSET_Y_PPEM,
+		#OFFSET_Y_SCALE
 	],
 	#pools : [
-		'FT2Types'
+		#FT2Types
 	],
 	#category : 'FreeType-Bindings',
 	#package : 'FreeType',

@@ -6,7 +6,7 @@ Class {
 	#name : 'MergeDiffMorph',
 	#superclass : 'DiffMorph',
 	#instVars : [
-		'allowJoinClicks'
+		#allowJoinClicks
 	],
 	#category : 'Tool-Diff-Morphs',
 	#package : 'Tool-Diff',

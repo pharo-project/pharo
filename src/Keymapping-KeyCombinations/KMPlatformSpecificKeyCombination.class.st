@@ -7,8 +7,8 @@ Class {
 	#name : 'KMPlatformSpecificKeyCombination',
 	#superclass : 'Object',
 	#instVars : [
-		'shortcut',
-		'platform'
+		#shortcut,
+		#platform
 	],
 	#category : 'Keymapping-KeyCombinations',
 	#package : 'Keymapping-KeyCombinations'

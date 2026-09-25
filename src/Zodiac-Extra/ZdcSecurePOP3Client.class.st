@@ -12,7 +12,7 @@ Class {
 	#name : 'ZdcSecurePOP3Client',
 	#superclass : 'POP3Client',
 	#instVars : [
-		'lineReader'
+		#lineReader
 	],
 	#category : 'Zodiac-Extra',
 	#package : 'Zodiac-Extra'

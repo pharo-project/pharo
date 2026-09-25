@@ -5,9 +5,9 @@ Class {
 	#name : 'SourceFile',
 	#superclass : 'Object',
 	#instVars : [
-		'path',
-		'stream',
-		'potentialLocations'
+		#path,
+		#stream,
+		#potentialLocations
 	],
 	#category : 'System-Sources-Sources',
 	#package : 'System-Sources',

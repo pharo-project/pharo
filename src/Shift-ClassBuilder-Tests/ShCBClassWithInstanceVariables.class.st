@@ -5,7 +5,7 @@ Class {
 	#name : 'ShCBClassWithInstanceVariables',
 	#superclass : 'Object',
 	#instVars : [
-		'inheritedSlot'
+		#inheritedSlot
 	],
 	#category : 'Shift-ClassBuilder-Tests-TestClasses',
 	#package : 'Shift-ClassBuilder-Tests',

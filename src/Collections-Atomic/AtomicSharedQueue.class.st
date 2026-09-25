@@ -9,7 +9,7 @@ Class {
 	#name : 'AtomicSharedQueue',
 	#superclass : 'WaitfreeQueue',
 	#instVars : [
-		'availSema'
+		#availSema
 	],
 	#category : 'Collections-Atomic-Base',
 	#package : 'Collections-Atomic',

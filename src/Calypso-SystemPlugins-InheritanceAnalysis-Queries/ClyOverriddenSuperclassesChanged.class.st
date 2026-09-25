@@ -12,7 +12,7 @@ Class {
 	#name : 'ClyOverriddenSuperclassesChanged',
 	#superclass : 'ClyClassHierarchyChanged',
 	#instVars : [
-		'overridingSubclass'
+		#overridingSubclass
 	],
 	#category : 'Calypso-SystemPlugins-InheritanceAnalysis-Queries',
 	#package : 'Calypso-SystemPlugins-InheritanceAnalysis-Queries'

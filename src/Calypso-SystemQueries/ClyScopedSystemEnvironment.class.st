@@ -5,7 +5,7 @@ Class {
 	#name : 'ClyScopedSystemEnvironment',
 	#superclass : 'ClySystemEnvironment',
 	#instVars : [
-		'scope'
+		#scope
 	],
 	#category : 'Calypso-SystemQueries-Domain',
 	#package : 'Calypso-SystemQueries',

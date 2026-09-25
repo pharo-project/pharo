@@ -6,7 +6,7 @@ Class {
 	#name : 'FT2FFILibrary',
 	#superclass : 'FFILibrary',
 	#classVars : [
-		'ErrorCodeTable'
+		#ErrorCodeTable
 	],
 	#category : 'FreeType-Bindings',
 	#package : 'FreeType',

@@ -5,7 +5,7 @@ Class {
 	#name : 'LibTTY',
 	#superclass : 'FFILibrary',
 	#pools : [
-		'LibCTypes'
+		#LibCTypes
 	],
 	#category : 'UnifiedFFI-Libraries',
 	#package : 'UnifiedFFI',

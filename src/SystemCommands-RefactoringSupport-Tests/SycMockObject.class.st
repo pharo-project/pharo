@@ -5,7 +5,7 @@ Class {
 	#name : 'SycMockObject',
 	#superclass : 'Object',
 	#instVars : [
-		'changeClass'
+		#changeClass
 	],
 	#category : 'SystemCommands-RefactoringSupport-Tests',
 	#package : 'SystemCommands-RefactoringSupport-Tests'

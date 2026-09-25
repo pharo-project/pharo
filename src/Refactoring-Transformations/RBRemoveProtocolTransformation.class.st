@@ -18,7 +18,7 @@ Class {
 	#name : 'RBRemoveProtocolTransformation',
 	#superclass : 'RBClassTransformation',
 	#instVars : [
-		'protocol'
+		#protocol
 	],
 	#category : 'Refactoring-Transformations-Model-Unused',
 	#package : 'Refactoring-Transformations',

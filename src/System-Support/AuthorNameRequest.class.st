@@ -5,7 +5,7 @@ Class {
 	#name : 'AuthorNameRequest',
 	#superclass : 'Notification',
 	#instVars : [
-		'initialAnswer'
+		#initialAnswer
 	],
 	#category : 'System-Support-Authoring',
 	#package : 'System-Support',

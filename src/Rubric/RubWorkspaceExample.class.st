@@ -5,10 +5,10 @@ Class {
 	#name : 'RubWorkspaceExample',
 	#superclass : 'Object',
 	#instVars : [
-		'textModel',
-		'announcer',
-		'bindings',
-		'mustDeclareVariables'
+		#textModel,
+		#announcer,
+		#bindings,
+		#mustDeclareVariables
 	],
 	#category : 'Rubric-Editing-Widgets-Examples',
 	#package : 'Rubric',

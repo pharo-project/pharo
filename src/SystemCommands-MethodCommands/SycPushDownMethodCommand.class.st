@@ -5,7 +5,7 @@ Class {
 	#name : 'SycPushDownMethodCommand',
 	#superclass : 'SycRefactoringMethodCommand',
 	#instVars : [
-		'refactoringScopes'
+		#refactoringScopes
 	],
 	#category : 'SystemCommands-MethodCommands',
 	#package : 'SystemCommands-MethodCommands'

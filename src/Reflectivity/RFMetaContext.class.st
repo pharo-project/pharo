@@ -5,7 +5,7 @@ Class {
 	#name : 'RFMetaContext',
 	#superclass : 'Object',
 	#instVars : [
-		'level'
+		#level
 	],
 	#category : 'Reflectivity-Contexts',
 	#package : 'Reflectivity',

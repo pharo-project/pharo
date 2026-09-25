@@ -5,7 +5,7 @@ Class {
 	#name : 'TextStreamTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'stream'
+		#stream
 	],
 	#category : 'Text-Tests-Base',
 	#package : 'Text-Tests',

@@ -6,8 +6,8 @@ Class {
 	#name : 'ZipStringMember',
 	#superclass : 'ZipArchiveMember',
 	#instVars : [
-		'contents',
-		'stream'
+		#contents,
+		#stream
 	],
 	#category : 'Compression-Archives',
 	#package : 'Compression',

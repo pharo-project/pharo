@@ -14,7 +14,7 @@ Class {
 	#name : 'ClyClassScriptProperty',
 	#superclass : 'ClyProperty',
 	#instVars : [
-		'script'
+		#script
 	],
 	#category : 'Calypso-SystemPlugins-ClassScripts-Queries',
 	#package : 'Calypso-SystemPlugins-ClassScripts-Queries'

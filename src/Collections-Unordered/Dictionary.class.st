@@ -576,7 +576,7 @@ Dictionary >> includes: anObject [
 
 	"Check if anObject is one of the values in the dictionary"
 
-	self do: [ :each | anObject = each ifTrue: [ ^ true ] ].
+	self do: [ :each | (anObject sameContents: each) ifTrue: [ ^ true ] ].
 	^ false
 ]
 
@@ -584,7 +584,7 @@ Dictionary >> includes: anObject [
 Dictionary >> includesAssociation: anAssociation [
   ^ (self
       associationAt: anAssociation key
-      ifAbsent: [ ^ false ]) value = anAssociation value
+      ifAbsent: [ ^ false ]) value sameContents: anAssociation value
 ]
 
 { #category : 'testing' }
@@ -668,7 +668,7 @@ Dictionary >> keyAtValue: value ifAbsent: exceptionBlock [
 	: Use =, not ==, so stings like 'this' can be found.  Note that MethodDictionary continues to use == so it will be fast."
 
 	self associationsDo:
-		[:association | value = association value ifTrue: [^association key]].
+		[:association | (value sameContents: association value) ifTrue: [^association key]].
 	^exceptionBlock value
 ]
 
@@ -890,12 +890,12 @@ Dictionary >> scanFor: anObject [
 
 	"Search from (hash mod size) to the end."
 	start to: finish do:
-		[:index | ((element := array at: index) == nil or: [element key = anObject])
+		[:index | ((element := array at: index) == nil or: [element key sameContents: anObject])
 			ifTrue: [^ index ]].
 
 	"Search from 1 to where we started."
 	1 to: start-1 do:
-		[:index | ((element := array at: index) == nil or: [element key = anObject])
+		[:index | ((element := array at: index) == nil or: [element key sameContents: anObject])
 			ifTrue: [^ index ]].
 
 	^ 0  "No match AND no empty slot"

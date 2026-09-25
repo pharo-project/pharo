@@ -2,9 +2,9 @@ Class {
 	#name : 'RBRefactoringChangeTest',
 	#superclass : 'AbstractEnvironmentTestCase',
 	#instVars : [
-		'changes',
-		'workingEnvironment',
-		'changeFactory'
+		#changes,
+		#workingEnvironment,
+		#changeFactory
 	],
 	#category : 'Refactoring-Changes-Tests',
 	#package : 'Refactoring-Changes-Tests'
@@ -299,8 +299,8 @@ RBRefactoringChangeTest >> testPerformAddRemoveClassInstanceVariable [
 
 	| change |
 	change := changes addInstanceVariable: 'foo' to: self changeMockClass class.
-	self performAndUndoChange: change do: [ self assert: (change changeClass instVarNames includes: 'foo') ].
-	self deny: (change changeClass instVarNames includes: 'foo')
+	self performAndUndoChange: change do: [ self assert: (change changeClass instVarNames includes: #foo) ].
+	self deny: (change changeClass instVarNames includes: #foo)
 ]
 
 { #category : 'tests - perform' }
@@ -335,8 +335,8 @@ RBRefactoringChangeTest >> testPerformAddRemoveClassVariable [
 
 	| change |
 	change := changes addClassVariable: 'Foo' to: self changeMockClass.
-	self performAndUndoChange: change do: [ self assert: (change changeClass classVarNames includes: 'Foo') ].
-	self deny: (change changeClass classVarNames includes: 'Foo')
+	self performAndUndoChange: change do: [ self assert: (change changeClass classVarNames includes: #Foo) ].
+	self deny: (change changeClass classVarNames includes: #Foo)
 ]
 
 { #category : 'tests - perform' }
@@ -344,8 +344,8 @@ RBRefactoringChangeTest >> testPerformAddRemoveInstanceVariable [
 
 	| change |
 	change := changes addInstanceVariable: 'foo' to: self changeMockClass.
-	self performAndUndoChange: change do: [ self assert: (change changeClass instVarNames includes: 'foo') ].
-	self deny: (change changeClass instVarNames includes: 'foo')
+	self performAndUndoChange: change do: [ self assert: (change changeClass instVarNames includes: #foo) ].
+	self deny: (change changeClass instVarNames includes: #foo)
 ]
 
 { #category : 'tests - perform' }

@@ -6,8 +6,8 @@ Class {
 	#name : 'MCSmalltalkhubRepository',
 	#superclass : 'MCHttpRepository',
 	#instVars : [
-		'owner',
-		'project'
+		#owner,
+		#project
 	],
 	#category : 'MonticelloRemoteRepositories',
 	#package : 'MonticelloRemoteRepositories'

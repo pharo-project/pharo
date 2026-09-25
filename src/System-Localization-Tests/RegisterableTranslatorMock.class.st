@@ -5,7 +5,7 @@ Class {
 	#name : 'RegisterableTranslatorMock',
 	#superclass : 'Object',
 	#instVars : [
-		'translations'
+		#translations
 	],
 	#category : 'System-Localization-Tests-Mocks',
 	#package : 'System-Localization-Tests',

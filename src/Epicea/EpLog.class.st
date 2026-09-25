@@ -13,9 +13,9 @@ Class {
 	#name : 'EpLog',
 	#superclass : 'Object',
 	#instVars : [
-		'announcer',
-		'commentByEntryReference',
-		'store'
+		#announcer,
+		#commentByEntryReference,
+		#store
 	],
 	#category : 'Epicea-Log',
 	#package : 'Epicea',

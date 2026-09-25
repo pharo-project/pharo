@@ -17,10 +17,10 @@ Class {
 	#name : 'TKTParameterizableService',
 	#superclass : 'TKTService',
 	#instVars : [
-		'name',
-		'task',
-		'startUpTask',
-		'tearDownTask'
+		#name,
+		#task,
+		#startUpTask,
+		#tearDownTask
 	],
 	#category : 'TaskIt-Services',
 	#package : 'TaskIt',

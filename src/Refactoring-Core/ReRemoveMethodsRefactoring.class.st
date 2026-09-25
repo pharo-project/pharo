@@ -9,8 +9,8 @@ Class {
 	#name : 'ReRemoveMethodsRefactoring',
 	#superclass : 'ReCompositeRefactoring',
 	#instVars : [
-		'classSelectorMapping',
-		'allSelectors'
+		#classSelectorMapping,
+		#allSelectors
 	],
 	#category : 'Refactoring-Core-Refactorings',
 	#package : 'Refactoring-Core',

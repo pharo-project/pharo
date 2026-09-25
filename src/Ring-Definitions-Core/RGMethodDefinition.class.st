@@ -77,10 +77,10 @@ Class {
 	#name : 'RGMethodDefinition',
 	#superclass : 'RGElementDefinition',
 	#instVars : [
-		'protocol',
-		'sourceCode',
-		'stamp',
-		'package'
+		#protocol,
+		#sourceCode,
+		#stamp,
+		#package
 	],
 	#category : 'Ring-Definitions-Core-Base',
 	#package : 'Ring-Definitions-Core',

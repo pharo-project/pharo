@@ -31,7 +31,7 @@ ReTrueFalseDuplicationRule class >> uniqueIdentifierName [
 ReTrueFalseDuplicationRule >> afterCheck: aNode mappings: mappingDict [
 
 	mappingDict
-		at: '`.LastStatement'
+		at: #'`.LastStatement'
 		ifPresent: [ :statement |
 			^ statement isVariable not ].
 

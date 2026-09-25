@@ -5,7 +5,7 @@ Class {
 	#name : 'DiffMapMorph',
 	#superclass : 'BorderedMorph',
 	#instVars : [
-		'mappings'
+		#mappings
 	],
 	#category : 'Tool-Diff-Morphs',
 	#package : 'Tool-Diff',

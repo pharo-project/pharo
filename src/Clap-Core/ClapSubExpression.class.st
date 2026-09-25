@@ -6,7 +6,7 @@ Class {
 	#name : 'ClapSubExpression',
 	#superclass : 'ClapExpression',
 	#instVars : [
-		'parent'
+		#parent
 	],
 	#category : 'Clap-Core-Activation',
 	#package : 'Clap-Core',

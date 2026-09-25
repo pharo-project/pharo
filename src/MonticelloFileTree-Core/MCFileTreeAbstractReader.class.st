@@ -5,8 +5,8 @@ Class {
 	#name : 'MCFileTreeAbstractReader',
 	#superclass : 'MCMczReader',
 	#instVars : [
-		'packageDirectory',
-		'packageProperties'
+		#packageDirectory,
+		#packageProperties
 	],
 	#category : 'MonticelloFileTree-Core',
 	#package : 'MonticelloFileTree-Core'
@@ -167,7 +167,7 @@ MCFileTreeAbstractReader >> monticelloMetaDirName [
 
 { #category : 'testing' }
 MCFileTreeAbstractReader >> noMethodMetaData [
-    ^ self packageProperties at: 'noMethodMetaData' ifAbsent: [ false ]
+    ^ self packageProperties at: #'noMethodMetaData' ifAbsent: [ false ]
 ]
 
 { #category : 'accessing' }
@@ -194,12 +194,12 @@ MCFileTreeAbstractReader >> packageProperties [
 							0.2 - no method metaData file"
                                     packageProperties := Dictionary new.
                                     structureVersion := jsonObject printShowingDecimalPlaces: 1.
-                                    packageProperties at: 'noMethodMetaData' put: structureVersion = '0.2'.
-                                    packageProperties at: 'separateMethodMetaAndSource' put: structureVersion = '0.1' ]
+                                    packageProperties at: #'noMethodMetaData' put: structureVersion = '0.2'.
+                                    packageProperties at: #'separateMethodMetaAndSource' put: structureVersion = '0.1' ]
                                 ifFalse: [ 
                                     packageProperties := jsonObject.
-                                    ((packageProperties at: 'noMethodMetaData' ifAbsent: [ false ])
-                                        and: [ packageProperties at: 'separateMethodMetaAndSource' ifAbsent: [ false ] ])
+                                    ((packageProperties at: #'noMethodMetaData' ifAbsent: [ false ])
+                                        and: [ packageProperties at: #'separateMethodMetaAndSource' ifAbsent: [ false ] ])
                                         ifTrue: [ self error: 'noMethodMetaData and separateMethodMetaAndSource cannot both be true' ] ] ]
                                 on: Error
                                 do: [ :ex | 
@@ -218,5 +218,5 @@ MCFileTreeAbstractReader >> parseMember: fileName [
 
 { #category : 'testing' }
 MCFileTreeAbstractReader >> separateMethodMetaAndSource [
-    ^ self packageProperties at: 'separateMethodMetaAndSource' ifAbsent: [ false ]
+    ^ self packageProperties at: #'separateMethodMetaAndSource' ifAbsent: [ false ]
 ]

@@ -2,9 +2,9 @@ Class {
 	#name : 'StMethodsSelectionPresenterMock',
 	#superclass : 'Object',
 	#instVars : [
-		'label',
-		'items',
-		'selecting'
+		#label,
+		#items,
+		#selecting
 	],
 	#category : 'Refactoring-UI-Tests-Mocks',
 	#package : 'Refactoring-UI-Tests',

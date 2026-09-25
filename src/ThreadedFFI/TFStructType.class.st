@@ -5,10 +5,10 @@ Class {
 	#name : 'TFStructType',
 	#superclass : 'TFAbstractType',
 	#instVars : [
-		'members',
-		'offsets',
-		'targetClass',
-		'byteSize'
+		#members,
+		#offsets,
+		#targetClass,
+		#byteSize
 	],
 	#category : 'ThreadedFFI-Types',
 	#package : 'ThreadedFFI',

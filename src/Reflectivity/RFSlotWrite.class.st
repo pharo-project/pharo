@@ -5,7 +5,7 @@ Class {
 	#name : 'RFSlotWrite',
 	#superclass : 'RFVariableWrite',
 	#instVars : [
-		'object'
+		#object
 	],
 	#category : 'Reflectivity-Operations',
 	#package : 'Reflectivity',

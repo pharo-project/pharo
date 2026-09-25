@@ -29,9 +29,9 @@ Class {
 	#name : 'ZnMessageBenchmark',
 	#superclass : 'Object',
 	#instVars : [
-		'message',
-		'representation',
-		'buffer'
+		#message,
+		#representation,
+		#buffer
 	],
 	#category : 'Zinc-Tests',
 	#package : 'Zinc-Tests'

@@ -5,8 +5,8 @@ Class {
 	#name : 'EpPluggableFilter',
 	#superclass : 'EpFilter',
 	#instVars : [
-		'condition',
-		'title'
+		#condition,
+		#title
 	],
 	#category : 'EpiceaBrowsers-Filters',
 	#package : 'EpiceaBrowsers',

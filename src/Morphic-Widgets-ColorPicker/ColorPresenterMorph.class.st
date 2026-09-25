@@ -5,13 +5,13 @@ Class {
 	#name : 'ColorPresenterMorph',
 	#superclass : 'ModelMorph',
 	#instVars : [
-		'contentMorph',
-		'labelMorph',
-		'solidLabelMorph',
-		'getColorSelector'
+		#contentMorph,
+		#labelMorph,
+		#solidLabelMorph,
+		#getColorSelector
 	],
 	#classVars : [
-		'HatchForm'
+		#HatchForm
 	],
 	#category : 'Morphic-Widgets-ColorPicker',
 	#package : 'Morphic-Widgets-ColorPicker'

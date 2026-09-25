@@ -5,12 +5,12 @@ Class {
 	#name : 'IconicButtonMorph',
 	#superclass : 'SimpleButtonMorph',
 	#instVars : [
-		'graphicalMorph',
-		'oldBorderStyle',
-		'mouseOverBorderStyle'
+		#graphicalMorph,
+		#oldBorderStyle,
+		#mouseOverBorderStyle
 	],
 	#classVars : [
-		'DefaultGraphics'
+		#DefaultGraphics
 	],
 	#category : 'Morphic-Widgets-Basic-Buttons',
 	#package : 'Morphic-Widgets-Basic',

@@ -16,7 +16,7 @@ Class {
 	#name : 'ClyPackageExtensionMethodsQuery',
 	#superclass : 'ClyMethodQuery',
 	#instVars : [
-		'package'
+		#package
 	],
 	#category : 'Calypso-SystemQueries-Queries',
 	#package : 'Calypso-SystemQueries',

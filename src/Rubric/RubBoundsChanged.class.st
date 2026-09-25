@@ -5,7 +5,7 @@ Class {
 	#name : 'RubBoundsChanged',
 	#superclass : 'RubMorphAnnouncement',
 	#instVars : [
-		'previousBounds'
+		#previousBounds
 	],
 	#category : 'Rubric-Editing-Announcements',
 	#package : 'Rubric',

@@ -22,7 +22,7 @@ Class {
 	#name : 'ClyPackageChange',
 	#superclass : 'Object',
 	#instVars : [
-		'affectedPackage'
+		#affectedPackage
 	],
 	#category : 'Calypso-SystemQueries-Domain',
 	#package : 'Calypso-SystemQueries',

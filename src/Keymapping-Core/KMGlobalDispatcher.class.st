@@ -5,7 +5,7 @@ Class {
 	#name : 'KMGlobalDispatcher',
 	#superclass : 'Object',
 	#instVars : [
-		'dispatcher'
+		#dispatcher
 	],
 	#category : 'Keymapping-Core-Dispatching',
 	#package : 'Keymapping-Core',

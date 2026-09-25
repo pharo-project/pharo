@@ -5,7 +5,7 @@ Class {
 	#name : 'KMLog',
 	#superclass : 'Object',
 	#classInstVars : [
-		'debug'
+		#debug
 	],
 	#category : 'Keymapping-Core-Debugging',
 	#package : 'Keymapping-Core',

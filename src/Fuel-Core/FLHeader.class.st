@@ -10,9 +10,9 @@ Class {
 	#traits : 'TFLConfigurable',
 	#classTraits : 'TFLConfigurable classTrait',
 	#instVars : [
-		'preMaterializationActions',
-		'additionalObjects',
-		'postMaterializationActions'
+		#preMaterializationActions,
+		#additionalObjects,
+		#postMaterializationActions
 	],
 	#category : 'Fuel-Core-Base',
 	#package : 'Fuel-Core',

@@ -14,7 +14,7 @@ Class {
 	#name : 'ClyMethodCodeEditorToolMorph',
 	#superclass : 'ClyMethodEditorToolMorph',
 	#instVars : [
-		'editingMethod'
+		#editingMethod
 	],
 	#category : 'Calypso-SystemTools-Core-Editors-Methods',
 	#package : 'Calypso-SystemTools-Core',

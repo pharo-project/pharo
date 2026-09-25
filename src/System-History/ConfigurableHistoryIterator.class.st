@@ -69,10 +69,10 @@ Class {
 	#name : 'ConfigurableHistoryIterator',
 	#superclass : 'Object',
 	#instVars : [
-		'undoStack',
-		'redoStack',
-		'undoAction',
-		'redoAction'
+		#undoStack,
+		#redoStack,
+		#undoAction,
+		#redoAction
 	],
 	#category : 'System-History-Iterators',
 	#package : 'System-History',

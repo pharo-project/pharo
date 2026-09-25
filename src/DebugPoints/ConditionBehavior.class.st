@@ -6,7 +6,7 @@ Class {
 	#name : 'ConditionBehavior',
 	#superclass : 'DebugPointCheckBehavior',
 	#instVars : [
-		'condition'
+		#condition
 	],
 	#category : 'DebugPoints-Behaviors',
 	#package : 'DebugPoints',

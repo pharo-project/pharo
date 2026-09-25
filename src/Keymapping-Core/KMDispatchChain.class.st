@@ -6,9 +6,9 @@ Class {
 	#name : 'KMDispatchChain',
 	#superclass : 'Object',
 	#instVars : [
-		'target',
-		'dispatcher',
-		'initialTarget'
+		#target,
+		#dispatcher,
+		#initialTarget
 	],
 	#category : 'Keymapping-Core-Dispatching',
 	#package : 'Keymapping-Core',

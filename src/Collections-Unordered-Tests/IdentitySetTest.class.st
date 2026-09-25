@@ -5,7 +5,7 @@ Class {
 	#name : 'IdentitySetTest',
 	#superclass : 'SetTest',
 	#instVars : [
-		'floatCollection'
+		#floatCollection
 	],
 	#category : 'Collections-Unordered-Tests-Sets',
 	#package : 'Collections-Unordered-Tests',

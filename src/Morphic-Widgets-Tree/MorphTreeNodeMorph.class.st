@@ -5,17 +5,17 @@ Class {
 	#name : 'MorphTreeNodeMorph',
 	#superclass : 'Morph',
 	#instVars : [
-		'parent',
-		'index',
-		'indentLevel',
-		'isExpanded',
-		'complexContents',
-		'firstChild',
-		'container',
-		'nextSibling',
-		'controls',
-		'lineColor',
-		'selected'
+		#parent,
+		#index,
+		#indentLevel,
+		#isExpanded,
+		#complexContents,
+		#firstChild,
+		#container,
+		#nextSibling,
+		#controls,
+		#lineColor,
+		#selected
 	],
 	#category : 'Morphic-Widgets-Tree',
 	#package : 'Morphic-Widgets-Tree'

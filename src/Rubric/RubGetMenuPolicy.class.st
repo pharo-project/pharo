@@ -5,7 +5,7 @@ Class {
 	#name : 'RubGetMenuPolicy',
 	#superclass : 'Object',
 	#instVars : [
-		'textArea'
+		#textArea
 	],
 	#category : 'Rubric-Editing-Core',
 	#package : 'Rubric',

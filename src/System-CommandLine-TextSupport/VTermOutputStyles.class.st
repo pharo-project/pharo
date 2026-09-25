@@ -5,13 +5,13 @@ Class {
 	#name : 'VTermOutputStyles',
 	#superclass : 'SharedPool',
 	#classVars : [
-		'Blink',
-		'Bold',
-		'InvisibleFont',
-		'ResetStyle',
-		'Reverse',
-		'Standout',
-		'Underline'
+		#Blink,
+		#Bold,
+		#InvisibleFont,
+		#ResetStyle,
+		#Reverse,
+		#Standout,
+		#Underline
 	],
 	#category : 'System-CommandLine-TextSupport',
 	#package : 'System-CommandLine-TextSupport'

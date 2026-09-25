@@ -5,9 +5,9 @@ Class {
 	#name : 'KMShortcutDeclaration',
 	#superclass : 'SettingDeclaration',
 	#instVars : [
-		'categoryName',
-		'declaration',
-		'shortcutName'
+		#categoryName,
+		#declaration,
+		#shortcutName
 	],
 	#category : 'Keymapping-Settings',
 	#package : 'Keymapping-Settings'

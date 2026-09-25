@@ -31,8 +31,8 @@ Class {
 	#name : 'FTTreeItem',
 	#superclass : 'Object',
 	#instVars : [
-		'dataSource',
-		'children'
+		#dataSource,
+		#children
 	],
 	#category : 'Morphic-Widgets-FastTable-Tree',
 	#package : 'Morphic-Widgets-FastTable',

@@ -12,7 +12,7 @@ Class {
 	#name : 'ClyShowGroupsInMethodBrowserCommand',
 	#superclass : 'ClyMethodGroupCommand',
 	#instVars : [
-		'browser'
+		#browser
 	],
 	#category : 'Calypso-SystemTools-QueryBrowser-Commands-Queries',
 	#package : 'Calypso-SystemTools-QueryBrowser',

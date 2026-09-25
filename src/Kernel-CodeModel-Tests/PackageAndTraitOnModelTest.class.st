@@ -5,12 +5,12 @@ Class {
 	#name : 'PackageAndTraitOnModelTest',
 	#superclass : 'PackageTestCase',
 	#instVars : [
-		'a1',
-		't1',
-		't2',
-		'xPackage',
-		'yPackage',
-		'zPackage'
+		#a1,
+		#t1,
+		#t2,
+		#xPackage,
+		#yPackage,
+		#zPackage
 	],
 	#category : 'Kernel-CodeModel-Tests-Packages',
 	#package : 'Kernel-CodeModel-Tests',

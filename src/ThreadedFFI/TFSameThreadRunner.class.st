@@ -6,7 +6,7 @@ Class {
 	#name : 'TFSameThreadRunner',
 	#superclass : 'TFRunner',
 	#classInstVars : [
-		'uniqueInstance'
+		#uniqueInstance
 	],
 	#category : 'ThreadedFFI-Worker',
 	#package : 'ThreadedFFI',

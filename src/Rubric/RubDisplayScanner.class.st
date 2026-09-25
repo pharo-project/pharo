@@ -2,14 +2,14 @@ Class {
 	#name : 'RubDisplayScanner',
 	#superclass : 'RubCharacterScanner',
 	#instVars : [
-		'bitBlt',
-		'lineY',
-		'runX',
-		'foregroundColor',
-		'lineHeight',
-		'morphicOffset',
-		'defaultTextColor',
-		'scale'
+		#bitBlt,
+		#lineY,
+		#runX,
+		#foregroundColor,
+		#lineHeight,
+		#morphicOffset,
+		#defaultTextColor,
+		#scale
 	],
 	#category : 'Rubric-TextScanning',
 	#package : 'Rubric',

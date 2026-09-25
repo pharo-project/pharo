@@ -9,10 +9,10 @@ Class {
 	#name : 'RBSmalllintChecker',
 	#superclass : 'Object',
 	#instVars : [
-		'rule',
-		'environment',
-		'context',
-		'methodBlock'
+		#rule,
+		#environment,
+		#context,
+		#methodBlock
 	],
 	#category : 'Refactoring-Critics',
 	#package : 'Refactoring-Critics'

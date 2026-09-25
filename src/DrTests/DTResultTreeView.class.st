@@ -5,8 +5,8 @@ Class {
 	#name : 'DTResultTreeView',
 	#superclass : 'Object',
 	#instVars : [
-		'name',
-		'blockToExtractViewFromResult'
+		#name,
+		#blockToExtractViewFromResult
 	],
 	#category : 'DrTests-Model',
 	#package : 'DrTests',

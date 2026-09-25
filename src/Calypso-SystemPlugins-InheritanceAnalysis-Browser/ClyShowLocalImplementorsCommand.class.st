@@ -20,7 +20,7 @@ Class {
 	#name : 'ClyShowLocalImplementorsCommand',
 	#superclass : 'SycMethodCommand',
 	#instVars : [
-		'browser'
+		#browser
 	],
 	#category : 'Calypso-SystemPlugins-InheritanceAnalysis-Browser',
 	#package : 'Calypso-SystemPlugins-InheritanceAnalysis-Browser'

@@ -2,7 +2,7 @@ Class {
 	#name : 'OCDoitTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'ivarForTesting'
+		#ivarForTesting
 	],
 	#category : 'OpalCompiler-Tests-Misc',
 	#package : 'OpalCompiler-Tests',

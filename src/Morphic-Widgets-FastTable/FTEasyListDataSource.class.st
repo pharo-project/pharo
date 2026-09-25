@@ -6,9 +6,9 @@ Class {
 	#name : 'FTEasyListDataSource',
 	#superclass : 'FTSimpleDataSource',
 	#instVars : [
-		'displayBlock',
-		'iconBlock',
-		'menuBlock'
+		#displayBlock,
+		#iconBlock,
+		#menuBlock
 	],
 	#category : 'Morphic-Widgets-FastTable-Easy',
 	#package : 'Morphic-Widgets-FastTable',

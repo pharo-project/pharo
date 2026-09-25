@@ -6,8 +6,8 @@ Class {
 	#name : 'EDMockDisplayInterface',
 	#superclass : 'Object',
 	#instVars : [
-		'clear',
-		'displayData'
+		#clear,
+		#displayData
 	],
 	#category : 'EmergencyDebugger-Tests',
 	#package : 'EmergencyDebugger-Tests'

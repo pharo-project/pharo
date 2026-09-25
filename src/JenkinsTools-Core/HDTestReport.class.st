@@ -5,21 +5,21 @@ Class {
 	#name : 'HDTestReport',
 	#superclass : 'HDReport',
 	#instVars : [
-		'suite',
-		'stream',
-		'suitePosition',
-		'suiteTime',
-		'suiteFailures',
-		'suiteErrors',
-		'nodeName',
-		'stageName',
-		'progressFileName',
-		'progressStream',
-		'shouldSerializeError'
+		#suite,
+		#stream,
+		#suitePosition,
+		#suiteTime,
+		#suiteFailures,
+		#suiteErrors,
+		#nodeName,
+		#stageName,
+		#progressFileName,
+		#progressStream,
+		#shouldSerializeError
 	],
 	#classVars : [
-		'CurrentStageName',
-		'ShuffleSeed'
+		#CurrentStageName,
+		#ShuffleSeed
 	],
 	#category : 'JenkinsTools-Core',
 	#package : 'JenkinsTools-Core'
@@ -107,7 +107,7 @@ HDTestReport >> calculateNodeName [
 	environmentClass := Smalltalk at: #OSEnvironment ifAbsent: [ ^ name ].
 
 	^ environmentClass current
-		at: 'JENKINS_HOME'
+		at: #'JENKINS_HOME'
 		ifPresent: [ :value | name ]
 		ifAbsent: [ '' ]
 ]

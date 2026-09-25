@@ -2,7 +2,7 @@ Class {
 	#name : 'SycRenameVariableCommand2',
 	#superclass : 'CmdCommand',
 	#instVars : [
-		'toolContext'
+		#toolContext
 	],
 	#category : 'SystemCommands-VariableCommands',
 	#package : 'SystemCommands-VariableCommands'

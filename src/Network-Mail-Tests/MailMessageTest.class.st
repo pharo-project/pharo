@@ -107,18 +107,18 @@ MailMessageTest >> testMultiPartAlternative [
 			yourself.
 
 	self
-		assert: ((m fields at: 'content-type') at: 1) mainValue asLowercase equals: 'multipart/alternative';
+		assert: ((m fields at: #'content-type') at: 1) mainValue asLowercase equals: 'multipart/alternative';
 		assert: m parts size equals: 2.
 
 	part1 := m parts at: 1.
 	part2 := m parts at: 2.
 
 	self
-		assert: ((part1 fields at: 'content-type') at: 1) mainValue asLowercase equals: 'text/plain';
+		assert: ((part1 fields at: #'content-type') at: 1) mainValue asLowercase equals: 'text/plain';
 		assert: part1 body content equals: txt.
 
 	self
-		assert: ((part2 fields at: 'content-type') at: 1) mainValue asLowercase equals: 'text/html';
+		assert: ((part2 fields at: #'content-type') at: 1) mainValue asLowercase equals: 'text/html';
 		assert: part2 body content equals: html
 ]
 
@@ -135,18 +135,18 @@ MailMessageTest >> testMultiPartMixed [
 			yourself.
 
 	self
-		assert: ((m fields at: 'content-type') at: 1) mainValue asLowercase equals: 'multipart/mixed';
+		assert: ((m fields at: #'content-type') at: 1) mainValue asLowercase equals: 'multipart/mixed';
 		assert: m parts size equals: 2.
 
 	part1 := m parts at: 1.
 	part2 := m parts at: 2.
 
 	self
-		assert: ((part1 fields at: 'content-type') at: 1) mainValue asLowercase equals: 'text/plain';
+		assert: ((part1 fields at: #'content-type') at: 1) mainValue asLowercase equals: 'text/plain';
 		assert: part1 body content equals: txt.
 
 	self
-		assert: ((part2 fields at: 'content-type') at: 1) mainValue asLowercase equals: 'text/html';
+		assert: ((part2 fields at: #'content-type') at: 1) mainValue asLowercase equals: 'text/html';
 		assert: part2 body content equals: html
 ]
 

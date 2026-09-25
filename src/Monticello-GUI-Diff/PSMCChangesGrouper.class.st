@@ -5,11 +5,11 @@ Class {
 	#name : 'PSMCChangesGrouper',
 	#superclass : 'Object',
 	#instVars : [
-		'nonClassChanges',
-		'classes',
-		'model',
-		'currentOperation',
-		'classChanges'
+		#nonClassChanges,
+		#classes,
+		#model,
+		#currentOperation,
+		#classChanges
 	],
 	#category : 'Monticello-GUI-Diff',
 	#package : 'Monticello-GUI-Diff'

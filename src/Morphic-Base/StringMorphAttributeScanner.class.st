@@ -6,13 +6,13 @@ Class {
 	#name : 'StringMorphAttributeScanner',
 	#superclass : 'Object',
 	#instVars : [
-		'fontNumber',
-		'textColor',
-		'emphasis',
-		'alignment',
-		'actualFont',
-		'indent',
-		'kern'
+		#fontNumber,
+		#textColor,
+		#emphasis,
+		#alignment,
+		#actualFont,
+		#indent,
+		#kern
 	],
 	#category : 'Morphic-Base-Text Support',
 	#package : 'Morphic-Base',

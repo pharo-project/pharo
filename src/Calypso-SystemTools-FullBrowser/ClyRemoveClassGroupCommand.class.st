@@ -10,7 +10,7 @@ Class {
 	#name : 'ClyRemoveClassGroupCommand',
 	#superclass : 'CmdCommand',
 	#instVars : [
-		'classGroup'
+		#classGroup
 	],
 	#category : 'Calypso-SystemTools-FullBrowser-Commands-Class groups',
 	#package : 'Calypso-SystemTools-FullBrowser',

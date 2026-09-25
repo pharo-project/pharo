@@ -5,7 +5,7 @@ Class {
 	#name : 'DynamicMessageImplementorTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'instVar'
+		#instVar
 	],
 	#category : 'Debugger-Model-Tests-Core',
 	#package : 'Debugger-Model-Tests',

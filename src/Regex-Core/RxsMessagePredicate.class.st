@@ -10,8 +10,8 @@ Class {
 	#name : 'RxsMessagePredicate',
 	#superclass : 'RxsNode',
 	#instVars : [
-		'selector',
-		'negated'
+		#selector,
+		#negated
 	],
 	#category : 'Regex-Core-Nodes',
 	#package : 'Regex-Core',

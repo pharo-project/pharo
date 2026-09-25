@@ -6,7 +6,7 @@ Class {
 	#name : 'TKTWorkerExecutor',
 	#superclass : 'Object',
 	#instVars : [
-		'processToKill'
+		#processToKill
 	],
 	#category : 'TaskIt-Worker',
 	#package : 'TaskIt',

@@ -5,7 +5,7 @@ Class {
 	#name : 'MarginBorderStyle',
 	#superclass : 'SimpleBorderStyle',
 	#instVars : [
-		'margin'
+		#margin
 	],
 	#category : 'Morphic-Base-Borders',
 	#package : 'Morphic-Base',

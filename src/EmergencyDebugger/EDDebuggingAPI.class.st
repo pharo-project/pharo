@@ -6,10 +6,10 @@ Class {
 	#name : 'EDDebuggingAPI',
 	#superclass : 'Object',
 	#instVars : [
-		'session',
-		'debugger',
-		'changesForMethods',
-		'longStack'
+		#session,
+		#debugger,
+		#changesForMethods,
+		#longStack
 	],
 	#category : 'EmergencyDebugger-Core',
 	#package : 'EmergencyDebugger',

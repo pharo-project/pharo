@@ -5,7 +5,7 @@ Class {
 	#name : 'QuestionDialogWindow',
 	#superclass : 'ProceedDialogWindow',
 	#instVars : [
-		'answer'
+		#answer
 	],
 	#category : 'Polymorph-Widgets-Windows',
 	#package : 'Polymorph-Widgets',

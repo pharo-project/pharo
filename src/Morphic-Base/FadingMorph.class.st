@@ -17,9 +17,9 @@ Class {
 	#name : 'FadingMorph',
 	#superclass : 'BorderedMorph',
 	#instVars : [
-		'alpha',
-		'fadingFactor',
-		'resetable'
+		#alpha,
+		#fadingFactor,
+		#resetable
 	],
 	#category : 'Morphic-Base-Basic',
 	#package : 'Morphic-Base',

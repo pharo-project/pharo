@@ -5,7 +5,7 @@ Class {
 	#name : 'MCFileTreeFileUtils',
 	#superclass : 'Object',
 	#classVars : [
-		'Current'
+		#Current
 	],
 	#category : 'MonticelloFileTree-Core',
 	#package : 'MonticelloFileTree-Core'

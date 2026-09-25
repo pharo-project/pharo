@@ -7,12 +7,12 @@ Class {
 	#traits : 'TFLConfigurable',
 	#classTraits : 'TFLConfigurable classTrait',
 	#instVars : [
-		'stream',
-		'objectsIndexes',
-		'objectCount',
-		'indexStream',
-		'globalEnvironment',
-		'substitutionIndexes'
+		#stream,
+		#objectsIndexes,
+		#objectCount,
+		#indexStream,
+		#globalEnvironment,
+		#substitutionIndexes
 	],
 	#category : 'Fuel-Core-Base',
 	#package : 'Fuel-Core',

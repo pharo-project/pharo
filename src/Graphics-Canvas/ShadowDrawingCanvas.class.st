@@ -5,7 +5,7 @@ Class {
 	#name : 'ShadowDrawingCanvas',
 	#superclass : 'ColorMappingCanvas',
 	#instVars : [
-		'shadowColor'
+		#shadowColor
 	],
 	#category : 'Graphics-Canvas-Canvases',
 	#package : 'Graphics-Canvas',

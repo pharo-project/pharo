@@ -17,8 +17,8 @@ Class {
 	#name : 'TabBuildingIconMorph',
 	#superclass : 'Morph',
 	#instVars : [
-		'progressIconMorph',
-		'progress'
+		#progressIconMorph,
+		#progress
 	],
 	#category : 'Morphic-Widgets-Tabs-Morphs',
 	#package : 'Morphic-Widgets-Tabs',

@@ -5,8 +5,8 @@ Class {
 	#name : 'ScalingCanvasSavedPatch',
 	#superclass : 'Object',
 	#instVars : [
-		'form',
-		'scale'
+		#form,
+		#scale
 	],
 	#category : 'Morphic-Core-Kernel',
 	#package : 'Morphic-Core',

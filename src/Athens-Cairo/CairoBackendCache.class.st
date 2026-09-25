@@ -11,14 +11,14 @@ Class {
 	#name : 'CairoBackendCache',
 	#superclass : 'Object',
 	#instVars : [
-		'cache'
+		#cache
 	],
 	#pools : [
-		'AthensCairoDefinitions'
+		#AthensCairoDefinitions
 	],
 	#classInstVars : [
-		'soleInstance',
-		'session'
+		#soleInstance,
+		#session
 	],
 	#category : 'Athens-Cairo-Caching',
 	#package : 'Athens-Cairo',

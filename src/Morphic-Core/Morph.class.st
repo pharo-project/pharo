@@ -26,24 +26,24 @@ Class {
 	#name : 'Morph',
 	#superclass : 'Object',
 	#instVars : [
-		'bounds',
-		'owner',
-		'submorphs',
-		'fullBounds',
-		'color',
-		'extension'
+		#bounds,
+		#owner,
+		#submorphs,
+		#fullBounds,
+		#color,
+		#extension
 	],
 	#classVars : [
-		'CmdGesturesEnabled',
-		'CycleHalosBothDirections',
-		'DefaultYellowButtonMenuEnabled',
-		'EmptyArray',
-		'EventDispatcher',
-		'HalosEnabled',
-		'ShortcutsHandler'
+		#CmdGesturesEnabled,
+		#CycleHalosBothDirections,
+		#DefaultYellowButtonMenuEnabled,
+		#EmptyArray,
+		#EventDispatcher,
+		#HalosEnabled,
+		#ShortcutsHandler
 	],
 	#classInstVars : [
-		'announcer'
+		#announcer
 	],
 	#category : 'Morphic-Core-Kernel',
 	#package : 'Morphic-Core',

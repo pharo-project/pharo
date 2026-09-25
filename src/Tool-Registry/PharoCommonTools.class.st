@@ -6,7 +6,7 @@ Class {
 	#name : 'PharoCommonTools',
 	#superclass : 'ToolRegistry',
 	#instVars : [
-		'recentTools'
+		#recentTools
 	],
 	#category : 'Tool-Registry',
 	#package : 'Tool-Registry'

@@ -10,10 +10,10 @@ Class {
 	#name : 'MailMessage',
 	#superclass : 'Object',
 	#instVars : [
-		'text',
-		'body',
-		'fields',
-		'parts'
+		#text,
+		#body,
+		#fields,
+		#parts
 	],
 	#category : 'Network-Mail',
 	#package : 'Network-Mail'
@@ -98,33 +98,33 @@ MailMessage class >> omittedHeaderFields [
 	and it is impossible to predict them in advance."
 
 	^ #(
-			'comments'
-			'priority'
+			comments
+			priority
 			'disposition-notification-to'
 			'content-id'
-			'received'
+			received
 			'return-path'
-			'newsgroups'
+			newsgroups
 			'message-id'
-			'path'
+			path
 			'in-reply-to'
-			'sender'
-			'fonts'
+			sender
+			fonts
 			'mime-version'
-			'status'
+			status
 			'content-type'
 			'content-transfer-encoding'
 			'errors-to'
-			'keywords'
-			'references'
+			keywords
+			references
 			'nntp-posting-host'
-			'lines'
+			lines
 			'return-receipt-to'
-			'precedence'
-			'originator'
-			'distribution'
+			precedence
+			originator
+			distribution
 			'content-disposition'
-			'importance'
+			importance
 			'resent-to'
 			'resent-cc'
 			'resent-message-id'
@@ -269,7 +269,7 @@ MailMessage >> atomicParts [
 { #category : 'multipart' }
 MailMessage >> attachmentSeparator [
 	^(self fieldNamed: 'content-type' ifAbsent: [^nil]) parameters
-		at: 'boundary' ifAbsent: [^nil]
+		at: #'boundary' ifAbsent: [^nil]
 ]
 
 { #category : 'accessing' }
@@ -611,12 +611,12 @@ MailMessage >> name [
 
 	"try in the content-type: header"
 	type := self fieldNamed: 'content-type' ifAbsent: [nil].
-	(type isNotNil and: [(nameField := type parameters at: 'name' ifAbsent: [nil]) isNotNil])
+	(type isNotNil and: [(nameField := type parameters at: #'name' ifAbsent: [nil]) isNotNil])
 		ifTrue: [^ nameField].
 
 	"try in content-disposition:"
 	disposition := self fieldNamed: 'content-disposition' ifAbsent: [nil].
-	(disposition isNotNil and: [(nameField := disposition parameters at: 'filename' ifAbsent: [nil]) isNotNil])
+	(disposition isNotNil and: [(nameField := disposition parameters at: #'filename' ifAbsent: [nil]) isNotNil])
 		ifTrue: [^ nameField].
 
 	"give up"

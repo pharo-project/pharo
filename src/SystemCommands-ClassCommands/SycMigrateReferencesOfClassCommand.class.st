@@ -10,7 +10,7 @@ Class {
 	#name : 'SycMigrateReferencesOfClassCommand',
 	#superclass : 'SycSingleClassCommand',
 	#instVars : [
-		'newName'
+		#newName
 	],
 	#category : 'SystemCommands-ClassCommands',
 	#package : 'SystemCommands-ClassCommands'

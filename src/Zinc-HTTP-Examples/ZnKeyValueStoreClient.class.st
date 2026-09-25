@@ -19,7 +19,7 @@ Class {
 	#name : 'ZnKeyValueStoreClient',
 	#superclass : 'Object',
 	#instVars : [
-		'httpClient'
+		#httpClient
 	],
 	#category : 'Zinc-HTTP-Examples',
 	#package : 'Zinc-HTTP-Examples'

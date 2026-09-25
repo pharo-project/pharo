@@ -5,9 +5,9 @@ Class {
 	#name : 'AbstractResizerMorph',
 	#superclass : 'Morph',
 	#instVars : [
-		'dotColor',
-		'handleColor',
-		'lastMouse'
+		#dotColor,
+		#handleColor,
+		#lastMouse
 	],
 	#category : 'Morphic-Widgets-Windows-Resizing',
 	#package : 'Morphic-Widgets-Windows',

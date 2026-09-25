@@ -2,8 +2,8 @@ Class {
 	#name : 'RBRemoveParameterTransformation',
 	#superclass : 'RBChangeMethodNameTransformation',
 	#instVars : [
-		'parameterIndex',
-		'argument'
+		#parameterIndex,
+		#argument
 	],
 	#category : 'Refactoring-Transformations-Model-Unused',
 	#package : 'Refactoring-Transformations',

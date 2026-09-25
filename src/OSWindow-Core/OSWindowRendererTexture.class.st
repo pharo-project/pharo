@@ -7,8 +7,8 @@ Class {
 	#name : 'OSWindowRendererTexture',
 	#superclass : 'Object',
 	#instVars : [
-		'modificationCount',
-		'userData'
+		#modificationCount,
+		#userData
 	],
 	#category : 'OSWindow-Core-Renderer',
 	#package : 'OSWindow-Core',

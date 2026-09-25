@@ -101,7 +101,7 @@ TraitTest >> testClassHavingAnInstanceVariableUsersDifferenThanUsers [
 	aClass := self newClass: #C1 superclass: Object traits: {  }.
 	aClass class setTraitComposition: { t1 }.
 
-	self assert: (aClass class allSlots anySatisfy: [ :e | e name = #users ]).
+	self assert: (aClass class allSlots anySatisfy: [ :e | e name sameContents: #users ]).
 	self assert: (aClass class slotNamed: #users) definingClass equals: t1
 ]
 
@@ -173,7 +173,7 @@ TraitTest >> testClassUsingTraitsDoesNotHaveUsers [
 
 	aClass := self newClass: #C1 superclass: Object traits: {t1}.
 
-	self assert: (aClass class allSlots noneSatisfy: [:e | e name = #users])
+	self assert: (aClass class allSlots noneSatisfy: [:e | e name sameContents: #users])
 ]
 
 { #category : 'tests' }
@@ -770,7 +770,7 @@ TraitTest >> testTraitHaveUsersInstanceVariable [
 
 	aClass := self newClass: #C1 superclass: Object traits: {t1}.
 
-	self assert: (aClass allSlots anySatisfy: [:e | e name = #users]).
+	self assert: (aClass allSlots anySatisfy: [:e | e name sameContents: #users]).
 	self assert: (aClass slotNamed: #users) definingClass equals: t1
 ]
 

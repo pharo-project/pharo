@@ -5,12 +5,12 @@ Class {
 	#name : 'BalloonFillData',
 	#superclass : 'Object',
 	#instVars : [
-		'index',
-		'minX',
-		'maxX',
-		'yValue',
-		'source',
-		'destForm'
+		#index,
+		#minX,
+		#maxX,
+		#yValue,
+		#source,
+		#destForm
 	],
 	#category : 'FormCanvas-Core-BalloonEngine',
 	#package : 'FormCanvas-Core',

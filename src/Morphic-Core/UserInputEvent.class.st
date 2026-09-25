@@ -5,17 +5,17 @@ Class {
 	#name : 'UserInputEvent',
 	#superclass : 'MorphicEvent',
 	#instVars : [
-		'type',
-		'buttons',
-		'position',
-		'handler',
-		'wasHandled'
+		#type,
+		#buttons,
+		#position,
+		#handler,
+		#wasHandled
 	],
 	#classVars : [
-		'ALT_KEY_MASK',
-		'CMD_KEY_MASK',
-		'CTRL_KEY_MASK',
-		'SHIFT_KEY_MASK'
+		#ALT_KEY_MASK,
+		#CMD_KEY_MASK,
+		#CTRL_KEY_MASK,
+		#SHIFT_KEY_MASK
 	],
 	#category : 'Morphic-Core-Events',
 	#package : 'Morphic-Core',

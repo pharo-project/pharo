@@ -8,7 +8,7 @@ Class {
 	#name : 'ReProperMethodProtocolNameRule',
 	#superclass : 'ReAbstractRule',
 	#instVars : [
-		'methodProtocolName'
+		#methodProtocolName
 	],
 	#category : 'Renraku-Rules',
 	#package : 'Renraku',
@@ -25,7 +25,7 @@ ReProperMethodProtocolNameRule class >> badMethodProtocolNames [
 ReProperMethodProtocolNameRule class >> checksMethod [
 	"This one is abstract but subclasses should run as rules"
 
-	^ self name ~= #ReProperMethodProtocolNameRule
+	^ (self name sameContents: #ReProperMethodProtocolNameRule) not
 ]
 
 { #category : 'private - accessing' }

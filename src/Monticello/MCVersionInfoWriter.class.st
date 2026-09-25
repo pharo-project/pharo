@@ -7,7 +7,7 @@ Class {
 	#name : 'MCVersionInfoWriter',
 	#superclass : 'MCWriter',
 	#instVars : [
-		'written'
+		#written
 	],
 	#category : 'Monticello-Storing',
 	#package : 'Monticello',
@@ -26,7 +26,7 @@ MCVersionInfoWriter >> writeVersionInfo: aVersionInfo [
 	stream nextPut: $(.
 	#(name message id date time author) do: [:sel | | toWrite |
 		toWrite := (aVersionInfo perform: sel) ifNil: [''].
-		sel = #date
+		(sel sameContents: #date)
 			ifTrue: [ toWrite := toWrite yyyymmdd ].
 		stream 
 			nextPutAll: sel; space;

@@ -11,7 +11,7 @@ Class {
 	#name : 'ClyMethodExtensionSwitchMorph',
 	#superclass : 'ClyStatusBarItemMorph',
 	#instVars : [
-		'checkbox'
+		#checkbox
 	],
 	#category : 'Calypso-SystemTools-Core-Editors-Methods',
 	#package : 'Calypso-SystemTools-Core',

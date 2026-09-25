@@ -22,7 +22,7 @@ Class {
 	#name : 'ClyClassChange',
 	#superclass : 'Object',
 	#instVars : [
-		'affectedClass'
+		#affectedClass
 	],
 	#category : 'Calypso-SystemQueries-Domain',
 	#package : 'Calypso-SystemQueries',

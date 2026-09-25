@@ -18,7 +18,7 @@ ReFloatEqualityComparisonRule class >> uniqueIdentifierName [
 
 { #category : 'hooks' }
 ReFloatEqualityComparisonRule >> afterCheck: aNode mappings: mappingDict [
-	^ (mappingDict at: '`#floatLiteral') value isFloat
+	^ (mappingDict at: #'`#floatLiteral') value isFloat
 ]
 
 { #category : 'accessing' }

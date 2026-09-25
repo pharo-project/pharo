@@ -17,8 +17,8 @@ It is the preferred debugger opening entry point used by the system to open a de
 Trait {
 	#name : 'TDebugger',
 	#classInstVars : [
-		'rank',
-		'availableAutomatically'
+		#rank,
+		#availableAutomatically
 	],
 	#category : 'Debugger-Model-Core',
 	#package : 'Debugger-Model',

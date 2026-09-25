@@ -5,8 +5,8 @@ Class {
 	#name : 'TextTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'text',
-		'string'
+		#text,
+		#string
 	],
 	#category : 'Text-Tests-Base',
 	#package : 'Text-Tests',

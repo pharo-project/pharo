@@ -5,8 +5,8 @@ Class {
 	#name : 'ParametrizedTestOption',
 	#superclass : 'Object',
 	#instVars : [
-		'selector',
-		'values'
+		#selector,
+		#values
 	],
 	#category : 'SUnit-Core-Parametrized',
 	#package : 'SUnit-Core',

@@ -5,12 +5,12 @@ Class {
 	#name : 'TKTWatchDog',
 	#superclass : 'TKTService',
 	#instVars : [
-		'values',
-		'id',
-		'started'
+		#values,
+		#id,
+		#started
 	],
 	#classInstVars : [
-		'onDuty'
+		#onDuty
 	],
 	#category : 'TaskIt-Worker',
 	#package : 'TaskIt',

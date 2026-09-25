@@ -11,11 +11,11 @@ Class {
 	#name : 'RBVariableEnvironment',
 	#superclass : 'RBBrowserEnvironmentWrapper',
 	#instVars : [
-		'instanceVariables',
-		'instanceVariableReaders',
-		'instanceVariableWriters',
-		'classVariables',
-		'selectorCache'
+		#instanceVariables,
+		#instanceVariableReaders,
+		#instanceVariableWriters,
+		#classVariables,
+		#selectorCache
 	],
 	#category : 'Refactoring-Environment',
 	#package : 'Refactoring-Environment'

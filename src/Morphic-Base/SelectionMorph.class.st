@@ -17,13 +17,13 @@ Class {
 	#name : 'SelectionMorph',
 	#superclass : 'BorderedMorph',
 	#instVars : [
-		'selectedItems',
-		'slippage',
-		'dupLoc',
-		'dupDelta',
-		'itemsAlreadySelected',
-		'otherSelection',
-		'undoProperties'
+		#selectedItems,
+		#slippage,
+		#dupLoc,
+		#dupDelta,
+		#itemsAlreadySelected,
+		#otherSelection,
+		#undoProperties
 	],
 	#category : 'Morphic-Base-Basic',
 	#package : 'Morphic-Base',

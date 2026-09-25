@@ -8,7 +8,7 @@ Class {
 	#name : 'TFIntType',
 	#superclass : 'TFBasicType',
 	#instVars : [
-		'signed'
+		#signed
 	],
 	#category : 'ThreadedFFI-Types',
 	#package : 'ThreadedFFI',

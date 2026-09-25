@@ -29,21 +29,21 @@ Class {
 	#name : 'OpalCompiler',
 	#superclass : 'Object',
 	#instVars : [
-		'ast',
-		'source',
-		'compilationContext',
-		'compilationContextClass',
-		'permitFaulty',
-		'permitUndeclared',
-		'failBlock',
-		'logged',
-		'changeStamp',
-		'protocol',
-		'requestor',
-		'priorMethod'
+		#ast,
+		#source,
+		#compilationContext,
+		#compilationContextClass,
+		#permitFaulty,
+		#permitUndeclared,
+		#failBlock,
+		#logged,
+		#changeStamp,
+		#protocol,
+		#requestor,
+		#priorMethod
 	],
 	#classInstVars : [
-		'overlayEnvironment'
+		#overlayEnvironment
 	],
 	#category : 'OpalCompiler-Core-FrontEnd',
 	#package : 'OpalCompiler-Core',

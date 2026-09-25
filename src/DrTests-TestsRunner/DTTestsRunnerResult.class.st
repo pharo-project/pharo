@@ -10,7 +10,7 @@ Class {
 	#name : 'DTTestsRunnerResult',
 	#superclass : 'DTPluginResult',
 	#instVars : [
-		'testsResult'
+		#testsResult
 	],
 	#category : 'DrTests-TestsRunner-Base',
 	#package : 'DrTests-TestsRunner',

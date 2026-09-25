@@ -7,9 +7,9 @@ Class {
 	#name : 'ClapMatchesTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'clap',
-		'dirFlag',
-		'slowFlag'
+		#clap,
+		#dirFlag,
+		#slowFlag
 	],
 	#category : 'Clap-Tests-Integration',
 	#package : 'Clap-Tests',

@@ -12,7 +12,7 @@ Class {
 	#traits : 'TRefactoringCommandSupport',
 	#classTraits : 'TRefactoringCommandSupport classTrait',
 	#instVars : [
-		'classes'
+		#classes
 	],
 	#category : 'SystemCommands-ClassCommands',
 	#package : 'SystemCommands-ClassCommands'

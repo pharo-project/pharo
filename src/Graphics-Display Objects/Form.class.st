@@ -16,14 +16,14 @@ Class {
 	#name : 'Form',
 	#superclass : 'DisplayMedium',
 	#instVars : [
-		'bits',
-		'width',
-		'height',
-		'depth',
-		'offset'
+		#bits,
+		#width,
+		#height,
+		#depth,
+		#offset
 	],
 	#classVars : [
-		'FloodFillTolerance'
+		#FloodFillTolerance
 	],
 	#category : 'Graphics-Display Objects-Forms',
 	#package : 'Graphics-Display Objects',

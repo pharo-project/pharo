@@ -5,7 +5,7 @@ Class {
 	#name : 'EmptyLayout',
 	#superclass : 'AbstractLayout',
 	#classInstVars : [
-		'instance'
+		#instance
 	],
 	#category : 'Kernel-CodeModel-Layout',
 	#package : 'Kernel-CodeModel',

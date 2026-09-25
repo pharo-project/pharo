@@ -5,8 +5,8 @@ Class {
 	#name : 'ClyCriticalTextSegmentMorph',
 	#superclass : 'RubTextSegmentMorph',
 	#instVars : [
-		'entity',
-		'critique'
+		#entity,
+		#critique
 	],
 	#category : 'Calypso-SystemPlugins-Critic-Browser',
 	#package : 'Calypso-SystemPlugins-Critic-Browser'

@@ -10,7 +10,7 @@ Class {
 	#name : 'RubPluggableTextMorph',
 	#superclass : 'RubScrolledTextMorph',
 	#instVars : [
-		'getEnabledSelector'
+		#getEnabledSelector
 	],
 	#category : 'Rubric-Compatibility-toBeDeprecated',
 	#package : 'Rubric',

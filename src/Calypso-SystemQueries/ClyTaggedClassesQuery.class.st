@@ -15,7 +15,7 @@ Class {
 	#name : 'ClyTaggedClassesQuery',
 	#superclass : 'ClyClassQuery',
 	#instVars : [
-		'tag'
+		#tag
 	],
 	#category : 'Calypso-SystemQueries-Queries',
 	#package : 'Calypso-SystemQueries',

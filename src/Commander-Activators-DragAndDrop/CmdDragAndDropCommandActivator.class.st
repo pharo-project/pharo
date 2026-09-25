@@ -25,7 +25,7 @@ Class {
 	#name : 'CmdDragAndDropCommandActivator',
 	#superclass : 'CmdCommandActivator',
 	#instVars : [
-		'dropContext'
+		#dropContext
 	],
 	#category : 'Commander-Activators-DragAndDrop',
 	#package : 'Commander-Activators-DragAndDrop'

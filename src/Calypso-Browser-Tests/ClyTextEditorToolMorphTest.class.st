@@ -5,7 +5,7 @@ Class {
 	#name : 'ClyTextEditorToolMorphTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'tool'
+		#tool
 	],
 	#category : 'Calypso-Browser-Tests',
 	#package : 'Calypso-Browser-Tests'

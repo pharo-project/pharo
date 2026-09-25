@@ -7,13 +7,13 @@ Class {
 	#name : 'ClapParameter',
 	#superclass : 'Object',
 	#instVars : [
-		'identifier',
-		'canonicalName',
-		'description',
-		'multiple',
-		'meaningBlock',
-		'validationBlock',
-		'implicitMeaningBlock'
+		#identifier,
+		#canonicalName,
+		#description,
+		#multiple,
+		#meaningBlock,
+		#validationBlock,
+		#implicitMeaningBlock
 	],
 	#category : 'Clap-Core-Specification',
 	#package : 'Clap-Core',

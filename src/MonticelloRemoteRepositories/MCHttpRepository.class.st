@@ -6,10 +6,10 @@ Class {
 	#name : 'MCHttpRepository',
 	#superclass : 'MCRemoteFileBasedRepository',
 	#instVars : [
-		'location',
-		'user',
-		'password',
-		'readerCache'
+		#location,
+		#user,
+		#password,
+		#readerCache
 	],
 	#category : 'MonticelloRemoteRepositories',
 	#package : 'MonticelloRemoteRepositories'

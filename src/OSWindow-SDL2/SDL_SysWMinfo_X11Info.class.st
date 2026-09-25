@@ -5,8 +5,8 @@ Class {
 	#name : 'SDL_SysWMinfo_X11Info',
 	#superclass : 'SDL2Structure',
 	#classVars : [
-		'OFFSET_DISPLAY',
-		'OFFSET_WINDOW'
+		#OFFSET_DISPLAY,
+		#OFFSET_WINDOW
 	],
 	#category : 'OSWindow-SDL2-Bindings',
 	#package : 'OSWindow-SDL2',

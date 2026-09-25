@@ -5,8 +5,8 @@ Class {
 	#name : 'SDL_SysWMinfo_WindowsInfo',
 	#superclass : 'SDL2Structure',
 	#classVars : [
-		'OFFSET_HDC',
-		'OFFSET_WINDOW'
+		#OFFSET_HDC,
+		#OFFSET_WINDOW
 	],
 	#category : 'OSWindow-SDL2-Bindings',
 	#package : 'OSWindow-SDL2',

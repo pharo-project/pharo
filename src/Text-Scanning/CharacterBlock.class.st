@@ -19,12 +19,12 @@ Class {
 	#name : 'CharacterBlock',
 	#superclass : 'Rectangle',
 	#instVars : [
-		'stringIndex',
-		'text',
-		'textLine'
+		#stringIndex,
+		#text,
+		#textLine
 	],
 	#pools : [
-		'TextConstants'
+		#TextConstants
 	],
 	#category : 'Text-Scanning-Base',
 	#package : 'Text-Scanning',

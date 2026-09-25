@@ -11,7 +11,7 @@ Class {
 	#name : 'Association',
 	#superclass : 'LookupKey',
 	#instVars : [
-		'value'
+		#value
 	],
 	#category : 'Collections-Support-Associations',
 	#package : 'Collections-Support',
@@ -29,7 +29,7 @@ Association class >> key: newKey value: newValue [
 { #category : 'comparing' }
 Association >> = anAssociation [
 
-	^ super = anAssociation and: [value = anAssociation value]
+	^ super = anAssociation and: [value sameContents: anAssociation value]
 ]
 
 { #category : 'testing' }

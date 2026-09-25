@@ -6,10 +6,10 @@ Class {
 	#name : 'VTermOutputStyleElement',
 	#superclass : 'Object',
 	#instVars : [
-		'color'
+		#color
 	],
 	#pools : [
-		'VTermOutputStyles'
+		#VTermOutputStyles
 	],
 	#category : 'System-CommandLine-TextSupport',
 	#package : 'System-CommandLine-TextSupport'

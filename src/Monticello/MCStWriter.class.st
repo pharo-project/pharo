@@ -14,8 +14,8 @@ Class {
 	#name : 'MCStWriter',
 	#superclass : 'MCWriter',
 	#instVars : [
-		'initializers',
-		'writeInitializers'
+		#initializers,
+		#writeInitializers
 	],
 	#category : 'Monticello-Storing',
 	#package : 'Monticello',
@@ -134,7 +134,7 @@ MCStWriter >> writeDefinitions: aCollection [
 		collect: [:each | each name ].
 				
 	orderedClasses do: [:className |
-		self chunkContents: [ :str | str nextPutAll: (presentInitializers detect: [:each | each key = className]) value contents] ].
+		self chunkContents: [ :str | str nextPutAll: (presentInitializers detect: [:each | each key sameContents: className]) value contents] ].
 	
 	(notPresentInitializers asSortedCollection: [:a :b | a key <= b key]) do: [:association |
 		self chunkContents: [ :str | str  nextPutAll: association value contents ] ].

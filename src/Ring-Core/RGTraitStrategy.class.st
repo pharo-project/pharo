@@ -2,9 +2,9 @@ Class {
 	#name : 'RGTraitStrategy',
 	#superclass : 'RGTraitDescriptionStrategy',
 	#instVars : [
-		'classTrait',
-		'comment',
-		'package'
+		#classTrait,
+		#comment,
+		#package
 	],
 	#category : 'Ring-Core-Kernel',
 	#package : 'Ring-Core',
@@ -44,7 +44,7 @@ RGTraitStrategy >> category: aString [
 	self owner cleanTags.
 	aTag := self package
 		ifNotNil: [
-			self package name = aString
+			(self package name sameContents: aString)
 				ifTrue: [ ^ self ] "category contains only the package name"
 				ifFalse: [ aString withoutPrefix: self package name, '-'  ]]
 		ifNil: [ aString ].

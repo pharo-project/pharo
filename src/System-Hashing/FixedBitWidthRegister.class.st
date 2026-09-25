@@ -7,8 +7,8 @@ Class {
 	#name : 'FixedBitWidthRegister',
 	#superclass : 'Object',
 	#instVars : [
-		'low',
-		'hi'
+		#low,
+		#hi
 	],
 	#category : 'System-Hashing-Core',
 	#package : 'System-Hashing',

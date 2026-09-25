@@ -5,7 +5,7 @@ Class {
 	#name : 'RFSlotRead',
 	#superclass : 'RFVariableRead',
 	#instVars : [
-		'object'
+		#object
 	],
 	#category : 'Reflectivity-Operations',
 	#package : 'Reflectivity',

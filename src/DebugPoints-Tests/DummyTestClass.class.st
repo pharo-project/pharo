@@ -5,10 +5,10 @@ Class {
 	#name : 'DummyTestClass',
 	#superclass : 'Object',
 	#instVars : [
-		'id'
+		#id
 	],
 	#classVars : [
-		'ClassVar'
+		#ClassVar
 	],
 	#category : 'DebugPoints-Tests-Utils',
 	#package : 'DebugPoints-Tests',

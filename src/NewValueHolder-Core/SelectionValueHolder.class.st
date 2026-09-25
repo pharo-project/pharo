@@ -5,8 +5,8 @@ Class {
 	#name : 'SelectionValueHolder',
 	#superclass : 'NewValueHolder',
 	#instVars : [
-		'index',
-		'selection'
+		#index,
+		#selection
 	],
 	#category : 'NewValueHolder-Core-Base',
 	#package : 'NewValueHolder-Core',

@@ -5,7 +5,7 @@ Class {
 	#name : 'FLObjectCluster',
 	#superclass : 'FLIteratingCluster',
 	#instVars : [
-		'theClass'
+		#theClass
 	],
 	#category : 'Fuel-Core-Clusters',
 	#package : 'Fuel-Core',

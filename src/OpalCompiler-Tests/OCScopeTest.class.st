@@ -2,10 +2,10 @@ Class {
 	#name : 'OCScopeTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'ivarForTesting'
+		#ivarForTesting
 	],
 	#classVars : [
-		'MyClassVarForTesting'
+		#MyClassVarForTesting
 	],
 	#category : 'OpalCompiler-Tests-Semantic',
 	#package : 'OpalCompiler-Tests',

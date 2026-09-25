@@ -44,7 +44,7 @@ Class {
 	#name : 'RBParseTreeRewriter',
 	#superclass : 'RBParseTreeSearcher',
 	#instVars : [
-		'tree'
+		#tree
 	],
 	#category : 'AST-Core-Matching',
 	#package : 'AST-Core',

@@ -2,7 +2,7 @@ Class {
 	#name : 'DockingBarMenuMorph',
 	#superclass : 'MenuMorph',
 	#instVars : [
-		'activatorDockingBar'
+		#activatorDockingBar
 	],
 	#category : 'Morphic-Widgets-Extra',
 	#package : 'Morphic-Widgets-Extra'

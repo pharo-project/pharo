@@ -39,9 +39,9 @@ Class {
 	#name : 'ClyItemDefinitionProperty',
 	#superclass : 'ClyProperty',
 	#instVars : [
-		'definingClassItem',
-		'definingPackageItem',
-		'isInstanceSide'
+		#definingClassItem,
+		#definingPackageItem,
+		#isInstanceSide
 	],
 	#category : 'Calypso-SystemQueries-Properties',
 	#package : 'Calypso-SystemQueries',

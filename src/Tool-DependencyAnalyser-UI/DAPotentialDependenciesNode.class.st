@@ -5,7 +5,7 @@ Class {
 	#name : 'DAPotentialDependenciesNode',
 	#superclass : 'DADependentPackageNode',
 	#instVars : [
-		'messageSendAnalysis'
+		#messageSendAnalysis
 	],
 	#category : 'Tool-DependencyAnalyser-UI-Nodes',
 	#package : 'Tool-DependencyAnalyser-UI',

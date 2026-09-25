@@ -10,9 +10,9 @@ Class {
 	#name : 'DateAndTimeLeapTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'aDateAndTime',
-		'aDuration',
-		'aTimeZone'
+		#aDateAndTime,
+		#aDuration,
+		#aTimeZone
 	],
 	#category : 'System-Time-Tests',
 	#package : 'System-Time-Tests'

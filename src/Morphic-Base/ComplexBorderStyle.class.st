@@ -60,9 +60,9 @@ Class {
 	#name : 'ComplexBorderStyle',
 	#superclass : 'SimpleBorderStyle',
 	#instVars : [
-		'style',
-		'colors',
-		'lineStyles'
+		#style,
+		#colors,
+		#lineStyles
 	],
 	#category : 'Morphic-Base-Borders',
 	#package : 'Morphic-Base',

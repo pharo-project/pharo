@@ -6,11 +6,11 @@ Class {
 	#name : 'SoundTheme',
 	#superclass : 'Object',
 	#instVars : [
-		'sounds'
+		#sounds
 	],
 	#classVars : [
-		'Current',
-		'UseThemeSounds'
+		#Current,
+		#UseThemeSounds
 	],
 	#category : 'Polymorph-Widgets-Themes',
 	#package : 'Polymorph-Widgets',

@@ -5,10 +5,10 @@ Class {
 	#name : 'OupsDummyDebuggerSystem',
 	#superclass : 'OupsDebuggerSystem',
 	#instVars : [
-		'newUIProcessSpawned',
-		'customUIManager',
-		'debugRequestSentToHandleDebugRequest',
-		'callsToHandleDebugRequest'
+		#newUIProcessSpawned,
+		#customUIManager,
+		#debugRequestSentToHandleDebugRequest,
+		#callsToHandleDebugRequest
 	],
 	#category : 'Debugger-Oups-Tests-Utils',
 	#package : 'Debugger-Oups-Tests',

@@ -21,7 +21,7 @@ Class {
 
 { #category : 'querying' }
 RubScrolledTextExtra class >> classOfRulerNamed: aKey [
-	^ self allSubclasses detect: [ :cls | cls key = aKey ] ifNone: [  ]
+	^ self allSubclasses detect: [ :cls | cls key sameContents: aKey ] ifNone: [  ]
 ]
 
 { #category : 'querying' }

@@ -12,14 +12,14 @@ Class {
 	#name : 'SycCopyClassUsingPatternPresenter',
 	#superclass : 'SpPresenter',
 	#instVars : [
-		'sourcePreviewPresenter',
-		'sourceClassLabel',
-		'targetClassLabel',
-		'targetPreviewPresenter',
-		'sourceClassPatternTextInput',
-		'targetClassPatternTextInput',
-		'sourcePackage',
-		'newPackageName'
+		#sourcePreviewPresenter,
+		#sourceClassLabel,
+		#targetClassLabel,
+		#targetPreviewPresenter,
+		#sourceClassPatternTextInput,
+		#targetClassPatternTextInput,
+		#sourcePackage,
+		#newPackageName
 	],
 	#category : 'SystemCommands-RefactoringSupport-View',
 	#package : 'SystemCommands-RefactoringSupport',

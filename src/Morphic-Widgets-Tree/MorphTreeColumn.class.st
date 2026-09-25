@@ -5,14 +5,14 @@ Class {
 	#name : 'MorphTreeColumn',
 	#superclass : 'Object',
 	#instVars : [
-		'header',
-		'container',
-		'currentWidth',
-		'rowMorphGetSelector',
-		'shrinkWrap',
-		'color',
-		'isPotentialDropTarget',
-		'resizable'
+		#header,
+		#container,
+		#currentWidth,
+		#rowMorphGetSelector,
+		#shrinkWrap,
+		#color,
+		#isPotentialDropTarget,
+		#resizable
 	],
 	#category : 'Morphic-Widgets-Tree',
 	#package : 'Morphic-Widgets-Tree'

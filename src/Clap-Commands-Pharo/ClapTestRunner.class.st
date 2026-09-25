@@ -5,7 +5,7 @@ Class {
 	#name : 'ClapTestRunner',
 	#superclass : 'ClapPharoApplication',
 	#instVars : [
-		'suite'
+		#suite
 	],
 	#category : 'Clap-Commands-Pharo',
 	#package : 'Clap-Commands-Pharo'

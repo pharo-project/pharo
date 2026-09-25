@@ -14,7 +14,7 @@ Class {
 	#name : 'ClyConcreteGroupCritiqueQuery',
 	#superclass : 'ClyFilteringCritiqueQuery',
 	#instVars : [
-		'groupName'
+		#groupName
 	],
 	#category : 'Calypso-SystemPlugins-Critic-Queries',
 	#package : 'Calypso-SystemPlugins-Critic-Queries'

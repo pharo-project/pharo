@@ -9,8 +9,8 @@ Class {
 	#name : 'ReRemoveClassRefactoring',
 	#superclass : 'RBRefactoring',
 	#instVars : [
-		'classNames',
-		'classesDictionary'
+		#classNames,
+		#classesDictionary
 	],
 	#category : 'Refactoring-Core-Refactorings',
 	#package : 'Refactoring-Core',

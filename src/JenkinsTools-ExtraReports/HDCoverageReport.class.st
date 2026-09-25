@@ -5,9 +5,9 @@ Class {
 	#name : 'HDCoverageReport',
 	#superclass : 'HDTestReport',
 	#instVars : [
-		'packages',
-		'wrappers',
-		'covered'
+		#packages,
+		#wrappers,
+		#covered
 	],
 	#category : 'JenkinsTools-ExtraReports',
 	#package : 'JenkinsTools-ExtraReports'

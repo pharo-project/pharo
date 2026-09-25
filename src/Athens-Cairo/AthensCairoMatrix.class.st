@@ -7,15 +7,15 @@ Class {
 	#traits : 'TCairoLibrary',
 	#classTraits : 'TCairoLibrary classTrait',
 	#classVars : [
-		'OFFSET_SHX',
-		'OFFSET_SHY',
-		'OFFSET_SX',
-		'OFFSET_SY',
-		'OFFSET_X',
-		'OFFSET_Y'
+		#OFFSET_SHX,
+		#OFFSET_SHY,
+		#OFFSET_SX,
+		#OFFSET_SY,
+		#OFFSET_X,
+		#OFFSET_Y
 	],
 	#pools : [
-		'AthensCairoDefinitions'
+		#AthensCairoDefinitions
 	],
 	#category : 'Athens-Cairo-Transforms',
 	#package : 'Athens-Cairo',

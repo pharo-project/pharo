@@ -18,8 +18,8 @@ Class {
 	#name : 'ClyCritiqueSeverityProperty',
 	#superclass : 'ClyProperty',
 	#instVars : [
-		'name',
-		'color'
+		#name,
+		#color
 	],
 	#category : 'Calypso-SystemPlugins-Critic-Queries',
 	#package : 'Calypso-SystemPlugins-Critic-Queries'

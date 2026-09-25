@@ -5,7 +5,7 @@ Class {
 	#name : 'AdditionalMethodStateTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'amState'
+		#amState
 	],
 	#category : 'Kernel-Extended-Tests-Methods',
 	#package : 'Kernel-Extended-Tests',

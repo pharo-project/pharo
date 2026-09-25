@@ -6,8 +6,8 @@ Class {
 	#name : 'SVColorSelectorMorph',
 	#superclass : 'Morph',
 	#instVars : [
-		'selectedColor',
-		'locationMorph'
+		#selectedColor,
+		#locationMorph
 	],
 	#category : 'Morphic-Widgets-ColorPicker',
 	#package : 'Morphic-Widgets-ColorPicker'

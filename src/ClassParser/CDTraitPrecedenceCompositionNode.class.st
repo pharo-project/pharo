@@ -2,7 +2,7 @@ Class {
 	#name : 'CDTraitPrecedenceCompositionNode',
 	#superclass : 'CDTraitCompositionSequenceNode',
 	#instVars : [
-		'preferedTrait'
+		#preferedTrait
 	],
 	#category : 'ClassParser-Model',
 	#package : 'ClassParser',

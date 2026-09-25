@@ -5,7 +5,7 @@ Class {
 	#name : 'MeshGradientPaint',
 	#superclass : 'AthensAbstractPaint',
 	#instVars : [
-		'patches'
+		#patches
 	],
 	#category : 'Athens-Core-Paints',
 	#package : 'Athens-Core',

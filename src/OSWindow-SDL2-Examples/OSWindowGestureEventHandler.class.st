@@ -6,7 +6,7 @@ Class {
 	#name : 'OSWindowGestureEventHandler',
 	#superclass : 'OSWindowGestureHandler',
 	#instVars : [
-		'touchExample'
+		#touchExample
 	],
 	#category : 'OSWindow-SDL2-Examples-Gesture',
 	#package : 'OSWindow-SDL2-Examples',

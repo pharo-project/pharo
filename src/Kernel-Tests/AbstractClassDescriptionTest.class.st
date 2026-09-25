@@ -2,7 +2,7 @@ Class {
 	#name : 'AbstractClassDescriptionTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'class'
+		#class
 	],
 	#category : 'Kernel-Tests-Classes',
 	#package : 'Kernel-Tests',

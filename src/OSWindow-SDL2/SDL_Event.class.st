@@ -5,7 +5,7 @@ Class {
 	#name : 'SDL_Event',
 	#superclass : 'FFIExternalObject',
 	#classVars : [
-		'EventTypeMap'
+		#EventTypeMap
 	],
 	#category : 'OSWindow-SDL2-Bindings',
 	#package : 'OSWindow-SDL2',

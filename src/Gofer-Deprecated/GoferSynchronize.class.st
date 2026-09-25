@@ -5,7 +5,7 @@ Class {
 	#name : 'GoferSynchronize',
 	#superclass : 'GoferOperation',
 	#instVars : [
-		'cacheReferences'
+		#cacheReferences
 	],
 	#category : 'Gofer-Deprecated-Operations',
 	#package : 'Gofer-Deprecated',

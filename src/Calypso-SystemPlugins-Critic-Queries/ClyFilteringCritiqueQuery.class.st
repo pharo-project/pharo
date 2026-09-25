@@ -14,7 +14,7 @@ Class {
 	#name : 'ClyFilteringCritiqueQuery',
 	#superclass : 'ClyCritiqueQuery',
 	#instVars : [
-		'baseCritiqueQuery'
+		#baseCritiqueQuery
 	],
 	#category : 'Calypso-SystemPlugins-Critic-Queries',
 	#package : 'Calypso-SystemPlugins-Critic-Queries'

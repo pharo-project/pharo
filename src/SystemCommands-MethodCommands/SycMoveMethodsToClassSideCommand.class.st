@@ -5,7 +5,7 @@ Class {
 	#name : 'SycMoveMethodsToClassSideCommand',
 	#superclass : 'SycMethodCommand',
 	#instVars : [
-		'refactoringScopes'
+		#refactoringScopes
 	],
 	#category : 'SystemCommands-MethodCommands',
 	#package : 'SystemCommands-MethodCommands'

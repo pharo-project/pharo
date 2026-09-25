@@ -16,11 +16,11 @@ Class {
 	#name : 'EmbeddedFreeTypeFontInstaller',
 	#superclass : 'Object',
 	#instVars : [
-		'embeddedFileInfoCache',
-		'provider'
+		#embeddedFileInfoCache,
+		#provider
 	],
 	#classInstVars : [
-		'current'
+		#current
 	],
 	#category : 'EmbeddedFreeType-Installation',
 	#package : 'EmbeddedFreeType',

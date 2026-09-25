@@ -2,8 +2,8 @@ Class {
 	#name : 'OupsSingleDebuggerSelectorTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'debuggers',
-		'debuggerSelector'
+		#debuggers,
+		#debuggerSelector
 	],
 	#category : 'Debugger-Oups-Tests-Tests - strategies',
 	#package : 'Debugger-Oups-Tests',

@@ -35,10 +35,10 @@ Class {
 	#name : 'FileLocator',
 	#superclass : 'AbstractFileReference',
 	#instVars : [
-		'origin'
+		#origin
 	],
 	#classVars : [
-		'Resolver'
+		#Resolver
 	],
 	#category : 'FileSystem-Core-Public',
 	#package : 'FileSystem-Core',

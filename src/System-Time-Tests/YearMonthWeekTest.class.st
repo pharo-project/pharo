@@ -6,8 +6,8 @@ Class {
 	#name : 'YearMonthWeekTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'restoredStartDay',
-		'restoredTimeZone'
+		#restoredStartDay,
+		#restoredTimeZone
 	],
 	#category : 'System-Time-Tests',
 	#package : 'System-Time-Tests'

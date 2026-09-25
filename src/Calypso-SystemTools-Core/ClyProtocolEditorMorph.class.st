@@ -20,10 +20,10 @@ Class {
 	#name : 'ClyProtocolEditorMorph',
 	#superclass : 'ClyStatusBarItemMorph',
 	#instVars : [
-		'extensionCheckbox',
-		'editButton',
-		'label',
-		'resetButton'
+		#extensionCheckbox,
+		#editButton,
+		#label,
+		#resetButton
 	],
 	#category : 'Calypso-SystemTools-Core-Editors-Methods',
 	#package : 'Calypso-SystemTools-Core',

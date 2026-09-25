@@ -5,8 +5,8 @@ Class {
 	#name : 'AthensBalloonRadialGradient',
 	#superclass : 'AthensBalloonGradientPaint',
 	#instVars : [
-		'center',
-		'radius'
+		#center,
+		#radius
 	],
 	#category : 'Athens-Balloon-Paint',
 	#package : 'Athens-Balloon',

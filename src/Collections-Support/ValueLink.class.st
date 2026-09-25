@@ -9,7 +9,7 @@ Class {
 	#name : 'ValueLink',
 	#superclass : 'Link',
 	#instVars : [
-		'value'
+		#value
 	],
 	#category : 'Collections-Support-Links',
 	#package : 'Collections-Support',
@@ -24,7 +24,7 @@ ValueLink class >> value:	 aValue [
 { #category : 'comparing' }
 ValueLink >> = anotherObject [
 	^self species == anotherObject species
-		and: [self value = anotherObject value
+		and: [(self value sameContents: anotherObject value)
 				and: [self nextLink == anotherObject nextLink]]
 ]
 

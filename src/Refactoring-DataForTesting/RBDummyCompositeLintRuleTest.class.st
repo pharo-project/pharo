@@ -2,7 +2,7 @@ Class {
 	#name : 'RBDummyCompositeLintRuleTest',
 	#superclass : 'RBDummyLintRuleTest',
 	#instVars : [
-		'rules'
+		#rules
 	],
 	#category : 'Refactoring-DataForTesting-LittleHierarchy',
 	#package : 'Refactoring-DataForTesting',

@@ -9,8 +9,8 @@ Class {
 	#name : 'ZnDigestCredential',
 	#superclass : 'ZnBasicCredential',
 	#instVars : [
-		'nonce',
-		'opaque'
+		#nonce,
+		#opaque
 	],
 	#category : 'Zinc-HTTP-Support',
 	#package : 'Zinc-HTTP',
@@ -72,8 +72,8 @@ ZnDigestCredential >> isComplete [
 ZnDigestCredential >> linkToAuthRequest: aHeader [
 	| data |
 	data := self parseAuthRequest: aHeader.
-	self nonce: (data at: 'nonce').
-	self realm: (data at: 'realm' ifAbsent: [ '' ])
+	self nonce: (data at: #'nonce').
+	self realm: (data at: #'realm' ifAbsent: [ '' ])
 ]
 
 { #category : 'accessing' }
@@ -108,7 +108,7 @@ ZnDigestCredential >> responseForUrl: urlObject method: method [
 
 { #category : 'operations' }
 ZnDigestCredential >> setAuthorizationHeader: headers for: urlObject method: method [
-	headers at: 'Authorization' put: (self authTokenForUrl: urlObject method: method)
+	headers at: #'Authorization' put: (self authTokenForUrl: urlObject method: method)
 ]
 
 { #category : 'accessing' }

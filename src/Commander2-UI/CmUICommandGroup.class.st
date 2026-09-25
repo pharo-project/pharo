@@ -9,10 +9,10 @@ Class {
 	#name : 'CmUICommandGroup',
 	#superclass : 'CmCommandGroupDecorator',
 	#instVars : [
-		'displayStrategy',
-		'isRoot',
-		'icon',
-		'iconName'
+		#displayStrategy,
+		#isRoot,
+		#icon,
+		#iconName
 	],
 	#category : 'Commander2-UI-Core',
 	#package : 'Commander2-UI',

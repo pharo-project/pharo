@@ -5,18 +5,18 @@ Class {
 	#name : 'CompletionContext',
 	#superclass : 'Object',
 	#instVars : [
-		'source',
-		'position',
-		'completionToken',
-		'ast',
-		'node',
-		'class',
-		'entries',
-		'sorter',
-		'engine'
+		#source,
+		#position,
+		#completionToken,
+		#ast,
+		#node,
+		#class,
+		#entries,
+		#sorter,
+		#engine
 	],
 	#classVars : [
-		'SorterClass'
+		#SorterClass
 	],
 	#category : 'NECompletion-Model',
 	#package : 'NECompletion',

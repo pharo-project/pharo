@@ -5,7 +5,7 @@ Class {
 	#name : 'SycExtractSetUpCommand',
 	#superclass : 'SycTestCommand',
 	#instVars : [
-		'selectedTextInterval'
+		#selectedTextInterval
 	],
 	#category : 'SystemCommands-SourceCodeCommands',
 	#package : 'SystemCommands-SourceCodeCommands'

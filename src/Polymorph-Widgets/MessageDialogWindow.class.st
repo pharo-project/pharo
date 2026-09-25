@@ -5,9 +5,9 @@ Class {
 	#name : 'MessageDialogWindow',
 	#superclass : 'DialogWindowMorph',
 	#instVars : [
-		'textMorph',
-		'textFont',
-		'iconMorph'
+		#textMorph,
+		#textFont,
+		#iconMorph
 	],
 	#category : 'Polymorph-Widgets-Windows',
 	#package : 'Polymorph-Widgets',

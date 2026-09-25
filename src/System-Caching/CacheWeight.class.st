@@ -12,9 +12,9 @@ Class {
 	#name : 'CacheWeight',
 	#superclass : 'Object',
 	#instVars : [
-		'total',
-		'maximum',
-		'compute'
+		#total,
+		#maximum,
+		#compute
 	],
 	#category : 'System-Caching',
 	#package : 'System-Caching'

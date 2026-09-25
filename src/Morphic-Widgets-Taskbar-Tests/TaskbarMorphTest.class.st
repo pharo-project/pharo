@@ -5,8 +5,8 @@ Class {
 	#name : 'TaskbarMorphTest',
 	#superclass : 'TaskMorphTest',
 	#instVars : [
-		'taskbar',
-		'world'
+		#taskbar,
+		#world
 	],
 	#category : 'Morphic-Widgets-Taskbar-Tests',
 	#package : 'Morphic-Widgets-Taskbar-Tests'

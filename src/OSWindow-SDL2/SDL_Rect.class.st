@@ -5,10 +5,10 @@ Class {
 	#name : 'SDL_Rect',
 	#superclass : 'SDL2Structure',
 	#classVars : [
-		'OFFSET_H',
-		'OFFSET_W',
-		'OFFSET_X',
-		'OFFSET_Y'
+		#OFFSET_H,
+		#OFFSET_W,
+		#OFFSET_X,
+		#OFFSET_Y
 	],
 	#category : 'OSWindow-SDL2-Bindings',
 	#package : 'OSWindow-SDL2',

@@ -2,7 +2,7 @@ Class {
 	#name : 'AthensCairoExportSurfaceTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'surface'
+		#surface
 	],
 	#category : 'Athens-Cairo-Tests-Core',
 	#package : 'Athens-Cairo-Tests',

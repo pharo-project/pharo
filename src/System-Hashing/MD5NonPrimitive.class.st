@@ -15,10 +15,10 @@ Class {
 	#name : 'MD5NonPrimitive',
 	#superclass : 'MD5',
 	#classVars : [
-		'ABCDTable',
-		'IndexTable',
-		'ShiftTable',
-		'SinTable'
+		#ABCDTable,
+		#IndexTable,
+		#ShiftTable,
+		#SinTable
 	],
 	#category : 'System-Hashing-MD5',
 	#package : 'System-Hashing',

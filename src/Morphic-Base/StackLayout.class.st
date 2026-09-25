@@ -5,8 +5,8 @@ Class {
 	#name : 'StackLayout',
 	#superclass : 'LayoutPolicy',
 	#instVars : [
-		'cachedMinExtent',
-		'cachedMinExtents'
+		#cachedMinExtent,
+		#cachedMinExtents
 	],
 	#category : 'Morphic-Base-Layouts',
 	#package : 'Morphic-Base',

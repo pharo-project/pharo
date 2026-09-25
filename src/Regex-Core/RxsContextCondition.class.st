@@ -10,7 +10,7 @@ Class {
 	#name : 'RxsContextCondition',
 	#superclass : 'RxsNode',
 	#instVars : [
-		'kind'
+		#kind
 	],
 	#category : 'Regex-Core-Nodes',
 	#package : 'Regex-Core',

@@ -5,9 +5,9 @@ Class {
 	#name : 'AthensBackgroundChange',
 	#superclass : 'AthensTextDisplayCommand',
 	#instVars : [
-		'color',
-		'start',
-		'width'
+		#color,
+		#start,
+		#width
 	],
 	#category : 'Athens-Text',
 	#package : 'Athens-Text'

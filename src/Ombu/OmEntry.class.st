@@ -5,8 +5,8 @@ Class {
 	#name : 'OmEntry',
 	#superclass : 'Object',
 	#instVars : [
-		'tags',
-		'content'
+		#tags,
+		#content
 	],
 	#category : 'Ombu-Entries',
 	#package : 'Ombu',

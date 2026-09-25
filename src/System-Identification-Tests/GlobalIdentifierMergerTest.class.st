@@ -5,9 +5,9 @@ Class {
 	#name : 'GlobalIdentifierMergerTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'existing',
-		'stored',
-		'merger'
+		#existing,
+		#stored,
+		#merger
 	],
 	#category : 'System-Identification-Tests',
 	#package : 'System-Identification-Tests'

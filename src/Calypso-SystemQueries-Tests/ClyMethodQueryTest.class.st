@@ -2,7 +2,7 @@ Class {
 	#name : 'ClyMethodQueryTest',
 	#superclass : 'ClyTypedQueryTest',
 	#instVars : [
-		'foundSelectors'
+		#foundSelectors
 	],
 	#category : 'Calypso-SystemQueries-Tests-Queries',
 	#package : 'Calypso-SystemQueries-Tests',

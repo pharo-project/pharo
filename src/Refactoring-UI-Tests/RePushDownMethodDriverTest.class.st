@@ -2,8 +2,8 @@ Class {
 	#name : 'RePushDownMethodDriverTest',
 	#superclass : 'ReDriverTest',
 	#instVars : [
-		'model',
-		'environment'
+		#model,
+		#environment
 	],
 	#category : 'Refactoring-UI-Tests-Driver',
 	#package : 'Refactoring-UI-Tests',

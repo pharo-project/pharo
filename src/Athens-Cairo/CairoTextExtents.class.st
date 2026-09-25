@@ -14,12 +14,12 @@ Class {
 	#name : 'CairoTextExtents',
 	#superclass : 'FFIExternalStructure',
 	#classVars : [
-		'OFFSET_HEIGHT',
-		'OFFSET_WIDTH',
-		'OFFSET_X_ADVANCE',
-		'OFFSET_X_BEARING',
-		'OFFSET_Y_ADVANCE',
-		'OFFSET_Y_BEARING'
+		#OFFSET_HEIGHT,
+		#OFFSET_WIDTH,
+		#OFFSET_X_ADVANCE,
+		#OFFSET_X_BEARING,
+		#OFFSET_Y_ADVANCE,
+		#OFFSET_Y_BEARING
 	],
 	#category : 'Athens-Cairo-Text',
 	#package : 'Athens-Cairo',

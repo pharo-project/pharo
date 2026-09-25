@@ -33,7 +33,7 @@ TDictionaryValueAccessTest >> test0FixtureDictionaryElementAccess [
 	self denyEmpty: self nonEmpty.
 	self keyNotIn.
 	in := true.
-	self nonEmpty keys detect: [ :key | key = self keyNotIn ] ifNone: [ in := false ].
+	self nonEmpty keys detect: [ :key | key sameContents: self keyNotIn ] ifNone: [ in := false ].
 	self deny: in
 ]
 

@@ -2,10 +2,10 @@ Class {
 	#name : 'HiRulerBuilderTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'ruler'
+		#ruler
 	],
 	#classVars : [
-		'DebugShowingRulerInWindow'
+		#DebugShowingRulerInWindow
 	],
 	#category : 'Hiedra-Tests-Model',
 	#package : 'Hiedra-Tests',

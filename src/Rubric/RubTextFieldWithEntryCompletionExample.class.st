@@ -2,8 +2,8 @@ Class {
 	#name : 'RubTextFieldWithEntryCompletionExample',
 	#superclass : 'Object',
 	#instVars : [
-		'pkgName',
-		'announcer'
+		#pkgName,
+		#announcer
 	],
 	#category : 'Rubric-Editing-Widgets-Examples',
 	#package : 'Rubric',

@@ -60,9 +60,9 @@ Class {
 	#name : 'Interval',
 	#superclass : 'SequenceableCollection',
 	#instVars : [
-		'start',
-		'stop',
-		'step'
+		#start,
+		#stop,
+		#step
 	],
 	#category : 'Collections-Sequenceable-Base',
 	#package : 'Collections-Sequenceable',

@@ -9,10 +9,10 @@ Class {
 	#name : 'EventManager',
 	#superclass : 'Object',
 	#instVars : [
-		'actionMap'
+		#actionMap
 	],
 	#classVars : [
-		'ActionMaps'
+		#ActionMaps
 	],
 	#category : 'System-Object Events-Base',
 	#package : 'System-Object Events',

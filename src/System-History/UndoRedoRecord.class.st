@@ -16,8 +16,8 @@ Class {
 	#name : 'UndoRedoRecord',
 	#superclass : 'HistoryLeaf',
 	#instVars : [
-		'redoMessage',
-		'undoMessage'
+		#redoMessage,
+		#undoMessage
 	],
 	#category : 'System-History-Utilities',
 	#package : 'System-History',

@@ -5,8 +5,8 @@ Class {
 	#name : 'ExpanderMorph',
 	#superclass : 'PanelMorph',
 	#instVars : [
-		'titleMorph',
-		'announcer'
+		#titleMorph,
+		#announcer
 	],
 	#category : 'Polymorph-Widgets-Base',
 	#package : 'Polymorph-Widgets',
@@ -168,7 +168,7 @@ ExpanderMorph >> titleText: aStringOrText [
 ExpanderMorph >> update: aspect [
 	"Update the receiver."
 
-	aspect = #expanded
+	(aspect sameContents: #expanded)
 		ifTrue: [self spaceFillWeight: (self expanded
 					ifTrue: [1]
 					ifFalse: [0]).

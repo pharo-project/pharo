@@ -48,9 +48,9 @@ Class {
 	#name : 'FTColumn',
 	#superclass : 'Object',
 	#instVars : [
-		'id',
-		'width',
-		'sortingStrategy'
+		#id,
+		#width,
+		#sortingStrategy
 	],
 	#category : 'Morphic-Widgets-FastTable-Model',
 	#package : 'Morphic-Widgets-FastTable',

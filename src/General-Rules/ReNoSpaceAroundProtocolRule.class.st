@@ -5,7 +5,7 @@ Class {
 	#name : 'ReNoSpaceAroundProtocolRule',
 	#superclass : 'ReAbstractRule',
 	#instVars : [
-		'protocolName'
+		#protocolName
 	],
 	#category : 'General-Rules-Migrated',
 	#package : 'General-Rules',

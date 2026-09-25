@@ -7,7 +7,7 @@ Class {
 	#name : 'FLCompiledMethodCluster',
 	#superclass : 'FLCompiledCodeCluster',
 	#classInstVars : [
-		'transformationForSerializing'
+		#transformationForSerializing
 	],
 	#category : 'Fuel-Core-Clusters',
 	#package : 'Fuel-Core',

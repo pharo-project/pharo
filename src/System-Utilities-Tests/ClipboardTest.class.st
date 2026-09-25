@@ -5,7 +5,7 @@ Class {
 	#name : 'ClipboardTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'clipboard'
+		#clipboard
 	],
 	#category : 'System-Utilities-Tests-Base',
 	#package : 'System-Utilities-Tests',

@@ -11,10 +11,10 @@ Class {
 	#name : 'PluggableListItemWrapper',
 	#superclass : 'ListItemWrapper',
 	#instVars : [
-		'string',
-		'getContentsSelector',
-		'getStringSelector',
-		'hasContentsSelector'
+		#string,
+		#getContentsSelector,
+		#getStringSelector,
+		#hasContentsSelector
 	],
 	#category : 'Morphic-Widgets-List',
 	#package : 'Morphic-Widgets-List'

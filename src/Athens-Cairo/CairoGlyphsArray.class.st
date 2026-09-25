@@ -14,7 +14,7 @@ Class {
 	#name : 'CairoGlyphsArray',
 	#superclass : 'FFIExternalArray',
 	#instVars : [
-		'allocatedByCairo'
+		#allocatedByCairo
 	],
 	#category : 'Athens-Cairo-Text',
 	#package : 'Athens-Cairo',

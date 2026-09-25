@@ -5,10 +5,10 @@ Class {
 	#name : 'PragmaTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'atPragma',
-		'anotherAtPragma',
-		'yetAnotherAtPragma',
-		'atPutPragma'
+		#atPragma,
+		#anotherAtPragma,
+		#yetAnotherAtPragma,
+		#atPutPragma
 	],
 	#category : 'Kernel-Tests-Pragmas',
 	#package : 'Kernel-Tests',

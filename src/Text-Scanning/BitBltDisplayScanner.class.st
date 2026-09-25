@@ -17,8 +17,8 @@ Class {
 	#name : 'BitBltDisplayScanner',
 	#superclass : 'DisplayScanner',
 	#instVars : [
-		'bitBlt',
-		'scale'
+		#bitBlt,
+		#scale
 	],
 	#category : 'Text-Scanning-Base',
 	#package : 'Text-Scanning',

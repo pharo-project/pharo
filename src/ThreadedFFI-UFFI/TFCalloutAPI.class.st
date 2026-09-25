@@ -5,7 +5,7 @@ Class {
 	#name : 'TFCalloutAPI',
 	#superclass : 'FFICalloutAPI',
 	#classVars : [
-		'TraceBlock'
+		#TraceBlock
 	],
 	#category : 'ThreadedFFI-UFFI',
 	#package : 'ThreadedFFI-UFFI'

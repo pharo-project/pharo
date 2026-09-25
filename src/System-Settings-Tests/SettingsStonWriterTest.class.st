@@ -5,9 +5,9 @@ Class {
 	#name : 'SettingsStonWriterTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'writer',
-		'fileStream',
-		'fileReference'
+		#writer,
+		#fileStream,
+		#fileReference
 	],
 	#category : 'System-Settings-Tests',
 	#package : 'System-Settings-Tests'

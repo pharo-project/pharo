@@ -24,7 +24,7 @@ ReUnconditionalRecursionRule class >> uniqueIdentifierName [
 
 { #category : 'hooks' }
 ReUnconditionalRecursionRule >> afterCheck: aNode mappings: mappingDict [
-	^ (mappingDict at: '`@.before') noneSatisfy: #containsReturn
+	^ (mappingDict at: #'`@.before') noneSatisfy: #containsReturn
 ]
 
 { #category : 'accessing' }

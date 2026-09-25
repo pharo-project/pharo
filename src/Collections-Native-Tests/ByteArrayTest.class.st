@@ -7,7 +7,7 @@ Class {
 	#traits : 'TSequenceableTruncatedToSize',
 	#classTraits : 'TSequenceableTruncatedToSize classTrait',
 	#instVars : [
-		'collectionWith5Elements'
+		#collectionWith5Elements
 	],
 	#category : 'Collections-Native-Tests-Base',
 	#package : 'Collections-Native-Tests',

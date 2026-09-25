@@ -2,9 +2,9 @@ Class {
 	#name : 'KMShortcutPrinterTest',
 	#superclass : 'ParametrizedTestCase',
 	#instVars : [
-		'platform',
-		'shortcut',
-		'result'
+		#platform,
+		#shortcut,
+		#result
 	],
 	#category : 'Keymapping-Tests',
 	#package : 'Keymapping-Tests'

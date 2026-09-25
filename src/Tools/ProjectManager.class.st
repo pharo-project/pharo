@@ -9,7 +9,7 @@ Class {
 	#name : 'ProjectManager',
 	#superclass : 'Object',
 	#instVars : [
-		'environment'
+		#environment
 	],
 	#category : 'Tools',
 	#package : 'Tools'

@@ -12,7 +12,7 @@ Class {
 	#name : 'TabState',
 	#superclass : 'Object',
 	#instVars : [
-		'tab'
+		#tab
 	],
 	#category : 'Morphic-Widgets-Tabs-States',
 	#package : 'Morphic-Widgets-Tabs',

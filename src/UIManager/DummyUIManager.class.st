@@ -5,7 +5,7 @@ Class {
 	#name : 'DummyUIManager',
 	#superclass : 'UIManager',
 	#classVars : [
-		'ProgressBarEnabled'
+		#ProgressBarEnabled
 	],
 	#category : 'UIManager-Base',
 	#package : 'UIManager',

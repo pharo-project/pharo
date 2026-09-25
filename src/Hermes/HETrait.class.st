@@ -7,7 +7,7 @@ Class {
 	#name : 'HETrait',
 	#superclass : 'HEMethodContainer',
 	#instVars : [
-		'traitName'
+		#traitName
 	],
 	#category : 'Hermes-Model',
 	#package : 'Hermes',

@@ -11,7 +11,7 @@ Class {
 	#traits : 'TEasilyThemed',
 	#classTraits : 'TEasilyThemed classTrait',
 	#instVars : [
-		'tabGroup'
+		#tabGroup
 	],
 	#category : 'Morphic-Widgets-Windows-Widgets',
 	#package : 'Morphic-Widgets-Windows',

@@ -5,8 +5,8 @@ Class {
 	#name : 'CDUnrecognizedClassPart',
 	#superclass : 'Notification',
 	#instVars : [
-		'unrecognizedPart',
-		'classDefinition'
+		#unrecognizedPart,
+		#classDefinition
 	],
 	#category : 'ClassParser-Model',
 	#package : 'ClassParser',

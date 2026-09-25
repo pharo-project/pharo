@@ -6,8 +6,8 @@ Class {
 	#name : 'RBRefactoringWarning',
 	#superclass : 'Notification',
 	#instVars : [
-		'actionBlock',
-		'failedPreconditions'
+		#actionBlock,
+		#failedPreconditions
 	],
 	#category : 'Refactoring-Core-Support',
 	#package : 'Refactoring-Core',

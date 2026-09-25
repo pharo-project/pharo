@@ -23,15 +23,15 @@ Class {
 	#name : 'ThemeIcons',
 	#superclass : 'Object',
 	#instVars : [
-		'name',
-		'url',
-		'iconsPerScale',
-		'scale',
-		'formSetsCache',
-		'reportNotFound'
+		#name,
+		#url,
+		#iconsPerScale,
+		#scale,
+		#formSetsCache,
+		#reportNotFound
 	],
 	#classVars : [
-		'Current'
+		#Current
 	],
 	#category : 'Polymorph-Widgets-Themes',
 	#package : 'Polymorph-Widgets',
@@ -133,7 +133,7 @@ ThemeIcons class >> fetchPacks [
 	^ (STON fromString: jsonList)
 		collect: [ :each | | packName |
 			"Ensure we have just one instance of current pack"
-			packName := each at: 'name'.
+			packName := each at: #'name'.
 			packName = self current name
 				ifTrue: [ self current ]
 				ifFalse: [ self named: packName ] ]

@@ -5,7 +5,7 @@ Class {
 	#name : 'CDTraitSlotRenameNode',
 	#superclass : 'CDTraitCompositionNode',
 	#instVars : [
-		'renames'
+		#renames
 	],
 	#category : 'ClassParser-Model',
 	#package : 'ClassParser',

@@ -5,8 +5,8 @@ Class {
 	#name : 'OmDeferrerTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'count',
-		'deferrer'
+		#count,
+		#deferrer
 	],
 	#category : 'Ombu-Tests',
 	#package : 'Ombu-Tests'

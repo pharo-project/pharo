@@ -11,8 +11,8 @@ Class {
 	#name : 'MetaLinkAnonymousClassBuilder',
 	#superclass : 'Object',
 	#instVars : [
-		'classes',
-		'migratedObjects'
+		#classes,
+		#migratedObjects
 	],
 	#category : 'Reflectivity-Installer',
 	#package : 'Reflectivity',

@@ -12,10 +12,10 @@ Class {
 	#name : 'ZnHeaders',
 	#superclass : 'Object',
 	#instVars : [
-		'headers'
+		#headers
 	],
 	#classVars : [
-		'CommonHeaders'
+		#CommonHeaders
 	],
 	#category : 'Zinc-HTTP-Core',
 	#package : 'Zinc-HTTP',
@@ -25,16 +25,16 @@ Class {
 { #category : 'instance creation' }
 ZnHeaders class >> defaultRequestHeaders [
 	^ self new
-		at: 'User-Agent' put: (ZnCurrentOptions at: #userAgentString);
-		at: 'Accept' put: '*/*';
+		at: #'User-Agent' put: (ZnCurrentOptions at: #userAgentString);
+		at: #'Accept' put: '*/*';
 		yourself
 ]
 
 { #category : 'instance creation' }
 ZnHeaders class >> defaultResponseHeaders [
 	^ self new
-		at: 'Server' put: (ZnCurrentOptions at: #serverString);
-		at: 'Date' put: ZnUtils httpDate;
+		at: #'Server' put: (ZnCurrentOptions at: #serverString);
+		at: #'Date' put: ZnUtils httpDate;
 		yourself
 ]
 
@@ -42,11 +42,11 @@ ZnHeaders class >> defaultResponseHeaders [
 ZnHeaders class >> initialize [
 	CommonHeaders := (
 		#(
-			'Content-Length' 'Content-Type' 'Date' 'Server' 'Connection' 'User-Agent' 'Host'
-			'Accept' 'Accept-Language' 'Accept-Encoding'
-			'Referer' 'Dnt'
-			'Cookie' 'Set-Cookie' 'Authorization' 'WWW-Authenticate' 'Proxy-Authorization'
-			'Content-Encoding' 'Transfer-Encoding' 'Location'
+			'Content-Length' 'Content-Type' Date Server Connection 'User-Agent' Host
+			Accept 'Accept-Language' 'Accept-Encoding'
+			Referer Dnt
+			Cookie 'Set-Cookie' Authorization 'WWW-Authenticate' 'Proxy-Authorization'
+			'Content-Encoding' 'Transfer-Encoding' Location
 			'If-Modified-Since' 'Content-Disposition'
 			'X-Zinc-Remote-Address' 'X-Forwarded-Server' 'X-Forwarded-For' 'X-Forwarded-Host' )
 			collect: [ :each | ZnUtils capitalizeString: each ]) asSet
@@ -175,7 +175,7 @@ ZnHeaders >> contentLength [
 	"We allow multiple content-length headers provided they are identical."
 
 	| value |
-	(value := self headers at: 'Content-Length') isString
+	(value := self headers at: #'Content-Length') isString
 		ifFalse: [
 			value asSet size = 1
 				ifTrue: [ value := value first ]
@@ -185,7 +185,7 @@ ZnHeaders >> contentLength [
 
 { #category : 'accessing' }
 ZnHeaders >> contentLength: object [
-	self at: 'Content-Length' put: object asString
+	self at: #'Content-Length' put: object asString
 ]
 
 { #category : 'accessing' }
@@ -198,7 +198,7 @@ ZnHeaders >> contentType [
 
 { #category : 'accessing' }
 ZnHeaders >> contentType: object [
-	self at: 'Content-Type' put: object asString
+	self at: #'Content-Type' put: object asString
 ]
 
 { #category : 'private' }
@@ -341,9 +341,9 @@ ZnHeaders >> request: url [
 	"Setup the receiver to request url"
 
 	(url isNil or: [ url hasHost not ]) ifTrue: [ ^ self ].
-	self at: 'Host' put: url authority.
+	self at: #'Host' put: url authority.
 	(ZnNetworkingUtils proxyAuthorizationHeaderValueToUrl: url)
-		ifNotNil: [ :value | self at: 'Proxy-Authorization' put: value ].
+		ifNotNil: [ :value | self at: #'Proxy-Authorization' put: value ].
 ]
 
 { #category : 'accessing' }

@@ -75,13 +75,13 @@ TDictionaryAssociationAccessTest >> testAssociationAtIfPresent [
 	self
 		assert: result isArray;
 		assert: result size = 2;
-		assert: result first = #present;
-		assert: result second key = keyIn;
+		assert: (result first sameContents: #present);
+		assert: (result second key sameContents: keyIn);
 		assert: result second value = (collection at: keyIn).
 
 	"test that cull: is used to support zero-arg blocks"
 	result := collection associationAt: keyIn ifPresent: [#present].
-	self assert: result = #present.
+	self assert: (result sameContents: #present).
 
 	result := collection associationAt: self keyNotIn ifPresent: [:assoc | {#present. assoc}].
 	self assert: result isNil

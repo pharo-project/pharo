@@ -5,11 +5,11 @@ Class {
 	#name : 'FreeTypeCacheConstants',
 	#superclass : 'SharedPool',
 	#classVars : [
-		'FreeTypeCacheGlyph',
-		'FreeTypeCacheGlyphLCD',
-		'FreeTypeCacheGlyphMono',
-		'FreeTypeCacheLinearWidth',
-		'FreeTypeCacheWidth'
+		#FreeTypeCacheGlyph,
+		#FreeTypeCacheGlyphLCD,
+		#FreeTypeCacheGlyphMono,
+		#FreeTypeCacheLinearWidth,
+		#FreeTypeCacheWidth
 	],
 	#category : 'FreeType-Cache',
 	#package : 'FreeType',

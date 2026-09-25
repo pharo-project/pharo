@@ -5,8 +5,8 @@ Class {
 	#name : 'RubSelectionChanged',
 	#superclass : 'RubMorphAnnouncement',
 	#instVars : [
-		'previousMarkBlock',
-		'previousPointBlock'
+		#previousMarkBlock,
+		#previousPointBlock
 	],
 	#category : 'Rubric-Editing-Announcements',
 	#package : 'Rubric',

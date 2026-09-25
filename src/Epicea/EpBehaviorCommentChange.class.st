@@ -5,11 +5,11 @@ Class {
 	#name : 'EpBehaviorCommentChange',
 	#superclass : 'EpBehaviorChange',
 	#instVars : [
-		'behavior',
-		'oldComment',
-		'newComment',
-		'oldStamp',
-		'newStamp'
+		#behavior,
+		#oldComment,
+		#newComment,
+		#oldStamp,
+		#newStamp
 	],
 	#category : 'Epicea-Model',
 	#package : 'Epicea',

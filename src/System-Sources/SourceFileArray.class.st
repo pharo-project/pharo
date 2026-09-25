@@ -12,9 +12,9 @@ Class {
 	#name : 'SourceFileArray',
 	#superclass : 'Object',
 	#instVars : [
-		'files',
-		'readOnlyQueue',
-		'flushChanges'
+		#files,
+		#readOnlyQueue,
+		#flushChanges
 	],
 	#category : 'System-Sources-Sources',
 	#package : 'System-Sources',

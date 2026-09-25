@@ -10,15 +10,15 @@ Class {
 	#name : 'RBClass',
 	#superclass : 'RBAbstractClass',
 	#instVars : [
-		'classVariableNames',
-		'poolDictionaryNames',
-		'comment',
-		'classPool',
-		'packageName',
-		'tagName'
+		#classVariableNames,
+		#poolDictionaryNames,
+		#comment,
+		#classPool,
+		#packageName,
+		#tagName
 	],
 	#classVars : [
-		'LookupComment'
+		#LookupComment
 	],
 	#category : 'Refactoring-Core-Model',
 	#package : 'Refactoring-Core',

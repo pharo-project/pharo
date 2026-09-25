@@ -6,7 +6,7 @@ Class {
 	#name : 'TFCallbackInvocation',
 	#superclass : 'FFIExternalObject',
 	#instVars : [
-		'callback'
+		#callback
 	],
 	#category : 'ThreadedFFI-Callbacks',
 	#package : 'ThreadedFFI',

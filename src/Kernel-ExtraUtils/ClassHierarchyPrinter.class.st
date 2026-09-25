@@ -110,13 +110,13 @@ Class {
 	#name : 'ClassHierarchyPrinter',
 	#superclass : 'Object',
 	#instVars : [
-		'theClass',
-		'excludedClasses',
-		'limitedToClasses',
-		'stream',
-		'index',
-		'showSuperclasses',
-		'showState'
+		#theClass,
+		#excludedClasses,
+		#limitedToClasses,
+		#stream,
+		#index,
+		#showSuperclasses,
+		#showState
 	],
 	#category : 'Kernel-ExtraUtils-ForPharo',
 	#package : 'Kernel-ExtraUtils',

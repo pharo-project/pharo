@@ -14,10 +14,10 @@ Class {
 	#name : 'FastInflateStream',
 	#superclass : 'InflateStream',
 	#classVars : [
-		'DistanceMap',
-		'FixedDistTable',
-		'FixedLitTable',
-		'LiteralLengthMap'
+		#DistanceMap,
+		#FixedDistTable,
+		#FixedLitTable,
+		#LiteralLengthMap
 	],
 	#category : 'Compression-Streams',
 	#package : 'Compression',

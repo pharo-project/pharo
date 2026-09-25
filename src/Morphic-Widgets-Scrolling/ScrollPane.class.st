@@ -9,12 +9,12 @@ Class {
 	#name : 'ScrollPane',
 	#superclass : 'ModelMorph',
 	#instVars : [
-		'scrollBar',
-		'scroller',
-		'getMenuSelector',
-		'getMenuTitleSelector',
-		'hasFocus',
-		'hScrollBar'
+		#scrollBar,
+		#scroller,
+		#getMenuSelector,
+		#getMenuTitleSelector,
+		#hasFocus,
+		#hScrollBar
 	],
 	#category : 'Morphic-Widgets-Scrolling',
 	#package : 'Morphic-Widgets-Scrolling'

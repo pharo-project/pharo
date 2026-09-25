@@ -5,8 +5,8 @@ Class {
 	#name : 'AthensCharacterSpan',
 	#superclass : 'AthensTextDisplayCommand',
 	#instVars : [
-		'start',
-		'stop'
+		#start,
+		#stop
 	],
 	#category : 'Athens-Text',
 	#package : 'Athens-Text'

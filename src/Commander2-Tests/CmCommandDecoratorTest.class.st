@@ -5,8 +5,8 @@ Class {
 	#name : 'CmCommandDecoratorTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'commandToBeDecorated',
-		'decorator'
+		#commandToBeDecorated,
+		#decorator
 	],
 	#category : 'Commander2-Tests',
 	#package : 'Commander2-Tests'

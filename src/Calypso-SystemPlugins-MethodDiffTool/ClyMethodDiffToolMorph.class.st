@@ -13,9 +13,9 @@ Class {
 	#name : 'ClyMethodDiffToolMorph',
 	#superclass : 'ClyBrowserToolMorph',
 	#instVars : [
-		'diffMorph',
-		'leftMethod',
-		'rightMethod'
+		#diffMorph,
+		#leftMethod,
+		#rightMethod
 	],
 	#category : 'Calypso-SystemPlugins-MethodDiffTool',
 	#package : 'Calypso-SystemPlugins-MethodDiffTool'

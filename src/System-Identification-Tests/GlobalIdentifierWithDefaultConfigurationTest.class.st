@@ -5,7 +5,7 @@ Class {
 	#name : 'GlobalIdentifierWithDefaultConfigurationTest',
 	#superclass : 'GlobalIdentifierTest',
 	#instVars : [
-		'oldPreferences'
+		#oldPreferences
 	],
 	#category : 'System-Identification-Tests',
 	#package : 'System-Identification-Tests'

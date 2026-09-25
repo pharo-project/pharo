@@ -14,7 +14,7 @@ Class {
 	#name : 'MetacelloCypressBaselineProject',
 	#superclass : 'MetacelloMCBaselineProject',
 	#classVars : [
-		'UseCypressPackagesForAllBaselines'
+		#UseCypressPackagesForAllBaselines
 	],
 	#category : 'Metacello-Cypress',
 	#package : 'Metacello-Cypress'

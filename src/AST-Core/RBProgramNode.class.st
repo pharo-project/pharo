@@ -32,11 +32,11 @@ Class {
 	#name : 'RBProgramNode',
 	#superclass : 'RBNode',
 	#instVars : [
-		'parent',
-		'properties'
+		#parent,
+		#properties
 	],
 	#classVars : [
-		'FormatterClass'
+		#FormatterClass
 	],
 	#category : 'AST-Core-Nodes',
 	#package : 'AST-Core',
@@ -498,7 +498,7 @@ RBProgramNode >> equalTo: aNode exceptForVariables: variableNameCollection [
 	(self equalTo: aNode withMapping: dictionary) ifFalse: [^false].
 	dictionary keysAndValuesDo:
 			[:key :value |
-			(key = value or: [variableNameCollection includes: key]) ifFalse: [^false]].
+			((key sameContents: value) or: [variableNameCollection includes: key]) ifFalse: [^false]].
 	^true
 ]
 

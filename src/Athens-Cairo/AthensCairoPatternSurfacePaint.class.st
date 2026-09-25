@@ -5,12 +5,12 @@ Class {
 	#name : 'AthensCairoPatternSurfacePaint',
 	#superclass : 'AthensCairoPatternPaint',
 	#instVars : [
-		'surface',
-		'origin',
-		'extent'
+		#surface,
+		#origin,
+		#extent
 	],
 	#pools : [
-		'AthensCairoDefinitions'
+		#AthensCairoDefinitions
 	],
 	#category : 'Athens-Cairo-Paints',
 	#package : 'Athens-Cairo',

@@ -12,8 +12,8 @@ Class {
 	#superclass : 'Magnitude',
 	#type : 'immediate',
 	#classVars : [
-		'CharSet',
-		'DigitValues'
+		#CharSet,
+		#DigitValues
 	],
 	#category : 'Kernel-BasicObjects',
 	#package : 'Kernel',

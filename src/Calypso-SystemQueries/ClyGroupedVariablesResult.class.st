@@ -41,7 +41,7 @@ Class {
 	#name : 'ClyGroupedVariablesResult',
 	#superclass : 'ClyBrowserQueryResult',
 	#instVars : [
-		'hierarchy'
+		#hierarchy
 	],
 	#category : 'Calypso-SystemQueries-Results',
 	#package : 'Calypso-SystemQueries',

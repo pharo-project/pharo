@@ -7,7 +7,7 @@ Class {
 	#name : 'FBDASTBuilder',
 	#superclass : 'Object',
 	#instVars : [
-		'methodClass'
+		#methodClass
 	],
 	#category : 'Flashback-Decompiler-Utilities',
 	#package : 'Flashback-Decompiler',

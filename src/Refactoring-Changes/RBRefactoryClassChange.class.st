@@ -8,8 +8,8 @@ Class {
 	#name : 'RBRefactoryClassChange',
 	#superclass : 'RBRefactoryChange',
 	#instVars : [
-		'className',
-		'isMeta'
+		#className,
+		#isMeta
 	],
 	#category : 'Refactoring-Changes-Changes-Classes',
 	#package : 'Refactoring-Changes',
@@ -19,7 +19,7 @@ Class {
 { #category : 'testing' }
 RBRefactoryClassChange class >> isAbstract [
 
-	^ self name = #RBRefactoryClassChange
+	^ self name sameContents: #RBRefactoryClassChange
 ]
 
 { #category : 'comparing' }

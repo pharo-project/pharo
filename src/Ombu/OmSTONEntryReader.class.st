@@ -5,7 +5,7 @@ Class {
 	#name : 'OmSTONEntryReader',
 	#superclass : 'OmEntryReader',
 	#instVars : [
-		'reader'
+		#reader
 	],
 	#category : 'Ombu-Persistence',
 	#package : 'Ombu',

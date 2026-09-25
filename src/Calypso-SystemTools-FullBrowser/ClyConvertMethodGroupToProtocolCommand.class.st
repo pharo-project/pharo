@@ -11,7 +11,7 @@ Class {
 	#name : 'ClyConvertMethodGroupToProtocolCommand',
 	#superclass : 'ClyMethodGroupCommand',
 	#instVars : [
-		'protocol'
+		#protocol
 	],
 	#category : 'Calypso-SystemTools-FullBrowser-Commands-MethodGroups',
 	#package : 'Calypso-SystemTools-FullBrowser',

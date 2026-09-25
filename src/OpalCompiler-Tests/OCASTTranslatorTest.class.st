@@ -2,11 +2,11 @@ Class {
 	#name : 'OCASTTranslatorTest',
 	#superclass : 'ParametrizedTestCase',
 	#instVars : [
-		'instance',
-		'method',
-		'globals',
-		'encoder',
-		'optimization'
+		#instance,
+		#method,
+		#globals,
+		#encoder,
+		#optimization
 	],
 	#category : 'OpalCompiler-Tests-AST',
 	#package : 'OpalCompiler-Tests',

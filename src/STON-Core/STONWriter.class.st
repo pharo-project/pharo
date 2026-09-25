@@ -32,20 +32,20 @@ Class {
 	#name : 'STONWriter',
 	#superclass : 'Object',
 	#instVars : [
-		'writeStream',
-		'prettyPrint',
-		'stonCharacters',
-		'newLine',
-		'asciiOnly',
-		'jsonMode',
-		'keepNewLines',
-		'referencePolicy',
-		'level',
-		'objects'
+		#writeStream,
+		#prettyPrint,
+		#stonCharacters,
+		#newLine,
+		#asciiOnly,
+		#jsonMode,
+		#keepNewLines,
+		#referencePolicy,
+		#level,
+		#objects
 	],
 	#classVars : [
-		'STONCharacters',
-		'STONSimpleSymbolCharacters'
+		#STONCharacters,
+		#STONSimpleSymbolCharacters
 	],
 	#category : 'STON-Core-Writer',
 	#package : 'STON-Core',
@@ -375,11 +375,11 @@ STONWriter >> stonCharacters [
 { #category : 'private' }
 STONWriter >> with: object do: block [
 	| index |
-	referencePolicy = #ignore
+	(referencePolicy sameContents: #ignore)
 		ifTrue: [ ^ block value ].
 	(index := objects at: object ifAbsent: [ nil ]) isNotNil
 		ifTrue: [
-			referencePolicy = #error
+			(referencePolicy sameContents: #error)
 				ifTrue: [ ^ self error: 'shared reference detected' ].
 			self writeReference: index ]
 		ifFalse: [

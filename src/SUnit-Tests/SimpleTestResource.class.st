@@ -5,12 +5,12 @@ Class {
 	#name : 'SimpleTestResource',
 	#superclass : 'TestResource',
 	#instVars : [
-		'runningState',
-		'hasRun',
-		'hasSetup'
+		#runningState,
+		#hasRun,
+		#hasSetup
 	],
 	#classInstVars : [
-		'preventAvailability'
+		#preventAvailability
 	],
 	#category : 'SUnit-Tests-Resources',
 	#package : 'SUnit-Tests',

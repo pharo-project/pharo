@@ -18,8 +18,8 @@ Class {
 	#name : 'RBRenameTemporaryVariableTransformation',
 	#superclass : 'RBMethodTransformation',
 	#instVars : [
-		'variableName',
-		'newVariableName'
+		#variableName,
+		#newVariableName
 	],
 	#category : 'Refactoring-Transformations-Model-Unused',
 	#package : 'Refactoring-Transformations',

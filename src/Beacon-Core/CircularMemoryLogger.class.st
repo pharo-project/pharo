@@ -24,10 +24,10 @@ Class {
 	#name : 'CircularMemoryLogger',
 	#superclass : 'MemoryLogger',
 	#instVars : [
-		'entryCount',
-		'index',
-		'fullBuffer',
-		'loopCount'
+		#entryCount,
+		#index,
+		#fullBuffer,
+		#loopCount
 	],
 	#category : 'Beacon-Core-Loggers',
 	#package : 'Beacon-Core',

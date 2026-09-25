@@ -5,24 +5,24 @@ Class {
 	#name : 'FreeTypeFont',
 	#superclass : 'AbstractFont',
 	#instVars : [
-		'face',
-		'pointSize',
-		'simulatedEmphasis',
-		'pixelSize',
-		'widthAndKernedWidthCache',
-		'cachedHeight',
-		'cachedAscent',
-		'cachedDescent',
-		'subPixelPositioned',
-		'symbolFont',
-		'characterWidthCache'
+		#face,
+		#pointSize,
+		#simulatedEmphasis,
+		#pixelSize,
+		#widthAndKernedWidthCache,
+		#cachedHeight,
+		#cachedAscent,
+		#cachedDescent,
+		#subPixelPositioned,
+		#symbolFont,
+		#characterWidthCache
 	],
 	#pools : [
-		'FT2Constants',
-		'FreeTypeCacheConstants'
+		#FT2Constants,
+		#FreeTypeCacheConstants
 	],
 	#classInstVars : [
-		'all'
+		#all
 	],
 	#category : 'FreeType-Fonts',
 	#package : 'FreeType',
@@ -566,7 +566,7 @@ FreeTypeFont >> isSymbolFont [
 	symbolFont ifNotNil:[^symbolFont].
 	self face isValid ifFalse:[^false].
 	charmaps := self face charmaps.
-	(charmaps includes: 'symb') ifTrue:[^symbolFont := true]."MS Symbol font"
+	(charmaps includes: #symb) ifTrue:[^symbolFont := true]."MS Symbol font"
 	^symbolFont := false
 ]
 

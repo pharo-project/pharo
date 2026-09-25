@@ -9,7 +9,7 @@ Class {
 	#name : 'WeakSet',
 	#superclass : 'Set',
 	#instVars : [
-		'flag'
+		#flag
 	],
 	#category : 'Collections-Weak-Base',
 	#package : 'Collections-Weak',
@@ -243,7 +243,7 @@ WeakSet >> scanFor: anObject [
 	index := start := anObject hash \\ array size + 1.
 	[
 		| element |
-		((element := array at: index) == flag or: [ element enclosedElement = anObject ])
+		((element := array at: index) == flag or: [ element enclosedElement sameContents: anObject ])
 			ifTrue: [ ^index ].
 		(index := index \\ array size + 1) = start ] whileFalse.
 	self errorNoFreeSpace

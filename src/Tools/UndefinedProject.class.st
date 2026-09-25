@@ -5,7 +5,7 @@ Class {
 	#name : 'UndefinedProject',
 	#superclass : 'Project',
 	#instVars : [
-		'packages'
+		#packages
 	],
 	#category : 'Tools',
 	#package : 'Tools'

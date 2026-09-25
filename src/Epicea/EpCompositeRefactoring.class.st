@@ -5,7 +5,7 @@ Class {
 	#name : 'EpCompositeRefactoring',
 	#superclass : 'EpRefactoring',
 	#instVars : [
-		'childrenRefactorings'
+		#childrenRefactorings
 	],
 	#category : 'Epicea-Model',
 	#package : 'Epicea',

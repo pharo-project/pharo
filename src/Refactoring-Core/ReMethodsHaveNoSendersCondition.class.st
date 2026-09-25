@@ -2,9 +2,9 @@ Class {
 	#name : 'ReMethodsHaveNoSendersCondition',
 	#superclass : 'ReMethodsCondition',
 	#instVars : [
-		'classSelectorsMapping',
-		'model',
-		'allSelectors'
+		#classSelectorsMapping,
+		#model,
+		#allSelectors
 	],
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',

@@ -6,14 +6,14 @@ Class {
 	#name : 'CoTypeInferencer',
 	#superclass : 'RBProgramNodeVisitor',
 	#instVars : [
-		'returnType',
-		'variables',
-		'level',
-		'arguments',
-		'method',
-		'temporaryVariables',
-		'receiverClass',
-		'argumentVariables'
+		#returnType,
+		#variables,
+		#level,
+		#arguments,
+		#method,
+		#temporaryVariables,
+		#receiverClass,
+		#argumentVariables
 	],
 	#category : 'HeuristicCompletion-Model-InitializeInferenceHeuristic',
 	#package : 'HeuristicCompletion-Model',
@@ -301,10 +301,10 @@ CoTypeInferencer >> visitMessageNode: aRBMessageNode receiverType: receiverType 
 	(#(+ - / *) includes: aRBMessageNode selector)
 		ifTrue: [ ^ { Number } ].
 
-	"(aRBMessageNode selector = #asValueHolder)
+	"(aRBMessageNode selector sameContents: #asValueHolder)
 		ifTrue: [ ^ { NewValueHolder } ]."
 
-	aRBMessageNode selector = #class
+	(aRBMessageNode selector sameContents: #class)
 		ifTrue: [ ^ receiverType collect: [ :each | each class ] ].
 
 	argumentTypes := aRBMessageNode arguments

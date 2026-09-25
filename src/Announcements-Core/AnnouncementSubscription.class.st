@@ -8,7 +8,7 @@ Class {
 	#name : 'AnnouncementSubscription',
 	#superclass : 'AbstractAnnouncementSubscription',
 	#instVars : [
-		'subscriber'
+		#subscriber
 	],
 	#category : 'Announcements-Core-Subscription',
 	#package : 'Announcements-Core',

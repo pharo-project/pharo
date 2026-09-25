@@ -6,7 +6,7 @@ Class {
 	#name : 'DTTestsProfilerVisitor',
 	#superclass : 'SUnitVisitor',
 	#instVars : [
-		'profilingData'
+		#profilingData
 	],
 	#category : 'DrTests-TestsProfiling',
 	#package : 'DrTests-TestsProfiling'

@@ -16,10 +16,10 @@ Class {
 	#name : 'Pragma',
 	#superclass : 'Message',
 	#instVars : [
-		'method'
+		#method
 	],
 	#classInstVars : [
-		'pragmaCache'
+		#pragmaCache
 	],
 	#category : 'Kernel-CodeModel-Pragmas',
 	#package : 'Kernel-CodeModel',

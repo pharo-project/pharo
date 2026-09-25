@@ -5,7 +5,7 @@ Class {
 	#name : 'RubMorphEdited',
 	#superclass : 'RubMorphAnnouncement',
 	#instVars : [
-		'previousContents'
+		#previousContents
 	],
 	#category : 'Rubric-Editing-Announcements',
 	#package : 'Rubric',

@@ -5,10 +5,10 @@ Class {
 	#name : 'VariableBreakpoint',
 	#superclass : 'Breakpoint',
 	#instVars : [
-		'targetVariableNames',
-		'accessStrategy',
-		'isInstalled',
-		'targetClassOrMethod'
+		#targetVariableNames,
+		#accessStrategy,
+		#isInstalled,
+		#targetClassOrMethod
 	],
 	#category : 'Reflectivity-Breakpoints',
 	#package : 'Reflectivity',

@@ -6,7 +6,7 @@ Class {
 	#name : 'OSTouchComplexEvent',
 	#superclass : 'OSTouchEvent',
 	#instVars : [
-		'position'
+		#position
 	],
 	#category : 'OSWindow-Core-Events-Touch',
 	#package : 'OSWindow-Core',

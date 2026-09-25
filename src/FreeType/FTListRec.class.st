@@ -5,11 +5,11 @@ Class {
 	#name : 'FTListRec',
 	#superclass : 'FFIExternalStructure',
 	#classVars : [
-		'OFFSET_HEAD',
-		'OFFSET_TAIL'
+		#OFFSET_HEAD,
+		#OFFSET_TAIL
 	],
 	#pools : [
-		'FT2Types'
+		#FT2Types
 	],
 	#category : 'FreeType-Bindings',
 	#package : 'FreeType',

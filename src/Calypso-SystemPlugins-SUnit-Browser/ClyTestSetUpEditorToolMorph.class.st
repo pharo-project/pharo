@@ -11,7 +11,7 @@ Class {
 	#name : 'ClyTestSetUpEditorToolMorph',
 	#superclass : 'ClyMethodCodeEditorToolMorph',
 	#instVars : [
-		'testClass'
+		#testClass
 	],
 	#category : 'Calypso-SystemPlugins-SUnit-Browser-Tools',
 	#package : 'Calypso-SystemPlugins-SUnit-Browser',

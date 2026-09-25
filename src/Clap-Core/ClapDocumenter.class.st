@@ -7,7 +7,7 @@ Class {
 	#name : 'ClapDocumenter',
 	#superclass : 'Object',
 	#instVars : [
-		'formatter'
+		#formatter
 	],
 	#category : 'Clap-Core-Documentation',
 	#package : 'Clap-Core',

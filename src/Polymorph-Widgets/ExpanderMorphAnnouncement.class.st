@@ -5,7 +5,7 @@ Class {
 	#name : 'ExpanderMorphAnnouncement',
 	#superclass : 'Announcement',
 	#instVars : [
-		'expanderMorph'
+		#expanderMorph
 	],
 	#category : 'Polymorph-Widgets-Announcements',
 	#package : 'Polymorph-Widgets',

@@ -2,5 +2,5 @@ Extension { #name : 'CompiledMethod' }
 
 { #category : '*Keymapping-Core' }
 CompiledMethod >> isShortcutDeclaration [
-	^ self pragmas anySatisfy: [ :p | p selector = #shortcut ]
+	^ self pragmas anySatisfy: [ :p | p selector sameContents: #shortcut ]
 ]

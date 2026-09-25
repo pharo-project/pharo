@@ -16,19 +16,19 @@ Class {
 	#name : 'GrowlMorph',
 	#superclass : 'TextMorph',
 	#instVars : [
-		'dismissHandle',
-		'vanishTime',
-		'alpha',
-		'actionBlock',
-		'vanishDelay',
-		'labelAttr',
-		'contentsAttr',
-		'labelColor',
-		'contentsColor'
+		#dismissHandle,
+		#vanishTime,
+		#alpha,
+		#actionBlock,
+		#vanishDelay,
+		#labelAttr,
+		#contentsAttr,
+		#labelColor,
+		#contentsColor
 	],
 	#classVars : [
-		'Position',
-		'Type'
+		#Position,
+		#Type
 	],
 	#category : 'Growl-Base',
 	#package : 'Growl',
@@ -47,7 +47,7 @@ GrowlMorph class >> growlPositionChoices [
 	^#(topRight 'top right'
 		bottomLeft 'bottom left'
 		bottomRight 'bottom right'
-		topLeft 'topLeft') pairsCollect: [:a :b | b -> a]
+		topLeft topLeft) pairsCollect: [:a :b | b -> a]
 ]
 
 { #category : 'settings' }
@@ -108,7 +108,7 @@ GrowlMorph class >> openWithLabel: aString contents: contentString [
 { #category : 'instance creation' }
 GrowlMorph class >> openWithLabel: aString contents: contentString backgroundColor: aColor labelColor: aLabelColor [
 
-	^ self type = #window
+	^ (self type sameContents: #window)
 		ifTrue: [ MessageDialogWindow new message: contentString ]
 		ifFalse: [
 			| anInstance |
@@ -410,13 +410,13 @@ GrowlMorph >> streamDo: aBlock [
 { #category : 'position' }
 GrowlMorph >> unoccupiedPosition [
 
-	self class position = #bottomLeft
+	(self class position sameContents: #bottomLeft)
 		ifTrue: [ ^ self unoccupiedPositionBottomLeft ].
-	self class position = #topRight
+	(self class position sameContents: #topRight)
 		ifTrue: [ ^ self unoccupiedPositionTopRight ].
-	self class position = #bottomRight
+	(self class position sameContents: #bottomRight)
 		ifTrue: [ ^ self unoccupiedPositionBottomRight ].
-	self class position = #topLeft
+	(self class position sameContents: #topLeft)
 		ifTrue: [ ^ self unoccupiedPositionTopLeft ].
 	^ 0@0
 ]

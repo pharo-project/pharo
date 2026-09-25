@@ -2,11 +2,11 @@ Class {
 	#name : 'ShClassInstallerTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'newClass',
-		'superClass',
-		'subClass',
-		'newClass2',
-		'superClass2'
+		#newClass,
+		#superClass,
+		#subClass,
+		#newClass2,
+		#superClass2
 	],
 	#category : 'Shift-ClassBuilder-Tests-Installer',
 	#package : 'Shift-ClassBuilder-Tests',
@@ -341,7 +341,7 @@ ShClassInstallerTest >> testDuplicatedInstanceVariableInSuperclass [
 	self fail ]
 		on: DuplicatedSlotName
 		do: [ :ex | self deny: ex isResumable ].
-	self deny: ((superClass slots collect: [ :e | e name ]) includes: 'aSlot')
+	self deny: ((superClass slots collect: [ :e | e name ]) includes: #aSlot)
 ]
 
 { #category : 'tests' }
@@ -359,7 +359,7 @@ ShClassInstallerTest >> testDuplicatedInstanceVariableInSuperclassMetaclass [
 	self fail ]
 		on: DuplicatedSlotName
 		do: [ :ex | self deny: ex isResumable ].
-	self deny: ((superClass class slots collect: [ :e | e name ]) includes: 'aSlot')
+	self deny: ((superClass class slots collect: [ :e | e name ]) includes: #aSlot)
 ]
 
 { #category : 'tests' }

@@ -5,7 +5,7 @@ Class {
 	#name : 'AthensGradientPaint',
 	#superclass : 'AthensPaint',
 	#instVars : [
-		'gradient'
+		#gradient
 	],
 	#category : 'Athens-Balloon-Paint',
 	#package : 'Athens-Balloon',

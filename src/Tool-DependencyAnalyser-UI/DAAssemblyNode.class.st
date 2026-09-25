@@ -6,7 +6,7 @@ Class {
 	#name : 'DAAssemblyNode',
 	#superclass : 'DANode',
 	#instVars : [
-		'dependencies'
+		#dependencies
 	],
 	#category : 'Tool-DependencyAnalyser-UI-Nodes',
 	#package : 'Tool-DependencyAnalyser-UI',

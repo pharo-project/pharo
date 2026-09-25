@@ -27,11 +27,11 @@ Class {
 	#name : 'FTBasicTreeListItem',
 	#superclass : 'Object',
 	#instVars : [
-		'expanded',
-		'depth',
-		'item',
-		'children',
-		'dataSource'
+		#expanded,
+		#depth,
+		#item,
+		#children,
+		#dataSource
 	],
 	#category : 'Morphic-Widgets-FastTable-Tree-Basic',
 	#package : 'Morphic-Widgets-FastTable',

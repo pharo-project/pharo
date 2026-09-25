@@ -2,9 +2,9 @@ Class {
 	#name : 'ClyBrowserQueryCursorTest',
 	#superclass : 'ClyAbstractNavigationEnvironmentTest',
 	#instVars : [
-		'cursor',
-		'queryResult',
-		'itemObserver'
+		#cursor,
+		#queryResult,
+		#itemObserver
 	],
 	#category : 'Calypso-NavigationModel-Tests',
 	#package : 'Calypso-NavigationModel-Tests'

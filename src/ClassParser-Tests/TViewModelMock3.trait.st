@@ -4,8 +4,8 @@ A trait used in test classes like `CDFluidClassParserTest`
 Trait {
 	#name : 'TViewModelMock3',
 	#instVars : [
-		'a',
-		'b'
+		#a,
+		#b
 	],
 	#category : 'ClassParser-Tests',
 	#package : 'ClassParser-Tests'

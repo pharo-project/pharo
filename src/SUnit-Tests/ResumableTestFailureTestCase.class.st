@@ -5,7 +5,7 @@ Class {
 	#name : 'ResumableTestFailureTestCase',
 	#superclass : 'TestCase',
 	#instVars : [
-		'duplicateFailureLog'
+		#duplicateFailureLog
 	],
 	#category : 'SUnit-Tests-Core',
 	#package : 'SUnit-Tests',

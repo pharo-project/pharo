@@ -11,7 +11,7 @@ Class {
 	#name : 'FBDLoop',
 	#superclass : 'Object',
 	#instVars : [
-		'backjump'
+		#backjump
 	],
 	#category : 'Flashback-Decompiler-Utilities',
 	#package : 'Flashback-Decompiler',

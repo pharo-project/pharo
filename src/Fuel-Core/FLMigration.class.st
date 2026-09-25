@@ -7,9 +7,9 @@ Class {
 	#name : 'FLMigration',
 	#superclass : 'Object',
 	#instVars : [
-		'sourceClassName',
-		'variables',
-		'targetClass'
+		#sourceClassName,
+		#variables,
+		#targetClass
 	],
 	#category : 'Fuel-Core-Base',
 	#package : 'Fuel-Core',

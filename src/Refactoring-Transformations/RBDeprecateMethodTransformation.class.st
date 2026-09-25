@@ -42,7 +42,7 @@ Class {
 	#name : 'RBDeprecateMethodTransformation',
 	#superclass : 'RBCompositeMethodTransformation',
 	#instVars : [
-		'newSelector'
+		#newSelector
 	],
 	#category : 'Refactoring-Transformations-Model-Unused',
 	#package : 'Refactoring-Transformations',

@@ -5,8 +5,8 @@ Class {
 	#name : 'OmMemoryStore',
 	#superclass : 'OmStore',
 	#instVars : [
-		'entries',
-		'globalName'
+		#entries,
+		#globalName
 	],
 	#category : 'Ombu-Stores',
 	#package : 'Ombu',

@@ -6,7 +6,7 @@ Class {
 	#name : 'MorphicEventHandler',
 	#superclass : 'Object',
 	#instVars : [
-		'subscriptions'
+		#subscriptions
 	],
 	#category : 'Morphic-Base-Events',
 	#package : 'Morphic-Base',

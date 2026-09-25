@@ -21,7 +21,7 @@ Class {
 	#name : 'OSSDL2ExternalForm',
 	#superclass : 'Form',
 	#instVars : [
-		'pointer'
+		#pointer
 	],
 	#category : 'OSWindow-SDL2-Base',
 	#package : 'OSWindow-SDL2',

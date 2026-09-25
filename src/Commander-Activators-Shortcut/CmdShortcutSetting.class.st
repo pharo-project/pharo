@@ -20,7 +20,7 @@ Class {
 	#name : 'CmdShortcutSetting',
 	#superclass : 'SettingDeclaration',
 	#instVars : [
-		'shortcutActivation'
+		#shortcutActivation
 	],
 	#category : 'Commander-Activators-Shortcut',
 	#package : 'Commander-Activators-Shortcut'

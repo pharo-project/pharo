@@ -5,7 +5,7 @@ Class {
 	#name : 'AthensSurfaceExamples',
 	#superclass : 'Model',
 	#instVars : [
-		'renderBlock'
+		#renderBlock
 	],
 	#category : 'Athens-Examples-Base',
 	#package : 'Athens-Examples',

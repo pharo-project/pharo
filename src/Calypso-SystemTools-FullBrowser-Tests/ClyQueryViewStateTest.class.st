@@ -2,8 +2,8 @@ Class {
 	#name : 'ClyQueryViewStateTest',
 	#superclass : 'ClyNavigationHistoryTest',
 	#instVars : [
-		'viewDataSource',
-		'queryView'
+		#viewDataSource,
+		#queryView
 	],
 	#category : 'Calypso-SystemTools-FullBrowser-Tests',
 	#package : 'Calypso-SystemTools-FullBrowser-Tests'

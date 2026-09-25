@@ -11,8 +11,8 @@ Class {
 	#name : 'ZnMimePart',
 	#superclass : 'Object',
 	#instVars : [
-		'headers',
-		'entity'
+		#headers,
+		#entity
 	],
 	#category : 'Zinc-HTTP-Core',
 	#package : 'Zinc-HTTP',
@@ -81,7 +81,7 @@ ZnMimePart >> = other [
 
 { #category : 'accessing' }
 ZnMimePart >> contentDisposition [
-	^ self headers at: 'Content-Disposition' ifAbsent: [ nil ]
+	^ self headers at: #'Content-Disposition' ifAbsent: [ nil ]
 ]
 
 { #category : 'private' }
@@ -254,7 +254,7 @@ ZnMimePart >> readFrom: stream [
 
 { #category : 'accessing' }
 ZnMimePart >> setContentDisposition: value [
-	^ self headers at: 'Content-Disposition' put: value
+	^ self headers at: #'Content-Disposition' put: value
 ]
 
 { #category : 'writing' }

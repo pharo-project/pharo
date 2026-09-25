@@ -7,7 +7,7 @@ Class {
 	#name : 'LIFOQueue',
 	#superclass : 'AtomicCollection',
 	#instVars : [
-		'head'
+		#head
 	],
 	#category : 'Collections-Atomic-Base',
 	#package : 'Collections-Atomic',

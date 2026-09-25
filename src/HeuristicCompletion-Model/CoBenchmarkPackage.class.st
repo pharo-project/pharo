@@ -7,7 +7,7 @@ Class {
 	#name : 'CoBenchmarkPackage',
 	#superclass : 'Object',
 	#instVars : [
-		'package'
+		#package
 	],
 	#category : 'HeuristicCompletion-Model-Benchmarks',
 	#package : 'HeuristicCompletion-Model',

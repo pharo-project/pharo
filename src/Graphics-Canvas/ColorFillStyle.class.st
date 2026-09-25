@@ -5,8 +5,8 @@ Class {
 	#name : 'ColorFillStyle',
 	#superclass : 'SolidFillStyle',
 	#instVars : [
-		'origin',
-		'extent'
+		#origin,
+		#extent
 	],
 	#category : 'Graphics-Canvas-Fills',
 	#package : 'Graphics-Canvas',

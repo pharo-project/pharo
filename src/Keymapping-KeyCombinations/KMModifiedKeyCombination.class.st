@@ -19,8 +19,8 @@ Class {
 	#name : 'KMModifiedKeyCombination',
 	#superclass : 'KMKeyCombination',
 	#instVars : [
-		'modifier',
-		'character'
+		#modifier,
+		#character
 	],
 	#category : 'Keymapping-KeyCombinations',
 	#package : 'Keymapping-KeyCombinations'

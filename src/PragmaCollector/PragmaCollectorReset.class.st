@@ -13,7 +13,7 @@ Class {
 	#name : 'PragmaCollectorReset',
 	#superclass : 'Announcement',
 	#instVars : [
-		'collector'
+		#collector
 	],
 	#category : 'PragmaCollector-Announcements',
 	#package : 'PragmaCollector',

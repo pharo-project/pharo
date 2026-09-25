@@ -8,8 +8,8 @@ Class {
 	#name : 'WindowMoved',
 	#superclass : 'WindowAnnouncement',
 	#instVars : [
-		'oldPosition',
-		'newPosition'
+		#oldPosition,
+		#newPosition
 	],
 	#category : 'Morphic-Widgets-Windows-Announcements',
 	#package : 'Morphic-Widgets-Windows',

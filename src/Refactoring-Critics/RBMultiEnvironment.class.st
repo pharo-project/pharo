@@ -2,7 +2,7 @@ Class {
 	#name : 'RBMultiEnvironment',
 	#superclass : 'RBBrowserEnvironmentWrapper',
 	#instVars : [
-		'environmentDictionaries'
+		#environmentDictionaries
 	],
 	#category : 'Refactoring-Critics',
 	#package : 'Refactoring-Critics'

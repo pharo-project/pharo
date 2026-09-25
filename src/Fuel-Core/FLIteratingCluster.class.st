@@ -5,8 +5,8 @@ Class {
 	#name : 'FLIteratingCluster',
 	#superclass : 'FLCluster',
 	#instVars : [
-		'objects',
-		'references'
+		#objects,
+		#references
 	],
 	#category : 'Fuel-Core-Clusters',
 	#package : 'Fuel-Core',

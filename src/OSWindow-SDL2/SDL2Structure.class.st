@@ -5,10 +5,10 @@ Class {
 	#name : 'SDL2Structure',
 	#superclass : 'FFIExternalStructure',
 	#pools : [
-		'SDL2',
-		'SDL2Constants',
-		'SDL2ScanCodeConstants',
-		'SDL2Types'
+		#SDL2,
+		#SDL2Constants,
+		#SDL2ScanCodeConstants,
+		#SDL2Types
 	],
 	#category : 'OSWindow-SDL2-Bindings',
 	#package : 'OSWindow-SDL2',

@@ -7,10 +7,10 @@ Class {
 	#name : 'HiNode',
 	#superclass : 'Object',
 	#instVars : [
-		'value',
-		'incomingLinks',
-		'outgoingLinks',
-		'rulerPoint'
+		#value,
+		#incomingLinks,
+		#outgoingLinks,
+		#rulerPoint
 	],
 	#category : 'Hiedra-Model',
 	#package : 'Hiedra',

@@ -7,12 +7,12 @@ Class {
 	#traits : 'TTaskScheduler - {#scheduleTaskExecution:}',
 	#classTraits : 'TTaskScheduler classTrait',
 	#instVars : [
-		'poolMaxSize',
-		'workers',
-		'taskQueue',
-		'failedTasks',
-		'name',
-		'mutex'
+		#poolMaxSize,
+		#workers,
+		#taskQueue,
+		#failedTasks,
+		#name,
+		#mutex
 	],
 	#category : 'TaskIt-Worker',
 	#package : 'TaskIt',

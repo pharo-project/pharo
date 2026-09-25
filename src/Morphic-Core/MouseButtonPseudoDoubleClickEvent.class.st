@@ -6,7 +6,7 @@ Class {
 	#name : 'MouseButtonPseudoDoubleClickEvent',
 	#superclass : 'MouseButtonEvent',
 	#instVars : [
-		'secondEvent'
+		#secondEvent
 	],
 	#category : 'Morphic-Core-Events',
 	#package : 'Morphic-Core',

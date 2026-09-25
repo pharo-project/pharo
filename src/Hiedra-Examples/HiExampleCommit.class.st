@@ -27,9 +27,9 @@ Class {
 	#name : 'HiExampleCommit',
 	#superclass : 'Object',
 	#instVars : [
-		'id',
-		'comment',
-		'parentIds'
+		#id,
+		#comment,
+		#parentIds
 	],
 	#category : 'Hiedra-Examples-Model',
 	#package : 'Hiedra-Examples',

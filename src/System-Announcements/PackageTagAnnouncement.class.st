@@ -5,7 +5,7 @@ Class {
 	#name : 'PackageTagAnnouncement',
 	#superclass : 'SystemAnnouncement',
 	#instVars : [
-		'tag'
+		#tag
 	],
 	#category : 'System-Announcements-System-Packages',
 	#package : 'System-Announcements',

@@ -9,12 +9,12 @@ Class {
 ProjectManagerTest >> testPackagesInAProject [
 
 	| sUnitProject |
-	sUnitProject := ProjectManager new projects detect: [ :project | project name = #SUnit ].
+	sUnitProject := ProjectManager new projects detect: [ :project | project name sameContents: #SUnit ].
 
 	self
 		assertCollection:
-			#( 'BaselineOfSUnit' 'SUnit-Core' 'SUnit-Core-Traits' 'SUnit-Tests' 'SUnit-Visitor' 'SUnit-Visitor-Tests' 'SUnit-MockObjects' 'SUnit-MockObjects-Tests'
-			   'SUnit-UI' 'Coverage' 'JenkinsTools-Core' 'JenkinsTools-ExtraReports' 'SUnit-Support-UITesting-Tests' 'SUnit-Support-UITesting' )
+			#( BaselineOfSUnit 'SUnit-Core' 'SUnit-Core-Traits' 'SUnit-Tests' 'SUnit-Visitor' 'SUnit-Visitor-Tests' 'SUnit-MockObjects' 'SUnit-MockObjects-Tests'
+			   'SUnit-UI' Coverage 'JenkinsTools-Core' 'JenkinsTools-ExtraReports' 'SUnit-Support-UITesting-Tests' 'SUnit-Support-UITesting' )
 		hasSameElements: (sUnitProject packages collect: [ :package | package name ])
 ]
 

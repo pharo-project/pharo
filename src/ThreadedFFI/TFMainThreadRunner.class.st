@@ -6,10 +6,10 @@ Class {
 	#name : 'TFMainThreadRunner',
 	#superclass : 'TFRunner',
 	#classVars : [
-		'MainThreadHandle'
+		#MainThreadHandle
 	],
 	#classInstVars : [
-		'uniqueInstance'
+		#uniqueInstance
 	],
 	#category : 'ThreadedFFI-Worker',
 	#package : 'ThreadedFFI',

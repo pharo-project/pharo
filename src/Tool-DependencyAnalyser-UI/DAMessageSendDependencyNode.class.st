@@ -5,7 +5,7 @@ Class {
 	#name : 'DAMessageSendDependencyNode',
 	#superclass : 'DAMessageSendNode',
 	#instVars : [
-		'sentMessages'
+		#sentMessages
 	],
 	#category : 'Tool-DependencyAnalyser-UI-Nodes',
 	#package : 'Tool-DependencyAnalyser-UI',

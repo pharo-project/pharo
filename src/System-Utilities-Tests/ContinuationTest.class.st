@@ -5,8 +5,8 @@ Class {
 	#name : 'ContinuationTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'tmp',
-		'tmp2'
+		#tmp,
+		#tmp2
 	],
 	#category : 'System-Utilities-Tests',
 	#package : 'System-Utilities-Tests'

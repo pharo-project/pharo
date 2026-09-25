@@ -5,9 +5,9 @@ Class {
 	#name : 'PSMCMergeMorph',
 	#superclass : 'ComposableMorph',
 	#instVars : [
-		'patchMorph',
-		'codeMorph',
-		'merged'
+		#patchMorph,
+		#codeMorph,
+		#merged
 	],
 	#category : 'Monticello-GUI-Diff',
 	#package : 'Monticello-GUI-Diff'

@@ -5,8 +5,8 @@ Class {
 	#name : 'GuideTest',
 	#superclass : 'SingleTreeTest',
 	#instVars : [
-		'guide',
-		'visited'
+		#guide,
+		#visited
 	],
 	#category : 'FileSystem-Core-Tests-Guide',
 	#package : 'FileSystem-Core-Tests',
@@ -15,7 +15,7 @@ Class {
 
 { #category : 'testing' }
 GuideTest class >> isAbstract [
-	^ self name = #GuideTest
+	^ self name sameContents: #GuideTest
 ]
 
 { #category : 'asserting' }

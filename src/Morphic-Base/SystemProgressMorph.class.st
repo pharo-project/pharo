@@ -24,15 +24,15 @@ Class {
 	#traits : 'TAbleToRotate',
 	#classTraits : 'TAbleToRotate classTrait',
 	#instVars : [
-		'lock',
-		'lastRefresh'
+		#lock,
+		#lastRefresh
 	],
 	#classVars : [
-		'UniqueInstance'
+		#UniqueInstance
 	],
 	#classInstVars : [
-		'horizontalPosition',
-		'verticalPosition'
+		#horizontalPosition,
+		#verticalPosition
 	],
 	#category : 'Morphic-Base-ProgressBar',
 	#package : 'Morphic-Base',

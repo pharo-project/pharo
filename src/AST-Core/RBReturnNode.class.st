@@ -11,8 +11,8 @@ Class {
 	#name : 'RBReturnNode',
 	#superclass : 'RBProgramNode',
 	#instVars : [
-		'value',
-		'start'
+		#value,
+		#start
 	],
 	#category : 'AST-Core-Nodes',
 	#package : 'AST-Core',
@@ -38,7 +38,7 @@ RBReturnNode >> = anObject [
 		ifTrue: [ ^ true ].
 	self class = anObject class
 		ifFalse: [ ^ false ].
-	^ self value = anObject value
+	^ self value sameContents: anObject value
 ]
 
 { #category : 'visiting' }

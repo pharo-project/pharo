@@ -5,7 +5,7 @@ Class {
 	#name : 'EpLogNode',
 	#superclass : 'Object',
 	#instVars : [
-		'referencedNodes'
+		#referencedNodes
 	],
 	#category : 'EpiceaBrowsers-UI-Graph',
 	#package : 'EpiceaBrowsers',

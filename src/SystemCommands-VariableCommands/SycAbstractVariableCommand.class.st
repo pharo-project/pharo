@@ -2,7 +2,7 @@ Class {
 	#name : 'SycAbstractVariableCommand',
 	#superclass : 'SycRefactorVariableCommand',
 	#instVars : [
-		'selectedClass'
+		#selectedClass
 	],
 	#category : 'SystemCommands-VariableCommands',
 	#package : 'SystemCommands-VariableCommands'

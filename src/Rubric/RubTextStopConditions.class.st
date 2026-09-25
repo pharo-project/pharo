@@ -5,9 +5,9 @@ Class {
 	#name : 'RubTextStopConditions',
 	#superclass : 'Object',
 	#instVars : [
-		'stops',
-		'crossedX',
-		'endOfRun'
+		#stops,
+		#crossedX,
+		#endOfRun
 	],
 	#category : 'Rubric-TextScanning',
 	#package : 'Rubric',

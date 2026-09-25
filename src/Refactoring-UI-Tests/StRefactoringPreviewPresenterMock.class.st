@@ -2,8 +2,8 @@ Class {
 	#name : 'StRefactoringPreviewPresenterMock',
 	#superclass : 'Object',
 	#instVars : [
-		'changes',
-		'application'
+		#changes,
+		#application
 	],
 	#category : 'Refactoring-UI-Tests',
 	#package : 'Refactoring-UI-Tests'

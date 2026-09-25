@@ -18,9 +18,9 @@ Class {
 	#name : 'ZdcIOBuffer',
 	#superclass : 'Object',
 	#instVars : [
-		'buffer',
-		'readPointer',
-		'writePointer'
+		#buffer,
+		#readPointer,
+		#writePointer
 	],
 	#category : 'Zodiac-Core',
 	#package : 'Zodiac-Core'

@@ -15,13 +15,13 @@ Class {
 	#name : 'BreakpointGroup',
 	#superclass : 'Object',
 	#instVars : [
-		'name',
-		'breakpoints'
+		#name,
+		#breakpoints
 	],
 	#classVars : [
-		'AllBreakpointsGroup',
-		'AllGroups',
-		'UngroupedBreakpointsGroup'
+		#AllBreakpointsGroup,
+		#AllGroups,
+		#UngroupedBreakpointsGroup
 	],
 	#category : 'Reflectivity-Breakpoints',
 	#package : 'Reflectivity',

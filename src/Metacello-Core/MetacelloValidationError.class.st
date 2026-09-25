@@ -5,9 +5,9 @@ Class {
 	#name : 'MetacelloValidationError',
 	#superclass : 'Object',
 	#instVars : [
-		'reasonCode',
-		'callSite',
-		'explanation'
+		#reasonCode,
+		#callSite,
+		#explanation
 	],
 	#category : 'Metacello-Core-Validation',
 	#package : 'Metacello-Core',

@@ -5,7 +5,7 @@ Class {
 	#name : 'PackageTestCase',
 	#superclass : 'AbstractEnvironmentTestCase',
 	#instVars : [
-		'testEnvironment'
+		#testEnvironment
 	],
 	#category : 'Kernel-CodeModel-Tests-Packages',
 	#package : 'Kernel-CodeModel-Tests',

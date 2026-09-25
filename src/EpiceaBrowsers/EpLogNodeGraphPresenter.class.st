@@ -9,11 +9,11 @@ Class {
 	#name : 'EpLogNodeGraphPresenter',
 	#superclass : 'SpPresenter',
 	#instVars : [
-		'directory',
-		'monitor',
-		'hiedraColumnController',
-		'hiedraCheckBox',
-		'logNodesTable'
+		#directory,
+		#monitor,
+		#hiedraColumnController,
+		#hiedraCheckBox,
+		#logNodesTable
 	],
 	#category : 'EpiceaBrowsers-UI-Graph',
 	#package : 'EpiceaBrowsers',

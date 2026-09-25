@@ -13,18 +13,18 @@ Class {
 	#name : 'SHA1',
 	#superclass : 'HashFunction',
 	#instVars : [
-		'totalA',
-		'totalB',
-		'totalC',
-		'totalD',
-		'totalE',
-		'totals'
+		#totalA,
+		#totalB,
+		#totalC,
+		#totalD,
+		#totalE,
+		#totals
 	],
 	#classVars : [
-		'K1',
-		'K2',
-		'K3',
-		'K4'
+		#K1,
+		#K2,
+		#K3,
+		#K4
 	],
 	#category : 'System-Hashing-SHA1',
 	#package : 'System-Hashing',

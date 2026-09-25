@@ -9,7 +9,7 @@ Class {
 	#name : 'ClyEditCommentSwitchMorph',
 	#superclass : 'ClyStatusBarItemMorph',
 	#instVars : [
-		'checkbox'
+		#checkbox
 	],
 	#category : 'BeautifulComments-Core',
 	#package : 'BeautifulComments',

@@ -7,11 +7,11 @@ Class {
 	#name : 'MczInstaller',
 	#superclass : 'Object',
 	#instVars : [
-		'stream',
-		'zip'
+		#stream,
+		#zip
 	],
 	#classVars : [
-		'Versions'
+		#Versions
 	],
 	#category : 'System-Installers',
 	#package : 'System-Installers'

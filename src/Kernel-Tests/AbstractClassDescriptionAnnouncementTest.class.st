@@ -2,7 +2,7 @@ Class {
 	#name : 'AbstractClassDescriptionAnnouncementTest',
 	#superclass : 'AbstractClassDescriptionTest',
 	#instVars : [
-		'numberOfAnnouncements'
+		#numberOfAnnouncements
 	],
 	#category : 'Kernel-Tests-Classes',
 	#package : 'Kernel-Tests',

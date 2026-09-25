@@ -15,12 +15,12 @@ Class {
 	#name : 'TextSelectionColor',
 	#superclass : 'TextAttribute',
 	#instVars : [
-		'colorBlock'
+		#colorBlock
 	],
 	#classVars : [
-		'FindReplaceSelection',
-		'PrimarySelection',
-		'SecondarySelection'
+		#FindReplaceSelection,
+		#PrimarySelection,
+		#SecondarySelection
 	],
 	#category : 'Text-Edition-Utilities',
 	#package : 'Text-Edition',

@@ -7,7 +7,7 @@ Class {
 	#name : 'TreeListMorph',
 	#superclass : 'SimpleHierarchicalListMorph',
 	#instVars : [
-		'font'
+		#font
 	],
 	#category : 'Morphic-Widgets-List',
 	#package : 'Morphic-Widgets-List'

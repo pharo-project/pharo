@@ -8,7 +8,7 @@ Class {
 	#name : 'MessageCatcher',
 	#superclass : 'ProtoObject',
 	#instVars : [
-		'accumulator'
+		#accumulator
 	],
 	#category : 'Debugging-Core',
 	#package : 'Debugging-Core'

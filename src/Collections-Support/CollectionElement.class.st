@@ -9,10 +9,10 @@ Class {
 	#name : 'CollectionElement',
 	#superclass : 'Object',
 	#instVars : [
-		'enclosedElement'
+		#enclosedElement
 	],
 	#classVars : [
-		'NilElement'
+		#NilElement
 	],
 	#category : 'Collections-Support-Utilities',
 	#package : 'Collections-Support',

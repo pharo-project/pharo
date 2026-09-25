@@ -74,8 +74,8 @@ Class {
 	#name : 'HistoryNode',
 	#superclass : 'HistoryLeaf',
 	#instVars : [
-		'history',
-		'opened'
+		#history,
+		#opened
 	],
 	#category : 'System-History-Utilities',
 	#package : 'System-History',

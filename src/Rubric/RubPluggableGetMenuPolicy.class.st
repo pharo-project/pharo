@@ -5,8 +5,8 @@ Class {
 	#name : 'RubPluggableGetMenuPolicy',
 	#superclass : 'RubGetMenuPolicy',
 	#instVars : [
-		'getMenuSelector',
-		'menuProvider'
+		#getMenuSelector,
+		#menuProvider
 	],
 	#category : 'Rubric-Editing-Core',
 	#package : 'Rubric',

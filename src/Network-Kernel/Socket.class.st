@@ -7,22 +7,22 @@ Class {
 	#name : 'Socket',
 	#superclass : 'Object',
 	#instVars : [
-		'semaphore',
-		'socketHandle',
-		'readSemaphore',
-		'writeSemaphore'
+		#semaphore,
+		#socketHandle,
+		#readSemaphore,
+		#writeSemaphore
 	],
 	#classVars : [
-		'Connected',
-		'DeadServer',
-		'InvalidSocket',
-		'OtherEndClosed',
-		'Registry',
-		'TCPSocketType',
-		'ThisEndClosed',
-		'UDPSocketType',
-		'Unconnected',
-		'WaitingForConnection'
+		#Connected,
+		#DeadServer,
+		#InvalidSocket,
+		#OtherEndClosed,
+		#Registry,
+		#TCPSocketType,
+		#ThisEndClosed,
+		#UDPSocketType,
+		#Unconnected,
+		#WaitingForConnection
 	],
 	#category : 'Network-Kernel-Base',
 	#package : 'Network-Kernel',

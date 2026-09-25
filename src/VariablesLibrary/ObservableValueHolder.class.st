@@ -15,9 +15,9 @@ Class {
 	#name : 'ObservableValueHolder',
 	#superclass : 'Object',
 	#instVars : [
-		'subscriptions',
-		'lock',
-		'value'
+		#subscriptions,
+		#lock,
+		#value
 	],
 	#category : 'VariablesLibrary-Observable',
 	#package : 'VariablesLibrary',

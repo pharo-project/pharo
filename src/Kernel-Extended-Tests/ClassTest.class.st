@@ -5,8 +5,8 @@ Class {
 	#name : 'ClassTest',
 	#superclass : 'ClassTestCase',
 	#instVars : [
-		'className',
-		'testEnvironment'
+		#className,
+		#testEnvironment
 	],
 	#category : 'Kernel-Extended-Tests-Classes',
 	#package : 'Kernel-Extended-Tests',

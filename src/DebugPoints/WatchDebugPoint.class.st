@@ -5,8 +5,8 @@ Class {
 	#name : 'WatchDebugPoint',
 	#superclass : 'DebugPoint',
 	#instVars : [
-		'history',
-		'limit'
+		#history,
+		#limit
 	],
 	#category : 'DebugPoints-Implementations',
 	#package : 'DebugPoints',

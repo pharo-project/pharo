@@ -5,8 +5,8 @@ Class {
 	#name : 'ShAbstractClassBuilderTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'result',
-		'builder'
+		#result,
+		#builder
 	],
 	#category : 'Shift-ClassBuilder-Tests-Base',
 	#package : 'Shift-ClassBuilder-Tests',

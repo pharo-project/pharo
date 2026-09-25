@@ -7,7 +7,7 @@ Class {
 	#traits : 'TIncludesTest + TDictionaryKeysValuesAssociationsAccess + TDictionaryRemovingTest',
 	#classTraits : 'TIncludesTest classTrait + TDictionaryKeysValuesAssociationsAccess classTrait + TDictionaryRemovingTest classTrait',
 	#instVars : [
-		'nonEmptyDict'
+		#nonEmptyDict
 	],
 	#category : 'Collections-Unordered-Tests-Dictionaries',
 	#package : 'Collections-Unordered-Tests',

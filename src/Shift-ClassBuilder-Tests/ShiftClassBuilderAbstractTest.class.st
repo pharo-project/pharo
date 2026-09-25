@@ -2,7 +2,7 @@ Class {
 	#name : 'ShiftClassBuilderAbstractTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'builder'
+		#builder
 	],
 	#category : 'Shift-ClassBuilder-Tests-Base',
 	#package : 'Shift-ClassBuilder-Tests',

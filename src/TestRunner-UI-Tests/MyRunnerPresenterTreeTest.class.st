@@ -2,7 +2,7 @@ Class {
 	#name : 'MyRunnerPresenterTreeTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'testRunnerUI'
+		#testRunnerUI
 	],
 	#category : 'TestRunner-UI-Tests',
 	#package : 'TestRunner-UI-Tests'

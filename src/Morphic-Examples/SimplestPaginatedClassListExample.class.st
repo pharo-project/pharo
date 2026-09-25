@@ -5,7 +5,7 @@ Class {
 	#name : 'SimplestPaginatedClassListExample',
 	#superclass : 'PaginatedMorphTreeModel',
 	#instVars : [
-		'rootClass'
+		#rootClass
 	],
 	#category : 'Morphic-Examples-MorphTreeWidget',
 	#package : 'Morphic-Examples',

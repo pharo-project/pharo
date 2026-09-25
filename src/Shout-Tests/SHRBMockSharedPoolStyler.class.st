@@ -5,7 +5,7 @@ Class {
 	#name : 'SHRBMockSharedPoolStyler',
 	#superclass : 'SharedPool',
 	#classVars : [
-		'PoolVar'
+		#PoolVar
 	],
 	#category : 'Shout-Tests-Styling',
 	#package : 'Shout-Tests',

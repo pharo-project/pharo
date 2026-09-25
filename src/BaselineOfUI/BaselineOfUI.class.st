@@ -18,7 +18,7 @@ Class {
 	#name : 'BaselineOfUI',
 	#superclass : 'BaselineOf',
 	#classVars : [
-		'Initialized'
+		#Initialized
 	],
 	#category : 'BaselineOfUI',
 	#package : 'BaselineOfUI'

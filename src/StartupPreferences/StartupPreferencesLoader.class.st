@@ -101,12 +101,12 @@ Class {
 	#name : 'StartupPreferencesLoader',
 	#superclass : 'Object',
 	#instVars : [
-		'errors',
-		'actions'
+		#errors,
+		#actions
 	],
 	#classVars : [
-		'AllowStartupScript',
-		'UniqueInstance'
+		#AllowStartupScript,
+		#UniqueInstance
 	],
 	#category : 'StartupPreferences',
 	#package : 'StartupPreferences'

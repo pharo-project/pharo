@@ -5,8 +5,8 @@ Class {
 	#name : 'MemoryFileWriteStream',
 	#superclass : 'Object',
 	#instVars : [
-		'file',
-		'stream'
+		#file,
+		#stream
 	],
 	#category : 'FileSystem-Memory-Streams',
 	#package : 'FileSystem-Memory',

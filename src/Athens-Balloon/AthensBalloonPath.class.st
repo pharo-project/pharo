@@ -5,7 +5,7 @@ Class {
 	#name : 'AthensBalloonPath',
 	#superclass : 'AthensPath',
 	#instVars : [
-		'contours'
+		#contours
 	],
 	#category : 'Athens-Balloon-Path',
 	#package : 'Athens-Balloon',

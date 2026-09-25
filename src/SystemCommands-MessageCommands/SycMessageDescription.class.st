@@ -32,9 +32,9 @@ Class {
 	#name : 'SycMessageDescription',
 	#superclass : 'Object',
 	#instVars : [
-		'selector',
-		'argumentNames',
-		'contextUser'
+		#selector,
+		#argumentNames,
+		#contextUser
 	],
 	#category : 'SystemCommands-MessageCommands',
 	#package : 'SystemCommands-MessageCommands'

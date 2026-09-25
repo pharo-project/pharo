@@ -2,7 +2,7 @@ Class {
 	#name : 'IRBuilderTest',
 	#superclass : 'AbstractEnvironmentTestCase',
 	#classVars : [
-		'TestToPush'
+		#TestToPush
 	],
 	#category : 'OpalCompiler-Tests-IR',
 	#package : 'OpalCompiler-Tests',

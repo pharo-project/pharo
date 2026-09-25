@@ -17,7 +17,7 @@ Class {
 	#name : 'MCStReader',
 	#superclass : 'MCReader',
 	#instVars : [
-		'definitions'
+		#definitions
 	],
 	#category : 'Monticello-Storing',
 	#package : 'Monticello',

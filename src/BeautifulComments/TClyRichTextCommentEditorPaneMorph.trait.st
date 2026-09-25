@@ -4,7 +4,7 @@ I am a trait that gathers the common aspects of the package and class comment ed
 Trait {
 	#name : 'TClyRichTextCommentEditorPaneMorph',
 	#instVars : [
-		'isRendering'
+		#isRendering
 	],
 	#category : 'BeautifulComments-Core',
 	#package : 'BeautifulComments',

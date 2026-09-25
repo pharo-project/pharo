@@ -21,8 +21,8 @@ Class {
 	#name : 'RBMoveTemporaryVariableDefinitionTransformation',
 	#superclass : 'RBCompositeMethodTransformation',
 	#instVars : [
-		'variableName',
-		'blockNodes'
+		#variableName,
+		#blockNodes
 	],
 	#category : 'Refactoring-Transformations-Model-Unused',
 	#package : 'Refactoring-Transformations',

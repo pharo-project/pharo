@@ -7,9 +7,9 @@ Class {
 	#name : 'ColorMap',
 	#superclass : 'Object',
 	#instVars : [
-		'shifts',
-		'masks',
-		'colors'
+		#shifts,
+		#masks,
+		#colors
 	],
 	#category : 'Colors-Base',
 	#package : 'Colors',

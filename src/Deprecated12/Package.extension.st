@@ -85,7 +85,7 @@ Package >> classTagNamed: aSymbol ifAbsent: aBlock [
 
 	self deprecated: 'Use #tagNamed:ifAbsent: instead.' transformWith: '`@rcv classTagNamed: `@arg ifAbsent: `@arg2' -> '`@rcv tagNamed: `@arg ifAbsent: `@arg2'.
 	^ self tags
-		  detect: [ :each | each name = aSymbol ]
+		  detect: [ :each | each name sameContents: aSymbol ]
 		  ifNone: aBlock
 ]
 
@@ -94,7 +94,7 @@ Package >> classTagNamed: aSymbol ifPresent: aBlock [
 
 	self deprecated: 'Use #tagNamed:ifPresent: instead.' transformWith: '`@rcv classTagNamed: `@arg ifPresent: `@arg2' -> '`@rcv tagNamed: `@arg ifPresent: `@arg2'.
 	^ self tags
-		  detect: [ :each | each name = aSymbol ]
+		  detect: [ :each | each name sameContents: aSymbol ]
 		  ifFound: [ :tag | aBlock cull: tag ]
 		  ifNone: [ nil ]
 ]

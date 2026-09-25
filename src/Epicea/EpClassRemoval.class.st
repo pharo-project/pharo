@@ -5,7 +5,7 @@ Class {
 	#name : 'EpClassRemoval',
 	#superclass : 'EpClassChange',
 	#instVars : [
-		'classRemoved'
+		#classRemoved
 	],
 	#category : 'Epicea-Model',
 	#package : 'Epicea',

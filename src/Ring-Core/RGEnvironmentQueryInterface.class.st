@@ -2,8 +2,8 @@ Class {
 	#name : 'RGEnvironmentQueryInterface',
 	#superclass : 'Object',
 	#instVars : [
-		'environment',
-		'behaviorsDictionary'
+		#environment,
+		#behaviorsDictionary
 	],
 	#category : 'Ring-Core-Environment',
 	#package : 'Ring-Core',
@@ -81,7 +81,7 @@ RGEnvironmentQueryInterface >> behaviorNamedExactlyAs: aSymbol ifAbsent: aBlock 
 	^ self behaviorsDictionary at: aSymbol asSymbol ifAbsent: aBlock
 	"
 	self behaviorsDo: [:each |
-		(each name = aSymbol) ifTrue: [ ^ each ] ].
+		(each name sameContents: aSymbol) ifTrue: [ ^ each ] ].
 
 	^ nil
 	"
@@ -156,7 +156,7 @@ RGEnvironmentQueryInterface >> globalVariablesDo: aBlock [
 RGEnvironmentQueryInterface >> includesClassNamed: aSymbol [
 
 	self globalVariablesDo: [ :var |
-		var name = aSymbol ifTrue: [ ^ true ] ].
+		(var name sameContents: aSymbol) ifTrue: [ ^ true ] ].
 
 	^ self behaviorsDictionary
 		at: aSymbol asSymbol
@@ -164,7 +164,7 @@ RGEnvironmentQueryInterface >> includesClassNamed: aSymbol [
 		ifAbsent: [ false ]
 	"
 	self behaviorsDo: [:each |
-		(each name = aSymbol) ifTrue: [ ^ each ] ].
+		(each name sameContents: aSymbol) ifTrue: [ ^ each ] ].
 
 	^ nil
 	"
@@ -173,7 +173,7 @@ RGEnvironmentQueryInterface >> includesClassNamed: aSymbol [
 { #category : 'testing' }
 RGEnvironmentQueryInterface >> includesPackageNamed: aString [
 
-	self packagesDo: [ :each | each name = aString ifTrue: [ ^ true ] ].
+	self packagesDo: [ :each | (each name sameContents: aString) ifTrue: [ ^ true ] ].
 	^ false
 ]
 
@@ -187,7 +187,7 @@ RGEnvironmentQueryInterface >> invalidateName: aSymbol [
 RGEnvironmentQueryInterface >> packageNamed: aString [
 
 	self packagesDo: [:each |
-		(each name = aString) ifTrue: [ ^ each ] ].
+		(each name sameContents: aString) ifTrue: [ ^ each ] ].
 
 	^ nil
 ]

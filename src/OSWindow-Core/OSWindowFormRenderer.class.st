@@ -8,7 +8,7 @@ Class {
 	#name : 'OSWindowFormRenderer',
 	#superclass : 'OSWindowRenderer',
 	#instVars : [
-		'form'
+		#form
 	],
 	#category : 'OSWindow-Core-Renderer',
 	#package : 'OSWindow-Core',

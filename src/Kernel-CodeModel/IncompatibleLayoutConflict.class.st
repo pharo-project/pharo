@@ -5,8 +5,8 @@ Class {
 	#name : 'IncompatibleLayoutConflict',
 	#superclass : 'Error',
 	#instVars : [
-		'layout',
-		'subType'
+		#layout,
+		#subType
 	],
 	#category : 'Kernel-CodeModel-Exceptions',
 	#package : 'Kernel-CodeModel',

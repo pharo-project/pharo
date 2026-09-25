@@ -2,10 +2,10 @@ Class {
 	#name : 'MetacelloAtomicLoad',
 	#superclass : 'Object',
 	#instVars : [
-		'target',
-		'packageDirectives',
-		'postLoads',
-		'preLoads'
+		#target,
+		#packageDirectives,
+		#postLoads,
+		#preLoads
 	],
 	#category : 'Metacello-Core-Targets',
 	#package : 'Metacello-Core',

@@ -10,7 +10,7 @@ Class {
 	#name : 'RBPatternMethodNode',
 	#superclass : 'RBMethodNode',
 	#instVars : [
-		'isList'
+		#isList
 	],
 	#category : 'AST-Core-Pattern',
 	#package : 'AST-Core',
@@ -35,10 +35,10 @@ RBPatternMethodNode >> copyInContext: aDictionary [
 		selector: keywordSelector;
 		arguments: (self copyList: self arguments inContext: aDictionary);
 		pragmas: (self pragmas isEmpty
-			ifTrue: [ aDictionary at: '-pragmas-' ifAbsent: [ #() ] ]
+			ifTrue: [ aDictionary at: #'-pragmas-' ifAbsent: [ #() ] ]
 			ifFalse: [ self copyList: self pragmas inContext: aDictionary ]);
 		body: (self body copyInContext: aDictionary);
-		source: (aDictionary at: '-source-');
+		source: (aDictionary at: #'-source-');
 		yourself
 ]
 
@@ -56,7 +56,7 @@ RBPatternMethodNode >> isSelectorList [
 RBPatternMethodNode >> match: aNode inContext: aDictionary [
 	aNode class = self matchingClass
 		ifFalse: [ ^ false ].
-	aDictionary at: '-source-' put: aNode source.
+	aDictionary at: #'-source-' put: aNode source.
 	self isSelectorList ifTrue: [
 		^ (aDictionary at:  self selectorParts first ifAbsentPut: [ aNode selector ]) = aNode selector
 			and: [ (arguments isEmpty or: [(aDictionary at: arguments first ifAbsentPut: [ aNode arguments ]) = aNode arguments])

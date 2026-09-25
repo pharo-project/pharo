@@ -7,9 +7,9 @@ Class {
 	#name : 'HiRulerBuilder',
 	#superclass : 'Object',
 	#instVars : [
-		'values',
-		'linksBlock',
-		'ruler'
+		#values,
+		#linksBlock,
+		#ruler
 	],
 	#category : 'Hiedra-Model',
 	#package : 'Hiedra',

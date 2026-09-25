@@ -15,7 +15,7 @@ Class {
 	#name : 'RBPushDownMethodInSomeClassesDriver',
 	#superclass : 'RePushDownMethodDriver',
 	#instVars : [
-		'classes'
+		#classes
 	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',

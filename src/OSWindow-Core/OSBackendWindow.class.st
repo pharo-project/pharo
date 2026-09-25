@@ -8,8 +8,8 @@ Class {
 	#name : 'OSBackendWindow',
 	#superclass : 'Object',
 	#instVars : [
-		'osWindow',
-		'renderer'
+		#osWindow,
+		#renderer
 	],
 	#category : 'OSWindow-Core-Utilities',
 	#package : 'OSWindow-Core',

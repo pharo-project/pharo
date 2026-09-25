@@ -5,9 +5,9 @@ Class {
 	#name : 'NECEntryDescription',
 	#superclass : 'Object',
 	#instVars : [
-		'title',
-		'description',
-		'label'
+		#title,
+		#description,
+		#label
 	],
 	#category : 'NECompletion-Model',
 	#package : 'NECompletion',

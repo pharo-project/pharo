@@ -12,8 +12,8 @@ Class {
 	#name : 'ClyFullBrowserState',
 	#superclass : 'ClyBrowserState',
 	#instVars : [
-		'metaLevelScope',
-		'methodGroupQuery'
+		#metaLevelScope,
+		#methodGroupQuery
 	],
 	#category : 'Calypso-SystemTools-FullBrowser-UI',
 	#package : 'Calypso-SystemTools-FullBrowser',

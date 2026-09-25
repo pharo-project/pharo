@@ -20,9 +20,9 @@ Class {
 	#traits : 'TRefactoringCommandSupport',
 	#classTraits : 'TRefactoringCommandSupport classTrait',
 	#instVars : [
-		'originalMessage',
-		'refactoringScopes',
-		'refactoredClass'
+		#originalMessage,
+		#refactoringScopes,
+		#refactoredClass
 	],
 	#category : 'SystemCommands-MessageCommands',
 	#package : 'SystemCommands-MessageCommands'

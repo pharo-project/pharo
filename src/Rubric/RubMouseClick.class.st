@@ -5,7 +5,7 @@ Class {
 	#name : 'RubMouseClick',
 	#superclass : 'RubMorphAnnouncement',
 	#instVars : [
-		'event'
+		#event
 	],
 	#category : 'Rubric-Editing-Announcements',
 	#package : 'Rubric',

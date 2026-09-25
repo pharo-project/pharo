@@ -2,7 +2,7 @@ Class {
 	#name : 'MCSnapshotTest',
 	#superclass : 'MCTestCase',
 	#instVars : [
-		'snapshot'
+		#snapshot
 	],
 	#category : 'Monticello-Tests-Snapshots',
 	#package : 'Monticello-Tests',
@@ -120,8 +120,8 @@ MCSnapshotTest >> testClassWithClassTraitCompositionHasTraitComposition [
 MCSnapshotTest >> testCreation [
 	|d|
 	d :=  self mockSnapshot definitions.
-	self assert: (d anySatisfy: [:ea | ea isClassDefinition and: [ea className = #MCMockClassA]]).
-	self assert: (d anySatisfy: [:ea | ea isMethodDefinition and: [ea selector = #mockClassExtension]]).
+	self assert: (d anySatisfy: [:ea | ea isClassDefinition and: [ea className sameContents: #MCMockClassA]]).
+	self assert: (d anySatisfy: [:ea | ea isMethodDefinition and: [ea selector sameContents: #mockClassExtension]]).
 	self assert: (d allSatisfy: [:ea | ea isClassDefinition not or: [ea category endsWith: 'Mocks']]).
 	
 ]
@@ -146,7 +146,7 @@ MCSnapshotTest >> testTraitWithClassTraitCompositionHasTraitComposition [
 	"This could use #lookupTrait:in: when this issue will be fixed: https://github.com/pharo-project/pharo/issues/14605
 	
 	The problem is that since MCClassTraitDefinition returns true, we can get a MCClassTraitDefinition instead of a MCTraitDefinition"
-	def := definitions detect: [ :aDef | (aDef isKindOf: MCTraitDefinition) and: [ aDef className = #T3 ] ].
+	def := definitions detect: [ :aDef | (aDef isKindOf: MCTraitDefinition) and: [ aDef className sameContents: #T3 ] ].
 
 	self assert: def hasClassTraitComposition
 ]

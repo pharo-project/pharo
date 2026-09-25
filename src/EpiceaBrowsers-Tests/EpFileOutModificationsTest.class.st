@@ -2,8 +2,8 @@ Class {
 	#name : 'EpFileOutModificationsTest',
 	#superclass : 'EpEnabledIntegrationTest',
 	#instVars : [
-		'chunkExporter',
-		'chunkImporter'
+		#chunkExporter,
+		#chunkImporter
 	],
 	#category : 'EpiceaBrowsers-Tests-Integration',
 	#package : 'EpiceaBrowsers-Tests',
@@ -69,8 +69,8 @@ EpFileOutModificationsTest >> testFileOutMultipleClassAddition [
 	literalNode1 := (RBParser parseExpression: (chunks at: chunks size - 1) contents) allChildren select: [ :each | each isLiteralNode ].
 	literalNode2 := (RBParser parseExpression: chunks last contents) allChildren select: [ :each | each isLiteralNode ].
 
-	self assert: (literalNode1 anySatisfy: [ :node | node value = aClass1 name ]).
-	self assert: (literalNode2 anySatisfy: [ :node | node value = aClass2 name ]).
+	self assert: (literalNode1 anySatisfy: [ :node | node value sameContents: aClass1 name ]).
+	self assert: (literalNode2 anySatisfy: [ :node | node value sameContents: aClass2 name ]).
 
 ]
 
@@ -184,7 +184,7 @@ EpFileOutModificationsTest >> testFileOutSingleClassAddition [
 	literalNodes := (RBParser parseExpression: chunks last contents)
 		                allChildren select: [ :each | each isLiteralNode ].
 
-	self assert: (literalNodes anySatisfy: [ :node | node value = aClass name ]).
+	self assert: (literalNodes anySatisfy: [ :node | node value sameContents: aClass name ]).
 ]
 
 { #category : 'tests' }
@@ -204,7 +204,7 @@ EpFileOutModificationsTest >> testFileOutSingleClassModification [
 	self assert: chunks last isDoItDeclaration.
 
 	rbNode := (RBParser parseExpression: chunks last contents) allChildren select: #isLiteralNode.
-	self assert: (rbNode anySatisfy: [ :node | node value = #x ]).
+	self assert: (rbNode anySatisfy: [ :node | node value sameContents: #x ]).
 ]
 
 { #category : 'tests' }
@@ -384,7 +384,7 @@ EpFileOutModificationsTest >> testFileOutSingleTraitAddition [
 	literalNodes := (RBParser parseExpression: chunks last contents)
 		                allChildren select: [ :each | each isLiteralNode ].
 
-	self assert: (literalNodes anySatisfy: [ :node | node value = aTrait name ]).
+	self assert: (literalNodes anySatisfy: [ :node | node value sameContents: aTrait name ]).
 ]
 
 { #category : 'tests' }
@@ -404,7 +404,7 @@ EpFileOutModificationsTest >> testFileOutSingleTraitModification [
 	self assert: chunks last isDoItDeclaration.
 
 	rbNode := (RBParser parseExpression: chunks last contents) allChildren select: #isLiteralNode.
-	self assert: (rbNode anySatisfy: [ :node | node value = #x ]).
+	self assert: (rbNode anySatisfy: [ :node | node value sameContents: #x ]).
 ]
 
 { #category : 'tests' }

@@ -2,7 +2,7 @@ Class {
 	#name : 'OupsDebuggerSystemTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'debuggerSystem'
+		#debuggerSystem
 	],
 	#category : 'Debugger-Oups-Tests-Tests - infrastructure',
 	#package : 'Debugger-Oups-Tests',

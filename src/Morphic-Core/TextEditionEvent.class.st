@@ -2,9 +2,9 @@ Class {
 	#name : 'TextEditionEvent',
 	#superclass : 'UserInputEvent',
 	#instVars : [
-		'text',
-		'start',
-		'length'
+		#text,
+		#start,
+		#length
 	],
 	#category : 'Morphic-Core-Events',
 	#package : 'Morphic-Core',

@@ -23,7 +23,7 @@ Class {
 	#name : 'FTSortFunctionColumnSortingStrategy',
 	#superclass : 'FTStateBasedColumnSortingStrategy',
 	#instVars : [
-		'sortFunction'
+		#sortFunction
 	],
 	#category : 'Morphic-Widgets-FastTable-Sorting',
 	#package : 'Morphic-Widgets-FastTable',

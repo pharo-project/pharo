@@ -5,7 +5,7 @@ Class {
 	#name : 'RTFMethodCallsCollectorTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'tree'
+		#tree
 	],
 	#category : 'RottenTestsFinder-Tests',
 	#package : 'RottenTestsFinder-Tests'

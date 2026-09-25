@@ -2,11 +2,11 @@ Class {
 	#name : 'BreakpointObserverTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'breakpoint',
-		'cls',
-		'previousBreakpoints',
-		'observer',
-		'oldSystemAnnouncer'
+		#breakpoint,
+		#cls,
+		#previousBreakpoints,
+		#observer,
+		#oldSystemAnnouncer
 	],
 	#category : 'Reflectivity-Tools-Tests',
 	#package : 'Reflectivity-Tools-Tests'

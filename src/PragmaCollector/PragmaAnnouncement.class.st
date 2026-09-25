@@ -12,7 +12,7 @@ Class {
 	#name : 'PragmaAnnouncement',
 	#superclass : 'Announcement',
 	#instVars : [
-		'pragma'
+		#pragma
 	],
 	#category : 'PragmaCollector-Announcements',
 	#package : 'PragmaCollector',

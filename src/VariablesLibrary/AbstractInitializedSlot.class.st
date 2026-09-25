@@ -9,7 +9,7 @@ Class {
 	#name : 'AbstractInitializedSlot',
 	#superclass : 'InstanceVariableSlot',
 	#instVars : [
-		'default'
+		#default
 	],
 	#category : 'VariablesLibrary-Slots',
 	#package : 'VariablesLibrary',

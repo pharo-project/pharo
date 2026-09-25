@@ -11,12 +11,12 @@ Class {
 	#name : 'RxParser',
 	#superclass : 'Object',
 	#instVars : [
-		'input',
-		'lookahead'
+		#input,
+		#lookahead
 	],
 	#classVars : [
-		'BackslashConstants',
-		'BackslashSpecials'
+		#BackslashConstants,
+		#BackslashSpecials
 	],
 	#category : 'Regex-Core-Base',
 	#package : 'Regex-Core',

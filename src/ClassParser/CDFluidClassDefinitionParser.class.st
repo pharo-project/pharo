@@ -36,12 +36,12 @@ Class {
 	#name : 'CDFluidClassDefinitionParser',
 	#superclass : 'Object',
 	#instVars : [
-		'classNameNode',
-		'superclassNode',
-		'classDefinition'
+		#classNameNode,
+		#superclassNode,
+		#classDefinition
 	],
 	#classInstVars : [
-		'unrestrictedVariableDefinitions'
+		#unrestrictedVariableDefinitions
 	],
 	#category : 'ClassParser-Parser',
 	#package : 'ClassParser',

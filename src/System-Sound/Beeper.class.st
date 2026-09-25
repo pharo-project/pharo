@@ -20,7 +20,7 @@ Class {
 	#name : 'Beeper',
 	#superclass : 'Object',
 	#classInstVars : [
-		'default'
+		#default
 	],
 	#category : 'System-Sound',
 	#package : 'System-Sound'

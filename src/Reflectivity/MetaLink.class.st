@@ -31,18 +31,18 @@ Class {
 	#name : 'MetaLink',
 	#superclass : 'Object',
 	#instVars : [
-		'arguments',
-		'condition',
-		'conditionArguments',
-		'control',
-		'level',
-		'metaObject',
-		'nodes',
-		'selector',
-		'options'
+		#arguments,
+		#condition,
+		#conditionArguments,
+		#control,
+		#level,
+		#metaObject,
+		#nodes,
+		#selector,
+		#options
 	],
 	#classInstVars : [
-		'linkInstaller'
+		#linkInstaller
 	],
 	#category : 'Reflectivity-Core',
 	#package : 'Reflectivity',

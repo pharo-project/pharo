@@ -5,8 +5,8 @@ Class {
 	#name : 'RBMethodTransformation',
 	#superclass : 'RBClassTransformation',
 	#instVars : [
-		'method',
-		'selector'
+		#method,
+		#selector
 	],
 	#category : 'Refactoring-Transformations-Model',
 	#package : 'Refactoring-Transformations',

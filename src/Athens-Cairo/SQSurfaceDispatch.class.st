@@ -21,18 +21,18 @@ Class {
 	#name : 'SQSurfaceDispatch',
 	#superclass : 'FFIExternalStructure',
 	#instVars : [
-		'getSurfaceFormatFn',
-		'lockSurfaceFn',
-		'showSurfaceFn',
-		'unlockSurfaceFn'
+		#getSurfaceFormatFn,
+		#lockSurfaceFn,
+		#showSurfaceFn,
+		#unlockSurfaceFn
 	],
 	#classVars : [
-		'OFFSET_GETSURFACEFORMATFN',
-		'OFFSET_LOCKSURFACEFN',
-		'OFFSET_MAJORVERSION',
-		'OFFSET_MINORVERSION',
-		'OFFSET_SHOWSURFACEFN',
-		'OFFSET_UNLOCKSURFACEFN'
+		#OFFSET_GETSURFACEFORMATFN,
+		#OFFSET_LOCKSURFACEFN,
+		#OFFSET_MAJORVERSION,
+		#OFFSET_MINORVERSION,
+		#OFFSET_SHOWSURFACEFN,
+		#OFFSET_UNLOCKSURFACEFN
 	],
 	#category : 'Athens-Cairo-Surface',
 	#package : 'Athens-Cairo',

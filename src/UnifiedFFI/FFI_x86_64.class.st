@@ -12,7 +12,7 @@ Class {
 { #category : 'testing' }
 FFI_x86_64 class >> isAbstract [
 
-	^self name = #FFI_x86_64
+	^self name sameContents: #FFI_x86_64
 ]
 
 { #category : 'types' }

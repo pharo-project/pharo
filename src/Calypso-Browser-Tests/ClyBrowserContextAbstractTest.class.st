@@ -2,7 +2,7 @@ Class {
 	#name : 'ClyBrowserContextAbstractTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'browser'
+		#browser
 	],
 	#category : 'Calypso-Browser-Tests',
 	#package : 'Calypso-Browser-Tests'

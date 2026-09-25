@@ -5,11 +5,11 @@ Class {
 	#name : 'RubParagraph',
 	#superclass : 'Object',
 	#instVars : [
-		'text',
-		'composer',
-		'container',
-		'drawingEnabled',
-		'textArea'
+		#text,
+		#composer,
+		#container,
+		#drawingEnabled,
+		#textArea
 	],
 	#category : 'Rubric-Editing-Core',
 	#package : 'Rubric',

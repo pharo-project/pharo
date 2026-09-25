@@ -10,8 +10,8 @@ Class {
 	#name : 'RBSelectorNode',
 	#superclass : 'RBValueNode',
 	#instVars : [
-		'value',
-		'keywordPositions'
+		#value,
+		#keywordPositions
 	],
 	#category : 'AST-Core-Nodes',
 	#package : 'AST-Core',
@@ -36,7 +36,7 @@ RBSelectorNode class >> value: aString keywordPositions: keywordPositions [
 { #category : 'comparing' }
 RBSelectorNode >> = anObject [
 	self == anObject ifTrue: [^true].
-	^ self class = anObject class and: [ self value = anObject value ]
+	^ self class = anObject class and: [ self value sameContents: anObject value ]
 ]
 
 { #category : 'visiting' }

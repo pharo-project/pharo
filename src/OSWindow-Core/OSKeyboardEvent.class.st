@@ -15,13 +15,13 @@ Class {
 	#name : 'OSKeyboardEvent',
 	#superclass : 'OSEvent',
 	#instVars : [
-		'scanCode',
-		'symbol',
-		'character',
-		'modifiers',
-		'position',
-		'repeat',
-		'handled'
+		#scanCode,
+		#symbol,
+		#character,
+		#modifiers,
+		#position,
+		#repeat,
+		#handled
 	],
 	#category : 'OSWindow-Core-Events',
 	#package : 'OSWindow-Core',

@@ -5,7 +5,7 @@ Class {
 	#name : 'SycGeneratePrintOnCommand',
 	#superclass : 'SycSingleClassCommand',
 	#instVars : [
-		'variables'
+		#variables
 	],
 	#category : 'SystemCommands-ClassCommands',
 	#package : 'SystemCommands-ClassCommands'

@@ -29,7 +29,7 @@ Class {
 	#name : 'ZnUrlShortenerDelegate',
 	#superclass : 'Object',
 	#classVars : [
-		'Database'
+		#Database
 	],
 	#category : 'Zinc-HTTP-Examples',
 	#package : 'Zinc-HTTP-Examples'
@@ -78,7 +78,7 @@ ZnUrlShortenerDelegate >> handleGetRequest: request [
 
 { #category : 'request handling' }
 ZnUrlShortenerDelegate >> handleRequest: request [
-	^ request method = #GET
+	^ (request method sameContents: #GET)
 		ifTrue: [ self handleGetRequest: request ]
 		ifFalse: [ ZnResponse methodNotAllowed: request ]
 ]

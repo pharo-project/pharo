@@ -10,9 +10,9 @@ Class {
 	#name : 'RTFSelfCallNode',
 	#superclass : 'RTFSelfCallRootNode',
 	#instVars : [
-		'astNode',
-		'hasBeenExecuted',
-		'metaLink'
+		#astNode,
+		#hasBeenExecuted,
+		#metaLink
 	],
 	#category : 'RottenTestsFinder-SelfInterpreter',
 	#package : 'RottenTestsFinder',

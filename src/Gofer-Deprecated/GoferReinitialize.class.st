@@ -20,5 +20,5 @@ GoferReinitialize >> execute [
 GoferReinitialize >> execute: aWorkingCopy [
 
 	aWorkingCopy systemPackage ifNotNil: [ :package |
-		package methods do: [ :each | (each isClassSide and: [ each selector = #initialize ]) ifTrue: [ each methodClass instanceSide initialize ] ] ]
+		package methods do: [ :each | (each isClassSide and: [ each selector sameContents: #initialize ]) ifTrue: [ each methodClass instanceSide initialize ] ] ]
 ]

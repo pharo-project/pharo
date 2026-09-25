@@ -2,8 +2,8 @@ Class {
 	#name : 'BehaviorWithCompilerTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'c1',
-		'c2'
+		#c1,
+		#c2
 	],
 	#category : 'Kernel-Tests-WithCompiler',
 	#package : 'Kernel-Tests-WithCompiler'

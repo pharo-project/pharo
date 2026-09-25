@@ -5,19 +5,19 @@ Class {
 	#name : 'OmSessionStore',
 	#superclass : 'OmStore',
 	#instVars : [
-		'currentSession',
-		'currentImagePathString',
-		'currentStore',
-		'baseLocator',
-		'announcer',
-		'writingDeferDuration',
-		'headReference',
-		'storeNameStrategy'
+		#currentSession,
+		#currentImagePathString,
+		#currentStore,
+		#baseLocator,
+		#announcer,
+		#writingDeferDuration,
+		#headReference,
+		#storeNameStrategy
 	],
 	#classInstVars : [
-		'storeNameStrategy',
-		'defaultBaseLocator',
-		'registry'
+		#storeNameStrategy,
+		#defaultBaseLocator,
+		#registry
 	],
 	#category : 'Ombu-Stores',
 	#package : 'Ombu',

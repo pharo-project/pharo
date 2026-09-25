@@ -5,7 +5,7 @@ Class {
 	#name : 'MockTest',
 	#superclass : 'TestCase',
 	#classInstVars : [
-		'ignore'
+		#ignore
 	],
 	#category : 'TestRunner-Tests-Utilities-Test',
 	#package : 'TestRunner-Tests',

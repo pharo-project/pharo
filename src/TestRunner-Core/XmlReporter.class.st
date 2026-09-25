@@ -5,8 +5,8 @@ Class {
 	#name : 'XmlReporter',
 	#superclass : 'AbstractReporter',
 	#instVars : [
-		'stream',
-		'suitePosition'
+		#stream,
+		#suitePosition
 	],
 	#category : 'TestRunner-Core-Reporters',
 	#package : 'TestRunner-Core',
@@ -19,8 +19,8 @@ XmlReporter class >> buildAttributesForFailure: aTestFailure duringTest: aTestCa
 	| aDictionnary |
 	aDictionnary := Dictionary new.
 	aDictionnary
-		at: 'type' put: aTestFailure class;
-		at: 'message' put: aTestFailure messageText.
+		at: #'type' put: aTestFailure class;
+		at: #'message' put: aTestFailure messageText.
 
 	^ aDictionnary
 ]
@@ -64,9 +64,9 @@ XmlReporter >> buildAttributesForTestCase: aTestCase [
 	| aDictionnary |
 	aDictionnary := Dictionary new.
 	aDictionnary
-		at: 'classname' put: (self generateTesCaseClassName: aTestCase);
-		at: 'name' put: aTestCase nameForReport;
-		at: 'time' put: self currentCaseDuration.
+		at: #'classname' put: (self generateTesCaseClassName: aTestCase);
+		at: #'name' put: aTestCase nameForReport;
+		at: #'time' put: self currentCaseDuration.
 
 	^ aDictionnary
 ]

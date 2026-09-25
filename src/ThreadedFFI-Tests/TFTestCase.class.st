@@ -2,7 +2,7 @@ Class {
 	#name : 'TFTestCase',
 	#superclass : 'ParametrizedTestCase',
 	#instVars : [
-		'runner'
+		#runner
 	],
 	#category : 'ThreadedFFI-Tests',
 	#package : 'ThreadedFFI-Tests'

@@ -5,9 +5,9 @@ Class {
 	#name : 'EpEntryItem',
 	#superclass : 'Model',
 	#instVars : [
-		'browser',
-		'entry',
-		'triggerItems'
+		#browser,
+		#entry,
+		#triggerItems
 	],
 	#category : 'EpiceaBrowsers-UI-Log',
 	#package : 'EpiceaBrowsers',

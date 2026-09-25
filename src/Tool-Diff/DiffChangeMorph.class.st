@@ -5,8 +5,8 @@ Class {
 	#name : 'DiffChangeMorph',
 	#superclass : 'ComposableMorph',
 	#instVars : [
-		'diffMorph',
-		'descriptionMorph'
+		#diffMorph,
+		#descriptionMorph
 	],
 	#category : 'Tool-Diff-Morphs',
 	#package : 'Tool-Diff',

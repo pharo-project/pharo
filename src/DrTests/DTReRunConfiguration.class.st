@@ -5,9 +5,9 @@ Class {
 	#name : 'DTReRunConfiguration',
 	#superclass : 'DTPluginConfiguration',
 	#instVars : [
-		'previousResult',
-		'configurationToRun',
-		'originalConfiguration'
+		#previousResult,
+		#configurationToRun,
+		#originalConfiguration
 	],
 	#category : 'DrTests-Model',
 	#package : 'DrTests',

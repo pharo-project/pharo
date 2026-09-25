@@ -8,10 +8,10 @@ Class {
 	#name : 'ChangesLog',
 	#superclass : 'Object',
 	#instVars : [
-		'startupStamp'
+		#startupStamp
 	],
 	#classVars : [
-		'DefaultInstance'
+		#DefaultInstance
 	],
 	#category : 'System-Sources-Changes-Log',
 	#package : 'System-Sources',

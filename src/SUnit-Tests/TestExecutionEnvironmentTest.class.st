@@ -2,8 +2,8 @@ Class {
 	#name : 'TestExecutionEnvironmentTest',
 	#superclass : 'TestExecutionEnvironmentTestCase',
 	#instVars : [
-		'exampleTestBlock',
-		'ranTest'
+		#exampleTestBlock,
+		#ranTest
 	],
 	#category : 'SUnit-Tests-Core',
 	#package : 'SUnit-Tests',

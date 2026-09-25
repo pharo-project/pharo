@@ -19,9 +19,9 @@ MetacelloLockTest >> testLoadLockedWillNotIncludeLockedPackages [
 	self 
 		assertCollection: ((self project version recordWithEngine: MetacelloScriptEngine new) packages collect: #name)
 		hasSameElements: #( 
-			'Package1'
-			'TestToLockPackage1' 
-			'TestToLockPackage2').
+			Package1
+			TestToLockPackage1 
+			TestToLockPackage2).
 		
 	[
 		"baseline needs to be registered to be locked"

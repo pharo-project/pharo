@@ -2,7 +2,7 @@ Class {
 	#name : 'CircleMorphCounter',
 	#superclass : 'CircleMorph',
 	#instVars : [
-		'counter'
+		#counter
 	],
 	#category : 'Rubric-Tests-Base',
 	#package : 'Rubric-Tests',

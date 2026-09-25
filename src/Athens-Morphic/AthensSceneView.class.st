@@ -35,12 +35,12 @@ Class {
 	#name : 'AthensSceneView',
 	#superclass : 'Morph',
 	#instVars : [
-		'surface',
-		'scene',
-		'session',
-		'transform',
-		'state',
-		'keepRefreshing'
+		#surface,
+		#scene,
+		#session,
+		#transform,
+		#state,
+		#keepRefreshing
 	],
 	#category : 'Athens-Morphic',
 	#package : 'Athens-Morphic'

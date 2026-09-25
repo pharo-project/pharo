@@ -7,10 +7,10 @@ Class {
 	#name : 'FBIRBytecodeDecompiler',
 	#superclass : 'InstructionClient',
 	#instVars : [
-		'instructionStream',
-		'irBuilder',
-		'newTempVector',
-		'scopeStack'
+		#instructionStream,
+		#irBuilder,
+		#newTempVector,
+		#scopeStack
 	],
 	#category : 'Flashback-Decompiler-Bytecode',
 	#package : 'Flashback-Decompiler',

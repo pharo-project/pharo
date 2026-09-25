@@ -5,7 +5,7 @@ Class {
 	#name : 'FileSystemResolverTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'resolver'
+		#resolver
 	],
 	#category : 'FileSystem-Core-Tests-Resolver',
 	#package : 'FileSystem-Core-Tests',

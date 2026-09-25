@@ -5,7 +5,7 @@ Class {
 	#name : 'GoferConstraintReference',
 	#superclass : 'GoferPackageReference',
 	#instVars : [
-		'constraintBlock'
+		#constraintBlock
 	],
 	#category : 'Gofer-Deprecated-References',
 	#package : 'Gofer-Deprecated',

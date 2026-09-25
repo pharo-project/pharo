@@ -5,11 +5,11 @@ Class {
 	#name : 'OmStoreFactory',
 	#superclass : 'Object',
 	#instVars : [
-		'nullStore',
-		'storeByPath'
+		#nullStore,
+		#storeByPath
 	],
 	#classInstVars : [
-		'current'
+		#current
 	],
 	#category : 'Ombu-Stores',
 	#package : 'Ombu',

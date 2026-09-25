@@ -6,8 +6,8 @@ Class {
 	#name : 'DTTestCoveragePlugin',
 	#superclass : 'DrTestsPlugin',
 	#instVars : [
-		'methods',
-		'testClasses'
+		#methods,
+		#testClasses
 	],
 	#category : 'DrTests-TestCoverage',
 	#package : 'DrTests-TestCoverage'

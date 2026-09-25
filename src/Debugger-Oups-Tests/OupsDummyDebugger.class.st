@@ -6,11 +6,11 @@ Class {
 	#name : 'OupsDummyDebugger',
 	#superclass : 'Object',
 	#instVars : [
-		'name',
-		'tag',
-		'deferred',
-		'usable',
-		'error'
+		#name,
+		#tag,
+		#deferred,
+		#usable,
+		#error
 	],
 	#category : 'Debugger-Oups-Tests-Utils',
 	#package : 'Debugger-Oups-Tests',

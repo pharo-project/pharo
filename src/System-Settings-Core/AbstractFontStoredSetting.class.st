@@ -5,10 +5,10 @@ Class {
 	#name : 'AbstractFontStoredSetting',
 	#superclass : 'AbstractStoredSetting',
 	#instVars : [
-		'fontClassName',
-		'familyName',
-		'pointSize',
-		'emphasized'
+		#fontClassName,
+		#familyName,
+		#pointSize,
+		#emphasized
 	],
 	#category : 'System-Settings-Core-Persistence-Ston-StoredSettings',
 	#package : 'System-Settings-Core',

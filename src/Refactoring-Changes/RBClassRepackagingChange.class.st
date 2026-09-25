@@ -5,8 +5,8 @@ Class {
 	#name : 'RBClassRepackagingChange',
 	#superclass : 'RBRefactoryClassChange',
 	#instVars : [
-		'packageName',
-		'tagName'
+		#packageName,
+		#tagName
 	],
 	#category : 'Refactoring-Changes',
 	#package : 'Refactoring-Changes'

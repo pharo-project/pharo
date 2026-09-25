@@ -6,8 +6,8 @@ Class {
 	#name : 'OSTextEditingEvent',
 	#superclass : 'OSTextInputEvent',
 	#instVars : [
-		'start',
-		'length'
+		#start,
+		#length
 	],
 	#category : 'OSWindow-Core-Events',
 	#package : 'OSWindow-Core',

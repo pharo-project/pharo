@@ -10,9 +10,9 @@ Class {
 	#name : 'OrientedFillStyle',
 	#superclass : 'FillStyle',
 	#instVars : [
-		'origin',
-		'direction',
-		'normal'
+		#origin,
+		#direction,
+		#normal
 	],
 	#category : 'Graphics-Canvas-Fills',
 	#package : 'Graphics-Canvas',

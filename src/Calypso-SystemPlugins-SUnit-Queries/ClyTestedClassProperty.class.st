@@ -11,7 +11,7 @@ Class {
 	#name : 'ClyTestedClassProperty',
 	#superclass : 'ClyProperty',
 	#instVars : [
-		'coveringTestCase'
+		#coveringTestCase
 	],
 	#category : 'Calypso-SystemPlugins-SUnit-Queries',
 	#package : 'Calypso-SystemPlugins-SUnit-Queries'

@@ -2,8 +2,8 @@ Class {
 	#name : 'MetacelloVersionDoesNotExistError',
 	#superclass : 'MetacelloError',
 	#instVars : [
-		'project',
-		'versionString'
+		#project,
+		#versionString
 	],
 	#category : 'Metacello-Core-Exceptions-Errors',
 	#package : 'Metacello-Core',

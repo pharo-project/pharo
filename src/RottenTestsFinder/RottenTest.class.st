@@ -5,8 +5,8 @@ Class {
 	#name : 'RottenTest',
 	#superclass : 'Object',
 	#instVars : [
-		'compiledMethod',
-		'callSites'
+		#compiledMethod,
+		#callSites
 	],
 	#category : 'RottenTestsFinder-Results',
 	#package : 'RottenTestsFinder',

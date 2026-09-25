@@ -9,14 +9,14 @@ Class {
 	#name : 'OSWindowMorphicEventHandler',
 	#superclass : 'OSWindowEventVisitor',
 	#instVars : [
-		'morphicWorld'
+		#morphicWorld
 	],
 	#classVars : [
-		'SimulateMiddleButton',
-		'SymbolCharacterMapping'
+		#SimulateMiddleButton,
+		#SymbolCharacterMapping
 	],
 	#pools : [
-		'OSKeySymbols'
+		#OSKeySymbols
 	],
 	#category : 'OSWindow-Core-Morphic',
 	#package : 'OSWindow-Core',

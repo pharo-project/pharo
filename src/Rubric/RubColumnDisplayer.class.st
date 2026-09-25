@@ -2,10 +2,10 @@ Class {
 	#name : 'RubColumnDisplayer',
 	#superclass : 'RubScrolledTextExtraSurface',
 	#instVars : [
-		'tabLineDashesColors',
-		'tabLineColor',
-		'tabLineDashes',
-		'tabLineWidth'
+		#tabLineDashesColors,
+		#tabLineColor,
+		#tabLineDashes,
+		#tabLineWidth
 	],
 	#category : 'Rubric-Editing-Widgets',
 	#package : 'Rubric',

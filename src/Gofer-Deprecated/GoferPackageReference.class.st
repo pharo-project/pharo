@@ -12,7 +12,7 @@ Class {
 { #category : 'private' }
 GoferPackageReference >> matches: aResolvedReference [
 
-	^ self packageName = aResolvedReference packageName
+	^ self packageName sameContents: aResolvedReference packageName
 ]
 
 { #category : 'accessing' }

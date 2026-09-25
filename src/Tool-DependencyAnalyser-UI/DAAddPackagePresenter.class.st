@@ -6,9 +6,9 @@ Class {
 	#name : 'DAAddPackagePresenter',
 	#superclass : 'SpPresenter',
 	#instVars : [
-		'packageList',
-		'buttonAddPackage',
-		'dependenciesPresenter'
+		#packageList,
+		#buttonAddPackage,
+		#dependenciesPresenter
 	],
 	#category : 'Tool-DependencyAnalyser-UI-Core',
 	#package : 'Tool-DependencyAnalyser-UI',

@@ -41,8 +41,8 @@ Class {
 	#name : 'ToolRegistry',
 	#superclass : 'Object',
 	#instVars : [
-		'tools',
-		'announcer'
+		#tools,
+		#announcer
 	],
 	#category : 'Tool-Registry',
 	#package : 'Tool-Registry'

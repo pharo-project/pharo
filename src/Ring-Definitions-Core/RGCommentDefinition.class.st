@@ -5,8 +5,8 @@ Class {
 	#name : 'RGCommentDefinition',
 	#superclass : 'RGElementDefinition',
 	#instVars : [
-		'content',
-		'stamp'
+		#content,
+		#stamp
 	],
 	#category : 'Ring-Definitions-Core-Base',
 	#package : 'Ring-Definitions-Core',

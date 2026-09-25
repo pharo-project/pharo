@@ -2,7 +2,7 @@ Class {
 	#name : 'RBRefactoringChangeManagerTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'manager'
+		#manager
 	],
 	#category : 'Refactoring-Changes-Tests',
 	#package : 'Refactoring-Changes-Tests'

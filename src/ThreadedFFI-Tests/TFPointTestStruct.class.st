@@ -5,8 +5,8 @@ Class {
 	#name : 'TFPointTestStruct',
 	#superclass : 'FFIExternalStructure',
 	#classVars : [
-		'OFFSET_X',
-		'OFFSET_Y'
+		#OFFSET_X,
+		#OFFSET_Y
 	],
 	#category : 'ThreadedFFI-Tests-Test-Structs',
 	#package : 'ThreadedFFI-Tests',

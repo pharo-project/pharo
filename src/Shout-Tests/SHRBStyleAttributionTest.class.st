@@ -2,14 +2,14 @@ Class {
 	#name : 'SHRBStyleAttributionTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'styler',
-		'oldSetting'
+		#styler,
+		#oldSetting
 	],
 	#classVars : [
-		'Test'
+		#Test
 	],
 	#pools : [
-		'SHRBMockSharedPoolStyler'
+		#SHRBMockSharedPoolStyler
 	],
 	#category : 'Shout-Tests-Styling',
 	#package : 'Shout-Tests',

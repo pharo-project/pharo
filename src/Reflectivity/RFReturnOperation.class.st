@@ -5,8 +5,8 @@ Class {
 	#name : 'RFReturnOperation',
 	#superclass : 'Object',
 	#instVars : [
-		'context',
-		'returnValue'
+		#context,
+		#returnValue
 	],
 	#category : 'Reflectivity-Operations',
 	#package : 'Reflectivity',

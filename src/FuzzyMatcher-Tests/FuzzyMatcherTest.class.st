@@ -67,7 +67,7 @@ FuzzyMatcherTest >> testChangePattern [
 FuzzyMatcherTest >> testClassSideAPI [
 
 	"If the protocol is changed, so should the class comment."
-	FuzzyMatcher class protocolNames detect: [ :p | p = #'utilities - api' ].
+	FuzzyMatcher class protocolNames detect: [ :p | p sameContents: #'utilities - api' ].
 
 	self
 		assert: (FuzzyMatcher allMatching: #a in: #(a b ab))

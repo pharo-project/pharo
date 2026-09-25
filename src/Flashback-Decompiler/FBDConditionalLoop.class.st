@@ -7,7 +7,7 @@ Class {
 	#name : 'FBDConditionalLoop',
 	#superclass : 'FBDLoop',
 	#instVars : [
-		'exitCondition'
+		#exitCondition
 	],
 	#category : 'Flashback-Decompiler-Utilities',
 	#package : 'Flashback-Decompiler',

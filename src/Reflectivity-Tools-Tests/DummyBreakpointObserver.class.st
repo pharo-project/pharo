@@ -7,7 +7,7 @@ Class {
 	#name : 'DummyBreakpointObserver',
 	#superclass : 'Object',
 	#instVars : [
-		'tag'
+		#tag
 	],
 	#category : 'Reflectivity-Tools-Tests',
 	#package : 'Reflectivity-Tools-Tests'

@@ -5,7 +5,7 @@ Class {
 	#name : 'CompositeFillStyle',
 	#superclass : 'FillStyle',
 	#instVars : [
-		'fillStyles'
+		#fillStyles
 	],
 	#category : 'Graphics-Canvas-Fills',
 	#package : 'Graphics-Canvas',

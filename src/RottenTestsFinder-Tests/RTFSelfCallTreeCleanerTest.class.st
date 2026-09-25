@@ -5,8 +5,8 @@ Class {
 	#name : 'RTFSelfCallTreeCleanerTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'tree1',
-		'tree2'
+		#tree1,
+		#tree2
 	],
 	#category : 'RottenTestsFinder-Tests',
 	#package : 'RottenTestsFinder-Tests'

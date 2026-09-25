@@ -2,7 +2,7 @@ Class {
 	#name : 'DTRTFResult',
 	#superclass : 'DTPluginResult',
 	#instVars : [
-		'result'
+		#result
 	],
 	#category : 'DrTests-RottenGreenTestsFinder-Base',
 	#package : 'DrTests-RottenGreenTestsFinder',

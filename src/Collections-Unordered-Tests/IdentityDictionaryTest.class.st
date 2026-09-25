@@ -38,7 +38,7 @@ IdentityDictionaryTest >> testIdentity [
 	self deny: (dict includesKey: key copy).
 
 "	dict at: 1 put: 'djdh'.
-	dict at: 'sksl' put: 1.0.
+	dict at: #'sksl' put: 1.0.
 	self deny: (dict includesKey: 1.0) .
 	self assert: (dict includes: 1)"
 ]

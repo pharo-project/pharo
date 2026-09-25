@@ -26,7 +26,7 @@ Class {
 	#name : 'ClyMethodChange',
 	#superclass : 'Object',
 	#instVars : [
-		'affectedMethod'
+		#affectedMethod
 	],
 	#category : 'Calypso-SystemQueries-Domain',
 	#package : 'Calypso-SystemQueries',

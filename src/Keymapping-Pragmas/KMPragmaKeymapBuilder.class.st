@@ -7,10 +7,10 @@ Class {
 	#name : 'KMPragmaKeymapBuilder',
 	#superclass : 'Object',
 	#instVars : [
-		'model'
+		#model
 	],
 	#classVars : [
-		'UniqueInstace'
+		#UniqueInstace
 	],
 	#category : 'Keymapping-Pragmas',
 	#package : 'Keymapping-Pragmas'

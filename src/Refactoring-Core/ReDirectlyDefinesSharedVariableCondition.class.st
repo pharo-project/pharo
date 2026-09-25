@@ -2,7 +2,7 @@ Class {
 	#name : 'ReDirectlyDefinesSharedVariableCondition',
 	#superclass : 'ReClassCondition',
 	#instVars : [
-		'sharedVariables'
+		#sharedVariables
 	],
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',

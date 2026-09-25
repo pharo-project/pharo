@@ -8,8 +8,8 @@ Class {
 	#name : 'FLPluggableSubstitutionMapper',
 	#superclass : 'FLMapper',
 	#instVars : [
-		'condition',
-		'substitutionFactory'
+		#condition,
+		#substitutionFactory
 	],
 	#category : 'Fuel-Core-Mappers',
 	#package : 'Fuel-Core',

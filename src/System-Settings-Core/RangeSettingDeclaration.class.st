@@ -12,7 +12,7 @@ Class {
 	#name : 'RangeSettingDeclaration',
 	#superclass : 'SettingDeclaration',
 	#instVars : [
-		'range'
+		#range
 	],
 	#category : 'System-Settings-Core-Base',
 	#package : 'System-Settings-Core',

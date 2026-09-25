@@ -2,7 +2,7 @@ Class {
 	#name : 'TraitCommonClassDefinitionPrinterTest',
 	#superclass : 'TraitAbstractTest',
 	#instVars : [
-		'emptySlots'
+		#emptySlots
 	],
 	#category : 'Traits-Tests',
 	#package : 'Traits-Tests'

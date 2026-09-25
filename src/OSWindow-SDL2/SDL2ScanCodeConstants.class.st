@@ -2,8 +2,8 @@ Class {
 	#name : 'SDL2ScanCodeConstants',
 	#superclass : 'SharedPool',
 	#classVars : [
-		'SDL_SCANCODE_COMMA',
-		'SDL_SCANCODE_PERIOD'
+		#SDL_SCANCODE_COMMA,
+		#SDL_SCANCODE_PERIOD
 	],
 	#category : 'OSWindow-SDL2-Bindings',
 	#package : 'OSWindow-SDL2',

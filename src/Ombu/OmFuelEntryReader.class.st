@@ -5,7 +5,7 @@ Class {
 	#name : 'OmFuelEntryReader',
 	#superclass : 'OmEntryReader',
 	#instVars : [
-		'materializer'
+		#materializer
 	],
 	#category : 'Ombu-Persistence',
 	#package : 'Ombu',

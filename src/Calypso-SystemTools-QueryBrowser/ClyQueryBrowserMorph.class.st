@@ -34,14 +34,14 @@ Class {
 	#name : 'ClyQueryBrowserMorph',
 	#superclass : 'ClyBrowserMorph',
 	#instVars : [
-		'resultView',
-		'systemQuery',
-		'queryScopes',
-		'activeScope',
-		'expectedFlatQueryResult'
+		#resultView,
+		#systemQuery,
+		#queryScopes,
+		#activeScope,
+		#expectedFlatQueryResult
 	],
 	#classVars : [
-		'DefaultQueryResult'
+		#DefaultQueryResult
 	],
 	#category : 'Calypso-SystemTools-QueryBrowser-UI',
 	#package : 'Calypso-SystemTools-QueryBrowser',

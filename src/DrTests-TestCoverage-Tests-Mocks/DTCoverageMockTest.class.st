@@ -2,7 +2,7 @@ Class {
 	#name : 'DTCoverageMockTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'mockObj'
+		#mockObj
 	],
 	#category : 'DrTests-TestCoverage-Tests-Mocks-Base',
 	#package : 'DrTests-TestCoverage-Tests-Mocks',

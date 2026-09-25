@@ -5,7 +5,7 @@ Class {
 	#name : 'AthensTextBackground',
 	#superclass : 'TextAttribute',
 	#instVars : [
-		'color'
+		#color
 	],
 	#category : 'Athens-Text',
 	#package : 'Athens-Text'

@@ -6,16 +6,16 @@ Class {
 	#name : 'SDLOSXPharoMenu',
 	#superclass : 'Object',
 	#instVars : [
-		'pharoMenu',
-		'pharoMenuTargetClass',
-		'doAboutCallback',
-		'pharoTargetObject',
-		'doQuitCallback',
-		'doPreferencesCallback',
-		'doRestartWorldCallback'
+		#pharoMenu,
+		#pharoMenuTargetClass,
+		#doAboutCallback,
+		#pharoTargetObject,
+		#doQuitCallback,
+		#doPreferencesCallback,
+		#doRestartWorldCallback
 	],
 	#classVars : [
-		'UniqueInstance'
+		#UniqueInstance
 	],
 	#category : 'OSWindow-SDL2-Pharo-Specific',
 	#package : 'OSWindow-SDL2',

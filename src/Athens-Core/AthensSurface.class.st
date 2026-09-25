@@ -18,7 +18,7 @@ Class {
 	#name : 'AthensSurface',
 	#superclass : 'Object',
 	#instVars : [
-		'currentCanvas'
+		#currentCanvas
 	],
 	#category : 'Athens-Core-Base',
 	#package : 'Athens-Core',

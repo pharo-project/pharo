@@ -5,7 +5,7 @@ Class {
 	#name : 'PluggableIconListMorph',
 	#superclass : 'PluggableMorphListMorph',
 	#instVars : [
-		'getIconSelector'
+		#getIconSelector
 	],
 	#category : 'Morphic-Widgets-Pluggable-Lists',
 	#package : 'Morphic-Widgets-Pluggable',

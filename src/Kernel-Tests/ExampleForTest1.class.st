@@ -5,7 +5,7 @@ Class {
 	#name : 'ExampleForTest1',
 	#superclass : 'Object',
 	#instVars : [
-		'aSuperclassVariable'
+		#aSuperclassVariable
 	],
 	#category : 'Kernel-Tests-Classes',
 	#package : 'Kernel-Tests',

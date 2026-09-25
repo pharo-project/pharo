@@ -9,8 +9,8 @@ Class {
 	#name : 'FLSimpleStack',
 	#superclass : 'Object',
 	#instVars : [
-		'array',
-		'slotIndex'
+		#array,
+		#slotIndex
 	],
 	#category : 'Fuel-Core-Collections',
 	#package : 'Fuel-Core',

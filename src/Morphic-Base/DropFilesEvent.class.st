@@ -14,7 +14,7 @@ Class {
 	#name : 'DropFilesEvent',
 	#superclass : 'DropEvent',
 	#instVars : [
-		'fileNames'
+		#fileNames
 	],
 	#category : 'Morphic-Base-Events',
 	#package : 'Morphic-Base',

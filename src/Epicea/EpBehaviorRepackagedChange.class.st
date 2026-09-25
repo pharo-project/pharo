@@ -5,11 +5,11 @@ Class {
 	#name : 'EpBehaviorRepackagedChange',
 	#superclass : 'EpBehaviorChange',
 	#instVars : [
-		'oldTagName',
-		'oldPackageName',
-		'newTagName',
-		'newPackageName',
-		'class'
+		#oldTagName,
+		#oldPackageName,
+		#newTagName,
+		#newPackageName,
+		#class
 	],
 	#category : 'Epicea-Model',
 	#package : 'Epicea',

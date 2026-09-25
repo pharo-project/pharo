@@ -23,8 +23,8 @@ Class {
 	#name : 'MorphicAlarm',
 	#superclass : 'MessageSend',
 	#instVars : [
-		'scheduledTime',
-		'numArgs'
+		#scheduledTime,
+		#numArgs
 	],
 	#category : 'Morphic-Base-Events',
 	#package : 'Morphic-Base',

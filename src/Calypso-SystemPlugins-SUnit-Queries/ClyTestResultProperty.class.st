@@ -18,10 +18,10 @@ Class {
 	#name : 'ClyTestResultProperty',
 	#superclass : 'ClyProperty',
 	#instVars : [
-		'allCount',
-		'errorCount',
-		'failureCount',
-		'successCount'
+		#allCount,
+		#errorCount,
+		#failureCount,
+		#successCount
 	],
 	#category : 'Calypso-SystemPlugins-SUnit-Queries',
 	#package : 'Calypso-SystemPlugins-SUnit-Queries'

@@ -16,9 +16,9 @@ Class {
 	#name : 'SettingTree',
 	#superclass : 'Model',
 	#instVars : [
-		'collector',
-		'nodeList',
-		'persistence'
+		#collector,
+		#nodeList,
+		#persistence
 	],
 	#category : 'System-Settings-Browser',
 	#package : 'System-Settings-Browser'
@@ -144,7 +144,7 @@ SettingTree >> nodeNamed: aSymbol [
 
 { #category : 'private - tree building' }
 SettingTree >> nodeNamed: aSymbol ifAbsent: aBlock [
-	^ self nodeList detect: [:d | d settingDeclaration name = aSymbol] ifNone: aBlock
+	^ self nodeList detect: [:d | d settingDeclaration name sameContents: aSymbol] ifNone: aBlock
 ]
 
 { #category : 'accessing' }

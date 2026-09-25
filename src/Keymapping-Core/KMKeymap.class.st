@@ -5,11 +5,11 @@ Class {
 	#name : 'KMKeymap',
 	#superclass : 'Object',
 	#instVars : [
-		'action',
-		'name',
-		'shortcut',
-		'defaultShortcut',
-		'description'
+		#action,
+		#name,
+		#shortcut,
+		#defaultShortcut,
+		#description
 	],
 	#category : 'Keymapping-Core-Base',
 	#package : 'Keymapping-Core',
@@ -52,7 +52,7 @@ KMKeymap >> = aKeymap [
 		ifTrue: [ ^ true ].
 	self species = aKeymap species
 		ifFalse: [ ^ false ].
-	^action = aKeymap action and: [ shortcut = aKeymap shortcut and: [ name = aKeymap name ] ]
+	^action = aKeymap action and: [ shortcut = aKeymap shortcut and: [ name sameContents: aKeymap name ] ]
 ]
 
 { #category : 'accessing' }

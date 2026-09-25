@@ -11,10 +11,10 @@ Class {
 	#name : 'KMSingleKeyCombination',
 	#superclass : 'KMKeyCombination',
 	#instVars : [
-		'key'
+		#key
 	],
 	#classInstVars : [
-		'specialKeys'
+		#specialKeys
 	],
 	#category : 'Keymapping-KeyCombinations',
 	#package : 'Keymapping-KeyCombinations'
@@ -50,7 +50,7 @@ KMSingleKeyCombination class >> specialKeys [
 
 { #category : 'comparing' }
 KMSingleKeyCombination >> = aShortcut [
-	^ super = aShortcut and: [ aShortcut key = key ]
+	^ super = aShortcut and: [ aShortcut key sameContents: key ]
 ]
 
 { #category : 'comparing' }

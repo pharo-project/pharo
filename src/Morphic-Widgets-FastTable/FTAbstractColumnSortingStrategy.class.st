@@ -27,7 +27,7 @@ Class {
 	#name : 'FTAbstractColumnSortingStrategy',
 	#superclass : 'Object',
 	#instVars : [
-		'column'
+		#column
 	],
 	#category : 'Morphic-Widgets-FastTable-Sorting',
 	#package : 'Morphic-Widgets-FastTable',

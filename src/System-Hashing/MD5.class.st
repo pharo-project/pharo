@@ -5,7 +5,7 @@ Class {
 	#name : 'MD5',
 	#superclass : 'HashFunction',
 	#instVars : [
-		'state'
+		#state
 	],
 	#category : 'System-Hashing-MD5',
 	#package : 'System-Hashing',

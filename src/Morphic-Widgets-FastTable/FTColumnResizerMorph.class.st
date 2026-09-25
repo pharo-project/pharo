@@ -6,11 +6,11 @@ Class {
 	#name : 'FTColumnResizerMorph',
 	#superclass : 'AbstractResizerMorph',
 	#instVars : [
-		'traceMorph',
-		'oldColor',
-		'container',
-		'leftColumn',
-		'rightColumn'
+		#traceMorph,
+		#oldColor,
+		#container,
+		#leftColumn,
+		#rightColumn
 	],
 	#category : 'Morphic-Widgets-FastTable-Base',
 	#package : 'Morphic-Widgets-FastTable',

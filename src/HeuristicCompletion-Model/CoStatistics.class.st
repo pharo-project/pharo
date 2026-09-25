@@ -12,11 +12,11 @@ Class {
 	#name : 'CoStatistics',
 	#superclass : 'Object',
 	#instVars : [
-		'acceptedEntries',
-		'cancelledCompletions'
+		#acceptedEntries,
+		#cancelledCompletions
 	],
 	#classVars : [
-		'UniqueInstance'
+		#UniqueInstance
 	],
 	#category : 'HeuristicCompletion-Model-Statistics',
 	#package : 'HeuristicCompletion-Model',

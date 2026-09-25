@@ -5,8 +5,8 @@ Class {
 	#name : 'PoolDefiner2',
 	#superclass : 'SharedPool',
 	#classVars : [
-		'AnAuthor',
-		'VariableInPoolDefiner2'
+		#AnAuthor,
+		#VariableInPoolDefiner2
 	],
 	#category : 'Kernel-Tests-Classes',
 	#package : 'Kernel-Tests',

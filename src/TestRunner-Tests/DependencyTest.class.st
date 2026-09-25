@@ -2,7 +2,7 @@ Class {
 	#name : 'DependencyTest',
 	#superclass : 'MockTest',
 	#classInstVars : [
-		'data'
+		#data
 	],
 	#category : 'TestRunner-Tests-Utilities-Test',
 	#package : 'TestRunner-Tests',

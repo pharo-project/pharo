@@ -31,11 +31,11 @@ Class {
 	#name : 'CharacterBlockScanner',
 	#superclass : 'CharacterScanner',
 	#instVars : [
-		'characterPoint',
-		'characterIndex',
-		'nextLeftMargin',
-		'specialWidth',
-		'lastCharacterWidth'
+		#characterPoint,
+		#characterIndex,
+		#nextLeftMargin,
+		#specialWidth,
+		#lastCharacterWidth
 	],
 	#category : 'Text-Scanning-Base',
 	#package : 'Text-Scanning',

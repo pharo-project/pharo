@@ -2,7 +2,7 @@ Class {
 	#name : 'RBTestAsDataForExtractSetupTransformationTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'aString'
+		#aString
 	],
 	#category : 'Refactoring-DataForTesting-ForTestRelatedOperation',
 	#package : 'Refactoring-DataForTesting',

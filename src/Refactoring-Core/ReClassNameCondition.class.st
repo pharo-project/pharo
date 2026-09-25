@@ -2,9 +2,9 @@ Class {
 	#name : 'ReClassNameCondition',
 	#superclass : 'RBNewAbstractCondition',
 	#instVars : [
-		'violators',
-		'model',
-		'className'
+		#violators,
+		#model,
+		#className
 	],
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',

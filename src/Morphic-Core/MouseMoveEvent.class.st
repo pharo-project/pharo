@@ -5,8 +5,8 @@ Class {
 	#name : 'MouseMoveEvent',
 	#superclass : 'MouseEvent',
 	#instVars : [
-		'startPoint',
-		'trail'
+		#startPoint,
+		#trail
 	],
 	#category : 'Morphic-Core-Events',
 	#package : 'Morphic-Core',

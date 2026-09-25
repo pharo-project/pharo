@@ -9,7 +9,7 @@ Class {
 	#name : 'TFVariadicFunctionDefinition',
 	#superclass : 'TFFunctionDefinition',
 	#instVars : [
-		'fixedArgumentCount'
+		#fixedArgumentCount
 	],
 	#category : 'ThreadedFFI-Base',
 	#package : 'ThreadedFFI',

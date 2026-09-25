@@ -2,7 +2,7 @@ Class {
 	#name : 'RBWithDifferentsArgumentsParametrizedTest',
 	#superclass : 'RBWithDifferentConstructorsParametrizedTest',
 	#instVars : [
-		'index'
+		#index
 	],
 	#category : 'Refactoring-Transformations-Tests-Parametrized',
 	#package : 'Refactoring-Transformations-Tests',

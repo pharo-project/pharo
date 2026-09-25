@@ -5,7 +5,7 @@ Class {
 	#name : 'SystemSettingLauncher',
 	#superclass : 'PragmaSetting',
 	#instVars : [
-		'script'
+		#script
 	],
 	#category : 'System-Settings-Browser',
 	#package : 'System-Settings-Browser'

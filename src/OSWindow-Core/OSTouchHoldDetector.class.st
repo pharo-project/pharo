@@ -5,13 +5,13 @@ Class {
 	#name : 'OSTouchHoldDetector',
 	#superclass : 'OSTouchPunctualGestureDetector',
 	#instVars : [
-		'waitingTime',
-		'maxDistanceTravelled',
-		'process'
+		#waitingTime,
+		#maxDistanceTravelled,
+		#process
 	],
 	#classVars : [
-		'MaxDistanceTravelled',
-		'WaitingTime'
+		#MaxDistanceTravelled,
+		#WaitingTime
 	],
 	#category : 'OSWindow-Core-Gestures',
 	#package : 'OSWindow-Core',

@@ -12,7 +12,7 @@ Class {
 	#name : 'PluggableMultiColumnListMorph',
 	#superclass : 'PluggableListMorph',
 	#instVars : [
-		'gapSize'
+		#gapSize
 	],
 	#category : 'Morphic-Widgets-Pluggable-Lists',
 	#package : 'Morphic-Widgets-Pluggable',

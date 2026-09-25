@@ -5,14 +5,14 @@ Class {
 	#name : 'FindReplaceService',
 	#superclass : 'Model',
 	#instVars : [
-		'findText',
-		'replaceText',
-		'caseSensitive',
-		'entireWordsOnly',
-		'wrapAround',
-		'searchBackwards',
-		'findStartIndex',
-		'isRegex'
+		#findText,
+		#replaceText,
+		#caseSensitive,
+		#entireWordsOnly,
+		#wrapAround,
+		#searchBackwards,
+		#findStartIndex,
+		#isRegex
 	],
 	#category : 'Rubric-Editing-FindReplaceService',
 	#package : 'Rubric',

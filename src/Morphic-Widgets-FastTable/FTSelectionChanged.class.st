@@ -27,8 +27,8 @@ Class {
 	#name : 'FTSelectionChanged',
 	#superclass : 'FTAnnouncement',
 	#instVars : [
-		'newSelectedIndexes',
-		'oldSelectedIndexes'
+		#newSelectedIndexes,
+		#oldSelectedIndexes
 	],
 	#category : 'Morphic-Widgets-FastTable-Announcement',
 	#package : 'Morphic-Widgets-FastTable',

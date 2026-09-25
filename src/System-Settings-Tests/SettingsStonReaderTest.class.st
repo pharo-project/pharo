@@ -5,7 +5,7 @@ Class {
 	#name : 'SettingsStonReaderTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'reader'
+		#reader
 	],
 	#category : 'System-Settings-Tests',
 	#package : 'System-Settings-Tests'

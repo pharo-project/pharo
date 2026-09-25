@@ -5,7 +5,7 @@ Class {
 	#name : 'SHStyleElementTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'element'
+		#element
 	],
 	#category : 'Shout-Tests-Styling',
 	#package : 'Shout-Tests',

@@ -18,9 +18,9 @@ Class {
 	#name : 'ColorForm',
 	#superclass : 'Form',
 	#instVars : [
-		'colors',
-		'cachedDepth',
-		'cachedColormap'
+		#colors,
+		#cachedDepth,
+		#cachedColormap
 	],
 	#category : 'Graphics-Display Objects-Forms',
 	#package : 'Graphics-Display Objects',

@@ -5,7 +5,7 @@ Class {
 	#name : 'LookupKey',
 	#superclass : 'Magnitude',
 	#instVars : [
-		'key'
+		#key
 	],
 	#category : 'Collections-Support-Associations',
 	#package : 'Collections-Support',
@@ -29,7 +29,7 @@ LookupKey >> < aLookupKey [
 { #category : 'comparing' }
 LookupKey >> = aLookupKey [
 
-	^ self species = aLookupKey species and: [ key = aLookupKey key ]
+	^ self species = aLookupKey species and: [ key sameContents: aLookupKey key ]
 ]
 
 { #category : 'comparing' }

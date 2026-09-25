@@ -11,7 +11,7 @@ Class {
 	#name : 'SettingTokenFilter',
 	#superclass : 'SettingFilter',
 	#instVars : [
-		'token'
+		#token
 	],
 	#category : 'System-Settings-Core-Filter',
 	#package : 'System-Settings-Core',

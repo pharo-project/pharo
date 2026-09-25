@@ -11,8 +11,8 @@ Class {
 	#name : 'SDL2AthensDrawingExample',
 	#superclass : 'SDL2AthensExample',
 	#instVars : [
-		'strokes',
-		'currentStroke'
+		#strokes,
+		#currentStroke
 	],
 	#category : 'OSWindow-SDL2-Examples-Basic',
 	#package : 'OSWindow-SDL2-Examples',

@@ -25,9 +25,9 @@ Class {
 	#name : 'RemoteString',
 	#superclass : 'Object',
 	#instVars : [
-		'sourceFileNumber',
-		'filePositionHi',
-		'sourceFileArray'
+		#sourceFileNumber,
+		#filePositionHi,
+		#sourceFileArray
 	],
 	#category : 'System-Sources-Utilities',
 	#package : 'System-Sources',

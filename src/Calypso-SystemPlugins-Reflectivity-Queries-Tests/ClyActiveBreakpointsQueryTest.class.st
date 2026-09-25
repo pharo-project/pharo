@@ -2,7 +2,7 @@ Class {
 	#name : 'ClyActiveBreakpointsQueryTest',
 	#superclass : 'ClyMethodQueryTest',
 	#instVars : [
-		'installedBreakpoints'
+		#installedBreakpoints
 	],
 	#category : 'Calypso-SystemPlugins-Reflectivity-Queries-Tests-Breakpoints',
 	#package : 'Calypso-SystemPlugins-Reflectivity-Queries-Tests',

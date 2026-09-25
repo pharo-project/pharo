@@ -17,7 +17,7 @@ Class {
 	#name : 'ClyMethodsInProtocolQuery',
 	#superclass : 'ClyMethodQuery',
 	#instVars : [
-		'protocol'
+		#protocol
 	],
 	#category : 'Calypso-SystemQueries-Queries',
 	#package : 'Calypso-SystemQueries',

@@ -5,7 +5,7 @@ Class {
 	#name : 'ExecutionEnvironmentStub',
 	#superclass : 'ExecutionEnvironment',
 	#instVars : [
-		'forkedProcesses'
+		#forkedProcesses
 	],
 	#category : 'Kernel-Tests-Processes',
 	#package : 'Kernel-Tests',

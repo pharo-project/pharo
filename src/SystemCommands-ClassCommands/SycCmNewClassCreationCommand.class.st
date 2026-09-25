@@ -11,7 +11,7 @@ Class {
 	#name : 'SycCmNewClassCreationCommand',
 	#superclass : 'SycClassCmCommand',
 	#instVars : [
-		'newClassName'
+		#newClassName
 	],
 	#category : 'SystemCommands-ClassCommands',
 	#package : 'SystemCommands-ClassCommands'

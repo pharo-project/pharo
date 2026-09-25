@@ -7,11 +7,11 @@ Class {
 	#name : 'PharoExternalProject',
 	#superclass : 'Object',
 	#instVars : [
-		'name',
-		'version',
-		'sourceDir',
-		'project',
-		'owner'
+		#name,
+		#version,
+		#sourceDir,
+		#project,
+		#owner
 	],
 	#category : 'BaselineOfPharo-Utilities',
 	#package : 'BaselineOfPharo',

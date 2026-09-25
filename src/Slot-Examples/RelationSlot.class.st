@@ -22,9 +22,9 @@ Class {
 	#name : 'RelationSlot',
 	#superclass : 'InstanceVariableSlot',
 	#instVars : [
-		'targetClass',
-		'inverseName',
-		'inverseSlot'
+		#targetClass,
+		#inverseName,
+		#inverseSlot
 	],
 	#category : 'Slot-Examples-Associations',
 	#package : 'Slot-Examples',

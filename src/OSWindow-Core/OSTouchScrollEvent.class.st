@@ -5,8 +5,8 @@ Class {
 	#name : 'OSTouchScrollEvent',
 	#superclass : 'OSTouchComplexEvent',
 	#instVars : [
-		'dDist',
-		'direction'
+		#dDist,
+		#direction
 	],
 	#category : 'OSWindow-Core-Events-Touch',
 	#package : 'OSWindow-Core',

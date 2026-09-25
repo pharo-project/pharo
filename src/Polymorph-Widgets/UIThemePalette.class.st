@@ -5,8 +5,8 @@ Class {
 	#name : 'UIThemePalette',
 	#superclass : 'Object',
 	#instVars : [
-		'colorConfigurator',
-		'paletteDictionary'
+		#colorConfigurator,
+		#paletteDictionary
 	],
 	#category : 'Polymorph-Widgets-Themes',
 	#package : 'Polymorph-Widgets',

@@ -5,7 +5,7 @@ Class {
 	#name : 'RGTraitDescriptionDefinition',
 	#superclass : 'RGBehaviorDefinition',
 	#instVars : [
-		'users'
+		#users
 	],
 	#category : 'Ring-Definitions-Core-Base',
 	#package : 'Ring-Definitions-Core',

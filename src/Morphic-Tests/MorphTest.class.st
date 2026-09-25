@@ -8,7 +8,7 @@ Class {
 	#name : 'MorphTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'morph'
+		#morph
 	],
 	#category : 'Morphic-Tests-Kernel',
 	#package : 'Morphic-Tests',

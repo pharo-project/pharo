@@ -5,9 +5,9 @@ Class {
 	#name : 'RubSmalltalkEditorTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'source',
-		'selection',
-		'currentCompletion'
+		#source,
+		#selection,
+		#currentCompletion
 	],
 	#category : 'Rubric-Tests-Base',
 	#package : 'Rubric-Tests',

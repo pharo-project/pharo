@@ -15,8 +15,8 @@ Class {
 	#name : 'RBReplaceSubtreeTransformation',
 	#superclass : 'RBMethodTransformation',
 	#instVars : [
-		'oldSourceCode',
-		'newSourceCode'
+		#oldSourceCode,
+		#newSourceCode
 	],
 	#category : 'Refactoring-Transformations-Model',
 	#package : 'Refactoring-Transformations',

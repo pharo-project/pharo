@@ -7,7 +7,7 @@ Class {
 	#name : 'RTFHelperCallsCollector',
 	#superclass : 'RTFSelfCallVisitor',
 	#instVars : [
-		'helperCalls'
+		#helperCalls
 	],
 	#category : 'RottenTestsFinder-SelfInterpreter',
 	#package : 'RottenTestsFinder',

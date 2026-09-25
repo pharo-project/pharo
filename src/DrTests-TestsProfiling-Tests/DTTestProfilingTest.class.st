@@ -2,10 +2,10 @@ Class {
 	#name : 'DTTestProfilingTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'package',
-		'classes',
-		'dTconf',
-		'plugin'
+		#package,
+		#classes,
+		#dTconf,
+		#plugin
 	],
 	#category : 'DrTests-TestsProfiling-Tests',
 	#package : 'DrTests-TestsProfiling-Tests'

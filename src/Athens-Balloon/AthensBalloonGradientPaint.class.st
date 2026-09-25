@@ -5,7 +5,7 @@ Class {
 	#name : 'AthensBalloonGradientPaint',
 	#superclass : 'AthensBalloonPaint',
 	#instVars : [
-		'colorRamp'
+		#colorRamp
 	],
 	#category : 'Athens-Balloon-Paint',
 	#package : 'Athens-Balloon',

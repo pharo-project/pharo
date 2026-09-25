@@ -7,9 +7,9 @@ Class {
 	#name : 'LessonView',
 	#superclass : 'Object',
 	#instVars : [
-		'shoutMorph',
-		'window',
-		'sourceTextModel'
+		#shoutMorph,
+		#window,
+		#sourceTextModel
 	],
 	#category : 'ProfStef-Core',
 	#package : 'ProfStef-Core'

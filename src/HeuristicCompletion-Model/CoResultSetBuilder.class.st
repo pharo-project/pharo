@@ -9,7 +9,7 @@ Class {
 	#name : 'CoResultSetBuilder',
 	#superclass : 'Object',
 	#instVars : [
-		'completionContext'
+		#completionContext
 	],
 	#category : 'HeuristicCompletion-Model-SystemIntegration',
 	#package : 'HeuristicCompletion-Model',

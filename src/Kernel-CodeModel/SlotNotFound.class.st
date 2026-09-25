@@ -5,7 +5,7 @@ Class {
 	#name : 'SlotNotFound',
 	#superclass : 'Error',
 	#instVars : [
-		'name'
+		#name
 	],
 	#category : 'Kernel-CodeModel-Exceptions',
 	#package : 'Kernel-CodeModel',

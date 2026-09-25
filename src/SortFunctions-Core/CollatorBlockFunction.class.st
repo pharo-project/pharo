@@ -16,7 +16,7 @@ Class {
 	#name : 'CollatorBlockFunction',
 	#superclass : 'SortFunction',
 	#instVars : [
-		'collatorBlock'
+		#collatorBlock
 	],
 	#category : 'SortFunctions-Core',
 	#package : 'SortFunctions-Core'

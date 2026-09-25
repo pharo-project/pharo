@@ -10,9 +10,9 @@ Class {
 	#name : 'ZipEncoderTree',
 	#superclass : 'Object',
 	#instVars : [
-		'bitLengths',
-		'codes',
-		'maxCode'
+		#bitLengths,
+		#codes,
+		#maxCode
 	],
 	#category : 'Compression-Streams',
 	#package : 'Compression',

@@ -48,13 +48,13 @@ Class {
 	#name : 'UUIDGenerator',
 	#superclass : 'Object',
 	#instVars : [
-		'node',
-		'random',
-		'counter',
-		'lock'
+		#node,
+		#random,
+		#counter,
+		#lock
 	],
 	#classVars : [
-		'Default'
+		#Default
 	],
 	#category : 'Network-UUID-Base',
 	#package : 'Network-UUID',

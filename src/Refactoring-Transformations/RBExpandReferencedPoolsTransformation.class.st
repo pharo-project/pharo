@@ -2,10 +2,10 @@ Class {
 	#name : 'RBExpandReferencedPoolsTransformation',
 	#superclass : 'RBTransformation',
 	#instVars : [
-		'pools',
-		'fromClass',
-		'parseTree',
-		'toClasses'
+		#pools,
+		#fromClass,
+		#parseTree,
+		#toClasses
 	],
 	#category : 'Refactoring-Transformations-Model-Migrated-Unused',
 	#package : 'Refactoring-Transformations',

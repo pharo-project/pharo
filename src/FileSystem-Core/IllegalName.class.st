@@ -6,7 +6,7 @@ Class {
 	#name : 'IllegalName',
 	#superclass : 'FileSystemError',
 	#instVars : [
-		'name'
+		#name
 	],
 	#category : 'FileSystem-Core-Kernel-Errors',
 	#package : 'FileSystem-Core',

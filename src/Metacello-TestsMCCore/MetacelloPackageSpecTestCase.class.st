@@ -12,7 +12,7 @@ MetacelloPackageSpecTestCase >> testPackageMergeSpec [
 		name: 'Package';
 		name: 'Package';
 		requires: 'AnotherPackage';
-		includes: 'IncludedPackage';
+		includes: #IncludedPackage;
 		answers: #(#('preload' 'preload answer') #('postload' 'postload answer'));
 		file: 'Package-dkh.1';
 		preLoadDoIt: #preLoadDoIt;
@@ -23,7 +23,7 @@ MetacelloPackageSpecTestCase >> testPackageMergeSpec [
 	packageB := self packageSpec
 		name: 'Package';
 		requires: 'AndAnotherPackage';
-		includes: 'AndIncludedPackage';
+		includes: #AndIncludedPackage;
 		answers: #(#('xpostload' 'xpostload answer'));
 		file: 'Package-dkh.2';
 		repository: 'http://example.com/repository' username: 'DaleHenrichs' password: 'secret';
@@ -37,11 +37,11 @@ MetacelloPackageSpecTestCase >> testPackageMergeSpec [
 	self assert: package file equals: 'Package-dkh.2'.
 	self assert: package preLoadDoIt value identicalTo: #preLoadDoIt.
 	self assert: package postLoadDoIt value identicalTo: #postLoadDoIt.
-	repository := package repositories map at: '/opt/gemstone/repository' ifAbsent: [ self assert: false ].
+	repository := package repositories map at: #'/opt/gemstone/repository' ifAbsent: [ self assert: false ].
 	self assert: repository type equals: 'directory'.
-	repository := package repositories map at: '/opt/gemstone/repo' ifAbsent: [ self assert: false ].
+	repository := package repositories map at: #'/opt/gemstone/repo' ifAbsent: [ self assert: false ].
 	self assert: repository type equals: 'directory'.
-	repository := package repositories map at: 'http://example.com/repository' ifAbsent: [ self assert: false ].
+	repository := package repositories map at: #'http://example.com/repository' ifAbsent: [ self assert: false ].
 	self assert: repository type equals: 'http'.
 	self assert: repository username equals: 'DaleHenrichs'.
 	self assert: repository password equals: 'secret'
@@ -53,7 +53,7 @@ MetacelloPackageSpecTestCase >> testPackageSpec [
 	package := self packageSpec
 		name: 'Package';
 		requires: 'AnotherPackage';
-		includes: 'IncludedPackage';
+		includes: #IncludedPackage;
 		answers: #(#('preload' 'preload answer') #('postload' 'postload answer'));
 		file: 'Package-dkh.1';
 		preLoadDoIt: #preLoadDoIt;
@@ -68,9 +68,9 @@ MetacelloPackageSpecTestCase >> testPackageSpec [
 	self assert: package file equals: 'Package-dkh.1'.
 	self assert: package preLoadDoIt value identicalTo: #preLoadDoIt.
 	self assert: package postLoadDoIt value identicalTo: #postLoadDoIt.
-	repository := package repositories map at: '/opt/gemstone/repository' ifAbsent: [ self assert: false ].
+	repository := package repositories map at: #'/opt/gemstone/repository' ifAbsent: [ self assert: false ].
 	self assert: repository type equals: 'directory'.
-	repository := package repositories map at: 'http://example.com/repository' ifAbsent: [ self assert: false ].
+	repository := package repositories map at: #'http://example.com/repository' ifAbsent: [ self assert: false ].
 	self assert: repository type equals: 'http'.
 	self assert: repository username equals: 'dkh'.
 	self assert: repository password equals: 'password'

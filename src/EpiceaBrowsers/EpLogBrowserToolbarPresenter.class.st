@@ -5,11 +5,11 @@ Class {
 	#name : 'EpLogBrowserToolbarPresenter',
 	#superclass : 'SpPresenter',
 	#instVars : [
-		'logBrowserPresenter',
-		'filtersButton',
-		'statusLabel',
-		'filteredEntriesCount',
-		'searchedEntriesCount'
+		#logBrowserPresenter,
+		#filtersButton,
+		#statusLabel,
+		#filteredEntriesCount,
+		#searchedEntriesCount
 	],
 	#category : 'EpiceaBrowsers-UI-Log',
 	#package : 'EpiceaBrowsers',

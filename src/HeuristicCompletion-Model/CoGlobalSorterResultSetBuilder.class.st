@@ -5,7 +5,7 @@ Class {
 	#name : 'CoGlobalSorterResultSetBuilder',
 	#superclass : 'CoASTResultSetBuilder',
 	#instVars : [
-		'sorterClass'
+		#sorterClass
 	],
 	#category : 'HeuristicCompletion-Model-SystemIntegration',
 	#package : 'HeuristicCompletion-Model',

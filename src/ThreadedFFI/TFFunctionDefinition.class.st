@@ -16,9 +16,9 @@ Class {
 	#name : 'TFFunctionDefinition',
 	#superclass : 'FFIExternalReference',
 	#instVars : [
-		'parameterTypes',
-		'returnType',
-		'abi'
+		#parameterTypes,
+		#returnType,
+		#abi
 	],
 	#category : 'ThreadedFFI-Base',
 	#package : 'ThreadedFFI',

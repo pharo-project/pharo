@@ -2,11 +2,11 @@ Class {
 	#name : 'MetacelloPackageSpec',
 	#superclass : 'MetacelloAbstractPackageSpec',
 	#instVars : [
-		'file',
-		'repositories',
-		'goferPackage',
-		'preLoadDoIt',
-		'postLoadDoIt'
+		#file,
+		#repositories,
+		#goferPackage,
+		#preLoadDoIt,
+		#postLoadDoIt
 	],
 	#category : 'Metacello-Core-Specs',
 	#package : 'Metacello-Core',
@@ -388,7 +388,7 @@ MetacelloPackageSpec >> workingCopy [
 
 	| wcs |
 	wcs := MCWorkingCopy allWorkingCopies select: [ :each |
-		       each packageName = self name ].
+		       each packageName sameContents: self name ].
 	wcs isEmpty ifTrue: [ ^ nil ].
 	^ wcs detectMax: [ :ea | ea package name size ]
 ]

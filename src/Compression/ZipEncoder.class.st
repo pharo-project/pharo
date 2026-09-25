@@ -5,12 +5,12 @@ Class {
 	#name : 'ZipEncoder',
 	#superclass : 'WriteStream',
 	#instVars : [
-		'bitBuffer',
-		'bitPosition',
-		'encodedStream'
+		#bitBuffer,
+		#bitPosition,
+		#encodedStream
 	],
 	#pools : [
-		'ZipConstants'
+		#ZipConstants
 	],
 	#category : 'Compression-Streams',
 	#package : 'Compression',

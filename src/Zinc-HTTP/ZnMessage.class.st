@@ -7,8 +7,8 @@ Class {
 	#name : 'ZnMessage',
 	#superclass : 'Object',
 	#instVars : [
-		'headers',
-		'entity'
+		#headers,
+		#entity
 	],
 	#category : 'Zinc-HTTP-Core',
 	#package : 'Zinc-HTTP',
@@ -241,12 +241,12 @@ ZnMessage >> session [
 
 { #category : 'accessing' }
 ZnMessage >> setConnectionClose [
-	self headers at: 'Connection' put: 'close'
+	self headers at: #'Connection' put: 'close'
 ]
 
 { #category : 'accessing' }
 ZnMessage >> setConnectionKeepAlive [
-	self headers at: 'Connection' put: 'keep-alive'
+	self headers at: #'Connection' put: 'keep-alive'
 ]
 
 { #category : 'accessing' }

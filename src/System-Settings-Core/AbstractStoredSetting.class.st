@@ -21,8 +21,8 @@ Class {
 	#name : 'AbstractStoredSetting',
 	#superclass : 'Object',
 	#instVars : [
-		'settingNodeIdentifier',
-		'hasDefaultValue'
+		#settingNodeIdentifier,
+		#hasDefaultValue
 	],
 	#category : 'System-Settings-Core-Persistence-Ston-StoredSettings',
 	#package : 'System-Settings-Core',

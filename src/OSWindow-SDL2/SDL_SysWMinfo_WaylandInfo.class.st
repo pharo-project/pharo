@@ -5,9 +5,9 @@ Class {
 	#name : 'SDL_SysWMinfo_WaylandInfo',
 	#superclass : 'SDL2Structure',
 	#classVars : [
-		'OFFSET_DISPLAY',
-		'OFFSET_SHELL_SURFACE',
-		'OFFSET_SURFACE'
+		#OFFSET_DISPLAY,
+		#OFFSET_SHELL_SURFACE,
+		#OFFSET_SURFACE
 	],
 	#category : 'OSWindow-SDL2-Bindings',
 	#package : 'OSWindow-SDL2',

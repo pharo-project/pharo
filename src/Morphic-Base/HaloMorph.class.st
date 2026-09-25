@@ -5,21 +5,21 @@ Class {
 	#name : 'HaloMorph',
 	#superclass : 'Morph',
 	#instVars : [
-		'target',
-		'innerTarget',
-		'positionOffset',
-		'angleOffset',
-		'growingOrRotating',
-		'directionArrowAnchor',
-		'haloBox',
-		'originalExtent',
-		'nameMorph'
+		#target,
+		#innerTarget,
+		#positionOffset,
+		#angleOffset,
+		#growingOrRotating,
+		#directionArrowAnchor,
+		#haloBox,
+		#originalExtent,
+		#nameMorph
 	],
 	#classVars : [
-		'CurrentHaloSpecifications',
-		'HaloEnclosesFullBounds',
-		'HaloWithDebugHandle',
-		'ShowBoundsInHalo'
+		#CurrentHaloSpecifications,
+		#HaloEnclosesFullBounds,
+		#HaloWithDebugHandle,
+		#ShowBoundsInHalo
 	],
 	#category : 'Morphic-Base-Widgets',
 	#package : 'Morphic-Base',

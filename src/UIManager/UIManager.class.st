@@ -5,7 +5,7 @@ Class {
 	#name : 'UIManager',
 	#superclass : 'Object',
 	#classVars : [
-		'Default'
+		#Default
 	],
 	#category : 'UIManager-Base',
 	#package : 'UIManager',

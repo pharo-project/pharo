@@ -5,7 +5,7 @@ Class {
 	#name : 'EpImpactCodeChangeFilter',
 	#superclass : 'EpFilter',
 	#instVars : [
-		'environment'
+		#environment
 	],
 	#category : 'EpiceaBrowsers-Filters',
 	#package : 'EpiceaBrowsers',

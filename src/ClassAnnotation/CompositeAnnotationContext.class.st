@@ -18,7 +18,7 @@ Class {
 	#name : 'CompositeAnnotationContext',
 	#superclass : 'AnnotationContext',
 	#instVars : [
-		'parts'
+		#parts
 	],
 	#category : 'ClassAnnotation',
 	#package : 'ClassAnnotation'

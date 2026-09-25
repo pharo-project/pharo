@@ -32,17 +32,17 @@ Class {
 	#name : 'EFFormatter',
 	#superclass : 'RBAbstractFormatter',
 	#instVars : [
-		'codeStream',
-		'indent',
-		'originalSource',
-		'lineStart',
-		'context',
-		'isInCascadeNode',
-		'lookAheadCode'
+		#codeStream,
+		#indent,
+		#originalSource,
+		#lineStart,
+		#context,
+		#isInCascadeNode,
+		#lookAheadCode
 	],
 	#classVars : [
-		'DefaultPrettyPrintContext',
-		'FormatAsYouReadPolicy'
+		#DefaultPrettyPrintContext,
+		#FormatAsYouReadPolicy
 	],
 	#category : 'EnlumineurFormatter-Core',
 	#package : 'EnlumineurFormatter',

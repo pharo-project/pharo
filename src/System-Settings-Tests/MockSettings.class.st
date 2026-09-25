@@ -5,11 +5,11 @@ Class {
 	#name : 'MockSettings',
 	#superclass : 'Object',
 	#classInstVars : [
-		'cacheDirectory',
-		'booleanMockSetting',
-		'rangeSetting',
-		'defaultDirectoryName',
-		'booleanSettingWithDefault'
+		#cacheDirectory,
+		#booleanMockSetting,
+		#rangeSetting,
+		#defaultDirectoryName,
+		#booleanSettingWithDefault
 	],
 	#category : 'System-Settings-Tests',
 	#package : 'System-Settings-Tests'

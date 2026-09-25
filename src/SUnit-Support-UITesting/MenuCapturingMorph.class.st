@@ -7,7 +7,7 @@ Class {
 	#name : 'MenuCapturingMorph',
 	#superclass : 'Morph',
 	#instVars : [
-		'menu'
+		#menu
 	],
 	#category : 'SUnit-Support-UITesting-Morphic',
 	#package : 'SUnit-Support-UITesting',

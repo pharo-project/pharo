@@ -2,7 +2,7 @@ Class {
 	#name : 'ClyItemFilterTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'filter'
+		#filter
 	],
 	#category : 'Calypso-NavigationModel-Tests',
 	#package : 'Calypso-NavigationModel-Tests'

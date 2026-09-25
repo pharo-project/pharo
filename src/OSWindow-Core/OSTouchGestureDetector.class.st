@@ -5,9 +5,9 @@ Class {
 	#name : 'OSTouchGestureDetector',
 	#superclass : 'OSWindowEventGestureVisitor',
 	#instVars : [
-		'deviceId',
-		'activeFingers',
-		'eventHandler'
+		#deviceId,
+		#activeFingers,
+		#eventHandler
 	],
 	#category : 'OSWindow-Core-Gestures',
 	#package : 'OSWindow-Core',

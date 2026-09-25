@@ -7,7 +7,7 @@ Class {
 	#name : 'ZnUnknownScheme',
 	#superclass : 'Error',
 	#instVars : [
-		'scheme'
+		#scheme
 	],
 	#category : 'Zinc-Resource-Meta-Core',
 	#package : 'Zinc-Resource-Meta-Core'

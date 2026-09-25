@@ -37,7 +37,7 @@ GoferUnload >> unload: aWorkingCopy [
 GoferUnload >> unloadClasses: aWorkingCopy [
 
 	aWorkingCopy systemPackage ifNotNil: [ :package |
-		package methods do: [ :each | (each isClassSide and: [ each selector = #unload ]) ifTrue: [ each methodClass instanceSide unload ] ] ]
+		package methods do: [ :each | (each isClassSide and: [ each selector sameContents: #unload ]) ifTrue: [ each methodClass instanceSide unload ] ] ]
 ]
 
 { #category : 'unloading' }

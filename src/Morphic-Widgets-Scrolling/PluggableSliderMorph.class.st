@@ -5,14 +5,14 @@ Class {
 	#name : 'PluggableSliderMorph',
 	#superclass : 'SliderMorph',
 	#instVars : [
-		'getValueSelector',
-		'getEnabledSelector',
-		'enabled',
-		'min',
-		'max',
-		'quantum',
-		'getLabelSelector',
-		'label'
+		#getValueSelector,
+		#getEnabledSelector,
+		#enabled,
+		#min,
+		#max,
+		#quantum,
+		#getLabelSelector,
+		#label
 	],
 	#category : 'Morphic-Widgets-Scrolling',
 	#package : 'Morphic-Widgets-Scrolling'

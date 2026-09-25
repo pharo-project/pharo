@@ -5,7 +5,7 @@ Class {
 	#name : 'StoredSettingsMergerTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'merger'
+		#merger
 	],
 	#category : 'System-Settings-Tests',
 	#package : 'System-Settings-Tests'

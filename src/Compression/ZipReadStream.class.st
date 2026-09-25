@@ -9,7 +9,7 @@ Class {
 	#name : 'ZipReadStream',
 	#superclass : 'FastInflateStream',
 	#instVars : [
-		'expectedCrc'
+		#expectedCrc
 	],
 	#category : 'Compression-Streams',
 	#package : 'Compression',

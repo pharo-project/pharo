@@ -16,9 +16,9 @@ Class {
 	#name : 'PaSimpleMatrixExampleTest',
 	#superclass : 'ParametrizedTestCase',
 	#instVars : [
-		'collectionClass',
-		'item1',
-		'item2'
+		#collectionClass,
+		#item1,
+		#item2
 	],
 	#category : 'SUnit-Tests-Parametrized-Examples',
 	#package : 'SUnit-Tests',

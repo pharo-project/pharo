@@ -11,7 +11,7 @@ Class {
 	#name : 'CachedFormSet',
 	#superclass : 'FormSet',
 	#instVars : [
-		'cache'
+		#cache
 	],
 	#category : 'Graphics-Display Objects-Forms',
 	#package : 'Graphics-Display Objects',

@@ -14,11 +14,11 @@ Class {
 	#name : 'PharoDocCommentNode',
 	#superclass : 'Object',
 	#instVars : [
-		'sourceNode',
-		'expression'
+		#sourceNode,
+		#expression
 	],
 	#classVars : [
-		'DocCommentEnabled'
+		#DocCommentEnabled
 	],
 	#category : 'PharoDocComment-Base',
 	#package : 'PharoDocComment',

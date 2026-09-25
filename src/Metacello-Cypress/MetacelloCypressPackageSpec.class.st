@@ -23,7 +23,7 @@ MetacelloCypressPackageSpec >> compareCurrentVersion: anOperator targetVersionSt
 MetacelloCypressPackageSpec >> isPackageLoaded: aLoader [
 
 	MCWorkingCopy allWorkingCopies
-		detect: [ :wc | wc packageName = self file ]
+		detect: [ :wc | wc packageName sameContents: self file ]
 		ifNone: [ ^ false ].
 	^ true
 ]

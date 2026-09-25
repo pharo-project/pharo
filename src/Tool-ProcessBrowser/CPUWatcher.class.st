@@ -17,14 +17,14 @@ Class {
 	#name : 'CPUWatcher',
 	#superclass : 'Model',
 	#instVars : [
-		'tally',
-		'watcher',
-		'threshold'
+		#tally,
+		#watcher,
+		#threshold
 	],
 	#classVars : [
-		'CpuWatcherEnabled',
-		'CurrentCPUWatcher',
-		'PigFinding'
+		#CpuWatcherEnabled,
+		#CurrentCPUWatcher,
+		#PigFinding
 	],
 	#category : 'Tool-ProcessBrowser',
 	#package : 'Tool-ProcessBrowser'

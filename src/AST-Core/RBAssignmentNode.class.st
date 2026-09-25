@@ -12,9 +12,9 @@ Class {
 	#name : 'RBAssignmentNode',
 	#superclass : 'RBValueNode',
 	#instVars : [
-		'variable',
-		'assignment',
-		'value'
+		#variable,
+		#assignment,
+		#value
 	],
 	#category : 'AST-Core-Nodes',
 	#package : 'AST-Core',
@@ -42,7 +42,7 @@ RBAssignmentNode class >> variable: aVariableNode value: aValueNode position: an
 RBAssignmentNode >> = anObject [
 	self == anObject ifTrue: [^true].
 	self class = anObject class ifFalse: [^false].
-	^self variable = anObject variable and: [self value = anObject value]
+	^self variable = anObject variable and: [self value sameContents: anObject value]
 ]
 
 { #category : 'visiting' }
@@ -72,7 +72,7 @@ RBAssignmentNode >> assignmentPosition [
 
 { #category : 'testing' }
 RBAssignmentNode >> assigns: aVariableName [
-	^variable name = aVariableName or: [value assigns: aVariableName]
+	^(variable name sameContents: aVariableName) or: [value assigns: aVariableName]
 ]
 
 { #category : 'accessing' }
@@ -175,7 +175,7 @@ RBAssignmentNode >> replaceSourceWith: aNode [
 			replaceFrom: self assignmentPosition
 			to: self assignmentPosition + self assignmentOperator size - 1
 			with: aNode assignmentOperator).
-		(aNode variable = variable and: [ aNode value = value ])
+		(aNode variable = variable and: [ aNode value sameContents: value ])
 			ifTrue: [ ^ self ] ].
 	aNode isMessage ifFalse: [^super replaceSourceWith: aNode].
 	aNode receiver isVariable ifFalse: [^super replaceSourceWith: aNode].

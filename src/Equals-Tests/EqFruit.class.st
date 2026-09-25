@@ -9,7 +9,7 @@ Class {
 	#traits : 'TEquality',
 	#classTraits : 'TEquality classTrait',
 	#instVars : [
-		'stage'
+		#stage
 	],
 	#category : 'Equals-Tests',
 	#package : 'Equals-Tests'

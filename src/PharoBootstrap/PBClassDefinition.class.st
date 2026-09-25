@@ -2,8 +2,8 @@ Class {
 	#name : 'PBClassDefinition',
 	#superclass : 'Object',
 	#instVars : [
-		'classDefinition',
-		'bootstrapEnvironment'
+		#classDefinition,
+		#bootstrapEnvironment
 	],
 	#category : 'PharoBootstrap',
 	#package : 'PharoBootstrap'

@@ -7,10 +7,10 @@ Class {
 	#name : 'ReferenceFinder',
 	#superclass : 'Object',
 	#instVars : [
-		'backlinks',
-		'objectsLeft',
-		'testBlock',
-		'foundBlock'
+		#backlinks,
+		#objectsLeft,
+		#testBlock,
+		#foundBlock
 	],
 	#category : 'ReferenceFinder-Core-Base',
 	#package : 'ReferenceFinder-Core',

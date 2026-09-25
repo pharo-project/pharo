@@ -14,7 +14,7 @@ Class {
 	#name : 'CmdCommandMenuItem',
 	#superclass : 'CmdMenuItem',
 	#instVars : [
-		'activator'
+		#activator
 	],
 	#category : 'Commander-Core',
 	#package : 'Commander-Core'

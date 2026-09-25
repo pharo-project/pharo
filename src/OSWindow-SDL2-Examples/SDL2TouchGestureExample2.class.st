@@ -5,18 +5,18 @@ Class {
 	#name : 'SDL2TouchGestureExample2',
 	#superclass : 'SDL2TouchExample',
 	#instVars : [
-		'circleSize',
-		'negativeColor',
-		'positiveColor',
-		'circleCenter',
-		'hasAbortedSwipe',
-		'discoMode',
-		'blackBackground',
-		'blackBackgroundPosition'
+		#circleSize,
+		#negativeColor,
+		#positiveColor,
+		#circleCenter,
+		#hasAbortedSwipe,
+		#discoMode,
+		#blackBackground,
+		#blackBackgroundPosition
 	],
 	#pools : [
-		'SDL2Constants',
-		'SDL2Types'
+		#SDL2Constants,
+		#SDL2Types
 	],
 	#category : 'OSWindow-SDL2-Examples-Gesture',
 	#package : 'OSWindow-SDL2-Examples',

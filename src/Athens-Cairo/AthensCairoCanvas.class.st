@@ -7,13 +7,13 @@ Class {
 	#traits : 'TCairoLibrary',
 	#classTraits : 'TCairoLibrary classTrait',
 	#instVars : [
-		'handle',
-		'pathTransform',
-		'paintTransform',
-		'currentClipRect'
+		#handle,
+		#pathTransform,
+		#paintTransform,
+		#currentClipRect
 	],
 	#pools : [
-		'AthensCairoDefinitions'
+		#AthensCairoDefinitions
 	],
 	#category : 'Athens-Cairo-Base',
 	#package : 'Athens-Cairo',

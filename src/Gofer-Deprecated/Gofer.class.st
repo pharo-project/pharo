@@ -70,11 +70,11 @@ Class {
 	#name : 'Gofer',
 	#superclass : 'Object',
 	#instVars : [
-		'references',
-		'repositories',
-		'errorBlock',
-		'packageCacheRepository',
-		'resolvedReferencesCache'
+		#references,
+		#repositories,
+		#errorBlock,
+		#packageCacheRepository,
+		#resolvedReferencesCache
 	],
 	#category : 'Gofer-Deprecated',
 	#package : 'Gofer-Deprecated'

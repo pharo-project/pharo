@@ -5,8 +5,8 @@ Class {
 	#name : 'SycClassCmCommand',
 	#superclass : 'SycCmCommand',
 	#instVars : [
-		'targetClass',
-		'refactoringScopes'
+		#targetClass,
+		#refactoringScopes
 	],
 	#category : 'SystemCommands-ClassCommands',
 	#package : 'SystemCommands-ClassCommands'

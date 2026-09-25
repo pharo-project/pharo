@@ -5,8 +5,8 @@ Class {
 	#name : 'TestInWorldMorph',
 	#superclass : 'Morph',
 	#instVars : [
-		'intoWorldCount',
-		'outOfWorldCount'
+		#intoWorldCount,
+		#outOfWorldCount
 	],
 	#category : 'Morphic-Tests-Kernel',
 	#package : 'Morphic-Tests',

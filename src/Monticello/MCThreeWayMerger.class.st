@@ -7,10 +7,10 @@ Class {
 	#name : 'MCThreeWayMerger',
 	#superclass : 'Object',
 	#instVars : [
-		'index',
-		'operations',
-		'provisions',
-		'redundantAdds'
+		#index,
+		#operations,
+		#provisions,
+		#redundantAdds
 	],
 	#category : 'Monticello-Merging',
 	#package : 'Monticello',

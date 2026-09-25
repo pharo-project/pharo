@@ -2,8 +2,8 @@ Class {
 	#name : 'ConfigurableHistoryIteratorTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'historyList',
-		'saved'
+		#historyList,
+		#saved
 	],
 	#category : 'System-History-Tests',
 	#package : 'System-History-Tests'

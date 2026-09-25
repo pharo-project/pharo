@@ -20,7 +20,7 @@ Class {
 	#name : 'CmdMenuGroup',
 	#superclass : 'CmdMenuItem',
 	#instVars : [
-		'contents'
+		#contents
 	],
 	#category : 'Commander-Core',
 	#package : 'Commander-Core'

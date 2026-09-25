@@ -23,11 +23,11 @@ Class {
 	#name : 'ClyOldMessageBrowserAdapter',
 	#superclass : 'Object',
 	#instVars : [
-		'messages',
-		'title',
-		'autoSelect',
-		'refreshingBlock',
-		'openedBrowser'
+		#messages,
+		#title,
+		#autoSelect,
+		#refreshingBlock,
+		#openedBrowser
 	],
 	#category : 'Calypso-SystemTools-OldToolCompatibillity',
 	#package : 'Calypso-SystemTools-OldToolCompatibillity'

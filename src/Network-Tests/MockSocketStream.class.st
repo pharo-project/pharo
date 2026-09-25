@@ -5,9 +5,9 @@ Class {
 	#name : 'MockSocketStream',
 	#superclass : 'Stream',
 	#instVars : [
-		'atEnd',
-		'inStream',
-		'outStream'
+		#atEnd,
+		#inStream,
+		#outStream
 	],
 	#category : 'Network-Tests-Kernel',
 	#package : 'Network-Tests',

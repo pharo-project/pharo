@@ -5,11 +5,11 @@ Class {
 	#name : 'OSTouchScrollDetector',
 	#superclass : 'OSTouchOneDirectionGestureDetector',
 	#instVars : [
-		'directionAtBeginning',
-		'persistentDirection'
+		#directionAtBeginning,
+		#persistentDirection
 	],
 	#classVars : [
-		'PersistentDirection'
+		#PersistentDirection
 	],
 	#category : 'OSWindow-Core-Gestures',
 	#package : 'OSWindow-Core',

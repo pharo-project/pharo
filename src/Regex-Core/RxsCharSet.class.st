@@ -11,8 +11,8 @@ Class {
 	#name : 'RxsCharSet',
 	#superclass : 'RxsNode',
 	#instVars : [
-		'negated',
-		'elements'
+		#negated,
+		#elements
 	],
 	#category : 'Regex-Core-Nodes',
 	#package : 'Regex-Core',

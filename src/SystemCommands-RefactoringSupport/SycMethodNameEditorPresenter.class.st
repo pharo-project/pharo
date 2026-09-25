@@ -33,17 +33,17 @@ Class {
 	#name : 'SycMethodNameEditorPresenter',
 	#superclass : 'SpPresenter',
 	#instVars : [
-		'selectorInput',
-		'argumentsList',
-		'previewResult',
-		'upButton',
-		'downButton',
-		'addButton',
-		'methodName',
-		'args',
-		'invalidArgNames',
-		'canAddArgs',
-		'canEditName'
+		#selectorInput,
+		#argumentsList,
+		#previewResult,
+		#upButton,
+		#downButton,
+		#addButton,
+		#methodName,
+		#args,
+		#invalidArgNames,
+		#canAddArgs,
+		#canEditName
 	],
 	#category : 'SystemCommands-RefactoringSupport',
 	#package : 'SystemCommands-RefactoringSupport'

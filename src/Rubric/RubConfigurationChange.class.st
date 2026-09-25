@@ -5,7 +5,7 @@ Class {
 	#name : 'RubConfigurationChange',
 	#superclass : 'RubAnnouncement',
 	#instVars : [
-		'configurationBlock'
+		#configurationBlock
 	],
 	#category : 'Rubric-Editing-Announcements',
 	#package : 'Rubric',

@@ -5,7 +5,7 @@ Class {
 	#name : 'ClyMessageSendersQuery',
 	#superclass : 'ClyMessageBasedQuery',
 	#instVars : [
-		'specialSelectorIndexes'
+		#specialSelectorIndexes
 	],
 	#category : 'Calypso-SystemQueries-Queries',
 	#package : 'Calypso-SystemQueries',

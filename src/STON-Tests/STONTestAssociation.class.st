@@ -6,7 +6,7 @@ Class {
 	#name : 'STONTestAssociation',
 	#superclass : 'Association',
 	#instVars : [
-		'timestamp'
+		#timestamp
 	],
 	#category : 'STON-Tests-Support',
 	#package : 'STON-Tests',

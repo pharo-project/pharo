@@ -15,15 +15,15 @@ Class {
 	#name : 'DAPackage',
 	#superclass : 'Object',
 	#instVars : [
-		'dependencies',
-		'included',
-		'inStack',
-		'tarjanIndex',
-		'tarjanLowLink',
-		'bfsParent',
-		'seen',
-		'systemPackage',
-		'packageName'
+		#dependencies,
+		#included,
+		#inStack,
+		#tarjanIndex,
+		#tarjanLowLink,
+		#bfsParent,
+		#seen,
+		#systemPackage,
+		#packageName
 	],
 	#category : 'Tool-DependencyAnalyser-Core',
 	#package : 'Tool-DependencyAnalyser',
@@ -54,7 +54,7 @@ DAPackage >> <= aPackage [
 DAPackage >> = aPackage [
 	(aPackage isKindOf: self class)
 		ifFalse: [ ^ false ].
-	^ self packageName = aPackage packageName
+	^ self packageName sameContents: aPackage packageName
 ]
 
 { #category : 'adding' }
@@ -135,13 +135,13 @@ DAPackage >> dependenciesSize [
 { #category : 'dependencies' }
 DAPackage >> dependenciesSizeTo: aPackage [
 	| dependency |
-	dependency := dependencies detect: [ :each | each target packageName = aPackage packageName ].
+	dependency := dependencies detect: [ :each | each target packageName sameContents: aPackage packageName ].
 	^ dependency ifNotNil: [ dependency numberOfDependencies ] ifNil: [ 0 ]
 ]
 
 { #category : 'dependencies' }
 DAPackage >> dependenciesTo: aPackage [
-	^ dependencies select: [ :each | each target packageName = aPackage ]
+	^ dependencies select: [ :each | each target packageName sameContents: aPackage ]
 ]
 
 { #category : 'dependencies' }

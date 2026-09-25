@@ -7,13 +7,13 @@ Class {
 	#traits : 'TCairoLibrary',
 	#classTraits : 'TCairoLibrary classTrait',
 	#instVars : [
-		'capStyle',
-		'joinStyle',
-		'dashLenghts',
-		'dashOffset'
+		#capStyle,
+		#joinStyle,
+		#dashLenghts,
+		#dashOffset
 	],
 	#pools : [
-		'AthensCairoDefinitions'
+		#AthensCairoDefinitions
 	],
 	#category : 'Athens-Cairo-Paints',
 	#package : 'Athens-Cairo',

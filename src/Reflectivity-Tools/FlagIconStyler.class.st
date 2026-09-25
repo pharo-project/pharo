@@ -31,5 +31,5 @@ FlagIconStyler >> iconFor: aNode [
 
 { #category : 'testing' }
 FlagIconStyler >> shouldStyleNode: aNode [
-	^aNode isMessage and: [aNode selector = #flag:]
+	^aNode isMessage and: [aNode selector sameContents: #flag:]
 ]

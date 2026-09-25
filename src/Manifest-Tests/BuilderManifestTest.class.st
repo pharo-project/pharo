@@ -5,7 +5,7 @@ Class {
 	#name : 'BuilderManifestTest',
 	#superclass : 'AbstractEnvironmentTestCase',
 	#instVars : [
-		'manifestBuilder'
+		#manifestBuilder
 	],
 	#category : 'Manifest-Tests-Base',
 	#package : 'Manifest-Tests',

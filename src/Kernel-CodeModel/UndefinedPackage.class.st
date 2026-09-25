@@ -5,7 +5,7 @@ Class {
 	#name : 'UndefinedPackage',
 	#superclass : 'Package',
 	#instVars : [
-		'undefinedTag'
+		#undefinedTag
 	],
 	#category : 'Kernel-CodeModel-Packages',
 	#package : 'Kernel-CodeModel',

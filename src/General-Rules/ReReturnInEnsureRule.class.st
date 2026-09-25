@@ -18,7 +18,7 @@ ReReturnInEnsureRule class >> uniqueIdentifierName [
 
 { #category : 'hooks' }
 ReReturnInEnsureRule >> afterCheck: aNode mappings: mappingDict [
-	^ (mappingDict at: '`@.Stmts')
+	^ (mappingDict at: #'`@.Stmts')
 		anySatisfy: #containsReturn
 ]
 

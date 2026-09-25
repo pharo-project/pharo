@@ -53,8 +53,8 @@ Class {
 	#name : 'Random',
 	#superclass : 'Object',
 	#instVars : [
-		'state',
-		'seed'
+		#state,
+		#seed
 	],
 	#category : 'Random-Core-Base',
 	#package : 'Random-Core',

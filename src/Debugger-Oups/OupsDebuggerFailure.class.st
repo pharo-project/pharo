@@ -12,8 +12,8 @@ Class {
 	#name : 'OupsDebuggerFailure',
 	#superclass : 'Exception',
 	#instVars : [
-		'failedDebugger',
-		'innerException'
+		#failedDebugger,
+		#innerException
 	],
 	#category : 'Debugger-Oups-Exceptions',
 	#package : 'Debugger-Oups',

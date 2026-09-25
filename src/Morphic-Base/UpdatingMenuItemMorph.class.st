@@ -7,10 +7,10 @@ Class {
 	#name : 'UpdatingMenuItemMorph',
 	#superclass : 'ToggleMenuItemMorph',
 	#instVars : [
-		'nameSelector',
-		'iconSelector',
-		'subMenuSelector',
-		'balloonTextSelector'
+		#nameSelector,
+		#iconSelector,
+		#subMenuSelector,
+		#balloonTextSelector
 	],
 	#category : 'Morphic-Base-Menus',
 	#package : 'Morphic-Base',

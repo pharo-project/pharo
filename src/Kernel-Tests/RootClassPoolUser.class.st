@@ -6,7 +6,7 @@ Class {
 	#name : 'RootClassPoolUser',
 	#superclass : 'Object',
 	#pools : [
-		'PoolDefiner'
+		#PoolDefiner
 	],
 	#category : 'Kernel-Tests-Classes',
 	#package : 'Kernel-Tests',

@@ -5,8 +5,8 @@ Class {
 	#name : 'OSWindowDropEvent',
 	#superclass : 'OSWindowEvent',
 	#instVars : [
-		'filePath',
-		'timestamp'
+		#filePath,
+		#timestamp
 	],
 	#category : 'OSWindow-Core-Events',
 	#package : 'OSWindow-Core',

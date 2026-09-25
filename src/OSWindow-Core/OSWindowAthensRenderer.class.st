@@ -5,8 +5,8 @@ Class {
 	#name : 'OSWindowAthensRenderer',
 	#superclass : 'OSWindowRenderer',
 	#instVars : [
-		'athensSurface',
-		'session'
+		#athensSurface,
+		#session
 	],
 	#category : 'OSWindow-Core-Renderer',
 	#package : 'OSWindow-Core',

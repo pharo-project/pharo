@@ -5,16 +5,16 @@ Class {
 	#name : 'AthensTextLine',
 	#superclass : 'Object',
 	#instVars : [
-		'text',
-		'startIndex',
-		'endIndex',
-		'height',
-		'maxAscent',
-		'maxDescent',
-		'width',
-		'top',
-		'commands',
-		'tail'
+		#text,
+		#startIndex,
+		#endIndex,
+		#height,
+		#maxAscent,
+		#maxDescent,
+		#width,
+		#top,
+		#commands,
+		#tail
 	],
 	#category : 'Athens-Text',
 	#package : 'Athens-Text'

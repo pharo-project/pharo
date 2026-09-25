@@ -5,10 +5,10 @@ Class {
 	#name : 'AthensBezier3Scene',
 	#superclass : 'Object',
 	#instVars : [
-		'pt1',
-		'pt2',
-		'pt3',
-		'pt4'
+		#pt1,
+		#pt2,
+		#pt3,
+		#pt4
 	],
 	#category : 'Athens-Core-PathsGeometry',
 	#package : 'Athens-Core',

@@ -5,7 +5,7 @@ Class {
 	#name : 'PackageAbstractNodeExample',
 	#superclass : 'MorphTreeNodeModel',
 	#instVars : [
-		'contents'
+		#contents
 	],
 	#category : 'Morphic-Examples-MorphTreeWidget',
 	#package : 'Morphic-Examples',

@@ -7,7 +7,7 @@ Class {
 	#name : 'EqTeacher',
 	#superclass : 'EqPerson',
 	#instVars : [
-		'experience'
+		#experience
 	],
 	#category : 'Equals-Tests',
 	#package : 'Equals-Tests'

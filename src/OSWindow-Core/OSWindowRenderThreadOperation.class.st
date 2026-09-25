@@ -5,10 +5,10 @@ Class {
 	#name : 'OSWindowRenderThreadOperation',
 	#superclass : 'Object',
 	#instVars : [
-		'operation',
-		'semaphore',
-		'blocking',
-		'failed'
+		#operation,
+		#semaphore,
+		#blocking,
+		#failed
 	],
 	#category : 'OSWindow-Core-Extras',
 	#package : 'OSWindow-Core',

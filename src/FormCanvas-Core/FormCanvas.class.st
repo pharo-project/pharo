@@ -5,16 +5,16 @@ Class {
 	#name : 'FormCanvas',
 	#superclass : 'Canvas',
 	#instVars : [
-		'origin',
-		'clipRect',
-		'form',
-		'port',
-		'transform',
-		'colorTransform',
-		'engine'
+		#origin,
+		#clipRect,
+		#form,
+		#port,
+		#transform,
+		#colorTransform,
+		#engine
 	],
 	#classVars : [
-		'TranslucentPatterns'
+		#TranslucentPatterns
 	],
 	#category : 'FormCanvas-Core-Canvas',
 	#package : 'FormCanvas-Core',

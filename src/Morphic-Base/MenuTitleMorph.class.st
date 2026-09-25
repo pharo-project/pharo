@@ -25,10 +25,10 @@ Class {
 	#name : 'MenuTitleMorph',
 	#superclass : 'AlignmentMorph',
 	#instVars : [
-		'titleContainer',
-		'icon',
-		'closeBox',
-		'pinBox'
+		#titleContainer,
+		#icon,
+		#closeBox,
+		#pinBox
 	],
 	#category : 'Morphic-Base-Menus',
 	#package : 'Morphic-Base',

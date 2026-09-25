@@ -23,7 +23,7 @@ Class {
 	#name : 'PharoCommandLineHandler',
 	#superclass : 'BasicCommandLineHandler',
 	#classVars : [
-		'ForcePreferencesOmission'
+		#ForcePreferencesOmission
 	],
 	#category : 'System-CommandLineHandler-Base',
 	#package : 'System-CommandLineHandler',

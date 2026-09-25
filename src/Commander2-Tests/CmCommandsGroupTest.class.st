@@ -5,11 +5,11 @@ Class {
 	#name : 'CmCommandsGroupTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'firstCommand',
-		'subCommand1',
-		'group',
-		'subGroup1',
-		'subGroup2'
+		#firstCommand,
+		#subCommand1,
+		#group,
+		#subGroup1,
+		#subGroup2
 	],
 	#category : 'Commander2-Tests',
 	#package : 'Commander2-Tests'

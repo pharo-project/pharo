@@ -11,7 +11,7 @@ Class {
 
 { #category : 'testing' }
 FileSystemTreeTest class >> isAbstract [
-	^ self name = #FileSystemTreeTest
+	^ self name sameContents: #FileSystemTreeTest
 ]
 
 { #category : 'running' }

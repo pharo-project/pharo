@@ -13,8 +13,8 @@ Class {
 	#name : 'ClyMethodVisibilityMorph',
 	#superclass : 'Morph',
 	#instVars : [
-		'browser',
-		'visibilityLevel'
+		#browser,
+		#visibilityLevel
 	],
 	#category : 'Calypso-SystemTools-FullBrowser-UI',
 	#package : 'Calypso-SystemTools-FullBrowser',

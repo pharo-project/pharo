@@ -9,21 +9,21 @@ Class {
 	#name : 'ScrollBarMorph',
 	#superclass : 'SliderMorph',
 	#instVars : [
-		'upButton',
-		'downButton',
-		'pagingArea',
-		'scrollDelta',
-		'pageDelta',
-		'interval',
-		'timeOfMouseDown',
-		'timeOfLastScroll',
-		'nextPageDirection',
-		'currentScrollDelay',
-		'lastPaneColor'
+		#upButton,
+		#downButton,
+		#pagingArea,
+		#scrollDelta,
+		#pageDelta,
+		#interval,
+		#timeOfMouseDown,
+		#timeOfLastScroll,
+		#nextPageDirection,
+		#currentScrollDelay,
+		#lastPaneColor
 	],
 	#classVars : [
-		'ArrowImagesCache',
-		'BoxesImagesCache'
+		#ArrowImagesCache,
+		#BoxesImagesCache
 	],
 	#category : 'Morphic-Widgets-Scrolling',
 	#package : 'Morphic-Widgets-Scrolling'

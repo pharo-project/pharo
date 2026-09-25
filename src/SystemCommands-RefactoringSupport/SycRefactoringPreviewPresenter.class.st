@@ -22,13 +22,13 @@ Class {
 	#name : 'SycRefactoringPreviewPresenter',
 	#superclass : 'SpPresenter',
 	#instVars : [
-		'changes',
-		'scopeDropList',
-		'table',
-		'command',
-		'selectedRefactorings',
-		'diffPresenter',
-		'existsChanges'
+		#changes,
+		#scopeDropList,
+		#table,
+		#command,
+		#selectedRefactorings,
+		#diffPresenter,
+		#existsChanges
 	],
 	#category : 'SystemCommands-RefactoringSupport',
 	#package : 'SystemCommands-RefactoringSupport'

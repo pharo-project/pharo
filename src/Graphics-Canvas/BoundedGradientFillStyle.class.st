@@ -5,7 +5,7 @@ Class {
 	#name : 'BoundedGradientFillStyle',
 	#superclass : 'GradientFillStyle',
 	#instVars : [
-		'extent'
+		#extent
 	],
 	#category : 'Graphics-Canvas-Fills',
 	#package : 'Graphics-Canvas',

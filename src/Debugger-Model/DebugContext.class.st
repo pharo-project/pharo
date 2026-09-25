@@ -33,7 +33,7 @@ Class {
 	#name : 'DebugContext',
 	#superclass : 'Object',
 	#instVars : [
-		'context'
+		#context
 	],
 	#category : 'Debugger-Model-Core',
 	#package : 'Debugger-Model',

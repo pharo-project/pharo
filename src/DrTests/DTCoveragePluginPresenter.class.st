@@ -16,10 +16,10 @@ Class {
 	#name : 'DTCoveragePluginPresenter',
 	#superclass : 'DTDefaultPluginPresenter',
 	#instVars : [
-		'sourceCodePanel',
-		'coveredNodes',
-		'uncoveredNodes',
-		'yellowNodes'
+		#sourceCodePanel,
+		#coveredNodes,
+		#uncoveredNodes,
+		#yellowNodes
 	],
 	#category : 'DrTests-Spec',
 	#package : 'DrTests',

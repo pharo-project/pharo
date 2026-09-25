@@ -8,7 +8,7 @@ Class {
 	#name : 'ExternalObject',
 	#superclass : 'Object',
 	#instVars : [
-		'handle'
+		#handle
 	],
 	#category : 'FFI-Kernel',
 	#package : 'FFI-Kernel'

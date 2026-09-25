@@ -181,8 +181,8 @@ OCASTClosureAnalyzerTest >> testNestedBlocksRemoteInBlockCase1 [
 
 	self assert: scopes second tempVars size equals: 0.
 	self assert: scopes second tempVector size equals: 2.
-	self assert: (scopes second tempVector at: 'a') isRemote.
-	self assert: (scopes second tempVector at: 'b') isRemote
+	self assert: (scopes second tempVector at: #'a') isRemote.
+	self assert: (scopes second tempVector at: #'b') isRemote
 ]
 
 { #category : 'tests - special cases' }
@@ -202,14 +202,14 @@ OCASTClosureAnalyzerTest >> testNestedBlocksRemoteInBlockCase2 [
 
 	self assert: scopes third tempVars size equals: 0.
 	self assert: scopes third tempVector size equals: 1.
-	self assert: (scopes third tempVector at: 'a') isRemote.
+	self assert: (scopes third tempVector at: #'a') isRemote.
 
 	self assert: scopes fourth tempVars size equals: 0.
 	self assert: scopes fourth tempVector size equals: 0.
 
 	self assert: scopes fifth tempVars size equals: 0.
 	self assert: scopes fifth tempVector size equals: 1.
-	self assert: (scopes fifth tempVector at: 'b') isRemote
+	self assert: (scopes fifth tempVector at: #'b') isRemote
 ]
 
 { #category : 'tests - special cases' }
@@ -229,14 +229,14 @@ OCASTClosureAnalyzerTest >> testNestedBlocksRemoteInBlockCase3 [
 
 	self assert: scopes third tempVars size equals: 0.
 	self assert: scopes third tempVector size equals: 1.
-	self assert: (scopes third tempVector at: 'a') isRemote.
+	self assert: (scopes third tempVector at: #'a') isRemote.
 
 	self assert: scopes fourth tempVars size equals: 0.
 	self assert: scopes fourth tempVector size equals: 0.
 
 	self assert: scopes fifth tempVars size equals: 0.
 	self assert: scopes fifth tempVector size equals: 1.
-	self assert: (scopes fifth tempVector at: 'b') isRemote
+	self assert: (scopes fifth tempVector at: #'b') isRemote
 ]
 
 { #category : 'tests - special cases' }
@@ -337,8 +337,8 @@ OCASTClosureAnalyzerTest >> testOptimizedBlockWriteInNestedBlockCase3 [
 	self assert: scopes second tempVars size equals: 0.
 	self assert: scopes second tempVector size equals: 0.
 	self assert: scopes second copiedVars size equals: 1.
-	scopes second copiedVars at: '0vector0' ifAbsent: [ self fail ].
-	self assert: (scopes second copiedVars at: '0vector0') isStoringTempVector
+	scopes second copiedVars at: #'0vector0' ifAbsent: [ self fail ].
+	self assert: (scopes second copiedVars at: #'0vector0') isStoringTempVector
 ]
 
 { #category : 'tests - special cases' }
@@ -356,7 +356,7 @@ OCASTClosureAnalyzerTest >> testOptimizedBlockWriteInNestedBlockCase4 [
 	self assert: scopes second tempVars size equals: 0.
 	self assert: scopes second tempVector size equals: 0.
 	self assert: scopes second copiedVars size equals: 1.
-	scopes second copiedVars at: '0vector0' ifAbsent: [ self fail ]
+	scopes second copiedVars at: #'0vector0' ifAbsent: [ self fail ]
 ]
 
 { #category : 'tests - special cases' }
@@ -375,7 +375,7 @@ OCASTClosureAnalyzerTest >> testOptimizedBlockWrittenAfterClosedOverCase1 [
 
 	self deny: (scopes third lookupVar: 'index') isRemote.
 	"as we are in an optimized loop, the var is considered a remote write"
-	self assert: (scopes third tempVector at: 'temp') isRemote
+	self assert: (scopes third tempVector at: #'temp') isRemote
 ]
 
 { #category : 'tests - special cases' }
@@ -389,7 +389,7 @@ OCASTClosureAnalyzerTest >> testOptimizedBlockWrittenAfterClosedOverCase2 [
 	self deny: (ast scope lookupVar: 'index') isRemote.
 
 	scopes := (OCScopesCollector new visitNode: ast) scopes.
-	self assert: (scopes third tempVector at: 'temp') isRemote
+	self assert: (scopes third tempVector at: #'temp') isRemote
 ]
 
 { #category : 'tests - special cases' }

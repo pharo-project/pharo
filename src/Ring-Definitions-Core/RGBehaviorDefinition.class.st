@@ -10,9 +10,9 @@ Class {
 	#name : 'RGBehaviorDefinition',
 	#superclass : 'RGGlobalDefinition',
 	#instVars : [
-		'superclass',
-		'methods',
-		'protocols'
+		#superclass,
+		#methods,
+		#protocols
 	],
 	#category : 'Ring-Definitions-Core-Base',
 	#package : 'Ring-Definitions-Core',

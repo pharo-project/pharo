@@ -24,10 +24,10 @@ Class {
 	#name : 'STONCStyleCommentsSkipStream',
 	#superclass : 'Object',
 	#instVars : [
-		'stream',
-		'peekedCharacter',
-		'delimiter',
-		'escape'
+		#stream,
+		#peekedCharacter,
+		#delimiter,
+		#escape
 	],
 	#category : 'STON-Core-Reader',
 	#package : 'STON-Core',

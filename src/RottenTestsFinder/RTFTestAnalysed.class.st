@@ -5,7 +5,7 @@ Class {
 	#name : 'RTFTestAnalysed',
 	#superclass : 'Notification',
 	#instVars : [
-		'compiledMethod'
+		#compiledMethod
 	],
 	#category : 'RottenTestsFinder-Notifications',
 	#package : 'RottenTestsFinder',

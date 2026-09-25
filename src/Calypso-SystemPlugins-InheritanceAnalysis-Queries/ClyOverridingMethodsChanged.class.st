@@ -7,7 +7,7 @@ Class {
 	#name : 'ClyOverridingMethodsChanged',
 	#superclass : 'MethodAnnouncement',
 	#instVars : [
-		'announcerPlugin'
+		#announcerPlugin
 	],
 	#category : 'Calypso-SystemPlugins-InheritanceAnalysis-Queries',
 	#package : 'Calypso-SystemPlugins-InheritanceAnalysis-Queries'

@@ -10,7 +10,7 @@ Class {
 	#name : 'NautilusRefactoring',
 	#superclass : 'Object',
 	#instVars : [
-		'model'
+		#model
 	],
 	#category : 'NautilusRefactoring-Base',
 	#package : 'NautilusRefactoring',

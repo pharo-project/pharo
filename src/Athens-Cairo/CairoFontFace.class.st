@@ -13,11 +13,11 @@ Class {
 	#traits : 'TCairoLibrary',
 	#classTraits : 'TCairoLibrary classTrait',
 	#instVars : [
-		'ftFace'
+		#ftFace
 	],
 	#pools : [
-		'AthensCairoDefinitions',
-		'AthensFT2Constants'
+		#AthensCairoDefinitions,
+		#AthensFT2Constants
 	],
 	#category : 'Athens-Cairo-Text',
 	#package : 'Athens-Cairo',

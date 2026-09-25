@@ -11,9 +11,9 @@ Class {
 	#name : 'FileSystemGuide',
 	#superclass : 'Object',
 	#instVars : [
-		'visitor',
-		'work',
-		'selectChildren'
+		#visitor,
+		#work,
+		#selectChildren
 	],
 	#category : 'FileSystem-Core-Base-Guide',
 	#package : 'FileSystem-Core',

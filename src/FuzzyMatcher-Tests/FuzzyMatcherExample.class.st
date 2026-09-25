@@ -7,12 +7,12 @@ Class {
 	#name : 'FuzzyMatcherExample',
 	#superclass : 'Object',
 	#instVars : [
-		'textModel',
-		'dataSource',
-		'elements',
-		'matchedElements',
-		'pattern',
-		'stringMorph'
+		#textModel,
+		#dataSource,
+		#elements,
+		#matchedElements,
+		#pattern,
+		#stringMorph
 	],
 	#category : 'FuzzyMatcher-Tests-Examples',
 	#package : 'FuzzyMatcher-Tests',

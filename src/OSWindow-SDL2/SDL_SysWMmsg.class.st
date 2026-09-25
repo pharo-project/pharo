@@ -5,9 +5,9 @@ Class {
 	#name : 'SDL_SysWMmsg',
 	#superclass : 'SDL2Structure',
 	#classVars : [
-		'OFFSET_MSG',
-		'OFFSET_SUBSYSTEM',
-		'OFFSET_VERSION'
+		#OFFSET_MSG,
+		#OFFSET_SUBSYSTEM,
+		#OFFSET_VERSION
 	],
 	#category : 'OSWindow-SDL2-Bindings',
 	#package : 'OSWindow-SDL2',

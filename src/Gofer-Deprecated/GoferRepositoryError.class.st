@@ -5,7 +5,7 @@ Class {
 	#name : 'GoferRepositoryError',
 	#superclass : 'Error',
 	#instVars : [
-		'repository'
+		#repository
 	],
 	#category : 'Gofer-Deprecated',
 	#package : 'Gofer-Deprecated'

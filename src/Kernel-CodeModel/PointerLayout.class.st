@@ -5,7 +5,7 @@ Class {
 	#name : 'PointerLayout',
 	#superclass : 'ObjectLayout',
 	#instVars : [
-		'slotScope'
+		#slotScope
 	],
 	#category : 'Kernel-CodeModel-Layout',
 	#package : 'Kernel-CodeModel',
@@ -196,7 +196,7 @@ PointerLayout >> resolveSlot: aName [
 
 { #category : 'accessing' }
 PointerLayout >> resolveSlot: aName ifFound: foundBlock ifNone: noneBlock [
-	^ slotScope resolveSlot: aName ifFound: foundBlock ifNone: noneBlock
+	^ slotScope resolveSlot: aName asSymbol ifFound: foundBlock ifNone: noneBlock
 ]
 
 { #category : 'testing' }

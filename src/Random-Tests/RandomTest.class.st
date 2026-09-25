@@ -5,7 +5,7 @@ Class {
 	#name : 'RandomTest',
 	#superclass : 'ClassTestCase',
 	#instVars : [
-		'gen'
+		#gen
 	],
 	#category : 'Random-Tests',
 	#package : 'Random-Tests'

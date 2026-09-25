@@ -5,7 +5,7 @@ Class {
 	#name : 'HistoryIteratorTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'historyList'
+		#historyList
 	],
 	#category : 'System-History-Tests',
 	#package : 'System-History-Tests'

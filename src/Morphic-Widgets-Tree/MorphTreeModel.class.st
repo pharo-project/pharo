@@ -5,14 +5,14 @@ Class {
 	#name : 'MorphTreeModel',
 	#superclass : 'Model',
 	#instVars : [
-		'selection',
-		'rootItems',
-		'autoMultiSelection',
-		'headerLabel',
-		'multiSelection',
-		'wrapBlockOrSelector',
-		'isCheckList',
-		'enabled'
+		#selection,
+		#rootItems,
+		#autoMultiSelection,
+		#headerLabel,
+		#multiSelection,
+		#wrapBlockOrSelector,
+		#isCheckList,
+		#enabled
 	],
 	#category : 'Morphic-Widgets-Tree',
 	#package : 'Morphic-Widgets-Tree'

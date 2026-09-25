@@ -7,7 +7,7 @@ Class {
 	#name : 'FLSystemGlobalsTestResource',
 	#superclass : 'TestResource',
 	#instVars : [
-		'globals'
+		#globals
 	],
 	#category : 'Fuel-Core-Tests-Support-Resources',
 	#package : 'Fuel-Core-Tests',

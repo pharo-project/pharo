@@ -31,11 +31,11 @@ Class {
 	#name : 'OCCompilerNotifyingTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'text',
-		'morph',
-		'expectedErrors',
-		'expectedErrorPositions',
-		'failure'
+		#text,
+		#morph,
+		#expectedErrors,
+		#expectedErrorPositions,
+		#failure
 	],
 	#category : 'OpalCompiler-Tests-FromOld',
 	#package : 'OpalCompiler-Tests',

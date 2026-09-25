@@ -143,9 +143,9 @@ ChunkImportTestCase >> testImportAClass [
 	class := self importAClass.
 	self assert: class superclass equals: Object.
 	self assert: #CodeImportTestCaseTestClass equals: class name.
-	self assert: (class instVarNames includes: 'var1').
-	self assert: (class instVarNames includes: 'var2').
-	self assert: (class instVarNames includes: 'var3').
+	self assert: (class instVarNames includes: #var1).
+	self assert: (class instVarNames includes: #var2).
+	self assert: (class instVarNames includes: #var3).
 	self assert: class package name equals: 'Generated-CodeImport-Tests-Garbage'
 ]
 

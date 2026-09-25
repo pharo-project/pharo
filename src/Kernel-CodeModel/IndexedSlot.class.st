@@ -7,7 +7,7 @@ Class {
 	#name : 'IndexedSlot',
 	#superclass : 'Slot',
 	#instVars : [
-		'index'
+		#index
 	],
 	#category : 'Kernel-CodeModel-Variables',
 	#package : 'Kernel-CodeModel',

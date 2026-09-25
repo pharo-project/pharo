@@ -5,8 +5,8 @@ Class {
 	#name : 'EpLogEntriesComment',
 	#superclass : 'EpLogBrowserOperation',
 	#instVars : [
-		'newComment',
-		'oldComment'
+		#newComment,
+		#oldComment
 	],
 	#category : 'Epicea-Model',
 	#package : 'Epicea',

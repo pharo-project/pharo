@@ -6,7 +6,7 @@ Class {
 	#name : 'ClassRemoved',
 	#superclass : 'ClassAnnouncement',
 	#instVars : [
-		'classRemoved'
+		#classRemoved
 	],
 	#category : 'System-Announcements-System-Classes',
 	#package : 'System-Announcements',

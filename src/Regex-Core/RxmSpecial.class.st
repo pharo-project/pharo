@@ -8,7 +8,7 @@ Class {
 	#name : 'RxmSpecial',
 	#superclass : 'RxmLink',
 	#instVars : [
-		'matchSelector'
+		#matchSelector
 	],
 	#category : 'Regex-Core-Links',
 	#package : 'Regex-Core',

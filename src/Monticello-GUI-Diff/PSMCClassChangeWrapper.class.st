@@ -5,7 +5,7 @@ Class {
 	#name : 'PSMCClassChangeWrapper',
 	#superclass : 'PSMCChangeWrapper',
 	#instVars : [
-		'contents'
+		#contents
 	],
 	#category : 'Monticello-GUI-Diff',
 	#package : 'Monticello-GUI-Diff'

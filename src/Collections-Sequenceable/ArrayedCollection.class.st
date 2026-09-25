@@ -11,7 +11,7 @@ Class {
 { #category : 'testing' }
 ArrayedCollection class >> isAbstract [
 
-	^self name = #ArrayedCollection
+	^self name sameContents: #ArrayedCollection
 ]
 
 { #category : 'instance creation' }

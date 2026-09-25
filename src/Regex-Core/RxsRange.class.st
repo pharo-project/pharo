@@ -16,8 +16,8 @@ Class {
 	#name : 'RxsRange',
 	#superclass : 'RxsNode',
 	#instVars : [
-		'first',
-		'last'
+		#first,
+		#last
 	],
 	#category : 'Regex-Core-Nodes',
 	#package : 'Regex-Core',

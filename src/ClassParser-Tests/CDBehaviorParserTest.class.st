@@ -2,7 +2,7 @@ Class {
 	#name : 'CDBehaviorParserTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'classDefinition'
+		#classDefinition
 	],
 	#category : 'ClassParser-Tests',
 	#package : 'ClassParser-Tests'

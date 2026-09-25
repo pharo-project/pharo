@@ -12,8 +12,8 @@ Class {
 	#name : 'SharedQueue',
 	#superclass : 'Stream',
 	#instVars : [
-		'monitor',
-		'items'
+		#monitor,
+		#items
 	],
 	#category : 'Collections-Sequenceable-Base',
 	#package : 'Collections-Sequenceable',

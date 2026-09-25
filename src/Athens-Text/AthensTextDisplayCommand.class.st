@@ -7,7 +7,7 @@ Class {
 	#name : 'AthensTextDisplayCommand',
 	#superclass : 'Object',
 	#instVars : [
-		'next'
+		#next
 	],
 	#category : 'Athens-Text',
 	#package : 'Athens-Text'

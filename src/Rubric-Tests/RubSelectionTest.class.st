@@ -2,7 +2,7 @@ Class {
 	#name : 'RubSelectionTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'editor'
+		#editor
 	],
 	#category : 'Rubric-Tests-Base',
 	#package : 'Rubric-Tests',

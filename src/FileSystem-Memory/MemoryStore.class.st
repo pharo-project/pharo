@@ -5,10 +5,10 @@ Class {
 	#name : 'MemoryStore',
 	#superclass : 'FileSystemStore',
 	#instVars : [
-		'root'
+		#root
 	],
 	#classVars : [
-		'CurrentFS'
+		#CurrentFS
 	],
 	#category : 'FileSystem-Memory-Store',
 	#package : 'FileSystem-Memory',

@@ -5,11 +5,11 @@ Class {
 	#name : 'OSSDL2WindowRendererTexture',
 	#superclass : 'OSWindowRendererTexture',
 	#instVars : [
-		'extent',
-		'handle'
+		#extent,
+		#handle
 	],
 	#pools : [
-		'SDL2Constants'
+		#SDL2Constants
 	],
 	#category : 'OSWindow-SDL2-Rendering',
 	#package : 'OSWindow-SDL2',

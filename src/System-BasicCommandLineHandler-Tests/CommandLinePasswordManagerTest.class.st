@@ -5,7 +5,7 @@ Class {
 	#name : 'CommandLinePasswordManagerTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'passwordManager'
+		#passwordManager
 	],
 	#category : 'System-BasicCommandLineHandler-Tests-Management',
 	#package : 'System-BasicCommandLineHandler-Tests',

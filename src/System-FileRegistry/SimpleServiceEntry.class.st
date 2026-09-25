@@ -23,14 +23,14 @@ Class {
 	#name : 'SimpleServiceEntry',
 	#superclass : 'Model',
 	#instVars : [
-		'provider',
-		'label',
-		'selector',
-		'usingLineAfter',
-		'stateSelector',
-		'description',
-		'argumentGetter',
-		'buttonLabel'
+		#provider,
+		#label,
+		#selector,
+		#usingLineAfter,
+		#stateSelector,
+		#description,
+		#argumentGetter,
+		#buttonLabel
 	],
 	#category : 'System-FileRegistry-Base',
 	#package : 'System-FileRegistry',

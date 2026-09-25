@@ -14,8 +14,8 @@ Class {
 	#name : 'SycRenameVariableCommand',
 	#superclass : 'CmdCommand',
 	#instVars : [
-		'newName',
-		'variable'
+		#newName,
+		#variable
 	],
 	#category : 'SystemCommands-VariableCommands',
 	#package : 'SystemCommands-VariableCommands'

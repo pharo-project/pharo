@@ -2,8 +2,8 @@ Class {
 	#name : 'OCASTLiteralTranslatorTest',
 	#superclass : 'OCASTTranslatorTest',
 	#instVars : [
-		'literalExample',
-		'expectedLiteralValue'
+		#literalExample,
+		#expectedLiteralValue
 	],
 	#category : 'OpalCompiler-Tests-AST',
 	#package : 'OpalCompiler-Tests',

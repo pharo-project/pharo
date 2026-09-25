@@ -5,7 +5,7 @@ Class {
 	#name : 'MorphChangedWithArguments',
 	#superclass : 'MorphChanged',
 	#instVars : [
-		'arguments'
+		#arguments
 	],
 	#category : 'Morphic-Core-Announcements',
 	#package : 'Morphic-Core',

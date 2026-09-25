@@ -5,9 +5,9 @@ Class {
 	#name : 'TCPSocketTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'listenerSocket',
-		'clientSocket',
-		'serverSocket'
+		#listenerSocket,
+		#clientSocket,
+		#serverSocket
 	],
 	#category : 'Network-Tests-Kernel',
 	#package : 'Network-Tests',

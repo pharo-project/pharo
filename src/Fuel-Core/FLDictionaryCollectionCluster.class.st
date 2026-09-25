@@ -5,7 +5,7 @@ Class {
 	#name : 'FLDictionaryCollectionCluster',
 	#superclass : 'FLAbstractCollectionCluster',
 	#instVars : [
-		'ephemeronKeys'
+		#ephemeronKeys
 	],
 	#category : 'Fuel-Core-Clusters-Optimized',
 	#package : 'Fuel-Core',

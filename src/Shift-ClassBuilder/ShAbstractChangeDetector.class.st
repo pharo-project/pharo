@@ -12,7 +12,7 @@ Class {
 	#name : 'ShAbstractChangeDetector',
 	#superclass : 'Object',
 	#instVars : [
-		'builder'
+		#builder
 	],
 	#category : 'Shift-ClassBuilder-Changes',
 	#package : 'Shift-ClassBuilder',

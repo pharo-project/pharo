@@ -5,13 +5,13 @@ Class {
 	#name : 'RBRefactoringChangeMock',
 	#superclass : 'RBRefactoryChange',
 	#instVars : [
-		'instVar'
+		#instVar
 	],
 	#classVars : [
-		'SharedVar'
+		#SharedVar
 	],
 	#classInstVars : [
-		'classInstVar'
+		#classInstVar
 	],
 	#category : 'Refactoring-Changes-Tests',
 	#package : 'Refactoring-Changes-Tests'

@@ -13,8 +13,8 @@ Class {
 	#name : 'MIMEHeaderValue',
 	#superclass : 'Object',
 	#instVars : [
-		'mainValue',
-		'parameters'
+		#mainValue,
+		#parameters
 	],
 	#category : 'Network-MIME-Base',
 	#package : 'Network-MIME',

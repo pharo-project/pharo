@@ -7,12 +7,12 @@ Class {
 	#name : 'FLVersion',
 	#superclass : 'Object',
 	#instVars : [
-		'major',
-		'minor',
-		'patch'
+		#major,
+		#minor,
+		#patch
 	],
 	#classVars : [
-		'Current'
+		#Current
 	],
 	#category : 'Fuel-Core-Configuration',
 	#package : 'Fuel-Core',

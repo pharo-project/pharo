@@ -14,7 +14,7 @@ Class {
 	#name : 'NativeBrowserOpenVisitor',
 	#superclass : 'OSPlatformVisitor',
 	#instVars : [
-		'pathString'
+		#pathString
 	],
 	#category : 'Native-Browser-Base',
 	#package : 'Native-Browser',

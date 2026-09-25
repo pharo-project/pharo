@@ -5,7 +5,7 @@ Class {
 	#name : 'PaMatrix3ExampleTest',
 	#superclass : 'PaAbstractExampleTest',
 	#instVars : [
-		'option3'
+		#option3
 	],
 	#category : 'SUnit-Tests-Parametrized',
 	#package : 'SUnit-Tests',

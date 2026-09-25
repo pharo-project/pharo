@@ -10,7 +10,7 @@ Class {
 	#name : 'ClyConcreteCritiqueMethodGroup',
 	#superclass : 'ClyMethodGroup',
 	#instVars : [
-		'ruleSeverity'
+		#ruleSeverity
 	],
 	#category : 'Calypso-SystemPlugins-Critic-Queries',
 	#package : 'Calypso-SystemPlugins-Critic-Queries'

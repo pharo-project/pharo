@@ -2,8 +2,8 @@ Class {
 	#name : 'ReNameIsGlobalCondition',
 	#superclass : 'ReReifiedCondition',
 	#instVars : [
-		'className',
-		'model'
+		#className,
+		#model
 	],
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',

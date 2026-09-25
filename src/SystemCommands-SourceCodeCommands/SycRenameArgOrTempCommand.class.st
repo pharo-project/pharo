@@ -10,7 +10,7 @@ Class {
 	#name : 'SycRenameArgOrTempCommand',
 	#superclass : 'SycSourceCodeRefactoringCommand',
 	#instVars : [
-		'newName'
+		#newName
 	],
 	#category : 'SystemCommands-SourceCodeCommands',
 	#package : 'SystemCommands-SourceCodeCommands'

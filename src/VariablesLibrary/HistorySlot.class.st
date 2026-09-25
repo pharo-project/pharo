@@ -6,7 +6,7 @@ Class {
 	#name : 'HistorySlot',
 	#superclass : 'IndexedSlot',
 	#instVars : [
-		'size'
+		#size
 	],
 	#category : 'VariablesLibrary-Slots',
 	#package : 'VariablesLibrary',

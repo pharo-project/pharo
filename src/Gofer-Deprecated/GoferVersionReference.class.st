@@ -5,10 +5,10 @@ Class {
 	#name : 'GoferVersionReference',
 	#superclass : 'GoferReference',
 	#instVars : [
-		'package',
-		'author',
-		'branch',
-		'versionNumber'
+		#package,
+		#author,
+		#branch,
+		#versionNumber
 	],
 	#category : 'Gofer-Deprecated-References',
 	#package : 'Gofer-Deprecated',
@@ -39,7 +39,7 @@ GoferVersionReference >> initializeName: aString [
 { #category : 'private' }
 GoferVersionReference >> matches: aResolvedReference [
 
-	^ self name = aResolvedReference name
+	^ self name sameContents: aResolvedReference name
 ]
 
 { #category : 'accessing' }

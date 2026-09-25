@@ -6,7 +6,7 @@ Class {
 	#superclass : 'TestCase',
 	#type : 'variable',
 	#instVars : [
-		'filesystem'
+		#filesystem
 	],
 	#category : 'FileSystem-Core-Tests-Base',
 	#package : 'FileSystem-Core-Tests',

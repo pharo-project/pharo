@@ -5,7 +5,7 @@ Class {
 	#name : 'OmBlockFileStore',
 	#superclass : 'OmFileStore',
 	#instVars : [
-		'blocks'
+		#blocks
 	],
 	#category : 'Ombu-Stores',
 	#package : 'Ombu',

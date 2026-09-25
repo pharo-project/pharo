@@ -57,7 +57,7 @@ Screenshot >> makeAScreenshot [
 				 translated
 		 title: 'Make a screenshot') ifNotNil: [ :choice |
 		| form name |
-		form := choice = #world
+		form := (choice sameContents: #world)
 			        ifTrue: [ self currentWorld imageForm ]
 			        ifFalse: [ Screenshot new formScreenshotFromUserSelection ].
 		name := (FileSystem workingDirectory / filePrefix , 'png')

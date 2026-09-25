@@ -24,7 +24,7 @@ ReNodeBasedRule class >> isAbstract [
 { #category : 'testing' }
 ReNodeBasedRule class >> isVisible [
 
-	^ self name ~=  #ReNodeBasedRule
+	^ (self name sameContents: #ReNodeBasedRule) not
 ]
 
 { #category : 'helpers' }

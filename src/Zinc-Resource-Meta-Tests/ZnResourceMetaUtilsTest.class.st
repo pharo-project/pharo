@@ -16,16 +16,16 @@ ZnResourceMetaUtilsTest >> testQueryParsing [
 	| string fields |
 	string := 'foo=100&x=' , (ZnPercentEncoder new encode: '/a b').
 	fields := ZnResourceMetaUtils parseQueryFrom: string readStream.
-	self assert: (fields at: 'foo') equals: '100'.
-	self assert: (fields at: 'x') equals: '/a b'
+	self assert: (fields at: #'foo') equals: '100'.
+	self assert: (fields at: #'x') equals: '/a b'
 ]
 
 { #category : 'testing' }
 ZnResourceMetaUtilsTest >> testQueryWriting [
 	| fields string |
 	(fields := Dictionary new)
-		at: 'foo' put: '100';
-		at: 'bar' put: 'a b'.
+		at: #'foo' put: '100';
+		at: #'bar' put: 'a b'.
 	string := String streamContents: [ :stream |
 		ZnResourceMetaUtils writeQueryFields: fields on: stream ].
 	self assert: (string includesSubstring: 'foo=1').

@@ -20,9 +20,9 @@ Class {
 	#name : 'StItemsSelectionPresenter',
 	#superclass : 'SpPresenter',
 	#instVars : [
-		'table',
-		'label',
-		'selectedItems'
+		#table,
+		#label,
+		#selectedItems
 	],
 	#category : 'Refactoring-UI-UI',
 	#package : 'Refactoring-UI',

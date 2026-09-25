@@ -5,8 +5,8 @@ Class {
 	#name : 'AthensTextComposer',
 	#superclass : 'Object',
 	#instVars : [
-		'lines',
-		'text'
+		#lines,
+		#text
 	],
 	#category : 'Athens-Text',
 	#package : 'Athens-Text'

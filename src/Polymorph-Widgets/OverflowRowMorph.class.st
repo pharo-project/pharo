@@ -24,9 +24,9 @@ Class {
 	#name : 'OverflowRowMorph',
 	#superclass : 'PanelMorph',
 	#instVars : [
-		'baseMorphs',
-		'moreButton',
-		'moreMorph'
+		#baseMorphs,
+		#moreButton,
+		#moreMorph
 	],
 	#category : 'Polymorph-Widgets-Base',
 	#package : 'Polymorph-Widgets',

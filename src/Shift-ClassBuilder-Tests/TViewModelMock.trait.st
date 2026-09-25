@@ -4,7 +4,7 @@ A trait to use as a mock in test classes like `FluidClassBuilderTest` and class 
 Trait {
 	#name : 'TViewModelMock',
 	#classInstVars : [
-		'a'
+		#a
 	],
 	#category : 'Shift-ClassBuilder-Tests-Mock',
 	#package : 'Shift-ClassBuilder-Tests',

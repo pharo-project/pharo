@@ -5,7 +5,7 @@ Class {
 	#name : 'CDTraitExclusionNode',
 	#superclass : 'CDTraitCompositionNode',
 	#instVars : [
-		'exclusions'
+		#exclusions
 	],
 	#category : 'ClassParser-Model',
 	#package : 'ClassParser',

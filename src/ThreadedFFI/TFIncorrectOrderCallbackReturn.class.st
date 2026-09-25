@@ -6,7 +6,7 @@ Class {
 	#name : 'TFIncorrectOrderCallbackReturn',
 	#superclass : 'TFCallbackCannotReturn',
 	#instVars : [
-		'previousCallbacks'
+		#previousCallbacks
 	],
 	#category : 'ThreadedFFI-Callbacks',
 	#package : 'ThreadedFFI',

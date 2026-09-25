@@ -5,8 +5,8 @@ Class {
 	#name : 'ColorSelectorDialogWindow',
 	#superclass : 'DialogWindowMorph',
 	#instVars : [
-		'selectedColor',
-		'hsvaMorph'
+		#selectedColor,
+		#hsvaMorph
 	],
 	#category : 'Morphic-Widgets-ColorPicker',
 	#package : 'Morphic-Widgets-ColorPicker'

@@ -32,7 +32,7 @@ Class {
 	#name : 'UUID',
 	#superclass : 'Object',
 	#instVars : [
-		'uuidData'
+		#uuidData
 	],
 	#category : 'Network-UUID-Base',
 	#package : 'Network-UUID',

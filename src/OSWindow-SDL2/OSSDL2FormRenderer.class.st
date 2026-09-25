@@ -5,14 +5,14 @@ Class {
 	#name : 'OSSDL2FormRenderer',
 	#superclass : 'OSWindowFormRenderer',
 	#instVars : [
-		'texture',
-		'renderer',
-		'extent',
-		'deferUpdates',
-		'mutex'
+		#texture,
+		#renderer,
+		#extent,
+		#deferUpdates,
+		#mutex
 	],
 	#pools : [
-		'SDL2Constants'
+		#SDL2Constants
 	],
 	#category : 'OSWindow-SDL2-Rendering',
 	#package : 'OSWindow-SDL2',

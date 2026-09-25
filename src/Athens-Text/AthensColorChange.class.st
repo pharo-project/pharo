@@ -5,7 +5,7 @@ Class {
 	#name : 'AthensColorChange',
 	#superclass : 'AthensTextDisplayCommand',
 	#instVars : [
-		'color'
+		#color
 	],
 	#category : 'Athens-Text',
 	#package : 'Athens-Text'

@@ -107,8 +107,8 @@ ZnServerTest >> testAuthorizationFailed [
 						yourself).
 			self assert: response headers contentType equals: ZnMimeType textPlain.
 			self assert: response statusLine code equals: 401.
-			self assert: ((response headers at: 'WWW-Authenticate') includesSubstring: 'Basic').
-			self assert: ((response headers at: 'WWW-Authenticate') includesSubstring: 'Zinc') ]
+			self assert: ((response headers at: #'WWW-Authenticate') includesSubstring: 'Basic').
+			self assert: ((response headers at: #'WWW-Authenticate') includesSubstring: 'Zinc') ]
 ]
 
 { #category : 'testing' }
@@ -153,7 +153,7 @@ ZnServerTest >> testCustomServerString [
 		(client := ZnClient new)
 			get: server localUrl;
 			close.
-		self assert: (client response headers at: 'Server') equals: 'foobar server' ]
+		self assert: (client response headers at: #'Server') equals: 'foobar server' ]
 ]
 
 { #category : 'testing' }
@@ -399,9 +399,9 @@ ZnServerTest >> testGzipCompressionAndChunking [
 			get.
 		self assert: client isSuccess.
 		self assert: client response hasContentEncoding.
-		self assert: (client response headers at: 'Content-Encoding') equals: 'gzip'.
+		self assert: (client response headers at: #'Content-Encoding') equals: 'gzip'.
 		self assert: client response hasTransferEncoding.
-		self assert: (client response headers at: 'Transfer-Encoding') equals: 'chunked' ]
+		self assert: (client response headers at: #'Transfer-Encoding') equals: 'chunked' ]
 ]
 
 { #category : 'testing' }

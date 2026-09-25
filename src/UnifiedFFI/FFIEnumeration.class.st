@@ -110,10 +110,10 @@ Class {
 	#name : 'FFIEnumeration',
 	#superclass : 'SharedPool',
 	#instVars : [
-		'value'
+		#value
 	],
 	#classInstVars : [
-		'representationType'
+		#representationType
 	],
 	#category : 'UnifiedFFI-Objects',
 	#package : 'UnifiedFFI',
@@ -313,7 +313,7 @@ FFIEnumeration class >> representationType [
 { #category : 'comparing' }
 FFIEnumeration >> = anEnumInst [
 	^ self class == anEnumInst class
-		and: [ self value = anEnumInst value ]
+		and: [ self value sameContents: anEnumInst value ]
 ]
 
 { #category : 'accessing' }

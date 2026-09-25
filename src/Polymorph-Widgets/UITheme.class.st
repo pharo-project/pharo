@@ -17,18 +17,18 @@ Class {
 	#name : 'UITheme',
 	#superclass : 'Model',
 	#instVars : [
-		'settings',
-		'formSets',
-		'soundTheme',
-		'focusIndicator',
-		'windowActiveDropShadowStyle',
-		'useScrollbarThumbShadow',
-		'colorPalette',
-		'tasklistMorph'
+		#settings,
+		#formSets,
+		#soundTheme,
+		#focusIndicator,
+		#windowActiveDropShadowStyle,
+		#useScrollbarThumbShadow,
+		#colorPalette,
+		#tasklistMorph
 	],
 	#classVars : [
-		'Builder',
-		'Current'
+		#Builder,
+		#Current
 	],
 	#category : 'Polymorph-Widgets-Themes',
 	#package : 'Polymorph-Widgets',
@@ -283,7 +283,7 @@ UITheme >> baseSelectionColorFor: aButton [
 UITheme >> basicCreateArrowOfDirection: aSymbolDirection size: finalSizeInteger color: aColor [
 	"PRIVATE - create an arrow with aSymbolDirectionDirection,
 	finalSizeInteger and aColor.
-	aSymbolDirectionDirection = #top, #bottom. #left or #right .
+	aSymbolDirectionDirection sameContents: #top, #bottom. #left or #right .
 	Try with:
 	(UITheme current
 		basicCreateArrowOfDirection: #top
@@ -3009,7 +3009,7 @@ UITheme >> newLabelGroupIn: aThemedMorph for: labelsAndControls [
 	^self newColumnIn: aThemedMorph for: (lc collect: [:a | | row |
 		a key ifNotNil: [a key hResizing: #rigid; extent: labelWidth@ a key height].
 		row := self newRowIn: aThemedMorph for: (a key ifNil: [{a value}] ifNotNil: [{a key. a value}]).
-		row vResizing: (a value vResizing = #spaceFill ifTrue: [#spaceFill] ifFalse: [#shrinkWrap]).
+		row vResizing: ((a value vResizing sameContents: #spaceFill) ifTrue: [#spaceFill] ifFalse: [#shrinkWrap]).
 		row])
 ]
 
@@ -3036,7 +3036,7 @@ UITheme >> newLabelGroupIn: aThemedMorph for: labelsAndControls font: aFont labe
 	^self newColumnIn: aThemedMorph for: (lc collect: [:a | | row |
 		a key hResizing: #rigid; extent: labelWidth@ a key height.
 		row := self newRowIn: aThemedMorph for: {a key. a value}.
-		row vResizing: (a value vResizing = #spaceFill ifTrue: [#spaceFill] ifFalse: [#shrinkWrap]).
+		row vResizing: ((a value vResizing sameContents: #spaceFill) ifTrue: [#spaceFill] ifFalse: [#shrinkWrap]).
 		row])
 ]
 

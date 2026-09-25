@@ -21,9 +21,9 @@ Class {
 	#name : 'HDTestCoverage',
 	#superclass : 'ProtoObject',
 	#instVars : [
-		'hasRun',
-		'reference',
-		'method'
+		#hasRun,
+		#reference,
+		#method
 	],
 	#category : 'JenkinsTools-ExtraReports',
 	#package : 'JenkinsTools-ExtraReports'

@@ -18,20 +18,20 @@ Class {
 	#name : 'NumberParser',
 	#superclass : 'Object',
 	#instVars : [
-		'sourceStream',
-		'base',
-		'neg',
-		'integerPart',
-		'fractionPart',
-		'exponent',
-		'scale',
-		'nDigits',
-		'lastNonZero',
-		'failBlock',
-		'maxExponent'
+		#sourceStream,
+		#base,
+		#neg,
+		#integerPart,
+		#fractionPart,
+		#exponent,
+		#scale,
+		#nDigits,
+		#lastNonZero,
+		#failBlock,
+		#maxExponent
 	],
 	#classVars : [
-		'MaxExponent'
+		#MaxExponent
 	],
 	#category : 'NumberParser-Base',
 	#package : 'NumberParser',

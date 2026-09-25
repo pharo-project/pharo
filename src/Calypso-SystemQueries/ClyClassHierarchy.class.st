@@ -82,8 +82,8 @@ Class {
 	#name : 'ClyClassHierarchy',
 	#superclass : 'Object',
 	#instVars : [
-		'sortFunction',
-		'inverse'
+		#sortFunction,
+		#inverse
 	],
 	#category : 'Calypso-SystemQueries-Results',
 	#package : 'Calypso-SystemQueries',

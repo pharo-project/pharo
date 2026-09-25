@@ -2,8 +2,8 @@ Class {
 	#name : 'SendsDeprecatedMethodToGlobalRuleTest',
 	#superclass : 'AbstractEnvironmentTestCase',
 	#instVars : [
-		'testClass',
-		'globalName'
+		#testClass,
+		#globalName
 	],
 	#category : 'General-Rules-Tests-Base',
 	#package : 'General-Rules-Tests',

@@ -5,11 +5,11 @@ Class {
 	#name : 'FTGeneric',
 	#superclass : 'FFIExternalStructure',
 	#classVars : [
-		'OFFSET_DATA',
-		'OFFSET_FINALIZER'
+		#OFFSET_DATA,
+		#OFFSET_FINALIZER
 	],
 	#pools : [
-		'FT2Types'
+		#FT2Types
 	],
 	#category : 'FreeType-Bindings',
 	#package : 'FreeType',

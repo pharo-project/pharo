@@ -31,13 +31,13 @@ Class {
 	#name : 'OupsDebugRequest',
 	#superclass : 'Object',
 	#instVars : [
-		'exception',
-		'context',
-		'label',
-		'process',
-		'compiledMethod',
-		'preDebugActions',
-		'debugSession'
+		#exception,
+		#context,
+		#label,
+		#process,
+		#compiledMethod,
+		#preDebugActions,
+		#debugSession
 	],
 	#category : 'Debugger-Oups-Infrastructure',
 	#package : 'Debugger-Oups',

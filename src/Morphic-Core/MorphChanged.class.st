@@ -5,7 +5,7 @@ Class {
 	#name : 'MorphChanged',
 	#superclass : 'MorphAnnouncement',
 	#instVars : [
-		'selector'
+		#selector
 	],
 	#category : 'Morphic-Core-Announcements',
 	#package : 'Morphic-Core',

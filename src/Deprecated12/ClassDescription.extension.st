@@ -344,7 +344,7 @@ ClassDescription >> untagFrom: aSymbol [
 	package := self package.
 	packageTag := self packageTag.
 	packageTag isRoot ifTrue: [ ^ #(  ) ].
-	packageTag name = aSymbol ifFalse: [ ^ self ].
+	(packageTag name sameContents: aSymbol) ifFalse: [ ^ self ].
 	packageTag removeClass: self.
 	package addClass: self
 ]

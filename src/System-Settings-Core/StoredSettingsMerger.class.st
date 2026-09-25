@@ -21,7 +21,7 @@ Class {
 	#name : 'StoredSettingsMerger',
 	#superclass : 'Object',
 	#instVars : [
-		'storedSettings'
+		#storedSettings
 	],
 	#category : 'System-Settings-Core-Persistence-Ston-StoredSettings-Builder',
 	#package : 'System-Settings-Core',

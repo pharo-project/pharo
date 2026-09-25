@@ -6,8 +6,8 @@ Class {
 	#name : 'CacheStatistics',
 	#superclass : 'Object',
 	#instVars : [
-		'hits',
-		'misses'
+		#hits,
+		#misses
 	],
 	#category : 'System-Caching',
 	#package : 'System-Caching'

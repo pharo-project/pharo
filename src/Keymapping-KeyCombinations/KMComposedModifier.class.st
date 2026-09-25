@@ -7,7 +7,7 @@ Class {
 	#name : 'KMComposedModifier',
 	#superclass : 'KMModifier',
 	#instVars : [
-		'modifiers'
+		#modifiers
 	],
 	#category : 'Keymapping-KeyCombinations',
 	#package : 'Keymapping-KeyCombinations'

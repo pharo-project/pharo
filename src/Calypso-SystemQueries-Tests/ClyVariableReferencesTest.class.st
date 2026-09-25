@@ -2,9 +2,9 @@ Class {
 	#name : 'ClyVariableReferencesTest',
 	#superclass : 'ClyMethodQueryTest',
 	#instVars : [
-		'referencedVar1',
-		'readVar1',
-		'writtenVar1'
+		#referencedVar1,
+		#readVar1,
+		#writtenVar1
 	],
 	#category : 'Calypso-SystemQueries-Tests-Queries',
 	#package : 'Calypso-SystemQueries-Tests',

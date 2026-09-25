@@ -2,7 +2,7 @@ Class {
 	#name : 'CoStatisticsTest',
 	#superclass : 'CoBasicCompletionTest',
 	#instVars : [
-		'statistics'
+		#statistics
 	],
 	#category : 'HeuristicCompletion-Tests-Statistics',
 	#package : 'HeuristicCompletion-Tests',

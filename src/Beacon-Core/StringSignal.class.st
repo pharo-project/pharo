@@ -13,7 +13,7 @@ Class {
 	#name : 'StringSignal',
 	#superclass : 'BeaconSignal',
 	#instVars : [
-		'message'
+		#message
 	],
 	#category : 'Beacon-Core-Signals',
 	#package : 'Beacon-Core',

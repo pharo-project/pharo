@@ -2,8 +2,8 @@ Class {
 	#name : 'OverridesDeprecatedMethodRuleTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'testClass',
-		'testSubclass'
+		#testClass,
+		#testSubclass
 	],
 	#category : 'General-Rules-Tests-Base',
 	#package : 'General-Rules-Tests',

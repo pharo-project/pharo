@@ -16,10 +16,10 @@ Class {
 	#name : 'FLBufferedWriteStream',
 	#superclass : 'Stream',
 	#instVars : [
-		'stream',
-		'buffer',
-		'position',
-		'streamRespondsToNextPutAllStartingAt'
+		#stream,
+		#buffer,
+		#position,
+		#streamRespondsToNextPutAllStartingAt
 	],
 	#category : 'Fuel-Core-Streams',
 	#package : 'Fuel-Core',

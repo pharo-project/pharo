@@ -15,8 +15,8 @@ Class {
 	#name : 'AthensQuadSegment',
 	#superclass : 'AthensPathSegment',
 	#instVars : [
-		'via',
-		'to'
+		#via,
+		#to
 	],
 	#category : 'Athens-Core-Paths',
 	#package : 'Athens-Core',

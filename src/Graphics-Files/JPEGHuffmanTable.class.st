@@ -5,17 +5,17 @@ Class {
 	#name : 'JPEGHuffmanTable',
 	#superclass : 'Object',
 	#instVars : [
-		'bits',
-		'values',
-		'mincode',
-		'maxcode',
-		'valptr',
-		'lookaheadBits',
-		'lookaheadSymbol'
+		#bits,
+		#values,
+		#mincode,
+		#maxcode,
+		#valptr,
+		#lookaheadBits,
+		#lookaheadSymbol
 	],
 	#classVars : [
-		'BitBufferSize',
-		'Lookahead'
+		#BitBufferSize,
+		#Lookahead
 	],
 	#category : 'Graphics-Files',
 	#package : 'Graphics-Files'

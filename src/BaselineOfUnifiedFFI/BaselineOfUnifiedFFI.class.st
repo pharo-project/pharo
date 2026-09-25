@@ -2,10 +2,10 @@ Class {
 	#name : 'BaselineOfUnifiedFFI',
 	#superclass : 'BaselineOf',
 	#instVars : [
-		'initializersEnabled'
+		#initializersEnabled
 	],
 	#classVars : [
-		'Initialized'
+		#Initialized
 	],
 	#category : 'BaselineOfUnifiedFFI',
 	#package : 'BaselineOfUnifiedFFI'

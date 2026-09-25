@@ -9,7 +9,7 @@ Class {
 	#name : 'TelnetProtocolClient',
 	#superclass : 'ProtocolClient',
 	#instVars : [
-		'responseCode'
+		#responseCode
 	],
 	#category : 'Network-Protocols-Protocols',
 	#package : 'Network-Protocols',

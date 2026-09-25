@@ -5,7 +5,7 @@ Class {
 	#name : 'RGClassDescriptionDefinition',
 	#superclass : 'RGBehaviorDefinition',
 	#instVars : [
-		'instanceVariables'
+		#instanceVariables
 	],
 	#category : 'Ring-Definitions-Core-Base',
 	#package : 'Ring-Definitions-Core',
@@ -22,7 +22,7 @@ RGClassDescriptionDefinition class >> isAbstract [
 RGClassDescriptionDefinition >> = aRGClassDefinition [
 
 	^self class = aRGClassDefinition class
-		and: [ self name = aRGClassDefinition name
+		and: [ (self name sameContents: aRGClassDefinition name)
 			and: [ self environment = aRGClassDefinition environment ] ]
 ]
 
@@ -102,7 +102,7 @@ RGClassDescriptionDefinition >> instVarNames [
 { #category : 'instance variables' }
 RGClassDescriptionDefinition >> instanceVariableNamed: aString [
 	^ instanceVariables
-		detect: [ :v | v name = aString asSymbol ]
+		detect: [ :v | v name sameContents: aString asSymbol ]
 		ifNone: [ nil ]
 ]
 

@@ -5,9 +5,9 @@ Class {
 	#name : 'ReCodeBasedTestCase',
 	#superclass : 'RenrakuBaseTestCase',
 	#instVars : [
-		'testClass',
-		'testMethod',
-		'testClass2'
+		#testClass,
+		#testMethod,
+		#testClass2
 	],
 	#category : 'Renraku-Tests',
 	#package : 'Renraku-Tests'

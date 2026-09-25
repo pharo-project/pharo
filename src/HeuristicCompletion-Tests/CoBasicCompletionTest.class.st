@@ -2,8 +2,8 @@ Class {
 	#name : 'CoBasicCompletionTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'completionClass',
-		'systemNavigation'
+		#completionClass,
+		#systemNavigation
 	],
 	#category : 'HeuristicCompletion-Tests-Core',
 	#package : 'HeuristicCompletion-Tests',

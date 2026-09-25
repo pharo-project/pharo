@@ -5,7 +5,7 @@ Class {
 	#name : 'OmNullReference',
 	#superclass : 'OmAbstractReference',
 	#classInstVars : [
-		'uniqueInstance'
+		#uniqueInstance
 	],
 	#category : 'Ombu-Entries',
 	#package : 'Ombu',

@@ -2,8 +2,8 @@ Class {
 	#name : 'MetacelloRecordTarget',
 	#superclass : 'MetacelloTarget',
 	#instVars : [
-		'required',
-		'currentRepositorySpecs'
+		#required,
+		#currentRepositorySpecs
 	],
 	#category : 'Metacello-Core-Targets',
 	#package : 'Metacello-Core',

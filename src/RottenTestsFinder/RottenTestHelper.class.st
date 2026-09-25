@@ -5,7 +5,7 @@ Class {
 	#name : 'RottenTestHelper',
 	#superclass : 'RottenTest',
 	#instVars : [
-		'testHelperCompiledMethods'
+		#testHelperCompiledMethods
 	],
 	#category : 'RottenTestsFinder-Results',
 	#package : 'RottenTestsFinder',

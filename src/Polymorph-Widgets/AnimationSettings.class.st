@@ -5,10 +5,10 @@ Class {
 	#name : 'AnimationSettings',
 	#superclass : 'Model',
 	#instVars : [
-		'useAnimation',
-		'animateClosing',
-		'delay',
-		'numberOfSteps'
+		#useAnimation,
+		#animateClosing,
+		#delay,
+		#numberOfSteps
 	],
 	#category : 'Polymorph-Widgets-Themes',
 	#package : 'Polymorph-Widgets',

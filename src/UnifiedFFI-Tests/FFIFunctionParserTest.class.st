@@ -5,8 +5,8 @@ Class {
 	#name : 'FFIFunctionParserTest',
 	#superclass : 'FFIAbstractTest',
 	#instVars : [
-		'ctx',
-		'resolver'
+		#ctx,
+		#resolver
 	],
 	#category : 'UnifiedFFI-Tests-Tests',
 	#package : 'UnifiedFFI-Tests',

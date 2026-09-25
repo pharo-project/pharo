@@ -34,7 +34,7 @@ Class {
 	#name : 'CmdToolContext',
 	#superclass : 'Object',
 	#instVars : [
-		'tool'
+		#tool
 	],
 	#category : 'Commander-Core',
 	#package : 'Commander-Core'

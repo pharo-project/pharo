@@ -7,7 +7,7 @@ Class {
 	#name : 'ClapExplicit',
 	#superclass : 'ClapSubExpression',
 	#instVars : [
-		'startIndex'
+		#startIndex
 	],
 	#category : 'Clap-Core-Activation',
 	#package : 'Clap-Core',

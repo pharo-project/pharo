@@ -13,10 +13,10 @@ Class {
 	#name : 'JobProgressBarMorph',
 	#superclass : 'Morph',
 	#instVars : [
-		'progressBar'
+		#progressBar
 	],
 	#classVars : [
-		'IsInterruptible'
+		#IsInterruptible
 	],
 	#category : 'Morphic-Base-ProgressBar',
 	#package : 'Morphic-Base',

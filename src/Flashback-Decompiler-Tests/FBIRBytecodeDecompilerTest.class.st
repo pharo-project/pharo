@@ -2,7 +2,7 @@ Class {
 	#name : 'FBIRBytecodeDecompilerTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'currentCompiler'
+		#currentCompiler
 	],
 	#category : 'Flashback-Decompiler-Tests-Bytecode',
 	#package : 'Flashback-Decompiler-Tests',

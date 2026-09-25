@@ -10,8 +10,8 @@ Class {
 	#name : 'RTFSelfCallRootNode',
 	#superclass : 'Object',
 	#instVars : [
-		'compiledMethod',
-		'subCalls'
+		#compiledMethod,
+		#subCalls
 	],
 	#category : 'RottenTestsFinder-SelfInterpreter',
 	#package : 'RottenTestsFinder',

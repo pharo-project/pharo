@@ -5,8 +5,8 @@ Class {
 	#name : 'GoferOperation',
 	#superclass : 'Object',
 	#instVars : [
-		'gofer',
-		'model'
+		#gofer,
+		#model
 	],
 	#category : 'Gofer-Deprecated-Operations',
 	#package : 'Gofer-Deprecated',

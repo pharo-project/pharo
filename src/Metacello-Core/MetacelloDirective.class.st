@@ -2,7 +2,7 @@ Class {
 	#name : 'MetacelloDirective',
 	#superclass : 'Object',
 	#instVars : [
-		'spec'
+		#spec
 	],
 	#category : 'Metacello-Core-Directives',
 	#package : 'Metacello-Core',

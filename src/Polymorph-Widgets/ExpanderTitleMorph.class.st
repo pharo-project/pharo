@@ -5,9 +5,9 @@ Class {
 	#name : 'ExpanderTitleMorph',
 	#superclass : 'PanelMorph',
 	#instVars : [
-		'labelMorph',
-		'buttonMorph',
-		'expanded'
+		#labelMorph,
+		#buttonMorph,
+		#expanded
 	],
 	#category : 'Polymorph-Widgets-Base',
 	#package : 'Polymorph-Widgets',

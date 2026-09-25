@@ -6,8 +6,8 @@ Class {
 	#name : 'ListItemWrapper',
 	#superclass : 'Model',
 	#instVars : [
-		'item',
-		'model'
+		#item,
+		#model
 	],
 	#category : 'Morphic-Widgets-List',
 	#package : 'Morphic-Widgets-List'

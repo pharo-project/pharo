@@ -19,8 +19,8 @@ Class {
 	#name : 'SettingsStonWriter',
 	#superclass : 'Object',
 	#instVars : [
-		'stream',
-		'storedSettings'
+		#stream,
+		#storedSettings
 	],
 	#category : 'System-Settings-Core-Persistence-Ston-StoredSettings-Builder',
 	#package : 'System-Settings-Core',

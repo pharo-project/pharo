@@ -76,9 +76,9 @@ Class {
 	#name : 'AthensStrokePaint',
 	#superclass : 'AthensPaint',
 	#instVars : [
-		'fillPaint',
-		'width',
-		'miterLimit'
+		#fillPaint,
+		#width,
+		#miterLimit
 	],
 	#category : 'Athens-Core-Paints',
 	#package : 'Athens-Core',

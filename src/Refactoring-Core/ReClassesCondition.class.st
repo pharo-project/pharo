@@ -2,8 +2,8 @@ Class {
 	#name : 'ReClassesCondition',
 	#superclass : 'ReReifiedCondition',
 	#instVars : [
-		'classes',
-		'violators'
+		#classes,
+		#violators
 	],
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',

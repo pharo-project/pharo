@@ -5,8 +5,8 @@ Class {
 	#name : 'CoASTResultSetBuilder',
 	#superclass : 'CoResultSetBuilder',
 	#instVars : [
-		'astNode',
-		'node'
+		#astNode,
+		#node
 	],
 	#category : 'HeuristicCompletion-Model-SystemIntegration',
 	#package : 'HeuristicCompletion-Model',

@@ -29,12 +29,12 @@ Class {
 	#name : 'ClassFactoryForTestCase',
 	#superclass : 'Object',
 	#instVars : [
-		'createdBehaviors',
-		'createdSilently',
-		'environment'
+		#createdBehaviors,
+		#createdSilently,
+		#environment
 	],
 	#classVars : [
-		'Counter'
+		#Counter
 	],
 	#category : 'SUnit-Core-Extensions',
 	#package : 'SUnit-Core',

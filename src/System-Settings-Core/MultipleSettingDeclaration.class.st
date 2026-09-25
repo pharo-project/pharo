@@ -5,7 +5,7 @@ Class {
 	#name : 'MultipleSettingDeclaration',
 	#superclass : 'SettingDeclaration',
 	#instVars : [
-		'domainValues'
+		#domainValues
 	],
 	#category : 'System-Settings-Core-Base',
 	#package : 'System-Settings-Core',

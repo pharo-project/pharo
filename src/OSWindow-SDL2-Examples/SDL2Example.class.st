@@ -5,8 +5,8 @@ Class {
 	#name : 'SDL2Example',
 	#superclass : 'Object',
 	#pools : [
-		'SDL2Constants',
-		'SDL2Types'
+		#SDL2Constants,
+		#SDL2Types
 	],
 	#category : 'OSWindow-SDL2-Examples-Examples',
 	#package : 'OSWindow-SDL2-Examples',

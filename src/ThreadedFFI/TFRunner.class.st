@@ -7,11 +7,11 @@ Class {
 	#name : 'TFRunner',
 	#superclass : 'FFIExternalReference',
 	#instVars : [
-		'callbackInvocationStack',
-		'stackProtect',
-		'exceptionHandler',
-		'semaphorePool',
-		'callbackReturnSemaphore'
+		#callbackInvocationStack,
+		#stackProtect,
+		#exceptionHandler,
+		#semaphorePool,
+		#callbackReturnSemaphore
 	],
 	#category : 'ThreadedFFI-Worker',
 	#package : 'ThreadedFFI',

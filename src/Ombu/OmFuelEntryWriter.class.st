@@ -5,7 +5,7 @@ Class {
 	#name : 'OmFuelEntryWriter',
 	#superclass : 'OmEntryWriter',
 	#instVars : [
-		'serializer'
+		#serializer
 	],
 	#category : 'Ombu-Persistence',
 	#package : 'Ombu',

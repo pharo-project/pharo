@@ -5,10 +5,10 @@ Class {
 	#name : 'ReTempVarOverridesInstVarRuleTest',
 	#superclass : 'ReAbstractRuleTestCase',
 	#instVars : [
-		'dummy1',
-		'dummy2',
-		'dummy3',
-		'dummy4'
+		#dummy1,
+		#dummy2,
+		#dummy3,
+		#dummy4
 	],
 	#category : 'General-Rules-Tests-Migrated',
 	#package : 'General-Rules-Tests',

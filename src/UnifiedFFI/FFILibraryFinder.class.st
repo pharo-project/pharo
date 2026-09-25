@@ -10,7 +10,7 @@ Class {
 	#name : 'FFILibraryFinder',
 	#superclass : 'Object',
 	#instVars : [
-		'userPaths'
+		#userPaths
 	],
 	#category : 'UnifiedFFI-Libraries',
 	#package : 'UnifiedFFI',
@@ -68,7 +68,7 @@ FFILibraryFinder >> knownPaths [
 { #category : 'accessing' }
 FFILibraryFinder >> ldLibraryPaths [
 
-	^ (OSEnvironment current at: 'LD_LIBRARY_PATH' ifAbsent: [ '' ]) substrings: ':'
+	^ (OSEnvironment current at: #'LD_LIBRARY_PATH' ifAbsent: [ '' ]) substrings: ':'
 ]
 
 { #category : 'accessing' }

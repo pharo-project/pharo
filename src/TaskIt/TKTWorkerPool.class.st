@@ -31,11 +31,11 @@ Class {
 	#traits : 'TTaskScheduler - {#scheduleTaskExecution:}',
 	#classTraits : 'TTaskScheduler classTrait',
 	#instVars : [
-		'poolMaxSize',
-		'freeWorkers',
-		'poolWorker',
-		'workers',
-		'priority'
+		#poolMaxSize,
+		#freeWorkers,
+		#poolWorker,
+		#workers,
+		#priority
 	],
 	#category : 'TaskIt-Worker',
 	#package : 'TaskIt',

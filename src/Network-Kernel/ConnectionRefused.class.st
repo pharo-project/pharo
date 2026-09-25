@@ -9,8 +9,8 @@ Class {
 	#name : 'ConnectionRefused',
 	#superclass : 'NetworkError',
 	#instVars : [
-		'host',
-		'port'
+		#host,
+		#port
 	],
 	#category : 'Network-Kernel-Exceptions',
 	#package : 'Network-Kernel',

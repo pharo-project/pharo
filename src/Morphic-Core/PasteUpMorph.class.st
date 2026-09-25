@@ -12,15 +12,15 @@ Class {
 	#name : 'PasteUpMorph',
 	#superclass : 'BorderedMorph',
 	#instVars : [
-		'backgroundMorph',
-		'worldState',
-		'griddingOn'
+		#backgroundMorph,
+		#worldState,
+		#griddingOn
 	],
 	#classVars : [
-		'ShouldShowWorldMenu',
-		'ShouldSwapMenuOpenerButtons',
-		'WindowEventHandler',
-		'WorldAnnouncer'
+		#ShouldShowWorldMenu,
+		#ShouldSwapMenuOpenerButtons,
+		#WindowEventHandler,
+		#WorldAnnouncer
 	],
 	#category : 'Morphic-Core-Worlds',
 	#package : 'Morphic-Core',

@@ -5,7 +5,7 @@ Class {
 	#name : 'ResolutionRequest',
 	#superclass : 'Notification',
 	#instVars : [
-		'origin'
+		#origin
 	],
 	#category : 'FileSystem-Core-Base-Errors',
 	#package : 'FileSystem-Core',

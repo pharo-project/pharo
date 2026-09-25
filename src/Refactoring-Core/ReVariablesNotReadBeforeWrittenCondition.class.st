@@ -2,7 +2,7 @@ Class {
 	#name : 'ReVariablesNotReadBeforeWrittenCondition',
 	#superclass : 'ReSubtreeCondition',
 	#instVars : [
-		'variables'
+		#variables
 	],
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',

@@ -15,15 +15,15 @@ Class {
 	#name : 'TextDiffBuilder',
 	#superclass : 'Object',
 	#instVars : [
-		'xLines',
-		'yLines'
+		#xLines,
+		#yLines
 	],
 	#classVars : [
-		'DiffsWithPrettyPrint',
-		'IgnoreLineEndings',
-		'InsertTextAttributes',
-		'NormalTextAttributes',
-		'RemoveTextAttributes'
+		#DiffsWithPrettyPrint,
+		#IgnoreLineEndings,
+		#InsertTextAttributes,
+		#NormalTextAttributes,
+		#RemoveTextAttributes
 	],
 	#category : 'Text-Diff-Building',
 	#package : 'Text-Diff',

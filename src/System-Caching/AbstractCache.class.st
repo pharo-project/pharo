@@ -18,10 +18,10 @@ Class {
 	#name : 'AbstractCache',
 	#superclass : 'Object',
 	#instVars : [
-		'factory',
-		'statistics',
-		'weight',
-		'access'
+		#factory,
+		#statistics,
+		#weight,
+		#access
 	],
 	#category : 'System-Caching',
 	#package : 'System-Caching'

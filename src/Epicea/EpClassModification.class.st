@@ -5,8 +5,8 @@ Class {
 	#name : 'EpClassModification',
 	#superclass : 'EpClassChange',
 	#instVars : [
-		'oldClass',
-		'newClass'
+		#oldClass,
+		#newClass
 	],
 	#category : 'Epicea-Model',
 	#package : 'Epicea',

@@ -5,7 +5,7 @@ Class {
 	#name : 'EpExpressionEvaluation',
 	#superclass : 'EpEvent',
 	#instVars : [
-		'expression'
+		#expression
 	],
 	#category : 'Epicea-Model',
 	#package : 'Epicea',

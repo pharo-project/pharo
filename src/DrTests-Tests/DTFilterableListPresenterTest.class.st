@@ -5,7 +5,7 @@ Class {
 	#name : 'DTFilterableListPresenterTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'filterableList'
+		#filterableList
 	],
 	#category : 'DrTests-Tests',
 	#package : 'DrTests-Tests'

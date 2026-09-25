@@ -2,11 +2,11 @@ Class {
 	#name : 'MyClassNonEmptyLeafUnused',
 	#superclass : 'MyClassA',
 	#instVars : [
-		'instVarName1222',
-		'instVarName23333'
+		#instVarName1222,
+		#instVarName23333
 	],
 	#classVars : [
-		'ClassVarName2456'
+		#ClassVarName2456
 	],
 	#category : 'Refactoring-DataForTesting-StaticModel',
 	#package : 'Refactoring-DataForTesting',

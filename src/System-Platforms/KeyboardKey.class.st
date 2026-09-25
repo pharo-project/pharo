@@ -32,16 +32,16 @@ Class {
 	#name : 'KeyboardKey',
 	#superclass : 'Object',
 	#instVars : [
-		'value',
-		'name'
+		#value,
+		#name
 	],
 	#classVars : [
-		'KeyCodeTable',
-		'KeyFromCharacterTable',
-		'KeyNameTable',
-		'MacosVirtualKeyTable',
-		'UnixVirtualKeyTable',
-		'WindowsVirtualKeyTable'
+		#KeyCodeTable,
+		#KeyFromCharacterTable,
+		#KeyNameTable,
+		#MacosVirtualKeyTable,
+		#UnixVirtualKeyTable,
+		#WindowsVirtualKeyTable
 	],
 	#category : 'System-Platforms-Utilities',
 	#package : 'System-Platforms',
@@ -1299,7 +1299,7 @@ KeyboardKey class >> zero [
 KeyboardKey >> = other [
 
 	^ self species = other species
-		and: [ self value = other value ]
+		and: [ self value sameContents: other value ]
 ]
 
 { #category : 'comparing' }

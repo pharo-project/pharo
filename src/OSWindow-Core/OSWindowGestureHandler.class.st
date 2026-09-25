@@ -5,11 +5,11 @@ Class {
 	#name : 'OSWindowGestureHandler',
 	#superclass : 'OSWindowEventGestureVisitor',
 	#instVars : [
-		'fingers',
-		'fingerCount',
-		'registeredGestures',
-		'devicesFingers',
-		'lastUpdateTimestamp'
+		#fingers,
+		#fingerCount,
+		#registeredGestures,
+		#devicesFingers,
+		#lastUpdateTimestamp
 	],
 	#category : 'OSWindow-Core-Gestures',
 	#package : 'OSWindow-Core',

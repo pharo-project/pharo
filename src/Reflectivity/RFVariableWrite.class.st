@@ -5,7 +5,7 @@ Class {
 	#name : 'RFVariableWrite',
 	#superclass : 'RFVariableAccess',
 	#instVars : [
-		'assignedValue'
+		#assignedValue
 	],
 	#category : 'Reflectivity-Operations',
 	#package : 'Reflectivity',

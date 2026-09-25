@@ -5,8 +5,8 @@ Class {
 	#name : 'DoItChunkImported',
 	#superclass : 'SystemAnnouncement',
 	#instVars : [
-		'contents',
-		'logSource'
+		#contents,
+		#logSource
 	],
 	#category : 'CodeImport-Utilities',
 	#package : 'CodeImport',

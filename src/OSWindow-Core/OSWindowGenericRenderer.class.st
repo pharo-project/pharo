@@ -5,7 +5,7 @@ Class {
 	#name : 'OSWindowGenericRenderer',
 	#superclass : 'OSWindowRenderer',
 	#instVars : [
-		'scene'
+		#scene
 	],
 	#category : 'OSWindow-Core-Renderer',
 	#package : 'OSWindow-Core',

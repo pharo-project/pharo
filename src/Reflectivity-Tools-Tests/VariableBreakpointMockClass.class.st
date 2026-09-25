@@ -5,10 +5,10 @@ Class {
 	#name : 'VariableBreakpointMockClass',
 	#superclass : 'Object',
 	#instVars : [
-		'v1'
+		#v1
 	],
 	#classVars : [
-		'ClassVar'
+		#ClassVar
 	],
 	#category : 'Reflectivity-Tools-Tests',
 	#package : 'Reflectivity-Tools-Tests'

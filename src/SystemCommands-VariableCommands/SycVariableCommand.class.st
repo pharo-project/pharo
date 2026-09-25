@@ -11,8 +11,8 @@ Class {
 	#name : 'SycVariableCommand',
 	#superclass : 'CmdCommand',
 	#instVars : [
-		'variables',
-		'toolContext'
+		#variables,
+		#toolContext
 	],
 	#category : 'SystemCommands-VariableCommands',
 	#package : 'SystemCommands-VariableCommands'

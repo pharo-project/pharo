@@ -5,7 +5,7 @@ Class {
 	#name : 'EpPropagateRefactoring',
 	#superclass : 'EpRefactoring',
 	#instVars : [
-		'targetRefactoring'
+		#targetRefactoring
 	],
 	#category : 'Epicea-Model',
 	#package : 'Epicea',

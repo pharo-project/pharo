@@ -2,7 +2,7 @@ Class {
 	#name : 'WindowAnnouncementTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'window'
+		#window
 	],
 	#category : 'Morphic-Tests-WindowNotification',
 	#package : 'Morphic-Tests',

@@ -5,9 +5,9 @@ Class {
 	#name : 'SDL2AthensExample',
 	#superclass : 'Object',
 	#instVars : [
-		'renderer',
-		'drawingProcess',
-		'window'
+		#renderer,
+		#drawingProcess,
+		#window
 	],
 	#category : 'OSWindow-SDL2-Examples-Examples',
 	#package : 'OSWindow-SDL2-Examples',

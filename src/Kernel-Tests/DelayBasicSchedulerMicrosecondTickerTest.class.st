@@ -18,9 +18,9 @@ Class {
 	#name : 'DelayBasicSchedulerMicrosecondTickerTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'ticker',
-		'scheduler',
-		'suspendedDelaysHeap'
+		#ticker,
+		#scheduler,
+		#suspendedDelaysHeap
 	],
 	#category : 'Kernel-Tests-Delays',
 	#package : 'Kernel-Tests',

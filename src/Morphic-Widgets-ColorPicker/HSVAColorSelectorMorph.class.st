@@ -5,8 +5,8 @@ Class {
 	#name : 'HSVAColorSelectorMorph',
 	#superclass : 'Morph',
 	#instVars : [
-		'hsvMorph',
-		'aMorph'
+		#hsvMorph,
+		#aMorph
 	],
 	#category : 'Morphic-Widgets-ColorPicker',
 	#package : 'Morphic-Widgets-ColorPicker'

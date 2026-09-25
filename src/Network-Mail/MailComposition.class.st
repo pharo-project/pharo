@@ -5,12 +5,12 @@ Class {
 	#name : 'MailComposition',
 	#superclass : 'Model',
 	#instVars : [
-		'messageText',
-		'morphicWindow',
-		'textModel'
+		#messageText,
+		#morphicWindow,
+		#textModel
 	],
 	#classVars : [
-		'SmtpServer'
+		#SmtpServer
 	],
 	#category : 'Network-Mail',
 	#package : 'Network-Mail'

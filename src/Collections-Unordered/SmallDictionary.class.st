@@ -45,9 +45,9 @@ Class {
 	#name : 'SmallDictionary',
 	#superclass : 'Collection',
 	#instVars : [
-		'keys',
-		'values',
-		'size'
+		#keys,
+		#values,
+		#size
 	],
 	#category : 'Collections-Unordered-Dictionaries',
 	#package : 'Collections-Unordered',
@@ -484,7 +484,7 @@ SmallDictionary >> hasBindingThatBeginsWith: aString [
 
 { #category : 'testing' }
 SmallDictionary >> includes: aValue [
-	self do: [:each | aValue = each ifTrue: [^true]].
+	self do: [:each | (aValue sameContents: each) ifTrue: [^true]].
 	^false
 ]
 
@@ -492,7 +492,7 @@ SmallDictionary >> includes: aValue [
 SmallDictionary >> includesAssociation: anAssociation [
   ^ (self
       associationAt: anAssociation key
-      ifAbsent: [ ^ false ]) value = anAssociation value
+      ifAbsent: [ ^ false ]) value sameContents: anAssociation value
 ]
 
 { #category : 'testing' }

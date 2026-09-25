@@ -5,10 +5,10 @@ Class {
 	#name : 'StartupAction',
 	#superclass : 'Object',
 	#instVars : [
-		'code',
-		'hasBeenExecuted',
-		'runOnce',
-		'name'
+		#code,
+		#hasBeenExecuted,
+		#runOnce,
+		#name
 	],
 	#category : 'StartupPreferences',
 	#package : 'StartupPreferences'

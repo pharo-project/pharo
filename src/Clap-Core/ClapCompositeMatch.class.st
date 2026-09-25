@@ -7,7 +7,7 @@ Class {
 	#name : 'ClapCompositeMatch',
 	#superclass : 'ClapExplicit',
 	#instVars : [
-		'children'
+		#children
 	],
 	#category : 'Clap-Core-Activation',
 	#package : 'Clap-Core',

@@ -6,7 +6,7 @@ Class {
 	#name : 'OSButtonState',
 	#superclass : 'Object',
 	#instVars : [
-		'buttons'
+		#buttons
 	],
 	#category : 'OSWindow-Core-Events',
 	#package : 'OSWindow-Core',

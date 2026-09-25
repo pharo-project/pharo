@@ -5,8 +5,8 @@ Class {
 	#name : 'FontSubstitutionDuringLoading',
 	#superclass : 'Notification',
 	#instVars : [
-		'familyName',
-		'pixelSize'
+		#familyName,
+		#pixelSize
 	],
 	#category : 'Graphics-Fonts',
 	#package : 'Graphics-Fonts'

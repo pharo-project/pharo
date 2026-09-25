@@ -50,10 +50,10 @@ Class {
 	#name : 'MetaLinkInstaller',
 	#superclass : 'Object',
 	#instVars : [
-		'linksRegistry',
-		'anonSubclassesBuilder',
-		'linkToNodesMapper',
-		'superJumpLinks'
+		#linksRegistry,
+		#anonSubclassesBuilder,
+		#linkToNodesMapper,
+		#superJumpLinks
 	],
 	#category : 'Reflectivity-Installer',
 	#package : 'Reflectivity',

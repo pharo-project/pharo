@@ -5,7 +5,7 @@ Class {
 	#name : 'TaskbarMorphForManager',
 	#superclass : 'TaskbarMorph',
 	#instVars : [
-		'manager'
+		#manager
 	],
 	#category : 'Morphic-Widgets-Taskbar',
 	#package : 'Morphic-Widgets-Taskbar'

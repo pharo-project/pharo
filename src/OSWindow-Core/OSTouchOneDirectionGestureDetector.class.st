@@ -5,7 +5,7 @@ Class {
 	#name : 'OSTouchOneDirectionGestureDetector',
 	#superclass : 'OSTouchDirectionnalGestureDetector',
 	#instVars : [
-		'direction'
+		#direction
 	],
 	#category : 'OSWindow-Core-Gestures',
 	#package : 'OSWindow-Core',

@@ -31,7 +31,7 @@ Class {
 	#name : 'ClyVariableReferencesQuery',
 	#superclass : 'ClyMethodQuery',
 	#instVars : [
-		'variableQuery'
+		#variableQuery
 	],
 	#category : 'Calypso-SystemQueries-Queries',
 	#package : 'Calypso-SystemQueries',

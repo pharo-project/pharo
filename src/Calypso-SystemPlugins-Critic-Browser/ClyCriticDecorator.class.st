@@ -18,10 +18,10 @@ Class {
 	#name : 'ClyCriticDecorator',
 	#superclass : 'ClyBrowserToolDecorator',
 	#instVars : [
-		'criticView',
-		'originalToolPanel',
-		'analysisScope',
-		'progressMorph'
+		#criticView,
+		#originalToolPanel,
+		#analysisScope,
+		#progressMorph
 	],
 	#category : 'Calypso-SystemPlugins-Critic-Browser',
 	#package : 'Calypso-SystemPlugins-Critic-Browser'

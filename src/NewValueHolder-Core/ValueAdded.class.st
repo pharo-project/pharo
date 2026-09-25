@@ -5,7 +5,7 @@ Class {
 	#name : 'ValueAdded',
 	#superclass : 'Announcement',
 	#instVars : [
-		'newValue'
+		#newValue
 	],
 	#category : 'NewValueHolder-Core-Announcements',
 	#package : 'NewValueHolder-Core',

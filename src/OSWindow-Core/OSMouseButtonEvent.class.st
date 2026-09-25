@@ -5,7 +5,7 @@ Class {
 	#name : 'OSMouseButtonEvent',
 	#superclass : 'OSMouseEvent',
 	#instVars : [
-		'button'
+		#button
 	],
 	#category : 'OSWindow-Core-Events',
 	#package : 'OSWindow-Core',

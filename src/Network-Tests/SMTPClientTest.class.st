@@ -5,8 +5,8 @@ Class {
 	#name : 'SMTPClientTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'smtp',
-		'socket'
+		#smtp,
+		#socket
 	],
 	#category : 'Network-Tests-Protocols',
 	#package : 'Network-Tests',

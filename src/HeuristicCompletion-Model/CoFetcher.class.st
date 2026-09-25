@@ -40,8 +40,8 @@ Class {
 	#name : 'CoFetcher',
 	#superclass : 'Object',
 	#instVars : [
-		'generator',
-		'filter'
+		#generator,
+		#filter
 	],
 	#category : 'HeuristicCompletion-Model-Core',
 	#package : 'HeuristicCompletion-Model',

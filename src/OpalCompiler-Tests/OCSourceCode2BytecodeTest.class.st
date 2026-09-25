@@ -5,10 +5,10 @@ Class {
 	#name : 'OCSourceCode2BytecodeTest',
 	#superclass : 'AbstractEnvironmentTestCase',
 	#instVars : [
-		'instVar'
+		#instVar
 	],
 	#classVars : [
-		'ClassVar'
+		#ClassVar
 	],
 	#category : 'OpalCompiler-Tests-Source',
 	#package : 'OpalCompiler-Tests',

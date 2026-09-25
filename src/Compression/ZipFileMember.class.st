@@ -6,10 +6,10 @@ Class {
 	#name : 'ZipFileMember',
 	#superclass : 'ZipArchiveMember',
 	#instVars : [
-		'externalFileName',
-		'stream',
-		'localHeaderRelativeOffset',
-		'dataOffset'
+		#externalFileName,
+		#stream,
+		#localHeaderRelativeOffset,
+		#dataOffset
 	],
 	#category : 'Compression-Archives',
 	#package : 'Compression',

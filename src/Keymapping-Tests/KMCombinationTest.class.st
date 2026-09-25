@@ -17,7 +17,7 @@ KMCombinationTest >> testCombinationOfSimpleShortcuts [
 	combination := shortcut | otherShortcut.
 	self assert: (combination includes: shortcut).
 	self assert: (combination includes: otherShortcut).
-	self assert: ((combination collect: [:each | each platform]) allSatisfy: [ :p | p = #all ])
+	self assert: ((combination collect: [:each | each platform]) allSatisfy: [ :p | p sameContents: #all ])
 ]
 
 { #category : 'tests' }

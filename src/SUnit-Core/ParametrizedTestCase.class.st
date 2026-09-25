@@ -52,7 +52,7 @@ Class {
 	#name : 'ParametrizedTestCase',
 	#superclass : 'TestCase',
 	#instVars : [
-		'parametersToUse'
+		#parametersToUse
 	],
 	#category : 'SUnit-Core-Parametrized',
 	#package : 'SUnit-Core',
@@ -80,7 +80,7 @@ ParametrizedTestCase class >> buildSuite [
 
 { #category : 'private' }
 ParametrizedTestCase class >> isAbstract [
-	^ self name = #ParametrizedTestCase
+	^ self name sameContents: #ParametrizedTestCase
 ]
 
 { #category : 'building suites' }

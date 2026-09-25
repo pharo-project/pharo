@@ -6,7 +6,7 @@ Class {
 	#name : 'ClassSessionHandler',
 	#superclass : 'AbstractSessionHandler',
 	#instVars : [
-		'registeredClassName'
+		#registeredClassName
 	],
 	#category : 'System-SessionManager-Handlers',
 	#package : 'System-SessionManager',

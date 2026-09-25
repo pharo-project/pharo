@@ -5,7 +5,7 @@ Class {
 	#name : 'GoferResolvedReference',
 	#superclass : 'GoferVersionReference',
 	#instVars : [
-		'repository'
+		#repository
 	],
 	#category : 'Gofer-Deprecated-References',
 	#package : 'Gofer-Deprecated',
@@ -30,7 +30,7 @@ GoferResolvedReference >> <= aResolvedReference [
 		4. author name
 		5. repository priority"
 
-	self packageName = aResolvedReference packageName
+	(self packageName sameContents: aResolvedReference packageName)
 		ifFalse: [ ^ self packageName <= aResolvedReference packageName ].
 	self branch = aResolvedReference branch ifFalse: [
 		^ (self branch isEmpty or: [ aResolvedReference branch isEmpty ])

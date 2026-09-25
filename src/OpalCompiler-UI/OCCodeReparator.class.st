@@ -13,8 +13,8 @@ Class {
 	#name : 'OCCodeReparator',
 	#superclass : 'Object',
 	#instVars : [
-		'node',
-		'requestor'
+		#node,
+		#requestor
 	],
 	#category : 'OpalCompiler-UI',
 	#package : 'OpalCompiler-UI'

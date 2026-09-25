@@ -6,12 +6,12 @@ Class {
 	#name : 'RubPluggableTextMorphExample',
 	#superclass : 'Model',
 	#instVars : [
-		'selection',
-		'scrollValue',
-		'classIsMeta',
-		'selectedClassName',
-		'selectedMethodName',
-		'enabled'
+		#selection,
+		#scrollValue,
+		#classIsMeta,
+		#selectedClassName,
+		#selectedMethodName,
+		#enabled
 	],
 	#category : 'Rubric-Compatibility-toBeDeprecated',
 	#package : 'Rubric',

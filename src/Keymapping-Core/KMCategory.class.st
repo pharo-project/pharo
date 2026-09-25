@@ -5,8 +5,8 @@ Class {
 	#name : 'KMCategory',
 	#superclass : 'Object',
 	#instVars : [
-		'name',
-		'platforms'
+		#name,
+		#platforms
 	],
 	#category : 'Keymapping-Core-Categories',
 	#package : 'Keymapping-Core',

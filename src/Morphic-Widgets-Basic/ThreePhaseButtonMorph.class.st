@@ -17,13 +17,13 @@ Class {
 	#name : 'ThreePhaseButtonMorph',
 	#superclass : 'ImageMorph',
 	#instVars : [
-		'offFormSet',
-		'pressedFormSet',
-		'state',
-		'target',
-		'actionSelector',
-		'arguments',
-		'actWhen'
+		#offFormSet,
+		#pressedFormSet,
+		#state,
+		#target,
+		#actionSelector,
+		#arguments,
+		#actWhen
 	],
 	#category : 'Morphic-Widgets-Basic-Buttons',
 	#package : 'Morphic-Widgets-Basic',

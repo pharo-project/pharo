@@ -16,10 +16,10 @@ Class {
 	#name : 'SharedRandom',
 	#superclass : 'Random',
 	#instVars : [
-		'mutex'
+		#mutex
 	],
 	#classInstVars : [
-		'global'
+		#global
 	],
 	#category : 'Random-Core-Base',
 	#package : 'Random-Core',

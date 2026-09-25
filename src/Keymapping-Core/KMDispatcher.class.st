@@ -7,11 +7,11 @@ Class {
 	#name : 'KMDispatcher',
 	#superclass : 'Object',
 	#instVars : [
-		'target',
-		'currentEvent',
-		'targets',
-		'morph',
-		'directKeymaps'
+		#target,
+		#currentEvent,
+		#targets,
+		#morph,
+		#directKeymaps
 	],
 	#category : 'Keymapping-Core-Dispatching',
 	#package : 'Keymapping-Core',
@@ -93,7 +93,7 @@ KMDispatcher >> detachKeymapCategory: aCategoryName [
 { #category : 'building' }
 KMDispatcher >> detachKeymapCategory: aCategoryName targetting: anObject [
 	self targets
-		detect: [ :tgt | tgt target = anObject and: [ tgt category name = aCategoryName ] ]
+		detect: [ :tgt | tgt target = anObject and: [ tgt category name sameContents: aCategoryName ] ]
 		ifFound: [ :categoryTarget | self targets remove: categoryTarget ]
 		ifNone: [ self error: 'Category ' , aCategoryName , ' is not attached to ' , morph asString ]
 ]
@@ -149,7 +149,7 @@ KMDispatcher >> includesKeymapCategory: aCategoryName [
 KMDispatcher >> includesKeymapCategory: aCategoryName targetting: anObject [
 
 	^self targets anySatisfy: [ :tgt |
-		tgt target = anObject and: [ tgt category name = aCategoryName ] ]
+		tgt target = anObject and: [ tgt category name sameContents: aCategoryName ] ]
 ]
 
 { #category : 'building' }

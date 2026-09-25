@@ -5,8 +5,8 @@ Class {
 	#name : 'EpRenameClassRefactoring',
 	#superclass : 'EpRefactoring',
 	#instVars : [
-		'newName',
-		'oldName'
+		#newName,
+		#oldName
 	],
 	#category : 'Epicea-Model',
 	#package : 'Epicea',

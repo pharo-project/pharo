@@ -26,7 +26,7 @@ ReThemeAccessRule >> check: aMethod forCritiquesDo: aCriticBlock [
 		or: [aMethod methodClass inheritsFrom: Model]) ifFalse: [ ^ self ].
 
 	problemThemes :=
-		(aMethod sendNodes select: [ :msgSend | msgSend selector = #theme
+		(aMethod sendNodes select: [ :msgSend | (msgSend selector sameContents: #theme)
 				and: [msgSend receiver sourceCode withSeparatorsCompacted = 'Smalltalk ui'] ]).
 
 	problemThemes do: [ :msgSend |

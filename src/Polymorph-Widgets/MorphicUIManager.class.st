@@ -9,10 +9,10 @@ Class {
 	#traits : 'TEasilyThemed - {#theme}',
 	#classTraits : 'TEasilyThemed classTrait',
 	#instVars : [
-		'activeTranscript'
+		#activeTranscript
 	],
 	#classVars : [
-		'UIProcess'
+		#UIProcess
 	],
 	#category : 'Polymorph-Widgets',
 	#package : 'Polymorph-Widgets'

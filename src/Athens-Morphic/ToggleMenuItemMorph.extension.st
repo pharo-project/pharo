@@ -23,7 +23,7 @@ ToggleMenuItemMorph >> drawText: aStringOrText onAthensCanvas: aCanvas in: aRect
 	| wrapper |
 	"Draw the text on the canvas within the given bounds."
 	wrapper := aCanvas asCanvasWrapper.
-	(self enabled not and: [ self theme disabledItemStyle = #inset ])
+	(self enabled not and: [ self theme disabledItemStyle sameContents: #inset ])
 		ifTrue: [
 			wrapper
 				drawString: aStringOrText

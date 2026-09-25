@@ -30,7 +30,7 @@ Class {
 	#name : 'ClyMergedHierarchy',
 	#superclass : 'ClyClassHierarchy',
 	#instVars : [
-		'mergedParts'
+		#mergedParts
 	],
 	#category : 'Calypso-SystemQueries-Results',
 	#package : 'Calypso-SystemQueries',

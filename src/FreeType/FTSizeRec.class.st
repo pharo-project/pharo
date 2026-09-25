@@ -5,13 +5,13 @@ Class {
 	#name : 'FTSizeRec',
 	#superclass : 'FFIExternalStructure',
 	#classVars : [
-		'OFFSET_FACE',
-		'OFFSET_GENERIC',
-		'OFFSET_INTERNAL',
-		'OFFSET_METRICS'
+		#OFFSET_FACE,
+		#OFFSET_GENERIC,
+		#OFFSET_INTERNAL,
+		#OFFSET_METRICS
 	],
 	#pools : [
-		'FT2Types'
+		#FT2Types
 	],
 	#category : 'FreeType-Bindings',
 	#package : 'FreeType',

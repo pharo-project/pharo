@@ -17,7 +17,7 @@ Class {
 { #category : 'testing' }
 AbstractFontProvider class >> isAbstract [
 
-	 ^self name = #AbstractFontProvider
+	 ^self name sameContents: #AbstractFontProvider
 ]
 
 { #category : 'accessing' }

@@ -7,7 +7,7 @@ Class {
 	#name : 'CoFetcherDecorator',
 	#superclass : 'CoFetcher',
 	#instVars : [
-		'decoree'
+		#decoree
 	],
 	#category : 'HeuristicCompletion-Model-Core',
 	#package : 'HeuristicCompletion-Model',

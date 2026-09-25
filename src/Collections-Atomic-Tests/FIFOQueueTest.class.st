@@ -5,7 +5,7 @@ Class {
 	#name : 'FIFOQueueTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'count'
+		#count
 	],
 	#category : 'Collections-Atomic-Tests-Base',
 	#package : 'Collections-Atomic-Tests',

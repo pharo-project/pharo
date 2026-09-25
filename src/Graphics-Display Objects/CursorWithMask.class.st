@@ -5,7 +5,7 @@ Class {
 	#name : 'CursorWithMask',
 	#superclass : 'Cursor',
 	#instVars : [
-		'maskForm'
+		#maskForm
 	],
 	#category : 'Graphics-Display Objects-Cursors',
 	#package : 'Graphics-Display Objects',

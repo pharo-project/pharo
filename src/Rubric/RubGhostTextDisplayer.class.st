@@ -2,8 +2,8 @@ Class {
 	#name : 'RubGhostTextDisplayer',
 	#superclass : 'RubScrolledTextExtraSurface',
 	#instVars : [
-		'ghostText',
-		'textColor'
+		#ghostText,
+		#textColor
 	],
 	#category : 'Rubric-Editing-Widgets',
 	#package : 'Rubric',

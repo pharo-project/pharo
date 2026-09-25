@@ -23,12 +23,12 @@ Class {
 	#name : 'CommandLinePasswordManager',
 	#superclass : 'Object',
 	#instVars : [
-		'hashingPepper',
-		'numberOfHashIterations',
-		'passwordHash'
+		#hashingPepper,
+		#numberOfHashIterations,
+		#passwordHash
 	],
 	#classVars : [
-		'Instance'
+		#Instance
 	],
 	#category : 'System-BasicCommandLineHandler-Management',
 	#package : 'System-BasicCommandLineHandler',

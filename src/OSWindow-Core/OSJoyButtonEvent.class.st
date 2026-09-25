@@ -11,11 +11,11 @@ Class {
 	#name : 'OSJoyButtonEvent',
 	#superclass : 'OSEvent',
 	#instVars : [
-		'which',
-		'button',
-		'pressed',
-		'mapped',
-		'hasMapping'
+		#which,
+		#button,
+		#pressed,
+		#mapped,
+		#hasMapping
 	],
 	#category : 'OSWindow-Core-Events',
 	#package : 'OSWindow-Core',

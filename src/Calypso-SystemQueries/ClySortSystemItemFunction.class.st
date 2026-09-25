@@ -16,7 +16,7 @@ Class {
 	#name : 'ClySortSystemItemFunction',
 	#superclass : 'ClySortFunction',
 	#instVars : [
-		'functionsForTypes'
+		#functionsForTypes
 	],
 	#category : 'Calypso-SystemQueries-Queries',
 	#package : 'Calypso-SystemQueries',

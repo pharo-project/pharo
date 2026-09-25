@@ -6,7 +6,7 @@ Class {
 	#name : 'VTermOutputBackground',
 	#superclass : 'VTermOutputStyleElement',
 	#pools : [
-		'VTermOutputStyles'
+		#VTermOutputStyles
 	],
 	#category : 'System-CommandLine-TextSupport',
 	#package : 'System-CommandLine-TextSupport'

@@ -5,8 +5,8 @@ Class {
 	#name : 'EmbossedStringMorph',
 	#superclass : 'StringMorph',
 	#instVars : [
-		'style',
-		'trackPaneColor'
+		#style,
+		#trackPaneColor
 	],
 	#category : 'Morphic-Base-Basic',
 	#package : 'Morphic-Base',

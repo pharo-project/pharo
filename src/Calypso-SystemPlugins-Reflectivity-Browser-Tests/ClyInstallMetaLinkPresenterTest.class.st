@@ -2,12 +2,12 @@ Class {
 	#name : 'ClyInstallMetaLinkPresenterTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'node',
-		'metalink',
-		'metalink2',
-		'breakpoint',
-		'executionCounter',
-		'watchpoint'
+		#node,
+		#metalink,
+		#metalink2,
+		#breakpoint,
+		#executionCounter,
+		#watchpoint
 	],
 	#category : 'Calypso-SystemPlugins-Reflectivity-Browser-Tests-Metalinks',
 	#package : 'Calypso-SystemPlugins-Reflectivity-Browser-Tests',

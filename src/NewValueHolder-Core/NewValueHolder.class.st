@@ -15,8 +15,8 @@ Class {
 	#name : 'NewValueHolder',
 	#superclass : 'Model',
 	#instVars : [
-		'lock',
-		'value'
+		#lock,
+		#value
 	],
 	#category : 'NewValueHolder-Core-Base',
 	#package : 'NewValueHolder-Core',

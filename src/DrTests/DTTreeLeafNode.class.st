@@ -6,7 +6,7 @@ Class {
 	#name : 'DTTreeLeafNode',
 	#superclass : 'DTAbstractTreeNode',
 	#instVars : [
-		'content'
+		#content
 	],
 	#category : 'DrTests-Model',
 	#package : 'DrTests',

@@ -12,7 +12,7 @@ Class {
 	#name : 'WrapperSignal',
 	#superclass : 'BeaconSignal',
 	#instVars : [
-		'target'
+		#target
 	],
 	#category : 'Beacon-Core-Signals',
 	#package : 'Beacon-Core',

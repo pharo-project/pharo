@@ -7,9 +7,9 @@ Class {
 	#name : 'Crown',
 	#superclass : 'Object',
 	#instVars : [
-		'selector',
-		'callees',
-		'callers'
+		#selector,
+		#callees,
+		#callers
 	],
 	#category : 'Coverage-Base',
 	#package : 'Coverage',

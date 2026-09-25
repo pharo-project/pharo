@@ -11,9 +11,9 @@ Class {
 	#name : 'STONTestUser',
 	#superclass : 'Object',
 	#instVars : [
-		'username',
-		'password',
-		'enabled'
+		#username,
+		#password,
+		#enabled
 	],
 	#category : 'STON-Tests-Support',
 	#package : 'STON-Tests',

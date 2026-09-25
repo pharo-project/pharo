@@ -10,7 +10,7 @@ Class {
 	#name : 'SycSingleClassCommand',
 	#superclass : 'CmdCommand',
 	#instVars : [
-		'targetClass'
+		#targetClass
 	],
 	#category : 'SystemCommands-ClassCommands',
 	#package : 'SystemCommands-ClassCommands'

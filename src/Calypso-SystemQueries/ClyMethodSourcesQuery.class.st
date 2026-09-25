@@ -18,7 +18,7 @@ Class {
 	#name : 'ClyMethodSourcesQuery',
 	#superclass : 'ClyMethodQuery',
 	#instVars : [
-		'pattern'
+		#pattern
 	],
 	#category : 'Calypso-SystemQueries-Queries',
 	#package : 'Calypso-SystemQueries',

@@ -63,14 +63,14 @@ Class {
 	#name : 'FTTreeDataSource',
 	#superclass : 'FTDataSource',
 	#instVars : [
-		'childrenBlock',
-		'rootItem',
-		'maxDepth',
-		'searchStrategy',
-		'unsortedElements'
+		#childrenBlock,
+		#rootItem,
+		#maxDepth,
+		#searchStrategy,
+		#unsortedElements
 	],
 	#classVars : [
-		'SearchStrategies'
+		#SearchStrategies
 	],
 	#category : 'Morphic-Widgets-FastTable-Tree',
 	#package : 'Morphic-Widgets-FastTable',

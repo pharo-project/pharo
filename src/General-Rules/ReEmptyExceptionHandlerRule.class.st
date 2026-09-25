@@ -25,7 +25,7 @@ ReEmptyExceptionHandlerRule class >> uniqueIdentifierName [
 { #category : 'hooks' }
 ReEmptyExceptionHandlerRule >> afterCheck: aNode mappings: mappingDict [
 	| exception class |
-	exception := mappingDict at: '`exception'.
+	exception := mappingDict at: #'`exception'.
 
 	exception isVariable ifFalse: [ ^ false ].
 	(class := aNode methodNode methodClass environment classNamed: exception name) ifNil: [ ^ false ].

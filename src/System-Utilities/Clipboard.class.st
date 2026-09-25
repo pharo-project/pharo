@@ -9,11 +9,11 @@ Class {
 	#name : 'Clipboard',
 	#superclass : 'Object',
 	#instVars : [
-		'contents',
-		'recentClippings'
+		#contents,
+		#recentClippings
 	],
 	#classVars : [
-		'Default'
+		#Default
 	],
 	#category : 'System-Utilities-Base',
 	#package : 'System-Utilities',

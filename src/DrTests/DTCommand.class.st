@@ -12,7 +12,7 @@ Class {
 { #category : 'testing' }
 DTCommand class >> isAbstract [
 
-	^self name = #DTCommand
+	^self name sameContents: #DTCommand
 ]
 
 { #category : 'accessing' }

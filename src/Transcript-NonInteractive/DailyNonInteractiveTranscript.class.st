@@ -8,7 +8,7 @@ Class {
 	#name : 'DailyNonInteractiveTranscript',
 	#superclass : 'NonInteractiveTranscript',
 	#instVars : [
-		'date'
+		#date
 	],
 	#category : 'Transcript-NonInteractive-Base',
 	#package : 'Transcript-NonInteractive',

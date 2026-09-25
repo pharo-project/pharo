@@ -22,17 +22,17 @@ Class {
 	#name : 'RBAbstractClass',
 	#superclass : 'RBEntity',
 	#instVars : [
-		'name',
-		'newMethods',
-		'instanceVariableNames',
-		'model',
-		'superclass',
-		'subclasses',
-		'removedMethods',
-		'realClass'
+		#name,
+		#newMethods,
+		#instanceVariableNames,
+		#model,
+		#superclass,
+		#subclasses,
+		#removedMethods,
+		#realClass
 	],
 	#classVars : [
-		'LookupSuperclass'
+		#LookupSuperclass
 	],
 	#category : 'Refactoring-Core-Model',
 	#package : 'Refactoring-Core',
@@ -57,7 +57,7 @@ RBAbstractClass class >> named: aString [
 { #category : 'comparing' }
 RBAbstractClass >> = aRBClass [
 	^self class = aRBClass class
-		and: [self name = aRBClass name and: [self model = aRBClass model]]
+		and: [(self name sameContents: aRBClass name) and: [self model = aRBClass model]]
 ]
 
 { #category : 'variable accessing' }

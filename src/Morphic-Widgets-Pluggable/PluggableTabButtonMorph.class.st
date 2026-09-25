@@ -11,11 +11,11 @@ Class {
 	#name : 'PluggableTabButtonMorph',
 	#superclass : 'Morph',
 	#instVars : [
-		'active',
-		'model',
-		'textSelector',
-		'arcLengths',
-		'subMorph'
+		#active,
+		#model,
+		#textSelector,
+		#arcLengths,
+		#subMorph
 	],
 	#category : 'Morphic-Widgets-Pluggable-Tabs',
 	#package : 'Morphic-Widgets-Pluggable',

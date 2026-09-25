@@ -7,8 +7,8 @@ Class {
 	#name : 'DAWelcomePresenter',
 	#superclass : 'SpPresenter',
 	#instVars : [
-		'choosePresenter',
-		'browseDependenciesButton'
+		#choosePresenter,
+		#browseDependenciesButton
 	],
 	#category : 'Tool-DependencyAnalyser-UI-Core',
 	#package : 'Tool-DependencyAnalyser-UI',

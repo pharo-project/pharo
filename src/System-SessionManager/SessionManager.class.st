@@ -95,16 +95,16 @@ Class {
 	#name : 'SessionManager',
 	#superclass : 'Object',
 	#instVars : [
-		'currentSession',
-		'categories',
-		'guiCategory',
-		'toolsCategory',
-		'networkCategory',
-		'systemCategory',
-		'userCategory'
+		#currentSession,
+		#categories,
+		#guiCategory,
+		#toolsCategory,
+		#networkCategory,
+		#systemCategory,
+		#userCategory
 	],
 	#classVars : [
-		'Default'
+		#Default
 	],
 	#category : 'System-SessionManager-Base',
 	#package : 'System-SessionManager',
@@ -179,7 +179,7 @@ SessionManager >> basicCreateCategory: aString [
 { #category : 'accessing' }
 SessionManager >> categoryNamed: aString [
 	^ categories
-		detect: [ :each | each name = aString ]
+		detect: [ :each | each name sameContents: aString ]
 		ifNone: [ NotFound signalFor: aString ]
 ]
 

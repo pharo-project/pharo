@@ -12,7 +12,7 @@ Class {
 	#name : 'ClyMoveClassToGroupCommand',
 	#superclass : 'SycClassCommand',
 	#instVars : [
-		'classGroup'
+		#classGroup
 	],
 	#category : 'Calypso-SystemTools-FullBrowser-Commands-Classes',
 	#package : 'Calypso-SystemTools-FullBrowser',

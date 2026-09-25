@@ -5,7 +5,7 @@ Class {
 	#name : 'NullStreamTest',
 	#superclass : 'ClassTestCase',
 	#instVars : [
-		'stream'
+		#stream
 	],
 	#category : 'Collections-Streams-Tests-Base',
 	#package : 'Collections-Streams-Tests',

@@ -2,7 +2,7 @@ Class {
 	#name : 'RBNamespaceTest',
 	#superclass : 'RBRefactoringBrowserTest',
 	#instVars : [
-		'namespace'
+		#namespace
 	],
 	#category : 'Refactoring-Core-Tests',
 	#package : 'Refactoring-Core-Tests'
@@ -270,10 +270,10 @@ RBNamespaceTest >> testReferencesPrintOn [
 	hasFoundSelf := false.
 	namespace allReferencesTo: #printOn: do: [ :each |
 		hasFoundObject := hasFoundObject
-			or: [ each selector = #fullPrintString
+			or: [ (each selector sameContents: #fullPrintString)
 			and: [each modelClass = (namespace classNamed: #Object) ] ].
 		hasFoundSelf := hasFoundSelf
-			or: [ each selector = #testReferencesPrintOn
+			or: [ (each selector sameContents: #testReferencesPrintOn)
 			and: [ each modelClass = (namespace classNamed: self class name) ] ] ].
 	self assert: hasFoundObject.
 	self assert: hasFoundSelf
@@ -293,10 +293,10 @@ RBNamespaceTest >> testReferencesPrintOnAfterAddition [
 		classified: 'testing'.
 	namespace allReferencesTo: #printOn: do: [ :each |
 		hasFoundObject := hasFoundObject
-			or: [ each selector = #someTestReference
+			or: [ (each selector sameContents: #someTestReference)
 			and: [ each modelClass = (namespace classNamed: #Object) ] ].
 		hasFoundSelf := hasFoundSelf
-			or: [ each selector = #someTestReference
+			or: [ (each selector sameContents: #someTestReference)
 			and: [ each modelClass = (namespace classNamed: self class name) ] ] ].
 	self assert: hasFoundObject.
 	self assert: hasFoundSelf
@@ -315,10 +315,10 @@ RBNamespaceTest >> testReferencesPrintOnAfterRemove [
 		removeMethod: #testReferencesPrintOnAfterRemove.
 	namespace allReferencesTo: #printOn: do: [ :each |
 		hasFoundObject := hasFoundObject
-			or: [ each selector = #printString
+			or: [ (each selector sameContents: #printString)
 			and: [ each modelClass = (namespace classNamed: #Object) ] ].
 		hasFoundSelf := hasFoundSelf
-			or: [ each selector = #testReferencesPrintOnAfterRemove
+			or: [ (each selector sameContents: #testReferencesPrintOnAfterRemove)
 			and: [ each modelClass = (namespace classNamed: self class name) ] ] ].
 	self deny: hasFoundObject.
 	self deny: hasFoundSelf

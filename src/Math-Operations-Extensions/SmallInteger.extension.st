@@ -13,9 +13,9 @@ SmallInteger >> threeDigitName [
 	| units answer |
 
 	self = 0 ifTrue: [^''].
-	units := #('one' 'two' 'three' 'four' 'five' 'six' 'seven' 'eight' 'nine' 'ten'
-		'eleven' 'twelve' 'thirteen' 'fourteen' 'fifteen' 'sixteen' 'seventeen'
-		'eighteen' 'nineteen').
+	units := #(one two three four five six seven eight nine ten
+		eleven twelve thirteen fourteen fifteen sixteen seventeen
+		eighteen nineteen).
 	self > 99 ifTrue: [
 		answer := (units at: self // 100),' hundred'.
 		(self \\ 100) = 0 ifFalse: [

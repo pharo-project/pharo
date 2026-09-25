@@ -5,8 +5,8 @@ Class {
 	#name : 'TextEditorDialogWindow',
 	#superclass : 'MessageDialogWindow',
 	#instVars : [
-		'entryText',
-		'textEditorMorph'
+		#entryText,
+		#textEditorMorph
 	],
 	#category : 'Polymorph-Widgets-Windows',
 	#package : 'Polymorph-Widgets',

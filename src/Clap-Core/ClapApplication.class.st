@@ -15,7 +15,7 @@ Class {
 	#name : 'ClapApplication',
 	#superclass : 'Object',
 	#instVars : [
-		'arguments'
+		#arguments
 	],
 	#category : 'Clap-Core-Specification',
 	#package : 'Clap-Core',

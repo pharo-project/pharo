@@ -10,7 +10,7 @@ Class {
 	#name : 'WindowAnnouncement',
 	#superclass : 'Announcement',
 	#instVars : [
-		'window'
+		#window
 	],
 	#category : 'Morphic-Widgets-Windows-Announcements',
 	#package : 'Morphic-Widgets-Windows',

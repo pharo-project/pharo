@@ -5,7 +5,7 @@ Class {
 	#name : 'GenericPaintPatch',
 	#superclass : 'AthensAbstractMeshPaintPatch',
 	#instVars : [
-		'buildBlock'
+		#buildBlock
 	],
 	#category : 'Athens-Core-Paints',
 	#package : 'Athens-Core',

@@ -5,15 +5,15 @@ Class {
 	#name : 'AthensTextScanner',
 	#superclass : 'Object',
 	#instVars : [
-		'text',
-		'currentLine',
-		'lines',
-		'currentAttributes',
-		'currentFont',
-		'currentColor',
-		'textStyle',
-		'currentStrip',
-		'currentBackground'
+		#text,
+		#currentLine,
+		#lines,
+		#currentAttributes,
+		#currentFont,
+		#currentColor,
+		#textStyle,
+		#currentStrip,
+		#currentBackground
 	],
 	#category : 'Athens-Text',
 	#package : 'Athens-Text'

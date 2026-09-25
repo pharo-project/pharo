@@ -4,7 +4,7 @@ Class {
 	#traits : 'SpTMorphicUIRedrawer',
 	#classTraits : 'SpTMorphicUIRedrawer classTrait',
 	#instVars : [
-		'table'
+		#table
 	],
 	#category : 'Morphic-Widgets-FastTable-Tests-Configuration',
 	#package : 'Morphic-Widgets-FastTable-Tests',

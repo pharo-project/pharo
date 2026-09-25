@@ -25,7 +25,7 @@ Class {
 	#name : 'MetacelloMCBaselineProject',
 	#superclass : 'MetacelloProject',
 	#instVars : [
-		'repositoryDescription'
+		#repositoryDescription
 	],
 	#category : 'Metacello-Core-Model',
 	#package : 'Metacello-Core',

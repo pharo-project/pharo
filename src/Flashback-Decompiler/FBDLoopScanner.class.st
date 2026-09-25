@@ -11,10 +11,10 @@ Class {
 	#name : 'FBDLoopScanner',
 	#superclass : 'InstructionClient',
 	#instVars : [
-		'instructionStream',
-		'branchTargets',
-		'loops',
-		'currentPC'
+		#instructionStream,
+		#branchTargets,
+		#loops,
+		#currentPC
 	],
 	#category : 'Flashback-Decompiler-Utilities',
 	#package : 'Flashback-Decompiler',

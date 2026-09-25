@@ -5,10 +5,10 @@ Class {
 	#name : 'OCMockRequestor',
 	#superclass : 'Object',
 	#instVars : [
-		'notifyList',
-		'interactive',
-		'isScripting',
-		'text'
+		#notifyList,
+		#interactive,
+		#isScripting,
+		#text
 	],
 	#category : 'OpalCompiler-Tests-Misc',
 	#package : 'OpalCompiler-Tests',

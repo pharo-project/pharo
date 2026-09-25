@@ -5,7 +5,7 @@ Class {
 	#name : 'EpChunkExporter',
 	#superclass : 'Object',
 	#instVars : [
-		'outputFilename'
+		#outputFilename
 	],
 	#category : 'EpiceaBrowsers-Exporter',
 	#package : 'EpiceaBrowsers',

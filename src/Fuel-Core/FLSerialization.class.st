@@ -7,8 +7,8 @@ Class {
 	#traits : 'TFLConfigurable',
 	#classTraits : 'TFLConfigurable classTrait',
 	#instVars : [
-		'encoder',
-		'clusters'
+		#encoder,
+		#clusters
 	],
 	#category : 'Fuel-Core-Base',
 	#package : 'Fuel-Core',

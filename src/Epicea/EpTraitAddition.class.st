@@ -5,7 +5,7 @@ Class {
 	#name : 'EpTraitAddition',
 	#superclass : 'EpTraitChange',
 	#instVars : [
-		'trait'
+		#trait
 	],
 	#category : 'Epicea-Model',
 	#package : 'Epicea',

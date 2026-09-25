@@ -7,10 +7,10 @@ Class {
 	#name : 'DTFilterableListPresenter',
 	#superclass : 'SpPresenter',
 	#instVars : [
-		'listPresenter',
-		'filterTextInput',
-		'initialItems',
-		'labelPresenter'
+		#listPresenter,
+		#filterTextInput,
+		#initialItems,
+		#labelPresenter
 	],
 	#category : 'DrTests-Spec',
 	#package : 'DrTests',

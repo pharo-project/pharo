@@ -10,7 +10,7 @@ Class {
 	#superclass : 'Association',
 	#type : 'ephemeron',
 	#instVars : [
-		'container'
+		#container
 	],
 	#category : 'Collections-Weak-Dictionaries',
 	#package : 'Collections-Weak',

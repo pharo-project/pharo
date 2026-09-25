@@ -5,7 +5,7 @@ Class {
 	#name : 'FTAnnouncement',
 	#superclass : 'Announcement',
 	#instVars : [
-		'fastTable'
+		#fastTable
 	],
 	#category : 'Morphic-Widgets-FastTable-Announcement',
 	#package : 'Morphic-Widgets-FastTable',

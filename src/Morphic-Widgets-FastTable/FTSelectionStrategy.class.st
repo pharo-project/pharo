@@ -6,7 +6,7 @@ Class {
 	#name : 'FTSelectionStrategy',
 	#superclass : 'Object',
 	#instVars : [
-		'table'
+		#table
 	],
 	#category : 'Morphic-Widgets-FastTable-Selection',
 	#package : 'Morphic-Widgets-FastTable',

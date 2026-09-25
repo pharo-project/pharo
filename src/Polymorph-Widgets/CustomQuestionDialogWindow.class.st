@@ -5,9 +5,9 @@ Class {
 	#name : 'CustomQuestionDialogWindow',
 	#superclass : 'QuestionDialogWindow',
 	#instVars : [
-		'yesButton',
-		'noButton',
-		'cancelButton'
+		#yesButton,
+		#noButton,
+		#cancelButton
 	],
 	#category : 'Polymorph-Widgets-Windows',
 	#package : 'Polymorph-Widgets',

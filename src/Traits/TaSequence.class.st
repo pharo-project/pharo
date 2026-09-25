@@ -8,7 +8,7 @@ Class {
 	#name : 'TaSequence',
 	#superclass : 'TaAbstractComposition',
 	#instVars : [
-		'members'
+		#members
 	],
 	#category : 'Traits-Compositions',
 	#package : 'Traits',

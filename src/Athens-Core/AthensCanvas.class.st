@@ -12,12 +12,12 @@ Class {
 	#name : 'AthensCanvas',
 	#superclass : 'Object',
 	#instVars : [
-		'paint',
-		'surface',
-		'shape',
-		'fontRenderer',
-		'paintMode',
-		'paintCache'
+		#paint,
+		#surface,
+		#shape,
+		#fontRenderer,
+		#paintMode,
+		#paintCache
 	],
 	#category : 'Athens-Core-Base',
 	#package : 'Athens-Core',

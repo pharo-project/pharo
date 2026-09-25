@@ -5,7 +5,7 @@ Class {
 	#name : 'ZipFileSystemFile',
 	#superclass : 'MemoryFileSystemFile',
 	#instVars : [
-		'member'
+		#member
 	],
 	#category : 'FileSystem-Zip-Base',
 	#package : 'FileSystem-Zip',

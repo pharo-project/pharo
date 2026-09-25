@@ -2,8 +2,8 @@ Class {
 	#name : 'EpLogTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'log',
-		'logBuilder'
+		#log,
+		#logBuilder
 	],
 	#category : 'Epicea-Tests-Log',
 	#package : 'Epicea-Tests',

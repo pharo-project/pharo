@@ -7,19 +7,19 @@ Class {
 	#name : 'OSSDL2BackendWindow',
 	#superclass : 'OSBackendWindow',
 	#instVars : [
-		'currentCursor',
-		'iconSurface',
-		'sdl2Window',
-		'screenScaleFactor',
-		'horizontalDPI',
-		'verticalDPI',
-		'diagonalDPI'
+		#currentCursor,
+		#iconSurface,
+		#sdl2Window,
+		#screenScaleFactor,
+		#horizontalDPI,
+		#verticalDPI,
+		#diagonalDPI
 	],
 	#classVars : [
-		'ScreenScaleFactorBaseDPI'
+		#ScreenScaleFactorBaseDPI
 	],
 	#pools : [
-		'SDL2Constants'
+		#SDL2Constants
 	],
 	#category : 'OSWindow-SDL2-Base',
 	#package : 'OSWindow-SDL2',

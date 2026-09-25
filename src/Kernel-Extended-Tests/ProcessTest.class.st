@@ -802,7 +802,7 @@ ProcessTest >> testTerminateInTerminate [
 	self assert: terminatee isSuspended.
 	self assert: terminator isSuspended.
 	"run terminator and stop inside #terminate, e.g. before executing #suspend in #terminate"
-	[(InstructionStream on: terminator suspendedContext method pc: terminator suspendedContext pc) selectorToSendOrSelf = #handleProcessTerminationOfWaitingContext:]
+	[(InstructionStream on: terminator suspendedContext method pc: terminator suspendedContext pc) selectorToSendOrSelf sameContents: #handleProcessTerminationOfWaitingContext:]
 		whileFalse: [terminator step].
 	self assert: terminator isSuspended.
 	terminator terminate.

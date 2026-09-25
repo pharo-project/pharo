@@ -5,8 +5,8 @@ Class {
 	#name : 'ReRemoveMethodDriver',
 	#superclass : 'RBInteractionDriver',
 	#instVars : [
-		'methods',
-		'haveNoSenders'
+		#methods,
+		#haveNoSenders
 	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',

@@ -2,9 +2,9 @@ Class {
 	#name : 'RGClassDefinitionCompiler',
 	#superclass : 'Object',
 	#instVars : [
-		'environment',
-		'definitionString',
-		'requestor'
+		#environment,
+		#definitionString,
+		#requestor
 	],
 	#category : 'Calypso-Ring',
 	#package : 'Calypso-Ring'

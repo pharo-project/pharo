@@ -2,7 +2,7 @@ Class {
 	#name : 'RBSharedPoolForTestData',
 	#superclass : 'SharedPool',
 	#classVars : [
-		'Var1'
+		#Var1
 	],
 	#category : 'Refactoring-DataForTesting-ForSharedPool',
 	#package : 'Refactoring-DataForTesting',

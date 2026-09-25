@@ -5,13 +5,13 @@ Class {
 	#name : 'FTMatrix',
 	#superclass : 'FFIExternalStructure',
 	#classVars : [
-		'OFFSET_XX',
-		'OFFSET_XY',
-		'OFFSET_YX',
-		'OFFSET_YY'
+		#OFFSET_XX,
+		#OFFSET_XY,
+		#OFFSET_YX,
+		#OFFSET_YY
 	],
 	#pools : [
-		'FT2Types'
+		#FT2Types
 	],
 	#category : 'FreeType-Bindings',
 	#package : 'FreeType',

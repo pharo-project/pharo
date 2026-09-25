@@ -5,8 +5,8 @@ Class {
 	#name : 'SDL_CommonEvent',
 	#superclass : 'SDL2MappedEvent',
 	#classVars : [
-		'OFFSET_TIMESTAMP',
-		'OFFSET_TYPE'
+		#OFFSET_TIMESTAMP,
+		#OFFSET_TYPE
 	],
 	#category : 'OSWindow-SDL2-Bindings',
 	#package : 'OSWindow-SDL2',

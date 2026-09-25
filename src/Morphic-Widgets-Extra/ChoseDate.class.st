@@ -5,8 +5,8 @@ Class {
 	#name : 'ChoseDate',
 	#superclass : 'Announcement',
 	#instVars : [
-		'date',
-		'calendar'
+		#date,
+		#calendar
 	],
 	#category : 'Morphic-Widgets-Extra',
 	#package : 'Morphic-Widgets-Extra'

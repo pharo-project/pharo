@@ -17,8 +17,8 @@ Class {
 	#name : 'ClySubclassHierarchy',
 	#superclass : 'ClyClassHierarchy',
 	#classInstVars : [
-		'hierarchyForVariables',
-		'hierarchyForMethodVisibility'
+		#hierarchyForVariables,
+		#hierarchyForMethodVisibility
 	],
 	#category : 'Calypso-SystemQueries-Results',
 	#package : 'Calypso-SystemQueries',

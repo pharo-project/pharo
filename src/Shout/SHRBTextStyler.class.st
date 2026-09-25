@@ -5,22 +5,22 @@ Class {
 	#name : 'SHRBTextStyler',
 	#superclass : 'RBProgramNodeVisitor',
 	#instVars : [
-		'charAttr',
-		'parentheseLevel',
-		'bracketLevel',
-		'classOrMetaClass',
-		'workspace',
-		'plugins',
-		'braceLevel',
-		'view',
-		'stylingEnabled',
-		'text',
-		'isScripting'
+		#charAttr,
+		#parentheseLevel,
+		#bracketLevel,
+		#classOrMetaClass,
+		#workspace,
+		#plugins,
+		#braceLevel,
+		#view,
+		#stylingEnabled,
+		#text,
+		#isScripting
 	],
 	#classInstVars : [
-		'styleTable',
-		'formatIncompleteIdentifiers',
-		'textAttributes'
+		#styleTable,
+		#formatIncompleteIdentifiers,
+		#textAttributes
 	],
 	#category : 'Shout-Styling',
 	#package : 'Shout',
@@ -325,7 +325,7 @@ SHRBTextStyler class >> solarizedStyleTable [
 
 			"(symbol color [emphasisSymbolOrArray [textStyleName [pixelHeight]]])"
  ^ #(
-			(default 								('657A81' muchDarker))
+			(default 								(657A81 muchDarker))
 			(invalid 									red)
 
 			(comment 								'586E75')

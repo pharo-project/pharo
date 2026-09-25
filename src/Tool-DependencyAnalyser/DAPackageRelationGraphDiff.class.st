@@ -9,10 +9,10 @@ Class {
 	#name : 'DAPackageRelationGraphDiff',
 	#superclass : 'Object',
 	#instVars : [
-		'oldRelationGraph',
-		'newRelationGraph',
-		'packagesDiff',
-		'dependentPackagesDiff'
+		#oldRelationGraph,
+		#newRelationGraph,
+		#packagesDiff,
+		#dependentPackagesDiff
 	],
 	#category : 'Tool-DependencyAnalyser-Diff',
 	#package : 'Tool-DependencyAnalyser',
@@ -241,7 +241,7 @@ DAPackageRelationGraphDiff >> oldRelationGraph: anObject [
 
 { #category : 'accessing' }
 DAPackageRelationGraphDiff >> packageDiffNamed: aName [
-	^ self packagesDiff detect: [ :item | item content packageName = aName ]
+	^ self packagesDiff detect: [ :item | item content packageName sameContents: aName ]
 ]
 
 { #category : 'accessing' }

@@ -9,14 +9,14 @@ Class {
 	#name : 'Watch',
 	#superclass : 'Object',
 	#instVars : [
-		'tagname',
-		'node',
-		'link',
-		'values',
-		'recording'
+		#tagname,
+		#node,
+		#link,
+		#values,
+		#recording
 	],
 	#classVars : [
-		'Watches'
+		#Watches
 	],
 	#category : 'Reflectivity-Breakpoints',
 	#package : 'Reflectivity',

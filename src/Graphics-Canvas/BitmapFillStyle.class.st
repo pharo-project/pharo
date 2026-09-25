@@ -9,8 +9,8 @@ Class {
 	#name : 'BitmapFillStyle',
 	#superclass : 'OrientedFillStyle',
 	#instVars : [
-		'form',
-		'tileFlag'
+		#form,
+		#tileFlag
 	],
 	#category : 'Graphics-Canvas-Fills',
 	#package : 'Graphics-Canvas',

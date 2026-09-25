@@ -11,8 +11,8 @@ Class {
 	#name : 'ClySourceNodeCritiqueIntervalProperty',
 	#superclass : 'ClyProperty',
 	#instVars : [
-		'start',
-		'stop'
+		#start,
+		#stop
 	],
 	#category : 'Calypso-SystemPlugins-Critic-Queries',
 	#package : 'Calypso-SystemPlugins-Critic-Queries'

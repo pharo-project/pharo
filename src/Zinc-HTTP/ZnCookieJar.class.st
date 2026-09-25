@@ -7,7 +7,7 @@ Class {
 	#name : 'ZnCookieJar',
 	#superclass : 'Object',
 	#instVars : [
-		'cookies'
+		#cookies
 	],
 	#category : 'Zinc-HTTP-Support',
 	#package : 'Zinc-HTTP',
@@ -24,7 +24,7 @@ ZnCookieJar >> add: aCookie [
 
 { #category : 'accessing' }
 ZnCookieJar >> cookieAt: aName forUrl: urlObject [
-	(self cookiesForUrl: urlObject) do: [ :cookie | cookie name = aName ifTrue: [ ^ cookie ] ].
+	(self cookiesForUrl: urlObject) do: [ :cookie | (cookie name sameContents: aName) ifTrue: [ ^ cookie ] ].
 	^ nil
 ]
 

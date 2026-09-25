@@ -15,7 +15,7 @@ Class {
 	#name : 'TKTConfiguration',
 	#superclass : 'DynamicVariable',
 	#instVars : [
-		'value'
+		#value
 	],
 	#category : 'TaskIt-Profiles',
 	#package : 'TaskIt',
@@ -109,7 +109,7 @@ TKTConfiguration class >> profileNamed [
 TKTConfiguration class >> profileNamed: aProfileName [
 	| profile |
 
-	profile := (self profiles detect: [ :ass | ass key = aProfileName ]) value value.
+	profile := (self profiles detect: [ :ass | ass key sameContents: aProfileName ]) value value.
 	profile name: aProfileName.
 	self profile: profile
 ]
@@ -117,7 +117,7 @@ TKTConfiguration class >> profileNamed: aProfileName [
 { #category : 'accessing' }
 TKTConfiguration class >> profileNamed: aProfileName during: aBlock [
 	| return profile |
-	profile := (self profiles detect: [ :ass | ass key = aProfileName ]) value value .
+	profile := (self profiles detect: [ :ass | ass key sameContents: aProfileName ]) value value .
 	profile name: aProfileName.
 	return := self
 		value: profile

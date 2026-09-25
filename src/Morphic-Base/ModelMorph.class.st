@@ -9,11 +9,11 @@ Class {
 	#name : 'ModelMorph',
 	#superclass : 'BorderedMorph',
 	#instVars : [
-		'model'
+		#model
 	],
 	#classVars : [
-		'KeyboardFocusOnMouseDown',
-		'MouseOverForKeyboardFocus'
+		#KeyboardFocusOnMouseDown,
+		#MouseOverForKeyboardFocus
 	],
 	#category : 'Morphic-Base-Kernel',
 	#package : 'Morphic-Base',

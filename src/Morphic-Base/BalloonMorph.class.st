@@ -12,13 +12,13 @@ Class {
 	#name : 'BalloonMorph',
 	#superclass : 'PolygonMorph',
 	#instVars : [
-		'target',
-		'offsetFromTarget',
-		'balloonOwner',
-		'balloonColor'
+		#target,
+		#offsetFromTarget,
+		#balloonOwner,
+		#balloonColor
 	],
 	#classVars : [
-		'BalloonColor'
+		#BalloonColor
 	],
 	#category : 'Morphic-Base-Widgets',
 	#package : 'Morphic-Base',

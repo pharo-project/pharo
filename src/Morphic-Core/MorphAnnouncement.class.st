@@ -7,7 +7,7 @@ Class {
 	#name : 'MorphAnnouncement',
 	#superclass : 'Announcement',
 	#instVars : [
-		'morph'
+		#morph
 	],
 	#category : 'Morphic-Core-Announcements',
 	#package : 'Morphic-Core',

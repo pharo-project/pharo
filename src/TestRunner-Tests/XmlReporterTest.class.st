@@ -30,8 +30,8 @@ XmlReporterTest >> testBuildingAttributesForFailureTag [
 		                duringTest: aTestCase.
 	self
 		assert: aDictionnary size equals: 2;
-		assert: (aDictionnary at: 'type') equals: TestFailure;
-		assert: (aDictionnary at: 'message') equals: 'Assertion failed'
+		assert: (aDictionnary at: #'type') equals: TestFailure;
+		assert: (aDictionnary at: #'message') equals: 'Assertion failed'
 ]
 
 { #category : 'tests' }
@@ -42,7 +42,7 @@ XmlReporterTest >> testBuildingAttributesForTestCaseTag [
 	aDictionnary := reporter buildAttributesForTestCase: aTestCase.
 	self
 		assert: aDictionnary size equals: 3;
-		assert: (aDictionnary at: 'classname') equals: 'TestRunner.Tests.Utilities.Test.GreenTest';
-		assert: (aDictionnary at: 'name') equals: 'testPass';
-		assert: (aDictionnary at: 'time') equals: nil
+		assert: (aDictionnary at: #'classname') equals: 'TestRunner.Tests.Utilities.Test.GreenTest';
+		assert: (aDictionnary at: #'name') equals: 'testPass';
+		assert: (aDictionnary at: #'time') equals: nil
 ]

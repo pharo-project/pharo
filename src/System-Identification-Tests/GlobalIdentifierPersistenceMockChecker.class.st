@@ -5,7 +5,7 @@ Class {
 	#name : 'GlobalIdentifierPersistenceMockChecker',
 	#superclass : 'Object',
 	#instVars : [
-		'answer'
+		#answer
 	],
 	#category : 'System-Identification-Tests',
 	#package : 'System-Identification-Tests'

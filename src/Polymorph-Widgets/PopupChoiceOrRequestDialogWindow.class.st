@@ -2,7 +2,7 @@ Class {
 	#name : 'PopupChoiceOrRequestDialogWindow',
 	#superclass : 'PopupChoiceDialogWindow',
 	#instVars : [
-		'okButton'
+		#okButton
 	],
 	#category : 'Polymorph-Widgets-Windows',
 	#package : 'Polymorph-Widgets',

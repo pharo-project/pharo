@@ -56,9 +56,9 @@ ZnTestRunnerDelegate >> handleGetRequest: request [
 
 { #category : 'public' }
 ZnTestRunnerDelegate >> handleRequest: request [
-	(request method = #GET
+	((request method sameContents: #GET)
 		and: [
-			request uri firstPathSegment = #sunit
+			(request uri firstPathSegment sameContents: #sunit)
 				and: [
 					request uri pathSegments size > 1 ] ])
 		ifTrue: [

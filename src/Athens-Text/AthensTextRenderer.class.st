@@ -9,14 +9,14 @@ Class {
 	#name : 'AthensTextRenderer',
 	#superclass : 'Object',
 	#instVars : [
-		'text',
-		'font',
-		'canvas',
-		'glyphRenderer',
-		'color',
-		'advance',
-		'maxAscent',
-		'currentLine'
+		#text,
+		#font,
+		#canvas,
+		#glyphRenderer,
+		#color,
+		#advance,
+		#maxAscent,
+		#currentLine
 	],
 	#category : 'Athens-Text',
 	#package : 'Athens-Text'

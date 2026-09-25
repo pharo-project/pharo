@@ -52,14 +52,14 @@ Class {
 	#name : 'LayoutFrame',
 	#superclass : 'Object',
 	#instVars : [
-		'leftFraction',
-		'leftOffset',
-		'topFraction',
-		'topOffset',
-		'rightFraction',
-		'rightOffset',
-		'bottomFraction',
-		'bottomOffset'
+		#leftFraction,
+		#leftOffset,
+		#topFraction,
+		#topOffset,
+		#rightFraction,
+		#rightOffset,
+		#bottomFraction,
+		#bottomOffset
 	],
 	#category : 'Morphic-Base-Layouts',
 	#package : 'Morphic-Base',
