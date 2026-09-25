@@ -18,6 +18,13 @@ SycFileOutPackageCommand class >> fullBrowserMenuActivation [
 ]
 
 { #category : 'accessing' }
+SycFileOutPackageCommand >> defaultFileName [
+	^ packages size = 1
+		ifTrue: [ packages first name ]
+		ifFalse: [ 'packagefileout' ]
+]
+
+{ #category : 'accessing' }
 SycFileOutPackageCommand >> defaultMenuIconName [
 
 	^ #save
@@ -31,14 +38,8 @@ SycFileOutPackageCommand >> defaultMenuItemName [
 
 { #category : 'execution' }
 SycFileOutPackageCommand >> execute [
-
-	| filename |
-	filename := packages size = 1
-		            ifTrue: [ packages first name ]
-		            ifFalse: [ 'packagefileout' ].
-
 	^ Fileouter
-		fileoutNamed: filename
-		cofigureWith: [ :fileouter |
+		fileoutNamed: self defaultFileName
+		configureWith: [ :fileouter |
 			packages do: [ :each | fileouter addFullPackage: each ] ]
 ]

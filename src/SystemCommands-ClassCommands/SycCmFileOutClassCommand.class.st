@@ -20,6 +20,13 @@ Class {
 }
 
 { #category : 'accessing' }
+SycCmFileOutClassCommand >> defaultFileName [
+	^ codeObjects size = 1
+		ifTrue: [ codeObjects first name ]
+		ifFalse: [ 'classfileout' ]
+]
+
+{ #category : 'accessing' }
 SycCmFileOutClassCommand >> description [
 
 	^ 'Requests to save a textual version of the selected class to a new file in chunk format and .st extension. Instance and class side methods are both saved'
@@ -27,15 +34,9 @@ SycCmFileOutClassCommand >> description [
 
 { #category : 'executing' }
 SycCmFileOutClassCommand >> executeRefactoring [
-
-	| filename |
-	filename := codeObjects size = 1
-		            ifTrue: [ codeObjects first name ]
-		            ifFalse: [ 'classfileout' ].
-
 	^ Fileouter
-		fileoutNamed: filename
-		cofigureWith: [ :fileouter | 
+		fileoutNamed: self defaultFileName
+		configureWith: [ :fileouter | 
 			codeObjects do: [ :each | fileouter addFullClass: each ] ]
 ]
 

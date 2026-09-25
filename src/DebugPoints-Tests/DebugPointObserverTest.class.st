@@ -38,7 +38,7 @@ DebugPointObserverTest >> testNotifyDebugPointAdded [
 	dp := DebugPointManager installNew: DebugPoint on: node.
 	self assert: observer tag class equals: DebugPointAdded.
 	self assert: observer tag debugPoint identicalTo: dp.
-	self assertCollection: observer tag nodes equals: { (DummyTestClass >> #id:) ast } asSet
+	self assertCollection: (Set withAll: observer tag nodes) equals: { (DummyTestClass >> #id:) ast } asSet
 ]
 
 { #category : 'tests' }
@@ -51,14 +51,14 @@ DebugPointObserverTest >> testNotifyDebugPointChanged [
 
 	self assert: observer tag class equals: DebugPointChanged.
 	self assert: observer tag debugPoint identicalTo: dp.
-	self assertCollection: observer tag nodes equals: { (DummyTestClass >> #id:) ast } asSet.
+	self assertCollection: (Set withAll: observer tag nodes) equals: { (DummyTestClass >> #id:) ast } asSet.
 
 	observer tag: nil.
 	dp removeBehavior: OnceBehavior.
 
 	self assert: observer tag class equals: DebugPointChanged.
 	self assert: observer tag debugPoint identicalTo: dp.
-	self assertCollection: observer tag nodes equals: { (DummyTestClass >> #id:) ast } asSet
+	self assertCollection: (Set withAll: observer tag nodes) equals: { (DummyTestClass >> #id:) ast } asSet
 ]
 
 { #category : 'tests' }
@@ -71,7 +71,7 @@ DebugPointObserverTest >> testNotifyDebugPointHit [
 
 	self assert: observer tag class equals: DebugPointHit.
 	self assert: observer tag debugPoint identicalTo: dp.
-	self assertCollection: observer tag nodes equals: { (DummyTestClass >> #id:) ast } asSet
+	self assertCollection: (Set withAll: observer tag nodes) equals: { (DummyTestClass >> #id:) ast } asSet
 ]
 
 { #category : 'tests' }
@@ -82,7 +82,7 @@ DebugPointObserverTest >> testNotifyDebugPointRemoved [
 	dp remove.
 	self assert: observer tag class equals: DebugPointRemoved.
 	self assert: observer tag debugPoint identicalTo: dp.
-	self assertCollection: observer tag nodes equals: { (DummyTestClass >> #id:) ast } asSet
+	self assertCollection: (Set withAll: observer tag nodes) equals: { (DummyTestClass >> #id:) ast } asSet
 ]
 
 { #category : 'tests' }
@@ -96,7 +96,8 @@ DebugPointObserverTest >> testNotifyVariableDebugPointHit [
 
 	self assert: observer tag class equals: VariableDebugPointHit.
 	self assert: observer tag debugPoint identicalTo: dp.
-	self assertCollection: observer tag nodes equals: { (DummyTestClass >> #initialize) ast statements second } asSet.
+	"The collection is an identity set and we want a Set to compare it"
+	self assertCollection: (Set withAll: observer tag nodes) equals: { (DummyTestClass >> #initialize) ast statements second } asSet.
 	self assert: observer tag variableValue equals: nil.
 
 	observer tag: nil.
@@ -104,7 +105,7 @@ DebugPointObserverTest >> testNotifyVariableDebugPointHit [
 
 	self assert: observer tag class equals: VariableDebugPointHit.
 	self assert: observer tag debugPoint identicalTo: dp.
-	self assertCollection: observer tag nodes equals: { (DummyTestClass >> #id) ast statements first value } asSet.
+	self assertCollection: (Set withAll: observer tag nodes) equals: { (DummyTestClass >> #id) ast statements first value } asSet.
 	self assert: observer tag variableValue equals: 0.
 
 	observer tag: nil.
@@ -112,7 +113,7 @@ DebugPointObserverTest >> testNotifyVariableDebugPointHit [
 
 	self assert: observer tag class equals: VariableDebugPointHit.
 	self assert: observer tag debugPoint identicalTo: dp.
-	self assertCollection: observer tag nodes equals: { (DummyTestClass >> #id:) ast statements first value } asSet.
+	self assertCollection: (Set withAll: observer tag nodes)  equals: { (DummyTestClass >> #id:) ast statements first value } asSet.
 	self assert: observer tag variableValue equals: 0.
 
 	observer tag: nil.
@@ -120,6 +121,6 @@ DebugPointObserverTest >> testNotifyVariableDebugPointHit [
 
 	self assert: observer tag class equals: VariableDebugPointHit.
 	self assert: observer tag debugPoint identicalTo: dp.
-	self assertCollection: observer tag nodes equals: { (DummyTestClass >> #id) ast statements first value } asSet.
+	self assertCollection: (Set withAll: observer tag nodes)  equals: { (DummyTestClass >> #id) ast statements first value } asSet.
 	self assert: observer tag variableValue equals: 2
 ]
