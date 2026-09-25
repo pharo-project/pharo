@@ -33,46 +33,15 @@ ReRenameMethodDriver2 >> applicabilityPreconditionsAreSatisfied [
 	^ self checkApplicabilityPreconditions isNil
 ]
 
-{ #category : 'execution' }
-ReRenameMethodDriver2 >> breakingChoices [
-
-	| items |
-	items := OrderedCollection new.
-	items add: (ReRenameMethodChoice new driver: self).
-	items add: (ReRenameAndBrowseMethodOverridesChoice new driver: self).
-	items add: (ReBrowseMethodOverridesChoice new driver: self).
-	^ items
-]
-
 { #category : 'actions' }
 ReRenameMethodDriver2 >> browseOverrides [
 
 	| overrides |
 	overrides := conflictingImplementors violators.
 	(Smalltalk tools toolNamed: #messageList)
-		browse: (overrides collect: [ :ref | ref realClass lookupSelector: newMessage selector ])
-		asImplementorsOf: newMessage selector
+		browse: (overrides collect: [ :ref | ref realClass lookupSelector: refactoring oldSelector ])
+		asImplementorsOf: refactoring oldSelector
 		
-]
-
-{ #category : 'private - testing' }
-ReRenameMethodDriver2 >> canAddArgs [
-	^ false
-]
-
-{ #category : 'private - testing' }
-ReRenameMethodDriver2 >> canEditName [
-	^ true
-]
-
-{ #category : 'private - testing' }
-ReRenameMethodDriver2 >> canRemoveArgs [
-	^ false
-]
-
-{ #category : 'private - testing' }
-ReRenameMethodDriver2 >> canRenameArgs [
-	^ true
 ]
 
 { #category : 'execution' }
@@ -109,8 +78,7 @@ ReRenameMethodDriver2 >> checkBehaviorPreconditions [
 ReRenameMethodDriver2 >> configureMessage [
 
 	refactoring newSelector: newMessage selector.
-	refactoring permutation: newMessage permutation.
-	refactoring renameMap: newMessage renameMap.
+	refactoring permutation: newMessage permutation
 ]
 
 { #category : 'actions' }
@@ -118,29 +86,6 @@ ReRenameMethodDriver2 >> createAndSetNewRefactoring [
 
 	super configureRefactoring .
 	refactoring newName: newName.
-]
-
-{ #category : 'execution' }
-ReRenameMethodDriver2 >> gatherUserInput [
-
-	| failedConditions |
-	failedConditions := OrderedCollection empty.
-	[
-		newMessage := self requestNewMessage.
-		shouldEscape ifTrue: [ ^ false ].
-		self configureMessage.
-
-		refactoring isMethodDefinitionUnchanged ifTrue: [ ^ false ].
-		shouldEscape ifTrue: [ ^ false ].
-
-		failedConditions := refactoring failedApplicabilityPreconditions.
-		failedConditions do: [ :cond |
-				self informDialog
-					message: cond errorString;
-					title: 'Invalid method name';
-					openModal ] ] doWhileFalse: [ failedConditions isEmpty ].
-
-	^ true
 ]
 
 { #category : 'initialization' }
@@ -188,18 +133,6 @@ ReRenameMethodDriver2 >> isValidPermutation [
 		and: [ refactoring validNewNameCondition check not ]
 ]
 
-{ #category : 'for mocks' }
-ReRenameMethodDriver2 >> methodNameEditorPresenterClass [
-
-	^ methodNameEditorPresenterClass ifNil: [ methodNameEditorPresenterClass := StMethodNameEditorPresenter]
-]
-
-{ #category : 'for mocks' }
-ReRenameMethodDriver2 >> methodNameEditorPresenterClass: aClass [
-
-	methodNameEditorPresenterClass := aClass
-]
-
 { #category : 'initialization' }
 ReRenameMethodDriver2 >> model: aModel renameMethodSignature: aMessage in: aClass [ 
 
@@ -213,20 +146,6 @@ ReRenameMethodDriver2 >> model: aModel renameMethodSignature: aMessage in: aClas
 ReRenameMethodDriver2 >> newName: aSymbol [
 
 	newName := aSymbol
-]
-
-{ #category : 'private - factory' }
-ReRenameMethodDriver2 >> newRequestMethodDialogOn: methodName [
-	
-	^ (self methodNameEditorPresenterClass newApplication: self application model: methodName)
-		invalidArgNames: (RBCondition
-			invalidArgumentNamesForSelector:
-			originalMessage selector
-			in: model);
-		canRenameArgs: self canRenameArgs;
-		canRemoveArgs: self canRemoveArgs;
-		canAddArgs: self canAddArgs;
-		canEditName: self canEditName
 ]
 
 { #category : 'accessing' }
@@ -254,16 +173,6 @@ ReRenameMethodDriver2 >> previewPresenterClass [
 ReRenameMethodDriver2 >> renameMethod [
 
 	self applyChanges 
-]
-
-{ #category : 'accessing' }
-ReRenameMethodDriver2 >> requestDialogWith: methodName [
-	"This is lazy loaded and tests expect lazy loading, because they set `requestDialog`
-	and thus side-step methodNameEditorPresenter"
-
-	requestDialog ifNil: [ requestDialog := self newRequestMethodDialogOn: methodName ].
-	requestDialog openModal.
-	^ requestDialog
 ]
 
 { #category : 'interaction' }
