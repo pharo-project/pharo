@@ -40,7 +40,7 @@ StRenameMethodPreviewPresenterTest >> testExistingMethodNameDisplaysValidationEr
 	presenter validateName: #accessing.
 	
 	self assert: presenter validationLabel label 
-		  equals: '"accessing" is already defined in this class'
+		  equals: '#accessing is already defined in this class'
 ]
 
 { #category : 'tests' }
