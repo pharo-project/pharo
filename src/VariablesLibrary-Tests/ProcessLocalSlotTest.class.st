@@ -77,3 +77,8 @@ ProcessLocalSlotTest >> testWriteAndReadReflective [
 	[ self assert: (slot read: object) equals: nil. ] fork.
 	self assert: (slot read: object) equals: 3
 ]
+
+{ #category : 'tests' }
+ProcessLocalSlotTest >> testisUsed [
+	self assert: ProcessLocalSlot isUsed. "references count as uses, too"
+]
