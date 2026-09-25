@@ -16,7 +16,7 @@ ArgumentVariableTest >> testDefiningNode [
 	self assert: declaringNodeViaVariable equals: declaringNode.
 
 	"check block argument"
-	declaringNode := method blockNodes first arguments first.
+	declaringNode := method ast blockNodes first arguments first.
 	declaringNodeViaVariable := method ast variableReadNodes fifth variable definingNode.
 	self assert: declaringNodeViaVariable equals: declaringNode
 ]
