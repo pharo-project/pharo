@@ -8,7 +8,9 @@ Class {
 	#superclass : 'ReInteractionDriver',
 	#instVars : [
 		'class',
-		'packageSelectionDialog'
+		'packageSelectionDialog',
+		'targetPackage',
+		'targetTag'
 	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',
@@ -36,8 +38,8 @@ ReMoveClassToPackageDriver >> buildPackageSelectionDialog [
 { #category : 'accessing' }
 ReMoveClassToPackageDriver >> candidatePackages [
 
-	^ PackageOrganizer default 
-		reject: [ :eachPackage | eachPackage name = class packageName ]
+	^ PackageOrganizer default packages
+		  reject: [ :eachPackage | eachPackage name = class packageName ]
 ]
 
 { #category : 'execution' }
@@ -45,11 +47,17 @@ ReMoveClassToPackageDriver >> gatherUserInput [
 	"Ask the user for the target package. Return false if the user cancels."
 	| selection |
 	
+	targetPackage ifNotNil: [
+		refactoring
+			packageName: targetPackage name;
+			tagName: targetTag.
+		^ true ].
+
 	selection := self packageSelectionDialog openModal.
 	selection ifNil: [ ^ false ].
-	
+
 	refactoring packageName: selection name.
-	
+
 	^ true
 ]
 
@@ -80,4 +88,16 @@ ReMoveClassToPackageDriver >> scopes: refactoringScopes class: aClass [
 	scopes := refactoringScopes.
 	model := self refactoringScopeOn: scopes first.
 	class := aClass
+]
+
+{ #category : 'accessing' }
+ReMoveClassToPackageDriver >> targetPackage: aPackage [
+
+	targetPackage := aPackage
+]
+
+{ #category : 'accessing' }
+ReMoveClassToPackageDriver >> targetTag: aTagName [
+
+	targetTag := aTagName
 ]

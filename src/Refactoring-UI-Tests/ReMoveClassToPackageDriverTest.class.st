@@ -42,7 +42,6 @@ ReMoveClassToPackageDriverTest >> testCurrentPackageIsNotACandidate [
 	| driver |
 	
 	driver := self driverFor: RBClassDataForRefactoringTest.
-	
 	self deny: (driver candidatePackages includes: RBClassDataForRefactoringTest package).
 	self assert: (driver candidatePackages includes: (PackageOrganizer default packageNamed: #'Refactoring-Transformations'))
 ]
@@ -82,4 +81,17 @@ ReMoveClassToPackageDriverTest >> testMoveClassToMissingPackageIsReported [
 	self deny: driver refactoring failedApplicabilityPreconditions isEmpty.
 	"demeters law!"
 	self assert: driver refactoring model changes changes isEmpty
+]
+
+{ #category : 'tests' }
+ReMoveClassToPackageDriverTest >> testMoveClassToPreselectedPackage [
+	| driver targetPackage |
+	
+	driver := self driverFor: RBClassDataForRefactoringTest.
+	targetPackage := PackageOrganizer default packageNamed: #'Refactoring-Transformations'.
+	driver targetPackage: targetPackage.
+	driver runRefactoring.
+	self assert: driver refactoring packageName equals: #'Refactoring-Transformations'.
+	"demeter law"
+	self assert: driver refactoring model changes changes size equals: 1
 ]
