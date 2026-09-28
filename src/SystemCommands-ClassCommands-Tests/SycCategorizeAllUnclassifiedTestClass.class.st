@@ -14,13 +14,13 @@ Class {
 	#tag : 'TestData'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'initialization' }
 SycCategorizeAllUnclassifiedTestClass >> initialize [
 
 	super initialize
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 SycCategorizeAllUnclassifiedTestClass >> name [
 
 	^ name
