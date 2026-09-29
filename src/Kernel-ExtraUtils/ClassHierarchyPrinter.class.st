@@ -129,7 +129,7 @@ ClassHierarchyPrinter class >> forClass: aClass [
 	^ self new forClass: aClass; yourself
 ]
 
-{ #category : 'public API' }
+{ #category : 'public api' }
 ClassHierarchyPrinter >> cr [
 	stream cr
 ]
@@ -152,7 +152,7 @@ ClassHierarchyPrinter >> excludedClasses: aCollection [
 	excludedClasses := aCollection
 ]
 
-{ #category : 'public API' }
+{ #category : 'public api' }
 ClassHierarchyPrinter >> forClass: aClass [
 	theClass := aClass
 ]
@@ -180,18 +180,18 @@ ClassHierarchyPrinter >> limitedToClasses: aCollection [
 	limitedToClasses := aCollection
 ]
 
-{ #category : 'public API' }
+{ #category : 'public api' }
 ClassHierarchyPrinter >> nextPutAll: aString [
 	stream nextPutAll: aString
 ]
 
-{ #category : 'public API' }
+{ #category : 'public api' }
 ClassHierarchyPrinter >> on: aStream [
 
 	stream := aStream
 ]
 
-{ #category : 'public API' }
+{ #category : 'public api' }
 ClassHierarchyPrinter >> print [
 	"Answer a description containing the names and instance variable names
 	of all of the subclasses and superclasses of the class."
@@ -266,7 +266,7 @@ ClassHierarchyPrinter >> showSuperclasses [
 	showSuperclasses := true
 ]
 
-{ #category : 'public API' }
+{ #category : 'public api' }
 ClassHierarchyPrinter >> tab [
 	stream tab
 ]

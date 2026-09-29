@@ -56,7 +56,7 @@ GrafPort >> copyBits [
 		ifFalse: [ super copyBits ]
 ]
 
-{ #category : 'drawing support' }
+{ #category : 'drawing - support' }
 GrafPort >> fillOval: rect [
 	| centerX centerY nextY yBias xBias outer nextOuterX |
 	rect area <= 0 ifTrue: [^ self].
@@ -90,7 +90,7 @@ GrafPort >> fillPattern: anObject [
 	self fillColor: anObject
 ]
 
-{ #category : 'drawing support' }
+{ #category : 'drawing - support' }
 GrafPort >> fillRect: rect offset: aPoint [
 	"The offset is really just for stupid InfiniteForms."
 	| fc |
@@ -110,7 +110,7 @@ GrafPort >> fillRect: rect offset: aPoint [
 	self copyBits
 ]
 
-{ #category : 'drawing support' }
+{ #category : 'drawing - support' }
 GrafPort >> frameOval: rect borderWidth: borderWidth [
 	| centerX centerY nextY yBias xBias wp outer inner nextOuterX nextInnerX |
 	rect area <= 0 ifTrue: [^ self].
@@ -158,7 +158,7 @@ GrafPort >> frameOval: rect borderWidth: borderWidth [
 	self copyBits
 ]
 
-{ #category : 'drawing support' }
+{ #category : 'drawing - support' }
 GrafPort >> frameRect: rect borderWidth: borderWidth [
 	sourceX := 0.
 	sourceY := 0.
@@ -166,7 +166,7 @@ GrafPort >> frameRect: rect borderWidth: borderWidth [
 		[:edgeStrip | self destRect: edgeStrip; copyBits]
 ]
 
-{ #category : 'drawing support' }
+{ #category : 'drawing - support' }
 GrafPort >> frameRectBottom: rect height: h [
 
 	destX := rect left + 1.
@@ -180,7 +180,7 @@ GrafPort >> frameRectBottom: rect height: h [
 		width := width - 2]
 ]
 
-{ #category : 'drawing support' }
+{ #category : 'drawing - support' }
 GrafPort >> frameRectRight: rect width: w [
 
 	width := 1.
@@ -194,7 +194,7 @@ GrafPort >> frameRectRight: rect width: w [
 		height := height - 2]
 ]
 
-{ #category : 'drawing support' }
+{ #category : 'drawing - support' }
 GrafPort >> image: aForm at: aPoint sourceRect: sourceRect rule: rule [
 	"Draw the portion of the given Form defined by sourceRect at the given point using the given BitBlt combination rule."
 
@@ -205,7 +205,7 @@ GrafPort >> image: aForm at: aPoint sourceRect: sourceRect rule: rule [
 	self copyBits
 ]
 
-{ #category : 'drawing support' }
+{ #category : 'drawing - support' }
 GrafPort >> image: aForm at: aPoint sourceRect: sourceRect rule: rule alpha: sourceAlpha [
 	"Draw the portion of the given Form defined by sourceRect at the given point using the given BitBlt combination rule."
 
@@ -245,7 +245,7 @@ GrafPort >> lastFontForegroundColor: anObject [
 	lastFontForegroundColor := anObject
 ]
 
-{ #category : 'drawing support' }
+{ #category : 'drawing - support' }
 GrafPort >> stencil: stencilForm at: aPoint sourceRect: aRect [
 	"Paint using aColor wherever stencilForm has non-zero pixels"
 	self sourceForm: stencilForm;

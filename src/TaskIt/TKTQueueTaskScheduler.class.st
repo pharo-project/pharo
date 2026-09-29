@@ -27,7 +27,7 @@ TKTQueueTaskScheduler >> isEmpty [
 	^ queue isEmpty
 ]
 
-{ #category : 'schedulling' }
+{ #category : 'scheduling' }
 TKTQueueTaskScheduler >> purge [
 
 	queue removeAll
@@ -39,7 +39,7 @@ TKTQueueTaskScheduler >> queue: aTaskQueue [
 	queue := aTaskQueue
 ]
 
-{ #category : 'schedulling' }
+{ #category : 'scheduling' }
 TKTQueueTaskScheduler >> scheduleTaskExecution: aTask [
 
 	queue nextPut: aTask

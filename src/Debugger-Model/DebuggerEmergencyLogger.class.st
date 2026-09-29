@@ -14,13 +14,13 @@ Class {
 	#tag : 'Core'
 }
 
-{ #category : 'API' }
+{ #category : 'api' }
 DebuggerEmergencyLogger >> debugError: anError fromSession: aDebugSession [
 
 	self logError: anError forSession: aDebugSession
 ]
 
-{ #category : 'API' }
+{ #category : 'api' }
 DebuggerEmergencyLogger >> logError: anError forSession: aDebugSession [
 
 	| errDescription |

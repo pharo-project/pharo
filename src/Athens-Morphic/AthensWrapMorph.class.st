@@ -86,7 +86,7 @@ AthensWrapMorph >> fullDrawOnAthensCanvas: anAthensCanvas [
 	submorphs reverseDo: [:m | anAthensCanvas fullDrawMorph: m ]
 ]
 
-{ #category : 'events handling' }
+{ #category : 'event handling' }
 AthensWrapMorph >> handlesMouseDown: evt [
 	^ true
 ]

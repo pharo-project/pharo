@@ -938,7 +938,7 @@ StringTest >> testFindLastOccurrenceOfStringStartingAt [
 	self assert: (('Smalltalk' copyWith: 835 asCharacter) findLastOccurrenceOfString: 'al' asWideString startingAt: 2) equals: 7
 ]
 
-{ #category : 'tests - iterate on sequenced reable collections' }
+{ #category : 'tests - iterate on sequenced readable collections' }
 StringTest >> testFindSelector [
 	self assert: #isSymbol equals: 'isSymbol' findSelector.
 	self assert: #between:and: equals: 'between:and:' findSelector .

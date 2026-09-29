@@ -14,7 +14,7 @@ Class {
 	#tag : 'Base'
 }
 
-{ #category : 'stream-protocol' }
+{ #category : 'stream protocol' }
 MemoryFileSystemFile >> at: index [
 	index > bytes size
 		ifTrue: [ SubscriptOutOfBounds
@@ -25,7 +25,7 @@ MemoryFileSystemFile >> at: index [
 	^ bytes at: index
 ]
 
-{ #category : 'stream-protocol' }
+{ #category : 'stream protocol' }
 MemoryFileSystemFile >> at: index put: anObject [
 	index > bytes size
 		ifTrue: [ self grow ].
@@ -39,7 +39,7 @@ MemoryFileSystemFile >> at: index put: anObject [
 	self modified
 ]
 
-{ #category : 'stream-protocol' }
+{ #category : 'stream protocol' }
 MemoryFileSystemFile >> at: index read: aCollection startingAt: start count: count [
 	| max stop |
 	max := size - index + 1 min: count.
@@ -52,7 +52,7 @@ MemoryFileSystemFile >> at: index read: aCollection startingAt: start count: cou
 	^ stop - start + 1
 ]
 
-{ #category : 'stream-protocol' }
+{ #category : 'stream protocol' }
 MemoryFileSystemFile >> at: first write: aCollection startingAt: start count: count [
 	| last |
 	last := first + count - 1.
@@ -97,7 +97,7 @@ MemoryFileSystemFile >> closed [
 	^ closed
 ]
 
-{ #category : 'stream-protocol' }
+{ #category : 'stream protocol' }
 MemoryFileSystemFile >> copyFrom: from to: position [
 	^ bytes copyFrom: from to: position
 ]
@@ -107,7 +107,7 @@ MemoryFileSystemFile >> fileSize [
 	^ size
 ]
 
-{ #category : 'stream-protocol' }
+{ #category : 'stream protocol' }
 MemoryFileSystemFile >> grow [
 	self grownBy: self sizeIncrement
 ]
@@ -136,7 +136,7 @@ MemoryFileSystemFile >> isDirectory [
 	^ false
 ]
 
-{ #category : 'stream-protocol' }
+{ #category : 'stream protocol' }
 MemoryFileSystemFile >> readStream [
 	^ ReadStream on: self bytes asString from: 1 to: size
 ]
@@ -183,7 +183,7 @@ MemoryFileSystemFile >> updateSize: newSize [
 	self modified
 ]
 
-{ #category : 'stream-protocol' }
+{ #category : 'stream protocol' }
 MemoryFileSystemFile >> writeStreamDo: aBlock [
 	ByteArray
 		streamContents: [ :aStream |
