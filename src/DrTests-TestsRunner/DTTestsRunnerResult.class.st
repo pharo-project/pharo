@@ -27,7 +27,8 @@ DTTestsRunnerResult >> backgroundColorStyle [
 
 { #category : 'tree building' }
 DTTestsRunnerResult >> buildLeavesFrom: aCollection type: testResultType [
-	^ aCollection collect: [ :t | DTTestLeafNode content: t type: testResultType ]
+
+	^ (aCollection sorted: #drTestsName ascending) collect: [ :test | DTTestLeafNode content: test type: testResultType ]
 ]
 
 { #category : 'tree building' }
