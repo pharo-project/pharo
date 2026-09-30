@@ -39,12 +39,9 @@ StRefactoringPreviewPresenter class >> withChanges: changes scopes: scopes [
 StRefactoringPreviewPresenter >> accept [
 	
 	(self okToChange not or: [ selectedChanges isEmptyOrNil ]) ifTrue: [
-		self application newInform 
-				title: 'No changes to apply.';
-				acceptLabel: 'Close this!';
-				openDialog.
-		
-		self closeWindow ].
+		self closeWindow.
+		self application inform: 'No changes to apply.'.
+		^ self ].
 	self performChanges.
 	self updateGlobalActiveScope.
 	self closeWindow

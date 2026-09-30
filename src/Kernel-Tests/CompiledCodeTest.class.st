@@ -127,13 +127,13 @@ CompiledCodeTest >> methodReturningThisContext [
 
 { #category : 'private - test support' }
 CompiledCodeTest >> methodSendingDoitToSelf [
-
+	<ignoreNotImplementedSelectors: #(doit)>
 	^ self doit
 ]
 
 { #category : 'private - test support' }
 CompiledCodeTest >> methodSendingDoitToSelfWithUnusedBloc [
-
+	<ignoreNotImplementedSelectors: #(doit)>
 	self doit.
 	[ Object class ]
 ]
