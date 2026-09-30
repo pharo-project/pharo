@@ -168,6 +168,21 @@ ShiftClassInstaller >> installingEnvironment: anEnvironment [
 	builder installingEnvironment: anEnvironment
 ]
 
+{ #category : 'migrating' }
+ShiftClassInstaller >> invalidateBlockClosuresWithReceivers: receivers [
+
+	| blocksToInvalidate errorCompiledBlock |
+	blocksToInvalidate := OrderedCollection streamContents: [ :s |
+		                      FullBlockClosure allSubInstancesDo: [ :aBlock |
+			                      (receivers includes: aBlock receiver) ifTrue: [ s nextPut: aBlock ] ] ].
+
+	blocksToInvalidate ifEmpty: [ ^ self ].
+
+	errorCompiledBlock := [ self error: 'Receiver is invalid. Original Block cannot be evaluated' ] compiledBlock.
+
+	blocksToInvalidate do: [ :e | e compiledBlock: errorCompiledBlock ]
+]
+
 { #category : 'building' }
 ShiftClassInstaller >> make [
 	| newClass |
