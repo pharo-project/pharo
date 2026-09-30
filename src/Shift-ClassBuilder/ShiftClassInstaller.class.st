@@ -270,7 +270,10 @@ ShiftClassInstaller >> migrateInstancesTo: newClass [
 	newObjects := oldObjects collect: [ :e |
 		(readOnlyOldObjectsFlags add: e isReadOnlyObject).
 		self copyObject: e to: newClass ].
-
+	
+	builder instancesHasShrinked 
+		ifTrue: [ self invalidateBlockClosuresWithReceivers: oldObjects ].
+	
 	oldObjects elementsForwardIdentityTo: newObjects copyHash: true.
 
 	newObjects with: readOnlyOldObjectsFlags do: [ :anObject :aFlag | anObject setIsReadOnlyObject: aFlag ]
