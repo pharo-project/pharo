@@ -358,7 +358,7 @@ FFICallout >> resolveType: aTypeName [
 	ptrArity := 0.
 	"resolve aliases and pointers"
 	[
-		name := newName asString trimRight.
+		name := newName displayString trimRight.
 		newName := self aliasForType: name.
 		newName last = $* ifTrue: [
 			ptrArity := ptrArity + 1.

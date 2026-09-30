@@ -343,7 +343,7 @@ MCFileTreeStCypressWriter >> writeDefinitions: aCollection [
 	extensionMethodDefinitions do: [ :methodDefinition |
 			| classPath |
 			(extensionMethodMap at: methodDefinition className ifAbsentPut: [ OrderedCollection new ]) add: methodDefinition.
-			classPath := methodDefinition className , classDirExtension , self fileUtils pathNameDelimiter asString.
+			classPath := methodDefinition className , classDirExtension , self fileUtils pathNameDelimiterString.
 			self writeExtensionClassDefinition: methodDefinition to: classPath ].
 	extensionMethodMap keysAndValuesDo: [ :className :classMethodDefinitions |
 			| classPath filenameMetaMap |
@@ -351,12 +351,12 @@ MCFileTreeStCypressWriter >> writeDefinitions: aCollection [
 			classMethodDefinitions do: [ :methodDefinition |
 					| filename methodPath |
 					filename := (filenameMetaMap at: methodDefinition classIsMeta) at: methodDefinition selector.
-					classPath := methodDefinition className , classDirExtension , self fileUtils pathNameDelimiter asString.
+					classPath := methodDefinition className , classDirExtension , self fileUtils pathNameDelimiterString.
 					methodPath := classPath , (methodDefinition classIsMeta
 						               ifTrue: [ 'class' ]
-						               ifFalse: [ 'instance' ]) , self fileUtils pathNameDelimiter asString.
+						               ifFalse: [ 'instance' ]) , self fileUtils pathNameDelimiterString.
 					self writeMethodDefinition: methodDefinition to: methodPath filename: filename ].
-			classPath := className , classDirExtension , self fileUtils pathNameDelimiter asString.
+			classPath := className , classDirExtension , self fileUtils pathNameDelimiterString.
 			self
 				writeInDirectoryName: classPath
 				fileName: 'methodProperties'
@@ -427,10 +427,10 @@ MCFileTreeStCypressWriter >> writeMethodHolderDefinitions: aCollection extension
 
 	aCollection keysAndValuesDo: [ :className :definition |
 			| classPath instanceMethodPath classMethodPath filenameMetaMap theMethodDefinitions |
-			classPath := basePath , definition className , extension , self fileUtils pathNameDelimiter asString.
+			classPath := basePath , definition className , extension , self fileUtils pathNameDelimiterString.
 			aBlock value: definition value: classPath.
-			instanceMethodPath := classPath , 'instance' , self fileUtils pathNameDelimiter asString.
-			classMethodPath := classPath , 'class' , self fileUtils pathNameDelimiter asString.
+			instanceMethodPath := classPath , 'instance' , self fileUtils pathNameDelimiterString.
+			classMethodPath := classPath , 'class' , self fileUtils pathNameDelimiterString.
 			theMethodDefinitions := self methodDefinitions at: className ifAbsent: [ #(  ) ].
 			filenameMetaMap := self fileNameMapFor: theMethodDefinitions.
 			theMethodDefinitions do: [ :methodDefinition |

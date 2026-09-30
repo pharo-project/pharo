@@ -12,7 +12,7 @@ MCBitbucketRepository class >> basicDescription [
 
 { #category : 'instance creation' }
 MCBitbucketRepository class >> basicFromUrl: aZnUrl [ 
-	^ self location: aZnUrl asString
+	^ self location: aZnUrl displayString
 ]
 
 { #category : 'instance creation' }

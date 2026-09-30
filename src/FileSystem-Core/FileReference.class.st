@@ -360,7 +360,7 @@ FileReference >> lastFileFor: baseFileName extension: extension [
 	
 	^ (((FileVersionner from: self) versionNumberWithoutNumberPatternFor: baseFileName extension: extension)
 		ifNil: [ self error: 'No file with number pattern' ]
-		ifNotNil: [: version | 
+		ifNotNil: [ :version | 
 			version = 0
 				ifTrue: [ baseFileName, '.', extension ]
 				ifFalse: [ baseFileName , '.' , version asString , '.' , extension ] ]) asFileReference
@@ -401,7 +401,7 @@ FileReference >> nextNameFor: baseFileName extension: extension [
 
 	^ ((FileVersionner from: self) versionNumberWithoutNumberPatternFor: baseFileName extension: extension)
 		ifNil: [ baseFileName, '.1.', extension ]
-		ifNotNil: [ : version |  baseFileName , '.' , (version + 1) asString , '.' , extension ]
+		ifNotNil: [ :version |  baseFileName , '.' , (version + 1) asString , '.' , extension ]
 ]
 
 { #category : 'versions' }

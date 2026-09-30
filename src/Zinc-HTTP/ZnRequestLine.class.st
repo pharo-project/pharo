@@ -108,7 +108,7 @@ ZnRequestLine >> readFrom: stream [
 	lineStream := line readStream.
 	self method: (lineStream upTo: Character space).
 	self uri: (lineStream upTo: Character space).
-	self version: (lineStream upToEnd)
+	self version: lineStream upToEnd
 ]
 
 { #category : 'accessing' }

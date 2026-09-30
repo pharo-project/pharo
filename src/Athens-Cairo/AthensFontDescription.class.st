@@ -37,15 +37,8 @@ AthensFontDescription class >> example [
 { #category : 'accessing' }
 AthensFontDescription >> asString [
 	"[FAMILY-LIST] [STYLE-OPTIONS] [SIZE]"
-
-	^ String streamContents: [ :str |
-		  str nextPutAll: family; space.
-
-		  "2)STYLE_OPTIONS is a whitespace separated list of words where each WORD describes one of style, variant, weight, stretch, or gravity. If STYLE-OPTIONS is missing, then all style options will be set to the default values"
-		  #( slant variant weight stretch gravity ) do: [ :style |
-			  options at: style ifPresent: [ :val | str nextPutAll: val; space ] ].
-
-		  self fontSize ifNotNil: [ :fontSize | str space; nextPutAll: fontSize asString ] ]
+	self deprecated: 'Do not use asString when you need displayString'.
+	^ self displayString
 ]
 
 { #category : 'accessing' }
@@ -66,6 +59,19 @@ AthensFontDescription >> beNormal [
 { #category : 'accessing' }
 AthensFontDescription >> beOblique [
 	self slant: #oblique
+]
+
+{ #category : 'accessing' }
+AthensFontDescription >> displayStringOn: str [
+	"[FAMILY-LIST] [STYLE-OPTIONS] [SIZE]"
+
+	str nextPutAll: family; space.
+
+		  "2)STYLE_OPTIONS is a whitespace separated list of words where each WORD describes one of style, variant, weight, stretch, or gravity. If STYLE-OPTIONS is missing, then all style options will be set to the default values"
+	#( slant variant weight stretch gravity ) do: [ :style |
+			options at: style ifPresent: [ :val | str nextPutAll: val; space ] ].
+
+	self fontSize ifNotNil: [ :fontSize | str space; print: fontSize  ]
 ]
 
 { #category : 'cairo - options' }

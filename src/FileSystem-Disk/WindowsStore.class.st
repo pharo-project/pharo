@@ -18,6 +18,11 @@ WindowsStore class >> delimiter [
 ]
 
 { #category : 'accessing' }
+WindowsStore class >> delimiterString [
+	^ '\'
+]
+
+{ #category : 'accessing' }
 WindowsStore class >> isCaseSensitive [
 	^ false
 ]

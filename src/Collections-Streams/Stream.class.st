@@ -186,7 +186,22 @@ Stream >> openReadOnly [
 
 { #category : 'printing' }
 Stream >> print: anObject [
-	"Have anObject print itself on the receiver."
+	"Have anObject print itself on the receiver.
+	Instead of creating a useless stream (in asString) and destroying the API of object printing - asString is not for domain objects but for conversion between text/string like objects. 
+	
+		stream 
+			<< 'foo;'
+			<< x asString;
+			<< 'end foo'
+			
+	just do 
+		stream 
+			<< 'foo;'
+			print: x;
+			<< 'end foo'
+		
+	
+	"
 
 	anObject printOn: self
 ]
