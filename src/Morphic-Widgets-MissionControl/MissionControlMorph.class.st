@@ -16,6 +16,12 @@ MissionControlMorph class >> ensureMissionControlInWorld: world [
 	world submorphs detect: [ :m | m isKindOf: self ] ifNone: [ self new activateInWorld: world ]
 ]
 
+{ #category : 'activation' }
+MissionControlMorph class >> ensureMissionControlInWorldWithSameTabs: world [
+
+	world submorphs detect: [ :m | m isKindOf: self ] ifNone: [ self new activateOnlySameTypeInWorld: world ]
+]
+
 { #category : 'world menu' }
 MissionControlMorph class >> worldMenuEntryOn: aBuilder [
 
@@ -28,22 +34,35 @@ MissionControlMorph class >> worldMenuEntryOn: aBuilder [
 ]
 
 { #category : 'activation' }
-MissionControlMorph >> activateInWorld: world [
-
-	| nonCollapsed collapsed |
-
-	nonCollapsed := world systemWindows reject: #isCollapsed.
-	collapsed := world systemWindows select: #isCollapsed.
+MissionControlMorph >> activateIn: world tabs: tabs [
 
 	self bounds: world bounds.
-	spacesBar := MissionControlSpacesBar new initializeForWorld: world collapsedWindows: collapsed.
+	
+	spacesBar := MissionControlSpacesBar new initializeForWorld: world collapsedWindows: {}.
 	
 	self addMorph: spacesBar.
 	world addMorphFront: self.
-	self createThumbnailsFor: nonCollapsed.
+	self createThumbnailsFor: tabs.
 
 	world activeHand newKeyboardFocus: self.
 	isActive := true
+]
+
+{ #category : 'activation' }
+MissionControlMorph >> activateInWorld: world [
+
+	self activateIn: world tabs: (world systemWindows reject: #isCollapsed)
+]
+
+{ #category : 'activation' }
+MissionControlMorph >> activateOnlySameTypeInWorld: world [
+
+	| nonCollapsed |
+	nonCollapsed := world systemWindows select: [ :tab |
+		tab viewType = SystemWindow topWindow viewType
+	].
+
+	self activateIn: world tabs: nonCollapsed
 ]
 
 { #category : 'private' }
