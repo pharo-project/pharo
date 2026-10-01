@@ -1,5 +1,5 @@
 Class {
-	#name : 'ReMoveClassSideChoice',
+	#name : 'ReMoveClasstoClassSideChoice',
 	#superclass : 'ReMethodChoice',
 	#category : 'Refactoring-UI-Choices',
 	#package : 'Refactoring-UI',
@@ -7,13 +7,13 @@ Class {
 }
 
 { #category : 'accessing' }
-ReMoveClassSideChoice >> action [
+ReMoveClasstoClassSideChoice >> action [
 
 	driver applyChanges
 ]
 
 { #category : 'accessing' }
-ReMoveClassSideChoice >> description [
+ReMoveClasstoClassSideChoice >> description [
 
 	^ 'There is a method on the class side but still move the instance one there.'
 ]

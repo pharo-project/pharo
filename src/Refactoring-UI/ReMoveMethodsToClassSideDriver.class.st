@@ -30,7 +30,7 @@ ReMoveMethodsToClassSideDriver >> breakingChoices [
 	| items |
 	items := OrderedCollection new.
 	items add: (ReBrowseMethodChoice new driver: self).
-	items add: (ReMoveClassSideChoice new driver: self).
+	items add: (ReMoveClasstoClassSideChoice new driver: self).
 	^ items
 ]
 
