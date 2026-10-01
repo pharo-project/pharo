@@ -25,7 +25,7 @@ Class {
 		'name',
 		'newNameLabel',
 		'newNameInput',
-		'validationLabel',
+		'validationLabels',
 		'nameIsValid',
 		'mainLayout',
 		'topLayout',
@@ -41,7 +41,9 @@ Class {
 		'behaviorWarningTitle',
 		'behaviorMessageLabel',
 		'buttonBrowseMethod',
-		'permutation'
+		'permutation',
+		'validationPanel',
+		'validationLayout'
 	],
 	#category : 'Refactoring-UI-UI',
 	#package : 'Refactoring-UI',
@@ -75,7 +77,9 @@ StRenameMethodPreviewPresenter >> accept [
 StRenameMethodPreviewPresenter >> acceptValidName [
 
 	nameIsValid := true.
-	validationLabel label: ''
+	validationLabels removeAll.
+	validationLayout removeAll.
+	self rebuildLayout 
 ]
 
 { #category : 'action' }
@@ -206,10 +210,15 @@ StRenameMethodPreviewPresenter >> defaultLayout [
 		add: scopeDropList;
 		yourself.
 		
+	validationLayout := SpBoxLayout newTopToBottom
+		spacing: 2;
+		yourself.
+	validationPanel layout: validationLayout.
+		
 	inputLayout := SpBoxLayout newTopToBottom 
 		spacing: 2;
 		add: newNameInput expand: false;
-		add: validationLabel expand: false;
+		add: validationPanel expand: false;
 		yourself.
 		
 	nameLayout := SpBoxLayout newLeftToRight 
@@ -345,7 +354,8 @@ StRenameMethodPreviewPresenter >> initializePresenters [
 	newNameLabel := self newLabel label: 'Selector'.
 	newNameInput := self newTextInput.
 	
-	validationLabel := self newLabel label: ''.
+	validationLabels := OrderedCollection new.
+	validationPanel := SpPresenter new.
 	
 	argLabel := self newLabel label: 'Arguments'.
 	buttonUp := self newButton label: 'Up'; addStyle: 'small'.
@@ -441,10 +451,20 @@ StRenameMethodPreviewPresenter >> refactoring: aRBRemoveMethodDriver [
 StRenameMethodPreviewPresenter >> showValidationError: message [
 
 	nameIsValid := false.
-	validationLabel label:
-		(message asText
-			addAttribute: (TextColor color: Smalltalk ui theme dangerTextColor);
-			yourself)
+
+	validationLabels removeAll.
+	validationLayout removeAll.
+
+	message lines do: [ :line |
+		| label |
+		label := self newLabel
+			label: line;
+			addStyle: 'headerError';
+			yourself.
+
+		validationLabels add: label.
+		validationLayout add: label expand: false ].
+	self rebuildLayout 
 ]
 
 { #category : 'update' }
@@ -522,7 +542,7 @@ StRenameMethodPreviewPresenter >> updateTablePresenter [
 
 { #category : 'initialization' }
 StRenameMethodPreviewPresenter >> validationLabel [
-	^ validationLabel 
+	^ validationLabels 
 ]
 
 { #category : 'accessing' }
