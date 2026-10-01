@@ -498,13 +498,13 @@ ShClassInstallerTest >> testShrinkingAnInstanceInvalidatesBlockClosures [
 	clas compile: 'b: x
 		b := x'.
 
-	clas compile: 'bBlock
+	clas compile: 'block
 		^ [ :x | b class ]'.
 
 	inst := clas new.
 	inst b: 'hi'.
 	
-	block := inst bBlock.
+	block := inst block.
 	
 	"Shrink the class"
 	clas := self newClass: #Foo slots:  { #b. }.
