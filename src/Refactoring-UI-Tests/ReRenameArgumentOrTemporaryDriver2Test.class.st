@@ -40,7 +40,7 @@ ReRenameArgumentOrTemporaryDriver2Test >> testInvalidNameFailsApplicabilityPreco
 	driver newName: 'Tmp2'.
 	driver createAndSetNewRefactoring . 
 
-	failedCondition := driver checkApplicabilityPreconditions .
+	failedCondition := driver applicabilityPreconditionsMessage .
 	
 	self assert: failedCondition
 		  equals: 'Tmp2 the name musn''t start in uppercase or be a reserved word.'

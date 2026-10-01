@@ -31,7 +31,7 @@ ReRenameArgumentOrTemporaryDriver2 class >> shouldPreviewChangesByDefault [
 ]
 
 { #category : 'accessing' }
-ReRenameArgumentOrTemporaryDriver2 >> checkApplicabilityPreconditions [
+ReRenameArgumentOrTemporaryDriver2 >> applicabilityPreconditionsMessage [
 
 	^ refactoring failedApplicabilityMessage
 ]

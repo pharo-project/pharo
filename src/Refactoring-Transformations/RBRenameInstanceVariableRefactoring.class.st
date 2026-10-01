@@ -86,7 +86,7 @@ RBRenameInstanceVariableRefactoring >> browsedEnvironment [
 { #category : 'scripting api - conditions' }
 RBRenameInstanceVariableRefactoring >> checkPreconditions [ 
 
-	self checkApplicabilityPreconditions 
+	self applicabilityPreconditionsMessage 
 ]
 
 { #category : 'initialization' }

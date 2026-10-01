@@ -501,21 +501,21 @@ StRenameTempOrArgPreviewPresenter >> updateTablePresenter [
 { #category : 'accessing' }
 StRenameTempOrArgPreviewPresenter >> validateName: aString [
 
-	| newName |
+	| errorMessage |
 
 	driver newName: aString.
 	driver createAndSetNewRefactoring.
-	newName := driver checkApplicabilityPreconditions.
+	errorMessage := driver applicabilityPreconditionsMessage.
 
-	newName
+	errorMessage
 		ifNil: [
 				nameIsValid := true.
 				validationLabel label: '' ]
 		ifNotNil: [
 				nameIsValid := false.
-				validationLabel label: (newName asText
-						 addAttribute: (TextColor color: Smalltalk ui theme dangerTextColor);
-						 yourself) ]
+				validationLabel 
+					label: errorMessage;
+					addStyle: 'headerError' ]
 ]
 
 { #category : 'accessing' }
