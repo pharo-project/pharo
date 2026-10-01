@@ -232,6 +232,20 @@ ReAbstractTransformation >> execute [
 	self performChanges
 ]
 
+{ #category : 'condition definitions' }
+ReAbstractTransformation >> failedApplicabilityMessage [
+
+	| failedConditions |
+
+	failedConditions := self failedApplicabilityPreconditions.
+	failedConditions ifEmpty: [ ^ nil ].
+
+	^ String streamContents: [ :stream |
+		failedConditions
+			do: [ :condition | condition violationMessageOn: stream ]
+			separatedBy: [ stream cr ] ]
+]
+
 { #category : 'preconditions' }
 ReAbstractTransformation >> failedApplicabilityPreconditions [
 	"Returne the failed preconditions without raising error. It should only be called by drivers."
