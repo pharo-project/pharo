@@ -33,7 +33,7 @@ UndefinedSlot >> checkClassRebuild [
 	(self definingClass environment hasClassNamed: self slotClassName) ifFalse: [ ^ self ].
 	classIsRebuild := true.
 	"we rebuild the class, this triggers instance migration"
-	(self definingClass compiler evaluate: self definingClass definitionString) install.
+	(OpalEvaluator new evaluate: self definingClass definitionString) install.
 	"recompile all methods that access me to generat code for the loaded definition"
 	self usingMethods do: [:each | each recompile]
 ]
