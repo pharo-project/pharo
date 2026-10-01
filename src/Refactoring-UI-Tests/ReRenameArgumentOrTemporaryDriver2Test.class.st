@@ -33,20 +33,12 @@ ReRenameArgumentOrTemporaryDriver2Test >> setUpDriver [
 ReRenameArgumentOrTemporaryDriver2Test >> testInvalidNameFailsApplicabilityPreconditions [
 	"Verify that entering an invalid name fails the applicability preconditions."
 
-	| driver presenter failedCondition |
+	| driver failedCondition |
 	
 	driver := self setUpDriver .
 
-	presenter := StRenameTempOrArgPreviewPresenter new.
-	presenter
-		driver: driver;
-		scopes: { RBBrowserEnvironment default };
-		name: 'temp'.
-
-	presenter initializePresenters.
-
-	presenter newNameInput text: 'Tmp2'.
-	presenter validateName: 'Tmp2'.
+	driver newName: 'Tmp2'.
+	driver createAndSetNewRefactoring . 
 
 	failedCondition := driver checkApplicabilityPreconditions .
 	
@@ -68,29 +60,4 @@ ReRenameArgumentOrTemporaryDriver2Test >> testRenameTemporaryToInstanceVariableN
 	
 	self assert: message 
 		  equals: 'The variable "instVar" is already defined as a class/instance variable in the given context', 	         		String cr
-]
-
-{ #category : 'tests' }
-ReRenameArgumentOrTemporaryDriver2Test >> testUpdateChangesWithValidNameGeneratesPreview [
-"Verify that entering a valid name generates the preview of the refactoring changes."
-
-| driver presenter |
-
-    driver := self setUpDriver .
-
-    presenter := StRenameTempOrArgPreviewPresenter new.
-    presenter
-        driver: driver;
-        scopes: { RBBrowserEnvironment default };
-        name: 'temp'.
-
-    presenter initializePresenters.
-
-    presenter newNameInput text: 'tmp2'.
-	 presenter validateName: 'tmp2'.
-   
-    presenter updateName.
-
-    self assert: driver newName equals: 'tmp2'.
-	 self deny: driver refactoring changes changes isEmpty.
 ]

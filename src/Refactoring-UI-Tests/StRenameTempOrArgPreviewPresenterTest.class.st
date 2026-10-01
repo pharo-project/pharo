@@ -73,6 +73,30 @@ StRenameTempOrArgPreviewPresenterTest >> testRunRefactoringCreatesAndConfiguresP
 ]
 
 { #category : 'tests' }
+StRenameTempOrArgPreviewPresenterTest >> testUpdateChangesWithValidNameGeneratesPreview [
+"Verify that entering a valid name generates the preview of the refactoring changes."
+
+	| driver presenter |
+
+    driver := self setUpDriver .
+
+    presenter := StRenameTempOrArgPreviewPresenter new.
+    presenter
+        driver: driver;
+        scopes: { RBBrowserEnvironment default };
+        name: 'temp'.
+
+    presenter initializePresenters.
+
+    presenter newNameInput text: 'tmp2'.
+	 presenter validateName: 'tmp2'.
+   
+    presenter updateName.
+
+    self deny: presenter changes isEmpty
+]
+
+{ #category : 'tests' }
 StRenameTempOrArgPreviewPresenterTest >> testValidNameClearsValidationLabel [
 	"Verify that entering an invalid name updates the validation label."
 

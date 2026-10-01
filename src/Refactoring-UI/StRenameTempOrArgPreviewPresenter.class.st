@@ -130,6 +130,11 @@ StRenameTempOrArgPreviewPresenter >> buttonOk: aButton [
 	self updateOkButtonState.
 ]
 
+{ #category : 'accessing' }
+StRenameTempOrArgPreviewPresenter >> changes [
+	^ changes
+]
+
 { #category : 'initialization' }
 StRenameTempOrArgPreviewPresenter >> changesFrom: aCompositeChange [
 
