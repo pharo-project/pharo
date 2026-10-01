@@ -3,7 +3,7 @@ Rename Class Refactoring: Change the name of a selected class, update all refere
 
 "
 Class {
-	#name : 'SycRenameClassCommand',
+	#name : 'SycRenameClassCommand2',
 	#superclass : 'SycSingleClassCommand',
 	#instVars : [
 		'toolContext'
@@ -13,33 +13,33 @@ Class {
 }
 
 { #category : 'accessing' }
-SycRenameClassCommand >> defaultMenuIconName [
+SycRenameClassCommand2 >> defaultMenuIconName [
 	^ #edit
 ]
 
 { #category : 'accessing' }
-SycRenameClassCommand >> defaultMenuItemName [
-	^'(Old refactor) rename class'
+SycRenameClassCommand2 >> defaultMenuItemName [
+	^'(R) Rename class'
 ]
 
 { #category : 'execution' }
-SycRenameClassCommand >> execute [
+SycRenameClassCommand2 >> execute [
 
 	toolContext class = ClyFullBrowserClassContext
 		ifTrue: [
-			(ReRenameClassDriver rename: targetClass name)
+			(ReRenameClassDriver2 rename: targetClass name)
 				model: RBBrowserEnvironment new;
 				scopes: toolContext refactoringScopes;
 				runRefactoring ]
 		ifFalse: [
 			toolContext class = ClyClassDefinitionContext
 				ifTrue: [
-					(ReRenameClassDriver rename: toolContext selectedSourceNode value)
+					(ReRenameClassDriver2 rename: toolContext selectedSourceNode value)
 						model: RBBrowserEnvironment new;
 						scopes: toolContext refactoringScopes;
 						runRefactoring ]
 				ifFalse: [ "we are in selection in a method "
-					(ReRenameClassDriver rename:
+					(ReRenameClassDriver2 rename:
 							 toolContext selectedSourceNode value name)
 						model: RBBrowserEnvironment new;
 						scopes: toolContext refactoringScopes;
@@ -47,7 +47,7 @@ SycRenameClassCommand >> execute [
 ]
 
 { #category : 'execution' }
-SycRenameClassCommand >> prepareFullExecutionInContext: aToolContext [
+SycRenameClassCommand2 >> prepareFullExecutionInContext: aToolContext [
 	
 	super prepareFullExecutionInContext: aToolContext.
 	toolContext := aToolContext
