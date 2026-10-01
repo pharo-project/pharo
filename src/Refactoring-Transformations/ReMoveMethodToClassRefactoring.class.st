@@ -36,9 +36,8 @@ ReMoveMethodToClassRefactoring class >> model: aRBSmalltalk method: aMethod clas
 ]
 
 { #category : 'preconditions' }
-ReMoveMethodToClassRefactoring >> applicabilityPreconditions [
-	"we only move if there is no method in the class. 
-	This is clearly wrong for a refactoring. but for now let us keep it. "
+ReMoveMethodToClassRefactoring >> breakingChangePreconditions [
+
 	^ { (ReDefinesSelectorsCondition new definesSelectors: {method selector} in: class) not }
 ]
 
