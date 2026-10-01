@@ -57,7 +57,7 @@ ReClassRepackagingChange >> generateChanges [
 
 	((self changeClass packageOrganizer ensurePackage: packageName)
 		ensureTag: tagName)
-			addClass: self
+		addClass: self changeClass
 ]
 
 { #category : 'accessing' }
