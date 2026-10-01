@@ -891,11 +891,17 @@ Collection >> hash [
 	  -- two equal objects have equal hash values"
 
 	| hash |
-
 	hash := self species hash.
-	self size <= 10 ifTrue:
-		[self do: [:elem | hash := hash bitXor: elem hash]].
-	^hash bitXor: self size hash
+	self size <= 10 ifTrue: [
+			| identity elemIdentityHash elemHash |
+			identity := self identityHash.
+			self do: [ :elem |
+					elemIdentityHash := elem identityHash.
+					elemHash := elemIdentityHash = identity
+						            ifTrue: [ elemIdentityHash ]
+						            ifFalse: [ elem hash ].
+					hash := hash bitXor: elemHash ] ].
+	^ hash bitXor: self size hash
 ]
 
 { #category : 'testing' }
