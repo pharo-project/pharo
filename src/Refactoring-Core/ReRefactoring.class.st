@@ -78,7 +78,7 @@ ReRefactoring >> checkClass: aRBClass selector: aSelector using: aMatcher [
 { #category : 'scripting api - conditions' }
 ReRefactoring >> checkPreconditions [ 
 
-	self checkApplicabilityPreconditions.
+	self applicabilityPreconditionsMessage.
 	self checkBreakingChangePreconditions 
 ]
 

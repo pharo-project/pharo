@@ -48,7 +48,7 @@ ReRenameSharedVariableRefactoring >> applicabilityPreconditions [
 { #category : 'scripting api - conditions' }
 ReRenameSharedVariableRefactoring >> checkPreconditions [ 
 
-	self checkApplicabilityPreconditions 
+	self applicabilityPreconditionsMessage 
 ]
 
 { #category : 'accessing' }
