@@ -8,9 +8,9 @@ Note that  I only override a single private method, so changes in the superclass
 Class {
 	#name : 'OCTargetCompilerParser',
 	#superclass : 'OCParser',
-	#category : 'OpalCompiler-Tests-Semantic',
+	#category : 'OpalCompiler-Tests-Semantics',
 	#package : 'OpalCompiler-Tests',
-	#tag : 'Semantic'
+	#tag : 'Semantics'
 }
 
 { #category : 'private - parsing' }
