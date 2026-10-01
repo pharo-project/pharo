@@ -482,9 +482,9 @@ StRenameClassPreviewPresenter >> validateName: aString [
 				validationLabel label: '' ]
 		ifNotNil: [
 				nameIsValid := false.
-				validationLabel label: (message asText
-						 addAttribute: (TextColor color: Smalltalk ui theme dangerTextColor);
-						 yourself) ]
+				validationLabel 
+					label: message;
+					addStyle: 'headerError' ]
 ]
 
 { #category : 'accessing' }
