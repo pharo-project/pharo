@@ -57,7 +57,7 @@ RGPackageDefinition >> addTraitNamed: traitName [
 	self addClass: (RGTraitDefinition named: traitName)
 ]
 
-{ #category : 'convenient accesses' }
+{ #category : 'convenient accessing' }
 RGPackageDefinition >> allClasses [
 	"convenient method"
 
@@ -73,14 +73,14 @@ RGPackageDefinition >> allClassesDo: aBlock [
 		class hasMetaclass ifTrue: [ aBlock value: class classSide ] ]
 ]
 
-{ #category : 'convenient accesses' }
+{ #category : 'convenient accessing' }
 RGPackageDefinition >> allMethods [
 	"convenient method"
 
 	^ self methods
 ]
 
-{ #category : 'convenient accesses' }
+{ #category : 'convenient accessing' }
 RGPackageDefinition >> allTraits [
 	"convenient method"
 
@@ -137,7 +137,7 @@ RGPackageDefinition >> classesDo: aBlock [
 		class hasMetaclass ifTrue: [ aBlock value: class classSide ] ]
 ]
 
-{ #category : 'convenient accesses' }
+{ #category : 'convenient accessing' }
 RGPackageDefinition >> definedClassNames [
 	"Retrieves class names (including traits)"
 
@@ -411,14 +411,14 @@ RGPackageDefinition >> traitNamed: traitName [
 		  ifFalse: [ nil ]
 ]
 
-{ #category : 'convenient accesses' }
+{ #category : 'convenient accessing' }
 RGPackageDefinition >> traitNames [
 	"Retrieves the names of defined traits"
 
 	^ self traits keys
 ]
 
-{ #category : 'convenient accesses' }
+{ #category : 'convenient accessing' }
 RGPackageDefinition >> traits [
 	"Retrieves a collection (by default a dictionary) containing only defined traits"
 

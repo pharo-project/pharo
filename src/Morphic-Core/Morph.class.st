@@ -378,7 +378,7 @@ Morph >> addDropShadowMenuItems: aMenu hand: aHand [
 	aMenu add: 'drop shadow' subMenu: menu
 ]
 
-{ #category : 'meta-actions' }
+{ #category : 'meta actions' }
 Morph >> addEmbeddingMenuItemsTo: aMenu hand: aHandMorph [
 	"Construct a menu offerring embed targets for the receiver.  If the incoming menu is is not degenerate, add the constructed menu as a submenu; in any case, answer the embed-target menu"
 
@@ -1243,7 +1243,7 @@ Morph >> beginsWith: aString fromList: aMorph [
 	^ string asString beginsWith: aString fromList: aMorph
 ]
 
-{ #category : 'meta-actions' }
+{ #category : 'meta actions' }
 Morph >> blueButtonUp: anEvent [
 	"Ignored. Theoretically we should never get here since control is transferred to the halo on #blueButtonDown: but subclasses may implement this differently."
 ]
@@ -1454,7 +1454,7 @@ Morph >> buildDebugMenu: aHand [
 	^ aMenu
 ]
 
-{ #category : 'meta-actions' }
+{ #category : 'meta actions' }
 Morph >> buildHandleMenu: aHand [
 	"Build the morph menu for the given morph's halo's menu handle. This menu has two sections. The first section contains commands that are interpreted by the hand; the second contains commands provided by the target morph. This method allows the morph to decide which items should be included in the hand's section of the menu."
 
@@ -1470,7 +1470,7 @@ Morph >> buildHandleMenu: aHand [
 	^ menu
 ]
 
-{ #category : 'meta-actions' }
+{ #category : 'meta actions' }
 Morph >> buildMetaMenu: evt [
 	"Build the morph menu. This menu has two sections. The first section contains commands that are handled by the hand; the second contains commands handled by the argument morph."
 
@@ -1632,7 +1632,7 @@ Morph >> changeColor [
 		ifFalse: [self fillStyle: dialog selectedColor]
 ]
 
-{ #category : 'meta-actions' }
+{ #category : 'meta actions' }
 Morph >> changeColorTarget: anObject selector: aSymbol originalColor: aColor hand: aHand [
 	"Put up a color picker for changing some kind of color."
 
@@ -1955,7 +1955,7 @@ Morph >> computeFullBounds [
 			ex pass ]"
 ]
 
-{ #category : 'geometry testing' }
+{ #category : 'geometry - testing' }
 Morph >> containsPoint: aPoint [
 
 	^ self bounds containsPoint: aPoint
@@ -1979,7 +1979,7 @@ Morph >> copy [
 	^ self veryDeepCopy
 ]
 
-{ #category : 'meta-actions' }
+{ #category : 'meta actions' }
 Morph >> copyToPasteBuffer: evt [
 	^evt hand copyToPasteBuffer: self
 ]
@@ -2136,7 +2136,7 @@ Morph >> disableTableLayout: aBool [
 	self layoutChanged
 ]
 
-{ #category : 'meta-actions' }
+{ #category : 'meta actions' }
 Morph >> dismissMorph [
 	"This is called from an explicit halo destroy/delete action."
 
@@ -2146,7 +2146,7 @@ Morph >> dismissMorph [
 	self delete
 ]
 
-{ #category : 'meta-actions' }
+{ #category : 'meta actions' }
 Morph >> dismissMorph: evt [
 	self dismissMorph
 ]
@@ -2397,7 +2397,7 @@ Morph >> duplicate [
 	^newMorph
 ]
 
-{ #category : 'meta-actions' }
+{ #category : 'meta actions' }
 Morph >> duplicateMorph: evt [
 	"Make and return a duplicate of the receiver's argument"
 	| dup |
@@ -2694,7 +2694,7 @@ Morph >> fullBoundsInWorld [
 	^self bounds: self fullBounds in: self world
 ]
 
-{ #category : 'geometry testing' }
+{ #category : 'geometry - testing' }
 Morph >> fullContainsPoint: aPoint [
 	(self fullBounds containsPoint: aPoint)
 		ifFalse: [ ^ false ].	"quick elimination"
@@ -2771,7 +2771,7 @@ Morph >> goHome [
 		ifTrue: [self bottom: box bottom - fb bottom + self bottom]
 ]
 
-{ #category : 'meta-actions' }
+{ #category : 'meta actions' }
 Morph >> grabMorph: evt [
 
 	evt hand grabMorph: self
@@ -3055,7 +3055,7 @@ Morph >> handleMouseWheel: anEvent [
 		self mouseWheel: anEvent]
 ]
 
-{ #category : 'meta-actions' }
+{ #category : 'meta actions' }
 Morph >> handleSpecialGesture: mouseDownEvent [
 	"Special gestures (cmd-mouse on the Macintosh; Alt-mouse on Windows and Unix) allow a mouse-sensitive morph to be moved or bring up a halo for the morph."
 	| h tfm doNotDrag |
@@ -3125,7 +3125,7 @@ Morph >> handleWindowEvent: anEvent [
 	self windowEvent: anEvent
 ]
 
-{ #category : 'meta-actions' }
+{ #category : 'meta actions' }
 Morph >> handlerForBlueButtonDown: anEvent [
 	"Return the (prospective) handler for a mouse down event.
 	In this case all blue buttons are disabled unless the subclass whant to handle it"
@@ -3158,7 +3158,7 @@ Morph >> handlerForMouseDown: anEvent [
 		ifFalse: [ nil]
 ]
 
-{ #category : 'meta-actions' }
+{ #category : 'meta actions' }
 Morph >> handlerForSpecialGestureDown: anEvent [
 	"Return the (prospective) handler for a special gesture event (Halos).
 	The handler is temporarily installed and can be used for morphs further down the hierarchy to negotiate whether the inner or the outer morph should finally handle the event."
@@ -3628,7 +3628,7 @@ Morph >> insetColor [
 	^ owner ifNil: [ self color ] ifNotNil: [ self colorForInsets ]
 ]
 
-{ #category : 'meta-actions' }
+{ #category : 'meta actions' }
 Morph >> inspectAt: aPoint event: evt [
 	|  morphs target |
 	morphs := self morphsAt: aPoint.
@@ -3688,7 +3688,7 @@ Morph >> invalidRect: aRectangle from: aMorph [
 	owner ifNotNil: [owner invalidRect: damageRect from: self]
 ]
 
-{ #category : 'meta-actions' }
+{ #category : 'meta actions' }
 Morph >> invokeMetaMenu: evt [
 	| menu |
 	self world ifNil: [ ^self ].
@@ -4198,14 +4198,14 @@ Morph >> maybeAddCollapseItemTo: aMenu [
 				[aMenu add: 'collapse' target: self selector: #collapse]]
 ]
 
-{ #category : 'meta-actions' }
+{ #category : 'meta actions' }
 Morph >> maybeDuplicateMorph [
 	"Maybe duplicate the morph"
 
 	^self duplicate openInHand
 ]
 
-{ #category : 'meta-actions' }
+{ #category : 'meta actions' }
 Morph >> maybeDuplicateMorph: evt [
 	^self duplicateMorph: evt
 ]
@@ -4913,7 +4913,7 @@ Morph >> postOpenInWorld: aWorld [
 	self startSteppingSubmorphs
 ]
 
-{ #category : 'meta-actions' }
+{ #category : 'meta actions' }
 Morph >> potentialEmbeddingTargets [
 	"Return the potential targets for embedding the receiver"
 
@@ -4922,7 +4922,7 @@ Morph >> potentialEmbeddingTargets [
 	^ (oneUp morphsAt: topRend referencePosition behind: topRend unlocked: true) reject: [ :m | m isFlexMorph ]
 ]
 
-{ #category : 'meta-actions' }
+{ #category : 'meta actions' }
 Morph >> potentialTargets [
 	"Return the potential targets for the receiver.
 	This is derived from Morph>>potentialEmbeddingTargets."
@@ -4930,7 +4930,7 @@ Morph >> potentialTargets [
 	^owner morphsAt: self referencePosition behind: self unlocked: true not
 ]
 
-{ #category : 'meta-actions' }
+{ #category : 'meta actions' }
 Morph >> potentialTargetsAt: aPoint [
 	"Return the potential targets for the receiver.
 	This is derived from Morph>>potentialEmbeddingTargets."
@@ -5514,7 +5514,7 @@ Morph >> resistsRemovalString [
 	^ (self resistsRemoval) -> 'resist being deleted' translated
 ]
 
-{ #category : 'meta-actions' }
+{ #category : 'meta actions' }
 Morph >> resizeFromMenu [
 	"Commence an interaction that will resize the receiver"
 
@@ -5870,7 +5870,7 @@ Morph >> show [
 	self changed
 ]
 
-{ #category : 'meta-actions' }
+{ #category : 'meta actions' }
 Morph >> showActions [
 	"Put up a message list browser of all the code that this morph
 	would run for mouseUp, mouseDown, mouseMove, mouseEnter,
@@ -6364,7 +6364,7 @@ Morph >> target: aMorph [
 Do not remove."
 ]
 
-{ #category : 'meta-actions' }
+{ #category : 'meta actions' }
 Morph >> targetWith: evt [
 	"Some other morph become target of the receiver"
 	|  newTarget |

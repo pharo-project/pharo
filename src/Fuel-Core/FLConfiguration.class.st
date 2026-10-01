@@ -24,38 +24,38 @@ FLConfiguration class >> default [
 	^ default ifNil: [ default := self new ]
 ]
 
-{ #category : 'accessing-defaults' }
+{ #category : 'accessing - defaults' }
 FLConfiguration class >> defaultDirectory [
 	^ FileSystem disk workingDirectory
 ]
 
-{ #category : 'accessing-defaults' }
+{ #category : 'accessing - defaults' }
 FLConfiguration class >> defaultFileExtension [
 	^ 'fuel'
 ]
 
-{ #category : 'accessing-defaults' }
+{ #category : 'accessing - defaults' }
 FLConfiguration class >> defaultFilename [
 	^ 'serialization'
 ]
 
-{ #category : 'accessing-defaults' }
+{ #category : 'accessing - defaults' }
 FLConfiguration class >> defaultGlobalEnvironment [
 	^ self environment
 ]
 
-{ #category : 'accessing-defaults' }
+{ #category : 'accessing - defaults' }
 FLConfiguration class >> defaultGlobalSymbols [
 
     ^ #(#Smalltalk #SourceFiles #Transcript #Undeclared #Display #TextConstants #ActiveWorld #ActiveHand #ActiveEvent #Sensor #Processor #SystemOrganization #World)
 ]
 
-{ #category : 'accessing-defaults' }
+{ #category : 'accessing - defaults' }
 FLConfiguration class >> defaultHasMultipleObjects [
 	^ false
 ]
 
-{ #category : 'accessing-defaults' }
+{ #category : 'accessing - defaults' }
 FLConfiguration class >> defaultSignature [
 	^ 'FUEL'
 ]

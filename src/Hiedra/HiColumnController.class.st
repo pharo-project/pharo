@@ -32,7 +32,7 @@ HiColumnController >> cellBoundsForRow: rowIndex inPage: pageIndex [
 		corner: (renderer rowWidthAt: rowIndex) @ ((rowIndexRelativeToPage + 1) * renderer rowHeight)
 ]
 
-{ #category : 'API' }
+{ #category : 'api' }
 HiColumnController >> cellMorphAtRow: rowIndex [
 	"Answer a Morph that corresponds to a row index. The height of such Morph is given by renderer's rowHeight and the width is given by the ruler's numberOfColumns and the renderer's cellWidth.
 	This is an important method of this class, that the table widget will use to fill each Hiedra column's cell."
@@ -42,7 +42,7 @@ HiColumnController >> cellMorphAtRow: rowIndex [
 	^ cellMorphByRowIndex at: rowIndex ifAbsent: [ self newCellMorphForRow: rowIndex ]
 ]
 
-{ #category : 'API' }
+{ #category : 'api' }
 HiColumnController >> cellMorphAtValue: aValue [
 	"Answer a Morph that corresponds to aValue. See #cellMorphAtRowIndex: for more information."
 
@@ -105,29 +105,29 @@ HiColumnController >> pageIndexAtRow: rowIndex [
 	^ (rowIndex - 1) // self pageSize
 ]
 
-{ #category : 'API' }
+{ #category : 'api' }
 HiColumnController >> pageSize [
 	^ pageSize
 ]
 
-{ #category : 'API' }
+{ #category : 'api' }
 HiColumnController >> pageSize: anInteger [
 	"Set the number of rows that will be rendered together (when I'm asked for a missing cell Morph)."
 
 	pageSize := anInteger
 ]
 
-{ #category : 'API' }
+{ #category : 'api' }
 HiColumnController >> renderer [
 	^ renderer
 ]
 
-{ #category : 'API' }
+{ #category : 'api' }
 HiColumnController >> renderer: aHiRulerRenderer [
 	renderer := aHiRulerRenderer
 ]
 
-{ #category : 'API' }
+{ #category : 'api' }
 HiColumnController >> reset [
 	"Reset the internal state with the purpose to regenerate the visualization the next time #cellMorphFor: is executed."
 
@@ -155,17 +155,17 @@ HiColumnController >> rowIntervalAtPage: pageIndex [
 		(((pageIndex + 1) * self pageSize) min: self ruler numberOfRows)
 ]
 
-{ #category : 'API' }
+{ #category : 'api' }
 HiColumnController >> ruler [
 	^ renderer ruler
 ]
 
-{ #category : 'API' }
+{ #category : 'api' }
 HiColumnController >> ruler: aHiRuler [
 	renderer ruler: aHiRuler
 ]
 
-{ #category : 'API' }
+{ #category : 'api' }
 HiColumnController >> rulerWidth [
 
 	^ renderer formWidth

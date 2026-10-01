@@ -128,7 +128,7 @@ OSSDL2Driver >> createWindowWithAttributes: attributes osWindow: osWindow [
 	^ aBackendWindow
 ]
 
-{ #category : 'events-processing' }
+{ #category : 'events - processing' }
 OSSDL2Driver >> dispatchEvent: mappedEvent [
 
 	| window |
@@ -141,7 +141,7 @@ OSSDL2Driver >> dispatchEvent: mappedEvent [
 	^ window handleNewSDLEvent: mappedEvent
 ]
 
-{ #category : 'events-processing' }
+{ #category : 'events - processing' }
 OSSDL2Driver >> ensureEventLoop [
 
 	"Make sure an event loop is running.
@@ -151,7 +151,7 @@ OSSDL2Driver >> ensureEventLoop [
 	self setupEventLoop
 ]
 
-{ #category : 'events-processing' }
+{ #category : 'events - processing' }
 OSSDL2Driver >> evaluateUserInterrupt: anSDLEvent [
 
 	anSDLEvent isUserInterrupt
@@ -164,7 +164,7 @@ OSSDL2Driver >> eventFilter [
 	^ eventFilter ifNil: [ eventFilter := OSSDLPasteEventFilter new next: self; yourself ]
 ]
 
-{ #category : 'events-processing' }
+{ #category : 'events - processing' }
 OSSDL2Driver >> eventLoop [
 	| event session |
 	event := SDL_Event new.
@@ -184,7 +184,7 @@ OSSDL2Driver >> eventLoopProcess [
 	^ self class eventLoopProcess
 ]
 
-{ #category : 'events-processing' }
+{ #category : 'events - processing' }
 OSSDL2Driver >> forceNewEventLoop [
 
 	"Force the (re)creation of an event loop.
@@ -245,7 +245,7 @@ OSSDL2Driver >> openAddedJoystick: index [
 	JoystickMap at: index put: joystick
 ]
 
-{ #category : 'events-processing' }
+{ #category : 'events - processing' }
 OSSDL2Driver >> processEvent: sdlEvent [
 
 	| mappedEvent |
@@ -315,7 +315,7 @@ OSSDL2Driver >> setGLAttributes: glAttributes [
 	SDL2 glSetAttribute: SDL_GL_FRAMEBUFFER_SRGB_CAPABLE value: glAttributes srgbFramebuffer asBit
 ]
 
-{ #category : 'events-processing' }
+{ #category : 'events - processing' }
 OSSDL2Driver >> setupEventLoop [
 
 	"Create a new event loop.
@@ -340,7 +340,7 @@ OSSDL2Driver >> shutDown: quitting [
 	self shutdownEventLoop
 ]
 
-{ #category : 'events-processing' }
+{ #category : 'events - processing' }
 OSSDL2Driver >> shutdownEventLoop [
 
 	"Kills the current event loop if any"
@@ -442,7 +442,7 @@ OSSDL2Driver >> visitControllerDeviceRemovedEvent: controllerEvent [
 		hasMapping: true
 ]
 
-{ #category : 'events-processing' }
+{ #category : 'events - processing' }
 OSSDL2Driver >> visitFingerDownEvent: event [
 	^OSTouchActionPointerDownEvent new
 			timestamp: event timestamp;
@@ -454,7 +454,7 @@ OSSDL2Driver >> visitFingerDownEvent: event [
 			yourself
 ]
 
-{ #category : 'events-processing' }
+{ #category : 'events - processing' }
 OSSDL2Driver >> visitFingerMotionEvent: event [
 	^OSTouchActionPointerMoveEvent new
 			timestamp: event timestamp;
@@ -466,7 +466,7 @@ OSSDL2Driver >> visitFingerMotionEvent: event [
 			yourself
 ]
 
-{ #category : 'events-processing' }
+{ #category : 'events - processing' }
 OSSDL2Driver >> visitFingerUpEvent: event [
 	^OSTouchActionPointerUpEvent new
 			timestamp: event timestamp;

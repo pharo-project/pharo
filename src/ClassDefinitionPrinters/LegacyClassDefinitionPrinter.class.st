@@ -18,7 +18,7 @@ LegacyClassDefinitionPrinter >> applyCustomizersOn: stream [
 	self class customizers do: [ :customizer | customizer legacyClassDefinitionFor: forClass on: stream ]
 ]
 
-{ #category : 'public API' }
+{ #category : 'public api' }
 LegacyClassDefinitionPrinter >> classDefinitionString [
 
 	"Answer a String that defines the receiver in the old format using poolDictionaries and category.
@@ -55,7 +55,7 @@ LegacyClassDefinitionPrinter >> classDefinitionString [
 	^ aStream contents
 ]
 
-{ #category : 'public API' }
+{ #category : 'public api' }
 LegacyClassDefinitionPrinter >> metaclassDefinitionString [
 
 	^ String streamContents: [:stream |

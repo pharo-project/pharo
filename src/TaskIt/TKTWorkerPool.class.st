@@ -42,7 +42,7 @@ Class {
 	#tag : 'Worker'
 }
 
-{ #category : 'schedulling' }
+{ #category : 'scheduling' }
 TKTWorkerPool >> getAvailableWorker [
 
 	| worker |
@@ -83,7 +83,7 @@ TKTWorkerPool >> name: aString [
 	poolWorker name: aString
 ]
 
-{ #category : 'schedulling' }
+{ #category : 'scheduling' }
 TKTWorkerPool >> newWorker [
 	| newWorker |
 	newWorker := TKTWorker new.
@@ -125,19 +125,19 @@ TKTWorkerPool >> priority: anInteger [
 	workers do: [ : each | each priority: anInteger ]
 ]
 
-{ #category : 'schedulling' }
+{ #category : 'scheduling' }
 TKTWorkerPool >> purge [
 
 	poolWorker purge
 ]
 
-{ #category : 'schedulling' }
+{ #category : 'scheduling' }
 TKTWorkerPool >> returnWorker: aTKTWorker [
 
 	freeWorkers nextPut: aTKTWorker
 ]
 
-{ #category : 'schedulling' }
+{ #category : 'scheduling' }
 TKTWorkerPool >> scheduleTaskExecution: aTaskExecution [
 
 	poolWorker schedule: [ | worker |

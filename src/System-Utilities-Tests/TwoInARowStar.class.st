@@ -9,7 +9,7 @@ Class {
 	#package : 'System-Utilities-Tests'
 }
 
-{ #category : 'API' }
+{ #category : 'api' }
 TwoInARowStar >> T: anObj [
 	| n |
 	n := self getNext: anObj.
@@ -18,7 +18,7 @@ TwoInARowStar >> T: anObj [
 		ifFalse: [ false ]
 ]
 
-{ #category : 'API' }
+{ #category : 'api' }
 TwoInARowStar >> getNext: previousObj [
 	^ Continuation
 		currentDo: [ :here_again |
@@ -26,7 +26,7 @@ TwoInARowStar >> getNext: previousObj [
 			fill value: previousObj ]
 ]
 
-{ #category : 'API' }
+{ #category : 'api' }
 TwoInARowStar >> tree: aTree [
 	| fst |
 	fst := Continuation
@@ -39,7 +39,7 @@ TwoInARowStar >> tree: aTree [
 		ifFalse: [ false ]
 ]
 
-{ #category : 'API' }
+{ #category : 'api' }
 TwoInARowStar >> waddle: aTree [
 	^ (aTree isNotNil and: [ aTree isMemberOf: ValueLink ])
 		ifTrue: [ | car cdr |

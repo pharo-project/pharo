@@ -68,7 +68,7 @@ TransformMorph >> colorForInsets [
 	^ owner ifNil: [color] ifNotNil: [owner color]
 ]
 
-{ #category : 'geometry testing' }
+{ #category : 'geometry - testing' }
 TransformMorph >> containsPoint: aPoint [
 	(bounds containsPoint: aPoint) ifFalse: [ ^ false ].
 	^ self hasSubmorphs

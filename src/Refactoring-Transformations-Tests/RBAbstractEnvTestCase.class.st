@@ -227,7 +227,7 @@ RBAbstractEnvTestCase >> setUp [
 	testingEnvironment := Smalltalk globals
 ]
 
-{ #category : 'set up' }
+{ #category : 'setup' }
 RBAbstractEnvTestCase >> setupInlineExpressionFor: aRefactoring toReturn: aBoolean [
 	| options |
 	options := aRefactoring options copy.
