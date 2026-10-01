@@ -53,7 +53,7 @@ BaselineOfIDE >> baseline: spec [
 		spec baseline: 'Flashback' with: [ spec repository: repository ].
 
 		self
-			load: 'Shift' group: 'shift-tests' spec: spec;
+			load: 'Shift' group: 'Tests' spec: spec;
 			load: 'Traits' group: 'traits-tests' spec: spec;
 			load: 'SlotExtensions' group: 'Tests' spec: spec;
 			load: 'Clap' group: 'Development' spec: spec.

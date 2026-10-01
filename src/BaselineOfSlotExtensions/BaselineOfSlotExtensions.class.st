@@ -21,7 +21,7 @@ BaselineOfSlotExtensions >> baseline: spec [
 	
 	spec for: #common do: [ 
 		spec
-			baseline: 'Shift' with: [ spec loads: 'core' from: repository ];
+			baseline: 'Shift' with: [ spec loads: 'Core' from: repository ];
 			package: 'Kernel-CodeModel-Tests';
 			package: 'Slot-Examples';
 			package: 'Slot-Examples-Tests'  with: [ spec requires: #('Slot-Examples' 'Kernel-CodeModel-Tests') ];

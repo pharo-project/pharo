@@ -10,3 +10,13 @@ Class {
 TestClass class >> classSideMethodUsingInheritedSomeShareVariable [
 	^ SomeSharedVariable 
 ]
+
+{ #category : 'support' }
+TestClass >> anotherMethodUsingSomeSharedVariable [
+	^ SomeSharedVariable
+]
+
+{ #category : 'support' }
+TestClass >> methodUsingInheritedSharedPoolVariable [
+	^ One
+]

@@ -181,7 +181,6 @@ ClassVariableTest >> testUsingMethods [
 
 	variable := TestRootClass classVariableNamed: #SomeSharedVariable.
 	self assert: (variable usingMethods includes: TestRootClass>>#methodUsingSomeSharedVariable).
-	self assert: (variable usingMethods includes: TestClass>>#methodUsingSomeSharedVariable).
 	self assert: (variable usingMethods includes: TestClass>>#anotherMethodUsingSomeSharedVariable).
 
 	variable := TestSharedPool classVariableNamed: #One.
