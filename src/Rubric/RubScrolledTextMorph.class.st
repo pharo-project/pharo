@@ -561,6 +561,12 @@ RubScrolledTextMorph >> ghostTextRuler [
 	^ self rulerNamed: #ghostText
 ]
 
+{ #category : 'accessing - rulers' }
+RubScrolledTextMorph >> gutterDiffRuler [
+
+	^ self rulerNamed: #gutterDiff
+]
+
 { #category : 'accessing - scrollbars' }
 RubScrolledTextMorph >> hScrollbarShowAlways [
 	self scrollPane hScrollbarShowAlways.
@@ -1322,6 +1328,12 @@ RubScrolledTextMorph >> withGhostText: aText [
 ]
 
 { #category : 'accessing - rulers' }
+RubScrolledTextMorph >> withGutterDiff [
+
+	self withRulerNamed: #gutterDiff
+]
+
+{ #category : 'accessing - rulers' }
 RubScrolledTextMorph >> withLineNumbers [
 	self withRulerNamed: #lineNumbers
 ]
@@ -1404,6 +1416,12 @@ RubScrolledTextMorph >> withoutFocusBorder [
 { #category : 'accessing - rulers' }
 RubScrolledTextMorph >> withoutGhostText [
 	self withoutRulerNamed: #ghostText
+]
+
+{ #category : 'accessing - rulers' }
+RubScrolledTextMorph >> withoutGutterDiff [
+
+	self withoutRulerNamed: #gutterDiff
 ]
 
 { #category : 'accessing - rulers' }
