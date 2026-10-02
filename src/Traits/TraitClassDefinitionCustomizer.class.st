@@ -5,8 +5,9 @@ I am used to customize the ClassDefinitionPrinter to print informations about tr
 Class {
 	#name : 'TraitClassDefinitionCustomizer',
 	#superclass : 'AbstractClassDefinitionCustomizer',
-	#category : 'Traits',
-	#package : 'Traits'
+	#category : 'Traits-ClassDefinition',
+	#package : 'Traits',
+	#tag : 'ClassDefinition'
 }
 
 { #category : 'internal' }

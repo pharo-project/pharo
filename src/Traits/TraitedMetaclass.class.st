@@ -149,13 +149,12 @@ TraitedMetaclass >> initialize [
 
 { #category : 'initialization' }
 TraitedMetaclass >> initializeBasicMethods [
-	| selectors |
-
 	"When a traited class is created, the methods from TraitedClass are inserted in the classSide of the new class.
 	So this new class can have traits. The methods are filtered using #isRejectedMethod:"
 
-	selectors := self class traitedClassTrait selectors reject: [ :e | self isRejectedMethod: e ].
-	selectors do: [ :e | self class traitedClassTrait copyMethod: e into: self replacing: true ]
+	self class traitedClassTrait methodsCompilationInfo
+		reject: [ :info | self isRejectedMethod: info selector ]
+		thenDo: [ :info | self class traitedClassTrait copyInfo: info into: self replacing: true ]
 ]
 
 { #category : 'testing' }
@@ -246,24 +245,24 @@ TraitedMetaclass >> methodInstaller [
 
 { #category : 'initialization' }
 TraitedMetaclass >> rebuildMethodDictionary [
-	| selectors removedSelectors modified |
 
-		"During the creation of the class or after a change in the traitComposition, the whole method dictionary is calculated.
+	| compilationInfos removedSelectors modified |
+	"During the creation of the class or after a change in the traitComposition, the whole method dictionary is calculated.
 	If I return true, my users should be updated.
 	Check the version in TraitedClass for more details."
-
 	modified := false.
 
-	self methodDict valuesDo: [ :m | m traitSource ifNil: [ localMethods at: m selector put: m ]].
+	self methodDict valuesDo: [ :m | m traitSource ifNil: [ localMethods at: m selector put: m ] ].
 
-	selectors := self traitComposition selectors reject: [ :e | self isRejectedMethod: e ].
-	selectors do: [ :e | modified := modified | (self traitComposition installSelector: e into: self replacing: false) ].
+	compilationInfos := self traitComposition methodsCompilationInfo reject: [ :info | self isRejectedMethod: info selector ].
+	compilationInfos do: [ :info | modified := modified | (self traitComposition installCompilationInfos: info into: self replacing: false) ].
 
-	removedSelectors := self methodDict keys reject: [ :aSelector | (selectors includes: aSelector) or: [ self isSelectorToKeep: aSelector ] ].
-	modified := modified | (removedSelectors isNotEmpty).
+	removedSelectors := self methodDict keys reject: [ :aSelector |
+		                    (compilationInfos anySatisfy: [ :compilationInfo | compilationInfo selector = aSelector ]) or: [ self isSelectorToKeep: aSelector ] ].
+	modified := modified | removedSelectors isNotEmpty.
 	removedSelectors do: [ :aSelector |
-		self methodDict removeKey: aSelector.
-		self removeFromProtocols: aSelector  ].
+			self methodDict removeKey: aSelector.
+			self removeFromProtocols: aSelector ].
 
 	^ modified
 ]

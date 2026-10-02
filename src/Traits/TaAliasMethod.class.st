@@ -40,10 +40,10 @@ TaAliasMethod >> aliases: anObject [
 	aliases := anObject
 ]
 
-{ #category : 'transforming selectors' }
-TaAliasMethod >> changesSourceCode: aSelector [
+{ #category : 'testing' }
+TaAliasMethod >> changesSourceCode: compilationInfo [
 
-	^ self hasAliasForNew: aSelector
+	^ self hasAliasForNew: compilationInfo selector
 ]
 
 { #category : 'validation' }
@@ -118,6 +118,28 @@ TaAliasMethod >> isLocalAliasSelector: aSymbol [
 { #category : 'testing' }
 TaAliasMethod >> isTraitAlias [
 	^ true
+]
+
+{ #category : 'accessing' }
+TaAliasMethod >> methodsCompilationInfo [
+
+	| innerInfos aliased |
+	"I calculate the new aliases selectors"
+	innerInfos := inner methodsCompilationInfo.
+	aliased := OrderedCollection new: self aliases size.
+
+	self aliases associations do: [ :association |
+			innerInfos
+				detect: [ :info | info selector = association value ]
+				ifFound: [ :info |
+						aliased add: (TraitMethodCompilationInfo new
+								 selector: association key;
+								 definingTrait: info definingTrait;
+								 compiledMethod: info compiledMethod;
+								 sourceCode: (info compiledMethod getSourceReplacingSelectorWith: association key);
+								 yourself) ] ].
+
+	^ innerInfos , aliased
 ]
 
 { #category : 'instance creation' }
