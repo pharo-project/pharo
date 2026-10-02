@@ -206,6 +206,13 @@ OpalCompiler >> ast: anObject [
 		ifNotNil: [ self compilationContext: ast compilationContext ]
 ]
 
+{ #category : 'public access' }
+OpalCompiler >> basicEvaluate: textOrString [
+	"UI-less version of evaluate"
+	^ OpalEvaluator new evaluate: textOrString
+
+]
+
 { #category : 'accessing' }
 OpalCompiler >> bindings [
 	^ self compilationContext bindings
