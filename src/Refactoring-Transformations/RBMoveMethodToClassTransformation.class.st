@@ -62,7 +62,7 @@ RBMoveMethodToClassTransformation >> privateTransform [
 	originalProtocol := method protocolName.
 	self generateChangesFor: (RBAddMethodTransformation
 			 model: self model
-			 sourceCode: rbMethod
+			 sourceCode: rbMethod source
 			 in: newClass 
 			 withProtocol: originalProtocol).
 	self generateChangesFor: (RBRemoveMethodTransformation selector: method selector from: oldClass)
