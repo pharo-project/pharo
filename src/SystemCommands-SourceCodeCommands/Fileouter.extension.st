@@ -22,7 +22,6 @@ Fileouter class >> fileoutNamed: filename cofigureWith: aBlock [
 
 			presenter application
 				inform: message
-				action: 'Open location'
-				onClick: [ fileReference openInOSFileBrowser ] ];
+				action: [ fileReference openInOSFileBrowser ] ];
 		openModal
 ]
