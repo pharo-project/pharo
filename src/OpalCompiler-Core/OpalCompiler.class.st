@@ -206,13 +206,6 @@ OpalCompiler >> ast: anObject [
 		ifNotNil: [ self compilationContext: ast compilationContext ]
 ]
 
-{ #category : 'public access' }
-OpalCompiler >> basicEvaluate: textOrString [
-	"UI-less version of evaluate"
-	^ OpalEvaluator new evaluate: textOrString
-
-]
-
 { #category : 'accessing' }
 OpalCompiler >> bindings [
 	^ self compilationContext bindings
@@ -552,6 +545,13 @@ OpalCompiler >> newParse [
 		^ result signalError ].
 	
 	^ result compiledMethod
+]
+
+{ #category : 'public access' }
+OpalCompiler >> nonInteractiveEvaluate: textOrString [
+	"UI-less version of evaluate"
+	^ OpalEvaluator new evaluate: textOrString
+
 ]
 
 { #category : 'public access' }
