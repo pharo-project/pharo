@@ -250,7 +250,7 @@ MorphTreeModel >> headerLabel: aString [
 	headerLabel := aString
 ]
 
-{ #category : 'help-text' }
+{ #category : 'help text' }
 MorphTreeModel >> helpText [
 
 	^ nil

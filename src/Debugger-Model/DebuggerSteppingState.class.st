@@ -12,5 +12,5 @@ Class {
 { #category : 'accessing' }
 DebuggerSteppingState >> default [
 
-	^ false
+	^ nil
 ]

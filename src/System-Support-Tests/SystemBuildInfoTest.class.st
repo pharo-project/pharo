@@ -1,17 +1,27 @@
 Class {
 	#name : 'SystemBuildInfoTest',
 	#superclass : 'TestCase',
+	#instVars : [
+		'buildInfo'
+	],
 	#category : 'System-Support-Tests-Image',
 	#package : 'System-Support-Tests',
 	#tag : 'Image'
 }
 
+{ #category : 'running' }
+SystemBuildInfoTest >> setUp [
+
+	super setUp.
+	buildInfo := SystemBuildInfo new
+		        initializeForRelease;
+		        yourself
+]
+
 { #category : 'tests' }
 SystemBuildInfoTest >> testIsBuildFinished [
 
-	| buildInfo |
 	buildInfo := SystemBuildInfo new.
-
 	self deny: buildInfo isBuildFinished.
 
 	buildInfo initializeForRelease.
@@ -23,41 +33,35 @@ SystemBuildInfoTest >> testIsBuildFinished [
 SystemBuildInfoTest >> testIsSystemPackage [
 
 	| newPackage |
-	self assert: self class package isSystemPackage.
+	self assert: (buildInfo systemPackagesIncludes: self class package).
 	newPackage := self packageOrganizer ensurePackage: 'GeneratedPackageForTestsOfSystemBuildInfo'.
-	[ self deny: newPackage isSystemPackage ] ensure: [ newPackage ifNotNil: [ :package | package removeFromSystem ] ]
+	[ self deny: (buildInfo systemPackagesIncludes: newPackage) ] ensure: [ newPackage ifNotNil: [ :package | package removeFromSystem ] ]
 ]
 
 { #category : 'tests' }
 SystemBuildInfoTest >> testSystemPackageNames [
 
-	| buildInfo newPackage |
-	buildInfo := SystemBuildInfo new.
-	buildInfo initializeForRelease.
-
+	| newPackage |
 	self denyEmpty: buildInfo systemPackageNames.
 	buildInfo systemPackageNames do: [ :package | self assert: (self packageOrganizer packageNames includes: package) ].
 
 	[
-	newPackage := self packageOrganizer ensurePackage: 'NewPackageNotPartOfPharo'.
+		newPackage := self packageOrganizer ensurePackage: 'NewPackageNotPartOfPharo'.
 
-	self deny: (buildInfo systemPackageNames includes: newPackage name) ] ensure: [ self packageOrganizer removePackage: 'NewPackageNotPartOfPharo' ]
+		self deny: (buildInfo systemPackageNames includes: newPackage name) ] ensure: [ self packageOrganizer removePackage: 'NewPackageNotPartOfPharo' ]
 ]
 
 { #category : 'tests' }
 SystemBuildInfoTest >> testSystemPackages [
 
-	| buildInfo newPackage |
-	buildInfo := SystemBuildInfo new.
-	buildInfo initializeForRelease.
-
+	| newPackage |
 	self denyEmpty: buildInfo systemPackages.
 	buildInfo systemPackages do: [ :package |
-		self assert: package isPackage.
-		self assert: (self packageOrganizer packages includes: package) ].
+			self assert: package isPackage.
+			self assert: (self packageOrganizer packages includes: package) ].
 
 	[
-	newPackage := self packageOrganizer ensurePackage: 'NewPackageNotPartOfPharo'.
+		newPackage := self packageOrganizer ensurePackage: 'NewPackageNotPartOfPharo'.
 
-	self deny: (buildInfo systemPackages includes: newPackage) ] ensure: [ self packageOrganizer removePackage: 'NewPackageNotPartOfPharo' ]
+		self deny: (buildInfo systemPackages includes: newPackage) ] ensure: [ self packageOrganizer removePackage: 'NewPackageNotPartOfPharo' ]
 ]

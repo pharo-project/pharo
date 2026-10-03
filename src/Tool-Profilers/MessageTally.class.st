@@ -495,8 +495,8 @@ MessageTally >> fullPrintExactOn: aStream [
 		totalTime: time
 		tallyExact: true
 		orThreshold: nil.
-	aStream nextPut: Character newPage; cr.
-	aStream nextPutAll: '**Leaves**'; cr.
+
+	aStream cr; nextPutAll: '**Leaves**'; cr.
 	self leavesPrintExactOn: aStream
 ]
 
@@ -510,8 +510,8 @@ MessageTally >> fullPrintOn: aStream threshold: perCent [
 		total: tally
 		totalTime: time
 		threshold: threshold.
-	aStream nextPut: Character newPage; cr.
-	aStream nextPutAll: '**Leaves**'; cr.
+
+	aStream cr; nextPutAll: '**Leaves**'; cr.
 	self
 		leavesPrintOn: aStream
 		threshold: threshold

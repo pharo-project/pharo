@@ -50,7 +50,7 @@ FLContext >> finalizers [
 		ifAbsent: [ #() ]
 ]
 
-{ #category : 'exception-handling' }
+{ #category : 'exception handling' }
 FLContext >> handleObjectLimitExceeded [
 	map
 		at: #objectLimitExceededWarningRaised

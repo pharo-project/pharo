@@ -49,7 +49,7 @@ TaskbarTask >> asDraggableMorph [
 	^ StringMorph contents: self label
 ]
 
-{ #category : 'user-interface' }
+{ #category : 'user interface' }
 TaskbarTask >> buttonClickedForTaskList: aTasklist [
 	"Notify the tasklist."
 
@@ -136,7 +136,7 @@ TaskbarTask >> state: anObject [
 	state := anObject
 ]
 
-{ #category : 'user-interface' }
+{ #category : 'user interface' }
 TaskbarTask >> taskListButtonFor: aTasklist [
 	"Answer a button for the task."
 
@@ -145,7 +145,7 @@ TaskbarTask >> taskListButtonFor: aTasklist [
 		for: self
 ]
 
-{ #category : 'user-interface' }
+{ #category : 'user interface' }
 TaskbarTask >> taskbarButtonFor: aTaskBar [
 	"Answer a button for the task."
 

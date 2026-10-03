@@ -47,14 +47,14 @@ TPutTest >> test0FixturePutOneOrMoreElementsTest [
 	self denyEmpty: self nonEmpty
 ]
 
-{ #category : 'tests - puting with indexes' }
+{ #category : 'tests - putting with indexes' }
 TPutTest >> testAtAllIndexesPut [
 
 	self nonEmpty atAllPut: self aValue.
 	self nonEmpty do:[ :each| self assert: each = self aValue]
 ]
 
-{ #category : 'tests - puting with indexes' }
+{ #category : 'tests - putting with indexes' }
 TPutTest >> testAtAllPut [
 
 	self nonEmpty atAll: self indexArray put: self aValue.
@@ -63,7 +63,7 @@ TPutTest >> testAtAllPut [
 		[:i | self assert: (self nonEmpty at: i) equals: self aValue ]
 ]
 
-{ #category : 'tests - puting with indexes' }
+{ #category : 'tests - putting with indexes' }
 TPutTest >> testAtAllPutAll [
 
 	| aValueArray |
@@ -74,7 +74,7 @@ TPutTest >> testAtAllPutAll [
 		self assert: (self nonEmpty at: element) equals: (aValueArray  at: index) ]
 ]
 
-{ #category : 'tests - puting with indexes' }
+{ #category : 'tests - putting with indexes' }
 TPutTest >> testAtLastPut [
 
 	| index |
@@ -84,7 +84,7 @@ TPutTest >> testAtLastPut [
 	self assert: (self nonEmpty at: (self nonEmpty size + 1 - index)) equals: self aValue
 ]
 
-{ #category : 'tests - puting with indexes' }
+{ #category : 'tests - putting with indexes' }
 TPutTest >> testAtWrapPut [
 
 	| index |
@@ -103,7 +103,7 @@ TPutTest >> testAtWrapPut [
 	self assert: (self nonEmpty at: index) equals: self aValue
 ]
 
-{ #category : 'tests - puting with indexes' }
+{ #category : 'tests - putting with indexes' }
 TPutTest >> testFromToPut [
 
 	| collection index |
@@ -116,7 +116,7 @@ TPutTest >> testFromToPut [
 		[:i | self assert: (collection at:i)= (self nonEmpty at:i)]
 ]
 
-{ #category : 'tests - puting with indexes' }
+{ #category : 'tests - putting with indexes' }
 TPutTest >> testSwapWith [
 
 	| result index |

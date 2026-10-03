@@ -39,7 +39,7 @@ NewFileVersionner class >> from: aFileReference [
  	^ self new fileReference: aFileReference ; yourself
 ]
 
-{ #category : 'API' }
+{ #category : 'api' }
 NewFileVersionner >> extractVersionOrZero [
 	"Given a pattern basename.number.extension returns number.
 	All the other case returns 0."
@@ -75,7 +75,7 @@ NewFileVersionner >> indexOfNumber [
 	^ pattern indexOf: #number
 ]
 
-{ #category : 'API' }
+{ #category : 'api' }
 NewFileVersionner >> lastFileFor: baseFileName extension: extension [
 	"Assumes that the filereference instance variable is a folder and contains files named following one of the patterns supported e.g., games.22.ston or game.22
   Answer the file name with the largest number.
@@ -111,7 +111,7 @@ NewFileVersionner >> lastFileFor: baseFileName extension: extension [
 	 ^ ( directory / (tokenizedFilename first , '.' , maxVersion asString , extensionString )) asFileReference
 ]
 
-{ #category : 'API' }
+{ #category : 'api' }
 NewFileVersionner >> nextVersionFileReference [
 	"Assumes a file (or folder) name follows the pattern prior.number.extension pr prior.number, 
 	increment the version number and answer the new filereference. If the pattern is not set, respected or if a version number is not found, raise an error."

@@ -17,7 +17,7 @@ Class {
 	#tag : 'Infrastructure'
 }
 
-{ #category : 'utilities api' }
+{ #category : 'utilities - api' }
 OupsDebuggerSystem class >> closeAllDebuggers [
 	TDebugger users do:[:debuggerClass| debuggerClass closeAllDebuggers]
 ]

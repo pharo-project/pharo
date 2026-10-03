@@ -29,7 +29,7 @@ TDictionaryEnumeratingTest >> test0FixtureDictionaryEnumeratingTest [
 	self denyEmpty: self nonEmptyDict
 ]
 
-{ #category : 'tests - dictionnary enumerating' }
+{ #category : 'tests - dictionary enumerating' }
 TDictionaryEnumeratingTest >> testAssociationsDo [
 
 	| collection keys |
@@ -45,7 +45,7 @@ TDictionaryEnumeratingTest >> testAssociationsDo [
 	collection keys do: [:key | self assert: ( keys occurrencesOf: key ) = (collection keys occurrencesOf: key)]
 ]
 
-{ #category : 'tests - dictionnary enumerating' }
+{ #category : 'tests - dictionary enumerating' }
 TDictionaryEnumeratingTest >> testAssociationsSelect [
 	| collection keys result |
 	collection := self nonEmptyDict .
@@ -58,7 +58,7 @@ TDictionaryEnumeratingTest >> testAssociationsSelect [
 	self assert: result = collection
 ]
 
-{ #category : 'tests - dictionnary enumerating' }
+{ #category : 'tests - dictionary enumerating' }
 TDictionaryEnumeratingTest >> testCollect [
 	| collection values result |
 	collection := self nonEmptyDict .
@@ -71,7 +71,7 @@ TDictionaryEnumeratingTest >> testCollect [
 	self assert: result = collection
 ]
 
-{ #category : 'tests - dictionnary enumerating' }
+{ #category : 'tests - dictionary enumerating' }
 TDictionaryEnumeratingTest >> testDo [
 	| t collection |
 	collection := self nonEmptyDict .
@@ -83,7 +83,7 @@ TDictionaryEnumeratingTest >> testDo [
 	t do: [ :each | self assert: (t occurrencesOf: each ) = ( collection values occurrencesOf: each) ]
 ]
 
-{ #category : 'tests - dictionnary enumerating' }
+{ #category : 'tests - dictionary enumerating' }
 TDictionaryEnumeratingTest >> testKeysAndValuesDo [
 
 	| collection keys |
@@ -96,7 +96,7 @@ TDictionaryEnumeratingTest >> testKeysAndValuesDo [
 	collection keys do: [ :key | self assert: (collection keys occurrencesOf: key) = (keys occurrencesOf: key) ] 
 ]
 
-{ #category : 'tests - dictionnary enumerating' }
+{ #category : 'tests - dictionary enumerating' }
 TDictionaryEnumeratingTest >> testKeysDo [
 	| collection keys |
 	collection := self nonEmptyDict .
@@ -108,7 +108,7 @@ TDictionaryEnumeratingTest >> testKeysDo [
 	collection keys do: [ :key | self assert: (collection keys occurrencesOf: key) = (keys occurrencesOf: key)]
 ]
 
-{ #category : 'tests - dictionnary enumerating' }
+{ #category : 'tests - dictionary enumerating' }
 TDictionaryEnumeratingTest >> testReject [
 	"Ensure that Dictionary>>reject: answers a dictionary not something else"
 
@@ -119,7 +119,7 @@ TDictionaryEnumeratingTest >> testReject [
 	self assert: result = collection
 ]
 
-{ #category : 'tests - dictionnary enumerating' }
+{ #category : 'tests - dictionary enumerating' }
 TDictionaryEnumeratingTest >> testSelect [
 	| collection values result |
 	collection := self nonEmptyDict .
@@ -132,7 +132,7 @@ TDictionaryEnumeratingTest >> testSelect [
 	self assert: result = collection
 ]
 
-{ #category : 'tests - dictionnary enumerating' }
+{ #category : 'tests - dictionary enumerating' }
 TDictionaryEnumeratingTest >> testValuesDo [
 	| collection values |
 	collection := self nonEmptyDict .

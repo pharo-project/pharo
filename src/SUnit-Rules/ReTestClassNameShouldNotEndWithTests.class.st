@@ -11,7 +11,7 @@ Class {
 	#tag : 'SUnit'
 }
 
-{ #category : 'testing-interest' }
+{ #category : 'testing - interest' }
 ReTestClassNameShouldNotEndWithTests class >> checksClass [
 
 	^ true

@@ -27,7 +27,7 @@ JobProgressMorph class >> job: aJob [
 	^ self new initializeJob: aJob
 ]
 
-{ #category : 'API' }
+{ #category : 'api' }
 JobProgressMorph >> beComplete [
 
 	self close
@@ -50,20 +50,20 @@ JobProgressMorph >> close [
 	self removeDependent: SystemProgressMorph uniqueInstance
 ]
 
-{ #category : 'API' }
+{ #category : 'api' }
 JobProgressMorph >> current [
 
 	^ bar value
 ]
 
-{ #category : 'API' }
+{ #category : 'api' }
 JobProgressMorph >> current: aNumber [
 
 	bar value: aNumber.
 	self changed
 ]
 
-{ #category : 'API' }
+{ #category : 'api' }
 JobProgressMorph >> decrement [
 
 	bar decrement
@@ -82,7 +82,7 @@ JobProgressMorph >> forceRefreshOnNextChange [
 	lastRefresh := 0
 ]
 
-{ #category : 'API' }
+{ #category : 'api' }
 JobProgressMorph >> increment [
 
 	bar increment
@@ -130,13 +130,13 @@ JobProgressMorph >> job: aJob [
 	job := aJob
 ]
 
-{ #category : 'API' }
+{ #category : 'api' }
 JobProgressMorph >> label [
 
 	^ self labelMorph contents
 ]
 
-{ #category : 'API' }
+{ #category : 'api' }
 JobProgressMorph >> label: aString [
 
 	self label = aString ifTrue: [ ^ self ].
@@ -172,13 +172,13 @@ JobProgressMorph >> max: aNumber [
 	endValue := aNumber
 ]
 
-{ #category : 'API' }
+{ #category : 'api' }
 JobProgressMorph >> progress [
 
 	^ bar progress
 ]
 
-{ #category : 'API' }
+{ #category : 'api' }
 JobProgressMorph >> progress: aNormalizedNumber [
 
 	bar progress = aNormalizedNumber ifFalse: [
@@ -186,7 +186,7 @@ JobProgressMorph >> progress: aNormalizedNumber [
 			self changed ]
 ]
 
-{ #category : 'API' }
+{ #category : 'api' }
 JobProgressMorph >> progress: aNormalizedNumber label: aString [
 	"I am here to have a version updating only once the progress bar when we change label and progress. This method should call #change: or #change only once."
 

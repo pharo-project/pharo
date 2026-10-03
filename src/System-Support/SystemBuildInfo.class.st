@@ -3,7 +3,7 @@ I am a class providing informations on the Pharo build.
 
 Currently I'm allowing one to know:
 - if we are currently in the middle of a Pharo bootstrap or if it is done
-- access the list of the system package
+- access the list of the system package. A ""system package"" is a package that was present in the Pharo image at the end of the bootstrap (minimal image or full image)
 
 More info can be added later depending on needs
 "

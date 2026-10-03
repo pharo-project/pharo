@@ -143,7 +143,7 @@ ReInteractionDriver >> configureRefactoring [
 	refactoring prepareForExecution
 ]
 
-{ #category : 'ui - requests' }
+{ #category : 'ui requests' }
 ReInteractionDriver >> confirm: aString [
 
 	^ self application confirm: aString
@@ -237,7 +237,7 @@ ReInteractionDriver >> hasFailedBehaviorPreservingPreconditions [
 	^ refactoring failedBreakingChangePreconditions isNotEmpty
 ]
 
-{ #category : 'ui - requests' }
+{ #category : 'ui requests' }
 ReInteractionDriver >> inform: aString [
 	"Display a message for the user to read and then dismiss."
 

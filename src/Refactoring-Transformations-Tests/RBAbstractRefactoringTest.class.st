@@ -114,7 +114,7 @@ RBAbstractRefactoringTest >> setUp [
 	model := self defaultNamespaceClass new
 ]
 
-{ #category : 'set up' }
+{ #category : 'setup' }
 RBAbstractRefactoringTest >> setupExtractionClassFor: aRefactoring toReturn: aClass [
 	| options |
 	options := aRefactoring options copy.
@@ -123,7 +123,7 @@ RBAbstractRefactoringTest >> setupExtractionClassFor: aRefactoring toReturn: aCl
 	aRefactoring options: options
 ]
 
-{ #category : 'set up' }
+{ #category : 'setup' }
 RBAbstractRefactoringTest >> setupImplementorToInlineFor: aRefactoring toReturn: anObject [
 	| options |
 	options := aRefactoring options copy.
@@ -131,7 +131,7 @@ RBAbstractRefactoringTest >> setupImplementorToInlineFor: aRefactoring toReturn:
 	aRefactoring options: options
 ]
 
-{ #category : 'set up' }
+{ #category : 'setup' }
 RBAbstractRefactoringTest >> setupMethodNameFor: aRefactoring toReturn: aSelector [
 
 	| options |
@@ -145,7 +145,7 @@ RBAbstractRefactoringTest >> setupMethodNameFor: aRefactoring toReturn: aSelecto
 	aRefactoring options: options
 ]
 
-{ #category : 'set up' }
+{ #category : 'setup' }
 RBAbstractRefactoringTest >> setupMethodNameFor: aRefactoring toReturn: aSelector withArguments: stringCollection [
 
 	| options |
@@ -160,7 +160,7 @@ RBAbstractRefactoringTest >> setupMethodNameFor: aRefactoring toReturn: aSelecto
 	aRefactoring options: options
 ]
 
-{ #category : 'set up' }
+{ #category : 'setup' }
 RBAbstractRefactoringTest >> setupVariableToMoveToFor: aRefactoring toReturn: aString [
 
 	| options |
@@ -169,7 +169,7 @@ RBAbstractRefactoringTest >> setupVariableToMoveToFor: aRefactoring toReturn: aS
 	aRefactoring options: options
 ]
 
-{ #category : 'set up' }
+{ #category : 'setup' }
 RBAbstractRefactoringTest >> setupVariableTypesFor: aRefactoring toReturn: anObject [
 
 	| options |

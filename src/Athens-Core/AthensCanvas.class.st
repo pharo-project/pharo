@@ -92,14 +92,14 @@ AthensCanvas >> drawShape: anObject [
 		draw
 ]
 
-{ #category : 'drawing text' }
+{ #category : 'drawing - text' }
 AthensCanvas >> drawString: aString [
 	"Draw a string using currently selected font.
 	Answer a total advance of rendered string "
 	^ fontRenderer renderCharacters: aString from: 1 to: aString size
 ]
 
-{ #category : 'drawing text' }
+{ #category : 'drawing - text' }
 AthensCanvas >> drawString: aString from: start to: end [
 	"Draw a portion of string using currently selected font.
 	Answer a total advance of rendered portion"
@@ -174,7 +174,7 @@ AthensCanvas >> privatePaint: anObject [
 	paint := anObject
 ]
 
-{ #category : 'drawing text' }
+{ #category : 'drawing - text' }
 AthensCanvas >> setFont: aFont [
 	"Set the current font of receiver. Font object should answer a glyph renderer instance,
 	compatible with glyph renderer protocol"
