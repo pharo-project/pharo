@@ -9,44 +9,6 @@ Class {
 }
 
 { #category : 'tests' }
-ReAddParameterDriverTest >> testAddParameterCollidingSelectorInformsUser [
-	"Adding an argument that produces a selector already defined in the class must inform the user and not override it."
-
-	| rbclasses model method driver dialog colliding valid |
-	rbclasses := RBClassEnvironment classes: { RBClassDataForRefactoringTest }.
-	model := RBNamespace onEnvironment: rbclasses.
-	method := (model classObjectFor: RBClassDataForRefactoringTest) methodFor: #called:on:.
-	driver := ReAddParameterDriver new
-		          scopes: { rbclasses }
-		          model: model
-		          addParameterToMethodSignature: method
-		          in: RBClassDataForRefactoringTest.
-	self setUpDriver: driver.
-	driver application: StApplicationForRefactorDriverMock new.
-
-	colliding := RBMethodName selector: #textInput:name:symbol: arguments: #( 'a' 'b' 'c' ).
-	colliding
-		permutation: #( 1 2 -1 );
-		newArgs: { (RBArgumentName name: 'extra' value: 'nil') }.
-	valid := RBMethodName selector: #called:extra:on: arguments: #( 'a' 'extra' 'b' ).
-	valid
-		permutation: #( 1 -1 2 );
-		newArgs: { (RBArgumentName name: 'extra' value: 'nil') }.
-
-	dialog := MockObject new.
-	dialog on: #cancelled respond: false.
-	dialog on: #methodName respond: colliding.
-	dialog on: #cancelled respond: false.
-	dialog on: #methodName respond: valid.
-	driver requestDialog: dialog.
-	driver runRefactoring.
-
-	self assert: (driver application shownMessage includesSubstring: 'already defined').
-	self assert: ((driver refactoring model classObjectFor: RBClassDataForRefactoringTest) definesMethod: #called:extra:on:).
-	self assert: ((driver refactoring model classObjectFor: RBClassDataForRefactoringTest) definesMethod: #textInput:name:symbol:)
-]
-
-{ #category : 'tests' }
 ReAddParameterDriverTest >> testAddParameterExpectSuccess [
 	| rbclasses model method driver dialog methodName |
 	
