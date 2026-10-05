@@ -117,12 +117,13 @@ ReAddParameterDriver >> gatherUserInput [
 	^ true
 ]
 
-{ #category : 'refactoring' }
+{ #category : 'configuration' }
 ReAddParameterDriver >> instantiateRefactoring [
 	"Here we do not fully configure the refactoring: the new signature is missing.
 	Since we want to let the refactoring validate input, we create it upfront and configure it later."
 
 	^ RBAddParameterRefactoring new 
+		model: model;
 		renameMethod: originalMessage selector in: class;
 		yourself
 ]
