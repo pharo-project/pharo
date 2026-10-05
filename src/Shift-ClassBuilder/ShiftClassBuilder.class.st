@@ -417,11 +417,6 @@ ShiftClassBuilder >> instancesHasShrinked [
 	^ self changes anySatisfy: [ :e | e instancesHasShrinked ]
 ]
 
-{ #category : 'testing' }
-ShiftClassBuilder >> isExtension [
-	^ self metaSuperclass isKindOf: Extension class
-]
-
 { #category : 'accessing' }
 ShiftClassBuilder >> isInRemake [
 
