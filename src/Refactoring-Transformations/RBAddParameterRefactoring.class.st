@@ -59,7 +59,6 @@ RBAddParameterRefactoring >> applicabilityPreconditions [
 
 	^ super applicabilityPreconditions, 
 	{
-		  self newSelectorIsNotDefinedInTargetClassPrecondition.
 		  (ReBlockCondition new
 			   block: [ oldSelector numArgs <= newSelector numArgs ];
 			   violatorErrorString: newSelector printString , ' doesn''t have the proper number of arguments.').
@@ -76,12 +75,12 @@ RBAddParameterRefactoring >> applicabilityPreconditions [
 { #category : 'preconditions' }
 RBAddParameterRefactoring >> breakingChangePreconditions [
 
-	^ { 
-	ReUpToRootDoesNotDefinesMethod new
-		classes: self implementors;
-		selector: newSelector;
-		yourself
-	}
+	^ {
+		  (ReUpToRootDoesNotDefinesMethod new
+			   classes: self implementors;
+			   selector: newSelector;
+			   yourself)
+		}
 ]
 
 { #category : 'preconditions' }
