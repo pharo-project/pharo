@@ -950,6 +950,7 @@ ReflectivityOnStackTest >> testExecuteWithWaitingWithLinkInstalledInEmbeddedBloc
 ReflectivityOnStackTest >> testExecuteWithWaitingWithLinkInstalledInOuterMethodAfterExecutionOfMethodAfterExecutionOfEmbeddedBlockChangeMethodManually [
 
 	| instance messageNode process |
+	self skip. "see https://github.com/pharo-project/pharo/issues/20072"
 	instance := ReflectivityExampleOnStack new.
 
 	process := [ instance exampleMethodWaitingOnSemaphoreInEmbeddedBlock ]
