@@ -96,6 +96,11 @@ NullStream >> lf [
 	^ self nextPut: Character lf
 ]
 
+{ #category : 'writing' }
+NullStream >> newLine [
+	self nextPutAll: String newLine
+]
+
 { #category : 'accessing' }
 NullStream >> next [
 	"Answer the next object accessible by the receiver."
