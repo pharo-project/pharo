@@ -418,20 +418,23 @@ Class >> comment: aString [
 
 { #category : 'accessing - comment' }
 Class >> comment: aString stamp: aStamp [
-	"Store the comment, aString or Text or RemoteString, associated with the class we are organizing.  Empty string gets stored only if had a non-empty one before."
+	"Store the comment, aString or Text or RemoteString, associated with the class we are organizing. Empty string gets stored only if had a non-empty one before.
+	Normalize line endings (Pharo's internal convention) so the comment round-trips cleanly through Tonel. Avoid clashes of lf vs cr"
 
-	| oldComment oldStamp |
+	| oldComment oldStamp normalizedString |
 	oldComment := self comment.
 	oldStamp := self commentStamp.
 
-	aString string = oldComment string ifTrue: [ ^ self ].
+	normalizedString := aString string withInternalLineEndings.
 
-	SourcesManager current writeComment: aString stamp: aStamp  of: self.
+	normalizedString = oldComment string ifTrue: [ ^ self ].
+
+	SourcesManager current writeComment: normalizedString stamp: aStamp of: self.
 
 	self codeChangeAnnouncer
 		class: self
 		oldComment: oldComment
-		newComment: aString
+		newComment: normalizedString
 		oldStamp: oldStamp
 		newStamp: self commentStamp
 ]
