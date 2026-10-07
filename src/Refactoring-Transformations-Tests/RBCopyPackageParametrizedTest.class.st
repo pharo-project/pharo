@@ -107,3 +107,32 @@ RBCopyPackageParametrizedTest >> testFailureExistingPackage [
 
 	self shouldFail: (self createRefactoringWithArguments: { #'Refactoring-Core-Tests'. #'Refactoring-Changes-Tests' })
 ]
+
+{ #category : 'tests' }
+RBCopyPackageParametrizedTest >> testCopyPackageWithComposedTraitPreservesBothMethodSides [
+
+	| duplicate refactoring undo |
+	refactoring := self createRefactoringWithArguments: {
+		TReComposedTraitForDuplication packageName.
+		#RefactoringCOPYSmallPackageForTest }.
+	self executeRefactoring: (refactoring classMappings: {
+		#TReComposedTraitForDuplication -> #TReDuplicatedComposedTrait } asDictionary).
+	duplicate := refactoring model classNamed: #TReDuplicatedComposedTrait.
+	self assert: duplicate isTrait.
+	self assertCollection: duplicate traitComposition traits
+		hasSameElements: { TReTraitToBeUsedInDuplication }.
+	self assert: (duplicate directlyDefinesMethod: #instanceSideValue).
+	self assert: (duplicate classSide directlyDefinesMethod: #classSideValue).
+	undo := refactoring changes execute.
+	[
+		| installed |
+		installed := Smalltalk globals at: #TReDuplicatedComposedTrait.
+		self assert: installed isTrait.
+		self assert: installed packageName equals: #RefactoringCOPYSmallPackageForTest.
+		self assertCollection: installed traits
+			hasSameElements: { TReTraitToBeUsedInDuplication }.
+		self assert: (installed includesSelector: #methodInTrait).
+		self assert: installed classSideValue equals: 42
+	] ensure: [ undo execute ].
+	self deny: (Smalltalk globals includesKey: #TReDuplicatedComposedTrait)
+]
