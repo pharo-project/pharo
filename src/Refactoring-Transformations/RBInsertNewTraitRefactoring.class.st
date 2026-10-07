@@ -55,9 +55,8 @@ RBInsertNewTraitRefactoring >> packageName: aSymbol [
 { #category : 'transforming' }
 RBInsertNewTraitRefactoring >> privateTransform [
 
-	self model defineClass: [ :aBuilder |
+	self model defineTrait: [ :aBuilder |
 		aBuilder
-			beTrait;
 			name: className;
 			package: packageName;
 			tag: tagName;
