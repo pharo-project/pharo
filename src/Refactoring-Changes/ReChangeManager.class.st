@@ -40,7 +40,7 @@ ReChangeManager class >> initialize [
 	self deprecatedAliases: { #RBRefactoryChangeManager }.
 	
 	self nuke.
-	UndoSize := 100
+	UndoSize := 20
 ]
 
 { #category : 'instance creation' }
