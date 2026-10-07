@@ -337,7 +337,7 @@ RBNamespace >> createNewPackageFor: aPackage [
 ]
 
 { #category : 'changes' }
-RBNamespace >> defineClass: aBlock [
+RBNamespace >> defineBehavior: aBlock [
 
 	| change newClass newClassName |
 	change := changes defineClass: aBlock.
@@ -373,6 +373,21 @@ RBNamespace >> defineClass: aBlock [
 	newClass packageName: change package.
 	newClass tagName: change tag.
 	^ change
+]
+
+{ #category : 'changes' }
+RBNamespace >> defineClass: aBlock [
+	"Keep accepting builders configured as traits by existing callers."
+
+	^ self defineBehavior: aBlock
+]
+
+{ #category : 'changes' }
+RBNamespace >> defineTrait: aBlock [
+
+	^ self defineBehavior: [ :builder |
+		builder beTrait.
+		aBlock value: builder ]
 ]
 
 { #category : 'accessing' }
