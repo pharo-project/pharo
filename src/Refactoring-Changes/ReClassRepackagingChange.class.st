@@ -1,5 +1,5 @@
 "
-I'm a change corresponding to a change in the package and/or package tag of the class
+I'm a change corresponding to a change in the package and/or package tag of the class.
 "
 Class {
 	#name : 'ReClassRepackagingChange',
