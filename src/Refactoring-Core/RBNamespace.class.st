@@ -737,9 +737,9 @@ RBNamespace >> reparentClasses: aRBClassCollection to: newClass [
 						sharedVariables: aClass classVariableNames;
 						sharedPools: aClass sharedPoolNames;
 						package: aClass packageName;
-						traits: aClass traitComposition;
 						tag: aClass tagName;
-						classSlots: aClass classSide instanceVariableNames ] ]
+						classSlots: aClass classSide instanceVariableNames ]
+			traitComposition: aClass traitComposition ]
 ]
 
 { #category : 'accessing' }
@@ -767,4 +767,41 @@ RBNamespace >> unmarkAsRemoved: newClassName [
 RBNamespace >> unmarkPackageAsRemoved: newPackageName [
 	removedPackages
 		remove: newPackageName ifAbsent: [  ]
+]
+
+{ #category : 'changes' }
+RBNamespace >> changeTraitCompositionOf: aClass to: anExpression [
+
+	aClass traitComposition: (RBTraitComposition model: self expression: anExpression).
+	^ changes addChange: (changeFactory
+		changeTraitCompositionOf: aClass name
+		to: anExpression)
+]
+
+{ #category : 'private - changes' }
+RBNamespace >> defineBehavior: aBlock traitComposition: aComposition [
+
+	| change |
+	(aComposition isKindOf: RBTraitComposition) ifFalse: [
+		^ self defineBehavior: [ :builder |
+			aBlock value: builder.
+			builder traitComposition: aComposition ] ].
+	change := self defineBehavior: aBlock.
+	self changeTraitCompositionOf: (self classNamed: change changeClassName)
+		to: aComposition traitCompositionExpression.
+	^ change
+]
+
+{ #category : 'changes' }
+RBNamespace >> defineClass: aBlock traitComposition: aComposition [
+
+	^ self defineBehavior: aBlock traitComposition: aComposition
+]
+
+{ #category : 'changes' }
+RBNamespace >> defineTrait: aBlock traitComposition: aComposition [
+
+	^ self defineBehavior: [ :builder |
+		builder beTrait.
+		aBlock value: builder ] traitComposition: aComposition
 ]

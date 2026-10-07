@@ -60,8 +60,8 @@ RBInsertNewTraitRefactoring >> privateTransform [
 			name: className;
 			package: packageName;
 			tag: tagName;
-			comment: self comment;
-			traitComposition: (traitComposition ifNil: [ #(  ) ]) ]
+			comment: self comment ]
+	traitComposition: (traitComposition ifNil: [ #(  ) ])
 ]
 
 { #category : 'accessing' }

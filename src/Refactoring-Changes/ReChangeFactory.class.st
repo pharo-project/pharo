@@ -143,3 +143,9 @@ ReChangeFactory >> renamePackageNamed: aRBPackage to: newName [
 
 	^ ReRenamePackageChange rename: aRBPackage to: newName
 ]
+
+{ #category : 'refactory changes - classes' }
+ReChangeFactory >> changeTraitCompositionOf: aClassName to: anExpression [
+
+	^ ReChangeTraitCompositionChange change: aClassName to: anExpression
+]
