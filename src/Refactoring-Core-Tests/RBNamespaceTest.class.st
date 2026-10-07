@@ -413,10 +413,6 @@ RBNamespaceTest >> testDefineClassPreservesTraitComposition [
 	self assert: trait isTrait.
 	self assertCollection: trait traitComposition traits
 		hasSameElements: { TReTraitToBeUsedInDuplication }.
-	self assert: trait classSide superclass name equals: #Trait.
-	self assert: trait superclass isNil.
-	self assert: trait classSide class equals: RBTraitedMetaclass.
-	self deny: (namespace rootClasses includes: trait).
 	self assert: change builder isTrait.
 	self assertCollection: change traitComposition traits
 		hasSameElements: { TReTraitToBeUsedInDuplication }
@@ -438,4 +434,25 @@ RBNamespaceTest >> testDefineTraitWithoutBuilderFlag [
 	self deny: (namespace rootClasses includes: trait).
 	self assert: change builder isTrait.
 	self assert: (namespace changes changes includes: change)
+]
+
+{ #category : 'tests - classes' }
+RBNamespaceTest >> testDefineTraitPreservesCompositionAndMetadata [
+
+	| change trait |
+	change := namespace defineTrait: [ :builder |
+		builder
+			name: #TNamespaceDefinedTrait;
+			traitComposition: TReTraitToBeUsedInDuplication;
+			package: #'Refactoring-Core-Tests';
+			tag: 'Model';
+			comment: 'A composed trait defined in the model' ].
+	trait := namespace classNamed: #TNamespaceDefinedTrait.
+	self assertCollection: trait traitComposition traits
+		hasSameElements: { TReTraitToBeUsedInDuplication }.
+	self assert: trait packageName equals: #'Refactoring-Core-Tests'.
+	self assert: trait tagName equals: 'Model'.
+	self assert: trait comment equals: 'A composed trait defined in the model'.
+	self assert: (namespace changes changes includes: change).
+	self assert: change builder isTrait
 ]

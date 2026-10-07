@@ -49,3 +49,33 @@ ReDuplicateClassRefactoringTest >> testDuplicateClassPreservesHierarchyAndBothMe
 	self assert: (duplicate parseTreeForSelector: #method1)
 		equals: ((model classFor: RBClassToRename) parseTreeForSelector: #method1)
 ]
+
+{ #category : 'tests' }
+ReDuplicateClassRefactoringTest >> testDuplicateComposedTraitPreservesBothMethodSides [
+
+	| duplicate refactoring source |
+	source := TReComposedTraitForDuplication.
+	refactoring := ReDuplicateClassRefactoring
+		model: model
+		copyClass: source
+		withName: #TReDuplicatedComposedTrait
+		in: #'Refactoring-Transformations-Tests'.
+	refactoring generateChanges.
+	duplicate := model classNamed: #TReDuplicatedComposedTrait.
+	self assertCollection: duplicate traitComposition traits
+		hasSameElements: { TReTraitToBeUsedInDuplication }.
+	self assert: (duplicate directlyDefinesMethod: #instanceSideValue).
+	self assert: (duplicate classSide directlyDefinesMethod: #classSideValue).
+	self assert: (duplicate parseTreeForSelector: #instanceSideValue)
+		equals: ((model classFor: source) parseTreeForSelector: #instanceSideValue).
+	self performAndUndoChange: refactoring changes do: [
+		| installed |
+		installed := Smalltalk globals at: #TReDuplicatedComposedTrait.
+		self assert: installed isTrait.
+		self assertCollection: installed traits
+			hasSameElements: { TReTraitToBeUsedInDuplication }.
+		self assert: (installed includesSelector: #methodInTrait).
+		self assert: (installed includesSelector: #instanceSideValue).
+		self assert: installed classSideValue equals: 42 ].
+	self deny: (Smalltalk globals includesKey: #TReDuplicatedComposedTrait)
+]
