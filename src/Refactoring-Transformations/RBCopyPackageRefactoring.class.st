@@ -120,7 +120,8 @@ RBCopyPackageRefactoring >> privateTransform [
 	self model addPackageNamed: newName.
 	copyClasses := self copyAllClasses.
 	self changeReferencesOf: self classes with: copyClasses.
-	self reparent: self classes with: copyClasses
+	self reparent: self classes with: copyClasses.
+	self remapTraitCompositionsOf: copyClasses
 ]
 
 { #category : 'renaming' }
@@ -157,9 +158,8 @@ RBCopyPackageRefactoring >> reparent: classes with: copyClasses [
 		subclasses := copyClasses
 			              collect: [ :cls | self model classNamed: cls ]
 			              thenSelect: [ :rb |
-				              rb isTrait not and: [
-					              rb superclass isNotNil and: [
-						              classes includes: rb superclass name ] ] ].
+				              rb superclass isNotNil and: [
+					              classes includes: rb superclass name ] ].
 		subclasses do: [ :cls |
 				self model reparentClasses: { cls } to: (self model classNamed: (dict at: cls superclass name)).
 				job currentValue: jobIndex title: (String streamContents: [ :stream |
@@ -167,4 +167,21 @@ RBCopyPackageRefactoring >> reparent: classes with: copyClasses [
 								 << 'Reparent class ';
 								 << cls printString ]).
 				jobIndex := jobIndex + 1 ] ] asJob run
+]
+
+{ #category : 'transforming' }
+RBCopyPackageRefactoring >> remapTraitCompositionsOf: copiedClasses [
+
+	copiedClasses do: [ :name |
+		| copiedClass expression changed |
+		copiedClass := self model classNamed: name.
+		expression := self parserClass parseExpression:
+			copiedClass traitComposition traitCompositionExpression.
+		changed := false.
+		expression variableNodes do: [ :node |
+			self classMappings at: node name asSymbol ifPresent: [ :copiedName |
+				node name: copiedName.
+				changed := true ] ].
+		changed ifTrue: [
+			self model changeTraitCompositionOf: copiedClass to: expression formattedCode ] ]
 ]

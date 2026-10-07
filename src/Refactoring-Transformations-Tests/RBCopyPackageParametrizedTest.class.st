@@ -136,3 +136,66 @@ RBCopyPackageParametrizedTest >> testCopyPackageWithComposedTraitPreservesBothMe
 	] ensure: [ undo execute ].
 	self deny: (Smalltalk globals includesKey: #TReDuplicatedComposedTrait)
 ]
+
+{ #category : 'tests' }
+RBCopyPackageParametrizedTest >> testCopyPackageRemapsCopiedTraitDependencies [
+
+	| refactoring undo |
+	refactoring := self createRefactoringWithArguments: {
+		TReComposedTraitForDuplication packageName.
+		#RefactoringCOPYSmallPackageForTest }.
+	self executeRefactoring: (refactoring classMappings: {
+		#TReComposedTraitForDuplication -> #TReDuplicatedComposedTrait.
+		#TReTraitToBeUsedInDuplication -> #TReDuplicatedTrait } asDictionary).
+	self assertCollection: ((refactoring model classNamed: #TReDuplicatedComposedTrait)
+		traitComposition traits collect: #name)
+		hasSameElements: #( TReDuplicatedTrait ).
+	self assert: (refactoring model classNamed: #TReDuplicatedComposedTrait)
+		traitComposition asString equals: 'TReDuplicatedTrait'.
+	undo := refactoring changes execute.
+	[
+		| copiedTrait copiedDependency |
+		copiedTrait := Smalltalk globals at: #TReDuplicatedComposedTrait.
+		copiedDependency := Smalltalk globals at: #TReDuplicatedTrait.
+		self assertCollection: copiedTrait traits hasSameElements: { copiedDependency }.
+		self assertCollection: TReComposedTraitForDuplication traits
+			hasSameElements: { TReTraitToBeUsedInDuplication }.
+		self assert: copiedTrait classSideValue equals: 42.
+		self assert: (copiedTrait includesSelector: #methodInTrait)
+	] ensure: [ undo execute ].
+	self deny: (Smalltalk globals includesKey: #TReDuplicatedComposedTrait).
+	self deny: (Smalltalk globals includesKey: #TReDuplicatedTrait)
+]
+
+{ #category : 'tests' }
+RBCopyPackageParametrizedTest >> testCopyPackagePreservesAliasesAndExclusionsWhenRemappingTraits [
+
+	| refactoring sourceComposition undo copiedComposition |
+	refactoring := self createRefactoringWithArguments: {
+		TReComposedTraitForDuplication packageName.
+		#RefactoringCOPYSmallPackageForTest }.
+	sourceComposition := TReTraitToBeUsedInDuplication
+		@ { #aliasedMethod -> #methodInTrait } - { #methodInTrait }.
+	(refactoring model classFor: TReComposedTraitForDuplication)
+		traitComposition: sourceComposition.
+	self executeRefactoring: (refactoring classMappings: {
+		#TReComposedTraitForDuplication -> #TReDuplicatedComposedTrait.
+		#TReTraitToBeUsedInDuplication -> #TReDuplicatedTrait } asDictionary).
+	copiedComposition := (refactoring model classNamed: #TReDuplicatedComposedTrait)
+		traitComposition.
+	self assertCollection: (copiedComposition traits collect: #name)
+		hasSameElements: #( TReDuplicatedTrait ).
+	self assert: (copiedComposition asString includesSubstring: '#aliasedMethod -> #methodInTrait').
+	self assert: (copiedComposition asString includesSubstring: '- { #methodInTrait }').
+	self assertCollection: sourceComposition traits
+		hasSameElements: { TReTraitToBeUsedInDuplication }.
+	undo := refactoring changes execute.
+	[
+		| copiedTrait copiedDependency |
+		copiedTrait := Smalltalk globals at: #TReDuplicatedComposedTrait.
+		copiedDependency := Smalltalk globals at: #TReDuplicatedTrait.
+		self assertCollection: copiedTrait traits hasSameElements: { copiedDependency }.
+		self assert: (copiedTrait includesSelector: #aliasedMethod).
+		self deny: (copiedTrait includesSelector: #methodInTrait)
+	] ensure: [ undo execute ]
+]
