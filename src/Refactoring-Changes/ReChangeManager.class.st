@@ -37,7 +37,9 @@ ReChangeManager class >> counter [
 
 { #category : 'class initialization' }
 ReChangeManager class >> initialize [
-
+	"Renamed in Pharo 14"
+	self deprecatedAliases: { #RBRefactoryChangeManager }.
+	
 	self nuke.
 	UndoSize := 20
 ]

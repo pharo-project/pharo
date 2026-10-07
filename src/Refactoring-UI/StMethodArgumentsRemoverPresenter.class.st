@@ -153,6 +153,12 @@ StMethodArgumentsRemoverPresenter >> methodName [
 ]
 
 { #category : 'accessing' }
+StMethodArgumentsRemoverPresenter >> methodName: aMethodName [
+
+	methodName := aMethodName
+]
+
+{ #category : 'accessing' }
 StMethodArgumentsRemoverPresenter >> previewLabel [
 
 	| selectedIndex |

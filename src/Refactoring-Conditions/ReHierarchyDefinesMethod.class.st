@@ -19,20 +19,20 @@ ReHierarchyDefinesMethod >> check [
 ]
 
 { #category : 'checking' }
-ReHierarchyDefinesMethod >> doesClass: argClass definesMethod: aSelector [
+ReHierarchyDefinesMethod >> doesClass: argClass defineMethod: aSelector [
 	"We could avoid the aSelector argument. I do not have a good name."
 	
 	(argClass directlyDefinesMethod: aSelector) 
 		ifTrue: [ 
 			violators add: argClass. 
 			^ true].
-	^ argClass superclass isNotNil and: [ self doesClass: argClass superclass definesMethod: aSelector ]
+	^ argClass superclass isNotNil and: [ self doesClass: argClass superclass defineMethod: aSelector ]
 ]
 
 { #category : 'checking' }
 ReHierarchyDefinesMethod >> hierarchyDefinesMethod [
 
-	(self doesClass: class definesMethod: selector) ifTrue: [ ^ true ].
+	(self doesClass: class defineMethod: selector) ifTrue: [ ^ true ].
 	^ self subclassOf: class redefines: selector
 ]
 
