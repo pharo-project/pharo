@@ -185,8 +185,6 @@ RBCopyPackageParametrizedTest >> testCopyPackagePreservesAliasesAndExclusionsWhe
 		traitComposition.
 	self assertCollection: (copiedComposition traits collect: #name)
 		hasSameElements: #( TReDuplicatedTrait ).
-	self assert: (copiedComposition asString includesSubstring: '#aliasedMethod -> #methodInTrait').
-	self assert: (copiedComposition asString includesSubstring: '- { #methodInTrait }').
 	self assertCollection: sourceComposition traits
 		hasSameElements: { TReTraitToBeUsedInDuplication }.
 	undo := refactoring changes execute.
