@@ -40,9 +40,11 @@ ReChangeTraitCompositionChange >> changeString [
 ReChangeTraitCompositionChange >> generateChanges [
 
 	| composition |
-	composition := Smalltalk compiler
+	composition := (Smalltalk compiler
 		environment: onSystemEnvironment;
-		evaluate: traitCompositionExpression.
+		source: traitCompositionExpression;
+		isScripting: true;
+		compileOrFail) valueWithReceiver: nil.
 	self class classInstaller make: [ :builder |
 		builder
 			fillFor: self changeClass;
