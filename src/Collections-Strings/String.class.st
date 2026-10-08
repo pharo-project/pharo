@@ -367,6 +367,14 @@ String class >> newCaseSensitiveOrder [
 	^ newTab
 ]
 
+{ #category : 'instance creation' }
+String class >> newLine [
+	"Pharo uses internally cr as new line but we want to move to lf in the long run. This method is here to hardcode the value in only one place.
+	When there is an exchange with an external source (files, sockets), users should explicitly use newline conversions."
+
+	^ self cr
+]
+
 { #category : 'private - accessing' }
 String class >> newLowercasingTable [
 	"a table for translating to lower case"
