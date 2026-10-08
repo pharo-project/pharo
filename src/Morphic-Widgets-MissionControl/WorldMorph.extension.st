@@ -15,5 +15,14 @@ WorldMorph >> dismissMissionControl [
 WorldMorph >> missionControl [
 
 	"Toggle Mission Control"
+
 	MissionControlMorph ensureMissionControlInWorld: self
+]
+
+{ #category : '*Morphic-Widgets-MissionControl' }
+WorldMorph >> missionControlWithSameType [
+
+	"Toggle Mission Control with the same type of tabs"
+
+	MissionControlMorph ensureMissionControlInWorldWithSameTabs: self
 ]
