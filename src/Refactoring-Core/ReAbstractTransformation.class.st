@@ -245,6 +245,18 @@ ReAbstractTransformation >> failedApplicabilityMessage [
 ]
 
 { #category : 'preconditions' }
+ReAbstractTransformation >> failedApplicabilityMessage [
+
+	| failedConditions |
+	
+	failedConditions := self failedApplicabilityPreconditions.
+	failedConditions ifEmpty: [ ^ nil ].
+	
+	^ String cr join:
+		(failedConditions collect: [ :condition | condition errorString ])
+]
+
+{ #category : 'preconditions' }
 ReAbstractTransformation >> failedApplicabilityPreconditions [
 	"Returne the failed preconditions without raising error. It should only be called by drivers."
 	
