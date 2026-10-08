@@ -82,6 +82,7 @@ PragmaSetting >> acceptSettings: aVisitor [
 
 { #category : 'user interface' }
 PragmaSetting >> asString [
+	self deprecated: 'Do not use asString when you need displayString'.
 	^ self name
 ]
 
@@ -114,6 +115,12 @@ PragmaSetting >> dialog [
 { #category : 'user interface' }
 PragmaSetting >> dialog: aValuable [
 	dialog := aValuable
+]
+
+{ #category : 'printing' }
+PragmaSetting >> displayPrintOn: aStream [
+
+	aStream print: self name
 ]
 
 { #category : 'user interface' }
@@ -209,7 +216,7 @@ PragmaSetting >> printOn: aStream [
 
 	aStream
 		<< '[Setting: ';
-		<< self name asString;
+		print: self name;
 		<< ']'
 ]
 

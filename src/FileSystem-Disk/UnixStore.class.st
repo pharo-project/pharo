@@ -14,6 +14,11 @@ UnixStore class >> delimiter [
 	^ $/
 ]
 
+{ #category : 'public' }
+UnixStore class >> delimiterString [
+	^ '/'
+]
+
 { #category : 'current' }
 UnixStore class >> isActiveClass [
 	^ OSPlatform current isUnix and: [ super isActiveClass ]

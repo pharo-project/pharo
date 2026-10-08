@@ -114,6 +114,13 @@ Path class >> delimiter [
 	^$/
 ]
 
+{ #category : 'encodings' }
+Path class >> delimiterString [
+	"Internal path delimiter"
+
+	^ '/'
+]
+
 { #category : 'instance creation' }
 Path class >> from: aString [
 	"Answer an instance of the receiver with the supplied path using the default delimiter"
@@ -373,6 +380,11 @@ Path >> copyFrom: aPath [
 { #category : 'accessing' }
 Path >> delimiter [
 	^ $/
+]
+
+{ #category : 'accessing' }
+Path >> delimiterString [
+	^ '/'
 ]
 
 { #category : 'enumerating' }

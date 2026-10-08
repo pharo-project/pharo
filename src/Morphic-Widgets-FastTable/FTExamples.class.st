@@ -698,8 +698,8 @@ FTExamples class >> exampleTable1 [
 		dataSource: (FTExampleMethodTableDataSource for: Object);
 		selectFirst;
 		showFirstSelection;
-		onAnnouncement: FTSelectionChanged do: [ :ann | ('rows selected: ' , ann newSelectedIndexes asString) crTrace ];
-		onAnnouncement: FTStrongSelectionChanged do: [ :ann | ('double-click on row: ' , ann selectedIndex asString) crTrace ];
+		onAnnouncement: FTSelectionChanged do: [ :ann | ('rows selected: ' , ann newSelectedIndexes displayString) crTrace ];
+		onAnnouncement: FTStrongSelectionChanged do: [ :ann | ('double-click on row: ' , ann selectedIndex displayString) crTrace ];
 		beMultipleSelection;
 		beResizable;
 		yourself.

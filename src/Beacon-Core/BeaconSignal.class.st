@@ -69,7 +69,7 @@ BeaconSignal >> printOneLineContentsOn: stream [
 BeaconSignal >> printOneLineOn: stream [
 
 	stream
-		nextPutAll: self timestamp asString;
+		nextPutAll: self timestamp displayString;
 		space;
 		nextPutAll: self class name;
 		space.
