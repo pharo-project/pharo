@@ -164,7 +164,7 @@ StringMorph >> changeEmphasis [
 
 	| reply |
 	reply := self morphicUIManager
-				chooseFrom: (self emphasisChoices collect: [:t | t translated])
+				chooseFrom: (self emphasisChoices collect: [:t | t ])
 				values: self emphasisChoices.
 	reply ifNotNil: [ self emphasis: (TextEmphasis perform: reply) emphasisCode ]
 ]

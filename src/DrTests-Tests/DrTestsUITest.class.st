@@ -63,7 +63,7 @@ DrTestsUITest >> testInitialSelectedPluginIsFirstPluginInList [
 { #category : 'tests' }
 DrTestsUITest >> testInitialStatusIsInitialStatusPluginName [
 	|status|
-	status:= (drTestsUI currentPlugin pluginName , ' plugin is ready to work!') translated.
+	status:= (drTestsUI currentPlugin pluginName , ' plugin is ready to work!').
 
 	self
 		assert: drTestsUI statusLabel label

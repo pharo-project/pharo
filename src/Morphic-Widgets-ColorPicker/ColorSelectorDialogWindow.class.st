@@ -90,7 +90,7 @@ ColorSelectorDialogWindow >> colorSelected: aColor [
 ColorSelectorDialogWindow >> defaultLabel [
 	"Answer the default label for the receiver."
 
-	^'Color Selector' translated
+	^'Color Selector'
 ]
 
 { #category : 'constants' }
@@ -176,7 +176,7 @@ ColorSelectorDialogWindow >> newColorPickerButtonMorph [
 		labelForm:
 			((self iconNamed: #eyedropperIcon)
 				scaledIntoFormOfSize: 16)
-		help: 'Pick a color from the screen' translated
+		help: 'Pick a color from the screen'
 ]
 
 { #category : 'actions' }
@@ -186,7 +186,7 @@ ColorSelectorDialogWindow >> newColorPresenterMorph [
 	^self
 		newColorPresenterFor: self
 		getColor: #selectedColor
-		help: 'Shows the selected color' translated
+		help: 'Shows the selected color'
 ]
 
 { #category : 'actions' }
@@ -195,23 +195,23 @@ ColorSelectorDialogWindow >> newContentMorph [
 
 	self hsvaMorph: self newHSVAColorSelectorMorph.
 	^self newRow: {
-		self newGroupbox: 'Color' translated forAll: {
+		self newGroupbox: 'Color' forAll: {
 			self hsvaMorph.
 			(self newRow: {
 				(self newLabelGroup: {
-					'Selected color' translated -> self newColorPresenterMorph})
+					'Selected color'  -> self newColorPresenterMorph})
 					vResizing: #shrinkWrap.
 				self newColorPickerButtonMorph})
 				cellPositioning: #leftCenter}.
-		(self newGroupbox: 'Values' translated for:
+		(self newGroupbox: 'Values' for:
 			(self newLabelGroup: {
-				'Red' translated -> (self newColorComponentFieldMorph: #red).
-				'Green' translated -> (self newColorComponentFieldMorph: #green).
-				'Blue' translated -> (self newColorComponentFieldMorph: #blue).
-				'Hue' translated -> (self newColorComponentFieldMorph: #hue).
-				'Saturation' translated -> (self newColorComponentFieldMorph: #saturation).
-				'Brightness' translated -> (self newColorComponentFieldMorph: #brightness).
-				'Alpha' translated -> (self newColorComponentFieldMorph: #alpha)}))
+				'Red'  -> (self newColorComponentFieldMorph: #red).
+				'Green'  -> (self newColorComponentFieldMorph: #green).
+				'Blue'  -> (self newColorComponentFieldMorph: #blue).
+				'Hue'  -> (self newColorComponentFieldMorph: #hue).
+				'Saturation'  -> (self newColorComponentFieldMorph: #saturation).
+				'Brightness'  -> (self newColorComponentFieldMorph: #brightness).
+				'Alpha' -> (self newColorComponentFieldMorph: #alpha)}))
 			hResizing: #shrinkWrap}
 ]
 

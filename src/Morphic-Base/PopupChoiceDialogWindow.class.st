@@ -25,7 +25,7 @@ PopupChoiceDialogWindow class >> chooseFrom: aList lines: lines title: title [
 	"self chooseFrom: #('yes' 'no') lines: #()  title: 'Foo is the question'"
 	| pd |
 	pd := (self newWithTheme: self currentWorld theme)
-		title: (title isEmpty ifTrue: ['Choose' translated] ifFalse: [title asString]);
+		title: (title isEmpty ifTrue: ['Choose'] ifFalse: [title asString]);
 		labels: aList;
 		lines: (lines ifNil: [#()]);
 		model: aList.
@@ -318,7 +318,7 @@ PopupChoiceDialogWindow >> newFilterEntry [
 		getText: #filter
 		setText: #filter:
 		getEnabled: nil
-		help: 'Filters the options according to a matching substring' translated.
+		help: 'Filters the options according to a matching substring'.
 	entry acceptOnCR: false.
 	entry crAction: (MessageSend receiver: self selector: #ok).
 	^entry

@@ -402,7 +402,7 @@ WorldMorph >> contentsMenu: aMenu [
 
 { #category : 'menu & halo' }
 WorldMorph >> contentsMenuTitle [
-	^ 'World contents' translated
+	^ 'World contents'
 ]
 
 { #category : 'screenshot' }

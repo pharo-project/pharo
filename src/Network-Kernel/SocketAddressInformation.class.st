@@ -170,8 +170,8 @@ SocketAddressInformation >> connect [
 	sock := Socket newTCP: addressFamily.
 	sock connectTo: socketAddress.
 	sock waitForConnectionFor: Socket standardTimeout
-		ifTimedOut: [ConnectionTimedOut signal: ('Cannot connect to {1}' translated format: {self})]
-		ifRefused: [ConnectionRefused signal: ('Cannot connect to {1}' translated format: {self})].
+		ifTimedOut: [ConnectionTimedOut signal: ('Cannot connect to {1}' format: {self})]
+		ifRefused: [ConnectionRefused signal: ('Cannot connect to {1}' format: {self})].
 	^sock
 ]
 

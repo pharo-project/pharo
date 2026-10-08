@@ -232,14 +232,14 @@ ImageMorph >> isOpaque: aBool [
 
 { #category : 'menu' }
 ImageMorph >> opacityString [
-	^ (self isOpaque) -> 'opaque' translated
+	^ (self isOpaque) -> 'opaque'
 ]
 
 { #category : 'menu commands' }
 ImageMorph >> readFromFile [
 	| fileName |
 	fileName := self morphicUIManager
-		request: 'Please enter the image file name' translated
+		request: 'Please enter the image file name'
 		initialAnswer: 'fileName'.
 	fileName isEmptyOrNil ifTrue: [^ self].
 	self form: (Form fromFileNamed: fileName)

@@ -518,7 +518,7 @@ DiffMorph >> createOptionsPanel [
 DiffMorph >> defaultTitle [
 	"Answer the default title label for the receiver."
 
-	^'Diff' translated
+	^'Diff' 
 ]
 
 { #category : 'instance creation' }
@@ -967,8 +967,8 @@ DiffMorph >> newPrettyPrintCheckboxMorph [
 		getSelected: #prettyPrint
 		setSelected: #prettyPrint:
 		getEnabled: nil
-		label: 'Pretty print' translated
-		help: 'If selected, pretty print will be applied to any displayed method source (eliminates trivial formatting changes)' translated
+		label: 'Pretty print' 
+		help: 'If selected, pretty print will be applied to any displayed method source (eliminates trivial formatting changes)' 
 ]
 
 { #category : 'instance creation' }

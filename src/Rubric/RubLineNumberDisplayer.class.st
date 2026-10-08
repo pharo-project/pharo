@@ -23,7 +23,7 @@ RubLineNumberDisplayer class >> menuOn: aBuilder [
 
 	<contextMenu>
 	<RubLineNumberMenu>
-	(aBuilder item: #'Find...' translated)
+	(aBuilder item: #'Find...')
 		keyText: 'f';
 		selector: #find;
 		iconName: #smallFind

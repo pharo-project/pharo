@@ -15,7 +15,7 @@ RubSmalltalkScriptingMode class >> editingModeMenuOn: aBuilder [
 
 	<contextMenu>
 	<RubEditingModeMenu>
-	(aBuilder item: self label translated)
+	(aBuilder item: self label)
 		action: [:model | model textArea editingMode: self new]
 ]
 

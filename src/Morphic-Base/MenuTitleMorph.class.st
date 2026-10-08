@@ -98,7 +98,7 @@ MenuTitleMorph >> iconButtonCalling: aSelector withFormSet: aFormSet helpText: a
 		color: Color transparent;
 		extent: self boxExtent;
 		borderWidth: 0;
-		helpText: aText translated;
+		helpText: aText;
 		yourself
 ]
 
@@ -170,7 +170,7 @@ MenuTitleMorph >> title: aString [
 	layoutInset: 0;
 	layoutChanged.
 
-	aString translated linesDo: [ :line |
+	aString linesDo: [ :line |
 		titleContainer addMorphBack: (StringMorph contents: line font: StandardFonts menuFont)
 	].
 

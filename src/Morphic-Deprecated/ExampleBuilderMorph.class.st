@@ -16,6 +16,6 @@ ExampleBuilderMorph >> chooseColor: aColor title: label [
 
 	^ self theme
 		chooseColorIn: self modalMorph
-		title: (label ifNil: ['Choose Color' translated])
+		title: (label ifNil: ['Choose Color' ])
 		color: aColor
 ]

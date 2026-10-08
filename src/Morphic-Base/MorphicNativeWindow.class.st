@@ -251,7 +251,7 @@ MorphicNativeWindow >> taskbarButtonMenu: aMenu [
 	menu := theme newMenuIn: self for: self.
 	
 	menu
-		addToggle: 'Restore' translated
+		addToggle: 'Restore'
 		target: self
 		selector: #restore
 		getStateSelector: nil
@@ -261,7 +261,7 @@ MorphicNativeWindow >> taskbarButtonMenu: aMenu [
 		font: theme menuFont.
 		
 	menu
-		addToggle: 'Minimize' translated
+		addToggle: 'Minimize'
 		target: self
 		selector: #minimize
 		getStateSelector: nil
@@ -271,7 +271,7 @@ MorphicNativeWindow >> taskbarButtonMenu: aMenu [
 		font: theme menuFont.
 		
 	menu
-		addToggle: 'Maximize' translated
+		addToggle: 'Maximize'
 		target: self
 		selector: #maximize
 		getStateSelector: nil
@@ -288,31 +288,31 @@ MorphicNativeWindow >> taskbarButtonMenu: aMenu [
 		iconFormSet: theme windowCloseFormSet
 		subMenu: submenu.
 	submenu
-		addToggle: 'Close all' translated
+		addToggle: 'Close all'
 		target: self manager
 		selector: #closeAllWindows
 		getStateSelector: nil
 		enablementSelector: true.
 	submenu
-		addToggle: 'windows to left' translated
+		addToggle: 'windows to left'
 		target: self
 		selector: #closeAllWindowToLeft
 		getStateSelector: nil
 		enablementSelector: true.
 	submenu
-		addToggle: 'windows to right' translated
+		addToggle: 'windows to right'
 		target: self
 		selector: #closeAllWindowToRight
 		getStateSelector: nil
 		enablementSelector: true.
 	submenu
-		addToggle: 'close all debuggers' translated
+		addToggle: 'close all debuggers'
 		target: OupsDebuggerSystem
 		selector: #closeAllDebuggers
 		getStateSelector: nil
 		enablementSelector: true.
 	menu
-		addToggle: 'Close' translated
+		addToggle: 'Close'
 		target: self
 		selector: #delete
 		getStateSelector: nil

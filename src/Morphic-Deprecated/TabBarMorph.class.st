@@ -199,7 +199,7 @@ TabBarMorph >> createMenuButton [
 		activeEnabledOverDownFillStyle: (ImageFillStyle formSet: formSet);
 		passiveEnabledOverDownFillStyle: (ImageFillStyle formSet: formSet);
 		addUpAction: [ self popUpMenu ];
-		setBalloonText: 'tab menu' translated;
+		setBalloonText: 'tab menu';
 		extent: 16@16.
 
 	^ msb

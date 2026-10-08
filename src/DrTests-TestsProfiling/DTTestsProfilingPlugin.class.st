@@ -36,7 +36,7 @@ DTTestsProfilingPlugin >> pragmaForResultTrees [
 
 { #category : 'api' }
 DTTestsProfilingPlugin >> resultButtonHelp [
-	^ 'Browse the test selected in the results list.' translated
+	^ 'Browse the test selected in the results list.' 
 ]
 
 { #category : 'api' }
@@ -58,10 +58,10 @@ DTTestsProfilingPlugin >> secondListLabel [
 
 { #category : 'api' }
 DTTestsProfilingPlugin >> startButtonHelp [
-	^ 'Run tests selected.' translated
+	^ 'Run tests selected.' 
 ]
 
 { #category : 'api' }
 DTTestsProfilingPlugin >> startButtonLabel [
-	^ 'Profile Tests' translated
+	^ 'Profile Tests' 
 ]

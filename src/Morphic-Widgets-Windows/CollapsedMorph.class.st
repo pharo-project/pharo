@@ -46,7 +46,7 @@ CollapsedMorph >> buildWindowMenu [
 		ifFalse:
 			[aMenu add: 'Make unclosable' selector: #makeUnclosable]
 		ifTrue:
-			[aMenu add: 'Make closable' translated selector: #makeClosable].
+			[aMenu add: 'Make closable'  selector: #makeClosable].
 	aMenu
 		add: (self isSticky ifTrue: ['Make draggable'] ifFalse: ['Make undraggable'])
 		selector: #toggleStickiness.

@@ -295,7 +295,7 @@ DockingBarMorph >> autoGradient: aBoolean [
 DockingBarMorph >> autoGradientString [
 	"Answer the string to be shown in a menu to represent the  'resistsRemoval' status"
 
-	^ (self autoGradient) ->  'auto gradient' translated
+	^ (self autoGradient) ->  'auto gradient' 
 ]
 
 { #category : 'accessing' }
@@ -314,7 +314,7 @@ self updateLayoutProperties
 { #category : 'menu' }
 DockingBarMorph >> avoidVisibleBordersAtEdgeString [
 	"Answer the string to be shown in a menu to represent the visible status"
-	^ (self avoidVisibleBordersAtEdge) ->  'avoid visible borders at edge' translated
+	^ (self avoidVisibleBordersAtEdge) ->  'avoid visible borders at edge' 
 ]
 
 { #category : 'accessing' }
@@ -401,7 +401,7 @@ self updateLayoutProperties
 { #category : 'menu' }
 DockingBarMorph >> fillsOwnerString [
 	"Answer the string to be shown in a menu to represent the fills owner status"
-	^ (self fillsOwner) -> 'fills owner' translated
+	^ (self fillsOwner) -> 'fills owner' 
 ]
 
 { #category : 'private - layout' }

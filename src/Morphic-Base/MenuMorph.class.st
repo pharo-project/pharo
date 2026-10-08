@@ -83,7 +83,7 @@ MenuMorph class >> confirm: queryString [
 	"Put up a yes/no menu with caption queryString. Answer true if the response is yes, false if no. This is a modal question--the user must respond yes or no. Do not invoke this method - it is here to help in case of mini system, better use
 	UIManager default confirm: 'Is is the question?' "
 
-	^ self confirm: queryString trueChoice: 'Yes' translated falseChoice: 'No' translated
+	^ self confirm: queryString trueChoice: 'Yes'  falseChoice: 'No' 
 ]
 
 { #category : 'private - utilities' }
@@ -92,7 +92,7 @@ MenuMorph class >> confirm: queryString orCancel: cancelBlock [
 	"MenuMorph confirm: 'Reboot universe now' orCancel:[^'Nevermind'] "
 
 	| choice |
-	choice := self chooseFrom: {'Yes' translated. 'No' translated. 'Cancel' translated}
+	choice := self chooseFrom: {'Yes' . 'No' . 'Cancel' }
 		lines: #()
 		title: queryString.
 	choice = 1 ifTrue: [^ true].
@@ -375,9 +375,9 @@ MenuMorph >> addList: aList [
 			tuple == #-
 				ifTrue: [ self addLine ]
 				ifFalse: [
-					self add: tuple first capitalized translated selector: tuple second.
+					self add: tuple first capitalized  selector: tuple second.
 					(tuple size > 2 and: [ tuple third isNotNil ])
-						ifTrue: [ self balloonTextForLastItem: tuple third translated ].
+						ifTrue: [ self balloonTextForLastItem: tuple third  ].
 					(tuple size > 3 and: [ tuple fourth isNotNil ])
 						ifTrue: [ self lastItem icon: (self iconNamed: tuple fourth) ] ] ]
 ]
@@ -672,7 +672,7 @@ MenuMorph >> detachSubMenu: evt [
 
 	index := self morphicUIManager
 			chooseFrom: (possibleTargets collect:[:t| t contents asString])
-			title: 'Which menu?' translated.
+			title: 'Which menu?'.
 	index = 0 ifTrue:[^self].
 
 	item := possibleTargets at: index.

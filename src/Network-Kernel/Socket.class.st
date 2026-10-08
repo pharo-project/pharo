@@ -514,8 +514,8 @@ Socket >> connectTo: aSocketAddress waitForConnectionFor: timeout [
 	self connectNonBlockingTo: aSocketAddress.
 	self
 		waitForConnectionFor: timeout
-		ifTimedOut: [ConnectionTimedOut signal: ('Cannot connect to {1}' translated format: {aSocketAddress printString})]
-		ifRefused: [ConnectionRefused signal: ('Cannot connect to {1}' translated format: {aSocketAddress printString})]
+		ifTimedOut: [ConnectionTimedOut signal: ('Cannot connect to {1}' format: {aSocketAddress printString})]
+		ifRefused: [ConnectionRefused signal: ('Cannot connect to {1}' format: {aSocketAddress printString})]
 ]
 
 { #category : 'connection open/close' }

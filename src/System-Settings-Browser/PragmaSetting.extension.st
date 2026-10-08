@@ -10,13 +10,13 @@ PragmaSetting >> chooseFilePath [
 { #category : '*System-Settings-Browser' }
 PragmaSetting >> fontButtonLabel [
 	| emphases |
-	emphases := IdentityDictionary new at: nil put: 'Regular' translated;
-				 at: 0 put: 'Regular' translated;
-				 at: 1 put: 'Bold' translated;
-				 at: 2 put: 'Italic' translated;
-				 at: 4 put: 'Underlined' translated;
-				 at: 8 put: 'Narrow' translated;
-				 at: 16 put: 'StruckOut' translated;
+	emphases := IdentityDictionary new at: nil put: 'Regular';
+				 at: 0 put: 'Regular';
+				 at: 1 put: 'Bold';
+				 at: 2 put: 'Italic';
+				 at: 4 put: 'Underlined';
+				 at: 8 put: 'Narrow';
+				 at: 16 put: 'StruckOut';
 				 yourself.
 	^ StringMorph contents: self realValue familyName , ' '
 			, (emphases

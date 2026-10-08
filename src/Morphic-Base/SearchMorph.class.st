@@ -77,7 +77,7 @@ SearchMorph >> initialize [
 	self convertTo: String.
 	list := OrderedCollection new.
 	self useSelectionIndex: false.
-	self ghostText: 'Hit return to accept' translated
+	self ghostText: 'Hit return to accept'
 ]
 
 { #category : 'event handling' }

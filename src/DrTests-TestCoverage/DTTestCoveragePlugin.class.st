@@ -74,7 +74,7 @@ DTTestCoveragePlugin >> pragmaForResultTrees [
 
 { #category : 'api' }
 DTTestCoveragePlugin >> resultButtonHelp [
-	^ 'Browse the method selected in the results list.' translated
+	^ 'Browse the method selected in the results list.' 
 ]
 
 { #category : 'api' }
@@ -131,12 +131,12 @@ DTTestCoveragePlugin >> setSelectionModeOfItemsList: aListPresenter [
 
 { #category : 'api' }
 DTTestCoveragePlugin >> startButtonHelp [
-	^ 'Run test coverage in selected packages' translated
+	^ 'Run test coverage in selected packages'
 ]
 
 { #category : 'api' }
 DTTestCoveragePlugin >> startButtonLabel [
-	^ 'Run Coverage' translated
+	^ 'Run Coverage'
 ]
 
 { #category : 'api' }

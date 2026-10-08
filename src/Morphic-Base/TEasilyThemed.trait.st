@@ -12,7 +12,7 @@ Trait {
 TEasilyThemed >> abort: aStringOrText [
 	"Open an error dialog."
 
-	^self abort: aStringOrText title: 'Error' translated
+	^self abort: aStringOrText title: 'Error'
 ]
 
 { #category : 'services' }
@@ -29,7 +29,7 @@ TEasilyThemed >> abort: aStringOrText title: aString [
 TEasilyThemed >> alert: aStringOrText [
 	"Open an alert dialog."
 
-	^self alert: aStringOrText title: 'Alert' translated
+	^self alert: aStringOrText title: 'Alert'
 ]
 
 { #category : 'services' }
@@ -81,7 +81,7 @@ TEasilyThemed >> chooseColor: aColor [
 
 	^self theme
 		chooseColorIn: self
-		title: 'Colour Selector' translated
+		title: 'Colour Selector'
 		color: aColor
 ]
 
@@ -120,7 +120,7 @@ TEasilyThemed >> chooseDropList: aStringOrText list: aList [
 
 	^self
 		chooseDropList: aStringOrText
-		title: 'Choose' translated
+		title: 'Choose'
 		list: aList
 ]
 
@@ -173,7 +173,7 @@ TEasilyThemed >> chooseFont: aFont [
 
 	^self theme
 		chooseFontIn: self
-		title: 'Font Selector' translated
+		title: 'Font Selector'
 		font: aFont
 ]
 
@@ -216,7 +216,7 @@ TEasilyThemed >> longMessage: aStringOrText title: aString [
 TEasilyThemed >> message: aStringOrText [
 	"Open a message dialog."
 
-	^self message: aStringOrText title: 'Information' translated
+	^self message: aStringOrText title: 'Information'
 ]
 
 { #category : 'services' }
@@ -1306,7 +1306,7 @@ TEasilyThemed >> newYesButtonFor: aModel [
 TEasilyThemed >> proceed: aStringOrText [
 	"Open a proceed dialog."
 
-	^self proceed: aStringOrText title: 'Proceed' translated
+	^self proceed: aStringOrText title: 'Proceed'
 ]
 
 { #category : 'services' }
@@ -1323,7 +1323,7 @@ TEasilyThemed >> proceed: aStringOrText title: aString [
 TEasilyThemed >> question: aStringOrText [
 	"Open a question dialog."
 
-	^self question: aStringOrText title: 'Question' translated
+	^self question: aStringOrText title: 'Question'
 ]
 
 { #category : 'services' }
@@ -1341,7 +1341,7 @@ TEasilyThemed >> question: aStringOrText title: aString [
 TEasilyThemed >> questionWithoutCancel: aStringOrText [
 	"Open a question dialog."
 
-	^self questionWithoutCancel: aStringOrText title: 'Question' translated
+	^self questionWithoutCancel: aStringOrText title: 'Question'
 ]
 
 { #category : 'services' }
@@ -1359,7 +1359,7 @@ TEasilyThemed >> questionWithoutCancel: aStringOrText title: aString [
 TEasilyThemed >> textEntry: aStringOrText [
 	"Open a text entry dialog."
 
-	^self textEntry: aStringOrText title: 'Entry' translated
+	^self textEntry: aStringOrText title: 'Entry'
 ]
 
 { #category : 'services' }

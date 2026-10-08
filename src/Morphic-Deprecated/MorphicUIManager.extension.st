@@ -11,6 +11,6 @@ MorphicUIManager >> requestPassword: aStringOrText [
 	^modalMorph theme
 		passwordEntryIn: modalMorph
 		text: aStringOrText
-		title: 'Password Required' translated
+		title: 'Password Required'
 		entryText: ''
 ]

@@ -131,7 +131,7 @@ SystemWindow >> taskbarButtonMenu: aMenu [
 	menu := theme newMenuIn: self for: self.
 
 	menu
-		addToggle: 'Restore' translated
+		addToggle: 'Restore'
 		target: self
 		selector: #restore
 		getStateSelector: nil
@@ -141,7 +141,7 @@ SystemWindow >> taskbarButtonMenu: aMenu [
 		font: theme menuFont.
 
 	menu
-		addToggle: 'Minimize' translated
+		addToggle: 'Minimize'
 		target: self
 		selector: #minimize
 		getStateSelector: nil
@@ -151,7 +151,7 @@ SystemWindow >> taskbarButtonMenu: aMenu [
 		font: theme menuFont.
 
 	menu
-		addToggle: 'Maximize' translated
+		addToggle: 'Maximize'
 		target: self
 		selector: #maximize
 		getStateSelector: nil
@@ -168,19 +168,19 @@ SystemWindow >> taskbarButtonMenu: aMenu [
 		iconFormSet: (self iconFormSetNamed: #blank)
 		subMenu: moveSubmenu.
 	moveSubmenu
-		addToggle: 'Move left' translated
+		addToggle: 'Move left'
 		target: self
 		selector: #taskbarMoveLeft
 		getStateSelector: nil
 		enablementSelector: #canBeMovedToLeft.
 	moveSubmenu
-		addToggle: 'Move right' translated
+		addToggle: 'Move right'
 		target: self
 		selector: #taskbarMoveRight
 		getStateSelector: nil
 		enablementSelector: #canBeMovedToRight.
 	moveSubmenu
-		addToggle: 'Move to...' translated
+		addToggle: 'Move to...'
 		target: self
 		selector: #taskbarMoveTo
 		getStateSelector: nil.
@@ -192,49 +192,49 @@ SystemWindow >> taskbarButtonMenu: aMenu [
 		iconFormSet: self theme windowCloseFormSet
 		subMenu: submenu.
 	submenu
-		addToggle: 'all windows' translated
+		addToggle: 'all windows'
 		target: self
 		selector: #taskbarCloseAllWindows
 		getStateSelector: nil
 		enablementSelector: true.
 	submenu
-		addToggle: 'windows to left' translated
+		addToggle: 'windows to left'
 		target: self
 		selector: #taskbarCloseAllToLeft
 		getStateSelector: nil
 		enablementSelector: true.
 	submenu
-		addToggle: 'windows to right' translated
+		addToggle: 'windows to right'
 		target: self
 		selector: #taskbarCloseAllToRight
 		getStateSelector: nil
 		enablementSelector: true.
 	submenu
-		addToggle: 'windows like this' translated
+		addToggle: 'windows like this'
 		target: self
 		selector: #taskbarCloseAllLikeThis
 		getStateSelector: nil
 		enablementSelector: true.
 	submenu
-		addToggle: 'unchanged windows' translated
+		addToggle: 'unchanged windows'
 		target: self currentWorld
 		selector: #closeAllUnchangedWindows
 		getStateSelector: nil
 		enablementSelector: true.
 	submenu
-		addToggle: 'hidden windows' translated
+		addToggle: 'hidden windows'
 		target: self
 		selector: #taskbarCloseHiddenWindows
 		getStateSelector: nil
 		enablementSelector: true.	submenu
-		addToggle: 'close all debuggers' translated
+		addToggle: 'close all debuggers'
 		target: OupsDebuggerSystem
 		selector: #closeAllDebuggers
 		getStateSelector: nil
 		enablementSelector: true.
 
 	menu
-		addToggle: 'Close' translated
+		addToggle: 'Close'
 		target: self
 		selector: #closeBoxHit
 		getStateSelector: nil

@@ -146,10 +146,10 @@ RubPluggableTextMorph >> promptForCancel [
 
 	| choice |
 	choice := self morphicUIManager
-		confirm: 'Contents has been modified.\What do you want to do?' translated withCRs
-		trueChoice: 'Accept' translated
-		falseChoice: 'Discard' translated
-		cancelChoice: 'Cancel' translated
+		confirm: 'Contents has been modified.\What do you want to do?' withCRs
+		trueChoice: 'Accept'
+		falseChoice: 'Discard'
+		cancelChoice: 'Cancel'
 		default: nil.
 	choice
 		ifNotNil: [

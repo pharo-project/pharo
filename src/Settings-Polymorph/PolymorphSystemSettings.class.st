@@ -126,15 +126,15 @@ PolymorphSystemSettings class >> desktopColorSettingsOn: aBuilder [
 						domainValues: {#Horizontal. #Vertical. #Radial}.
 					(aBuilder pickOne: #desktopGradientOrigin) label: 'Origin';
 						domainValues: {
-							'Top left' translated -> #topLeft.
-							'Top' translated -> #topCenter.
-							'Top right' translated -> #topRight.
-							'Right' translated -> #rightCenter.
-							'Bottom right' translated -> #bottomRight.
-							'Bottom' translated -> #bottomCenter.
-							'Bottom left' translated -> #bottomLeft.
-							'Left' translated -> #leftCenter.
-							'Center' translated -> #center} ] ]
+							'Top left' -> #topLeft.
+							'Top' -> #topCenter.
+							'Top right' -> #topRight.
+							'Right' -> #rightCenter.
+							'Bottom right' -> #bottomRight.
+							'Bottom' -> #bottomCenter.
+							'Bottom left' -> #bottomLeft.
+							'Left' -> #leftCenter.
+							'Center' -> #center} ] ]
 ]
 
 { #category : 'desktop' }
@@ -282,13 +282,13 @@ PolymorphSystemSettings class >> desktopSettingsOn: aBuilder [
 PolymorphSystemSettings class >> labelAreaLayoutSettingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder pickOne: #labelAreaLayout)
-		label: 'Label area layout' translated;
+		label: 'Label area layout';
 		parent: #windows;
 		target: UITheme;
 		targetSelector: #currentSettings;
 		default: #platformDependent;
 		domainValues: {
-			'Platform Dependent' translated -> #platformDependent.
+			'Platform Dependent' -> #platformDependent.
 			'macOS' -> #macOS.
 			'Windows/Linux' -> #WindowsOrLinux };
 		description: 'If Platform Dependent, label area elements are placed as they are in the windows of the current OS.
