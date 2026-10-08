@@ -83,16 +83,6 @@ ReAbstractTransformation >> applicabilityPreconditions [
 	^ #(  )
 ]
 
-{ #category : 'scripting api - conditions' }
-ReAbstractTransformation >> applicabilityPreconditionsMessage [
-	"Check a preconditions and raise an error on violations. This method is part of the scripting API since it raises an error."
-	
-	| failedPreconditions |
-	failedPreconditions := self failedApplicabilityPreconditions.
-	failedPreconditions ifEmpty: [ ^ self ].
-	RBRefactoringError signalFor: failedPreconditions
-]
-
 { #category : 'private' }
 ReAbstractTransformation >> buildParametersForSelector: aSelector [
 	"(self new buildParametersForSelector: #cratpoc:freeFloc:) >>> #('param1' 'param2')"
@@ -164,6 +154,16 @@ ReAbstractTransformation >> changesToDisplayIn: aBrowser [
 				flatCollect: [:e | e changesToDisplayIn: aBrowser ]
 ]
 
+{ #category : 'scripting api - conditions' }
+ReAbstractTransformation >> checkApplicabilityPreconditions [
+	"Check a preconditions and raise an error on violations. This method is part of the scripting API since it raises an error."
+	
+	| failedPreconditions |
+	failedPreconditions := self failedApplicabilityPreconditions.
+	failedPreconditions ifEmpty: [ ^ self ].
+	RBRefactoringError signalFor: failedPreconditions
+]
+
 { #category : 'condition definitions' }
 ReAbstractTransformation >> checkInstanceVariableName: aName in: aClass [
 	^RBCondition checkInstanceVariableName: aName in: aClass
@@ -172,7 +172,7 @@ ReAbstractTransformation >> checkInstanceVariableName: aName in: aClass [
 { #category : 'scripting api - conditions' }
 ReAbstractTransformation >> checkPreconditions [
 
-	self applicabilityPreconditionsMessage
+	self checkApplicabilityPreconditions
 ]
 
 { #category : 'condition definitions' }
