@@ -155,9 +155,9 @@ def defineIsoTestStage(projectName, testPackages=""){
                 unstash "bootstrap64"
                 unzip "build/bootstrap-cache/metacello.zip"
                 shell "bash -c './bootstrap/scripts/getPharoVM.sh ${PHARO_SHORT}'"
-                shell "bash -c './pharo metacello.image metacello install --save --strict --signalErrorOnWarning \"filetree://../src\" SUnit --groups Core'"
-                shell "bash -c './pharo metacello.image metacello install --save --strict --signalErrorOnWarning \"filetree://../src\" " + projectName + " --groups " + testGroup + "'"
-                /*
+                shell "bash -c './pharo metacello.image metacello install --strict --signalErrorOnWarning \"filetree://../src\" SUnit --groups Core'"
+                shell "bash -c './pharo metacello.image metacello install --strict --signalErrorOnWarning \"filetree://../src\" " + projectName + " --groups " + testGroup + "'"
+                /* 
                 Some Baselines do specify tests in the Tests group that do not run on isolation.
                 For that scenario, users can define an explicit list of packages as `testPackages`.
                 In that case, take the packages specified by the user instead of the project packages.

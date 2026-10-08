@@ -12,13 +12,16 @@ Class {
 { #category : 'testing' }
 RGTraitDefinitionTest >> testAddingMethods [
 	| newMethod newClass |
-	newClass := RGTraitDefinition named: #TSortable.
-	newMethod := (RGMethodDefinition named: #sort)
+	newClass := RGTraitDefinition named: #TIsEmpty.
+	newMethod := (RGMethodDefinition named: #isNotEmpty)
 		parent: newClass;
-		protocol: 'sorting';
+		protocol: 'testing';
 		sourceCode:
-			'sort
-									self sort: [:a :b | a <= b]'.
+			'isNotEmpty
+	"Evaluate the given block with the receiver as argument, answering its value
+	unless the receiver is empty, in which case answer the receiver."
+
+	^ self isEmpty not'.
 
 	self assert: newMethod isMeta not.
 	self assert: newClass hasMethods not.
@@ -32,9 +35,9 @@ RGTraitDefinitionTest >> testAddingMethods [
 							^lastIndex - firstIndex + 1'.
 
 	self assert: newClass hasMethods.
-	self assert: newClass selectors asSet equals: #(sort size) asSet.
-	self assert: (newClass includesSelector: #sort).
-	self assert: (newClass methodNamed: #sort) equals: newMethod.
+	self assert: newClass selectors asSet equals: #(isNotEmpty size) asSet.
+	self assert: (newClass includesSelector: #isNotEmpty).
+	self assert: (newClass methodNamed: #isNotEmpty) equals: newMethod.
 	self assert: newClass methods size equals: 2.
 	self assert: newClass selectors size equals: 2.
 	self assert: newClass allSelectors size equals: 2.	"no hierarchy"
@@ -42,7 +45,7 @@ RGTraitDefinitionTest >> testAddingMethods [
 	newMethod := newClass methodNamed: #size.
 	self assert: newMethod parent equals: newClass.
 
-	self assert: (newClass compiledMethodNamed: #sort) isNotNil.
+	self assert: (newClass compiledMethodNamed: #isNotEmpty) isNotNil.
 	self assert: (newClass compiledMethodNamed: #foo) isNil
 ]
 
@@ -50,10 +53,10 @@ RGTraitDefinitionTest >> testAddingMethods [
 RGTraitDefinitionTest >> testAsTraitDefinition [
 
 	| newTrait |
-	newTrait := TSortable asRingDefinition.
+	newTrait := TEmpty asRingDefinition.
 	self assert: newTrait isRingObject.
 	self assert: newTrait isTrait.
-	self assert: newTrait name identicalTo: #TSortable.
+	self assert: newTrait name identicalTo: #TEmpty.
 	self assert: newTrait package isNotNil.
 	self assert: newTrait packageTag isNotNil.
 	self assert: newTrait superclassName isNotNil.
@@ -67,19 +70,19 @@ RGTraitDefinitionTest >> testAsTraitDefinition [
 { #category : 'testing' }
 RGTraitDefinitionTest >> testExistingTrait [
 	| newClass metaClass |
-	newClass := RGTraitDefinition named: #TSortable.
+	newClass := RGTraitDefinition named: #TEmpty.
 	self assert: newClass isTrait.
 	self assert: newClass isDefined.
-	self assert: newClass realClass equals: TSortable.
+	self assert: newClass realClass equals: TEmpty.
 	self assert: newClass isMeta not.
 
 	newClass withMetaclass.
 	self assert: newClass hasMetaclass.
 	metaClass := newClass classSide.
 	self assert: metaClass isMeta.
-	self assert: metaClass name equals: 'TSortable classTrait'.
+	self assert: metaClass name equals: 'TEmpty classTrait'.
 	self assert: metaClass instanceSide equals: newClass.
-	self assert: metaClass realClass equals: TSortable classSide
+	self assert: metaClass realClass equals: TEmpty classSide
 ]
 
 { #category : 'testing' }
@@ -105,8 +108,8 @@ RGTraitDefinitionTest >> testNonExistingClass [
 RGTraitDefinitionTest >> testTraitEquality [
 
 	| newClass |
-	self assert: TSortable asRingDefinition equals: TSortable asRingDefinition.
+	self assert: TEmpty asRingDefinition equals: TEmpty asRingDefinition.
 
-	newClass := TSortable asRingDefinition package: (RGPackageDefinition named: #Kernel).
-	self assert: TSortable asRingDefinition equals: newClass
+	newClass := TEmpty asRingDefinition package: (RGPackageDefinition named: #Kernel).
+	self assert: TEmpty asRingDefinition equals: newClass
 ]

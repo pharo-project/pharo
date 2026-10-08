@@ -107,8 +107,9 @@ SycMessageDescription >> methodClass [
 { #category : 'operations' }
 SycMessageDescription >> requestNewSignature [
 	| methodName dialog |
+
 	methodName := RBMethodName selector: selector arguments: argumentNames copy.
-	dialog := StMethodNameEditorPresenter openOn: methodName.
+	dialog := (StMethodNameEditorPresenter newApplication: StPharoApplication current model: methodName) openModal.
 	dialog cancelled ifTrue: [  CmdCommandAborted signal ].
 
 	selector = methodName selector & (argumentNames = methodName arguments)

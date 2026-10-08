@@ -4,15 +4,15 @@ Extension { #name : 'RGTraitDefinitionTest' }
 RGTraitDefinitionTest >> testAsFullTraitDefinition [
 
 	| rgClass |
-	rgClass := TSortable asRingDefinition.
+	rgClass := TIsEmpty asRingDefinition.
 	self assertEmpty: rgClass methods.
 	self assert: rgClass superclass isNil.
 	self assertEmpty: rgClass subclasses.
 	self assert: rgClass package name equals: #'Kernel-Traits'.
 
-	rgClass := TSortable asFullRingDefinition.
+	rgClass := TIsEmpty asFullRingDefinition.
 	self denyEmpty: rgClass methods.
-	self assert: (rgClass methodNamed: #isSorted) package isNotNil.
+	self assert: (rgClass methodNamed: #isNotEmpty) package isNotNil.
 	self assert: rgClass superclass isNotNil.
 	self assert: rgClass superclass name equals: #Trait.
 	self assertEmpty: rgClass subclasses.

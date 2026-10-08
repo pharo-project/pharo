@@ -165,7 +165,7 @@ echo "Loading packages: $(cat hermesMetacelloPackages.txt)"
 ${VM} "${METACELLO_IMAGE_NAME}.image" loadHermes $(cat hermesMetacelloPackages.txt) --save
 ${VM} "${METACELLO_IMAGE_NAME}.image" st ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/4-build-scripts/03-bootstrapMonticello.st --save --quit
 git clone https://github.com/pharo-vcs/tonel.git -b "Pharo${PHARO_MAJOR}" "${BOOTSTRAP_CACHE}/tonel"
-${VM} "${METACELLO_IMAGE_NAME}.image" metacello install --save --signalErrorOnWarning "filetree://${BOOTSTRAP_CACHE}/tonel" Tonel --groups core
+${VM} "${METACELLO_IMAGE_NAME}.image" metacello install --signalErrorOnWarning "filetree://${BOOTSTRAP_CACHE}/tonel" Tonel --groups core
 #We need the next line because we will reload Tonel from github and this could cause some trouble later
 ${VM} "${METACELLO_IMAGE_NAME}.image" "${IMAGE_FLAGS}" eval --save "MetacelloProjectRegistry resetRegistry"
 zip "${METACELLO_IMAGE_NAME}.zip" ${METACELLO_IMAGE_NAME}.*

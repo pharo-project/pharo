@@ -124,6 +124,15 @@ DebugSession >> clear [
 	self triggerEvent: #clear
 ]
 
+{ #category : 'debugging actions' }
+DebugSession >> completeTo: aContext [
+	"Send the selected message in selectedContext, and take control in
+	the method invoked to allow further step or send."
+
+	interruptedProcess completeTo: aContext.
+	self updateContextTo: (self stepToFirstInterestingBytecodeIn: interruptedProcess).
+]
+
 { #category : 'accessing' }
 DebugSession >> context [
 

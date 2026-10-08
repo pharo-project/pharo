@@ -29,7 +29,7 @@ RBRemoveDirectAccessToVariableTransformationTest >> testClassVariable [
 	self
 		assert: (class parseTreeForSelector: #initialize)
 		equals:
-		(self parseMethod: 'initialize self nuke. self undoSize: 20').
+		(self parseMethod: 'initialize "Renamed in Pharo 14" self deprecatedAliases: { #RBRefactoryChangeManager }. self nuke. self undoSize: 20').
 	self
 		assert: (class instanceSide parseTreeForSelector: #addUndo:)
 		equals: (self parseMethod: 'addUndo: aRefactoringChange

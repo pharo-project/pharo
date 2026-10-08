@@ -490,6 +490,30 @@ ShClassInstallerTest >> testRecompilingAClassKeepExtensionMethodsAsExtension [
 ]
 
 { #category : 'tests' }
+ShClassInstallerTest >> testShrinkingAnInstanceInvalidatesBlockClosures [
+
+	| clas inst block |
+
+	clas := self newClass: #Foo slots:  { #a. #b. }.
+
+	clas compile: 'b: x
+		b := x'.
+
+	clas compile: 'block
+		^ [ :x | b class ]'.
+
+	inst := clas new.
+	inst b: 'hi'.
+	
+	block := inst block.
+	
+	"Shrink the class"
+	clas := self newClass: #Foo slots:  { #b. }.
+
+	self should: [ block value ] raise: Error
+]
+
+{ #category : 'tests' }
 ShClassInstallerTest >> testTryingToModifyReadOnlyInstances [
 
 	| obj obj2 |

@@ -67,6 +67,12 @@ ShAbstractChange >> hash [
 	^ builder hash
 ]
 
+{ #category : 'testing' }
+ShAbstractChange >> instancesHasShrinked [
+	
+	^ false
+]
+
 { #category : 'accessing' }
 ShAbstractChange >> oldClass [
 	^ oldClass
