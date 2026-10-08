@@ -43,7 +43,7 @@ RBRemoveMethodRefactoring >> breakingChangePreconditions [
 		  (RBCondition withBlock: [ self checkSuperMethods ]).
 		  (RBCondition
 			   withBlock: [ self senders isEmpty ]
-			   errorString: 'Cannot remove method because it has senders') }
+			   errorString: 'Method has senders, proceeding will cause existing message sends to signal DNU') }
 ]
 
 { #category : 'preconditions' }

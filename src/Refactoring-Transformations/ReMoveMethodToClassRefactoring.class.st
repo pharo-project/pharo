@@ -36,9 +36,8 @@ ReMoveMethodToClassRefactoring class >> model: aRBSmalltalk method: aMethod clas
 ]
 
 { #category : 'preconditions' }
-ReMoveMethodToClassRefactoring >> applicabilityPreconditions [
-	"we only move if there is no method in the class. 
-	This is clearly wrong for a refactoring. but for now let us keep it. "
+ReMoveMethodToClassRefactoring >> breakingChangePreconditions [
+
 	^ { (ReDefinesSelectorsCondition new definesSelectors: {method selector} in: class) not }
 ]
 
@@ -68,12 +67,12 @@ ReMoveMethodToClassRefactoring >> privateTransform [
 	rbMethod := RBMethod for: newClass source: method sourceCode selector: method selector.
 	originalProtocol := method protocolName.
 	self generateChangesFor:
-		(RBAddMethodTransformation
+		(RBAddMethodRefactoring
 			sourceCode: rbMethod source
 			in: newClass
 			withProtocol: originalProtocol).
 	self generateChangesFor: 
-		(RBRemoveMethodTransformation 
+		(RBRemoveMethodRefactoring 
 			selector: method selector
 			from: oldClass)
 ]

@@ -89,3 +89,49 @@ ReInsertSubclassBeSiblingDriverTest >> testAddSingleSubclassToDifferentPackage [
 
 	self assertSubclassesOf: rbClass
 ]
+
+{ #category : 'tests' }
+ReInsertSubclassBeSiblingDriverTest >> testAddSingleSubclassWithExistingClassNameInformsUser [
+
+	| driver |
+	driver := ReInsertSubclassDriver new.
+
+	self setUpDriver: driver.
+
+	driver application: StApplicationForRefactorDriverMock new.
+
+	driver
+		beSibling;
+		superclass: self superclassToAddSubclass;
+		scopes: { testingEnvironment };
+		subclass: self superclassToAddSubclass name.
+
+	driver runRefactoring.
+
+	self assert: driver refactoring failedApplicabilityPreconditions size equals: 1.
+	self assert: (driver application shownMessage includesSubstring: 'already exists').
+	self assert: self superclassToAddSubclass subclasses size equals: 2
+]
+
+{ #category : 'tests' }
+ReInsertSubclassBeSiblingDriverTest >> testAddSingleSubclassWithInvalidClassNameInformsUser [
+
+	| driver |
+	driver := ReInsertSubclassDriver new.
+
+	self setUpDriver: driver.
+
+	driver application: StApplicationForRefactorDriverMock new.
+
+	driver
+		beSibling;
+		superclass: self superclassToAddSubclass;
+		scopes: { testingEnvironment };
+		subclass: 'noCapital'.
+
+	driver runRefactoring.
+
+	self assert: driver refactoring failedApplicabilityPreconditions size equals: 1.
+	self assert: (driver application shownMessage includesSubstring: 'is not a valid class name').
+	self assert: self superclassToAddSubclass subclasses size equals: 2
+]

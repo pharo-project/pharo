@@ -50,16 +50,6 @@ ClapMetacelloTest >> testCanKeepAliveWithNoQuitOption [
 ]
 
 { #category : 'tests' }
-ClapMetacelloTest >> testCanSave [
-
-	| command |
-	context := ClapMetacello commandSpecification activationWith: #( 'metacello' 'install' '--save' 'github://myorg/myproject:main/src' 'MyProject').
-	command := context command.
-
-	self assert: command shouldSave
-]
-
-{ #category : 'tests' }
 ClapMetacelloTest >> testCanSignalErrorOnWarning [
 
 	| command |
@@ -70,10 +60,10 @@ ClapMetacelloTest >> testCanSignalErrorOnWarning [
 ]
 
 { #category : 'tests' }
-ClapMetacelloTest >> testDoesNotSaveByDefault [
+ClapMetacelloTest >> testDoesNotSaveWithNoSaveOption [
 
 	| command |
-	context := ClapMetacello commandSpecification activationWith: #( 'metacello' 'install' 'github://myorg/myproject:main/src' 'MyProject').
+	context := ClapMetacello commandSpecification activationWith: #( 'metacello' 'install' '--no-save' 'github://myorg/myproject:main/src' 'MyProject').
 	command := context command.
 
 	self deny: command shouldSave
@@ -117,6 +107,16 @@ ClapMetacelloTest >> testRepositoryUrl [
 	command := context command.
 
 	self assert: command repositoryUrl equals: 'github://myorg/myproject:main/src'
+]
+
+{ #category : 'tests' }
+ClapMetacelloTest >> testSavesByDefault [
+
+	| command |
+	context := ClapMetacello commandSpecification activationWith: #( 'metacello' 'install' 'github://myorg/myproject:main/src' 'MyProject').
+	command := context command.
+
+	self assert: command shouldSave
 ]
 
 { #category : 'tests' }

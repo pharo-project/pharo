@@ -22,6 +22,11 @@ ClapPharoApplication class >> addNoQuitOptionTo: aCommandSpec [
 ]
 
 { #category : 'adding' }
+ClapPharoApplication class >> addNoSaveFlagTo: aCommandSpec [
+	aCommandSpec addFlag: #'no-save' description: 'Do not save the image after the command terminates'
+]
+
+{ #category : 'adding' }
 ClapPharoApplication class >> addRenameOptionTo: aCommandSpec [
 
 	aCommandSpec addFlag: #rename description: 'Rename the image as <NAME> before running the command'

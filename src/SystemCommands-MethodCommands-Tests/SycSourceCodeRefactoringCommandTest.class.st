@@ -6,8 +6,9 @@ Class {
 		'method',
 		'pc'
 	],
-	#category : 'SystemCommands-MethodCommands-Tests',
-	#package : 'SystemCommands-MethodCommands-Tests'
+	#category : 'SystemCommands-MethodCommands-Tests-Tests',
+	#package : 'SystemCommands-MethodCommands-Tests',
+	#tag : 'Tests'
 }
 
 { #category : 'building suites' }

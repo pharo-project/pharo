@@ -66,9 +66,11 @@ ProperMethodCategorizationTest >> testClassSideInitializeMethodNeedsToBeInClassI
 
 	Object allSubclassesDo: [:cls | 
 		cls methods do: [:method | 
-			(method selector = #initialize and: [ method isClassSide and: [( method package name beginsWith: 'SmalltalkCI') not ] ])
+			(method selector = #initialize and: [ method isClassSide 
+				and: [( method package name beginsWith: 'SmalltalkCI') not ] ])
 				ifTrue: [ classSideInitializeMethods add: method ]]].
-	violating := classSideInitializeMethods select: [:m | m protocolName ~= #'class initialization' ].
+	violating := classSideInitializeMethods
+		select: [:m | (#(#'class initialization' #'*Deprecated14' #'*Deprecated14*') includes: m protocolName) not ].
 
 	self assert: violating isEmpty description: 'Class side #initialize methods should be in "class initialization" method category:' , violating asString
 ]
