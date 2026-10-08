@@ -1,33 +1,9 @@
 "
-It provides a presenter for editing a method name. The editor also handles arguments and currently can:
+Provides a presenter for editing a method name. The editor also handles arguments and currently can:
 
 - Add an argument by clicking in `+` button. 
 - Remove an argument (currently selecting the argument, right-click to bring a contextual menu and then choose `Remove` option).
 - Re-order arguments by clicking on each argument and using up and down arrows.
-
-## Example
-
-To edit a method with one argument:
-```
-StMethodNameEditorPresenter
-	openOn: (RBMethodName
-		selector: (ObjectMockForTest >> #variable:) selector
-		arguments: #(#arg1))
-		canRenameArgs: true
-		canRemoveArgs: true
-		canAddArgs: true.
-```
-
-To edit a method without arguments:
-```
-StMethodNameEditorPresenter
-	openOn: (RBMethodName
-		selector: (ObjectMockForTest >> #variable) selector
-		arguments: #())
-		canRenameArgs: true
-		canRemoveArgs: true
-		canAddArgs: true.
-```
 "
 Class {
 	#name : 'StMethodNameEditorPresenter',
@@ -51,111 +27,30 @@ Class {
 	#tag : 'UI'
 }
 
-{ #category : 'examples' }
-StMethodNameEditorPresenter class >> example2 [
-	<script>
-	self
-		openOn:
-			(RBMethodName
-				selector: (RBExtractMethodRefactoring >> #validateRenameOf:to:) selector
-				arguments: ((RBExtractMethodRefactoring >> #validateRenameOf:to:) ast arguments collect: [:each | each name]))
-		canRenameArgs: true
-		canRemoveArgs: true
-		canAddArgs: true
-]
-
-{ #category : 'specs' }
-StMethodNameEditorPresenter class >> openOn: aMethod [
-	"I take a RBMethodName as parameter and open the refactoring UI in a modal to rename it."
-	|temp|
-	temp := self on: aMethod.
-	^ temp openBlockedDialog
-]
-
-{ #category : 'specs' }
-StMethodNameEditorPresenter class >> openOn: aMethod canRenameArgs: aBoolean1 canRemoveArgs: aBoolean2 canAddArgs: aBoolean3 [
-	"I take a RBMethodName as parameter and open the refactoring UI in a modal to rename it."
-	|temp|
-	temp := self on: aMethod.
-	temp canRenameArgs: aBoolean1.
-	temp canRemoveArgs: aBoolean2.
-	temp canAddArgs: aBoolean3.
-	^ temp openBlockedDialog
-]
-
-{ #category : 'specs' }
-StMethodNameEditorPresenter class >> openOn: aMethod withInvalidArgs: aSet canRenameArgs: aBoolean1 canRemoveArgs: aBoolean2 canAddArgs: aBoolean3 [
-	"I take a RBMethodName as parameter and open the refactoring UI in a modal to rename it."
-	|temp|
-	temp := self on: aMethod.
-	temp invalidArgNames: aSet.
-	temp canRenameArgs: aBoolean1.
-	temp canRemoveArgs: aBoolean2.
-	temp canAddArgs: aBoolean3.
-	^ temp openBlockedDialog
-]
-
-{ #category : 'specs' }
-StMethodNameEditorPresenter class >> openOn: aMethod withInvalidArgs: aSet canRenameArgs: aBoolean1 canRemoveArgs: aBoolean2 canAddArgs: aBoolean3 canEditName: aBoolean4 [
-	"I take a RBMethodName as parameter and open the refactoring UI in a modal to rename it."
-	| temp |
-	
-	self flag: #REMOVE. "This methis does not has to exist, please de no use it
-	Yes. my eyes are still hurting"
-	
-	temp := self on: aMethod.
-	temp invalidArgNames: aSet.
-	temp canRenameArgs: aBoolean1.
-	temp canRemoveArgs: aBoolean2.
-	temp canAddArgs: aBoolean3.
-	temp canEditName: aBoolean4.
-	^ temp openModal
-]
-
 { #category : 'action' }
-StMethodNameEditorPresenter >> addArgumentToKeywordSelector: argumentName [
+StMethodNameEditorPresenter >> addArgumentToKeywordSelector: anArgument [
 	"The argument is an instance of RBArgumentName"
-	
-	| newArg newArgSymbol argValue selectedIndex keywordInput |
-	keywordInput := self getNewKeywordPartBodyName.
-	keywordInput := keywordInput  select: [ :each | each isAlphaNumeric ].
-	
-	keywordInput isEmptyOrNil
-		ifTrue: [ newArgSymbol := (self newArgName: 'anObject') asSymbol ]
-		ifFalse: [ newArgSymbol := (self newArgName: keywordInput) asSymbol ].
-	selectedIndex := argumentsList selection selectedIndex.
-	
-	self selectorInput text: self selectorInput text ,  'with:'.
+	| newKeyword newArgName insertIndex newArg |
 
-	argValue := self getDefaultValue.
-	argValue isEmptyOrNil ifTrue: [ CmdCommandAborted signal ].
-	newArg := RBArgumentName name: newArgSymbol value: argValue.
-	argumentsList items:
-		(argumentsList items copyUpThrough: argumentName) , { newArg }
-		, (argumentsList items copyAfter: argumentName).
-	
-	argumentsList selectIndex: selectedIndex + 1.
+	newKeyword := self cleanedKeywordPart.
+	newArgName := self newArgName: (self getNewArgumentName ifNil: [ '' ]).
+	insertIndex := self insertionIndexAfter: anArgument.
+	self selectorInput text: (self selectorTextWithKeywordPart: newKeyword , ':' insertedBefore: insertIndex).
+	newArg := RBArgumentName name: newArgName value: 'nil'.
+	argumentsList items: (argumentsList items copyUpThrough: anArgument)
+		, { newArg }
+		, (argumentsList items copyAfter: anArgument).
+	argumentsList selectIndex: insertIndex.
 	self canEditName: true.
 	self updateLabel
 ]
 
 { #category : 'action' }
 StMethodNameEditorPresenter >> addArgumentToUnarySelector [
+	| newArgName newArg |
 
-	| newArg argValue newKeyword |
-	newKeyword := self getNewKeywordPartBodyName.
-	newKeyword := newKeyword select: [ :each | each isAlphaNumeric ].
-	"We do not call cleanedKeyword: because here the newKeyword can be nil after cleaning
-	the following with handle it"
-	
-	newKeyword isEmptyOrNil
-		ifTrue: [ newArg := (self newArgName: 'anObject') asSymbol ]
-		ifFalse: [ newArg := (self newArgName: newKeyword) asSymbol ].
-
-	argValue := self getDefaultValue.
-	argValue isEmptyOrNil ifTrue: [ CmdCommandAborted signal ].
-
-	newArg := RBArgumentName name: newArg value: argValue.
+	newArgName := self newArgName: (self getNewArgumentName ifNil: [ '' ]).
+	newArg := RBArgumentName name: newArgName value: 'nil'.
 	argumentsList items: { newArg }.
 	self selectorInput text: self selectorInput text , ':'.
 	argumentsList selectIndex: 1.
@@ -238,6 +133,17 @@ StMethodNameEditorPresenter >> cancelled [
 ]
 
 { #category : 'action' }
+StMethodNameEditorPresenter >> cleanedKeywordPart [
+	"Answer the keyword part entered by the user, sanitized. 'with' is used
+	when nothing usable was entered."
+	| keyword |
+
+	keyword := self getNewKeywordPartBodyName ifNil: [ '' ].
+	keyword := (keyword select: [ :each | each isAlphaNumeric ]) asString.
+	^ keyword ifEmpty: [ 'with' ]
+]
+
+{ #category : 'action' }
 StMethodNameEditorPresenter >> computePermutation [
 
 	| index |
@@ -290,18 +196,13 @@ StMethodNameEditorPresenter >> downButton [
 ]
 
 { #category : 'action' }
-StMethodNameEditorPresenter >> getDefaultValue [
-
-	^ self 
-		  request: 'Enter default value for argument'
-		  initialAnswer: 'nil'
+StMethodNameEditorPresenter >> getNewArgumentName [
+	^ self request: 'Enter argument name' initialAnswer: 'arg'.
 ]
 
 { #category : 'action' }
 StMethodNameEditorPresenter >> getNewKeywordPartBodyName [
-	^ self
-		  request: 'Enter keyword part name without the ending :'
-		  initialAnswer: 'arg'
+	^ self request: 'Enter keyword part name without the ending :' initialAnswer: 'with'.
 ]
 
 { #category : 'services' }
@@ -312,10 +213,7 @@ StMethodNameEditorPresenter >> getParametersOrder [
 { #category : 'to be pushed to presenter' }
 StMethodNameEditorPresenter >> inform: aString [
 
-	^ self application newInform
-		title: aString;
-		acceptLabel: 'Got it !';
-		openDialog
+	self application inform: aString
 ]
 
 { #category : 'initialization' }
@@ -373,8 +271,8 @@ StMethodNameEditorPresenter >> initializeDialogWindow: aModalPresenter [
 	aModalPresenter
 		initialExtent: 600 @ 300 ;
 		title: 'Method name editor', (methodName selector
-					ifNil: [ '' ]
-					ifNotNil: [ :selector | ' : "', selector, '"' ]);		
+			ifNil: [ '' ]
+			ifNotNil: [ :selector | ' : "', selector, '"' ]);		
 		addButton: 'Cancel' do: [ :presenter | presenter beCancel; close ];
 		addDefaultButton: 'Rename' do: [ :presenter | self renameMethodAndClose: presenter ];
 		whenOpenedDo: [ selectorInput takeKeyboardFocus; selectAll ]
@@ -393,6 +291,15 @@ StMethodNameEditorPresenter >> initializePresenters [
 		initializeButtons;
 		initializeArgumentsList;
 		initializeAddButton.
+]
+
+{ #category : 'action' }
+StMethodNameEditorPresenter >> insertionIndexAfter: anArgument [
+	"Answer the index where a new argument is inserted after anArgument,
+	matching the copyUpThrough:/copyAfter: semantics (end of the list when
+	anArgument is not found)."
+
+	^ (argumentsList items indexOf: anArgument ifAbsent: [ argumentsList items size ]) + 1
 ]
 
 { #category : 'accessing' }
@@ -443,12 +350,20 @@ StMethodNameEditorPresenter >> previewResult [
 { #category : 'action' }
 StMethodNameEditorPresenter >> pushDownSelectedArgument [
 	| selectedIndex |
+	
 	selectedIndex := argumentsList selection selectedIndex.
+	
 	selectedIndex = 0
 		ifTrue: [ ^ self inform: 'There is not argument selected.' ].
+	selectedIndex = 1
+		ifTrue: [ ^ self inform: 'The first argument (method name) cannot be moved.' ].
 	selectedIndex = argumentsList items size
 		ifTrue: [ ^ self inform: 'The argument is already the last of the list.' ].
-	argumentsList items swap: selectedIndex with: selectedIndex + 1.
+	
+	argumentsList items: (argumentsList items 
+		swap: selectedIndex 
+		with: selectedIndex + 1).
+	self swapSelectorKeywords: selectedIndex with: selectedIndex + 1.
 	argumentsList selectIndex: selectedIndex + 1.
 	self updateLabel
 ]
@@ -456,12 +371,19 @@ StMethodNameEditorPresenter >> pushDownSelectedArgument [
 { #category : 'action' }
 StMethodNameEditorPresenter >> pushUpSelectedArgument [
 	| selectedIndex |
+	
 	selectedIndex := argumentsList selection selectedIndex.
 	selectedIndex = 0
 		ifTrue: [ ^ self inform: 'There is not argument selected.' ].
 	selectedIndex = 1
 		ifTrue: [ ^ self inform: 'The argument is already the first of the list.' ].
-	argumentsList items swap: selectedIndex with: selectedIndex - 1.
+	selectedIndex = 2
+		ifTrue: [ ^ self inform: 'The first position is reserved for the method name.' ].
+	
+	argumentsList items: (argumentsList items
+		swap: selectedIndex 
+		with: selectedIndex - 1).
+	self swapSelectorKeywords: selectedIndex with: selectedIndex - 1.
 	argumentsList selectIndex: selectedIndex - 1.
 	self updateLabel
 ]
@@ -558,10 +480,35 @@ StMethodNameEditorPresenter >> selectorInput [
 	^ selectorInput
 ]
 
+{ #category : 'action' }
+StMethodNameEditorPresenter >> selectorTextWithKeywordPart: aKeywordPart insertedBefore: anIndex [
+	"Answer the current selector text with aKeywordPart inserted at anIndex
+	among its keyword parts, so the keyword sits next to its argument."
+
+	| parts |
+	parts := (self selectorInput text asSymbol keywords) asOrderedCollection.
+	parts add: aKeywordPart beforeIndex: anIndex.
+	^ parts inject: '' into: [ :acc :each | acc , each ]
+]
+
 { #category : 'initialization' }
 StMethodNameEditorPresenter >> setModelBeforeInitialization: aRBMethodName [
 	methodName := aRBMethodName.
 	args := methodName arguments copy
+]
+
+{ #category : 'action' }
+StMethodNameEditorPresenter >> swapSelectorKeywords: aFirst with: aSecond [
+	"Swap two keyword parts of the current selector so the keyword order follows the reordered arguments."
+	| selectorText parts |
+
+	selectorText := self selectorInput text.
+	selectorText ifNil: [ ^ self ].
+	parts := selectorText asSymbol keywords.
+	(parts isNil or: [ parts size ~= argumentsList items size ])
+		ifTrue: [ ^ self ].
+	parts swap: aFirst with: aSecond.
+	self selectorInput text: (parts inject: '' into: [ :acc :each | acc , each ])
 ]
 
 { #category : 'accessing - ui' }
@@ -571,13 +518,12 @@ StMethodNameEditorPresenter >> upButton [
 
 { #category : 'action' }
 StMethodNameEditorPresenter >> updateLabel [
-	"Update the new method name to display to the user when the user change its name or order of the arguments."
+	"Update the new method name to display to the user when the user change 
+	 its name or order of the arguments."
 
-	previewResult
-		label:
-			(RBMethodName
-				selector: (self selectorInput text ifNil: [''])
-				arguments: (argumentsList items collect: #newName) ) methodName
+	previewResult label: (RBMethodName
+		selector: (self selectorInput text ifNil: [''])
+		arguments: (argumentsList items collect: #newName) ) methodName
 ]
 
 { #category : 'initialization' }

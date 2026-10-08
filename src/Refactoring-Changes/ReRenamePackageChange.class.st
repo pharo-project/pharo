@@ -1,5 +1,5 @@
 "
-I am a refactory change for a package renaming. The RBRefactory api is implemented in my super class, I just define the concrete ""package"" renaming.
+I am a refactory change for a package renaming. The refactoring api is implemented in my superclass, I just define the concrete ""package"" renaming.
 "
 Class {
 	#name : 'ReRenamePackageChange',

@@ -2,7 +2,8 @@ Class {
 	#name : 'StMethodNameEditorPresenterAnswerForTest',
 	#superclass : 'Object',
 	#instVars : [
-		'label'
+		'label',
+		'answers'
 	],
 	#category : 'Refactoring-UI-UI',
 	#package : 'Refactoring-UI',
@@ -10,9 +11,19 @@ Class {
 }
 
 { #category : 'accessing' }
-StMethodNameEditorPresenterAnswerForTest >> label [
+StMethodNameEditorPresenterAnswerForTest >> answers: aCollection [
+	"Queue the answers to be returned, in order, one per request."
 
-	^ label
+	answers := aCollection asOrderedCollection
+]
+
+{ #category : 'accessing' }
+StMethodNameEditorPresenterAnswerForTest >> label [
+	"Answer the next queued answer, if any, or the fixed label."
+
+	answers isNil ifTrue: [ ^ label ].
+	answers isEmpty ifTrue: [ ^ label ].
+	^ answers removeFirst
 ]
 
 { #category : 'accessing' }

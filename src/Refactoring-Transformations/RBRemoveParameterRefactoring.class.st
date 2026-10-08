@@ -55,6 +55,17 @@ RBRemoveParameterRefactoring >> applicabilityPreconditions [
 						errorString: 'This argument is still referenced in at least one implementor!!')]) asArray				
 ]
 
+{ #category : 'preconditions' }
+RBRemoveParameterRefactoring >> breakingChangePreconditions [
+
+	^ { 
+	ReUpToRootDoesNotDefinesMethod new
+		classes: self implementors;
+		selector: newSelector;
+		yourself 
+	}
+]
+
 { #category : 'transforming' }
 RBRemoveParameterRefactoring >> hasReferencesToTemporaryIn: each [
 
@@ -63,6 +74,13 @@ RBRemoveParameterRefactoring >> hasReferencesToTemporaryIn: each [
 	tree := each parseTreeForSelector: oldSelector.
 	tree ifNil: [ self refactoringError: 'Cannot parse sources.' ].
 	^ tree references: ( tree argumentNames at: parameterIndex )
+]
+
+{ #category : 'transforming' }
+RBRemoveParameterRefactoring >> modifyImplementorParseTree: parseTree in: aClass [
+
+	super modifyImplementorParseTree: parseTree in: aClass.
+	self renameArgumentsIn: parseTree
 ]
 
 { #category : 'accessing' }
@@ -84,4 +102,18 @@ RBRemoveParameterRefactoring >> removeParameter: aString in: aClass selector: aS
 	class := self classObjectFor: aClass.
 	argument := aString.
 	parameterIndex := anIndex
+]
+
+{ #category : 'initialization' }
+RBRemoveParameterRefactoring >> removeParameterFrom: aSelector in: aClass [
+	"Partial configuration, the argument to remove is defined later by the user."
+
+	oldSelector := aSelector.
+	class := self classObjectFor: aClass
+]
+
+{ #category : 'preconditions' }
+RBRemoveParameterRefactoring >> violations [
+
+	^ self breakingChangePreconditions flatCollect: [ :each | each violators ]
 ]

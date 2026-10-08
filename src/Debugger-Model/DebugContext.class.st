@@ -141,13 +141,14 @@ DebugContext >> recompileCurrentMethodTo: aText notifying: aNotifyer inSession: 
 	classOrTraitOfMethod := self confirmOnTraitOverwrite: selector inClass: self selectedClass inSession: aSession.
 	classOrTraitOfMethod ifNil: [ ^ nil ].
 
-	selector := classOrTraitOfMethod
+selector := classOrTraitOfMethod
 		compile: aText
 		classified: self selectedMessageCategoryName
-		notifying: aNotifyer.
+		withStamp: nil
+		notifying: aNotifyer
+		logSource: true.
 	^ classOrTraitOfMethod >> selector
 ]
-
 { #category : 'accessing' }
 DebugContext >> selectedClass [
 	"Answer the class in which the current context's method was found."

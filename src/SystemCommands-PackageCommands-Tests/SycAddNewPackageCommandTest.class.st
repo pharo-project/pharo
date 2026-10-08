@@ -4,8 +4,9 @@ A SycAddNewPackageCommandTest is a test class for testing the behavior of SycAdd
 Class {
 	#name : 'SycAddNewPackageCommandTest',
 	#superclass : 'TestCase',
-	#category : 'SystemCommands-PackageCommands-Tests',
-	#package : 'SystemCommands-PackageCommands-Tests'
+	#category : 'SystemCommands-PackageCommands-Tests-Tests',
+	#package : 'SystemCommands-PackageCommands-Tests',
+	#tag : 'Tests'
 }
 
 { #category : 'tests' }

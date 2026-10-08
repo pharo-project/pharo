@@ -274,7 +274,8 @@ PragmaCollector >> pragmas [
 { #category : 'querying' }
 PragmaCollector >> pragmasOfClass: aClass [
 	"return all handlers of class aClass"
-	^ self	select: [:prag | prag methodClass = aClass ]
+
+	^ self select: [:prag | prag methodClass = aClass ]
 ]
 
 { #category : 'enumerating' }
@@ -282,11 +283,11 @@ PragmaCollector >> reject: aBlock [
 	^ self collected reject: aBlock
 ]
 
-{ #category : 'dependents access' }
+{ #category : 'dependencies' }
 PragmaCollector >> release [
 
 	self noMoreNotifications.
-	self destroyAnnouncer.
+	announcer := nil.
 	collected := nil
 ]
 
