@@ -23,6 +23,13 @@ SycMoveMethodsToClassCommand class >> methods: methods class: targetClass [
 		targetClass: targetClass
 ]
 
+{ #category : 'instance creation' }
+SycMoveMethodsToClassCommand class >> methods: methods class: targetClass refactoringScopes: refactoringScopes [
+	"Create a command moving methods to a class without any tool context, which happens when another command delegates to me. Such a command has to be given the refactoring scopes explicitly, because I can not read them from a context."
+
+	^ (self methods: methods class: targetClass) refactoringScopes: refactoringScopes
+]
+
 { #category : 'accessing' }
 SycMoveMethodsToClassCommand >> defaultMenuIconName [
 	^ #smallRedo
@@ -59,6 +66,12 @@ SycMoveMethodsToClassCommand >> prepareFullExecutionInContext: aToolContext [
 	targetClass := aToolContext requestSingleClass: 'Choose class'.
 	targetClass := aToolContext currentMetaLevelOf: targetClass.
 	refactoringScopes := aToolContext refactoringScopes
+]
+
+{ #category : 'accessing' }
+SycMoveMethodsToClassCommand >> refactoringScopes: aCollection [
+
+	refactoringScopes := aCollection
 ]
 
 { #category : 'accessing' }
