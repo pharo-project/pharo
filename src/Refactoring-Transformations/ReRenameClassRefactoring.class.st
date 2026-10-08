@@ -15,7 +15,8 @@ Class {
 	#superclass : 'RBClassRefactoring',
 	#instVars : [
 		'newName',
-		'class'
+		'class',
+		'notCheckVarName'
 	],
 	#category : 'Refactoring-Transformations',
 	#package : 'Refactoring-Transformations'
@@ -62,7 +63,7 @@ ReRenameClassRefactoring >> applicabilityPreconditions [
 { #category : 'preconditions' }
 ReRenameClassRefactoring >> breakingChangePreconditions [
 
-	^ { (ReSharedVariableShadowingClassNameCondition name: newName oldName: className model: self model) }
+	^ { self hasShadowingPrecondition }
 ]
 
 { #category : 'initialization' }
@@ -83,6 +84,15 @@ ReRenameClassRefactoring >> className: aName newName: aNewName [
 { #category : 'preconditions' }
 ReRenameClassRefactoring >> doesClassToBeRenamedExist [
 	^ class isNotNil 
+]
+
+{ #category : 'preconditions' }
+ReRenameClassRefactoring >> hasShadowingPrecondition [
+
+	^ ReSharedVariableShadowingClassNameCondition
+		name: newName
+		oldName: className
+		model: self model
 ]
 
 { #category : 'preconditions' }
