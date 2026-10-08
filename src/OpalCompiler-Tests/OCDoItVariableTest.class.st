@@ -4,9 +4,9 @@ Class {
 	#instVars : [
 		'instVarForTest'
 	],
-	#category : 'OpalCompiler-Tests-Semantic',
+	#category : 'OpalCompiler-Tests-Semantics',
 	#package : 'OpalCompiler-Tests',
-	#tag : 'Semantic'
+	#tag : 'Semantics'
 }
 
 { #category : 'helpers' }
