@@ -353,7 +353,7 @@ RBTransformationsTest >> testRenameClassTransform [
 		                  to: newClassName.
 	transformation generateChanges.
 
-	self assert: transformation model changes changes size equals: 11.
+	self assert: transformation model changes changes size equals: 12.
 
 	class := transformation model classNamed: newClassName.
 	self
@@ -376,6 +376,10 @@ RBTransformationsTest >> testRenameClassTransform [
 	self
 		assert: (class parseTreeForSelector: #reference)
 		equals: (self parseMethod: 'reference ^ RBNewDummyClassName new')
+	self
+		assert: ((transformation model classNamed: #RBTDummy)
+			 parseTreeForSelector: #methodFromTrait)
+		equals: (self parseMethod: 'methodFromTrait RBNewDummyClassName justForTest')
 ]
 
 { #category : 'tests' }
