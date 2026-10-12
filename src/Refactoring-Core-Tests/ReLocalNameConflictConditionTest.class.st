@@ -13,7 +13,7 @@ Class {
 ReLocalNameConflictConditionTest >> testCheckDetectsNestedDefinitionConflict [
     | ast condition innerBlock |
 
-    ast := RBParser parseMethod: '
+    ast := OCParser parseMethod: '
     foo
 		|temp|
 		temp:= 3.
@@ -38,7 +38,7 @@ ReLocalNameConflictConditionTest >> testCheckReturnsFalseWhenTemporaryAlreadyExi
 
 	| ast condition |
 
-	ast := RBParser parseMethod: '
+	ast := OCParser parseMethod: '
 	foo
     | temp |
     temp := 1
@@ -57,7 +57,7 @@ ReLocalNameConflictConditionTest >> testCheckReturnsTrueWhenVariableDoesNotExist
 
 	| ast condition |
 
-	ast := RBParser parseMethod: '
+	ast := OCParser parseMethod: '
 	foo
 		| a |
 		a := 1.
