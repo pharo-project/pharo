@@ -9,12 +9,12 @@ Class {
 	#tag : 'Manifest'
 }
 
-{ #category : 'meta-data' }
+{ #category : 'meta data' }
 ManifestCollectionsStreams class >> dependencies [
 	^ #(#'Collections-Strings' #'Collections-Support' #'Collections-Sequenceable' #Kernel #'Collections-Native')
 ]
 
-{ #category : 'meta-data' }
+{ #category : 'meta data' }
 ManifestCollectionsStreams class >> packageName [
 	^ #'Collections-Streams'
 ]

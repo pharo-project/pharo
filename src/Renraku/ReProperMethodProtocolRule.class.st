@@ -28,8 +28,9 @@ ReProperMethodProtocolRule class >> checksMethod [
 ]
 
 { #category : 'accessing' }
-ReProperMethodProtocolRule class >> group [
-	^ self cleanCodeGroup
+ReProperMethodProtocolRule class >> groupSelector [
+
+	^ #cleanCodeGroup
 ]
 
 { #category : 'testing' }

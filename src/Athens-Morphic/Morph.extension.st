@@ -48,9 +48,8 @@ Morph >> drawOnCanvasWrapperFor: anAthensCanvas [
 
 { #category : '*Athens-Morphic' }
 Morph >> drawSubmorphsOnAthensCanvas: anAthensCanvas [
-	self
-		drawClippedOnAthensCanvas: anAthensCanvas
-		during: [ submorphs reverseDo: [ :m | anAthensCanvas fullDrawMorph: m ] ]
+
+	self drawClippedOnAthensCanvas: anAthensCanvas during: [ self submorphs reverseDo: [ :m | anAthensCanvas fullDrawMorph: m ] ]
 ]
 
 { #category : '*Athens-Morphic' }

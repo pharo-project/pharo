@@ -15,8 +15,9 @@ ReUnaryAccessingMethodWithoutReturnRule class >> checksMethod [
 ]
 
 { #category : 'accessing' }
-ReUnaryAccessingMethodWithoutReturnRule class >> group [
-	^ self potentialBugsGroup
+ReUnaryAccessingMethodWithoutReturnRule class >> groupSelector [
+
+	^ #potentialBugsGroup
 ]
 
 { #category : 'accessing' }
@@ -35,5 +36,6 @@ ReUnaryAccessingMethodWithoutReturnRule >> basicCheck: aMethod [
 
 	(aMethod numArgs > 0 or: [ aMethod isAbstract ]) ifTrue: [ ^ false ].
 	(aMethod protocolName beginsWith: 'accessing') ifFalse: [ ^ false ].
+	(aMethod selector = #initialize) ifTrue: [ ^ false ].
 	^ aMethod ast withAllChildren noneSatisfy: [ :each | each isReturn ]
 ]

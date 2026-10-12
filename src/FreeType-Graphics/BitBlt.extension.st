@@ -1,13 +1,6 @@
 Extension { #name : 'BitBlt' }
 
 { #category : '*FreeType-Graphics' }
-BitBlt >> combinationRule [
-	"Answer the receiver's combinationRule"
-
-	^ combinationRule
-]
-
-{ #category : '*FreeType-Graphics' }
 BitBlt >> copyBitsColor: argbColorSmallInteger alpha: argbAlphaSmallInteger gammaTable: gammaByteArray ungammaTable: ungammaByteArray [
 	"This entry point to BitBlt supplies an extra argument to specify the fore color
 	argb value for operation 41. This is split into an alpha value and an rgb value,

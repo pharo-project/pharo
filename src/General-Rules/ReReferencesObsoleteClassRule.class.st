@@ -11,8 +11,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReReferencesObsoleteClassRule class >> group [
-	^ self bugsGroup
+ReReferencesObsoleteClassRule class >> groupSelector [
+
+	^ #bugsGroup
 ]
 
 { #category : 'accessing' }

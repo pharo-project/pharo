@@ -361,6 +361,12 @@ AthensCairoSurface >> attemptToRecurseDrawing [
 	^ self
 ]
 
+{ #category : 'accessing' }
+AthensCairoSurface >> basicHandle [
+
+	^ handle
+]
+
 { #category : 'caching' }
 AthensCairoSurface >> cacheAt: anObject ifAbsentPut: aBlock [
 	"Answer an object from surface's cache identified by anObject,

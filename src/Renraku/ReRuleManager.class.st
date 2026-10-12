@@ -82,7 +82,7 @@ ReRuleManager class >> doesNotUnderstand: aMessage [
 			| ruleName rules |
 			ruleName := (aMessage selector allButFirst: 16) withoutSuffix: ':'.
 			rules := self visibleRuleClasses select: [ :class |
-				         class group = ruleName ].
+				         class groupSelector = ruleName ].
 			^ (aMessage selector endsWith: ':')
 				  ifTrue: [ rules do: [ :rule | rule enabled: aMessage arguments first] ]
 				  ifFalse: [ rules anySatisfy: [ :rule | rule enabled] ] ]
@@ -185,22 +185,21 @@ ReRuleManager class >> ruleToggleSettingsOn: aBuilder [
 	(aBuilder group: self ruleToggleGroupID)
 		order: 1;
 		label: 'Toggle rules to run';
-		description:
-			'Select which rules do you want to see in the live feedback';
+		description: 'Select which rules do you want to see in the live feedback';
 		parent: #qualityAssistant;
 		with: [
-			(self visibleRuleClasses groupedBy: [ :class | class group ])
-				keysAndValuesDo: [ :groupName :rules |
-					(aBuilder setting: groupName asSymbol)
-						target: self;
-						selector: #toggleGroupNamed , groupName capitalized;
-						default: true;
-						noOrdering;
-						iconName: #smallConfiguration;
-						label: groupName , ' rules';
-						description: 'select ', groupName , ' rules';
-						with: [ self subSettingsOn: aBuilder with: rules] ] ]
-
+				(self visibleRuleClasses groupedBy: [ :class | class groupSelector ]) keysAndValuesDo: [ :groupNameSelector :rules |
+							| groupName |
+							groupName := ReAbstractRule perform: groupNameSelector.
+							(aBuilder setting: groupNameSelector asSymbol)
+								target: self;
+								selector: #toggleGroupNamed , groupNameSelector capitalized;
+								default: true;
+								noOrdering;
+								iconName: #smallConfiguration;
+								label: groupName , ' rules';
+								description: 'select ' , groupName , ' rules';
+								with: [ self subSettingsOn: aBuilder with: rules ] ] ]
 ]
 
 { #category : 'accessing' }

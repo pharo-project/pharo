@@ -207,8 +207,29 @@ MethodMapTest >> testMethodSourceNodeAtInitialPC [
 ]
 
 { #category : 'tests - ast mapping' }
+MethodMapTest >> testMethodSourceNodeAtInitialPCWithoutCache [
+
+	| method actual |
+	method := self class >> testSelector.
+	method flushBytecodeToASTMapping.
+	actual := method sourceNodeForPC: method initialPC.
+
+	self assert: actual equals: method ast sendNodes first receiver receiver
+]
+
+{ #category : 'tests - ast mapping' }
 MethodMapTest >> testMethodSourceNodeAtPC [
 	self assert: (((Object>>#halt) sourceNodeForPC:  (Smalltalk vm for32bit: 22 for64bit: 42)) isKindOf: OCMessageNode)
+]
+
+{ #category : 'tests - ast mapping' }
+MethodMapTest >> testMethodSourceNodeAtPCWithoutCache [
+
+	| method |
+	method := Object >> #halt.
+	method flushBytecodeToASTMapping.
+
+	self assert: ((method sourceNodeForPC: (Smalltalk vm for32bit: 22 for64bit: 42)) isKindOf: OCMessageNode)
 ]
 
 { #category : 'tests - ast mapping' }
@@ -216,6 +237,17 @@ MethodMapTest >> testPrimitiveMethodSourceNodeAtInitialPC [
 
 	| method actual |
 	method := SmallInteger >> #+.
+	actual := method sourceNodeForPC: method initialPC.
+
+	self assert: actual equals: method ast
+]
+
+{ #category : 'tests - ast mapping' }
+MethodMapTest >> testPrimitiveMethodSourceNodeAtInitialPCWithoutCache [
+
+	| method actual |
+	method := SmallInteger >> #+.
+	method flushBytecodeToASTMapping.
 	actual := method sourceNodeForPC: method initialPC.
 
 	self assert: actual equals: method ast

@@ -19,8 +19,13 @@ Class {
 { #category : 'system annoucements' }
 RFReflectivityASTCacheStrategy class >> handleMethodModified: aMethodModified [
 
-	aMethodModified oldMethod saveBcToASTCacheWithAST:
-		aMethodModified oldMethod ast
+	"A method has been modified.
+	Remove it from the AST cache if there.
+	If absent do nothing
+
+	BC-AST mapping will be recomputed on demand"
+	
+	OCASTCache default removeKey: aMethodModified oldMethod ifAbsent: nil
 ]
 
 { #category : 'class initialization' }

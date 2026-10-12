@@ -43,14 +43,32 @@ RBPullUpClassVariableParametrizedTest >> testFailureNonExistantName [
 
 { #category : 'tests' }
 RBPullUpClassVariableParametrizedTest >> testPullUpClassVariable [
-	| refactoring |
+	| refactoring root firstChild secondChild |
+	model
+		defineClass: [ :aBuilder |
+			aBuilder
+				superclass: Object;
+				name: #PullUpClassVariableRoot;
+				package: #'Refactory-Test data' ];
+		defineClass: [ :aBuilder |
+			aBuilder
+				superclassName: #PullUpClassVariableRoot;
+				name: #PullUpClassVariableFirstChild;
+				sharedVariables: { #Foo };
+				package: #'Refactory-Test data' ];
+		defineClass: [ :aBuilder |
+			aBuilder
+				superclassName: #PullUpClassVariableRoot;
+				name: #PullUpClassVariableSecondChild;
+				sharedVariables: { #Foo };
+				package: #'Refactory-Test data' ].
 	refactoring := self createRefactoringWithModel: model andArguments:
-		{ #RecursiveSelfRule . #RBLintRuleTestData }.
-	[ self executeRefactoring: refactoring ]
-		on: RBRefactoringWarning 
-		do: [ :e | e resume ].
-	self assert: ((refactoring model classNamed: #RBLintRuleTestData)
-		directlyDefinesClassVariable: #RecursiveSelfRule).
-	self deny: ((refactoring model classNamed: #RBTransformationRuleTestData)
-		directlyDefinesClassVariable: #RecursiveSelfRule)
+		{ #Foo . #PullUpClassVariableRoot }.
+	self executeRefactoring: refactoring.
+	root := refactoring model classNamed: #PullUpClassVariableRoot.
+	firstChild := refactoring model classNamed: #PullUpClassVariableFirstChild.
+	secondChild := refactoring model classNamed: #PullUpClassVariableSecondChild.
+	self assert: (root directlyDefinesClassVariable: #Foo).
+	self deny: (firstChild directlyDefinesClassVariable: #Foo).
+	self deny: (secondChild directlyDefinesClassVariable: #Foo)
 ]

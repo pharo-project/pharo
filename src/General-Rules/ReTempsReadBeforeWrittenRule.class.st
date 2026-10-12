@@ -27,8 +27,9 @@ ReTempsReadBeforeWrittenRule class >> checksMethod [
 ]
 
 { #category : 'accessing' }
-ReTempsReadBeforeWrittenRule class >> group [
-	^ self potentialBugsGroup
+ReTempsReadBeforeWrittenRule class >> groupSelector [
+
+	^ #potentialBugsGroup
 ]
 
 { #category : 'accessing' }

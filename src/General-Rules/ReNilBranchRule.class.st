@@ -10,8 +10,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReNilBranchRule class >> group [
-	^ self designFlawGroup
+ReNilBranchRule class >> groupSelector [
+
+	^ #designFlawGroup
 ]
 
 { #category : 'accessing' }

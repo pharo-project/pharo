@@ -80,18 +80,18 @@ OCInteraciveAPITest >> setUp [
 OCInteraciveAPITest >> testCodeWithoutInteractiveReparationSendsNotificationToRequestor [
 
 	| method |
-	
 	"I set myself as not interactive, this will avoid the automatic reparation and launch the old notify process"
 	interactive := false.
-	
+
 	text := 'foo "x and y are not declared" x + y'.
 	method := OCInteractiveAPI new
 		          undeclaredVariableReparator: self;
 		          compile: text notifying: self in: self class.
 
-	self assert: notifications asArray equals: {
-			#('Undeclared variable named x in foo ->' 32 'foo "x and y are not declared" x + y').
-			#('Undeclared variable named y in foo ->' 36 'foo "x and y are not declared" x + y') }
+	"When there is a requestor, then the notifications will stop after the first one"
+	self
+		assert: notifications asArray
+		equals: { #( 'Undeclared variable named x in foo ->' 32 'foo "x and y are not declared" x + y' ) }
 ]
 
 { #category : 'tests' }

@@ -9,7 +9,7 @@ UITheme >> growlBorderColorFor: aGrowlMorph [
 { #category : '*Growl' }
 UITheme >> growlContentsColorFor: aGrowlMorph [
 
-	^ colorPalette growlContentsColorFor: aGrowlMorph
+	^ self colorPalette growlContentsColorFor: aGrowlMorph
 ]
 
 { #category : '*Growl' }

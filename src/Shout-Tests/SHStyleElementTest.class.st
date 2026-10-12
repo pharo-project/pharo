@@ -4,31 +4,45 @@ SUnit tests for class SHStyleElement
 Class {
 	#name : 'SHStyleElementTest',
 	#superclass : 'TestCase',
-	#instVars : [
-		'element'
-	],
 	#category : 'Shout-Tests-Styling',
 	#package : 'Shout-Tests',
 	#tag : 'Styling'
 }
 
-{ #category : 'running' }
-SHStyleElementTest >> setUp [
-	super setUp.
-	element := SHStyleElement withTokens: #(#self #super #true #false)
+{ #category : 'tests' }
+SHStyleElementTest >> testSerialization [
+	"STONing a StyleElement should result in a dictionary containing the attributes"
+	| elem ston values  |
+	elem := SHStyleElement group: 'default'.
+	ston := String streamContents: [ :stream |
+			        STON writer
+				        on: stream;
+				        nextPut: elem ].
+	values := STON reader
+		          on: ston readStream;
+		          next.
+	self assert: (values at: 'group') equals: elem group.
+	self assert: (values at: 'color') equals: elem color.
+	self assert: (values at: 'emphasis') equals: elem emphasis
 ]
 
 { #category : 'tests' }
-SHStyleElementTest >> testPrintOn [
-	self
-		assert: element printString
-		equals: 'a SHStyleElement tokens: #(#self #super #true #false)'
-]
+SHStyleElementTest >> testSettingAttributes [
 
-{ #category : 'tests' }
-SHStyleElementTest >> testStyleForTable [
-	| table |
-	table := element styleForTable.
-	self assert: table size equals: 4.
-	self assert: (table collect: [:each | each first]) equals: element tokens
+	| group element oldColor oldEmphasis newColor newEmphasis |
+	group := 'default'.
+	element := SHStyleElement group: group.
+	self assert: element group equals: group.
+	oldColor := element color.
+	oldEmphasis := element emphasis.
+	newColor := Color magenta.
+	newEmphasis := 'bold'.
+	element color: newColor.
+	element emphasis: newEmphasis.
+	self assert: element color equals: newColor.
+	self assert: element emphasis equals: newEmphasis.
+	element color: oldColor.
+	element emphasis: oldEmphasis.
+	self assert: element color equals: oldColor.
+	self assert: element emphasis equals: oldEmphasis
 ]

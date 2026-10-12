@@ -11,8 +11,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReDeadBlockRule class >> group [
-	^ self optimizationGroup
+ReDeadBlockRule class >> groupSelector [
+
+	^ #optimizationGroup
 ]
 
 { #category : 'accessing' }

@@ -20,8 +20,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReWhileTrueRule class >> group [
-	^ self codingIdiomViolationGroup
+ReWhileTrueRule class >> groupSelector [
+
+	^ #codingIdiomViolationGroup
 ]
 
 { #category : 'accessing' }

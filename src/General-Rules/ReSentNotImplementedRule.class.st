@@ -15,8 +15,9 @@ ReSentNotImplementedRule class >> checksMethod [
 ]
 
 { #category : 'accessing' }
-ReSentNotImplementedRule class >> group [
-	^ self bugsGroup
+ReSentNotImplementedRule class >> groupSelector [
+
+	^ #bugsGroup
 ]
 
 { #category : 'accessing' }

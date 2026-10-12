@@ -22,6 +22,18 @@ TestExecutionEnvironmentTestCase >> createTestService [
 	self subclassResponsibility
 ]
 
+{ #category : 'accessing' }
+TestExecutionEnvironmentTestCase >> executionEnvironment1 [
+
+	^ executionEnvironment
+]
+
+{ #category : 'accessing' }
+TestExecutionEnvironmentTestCase >> executionEnvironment: anObject [
+
+	executionEnvironment := anObject
+]
+
 { #category : 'running' }
 TestExecutionEnvironmentTestCase >> newProcess: aName toImmediatelyExecute: aBlock [
 	| newProcess |
@@ -30,6 +42,18 @@ TestExecutionEnvironmentTestCase >> newProcess: aName toImmediatelyExecute: aBlo
 	newProcess priority: Processor activePriority + 1.
 	processes add: newProcess.
 	^newProcess
+]
+
+{ #category : 'accessing' }
+TestExecutionEnvironmentTestCase >> processes [
+
+	^ processes
+]
+
+{ #category : 'accessing' }
+TestExecutionEnvironmentTestCase >> processes: anObject [
+
+	processes := anObject
 ]
 
 { #category : 'running' }
@@ -91,4 +115,16 @@ TestExecutionEnvironmentTestCase >> testIsEnabledByDefault [
 
 	self assert: testService isEnabled equals: testService isEnabledByDefault.
 	self assert: testService isEnabledByDefault equals: testService class isEnabled
+]
+
+{ #category : 'accessing' }
+TestExecutionEnvironmentTestCase >> testService [
+
+	^ testService
+]
+
+{ #category : 'accessing' }
+TestExecutionEnvironmentTestCase >> testService: anObject [
+
+	testService := anObject
 ]

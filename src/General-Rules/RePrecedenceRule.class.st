@@ -10,8 +10,9 @@ Class {
 }
 
 { #category : 'accessing' }
-RePrecedenceRule class >> group [
-	^ self potentialBugsGroup
+RePrecedenceRule class >> groupSelector [
+
+	^ #potentialBugsGroup
 ]
 
 { #category : 'accessing' }

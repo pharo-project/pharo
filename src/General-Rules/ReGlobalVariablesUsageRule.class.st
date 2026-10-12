@@ -11,14 +11,15 @@ Class {
 	#tag : 'Design Flaws'
 }
 
-{ #category : 'testing-interest' }
+{ #category : 'testing - interest' }
 ReGlobalVariablesUsageRule class >> checksMethod [
 	^ true
 ]
 
 { #category : 'accessing' }
-ReGlobalVariablesUsageRule class >> group [
-	^ self designFlawGroup
+ReGlobalVariablesUsageRule class >> groupSelector [
+
+	^ #designFlawGroup
 ]
 
 { #category : 'accessing' }

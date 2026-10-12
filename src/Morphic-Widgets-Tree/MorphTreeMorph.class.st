@@ -618,7 +618,7 @@ MorphTreeMorph >> columnsChanged [
 	self addColumnResizers
 ]
 
-{ #category : 'events-processing' }
+{ #category : 'events - processing' }
 MorphTreeMorph >> commandOrCrontrolKeyPressed: anEvent [
 	^ (OSPlatform current isMacOS)
 		ifTrue: [anEvent controlKeyPressed]
@@ -647,7 +647,7 @@ MorphTreeMorph >> disable [
 	self enabled: false
 ]
 
-{ #category : 'events-processing' }
+{ #category : 'events - processing' }
 MorphTreeMorph >> doubleClick: anEvent [
 	| targetMorph |
 	targetMorph := self scrollerSubMorphFromPoint: anEvent position.
@@ -915,7 +915,7 @@ MorphTreeMorph >> hScrollBarValue: scrollValue [
 			self updateTopHeader]
 ]
 
-{ #category : 'events-processing' }
+{ #category : 'events - processing' }
 MorphTreeMorph >> handleMouseMove: anEvent [
 	"Reimplemented because we really want #mouseMove when a morph is dragged around"
 
@@ -1079,7 +1079,7 @@ MorphTreeMorph >> itemStringGetter: aValuable [
 	self columns first itemStringGetter: aValuable
 ]
 
-{ #category : 'events-processing' }
+{ #category : 'events - processing' }
 MorphTreeMorph >> keyDown: event [
 	"Process potential command keys."
 	(self navigationKey: event) ifTrue: [^true].
@@ -1191,7 +1191,7 @@ MorphTreeMorph >> model: aTreeModel [
 	self registerRequestHandlers
 ]
 
-{ #category : 'events-processing' }
+{ #category : 'events - processing' }
 MorphTreeMorph >> mouseDown: event [
 	"Changed to take keybaord focus."
 	| targetMorph selectors |
@@ -1242,7 +1242,7 @@ MorphTreeMorph >> mouseDownHighlightColor [
 		ifFalse: [Color white]
 ]
 
-{ #category : 'events-processing' }
+{ #category : 'events - processing' }
 MorphTreeMorph >> mouseEnter: event [
 	"Changed to take keyboardFocusOnMouseDown preference into account."
 
@@ -1251,7 +1251,7 @@ MorphTreeMorph >> mouseEnter: event [
 	self keyboardFocusOnMouseDown ifFalse: [self takeKeyboardFocus]
 ]
 
-{ #category : 'events-processing' }
+{ #category : 'events - processing' }
 MorphTreeMorph >> mouseEnterDragging: evt [
 	| aMorph |
 	(evt hand hasSubmorphs and: [self dropEnabled])
@@ -1264,7 +1264,7 @@ MorphTreeMorph >> mouseEnterDragging: evt [
 			"above is ugly but necessary for now"]
 ]
 
-{ #category : 'events-processing' }
+{ #category : 'events - processing' }
 MorphTreeMorph >> mouseLeaveDragging: anEvent [
 	(self dropEnabled and:[anEvent hand hasSubmorphs]) ifFalse: ["no d&d"
 		^ super mouseLeaveDragging: anEvent].
@@ -1273,7 +1273,7 @@ MorphTreeMorph >> mouseLeaveDragging: anEvent [
 	"above is ugly but necessary for now"
 ]
 
-{ #category : 'events-processing' }
+{ #category : 'events - processing' }
 MorphTreeMorph >> mouseMove: evt [
 
 	| targetMorph |
@@ -1302,7 +1302,7 @@ MorphTreeMorph >> mouseOverAllowed [
 	^ mouseOverAllowed ifNil: [mouseOverAllowed := false]
 ]
 
-{ #category : 'events-processing' }
+{ #category : 'events - processing' }
 MorphTreeMorph >> mouseStillDown: anEvent [
 	(anEvent hand position y > self innerBounds bottom)
 		ifTrue: [self listManager selectMoreAtBottom]
@@ -1312,13 +1312,13 @@ MorphTreeMorph >> mouseStillDown: anEvent [
 				ifFalse: [super mouseStillDown: anEvent]]
 ]
 
-{ #category : 'events-processing' }
+{ #category : 'events - processing' }
 MorphTreeMorph >> mouseStillDownStepRate [
 	"At what rate do I want to receive #mouseStillDown: notifications?"
 	^10
 ]
 
-{ #category : 'events-processing' }
+{ #category : 'events - processing' }
 MorphTreeMorph >> mouseUp: event [
 	"Fixed up highlight problems."
 
@@ -1586,7 +1586,7 @@ MorphTreeMorph >> scrollSelectionIntoView [
 		ifNotNil: [:morph | self scrollToShow: morph contentBounds ]
 ]
 
-{ #category : 'events-processing' }
+{ #category : 'events - processing' }
 MorphTreeMorph >> scrollerSubMorphFromPoint: aPoint [
 	"Return the list element (morph) at the given point or nil if outside"
 
@@ -1705,7 +1705,7 @@ MorphTreeMorph >> setSelectedMorph: aNodeMorph [
 	self listManager setSelectedMorph: aNodeMorph
 ]
 
-{ #category : 'events-processing' }
+{ #category : 'events - processing' }
 MorphTreeMorph >> startDrag: anEvent [
 	| aTransferMorph itemMorph passenger |
 	self dragEnabled
@@ -1748,7 +1748,7 @@ MorphTreeMorph >> swapColumnAt: oneIndex withColumnAt: anotherIndex [
 	self columnResizersToFront
 ]
 
-{ #category : 'events-processing' }
+{ #category : 'events - processing' }
 MorphTreeMorph >> takesKeyboardFocus [
 	"Answer whether the receiver can normally take keyboard focus."
 
@@ -1769,7 +1769,7 @@ MorphTreeMorph >> themeChanged [
 	super themeChanged
 ]
 
-{ #category : 'events-processing' }
+{ #category : 'events - processing' }
 MorphTreeMorph >> toggleExpandedState: aMorph event: event [
 	| oldState |
 	event yellowButtonPressed
@@ -1941,7 +1941,7 @@ MorphTreeMorph >> withTreeLines: aBoolean [
 	self  treeLineWidth: 1
 ]
 
-{ #category : 'events-processing' }
+{ #category : 'events - processing' }
 MorphTreeMorph >> yellowButtonEvent: anEvent [
 
 	(self scrollerSubMorphFromPoint: anEvent position)

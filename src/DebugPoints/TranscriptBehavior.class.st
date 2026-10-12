@@ -1,6 +1,7 @@
 "
 I am a behavior that can be added to debug points. 
-I write the string in my text variable to the transcript window when executed.
+I'm super basic trace: basically a single string.
+I write the string held in my text variable to the transcript window when executed.
 "
 Class {
 	#name : 'TranscriptBehavior',
@@ -22,22 +23,23 @@ TranscriptBehavior class >> isAbstract [
 { #category : 'execution' }
 TranscriptBehavior >> execute [
 	self text trace.
-	^true
+	^ true
 ]
 
 { #category : 'cleanup' }
 TranscriptBehavior >> remove [ 
 	"saving the text in case the behavior is added again later"
-	self debugPoint properties at: #TranscriptText put: self text.
+	
+	self debugPoint properties at: #TranscriptText put: self text
 ]
 
 { #category : 'accessing' }
 TranscriptBehavior >> text [
-	^text ifNil: [ '' ]
+	^ text ifNil: [ '' ]
 ]
 
 { #category : 'accessing' }
 TranscriptBehavior >> text: aString [
-	text := aString.
+	text := aString
 
 ]

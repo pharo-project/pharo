@@ -23,7 +23,7 @@ DebugPointNodeTarget >> install: aLink on: aClassOrObject [
 
 { #category : 'accessing' }
 DebugPointNodeTarget >> method [
-	"returns the method to which the debug point is attached"
+	"Returns the method to which the debug point is attached."
 
 	^ self methodNode compiledMethod
 ]

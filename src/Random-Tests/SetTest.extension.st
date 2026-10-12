@@ -4,9 +4,9 @@ Extension { #name : 'SetTest' }
 SetTest >> testAtRandom [
 	| rand |
 	rand := Random new.
-	full add: 3.
-	full add: 2.
-	full add: 4.
-	full add: 1.
-	self assert: (full includes: (full atRandom: rand))
+	self full add: 3.
+	self full add: 2.
+	self full add: 4.
+	self full add: 1.
+	self assert: (self full includes: (self full atRandom: rand))
 ]

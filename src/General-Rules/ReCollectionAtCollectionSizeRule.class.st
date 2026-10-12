@@ -11,8 +11,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReCollectionAtCollectionSizeRule class >> group [
-	^ self codingIdiomViolationGroup
+ReCollectionAtCollectionSizeRule class >> groupSelector [
+
+	^ #codingIdiomViolationGroup
 ]
 
 { #category : 'accessing' }

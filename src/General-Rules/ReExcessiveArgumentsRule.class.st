@@ -19,8 +19,9 @@ ReExcessiveArgumentsRule class >> checksMethod [
 ]
 
 { #category : 'accessing' }
-ReExcessiveArgumentsRule class >> group [
-	^ self designFlawGroup
+ReExcessiveArgumentsRule class >> groupSelector [
+
+	^ #designFlawGroup
 ]
 
 { #category : 'accessing' }

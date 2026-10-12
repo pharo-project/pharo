@@ -58,8 +58,9 @@ ReImplementedNotSentRule class >> enabled: aBoolean [
 ]
 
 { #category : 'accessing' }
-ReImplementedNotSentRule class >> group [
-	^ self designFlawGroup
+ReImplementedNotSentRule class >> groupSelector [
+
+	^ #designFlawGroup
 ]
 
 { #category : 'class initialization' }

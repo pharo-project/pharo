@@ -30,7 +30,7 @@ ReMoveMethodsToClassSideDriver >> breakingChoices [
 	| items |
 	items := OrderedCollection new.
 	items add: (ReBrowseMethodChoice new driver: self).
-	items add: (ReMoveClassSideChoice new driver: self).
+	items add: (ReMoveClasstoClassSideChoice new driver: self).
 	^ items
 ]
 
@@ -41,7 +41,7 @@ ReMoveMethodsToClassSideDriver >> browseMethod [
 	methods := refactoring refactorings collect: [ :each | each method ].
 	names := methods collect: [ :method | method selector ].
 
-	(Smalltalk tools toolNamed: #messageList) browseImplementorsOfAll: names from: methods anyOne methodClass
+	(Smalltalk tools toolNamed: #messageList) browseImplementorsOfAll: names
 ]
 
 { #category : 'execution' }

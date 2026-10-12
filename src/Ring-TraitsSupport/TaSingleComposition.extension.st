@@ -2,5 +2,5 @@ Extension { #name : 'TaSingleComposition' }
 
 { #category : '*Ring-TraitsSupport' }
 TaSingleComposition >> includesElement: anElement [
-	^ self == anElement or: [ inner == anElement ]
+	^ self == anElement or: [ self inner == anElement ]
 ]

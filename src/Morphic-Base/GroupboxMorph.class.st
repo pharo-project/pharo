@@ -36,7 +36,7 @@ GroupboxMorph >> adoptPaneColor: paneColor [
 		borderStyle: (self theme groupLabelBorderStyleFor: self)
 ]
 
-{ #category : 'geometry testing' }
+{ #category : 'geometry - testing' }
 GroupboxMorph >> containsPoint: aPoint [
 	"Override here to check the label and content instead."
 
@@ -154,7 +154,7 @@ GroupboxMorph >> labelMorph: anObject [
 	labelMorph := anObject
 ]
 
-{ #category : 'geometry testing' }
+{ #category : 'geometry - testing' }
 GroupboxMorph >> minExtent [
 	"Answer the minmum extent of the receiver.
 	Based on label and rounding."

@@ -1,13 +1,13 @@
 Extension { #name : 'Context' }
 
 { #category : '*Fuel-Core' }
-Context >> cleanCopy [ 
+Context >> cleanCopy [
 
-	^ self class 
-		sender: nil 
-		receiver: receiver 
-		method: method
-		arguments: #()
+	^ self class
+		  sender: nil
+		  receiver: self receiver
+		  method: self method
+		  arguments: #(  )
 ]
 
 { #category : '*Fuel-Core' }

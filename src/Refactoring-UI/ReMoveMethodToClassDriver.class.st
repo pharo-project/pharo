@@ -26,6 +26,34 @@ ReMoveMethodToClassDriver class >> shouldPreviewChanges [
 ]
 
 { #category : 'configuration' }
+ReMoveMethodToClassDriver >> breakingChoices [
+	
+	| items |
+	items := OrderedCollection new.
+	items add: (ReBrowseMethodChoice new driver: self).
+	items add: (ReMoveClasstoInstanceSideChoice new driver: self).
+	^ items
+]
+
+{ #category : 'configuration' }
+ReMoveMethodToClassDriver >> browseMethod [
+
+	(Smalltalk tools toolNamed: #messageList) browseImplementorsOfAll: refactoring method selector
+]
+
+{ #category : 'configuration' }
+ReMoveMethodToClassDriver >> defaultSelectDialog [
+
+	^ super defaultSelectDialog
+		  title: 'Warning you may break your code';
+		  message: 'One or more methods are already defined on the class side!';
+		  items: self breakingChoices;
+		  display: [ :each | each description ];
+		  displayIcon: [ :each | self iconNamed: each systemIconName ];
+		  yourself
+]
+
+{ #category : 'configuration' }
 ReMoveMethodToClassDriver >> instantiateRefactoring [
 
 	^ ReMoveMethodToClassRefactoring model: model method: method class: class

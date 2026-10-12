@@ -23,8 +23,9 @@ ReLongMethodsRule class >> checksMethod [
 ]
 
 { #category : 'accessing' }
-ReLongMethodsRule class >> group [
-	^ self designFlawGroup
+ReLongMethodsRule class >> groupSelector [
+
+	^ #designFlawGroup
 ]
 
 { #category : 'private' }

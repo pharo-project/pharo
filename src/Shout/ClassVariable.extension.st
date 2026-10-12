@@ -4,6 +4,6 @@ Extension { #name : 'ClassVariable' }
 ClassVariable >> styleNameIn: aVariableNode [
 
 	^ self isPoolVariable
-		  ifTrue: [ #poolConstant ]
-		  ifFalse: [ #classVar ]
+		  ifTrue: [ 'poolConstant' ]
+		  ifFalse: [ 'classVar' ]
 ]

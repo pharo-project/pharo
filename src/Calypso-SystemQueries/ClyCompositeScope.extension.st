@@ -23,9 +23,10 @@ ClyCompositeScope >> asInterestingClassScope [
 
 { #category : '*Calypso-SystemQueries' }
 ClyCompositeScope >> asLocalClassScope [
+
 	| newSubscopes |
-	newSubscopes := subscopes collect: [ :each | each asLocalClassScope ].
-	^ClyCompositeScope on: newSubscopes in: environment
+	newSubscopes := self subscopes collect: [ :each | each asLocalClassScope ].
+	^ ClyCompositeScope on: newSubscopes in: self environment
 ]
 
 { #category : '*Calypso-SystemQueries' }

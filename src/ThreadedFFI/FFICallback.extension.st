@@ -27,5 +27,5 @@ FFICallback >> tfPointerAddress [
 { #category : '*ThreadedFFI' }
 FFICallback >> tfPrintString [
 
-	^ block printString
+	^ self block printString
 ]

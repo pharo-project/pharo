@@ -6,19 +6,16 @@ My precondition verifies that the moved variable is not referenced in the method
 Class {
 	#name : 'RBPushDownClassVariableRefactoring',
 	#superclass : 'RBVariableRefactoring',
+	#instVars : [
+		'transformation'
+	],
 	#category : 'Refactoring-Transformations',
 	#package : 'Refactoring-Transformations'
 }
 
 { #category : 'preconditions' }
 RBPushDownClassVariableRefactoring >> applicabilityPreconditions [
-
-	^ {
-    	(ReDirectlyDefinesSharedVariableCondition 
-        	class: class 
-        	sharedVariables: { variableName }).
-		self preconditionHasSubclass
-	 }
+	^ transformation applicabilityPreconditions
 ]
 
 { #category : 'preconditions' }
@@ -27,14 +24,10 @@ RBPushDownClassVariableRefactoring >> breakingChangePreconditions [
     ^ { self preconditionHasNoReferences }
 ]
 
-{ #category : 'preconditions' }
-RBPushDownClassVariableRefactoring >> findDestinationClasses [
-
-	| classes |
-	classes := class withAllSubclasses reject: [ :each |
-		(each whichSelectorsReferToClassVariable: variableName) isEmpty
-			and: [ (each classSide whichSelectorsReferToClassVariable: variableName) isEmpty ] ].
-	^ classes
+{ #category : 'initialization' }
+RBPushDownClassVariableRefactoring >> model: aRBNamespace [
+	super model: aRBNamespace.
+	transformation ifNotNil: [ transformation model: aRBNamespace ]
 ]
 
 { #category : 'preconditions' }
@@ -55,10 +48,14 @@ RBPushDownClassVariableRefactoring >> preconditionHasSubclass [
 
 { #category : 'transforming' }
 RBPushDownClassVariableRefactoring >> privateTransform [
+	^ transformation privateTransform
+]
 
-	| destinationClasses |
-	class removeClassVariable: variableName.
-	destinationClasses := self findDestinationClasses.
-	destinationClasses ifEmpty: [ ^ self ].
-	destinationClasses do: [ :aClass | aClass addClassVariable: variableName ]
+{ #category : 'initialization' }
+RBPushDownClassVariableRefactoring >> variable: aVarName class: aClassName [
+	super variable: aVarName class: aClassName.
+	transformation := RBPushDownVariableTransformation
+		model: self model
+		classVariable: aVarName
+		class: aClassName
 ]

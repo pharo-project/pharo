@@ -128,6 +128,12 @@ UIThemePalette >> classExtensionColor [
 ]
 
 { #category : 'accessing' }
+UIThemePalette >> colorConfigurator [
+
+	^ colorConfigurator
+]
+
+{ #category : 'accessing' }
 UIThemePalette >> colorConfigurator: aColorConfigurator [
 
 	colorConfigurator := aColorConfigurator
@@ -397,6 +403,12 @@ UIThemePalette >> mouseOverColor [
 UIThemePalette >> paginatorSelectionColor [
 
 	^ paletteDictionary at: #paginatorSelectionColor ifAbsentPut: [ colorConfigurator paginatorSelectionColor ]
+]
+
+{ #category : 'accessing' }
+UIThemePalette >> paletteDictionary [
+
+	^ paletteDictionary
 ]
 
 { #category : 'colors' }

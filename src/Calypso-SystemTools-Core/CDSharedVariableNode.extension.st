@@ -4,8 +4,7 @@ Extension { #name : 'CDSharedVariableNode' }
 CDSharedVariableNode >> asCalypsoVariableOf: aClass [
 
 	| actualClass classVar |
-	actualClass := self classDefinitionNode existingClassIfAbsent: [
-		self error: 'Class is not exists yet'].
-	classVar := actualClass classVariableNamed: name asSymbol.
-	^ClyClassVariable on: classVar definedIn: actualClass
+	actualClass := self classDefinitionNode existingClassIfAbsent: [ self error: 'Class is not exists yet' ].
+	classVar := actualClass classVariableNamed: self name asSymbol.
+	^ ClyClassVariable on: classVar definedIn: actualClass
 ]

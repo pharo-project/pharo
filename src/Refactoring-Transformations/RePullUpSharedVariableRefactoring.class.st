@@ -4,19 +4,16 @@ I am a refactoring for moving a class variable up to the superclass.
 Class {
 	#name : 'RePullUpSharedVariableRefactoring',
 	#superclass : 'RBVariableRefactoring',
+	#instVars : [
+		'transformation'
+	],
 	#category : 'Refactoring-Transformations',
 	#package : 'Refactoring-Transformations'
 }
 
 { #category : 'preconditions' }
 RePullUpSharedVariableRefactoring >> applicabilityPreconditions [
-
-	^ {
-		  (RBCondition isMetaclass: class) not.
-		  (ReHierarchyDefinesSharedVariableCondition new
-			   class: class;
-			   sharedVariables: { variableName };
-			   yourself) }
+	^ transformation applicabilityPreconditions
 ]
 
 { #category : 'preconditions' }
@@ -32,13 +29,22 @@ RePullUpSharedVariableRefactoring >> breakingChangePreconditions [
 		   true ]) }
 ]
 
+{ #category : 'initialization' }
+RePullUpSharedVariableRefactoring >> model: aRBNamespace [
+	super model: aRBNamespace.
+	transformation ifNotNil: [ transformation model: aRBNamespace ]
+]
+
 { #category : 'transforming' }
 RePullUpSharedVariableRefactoring >> privateTransform [
-	"Remove all the variables in the hierarchy below the classes and define one on the top."
-	
-	class allSubclasses do:
-		[:each |
-		(each directlyDefinesClassVariable: variableName)
-			ifTrue: [each removeClassVariable: variableName]].
-	class addClassVariable: variableName
+	^ transformation privateTransform
+]
+
+{ #category : 'initialization' }
+RePullUpSharedVariableRefactoring >> variable: aVarName class: aClassName [
+	super variable: aVarName class: aClassName.
+	transformation := RBPullUpVariableTransformation
+		model: self model
+		classVariable: aVarName
+		class: aClassName
 ]

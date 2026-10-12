@@ -18,8 +18,9 @@ ReJustSendsSuperRule class >> checksMethod [
 ]
 
 { #category : 'accessing' }
-ReJustSendsSuperRule class >> group [
-	^ self optimizationGroup
+ReJustSendsSuperRule class >> groupSelector [
+
+	^ #optimizationGroup
 ]
 
 { #category : 'accessing' }

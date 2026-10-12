@@ -5,6 +5,9 @@ The variable should not be used obviously.
 Class {
 	#name : 'ReRemoveInstanceVariableRefactoring',
 	#superclass : 'RBVariableRefactoring',
+	#instVars : [
+		'transformation'
+	],
 	#category : 'Refactoring-Transformations',
 	#package : 'Refactoring-Transformations'
 }
@@ -27,18 +30,21 @@ ReRemoveInstanceVariableRefactoring class >> remove: variable from: class [
 
 { #category : 'preconditions' }
 ReRemoveInstanceVariableRefactoring >> applicabilityPreconditions [
-	"we store it because the violators are computed during check so we should not recreate it each time."
 
-	^ { (ReDirectlyDefinesInstanceVariableCondition
-		   classNamed: class name
-		   inModel: self model
-		   instanceVariables: { variableName }) }
+	^ transformation applicabilityPreconditions
 ]
 
 { #category : 'preconditions' }
 ReRemoveInstanceVariableRefactoring >> breakingChangePreconditions [
 
 	^ { self preconditionHasReferences }
+]
+
+{ #category : 'accessing' }
+ReRemoveInstanceVariableRefactoring >> model: aRBNamespace [
+
+	super model: aRBNamespace.
+	transformation ifNotNil: [ transformation model: aRBNamespace ]
 ]
 
 { #category : 'preconditions' }
@@ -68,10 +74,20 @@ ReRemoveInstanceVariableRefactoring >> printOn: aStream [
 { #category : 'transforming' }
 ReRemoveInstanceVariableRefactoring >> privateTransform [
 
-	class removeInstanceVariable: variableName
+	transformation privateTransform
 ]
 
 { #category : 'accessing' }
 ReRemoveInstanceVariableRefactoring >> refactoredClass [
 	^ class
+]
+
+{ #category : 'initialization' }
+ReRemoveInstanceVariableRefactoring >> variable: aVarName class: aClassName [
+
+	super variable: aVarName class: aClassName.
+	transformation := RBRemoveVariableTransformation
+				  model: self model
+				  instanceVariable: aVarName
+				  class: aClassName
 ]

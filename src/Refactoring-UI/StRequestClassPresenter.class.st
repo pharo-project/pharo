@@ -11,6 +11,12 @@ Class {
 	#tag : 'UI'
 }
 
+{ #category : 'private - accessing' }
+StRequestClassPresenter >> driver [
+
+	^ driver
+]
+
 { #category : 'initialization' }
 StRequestClassPresenter >> initializeClassNamePresenter [
 
@@ -84,6 +90,12 @@ StRequestClassPresenter >> packageName [
 	^ packagePresenter selectedItem
 ]
 
+{ #category : 'private - accessing' }
+StRequestClassPresenter >> packagePresenter [
+
+	^ packagePresenter
+]
+
 { #category : 'accessing - model' }
 StRequestClassPresenter >> setModelBeforeInitialization: anInteractionDriver [
 
@@ -94,6 +106,12 @@ StRequestClassPresenter >> setModelBeforeInitialization: anInteractionDriver [
 StRequestClassPresenter >> tagName [
 
 	^ tagPresenter selectedItem
+]
+
+{ #category : 'private - accessing' }
+StRequestClassPresenter >> tagPresenter [
+
+	^ tagPresenter
 ]
 
 { #category : 'callbacks' }

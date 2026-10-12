@@ -23,25 +23,25 @@ BlockClosure >> rfvalue [
 	 whose closure is the receiver and whose caller is the sender of this
 	 message. Supply the copied values to the activation as its copied
 	 temps. Primitive. Essential."
+
 	<primitive: 207>
-	<metaLinkOptions: #( + optionDisabledLink)>
+	<metaLinkOptions: #( + optionDisabledLink )>
 	| newContext |
-	numArgs ~= 0 ifTrue:
-		[self numArgsError: 0].
+	self numArgs ~= 0 ifTrue: [ self numArgsError: 0 ].
 	false
-		ifTrue: "Old code to simulate the closure value primitive on VMs that lack it."
-			[newContext := self asContextWithSender: thisContext sender.
-			thisContext privSender: newContext]
-		ifFalse: [self primitiveFailed]
+		ifTrue: [ "Old code to simulate the closure value primitive on VMs that lack it."
+				newContext := self asContextWithSender: thisContext sender.
+				thisContext privSender: newContext ]
+		ifFalse: [ self primitiveFailed ]
 ]
 
 { #category : '*Reflectivity' }
 BlockClosure >> rfvalueNoContextSwitch [
 	"same as valueNoContextSwitch, for recursion stopping metalinks"
+
 	<primitive: 209>
-	<metaLinkOptions: #( + optionDisabledLink)>
-	numArgs ~= 0 ifTrue:
-		[self numArgsError: 0].
+	<metaLinkOptions: #( + optionDisabledLink )>
+	self numArgs ~= 0 ifTrue: [ self numArgsError: 0 ].
 	self primitiveFailed
 ]
 

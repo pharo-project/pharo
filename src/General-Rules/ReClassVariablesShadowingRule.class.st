@@ -9,15 +9,16 @@ Class {
 	#tag : 'Design Flaws'
 }
 
-{ #category : 'testing-interest' }
+{ #category : 'testing - interest' }
 ReClassVariablesShadowingRule class >> checksClass [
 
 	^ true
 ]
 
 { #category : 'accessing' }
-ReClassVariablesShadowingRule class >> group [
-	^ self designFlawGroup
+ReClassVariablesShadowingRule class >> groupSelector [
+
+	^ #designFlawGroup
 ]
 
 { #category : 'accessing' }

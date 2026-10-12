@@ -16,8 +16,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReUnoptimizedToDoRule class >> group [
-	^ self optimizationGroup
+ReUnoptimizedToDoRule class >> groupSelector [
+
+	^ #optimizationGroup
 ]
 
 { #category : 'accessing' }

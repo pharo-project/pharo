@@ -462,3 +462,11 @@ ExtensionTest >> test20CleanExtendedBehaviorsCleansAliases [
 
 	self deny: (scopedSelector extendedBehaviors includes: objectClass)
 ]
+
+{ #category : 'tests - runtime' }
+ExtensionTest >> test21ExtensionMethodCanNotAccessInstanceVariable [
+
+	pointClass addInstVarNamed: 'x'.
+
+	self should: [ self compile: 'getX ^ x' on: extensionOnPoint ] raise: OCCompilationError
+]

@@ -3,16 +3,14 @@ Extension { #name : 'CmdCompositeToolContext' }
 { #category : '*Commander-Activators-DragAndDrop' }
 CmdCompositeToolContext >> allowsDropExecutionOf: aCommand [
 
-	^existingContexts anySatisfy: [ :each |
-		each allowsDropExecutionOf: aCommand ]
+	^ self existingContexts anySatisfy: [ :each | each allowsDropExecutionOf: aCommand ]
 ]
 
 { #category : '*Commander-Activators-DragAndDrop' }
 CmdCompositeToolContext >> applyDropResultOf: aCommand [
 
 	| activeDropContext |
-	activeDropContext := existingContexts detect: [ :each |
-		each allowsDropExecutionOf: aCommand ].
+	activeDropContext := self existingContexts detect: [ :each | each allowsDropExecutionOf: aCommand ].
 
 	activeDropContext applyDropResultOf: aCommand
 ]
@@ -28,8 +26,7 @@ CmdCompositeToolContext >> prepareDragActivationOf: aCommand [
 CmdCompositeToolContext >> prepareDropExecutionOf: aCommand [
 
 	| activeDropContext |
-	activeDropContext := existingContexts detect: [ :each |
-		each allowsDropExecutionOf: aCommand ].
+	activeDropContext := self existingContexts detect: [ :each | each allowsDropExecutionOf: aCommand ].
 
 	activeDropContext prepareDropExecutionOf: aCommand
 ]

@@ -20,11 +20,11 @@ VTermOutputDriver >> color256: aColor background: isBackground [
 
 	self csiEscape.
 
-	outStream nextPutAll: (isBackground
-		ifFalse: [ '38;5;' ]
-		ifTrue:  [ '48;5;' ]).
+	self outStream nextPutAll: (isBackground
+			 ifFalse: [ '38;5;' ]
+			 ifTrue: [ '48;5;' ]).
 
-	outStream
+	self outStream
 		print: aColor closestXTermPixelValue;
 		nextPut: $m
 ]

@@ -11,15 +11,16 @@ Class {
 	#tag : 'SUnit'
 }
 
-{ #category : 'testing-interest' }
+{ #category : 'testing - interest' }
 ReTestClassNameShouldNotEndWithTests class >> checksClass [
 
 	^ true
 ]
 
 { #category : 'accessing' }
-ReTestClassNameShouldNotEndWithTests class >> group [
-	^ self sunitGroup
+ReTestClassNameShouldNotEndWithTests class >> groupSelector [
+
+	^ #sunitGroup
 ]
 
 { #category : 'accessing' }

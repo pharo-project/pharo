@@ -10,7 +10,8 @@ Class {
 	#superclass : 'ReRefactoring',
 	#instVars : [
 		'classNames',
-		'classesDictionary'
+		'classesDictionary',
+		'transformation'
 	],
 	#category : 'Refactoring-Transformations',
 	#package : 'Refactoring-Transformations'
@@ -40,9 +41,7 @@ ReRemoveClassRefactoring class >> model: aRBSmalltalk classNames: aClassNameColl
 { #category : 'preconditions' }
 ReRemoveClassRefactoring >> applicabilityPreconditions [
 
-	^ {
-		  (ReClassesExistCondition new classes: classesDictionary).
-		  self preconditionAreNotMeta }
+	^ transformation applicabilityPreconditions
 ]
 
 { #category : 'preconditions' }
@@ -68,7 +67,10 @@ ReRemoveClassRefactoring >> classNames [
 
 { #category : 'initialization' }
 ReRemoveClassRefactoring >> classNames: aClassNameCollection [
-	classNames := aClassNameCollection
+	classNames := aClassNameCollection.
+	transformation := ReRemoveClassesTransformation
+				  model: self model
+				  classNames: classNames
 ]
 
 { #category : 'preconditions' }
@@ -76,6 +78,13 @@ ReRemoveClassRefactoring >> environmentWithUsersOf: aClassable [
 	^ RBClassEnvironment
 		onEnvironment: RBBrowserEnvironment new
 		classes: (self model classesReferencingClass: aClassable)
+]
+
+{ #category : 'accessing' }
+ReRemoveClassRefactoring >> model: aRBNamespace [
+
+	super model: aRBNamespace.
+	transformation ifNotNil: [ transformation model: aRBNamespace ]
 ]
 
 { #category : 'preconditions' }
@@ -118,7 +127,8 @@ ReRemoveClassRefactoring >> prepareForExecution [
 
 	classesDictionary := (classNames collect: [ :className |
 		            className -> (self model classNamed: className) ])
-		           asDictionary
+		           asDictionary.
+	transformation prepareForExecution
 ]
 
 { #category : 'preparation' }
@@ -129,9 +139,8 @@ ReRemoveClassRefactoring >> prepareForInteractiveMode [
 
 { #category : 'transforming' }
 ReRemoveClassRefactoring >> privateTransform [
-	self
-		reparentSubclasses;
-		removeClasses
+
+	transformation privateTransform
 ]
 
 { #category : 'removing' }
@@ -145,14 +154,12 @@ ReRemoveClassRefactoring >> removeClassChanges [
 
 { #category : 'transforming' }
 ReRemoveClassRefactoring >> removeClasses [
-	classNames do: [:each | self model removeClassNamed: each]
+
+	transformation removeClasses
 ]
 
 { #category : 'transforming' }
 ReRemoveClassRefactoring >> reparentSubclasses [
-	classNames do:
-			[:each |
-			| class |
-			class := self model classNamed: each.
-			self model reparentClasses: class subclasses copy to: class superclass]
+
+	transformation reparentSubclasses
 ]

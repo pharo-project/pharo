@@ -17,15 +17,14 @@ SHTextStyler >> styleDocExpression: aPharoDocExpression in: aComment [
 
 	off := aComment start.
 	expressionText withIndexDo: [ :char :ij |
-		| index attr |
-		index := ij + off.
-		attr := expressionText attributesAt: ij.
-		charAttr at: index put: attr.
-		(expressionText at: ij) = $" ifTrue: [
-			"Because doublequote are escaped in the original source code,
+			| index attr |
+			index := ij + off.
+			attr := expressionText attributesAt: ij.
+			self charAttr at: index put: attr.
+			(expressionText at: ij) = $" ifTrue: [ "Because doublequote are escaped in the original source code,
 			just highlight both character the same and increase the original source offset"
-			charAttr at: index + 1 put: attr.
-			off := off + 1 ] ]
+					self charAttr at: index + 1 put: attr.
+					off := off + 1 ] ]
 ]
 
 { #category : '*PharoDocComment' }

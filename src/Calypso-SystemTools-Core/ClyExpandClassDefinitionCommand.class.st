@@ -6,6 +6,12 @@ Class {
 	#tag : 'Commands-Classes'
 }
 
+{ #category : 'testing' }
+ClyExpandClassDefinitionCommand class >> canBeExecutedInContext: aToolContext [
+
+	^ true 
+]
+
 { #category : 'activation' }
 ClyExpandClassDefinitionCommand class >> contextMenuActivation [
 	<classAnnotation>

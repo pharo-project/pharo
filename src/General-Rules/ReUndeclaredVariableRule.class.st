@@ -10,8 +10,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReUndeclaredVariableRule class >> group [
-	^ self bugsGroup
+ReUndeclaredVariableRule class >> groupSelector [
+
+	^ #bugsGroup
 ]
 
 { #category : 'accessing' }

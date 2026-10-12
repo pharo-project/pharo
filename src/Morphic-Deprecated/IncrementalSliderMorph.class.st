@@ -43,7 +43,7 @@ IncrementalSliderMorph >> buttons [
 	^{self firstSubmorph. self lastSubmorph}
 ]
 
-{ #category : 'API' }
+{ #category : 'api' }
 IncrementalSliderMorph >> decrement [
 	"Decrement the value."
 

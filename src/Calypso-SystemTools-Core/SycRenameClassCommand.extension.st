@@ -11,7 +11,8 @@ SycRenameClassCommand class >> browserContextMenuActivation [
 
 { #category : '*Calypso-SystemTools-Core' }
 SycRenameClassCommand class >> browserShortcutActivation [
-	<classAnnotation>
+"	<classAnnotation>"
+	"Disabled to make the rename shortcut trigger the new solution."
 	
 	^CmdShortcutActivation renamingFor: ClyClass asCalypsoItemContext
 ]
@@ -25,7 +26,8 @@ SycRenameClassCommand class >> sourceCodeMenuActivation [
 
 { #category : '*Calypso-SystemTools-Core' }
 SycRenameClassCommand class >> sourceCodeShortcutActivation [
-	<classAnnotation>
+"	<classAnnotation>"
+	"Disabled to make the rename shortcut trigger the new solution."
 
 	^CmdShortcutActivation renamingFor: ClySourceCodeContext
 ]

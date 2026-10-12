@@ -10,8 +10,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReBetweenAndRule class >> group [
-	^ self codingIdiomViolationGroup
+ReBetweenAndRule class >> groupSelector [
+
+	^ #codingIdiomViolationGroup
 ]
 
 { #category : 'accessing' }

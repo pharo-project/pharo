@@ -13,7 +13,7 @@ RxMatcherTest class >> packageNamesUnderTest [
 	^ #('VB-Regex')
 ]
 
-{ #category : 'utilties' }
+{ #category : 'utilities' }
 RxMatcherTest >> compileRegex: aString [
 
 	"Compile the regex and answer the matcher, or answer nil if compilation fails."
@@ -34,7 +34,7 @@ RxMatcherTest >> matcherClass [
 	^ RxMatcher
 ]
 
-{ #category : 'utilties' }
+{ #category : 'utilities' }
 RxMatcherTest >> runMatcher: aMatcher with: aString expect: aBoolean withSubexpressions: anArray [
 	| copy got |
 	copy := aMatcher
@@ -59,7 +59,7 @@ RxMatcherTest >> runMatcher: aMatcher with: aString expect: aBoolean withSubexpr
 			description: 'Subexpression ' , sub printString , ': expected ' , subExpect printString , ', but got ' , subGot printString ]
 ]
 
-{ #category : 'utilties' }
+{ #category : 'utilities' }
 RxMatcherTest >> runRegex: anArray [
 
 	"Run a clause anArray against a set of tests. Each clause is an array with a regex source string followed by sequence of 3-tuples. Each three-element group is one test to try against the regex, and includes: 1) test string; 2) expected result; 3) expected subexpression as an array of (index, substring), or nil."

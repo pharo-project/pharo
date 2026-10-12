@@ -10,8 +10,9 @@ Class {
 }
 
 { #category : 'accessing' }
-SendsDeprecatedMethodToGlobalRule class >> group [
-	^ self designFlawGroup
+SendsDeprecatedMethodToGlobalRule class >> groupSelector [
+
+	^ #designFlawGroup
 ]
 
 { #category : 'accessing' }

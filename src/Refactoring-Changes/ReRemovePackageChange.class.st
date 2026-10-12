@@ -1,5 +1,5 @@
 "
-I am a refactory change for a package removing. The RBRefactory api is implemented in my super class, I just define the concrete ""package"" removing.
+I am a refactory change for a package removing. The refactoringapi is implemented in my superclass, I just define the concrete ""package"" removing.
 "
 Class {
 	#name : 'ReRemovePackageChange',

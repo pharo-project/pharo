@@ -20,8 +20,9 @@ ReUnpackagedCodeRule class >> checksMethod [
 ]
 
 { #category : 'accessing' }
-ReUnpackagedCodeRule class >> group [
-	^ self potentialBugsGroup
+ReUnpackagedCodeRule class >> groupSelector [
+
+	^ #potentialBugsGroup
 ]
 
 { #category : 'accessing' }

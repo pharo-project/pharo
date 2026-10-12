@@ -133,6 +133,12 @@ Bag >> associationsDo: aBlock [
 ]
 
 { #category : 'accessing' }
+Bag >> contents [
+
+	^ contents
+]
+
+{ #category : 'accessing' }
 Bag >> counts [
 	"Returns the amount of occurrences of each element."
 	"#(11 22 22 33 11 11 11) asBag counts >>>  #(4 2 1)"

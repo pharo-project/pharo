@@ -83,6 +83,12 @@ MouseButtonEvent >> whichButton [
 ]
 
 { #category : 'accessing' }
+MouseButtonEvent >> whichButton: anObject [
+
+	whichButton := anObject
+]
+
+{ #category : 'accessing' }
 MouseButtonEvent >> yellowButtonChanged [
 	"Answer true if the yellow mouse button has changed. This is the second mouse button or option+click on the Mac."
 

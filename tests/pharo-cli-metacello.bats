@@ -20,13 +20,13 @@ teardown() {
 
 @test "metacello install --help prints help" {
   run_pharo metacello install --help
-  assert_output --partial "Usage: metacello install [--help] [--groups <groups-value>] [--strict] [--signalErrorOnWarning] [--save] [--keepAlive] [--no-quit] [--rename] [<repository>] [<project>]"
+  assert_output --partial "Usage: metacello install [--help] [--groups <groups-value>] [--strict] [--signalErrorOnWarning] [--no-save] [--keepAlive] [--no-quit] [--rename] [<repository>] [<project>]"
   assert_success
 }
 
 @test "metacello can install a baseline project" {
   copy_image "test-metacello-load.image"
-  run_pharo_with_timeout 200 metacello install --save github://DuneSt/MaterialColors:master/src MaterialColors
+  run_pharo_with_timeout 200 metacello install github://DuneSt/MaterialColors:master/src MaterialColors
   assert_success
 
   # Check that the loading is ok

@@ -25,6 +25,7 @@ DebugPointCheckBehavior >> addToDebugPoint: aDebugPoint [
 DebugPointCheckBehavior >> initialize [
 
 	super initialize.
+	"DebugPointCheckBehavior are always executed prior to DebugPointMetaBehavior"
 	self priority: SmallInteger maxVal
 ]
 

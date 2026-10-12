@@ -10,8 +10,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReAssignmentInBlockRule class >> group [
-	^ self codingIdiomViolationGroup
+ReAssignmentInBlockRule class >> groupSelector [
+
+	^ #codingIdiomViolationGroup
 ]
 
 { #category : 'accessing' }

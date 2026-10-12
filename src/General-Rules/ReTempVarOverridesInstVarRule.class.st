@@ -9,14 +9,15 @@ Class {
 	#tag : 'Potential Bugs'
 }
 
-{ #category : 'testing-interest' }
+{ #category : 'testing - interest' }
 ReTempVarOverridesInstVarRule class >> checksMethod [
 	^ true
 ]
 
 { #category : 'accessing' }
-ReTempVarOverridesInstVarRule class >> group [
-	^ self potentialBugsGroup
+ReTempVarOverridesInstVarRule class >> groupSelector [
+
+	^ #potentialBugsGroup
 ]
 
 { #category : 'accessing' }

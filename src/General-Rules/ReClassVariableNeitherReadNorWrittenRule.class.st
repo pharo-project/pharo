@@ -11,14 +11,15 @@ Class {
 	#tag : 'Clean Code'
 }
 
-{ #category : 'testing-interest' }
+{ #category : 'testing - interest' }
 ReClassVariableNeitherReadNorWrittenRule class >> checksClass [
 	^ true
 ]
 
 { #category : 'accessing' }
-ReClassVariableNeitherReadNorWrittenRule class >> group [
-	^ self cleanCodeGroup
+ReClassVariableNeitherReadNorWrittenRule class >> groupSelector [
+
+	^ #cleanCodeGroup
 ]
 
 { #category : 'accessing' }

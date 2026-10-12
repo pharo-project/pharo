@@ -169,6 +169,21 @@ ShiftClassInstaller >> installingEnvironment: anEnvironment [
 	builder installingEnvironment: anEnvironment
 ]
 
+{ #category : 'migrating' }
+ShiftClassInstaller >> invalidateBlockClosuresWithReceivers: receivers [
+
+	| blocksToInvalidate errorCompiledBlock |
+	blocksToInvalidate := OrderedCollection streamContents: [ :s |
+		                      FullBlockClosure allSubInstancesDo: [ :aBlock |
+			                      (receivers includes: aBlock receiver) ifTrue: [ s nextPut: aBlock ] ] ].
+
+	blocksToInvalidate ifEmpty: [ ^ self ].
+
+	errorCompiledBlock := [ self error: 'Receiver is invalid. Original Block cannot be evaluated' ] compiledBlock.
+
+	blocksToInvalidate do: [ :e | e compiledBlock: errorCompiledBlock ]
+]
+
 { #category : 'building' }
 ShiftClassInstaller >> make [
 	| newClass |
@@ -187,6 +202,11 @@ ShiftClassInstaller >> make [
 		builder builderEnhancer afterMigratingClass: builder installer: self.
 
 		builder builderEnhancer propagateChangesToRelatedClasses: newClass builder: builder.
+		
+		"In the case we update the trait composition of the class, we might have to remove empty protocols. We do that after rebuilding the dictionaries so that all selectors are present."
+
+		newClass removeEmptyProtocols.
+		newClass class removeEmptyProtocols.
 		
 	] on: ShNoChangesInClass do:[
 		"If there are no changes in the building, I am not building or replacing nothing"
@@ -272,7 +292,10 @@ ShiftClassInstaller >> migrateInstancesTo: newClass [
 	newObjects := oldObjects collect: [ :e |
 		(readOnlyOldObjectsFlags add: e isReadOnlyObject).
 		self copyObject: e to: newClass ].
-
+	
+	builder instancesHasShrinked 
+		ifTrue: [ self invalidateBlockClosuresWithReceivers: oldObjects ].
+	
 	oldObjects elementsForwardIdentityTo: newObjects copyHash: true.
 
 	newObjects with: readOnlyOldObjectsFlags do: [ :anObject :aFlag | anObject setIsReadOnlyObject: aFlag ]
@@ -319,9 +342,6 @@ ShiftClassInstaller >> updateBindings: aBinding of: newClass [
 { #category : 'notifications' }
 ShiftClassInstaller >> updatePackage: aClass [
 	"If the package is nil we leave the class unclassified"
-	builder package ifNotNil: [ :package | 
-		((self packageOrganizer
-			ensurePackage: package)
-				ensureTag: builder tag)
-					addClass: aClass ]
+
+	builder package ifNotNil: [ :package | ((self packageOrganizer ensurePackage: package) ensureTag: builder tag) addClass: aClass ]
 ]

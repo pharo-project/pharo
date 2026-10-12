@@ -12,8 +12,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReShouldTransformedIntoAssertRule class >> group [
-	^ self sunitGroup
+ReShouldTransformedIntoAssertRule class >> groupSelector [
+
+	^ #sunitGroup
 ]
 
 { #category : 'accessing' }

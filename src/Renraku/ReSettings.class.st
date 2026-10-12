@@ -31,7 +31,7 @@ ReSettings class >> resetButtonSettingsOn: aBuilder [
 		buttonLabel: 'Reset'
 ]
 
-{ #category : 'settings-accessing' }
+{ #category : 'settings - accessing' }
 ReSettings class >> showErrors [
 	self flag: 'switch to exception strategy completely'.
 	"Utilize the ReExceptionStrategy to either skip the exception,
@@ -41,7 +41,7 @@ ReSettings class >> showErrors [
 	^ ReExceptionStrategy current = RePassExceptionStrategy
 ]
 
-{ #category : 'settings-accessing' }
+{ #category : 'settings - accessing' }
 ReSettings class >> showErrors: aBoolean [
 
 	ReExceptionStrategy current: (aBoolean

@@ -13,19 +13,19 @@ Class {
 	#tag : 'Morphic'
 }
 
-{ #category : 'meta-actions' }
+{ #category : 'meta actions' }
 MorphHandlingMiddleButton >> blueButtonUp: anEvent [
 
 	receivedBlueButtonUp := true
 ]
 
-{ #category : 'meta-actions' }
+{ #category : 'meta actions' }
 MorphHandlingMiddleButton >> handleSpecialGesture: anEvent [
 
 	receivedBlueButtonDown := true
 ]
 
-{ #category : 'meta-actions' }
+{ #category : 'meta actions' }
 MorphHandlingMiddleButton >> handlerForBlueButtonDown: anEvent [
 
 	^ self

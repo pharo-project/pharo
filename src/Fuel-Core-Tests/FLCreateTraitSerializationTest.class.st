@@ -11,12 +11,12 @@ Class {
 	#tag : 'FullSerialization'
 }
 
-{ #category : 'class-factory' }
+{ #category : 'class factory' }
 FLCreateTraitSerializationTest >> newAnonymousClassOrTrait [
 	^ self classFactory newAnonymousTrait
 ]
 
-{ #category : 'class-factory' }
+{ #category : 'class factory' }
 FLCreateTraitSerializationTest >> newInstanceFrom: aClassOrTrait [
 
 	^ (aClassOrTrait isTrait

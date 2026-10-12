@@ -47,6 +47,12 @@ FTTreeItem class >> data: aData from: aDataSource [
 		yourself
 ]
 
+{ #category : 'testing' }
+FTTreeItem >> basicChilren [
+
+	^ children
+]
+
 { #category : 'accessing' }
 FTTreeItem >> childAt: anIndex [
 	| tmpIndex |

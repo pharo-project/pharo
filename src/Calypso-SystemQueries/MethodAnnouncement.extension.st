@@ -34,7 +34,7 @@ MethodAnnouncement >> affectsMethodsDefinedInPackage: aPackage [
 { #category : '*Calypso-SystemQueries' }
 MethodAnnouncement >> affectsMethodsInProtocol: protocol [
 
-	^ method protocolName == protocol
+	^ self method protocolName == protocol
 ]
 
 { #category : '*Calypso-SystemQueries' }

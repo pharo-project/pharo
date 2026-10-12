@@ -122,6 +122,18 @@ DoubleLinkedList >> firstLink [
 	^ head
 ]
 
+{ #category : 'accessing' }
+DoubleLinkedList >> head [
+
+	^ head
+]
+
+{ #category : 'accessing' }
+DoubleLinkedList >> head: anObject [
+
+	head := anObject
+]
+
 { #category : 'testing' }
 DoubleLinkedList >> isEmpty [
 	"Return true when I contain no elements, false otherwise."
@@ -235,4 +247,16 @@ DoubleLinkedList >> reverseLinksDo: block [
 		whileFalse: [
 	 		block value: current.
 			current := current previousLink ]
+]
+
+{ #category : 'accessing' }
+DoubleLinkedList >> tail [
+
+	^ tail
+]
+
+{ #category : 'accessing' }
+DoubleLinkedList >> tail: anObject [
+
+	tail := anObject
 ]

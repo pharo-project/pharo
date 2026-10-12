@@ -12,8 +12,9 @@ Class {
 }
 
 { #category : 'accessing' }
-RePlatformDependentUserInteractionRule class >> group [
-	^ self potentialBugsGroup
+RePlatformDependentUserInteractionRule class >> groupSelector [
+
+	^ #potentialBugsGroup
 ]
 
 { #category : 'accessing' }

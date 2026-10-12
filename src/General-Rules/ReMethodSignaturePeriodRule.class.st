@@ -15,8 +15,9 @@ ReMethodSignaturePeriodRule class >> checksMethod [
 ]
 
 { #category : 'accessing' }
-ReMethodSignaturePeriodRule class >> group [
-	^ self potentialBugsGroup
+ReMethodSignaturePeriodRule class >> groupSelector [
+
+	^ #potentialBugsGroup
 ]
 
 { #category : 'accessing' }

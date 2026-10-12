@@ -1,170 +1,101 @@
 "
-A Shout style element
+I am a style element of the custom style.
+
+I am just a proxy object for one of the groups stored in `SHCustomStyleSettings`
 "
 Class {
 	#name : 'SHStyleElement',
 	#superclass : 'Object',
 	#instVars : [
-		'tokens',
-		'color',
-		'emphasis'
+		'group'
 	],
 	#category : 'Shout-Styling',
 	#package : 'Shout',
 	#tag : 'Styling'
 }
 
-{ #category : 'instance creation api' }
-SHStyleElement class >> color: aColor tokens: tokens [
+{ #category : 'accessing' }
+SHStyleElement class >> group: groupName [
 
-	^ self new
-		basicColor: aColor tokens: tokens emphasis: nil;
-		yourself
+	^ self basicNew
+		  group: groupName;
+		  yourself
 ]
 
-{ #category : 'instanceCreation' }
-SHStyleElement class >> emphasis: anEmphasis tokens: someTokens [
-
-	^ self new
-		basicColor: nil tokens: someTokens emphasis: anEmphasis;
-		yourself
+{ #category : 'instance creation' }
+SHStyleElement class >> new [
+	"Please use #group: to create an instance"
+	self shouldNotImplement
 ]
 
 { #category : 'settings' }
 SHStyleElement class >> settingInputWidgetForNode: aSettingNode [
+
 	| theme |
 	theme := UITheme builder.
-	^ theme newRow: {theme
-			newColorChooserFor: aSettingNode realValue
-			getColor: #color
-			setColor: #color:
-			help: 'Choose token color'. (theme
-			newDropListFor: aSettingNode realValue
-			list: #(#bold #italic #normal 'bold italic' )
-			getSelected: #emphasis
-			setSelected: #emphasis:
-			getEnabled: nil
-			useIndex: false
-			help: 'Choose token emphasis') hResizing: #rigid;
-			 width: 100}
-]
-
-{ #category : 'instance creation' }
-SHStyleElement class >> tokens: aCollection [
-
-	^ self new
-		basicColor: nil tokens: aCollection  emphasis: nil;
-		yourself
-]
-
-{ #category : 'instance creation' }
-SHStyleElement class >> withTokens: aCollection [
-	^ self new tokens: aCollection;
-		 yourself
-]
-
-{ #category : 'comparing' }
-SHStyleElement >> = otherObject [
-
-	^ self species = otherObject species
-		and: [ tokens = otherObject tokens
-				and:
-					[ self color = otherObject color and: [ self emphasis = otherObject emphasis ] ] ]
-]
-
-{ #category : 'accessing' }
-SHStyleElement >> basicColor: aColor tokens: someTokens emphasis: anEmphasis [
-
-	color := aColor.
-	tokens := someTokens.
-	emphasis := anEmphasis
+	^ theme newRow: {
+			  (theme
+				   newColorChooserFor: aSettingNode realValue
+				   getColor: #color
+				   setColor: #color:
+				   help: 'Choose token color').
+			  ((theme
+				    newDropListFor: aSettingNode realValue
+				    list: #( #bold #italic #normal #'bold italic' )
+				    getSelected: #emphasis
+				    setSelected: #emphasis:
+				    getEnabled: nil
+				    useIndex: false
+				    help: 'Choose token emphasis')
+				   hResizing: #rigid;
+				   width: 100) }
 ]
 
 { #category : 'accessing' }
 SHStyleElement >> color [
-	^ color
-		ifNil: [color := Color colorFrom: (SHPreferences customStyleTable
-							detect: [:e | self tokens first = e first]) second]
+
+	^ SHCustomStyle colorForGroup: group
 ]
 
 { #category : 'accessing' }
-SHStyleElement >> color: anObject [
-	color := anObject.
-	SHPreferences applyStyle
+SHStyleElement >> color: aColor [
+
+	^ SHCustomStyle color: aColor forGroup: group
 ]
 
 { #category : 'accessing' }
 SHStyleElement >> emphasis [
-	| style |
-	^ emphasis
-		ifNil: [style := SHPreferences customStyleTable
-						detect: [:e | self tokens first = e first].
-			style size > 2
-				ifTrue: [emphasis := style third.
-					emphasis isSymbol
-						ifFalse: [emphasis := ' ' join: emphasis].
-					emphasis]
-				ifFalse: [#normal]]
+
+	^ SHCustomStyle emphasisForGroup: group
 ]
 
 { #category : 'accessing' }
-SHStyleElement >> emphasis: anObject [
-	emphasis := anObject.
-	SHPreferences applyStyle
+SHStyleElement >> emphasis: anEmphasis [
+
+	^ SHCustomStyle emphasis: anEmphasis forGroup: group
 ]
 
-{ #category : 'styling' }
-SHStyleElement >> emphasisAsArray [
-	^ self emphasis = 'bold italic'
-		ifTrue: [#(#bold #italic )]
-		ifFalse: [self emphasis]
+{ #category : 'accessing' }
+SHStyleElement >> group [
+
+	^ group
 ]
 
-{ #category : 'comparing' }
-SHStyleElement >> hash [
-
-	^ tokens hash
+{ #category : 'accessing' }
+SHStyleElement >> group: aString [ 
+	group := aString
 ]
 
 { #category : 'printing' }
 SHStyleElement >> printOn: aStream [
-
 	super printOn: aStream.
-	color
-		ifNotNil: [ aStream
-				nextPutAll: ' color: ';
-				print: color
-			].
-	emphasis
-		ifNotNil: [ aStream
-				nextPutAll: ' emphasis: ';
-				print: emphasis
-			].
-	tokens
-		ifNotNil: [ aStream
-				nextPutAll: ' tokens: ';
-				print: tokens
-			]
-]
-
-{ #category : 'styling' }
-SHStyleElement >> styleForTable [
-	^ self tokens
-		collect: [:token |
-			| style |
-			style := OrderedCollection with: token.
-			style add: self color.
-			self emphasis
-				ifNotNil: [style add: self emphasisAsArray].
-			style asArray]
-]
-
-{ #category : 'accessing' }
-SHStyleElement >> tokens [
-	^ tokens
-]
-
-{ #category : 'accessing' }
-SHStyleElement >> tokens: anObject [
-	tokens := anObject
+	aStream nextPutAll: ' group: '.
+	group printOn: aStream.
+	aStream nextPutAll: ' (color: '.
+	"aStream nextPutAll: self color shortPrintString."
+	aStream nextPut: $#.
+	aStream nextPutAll: self color asHexString.
+	aStream nextPutAll: ', emphasis: '.
+	self emphasis printOn: aStream.
+	aStream nextPutAll: ')'.
 ]

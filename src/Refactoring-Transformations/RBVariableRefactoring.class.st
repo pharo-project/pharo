@@ -33,6 +33,12 @@ RBVariableRefactoring class >> variable: aVarName class: aClass [
 		yourself
 ]
 
+{ #category : 'accessing' }
+RBVariableRefactoring >> refactoredClass [
+
+	^ class
+]
+
 { #category : 'initialization' }
 RBVariableRefactoring >> refactoredClassName [
 	^ class name

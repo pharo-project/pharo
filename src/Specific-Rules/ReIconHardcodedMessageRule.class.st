@@ -16,9 +16,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReIconHardcodedMessageRule class >> group [
+ReIconHardcodedMessageRule class >> groupSelector [
 
-	^ self apiChangeGroup
+	^ #apiChangeGroup
 ]
 
 { #category : 'accessing' }

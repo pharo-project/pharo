@@ -367,6 +367,14 @@ String class >> newCaseSensitiveOrder [
 	^ newTab
 ]
 
+{ #category : 'instance creation' }
+String class >> newLine [
+	"Pharo uses internally cr as new line but we want to move to lf in the long run. This method is here to hardcode the value in only one place.
+	When there is an exchange with an external source (files, sockets), users should explicitly use newline conversions."
+
+	^ self cr
+]
+
 { #category : 'private - accessing' }
 String class >> newLowercasingTable [
 	"a table for translating to lower case"
@@ -1759,10 +1767,17 @@ String >> hasWideCharacterFrom: start to: stop [
 { #category : 'comparing' }
 String >> hash [
 	"#hash is implemented, because #= is implemented"
-	"ar 4/10/2005: I had to change this to use ByteString hash as initial
-	hash in order to avoid having to rehash everything and yet compute
-	the same hash for ByteString and WideString."
-	^ self class stringHash: self initialHash: ByteString hash
+	
+	
+	"Use the hardcoded value of ByteString hash.
+	It is as arbitrary as any other value.
+	
+	Hardcoding the value instead of computing the hash everytime improves hash calculation
+	 - by 2x on ~20-sized small strings
+	 - by 1.2x on ~200-sized strings
+	 - it is not much very noticeable on ~2k-sized large strings"
+
+	^ self class stringHash: self initialHash: 13312
 ]
 
 { #category : 'comparing' }

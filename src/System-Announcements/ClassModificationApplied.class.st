@@ -27,6 +27,12 @@ ClassModificationApplied >> classAffected [
 ]
 
 { #category : 'accessing' }
+ClassModificationApplied >> modifiedClass [
+
+	^ modifiedClass
+]
+
+{ #category : 'accessing' }
 ClassModificationApplied >> modifiedClass: anObject [
 	modifiedClass := anObject
 ]

@@ -10,8 +10,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReFloatEqualityComparisonRule class >> group [
-	^ self potentialBugsGroup
+ReFloatEqualityComparisonRule class >> groupSelector [
+
+	^ #potentialBugsGroup
 ]
 
 { #category : 'accessing' }

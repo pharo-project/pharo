@@ -34,9 +34,9 @@ Class {
 		'classesDictionary',
 		'classNames'
 	],
-	#category : 'Refactoring-Transformations-Model-Unused',
+	#category : 'Refactoring-Transformations-Model',
 	#package : 'Refactoring-Transformations',
-	#tag : 'Model-Unused'
+	#tag : 'Model'
 }
 
 { #category : 'private' }
@@ -71,12 +71,6 @@ ReRemoveClassesTransformation >> applicabilityPreconditions [
 		  self preconditionAreNotMeta }
 ]
 
-{ #category : 'preconditions' }
-ReRemoveClassesTransformation >> breakingChangePreconditions [
-
-	^ { self preconditionHaveNoReferences }
-]
-
 { #category : 'accessing' }
 ReRemoveClassesTransformation >> classNames [
 
@@ -93,23 +87,8 @@ ReRemoveClassesTransformation >> classNames: aClassNameCollection [
 ReRemoveClassesTransformation >> preconditionAreNotMeta [
 
 	^ ReClassesAreNotMetaClassCondition new
-		  classes: classesDictionary;
+		  classes: (classesDictionary values reject: [ :eachClass | eachClass isNil ]);
 		  message: 'Metaclasses can be removed. Remove their class.'
-]
-
-{ #category : 'preconditions' }
-ReRemoveClassesTransformation >> preconditionHaveNoReferences [
-
-	^ ReClassesHaveNoReferencesCondition new
-		  model: model;
-		  classes: classesDictionary values 
-]
-
-{ #category : 'preconditions' }
-ReRemoveClassesTransformation >> preconditions [
-	"We hope in the future to push up this method to RBRefactoring"
-
-	^ self applicabilityPreconditions & self breakingChangePreconditions
 ]
 
 { #category : 'transforming' }

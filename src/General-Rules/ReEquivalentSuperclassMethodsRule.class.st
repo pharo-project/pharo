@@ -17,8 +17,9 @@ ReEquivalentSuperclassMethodsRule class >> checksMethod [
 ]
 
 { #category : 'accessing' }
-ReEquivalentSuperclassMethodsRule class >> group [
-	^ self designFlawGroup
+ReEquivalentSuperclassMethodsRule class >> groupSelector [
+
+	^ #designFlawGroup
 ]
 
 { #category : 'accessing' }

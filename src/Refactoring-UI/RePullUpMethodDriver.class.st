@@ -233,9 +233,9 @@ RePullUpMethodDriver >> pullUpReferencedInstVars [
 { #category : 'actions' }
 RePullUpMethodDriver >> pullUpReferencedSharedVars [
 
-	notSharedVarRefs referencedSharedVariables do: [ :sharedVar | 
-		"We add the pushUpVariable transformation to the refactoring previous transformations"
-		refactoring pullUpSharedVariable: sharedVar ]
+	notSharedVarRefs referencedSharedVariables do: [ :sharedVar | "We add the pushUpVariable transformation to the refactoring previous transformations"
+		refactoring pullUpSharedVariable: sharedVar ].
+	self pullUpMethods 
 ]
 
 { #category : 'execution' }

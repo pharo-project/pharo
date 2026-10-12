@@ -10,8 +10,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReEmptyExceptionHandlerRule class >> group [
-	^ self potentialBugsGroup
+ReEmptyExceptionHandlerRule class >> groupSelector [
+
+	^ #potentialBugsGroup
 ]
 
 { #category : 'accessing' }

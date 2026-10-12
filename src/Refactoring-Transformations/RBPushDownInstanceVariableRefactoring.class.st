@@ -6,20 +6,28 @@ My precondition verifies that the moved variable is not referenced in the method
 Class {
 	#name : 'RBPushDownInstanceVariableRefactoring',
 	#superclass : 'RBVariableRefactoring',
+	#instVars : [
+		'transformation'
+	],
 	#category : 'Refactoring-Transformations',
 	#package : 'Refactoring-Transformations'
 }
 
 { #category : 'preconditions' }
 RBPushDownInstanceVariableRefactoring >> applicabilityPreconditions [
-
-	^ { (RBCondition definesInstanceVariable: variableName in: class) }
+	^ transformation applicabilityPreconditions
 ]
 
 { #category : 'preconditions' }
 RBPushDownInstanceVariableRefactoring >> breakingChangePreconditions [
 
 	^ { self preconditionReferencesInstanceVariable }
+]
+
+{ #category : 'initialization' }
+RBPushDownInstanceVariableRefactoring >> model: aRBNamespace [
+	super model: aRBNamespace.
+	transformation ifNotNil: [ transformation model: aRBNamespace ]
 ]
 
 { #category : 'preconditions' }
@@ -36,6 +44,14 @@ RBPushDownInstanceVariableRefactoring >> preconditions [
 
 { #category : 'transforming' }
 RBPushDownInstanceVariableRefactoring >> privateTransform [
-	class removeInstanceVariable: variableName.
-	class subclasses do: [:each | each addInstanceVariable: variableName]
+	^ transformation privateTransform
+]
+
+{ #category : 'initialization' }
+RBPushDownInstanceVariableRefactoring >> variable: aVarName class: aClassName [
+	super variable: aVarName class: aClassName.
+	transformation := RBPushDownVariableTransformation
+		model: self model
+		instanceVariable: aVarName
+		class: aClassName
 ]

@@ -51,22 +51,19 @@ DoubleLinkedList >> removeMaybeNotExistingLink: link [
 	predecessor := link previousLink.
 	successor := link nextLink.
 	predecessor
-		ifNil: [ 
-			head = link ifFalse: [ 
-				link clearLinks.
-				^ false ].
-			head := successor ]
-		ifNotNil: [ 
-			predecessor nextLink = link 
-				ifFalse: [ 
-				 link clearLinks.
-				 ^ false ].
-			predecessor nextLink: successor ].
-	successor
-		ifNil: [ tail := predecessor ]
-		ifNotNil: [ successor previousLink: predecessor ].
-	
+		ifNil: [
+				self head = link ifFalse: [
+						link clearLinks.
+						^ false ].
+				self head: successor ]
+		ifNotNil: [
+				predecessor nextLink = link ifFalse: [
+						link clearLinks.
+						^ false ].
+				predecessor nextLink: successor ].
+	successor ifNil: [ self tail: predecessor ] ifNotNil: [ successor previousLink: predecessor ].
+
 	link clearLinks.
-	
+
 	^ true
 ]

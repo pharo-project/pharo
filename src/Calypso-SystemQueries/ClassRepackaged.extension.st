@@ -21,7 +21,7 @@ ClassRepackaged >> affectsMethodsDefinedInPackage: aPackage [
 { #category : '*Calypso-SystemQueries' }
 ClassRepackaged >> affectsMethodsInProtocol: protocol [
 
-	^ classRepackaged protocolNames includes: protocol
+	^ self classRepackaged protocolNames includes: protocol
 ]
 
 { #category : '*Calypso-SystemQueries' }

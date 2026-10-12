@@ -13,8 +13,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReDoNotSendSuperShutDownInClassSideRule class >> group [
-	^ self potentialBugsGroup
+ReDoNotSendSuperShutDownInClassSideRule class >> groupSelector [
+
+	^ #potentialBugsGroup
 ]
 
 { #category : 'accessing' }

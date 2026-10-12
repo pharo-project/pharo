@@ -65,26 +65,24 @@ Process >> popTo: aContext value: aValue [
 Process >> restartTop [
 	"Rollback top context and replace with new method.  Assumes self is suspended"
 
-	suspendedContext privRefresh
+	self suspendedContext privRefresh
 ]
 
 { #category : '*Debugger-Model' }
 Process >> restartTopWith: method [
 	"Rollback top context and replace with new method.  Assumes self is suspended"
 
-	suspendedContext privRefreshWith: method
+	self suspendedContext privRefreshWith: method
 ]
 
 { #category : '*Debugger-Model' }
 Process >> return: aContext value: value [
 	"Pop thread down to aContext's sender.  Execute any unwind blocks on the way.  See #popTo: comment and #runUntilErrorOrReturnFrom: for more details."
 
-	suspendedContext == aContext ifTrue:
-		[^Processor activeProcess
-			evaluate: [suspendedContext := aContext return: value from: aContext]
-			onBehalfOf: self].
+	self suspendedContext == aContext ifTrue: [
+		^ Processor activeProcess evaluate: [ self suspendedContext: (aContext return: value from: aContext). self suspendedContext ] onBehalfOf: self ].
 	self activateReturn: aContext value: value.
-	^self complete: aContext
+	^ self complete: aContext
 ]
 
 { #category : '*Debugger-Model' }

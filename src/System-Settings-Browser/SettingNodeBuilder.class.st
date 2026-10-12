@@ -76,6 +76,12 @@ SettingNodeBuilder >> iconName: aSymbol [
 	self icon: (self iconNamed: aSymbol)
 ]
 
+{ #category : 'testing' }
+SettingNodeBuilder >> isTransient: aBoolean [
+
+	node item isTransient: aBoolean
+]
+
 { #category : 'declaration accessing' }
 SettingNodeBuilder >> label: aString [
 	node item label: aString

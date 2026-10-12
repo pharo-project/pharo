@@ -10,8 +10,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReUseIsEmptyNotSizeRule class >> group [
-	^ self codingIdiomViolationGroup
+ReUseIsEmptyNotSizeRule class >> groupSelector [
+
+	^ #codingIdiomViolationGroup
 ]
 
 { #category : 'accessing' }

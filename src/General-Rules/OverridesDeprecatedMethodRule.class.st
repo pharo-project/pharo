@@ -17,8 +17,9 @@ OverridesDeprecatedMethodRule class >> checksMethod [
 ]
 
 { #category : 'accessing' }
-OverridesDeprecatedMethodRule class >> group [
-	^ self potentialBugsGroup
+OverridesDeprecatedMethodRule class >> groupSelector [
+
+	^ #potentialBugsGroup
 ]
 
 { #category : 'accessing' }

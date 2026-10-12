@@ -23,8 +23,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReUnwindBlocksRule class >> group [
-	^ self optimizationGroup
+ReUnwindBlocksRule class >> groupSelector [
+
+	^ #optimizationGroup
 ]
 
 { #category : 'accessing' }

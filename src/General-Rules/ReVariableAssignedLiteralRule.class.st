@@ -9,15 +9,16 @@ Class {
 	#tag : 'Design Flaws'
 }
 
-{ #category : 'testing-interest' }
+{ #category : 'testing - interest' }
 ReVariableAssignedLiteralRule class >> checksClass [
 
 	^ true
 ]
 
 { #category : 'accessing' }
-ReVariableAssignedLiteralRule class >> group [
-	^ self designFlawGroup
+ReVariableAssignedLiteralRule class >> groupSelector [
+
+	^ #designFlawGroup
 ]
 
 { #category : 'accessing' }

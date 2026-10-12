@@ -10,8 +10,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReAssertWithBooleanEqualtiyRule class >> group [
-	^ self optimizationGroup
+ReAssertWithBooleanEqualtiyRule class >> groupSelector [
+
+	^ #optimizationGroup
 ]
 
 { #category : 'accessing' }

@@ -10,8 +10,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReOverridingExtentsionMethod class >> group [
-	^ self potentialBugsGroup
+ReOverridingExtentsionMethod class >> groupSelector [
+
+	^ #potentialBugsGroup
 ]
 
 { #category : 'accessing' }

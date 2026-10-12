@@ -15,9 +15,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReAsClassRule class >> group [
+ReAsClassRule class >> groupSelector [
 
-	^ self designFlawGroup
+	^ #designFlawGroup
 ]
 
 { #category : 'accessing' }

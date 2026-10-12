@@ -38,7 +38,7 @@ SpRubFindReplaceService >> dialogWindow [
 	^ dialogWindow
 ]
 
-{ #category : 'events handling' }
+{ #category : 'event handling' }
 SpRubFindReplaceService >> discardDialog [
 
 	dialog := nil.
@@ -104,7 +104,7 @@ SpRubFindReplaceService >> initialize [
 	textAreaHolder := WeakArray new: 1
 ]
 
-{ #category : 'events handling' }
+{ #category : 'event handling' }
 SpRubFindReplaceService >> openDialog [
 
 	| text |
@@ -175,11 +175,11 @@ SpRubFindReplaceService >> updateFindStartIndex [
 			self findStartIndex: (self searchBackwards ifTrue: [si first - 1] ifFalse: [si last + 1]) ]
 ]
 
-{ #category : 'user-interface' }
+{ #category : 'user interface' }
 SpRubFindReplaceService >> whenDialogDeleted [
 ]
 
-{ #category : 'events handling' }
+{ #category : 'event handling' }
 SpRubFindReplaceService >> whenFindReplaceWindowRequired: anAnnouncement [
 
 	self textArea hasSelection
@@ -188,16 +188,16 @@ SpRubFindReplaceService >> whenFindReplaceWindowRequired: anAnnouncement [
 	self openDialog
 ]
 
-{ #category : 'events handling' }
+{ #category : 'event handling' }
 SpRubFindReplaceService >> whenTextAreaGotFocus: anAnnounce [
 	self textArea: anAnnounce morph
 ]
 
-{ #category : 'events handling' }
+{ #category : 'event handling' }
 SpRubFindReplaceService >> whenTextAreaLostFocus: anAnnounce [
 ]
 
-{ #category : 'events handling' }
+{ #category : 'event handling' }
 SpRubFindReplaceService >> whenTextAreaSelectionChanged: anAnnouncement [
 	self updateFindStartIndex
 ]

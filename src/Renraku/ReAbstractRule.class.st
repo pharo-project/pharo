@@ -135,7 +135,13 @@ ReAbstractRule class >> enabledSettingID [
 { #category : 'accessing' }
 ReAbstractRule class >> group [
 
-	^ 'Unclassified rules'
+	^ self perform: self groupSelector
+]
+
+{ #category : 'accessing' }
+ReAbstractRule class >> groupSelector [
+
+	^  #unclassifiedMethodsGroup
 ]
 
 { #category : 'manifest' }
@@ -247,6 +253,12 @@ ReAbstractRule class >> styleGroup [
 ReAbstractRule class >> sunitGroup [
 
 	^ 'SUnit'
+]
+
+{ #category : 'accessing - rule group' }
+ReAbstractRule class >> unclassifiedMethodsGroup [
+
+	^ 'Unclassified rules'
 ]
 
 { #category : 'manifest' }

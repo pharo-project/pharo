@@ -9,14 +9,70 @@ Class {
 	#instVars : [
 		'environment'
 	],
+	#classInstVars : [
+		'navigationClass'
+	],
 	#category : 'System-Support-Image',
 	#package : 'System-Support',
 	#tag : 'Image'
 }
 
+{ #category : 'activation' }
+SystemNavigation class >> activate [
+	"hook if a subclass wants to know if it is handling navigation now"
+]
+
+{ #category : 'activation' }
+SystemNavigation class >> deactivate [
+	"Hook if a class needs to be notified if it is not the system's navigation class"
+	
+	
+	
+]
+
 { #category : 'accessing' }
 SystemNavigation class >> default [
-	^ self new
+	^ self navigationClass new
+]
+
+{ #category : 'class initialization' }
+SystemNavigation class >> initialize [
+
+	navigationClass := SystemNavigation 
+]
+
+{ #category : 'accessing' }
+SystemNavigation class >> navigationClass [
+
+	^ navigationClass
+]
+
+{ #category : 'accessing' }
+SystemNavigation class >> navigationClass: aClass [ 
+
+	(navigationClass = aClass) ifTrue: [ ^ self ].
+		
+	navigationClass deactivate.
+
+	navigationClass := aClass.
+	
+	navigationClass activate.
+]
+
+{ #category : 'settings' }
+SystemNavigation class >> settingsOn: aBuilder [
+<systemsettings>
+
+	(aBuilder pickOne: #navigationClass)
+		label: 'System Navigation Provider';
+		description: 'Class used for IDE search (implementors, senders, classes, selectors)';
+		target: self;
+		getSelector: #navigationClass;
+		setSelector: #navigationClass: ;
+		default: SystemNavigation;
+		domainValues: { SystemNavigation }, SystemNavigation allSubclasses;
+		parent: #spotter
+	
 ]
 
 { #category : 'query' }
@@ -185,11 +241,15 @@ SystemNavigation >> allPrimitiveMethods [
 SystemNavigation >> allReferencesTo: aLiteral [
 	"Answer all the methods that refer to aLiteral even deeply embedded in literal array."
 
-
 	| specialIndex |
 	"for speed we check the special selectors here once per class"
-	specialIndex := Smalltalk specialSelectorIndexOrNil: aLiteral.
-	^ self allBehaviors flatCollect: [ :class | class thoroughWhichMethodsReferTo: aLiteral specialIndex: specialIndex ]
+	^ self allBehaviors flatCollect: [ :class |
+			| targetLiteral |
+			targetLiteral := aLiteral.
+			(targetLiteral isKindOf: Symbol) ifTrue: [ 
+				targetLiteral := class package visibleSelectorForSymbol: aLiteral ].
+			specialIndex := Smalltalk specialSelectorIndexOrNil: aLiteral.
+			class thoroughWhichMethodsReferTo: targetLiteral specialIndex: specialIndex ]
 ]
 
 { #category : 'query' }

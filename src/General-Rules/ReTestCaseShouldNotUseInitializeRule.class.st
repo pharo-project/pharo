@@ -12,15 +12,16 @@ Class {
 	#tag : 'Clean Code'
 }
 
-{ #category : 'testing-interest' }
+{ #category : 'testing - interest' }
 ReTestCaseShouldNotUseInitializeRule class >> checksClass [
 
 	^ true
 ]
 
 { #category : 'accessing' }
-ReTestCaseShouldNotUseInitializeRule class >> group [
-	^ self cleanCodeGroup
+ReTestCaseShouldNotUseInitializeRule class >> groupSelector [
+
+	^ #cleanCodeGroup
 ]
 
 { #category : 'accessing' }

@@ -99,8 +99,13 @@ DebugPointIconStyler >> icon: dp [
 
 { #category : 'defaults' }
 DebugPointIconStyler >> iconBlockEdit: dp [
-		 ^ [ :seg | dp remove.
-	   seg delete ]
+
+	^ [ :seg |
+		  | interval |
+		  interval := seg interval.
+		  dp remove.
+		  renderer textModel announce: (RubConfigurationChange new configurationBlock: [ :scrolledTextMorph |
+				   (scrolledTextMorph textArea segments select: [ :s | s interval = interval ]) do: [ :s | s delete ] ]) ]
 ]
 
 { #category : 'defaults' }

@@ -31,8 +31,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReNotEliminationRule class >> group [
-	^ self optimizationGroup
+ReNotEliminationRule class >> groupSelector [
+
+	^ #optimizationGroup
 ]
 
 { #category : 'accessing' }

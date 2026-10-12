@@ -10,8 +10,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReTemporaryVariableCapitalizationRule class >> group [
-	^ self styleGroup
+ReTemporaryVariableCapitalizationRule class >> groupSelector [
+
+	^ #styleGroup
 ]
 
 { #category : 'accessing' }

@@ -22,6 +22,12 @@ RecursionStopperTest class >> defaultTimeLimit [
 ]
 
 { #category : 'accessing' }
+RecursionStopperTest >> fork [
+
+	^ fork
+]
+
+{ #category : 'accessing' }
 RecursionStopperTest >> mixedMethod [
 
 	RecursionStopper during: [

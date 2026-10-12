@@ -15,8 +15,9 @@ ReThemeAccessRule class >> checksMethod [
 ]
 
 { #category : 'accessing' }
-ReThemeAccessRule class >> group [
-	^ self apiHintsGroup
+ReThemeAccessRule class >> groupSelector [
+
+	^ #apiHintsGroup
 ]
 
 { #category : 'accessing' }

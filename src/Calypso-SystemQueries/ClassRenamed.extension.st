@@ -20,13 +20,13 @@ ClassRenamed >> affectsMethodsDefinedInClass: aClass [
 { #category : '*Calypso-SystemQueries' }
 ClassRenamed >> affectsMethodsDefinedInPackage: aPackage [
 
-	^classRenamed package == aPackage
+	^ self classRenamed package == aPackage
 ]
 
 { #category : '*Calypso-SystemQueries' }
 ClassRenamed >> affectsMethodsInProtocol: protocol [
 
-	^ classRenamed protocolNames includes: protocol
+	^ self classRenamed protocolNames includes: protocol
 ]
 
 { #category : '*Calypso-SystemQueries' }
@@ -35,9 +35,9 @@ ClassRenamed >> affectsVariablesOf: aClass [
 	That's any class modification can affect variables from both class sides.
 	And we do not need to distinguish it"
 
-	aClass instanceSide = classRenamed instanceSide ifTrue: [ ^true ].
+	aClass instanceSide = self classRenamed instanceSide ifTrue: [ ^ true ].
 
-	^false
+	^ false
 ]
 
 { #category : '*Calypso-SystemQueries' }

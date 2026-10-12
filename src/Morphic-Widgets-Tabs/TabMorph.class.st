@@ -416,7 +416,7 @@ TabMorph >> backgroundColor [
 	^ state backgroundColor
 ]
 
-{ #category : 'meta-actions' }
+{ #category : 'meta actions' }
 TabMorph >> blueButtonUp: anEvent [
 	super blueButtonUp: anEvent.
 	self close
@@ -552,7 +552,7 @@ TabMorph >> handleMouseUp: anEvent [
 		ifFalse: [ super handleMouseUp: anEvent ]
 ]
 
-{ #category : 'events - handling' }
+{ #category : 'event handling' }
 TabMorph >> handlesMouseDown: event [
 
 	^ true
@@ -696,7 +696,7 @@ TabMorph >> morph: anObject [
 	self triggerEvent: #tabRefreshed with: self
 ]
 
-{ #category : 'events - handling' }
+{ #category : 'event handling' }
 TabMorph >> mouseDown: event [
 	self flag: #pharoTodo. "Add drag"
 ]
@@ -720,7 +720,7 @@ TabMorph >> mouseLeaveIcon [
 		closeIcon image: self class closeIcon ] fork
 ]
 
-{ #category : 'events - handling' }
+{ #category : 'event handling' }
 TabMorph >> mouseUp: event [
 
 	(event commandKeyPressed or: [ event controlKeyPressed ])

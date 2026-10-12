@@ -13,32 +13,32 @@ TTaskScheduler classSide >> isDebuggingCompatible [
 	^ false
 ]
 
-{ #category : 'schedulling' }
+{ #category : 'scheduling' }
 TTaskScheduler >> future: aTask [
 	^ aTask asTask future: self
 ]
 
-{ #category : 'schedulling' }
+{ #category : 'scheduling' }
 TTaskScheduler >> isDebuggingCompatible [
 	^ false
 ]
 
-{ #category : 'schedulling' }
+{ #category : 'scheduling' }
 TTaskScheduler >> isLocalThreadRunner [
 	^ false
 ]
 
-{ #category : 'schedulling' }
+{ #category : 'scheduling' }
 TTaskScheduler >> isUIRunner [
 	^ false
 ]
 
-{ #category : 'schedulling' }
+{ #category : 'scheduling' }
 TTaskScheduler >> isWorker [
 	^ false
 ]
 
-{ #category : 'schedulling' }
+{ #category : 'scheduling' }
 TTaskScheduler >> privateFuture: aTask [
 	| execution |
 	execution := aTask asTask futureTaskExecutionFor: self.
@@ -46,26 +46,26 @@ TTaskScheduler >> privateFuture: aTask [
 	^ execution future
 ]
 
-{ #category : 'schedulling' }
+{ #category : 'scheduling' }
 TTaskScheduler >> privateSchedule: aTask [
 	| execution |
 	execution := aTask asTask scheduleTaskExecutionFor: self.
 	self scheduleTaskExecution: execution
 ]
 
-{ #category : 'schedulling' }
+{ #category : 'scheduling' }
 TTaskScheduler >> privateTimeout: timeout on: aTaskExecution [
 	timeout wait.
 	aTaskExecution isFinished
 		ifFalse: [ aTaskExecution cancelWithReason: 'Timeout after: ' , timeout asString ]
 ]
 
-{ #category : 'schedulling' }
+{ #category : 'scheduling' }
 TTaskScheduler >> schedule: aTask [
 	aTask asTask schedule: self
 ]
 
-{ #category : 'schedulling' }
+{ #category : 'scheduling' }
 TTaskScheduler >> schedule: aTask timeout: aTimeout [
 
 	| execution |
@@ -77,13 +77,13 @@ TTaskScheduler >> schedule: aTask timeout: aTimeout [
 	self scheduleTaskExecution: execution
 ]
 
-{ #category : 'schedulling' }
+{ #category : 'scheduling' }
 TTaskScheduler >> scheduleTaskExecution: aTaskExecution [
 
 	self explicitRequirement
 ]
 
-{ #category : 'schedulling' }
+{ #category : 'scheduling' }
 TTaskScheduler >> scheduleTimeout: timeout on: aTaskExecution [
 	TKTConfiguration processProvider
 		createProcessDoing:

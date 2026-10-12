@@ -10,8 +10,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReSmalltalkGlobalsRule class >> group [
-	^ self codingIdiomViolationGroup
+ReSmalltalkGlobalsRule class >> groupSelector [
+
+	^ #codingIdiomViolationGroup
 ]
 
 { #category : 'accessing' }

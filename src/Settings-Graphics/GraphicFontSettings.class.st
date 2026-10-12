@@ -25,6 +25,18 @@ GraphicFontSettings class >> displayScaleFactorForStyleNamed: aSymbol [
 			ifNotNil: [:info | info second]
 ]
 
+{ #category : 'private' }
+GraphicFontSettings class >> font [
+
+	^ StandardFonts defaultFont
+]
+
+{ #category : 'private' }
+GraphicFontSettings class >> font: aFont [
+
+	^ self resetAllFontsTo: aFont
+]
+
 { #category : 'fonts' }
 GraphicFontSettings class >> fontSize [
 
@@ -60,14 +72,14 @@ GraphicFontSettings class >> fontSizeRowSettingsOn: aBuilder [
 ]
 
 { #category : 'private' }
-GraphicFontSettings class >> pickFont: aPresenter [ 
+GraphicFontSettings class >> pickFont: aPresenter [
 
-	FontChooser 
+	FontChooser
 		openModalWithTitle: 'Font for all font'
 		initialFont: StandardFonts defaultFont
 		onAcceptDo: [ :aFont | self resetAllFontsTo: aFont ].
-		
-	aPresenter window presenter announce: StSettingModelChanged
+
+	aPresenter ifNotNil: [ aPresenter window presenter announce: StSettingModelChanged ]
 ]
 
 { #category : 'fonts' }
@@ -127,6 +139,8 @@ GraphicFontSettings class >> standardFontsSettingsOn: aBuilder [
 				order: 0;
 				description: 'Pick an unique font for all fonts of this category' ;
 				target: self;
+				getSelector: #font;
+				setSelector: #font:;
 				label: 'Pick font for all';
 				buttonLabel: 'Pick'.
 			(aBuilder setting: #defaultFont)

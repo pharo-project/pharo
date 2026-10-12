@@ -27,8 +27,8 @@ ReClassNotCategorizedRuleTest >> tearDown [
 ReClassNotCategorizedRuleTest >> testAllClassesAreNotTagged [
 
 	| aClass anotherClass |
-	aClass := classFactory make: [ :builder | builder package: 'aPackage' ].
-	anotherClass := classFactory make: [ :builder | builder package: 'aPackage' ].
+	aClass := classFactory make: [ :builder | builder package: 'APackage' ].
+	anotherClass := classFactory make: [ :builder | builder package: 'APackage' ].
 
 	self assertEmpty: (self myCritiquesOnClass: aClass).
 	self assertEmpty: (self myCritiquesOnClass: anotherClass)
@@ -41,8 +41,8 @@ ReClassNotCategorizedRuleTest >> testRule [
 	classCategorized := classFactory make: [ :builder |
 		                    builder
 			                    tag: 'aTag';
-			                    package: 'aPackage' ].
-	classNotCategorized := classFactory make: [ :builder | builder package: 'aPackage' ].
+			                    package: 'APackage' ].
+	classNotCategorized := classFactory make: [ :builder | builder package: 'APackage' ].
 	self assert: (self myCritiquesOnClass: classNotCategorized) size equals: 1
 ]
 
@@ -53,10 +53,10 @@ ReClassNotCategorizedRuleTest >> testRuleNotViolated [
 	classCategorized := classFactory make: [ :builder |
 		                    builder
 			                    tag: 'aTag';
-			                    package: 'aPackage' ].
+			                    package: 'APackage' ].
 	anotherClassCategorized := classFactory make: [ :builder |
 		                           builder
 			                           tag: 'aTag';
-			                           package: 'aPackage' ].
+			                           package: 'APackage' ].
 	self assertEmpty: (self myCritiquesOnClass: anotherClassCategorized)
 ]

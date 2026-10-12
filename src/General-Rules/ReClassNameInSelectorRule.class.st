@@ -17,8 +17,9 @@ ReClassNameInSelectorRule class >> checksMethod [
 ]
 
 { #category : 'accessing' }
-ReClassNameInSelectorRule class >> group [
-	^ self styleGroup
+ReClassNameInSelectorRule class >> groupSelector [
+
+	^ #styleGroup
 ]
 
 { #category : 'accessing' }

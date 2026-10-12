@@ -15,8 +15,9 @@ ReSelfSentNotImplementedRule class >> checksMethod [
 ]
 
 { #category : 'accessing' }
-ReSelfSentNotImplementedRule class >> group [
-	^ self bugsGroup
+ReSelfSentNotImplementedRule class >> groupSelector [
+
+	^ #bugsGroup
 ]
 
 { #category : 'accessing' }

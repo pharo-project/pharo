@@ -17,6 +17,9 @@ DebugSession >> implement: aMessage inClass: aClass forContext: aContext [
 	newContext sender: aContext sender.
 	newContext receiver: aContext receiver.
 	self updateContextTo: newContext.
+	"Set the top context of the current process to the new created context"
+	interruptedProcess suspendedContext: newContext.
+	
 	self contextChanged.
 	^ method
 ]

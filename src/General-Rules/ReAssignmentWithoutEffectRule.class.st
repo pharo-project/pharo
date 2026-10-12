@@ -10,8 +10,9 @@ Class {
 }
 
 { #category : 'accessing' }
-ReAssignmentWithoutEffectRule class >> group [
-	^ self optimizationGroup
+ReAssignmentWithoutEffectRule class >> groupSelector [
+
+	^ #optimizationGroup
 ]
 
 { #category : 'accessing' }

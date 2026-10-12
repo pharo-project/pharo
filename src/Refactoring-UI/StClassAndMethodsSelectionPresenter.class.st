@@ -53,6 +53,7 @@ StClassAndMethodsSelectionPresenter >> baseClassName: aString [
 	textInput text: aString
 ]
 
+
 { #category : 'accessing' }
 StClassAndMethodsSelectionPresenter >> basePackageName: aString [
 

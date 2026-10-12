@@ -13,14 +13,14 @@ CmdCommandActivator >> registerContextMenuItemsFor: aCommandItem withBuilder: aB
 
 	self canExecuteCommand ifFalse: [ ^self ].
 
-	command registerContextMenuItemsFor: aCommandItem withBuilder: aBuilder
+	self command registerContextMenuItemsFor: aCommandItem withBuilder: aBuilder
 ]
 
 { #category : '*Commander-Activators-ContextMenu' }
 CmdCommandActivator >> setUpShortcutTipForMenuItem: aMenuItemMorph [
 
 	CmdShortcutActivation
-		activeInstancesFor: command class inContext: context
+		activeInstancesFor: self command class inContext: self context
 		do: [ :shortcut |
 			aMenuItemMorph keyText: (shortcut keyCombination acceptVisitor: OSPlatform current shortcutPrinter)]
 ]

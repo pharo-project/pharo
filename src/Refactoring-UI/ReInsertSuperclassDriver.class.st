@@ -84,7 +84,6 @@ ReInsertSuperclassDriver >> gatherUserInput [
 
 { #category : 'configuration' }
 ReInsertSuperclassDriver >> instantiateRefactoring [
-	"self ensureSuperclassInModel."
 
 	^ (RBInsertNewClassRefactoring className: self subclass asString)
 		  model: model;
@@ -123,10 +122,9 @@ ReInsertSuperclassDriver >> requestClass [
 ReInsertSuperclassDriver >> scopes: refactoringScopes [
 
 	scopes := refactoringScopes.
-
 	model := self refactoringScopeOn: scopes first.
-	superclass := model classObjectFor: superclass
-	
+	superclass := model classObjectFor: superclass.
+	superclassParent ifNil: [ superclassParent := superclass superclass ]
 ]
 
 { #category : 'accessing' }

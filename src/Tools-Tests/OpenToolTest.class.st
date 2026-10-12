@@ -58,7 +58,7 @@ OpenToolTest >> testInspectInteger [
 { #category : 'tests - inspect' }
 OpenToolTest >> testInspectTraitClass [
 	| inspector |
-	inspector := self openInspectorOn: TSortable.
+	inspector := self openInspectorOn: TEmpty.
 	inspector changed.
 	inspector close
 ]
@@ -89,8 +89,9 @@ OpenToolTest >> testOpenBrowseOnMethod [
 
 { #category : 'tests - browse' }
 OpenToolTest >> testOpenBrowseOnTraitMethod [
+
 	| browser |
-	browser := (TSortable>>#isSorted) browse.
+	browser := (TIsEmpty >> #isEmpty) browse.
 	browser changed.
 	browser close
 ]

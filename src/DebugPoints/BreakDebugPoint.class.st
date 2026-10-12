@@ -9,7 +9,7 @@ Class {
 	#tag : 'Implementations'
 }
 
-{ #category : 'API' }
+{ #category : 'api' }
 BreakDebugPoint >> hitWithContext: aContext [
 
 	<debuggerCompleteToSender>

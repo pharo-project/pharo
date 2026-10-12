@@ -15,8 +15,9 @@ ReUnclassifiedMethodsRule class >> checksMethod [
 ]
 
 { #category : 'accessing' }
-ReUnclassifiedMethodsRule class >> group [
-	^ self styleGroup
+ReUnclassifiedMethodsRule class >> groupSelector [
+
+	^ #styleGroup
 ]
 
 { #category : 'accessing' }

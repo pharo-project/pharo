@@ -14,7 +14,7 @@ ClassModificationApplied >> affectsVariablesOf: aClass [
 	Therefore any class modification can affect variables from both class sides.
 	And we do not need to distinguish it"
 
-	aClass instanceSide = modifiedClass instanceSide ifTrue: [ ^true ].
+	aClass instanceSide = self modifiedClass instanceSide ifTrue: [ ^ true ].
 
-	^false
+	^ false
 ]

@@ -19,8 +19,9 @@ ReDefineBasicCheckRule class >> checksClass [
 ]
 
 { #category : 'accessing' }
-ReDefineBasicCheckRule class >> group [
-	^ self codingIdiomViolationGroup
+ReDefineBasicCheckRule class >> groupSelector [
+
+	^ #codingIdiomViolationGroup
 ]
 
 { #category : 'accessing' }

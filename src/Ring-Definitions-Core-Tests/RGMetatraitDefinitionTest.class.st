@@ -13,11 +13,11 @@ Class {
 RGMetatraitDefinitionTest >> testAsClassTraitfinition [
 
 	| rgCTrait cTrait |
-	cTrait := TSortable classTrait.
+	cTrait := TEmpty classTrait.
 	rgCTrait := cTrait asRingDefinition.
 	self assert: rgCTrait isRingObject.
 	self assert: rgCTrait isTrait.
-	self assert: rgCTrait name identicalTo: #'TSortable classTrait'.
+	self assert: rgCTrait name identicalTo: #'TEmpty classTrait'.
 	self assert: rgCTrait package name identicalTo: cTrait package name.
 	self assert: rgCTrait packageTag identicalTo: cTrait packageTag name.
 	self assert: rgCTrait classSide identicalTo: rgCTrait

@@ -757,7 +757,7 @@ RGEnvironmentBackend >> setSourceCodeFor: anRGMethod to: anObject [
 	anRGMethod pvtSourceCode: anObject
 ]
 
-{ #category : 'trait transormation' }
+{ #category : 'trait transformation' }
 RGEnvironmentBackend >> setSubjectFor: anRGTraitComposition to: anRGTrait [
 
 	^  anRGTraitComposition pvtSubject: anRGTrait
@@ -811,7 +811,7 @@ RGEnvironmentBackend >> sourceCodeFor: anRGMethod [
 	^ anRGMethod pvtSafeSourceCode
 ]
 
-{ #category : 'trait transormation' }
+{ #category : 'trait transformation' }
 RGEnvironmentBackend >> subjectFor: anRGTraitComposition [
 
 	^  anRGTraitComposition pvtSubject

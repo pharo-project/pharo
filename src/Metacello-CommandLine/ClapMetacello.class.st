@@ -26,7 +26,7 @@ ClapMetacello class >> commandSpecification [
 		yourself.
 		
 	self 
-		addSaveFlagTo: spec;
+		addNoSaveFlagTo: spec;
 		addKeepAliveOptionTo: spec;
 		addNoQuitOptionTo: spec;
 		addRenameOptionTo: spec.
@@ -83,6 +83,11 @@ ClapMetacello >> projectName [
 { #category : 'accessing' }
 ClapMetacello >> repositoryUrl [
 	^ self positional: #repository
+]
+
+{ #category : 'testing' }
+ClapMetacello >> shouldSave [
+	^ (self hasFlag: #'no-save') not
 ]
 
 { #category : 'accessing' }
