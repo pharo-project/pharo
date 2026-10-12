@@ -110,6 +110,11 @@ StRefactoringAddClassPresenter >> open [
 		centered
 ]
 
+{ #category : 'as yet unclassified' }
+StRefactoringAddClassPresenter >> textInputPresenter [
+	^ textInput 
+]
+
 { #category : 'callbacks' }
 StRefactoringAddClassPresenter >> updateTagItems: item [
 	"Note that as it seems there is no Spec drop list with editable text, we provide a 'Core' tag by default if the package has no tags"

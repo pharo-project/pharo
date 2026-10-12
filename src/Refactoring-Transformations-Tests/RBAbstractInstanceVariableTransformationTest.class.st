@@ -272,7 +272,7 @@ RBAbstractInstanceVariableTransformationTest >> testVariableIsNotAccessed [
 	self deny: (class directlyDefinesLocalMethod: #instVar:).
 
 	transformation generateChanges.
-	self assert: transformation model changes changes size equals: 3.
+	self assert: transformation model changes changes size equals: 2.
 	"the accessors and the method using the variables"
 	self assert: (class directlyDefinesLocalMethod: #instVar).
 	self assert: (class directlyDefinesLocalMethod: #instVar:)
