@@ -6,8 +6,9 @@
 Class {
 	#name : 'ClapDbgNumericHistoryHandler',
 	#superclass : 'ClapDbgDebuggerHistoryHandler',
-	#category : 'Debugger-CLI',
-	#package : 'Debugger-CLI'
+	#category : 'Debugger-CLI-Core',
+	#package : 'Debugger-CLI',
+	#tag : 'Core'
 }
 
 { #category : 'execution' }

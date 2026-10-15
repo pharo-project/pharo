@@ -13,7 +13,6 @@ ClapDbgIOTest >> setUp [
 
 	super setUp.
 	debugger := ClapDebugger new.
-
 	debugger lineEnding: String lf
 ]
 

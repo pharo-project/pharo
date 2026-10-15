@@ -1,6 +1,6 @@
 "
-A class to execute commands from command Line.
-We can parse commands and arguments, and execute the dedicated method
+I'm a class that executes commands from the command line.
+I parse commands and arguments, and execute the dedicated method.
 "
 Class {
 	#name : 'ClapDebugger',
@@ -17,8 +17,9 @@ Class {
 		'outStream',
 		'historyHandlers'
 	],
-	#category : 'Debugger-CLI',
-	#package : 'Debugger-CLI'
+	#category : 'Debugger-CLI-Core',
+	#package : 'Debugger-CLI',
+	#tag : 'Core'
 }
 
 { #category : 'instance creation' }
@@ -102,6 +103,7 @@ ClapDebugger >> context [
 
 { #category : 'accessing' }
 ClapDebugger >> context: aDebugContext [
+
     context := aDebugContext
 ]
 
@@ -167,9 +169,9 @@ ClapDebugger >> inStream [
 ]
 
 { #category : 'accessing' }
-ClapDebugger >> inStream: anObject [
+ClapDebugger >> inStream: aStream [
 
-	inStream := anObject
+	inStream := aStream
 ]
 
 { #category : 'initialization' }
@@ -251,9 +253,9 @@ ClapDebugger >> outStream [
 ]
 
 { #category : 'accessing' }
-ClapDebugger >> outStream: anObject [
+ClapDebugger >> outStream: aStream [
 
-	outStream := anObject
+	outStream := aStream
 ]
 
 { #category : 'command shortcut' }

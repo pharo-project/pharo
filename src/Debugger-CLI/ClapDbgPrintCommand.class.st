@@ -1,8 +1,9 @@
 Class {
 	#name : 'ClapDbgPrintCommand',
 	#superclass : 'ClapDbgCommand',
-	#category : 'Debugger-CLI',
-	#package : 'Debugger-CLI'
+	#category : 'Debugger-CLI-Commands',
+	#package : 'Debugger-CLI',
+	#tag : 'Commands'
 }
 
 { #category : 'execution' }
@@ -14,7 +15,7 @@ ClapDbgPrintCommand >> basicExecuteOn: aDebugger with: args [
 		              context: aDebugger context;
 		              evaluate: args.
 
-	^ evaluation asString
+	^ evaluation displayString
 ]
 
 { #category : 'initialization' }

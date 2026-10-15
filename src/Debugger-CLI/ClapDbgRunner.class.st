@@ -4,8 +4,9 @@ Class {
 	#instVars : [
 		'debugger'
 	],
-	#category : 'Debugger-CLI',
-	#package : 'Debugger-CLI'
+	#category : 'Debugger-CLI-Unused',
+	#package : 'Debugger-CLI',
+	#tag : 'Unused'
 }
 
 { #category : 'command line' }
@@ -33,9 +34,7 @@ ClapDbgRunner class >> commandSpecification [
 ClapDbgRunner >> execute [
 
 	self prepareImageAndExit.
-
 	self runDebugger.
-
 	self exitSuccess
 ]
 
