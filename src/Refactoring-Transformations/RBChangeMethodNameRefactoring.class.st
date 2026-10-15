@@ -106,6 +106,12 @@ RBChangeMethodNameRefactoring >> newSelector: aSymbol [
 ]
 
 { #category : 'accessing' }
+RBChangeMethodNameRefactoring >> oldCompiledMethod [
+
+	^ self methodClass >> oldSelector
+]
+
+{ #category : 'accessing' }
 RBChangeMethodNameRefactoring >> permutation: anObject [
 
 	permutation := anObject

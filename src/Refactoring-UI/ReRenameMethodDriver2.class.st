@@ -8,7 +8,6 @@ Class {
 		'class',
 		'originalMessage',
 		'newMessage',
-		'shouldEscape',
 		'methodNameEditorPresenterClass',
 		'oldName',
 		'newName',
@@ -102,8 +101,7 @@ ReRenameMethodDriver2 >> hasPrimitiveImplementor [
 { #category : 'initialization' }
 ReRenameMethodDriver2 >> initialize [ 
 	
-	super initialize.
-	shouldEscape := false.
+	super initialize
 ]
 
 { #category : 'private - testing' }
@@ -143,9 +141,26 @@ ReRenameMethodDriver2 >> model: aModel renameMethodSignature: aMessage in: aClas
 ]
 
 { #category : 'actions' }
+ReRenameMethodDriver2 >> newMessage [
+
+	newMessage := self requestNewMessage 
+]
+
+{ #category : 'actions' }
+ReRenameMethodDriver2 >> newMessage: aMessage [
+
+	newMessage := aMessage 
+]
+
+{ #category : 'actions' }
 ReRenameMethodDriver2 >> newName: aSymbol [
 
 	newName := aSymbol
+]
+
+{ #category : 'accessing' }
+ReRenameMethodDriver2 >> oldCompiledMethod [
+	^ self refactoring oldCompiledMethod
 ]
 
 { #category : 'accessing' }
@@ -224,7 +239,6 @@ ReRenameMethodDriver2 >> scopes: refactoringScope model: aModel renameMethodSign
 ReRenameMethodDriver2 >> setNewMessage: aSymbol [
 
 	refactoring newSelector: aSymbol .
-	newMessage selector: aSymbol .
 	self configureMessage
 ]
 

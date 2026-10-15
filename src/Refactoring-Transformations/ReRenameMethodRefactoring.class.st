@@ -61,8 +61,9 @@ ReRenameMethodRefactoring class >> renameMethod: aSelector in: aClass to: newSel
 
 { #category : 'preconditions' }
 ReRenameMethodRefactoring >> applicabilityPreconditions [
-
-	^ { self validNewNameCondition . self validSelectorCondition . self selectorsHaveSameArity }
+"
+	^ { self validNewNameCondition . self validSelectorCondition . self selectorsHaveSameArity }"
+	^ {  self validSelectorCondition . self selectorsHaveSameArity }
 ]
 
 { #category : 'torevisit' }
@@ -192,7 +193,7 @@ ReRenameMethodRefactoring >> superclassesDoNotDefineNewSelectorCondition [
 ReRenameMethodRefactoring >> validNewNameCondition [
  
 	^ (ReBlockCondition new 
-			block: [ (class includesSelector: newSelector) not ];
+			block: [ self areNamesTheSame not ];
 			violatorErrorString: newSelector printString,' is already defined in this class')
 ]
 
