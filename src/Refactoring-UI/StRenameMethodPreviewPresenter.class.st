@@ -129,7 +129,7 @@ StRenameMethodPreviewPresenter >> buildDiffFor: aChange [
 StRenameMethodPreviewPresenter >> buildLeftSideDiff [
 
 	diffPresenter 
-		leftText: driver originalMessage contextUser source ;
+		leftText: driver oldCompiledMethod sourceCode ;
 		rightText: ''
 ]
 
