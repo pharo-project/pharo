@@ -57,7 +57,13 @@ SpRubFindReplaceDialog >> connectPresenters [
 		whenTextChangedDo: [ :aText | self updateFindText: aText ];
 		whenSubmitDo: [ :text | self find ].
 
-	replaceTextInput whenTextChangedDo: [ :aText | self replacingText: aText ]
+	replaceTextInput whenTextChangedDo: [ :aText | self replacingText: aText ].
+
+	caseCheckBox whenChangedDo: [ :aBoolean | service caseSensitive: aBoolean ].
+	regExpCheckBox whenChangedDo: [ :aBoolean | service isRegex: aBoolean ].
+	entireCheckBox whenChangedDo: [ :aBoolean | service entireWordsOnly: aBoolean ].
+	wrapCheckBox whenChangedDo: [ :aBoolean | service wrapAround: aBoolean ].
+	backwardsCheckBox whenChangedDo: [ :aBoolean | service searchBackwards: aBoolean ]
 ]
 
 { #category : 'layout' }
@@ -85,7 +91,6 @@ SpRubFindReplaceDialog >> defaultLayout [
 
 { #category : 'operations' }
 SpRubFindReplaceDialog >> find [
-	self updateService.
 	service find
 ]
 
@@ -137,8 +142,7 @@ SpRubFindReplaceDialog >> initializeDialogWindow: aDialogWindowPresenter [
 	aDialogWindowPresenter whenOpenedDo: [ findInput selectAll ].
 	aDialogWindowPresenter whenClosedDo: [
 			service findText: ''.
-			service discardDialog.
-			self updateService ]
+			service discardDialog ]
 ]
 
 { #category : 'initialization' }
@@ -180,7 +184,6 @@ SpRubFindReplaceDialog >> newReplacement [
 
 { #category : 'operations' }
 SpRubFindReplaceDialog >> replace [
-	self updateService.
 	self newReplacement.
 	service replace.
 	service find
@@ -188,7 +191,6 @@ SpRubFindReplaceDialog >> replace [
 
 { #category : 'operations' }
 SpRubFindReplaceDialog >> replaceAll [
-	self updateService.
 	self newReplacement.
 	service replaceAll
 ]
@@ -268,14 +270,4 @@ SpRubFindReplaceDialog >> updateFromService [
 	entireCheckBox state: service entireWordsOnly.
 	wrapCheckBox state: service wrapAround.
 	backwardsCheckBox state: service searchBackwards
-]
-
-{ #category : 'private' }
-SpRubFindReplaceDialog >> updateService [
-
-	service caseSensitive: caseCheckBox state.
-	service isRegex: regExpCheckBox state.
-	service entireWordsOnly: entireCheckBox state.
-	service wrapAround: wrapCheckBox state.
-	service searchBackwards: backwardsCheckBox state
 ]
