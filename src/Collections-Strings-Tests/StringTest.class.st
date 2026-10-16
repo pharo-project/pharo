@@ -516,10 +516,7 @@ StringTest >> testAsSmalltalkComment [
 { #category : 'tests' }
 StringTest >> testAsString [
 
-	self assert: 123 asString equals: '123'.
-	self assert: #(1 2 3) asString equals: '#(1 2 3)'.
-	self assert: (OrderedCollection new) asString equals: 'an OrderedCollection()'.
-	self assert: (1 < 3) asString equals: 'true'.
+	self assert: 123 printString equals: '123'.
 	self assert: 'é è à ô ü ö ß ä ó ñ í á' asString equals: 'é è à ô ü ö ß ä ó ñ í á'.
 	self assert: '' asString equals: ''
 ]

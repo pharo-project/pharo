@@ -276,8 +276,8 @@ CompiledCode >> asOrderedCollection [
 
 { #category : 'printing' }
 CompiledCode >> asString [
-
-	  ^self sourceCode
+	self deprecated: 'Do not use asString when you need displayString'.
+	^ self sourceCode
 ]
 
 { #category : 'source code management' }
@@ -854,6 +854,12 @@ CompiledCode >> primitiveErrorVariableName [
 			and: [(ecIndex := kwds indexOf: 'error:') > 0]) ifTrue:
 				[^pragma argumentAt: ecIndex]]].
 	^nil
+]
+
+{ #category : 'printing' }
+CompiledCode >> printOn: aStream [
+
+	aStream nextPutAll: self sourceCode
 ]
 
 { #category : 'accessing - pragmas & properties' }

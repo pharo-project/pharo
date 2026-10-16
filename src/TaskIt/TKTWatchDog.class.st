@@ -66,7 +66,7 @@ TKTWatchDog >> initialize [
 
 { #category : 'initialization' }
 TKTWatchDog >> name [
-	^ 'WatchDog (' , id asString , ')'
+	^ 'WatchDog (' , id printString , ')'
 ]
 
 { #category : 'accessing' }
