@@ -65,20 +65,20 @@ SpRubFindReplaceDialog >> defaultLayout [
 
 	<spec>
 	^ SpBoxLayout newVertical
-		  add: #findInput expand: false;
+		  add: findInput expand: false;
 		  add: (SpGridLayout new
 				   beColumnHomogeneous;
 				   beRowHomogeneous;
-				   add: #regExpCheckBox atPoint: 1 @ 1;
-				   add: #backwardsCheckBox atPoint: 2 @ 1;
-				   add: #caseCheckBox atPoint: 1 @ 2;
-				   add: #wrapCheckBox atPoint: 2 @ 2;
-				   add: #entireCheckBox atPoint: 1 @ 3;
+				   add: regExpCheckBox atPoint: 1 @ 1;
+				   add: backwardsCheckBox atPoint: 2 @ 1;
+				   add: caseCheckBox atPoint: 1 @ 2;
+				   add: wrapCheckBox atPoint: 2 @ 2;
+				   add: entireCheckBox atPoint: 1 @ 3;
 				   yourself);
 		  addLast: (SpBoxLayout newHorizontal
 				   spacing: 5;
 				   add: 'Replace with:' expand: false;
-				   add: #replaceTextInput;
+				   add: replaceTextInput;
 				   yourself);
 		  yourself
 ]
