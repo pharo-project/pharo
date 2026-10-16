@@ -108,7 +108,7 @@ RubShoutStylerDecorator >> style: aText [
 	[ ^ self styler style: aText ]
 		on: Error
 		do: [ :ex |
-			ex traceCr.
+			ex traceNewLine.
 			^ aText ]
 ]
 

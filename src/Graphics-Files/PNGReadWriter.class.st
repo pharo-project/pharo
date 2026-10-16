@@ -746,6 +746,7 @@ PNGReadWriter >> grayColorsFor: d [
 
 { #category : 'accessing' }
 PNGReadWriter >> nextImage [
+
 	bigEndian := EndianDetector isBigEndian.
 	filtersSeen := Bag new.
 	idatChunkStream := nil.
@@ -754,27 +755,22 @@ PNGReadWriter >> nextImage [
 	stream skip: 8.
 	[ stream atEnd ] whileFalse: [ self processNextChunk ].
 	"Set up our form"
-	palette
-		ifNotNil: [ "Dump the palette if it's the same as our standard palette"
-			palette = (StandardColors copyFrom: 1 to: palette size)
-				ifTrue: [ palette := nil ] ].
+	palette ifNotNil: [ "Dump the palette if it's the same as our standard palette" palette = (StandardColors copyFrom: 1 to: palette size) ifTrue: [ palette := nil ] ].
 	(depth <= 8 and: [ palette isNotNil ])
-		ifTrue: [ form := ColorForm extent: width @ height depth: depth.
-			form colors: palette ]
+		ifTrue: [
+				form := ColorForm extent: width @ height depth: depth.
+				form colors: palette ]
 		ifFalse: [ form := Form extent: width @ height depth: depth ].
 	backColor ifNotNil: [ form fillColor: backColor ].
 	idatChunkStream
 		ifNil: [ self error: 'image data is missing' ]
 		ifNotNil: [ self processIDATChunk ].
-	unknownChunks isEmpty
-		ifFalse:
-			[ "Transcript show: ' ',unknownChunks asSortedCollection asArray printString." ].
-	self debugging
-		ifTrue: [ self crTrace: 'form = ' , form printString.
-			self crTrace: 'colorType = ' , colorType printString.
-			self crTrace: 'interlaceMethod = ' , interlaceMethod printString.
-			self
-				crTrace: 'filters = ' , filtersSeen sortedCounts asArray printString ].
+	unknownChunks isEmpty ifFalse: [ "Transcript show: ' ',unknownChunks asSortedCollection asArray printString." ].
+	self debugging ifTrue: [
+			self newLineTrace: 'form = ' , form printString.
+			self newLineTrace: 'colorType = ' , colorType printString.
+			self newLineTrace: 'interlaceMethod = ' , interlaceMethod printString.
+			self newLineTrace: 'filters = ' , filtersSeen sortedCounts asArray printString ].
 	^ form
 ]
 
@@ -1038,7 +1034,7 @@ PNGReadWriter >> processNonInterlaced [
 		at: colorType + 1.
 	debug
 		ifTrue: [ self
-				crTrace:
+				newLineTrace:
 					('NI chunk size=<1s>' expandMacrosWith: idatChunkStream position) ].
 	z := ZLibReadStream
 		on: idatChunkStream originalContents
@@ -1056,7 +1052,7 @@ PNGReadWriter >> processNonInterlaced [
 			startingAt: 1.
 		(debug and: [ thisScanline size < bytesPerScanline ])
 			ifTrue: [ self
-					traceCr:
+					traceNewLine:
 						('wanted {1} but only got {2}'
 							format:
 								{bytesPerScanline.
@@ -1162,35 +1158,32 @@ PNGReadWriter >> updateCrc: oldCrc from: start to: stop in: aCollection [
 
 { #category : 'writing' }
 PNGReadWriter >> writeChunk: crcStream [
+
 	| bytes length crc debug |
 	debug := self debugging.
 	bytes := crcStream originalContents.
 	length := crcStream position.
 	crc := self
-		updateCrc: 4294967295
-		from: 1
-		to: length
-		in: bytes.
+		       updateCrc: 4294967295
+		       from: 1
+		       to: length
+		       in: bytes.
 	crc := crc bitXor: 4294967295.
-	debug
-		ifTrue: [ self
-				crTrace:
-					(String
-						streamContents: [ :str |
-							str
-								cr;
-								print: stream position;
-								space;
-								nextPutAll: (bytes copyFrom: 1 to: 4) asString;
-								nextPutAll: ' len=';
-								print: length;
-								nextPutAll: ' crc=0x';
-								nextPutAll: crc printStringHex ]) ].
-	self nextLongPut: length - 4.	"exclude chunk name"
+	debug ifTrue: [
+			self newLineTrace: (String streamContents: [ :str |
+						 str
+							 cr;
+							 print: stream position;
+							 space;
+							 nextPutAll: (bytes copyFrom: 1 to: 4) asString;
+							 nextPutAll: ' len=';
+							 print: length;
+							 nextPutAll: ' crc=0x';
+							 nextPutAll: crc printStringHex ]) ].
+	self nextLongPut: length - 4. "exclude chunk name"
 	stream next: length putAll: bytes startingAt: 1.
 	self nextLongPut: crc.
-	debug
-		ifTrue: [ self crTrace: ' afterPos=' , stream position asString ].
+	debug ifTrue: [ self newLineTrace: ' afterPos=' , stream position asString ].
 	crcStream resetToStart
 ]
 
@@ -1209,12 +1202,7 @@ PNGReadWriter >> writeIDATChunkOn: aStream [
 	form depth <= 8
 		ifTrue: [ self writeType3DataOn: z ]
 		ifFalse: [ self writeType6DataOn: z ].
-	self debugging
-		ifTrue: [ self
-				crTrace:
-					('compressed size=<1s> uncompressed size=<2s>'
-						expandMacrosWith: aStream position
-						with: z position) ]
+	self debugging ifTrue: [ self newLineTrace: ('compressed size=<1s> uncompressed size=<2s>' expandMacrosWith: aStream position with: z position) ]
 ]
 
 { #category : 'writing' }

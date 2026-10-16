@@ -20,14 +20,14 @@ KMLog class >> initialize [
 { #category : 'logging' }
 KMLog class >> log: aKeyEvent [
 	debug 	ifFalse: [ ^ self ].
-	self traceCr: aKeyEvent printString
+	self traceNewLine: aKeyEvent printString
 ]
 
 { #category : 'logging' }
 KMLog class >> logCompleteMatch: aKeymap [
 	debug
 		ifFalse: [ ^ self ].
-	self traceCr: 'Complete match: ' , aKeymap printString
+	self traceNewLine: 'Complete match: ' , aKeymap printString
 ]
 
 { #category : 'logging' }
@@ -35,14 +35,14 @@ KMLog class >> logCompleteMatchBetween: aMorph and: aKeymap [
 	debug
 		ifFalse: [ ^ self ].
 	self
-		traceCr: aMorph printString , ' Complete match: ' , aKeymap printString
+		traceNewLine: aMorph printString , ' Complete match: ' , aKeymap printString
 ]
 
 { #category : 'logging' }
 KMLog class >> logPartialMatch: anEvent [
 	debug
 		ifFalse: [ ^ self ].
-	self traceCr: 'Partial match: ' , anEvent printString
+	self traceNewLine: 'Partial match: ' , anEvent printString
 ]
 
 { #category : 'debugging' }
