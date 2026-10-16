@@ -1,5 +1,5 @@
 "
-I am a Spec dialog used for find & replace service. I am currently partly dependent on Morphic backend because of more user friendly keyboard manipulation.
+I am the Spec dialog used by the find and replace service. I only use Spec APIs, so I work on any Spec backend.
 "
 Class {
 	#name : 'SpRubFindReplaceDialog',
@@ -85,26 +85,14 @@ SpRubFindReplaceDialog class >> textToFind: aText [
 	textToFind := aText
 ]
 
-{ #category : 'morphic dependencies' }
-SpRubFindReplaceDialog >> assignEnterKeystrokeEventFor: aPresenter [
-	"Morphic dependent!"
-
-	aPresenter whenBuiltDo: [ :this | this widget announcer when: RubReturnEntered do: [ :ann | self find ] for: self ]
-]
-
-{ #category : 'morphic dependencies' }
-SpRubFindReplaceDialog >> closeWindowOnEscIn: aPresenter [
-	"Morphic dependent!"
-
-	aPresenter whenBuiltDo: [ :this |
-		this widget announcer when: RubKeystroke do: [ :ann | ann event keyCharacter = Character escape ifTrue: [ self window triggerCancelAction ] ] for: self ]
-]
-
 { #category : 'initialization' }
 SpRubFindReplaceDialog >> connectPresenters [
 
-    findInput whenTextChangedDo: [ :aText | self updateFindText: aText ].
-    replaceTextInput whenTextChangedDo: [ :aText | self replacingText: aText ]
+	findInput
+		whenTextChangedDo: [ :aText | self updateFindText: aText ];
+		whenSubmitDo: [ :text | self find ].
+
+	replaceTextInput whenTextChangedDo: [ :aText | self replacingText: aText ]
 ]
 
 { #category : 'operations' }
@@ -175,9 +163,6 @@ SpRubFindReplaceDialog >> initializePresenters [
 	findInput text: self textToFind.
 	self updateFindText: self textToFind.
 
-	self closeWindowOnEscIn: findInput.
-	self assignEnterKeystrokeEventFor: findInput.
-
 	regExpCheckBox := self newCheckBox label: 'Regular expression'.
 	backwardsCheckBox := self newCheckBox label: 'Search backwards'.
 	caseCheckBox := self newCheckBox label: 'Case sensitive'.
@@ -186,8 +171,6 @@ SpRubFindReplaceDialog >> initializePresenters [
 	self updateFromService.
 	replaceTextInput := self newTextInput autoAccept: true.
 	self selectAllOnFocusIn: replaceTextInput.
-
-	self closeWindowOnEscIn: replaceTextInput.
 
 	replaceTextInput text: self replacingText.
 	service replaceText: replaceTextInput text.
@@ -236,7 +219,7 @@ SpRubFindReplaceDialog >> replacingText: aText [
 	^ self class replacingText: aText
 ]
 
-{ #category : 'morphic dependencies' }
+{ #category : 'initialization' }
 SpRubFindReplaceDialog >> selectAllOnFocusIn: aPresenter [
 
 	aPresenter eventHandler whenFocusReceivedDo: [ :anEvent | replaceTextInput selectAll ]
