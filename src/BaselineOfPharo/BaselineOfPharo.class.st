@@ -214,7 +214,7 @@ BaselineOfPharo >> postload: loader package: packageSpec [
 		| credential |
 		credential := (self classNamed: #IceCredentialStore) current plaintextCredentialForHostname: 'github.com'.
 		credential password = token ifTrue: [ (self classNamed: #IceCredentialStore) current removePlainTextCredential: credential ].
-		'Removing credential.' traceCr ].
+		'Removing credential.' traceNewLine ].
 
 	"Reset all ffi structures that may have been initialised durying bootstrap"
 	(Smalltalk classNamed: #FFIStructure) 

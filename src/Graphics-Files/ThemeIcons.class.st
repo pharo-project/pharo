@@ -229,7 +229,7 @@ ThemeIcons >> iconFormSetNamed: aSymbol ifNone: aBlock [
 	((aSymbol endsWith: 'Icon') or: [ (aSymbol endsWith: 'Form') ]) ifTrue: [
 		(self basicIconFormSetNamed: (aSymbol allButLast: 4) asSymbol)
 			ifNotNil: [ :icon | 
-				('Using old icon name, please rename ', aSymbol printString) traceCr.
+				('Using old icon name, please rename ', aSymbol printString) traceNewLine.
 				^ icon ]
 	].
 

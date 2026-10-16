@@ -89,8 +89,8 @@ Socket class >> loopbackTest [
 
 	| sock1 sock2 bytesToSend sendBuf receiveBuf done bytesSent bytesReceived t extraBytes packetsSent packetsRead |
 	'
-starting loopback test' traceCr.
-	'---------- Connecting ----------' traceCr.
+starting loopback test' traceNewLine.
+	'---------- Connecting ----------' traceNewLine.
 	self initializeNetwork.
 	sock1 := self new.
 	sock2 := self new.
@@ -100,7 +100,7 @@ starting loopback test' traceCr.
 	sock2 waitForConnectionFor: self standardTimeout.
 	sock1 isConnected ifFalse: [ self error: 'sock1 not connected' ].
 	sock2 isConnected ifFalse: [ self error: 'sock2 not connected' ].
-	'connection established' traceCr.
+	'connection established' traceNewLine.
 	bytesToSend := 5000000.
 	sendBuf := String new: 5000 withAll: $x.
 	receiveBuf := String new: 50000.
@@ -117,26 +117,26 @@ starting loopback test' traceCr.
 			                      + (sock2 receiveDataInto: receiveBuf) ].
 		     done := bytesSent >= bytesToSend and: [
 			             bytesReceived = bytesSent ] ] ] millisecondsToRun.
-	'closing connection' traceCr.
+	'closing connection' traceNewLine.
 	sock1 waitForSendDoneFor: self standardTimeout.
 	sock1 close.
 	sock2 waitForDisconnectionFor: self standardTimeout.
 	extraBytes := sock2 discardReceivedData.
 	extraBytes > 0 ifTrue: [
 		' *** received ' , extraBytes size printString
-		, ' extra bytes ***' traceCr ].
+		, ' extra bytes ***' traceNewLine ].
 	sock2 close.
 	sock1 waitForDisconnectionFor: self standardTimeout.
 	sock1 isUnconnectedOrInvalid ifFalse: [
 		self error: 'sock1 not closed' ].
 	sock2 isUnconnectedOrInvalid ifFalse: [
 		self error: 'sock2 not closed' ].
-	'---------- Connection Closed ----------' traceCr.
+	'---------- Connection Closed ----------' traceNewLine.
 	sock1 destroy.
 	sock2 destroy.
-	('loopback test done; time = ' , t printString) traceCr.
+	('loopback test done; time = ' , t printString) traceNewLine.
 	((bytesToSend asFloat / t roundTo: 0.01) printString
-	 , '* 1000 bytes/sec') traceCr.
+	 , '* 1000 bytes/sec') traceNewLine.
 	(Smalltalk tools toolNamed: #transcript) endEntry
 ]
 
