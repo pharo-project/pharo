@@ -1,5 +1,5 @@
 "
-RBRefactoryProtocolChange is responsible for adding a protocol in classes in a RB model
+I'm responsible for adding a protocol in classes in a refactoring model.
 "
 Class {
 	#name : 'ReAddProtocolChange',

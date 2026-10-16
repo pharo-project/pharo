@@ -31,8 +31,7 @@ ClyTextEditor >> implementorsOf: selectedSelector [
 			browseImplementorsOf: selectedSelector ].
 	
 	(Smalltalk tools toolNamed: #messageList) 
-		browseImplementorsOf: selectedSelector 
-		from: self browser classSelection lastSelectedItem actualObject.
+		browseImplementorsOf: selectedSelector
 ]
 
 { #category : '*Calypso-SystemTools-QueryBrowser' }

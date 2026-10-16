@@ -28,6 +28,13 @@ SycRemoveMessageArgumentCommand >> abort [
 	CmdCommandAborted signal
 ]
 
+{ #category : 'execution' }
+SycRemoveMessageArgumentCommand >> applyResultInContext: aToolContext [
+	"The refactoring was applied by the driver while executing the command."
+
+	
+]
+
 { #category : 'accessing' }
 SycRemoveMessageArgumentCommand >> argumentName [
 	^ argumentName
@@ -47,13 +54,7 @@ SycRemoveMessageArgumentCommand >> computeArgumentName [
 
 { #category : 'execution' }
 SycRemoveMessageArgumentCommand >> createRefactoring [
-
-	^ (RBRemoveParameterRefactoring
-		   model: model
-		   removeParameter: argumentName 
-		   in: refactoredClass
-		   selector: originalMessage selector
-		   index: (originalMessage argumentNames indexOf: argumentName)) newSelector: self resultMessageSelector
+	"not used"
 ]
 
 { #category : 'accessing' }
@@ -64,6 +65,17 @@ SycRemoveMessageArgumentCommand >> defaultMenuIconName [
 { #category : 'accessing' }
 SycRemoveMessageArgumentCommand >> defaultMenuItemName [
 	^'Remove argument'
+]
+
+{ #category : 'execution' }
+SycRemoveMessageArgumentCommand >> execute [
+	
+	ReRemoveParameterDriver new
+		scopes: refactoringScopes
+			model: model
+			removeParameterFromMethodSignature: originalMessage
+			in: originalMessage methodClass;
+		runRefactoring
 ]
 
 { #category : 'private' }
@@ -80,23 +92,6 @@ SycRemoveMessageArgumentCommand >> methodName [
 		  methodName := RBMethodName
 			                selector: originalMessage selector
 			                arguments: originalMessage argumentNames ]
-]
-
-{ #category : 'execution' }
-SycRemoveMessageArgumentCommand >> prepareFullExecutionInContext: aToolContext [
-
-	| dialog |
-	super prepareFullExecutionInContext: aToolContext.
-	dialog := SycMethodArgumentsRemoverPresenter openOn: self methodName.
-	dialog cancelled ifTrue: [ self abort ].
-
-	self argumentName: self computeArgumentName.
-
-	(originalMessage argumentNames includes: argumentName)
-		ifTrue: [ ^ self ].
-	
-	self informArgumentError.
-	self abort
 ]
 
 { #category : 'execution' }

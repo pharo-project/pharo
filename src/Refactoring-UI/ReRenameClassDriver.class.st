@@ -80,7 +80,7 @@ ReRenameClassDriver >> initialize [
 { #category : 'configuration' }
 ReRenameClassDriver >> instantiateRefactoring [
 
-	^ ReRenameClassRefactoring rename: oldName
+	^ ReRenameClassRefactoring model: model rename: oldName
 ]
 
 { #category : 'accessing' }

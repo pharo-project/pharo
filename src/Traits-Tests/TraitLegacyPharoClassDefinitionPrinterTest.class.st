@@ -57,6 +57,13 @@ TraitLegacyPharoClassDefinitionPrinterTest >> testTComparableClassTrait [
 ]
 
 { #category : 'tests - traits' }
+TraitLegacyPharoClassDefinitionPrinterTest >> testTEmpty [
+
+	self assert: (self forClass: TEmpty classTrait) equals: 'TEmpty classTrait
+	instanceVariableNames: '''''
+]
+
+{ #category : 'tests - traits' }
 TraitLegacyPharoClassDefinitionPrinterTest >> testTEventVisitorClassTrait [
 
 	self assert: (self forClass: EpTEventVisitor classTrait) equals: 'EpTEventVisitor classTrait
@@ -70,13 +77,6 @@ TraitLegacyPharoClassDefinitionPrinterTest >> testTIsEmpty [
 	self assert: (self forClass: TIsEmpty) equals: 'Trait named: #TIsEmpty
 	 uses: {}
 	 package: ''Kernel-Traits-Base'''
-]
-
-{ #category : 'tests - traits' }
-TraitLegacyPharoClassDefinitionPrinterTest >> testTSortable [
-
-	self assert: (self forClass: TSortable classTrait) equals: 'TSortable classTrait
-	instanceVariableNames: '''''
 ]
 
 { #category : 'tests - traits' }

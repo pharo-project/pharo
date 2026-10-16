@@ -51,7 +51,7 @@ ClyTextEditorToolMorph >> applyChanges [
 	self subclassResponsibility
 ]
 
-{ #category : 'events handling' }
+{ #category : 'event handling' }
 ClyTextEditorToolMorph >> applyChangesBy: aBlock [
 
 	applyingChanges := true.
@@ -118,7 +118,7 @@ ClyTextEditorToolMorph >> cancelChanges [
 	self rebuildStatusBar
 ]
 
-{ #category : 'events handling' }
+{ #category : 'event handling' }
 ClyTextEditorToolMorph >> changesAccepted [
 
 	| applied |
@@ -142,19 +142,19 @@ ClyTextEditorToolMorph >> changesAccepted [
 			  ifFalse: [ textMorph hasUnacceptedEdits: true ] ]
 ]
 
-{ #category : 'events handling' }
+{ #category : 'event handling' }
 ClyTextEditorToolMorph >> changesAreAboutApply [
 	"it is a hook method to allow subclasses prepare state
 	just before applying changes"
 ]
 
-{ #category : 'events handling' }
+{ #category : 'event handling' }
 ClyTextEditorToolMorph >> changesCancelRequested: aRubCancelEditRequested [
 
 	changesCancelRequested := true
 ]
 
-{ #category : 'events handling' }
+{ #category : 'event handling' }
 ClyTextEditorToolMorph >> changesCancelled [
 
 	"Avoid clearing the dirty flag if the pending text differs from the current text (issue#11649)"
@@ -305,7 +305,7 @@ ClyTextEditorToolMorph >> takeKeyboardFocus [
 	textMorph ifNotNil: [ textMorph takeKeyboardFocus]
 ]
 
-{ #category : 'events handling' }
+{ #category : 'event handling' }
 ClyTextEditorToolMorph >> textChanged: aTextChanged [
 
 	changesCancelRequested ifTrue: [

@@ -10,7 +10,7 @@ Class {
 	#tag : 'Manifest'
 }
 
-{ #category : 'meta-data' }
+{ #category : 'meta data' }
 ManifestCollectionsUnordered class >> dependencies [
 	^ #(#'Collections-Strings' #'Collections-Support' #Kernel #'Collections-Sequenceable' #'Collections-Abstract')
 ]
@@ -20,7 +20,7 @@ ManifestCollectionsUnordered class >> manuallyResolvedDependencies [
 	^ #(#'Collections-Streams' #'Math-Operations-Extensions' #'System-Support')
 ]
 
-{ #category : 'meta-data' }
+{ #category : 'meta data' }
 ManifestCollectionsUnordered class >> packageName [
 	^ #'Collections-Unordered'
 ]

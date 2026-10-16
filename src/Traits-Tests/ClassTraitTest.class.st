@@ -73,11 +73,11 @@ ClassTraitTest >> testInitialization [
 ClassTraitTest >> testIsClassOrTrait [
 
 	self
-		assert: TSortable isClassOrTrait;
+		assert: TEmpty isClassOrTrait;
 		assert: Class isClassOrTrait;
 		assert: Class class isClassOrTrait;
 		deny: Object new isClassOrTrait;
-		assert: TSortable classTrait isClassOrTrait
+		assert: TEmpty classTrait isClassOrTrait
 ]
 
 { #category : 'tests' }

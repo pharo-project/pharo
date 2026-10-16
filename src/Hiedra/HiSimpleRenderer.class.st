@@ -321,7 +321,7 @@ HiSimpleRenderer >> linkWidth: aNumber [
 	linkWidth := aNumber
 ]
 
-{ #category : 'API' }
+{ #category : 'api' }
 HiSimpleRenderer >> newForm [
 	"Answer a new form, rendered with the current ruler and rowInterval."
 

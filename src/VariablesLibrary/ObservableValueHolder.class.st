@@ -64,7 +64,7 @@ ObservableValueHolder >> subscriptions: anObject [
 	subscriptions := anObject
 ]
 
-{ #category : 'transfert' }
+{ #category : 'transfer' }
 ObservableValueHolder >> transferSubscriptionsTo: aSpValueHolder [
 	aSpValueHolder subscriptions: subscriptions
 ]

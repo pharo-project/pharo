@@ -14,22 +14,22 @@ RBMoveMethodToClassParametrizedTest class >> testParameters [
 		yourself
 ]
 
-{ #category : 'tests' }
+{ #category : 'accessing' }
 RBMoveMethodToClassParametrizedTest >> constructor [
-	^ #method:class:
+	^ #model:method:class:
 ]
 
 { #category : 'failure tests' }
 RBMoveMethodToClassParametrizedTest >> testFailureMethodAlreadyDefined [
 
-	| method someClass |
-	someClass := model classNamed: #RBFooLintRuleTestData.
-	method := RBMethod
-		          for: someClass
-		          source: 'foo' , String cr , String tab , '^ 6'
-		          selector: #foo.
-
-	self shouldFail: (self createRefactoringWithArguments: {
-				 method.
-				 someClass })
+	| method targetClass sourceClass |
+	sourceClass := model classNamed: #RBTransformationRuleTestData1.
+	targetClass := model classNamed: #RBFooLintRuleTestData.
+	method := (sourceClass methodFor: #foo) compiledMethod.
+	"refactoring will raise warning, so we proceed and test if the change was performed in the model"
+	self proceedThroughWarning: [
+		(self createRefactoringWithArguments: { model . method . targetClass }) generateChanges].
+	self deny: (sourceClass definesMethod: #foo).
+	self assert: (targetClass methodFor: #foo) source equals: 'foo' , String cr , String tab , '^ foo'
+	
 ]

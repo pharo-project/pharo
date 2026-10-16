@@ -57,3 +57,9 @@ RBRefactoringWarning >> failedPreconditions: anObject [
 
 	failedPreconditions := anObject
 ]
+
+{ #category : 'notification' }
+RBRefactoringWarning >> notifyUserOfCommand: aCommand [
+
+	(ConfirmationRequest signal: messageText) ifTrue: [ self resume ]
+]

@@ -16,11 +16,11 @@ ReUpToRootDoesNotDefinesMethod >> class: aRBClass [
 ]
 
 { #category : 'checking' }
-ReUpToRootDoesNotDefinesMethod >> doesClass: argClass definesMethod: aSelector [
+ReUpToRootDoesNotDefinesMethod >> doesClass: argClass defineMethod: aSelector [
 	"We could avoid the aSelector argument. I do not have a good name."
 
 	(argClass directlyDefinesMethod: aSelector) ifTrue: [ ^ true ].
-	^ argClass superclass isNotNil and: [ self doesClass: argClass superclass definesMethod: aSelector ]
+	^ argClass superclass isNotNil and: [ self doesClass: argClass superclass defineMethod: aSelector ]
 ]
 
 { #category : 'accessing' }
@@ -47,5 +47,5 @@ ReUpToRootDoesNotDefinesMethod >> violators [
 
 	^ violators ifNil: [
 		  violators := (classes select: [ :class |
-			  self doesClass: class definesMethod: selector ]) asOrderedCollection ]
+			  self doesClass: class defineMethod: selector ]) asOrderedCollection ]
 ]

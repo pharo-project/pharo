@@ -229,9 +229,9 @@ ReSemanticsOfCompositeExtractMethodRefactoringTest >> testExtractClassFromMessag
 
 	| transformation |
 	transformation := self 
-extractSource: 'RBParser' 
+extractSource: 'OCParser' 
 fromSource: 'm
-		instVar := RBParser parseMethod: foo'
+		instVar := OCParser parseMethod: foo'
 withNewSelector: #extractedMethod.
 
 	transformation generateChanges.
@@ -239,7 +239,7 @@ withNewSelector: #extractedMethod.
 	self 
 		assert: (class parseTreeForSelector: #extractedMethod)
 		equals: (self parseMethod: 'extractedMethod 
-					^ RBParser').
+					^OCParser').
 		
 	self 
 		assert: (class parseTreeForSelector: #m)

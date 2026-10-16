@@ -28,6 +28,13 @@ SycAddMessageArgumentCommand class >> canBeExecutedInContext: aToolContext [
 	^aToolContext isMethodSelected
 ]
 
+{ #category : 'execution' }
+SycAddMessageArgumentCommand >> applyResultInContext: aToolContext [
+	"The refactoring was applied by the driver while executing the command."
+
+	
+]
+
 { #category : 'testing' }
 SycAddMessageArgumentCommand >> canEditName [
 	^ false
@@ -40,15 +47,8 @@ SycAddMessageArgumentCommand >> canRemoveArgs [
 
 { #category : 'execution' }
 SycAddMessageArgumentCommand >> createRefactoring [
+	"not used"
 
-	^(RBAddParameterRefactoring
-		model: model
-		addParameterToMethod: originalMessage selector
-		in: refactoredClass
-		newSelector: newSelector selector
-		permutation: newSelector permutation
-		newArgs: newSelector newArgs)
-		renameMap: newSelector renameMap
 ]
 
 { #category : 'accessing' }
@@ -61,6 +61,17 @@ SycAddMessageArgumentCommand >> defaultMenuItemName [
 	^'Add argument'
 ]
 
+{ #category : 'execution' }
+SycAddMessageArgumentCommand >> execute [
+
+	ReAddParameterDriver new
+		scopes: refactoringScopes
+			model: model
+			addParameterToMethodSignature: originalMessage
+			in: originalMessage methodClass;
+		runRefactoring
+]
+
 { #category : 'accessing' }
 SycAddMessageArgumentCommand >> newSelector [
 	^ newSelector
@@ -69,13 +80,6 @@ SycAddMessageArgumentCommand >> newSelector [
 { #category : 'accessing' }
 SycAddMessageArgumentCommand >> newSelector: anObject [
 	newSelector := anObject
-]
-
-{ #category : 'execution' }
-SycAddMessageArgumentCommand >> prepareFullExecutionInContext: aToolContext [
-	super prepareFullExecutionInContext: aToolContext.
-
-	newSelector := self requestNewMessageIn: aToolContext
 ]
 
 { #category : 'execution' }

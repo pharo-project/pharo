@@ -143,7 +143,7 @@ ReInteractionDriver >> configureRefactoring [
 	refactoring prepareForExecution
 ]
 
-{ #category : 'ui - requests' }
+{ #category : 'ui requests' }
 ReInteractionDriver >> confirm: aString [
 
 	^ self application confirm: aString
@@ -237,7 +237,7 @@ ReInteractionDriver >> hasFailedBehaviorPreservingPreconditions [
 	^ refactoring failedBreakingChangePreconditions isNotEmpty
 ]
 
-{ #category : 'ui - requests' }
+{ #category : 'ui requests' }
 ReInteractionDriver >> inform: aString [
 	"Display a message for the user to read and then dismiss."
 
@@ -349,14 +349,18 @@ ReInteractionDriver >> requestDialog: aDialog [
 
 { #category : 'execution' }
 ReInteractionDriver >> runRefactoring [
+	"Configures the refactoring, gathers user input and applies the changes."
 
-	self configureRefactoring.
-	self gatherUserInput ifFalse: [ ^ self "user abandons" ].
-	self hasFailedApplicabilityPreconditions ifTrue: [ ^ self "applicability failed" ].
-	self hasFailedBehaviorPreservingPreconditions
-		ifTrue: [ self handleBreakingChanges ]
-		ifFalse: [ self applyChanges ].
+	[
+		self configureRefactoring.
+		self gatherUserInput ifFalse: [ ^ self "user abandons" ].
+		self hasFailedApplicabilityPreconditions ifTrue: [ ^ self "applicability failed" ].
 
+		self hasFailedBehaviorPreservingPreconditions
+			ifTrue: [ self handleBreakingChanges ]
+			ifFalse: [ self applyChanges ] ]
+		on: Error
+		do: [ :e | self inform: 'The refactoring could not be executed: ' , e messageText ]
 ]
 
 { #category : 'accessing' }

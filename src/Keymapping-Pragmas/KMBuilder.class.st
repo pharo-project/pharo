@@ -33,13 +33,13 @@ KMBuilder >> platform: aPlatform [
 	platform := aPlatform
 ]
 
-{ #category : 'keymap-building' }
+{ #category : 'keymap building' }
 KMBuilder >> setAsGlobalCategory: aGlobalCategory [
 
 	KMRepository default setAsGlobalCategory: aGlobalCategory
 ]
 
-{ #category : 'keymap-building' }
+{ #category : 'keymap building' }
 KMBuilder >> shortcut: aKeymapName [
 	^KMKeymapBuilder
 		for: aKeymapName

@@ -566,10 +566,15 @@ OCASTTranslator >> visitAnnotationMarkNode: aAnnotationValueNode [
 
 { #category : 'visitor - double dispatching' }
 OCASTTranslator >> visitArrayNode: anArrayNode [
+	| elementNodes |
 
-	| elementNodes stackLimit |
-	stackLimit := CompiledCode fullFrameSize min: self compilationContext encoderClass arraySizeLimitForPushArrayInstruction.
-	methodBuilder stackSize + anArrayNode statements size > stackLimit ifTrue: [ ^ self visitLargeArrayNode: anArrayNode ].
+	self flag: #WORKAROUND. "This is reverted to the old magic number because 
+	this is failing (see https://github.com/pharo-project/pharo/issues/19058). 
+	This is not a real fix, but it allow me to continue working :)"
+
+	"stackLimit := CompiledCode fullFrameSize min: self compilationContext encoderClass arraySizeLimitForPushArrayInstruction.
+	methodBuilder stackSize + anArrayNode statements size > stackLimit ifTrue: [ ^ self visitLargeArrayNode: anArrayNode ]."
+	anArrayNode statements size > 32 ifTrue: [^ self visitLargeArrayNode: anArrayNode ].
 
 	elementNodes := anArrayNode children.
 	elementNodes do: [ :node | self visitNode: node ].

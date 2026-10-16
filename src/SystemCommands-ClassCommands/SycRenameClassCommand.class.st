@@ -19,7 +19,7 @@ SycRenameClassCommand >> defaultMenuIconName [
 
 { #category : 'accessing' }
 SycRenameClassCommand >> defaultMenuItemName [
-	^'(R) Rename'
+	^'(Old refactor) rename class'
 ]
 
 { #category : 'execution' }

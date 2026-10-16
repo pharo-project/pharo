@@ -11,7 +11,7 @@ Class {
 	#tag : 'Clean Code'
 }
 
-{ #category : 'testing-interest' }
+{ #category : 'testing - interest' }
 ReIvarNeitherReadNorWrittenRule class >> checksClass [
 	^ true
 ]
