@@ -25,9 +25,3 @@ HaltOnceIconStyler >> iconLabelBlock: aNode [
 HaltOnceIconStyler >> shouldStyleNode: aNode [
 	^aNode isMessage and: [ aNode selector = #haltOnce]
 ]
-
-{ #category : 'private' }
-HaltOnceIconStyler >> stylerName [
-
-	^ 'breakpoint'
-]
