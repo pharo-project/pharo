@@ -56,10 +56,6 @@ SpRubFindReplaceService >> openDialog [
 	dialogWindow := dialog openDialog 
 ]
 
-{ #category : 'user interface' }
-SpRubFindReplaceService >> whenDialogDeleted [
-]
-
 { #category : 'event handling' }
 SpRubFindReplaceService >> whenFindReplaceWindowRequired: anAnnouncement [
 
