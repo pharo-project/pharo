@@ -337,7 +337,7 @@ RBNamespace >> createNewPackageFor: aPackage [
 ]
 
 { #category : 'changes' }
-RBNamespace >> defineClass: aBlock [
+RBNamespace >> defineBehavior: aBlock [
 
 	| change newClass newClassName |
 	change := changes defineClass: aBlock.
@@ -346,24 +346,48 @@ RBNamespace >> defineClass: aBlock [
 	newClass ifNil: [
 		| newMetaclass |
 		self unmarkAsRemoved: newClassName.
-		newClass := RBClass named: newClassName.
-		newMetaclass := RBMetaclass named: newClassName.
+		change builder isTrait
+			ifTrue: [
+				newClass := self rbTraitClass named: newClassName.
+				newMetaclass := self rbTraitedMetaclassClass named: newClassName ]
+			ifFalse: [
+				newClass := self rbClassClass named: newClassName.
+				newMetaclass := self rbMetaclassClass named: newClassName ].
 		newClass model: self.
 		newMetaclass model: self.
 		newClasses at: newClassName put: (Array with: newClass with: newMetaclass) ].
 	newClass superclass: (self classNamed: change superclassName).
-	newClass superclass
-		ifNil: [
-			self rootClasses add: newClass.
-			newClass classSide superclass: (self classFor: Object class superclass) ]
-		ifNotNil: [ newClass classSide superclass: newClass superclass classSide ].
+	newClass isTrait
+		ifTrue: [ newClass classSide superclass: (self classFor: Trait) ]
+		ifFalse: [
+			newClass superclass
+				ifNil: [
+					self rootClasses add: newClass.
+					newClass classSide superclass: (self classFor: Object class superclass) ]
+				ifNotNil: [ newClass classSide superclass: newClass superclass classSide ] ].
 	newClass instanceVariableNames: (change instanceVariableNames ifNil: [ '' ]).
 	newClass classVariableNames: (change classVariableNames ifNil: [ '' ]).
 	newClass poolDictionaryNames: (change sharedPoolNames ifNil: [ '' ]).
+	newClass traitComposition: change traitComposition.
 	change comment ifNotNil: [ :comment | newClass comment: comment ].
 	newClass packageName: change package.
 	newClass tagName: change tag.
 	^ change
+]
+
+{ #category : 'changes' }
+RBNamespace >> defineClass: aBlock [
+	"Keep accepting builders configured as traits by existing callers."
+
+	^ self defineBehavior: aBlock
+]
+
+{ #category : 'changes' }
+RBNamespace >> defineTrait: aBlock [
+
+	^ self defineBehavior: [ :builder |
+		builder beTrait.
+		aBlock value: builder ]
 ]
 
 { #category : 'accessing' }
@@ -713,9 +737,9 @@ RBNamespace >> reparentClasses: aRBClassCollection to: newClass [
 						sharedVariables: aClass classVariableNames;
 						sharedPools: aClass sharedPoolNames;
 						package: aClass packageName;
-						traits: aClass traitComposition;
 						tag: aClass tagName;
-						classSlots: aClass classSide instanceVariableNames ] ]
+						classSlots: aClass classSide instanceVariableNames ]
+			traitComposition: aClass traitComposition ]
 ]
 
 { #category : 'accessing' }
@@ -743,4 +767,41 @@ RBNamespace >> unmarkAsRemoved: newClassName [
 RBNamespace >> unmarkPackageAsRemoved: newPackageName [
 	removedPackages
 		remove: newPackageName ifAbsent: [  ]
+]
+
+{ #category : 'changes' }
+RBNamespace >> changeTraitCompositionOf: aClass to: anExpression [
+
+	aClass traitComposition: (RBTraitComposition model: self expression: anExpression).
+	^ changes addChange: (changeFactory
+		changeTraitCompositionOf: aClass name
+		to: anExpression)
+]
+
+{ #category : 'private - changes' }
+RBNamespace >> defineBehavior: aBlock traitComposition: aComposition [
+
+	| change |
+	(aComposition isKindOf: RBTraitComposition) ifFalse: [
+		^ self defineBehavior: [ :builder |
+			aBlock value: builder.
+			builder traitComposition: aComposition ] ].
+	change := self defineBehavior: aBlock.
+	self changeTraitCompositionOf: (self classNamed: change changeClassName)
+		to: aComposition traitCompositionExpression.
+	^ change
+]
+
+{ #category : 'changes' }
+RBNamespace >> defineClass: aBlock traitComposition: aComposition [
+
+	^ self defineBehavior: aBlock traitComposition: aComposition
+]
+
+{ #category : 'changes' }
+RBNamespace >> defineTrait: aBlock traitComposition: aComposition [
+
+	^ self defineBehavior: [ :builder |
+		builder beTrait.
+		aBlock value: builder ] traitComposition: aComposition
 ]
