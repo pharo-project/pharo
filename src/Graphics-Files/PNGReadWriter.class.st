@@ -1052,7 +1052,7 @@ PNGReadWriter >> processNonInterlaced [
 			startingAt: 1.
 		(debug and: [ thisScanline size < bytesPerScanline ])
 			ifTrue: [ self
-					traceCr:
+					traceNewLine:
 						('wanted {1} but only got {2}'
 							format:
 								{bytesPerScanline.

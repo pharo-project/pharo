@@ -9,17 +9,17 @@ Object >> crTrace [
 
 { #category : '*Transcript-NonInteractive' }
 Object >> logEntry [
-	self traceCr: 'Entered ' , thisContext sender printString
+	self traceNewLine: 'Entered ' , thisContext sender printString
 ]
 
 { #category : '*Transcript-NonInteractive' }
 Object >> logExecution [
-	self traceCr: 'Executing ' , thisContext sender printString
+	self traceNewLine: 'Executing ' , thisContext sender printString
 ]
 
 { #category : '*Transcript-NonInteractive' }
 Object >> logExit [
-	self traceCr: 'Exited ' , thisContext sender printString
+	self traceNewLine: 'Exited ' , thisContext sender printString
 ]
 
 { #category : '*Transcript-NonInteractive' }
