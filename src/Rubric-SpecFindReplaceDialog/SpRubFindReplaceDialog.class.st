@@ -16,8 +16,7 @@ Class {
 		'replaceButton',
 		'replaceAllButton',
 		'closeButton',
-		'replaceTextInput',
-		'replaceLabel'
+		'replaceTextInput'
 	],
 	#classInstVars : [
 		'textToFind',
@@ -26,40 +25,6 @@ Class {
 	#category : 'Rubric-SpecFindReplaceDialog',
 	#package : 'Rubric-SpecFindReplaceDialog'
 }
-
-{ #category : 'layout' }
-SpRubFindReplaceDialog class >> defaultLayout [
-
-	<spec>
-	^ SpBoxLayout newVertical
-		  add: #findInput expand: false;
-		  add: (SpGridLayout new
-				   beColumnHomogeneous;
-				   beRowHomogeneous;
-				   add: #regExpCheckBox atPoint: 1 @ 1;
-				   add: #backwardsCheckBox atPoint: 2 @ 1;
-				   add: #caseCheckBox atPoint: 1 @ 2;
-				   add: #wrapCheckBox atPoint: 2 @ 2;
-				   add: #entireCheckBox atPoint: 1 @ 3;
-				   yourself);
-		  addLast: (SpBoxLayout newHorizontal
-				   borderWidth: 5;
-				   spacing: 5;
-				   add: #replaceLabel
-				   expand: false
-				   fill: false
-				   padding: 0;
-				   add: #replaceTextInput;
-				   yourself);
-		  "addLast: (SpBoxLayout newHorizontal
-			borderWidth: 3;
-			spacing: 5;
-			add: #findButton;
-			add: #replaceButton;
-			add: #replaceAllButton;
-			add: #cancelButton);"
-			  yourself
-]
 
 { #category : 'accessing' }
 SpRubFindReplaceDialog class >> replacingText [
@@ -93,6 +58,29 @@ SpRubFindReplaceDialog >> connectPresenters [
 		whenSubmitDo: [ :text | self find ].
 
 	replaceTextInput whenTextChangedDo: [ :aText | self replacingText: aText ]
+]
+
+{ #category : 'layout' }
+SpRubFindReplaceDialog >> defaultLayout [
+
+	<spec>
+	^ SpBoxLayout newVertical
+		  add: #findInput expand: false;
+		  add: (SpGridLayout new
+				   beColumnHomogeneous;
+				   beRowHomogeneous;
+				   add: #regExpCheckBox atPoint: 1 @ 1;
+				   add: #backwardsCheckBox atPoint: 2 @ 1;
+				   add: #caseCheckBox atPoint: 1 @ 2;
+				   add: #wrapCheckBox atPoint: 2 @ 2;
+				   add: #entireCheckBox atPoint: 1 @ 3;
+				   yourself);
+		  addLast: (SpBoxLayout newHorizontal
+				   spacing: 5;
+				   add: 'Replace with:' expand: false;
+				   add: #replaceTextInput;
+				   yourself);
+		  yourself
 ]
 
 { #category : 'operations' }
@@ -174,8 +162,6 @@ SpRubFindReplaceDialog >> initializePresenters [
 
 	replaceTextInput text: self replacingText.
 	service replaceText: replaceTextInput text.
-
-	replaceLabel := self newLabel label: 'Replace with:'.
 
 	self focusOrder
 		add: findInput;
