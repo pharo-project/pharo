@@ -35,6 +35,7 @@ Class {
 		'compilationContextClass',
 		'permitFaulty',
 		'permitUndeclared',
+		'permitShadowing',
 		'logged',
 		'changeStamp',
 		'protocol',
@@ -473,6 +474,13 @@ OpalCompiler >> generateMethod [
 	^ method
 ]
 
+{ #category : 'initialization' }
+OpalCompiler >> initialize [
+
+	super initialize.
+	permitShadowing := true
+]
+
 { #category : 'actions' }
 OpalCompiler >> install [
 	"Compile and install a method in a class"
@@ -507,6 +515,15 @@ OpalCompiler >> isScripting [
 OpalCompiler >> isScripting: aBoolean [
 
 	self compilationContext isScripting: aBoolean
+]
+
+{ #category : 'public access' }
+OpalCompiler >> isStrict [
+
+	permitFaulty ifNil: [ ^ false ].
+	permitUndeclared ifNil: [ ^ false ].
+
+	^ permitFaulty not and: [ permitUndeclared not and: [ permitShadowing not ] ]
 ]
 
 { #category : 'accessing' }
@@ -622,6 +639,18 @@ OpalCompiler >> permitFaulty: aBoolean [
 ]
 
 { #category : 'public access' }
+OpalCompiler >> permitShadowing [
+
+	^ permitShadowing
+]
+
+{ #category : 'public access' }
+OpalCompiler >> permitShadowing: aBoolean [
+
+	permitShadowing := aBoolean
+]
+
+{ #category : 'public access' }
 OpalCompiler >> permitUndeclared [
 
 	^ permitUndeclared
@@ -725,4 +754,20 @@ OpalCompiler >> source: aString [
 OpalCompiler >> storeSourcesAsProperty: aBoolean [ 
 	
 	compilationContext storeSourcesAsProperty: aBoolean
+]
+
+{ #category : 'public access' }
+OpalCompiler >> strict [
+
+	self strict: true
+]
+
+{ #category : 'public access' }
+OpalCompiler >> strict: aBoolean [
+
+	"self strict: true should set permitFaulty:, permitUndeclared:, and permitShadowing: to false"
+
+	self permitFaulty: aBoolean not.
+	self permitUndeclared: aBoolean not.
+	self permitShadowing: aBoolean not
 ]
