@@ -14,11 +14,6 @@ Class {
 }
 
 { #category : 'services' }
-RubNullFindReplaceService >> dialogIsActiveFor: aTextArea [
-	^ false
-]
-
-{ #category : 'services' }
 RubNullFindReplaceService >> find [
 	^ nil
 ]

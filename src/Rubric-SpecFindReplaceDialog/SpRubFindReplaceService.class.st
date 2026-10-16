@@ -25,12 +25,6 @@ SpRubFindReplaceService >> dialog [
 	^ dialog
 ]
 
-{ #category : 'services' }
-SpRubFindReplaceService >> dialogIsActiveFor: aTextArea [
-
- ^ false
-]
-
 { #category : 'accessing' }
 SpRubFindReplaceService >> dialogWindow [
 

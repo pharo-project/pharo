@@ -3,7 +3,7 @@ Model for a find and replace service in editors
 "
 Class {
 	#name : 'FindReplaceService',
-	#superclass : 'Model',
+	#superclass : 'Object',
 	#instVars : [
 		'findText',
 		'replaceText',
@@ -48,6 +48,11 @@ FindReplaceService >> convertedFindString [
 				s nextPut: c]]
 ]
 
+{ #category : 'services' }
+FindReplaceService >> dialogIsActiveFor: aTextArea [
+	^ false
+]
+
 { #category : 'accessing' }
 FindReplaceService >> entireWordsOnly [
 	^ entireWordsOnly ifNil: [entireWordsOnly := false]
@@ -90,29 +95,6 @@ FindReplaceService >> findAndSelectRegex [
 ]
 
 { #category : 'services' }
-FindReplaceService >> findInTextMorph: aTextMorph [
-	| where  |
-	findStartIndex
-		ifNil: [findStartIndex := self searchBackwards
-			ifTrue: [aTextMorph editor stopIndex]
-			ifFalse: [aTextMorph editor startIndex]].
-	findStartIndex > 0
-		ifTrue: [where := aTextMorph
-			findAndSelect: self findRegex
-			startingAt: findStartIndex
-			searchBackwards: self searchBackwards].
-	(where isNil and: [self wrapAround])
-		ifTrue: [ | idx |
-			idx := self searchBackwards ifTrue: [aTextMorph editor string size] ifFalse: [1].
-			where := aTextMorph
-				findAndSelect: self findRegex
-				startingAt: idx
-				searchBackwards: self searchBackwards].
-	where ifNil: [aTextMorph flash].
-	^ where
-]
-
-{ #category : 'services' }
 FindReplaceService >> findNext [
 
 	| where |
@@ -120,18 +102,6 @@ FindReplaceService >> findNext [
 	findStartIndex > 0 ifTrue: [ where := self textArea findNextString: self findString startingAt: findStartIndex ].
 	(where isNil and: [ self wrapAround ]) ifTrue: [ where := self textArea findNextString: self findString asString startingAt: 1 ].
 	where ifNil: [ self textArea flash ].
-	^ where
-]
-
-{ #category : 'services' }
-FindReplaceService >> findNextSubstring: aSubstring inTextMorph: aTextMorph [
-	| where  |
-	findStartIndex
-		ifNil: [findStartIndex := aTextMorph editor startIndex].
-	findStartIndex > 0
-		ifTrue: [where := aTextMorph findNextString: aSubstring asString startingAt: findStartIndex].
-	(where isNil and: [self wrapAround])
-		ifTrue: [where := aTextMorph findNextString: aSubstring asString startingAt: 1].
 	^ where
 ]
 
@@ -152,8 +122,7 @@ FindReplaceService >> findRegex [
 			ifTrue: [s asRegex]
 			ifFalse: [s asRegexIgnoringCase]]
 		on: Error
-		do: [self changed: #regexError.
-			^ '' asRegex]
+		do: [^ '' asRegex]
 ]
 
 { #category : 'accessing' }
@@ -250,23 +219,6 @@ FindReplaceService >> replaceAll [
 	self textArea replaceAll: self findRegex with: self replaceText startingAt: startIdx
 ]
 
-{ #category : 'services' }
-FindReplaceService >> replaceAllInTextMorph: aTextMorph [
-	| startIdx |
-	startIdx := self wrapAround ifTrue: [1] ifFalse: [aTextMorph editor selectionInterval first].
-	aTextMorph replaceAll: self findRegex with: self replaceText startingAt: startIdx
-]
-
-{ #category : 'services' }
-FindReplaceService >> replaceInTextMorph: aTextMorph [
-
-	findStartIndex := self searchBackwards
-		ifTrue: [aTextMorph editor stopIndex]
-		ifFalse: [aTextMorph editor startIndex].
-	(self findInTextMorph: aTextMorph)
-		ifNotNil: [aTextMorph replaceSelectionWith: self replaceText]
-]
-
 { #category : 'accessing' }
 FindReplaceService >> replaceText [
 	^ replaceText ifNil: [replaceText := '']
@@ -330,18 +282,10 @@ FindReplaceService >> updateFindStartIndex [
 		ifNil: [ ^ self ]
 		ifNotNil: [ :aTextArea |
 				aTextArea changed.
-				self changed: #replaceEnabled.
 				si := aTextArea selectionInterval.
 				self findStartIndex: (self searchBackwards
 						 ifTrue: [ si first - 1 ]
 						 ifFalse: [ si last + 1 ]) ]
-]
-
-{ #category : 'updating' }
-FindReplaceService >> updateFindStartIndexForTextMorph: aTextMorph [
-	| si |
-	si := aTextMorph editor selectionInterval.
-	self findStartIndex: (self searchBackwards ifTrue: [si first - 1] ifFalse: [si last + 1])
 ]
 
 { #category : 'event handling' }
