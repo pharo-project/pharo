@@ -208,17 +208,15 @@ ThemeIcons >> hash [
 { #category : 'accessing' }
 ThemeIcons >> iconFormSetNamed: aSymbol [
 
-	^ (self
-		iconFormSetNamed: aSymbol
-		ifNone: [
-			self isReportingNotFound
-				ifTrue: [
-					self crTrace: (aSymbol, ' icon not found!').
-					self notFoundIconFormSet ]
-				ifFalse: [
-					aSymbol ~= #blank
-						ifTrue: [ self blankIconFormSet ]
-						ifFalse: [ FormSet form: (Form extent: 0@0) ]]])
+	^ self iconFormSetNamed: aSymbol ifNone: [
+			  self isReportingNotFound
+				  ifTrue: [
+						  self newLineTrace: aSymbol , ' icon not found!'.
+						  self notFoundIconFormSet ]
+				  ifFalse: [
+						  aSymbol ~= #blank
+							  ifTrue: [ self blankIconFormSet ]
+							  ifFalse: [ FormSet form: (Form extent: 0 @ 0) ] ] ]
 ]
 
 { #category : 'accessing' }
@@ -282,56 +280,51 @@ ThemeIcons >> loadIconsFromUrlUsingScale: newScale [
 
 { #category : 'loading' }
 ThemeIcons >> loadIconsFromZipArchiveUsingScale: newScale [
-	| newIconsPerScale zipContent |
 
+	| newIconsPerScale zipContent |
 	newIconsPerScale := Dictionary new.
 	zipContent := (FileSystem zip: zipArchive) open workingDirectory.
 
 	"If it has the old icon pack structure we handle as they don't have multiple sizes"
-	(zipContent allChildrenMatching: 'icons') 
-		ifNotEmpty: [ 
+	(zipContent allChildrenMatching: 'icons') ifNotEmpty: [
 			scale := 1.
 			^ self loadIconsOldIconSetsFrom: zipContent ].
 
 	(zipContent allChildrenMatching: 'png-scale*') do: [ :directory |
-		| newIcons |
-		newIconsPerScale
-			at: (Float readFrom: (directory basename copyFrom: 10 to: directory basename size))
-			put: (newIcons := IdentityDictionary new).
-		(directory allChildrenMatching: '*.png')
-			reject: [ :each | each base beginsWith: '.' ]
-			thenDo: [ :each |
-				[ newIcons
-					at: each base asSymbol
-					put: (self readPNGFrom: each) ]
-				on: Error do: [ :e | self crTrace: ('{1} not a PNG, skipping.' format: { each fullName }) ] ] ].
+			| newIcons |
+			newIconsPerScale at: (Float readFrom: (directory basename copyFrom: 10 to: directory basename size)) put: (newIcons := IdentityDictionary new).
+			(directory allChildrenMatching: '*.png')
+				reject: [ :each | each base beginsWith: '.' ]
+				thenDo: [ :each |
+						[ newIcons at: each base asSymbol put: (self readPNGFrom: each) ]
+							on: Error
+							do: [ :e | self newLineTrace: ('{1} not a PNG, skipping.' format: { each fullName }) ] ] ].
 	newIconsPerScale keysAndValuesDo: [ :iconsScale :icons |
-		icons at: #notFound ifAbsentPut: [ 
-			| form |
-			form := Form extent: (16 * iconsScale) asPoint depth: 32.
-			form fillColor: Color red.
-			form ] ].
+			icons at: #notFound ifAbsentPut: [
+					| form |
+					form := Form extent: (16 * iconsScale) asPoint depth: 32.
+					form fillColor: Color red.
+					form ] ].
 	iconsPerScale := newIconsPerScale.
 	scale := newScale
 ]
 
 { #category : 'loading' }
-ThemeIcons >> loadIconsOldIconSetsFrom: zipContent [ 
+ThemeIcons >> loadIconsOldIconSetsFrom: zipContent [
 
 	| newIcons |
 	newIcons := IdentityDictionary new.
-	
+
 	(zipContent allChildrenMatching: '*.png')
 		reject: [ :each | each base beginsWith: '.' ]
-		thenDo: [ :each | 
-			[ newIcons 	
-				at: each base asSymbol
-				put: (self readPNGFrom: each) ]
-			on: Error do: [ :e | self crTrace: each fullName, ' not a PNG, skipping.'  ]].
+		thenDo: [ :each |
+				[ newIcons at: each base asSymbol put: (self readPNGFrom: each) ]
+					on: Error
+					do: [ :e | self newLineTrace: each fullName , ' not a PNG, skipping.' ] ].
 
 	iconsPerScale := Dictionary new
-	   at: 1.0 put: newIcons;
-	   yourself
+		                 at: 1.0 put: newIcons;
+		                 yourself
 ]
 
 { #category : 'accessing' }

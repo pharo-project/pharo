@@ -8,13 +8,6 @@ Object >> crTrace [
 ]
 
 { #category : '*Transcript-NonInteractive' }
-Object >> crTrace: aString [
-	"To deprecate in favor of #newLineTrace:."
-
-	self newLineTrace: aString
-]
-
-{ #category : '*Transcript-NonInteractive' }
 Object >> logEntry [
 	self traceCr: 'Entered ' , thisContext sender printString
 ]
@@ -67,13 +60,6 @@ Object >> traceCr: anObject [
 	"To deprecate in favor of #traceNewLine:."
 
 	self traceNewLine: anObject
-]
-
-{ #category : '*Transcript-NonInteractive' }
-Object >> traceCrTab: anObject [
-	"To deprecate in favor of #traceNewLineTab:"
-
-	self traceNewLineTab: anObject
 ]
 
 { #category : '*Transcript-NonInteractive' }

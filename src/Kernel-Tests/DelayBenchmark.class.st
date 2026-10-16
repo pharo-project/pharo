@@ -39,32 +39,25 @@ DelayBenchmark >> bench [
 	"DelayBenchmark run."
 
 	| sampleSetSeeds trialOfNumberConcurrent completed |
-	sampleSetSeeds := #(42).	"5975 13746 22634 44022"	"uncomment items to get a better average"
-	trialOfNumberConcurrent := #(1000 2000 3000 4000 5000 6000 7000 8000 9000 10000).
+	sampleSetSeeds := #( 42 ). "5975 13746 22634 44022" "uncomment items to get a better average"
+	trialOfNumberConcurrent := #( 1000 2000 3000 4000 5000 6000 7000 8000 9000 10000 ).
 	completed := Semaphore new.
-	self
-		crTrace: String cr , 'Benchmarking ' , Delay delaySchedulerClass printString.
-	[ trialOfNumberConcurrent
-		do: [ :numberConcurrent |
-			self
-				crTrace: '#ConcurrentDelays: ' , numberConcurrent printString , String space.
-			EnterCount := ExitCount := 0.
-			sampleSetSeeds
-				do: [ :seed |
-					self trace: '.'.
-					self
-						trialConcurrent: numberConcurrent
-						priority: Processor userSchedulingPriority + 1
-						maxDuration: 50
-						fromSeed: seed ].
-			self trace: String space.
-			self
-				trace:
-					'EnterCount: ' , (EnterCount // sampleSetSeeds size) printString
-						, String space.
-			self
-				trace: 'ExitCount: ' , (ExitCount // sampleSetSeeds size) printString ].
-	completed signal ] forkAt: Processor userSchedulingPriority + 2.	"To avoid UI loop influencing result"
+	self newLineTrace: String cr , 'Benchmarking ' , Delay delaySchedulerClass printString.
+	[
+		trialOfNumberConcurrent do: [ :numberConcurrent |
+				self newLineTrace: '#ConcurrentDelays: ' , numberConcurrent printString , String space.
+				EnterCount := ExitCount := 0.
+				sampleSetSeeds do: [ :seed |
+						self trace: '.'.
+						self
+							trialConcurrent: numberConcurrent
+							priority: Processor userSchedulingPriority + 1
+							maxDuration: 50
+							fromSeed: seed ].
+				self trace: String space.
+				self trace: 'EnterCount: ' , (EnterCount // sampleSetSeeds size) printString , String space.
+				self trace: 'ExitCount: ' , (ExitCount // sampleSetSeeds size) printString ].
+		completed signal ] forkAt: Processor userSchedulingPriority + 2. "To avoid UI loop influencing result"
 	completed wait
 ]
 

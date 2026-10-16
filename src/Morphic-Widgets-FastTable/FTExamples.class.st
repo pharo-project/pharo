@@ -411,16 +411,14 @@ FTExamples class >> exampleListWithExplicitFilter [
 
 { #category : 'function examples' }
 FTExamples class >> exampleListWithExplicitFilterAndActionButton [
+
 	<example>
 	| list |
 	list := FTTableMorph new
-		extent: 300 @ 300;
-		dataSource:
-			(FTExampleDataSource
-				elements: (Smalltalk allClassesAndTraits sorted: [ :a :b | a name < b name ]));
-		enableFilterWithAction: [ :dataSource :searchPattern | self crTrace: searchPattern ]
-			named: 'Show';
-		yourself.
+		        extent: 300 @ 300;
+		        dataSource: (FTExampleDataSource elements: (Smalltalk allClassesAndTraits sorted: [ :a :b | a name < b name ]));
+		        enableFilterWithAction: [ :dataSource :searchPattern | self newLineTrace: searchPattern ] named: 'Show';
+		        yourself.
 	list openInWindow
 ]
 
