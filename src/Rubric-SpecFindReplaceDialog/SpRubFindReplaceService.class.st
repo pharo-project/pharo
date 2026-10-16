@@ -44,18 +44,6 @@ SpRubFindReplaceService >> discardDialog [
 	dialogWindow := nil
 ]
 
-{ #category : 'updating' }
-SpRubFindReplaceService >> findPolicyChanged [
-]
-
-{ #category : 'accessing' }
-SpRubFindReplaceService >> findText: aStringOrText [
-
-	super findText: aStringOrText.
-	self textArea ifNotNil: [:textArea | textArea whenFindTextChanged: RubFindTextChanged new].
-	^ true
-]
-
 { #category : 'event handling' }
 SpRubFindReplaceService >> openDialog [
 

@@ -137,7 +137,7 @@ FindReplaceService >> findNextSubstring: aSubstring inTextMorph: aTextMorph [
 { #category : 'accessing' }
 FindReplaceService >> findPolicyChanged [
 
-	self changed: #findPolicy
+	self textArea ifNotNil: [ :textArea | textArea whenFindTextChanged: RubFindTextChanged new ]
 ]
 
 { #category : 'services' }
@@ -177,6 +177,7 @@ FindReplaceService >> findText [
 
 { #category : 'accessing' }
 FindReplaceService >> findText: aStringOrText [
+
 	findText := aStringOrText asText.
 	self findPolicyChanged
 ]

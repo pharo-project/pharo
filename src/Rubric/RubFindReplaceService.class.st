@@ -32,19 +32,6 @@ RubFindReplaceService >> dialogIsActiveFor: aTextArea [
 	^ (self textArea = aTextArea) and: [ self dialog world isNotNil ]
 ]
 
-{ #category : 'updating' }
-RubFindReplaceService >> findPolicyChanged [
-
-	self textArea whenFindTextChanged: RubFindTextChanged new
-]
-
-{ #category : 'accessing' }
-RubFindReplaceService >> findText: aStringOrText [
-	super findText: aStringOrText.
-	self textArea ifNotNil: [:textArea | textArea whenFindTextChanged: RubFindTextChanged new].
-	^ true
-]
-
 { #category : 'accessing' }
 RubFindReplaceService >> findTextSilently: aStringOrText [
 	findText := aStringOrText asText.
