@@ -39,8 +39,7 @@ BaselineOfMorphic >> baseline: spec [
 		spec preLoadDoIt: #preload:package:.
 		spec postLoadDoIt: #postload:package:.
 			
-		spec package: 'System-Identification'.
-		spec package: 'System-Settings-Core' with: [ spec requires: #( 'System-Identification' ) ].
+		spec package: 'System-Settings-Core'.
 		spec package: 'StartupPreferences'. "This should move out of Morphic but currently there is a cyclic dependency with System-Settings-Core..."
 
 		spec package: 'System-Localization'.
@@ -121,7 +120,7 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 		nextPutAll: Smalltalk ui asString;
 		lf.
 
-	#( #ProgressBarMorph #GlobalIdentifier #HaloMorph
+	#( #ProgressBarMorph #HaloMorph
 	   #CharacterScanner #ImageMorph
 	   #Locale #MenuItemMorph
 	   #MenuMorph #RxMatcher #RxParser #RxsPredicate #SHA1
