@@ -13,9 +13,12 @@ ClapDbgBasicCommandsTest >> setUp [
 
 	| debuggingProcess debuggingContext debuggingSession |
 	super setUp.
-	debuggingProcess := [ self class compiler evaluate: 'OCParser parseMethod: foo self' ] newProcess.
+	debuggingProcess := [ self class compiler evaluate: 'OCParser parseMethod: ''foo self''' ] newProcess.
 	debuggingContext := debuggingProcess suspendedContext.
-	debuggingSession := DebugSession named: 'test' on: debuggingProcess startedAt: debuggingContext.
+	debuggingSession := DebugSession 
+		named: 'test' 
+		on: debuggingProcess 
+		startedAt: debuggingContext.
 	debugger := ClapDebugger new
 		            context: debuggingContext;
 		            process: debuggingProcess;

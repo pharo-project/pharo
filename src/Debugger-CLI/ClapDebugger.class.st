@@ -229,8 +229,9 @@ ClapDebugger >> isActive [
 ClapDebugger >> lastCommand [
 	"returns the last command in history and pops it"
 	
-	commandsStack ifNotEmpty: [ ^ commandsStack pop ]
-	ifEmpty: [ ^ '' ]
+	^ commandsStack 
+		ifNotEmpty: [ commandsStack pop ]
+		ifEmpty: [ '' ]
 	
 ]
 
