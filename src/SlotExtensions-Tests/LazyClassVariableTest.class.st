@@ -1,0 +1,54 @@
+Class {
+	#name : 'LazyClassVariableTest',
+	#superclass : 'SlotSilentTest',
+	#category : 'SlotExtensions-Tests-Tests',
+	#package : 'SlotExtensions-Tests',
+	#tag : 'Tests'
+}
+
+{ #category : 'tests' }
+LazyClassVariableTest >> testLazyClassVarCompiled [
+	| classVar |
+	<ignoreNotImplementedSelectors: #(ClassVar ClassVar:)>
+	classVar := #ClassVar => LazyClassVariable default: 5.
+	aClass := self make: [ :builder | builder sharedVariables: {classVar}].
+
+	self compileAccessorsFor: classVar.
+	self assert: aClass new ClassVar equals: 5.
+	aClass new ClassVar: 6.
+	self assert: aClass new ClassVar equals: 6
+]
+
+{ #category : 'tests' }
+LazyClassVariableTest >> testLazyClassVarReadReflective [
+	| classVar |
+	classVar := #ClassVar => LazyClassVariable default: 5.
+	aClass := self make: [ :builder | builder sharedVariables: {classVar}].
+
+	self assert: classVar read equals: 5.
+	classVar write: 10.
+	self assert: classVar read equals: 10
+]
+
+{ #category : 'tests' }
+LazyClassVariableTest >> testLazyClassVarReadReflectiveBlock [
+	| classVar |
+	classVar := #ClassVar => LazyClassVariable default: [5].
+	aClass := self make: [ :builder | builder sharedVariables: {classVar}].
+
+	self assert: classVar read equals: 5.
+	classVar write: 10.
+	self assert: classVar read equals: 10
+]
+
+{ #category : 'tests' }
+LazyClassVariableTest >> testLazyClassVariableDefinitionString [
+	| classVariable |
+	classVariable := #myClassVar => LazyClassVariable default: 5 .
+	self assert: classVariable definitionString equals: '#myClassVar => LazyClassVariable default: 5'.
+	classVariable := #myClassVar => LazyClassVariable default: [ 5 ].
+	self assert: classVariable definitionString equals: '#myClassVar => LazyClassVariable default: [ 5 ]'.
+	"if the default is really a block"
+	classVariable := #myClassVar => LazyClassVariable default: [ 5 ].
+	self assert: classVariable definitionString equals: '#myClassVar => LazyClassVariable default: [ 5 ]'
+]
