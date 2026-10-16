@@ -44,7 +44,7 @@ TreePagerMorph >> buildPanel [
 						getEnabled: #notOnFirstPage
 						help: 'Previous page'.
 			widgets add: previousButton.
-			wid := self textEntryLabel: '' get: #currentPageToString set: #currentPageInput: help: 'Index of page to view' translated class: String.
+			wid := self textEntryLabel: '' get: #currentPageToString set: #currentPageInput: help: 'Index of page to view' class: String.
 			wid hResizing: #rigid.
 			wid width: (self preferedFont widthOfString: '1000000').
 			widgets add: wid.
@@ -69,7 +69,7 @@ TreePagerMorph >> buildPanel [
 				textEntryLabel: 'Page size'
 				get: #pageSizeToString
 				set: #pageSizeFromString:
-				help: 'Change the page size or the number of pages if the input begins with "/"' translated
+				help: 'Change the page size or the number of pages if the input begins with "/"'
 				class: String.
 	pageSizeEditor hResizing: #rigid.
 	pageSizeEditor width: (self preferedFont widthOfString: '1000000').
@@ -79,7 +79,7 @@ TreePagerMorph >> buildPanel [
 						textEntryLabel: ''
 						get: #pageSearchText
 						set: #pageSearchText:
-						help: 'Enter a text correspondig to your search' translated
+						help: 'Enter a text correspondig to your search'
 						class: String.
 			searchEditor ghostText: 'Searched text'.
 			widgets add: searchEditor].

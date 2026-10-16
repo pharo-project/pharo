@@ -111,7 +111,7 @@ DrTests >> currentPlugin: aPlugin [
 		with: newPluginPresenter.
 	pluginPresenter := newPluginPresenter.
 
-	self updateStatus: aPlugin pluginName , ' plugin is ready to work!' translated
+	self updateStatus: aPlugin pluginName , ' plugin is ready to work!' 
 ]
 
 { #category : 'private' }

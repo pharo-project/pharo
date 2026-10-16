@@ -97,8 +97,8 @@ GroupWindowMorph >> grabWindow [
 		chooseFrom: (windows collect: [:e | e labelString])
 		values: windows
 		lines: #()
-		message: 'Choose a window to add to the organiser' translated
-		title: 'Grab window' translated.
+		message: 'Choose a window to add to the organiser' 
+		title: 'Grab window' .
 	choice ifNotNil: [self addWindow: choice]
 ]
 

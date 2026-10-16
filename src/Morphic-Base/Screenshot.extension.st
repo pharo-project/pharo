@@ -49,12 +49,11 @@ Screenshot >> makeAScreenshot [
 	filePrefix := 'PharoScreenshot'.
 	(MorphicUIManager new
 		 chooseFrom: {
-				 'The entire world' translated.
-				 'A selected area' translated }
+				 'The entire world'.
+				 'A selected area' }
 		 values: #( #world #area )
 		 message:
 			 'What do you want to shoot? (File will be saved in image directory)'
-				 translated
 		 title: 'Make a screenshot') ifNotNil: [ :choice |
 		| form name |
 		form := choice = #world

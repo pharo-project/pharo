@@ -107,7 +107,7 @@ DTTestsRunnerPlugin >> removeTests: aCollectionOfTest from: aTestResult [
 
 { #category : 'api' }
 DTTestsRunnerPlugin >> resultButtonHelp [
-	^ 'Browse the test selected in the results list.' translated
+	^ 'Browse the test selected in the results list.' 
 ]
 
 { #category : 'running' }
@@ -133,10 +133,10 @@ DTTestsRunnerPlugin >> secondListLabel [
 
 { #category : 'api' }
 DTTestsRunnerPlugin >> startButtonHelp [
-	^ 'Run tests selected.' translated
+	^ 'Run tests selected.' 
 ]
 
 { #category : 'api' }
 DTTestsRunnerPlugin >> startButtonLabel [
-	^ 'Run Tests' translated
+	^ 'Run Tests' 
 ]

@@ -218,7 +218,7 @@ TextMorph >> autoFitString [
 	^ (self isAutoFit
 		ifTrue: ['<yes>']
 		ifFalse: ['<no>'])
-		, 'text auto fit' translated
+		, 'text auto fit'
 ]
 
 { #category : 'containment' }
@@ -1901,7 +1901,7 @@ TextMorph >> wrapString [
 	^ (wrapFlag
 		ifTrue: ['<yes>']
 		ifFalse: ['<no>'])
-		, 'text wrap to bounds' translated
+		, 'text wrap to bounds'
 ]
 
 { #category : 'event handling' }

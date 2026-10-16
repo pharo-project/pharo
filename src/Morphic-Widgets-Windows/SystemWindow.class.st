@@ -557,7 +557,7 @@ SystemWindow >> aboutText [
 	"Answer the text to use for the About dialog."
 
 	^self model
-		ifNil: ['This is a system window without a model' translated]
+		ifNil: ['This is a system window without a model' ]
 		ifNotNil: [self model class instanceSide comment
 					ifEmpty: ['The model of this window has no class comment']
 					ifNotEmpty: [:comment | comment]]
@@ -573,7 +573,7 @@ SystemWindow >> aboutTitle [
 		ifNotNil: [(self model respondsTo: #aboutTitle)
 					ifTrue: [self model aboutTitle]
 					ifFalse: [self model class name]].
-	^'About {1}' translated format: {title}
+	^'About {1}' format: {title}
 ]
 
 { #category : 'activation' }
@@ -1331,7 +1331,7 @@ SystemWindow >> createWindowGroup [
 	ext := self extent.
 	group := GroupWindowMorph new.
 	group addWindow: self.
-	(group openInWindowLabeled: 'Group: ' translated , self label)
+	(group openInWindowLabeled: 'Group: ' , self label)
 		extent: ext;
 		position: pos;
 		model: group
@@ -1576,7 +1576,7 @@ SystemWindow >> fallbackMenuOn: menu [
 	"Build the menu that is put up if something is going wrong with the menubuilder"
 
 	menu
-		addToggle: 'Close' translated
+		addToggle: 'Close'
 		target: self
 		selector: #closeBoxHit
 		getStateSelector: nil
@@ -2677,7 +2677,7 @@ SystemWindow >> rejectDropMorphEvent: evt [
 SystemWindow >> relabel [
 	| newLabel |
 	newLabel := self morphicUIManager
-		request: 'New title for this window' translated
+		request: 'New title for this window'
 		initialAnswer: labelString.
 	newLabel isEmptyOrNil ifTrue: [^self].
 	self setLabel: newLabel
@@ -2862,8 +2862,8 @@ SystemWindow >> setExpandBoxBalloonText [
 
 	expandBox ifNil: [^self].
 	self unexpandedFrame
-		ifNil: [expandBox setBalloonText: 'Expand to full screen' translated]
-		ifNotNil: [expandBox setBalloonText: 'Contract to original size' translated]
+		ifNil: [expandBox setBalloonText: 'Expand to full screen' ]
+		ifNotNil: [expandBox setBalloonText: 'Contract to original size' ]
 ]
 
 { #category : 'accessing' }

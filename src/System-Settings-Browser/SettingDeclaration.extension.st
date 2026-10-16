@@ -85,7 +85,7 @@ SettingDeclaration >> inputWidgetForFileOrDirectoryWithAction: aSymbol [
 		label:
 			(AlphaImageMorph new
 				image: (self iconNamed: #smallOpen))
-		help: 'Open directory chooser dialog' translated.
+		help: 'Open directory chooser dialog'.
 	^ self theme
 		newRowIn: self
 		for:
@@ -103,7 +103,7 @@ SettingDeclaration >> inputWidgetForFont [
 		arguments: {}
 		getEnabled: #enabled
 		getLabel: #fontButtonLabel
-		help: 'Choose a font ...' translated) cornerStyle: #square
+		help: 'Choose a font ...') cornerStyle: #square
 ]
 
 { #category : '*System-Settings-Browser' }

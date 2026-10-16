@@ -29,7 +29,7 @@ ComposableMorph >> defaultBorderWidth [
 ComposableMorph >> defaultTitle [
 	"Answer the default title label for the receiver."
 
-	^'Composite' translated
+	^'Composite' 
 ]
 
 { #category : 'instance creation' }

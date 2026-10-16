@@ -434,7 +434,7 @@ SettingBrowser >> exportSettings: aCollection toFileNamed: filename [
 { #category : 'accessing' }
 SettingBrowser >> getDescription [
 	^ (self selectedNode)
-		ifNil: [self status contents ifEmpty: ['Hit return in text fields to accept the input' translated]]
+		ifNil: [self status contents ifEmpty: ['Hit return in text fields to accept the input']]
 		ifNotNil: [:sel | (Text string: sel item label attribute: TextEmphasis bold), String cr, sel item description]
 ]
 
@@ -443,7 +443,7 @@ SettingBrowser >> getViewedPackageNames [
 
 	^ Text streamContents: [ :s |
 		  self viewedPackages
-			  ifEmpty: [ s nextPutAll: 'All packages' translated ]
+			  ifEmpty: [ s nextPutAll: 'All packages' ]
 			  ifNotEmpty: [ :selections |
 				  selections asSet = self allPackagesWithSettings asSet
 					  ifTrue: [ s nextPutAll: 'All packages' ]
@@ -728,11 +728,11 @@ SettingBrowser >> toolBarIn: aMorph [
 		action: #expandAll
 		arguments: nil
 		getEnabled: nil
-		label: 'Expand all' translated
-		help: 'Expand all tree nodes' translated.
+		label: 'Expand all'
+		help: 'Expand all tree nodes'.
 	aMorph newToolSpacer.
 	aMorph newToolSpacer.
-	aMorph newLabel: 'Search for: ' translated.
+	aMorph newLabel: 'Search for: '.
 	(SearchMorph
 				on: self
 				list: #searchedTextList
@@ -742,14 +742,14 @@ SettingBrowser >> toolBarIn: aMorph [
 				addToList: #addToSearchedTextList:
 				class: String
 				getEnabled: nil) hResizing: #spaceFill;
-				ghostText: 'Hit return to accept' translated.
+				ghostText: 'Hit return to accept'.
 	aMorph
 			newCheckboxFor: self
 			getSelected: #regexpSearch
 			setSelected: #regexpSearch:
 			getEnabled: nil
 			label: 'Regexp'
-			help: 'Filter according to a regular expression' translated.
+			help: 'Filter according to a regular expression'.
 	aMorph newToolSpacer.
 	aMorph newToolSpacer.
 	(aMorph
@@ -758,24 +758,24 @@ SettingBrowser >> toolBarIn: aMorph [
 				action: #choosePackagesIn:
 				arguments: {aMorph}
 				getEnabled: nil
-				label: 'Choose packages' translated
-				help: 'Per default, SettingBrowser shows all the setting of the system. You can restrict what is displayed to some packages that contains setting definitions.' translated).
+				label: 'Choose packages'
+				help: 'Per default, SettingBrowser shows all the setting of the system. You can restrict what is displayed to some packages that contains setting definitions.').
 	(aMorph
 				newButtonFor: self
 				getState: nil
 				action: #storeSettings
 				arguments: nil
 				getEnabled: nil
-				label: 'Store Settings' translated
-				help: 'Store the current settings' translated).
+				label: 'Store Settings'
+				help: 'Store the current settings').
 	(aMorph
 				newButtonFor: self
 				getState: nil
 				action: #loadSettings
 				arguments: nil
 				getEnabled: nil
-				label: 'Load Settings' translated
-				help: 'Load the current settings from the disk' translated).
+				label: 'Load Settings'
+				help: 'Load the current settings from the disk').
 	aMorph newToolSpacer}.
 	^ toolBar
 ]
