@@ -1,25 +1,24 @@
 Class {
-	#name : 'RubFindReplaceServiceTest',
+	#name : 'SpRubFindReplaceServiceTest',
 	#superclass : 'TestCase',
-	#category : 'Rubric-Tests-Base',
-	#package : 'Rubric-Tests',
-	#tag : 'Base'
+	#category : 'Rubric-SpecFindReplaceDialog-Tests',
+	#package : 'Rubric-SpecFindReplaceDialog-Tests'
 }
 
 { #category : 'tests' }
-RubFindReplaceServiceTest >> defaultFindReplaceServiceClass [
+SpRubFindReplaceServiceTest >> defaultFindReplaceServiceClass [
 
 	^ SpRubFindReplaceService
 ]
 
 { #category : 'tests' }
-RubFindReplaceServiceTest >> testCaseSensitive [
+SpRubFindReplaceServiceTest >> testCaseSensitive [
 
 	self deny: ( self defaultFindReplaceServiceClass newFor: self) caseSensitive
 ]
 
 { #category : 'tests' }
-RubFindReplaceServiceTest >> testOpenDialogWithDifferentText [
+SpRubFindReplaceServiceTest >> testOpenDialogWithDifferentText [
 	"Test that dialog text gets updated when findText differs from dialog input"
 
 	| service mock |
@@ -38,7 +37,7 @@ RubFindReplaceServiceTest >> testOpenDialogWithDifferentText [
 ]
 
 { #category : 'tests' }
-RubFindReplaceServiceTest >> testOpenDialogWithSameText [
+SpRubFindReplaceServiceTest >> testOpenDialogWithSameText [
 	"Test that dialog text stays the same when findText matches cached text"
 
 	| service mock text|
