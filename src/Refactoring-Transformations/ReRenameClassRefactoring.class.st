@@ -28,6 +28,13 @@ ReRenameClassRefactoring class >> basicMenuItemString [
 	^ 'Rename'
 ]
 
+{ #category : 'partial instantiation' }
+ReRenameClassRefactoring class >> model: aRBNamespace rename: aClassName [ 
+	^ self new
+		model: aRBNamespace;
+		className: aClassName ; yourself
+]
+
 { #category : 'instance creation' }
 ReRenameClassRefactoring class >> model: aRBNamespace rename: aClass to: aNewName [
 	^ self new
