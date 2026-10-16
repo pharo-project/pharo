@@ -1,6 +1,6 @@
 Extension { #name : 'Character' }
 
-{ #category : '*System-Model' }
+{ #category : '*DeepCopier' }
 Character >> veryDeepCopyWith: deepCopier [
 	"Answer the receiver, because Characters are unique."
 	^self
