@@ -1,7 +1,9 @@
 "
-""Handles command !<anInteger> and return (if it exists) the command related to the number
-	ex : !-2 returns the second last command
-		  !2 returns the second command ""
+Handles command !<anInteger> and returns (if it exists) the command related to the number.
+
+Syntax is:
+- `!-2` returns the second last command
+- `!2` returns the second command
 "
 Class {
 	#name : 'ClapDbgNumericHistoryHandler',
@@ -22,18 +24,24 @@ ClapDbgNumericHistoryHandler >> canHandle: aString [
 ]
 
 { #category : 'execution' }
-ClapDbgNumericHistoryHandler >> handle: aString for: aDebugger [
-
+ClapDbgNumericHistoryHandler >> handle: aString for: aClapDebugger [
+	"aString is the text entered by the user.
+	It should start with !
+	Then it expects either a positive or negative number"
+	
 	| indexString targetIndex commandsArray |
 	indexString := aString allButFirst.
-
 	targetIndex := indexString asInteger.
-	targetIndex isInteger ifFalse: [ ^ aString ]. "checking if it is a number. If not, return the string typed by the user"
-	commandsArray := aDebugger commandsStack asArray.
+	targetIndex isInteger ifFalse: [ ^ aString ]. 
+	commandsArray := aClapDebugger commandsStack asArray.
 
-	targetIndex < 0 ifTrue: [ ^ commandsArray at: targetIndex abs ifAbsent: [ ClapDbgHistoryEventNotFound signal: aString , ': event not found' ] ].
-
-	targetIndex > 0 ifTrue: [ ^ commandsArray at: commandsArray size - targetIndex + 1  ifAbsent: [ ClapDbgHistoryEventNotFound signal: aString , ': event not found' ] ].
-
+	targetIndex < 0 
+		ifTrue: [ ^ commandsArray 
+						at: targetIndex abs 
+						ifAbsent: [ ClapDbgHistoryEventNotFound signal: aString , ': event not found' ] ].
+	targetIndex > 0 
+		ifTrue: [ ^ commandsArray 
+			at: commandsArray size - targetIndex + 1  
+			ifAbsent: [ ClapDbgHistoryEventNotFound signal: aString , ': event not found' ] ].
 	^ aString
 ]
