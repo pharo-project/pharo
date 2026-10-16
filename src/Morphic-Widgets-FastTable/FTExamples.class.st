@@ -342,7 +342,7 @@ FTExamples class >> exampleList3 [
 		dataSource: (FTExampleMethodListDataSource for: Object);
 		selectIndex: 42;
 		showFirstSelection;
-		onAnnouncement: FTSelectionChanged do: [ :ann | ('row selected: ' , ann newSelectedIndexes asString) crTrace ];
+		onAnnouncement: FTSelectionChanged do: [ :ann | ('row selected: ' , ann newSelectedIndexes asString) newLineTrace ];
 		yourself.
 
 	^ list openInWindow
@@ -364,10 +364,10 @@ FTExamples class >> exampleList4 [
 		selectIndex: 42;
 		showFirstSelection;
 		onAnnouncement: FTSelectionChanged
-			do: [ :ann | ('row selected: ' , ann newSelectedIndexes asString) crTrace ];
+			do: [ :ann | ('row selected: ' , ann newSelectedIndexes asString) newLineTrace ];
 		onAnnouncement: FTStrongSelectionChanged
 			do:
-				[ :ann | ('double-click on row: ' , ann selectedIndex asString) crTrace ];
+				[ :ann | ('double-click on row: ' , ann selectedIndex asString) newLineTrace ];
 		yourself.
 	^ list openInWindow
 ]
@@ -388,8 +388,8 @@ FTExamples class >> exampleList5 [
 		dataSource: (FTExampleMethodListDataSource for: Object);
 		selectIndexes: #(42 43);
 		showFirstSelection;
-		onAnnouncement: FTSelectionChanged do: [ :ann | ('rows selected: ' , ann newSelectedIndexes asString) crTrace ];
-		onAnnouncement: FTStrongSelectionChanged do: [ :ann | ('double-click on row: ' , ann selectedIndex asString) crTrace ];
+		onAnnouncement: FTSelectionChanged do: [ :ann | ('rows selected: ' , ann newSelectedIndexes asString) newLineTrace ];
+		onAnnouncement: FTStrongSelectionChanged do: [ :ann | ('double-click on row: ' , ann selectedIndex asString) newLineTrace ];
 		beMultipleSelection;
 		yourself.
 
@@ -586,8 +586,8 @@ FTExamples class >> exampleSortableTable1 [
 		dataSource: (FTExampleMethodTableDataSource for: Object);
 		selectFirst;
 		showFirstSelection;
-		onAnnouncement: FTSelectionChanged do: [ :ann | ('rows selected: ' , ann newSelectedIndexes asString) crTrace ];
-		onAnnouncement: FTStrongSelectionChanged do: [ :ann | ('double-click on row: ' , ann selectedIndex asString) crTrace ];
+		onAnnouncement: FTSelectionChanged do: [ :ann | ('rows selected: ' , ann newSelectedIndexes asString) newLineTrace ];
+		onAnnouncement: FTStrongSelectionChanged do: [ :ann | ('double-click on row: ' , ann selectedIndex asString) newLineTrace ];
 		beMultipleSelection;
 		beResizable;
 		yourself.
@@ -696,8 +696,8 @@ FTExamples class >> exampleTable1 [
 		dataSource: (FTExampleMethodTableDataSource for: Object);
 		selectFirst;
 		showFirstSelection;
-		onAnnouncement: FTSelectionChanged do: [ :ann | ('rows selected: ' , ann newSelectedIndexes asString) crTrace ];
-		onAnnouncement: FTStrongSelectionChanged do: [ :ann | ('double-click on row: ' , ann selectedIndex asString) crTrace ];
+		onAnnouncement: FTSelectionChanged do: [ :ann | ('rows selected: ' , ann newSelectedIndexes asString) newLineTrace ];
+		onAnnouncement: FTStrongSelectionChanged do: [ :ann | ('double-click on row: ' , ann selectedIndex asString) newLineTrace ];
 		beMultipleSelection;
 		beResizable;
 		yourself.
@@ -720,8 +720,8 @@ FTExamples class >> exampleTable2 [
 		dataSource: (FTExampleMethodTableDataSource for: Morph);
 		selectFirst;
 		showFirstSelection;
-		onAnnouncement: FTSelectionChanged do: [ :ann | ('rows selected: ' , ann newSelectedIndexes asString) crTrace ];
-		onAnnouncement: FTStrongSelectionChanged do: [ :ann | ('double-click on row: ' , ann selectedIndex asString) crTrace ];
+		onAnnouncement: FTSelectionChanged do: [ :ann | ('rows selected: ' , ann newSelectedIndexes asString) newLineTrace ];
+		onAnnouncement: FTStrongSelectionChanged do: [ :ann | ('double-click on row: ' , ann selectedIndex asString) newLineTrace ];
 		beMultipleSelection;
 		beResizable;
 		yourself.
@@ -746,8 +746,8 @@ FTExamples class >> exampleTable3 [
 		dataSource: (FTExampleMethodTableDataSource for: Morph);
 		selectFirst;
 		showFirstSelection;
-		onAnnouncement: FTSelectionChanged do: [ :ann | ('rows selected: ' , ann newSelectedIndexes asString) crTrace ];
-		onAnnouncement: FTStrongSelectionChanged do: [ :ann | ('double-click on row: ' , ann selectedIndex asString) crTrace ];
+		onAnnouncement: FTSelectionChanged do: [ :ann | ('rows selected: ' , ann newSelectedIndexes asString) newLineTrace ];
+		onAnnouncement: FTStrongSelectionChanged do: [ :ann | ('double-click on row: ' , ann selectedIndex asString) newLineTrace ];
 		beMultipleSelection;
 		beResizable;
 		yourself.
@@ -774,8 +774,8 @@ FTExamples class >> exampleTable4 [
 		dataSource: (FTExampleMethodTableDataSource for: Morph);
 		selectFirst;
 		showFirstSelection;
-		onAnnouncement: FTSelectionChanged do: [ :ann | ('rows selected: ' , ann newSelectedIndexes asString) crTrace ];
-		onAnnouncement: FTStrongSelectionChanged do: [ :ann | ('double-click on row: ' , ann selectedIndex asString) crTrace ];
+		onAnnouncement: FTSelectionChanged do: [ :ann | ('rows selected: ' , ann newSelectedIndexes asString) newLineTrace ];
+		onAnnouncement: FTStrongSelectionChanged do: [ :ann | ('double-click on row: ' , ann selectedIndex asString) newLineTrace ];
 		beMultipleSelection;
 		beResizable;
 		yourself.
@@ -824,8 +824,8 @@ FTExamples class >> exampleTableHorizontalScroll [
 		dataSource: (FTExampleMethodTableDataSource for: Morph);
 		selectFirst;
 		showFirstSelection;
-		onAnnouncement: FTSelectionChanged do: [ :ann | ('rows selected: ' , ann newSelectedIndexes asString) crTrace ];
-		onAnnouncement: FTStrongSelectionChanged do: [ :ann | ('double-click on row: ' , ann selectedIndex asString) crTrace ];
+		onAnnouncement: FTSelectionChanged do: [ :ann | ('rows selected: ' , ann newSelectedIndexes asString) newLineTrace ];
+		onAnnouncement: FTStrongSelectionChanged do: [ :ann | ('double-click on row: ' , ann selectedIndex asString) newLineTrace ];
 		beMultipleSelection;
 		yourself.
 

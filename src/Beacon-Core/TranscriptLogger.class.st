@@ -19,5 +19,5 @@ Class {
 { #category : 'logging' }
 TranscriptLogger >> nextPut: anAnnouncement [
 
-	anAnnouncement crTrace
+	anAnnouncement newLineTrace
 ]
