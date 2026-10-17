@@ -1,5 +1,9 @@
 "
-Model for a find and replace service in editors
+I am the base class of the find and replace services used by Rubric text areas.
+
+I hold the search state (find text, replacement text, case sensitivity, entire word only, wrap around, search direction, start index) and implement the find and replace engine over the text area I am attached to with #textArea:.
+
+My subclasses provide the user interface: SpRubFindReplaceService opens a Spec dialog, while RubNullFindReplaceService does nothing and is used by the text areas that have no find and replace support (see RubAbstractTextArea class>>defaultFindReplaceServiceClass).
 "
 Class {
 	#name : 'FindReplaceService',
@@ -46,11 +50,6 @@ FindReplaceService >> convertedFindString [
 		streamContents: [:s | self findString
 			do: [:c | (specials includes: c) ifTrue: [s nextPut:$\].
 				s nextPut: c]]
-]
-
-{ #category : 'services' }
-FindReplaceService >> dialogIsActiveFor: aTextArea [
-	^ false
 ]
 
 { #category : 'accessing' }

@@ -1,5 +1,9 @@
 "
-I am the Spec dialog used by the find and replace service. I only use Spec APIs, so I work on any Spec backend.
+I am the find and replace service used by the Rubric text areas that support find and replace.
+
+I open the Spec dialog SpRubFindReplaceDialog and forward the find and replace requests to it.
+
+The IDE baseline installs me as the default service of RubEditingArea and RubTextFieldArea (see BaselineOfIDE); text areas without find and replace support use RubNullFindReplaceService instead.
 "
 Class {
 	#name : 'SpRubFindReplaceDialog',

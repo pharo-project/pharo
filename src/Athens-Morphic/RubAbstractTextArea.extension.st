@@ -7,6 +7,6 @@ RubAbstractTextArea >> drawSubmorphsOnAthensCanvas: aCanvas [
 
 	super drawSubmorphsOnAthensCanvas: aCanvas.
 	self paragraph drawOnAthensCanvas: aCanvas bounds: self drawingBounds color: self textColor.
-	(self scrollPane isNil and: [ self readOnly not and: [ self hasKeyboardFocus or: [ self hasFindReplaceFocus ] ] ]) ifTrue: [
+	(self scrollPane isNil and: [ self readOnly not and: [ self hasKeyboardFocus ] ]) ifTrue: [
 		self drawKeyboardFocusOnAthensCanvas: aCanvas ]
 ]
