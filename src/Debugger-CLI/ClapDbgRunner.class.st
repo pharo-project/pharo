@@ -1,12 +1,17 @@
+"
+Typical use: 
+
+Pharo --headless P.image debug 1+2
+"
 Class {
 	#name : 'ClapDbgRunner',
 	#superclass : 'ClapPharoApplication',
 	#instVars : [
 		'debugger'
 	],
-	#category : 'Debugger-CLI-Unused',
+	#category : 'Debugger-CLI-Main',
 	#package : 'Debugger-CLI',
-	#tag : 'Unused'
+	#tag : 'Main'
 }
 
 { #category : 'command line' }
@@ -16,7 +21,7 @@ ClapDbgRunner class >> commandSpecification [
 	| spec |
 	spec := (ClapCommandSpec id: #debug)
 		        commandClass: self;
-		        description: 'A Debug runner to launch debugger from a shell';
+		        description: 'A debug runner to launch debugger from a shell';
 		        addHelp;
 		        addPositional: #EXPR spec: [ :positional |
 				        positional

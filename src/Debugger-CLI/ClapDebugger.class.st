@@ -215,7 +215,7 @@ ClapDebugger >> initializeHistoryHandlers [
 
 	^ historyHandlers := {
 		                     ClapDbgLastCommandHandler new.
-		                     ClapDbgContansStringHandler new.
+		                     ClapDbgContainsStringHandler new.
 		                     ClapDbgNumericHistoryHandler new.
 		                     ClapDbgStartsWithStringHandler new }
 ]

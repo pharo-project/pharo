@@ -32,5 +32,7 @@ ClapDbgStartsWithStringHandler >> handle: aString for: aDebugger [
 	unMot := aString allButFirst.
 	commandsArray := aDebugger commandsStack asArray.
 
-	^ commandsArray detect: [ :command | command beginsWith: unMot ] ifNone: [ ClapDbgHistoryEventNotFound signal: aString , ': event not found' ]
+	^ commandsArray 
+		detect: [ :command | command beginsWith: unMot ] 
+		ifNone: [ ClapDbgHistoryEventNotFound signal: aString , ': event not found' ]
 ]
