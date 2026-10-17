@@ -10,7 +10,7 @@ Class {
 ClapDbgHelpCommand >> basicExecuteOn: aDebugger with: args [
 
 	| helpArray informLine |
-	helpArray := aDebugger commands values collect: [ :command | String tab , command printHelp ].
+	helpArray := aDebugger registeredCommandInstances values collect: [ :command | String tab , command printHelp ].
 	informLine := '=========== available commands ==========='.
 
 	^ informLine , aDebugger lineEnding , (helpArray asSet asArray joinUsing: aDebugger lineEnding)

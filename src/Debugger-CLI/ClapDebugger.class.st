@@ -10,12 +10,12 @@ Class {
 		'context',
 		'process',
 		'lineEnding',
-		'commands',
 		'commandsStack',
 		'session',
 		'inStream',
 		'outStream',
-		'historyHandlers'
+		'historyHandlers',
+		'registeredCommandInstances'
 	],
 	#category : 'Debugger-CLI-Core',
 	#package : 'Debugger-CLI',
@@ -66,33 +66,15 @@ ClapDebugger >> askTyping [
 ClapDebugger >> commandClassInstanceFor: aString [
 	"Gives an instance of the right command class to use"
 
-	[ ^ commands at: aString ]
+	[ ^ registeredCommandInstances at: aString ]
 		on: KeyNotFound
 		do: [ ^ ClapDbgUnknownCommand new command: aString ]
-]
-
-{ #category : 'accessing' }
-ClapDebugger >> commands [
-
-	^ commands
-]
-
-{ #category : 'accessing' }
-ClapDebugger >> commands: anObject [
-
-	commands := anObject
 ]
 
 { #category : 'accessing' }
 ClapDebugger >> commandsStack [
 
 	^ commandsStack
-]
-
-{ #category : 'accessing' }
-ClapDebugger >> commandsStack: anObject [
-
-	commandsStack := anObject
 ]
 
 { #category : 'accessing' }
@@ -204,10 +186,10 @@ ClapDebugger >> initializeCommands [
 		                ClapDbgReturnCommand new.
 		                ClapDbgFinishCommand new.
 		                ClapDbgProceedCommand new }.
-	commands := Dictionary new.
+	registeredCommandInstances := Dictionary new.
 	commandsList do: [ :aCommand |
-			commands at: aCommand commandName first put: aCommand.
-			commands at: aCommand commandName last put: aCommand ]
+			registeredCommandInstances at: aCommand commandName first put: aCommand.
+			registeredCommandInstances at: aCommand commandName last put: aCommand ]
 ]
 
 { #category : 'initialization' }
@@ -359,6 +341,12 @@ ClapDebugger >> readNextLine [
 				on: Error
 				do: [ :ex | self handleZnIncompleteErrorInInput: ex ] ].
 	^ input trimRight
+]
+
+{ #category : 'accessing' }
+ClapDebugger >> registeredCommandInstances [
+
+	^ registeredCommandInstances
 ]
 
 { #category : 'command shortcut' }
