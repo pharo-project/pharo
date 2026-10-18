@@ -1,8 +1,9 @@
 Class {
 	#name : 'ClapDbgPrintStackCommand',
 	#superclass : 'ClapDbgCommand',
-	#category : 'Debugger-CLI',
-	#package : 'Debugger-CLI'
+	#category : 'Debugger-CLI-Commands',
+	#package : 'Debugger-CLI',
+	#tag : 'Commands'
 }
 
 { #category : 'execution' }

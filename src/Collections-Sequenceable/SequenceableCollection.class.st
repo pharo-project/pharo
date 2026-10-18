@@ -1287,7 +1287,7 @@ SequenceableCollection >> indexOf: anElement startingAt: start ifAbsent: excepti
 	" 	(#(a b c d e) indexOf: #x startingAt: 2 ifAbsent: 7 using: [ : a : b | a = b ]) >>> 7 "
 
 
-	start to: self size do: [ : index | 
+	start to: self size do: [ :index | 
 		(comparisonBlock value: (self at: index) value: anElement) 
 			ifTrue: [ ^ index ] ].
 	^ exceptionBlock value

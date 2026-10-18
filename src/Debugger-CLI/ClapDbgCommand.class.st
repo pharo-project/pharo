@@ -1,3 +1,8 @@
+"
+I'm the root of command line actions that expose debugger functionality.
+Each of my subclasses specialize the hook method `basicExecuteOn:with:`.
+
+"
 Class {
 	#name : 'ClapDbgCommand',
 	#superclass : 'Object',
@@ -6,8 +11,9 @@ Class {
 		'commandHelp',
 		'arguments'
 	],
-	#category : 'Debugger-CLI',
-	#package : 'Debugger-CLI'
+	#category : 'Debugger-CLI-Commands',
+	#package : 'Debugger-CLI',
+	#tag : 'Commands'
 }
 
 { #category : 'accessing' }
