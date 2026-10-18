@@ -117,7 +117,8 @@ ReAbstractRule class >> enabled [
 ReAbstractRule class >> enabled: aBoolean [
 
 	enabled := aBoolean.
-	ReRuleManager reset
+	ReRuleManager reset.
+	ReSystemAnnouncer uniqueInstance announce: ReRuleSetChanged new
 ]
 
 { #category : 'manifest' }

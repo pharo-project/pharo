@@ -39,7 +39,9 @@ ReRuleManager class >> classAddedOrRemoved: aClassAddedAnnouncement [
 
 	((class inheritsFrom: RBLintRule) or: [
 	  class inheritsFrom: ReAbstractRule ])
-		ifTrue: [ self reset ]
+		ifTrue: [ 
+			self reset.
+			ReSystemAnnouncer uniqueInstance announce: ReRuleSetChanged new ]
 ]
 
 { #category : 'cleanup' }
