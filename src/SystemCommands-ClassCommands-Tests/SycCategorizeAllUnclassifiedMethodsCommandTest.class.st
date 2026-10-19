@@ -21,8 +21,8 @@ SycCategorizeAllUnclassifiedMethodsCommandTest >> setUp [
 { #category : 'running' }
 SycCategorizeAllUnclassifiedMethodsCommandTest >> tearDown [
 
-	SycCategorizeAllUnclassifiedTestClass methods do: [ :each |
-		each unclassify ].
+	SycCategorizeAllUnclassifiedTestClass >> #initialize protocol: #initialization.
+	SycCategorizeAllUnclassifiedTestClass >> #name protocol: #accessing.
 
 	super tearDown
 ]
