@@ -33,6 +33,12 @@ ReRenameClassChange >> changeClass [
 		  onSystemEnvironment classNamed: newName ]
 ]
 
+{ #category : 'private' }
+ReRenameClassChange >> changeString [
+	
+	^ self textToDisplay
+]
+
 { #category : 'accessing' }
 ReRenameClassChange >> changesToDisplayIn: aChangeBrowser [
 

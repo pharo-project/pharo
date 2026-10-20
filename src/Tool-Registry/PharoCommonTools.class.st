@@ -43,7 +43,7 @@ PharoCommonTools class >> menuHistoryOn: aBuilder [
 		action: [
 				Metacello new
   baseline: 'ExtendedHeuristicCompletionHistory';
-  repository: 'github://omarabedelkader/HeuristicCompletion-History:v0.9.3/src';
+  repository: 'github://omarabedelkader/HeuristicCompletion-History:v0.9.5/src';
 					onConflictUseIncoming;
 					load ]
 ]

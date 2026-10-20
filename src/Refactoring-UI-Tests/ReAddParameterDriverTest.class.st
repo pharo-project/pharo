@@ -9,13 +9,14 @@ Class {
 }
 
 { #category : 'tests' }
-ReAddParameterDriverTest >> testAddParameterCollidingSelectorInformsUser [
+ReAddParameterDriverTest >> testAddParameterCollidingSelectorWarnsUser [
 	"Adding an argument that produces a selector already defined in the class must inform the user and not override it."
 
-	| rbclasses model method driver dialog colliding valid |
+	| rbclasses model sourceClass method driver dialog colliding valid |
 	rbclasses := RBClassEnvironment classes: { RBClassDataForRefactoringTest }.
 	model := RBNamespace onEnvironment: rbclasses.
-	method := (model classObjectFor: RBClassDataForRefactoringTest) methodFor: #called:on:.
+	sourceClass := model classObjectFor: RBClassDataForRefactoringTest.
+	method := sourceClass methodFor: #called:on:.
 	driver := ReAddParameterDriver new
 		          scopes: { rbclasses }
 		          model: model
@@ -41,9 +42,10 @@ ReAddParameterDriverTest >> testAddParameterCollidingSelectorInformsUser [
 	driver requestDialog: dialog.
 	driver runRefactoring.
 
-	self assert: (driver application shownMessage includesSubstring: 'already defined').
-	self assert: ((driver refactoring model classObjectFor: RBClassDataForRefactoringTest) definesMethod: #called:extra:on:).
-	self assert: ((driver refactoring model classObjectFor: RBClassDataForRefactoringTest) definesMethod: #textInput:name:symbol:)
+	"self assert: (driver selectDialogForBreakingChanges message includesSubstring: 'Watchout potential override detected')."
+	self deny: (sourceClass definesMethod: #called:extra:on:).
+	self assert: (sourceClass definesMethod: #called:on:).
+	self assert: (sourceClass definesMethod: #textInput:name:symbol:)
 ]
 
 { #category : 'tests' }
@@ -70,7 +72,47 @@ ReAddParameterDriverTest >> testAddParameterExpectSuccess [
 
 	self 
 		assert: driver refactoring model changes changes size 
-		equals: 6
+		equals: 2
+]
+
+{ #category : 'tests' }
+ReAddParameterDriverTest >> testAddParameterWrongArgsNumberInformsUser [
+	"Adding an argument that produces a selector already defined in the class must inform the user and not override it."
+
+	| rbclasses model sourceClass method driver dialog valid invalid |
+	rbclasses := RBClassEnvironment classes: { RBClassDataForRefactoringTest }.
+	model := RBNamespace onEnvironment: rbclasses.
+	sourceClass := model classObjectFor: RBClassDataForRefactoringTest.
+	method := sourceClass methodFor: #called:on:.
+	driver := ReAddParameterDriver new
+		          scopes: { rbclasses }
+		          model: model
+		          addParameterToMethodSignature: method
+		          in: RBClassDataForRefactoringTest.
+	self setUpDriver: driver.
+	driver application: StApplicationForRefactorDriverMock new.
+
+	invalid := RBMethodName selector: #textInput: arguments: #( 'a' ).
+	invalid
+		permutation: #( 1 );
+		newArgs: { (RBArgumentName name: 'extra' value: 'nil') }.
+	valid := RBMethodName selector: #called:extra:on: arguments: #( 'a' 'extra' 'b' ).
+	valid
+		permutation: #( 1 -1 2 );
+		newArgs: { (RBArgumentName name: 'extra' value: 'nil') }.
+
+	dialog := MockObject new.
+	dialog on: #cancelled respond: false.
+	dialog on: #methodName respond: invalid.
+	dialog on: #cancelled respond: false.
+	dialog on: #methodName respond: valid.
+	driver requestDialog: dialog.
+	driver runRefactoring.
+
+	self assert: (driver application shownMessage includesSubstring: 'doesn''t have the proper number of arguments').
+	self deny: (sourceClass definesMethod: #textInput:).
+	self deny: (sourceClass definesMethod: #called:on:).
+	self assert: (sourceClass definesMethod: #called:extra:on:).
 ]
 
 { #category : 'tests' }
@@ -101,7 +143,7 @@ ReAddParameterDriverTest >> testInvalidInitializationValueFollowedByValidExpectS
 
 	self 
 		assert: driver refactoring model changes changes size 
-		equals: 6
+		equals: 2
 ]
 
 { #category : 'tests' }

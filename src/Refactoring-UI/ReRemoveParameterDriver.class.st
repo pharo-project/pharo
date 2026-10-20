@@ -22,12 +22,6 @@ ReRemoveParameterDriver class >> driverName [
 ]
 
 { #category : 'breaking changes' }
-ReRemoveParameterDriver >> b [
-
-	
-]
-
-{ #category : 'breaking changes' }
 ReRemoveParameterDriver >> breakingChoices [
 	
 	^ {
@@ -155,6 +149,7 @@ ReRemoveParameterDriver >> requestDialogWith: methodName [
 	"I am lazily loading the dialog. It also allows tests to inject a mock."
 
 	requestDialog ifNil: [ requestDialog := self newRequestRemovalDialogOn: methodName ].
+	requestDialog methodName: methodName.
 	requestDialog openModal.
 	^ requestDialog
 ]
