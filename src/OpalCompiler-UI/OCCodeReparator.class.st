@@ -19,7 +19,17 @@ Class {
 	#category : 'OpalCompiler-UI',
 	#package : 'OpalCompiler-UI'
 }
+{ #category : 'correcting' }
+OCCodeReparator >> declareInstVarWithoutMenu: aString [
+	self declareInstVar: aString.
+	^ true
+]
 
+{ #category : 'correcting' }
+OCCodeReparator >> declareTempWithoutMenu: aString [
+	self declareTempAndPaste: aString.
+	^ true
+]
 { #category : 'correcting' }
 OCCodeReparator >> declareClassVar [
 
