@@ -1,6 +1,6 @@
 Class {
 	#name : 'SycMethodExtraCmCommandTest',
-	#superclass : 'TestCase',
+	#superclass : 'SycAbstractCommandTest',
 	#category : 'SystemCommands-MethodCommands-Tests-Tests',
 	#package : 'SystemCommands-MethodCommands-Tests',
 	#tag : 'Tests'
@@ -10,6 +10,6 @@ Class {
 SycMethodExtraCmCommandTest >> testGroupContainsExtraCommands [
 
 	| group |
-	group := ClyCommandGroupBuilder buildFor: SycMethodExtraCmCommand context: SycMockMethodContext new.
+	group := ClyCommandGroupBuilder buildFor: SycMethodExtraCmCommand context: self contextOnPoint.
 	self denyEmpty: group commands
 ]
