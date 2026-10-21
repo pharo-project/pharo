@@ -358,6 +358,12 @@ OCASTTranslator >> emitToDo: aMessageNode step: step [
 	block := aMessageNode arguments last.
 	iterator := block arguments first variable.
 
+	
+	"evaluate the receiver first"
+	self visitNode: aMessageNode receiver.
+	iterator emitStore: methodBuilder.
+
+	"now the limit argument"
 	limitEmit := [self visitNode: limit].
 	"if the limit is not just a literal or a non-writable variable, make a temp store it there"
 	(limit isLiteralNode or: [limit isVariable and: [limit variable isWritable not]]) ifFalse: [
@@ -368,8 +374,7 @@ OCASTTranslator >> emitToDo: aMessageNode step: step [
 		limitEmit := [methodBuilder pushTemp: ('0limit_', iterator name)]].
 
 	"push start. allocate and initialize iterator"
-	self visitNode: aMessageNode receiver.
-	iterator emitStore: methodBuilder.
+
 	methodBuilder jumpBackTarget: #start.
 	iterator emitValue: methodBuilder.
 	limitEmit value.
