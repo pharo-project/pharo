@@ -27,7 +27,7 @@ SycInlineTempCommand >> asRefactorings [
 
 { #category : 'accessing' }
 SycInlineTempCommand >> defaultMenuIconName [
-	^ ##smallRightFlush
+	^ #smallRightFlush
 ]
 
 { #category : 'accessing' }

@@ -24,7 +24,7 @@ SycExtractTempCommand class >> canBeExecutedInContext: aSourceCodeContext [
 
 { #category : 'accessing' }
 SycExtractTempCommand >> defaultMenuIconName [
-	^ ##smallUpdate
+	^ #smallUpdate
 ]
 
 { #category : 'accessing' }
