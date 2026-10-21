@@ -8,16 +8,16 @@ Class {
 	#package : 'SystemCommands-MethodCommands'
 }
 
-{ #category : 'executing' }
-SycInspectMethodCommand >> applyCommandResult [
-
-	self methods do: #inspect
-]
-
 { #category : 'accessing' }
 SycInspectMethodCommand >> description [
 
 	^ 'Inspect the selected methods'
+]
+
+{ #category : 'execution' }
+SycInspectMethodCommand >> execute [
+
+	self methods do: [ :method | method inspect ]
 ]
 
 { #category : 'accessing' }

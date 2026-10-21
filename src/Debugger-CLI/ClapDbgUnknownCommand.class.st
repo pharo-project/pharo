@@ -4,8 +4,9 @@ Class {
 	#instVars : [
 		'command'
 	],
-	#category : 'Debugger-CLI',
-	#package : 'Debugger-CLI'
+	#category : 'Debugger-CLI-Commands',
+	#package : 'Debugger-CLI',
+	#tag : 'Commands'
 }
 
 { #category : 'execution' }

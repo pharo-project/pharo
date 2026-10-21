@@ -9,6 +9,14 @@ Class {
 	#package : 'SystemCommands-RefactoringSupport'
 }
 
+{ #category : 'execution' }
+SycOpenContextMenuCommand >> addClyCommandsToMenu: aMenuMorph [
+
+	self cmCommandClass
+		addMenuItemsTo: aMenuMorph
+		onContext: self context
+]
+
 { #category : 'context menu' }
 SycOpenContextMenuCommand >> cmCommandClass [
 	self subclassResponsibility
@@ -19,7 +27,7 @@ SycOpenContextMenuCommand >> createContextMenu [
 
 	| menuMorph |
 	menuMorph := super createContextMenu.
-	self cmCommandClass addMenuItemsTo: menuMorph onContext: self context.
+	self addClyCommandsToMenu: menuMorph.
 	^ menuMorph
 ]
 
