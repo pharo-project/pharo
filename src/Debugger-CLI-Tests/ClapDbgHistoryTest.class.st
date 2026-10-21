@@ -19,7 +19,7 @@ ClapDbgHistoryTest >> setUp [
     debugger commandsStack push: 'help'.    
 ]
 
-{ #category : 'running' }
+{ #category : 'tests' }
 ClapDbgHistoryTest >> testHandleContainingStringHistory [
 
 	self assert: (debugger handleHistory: '!?ste') equals: 'step'.
@@ -28,7 +28,7 @@ ClapDbgHistoryTest >> testHandleContainingStringHistory [
 	self assert: (debugger handleHistory: '!?e') equals: 'help'
 ]
 
-{ #category : 'running' }
+{ #category : 'tests' }
 ClapDbgHistoryTest >> testHandleHistoryInvalidInputs [
 
 	self
@@ -51,7 +51,7 @@ ClapDbgHistoryTest >> testHandleHistoryInvalidInputs [
 	self assert: (debugger handleHistory: '!') equals: '!'
 ]
 
-{ #category : 'running' }
+{ #category : 'tests' }
 ClapDbgHistoryTest >> testHandleHistoryLastCommand [
 
 	self assert: (debugger handleHistory: '!!') equals: 'help'.
@@ -61,14 +61,14 @@ ClapDbgHistoryTest >> testHandleHistoryLastCommand [
 	self assert: (debugger handleHistory: '') equals: 'test'
 ]
 
-{ #category : 'running' }
+{ #category : 'tests' }
 ClapDbgHistoryTest >> testHandleHistoryLeavesStandardCommandsIntact [
 
 	self assert: (debugger handleHistory: 'step') equals: 'step'.
 	self assert: (debugger handleHistory: 'p 10') equals: 'p 10'
 ]
 
-{ #category : 'running' }
+{ #category : 'tests' }
 ClapDbgHistoryTest >> testHandleNumericHistoryNegative [
 
 	self assert: (debugger handleHistory: '!-1') equals: 'help'.
@@ -76,7 +76,7 @@ ClapDbgHistoryTest >> testHandleNumericHistoryNegative [
 	self assert: (debugger handleHistory: '!-4') equals: 'print a'
 ]
 
-{ #category : 'running' }
+{ #category : 'tests' }
 ClapDbgHistoryTest >> testHandleNumericHistoryPositive [
 
 	self assert: (debugger handleHistory: '!1') equals: 'print a'.
@@ -84,7 +84,7 @@ ClapDbgHistoryTest >> testHandleNumericHistoryPositive [
 	self assert: (debugger handleHistory: '!4') equals: 'help'
 ]
 
-{ #category : 'running' }
+{ #category : 'tests' }
 ClapDbgHistoryTest >> testHandleStartingWithStringHistory [
 
 	self assert: (debugger handleHistory: '!ste') equals: 'step'.

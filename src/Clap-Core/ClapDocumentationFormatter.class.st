@@ -76,9 +76,8 @@ ClapDocumentationFormatter >> space: anInteger [
 
 { #category : 'initialization' }
 ClapDocumentationFormatter >> stream: aStream [
-	stream := 	(aStream respondsTo: #newLine)
-		ifTrue: [ aStream ]
-		ifFalse: [ ZnNewLineWriterStream on: aStream ]
+
+	stream := ZnNewLineWriterStream on: aStream
 ]
 
 { #category : 'formatting' }

@@ -13,7 +13,6 @@ SycCmFileOutClassCommandTest >> testDefaultFileNameForMultipleClasses [
 	context := SycMockClassContext new.
 	context selectedObjects: { Point . Rectangle }.
 	cmd context: context.
-	cmd prepareFullExecution.
 	self assert: cmd defaultFileName equals: 'classfileout'
 ]
 
@@ -24,6 +23,5 @@ SycCmFileOutClassCommandTest >> testDefaultFileNameForSingleClass [
 	context := SycMockClassContext new.
 	context selectedObjects: { Point }.
 	cmd context: context.
-	cmd prepareFullExecution.
 	self assert: cmd defaultFileName equals: 'Point'
 ]
