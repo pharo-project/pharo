@@ -41,11 +41,13 @@ DoItChunk >> importFor: requestor logSource: logSource [
 	(self isPackageAddition: ast) ifTrue: [ ^ self packageOrganizer ensurePackageMatching: ast arguments first value ].
 	(OldClassDefinitionBuilder isOldClassCreation: ast) ifTrue: [ ^ OldClassDefinitionBuilder buildFromAST: ast ].
 
-	^ self class compiler class new
+	"For DoIts we allow undelared variables"
+	^ [self class compiler class new
 		  source: contents;
 		  requestor: requestor;
 		  logged: logSource;
-		  evaluate
+		  permitUndeclared: true;
+		  evaluate] on: UndeclaredVariableError do: [ :ex | ex resume ] 
 ]
 
 { #category : 'testing' }
