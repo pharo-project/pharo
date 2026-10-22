@@ -1437,7 +1437,7 @@ OCParserTest >> testParseMethodWhichEndsWithUncompleteStringWithEscapedMarkAtThe
 	self
 		assert: errorNode value
 		equals: '''wrong'''''.
-	self assert: errorNode errorMessage equals: 'Unmatched '' in string literal.' translated
+	self assert: errorNode errorMessage equals: 'Unmatched '' in string literal.'
 ]
 
 { #category : 'tests - CreationProtocol' }
@@ -1474,7 +1474,7 @@ OCParserTest >> testParseMethodWithErrorTokenIsWellFormed [
 		equals:
 			'''wrong because no end.
 		^temp'.
-	self assert: errorNode errorMessage equals: 'Unmatched '' in string literal.' translated
+	self assert: errorNode errorMessage equals: 'Unmatched '' in string literal.' 
 ]
 
 { #category : 'tests - parsing' }

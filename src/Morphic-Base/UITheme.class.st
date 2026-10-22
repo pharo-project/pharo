@@ -754,7 +754,7 @@ UITheme >> chooseDirectoryIn: aThemedMorph title: title path: path [
 	path ifNotNil: [ dialog defaultFolder: path ].
 
 	dialog
-		title: (title ifNil: [ 'Choose Directory' translated ]);
+		title: (title ifNil: [ 'Choose Directory' ]);
 		openModal;
 		yourself.
 
@@ -787,7 +787,7 @@ UITheme >> chooseExistingFileReferenceIn: aThemedMorph title: title extensions: 
 	path ifNotNil: [ dialog nameText: path basename ].
 	dialog
 		defaultFolder: (path ifNil: [ StFileSystemModel defaultDirectory ]);
-		title: (title ifNil: [ 'Choose File' translated ]);
+		title: (title ifNil: [ 'Choose File' ]);
 		openModal.
 
 	^ dialog cancelled
@@ -807,7 +807,7 @@ UITheme >> chooseFileIn: aThemedMorph title: title extensions: exts path: path p
 	dialog
 		defaultFolder: (path ifNil: [ StFileSystemModel defaultDirectory ]);
 		title: (title
-				 ifNil: [ 'Choose File' translated ]
+				 ifNil: [ 'Choose File' ]
 				 ifNotNil: [ title ]);
 		openModal.
 
@@ -854,7 +854,7 @@ UITheme >> chooseFullFileNameIn: aThemedMorph title: title patterns: patterns pa
 	path ifNotNil: [ dialog nameText: path basename ].
 	dialog
 		defaultFolder: (path ifNil: [ StFileSystemModel defaultDirectory ]);
-		title: (title ifNil: [ 'Choose File' translated ]);
+		title: (title ifNil: [ 'Choose File' ]);
 		openModal.
 
 	^ dialog cancelled
@@ -868,7 +868,7 @@ UITheme >> chooseIn: aThemedMorph title: title labels: labels values: values lin
 
 	| dialog |
 	dialog := (PopupChoiceDialogWindow newWithTheme: aThemedMorph theme)
-		title: (title isEmpty ifTrue: ['Choose' translated] ifFalse: [title asString]);
+		title: (title isEmpty ifTrue: ['Choose'] ifFalse: [title asString]);
 		labels: labels;
 		lines: (lines ifNil: [#()]);
 		model: values.
@@ -881,7 +881,7 @@ UITheme >> chooseIn: aThemedMorph title: title message: aMessage labels: labels 
 
 	|dialog|
 	dialog := (PopupChoiceDialogWindowWithMessage newWithTheme: aThemedMorph theme)
-		title: (title isEmpty ifTrue: ['Choose' translated] ifFalse: [title asString]);
+		title: (title isEmpty ifTrue: ['Choose'] ifFalse: [title asString]);
 		textFont: self textFont;
 		message: aMessage;
 		labels: labels;
@@ -896,7 +896,7 @@ UITheme >> chooseOrRequestIn: aThemedMorph title: title labels: labels values: v
 
 	| dialog choice |
 	dialog := (PopupChoiceOrRequestDialogWindow newWithTheme: aThemedMorph theme)
-		title: (title ifEmpty: [ 'Choose' translated ] ifNotEmpty: #asString);
+		title: (title ifEmpty: [ 'Choose' ] ifNotEmpty: #asString);
 		labels: labels;
 		lines: (lines ifNil: [ #() ]);
 		model: values.
@@ -1240,7 +1240,7 @@ UITheme >> createCloseBoxFor: aSystemWindow [
 						                   yourself.
 					   self currentWorld announcer announce: announcement ]
 				   ifFalse: [ aSystemWindow closeBoxHit ] ]
-		   help: 'Close this window' translated) extent:
+		   help: 'Close this window') extent:
 		  aSystemWindow boxExtent
 ]
 
@@ -1266,7 +1266,7 @@ UITheme >> createCollapseBoxFor: aSystemWindow [
 		activeEnabledOverDownFillStyle: (ImageFillStyle formSet: formSet);
 		passiveEnabledOverDownFillStyle: (ImageFillStyle formSet: formSet);
 		addUpAction: [aSystemWindow collapseBoxHit];
-		setBalloonText: 'Collapse this window' translated;
+		setBalloonText: 'Collapse this window';
 		extent: aSystemWindow boxExtent.
 	^msb
 ]
@@ -1293,7 +1293,7 @@ UITheme >> createExpandBoxFor: aSystemWindow [
 		activeEnabledOverDownFillStyle: (ImageFillStyle formSet: formSet);
 		passiveEnabledOverDownFillStyle: (ImageFillStyle formSet: formSet);
 		addUpAction: [aSystemWindow expandBoxHit];
-		setBalloonText: 'Expand to full screen' translated;
+		setBalloonText: 'Expand to full screen';
 		extent: aSystemWindow boxExtent.
 	^msb
 ]
@@ -1329,7 +1329,7 @@ UITheme >> createMenuBoxFor: aSystemWindow [
 		activeEnabledOverDownFillStyle: (ImageFillStyle formSet: formSet);
 		passiveEnabledOverDownFillStyle: (ImageFillStyle formSet: formSet);
 		addUpAction: [aSystemWindow offerWindowMenu];
-		setBalloonText: 'window menu' translated;
+		setBalloonText: 'window menu';
 		extent: aSystemWindow boxExtent.
 	^msb
 ]
@@ -1826,7 +1826,7 @@ UITheme >> enterOrRequestIn: aThemedMorph title: title labels: labels values: va
 
 	| dialog choice |
 	dialog := (PopupChoiceOrRequestDialogWindow newWithTheme: aThemedMorph theme)
-		title: (title isEmpty ifTrue: ['Choose' translated] ifFalse: [title asString]);
+		title: (title isEmpty ifTrue: ['Choose'] ifFalse: [title asString]);
 		labels: labels;
 		lines: (lines ifNil: [#()]);
 		model: values.
@@ -2603,8 +2603,8 @@ UITheme >> newCancelButtonIn: aThemedMorph for: aModel [
 		action: #cancel
 		arguments: nil
 		getEnabled: nil
-		label: 'Cancel' translated
-		help: 'Cancel changes and close the window' translated
+		label: 'Cancel'
+		help: 'Cancel changes and close the window'
 ]
 
 { #category : 'morph creation' }
@@ -2654,8 +2654,8 @@ UITheme >> newCloseButtonIn: aThemedMorph for: aModel [
 		action: #close
 		arguments: nil
 		getEnabled: nil
-		label: 'Close' translated
-		help: 'Close the window' translated
+		label: 'Close'
+		help: 'Close the window'
 ]
 
 { #category : 'morph creation' }
@@ -3076,8 +3076,8 @@ UITheme >> newNoButtonIn: aThemedMorph for: aModel [
 			action: #no
 			arguments: nil
 			getEnabled: nil
-			label: 'No' translated
-			help: 'Answer no and close the window' translated)
+			label: 'No'
+			help: 'Answer no and close the window')
 		hResizing: #rigid;
 		vResizing: #rigid
 ]
@@ -3093,8 +3093,8 @@ UITheme >> newOKButtonIn: aThemedMorph for: aModel getEnabled: enabledSel [
 		action: #ok
 		arguments: nil
 		getEnabled: enabledSel
-		label: 'OK' translated
-		help: 'Apply changes and close the window' translated
+		label: 'OK'
+		help: 'Apply changes and close the window'
 ]
 
 { #category : 'morph creation' }
@@ -3520,8 +3520,8 @@ UITheme >> newYesButtonIn: aThemedMorph for: aModel [
 			action: #yes
 			arguments: nil
 			getEnabled: nil
-			label: 'Yes' translated
-			help: 'Answer yes and close the window' translated)
+			label: 'Yes'
+			help: 'Answer yes and close the window')
 		hResizing: #rigid;
 		vResizing: #rigid
 ]

@@ -44,7 +44,7 @@ ImagePreviewMorph >> image: form size: imageSize [
 				image: form
 				size: imageSize.
 			self textMorph
-				contents: ('{1} x {2} pixels' translated
+				contents: ('{1} x {2} pixels'
 							format: {form width asString. form height asString})]
 ]
 

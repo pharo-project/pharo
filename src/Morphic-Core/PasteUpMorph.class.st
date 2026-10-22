@@ -259,7 +259,7 @@ PasteUpMorph >> contentsMenu: aMenu [
 
 { #category : 'menu & halo' }
 PasteUpMorph >> contentsMenuTitle [
-	^ 'Contents' translated
+	^ 'Contents'
 ]
 
 { #category : 'accessing' }
@@ -495,7 +495,7 @@ PasteUpMorph >> gridVisibleString [
 	^ (self gridVisible
 		ifTrue: ['<yes>']
 		ifFalse: ['<no>'])
-		, 'show grid when gridding' translated
+		, 'show grid when gridding'
 ]
 
 { #category : 'gridding' }
@@ -518,7 +518,7 @@ PasteUpMorph >> griddingString [
 	^ (self griddingOn
 		ifTrue: ['<yes>']
 		ifFalse: ['<no>'])
-		, 'use gridding' translated
+		, 'use gridding' 
 ]
 
 { #category : 'event handling' }

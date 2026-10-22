@@ -172,7 +172,7 @@ MorphExtension >> inspectElement [
 	key := self morphicUIManager
 				chooseFrom: self sortedPropertyNames
 				values: self sortedPropertyNames
-				title: 'Inspect which property?' translated.
+				title: 'Inspect which property?'.
 	key
 		ifNil: [^ self].
 	obj := otherProperties

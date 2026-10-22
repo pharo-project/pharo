@@ -15,7 +15,7 @@ RubPlainTextMode class >> editingModeMenuOn: aBuilder [
 
 	<contextMenu>
 	<RubEditingModeMenu>
-	(aBuilder item: self label translated)
+	(aBuilder item: self label)
 		action: [:model | model textArea editingMode: self new ]
 ]
 
@@ -30,10 +30,10 @@ RubPlainTextMode class >> fontMenuOn: aBuilder [
 		label: 'Font...';
 		withSeparatorAfter;
 		with: [
-					(aBuilder item: #'Set font...' translated)
+					(aBuilder item: #'Set font...')
 						keyText: 'k';
 						selector: #offerFontMenu.
-					(aBuilder item: #'Set alignment...' translated)
+					(aBuilder item: #'Set alignment...')
 						selector: #chooseAlignment;
 						withSeparatorAfter ]
 ]
@@ -58,50 +58,50 @@ RubPlainTextMode class >> menuOn: aBuilder [
 	<contextMenu>
 	<RubPlainTextMenu>
 
-	(aBuilder item: #'Find...' translated)
+	(aBuilder item: #'Find...')
 		keyText: 'f';
 		selector: #find;
 		iconName: #smallFind.
-	(aBuilder item: #'Find again' translated)
+	(aBuilder item: #'Find again')
 		keyText: 'g';
 		selector: #findAgain;
 		iconName: #smallFind.
-	(aBuilder item: #'Set search string' translated)
+	(aBuilder item: #'Set search string')
 		keyText: 'h';
 		selector: #setSearchString.
 	aBuilder model canChangeText
 		ifTrue: [
-			(aBuilder item: #Undo translated)
+			(aBuilder item: #Undo)
 				keyText: 'z';
 				selector: #undo;
 				iconName: #smallUndo;
 				withSeparatorAfter.
 			self fontMenuOn: aBuilder ].
-	(aBuilder item: #Copy translated)
+	(aBuilder item: #Copy)
 		keyText: 'c';
 		selector: #copySelection;
 		iconName: #smallCopy.
 	aBuilder model canChangeText
 		ifTrue: [
-			(aBuilder item: #Cut translated)
+			(aBuilder item: #Cut)
 				keyText: 'x';
 				selector: #cut;
 				iconName: #smallCut.
-			(aBuilder item: #Paste translated)
+			(aBuilder item: #Paste)
 				keyText: 'v';
 				selector: #paste;
 				iconName: #smallPaste.
-			(aBuilder item: #'Paste Recent' translated)
+			(aBuilder item: #'Paste Recent')
 				selector: #pasteRecent;
 				iconName: #smallCopy;
 				withSeparatorAfter.
 			(aBuilder model model isNotNil and: [ aBuilder model acceptAllowed ])
 				ifTrue: [
-					(aBuilder item: #Accept translated)
+					(aBuilder item: #Accept)
 						keyText: 's';
 						selector: #accept;
 						iconName: #smallOk.
-					(aBuilder item: #Cancel translated)
+					(aBuilder item: #Cancel)
 						keyText: 'l';
 						selector: #cancel;
 						iconName: #smallCancel ] ]

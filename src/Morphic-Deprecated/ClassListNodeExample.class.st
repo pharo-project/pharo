@@ -23,7 +23,7 @@ ClassListNodeExample >> classButton [
 		arguments: {}
 		getEnabled: #enabled
 		getLabel: nil
-		help: 'Open a browser on ' translated , self item name)
+		help: 'Open a browser on ' , self item name)
 			label: (self theme windowLabelForText: (self item name) , '...');
 			yourself
 ]

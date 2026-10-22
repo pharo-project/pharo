@@ -490,13 +490,13 @@ WidgetExample class >> exampleWindowWithToolbars [
 	| win fileMenu tools dock text holder |
 	win := StandardWindow new.
 	fileMenu := win newMenu.
-	fileMenu addToggle: 'Open' translated target: nil selector: #openFile.	"would be model"
+	fileMenu addToggle: 'Open' target: nil selector: #openFile.	"would be model"
 	fileMenu lastItem
 		font: win theme menuFont;
 		icon: (self iconNamed: #smallOpen);
 		keyText: 'Ctrl+O'.
 	fileMenu
-		addToggle: 'Save' translated
+		addToggle: 'Save'
 		target: nil
 		selector: #saveFile
 		getStateSelector: nil
@@ -506,7 +506,7 @@ WidgetExample class >> exampleWindowWithToolbars [
 		icon: (self iconNamed: #smallSave);
 		keyText: 'Ctrl+S'.
 	fileMenu
-		addToggle: 'Print...' translated
+		addToggle: 'Print...'
 		target: nil
 		selector: #print.
 	fileMenu lastItem
@@ -522,7 +522,7 @@ WidgetExample class >> exampleWindowWithToolbars [
 				arguments: nil
 				getEnabled: nil
 				labelForm: (self iconNamed: #smallOpen)
-				help: 'Open file' translated).	"if we had a model it would go here"
+				help: 'Open file').	"if we had a model it would go here"
 			(win
 				newButtonFor: nil
 				getState: nil
@@ -530,7 +530,7 @@ WidgetExample class >> exampleWindowWithToolbars [
 				arguments: nil
 				getEnabled: nil
 				labelForm: (self iconNamed: #smallSave)
-				help: 'Save file' translated).
+				help: 'Save file').
 			(win
 				newButtonFor: nil
 				getState: nil
@@ -538,7 +538,7 @@ WidgetExample class >> exampleWindowWithToolbars [
 				arguments: nil
 				getEnabled: nil
 				labelForm: (self iconNamed: #smallPrint)
-				help: 'Print' translated)}.
+				help: 'Print')}.
 	holder := NewValueHolder new.
 	text := win
 		newTextEditorFor: holder
@@ -546,10 +546,10 @@ WidgetExample class >> exampleWindowWithToolbars [
 		setText: #value:.
 	dock := win newToolDockingBar.
 	dock
-		add: 'File' translated
+		add: 'File'
 			font: win theme menuBarFont
 			icon: (self iconNamed: #smallOpen)
-			help: 'File operations' translated
+			help: 'File operations'
 			subMenu: fileMenu;
 		addMorphBack: tools.
 	win

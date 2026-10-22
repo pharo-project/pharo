@@ -55,7 +55,7 @@ DTRFTPlugin >> pragmaForResultTrees [
 
 { #category : 'api' }
 DTRFTPlugin >> resultButtonHelp [
-	^ 'Browse the test selected in the results list.' translated
+	^ 'Browse the test selected in the results list.'
 ]
 
 { #category : 'api' }
@@ -71,10 +71,10 @@ DTRFTPlugin >> secondListLabel [
 
 { #category : 'api' }
 DTRFTPlugin >> startButtonHelp [
-	^ 'Run Tests' translated
+	^ 'Run Tests'
 ]
 
 { #category : 'api' }
 DTRFTPlugin >> startButtonLabel [
-	^ 'Run tests selected.' translated
+	^ 'Run tests selected.'
 ]
