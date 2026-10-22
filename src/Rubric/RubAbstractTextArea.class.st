@@ -142,7 +142,7 @@ RubAbstractTextArea class >> caseSensitiveFinds: aBoolean [
 { #category : 'accessing' }
 RubAbstractTextArea class >> defaultFindReplaceServiceClass [
 
-	^ defaultFindReplaceServiceClass ifNil: [ RubFindReplaceService ]
+	^ defaultFindReplaceServiceClass ifNil: [ RubNullFindReplaceService ]
 ]
 
 { #category : 'accessing' }
@@ -796,7 +796,7 @@ RubAbstractTextArea >> drawSubmorphsOn: aCanvas [
 	self resetEmbeddedMorphs.
 	super drawSubmorphsOn: aCanvas.
 	aCanvas rubParagraph: self paragraph bounds: self drawingBounds color: self textColor.
-	(scrollPane isNil and: [ self readOnly not and: [ self hasKeyboardFocus or: [ self hasFindReplaceFocus ] ] ])
+	(scrollPane isNil and: [ self readOnly not and: [ self hasKeyboardFocus ] ])
 		ifTrue: [self drawKeyboardFocusOn: aCanvas ].
 	self drawEmbeddedMorphsOn: aCanvas
 ]
@@ -1156,11 +1156,6 @@ RubAbstractTextArea >> hasDecorator: aDecorator [
 { #category : 'accessing - decorators' }
 RubAbstractTextArea >> hasDecoratorNamed: aKey [
 	^ self paragraph hasDecoratorNamed: aKey
-]
-
-{ #category : 'find-replace' }
-RubAbstractTextArea >> hasFindReplaceFocus [
-	^ self findReplaceService dialogIsActiveFor: self
 ]
 
 { #category : 'accessing - editing state' }
