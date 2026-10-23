@@ -6,7 +6,7 @@ This smell arises when a method is implemented but never sent. If a method is no
 		self deprecated: ''Use bar instead ''. 
 		^ self bar
 		 
-NOTE: the rule updates its data with messages send in new methods, but does not remove messages till the next image startup. The reason is that it would be to slow to re-calculate the data at each method removal.
+NOTE: the rule updates its data with messages send in new and modified methods, but does not remove messages till the next image startup. The reason is that it would be to slow to re-calculate the data at each method removal.
 
 It can be forced to update by executing:
 
@@ -28,7 +28,7 @@ ReImplementedNotSentRule class >> allMessages [
 	"return all 'message sends' in the system and cache them"
 
 	^ allMessages ifNil: [
-		  allMessages := IdentitySet new.
+		  allMessages := IdentityBag new.
 		  Smalltalk globals allBehaviors do: [ :behavior | behavior methodsDo: [ :method | allMessages addAll: method messages ] ].
 		  allMessages ]
 ]
@@ -141,13 +141,5 @@ ReImplementedNotSentRule >> basicCheck: aMethod [
 	For example, if a method calls itself 3 times, we consider that it is sent only if 4 messages in the system send them."
 	occurrencesToFind := aMethod messages occurrencesOf: aMethod selector.
 
-	^ self class allMessages noneSatisfy: [ :message |
-		  message = aMethod selector
-			  ifTrue: [
-				  occurrencesToFind = 0
-					  ifTrue: [ true ]
-					  ifFalse: [
-						  occurrencesToFind := occurrencesToFind - 1.
-						  false ] ]
-			  ifFalse: [ false ] ]
+	^ (self class allMessages occurrencesOf: aMethod selector) <= occurrencesToFind
 ]
