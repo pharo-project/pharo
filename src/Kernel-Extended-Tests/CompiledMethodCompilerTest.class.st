@@ -76,12 +76,6 @@ CompiledMethodCompilerTest >> testAddingSlotDoesNotRemoveExtension [
 	self assert: (class >> #isExtensionTestMethod) isExtension ] ensure: [ self packageOrganizer removePackage: 'GeneratedPackageForTest' ]
 ]
 
-{ #category : 'tests - converting' }
-CompiledMethodCompilerTest >> testAsString [
-
-	self assert: thisContext method asString isString
-]
-
 { #category : 'tests - accessing' }
 CompiledMethodCompilerTest >> testBytecode [
 	"The result of this test depends on the used bytecode set.

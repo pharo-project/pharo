@@ -89,7 +89,7 @@ MCGitBasedNetworkRepository class >> downloadZipArchive: url to: outputFileName 
 	outputFileName asFileReference ensureDelete.
 	client := ZnClient new.
 	[ :bar |
-	bar title: 'Download: ' , url asString , ' to ' , outputFileName.
+	bar title: 'Download: ' , url displayString , ' to ' , outputFileName.
 	[
 	client
 		url: url;

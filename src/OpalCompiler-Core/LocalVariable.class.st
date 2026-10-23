@@ -61,7 +61,7 @@ LocalVariable >> asDoItVariableFrom: aContext [
 
 { #category : 'converting' }
 LocalVariable >> asString [
-
+	self deprecated: 'Do not use asString when you need displayString'.
 	^ self name
 ]
 

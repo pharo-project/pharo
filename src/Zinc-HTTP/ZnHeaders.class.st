@@ -198,7 +198,7 @@ ZnHeaders >> contentType [
 
 { #category : 'accessing' }
 ZnHeaders >> contentType: object [
-	self at: 'Content-Type' put: object asString
+	self at: 'Content-Type' put: object printString
 ]
 
 { #category : 'private' }
