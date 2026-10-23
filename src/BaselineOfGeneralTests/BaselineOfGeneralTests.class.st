@@ -68,7 +68,6 @@ BaselineOfGeneralTests >> baseline: spec [
 				package: 'Zinc-Resource-Meta-Tests';
 				package: 'Zinc-HTTP-Examples';
 				package: 'Zinc-Tests';
-				"requires Zinc-Resource-Meta-Tests"package: 'System-Identification-Tests';
 				package: 'Transcript-NonInteractive-Tests';
 				package: 'PharoDocComment-Tests' "standalone" ]
 ]

@@ -82,6 +82,9 @@ GlobalIdentifier class >> startUp: resuming [
 { #category : 'accessing' }
 GlobalIdentifier class >> uniqueInstance [
 	"self uniqueInstance"
+	self
+		deprecated: 'System-Identification is deprecated and will be removed in a future release. Use pharo-contributions/System-Identification instead.'
+		transformWith: ''.
 	uniqueInstance ifNil: [ self initializeUniqueInstance ].
 	^ uniqueInstance
 ]
