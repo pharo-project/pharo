@@ -10,7 +10,7 @@ Class {
 OupsDebuggerSelectionStrategyTest >> setUp [
 	
 	super setUp.
-	('Running: ' , testSelector asString , ' from ' , self class name) traceCr.
+	('Running: ' , testSelector asString , ' from ' , self class name) traceNewLine.
 ]
 
 { #category : 'tests - debugging' }

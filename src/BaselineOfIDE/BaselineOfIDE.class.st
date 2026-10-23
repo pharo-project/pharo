@@ -215,7 +215,7 @@ BaselineOfIDE >> loadIceberg [
 			               yourself.
 
 		(self classNamed: #IceCredentialStore) current storeCredential: credentials forHostname: 'github.com'.
-		'Using authentification for Github API' traceCr ].
+		'Using authentification for Github API' traceNewLine ].
 
 	self registerPharo.
 	self registerProject: 'Spec2' baseline: 'Spec2' otherBaselines: #('SpecCore').
