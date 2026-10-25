@@ -1087,6 +1087,13 @@ ReflectivityReificationTest >> testReifyMethodSelector [
 ]
 
 { #category : 'tests - method' }
+ReflectivityReificationTest >> testReifyMethodSender [
+
+	self assert: RFSenderReification new genForASTMethodNode formattedCode
+		equals: 'thisContext sender receiver'
+]
+
+{ #category : 'tests - method' }
 ReflectivityReificationTest >> testReifyMethodThisContext [
 	| sendNode instance |
 	sendNode := (ReflectivityExamples >> #exampleMethod) ast.
