@@ -1,5 +1,9 @@
 "
-I am a Spec dialog used for find & replace service. I am currently partly dependent on Morphic backend because of more user friendly keyboard manipulation.
+I am the find and replace service used by the Rubric text areas that support find and replace.
+
+I open the Spec dialog SpRubFindReplaceDialog and forward the find and replace requests to it.
+
+The IDE baseline installs me as the default service of RubEditingArea and RubTextFieldArea (see BaselineOfIDE); text areas without find and replace support use RubNullFindReplaceService instead.
 "
 Class {
 	#name : 'SpRubFindReplaceDialog',
@@ -16,8 +20,7 @@ Class {
 		'replaceButton',
 		'replaceAllButton',
 		'closeButton',
-		'replaceTextInput',
-		'replaceLabel'
+		'replaceTextInput'
 	],
 	#classInstVars : [
 		'textToFind',
@@ -26,40 +29,6 @@ Class {
 	#category : 'Rubric-SpecFindReplaceDialog',
 	#package : 'Rubric-SpecFindReplaceDialog'
 }
-
-{ #category : 'layout' }
-SpRubFindReplaceDialog class >> defaultLayout [
-
-	<spec>
-	^ SpBoxLayout newVertical
-		  add: #findInput expand: false;
-		  add: (SpGridLayout new
-				   beColumnHomogeneous;
-				   beRowHomogeneous;
-				   add: #regExpCheckBox atPoint: 1 @ 1;
-				   add: #backwardsCheckBox atPoint: 2 @ 1;
-				   add: #caseCheckBox atPoint: 1 @ 2;
-				   add: #wrapCheckBox atPoint: 2 @ 2;
-				   add: #entireCheckBox atPoint: 1 @ 3;
-				   yourself);
-		  addLast: (SpBoxLayout newHorizontal
-				   borderWidth: 5;
-				   spacing: 5;
-				   add: #replaceLabel
-				   expand: false
-				   fill: false
-				   padding: 0;
-				   add: #replaceTextInput;
-				   yourself);
-		  "addLast: (SpBoxLayout newHorizontal
-			borderWidth: 3;
-			spacing: 5;
-			add: #findButton;
-			add: #replaceButton;
-			add: #replaceAllButton;
-			add: #cancelButton);"
-			  yourself
-]
 
 { #category : 'accessing' }
 SpRubFindReplaceDialog class >> replacingText [
@@ -85,31 +54,47 @@ SpRubFindReplaceDialog class >> textToFind: aText [
 	textToFind := aText
 ]
 
-{ #category : 'morphic dependencies' }
-SpRubFindReplaceDialog >> assignEnterKeystrokeEventFor: aPresenter [
-	"Morphic dependent!"
-
-	aPresenter whenBuiltDo: [ :this | this widget announcer when: RubReturnEntered do: [ :ann | self find ] for: self ]
-]
-
-{ #category : 'morphic dependencies' }
-SpRubFindReplaceDialog >> closeWindowOnEscIn: aPresenter [
-	"Morphic dependent!"
-
-	aPresenter whenBuiltDo: [ :this |
-		this widget announcer when: RubKeystroke do: [ :ann | ann event keyCharacter = Character escape ifTrue: [ self window triggerCancelAction ] ] for: self ]
-]
-
 { #category : 'initialization' }
 SpRubFindReplaceDialog >> connectPresenters [
 
-    findInput whenTextChangedDo: [ :aText | self updateFindText: aText ].
-    replaceTextInput whenTextChangedDo: [ :aText | self replacingText: aText ]
+	findInput
+		whenTextChangedDo: [ :aText | self updateFindText: aText ];
+		whenSubmitDo: [ :text | self find ].
+
+	replaceTextInput whenTextChangedDo: [ :aText | self replacingText: aText ].
+
+	caseCheckBox whenChangedDo: [ :aBoolean | service caseSensitive: aBoolean ].
+	regExpCheckBox whenChangedDo: [ :aBoolean | service isRegex: aBoolean ].
+	entireCheckBox whenChangedDo: [ :aBoolean | service entireWordsOnly: aBoolean ].
+	wrapCheckBox whenChangedDo: [ :aBoolean | service wrapAround: aBoolean ].
+	backwardsCheckBox whenChangedDo: [ :aBoolean | service searchBackwards: aBoolean ]
+]
+
+{ #category : 'layout' }
+SpRubFindReplaceDialog >> defaultLayout [
+
+	<spec>
+	^ SpBoxLayout newVertical
+		  add: findInput expand: false;
+		  add: (SpGridLayout new
+				   beColumnHomogeneous;
+				   beRowHomogeneous;
+				   add: regExpCheckBox atPoint: 1 @ 1;
+				   add: backwardsCheckBox atPoint: 2 @ 1;
+				   add: caseCheckBox atPoint: 1 @ 2;
+				   add: wrapCheckBox atPoint: 2 @ 2;
+				   add: entireCheckBox atPoint: 1 @ 3;
+				   yourself);
+		  addLast: (SpBoxLayout newHorizontal
+				   spacing: 5;
+				   add: 'Replace with:' expand: false;
+				   add: replaceTextInput;
+				   yourself);
+		  yourself
 ]
 
 { #category : 'operations' }
 SpRubFindReplaceDialog >> find [
-	self updateService.
 	service find
 ]
 
@@ -161,8 +146,7 @@ SpRubFindReplaceDialog >> initializeDialogWindow: aDialogWindowPresenter [
 	aDialogWindowPresenter whenOpenedDo: [ findInput selectAll ].
 	aDialogWindowPresenter whenClosedDo: [
 			service findText: ''.
-			service discardDialog.
-			self updateService ]
+			service discardDialog ]
 ]
 
 { #category : 'initialization' }
@@ -175,9 +159,6 @@ SpRubFindReplaceDialog >> initializePresenters [
 	findInput text: self textToFind.
 	self updateFindText: self textToFind.
 
-	self closeWindowOnEscIn: findInput.
-	self assignEnterKeystrokeEventFor: findInput.
-
 	regExpCheckBox := self newCheckBox label: 'Regular expression'.
 	backwardsCheckBox := self newCheckBox label: 'Search backwards'.
 	caseCheckBox := self newCheckBox label: 'Case sensitive'.
@@ -187,12 +168,8 @@ SpRubFindReplaceDialog >> initializePresenters [
 	replaceTextInput := self newTextInput autoAccept: true.
 	self selectAllOnFocusIn: replaceTextInput.
 
-	self closeWindowOnEscIn: replaceTextInput.
-
 	replaceTextInput text: self replacingText.
 	service replaceText: replaceTextInput text.
-
-	replaceLabel := self newLabel label: 'Replace with:'.
 
 	self focusOrder
 		add: findInput;
@@ -211,7 +188,6 @@ SpRubFindReplaceDialog >> newReplacement [
 
 { #category : 'operations' }
 SpRubFindReplaceDialog >> replace [
-	self updateService.
 	self newReplacement.
 	service replace.
 	service find
@@ -219,7 +195,6 @@ SpRubFindReplaceDialog >> replace [
 
 { #category : 'operations' }
 SpRubFindReplaceDialog >> replaceAll [
-	self updateService.
 	self newReplacement.
 	service replaceAll
 ]
@@ -236,7 +211,7 @@ SpRubFindReplaceDialog >> replacingText: aText [
 	^ self class replacingText: aText
 ]
 
-{ #category : 'morphic dependencies' }
+{ #category : 'initialization' }
 SpRubFindReplaceDialog >> selectAllOnFocusIn: aPresenter [
 
 	aPresenter eventHandler whenFocusReceivedDo: [ :anEvent | replaceTextInput selectAll ]
@@ -299,14 +274,4 @@ SpRubFindReplaceDialog >> updateFromService [
 	entireCheckBox state: service entireWordsOnly.
 	wrapCheckBox state: service wrapAround.
 	backwardsCheckBox state: service searchBackwards
-]
-
-{ #category : 'private' }
-SpRubFindReplaceDialog >> updateService [
-
-	service caseSensitive: caseCheckBox state.
-	service isRegex: regExpCheckBox state.
-	service entireWordsOnly: entireCheckBox state.
-	service wrapAround: wrapCheckBox state.
-	service searchBackwards: backwardsCheckBox state
 ]
