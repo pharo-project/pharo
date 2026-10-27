@@ -24,10 +24,10 @@ StoredSettingsMergerTest >> testEmpty [
 
 { #category : 'tests' }
 StoredSettingsMergerTest >> testStoredSettings [
-	| numberOfNodeSettings |
-	numberOfNodeSettings := MockSettings nodeSettings size.
+	| numberOfSettings |
+	numberOfSettings := MockSettings settings size.
 	merger addStoredSettings: MockSettings storedSettings.
-	self assert: merger storedSettings size equals: numberOfNodeSettings.
+	self assert: merger storedSettings size equals: numberOfSettings.
 	merger addStoredSettings: MockSettings storedSettings.
-	self assert: merger storedSettings size equals: numberOfNodeSettings
+	self assert: merger storedSettings size equals: numberOfSettings
 ]
