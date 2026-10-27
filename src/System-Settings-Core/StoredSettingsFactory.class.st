@@ -1,7 +1,7 @@
 "
-I am responsible for creating new StoredSetting objects from existing SettingNodes. I know how to create a StoredSetting from a SettingNode.
+I am responsible for creating new StoredSetting objects from existing settings. I know how to create a StoredSetting from a setting.
 
-Collaborators: SystemSettingsPersistence
+Collaborators: SettingsManager
 
 Public API and Key Messages
 
@@ -130,11 +130,6 @@ StoredSettingsFactory >> visitLogicalFont: aLogicalFont [
 { #category : 'visitor' }
 StoredSettingsFactory >> visitObject: anObject [
 	self newStoredSetting realValue: anObject
-]
-
-{ #category : 'visitor' }
-StoredSettingsFactory >> visitPragmaSetting: aPragmaSetting [
-	"do nothing"
 ]
 
 { #category : 'visitor' }
