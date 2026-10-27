@@ -58,6 +58,12 @@ AbstractStoredSetting >> hash [
 ]
 
 { #category : 'testing' }
+AbstractStoredSetting >> isForSettingIdentifier: aSettingIdentifier [
+
+	^ self settingNodeIdentifier = aSettingIdentifier
+]
+
+{ #category : 'testing' }
 AbstractStoredSetting >> isForSettingNode: aSettingNode [
 	^ self settingNodeIdentifier = aSettingNode settingNodeIdentifier
 ]

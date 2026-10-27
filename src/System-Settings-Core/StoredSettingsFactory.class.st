@@ -29,22 +29,21 @@ Class {
 
 { #category : 'building' }
 StoredSettingsFactory >> from: aSettingNode [
+
 	storedSetting := nil.
-	aSettingNode item acceptSettings: self.
-	storedSetting ifNotNil: [
-		storedSetting settingNodeIdentifier: aSettingNode settingNodeIdentifier ].
+	aSettingNode acceptSettings: self.
+	storedSetting ifNotNil: [ storedSetting settingNodeIdentifier: aSettingNode settingIdentifier ].
 	^ storedSetting
 ]
 
 { #category : 'building' }
 StoredSettingsFactory >> fromSettingNodes: aCollectionOfSettingNodes [
+
 	storedSettings := OrderedCollection new.
 
 	aCollectionOfSettingNodes
-		select: [ :eachSettingNode |
-			eachSettingNode item hasValue ]
-		thenDo: [ :eachSettingNode |
-			(self from: eachSettingNode) ifNotNil: [ :aStoredNode | storedSettings add: aStoredNode ] ].
+		select: [ :eachSettingNode | eachSettingNode hasValue and: [ eachSettingNode isTransient not ] ]
+		thenDo: [ :eachSettingNode | (self from: eachSettingNode) ifNotNil: [ :aStoredNode | storedSettings add: aStoredNode ] ].
 
 	^ storedSettings
 ]
