@@ -13,10 +13,19 @@ Class {
 		'storedSettingsWriter',
 		'settingsFile'
 	],
+	#classInstVars : [
+		'lastSettingsComputerID'
+	],
 	#category : 'System-Settings-Core-Base-New',
 	#package : 'System-Settings-Core',
 	#tag : 'Base-New'
 }
+
+{ #category : 'cleanup' }
+SettingsManager class >> cleanUp [
+
+	lastSettingsComputerID := nil
+]
 
 { #category : 'accessing' }
 SettingsManager class >> defaultPreferencesFileReference [
@@ -36,6 +45,27 @@ SettingsManager class >> forSettings: aListOfSettings [
 	^ self new
 		settings: aListOfSettings;
 		yourself 
+]
+
+{ #category : 'instance creation' }
+SettingsManager class >> forSystemSettings [
+	"Answer a manager of the system settings (declared with <systemsettings>) stored in the default preferences file"
+
+	^ (self forPragmaNamed: #systemsettings)
+		  useDefaultPreferencesFile;
+		  yourself
+]
+
+{ #category : 'system startup' }
+SettingsManager class >> resumeSystemSettings [
+	"Load the stored system settings if they were not loaded yet on this computer"
+
+	| thisComputerID |
+	thisComputerID := GlobalIdentifier uniqueInstance computerUUID.
+	lastSettingsComputerID = thisComputerID ifTrue: [ ^ self ].
+
+	lastSettingsComputerID := thisComputerID.
+	self forSystemSettings loadSettings
 ]
 
 { #category : 'loading' }
