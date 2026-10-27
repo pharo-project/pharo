@@ -69,9 +69,9 @@ SystemNavigation class >> settingsOn: aBuilder [
 		target: self;
 		getSelector: #navigationClass;
 		setSelector: #navigationClass: ;
-		default: SystemNavigation;
+		defaultValue: SystemNavigation;
 		domainValues: { SystemNavigation }, SystemNavigation allSubclasses;
-		parent: #spotter
+		parentName: #spotter
 	
 ]
 

@@ -138,15 +138,15 @@ ClyFullBrowserMorph class >> settingsGroupOn: aBuilder [
 	<systemsettings>
 	(aBuilder group: #Calypso)
 		label: 'Calypso Browser';
-		parent: #codeBrowsing;
+		parentName: #codeBrowsing;
 		description: 'Settings related to the browser';
 		with: [
-			(aBuilder setting: #shouldDisplayProjectView)
-				label: 'Should display project view by default';
-				default: false;
-				target: self;
-				description:
-					'If true, Calypso will open a a project view. A project view list all the baselines in the current image as a project. A project can be open to display the packages inside of it. If false, displays the list of all packages present in the image.' ]
+				(aBuilder setting: #shouldDisplayProjectView)
+					label: 'Should display project view by default';
+					defaultValue: false;
+					target: self;
+					description:
+						'If true, Calypso will open a a project view. A project view list all the baselines in the current image as a project. A project can be open to display the packages inside of it. If false, displays the list of all packages present in the image.' ]
 ]
 
 { #category : 'accessing' }

@@ -198,7 +198,7 @@ EFSettingPreviewer2 class >> settingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder group: #EnlumineurFormatterExtra)
 		target: self;
-		parent: #codeFormatters;
+		parentName: #codeFormatters;
 		label: 'Formatter Previewer';
 		description: 'Open the setting previewer to edit the formatting options';
 		dialog: [ self dialogOpenBIPreviewer ]

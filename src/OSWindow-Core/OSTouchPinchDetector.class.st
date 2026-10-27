@@ -34,34 +34,35 @@ OSTouchPinchDetector class >> maxDistanceBetweenFingersLine: aNumber [
 
 { #category : 'settings' }
 OSTouchPinchDetector class >> maxDistanceBetweenFingersLineSettingsOn: aBuilder [
+
 	<systemsettings>
 	(aBuilder setting: #maxDistanceBetweenFingersLine)
 		target: self;
 		label: 'Max distance between fingers lines (%)';
-		default: 0.2;
-		description:
-				'The maximum distance between the two lines formed by the fingers';
-		parent: #pinchGesture
+		defaultValue: 0.2;
+		description: 'The maximum distance between the two lines formed by the fingers';
+		parentName: #pinchGesture
 ]
 
 { #category : 'settings' }
 OSTouchPinchDetector class >> minDistanceBeforeDetectionSettingsOn: aBuilder [
+
 	<systemsettings>
 	(aBuilder setting: #minDistanceBeforeDetection)
 		target: self;
 		label: 'Minimal fingers distance crossed (%)';
-		default: 0.05;
-		description:
-				'The distance, in percentage of the screen, that a finger of both fingers needs to travel before event detection';
-		parent: #pinchGesture
+		defaultValue: 0.05;
+		description: 'The distance, in percentage of the screen, that a finger of both fingers needs to travel before event detection';
+		parentName: #pinchGesture
 ]
 
 { #category : 'settings' }
 OSTouchPinchDetector class >> touchPinchSettingsOn: aBuilder [
+
 	<systemsettings>
 	(aBuilder group: #pinchGesture)
 		label: 'Pinch';
-		parent: #touchGestures
+		parentName: #touchGestures
 ]
 
 { #category : 'preconditions' }

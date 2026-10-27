@@ -47,14 +47,14 @@ OSSDL2BackendWindow class >> screenScaleFactorBaseDPI: aNumber [
 
 { #category : 'settings' }
 OSSDL2BackendWindow class >> settingsOn: aBuilder [
-	<systemsettings>
 
+	<systemsettings>
 	(aBuilder setting: #screenScaleFactorBaseDPI)
-		parent: #pharoSystem;
+		parentName: #pharoSystem;
 		label: 'SDL2 Screen Scale Factor Base DPI';
 		description: 'Set the screen scale factore base DPI for SDL2.';
 		target: self;
-		default: 96.0
+		defaultValue: 96.0
 ]
 
 { #category : 'accessing' }

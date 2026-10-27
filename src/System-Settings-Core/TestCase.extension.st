@@ -2,16 +2,16 @@ Extension { #name : 'TestCase' }
 
 { #category : '*System-Settings-Core' }
 TestCase class >> defaultTimeLimitSettingOn: aBuilder [
-	<systemsettings>
 
+	<systemsettings>
 	(aBuilder group: #sunit)
 		label: 'SUnit';
-		parent: #pharoSystem;
+		parentName: #pharoSystem;
 		description: 'SUnit';
 		with: [
-			(aBuilder setting: #defaultTimeLimitSecs)
-				target: self;
-				default: 10.0;
-				label: 'Default time limit for tests (secs)' ;
-				description: 'Detault time limit in seconds for test execution']
+				(aBuilder setting: #defaultTimeLimitSecs)
+					target: self;
+					defaultValue: 10.0;
+					label: 'Default time limit for tests (secs)';
+					description: 'Detault time limit in seconds for test execution' ]
 ]
