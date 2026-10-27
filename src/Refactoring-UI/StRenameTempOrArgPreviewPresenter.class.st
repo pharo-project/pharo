@@ -173,10 +173,13 @@ StRenameTempOrArgPreviewPresenter >> connectPresenters [
 
 	buttonCancel action: [ self closeWindow ].
 	buttonOk action: [ self accept ].
+	
+	newNameInput whenSubmitDo: [ :text |
+    				self terminateUpdateProcess.
+    				self updatePreviewForName: text .
+					nameIsValid ifTrue: [ self accept ]].
 		
 	newNameInput whenTextChangedDo: [ :text | self schedulePreviewUpdate: text ].
-	
-	newNameInput whenSubmitDo: [ :text | self accept ].
 
 	buttonApplyAnyway  whenActivatedDo: [ self applyAnyway ];
 							associatedRadioButtons: { buttonApplyTransformation }.
@@ -389,13 +392,8 @@ StRenameTempOrArgPreviewPresenter >> schedulePreviewUpdate: aString [
 	"Use a short delay to avoid updating the preview on every keystroke while keeping the UI responsive."
 
 	updateProcess ifNotNil: [ updateProcess terminate ].
-
-	updateProcess := [
-		                 200 milliSeconds wait.
-		                 self application defer: [
-				                 self validateName: aString.
-				                 self updateBehaviorPanelVisibility: aString.
-				                 self updateName ] ] fork
+	updateProcess := [ 200 milliSeconds wait.
+		                self application defer: [ self updatePreviewForName: aString ] ] fork
 ]
 
 { #category : 'accessing' }
@@ -480,6 +478,14 @@ StRenameTempOrArgPreviewPresenter >> updateOkButtonState [
 	nameIsValid
 		ifTrue: [ buttonOk enable ]
 		ifFalse: [ buttonOk disable ]
+]
+
+{ #category : 'accessing' }
+StRenameTempOrArgPreviewPresenter >> updatePreviewForName: aString [
+
+    self validateName: aString.
+    self updateBehaviorPanelVisibility: aString.
+    self updateName
 ]
 
 { #category : 'update' }
