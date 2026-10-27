@@ -41,8 +41,7 @@ SHCustomStyle class >> copyFromCurrentStyle [
 						(emphasis isKindOf: Symbol) ifFalse: [
 							emphasis := (' ' join: emphasis) asSymbol ].
 						entry at: 'color' put: (Color colorFrom: colorDesc).
-						entry at: 'emphasis' put: emphasis ] ].
-	SettingBrowser refreshAllSettingBrowsers
+						entry at: 'emphasis' put: emphasis ] ]
 ]
 
 { #category : 'private' }

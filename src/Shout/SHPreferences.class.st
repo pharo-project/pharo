@@ -118,18 +118,13 @@ SHPreferences class >> settingsOn: aBuilder [
 					defaultValue: 'Default'.
 				(aBuilder group: 'Edit Custom Style')
 					description: 'Change the Custom style to your liking.  You have to activate it for your changes to take effect.' ;
-					dialog: [
-							Smalltalk ui theme
-								newButtonIn: self
-								for: SHCustomStyle
-								getState: nil
-								action: #copyFromCurrentStyle
-								arguments: nil
-								getEnabled: nil
-								label: 'Copy from current style'
-								help:
-									'Initialize custom style to colors of the currently selected them' ];
 					with: [
+							(aBuilder button: #copyFromCurrentStyle)
+								order: 0;
+								target: SHCustomStyle;
+								label: 'Copy from current style';
+								description: 'Initialize custom style to colors of the currently selected style';
+								buttonLabel: 'Copy'.
 							SHCustomStyle groups keysAndValuesDo: [ :group :info |
 										(aBuilder setting: group , 'Style')
 											target: self;
