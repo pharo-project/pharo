@@ -72,14 +72,12 @@ GraphicFontSettings class >> fontSizeRowSettingsOn: aBuilder [
 ]
 
 { #category : 'private' }
-GraphicFontSettings class >> pickFont: aPresenter [
+GraphicFontSettings class >> pickFont [
 
 	FontChooser
 		openModalWithTitle: 'Font for all font'
 		initialFont: StandardFonts defaultFont
-		onAcceptDo: [ :aFont | self resetAllFontsTo: aFont ].
-
-	aPresenter ifNotNil: [ aPresenter window presenter announce: StSettingModelChanged ]
+		onAcceptDo: [ :aFont | self resetAllFontsTo: aFont ]
 ]
 
 { #category : 'fonts' }
@@ -135,7 +133,7 @@ GraphicFontSettings class >> standardFontsSettingsOn: aBuilder [
 		parentName: #appearance;
 		order: 4;
 		with: [
-			(aBuilder button: #pickFont:)
+			(aBuilder button: #pickFont)
 				order: 0;
 				description: 'Pick an unique font for all fonts of this category' ;
 				target: self;

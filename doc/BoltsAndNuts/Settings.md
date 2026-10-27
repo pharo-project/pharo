@@ -170,7 +170,7 @@ windowPositionStrategySettingsOn: aBuilder
 
 A button is a particular setting. It allows one to run an action directly from the settings browser. Imagine that you have changed some settings and that you need to evaluate a script in order to update some other objects.
 
-A button is declared by sending `button:` to the builder. When the button is clicked, its name is sent as a message to its target. If this message takes an argument, it receives the button presenter, which can be used to refresh the settings browser:
+A button is declared by sending `button:` to the builder. When the button is clicked, its name is sent as a message to its target. Then the settings browser refreshes the page, so that it shows the settings changed by the action:
 
 ```st
 GraphicFontSettings class>>standardFontsSettingsOn: aBuilder
@@ -178,18 +178,17 @@ GraphicFontSettings class>>standardFontsSettingsOn: aBuilder
 	(aBuilder group: #standardFonts)
 		...
 		with: [
-			(aBuilder button: #pickFont:)
+			(aBuilder button: #pickFont)
 				target: self;
 				label: 'Pick font for all';
 				buttonLabel: 'Pick'.
 			... ]
 
-GraphicFontSettings class>>pickFont: aPresenter
+GraphicFontSettings class>>pickFont
 	FontChooser
 		openModalWithTitle: 'Font for all font'
 		initialFont: StandardFonts defaultFont
-		onAcceptDo: [ :aFont | self resetAllFontsTo: aFont ].
-	aPresenter ifNotNil: [ aPresenter window presenter announce: StSettingModelChanged ]
+		onAcceptDo: [ :aFont | self resetAllFontsTo: aFont ]
 ```
 
 ### Transient setting
