@@ -234,7 +234,7 @@ ReRuleManager class >> subSettingsOn: aBuilder with: rules [
 			(aBuilder setting: rule enabledSettingID)
 				  selector: #enabled;
 				  target: rule;
-				  default: rule enabledByDefault;
+				  defaultValue: rule enabledByDefault;
 				  label: rule ruleName;
 				  description: rule rationale ]
 ]
