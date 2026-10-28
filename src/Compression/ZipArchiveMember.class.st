@@ -725,7 +725,7 @@ ZipArchiveMember >> extraFieldsIn: aByteArrayOrString [
 	^ fields
 ]
 
-{ #category : 'extraction-ui' }
+{ #category : 'extraction' }
 ZipArchiveMember >> extractInDirectory: aDirectory [
 	"Extract this entry into the given directory, keeping an existing file"
 

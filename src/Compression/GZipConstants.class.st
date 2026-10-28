@@ -29,12 +29,12 @@ Class {
 	#tag : 'Streams'
 }
 
-{ #category : 'pool initialization' }
+{ #category : 'accessing' }
 GZipConstants class >> gzipMagic [
 	^GZipMagic
 ]
 
-{ #category : 'pool initialization' }
+{ #category : 'class initialization' }
 GZipConstants class >> initialize [
 
 	GZipMagic := 16r8B1F. "GZIP magic number"
