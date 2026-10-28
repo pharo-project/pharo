@@ -27,7 +27,6 @@ Adler32 class >> update: adler from: start to: stop in: aCollection [
         }
         return (s2 << 16) + s1;
 "
-	<primitive: 'primitiveUpdateAdler32' module: 'ZipPlugin'>
 
 	| s1 s2 |
 	s1 := adler bitAnd: 16rFFFF.

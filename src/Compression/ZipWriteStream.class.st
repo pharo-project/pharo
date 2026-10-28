@@ -90,13 +90,6 @@ ZipWriteStream >> crc [
 	^crc
 ]
 
-{ #category : 'deflating' }
-ZipWriteStream >> deflateBlock: lastIndex chainLength: chainLength goodMatch: goodMatch [
-	"^DeflatePlugin doPrimitive:#primitiveDeflateBlock"
-	<primitive: 'primitiveDeflateBlock' module: 'ZipPlugin'>
-	^super deflateBlock: lastIndex chainLength: chainLength goodMatch: goodMatch
-]
-
 { #category : 'dynamic blocks' }
 ZipWriteStream >> dynamicBlockSizeFor: lTree and: dTree using: blTree and: blFreq [
 	"Compute the length for the current block using dynamic huffman trees"
