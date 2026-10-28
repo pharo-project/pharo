@@ -31,6 +31,12 @@ ZipArchiveTest >> assertLastModificationTimeFrom: endianStream expected: fileMod
 				and: fileModified + 2 seconds)
 ]
 
+{ #category : 'tests - members' }
+ZipArchiveTest >> reread: anArchive [
+
+	^ ZipArchive new readFrom: (ByteArray streamContents: [ :stream | anArchive writeTo: stream ]) readStream
+]
+
 { #category : 'running' }
 ZipArchiveTest >> setUp [
 
@@ -184,6 +190,18 @@ ZipArchiveTest >> testArchiveWithThousandFilesShouldWork [
 	] ensure: [
 		dir ensureDeleteAll.
 		(FileLocator temp / 'result.zip') ensureDelete. ]
+]
+
+{ #category : 'tests - members' }
+ZipArchiveTest >> testByteArrayMembersAreWrittenAsIs [
+
+	| bytes archive |
+	bytes := #[ 0 255 128 1 233 ].
+	zip addString: bytes as: 'stored.bin'.
+	zip addDeflateString: bytes as: 'deflated.bin'.
+	archive := self reread: zip.
+	self assert: (archive contentsOf: 'stored.bin') equals: bytes.
+	self assert: (archive contentsOf: 'deflated.bin') equals: bytes
 ]
 
 { #category : 'tests' }
@@ -630,6 +648,27 @@ ZipArchiveTest >> testStoredMemberWithCorrectCrc32IsRead [
 		self assert: member compressionMethod equals: 0. "CompressionStored"
 		self assert: member contents asString equals: 'Hello World'.
 		self deny: member isCorrupt ] ensure: [ readArchive close ]
+]
+
+{ #category : 'tests - members' }
+ZipArchiveTest >> testStoredStringMemberIsWrittenToAByteArrayStream [
+
+	zip addString: 'hello' as: 'a.txt'.
+	self assert: ((self reread: zip) contentsOf: 'a.txt') equals: 'hello' asByteArray
+]
+
+{ #category : 'tests - members' }
+ZipArchiveTest >> testStringMembersAreWrittenInUTF8 [
+
+	| text archive |
+	text := 'été ' , (String with: (Character value: 16r4E2D)).
+	zip addString: text as: 'stored.txt'.
+	zip addDeflateString: text as: 'deflated.txt'.
+	self assert: zip members first uncompressedSize equals: text utf8Encoded size.
+	archive := self reread: zip.
+	self assert: (archive contentsOf: 'stored.txt') equals: text utf8Encoded.
+	self assert: (archive contentsOf: 'deflated.txt') equals: text utf8Encoded.
+	self assert: (archive contentsOf: 'deflated.txt') utf8Decoded equals: text
 ]
 
 { #category : 'tests - accessing' }

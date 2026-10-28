@@ -122,13 +122,13 @@ ZipArchive >> addDeflateString: aString as: aFileName [
 	^ mbr
 ]
 
-{ #category : 'accessing' }
+{ #category : 'archive operations' }
 ZipArchive >> addSymbolicLink: aTargetString as: aFileName [
 	"Add a Unix symbolic link named aFileName pointing to aTargetString. The target
 	is stored in UTF-8, uncompressed, as Info-ZIP does."
 
 	| member |
-	member := self addString: aTargetString utf8Encoded asString as: aFileName.
+	member := self addString: aTargetString as: aFileName.
 	member desiredCompressionMethod: CompressionStored.
 	member beSymbolicLink.
 	^ member
