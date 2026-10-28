@@ -113,10 +113,12 @@ Archive >> extractMemberWithoutPath: aMemberOrName [
 
 { #category : 'archive operations' }
 Archive >> extractMemberWithoutPath: aMemberOrName inDirectory: dir [
+	"Extract the member directly into dir, under the last part of its name"
+
 	| member |
 	member := self member: aMemberOrName.
 	member ifNil: [ ^ nil ].
-	member extractToFileNamed: member asFileReference basename inDirectory: dir overwrite: true
+	member extractToFileNamed: member splitFileName last inDirectory: dir overwrite: true
 ]
 
 { #category : 'initialization' }

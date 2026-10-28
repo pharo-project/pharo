@@ -105,6 +105,23 @@ ZipArchiveExtractionTest >> testExtractAllToInformingKeepsExistingFiles [
 ]
 
 { #category : 'tests' }
+ZipArchiveExtractionTest >> testExtractMemberWithoutPath [
+
+	| archive |
+	archive := self archiveWith: 'read me' as: 'docs/guide/readme.txt'.
+	archive extractMemberWithoutPath: 'docs/guide/readme.txt' inDirectory: target.
+	self assert: (target children collect: #basename) asArray equals: #( 'readme.txt' ).
+	self assert: (target / 'readme.txt') contents equals: 'read me'
+]
+
+{ #category : 'tests' }
+ZipArchiveExtractionTest >> testExtractMissingMemberWithoutPathAnswersNil [
+
+	self assert: ((self archiveWith: 'x' as: 'a.txt') extractMemberWithoutPath: 'missing.txt' inDirectory: target) isNil.
+	self assert: target children isEmpty
+]
+
+{ #category : 'tests' }
 ZipArchiveExtractionTest >> testExtractWithOverwriteInDirectory [
 
 	target / 'a.txt' writeStreamDo: [ :s | s nextPutAll: 'older and longer' ].
