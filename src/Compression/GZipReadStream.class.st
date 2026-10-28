@@ -74,33 +74,57 @@ GZipReadStream class >> unzip: fullFileName to: pathName [
 { #category : 'initialization' }
 GZipReadStream >> on: aCollection from: firstIndex to: lastIndex [
 	"Check the header of the GZIP stream."
-	| method magic flags length |
+
 	super on: aCollection from: firstIndex to: lastIndex.
+	self readHeader
+]
+
+{ #category : 'initialization' }
+GZipReadStream >> readHeader [
+	"Read the header of a GZIP member (RFC 1952, section 2.3)"
+
+	| method magic flags length |
 	crc := 16rFFFFFFFF.
 	magic := self nextBits: 16.
-	(magic = GZipMagic)
-		ifFalse:[^self error:'Not a GZipped stream'].
+	magic = GZipMagic ifFalse: [ ^ self error: 'Not a GZipped stream' ].
 	method := self nextBits: 8.
-	(method = GZipDeflated)
-		ifFalse:[^self error:'Bad compression method'].
+	method = GZipDeflated ifFalse: [ ^ self error: 'Bad compression method' ].
 	flags := self nextBits: 8.
-	(flags anyMask: GZipEncryptFlag)
-		ifTrue:[^self error:'Cannot decompress encrypted stream'].
-	(flags anyMask: GZipReservedFlags)
-		ifTrue:[^self error:'Cannot decompress stream with unknown flags'].
+	(flags anyMask: GZipEncryptFlag) ifTrue: [ ^ self error: 'Cannot decompress encrypted stream' ].
+	(flags anyMask: GZipReservedFlags) ifTrue: [ ^ self error: 'Cannot decompress stream with unknown flags' ].
 	"Ignore stamp, extra flags, OS type"
-	self nextBits: 16; nextBits: 16. "stamp"
+	self
+		nextBits: 16;
+		nextBits: 16. "stamp"
 	self nextBits: 8. "extra flags"
 	self nextBits: 8. "OS type"
-	(flags anyMask: GZipContinueFlag) "Number of multi-part archive - ignored"
-		ifTrue:[self nextBits: 16].
-	(flags anyMask: GZipExtraField) "Extra fields - ignored"
-		ifTrue:[	length := self nextBits: 16.
-				1 to: length do:[:i| self nextBits: 8]].
-	(flags anyMask: GZipNameFlag) "Original file name - ignored"
-		ifTrue:[[(self nextBits: 8) = 0] whileFalse].
-	(flags anyMask: GZipCommentFlag) "Comment - ignored"
-		ifTrue:[[(self nextBits: 8) = 0] whileFalse]
+	(flags anyMask: GZipContinueFlag) ifTrue: [ self nextBits: 16 ]. "Number of multi-part archive - ignored"
+	(flags anyMask: GZipExtraField) ifTrue: [
+			length := self nextBits: 16.
+			1 to: length do: [ :i | self nextBits: 8 ] ]. "Extra fields - ignored"
+	(flags anyMask: GZipNameFlag) ifTrue: [ [ (self nextBits: 8) = 0 ] whileFalse ]. "Original file name - ignored"
+	(flags anyMask: GZipCommentFlag) ifTrue: [ [ (self nextBits: 8) = 0 ] whileFalse ] "Comment - ignored"
+]
+
+{ #category : 'private' }
+GZipReadStream >> skipSizeAndStartNextMember [
+	"Skip the ISIZE field ending the current member.
+	A GZIP file is a series of members (RFC 1952, section 2.2): if another member follows, read its header and continue decompressing."
+
+	sourceLimit - sourcePos >= 4 ifFalse: [ ^ self ].
+	sourcePos := sourcePos + 4.
+	self startsWithMagic ifFalse: [ ^ self ].
+	bitBuf := bitPos := 0.
+	self readHeader.
+	state := StateNewBlock
+]
+
+{ #category : 'private' }
+GZipReadStream >> startsWithMagic [
+	"Answer whether the next source bytes are the GZIP magic number, i.e. whether another member follows"
+
+	^ sourceLimit - sourcePos >= 2 and: [
+		  (source byteAt: sourcePos + 1) = (GZipMagic bitAnd: 16rFF) and: [ (source byteAt: sourcePos + 2) = (GZipMagic bitShift: -8) ] ]
 ]
 
 { #category : 'crc' }
@@ -111,12 +135,14 @@ GZipReadStream >> updateCrc: oldCrc from: start to: stop in: aCollection [
 
 { #category : 'crc' }
 GZipReadStream >> verifyCrc [
+
 	| stored |
 	stored := 0.
 	0 to: 24 by: 8 do: [ :i |
-		sourcePos >= sourceLimit ifTrue: [ ^ self crcError: 'No checksum (proceed to ignore)' ].
-		stored := stored + (self nextByte bitShift: i) ].
+			sourcePos >= sourceLimit ifTrue: [ ^ self crcError: 'No checksum (proceed to ignore)' ].
+			stored := stored + (self nextByte bitShift: i) ].
 	stored := stored bitXor: 16rFFFFFFFF.
 	stored = crc ifFalse: [ ^ self crcError: 'Wrong checksum (proceed to ignore)' ].
-	^stored
+	self skipSizeAndStartNextMember.
+	^ stored
 ]
