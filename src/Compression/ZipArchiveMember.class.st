@@ -31,9 +31,7 @@ Class {
 		'compressedSize',
 		'uncompressedSize',
 		'readDataRemaining',
-		'headerStartPosition',
-		'usesZip64',
-		'writesExtendedTimestamp'
+		'headerStartPosition'
 	],
 	#pools : [
 		'ZipFileConstants'
@@ -42,6 +40,43 @@ Class {
 	#package : 'Compression',
 	#tag : 'Archives'
 }
+
+{ #category : 'compression methods' }
+ZipArchiveMember class >> compressionMethodNameFor: anInteger [
+
+	^ self compressionMethodNames at: anInteger ifAbsent: [ 'unknown' ]
+]
+
+{ #category : 'compression methods' }
+ZipArchiveMember class >> compressionMethodNames [
+	"Compression methods of APPNOTE 4.4.5"
+
+	^ Dictionary newFrom: {
+			  (0 -> 'stored').
+			  (1 -> 'shrunk').
+			  (2 -> 'reduced (factor 1)').
+			  (3 -> 'reduced (factor 2)').
+			  (4 -> 'reduced (factor 3)').
+			  (5 -> 'reduced (factor 4)').
+			  (6 -> 'imploded').
+			  (7 -> 'tokenized').
+			  (8 -> 'deflated').
+			  (9 -> 'Deflate64').
+			  (10 -> 'PKWARE DCL imploded').
+			  (12 -> 'bzip2').
+			  (14 -> 'LZMA').
+			  (16 -> 'IBM z/OS CMPSC').
+			  (18 -> 'IBM TERSE').
+			  (19 -> 'IBM LZ77 z').
+			  (20 -> 'Zstandard (deprecated id)').
+			  (93 -> 'Zstandard').
+			  (94 -> 'MP3').
+			  (95 -> 'XZ').
+			  (96 -> 'JPEG variant').
+			  (97 -> 'WavPack').
+			  (98 -> 'PPMd').
+			  (99 -> 'AE-x encryption') }
+]
 
 { #category : 'accessing' }
 ZipArchiveMember class >> cp437HighCodePoints [
@@ -52,6 +87,20 @@ ZipArchiveMember class >> cp437HighCodePoints [
 	     9559 9565 9564 9563 9488 9492 9524 9516 9500 9472 9532 9566 9567 9562 9556 9577 9574 9568 9552 9580 9575 9576 9572 9573 9561
 	     9560 9554 9555 9579 9578 9496 9484 9608 9604 9612 9616 9600 945 223 915 960 931 963 181 964 934 920 937 948 8734 966 949 8745
 	     8801 177 8805 8804 8992 8993 247 8776 176 8729 183 8730 8319 178 9632 160 )
+]
+
+{ #category : 'compression methods' }
+ZipArchiveMember class >> decompressorForMethod: anInteger [
+	"Answer a block decompressing a ByteArray compressed with the compression method anInteger, or nil.
+	Stored and deflated data are handled by the members themselves. Other compression methods can be supported by a class side method taking the compressed ByteArray and answering the decompressed one, with the pragma <zipDecompressorForMethod: anInteger>."
+
+	^ (Pragma allNamed: #zipDecompressorForMethod:)
+		  detect: [ :pragma | (pragma argumentAt: 1) = anInteger ]
+		  ifFound: [ :pragma |
+				  | receiver |
+				  receiver := pragma methodClass instanceSide.
+				  [ :bytes | receiver perform: pragma method selector with: bytes ] ]
+		  ifNone: [ nil ]
 ]
 
 { #category : 'instance creation' }
@@ -146,6 +195,14 @@ ZipArchiveMember >> bitFlagToWrite [
 		  ifFalse: [ self bitFlag bitOr: LanguageEncodingFlag ]
 ]
 
+{ #category : 'testing' }
+ZipArchiveMember >> canDecompress [
+	"Answer whether my data can be extracted: it is stored, deflated, or a decompressor is registered for its compression method"
+
+	^ compressionMethod = CompressionStored or: [
+		  compressionMethod = CompressionDeflated or: [ (self class decompressorForMethod: compressionMethod) isNotNil ] ]
+]
+
 { #category : 'accessing - extra fields' }
 ZipArchiveMember >> centralDirectoryExtraField [
 	"Answer the raw extra field of my central directory header (APPNOTE 4.5)"
@@ -233,6 +290,13 @@ ZipArchiveMember >> compressionMethod [
 	or CompressionStored or CompressionDeflated (others are possible but not handled)"
 
 	^compressionMethod
+]
+
+{ #category : 'testing' }
+ZipArchiveMember >> compressionMethodName [
+	"Answer the name of my compression method, as in APPNOTE 4.4.5"
+
+	^ self class compressionMethodNameFor: compressionMethod
 ]
 
 { #category : 'accessing' }
@@ -354,6 +418,37 @@ ZipArchiveMember >> decodeText: aByteArray [
 	^ [ bytes utf8Decoded ]
 		  on: ZnCharacterEncodingError
 		  do: [ self decodeCp437: bytes ]
+]
+
+{ #category : 'private - writing' }
+ZipArchiveMember >> decompressDataTo: aStream [
+	"Decompress data that is neither stored nor deflated, when a decompressor is registered for its compression method (see #decompressorForMethod:)"
+
+	| decompressor compressed data crc |
+	decompressor := self class decompressorForMethod: compressionMethod.
+	decompressor ifNil: [
+			^ ZipArchiveError signal:
+				  'compression method ' , compressionMethod printString , ' (' , self compressionMethodName
+				  , ') is not supported, cannot extract ' , fileName printString ].
+	readDataRemaining := compressedSize.
+	compressed := ByteArray new: compressedSize streamContents: [ :stream |
+			              [ readDataRemaining > 0 ] whileTrue: [
+					              | chunk |
+					              chunk := self readRawChunk: (4096 min: readDataRemaining).
+					              stream nextPutAll: chunk.
+					              readDataRemaining := readDataRemaining - chunk size ] ].
+	data := (decompressor value: compressed) asByteArray.
+	crc := (ZipWriteStream
+		        updateCrc: 16rFFFFFFFF
+		        from: 1
+		        to: data size
+		        in: data) bitXor: 16rFFFFFFFF.
+	crc = crc32 ifFalse: [
+			self isCorrupt: true.
+			^ CRCError signal: ('Wrong CRC-32 (expected {1} got {2})' format: {
+						   crc32 printStringHex.
+						   crc printStringHex }) ].
+	aStream nextPutAll: data
 ]
 
 { #category : 'accessing' }
@@ -560,6 +655,10 @@ ZipArchiveMember >> extractToFile: aFile [
 	| file |
 	file := aFile.
 	file exists ifTrue: [ ^ self ].
+	self canDecompress ifFalse: [
+			^ ZipArchiveError signal:
+				  'compression method ' , compressionMethod printString , ' (' , self compressionMethodName
+				  , ') is not supported, cannot extract ' , fileName printString ].
 	file binaryWriteStreamDo: [ :str | self extractTo: str ]
 ]
 
@@ -992,13 +1091,19 @@ ZipArchiveMember >> writeDataTo: aStream [
 	data may be produced by the compressor (i.e., '' zipped size > 0) and must
 	be stored in the file or else other utilities will treat the zip file as corrupt."
 
-	(compressionMethod = CompressionStored and: [ desiredCompressionMethod = CompressionDeflated ])
-		ifTrue: [ ^self compressDataTo: aStream ].
+	(compressionMethod = CompressionStored and: [ desiredCompressionMethod = CompressionDeflated ]) ifTrue: [
+		^ self compressDataTo: aStream ].
 
-	(compressionMethod = CompressionDeflated and: [ desiredCompressionMethod = CompressionStored ])
-		ifTrue: [ ^self uncompressDataTo: aStream ].
+	(compressionMethod = CompressionDeflated and: [ desiredCompressionMethod = CompressionStored ]) ifTrue: [
+		^ self uncompressDataTo: aStream ].
 
-	self copyDataTo: aStream
+	compressionMethod = desiredCompressionMethod ifTrue: [ ^ self copyDataTo: aStream ].
+
+	desiredCompressionMethod = CompressionStored ifTrue: [ ^ self decompressDataTo: aStream ].
+
+	ZipArchiveError signal:
+		'cannot write ' , fileName printString , ' with compression method ' , desiredCompressionMethod printString , ' ('
+		, (self class compressionMethodNameFor: desiredCompressionMethod) , ')'
 ]
 
 { #category : 'private - writing' }
@@ -1008,15 +1113,20 @@ ZipArchiveMember >> writeDataTo: aStream from: start to: finish [
 	This might do decompression, or straight copying, depending
 	on the values of compressionMethod and desiredCompressionMethod"
 
-	uncompressedSize = 0 ifTrue: [ ^self ].	"nothing to do because no data"
-	start > finish ifTrue: [ ^self ].
-	start > uncompressedSize ifTrue: [ ^self ].
+	uncompressedSize = 0 ifTrue: [ ^ self ]. "nothing to do because no data"
+	start > finish ifTrue: [ ^ self ].
+	start > uncompressedSize ifTrue: [ ^ self ].
 
-	(compressionMethod = CompressionStored and: [ desiredCompressionMethod = CompressionDeflated ])
-		ifTrue: [ ^self error: 'only supports uncompression or copying right now' ].
+	(compressionMethod = CompressionStored and: [ desiredCompressionMethod = CompressionDeflated ]) ifTrue: [
+		^ self error: 'only supports uncompression or copying right now' ].
 
-	(compressionMethod = CompressionDeflated and: [ desiredCompressionMethod = CompressionStored ])
-		ifTrue: [ ^self uncompressDataTo: aStream from: start to: finish ].
+	(compressionMethod = CompressionDeflated and: [ desiredCompressionMethod = CompressionStored ]) ifTrue: [
+		^ self uncompressDataTo: aStream from: start to: finish ].
+
+	(compressionMethod ~= CompressionStored and: [ desiredCompressionMethod = CompressionStored ]) ifTrue: [
+			| data |
+			data := ByteArray streamContents: [ :stream | self decompressDataTo: stream ].
+			^ aStream nextPutAll: (data copyFrom: start to: (finish min: data size)) ].
 
 	self copyRawDataTo: aStream from: start to: finish
 ]
