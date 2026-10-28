@@ -70,7 +70,7 @@ ZipFileMember >> hasEncryptedData [
 	stream position: localHeaderRelativeOffset + 6.
 	flag := stream next.
 	stream position: oldPosition.
-	^ (flag bitAnd: 1) ~= 0
+	^ (flag bitAnd: EncryptedFlag) ~= 0
 ]
 
 { #category : 'initialization' }
@@ -180,7 +180,7 @@ ZipFileMember >> readLocalDirectoryFileHeaderFrom: aStream [
 	sig := aStream next: 4.
 	sig = LocalFileHeaderSignature asByteArray ifFalse: [
 			aStream position: oldPos.
-			^ self error: 'bad LH signature at ' , localHeaderRelativeOffset printStringHex ].
+			^ ZipArchiveError signal: 'bad local header signature at ' , localHeaderRelativeOffset printStringHex ].
 
 	endianStream := ZnEndianessReadWriteStream on: aStream.
 	self readCommonHeaderFieldsFrom: endianStream.
@@ -231,7 +231,7 @@ ZipFileMember >> readZip64ValuesFromCentralDirectory [
 ZipFileMember >> rewindData [
 	super rewindData.
 	(stream isNil or: [ stream closed ])
-		ifTrue: [ self error: 'stream missing or closed' ].
+		ifTrue: [ ZipArchiveError signal: 'the archive stream of ' , fileName printString , ' is missing or closed' ].
 	stream position: (localHeaderRelativeOffset + 4).
 	self skipLocalDirectoryFileHeaderFrom: stream
 ]

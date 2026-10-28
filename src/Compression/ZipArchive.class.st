@@ -64,7 +64,7 @@ ZipArchive class >> findEndOfCentralDirectoryFrom: stream [
 	stream setToEnd.
 	fileLength := stream position.
 	"If the file length is less than 18 for the EOCD length plus 4 for the signature, we have a problem"
-	fileLength < 22 ifTrue: [^ self error: 'file is too short'].
+	fileLength < 22 ifTrue: [^ ZipArchiveError signal: 'file is too short to be a ZIP archive'].
 
 	seekOffset := 0.
 	pos := 0.
@@ -201,7 +201,7 @@ ZipArchive >> extractMember: aMember inDirectory: aDirectory overwrite: aBoolean
 ZipArchive >> forceZip64 [
 	"Answer whether Zip64 records are written even when sizes, offsets and the number of members fit without them"
 
-	^ forceZip64 == true
+	^ forceZip64
 ]
 
 { #category : 'accessing' }
@@ -228,9 +228,12 @@ ZipArchive >> hasZip64LocatorIn: stream before: eocdPosition [
 
 { #category : 'initialization' }
 ZipArchive >> initialize [
+
 	super initialize.
 	writeEOCDOffset := writeCentralDirectoryOffset := 0.
-	zipFileComment := ''
+	zipFileComment := ''.
+	forceZip64 := false.
+	writeExtendedTimestamps := false
 ]
 
 { #category : 'private' }
@@ -282,7 +285,7 @@ ZipArchive >> readEndOfCentralDirectoryFrom: aStream [
 
 	| signature zipFileCommentLength endianStream diskNumber centralDirectoryDiskNumber entriesOnThisDisk entries |
 	signature := self readSignatureFrom: aStream.
-	signature = EndOfCentralDirectorySignature ifFalse: [ ^ self error: 'bad signature at ' , aStream position printString ].
+	signature = EndOfCentralDirectorySignature ifFalse: [ ^ ZipArchiveError signal: 'bad end of central directory signature at ' , aStream position printString ].
 
 	endianStream := ZnEndianessReadWriteStream on: aStream.
 	diskNumber := endianStream nextLittleEndianNumber: 2. "# of this disk"
@@ -433,7 +436,7 @@ ZipArchive >> writeEndOfCentralDirectoryTo: aStream [
 ZipArchive >> writeExtendedTimestamps [
 	"Answer whether modification times are also written in extended timestamp extra fields"
 
-	^ writeExtendedTimestamps == true
+	^ writeExtendedTimestamps
 ]
 
 { #category : 'accessing' }

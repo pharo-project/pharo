@@ -378,6 +378,13 @@ ZipArchiveTest >> testParsePharoZipTimestamp [
 ]
 
 { #category : 'tests' }
+ZipArchiveTest >> testReadingDataThatIsNotAnArchiveRaisesZipArchiveError [
+
+	self should: [ ZipArchive new readFrom: #[ 1 2 3 ] readStream ] raise: ZipArchiveError.
+	self should: [ ZipArchive new readFrom: (ByteArray new: 100 withAll: 7) readStream ] raise: ZipArchiveError
+]
+
+{ #category : 'tests' }
 ZipArchiveTest >> testSetLastModification [
 	"The modification time survives writing and reading an archive.
 	DOS timestamps only have a 2 seconds resolution, so odd seconds are truncated."

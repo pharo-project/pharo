@@ -136,7 +136,7 @@ ZipArchiveMember >> beSymbolicLink [
 	"Mark me as a Unix symbolic link, with permissions rwxrwxrwx. My contents must be the link target."
 
 	fileAttributeFormat := FaUnix.
-	externalFileAttributes := self mapPermissionsFromUnix: 8r120777
+	externalFileAttributes := self mapPermissionsFromUnix: (SymbolicLinkAttrib bitOr: 8r777)
 ]
 
 { #category : 'accessing - spec fields' }
@@ -566,17 +566,16 @@ ZipArchiveMember >> desiredCompressionMethod [
 
 { #category : 'accessing' }
 ZipArchiveMember >> desiredCompressionMethod: aNumber [
-	"Set my desiredCompressionMethod
-	This is the method that will be used to write.
-	Answers prior desiredCompressionMethod.
-	Only CompressionDeflated or CompressionStored are valid arguments.
+	"Set the compression method that will be used to write me, and answer the previous one.
+	Stored and deflated data can always be written. Data read with another method can only
+	be copied as is, or extracted (stored) when a decompressor is registered for it
+	(see #decompressorForMethod:); #writeDataTo: signals a ZipArchiveError otherwise.
 	Changing to CompressionStored will change my desiredCompressionLevel
 	to CompressionLevelNone; changing to CompressionDeflated will change my
 	desiredCompressionLevel to CompressionLevelDefault.
 	The compressed size of an encrypted stored member includes its encryption header."
 
 	| old |
-	self flag: 'should be an error if unsupported, but valid zip compression is requested. Also, clean up test branches here'.
 	old := desiredCompressionMethod.
 	desiredCompressionMethod := aNumber.
 	desiredCompressionLevel := aNumber = CompressionDeflated
@@ -679,7 +678,7 @@ ZipArchiveMember >> extraFieldToWriteFrom: anExtraField zip64Values: aCollection
 
 	| extraField |
 	extraField := self extraField: anExtraField replacing: Zip64ExtraFieldId with: (self zip64DataFor: aCollection).
-	(writesExtendedTimestamp == true or: [ (self extraFieldIn: extraField withId: ExtendedTimestampExtraFieldId) isNotNil ]) ifTrue: [
+	(writesExtendedTimestamp or: [ (self extraFieldIn: extraField withId: ExtendedTimestampExtraFieldId) isNotNil ]) ifTrue: [
 		extraField := self extraField: extraField replacing: ExtendedTimestampExtraFieldId with: self extendedTimestampData ].
 	^ extraField
 ]
@@ -853,7 +852,9 @@ ZipArchiveMember >> hasContainedSymbolicLinkTarget [
 
 { #category : 'testing' }
 ZipArchiveMember >> hasDataDescriptor [
-	^ (self bitFlag bitAnd: 8)	~= 0 "GPBF:=HAS:=DATA:=DESCRIPTOR:=MASK"
+	"Answer whether my CRC-32 and sizes follow my data, in a data descriptor (bit 3)"
+
+	^ (self bitFlag bitAnd: DataDescriptorFlag) ~= 0
 ]
 
 { #category : 'testing' }
@@ -866,6 +867,7 @@ ZipArchiveMember >> hasEncryptedData [
 
 { #category : 'initialization' }
 ZipArchiveMember >> initialize [
+
 	super initialize.
 	lastModFileDateTime := DateAndTime epoch.
 	fileAttributeFormat := FaUnix.
@@ -884,6 +886,8 @@ ZipArchiveMember >> initialize [
 	crc32 := 0.
 	compressedSize := 0.
 	uncompressedSize := 0.
+	usesZip64 := false.
+	writesExtendedTimestamp := false.
 	self unixFileAttributes: DefaultFilePermissions
 ]
 
@@ -895,7 +899,7 @@ ZipArchiveMember >> isDirectory [
 { #category : 'testing' }
 ZipArchiveMember >> isEncrypted [
 	"Return true if this member is encrypted (this is unsupported)"
-	^ (self bitFlag bitAnd: 1) ~= 0
+	^ (self bitFlag bitAnd: EncryptedFlag) ~= 0
 ]
 
 { #category : 'testing' }
@@ -903,7 +907,7 @@ ZipArchiveMember >> isStronglyEncrypted [
 	"Answer whether I use AES (compression method 99) or PKWARE strong
 	encryption (bit 6), neither of which is supported"
 
-	^ self isEncrypted and: [ (self bitFlag bitAnd: 64) ~= 0 or: [ compressionMethod = 99 ] ]
+	^ self isEncrypted and: [ (self bitFlag bitAnd: StrongEncryptionFlag) ~= 0 or: [ compressionMethod = CompressionAES ] ]
 ]
 
 { #category : 'testing' }
@@ -911,7 +915,7 @@ ZipArchiveMember >> isSymbolicLink [
 	"Answer whether I am a Unix symbolic link: my Unix file type, in the high bits
 	of my external attributes, is S_IFLNK. My data is then the link target."
 
-	^ fileAttributeFormat = FaUnix and: [ (self unixFileAttributes bitAnd: 8r170000) = 8r120000 ]
+	^ fileAttributeFormat = FaUnix and: [ (self unixFileAttributes bitAnd: UnixFileTypeMask) = SymbolicLinkAttrib ]
 ]
 
 { #category : 'testing' }
@@ -1207,7 +1211,7 @@ ZipArchiveMember >> unixUid [
 ZipArchiveMember >> usesZip64 [
 	"Answer whether I was last written with Zip64 extended information (APPNOTE 4.5.3)"
 
-	^ usesZip64 == true
+	^ usesZip64
 ]
 
 { #category : 'accessing - spec fields' }
@@ -1303,7 +1307,7 @@ ZipArchiveMember >> writeDataDescriptorTo: aStream [
 	sizeLength := self usesZip64
 		              ifTrue: [ 8 ]
 		              ifFalse: [ 4 ].
-	aStream nextPutAll: #[ 16r50 16r4B 16r07 16r08 ].
+	aStream nextPutAll: DataDescriptorSignature.
 	endianStream := ZnEndianessReadWriteStream on: aStream.
 	endianStream nextLittleEndianNumber: 4 put: crc32.
 	endianStream nextLittleEndianNumber: sizeLength put: compressedSize.
@@ -1347,7 +1351,7 @@ ZipArchiveMember >> writeDataTo: aStream from: start to: finish [
 	start > uncompressedSize ifTrue: [ ^ self ].
 
 	(compressionMethod = CompressionStored and: [ desiredCompressionMethod = CompressionDeflated ]) ifTrue: [
-		^ self error: 'only supports uncompression or copying right now' ].
+		^ ZipArchiveError signal: 'a range of ' , fileName printString , ' can only be extracted, not compressed' ].
 
 	(compressionMethod = CompressionDeflated and: [ desiredCompressionMethod = CompressionStored ]) ifTrue: [
 		^ self uncompressDataTo: aStream from: start to: finish ].
@@ -1367,7 +1371,7 @@ ZipArchiveMember >> writeEncryptedDataTo: aStream [
 	byte is the high byte of the CRC-32."
 
 	| data header random crypto |
-	self bitFlag: ((self bitFlag bitOr: 1) bitClear: 8).
+	self bitFlag: ((self bitFlag bitOr: EncryptedFlag) bitClear: DataDescriptorFlag).
 	data := self plainDataToEncrypt.
 	random := Random new.
 	header := ByteArray new: ZipCrypto headerSize.
@@ -1403,7 +1407,7 @@ ZipArchiveMember >> writeMemberDataTo: aStream [
 
 	self hasEncryptedData ifTrue: [ ^ self copyEncryptedDataTo: aStream ].
 	password ifNil: [
-			self bitFlag: (self bitFlag bitClear: 1).
+			self bitFlag: (self bitFlag bitClear: EncryptedFlag).
 			^ self writeDataTo: aStream ].
 	self writeEncryptedDataTo: aStream
 ]
@@ -1435,7 +1439,7 @@ ZipArchiveMember >> writeTo: aStream forcingZip64: aBoolean [
 	aStream position: headerStartPosition.
 	self writeLocalFileHeaderTo: aStream.
 	"Verify that our calculation of the header size was correct!"
-	aStream position == headerEndPosition ifFalse: [ self error: 'Incorrect header size!' ].
+	aStream position == headerEndPosition ifFalse: [ ZipArchiveError signal: 'incorrect header size for ' , fileName printString ].
 	aStream position: dataEndPosition
 ]
 

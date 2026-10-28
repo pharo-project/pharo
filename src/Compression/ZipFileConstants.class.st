@@ -55,11 +55,14 @@ Class {
 	#superclass : 'SharedPool',
 	#classVars : [
 		'CentralDirectoryFileHeaderSignature',
+		'CompressionAES',
 		'CompressionDeflated',
 		'CompressionLevelDefault',
 		'CompressionLevelNone',
 		'CompressionStored',
+		'DataDescriptorFlag',
 		'DataDescriptorLength',
+		'DataDescriptorSignature',
 		'DefaultDirectoryPermissions',
 		'DefaultFilePermissions',
 		'DeflatingCompressionFast',
@@ -67,6 +70,7 @@ Class {
 		'DeflatingCompressionNormal',
 		'DeflatingCompressionSuperFast',
 		'DirectoryAttrib',
+		'EncryptedFlag',
 		'EndOfCentralDirectorySignature',
 		'ExtendedTimestampExtraFieldId',
 		'FaMsdos',
@@ -76,7 +80,10 @@ Class {
 		'IfaTextFile',
 		'LanguageEncodingFlag',
 		'LocalFileHeaderSignature',
+		'StrongEncryptionFlag',
+		'SymbolicLinkAttrib',
 		'UnicodePathExtraFieldId',
+		'UnixFileTypeMask',
 		'UnixOwnerExtraFieldId',
 		'Zip64EndOfCentralDirectoryLocatorSignature',
 		'Zip64EndOfCentralDirectorySignature',
@@ -109,6 +116,12 @@ ZipFileConstants class >> initialize [
 
 	"General purpose bit 11 (Language encoding flag, EFS): the file name and comment are UTF-8"
 	LanguageEncodingFlag := 16r800.
+	"General purpose bits 0, 3 and 6: encrypted data, data descriptor after the data, PKWARE strong encryption"
+	EncryptedFlag := 16r1.
+	DataDescriptorFlag := 16r8.
+	StrongEncryptionFlag := 16r40.
+	"Compression method used by WinZip AES encryption (AE-x)"
+	CompressionAES := 99.
 
 	"Zip64 (APPNOTE 4.3.14, 4.3.15 and 4.5.3): sizes, offsets and counts that do not fit are written as Zip64Limit or Zip64EntriesLimit, and the real values are stored in Zip64 records"
 	Zip64Limit := 16rFFFFFFFF.
@@ -129,13 +142,17 @@ ZipFileConstants class >> initialize [
 	DefaultFilePermissions := 8r0100666.
 	DirectoryAttrib := 8r040000.
 	FileAttrib := 8r0100000.
+	SymbolicLinkAttrib := 8r0120000.
+	UnixFileTypeMask := 8r0170000.
 
 	"0x02014b50 little-endian i.e. #(16r50 16r4B 16r01 16r02) [1]"
 	CentralDirectoryFileHeaderSignature := #[ 80 75 1 2 ].
 	"0x04034b50 little-endian i.e. #(16r50 16r4B 16r03 16r04) [1]"
 	LocalFileHeaderSignature := #[ 80 75 3 4 ].
 	"0x06054b50 little-endian i.e. #(16r50 16r4B 16r05 16r06) [1]"
-	EndOfCentralDirectorySignature := #[ 80 75 5 6 ]
+	EndOfCentralDirectorySignature := #[ 80 75 5 6 ].
+	"0x08074b50 little-endian: the optional signature of a data descriptor (APPNOTE 4.3.9.3)"
+	DataDescriptorSignature := #[ 80 75 7 8 ]
 
 	"[1] http://en.wikipedia.org/wiki/Zip_(file_format)#File_headers"
 ]

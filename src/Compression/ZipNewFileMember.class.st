@@ -42,17 +42,18 @@ ZipNewFileMember >> from: aFileReference [
 	reference := aFileReference.
 	entry := aFileReference entry.
 	compressedSize := uncompressedSize := entry size.
-	desiredCompressionMethod := compressedSize > 0 ifTrue: [ CompressionDeflated ] ifFalse: [ CompressionStored ].
-	self flag: 'When we replace Files with FileSystem, the following line won''t have to jump throught hoops (FS returns aDateAndTime)'.
+	desiredCompressionMethod := compressedSize > 0
+		                            ifTrue: [ CompressionDeflated ]
+		                            ifFalse: [ CompressionStored ].
 	self modifiedAt: entry modificationTime
 ]
 
 { #category : 'initialization' }
 ZipNewFileMember >> initialize [
+
 	super initialize.
 	externalFileName := ''.
-	compressionMethod := CompressionStored.
-	self mapPermissionsFromUnix: DefaultFilePermissions
+	compressionMethod := CompressionStored
 ]
 
 { #category : 'private' }
