@@ -105,6 +105,14 @@ ZipArchiveExtractionTest >> testExtractAllToInformingKeepsExistingFiles [
 ]
 
 { #category : 'tests' }
+ZipArchiveExtractionTest >> testExtractWithOverwriteInDirectory [
+
+	target / 'a.txt' writeStreamDo: [ :s | s nextPutAll: 'older and longer' ].
+	(self archiveWith: 'new' as: 'a.txt') members first extractWithOverwriteInDirectory: target.
+	self assert: (target / 'a.txt') contents equals: 'new'
+]
+
+{ #category : 'tests' }
 ZipArchiveExtractionTest >> testOverwriteFalseKeepsExistingFiles [
 
 	target / 'a.txt' writeStreamDo: [ :s | s nextPutAll: 'old' ].

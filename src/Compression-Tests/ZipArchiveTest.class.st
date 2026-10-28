@@ -205,6 +205,35 @@ ZipArchiveTest >> testCanUnzipFromStream [
 	self assert: (extracted / nestedFileToZip basename) contents equals: 'file contents'
 ]
 
+{ #category : 'tests - accessing' }
+ZipArchiveTest >> testCompressionConstants [
+
+	self assert: ZipArchive compressionStored equals: 0.
+	self assert: ZipArchive compressionLevelNone equals: 0.
+	self assert: ZipArchive compressionLevelDefault equals: 6
+]
+
+{ #category : 'tests - accessing' }
+ZipArchiveTest >> testContentsOf [
+
+	zip addString: 'hello' as: 'a.txt'.
+	self assert: (zip contentsOf: 'a.txt') equals: 'hello'.
+	self assert: (zip contentsOf: zip members first) equals: 'hello'.
+	self assert: (zip contentsOf: 'missing.txt') isNil
+]
+
+{ #category : 'tests - members' }
+ZipArchiveTest >> testCrc32StringIsEightHexDigits [
+
+	| bytes members |
+	zip addDeflateString: 'hello' as: 'a.txt'.
+	zip addDeflateString: '' as: 'empty.txt'.
+	bytes := ByteArray streamContents: [ :stream | zip writeTo: stream ].
+	members := (ZipArchive new readFrom: bytes readStream) members.
+	self assert: members first crc32String equals: '3610A686'.
+	self assert: members second crc32String equals: '00000000'
+]
+
 { #category : 'tests' }
 ZipArchiveTest >> testCreateWithRelativeNames [
 	"Test creating a zip with a relative tree of files, so that the tree will
@@ -347,6 +376,17 @@ ZipArchiveTest >> testDate29Feb2000 [
 	[ self assert: (readArchive memberNamed: 'bar') lastModTime equals: theDate ] ensure: [ readArchive close ]
 ]
 
+{ #category : 'tests - members' }
+ZipArchiveTest >> testDesiredCompressionLevelFollowsCompressionMethod [
+
+	| member |
+	member := zip addString: 'hello' as: 'a.txt'.
+	member desiredCompressionMethod: ZipArchive compressionDeflated.
+	self assert: member desiredCompressionLevel equals: ZipArchive compressionLevelDefault.
+	member desiredCompressionMethod: ZipArchive compressionStored.
+	self assert: member desiredCompressionLevel equals: ZipArchive compressionLevelNone
+]
+
 { #category : 'tests' }
 ZipArchiveTest >> testFilePermissions [
 
@@ -366,6 +406,37 @@ ZipArchiveTest >> testFilePermissions [
 	self assert: folderMember unixFileAttributes equals: 8r40755
 ]
 
+{ #category : 'tests - accessing' }
+ZipArchiveTest >> testHasMemberSuchThat [
+
+	zip addString: 'a' as: 'a.txt'.
+	self assert: (zip hasMemberSuchThat: [ :member | member fileName = 'a.txt' ]).
+	self deny: (zip hasMemberSuchThat: [ :member | member fileName = 'b.txt' ])
+]
+
+{ #category : 'tests - members' }
+ZipArchiveTest >> testIsTextFileIsWrittenAndRead [
+
+	| bytes members |
+	(zip addDeflateString: 'text' as: 'a.txt') isTextFile: true.
+	zip addDeflateString: 'binary' as: 'b.bin'.
+	self assert: zip members first isTextFile.
+	bytes := ByteArray streamContents: [ :stream | zip writeTo: stream ].
+	members := (ZipArchive new readFrom: bytes readStream) members.
+	self assert: members first isTextFile.
+	self deny: members second isTextFile.
+	members first isTextFile: false.
+	self deny: members first isTextFile
+]
+
+{ #category : 'tests - accessing' }
+ZipArchiveTest >> testMemberNames [
+
+	zip addString: 'a' as: 'a.txt'.
+	zip addString: 'b' as: 'dir/b.txt'.
+	self assert: zip memberNames asArray equals: #( 'a.txt' 'dir/b.txt' )
+]
+
 { #category : 'tests' }
 ZipArchiveTest >> testParsePharoZipTimestamp [
 	"Issue 6054. We're testing a private method. Eventually, the zip timestamp handling should be refactored; maybe a ZipTimestamp subclass of DosTimestamp"
@@ -377,11 +448,33 @@ ZipArchiveTest >> testParsePharoZipTimestamp [
 	self assert: dateAndTime equals: (DateAndTime fromString: '2011-09-29T04:01:06+00:00')
 ]
 
+{ #category : 'tests - writing' }
+ZipArchiveTest >> testPrependedDataSizeIsZeroWithoutPrependedData [
+
+	| bytes |
+	zip addDeflateString: 'hello' as: 'a.txt'.
+	bytes := ByteArray streamContents: [ :stream | zip writeTo: stream ].
+	self assert: (ZipArchive new readFrom: bytes readStream) prependedDataSize equals: 0
+]
+
 { #category : 'tests' }
 ZipArchiveTest >> testReadingDataThatIsNotAnArchiveRaisesZipArchiveError [
 
 	self should: [ ZipArchive new readFrom: #[ 1 2 3 ] readStream ] raise: ZipArchiveError.
 	self should: [ ZipArchive new readFrom: (ByteArray new: 100 withAll: 7) readStream ] raise: ZipArchiveError
+]
+
+{ #category : 'tests - accessing' }
+ZipArchiveTest >> testRemoveMember [
+
+	| removed |
+	zip addString: 'a' as: 'a.txt'.
+	zip addString: 'b' as: 'b.txt'.
+	removed := zip removeMember: 'a.txt'.
+	self assert: removed fileName equals: 'a.txt'.
+	self assert: zip memberNames asArray equals: #( 'b.txt' ).
+	self assert: (zip removeMember: 'missing.txt') isNil.
+	self assert: zip numberOfMembers equals: 1
 ]
 
 { #category : 'tests' }
@@ -466,6 +559,30 @@ ZipArchiveTest >> testStoredMemberWithCorrectCrc32IsRead [
 		self assert: member compressionMethod equals: 0. "CompressionStored"
 		self assert: member contents asString equals: 'Hello World'.
 		self deny: member isCorrupt ] ensure: [ readArchive close ]
+]
+
+{ #category : 'tests - accessing' }
+ZipArchiveTest >> testSymbolicLinkHandler [
+
+	| handler |
+	self assert: zip symbolicLinkHandler isNil.
+	handler := [ :member :file |  ].
+	zip symbolicLinkHandler: handler.
+	self assert: zip symbolicLinkHandler identicalTo: handler
+]
+
+{ #category : 'tests - writing' }
+ZipArchiveTest >> testWriteToPrependingFile [
+
+	| prefix bytes archive |
+	prefix := fs root / 'prefix.bin'.
+	prefix binaryWriteStreamDo: [ :stream | stream nextPutAll: #[ 1 2 3 4 5 6 7 ] ].
+	zip addDeflateString: 'hello' as: 'a.txt'.
+	bytes := ByteArray streamContents: [ :stream | zip writeTo: stream prependingFile: prefix ].
+	self assert: (bytes first: 7) equals: #[ 1 2 3 4 5 6 7 ].
+	archive := ZipArchive new readFrom: bytes readStream.
+	self assert: archive prependedDataSize equals: 7.
+	self assert: (archive contentsOf: 'a.txt') asString equals: 'hello'
 ]
 
 { #category : 'tests' }
@@ -584,6 +701,15 @@ ZipArchiveTest >> testZip [
 		self assert: (endianStream nextLittleEndianNumber: 4) equals: centralDirectoryOffset "from start of first disk".
 		self assert: (endianStream nextLittleEndianNumber: 2) equals: 0 "zip comment length".
 		self assert: str atEnd ]
+]
+
+{ #category : 'tests - writing' }
+ZipArchiveTest >> testZipFileCommentIsWrittenAndRead [
+
+	zip addDeflateString: 'hello' as: 'a.txt'.
+	zip zipFileComment: 'an archive comment'.
+	zip writeToFile: zipFile.
+	self assert: (ZipArchive new readFrom: zipFile) zipFileComment equals: 'an archive comment'
 ]
 
 { #category : 'tests' }

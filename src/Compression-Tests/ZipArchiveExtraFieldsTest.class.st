@@ -61,6 +61,23 @@ ZipArchiveExtraFieldsTest >> setUp [
 ]
 
 { #category : 'tests' }
+ZipArchiveExtraFieldsTest >> testClearExtraFields [
+
+	| archive |
+	archive := ZipArchive new.
+	archive writeExtendedTimestamps: true.
+	archive addDeflateString: 'Hello' as: 'hello.txt'.
+	self writeArchive: archive.
+	self readArchiveDo: [ :readArchive |
+			| member |
+			member := readArchive members first.
+			self deny: member centralDirectoryExtraField isEmpty.
+			member clearExtraFields.
+			self assert: member localExtraField equals: #[  ].
+			self assert: member centralDirectoryExtraField equals: #[  ] ]
+]
+
+{ #category : 'tests' }
 ZipArchiveExtraFieldsTest >> testExtendedTimestampsAreNotWrittenByDefault [
 	"Without extended timestamp, the DOS time has a precision of two seconds"
 
