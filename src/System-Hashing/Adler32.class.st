@@ -13,7 +13,7 @@ Class {
 	#tag : 'Checksums'
 }
 
-{ #category : 'primitives' }
+{ #category : 'computing' }
 Adler32 class >> update: adler from: start to: stop in: aCollection [
 	"Update crc using the Adler32 checksum technique from RFC1950"
 "

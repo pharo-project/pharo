@@ -231,7 +231,7 @@ CRC class >> crc32Table [
 			 16rB40BBE37	 16rC30C8EA1	 16r5A05DF1B	 16r2D02EF8D)
 ]
 
-{ #category : 'primitives' }
+{ #category : 'computing' }
 CRC class >> update: oldCrc from: start to: stop in: aCollection [
 	| newCrc |
 	newCrc := oldCrc.
