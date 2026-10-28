@@ -81,29 +81,29 @@ GZipReadStream >> on: aCollection from: firstIndex to: lastIndex [
 
 { #category : 'initialization' }
 GZipReadStream >> readHeader [
-	"Read the header of a GZIP member (RFC 1952, section 2.3)"
+	"Read the header of a GZIP member (RFC 1952, section 2.3.1)"
 
-	| method magic flags length |
+	| headerStart method magic flags length |
 	crc := 16rFFFFFFFF.
+	headerStart := sourcePos + 1.
 	magic := self nextBits: 16.
 	magic = GZipMagic ifFalse: [ ^ self error: 'Not a GZipped stream' ].
 	method := self nextBits: 8.
 	method = GZipDeflated ifFalse: [ ^ self error: 'Bad compression method' ].
 	flags := self nextBits: 8.
-	(flags anyMask: GZipEncryptFlag) ifTrue: [ ^ self error: 'Cannot decompress encrypted stream' ].
-	(flags anyMask: GZipReservedFlags) ifTrue: [ ^ self error: 'Cannot decompress stream with unknown flags' ].
-	"Ignore stamp, extra flags, OS type"
+	(flags anyMask: GZipReservedFlags) ifTrue: [ ^ self error: 'Cannot decompress stream with reserved flags set' ].
+	"Ignore modification time, extra flags, OS type"
 	self
 		nextBits: 16;
-		nextBits: 16. "stamp"
-	self nextBits: 8. "extra flags"
-	self nextBits: 8. "OS type"
-	(flags anyMask: GZipContinueFlag) ifTrue: [ self nextBits: 16 ]. "Number of multi-part archive - ignored"
+		nextBits: 16. "MTIME"
+	self nextBits: 8. "XFL"
+	self nextBits: 8. "OS"
 	(flags anyMask: GZipExtraField) ifTrue: [
 			length := self nextBits: 16.
 			1 to: length do: [ :i | self nextBits: 8 ] ]. "Extra fields - ignored"
 	(flags anyMask: GZipNameFlag) ifTrue: [ [ (self nextBits: 8) = 0 ] whileFalse ]. "Original file name - ignored"
-	(flags anyMask: GZipCommentFlag) ifTrue: [ [ (self nextBits: 8) = 0 ] whileFalse ] "Comment - ignored"
+	(flags anyMask: GZipCommentFlag) ifTrue: [ [ (self nextBits: 8) = 0 ] whileFalse ]. "Comment - ignored"
+	(flags anyMask: GZipHeaderCrcFlag) ifTrue: [ self verifyHeaderCrcFrom: headerStart ]
 ]
 
 { #category : 'private' }
@@ -145,4 +145,18 @@ GZipReadStream >> verifyCrc [
 	stored = crc ifFalse: [ ^ self crcError: 'Wrong checksum (proceed to ignore)' ].
 	self skipSizeAndStartNextMember.
 	^ stored
+]
+
+{ #category : 'crc' }
+GZipReadStream >> verifyHeaderCrcFrom: headerStart [
+	"FHCRC: the header ends with the two least significant bytes of the CRC-32 of all the header bytes before them"
+
+	| expected actual |
+	actual := (ZipWriteStream
+		           updateCrc: 16rFFFFFFFF
+		           from: headerStart
+		           to: sourcePos
+		           in: source) bitXor: 16rFFFFFFFF.
+	expected := self nextBits: 16.
+	(actual bitAnd: 16rFFFF) = expected ifFalse: [ self crcError: 'Wrong header CRC (proceed to ignore)' ]
 ]
