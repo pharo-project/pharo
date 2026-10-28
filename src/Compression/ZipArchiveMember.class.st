@@ -131,6 +131,14 @@ ZipArchiveMember >> asDirectory [
 	^ZipDirectoryMember new copyFrom: self
 ]
 
+{ #category : 'initialization' }
+ZipArchiveMember >> beSymbolicLink [
+	"Mark me as a Unix symbolic link, with permissions rwxrwxrwx. My contents must be the link target."
+
+	fileAttributeFormat := FaUnix.
+	externalFileAttributes := self mapPermissionsFromUnix: 8r120777
+]
+
 { #category : 'accessing - spec fields' }
 ZipArchiveMember >> bitFlag [
 	"Per .ZIP File Format Specification Version: 6.3.2:
@@ -805,11 +813,39 @@ ZipArchiveMember >> fileComment: aString [
 	fileComment := aString
 ]
 
+{ #category : 'accessing' }
+ZipArchiveMember >> fileInDirectory: aDirectory [
+	"Answer the file reference I would be extracted to under aDirectory"
+
+	^ (fileName findTokens: '/') inject: aDirectory into: [ :base :part | base / part ]
+]
+
 { #category : 'private - extra fields' }
 ZipArchiveMember >> fileNameFrom: aByteArray extraField: anExtraField [
 	"Decode the file name of a header, preferring the UTF-8 name of a matching Unicode path block"
 
 	^ (self unicodePathIn: anExtraField forNameBytes: aByteArray) ifNil: [ self decodeText: aByteArray ]
+]
+
+{ #category : 'testing' }
+ZipArchiveMember >> hasContainedSymbolicLinkTarget [
+	"Answer whether I am a symbolic link whose target stays inside the extraction
+	directory: it is relative, and its '..' components never climb above the root
+	of the archive, starting from the directory holding me."
+
+	| target depth |
+	self isSymbolicLink ifFalse: [ ^ false ].
+	target := self symbolicLinkTarget.
+	(target isEmpty or: [ target first = $/ or: [ target first = $\ or: [ target size > 1 and: [ (target at: 2) = $: ] ] ] ])
+		ifTrue: [ ^ false ].
+	depth := (fileName findTokens: '/') size - 1.
+	(target findTokens: '/\') do: [ :each |
+			each = '..'
+				ifTrue: [
+						depth := depth - 1.
+						depth < 0 ifTrue: [ ^ false ] ]
+				ifFalse: [ each = '.' ifFalse: [ depth := depth + 1 ] ] ].
+	^ true
 ]
 
 { #category : 'testing' }
@@ -865,6 +901,14 @@ ZipArchiveMember >> isStronglyEncrypted [
 	encryption (bit 6), neither of which is supported"
 
 	^ self isEncrypted and: [ (self bitFlag bitAnd: 64) ~= 0 or: [ compressionMethod = 99 ] ]
+]
+
+{ #category : 'testing' }
+ZipArchiveMember >> isSymbolicLink [
+	"Answer whether I am a Unix symbolic link: my Unix file type, in the high bits
+	of my external attributes, is S_IFLNK. My data is then the link target."
+
+	^ fileAttributeFormat = FaUnix and: [ (self unixFileAttributes bitAnd: 8r170000) = 8r120000 ]
 ]
 
 { #category : 'testing' }
@@ -1011,6 +1055,14 @@ ZipArchiveMember >> rewindData [
 ZipArchiveMember >> splitFileName [
 	"Answer my name split on slash boundaries. A directory will have a trailing empty string."
 	^ fileName findTokens: '/'
+]
+
+{ #category : 'accessing' }
+ZipArchiveMember >> symbolicLinkTarget [
+	"Answer the target of the symbolic link I represent, decoded from UTF-8"
+
+	self isSymbolicLink ifFalse: [ ZipArchiveError signal: fileName , ' is not a symbolic link' ].
+	^ self contents asByteArray utf8Decoded
 ]
 
 { #category : 'accessing' }

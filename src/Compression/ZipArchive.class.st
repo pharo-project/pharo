@@ -13,7 +13,8 @@ Class {
 		'writeCentralDirectoryOffset',
 		'writeEOCDOffset',
 		'forceZip64',
-		'writeExtendedTimestamps'
+		'writeExtendedTimestamps',
+		'symbolicLinkHandler'
 	],
 	#pools : [
 		'ZipFileConstants'
@@ -121,6 +122,18 @@ ZipArchive >> addDeflateString: aString as: aFileName [
 	^ mbr
 ]
 
+{ #category : 'accessing' }
+ZipArchive >> addSymbolicLink: aTargetString as: aFileName [
+	"Add a Unix symbolic link named aFileName pointing to aTargetString. The target
+	is stored in UTF-8, uncompressed, as Info-ZIP does."
+
+	| member |
+	member := self addString: aTargetString utf8Encoded asString as: aFileName.
+	member desiredCompressionMethod: CompressionStored.
+	member beSymbolicLink.
+	^ member
+]
+
 { #category : 'initialization' }
 ZipArchive >> close [
 	self members do: [:m | m close ]
@@ -160,7 +173,7 @@ ZipArchive >> extractAllTo: aDirectory informing: job [
 			(shouldUpdateInfos := (Time millisecondsSince: lastUpdate) >= 100) ifTrue: [
 					lastUpdate := Time millisecondClockValue.
 					job1 title: 'Extracting ' , entry fileName ].
-			entry extractInDirectory: aDirectory.
+			self extractMember: entry inDirectory: aDirectory.
 			barValue := barValue + 1.
 			shouldUpdateInfos ifTrue: [
 					job1 currentValue: barValue.
@@ -196,7 +209,7 @@ ZipArchive >> extractAllTo: aDirectory informing: aBar overwrite: allOverwrite [
 			ifTrue: [
 				lastUpdate := Time millisecondClockValue.
 				bar label: 'Extracting ' , entry fileName ].
-		entry extractInDirectory: aDirectory.
+		self extractMember: entry inDirectory: aDirectory.
 		barValue := barValue + 1.
 		shouldUpdateInfos ifTrue: [
 			bar value: barValue.
@@ -207,7 +220,29 @@ ZipArchive >> extractAllTo: aDirectory informing: aBar overwrite: allOverwrite [
 ZipArchive >> extractAllTo: aDirectory overwrite: overwriteAll [
 	"Extracts all elements to the given directory, overwriting existing entries if necessary. Does not use the UI for confirmation"
 
-	self members do: [ :entry | entry extractInDirectory: aDirectory withoutInformingOverwrite: overwriteAll ]
+	self members do: [ :entry |
+		self
+			extractMember: entry
+			inDirectory: aDirectory
+			otherwise: [ entry extractInDirectory: aDirectory withoutInformingOverwrite: overwriteAll ] ]
+]
+
+{ #category : 'private' }
+ZipArchive >> extractMember: aMember inDirectory: aDirectory [
+
+	self extractMember: aMember inDirectory: aDirectory otherwise: [ aMember extractInDirectory: aDirectory ]
+]
+
+{ #category : 'private' }
+ZipArchive >> extractMember: aMember inDirectory: aDirectory otherwise: aBlock [
+	"Extract aMember with my symbolicLinkHandler when it is a link and I have one,
+	else evaluate aBlock. The handler is only given a file inside aDirectory."
+
+	| file |
+	(symbolicLinkHandler notNil and: [ aMember isSymbolicLink ]) ifFalse: [ ^ aBlock value ].
+	file := aMember fileInDirectory: aDirectory.
+	aMember ensureExtractionTarget: file isInside: aDirectory.
+	^ symbolicLinkHandler value: aMember value: file
 ]
 
 { #category : 'accessing' }
@@ -382,6 +417,31 @@ ZipArchive >> readZip64EndOfCentralDirectoryFrom: stream before: eocdPosition [
 	centralDirectorySize := endianStream nextLittleEndianNumber: 8.
 	centralDirectoryOffsetWRTStartingDiskNumber := endianStream nextLittleEndianNumber: 8.
 	^ recordPosition - centralDirectorySize
+]
+
+{ #category : 'extraction' }
+ZipArchive >> skipSymbolicLinks [
+	"Do not extract members that are symbolic links"
+
+	self symbolicLinkHandler: [ :member :file |  ]
+]
+
+{ #category : 'accessing' }
+ZipArchive >> symbolicLinkHandler [
+
+	^ symbolicLinkHandler
+]
+
+{ #category : 'accessing' }
+ZipArchive >> symbolicLinkHandler: aBlock [
+	"Set the block used by #extractAllTo: and its variants to extract members that
+	are symbolic links. It is evaluated with the member and the file reference it
+	would be extracted to; it can create the link with an operating system facility,
+	or skip it. Consider checking #hasContainedSymbolicLinkTarget first, since links
+	pointing outside the extraction directory are a classic archive attack.
+	When nil, the default, a link is extracted as a regular file holding its target."
+
+	symbolicLinkHandler := aBlock
 ]
 
 { #category : 'private' }
