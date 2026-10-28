@@ -4,6 +4,9 @@ gzip is an integral part of the VM.
 Class {
 	#name : 'GZipReadStream',
 	#superclass : 'FastInflateStream',
+	#instVars : [
+		'header'
+	],
 	#pools : [
 		'GZipConstants'
 	],
@@ -71,19 +74,42 @@ GZipReadStream class >> unzip: fullFileName to: pathName [
 	^ newName
 ]
 
+{ #category : 'accessing' }
+GZipReadStream >> header [
+	"Answer the GZipHeader of the first member: original file name, comment, modification time..."
+
+	^ header
+]
+
+{ #category : 'private' }
+GZipReadStream >> nextBytes: anInteger [
+	"Read anInteger header bytes"
+
+	^ (1 to: anInteger) collect: [ :each | self nextBits: 8 ] as: ByteArray
+]
+
+{ #category : 'private' }
+GZipReadStream >> nextZeroTerminatedString [
+	"Read a zero terminated ISO 8859-1 header string (FNAME and FCOMMENT)"
+
+	^ String streamContents: [ :stream |
+			  | byte |
+			  [ (byte := self nextBits: 8) = 0 ] whileFalse: [ stream nextPut: (Character value: byte) ] ]
+]
+
 { #category : 'initialization' }
 GZipReadStream >> on: aCollection from: firstIndex to: lastIndex [
 	"Check the header of the GZIP stream."
 
 	super on: aCollection from: firstIndex to: lastIndex.
-	self readHeader
+	header := self readHeader
 ]
 
 { #category : 'initialization' }
 GZipReadStream >> readHeader [
-	"Read the header of a GZIP member (RFC 1952, section 2.3.1)"
+	"Read the header of a GZIP member (RFC 1952, section 2.3.1) and answer it"
 
-	| headerStart method magic flags length |
+	| headerStart method magic flags modificationTime newHeader |
 	crc := 16rFFFFFFFF.
 	headerStart := sourcePos + 1.
 	magic := self nextBits: 16.
@@ -92,18 +118,17 @@ GZipReadStream >> readHeader [
 	method = GZipDeflated ifFalse: [ ^ self error: 'Bad compression method' ].
 	flags := self nextBits: 8.
 	(flags anyMask: GZipReservedFlags) ifTrue: [ ^ self error: 'Cannot decompress stream with reserved flags set' ].
-	"Ignore modification time, extra flags, OS type"
-	self
-		nextBits: 16;
-		nextBits: 16. "MTIME"
+	newHeader := GZipHeader new.
+	newHeader isText: (flags anyMask: GZipAsciiFlag).
+	modificationTime := self nextBits: 32. "MTIME"
+	modificationTime = 0 ifFalse: [ newHeader modificationTime: (DateAndTime fromUnixTime: modificationTime) ].
 	self nextBits: 8. "XFL"
-	self nextBits: 8. "OS"
-	(flags anyMask: GZipExtraField) ifTrue: [
-			length := self nextBits: 16.
-			1 to: length do: [ :i | self nextBits: 8 ] ]. "Extra fields - ignored"
-	(flags anyMask: GZipNameFlag) ifTrue: [ [ (self nextBits: 8) = 0 ] whileFalse ]. "Original file name - ignored"
-	(flags anyMask: GZipCommentFlag) ifTrue: [ [ (self nextBits: 8) = 0 ] whileFalse ]. "Comment - ignored"
-	(flags anyMask: GZipHeaderCrcFlag) ifTrue: [ self verifyHeaderCrcFrom: headerStart ]
+	newHeader operatingSystem: (self nextBits: 8).
+	(flags anyMask: GZipExtraField) ifTrue: [ newHeader extraField: (self nextBytes: (self nextBits: 16)) ].
+	(flags anyMask: GZipNameFlag) ifTrue: [ newHeader fileName: self nextZeroTerminatedString ].
+	(flags anyMask: GZipCommentFlag) ifTrue: [ newHeader comment: self nextZeroTerminatedString ].
+	(flags anyMask: GZipHeaderCrcFlag) ifTrue: [ self verifyHeaderCrcFrom: headerStart ].
+	^ newHeader
 ]
 
 { #category : 'private' }
