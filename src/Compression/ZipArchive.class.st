@@ -11,7 +11,9 @@ Class {
 		'centralDirectoryOffsetWRTStartingDiskNumber',
 		'zipFileComment',
 		'writeCentralDirectoryOffset',
-		'writeEOCDOffset'
+		'writeEOCDOffset',
+		'forceZip64',
+		'writeExtendedTimestamps'
 	],
 	#pools : [
 		'ZipFileConstants'
@@ -212,9 +214,32 @@ ZipArchive >> extractAllTo: aDirectory overwrite: overwriteAll [
 ]
 
 { #category : 'accessing' }
+ZipArchive >> forceZip64 [
+	"Answer whether Zip64 records are written even when sizes, offsets and the number of members fit without them"
+
+	^ forceZip64 == true
+]
+
+{ #category : 'accessing' }
+ZipArchive >> forceZip64: aBoolean [
+	"When true, write Zip64 records (APPNOTE 4.5.3, 4.3.14 and 4.3.15) even when they are not needed.
+	They are written anyway for members or archives larger than 4GB, or with more than 65534 members."
+
+	forceZip64 := aBoolean
+]
+
+{ #category : 'accessing' }
 ZipArchive >> hasMemberSuchThat: aBlock [
 	"Answer whether we have a member satisfying the given condition"
 	^self members anySatisfy: aBlock
+]
+
+{ #category : 'private' }
+ZipArchive >> hasZip64LocatorIn: stream before: eocdPosition [
+
+	eocdPosition < 20 ifTrue: [ ^ false ].
+	stream position: eocdPosition - 20.
+	^ (stream next: 4) asByteArray = Zip64EndOfCentralDirectoryLocatorSignature
 ]
 
 { #category : 'initialization' }
@@ -227,6 +252,14 @@ ZipArchive >> initialize [
 { #category : 'private' }
 ZipArchive >> memberClass [
 	^ZipArchiveMember
+]
+
+{ #category : 'private' }
+ZipArchive >> needsZip64EndOfCentralDirectory [
+
+	^ self forceZip64 or: [
+			  members size >= Zip64EntriesLimit or: [
+				  writeCentralDirectoryOffset >= Zip64Limit or: [ writeEOCDOffset - writeCentralDirectoryOffset >= Zip64Limit ] ] ]
 ]
 
 { #category : 'accessing' }
@@ -258,30 +291,35 @@ ZipArchive >> readEndOfCentralDirectoryFrom: aStream [
 
 { #category : 'reading' }
 ZipArchive >> readFrom: aStreamOrFile [
+
 	| stream name eocdPosition |
 	stream := aStreamOrFile isStream
-		ifTrue: [ name := aStreamOrFile printString. aStreamOrFile ]
-		ifFalse: [ name := aStreamOrFile asFileReference fullName. aStreamOrFile asFileReference binaryReadStream ].
+		          ifTrue: [
+				          name := aStreamOrFile printString.
+				          aStreamOrFile ]
+		          ifFalse: [
+				          name := aStreamOrFile asFileReference fullName.
+				          aStreamOrFile asFileReference binaryReadStream ].
 	eocdPosition := self class findEndOfCentralDirectoryFrom: stream.
 	eocdPosition <= 0 ifTrue: [ ZipArchiveError signal: 'can''t find EOCD position' ].
 	self readEndOfCentralDirectoryFrom: stream.
-	stream position: eocdPosition - centralDirectorySize.
+	stream position: (self readZip64EndOfCentralDirectoryFrom: stream before: eocdPosition).
 	self readMembersFrom: stream named: name
 ]
 
 { #category : 'private' }
 ZipArchive >> readMembersFrom: stream named: fileName [
 
-	[ | signature newMember |
+	[
+		| signature newMember |
 		newMember := self memberClass newFromZipFile: stream named: fileName.
 		signature := self readSignatureFrom: stream.
-		signature = EndOfCentralDirectorySignature ifTrue: [ ^self ].
-		signature = CentralDirectoryFileHeaderSignature
-			ifFalse: [ ZipArchiveError signal: 'bad CD signature at ', (stream position - 4) printStringHex ].
+		(signature = EndOfCentralDirectorySignature or: [ signature = Zip64EndOfCentralDirectorySignature ]) ifTrue: [ ^ self ].
+		signature = CentralDirectoryFileHeaderSignature ifFalse: [
+			ZipArchiveError signal: 'bad CD signature at ' , (stream position - 4) printStringHex ].
 		newMember readFrom: stream.
 		newMember looksLikeDirectory ifTrue: [ newMember := newMember asDirectory ].
-		self addMember: newMember.
-	] repeat
+		self addMember: newMember ] repeat
 ]
 
 { #category : 'private' }
@@ -291,10 +329,35 @@ ZipArchive >> readSignatureFrom: stream [
 	| signatureData |
 	signatureData := ByteArray new: 4.
 	stream next: 4 into: signatureData.
-	({ CentralDirectoryFileHeaderSignature . LocalFileHeaderSignature . EndOfCentralDirectorySignature }
-		includes: signatureData)
-			ifFalse: [ ^ ZipArchiveError signal: 'bad signature ', signatureData asString asHex, ' at position ', (stream position - 4) asString ].
-	^signatureData
+	({
+		 CentralDirectoryFileHeaderSignature.
+		 LocalFileHeaderSignature.
+		 EndOfCentralDirectorySignature.
+		 Zip64EndOfCentralDirectorySignature } includes: signatureData) ifFalse: [
+		^ ZipArchiveError signal: 'bad signature ' , signatureData asString asHex , ' at position ' , (stream position - 4) asString ].
+	^ signatureData
+]
+
+{ #category : 'private' }
+ZipArchive >> readZip64EndOfCentralDirectoryFrom: stream before: eocdPosition [
+	"When the archive has a Zip64 end of central directory locator just before the end of central directory record, read the size and offset of the central directory from the Zip64 end of central directory record (APPNOTE 4.3.14 and 4.3.15).
+	Answer the position where the central directory starts."
+
+	| recordPosition endianStream |
+	(self hasZip64LocatorIn: stream before: eocdPosition) ifFalse: [ ^ eocdPosition - centralDirectorySize ].
+	recordPosition := self zip64RecordPositionIn: stream before: eocdPosition.
+	stream position: recordPosition + 4.
+	endianStream := ZnEndianessReadWriteStream on: stream.
+	endianStream nextLittleEndianNumber: 8. "size of the record"
+	endianStream nextLittleEndianNumber: 2. "version made by"
+	endianStream nextLittleEndianNumber: 2. "version needed to extract"
+	endianStream nextLittleEndianNumber: 4. "# of this disk"
+	endianStream nextLittleEndianNumber: 4. "# of disk with central dir start"
+	endianStream nextLittleEndianNumber: 8. "# of entries in central dir on this disk"
+	endianStream nextLittleEndianNumber: 8. "total # of entries in central dir"
+	centralDirectorySize := endianStream nextLittleEndianNumber: 8.
+	centralDirectoryOffsetWRTStartingDiskNumber := endianStream nextLittleEndianNumber: 8.
+	^ recordPosition - centralDirectorySize
 ]
 
 { #category : 'private' }
@@ -312,27 +375,46 @@ ZipArchive >> writeCentralDirectoryTo: aStream [
 { #category : 'private' }
 ZipArchive >> writeEndOfCentralDirectoryTo: aStream [
 
-	| endianStream |
+	| endianStream centralDirectorySizeToWrite |
+	centralDirectorySizeToWrite := writeEOCDOffset - writeCentralDirectoryOffset.
+	self needsZip64EndOfCentralDirectory ifTrue: [ self writeZip64EndOfCentralDirectoryTo: aStream ].
 	aStream nextPutAll: EndOfCentralDirectorySignature.
 
+	"Values that do not fit are written as their maximum, the real ones are in the Zip64 record"
 	endianStream := ZnEndianessReadWriteStream on: aStream.
 	endianStream nextLittleEndianNumber: 2 put: 0. "diskNumber"
 	endianStream nextLittleEndianNumber: 2 put: 0. "diskNumberWithStartOfCentralDirectory"
-	endianStream nextLittleEndianNumber: 2 put: members size. "numberOfCentralDirectoriesOnThisDisk"
-	endianStream nextLittleEndianNumber: 2 put: members size. "numberOfCentralDirectories"
-	endianStream nextLittleEndianNumber: 4 put: writeEOCDOffset - writeCentralDirectoryOffset. "size of central dir"
-	endianStream nextLittleEndianNumber: 4 put: writeCentralDirectoryOffset. "offset of central dir"
+	endianStream nextLittleEndianNumber: 2 put: (members size min: Zip64EntriesLimit). "numberOfCentralDirectoriesOnThisDisk"
+	endianStream nextLittleEndianNumber: 2 put: (members size min: Zip64EntriesLimit). "numberOfCentralDirectories"
+	endianStream nextLittleEndianNumber: 4 put: (centralDirectorySizeToWrite min: Zip64Limit). "size of central dir"
+	endianStream nextLittleEndianNumber: 4 put: (writeCentralDirectoryOffset min: Zip64Limit). "offset of central dir"
 	endianStream nextLittleEndianNumber: 2 put: zipFileComment size. "zip file comment"
 
 	zipFileComment isEmpty ifFalse: [ aStream nextPutAll: zipFileComment ]
 ]
 
+{ #category : 'accessing' }
+ZipArchive >> writeExtendedTimestamps [
+	"Answer whether modification times are also written in extended timestamp extra fields"
+
+	^ writeExtendedTimestamps == true
+]
+
+{ #category : 'accessing' }
+ZipArchive >> writeExtendedTimestamps: aBoolean [
+	"When true, also write the modification time of members in extended timestamp extra fields ('UT', 0x5455), in UTC with a precision of one second.
+	Otherwise only the DOS time of the headers is written: local time, with a precision of two seconds."
+
+	writeExtendedTimestamps := aBoolean
+]
+
 { #category : 'writing' }
 ZipArchive >> writeTo: stream [
+
 	members do: [ :member |
-		member writeTo: stream.
-		member endRead.
-	].
+			member writesExtendedTimestamp: self writeExtendedTimestamps.
+			member writeTo: stream forcingZip64: self forceZip64.
+			member endRead ].
 	writeCentralDirectoryOffset := stream position.
 	self writeCentralDirectoryTo: stream
 ]
@@ -358,6 +440,48 @@ ZipArchive >> writeTo: stream prependingFile: aFileReferenceOrFileName [
 		 ].
 
 	self writeTo: stream
+]
+
+{ #category : 'private' }
+ZipArchive >> writeZip64EndOfCentralDirectoryTo: aStream [
+	"Write the Zip64 end of central directory record and its locator (APPNOTE 4.3.14 and 4.3.15). The record starts just after the central directory."
+
+	| endianStream |
+	aStream nextPutAll: Zip64EndOfCentralDirectorySignature.
+	endianStream := ZnEndianessReadWriteStream on: aStream.
+	endianStream nextLittleEndianNumber: 8 put: 44. "size of the rest of the record"
+	endianStream nextLittleEndianNumber: 1 put: Zip64VersionNeededToExtract. "version made by"
+	endianStream nextLittleEndianNumber: 1 put: FaUnix.
+	endianStream nextLittleEndianNumber: 2 put: Zip64VersionNeededToExtract.
+	endianStream nextLittleEndianNumber: 4 put: 0. "# of this disk"
+	endianStream nextLittleEndianNumber: 4 put: 0. "# of disk with central dir start"
+	endianStream nextLittleEndianNumber: 8 put: members size. "# of entries in central dir on this disk"
+	endianStream nextLittleEndianNumber: 8 put: members size. "total # of entries in central dir"
+	endianStream nextLittleEndianNumber: 8 put: writeEOCDOffset - writeCentralDirectoryOffset. "size of central dir"
+	endianStream nextLittleEndianNumber: 8 put: writeCentralDirectoryOffset. "offset of central dir"
+
+	aStream nextPutAll: Zip64EndOfCentralDirectoryLocatorSignature.
+	endianStream nextLittleEndianNumber: 4 put: 0. "# of disk with the Zip64 record"
+	endianStream nextLittleEndianNumber: 8 put: writeEOCDOffset. "offset of the Zip64 record"
+	endianStream nextLittleEndianNumber: 4 put: 1 "total # of disks"
+]
+
+{ #category : 'private' }
+ZipArchive >> zip64RecordPositionIn: stream before: eocdPosition [
+	"The Zip64 end of central directory record is usually 56 bytes long and just before its locator, which also gives its offset.
+	Trying the position before the locator first also works when data was prepended to the archive."
+
+	| candidate offset |
+	candidate := eocdPosition - 20 - 56.
+	candidate >= 0 ifTrue: [
+			stream position: candidate.
+			(stream next: 4) asByteArray = Zip64EndOfCentralDirectorySignature ifTrue: [ ^ candidate ] ].
+	stream position: eocdPosition - 20 + 4 + 4.
+	offset := (ZnEndianessReadWriteStream on: stream) nextLittleEndianNumber: 8.
+	stream position: offset.
+	(stream next: 4) asByteArray = Zip64EndOfCentralDirectorySignature ifFalse: [
+		ZipArchiveError signal: 'can''t find the Zip64 end of central directory record' ].
+	^ offset
 ]
 
 { #category : 'accessing' }
