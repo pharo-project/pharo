@@ -431,6 +431,37 @@ ZipArchiveTest >> testShouldUnzipAndOverwriteWithoutInforming [
 ]
 
 { #category : 'tests' }
+ZipArchiveTest >> testStoredMemberCanBeCopiedToAnotherArchive [
+	"Writing an archive that was read copies its stored members, which also checks their CRC-32."
+
+	| readArchive copyFile copiedArchive |
+	zip addString: 'Hello World' as: 'hello.txt'.
+	zip writeToFile: zipFile.
+	copyFile := fs root / 'copy.zip'.
+
+	readArchive := ZipArchive new readFrom: zipFile.
+	[ readArchive writeToFile: copyFile ] ensure: [ readArchive close ].
+
+	copiedArchive := ZipArchive new readFrom: copyFile.
+	[ self assert: (copiedArchive memberNamed: 'hello.txt') contents asString equals: 'Hello World' ] ensure: [ copiedArchive close ]
+]
+
+{ #category : 'tests' }
+ZipArchiveTest >> testStoredMemberWithCorrectCrc32IsRead [
+
+	| readArchive member |
+	zip addString: 'Hello World' as: 'hello.txt'.
+	zip writeToFile: zipFile.
+
+	readArchive := ZipArchive new readFrom: zipFile.
+	[
+		member := readArchive memberNamed: 'hello.txt'.
+		self assert: member compressionMethod equals: 0. "CompressionStored"
+		self assert: member contents asString equals: 'Hello World'.
+		self deny: member isCorrupt ] ensure: [ readArchive close ]
+]
+
+{ #category : 'tests' }
 ZipArchiveTest >> testWrongCrc32InDeflatedMemberRaisesCRCError [
 	"Change the CRC-32 stored in the archive (local header and central directory) and check that reading the member detects it."
 
@@ -452,10 +483,8 @@ ZipArchiveTest >> testWrongCrc32InDeflatedMemberRaisesCRCError [
 
 { #category : 'tests' }
 ZipArchiveTest >> testWrongCrc32InStoredMemberRaisesCRCError [
-	"Same as #testWrongCrc32InDeflatedMemberRaisesCRCError but for a stored (not compressed) member.
-	Expected to fail: stored members are copied without checking their CRC-32, only deflated ones are checked (see ZipFileMember>>#uncompressDataTo:)."
+	"Same as #testWrongCrc32InDeflatedMemberRaisesCRCError but for a stored (not compressed) member."
 
-	<expectedFailure>
 	| crcBytes bytes corruptedBytes readArchive |
 	zip addString: 'Hello World' as: 'hello.txt'.
 	zip writeToFile: zipFile.
@@ -471,7 +500,8 @@ ZipArchiveTest >> testWrongCrc32InStoredMemberRaisesCRCError [
 	readArchive := ZipArchive new readFrom: zipFile.
 	[
 		self assert: (readArchive memberNamed: 'hello.txt') compressionMethod equals: 0. "CompressionStored"
-		self should: [ (readArchive memberNamed: 'hello.txt') contents ] raise: CRCError ] ensure: [ readArchive close ]
+		self should: [ (readArchive memberNamed: 'hello.txt') contents ] raise: CRCError.
+		self assert: (readArchive memberNamed: 'hello.txt') isCorrupt ] ensure: [ readArchive close ]
 ]
 
 { #category : 'tests' }

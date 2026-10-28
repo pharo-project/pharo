@@ -37,7 +37,32 @@ ZipFileMember >> close [
 { #category : 'private - writing' }
 ZipFileMember >> copyDataTo: aStream [
 
-	self copyRawDataTo: aStream
+	compressionMethod = CompressionStored ifFalse: [ ^ self copyRawDataTo: aStream ].
+	self copyStoredDataCheckingCrcTo: aStream
+]
+
+{ #category : 'private - writing' }
+ZipFileMember >> copyStoredDataCheckingCrcTo: aStream [
+	"Copy my stored (not compressed) data to aStream and check it against the CRC-32 read from the archive headers, as #uncompressDataTo: does for deflated data."
+
+	| crc |
+	crc := 16rFFFFFFFF.
+	[ readDataRemaining > 0 ] whileTrue: [
+			| data |
+			data := self readRawChunk: (4096 min: readDataRemaining).
+			aStream nextPutAll: data.
+			crc := ZipWriteStream
+				       updateCrc: crc
+				       from: 1
+				       to: data size
+				       in: data.
+			readDataRemaining := readDataRemaining - data size ].
+	crc := crc bitXor: 16rFFFFFFFF.
+	crc = crc32 ifFalse: [
+			self isCorrupt: true.
+			CRCError signal: ('Wrong CRC-32 (expected {1} got {2})' format: {
+						 crc32 printStringHex.
+						 crc printStringHex }) ]
 ]
 
 { #category : 'accessing' }
