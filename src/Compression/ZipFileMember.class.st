@@ -65,6 +65,13 @@ ZipFileMember >> looksLikeDirectory [
 ]
 
 { #category : 'private - reading' }
+ZipFileMember >> nextZip64ValueFrom: aStream [
+
+	aStream atEnd ifTrue: [ ZipArchiveError signal: 'missing Zip64 extended information for ' , fileName printString ].
+	^ aStream next
+]
+
+{ #category : 'private - reading' }
 ZipFileMember >> readCentralDirectoryFileHeaderFrom: aStream [
 	"Assumes aStream positioned after signature"
 
@@ -93,6 +100,7 @@ ZipFileMember >> readCentralDirectoryFileHeaderFrom: aStream [
 	fileName := self decodeText: (aStream next: fileNameLength).
 	cdExtraField := (aStream next: extraFieldLength) asByteArray asString.
 	fileComment := self decodeText: (aStream next: fileCommentLength).
+	self readZip64ValuesFromCentralDirectory.
 
 	self desiredCompressionMethod: compressionMethod
 ]
@@ -111,7 +119,7 @@ ZipFileMember >> readFrom: aStream [
 ZipFileMember >> readLocalDirectoryFileHeaderFrom: aStream [
 	"Positions stream as necessary. Will return stream to its original position"
 
-	| fileNameLength extraFieldLength xcrc32 xcompressedSize xuncompressedSize sig oldPos endianStream |
+	| fileNameLength extraFieldLength xcrc32 xcompressedSize xuncompressedSize sig oldPos endianStream zip64Values |
 	oldPos := aStream position.
 
 	aStream position: localHeaderRelativeOffset.
@@ -136,6 +144,11 @@ ZipFileMember >> readLocalDirectoryFileHeaderFrom: aStream [
 	fileName := self decodeText: (aStream next: fileNameLength).
 	localExtraField := (aStream next: extraFieldLength) asByteArray.
 
+	"With Zip64, both sizes are in the extended information extra field of the local header (APPNOTE 4.5.3)"
+	zip64Values := self zip64ValuesIn: localExtraField.
+	xuncompressedSize = Zip64Limit ifTrue: [ xuncompressedSize := self nextZip64ValueFrom: zip64Values ].
+	xcompressedSize = Zip64Limit ifTrue: [ xcompressedSize := self nextZip64ValueFrom: zip64Values ].
+
 	dataOffset := aStream position.
 
 	"Don't trash these fields if we already got them from the central directory"
@@ -150,6 +163,17 @@ ZipFileMember >> readLocalDirectoryFileHeaderFrom: aStream [
 { #category : 'private - reading' }
 ZipFileMember >> readRawChunk: n [
 	^stream next: n
+]
+
+{ #category : 'private - reading' }
+ZipFileMember >> readZip64ValuesFromCentralDirectory [
+	"Sizes and offset that do not fit in the central directory header are in its Zip64 extended information extra field, in this order (APPNOTE 4.5.3)"
+
+	| values |
+	values := self zip64ValuesIn: cdExtraField.
+	uncompressedSize = Zip64Limit ifTrue: [ uncompressedSize := self nextZip64ValueFrom: values ].
+	compressedSize = Zip64Limit ifTrue: [ compressedSize := self nextZip64ValueFrom: values ].
+	localHeaderRelativeOffset = Zip64Limit ifTrue: [ localHeaderRelativeOffset := self nextZip64ValueFrom: values ]
 ]
 
 { #category : 'private - reading' }

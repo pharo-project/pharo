@@ -31,7 +31,8 @@ Class {
 		'compressedSize',
 		'uncompressedSize',
 		'readDataRemaining',
-		'headerStartPosition'
+		'headerStartPosition',
+		'usesZip64'
 	],
 	#pools : [
 		'ZipFileConstants'
@@ -144,13 +145,26 @@ ZipArchiveMember >> bitFlagToWrite [
 		  ifFalse: [ self bitFlag bitOr: LanguageEncodingFlag ]
 ]
 
+{ #category : 'private - zip64' }
+ZipArchiveMember >> centralDirectoryExtraFieldToWrite [
+	"With Zip64, the central directory header has both sizes and the offset of the local header in a Zip64 extended information extra field"
+
+	^ self extraField: cdExtraField replacing: Zip64ExtraFieldId with: (self zip64DataFor: (self usesZip64
+				    ifTrue: [
+						    {
+							    uncompressedSize.
+							    self compressedSizeToWrite.
+							    headerStartPosition } ]
+				    ifFalse: [ #(  ) ]))
+]
+
 { #category : 'accessing' }
 ZipArchiveMember >> centralDirectoryHeaderSize [
 
 	| systemFileName systemFileComment systemCdExtraField |
 	systemFileName := fileName asVmPathName.
 	systemFileComment := fileComment utf8Encoded.
-	systemCdExtraField := cdExtraField.
+	systemCdExtraField := self centralDirectoryExtraFieldToWrite.
 	^ 46 + systemFileName size + systemCdExtraField size + systemFileComment size
 ]
 
@@ -185,6 +199,14 @@ ZipArchiveMember >> compressedSize [
 	This will not be set for members that were constructed from strings
 	or external files until after the member has been written."
 	^compressedSize
+]
+
+{ #category : 'private - zip64' }
+ZipArchiveMember >> compressedSizeToWrite [
+
+	^ desiredCompressionMethod = CompressionStored
+		  ifTrue: [ uncompressedSize ]
+		  ifFalse: [ compressedSize ]
 ]
 
 { #category : 'accessing' }
@@ -382,6 +404,58 @@ ZipArchiveMember >> endRead [
 	readDataRemaining := 0
 ]
 
+{ #category : 'private - extra fields' }
+ZipArchiveMember >> extraField: aByteArrayOrString replacing: anId with: aByteArrayOrNil [
+	"Answer aByteArrayOrString without its blocks of header id anId, followed by a new block of that id when aByteArrayOrNil is not nil.
+	When there is nothing to remove or add, answer the extra field unchanged."
+
+	| fields |
+	(aByteArrayOrNil isNil and: [ (self extraFieldIn: aByteArrayOrString withId: anId) isNil ]) ifTrue: [
+		^ aByteArrayOrString asByteArray ].
+	fields := (self extraFieldsIn: aByteArrayOrString) reject: [ :each | each key = anId ].
+	aByteArrayOrNil ifNotNil: [ fields add: anId -> aByteArrayOrNil ].
+	^ self extraFieldBytesFrom: fields
+]
+
+{ #category : 'private - extra fields' }
+ZipArchiveMember >> extraFieldBytesFrom: aCollectionOfAssociations [
+	"Answer the extra field made of the given associations from header id to data"
+
+	^ ByteArray streamContents: [ :stream |
+			  aCollectionOfAssociations do: [ :each |
+					  stream
+						  nextPut: (each key bitAnd: 255);
+						  nextPut: (each key bitShift: -8);
+						  nextPut: (each value size bitAnd: 255);
+						  nextPut: (each value size bitShift: -8);
+						  nextPutAll: each value ] ]
+]
+
+{ #category : 'private - extra fields' }
+ZipArchiveMember >> extraFieldIn: aByteArrayOrString withId: anId [
+	"Answer the data of the block of header id anId, or nil"
+
+	^ (self extraFieldsIn: aByteArrayOrString) detect: [ :each | each key = anId ] ifFound: [ :each | each value ] ifNone: [ nil ]
+]
+
+{ #category : 'private - extra fields' }
+ZipArchiveMember >> extraFieldsIn: aByteArrayOrString [
+	"Answer the blocks of an extra field (APPNOTE 4.5.1) as associations from header id to data. Truncated blocks are ignored."
+
+	| bytes fields index |
+	bytes := aByteArrayOrString asByteArray.
+	fields := OrderedCollection new.
+	index := 1.
+	[ index + 3 <= bytes size ] whileTrue: [
+			| id size |
+			id := (bytes at: index) + ((bytes at: index + 1) bitShift: 8).
+			size := (bytes at: index + 2) + ((bytes at: index + 3) bitShift: 8).
+			index + 3 + size > bytes size ifTrue: [ ^ fields ].
+			fields add: id -> (bytes copyFrom: index + 4 to: index + 3 + size).
+			index := index + 4 + size ].
+	^ fields
+]
+
 { #category : 'extraction-ui' }
 ZipArchiveMember >> extractInDirectory: aDirectory [
 	"Extract this entry into the given directory. Answer successBlock or call one of the other action blocks."
@@ -549,6 +623,18 @@ ZipArchiveMember >> lastModTime [
 	^ lastModFileDateTime
 ]
 
+{ #category : 'private - zip64' }
+ZipArchiveMember >> localExtraFieldToWrite [
+	"With Zip64, the local header has both sizes in a Zip64 extended information extra field"
+
+	^ self extraField: localExtraField replacing: Zip64ExtraFieldId with: (self zip64DataFor: (self usesZip64
+				    ifTrue: [
+						    {
+							    uncompressedSize.
+							    self compressedSizeToWrite } ]
+				    ifFalse: [ #(  ) ]))
+]
+
 { #category : 'accessing' }
 ZipArchiveMember >> localFileName [
 	"Answer my fileName in terms of the local directory naming convention"
@@ -572,6 +658,13 @@ ZipArchiveMember >> mapPermissionsToUnix: zipPerms [
 	"Extract Unix permissions (the high 16 bits) from zip permissions. The low 16 bits are for DOS permissions"
 
 	^ zipPerms bitShift: -16
+]
+
+{ #category : 'private - zip64' }
+ZipArchiveMember >> mayExceedZip64Limit [
+	"Answer whether my sizes may not fit in 4 bytes. Deflate may expand incompressible data a little, so stay away from the limit."
+
+	^ uncompressedSize >= (Zip64Limit - (Zip64Limit // 100))
 ]
 
 { #category : 'accessing' }
@@ -653,6 +746,13 @@ ZipArchiveMember >> unixFileAttributes: perms [
 	^oldPerms
 ]
 
+{ #category : 'private - zip64' }
+ZipArchiveMember >> usesZip64 [
+	"Answer whether I was last written with Zip64 extended information (APPNOTE 4.5.3)"
+
+	^ usesZip64 == true
+]
+
 { #category : 'accessing - spec fields' }
 ZipArchiveMember >> versionMadeBy [
 	"Per .ZIP File Format Specification Version: 6.3.2:
@@ -688,6 +788,14 @@ ZipArchiveMember >> versionNeededToExtract: anInteger [
 	versionNeededToExtract := anInteger
 ]
 
+{ #category : 'private - zip64' }
+ZipArchiveMember >> versionNeededToWrite [
+
+	^ self usesZip64
+		  ifTrue: [ versionNeededToExtract max: Zip64VersionNeededToExtract ]
+		  ifFalse: [ versionNeededToExtract ]
+]
+
 { #category : 'private - writing' }
 ZipArchiveMember >> writeCentralDirectoryFileHeaderTo: aStream [
 	"C2 v3 V4 v5 V2"
@@ -695,15 +803,15 @@ ZipArchiveMember >> writeCentralDirectoryFileHeaderTo: aStream [
 	| systemFileName systemFileComment systemCdExtraField endianStream |
 	systemFileName := fileName asVmPathName.
 	systemFileComment := fileComment utf8Encoded.
-	systemCdExtraField := cdExtraField.
+	systemCdExtraField := self centralDirectoryExtraFieldToWrite.
 	aStream nextPutAll: CentralDirectoryFileHeaderSignature.
 
 
 	endianStream := ZnEndianessReadWriteStream on: aStream.
-	endianStream nextLittleEndianNumber: 1 put: self versionMadeBy.
+	endianStream nextLittleEndianNumber: 1 put: (self versionMadeBy max: self versionNeededToWrite).
 	endianStream nextLittleEndianNumber: 1 put: fileAttributeFormat.
 
-	endianStream nextLittleEndianNumber: 2 put: versionNeededToExtract.
+	endianStream nextLittleEndianNumber: 2 put: self versionNeededToWrite.
 	endianStream nextLittleEndianNumber: 2 put: self bitFlagToWrite.
 	endianStream nextLittleEndianNumber: 2 put: desiredCompressionMethod.
 
@@ -711,10 +819,12 @@ ZipArchiveMember >> writeCentralDirectoryFileHeaderTo: aStream [
 
 	"These next 3 should have been updated during the write of the data"
 	endianStream nextLittleEndianNumber: 4 put: crc32.
-	endianStream nextLittleEndianNumber: 4 put: (desiredCompressionMethod = CompressionStored
-			 ifTrue: [ uncompressedSize ]
-			 ifFalse: [ compressedSize ]).
-	endianStream nextLittleEndianNumber: 4 put: uncompressedSize.
+	endianStream nextLittleEndianNumber: 4 put: (self usesZip64
+			 ifTrue: [ Zip64Limit ]
+			 ifFalse: [ self compressedSizeToWrite ]).
+	endianStream nextLittleEndianNumber: 4 put: (self usesZip64
+			 ifTrue: [ Zip64Limit ]
+			 ifFalse: [ uncompressedSize ]).
 
 	endianStream nextLittleEndianNumber: 2 put: systemFileName size.
 	endianStream nextLittleEndianNumber: 2 put: systemCdExtraField size.
@@ -723,7 +833,9 @@ ZipArchiveMember >> writeCentralDirectoryFileHeaderTo: aStream [
 	endianStream nextLittleEndianNumber: 2 put: internalFileAttributes.
 
 	endianStream nextLittleEndianNumber: 4 put: externalFileAttributes.
-	endianStream nextLittleEndianNumber: 4 put: headerStartPosition.
+	endianStream nextLittleEndianNumber: 4 put: (self usesZip64
+			 ifTrue: [ Zip64Limit ]
+			 ifFalse: [ headerStartPosition ]).
 
 	aStream nextPutAll: systemFileName asByteArray.
 	aStream nextPutAll: systemCdExtraField asByteArray.
@@ -788,48 +900,79 @@ ZipArchiveMember >> writeLocalFileHeaderTo: aStream [
 	Stores the offset to the start of the header in my
 	writeLocalHeaderRelativeOffset member."
 
-	| systemFileName endianStream |
+	| systemFileName endianStream extraField |
 	systemFileName := fileName asVmPathName.
+	extraField := self localExtraFieldToWrite.
 	aStream nextPutAll: LocalFileHeaderSignature.
 
 	endianStream := ZnEndianessReadWriteStream on: aStream.
-	endianStream nextLittleEndianNumber: 2 put: versionNeededToExtract.
+	endianStream nextLittleEndianNumber: 2 put: self versionNeededToWrite.
 	endianStream nextLittleEndianNumber: 2 put: self bitFlagToWrite.
 	endianStream nextLittleEndianNumber: 2 put: desiredCompressionMethod.
 
 	endianStream nextLittleEndianNumber: 4 put: lastModFileDateTime asDosTimestamp.
 	endianStream nextLittleEndianNumber: 4 put: crc32.
-	endianStream nextLittleEndianNumber: 4 put: (desiredCompressionMethod = CompressionStored
-			 ifTrue: [ uncompressedSize ]
-			 ifFalse: [ compressedSize ]).
-	endianStream nextLittleEndianNumber: 4 put: uncompressedSize.
+	endianStream nextLittleEndianNumber: 4 put: (self usesZip64
+			 ifTrue: [ Zip64Limit ]
+			 ifFalse: [ self compressedSizeToWrite ]).
+	endianStream nextLittleEndianNumber: 4 put: (self usesZip64
+			 ifTrue: [ Zip64Limit ]
+			 ifFalse: [ uncompressedSize ]).
 
 	endianStream nextLittleEndianNumber: 2 put: systemFileName size.
-	endianStream nextLittleEndianNumber: 2 put: localExtraField size.
+	endianStream nextLittleEndianNumber: 2 put: extraField size.
 
 	aStream nextPutAll: systemFileName asByteArray.
-	aStream nextPutAll: localExtraField asByteArray
+	aStream nextPutAll: extraField
 ]
 
 { #category : 'writing' }
 ZipArchiveMember >> writeTo: aStream [
+
+	self writeTo: aStream forcingZip64: false
+]
+
+{ #category : 'writing' }
+ZipArchiveMember >> writeTo: aStream forcingZip64: aBoolean [
 	"The header contains information about the data, including compressed size and CRC,
 	 that we do not know yet! So we leave room for the header, write the data, and go
-	 back to write the header after we have the needed information."
+	 back to write the header after we have the needed information.
+	Zip64 extended information is written when aBoolean is true, or when my sizes or position may not fit in 4 bytes."
 
 	| headerSize headerEndPosition dataEndPosition |
 	self rewindData.
 	headerStartPosition := aStream position.
-	headerSize := 30
-		+ fileName asVmPathName asByteArray size
-		+ localExtraField asByteArray size.
+	usesZip64 := aBoolean or: [ self mayExceedZip64Limit or: [ headerStartPosition >= Zip64Limit ] ].
+	headerSize := 30 + fileName asVmPathName asByteArray size + self localExtraFieldToWrite size.
 	headerEndPosition := headerStartPosition + headerSize.
 	aStream nextPutAll: (ByteArray new: headerSize).
 	self writeDataTo: aStream.
 	dataEndPosition := aStream position.
+	(self usesZip64 not and: [ uncompressedSize >= Zip64Limit or: [ self compressedSizeToWrite >= Zip64Limit ] ]) ifTrue: [
+		ZipArchiveError signal: fileName printString , ' is too large for a header without Zip64 extended information' ].
 	aStream position: headerStartPosition.
 	self writeLocalFileHeaderTo: aStream.
 	"Verify that our calculation of the header size was correct!"
 	aStream position == headerEndPosition ifFalse: [ self error: 'Incorrect header size!' ].
 	aStream position: dataEndPosition
+]
+
+{ #category : 'private - zip64' }
+ZipArchiveMember >> zip64DataFor: aCollectionOfIntegers [
+	"Answer the data of a Zip64 extended information extra field holding the given values as 8 bytes little endian integers, or nil if there is none"
+
+	aCollectionOfIntegers ifEmpty: [ ^ nil ].
+	^ ByteArray streamContents: [ :stream |
+		  aCollectionOfIntegers do: [ :each |
+			  0 to: 7 do: [ :byteIndex | stream nextPut: ((each bitShift: byteIndex * -8) bitAnd: 255) ] ] ]
+]
+
+{ #category : 'private - zip64' }
+ZipArchiveMember >> zip64ValuesIn: aByteArrayOrString [
+	"Answer a stream on the 8 bytes little endian values of the Zip64 extended information extra field (APPNOTE 4.5.3), empty if there is none"
+
+	| data |
+	data := (self extraFieldIn: aByteArrayOrString withId: Zip64ExtraFieldId) ifNil: [ #[  ] ].
+	^ ((0 to: data size // 8 - 1) collect: [ :index |
+		   (8 to: 1 by: -1) inject: 0 into: [ :value :byteIndex | (value bitShift: 8) + (data at: index * 8 + byteIndex) ] ]) readStream
 ]

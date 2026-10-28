@@ -74,7 +74,13 @@ Class {
 		'IfaBinaryFile',
 		'IfaTextFile',
 		'LanguageEncodingFlag',
-		'LocalFileHeaderSignature'
+		'LocalFileHeaderSignature',
+		'Zip64EndOfCentralDirectoryLocatorSignature',
+		'Zip64EndOfCentralDirectorySignature',
+		'Zip64EntriesLimit',
+		'Zip64ExtraFieldId',
+		'Zip64Limit',
+		'Zip64VersionNeededToExtract'
 	],
 	#category : 'Compression-Archives',
 	#package : 'Compression',
@@ -100,6 +106,15 @@ ZipFileConstants class >> initialize [
 
 	"General purpose bit 11 (Language encoding flag, EFS): the file name and comment are UTF-8"
 	LanguageEncodingFlag := 16r800.
+
+	"Zip64 (APPNOTE 4.3.14, 4.3.15 and 4.5.3): sizes, offsets and counts that do not fit are written as Zip64Limit or Zip64EntriesLimit, and the real values are stored in Zip64 records"
+	Zip64Limit := 16rFFFFFFFF.
+	Zip64EntriesLimit := 16rFFFF.
+	Zip64ExtraFieldId := 16r0001.
+	Zip64VersionNeededToExtract := 45.
+	"0x06064b50 and 0x07064b50 little-endian"
+	Zip64EndOfCentralDirectorySignature := #[ 80 75 6 6 ].
+	Zip64EndOfCentralDirectoryLocatorSignature := #[ 80 75 6 7 ].
 
 	"Unix permission bits"
 	DefaultDirectoryPermissions := 8r040755.
