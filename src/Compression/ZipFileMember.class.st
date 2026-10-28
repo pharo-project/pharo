@@ -76,6 +76,20 @@ ZipFileMember >> externalFile: aFileReference [
 	externalFileName := aFileReference
 ]
 
+{ #category : 'testing' }
+ZipFileMember >> hasEncryptedData [
+	"Answer whether my data in the archive is encrypted. The flag is read from
+	my local header, so that it reflects the data and not a flag changed since."
+
+	| oldPosition flag |
+	(stream isNil or: [ stream closed ]) ifTrue: [ ^ self isEncrypted ].
+	oldPosition := stream position.
+	stream position: localHeaderRelativeOffset + 6.
+	flag := stream next.
+	stream position: oldPosition.
+	^ (flag bitAnd: 1) ~= 0
+]
+
 { #category : 'initialization' }
 ZipFileMember >> initialize [
 	super initialize.

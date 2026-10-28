@@ -33,7 +33,8 @@ Class {
 		'readDataRemaining',
 		'headerStartPosition',
 		'usesZip64',
-		'writesExtendedTimestamp'
+		'writesExtendedTimestamp',
+		'password'
 	],
 	#pools : [
 		'ZipFileConstants'
@@ -242,6 +243,15 @@ ZipArchiveMember >> centralDirectoryHeaderSize [
 	^ 46 + systemFileName size + systemCdExtraField size + systemFileComment size
 ]
 
+{ #category : 'private - encryption' }
+ZipArchiveMember >> checkCanDecrypt [
+
+	self isStronglyEncrypted ifTrue: [
+			ZipArchiveError signal:
+				'member ' , fileName , ' uses AES or strong encryption, which is not supported (only traditional ZipCrypto is)' ].
+	password ifNil: [ ZipPasswordError signal: 'member ' , fileName , ' is encrypted; set its password with #password:' ]
+]
+
 { #category : 'accessing' }
 ZipArchiveMember >> clearExtraFields [
 	cdExtraField := ''.
@@ -276,8 +286,10 @@ ZipArchiveMember >> compressedSize [
 
 { #category : 'private - zip64' }
 ZipArchiveMember >> compressedSizeToWrite [
+	"The compressed size written in my headers. Stored data is not compressed,
+	but when encrypted it is preceded by the encryption header."
 
-	^ desiredCompressionMethod = CompressionStored
+	^ (desiredCompressionMethod = CompressionStored and: [ self isEncrypted not ])
 		  ifTrue: [ uncompressedSize ]
 		  ifFalse: [ compressedSize ]
 ]
@@ -359,6 +371,17 @@ ZipArchiveMember >> copyDataWithCRCTo: aStream [
 	].
 
 	crc32 := crc32 bitXor: 16rFFFFFFFF
+]
+
+{ #category : 'private - encryption' }
+ZipArchiveMember >> copyEncryptedDataTo: aStream [
+	"Copy my encrypted data, and its data descriptor if I have one, since the
+	encryption check byte depends on it"
+
+	desiredCompressionMethod := compressionMethod.
+	readDataRemaining := compressedSize.
+	self copyRawDataTo: aStream.
+	self hasDataDescriptor ifTrue: [ self writeDataDescriptorTo: aStream ]
 ]
 
 { #category : 'private - writing' }
@@ -452,6 +475,40 @@ ZipArchiveMember >> decompressDataTo: aStream [
 	aStream nextPutAll: data
 ]
 
+{ #category : 'private - encryption' }
+ZipArchiveMember >> decryptedContents [
+	"Answer my uncompressed data, decrypted with my password. The CRC is checked."
+
+	| data contents |
+	data := self decryptedData.
+	contents := compressionMethod = CompressionStored
+		            ifTrue: [ data ]
+		            ifFalse: [
+				            compressionMethod = CompressionDeflated ifFalse: [
+					            ZipArchiveError signal: 'compression method ' , compressionMethod printString , ' is not supported' ].
+				            (ZipReadStream on: data readStream) next: uncompressedSize ].
+	(contents size = uncompressedSize and: [ (CRC crc32FromCollection: contents) = crc32 ]) ifFalse: [
+			self isCorrupt: true.
+			CRCError signal: 'CRC mismatch in encrypted member ' , fileName ].
+	^ contents
+]
+
+{ #category : 'private - encryption' }
+ZipArchiveMember >> decryptedData [
+	"Answer my data, still compressed, decrypted with my password"
+
+	| raw plain headerSize |
+	self checkCanDecrypt.
+	headerSize := ZipCrypto headerSize.
+	self rewindData.
+	raw := (self readRawChunk: compressedSize) asByteArray.
+	self endRead.
+	raw size < headerSize ifTrue: [ ZipArchiveError signal: 'encrypted member ' , fileName , ' is truncated' ].
+	plain := (ZipCrypto password: password) decrypt: raw.
+	(plain at: headerSize) = self encryptionCheckByte ifFalse: [ ZipPasswordError signal: 'wrong password for member ' , fileName ].
+	^ plain allButFirst: headerSize
+]
+
 { #category : 'private - writing' }
 ZipArchiveMember >> deflateLevel [
 	"The level used to deflate my data: my desiredCompressionLevel, or the default one when it is not a level from 1 to 9"
@@ -501,22 +558,31 @@ ZipArchiveMember >> desiredCompressionMethod: aNumber [
 	"Set my desiredCompressionMethod
 	This is the method that will be used to write.
 	Answers prior desiredCompressionMethod.
-
 	Only CompressionDeflated or CompressionStored are valid arguments.
-
 	Changing to CompressionStored will change my desiredCompressionLevel
 	to CompressionLevelNone; changing to CompressionDeflated will change my
-	desiredCompressionLevel to CompressionLevelDefault."
+	desiredCompressionLevel to CompressionLevelDefault.
+	The compressed size of an encrypted stored member includes its encryption header."
 
 	| old |
 	self flag: 'should be an error if unsupported, but valid zip compression is requested. Also, clean up test branches here'.
 	old := desiredCompressionMethod.
 	desiredCompressionMethod := aNumber.
-	desiredCompressionLevel := (aNumber = CompressionDeflated)
-			ifTrue: [ CompressionLevelDefault ]
-			ifFalse: [ CompressionLevelNone ].
-	compressionMethod = CompressionStored ifTrue: [ compressedSize := uncompressedSize ].
-	^old
+	desiredCompressionLevel := aNumber = CompressionDeflated
+		                           ifTrue: [ CompressionLevelDefault ]
+		                           ifFalse: [ CompressionLevelNone ].
+	(compressionMethod = CompressionStored and: [ self isEncrypted not ]) ifTrue: [ compressedSize := uncompressedSize ].
+	^ old
+]
+
+{ #category : 'private - encryption' }
+ZipArchiveMember >> encryptionCheckByte [
+	"The last byte of the encryption header: the high byte of the DOS modification
+	time when I have a data descriptor, else the high byte of my CRC-32"
+
+	^ self hasDataDescriptor
+		  ifTrue: [ (lastModFileDateTime asDosTimestamp bitShift: -8) bitAnd: 255 ]
+		  ifFalse: [ (crc32 bitShift: -24) bitAnd: 255 ]
 ]
 
 { #category : 'private' }
@@ -649,8 +715,9 @@ ZipArchiveMember >> extractInDirectory: dir withoutInformingOverwrite: overwrite
 
 { #category : 'extraction' }
 ZipArchiveMember >> extractTo: aStream [
+
 	| oldCompression |
-	self isEncrypted ifTrue: [ self error: 'encryption is unsupported' ].
+	self hasEncryptedData ifTrue: [ ^ aStream nextPutAll: self decryptedContents ].
 	oldCompression := self desiredCompressionMethod: CompressionStored.
 	self rewindData.
 	self writeDataTo: aStream.
@@ -660,8 +727,14 @@ ZipArchiveMember >> extractTo: aStream [
 
 { #category : 'extraction' }
 ZipArchiveMember >> extractTo: aStream from: start to: finish [
+
 	| oldCompression |
-	self isEncrypted ifTrue: [ self error: 'encryption is unsupported' ].
+	self hasEncryptedData ifTrue: [
+			| contents |
+			contents := self decryptedContents copyFrom: (start max: 1) to: (finish min: uncompressedSize).
+			^ aStream nextPutAll: (aStream isBinary
+					   ifTrue: [ contents ]
+					   ifFalse: [ contents asString ]) ].
 	aStream binary.
 	oldCompression := self desiredCompressionMethod: CompressionStored.
 	self rewindData.
@@ -744,6 +817,14 @@ ZipArchiveMember >> hasDataDescriptor [
 	^ (self bitFlag bitAnd: 8)	~= 0 "GPBF:=HAS:=DATA:=DESCRIPTOR:=MASK"
 ]
 
+{ #category : 'testing' }
+ZipArchiveMember >> hasEncryptedData [
+	"Answer whether the data I read from is encrypted.
+	Only members read from an archive can hold encrypted data."
+
+	^ false
+]
+
 { #category : 'initialization' }
 ZipArchiveMember >> initialize [
 	super initialize.
@@ -776,6 +857,14 @@ ZipArchiveMember >> isDirectory [
 ZipArchiveMember >> isEncrypted [
 	"Return true if this member is encrypted (this is unsupported)"
 	^ (self bitFlag bitAnd: 1) ~= 0
+]
+
+{ #category : 'testing' }
+ZipArchiveMember >> isStronglyEncrypted [
+	"Answer whether I use AES (compression method 99) or PKWARE strong
+	encryption (bit 6), neither of which is supported"
+
+	^ self isEncrypted and: [ (self bitFlag bitAnd: 64) ~= 0 or: [ compressionMethod = 99 ] ]
 ]
 
 { #category : 'testing' }
@@ -869,6 +958,40 @@ ZipArchiveMember >> mayExceedZip64Limit [
 ZipArchiveMember >> modifiedAt: aDateAndTime [
 
 	lastModFileDateTime := aDateAndTime
+]
+
+{ #category : 'accessing' }
+ZipArchiveMember >> password [
+	"Answer the password used to decrypt or encrypt my data, or nil"
+
+	^ password
+]
+
+{ #category : 'accessing' }
+ZipArchiveMember >> password: aStringOrByteArray [
+	"Set the password used to decrypt my data when I am an encrypted member,
+	or to encrypt my data when I am written. Encryption uses the traditional
+	PKWARE cipher (ZipCrypto), which is weak: see the comment of ZipCrypto.
+	A member read already encrypted is copied as is when written."
+
+	password := aStringOrByteArray
+]
+
+{ #category : 'private - encryption' }
+ZipArchiveMember >> plainDataToEncrypt [
+	"Answer my data as it would be written without encryption, and set my CRC-32 and sizes"
+
+	| buffer |
+	(compressionMethod = CompressionStored and: [ desiredCompressionMethod = CompressionStored ]) ifTrue: [
+			| data |
+			data := (self readRawChunk: readDataRemaining) asByteArray.
+			readDataRemaining := 0.
+			uncompressedSize := data size.
+			crc32 := CRC crc32FromCollection: data.
+			^ data ].
+	buffer := WriteStream on: (ByteArray new: 4096).
+	self writeDataTo: buffer.
+	^ buffer contents
 ]
 
 { #category : 'private' }
@@ -1096,15 +1219,19 @@ ZipArchiveMember >> writeCentralDirectoryFileHeaderTo: aStream [
 
 { #category : 'private - writing' }
 ZipArchiveMember >> writeDataDescriptorTo: aStream [
-	"This writes a data descriptor to the given stream.
-	Assumes that crc32, writeOffset, and uncompressedSize are
-	set correctly (they should be after a write).
-	Further, the local file header should have the
-	GPBF:=HAS:=DATA:=DESCRIPTOR:=MASK (8) bit set."
+	"Write my data descriptor, with its optional signature. Its sizes take 8 bytes
+	when I use Zip64 (APPNOTE 4.3.9). Assumes that crc32, compressedSize and
+	uncompressedSize are set, and that my bit flag has bit 3 set."
 
-	aStream nextLittleEndianNumber: 4 put: crc32.
-	aStream nextLittleEndianNumber: 4 put: compressedSize.
-	aStream nextLittleEndianNumber: 4 put: uncompressedSize
+	| endianStream sizeLength |
+	sizeLength := self usesZip64
+		              ifTrue: [ 8 ]
+		              ifFalse: [ 4 ].
+	aStream nextPutAll: #[ 16r50 16r4B 16r07 16r08 ].
+	endianStream := ZnEndianessReadWriteStream on: aStream.
+	endianStream nextLittleEndianNumber: 4 put: crc32.
+	endianStream nextLittleEndianNumber: sizeLength put: compressedSize.
+	endianStream nextLittleEndianNumber: sizeLength put: uncompressedSize
 ]
 
 { #category : 'private - writing' }
@@ -1157,6 +1284,26 @@ ZipArchiveMember >> writeDataTo: aStream from: start to: finish [
 	self copyRawDataTo: aStream from: start to: finish
 ]
 
+{ #category : 'private - encryption' }
+ZipArchiveMember >> writeEncryptedDataTo: aStream [
+	"Write my (possibly compressed) data encrypted with ZipCrypto, preceded by
+	the 12-byte encryption header. No data descriptor is written, so the check
+	byte is the high byte of the CRC-32."
+
+	| data header random crypto |
+	self bitFlag: ((self bitFlag bitOr: 1) bitClear: 8).
+	data := self plainDataToEncrypt.
+	random := Random new.
+	header := ByteArray new: ZipCrypto headerSize.
+	1 to: header size - 1 do: [ :i | header at: i put: (random nextInteger: 256) - 1 ].
+	header at: header size put: self encryptionCheckByte.
+	crypto := ZipCrypto password: password.
+	aStream
+		nextPutAll: (crypto encrypt: header);
+		nextPutAll: (crypto encrypt: data).
+	compressedSize := data size + header size
+]
+
 { #category : 'private - writing' }
 ZipArchiveMember >> writeLocalFileHeaderTo: aStream [
 	"Write my local header to a file handle.
@@ -1189,6 +1336,18 @@ ZipArchiveMember >> writeLocalFileHeaderTo: aStream [
 	aStream nextPutAll: extraField
 ]
 
+{ #category : 'private - encryption' }
+ZipArchiveMember >> writeMemberDataTo: aStream [
+	"Write my data, encrypting it when I have a password.
+	Data read already encrypted is copied as is."
+
+	self hasEncryptedData ifTrue: [ ^ self copyEncryptedDataTo: aStream ].
+	password ifNil: [
+			self bitFlag: (self bitFlag bitClear: 1).
+			^ self writeDataTo: aStream ].
+	self writeEncryptedDataTo: aStream
+]
+
 { #category : 'writing' }
 ZipArchiveMember >> writeTo: aStream [
 
@@ -1209,7 +1368,7 @@ ZipArchiveMember >> writeTo: aStream forcingZip64: aBoolean [
 	headerSize := 30 + fileName asVmPathName asByteArray size + self localExtraFieldToWrite size.
 	headerEndPosition := headerStartPosition + headerSize.
 	aStream nextPutAll: (ByteArray new: headerSize).
-	self writeDataTo: aStream.
+	self writeMemberDataTo: aStream.
 	dataEndPosition := aStream position.
 	(self usesZip64 not and: [ uncompressedSize >= Zip64Limit or: [ self compressedSizeToWrite >= Zip64Limit ] ]) ifTrue: [
 		ZipArchiveError signal: fileName printString , ' is too large for a header without Zip64 extended information' ].
