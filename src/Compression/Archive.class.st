@@ -199,11 +199,12 @@ Archive >> writeTo: aStream [
 
 { #category : 'archive operations' }
 Archive >> writeToFile: aFileReferenceOrFileName [
-
 	"Catch attempts to overwrite existing zip file"
-	(self canWriteToFile: aFileReferenceOrFileName)
-		ifFalse: [ ^self error: (aFileReferenceOrFileName asString, ' is needed by one or more members in this archive') ].
 
-	aFileReferenceOrFileName asFileReference
-		binaryWriteStreamDo: [ :stream | self writeTo: stream ]
+	| file |
+	(self canWriteToFile: aFileReferenceOrFileName) ifFalse: [
+		^ ZipArchiveError signal: aFileReferenceOrFileName asString , ' is needed by one or more members in this archive' ].
+	file := aFileReferenceOrFileName asFileReference.
+	file ensureDelete.
+	file binaryWriteStreamDo: [ :stream | self writeTo: stream ]
 ]

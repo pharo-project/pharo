@@ -38,7 +38,8 @@ ZipNewFileMember >> from: aFileReference [
 
 	| entry |
 	"Now get the size, attributes, and timestamps, and see if the file exists"
-	self localFileName: (externalFileName := aFileReference fullName).
+	externalFileName := aFileReference.
+	self localFileName: aFileReference fullName.
 	reference := aFileReference.
 	entry := aFileReference entry.
 	compressedSize := uncompressedSize := entry size.

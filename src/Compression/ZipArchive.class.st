@@ -312,7 +312,7 @@ ZipArchive >> readFrom: aStreamOrFile [
 				          name := aStreamOrFile printString.
 				          aStreamOrFile ]
 		          ifFalse: [
-				          name := aStreamOrFile asFileReference fullName.
+				          name := aStreamOrFile asFileReference.
 				          aStreamOrFile asFileReference binaryReadStream ].
 	eocdPosition := self class findEndOfCentralDirectoryFrom: stream.
 	eocdPosition <= 0 ifTrue: [ ZipArchiveError signal: 'can''t find EOCD position' ].

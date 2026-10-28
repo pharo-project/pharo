@@ -643,6 +643,26 @@ ZipArchiveTest >> testSymbolicLinkHandler [
 ]
 
 { #category : 'tests - writing' }
+ZipArchiveTest >> testWriteToFileNeededByAMemberRaisesZipArchiveError [
+
+	zip addDeflateString: 'hello' as: 'a.txt'.
+	zip writeToFile: zipFile.
+	zip := ZipArchive new readFrom: zipFile.
+	[ self should: [ zip writeToFile: zipFile ] raise: ZipArchiveError ] ensure: [ zip close ].
+	self assert: ((ZipArchive new readFrom: zipFile) contentsOf: 'a.txt') asString equals: 'hello'
+]
+
+{ #category : 'tests - writing' }
+ZipArchiveTest >> testWriteToFileReplacesALongerFile [
+
+	zipFile binaryWriteStreamDo: [ :stream | stream nextPutAll: (ByteArray new: 5000 withAll: 7) ].
+	zip addDeflateString: 'hello' as: 'a.txt'.
+	zip writeToFile: zipFile.
+	self assert: zipFile size < 5000.
+	self assert: ((ZipArchive new readFrom: zipFile) contentsOf: 'a.txt') asString equals: 'hello'
+]
+
+{ #category : 'tests - writing' }
 ZipArchiveTest >> testWriteToPrependingFile [
 
 	| prefix bytes archive |
