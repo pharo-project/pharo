@@ -14,7 +14,9 @@ Class {
 
 { #category : 'archive operations' }
 Archive >> addDirectory: aFileReference [
-	^self addDirectory: aFileReference as: aFileReference path pathString
+	"Add a member for the directory aFileReference (not its contents) under its basename"
+
+	^ self addDirectory: aFileReference as: aFileReference basename
 ]
 
 { #category : 'archive operations' }
@@ -28,7 +30,9 @@ Archive >> addDirectory: aFileReference as: anotherFileName [
 
 { #category : 'archive operations' }
 Archive >> addFile: aFileReference [
-	^self addFile: aFileReference as: aFileReference path pathString
+	"Add aFileReference under its basename. Use #addFile:as: or #addTree:relativeTo:match: to keep a path"
+
+	^ self addFile: aFileReference as: aFileReference basename
 ]
 
 { #category : 'archive operations' }

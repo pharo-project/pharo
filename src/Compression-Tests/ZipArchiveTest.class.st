@@ -56,6 +56,22 @@ ZipArchiveTest >> tearDown [
 	super tearDown
 ]
 
+{ #category : 'tests - adding' }
+ZipArchiveTest >> testAddDirectoryUsesTheBasename [
+
+	self assert: (zip addDirectory: subdir) fileName equals: 'test-zip-dir/'.
+	self assert: (zip addDirectory: subdir as: 'other/') fileName equals: 'other/'.
+	self assert: (zip addDirectory: subdir as: 'another') fileName equals: 'another/'
+]
+
+{ #category : 'tests - adding' }
+ZipArchiveTest >> testAddFileUsesTheBasename [
+
+	| member |
+	member := zip addFile: fileToZip.
+	self assert: member fileName equals: 'test-zip-file'
+]
+
 { #category : 'tests' }
 ZipArchiveTest >> testAddNonExistentFile [
 
@@ -114,6 +130,24 @@ ZipArchiveTest >> testAddTreeWithSubDirectoriesShouldSucceed [
 	self assert:	 (extractionDir / 'test-zip-dir' / 'subSubDir') asFileReference isDirectory.
 	self assert:	 (extractionDir / 'test-zip-dir' / 'subSubDir' / 'fileInSubSubDir') asFileReference isFile.
 	self deny: (extractionDir / 'subSubDir') asFileReference isDirectory
+]
+
+{ #category : 'tests - adding' }
+ZipArchiveTest >> testArchiveOfAddedFileExtractsNextToIt [
+	"As the file browser compresses a file: the archive extracts back to the file alone, without the directories above it"
+
+	| file target |
+	file := (fs root / 'home' / 'user') ensureCreateDirectory / 'notes.txt'.
+	file writeStreamDo: [ :stream | stream nextPutAll: 'file contents' ].
+	zip addFile: file.
+	zip writeToFile: zipFile.
+	zip close.
+	target := (fs root / 'target') ensureCreateDirectory.
+	(ZipArchive new readFrom: zipFile)
+		extractAllTo: target;
+		close.
+	self assert: (target children collect: #basename) asArray equals: #( 'notes.txt' ).
+	self assert: (target / 'notes.txt') contents equals: 'file contents'
 ]
 
 { #category : 'tests' }
