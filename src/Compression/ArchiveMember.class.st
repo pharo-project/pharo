@@ -32,6 +32,13 @@ ArchiveMember class >> newFromString: aString [
 ArchiveMember >> close [
 ]
 
+{ #category : 'initialization' }
+ArchiveMember >> copyAttributesFrom: aMember [
+	"Take the attributes of aMember that do not depend on its data, when I replace it. My file name is already set."
+
+	
+]
+
 { #category : 'accessing' }
 ArchiveMember >> fileName [
 	^fileName

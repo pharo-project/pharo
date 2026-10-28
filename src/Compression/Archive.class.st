@@ -177,10 +177,11 @@ Archive >> replaceMember: aMemberOrName with: newMember [
 
 { #category : 'archive operations' }
 Archive >> setContentsOf: aMemberOrName to: aString [
+
 	| newMember oldMember |
-	oldMember := self member: aMemberOrName.
-	newMember := (self memberClass newFromString: aString named: oldMember fileName)
-		copyFrom: oldMember.
+	oldMember := (self member: aMemberOrName) ifNil: [ ^ ZipArchiveError signal: 'no member named ' , aMemberOrName printString ].
+	newMember := self memberClass newFromString: aString named: oldMember fileName.
+	newMember copyAttributesFrom: oldMember.
 	self replaceMember: oldMember with: newMember
 ]
 

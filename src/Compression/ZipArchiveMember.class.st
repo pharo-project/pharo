@@ -368,6 +368,17 @@ ZipArchiveMember >> contentsFrom: start to: finish [
 	^s contents
 ]
 
+{ #category : 'initialization' }
+ZipArchiveMember >> copyAttributesFrom: aMember [
+	"Take the comment, file attributes and compression method of aMember, which I replace. My data, CRC-32, sizes and modification time are my own."
+
+	fileComment := aMember fileComment.
+	fileAttributeFormat := aMember fileAttributeFormat.
+	internalFileAttributes := aMember internalFileAttributes.
+	externalFileAttributes := aMember externalFileAttributes.
+	self desiredCompressionMethod: aMember desiredCompressionMethod
+]
+
 { #category : 'private - writing' }
 ZipArchiveMember >> copyDataTo: aStream [
 
@@ -638,6 +649,12 @@ ZipArchiveMember >> extendedTimestampIn: aByteArrayOrString [
 	^ DateAndTime fromUnixTime: seconds
 ]
 
+{ #category : 'accessing - spec fields' }
+ZipArchiveMember >> externalFileAttributes [
+
+	^ externalFileAttributes
+]
+
 { #category : 'private - extra fields' }
 ZipArchiveMember >> extraField: aByteArrayOrString replacing: anId with: aByteArrayOrNil [
 	"Answer aByteArrayOrString without its blocks of header id anId, followed by a new block of that id when aByteArrayOrNil is not nil.
@@ -805,6 +822,13 @@ ZipArchiveMember >> extractWithOverwriteInDirectory: dir [
 	self extractInDirectory: dir overwrite: true
 ]
 
+{ #category : 'accessing - spec fields' }
+ZipArchiveMember >> fileAttributeFormat [
+	"Answer the host system of my external file attributes (FaMsdos or FaUnix)"
+
+	^ fileAttributeFormat
+]
+
 { #category : 'accessing' }
 ZipArchiveMember >> fileComment [
 	^fileComment
@@ -889,6 +913,12 @@ ZipArchiveMember >> initialize [
 	usesZip64 := false.
 	writesExtendedTimestamp := false.
 	self unixFileAttributes: DefaultFilePermissions
+]
+
+{ #category : 'accessing - spec fields' }
+ZipArchiveMember >> internalFileAttributes [
+
+	^ internalFileAttributes
 ]
 
 { #category : 'testing' }

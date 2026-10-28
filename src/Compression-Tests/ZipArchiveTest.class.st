@@ -477,6 +477,43 @@ ZipArchiveTest >> testRemoveMember [
 	self assert: zip numberOfMembers equals: 1
 ]
 
+{ #category : 'tests - accessing' }
+ZipArchiveTest >> testSetContentsOfAMissingMemberRaisesZipArchiveError [
+
+	self should: [ zip setContentsOf: 'missing.txt' to: 'x' ] raise: ZipArchiveError
+]
+
+{ #category : 'tests - accessing' }
+ZipArchiveTest >> testSetContentsOfReplacesAMemberReadFromAFile [
+
+	| archive |
+	zip addDeflateString: 'hello' as: 'a.txt'.
+	zip writeToFile: zipFile.
+	archive := ZipArchive new readFrom: zipFile.
+	[
+		archive setContentsOf: 'a.txt' to: 'goodbye'.
+		self assert: (archive contentsOf: 'a.txt') equals: 'goodbye'.
+		archive writeToFile: fs root / 'rewritten.zip' ] ensure: [ archive close ].
+	archive := ZipArchive new readFrom: fs root / 'rewritten.zip'.
+	[ self assert: (archive contentsOf: 'a.txt') asString equals: 'goodbye' ] ensure: [ archive close ]
+]
+
+{ #category : 'tests - accessing' }
+ZipArchiveTest >> testSetContentsOfReplacesTheContents [
+
+	| member |
+	member := zip addDeflateString: 'hello' as: 'a.txt'.
+	member fileComment: 'a comment'.
+	member unixFileAttributes: 8r100600.
+	zip setContentsOf: 'a.txt' to: 'goodbye'.
+	self assert: (zip contentsOf: 'a.txt') equals: 'goodbye'.
+	member := zip members first.
+	self assert: zip numberOfMembers equals: 1.
+	self assert: member fileComment equals: 'a comment'.
+	self assert: (member unixFileAttributes bitAnd: 8r777) equals: 8r600.
+	self assert: member desiredCompressionMethod equals: ZipArchive compressionDeflated
+]
+
 { #category : 'tests' }
 ZipArchiveTest >> testSetLastModification [
 	"The modification time survives writing and reading an archive.
