@@ -741,8 +741,6 @@ ZipArchiveMember >> extractInDirectory: aDirectory overwrite: aBoolean [
 	| file |
 	file := self fileInDirectory: aDirectory.
 	self ensureExtractionTarget: file isInside: aDirectory.
-	self isDirectory ifTrue: [ ^ file ensureCreateDirectory ].
-	file parent ensureCreateDirectory.
 	self extractToFile: file overwrite: aBoolean
 ]
 
@@ -792,9 +790,12 @@ ZipArchiveMember >> extractToFile: aFile [
 
 { #category : 'private - extraction' }
 ZipArchiveMember >> extractToFile: aFile overwrite: aBoolean [
-	"Extract this entry into aFile. An existing file is kept unless aBoolean is true.
-	Nothing is written when my compression method is not supported."
+	"Extract this entry into aFile, creating the directories it needs. An existing file is kept unless aBoolean is true.
+	Nothing is written when my compression method is not supported.
+	aFile is trusted: callers check it first when it is built from my file name (zip slip)."
 
+	self isDirectory ifTrue: [ ^ aFile ensureCreateDirectory ].
+	aFile parent ensureCreateDirectory.
 	aFile exists ifTrue: [
 			aBoolean ifFalse: [ ^ self ].
 			aFile ensureDelete ].
@@ -804,6 +805,9 @@ ZipArchiveMember >> extractToFile: aFile overwrite: aBoolean [
 
 { #category : 'extraction' }
 ZipArchiveMember >> extractToFileNamed: aFileName [
+	"Extract me to aFileName (a String or a FileReference), resolved against the working directory, replacing an existing file.
+	The caller chose aFileName, so it is trusted."
+
 	self extractToFileNamed: aFileName inDirectory: FileSystem workingDirectory overwrite: true
 ]
 
@@ -813,14 +817,11 @@ ZipArchiveMember >> extractToFileNamed: aLocalFileName inDirectory: dir [
 ]
 
 { #category : 'extraction' }
-ZipArchiveMember >> extractToFileNamed: aLocalFileName inDirectory: dir overwrite: overwrite [
+ZipArchiveMember >> extractToFileNamed: aFileName inDirectory: dir overwrite: overwrite [
+	"Extract me to aFileName (a String or a FileReference), resolved against dir.
+	The caller chose aFileName, so it is trusted and may lead outside of dir."
 
-	| file |
-	file := dir / aLocalFileName.
-	self ensureExtractionTarget: file isInside: dir.
-	self isDirectory ifTrue: [ ^ file ensureCreateDirectory ].
-	file parent ensureCreateDirectory.
-	self extractToFile: file overwrite: overwrite
+	self extractToFile: (dir resolve: aFileName) canonicalize overwrite: overwrite
 ]
 
 { #category : 'extraction' }

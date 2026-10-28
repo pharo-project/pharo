@@ -105,6 +105,16 @@ ZipArchiveExtractionTest >> testExtractAllToInformingKeepsExistingFiles [
 ]
 
 { #category : 'tests' }
+ZipArchiveExtractionTest >> testExtractMemberToFileNamedOutsideTheWorkingDirectory [
+	"The caller chose the target file, so it is trusted"
+
+	| file |
+	file := fileSystem / 'elsewhere' / 'b.txt'.
+	(self archiveWith: 'hello' as: 'a.txt') extractMember: 'a.txt' toFileNamed: file.
+	self assert: file contents equals: 'hello'
+]
+
+{ #category : 'tests' }
 ZipArchiveExtractionTest >> testExtractMemberWithoutPath [
 
 	| archive |
@@ -115,10 +125,29 @@ ZipArchiveExtractionTest >> testExtractMemberWithoutPath [
 ]
 
 { #category : 'tests' }
+ZipArchiveExtractionTest >> testExtractMemberWithoutPathRefusesDotDot [
+	"The name comes from the archive: its last part '..' would lead outside of the directory.
+	The member is created in the image, since reading an archive canonicalizes names."
+
+	| archive |
+	archive := ZipArchive new.
+	archive addString: 'hello' as: 'a/..'.
+	self should: [ archive extractMemberWithoutPath: 'a/..' inDirectory: target ] raise: ZipArchiveError.
+	self assert: (fileSystem root children collect: #basename) asArray equals: #( 'target' )
+]
+
+{ #category : 'tests' }
 ZipArchiveExtractionTest >> testExtractMissingMemberWithoutPathAnswersNil [
 
 	self assert: ((self archiveWith: 'x' as: 'a.txt') extractMemberWithoutPath: 'missing.txt' inDirectory: target) isNil.
 	self assert: target children isEmpty
+]
+
+{ #category : 'tests' }
+ZipArchiveExtractionTest >> testExtractToFileNamedInDirectoryTrustsTheGivenName [
+
+	(self archiveWith: 'hello' as: 'a.txt') members first extractToFileNamed: '../out.txt' inDirectory: target overwrite: true.
+	self assert: (fileSystem / 'out.txt') contents equals: 'hello'
 ]
 
 { #category : 'tests' }

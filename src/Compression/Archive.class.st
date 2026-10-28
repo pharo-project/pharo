@@ -87,13 +87,12 @@ Archive >> contentsOf: aMemberOrName [
 
 { #category : 'archive operations' }
 Archive >> extractMember: aMemberOrName [
+	"Extract the member under the working directory, at the path given by its name, replacing an existing file"
+
 	| member |
 	member := self member: aMemberOrName.
 	member ifNil: [ ^ nil ].
-	member
-		extractToFileNamed: member localFileName
-		inDirectory: FileSystem workingDirectory
-		overwrite: true
+	member extractInDirectory: FileSystem workingDirectory overwrite: true
 ]
 
 { #category : 'archive operations' }
@@ -115,10 +114,12 @@ Archive >> extractMemberWithoutPath: aMemberOrName [
 Archive >> extractMemberWithoutPath: aMemberOrName inDirectory: dir [
 	"Extract the member directly into dir, under the last part of its name"
 
-	| member |
+	| member file |
 	member := self member: aMemberOrName.
 	member ifNil: [ ^ nil ].
-	member extractToFileNamed: member splitFileName last inDirectory: dir overwrite: true
+	file := dir / member splitFileName last.
+	member ensureExtractionTarget: file isInside: dir.
+	member extractToFile: file overwrite: true
 ]
 
 { #category : 'initialization' }

@@ -113,7 +113,6 @@ ZipArchiveExtractionSafetyTest >> testInImageMemberWithDotDotIsRefused [
 		member := archive addString: 'pwned' as: '../outside.txt'.
 		self should: [ member extractInDirectory: target ] raise: ZipArchiveError.
 		self should: [ member extractInDirectory: target withoutInformingOverwrite: true ] raise: ZipArchiveError.
-		self should: [ member extractToFileNamed: '../outside.txt' inDirectory: target ] raise: ZipArchiveError.
 		self should: [ archive extractAllTo: target informing: nil ] raise: ZipArchiveError ] ensure: [ archive close ].
 	self assertNothingOutsideTarget
 ]
