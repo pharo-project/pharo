@@ -167,22 +167,29 @@ ZipArchiveTest >> testCanUnzipFromFileName [
 
 { #category : 'tests' }
 ZipArchiveTest >> testCanUnzipFromStream [
-	| nestedFileToZip |
-	nestedFileToZip := (subdir / '_test-zip-file.txt')
-		writeStreamDo: [ :stream | stream nextPutAll: 'file contents' ];
-		yourself.
-	zipFile binaryWriteStreamDo: [ :stream |
-		zip
-			addDirectory: subdir as: subdir basename;
-			addFile: nestedFileToZip as: nestedFileToZip basename;
-			writeTo: stream;
-			close. ].
 
+	| nestedFileToZip extracted |
+	nestedFileToZip := (subdir / '_test-zip-file.txt')
+		                   writeStreamDo: [ :stream | stream nextPutAll: 'file contents' ];
+		                   yourself.
+	zipFile binaryWriteStreamDo: [ :stream |
+			zip
+				addDirectory: subdir as: subdir basename;
+				addFile: nestedFileToZip as: nestedFileToZip basename;
+				writeTo: stream;
+				close ].
+
+	extracted := (fs root / 'extracted')
+		             ensureCreateDirectory;
+		             yourself.
 	zipFile binaryReadStreamDo: [ :stream |
-		ZipArchive new
-			readFrom: stream ;
-			extractAllTo: subdir overwrite: true;
-			close ]
+			ZipArchive new
+				readFrom: stream;
+				extractAllTo: extracted overwrite: true;
+				close ].
+
+	self assert: (extracted / subdir basename) isDirectory.
+	self assert: (extracted / nestedFileToZip basename) contents equals: 'file contents'
 ]
 
 { #category : 'tests' }
