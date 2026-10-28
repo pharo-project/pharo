@@ -300,7 +300,7 @@ ZipArchive >> readEndOfCentralDirectoryFrom: aStream [
 	centralDirectorySize := endianStream nextLittleEndianNumber: 4. "size of central directory"
 	centralDirectoryOffsetWRTStartingDiskNumber := endianStream nextLittleEndianNumber: 4. "offset of start of central directory"
 	zipFileCommentLength := endianStream nextLittleEndianNumber: 2. "zip file comment"
-	zipFileComment := aStream next: zipFileCommentLength
+	zipFileComment := ZipArchiveMember decodeText: (aStream next: zipFileCommentLength)
 ]
 
 { #category : 'reading' }
@@ -414,7 +414,7 @@ ZipArchive >> writeCentralDirectoryTo: aStream [
 { #category : 'private' }
 ZipArchive >> writeEndOfCentralDirectoryTo: aStream [
 
-	| endianStream centralDirectorySizeToWrite |
+	| endianStream centralDirectorySizeToWrite commentBytes |
 	centralDirectorySizeToWrite := writeEOCDOffset - writeCentralDirectoryOffset.
 	self needsZip64EndOfCentralDirectory ifTrue: [ self writeZip64EndOfCentralDirectoryTo: aStream ].
 	aStream nextPutAll: EndOfCentralDirectorySignature.
@@ -427,9 +427,10 @@ ZipArchive >> writeEndOfCentralDirectoryTo: aStream [
 	endianStream nextLittleEndianNumber: 2 put: (members size min: Zip64EntriesLimit). "numberOfCentralDirectories"
 	endianStream nextLittleEndianNumber: 4 put: (centralDirectorySizeToWrite min: Zip64Limit). "size of central dir"
 	endianStream nextLittleEndianNumber: 4 put: (writeCentralDirectoryOffset min: Zip64Limit). "offset of central dir"
-	endianStream nextLittleEndianNumber: 2 put: zipFileComment size. "zip file comment"
+	commentBytes := zipFileComment utf8Encoded.
+	endianStream nextLittleEndianNumber: 2 put: commentBytes size. "zip file comment"
 
-	zipFileComment isEmpty ifFalse: [ aStream nextPutAll: zipFileComment ]
+	aStream nextPutAll: commentBytes
 ]
 
 { #category : 'accessing' }

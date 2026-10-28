@@ -741,12 +741,40 @@ ZipArchiveTest >> testZip [
 ]
 
 { #category : 'tests - writing' }
+ZipArchiveTest >> testZipFileCommentInCp437IsDecoded [
+	"Without UTF-8, the comment is read as CP437, in which 16r82 is é"
+
+	| bytes |
+	zip addDeflateString: 'hello' as: 'a.txt'.
+	zip zipFileComment: 'xx'.
+	bytes := ByteArray streamContents: [ :stream | zip writeTo: stream ].
+	bytes at: bytes size - 1 put: 16r82.
+	bytes at: bytes size put: $A asInteger.
+	self assert: (ZipArchive new readFrom: bytes readStream) zipFileComment equals: 'éA'
+]
+
+{ #category : 'tests - writing' }
 ZipArchiveTest >> testZipFileCommentIsWrittenAndRead [
 
+	| bytes |
 	zip addDeflateString: 'hello' as: 'a.txt'.
 	zip zipFileComment: 'an archive comment'.
 	zip writeToFile: zipFile.
-	self assert: (ZipArchive new readFrom: zipFile) zipFileComment equals: 'an archive comment'
+	self assert: (ZipArchive new readFrom: zipFile) zipFileComment equals: 'an archive comment'.
+	bytes := ByteArray streamContents: [ :stream | zip writeTo: stream ].
+	self assert: (ZipArchive new readFrom: bytes readStream) zipFileComment equals: 'an archive comment'
+]
+
+{ #category : 'tests - writing' }
+ZipArchiveTest >> testZipFileCommentIsWrittenInUTF8 [
+
+	| comment bytes |
+	comment := 'été ' , (String with: (Character value: 16r4E2D)).
+	zip addDeflateString: 'hello' as: 'a.txt'.
+	zip zipFileComment: comment.
+	bytes := ByteArray streamContents: [ :stream | zip writeTo: stream ].
+	self assert: (bytes last: comment utf8Encoded size) equals: comment utf8Encoded.
+	self assert: (ZipArchive new readFrom: bytes readStream) zipFileComment equals: comment
 ]
 
 { #category : 'tests' }

@@ -92,6 +92,30 @@ ZipArchiveMember class >> cp437HighCodePoints [
 	     8801 177 8805 8804 8992 8993 247 8776 176 8729 183 8730 8319 178 9632 160 )
 ]
 
+{ #category : 'decoding' }
+ZipArchiveMember class >> decodeCp437: aByteArray [
+
+	| highCodePoints |
+	highCodePoints := self cp437HighCodePoints.
+	^ String streamContents: [ :stream |
+			  aByteArray do: [ :each |
+					  stream nextPut: (Character value: (each < 128
+								    ifTrue: [ each ]
+								    ifFalse: [ highCodePoints at: each - 127 ])) ] ]
+]
+
+{ #category : 'decoding' }
+ZipArchiveMember class >> decodeText: aByteArray [
+	"Decode text read from an archive without the language encoding flag (APPNOTE, appendix D).
+	It should be CP437, but many tools (and older versions of Pharo) write UTF-8, so valid UTF-8 is decoded as UTF-8."
+
+	| bytes |
+	bytes := aByteArray asByteArray.
+	^ [ bytes utf8Decoded ]
+		  on: ZnCharacterEncodingError
+		  do: [ self decodeCp437: bytes ]
+]
+
 { #category : 'compression methods' }
 ZipArchiveMember class >> decompressorForMethod: anInteger [
 	"Answer a block decompressing a ByteArray compressed with the compression method anInteger, or nil.
@@ -454,30 +478,13 @@ ZipArchiveMember >> crc32String [
 	^('00000000' copyFrom: 1 to: 11 - (hexString size)) , (hexString copyFrom: 4 to: hexString size)
 ]
 
-{ #category : 'private - encoding' }
-ZipArchiveMember >> decodeCp437: aByteArray [
-
-	| highCodePoints |
-	highCodePoints := self class cp437HighCodePoints.
-	^ String streamContents: [ :stream |
-			  aByteArray do: [ :each |
-					  stream nextPut: (Character value: (each < 128
-								    ifTrue: [ each ]
-								    ifFalse: [ highCodePoints at: each - 127 ])) ] ]
-]
-
-{ #category : 'private - encoding' }
+{ #category : 'private - reading' }
 ZipArchiveMember >> decodeText: aByteArray [
-	"Decode a file name or comment read from the archive (APPNOTE, appendix D).
-	With the language encoding flag the text is UTF-8, otherwise it should be CP437.
-	Many tools (and older versions of Pharo) write UTF-8 without the flag, so valid UTF-8 is decoded as UTF-8 anyway."
+	"Decode a file name or comment read from the archive (APPNOTE, appendix D):
+	UTF-8 with the language encoding flag, see the class side otherwise"
 
-	| bytes |
-	bytes := aByteArray asByteArray.
-	((self bitFlag anyMask: LanguageEncodingFlag) or: [ bytes allSatisfy: [ :each | each < 128 ] ]) ifTrue: [ ^ bytes utf8Decoded ].
-	^ [ bytes utf8Decoded ]
-		  on: ZnCharacterEncodingError
-		  do: [ self decodeCp437: bytes ]
+	(self bitFlag anyMask: LanguageEncodingFlag) ifTrue: [ ^ aByteArray asByteArray utf8Decoded ].
+	^ self class decodeText: aByteArray
 ]
 
 { #category : 'private - writing' }
