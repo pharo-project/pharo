@@ -248,17 +248,16 @@ ZipArchiveMember >> clearExtraFields [
 
 { #category : 'private - writing' }
 ZipArchiveMember >> compressDataTo: aStream [
-	"Copy my deflated data to the given stream."
+	"Copy my deflated data to the given stream, compressed with my desiredCompressionLevel."
+
 	| encoder startPos endPos |
-
-	encoder := ZipWriteStream on: aStream.
+	encoder := ZipWriteStream on: aStream level: self deflateLevel.
 	startPos := aStream position.
-
-	[ readDataRemaining > 0 ] whileTrue: [ | data |
-		data := self readRawChunk: (4096 min: readDataRemaining).
-		encoder nextPutAll: data asByteArray.
-		readDataRemaining := readDataRemaining - data size.
-	].
+	[ readDataRemaining > 0 ] whileTrue: [
+			| data |
+			data := self readRawChunk: (4096 min: readDataRemaining).
+			encoder nextPutAll: data asByteArray.
+			readDataRemaining := readDataRemaining - data size ].
 	encoder finish. "not close!"
 	endPos := aStream position.
 	compressedSize := endPos - startPos.
@@ -449,6 +448,15 @@ ZipArchiveMember >> decompressDataTo: aStream [
 						   crc32 printStringHex.
 						   crc printStringHex }) ].
 	aStream nextPutAll: data
+]
+
+{ #category : 'private - writing' }
+ZipArchiveMember >> deflateLevel [
+	"The level used to deflate my data: my desiredCompressionLevel, or the default one when it is not a level from 1 to 9"
+
+	^ (desiredCompressionLevel isInteger and: [ desiredCompressionLevel between: 1 and: 9 ])
+		  ifTrue: [ desiredCompressionLevel ]
+		  ifFalse: [ CompressionLevelDefault ]
 ]
 
 { #category : 'accessing' }
