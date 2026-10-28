@@ -31,7 +31,9 @@ Class {
 		'compressedSize',
 		'uncompressedSize',
 		'readDataRemaining',
-		'headerStartPosition'
+		'headerStartPosition',
+		'usesZip64',
+		'writesExtendedTimestamp'
 	],
 	#pools : [
 		'ZipFileConstants'
