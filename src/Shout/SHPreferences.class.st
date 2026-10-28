@@ -10,7 +10,6 @@ Class {
 	#name : 'SHPreferences',
 	#superclass : 'Object',
 	#classInstVars : [
-		'enabled',
 		'activeStyleTable',
 		'syntaxHighlightingEnabled'
 	],
@@ -90,7 +89,7 @@ SHPreferences class >> informUI [
 
 { #category : 'settings' }
 SHPreferences class >> settingsOn: aBuilder [
-	
+
 	<systemsettings>
 	(aBuilder group: 'Syntax Highlighting')
 		parentName: 'codeBrowsing';
@@ -115,27 +114,22 @@ SHPreferences class >> settingsOn: aBuilder [
 					label: 'Predefined styles';
 					target: self;
 					domainValues: self styleTableNames;
-					description: 'Choose between the different styles.  Default changes according to the UI Theme and Custom can be modified by you.' ;
+					description:
+						'Choose between the different styles.  Default changes according to the UI Theme and Custom can be modified by you.';
 					default: 'Default'.
 				(aBuilder group: 'Edit Custom Style')
-					description: 'Change the Custom style to your liking.  You have to activate it for your changes to take effect.' ;
-					dialog: [
-							Smalltalk ui theme
-								newButtonIn: self
-								for: SHCustomStyle
-								getState: nil
-								action: #copyFromCurrentStyle
-								arguments: nil
-								getEnabled: nil
-								label: 'Copy from current style'
-								help:
-									'Initialize custom style to colors of the currently selected them' ];
+					description: 'Change the Custom style to your liking.  You have to activate it for your changes to take effect.';
 					with: [
+							(aBuilder button: #copyFromCurrentStyle)
+								description: 'Initialize custom style to colors of the currently selected them';
+								target: SHCustomStyle;
+								label: 'Copy from current style';
+								buttonLabel: 'Copy'.
 							SHCustomStyle groups keysAndValuesDo: [ :group :info |
-										(aBuilder setting: group , 'Style')
-											target: self;
-											label: (info at: 'label');
-											description: (info at: 'description' ifAbsent: [ '' ]) ] ] ]
+									(aBuilder setting: group , 'Style')
+										target: self;
+										label: (info at: 'label');
+										description: (info at: 'description' ifAbsent: [ '' ]) ] ] ]
 ]
 
 { #category : 'private' }
