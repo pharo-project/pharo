@@ -29,6 +29,7 @@ ZipWriteStreamTest >> testDeflateTablesFollowRFC1951 [
 	self assert: ZipWriteStream matchLengthCodes size equals: 256.
 	self assert: ZipWriteStream matchLengthCodes first equals: 257.
 	self assert: (ZipWriteStream matchLengthCodes at: 257 - 3 + 1) equals: 284.
+	self assert: ZipWriteStream matchLengthCodes last equals: 285.
 	self assert: ZipWriteStream distanceCodes size equals: 512.
 	self assert: (ZipWriteStream distanceCodes first: 5) asArray equals: #( 0 1 2 3 4 )
 ]
@@ -48,6 +49,21 @@ ZipWriteStreamTest >> testEmptyStrings [
 	self assertEmpty: zipStream nextString.
 	zipStream close.
 	aStream close
+]
+
+{ #category : 'tests' }
+ZipWriteStreamTest >> testLongestMatchesRoundTrip [
+	"A long run of one byte is made of matches of the longest length, 258, encoded with code 285 and no extra bits (RFC 1951)"
+
+	| data compressed |
+	data := ByteArray new: 100000 withAll: 97.
+	compressed := ByteArray streamContents: [ :stream |
+			              (ZipWriteStream on: stream)
+				              nextPutAll: data;
+				              close ].
+	self assert: (InflateStream on: compressed readStream) upToEnd asByteArray equals: data.
+	"With code 284 and 31 extra bits instead, it took 358 bytes"
+	self assert: compressed size < 200
 ]
 
 { #category : 'tests' }

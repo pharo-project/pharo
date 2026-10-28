@@ -194,7 +194,7 @@ ZipWriteStream >> fixedBlockSizeFor: lTree and: dTree [
 	"Compute the size of the compressed block"
 	0 to: NumLiterals do:[:i| "encoding of literals"
 		bits := bits + ((literalFreq at: i+1) * (FixedLiteralTree bitLengthAt: i))].
-	NumLiterals+1 to: lTree maxCode+1 do:[:i| "Encoding of match lengths"
+	NumLiterals+1 to: lTree maxCode do:[:i| "Encoding of match lengths"
 		extra := ExtraLengthBits at: i-NumLiterals.
 		bits := bits + ((literalFreq at: i+1) * ((FixedLiteralTree bitLengthAt: i) + extra))].
 	0 to: dTree maxCode do:[:i| "encoding of distances"
