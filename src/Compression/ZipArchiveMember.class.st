@@ -41,6 +41,17 @@ Class {
 	#tag : 'Archives'
 }
 
+{ #category : 'accessing' }
+ZipArchiveMember class >> cp437HighCodePoints [
+	"Unicode code points of the bytes 128 to 255 of IBM code page 437, the encoding of ZIP file names and comments when the language encoding flag is not set (APPNOTE, appendix D)"
+
+	^ #( 199 252 233 226 228 224 229 231 234 235 232 239 238 236 196 197 201 230 198 244 246 242 251 249 255 214 220 162 163 165 8359
+	     402 225 237 243 250 241 209 170 186 191 8976 172 189 188 161 171 187 9617 9618 9619 9474 9508 9569 9570 9558 9557 9571 9553
+	     9559 9565 9564 9563 9488 9492 9524 9516 9500 9472 9532 9566 9567 9562 9556 9577 9574 9568 9552 9580 9575 9576 9572 9573 9561
+	     9560 9554 9555 9579 9578 9496 9484 9608 9604 9612 9616 9600 945 223 915 960 931 963 181 964 934 920 937 948 8734 966 949 8745
+	     8801 177 8805 8804 8992 8993 247 8776 176 8729 183 8730 8319 178 9632 160 )
+]
+
 { #category : 'instance creation' }
 ZipArchiveMember class >> newFromDirectory: aFileReference localName: localName [
 	^ZipDirectoryMember newFromDirectory: aFileReference localName: localName
@@ -122,6 +133,15 @@ ZipArchiveMember >> bitFlag: aNumber [
 	"See comment for #bitFlag"
 
 	bitFlag := aNumber
+]
+
+{ #category : 'private - encoding' }
+ZipArchiveMember >> bitFlagToWrite [
+	"Answer my general purpose bit flag, with the language encoding flag when my file name or comment is not ASCII, since they are written in UTF-8"
+
+	^ (fileName isAsciiString and: [ fileComment isAsciiString ])
+		  ifTrue: [ self bitFlag ]
+		  ifFalse: [ self bitFlag bitOr: LanguageEncodingFlag ]
 ]
 
 { #category : 'accessing' }
@@ -271,6 +291,32 @@ ZipArchiveMember >> crc32String [
 	| hexString |
 	hexString := crc32 storeStringHex.
 	^('00000000' copyFrom: 1 to: 11 - (hexString size)) , (hexString copyFrom: 4 to: hexString size)
+]
+
+{ #category : 'private - encoding' }
+ZipArchiveMember >> decodeCp437: aByteArray [
+
+	| highCodePoints |
+	highCodePoints := self class cp437HighCodePoints.
+	^ String streamContents: [ :stream |
+			  aByteArray do: [ :each |
+					  stream nextPut: (Character value: (each < 128
+								    ifTrue: [ each ]
+								    ifFalse: [ highCodePoints at: each - 127 ])) ] ]
+]
+
+{ #category : 'private - encoding' }
+ZipArchiveMember >> decodeText: aByteArray [
+	"Decode a file name or comment read from the archive (APPNOTE, appendix D).
+	With the language encoding flag the text is UTF-8, otherwise it should be CP437.
+	Many tools (and older versions of Pharo) write UTF-8 without the flag, so valid UTF-8 is decoded as UTF-8 anyway."
+
+	| bytes |
+	bytes := aByteArray asByteArray.
+	((self bitFlag anyMask: LanguageEncodingFlag) or: [ bytes allSatisfy: [ :each | each < 128 ] ]) ifTrue: [ ^ bytes utf8Decoded ].
+	^ [ bytes utf8Decoded ]
+		  on: ZnCharacterEncodingError
+		  do: [ self decodeCp437: bytes ]
 ]
 
 { #category : 'accessing' }
@@ -658,7 +704,7 @@ ZipArchiveMember >> writeCentralDirectoryFileHeaderTo: aStream [
 	endianStream nextLittleEndianNumber: 1 put: fileAttributeFormat.
 
 	endianStream nextLittleEndianNumber: 2 put: versionNeededToExtract.
-	endianStream nextLittleEndianNumber: 2 put: self bitFlag.
+	endianStream nextLittleEndianNumber: 2 put: self bitFlagToWrite.
 	endianStream nextLittleEndianNumber: 2 put: desiredCompressionMethod.
 
 	endianStream nextLittleEndianNumber: 4 put: lastModFileDateTime asDosTimestamp.
@@ -666,13 +712,14 @@ ZipArchiveMember >> writeCentralDirectoryFileHeaderTo: aStream [
 	"These next 3 should have been updated during the write of the data"
 	endianStream nextLittleEndianNumber: 4 put: crc32.
 	endianStream nextLittleEndianNumber: 4 put: (desiredCompressionMethod = CompressionStored
-												ifTrue: [ uncompressedSize ] ifFalse: [ compressedSize ]).
+			 ifTrue: [ uncompressedSize ]
+			 ifFalse: [ compressedSize ]).
 	endianStream nextLittleEndianNumber: 4 put: uncompressedSize.
 
 	endianStream nextLittleEndianNumber: 2 put: systemFileName size.
 	endianStream nextLittleEndianNumber: 2 put: systemCdExtraField size.
 	endianStream nextLittleEndianNumber: 2 put: systemFileComment size.
-	endianStream nextLittleEndianNumber: 2 put: 0.		"diskNumberStart"
+	endianStream nextLittleEndianNumber: 2 put: 0. "diskNumberStart"
 	endianStream nextLittleEndianNumber: 2 put: internalFileAttributes.
 
 	endianStream nextLittleEndianNumber: 4 put: externalFileAttributes.
@@ -747,13 +794,14 @@ ZipArchiveMember >> writeLocalFileHeaderTo: aStream [
 
 	endianStream := ZnEndianessReadWriteStream on: aStream.
 	endianStream nextLittleEndianNumber: 2 put: versionNeededToExtract.
-	endianStream nextLittleEndianNumber: 2 put: self bitFlag.
+	endianStream nextLittleEndianNumber: 2 put: self bitFlagToWrite.
 	endianStream nextLittleEndianNumber: 2 put: desiredCompressionMethod.
 
 	endianStream nextLittleEndianNumber: 4 put: lastModFileDateTime asDosTimestamp.
 	endianStream nextLittleEndianNumber: 4 put: crc32.
 	endianStream nextLittleEndianNumber: 4 put: (desiredCompressionMethod = CompressionStored
-												ifTrue: [ uncompressedSize ] ifFalse: [ compressedSize ]).
+			 ifTrue: [ uncompressedSize ]
+			 ifFalse: [ compressedSize ]).
 	endianStream nextLittleEndianNumber: 4 put: uncompressedSize.
 
 	endianStream nextLittleEndianNumber: 2 put: systemFileName size.
