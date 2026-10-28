@@ -359,12 +359,23 @@ ZipArchiveTest >> testParsePharoZipTimestamp [
 
 { #category : 'tests' }
 ZipArchiveTest >> testSetLastModification [
+	"The modification time survives writing and reading an archive.
+	DOS timestamps only have a 2 seconds resolution, so odd seconds are truncated."
 
-	| aDateAndTime member |
-	aDateAndTime := '15 January, 2000T13:23:55'.
-	member := zip addDeflateString: 'foo' as: 'bar'.
-	member modifiedAt: aDateAndTime.
-	self assert: member lastModTime equals: aDateAndTime
+	| aDateAndTime readArchive |
+	aDateAndTime := DateAndTime
+		                year: 2000
+		                month: 1
+		                day: 15
+		                hour: 13
+		                minute: 23
+		                second: 55
+		                offset: Duration zero.
+	(zip addDeflateString: 'foo' as: 'bar') modifiedAt: aDateAndTime.
+	zip writeToFile: zipFile.
+
+	readArchive := ZipArchive new readFrom: zipFile.
+	[ self assert: (readArchive memberNamed: 'bar') lastModTime equals: aDateAndTime - 1 second ] ensure: [ readArchive close ]
 ]
 
 { #category : 'tests' }
