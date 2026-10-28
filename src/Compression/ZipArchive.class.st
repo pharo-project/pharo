@@ -225,6 +225,18 @@ ZipArchive >> initialize [
 ]
 
 { #category : 'private' }
+ZipArchive >> isSplitArchiveWithDiskNumber: diskNumber centralDirectoryDiskNumber: centralDirectoryDiskNumber entriesOnThisDisk: entriesOnThisDisk entries: entries [
+	"Split (or spanned) archives are made of several files (.z01, .z02... .zip, APPNOTE 8.5): their last file has a disk number other than 0.
+	16rFFFF means that the value is in the Zip64 end of central directory record (APPNOTE 4.4.1.4), so it is not considered."
+
+	| known |
+	known := [ :value | value ~= 16rFFFF ].
+	^ ((known value: diskNumber) and: [ diskNumber ~= 0 ]) or: [
+			  ((known value: centralDirectoryDiskNumber) and: [ centralDirectoryDiskNumber ~= 0 ]) or: [
+				  (known value: entriesOnThisDisk) and: [ (known value: entries) and: [ entriesOnThisDisk ~= entries ] ] ] ]
+]
+
+{ #category : 'private' }
 ZipArchive >> memberClass [
 	^ZipArchiveMember
 ]
@@ -241,15 +253,21 @@ ZipArchive >> prependedDataSize [
 { #category : 'private' }
 ZipArchive >> readEndOfCentralDirectoryFrom: aStream [
 	"Read EOCD, starting from position before signature."
-	| signature zipFileCommentLength endianStream |
+
+	| signature zipFileCommentLength endianStream diskNumber centralDirectoryDiskNumber entriesOnThisDisk entries |
 	signature := self readSignatureFrom: aStream.
-	signature = EndOfCentralDirectorySignature ifFalse: [ ^self error: 'bad signature at ', aStream position printString ].
+	signature = EndOfCentralDirectorySignature ifFalse: [ ^ self error: 'bad signature at ' , aStream position printString ].
 
 	endianStream := ZnEndianessReadWriteStream on: aStream.
-	endianStream nextLittleEndianNumber: 2. "# of this disk"
-	endianStream nextLittleEndianNumber: 2. "# of disk with central dir start"
-	endianStream nextLittleEndianNumber: 2. "# of entries in central dir on this disk"
-	endianStream nextLittleEndianNumber: 2. "total # of entries in central dir"
+	diskNumber := endianStream nextLittleEndianNumber: 2. "# of this disk"
+	centralDirectoryDiskNumber := endianStream nextLittleEndianNumber: 2. "# of disk with central dir start"
+	entriesOnThisDisk := endianStream nextLittleEndianNumber: 2. "# of entries in central dir on this disk"
+	entries := endianStream nextLittleEndianNumber: 2. "total # of entries in central dir"
+	(self
+		 isSplitArchiveWithDiskNumber: diskNumber
+		 centralDirectoryDiskNumber: centralDirectoryDiskNumber
+		 entriesOnThisDisk: entriesOnThisDisk
+		 entries: entries) ifTrue: [ ZipArchiveError signal: 'split archives (made of several files) are not supported' ].
 	centralDirectorySize := endianStream nextLittleEndianNumber: 4. "size of central directory"
 	centralDirectoryOffsetWRTStartingDiskNumber := endianStream nextLittleEndianNumber: 4. "offset of start of central directory"
 	zipFileCommentLength := endianStream nextLittleEndianNumber: 2. "zip file comment"
