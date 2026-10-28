@@ -230,6 +230,15 @@ ZipArchive >> memberClass [
 ]
 
 { #category : 'accessing' }
+ZipArchive >> password: aStringOrByteArray [
+	"Set the password of all my current members: to decrypt the encrypted ones,
+	and to encrypt the others when I am written. Encryption uses the traditional
+	PKWARE cipher (ZipCrypto), which is weak: see the comment of ZipCrypto."
+
+	members do: [ :each | each password: aStringOrByteArray ]
+]
+
+{ #category : 'accessing' }
 ZipArchive >> prependedDataSize [
 	"Answer the size of whatever data exists before my first member.
 	Assumes that I was read from a file or stream (i.e. the first member is a ZipFileMember)"
