@@ -117,6 +117,19 @@ ZipArchiveTest >> testAddTreeWithSubDirectoriesShouldSucceed [
 ]
 
 { #category : 'tests' }
+ZipArchiveTest >> testArchiveStoresCrc32OfMembers [
+	"The CRC-32 of a member is written in the archive and read back."
+
+	| readArchive |
+	zip addDeflateString: 'Hello World' as: 'hello.txt'.
+	zip writeToFile: zipFile.
+
+	readArchive := ZipArchive new readFrom: zipFile.
+	"Standard CRC-32 of 'Hello World', as given by zlib's crc32 or Python's zlib.crc32"
+	[ self assert: (readArchive memberNamed: 'hello.txt') crc32 equals: 16r4A17B156 ] ensure: [ readArchive close ]
+]
+
+{ #category : 'tests' }
 ZipArchiveTest >> testArchiveWithThousandFilesShouldWork [
 
 	"Smoke test showing that we can create zip archives with up to 1000 elements.
@@ -415,6 +428,50 @@ ZipArchiveTest >> testShouldUnzipAndOverwriteWithoutInforming [
 		extractAllTo: subdir overwrite: false;
 		close.
 	self deny: fileModificationTime ~= fileModificationTimeBlock value
+]
+
+{ #category : 'tests' }
+ZipArchiveTest >> testWrongCrc32InDeflatedMemberRaisesCRCError [
+	"Change the CRC-32 stored in the archive (local header and central directory) and check that reading the member detects it."
+
+	| crcBytes bytes corruptedBytes readArchive |
+	zip addDeflateString: 'Hello World' as: 'hello.txt'.
+	zip writeToFile: zipFile.
+
+	"Little endian bytes of 16r4A17B156, the CRC-32 of 'Hello World'"
+	crcBytes := #[ 16r56 16rB1 16r17 16r4A ].
+	bytes := zipFile binaryReadStreamDo: [ :stream | stream upToEnd ].
+	corruptedBytes := bytes copyReplaceAll: crcBytes with: #[ 16r57 16rB1 16r17 16r4A ].
+	self deny: corruptedBytes equals: bytes.
+	zipFile ensureDelete.
+	zipFile binaryWriteStreamDo: [ :stream | stream nextPutAll: corruptedBytes ].
+
+	readArchive := ZipArchive new readFrom: zipFile.
+	[ self should: [ (readArchive memberNamed: 'hello.txt') contents ] raise: CRCError ] ensure: [ readArchive close ]
+]
+
+{ #category : 'tests' }
+ZipArchiveTest >> testWrongCrc32InStoredMemberRaisesCRCError [
+	"Same as #testWrongCrc32InDeflatedMemberRaisesCRCError but for a stored (not compressed) member.
+	Expected to fail: stored members are copied without checking their CRC-32, only deflated ones are checked (see ZipFileMember>>#uncompressDataTo:)."
+
+	<expectedFailure>
+	| crcBytes bytes corruptedBytes readArchive |
+	zip addString: 'Hello World' as: 'hello.txt'.
+	zip writeToFile: zipFile.
+
+	"Little endian bytes of 16r4A17B156, the CRC-32 of 'Hello World'"
+	crcBytes := #[ 16r56 16rB1 16r17 16r4A ].
+	bytes := zipFile binaryReadStreamDo: [ :stream | stream upToEnd ].
+	corruptedBytes := bytes copyReplaceAll: crcBytes with: #[ 16r57 16rB1 16r17 16r4A ].
+	self deny: corruptedBytes equals: bytes.
+	zipFile ensureDelete.
+	zipFile binaryWriteStreamDo: [ :stream | stream nextPutAll: corruptedBytes ].
+
+	readArchive := ZipArchive new readFrom: zipFile.
+	[
+		self assert: (readArchive memberNamed: 'hello.txt') compressionMethod equals: 0. "CompressionStored"
+		self should: [ (readArchive memberNamed: 'hello.txt') contents ] raise: CRCError ] ensure: [ readArchive close ]
 ]
 
 { #category : 'tests' }

@@ -192,3 +192,14 @@ ZipCrcTest >> testValidZipCrc [
 	readBytes := reader next: 100.
 	self assert: readBytes equals: 'Hello World'
 ]
+
+{ #category : 'tests' }
+ZipCrcTest >> testZipWriteStreamComputesCrc32 [
+
+	| writer |
+	writer := ZipWriteStream on: String new.
+	writer nextPutAll: 'Hello World'.
+	writer close.
+	"Standard CRC-32 of 'Hello World', as given by zlib's crc32 or Python's zlib.crc32"
+	self assert: writer crc equals: 16r4A17B156
+]
