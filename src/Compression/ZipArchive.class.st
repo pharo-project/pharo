@@ -142,30 +142,27 @@ ZipArchive >> extractAllTo: aDirectory informing: job [
 	job1 := job ifNil: [ DummySystemProgressItem new ].
 	barValue := 0.
 	self members select: #isDirectory thenDo: [ :entry |
-		| dir shouldUpdateInfos lastUpdate |
-		lastUpdate := 0.
-		(shouldUpdateInfos := (Time millisecondsSince: lastUpdate) >= 100)
-			ifTrue: [
-				lastUpdate := Time millisecondClockValue.
-				job1 title: 'Creating ' , entry fileName ].
-		dir := (entry fileName findTokens: '/')
-			       inject: aDirectory
-			       into: [ :base :part | base / part ].
-		dir ensureCreateDirectory.
-		barValue := barValue + 1.
-		shouldUpdateInfos ifTrue: [ job1 currentValue: barValue ] ].
+			| dir shouldUpdateInfos lastUpdate |
+			lastUpdate := 0.
+			(shouldUpdateInfos := (Time millisecondsSince: lastUpdate) >= 100) ifTrue: [
+					lastUpdate := Time millisecondClockValue.
+					job1 title: 'Creating ' , entry fileName ].
+			dir := (entry fileName findTokens: '/') inject: aDirectory into: [ :base :part | base / part ].
+			entry ensureExtractionTarget: dir isInside: aDirectory.
+			dir ensureCreateDirectory.
+			barValue := barValue + 1.
+			shouldUpdateInfos ifTrue: [ job1 currentValue: barValue ] ].
 	self members reject: #isDirectory thenDo: [ :entry |
-		| shouldUpdateInfos lastUpdate |
-		lastUpdate := 0.
-		(shouldUpdateInfos := (Time millisecondsSince: lastUpdate) >= 100)
-			ifTrue: [
-				lastUpdate := Time millisecondClockValue.
-				job1 title: 'Extracting ' , entry fileName ].
-		entry extractInDirectory: aDirectory.
-		barValue := barValue + 1.
-		shouldUpdateInfos ifTrue: [
-			job1 currentValue: barValue.
-			lastUpdate := Time millisecondClockValue ] ].
+			| shouldUpdateInfos lastUpdate |
+			lastUpdate := 0.
+			(shouldUpdateInfos := (Time millisecondsSince: lastUpdate) >= 100) ifTrue: [
+					lastUpdate := Time millisecondClockValue.
+					job1 title: 'Extracting ' , entry fileName ].
+			entry extractInDirectory: aDirectory.
+			barValue := barValue + 1.
+			shouldUpdateInfos ifTrue: [
+					job1 currentValue: barValue.
+					lastUpdate := Time millisecondClockValue ] ].
 	^ self
 ]
 

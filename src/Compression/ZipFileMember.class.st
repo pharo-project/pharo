@@ -23,10 +23,16 @@ ZipFileMember class >> newFrom: stream named: fileName [
 
 { #category : 'private - reading' }
 ZipFileMember >> canonicalizeFileName [
-	"For security reasons, make all paths relative and remove any ../ portions"
+	"For security reasons (zip slip), make all paths relative: remove leading slashes, a leading drive letter and any '.' or '..' segment.
+	Backslashes are treated as separators too, since some Windows tools write them."
 
-	[fileName beginsWith: '/'] whileTrue: [fileName := fileName allButFirst].
-	fileName := fileName copyReplaceAll: '../' with: ''
+	| isDirectory segments |
+	isDirectory := fileName notEmpty and: [ '/\' includes: fileName last ].
+	segments := (fileName copyReplaceAll: '\' with: '/') findTokens: '/'.
+	segments := segments reject: [ :each | each = '.' or: [ each = '..' ] ].
+	(segments notEmpty and: [ self isDriveLetter: segments first ]) ifTrue: [ segments := segments allButFirst ].
+	fileName := '/' join: segments.
+	(isDirectory and: [ fileName notEmpty ]) ifTrue: [ fileName := fileName , '/' ]
 ]
 
 { #category : 'initialization' }
@@ -53,6 +59,13 @@ ZipFileMember >> initialize [
 	dataOffset := 0
 ]
 
+{ #category : 'private - reading' }
+ZipFileMember >> isDriveLetter: aString [
+	"Answer whether aString is a Windows drive such as 'C:'"
+
+	^ aString size = 2 and: [ aString first isLetter and: [ aString last = $: ] ]
+]
+
 { #category : 'private - writing' }
 ZipFileMember >> localHeaderRelativeOffset [
 	^localHeaderRelativeOffset
@@ -60,8 +73,8 @@ ZipFileMember >> localHeaderRelativeOffset [
 
 { #category : 'testing' }
 ZipFileMember >> looksLikeDirectory [
-	^fileName last = $/
-		and: [ uncompressedSize = 0 ]
+
+	^ (fileName notEmpty and: [ fileName last = $/ ]) and: [ uncompressedSize = 0 ]
 ]
 
 { #category : 'private - reading' }
