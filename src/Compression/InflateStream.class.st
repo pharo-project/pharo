@@ -683,16 +683,6 @@ InflateStream >> size [
 ]
 
 { #category : 'accessing' }
-InflateStream >> sourceLimit [
-	^sourceLimit
-]
-
-{ #category : 'positioning' }
-InflateStream >> sourcePosition [
-	^sourcePos
-]
-
-{ #category : 'accessing' }
 InflateStream >> sourceStream [
 	^sourceStream
 ]
