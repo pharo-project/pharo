@@ -32,7 +32,8 @@ Class {
 		'uncompressedSize',
 		'readDataRemaining',
 		'headerStartPosition',
-		'usesZip64'
+		'usesZip64',
+		'writesExtendedTimestamp'
 	],
 	#pools : [
 		'ZipFileConstants'
@@ -145,17 +146,31 @@ ZipArchiveMember >> bitFlagToWrite [
 		  ifFalse: [ self bitFlag bitOr: LanguageEncodingFlag ]
 ]
 
+{ #category : 'accessing - extra fields' }
+ZipArchiveMember >> centralDirectoryExtraField [
+	"Answer the raw extra field of my central directory header (APPNOTE 4.5)"
+
+	^ cdExtraField asByteArray
+]
+
+{ #category : 'accessing - extra fields' }
+ZipArchiveMember >> centralDirectoryExtraField: aByteArray [
+	"Set the raw extra field of my central directory header (APPNOTE 4.5). Zip64 and extended timestamp blocks are updated when I am written."
+
+	cdExtraField := aByteArray asByteArray
+]
+
 { #category : 'private - zip64' }
 ZipArchiveMember >> centralDirectoryExtraFieldToWrite [
 	"With Zip64, the central directory header has both sizes and the offset of the local header in a Zip64 extended information extra field"
 
-	^ self extraField: cdExtraField replacing: Zip64ExtraFieldId with: (self zip64DataFor: (self usesZip64
-				    ifTrue: [
-						    {
-							    uncompressedSize.
-							    self compressedSizeToWrite.
-							    headerStartPosition } ]
-				    ifFalse: [ #(  ) ]))
+	^ self extraFieldToWriteFrom: cdExtraField zip64Values: (self usesZip64
+			   ifTrue: [
+					   {
+						   uncompressedSize.
+						   self compressedSizeToWrite.
+						   headerStartPosition } ]
+			   ifFalse: [ #(  ) ])
 ]
 
 { #category : 'accessing' }
@@ -405,6 +420,32 @@ ZipArchiveMember >> endRead [
 ]
 
 { #category : 'private - extra fields' }
+ZipArchiveMember >> extendedTimestampData [
+	"Answer the data of an extended timestamp block holding my modification time, or nil if it does not fit in a signed 4 bytes number"
+
+	| seconds |
+	seconds := lastModFileDateTime asDateAndTime asUnixTime.
+	(seconds between: -16r80000000 and: 16r7FFFFFFF) ifFalse: [ ^ nil ].
+	seconds < 0 ifTrue: [ seconds := seconds + 16r100000000 ].
+	^ ByteArray streamContents: [ :stream |
+			  stream nextPut: 1. "only the modification time"
+			  0 to: 3 do: [ :index | stream nextPut: ((seconds bitShift: index * -8) bitAnd: 255) ] ]
+]
+
+{ #category : 'private - extra fields' }
+ZipArchiveMember >> extendedTimestampIn: aByteArrayOrString [
+	"Answer the modification time of an extended timestamp block ('UT', 0x5455), or nil.
+	Its first byte tells which times follow; the modification time is first, as a signed 4 bytes number of seconds since 1970 UTC."
+
+	| data seconds |
+	data := self extraFieldIn: aByteArrayOrString withId: ExtendedTimestampExtraFieldId.
+	(data isNil or: [ data size < 5 or: [ ((data at: 1) bitAnd: 1) = 0 ] ]) ifTrue: [ ^ nil ].
+	seconds := (5 to: 2 by: -1) inject: 0 into: [ :value :index | (value bitShift: 8) + (data at: index) ].
+	seconds >= 16r80000000 ifTrue: [ seconds := seconds - 16r100000000 ].
+	^ DateAndTime fromUnixTime: seconds
+]
+
+{ #category : 'private - extra fields' }
 ZipArchiveMember >> extraField: aByteArrayOrString replacing: anId with: aByteArrayOrNil [
 	"Answer aByteArrayOrString without its blocks of header id anId, followed by a new block of that id when aByteArrayOrNil is not nil.
 	When there is nothing to remove or add, answer the extra field unchanged."
@@ -436,6 +477,17 @@ ZipArchiveMember >> extraFieldIn: aByteArrayOrString withId: anId [
 	"Answer the data of the block of header id anId, or nil"
 
 	^ (self extraFieldsIn: aByteArrayOrString) detect: [ :each | each key = anId ] ifFound: [ :each | each value ] ifNone: [ nil ]
+]
+
+{ #category : 'private - extra fields' }
+ZipArchiveMember >> extraFieldToWriteFrom: anExtraField zip64Values: aCollection [
+	"Answer anExtraField with the Zip64 extended information holding aCollection, and with my modification time in an extended timestamp block when I write one or already have one"
+
+	| extraField |
+	extraField := self extraField: anExtraField replacing: Zip64ExtraFieldId with: (self zip64DataFor: aCollection).
+	(writesExtendedTimestamp == true or: [ (self extraFieldIn: extraField withId: ExtendedTimestampExtraFieldId) isNotNil ]) ifTrue: [
+		extraField := self extraField: extraField replacing: ExtendedTimestampExtraFieldId with: self extendedTimestampData ].
+	^ extraField
 ]
 
 { #category : 'private - extra fields' }
@@ -555,6 +607,13 @@ ZipArchiveMember >> fileComment: aString [
 	fileComment := aString
 ]
 
+{ #category : 'private - extra fields' }
+ZipArchiveMember >> fileNameFrom: aByteArray extraField: anExtraField [
+	"Decode the file name of a header, preferring the UTF-8 name of a matching Unicode path block"
+
+	^ (self unicodePathIn: anExtraField forNameBytes: aByteArray) ifNil: [ self decodeText: aByteArray ]
+]
+
 { #category : 'testing' }
 ZipArchiveMember >> hasDataDescriptor [
 	^ (self bitFlag bitAnd: 8)	~= 0 "GPBF:=HAS:=DATA:=DESCRIPTOR:=MASK"
@@ -623,16 +682,30 @@ ZipArchiveMember >> lastModTime [
 	^ lastModFileDateTime
 ]
 
+{ #category : 'accessing - extra fields' }
+ZipArchiveMember >> localExtraField [
+	"Answer the raw extra field of my local header (APPNOTE 4.5)"
+
+	^ localExtraField asByteArray
+]
+
+{ #category : 'accessing - extra fields' }
+ZipArchiveMember >> localExtraField: aByteArray [
+	"Set the raw extra field of my local header (APPNOTE 4.5). Zip64 and extended timestamp blocks are updated when I am written."
+
+	localExtraField := aByteArray asByteArray
+]
+
 { #category : 'private - zip64' }
 ZipArchiveMember >> localExtraFieldToWrite [
 	"With Zip64, the local header has both sizes in a Zip64 extended information extra field"
 
-	^ self extraField: localExtraField replacing: Zip64ExtraFieldId with: (self zip64DataFor: (self usesZip64
-				    ifTrue: [
-						    {
-							    uncompressedSize.
-							    self compressedSizeToWrite } ]
-				    ifFalse: [ #(  ) ]))
+	^ self extraFieldToWriteFrom: localExtraField zip64Values: (self usesZip64
+			   ifTrue: [
+					   {
+						   uncompressedSize.
+						   self compressedSizeToWrite } ]
+			   ifFalse: [ #(  ) ])
 ]
 
 { #category : 'accessing' }
@@ -698,6 +771,21 @@ ZipArchiveMember >> uncompressedSize [
 	^uncompressedSize
 ]
 
+{ #category : 'private - extra fields' }
+ZipArchiveMember >> unicodePathIn: aByteArrayOrString forNameBytes: aByteArray [
+	"Answer the UTF-8 file name of an Info-ZIP Unicode path block ('up', 0x7075), or nil.
+	It holds a version (1), the CRC-32 of the file name of the header, then the UTF-8 name. It is ignored when the CRC does not match, i.e. when the name of the header was changed by a tool that does not know this block."
+
+	| data crc |
+	data := self extraFieldIn: aByteArrayOrString withId: UnicodePathExtraFieldId.
+	(data isNil or: [ data size < 5 or: [ (data at: 1) ~= 1 ] ]) ifTrue: [ ^ nil ].
+	crc := (5 to: 2 by: -1) inject: 0 into: [ :value :index | (value bitShift: 8) + (data at: index) ].
+	crc = (CRC crc32FromCollection: aByteArray asByteArray) ifFalse: [ ^ nil ].
+	^ [ (data allButFirst: 5) utf8Decoded ]
+		  on: ZnCharacterEncodingError
+		  do: [ nil ]
+]
+
 { #category : 'accessing' }
 ZipArchiveMember >> unixFileAttributes [
 	"See comment at end"
@@ -744,6 +832,45 @@ ZipArchiveMember >> unixFileAttributes: perms [
 			ifFalse: [ (perms bitAnd: DirectoryAttrib bitInvert) bitOr: FileAttrib ].
 	externalFileAttributes := self mapPermissionsFromUnix: newPerms.
 	^oldPerms
+]
+
+{ #category : 'accessing - extra fields' }
+ZipArchiveMember >> unixGid [
+	"Answer the Unix group id of an Info-ZIP Unix extra field, or nil"
+
+	^ self unixOwner ifNotNil: [ :owner | owner second ]
+]
+
+{ #category : 'accessing - extra fields' }
+ZipArchiveMember >> unixOwner [
+
+	^ (self unixOwnerIn: cdExtraField) ifNil: [ self unixOwnerIn: localExtraField ]
+]
+
+{ #category : 'private - extra fields' }
+ZipArchiveMember >> unixOwnerIn: aByteArrayOrString [
+	"Answer the UID and GID of an Info-ZIP Unix block ('ux', 0x7875), or nil.
+	It holds a version (1), then the size and value of the UID, then the size and value of the GID, little endian."
+
+	| data uidSize gidSize littleEndian |
+	data := self extraFieldIn: aByteArrayOrString withId: UnixOwnerExtraFieldId.
+	(data isNil or: [ data size < 3 or: [ (data at: 1) ~= 1 ] ]) ifTrue: [ ^ nil ].
+	uidSize := data at: 2.
+	data size < (3 + uidSize) ifTrue: [ ^ nil ].
+	gidSize := data at: 3 + uidSize.
+	data size < (3 + uidSize + gidSize) ifTrue: [ ^ nil ].
+	littleEndian := [ :start :size |
+	                (start + size - 1 to: start by: -1) inject: 0 into: [ :value :index | (value bitShift: 8) + (data at: index) ] ].
+	^ {
+		  (littleEndian value: 3 value: uidSize).
+		  (littleEndian value: 4 + uidSize value: gidSize) }
+]
+
+{ #category : 'accessing - extra fields' }
+ZipArchiveMember >> unixUid [
+	"Answer the Unix user id of an Info-ZIP Unix extra field, or nil"
+
+	^ self unixOwner ifNotNil: [ :owner | owner first ]
 ]
 
 { #category : 'private - zip64' }
@@ -955,6 +1082,13 @@ ZipArchiveMember >> writeTo: aStream forcingZip64: aBoolean [
 	"Verify that our calculation of the header size was correct!"
 	aStream position == headerEndPosition ifFalse: [ self error: 'Incorrect header size!' ].
 	aStream position: dataEndPosition
+]
+
+{ #category : 'accessing - extra fields' }
+ZipArchiveMember >> writesExtendedTimestamp: aBoolean [
+	"When true, my modification time is also written in extended timestamp extra fields ('UT'), in UTC with a precision of one second"
+
+	writesExtendedTimestamp := aBoolean
 ]
 
 { #category : 'private - zip64' }

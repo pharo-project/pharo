@@ -68,6 +68,7 @@ Class {
 		'DeflatingCompressionSuperFast',
 		'DirectoryAttrib',
 		'EndOfCentralDirectorySignature',
+		'ExtendedTimestampExtraFieldId',
 		'FaMsdos',
 		'FaUnix',
 		'FileAttrib',
@@ -75,6 +76,8 @@ Class {
 		'IfaTextFile',
 		'LanguageEncodingFlag',
 		'LocalFileHeaderSignature',
+		'UnicodePathExtraFieldId',
+		'UnixOwnerExtraFieldId',
 		'Zip64EndOfCentralDirectoryLocatorSignature',
 		'Zip64EndOfCentralDirectorySignature',
 		'Zip64EntriesLimit',
@@ -115,6 +118,11 @@ ZipFileConstants class >> initialize [
 	"0x06064b50 and 0x07064b50 little-endian"
 	Zip64EndOfCentralDirectorySignature := #[ 80 75 6 6 ].
 	Zip64EndOfCentralDirectoryLocatorSignature := #[ 80 75 6 7 ].
+
+	"Third party extra fields (APPNOTE 4.6)"
+	ExtendedTimestampExtraFieldId := 16r5455. "'UT': modification time in seconds since 1970 UTC"
+	UnixOwnerExtraFieldId := 16r7875. "'ux': Info-ZIP Unix UID and GID"
+	UnicodePathExtraFieldId := 16r7075. "'up': Info-ZIP UTF-8 file name"
 
 	"Unix permission bits"
 	DefaultDirectoryPermissions := 8r040755.

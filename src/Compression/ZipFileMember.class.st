@@ -75,7 +75,7 @@ ZipFileMember >> nextZip64ValueFrom: aStream [
 ZipFileMember >> readCentralDirectoryFileHeaderFrom: aStream [
 	"Assumes aStream positioned after signature"
 
-	| fileNameLength extraFieldLength fileCommentLength endianStream |
+	| fileNameLength extraFieldLength fileCommentLength endianStream fileNameBytes |
 	endianStream := ZnEndianessReadWriteStream on: aStream.
 	self versionMadeBy: (endianStream nextLittleEndianNumber: 1).
 	fileAttributeFormat := endianStream nextLittleEndianNumber: 1.
@@ -97,12 +97,21 @@ ZipFileMember >> readCentralDirectoryFileHeaderFrom: aStream [
 	externalFileAttributes := endianStream nextLittleEndianNumber: 4.
 	localHeaderRelativeOffset := endianStream nextLittleEndianNumber: 4.
 
-	fileName := self decodeText: (aStream next: fileNameLength).
+	fileNameBytes := aStream next: fileNameLength.
 	cdExtraField := (aStream next: extraFieldLength) asByteArray asString.
+	fileName := self fileNameFrom: fileNameBytes extraField: cdExtraField.
 	fileComment := self decodeText: (aStream next: fileCommentLength).
 	self readZip64ValuesFromCentralDirectory.
 
 	self desiredCompressionMethod: compressionMethod
+]
+
+{ #category : 'private - reading' }
+ZipFileMember >> readExtendedTimestamp [
+	"An extended timestamp block gives the modification time in UTC with a precision of one second, better than the DOS time of the headers"
+
+	((self extendedTimestampIn: cdExtraField) ifNil: [ self extendedTimestampIn: localExtraField ]) ifNotNil: [ :time |
+		lastModFileDateTime := time ]
 ]
 
 { #category : 'private - reading' }
@@ -111,6 +120,7 @@ ZipFileMember >> readFrom: aStream [
 
 	self readCentralDirectoryFileHeaderFrom: aStream.
 	self readLocalDirectoryFileHeaderFrom: aStream.
+	self readExtendedTimestamp.
 	self endRead.
 	self canonicalizeFileName
 ]
@@ -119,7 +129,7 @@ ZipFileMember >> readFrom: aStream [
 ZipFileMember >> readLocalDirectoryFileHeaderFrom: aStream [
 	"Positions stream as necessary. Will return stream to its original position"
 
-	| fileNameLength extraFieldLength xcrc32 xcompressedSize xuncompressedSize sig oldPos endianStream zip64Values |
+	| fileNameLength extraFieldLength xcrc32 xcompressedSize xuncompressedSize sig oldPos endianStream zip64Values fileNameBytes |
 	oldPos := aStream position.
 
 	aStream position: localHeaderRelativeOffset.
@@ -141,8 +151,9 @@ ZipFileMember >> readLocalDirectoryFileHeaderFrom: aStream [
 	fileNameLength := endianStream nextLittleEndianNumber: 2.
 	extraFieldLength := endianStream nextLittleEndianNumber: 2.
 
-	fileName := self decodeText: (aStream next: fileNameLength).
+	fileNameBytes := aStream next: fileNameLength.
 	localExtraField := (aStream next: extraFieldLength) asByteArray.
+	fileName := self fileNameFrom: fileNameBytes extraField: localExtraField.
 
 	"With Zip64, both sizes are in the extended information extra field of the local header (APPNOTE 4.5.3)"
 	zip64Values := self zip64ValuesIn: localExtraField.

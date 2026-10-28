@@ -12,7 +12,8 @@ Class {
 		'zipFileComment',
 		'writeCentralDirectoryOffset',
 		'writeEOCDOffset',
-		'forceZip64'
+		'forceZip64',
+		'writeExtendedTimestamps'
 	],
 	#pools : [
 		'ZipFileConstants'
@@ -392,10 +393,26 @@ ZipArchive >> writeEndOfCentralDirectoryTo: aStream [
 	zipFileComment isEmpty ifFalse: [ aStream nextPutAll: zipFileComment ]
 ]
 
+{ #category : 'accessing' }
+ZipArchive >> writeExtendedTimestamps [
+	"Answer whether modification times are also written in extended timestamp extra fields"
+
+	^ writeExtendedTimestamps == true
+]
+
+{ #category : 'accessing' }
+ZipArchive >> writeExtendedTimestamps: aBoolean [
+	"When true, also write the modification time of members in extended timestamp extra fields ('UT', 0x5455), in UTC with a precision of one second.
+	Otherwise only the DOS time of the headers is written: local time, with a precision of two seconds."
+
+	writeExtendedTimestamps := aBoolean
+]
+
 { #category : 'writing' }
 ZipArchive >> writeTo: stream [
 
 	members do: [ :member |
+			member writesExtendedTimestamp: self writeExtendedTimestamps.
 			member writeTo: stream forcingZip64: self forceZip64.
 			member endRead ].
 	writeCentralDirectoryOffset := stream position.
