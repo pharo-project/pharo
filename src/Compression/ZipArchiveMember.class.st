@@ -782,13 +782,6 @@ ZipArchiveMember >> extractTo: aStream from: start to: finish [
 ]
 
 { #category : 'private - extraction' }
-ZipArchiveMember >> extractToFile: aFile [
-	"Extract this entry into the given file, unless it exists"
-
-	self extractToFile: aFile overwrite: false
-]
-
-{ #category : 'private - extraction' }
 ZipArchiveMember >> extractToFile: aFile overwrite: aBoolean [
 	"Extract this entry into aFile, creating the directories it needs. An existing file is kept unless aBoolean is true.
 	Nothing is written when my compression method is not supported.

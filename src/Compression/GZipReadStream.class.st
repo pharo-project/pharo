@@ -24,28 +24,6 @@ GZipReadStream class >> fileIn: fullFileName [
 		do: [ :aStream | CodeImporter evaluateString: aStream contents asString ]
 ]
 
-{ #category : 'file in/out' }
-GZipReadStream class >> saveContents: fullFileName [
-	"Save the contents of a gzipped file"
-
-	| buffer newName |
-	newName := fullFileName asFileReference basenameWithoutExtension.
-	newName asFileReference binaryWriteStreamDo: [ :unzipped |
-			fullFileName asFileReference
-				binaryReadStreamDo: [ :readStream |
-					self with: readStream
-						do: [ :zipped |
-							buffer := ByteArray new: 50000.
-							'Extracting ' , fullFileName
-								displayProgressFrom: 0
-								to: zipped sourceStream size
-								during: [ :bar |
-									[ zipped atEnd ]
-										whileFalse: [ bar current: zipped sourceStream position.
-											unzipped nextPutAll: (zipped nextInto: buffer) ] ] ] ] ].
-	^ newName
-]
-
 { #category : 'unzipping' }
 GZipReadStream class >> unzip: fullFileName [
 	"Unzip the contents of the file specified by the full path name or file reference fullFileName to the current working directory

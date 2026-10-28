@@ -14,17 +14,7 @@ Class {
 }
 
 { #category : 'instance creation' }
-ArchiveMember class >> newDirectoryNamed: aString [
-	self subclassResponsibility
-]
-
-{ #category : 'instance creation' }
 ArchiveMember class >> newFromFile: aFileName [
-	self subclassResponsibility
-]
-
-{ #category : 'instance creation' }
-ArchiveMember class >> newFromString: aString [
 	self subclassResponsibility
 ]
 

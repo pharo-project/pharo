@@ -270,15 +270,6 @@ InflateStream >> decodeValueFrom: table [
 	^value
 ]
 
-{ #category : 'private' }
-InflateStream >> decompressAll [
-	"Profile the decompression speed"
-	[self atEnd] whileFalse:[
-		position := readLimit.
-		self next "Provokes decompression"
-	]
-]
-
 { #category : 'inflating' }
 InflateStream >> decompressBlock: llTable with: dTable [
 	"Process the compressed data in the block.
