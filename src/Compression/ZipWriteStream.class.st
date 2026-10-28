@@ -73,43 +73,6 @@ ZipWriteStream class >> maxLiteralCodes [
 	^MaxLiteralCodes
 ]
 
-{ #category : 'regression test' }
-ZipWriteStream class >> printRegressionStats: stats from: fd [
-	| raw compressed numFiles |
-	raw := stats at: #rawSize ifAbsent: [ 0 ].
-	raw = 0
-		ifTrue: [ ^ self ].
-	compressed := stats at: #compressedSize ifAbsent: [ 0 ].
-	numFiles := stats at: #numFiles ifAbsent: [ 0 ].
-
-	SystemNotification signal: (String streamContents: [ :aStream |
-		aStream nextPutAll: fd fullName asString; cr.
-		aStream tab; nextPutAll: 'Files compressed: '; nextPutAll: numFiles asStringWithCommas; cr.
-		aStream tab; nextPutAll: 'Bytes compressed: '; nextPutAll: raw asStringWithCommas; cr.
-		aStream tab; nextPutAll: 'Avg. compression ratio: '; nextPutAll: (compressed / raw asFloat * 100.0 truncateTo: 0.01) asString ])
-]
-
-{ #category : 'regression test' }
-ZipWriteStream class >> regressionCompress: aFile into: tempFile notifiying: progressBar stats: stats [
-	"Compress aFile into tempFile"
-	| zip encoded buffer |
-	aFile binary.
-	aFile position: 0.
-	tempFile binary.
-	buffer := ByteArray new: 4096.
-	zip := self on: (ByteArray new: 10000).
-	encoded := zip encodedStream.
-	[aFile atEnd] whileFalse:[
-		progressBar current: aFile position.
-		zip nextPutAll: (aFile nextInto: buffer).
-		encoded position > 0 ifTrue:[
-			tempFile nextPutAll: encoded contents.
-			encoded position: 0]].
-	zip close.
-	tempFile nextPutAll: encoded contents.
-	^true
-]
-
 { #category : 'crc' }
 ZipWriteStream class >> updateCrc: oldCrc from: start to: stop in: aCollection [
 	^ CRC update: oldCrc from: start to: stop in: aCollection
