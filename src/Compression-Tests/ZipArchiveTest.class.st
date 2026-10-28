@@ -308,14 +308,23 @@ ZipArchiveTest >> testCreateWithRelativeNames [
 
 { #category : 'tests' }
 ZipArchiveTest >> testDate29Feb2000 [
-	"Ensure that dates with leap years don't screw up in the conversion"
+	"Ensure that dates with leap years survive the DOS timestamp conversion done when writing and reading an archive.
+	DOS timestamps only have a 2 seconds resolution, so we use an even number of seconds."
 
-	| archive member theDate |
-	theDate := Date year: 2000 month: 2 day: 29.
-	archive := ZipArchive new.
-	member := archive addDeflateString: 'foo' as: 'bar'.
-	member modifiedAt: theDate.
-	self assert: member lastModTime equals: theDate
+	| theDate readArchive |
+	theDate := DateAndTime
+		           year: 2000
+		           month: 2
+		           day: 29
+		           hour: 13
+		           minute: 23
+		           second: 54
+		           offset: Duration zero.
+	(zip addDeflateString: 'foo' as: 'bar') modifiedAt: theDate.
+	zip writeToFile: zipFile.
+
+	readArchive := ZipArchive new readFrom: zipFile.
+	[ self assert: (readArchive memberNamed: 'bar') lastModTime equals: theDate ] ensure: [ readArchive close ]
 ]
 
 { #category : 'tests' }
