@@ -522,6 +522,18 @@ ZipArchiveMember >> endRead [
 	readDataRemaining := 0
 ]
 
+{ #category : 'private - extraction' }
+ZipArchiveMember >> ensureExtractionTarget: aFileReference isInside: aDirectory [
+	"Zip slip protection: refuse to extract me outside of aDirectory, whatever my file name contains ('..', absolute paths, ...).
+	A directory member may be extracted to aDirectory itself."
+
+	| target directory |
+	target := aFileReference asFileReference canonicalize.
+	directory := aDirectory asFileReference canonicalize.
+	((directory contains: target) or: [ self isDirectory and: [ target = directory ] ]) ifFalse: [
+		ZipArchiveError signal: 'Refusing to extract ' , fileName printString , ' outside of ' , directory fullName ]
+]
+
 { #category : 'private - extra fields' }
 ZipArchiveMember >> extendedTimestampData [
 	"Answer the data of an extended timestamp block holding my modification time, or nil if it does not fit in a signed 4 bytes number"
@@ -617,12 +629,12 @@ ZipArchiveMember >> extractInDirectory: aDirectory [
 
 	| path fileDir file localName |
 	path := fileName findTokens: '/'.
+	path ifEmpty: [ ^ self ensureExtractionTarget: aDirectory isInside: aDirectory ].
 	localName := path last.
-	fileDir := path allButLast
-		           inject: aDirectory
-		           into: [ :base :part | base / part ].
-	fileDir ensureCreateDirectory.
+	fileDir := path allButLast inject: aDirectory into: [ :base :part | base / part ].
 	file := fileDir / localName.
+	self ensureExtractionTarget: file isInside: aDirectory.
+	fileDir ensureCreateDirectory.
 	^ self extractToFile: file
 ]
 
@@ -682,21 +694,25 @@ ZipArchiveMember >> extractToFileNamed: aLocalFileName inDirectory: dir [
 
 { #category : 'extraction' }
 ZipArchiveMember >> extractToFileNamed: aLocalFileName inDirectory: dir overwrite: overwrite [
+
 	| file |
-	self isEncrypted
-		ifTrue: [ ^ self error: 'encryption unsupported' ].
+	self isEncrypted ifTrue: [ ^ self error: 'encryption unsupported' ].
 	file := dir / aLocalFileName.
+	self ensureExtractionTarget: file isInside: dir.
 	self isDirectory
 		ifTrue: [ file ensureCreateDirectory ]
-		ifFalse: [ (file isFile and: [ file exists ])
-				ifTrue: [ overwrite
-						ifTrue: [ file
-								ensureDelete;
+		ifFalse: [
+				(file isFile and: [ file exists ])
+					ifTrue: [
+							overwrite ifTrue: [
+									file
+										ensureDelete;
+										ensureCreateFile;
+										binaryWriteStreamDo: [ :stream | self extractTo: stream ] ] ]
+					ifFalse: [
+							file
 								ensureCreateFile;
 								binaryWriteStreamDo: [ :stream | self extractTo: stream ] ] ]
-				ifFalse: [ file
-						ensureCreateFile;
-						binaryWriteStreamDo: [ :stream | self extractTo: stream ] ] ]
 ]
 
 { #category : 'extraction' }
