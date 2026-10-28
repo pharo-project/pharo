@@ -261,17 +261,22 @@ ZipArchiveMember >> checkCanDecrypt [
 ]
 
 { #category : 'private - writing' }
-ZipArchiveMember >> checkCrcOf: aByteArray [
-	"Signal a CRCError, and mark me as corrupt, when aByteArray does not match my CRC-32"
+ZipArchiveMember >> checkCrc: aCrc [
+	"Signal a CRCError, and mark me as corrupt, when aCrc is not my CRC-32"
 
-	| crc |
-	crc := CRC crc32FromCollection: aByteArray.
-	crc = crc32 ifTrue: [ ^ self ].
+	aCrc = crc32 ifTrue: [ ^ self ].
 	self isCorrupt: true.
 	CRCError signal: ('Wrong CRC-32 in {1} (expected {2} got {3})' format: {
 				 fileName printString.
 				 crc32 printStringHex.
-				 crc printStringHex })
+				 aCrc printStringHex })
+]
+
+{ #category : 'private - writing' }
+ZipArchiveMember >> checkCrcOf: aByteArray [
+	"Signal a CRCError, and mark me as corrupt, when aByteArray does not match my CRC-32"
+
+	self checkCrc: (CRC crc32FromCollection: aByteArray)
 ]
 
 { #category : 'accessing' }
@@ -284,17 +289,12 @@ ZipArchiveMember >> clearExtraFields [
 ZipArchiveMember >> compressDataTo: aStream [
 	"Copy my deflated data to the given stream, compressed with my desiredCompressionLevel."
 
-	| encoder startPos endPos |
+	| encoder startPos |
 	encoder := ZipWriteStream on: aStream level: self deflateLevel.
 	startPos := aStream position.
-	[ readDataRemaining > 0 ] whileTrue: [
-			| data |
-			data := self readRawChunk: (4096 min: readDataRemaining).
-			encoder nextPutAll: data asByteArray.
-			readDataRemaining := readDataRemaining - data size ].
+	self readRawChunksDo: [ :chunk | encoder nextPutAll: chunk asByteArray ].
 	encoder finish. "not close!"
-	endPos := aStream position.
-	compressedSize := endPos - startPos.
+	compressedSize := aStream position - startPos.
 	crc32 := encoder crc
 ]
 
@@ -382,17 +382,7 @@ ZipArchiveMember >> copyDataWithCRCTo: aStream [
 	Only used when compressionMethod = desiredCompressionMethod = CompressionStored"
 
 	uncompressedSize := compressedSize := readDataRemaining.
-
-	crc32 := 16rFFFFFFFF.
-
-	[ readDataRemaining > 0 ] whileTrue: [ | data |
-		data := self readRawChunk: (4096 min: readDataRemaining).
-		aStream nextPutAll: data.
-		crc32 := ZipWriteStream updateCrc: crc32 from: 1 to: data size in: data.
-		readDataRemaining := readDataRemaining - data size.
-	].
-
-	crc32 := crc32 bitXor: 16rFFFFFFFF
+	crc32 := self copyRawDataComputingCrcTo: aStream
 ]
 
 { #category : 'private - encryption' }
@@ -407,12 +397,25 @@ ZipArchiveMember >> copyEncryptedDataTo: aStream [
 ]
 
 { #category : 'private - writing' }
+ZipArchiveMember >> copyRawDataComputingCrcTo: aStream [
+	"Copy my remaining raw data to aStream and answer its CRC-32"
+
+	| crc |
+	crc := 16rFFFFFFFF.
+	self readRawChunksDo: [ :chunk |
+			aStream nextPutAll: chunk.
+			crc := CRC
+				       update: crc
+				       from: 1
+				       to: chunk size
+				       in: chunk ].
+	^ crc bitXor: 16rFFFFFFFF
+]
+
+{ #category : 'private - writing' }
 ZipArchiveMember >> copyRawDataTo: aStream [
 
-	[ readDataRemaining > 0 ] whileTrue: [ | data |
-		data := self readRawChunk: (4096 min: readDataRemaining).
-		aStream nextPutAll: data.
-		readDataRemaining := readDataRemaining - data size ]
+	self readRawChunksDo: [ :chunk | aStream nextPutAll: chunk ]
 ]
 
 { #category : 'private - writing' }
@@ -817,7 +820,7 @@ ZipArchiveMember >> fileComment: aString [
 ZipArchiveMember >> fileInDirectory: aDirectory [
 	"Answer the file reference I would be extracted to under aDirectory"
 
-	^ (fileName findTokens: '/') inject: aDirectory into: [ :base :part | base / part ]
+	^ self splitFileName inject: aDirectory into: [ :base :part | base / part ]
 ]
 
 { #category : 'private - extra fields' }
@@ -838,7 +841,7 @@ ZipArchiveMember >> hasContainedSymbolicLinkTarget [
 	target := self symbolicLinkTarget.
 	(target isEmpty or: [ target first = $/ or: [ target first = $\ or: [ target size > 1 and: [ (target at: 2) = $: ] ] ] ])
 		ifTrue: [ ^ false ].
-	depth := (fileName findTokens: '/') size - 1.
+	depth := self splitFileName size - 1.
 	(target findTokens: '/\') do: [ :each |
 			each = '..'
 				ifTrue: [
@@ -1028,8 +1031,7 @@ ZipArchiveMember >> plainDataToEncrypt [
 	| buffer |
 	(compressionMethod = CompressionStored and: [ desiredCompressionMethod = CompressionStored ]) ifTrue: [
 			| data |
-			data := (self readRawChunk: readDataRemaining) asByteArray.
-			readDataRemaining := 0.
+			data := self readRawData.
 			uncompressedSize := data size.
 			crc32 := CRC crc32FromCollection: data.
 			^ data ].
@@ -1058,7 +1060,9 @@ ZipArchiveMember >> readRawChunksDo: aBlock [
 ZipArchiveMember >> readRawData [
 	"Answer all my remaining raw (possibly compressed or encrypted) data"
 
-	^ ByteArray new: readDataRemaining streamContents: [ :stream | self readRawChunksDo: [ :chunk | stream nextPutAll: chunk ] ]
+	^ ByteArray
+		  new: readDataRemaining
+		  streamContents: [ :stream | self readRawChunksDo: [ :chunk | stream nextPutAll: chunk asByteArray ] ]
 ]
 
 { #category : 'private' }
@@ -1251,48 +1255,42 @@ ZipArchiveMember >> versionNeededToWrite [
 
 { #category : 'private - writing' }
 ZipArchiveMember >> writeCentralDirectoryFileHeaderTo: aStream [
-	"C2 v3 V4 v5 V2"
+	"Write my central directory header (APPNOTE 4.3.12). My data must have been written,
+	so that my CRC-32, sizes and header position are known."
 
 	| systemFileName systemFileComment systemCdExtraField endianStream |
 	systemFileName := fileName asVmPathName.
 	systemFileComment := fileComment utf8Encoded.
 	systemCdExtraField := self centralDirectoryExtraFieldToWrite.
 	aStream nextPutAll: CentralDirectoryFileHeaderSignature.
-
-
 	endianStream := ZnEndianessReadWriteStream on: aStream.
 	endianStream nextLittleEndianNumber: 1 put: (self versionMadeBy max: self versionNeededToWrite).
 	endianStream nextLittleEndianNumber: 1 put: fileAttributeFormat.
+	self writeCommonHeaderFieldsTo: endianStream fileNameSize: systemFileName size extraFieldSize: systemCdExtraField size.
+	endianStream nextLittleEndianNumber: 2 put: systemFileComment size.
+	endianStream nextLittleEndianNumber: 2 put: 0. "diskNumberStart"
+	endianStream nextLittleEndianNumber: 2 put: internalFileAttributes.
+	endianStream nextLittleEndianNumber: 4 put: externalFileAttributes.
+	endianStream nextLittleEndianNumber: 4 put: (self zip64Masked: headerStartPosition).
+	aStream nextPutAll: systemFileName asByteArray.
+	aStream nextPutAll: systemCdExtraField asByteArray.
+	aStream nextPutAll: systemFileComment
+]
+
+{ #category : 'private - writing' }
+ZipArchiveMember >> writeCommonHeaderFieldsTo: endianStream fileNameSize: nameSize extraFieldSize: extraSize [
+	"Write the fields shared by the local and central directory headers, from 'version
+	needed to extract' to 'extra field length' (APPNOTE 4.3.7 and 4.3.12)"
 
 	endianStream nextLittleEndianNumber: 2 put: self versionNeededToWrite.
 	endianStream nextLittleEndianNumber: 2 put: self bitFlagToWrite.
 	endianStream nextLittleEndianNumber: 2 put: desiredCompressionMethod.
-
 	endianStream nextLittleEndianNumber: 4 put: lastModFileDateTime asDosTimestamp.
-
-	"These next 3 should have been updated during the write of the data"
 	endianStream nextLittleEndianNumber: 4 put: crc32.
-	endianStream nextLittleEndianNumber: 4 put: (self usesZip64
-			 ifTrue: [ Zip64Limit ]
-			 ifFalse: [ self compressedSizeToWrite ]).
-	endianStream nextLittleEndianNumber: 4 put: (self usesZip64
-			 ifTrue: [ Zip64Limit ]
-			 ifFalse: [ uncompressedSize ]).
-
-	endianStream nextLittleEndianNumber: 2 put: systemFileName size.
-	endianStream nextLittleEndianNumber: 2 put: systemCdExtraField size.
-	endianStream nextLittleEndianNumber: 2 put: systemFileComment size.
-	endianStream nextLittleEndianNumber: 2 put: 0. "diskNumberStart"
-	endianStream nextLittleEndianNumber: 2 put: internalFileAttributes.
-
-	endianStream nextLittleEndianNumber: 4 put: externalFileAttributes.
-	endianStream nextLittleEndianNumber: 4 put: (self usesZip64
-			 ifTrue: [ Zip64Limit ]
-			 ifFalse: [ headerStartPosition ]).
-
-	aStream nextPutAll: systemFileName asByteArray.
-	aStream nextPutAll: systemCdExtraField asByteArray.
-	aStream nextPutAll: systemFileComment
+	endianStream nextLittleEndianNumber: 4 put: (self zip64Masked: self compressedSizeToWrite).
+	endianStream nextLittleEndianNumber: 4 put: (self zip64Masked: uncompressedSize).
+	endianStream nextLittleEndianNumber: 2 put: nameSize.
+	endianStream nextLittleEndianNumber: 2 put: extraSize
 ]
 
 { #category : 'private - writing' }
@@ -1384,32 +1382,16 @@ ZipArchiveMember >> writeEncryptedDataTo: aStream [
 
 { #category : 'private - writing' }
 ZipArchiveMember >> writeLocalFileHeaderTo: aStream [
-	"Write my local header to a file handle.
-	Stores the offset to the start of the header in my
-	writeLocalHeaderRelativeOffset member."
+	"Write my local header (APPNOTE 4.3.7)"
 
-	| systemFileName endianStream extraField |
+	| systemFileName extraField |
 	systemFileName := fileName asVmPathName.
 	extraField := self localExtraFieldToWrite.
 	aStream nextPutAll: LocalFileHeaderSignature.
-
-	endianStream := ZnEndianessReadWriteStream on: aStream.
-	endianStream nextLittleEndianNumber: 2 put: self versionNeededToWrite.
-	endianStream nextLittleEndianNumber: 2 put: self bitFlagToWrite.
-	endianStream nextLittleEndianNumber: 2 put: desiredCompressionMethod.
-
-	endianStream nextLittleEndianNumber: 4 put: lastModFileDateTime asDosTimestamp.
-	endianStream nextLittleEndianNumber: 4 put: crc32.
-	endianStream nextLittleEndianNumber: 4 put: (self usesZip64
-			 ifTrue: [ Zip64Limit ]
-			 ifFalse: [ self compressedSizeToWrite ]).
-	endianStream nextLittleEndianNumber: 4 put: (self usesZip64
-			 ifTrue: [ Zip64Limit ]
-			 ifFalse: [ uncompressedSize ]).
-
-	endianStream nextLittleEndianNumber: 2 put: systemFileName size.
-	endianStream nextLittleEndianNumber: 2 put: extraField size.
-
+	self
+		writeCommonHeaderFieldsTo: (ZnEndianessReadWriteStream on: aStream)
+		fileNameSize: systemFileName size
+		extraFieldSize: extraField size.
 	aStream nextPutAll: systemFileName asByteArray.
 	aStream nextPutAll: extraField
 ]
@@ -1472,6 +1454,16 @@ ZipArchiveMember >> zip64DataFor: aCollectionOfIntegers [
 	^ ByteArray streamContents: [ :stream |
 		  aCollectionOfIntegers do: [ :each |
 			  0 to: 7 do: [ :byteIndex | stream nextPut: ((each bitShift: byteIndex * -8) bitAnd: 255) ] ] ]
+]
+
+{ #category : 'private - writing' }
+ZipArchiveMember >> zip64Masked: anInteger [
+	"Answer the value written in a 4-byte header field for anInteger: with Zip64 the field
+	holds 16rFFFFFFFF and the value is in the extended information extra field"
+
+	^ self usesZip64
+		  ifTrue: [ Zip64Limit ]
+		  ifFalse: [ anInteger ]
 ]
 
 { #category : 'private - zip64' }

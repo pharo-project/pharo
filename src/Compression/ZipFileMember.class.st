@@ -51,24 +51,7 @@ ZipFileMember >> copyDataTo: aStream [
 ZipFileMember >> copyStoredDataCheckingCrcTo: aStream [
 	"Copy my stored (not compressed) data to aStream and check it against the CRC-32 read from the archive headers, as #uncompressDataTo: does for deflated data."
 
-	| crc |
-	crc := 16rFFFFFFFF.
-	[ readDataRemaining > 0 ] whileTrue: [
-			| data |
-			data := self readRawChunk: (4096 min: readDataRemaining).
-			aStream nextPutAll: data.
-			crc := ZipWriteStream
-				       updateCrc: crc
-				       from: 1
-				       to: data size
-				       in: data.
-			readDataRemaining := readDataRemaining - data size ].
-	crc := crc bitXor: 16rFFFFFFFF.
-	crc = crc32 ifFalse: [
-			self isCorrupt: true.
-			CRCError signal: ('Wrong CRC-32 (expected {1} got {2})' format: {
-						 crc32 printStringHex.
-						 crc printStringHex }) ]
+	self checkCrc: (self copyRawDataComputingCrcTo: aStream)
 ]
 
 { #category : 'accessing' }
@@ -132,10 +115,7 @@ ZipFileMember >> readCentralDirectoryFileHeaderFrom: aStream [
 	self versionMadeBy: (endianStream nextLittleEndianNumber: 1).
 	fileAttributeFormat := endianStream nextLittleEndianNumber: 1.
 
-	self versionNeededToExtract: (endianStream nextLittleEndianNumber: 2).
-	self bitFlag: (endianStream nextLittleEndianNumber: 2).
-	compressionMethod := endianStream nextLittleEndianNumber: 2.
-	lastModFileDateTime := self unzipTimestamp: (endianStream nextLittleEndianNumber: 4).
+	self readCommonHeaderFieldsFrom: endianStream.
 	crc32 := endianStream nextLittleEndianNumber: 4.
 	compressedSize := endianStream nextLittleEndianNumber: 4.
 	uncompressedSize := endianStream nextLittleEndianNumber: 4.
@@ -156,6 +136,17 @@ ZipFileMember >> readCentralDirectoryFileHeaderFrom: aStream [
 	self readZip64ValuesFromCentralDirectory.
 
 	self desiredCompressionMethod: compressionMethod
+]
+
+{ #category : 'private - reading' }
+ZipFileMember >> readCommonHeaderFieldsFrom: endianStream [
+	"Read the fields shared by the local and central directory headers, from 'version
+	needed to extract' to 'last mod file date' (APPNOTE 4.3.7 and 4.3.12)"
+
+	versionNeededToExtract := endianStream nextLittleEndianNumber: 2.
+	self bitFlag: (endianStream nextLittleEndianNumber: 2).
+	compressionMethod := endianStream nextLittleEndianNumber: 2.
+	lastModFileDateTime := self unzipTimestamp: (endianStream nextLittleEndianNumber: 4)
 ]
 
 { #category : 'private - reading' }
@@ -192,10 +183,7 @@ ZipFileMember >> readLocalDirectoryFileHeaderFrom: aStream [
 			^ self error: 'bad LH signature at ' , localHeaderRelativeOffset printStringHex ].
 
 	endianStream := ZnEndianessReadWriteStream on: aStream.
-	versionNeededToExtract := endianStream nextLittleEndianNumber: 2.
-	self bitFlag: (endianStream nextLittleEndianNumber: 2).
-	compressionMethod := endianStream nextLittleEndianNumber: 2.
-	lastModFileDateTime := self unzipTimestamp: (endianStream nextLittleEndianNumber: 4).
+	self readCommonHeaderFieldsFrom: endianStream.
 	xcrc32 := endianStream nextLittleEndianNumber: 4.
 	xcompressedSize := endianStream nextLittleEndianNumber: 4.
 	xuncompressedSize := endianStream nextLittleEndianNumber: 4.
