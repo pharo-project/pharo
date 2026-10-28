@@ -151,95 +151,47 @@ ZipArchive >> extractAllTo: aDirectory [
 
 { #category : 'archive operations' }
 ZipArchive >> extractAllTo: aDirectory informing: job [
-	"Extract all elements to the given directory; notifying user via UI on progress and if existing files exist"
+	"Extract all members to aDirectory, keeping existing files; job, when not nil, is told about the progress"
 
-	| job1 barValue |
-	job1 := job ifNil: [ DummySystemProgressItem new ].
-	barValue := 0.
-	self members select: #isDirectory thenDo: [ :entry |
-			| dir shouldUpdateInfos lastUpdate |
-			lastUpdate := 0.
-			(shouldUpdateInfos := (Time millisecondsSince: lastUpdate) >= 100) ifTrue: [
-					lastUpdate := Time millisecondClockValue.
-					job1 title: 'Creating ' , entry fileName ].
-			dir := (entry fileName findTokens: '/') inject: aDirectory into: [ :base :part | base / part ].
-			entry ensureExtractionTarget: dir isInside: aDirectory.
-			dir ensureCreateDirectory.
-			barValue := barValue + 1.
-			shouldUpdateInfos ifTrue: [ job1 currentValue: barValue ] ].
-	self members reject: #isDirectory thenDo: [ :entry |
-			| shouldUpdateInfos lastUpdate |
-			lastUpdate := 0.
-			(shouldUpdateInfos := (Time millisecondsSince: lastUpdate) >= 100) ifTrue: [
-					lastUpdate := Time millisecondClockValue.
-					job1 title: 'Extracting ' , entry fileName ].
-			self extractMember: entry inDirectory: aDirectory.
-			barValue := barValue + 1.
-			shouldUpdateInfos ifTrue: [
-					job1 currentValue: barValue.
-					lastUpdate := Time millisecondClockValue ] ].
-	^ self
+	self extractAllTo: aDirectory informing: job overwrite: false
 ]
 
 { #category : 'archive operations' }
-ZipArchive >> extractAllTo: aDirectory informing: aBar overwrite: allOverwrite [
-	"Extract all elements to the given directory. Informs user when a file exists and set to overwrite"
+ZipArchive >> extractAllTo: aDirectory informing: job overwrite: overwriteAll [
+	"Extract all members to aDirectory, directories first. Existing files are kept unless
+	overwriteAll is true. job, when not nil, is told about the progress, at most every 100 ms."
 
-	| bar overwriteAll barValue |
-	bar := aBar ifNil: [ DummySystemProgressItem new ].
-	overwriteAll := allOverwrite.
-	barValue := 0.
-	self members select: #isDirectory thenDo: [ :entry |
-		| dir shouldUpdateInfos lastUpdate |
-		lastUpdate := 0.
-		(shouldUpdateInfos := (Time millisecondsSince: lastUpdate) >= 100)
-			ifTrue: [
-				lastUpdate := Time millisecondClockValue.
-				bar label: 'Creating ' , entry fileName ].
-		dir := (entry fileName findTokens: '/')
-			       inject: aDirectory
-			       into: [ :base :part | base / part ].
-		dir ensureCreateDirectory.
-		barValue := barValue + 1.
-		shouldUpdateInfos ifTrue: [ bar value: barValue ] ].
-	self members reject: #isDirectory thenDo: [ :entry |
-		| shouldUpdateInfos lastUpdate |
-		lastUpdate := 0.
-		(shouldUpdateInfos := (Time millisecondsSince: lastUpdate) >= 100)
-			ifTrue: [
-				lastUpdate := Time millisecondClockValue.
-				bar label: 'Extracting ' , entry fileName ].
-		self extractMember: entry inDirectory: aDirectory.
-		barValue := barValue + 1.
-		shouldUpdateInfos ifTrue: [
-			bar value: barValue.
-			lastUpdate := Time millisecondClockValue ] ]
+	| progress count lastUpdate |
+	progress := job ifNil: [ DummySystemProgressItem new ].
+	count := 0.
+	lastUpdate := 0.
+	(self members select: #isDirectory) , (self members reject: #isDirectory) do: [ :entry |
+			count := count + 1.
+			(Time millisecondsSince: lastUpdate) >= 100 ifTrue: [
+					lastUpdate := Time millisecondClockValue.
+					progress
+						title: (entry isDirectory
+								 ifTrue: [ 'Creating ' ]
+								 ifFalse: [ 'Extracting ' ]) , entry fileName;
+						currentValue: count ].
+			self extractMember: entry inDirectory: aDirectory overwrite: overwriteAll ]
 ]
 
 { #category : 'archive operations' }
 ZipArchive >> extractAllTo: aDirectory overwrite: overwriteAll [
 	"Extracts all elements to the given directory, overwriting existing entries if necessary. Does not use the UI for confirmation"
 
-	self members do: [ :entry |
-		self
-			extractMember: entry
-			inDirectory: aDirectory
-			otherwise: [ entry extractInDirectory: aDirectory withoutInformingOverwrite: overwriteAll ] ]
+	self extractAllTo: aDirectory informing: nil overwrite: overwriteAll
 ]
 
 { #category : 'private' }
-ZipArchive >> extractMember: aMember inDirectory: aDirectory [
-
-	self extractMember: aMember inDirectory: aDirectory otherwise: [ aMember extractInDirectory: aDirectory ]
-]
-
-{ #category : 'private' }
-ZipArchive >> extractMember: aMember inDirectory: aDirectory otherwise: aBlock [
-	"Extract aMember with my symbolicLinkHandler when it is a link and I have one,
-	else evaluate aBlock. The handler is only given a file inside aDirectory."
+ZipArchive >> extractMember: aMember inDirectory: aDirectory overwrite: aBoolean [
+	"Extract aMember under aDirectory. A symbolic link is given to my symbolicLinkHandler
+	when I have one, once checked to stay inside aDirectory."
 
 	| file |
-	(symbolicLinkHandler notNil and: [ aMember isSymbolicLink ]) ifFalse: [ ^ aBlock value ].
+	(symbolicLinkHandler isNotNil and: [ aMember isSymbolicLink ]) ifFalse: [
+		^ aMember extractInDirectory: aDirectory overwrite: aBoolean ].
 	file := aMember fileInDirectory: aDirectory.
 	aMember ensureExtractionTarget: file isInside: aDirectory.
 	^ symbolicLinkHandler value: aMember value: file

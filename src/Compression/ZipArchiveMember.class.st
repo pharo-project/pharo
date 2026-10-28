@@ -260,6 +260,20 @@ ZipArchiveMember >> checkCanDecrypt [
 	password ifNil: [ ZipPasswordError signal: 'member ' , fileName , ' is encrypted; set its password with #password:' ]
 ]
 
+{ #category : 'private - writing' }
+ZipArchiveMember >> checkCrcOf: aByteArray [
+	"Signal a CRCError, and mark me as corrupt, when aByteArray does not match my CRC-32"
+
+	| crc |
+	crc := CRC crc32FromCollection: aByteArray.
+	crc = crc32 ifTrue: [ ^ self ].
+	self isCorrupt: true.
+	CRCError signal: ('Wrong CRC-32 in {1} (expected {2} got {3})' format: {
+				 fileName printString.
+				 crc32 printStringHex.
+				 crc printStringHex })
+]
+
 { #category : 'accessing' }
 ZipArchiveMember >> clearExtraFields [
 	cdExtraField := ''.
@@ -453,33 +467,27 @@ ZipArchiveMember >> decodeText: aByteArray [
 ]
 
 { #category : 'private - writing' }
+ZipArchiveMember >> decompress: aByteArray [
+	"Answer my data decompressed from aByteArray, my compressed data. Besides stored
+	and deflated data, the decompressors registered with #decompressorForMethod: are used."
+
+	| decompressor |
+	compressionMethod = CompressionStored ifTrue: [ ^ aByteArray ].
+	compressionMethod = CompressionDeflated ifTrue: [ ^ (ZipReadStream on: aByteArray readStream) next: uncompressedSize ].
+	decompressor := self class decompressorForMethod: compressionMethod.
+	decompressor ifNil: [ ^ self signalUnsupportedCompressionMethod ].
+	^ (decompressor value: aByteArray) asByteArray
+]
+
+{ #category : 'private - writing' }
 ZipArchiveMember >> decompressDataTo: aStream [
 	"Decompress data that is neither stored nor deflated, when a decompressor is registered for its compression method (see #decompressorForMethod:)"
 
-	| decompressor compressed data crc |
-	decompressor := self class decompressorForMethod: compressionMethod.
-	decompressor ifNil: [
-			^ ZipArchiveError signal:
-				  'compression method ' , compressionMethod printString , ' (' , self compressionMethodName
-				  , ') is not supported, cannot extract ' , fileName printString ].
+	| data |
+	self canDecompress ifFalse: [ ^ self signalUnsupportedCompressionMethod ].
 	readDataRemaining := compressedSize.
-	compressed := ByteArray new: compressedSize streamContents: [ :stream |
-			              [ readDataRemaining > 0 ] whileTrue: [
-					              | chunk |
-					              chunk := self readRawChunk: (4096 min: readDataRemaining).
-					              stream nextPutAll: chunk.
-					              readDataRemaining := readDataRemaining - chunk size ] ].
-	data := (decompressor value: compressed) asByteArray.
-	crc := (ZipWriteStream
-		        updateCrc: 16rFFFFFFFF
-		        from: 1
-		        to: data size
-		        in: data) bitXor: 16rFFFFFFFF.
-	crc = crc32 ifFalse: [
-			self isCorrupt: true.
-			^ CRCError signal: ('Wrong CRC-32 (expected {1} got {2})' format: {
-						   crc32 printStringHex.
-						   crc printStringHex }) ].
+	data := self decompress: self readRawData.
+	self checkCrcOf: data.
 	aStream nextPutAll: data
 ]
 
@@ -487,17 +495,9 @@ ZipArchiveMember >> decompressDataTo: aStream [
 ZipArchiveMember >> decryptedContents [
 	"Answer my uncompressed data, decrypted with my password. The CRC is checked."
 
-	| data contents |
-	data := self decryptedData.
-	contents := compressionMethod = CompressionStored
-		            ifTrue: [ data ]
-		            ifFalse: [
-				            compressionMethod = CompressionDeflated ifFalse: [
-					            ZipArchiveError signal: 'compression method ' , compressionMethod printString , ' is not supported' ].
-				            (ZipReadStream on: data readStream) next: uncompressedSize ].
-	(contents size = uncompressedSize and: [ (CRC crc32FromCollection: contents) = crc32 ]) ifFalse: [
-			self isCorrupt: true.
-			CRCError signal: 'CRC mismatch in encrypted member ' , fileName ].
+	| contents |
+	contents := self decompress: self decryptedData.
+	self checkCrcOf: contents.
 	^ contents
 ]
 
@@ -509,8 +509,8 @@ ZipArchiveMember >> decryptedData [
 	self checkCanDecrypt.
 	headerSize := ZipCrypto headerSize.
 	self rewindData.
-	raw := (self readRawChunk: compressedSize) asByteArray.
-	self endRead.
+	readDataRemaining := compressedSize.
+	raw := self readRawData.
 	raw size < headerSize ifTrue: [ ZipArchiveError signal: 'encrypted member ' , fileName , ' is truncated' ].
 	plain := (ZipCrypto password: password) decrypt: raw.
 	(plain at: headerSize) = self encryptionCheckByte ifFalse: [ ZipPasswordError signal: 'wrong password for member ' , fileName ].
@@ -701,24 +701,30 @@ ZipArchiveMember >> extraFieldsIn: aByteArrayOrString [
 
 { #category : 'extraction-ui' }
 ZipArchiveMember >> extractInDirectory: aDirectory [
-	"Extract this entry into the given directory. Answer successBlock or call one of the other action blocks."
+	"Extract this entry into the given directory, keeping an existing file"
 
-	| path fileDir file localName |
-	path := fileName findTokens: '/'.
-	path ifEmpty: [ ^ self ensureExtractionTarget: aDirectory isInside: aDirectory ].
-	localName := path last.
-	fileDir := path allButLast inject: aDirectory into: [ :base :part | base / part ].
-	file := fileDir / localName.
+	^ self extractInDirectory: aDirectory overwrite: false
+]
+
+{ #category : 'extraction' }
+ZipArchiveMember >> extractInDirectory: aDirectory overwrite: aBoolean [
+	"Extract me under aDirectory, at the path given by my file name, creating the
+	directories it needs. An existing file is kept unless aBoolean is true.
+	Refuse to extract me outside of aDirectory (zip slip)."
+
+	| file |
+	file := self fileInDirectory: aDirectory.
 	self ensureExtractionTarget: file isInside: aDirectory.
-	fileDir ensureCreateDirectory.
-	^ self extractToFile: file
+	self isDirectory ifTrue: [ ^ file ensureCreateDirectory ].
+	file parent ensureCreateDirectory.
+	self extractToFile: file overwrite: aBoolean
 ]
 
 { #category : 'extraction' }
 ZipArchiveMember >> extractInDirectory: dir withoutInformingOverwrite: overwrite [
 	"Extract myself to dir without informing user whether to overwrite existing file"
 
-	self extractToFileNamed: self localFileName inDirectory: dir overwrite: overwrite
+	self extractInDirectory: dir overwrite: overwrite
 ]
 
 { #category : 'extraction' }
@@ -753,16 +759,21 @@ ZipArchiveMember >> extractTo: aStream from: start to: finish [
 
 { #category : 'private - extraction' }
 ZipArchiveMember >> extractToFile: aFile [
-	"Extract this entry into the given file. Answer successBlock or call one of the other action blocks."
+	"Extract this entry into the given file, unless it exists"
 
-	| file |
-	file := aFile.
-	file exists ifTrue: [ ^ self ].
-	self canDecompress ifFalse: [
-			^ ZipArchiveError signal:
-				  'compression method ' , compressionMethod printString , ' (' , self compressionMethodName
-				  , ') is not supported, cannot extract ' , fileName printString ].
-	file binaryWriteStreamDo: [ :str | self extractTo: str ]
+	self extractToFile: aFile overwrite: false
+]
+
+{ #category : 'private - extraction' }
+ZipArchiveMember >> extractToFile: aFile overwrite: aBoolean [
+	"Extract this entry into aFile. An existing file is kept unless aBoolean is true.
+	Nothing is written when my compression method is not supported."
+
+	aFile exists ifTrue: [
+			aBoolean ifFalse: [ ^ self ].
+			aFile ensureDelete ].
+	self canDecompress ifFalse: [ ^ self signalUnsupportedCompressionMethod ].
+	aFile binaryWriteStreamDo: [ :stream | self extractTo: stream ]
 ]
 
 { #category : 'extraction' }
@@ -779,28 +790,17 @@ ZipArchiveMember >> extractToFileNamed: aLocalFileName inDirectory: dir [
 ZipArchiveMember >> extractToFileNamed: aLocalFileName inDirectory: dir overwrite: overwrite [
 
 	| file |
-	self isEncrypted ifTrue: [ ^ self error: 'encryption unsupported' ].
 	file := dir / aLocalFileName.
 	self ensureExtractionTarget: file isInside: dir.
-	self isDirectory
-		ifTrue: [ file ensureCreateDirectory ]
-		ifFalse: [
-				(file isFile and: [ file exists ])
-					ifTrue: [
-							overwrite ifTrue: [
-									file
-										ensureDelete;
-										ensureCreateFile;
-										binaryWriteStreamDo: [ :stream | self extractTo: stream ] ] ]
-					ifFalse: [
-							file
-								ensureCreateFile;
-								binaryWriteStreamDo: [ :stream | self extractTo: stream ] ] ]
+	self isDirectory ifTrue: [ ^ file ensureCreateDirectory ].
+	file parent ensureCreateDirectory.
+	self extractToFile: file overwrite: overwrite
 ]
 
 { #category : 'extraction' }
 ZipArchiveMember >> extractWithOverwriteInDirectory: dir [
-	self extractToFileNamed: self localFileName inDirectory: dir overwrite: true
+
+	self extractInDirectory: dir overwrite: true
 ]
 
 { #category : 'accessing' }
@@ -1043,12 +1043,38 @@ ZipArchiveMember >> readRawChunk: n [
 	self subclassResponsibility
 ]
 
+{ #category : 'private - writing' }
+ZipArchiveMember >> readRawChunksDo: aBlock [
+	"Evaluate aBlock with my remaining raw data, in chunks"
+
+	[ readDataRemaining > 0 ] whileTrue: [
+			| chunk |
+			chunk := self readRawChunk: (4096 min: readDataRemaining).
+			readDataRemaining := readDataRemaining - chunk size.
+			aBlock value: chunk ]
+]
+
+{ #category : 'private - writing' }
+ZipArchiveMember >> readRawData [
+	"Answer all my remaining raw (possibly compressed or encrypted) data"
+
+	^ ByteArray new: readDataRemaining streamContents: [ :stream | self readRawChunksDo: [ :chunk | stream nextPutAll: chunk ] ]
+]
+
 { #category : 'private' }
 ZipArchiveMember >> rewindData [
 	readDataRemaining :=  (desiredCompressionMethod = CompressionDeflated
 		and: [ compressionMethod = CompressionDeflated ])
 			ifTrue: [ compressedSize ]
 			ifFalse: [ uncompressedSize ]
+]
+
+{ #category : 'private - writing' }
+ZipArchiveMember >> signalUnsupportedCompressionMethod [
+
+	^ ZipArchiveError signal:
+		  'compression method ' , compressionMethod printString , ' (' , self compressionMethodName
+		  , ') is not supported, cannot extract ' , fileName printString
 ]
 
 { #category : 'accessing' }

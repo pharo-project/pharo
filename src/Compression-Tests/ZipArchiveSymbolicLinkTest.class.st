@@ -96,7 +96,7 @@ ZipArchiveSymbolicLinkTest >> testHandlerIsNotCalledForLinkNamedOutsideTheDirect
 	(archive addSymbolicLink: 'target' as: 'link') fileName: '../link'.
 	handled := false.
 	archive symbolicLinkHandler: [ :member :file | handled := true ].
-	self should: [ archive extractMember: archive members first inDirectory: directory ] raise: ZipArchiveError.
+	self should: [ archive extractMember: archive members first inDirectory: directory overwrite: false ] raise: ZipArchiveError.
 	self deny: handled
 ]
 
