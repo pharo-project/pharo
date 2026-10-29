@@ -34,8 +34,14 @@ PseudoVariable class >> variableName [
 
 { #category : 'converting' }
 PseudoVariable >> asString [
-
+	self deprecated: 'Do not use asString when you need displayString'.
 	^ self name
+]
+
+{ #category : 'printing' }
+PseudoVariable >> displayStringOn: aStream [
+	
+	aStream nextPutAll: self name
 ]
 
 { #category : 'code generation' }
@@ -67,9 +73,9 @@ PseudoVariable >> name: aSymbol [
 ]
 
 { #category : 'printing' }
-PseudoVariable >> printOn: stream [
-
-	stream nextPutAll: self name
+PseudoVariable >> printOn: aStream [
+	
+	aStream nextPutAll: self name
 ]
 
 { #category : 'accessing' }

@@ -37,7 +37,7 @@ Object >> trace [
 Object >> trace: anObject [
 	"Log the argument. Use self trace: instead of Transcript show: "
 
-	Transcript show: anObject asString
+	Transcript show: anObject displayString
 ]
 
 { #category : '*Transcript-NonInteractive' }

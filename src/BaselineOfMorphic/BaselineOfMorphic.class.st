@@ -118,7 +118,7 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	SystemNotification signal: 'Starting postload action'.
 
 	Stdio stdout
-		nextPutAll: Smalltalk ui asString;
+		nextPutAll: Smalltalk ui displayString;
 		lf.
 
 	#( #ProgressBarMorph #GlobalIdentifier #HaloMorph
