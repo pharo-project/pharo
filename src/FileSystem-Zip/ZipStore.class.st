@@ -21,20 +21,18 @@ ZipStore class >> reference: aReference [
 
 { #category : 'public' }
 ZipStore >> close [
-	| archive fs stream |
+
+	| archive fs |
 	archive := ZipArchive new.
 	fs := FileSystem store: self.
-	fs root allChildren do:
-		[ :each |
-		each isFile ifTrue:
-			[ each readStreamDo:
-				[ :output |
-				archive addString: output contents as: each path printString ] ] ].
-	archive
-		writeTo: (stream := WriteStream on: ByteArray new);
-		close.
-	self reference writeStreamDo:
-		[ :output | output nextPutAll: stream contents ]
+	fs root allChildren do: [ :each |
+			| name |
+			name := (each relativeTo: fs root) pathString.
+			each isFile ifTrue: [ each binaryReadStreamDo: [ :input | archive addDeflateString: input upToEnd as: name ] ].
+			(each isDirectory and: [ each ~= fs root ]) ifTrue: [ archive addDirectory: each as: name ] ].
+	self reference ensureDelete.
+	self reference binaryWriteStreamDo: [ :output | archive writeTo: output ].
+	archive close
 ]
 
 { #category : 'printing' }
