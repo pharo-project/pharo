@@ -91,9 +91,10 @@ ZnConstants class >> knownHTTPVersions [
 ZnConstants class >> maximumLineLength [
 	"Return the maximum line length to accept.
 	Used by ZnLineReader and thus for reading request/status lines as well as headers.
-	This helps to protect us from malicious content."
+	This helps to protect us from malicious content.
+	This is now the #maximumLineLength option: set it there, or on a ZnClient or ZnServer."
 
-	^ 8192 "4096*2"
+	^ ZnCurrentOptions at: #maximumLineLength
 ]
 
 { #category : 'accessing' }

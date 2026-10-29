@@ -75,6 +75,17 @@ ZnOptions class >> maximumEntitySize [
 ]
 
 { #category : 'options' }
+ZnOptions class >> maximumLineLength [
+	"The maximum line length in bytes that can be read from a stream before ZnLineTooLong is signalled.
+	This is applicable to each message's first line and each header line. Malicious parties could hurt
+	a client or server by sending artificially large lines. Setting a maximum is a protection against this."
+
+	<znOption>
+
+	^ 32 * 1024
+]
+
+{ #category : 'options' }
 ZnOptions class >> maximumNumberOfConcurrentConnections [
 	"Set the maximum number of concurrent connections that I will accept.
 	When this threshold is reached, a 503 Service Unavailable response will be sent
