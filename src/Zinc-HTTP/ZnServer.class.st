@@ -331,6 +331,13 @@ ZnServer >> maximumEntitySize: integer [
 ]
 
 { #category : 'options' }
+ZnServer >> maximumLineLength: integer [
+	"Set the maximum line length in bytes that I will read from a stream before signalling ZnLineTooLong"
+
+	self localOptions at: #maximumLineLength put: integer
+]
+
+{ #category : 'options' }
 ZnServer >> maximumNumberOfConcurrentConnections: count [
 	"Set the maximum number of concurrent connections that I will accept.
 	When this threshold is reached, a 503 Service Unavailable response will be sent
