@@ -124,9 +124,12 @@ NonInteractiveTranscript >> cr [
 
 { #category : 'streaming' }
 NonInteractiveTranscript >> crShow: anObject [
-	"Output anObject asString on the receiver preceded by a cr and show the output"
+	"To deprecate in favor of #newLineShow:"
 
-	self critical: [ self cr; show: anObject ]
+	self critical: [
+			self
+				cr;
+				show: anObject ]
 ]
 
 { #category : 'streaming' }
@@ -226,6 +229,16 @@ NonInteractiveTranscript >> newLine [
 	"Output a cr on the receiver, buffered and not yet shown"
 
 	self nextPutAll: OSPlatform current lineEnding
+]
+
+{ #category : 'streaming' }
+NonInteractiveTranscript >> newLineShow: anObject [
+	"Output anObject asString on the receiver preceded by a line return and show the output"
+
+	self critical: [
+			self
+				newLine;
+				show: anObject ]
 ]
 
 { #category : 'streaming' }

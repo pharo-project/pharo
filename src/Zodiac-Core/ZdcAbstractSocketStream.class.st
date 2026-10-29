@@ -146,8 +146,8 @@ ZdcAbstractSocketStream >> isStream [
 
 { #category : 'private' }
 ZdcAbstractSocketStream >> log: object [
-	debug ifTrue: [
-		self crTrace: object value ]
+
+	debug ifTrue: [ self newLineTrace: object value ]
 ]
 
 { #category : 'stream in' }

@@ -542,7 +542,7 @@ SmalltalkImage >> fixObsoleteBindings [
 			obsName := binding value name.
 			self
 				trace: 'Binding: ';
-				traceCr: obsName.
+				traceNewLine: obsName.
 			realName := obsName copyReplaceAll: 'AnObsolete' with: ''.
 			realClass := Smalltalk globals at: realName asSymbol ifAbsent: [ UndefinedObject ].
 			binding key: binding key value: realClass ].

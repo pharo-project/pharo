@@ -80,7 +80,7 @@ FBDExamples >> exampleAndOr [
 	| t1 t2 |
 	t1 := true.
 	t2 := false.
-	t1 and: [ t2. '1' traceCr ] "effect"
+	t1 and: [ t2. '1' traceNewLine ] "effect"
 ]
 
 { #category : 'examples - blocks-optimized' }
@@ -92,7 +92,7 @@ FBDExamples >> exampleAndOr2 [
 	tmp2 := false.
 	tmp2
 		ifTrue: [ ]
-		ifFalse: [ '2' traceCr ].
+		ifFalse: [ '2' traceNewLine ].
 	^ self
 ]
 
