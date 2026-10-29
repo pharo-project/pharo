@@ -8,11 +8,24 @@ Class {
 	#name : 'ZnEndianSensitiveUTFEncoder',
 	#superclass : 'ZnUTFEncoder',
 	#instVars : [
-		'endianness'
+		'endianness',
+		'identifier'
 	],
 	#category : 'Zinc-Character-Encoding-Core',
 	#package : 'Zinc-Character-Encoding-Core'
 }
+
+{ #category : 'accessing' }
+ZnEndianSensitiveUTFEncoder class >> handlesEncoding: string [
+	"Return true when my instances handle the encoding described by string"
+
+	^ false
+]
+
+{ #category : 'testing' }
+ZnEndianSensitiveUTFEncoder class >> isAbstract [
+	^ self = ZnEndianSensitiveUTFEncoder
+]
 
 { #category : 'instance creation' }
 ZnEndianSensitiveUTFEncoder class >> newForEncoding: string [
@@ -21,6 +34,7 @@ ZnEndianSensitiveUTFEncoder class >> newForEncoding: string [
 
 	| encoder |
 	encoder := self new.
+	encoder identifier: string.
 	(string asLowercase endsWith: 'be') ifTrue: [ encoder beBigEndian ].
 	(string asLowercase endsWith: 'le') ifTrue: [ encoder beLittleEndian ].
 	^ encoder
@@ -28,7 +42,7 @@ ZnEndianSensitiveUTFEncoder class >> newForEncoding: string [
 
 { #category : 'comparing' }
 ZnEndianSensitiveUTFEncoder >> = anObject [
-	^ super = anObject and: [ self endianness == anObject endianness ]
+	^ super = anObject and: [ self identifier == anObject identifier ]
 ]
 
 { #category : 'initialization' }
@@ -48,7 +62,17 @@ ZnEndianSensitiveUTFEncoder >> endianness [
 
 { #category : 'comparing' }
 ZnEndianSensitiveUTFEncoder >> hash [
-	^ super hash bitXor: self endianness hash
+	^ self identifier hash
+]
+
+{ #category : 'accessing' }
+ZnEndianSensitiveUTFEncoder >> identifier [
+	^ identifier
+]
+
+{ #category : 'accessing' }
+ZnEndianSensitiveUTFEncoder >> identifier: anObject [
+	identifier := anObject
 ]
 
 { #category : 'initialization' }
@@ -70,6 +94,7 @@ ZnEndianSensitiveUTFEncoder >> isLittleEndian [
 ZnEndianSensitiveUTFEncoder >> printOn: stream [
 	super printOn: stream.
 	stream nextPut: $(.
+	stream print: self identifier asString; space.
 	stream nextPutAll: endianness; nextPutAll: ' endian'.
 	stream nextPut: $)
 ]
