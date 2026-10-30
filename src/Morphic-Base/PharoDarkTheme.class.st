@@ -49,6 +49,15 @@ PharoDarkTheme >> buttonDisabledBorderStyleFor: aButton [
 	^ BorderStyle width: 0 color: Color transparent
 ]
 
+{ #category : 'fill-styles - buttons' }
+PharoDarkTheme >> buttonMouseOverFillStyleFor: aButton [
+	"Return the button mouse over fillStyle for the given color."
+
+	(aButton valueOfProperty: #noFill ifAbsent: [ false ]) ifTrue: [
+		^ self buttonNormalFillStyleFor: aButton ].
+	^ SolidFillStyle color: self buttonColor lighter
+]
+
 { #category : 'border-styles - buttons' }
 PharoDarkTheme >> buttonNormalBorderStyleFor: aButton [
 
@@ -85,11 +94,9 @@ PharoDarkTheme >> buttonSelectedFillStyleFor: aButton [
 { #category : 'border-styles' }
 PharoDarkTheme >> configureWindowBorderFor: aWindow [
 
-	| aStyle |
-	aStyle := SimpleBorderStyle new
-		          color: self borderColor;
-		          width: 1 scaledByDisplayScaleFactor.
-	aWindow borderStyle: aStyle
+	aWindow borderStyle: (SimpleBorderStyle new
+			 color: self borderColor;
+			 width: 1 scaledByDisplayScaleFactor)
 ]
 
 { #category : 'fill-styles - buttons' }
@@ -99,6 +106,18 @@ PharoDarkTheme >> controlButtonNormalFillStyleFor: aButton [
 	Control buttons are generally used for drop-lists and expanders."
 
 	^ self buttonNormalFillStyleFor: aButton
+]
+
+{ #category : 'initialization' }
+PharoDarkTheme >> defaultSettings [
+
+	^ super defaultSettings
+		  menuColor: self menuColor;
+		  menuTitleColor: self menuTitleColor;
+		  menuSelectionTextColor: Color white;
+		  progressBarColor: self lightBackgroundColor;
+		  flatMenu: true;
+		  yourself
 ]
 
 { #category : 'border-styles' }
@@ -122,13 +141,55 @@ PharoDarkTheme >> initialize [
 { #category : 'accessing' }
 PharoDarkTheme >> menuBorderWidth [
 
-	^ self borderWidth
+	^ 1 scaledByDisplayScaleFactor
+]
+
+{ #category : 'defaults' }
+PharoDarkTheme >> menuInset [
+
+	^ 4 scaledByDisplayScaleFactor
+]
+
+{ #category : 'defaults' }
+PharoDarkTheme >> menuItemVerticalPadding [
+
+	^ 5 scaledByDisplayScaleFactor
 ]
 
 { #category : 'accessing - colors' }
 PharoDarkTheme >> popoverButtonColor [
 
 	^ self lightBaseColor
+]
+
+{ #category : 'fill-styles - scrollbars' }
+PharoDarkTheme >> scrollbarMouseOverThumbFillStyleFor: aScrollbar [
+	"Return the scrollbar mouse over thumb fillStyle for the given scrollbar."
+
+	^ SolidFillStyle color: self disabledColor
+]
+
+{ #category : 'fill-styles - scrollbars' }
+PharoDarkTheme >> scrollbarNormalButtonFillStyleFor: aScrollbar [
+	"Keep the arrow buttons but draw them as part of the track."
+
+	^ self scrollbarNormalFillStyleFor: aScrollbar
+]
+
+{ #category : 'border-styles - scrollbars' }
+PharoDarkTheme >> scrollbarNormalThumbBorderStyleFor: aScrollbar [
+	"A border in the color of the track makes the thumb look inset without any extra drawing."
+
+	^ SimpleBorderStyle new
+		  width: 2 scaledByDisplayScaleFactor;
+		  baseColor: (self scrollbarNormalFillStyleFor: aScrollbar) asColor
+]
+
+{ #category : 'fill-styles - scrollbars' }
+PharoDarkTheme >> scrollbarNormalThumbFillStyleFor: aScrollbar [
+	"Return the normal scrollbar thumb fillStyle for the given scrollbar."
+
+	^ SolidFillStyle color: self scrollbarColor
 ]
 
 { #category : 'fill-styles - scrollbars' }
@@ -139,16 +200,57 @@ PharoDarkTheme >> scrollbarPressedThumbFillStyleFor: aScrollbar [
 	^ self buttonSelectedFillStyleFor: aScrollbar
 ]
 
+{ #category : 'defaults' }
+PharoDarkTheme >> scrollbarThickness [
+	"Answer the width or height of a scrollbar as appropriate to
+	its orientation."
+
+	^ 11 * self displayScaleFactor
+]
+
 { #category : 'accessing' }
 PharoDarkTheme >> shStyleTableName [
 
 	^ #darkStyleTable
 ]
 
+{ #category : 'border-styles' }
+PharoDarkTheme >> tabLabelNormalBorderStyleFor: aTabLabel [
+
+	^ BottomBorderStyle new
+		  color: Color transparent;
+		  width: 2 scaledByDisplayScaleFactor;
+		  yourself
+]
+
+{ #category : 'fill-styles - buttons' }
+PharoDarkTheme >> tabLabelNormalFillStyleFor: aTabLabel [
+
+	^ SolidFillStyle color: Color transparent
+]
+
+{ #category : 'border-styles' }
+PharoDarkTheme >> tabLabelSelectedBorderStyleFor: aTabLabel [
+
+	^ self tabLabelNormalBorderStyleFor: aTabLabel
+]
+
+{ #category : 'fill-styles - buttons' }
+PharoDarkTheme >> tabLabelSelectedFillStyleFor: aTabLabel [
+
+	^ SolidFillStyle color: self backgroundColor
+]
+
+{ #category : 'accessing - colors' }
+PharoDarkTheme >> tabSelectionIndicatorColor [
+
+	^ self selectedTabBorderColor
+]
+
 { #category : 'fill-styles - taskbar' }
 PharoDarkTheme >> taskbarFillStyleFor: aTaskbar [
 
-	^ SolidFillStyle color: (Color black lighter alpha: 0.8)
+	^ SolidFillStyle color: self baseColor
 ]
 
 { #category : 'border-styles - taskbar' }
@@ -169,7 +271,7 @@ PharoDarkTheme >> taskbarItemDisabledFillStyleFor: aButton [
 PharoDarkTheme >> taskbarItemMouseOverBorderStyleFor: aButton [
 
 	^ BottomBorderStyle new
-		  color: Color white;
+		  color: self selectedTabBorderColor;
 		  width: 2 scaledByDisplayScaleFactor;
 		  yourself
 ]
@@ -184,8 +286,8 @@ PharoDarkTheme >> taskbarItemMouseOverFillStyleFor: aButton [
 PharoDarkTheme >> taskbarItemNormalBorderStyleFor: aButton [
 
 	^ BottomBorderStyle new
-		  color: Color white;
-		  width: 1 scaledByDisplayScaleFactor;
+		  color: self borderColor;
+		  width: 2 scaledByDisplayScaleFactor;
 		  trimSize: 2 scaledByDisplayScaleFactor;
 		  yourself
 ]
@@ -250,6 +352,12 @@ PharoDarkTheme >> taskbarItemSelectedPressedFillStyleFor: aButton [
 	^ SolidFillStyle color: (Color white alpha: 0.35)
 ]
 
+{ #category : 'fill-styles' }
+PharoDarkTheme >> windowActiveTitleFillStyleFor: aWindow [
+
+	^ SolidFillStyle color: self lightBackgroundColor
+]
+
 { #category : 'label-styles - windows' }
 PharoDarkTheme >> windowCloseFormSet [
 	"Answer the form set to use for the close button of a window."
@@ -262,6 +370,12 @@ PharoDarkTheme >> windowCloseOverFormSet [
 	"Answer the form set to use for mouse over window close buttons"
 
 	^ self iconFormSetNamed: #windowCloseInverted
+]
+
+{ #category : 'fill-styles' }
+PharoDarkTheme >> windowInactiveLabelFillStyleFor: aWindow [
+
+	^ self disabledColor
 ]
 
 { #category : 'label-styles - windows' }
@@ -305,4 +419,11 @@ PharoDarkTheme >> windowMinimizeOverFormSet [
 	"Answer the form set to use for mouse over window minimize buttons"
 
 	^ self iconFormSetNamed: #windowMinimizeInverted
+]
+
+{ #category : 'fill-styles' }
+PharoDarkTheme >> worldMainDockingBarNormalFillStyleFor: aDockingBar [
+	"A solid fill keeps the bar cheap to redraw."
+
+	^ SolidFillStyle color: aDockingBar originalColor
 ]
