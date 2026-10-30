@@ -164,7 +164,7 @@ BaselineOfCalypso >> baseline: spec [
 			with: [ spec requires: #( #'Calypso-SystemTools-Core' ) ];
 			package: #'Calypso-Browser' with: [
 				spec requires: #( 'CalypsoNavigationModel'
-					   #Commander #'Calypso-Commands' ) ];
+					   #Commander 'SystemCommands' ) ];
 			package: #'Calypso-Browser-Tests'
 			with: [ spec requires: #( #'Calypso-Browser' ) ];
 			package: #'Calypso-SystemTools-Core' with: [
