@@ -292,15 +292,6 @@ ZnBufferedReadStream >> position: anInteger [
 			stream position: anInteger ]
 ]
 
-{ #category : 'accessing' }
-ZnBufferedReadStream >> rawStream [
-	"Answer the innermost stream wrapped by the receiver, e.g. a raw binary file stream,
-	socket stream, or regular Read/WriteStream.
-	Defer to the wrappedStream."
-
-	^ self wrappedStream rawStream
-]
-
 { #category : 'private' }
 ZnBufferedReadStream >> readFromBufferInto: collection startingAt: offset count: requestedCount [
 	"Read up to requestedCount elements into collection starting at offset,

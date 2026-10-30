@@ -457,16 +457,9 @@ ZnClient >> execute [
 	^ self withDynamicVariablesDo: [
 		| result |
 		self prepareRequest.
-		result := self executeHandlingErrors.
+		result := self executeWithTimeout.
 		self prepareNextRequest.
 		result ]
-]
-
-{ #category : 'private - protocol' }
-ZnClient >> executeHandlingErrors [
-	^ [ self executeWithRetriesRemaining: self numberOfRetries ]
-			on: Error
-			do: self ifFailBlock
 ]
 
 { #category : 'private - protocol' }
@@ -482,36 +475,24 @@ ZnClient >> executeRequestResponse [
 ]
 
 { #category : 'private - protocol' }
-ZnClient >> executeWithRedirectsRemaining: redirectCount trail: collectionOfUrls [
+ZnClient >> executeWithRedirectsRemaining: redirectCount [
 	self getConnectionAndExecute.
 	response isRedirect
 		ifTrue: [
 			(redirectCount > 0 and: [ self followRedirects ])
 				ifTrue: [
-					self prepareRedirect.
-					collectionOfUrls add: self request url.
-					self 
-						executeWithRedirectsRemaining: redirectCount - 1 
-						trail: collectionOfUrls ]
+					self
+						prepareRedirect;
+						executeWithRedirectsRemaining: redirectCount - 1 ]
 				ifFalse: [
 					self followRedirects
-						ifTrue: [ | exception |
-							(exception := ZnTooManyRedirects new) 
-									trail: collectionOfUrls. 
-							exception signal = exception defaultResumeValue
-								ifTrue: [
-									"when resumed with default resume value, start over"
-									self 
-										executeWithRedirectsRemaining: self maxNumberOfRedirects 
-										trail: collectionOfUrls ] ] ] ].
+						ifTrue: [ ZnTooManyRedirects signal ] ] ].
 	^ self handleResponse
 ]
 
 { #category : 'private - protocol' }
 ZnClient >> executeWithRetriesRemaining: retryCount [
-	^ [ self 
-			executeWithRedirectsRemaining: self maxNumberOfRedirects
-			trail: OrderedCollection new ]
+	^ [ self executeWithRedirectsRemaining: self maxNumberOfRedirects ]
 		on: self retryExceptionSet
 		do: [ :exception |
 			retryCount > 0
@@ -521,6 +502,14 @@ ZnClient >> executeWithRetriesRemaining: retryCount [
 						executeWithRetriesRemaining: retryCount - 1 ]
 				ifFalse: [
 					exception pass ] ]
+]
+
+{ #category : 'private - protocol' }
+ZnClient >> executeWithTimeout [
+	^ self withTimeoutDo: [
+		[ self executeWithRetriesRemaining: self numberOfRetries ]
+			on: Error
+			do: self ifFailBlock ]
 ]
 
 { #category : 'options' }
@@ -725,7 +714,6 @@ ZnClient >> ifFailBlock [
 
 { #category : 'initialization' }
 ZnClient >> initialize [
-	super initialize.
 	request := ZnRequest empty.
 	self loggingOn
 ]
@@ -997,7 +985,9 @@ ZnClient >> maximumNumberOfDictionaryEntries [
 ZnClient >> maximumNumberOfDictionaryEntries: anInteger [
 	"Set the maximum number of entries allowed in ZnMutliValueDictionaries before signalling ZnTooManyDictionaryEntries. This protects us from overflow attacks."
 
-	self localOptions at: #maximumNumberOfDictionaryEntries put: anInteger
+	^ self
+		optionAt: #maximumNumberOfDictionaryEntries
+		put: anInteger
 ]
 
 { #category : 'accessing - request' }
@@ -1009,8 +999,7 @@ ZnClient >> method: httpMethod [
 
 	(self autoResetEntityMethods includes: httpMethod)
 		ifTrue: [ self resetEntity ].
-	self withDynamicVariablesDo: [ 
-		request method: httpMethod ]
+	request method: httpMethod
 ]
 
 { #category : 'accessing - request' }
@@ -1293,13 +1282,15 @@ ZnClient >> queryAt: key put: value [
 { #category : 'private - protocol' }
 ZnClient >> readResponse [
 	self signalHTTPProgress: 'Reading response'.
-	self withDefaultCharacterEncoderDo: [
-		response := (#(HEAD CONNECT) includes: request method)
-			ifTrue: [ ZnResponse readHeaderFrom: connection ]
-			ifFalse: [
-				self streaming
-					ifTrue: [ ZnResponse readStreamingFrom: connection ]
-					ifFalse: [ self reader value: connection ] ] ].
+	self withMaximumNumberOfDictionaryEntriesDo: [
+		self withDefaultCharacterEncoderDo: [
+			response := (#(HEAD CONNECT) includes: request method)
+				ifTrue: [ ZnResponse readHeaderFrom: connection ]
+				ifFalse: [
+					self streaming
+						ifTrue: [ ZnResponse readStreamingFrom: connection ]
+						ifFalse: [
+							self reader value: connection ] ] ] ].
 	lastUsed := Time totalSeconds
 ]
 
@@ -1475,17 +1466,10 @@ ZnClient >> setupTLSTo: url [
 	connection sslSession certificateName: self certificate.
 
 	[ connection sslSession serverName: url host ]
-		on: (ZnUtils exceptionSet: #( #SocketError #PrimitiveFailed ))
+		on: SocketError, PrimitiveFailed
 		do: [ :error | "log it?" ].
 
-	connection connect.
-	
-	((ZnCurrentOptions at: #verifyCertificates) 
-			and: [ connection sslSession certificateVerificationState ~= 0 ])
-		ifTrue: [ 
-			ZnCertificateVerificationFailed new 
-				verificationState: connection sslSession certificateVerificationState;
-				signal ]
+	connection connect
 ]
 
 { #category : 'private' }
@@ -1541,7 +1525,7 @@ ZnClient >> timeout: seconds [
 	"Set the timeout for network socket stream operations
 	like connecting, reading and writing to seconds."
 
-	self localOptions at: #socketStreamTimeout put: seconds
+	self optionAt: #timeout put: seconds
 ]
 
 { #category : 'convenience' }
@@ -1608,6 +1592,16 @@ ZnClient >> withDynamicVariablesDo: block [
 	^ self localOptions conditionallyDuring: block
 ]
 
+{ #category : 'private' }
+ZnClient >> withMaximumNumberOfDictionaryEntriesDo: block [
+	^ self maximumNumberOfDictionaryEntries = ZnMaximumNumberOfDictionaryEntries value
+			ifTrue: block
+			ifFalse: [
+				ZnMaximumNumberOfDictionaryEntries
+					value: self maximumNumberOfDictionaryEntries
+					during: block ]
+]
+
 { #category : 'initialization' }
 ZnClient >> withOptions: block [
 	"Execute block with my options as argument.
@@ -1617,6 +1611,17 @@ ZnClient >> withOptions: block [
 	result := block value: self localOptions.
 	self postLocalOptionsChanged.
 	^ result
+]
+
+{ #category : 'private' }
+ZnClient >> withTimeoutDo: block [
+	^ ZnConnectionTimeout value
+		ifNil: [
+			ZnConnectionTimeout
+				value: self timeout
+				during: [ ^ block value ] ]
+		ifNotNil: [
+			block value ]
 ]
 
 { #category : 'private - protocol' }

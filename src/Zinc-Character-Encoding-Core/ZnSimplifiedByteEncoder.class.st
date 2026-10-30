@@ -207,10 +207,10 @@ ZnSimplifiedByteEncoder >> ensureAtBeginOfCodePointOnStream: stream [
 ]
 
 { #category : 'encoding - decoding' }
-ZnSimplifiedByteEncoder >> forwardOnStream: stream [
-	"Move forward one character on stream"
+ZnSimplifiedByteEncoder >> forwardOnStream: aStream [
+	"I should move from 1 character forward on the stream. The stream is over a ByteArray."
 
-	stream next
+	aStream next
 ]
 
 { #category : 'comparing' }
@@ -256,7 +256,7 @@ ZnSimplifiedByteEncoder >> nextCodePointFromStream: stream [
 				ifNotNil: [ :unicode | unicode asInteger ]
 				ifNil: [
 					strict
-						ifTrue: [ ^ self errorOutsideRange: byteValue from:stream ]
+						ifTrue: [ self errorOutsideRange ]
 						ifFalse: [ byteValue ] ] ]
 ]
 
@@ -266,14 +266,14 @@ ZnSimplifiedByteEncoder >> nextFromStream: stream [
 	Overwritten for performance reasons"
 
 	| byteValue |
-	^ (byteValue := stream next ifNil: [ ^ self errorIncompleteFrom: stream ]) < 128
+	^ (byteValue := stream next ifNil: [ ^ self errorIncomplete asCharacter ]) < 128
 		ifTrue: [ Character value: byteValue ]
 		ifFalse: [
 			(byteToUnicode at: byteValue - 127 ifAbsent: [ nil ])
 				ifNotNil: [ :unicode | unicode ]
 				ifNil: [
 					strict
-						ifTrue: [ ^ Character value: (self errorOutsideRange: byteValue from:stream) ]
+						ifTrue: [ self errorOutsideRange ]
 						ifFalse: [ Character value: byteValue ] ] ]
 ]
 
@@ -287,7 +287,7 @@ ZnSimplifiedByteEncoder >> nextPutCodePoint: codePoint toStream: stream [
 			| byte |
 			byte := unicodeToByte at: codePoint ifAbsent: [ nil ].
 			(byte isNil and: [ strict or: [ codePoint > 255 ] ])
-				ifTrue: [ ^ self errorOutsideRange: codePoint to: stream ].
+				ifTrue: [ self errorOutsideRange ].
 			stream nextPut: (byte ifNil: [ codePoint ]) ]
 ]
 

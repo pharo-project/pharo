@@ -36,8 +36,7 @@ ZnServerSocketReleasedEvent >> port: anObject [
 { #category : 'printing' }
 ZnServerSocketReleasedEvent >> printContentsOn: stream [
 	super printContentsOn: stream.
-
 	stream << 'Server Socket Released '.
-	self class printAddress: address on: stream. 
+	address do: [ :each | stream print: each ] separatedBy: [ stream nextPut: $. ].
 	stream nextPut: $:; print: port
 ]

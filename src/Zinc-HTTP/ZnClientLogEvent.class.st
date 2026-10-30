@@ -28,5 +28,5 @@ ZnClientLogEvent >> clientId: anObject [
 { #category : 'printing' }
 ZnClientLogEvent >> printHeaderOn: stream [
 	super printHeaderOn: stream.
-	clientId ifNotNil: [ stream space; << clientId asString ]
+	clientId ifNotNil: [ stream space; << clientId ]
 ]
