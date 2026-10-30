@@ -18,16 +18,6 @@ ClyNavigateBrowserBackCommand class >> defaultShortcut [
 ]
 
 { #category : 'accessing' }
-ClyNavigateBrowserBackCommand >> defaultMenuIconName [
-	^#back
-]
-
-{ #category : 'accessing' }
-ClyNavigateBrowserBackCommand >> defaultMenuItemName [
-	^'go backward'
-]
-
-{ #category : 'accessing' }
 ClyNavigateBrowserBackCommand >> description [
 	^'go backward in the navigation history'
 ]
@@ -35,4 +25,14 @@ ClyNavigateBrowserBackCommand >> description [
 { #category : 'execution' }
 ClyNavigateBrowserBackCommand >> execute [
 	browser navigateBack
+]
+
+{ #category : 'accessing' }
+ClyNavigateBrowserBackCommand >> iconName [
+	^#back
+]
+
+{ #category : 'accessing' }
+ClyNavigateBrowserBackCommand >> name [
+	^'go backward'
 ]

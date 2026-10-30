@@ -23,16 +23,6 @@ SycRemoveMethodCommand class >> methodShortcutActivation [
 ]
 
 { #category : 'accessing' }
-SycRemoveMethodCommand >> defaultMenuIconName [
-	^#remove
-]
-
-{ #category : 'accessing' }
-SycRemoveMethodCommand >> defaultMenuItemName [
-	^'(R) Remove'
-]
-
-{ #category : 'accessing' }
 SycRemoveMethodCommand >> description [
 
 	^ 'Removes methods.'
@@ -44,6 +34,16 @@ SycRemoveMethodCommand >> execute [
 	(ReRemoveMethodDriver new
 				 scopes: toolContext refactoringScopes
 				 methods: methods) runRefactoring
+]
+
+{ #category : 'accessing' }
+SycRemoveMethodCommand >> iconName [
+	^#remove
+]
+
+{ #category : 'accessing' }
+SycRemoveMethodCommand >> name [
+	^'(R) Remove'
 ]
 
 { #category : 'execution' }

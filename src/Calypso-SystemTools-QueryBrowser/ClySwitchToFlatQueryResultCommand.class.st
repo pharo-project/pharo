@@ -11,11 +11,6 @@ Class {
 	#tag : 'Commands-Controlling'
 }
 
-{ #category : 'accessing' }
-ClySwitchToFlatQueryResultCommand >> defaultMenuItemName [
-	^'Flat'
-]
-
 { #category : 'execution' }
 ClySwitchToFlatQueryResultCommand >> execute [
 	browser switchToFlatResult
@@ -24,4 +19,9 @@ ClySwitchToFlatQueryResultCommand >> execute [
 { #category : 'testing' }
 ClySwitchToFlatQueryResultCommand >> isAppliedToBrowser [
 	^browser showsFlatResult
+]
+
+{ #category : 'accessing' }
+ClySwitchToFlatQueryResultCommand >> name [
+	^'Flat'
 ]

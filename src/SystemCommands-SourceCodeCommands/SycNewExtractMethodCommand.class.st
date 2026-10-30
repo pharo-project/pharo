@@ -26,17 +26,6 @@ SycNewExtractMethodCommand class >> methodEditorShortcutActivation [
 ]
 
 { #category : 'accessing' }
-SycNewExtractMethodCommand >> defaultMenuIconName [
-	^ #restart
-]
-
-{ #category : 'accessing' }
-SycNewExtractMethodCommand >> defaultMenuItemName [
-
-	^ '(R) Extract method (no occurrences)'
-]
-
-{ #category : 'accessing' }
 SycNewExtractMethodCommand >> description [
 
 	^ 'Extract selected ast node into separate method.'
@@ -58,6 +47,17 @@ SycNewExtractMethodCommand >> execute [
 		               in: method origin.
 	driver runRefactoring.
 	
+]
+
+{ #category : 'accessing' }
+SycNewExtractMethodCommand >> iconName [
+	^ #restart
+]
+
+{ #category : 'accessing' }
+SycNewExtractMethodCommand >> name [
+
+	^ '(R) Extract method (no occurrences)'
 ]
 
 { #category : 'execution' }

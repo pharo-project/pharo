@@ -9,7 +9,7 @@ Internal Representation and Key Implementation Points.
 "
 Class {
 	#name : 'SycRenamePackageCommand',
-	#superclass : 'CmdCommand',
+	#superclass : 'ClyCommand',
 	#instVars : [
 		'package',
 		'refactoringScopes'
@@ -24,16 +24,6 @@ SycRenamePackageCommand class >> canBeExecutedInContext: aToolContext [
 ]
 
 { #category : 'accessing' }
-SycRenamePackageCommand >> defaultMenuIconName [
-	^ #edit
-]
-
-{ #category : 'accessing' }
-SycRenamePackageCommand >> defaultMenuItemName [
-	^'Rename'
-]
-
-{ #category : 'accessing' }
 SycRenamePackageCommand >> description [
 
 	^ 'Rename package'
@@ -45,6 +35,16 @@ SycRenamePackageCommand >> execute [
 	^ ((ReRenamePackageDriver newApplication: self application)
 		scopes: refactoringScopes
 		packageName: package name) runRefactoring
+]
+
+{ #category : 'accessing' }
+SycRenamePackageCommand >> iconName [
+	^ #edit
+]
+
+{ #category : 'accessing' }
+SycRenamePackageCommand >> name [
+	^'Rename'
 ]
 
 { #category : 'execution' }

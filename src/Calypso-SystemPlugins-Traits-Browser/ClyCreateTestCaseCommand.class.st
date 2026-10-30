@@ -26,16 +26,6 @@ ClyCreateTestCaseCommand class >> fullBrowserMenuActivation [
 	^CmdContextMenuActivation byRootGroupItemOrder: 5 for: ClyFullBrowserClassContext
 ]
 
-{ #category : 'accessing' }
-ClyCreateTestCaseCommand >> defaultMenuIconName [
-	^#testGreen
-]
-
-{ #category : 'accessing' }
-ClyCreateTestCaseCommand >> defaultMenuItemName [
-	^'New test class'
-]
-
 { #category : 'command execution' }
 ClyCreateTestCaseCommand >> execute [
 
@@ -45,6 +35,16 @@ ClyCreateTestCaseCommand >> execute [
 	classDefinition isEmptyOrNil ifTrue: [ ^ self ].
 	resultClass := browser compileANewClassFrom: classDefinition notifying: nil startingFrom: nil.
 	resultClass ifNotNil: [ browser selectClass: resultClass ]
+]
+
+{ #category : 'accessing' }
+ClyCreateTestCaseCommand >> iconName [
+	^#testGreen
+]
+
+{ #category : 'accessing' }
+ClyCreateTestCaseCommand >> name [
+	^'New test class'
 ]
 
 { #category : 'execution' }

@@ -8,19 +8,19 @@ Class {
 	#package : 'SystemCommands-ClassCommands'
 }
 
+{ #category : 'execution' }
+SycBrowseClassCommand >> execute [
+	targetClass browse
+]
+
 { #category : 'accessing' }
-SycBrowseClassCommand >> defaultMenuIconName [
+SycBrowseClassCommand >> iconName [
 	^#browse
 ]
 
 { #category : 'accessing' }
-SycBrowseClassCommand >> defaultMenuItemName [
+SycBrowseClassCommand >> name [
 	^'Browse'
-]
-
-{ #category : 'execution' }
-SycBrowseClassCommand >> execute [
-	targetClass browse
 ]
 
 { #category : 'execution' }

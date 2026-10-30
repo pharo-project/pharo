@@ -14,18 +14,6 @@ Class {
 	#package : 'SystemCommands-MethodCommands'
 }
 
-{ #category : 'accessing' }
-SycProfileTestMethodCommand >> defaultMenuIconName [
-
-	^ #smallProfile
-]
-
-{ #category : 'accessing' }
-SycProfileTestMethodCommand >> defaultMenuItemName [
-
-	^ 'Profile method'
-]
-
 { #category : 'execution' }
 SycProfileTestMethodCommand >> execute [
 
@@ -33,6 +21,18 @@ SycProfileTestMethodCommand >> execute [
 		select: [ : cm | cm isTestMethod ]
 		thenDo: [ : cm | self profileMethod: cm ].
 
+]
+
+{ #category : 'accessing' }
+SycProfileTestMethodCommand >> iconName [
+
+	^ #smallProfile
+]
+
+{ #category : 'accessing' }
+SycProfileTestMethodCommand >> name [
+
+	^ 'Profile method'
 ]
 
 { #category : 'execution' }

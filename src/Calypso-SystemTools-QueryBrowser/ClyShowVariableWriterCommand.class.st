@@ -41,11 +41,6 @@ ClyShowVariableWriterCommand class >> sourceCodeMenuActivation [
 ]
 
 { #category : 'accessing' }
-ClyShowVariableWriterCommand >> defaultMenuItemName [
-	^'Writers'
-]
-
-{ #category : 'accessing' }
 ClyShowVariableWriterCommand >> description [
 
 	^ 'Show all variable writers.'
@@ -55,6 +50,11 @@ ClyShowVariableWriterCommand >> description [
 ClyShowVariableWriterCommand >> execute [
 
 	(Smalltalk tools toolNamed: #messageList) browseWritersOfVariables: variables 
+]
+
+{ #category : 'accessing' }
+ClyShowVariableWriterCommand >> name [
+	^'Writers'
 ]
 
 { #category : 'execution' }

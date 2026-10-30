@@ -22,25 +22,25 @@ SycGenerateAllInstVarAccessorsCommand >> asRefactorings [
 	^ refactorings
 ]
 
-{ #category : 'accessing' }
-SycGenerateAllInstVarAccessorsCommand >> defaultMenuIconName [
-	^ #smallAdd
-]
-
-{ #category : 'accessing' }
-SycGenerateAllInstVarAccessorsCommand >> defaultMenuItemName [
-	^'Generate accessors'
-]
-
 { #category : 'execution' }
 SycGenerateAllInstVarAccessorsCommand >> execute [
 
 	self executeRefactorings
 ]
 
+{ #category : 'accessing' }
+SycGenerateAllInstVarAccessorsCommand >> iconName [
+	^ #smallAdd
+]
+
 { #category : 'testing' }
 SycGenerateAllInstVarAccessorsCommand >> isComplexRefactoring [
 	^true
+]
+
+{ #category : 'accessing' }
+SycGenerateAllInstVarAccessorsCommand >> name [
+	^'Generate accessors'
 ]
 
 { #category : 'execution' }

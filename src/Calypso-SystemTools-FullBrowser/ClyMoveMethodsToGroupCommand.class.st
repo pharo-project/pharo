@@ -52,11 +52,6 @@ ClyMoveMethodsToGroupCommand class >> fullBrowserDragAndDropActivation3 [
 		toDropIn: ClyExternalPackageMethodGroup asCalypsoItemContext
 ]
 
-{ #category : 'accessing' }
-ClyMoveMethodsToGroupCommand >> defaultMenuItemName [
-	^'Move to method group'
-]
-
 { #category : 'execution' }
 ClyMoveMethodsToGroupCommand >> execute [
 
@@ -75,6 +70,11 @@ ClyMoveMethodsToGroupCommand >> methodGroup [
 { #category : 'accessing' }
 ClyMoveMethodsToGroupCommand >> methodGroup: anObject [
 	methodGroup := anObject
+]
+
+{ #category : 'accessing' }
+ClyMoveMethodsToGroupCommand >> name [
+	^'Move to method group'
 ]
 
 { #category : 'drag and drop support' }

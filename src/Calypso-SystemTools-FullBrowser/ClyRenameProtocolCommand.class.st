@@ -11,7 +11,7 @@ Internal Representation and Key Implementation Points.
 "
 Class {
 	#name : 'ClyRenameProtocolCommand',
-	#superclass : 'CmdCommand',
+	#superclass : 'ClyCommand',
 	#instVars : [
 		'methodGroup',
 		'newName',
@@ -48,11 +48,6 @@ ClyRenameProtocolCommand >> applyResultInContext: aToolContext [
 ]
 
 { #category : 'accessing' }
-ClyRenameProtocolCommand >> defaultMenuItemName [
-	^'Rename'
-]
-
-{ #category : 'accessing' }
 ClyRenameProtocolCommand >> description [ 
 
 ^'Renames method protocol.'
@@ -80,6 +75,11 @@ ClyRenameProtocolCommand >> methodGroup [
 { #category : 'accessing' }
 ClyRenameProtocolCommand >> methodGroup: anObject [
 	methodGroup := anObject
+]
+
+{ #category : 'accessing' }
+ClyRenameProtocolCommand >> name [
+	^'Rename'
 ]
 
 { #category : 'accessing' }

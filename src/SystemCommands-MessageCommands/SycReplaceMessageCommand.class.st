@@ -12,18 +12,6 @@ Class {
 	#package : 'SystemCommands-MessageCommands'
 }
 
-{ #category : 'accessing' }
-SycReplaceMessageCommand >> defaultMenuIconName [
-	^#edit
-]
-
-{ #category : 'accessing' }
-SycReplaceMessageCommand >> defaultMenuItemName [
-	"Make sure that the user knows that this is a transformation by adding (T) in front of the menu item name."
-
-	^ self refactoringClass menuItemString
-]
-
 { #category : 'execution' }
 SycReplaceMessageCommand >> execute [
 
@@ -32,6 +20,18 @@ SycReplaceMessageCommand >> execute [
 		   class: selectedClass
 		   selector: newSelector
 		   oldSelector: originalMessage) runRefactoring 
+]
+
+{ #category : 'accessing' }
+SycReplaceMessageCommand >> iconName [
+	^#edit
+]
+
+{ #category : 'accessing' }
+SycReplaceMessageCommand >> name [
+	"Make sure that the user knows that this is a transformation by adding (T) in front of the menu item name."
+
+	^ self refactoringClass menuItemString
 ]
 
 { #category : 'execution' }

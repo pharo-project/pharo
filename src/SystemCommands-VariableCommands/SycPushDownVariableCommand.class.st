@@ -15,22 +15,22 @@ SycPushDownVariableCommand class >> sourceCodeMenuActivation [
 	^SycSourceCodeMenuActivation byRootGroupItemOrder: 1.4 for: ClySourceCodeContext
 ]
 
-{ #category : 'accessing' }
-SycPushDownVariableCommand >> defaultMenuIconName [
-	^ #down
-]
-
-{ #category : 'accessing' }
-SycPushDownVariableCommand >> defaultMenuItemName [
-	^'Push down'
-]
-
 { #category : 'execution' }
 SycPushDownVariableCommand >> execute [
 
 	^ ((RePushDownInstanceVariableDriver newApplication: self application)
 		   scopes: toolContext refactoringScopes;
 		   variables: variables) runRefactoring
+]
+
+{ #category : 'accessing' }
+SycPushDownVariableCommand >> iconName [
+	^ #down
+]
+
+{ #category : 'accessing' }
+SycPushDownVariableCommand >> name [
+	^'Push down'
 ]
 
 { #category : 'execution' }

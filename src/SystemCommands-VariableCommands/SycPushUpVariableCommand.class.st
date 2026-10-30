@@ -15,16 +15,6 @@ SycPushUpVariableCommand class >> sourceCodeMenuActivation [
 	^SycSourceCodeMenuActivation byRootGroupItemOrder: 1.3 for: ClySourceCodeContext
 ]
 
-{ #category : 'execution' }
-SycPushUpVariableCommand >> defaultMenuIconName [
-	^ #up
-]
-
-{ #category : 'accessing' }
-SycPushUpVariableCommand >> defaultMenuItemName [
-	^'(R) Push up'
-]
-
 { #category : 'accessing' }
 SycPushUpVariableCommand >> executeRefactorings [
 
@@ -32,4 +22,14 @@ SycPushUpVariableCommand >> executeRefactorings [
 		   scopes: refactoringScopes
 		   variables: (variables collect: [ :v | v actualVariable ])
 		   to: variables first definingClass superclass) runRefactoring
+]
+
+{ #category : 'execution' }
+SycPushUpVariableCommand >> iconName [
+	^ #up
+]
+
+{ #category : 'accessing' }
+SycPushUpVariableCommand >> name [
+	^'(R) Push up'
 ]

@@ -40,19 +40,19 @@ SycExtractMethodAndOccurrencesCommand >> asRefactorings [
 ]
 
 { #category : 'accessing' }
-SycExtractMethodAndOccurrencesCommand >> defaultMenuIconName [
+SycExtractMethodAndOccurrencesCommand >> description [
+
+	^ 'Extracts selected ast node into separate method.'
+]
+
+{ #category : 'accessing' }
+SycExtractMethodAndOccurrencesCommand >> iconName [
 	^ #restart
 ]
 
 { #category : 'accessing' }
-SycExtractMethodAndOccurrencesCommand >> defaultMenuItemName [
+SycExtractMethodAndOccurrencesCommand >> name [
 	^ '(Old refactor) Extract method with occurrences'
-]
-
-{ #category : 'accessing' }
-SycExtractMethodAndOccurrencesCommand >> description [
-
-	^ 'Extracts selected ast node into separate method.'
 ]
 
 { #category : 'execution' }

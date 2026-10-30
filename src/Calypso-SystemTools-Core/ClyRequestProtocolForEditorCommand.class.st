@@ -20,12 +20,6 @@ ClyRequestProtocolForEditorCommand class >> methodEditorShorcutActivation [
 ]
 
 { #category : 'accessing' }
-ClyRequestProtocolForEditorCommand >> defaultMenuItemName [
-
-	^ menuItemName
-]
-
-{ #category : 'accessing' }
 ClyRequestProtocolForEditorCommand >> description [
 
 	^ 'Requests a protocol to reclassify a method.'
@@ -36,6 +30,12 @@ ClyRequestProtocolForEditorCommand >> execute [
 	| protocolEditor |
 	protocolEditor := methodEditor protocolAndPackageEditor.
 	protocolEditor requestChangeBy: [ protocolEditor requestProtocol]
+]
+
+{ #category : 'accessing' }
+ClyRequestProtocolForEditorCommand >> name [
+
+	^ menuItemName
 ]
 
 { #category : 'execution' }

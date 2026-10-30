@@ -10,7 +10,7 @@ Internal Representation and Key Implementation Points.
 "
 Class {
 	#name : 'SycAddNewClassTagCommand',
-	#superclass : 'CmdCommand',
+	#superclass : 'ClyCommand',
 	#instVars : [
 		'package',
 		'tagName'
@@ -30,20 +30,20 @@ SycAddNewClassTagCommand >> applyResultInContext: aToolContext [
 	aToolContext showPackage: package tag: tagName
 ]
 
-{ #category : 'accessing' }
-SycAddNewClassTagCommand >> defaultMenuIconName [
-	^#add
-]
-
-{ #category : 'accessing' }
-SycAddNewClassTagCommand >> defaultMenuItemName [
-	^'New tag'
-]
-
 { #category : 'execution' }
 SycAddNewClassTagCommand >> execute [
 
 	package ensureTag: tagName
+]
+
+{ #category : 'accessing' }
+SycAddNewClassTagCommand >> iconName [
+	^#add
+]
+
+{ #category : 'accessing' }
+SycAddNewClassTagCommand >> name [
+	^'New tag'
 ]
 
 { #category : 'accessing' }
