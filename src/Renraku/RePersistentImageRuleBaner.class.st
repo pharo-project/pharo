@@ -14,14 +14,20 @@ RePersistentImageRuleBaner class >> ban: aCritique [
 
 	super ban: aCritique.
 
-	SystemSettingsPersistence storeIdentifier:
-		ReRuleManager ruleToggleGroupID printString,
-		aCritique rule class enabledSettingID printString
-		"printString to ensure symbol hash"
+	self storeEnabledSettingOf: aCritique rule class in: SettingsManager forSystemSettings
 ]
 
 { #category : 'properties' }
 RePersistentImageRuleBaner class >> reBanName [
 
 	^ super reBanName, ' and future images'
+]
+
+{ #category : 'private' }
+RePersistentImageRuleBaner class >> storeEnabledSettingOf: aRuleClass in: aSettingsManager [
+	"Store the setting enabling aRuleClass, so that its current state is restored in future images"
+
+	aSettingsManager settings
+		detect: [ :each | each name = aRuleClass enabledSettingID ]
+		ifFound: [ :setting | aSettingsManager storeSetting: setting ]
 ]

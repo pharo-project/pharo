@@ -145,10 +145,11 @@ ClyQueryViewMorph class >> for: aBrowser [
 
 { #category : 'settings' }
 ClyQueryViewMorph class >> settingsDragAndDropDelayOn: aBuilder [
+
 	<systemsettings>
 	(aBuilder setting: #dragAndDropDelay)
-		parent: #Calypso;
-		default: 1500;
+		parentName: #Calypso;
+		defaultValue: 1500;
 		label: 'DragAndDrop delay (ms)';
 		description: 'Delay to extend the list of item in the target of a drag and drop.
 For example drag and drop on a package which contains tag will be extended after dragAndDropDelay miliseconds.
