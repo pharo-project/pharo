@@ -29,6 +29,14 @@ GZipReadStreamTest >> setUp [
 ]
 
 { #category : 'tests' }
+GZipReadStreamTest >> testGzipDataStartsWithGzipMagic [
+	"GZipConstants gzipMagic is 16r8B1F: the bytes 16r1F 16r8B read as a little-endian number (RFC 1952)"
+
+	self assert: GZipConstants gzipMagic equals: 16r8B1F.
+	self assert: (self class gzFileBytes first: 2) asByteArray equals: #[ 16r1F 16r8B ]
+]
+
+{ #category : 'tests' }
 GZipReadStreamTest >> testUnzipTo [
 	| gzFile txtFile return |
 	[ (gzFile := filesystem workingDirectory / self class gzFileName)

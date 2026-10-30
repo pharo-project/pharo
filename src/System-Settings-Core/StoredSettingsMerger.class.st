@@ -1,7 +1,7 @@
 "
 I merge several stored settings together. If you ask me twice to store same stored settings, the last one wins. 
 
-Collaborators: SystemSettingsPersistence
+Collaborators: SettingsManager
 
 Public API and Key Messages
 

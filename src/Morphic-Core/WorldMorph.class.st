@@ -84,15 +84,16 @@ WorldMorph class >> displayScaleFactor: aNumber [
 
 { #category : 'settings' }
 WorldMorph class >> displaySettingsOn: aBuilder [
+
 	<systemsettings>
 	(aBuilder setting: #displayFullscreen)
 		label: 'Fullscreen mode';
-		parent: #desktopSettings;
+		parentName: #desktopSettings;
 		target: #WorldMorph;
 		getSelector: #isFullscreen;
 		setSelector: #fullscreen:;
 		description: 'On platforms that support it, set fullscreen mode';
-		default: false
+		defaultValue: false
 ]
 
 { #category : 'updating' }
@@ -253,17 +254,16 @@ WorldMorph class >> zoomFactor: aValue [
 
 { #category : 'setting' }
 WorldMorph class >> zoomFactorSettingsOn: aBuilder [
-	<systemsettings>
 
+	<systemsettings>
 	(aBuilder pickOne: #zoomFactor)
-		parent: #appearance;
+		parentName: #appearance;
 		order: 3;
-		default: 1;
+		defaultValue: 1;
 		label: 'Zoom factor';
 		description: 'Specify zoom factor for UI elements. Bigger zooms in. Smaller zooms out.';
 		target: self;
-		domainValues: (#( 1 1.5 2 2.5 3 3.5 4 4.5 5 ) collect: [ :e | 
-			(e * 100) asInteger asString, '%' -> e ])
+		domainValues: (#( 1 1.5 2 2.5 3 3.5 4 4.5 5 ) collect: [ :e | (e * 100) asInteger asString , '%' -> e ])
 ]
 
 { #category : 'operations' }

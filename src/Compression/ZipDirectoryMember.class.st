@@ -44,7 +44,11 @@ ZipDirectoryMember >> isDirectory [
 
 { #category : 'accessing' }
 ZipDirectoryMember >> localFileName: aString [
-	super localFileName: (aString copyWith: $/).
+	"Directory names end with a slash; add it unless aString already has it"
+
+	super localFileName: ((aString endsWith: '/')
+			 ifTrue: [ aString ]
+			 ifFalse: [ aString copyWith: $/ ]).
 	externalFileName ifAbsent: [ ^ self ].
 	self modifiedAt: externalFileName entry modificationTime
 ]

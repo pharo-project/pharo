@@ -7,8 +7,8 @@ DebugSession class >> fastStepThroughModeSettingOn: aBuilder [
 	(aBuilder setting: #fastStepThroughMode)
 		label: 'Enable the fast step through mode';
 		target: self;
-		parent: #debugging;
-		default: false;
+		parentName: #debugging;
+		defaultValue: false;
 		description:
 			'If enabled, the debugger will perform step through operations using halting blocks. This implementation is more efficient than the original one based on interpreter steps'
 ]
