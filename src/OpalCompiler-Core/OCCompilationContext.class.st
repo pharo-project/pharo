@@ -31,7 +31,8 @@ Class {
 		'semanticScope',
 		'compiledBlockClass',
 		'semanticAnalysisNeeded',
-		'storeSourcesAsProperty'
+		'storeSourcesAsProperty',
+		'maxFrameSize'
 	],
 	#classVars : [
 		'DefaultOptions',
@@ -510,6 +511,20 @@ OCCompilationContext >> isScripting: aBoolean [
 OCCompilationContext >> isSemanticAnalysisNeeded [
 
 	^ semanticAnalysisNeeded == true
+]
+
+{ #category : 'options' }
+OCCompilationContext >> maxFrameSize [
+	"The frame size allowed for temps and stack when deciding how to compile dynamic arrays.
+	It can never exceed the hard limit of the VM, CompiledCode fullFrameSize"
+
+	^ (maxFrameSize ifNil: [ CompiledCode fullFrameSize ]) min: CompiledCode fullFrameSize
+]
+
+{ #category : 'options' }
+OCCompilationContext >> maxFrameSize: anInteger [
+
+	maxFrameSize := anInteger
 ]
 
 { #category : 'options' }
