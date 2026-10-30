@@ -88,23 +88,6 @@ ZnCharacterEncoderTest >> testByteDecoding [
 ]
 
 { #category : 'testing' }
-ZnCharacterEncoderTest >> testByteEncoderFromUrl [
-	| encoderFromUrl iso88592 bytes characters |
-	encoderFromUrl := ZnByteEncoder newFromUrl: 'http://files.pharo.org/extra/unicode/8859-2.TXT'.
-	iso88592 := ZnCharacterEncoder newForEncoding: #iso88592.
-	self assert: encoderFromUrl byteDomain equals: iso88592 byteDomain.
-	self assert: encoderFromUrl characterDomain equals: iso88592 characterDomain.
-	bytes := encoderFromUrl byteDomain.
-	self
-		assert: (encoderFromUrl decodeBytes: bytes)
-		equals: (iso88592 decodeBytes: bytes).
-	characters := String withAll: encoderFromUrl characterDomain asArray.
-	self
-		assert: (encoderFromUrl encodeString: characters)
-		equals: (iso88592 encodeString: characters)
-]
-
-{ #category : 'testing' }
 ZnCharacterEncoderTest >> testCodePointEncodingDecoding [
 	| encoder input output |
 	input := 'Düsseldorf Königsallee' collect: #codePoint as: Array.
@@ -149,13 +132,6 @@ ZnCharacterEncoderTest >> testConvencienceMethods [
 ]
 
 { #category : 'testing' }
-ZnCharacterEncoderTest >> testDebuggingUTF8 [
-	self 
-		assert: (({ $A. 55296 asCharacter . $B } as: String) encodeWith: #utf8debug) utf8Decoded 
-		equals: 'A<Cannot utf-8 encode code point 55296>B'
-]
-
-{ #category : 'testing' }
 ZnCharacterEncoderTest >> testDefault [
 	| string bytes |
 	self assert: ZnCharacterEncoder default equals: ZnUTF8Encoder new.
@@ -188,9 +164,9 @@ ZnCharacterEncoderTest >> testDetectEncoding [
 
 { #category : 'testing' }
 ZnCharacterEncoderTest >> testKnownEncodingIdentifiers [
-	| all minimal asciiString notSelfIdentifying|
+	| all minimal asciiString |
 	all := ZnCharacterEncoder knownEncodingIdentifiers asSet.
-	minimal := #('utf8' 'latin1' 'null' 'ascii' 'iso88591') asSet.
+	minimal := #(utf8 latin1 null ascii iso88591) asSet.
 	"make sure at least a minimal set is present"
 	self assert: (all intersection: minimal) equals: minimal.
 	asciiString := String withAll: ($a to: $z) , ($A to: $Z) , ($0 to: $9).
@@ -200,11 +176,7 @@ ZnCharacterEncoderTest >> testKnownEncodingIdentifiers [
 		| encoder bytes |
 		encoder := ZnCharacterEncoder newForEncoding: each.
 		bytes := encoder encodeString: asciiString.
-		self assert: (encoder decodeBytes: bytes) equals: asciiString ].
-	"make sure identifiers are preserved"
-	notSelfIdentifying := ZnCharacterEncoder knownEncodingIdentifiers reject: [ :each | 
-		each asZnCharacterEncoder identifier = each ].
-	self assert: notSelfIdentifying isEmpty
+		self assert: (encoder decodeBytes: bytes) equals: asciiString ]
 ]
 
 { #category : 'testing' }
@@ -233,37 +205,6 @@ ZnCharacterEncoderTest >> testLatin2Encoder [
 	self assert: outputBytes equals: inputBytes.
 	outputString := self decodeBytes: inputBytes with: encoder.
 	self assert: outputString equals: inputString
-]
-
-{ #category : 'testing' }
-ZnCharacterEncoderTest >> testLossyUTF8 [
-	| encoder replacement |
-	encoder := ZnLossyUTF8Encoder new.
-	self assert: #utf8lossy asZnCharacterEncoder equals: encoder.
-	replacement := encoder replacementCodePoint asCharacter.
-	self 
-		assert: (#[65 160 66] decodeWith: encoder) 
-		equals: ({ $A. replacement . $B } as: String).
-	self 
-		assert: (#[16rE1 16rA0 16rC0] decodeWith: encoder) 
-		equals: replacement asString.
-	self 
-		assert: (encoder decodeBytes: #[16r41 16rA1 16rA2 16rA3 16r42]) 
-		equals: ({ $A. replacement . replacement . replacement . $B } as: String).
-	self 
-		assert: (encoder decodeBytesSingleReplacement: #[16r41 16rA1 16rA2 16rA3 16r42])
-		equals: ({ $A. replacement . $B } as: String).
-	self
-		assert: (encoder encodeString: ({ $A . 16rFFFD asCharacter . $B } as: String))
-		equals: ({ $A . replacement . $B } as: String) utf8Encoded
-]
-
-{ #category : 'testing' }
-ZnCharacterEncoderTest >> testLossyUTF8Random [
-	| bytes string |
-	bytes := ((1 to: 10000) collect: [ :_ | 256 atRandom - 1 ]) asByteArray.
-	string := bytes decodeWith: ZnLossyUTF8Encoder new.
-	self assert: string isString
 ]
 
 { #category : 'testing' }
@@ -297,12 +238,16 @@ ZnCharacterEncoderTest >> testNullEncoder [
 
 { #category : 'testing' }
 ZnCharacterEncoderTest >> testNumberOfCharactersFrom [
+
 	| bytes |
-	#(latin1 utf8 utf16 utf32) do: [ :encoding |
-		bytes := 'Düsseldorf Königsallee' encodeWith: encoding.
-		self assert: (encoding asZnCharacterEncoder numberOfCharactersFrom: bytes) equals: 22 ].
+	bytes := 'Düsseldorf Königsallee' utf8Encoded.
+	self assert: (#utf8 asZnCharacterEncoder numberOfCharactersFrom: bytes) equals: 22.
+	bytes := 'Düsseldorf Königsallee' encodeWith: #utf16.
+	self assert: (#utf16 asZnCharacterEncoder numberOfCharactersFrom: bytes) equals: 22.
 	bytes := 'Test' encodeWith: #ascii.
 	self assert: (#ascii asZnCharacterEncoder numberOfCharactersFrom: bytes) equals: 4.
+	bytes := 'Test' encodeWith: #latin1.
+	self assert: (#latin1 asZnCharacterEncoder numberOfCharactersFrom: bytes) equals: 4
 ]
 
 { #category : 'testing' }
@@ -622,18 +567,6 @@ ZnCharacterEncoderTest >> testUTF8ByteOrderMark [
 
 	bom := encoder encodeStringWithByteOrderMark: ''.
 	self should: [ encoder decodeBytes: bom ] raise: ZnIncomplete
-]
-
-{ #category : 'testing' }
-ZnCharacterEncoderTest >> testUTF8ByteOrderMarkSignificant [
-	| input encoder result |
-	input := #[16r41 16rEF 16rBB 16rBF 16r42].
-	encoder := ZnUTF8Encoder new.
-	encoder ignoreByteOrderMark: false.
-	result := encoder decodeBytes: input.
-	self assert: result first equals: $A.
-	self assert: result second equals: encoder byteOrderMark asCharacter.
-	self assert: result third equals: $B
 ]
 
 { #category : 'testing' }

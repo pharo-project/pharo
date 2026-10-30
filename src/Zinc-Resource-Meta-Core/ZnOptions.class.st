@@ -39,16 +39,6 @@ Class {
 	#package : 'Zinc-Resource-Meta-Core'
 }
 
-{ #category : 'options' }
-ZnOptions class >> allowedMethods [
-	"The list of HTTP methods or verbs that a client or server accepts.
-	Defaults to the required standard set."
-
-	<znOption>
-
-	^ #(GET PUT POST DELETE HEAD TRACE OPTIONS CONNECT PATCH)
-]
-
 { #category : 'utilities' }
 ZnOptions class >> definitionOf: key [
 	| implementors options |
@@ -71,16 +61,6 @@ ZnOptions class >> initialize [
 	"Changed at 2021-12-13"
 
 	self resetGlobalDefault
-]
-
-{ #category : 'options' }
-ZnOptions class >> listenBacklogSize [
-	"Server socket listen backlog size.
-	The number of pending connections queued up, waiting to be accepted, at any one time."
-	
-	<znOption>
-
-	^ 32
 ]
 
 { #category : 'options' }
@@ -115,19 +95,6 @@ ZnOptions class >> maximumNumberOfConcurrentConnections [
 	<znOption>
 
 	^ 32
-]
-
-{ #category : 'options' }
-ZnOptions class >> maximumNumberOfDictionaryEntries [
-	"The maximum number dictionary entries to accept,
-	before ZnTooManyDictionaryEntries is signalled.
-	Used by ZnMultiValueDictionary and thus for reading headers,
-	url query and application form url encoded entity fields.
-	This helps to protect us from malicious content."
-
-	<znOption>
-
-	^ 256
 ]
 
 { #category : 'options' }
@@ -204,25 +171,6 @@ ZnOptions class >> signalProgress [
 ]
 
 { #category : 'options' }
-ZnOptions class >> socketStreamTimeout [
-	"The timeout in seconds for network socket stream operations like connecting, reading and writing."
-
-	<znOption>
-
-	^ 30
-]
-
-{ #category : 'options' }
-ZnOptions class >> urlAsIri [
-	"Boolean indicating if we parse and render URLs as IRIs.
-	An Internationalized Resource Identifier allows non-ASCII characters without percent encoding them"
-	
-	<znOption>
-
-	^ false
-]
-
-{ #category : 'options' }
 ZnOptions class >> userAgentString [
 	"The value a client uses in the User-Agent header of requests to identify itself.
 	To provide as little information to a server it could make sense to overwrite this.
@@ -231,16 +179,6 @@ ZnOptions class >> userAgentString [
 	<znOption>
 
 	^ ZnConstants defaultUserAgent
-]
-
-{ #category : 'options' }
-ZnOptions class >> verifyCertificates [
-	"Boolean indicating if TLS/SSL certificates should be verified.
-	When true, ZnCertificateVerificationFailed could be signalled."
-
-	<znOption>
-
-	^ false
 ]
 
 { #category : 'accessing' }
@@ -276,22 +214,6 @@ ZnOptions >> at: key put: value [
 		ifFalse: [ KeyNotFound signalFor: key in: self ].
 	options ifNil: [ options := Dictionary new ].
 	^ options at: key put: value
-]
-
-{ #category : 'accessing' }
-ZnOptions >> at: key update: block [
-	| newValue |
-	writable
-		ifFalse: [ (ModificationForbidden
-				for: self
-				at: key
-				with: block
-				retrySelector: #at:put:) signal ].
-	(parent isNotNil and: [ parent includesKey: key ])
-		ifFalse: [ KeyNotFound signalFor: key in: self ].
-	options ifNil: [ options := Dictionary new ].
-	newValue := block value: (self at: key).
-	^ options at: key put: newValue
 ]
 
 { #category : 'copying' }

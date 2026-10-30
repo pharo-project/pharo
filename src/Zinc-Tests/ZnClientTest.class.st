@@ -729,7 +729,7 @@ ZnClientTest >> testRedirect [
 			beOneShot;
 			maxNumberOfRedirects: 0;
 			get: target;
-			response ] on: ZnTooManyRedirects do: [ :exception | exception resume: #doNotRetry ].
+			response ] on: ZnTooManyRedirects do: [ :exception | exception resume ].
 	self assert: response isRedirect
 ]
 

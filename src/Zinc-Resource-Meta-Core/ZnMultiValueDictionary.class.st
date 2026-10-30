@@ -28,7 +28,7 @@ ZnMultiValueDictionary class >> defaultLimit [
 	url query and application form url encoded entity fields.
 	This helps to protect us from malicious content."
 
-	^ ZnCurrentOptions at: #maximumNumberOfDictionaryEntries
+	^ ZnMaximumNumberOfDictionaryEntries value
 ]
 
 { #category : 'adding' }

@@ -19,7 +19,8 @@ Class {
 		'sslSessionClass'
 	],
 	#classVars : [
-		'Default'
+		'Default',
+		'DefaultSocketStreamTimeout'
 	],
 	#category : 'Zinc-HTTP-Support',
 	#package : 'Zinc-HTTP',
@@ -36,11 +37,26 @@ ZnNetworkingUtils class >> default: instance [
 	Default := instance
 ]
 
+{ #category : 'constants' }
+ZnNetworkingUtils class >> defaultSocketStreamTimeout [
+	"Global default timeout in seconds for SocketStream IO"
+
+	^ DefaultSocketStreamTimeout
+]
+
+{ #category : 'constants' }
+ZnNetworkingUtils class >> defaultSocketStreamTimeout: seconds [
+	"Global default timeout in seconds for SocketStream IO"
+
+	^ DefaultSocketStreamTimeout := seconds
+]
+
 { #category : 'class initialization' }
 ZnNetworkingUtils class >> initialize [
 	"The default will try to use ZdcSocketStream and ZdcSecureSocketStream"
 
-	Default := self new
+	Default := self new.
+	DefaultSocketStreamTimeout := 30
 ]
 
 { #category : 'converting' }
@@ -53,10 +69,9 @@ ZnNetworkingUtils class >> ipAddressToString: byteArray [
 
 { #category : 'constants' }
 ZnNetworkingUtils class >> listenBacklogSize [
-	"Server socket listen backlog size.
-	The number of pending connections queued up, waiting to be accepted, at any one time."
+	"Server socket backlog size (number of pending connection waiting to be accepted)"
 
-	^ ZnCurrentOptions at: #listenBacklogSize
+	^ 32
 ]
 
 { #category : 'proxy' }
@@ -113,9 +128,10 @@ ZnNetworkingUtils class >> socketStreamOn: socket [
 
 { #category : 'constants' }
 ZnNetworkingUtils class >> socketStreamTimeout [
-	"Return the timeout in seconds for network socket stream operations like connecting, reading and writing."
+	"Access the current timeout in seconds for SocketStream IO"
 
-	^ ZnCurrentOptions at: #socketStreamTimeout
+	^ ZnConnectionTimeout value
+		ifNil: [ self defaultSocketStreamTimeout ]
 ]
 
 { #category : 'networking' }
