@@ -15,8 +15,7 @@ Class {
 	#superclass : 'RBClassRefactoring',
 	#instVars : [
 		'newName',
-		'class',
-		'notCheckVarName'
+		'class'
 	],
 	#category : 'Refactoring-Transformations',
 	#package : 'Refactoring-Transformations'
