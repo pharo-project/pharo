@@ -566,7 +566,9 @@ OCASTTranslator >> visitAnnotationMarkNode: aAnnotationValueNode [
 
 { #category : 'visitor - double dispatching' }
 OCASTTranslator >> visitArrayNode: anArrayNode [
+
 	| elementNodes |
+	self compilationContext optionPushConsArray ifFalse: [ ^ self visitLargeArrayNode: anArrayNode ].
 
 	self flag: #WORKAROUND. "This is reverted to the old magic number because 
 	this is failing (see https://github.com/pharo-project/pharo/issues/19058). 
@@ -574,7 +576,7 @@ OCASTTranslator >> visitArrayNode: anArrayNode [
 
 	"stackLimit := CompiledCode fullFrameSize min: self compilationContext encoderClass arraySizeLimitForPushArrayInstruction.
 	methodBuilder stackSize + anArrayNode statements size > stackLimit ifTrue: [ ^ self visitLargeArrayNode: anArrayNode ]."
-	anArrayNode statements size > 32 ifTrue: [^ self visitLargeArrayNode: anArrayNode ].
+	anArrayNode statements size > 32 ifTrue: [ ^ self visitLargeArrayNode: anArrayNode ].
 
 	elementNodes := anArrayNode children.
 	elementNodes do: [ :node | self visitNode: node ].

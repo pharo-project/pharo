@@ -6,6 +6,38 @@ Class {
 	#tag : 'Misc'
 }
 
+{ #category : 'tests - array' }
+OpalCompilerTest >> assertConsArrayCompilationOf: aString equals: anArray translator: aTranslatorClass [
+
+	| method |
+	method := self compileArraySource: aString options: #( #+ optionPushConsArray ) translator: aTranslatorClass.
+	self deny: (method sendsSelector: #new:).
+	self deny: (method sendsSelector: #at:put:).
+	self assert: (nil executeMethod: method) equals: anArray
+]
+
+{ #category : 'tests - array' }
+OpalCompilerTest >> assertLargeArrayCompilationOf: aString equals: anArray translator: aTranslatorClass [
+
+	| method |
+	method := self compileArraySource: aString options: #( #- optionPushConsArray ) translator: aTranslatorClass.
+	self assert: (method sendsSelector: #new:).
+	self assert: (nil executeMethod: method) equals: anArray
+]
+
+{ #category : 'tests - array' }
+OpalCompilerTest >> compileArraySource: aString options: anArray translator: aTranslatorClass [
+
+	| compiler |
+	compiler := OpalCompiler new.
+	compiler compilationContext
+		compilerOptions: anArray;
+		astTranslatorClass: aTranslatorClass.
+	^ compiler
+		  source: aString;
+		  compileOrFail
+]
+
 { #category : 'tests - bindings' }
 OpalCompilerTest >> testArrayBindingsWithUppercaseNameDoOverwriteGlobals [
 	| result |
@@ -188,6 +220,35 @@ OpalCompilerTest >> testInstall [
 	"Cleanup"
 	method removeFromSystem.
 	self deny: (MockForCompilation includesSelector: #foo)
+]
+
+{ #category : 'tests - array' }
+OpalCompilerTest >> testOptionPushConsArrayDisabledUsesLargeArray [
+
+	self assertLargeArrayCompilationOf: 'test ^ { }' equals: #(  ) translator: OCASTTranslator.
+	self assertLargeArrayCompilationOf: 'test ^ { 1 }' equals: #( 1 ) translator: OCASTTranslator.
+	self assertLargeArrayCompilationOf: 'test ^ { 1 . 2 + 1 }' equals: #( 1 3 ) translator: OCASTTranslator
+]
+
+{ #category : 'tests - array' }
+OpalCompilerTest >> testOptionPushConsArrayDisabledUsesLargeArrayInReflectivity [
+
+	self assertLargeArrayCompilationOf: 'test ^ { }' equals: #(  ) translator: RFASTTranslator.
+	self assertLargeArrayCompilationOf: 'test ^ { 1 . 2 + 1 }' equals: #( 1 3 ) translator: RFASTTranslator
+]
+
+{ #category : 'tests - array' }
+OpalCompilerTest >> testOptionPushConsArrayEnabledUsesConsArray [
+
+	self assertConsArrayCompilationOf: 'test ^ { }' equals: #(  ) translator: OCASTTranslator.
+	self assertConsArrayCompilationOf: 'test ^ { 1 }' equals: #( 1 ) translator: OCASTTranslator.
+	self assertConsArrayCompilationOf: 'test ^ { 1 . 2 + 1 }' equals: #( 1 3 ) translator: OCASTTranslator
+]
+
+{ #category : 'tests - array' }
+OpalCompilerTest >> testOptionPushConsArrayEnabledUsesConsArrayInReflectivity [
+
+	self assertConsArrayCompilationOf: 'test ^ { 1 . 2 + 1 }' equals: #( 1 3 ) translator: RFASTTranslator
 ]
 
 { #category : 'tests' }

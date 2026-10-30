@@ -72,11 +72,11 @@ RFASTTranslator >> emitPreamble: aNode [
 RFASTTranslator >> visitArrayNode: anArrayNode [
 
 	| elementNodes |
-
-	anArrayNode statements size > 32 ifTrue: [^ self visitLargeArrayNode: anArrayNode ].
+	self compilationContext optionPushConsArray ifFalse: [ ^ self visitLargeArrayNode: anArrayNode ].
+	anArrayNode statements size > 32 ifTrue: [ ^ self visitLargeArrayNode: anArrayNode ].
 
 	elementNodes := anArrayNode children.
-	elementNodes do: [:node | self visitNode: node].
+	elementNodes do: [ :node | self visitNode: node ].
 	self emitPreamble: anArrayNode.
 	self emitMetaLinkBefore: anArrayNode.
 	anArrayNode hasMetalinkInstead
