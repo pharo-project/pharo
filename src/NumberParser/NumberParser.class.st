@@ -83,10 +83,9 @@ NumberParser class >> parse: aStringOrStream onError: failBlock [
 NumberParser class >> settingsOn: aBuilder [
 
 	<systemsettings>
-
 	(aBuilder setting: #maxExponent)
-		parent: #compiler;
-		default: 10000;
+		parentName: #compiler;
+		defaultValue: 10000;
 		label: 'Max Exponent when parsing numbers';
 		description: 'This is the max exponent to parse when parsing numbers in the shape of 1e22. It is the absolute value';
 		target: self

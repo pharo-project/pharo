@@ -25,11 +25,22 @@ ZipStringMember >> contents [
 ]
 
 { #category : 'initialization' }
-ZipStringMember >> contents: aString [
-	contents := aString.
-	compressedSize := uncompressedSize := aString size.
+ZipStringMember >> contents: aStringOrByteArray [
+	"Set my contents: a String is text, written in UTF-8; a ByteArray is written as is"
+
+	contents := aStringOrByteArray.
+	compressedSize := uncompressedSize := self data size.
 	"set the file date to now"
 	self modifiedAt: DateAndTime now
+]
+
+{ #category : 'private - writing' }
+ZipStringMember >> data [
+	"Answer my contents as they are written"
+
+	^ contents isString
+		  ifTrue: [ contents utf8Encoded ]
+		  ifFalse: [ contents asByteArray ]
 ]
 
 { #category : 'initialization' }
@@ -46,7 +57,10 @@ ZipStringMember >> readRawChunk: n [
 
 { #category : 'private - writing' }
 ZipStringMember >> rewindData [
+
+	| data |
 	super rewindData.
-	stream := contents readStream.
-	readDataRemaining := contents size
+	data := self data.
+	stream := data readStream.
+	readDataRemaining := data size
 ]

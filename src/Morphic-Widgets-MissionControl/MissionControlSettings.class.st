@@ -28,29 +28,29 @@ MissionControlSettings class >> missionControlSettingsOn: aBuilder [
 
 	<systemsettings>
 	(aBuilder group: #missionControl)
-		parent: #morphic;
+		parentName: #morphic;
 		label: 'Mission Control';
 		description: 'Settings for the Mission Control window overview feature.';
 		with: [
 				(aBuilder setting: #overlayOpacity)
 					target: self;
 					label: 'Overlay opacity';
-					default: 0.5;
+					defaultValue: 0.5;
 					description: 'Opacity of the dark overlay shown behind window thumbnails (0.0 to 1.0).'.
 				(aBuilder setting: #thumbnailPadding)
 					target: self;
 					label: 'Thumbnail padding';
-					default: 20;
+					defaultValue: 20;
 					description: 'Padding in pixels between window thumbnails.'.
 				(aBuilder setting: #showWindowLabels)
 					target: self;
 					label: 'Show window labels';
-					default: true;
+					defaultValue: true;
 					description: 'Whether to show window titles below thumbnails.'.
 				(aBuilder setting: #animateTransitions)
 					target: self;
 					label: 'Animate transitions';
-					default: false;
+					defaultValue: false;
 					description: 'Whether to animate entering and exiting Mission Control.'
 		]
 ]

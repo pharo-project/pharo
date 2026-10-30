@@ -122,18 +122,20 @@ ZipCrcTest >> testMissingZLibCrc [
 ZipCrcTest >> testMissingZipCrc [
 	"See that the lack of a CRC does not raise an error"
 
-	| reader writer bytes readBytes |
+	| reader writer bytes |
 	writer := ZipWriteStream on: String new.
 	writer nextPutAll: 'Hello World'.
 	writer close.
 	bytes := writer encodedStream contents.
+
 	reader := ZipReadStream on: bytes.
-	readBytes := reader upToEnd.
-	self assert: readBytes equals: 'Hello World'.
+	self assert: reader upToEnd equals: 'Hello World'.
+
 	reader := ZipReadStream on: bytes.
-	reader contents.
+	self assert: reader contents equals: 'Hello World'.
+
 	reader := ZipReadStream on: bytes.
-	reader next: 100
+	self assert: (reader next: 100) equals: 'Hello World'
 ]
 
 { #category : 'tests' }
@@ -189,4 +191,15 @@ ZipCrcTest >> testValidZipCrc [
 	reader expectedCrc: writer crc.
 	readBytes := reader next: 100.
 	self assert: readBytes equals: 'Hello World'
+]
+
+{ #category : 'tests' }
+ZipCrcTest >> testZipWriteStreamComputesCrc32 [
+
+	| writer |
+	writer := ZipWriteStream on: String new.
+	writer nextPutAll: 'Hello World'.
+	writer close.
+	"Standard CRC-32 of 'Hello World', as given by zlib's crc32 or Python's zlib.crc32"
+	self assert: writer crc equals: 16r4A17B156
 ]

@@ -161,18 +161,18 @@ TKTConfiguration class >> serviceManager: aManager during: aBlock [
 
 { #category : 'settings' }
 TKTConfiguration class >> settingsOn: aBuilder [
-	<systemsettings>
 
+	<systemsettings>
 	(aBuilder group: #taskitExecution)
 		label: 'Task it execution profile';
 		with: [
-			(aBuilder pickOne: #profileNamed)
-				label: 'Executing Profile';
-				target: self;
-				parent: #taskitExecution;
-				default: TKTProfile defaultProfileName;
-				order: 1;
-				domainValues: (self profiles collect: #key) ]
+				(aBuilder pickOne: #profileNamed)
+					label: 'Executing Profile';
+					target: self;
+					parentName: #taskitExecution;
+					defaultValue: TKTProfile defaultProfileName;
+					order: 1;
+					domainValues: (self profiles collect: #key) ]
 ]
 
 { #category : 'accessing' }

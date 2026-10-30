@@ -134,12 +134,6 @@ ZipEncoderTree >> codeAt: index [
 ]
 
 { #category : 'accessing' }
-ZipEncoderTree >> codes [
-	"Return an array of all valid codes"
-	^codes
-]
-
-{ #category : 'accessing' }
 ZipEncoderTree >> maxCode [
 	^maxCode
 ]

@@ -94,19 +94,18 @@ SHPreferences class >> settingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder group: 'Syntax Highlighting')
 		parentName: 'codeBrowsing';
+		description:
+			'Syntax Highlighting As You Type: Enable syntax highlighting in browsers, debuggers and workspaces and set patterns style.';
+		isActive: true;
+		readBlock: [ self enabled ];
+		writeBlock: [ :active | self enabled: active ];
 		target: self;
 		iconName: #smallConfiguration;
 		noOrdering;
 		with: [
-				(aBuilder setting: 'Enable Syntax Highlighting')
-					target: self;
-					default: true;
-					selector: #enabled;
-					description:
-						'Syntax Highlighting As You Type: Enable syntax highlighting in browsers, debuggers and workspaces and set patterns style.'.
 				(aBuilder setting: #formatIncompleteIdentifiers)
 					target: SHRBTextStyler;
-					default: false;
+					defaultValue: false;
 					label: 'Format Incomplete Identifiers';
 					parentName: 'Syntax Highlighting';
 					description:
@@ -116,21 +115,16 @@ SHPreferences class >> settingsOn: aBuilder [
 					target: self;
 					domainValues: self styleTableNames;
 					description: 'Choose between the different styles.  Default changes according to the UI Theme and Custom can be modified by you.' ;
-					default: 'Default'.
+					defaultValue: 'Default'.
 				(aBuilder group: 'Edit Custom Style')
 					description: 'Change the Custom style to your liking.  You have to activate it for your changes to take effect.' ;
-					dialog: [
-							Smalltalk ui theme
-								newButtonIn: self
-								for: SHCustomStyle
-								getState: nil
-								action: #copyFromCurrentStyle
-								arguments: nil
-								getEnabled: nil
-								label: 'Copy from current style'
-								help:
-									'Initialize custom style to colors of the currently selected them' ];
 					with: [
+							(aBuilder button: #copyFromCurrentStyle)
+								order: 0;
+								target: SHCustomStyle;
+								label: 'Copy from current style';
+								description: 'Initialize custom style to colors of the currently selected style';
+								buttonLabel: 'Copy'.
 							SHCustomStyle groups keysAndValuesDo: [ :group :info |
 										(aBuilder setting: group , 'Style')
 											target: self;
