@@ -12,7 +12,7 @@ Class {
 { #category : 'colors' }
 LightThemeColorConfigurator >> backgroundColor [
 
-	^ Color fromHexString: 'FAFAFB'
+	^ Color fromHexString: 'F4F5F7'
 ]
 
 { #category : 'colors' }
@@ -30,13 +30,13 @@ LightThemeColorConfigurator >> balloonTextColor [
 { #category : 'colors' }
 LightThemeColorConfigurator >> baseColor [
 
-	^ Color fromHexString: 'F1F2F5'
+	^ Color fromHexString: 'ECEEF1'
 ]
 
 { #category : 'colors' }
 LightThemeColorConfigurator >> basePassiveBackgroundColor [
 
-	^ Color fromHexString: 'F6F7F8'
+	^ Color fromHexString: 'F0F1F4'
 ]
 
 { #category : 'colors' }
@@ -48,7 +48,7 @@ LightThemeColorConfigurator >> baseSelectionColor [
 { #category : 'colors' }
 LightThemeColorConfigurator >> borderColor [
 
-	^ Color fromHexString: 'D2D6DC'
+	^ Color fromHexString: 'CACED5'
 ]
 
 { #category : 'buttons' }
@@ -66,13 +66,13 @@ LightThemeColorConfigurator >> caretColor [
 { #category : 'colors' }
 LightThemeColorConfigurator >> darkBaseColor [
 
-	^ Color fromHexString: 'DDE0E5'
+	^ Color fromHexString: 'D8DBE1'
 ]
 
 { #category : 'colors' }
 LightThemeColorConfigurator >> desktopColor [
 
-	^ Color fromHexString: 'E3E6EB'
+	^ Color fromHexString: 'DDE0E5'
 ]
 
 { #category : 'colors' }
@@ -108,7 +108,7 @@ LightThemeColorConfigurator >> ghostTextColor [
 { #category : 'colors' }
 LightThemeColorConfigurator >> lightBackgroundColor [
 
-	^ Color fromHexString: 'E8EAEE'
+	^ Color fromHexString: 'E3E5EA'
 ]
 
 { #category : 'colors' }
