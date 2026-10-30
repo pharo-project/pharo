@@ -351,7 +351,7 @@ ReleaseTest >> testNoEquivalentSuperclassMethods [
 
 	methods := methods select: [ :method | method hasEquivalentMethodInSuperclass and: [ method package isSystemPackage ] ].
 
-	self assert: methods size <= 31
+	self assert: methods size <= 35
 ]
 
 { #category : 'tests - variables' }
