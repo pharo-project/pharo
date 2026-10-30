@@ -27,9 +27,3 @@ OCErrorNotice >> isErrorOn: anOpalCompiler [
 	^ permitFaulty ifNil: [ true ]
 		ifNotNil: [ permitFaulty not ]
 ]
-
-{ #category : 'testing' }
-OCErrorNotice >> isWarningOn: anOpalCompiler [
-	
-	^ (self isErrorOn: anOpalCompiler) not
-]
