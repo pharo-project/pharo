@@ -64,6 +64,24 @@ PNGReadWriterTest >> blankPngBytesWidth: width height: height colorType: colorTy
 ]
 
 { #category : 'helpers - png encoding' }
+PNGReadWriterTest >> blankRGBHeader [
+	"Answer the IHDR data of a 3x2 non-interlaced 8-bit RGB image, whose image data is blankRGBImageData"
+
+	^ self
+		  headerWidth: 3
+		  height: 2
+		  colorType: 2
+		  interlace: 0
+]
+
+{ #category : 'helpers - png encoding' }
+PNGReadWriterTest >> blankRGBImageData [
+	"Answer the uncompressed image data of a 3x2 8-bit RGB image: two scanlines of one filter byte and 9 zero samples"
+
+	^ ByteArray new: 1 + 9 * 2
+]
+
+{ #category : 'helpers - png encoding' }
 PNGReadWriterTest >> bytesPerPixelForColorType: colorType [
 	"Answer the number of bytes of one pixel with 8-bit samples of colorType"
 
@@ -125,6 +143,18 @@ PNGReadWriterTest >> coloredFiles8 [
 		Color green->'iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAADAFBMVEX///8AAAD///9/f3//AAAA/wAAAP8A/////wD/AP8fHx8/Pz9fX1+fn5+/v7/f398HBwcPDw8XFxcnJycvLy83NzdHR0dPT09XV1dnZ2dvb293d3eHh4ePj4+Xl5enp6evr6+3t7fHx8fPz8/X19fn5+fv7+/39/cAAAAAMgAAZQAAmAAAywAA/wAAADIAMjIAZTIAmDIAyzIA/zIAAGUAMmUAZWUAmGUAy2UA/2UAAJgAMpgAZZgAmJgAy5gA/5gAAMsAMssAZcsAmMsAy8sA/8sAAP8AMv8AZf8AmP8Ay/8A//8yAAAyMgAyZQAymAAyywAy/wAyADIyMjIyZTIymDIyyzIy/zIyAGUyMmUyZWUymGUyy2Uy/2UyAJgyMpgyZZgymJgyy5gy/5gyAMsyMssyZcsymMsyy8sy/8syAP8yMv8yZf8ymP8yy/8y//9lAABlMgBlZQBlmABlywBl/wBlADJlMjJlZTJlmDJlyzJl/zJlAGVlMmVlZWVlmGVly2Vl/2VlAJhlMphlZZhlmJhly5hl/5hlAMtlMstlZctlmMtly8tl/8tlAP9lMv9lZf9lmP9ly/9l//+YAACYMgCYZQCYmACYywCY/wCYADKYMjKYZTKYmDKYyzKY/zKYAGWYMmWYZWWYmGWYy2WY/2WYAJiYMpiYZZiYmJiYy5iY/5iYAMuYMsuYZcuYmMuYy8uY/8uYAP+YMv+YZf+YmP+Yy/+Y///LAADLMgDLZQDLmADLywDL/wDLADLLMjLLZTLLmDLLyzLL/zLLAGXLMmXLZWXLmGXLy2XL/2XLAJjLMpjLZZjLmJjLy5jL/5jLAMvLMsvLZcvLmMvLy8vL/8vLAP/LMv/LZf/LmP/Ly//L////AAD/MgD/ZQD/mAD/ywD//wD/ADL/MjL/ZTL/mDL/yzL//zL/AGX/MmX/ZWX/mGX/y2X//2X/AJj/Mpj/ZZj/mJj/y5j//5j/AMv/Msv/Zcv/mMv/y8v//8v/AP//Mv//Zf//mP//y/////9ECiHUAAAAGElEQVR4XmPQ1cUPGHRHFYwqGFUwQhUAAFndtAGHEKBOAAAAAElFTkSuQmCC'.
 		Color blue->'iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAADAFBMVEX///8AAAD///9/f3//AAAA/wAAAP8A/////wD/AP8fHx8/Pz9fX1+fn5+/v7/f398HBwcPDw8XFxcnJycvLy83NzdHR0dPT09XV1dnZ2dvb293d3eHh4ePj4+Xl5enp6evr6+3t7fHx8fPz8/X19fn5+fv7+/39/cAAAAAMgAAZQAAmAAAywAA/wAAADIAMjIAZTIAmDIAyzIA/zIAAGUAMmUAZWUAmGUAy2UA/2UAAJgAMpgAZZgAmJgAy5gA/5gAAMsAMssAZcsAmMsAy8sA/8sAAP8AMv8AZf8AmP8Ay/8A//8yAAAyMgAyZQAymAAyywAy/wAyADIyMjIyZTIymDIyyzIy/zIyAGUyMmUyZWUymGUyy2Uy/2UyAJgyMpgyZZgymJgyy5gy/5gyAMsyMssyZcsymMsyy8sy/8syAP8yMv8yZf8ymP8yy/8y//9lAABlMgBlZQBlmABlywBl/wBlADJlMjJlZTJlmDJlyzJl/zJlAGVlMmVlZWVlmGVly2Vl/2VlAJhlMphlZZhlmJhly5hl/5hlAMtlMstlZctlmMtly8tl/8tlAP9lMv9lZf9lmP9ly/9l//+YAACYMgCYZQCYmACYywCY/wCYADKYMjKYZTKYmDKYyzKY/zKYAGWYMmWYZWWYmGWYy2WY/2WYAJiYMpiYZZiYmJiYy5iY/5iYAMuYMsuYZcuYmMuYy8uY/8uYAP+YMv+YZf+YmP+Yy/+Y///LAADLMgDLZQDLmADLywDL/wDLADLLMjLLZTLLmDLLyzLL/zLLAGXLMmXLZWXLmGXLy2XL/2XLAJjLMpjLZZjLmJjLy5jL/5jLAMvLMsvLZcvLmMvLy8vL/8vLAP/LMv/LZf/LmP/Ly//L////AAD/MgD/ZQD/mAD/ywD//wD/ADL/MjL/ZTL/mDL/yzL//zL/AGX/MmX/ZWX/mGX/y2X//2X/AJj/Mpj/ZZj/mJj/y5j//5j/AMv/Msv/Zcv/mMv/y8v//8v/AP//Mv//Zf//mP//y/////9ECiHUAAAAGElEQVR4XmNwc8MPGNxGFYwqGFUwQhUAAKXvGBBI7gcMAAAAAElFTkSuQmCC'.
 		Color black->'iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAADAFBMVEX///8AAAD///9/f3//AAAA/wAAAP8A/////wD/AP8fHx8/Pz9fX1+fn5+/v7/f398HBwcPDw8XFxcnJycvLy83NzdHR0dPT09XV1dnZ2dvb293d3eHh4ePj4+Xl5enp6evr6+3t7fHx8fPz8/X19fn5+fv7+/39/cAAAAAMgAAZQAAmAAAywAA/wAAADIAMjIAZTIAmDIAyzIA/zIAAGUAMmUAZWUAmGUAy2UA/2UAAJgAMpgAZZgAmJgAy5gA/5gAAMsAMssAZcsAmMsAy8sA/8sAAP8AMv8AZf8AmP8Ay/8A//8yAAAyMgAyZQAymAAyywAy/wAyADIyMjIyZTIymDIyyzIy/zIyAGUyMmUyZWUymGUyy2Uy/2UyAJgyMpgyZZgymJgyy5gy/5gyAMsyMssyZcsymMsyy8sy/8syAP8yMv8yZf8ymP8yy/8y//9lAABlMgBlZQBlmABlywBl/wBlADJlMjJlZTJlmDJlyzJl/zJlAGVlMmVlZWVlmGVly2Vl/2VlAJhlMphlZZhlmJhly5hl/5hlAMtlMstlZctlmMtly8tl/8tlAP9lMv9lZf9lmP9ly/9l//+YAACYMgCYZQCYmACYywCY/wCYADKYMjKYZTKYmDKYyzKY/zKYAGWYMmWYZWWYmGWYy2WY/2WYAJiYMpiYZZiYmJiYy5iY/5iYAMuYMsuYZcuYmMuYy8uY/8uYAP+YMv+YZf+YmP+Yy/+Y///LAADLMgDLZQDLmADLywDL/wDLADLLMjLLZTLLmDLLyzLL/zLLAGXLMmXLZWXLmGXLy2XL/2XLAJjLMpjLZZjLmJjLy5jL/5jLAMvLMsvLZcvLmMvLy8vL/8vLAP/LMv/LZf/LmP/Ly//L////AAD/MgD/ZQD/mAD/ywD//wD/ADL/MjL/ZTL/mDL/yzL//zL/AGX/MmX/ZWX/mGX/y2X//2X/AJj/Mpj/ZZj/mJj/y5j//5j/AMv/Msv/Zcv/mMv/y8v//8v/AP//Mv//Zf//mP//y/////9ECiHUAAAAGElEQVR4XmNgZMQPGBhHFYwqGFUwQhUAAESYBAHkRTpbAAAAAElFTkSuQmCC'}
+]
+
+{ #category : 'helpers - png encoding' }
+PNGReadWriterTest >> compressed: imageData [
+	"Answer imageData compressed with zlib, as an IDAT chunk holds it"
+
+	| zStream |
+	zStream := ZLibWriteStream on: (WriteStream on: ByteArray new).
+	zStream
+		nextPutAll: imageData;
+		close.
+	^ zStream encodedStream contents
 ]
 
 { #category : 'tests - decoding' }
@@ -597,20 +627,21 @@ PNGReadWriterTest >> pngBytesFrom: aForm colorType: colorType filters: filterTyp
 ]
 
 { #category : 'helpers - png encoding' }
+PNGReadWriterTest >> pngBytesWithChunks: chunks [
+	"Answer the bytes of a PNG file made of the signature followed by chunks (type -> data associations), in the given order and without any check, so that invalid files can be built"
+
+	^ ByteArray streamContents: [ :out |
+			  out nextPutAll: #[ 137 80 78 71 13 10 26 10 ].
+			  chunks do: [ :each | self writePngChunk: each key data: each value on: out ] ]
+]
+
+{ #category : 'helpers - png encoding' }
 PNGReadWriterTest >> pngBytesWithHeader: header chunks: chunks imageData: imageData [
 	"Answer the bytes of a complete PNG file: signature, IHDR with header, the chunks (type -> data associations) that must come before the image data, one IDAT holding the compressed imageData (scanlines already filtered) and IEND"
 
-	| zStream |
-	zStream := ZLibWriteStream on: (WriteStream on: ByteArray new).
-	zStream
-		nextPutAll: imageData;
-		close.
-	^ ByteArray streamContents: [ :out |
-			  out nextPutAll: #[ 137 80 78 71 13 10 26 10 ].
-			  self writePngChunk: 'IHDR' data: header on: out.
-			  chunks do: [ :each | self writePngChunk: each key data: each value on: out ].
-			  self writePngChunk: 'IDAT' data: zStream encodedStream contents on: out.
-			  self writePngChunk: 'IEND' data: #[  ] on: out ]
+	^ self pngBytesWithChunks: { ('IHDR' -> header) } , chunks , {
+			  ('IDAT' -> (self compressed: imageData)).
+			  ('IEND' -> #[  ]) }
 ]
 
 { #category : 'helpers - png encoding' }
@@ -843,6 +874,26 @@ PNGReadWriterTest >> testDecodeAcceptsAllValidColorTypesAndBitDepths [
 			self assert: form extent equals: 3 @ 2 ]
 ]
 
+{ #category : 'tests - validation' }
+PNGReadWriterTest >> testDecodeAcceptsImageDataSplitInSeveralChunks [
+
+	| expected compressed decoded |
+	expected := self formColorGrid.
+	compressed := self compressed: (self adam7RGBImageDataOf: expected).
+	"The compressed image data is spread over three consecutive IDAT chunks"
+	decoded := self decodedPngBytes: (self pngBytesWithChunks: {
+				            ('IHDR' -> (self
+					              headerWidth: 16
+					              height: 16
+					              colorType: 2
+					              interlace: 1)).
+				            ('IDAT' -> (compressed copyFrom: 1 to: 10)).
+				            ('IDAT' -> (compressed copyFrom: 11 to: 30)).
+				            ('IDAT' -> (compressed copyFrom: 31 to: compressed size)).
+				            ('IEND' -> #[  ]) }).
+	self assert: (self pixelsOf: decoded differingFrom: expected) equals: #(  )
+]
+
 { #category : 'tests - decoding' }
 PNGReadWriterTest >> testDecodeGrayWithAllFilterTypes [
 	"Rows use the filters Paeth, Average, Up, Sub and None in turn, so that each one also appears with a non-zero row above"
@@ -861,6 +912,27 @@ PNGReadWriterTest >> testDecodeIgnoresBytesAfterIEND [
 	expected := self formColorGrid.
 	decoded := PNGReadWriter formFromStream: ((self pngBytesFrom: expected) , #[ 0 0 0 0 0 0 0 0 0 0 ]) readStream.
 	self assert: decoded extent equals: expected extent.
+	self assert: (self pixelsOf: decoded differingFrom: expected) equals: #(  )
+]
+
+{ #category : 'tests - validation' }
+PNGReadWriterTest >> testDecodeIgnoresUnknownAncillaryChunk [
+	"A chunk type starting with a lowercase letter is ancillary: a decoder that does not know it must skip it"
+
+	| expected decoded |
+	expected := self formColorGrid.
+	decoded := self decodedPngBytes: (self
+			            pngBytesWithHeader: (self
+					             headerWidth: 16
+					             height: 16
+					             colorType: 2
+					             interlace: 0)
+			            chunks: { ('zzZZ' -> #[ 1 2 3 ]) }
+			            imageData: (ByteArray streamContents: [ :out |
+						             0 to: 15 do: [ :y |
+								             out
+									             nextPut: 0;
+									             nextPutAll: (self rgbSamplesOf: expected row: y columns: (0 to: 15)) ] ])).
 	self assert: (self pixelsOf: decoded differingFrom: expected) equals: #(  )
 ]
 
@@ -896,6 +968,24 @@ PNGReadWriterTest >> testDecodeInterlacedRGBKeepsAllPixels [
 ]
 
 { #category : 'tests - validation' }
+PNGReadWriterTest >> testDecodeInterlacedRejectsExtraImageData [
+
+	| form |
+	form := self formColorGrid.
+	self
+		should: [
+				self decodedPngBytes: (self
+						 pngBytesWithHeader: (self
+								  headerWidth: form width
+								  height: form height
+								  colorType: 2
+								  interlace: 1)
+						 chunks: #(  )
+						 imageData: (self adam7RGBImageDataOf: form) , #[ 0 0 0 0 ]) ]
+		raise: PNGFormatError
+]
+
+{ #category : 'tests - validation' }
 PNGReadWriterTest >> testDecodeInterlacedRejectsInvalidFilterType [
 
 	| form imageData |
@@ -913,6 +1003,25 @@ PNGReadWriterTest >> testDecodeInterlacedRejectsInvalidFilterType [
 								  interlace: 1)
 						 chunks: #(  )
 						 imageData: imageData) ]
+		raise: PNGFormatError
+]
+
+{ #category : 'tests - validation' }
+PNGReadWriterTest >> testDecodeInterlacedRejectsTruncatedImageData [
+
+	| form imageData |
+	form := self formColorGrid.
+	imageData := self adam7RGBImageDataOf: form.
+	self
+		should: [
+				self decodedPngBytes: (self
+						 pngBytesWithHeader: (self
+								  headerWidth: form width
+								  height: form height
+								  colorType: 2
+								  interlace: 1)
+						 chunks: #(  )
+						 imageData: imageData allButLast) ]
 		raise: PNGFormatError
 ]
 
@@ -936,6 +1045,32 @@ PNGReadWriterTest >> testDecodeRGBWithAllFilterTypes [
 	decoded := PNGReadWriter formFromStream: (self pngBytesFrom: expected colorType: 2 filters: #( 4 3 2 1 0 )) readStream.
 	self assert: decoded extent equals: expected extent.
 	self assert: (self pixelsOf: decoded differingFrom: expected) equals: #(  )
+]
+
+{ #category : 'tests - validation' }
+PNGReadWriterTest >> testDecodeRejectsExtraImageData [
+
+	self
+		should: [
+				self decodedPngBytes:
+					(self pngBytesWithHeader: self blankRGBHeader chunks: #(  ) imageData: self blankRGBImageData , #[ 0 0 0 0 ]) ]
+		raise: PNGFormatError
+]
+
+{ #category : 'tests - validation' }
+PNGReadWriterTest >> testDecodeRejectsIndexedImageWithoutPalette [
+
+	self
+		should: [
+				self decodedPngBytes: (self
+						 pngBytesWithHeader: (self
+								  headerWidth: 3
+								  height: 2
+								  colorType: 3
+								  interlace: 0)
+						 chunks: #(  )
+						 imageData: (ByteArray new: 1 + 3 * 2)) ]
+		raise: PNGFormatError
 ]
 
 { #category : 'tests - validation' }
@@ -993,6 +1128,92 @@ PNGReadWriterTest >> testDecodeRejectsMissingIHDR [
 ]
 
 { #category : 'tests - validation' }
+PNGReadWriterTest >> testDecodeRejectsMissingImageData [
+
+	self
+		should: [
+				self decodedPngBytes: (self pngBytesWithChunks: {
+							 ('IHDR' -> self blankRGBHeader).
+							 ('IEND' -> #[  ]) }) ]
+		raise: PNGFormatError
+]
+
+{ #category : 'tests - validation' }
+PNGReadWriterTest >> testDecodeRejectsNonConsecutiveImageData [
+
+	| compressed |
+	compressed := self compressed: self blankRGBImageData.
+	self
+		should: [
+				self decodedPngBytes: (self pngBytesWithChunks: {
+							 ('IHDR' -> self blankRGBHeader).
+							 ('IDAT' -> (compressed copyFrom: 1 to: 5)).
+							 ('tEXt' -> ('Comment' asByteArray , #[ 0 ] , 'between image data' asByteArray)).
+							 ('IDAT' -> (compressed copyFrom: 6 to: compressed size)).
+							 ('IEND' -> #[  ]) }) ]
+		raise: PNGFormatError
+]
+
+{ #category : 'tests - validation' }
+PNGReadWriterTest >> testDecodeRejectsPaletteAfterImageData [
+
+	self
+		should: [
+				self decodedPngBytes: (self pngBytesWithChunks: {
+							 ('IHDR' -> (self
+								   headerWidth: 3
+								   height: 2
+								   colorType: 3
+								   interlace: 0)).
+							 ('IDAT' -> (self compressed: (ByteArray new: 1 + 3 * 2))).
+							 ('PLTE' -> (ByteArray new: 3)).
+							 ('IEND' -> #[  ]) }) ]
+		raise: PNGFormatError
+]
+
+{ #category : 'tests - validation' }
+PNGReadWriterTest >> testDecodeRejectsPaletteInGrayImage [
+	"Gray images have one sample per pixel, gray with alpha images two"
+
+	#( #( 0 1 ) #( 4 2 ) ) do: [ :colorTypeAndSamples |
+			self
+				should: [
+						self decodedPngBytes: (self
+								 pngBytesWithHeader: (self
+										  headerWidth: 3
+										  height: 2
+										  colorType: colorTypeAndSamples first
+										  interlace: 0)
+								 chunks: { ('PLTE' -> (ByteArray new: 3)) }
+								 imageData: (ByteArray new: 1 + (3 * colorTypeAndSamples last) * 2)) ]
+				raise: PNGFormatError
+				description: 'PLTE in an image of color type ' , colorTypeAndSamples first printString ]
+]
+
+{ #category : 'tests - validation' }
+PNGReadWriterTest >> testDecodeRejectsSecondIHDR [
+
+	self
+		should: [
+				self decodedPngBytes:
+					(self pngBytesWithHeader: self blankRGBHeader chunks: { ('IHDR' -> self blankRGBHeader) } imageData: self blankRGBImageData) ]
+		raise: PNGFormatError
+]
+
+{ #category : 'tests - validation' }
+PNGReadWriterTest >> testDecodeRejectsTruncatedImageData [
+	"The last scanline is missing, then only half of it is"
+
+	#( 10 15 ) do: [ :size |
+			self
+				should: [
+						self decodedPngBytes:
+							(self pngBytesWithHeader: self blankRGBHeader chunks: #(  ) imageData: (self blankRGBImageData copyFrom: 1 to: size)) ]
+				raise: PNGFormatError
+				description: 'image data cut after ' , size printString , ' bytes' ]
+]
+
+{ #category : 'tests - validation' }
 PNGReadWriterTest >> testDecodeRejectsUnknownCompressionFilterAndInterlaceMethods [
 
 	| valid |
@@ -1008,6 +1229,17 @@ PNGReadWriterTest >> testDecodeRejectsUnknownCompressionFilterAndInterlaceMethod
 							(self pngBytes: valid withHeaderPatchedBy: [ :header | header at: indexAndValue first put: indexAndValue last ]) ]
 				raise: PNGFormatError
 				description: 'IHDR byte ' , indexAndValue first printString , ' set to ' , indexAndValue last printString ]
+]
+
+{ #category : 'tests - validation' }
+PNGReadWriterTest >> testDecodeRejectsUnknownCriticalChunk [
+	"A chunk type starting with an uppercase letter is critical: a decoder that does not know it cannot decode the image"
+
+	self
+		should: [
+				self decodedPngBytes:
+					(self pngBytesWithHeader: self blankRGBHeader chunks: { ('ZZZZ' -> #[ 1 2 3 ]) } imageData: self blankRGBImageData) ]
+		raise: PNGFormatError
 ]
 
 { #category : 'tests - colors' }

@@ -32,7 +32,8 @@ Class {
 		'transparentPixelValue',
 		'filtersSeen',
 		'cachedDecoderMap',
-		'bigEndian'
+		'bigEndian',
+		'previousChunkType'
 	],
 	#classVars : [
 		'BPP',
@@ -129,6 +130,23 @@ PNGReadWriter class >> initialize [
 PNGReadWriter class >> typicalFileExtensions [
 	"Answer a collection of file extensions (lowercase) which files that I can read might commonly have"
 	^#('png')
+]
+
+{ #category : 'chunks' }
+PNGReadWriter >> checkOrderOf: chunkType [
+	"Signal a PNGFormatError when the PNG specification does not allow a chunk of chunkType after the chunks read so far"
+
+	previousChunkType ifNil: [
+			chunkType = 'IHDR' ifFalse: [ PNGFormatError signal: 'IHDR must be the first chunk' ].
+			^ self ].
+	chunkType = 'IHDR' ifTrue: [ PNGFormatError signal: 'IHDR must appear only once' ].
+	chunkType = 'PLTE' ifTrue: [
+			idatChunkStream ifNotNil: [ PNGFormatError signal: 'PLTE must come before IDAT' ].
+			(colorType = 0 or: [ colorType = 4 ]) ifTrue: [ PNGFormatError signal: 'PLTE is not allowed in a gray image' ] ].
+	chunkType = 'IDAT' ifTrue: [
+			(idatChunkStream isNotNil and: [ previousChunkType ~= 'IDAT' ]) ifTrue: [
+				PNGFormatError signal: 'IDAT chunks must be consecutive' ].
+			(colorType = 3 and: [ palette isNil ]) ifTrue: [ PNGFormatError signal: 'an indexed image needs a PLTE chunk before IDAT' ] ]
 ]
 
 { #category : 'pixel copies' }
@@ -756,10 +774,11 @@ PNGReadWriter >> nextImage [
 	idatChunkStream := nil.
 	transparentPixelValue := nil.
 	unknownChunks := Set new.
+	previousChunkType := nil.
 	stream skip: 8.
-	self processNextChunk = 'IHDR' ifFalse: [ PNGFormatError signal: 'IHDR must be the first chunk' ].
 	"IEND ends the image: any bytes after it are not chunks"
 	[ stream atEnd or: [ self processNextChunk = 'IEND' ] ] whileFalse.
+	idatChunkStream ifNil: [ PNGFormatError signal: 'image data is missing' ].
 	"Set up our form"
 	palette ifNotNil: [ "Dump the palette if it's the same as our standard palette"
 		palette = (StandardColors copyFrom: 1 to: palette size) ifTrue: [ palette := nil ] ].
@@ -769,7 +788,7 @@ PNGReadWriter >> nextImage [
 				form colors: palette ]
 		ifFalse: [ form := Form extent: width @ height depth: depth ].
 	backColor ifNotNil: [ form fillColor: backColor ].
-	idatChunkStream ifNil: [ self error: 'image data is missing' ] ifNotNil: [ self processIDATChunk ].
+	self processIDATChunk.
 	unknownChunks isEmpty ifFalse: [ "Transcript show: ' ',unknownChunks asSortedCollection asArray printString." ].
 	self debugging ifTrue: [
 			self crTrace: 'form = ' , form printString.
@@ -962,19 +981,21 @@ PNGReadWriter >> processInterlaced [
 					thisScanline := ByteArray new: bytesPerScanline.
 					(startingRow at: pass) to: height - 1 by: (rowIncrement at: pass) do: [ :y |
 							filter := z next.
+							filter ifNil: [ PNGFormatError signal: 'image data is too short' ].
 							filtersSeen add: filter.
 							thisScanline := z next: bytesPerPass into: thisScanline startingAt: 1.
+							thisScanline size < bytesPerPass ifTrue: [ PNGFormatError signal: 'image data is too short' ].
 							self filterScanline: filter count: bytesPerPass.
 							self copyPixels: y at: sc by: cx.
 							temp := prevScanline.
 							prevScanline := thisScanline.
 							thisScanline := temp ] ] ].
-	z atEnd ifFalse: [ self error: 'Unexpected data' ]
+	z atEnd ifFalse: [ PNGFormatError signal: 'image data is too long' ]
 ]
 
 { #category : 'chunks' }
 PNGReadWriter >> processNextChunk [
-	"Read the next chunk from the stream, check its CRC and process it. Answer the chunk type, so that the caller can stop after the IEND chunk."
+	"Read the next chunk from the stream, check its CRC and its position among the other chunks, and process it. Answer the chunk type, so that the caller can stop after the IEND chunk."
 
 	| length chunkType crc chunkCrc |
 	length := self nextLong.
@@ -994,6 +1015,8 @@ PNGReadWriter >> processNextChunk [
 		       to: length
 		       in: chunk.
 	crc = chunkCrc ifFalse: [ self error: 'PNGReadWriter crc error in chunk ' , chunkType ].
+	self checkOrderOf: chunkType.
+	previousChunkType := chunkType.
 	chunkType = 'IEND' ifTrue: [ ^ chunkType "*should* be the last chunk" ].
 	chunkType = 'sBIT' ifTrue: [
 			self processSBITChunk. "could indicate unusual sample depth in original"
@@ -1020,51 +1043,36 @@ PNGReadWriter >> processNextChunk [
 		to do this on the fly---"
 			idatChunkStream ifNil: [ idatChunkStream := WriteStream with: chunk copy ] ifNotNil: [ idatChunkStream nextPutAll: chunk ].
 			^ chunkType ].
+	"An unknown critical chunk (uppercase first letter) holds information needed to decode the image"
+	chunkType first isUppercase ifTrue: [ PNGFormatError signal: 'unknown critical chunk ' , chunkType ].
 	unknownChunks add: chunkType.
 	^ chunkType
 ]
 
 { #category : 'chunks' }
 PNGReadWriter >> processNonInterlaced [
+
 	| z filter temp copyMethod debug |
 	debug := self debugging.
-	copyMethod := #(#copyPixelsGray: nil #copyPixelsRGB: #copyPixelsIndexed: #copyPixelsGrayAlpha: nil #copyPixelsRGBA:)
-		at: colorType + 1.
-	debug
-		ifTrue: [ self
-				crTrace:
-					('NI chunk size=<1s>' expandMacrosWith: idatChunkStream position) ].
-	z := ZLibReadStream
-		on: idatChunkStream originalContents
-		from: 1
-		to: idatChunkStream position.
+	copyMethod := #( #copyPixelsGray: nil #copyPixelsRGB: #copyPixelsIndexed: #copyPixelsGrayAlpha: nil #copyPixelsRGBA: ) at:
+		              colorType + 1.
+	debug ifTrue: [ self crTrace: ('NI chunk size=<1s>' expandMacrosWith: idatChunkStream position) ].
+	z := ZLibReadStream on: idatChunkStream originalContents from: 1 to: idatChunkStream position.
 	prevScanline := ByteArray new: bytesPerScanline.
 	thisScanline := ByteArray new: bytesPerScanline.
 	0 to: height - 1 do: [ :y |
-		filter := z next.
-		debug
-			ifTrue: [ filtersSeen add: filter ].
-		thisScanline := z
-			next: bytesPerScanline
-			into: thisScanline
-			startingAt: 1.
-		(debug and: [ thisScanline size < bytesPerScanline ])
-			ifTrue: [ self
-					traceCr:
-						('wanted {1} but only got {2}'
-							format:
-								{bytesPerScanline.
-								thisScanline size}) ].
-		filter = 0
-			ifFalse: [ self filterScanline: filter count: bytesPerScanline ].
-		self perform: copyMethod with: y.
-		temp := prevScanline.
-		prevScanline := thisScanline.
-		thisScanline := temp ].
-	z atEnd
-		ifFalse: [ self error: 'Unexpected data' ].
-	debug
-		ifTrue: [ self trace: ' compressed size=' , z position asString ]
+			filter := z next.
+			filter ifNil: [ PNGFormatError signal: 'image data is too short' ].
+			debug ifTrue: [ filtersSeen add: filter ].
+			thisScanline := z next: bytesPerScanline into: thisScanline startingAt: 1.
+			thisScanline size < bytesPerScanline ifTrue: [ PNGFormatError signal: 'image data is too short' ].
+			filter = 0 ifFalse: [ self filterScanline: filter count: bytesPerScanline ].
+			self perform: copyMethod with: y.
+			temp := prevScanline.
+			prevScanline := thisScanline.
+			thisScanline := temp ].
+	z atEnd ifFalse: [ PNGFormatError signal: 'image data is too long' ].
+	debug ifTrue: [ self trace: ' compressed size=' , z position asString ]
 ]
 
 { #category : 'chunks' }
