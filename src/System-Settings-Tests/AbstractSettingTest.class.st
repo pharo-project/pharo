@@ -10,6 +10,18 @@ Class {
 }
 
 { #category : 'settings' }
+AbstractSettingTest class >> receiverSettingsOn: aBuilder [
+
+	<receiver_settings_test_data>
+	(aBuilder group: #targetedGroup)
+		target: Object;
+		with: [
+			(aBuilder setting: #settingWithoutTarget).
+			(aBuilder button: #buttonWithoutTarget) buttonLabel: 'Do' ].
+	(aBuilder button: #topLevelButtonWithoutTarget) buttonLabel: 'Do'
+]
+
+{ #category : 'settings' }
 AbstractSettingTest class >> transientSettingsOn: aBuilder [
 
 	<transient_settings_test_data>
@@ -26,6 +38,12 @@ AbstractSettingTest class >> transientSettingsOn: aBuilder [
 ]
 
 { #category : 'helpers' }
+AbstractSettingTest >> receiverSettingNamed: aSymbol [
+
+	^ (SettingsBuilder forPragmaNamed: #receiver_settings_test_data) settings detect: [ :each | each name = aSymbol ]
+]
+
+{ #category : 'helpers' }
 AbstractSettingTest >> settingNamed: aSymbol [
 
 	^ self transientSettings detect: [ :each | each name = aSymbol ]
@@ -35,6 +53,24 @@ AbstractSettingTest >> settingNamed: aSymbol [
 AbstractSettingTest >> transientSettings [
 
 	^ (SettingsBuilder forPragmaNamed: #transient_settings_test_data) settings
+]
+
+{ #category : 'tests - receiver' }
+AbstractSettingTest >> testButtonInheritsTheReceiverOfItsGroup [
+
+	self assert: (self receiverSettingNamed: #buttonWithoutTarget) settingReceiver equals: Object
+]
+
+{ #category : 'tests - receiver' }
+AbstractSettingTest >> testButtonWithoutParentIsReceivedByItsDeclaringClass [
+
+	self assert: (self receiverSettingNamed: #topLevelButtonWithoutTarget) settingReceiver equals: AbstractSettingTest
+]
+
+{ #category : 'tests - receiver' }
+AbstractSettingTest >> testSettingInheritsTheReceiverOfItsGroup [
+
+	self assert: (self receiverSettingNamed: #settingWithoutTarget) settingReceiver equals: Object
 ]
 
 { #category : 'tests - transient' }
