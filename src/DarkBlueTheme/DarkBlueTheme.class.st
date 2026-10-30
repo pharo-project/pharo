@@ -19,44 +19,14 @@ DarkBlueTheme class >> themeName [
 	^ 'DarkBlue'
 ]
 
-{ #category : 'border-styles - buttons' }
-DarkBlueTheme >> buttonNormalBorderStyleFor: aButton [
-	"Return the normal button borderStyle for the given button."
-
-	(aButton valueOfProperty: #noBorder ifAbsent: [ false ])
-		ifTrue: [
-			^ SimpleBorderStyle new
-				width: 0;
-				baseColor: Color transparent ].
-
-	^ SimpleBorderStyle new
-		width: 1;
-		baseColor: self buttonColor darker
-]
-
-{ #category : 'initialization' }
-DarkBlueTheme >> defaultSettings [
-
-	^ super defaultSettings
-		  menuSelectionTextColor: Color white twiceDarker;
-		  yourself
-]
-
 { #category : 'fill-styles' }
 DarkBlueTheme >> progressBarProgressFillColor [
 
-	^ self lightSelectionColor twiceLighter 
+	^ self baseSelectionColor
 ]
 
 { #category : 'accessing' }
 DarkBlueTheme >> shStyleTableName [
 
 	^ #darkBlueStyleTable
-]
-
-{ #category : 'fill-styles' }
-DarkBlueTheme >> windowInactiveFillStyleFor: aWindow [
-	"We do not want the lighting effect when the window goes inactive"
-
-	^ SolidFillStyle color: self baseColor slightlyDarker slightlyDarker
 ]

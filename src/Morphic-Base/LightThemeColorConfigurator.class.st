@@ -12,7 +12,7 @@ Class {
 { #category : 'colors' }
 LightThemeColorConfigurator >> backgroundColor [
 
-	^ Color fromHexString: 'FFFFFF'
+	^ Color fromHexString: 'FAFAFB'
 ]
 
 { #category : 'colors' }
@@ -30,13 +30,13 @@ LightThemeColorConfigurator >> balloonTextColor [
 { #category : 'colors' }
 LightThemeColorConfigurator >> baseColor [
 
-	^ Color fromHexString: 'F3F4F6'
+	^ Color fromHexString: 'F1F2F5'
 ]
 
 { #category : 'colors' }
 LightThemeColorConfigurator >> basePassiveBackgroundColor [
 
-	^ Color fromHexString: 'F7F8FA'
+	^ Color fromHexString: 'F6F7F8'
 ]
 
 { #category : 'colors' }
@@ -72,19 +72,19 @@ LightThemeColorConfigurator >> darkBaseColor [
 { #category : 'colors' }
 LightThemeColorConfigurator >> desktopColor [
 
-	^ Color fromHexString: 'E6E9ED'
+	^ Color fromHexString: 'E3E6EB'
 ]
 
 { #category : 'colors' }
 LightThemeColorConfigurator >> disabledColor [
 
-	^ Color fromHexString: '767D88'
+	^ Color fromHexString: '6B727D'
 ]
 
 { #category : 'colors' }
 LightThemeColorConfigurator >> disabledLabelColor [
 
-	^ Color fromHexString: '767D88'
+	^ Color fromHexString: '6B727D'
 ]
 
 { #category : 'colors' }
@@ -102,19 +102,19 @@ LightThemeColorConfigurator >> enabledColor [
 { #category : 'colors' }
 LightThemeColorConfigurator >> ghostTextColor [
 
-	^ Color fromHexString: '767D88'
+	^ Color fromHexString: '6B727D'
 ]
 
 { #category : 'colors' }
 LightThemeColorConfigurator >> lightBackgroundColor [
 
-	^ Color fromHexString: 'ECEEF1'
+	^ Color fromHexString: 'E8EAEE'
 ]
 
 { #category : 'colors' }
 LightThemeColorConfigurator >> lightBaseColor [
 
-	^ Color fromHexString: 'FFFFFF'
+	^ self backgroundColor
 ]
 
 { #category : 'colors' }
@@ -126,13 +126,13 @@ LightThemeColorConfigurator >> lightSelectionColor [
 { #category : 'colors' }
 LightThemeColorConfigurator >> lineNumberColor [
 
-	^ Color fromHexString: '767D88'
+	^ Color fromHexString: '6B727D'
 ]
 
 { #category : 'colors' }
 LightThemeColorConfigurator >> listTextColor [
 
-	^ Color fromHexString: '1F2329'
+	^ self textColor
 ]
 
 { #category : 'menus' }
@@ -144,7 +144,7 @@ LightThemeColorConfigurator >> menuBorderColor [
 { #category : 'menus' }
 LightThemeColorConfigurator >> menuColor [
 
-	^ Color fromHexString: 'FFFFFF'
+	^ self backgroundColor
 ]
 
 { #category : 'menus' }
@@ -212,7 +212,7 @@ LightThemeColorConfigurator >> selectionColor [
 { #category : 'colors' }
 LightThemeColorConfigurator >> selectionTextColor [
 
-	^ Color fromHexString: '1F2329'
+	^ self textColor
 ]
 
 { #category : 'taskbar' }
@@ -230,7 +230,7 @@ LightThemeColorConfigurator >> taskbarItemLabelColorForExpanded: anObject [
 { #category : 'colors' }
 LightThemeColorConfigurator >> textColor [
 
-	^ Color fromHexString: '1F2329'
+	^ Color fromHexString: '2A2F36'
 ]
 
 { #category : 'colors' }

@@ -12,7 +12,7 @@ Class {
 { #category : 'colors' }
 DarkThemeColorConfigurator >> backgroundColor [
 
-	^ Color fromHexString: '1E2127'
+	^ Color fromHexString: '22252B'
 ]
 
 { #category : 'colors' }
@@ -36,13 +36,13 @@ DarkThemeColorConfigurator >> balloonBackgroundColor [
 { #category : 'colors' }
 DarkThemeColorConfigurator >> baseColor [
 
-	^ Color fromHexString: '24272E'
+	^ Color fromHexString: '282C33'
 ]
 
 { #category : 'colors' }
 DarkThemeColorConfigurator >> basePassiveBackgroundColor [
 
-	^ Color fromHexString: '2B2F37'
+	^ Color fromHexString: '30343C'
 ]
 
 { #category : 'colors' }
@@ -54,13 +54,13 @@ DarkThemeColorConfigurator >> baseSelectionColor [
 { #category : 'colors' }
 DarkThemeColorConfigurator >> borderColor [
 
-	^ Color fromHexString: '363B45'
+	^ Color fromHexString: '3C414B'
 ]
 
 { #category : 'colors' }
 DarkThemeColorConfigurator >> buttonColor [
 
-	^ self lightBackgroundColor lighter
+	^ Color fromHexString: '3B4049'
 ]
 
 { #category : 'colors' }
@@ -84,13 +84,13 @@ DarkThemeColorConfigurator >> dangerTextColor [
 { #category : 'colors' }
 DarkThemeColorConfigurator >> darkBaseColor [
 
-	^ Color fromHexString: '1A1C21'
+	^ Color fromHexString: '1D2025'
 ]
 
 { #category : 'colors' }
 DarkThemeColorConfigurator >> desktopColor [
 
-	^ Color fromHexString: '15171B'
+	^ Color fromHexString: '1A1D22'
 ]
 
 { #category : 'colors' }
@@ -120,7 +120,7 @@ DarkThemeColorConfigurator >> diffRemovedLinesBackgroundColor [
 { #category : 'colors' }
 DarkThemeColorConfigurator >> disabledColor [
 
-	^ Color fromHexString: '7C838E'
+	^ Color fromHexString: '8A919C'
 ]
 
 { #category : 'colors' }
@@ -169,7 +169,7 @@ DarkThemeColorConfigurator >> lessConspicuousColorFrom: aColor [
 { #category : 'colors' }
 DarkThemeColorConfigurator >> lightBackgroundColor [
 
-	^ Color fromHexString: '2B2F37'
+	^ Color fromHexString: '30343C'
 ]
 
 { #category : 'colors' }
@@ -181,7 +181,7 @@ DarkThemeColorConfigurator >> lightBaseColor [
 { #category : 'colors' }
 DarkThemeColorConfigurator >> lineNumberColor [
 
-	^ Color fromHexString: '6B727D'
+	^ Color fromHexString: '8A919C'
 ]
 
 { #category : 'colors' }
@@ -199,7 +199,7 @@ DarkThemeColorConfigurator >> listTextColor [
 { #category : 'colors' }
 DarkThemeColorConfigurator >> menuBorderColor [
 
-	^ Color fromHexString: '414752'
+	^ Color fromHexString: '474D58'
 ]
 
 { #category : 'menus' }
@@ -247,7 +247,7 @@ DarkThemeColorConfigurator >> popoverButtonColor [
 { #category : 'colors' }
 DarkThemeColorConfigurator >> scrollbarColor [
 
-	^ Color fromHexString: '444A55'
+	^ Color fromHexString: '4A505C'
 ]
 
 { #category : 'scrollbars' }
@@ -267,7 +267,7 @@ DarkThemeColorConfigurator >> scrollbarNormalFillStyleFor: aScrollbar [
 { #category : 'colors' }
 DarkThemeColorConfigurator >> secondarySelectionColor [
 
-	^ Color fromHexString: '363B45'
+	^ Color fromHexString: '3C414B'
 ]
 
 { #category : 'custom' }
@@ -279,7 +279,7 @@ DarkThemeColorConfigurator >> selectedTabBorderColor [
 { #category : 'colors' }
 DarkThemeColorConfigurator >> selectionColor [
 
-	^ Color fromHexString: '2A4A7A'
+	^ Color fromHexString: '27416A'
 ]
 
 { #category : 'colors' }
@@ -321,7 +321,7 @@ DarkThemeColorConfigurator >> taskbarItemLabelColorForExpanded: aButton [
 { #category : 'colors' }
 DarkThemeColorConfigurator >> textColor [
 
-	^ Color fromHexString: 'E2E5EA'
+	^ Color fromHexString: 'D5D9E0'
 ]
 
 { #category : 'colors' }
