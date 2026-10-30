@@ -42,6 +42,20 @@ OCASTTranslator class >> initialize [
 		                     (#whileTrue -> #emitWhileTrue:) } asDictionary
 ]
 
+{ #category : 'visitor - double dispatching' }
+OCASTTranslator >> canUseConsArrayFor: anArrayNode [
+	"pushConsArray keeps all previous elements on the stack, so what counts is the stack needed
+	by the whole statement holding the array, plus the temps sharing the frame"
+
+	self compilationContext optionPushConsArray ifFalse: [ ^ false ].
+	
+	anArrayNode statements size > self compilationContext encoderClass arraySizeLimitForPushArrayInstruction
+		ifTrue: [ ^ false ].
+
+	^ (OCStackDepthVisitor new visitNode: (self outermostStatementOf: anArrayNode))
+		+ self ir tempMap size <= CompiledCode fullFrameSize
+]
+
 { #category : 'accessing' }
 OCASTTranslator >> compilationContext [
 	^methodBuilder compilationContext
@@ -440,6 +454,19 @@ OCASTTranslator >> nextUniqueInlineID [
 ]
 
 { #category : 'visitor - double dispatching' }
+OCASTTranslator >> outermostStatementOf: aNode [
+	"Inlined blocks run on the stack of the statement that holds them"
+
+	| statement |
+	statement := aNode statementNode.
+	[
+		statement parent isNotNil and: [
+			statement parent parent isNotNil and: [ statement parent parent isBlock and: [ statement parent parent isInlined ] ] ] ]
+		whileTrue: [ statement := statement parent parent statementNode ].
+	^ statement
+]
+
+{ #category : 'visitor - double dispatching' }
 OCASTTranslator >> prepareForInlining: aMessageNode [
 
 	| currentTemps |
@@ -568,15 +595,7 @@ OCASTTranslator >> visitAnnotationMarkNode: aAnnotationValueNode [
 OCASTTranslator >> visitArrayNode: anArrayNode [
 
 	| elementNodes |
-	self compilationContext optionPushConsArray ifFalse: [ ^ self visitLargeArrayNode: anArrayNode ].
-
-	self flag: #WORKAROUND. "This is reverted to the old magic number because 
-	this is failing (see https://github.com/pharo-project/pharo/issues/19058). 
-	This is not a real fix, but it allow me to continue working :)"
-
-	"stackLimit := CompiledCode fullFrameSize min: self compilationContext encoderClass arraySizeLimitForPushArrayInstruction.
-	methodBuilder stackSize + anArrayNode statements size > stackLimit ifTrue: [ ^ self visitLargeArrayNode: anArrayNode ]."
-	anArrayNode statements size > 32 ifTrue: [ ^ self visitLargeArrayNode: anArrayNode ].
+	(self canUseConsArrayFor: anArrayNode) ifFalse: [ ^ self visitLargeArrayNode: anArrayNode ].
 
 	elementNodes := anArrayNode children.
 	elementNodes do: [ :node | self visitNode: node ].

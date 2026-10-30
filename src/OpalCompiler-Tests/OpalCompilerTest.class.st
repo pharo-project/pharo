@@ -7,6 +7,26 @@ Class {
 }
 
 { #category : 'tests - array' }
+OpalCompilerTest >> arrayElements: aCount [
+
+	^ ' . ' join: ((1 to: aCount) collect: [ :each | each asString ])
+]
+
+{ #category : 'tests - array' }
+OpalCompilerTest >> arraySourceWithTemps: tempCount pending: pendingCount nesting: nestingCount [
+	"A method with many temps and a large array whose last element nests sends, as in issue 19058"
+
+	| nested |
+	nested := (1 to: nestingCount) inject: '1' into: [ :source :each | '(1 max: ' , source , ')' ].
+	^ String streamContents: [ :stream |
+			  stream nextPutAll: 'test | '.
+			  1 to: tempCount do: [ :index | stream nextPutAll: 't' , index asString , ' ' ].
+			  stream nextPutAll: '| ^ { '.
+			  1 to: pendingCount do: [ :index | stream nextPutAll: index asString , ' . ' ].
+			  stream nextPutAll: nested , ' }' ]
+]
+
+{ #category : 'tests - array' }
 OpalCompilerTest >> assertConsArrayCompilationOf: aString equals: anArray translator: aTranslatorClass [
 
 	| method |
@@ -36,6 +56,17 @@ OpalCompilerTest >> compileArraySource: aString options: anArray translator: aTr
 	^ compiler
 		  source: aString;
 		  compileOrFail
+]
+
+{ #category : 'tests - array' }
+OpalCompilerTest >> testArrayAsArgumentCountsPendingStack [
+
+	| method |
+	method := self
+		          compileArraySource: 'test ^ 1 max: (2 max: (3 max: ((1 to: 50) size max: { ' , (self arrayElements: 50) , ' } size)))'
+		          options: #( #+ optionPushConsArray )
+		          translator: OCASTTranslator.
+	self assert: (nil executeMethod: method) equals: 50
 ]
 
 { #category : 'tests - bindings' }
@@ -81,6 +112,40 @@ OpalCompilerTest >> testArrayEvaluateWithBindingsWithUppercaseName [
 		bindings: {(#MyVar -> 3)};
 		evaluate: '1+MyVar'.
 	self assert: result equals: 4
+]
+
+{ #category : 'tests - array' }
+OpalCompilerTest >> testArrayWithNestedElementFittingFrameUsesConsArray [
+
+	| method |
+	method := self
+		          compileArraySource: (self arraySourceWithTemps: 0 pending: 20 nesting: 5)
+		          options: #( #+ optionPushConsArray )
+		          translator: OCASTTranslator.
+	self deny: (method sendsSelector: #at:put:)
+]
+
+{ #category : 'tests - array' }
+OpalCompilerTest >> testArrayWithNestedElementOverflowingFrameFallsBackToLargeArray [
+
+	| method |
+	method := self
+		          compileArraySource: (self arraySourceWithTemps: 30 pending: 20 nesting: 10)
+		          options: #( #+ optionPushConsArray )
+		          translator: OCASTTranslator.
+	self assert: (method sendsSelector: #at:put:).
+	self assert: (nil executeMethod: method) size equals: 21
+]
+
+{ #category : 'tests - array' }
+OpalCompilerTest >> testArrayWithNestedElementOverflowingFrameInReflectivity [
+
+	| method |
+	method := self
+		          compileArraySource: (self arraySourceWithTemps: 30 pending: 20 nesting: 10)
+		          options: #( #+ optionPushConsArray )
+		          translator: RFASTTranslator.
+	self assert: (nil executeMethod: method) size equals: 21
 ]
 
 { #category : 'tests - bindings' }
