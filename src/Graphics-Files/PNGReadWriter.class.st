@@ -619,13 +619,13 @@ PNGReadWriter >> doPass: pass [
 dimensions"
 
 	pass = 1 ifTrue: [ ^ true ].
-	((width = 1) and: [height = 1]) ifTrue: [ ^ false ].
+	(width = 1 and: [ height = 1 ]) ifTrue: [ ^ false ].
 	pass = 2 ifTrue: [ ^ width >= 5 ].
 	pass = 3 ifTrue: [ ^ height >= 5 ].
-	pass = 4 ifTrue: [ ^ (width >=3 ) or: [height >= 5] ].
-	pass = 5 ifTrue: [ ^ height >=3 ].
-	pass = 6 ifTrue: [ ^ width >=2 ].
-	pass = 7 ifTrue: [ ^ height >=2 ]
+	pass = 4 ifTrue: [ ^ width >= 3 ].
+	pass = 5 ifTrue: [ ^ height >= 3 ].
+	pass = 6 ifTrue: [ ^ width >= 2 ].
+	pass = 7 ifTrue: [ ^ height >= 2 ]
 ]
 
 { #category : 'filtering' }
@@ -742,35 +742,31 @@ PNGReadWriter >> grayColorsFor: d [
 
 { #category : 'accessing' }
 PNGReadWriter >> nextImage [
+
 	bigEndian := EndianDetector isBigEndian.
 	filtersSeen := Bag new.
 	idatChunkStream := nil.
 	transparentPixelValue := nil.
 	unknownChunks := Set new.
 	stream skip: 8.
-	[ stream atEnd ] whileFalse: [ self processNextChunk ].
+	"IEND ends the image: any bytes after it are not chunks"
+	[ stream atEnd or: [ self processNextChunk = 'IEND' ] ] whileFalse.
 	"Set up our form"
-	palette
-		ifNotNil: [ "Dump the palette if it's the same as our standard palette"
-			palette = (StandardColors copyFrom: 1 to: palette size)
-				ifTrue: [ palette := nil ] ].
+	palette ifNotNil: [ "Dump the palette if it's the same as our standard palette"
+		palette = (StandardColors copyFrom: 1 to: palette size) ifTrue: [ palette := nil ] ].
 	(depth <= 8 and: [ palette isNotNil ])
-		ifTrue: [ form := ColorForm extent: width @ height depth: depth.
-			form colors: palette ]
+		ifTrue: [
+				form := ColorForm extent: width @ height depth: depth.
+				form colors: palette ]
 		ifFalse: [ form := Form extent: width @ height depth: depth ].
 	backColor ifNotNil: [ form fillColor: backColor ].
-	idatChunkStream
-		ifNil: [ self error: 'image data is missing' ]
-		ifNotNil: [ self processIDATChunk ].
-	unknownChunks isEmpty
-		ifFalse:
-			[ "Transcript show: ' ',unknownChunks asSortedCollection asArray printString." ].
-	self debugging
-		ifTrue: [ self crTrace: 'form = ' , form printString.
+	idatChunkStream ifNil: [ self error: 'image data is missing' ] ifNotNil: [ self processIDATChunk ].
+	unknownChunks isEmpty ifFalse: [ "Transcript show: ' ',unknownChunks asSortedCollection asArray printString." ].
+	self debugging ifTrue: [
+			self crTrace: 'form = ' , form printString.
 			self crTrace: 'colorType = ' , colorType printString.
 			self crTrace: 'interlaceMethod = ' , interlaceMethod printString.
-			self
-				crTrace: 'filters = ' , filtersSeen sortedCounts asArray printString ].
+			self crTrace: 'filters = ' , filtersSeen sortedCounts asArray printString ].
 	^ form
 ]
 
@@ -987,43 +983,54 @@ PNGReadWriter >> processInterlaced [
 
 { #category : 'chunks' }
 PNGReadWriter >> processNextChunk [
+	"Read the next chunk from the stream, check its CRC and process it. Answer the chunk type, so that the caller can stop after the IEND chunk."
+
 	| length chunkType crc chunkCrc |
 	length := self nextLong.
 	chunkType := (self next: 4) asString.
- 	(chunk isNil or: [ chunk size ~= length ])
- 		ifTrue: [ chunk := self next: length ]
- 		ifFalse: [ stream next: length into: chunk startingAt: 1 ].
+	(chunk isNil or: [ chunk size ~= length ])
+		ifTrue: [ chunk := self next: length ]
+		ifFalse: [ stream next: length into: chunk startingAt: 1 ].
 	chunkCrc := self nextLong bitXor: 4294967295.
 	crc := self
-		updateCrc: 4294967295
-		from: 1
-		to: 4
-		in: chunkType.
+		       updateCrc: 4294967295
+		       from: 1
+		       to: 4
+		       in: chunkType.
 	crc := self
-		updateCrc: crc
-		from: 1
-		to: length
-		in: chunk.
+		       updateCrc: crc
+		       from: 1
+		       to: length
+		       in: chunk.
 	crc = chunkCrc ifFalse: [ self error: 'PNGReadWriter crc error in chunk ' , chunkType ].
-	chunkType = 'IEND' ifTrue: [ ^ self	"*should* be the last chunk" ].
-	chunkType = 'sBIT' ifTrue:
-		[ ^ self processSBITChunk	"could indicate unusual sample depth in original" ].
-	chunkType = 'gAMA' ifTrue: [ ^ self	"indicates gamma correction value" ].
-	chunkType = 'bKGD' ifTrue: [ ^ self processBackgroundChunk ].
-	chunkType = 'pHYs' ifTrue: [ ^ self processPhysicalPixelChunk ].
-	chunkType = 'tRNS' ifTrue: [ ^ self processTransparencyChunk ].
-	chunkType = 'IHDR' ifTrue: [ ^ self processIHDRChunk ].
-	chunkType = 'PLTE' ifTrue: [ ^ self processPLTEChunk ].
-	chunkType = 'IDAT' ifTrue:
-		[ "---since the compressed data can span multiple
+	chunkType = 'IEND' ifTrue: [ ^ chunkType "*should* be the last chunk" ].
+	chunkType = 'sBIT' ifTrue: [
+			self processSBITChunk. "could indicate unusual sample depth in original"
+			^ chunkType ].
+	chunkType = 'gAMA' ifTrue: [ ^ chunkType "indicates gamma correction value" ].
+	chunkType = 'bKGD' ifTrue: [
+			self processBackgroundChunk.
+			^ chunkType ].
+	chunkType = 'pHYs' ifTrue: [
+			self processPhysicalPixelChunk.
+			^ chunkType ].
+	chunkType = 'tRNS' ifTrue: [
+			self processTransparencyChunk.
+			^ chunkType ].
+	chunkType = 'IHDR' ifTrue: [
+			self processIHDRChunk.
+			^ chunkType ].
+	chunkType = 'PLTE' ifTrue: [
+			self processPLTEChunk.
+			^ chunkType ].
+	chunkType = 'IDAT' ifTrue: [ "---since the compressed data can span multiple
 		chunks, stitch them all together first. later,
 		if memory is an issue, we need to figure out how
 		to do this on the fly---"
- 		idatChunkStream
- 			ifNil: [ idatChunkStream := WriteStream with: chunk copy ]
- 			ifNotNil: [ idatChunkStream nextPutAll: chunk ].
-		^ self ].
-	unknownChunks add: chunkType
+			idatChunkStream ifNil: [ idatChunkStream := WriteStream with: chunk copy ] ifNotNil: [ idatChunkStream nextPutAll: chunk ].
+			^ chunkType ].
+	unknownChunks add: chunkType.
+	^ chunkType
 ]
 
 { #category : 'chunks' }

@@ -337,6 +337,18 @@ PNGReadWriterTest >> formColorGrid [
 	^ form
 ]
 
+{ #category : 'fixtures - forms' }
+PNGReadWriterTest >> formNarrowColorStrip [
+	"Answer a 2x9 opaque 32-bit form in which every pixel has a different color. It is narrower than 3 pixels and higher than 4, so the fourth Adam7 interlace pass (starting at column 2) is empty for it.
+	To look at it: (PNGReadWriterTest new formNarrowColorStrip magnifyBy: 16) asMorph openInWindow"
+
+	| form |
+	form := Form extent: 2 @ 9 depth: 32.
+	0 to: 8 do: [ :y |
+	0 to: 1 do: [ :x | form pixelValueAt: x @ y put: 16rFF000000 + (x * 200 + 40 << 16) + (y * 28 << 8) + (255 - (y * 28)) ] ].
+	^ form
+]
+
 { #category : 'helpers - png encoding' }
 PNGReadWriterTest >> interlacedRGBPngBytesFrom: aForm [
 	"Answer the bytes of a complete PNG file encoding aForm as 8-bit RGB (color type 2) with Adam7 interlacing. PNGReadWriter cannot write interlaced PNGs, so the tests build them here, without any file."
@@ -368,6 +380,13 @@ PNGReadWriterTest >> pixelsOf: aForm differingFrom: expectedForm [
 			  (0 to: expectedForm width - 1)
 				  select: [ :x | (aForm pixelValueAt: x @ y) ~= (expectedForm pixelValueAt: x @ y) ]
 				  thenCollect: [ :x | x @ y ] ]
+]
+
+{ #category : 'helpers - png encoding' }
+PNGReadWriterTest >> pngBytesFrom: aForm [
+	"Answer the bytes of the PNG file that PNGReadWriter writes for aForm, without using any file"
+
+	^ ByteArray streamContents: [ :out | (PNGReadWriter on: out) nextPutImage: aForm ]
 ]
 
 { #category : 'helpers' }
@@ -548,6 +567,26 @@ PNGReadWriterTest >> testBlue32 [
 { #category : 'tests - colors' }
 PNGReadWriterTest >> testBlue8 [
 	self encodeAndDecodeColor: Color blue depth: 8
+]
+
+{ #category : 'tests - decoding' }
+PNGReadWriterTest >> testDecodeIgnoresBytesAfterIEND [
+
+	| expected decoded |
+	expected := self formColorGrid.
+	decoded := PNGReadWriter formFromStream: ((self pngBytesFrom: expected) , #[ 0 0 0 0 0 0 0 0 0 0 ]) readStream.
+	self assert: decoded extent equals: expected extent.
+	self assert: (self pixelsOf: decoded differingFrom: expected) equals: #(  )
+]
+
+{ #category : 'tests - decoding' }
+PNGReadWriterTest >> testDecodeInterlacedNarrowRGBKeepsAllPixels [
+
+	| expected decoded |
+	expected := self formNarrowColorStrip.
+	decoded := PNGReadWriter formFromStream: (self interlacedRGBPngBytesFrom: expected) readStream.
+	self assert: decoded extent equals: expected extent.
+	self assert: (self pixelsOf: decoded differingFrom: expected) equals: #(  )
 ]
 
 { #category : 'tests - decoding' }
