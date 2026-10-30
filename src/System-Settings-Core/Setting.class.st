@@ -121,17 +121,6 @@ Setting >> setToDefault [
 ]
 
 { #category : 'accessing' }
-Setting >> settingReceiver [
-
-	(self hasTarget not and: [ self hasParent ])
-		ifTrue: [ ^ self parent settingReceiver ifNil: [ self defaultTarget ] ].
-
-	^ self targetSelector
-		  ifNil: [ self realTarget ]
-		  ifNotNil: [ self realTarget perform: self targetSelector ]
-]
-
-{ #category : 'accessing' }
 Setting >> type [
 
 	^ type
