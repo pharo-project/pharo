@@ -100,6 +100,29 @@ QuickProjectEntry >> baselineName: aString [
 ]
 
 { #category : 'accessing' }
+QuickProjectEntry >> displayRepository [
+	"Answer the short form shown next to the name, e.g. 'owner/repo'."
+
+	| url path |
+	url := self metacelloRepositoryUrl.
+	(url includesSubstring: '://') ifFalse: [ ^ url ].
+	path := (url splitOn: '://') second substrings: '/'.
+	path size < 2 ifTrue: [ ^ url ].
+	^ path first , '/' , (path second copyUpTo: $:)
+]
+
+{ #category : 'accessing' }
+QuickProjectEntry >> effectiveBaselineName [
+	"Metacello refuses to run without a baseline, so fall back on the project name."
+
+	| baseline |
+	baseline := self baselineName ifEmpty: [ self name ].
+	^ (baseline beginsWith: 'BaselineOf')
+		ifTrue: [ baseline allButFirst: 'BaselineOf' size ]
+		ifFalse: [ baseline ]
+]
+
+{ #category : 'accessing' }
 QuickProjectEntry >> groups [
 
 	^ groups ifNil: [ groups := #() ]
@@ -114,9 +137,9 @@ QuickProjectEntry >> groups: anArray [
 { #category : 'comparing' }
 QuickProjectEntry >> hash [
 
-	self name isNotEmpty ifTrue: [ ^ self name asLowercase hash ].
-	self baselineName isNotEmpty ifTrue: [ ^ self baselineName asLowercase hash ].
-	^ self repositoryUrl asLowercase hash
+	"#= matches on any one of name, baseline or URL, so no single field can be hashed."
+
+	^ self class hash
 ]
 
 { #category : 'actions' }
@@ -141,19 +164,8 @@ QuickProjectEntry >> initialize [
 QuickProjectEntry >> isLoadedInImage [
 	"Answer true if this project (baseline class or registered project) is currently loaded in the image."
 
-	self baselineName isNotEmpty ifTrue: [ 
-		| clsName |
-		clsName := (self baselineName beginsWith: 'BaselineOf')
-			ifTrue: [ self baselineName ]
-			ifFalse: [ 'BaselineOf' , self baselineName ].
-		(self class environment hasClassNamed: clsName asSymbol) ifTrue: [ ^ true ] ].
-
-	self name isNotEmpty ifTrue: [ 
-		| clsName |
-		clsName := (self name beginsWith: 'BaselineOf')
-			ifTrue: [ self name ]
-			ifFalse: [ 'BaselineOf' , self name ].
-		(self class environment hasClassNamed: clsName asSymbol) ifTrue: [ ^ true ] ].
+	(self class environment hasClassNamed: ('BaselineOf' , self effectiveBaselineName) asSymbol)
+		ifTrue: [ ^ true ].
 
 	^ MetacelloProjectRegistry
 		registrationNamed: self name
@@ -178,10 +190,9 @@ QuickProjectEntry >> load [
 
 	| metacello |
 	metacello := Metacello new
-		repository: self repositoryUrl;
+		repository: self metacelloRepositoryUrl;
+		baseline: self effectiveBaselineName;
 		yourself.
-	self baselineName isNotEmpty ifTrue: [ 
-		metacello baseline: self baselineName ].
 	self useIncomingOnConflict ifTrue: [ 
 		metacello onConflictUseIncoming ].
 	self groups
@@ -219,15 +230,29 @@ QuickProjectEntry >> metacelloLoadScript [
 	^ String streamContents: [ :stream |
 		stream
 			<< 'Metacello new'; cr;
-			<< '  repository: '; << self repositoryUrl printString; << ';'; cr.
-		self baselineName isNotEmpty ifTrue: [ 
-			stream << '  baseline: '; << self baselineName printString; << ';'; cr ].
+			<< '  repository: '; << self metacelloRepositoryUrl printString; << ';'; cr;
+			<< '  baseline: '; << self effectiveBaselineName printString; << ';'; cr.
 		self useIncomingOnConflict ifTrue: [ 
 			stream << '  onConflictUseIncoming;'; cr ].
 		self groups 
 			ifNotEmpty: [ :g | stream << '  load: '; << g printString ]
 			ifEmpty: [ stream << '  load' ].
 		stream << '.' ]
+]
+
+{ #category : 'accessing' }
+QuickProjectEntry >> metacelloRepositoryUrl [
+	"Answer the URL in a form Metacello accepts: clone URLs pasted from GitHub become github:// ones."
+
+	| url |
+	url := self repositoryUrl trimBoth.
+	#( 'git@github.com:' 'https://github.com/' 'http://github.com/' ) do: [ :prefix |
+		(url beginsWith: prefix) ifTrue: [
+			url := 'github://' , (url allButFirst: prefix size).
+			^ (url endsWith: '.git')
+				ifTrue: [ url allButLast: '.git' size ]
+				ifFalse: [ url ] ] ].
+	^ url
 ]
 
 { #category : 'accessing' }
@@ -255,10 +280,7 @@ QuickProjectEntry >> printOn: aStream [
 QuickProjectEntry >> recordLoadInSession: aSessionMarker [
 
 	(self loadedInSessions includes: aSessionMarker) ifTrue: [ ^ self ].
-	loadedInSessions := (self loadedInSessions copyWith: aSessionMarker)
-		last: 30;
-		yourself.
-	^ self
+	loadedInSessions := (self loadedInSessions copyWith: aSessionMarker) last: (self loadedInSessions size + 1 min: 30)
 ]
 
 { #category : 'accessing' }

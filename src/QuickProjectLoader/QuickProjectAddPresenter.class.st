@@ -8,7 +8,7 @@ Inputs:
 - Groups (optional, comma-separated)
 - Use incoming on conflict checkbox (default: checked)
 
-On accept (main dialog OK button), I answer a new QuickProjectEntry.
+On accept (main dialog Add button), I answer a new QuickProjectEntry.
 "
 Class {
 	#name : 'QuickProjectAddPresenter',
@@ -37,6 +37,17 @@ QuickProjectAddPresenter class >> open [
 	^ (self newApplication: StPharoApplication current) open
 ]
 
+{ #category : 'actions' }
+QuickProjectAddPresenter >> acceptIn: aDialog [
+
+	self isFormValid ifFalse: [
+		UIManager default inform: 'Name and repository URL are required'.
+		^ self ].
+	aDialog
+		beOk;
+		close
+]
+
 { #category : 'accessing' }
 QuickProjectAddPresenter >> baselineInput [
 
@@ -49,9 +60,9 @@ QuickProjectAddPresenter >> createEntry [
 	| parsedGroups |
 	parsedGroups := self parseGroups: groupsInput text.
 	^ QuickProjectEntry new
-		name: nameInput text trimmed;
-		repositoryUrl: urlInput text trimmed;
-		baselineName: baselineInput text trimmed;
+		name: nameInput text trimBoth;
+		repositoryUrl: urlInput text trimBoth;
+		baselineName: baselineInput text trimBoth;
 		groups: parsedGroups;
 		useIncomingOnConflict: useIncomingCheckBox state;
 		isManual: true;
@@ -86,12 +97,7 @@ QuickProjectAddPresenter >> initializeDialogWindow: aDialogPresenter [
 
 	aDialogPresenter
 		addButton: 'Cancel' do: [ :dialog | dialog close ];
-		addButton: 'OK' do: [ :dialog | 
-			self isFormValid ifFalse: [ 
-				self inform: 'Please fill in required fields (Name and Repository URL)'.
-				^ self ].
-			dialog beOk.
-			dialog close ]
+		addDefaultButton: 'Add' do: [ :dialog | self acceptIn: dialog ]
 ]
 
 { #category : 'initialization' }
@@ -118,8 +124,8 @@ QuickProjectAddPresenter >> initializePresenters [
 { #category : 'testing' }
 QuickProjectAddPresenter >> isFormValid [
 
-	^ nameInput text trimmed isNotEmpty
-		and: [ urlInput text trimmed isNotEmpty ]
+	^ nameInput text trimBoth isNotEmpty
+		and: [ urlInput text trimBoth isNotEmpty ]
 ]
 
 { #category : 'accessing' }
@@ -131,10 +137,10 @@ QuickProjectAddPresenter >> nameInput [
 { #category : 'private' }
 QuickProjectAddPresenter >> parseGroups: aString [
 
-	| trimmed |
-	trimmed := aString trimmed.
-	trimmed ifEmpty: [ ^ #() ].
-	^ (trimmed substrings: $,) collect: [ :each | each trimmed ]
+	| groups |
+	groups := aString trimBoth.
+	groups ifEmpty: [ ^ #() ].
+	^ (groups substrings: ',') collect: [ :each | each trimBoth ]
 ]
 
 { #category : 'accessing' }

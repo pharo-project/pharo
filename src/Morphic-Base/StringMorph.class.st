@@ -201,12 +201,6 @@ StringMorph >> defaultColor [
 	^ self theme textColor
 ]
 
-{ #category : 'as yet unclassified' }
-StringMorph >> disableLabel [
-	
-		color := color alpha: 0.35
-]
-
 { #category : 'editing' }
 StringMorph >> doneWithEdits [
 

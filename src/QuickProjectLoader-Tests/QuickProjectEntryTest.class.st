@@ -59,9 +59,9 @@ QuickProjectEntryTest >> testEquality [
 		repositoryUrl: 'github://owner/repo/src'
 		baseline: 'MyProject'.
 	entry3 := QuickProjectEntry
-		name: 'Project A'
+		name: 'Project B'
 		repositoryUrl: 'github://owner/other/src'
-		baseline: 'MyProject'.
+		baseline: 'OtherProject'.
 
 	self assert: entry1 equals: entry2.
 	self assert: entry1 hash equals: entry2 hash.
@@ -123,7 +123,7 @@ QuickProjectEntryTest >> testMetacelloLoadScriptWithoutBaseline [
 		repositoryUrl: 'github://owner/repo'.
 
 	script := entry metacelloLoadScript.
-	self deny: (script includesSubstring: 'baseline:').
+	self assert: (script includesSubstring: 'baseline: ''MyRepo''').
 	self assert: (script includesSubstring: 'onConflictUseIncoming')
 ]
 
@@ -162,4 +162,65 @@ QuickProjectEntryTest >> testStonSerialization [
 	self assert: restored loadCount equals: 1.
 	self assert: restored useIncomingOnConflict.
 	self assert: restored equals: entry
+]
+
+{ #category : 'tests' }
+QuickProjectEntryTest >> testBaselineFallsBackOnName [
+
+	| entry |
+	entry := QuickProjectEntry name: 'Ume' repositoryUrl: 'github://FedeLoch/Ume'.
+
+	self assert: entry effectiveBaselineName equals: 'Ume'.
+	self assert: (entry metacelloLoadScript includesSubstring: 'baseline: ''Ume''')
+]
+
+{ #category : 'tests' }
+QuickProjectEntryTest >> testBaselinePrefixIsStripped [
+
+	self
+		assert: (QuickProjectEntry name: 'X' repositoryUrl: '' baseline: 'BaselineOfFoo') effectiveBaselineName
+		equals: 'Foo'
+]
+
+{ #category : 'tests' }
+QuickProjectEntryTest >> testCloneUrlsBecomeMetacelloUrls [
+
+	#( 'git@github.com:FedeLoch/Ume.git' 'https://github.com/FedeLoch/Ume.git' 'https://github.com/FedeLoch/Ume' ) do: [ :url |
+		self
+			assert: (QuickProjectEntry name: 'Ume' repositoryUrl: url) metacelloRepositoryUrl
+			equals: 'github://FedeLoch/Ume' ].
+	self
+		assert: (QuickProjectEntry name: 'X' repositoryUrl: 'github://a/b:main/src') metacelloRepositoryUrl
+		equals: 'github://a/b:main/src'
+]
+
+{ #category : 'tests' }
+QuickProjectEntryTest >> testDisplayRepository [
+
+	self
+		assert: (QuickProjectEntry name: 'X' repositoryUrl: 'github://a/b:main/src') displayRepository
+		equals: 'a/b'
+]
+
+{ #category : 'tests' }
+QuickProjectEntryTest >> testEqualEntriesHashEqually [
+
+	self
+		assert: (QuickProjectEntry name: 'A' repositoryUrl: 'github://a/b') hash
+		equals: (QuickProjectEntry name: 'B' repositoryUrl: 'github://a/b') hash
+]
+
+{ #category : 'tests' }
+QuickProjectEntryTest >> testRecordLoadInSessionKeepsLastThirty [
+
+	| entry start |
+	entry := QuickProjectEntry name: 'A' repositoryUrl: 'github://a/b'.
+	start := DateAndTime now.
+	entry recordLoadInSession: start.
+	self assert: entry loadedInSessions size equals: 1.
+
+	1 to: 40 do: [ :i | entry recordLoadInSession: start + i seconds ].
+
+	self assert: entry loadedInSessions size equals: 30.
+	self assert: entry loadedInSessions last equals: start + 40 seconds
 ]

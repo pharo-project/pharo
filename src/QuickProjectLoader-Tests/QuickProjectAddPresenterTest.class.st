@@ -82,3 +82,20 @@ QuickProjectAddPresenterTest >> testValidationRejectsEmpty [
 	presenter urlInput text: 'github://a/b'.
 	self assert: presenter isFormValid
 ]
+
+{ #category : 'tests' }
+QuickProjectAddPresenterTest >> testAcceptClosesDialogOnlyWhenValid [
+
+	| dialog |
+	dialog := presenter openDialog.
+	[
+		presenter acceptIn: dialog.
+		self deny: dialog isOk.
+		self assert: dialog isOpen.
+
+		presenter nameInput text: 'Roassal'.
+		presenter urlInput text: 'github://ObjectProfile/Roassal/src'.
+		presenter acceptIn: dialog.
+		self assert: dialog isOk.
+		self deny: dialog isOpen ] ensure: [ dialog close ]
+]

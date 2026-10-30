@@ -4,13 +4,14 @@ I manage the persistent collection of QuickProjectEntry objects.
 I am a singleton that stores project entries in a STON file at:
   FileLocator preferences / 'pharo' / 'quickProjectLoader.ston'
 
-I answer entries sorted by loadCount (most-used first), deduplicated by project name/baseline, persist on every mutation, and can infer registered projects directly from the Pharo image.
+The file is shared by every image of the user, and it is the source of truth: the entries I hold are only a cache of it. Before each mutation I re-read it if another image changed it, and I replace it in one step so a shorter list cannot leave a corrupt file behind.
+
+Entries come from real loads only. I subscribe to Metacello's end-of-execution announcement, so anything loaded with a Metacello script is remembered, from any tool, at no cost unless a load happens.
 
 ## Usage
 
 ```
-QuickProjectRepository default inferProjects. ""Auto-populate entries from image""
-QuickProjectRepository default entries. ""sorted by usage""
+QuickProjectRepository default visibleEntries. ""manual ones plus recently loaded ones""
 ```
 "
 Class {
@@ -19,7 +20,9 @@ Class {
 	#instVars : [
 		'entries',
 		'persistencePath',
-		'currentSessionMarker'
+		'currentSessionMarker',
+		'markerSession',
+		'fileStamp'
 	],
 	#classVars : [
 		'Default',
@@ -48,6 +51,21 @@ QuickProjectRepository class >> defaultPersistencePath [
 	^ FileLocator preferences / 'pharo' / 'quickProjectLoader.ston'
 ]
 
+{ #category : 'class initialization' }
+QuickProjectRepository class >> initialize [
+
+	self subscribeToMetacello
+]
+
+{ #category : 'announcements' }
+QuickProjectRepository class >> metacelloExecutionEnded: anAnnouncement [
+	"Must never get in the way of the load that is being reported."
+
+	[ self default recordExecutionOf: anAnnouncement executor ]
+		on: Error
+		do: [ :ex | ex traceCr ]
+]
+
 { #category : 'accessing' }
 QuickProjectRepository class >> recentImagesWindowSize [
 
@@ -67,21 +85,34 @@ QuickProjectRepository class >> reset [
 	RecentImagesWindowSize := nil
 ]
 
+{ #category : 'announcements' }
+QuickProjectRepository class >> subscribeToMetacello [
+	<script>
+
+	self codeSupportAnnouncer unsubscribe: self.
+	self codeSupportAnnouncer
+		when: MetacelloExecutionEndAnnouncement
+		do: [ :announcement | self metacelloExecutionEnded: announcement ]
+		for: self
+]
+
 { #category : 'adding' }
 QuickProjectRepository >> addEntry: aQuickProjectEntry [
 	"Add an entry to the repository. If a duplicate exists, update missing info instead of duplicating."
 
 	| existing |
+	self syncWithDisk.
 	existing := self rawEntries detect: [ :each | each = aQuickProjectEntry ] ifNone: [ nil ].
-	existing ifNotNil: [ 
-		existing repositoryUrl ifEmpty: [ existing repositoryUrl: aQuickProjectEntry repositoryUrl ].
-		existing baselineName ifEmpty: [ existing baselineName: aQuickProjectEntry baselineName ].
+	existing ifNil: [
+		self rawEntries add: aQuickProjectEntry.
 		self save.
-		^ existing ].
+		^ aQuickProjectEntry ].
 
-	self rawEntries add: aQuickProjectEntry.
+	existing repositoryUrl ifEmpty: [ existing repositoryUrl: aQuickProjectEntry repositoryUrl ].
+	existing baselineName ifEmpty: [ existing baselineName: aQuickProjectEntry baselineName ].
+	aQuickProjectEntry isManual ifTrue: [ existing isManual: true ].
 	self save.
-	^ aQuickProjectEntry
+	^ existing
 ]
 
 { #category : 'adding' }
@@ -106,12 +137,18 @@ QuickProjectRepository >> addEntryNamed: aName repository: aUrl baseline: aBasel
 { #category : 'accessing' }
 QuickProjectRepository >> currentSessionMarker [
 
+	"Answered lazily so that a new image session costs nothing at startup."
+
+	markerSession == Smalltalk session ifFalse: [
+		markerSession := Smalltalk session.
+		currentSessionMarker := DateAndTime now ].
 	^ currentSessionMarker
 ]
 
 { #category : 'accessing' }
 QuickProjectRepository >> currentSessionMarker: anObject [
 
+	markerSession := Smalltalk session.
 	currentSessionMarker := anObject
 ]
 
@@ -119,9 +156,6 @@ QuickProjectRepository >> currentSessionMarker: anObject [
 QuickProjectRepository >> entries [
 	"Answer all deduplicated entries in the store, most-loaded first."
 
-	self sanitizeEntries.
-	self rawEntries ifEmpty: [ self load ].
-	self rawEntries ifEmpty: [ self inferProjects ].
 	self sanitizeEntries.
 	^ self rawEntries sorted: [ :a :b | a loadCount > b loadCount ]
 ]
@@ -132,79 +166,30 @@ QuickProjectRepository >> hasEntries [
 	^ self rawEntries isNotEmpty
 ]
 
-{ #category : 'inference' }
-QuickProjectRepository >> inferProjects [
-	"Infer projects automatically from MetacelloProjectRegistry and BaselineOf subclasses in the Pharo image."
-
-	"1. From MetacelloProjectRegistry registrations"
-	[ 
-		(MetacelloProjectRegistry registry registrations) do: [ :reg |
-			| spec repoUrl baseName projName |
-			spec := reg projectSpec.
-			spec ifNotNil: [
-				projName := spec name.
-				baseName := (projName beginsWith: 'BaselineOf')
-					ifTrue: [ projName copyFrom: 11 to: projName size ]
-					ifFalse: [ projName ].
-				repoUrl := (spec respondsTo: #repositorySpecs)
-					ifTrue: [ 
-						spec repositorySpecs 
-							ifNotEmpty: [ :repos | repos first description ]
-							ifEmpty: [ '' ] ]
-					ifFalse: [ '' ].
-				repoUrl ifNotEmpty: [ 
-					self addEntry: (QuickProjectEntry
-						name: baseName
-						repositoryUrl: repoUrl
-						baseline: baseName) ] ] ]
-	] on: Error do: [ :ex | "Ignore inference errors" ].
-
-	"2. From loaded BaselineOf subclasses"
-	[
-		BaselineOf allSubclasses do: [ :cls |
-			| baseName |
-			baseName := (cls name beginsWith: 'BaselineOf')
-				ifTrue: [ cls name copyFrom: 11 to: cls name size ]
-				ifFalse: [ cls name ].
-			self addEntry: (QuickProjectEntry
-				name: baseName
-				repositoryUrl: 'github://pharo-project/' , baseName
-				baseline: baseName) ]
-	] on: Error do: [ :ex | "Ignore inference errors" ].
-
-	self sanitizeEntries.
-	self save
-]
-
 { #category : 'initialization' }
 QuickProjectRepository >> initialize [
 
 	super initialize.
 	entries := OrderedCollection new.
-	persistencePath := self class defaultPersistencePath.
-	currentSessionMarker := DateAndTime now
-]
-
-{ #category : 'private' }
-QuickProjectRepository >> isEntryVisible: anEntry [
-
-	^ anEntry isManual
-		or: [ anEntry loadedInSessions anySatisfy: [ :m | self recentSessionMarkers includes: m ] ]
+	persistencePath := self class defaultPersistencePath
 ]
 
 { #category : 'persistence' }
 QuickProjectRepository >> load [
+	"Replace the cache with the file. An unreadable file keeps the cache as it is.
+	 Entries that are neither manual nor ever loaded carry no history: older versions wrote them by guessing from the image, so they are dropped here."
 
 	| file |
 	file := self persistencePath asFileReference.
 	file exists ifFalse: [ 
 		entries := OrderedCollection new.
+		fileStamp := nil.
 		^ self ].
-	[ entries := (STON fromString: file contents) asOrderedCollection ]
+	[ entries := (STON fromString: file contents) asOrderedCollection
+		reject: [ :each | each isManual not and: [ each loadedInSessions isEmpty ] ] ]
 		on: Error
-		do: [ :ex | 
-			entries := OrderedCollection new.
-			ex return ].
+		do: [ :ex | ex traceCr ].
+	fileStamp := self stampOf: file.
 	self sanitizeEntries
 ]
 
@@ -232,15 +217,6 @@ QuickProjectRepository >> persistencePath: aFileReference [
 ]
 
 { #category : 'private' }
-QuickProjectRepository >> rankOf: anEntry [
-	"1 = most recent load. Entries are ranked by the most recent session in which they were loaded; entries never loaded in a recent session sink to the bottom."
-
-	^ self recentSessionMarkers
-		detectIndex: [ :marker | anEntry loadedInSessions includes: marker ]
-		ifNone: [ self recentSessionMarkers size + 1 ]
-]
-
-{ #category : 'private' }
 QuickProjectRepository >> rawEntries [
 
 	^ entries
@@ -251,25 +227,46 @@ QuickProjectRepository >> recentSessionMarkers [
 	"Answer the markers of the last N distinct sessions seen across all entries, newest-first."
 
 	| seenMarkers |
-	seenMarkers := OrderedCollection new.
-	self rawEntries do: [ :entry |
-		entry loadedInSessions do: [ :marker |
-			(seenMarkers includes: marker) ifFalse: [ seenMarkers add: marker ] ] ].
-	seenMarkers sort: [ :a :b | a >= b ].
-	^ seenMarkers first: (seenMarkers size min: self class recentImagesWindowSize)
+	seenMarkers := Set new.
+	self rawEntries do: [ :entry | seenMarkers addAll: entry loadedInSessions ].
+	^ (seenMarkers asArray sort: [ :a :b | a >= b ])
+		first: (seenMarkers size min: self class recentImagesWindowSize)
+]
+
+{ #category : 'actions' }
+QuickProjectRepository >> recordExecutionOf: aMetacelloExecutor [
+	"Remember a finished Metacello load. The announcement also comes after a failed load, and a failed load never brought its baseline in."
+
+	| action entry |
+	action := aMetacelloExecutor actionArg.
+	(action notNil and: [ action key = #load: ]) ifFalse: [ ^ self ].
+	aMetacelloExecutor repositoryArg ifNil: [ ^ self ].
+	entry := QuickProjectEntry
+		name: (aMetacelloExecutor baselineArg asString withoutPrefix: 'BaselineOf')
+		repositoryUrl: aMetacelloExecutor repositoryArg asString
+		baseline: (aMetacelloExecutor baselineArg asString withoutPrefix: 'BaselineOf')
+		groups: action value first asArray.
+	entry isLoadedInImage ifTrue: [ self recordLoadOf: entry ]
 ]
 
 { #category : 'actions' }
 QuickProjectRepository >> recordLoadOf: aQuickProjectEntry [
 
-	aQuickProjectEntry incrementLoadCount.
-	aQuickProjectEntry recordLoadInSession: self currentSessionMarker.
-	self save
+	| entry |
+	self syncWithDisk.
+	entry := self rawEntries
+		detect: [ :each | each = aQuickProjectEntry ]
+		ifNone: [ self rawEntries add: aQuickProjectEntry ].
+	entry incrementLoadCount.
+	entry recordLoadInSession: self currentSessionMarker.
+	self save.
+	^ entry
 ]
 
 { #category : 'removing' }
 QuickProjectRepository >> removeEntry: aQuickProjectEntry [
 
+	self syncWithDisk.
 	self rawEntries remove: aQuickProjectEntry ifAbsent: [].
 	self save
 ]
@@ -288,23 +285,50 @@ QuickProjectRepository >> sanitizeEntries [
 
 { #category : 'persistence' }
 QuickProjectRepository >> save [
+	"Write a new file and swap it in: a write stream on the existing file would keep its tail whenever the new contents are shorter."
+
+	| file temporary |
+	file := self persistencePath asFileReference.
+	file parent ensureCreateDirectory.
+	temporary := file parent / (file basename , '.tmp').
+	temporary ensureDelete.
+	temporary writeStreamDo: [ :stream |
+		stream nextPutAll: (STON toStringPretty: self rawEntries asArray) ].
+	file ensureDelete.
+	temporary moveTo: file.
+	fileStamp := self stampOf: file
+]
+
+{ #category : 'private' }
+QuickProjectRepository >> stampOf: aFileReference [
+
+	^ { aFileReference modificationTime. aFileReference size }
+]
+
+{ #category : 'persistence' }
+QuickProjectRepository >> syncWithDisk [
+	"Reload only if the file is not the one this repository last read or wrote, typically because another image changed it."
 
 	| file |
 	file := self persistencePath asFileReference.
-	file parent ensureCreateDirectory.
-	file writeStreamDo: [ :stream |
-		stream nextPutAll: (STON toStringPretty: self rawEntries asArray) ]
+	(file exists and: [ fileStamp ~= (self stampOf: file) ]) ifTrue: [ self load ]
 ]
 
 { #category : 'accessing' }
 QuickProjectRepository >> visibleEntries [
 	"Answer the entries to suggest: manually added ones plus those loaded in one of the last N image sessions, most-recently-used first."
 
-	self entries.
-	^ (self rawEntries select: [ :entry | self isEntryVisible: entry ])
+	| markers rank |
+	markers := self recentSessionMarkers.
+	rank := [ :entry |
+		markers
+			detectIndex: [ :marker | entry loadedInSessions includes: marker ]
+			ifNone: [ markers size + 1 ] ].
+	self sanitizeEntries.
+	^ (self rawEntries select: [ :entry | entry isManual or: [ (rank value: entry) <= markers size ] ])
 		sorted: [ :a :b |
 			| rankA rankB |
-			rankA := self rankOf: a.
-			rankB := self rankOf: b.
+			rankA := rank value: a.
+			rankB := rank value: b.
 			rankA < rankB or: [ rankA = rankB and: [ a name <= b name ] ] ]
 ]

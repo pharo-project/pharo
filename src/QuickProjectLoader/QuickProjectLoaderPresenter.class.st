@@ -1,19 +1,9 @@
 "
-I am the main Spec2 UI presenter for the Quick Project Loader.
+I am the small panel of the Quick Project Loader: the projects you loaded recently, one click away from being loaded again in this image.
 
-I display a modern list/table of commonly-used Metacello projects sorted by usage frequency (most-used first).
-I am designed to be thin (320px wide), tall (600px high), and positioned on the right side of the screen.
+I open by myself once in a fresh image, in the top-right corner, without taking the keyboard focus, and only if there is something to propose. Closing me is enough to dismiss me. After that I come back with the shortcut (Option+P / Cmd+Shift+P) or from the Tools menu.
 
-Features:
-- Global shortcut bound directly to World (Option+P / Cmd+Shift+P) to toggle (open & close) the window from anywhere in Pharo
-- Live search/filtering bar
-- Loaded vs Unloaded status distinction
-- Auto-infer projects from image on startup & open
-- Table view with icons, project names, baseline subtitles, and context menu
-- Single/double-click loading
-- Manual project entry ('Add Project' button)
-- World menu integration (<worldMenu>)
-- Auto-startup via SessionManager and Pharo Settings (<systemsettings>)
+Nothing happens at startup besides a flag check: the history is read when I am about to open, and the network is only used when you pick a project. Loads run in a background process, so I never block the image.
 
 ## Usage
 
@@ -25,14 +15,17 @@ Class {
 	#name : 'QuickProjectLoaderPresenter',
 	#superclass : 'SpPresenter',
 	#instVars : [
+		'header',
 		'searchInput',
-		'projectList',
-		'addButton',
-		'removeButton',
-		'repository'
+		'list',
+		'rowsMorph',
+		'items',
+		'repository',
+		'loadingEntry'
 	],
 	#classVars : [
 		'CurrentWindow',
+		'Offered',
 		'ShowOnStartup'
 	],
 	#category : 'QuickProjectLoader-UI',
@@ -43,15 +36,32 @@ Class {
 { #category : 'instance creation' }
 QuickProjectLoaderPresenter class >> closeWindow [
 
-	CurrentWindow ifNotNil: [ 
-		[ CurrentWindow close ] on: Error do: [].
+	CurrentWindow ifNotNil: [
+		CurrentWindow close.
 		CurrentWindow := nil ]
 ]
 
 { #category : 'accessing' }
 QuickProjectLoaderPresenter class >> defaultPreferredExtent [
 
-	^ 320 @ 600
+	^ self extentForRows: 5
+]
+
+{ #category : 'accessing' }
+QuickProjectLoaderPresenter class >> extentForRows: anInteger [
+	"Only as tall as what it shows, up to a list that still fits in the corner of the screen."
+
+	| rows |
+	rows := (anInteger max: 1) min: self maxVisibleRows.
+	^ 316 @ (rows * QuickProjectRowMorph rowHeight + 54
+		+ (anInteger > self maxVisibleRows ifTrue: [ 32 ] ifFalse: [ 0 ]))
+]
+
+{ #category : 'private' }
+QuickProjectLoaderPresenter class >> hasDisplay [
+	"False when the image runs from the command line or in a CI job."
+
+	^ UIManager default isKindOf: MorphicUIManager
 ]
 
 { #category : 'class initialization' }
@@ -59,11 +69,14 @@ QuickProjectLoaderPresenter class >> initialize [
 
 	KMRepository default setAsGlobalCategory: #QuickProjectLoaderCategory.
 	self registerWorldShortcut.
+	SessionManager default registerUserClassNamed: self name
+]
 
-	SessionManager default
-		register: (ClassSessionHandler forClassNamed: self name)
-		inCategory: SessionManager default userCategory
-		atPriority: SessionManager default defaultPriority
+{ #category : 'accessing' }
+QuickProjectLoaderPresenter class >> maxVisibleRows [
+	"Past this the list scrolls and a search field earns its place."
+
+	^ 6
 ]
 
 { #category : 'world menu' }
@@ -71,6 +84,7 @@ QuickProjectLoaderPresenter class >> menuCommandOn: aBuilder [
 	<worldMenu>
 
 	(aBuilder item: #QuickProjectLoader)
+		label: 'Quick Project Loader';
 		action: [ self toggle ];
 		order: 1;
 		parent: #Tools;
@@ -79,26 +93,34 @@ QuickProjectLoaderPresenter class >> menuCommandOn: aBuilder [
 ]
 
 { #category : 'instance creation' }
-QuickProjectLoaderPresenter class >> open [
-	"Open the presenter, auto-infer projects, and position it at the top-right corner of the World screen."
+QuickProjectLoaderPresenter class >> offer [
+	"Propose the recent projects without disturbing whatever the user is doing."
 
-	| presenter window worldBounds windowWidth windowHeight topX topY morphWindow |
+	| previous window |
+	Offered := true.
+	QuickProjectRepository default syncWithDisk.
+	QuickProjectRepository default visibleEntries ifEmpty: [ ^ self ].
+	previous := SystemWindow topWindow.
+	window := self open.
+	window window passivate.
+	previous ifNotNil: [ previous activate ].
+	^ window
+]
+
+{ #category : 'instance creation' }
+QuickProjectLoaderPresenter class >> open [
+	"Open the panel in the top-right corner of the World."
+
+	| window world extent |
 	self closeWindow.
 
-	presenter := self newApplication: StPharoApplication current.
-	window := presenter open.
+	window := (self newApplication: StPharoApplication current) open.
 
-	worldBounds := self currentWorld bounds.
-	windowWidth := self defaultPreferredExtent x.
-	windowHeight := self defaultPreferredExtent y.
-	topX := (worldBounds right - windowWidth - 5) max: 0.
-	topY := (worldBounds top + 35) max: 0.
-
-	(window respondsTo: #window) ifTrue: [ 
-		morphWindow := window window.
-		morphWindow ifNotNil: [ 
-			morphWindow extent: windowWidth @ windowHeight.
-			morphWindow position: topX @ topY ] ].
+	world := self currentWorld bounds.
+	extent := self extentForRows: window presenter items size.
+	window window
+		extent: extent;
+		position: ((world right - extent x - 8) max: 0) @ (world top + 35).
 
 	CurrentWindow := window.
 	^ window
@@ -114,23 +136,22 @@ QuickProjectLoaderPresenter class >> quickLoadShortcutOn: aBuilder [
 		do: [ :target :morph :event | self toggle ]
 ]
 
-{ #category : 'accessing' }
-QuickProjectLoaderPresenter class >> recentImagesWindowSize [
-
-	^ QuickProjectRepository recentImagesWindowSize
-]
-
 { #category : 'keymapping' }
 QuickProjectLoaderPresenter class >> registerWorldShortcut [
 	<script>
-	"Binds the toggle shortcut directly to the World Morph so it works everywhere on macOS."
+	"Binds the toggle shortcut directly to the World Morph so it works everywhere on macOS. The binding is saved with the image."
 
-	[ 
-		self currentWorld ifNotNil: [ :w |
-			w bindKeyCombination: $p alt toAction: [ self toggle ].
-			w bindKeyCombination: $p meta shift toAction: [ self toggle ].
-			w bindKeyCombination: $o meta shift toAction: [ self toggle ] ]
-	] on: Error do: [ :ex | "Ignore if World is not ready" ]
+	self currentWorld ifNotNil: [ :world |
+		world bindKeyCombination: $p alt toAction: [ self toggle ].
+		world bindKeyCombination: $p meta shift toAction: [ self toggle ].
+		world bindKeyCombination: $o meta shift toAction: [ self toggle ] ]
+]
+
+{ #category : 'accessing' }
+QuickProjectLoaderPresenter class >> resetOffered [
+	<script>
+
+	Offered := nil
 ]
 
 { #category : 'settings' }
@@ -138,11 +159,18 @@ QuickProjectLoaderPresenter class >> settingsOn: aBuilder [
 	<systemsettings>
 
 	(aBuilder setting: #showOnStartup)
-		label: 'Show Quick Project Loader on startup';
+		label: 'Show Quick Project Loader in new images';
 		parent: #pharoSystem;
 		default: true;
 		target: self;
-		description: 'If true, the Quick Project Loader popup appears when a new image starts'
+		description: 'If true, the Quick Project Loader proposes your recent projects the first time a new image starts'
+]
+
+{ #category : 'testing' }
+QuickProjectLoaderPresenter class >> shouldOfferOnStartup [
+	"This runs on the startup path: it must stay a few flag checks, with no file access."
+
+	^ Offered isNil and: [ self showOnStartup and: [ self hasDisplay ] ]
 ]
 
 { #category : 'accessing' }
@@ -165,112 +193,130 @@ QuickProjectLoaderPresenter class >> shutDown: isQuitting [
 { #category : 'system startup' }
 QuickProjectLoaderPresenter class >> startUp: isImageStarting [
 
-	isImageStarting ifTrue: [
-		QuickProjectRepository default currentSessionMarker: DateAndTime now.
-		self registerWorldShortcut.
-		self showOnStartup ifTrue: [
-			self open ] ]
+	(isImageStarting and: [ self shouldOfferOnStartup ])
+		ifTrue: [ UIManager default defer: [ self offer ] ]
 ]
 
 { #category : 'instance creation' }
 QuickProjectLoaderPresenter class >> toggle [
-	"Toggle the presenter window: open if closed, close if open."
+	"Toggle the panel: open if closed, close if open."
 
-	(CurrentWindow notNil and: [ 
-		(CurrentWindow respondsTo: #isBuilt) and: [ CurrentWindow isBuilt ] ]) ifTrue: [ 
-			self closeWindow.
-			^ self ].
-	self open
+	(CurrentWindow notNil and: [ CurrentWindow isOpen ]) ifTrue: [
+		self closeWindow.
+		^ self ].
+	self open presenter takeSearchFocus
 ]
 
-{ #category : 'accessing' }
-QuickProjectLoaderPresenter >> addButton [
+{ #category : 'private' }
+QuickProjectLoaderPresenter >> actionLabelFor: anEntry [
 
-	^ addButton
+	anEntry = loadingEntry ifTrue: [ ^ 'Loading...' ].
+	^ anEntry isLoadedInImage
+		ifTrue: [ 'Reload' ]
+		ifFalse: [ 'Load' ]
 ]
 
 { #category : 'actions' }
 QuickProjectLoaderPresenter >> addProject [
 
 	| dialog presenter |
-	presenter := QuickProjectAddPresenter new.
+	presenter := self instantiate: QuickProjectAddPresenter.
 	dialog := presenter openModal.
 	dialog isOk ifTrue: [
-		presenter createEntry ifNotNil: [ :entry |
-			self repository addEntry: entry.
-			self refreshList ] ]
+		self repository addEntry: presenter createEntry.
+		self refreshList ]
 ]
 
-{ #category : 'accessing' }
-QuickProjectLoaderPresenter >> copySelectedScript [
+{ #category : 'actions' }
+QuickProjectLoaderPresenter >> copyScriptOf: anEntry [
 
-	projectList selectedItem ifNotNil: [ :entry |
-		Clipboard clipboardText: entry metacelloLoadScript.
-		self inform: 'Metacello load script copied to clipboard!' ]
+	Clipboard clipboardText: anEntry metacelloLoadScript.
+	self notify: 'Metacello script copied'
 ]
 
 { #category : 'layout' }
 QuickProjectLoaderPresenter >> defaultLayout [
 
-	^ SpBoxLayout newTopToBottom
-		spacing: 5;
-		add: searchInput expand: false;
-		add: projectList;
-		add: (SpBoxLayout newLeftToRight
-			spacing: 4;
-			add: addButton;
-			add: removeButton;
-			yourself) expand: false;
+	| layout |
+	layout := SpBoxLayout newTopToBottom yourself.
+	layout add: header expand: false.
+	self repository visibleEntries size > self class maxVisibleRows
+		ifTrue: [ layout add: searchInput expand: false ].
+	^ layout
+		add: list;
 		yourself
+]
+
+{ #category : 'actions' }
+QuickProjectLoaderPresenter >> disableStartupOffer [
+
+	self class showOnStartup: false.
+	self window close
 ]
 
 { #category : 'actions' }
 QuickProjectLoaderPresenter >> filterProjects: aString [
 
-	| query filtered |
+	| query |
 	query := aString trimBoth asLowercase.
-	query ifEmpty: [
-			self refreshList.
-			^ self ].
-	filtered := self repository visibleEntries select: [ :entry |
-			            (entry name asLowercase includesSubstring: query) or: [
-				            (entry baselineName asLowercase includesSubstring: query) or: [
-					            entry repositoryUrl asLowercase includesSubstring: query ] ] ].
-	projectList items: filtered
-]
-
-{ #category : 'private' }
-QuickProjectLoaderPresenter >> iconFor: anEntry [
-
-	^ anEntry isLoadedInImage
-		ifTrue: [ self iconNamed: #smallOk ]
-		ifFalse: [ nil ]
+	items := query
+		ifEmpty: [ self repository visibleEntries ]
+		ifNotEmpty: [
+			self repository visibleEntries select: [ :entry |
+				(entry name asLowercase includesSubstring: query)
+					or: [ entry repositoryUrl asLowercase includesSubstring: query ] ] ].
+	self rebuildRows
 ]
 
 { #category : 'initialization' }
 QuickProjectLoaderPresenter >> initialize [
 
 	repository := QuickProjectRepository default.
-	repository inferProjects.
+	repository syncWithDisk.
 	super initialize
 ]
 
 { #category : 'initialization' }
-QuickProjectLoaderPresenter >> initializeButtons [
+QuickProjectLoaderPresenter >> initializeHeader [
 
-	addButton := self newButton
-		label: 'Add';
-		icon: (self iconNamed: #add);
-		help: 'Add a new project entry manually';
-		action: [ self addProject ];
+	header := self newMorph
+		morph: (QuickProjectHeaderMorph
+			title: 'Recent projects'
+			buttons: {
+				QuickProjectIconButtonMorph
+					icon: (self iconNamed: #add)
+					help: 'Add a project'
+					action: [ self addProject ].
+				QuickProjectIconButtonMorph
+					icon: (self iconNamed: #glamorousClose)
+					help: 'Close'
+					action: [ self close ] });
+		yourself
+]
+
+{ #category : 'initialization' }
+QuickProjectLoaderPresenter >> initializeList [
+
+	| pane |
+	rowsMorph := Morph new
+		color: Color transparent;
+		borderWidth: 0;
+		changeTableLayout;
+		layoutInset: (6 @ 0 corner: 6 @ 6);
+		cellInset: 2;
+		hResizing: #rigid;
+		vResizing: #shrinkWrap;
 		yourself.
-	removeButton := self newButton
-		label: 'Remove';
-		icon: (self iconNamed: #remove);
-		help: 'Remove selected project';
-		action: [ self removeSelectedProject ];
-		disable;
+	pane := GeneralScrollPaneMorph new
+		color: Color transparent;
+		borderWidth: 0;
+		hScrollbarShowNever;
+		vScrollbarShowWhenNeeded;
+		scrollTarget: rowsMorph;
 		yourself.
+	list := self newMorph
+		morph: pane;
+		yourself
 ]
 
 { #category : 'initialization' }
@@ -281,106 +327,74 @@ QuickProjectLoaderPresenter >> initializePresenters [
 		whenTextChangedDo: [ :text | self filterProjects: text ];
 		yourself.
 
-	projectList := self newTable.
-	projectList
-		addColumn: (SpImageTableColumn new
-			width: 22;
-			evaluated: [ :entry | self iconFor: entry ];
-			yourself);
-		addColumn: (SpImageTableColumn new
-			title: 'Project';
-			evaluated: [ :entry | self labelMorphFor: entry ];
-			sortFunction: [ :entry | entry name ] ascending;
-			yourself);
-		contextMenu: [ 
-			self newMenu
-				addItem: [ :item | 
-					item 
-						name: 'Load Project';
-						icon: (self iconNamed: #smallLoadProject);
-						action: [ self loadSelectedProject ] ];
-				addItem: [ :item | 
-					item 
-						name: 'Copy Metacello Script';
-						icon: (self iconNamed: #smallCopy);
-						action: [ self copySelectedScript ] ];
-				addItem: [ :item | 
-					item 
-						name: 'Remove';
-						icon: (self iconNamed: #remove);
-						action: [ self removeSelectedProject ] ];
-				yourself ];
-		whenSelectionChangedDo: [ :selection | self updateButtonStates ];
-		whenActivatedDo: [ :selection | self loadSelectedProject ];
-		yourself.
-
-	self initializeButtons.
-	self refreshList.
-
-	self whenDisplayDo: [ projectList takeKeyboardFocus ]
+	self initializeHeader.
+	self initializeList.
+	self refreshList
 ]
 
-{ #category : 'private' }
-QuickProjectLoaderPresenter >> labelMorphFor: anEntry [
+{ #category : 'initialization' }
+QuickProjectLoaderPresenter >> initializeWindow: aWindowPresenter [
 
-	| label |
-	label := anEntry name asStringMorph.
-	anEntry isLoadedInImage ifFalse: [
-		label disableLabel
-	].
-	^ label
+	super initializeWindow: aWindowPresenter.
+	aWindowPresenter withoutDecorations
+]
+
+{ #category : 'accessing' }
+QuickProjectLoaderPresenter >> items [
+
+	^ items
 ]
 
 { #category : 'actions' }
 QuickProjectLoaderPresenter >> loadProject: anEntry [
+	"Download in the background. Metacello reports the finished load to the repository, which is what brings the project to the top of the list."
 
-	| confirmMessage |
-	confirmMessage := 'Load project ''', anEntry name, '''?'.
-	(self confirm: confirmMessage) ifFalse: [ ^ self ].
-
-	self repository recordLoadOf: anEntry.
+	loadingEntry ifNotNil: [ ^ self ].
+	loadingEntry := anEntry.
 	self refreshList.
-
-	[ 
+	[ [ [
 		anEntry load.
-		self inform: 'Project ''', anEntry name, ''' loaded successfully!'
-	] on: Error do: [ :ex |
-		self inform: 'Error loading project: ', ex messageText.
-		ex pass ]
+		self notify: anEntry name , ' loaded' ]
+			on: Error
+			do: [ :ex |
+				self notify: 'Could not load ' , anEntry name , ': ' , ex messageText.
+				ex pass ] ]
+		ensure: [
+			loadingEntry := nil.
+			UIManager default defer: [ self refreshList ] ] ]
+		forkAt: Processor userBackgroundPriority
+		named: 'Quick Project Loader: ' , anEntry name
 ]
 
-{ #category : 'actions' }
-QuickProjectLoaderPresenter >> loadSelectedProject [
+{ #category : 'private' }
+QuickProjectLoaderPresenter >> notify: aString [
 
-	projectList selectedItem ifNotNil: [ :entry |
-		self loadProject: entry ]
+	UIManager default inform: aString
 ]
 
-{ #category : 'accessing' }
-QuickProjectLoaderPresenter >> projectList [
+{ #category : 'private' }
+QuickProjectLoaderPresenter >> rebuildRows [
 
-	^ projectList
+	rowsMorph removeAllMorphs.
+	items do: [ :entry | rowsMorph addMorphBack: (self rowFor: entry) ].
+	items ifEmpty: [
+		rowsMorph addMorphBack: ((StringMorph contents: 'Projects you load will show up here')
+			color: self theme ghostTextColor;
+			yourself) ].
+	self updateScrolling
 ]
 
 { #category : 'actions' }
 QuickProjectLoaderPresenter >> refreshList [
 
-	projectList items: self repository visibleEntries
-]
-
-{ #category : 'accessing' }
-QuickProjectLoaderPresenter >> removeButton [
-
-	^ removeButton
+	self filterProjects: searchInput text
 ]
 
 { #category : 'actions' }
-QuickProjectLoaderPresenter >> removeSelectedProject [
+QuickProjectLoaderPresenter >> removeProject: anEntry [
 
-	projectList selectedItem ifNotNil: [ :entry |
-		(self confirm: 'Remove project ''', entry name, ''' from list?') ifTrue: [
-			self repository removeEntry: entry.
-			self refreshList ] ]
+	self repository removeEntry: anEntry.
+	self refreshList
 ]
 
 { #category : 'accessing' }
@@ -396,22 +410,54 @@ QuickProjectLoaderPresenter >> repository: aRepository [
 	self refreshList
 ]
 
+{ #category : 'private' }
+QuickProjectLoaderPresenter >> rowFor: anEntry [
+
+	^ QuickProjectRowMorph
+		entry: anEntry
+		action: (self actionLabelFor: anEntry)
+		onLoad: [ self loadProject: anEntry ]
+		onMenu: [ (self rowMenuFor: anEntry) popUpInWorld ]
+]
+
+{ #category : 'private' }
+QuickProjectLoaderPresenter >> rowMenuFor: anEntry [
+
+	^ MenuMorph new
+		add: 'Copy Metacello Script' target: self selector: #copyScriptOf: argument: anEntry;
+		add: 'Remove from List' target: self selector: #removeProject: argument: anEntry;
+		addLine;
+		add: 'Don''t Show in New Images' target: self selector: #disableStartupOffer;
+		yourself
+]
+
 { #category : 'accessing' }
 QuickProjectLoaderPresenter >> searchInput [
 
 	^ searchInput
 ]
 
-{ #category : 'private' }
-QuickProjectLoaderPresenter >> updateButtonStates [
+{ #category : 'actions' }
+QuickProjectLoaderPresenter >> takeSearchFocus [
 
-	projectList selectedItem
-		ifNotNil: [ removeButton enable ]
-		ifNil: [ removeButton disable ]
+	searchInput takeKeyboardFocus
+]
+
+{ #category : 'private' }
+QuickProjectLoaderPresenter >> updateScrolling [
+	"The panel is as tall as its rows, so only a list past the maximum height ever needs a scrollbar."
+
+	| pane |
+	pane := list morph.
+	items size > self class maxVisibleRows
+		ifTrue: [ pane vScrollbarShowWhenNeeded ]
+		ifFalse: [ pane vScrollbarShowNever ].
+	"The gutter is always there, so rows never sit under the scrollbar nor shift when it appears."
+	rowsMorph width: self class defaultPreferredExtent x - pane scrollBarThickness - 16
 ]
 
 { #category : 'initialization' }
 QuickProjectLoaderPresenter >> windowTitle [
 
-	^ 'Quick Loader'
+	^ 'Recent Projects'
 ]
