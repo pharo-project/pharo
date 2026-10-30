@@ -966,6 +966,13 @@ ZnClient >> maximumEntitySize: integer [
 ]
 
 { #category : 'options' }
+ZnClient >> maximumLineLength: integer [
+	"Set the maximum line length in bytes that I will read from a stream before signalling ZnLineTooLong"
+
+	self localOptions at: #maximumLineLength put: integer
+]
+
+{ #category : 'options' }
 ZnClient >> maximumNumberOfDictionaryEntries [
 	"Return the maximum number of entries allowed in ZnMutliValueDictionaries before signalling ZnTooManyDictionaryEntries. This protects us from overflow attacks."
 
