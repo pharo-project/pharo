@@ -17,7 +17,7 @@ The instances created with #signature:block: have no library, so they use the 'd
 			signature: #(int (int a))
 			block: [ :a | a + 1 ].
 
-Subclasses can declare their signature in #fnSpec and their library in #ffiLibrary on the class side, and are then created with:
+Subclasses can declare their signature in #fnSpec and their library in #ffiLibraryName on the class side, and are then created with:
 
 	cb := MyCallback on: [ :a | a + 1 ].
 "

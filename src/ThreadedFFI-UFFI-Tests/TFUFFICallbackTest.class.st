@@ -189,3 +189,13 @@ TFUFFICallbackTest >> testNewCallbackIsOwnedByItsLibrary [
 
 	self assert: callback ffiLibraryName identicalTo: library
 ]
+
+{ #category : 'tests' }
+TFUFFICallbackTest >> testOnCreatesCallbackOwnedByDeclaredLibrary [
+
+	| callback |
+	callback := TFUFFIWorkerLibraryCallback on: [ :a | a + 1 ].
+
+	self assert: callback class identicalTo: TFUFFIWorkerLibraryCallback.
+	self assert: callback ffiLibraryName identicalTo: TFTestLibraryUsingWorker uniqueInstance
+]
