@@ -12,6 +12,33 @@ Class {
 	#tag : 'Files'
 }
 
+{ #category : 'helpers - png encoding' }
+PNGReadWriterTest >> adam7RGBImageDataOf: aForm [
+	"Answer the uncompressed image data of aForm laid out with Adam7 interlacing: seven reduced images made of RGB scanlines. A pass with no pixels contributes no bytes at all, as the PNG specification requires."
+
+	| startRow startColumn rowStep columnStep |
+	startRow := #( 0 0 4 0 2 0 1 ).
+	startColumn := #( 0 4 0 2 0 1 0 ).
+	rowStep := #( 8 8 8 4 4 2 2 ).
+	columnStep := #( 8 8 4 4 2 2 1 ).
+	^ ByteArray streamContents: [ :out |
+			  1 to: 7 do: [ :pass |
+					  | columns |
+					  columns := (startColumn at: pass) to: aForm width - 1 by: (columnStep at: pass).
+					  columns ifNotEmpty: [
+							  (startRow at: pass) to: aForm height - 1 by: (rowStep at: pass) do: [ :y |
+							  out nextPutAll: (self rgbScanlineOf: aForm row: y columns: columns) ] ] ] ]
+]
+
+{ #category : 'helpers - png encoding' }
+PNGReadWriterTest >> bigEndianLong: anInteger [
+	"Answer anInteger encoded on 4 bytes, most significant byte first, as PNG requires"
+
+	^ (ByteArray new: 4)
+		  unsignedLongAt: 1 put: anInteger bigEndian: true;
+		  yourself
+]
+
 { #category : 'tests - decoding' }
 PNGReadWriterTest >> coloredFiles16 [
 	"Created by
@@ -298,12 +325,72 @@ PNGReadWriterTest >> encodeColors: colorsAndFiles depth: requiredDepth [
 			self assert: encoded contents equals: original contents ]
 ]
 
+{ #category : 'fixtures - forms' }
+PNGReadWriterTest >> formColorGrid [
+	"Answer a 16x16 opaque 32-bit form in which every pixel has a different color, so that a lost or misplaced pixel is visible.
+	To look at it: (PNGReadWriterTest new formColorGrid magnifyBy: 16) asMorph openInWindow"
+
+	| form |
+	form := Form extent: 16 @ 16 depth: 32.
+	0 to: 15 do: [ :y |
+	0 to: 15 do: [ :x | form pixelValueAt: x @ y put: 16rFF000000 + (x * 16 << 16) + (y * 16 << 8) + (x + y * 8) ] ].
+	^ form
+]
+
+{ #category : 'helpers - png encoding' }
+PNGReadWriterTest >> interlacedRGBPngBytesFrom: aForm [
+	"Answer the bytes of a complete PNG file encoding aForm as 8-bit RGB (color type 2) with Adam7 interlacing. PNGReadWriter cannot write interlaced PNGs, so the tests build them here, without any file."
+
+	| header zStream |
+	header := ByteArray new: 13.
+	header
+		unsignedLongAt: 1 put: aForm width bigEndian: true;
+		unsignedLongAt: 5 put: aForm height bigEndian: true;
+		at: 9 put: 8;
+		"bit depth"at: 10 put: 2;
+		"color type: RGB"at: 13 put: 1. "interlace method: Adam7"
+	zStream := ZLibWriteStream on: (WriteStream on: ByteArray new).
+	zStream
+		nextPutAll: (self adam7RGBImageDataOf: aForm);
+		close.
+	^ ByteArray streamContents: [ :out |
+			  out nextPutAll: #[ 137 80 78 71 13 10 26 10 ].
+			  self writePngChunk: 'IHDR' data: header on: out.
+			  self writePngChunk: 'IDAT' data: zStream encodedStream contents on: out.
+			  self writePngChunk: 'IEND' data: #[  ] on: out ]
+]
+
+{ #category : 'helpers' }
+PNGReadWriterTest >> pixelsOf: aForm differingFrom: expectedForm [
+	"Answer the points where aForm and expectedForm have different pixel values"
+
+	^ (0 to: expectedForm height - 1) flatCollect: [ :y |
+			  (0 to: expectedForm width - 1)
+				  select: [ :x | (aForm pixelValueAt: x @ y) ~= (expectedForm pixelValueAt: x @ y) ]
+				  thenCollect: [ :x | x @ y ] ]
+]
+
 { #category : 'helpers' }
 PNGReadWriterTest >> readEncoded: bytes [
 	"Answer a ReadStream on the file named by fileName, if possible; else a ReadStream on bytes"
 
 	fileName ifNil:[^ bytes readStream ].
 	^(File named: fileName) readStream
+]
+
+{ #category : 'helpers - png encoding' }
+PNGReadWriterTest >> rgbScanlineOf: aForm row: y columns: columns [
+	"Answer the PNG scanline for the pixels of aForm at the given columns of row y: a filter type byte (0, no filtering) followed by 8-bit red, green and blue samples"
+
+	^ ByteArray streamContents: [ :out |
+			  out nextPut: 0.
+			  columns do: [ :x |
+					  | pixel |
+					  pixel := aForm pixelValueAt: x @ y.
+					  out
+						  nextPut: (pixel >> 16 bitAnd: 255);
+						  nextPut: (pixel >> 8 bitAnd: 255);
+						  nextPut: (pixel bitAnd: 255) ] ]
 ]
 
 { #category : 'running' }
@@ -463,6 +550,16 @@ PNGReadWriterTest >> testBlue8 [
 	self encodeAndDecodeColor: Color blue depth: 8
 ]
 
+{ #category : 'tests - decoding' }
+PNGReadWriterTest >> testDecodeInterlacedRGBKeepsAllPixels [
+
+	| expected decoded |
+	expected := self formColorGrid.
+	decoded := PNGReadWriter formFromStream: (self interlacedRGBPngBytesFrom: expected) readStream.
+	self assert: decoded extent equals: expected extent.
+	self assert: (self pixelsOf: decoded differingFrom: expected) equals: #(  )
+]
+
 { #category : 'tests - colors' }
 PNGReadWriterTest >> testGreen16 [
 	self encodeAndDecodeColor: Color green depth: 16
@@ -569,4 +666,21 @@ PNGReadWriterTest >> writeEncoded: bytes [
 	fileName asFileReference
 		ensureDelete;
 		binaryWriteStreamDo: [ :file | file nextPutAll: bytes ]
+]
+
+{ #category : 'helpers - png encoding' }
+PNGReadWriterTest >> writePngChunk: type data: aByteArray on: aStream [
+	"Write on aStream a PNG chunk: data length, type, data and CRC of type and data"
+
+	| typeAndData crc |
+	typeAndData := type asByteArray , aByteArray.
+	crc := (ZipWriteStream
+		        updateCrc: 16rFFFFFFFF
+		        from: 1
+		        to: typeAndData size
+		        in: typeAndData) bitXor: 16rFFFFFFFF.
+	aStream
+		nextPutAll: (self bigEndianLong: aByteArray size);
+		nextPutAll: typeAndData;
+		nextPutAll: (self bigEndianLong: crc)
 ]
