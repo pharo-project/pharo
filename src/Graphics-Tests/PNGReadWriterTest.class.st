@@ -14,7 +14,7 @@ Class {
 
 { #category : 'helpers - png encoding' }
 PNGReadWriterTest >> adam7RGBImageDataOf: aForm [
-	"Answer the uncompressed image data of aForm laid out with Adam7 interlacing: seven reduced images made of RGB scanlines. A pass with no pixels contributes no bytes at all, as the PNG specification requires."
+	"Answer the uncompressed image data of aForm laid out with Adam7 interlacing: seven reduced images made of unfiltered RGB scanlines. A pass with no pixels contributes no bytes at all, as the PNG specification requires."
 
 	| startRow startColumn rowStep columnStep |
 	startRow := #( 0 0 4 0 2 0 1 ).
@@ -27,7 +27,9 @@ PNGReadWriterTest >> adam7RGBImageDataOf: aForm [
 					  columns := (startColumn at: pass) to: aForm width - 1 by: (columnStep at: pass).
 					  columns ifNotEmpty: [
 							  (startRow at: pass) to: aForm height - 1 by: (rowStep at: pass) do: [ :y |
-							  out nextPutAll: (self rgbScanlineOf: aForm row: y columns: columns) ] ] ] ]
+									  out
+										  nextPut: 0;
+										  "filter type: None"nextPutAll: (self rgbSamplesOf: aForm row: y columns: columns) ] ] ] ]
 ]
 
 { #category : 'helpers - png encoding' }
@@ -37,6 +39,13 @@ PNGReadWriterTest >> bigEndianLong: anInteger [
 	^ (ByteArray new: 4)
 		  unsignedLongAt: 1 put: anInteger bigEndian: true;
 		  yourself
+]
+
+{ #category : 'helpers - png encoding' }
+PNGReadWriterTest >> bytesPerPixelForColorType: colorType [
+	"Answer the number of bytes of one pixel with 8-bit samples of colorType"
+
+	^ #( 1 nil 3 1 2 nil 4 ) at: colorType + 1
 ]
 
 { #category : 'tests - decoding' }
@@ -327,43 +336,62 @@ PNGReadWriterTest >> encodeColors: colorsAndFiles depth: requiredDepth [
 
 { #category : 'helpers - png encoding' }
 PNGReadWriterTest >> filter: filterType scanline: samples previous: previousSamples bytesPerPixel: bpp [
-	"Answer the PNG scanline for samples filtered with filterType (0 None, 1 Sub, 2 Up, 3 Average, 4 Paeth): the filter type byte followed by the filtered bytes. previousSamples are the unfiltered samples of the row above (zeros for the first row)."
+	"Answer the PNG scanline for samples filtered with filterType: the filter type byte followed by the filtered bytes. previousSamples are the unfiltered samples of the row above (zeros for the first row)."
 
 	^ ByteArray streamContents: [ :out |
 			  out nextPut: filterType.
 			  1 to: samples size do: [ :i |
-					  | a b c predictor |
-					  a := i > bpp
-						       ifTrue: [ samples at: i - bpp ]
-						       ifFalse: [ 0 ].
-					  b := previousSamples at: i.
-					  c := i > bpp
-						       ifTrue: [ previousSamples at: i - bpp ]
-						       ifFalse: [ 0 ].
-					  predictor := filterType = 0
-						               ifTrue: [ 0 ]
-						               ifFalse: [
-								               filterType = 1
-									               ifTrue: [ a ]
-									               ifFalse: [
-											               filterType = 2
-												               ifTrue: [ b ]
-												               ifFalse: [
-														               filterType = 3
-															               ifTrue: [ a + b // 2 ]
-															               ifFalse: [ self paethPredictorLeft: a above: b upperLeft: c ] ] ] ].
+					  | predictor |
+					  predictor := self
+						               predictorFor: filterType
+						               left: (i > bpp
+								                ifTrue: [ samples at: i - bpp ]
+								                ifFalse: [ 0 ])
+						               above: (previousSamples at: i)
+						               upperLeft: (i > bpp
+								                ifTrue: [ previousSamples at: i - bpp ]
+								                ifFalse: [ 0 ]).
 					  out nextPut: ((samples at: i) - predictor bitAnd: 255) ] ]
 ]
 
 { #category : 'fixtures - forms' }
 PNGReadWriterTest >> formColorGrid [
-	"Answer a 16x16 opaque 32-bit form in which every pixel has a different color, so that a lost or misplaced pixel is visible.
+	"Answer a 16x16 opaque 32-bit form in which every pixel has a different color, so that a lost or misplaced pixel is visible. Neighbouring samples often add up to an odd number, which the Average filter must round down.
 	To look at it: (PNGReadWriterTest new formColorGrid magnifyBy: 16) asMorph openInWindow"
 
 	| form |
 	form := Form extent: 16 @ 16 depth: 32.
 	0 to: 15 do: [ :y |
-	0 to: 15 do: [ :x | form pixelValueAt: x @ y put: 16rFF000000 + (x * 16 << 16) + (y * 16 << 8) + (x + y * 8) ] ].
+	0 to: 15 do: [ :x | form pixelValueAt: x @ y put: 16rFF000000 + (x * 17 << 16) + (y * 15 + 7 << 8) + (x * 5 + (y * 11)) ] ].
+	^ form
+]
+
+{ #category : 'fixtures - forms' }
+PNGReadWriterTest >> formGrayRamp [
+	"Answer a 16x16 8-bit ColorForm with a gray palette whose pixels go through all 256 gray levels, from black (top left) to white (bottom right).
+	To look at it: (PNGReadWriterTest new formGrayRamp magnifyBy: 16) asMorph openInWindow"
+
+	| form |
+	form := ColorForm extent: 16 @ 16 depth: 8.
+	form colors: ((0 to: 255) collect: [ :level | Color gray: level / 255 ]).
+	0 to: 15 do: [ :y | 0 to: 15 do: [ :x | form pixelValueAt: x @ y put: y * 16 + x ] ].
+	^ form
+]
+
+{ #category : 'fixtures - forms' }
+PNGReadWriterTest >> formIndexedTranslucentPalette [
+	"Answer a 16x16 8-bit ColorForm with a palette of 32 different colors whose alpha goes down along the palette, from opaque (first entry) to fully transparent (last entry). Pixels follow diagonal stripes, so every palette entry is used, and the indexes on the left and above a pixel add up to an odd number, which the Average filter must round down.
+	To look at it: (PNGReadWriterTest new formIndexedTranslucentPalette magnifyBy: 16) asMorph openInWindow"
+
+	| form |
+	form := ColorForm extent: 16 @ 16 depth: 8.
+	form colors: ((0 to: 31) collect: [ :i |
+				 (Color
+					  r: i * 8
+					  g: 255 - (i * 8)
+					  b: i * 37 \\ 256
+					  range: 255) alpha: 31 - i * 255 // 31 / 255 ]).
+	0 to: 15 do: [ :y | 0 to: 15 do: [ :x | form pixelValueAt: x @ y put: x + (2 * y) \\ 32 ] ].
 	^ form
 ]
 
@@ -393,14 +421,43 @@ PNGReadWriterTest >> formTranslucentColorGrid [
 ]
 
 { #category : 'helpers - png encoding' }
+PNGReadWriterTest >> graySamplesOf: aForm row: y [
+	"Answer the unfiltered 8-bit gray samples of row y of aForm, whose colors must be grays"
+
+	^ ((0 to: aForm width - 1) collect: [ :x | ((aForm colorAt: x @ y) red * 255) rounded ]) asByteArray
+]
+
+{ #category : 'helpers - png encoding' }
+PNGReadWriterTest >> headerWidth: width height: height colorType: colorType interlace: interlaceMethod [
+	"Answer the data of an IHDR chunk for an image with 8-bit samples"
+
+	^ (ByteArray new: 13)
+		  unsignedLongAt: 1 put: width bigEndian: true;
+		  unsignedLongAt: 5 put: height bigEndian: true;
+		  at: 9 put: 8;
+		  "bit depth"at: 10 put: colorType;
+		  at: 13 put: interlaceMethod;
+		  yourself
+]
+
+{ #category : 'helpers - png encoding' }
+PNGReadWriterTest >> indexedSamplesOf: aForm row: y [
+	"Answer the palette indexes of row y of aForm, an 8-bit ColorForm"
+
+	^ ((0 to: aForm width - 1) collect: [ :x | aForm pixelValueAt: x @ y ]) asByteArray
+]
+
+{ #category : 'helpers - png encoding' }
 PNGReadWriterTest >> interlacedRGBPngBytesFrom: aForm [
 	"Answer the bytes of a complete PNG file encoding aForm as 8-bit RGB (color type 2) with Adam7 interlacing. PNGReadWriter cannot write interlaced PNGs, so the tests build them here, without any file."
 
 	^ self
-		  pngBytesOfWidth: aForm width
-		  height: aForm height
-		  colorType: 2
-		  interlace: 1
+		  pngBytesWithHeader: (self
+				   headerWidth: aForm width
+				   height: aForm height
+				   colorType: 2
+				   interlace: 1)
+		  chunks: #(  )
 		  imageData: (self adam7RGBImageDataOf: aForm)
 ]
 
@@ -418,13 +475,33 @@ PNGReadWriterTest >> paethPredictorLeft: a above: b upperLeft: c [
 	^ c
 ]
 
+{ #category : 'helpers - png encoding' }
+PNGReadWriterTest >> paletteChunksOf: aForm [
+	"Answer the PLTE and tRNS chunks (type -> data associations) describing the colors of aForm, a ColorForm"
+
+	| palette alphas |
+	palette := ByteArray streamContents: [ :out |
+			           aForm colors do: [ :each |
+					           out
+						           nextPut: (each red * 255) rounded;
+						           nextPut: (each green * 255) rounded;
+						           nextPut: (each blue * 255) rounded ] ].
+	alphas := (aForm colors collect: [ :each | (each alpha * 255) rounded ]) asByteArray.
+	^ {
+		  ('PLTE' -> palette).
+		  ('tRNS' -> alphas) }
+]
+
 { #category : 'helpers' }
 PNGReadWriterTest >> pixelsOf: aForm differingFrom: expectedForm [
-	"Answer the points where aForm and expectedForm have different pixel values"
+	"Answer the points where aForm and expectedForm show different colors. Both are compared as 32-bit forms, so a ColorForm is compared through its palette colors rather than its indexes."
 
-	^ (0 to: expectedForm height - 1) flatCollect: [ :y |
-			  (0 to: expectedForm width - 1)
-				  select: [ :x | (aForm pixelValueAt: x @ y) ~= (expectedForm pixelValueAt: x @ y) ]
+	| actual expected |
+	actual := aForm asFormOfDepth: 32.
+	expected := expectedForm asFormOfDepth: 32.
+	^ (0 to: expected height - 1) flatCollect: [ :y |
+			  (0 to: expected width - 1)
+				  select: [ :x | (actual pixelValueAt: x @ y) ~= (expected pixelValueAt: x @ y) ]
 				  thenCollect: [ :x | x @ y ] ]
 ]
 
@@ -436,17 +513,39 @@ PNGReadWriterTest >> pngBytesFrom: aForm [
 ]
 
 { #category : 'helpers - png encoding' }
-PNGReadWriterTest >> pngBytesOfWidth: width height: height colorType: colorType interlace: interlaceMethod imageData: imageData [
-	"Answer the bytes of a complete PNG file with 8-bit samples: signature, IHDR, one IDAT holding the compressed imageData (scanlines already filtered) and IEND"
+PNGReadWriterTest >> pngBytesFrom: aForm colorType: colorType filters: filterTypes [
+	"Answer the bytes of a complete non-interlaced PNG file encoding aForm with 8-bit samples of colorType (0 gray, 2 RGB, 3 indexed, 6 RGBA). Row y is filtered with the filter type at position y + 1 of filterTypes, cycling through it, so that each filter is exercised."
 
-	| header zStream |
-	header := ByteArray new: 13.
-	header
-		unsignedLongAt: 1 put: width bigEndian: true;
-		unsignedLongAt: 5 put: height bigEndian: true;
-		at: 9 put: 8;
-		"bit depth"at: 10 put: colorType;
-		at: 13 put: interlaceMethod.
+	| bpp previous imageData |
+	bpp := self bytesPerPixelForColorType: colorType.
+	previous := ByteArray new: aForm width * bpp.
+	imageData := ByteArray streamContents: [ :out |
+			             0 to: aForm height - 1 do: [ :y |
+					             | samples |
+					             samples := self samplesOf: aForm row: y colorType: colorType.
+					             out nextPutAll: (self
+							              filter: (filterTypes at: y \\ filterTypes size + 1)
+							              scanline: samples
+							              previous: previous
+							              bytesPerPixel: bpp).
+					             previous := samples ] ].
+	^ self
+		  pngBytesWithHeader: (self
+				   headerWidth: aForm width
+				   height: aForm height
+				   colorType: colorType
+				   interlace: 0)
+		  chunks: (colorType = 3
+				   ifTrue: [ self paletteChunksOf: aForm ]
+				   ifFalse: [ #(  ) ])
+		  imageData: imageData
+]
+
+{ #category : 'helpers - png encoding' }
+PNGReadWriterTest >> pngBytesWithHeader: header chunks: chunks imageData: imageData [
+	"Answer the bytes of a complete PNG file: signature, IHDR with header, the chunks (type -> data associations) that must come before the image data, one IDAT holding the compressed imageData (scanlines already filtered) and IEND"
+
+	| zStream |
 	zStream := ZLibWriteStream on: (WriteStream on: ByteArray new).
 	zStream
 		nextPutAll: imageData;
@@ -454,8 +553,20 @@ PNGReadWriterTest >> pngBytesOfWidth: width height: height colorType: colorType 
 	^ ByteArray streamContents: [ :out |
 			  out nextPutAll: #[ 137 80 78 71 13 10 26 10 ].
 			  self writePngChunk: 'IHDR' data: header on: out.
+			  chunks do: [ :each | self writePngChunk: each key data: each value on: out ].
 			  self writePngChunk: 'IDAT' data: zStream encodedStream contents on: out.
 			  self writePngChunk: 'IEND' data: #[  ] on: out ]
+]
+
+{ #category : 'helpers - png encoding' }
+PNGReadWriterTest >> predictorFor: filterType left: a above: b upperLeft: c [
+	"Answer the value that filterType (0 None, 1 Sub, 2 Up, 3 Average, 4 Paeth) predicts for a byte, from the corresponding bytes of the pixel on the left, above and above-left"
+
+	filterType = 0 ifTrue: [ ^ 0 ].
+	filterType = 1 ifTrue: [ ^ a ].
+	filterType = 2 ifTrue: [ ^ b ].
+	filterType = 3 ifTrue: [ ^ a + b // 2 ].
+	^ self paethPredictorLeft: a above: b upperLeft: c
 ]
 
 { #category : 'helpers' }
@@ -467,11 +578,10 @@ PNGReadWriterTest >> readEncoded: bytes [
 ]
 
 { #category : 'helpers - png encoding' }
-PNGReadWriterTest >> rgbScanlineOf: aForm row: y columns: columns [
-	"Answer the PNG scanline for the pixels of aForm at the given columns of row y: a filter type byte (0, no filtering) followed by 8-bit red, green and blue samples"
+PNGReadWriterTest >> rgbSamplesOf: aForm row: y columns: columns [
+	"Answer the unfiltered 8-bit red, green and blue samples of the pixels of aForm at the given columns of row y"
 
 	^ ByteArray streamContents: [ :out |
-			  out nextPut: 0.
 			  columns do: [ :x |
 					  | pixel |
 					  pixel := aForm pixelValueAt: x @ y.
@@ -479,30 +589,6 @@ PNGReadWriterTest >> rgbScanlineOf: aForm row: y columns: columns [
 						  nextPut: (pixel >> 16 bitAnd: 255);
 						  nextPut: (pixel >> 8 bitAnd: 255);
 						  nextPut: (pixel bitAnd: 255) ] ]
-]
-
-{ #category : 'helpers - png encoding' }
-PNGReadWriterTest >> rgbaPngBytesFrom: aForm filters: filterTypes [
-	"Answer the bytes of a complete non-interlaced PNG file encoding aForm as 8-bit RGBA (color type 6). Row y is filtered with the filter type at position y + 1 of filterTypes, cycling through it, so that each filter is exercised."
-
-	| previous imageData |
-	previous := ByteArray new: aForm width * 4.
-	imageData := ByteArray streamContents: [ :out |
-			             0 to: aForm height - 1 do: [ :y |
-					             | samples |
-					             samples := self rgbaSamplesOf: aForm row: y.
-					             out nextPutAll: (self
-							              filter: (filterTypes at: y \\ filterTypes size + 1)
-							              scanline: samples
-							              previous: previous
-							              bytesPerPixel: 4).
-					             previous := samples ] ].
-	^ self
-		  pngBytesOfWidth: aForm width
-		  height: aForm height
-		  colorType: 6
-		  interlace: 0
-		  imageData: imageData
 ]
 
 { #category : 'helpers - png encoding' }
@@ -518,6 +604,17 @@ PNGReadWriterTest >> rgbaSamplesOf: aForm row: y [
 						  nextPut: (pixel >> 8 bitAnd: 255);
 						  nextPut: (pixel bitAnd: 255);
 						  nextPut: (pixel >> 24 bitAnd: 255) ] ]
+]
+
+{ #category : 'helpers - png encoding' }
+PNGReadWriterTest >> samplesOf: aForm row: y colorType: colorType [
+	"Answer the unfiltered 8-bit samples of row y of aForm, laid out as colorType requires (0 gray, 2 RGB, 3 indexed, 6 RGBA)"
+
+	colorType = 0 ifTrue: [ ^ self graySamplesOf: aForm row: y ].
+	colorType = 2 ifTrue: [ ^ self rgbSamplesOf: aForm row: y columns: (0 to: aForm width - 1) ].
+	colorType = 3 ifTrue: [ ^ self indexedSamplesOf: aForm row: y ].
+	colorType = 6 ifTrue: [ ^ self rgbaSamplesOf: aForm row: y ].
+	self error: 'Unsupported color type ' , colorType printString
 ]
 
 { #category : 'running' }
@@ -678,11 +775,33 @@ PNGReadWriterTest >> testBlue8 [
 ]
 
 { #category : 'tests - decoding' }
+PNGReadWriterTest >> testDecodeGrayWithAllFilterTypes [
+	"Rows use the filters Paeth, Average, Up, Sub and None in turn, so that each one also appears with a non-zero row above"
+
+	| expected decoded |
+	expected := self formGrayRamp.
+	decoded := PNGReadWriter formFromStream: (self pngBytesFrom: expected colorType: 0 filters: #( 4 3 2 1 0 )) readStream.
+	self assert: decoded extent equals: expected extent.
+	self assert: (self pixelsOf: decoded differingFrom: expected) equals: #(  )
+]
+
+{ #category : 'tests - decoding' }
 PNGReadWriterTest >> testDecodeIgnoresBytesAfterIEND [
 
 	| expected decoded |
 	expected := self formColorGrid.
 	decoded := PNGReadWriter formFromStream: ((self pngBytesFrom: expected) , #[ 0 0 0 0 0 0 0 0 0 0 ]) readStream.
+	self assert: decoded extent equals: expected extent.
+	self assert: (self pixelsOf: decoded differingFrom: expected) equals: #(  )
+]
+
+{ #category : 'tests - decoding' }
+PNGReadWriterTest >> testDecodeIndexedWithAllFilterTypes [
+	"The palette has translucent and transparent entries, so the tRNS chunk matters. Rows use the filters Paeth, Average, Up, Sub and None in turn."
+
+	| expected decoded |
+	expected := self formIndexedTranslucentPalette.
+	decoded := PNGReadWriter formFromStream: (self pngBytesFrom: expected colorType: 3 filters: #( 4 3 2 1 0 )) readStream.
 	self assert: decoded extent equals: expected extent.
 	self assert: (self pixelsOf: decoded differingFrom: expected) equals: #(  )
 ]
@@ -713,7 +832,18 @@ PNGReadWriterTest >> testDecodeRGBAWithAllFilterTypes [
 
 	| expected decoded |
 	expected := self formTranslucentColorGrid.
-	decoded := PNGReadWriter formFromStream: (self rgbaPngBytesFrom: expected filters: #( 4 3 2 1 0 )) readStream.
+	decoded := PNGReadWriter formFromStream: (self pngBytesFrom: expected colorType: 6 filters: #( 4 3 2 1 0 )) readStream.
+	self assert: decoded extent equals: expected extent.
+	self assert: (self pixelsOf: decoded differingFrom: expected) equals: #(  )
+]
+
+{ #category : 'tests - decoding' }
+PNGReadWriterTest >> testDecodeRGBWithAllFilterTypes [
+	"Rows use the filters Paeth, Average, Up, Sub and None in turn, so that each one also appears with a non-zero row above"
+
+	| expected decoded |
+	expected := self formColorGrid.
+	decoded := PNGReadWriter formFromStream: (self pngBytesFrom: expected colorType: 2 filters: #( 4 3 2 1 0 )) readStream.
 	self assert: decoded extent equals: expected extent.
 	self assert: (self pixelsOf: decoded differingFrom: expected) equals: #(  )
 ]
