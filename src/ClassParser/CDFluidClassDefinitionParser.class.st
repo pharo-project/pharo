@@ -62,18 +62,18 @@ CDFluidClassDefinitionParser class >> parse: aString [
 
 { #category : 'settings' }
 CDFluidClassDefinitionParser class >> settingsOn: aBuilder [
-	
+
 	<systemsettings>
 	(aBuilder setting: #unrestrictedVariableDefinitions)
-		parent: #codeBrowsing;
-		default: false;
+		parentName: #codeBrowsing;
+		defaultValue: false;
 		label: 'Unrestricted Slots/Class Variable Definitions';
 		description: 'EXPERIMENTAL: If true, the system will allow any expression as 
 a Variable Definition (for Slots and Classvariables) that evaluates to a valid instance. 
 		
 WARNING1: you have to load all the Variable implementation classes *before* any users. 
 WARNING2: the definition will be loaded by *unchecked* evaluation';
-		target: self.
+		target: self
 ]
 
 { #category : 'settings' }

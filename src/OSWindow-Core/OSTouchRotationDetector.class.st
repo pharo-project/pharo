@@ -32,22 +32,23 @@ OSTouchRotationDetector class >> minAngleBeforeDetection: anInteger [
 
 { #category : 'settings' }
 OSTouchRotationDetector class >> minAngleBeforeDetectionSettingsOn: aBuilder [
+
 	<systemsettings>
 	(aBuilder setting: #minAngleBeforeDetection)
 		target: self;
-		default: 10;
+		defaultValue: 10;
 		label: 'Minimal angle (degrees)';
-		description:
-				'Minimal angle, in degrees, that the fingers have to rotate before detection';
-		parent: #rotationGesture
+		description: 'Minimal angle, in degrees, that the fingers have to rotate before detection';
+		parentName: #rotationGesture
 ]
 
 { #category : 'settings' }
 OSTouchRotationDetector class >> touchRotationSettingsOn: aBuilder [
+
 	<systemsettings>
 	(aBuilder group: #rotationGesture)
 		label: 'Rotation';
-		parent: #touchGestures
+		parentName: #touchGestures
 ]
 
 { #category : 'preconditions' }

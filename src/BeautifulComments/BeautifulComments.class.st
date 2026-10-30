@@ -21,17 +21,18 @@ Class {
 { #category : 'settings' }
 BeautifulComments class >> beautifulCommentsSettingsOn: aBuilder [
 	"These settings are added to the settings defined in Microdown>>preferencesSettingsOn:"
+
 	<systemsettings>
 	(aBuilder setting: #rendering)
-		parent: #microdownAndcomments;
+		parentName: #microdownAndcomments;
 		label: 'Enable richtext comments';
-		default: true;
+		defaultValue: true;
 		target: self;
 		description: self renderingDocForSetting.
 	(aBuilder setting: #captureErrors)
-		parent: #microdownAndcomments;
+		parentName: #microdownAndcomments;
 		label: 'Enable rendering error capture';
-		default: true;
+		defaultValue: true;
 		target: self;
 		description: self captureErrorsDocForSetting
 ]

@@ -56,12 +56,12 @@ GraphicFontSettings class >> fontSizeRowSettingsOn: aBuilder [
 	<systemsettings>
 
 	(aBuilder pickOne: #fontSize)
-		parent: #standardFonts;
+		parentName: #standardFonts;
 		label: 'Predefined Styles';
 		description: '';
 		target: GraphicFontSettings;		
 		selector: #fontSize;
-		default: self fontSize;
+		defaultValue: self fontSize;
 		order: -1;
 		domainValues: {
 				('Small' -> #small).
@@ -72,14 +72,12 @@ GraphicFontSettings class >> fontSizeRowSettingsOn: aBuilder [
 ]
 
 { #category : 'private' }
-GraphicFontSettings class >> pickFont: aPresenter [
+GraphicFontSettings class >> pickFont [
 
 	FontChooser
 		openModalWithTitle: 'Font for all font'
 		initialFont: StandardFonts defaultFont
-		onAcceptDo: [ :aFont | self resetAllFontsTo: aFont ].
-
-	aPresenter ifNotNil: [ aPresenter window presenter announce: StSettingModelChanged ]
+		onAcceptDo: [ :aFont | self resetAllFontsTo: aFont ]
 ]
 
 { #category : 'fonts' }
@@ -132,49 +130,47 @@ GraphicFontSettings class >> standardFontsSettingsOn: aBuilder [
 	(aBuilder group: #standardFonts)
 		label: 'Standard fonts';
 		target: StandardFonts;
-		parent: #appearance;
+		parentName: #appearance;
 		order: 4;
 		with: [
-			(aBuilder button: #pickFont:)
+			(aBuilder button: #pickFont)
 				order: 0;
 				description: 'Pick an unique font for all fonts of this category' ;
 				target: self;
-				getSelector: #font;
-				setSelector: #font:;
 				label: 'Pick font for all';
 				buttonLabel: 'Pick'.
 			(aBuilder setting: #defaultFont)
 				order: 1;
 				description: 'The default text font' ;
-				default: (LogicalFont familyName: 'Source Sans Pro' pointSize: 10);
+				defaultValue: (LogicalFont familyName: 'Source Sans Pro' pointSize: 10);
 				dialog: (MessageSend receiver: self selector: #resetAllFontToDefaultButton);
 				label: 'Default'.
 			(aBuilder setting: #codeFont)
 				description: 'The standard code font' ;
-				default: (LogicalFont familyName: 'Source Code Pro' pointSize: 10);
+				defaultValue: (LogicalFont familyName: 'Source Code Pro' pointSize: 10);
 				label: 'Code'.
 			(aBuilder setting: #listFont)
 				description: 'The standard list font' ;
-				default: (LogicalFont familyName: 'Source Sans Pro' pointSize: 10);
+				defaultValue: (LogicalFont familyName: 'Source Sans Pro' pointSize: 10);
 				label: 'List'.
 			(aBuilder setting: #menuFont)
 				description: 'The standard menu font' ;
-				default: (LogicalFont familyName: 'Source Sans Pro' pointSize: 10);
+				defaultValue: (LogicalFont familyName: 'Source Sans Pro' pointSize: 10);
 				label: 'Menu' .
 			(aBuilder setting: #buttonFont)
 				description: 'The standard button font' ;
-				default: (LogicalFont familyName: 'Source Sans Pro' pointSize: 10);
+				defaultValue: (LogicalFont familyName: 'Source Sans Pro' pointSize: 10);
 				label: 'Button' .
 			(aBuilder setting: #windowTitleFont)
 				description: 'The standard window title font' ;
-				default: (LogicalFont familyName: 'Source Sans Pro' pointSize: 11);
+				defaultValue: (LogicalFont familyName: 'Source Sans Pro' pointSize: 11);
 				label: 'Window title' .
 			(aBuilder setting: #balloonFont)
 				description: 'The standard balloon-help font' ;
-				default: (LogicalFont familyName: 'Source Sans Pro' pointSize: 9);
+				defaultValue: (LogicalFont familyName: 'Source Sans Pro' pointSize: 9);
 				label: 'Balloon-help' .
 			(aBuilder setting: #haloFont)
-				default: (LogicalFont familyName: 'Source Sans Pro' pointSize: 9);
+				defaultValue: (LogicalFont familyName: 'Source Sans Pro' pointSize: 9);
 				description: 'The morphic halo font' ;
 				label: 'Morphic halo' ]
 ]

@@ -14,15 +14,16 @@ Class {
 
 { #category : 'settings' }
 FreeTypeSystemSettings class >> freeTypeSettingsOn: aBuilder [
+
 	<systemsettings>
 	(aBuilder setting: #noFt2Library)
 		target: self;
 		iconName: #smallConfiguration;
 		type: #Label;
 		label: 'Free Type';
-		default: 'Free type fonts are not available';
+		defaultValue: 'Free type fonts are not available';
 		precondition: [ FT2Library current isAvailable not ];
-		parent: #appearance;
+		parentName: #appearance;
 		order: 3;
 		description: 'Free type fonts are not available probably because the FT2 plugin is not installed. Check your VM installation'.
 
@@ -30,61 +31,61 @@ FreeTypeSystemSettings class >> freeTypeSettingsOn: aBuilder [
 		iconName: #smallConfiguration;
 		label: 'Free Type';
 		description: '';
-		parent: #appearance;
+		parentName: #appearance;
 		order: 3;
-		with: [ 
-			(aBuilder setting: #loadFt2Library)
-				order: 1;
-				target: self;
-				default: true;
-				label: 'Use FreeType';
-				precondition: [ FT2Library current isNotNil ];
-				description: 'If checked, it allows the usage of Freetype fonts and updates available fonts by scanning the current system'.				
-			
-			(aBuilder pickOne: #monitorType)
-				label: 'Monitor type';
-				description: 'LCD is generally better for flat screens';
-				target: FreeTypeSettings;
-				targetSelector: #current;
-				order: 2;
-				default: #LCD;
-				domainValues: {#LCD . #CRT}.
-			(aBuilder setting: #updateFontsAtImageStartup)
-				order: 3;
-				target: FreeTypeSettings;
-				default: false;
-				label: 'Update fonts at startup';
-				description: 'If true, then the available font list is recomputed at each startup'.
-			(aBuilder group: #advancedSettings)
-				order: 4;
-				label: 'Advanced features';
-				description: 'Some very specific parameters as the hinting or the cache size';
-				with: [ (aBuilder range: #cacheSize)
-						target: FreeTypeCache;
-						targetSelector: #current;
-						label: 'Cache size';
-						description: 'The size of the font cache in KBytes';
-						default: 5000;
-						range: (0 to: 50000 by: 10).
-					(aBuilder pickOne: #hintingSymbol)
-						label: 'Hinting';
-						description: self glyphShapesHelpText;
-						target: FreeTypeSettings;
-						targetSelector: #current;
-						default: #Light;
-						domainValues:
-							{('Light' -> #Light).
-							('Normal' -> #Normal).
-							('Full' -> #Full).
-							('None' -> #None)}.
-					(aBuilder range: #glyphContrast)
-						target: FreeTypeSettings;
-						targetSelector: #current;
-						default: 55.0;
-						label: 'Glyph contrast';
-						description:
-							'Change the contrast level for glyphs. This is an integer between 1 and 100' ;
-						range: (0 to: 100 by: 10) ] ]
+		with: [
+				(aBuilder setting: #loadFt2Library)
+					order: 1;
+					target: self;
+					defaultValue: true;
+					label: 'Use FreeType';
+					precondition: [ FT2Library current isNotNil ];
+					description: 'If checked, it allows the usage of Freetype fonts and updates available fonts by scanning the current system'.
+
+				(aBuilder pickOne: #monitorType)
+					label: 'Monitor type';
+					description: 'LCD is generally better for flat screens';
+					target: FreeTypeSettings;
+					targetSelector: #current;
+					order: 2;
+					defaultValue: #LCD;
+					domainValues: { #LCD. #CRT }.
+				(aBuilder setting: #updateFontsAtImageStartup)
+					order: 3;
+					target: FreeTypeSettings;
+					defaultValue: false;
+					label: 'Update fonts at startup';
+					description: 'If true, then the available font list is recomputed at each startup'.
+				(aBuilder group: #advancedSettings)
+					order: 4;
+					label: 'Advanced features';
+					description: 'Some very specific parameters as the hinting or the cache size';
+					with: [
+							(aBuilder range: #cacheSize)
+								target: FreeTypeCache;
+								targetSelector: #current;
+								label: 'Cache size';
+								description: 'The size of the font cache in KBytes';
+								defaultValue: 5000;
+								range: (0 to: 50000 by: 10).
+							(aBuilder pickOne: #hintingSymbol)
+								label: 'Hinting';
+								description: self glyphShapesHelpText;
+								target: FreeTypeSettings;
+								targetSelector: #current;
+								defaultValue: #Light;
+								domainValues: {
+										('Light' -> #Light).
+										('Normal' -> #Normal).
+										('Full' -> #Full).
+										('None' -> #None) }.
+							(aBuilder range: #glyphContrast)
+								target: FreeTypeSettings;
+								targetSelector: #current;
+								defaultValue: 50;
+								label: 'Glyph contrast';
+								description: 'Change the contrast level for glyphs. This is an integer between 1 and 100';
+								range: (0 to: 100 by: 10) ] ]
 ]
 
 { #category : 'settings' }
