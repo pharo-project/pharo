@@ -694,12 +694,11 @@ PNGReadWriter >> filterPaeth: count [
 
 { #category : 'filtering' }
 PNGReadWriter >> filterScanline: filterType count: count [
+	"Undo the filter of the current scanline, signalling a PNGFormatError for a filter type the PNG specification does not define"
 
-	self
-		perform: (
-			#(filterNone: filterHorizontal: filterVertical: filterAverage: filterPaeth:)
-				at: filterType+1)
-		with: count
+	(filterType isInteger and: [ filterType between: 0 and: 4 ]) ifFalse: [
+		PNGFormatError signal: 'invalid filter type ' , filterType printString ].
+	self perform: (#( filterNone: filterHorizontal: filterVertical: filterAverage: filterPaeth: ) at: filterType + 1) with: count
 ]
 
 { #category : 'filtering' }
@@ -740,6 +739,15 @@ PNGReadWriter >> grayColorsFor: d [
 		]
 ]
 
+{ #category : 'testing' }
+PNGReadWriter >> isValidBitDepth: bitDepth forColorType: aColorType [
+	"Answer whether the PNG specification allows bitDepth for aColorType (0 gray, 2 RGB, 3 indexed, 4 gray with alpha, 6 RGBA)"
+
+	| allowedDepths |
+	allowedDepths := #( #( 1 2 4 8 16 ) nil #( 8 16 ) #( 1 2 4 8 ) #( 8 16 ) nil #( 8 16 ) ) at: aColorType + 1 ifAbsent: [ nil ].
+	^ allowedDepths isNotNil and: [ allowedDepths includes: bitDepth ]
+]
+
 { #category : 'accessing' }
 PNGReadWriter >> nextImage [
 
@@ -749,6 +757,7 @@ PNGReadWriter >> nextImage [
 	transparentPixelValue := nil.
 	unknownChunks := Set new.
 	stream skip: 8.
+	self processNextChunk = 'IHDR' ifFalse: [ PNGFormatError signal: 'IHDR must be the first chunk' ].
 	"IEND ends the image: any bytes after it are not chunks"
 	[ stream atEnd or: [ self processNextChunk = 'IEND' ] ] whileFalse.
 	"Set up our form"
@@ -911,73 +920,55 @@ PNGReadWriter >> processIDATChunk [
 
 { #category : 'chunks' }
 PNGReadWriter >> processIHDRChunk [
-	width := chunk
-		longAt: 1
-		bigEndian: true.
-	height := chunk
-		longAt: 5
-		bigEndian: true.
+	"Read the image header and check it against the PNG specification, signalling a PNGFormatError when it is invalid"
+
+	chunk size = 13 ifFalse: [ PNGFormatError signal: 'IHDR chunk must be 13 bytes long' ].
+	width := chunk longAt: 1 bigEndian: true.
+	height := chunk longAt: 5 bigEndian: true.
+	((width between: 1 and: 16r7FFFFFFF) and: [ height between: 1 and: 16r7FFFFFFF ]) ifFalse: [
+		PNGFormatError signal: 'invalid image size ' , width printString , 'x' , height printString ].
 	bitsPerChannel := chunk at: 9.
 	colorType := chunk at: 10.
-	"compression := chunk at: 11."	"TODO - validate compression"
-	"filterMethod := chunk at: 12."	"TODO - validate filterMethod"
-	interlaceMethod := chunk at: 13.	"TODO - validate interlace method"
-	(#(2 4 6 ) includes: colorType) ifTrue: [ depth := 32 ].
-	(#(0 3 ) includes: colorType) ifTrue:
-		[ depth := bitsPerChannel min: 8.
-		colorType = 0 ifTrue:
-			[ "grayscale"
-			palette := self grayColorsFor: depth ] ].
+	(self isValidBitDepth: bitsPerChannel forColorType: colorType) ifFalse: [
+		PNGFormatError signal: 'invalid bit depth ' , bitsPerChannel printString , ' for color type ' , colorType printString ].
+	(chunk at: 11) = 0 ifFalse: [ PNGFormatError signal: 'unknown compression method ' , (chunk at: 11) printString ].
+	(chunk at: 12) = 0 ifFalse: [ PNGFormatError signal: 'unknown filter method ' , (chunk at: 12) printString ].
+	interlaceMethod := chunk at: 13.
+	interlaceMethod <= 1 ifFalse: [ PNGFormatError signal: 'unknown interlace method ' , interlaceMethod printString ].
+	(#( 2 4 6 ) includes: colorType) ifTrue: [ depth := 32 ].
+	(#( 0 3 ) includes: colorType) ifTrue: [
+			depth := bitsPerChannel min: 8.
+			colorType = 0 ifTrue: [ "grayscale" palette := self grayColorsFor: depth ] ].
 	bitsPerPixel := (BPP at: colorType + 1) at: bitsPerChannel highBit.
-	bytesPerScanline := (width * bitsPerPixel + 7) // 8.
+	bytesPerScanline := width * bitsPerPixel + 7 // 8.
 	rowSize := width * depth + 31 >> 5
 ]
 
 { #category : 'chunks' }
 PNGReadWriter >> processInterlaced [
+
 	| z filter bytesPerPass startingCol colIncrement rowIncrement startingRow cx sc temp |
-	startingCol := #(0 4 0 2 0 1 0 ).
-	colIncrement := #(8 8 4 4 2 2 1 ).
-	rowIncrement := #(8 8 8 4 4 2 2 ).
-	startingRow := #(0 0 4 0 2 0 1 ).
- 	z := ZLibReadStream
- 		on: idatChunkStream originalContents
- 		from: 1
- 		to: idatChunkStream position.
-	1
-		to: 7
-		do:
-			[ :pass |
-			(self doPass: pass) ifTrue:
-				[ cx := colIncrement at: pass.
-				sc := startingCol at: pass.
-				bytesPerPass := ((width - sc + cx - 1) // cx * bitsPerPixel + 7) // 8.
-				prevScanline := ByteArray new: bytesPerPass.
-				thisScanline := ByteArray new: bytesPerScanline.
-				(startingRow at: pass)
-					to: height - 1
-					by: (rowIncrement at: pass)
-					do:
-						[ :y |
-						filter := z next.
-						filtersSeen add: filter.
-						(filter isNil or: [ (filter
-							between: 0
-							and: 4) not ]) ifTrue: [ ^ self ].
-						thisScanline := z
-							next: bytesPerPass
-							into: thisScanline
-							startingAt: 1.
-						self
-							filterScanline: filter
-							count: bytesPerPass.
-						self
-							copyPixels: y
-							at: sc
-							by: cx.
-						temp := prevScanline.
-						prevScanline := thisScanline.
-						thisScanline := temp ] ] ].
+	startingCol := #( 0 4 0 2 0 1 0 ).
+	colIncrement := #( 8 8 4 4 2 2 1 ).
+	rowIncrement := #( 8 8 8 4 4 2 2 ).
+	startingRow := #( 0 0 4 0 2 0 1 ).
+	z := ZLibReadStream on: idatChunkStream originalContents from: 1 to: idatChunkStream position.
+	1 to: 7 do: [ :pass |
+			(self doPass: pass) ifTrue: [
+					cx := colIncrement at: pass.
+					sc := startingCol at: pass.
+					bytesPerPass := width - sc + cx - 1 // cx * bitsPerPixel + 7 // 8.
+					prevScanline := ByteArray new: bytesPerPass.
+					thisScanline := ByteArray new: bytesPerScanline.
+					(startingRow at: pass) to: height - 1 by: (rowIncrement at: pass) do: [ :y |
+							filter := z next.
+							filtersSeen add: filter.
+							thisScanline := z next: bytesPerPass into: thisScanline startingAt: 1.
+							self filterScanline: filter count: bytesPerPass.
+							self copyPixels: y at: sc by: cx.
+							temp := prevScanline.
+							prevScanline := thisScanline.
+							thisScanline := temp ] ] ].
 	z atEnd ifFalse: [ self error: 'Unexpected data' ]
 ]
 

@@ -42,6 +42,28 @@ PNGReadWriterTest >> bigEndianLong: anInteger [
 ]
 
 { #category : 'helpers - png encoding' }
+PNGReadWriterTest >> blankPngBytesWidth: width height: height colorType: colorType bitDepth: bitDepth [
+	"Answer the bytes of a complete non-interlaced PNG file whose samples are all zero, for any color type and bit depth, even invalid ones. An indexed image gets a black palette with one entry per possible index."
+
+	| channels bytesPerScanline imageData |
+	channels := #( 1 1 3 1 2 1 4 1 ) at: colorType + 1 ifAbsent: [ 1 ].
+	bytesPerScanline := width * channels * bitDepth + 7 // 8.
+	imageData := ByteArray new: bytesPerScanline + 1 * height.
+	^ self
+		  pngBytesWithHeader: ((self
+				    headerWidth: width
+				    height: height
+				    colorType: colorType
+				    interlace: 0)
+				   at: 9 put: bitDepth;
+				   yourself)
+		  chunks: (colorType = 3
+				   ifTrue: [ { ('PLTE' -> (ByteArray new: 3 << (bitDepth min: 8))) } ]
+				   ifFalse: [ #(  ) ])
+		  imageData: imageData
+]
+
+{ #category : 'helpers - png encoding' }
 PNGReadWriterTest >> bytesPerPixelForColorType: colorType [
 	"Answer the number of bytes of one pixel with 8-bit samples of colorType"
 
@@ -115,6 +137,13 @@ PNGReadWriterTest >> decodeColors: colorsAndFiles depth: requiredDepth [
 			form := PNGReadWriter formFromStream: bytes readStream.
 			self assert: form depth equals: requiredDepth.
 			self assert: (form pixelValueAt: 1 @ 1) equals: (color pixelValueForDepth: requiredDepth) ]
+]
+
+{ #category : 'helpers - png encoding' }
+PNGReadWriterTest >> decodedPngBytes: pngBytes [
+	"Answer the form that PNGReadWriter decodes from pngBytes"
+
+	^ PNGReadWriter formFromStream: pngBytes readStream
 ]
 
 { #category : 'helpers' }
@@ -506,6 +535,32 @@ PNGReadWriterTest >> pixelsOf: aForm differingFrom: expectedForm [
 ]
 
 { #category : 'helpers - png encoding' }
+PNGReadWriterTest >> pngBytes: pngBytes withHeaderPatchedBy: aBlock [
+	"Answer a copy of pngBytes in which the data of the IHDR chunk, which always comes first, has been changed by aBlock. The CRC of the chunk is recomputed, so that only the header content is invalid."
+
+	| bytes header crc |
+	bytes := pngBytes copy.
+	header := bytes copyFrom: 17 to: 29.
+	aBlock value: header.
+	bytes
+		replaceFrom: 17
+		to: 29
+		with: header
+		startingAt: 1.
+	crc := (ZipWriteStream
+		        updateCrc: 16rFFFFFFFF
+		        from: 13
+		        to: 29
+		        in: bytes) bitXor: 16rFFFFFFFF.
+	bytes
+		replaceFrom: 30
+		to: 33
+		with: (self bigEndianLong: crc)
+		startingAt: 1.
+	^ bytes
+]
+
+{ #category : 'helpers - png encoding' }
 PNGReadWriterTest >> pngBytesFrom: aForm [
 	"Answer the bytes of the PNG file that PNGReadWriter writes for aForm, without using any file"
 
@@ -774,6 +829,20 @@ PNGReadWriterTest >> testBlue8 [
 	self encodeAndDecodeColor: Color blue depth: 8
 ]
 
+{ #category : 'tests - validation' }
+PNGReadWriterTest >> testDecodeAcceptsAllValidColorTypesAndBitDepths [
+
+	#( #( 0 1 ) #( 0 2 ) #( 0 4 ) #( 0 8 ) #( 0 16 ) #( 2 8 ) #( 2 16 ) #( 3 1 ) #( 3 2 ) #( 3 4 ) #( 3 8 ) #( 4 8 ) #( 4 16 )
+	   #( 6 8 ) #( 6 16 ) ) do: [ :each |
+			| form |
+			form := self decodedPngBytes: (self
+					         blankPngBytesWidth: 3
+					         height: 2
+					         colorType: each first
+					         bitDepth: each last).
+			self assert: form extent equals: 3 @ 2 ]
+]
+
 { #category : 'tests - decoding' }
 PNGReadWriterTest >> testDecodeGrayWithAllFilterTypes [
 	"Rows use the filters Paeth, Average, Up, Sub and None in turn, so that each one also appears with a non-zero row above"
@@ -826,6 +895,27 @@ PNGReadWriterTest >> testDecodeInterlacedRGBKeepsAllPixels [
 	self assert: (self pixelsOf: decoded differingFrom: expected) equals: #(  )
 ]
 
+{ #category : 'tests - validation' }
+PNGReadWriterTest >> testDecodeInterlacedRejectsInvalidFilterType [
+
+	| form imageData |
+	form := self formColorGrid.
+	imageData := self adam7RGBImageDataOf: form.
+	"The first byte is the filter type of the first scanline of the first pass"
+	imageData at: 1 put: 5.
+	self
+		should: [
+				self decodedPngBytes: (self
+						 pngBytesWithHeader: (self
+								  headerWidth: form width
+								  height: form height
+								  colorType: 2
+								  interlace: 1)
+						 chunks: #(  )
+						 imageData: imageData) ]
+		raise: PNGFormatError
+]
+
 { #category : 'tests - decoding' }
 PNGReadWriterTest >> testDecodeRGBAWithAllFilterTypes [
 	"Rows use the filters Paeth, Average, Up, Sub and None in turn, so that each one also appears with a non-zero row above"
@@ -846,6 +936,78 @@ PNGReadWriterTest >> testDecodeRGBWithAllFilterTypes [
 	decoded := PNGReadWriter formFromStream: (self pngBytesFrom: expected colorType: 2 filters: #( 4 3 2 1 0 )) readStream.
 	self assert: decoded extent equals: expected extent.
 	self assert: (self pixelsOf: decoded differingFrom: expected) equals: #(  )
+]
+
+{ #category : 'tests - validation' }
+PNGReadWriterTest >> testDecodeRejectsInvalidColorTypesAndBitDepths [
+
+	#( #( 1 8 ) #( 5 8 ) #( 7 8 ) #( 0 3 ) #( 0 32 ) #( 2 4 ) #( 3 16 ) #( 4 4 ) #( 6 1 ) ) do: [ :each |
+			self
+				should: [
+						self decodedPngBytes: (self
+								 blankPngBytesWidth: 3
+								 height: 2
+								 colorType: each first
+								 bitDepth: each last) ]
+				raise: PNGFormatError
+				description: 'color type ' , each first printString , ' with bit depth ' , each last printString ]
+]
+
+{ #category : 'tests - validation' }
+PNGReadWriterTest >> testDecodeRejectsInvalidFilterType [
+
+	self
+		should: [ self decodedPngBytes: (self pngBytesFrom: self formColorGrid colorType: 2 filters: #( 0 0 0 5 )) ]
+		raise: PNGFormatError
+]
+
+{ #category : 'tests - validation' }
+PNGReadWriterTest >> testDecodeRejectsInvalidImageSizes [
+
+	| valid |
+	valid := self
+		         blankPngBytesWidth: 3
+		         height: 2
+		         colorType: 2
+		         bitDepth: 8.
+	{
+		[ :header | header unsignedLongAt: 1 put: 0 bigEndian: true ].
+		[ :header | header unsignedLongAt: 5 put: 0 bigEndian: true ].
+		[ :header | header unsignedLongAt: 1 put: 16r80000000 bigEndian: true ].
+		[ :header | header unsignedLongAt: 5 put: 16r80000000 bigEndian: true ] } do: [ :patch |
+		self should: [ self decodedPngBytes: (self pngBytes: valid withHeaderPatchedBy: patch) ] raise: PNGFormatError ]
+]
+
+{ #category : 'tests - validation' }
+PNGReadWriterTest >> testDecodeRejectsMissingIHDR [
+
+	| valid withoutHeader |
+	valid := self
+		         blankPngBytesWidth: 3
+		         height: 2
+		         colorType: 2
+		         bitDepth: 8.
+	"The IHDR chunk takes bytes 9 to 33: length, type, 13 bytes of data and CRC"
+	withoutHeader := (valid copyFrom: 1 to: 8) , (valid copyFrom: 34 to: valid size).
+	self should: [ self decodedPngBytes: withoutHeader ] raise: PNGFormatError
+]
+
+{ #category : 'tests - validation' }
+PNGReadWriterTest >> testDecodeRejectsUnknownCompressionFilterAndInterlaceMethods [
+
+	| valid |
+	valid := self
+		         blankPngBytesWidth: 3
+		         height: 2
+		         colorType: 2
+		         bitDepth: 8.
+	#( #( 11 1 ) #( 12 1 ) #( 13 2 ) ) do: [ :indexAndValue |
+			self
+				should: [
+						self decodedPngBytes:
+							(self pngBytes: valid withHeaderPatchedBy: [ :header | header at: indexAndValue first put: indexAndValue last ]) ]
+				raise: PNGFormatError
+				description: 'IHDR byte ' , indexAndValue first printString , ' set to ' , indexAndValue last printString ]
 ]
 
 { #category : 'tests - colors' }
