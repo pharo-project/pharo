@@ -54,8 +54,17 @@ QuickProjectIconButtonMorph >> handlesMouseOver: anEvent [
 
 { #category : 'accessing' }
 QuickProjectIconButtonMorph >> icon: aForm [
+	"Keep the shape of the icon, in a color that follows the theme."
 
-	icon := aForm
+	| tint |
+	tint := self tintColor.
+	icon := aForm collectColors: [ :each | tint alpha: each alpha * tint alpha ]
+]
+
+{ #category : 'drawing' }
+QuickProjectIconButtonMorph >> tintColor [
+
+	^ self theme ghostTextColor
 ]
 
 { #category : 'initialization' }
@@ -87,5 +96,6 @@ QuickProjectIconButtonMorph >> mouseEnter: anEvent [
 QuickProjectIconButtonMorph >> mouseLeave: anEvent [
 
 	hovering := false.
-	self changed
+	self changed.
+	owner ifNotNil: [ owner mouseLeave: anEvent ]
 ]

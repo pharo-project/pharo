@@ -41,6 +41,17 @@ Class {
 }
 
 { #category : 'parsing' }
+QuickProjectEntry class >> branchNamesIn: aJsonString [
+	"Answer the names from the answer of the GitHub branches API. An error answer is an object, not a list."
+
+	| answer |
+	answer := STON fromString: aJsonString.
+	^ answer isDictionary
+		ifTrue: [ #(  ) ]
+		ifFalse: [ answer collect: [ :each | each at: 'name' ] ]
+]
+
+{ #category : 'parsing' }
 QuickProjectEntry class >> defaultBranchIn: aJsonString [
 	"Answer the default branch from the answer of the GitHub repository API, or nil when it is an error answer."
 
@@ -133,12 +144,10 @@ QuickProjectEntry >> displayRepository [
 ]
 
 { #category : 'accessing' }
-QuickProjectEntry >> displaySource [
-	"Answer what the row shows under the name, e.g. 'owner/repo:main'."
+QuickProjectEntry >> displayBranch [
+	"Answer what the branch selector of the row shows."
 
-	^ self effectiveBranch
-		ifEmpty: [ self displayRepository ]
-		ifNotEmpty: [ :aBranch | self displayRepository , ':' , aBranch ]
+	^ self effectiveBranch ifEmpty: [ 'default' ]
 ]
 
 { #category : 'accessing' }
@@ -160,17 +169,30 @@ QuickProjectEntry >> effectiveBranch [
 
 { #category : 'private' }
 QuickProjectEntry >> fetchDefaultBranch [
-	"This is the only network access of an entry, and it only happens when the entry is being loaded."
+	"Answer nil when GitHub cannot tell. An entry only touches the network when the user asks for something."
 
-	| answer |
 	self isGitHubRepository ifFalse: [ ^ nil ].
-	^ [
-		answer := ZnClient new
-			timeout: 5;
-			get: 'https://api.github.com/repos/' , self displayRepository.
-		self class defaultBranchIn: answer ]
+	^ [ self class defaultBranchIn: (self gitHubApiGet: '') ]
 		on: Error
 		do: [ nil ]
+]
+
+{ #category : 'private' }
+QuickProjectEntry >> fetchBranches [
+	"Answer the branch names of the repository, empty when GitHub cannot tell."
+
+	self isGitHubRepository ifFalse: [ ^ #(  ) ].
+	^ [ self class branchNamesIn: (self gitHubApiGet: '/branches?per_page=100') ]
+		on: Error
+		do: [ #(  ) ]
+]
+
+{ #category : 'private' }
+QuickProjectEntry >> gitHubApiGet: aPath [
+
+	^ ZnClient new
+		timeout: 5;
+		get: 'https://api.github.com/repos/' , self displayRepository , aPath
 ]
 
 { #category : 'accessing' }

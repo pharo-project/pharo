@@ -297,14 +297,17 @@ QuickProjectEntryTest >> testDefaultBranchParsing [
 ]
 
 { #category : 'tests' }
-QuickProjectEntryTest >> testDisplaySourceShowsTheBranch [
+QuickProjectEntryTest >> testDisplayBranch [
 
 	| entry |
 	entry := QuickProjectEntry name: 'A' repositoryUrl: 'github://owner/repo/src'.
-	self assert: entry displaySource equals: 'owner/repo'.
+	self assert: entry displayBranch equals: 'default'.
 
 	entry branch: 'main'.
-	self assert: entry displaySource equals: 'owner/repo:main'
+	self assert: entry displayBranch equals: 'main'.
+	self
+		assert: (QuickProjectEntry name: 'A' repositoryUrl: 'github://owner/repo:dev') displayBranch
+		equals: 'dev'
 ]
 
 { #category : 'tests' }
@@ -323,4 +326,19 @@ QuickProjectEntryTest >> testBranchSurvivesTheFile [
 	entry branch: 'main'.
 
 	self assert: (STON fromString: (STON toString: entry)) branch equals: 'main'
+]
+
+{ #category : 'tests' }
+QuickProjectEntryTest >> testBranchNamesParsing [
+
+	self
+		assert: (QuickProjectEntry branchNamesIn: '[{"name":"main"},{"name":"dev"}]') asArray
+		equals: #( 'main' 'dev' ).
+	self assert: (QuickProjectEntry branchNamesIn: '{"message":"Not Found"}') isEmpty
+]
+
+{ #category : 'tests' }
+QuickProjectEntryTest >> testOnlyGitHubIsAskedForBranches [
+
+	self assert: (QuickProjectEntry name: 'A' repositoryUrl: 'gitlab://a/b') fetchBranches isEmpty
 ]

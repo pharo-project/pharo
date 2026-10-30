@@ -204,3 +204,124 @@ QuickProjectLoaderPresenterTest >> testLoadBranchSetsTheBranchAndLoads [
 	self assert: loaded.
 	self assert: entry branch equals: 'dev'
 ]
+
+{ #category : 'tests' }
+QuickProjectLoaderPresenterTest >> testBranchButtonSitsBesideTheAction [
+
+	| row |
+	row := presenter rowFor: presenter items first.
+	row bounds: (0 @ 0 extent: 288 @ 46).
+
+	self assert: row branchButton right < row actionBounds left.
+	self assert: row branchButton left > row left.
+	self assert: row branchButton center y equals: row center y
+]
+
+{ #category : 'tests' }
+QuickProjectLoaderPresenterTest >> testBranchesLineUpAcrossRows [
+
+	| rows |
+	rows := #( 'Load' 'Reload' ) collect: [ :label |
+		(QuickProjectRowMorph
+			entry: presenter items first
+			action: label
+			onLoad: [  ]
+			onMenu: [  ])
+			branchBlock: [  ];
+			bounds: (0 @ 0 extent: 340 @ 46);
+			yourself ].
+
+	self assert: rows first branchButton left equals: rows second branchButton left
+]
+
+{ #category : 'tests' }
+QuickProjectLoaderPresenterTest >> testBranchChipShowsTheBranchToLoad [
+
+	| entry row |
+	entry := QuickProjectEntry name: 'A' repositoryUrl: 'github://a/b:dev'.
+
+	row := presenter rowFor: entry.
+
+	self assert: row branchButton label equals: 'dev'.
+	self assert: (presenter rowFor: presenter items first) branchButton label equals: 'default'
+]
+
+{ #category : 'tests' }
+QuickProjectLoaderPresenterTest >> testBranchChipCutsLongNames [
+
+	| chip font fitted |
+	chip := QuickProjectBranchChipMorph label: 'feature/a-very-long-branch-name' action: [  ].
+	font := StandardFonts defaultFont.
+
+	fitted := QuickProjectRowMorph fit: chip label font: font width: 60.
+
+	self assert: (fitted endsWith: '...').
+	self assert: (font widthOfString: fitted) <= 60
+]
+
+{ #category : 'tests' }
+QuickProjectLoaderPresenterTest >> testNoBranchButtonWhileLoading [
+
+	| row |
+	row := QuickProjectRowMorph
+		entry: presenter items first
+		action: 'Loading...'
+		onLoad: [  ]
+		onMenu: [  ].
+	row branchBlock: [  ].
+
+	self assert: row branchButton isNil
+]
+
+{ #category : 'tests' }
+QuickProjectLoaderPresenterTest >> testBranchMenuListsBranchesAndOther [
+
+	| entry labels |
+	entry := QuickProjectEntry name: 'A' repositoryUrl: 'github://a/b:dev'.
+
+	labels := ((presenter branchMenuFor: entry names: #( 'main' 'dev' )) items
+		collect: [ :each | each contents asString ]).
+
+	self assert: (labels includesAll: #( 'main' 'dev' 'Other...' ))
+]
+
+{ #category : 'tests' }
+QuickProjectLoaderPresenterTest >> testBranchMenuIsCapped [
+
+	| names labels |
+	names := (1 to: 50) collect: [ :i | 'branch' , i printString ].
+
+	labels := ((presenter branchMenuFor: presenter items first names: names) items
+		collect: [ :each | each contents asString ]).
+
+	self assert: (labels select: [ :each | each beginsWith: 'branch' ]) size equals: QuickProjectLoaderPresenter maxBranchesInMenu
+]
+
+{ #category : 'tests' }
+QuickProjectLoaderPresenterTest >> testLongTextGetsAnEllipsis [
+
+	| row font fitted |
+	row := QuickProjectRowMorph new.
+	font := StandardFonts defaultFont.
+
+	fitted := row fit: 'a-really-long-organization/a-really-long-repository' font: font width: 80.
+
+	self assert: (fitted endsWith: '...').
+	self assert: (font widthOfString: fitted) <= 80.
+	self assert: (row fit: 'short' font: font width: 80) equals: 'short'
+]
+
+{ #category : 'tests' }
+QuickProjectLoaderPresenterTest >> testIconsAreTintedWithTheTheme [
+
+	| source chip |
+	source := Form extent: 2 @ 2 depth: 32.
+	source fillColor: Color red.
+
+	chip := QuickProjectIconButtonMorph icon: source help: '' action: [  ].
+
+	self deny: ((chip instVarNamed: #icon) colorAt: 0 @ 0) = Color red.
+	self
+		assert: ((chip instVarNamed: #icon) colorAt: 0 @ 0) rgbTriplet
+		equals: chip tintColor rgbTriplet
+]

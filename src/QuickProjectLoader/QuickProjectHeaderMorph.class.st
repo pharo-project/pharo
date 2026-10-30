@@ -45,7 +45,7 @@ QuickProjectHeaderMorph >> initialize [
 		wrapCentering: #center;
 		listCentering: #center;
 		cellInset: 2;
-		layoutInset: (10 @ 4 corner: 6 @ 4);
+		layoutInset: (11 @ 4 corner: 11 @ 4);
 		hResizing: #spaceFill;
 		vResizing: #rigid;
 		height: 36
@@ -83,7 +83,12 @@ QuickProjectHeaderMorph >> title: aString [
 		vResizing: #rigid;
 		height: 1;
 		yourself.
+	"The title starts where the rows have their content, past the margin of their hover area."
 	self
+		addMorphBack: (Morph new
+			color: Color transparent;
+			extent: 3 @ 1;
+			yourself);
 		addMorphBack: label;
 		addMorphBack: spacer
 ]

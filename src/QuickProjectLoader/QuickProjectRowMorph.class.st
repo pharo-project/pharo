@@ -11,7 +11,8 @@ Class {
 		'actionLabel',
 		'hovering',
 		'loadBlock',
-		'menuBlock'
+		'menuBlock',
+		'branchButton'
 	],
 	#category : 'QuickProjectLoader-UI',
 	#package : 'QuickProjectLoader',
@@ -27,6 +28,18 @@ QuickProjectRowMorph class >> entry: anEntry action: aString onLoad: aBlock onMe
 		loadBlock: aBlock;
 		menuBlock: anotherBlock;
 		yourself
+]
+
+{ #category : 'drawing' }
+QuickProjectRowMorph class >> fit: aString font: aFont width: anInteger [
+	"Cut a text that does not fit at the end, with an ellipsis, rather than in the middle of a letter."
+
+	| text |
+	(aFont widthOfString: aString) <= anInteger ifTrue: [ ^ aString ].
+	text := aString.
+	[ text notEmpty and: [ (aFont widthOfString: text , '...') > anInteger ] ]
+		whileTrue: [ text := text allButLast ].
+	^ text , '...'
 ]
 
 { #category : 'accessing' }
@@ -56,10 +69,36 @@ QuickProjectRowMorph >> actionBounds [
 	^ (self right - width - 10) @ (self center y - 12) extent: width @ 24
 ]
 
+{ #category : 'geometry' }
+QuickProjectRowMorph >> actionColumnWidth [
+	"Wide enough for every action, so the branch icons line up from row to row."
+
+	^ 76
+]
+
 { #category : 'drawing' }
 QuickProjectRowMorph >> actionFont [
 
 	^ StandardFonts defaultFont emphasized: TextEmphasis bold emphasisCode
+]
+
+{ #category : 'accessing' }
+QuickProjectRowMorph >> branchBlock: aBlock [
+
+	"Always shown: an inactive window gets no hover, and this must work next to the window being used."
+
+	self isBusy ifTrue: [ ^ self ].
+	branchButton := QuickProjectBranchChipMorph
+		label: entry displayBranch
+		action: aBlock.
+	self addMorphBack: branchButton.
+	self placeBranchButton
+]
+
+{ #category : 'accessing' }
+QuickProjectRowMorph >> branchButton [
+
+	^ branchButton
 ]
 
 { #category : 'drawing' }
@@ -114,16 +153,16 @@ QuickProjectRowMorph >> drawOn: aCanvas [
 	self drawInitialOn: aCanvas.
 
 	textLeft := self left + 50.
-	textRight := self actionBounds left - 8.
+	textRight := self left + 50 + self textWidth.
 	font := StandardFonts defaultFont.
-	smallFont := font copy pointSize: (font pointSize - 1 max: 8).
+	smallFont := QuickProjectBranchChipMorph font.
 	aCanvas
-		drawString: entry name
+		drawString: (self fit: entry name font: font width: self textWidth)
 		in: (textLeft @ (self top + 7) corner: textRight @ self center y + 2)
 		font: (font emphasized: TextEmphasis bold emphasisCode)
 		color: self nameColor.
 	aCanvas
-		drawString: entry displaySource
+		drawString: (self fit: entry displayRepository font: smallFont width: self textWidth)
 		in: (textLeft @ (self center y + 2) corner: textRight @ self bottom)
 		font: smallFont
 		color: self theme ghostTextColor.
@@ -141,6 +180,19 @@ QuickProjectRowMorph >> entry [
 QuickProjectRowMorph >> entry: anEntry [
 
 	entry := anEntry
+]
+
+{ #category : 'geometry' }
+QuickProjectRowMorph >> extent: aPoint [
+
+	super extent: aPoint.
+	self placeBranchButton
+]
+
+{ #category : 'drawing' }
+QuickProjectRowMorph >> fit: aString font: aFont width: anInteger [
+
+	^ self class fit: aString font: aFont width: anInteger
 ]
 
 { #category : 'event handling' }
@@ -212,8 +264,24 @@ QuickProjectRowMorph >> mouseEnter: anEvent [
 { #category : 'event handling' }
 QuickProjectRowMorph >> mouseLeave: anEvent [
 
+	"Going onto the branch button also counts as leaving the row."
+	(anEvent notNil and: [ self containsPoint: (self globalPointToLocal: anEvent hand position) ])
+		ifTrue: [ ^ self ].
 	hovering := false.
 	self changed
+]
+
+{ #category : 'geometry' }
+QuickProjectRowMorph >> placeBranchButton [
+
+	branchButton ifNil: [ ^ self ].
+	branchButton position: (self right - self actionColumnWidth - QuickProjectBranchChipMorph chipWidth - 2) @ (self center y - (branchButton height // 2))
+]
+
+{ #category : 'geometry' }
+QuickProjectRowMorph >> textWidth [
+
+	^ self width - 50 - self actionColumnWidth - QuickProjectBranchChipMorph chipWidth - 8
 ]
 
 { #category : 'drawing' }

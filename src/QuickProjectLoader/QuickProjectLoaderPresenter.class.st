@@ -53,7 +53,7 @@ QuickProjectLoaderPresenter class >> extentForRows: anInteger [
 
 	| rows |
 	rows := (anInteger max: 1) min: self maxVisibleRows.
-	^ 316 @ (rows * QuickProjectRowMorph rowHeight + 54
+	^ 396 @ (rows * QuickProjectRowMorph rowHeight + 60
 		+ (anInteger > self maxVisibleRows ifTrue: [ 32 ] ifFalse: [ 0 ]))
 ]
 
@@ -70,6 +70,19 @@ QuickProjectLoaderPresenter class >> initialize [
 	KMRepository default setAsGlobalCategory: #QuickProjectLoaderCategory.
 	self registerWorldShortcut.
 	SessionManager default registerUserClassNamed: self name
+]
+
+{ #category : 'accessing' }
+QuickProjectLoaderPresenter class >> listSideMargin [
+
+	^ 10
+]
+
+{ #category : 'accessing' }
+QuickProjectLoaderPresenter class >> maxBranchesInMenu [
+	"Beyond this a menu stops being quicker than typing the name in Other..."
+
+	^ 20
 ]
 
 { #category : 'accessing' }
@@ -102,7 +115,6 @@ QuickProjectLoaderPresenter class >> offer [
 	QuickProjectRepository default visibleEntries ifEmpty: [ ^ self ].
 	previous := SystemWindow topWindow.
 	window := self open.
-	window window passivate.
 	previous ifNotNil: [ previous activate ].
 	^ window
 ]
@@ -225,6 +237,35 @@ QuickProjectLoaderPresenter >> addProject [
 	dialog isOk ifTrue: [
 		self repository addEntry: presenter createEntry.
 		self refreshList ]
+]
+
+{ #category : 'private' }
+QuickProjectLoaderPresenter >> branchMenuFor: anEntry names: aCollection [
+
+	| menu |
+	menu := MenuMorph new.
+	menu addTitle: 'Load branch'.
+	(aCollection first: (aCollection size min: self class maxBranchesInMenu)) do: [ :each |
+		menu add: each target: self selector: #loadBranch:of: argumentList: { each. anEntry }.
+		each = anEntry effectiveBranch ifTrue: [ menu lastItem icon: (self iconNamed: #smallOk) ] ].
+	menu addLine.
+	menu add: 'Other...' target: self selector: #askBranchAndLoad: argument: anEntry.
+	^ menu
+]
+
+{ #category : 'actions' }
+QuickProjectLoaderPresenter >> chooseBranchOf: anEntry [
+	"Asking GitHub can take a moment, so the menu comes back from a background process."
+
+	[
+		| names |
+		names := anEntry fetchBranches.
+		UIManager default defer: [
+			names
+				ifEmpty: [ self askBranchAndLoad: anEntry ]
+				ifNotEmpty: [ (self branchMenuFor: anEntry names: names) popUpInWorld ] ] ]
+		forkAt: Processor userBackgroundPriority
+		named: 'Quick Project Loader: branches of ' , anEntry name
 ]
 
 { #category : 'actions' }
@@ -358,6 +399,7 @@ QuickProjectLoaderPresenter >> askBranchAndLoad: anEntry [
 QuickProjectLoaderPresenter >> loadBranch: aString of: anEntry [
 	"The choice is remembered, so the row keeps loading this branch."
 
+	loadingEntry ifNotNil: [ ^ self ].
 	anEntry branch: aString.
 	self repository save.
 	self loadProject: anEntry
@@ -431,18 +473,19 @@ QuickProjectLoaderPresenter >> repository: aRepository [
 { #category : 'private' }
 QuickProjectLoaderPresenter >> rowFor: anEntry [
 
-	^ QuickProjectRowMorph
+	^ (QuickProjectRowMorph
 		entry: anEntry
 		action: (self actionLabelFor: anEntry)
 		onLoad: [ self loadProject: anEntry ]
-		onMenu: [ (self rowMenuFor: anEntry) popUpInWorld ]
+		onMenu: [ (self rowMenuFor: anEntry) popUpInWorld ])
+		branchBlock: [ self chooseBranchOf: anEntry ];
+		yourself
 ]
 
 { #category : 'private' }
 QuickProjectLoaderPresenter >> rowMenuFor: anEntry [
 
 	^ MenuMorph new
-		add: 'Load Branch...' target: self selector: #askBranchAndLoad: argument: anEntry;
 		add: 'Copy Metacello Script' target: self selector: #copyScriptOf: argument: anEntry;
 		add: 'Remove from List' target: self selector: #removeProject: argument: anEntry;
 		addLine;
@@ -466,13 +509,15 @@ QuickProjectLoaderPresenter >> takeSearchFocus [
 QuickProjectLoaderPresenter >> updateScrolling [
 	"The panel is as tall as its rows, so only a list past the maximum height ever needs a scrollbar."
 
-	| pane |
+	| pane scrolls |
 	pane := list morph.
-	items size > self class maxVisibleRows
+	scrolls := items size > self class maxVisibleRows.
+	scrolls
 		ifTrue: [ pane vScrollbarShowWhenNeeded ]
 		ifFalse: [ pane vScrollbarShowNever ].
-	"The gutter is always there, so rows never sit under the scrollbar nor shift when it appears."
-	rowsMorph width: self class defaultPreferredExtent x - pane scrollBarThickness - 16
+	"Only a scrolling list gives up width: otherwise the rows keep the same margins as the header."
+	rowsMorph width: self class defaultPreferredExtent x - self class listSideMargin
+		- (scrolls ifTrue: [ pane scrollBarThickness + 4 ] ifFalse: [ 0 ])
 ]
 
 { #category : 'initialization' }
