@@ -68,7 +68,7 @@ ZnCharacterEncoder class >> detectEncoding: bytes [
 
 	| candidates |
 	"Set up an ordered candidates list, 7-bit ascii and utf8 are reasonably reliable, iso88591 is a reasonable default"
-	candidates := #('ascii' 'utf8' 'iso88591').
+	candidates := #(ascii utf8 iso88591).
 	candidates := candidates , (ZnByteEncoder knownEncodingIdentifiers difference: candidates).
 	candidates := candidates , (self knownEncodingIdentifiers difference: candidates).
 	"Try each and return the first one that succeeeds."
@@ -250,35 +250,13 @@ ZnCharacterEncoder >> errorIncomplete [
 ]
 
 { #category : 'error handling' }
-ZnCharacterEncoder >> errorIncompleteFrom: stream [
-	^ self errorIncomplete
-]
-
-{ #category : 'error handling' }
 ZnCharacterEncoder >> errorOutsideRange [
 	^ self error: 'Character Unicode code point outside encoder range'
 ]
 
-{ #category : 'error handling' }
-ZnCharacterEncoder >> errorOutsideRange: codePoint from: stream [
-	self errorOutsideRange.
-	^ 0
-]
-
-{ #category : 'error handling' }
-ZnCharacterEncoder >> errorOutsideRange: codePoint to: stream [
-	^ self errorOutsideRange
-]
-
-{ #category : 'error handling' }
-ZnCharacterEncoder >> errorOutsideRangeByteCount: codePoint [
-	self errorOutsideRange.
-	^ 0
-]
-
 { #category : 'encoding - decoding' }
-ZnCharacterEncoder >> forwardOnStream: stream [
-	"Move forward one character on stream"
+ZnCharacterEncoder >> forwardOnStream: aStream [
+	"I should move from 1 character forward on the stream. The stream is over a ByteArray."
 
 	self subclassResponsibility
 ]
@@ -354,16 +332,14 @@ ZnCharacterEncoder >> nextPutCodePoint: codePoint toStream: stream [
 
 { #category : 'convenience' }
 ZnCharacterEncoder >> numberOfCharactersFrom: bytes [
-	"Return the number of characters represented in bytes.
-	We avoid creating code points, characters or string for speed reasons. 
-	We use #forwardOnStream: to skip bytes corresponding to one character."
+	"Return the number of characters represented by a byte array. We avoid creating code points, characters or string for speed reasons. Instead we use #forwardOnStream: that will just skip the bytes correspondin to one character."
 
 	| byteStream count |
 	byteStream := bytes readStream.
 	count := 0.
-	[ byteStream atEnd ] whileFalse: [ 
-		self forwardOnStream: byteStream.
-		count := count + 1 ].
+	[ byteStream atEnd ] whileFalse: [
+			count := count + 1.
+			self forwardOnStream: byteStream ].
 	^ count
 ]
 

@@ -24,7 +24,7 @@ ZnServerLogEvent >> initialize [
 { #category : 'printing' }
 ZnServerLogEvent >> printHeaderOn: stream [
 	super printHeaderOn: stream.
-	serverId ifNotNil: [ stream space; << serverId asString ]
+	serverId ifNotNil: [ stream space; << serverId ]
 ]
 
 { #category : 'accessing' }
