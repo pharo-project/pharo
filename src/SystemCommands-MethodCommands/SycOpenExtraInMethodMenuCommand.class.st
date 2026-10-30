@@ -40,13 +40,13 @@ SycOpenExtraInMethodMenuCommand >> cmCommandClass [
 ]
 
 { #category : 'accessing' }
-SycOpenExtraInMethodMenuCommand >> defaultMenuIconName [
+SycOpenExtraInMethodMenuCommand >> iconName [
 
 	^ #forward 
 ]
 
 { #category : 'accessing' }
-SycOpenExtraInMethodMenuCommand >> defaultMenuItemName [
+SycOpenExtraInMethodMenuCommand >> name [
 
 	^ 'Extra' 
 ]

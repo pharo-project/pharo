@@ -17,7 +17,7 @@ BaselineOfSystemCommands >> baseline: spec [
 			spec
 				package: #'Calypso-Commands' with: [ spec requires: #( 'Commander2' ) ];
 				package: #'Calypso-Commands-Tests' with: [ spec requires: #( #'Calypso-Commands' ) ];
-				package: #'SystemCommands-RefactoringSupport' with: [ spec requires: #( 'Commander' ) ];
+				package: #'SystemCommands-RefactoringSupport' with: [ spec requires: #( 'Commander' #'Calypso-Commands' ) ];
 				package: #'SystemCommands-ClassCommands' with: [ spec requires: #( 'Commander' #'SystemCommands-RefactoringSupport' #'Calypso-Commands' ) ];
 				package: #'SystemCommands-MessageCommands' with: [ spec requires: #( 'Commander' #'SystemCommands-RefactoringSupport' #'Calypso-Commands' ) ];
 				package: #'SystemCommands-MessageCommands-Tests' with: [ spec requires: #( 'Commander' 'SystemCommands-MessageCommands' ) ];
