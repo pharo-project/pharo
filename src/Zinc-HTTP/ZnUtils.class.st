@@ -90,6 +90,17 @@ ZnUtils class >> encodeBase64: string [
 ]
 
 { #category : 'converting' }
+ZnUtils class >> exceptionSet: classNames [
+	^ classNames inject: ExceptionSet new into: [ :set :each |
+		  (Smalltalk globals includesKey: each)
+			  ifTrue: [
+				  set
+					  add: (Smalltalk at: each);
+					  yourself ]
+			  ifFalse: [ set ] ]
+]
+
+{ #category : 'converting' }
 ZnUtils class >> httpDate [
 	^ self httpDate: DateAndTime now
 ]
@@ -150,7 +161,7 @@ ZnUtils class >> parseHttpDate: string [
 	| tokens day month year hour minute second months map yearToken |
 	tokens := (string findTokens: #( $ $- $: $, )) allButFirst.
 	tokens last = 'GMT' ifTrue: [ tokens := tokens allButLast ].
-	months := #(jan feb mar apr may jun jul aug sep oct nov dec).
+	months := #('jan' 'feb' 'mar' 'apr' 'may' 'jun' 'jul' 'aug' 'sep' 'oct' 'nov' 'dec').
 	(Integer readFrom: tokens first ifFail: [ 0 ]) isZero
 		ifTrue: [ map := #(2 1 6 3 4 5) ]
 		ifFalse: [ map := #(1 2 3 4 5 6) ].
@@ -197,10 +208,17 @@ ZnUtils class >> readUpToEnd: inputStream limit: limit [
 
 { #category : 'streaming' }
 ZnUtils class >> signalProgress: amount total: total [
-  (ZnCurrentOptions at: #signalProgress) ifTrue: [ total ifNil: [ HTTPProgress new signal: ('Transferred {1} bytes ...' format: {amount humanReadableSISizeString}) ] ifNotNil: [ HTTPProgress new
-                 total: total;
-                 amount: amount;
-                 signal: 'Transferring...' ] ]
+	(ZnCurrentOptions at: #signalProgress)
+		ifTrue: [
+			total
+				ifNil: [
+					HTTPProgress new
+						signal: ('Transferred {1} bytes ...' format: { amount humanReadableSIByteSize }) ]
+				ifNotNil: [
+					HTTPProgress new
+						total: total;
+						amount: amount;
+						signal: 'Transferring...' ] ]
 ]
 
 { #category : 'streaming' }

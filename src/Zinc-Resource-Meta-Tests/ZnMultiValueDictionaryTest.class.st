@@ -7,8 +7,8 @@ Class {
 
 { #category : 'testing' }
 ZnMultiValueDictionaryTest >> testDynamicLimit [
-	ZnMaximumNumberOfDictionaryEntries
-		value: 10
+	ZnOptions globalDefault clone
+		at: #maximumNumberOfDictionaryEntries put: 10;
 		during: [
 			| dictionary |
 			dictionary := ZnMultiValueDictionary new.
