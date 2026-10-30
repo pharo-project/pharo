@@ -122,7 +122,7 @@ PharoOptionsHandler >> preferencesFileArgument [
 { #category : 'private - preferences' }
 PharoOptionsHandler >> runPreferences [
 
-	SystemSettingsPersistence resumeSystemSettings.
+	SettingsManager resumeSystemSettings.
 	StartupPreferencesLoader default loadFromDefaultLocations
 ]
 

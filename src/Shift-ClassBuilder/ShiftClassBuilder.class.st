@@ -440,6 +440,12 @@ ShiftClassBuilder >> installingEnvironment: anObject [
 ]
 
 { #category : 'testing' }
+ShiftClassBuilder >> instancesHasShrinked [
+	
+	^ self changes anySatisfy: [ :e | e instancesHasShrinked ]
+]
+
+{ #category : 'testing' }
 ShiftClassBuilder >> isExtension [
 	^ self metaSuperclass isKindOf: Extension class
 ]

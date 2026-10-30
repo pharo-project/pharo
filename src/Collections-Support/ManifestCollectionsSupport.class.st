@@ -15,7 +15,7 @@ Class {
 	#tag : 'Manifest'
 }
 
-{ #category : 'meta-data' }
+{ #category : 'meta data' }
 ManifestCollectionsSupport class >> dependencies [
 	^ #(#'Collections-Strings' #'Collections-Native' #'Collections-Unordered' #Kernel #'Collections-Abstract')
 ]
@@ -25,7 +25,7 @@ ManifestCollectionsSupport class >> manuallyResolvedDependencies [
 	^ #(#'Collections-Streams')
 ]
 
-{ #category : 'meta-data' }
+{ #category : 'meta data' }
 ManifestCollectionsSupport class >> packageName [
 	^ #'Collections-Support'
 ]

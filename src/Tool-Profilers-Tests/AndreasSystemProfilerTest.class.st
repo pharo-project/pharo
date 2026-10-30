@@ -27,8 +27,10 @@ AndreasSystemProfilerTest >> testFullPrintOn [
 	tally fullPrintOn: stream tallyExact: false orThreshold: 0 time: 10.
 
 	self assert: stream contents equals: '**Tree**
-
+
 **Leaves**
+
+**FFI Methods**
 '
 ]
 

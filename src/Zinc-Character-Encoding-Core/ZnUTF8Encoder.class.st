@@ -55,7 +55,7 @@ ZnUTF8Encoder class >> initialize [
 
 { #category : 'accessing' }
 ZnUTF8Encoder class >> knownEncodingIdentifiers [
-	^ #( utf8 )
+	^ #( 'utf8' )
 ]
 
 { #category : 'instance creation' }
@@ -80,8 +80,7 @@ ZnUTF8Encoder >> encodedByteCountForCodePoint: codePoint [
 	codePoint < 2048 ifTrue: [ ^ 2 ].
 	codePoint < 65535 ifTrue: [ ^ 3 ].
 	codePoint <= self maximumUTFCode ifTrue: [ ^ 4 ].
-	self errorOutsideRange.
-	^ 0
+	^ self errorOutsideRangeByteCount: codePoint
 ]
 
 { #category : 'encoding - decoding' }
@@ -89,6 +88,10 @@ ZnUTF8Encoder >> ensureAtBeginOfCodePointOnStream: stream [
 	"Ensure that the current position of stream is a the beginning of an encoded code point,
 	if not move further backwards. This is necessary when a position in the binary stream is set,
 	not knowing if that position is on a proper encoded character boundary."
+
+	"If we are at end-of-stream, we can't be in the middle of an encoded codepoint
+	(unless that codepoint is incomplete and thus invalid, which we won't worry about)"
+	stream atEnd ifTrue: [ ^ self ].
 
 	"Back up until we are not longer on a continuation byte but on a leading byte"
 
@@ -101,17 +104,17 @@ ZnUTF8Encoder >> error: message [
 ]
 
 { #category : 'error handling' }
-ZnUTF8Encoder >> errorIllegalContinuationByte [
+ZnUTF8Encoder >> errorIllegalContinuationByte: byte from: stream [
 	^ self error: 'Illegal continuation byte for utf-8 encoding'
 ]
 
 { #category : 'error handling' }
-ZnUTF8Encoder >> errorIllegalLeadingByte [
+ZnUTF8Encoder >> errorIllegalLeadingByte: byte from: stream [
 	^ self error: 'Illegal leading byte for utf-8 encoding'
 ]
 
 { #category : 'error handling' }
-ZnUTF8Encoder >> errorOverlong [
+ZnUTF8Encoder >> errorOverlong: codePoint from: stream [
 	^ self error: 'Overlong utf-8 encoding (non-shortest form)'
 ]
 
@@ -128,25 +131,20 @@ ZnUTF8Encoder >> findFirstNonASCIIIn: string startingAt: offset [
 
 { #category : 'encoding - decoding' }
 ZnUTF8Encoder >> forwardOnStream: stream [
-	"Move forward one character on a binary stream following the UTF8 encoding.."
+	"Move forward one character on stream"
 
 	| firstByte |
 	(firstByte := stream next) ifNil: [ self error: 'Cannot move forward once at the end' ].
-	
-	(firstByte bitAnd: 2r10000000) = 0 ifTrue: [ ^ self ]. "In UTF8, if a byte lead by 0xxxxxxx, it means it is an ascii character on 1 byte."
-
-	(firstByte bitAnd: 2r11100000) = 2r11000000 ifTrue: [ ^ stream skip: 1 ]. "Byte leaded by 110xxxxx means we have a 2 bytes character. Skip one more byte."
-
-	(firstByte bitAnd: 2r11110000) = 2r11100000 ifTrue: [ ^ stream skip: 2 ]. "Byte leaded by 1110xxxx means we have a 3 bytes character. Skip two more bytes."
-
-	(firstByte bitAnd: 2r11111000) = 2r11110000 ifTrue: [ ^ stream skip: 3 ]. "Byte leaded by 11110xxx means we have a 4 bytes character. Skip three more bytes."
-	
-	self error: 'We should not get here. Maybe the position of your stream was in the middle of a character or the encoder it not the right one?'
+	(firstByte bitAnd: 2r10000000) = 0 ifTrue: [ ^ self ].
+	(firstByte bitAnd: 2r11100000) = 2r11000000 ifTrue: [ ^ stream skip: 1 ].
+	(firstByte bitAnd: 2r11110000) = 2r11100000 ifTrue: [ ^ stream skip: 2 ].
+	(firstByte bitAnd: 2r11111000) = 2r11110000 ifTrue: [ ^ stream skip: 3 ].
+	^ self errorIllegalLeadingByte: firstByte from: stream
 ]
 
 { #category : 'accessing' }
 ZnUTF8Encoder >> identifier [
-	^ #utf8
+	^ 'utf8'
 ]
 
 { #category : 'testing' }
@@ -202,40 +200,40 @@ ZnUTF8Encoder >> nextCodePointFromStream: stream [
 	"Read and return the next integer code point from stream"
 
 	| code byte next |
-	(byte := stream next ifNil: [ ^ self errorIncomplete ]) < 128
+	(byte := stream next ifNil: [ ^ self errorIncompleteFrom: stream ]) < 128
 		ifTrue: [ ^ byte ].
 	(byte bitAnd: 2r11100000) == 2r11000000
 		ifTrue: [
 			code := byte bitAnd: 2r00011111.
-			((next := stream next ifNil: [ ^ self errorIncomplete ]) bitAnd: 2r11000000) == 2r10000000
+			((next := stream next ifNil: [ ^ self errorIncompleteFrom: stream ]) bitAnd: 2r11000000) == 2r10000000
 				ifTrue: [ code := (code bitShift: 6) + (next bitAnd: 2r00111111) ]
-				ifFalse: [ ^ self errorIllegalContinuationByte ].
-			code < 128 ifTrue: [ ^ self errorOverlong ].
+				ifFalse: [ ^ self errorIllegalContinuationByte: next from: stream ].
+			code < 128 ifTrue: [ ^ self errorOverlong: code from: stream ].
 			^ code ].
 	(byte bitAnd: 2r11110000) == 2r11100000
 		ifTrue: [
 			code := byte bitAnd: 2r00001111.
 			2 timesRepeat: [
-				((next := stream next ifNil: [ ^ self errorIncomplete ]) bitAnd: 2r11000000) == 2r10000000
+				((next := stream next ifNil: [ ^ self errorIncompleteFrom: stream ]) bitAnd: 2r11000000) == 2r10000000
 					ifTrue: [ code := (code bitShift: 6) + (next bitAnd: 2r00111111) ]
-					ifFalse: [ ^ self errorIllegalContinuationByte ] ].
-			code < 2048 ifTrue: [ ^ self errorOverlong ].
-			(self isSurrogateCodePoint: code) ifTrue: [ ^ self errorOutsideRange ].
-			code = 65279 "Unicode Byte Order Mark" ifTrue: [
-				stream atEnd ifTrue: [ ^ self errorIncomplete ].
+					ifFalse: [ ^ self errorIllegalContinuationByte: next from: stream ] ].
+			code < 2048 ifTrue: [ ^ self errorOverlong: code from: stream ].
+			(self isSurrogateCodePoint: code) ifTrue: [ ^ self errorOutsideRange: code from: stream ].
+			(code = self byteOrderMark and: [ self ignoreByteOrderMark ]) ifTrue: [
+				stream atEnd ifTrue: [ ^ self errorIncompleteFrom: stream ].
 				^ self nextCodePointFromStream: stream ].
 			^ code ].
 	(byte bitAnd: 2r11111000) == 2r11110000
 		ifTrue: [
 			code := byte bitAnd: 2r00000111.
 			3 timesRepeat: [
-				((next := stream next ifNil: [ ^ self errorIncomplete ]) bitAnd: 2r11000000) == 2r10000000
+				((next := stream next ifNil: [ ^ self errorIncompleteFrom: stream ]) bitAnd: 2r11000000) == 2r10000000
 					ifTrue: [ code := (code bitShift: 6) + (next bitAnd: 2r00111111) ]
-					ifFalse: [ ^ self errorIllegalContinuationByte ] ].
-			code < 65535 ifTrue: [ ^ self errorOverlong ].
-			code > self maximumUTFCode ifTrue: [ self errorOutsideRange ].
+					ifFalse: [ ^ self errorIllegalContinuationByte: next from: stream ] ].
+			code < 65535 ifTrue: [ ^ self errorOverlong: code from: stream ].
+			code > self maximumUTFCode ifTrue: [ ^ self errorOutsideRange: code from: stream ].
 			^ code ].
-	^ self errorIllegalLeadingByte
+	^ self errorIllegalLeadingByte: byte from: stream
 ]
 
 { #category : 'encoding - decoding' }
@@ -248,7 +246,7 @@ ZnUTF8Encoder >> nextPutCodePoint: codePoint toStream: stream [
 		^ stream
 			nextPut: (2r11000000 + (codePoint bitShift: -6));
 			nextPut: (2r10000000 + (codePoint bitAnd: 2r111111)) ].
-	(self isSurrogateCodePoint: codePoint) ifTrue: [ ^ self errorOutsideRange ].
+	(self isSurrogateCodePoint: codePoint) ifTrue: [ ^ self errorOutsideRange: codePoint to: stream ].
 	codePoint < 65536 ifTrue: [
 		^ stream
 			nextPut: (2r11100000 + (codePoint bitShift: -12));
@@ -260,7 +258,7 @@ ZnUTF8Encoder >> nextPutCodePoint: codePoint toStream: stream [
 			nextPut: (2r10000000 + ((codePoint bitShift: -12) bitAnd: 2r111111));
 			nextPut: (2r10000000 + ((codePoint bitShift: -6) bitAnd: 2r111111));
 			nextPut: (2r10000000 + (codePoint bitAnd: 2r111111)) ].
-	^ self errorOutsideRange
+	^ self errorOutsideRange: codePoint to: stream
 ]
 
 { #category : 'convenience' }

@@ -9,23 +9,25 @@ Class {
 }
 
 { #category : 'accessing' }
+SycFileOutMethodCommand >> defaultFileName [
+	| method |
+	^ self methods size = 1
+		ifTrue: [
+			method := self methods first.
+			method methodClass name , '-' , method selector ]
+		ifFalse: [ 'methodsfileout' ]
+]
+
+{ #category : 'accessing' }
 SycFileOutMethodCommand >> description [
 
 	^ 'Requests to save a textual version of the selected class to a new file in chunk format and .st extension. Instance and class side methods are both saved'
 ]
 
-{ #category : 'executing' }
-SycFileOutMethodCommand >> executeRefactoring [
+{ #category : 'execution' }
+SycFileOutMethodCommand >> execute [
 
-	| filename |
-	filename := self methods size = 1
-		            ifTrue: [ self methods first name ]
-		            ifFalse: [ 'methodsfileout' ].
-
-	^ Fileouter
-		fileoutNamed: filename
-		cofigureWith: [ :fileouter | 
-			self methods do: [ :each | fileouter addMethod: each ] ]
+	^ Fileouter fileoutNamed: self defaultFileName configureWith: [ :fileouter | self methods do: [ :method | fileouter addMethod: method ] ]
 ]
 
 { #category : 'accessing' }

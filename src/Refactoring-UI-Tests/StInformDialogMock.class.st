@@ -1,6 +1,9 @@
 Class {
 	#name : 'StInformDialogMock',
 	#superclass : 'Object',
+	#instVars : [
+		'shownMessage'
+	],
 	#category : 'Refactoring-UI-Tests',
 	#package : 'Refactoring-UI-Tests'
 }
@@ -15,11 +18,17 @@ StInformDialogMock >> label: aString [
 { #category : 'accessing' }
 StInformDialogMock >> message: aString [
 
-	^ 'nothing'
+	shownMessage := aString
 ]
 
 { #category : 'api - showing' }
 StInformDialogMock >> openModal [
+]
+
+{ #category : 'accessing' }
+StInformDialogMock >> shownMessage [
+
+	^ shownMessage
 ]
 
 { #category : 'accessing' }

@@ -80,10 +80,9 @@ RubTextScrollPane >> drawSubmorphsOn: aCanvas [
 	for the focus rectangle."
 
 	super drawSubmorphsOn: aCanvas.
-	self textArea readOnly ifTrue: [ ^self ].
+	self textArea readOnly ifTrue: [ ^ self ].
 	self drawFocusBorder ifFalse: [ ^ self ].
-	(self hasKeyboardFocus or: [ self textArea hasFindReplaceFocus ])
-		ifTrue: [self drawKeyboardFocusOn: aCanvas]
+	self hasKeyboardFocus ifTrue: [ self drawKeyboardFocusOn: aCanvas ]
 ]
 
 { #category : 'geometry' }

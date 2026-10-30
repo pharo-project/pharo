@@ -147,6 +147,7 @@ Slot >> ensureSlotInitializationFor: aClass [
 
 	source := (aClass >> #initialize) sourceCode allButFirst: 10.
 	source := 'initialize
+	"The following line is mandatory to support the implementation of ObservableSlot. Do not remove it if you continue to get your class using observable slots."
 
 	self class initializeSlots: self.' , source.
 

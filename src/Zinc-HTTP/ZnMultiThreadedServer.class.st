@@ -35,16 +35,6 @@ ZnMultiThreadedServer >> closeSocketStream: socketStream [
 		do: [ ]
 ]
 
-{ #category : 'private' }
-ZnMultiThreadedServer >> exceptionSet: classNames [
-	^ classNames
-		inject: ExceptionSet new
-		into: [ :set :each |
-			(Smalltalk includesKey: each)
-				ifTrue: [ set add: (Smalltalk at: each); yourself ]
-				ifFalse: [ set ] ]
-]
-
 { #category : 'request handling' }
 ZnMultiThreadedServer >> executeOneRequestResponseOn: stream [
 	"Execute one HTTP request / response cycle on stream in 3 steps
@@ -95,7 +85,7 @@ ZnMultiThreadedServer >> readRequestBadExceptionSet [
 	"Return the set of exceptions which, when they occur while reading a request,
 	are interpreted as equivalent to a request parse error or bad request."
 
-	^ self
+	^ ZnUtils
 		exceptionSet:
 			#(#ZnParseError #ZnCharacterEncodingError #ZnUnknownScheme #ZnPortNotANumber #ZnTooManyDictionaryEntries #ZnEntityTooLarge)
 ]
@@ -122,9 +112,9 @@ ZnMultiThreadedServer >> readRequestTerminationExceptionSet [
 	"Return the set of exceptions which, when they occur while reading a request,
 	are interpreted as equivalent to a timeout or connection close."
 
-	^ self
+	^ ZnUtils
 		exceptionSet:
-			#(#ConnectionClosed #ConnectionTimedOut #PrimitiveFailed)
+			#(#ConnectionClosed #ConnectionTimedOut #SocketError #PrimitiveFailed)
 ]
 
 { #category : 'request handling' }
@@ -178,5 +168,7 @@ ZnMultiThreadedServer >> writeResponseTerminationExceptionSet [
 	"Return the set of exceptions which, when they occur while writing a response,
 	are interpreted as equivalent to a timeout or connection close."
 
-	^ self exceptionSet: #(#ConnectionClosed #ConnectionTimedOut #PrimitiveFailed)
+	^ ZnUtils 
+		exceptionSet:
+			#(#ConnectionClosed #ConnectionTimedOut #SocketError #PrimitiveFailed)
 ]

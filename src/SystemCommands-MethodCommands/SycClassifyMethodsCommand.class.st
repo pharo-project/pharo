@@ -4,18 +4,19 @@ Classify the selected methods
 Class {
 	#name : 'SycClassifyMethodsCommand',
 	#superclass : 'SycMethodExtraCmCommand',
-	#instVars : [
-		'protocol'
-	],
 	#category : 'SystemCommands-MethodCommands',
 	#package : 'SystemCommands-MethodCommands'
 }
 
 { #category : 'execution' }
-SycClassifyMethodsCommand >> applyCommandResult [
+SycClassifyMethodsCommand >> execute [
 
-	self methods do: [ :aMethod | aMethod protocol: self protocol ].
-	context showProtocol: self protocol
+	| aProtocol |
+	aProtocol := StProtocolNameChooserPresenter requestProtocolNameConfiguring: [ :presenter | presenter concernedClass: context lastSelectedClass ].
+
+	aProtocol ifNil: [ ^ self ].
+	self methods do: [ :aMethod | aMethod protocol: aProtocol ].
+	context showProtocol: aProtocol
 ]
 
 { #category : 'accessing' }
@@ -28,23 +29,4 @@ SycClassifyMethodsCommand >> icon [
 SycClassifyMethodsCommand >> name [
 
 	^ 'Classify methods'
-]
-
-{ #category : 'preparation' }
-SycClassifyMethodsCommand >> prepareFullExecution [
-
-	super prepareFullExecution.
-	protocol := StProtocolNameChooserPresenter requestProtocolNameConfiguring: [ :presenter | presenter concernedClass: context lastSelectedClass ]
-]
-
-{ #category : 'accessing' }
-SycClassifyMethodsCommand >> protocol [
-
-	^ protocol
-]
-
-{ #category : 'accessing' }
-SycClassifyMethodsCommand >> protocol: anObject [
-
-	protocol := anObject
 ]

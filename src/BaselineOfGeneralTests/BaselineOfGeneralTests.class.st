@@ -44,7 +44,9 @@ BaselineOfGeneralTests >> baseline: spec [
 				package: 'Morphic-Tests';
 				package: 'Morphic-Widgets-FastTable-Tests';
 				package: 'NECompletion-Tests';
+				package: 'PragmaCollector-Tests';
 				package: 'Regex-Core-Tests';
+				package: 'Rubric-SpecFindReplaceDialog-Tests';
 				package: 'Rubric-Tests';
 				package: 'ScriptingExtensions-Tests';
 				package: 'StartupPreferences-Tests';

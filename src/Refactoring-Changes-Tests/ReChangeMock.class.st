@@ -23,12 +23,6 @@ ReChangeMock class >> classInsVar [
 	^ classInstVar
 ]
 
-{ #category : 'accessing' }
-ReChangeMock >> accessAll [ 
-	instVar := 0. 
-	SharedVar := 0.
-	^ instVar + SharedVar 
-]
 
 { #category : 'private' }
 ReChangeMock >> executeNotifying: aBlock [

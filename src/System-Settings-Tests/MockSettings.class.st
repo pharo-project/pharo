@@ -26,11 +26,6 @@ MockSettings class >> booleanSetting: aBoolean [
 ]
 
 { #category : 'settings' }
-MockSettings class >> booleanSettingNode [
-	^ self settingTree nodeNamed: #booleanSetting
-]
-
-{ #category : 'settings' }
 MockSettings class >> booleanSettingNodeOn: aBuilder [
 	<mocksystemsettings>
 	(aBuilder setting: #booleanSetting)
@@ -55,7 +50,7 @@ MockSettings class >> booleanSettingWithDefaultNodeOn: aBuilder [
 
 	(aBuilder setting: #booleanSettingWithDefault)
 		label: 'Mock boolean setting';
-		default: false;
+		defaultValue: false;
 		yourself
 ]
 
@@ -67,11 +62,6 @@ MockSettings class >> cacheDirectory [
 { #category : 'accessing' }
 MockSettings class >> cacheDirectory: aFileReference [
 	cacheDirectory := aFileReference
-]
-
-{ #category : 'settings' }
-MockSettings class >> cacheDirectorySettingNode [
-	^ self settingTree nodeNamed: #cacheDirectory
 ]
 
 { #category : 'setting strings' }
@@ -127,12 +117,6 @@ MockSettings class >> monticelloSettingsOn: aBuilder [
 			]
 ]
 
-{ #category : 'accessing' }
-MockSettings class >> nodeSettings [
-	"self nodeSettings"
-	^ self settingTree nodeList
-]
-
 { #category : 'setting strings' }
 MockSettings class >> notExistingClassStoredSettingSTONString [
 	^
@@ -166,11 +150,6 @@ MockSettings class >> rangeSetting: anInteger [
 ]
 
 { #category : 'settings' }
-MockSettings class >> rangeSettingNode [
-	^ self settingTree nodeNamed: #rangeSetting
-]
-
-{ #category : 'settings' }
 MockSettings class >> rangeSettingNodeOn: aBuilder [
 	<mocksystemsettings>
 	(aBuilder range: #rangeSetting)
@@ -179,9 +158,16 @@ MockSettings class >> rangeSettingNodeOn: aBuilder [
 ]
 
 { #category : 'accessing' }
-MockSettings class >> settingTree [
-	"self settingTree"
-	^ SettingTree new acceptableKeywords: (Array with: #mocksystemsettings)
+MockSettings class >> settingNamed: aSymbol [
+
+	^ self settings detect: [ :each | each name = aSymbol ]
+]
+
+{ #category : 'accessing' }
+MockSettings class >> settings [
+	"self settings"
+
+	^ (SettingsBuilder forPragmaNamed: #mocksystemsettings) settings
 ]
 
 { #category : 'accessing' }
@@ -189,7 +175,7 @@ MockSettings class >> storedSettings [
 	"self storedSettings"
 	| builder |
 	builder := StoredSettingsFactory new.
-	^ self nodeSettings collect: [ :e | builder from: e ]
+	^ self settings collect: [ :e | builder from: e ]
 ]
 
 { #category : 'setting strings' }

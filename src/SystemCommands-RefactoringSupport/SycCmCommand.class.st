@@ -66,6 +66,13 @@ SycCmCommand class >> defaultDescription [
 SycCmCommand >> applyCommandResult [
 ]
 
+{ #category : 'testing' }
+SycCmCommand >> canBeExecuted [
+
+	"Bridge the legacy Commander applicability check to the Commander2 contract."
+	^ self isApplicable
+]
+
 { #category : 'executing' }
 SycCmCommand >> execute [
 	

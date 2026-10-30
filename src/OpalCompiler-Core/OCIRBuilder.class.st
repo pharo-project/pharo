@@ -140,8 +140,10 @@ OCIRBuilder >> cacheIndex: tempKey [
 	self sourceNode ifNotNil: [ :sourceNode |
 		| var |
 		var := sourceNode scope lookupVar: tempKey.
-		"some vars (e.g. limits in loops) do not exist on the AST level"
-		var ifNotNil: [ var index: (self currentScope tempMap at: tempKey) ] ]
+		"some vars (e.g. limits in loops) do not exist on the AST level.
+		When doing the lookupVar above, some scopes (e.g., playground requestors) may return undeclared variables"
+		(var notNil and: [ var isUndeclaredVariable not ])
+			ifTrue: [ var index: (self currentScope tempMap at: tempKey) ] ]
 ]
 
 { #category : 'accessing' }

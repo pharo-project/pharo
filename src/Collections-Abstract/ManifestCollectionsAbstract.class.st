@@ -9,7 +9,7 @@ Class {
 	#tag : 'Manifest'
 }
 
-{ #category : 'meta-data' }
+{ #category : 'meta data' }
 ManifestCollectionsAbstract class >> dependencies [
 	^ #(#'Regex-Core' #'Collections-Strings' #'Collections-Streams' #'Collections-Support' #'Collections-Unordered' #Kernel #'Collections-Sequenceable' #'Collections-Native')
 ]
@@ -21,7 +21,7 @@ ManifestCollectionsAbstract class >> manuallyResolvedDependencies [
 	^ #(#'Collections-Streams' #'Collections-Sequenceable')
 ]
 
-{ #category : 'meta-data' }
+{ #category : 'meta data' }
 ManifestCollectionsAbstract class >> packageName [
 	^ #'Collections-Abstract'
 ]

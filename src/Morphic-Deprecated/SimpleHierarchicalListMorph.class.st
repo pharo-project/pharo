@@ -504,7 +504,7 @@ SimpleHierarchicalListMorph >> hExtraScrollRange [
 	^5
 ]
 
-{ #category : 'events-processing' }
+{ #category : 'events - processing' }
 SimpleHierarchicalListMorph >> handleMouseMove: anEvent [
 	"Reimplemented because we really want #mouseMove when a morph is dragged around"
 	anEvent wasHandled ifTrue:[^self]. "not interested"

@@ -349,16 +349,3 @@ RBAddParameterParametrizedTest >> testFailurePrimitiveMethods [
 			               { newArg } }.
 	self shouldFail: refactoring
 ]
-
-{ #category : 'failure tests' }
-RBAddParameterParametrizedTest >> testFailureUseExistingNewSelector [
-
-	| newArg |
-	newArg := RBArgumentName name: 'anObject' value: 'nil'.
-	self shouldFail: (self createRefactoringWithArguments: {
-				 #checkSendersAccessTo:.
-				 RBLintRuleTestData.
-				 #safeVariableNameFor:temporaries:.
-				 #( 1 -1 ).
-				 { newArg } })
-]

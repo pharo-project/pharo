@@ -111,14 +111,14 @@ ClyNotebookPageMorph >> markDirty: dirty [
 	labelPresenter updatePresenter
 ]
 
-{ #category : 'events handling' }
+{ #category : 'event handling' }
 ClyNotebookPageMorph >> onClose: aBlock [
 
 	labelPresenter onClose: aBlock.
 	self beCloseable
 ]
 
-{ #category : 'events handling' }
+{ #category : 'event handling' }
 ClyNotebookPageMorph >> onDoubleClick: aBlock [
 
 	labelPresenter onDoubleClick: aBlock

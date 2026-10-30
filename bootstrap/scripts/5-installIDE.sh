@@ -103,8 +103,8 @@ env 2>&1 > env.log
 
 ${VM} "${PHARO_IMAGE_NAME}.image" eval --save "MCCacheRepository uniqueInstance disable"
 #First we load the remote repositories capabilities of Monticello to be able to load the Pharo baseline with external remote dependencies
-${VM} "${PHARO_IMAGE_NAME}.image" metacello install --save --signalErrorOnWarning "tonel://${BOOTSTRAP_REPOSITORY}/src" Monticello --groups RemoteRepositories
-${VM} "${PHARO_IMAGE_NAME}.image" metacello install --save --signalErrorOnWarning "tonel://${BOOTSTRAP_REPOSITORY}/src" Pharo
+${VM} "${PHARO_IMAGE_NAME}.image" metacello install --signalErrorOnWarning "tonel://${BOOTSTRAP_REPOSITORY}/src" Monticello --groups RemoteRepositories
+${VM} "${PHARO_IMAGE_NAME}.image" metacello install --signalErrorOnWarning "tonel://${BOOTSTRAP_REPOSITORY}/src" Pharo
 
 #Storing the image version into the image header
 ${VM} "${PHARO_IMAGE_NAME}.image" "${IMAGE_FLAGS}" eval --save "Smalltalk vm saveImageVersionInImageHeader"

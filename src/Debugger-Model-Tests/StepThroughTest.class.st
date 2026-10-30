@@ -149,6 +149,18 @@ StepThroughTest >> stepI2: someBlock [
 	^ someBlock value: 24
 ]
 
+{ #category : 'helper' }
+StepThroughTest >> stepJ1 [
+
+	^ self stepJ2 value
+]
+
+{ #category : 'helper' }
+StepThroughTest >> stepJ2 [ 
+
+	^ [ 1 printString ]
+]
+
 { #category : 'running' }
 StepThroughTest >> tearDown [
 
@@ -423,6 +435,21 @@ StepThroughTest >> testStepThroughUntilTermination [
 	self assert: session interruptedProcess isTerminated.
 	self deny: (session isContextPostMortem: session interruptedContext).
 	self assert: session interruptedContext sender isNil
+]
+
+{ #category : 'tests' }
+StepThroughTest >> testStepThroughValueOnReturnedBlockhouldNotEnterInBlock [ 
+
+	| node |
+	self settingUpSessionAndProcessAndContextForBlock: [ self stepJ1 ].
+	session stepInto.
+	session stepOver. 
+	session stepThrough.
+
+	self assert: (session interruptedContext method) equals: (self class lookupSelector: #stepJ1).
+	node := (self class lookupSelector: #stepJ1) sourceNodeForPC: session interruptedContext pc.
+	self assert: node isReturn.
+	
 ]
 
 { #category : 'tests' }

@@ -73,27 +73,8 @@ ZnConstants class >> initializeHTTPStatusCodes [
 ]
 
 { #category : 'accessing' }
-ZnConstants class >> knownHTTPMethods [
-	^ #(
-		"Standard HTTP 1.1 Verbs"
-		GET PUT POST DELETE HEAD
-		TRACE OPTIONS CONNECT PATCH
-		"WebDAV verbs"
-		PROPFIND PROPPATCH MKCOL COPY MOVE LOCK UNLOCK)
-]
-
-{ #category : 'accessing' }
 ZnConstants class >> knownHTTPVersions [
 	^ #('HTTP/1.1' 'HTTP/1.0')
-]
-
-{ #category : 'resource limits' }
-ZnConstants class >> maximumLineLength [
-	"Return the maximum line length to accept.
-	Used by ZnLineReader and thus for reading request/status lines as well as headers.
-	This helps to protect us from malicious content."
-
-	^ 4096
 ]
 
 { #category : 'accessing' }

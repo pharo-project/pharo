@@ -80,19 +80,17 @@ ReDuplicateClassDriverTest >> testDuplicateClass [
 { #category : 'tests' }
 ReDuplicateClassDriverTest >> testDuplicateClassInIncompleteModelFails [
 
-	| driver rbClass |
+	| driver |
 	testingEnvironment := RBClassEnvironment classes: { ReClassToBeDuplicated }.
-	driver := ReDuplicateClassDriver className:
-		          ReClassToBeDuplicated name.
+	driver := ReDuplicateClassDriver className: ReClassToBeDuplicated name.
 
 	self setUpMocksOn: driver.
 
+	driver informDialog: StInformDialogMock new.
+	driver application: StApplicationForRefactorDriverMock new.
 	driver scopes: { testingEnvironment }.
-	rbClass := testingEnvironment classes anyOne.
-
-	self
-		should: [ driver runRefactoring ]
-		raise: RBRefactoringError
+	driver runRefactoring.
+	self assert: (driver application shownMessage includesSubstring: 'missing from the model')
 ]
 
 { #category : 'tests' }
@@ -126,4 +124,20 @@ ReDuplicateClassDriverTest >> testDuplicateClassWithTrait [
 	self
 		assert: classAddition traitComposition asString
 		equals: ReClassToBeDuplicatedWithTraits traitCompositionString
+]
+{ #category : 'tests' }
+ReDuplicateClassDriverTest >> testDuplicateClassWithoutTagDoesNotCrash [
+
+	| driver dialog |
+	testingEnvironment := RBClassEnvironment classes: {
+		                      ReChangeMock.
+		                      ReChangeMock superclass }.
+
+	driver := ReDuplicateClassDriver className: ReChangeMock name.
+	driver scopes: { testingEnvironment }.
+
+	self
+		shouldnt: [ dialog := driver newRequestClassDialog ]
+		raise: NotFound.
+	self assert: dialog isNotNil
 ]

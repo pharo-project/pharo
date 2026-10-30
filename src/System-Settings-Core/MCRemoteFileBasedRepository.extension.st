@@ -6,9 +6,9 @@ MCRemoteFileBasedRepository class >> monticelloSettingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder setting: #cacheDirectory)
 		type: #Directory;
-		parent: #monticello;
+		parentName: #monticello;
 		target: MCCacheRepository;
-		default: (FileLocator localDirectory / 'package-cache') asFileReference;
+		defaultValue: (FileLocator localDirectory / 'package-cache') asFileReference;
 		description: 'The path of the local repository cache';
 		label: 'Local cache directory'
 ]

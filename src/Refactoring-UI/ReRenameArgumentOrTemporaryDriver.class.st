@@ -74,6 +74,7 @@ ReRenameArgumentOrTemporaryDriver >> gatherUserInput [
 
 	| cancelled |
 	cancelled := false.
+
 	[
 		refactoring newName: ((requestDialog ifNil: [ self defaultRequestDialog ])
 				 title: 'Rename a temp variable';

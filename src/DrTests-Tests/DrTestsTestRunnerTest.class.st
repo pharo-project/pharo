@@ -39,6 +39,19 @@ DrTestsTestRunnerTest >> testAllSelectedClassesAreTestCases [
 ]
 
 { #category : 'tests' }
+DrTestsTestRunnerTest >> testFailuresAreSortedAlphabetically [
+	"Regression tests, failures were the only sections not sorted alphabetically"
+
+	| testResult failuresNode |
+	testResult := TestResult new.
+	#( #testMethod3forMock #testMethod1forMock #testMethod2forMock ) do: [ :selector | testResult addFailure: (DTCoverageMockTest selector: selector) ].
+	failuresNode := (DTTestsRunnerResult new testResults: testResult) buildTreeForUI subResults second.
+	self
+		assert: (failuresNode subResults collect: #drTestsName) asArray
+		equals: #( 'DTCoverageMockTest>>#testMethod1forMock' 'DTCoverageMockTest>>#testMethod2forMock' 'DTCoverageMockTest>>#testMethod3forMock' )
+]
+
+{ #category : 'tests' }
 DrTestsTestRunnerTest >> testReRunResultIsDTTestRunnerResult [
 	| pluginResult |
 

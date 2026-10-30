@@ -102,7 +102,7 @@ GroupWindowMorph >> grabWindow [
 	choice ifNotNil: [self addWindow: choice]
 ]
 
-{ #category : 'events-processing' }
+{ #category : 'events - processing' }
 GroupWindowMorph >> handleDropMorph: anEvent [
 	"Handle a dropping morph."
 

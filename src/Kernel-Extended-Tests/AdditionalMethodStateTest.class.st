@@ -29,7 +29,7 @@ AdditionalMethodStateTest >> testAnalogousCodeTo [
 	state := AdditionalMethodState new: 1.
 	state
 		basicAt: 1
-		put: #traitSource -> TSortable.
+		put: #traitSource -> TEmpty.
 
 	self
 		shouldnt: [ state analogousCodeTo: state ]

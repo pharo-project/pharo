@@ -63,34 +63,33 @@ RubCursor class >> period: anInteger [
 
 { #category : 'settings' }
 RubCursor class >> rubricSettingsOn: aBuilder [
+
 	<systemsettings>
 	(aBuilder group: #'Rubric cursor')
-		parent: #RubricEditor;
+		parentName: #RubricEditor;
 		label: 'Cursor';
 		with: [
-					(aBuilder setting: #cursorWithFixedColor)
-						target: self;
-						default: false;
-						label: 'Fixed color';
-						with: [
-									(aBuilder setting: #defaultColor)
-										target: self;
-										default: Color lightGray;
-										description: 'The cursolr color color';
-										label: 'Color'  ].
-					(aBuilder range: #defaultWidth)
-						target: self;
-						default: 2;
-						label: 'Width';
-						description: 'Specify the cursor width';
-						range: (1 to: 4).
-					(aBuilder range: #period)
-						target: self;
-						default: 700;
-						label: 'Blinking period';
-						description:
-								'Specify the cursor blinking period in milliseconds. If it is set to zero then the cursor will not blink';
-						range: (0 to: 1000) ]
+				(aBuilder group: #cursorWithFixedColor)
+					isActive: false;
+					label: 'Fixed color';
+					with: [
+							(aBuilder setting: #defaultColor)
+								target: self;
+								defaultValue: Color lightGray;
+								description: 'The cursor color color';
+								label: 'Color' ].
+				(aBuilder range: #defaultWidth)
+					target: self;
+					defaultValue: 2;
+					label: 'Width';
+					description: 'Specify the cursor width';
+					range: (1 to: 4).
+				(aBuilder range: #period)
+					target: self;
+					defaultValue: 700;
+					label: 'Blinking period';
+					description: 'Specify the cursor blinking period in milliseconds. If it is set to zero then the cursor will not blink';
+					range: (0 to: 1000) ]
 ]
 
 { #category : 'initialization' }

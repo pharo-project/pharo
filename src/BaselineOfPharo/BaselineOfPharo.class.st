@@ -202,7 +202,8 @@ BaselineOfPharo >> baseline: spec [
 			package: 'Deprecated13';
 			package: 'Deprecated13-Kernel';
 			package: 'Deprecated14';
-			package: 'Deprecated14-Kernel' ]
+			package: 'Deprecated14-Kernel';
+			package: 'Deprecated15' ]
 ]
 
 { #category : 'actions' }

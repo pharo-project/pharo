@@ -1,23 +1,24 @@
 "
-I am a command to file out given objects.
+I am a command to file out the selected classes.
 I simply call #fileOut for each of them.
- 
-Internal Representation and Key Implementation Points.
-
-## Instance Variables
-
-- codeObjects:		<Colletion of<Object>>
 "
 Class {
 	#name : 'SycCmFileOutClassCommand',
 	#superclass : 'SycClassExtraCmCommand',
-	#instVars : [
-		'codeObjects'
-	],
 	#category : 'SystemCommands-ClassCommands-Extra',
 	#package : 'SystemCommands-ClassCommands',
 	#tag : 'Extra'
 }
+
+{ #category : 'accessing' }
+SycCmFileOutClassCommand >> defaultFileName [
+
+	| codeObjects |
+	codeObjects := context selectedObjects.
+	^ codeObjects size = 1
+		  ifTrue: [ codeObjects first name ]
+		  ifFalse: [ 'classfileout' ]
+]
 
 { #category : 'accessing' }
 SycCmFileOutClassCommand >> description [
@@ -25,29 +26,14 @@ SycCmFileOutClassCommand >> description [
 	^ 'Requests to save a textual version of the selected class to a new file in chunk format and .st extension. Instance and class side methods are both saved'
 ]
 
-{ #category : 'executing' }
-SycCmFileOutClassCommand >> executeRefactoring [
+{ #category : 'execution' }
+SycCmFileOutClassCommand >> execute [
 
-	| filename |
-	filename := codeObjects size = 1
-		            ifTrue: [ codeObjects first name ]
-		            ifFalse: [ 'classfileout' ].
-
-	^ Fileouter
-		fileoutNamed: filename
-		cofigureWith: [ :fileouter | 
-			codeObjects do: [ :each | fileouter addFullClass: each ] ]
+	Fileouter fileoutNamed: self defaultFileName configureWith: [ :fileouter | context selectedObjects do: [ :class | fileouter addFullClass: class ] ]
 ]
 
 { #category : 'accessing' }
 SycCmFileOutClassCommand >> name [
 
 	^ 'File out'
-]
-
-{ #category : 'preparation' }
-SycCmFileOutClassCommand >> prepareFullExecution [
-
-	super prepareFullExecution.
-	codeObjects := context selectedObjects
 ]

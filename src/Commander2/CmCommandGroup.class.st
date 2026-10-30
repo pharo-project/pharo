@@ -43,12 +43,12 @@ CmCommandGroup >> allCommands [
 	^ visitor commandsCollected
 ]
 
-{ #category : 'public-api' }
+{ #category : 'public api' }
 CmCommandGroup >> commandOrGroupNamed: aString [
 	^ (entries detect: [ :commandOrRegister | commandOrRegister name = aString ])
 ]
 
-{ #category : 'public-api' }
+{ #category : 'public api' }
 CmCommandGroup >> commandOrGroupNamed: aString ifFound: aBlock [
 
 	^ entries
@@ -56,7 +56,7 @@ CmCommandGroup >> commandOrGroupNamed: aString ifFound: aBlock [
 		  ifFound: aBlock
 ]
 
-{ #category : 'public-api' }
+{ #category : 'public api' }
 CmCommandGroup >> commands [
 	^ entries select: [ :entry | entry isCommand ]
 ]
@@ -70,7 +70,7 @@ CmCommandGroup >> ensureNotDuplicated: aCommandOrGroup [
 		ifTrue: [ CmDuplicatedEntryName signalEntryNamed: aCommandOrGroup name ]
 ]
 
-{ #category : 'public-api' }
+{ #category : 'public api' }
 CmCommandGroup >> entries [
 	^ entries
 ]
@@ -89,7 +89,7 @@ CmCommandGroup >> entriesIndexOf: aCommandOrGroup [
 				signal: 'Command or group to replace is not found in the group.' ]
 ]
 
-{ #category : 'public-api' }
+{ #category : 'public api' }
 CmCommandGroup >> groups [
 	^ entries select: [ :entry | entry isGroup ]
 ]
@@ -120,24 +120,24 @@ CmCommandGroup >> initialize [
 	entries := OrderedCollection new
 ]
 
-{ #category : 'public-api' }
+{ #category : 'public api' }
 CmCommandGroup >> register: aCommandOrGroup [
 	self registerLast: aCommandOrGroup
 ]
 
-{ #category : 'public-api' }
+{ #category : 'public api' }
 CmCommandGroup >> register: aCommandOrGroup after: anotherCommandOrGroup [
 	self ensureNotDuplicated: aCommandOrGroup.
 	self entries add: aCommandOrGroup after: anotherCommandOrGroup
 ]
 
-{ #category : 'public-api' }
+{ #category : 'public api' }
 CmCommandGroup >> register: aCommandOrGroup before: anotherCommandOrGroup [
 	self ensureNotDuplicated: aCommandOrGroup.
 	self entries add: aCommandOrGroup before: anotherCommandOrGroup
 ]
 
-{ #category : 'public-api' }
+{ #category : 'public api' }
 CmCommandGroup >> register: aCommandOrGroup insteadOf: anotherCommandOrGroup [
 	| commandToReplaceIndex |
 	commandToReplaceIndex := self entriesIndexOf: anotherCommandOrGroup.
@@ -148,19 +148,19 @@ CmCommandGroup >> register: aCommandOrGroup insteadOf: anotherCommandOrGroup [
 	entries at: commandToReplaceIndex put: aCommandOrGroup
 ]
 
-{ #category : 'public-api' }
+{ #category : 'public api' }
 CmCommandGroup >> registerFirst: aCommandOrGroup [
 	self ensureNotDuplicated: aCommandOrGroup.
 	entries addFirst: aCommandOrGroup
 ]
 
-{ #category : 'public-api' }
+{ #category : 'public api' }
 CmCommandGroup >> registerLast: aCommandOrGroup [
 	self ensureNotDuplicated: aCommandOrGroup.
 	entries addLast: aCommandOrGroup
 ]
 
-{ #category : 'public-api' }
+{ #category : 'public api' }
 CmCommandGroup >> unregister: aCmCommandOrGroup [
 	entries remove: (entries detect: [ :e | e = aCmCommandOrGroup ])
 ]

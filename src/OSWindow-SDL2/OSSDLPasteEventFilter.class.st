@@ -20,7 +20,7 @@ OSSDLPasteEventFilter >> addEvent: aEvent [
 	self lastEvents add: aEvent
 ]
 
-{ #category : 'events-processing' }
+{ #category : 'events - processing' }
 OSSDLPasteEventFilter >> changeEventsToIncludeModifier [
 
 	| modifierToUse defaultModifier |
@@ -54,7 +54,7 @@ OSSDLPasteEventFilter >> currentState: aValue [
 	currentState := aValue
 ]
 
-{ #category : 'events-processing' }
+{ #category : 'events - processing' }
 OSSDLPasteEventFilter >> dispatchEvent: aSDLEvent [
 
 	"
@@ -118,7 +118,7 @@ OSSDLPasteEventFilter >> flushEvents [
 	self lastEvents removeAll
 ]
 
-{ #category : 'events-processing' }
+{ #category : 'events - processing' }
 OSSDLPasteEventFilter >> isKeyDownV: aSDLEvent [
 
 	^ aSDLEvent isKeyDownEvent
@@ -126,7 +126,7 @@ OSSDLPasteEventFilter >> isKeyDownV: aSDLEvent [
 			and: [aSDLEvent keysym sym = SDLK_v]]
 ]
 
-{ #category : 'events-processing' }
+{ #category : 'events - processing' }
 OSSDLPasteEventFilter >> isKeyUpV: aSDLEvent [
 
 	^ aSDLEvent isKeyUpEvent
