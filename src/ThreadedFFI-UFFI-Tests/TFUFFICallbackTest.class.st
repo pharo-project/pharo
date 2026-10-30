@@ -163,17 +163,29 @@ TFUFFICallbackTest >> testCallbackWithErrorHanlded [
 { #category : 'tests' }
 TFUFFICallbackTest >> testCallbacksInOtherThread [
 
-	| callback semaphore|
-
-	"Using same thread runner with callbacks from other threads produce a segmentation fault"
+	| callback semaphore |
+	"A callback must use the same runner as the callout that triggers it: using the same thread runner with callbacks from other threads produces a segmentation fault that cannot be caught, so that variant is skipped instead of run. Create callbacks through their library to get the right runner, see FFICallback class comment and FFILibrary>>#newCallback:signature:block:"
 	ffiLibrary = TFTestLibraryUsingSameThreadRunner ifTrue: [ ^ self skip ].
 
 	semaphore := Semaphore new.
+	callback := self newCallbackWithSignature: #( int #( int a ) ) block: [ :a |
+			            semaphore signal.
+			            a + 1 ].
 
-	callback := self newCallbackWithSignature: #(int (int a)) block: [ :a | semaphore signal. a + 1 ].
 	self callbackFromAnotherThread: callback.
-	semaphore wait.
 
+	semaphore wait.
 	1 second wait.
+
 	self assert: self getValue equals: 43
+]
+
+{ #category : 'tests' }
+TFUFFICallbackTest >> testNewCallbackIsOwnedByItsLibrary [
+
+	| library callback |
+	library := self ffiLibrary uniqueInstance.
+	callback := library newCallback: FFICallback signature: #( int #( int a ) ) block: [ :a | a + 1 ].
+
+	self assert: callback ffiLibraryName identicalTo: library
 ]

@@ -1,12 +1,25 @@
 "
 I define a callback for an external function call.
-I allow blocks to be evaluated when an external block funtion needs it. 
+I allow blocks to be evaluated when an external block funtion needs it.
 
 	cb := FFICallback
 			signature:  #(int (const void *a, const void *b))
 			block: [ :arg1 :arg2 | ((arg1 doubleAt: 1) - (arg2 doubleAt: 1)) sign].
 
 argument types are calculated and converted using same parsing logic than FFICallout
+
+A callback belongs to a library, and that library's runner decides how it is executed. It must use the same runner as the callout that triggers it: a callback that uses a same-thread runner but is called from a TFWorker thread crashes the VM (see TFUFFICallbackTest>>#testCallbacksInOtherThread).
+
+The instances created with #signature:block: have no library, so they use the 'default' library and its same-thread runner. This is correct for callouts in the same thread only. Callbacks of a library that may use another runner should be created through that library:
+
+	cb := aLibrary
+			newCallback: FFICallback
+			signature: #(int (int a))
+			block: [ :a | a + 1 ].
+
+Subclasses can declare their signature in #fnSpec and their library in #ffiLibrary on the class side, and are then created with:
+
+	cb := MyCallback on: [ :a | a + 1 ].
 "
 Class {
 	#name : 'FFICallback',
@@ -50,6 +63,19 @@ FFICallback class >> exampleCqsort [
 ]
 
 { #category : 'instance creation' }
+FFICallback class >> ffiLibraryName [
+
+	^ 'default'
+]
+
+{ #category : 'instance creation' }
+FFICallback class >> fnSpec [
+	"Answer the signature of the receiver's callbacks"
+
+	^ self subclassResponsibility
+]
+
+{ #category : 'instance creation' }
 FFICallback class >> forAddress: address [
 	"Reconstructs a callback from an address (an integer).
 	 This is useful for reading callbacks from a structure.
@@ -58,6 +84,13 @@ FFICallback class >> forAddress: address [
 		And the callback needs to be created with FFICallback (not plain Alien callbacks), then
 		we can be sure block in fact contains the FFICallback instance"
 	^ FFIBackend current lookupCallbackByAddress: address
+]
+
+{ #category : 'instance creation' }
+FFICallback class >> on: aBlock [
+	"Answer a callback of the receiver, with the signature in #fnSpec, owned by the library in #ffiLibrary"
+
+	^ self ffiLibrary newCallback: self signature: self fnSpec block: aBlock
 ]
 
 { #category : 'private - primitives' }

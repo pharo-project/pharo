@@ -19,10 +19,3 @@ DraggableCallback class >> fnSpec [
 
 	^'int ( SDL_Window aWindow, SDL_Point* pt, void* data )'
 ]
-
-{ #category : 'instance creation' }
-DraggableCallback class >> on: aBlock [
-	^ self
-		signature: self fnSpec
-		block: aBlock
-]
