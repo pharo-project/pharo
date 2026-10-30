@@ -12,3 +12,31 @@ Class {
 ClyOpenContextMenuCommand class >> isAbstract [
 	^ self = ClyOpenContextMenuCommand
 ]
+
+{ #category : 'accessing' }
+ClyOpenContextMenuCommand >> defaultMenuIconName [
+	"Temporary method for Commander2 migration."
+
+	^ self iconName
+]
+
+{ #category : 'accessing' }
+ClyOpenContextMenuCommand >> defaultMenuItemName [
+	"Temporary method for Commander2 migration."
+
+	^ self name
+]
+
+{ #category : 'accessing' }
+ClyOpenContextMenuCommand >> iconName [
+	"Temporary method for Commander2 migration."
+
+	^ super defaultMenuIconName
+]
+
+{ #category : 'accessing' }
+ClyOpenContextMenuCommand >> name [
+	"Temporary method for Commander2 migration."
+
+	^ super defaultMenuItemName
+]
