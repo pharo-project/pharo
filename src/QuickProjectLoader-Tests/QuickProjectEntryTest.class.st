@@ -224,3 +224,103 @@ QuickProjectEntryTest >> testRecordLoadInSessionKeepsLastThirty [
 	self assert: entry loadedInSessions size equals: 30.
 	self assert: entry loadedInSessions last equals: start + 40 seconds
 ]
+
+{ #category : 'tests' }
+QuickProjectEntryTest >> testBranchGoesInItsPlaceInTheUrl [
+
+	| entry |
+	entry := QuickProjectEntry name: 'A' repositoryUrl: 'github://owner/repo/src'.
+	entry branch: 'dev'.
+
+	self assert: entry metacelloRepositoryUrl equals: 'github://owner/repo:dev/src'
+]
+
+{ #category : 'tests' }
+QuickProjectEntryTest >> testBranchOnCloneUrl [
+
+	| entry |
+	entry := QuickProjectEntry name: 'Ume' repositoryUrl: 'git@github.com:FedeLoch/Ume.git'.
+	entry branch: 'main'.
+
+	self assert: entry metacelloRepositoryUrl equals: 'github://FedeLoch/Ume:main'
+]
+
+{ #category : 'tests' }
+QuickProjectEntryTest >> testBranchWinsOverTheOneInTheUrl [
+
+	| entry |
+	entry := QuickProjectEntry name: 'A' repositoryUrl: 'github://owner/repo:old/src'.
+	entry branch: 'new'.
+
+	self assert: entry metacelloRepositoryUrl equals: 'github://owner/repo:new/src'.
+	self assert: entry effectiveBranch equals: 'new'
+]
+
+{ #category : 'tests' }
+QuickProjectEntryTest >> testDefaultBranchIsResolvedOnlyWithoutABranch [
+
+	| entry |
+	entry := QuickProjectLoadRecorder new
+		name: 'A';
+		repositoryUrl: 'github://owner/repo';
+		defaultBranch: 'main';
+		yourself.
+	entry resolveDefaultBranch.
+	self assert: entry metacelloRepositoryUrl equals: 'github://owner/repo:main'.
+
+	entry
+		repositoryUrl: 'github://owner/repo:dev';
+		branch: ''.
+	entry resolveDefaultBranch.
+	self assert: entry metacelloRepositoryUrl equals: 'github://owner/repo:dev'
+]
+
+{ #category : 'tests' }
+QuickProjectEntryTest >> testDefaultBranchLookupFailureKeepsTheUrl [
+
+	| entry |
+	entry := QuickProjectLoadRecorder new
+		name: 'A';
+		repositoryUrl: 'github://owner/repo';
+		yourself.
+
+	entry resolveDefaultBranch.
+
+	self assert: entry metacelloRepositoryUrl equals: 'github://owner/repo'
+]
+
+{ #category : 'tests' }
+QuickProjectEntryTest >> testDefaultBranchParsing [
+
+	self assert: (QuickProjectEntry defaultBranchIn: '{"name":"Ume","default_branch":"main"}') equals: 'main'.
+	self assert: (QuickProjectEntry defaultBranchIn: '{"message":"Not Found"}') isNil
+]
+
+{ #category : 'tests' }
+QuickProjectEntryTest >> testDisplaySourceShowsTheBranch [
+
+	| entry |
+	entry := QuickProjectEntry name: 'A' repositoryUrl: 'github://owner/repo/src'.
+	self assert: entry displaySource equals: 'owner/repo'.
+
+	entry branch: 'main'.
+	self assert: entry displaySource equals: 'owner/repo:main'
+]
+
+{ #category : 'tests' }
+QuickProjectEntryTest >> testOnlyGitHubIsAskedForADefaultBranch [
+
+	self assert: (QuickProjectEntry name: 'A' repositoryUrl: 'git@github.com:a/b.git') isGitHubRepository.
+	self deny: (QuickProjectEntry name: 'A' repositoryUrl: 'gitlab://a/b') isGitHubRepository.
+	self assert: (QuickProjectEntry name: 'A' repositoryUrl: 'gitlab://a/b') fetchDefaultBranch isNil
+]
+
+{ #category : 'tests' }
+QuickProjectEntryTest >> testBranchSurvivesTheFile [
+
+	| entry |
+	entry := QuickProjectEntry name: 'A' repositoryUrl: 'github://a/b'.
+	entry branch: 'main'.
+
+	self assert: (STON fromString: (STON toString: entry)) branch equals: 'main'
+]

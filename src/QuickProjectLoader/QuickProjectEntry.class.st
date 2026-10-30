@@ -5,6 +5,7 @@ I hold metadata to load a project via Metacello from a repository:
 - name: a human-readable display name
 - repositoryUrl: the full Metacello repository URL (e.g., 'github://owner/repo:branch/src')
 - baselineName: optional baseline name (without 'BaselineOf' prefix)
+- branch: optional branch, tag or commit to load. It wins over one written in the URL. When there is neither, GitHub is asked for the default branch at load time, because Metacello would otherwise assume 'master'
 - groups: an optional array of group names to load (empty means default group)
 - loadCount: how many times this project has been loaded (used for sorting)
 - useIncomingOnConflict: boolean indicating whether to send #onConflictUseIncoming to Metacello (default: true)
@@ -27,6 +28,7 @@ Class {
 		'name',
 		'repositoryUrl',
 		'baselineName',
+		'branch',
 		'groups',
 		'loadCount',
 		'useIncomingOnConflict',
@@ -37,6 +39,13 @@ Class {
 	#package : 'QuickProjectLoader',
 	#tag : 'Model'
 }
+
+{ #category : 'parsing' }
+QuickProjectEntry class >> defaultBranchIn: aJsonString [
+	"Answer the default branch from the answer of the GitHub repository API, or nil when it is an error answer."
+
+	^ (STON fromString: aJsonString) at: 'default_branch' ifAbsent: [ nil ]
+]
 
 { #category : 'instance creation' }
 QuickProjectEntry class >> name: aName repositoryUrl: aUrl [
@@ -100,6 +109,18 @@ QuickProjectEntry >> baselineName: aString [
 ]
 
 { #category : 'accessing' }
+QuickProjectEntry >> branch [
+
+	^ branch ifNil: [ branch := '' ]
+]
+
+{ #category : 'accessing' }
+QuickProjectEntry >> branch: aString [
+
+	branch := aString
+]
+
+{ #category : 'accessing' }
 QuickProjectEntry >> displayRepository [
 	"Answer the short form shown next to the name, e.g. 'owner/repo'."
 
@@ -112,6 +133,15 @@ QuickProjectEntry >> displayRepository [
 ]
 
 { #category : 'accessing' }
+QuickProjectEntry >> displaySource [
+	"Answer what the row shows under the name, e.g. 'owner/repo:main'."
+
+	^ self effectiveBranch
+		ifEmpty: [ self displayRepository ]
+		ifNotEmpty: [ :aBranch | self displayRepository , ':' , aBranch ]
+]
+
+{ #category : 'accessing' }
 QuickProjectEntry >> effectiveBaselineName [
 	"Metacello refuses to run without a baseline, so fall back on the project name."
 
@@ -120,6 +150,27 @@ QuickProjectEntry >> effectiveBaselineName [
 	^ (baseline beginsWith: 'BaselineOf')
 		ifTrue: [ baseline allButFirst: 'BaselineOf' size ]
 		ifFalse: [ baseline ]
+]
+
+{ #category : 'accessing' }
+QuickProjectEntry >> effectiveBranch [
+
+	^ self branch ifEmpty: [ self urlBranch ]
+]
+
+{ #category : 'private' }
+QuickProjectEntry >> fetchDefaultBranch [
+	"This is the only network access of an entry, and it only happens when the entry is being loaded."
+
+	| answer |
+	self isGitHubRepository ifFalse: [ ^ nil ].
+	^ [
+		answer := ZnClient new
+			timeout: 5;
+			get: 'https://api.github.com/repos/' , self displayRepository.
+		self class defaultBranchIn: answer ]
+		on: Error
+		do: [ nil ]
 ]
 
 { #category : 'accessing' }
@@ -161,6 +212,12 @@ QuickProjectEntry >> initialize [
 ]
 
 { #category : 'testing' }
+QuickProjectEntry >> isGitHubRepository [
+
+	^ self normalizedRepositoryUrl beginsWith: 'github://'
+]
+
+{ #category : 'testing' }
 QuickProjectEntry >> isLoadedInImage [
 	"Answer true if this project (baseline class or registered project) is currently loaded in the image."
 
@@ -189,6 +246,7 @@ QuickProjectEntry >> isManual: aBoolean [
 QuickProjectEntry >> load [
 
 	| metacello |
+	self resolveDefaultBranch.
 	metacello := Metacello new
 		repository: self metacelloRepositoryUrl;
 		baseline: self effectiveBaselineName;
@@ -242,7 +300,20 @@ QuickProjectEntry >> metacelloLoadScript [
 
 { #category : 'accessing' }
 QuickProjectEntry >> metacelloRepositoryUrl [
-	"Answer the URL in a form Metacello accepts: clone URLs pasted from GitHub become github:// ones."
+	"Answer the URL Metacello gets, with the branch in its place: scheme://owner/repo:branch/path."
+
+	| url segments |
+	url := self normalizedRepositoryUrl.
+	(self branch isEmpty or: [ (url includesSubstring: '://') not ]) ifTrue: [ ^ url ].
+	segments := (url splitOn: '://') second splitOn: $/.
+	segments size < 2 ifTrue: [ ^ url ].
+	segments at: 2 put: ((segments at: 2) copyUpTo: $:) , ':' , self branch.
+	^ (url splitOn: '://') first , '://' , (segments joinUsing: '/')
+]
+
+{ #category : 'accessing' }
+QuickProjectEntry >> normalizedRepositoryUrl [
+	"Clone URLs pasted from GitHub become github:// ones, which is what Metacello accepts."
 
 	| url |
 	url := self repositoryUrl trimBoth.
@@ -293,6 +364,25 @@ QuickProjectEntry >> repositoryUrl [
 QuickProjectEntry >> repositoryUrl: aString [
 
 	repositoryUrl := aString
+]
+
+{ #category : 'actions' }
+QuickProjectEntry >> resolveDefaultBranch [
+
+	self effectiveBranch ifNotEmpty: [ ^ self ].
+	self fetchDefaultBranch ifNotNil: [ :aBranch | branch := aBranch ]
+]
+
+{ #category : 'accessing' }
+QuickProjectEntry >> urlBranch [
+	"Answer the branch written in the URL, or an empty string."
+
+	| url segments |
+	url := self normalizedRepositoryUrl.
+	(url includesSubstring: '://') ifFalse: [ ^ '' ].
+	segments := (url splitOn: '://') second splitOn: $/.
+	segments size < 2 ifTrue: [ ^ '' ].
+	^ (segments at: 2) copyAfter: $:
 ]
 
 { #category : 'accessing' }

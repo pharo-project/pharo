@@ -5,11 +5,24 @@ Class {
 	#name : 'QuickProjectLoadRecorder',
 	#superclass : 'QuickProjectEntry',
 	#instVars : [
-		'onLoad'
+		'onLoad',
+		'defaultBranch'
 	],
 	#category : 'QuickProjectLoader-Tests',
 	#package : 'QuickProjectLoader-Tests'
 }
+
+{ #category : 'accessing' }
+QuickProjectLoadRecorder >> defaultBranch: aString [
+
+	defaultBranch := aString
+]
+
+{ #category : 'private' }
+QuickProjectLoadRecorder >> fetchDefaultBranch [
+
+	^ defaultBranch
+]
 
 { #category : 'actions' }
 QuickProjectLoadRecorder >> load [

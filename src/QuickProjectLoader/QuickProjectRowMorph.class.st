@@ -123,7 +123,7 @@ QuickProjectRowMorph >> drawOn: aCanvas [
 		font: (font emphasized: TextEmphasis bold emphasisCode)
 		color: self nameColor.
 	aCanvas
-		drawString: entry displayRepository
+		drawString: entry displaySource
 		in: (textLeft @ (self center y + 2) corner: textRight @ self bottom)
 		font: smallFont
 		color: self theme ghostTextColor.

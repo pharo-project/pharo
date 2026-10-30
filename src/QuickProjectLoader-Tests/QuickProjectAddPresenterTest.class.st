@@ -99,3 +99,13 @@ QuickProjectAddPresenterTest >> testAcceptClosesDialogOnlyWhenValid [
 		self assert: dialog isOk.
 		self deny: dialog isOpen ] ensure: [ dialog close ]
 ]
+
+{ #category : 'tests' }
+QuickProjectAddPresenterTest >> testCreatesEntryWithBranch [
+
+	presenter nameInput text: 'Ume'.
+	presenter urlInput text: 'github://FedeLoch/Ume'.
+	presenter branchInput text: ' main '.
+
+	self assert: presenter createEntry branch equals: 'main'
+]

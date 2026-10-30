@@ -346,6 +346,24 @@ QuickProjectLoaderPresenter >> items [
 ]
 
 { #category : 'actions' }
+QuickProjectLoaderPresenter >> askBranchAndLoad: anEntry [
+
+	(UIManager default
+		request: 'Branch, tag or commit (empty for the default branch)'
+		initialAnswer: anEntry effectiveBranch) ifNotNil: [ :answer |
+			self loadBranch: answer trimBoth of: anEntry ]
+]
+
+{ #category : 'actions' }
+QuickProjectLoaderPresenter >> loadBranch: aString of: anEntry [
+	"The choice is remembered, so the row keeps loading this branch."
+
+	anEntry branch: aString.
+	self repository save.
+	self loadProject: anEntry
+]
+
+{ #category : 'actions' }
 QuickProjectLoaderPresenter >> loadProject: anEntry [
 	"Download in the background. Metacello reports the finished load to the repository, which is what brings the project to the top of the list."
 
@@ -424,6 +442,7 @@ QuickProjectLoaderPresenter >> rowFor: anEntry [
 QuickProjectLoaderPresenter >> rowMenuFor: anEntry [
 
 	^ MenuMorph new
+		add: 'Load Branch...' target: self selector: #askBranchAndLoad: argument: anEntry;
 		add: 'Copy Metacello Script' target: self selector: #copyScriptOf: argument: anEntry;
 		add: 'Remove from List' target: self selector: #removeProject: argument: anEntry;
 		addLine;

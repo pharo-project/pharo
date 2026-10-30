@@ -4,6 +4,7 @@ I am a Spec2 dialog for entering new project details to add to the Quick Project
 Inputs:
 - Project name (required)
 - Repository URL (required, e.g., 'github://owner/repo/src')
+- Branch (optional, the default branch of the repository otherwise)
 - Baseline name (optional, e.g. 'MyProject' without BaselineOf)
 - Groups (optional, comma-separated)
 - Use incoming on conflict checkbox (default: checked)
@@ -16,6 +17,7 @@ Class {
 	#instVars : [
 		'nameInput',
 		'urlInput',
+		'branchInput',
 		'baselineInput',
 		'groupsInput',
 		'useIncomingCheckBox'
@@ -28,7 +30,7 @@ Class {
 { #category : 'accessing' }
 QuickProjectAddPresenter class >> defaultPreferredExtent [
 
-	^ 400 @ 320
+	^ 400 @ 370
 ]
 
 { #category : 'instance creation' }
@@ -54,6 +56,12 @@ QuickProjectAddPresenter >> baselineInput [
 	^ baselineInput
 ]
 
+{ #category : 'accessing' }
+QuickProjectAddPresenter >> branchInput [
+
+	^ branchInput
+]
+
 { #category : 'actions' }
 QuickProjectAddPresenter >> createEntry [
 
@@ -62,6 +70,7 @@ QuickProjectAddPresenter >> createEntry [
 	^ QuickProjectEntry new
 		name: nameInput text trimBoth;
 		repositoryUrl: urlInput text trimBoth;
+		branch: branchInput text trimBoth;
 		baselineName: baselineInput text trimBoth;
 		groups: parsedGroups;
 		useIncomingOnConflict: useIncomingCheckBox state;
@@ -78,6 +87,8 @@ QuickProjectAddPresenter >> defaultLayout [
 		add: nameInput expand: false;
 		add: 'Repository URL (required):' expand: false;
 		add: urlInput expand: false;
+		add: 'Branch (optional):' expand: false;
+		add: branchInput expand: false;
 		add: 'Baseline Name (optional):' expand: false;
 		add: baselineInput expand: false;
 		add: 'Groups (comma-separated, optional):' expand: false;
@@ -108,6 +119,9 @@ QuickProjectAddPresenter >> initializePresenters [
 		yourself.
 	urlInput := self newTextInput
 		placeholder: 'github://owner/repo/src';
+		yourself.
+	branchInput := self newTextInput
+		placeholder: 'Default branch of the repository';
 		yourself.
 	baselineInput := self newTextInput
 		placeholder: 'MyProject (optional)';

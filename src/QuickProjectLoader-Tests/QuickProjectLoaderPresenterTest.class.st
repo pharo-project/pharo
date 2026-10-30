@@ -187,3 +187,20 @@ QuickProjectLoaderPresenterTest >> testRowActionOnlyFiresInsideTheAction [
 	row mouseDown: (MouseButtonEvent new setType: #mouseDown position: 5 @ 5 which: 2 buttons: 2 hand: nil stamp: 0).
 	self assert: menus equals: 1
 ]
+
+{ #category : 'tests' }
+QuickProjectLoaderPresenterTest >> testLoadBranchSetsTheBranchAndLoads [
+
+	| entry loaded |
+	loaded := false.
+	entry := QuickProjectLoadRecorder new
+		name: 'Stub';
+		onLoad: [ loaded := true ];
+		yourself.
+
+	presenter loadBranch: 'dev' of: entry.
+	100 milliSeconds wait.
+
+	self assert: loaded.
+	self assert: entry branch equals: 'dev'
+]
