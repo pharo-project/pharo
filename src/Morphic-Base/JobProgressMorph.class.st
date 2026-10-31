@@ -242,7 +242,7 @@ JobProgressMorph >> scheduleLabelUpdate [
 	labelUpdateScheduled ifTrue: [ ^ self ].
 	labelUpdateScheduled := true.
 	[ (Delay forMilliseconds: 60) wait.
-	UIManager default defer: [
+	self currentWorld defer: [
 			labelUpdateScheduled := false.
 			self updateLabelToPending ] ] forkAt: Processor userBackgroundPriority
 ]
