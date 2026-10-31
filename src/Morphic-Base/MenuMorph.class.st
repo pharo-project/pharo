@@ -1367,7 +1367,7 @@ MenuMorph >> setDefaultParameters [
 				hasDropShadow: true;
 				shadowColor:  self theme menuShadowColor;
 				shadowOffset: 1 @ 1].
-	self layoutInset: 3.
+	self layoutInset: self theme menuInset.
 	self cellInset: 0@1
 ]
 
