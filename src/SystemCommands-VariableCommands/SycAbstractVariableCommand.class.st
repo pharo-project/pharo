@@ -14,17 +14,6 @@ Class {
 }
 
 { #category : 'accessing' }
-SycAbstractVariableCommand >> defaultMenuIconName [
-	^ #smallAdd
-]
-
-{ #category : 'accessing' }
-SycAbstractVariableCommand >> defaultMenuItemName [
-
-	^'Abstract accessors'
-]
-
-{ #category : 'accessing' }
 SycAbstractVariableCommand >> description [
     ^ 'Replace direct accesses to an instance variable with calls to its getter or setter. Missing accessor methods will be generated automatically.'
 ]
@@ -36,6 +25,17 @@ SycAbstractVariableCommand >> execute [
 		   scopes: refactoringScopes
 		   name: variables first name
 		   class: selectedClass name) runRefactoring
+]
+
+{ #category : 'accessing' }
+SycAbstractVariableCommand >> iconName [
+	^ #smallAdd
+]
+
+{ #category : 'accessing' }
+SycAbstractVariableCommand >> name [
+
+	^'Abstract accessors'
 ]
 
 { #category : 'execution' }

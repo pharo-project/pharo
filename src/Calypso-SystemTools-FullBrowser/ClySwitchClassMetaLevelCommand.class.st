@@ -41,11 +41,6 @@ ClySwitchClassMetaLevelCommand class >> toolbarOrder [
 	self subclassResponsibility
 ]
 
-{ #category : 'accessing' }
-ClySwitchClassMetaLevelCommand >> defaultMenuItemName [
-	^self metaLevelScope defaultName capitalized
-]
-
 { #category : 'execution' }
 ClySwitchClassMetaLevelCommand >> execute [
 	browser switchToMetaLevelScope: self metaLevelScope
@@ -59,4 +54,9 @@ ClySwitchClassMetaLevelCommand >> isAppliedToBrowser [
 { #category : 'execution' }
 ClySwitchClassMetaLevelCommand >> metaLevelScope [
 	self subclassResponsibility
+]
+
+{ #category : 'accessing' }
+ClySwitchClassMetaLevelCommand >> name [
+	^self metaLevelScope defaultName capitalized
 ]

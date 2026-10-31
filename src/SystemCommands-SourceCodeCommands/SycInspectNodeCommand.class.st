@@ -15,16 +15,16 @@ SycInspectNodeCommand >> asRefactorings [
 ]
 
 { #category : 'execution' }
-SycInspectNodeCommand >> defaultMenuIconName [
+SycInspectNodeCommand >> execute [
+	sourceNode inspect
+]
+
+{ #category : 'execution' }
+SycInspectNodeCommand >> iconName [
 	^ #smallInspectIt
 ]
 
 { #category : 'execution' }
-SycInspectNodeCommand >> defaultMenuItemName [
+SycInspectNodeCommand >> name [
 	^'Inspect AST Node ' , sourceNode class name
-]
-
-{ #category : 'execution' }
-SycInspectNodeCommand >> execute [
-	sourceNode inspect
 ]

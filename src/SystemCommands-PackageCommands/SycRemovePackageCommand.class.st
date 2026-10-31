@@ -8,11 +8,6 @@ Class {
 	#package : 'SystemCommands-PackageCommands'
 }
 
-{ #category : 'accessing' }
-SycRemovePackageCommand class >> defaultMenuIconName [
-	^ #delete
-]
-
 { #category : 'execution' }
 SycRemovePackageCommand >> applyResultInContext: aToolContext [
 	"Update the browser's title and method editor  after removal of a package"
@@ -30,16 +25,6 @@ SycRemovePackageCommand >> applyResultInContext: aToolContext [
 ]
 
 { #category : 'accessing' }
-SycRemovePackageCommand >> defaultMenuIconName [
-	^#remove
-]
-
-{ #category : 'accessing' }
-SycRemovePackageCommand >> defaultMenuItemName [
-	^'Remove'
-]
-
-{ #category : 'accessing' }
 SycRemovePackageCommand >> description [
 
 	^ 'Removes Packages.'
@@ -50,6 +35,16 @@ SycRemovePackageCommand >> execute [
 
 	self packages do: [ :each | each removeFromSystem ].
 	self packages: OrderedCollection new.
+]
+
+{ #category : 'accessing' }
+SycRemovePackageCommand >> iconName [
+	^#remove
+]
+
+{ #category : 'accessing' }
+SycRemovePackageCommand >> name [
+	^'Remove'
 ]
 
 { #category : 'execution' }

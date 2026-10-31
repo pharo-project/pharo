@@ -31,13 +31,13 @@ SycOpenClassMenuCommand >> cmCommandClass [
 	^ SycClassCmCommand
 ]
 
-{ #category : 'execution' }
-SycOpenClassMenuCommand >> defaultMenuItemName [
-	^'Refactorings'
-]
-
 { #category : 'accessing' }
 SycOpenClassMenuCommand >> description [
 
 	^ 'Opens special class menu.'
+]
+
+{ #category : 'execution' }
+SycOpenClassMenuCommand >> name [
+	^'Refactorings'
 ]

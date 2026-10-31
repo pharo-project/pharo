@@ -50,13 +50,6 @@ ClySwitchQueryScopeCommand >> addToolbarItemInto: toolbarMorph using: aCommandAc
 ]
 
 { #category : 'accessing' }
-ClySwitchQueryScopeCommand >> defaultMenuItemName [
-	queryScope ifNil: [ ^'Switch scope' ].
-
-	^'Switch scope to ', queryScope description
-]
-
-{ #category : 'accessing' }
 ClySwitchQueryScopeCommand >> defaultToolbarItemName [
 
 	^queryScope description
@@ -80,6 +73,13 @@ ClySwitchQueryScopeCommand >> fillContextMenu: aMenu using: aCommandActivator [
 { #category : 'testing' }
 ClySwitchQueryScopeCommand >> isAppliedToBrowser [
 	^browser isQueryScopeActive: queryScope
+]
+
+{ #category : 'accessing' }
+ClySwitchQueryScopeCommand >> name [
+	queryScope ifNil: [ ^'Switch scope' ].
+
+	^'Switch scope to ', queryScope description
 ]
 
 { #category : 'accessing' }

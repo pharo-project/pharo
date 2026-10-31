@@ -13,21 +13,21 @@ ClyAddWatchDebugPointCommand class >> contextMenuOrder [
 	^4
 ]
 
-{ #category : 'accessing' }
-ClyAddWatchDebugPointCommand >> defaultMenuIconName [
-	^#history
-]
-
-{ #category : 'accessing' }
-ClyAddWatchDebugPointCommand >> defaultMenuItemName [
-
-	^ String streamContents: [ :stream | stream << 'Watch "' << sourceNode displaySourceCode << '"' ]
-]
-
 { #category : 'execution' }
 ClyAddWatchDebugPointCommand >> execute [
 
 	| dp | 
 	dp := DebugPointManager installNew: WatchDebugPoint on: sourceNode.
 	self putIconInProperties: dp
+]
+
+{ #category : 'accessing' }
+ClyAddWatchDebugPointCommand >> iconName [
+	^#history
+]
+
+{ #category : 'accessing' }
+ClyAddWatchDebugPointCommand >> name [
+
+	^ String streamContents: [ :stream | stream << 'Watch "' << sourceNode displaySourceCode << '"' ]
 ]

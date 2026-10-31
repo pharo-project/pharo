@@ -32,16 +32,6 @@ SycRenameArgOrTempCommand2 >> applyResultInContext: aSourceCodeContext [
 ]
 
 { #category : 'accessing' }
-SycRenameArgOrTempCommand2 >> defaultMenuIconName [
-	^ #edit
-]
-
-{ #category : 'accessing' }
-SycRenameArgOrTempCommand2 >> defaultMenuItemName [
-	^'(R) Rename temp'
-]
-
-{ #category : 'accessing' }
 SycRenameArgOrTempCommand2 >> description [
 
 	^ 'Renames temp variable in given method.'
@@ -60,6 +50,16 @@ SycRenameArgOrTempCommand2 >> execute [
 	result := driver runRefactoring.
 	newName := driver newName.
 	^ result
+]
+
+{ #category : 'accessing' }
+SycRenameArgOrTempCommand2 >> iconName [
+	^ #edit
+]
+
+{ #category : 'accessing' }
+SycRenameArgOrTempCommand2 >> name [
+	^'(R) Rename temp'
 ]
 
 { #category : 'execution' }

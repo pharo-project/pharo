@@ -19,16 +19,6 @@ SycPushDownMethodInSomeClassesCommand >> asRefactorings [
 	self shouldNotImplement
 ]
 
-{ #category : 'accessing' }
-SycPushDownMethodInSomeClassesCommand >> defaultMenuIconName [
-	^ #down
-]
-
-{ #category : 'accessing' }
-SycPushDownMethodInSomeClassesCommand >> defaultMenuItemName [
-	^'Push down in some classes'
-]
-
 { #category : 'execution' }
 SycPushDownMethodInSomeClassesCommand >> executeRefactorings [
 
@@ -36,6 +26,16 @@ SycPushDownMethodInSomeClassesCommand >> executeRefactorings [
 		model: model
 		scopes: refactoringScopes
 		pushDownMethods: methods) runRefactoring
+]
+
+{ #category : 'accessing' }
+SycPushDownMethodInSomeClassesCommand >> iconName [
+	^ #down
+]
+
+{ #category : 'accessing' }
+SycPushDownMethodInSomeClassesCommand >> name [
+	^'Push down in some classes'
 ]
 
 { #category : 'execution' }

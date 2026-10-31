@@ -27,16 +27,6 @@ ClyRemoveMethodGroupCommand class >> fullBrowserShortcutActivation [
 ]
 
 { #category : 'accessing' }
-ClyRemoveMethodGroupCommand >> defaultMenuIconName [
-	^#remove
-]
-
-{ #category : 'accessing' }
-ClyRemoveMethodGroupCommand >> defaultMenuItemName [
-	^'Remove'
-]
-
-{ #category : 'accessing' }
 ClyRemoveMethodGroupCommand >> description [
 
 ^ 'Removes method group with containing methods.'
@@ -49,6 +39,16 @@ ClyRemoveMethodGroupCommand >> execute [
 		group
 			removeWithMethods;
 			removeProtocolFrom: selectedClasses ]
+]
+
+{ #category : 'accessing' }
+ClyRemoveMethodGroupCommand >> iconName [
+	^#remove
+]
+
+{ #category : 'accessing' }
+ClyRemoveMethodGroupCommand >> name [
+	^'Remove'
 ]
 
 { #category : 'execution' }

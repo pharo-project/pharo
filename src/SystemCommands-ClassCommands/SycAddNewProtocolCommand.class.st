@@ -9,7 +9,7 @@ Internal Representation and Key Implementation Points.
 "
 Class {
 	#name : 'SycAddNewProtocolCommand',
-	#superclass : 'CmdCommand',
+	#superclass : 'ClyCommand',
 	#instVars : [
 		'targetClass',
 		'protocol'
@@ -24,22 +24,22 @@ SycAddNewProtocolCommand >> applyResultInContext: aToolContext [
 	aToolContext showProtocol: protocol
 ]
 
+{ #category : 'execution' }
+SycAddNewProtocolCommand >> execute [
+
+	targetClass addProtocol: protocol
+]
+
 { #category : 'accessing' }
-SycAddNewProtocolCommand >> defaultMenuIconName [
+SycAddNewProtocolCommand >> iconName [
 
 	^ #add
 ]
 
 { #category : 'accessing' }
-SycAddNewProtocolCommand >> defaultMenuItemName [
+SycAddNewProtocolCommand >> name [
 
 	^ 'New protocol'
-]
-
-{ #category : 'execution' }
-SycAddNewProtocolCommand >> execute [
-
-	targetClass addProtocol: protocol
 ]
 
 { #category : 'execution' }

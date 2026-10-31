@@ -13,16 +13,6 @@ SycInlineIntoLocalSendersMessageCommand class >> canBeExecutedInContext: aToolCo
 	^ aToolContext isMethodSelected
 ]
 
-{ #category : 'accessing' }
-SycInlineIntoLocalSendersMessageCommand >> defaultMenuIconName [
-	^#smallRightFlush
-]
-
-{ #category : 'accessing' }
-SycInlineIntoLocalSendersMessageCommand >> defaultMenuItemName [
-	^'Inline senders'
-]
-
 { #category : 'execution' }
 SycInlineIntoLocalSendersMessageCommand >> execute [ 
 
@@ -30,6 +20,16 @@ SycInlineIntoLocalSendersMessageCommand >> execute [
 	methodOrigin := originalMessage contextUser compiledMethod origin.
 	((ReInlineIntoLocalSendersDriver newApplication: self application) scopes: refactoringScopes message: originalMessage selector class: methodOrigin)
 		runRefactoring  
+]
+
+{ #category : 'accessing' }
+SycInlineIntoLocalSendersMessageCommand >> iconName [
+	^#smallRightFlush
+]
+
+{ #category : 'accessing' }
+SycInlineIntoLocalSendersMessageCommand >> name [
+	^'Inline senders'
 ]
 
 { #category : 'execution' }

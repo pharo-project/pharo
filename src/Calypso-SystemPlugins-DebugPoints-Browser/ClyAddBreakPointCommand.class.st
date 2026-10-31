@@ -20,17 +20,6 @@ ClyAddBreakPointCommand class >> methodEditorLeftBarClickActivation [
 	^ CmdTextLeftBarDoubleClickActivation for: ClyMethodSourceCodeContext
 ]
 
-{ #category : 'accessing' }
-ClyAddBreakPointCommand >> defaultMenuIconName [
-	^#smallDebug 
-]
-
-{ #category : 'accessing' }
-ClyAddBreakPointCommand >> defaultMenuItemName [
-
-	^ String streamContents: [ :stream | stream << 'Break on "' << sourceNode displaySourceCode << '"' ]
-]
-
 { #category : 'execution' }
 ClyAddBreakPointCommand >> execute [
 
@@ -38,4 +27,15 @@ ClyAddBreakPointCommand >> execute [
 	dp := DebugPointManager installNew: BreakDebugPoint on: sourceNode.
 
 	self putIconInProperties: dp 
+]
+
+{ #category : 'accessing' }
+ClyAddBreakPointCommand >> iconName [
+	^#smallDebug 
+]
+
+{ #category : 'accessing' }
+ClyAddBreakPointCommand >> name [
+
+	^ String streamContents: [ :stream | stream << 'Break on "' << sourceNode displaySourceCode << '"' ]
 ]

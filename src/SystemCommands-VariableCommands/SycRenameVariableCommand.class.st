@@ -3,7 +3,7 @@ I am a command to rename a variable.
 "
 Class {
 	#name : 'SycRenameVariableCommand',
-	#superclass : 'CmdCommand',
+	#superclass : 'ClyCommand',
 	#instVars : [
 		'toolContext'
 	],
@@ -14,17 +14,6 @@ Class {
 { #category : 'testing' }
 SycRenameVariableCommand class >> canBeExecutedInContext: aToolContext [
 	^aToolContext isVariableSelected and: [ aToolContext isGlobalVariableSelected not ]
-]
-
-{ #category : 'accessing' }
-SycRenameVariableCommand class >> defaultMenuIconName [
-	^ #edit
-]
-
-{ #category : 'accessing' }
-SycRenameVariableCommand >> defaultMenuItemName [
-
-	^ 'Rename'
 ]
 
 { #category : 'accessing' }
@@ -47,6 +36,17 @@ SycRenameVariableCommand >> execute [
 		 scopes: toolContext refactoringScopes
 		 variable: variable name
 		 for: variable definingClass) runRefactoring
+]
+
+{ #category : 'accessing' }
+SycRenameVariableCommand >> iconName [
+	^ #edit
+]
+
+{ #category : 'accessing' }
+SycRenameVariableCommand >> name [
+
+	^ 'Rename'
 ]
 
 { #category : 'execution' }

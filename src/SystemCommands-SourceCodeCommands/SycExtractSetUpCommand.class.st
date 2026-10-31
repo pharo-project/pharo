@@ -25,12 +25,12 @@ SycExtractSetUpCommand >> asRefactorings [
 ]
 
 { #category : 'accessing' }
-SycExtractSetUpCommand >> defaultMenuIconName [
+SycExtractSetUpCommand >> iconName [
 	^ #restart
 ]
 
 { #category : 'accessing' }
-SycExtractSetUpCommand >> defaultMenuItemName [
+SycExtractSetUpCommand >> name [
 	^ 'Extract setUp'
 ]
 

@@ -12,16 +12,6 @@ Class {
 	#package : 'SystemCommands-ClassCommands'
 }
 
-{ #category : 'accessing' }
-SycRenameClassCommand >> defaultMenuIconName [
-	^ #edit
-]
-
-{ #category : 'accessing' }
-SycRenameClassCommand >> defaultMenuItemName [
-	^'(Old refactor) rename class'
-]
-
 { #category : 'execution' }
 SycRenameClassCommand >> execute [
 
@@ -44,6 +34,16 @@ SycRenameClassCommand >> execute [
 						model: RBBrowserEnvironment new;
 						scopes: toolContext refactoringScopes;
 						runRefactoring ] ]
+]
+
+{ #category : 'accessing' }
+SycRenameClassCommand >> iconName [
+	^ #edit
+]
+
+{ #category : 'accessing' }
+SycRenameClassCommand >> name [
+	^'(Old refactor) rename class'
 ]
 
 { #category : 'execution' }

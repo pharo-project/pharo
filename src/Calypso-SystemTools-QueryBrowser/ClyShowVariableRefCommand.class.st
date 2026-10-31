@@ -41,11 +41,6 @@ ClyShowVariableRefCommand class >> sourceCodeMenuActivation [
 ]
 
 { #category : 'accessing' }
-ClyShowVariableRefCommand >> defaultMenuItemName [
-	^'References'
-]
-
-{ #category : 'accessing' }
 ClyShowVariableRefCommand >> description [
 
 	^ 'Show all variable references.'
@@ -55,6 +50,11 @@ ClyShowVariableRefCommand >> description [
 ClyShowVariableRefCommand >> execute [
 
 	(Smalltalk tools toolNamed: #messageList) browseReferencesToVariables: variables 
+]
+
+{ #category : 'accessing' }
+ClyShowVariableRefCommand >> name [
+	^'References'
 ]
 
 { #category : 'execution' }

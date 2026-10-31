@@ -30,16 +30,6 @@ SycMoveMethodsToClassCommand class >> methods: methods class: targetClass refact
 	^ (self methods: methods class: targetClass) refactoringScopes: refactoringScopes
 ]
 
-{ #category : 'accessing' }
-SycMoveMethodsToClassCommand >> defaultMenuIconName [
-	^ #smallRedo
-]
-
-{ #category : 'accessing' }
-SycMoveMethodsToClassCommand >> defaultMenuItemName [
-	^'Move to another class'
-]
-
 { #category : 'execution' }
 SycMoveMethodsToClassCommand >> execute [
 
@@ -47,6 +37,16 @@ SycMoveMethodsToClassCommand >> execute [
 		collect: [ :each |(ReMoveMethodToClassDriver newApplication: self application) scopes: refactoringScopes method: each class: targetClass ]
 		thenDo: [ :each | each runRefactoring ].
 	methods do: [ :each | each origin removeEmptyProtocols ]
+]
+
+{ #category : 'accessing' }
+SycMoveMethodsToClassCommand >> iconName [
+	^ #smallRedo
+]
+
+{ #category : 'accessing' }
+SycMoveMethodsToClassCommand >> name [
+	^'Move to another class'
 ]
 
 { #category : 'drag and drop support' }

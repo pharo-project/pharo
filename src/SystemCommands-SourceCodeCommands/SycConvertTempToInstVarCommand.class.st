@@ -14,16 +14,6 @@ SycConvertTempToInstVarCommand class >> canBeExecutedInContext: aSourceCodeConte
 ]
 
 { #category : 'execution' }
-SycConvertTempToInstVarCommand >> defaultMenuIconName [
-	^ #smallRedo
-]
-
-{ #category : 'execution' }
-SycConvertTempToInstVarCommand >> defaultMenuItemName [
-	^'(R) Convert to Instance Var'
-]
-
-{ #category : 'execution' }
 SycConvertTempToInstVarCommand >> execute [
 	
 	self executeRefactorings 
@@ -37,4 +27,14 @@ SycConvertTempToInstVarCommand >> executeRefactorings [
 		   class: method origin
 		   selector: method selector
 		   variable: sourceNode name) runRefactoring
+]
+
+{ #category : 'execution' }
+SycConvertTempToInstVarCommand >> iconName [
+	^ #smallRedo
+]
+
+{ #category : 'execution' }
+SycConvertTempToInstVarCommand >> name [
+	^'(R) Convert to Instance Var'
 ]

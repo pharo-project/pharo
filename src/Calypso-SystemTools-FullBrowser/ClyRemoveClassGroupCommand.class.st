@@ -8,7 +8,7 @@ Internal Representation and Key Implementation Points.
 "
 Class {
 	#name : 'ClyRemoveClassGroupCommand',
-	#superclass : 'CmdCommand',
+	#superclass : 'ClyCommand',
 	#instVars : [
 		'classGroup'
 	],
@@ -47,16 +47,6 @@ ClyRemoveClassGroupCommand >> classGroup: anObject [
 ]
 
 { #category : 'accessing' }
-ClyRemoveClassGroupCommand >> defaultMenuIconName [
-	^#remove
-]
-
-{ #category : 'accessing' }
-ClyRemoveClassGroupCommand >> defaultMenuItemName [
-	^'Remove'
-]
-
-{ #category : 'accessing' }
 ClyRemoveClassGroupCommand >> description [
 
 ^ 'Removes class group with containing classes.'
@@ -66,6 +56,16 @@ ClyRemoveClassGroupCommand >> description [
 ClyRemoveClassGroupCommand >> execute [
 
 	classGroup removeWithClasses
+]
+
+{ #category : 'accessing' }
+ClyRemoveClassGroupCommand >> iconName [
+	^#remove
+]
+
+{ #category : 'accessing' }
+ClyRemoveClassGroupCommand >> name [
+	^'Remove'
 ]
 
 { #category : 'execution' }

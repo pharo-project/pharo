@@ -86,15 +86,15 @@ ClyShowClassRefCommand >> browser: anObject [
 	browser := anObject
 ]
 
-{ #category : 'accessing' }
-ClyShowClassRefCommand >> defaultMenuItemName [
-	^'Class refs.'
-]
-
 { #category : 'execution' }
 ClyShowClassRefCommand >> execute [
 
 	(Smalltalk tools toolNamed: #messageList) browseReferencesToClass: classes first
+]
+
+{ #category : 'accessing' }
+ClyShowClassRefCommand >> name [
+	^'Class refs.'
 ]
 
 { #category : 'execution' }

@@ -1,6 +1,6 @@
 Class {
 	#name : 'SycGenerateVariableAccessorsWithLazyInitializationCommand',
-	#superclass : 'CmdCommand',
+	#superclass : 'ClyCommand',
 	#instVars : [
 		'variable',
 		'value'
@@ -35,20 +35,20 @@ SycGenerateVariableAccessorsWithLazyInitializationCommand >> asRefactorings [
 ]
 
 { #category : 'accessing' }
-SycGenerateVariableAccessorsWithLazyInitializationCommand >> defaultMenuIconName [
+SycGenerateVariableAccessorsWithLazyInitializationCommand >> iconName [
 	^ #smallAdd
-]
-
-{ #category : 'accessing' }
-SycGenerateVariableAccessorsWithLazyInitializationCommand >> defaultMenuItemName [
-	"Make sure that the user knows that this is a transformation by adding (T) in front of the menu item name."
-
-	^ self refactoringClass menuItemString
 ]
 
 { #category : 'testing' }
 SycGenerateVariableAccessorsWithLazyInitializationCommand >> isComplexRefactoring [
 	^true
+]
+
+{ #category : 'accessing' }
+SycGenerateVariableAccessorsWithLazyInitializationCommand >> name [
+	"Make sure that the user knows that this is a transformation by adding (T) in front of the menu item name."
+
+	^ self refactoringClass menuItemString
 ]
 
 { #category : 'execution' }
