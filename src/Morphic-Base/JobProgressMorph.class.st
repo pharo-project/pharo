@@ -15,7 +15,9 @@ Class {
 		'lastRefresh',
 		'lock',
 		'result',
-		'startValue'
+		'startValue',
+		'pendingLabel',
+		'labelUpdateScheduled'
 	],
 	#category : 'Morphic-Base-ProgressBar',
 	#package : 'Morphic-Base',
@@ -36,11 +38,9 @@ JobProgressMorph >> beComplete [
 { #category : 'updating' }
 JobProgressMorph >> changed [
 
-	| msRefreshRate isTimeForRefresh |
-	msRefreshRate := 60 "roughly 16 times per second".
-	isTimeForRefresh := Time millisecondClockValue - self lastRefresh >= msRefreshRate.
-	(self isInWorld and: [ isTimeForRefresh ]) ifTrue: [
-		super changed ]
+	(self isInWorld and: [ self isTimeForRefresh ]) ifFalse: [ ^ self ].
+	lastRefresh := Time millisecondClockValue.
+	super changed
 ]
 
 { #category : 'private' }
@@ -104,6 +104,7 @@ JobProgressMorph >> initializeJob: aJob [
 	job := aJob.
 	hasResult := false.
 	lastRefresh := 0.
+	labelUpdateScheduled := false.
 
 	self
 		color: Color transparent;
@@ -122,6 +123,13 @@ JobProgressMorph >> initializeJob: aJob [
 		on: #mouseUp send: #interrupt to: aJob;
 		hResizing: #spaceFill.
 	self updateLayout
+]
+
+{ #category : 'testing' }
+JobProgressMorph >> isTimeForRefresh [
+	"Answer true when enough time elapsed since the last update to update the progress again."
+
+	^ Time millisecondClockValue - self lastRefresh >= self refreshDelay
 ]
 
 { #category : 'accessing' }
@@ -188,29 +196,21 @@ JobProgressMorph >> progress: aNormalizedNumber [
 
 { #category : 'api' }
 JobProgressMorph >> progress: aNormalizedNumber label: aString [
-	"I am here to have a version updating only once the progress bar when we change label and progress. This method should call #change: or #change only once."
+
+	"I am here to have a version updating only once the progress bar when we change label and progress. The label may be refreshed later, so the last requested label is never dropped."
 
 	| changed |
 	changed := false.
-
 	bar progress = aNormalizedNumber ifFalse: [
 			bar progress: aNormalizedNumber.
 			changed := true ].
 
-	self label = aString
-		ifTrue: [ changed ifTrue: [ self changed ] ]
-		ifFalse: [
-				self label ifEmpty: [
-						aString isEmptyOrNil ifTrue: [ ^ self ].
-						self removeAllMorphs.
-						self labelMorph contents: aString.
-						self updateLayout ].
+	pendingLabel := aString.
+	self label = aString ifTrue: [
+			changed ifTrue: [ self changed ].
+			^ self ].
 
-				aString isEmptyOrNil
-					ifTrue: [ self removeMorph: self labelMorph ]
-					ifFalse: [ self labelMorph contents: aString ].
-
-				self changed: #width ]
+	self updateLabelToPending
 ]
 
 { #category : 'private' }
@@ -218,6 +218,12 @@ JobProgressMorph >> refresh [
 
 	lastRefresh := Time millisecondClockValue.
 	self width: labelMorph width + 25
+]
+
+{ #category : 'accessing' }
+JobProgressMorph >> refreshDelay [
+
+	^ 60 "milliseconds  - roughly 16 times per second"
 ]
 
 { #category : 'private' }
@@ -235,6 +241,19 @@ JobProgressMorph >> result: anObject [
 ]
 
 { #category : 'private' }
+JobProgressMorph >> scheduleLabelUpdate [
+	"Retry the label update once the refresh delay elapsed, from the UI process."
+
+	labelUpdateScheduled ifTrue: [ ^ self ].
+	labelUpdateScheduled := true.
+	[
+		(Delay forMilliseconds: self refreshDelay) wait.
+		self currentWorld defer: [
+				self updateLabelToPending.
+				labelUpdateScheduled := false ] ] forkAt: Processor userBackgroundPriority
+]
+
+{ #category : 'private' }
 JobProgressMorph >> start: aNumber [
 
 	startValue := aNumber
@@ -244,6 +263,28 @@ JobProgressMorph >> start: aNumber [
 JobProgressMorph >> startAt: aNumber [
 
 	startValue := aNumber
+]
+
+{ #category : 'private' }
+JobProgressMorph >> updateLabelToPending [
+
+	"Apply the last requested label once the refresh delay elapsed, otherwise schedule it."
+
+	self label = pendingLabel ifTrue: [ ^ self ].
+	self isTimeForRefresh ifFalse: [ ^ self scheduleLabelUpdate ].
+
+	lastRefresh := Time millisecondClockValue.
+	self label ifEmpty: [
+			pendingLabel isEmptyOrNil ifTrue: [ ^ self ].
+			self removeAllMorphs.
+			self labelMorph contents: pendingLabel.
+			self updateLayout ].
+
+	pendingLabel isEmptyOrNil
+		ifTrue: [ self removeMorph: self labelMorph ]
+		ifFalse: [ self labelMorph contents: pendingLabel ].
+
+	self changed: #width
 ]
 
 { #category : 'private' }
