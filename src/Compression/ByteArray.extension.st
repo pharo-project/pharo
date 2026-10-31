@@ -32,8 +32,9 @@ ByteArray >> unzipped [
 ByteArray >> zipped [
 	"Return a ByteArray containing a GZIP compressed version of the receiver"
 
-	"#[1 2 3] zipped >>> #[31 139 8 0 0 0 0 0 255 99 100 98 6 0 29 128 188 85 3 0 0 0]"
-	"pay attention that the pharo implementation puts by default 255 (= unknown) for the OS gzip header"
+	"#[1 2 3] zipped  >>> #[31 139 8 0 0 0 0 0 0 255 99 100 98 6 0 29 128 188 85 3 0 0 0]"
+	
+	"pay attention that the pharo implementation puts by default 255 (= unknown) in the 10th byte (for the OS gzip header)"
 
 	^ ByteArray streamContents: [ :out |
 		(GZipWriteStream on: out)
