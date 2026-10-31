@@ -127,9 +127,9 @@ JobProgressMorph >> initializeJob: aJob [
 
 { #category : 'testing' }
 JobProgressMorph >> isTimeForRefresh [
-
 	"Answer true when enough time elapsed since the last update to update the progress again."
-	^ Time millisecondClockValue - self lastRefresh >= 60 "roughly 16 times per second"
+
+	^ Time millisecondClockValue - self lastRefresh >= self refreshDelay
 ]
 
 { #category : 'accessing' }
@@ -220,6 +220,12 @@ JobProgressMorph >> refresh [
 	self width: labelMorph width + 25
 ]
 
+{ #category : 'accessing' }
+JobProgressMorph >> refreshDelay [
+
+	^ 60 "milliseconds  - roughly 16 times per second"
+]
+
 { #category : 'private' }
 JobProgressMorph >> result [
 
@@ -236,15 +242,15 @@ JobProgressMorph >> result: anObject [
 
 { #category : 'private' }
 JobProgressMorph >> scheduleLabelUpdate [
-
 	"Retry the label update once the refresh delay elapsed, from the UI process."
 
 	labelUpdateScheduled ifTrue: [ ^ self ].
 	labelUpdateScheduled := true.
-	[ (Delay forMilliseconds: 60) wait.
-	self currentWorld defer: [
-			labelUpdateScheduled := false.
-			self updateLabelToPending ] ] forkAt: Processor userBackgroundPriority
+	[
+		(Delay forMilliseconds: self refreshDelay) wait.
+		self currentWorld defer: [
+				self updateLabelToPending.
+				labelUpdateScheduled := false ] ] forkAt: Processor userBackgroundPriority
 ]
 
 { #category : 'private' }
