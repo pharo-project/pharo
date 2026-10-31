@@ -15,3 +15,13 @@ ZipFileSystemDirectory >> ensureCreateFile: aFileName [
 		fileEntryAt: aFileName
 		put: (ZipFileSystemFile named: aFileName)
 ]
+
+{ #category : '*NewTools-Inspector' }
+ZipFileSystemDirectory >> inspectionItems [
+	<inspectorPresentationOrder: 1 title: 'Contents'>
+
+	^ SpTablePresenter new
+		addColumn: (SpStringTableColumn title: 'Name' evaluated: [ :entry | entry name ]);
+		items: self entries values;
+		yourself
+]
