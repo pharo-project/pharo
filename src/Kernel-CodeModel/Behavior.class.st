@@ -1538,12 +1538,6 @@ Behavior >> propertyAt: propName put: propValue [
 		put: propValue
 ]
 
-{ #category : 'accessing' }
-Behavior >> realClass [
-
-	^ self
-]
-
 { #category : 'obsolete subclasses' }
 Behavior >> removeAllObsoleteSubclasses [
 	"Remove all the obsolete subclasses of the receiver"
