@@ -470,3 +470,12 @@ ExtensionTest >> test21ExtensionMethodCanNotAccessInstanceVariable [
 
 	self should: [ self compile: 'getX ^ x' on: extensionOnPoint ] raise: OCCompilationError
 ]
+
+{ #category : 'tests - runtime' }
+ExtensionTest >> test22ScopedSelectorAnswersSizeAndCopyFromOfItsSymbol [
+
+	| scopedSelector |
+	scopedSelector := self compile: 'extensionMethod ^ 42' on: extensionOnObject.
+	self assert: scopedSelector size equals: #extensionMethod size.
+	self assert: (scopedSelector copyFrom: 1 to: 14) equals: #extensionMetho
+]
