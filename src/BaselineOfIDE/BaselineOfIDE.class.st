@@ -125,6 +125,8 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Tool-DependencyAnalyser-UI-Tab' with: [
 			"Depends also on the dependency analyser in newtools"
 			spec requires: #('Calypso') ].
+		spec package: 'QuickProjectLoader' with: [ spec requires: #( 'BasicTools' ) ].
+		spec package: 'QuickProjectLoader-Tests' with: [ spec requires: #( 'QuickProjectLoader' ) ].
 		self specCode: spec.
 		self roassal: spec.
 		self microdown: spec.
