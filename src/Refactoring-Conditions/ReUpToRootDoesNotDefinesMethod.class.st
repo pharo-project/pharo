@@ -8,6 +8,14 @@ Class {
 	#package : 'Refactoring-Conditions'
 }
 
+{ #category : 'as yet unclassified' }
+ReUpToRootDoesNotDefinesMethod class >> classes: classes selector: selector [
+
+	^ self new
+		classes: classes;
+		selector: selector
+]
+
 { #category : 'instance creation' }
 ReUpToRootDoesNotDefinesMethod >> class: aRBClass [ 
 
@@ -31,15 +39,10 @@ ReUpToRootDoesNotDefinesMethod >> selector: aSymbol [
 
 { #category : 'displaying' }
 ReUpToRootDoesNotDefinesMethod >> violationMessageOn: aStream [
+		
+	aStream
+    nextPutAll: 'This name conflicts with an inherited method and may change program behavior.'
 
-	self violators size = 1
-		ifTrue: [ aStream nextPutAll: self violators first name; nextPutAll: ' defines the method ' ]
-		ifFalse: [ 
-	self violators 
-			do: [ :each | aStream nextPutAll: each name ] 
-			separatedBy: [ aStream nextPutAll: ', '].
-	aStream nextPutAll: ' define the method '. ].
-	aStream nextPutAll: selector.
 ]
 
 { #category : 'accessing' }

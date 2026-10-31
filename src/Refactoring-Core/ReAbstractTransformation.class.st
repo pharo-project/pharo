@@ -232,28 +232,18 @@ ReAbstractTransformation >> execute [
 	self performChanges
 ]
 
-{ #category : 'accessing' }
+{ #category : 'condition definitions' }
 ReAbstractTransformation >> failedApplicabilityMessage [
 
 	| failedConditions |
-	
+
 	failedConditions := self failedApplicabilityPreconditions.
 	failedConditions ifEmpty: [ ^ nil ].
-	
-	^ String cr join:
-		(failedConditions collect: [ :condition | condition errorString ])
-]
 
-{ #category : 'preconditions' }
-ReAbstractTransformation >> failedApplicabilityMessage [
-
-	| failedConditions |
-	
-	failedConditions := self failedApplicabilityPreconditions.
-	failedConditions ifEmpty: [ ^ nil ].
-	
-	^ String cr join:
-		(failedConditions collect: [ :condition | condition errorString ])
+	^ String streamContents: [ :stream |
+		failedConditions
+			do: [ :condition | condition violationMessageOn: stream ]
+			separatedBy: [ stream cr ] ]
 ]
 
 { #category : 'preconditions' }
