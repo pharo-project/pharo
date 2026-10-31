@@ -31,7 +31,8 @@ Class {
 		'semanticScope',
 		'compiledBlockClass',
 		'semanticAnalysisNeeded',
-		'storeSourcesAsProperty'
+		'storeSourcesAsProperty',
+		'maxFrameSize'
 	],
 	#classVars : [
 		'DefaultOptions',
@@ -287,6 +288,18 @@ OCCompilationContext class >> optionParseErrorsNonInteractiveOnly: aBoolean [
 ]
 
 { #category : 'options - settings API' }
+OCCompilationContext class >> optionPushConsArray [
+
+	^ self readDefaultOption: #optionPushConsArray
+]
+
+{ #category : 'options - settings API' }
+OCCompilationContext class >> optionPushConsArray: aBoolean [
+
+	^ self writeDefaultOption: #optionPushConsArray value: aBoolean
+]
+
+{ #category : 'options - settings API' }
 OCCompilationContext class >> optionSkipSemanticWarnings [
 	^ self readDefaultOption: #optionSkipSemanticWarnings
 ]
@@ -303,28 +316,26 @@ OCCompilationContext class >> optionsDescription [
 	 fall-back if DefaultOptions is not initialized (bootstrap, ...)"
 
 	"each entry is fall-back default value (+/-), option name, description"
-	^ #(
-	(+ optionOptimiseSpecialSends 'Use optimised bytecodes for special selectors. These bytecodes hint the VM to do static type predictions')
-	(+ optionInlineIf 					'Inline ifTrue:, ifFalse:, ifTrue:ifFalse:, ifFalse:ifTrue: if specific conditions are met (See isInlineIf)')
-	(+ optionInlineIfNil 				'Inline ifNil:, ifNotNil:, ifNil:ifNotNil:, ifNotNil:ifNil: if specific conditions are met (See isInlineIfNil)')
-	(+ optionInlineAndOr 				'Inline and:, or: if specific conditions are met (See isInlineAndOr)')
-	(+ optionInlineWhile 				'Inline whileTrue, whileTrue:, whileFalse:, whileFalse if specific conditions are met (See isInlineWhile)')
-	(+ optionInlineToDo 				'Inline to:do:, to:by:do: if specific conditions are met (See isInlineToDo)')
-	(+ optionInlineCase 				'Inline caseOf:, caseOf:otherwise: if specific conditions are met (See isInlineCase)')
-	(+ optionInlineTimesRepeat 		'Inline timesRepeat: if specific conditions are met (See isInlineTimesRepeat)')
-	(+ optionInlineRepeat 			'Inline repeat if specific conditions are met (See isInlineRepeat)')
-	(- optionInlineNone 				'To turn off all inlining options. Overrides the others')
 
-	(- optionBlockClosureOptionalOuter 			'Compiler compiles closure creation with outerContext only if it has a non-local return. Experimental')
-	(+ optionConstantBlockClosure 			'Compiler compiles closure creation to use ConstantBlockClosure for constant with 0-3 arguments. Experimental')
-	(+ optionCleanBlockClosure 			'Compiler compiles closure creation to use CleanBlockClosure instead of FullBlockClosure for clean blocks. Experimental')
-	(- optionLongIvarAccessBytecodes 	'Specific inst var accesses to Maybe context objects')
-	(+ optionOptimizeIR 					'Rewrite jumps in bytecode in a slightly more efficient way')
-	(- optionParseErrors 					'Parse syntactically wrong code (interactive and non-interactive')
-	(- optionParseErrorsNonInteractiveOnly 	'Parse syntactically wrong code in non-interactive mode only')
-	(- optionSkipSemanticWarnings 		'Do not warn about semantic problems (e.g. undeclared vars). Used for syntax highlight parsing')
-
-	)
+	^ #( #( #+ optionOptimiseSpecialSends 'Use optimised bytecodes for special selectors. These bytecodes hint the VM to do static type predictions' )
+	     #( #+ optionInlineIf 'Inline ifTrue:, ifFalse:, ifTrue:ifFalse:, ifFalse:ifTrue: if specific conditions are met (See isInlineIf)' )
+	     #( #+ optionInlineIfNil 'Inline ifNil:, ifNotNil:, ifNil:ifNotNil:, ifNotNil:ifNil: if specific conditions are met (See isInlineIfNil)' )
+	     #( #+ optionInlineAndOr 'Inline and:, or: if specific conditions are met (See isInlineAndOr)' )
+	     #( #+ optionInlineWhile 'Inline whileTrue, whileTrue:, whileFalse:, whileFalse if specific conditions are met (See isInlineWhile)' )
+	     #( #+ optionInlineToDo 'Inline to:do:, to:by:do: if specific conditions are met (See isInlineToDo)' )
+	     #( #+ optionInlineCase 'Inline caseOf:, caseOf:otherwise: if specific conditions are met (See isInlineCase)' )
+	     #( #+ optionInlineTimesRepeat 'Inline timesRepeat: if specific conditions are met (See isInlineTimesRepeat)' )
+	     #( #+ optionInlineRepeat 'Inline repeat if specific conditions are met (See isInlineRepeat)' )
+	     #( #- optionInlineNone 'To turn off all inlining options. Overrides the others' )
+	     #( #- optionBlockClosureOptionalOuter 'Compiler compiles closure creation with outerContext only if it has a non-local return. Experimental' )
+	     #( #+ optionConstantBlockClosure 'Compiler compiles closure creation to use ConstantBlockClosure for constant with 0-3 arguments. Experimental' )
+	     #( #+ optionCleanBlockClosure 'Compiler compiles closure creation to use CleanBlockClosure instead of FullBlockClosure for clean blocks. Experimental' )
+	     #( #- optionLongIvarAccessBytecodes 'Specific inst var accesses to Maybe context objects' )
+	     #( #+ optionOptimizeIR 'Rewrite jumps in bytecode in a slightly more efficient way' )
+	     #( #+ optionPushConsArray 'Compile small dynamic arrays with the pushConsArray bytecode. When disabled, all dynamic arrays use new: and at:put:, and metalinks on array nodes do not fire' )
+	     #( #- optionParseErrors 'Parse syntactically wrong code (interactive and non-interactive' )
+	     #( #- optionParseErrorsNonInteractiveOnly 'Parse syntactically wrong code in non-interactive mode only' )
+	     #( #- optionSkipSemanticWarnings 'Do not warn about semantic problems (e.g. undeclared vars). Used for syntax highlight parsing' ) )
 ]
 
 { #category : 'options - settings API' }
@@ -503,6 +514,20 @@ OCCompilationContext >> isSemanticAnalysisNeeded [
 ]
 
 { #category : 'options' }
+OCCompilationContext >> maxFrameSize [
+	"The frame size allowed for temps and stack when deciding how to compile dynamic arrays.
+	It can never exceed the hard limit of the VM, CompiledCode fullFrameSize"
+
+	^ (maxFrameSize ifNil: [ CompiledCode fullFrameSize ]) min: CompiledCode fullFrameSize
+]
+
+{ #category : 'options' }
+OCCompilationContext >> maxFrameSize: anInteger [
+
+	maxFrameSize := anInteger
+]
+
+{ #category : 'options' }
 OCCompilationContext >> optionBlockClosureOptionalOuter [
 	^ options includes: #optionBlockClosureOptionalOuter
 ]
@@ -600,6 +625,12 @@ OCCompilationContext >> optionParseErrors [
 { #category : 'options' }
 OCCompilationContext >> optionParseErrorsNonInteractiveOnly [
 	^ options includes: #optionParseErrorsNonInteractiveOnly
+]
+
+{ #category : 'options' }
+OCCompilationContext >> optionPushConsArray [
+
+	^ options includes: #optionPushConsArray
 ]
 
 { #category : 'options' }
