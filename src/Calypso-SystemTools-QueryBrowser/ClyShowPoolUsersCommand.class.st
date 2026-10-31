@@ -12,6 +12,12 @@ Class {
 	#tag : 'Commands-Queries'
 }
 
+{ #category : 'testing' }
+ClyShowPoolUsersCommand class >> canBeExecutedInContext: aToolContext [
+
+	^ aToolContext isClassSelected and: [ aToolContext lastSelectedClass isPool ]
+]
+
 { #category : 'activation' }
 ClyShowPoolUsersCommand class >> fullBrowserMenuActivation [
 
