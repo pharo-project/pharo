@@ -72,12 +72,6 @@ ClyClassVariable >> isLive [
 ]
 
 { #category : 'operations' }
-ClyClassVariable >> openInspector [
-
-	actualVariable inspect
-]
-
-{ #category : 'operations' }
 ClyClassVariable >> openValueInspector [
 
 	actualVariable value inspect

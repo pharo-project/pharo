@@ -10,7 +10,6 @@ Class {
 	#name : 'SHPreferences',
 	#superclass : 'Object',
 	#classInstVars : [
-		'enabled',
 		'activeStyleTable',
 		'syntaxHighlightingEnabled'
 	],
@@ -149,5 +148,6 @@ SHPreferences class >> styleTableNames [
 { #category : 'updating' }
 SHPreferences class >> themeChanged [
 
-	activeStyleTable = 'Default' ifTrue: [ self activeStyleTable: 'Default' ]
+	(activeStyleTable isNil or: [ activeStyleTable = 'Default' ])
+		ifTrue: [ self activeStyleTable: 'Default' ]
 ]

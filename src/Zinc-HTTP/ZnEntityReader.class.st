@@ -119,7 +119,11 @@ ZnEntityReader >> readEntityFromStream [
 	chunkedStream := (isChunked := self isChunked) ifTrue: [ stream := ZnChunkedReadStream on: stream ] ifFalse: [ nil ].
 	self isGzipped
 		ifTrue: [
-			self hasContentLength ifTrue: [ stream := ZnLimitedReadStream on: stream limit: self contentLength ].
+			self hasContentLength
+				ifTrue: [ stream := ZnLimitedReadStream on: stream limit: self contentLength ]
+				ifFalse: [
+					"InflateStream asks its source for its position, which a socket stream cannot answer"
+					isChunked ifFalse: [ stream := ZnLimitedReadStream on: stream limit: SmallInteger maxVal ] ].
 			decodedEntityLength := nil.
 			stream := GZipReadStream on: stream ]
 		ifFalse: [ decodedEntityLength := self contentLength ].

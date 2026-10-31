@@ -601,7 +601,7 @@ ZnClient >> getConnectionAndExecute [
 	self canReuseConnection
 		ifTrue: [
 			[ ^ self executeRequestResponse; cleanupConnection ]
-				on: Exception
+				on: Error
 				do: [ :exception | self logIgnoringExceptionOnReusedConnection: exception; close ] ].
 	self newConnectionTo: request url.
 	[ self executeRequestResponse ]
@@ -1466,7 +1466,7 @@ ZnClient >> setupTLSTo: url [
 	connection sslSession certificateName: self certificate.
 
 	[ connection sslSession serverName: url host ]
-		on: PrimitiveFailed
+		on: SocketError, PrimitiveFailed
 		do: [ :error | "log it?" ].
 
 	connection connect
