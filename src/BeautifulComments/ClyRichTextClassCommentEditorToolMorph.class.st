@@ -55,7 +55,7 @@ ClyRichTextClassCommentEditorToolMorph >> defaultIconName [
 
 { #category : 'initialization' }
 ClyRichTextClassCommentEditorToolMorph >> defaultTitle [
-	^'Comment'
+	^'Comment Foo'
 ]
 
 { #category : 'rendering' }
@@ -98,6 +98,13 @@ ClyRichTextClassCommentEditorToolMorph >> printContext [
 ClyRichTextClassCommentEditorToolMorph >> reactToRubTextAreaDoubleClick: anEvent [
 
 	self switchToEditMode
+]
+
+{ #category : 'rendering' }
+ClyRichTextClassCommentEditorToolMorph >> renderComment: aString of: aClassOrPackage [ 
+	"The actual implementation is moved to BeautifulComments - basically to allow Testing"
+
+	^ BeautifulComments renderComment: aString of: aClassOrPackage
 ]
 
 { #category : 'initialization' }
