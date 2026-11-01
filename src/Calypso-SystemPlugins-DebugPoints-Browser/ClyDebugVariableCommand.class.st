@@ -46,18 +46,6 @@ ClyDebugVariableCommand >> debugPointClass [
 	^ self class debugPointClass
 ]
 
-{ #category : 'accessing' }
-ClyDebugVariableCommand >> defaultMenuIconName [
-
-	^ #smallDebug
-]
-
-{ #category : 'accessing' }
-ClyDebugVariableCommand >> defaultMenuItemName [
-
-	^ 'Add debug point:'
-]
-
 { #category : 'execution' }
 ClyDebugVariableCommand >> execute [
 
@@ -72,4 +60,16 @@ ClyDebugVariableCommand >> executeFor: aVariable [
 		inClass: aVariable definingClass
 		onVariableNamed: aVariable name
 		accessStrategy: self accessStrategy
+]
+
+{ #category : 'accessing' }
+ClyDebugVariableCommand >> iconName [
+
+	^ #smallDebug
+]
+
+{ #category : 'accessing' }
+ClyDebugVariableCommand >> name [
+
+	^ 'Add debug point:'
 ]

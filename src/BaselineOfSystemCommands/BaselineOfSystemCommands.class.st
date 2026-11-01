@@ -17,16 +17,16 @@ BaselineOfSystemCommands >> baseline: spec [
 			spec
 				package: #'Calypso-Commands' with: [ spec requires: #( 'Commander2' ) ];
 				package: #'Calypso-Commands-Tests' with: [ spec requires: #( #'Calypso-Commands' ) ];
-				package: #'SystemCommands-RefactoringSupport' with: [ spec requires: #( 'Commander' ) ];
+				package: #'SystemCommands-RefactoringSupport' with: [ spec requires: #( 'Commander' #'Calypso-Commands' ) ];
 				package: #'SystemCommands-ClassCommands' with: [ spec requires: #( 'Commander' #'SystemCommands-RefactoringSupport' #'Calypso-Commands' ) ];
-				package: #'SystemCommands-MessageCommands' with: [ spec requires: #( 'Commander' #'SystemCommands-RefactoringSupport' ) ];
+				package: #'SystemCommands-MessageCommands' with: [ spec requires: #( 'Commander' #'SystemCommands-RefactoringSupport' #'Calypso-Commands' ) ];
 				package: #'SystemCommands-MessageCommands-Tests' with: [ spec requires: #( 'Commander' 'SystemCommands-MessageCommands' ) ];
 				package: #'SystemCommands-MethodCommands' with: [ spec requires: #( 'Commander' #'SystemCommands-RefactoringSupport' #'Calypso-Commands' ) ];
 				package: #'SystemCommands-MethodCommands-Tests' with: [ spec requires: #( #'SystemCommands-MethodCommands' ) ];
 				package: #'SystemCommands-ClassCommands-Tests' with: [ spec requires: #( #'SystemCommands-ClassCommands' ) ];
-				package: #'SystemCommands-PackageCommands' with: [ spec requires: #( 'Commander' ) ];
+				package: #'SystemCommands-PackageCommands' with: [ spec requires: #( 'Commander' #'Calypso-Commands' ) ];
 				package: #'SystemCommands-PackageCommands-Tests' with: [ spec requires: #( #'SystemCommands-PackageCommands' ) ];
-				package: #'SystemCommands-SourceCodeCommands' with: [ spec requires: #( 'Commander' #'SystemCommands-RefactoringSupport' ) ];
-				package: #'SystemCommands-VariableCommands' with: [ spec requires: #( 'Commander' #'SystemCommands-RefactoringSupport' ) ];
+				package: #'SystemCommands-SourceCodeCommands' with: [ spec requires: #( 'Commander' #'SystemCommands-RefactoringSupport' #'Calypso-Commands' ) ];
+				package: #'SystemCommands-VariableCommands' with: [ spec requires: #( 'Commander' #'SystemCommands-RefactoringSupport' #'Calypso-Commands' ) ];
 				package: #'SystemCommands-RefactoringSupport-Tests' with: [ spec requires: #( #'SystemCommands-RefactoringSupport' ) ] ]
 ]

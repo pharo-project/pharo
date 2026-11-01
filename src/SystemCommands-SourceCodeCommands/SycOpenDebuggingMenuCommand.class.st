@@ -21,18 +21,18 @@ SycOpenDebuggingMenuCommand >> cmCommandClass [
 ]
 
 { #category : 'accessing' }
-SycOpenDebuggingMenuCommand >> defaultMenuIconName [
+SycOpenDebuggingMenuCommand >> description [
+
+	^ 'Opens the breakpoint menu after a right click on the source code.'
+]
+
+{ #category : 'accessing' }
+SycOpenDebuggingMenuCommand >> iconName [
 	^ #halt
 ]
 
 { #category : 'accessing' }
-SycOpenDebuggingMenuCommand >> defaultMenuItemName [
+SycOpenDebuggingMenuCommand >> name [
 
 	^ 'Breakpoints'
-]
-
-{ #category : 'accessing' }
-SycOpenDebuggingMenuCommand >> description [
-
-	^ 'Opens the breakpoint menu after a right click on the source code.'
 ]

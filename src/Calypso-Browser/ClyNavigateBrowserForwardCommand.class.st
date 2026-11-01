@@ -18,16 +18,6 @@ ClyNavigateBrowserForwardCommand class >> defaultShortcut [
 ]
 
 { #category : 'accessing' }
-ClyNavigateBrowserForwardCommand >> defaultMenuIconName [
-	^#forward
-]
-
-{ #category : 'accessing' }
-ClyNavigateBrowserForwardCommand >> defaultMenuItemName [
-	^'go forward'
-]
-
-{ #category : 'accessing' }
 ClyNavigateBrowserForwardCommand >> description [
 	^'go forward in the navigation history'
 ]
@@ -35,4 +25,14 @@ ClyNavigateBrowserForwardCommand >> description [
 { #category : 'execution' }
 ClyNavigateBrowserForwardCommand >> execute [
 	browser navigateForward
+]
+
+{ #category : 'accessing' }
+ClyNavigateBrowserForwardCommand >> iconName [
+	^#forward
+]
+
+{ #category : 'accessing' }
+ClyNavigateBrowserForwardCommand >> name [
+	^'go forward'
 ]

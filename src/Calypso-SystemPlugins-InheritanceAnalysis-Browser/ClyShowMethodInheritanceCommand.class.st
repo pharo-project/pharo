@@ -33,18 +33,18 @@ ClyShowMethodInheritanceCommand >> createInheritanceScopeFrom: classes [
 ]
 
 { #category : 'accessing' }
-ClyShowMethodInheritanceCommand >> defaultMenuIconName [
+ClyShowMethodInheritanceCommand >> description [
+
+	^ 'Show all method implementors in full hierarchy of selected method classes.'
+]
+
+{ #category : 'accessing' }
+ClyShowMethodInheritanceCommand >> iconName [
 
 	^ #browse
 ]
 
 { #category : 'accessing' }
-ClyShowMethodInheritanceCommand >> defaultMenuItemName [
+ClyShowMethodInheritanceCommand >> name [
 	^'Hierarchical implementors'
-]
-
-{ #category : 'accessing' }
-ClyShowMethodInheritanceCommand >> description [
-
-	^ 'Show all method implementors in full hierarchy of selected method classes.'
 ]

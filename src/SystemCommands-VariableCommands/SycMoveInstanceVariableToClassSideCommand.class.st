@@ -22,22 +22,22 @@ SycMoveInstanceVariableToClassSideCommand class >> sourceCodeMenuActivation [
 	^SycSourceCodeMenuActivation byRootGroupItemOrder: 1.6 for: ClySourceCodeContext
 ]
 
-{ #category : 'accessing' }
-SycMoveInstanceVariableToClassSideCommand >> defaultMenuIconName [
-	^ #smallRedo
-]
-
-{ #category : 'accessing' }
-SycMoveInstanceVariableToClassSideCommand >> defaultMenuItemName [
-
-	^ '(T) Move to class side'
-]
-
 { #category : 'execution' }
 SycMoveInstanceVariableToClassSideCommand >> execute [
 
 	^ ((ReMoveVariablesToClassSideDriver newApplication: self application) scopes: refactoringScopes variables: variables)
 		  runRefactoring
+]
+
+{ #category : 'accessing' }
+SycMoveInstanceVariableToClassSideCommand >> iconName [
+	^ #smallRedo
+]
+
+{ #category : 'accessing' }
+SycMoveInstanceVariableToClassSideCommand >> name [
+
+	^ '(T) Move to class side'
 ]
 
 { #category : 'execution' }

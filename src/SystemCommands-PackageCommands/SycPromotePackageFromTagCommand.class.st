@@ -10,7 +10,7 @@ Internal Representation and Key Implementation Points.
 "
 Class {
 	#name : 'SycPromotePackageFromTagCommand',
-	#superclass : 'CmdCommand',
+	#superclass : 'ClyCommand',
 	#instVars : [
 		'package',
 		'classTag'
@@ -32,15 +32,15 @@ SycPromotePackageFromTagCommand >> applyResultInContext: aBrowserContext [
 	aBrowserContext showPackage: newPackage
 ]
 
-{ #category : 'accessing' }
-SycPromotePackageFromTagCommand >> defaultMenuItemName [
-	^'Promote as package'
-]
-
 { #category : 'execution' }
 SycPromotePackageFromTagCommand >> execute [
 
 	(package tagNamed: classTag) promoteAsPackage
+]
+
+{ #category : 'accessing' }
+SycPromotePackageFromTagCommand >> name [
+	^'Promote as package'
 ]
 
 { #category : 'execution' }

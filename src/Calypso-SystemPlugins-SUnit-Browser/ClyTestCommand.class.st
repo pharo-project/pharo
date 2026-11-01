@@ -3,7 +3,7 @@ I am a root of hierarchy of commands to run any kind of tests
 "
 Class {
 	#name : 'ClyTestCommand',
-	#superclass : 'CmdCommand',
+	#superclass : 'ClyCommand',
 	#category : 'Calypso-SystemPlugins-SUnit-Browser-Commands',
 	#package : 'Calypso-SystemPlugins-SUnit-Browser',
 	#tag : 'Commands'
@@ -25,7 +25,7 @@ ClyTestCommand >> applyResultInContext: aToolContext [
 ]
 
 { #category : 'context menu support' }
-ClyTestCommand >> defaultMenuIconName [
+ClyTestCommand >> iconName [
 
 	^self testResult iconName
 ]

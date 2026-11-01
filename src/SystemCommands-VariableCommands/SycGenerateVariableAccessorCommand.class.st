@@ -8,18 +8,6 @@ Class {
 	#package : 'SystemCommands-VariableCommands'
 }
 
-{ #category : 'accessing' }
-SycGenerateVariableAccessorCommand >> defaultMenuIconName [
-	^ #smallAdd
-]
-
-{ #category : 'accessing' }
-SycGenerateVariableAccessorCommand >> defaultMenuItemName [
-	"Make sure that the user knows that this is a transformation by adding (T) in front of the menu item name."
-
-	^ self refactoringClass menuItemString
-]
-
 { #category : 'execution' }
 SycGenerateVariableAccessorCommand >> execute [
 
@@ -28,6 +16,18 @@ SycGenerateVariableAccessorCommand >> execute [
 		 scopes: toolContext refactoringScopes
 		 scopeInstanceSide: variables first definingClass isInstanceSide
 		 selectedVariables: (variables collect: [ :each | each name ])) runRefactoring
+]
+
+{ #category : 'accessing' }
+SycGenerateVariableAccessorCommand >> iconName [
+	^ #smallAdd
+]
+
+{ #category : 'accessing' }
+SycGenerateVariableAccessorCommand >> name [
+	"Make sure that the user knows that this is a transformation by adding (T) in front of the menu item name."
+
+	^ self refactoringClass menuItemString
 ]
 
 { #category : 'execution' }

@@ -40,17 +40,6 @@ ClyExpandClassDefinitionCommand >> applyResultInContext: aToolContext [
 ]
 
 { #category : 'accessing' }
-ClyExpandClassDefinitionCommand >> defaultMenuIconName [
-	^#browse
-]
-
-{ #category : 'accessing' }
-ClyExpandClassDefinitionCommand >> defaultMenuItemName [
-
-	^ 'Expand class definition'
-]
-
-{ #category : 'accessing' }
 ClyExpandClassDefinitionCommand >> description [
 
 	^ 'Expands the fluid definition to include all possible elements and shows the default values'
@@ -61,4 +50,15 @@ ClyExpandClassDefinitionCommand >> execute [
 	"
 	empty on purpose logic is in applyResultInContext:
 	"
+]
+
+{ #category : 'accessing' }
+ClyExpandClassDefinitionCommand >> iconName [
+	^#browse
+]
+
+{ #category : 'accessing' }
+ClyExpandClassDefinitionCommand >> name [
+
+	^ 'Expand class definition'
 ]

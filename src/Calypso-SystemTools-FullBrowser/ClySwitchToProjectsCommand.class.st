@@ -20,11 +20,6 @@ ClySwitchToProjectsCommand class >> canBeExecutedInContext: aContext [
 ]
 
 { #category : 'accessing' }
-ClySwitchToProjectsCommand >> defaultMenuItemName [
-	^'Projects'
-]
-
-{ #category : 'accessing' }
 ClySwitchToProjectsCommand >> description [
 
 	^ 'Click to group packages by projects. Projects are currently defined by baselines.'
@@ -40,4 +35,9 @@ ClySwitchToProjectsCommand >> execute [
 ClySwitchToProjectsCommand >> isAppliedToBrowser [
 
 	^ (browser packageView showsItemsFromQuery: ClyAllProjectsQuery) and: [ browser isScopedModeEnabled not ]
+]
+
+{ #category : 'accessing' }
+ClySwitchToProjectsCommand >> name [
+	^'Projects'
 ]

@@ -28,12 +28,12 @@ SycOpenDebuggingPointsMenuCommand >> cmCommandClass [
 ]
 
 { #category : 'accessing' }
-SycOpenDebuggingPointsMenuCommand >> defaultMenuIconName [
+SycOpenDebuggingPointsMenuCommand >> iconName [
 	^ #smallDebug
 ]
 
 { #category : 'accessing' }
-SycOpenDebuggingPointsMenuCommand >> defaultMenuItemName [
+SycOpenDebuggingPointsMenuCommand >> name [
 
 	^ 'Debug Points'
 ]

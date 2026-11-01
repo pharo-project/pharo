@@ -32,16 +32,6 @@ SycRenameArgOrTempCommand >> applyResultInContext: aSourceCodeContext [
 ]
 
 { #category : 'accessing' }
-SycRenameArgOrTempCommand >> defaultMenuIconName [
-	^ #edit
-]
-
-{ #category : 'accessing' }
-SycRenameArgOrTempCommand >> defaultMenuItemName [
-	^' (Old refactor) rename temp'
-]
-
-{ #category : 'accessing' }
 SycRenameArgOrTempCommand >> description [
 
 	^ 'Renames temp variable in given method.'
@@ -55,6 +45,16 @@ SycRenameArgOrTempCommand >> execute [
 		   method: method;
 		   scopes: toolContext refactoringScopes;
 		   yourself) runRefactoring
+]
+
+{ #category : 'accessing' }
+SycRenameArgOrTempCommand >> iconName [
+	^ #edit
+]
+
+{ #category : 'accessing' }
+SycRenameArgOrTempCommand >> name [
+	^' (Old refactor) rename temp'
 ]
 
 { #category : 'execution' }

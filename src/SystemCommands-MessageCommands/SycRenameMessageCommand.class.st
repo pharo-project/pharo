@@ -42,16 +42,6 @@ SycRenameMessageCommand >> createRefactoring [
 ]
 
 { #category : 'accessing' }
-SycRenameMessageCommand >> defaultMenuIconName [
-	^ #edit
-]
-
-{ #category : 'accessing' }
-SycRenameMessageCommand >> defaultMenuItemName [
-	^ '(R) Rename'
-]
-
-{ #category : 'accessing' }
 SycRenameMessageCommand >> description [
 
 	^ 'Rename method'
@@ -67,6 +57,16 @@ SycRenameMessageCommand >> execute [
 		          in: originalMessage methodClass.
 	driver runRefactoring.
 	
+]
+
+{ #category : 'accessing' }
+SycRenameMessageCommand >> iconName [
+	^ #edit
+]
+
+{ #category : 'accessing' }
+SycRenameMessageCommand >> name [
+	^ '(R) Rename'
 ]
 
 { #category : 'accessing' }

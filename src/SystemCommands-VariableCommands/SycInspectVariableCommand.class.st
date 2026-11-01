@@ -17,17 +17,6 @@ SycInspectVariableCommand class >> browserContextMenuActivation [
 ]
 
 { #category : 'accessing' }
-SycInspectVariableCommand >> defaultMenuIconName [
-
-	^ #inspect
-]
-
-{ #category : 'accessing' }
-SycInspectVariableCommand >> defaultMenuItemName [
-	^'Inspect variable'
-]
-
-{ #category : 'accessing' }
 SycInspectVariableCommand >> description [
 
 	^ 'Inspect variable'
@@ -37,4 +26,15 @@ SycInspectVariableCommand >> description [
 SycInspectVariableCommand >> execute [
 
 	variables last openInspector 
+]
+
+{ #category : 'accessing' }
+SycInspectVariableCommand >> iconName [
+
+	^ #inspect
+]
+
+{ #category : 'accessing' }
+SycInspectVariableCommand >> name [
+	^'Inspect variable'
 ]

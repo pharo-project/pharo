@@ -22,7 +22,7 @@ ClyRunAllTestsFromMethodDataSourceCommand >> buildTestSuite [
 ]
 
 { #category : 'accessing' }
-ClyRunAllTestsFromMethodDataSourceCommand >> defaultMenuItemName [
+ClyRunAllTestsFromMethodDataSourceCommand >> name [
 	self hasTestResult ifFalse: [ ^'Run all' ].
 
 	^'Run all (', self testResult allCount asString, ')'

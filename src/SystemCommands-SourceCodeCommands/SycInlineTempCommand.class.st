@@ -26,16 +26,6 @@ SycInlineTempCommand >> asRefactorings [
 
 ]
 
-{ #category : 'accessing' }
-SycInlineTempCommand >> defaultMenuIconName [
-	^ ##smallRightFlush
-]
-
-{ #category : 'accessing' }
-SycInlineTempCommand >> defaultMenuItemName [
-	^'Inline temp'
-]
-
 { #category : 'execution' }
 SycInlineTempCommand >> execute [
 
@@ -47,6 +37,16 @@ SycInlineTempCommand >> execute [
 		   interval: assignment sourceInterval
 		   selector: method selector
 		   class: method origin) runRefactoring }
+]
+
+{ #category : 'accessing' }
+SycInlineTempCommand >> iconName [
+	^ ##smallRightFlush
+]
+
+{ #category : 'accessing' }
+SycInlineTempCommand >> name [
+	^'Inline temp'
 ]
 
 { #category : 'execution' }

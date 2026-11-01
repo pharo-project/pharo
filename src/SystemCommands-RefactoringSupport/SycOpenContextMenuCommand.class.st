@@ -4,7 +4,7 @@ I show in menu all commands annotated by activationStrategy class
 "
 Class {
 	#name : 'SycOpenContextMenuCommand',
-	#superclass : 'CmdOpenContextMenuCommand',
+	#superclass : 'ClyOpenContextMenuCommand',
 	#category : 'SystemCommands-RefactoringSupport',
 	#package : 'SystemCommands-RefactoringSupport'
 }

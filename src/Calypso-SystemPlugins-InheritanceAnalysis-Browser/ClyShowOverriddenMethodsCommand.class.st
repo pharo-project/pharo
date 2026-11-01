@@ -17,11 +17,11 @@ ClyShowOverriddenMethodsCommand >> createInheritanceScopeFrom: classes [
 ]
 
 { #category : 'accessing' }
-ClyShowOverriddenMethodsCommand >> defaultMenuIconName [
+ClyShowOverriddenMethodsCommand >> iconName [
 	^#arrowUp
 ]
 
 { #category : 'accessing' }
-ClyShowOverriddenMethodsCommand >> defaultMenuItemName [
+ClyShowOverriddenMethodsCommand >> name [
 	^'Overridden methods'
 ]

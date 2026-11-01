@@ -9,11 +9,6 @@ Class {
 	#tag : 'Scope'
 }
 
-{ #category : 'accessing' }
-SycAddHierarchyScopeCommand >> defaultMenuItemName [
-	^ 'Create scope from selected class hierarchy'
-]
-
 { #category : 'execution' }
 SycAddHierarchyScopeCommand >> execute [
 	| scope |
@@ -22,4 +17,9 @@ SycAddHierarchyScopeCommand >> execute [
 	scope :=  RBBrowserEnvironment new forClassHierarchy: targetClass.
 	ScopesManager addScope: scope.
 	ScopesPresenter openSelecting: scope
+]
+
+{ #category : 'accessing' }
+SycAddHierarchyScopeCommand >> name [
+	^ 'Create scope from selected class hierarchy'
 ]

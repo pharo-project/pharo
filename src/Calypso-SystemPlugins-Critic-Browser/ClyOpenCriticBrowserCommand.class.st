@@ -16,15 +16,15 @@ ClyOpenCriticBrowserCommand class >> packageContextMenuActivation [
 		byItemOf: ClyQueryMenuGroup for: Package asCalypsoItemContext
 ]
 
-{ #category : 'activation' }
-ClyOpenCriticBrowserCommand >> defaultMenuItemName [
-	^'Browse critiques'
-]
-
 { #category : 'execution' }
 ClyOpenCriticBrowserCommand >> execute [
 	| env |
 
 	env := RBPackageEnvironment new packages: packages.
 	StCritiqueRuleSelectorPresenter openWithEnvironment: env removeTestCase: false
+]
+
+{ #category : 'activation' }
+ClyOpenCriticBrowserCommand >> name [
+	^'Browse critiques'
 ]

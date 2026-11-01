@@ -21,12 +21,12 @@ SycOpenReflectivityMenuCommand >> cmCommandClass [
 ]
 
 { #category : 'accessing' }
-SycOpenReflectivityMenuCommand >> defaultMenuIconName [
+SycOpenReflectivityMenuCommand >> iconName [
 	^ #smallObjects
 ]
 
 { #category : 'accessing' }
-SycOpenReflectivityMenuCommand >> defaultMenuItemName [
+SycOpenReflectivityMenuCommand >> name [
 
 	^ 'Reflectivity'
 ]

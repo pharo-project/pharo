@@ -24,22 +24,17 @@ SycMoveMethodsToPackageCommand class >> for: methods to: aPackage [
 		package: aPackage
 ]
 
-{ #category : 'accessing' }
-SycMoveMethodsToPackageCommand >> defaultMenuIconName [
-	^ #smallRedo
-]
-
-{ #category : 'accessing' }
-SycMoveMethodsToPackageCommand >> defaultMenuItemName [
-	^'Move to package'
-]
-
 { #category : 'execution' }
 SycMoveMethodsToPackageCommand >> execute [
 
 	methods do: [ :each |
 		self moveMethod: each toPackage: package.
 		each origin removeEmptyProtocols ]
+]
+
+{ #category : 'accessing' }
+SycMoveMethodsToPackageCommand >> iconName [
+	^ #smallRedo
 ]
 
 { #category : 'execution' }
@@ -51,6 +46,11 @@ SycMoveMethodsToPackageCommand >> moveMethod: aMethod toPackage: aPackage [
 	aPackage ~~ aMethod origin package
 		ifTrue: [ aMethod protocol: '*' , aPackage name ]
 		ifFalse: [ self classifyMethod: aMethod ]
+]
+
+{ #category : 'accessing' }
+SycMoveMethodsToPackageCommand >> name [
+	^'Move to package'
 ]
 
 { #category : 'accessing' }

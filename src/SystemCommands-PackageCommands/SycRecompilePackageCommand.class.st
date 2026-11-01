@@ -5,15 +5,15 @@ Class {
 	#package : 'SystemCommands-PackageCommands'
 }
 
-{ #category : 'accessing' }
-SycRecompilePackageCommand >> defaultMenuItemName [
-	^'Recompile'
-]
-
 { #category : 'execution' }
 SycRecompilePackageCommand >> execute [
 	packages
 		do: [ :eachPackage |
 			eachPackage methods do: [ :eachMethod | eachMethod recompile ] ]
 		displayingProgress: [:eachPackage | 'Recompiling ', eachPackage name]
+]
+
+{ #category : 'accessing' }
+SycRecompilePackageCommand >> name [
+	^'Recompile'
 ]

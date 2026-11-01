@@ -32,16 +32,6 @@ ClyCommitPackageCommand class >> fullBrowserShortcutActivation [
 ]
 
 { #category : 'accessing' }
-ClyCommitPackageCommand >> defaultMenuIconName [
-	^#monticelloPackage
-]
-
-{ #category : 'accessing' }
-ClyCommitPackageCommand >> defaultMenuItemName [
-	^'Commit'
-]
-
-{ #category : 'accessing' }
 ClyCommitPackageCommand >> description [
 
 ^ 'I am a command to commit given packages' 
@@ -84,4 +74,14 @@ You can fix this problem using the Iceberg tool.'
 			title: 'Error'.
 		^ self ].
 	(IceTipCommitBrowser onRepository: targetRepo) open
+]
+
+{ #category : 'accessing' }
+ClyCommitPackageCommand >> iconName [
+	^#monticelloPackage
+]
+
+{ #category : 'accessing' }
+ClyCommitPackageCommand >> name [
+	^'Commit'
 ]

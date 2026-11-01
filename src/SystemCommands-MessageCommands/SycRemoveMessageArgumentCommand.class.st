@@ -57,16 +57,6 @@ SycRemoveMessageArgumentCommand >> createRefactoring [
 	"not used"
 ]
 
-{ #category : 'accessing' }
-SycRemoveMessageArgumentCommand >> defaultMenuIconName [
-	^#remove
-]
-
-{ #category : 'accessing' }
-SycRemoveMessageArgumentCommand >> defaultMenuItemName [
-	^'Remove argument'
-]
-
 { #category : 'execution' }
 SycRemoveMessageArgumentCommand >> execute [
 	
@@ -76,6 +66,11 @@ SycRemoveMessageArgumentCommand >> execute [
 			removeParameterFromMethodSignature: originalMessage
 			in: originalMessage methodClass;
 		runRefactoring
+]
+
+{ #category : 'accessing' }
+SycRemoveMessageArgumentCommand >> iconName [
+	^#remove
 ]
 
 { #category : 'private' }
@@ -92,6 +87,11 @@ SycRemoveMessageArgumentCommand >> methodName [
 		  methodName := RBMethodName
 			                selector: originalMessage selector
 			                arguments: originalMessage argumentNames ]
+]
+
+{ #category : 'accessing' }
+SycRemoveMessageArgumentCommand >> name [
+	^'Remove argument'
 ]
 
 { #category : 'execution' }

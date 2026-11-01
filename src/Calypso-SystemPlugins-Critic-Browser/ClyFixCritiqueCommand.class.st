@@ -16,11 +16,6 @@ ClyFixCritiqueCommand class >> canBeExecutedInContext: aCriticContext [
 	^aCriticContext lastSelectedItem isMarkedWith: ClyCritiqueFixableTag
 ]
 
-{ #category : 'initialization' }
-ClyFixCritiqueCommand >> defaultMenuIconName [
-	^#repair
-]
-
 { #category : 'table decoration' }
 ClyFixCritiqueCommand >> description [
 	^'Automatically resolve the issue'
@@ -30,4 +25,9 @@ ClyFixCritiqueCommand >> description [
 ClyFixCritiqueCommand >> execute [
 
 	(StChangesBrowserPresenter changes: { critique change }) open
+]
+
+{ #category : 'initialization' }
+ClyFixCritiqueCommand >> iconName [
+	^#repair
 ]

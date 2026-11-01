@@ -8,20 +8,20 @@ Class {
 	#package : 'SystemCommands-ClassCommands'
 }
 
-{ #category : 'accessing' }
-SycRemoveEmptyMethodTagsCommand >> defaultMenuIconName [
-	^#delete
-]
-
-{ #category : 'accessing' }
-SycRemoveEmptyMethodTagsCommand >> defaultMenuItemName [
-	^'Remove empty protocols'
-]
-
 { #category : 'execution' }
 SycRemoveEmptyMethodTagsCommand >> execute [
 
 	classes do: [ :class | class removeEmptyProtocols ]
+]
+
+{ #category : 'accessing' }
+SycRemoveEmptyMethodTagsCommand >> iconName [
+	^#delete
+]
+
+{ #category : 'accessing' }
+SycRemoveEmptyMethodTagsCommand >> name [
+	^'Remove empty protocols'
 ]
 
 { #category : 'execution' }

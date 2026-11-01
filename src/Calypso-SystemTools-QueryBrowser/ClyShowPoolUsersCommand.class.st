@@ -39,16 +39,16 @@ ClyShowPoolUsersCommand >> browser: anObject [
 	browser := anObject
 ]
 
-{ #category : 'accessing' }
-ClyShowPoolUsersCommand >> defaultMenuItemName [
-
-	^ 'Show pool users'
-]
-
 { #category : 'execution' }
 ClyShowPoolUsersCommand >> execute [
 
 	(Smalltalk tools toolNamed: #messageList) browseUsersOfSharedPool: classes first
+]
+
+{ #category : 'accessing' }
+ClyShowPoolUsersCommand >> name [
+
+	^ 'Show pool users'
 ]
 
 { #category : 'execution' }
