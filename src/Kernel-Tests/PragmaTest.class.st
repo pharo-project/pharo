@@ -36,6 +36,27 @@ PragmaTest >> testAllNamed [
 	self assert: (Pragma allNamed: #nonExistingPragma) isEmpty
 ]
 
+{ #category : 'tests - cache' }
+PragmaTest >> testAllNamedObsolete [
+	"We test that the cache query never returns Pragmas from Obsolete classes"
+	
+	| classForTesting |
+	
+	classForTesting := self class classInstaller make: [ :builder | 
+			builder 
+				superclass: Object;
+				name: #MyPragmaCacheTestClass
+			 ].
+	
+	classForTesting compile: 'methodWithPraga <myPragmaCacheTestPragma>'.
+	
+	self deny: (Pragma allNamed: #myPragmaCacheTestPragma) isEmpty.
+
+	classForTesting removeFromSystem.
+	
+	self assert: (Pragma allNamed: #myPragmaCacheTestPragma) isEmpty
+]
+
 { #category : 'tests' }
 PragmaTest >> testArgumentAt [
 	| pragma |
