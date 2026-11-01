@@ -8,18 +8,15 @@ Class {
 { #category : 'baselines' }
 BaselineOfShift >> baseline: spec [
 	<baseline>
-	spec
-		for: #pharo
-		do:
-			[
-			spec package: 'Shift-ClassBuilder'.
-			spec package: 'Shift-ClassBuilder-Tests' with:[spec requires: #core].
+	spec for: #pharo do: [
+			spec 
+				package: 'Kernel-CodeModel-Tests';
+				package: 'Shift-ClassBuilder';
+				package: 'Shift-ClassBuilder-Tests' with:[ spec requires: 'Kernel-CodeModel-Tests' ];
 
-			spec
-				group: 'core' with: #('Shift-ClassBuilder');
-				group: 'dev' with: #('core' 'tests');
-				group: 'shift-tests' with: #('Shift-ClassBuilder-Tests');
-				group: 'Tests' with: #('shift-tests');
-				group: 'default' with: #('core')
+				group: 'Core' with: #('Shift-ClassBuilder');
+				group: 'dev' with: #('Core' 'Tests');
+				group: 'Tests' with: #('Shift-ClassBuilder-Tests');
+				group: 'default' with: #('Core')
 			]
 ]

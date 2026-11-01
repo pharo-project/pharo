@@ -548,6 +548,13 @@ OpalCompiler >> newParse [
 ]
 
 { #category : 'public access' }
+OpalCompiler >> nonInteractiveEvaluate: textOrString [
+	"UI-less version of evaluate"
+	^ OpalEvaluator new evaluate: textOrString
+
+]
+
+{ #category : 'public access' }
 OpalCompiler >> options: anOptionsArray [
 
 	"Compatibility for those options"
