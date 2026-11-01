@@ -137,6 +137,11 @@ ScopedSelector >> cleanupExtendedBehaviors [
 ]
 
 { #category : 'accessing' }
+ScopedSelector >> copyFrom: startIndex to: endIndex [
+	^ self symbol copyFrom: startIndex to: endIndex
+]
+
+{ #category : 'accessing' }
 ScopedSelector >> extendedBehaviors [
 
 	^ extendedBehaviors ifNil: [#()]
@@ -288,6 +293,11 @@ ScopedSelector >> removeAliases [
 	aliasedBehaviors ifNil: [ ^ self ].
 	aliasedBehaviors do: [ :e | e removeSelector: self ].
 	aliasedBehaviors := nil
+]
+
+{ #category : 'accessing' }
+ScopedSelector >> size [
+	^ self symbol size
 ]
 
 { #category : 'ston persistence' }
