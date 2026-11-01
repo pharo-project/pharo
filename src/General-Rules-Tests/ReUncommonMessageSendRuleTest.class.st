@@ -24,5 +24,5 @@ ReUncommonMessageSendRuleTest >> testRule [
 	critiques := self myCritiques.
 
 	self assert: critiques size equals: 2.
-	self assert: (self sourceAtChritique:  critiques second) equals: '7 BadSelector'
+	self assert: (self sourceAtCritique:  critiques second) equals: '7 BadSelector'
 ]
