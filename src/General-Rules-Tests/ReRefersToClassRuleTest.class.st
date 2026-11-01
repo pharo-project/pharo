@@ -38,5 +38,5 @@ ReRefersToClassRuleTest >> testRuleDetectHardCodedClass [
 	critiques := self myCritiquesOnMethod: self class >> #referToClassName.
 
 	self assert: critiques size equals: 2.
-	self assert: (self sourceAtChritique: critiques first) equals: self class name asString
+	self assert: (self sourceAtCritique: critiques first) equals: self class name asString
 ]
