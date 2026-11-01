@@ -87,22 +87,19 @@ OCArrayLiteralTest >> testByteArrayWithinArray [
 
 { #category : 'tests' }
 OCArrayLiteralTest >> testLiteralArrayLongHavingAnotherArrayLong [
+
 	| method array elements |
-	
-	self flag: 'Skipped in Pharo14 because of github.com/pharo-project/pharo/issues/19058. Fix should come on P15'.
-	self skip.
-	
-	elements := ((1 to: 32) inject: ' ' into: [ :r :e | r , ' . ' , e asString ]).
+	elements := (1 to: 32) inject: ' ' into: [ :r :e | r , ' . ' , e asString ].
 	array := ' { ' , elements , ' }'.
 	array := array copyReplaceAll: '32' with: array.
-	
+
 	method := self compile: 'array ^' , array.
-	array := method valueWithReceiver: #().
-	
-	self assert: ( array isKindOf: Array).
+	array := method valueWithReceiver: #(  ).
+
+	self assert: (array isKindOf: Array).
 	self assert: array size equals: 32.
 	1 to: 31 do: [ :index | self assert: (array at: index) equals: index ].
-	1 to: 32 do: [ :index | self assert: ((array at: 32) at: index) equals: index ].
+	1 to: 32 do: [ :index | self assert: ((array at: 32) at: index) equals: index ]
 ]
 
 { #category : 'tests' }
