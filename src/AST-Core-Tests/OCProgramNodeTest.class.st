@@ -1162,6 +1162,24 @@ OCProgramNodeTest >> testReplaceMessage [
 ]
 
 { #category : 'tests - replacing' }
+OCProgramNodeTest >> testReplaceMessageAddsParenthesesForBinaryArgument [
+
+	| tree |
+	tree := self parseMethod: 'run "1" ^ 1 + 33 asPoint "2"'.
+	tree body statements first value arguments first replaceWith: (self parseExpression: '33 @ 33').
+	self assert: tree newSource equals: 'run "1" ^ 1 + (33 @ 33) "2"'
+]
+
+{ #category : 'tests - replacing' }
+OCProgramNodeTest >> testReplaceMessageAddsParenthesesForUnaryReceiver [
+
+	| tree |
+	tree := self parseMethod: 'run "1" ^ 33 asPoint x "2"'.
+	tree body statements first value receiver replaceWith: (self parseExpression: '33 @ 33').
+	self assert: tree newSource equals: 'run "1" ^ (33 @ 33) x "2"'
+]
+
+{ #category : 'tests - replacing' }
 OCProgramNodeTest >> testReplaceMessageArgument [
 	| tree |
 	tree := self parseMethod: 'foo "1" self "2" foo: "3" foo "4"'.
@@ -1176,6 +1194,21 @@ OCProgramNodeTest >> testReplaceMessageArgument [
 ]
 
 { #category : 'tests - replacing' }
+OCProgramNodeTest >> testReplaceMessageKeepsFormattingOfTheMethod [
+
+	| tree |
+	tree := self parseMethod: 'run
+	^ self
+		foo: 33 asPoint
+		bar: 2'.
+	tree body statements first value arguments first replaceWith: (self parseExpression: '33 @ 33').
+	self assert: tree newSource equals: 'run
+	^ self
+		foo: 33 @ 33
+		bar: 2'
+]
+
+{ #category : 'tests - replacing' }
 OCProgramNodeTest >> testReplaceMessageReceiver [
 	| tree |
 	tree := self parseMethod: 'foo "1" self "2" foo: "3" 123 "4"'.
@@ -1187,6 +1220,16 @@ OCProgramNodeTest >> testReplaceMessageReceiver [
 	tree := self parseMethod: 'foo "1" self foo "2" foo: "3" 123 "4"'.
 	tree body statements first receiver replaceWith: (self parseExpression: 'bar').
 	self assert: tree newSource equals: 'foo "1" bar "2" foo: "3" 123 "4"'
+]
+
+{ #category : 'tests - replacing' }
+OCProgramNodeTest >> testReplaceMessageWithMessageOfAnotherArity [
+	"A unary message replaced by a binary one: only its text changes, the rest of the source is kept."
+
+	| tree |
+	tree := self parseMethod: 'run "1" ^ 33 asPoint "2"'.
+	tree body statements first value replaceWith: (self parseExpression: '33 @ 33').
+	self assert: tree newSource equals: 'run "1" ^ 33 @ 33 "2"'
 ]
 
 { #category : 'tests - replacing' }
@@ -1267,6 +1310,15 @@ OCProgramNodeTest >> testReplaceMethodUnary [
 	tree := self parseMethod: 'run "1" ^ "2" 3 "4"'.
 	tree renameSelector: #assert:description: andArguments: (Array with: (self parseExpression: 'first') with: (self parseExpression: 'second')).
 	self assert: tree newSource equals: 'assert: first description: second "1" ^ "2" 3 "4"'
+]
+
+{ #category : 'tests - replacing' }
+OCProgramNodeTest >> testReplaceParenthesizedMessageKeepsItsParentheses [
+
+	| tree |
+	tree := self parseMethod: 'run "1" ^ (33 asPoint) x "2"'.
+	tree body statements first value receiver replaceWith: (self parseExpression: '33 @ 33').
+	self assert: tree newSource equals: 'run "1" ^ (33 @ 33) x "2"'
 ]
 
 { #category : 'tests - replacing' }

@@ -360,6 +360,17 @@ OCMessageNode >> replaceNode: aNode withNode: anotherNode [
 ]
 
 { #category : 'private - replacing' }
+OCMessageNode >> replaceSourceFrom: aNode [
+	"I replace aNode: write my source in place of the source of aNode (its parentheses included),
+	so the rest of the method keeps its formatting. My formatted code has parentheses when my
+	new position needs them.
+	If the edited source does not parse to the expected tree, OCMethodNode>>#reformatSource
+	falls back to formatting the whole method."
+
+	self addReplacement: (OCStringReplacement replaceFrom: aNode start to: aNode stop with: self formattedCode)
+]
+
+{ #category : 'private - replacing' }
 OCMessageNode >> replaceSourceWith: aNode [
 	(self isContainmentReplacement: aNode)
 		ifTrue: [^self replaceContainmentSourceWith: aNode].
