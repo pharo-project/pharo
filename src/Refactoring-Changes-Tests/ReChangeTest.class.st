@@ -633,3 +633,17 @@ ReChangeTest >> universalTestFor: aChange [
 	(aChange isKindOf: ReClassChange)
 		ifTrue: [ self undoTestFor: aChange ]
 ]
+
+{ #category : 'tests' }
+ReChangeTest >> testChangeTraitCompositionRestoresCompositionOnUndo [
+
+	| change |
+	change := changeFactory
+		changeTraitCompositionOf: #TReComposedTraitForDuplication
+		to: 'RBRefactoringTestTrait'.
+	self performAndUndoChange: change do: [
+		self assertCollection: TReComposedTraitForDuplication traits
+			hasSameElements: { RBRefactoringTestTrait } ].
+	self assertCollection: TReComposedTraitForDuplication traits
+		hasSameElements: { TReTraitToBeUsedInDuplication }
+]
