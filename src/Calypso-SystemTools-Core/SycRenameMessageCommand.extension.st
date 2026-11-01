@@ -9,7 +9,8 @@ SycRenameMessageCommand class >> methodMenuActivation [
 
 { #category : '*Calypso-SystemTools-Core' }
 SycRenameMessageCommand class >> methodShortcutActivation [
-	<classAnnotation>
+"	<classAnnotation>"
+	"Disabled to make the rename shortcut trigger the new solution."
 
 	^CmdShortcutActivation renamingFor: ClyMethod asCalypsoItemContext
 ]
@@ -24,6 +25,8 @@ SycRenameMessageCommand class >> sourceCodeMenuActivation [
 { #category : '*Calypso-SystemTools-Core' }
 SycRenameMessageCommand class >> sourceCodeShortcutActivation [
 
-	<classAnnotation>
+"	<classAnnotation>"
+	"Disabled to make the rename shortcut trigger the new solution."
+	
 	^ CmdShortcutActivation by: $r meta for: ClyMethodSourceCodeContext
 ]
