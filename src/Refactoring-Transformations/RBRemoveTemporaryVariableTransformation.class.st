@@ -90,10 +90,24 @@ RBRemoveTemporaryVariableTransformation >> classExist [
 
 { #category : 'private - accessing' }
 RBRemoveTemporaryVariableTransformation >> definingSequenceNode [
+	"Answer the sequence whose declaration of the variable is removed, or nil when none declares it.
+	When several scopes declare the same name (a block temporary shadowing an outer one), prefer one
+	where the variable is unused: nothing refers to that declaration, so it can be removed safely."
 
-	^ (self definingMethod allChildren select: [ :each | each isSequence ])
-		detect: [ :each | each exactNodeDefines: variableName ]
-		ifNone: [ nil ]
+	| candidates |
+	candidates := self definingMethod allChildren select: [ :each | each isSequence and: [ each exactNodeDefines: variableName ] ].
+	candidates ifEmpty: [ ^ nil ].
+	^ candidates detect: [ :each | (self hasUsagesIn: each) not ] ifNone: [ candidates first ]
+]
+
+{ #category : 'private-testing' }
+RBRemoveTemporaryVariableTransformation >> hasUsagesIn: aSequenceNode [
+	"Answer whether a variable node refers to the declaration of the variable in aSequenceNode,
+	and not to another declaration of the same name in an inner scope."
+
+	^ aSequenceNode statements anySatisfy: [ :statement |
+			  statement withAllChildren anySatisfy: [ :node |
+				  node isVariable and: [ node name = variableName and: [ (node whichUpNodeDefines: variableName) == aSequenceNode ] ] ] ]
 ]
 
 { #category : 'private-testing' }
@@ -102,27 +116,14 @@ RBRemoveTemporaryVariableTransformation >> hasUsagesInScope [
 	| definingSequence |
 	definingSequence := self definingSequenceNode.
 	definingSequence ifNil: [ ^ false ].
-
-	^ definingSequence statements anySatisfy: [ :statement |
-		statement withAllChildren anySatisfy: [ :node |
-			node isVariable
-				and: [ node name = variableName
-				and: [ (node whichUpNodeDefines: variableName) == definingSequence ] ] ] ]
+	^ self hasUsagesIn: definingSequence
 ]
 
-{ #category : 'executing' }
+{ #category : 'transforming' }
 RBRemoveTemporaryVariableTransformation >> privateTransform [
 
-	| methodTree modifiedNode |
-	methodTree := self definingMethod.
-
-	modifiedNode := (methodTree withAllChildren select: [:each | each isSequence])
-						detect: [ :sequence | sequence exactNodeDefines: variableName ]
-						ifNone: [ nil ].
-
-	modifiedNode ifNotNil: [ modifiedNode removeTemporaryNamed: variableName ].
-
-	class compileTree: methodTree
+	self definingSequenceNode ifNotNil: [ :sequence | sequence removeTemporaryNamed: variableName ].
+	class compileTree: self definingMethod
 ]
 
 { #category : 'api' }
