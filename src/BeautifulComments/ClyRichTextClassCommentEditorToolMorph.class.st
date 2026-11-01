@@ -100,13 +100,6 @@ ClyRichTextClassCommentEditorToolMorph >> reactToRubTextAreaDoubleClick: anEvent
 	self switchToEditMode
 ]
 
-{ #category : 'rendering' }
-ClyRichTextClassCommentEditorToolMorph >> renderComment: aString of: aClassOrPackage [ 
-	"The actual implementation is moved to BeautifulComments - basically to allow Testing"
-
-	^ BeautifulComments renderComment: aString of: aClassOrPackage
-]
-
 { #category : 'initialization' }
 ClyRichTextClassCommentEditorToolMorph >> setBackgroundColor: aColor [
 	
