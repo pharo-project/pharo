@@ -59,6 +59,34 @@ RBRemoveTemporaryVariableTransformationTest >> testMethodDoesNotExist [
 ]
 
 { #category : 'tests' }
+RBRemoveTemporaryVariableTransformationTest >> testRemoveInnerUnusedTemporaryShadowingUsedOuterOne [
+
+	| transformation class mthAST |
+	transformation := RBAddMethodTransformation
+		                  sourceCode: 'foo
+			| first second |
+			first := 22. second := first + 1.
+			first := [ | first | 33 ]. ^ 1'
+		                  in: self changeMockClass name
+		                  withProtocol: #accessing.
+	transformation generateChanges.
+	transformation := RBRemoveTemporaryVariableTransformation
+		                  model: transformation model
+		                  variable: 'first'
+		                  inMethod: #foo
+		                  inClass: self changeMockClass name.
+	self deny: transformation hasUsagesInScope.
+	transformation generateChanges.
+	class := transformation model classNamed: self changeMockClass name.
+	mthAST := class parseTreeForSelector: #foo.
+	self 
+		assert: (mthAST temporaries collect: [ :each | each name ]) asArray 
+		equals: #( #first #second ).
+
+	self assert: mthAST blockNodes first temporaries isEmpty
+]
+
+{ #category : 'tests' }
 RBRemoveTemporaryVariableTransformationTest >> testRemoveOuterUnusedTemporaryWhenInnerBlockShadowsSameName [
 
 	| transformation class |
