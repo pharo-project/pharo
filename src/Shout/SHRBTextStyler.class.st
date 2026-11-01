@@ -83,7 +83,7 @@ SHRBTextStyler class >> blueStyleTable [
 
 	"(symbol color [emphasisSymbolOrArray [textStyleName [pixelHeight]]])"
  	^ #(
-			('default' 								black)
+			('default' 								'2A2F36')
 			('invalid' 									red)
 
 			('comment' 								(gray darker))
@@ -164,7 +164,7 @@ SHRBTextStyler class >> darkBlueStyleTable [
 
 			"(symbol color [emphasisSymbolOrArray [textStyleName [pixelHeight]]])"
  	^ #(
-			('default' 								white)
+			('default' 								'D6DEEA')
 			('invalid' 								'FF8A80') 
 
 			('comment' 								'7D8C93')
@@ -196,8 +196,8 @@ SHRBTextStyler class >> darkBlueStyleTable [
 			('blockPatternArg' 					'0091ea' italic)
 			('blockArg' 							'0091ea' italic)
 
-			('blockPatternTempVar' 				'00838f' italic)
-			('blockTempVar' 						'00838f' italic)
+			('blockPatternTempVar' 				'26B6C6' italic)
+			('blockTempVar' 						'26B6C6' italic)
 
 			('poolConstant' 						'A7E2ED' bold)
 			('classVar' 							'A7E2ED' bold)
@@ -253,7 +253,7 @@ SHRBTextStyler class >> darkStyleTable [
 
 			"(symbol color [emphasisSymbolOrArray [textStyleName [pixelHeight]]])"
  ^ #(
-			('default' 								white)
+			('default' 								'D5D9E0')
 			('invalid' 								'FF8A80')
 
 			('comment' 								'7D8C93')
