@@ -24,6 +24,11 @@ SycDemoteToPackageWithTagCommand >> applyResultInContext: aBrowserContext [
 	aBrowserContext showPackage: newPackage tag: tag asSymbol
 ]
 
+{ #category : 'testing' }
+SycDemoteToPackageWithTagCommand >> canBeExecuted [
+	^ context isAboutBrowserItemType: Package
+]
+
 { #category : 'execution' }
 SycDemoteToPackageWithTagCommand >> executeRefactoring [
 	packages

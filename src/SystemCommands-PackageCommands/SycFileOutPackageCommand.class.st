@@ -8,6 +8,11 @@ Class {
 	#package : 'SystemCommands-PackageCommands'
 }
 
+{ #category : 'testing' }
+SycFileOutPackageCommand >> canBeExecuted [
+	^ context isAboutBrowserItemType: Package
+]
+
 { #category : 'accessing' }
 SycFileOutPackageCommand >> defaultFileName [
 	^ packages size = 1

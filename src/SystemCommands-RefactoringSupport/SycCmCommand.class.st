@@ -62,7 +62,7 @@ SycCmCommand class >> defaultDescription [
 	^ self comment
 ]
 
-{ #category : 'execution' }
+{ #category : 'executing' }
 SycCmCommand >> applyCommandResult [
 ]
 
@@ -113,7 +113,7 @@ SycCmCommand >> parentGroup: aCmdRootMenuGroup [
 SycCmCommand >> prepareFullExecution [
 ]
 
-{ #category : 'execution' }
+{ #category : 'executing' }
 SycCmCommand >> processCommandFailure: anException [
 
 	context processFailure: anException of: self

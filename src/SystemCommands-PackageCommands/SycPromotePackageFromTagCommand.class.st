@@ -10,7 +10,7 @@ Internal Representation and Key Implementation Points.
 "
 Class {
 	#name : 'SycPromotePackageFromTagCommand',
-	#superclass : 'ClyCommand',
+	#superclass : 'SycPackageExtraCmCommand',
 	#instVars : [
 		'package',
 		'classTag'
@@ -24,17 +24,20 @@ SycPromotePackageFromTagCommand class >> canBeExecutedInContext: aToolContext [
 	^aToolContext isPackageSelected and: [aToolContext isPackageTagSelected]
 ]
 
-{ #category : 'execution' }
-SycPromotePackageFromTagCommand >> applyResultInContext: aBrowserContext [
-
+{ #category : 'executing' }
+SycPromotePackageFromTagCommand >> applyCommandResult [
 	| newPackage |
 	newPackage := (package name, '-', classTag) asPackage.
-	aBrowserContext showPackage: newPackage
+	context showPackage: newPackage
 ]
 
-{ #category : 'execution' }
-SycPromotePackageFromTagCommand >> execute [
+{ #category : 'testing' }
+SycPromotePackageFromTagCommand >> canBeExecuted [
+	^ context isAboutBrowserItemType: ClyTaggedClassGroup
+]
 
+{ #category : 'executing' }
+SycPromotePackageFromTagCommand >> executeRefactoring [
 	(package tagNamed: classTag) promoteAsPackage
 ]
 
@@ -43,10 +46,9 @@ SycPromotePackageFromTagCommand >> name [
 	^'Promote as package'
 ]
 
-{ #category : 'execution' }
-SycPromotePackageFromTagCommand >> prepareFullExecutionInContext: aToolContext [
-	super prepareFullExecutionInContext: aToolContext.
-
-	package := aToolContext lastSelectedPackage.
-	classTag := aToolContext lastSelectedPackageTag
+{ #category : 'preparation' }
+SycPromotePackageFromTagCommand >> prepareFullExecution [
+	super prepareFullExecution.
+	package := context lastSelectedPackage.
+	classTag := context lastSelectedPackageTag
 ]

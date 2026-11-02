@@ -19,6 +19,11 @@ SycInspectPackageCommand class >> canBeExecutedInContext: aToolContext [
 	^aToolContext isPackageSelected
 ]
 
+{ #category : 'testing' }
+SycInspectPackageCommand >> canBeExecuted [
+	^ context isAboutBrowserItemType: Package
+]
+
 { #category : 'accessing' }
 SycInspectPackageCommand >> description [
 

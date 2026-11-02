@@ -5,6 +5,11 @@ Class {
 	#package : 'SystemCommands-PackageCommands'
 }
 
+{ #category : 'testing' }
+SycRecompilePackageCommand >> canBeExecuted [
+	^ context isAboutBrowserItemType: Package
+]
+
 { #category : 'execution' }
 SycRecompilePackageCommand >> executeRefactoring [
 	packages

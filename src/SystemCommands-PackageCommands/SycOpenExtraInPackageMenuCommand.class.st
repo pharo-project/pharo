@@ -15,6 +15,13 @@ SycOpenExtraInPackageMenuCommand class >> packageContextMenuActivation [
 	^ CmdContextMenuActivation byRootGroupItemOrder: 10200 for: Package asCalypsoItemContext
 ]
 
+{ #category : 'activation' }
+SycOpenExtraInPackageMenuCommand class >> taggedClassGroupContextMenuActivation [
+	<classAnnotation>
+
+	^ CmdContextMenuActivation byRootGroupItemOrder: 10200 for: ClyTaggedClassGroup asCalypsoItemContext
+]
+
 { #category : 'accessing' }
 SycOpenExtraInPackageMenuCommand >> activationStrategy [
 	^ SycExtraMenuActivation
