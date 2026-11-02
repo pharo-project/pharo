@@ -27,6 +27,12 @@ SycCmDuplicateClassCommand >> applyCommandResult [
 	"Nothing"
 ]
 
+{ #category : 'testing' }
+SycCmDuplicateClassCommand >> canBeExecuted [
+
+	^ context lastSelectedClass isTrait not
+]
+
 { #category : 'accessing' }
 SycCmDuplicateClassCommand >> description [
 
@@ -46,12 +52,6 @@ SycCmDuplicateClassCommand >> executeRefactoring [
 SycCmDuplicateClassCommand >> icon [
 
 	^ self iconNamed: #smallCopy
-]
-
-{ #category : 'testing' }
-SycCmDuplicateClassCommand >> isApplicable [
-
-	^ context lastSelectedClass isTrait not
 ]
 
 { #category : 'testing' }

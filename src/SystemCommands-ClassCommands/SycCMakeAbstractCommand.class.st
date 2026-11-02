@@ -8,6 +8,12 @@ Class {
 	#package : 'SystemCommands-ClassCommands'
 }
 
+{ #category : 'testing' }
+SycCMakeAbstractCommand >> canBeExecuted [
+
+	^ context lastSelectedClass realClass isAbstract not
+]
+
 { #category : 'executing' }
 SycCMakeAbstractCommand >> executeRefactoring [
 
@@ -18,12 +24,6 @@ SycCMakeAbstractCommand >> executeRefactoring [
 SycCMakeAbstractCommand >> icon [
 
 	^ self iconNamed: #smallLoadProject
-]
-
-{ #category : 'accessing' }
-SycCMakeAbstractCommand >> isApplicable [
-
-	^ context lastSelectedClass realClass isAbstract not
 ]
 
 { #category : 'testing' }

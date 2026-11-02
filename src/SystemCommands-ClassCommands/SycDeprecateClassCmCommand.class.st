@@ -6,7 +6,7 @@ Class {
 }
 
 { #category : 'testing' }
-SycDeprecateClassCmCommand >> isApplicable [
+SycDeprecateClassCmCommand >> canBeExecuted [
 
 	^ context lastSelectedClass realClass isDeprecated not
 ]
