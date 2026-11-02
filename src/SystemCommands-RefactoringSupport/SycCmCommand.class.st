@@ -28,8 +28,7 @@ SycCmCommand class >> defaultDescription [
 { #category : 'testing' }
 SycCmCommand >> canBeExecuted [
 
-	"Bridge the legacy Commander applicability check to the Commander2 contract."
-	^ self isApplicable
+	^ true
 ]
 
 { #category : 'accessing' }
@@ -45,12 +44,6 @@ SycCmCommand >> executeRefactoring [
 SycCmCommand >> icon [
 
 	^ nil
-]
-
-{ #category : 'testing' }
-SycCmCommand >> isApplicable [
-
-	^ true
 ]
 
 { #category : 'testing' }

@@ -8,16 +8,16 @@ Class {
 	#package : 'SystemCommands-PackageCommands'
 }
 
+{ #category : 'testing' }
+SycRecompilePackageCommand >> canBeExecuted [
+
+	^ context isAboutBrowserItemType: Package
+]
+
 { #category : 'execution' }
 SycRecompilePackageCommand >> executeRefactoring [
 
 	self packages do: [ :package | package methods do: [ :method | method recompile ] ] displayingProgress: [ :package | 'Recompiling ' , package name ]
-]
-
-{ #category : 'testing' }
-SycRecompilePackageCommand >> isApplicable [
-
-	^ context isAboutBrowserItemType: Package
 ]
 
 { #category : 'accessing' }

@@ -8,6 +8,12 @@ Class {
 	#package : 'SystemCommands-PackageCommands'
 }
 
+{ #category : 'testing' }
+SycFileOutPackageCommand >> canBeExecuted [
+
+	^ context isAboutBrowserItemType: Package
+]
+
 { #category : 'accessing' }
 SycFileOutPackageCommand >> defaultFileName [
 
@@ -26,12 +32,6 @@ SycFileOutPackageCommand >> executeRefactoring [
 SycFileOutPackageCommand >> icon [
 
 	^ self iconNamed: #save
-]
-
-{ #category : 'testing' }
-SycFileOutPackageCommand >> isApplicable [
-
-	^ context isAboutBrowserItemType: Package
 ]
 
 { #category : 'accessing' }

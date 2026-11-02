@@ -9,6 +9,12 @@ Class {
 	#package : 'SystemCommands-VariableCommands'
 }
 
+{ #category : 'testing' }
+SycInspectVariableCommand >> canBeExecuted [
+
+	^ context isAboutBrowserItemType: ClyVariableMethodGroup
+]
+
 { #category : 'accessing' }
 SycInspectVariableCommand >> description [
 
@@ -31,12 +37,6 @@ SycInspectVariableCommand >> icon [
 SycInspectVariableCommand >> iconName [
 
 	^ #inspect
-]
-
-{ #category : 'testing' }
-SycInspectVariableCommand >> isApplicable [
-
-	^ context isAboutBrowserItemType: ClyVariableMethodGroup
 ]
 
 { #category : 'accessing' }

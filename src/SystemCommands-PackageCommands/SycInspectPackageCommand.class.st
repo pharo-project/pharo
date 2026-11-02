@@ -8,6 +8,12 @@ Class {
 	#package : 'SystemCommands-PackageCommands'
 }
 
+{ #category : 'testing' }
+SycInspectPackageCommand >> canBeExecuted [
+
+	^ context isAboutBrowserItemType: Package
+]
+
 { #category : 'execution' }
 SycInspectPackageCommand >> executeRefactoring [
 
@@ -18,12 +24,6 @@ SycInspectPackageCommand >> executeRefactoring [
 SycInspectPackageCommand >> icon [
 
 	^ self iconNamed: #inspect
-]
-
-{ #category : 'testing' }
-SycInspectPackageCommand >> isApplicable [
-
-	^ context isAboutBrowserItemType: Package
 ]
 
 { #category : 'accessing' }

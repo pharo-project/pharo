@@ -20,18 +20,18 @@ SycDemoteToPackageWithTagCommand >> applyCommandResult [
 	context showPackage: newPackage tag: tag asSymbol
 ]
 
+{ #category : 'testing' }
+SycDemoteToPackageWithTagCommand >> canBeExecuted [
+
+	^ context isAboutBrowserItemType: Package
+]
+
 { #category : 'execution' }
 SycDemoteToPackageWithTagCommand >> executeRefactoring [
 
 	self packages
 		select: [ :package | package name includes: $- ]
 		thenDo: [ :package | package demoteToTagInPackage ]
-]
-
-{ #category : 'testing' }
-SycDemoteToPackageWithTagCommand >> isApplicable [
-
-	^ context isAboutBrowserItemType: Package
 ]
 
 { #category : 'accessing' }

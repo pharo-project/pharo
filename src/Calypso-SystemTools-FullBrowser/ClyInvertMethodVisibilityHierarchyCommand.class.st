@@ -10,17 +10,17 @@ Class {
 	#tag : 'Commands-MethodGroups'
 }
 
+{ #category : 'testing' }
+ClyInvertMethodVisibilityHierarchyCommand >> canBeExecuted [
+
+	^ context isAboutBrowserItemType: ClyInheritedMethodGroup
+]
+
 { #category : 'execution' }
 ClyInvertMethodVisibilityHierarchyCommand >> executeRefactoring [
 
 	ClySubclassHierarchy invertMethodVisibilityHierarchy.
 	self context browser switchToMethodGroups
-]
-
-{ #category : 'testing' }
-ClyInvertMethodVisibilityHierarchyCommand >> isApplicable [
-
-	^ context isAboutBrowserItemType: ClyInheritedMethodGroup
 ]
 
 { #category : 'accessing' }

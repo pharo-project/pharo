@@ -20,16 +20,16 @@ SycPromotePackageFromTagCommand >> applyCommandResult [
 	context showPackage: newPackage
 ]
 
+{ #category : 'testing' }
+SycPromotePackageFromTagCommand >> canBeExecuted [
+
+	^ context isAboutBrowserItemType: ClyTaggedClassGroup
+]
+
 { #category : 'execution' }
 SycPromotePackageFromTagCommand >> executeRefactoring [
 
 	(package tagNamed: classTag) promoteAsPackage
-]
-
-{ #category : 'testing' }
-SycPromotePackageFromTagCommand >> isApplicable [
-
-	^ context isAboutBrowserItemType: ClyTaggedClassGroup
 ]
 
 { #category : 'accessing' }

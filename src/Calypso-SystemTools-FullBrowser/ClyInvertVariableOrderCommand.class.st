@@ -10,17 +10,17 @@ Class {
 	#tag : 'Commands-MethodGroups'
 }
 
+{ #category : 'testing' }
+ClyInvertVariableOrderCommand >> canBeExecuted [
+
+	^ context isAboutBrowserItemType: ClyVariableMethodGroup
+]
+
 { #category : 'execution' }
 ClyInvertVariableOrderCommand >> executeRefactoring [
 
 	ClySubclassHierarchy invertVariableHierarchy.
 	self context browser switchToVariables
-]
-
-{ #category : 'testing' }
-ClyInvertVariableOrderCommand >> isApplicable [
-
-	^ context isAboutBrowserItemType: ClyVariableMethodGroup
 ]
 
 { #category : 'accessing' }

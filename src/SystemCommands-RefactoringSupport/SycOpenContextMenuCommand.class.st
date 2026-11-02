@@ -16,7 +16,7 @@ SycOpenContextMenuCommand >> addPureItemsTo: aPresentedRoot [
 	self cmCommandClass activationStrategy = self activationStrategy ifFalse: [ ^ self ].
 	commands := self cmCommandClass subclasses
 		collect: [ :each | each new context: self context; yourself ]
-		thenSelect: [ :each | each isApplicable ].
+		thenSelect: [ :each | each canBeExecuted ].
 	commands do: [ :each |
 		aPresentedRoot register: (ClyPresentedCommand new
 			decorate: each;
@@ -40,5 +40,5 @@ SycOpenContextMenuCommand >> pureMenuCommands [
 	"The commands of the class of this opener that apply here (the generic drawing of addMenuItemsTo:onContext:)."
 	^ self cmCommandClass allSubclasses
 		collect: [ :each | each new context: self context; yourself ]
-		thenSelect: [ :each | each isApplicable ]
+		thenSelect: [ :each | each canBeExecuted ]
 ]
