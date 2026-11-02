@@ -60,7 +60,7 @@ SycGenerateVariableAccessorsWithLazyInitializationCommand >> prepareFullExecutio
 		           request: 'Default value of variable accessor'
 		           initialAnswer: 'nil'
 		           title: 'Default variable''s value'.
-	value isEmptyOrNil ifTrue: [ CmdCommandAborted signal ]
+	value isEmptyOrNil ifTrue: [ CmCommandAborted signal ]
 ]
 
 { #category : 'factory method' }

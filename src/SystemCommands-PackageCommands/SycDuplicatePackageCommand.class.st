@@ -49,8 +49,8 @@ SycDuplicatePackageCommand >> prepareFullExecutionInContext: aToolContext [
 		request: 'New name of copied package'
 		initialAnswer: package name
 		title: 'Copy package'.
-	newName isEmptyOrNil | (newName = package name) ifTrue: [ ^ CmdCommandAborted signal ].
+	newName isEmptyOrNil | (newName = package name) ifTrue: [ ^ CmCommandAborted signal ].
 
 	dialog := SycCopyClassUsingPatternPresenter openOn: package -> newName.
-	dialog cancelled ifTrue: [ ^ CmdCommandAborted signal ]
+	dialog cancelled ifTrue: [ ^ CmCommandAborted signal ]
 ]
