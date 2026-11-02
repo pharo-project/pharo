@@ -25,8 +25,3 @@ SycRecompilePackageCommand >> name [
 
 	^ 'Recompile'
 ]
-
-{ #category : 'accessing' }
-SycRecompilePackageCommand >> name [
-	^'Recompile'
-]

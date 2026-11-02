@@ -31,14 +31,3 @@ ClyAddWatchDebugPointCommand >> name [
 
 	^ String streamContents: [ :stream | stream << 'Watch "' << self sourceNode displaySourceCode << '"' ]
 ]
-
-{ #category : 'accessing' }
-ClyAddWatchDebugPointCommand >> iconName [
-	^#history
-]
-
-{ #category : 'accessing' }
-ClyAddWatchDebugPointCommand >> name [
-
-	^ String streamContents: [ :stream | stream << 'Watch "' << sourceNode displaySourceCode << '"' ]
-]

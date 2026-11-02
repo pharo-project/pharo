@@ -46,13 +46,3 @@ SycExtractTempCommand >> order [
 
 	^ 1.4
 ]
-
-{ #category : 'accessing' }
-SycExtractTempCommand >> iconName [
-	^ ##smallUpdate
-]
-
-{ #category : 'accessing' }
-SycExtractTempCommand >> name [
-	^ 'Extract temp'
-]

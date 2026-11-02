@@ -31,8 +31,3 @@ ClyFixCritiqueCommand >> executeRefactoring [
 ClyFixCritiqueCommand >> iconName [
 	^#repair
 ]
-
-{ #category : 'initialization' }
-ClyFixCritiqueCommand >> iconName [
-	^#repair
-]

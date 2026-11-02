@@ -36,13 +36,3 @@ ClyNavigateBrowserBackCommand >> iconName [
 ClyNavigateBrowserBackCommand >> name [
 	^'go backward'
 ]
-
-{ #category : 'accessing' }
-ClyNavigateBrowserBackCommand >> iconName [
-	^#back
-]
-
-{ #category : 'accessing' }
-ClyNavigateBrowserBackCommand >> name [
-	^'go backward'
-]

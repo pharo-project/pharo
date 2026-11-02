@@ -61,16 +61,6 @@ ClyCreateTraitCommand >> order [
 	^ 3
 ]
 
-{ #category : 'accessing' }
-ClyCreateTraitCommand >> iconName [
-	^#trait
-]
-
-{ #category : 'accessing' }
-ClyCreateTraitCommand >> name [
-	^'New trait'
-]
-
 { #category : 'execution' }
 ClyCreateTraitCommand >> prepareFullExecution [
 

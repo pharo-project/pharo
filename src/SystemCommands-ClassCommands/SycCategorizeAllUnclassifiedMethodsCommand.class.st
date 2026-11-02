@@ -37,16 +37,6 @@ SycCategorizeAllUnclassifiedMethodsCommand >> order [
 	^ 10000
 ]
 
-{ #category : 'accessing' }
-SycCategorizeAllUnclassifiedMethodsCommand >> iconName [
-	^#browse
-]
-
-{ #category : 'accessing' }
-SycCategorizeAllUnclassifiedMethodsCommand >> name [
-	^'Categorize all uncategorized'
-]
-
 { #category : 'execution' }
 SycCategorizeAllUnclassifiedMethodsCommand >> prepareFullExecution [
 

@@ -35,9 +35,3 @@ ClySwitchToScopedViewCommand >> name [
 
 	^ 'Scoped View'
 ]
-
-{ #category : 'accessing' }
-ClySwitchToScopedViewCommand >> name [
-
-	^ 'Scoped View'
-]

@@ -46,15 +46,3 @@ SycMoveMethodsToTheDefiningClassCommand >> order [
 
 	^ 80
 ]
-
-{ #category : 'accessing' }
-SycMoveMethodsToTheDefiningClassCommand >> iconName [
-
-	^ #smallRedo
-]
-
-{ #category : 'accessing' }
-SycMoveMethodsToTheDefiningClassCommand >> name [
-
-	^ 'Move to defining class'
-]

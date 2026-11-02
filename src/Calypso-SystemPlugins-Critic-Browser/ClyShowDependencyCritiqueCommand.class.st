@@ -30,8 +30,3 @@ ClyShowDependencyCritiqueCommand >> executeRefactoring [
 ClyShowDependencyCritiqueCommand >> iconName [
 	^#smallWindow
 ]
-
-{ #category : 'accessing' }
-ClyShowDependencyCritiqueCommand >> iconName [
-	^#smallWindow
-]

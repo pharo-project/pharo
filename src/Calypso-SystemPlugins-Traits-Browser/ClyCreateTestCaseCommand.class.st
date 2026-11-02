@@ -52,16 +52,6 @@ ClyCreateTestCaseCommand >> order [
 	^ 5
 ]
 
-{ #category : 'accessing' }
-ClyCreateTestCaseCommand >> iconName [
-	^#testGreen
-]
-
-{ #category : 'accessing' }
-ClyCreateTestCaseCommand >> name [
-	^'New test class'
-]
-
 { #category : 'execution' }
 ClyCreateTestCaseCommand >> prepareFullExecution [
 

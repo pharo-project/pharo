@@ -57,16 +57,6 @@ ClyFindMethodInBrowserCommand >> order [
 	^ 1000
 ]
 
-{ #category : 'accessing' }
-ClyFindMethodInBrowserCommand >> iconName [
-	^#smallFind
-]
-
-{ #category : 'accessing' }
-ClyFindMethodInBrowserCommand >> name [
-	^'Find method'
-]
-
 { #category : 'execution' }
 ClyFindMethodInBrowserCommand >> prepareFullExecution [
 

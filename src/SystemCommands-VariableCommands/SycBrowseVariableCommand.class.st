@@ -39,13 +39,3 @@ SycBrowseVariableCommand >> order [
 
 	^ 1000
 ]
-
-{ #category : 'accessing' }
-SycBrowseVariableCommand >> iconName [
-	^#browse
-]
-
-{ #category : 'accessing' }
-SycBrowseVariableCommand >> name [
-	^'Browse'
-]

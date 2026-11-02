@@ -32,8 +32,3 @@ ClySwitchToFullHierarchyCommand >> isAppliedToBrowser [
 ClySwitchToFullHierarchyCommand >> name [
 	^'Hier.'
 ]
-
-{ #category : 'accessing' }
-ClySwitchToFullHierarchyCommand >> name [
-	^'Hier.'
-]

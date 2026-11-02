@@ -77,13 +77,6 @@ ClySwitchQueryScopeCommand >> name [
 ]
 
 { #category : 'accessing' }
-ClySwitchQueryScopeCommand >> name [
-	queryScope ifNil: [ ^'Switch scope' ].
-
-	^'Switch scope to ', queryScope description
-]
-
-{ #category : 'accessing' }
 ClySwitchQueryScopeCommand >> queryScope [
 	^ queryScope
 ]

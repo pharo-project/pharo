@@ -76,16 +76,6 @@ ClyShowMessageImplementorCommand >> order [
 	^ 1000
 ]
 
-{ #category : 'accessing' }
-ClyShowMessageImplementorCommand >> iconName [
-	^ #smallFind
-]
-
-{ #category : 'accessing' }
-ClyShowMessageImplementorCommand >> name [
-	^'Implementors'
-]
-
 { #category : 'execution' }
 ClyShowMessageImplementorCommand >> prepareFullExecution [
 

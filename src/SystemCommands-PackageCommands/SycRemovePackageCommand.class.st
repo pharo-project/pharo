@@ -58,16 +58,6 @@ SycRemovePackageCommand >> order [
 	^ 10000
 ]
 
-{ #category : 'accessing' }
-SycRemovePackageCommand >> iconName [
-	^#remove
-]
-
-{ #category : 'accessing' }
-SycRemovePackageCommand >> name [
-	^'Remove'
-]
-
 { #category : 'execution' }
 SycRemovePackageCommand >> prepareFullExecution [
 

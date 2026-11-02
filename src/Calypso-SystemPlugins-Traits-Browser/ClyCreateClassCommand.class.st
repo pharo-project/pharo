@@ -52,16 +52,6 @@ ClyCreateClassCommand >> order [
 	^ 4
 ]
 
-{ #category : 'accessing' }
-ClyCreateClassCommand >> iconName [
-	^#class
-]
-
-{ #category : 'accessing' }
-ClyCreateClassCommand >> name [
-	^'New class'
-]
-
 { #category : 'execution' }
 ClyCreateClassCommand >> prepareFullExecution [
 

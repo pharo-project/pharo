@@ -30,8 +30,3 @@ ClyBanCritiqueRuleCommand >> executeRefactoring [
 ClyBanCritiqueRuleCommand >> iconName [
 	^#smallCancel
 ]
-
-{ #category : 'initialization' }
-ClyBanCritiqueRuleCommand >> iconName [
-	^#smallCancel
-]

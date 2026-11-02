@@ -55,12 +55,6 @@ ClyMoveMethodGroupsToPackageCommand >> order [
 ]
 
 { #category : 'accessing' }
-ClyMoveMethodGroupsToPackageCommand >> name [
-
-	^'Convert to extension'
-]
-
-{ #category : 'accessing' }
 ClyMoveMethodGroupsToPackageCommand >> package [
 	^ package
 ]

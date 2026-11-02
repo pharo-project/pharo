@@ -50,14 +50,3 @@ SycInspectVariableCommand >> order [
 
 	^ 1000
 ]
-
-{ #category : 'accessing' }
-SycInspectVariableCommand >> iconName [
-
-	^ #inspect
-]
-
-{ #category : 'accessing' }
-SycInspectVariableCommand >> name [
-	^'Inspect variable'
-]

@@ -46,16 +46,6 @@ SycRenamePackageCommand >> order [
 	^ 1
 ]
 
-{ #category : 'accessing' }
-SycRenamePackageCommand >> iconName [
-	^ #edit
-]
-
-{ #category : 'accessing' }
-SycRenamePackageCommand >> name [
-	^'Rename'
-]
-
 { #category : 'execution' }
 SycRenamePackageCommand >> prepareFullExecution [
 

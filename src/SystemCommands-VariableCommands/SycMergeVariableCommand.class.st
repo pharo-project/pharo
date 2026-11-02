@@ -66,16 +66,6 @@ SycMergeVariableCommand >> name [
 ]
 
 { #category : 'accessing' }
-SycMergeVariableCommand >> iconName [
-	^ #merge
-]
-
-{ #category : 'accessing' }
-SycMergeVariableCommand >> name [
-	^'Merge into another'
-]
-
-{ #category : 'accessing' }
 SycMergeVariableCommand >> newName [
 	^ newName
 ]

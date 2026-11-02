@@ -39,14 +39,3 @@ ClyAddBreakPointCommand >> name [
 
 	^ String streamContents: [ :stream | stream << 'Break on "' << self sourceNode displaySourceCode << '"' ]
 ]
-
-{ #category : 'accessing' }
-ClyAddBreakPointCommand >> iconName [
-	^#smallDebug 
-]
-
-{ #category : 'accessing' }
-ClyAddBreakPointCommand >> name [
-
-	^ String streamContents: [ :stream | stream << 'Break on "' << sourceNode displaySourceCode << '"' ]
-]
