@@ -9,10 +9,7 @@ package:		<Package>
 "
 Class {
 	#name : 'SycInspectPackageCommand',
-	#superclass : 'ClyCommand',
-	#instVars : [
-		'package'
-	],
+	#superclass : 'SycPackageExtraCmCommand',
 	#category : 'SystemCommands-PackageCommands',
 	#package : 'SystemCommands-PackageCommands'
 }
@@ -22,15 +19,6 @@ SycInspectPackageCommand class >> canBeExecutedInContext: aToolContext [
 	^aToolContext isPackageSelected
 ]
 
-{ #category : 'activation' }
-SycInspectPackageCommand class >> fullBrowserMenuActivation [
-
-	<classAnnotation>
-	^ CmdContextMenuActivation
-		  byItemOf: CmdExtraMenuGroup
-		  for: Package asCalypsoItemContext
-]
-
 { #category : 'accessing' }
 SycInspectPackageCommand >> description [
 
@@ -38,25 +26,16 @@ SycInspectPackageCommand >> description [
 ]
 
 { #category : 'execution' }
-SycInspectPackageCommand >> execute [
-
-	(Smalltalk tools toolNamed: #inspector) openOn: package
+SycInspectPackageCommand >> executeRefactoring [
+	(Smalltalk tools toolNamed: #inspector) openOn: context lastSelectedPackage
 ]
 
 { #category : 'accessing' }
-SycInspectPackageCommand >> iconName [
-	^ #inspect
+SycInspectPackageCommand >> icon [
+	^ self iconNamed: #inspect
 ]
 
 { #category : 'accessing' }
 SycInspectPackageCommand >> name [
 	^'Inspect'
-]
-
-{ #category : 'execution' }
-SycInspectPackageCommand >> prepareFullExecutionInContext: aToolContext [
-
-	super prepareFullExecutionInContext: aToolContext.
-
-	package := aToolContext lastSelectedPackage
 ]

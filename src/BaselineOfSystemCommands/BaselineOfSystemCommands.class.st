@@ -24,7 +24,7 @@ BaselineOfSystemCommands >> baseline: spec [
 				package: #'SystemCommands-MethodCommands' with: [ spec requires: #( 'Commander' #'SystemCommands-RefactoringSupport' #'Calypso-Commands' ) ];
 				package: #'SystemCommands-MethodCommands-Tests' with: [ spec requires: #( #'SystemCommands-MethodCommands' ) ];
 				package: #'SystemCommands-ClassCommands-Tests' with: [ spec requires: #( #'SystemCommands-ClassCommands' ) ];
-				package: #'SystemCommands-PackageCommands' with: [ spec requires: #( 'Commander' #'Calypso-Commands' ) ];
+				package: #'SystemCommands-PackageCommands' with: [ spec requires: #( 'Commander' #'Calypso-Commands' #'SystemCommands-RefactoringSupport' ) ];
 				package: #'SystemCommands-PackageCommands-Tests' with: [ spec requires: #( #'SystemCommands-PackageCommands' ) ];
 				package: #'SystemCommands-SourceCodeCommands' with: [ spec requires: #( 'Commander' #'SystemCommands-RefactoringSupport' #'Calypso-Commands' ) ];
 				package: #'SystemCommands-VariableCommands' with: [ spec requires: #( 'Commander' #'SystemCommands-RefactoringSupport' #'Calypso-Commands' ) ];

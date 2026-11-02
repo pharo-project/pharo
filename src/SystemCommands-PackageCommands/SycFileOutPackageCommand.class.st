@@ -3,19 +3,10 @@ Requests to save a textual version of the selected package to a new file in chun
 "
 Class {
 	#name : 'SycFileOutPackageCommand',
-	#superclass : 'SycPackageCommand',
+	#superclass : 'SycPackageExtraCmCommand',
 	#category : 'SystemCommands-PackageCommands',
 	#package : 'SystemCommands-PackageCommands'
 }
-
-{ #category : 'activation' }
-SycFileOutPackageCommand class >> fullBrowserMenuActivation [
-
-	<classAnnotation>
-	^ CmdContextMenuActivation
-		  byItemOf: CmdExtraMenuGroup
-		  for: Package asCalypsoItemContext 
-]
 
 { #category : 'accessing' }
 SycFileOutPackageCommand >> defaultFileName [
@@ -25,17 +16,14 @@ SycFileOutPackageCommand >> defaultFileName [
 ]
 
 { #category : 'execution' }
-SycFileOutPackageCommand >> execute [
-	^ Fileouter
-		fileoutNamed: self defaultFileName
-		configureWith: [ :fileouter |
-			packages do: [ :each | fileouter addFullPackage: each ] ]
+SycFileOutPackageCommand >> executeRefactoring [
+
+	^ Fileouter fileoutNamed: self defaultFileName configureWith: [ :fileouter | packages do: [ :package | fileouter addFullPackage: package ] ]
 ]
 
 { #category : 'accessing' }
-SycFileOutPackageCommand >> iconName [
-
-	^ #save
+SycFileOutPackageCommand >> icon [
+	^ self iconNamed: #save
 ]
 
 { #category : 'accessing' }

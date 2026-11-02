@@ -3,10 +3,15 @@ I am a command to demote given packages into the package with tag
 "
 Class {
 	#name : 'SycDemoteToPackageWithTagCommand',
-	#superclass : 'SycPackageCommand',
+	#superclass : 'SycPackageExtraCmCommand',
 	#category : 'SystemCommands-PackageCommands',
 	#package : 'SystemCommands-PackageCommands'
 }
+
+{ #category : 'execution' }
+SycDemoteToPackageWithTagCommand >> applyCommandResult [
+	^ self applyResultInContext: self context
+]
 
 { #category : 'execution' }
 SycDemoteToPackageWithTagCommand >> applyResultInContext: aBrowserContext [
@@ -20,8 +25,7 @@ SycDemoteToPackageWithTagCommand >> applyResultInContext: aBrowserContext [
 ]
 
 { #category : 'execution' }
-SycDemoteToPackageWithTagCommand >> execute [
-
+SycDemoteToPackageWithTagCommand >> executeRefactoring [
 	packages
 		select: [ :package | package name includes: $- ]
 		thenDo: [ :package | package demoteToTagInPackage ]

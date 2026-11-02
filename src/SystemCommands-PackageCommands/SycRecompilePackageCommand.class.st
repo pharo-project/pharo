@@ -1,12 +1,12 @@
 Class {
 	#name : 'SycRecompilePackageCommand',
-	#superclass : 'SycPackageCommand',
+	#superclass : 'SycPackageExtraCmCommand',
 	#category : 'SystemCommands-PackageCommands',
 	#package : 'SystemCommands-PackageCommands'
 }
 
 { #category : 'execution' }
-SycRecompilePackageCommand >> execute [
+SycRecompilePackageCommand >> executeRefactoring [
 	packages
 		do: [ :eachPackage |
 			eachPackage methods do: [ :eachMethod | eachMethod recompile ] ]
