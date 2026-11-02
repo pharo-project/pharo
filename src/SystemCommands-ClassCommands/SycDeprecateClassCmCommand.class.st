@@ -6,7 +6,7 @@ Class {
 }
 
 { #category : 'testing' }
-SycDeprecateClassCmCommand >> isApplicable [
+SycDeprecateClassCmCommand >> canBeExecuted [
 
 	self flag: 'Disabled for Pharo14, as it is not working'.
 
