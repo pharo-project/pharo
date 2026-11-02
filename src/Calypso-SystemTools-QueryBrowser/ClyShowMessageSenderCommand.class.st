@@ -94,6 +94,16 @@ ClyShowMessageSenderCommand >> order [
 	^ 1000
 ]
 
+{ #category : 'accessing' }
+ClyShowMessageSenderCommand >> iconName [
+	^ #smallFind
+]
+
+{ #category : 'accessing' }
+ClyShowMessageSenderCommand >> name [
+	^'Senders'
+]
+
 { #category : 'execution' }
 ClyShowMessageSenderCommand >> prepareFullExecution [
 

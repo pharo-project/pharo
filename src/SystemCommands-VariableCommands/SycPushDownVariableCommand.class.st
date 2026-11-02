@@ -40,6 +40,16 @@ SycPushDownVariableCommand >> order [
 	^ 1.4
 ]
 
+{ #category : 'accessing' }
+SycPushDownVariableCommand >> iconName [
+	^ #down
+]
+
+{ #category : 'accessing' }
+SycPushDownVariableCommand >> name [
+	^'Push down'
+]
+
 { #category : 'execution' }
 SycPushDownVariableCommand >> prepareFullExecution [
 

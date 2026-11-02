@@ -64,6 +64,11 @@ ClyRenamePackageTagCommand >> name [
 ]
 
 { #category : 'accessing' }
+ClyRenamePackageTagCommand >> name [
+	^'Rename'
+]
+
+{ #category : 'accessing' }
 ClyRenamePackageTagCommand >> newName [
 	^ newName
 ]

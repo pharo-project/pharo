@@ -39,6 +39,16 @@ SycInlineIntoLocalSendersMessageCommand >> order [
 	^ 35
 ]
 
+{ #category : 'accessing' }
+SycInlineIntoLocalSendersMessageCommand >> iconName [
+	^#smallRightFlush
+]
+
+{ #category : 'accessing' }
+SycInlineIntoLocalSendersMessageCommand >> name [
+	^'Inline senders'
+]
+
 { #category : 'execution' }
 SycInlineIntoLocalSendersMessageCommand >> resultMessageSelector [
 

@@ -41,3 +41,8 @@ ClySwitchToProjectsCommand >> isAppliedToBrowser [
 ClySwitchToProjectsCommand >> name [
 	^'Projects'
 ]
+
+{ #category : 'accessing' }
+ClySwitchToProjectsCommand >> name [
+	^'Projects'
+]

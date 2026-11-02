@@ -40,3 +40,13 @@ SycConvertTempToInstVarCommand >> order [
 
 	^ 1.4
 ]
+
+{ #category : 'execution' }
+SycConvertTempToInstVarCommand >> iconName [
+	^ #smallRedo
+]
+
+{ #category : 'execution' }
+SycConvertTempToInstVarCommand >> name [
+	^'(R) Convert to Instance Var'
+]

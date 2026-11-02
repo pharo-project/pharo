@@ -25,3 +25,8 @@ ClySwitchToFlatQueryResultCommand >> isAppliedToBrowser [
 ClySwitchToFlatQueryResultCommand >> name [
 	^'Flat'
 ]
+
+{ #category : 'accessing' }
+ClySwitchToFlatQueryResultCommand >> name [
+	^'Flat'
+]

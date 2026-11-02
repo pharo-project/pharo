@@ -36,3 +36,13 @@ ClyNavigateBrowserForwardCommand >> iconName [
 ClyNavigateBrowserForwardCommand >> name [
 	^'go forward'
 ]
+
+{ #category : 'accessing' }
+ClyNavigateBrowserForwardCommand >> iconName [
+	^#forward
+]
+
+{ #category : 'accessing' }
+ClyNavigateBrowserForwardCommand >> name [
+	^'go forward'
+]

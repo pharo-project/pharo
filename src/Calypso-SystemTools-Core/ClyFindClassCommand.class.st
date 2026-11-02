@@ -48,6 +48,16 @@ ClyFindClassCommand >> order [
 	^ 1000
 ]
 
+{ #category : 'accessing' }
+ClyFindClassCommand >> iconName [
+	^#smallFind
+]
+
+{ #category : 'accessing' }
+ClyFindClassCommand >> name [
+	^'Find class'
+]
+
 { #category : 'execution' }
 ClyFindClassCommand >> prepareFullExecution [
 

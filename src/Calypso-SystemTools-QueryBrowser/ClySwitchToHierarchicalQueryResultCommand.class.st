@@ -25,3 +25,8 @@ ClySwitchToHierarchicalQueryResultCommand >> isAppliedToBrowser [
 ClySwitchToHierarchicalQueryResultCommand >> name [
 	^'Hier.'
 ]
+
+{ #category : 'accessing' }
+ClySwitchToHierarchicalQueryResultCommand >> name [
+	^'Hier.'
+]

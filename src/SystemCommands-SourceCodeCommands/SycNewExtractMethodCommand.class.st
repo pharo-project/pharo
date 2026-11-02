@@ -65,6 +65,17 @@ SycNewExtractMethodCommand >> order [
 	^ 1.4
 ]
 
+{ #category : 'accessing' }
+SycNewExtractMethodCommand >> iconName [
+	^ #restart
+]
+
+{ #category : 'accessing' }
+SycNewExtractMethodCommand >> name [
+
+	^ '(R) Extract method (no occurrences)'
+]
+
 { #category : 'execution' }
 SycNewExtractMethodCommand >> prepareFullExecution [
 

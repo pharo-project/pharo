@@ -38,6 +38,11 @@ SycMoveMethodsToPackageCommand >> icon [
 	^ self iconNamed: #smallRedo
 ]
 
+{ #category : 'accessing' }
+SycMoveMethodsToPackageCommand >> iconName [
+	^ #smallRedo
+]
+
 { #category : 'execution' }
 SycMoveMethodsToPackageCommand >> moveMethod: aMethod toPackage: aPackage [
 

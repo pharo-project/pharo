@@ -50,6 +50,16 @@ ClyRemoveMethodGroupCommand >> order [
 	^ 100000
 ]
 
+{ #category : 'accessing' }
+ClyRemoveMethodGroupCommand >> iconName [
+	^#remove
+]
+
+{ #category : 'accessing' }
+ClyRemoveMethodGroupCommand >> name [
+	^'Remove'
+]
+
 { #category : 'execution' }
 ClyRemoveMethodGroupCommand >> prepareFullExecution [
 

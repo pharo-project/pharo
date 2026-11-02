@@ -33,6 +33,11 @@ ClySwitchToScopedModeCommand >> order [
 ]
 
 { #category : 'accessing' }
+ClySwitchToScopedModeCommand >> name [
+	^'Set up scope'
+]
+
+{ #category : 'accessing' }
 ClySwitchToScopedModeCommand >> packages [
 	^ packages
 ]

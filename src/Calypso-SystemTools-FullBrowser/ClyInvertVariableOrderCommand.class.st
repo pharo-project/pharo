@@ -34,3 +34,8 @@ ClyInvertVariableOrderCommand >> order [
 
 	^ 1000
 ]
+
+{ #category : 'accessing' }
+ClyInvertVariableOrderCommand >> name [
+	^'Invert hierarchy'
+]

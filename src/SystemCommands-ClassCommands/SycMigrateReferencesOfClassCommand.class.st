@@ -40,6 +40,11 @@ SycMigrateReferencesOfClassCommand >> isAvailableInMenuOf: aToolContext [
 		or: [ aToolContext isSourceCodeContext ]
 ]
 
+{ #category : 'accessing' }
+SycMigrateReferencesOfClassCommand >> iconName [
+	^ #source
+]
+
 { #category : 'testing' }
 SycMigrateReferencesOfClassCommand >> isComplexRefactoring [
 	^ true

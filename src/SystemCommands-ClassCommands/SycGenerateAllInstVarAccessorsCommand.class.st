@@ -39,6 +39,11 @@ SycGenerateAllInstVarAccessorsCommand >> isAvailableInMenuOf: aToolContext [
 	^ aToolContext isFullBrowserClassContext
 ]
 
+{ #category : 'accessing' }
+SycGenerateAllInstVarAccessorsCommand >> iconName [
+	^ #smallAdd
+]
+
 { #category : 'testing' }
 SycGenerateAllInstVarAccessorsCommand >> isComplexRefactoring [
 	^true

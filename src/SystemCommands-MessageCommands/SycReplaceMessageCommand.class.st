@@ -42,6 +42,18 @@ SycReplaceMessageCommand >> order [
 	^ 1100
 ]
 
+{ #category : 'accessing' }
+SycReplaceMessageCommand >> iconName [
+	^#edit
+]
+
+{ #category : 'accessing' }
+SycReplaceMessageCommand >> name [
+	"Make sure that the user knows that this is a transformation by adding (T) in front of the menu item name."
+
+	^ self refactoringClass menuItemString
+]
+
 { #category : 'execution' }
 SycReplaceMessageCommand >> prepareFullExecution [
 

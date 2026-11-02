@@ -36,3 +36,9 @@ ClySwitchToPackagesCommand >> name [
 
 	^ 'All Packages'
 ]
+
+{ #category : 'accessing' }
+ClySwitchToPackagesCommand >> name [
+
+	^ 'All Packages'
+]

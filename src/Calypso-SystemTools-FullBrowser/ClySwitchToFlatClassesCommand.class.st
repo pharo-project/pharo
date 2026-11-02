@@ -25,3 +25,8 @@ ClySwitchToFlatClassesCommand >> isAppliedToBrowser [
 ClySwitchToFlatClassesCommand >> name [
 	^'Flat'
 ]
+
+{ #category : 'accessing' }
+ClySwitchToFlatClassesCommand >> name [
+	^'Flat'
+]

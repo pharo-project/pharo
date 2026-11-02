@@ -39,3 +39,15 @@ SycFileOutPackageCommand >> name [
 
 	^ 'File out'
 ]
+
+{ #category : 'accessing' }
+SycFileOutPackageCommand >> iconName [
+
+	^ #save
+]
+
+{ #category : 'accessing' }
+SycFileOutPackageCommand >> name [
+
+	^ 'File out'
+]

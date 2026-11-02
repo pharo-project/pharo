@@ -10,7 +10,6 @@ Class {
 	#name : 'SHPreferences',
 	#superclass : 'Object',
 	#classInstVars : [
-		'enabled',
 		'activeStyleTable',
 		'syntaxHighlightingEnabled'
 	],

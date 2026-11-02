@@ -50,6 +50,11 @@ ClyBrowseCoveringTestCaseCommand >> order [
 	^ 1000
 ]
 
+{ #category : 'accessing' }
+ClyBrowseCoveringTestCaseCommand >> name [
+	^ 'Browse test class'
+]
+
 { #category : 'execution' }
 ClyBrowseCoveringTestCaseCommand >> prepareFullExecution [
 

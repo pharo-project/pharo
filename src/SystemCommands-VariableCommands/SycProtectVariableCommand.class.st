@@ -44,6 +44,16 @@ SycProtectVariableCommand >> order [
 	^ 1.2
 ]
 
+{ #category : 'accessing' }
+SycProtectVariableCommand >> iconName [
+	^ #group
+]
+
+{ #category : 'accessing' }
+SycProtectVariableCommand >> name [
+	^'Protect'
+]
+
 { #category : 'execution' }
 SycProtectVariableCommand >> prepareFullExecution [
 

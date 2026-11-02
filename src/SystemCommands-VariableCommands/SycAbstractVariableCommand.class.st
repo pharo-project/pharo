@@ -47,6 +47,17 @@ SycAbstractVariableCommand >> order [
 	^ 1000
 ]
 
+{ #category : 'accessing' }
+SycAbstractVariableCommand >> iconName [
+	^ #smallAdd
+]
+
+{ #category : 'accessing' }
+SycAbstractVariableCommand >> name [
+
+	^'Abstract accessors'
+]
+
 { #category : 'execution' }
 SycAbstractVariableCommand >> prepareFullExecution [
 

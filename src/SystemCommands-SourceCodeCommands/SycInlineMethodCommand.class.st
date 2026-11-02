@@ -52,3 +52,13 @@ SycInlineMethodCommand >> order [
 
 	^ 1.4
 ]
+
+{ #category : 'accessing' }
+SycInlineMethodCommand >> iconName [
+	^ #smallRightFlush
+]
+
+{ #category : 'accessing' }
+SycInlineMethodCommand >> name [
+	^ 'Inline method'
+]

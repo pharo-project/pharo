@@ -30,3 +30,8 @@ ClyOpenDependencyBrowserCommand >> order [
 
 	^ 1000
 ]
+
+{ #category : 'accessing' }
+ClyOpenDependencyBrowserCommand >> name [
+	^'Browse dependencies'
+]
