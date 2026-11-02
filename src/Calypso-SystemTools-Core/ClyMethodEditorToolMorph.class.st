@@ -204,7 +204,7 @@ ClyMethodEditorToolMorph >> protocolAndPackageEditingMethod: aMethod [
 
 { #category : 'accessing' }
 ClyMethodEditorToolMorph >> protocolAndPackageEditor [
-	^(statusBar findDeeplyA: ClyProtocolEditorMorph) ifNil: [ CmdCommandAborted signal ]
+	^(statusBar findDeeplyA: ClyProtocolEditorMorph) ifNil: [ CmCommandAborted signal ]
 ]
 
 { #category : 'rubric interaction model' }

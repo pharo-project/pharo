@@ -77,5 +77,5 @@ ClyRemoveClassGroupCommand >> prepareFullExecutionInContext: aToolContext [
 
 	classGroup classesSize > 0 ifTrue: [
 		confirmed := self confirm: 'Are you sure you want to remove all classes in group ', classGroup name, '?'.
-		confirmed ifFalse: [CmdCommandAborted signal]]
+		confirmed ifFalse: [CmCommandAborted signal]]
 ]

@@ -25,7 +25,7 @@ SycRemoveMessageArgumentCommand class >> canBeExecutedInContext: aToolContext [
 
 { #category : 'private' }
 SycRemoveMessageArgumentCommand >> abort [
-	CmdCommandAborted signal
+	CmCommandAborted signal
 ]
 
 { #category : 'execution' }

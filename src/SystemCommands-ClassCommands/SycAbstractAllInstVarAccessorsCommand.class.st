@@ -66,6 +66,6 @@ SycAbstractAllInstVarAccessorsCommand >> selectVariables [
 				                     withItems: vars
 				                     selecting: vars
 				                     acceptBlock: [ :items | selectedVars := items ].
-			           dialog cancelled ifTrue: [ CmdCommandAborted signal ].
+			           dialog cancelled ifTrue: [ CmCommandAborted signal ].
 			           aClass -> selectedVars ]
 ]

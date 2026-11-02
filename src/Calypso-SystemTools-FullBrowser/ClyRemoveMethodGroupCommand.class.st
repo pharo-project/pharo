@@ -62,5 +62,5 @@ ClyRemoveMethodGroupCommand >> prepareFullExecutionInContext: aToolContext [
 	(methodGroups anySatisfy: [ :each | each methodsSize > 0 ]) ifFalse: [ ^ self ].
 	
 	confirmed := self confirm: 'Are you sure you want to remove methods from ' , tagsString , '?'.
-	confirmed ifFalse: [ CmdCommandAborted signal ]
+	confirmed ifFalse: [ CmCommandAborted signal ]
 ]

@@ -104,5 +104,5 @@ ClyRenameProtocolCommand >> prepareFullExecutionInContext: aToolContext [
 		           presenter
 			           protocolName: methodGroup name;
 			           concernedClass: aToolContext lastSelectedClass ].
-	newName = methodGroup name ifTrue: [ CmdCommandAborted signal ]
+	newName = methodGroup name ifTrue: [ CmCommandAborted signal ]
 ]

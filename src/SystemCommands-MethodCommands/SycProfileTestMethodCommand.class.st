@@ -68,7 +68,7 @@ SycProfileTestMethodCommand >> setUpModelFromContext: aContext [
 	
 	browser := aContext browser.
 	browser classSelection isMultipleSelected
-		ifTrue: [ ^ CmdCommandAborted signal ].
+		ifTrue: [ ^ CmCommandAborted signal ].
 
 
 ]
