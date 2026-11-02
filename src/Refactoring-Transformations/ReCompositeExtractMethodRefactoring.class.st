@@ -323,8 +323,10 @@ ReCompositeExtractMethodRefactoring >> generateNewMethodWith: aMethodName [
 ReCompositeExtractMethodRefactoring >> getSourceFromInterval [
 	| source |
 	source := class sourceCodeFor: selector.
+	source ifNil: [ self refactoringError: 'Invalid source' ].
 	((interval first between: 1 and: source size)
-		and: [interval last between: 1 and: source size])
+		and: [ (interval last between: 1 and: source size)
+		and: [ interval first <= interval last ] ])
 			ifFalse: [self refactoringError: 'Invalid interval'].
 	^source copyFrom: interval first to: interval last
 ]
