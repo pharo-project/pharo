@@ -1,7 +1,7 @@
 Class {
 	#name : 'ReClassToBeRenamed',
 	#superclass : 'Object',
-	#instVars : [
+	#classVars : [
 		'SharedVar'
 	],
 	#category : 'Refactoring-DataForTesting-ForDuplication',
@@ -9,8 +9,15 @@ Class {
 	#tag : 'ForDuplication'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'actions' }
 ReClassToBeRenamed >> checkBehaviorPrecondition [
 
 	ReClassToBeRenamedChild new 
+]
+
+{ #category : 'initialization' }
+ReClassToBeRenamed >> initialize [
+
+	<ignoreUnusedClassVariables: #( #SharedVar )>
+	super initialize
 ]

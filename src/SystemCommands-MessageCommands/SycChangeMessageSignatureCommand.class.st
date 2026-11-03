@@ -16,7 +16,7 @@ Internal Representation and Key Implementation Points.
 "
 Class {
 	#name : 'SycChangeMessageSignatureCommand',
-	#superclass : 'CmdCommand',
+	#superclass : 'ClyCommand',
 	#traits : 'TRefactoringCommandSupport',
 	#classTraits : 'TRefactoringCommandSupport classTrait',
 	#instVars : [
@@ -124,11 +124,11 @@ SycChangeMessageSignatureCommand >> requestNewMessageIn: aToolContext [
 		canAddArgs: self canAddArgs;
 		canEditName: self canEditName;
 		openModal.
-	dialog cancelled ifTrue: [ CmdCommandAborted signal ].
+	dialog cancelled ifTrue: [ CmCommandAborted signal ].
 
 	((originalMessage selector = methodName selector) 
 		and: [ originalMessage argumentNames = methodName arguments ]) 
-		ifTrue: [ CmdCommandAborted signal ].
+		ifTrue: [ CmCommandAborted signal ].
 	
 	^ methodName
 ]

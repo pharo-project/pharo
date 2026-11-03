@@ -11,7 +11,7 @@ Internal Representation and Key Implementation Points.
 "
 Class {
 	#name : 'ClyRenamePackageTagCommand',
-	#superclass : 'CmdCommand',
+	#superclass : 'ClyCommand',
 	#instVars : [
 		'package',
 		'newName',
@@ -48,11 +48,6 @@ ClyRenamePackageTagCommand >> applyResultInContext: aToolContext [
 ]
 
 { #category : 'accessing' }
-ClyRenamePackageTagCommand >> defaultMenuItemName [
-	^'Rename'
-]
-
-{ #category : 'accessing' }
 ClyRenamePackageTagCommand >> description [ 
 
 ^'Renames class tag of the package'
@@ -62,6 +57,11 @@ ClyRenamePackageTagCommand >> description [
 ClyRenamePackageTagCommand >> execute [
 
 	packageTag renameTagTo: newName
+]
+
+{ #category : 'accessing' }
+ClyRenamePackageTagCommand >> name [
+	^'Rename'
 ]
 
 { #category : 'accessing' }
@@ -94,5 +94,5 @@ ClyRenamePackageTagCommand >> prepareFullExecutionInContext: aToolContext [
 		request: 'New name of the class tag'
 		initialAnswer: packageTag name
 		title: 'Rename a class tag'.
-	newName isEmptyOrNil | (newName = packageTag name) ifTrue: [ CmdCommandAborted signal]
+	newName isEmptyOrNil | (newName = packageTag name) ifTrue: [ CmCommandAborted signal]
 ]

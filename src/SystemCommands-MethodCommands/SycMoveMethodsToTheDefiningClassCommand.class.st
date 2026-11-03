@@ -15,22 +15,22 @@ SycMoveMethodsToTheDefiningClassCommand class >> canBeExecutedInContext: aToolCo
 	^aToolContext isExtensionMethodSelected
 ]
 
-{ #category : 'accessing' }
-SycMoveMethodsToTheDefiningClassCommand >> defaultMenuIconName [
-
-	^ #smallRedo
-]
-
-{ #category : 'accessing' }
-SycMoveMethodsToTheDefiningClassCommand >> defaultMenuItemName [
-
-	^ 'Move to defining class'
-]
-
 { #category : 'execution' }
 SycMoveMethodsToTheDefiningClassCommand >> execute [
 
 	methods
 		select: [ :method | method isExtension ]
 		thenDo: [ :method | self classifyMethod: method ]
+]
+
+{ #category : 'accessing' }
+SycMoveMethodsToTheDefiningClassCommand >> iconName [
+
+	^ #smallRedo
+]
+
+{ #category : 'accessing' }
+SycMoveMethodsToTheDefiningClassCommand >> name [
+
+	^ 'Move to defining class'
 ]

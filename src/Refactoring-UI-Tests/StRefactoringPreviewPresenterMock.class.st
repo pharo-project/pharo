@@ -3,7 +3,6 @@ Class {
 	#superclass : 'StRenameTempOrArgPreviewPresenter',
 	#instVars : [
 		'lastInstance',
-		'openModal',
 		'opened',
 		'performed',
 		'updated',

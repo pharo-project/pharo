@@ -8,23 +8,13 @@ Internal Representation and Key Implementation Points.
 "
 Class {
 	#name : 'SycFormatSourceCodeCommand',
-	#superclass : 'CmdCommand',
+	#superclass : 'ClyCommand',
 	#instVars : [
 		'sourceCodeEditor'
 	],
 	#category : 'SystemCommands-SourceCodeCommands',
 	#package : 'SystemCommands-SourceCodeCommands'
 }
-
-{ #category : 'accessing' }
-SycFormatSourceCodeCommand >> defaultMenuIconName [
-	^ #smallJustified
-]
-
-{ #category : 'accessing' }
-SycFormatSourceCodeCommand >> defaultMenuItemName [
-	^ 'Format code'
-]
 
 { #category : 'accessing' }
 SycFormatSourceCodeCommand >> description [
@@ -36,6 +26,16 @@ SycFormatSourceCodeCommand >> description [
 SycFormatSourceCodeCommand >> execute [
 
 	sourceCodeEditor formatSourceCode
+]
+
+{ #category : 'accessing' }
+SycFormatSourceCodeCommand >> iconName [
+	^ #smallJustified
+]
+
+{ #category : 'accessing' }
+SycFormatSourceCodeCommand >> name [
+	^ 'Format code'
 ]
 
 { #category : 'execution' }

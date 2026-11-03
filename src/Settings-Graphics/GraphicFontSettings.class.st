@@ -14,7 +14,7 @@ Class {
 { #category : 'fonts' }
 GraphicFontSettings class >> defaulFontSize [
 
-	^ #medium
+	^ #small
 ]
 
 { #category : 'fonts' }
@@ -40,8 +40,7 @@ GraphicFontSettings class >> font: aFont [
 { #category : 'fonts' }
 GraphicFontSettings class >> fontSize [
 
-	^ FontSize
-		ifNil: [ FontSize := self defaulFontSize ]
+	^ FontSize ifNil: [ self defaulFontSize ]
 ]
 
 { #category : 'fonts' }

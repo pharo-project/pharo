@@ -17,13 +17,13 @@ ClyInvertMethodVisibilityHierarchyCommand class >> browserContextMenuActivation 
 	^CmdContextMenuActivation byItemOf: CmdExtraMenuGroup for: ClyInheritedMethodGroup asCalypsoItemContext
 ]
 
-{ #category : 'accessing' }
-ClyInvertMethodVisibilityHierarchyCommand >> defaultMenuItemName [
-	^'Invert hierarchy'
-]
-
 { #category : 'execution' }
 ClyInvertMethodVisibilityHierarchyCommand >> execute [
 	ClySubclassHierarchy invertMethodVisibilityHierarchy.
 	browser switchToMethodGroups
+]
+
+{ #category : 'accessing' }
+ClyInvertMethodVisibilityHierarchyCommand >> name [
+	^'Invert hierarchy'
 ]

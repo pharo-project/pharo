@@ -20,12 +20,12 @@ SycOpenMethodMenuCommand >> cmCommandClass [
 ]
 
 { #category : 'accessing' }
-SycOpenMethodMenuCommand >> defaultMenuItemName [
-	^'Refactorings'
-]
-
-{ #category : 'accessing' }
 SycOpenMethodMenuCommand >> description [
 
 	^ 'Opens special method menu.'
+]
+
+{ #category : 'accessing' }
+SycOpenMethodMenuCommand >> name [
+	^'Refactorings'
 ]

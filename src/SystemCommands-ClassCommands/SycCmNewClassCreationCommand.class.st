@@ -31,7 +31,7 @@ SycCmNewClassCreationCommand >> applyCommandResult [
 ]
 
 { #category : 'testing' }
-SycCmNewClassCreationCommand >> isApplicable [
+SycCmNewClassCreationCommand >> canBeExecuted [
 
 	^ false
 ]

@@ -16,15 +16,15 @@ ClySwitchToScopedModeCommand class >> fullBrowserMenuActivation [
 	^CmdContextMenuActivation byRootGroupItemFor: ClyFullBrowserPackageContext
 ]
 
-{ #category : 'accessing' }
-ClySwitchToScopedModeCommand >> defaultMenuItemName [
-	^'Set up scope'
-]
-
 { #category : 'execution' }
 ClySwitchToScopedModeCommand >> execute [
 
 	browser switchToPackageScopeOf: packages
+]
+
+{ #category : 'accessing' }
+ClySwitchToScopedModeCommand >> name [
+	^'Set up scope'
 ]
 
 { #category : 'accessing' }

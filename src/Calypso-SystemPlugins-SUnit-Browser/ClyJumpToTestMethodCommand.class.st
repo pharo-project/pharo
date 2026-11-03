@@ -56,11 +56,6 @@ ClyJumpToTestMethodCommand class >> methodShortcutActivation [
 ]
 
 { #category : 'accessing' }
-ClyJumpToTestMethodCommand >> defaultMenuItemName [
-	^ 'Jump to test method'
-]
-
-{ #category : 'accessing' }
 ClyJumpToTestMethodCommand >> description [
 
 ^ 'Jump on the test method corresponding to the method. If the method does not exists I will create it in the corresponding class.'
@@ -95,6 +90,11 @@ ClyJumpToTestMethodCommand >> generateTestMethodNamed: aSymbol in: aClass [
 	self flag: #toImplement.
 	self assert: false' format: {aSymbol}.
 	aClass compile: body classified: 'tests'
+]
+
+{ #category : 'accessing' }
+ClyJumpToTestMethodCommand >> name [
+	^ 'Jump to test method'
 ]
 
 { #category : 'execution' }

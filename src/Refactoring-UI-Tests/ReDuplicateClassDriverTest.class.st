@@ -125,6 +125,7 @@ ReDuplicateClassDriverTest >> testDuplicateClassWithTrait [
 		assert: classAddition traitComposition asString
 		equals: ReClassToBeDuplicatedWithTraits traitCompositionString
 ]
+
 { #category : 'tests' }
 ReDuplicateClassDriverTest >> testDuplicateClassWithoutTagDoesNotCrash [
 

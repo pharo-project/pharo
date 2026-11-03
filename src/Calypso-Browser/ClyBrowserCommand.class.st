@@ -6,7 +6,7 @@ Instance Variables
 "
 Class {
 	#name : 'ClyBrowserCommand',
-	#superclass : 'CmdCommand',
+	#superclass : 'ClyCommand',
 	#instVars : [
 		'browser'
 	],

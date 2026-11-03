@@ -18,16 +18,6 @@ SycMoveMethodsToInstanceSideCommand class >> canBeExecutedInContext: aToolContex
 ]
 
 { #category : 'accessing' }
-SycMoveMethodsToInstanceSideCommand >> defaultMenuIconName [
-	^ #smallRedo
-]
-
-{ #category : 'accessing' }
-SycMoveMethodsToInstanceSideCommand >> defaultMenuItemName [
-	^'Move to instance side'
-]
-
-{ #category : 'accessing' }
 SycMoveMethodsToInstanceSideCommand >> description [
 
 	^ 'Move method to the instance side.'
@@ -43,6 +33,16 @@ SycMoveMethodsToInstanceSideCommand >> execute [
 					method: each
 					class: each origin instanceSide ]
 		thenDo: [ :each | each runRefactoring ]
+]
+
+{ #category : 'accessing' }
+SycMoveMethodsToInstanceSideCommand >> iconName [
+	^ #smallRedo
+]
+
+{ #category : 'accessing' }
+SycMoveMethodsToInstanceSideCommand >> name [
+	^'Move to instance side'
 ]
 
 { #category : 'execution' }

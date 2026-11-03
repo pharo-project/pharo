@@ -58,7 +58,7 @@ ClyRunTestsFromSelectedItemsCommand class >> isAbstract [
 ]
 
 { #category : 'accessing' }
-ClyRunTestsFromSelectedItemsCommand >> defaultMenuItemName [
+ClyRunTestsFromSelectedItemsCommand >> name [
 	^'Run tests'
 ]
 

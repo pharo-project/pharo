@@ -125,7 +125,9 @@ ClyProtocolEditorMorph >> printProtocolOrPackage [
 { #category : 'operations' }
 ClyProtocolEditorMorph >> requestChangeBy: aBlock [
 
-	aBlock on: CmdCommandAborted, CmCommandAborted do: [ :err ].
+	aBlock
+		on: CmCommandAborted
+		do: [ :err |  ].
 
 	self update
 ]
@@ -148,7 +150,7 @@ ClyProtocolEditorMorph >> requestProtocol [
 		               presenter
 			               protocolName: priorProtocol;
 			               concernedClass: ownerTool methodClass ].
-	newProtocol = priorProtocol ifTrue: [ ^ CmdCommandAborted signal ].
+	newProtocol = priorProtocol ifTrue: [ ^ CmCommandAborted signal ].
 
 	ownerTool methodProtocol: newProtocol
 ]
