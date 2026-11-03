@@ -10,7 +10,7 @@ Internal Representation and Key Implementation Points.
 "
 Class {
 	#name : 'ClyRunClassScriptCommand',
-	#superclass : 'CmdCommand',
+	#superclass : 'ClyCommand',
 	#instVars : [
 		'targetClass',
 		'script'
@@ -34,19 +34,19 @@ ClyRunClassScriptCommand class >> methodTableIconActivation [
 	^ClyTableIconCommandActivation for: ClyMethod asCalypsoItemContext
 ]
 
+{ #category : 'execution' }
+ClyRunClassScriptCommand >> execute [
+	script executeOn: targetClass
+]
+
 { #category : 'accessing' }
-ClyRunClassScriptCommand >> defaultMenuIconName [
+ClyRunClassScriptCommand >> iconName [
 	^ script iconName
 ]
 
 { #category : 'accessing' }
-ClyRunClassScriptCommand >> defaultMenuItemName [
+ClyRunClassScriptCommand >> name [
 	^'Run script'
-]
-
-{ #category : 'execution' }
-ClyRunClassScriptCommand >> execute [
-	script executeOn: targetClass
 ]
 
 { #category : 'execution' }

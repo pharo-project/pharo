@@ -15,15 +15,15 @@ ClyOpenDependencyBrowserCommand class >> packageContextMenuActivation [
 	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup for: Package asCalypsoItemContext
 ]
 
-{ #category : 'accessing' }
-ClyOpenDependencyBrowserCommand >> defaultMenuItemName [
-	^'Browse dependencies'
-]
-
 { #category : 'execution' }
 ClyOpenDependencyBrowserCommand >> execute [
 
 	| packageNames |
 	packageNames := packages collect: [ :each | each name ].
 	(StPackageDependenciesPresenter onPackagesNamed: packageNames) open
+]
+
+{ #category : 'accessing' }
+ClyOpenDependencyBrowserCommand >> name [
+	^'Browse dependencies'
 ]

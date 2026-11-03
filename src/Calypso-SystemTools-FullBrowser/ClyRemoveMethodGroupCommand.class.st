@@ -27,16 +27,6 @@ ClyRemoveMethodGroupCommand class >> fullBrowserShortcutActivation [
 ]
 
 { #category : 'accessing' }
-ClyRemoveMethodGroupCommand >> defaultMenuIconName [
-	^#remove
-]
-
-{ #category : 'accessing' }
-ClyRemoveMethodGroupCommand >> defaultMenuItemName [
-	^'Remove'
-]
-
-{ #category : 'accessing' }
 ClyRemoveMethodGroupCommand >> description [
 
 ^ 'Removes method group with containing methods.'
@@ -51,6 +41,16 @@ ClyRemoveMethodGroupCommand >> execute [
 			removeProtocolFrom: selectedClasses ]
 ]
 
+{ #category : 'accessing' }
+ClyRemoveMethodGroupCommand >> iconName [
+	^#remove
+]
+
+{ #category : 'accessing' }
+ClyRemoveMethodGroupCommand >> name [
+	^'Remove'
+]
+
 { #category : 'execution' }
 ClyRemoveMethodGroupCommand >> prepareFullExecutionInContext: aToolContext [
 
@@ -62,5 +62,5 @@ ClyRemoveMethodGroupCommand >> prepareFullExecutionInContext: aToolContext [
 	(methodGroups anySatisfy: [ :each | each methodsSize > 0 ]) ifFalse: [ ^ self ].
 	
 	confirmed := self confirm: 'Are you sure you want to remove methods from ' , tagsString , '?'.
-	confirmed ifFalse: [ CmdCommandAborted signal ]
+	confirmed ifFalse: [ CmCommandAborted signal ]
 ]

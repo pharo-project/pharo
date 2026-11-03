@@ -75,16 +75,6 @@ ClyShowMessageSenderCommand >> browser: anObject [
 ]
 
 { #category : 'accessing' }
-ClyShowMessageSenderCommand >> defaultMenuIconName [
-	^ #smallFind
-]
-
-{ #category : 'accessing' }
-ClyShowMessageSenderCommand >> defaultMenuItemName [
-	^'Senders'
-]
-
-{ #category : 'accessing' }
 ClyShowMessageSenderCommand >> description [
 
 	^ 'Show all message senders.'
@@ -96,6 +86,16 @@ ClyShowMessageSenderCommand >> execute [
 	| selectors |
 	selectors := messages collect: [ :each | each selector ].
 	(Smalltalk tools toolNamed: #messageList) browseSendersOfAll: selectors
+]
+
+{ #category : 'accessing' }
+ClyShowMessageSenderCommand >> iconName [
+	^ #smallFind
+]
+
+{ #category : 'accessing' }
+ClyShowMessageSenderCommand >> name [
+	^'Senders'
 ]
 
 { #category : 'execution' }

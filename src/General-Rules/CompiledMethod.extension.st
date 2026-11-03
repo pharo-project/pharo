@@ -6,6 +6,9 @@ CompiledMethod >> hasEquivalentMethodInSuperclass [
 
 	self isFromTrait ifTrue: [ ^ false ].
 
+	"Class initialize methods can be equivalent to their super method and it makes sense."
+	(self selector = #initialize and: [ self isClassSide ]) ifTrue: [ ^ false ].
+
 	^ self overriddenMethod
 		  ifNil: [ false ]
 		  ifNotNil: [ :method | self equivalentTo: method ]

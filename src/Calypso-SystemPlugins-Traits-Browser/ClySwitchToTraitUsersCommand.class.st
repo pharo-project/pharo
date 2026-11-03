@@ -16,7 +16,7 @@ ClySwitchToTraitUsersCommand class >> canBeExecutedInContext: aToolContext [
 ]
 
 { #category : 'accessing' }
-ClySwitchToTraitUsersCommand >> defaultMenuItemName [
+ClySwitchToTraitUsersCommand >> name [
 	^'Users'
 ]
 

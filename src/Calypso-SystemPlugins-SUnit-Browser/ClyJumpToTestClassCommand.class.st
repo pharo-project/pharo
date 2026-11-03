@@ -40,16 +40,6 @@ ClyJumpToTestClassCommand class >> fullBrowserShortcutActivation [
 	^ CmdShortcutActivation by: $g meta, $j meta for: ClyFullBrowserClassContext
 ]
 
-{ #category : 'accessing' }
-ClyJumpToTestClassCommand >> defaultMenuIconName [
-	^#jump
-]
-
-{ #category : 'accessing' }
-ClyJumpToTestClassCommand >> defaultMenuItemName [
-	^ 'Jump to test class'
-]
-
 { #category : 'execution' }
 ClyJumpToTestClassCommand >> execute [
 
@@ -62,6 +52,16 @@ ClyJumpToTestClassCommand >> execute [
 	[ browser selectClass: (self testClassFor: targetClass) ]
 		on: ClyInvalidClassForTestClassGeneration
 		do: [ :ex | self inform: 'Cannot generate test class for ' , ex baseClass printString , '.' ]
+]
+
+{ #category : 'accessing' }
+ClyJumpToTestClassCommand >> iconName [
+	^#jump
+]
+
+{ #category : 'accessing' }
+ClyJumpToTestClassCommand >> name [
+	^ 'Jump to test class'
 ]
 
 { #category : 'execution' }

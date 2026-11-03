@@ -12,12 +12,6 @@ ClySwitchToScopedViewCommand class >> toolbarOrder [
 ]
 
 { #category : 'accessing' }
-ClySwitchToScopedViewCommand >> defaultMenuItemName [
-
-	^ 'Scoped View'
-]
-
-{ #category : 'accessing' }
 ClySwitchToScopedViewCommand >> description [
 
 	^ 'Scope to selected packages'
@@ -34,4 +28,10 @@ ClySwitchToScopedViewCommand >> execute [
 ClySwitchToScopedViewCommand >> isAppliedToBrowser [
 
 	^ (browser packageView showsItemsFromQuery: ClyAllPackagesQuery) and: [ browser isScopedModeEnabled ]
+]
+
+{ #category : 'accessing' }
+ClySwitchToScopedViewCommand >> name [
+
+	^ 'Scoped View'
 ]

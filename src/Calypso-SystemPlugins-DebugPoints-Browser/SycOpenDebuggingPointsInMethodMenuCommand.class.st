@@ -24,19 +24,19 @@ SycOpenDebuggingPointsInMethodMenuCommand >> activationStrategy [
 ]
 
 { #category : 'accessing' }
-SycOpenDebuggingPointsInMethodMenuCommand >> defaultMenuIconName [
+SycOpenDebuggingPointsInMethodMenuCommand >> description [
+
+	^ 'Defines how the debugging point menu group should activate inside the calypso method view.'
+]
+
+{ #category : 'accessing' }
+SycOpenDebuggingPointsInMethodMenuCommand >> iconName [
 
 	^ #smallDebug 
 ]
 
 { #category : 'accessing' }
-SycOpenDebuggingPointsInMethodMenuCommand >> defaultMenuItemName [
+SycOpenDebuggingPointsInMethodMenuCommand >> name [
 
 	^ 'Debug Points' 
-]
-
-{ #category : 'accessing' }
-SycOpenDebuggingPointsInMethodMenuCommand >> description [
-
-	^ 'Defines how the debugging point menu group should activate inside the calypso method view.'
 ]

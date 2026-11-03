@@ -12,7 +12,7 @@ Internal Representation and Key Implementation Points.
 "
 Class {
 	#name : 'ClySpawnFullBrowserCommand',
-	#superclass : 'CmdCommand',
+	#superclass : 'ClyCommand',
 	#instVars : [
 		'browser'
 	],
@@ -48,16 +48,6 @@ ClySpawnFullBrowserCommand class >> fullBrowserDoubleClickMenuActivation [
 ]
 
 { #category : 'accessing' }
-ClySpawnFullBrowserCommand >> defaultMenuIconName [
-	^#browse
-]
-
-{ #category : 'accessing' }
-ClySpawnFullBrowserCommand >> defaultMenuItemName [
-	^'Browse'
-]
-
-{ #category : 'accessing' }
 ClySpawnFullBrowserCommand >> description [
 
 	^ 'Spawn full browser from current browser state.'
@@ -67,6 +57,16 @@ ClySpawnFullBrowserCommand >> description [
 ClySpawnFullBrowserCommand >> execute [
 
 	browser spawnFullBrowser
+]
+
+{ #category : 'accessing' }
+ClySpawnFullBrowserCommand >> iconName [
+	^#browse
+]
+
+{ #category : 'accessing' }
+ClySpawnFullBrowserCommand >> name [
+	^'Browse'
 ]
 
 { #category : 'execution' }

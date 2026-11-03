@@ -70,20 +70,20 @@ ClyMoveClassToGroupCommand >> classGroup: anObject [
 	classGroup := anObject
 ]
 
-{ #category : 'accessing' }
-ClyMoveClassToGroupCommand >> defaultMenuIconName [
-	^ #smallRedo
-]
-
-{ #category : 'accessing' }
-ClyMoveClassToGroupCommand >> defaultMenuItemName [
-	^'Move to package'
-]
-
 { #category : 'execution' }
 ClyMoveClassToGroupCommand >> execute [
 
 	classes do: [ :class | classGroup addClass: class ]
+]
+
+{ #category : 'accessing' }
+ClyMoveClassToGroupCommand >> iconName [
+	^ #smallRedo
+]
+
+{ #category : 'accessing' }
+ClyMoveClassToGroupCommand >> name [
+	^'Move to package'
 ]
 
 { #category : 'execution' }

@@ -23,18 +23,6 @@ ClyRunTestsFromMethodsCommand class >> contextClass [
 	^ClyMethod asCalypsoItemContext
 ]
 
-{ #category : 'execution' }
-ClyRunTestsFromMethodsCommand >> defaultMenuIconName [
-
-	| fullResult |
-	fullResult := self testResult.
-	runTestCases do: [ :each |
-		fullResult concreteResultOf: runTestCases first ifPresent: [:testResult |
-			^testResult iconName ]].
-
-	^fullResult iconName
-]
-
 { #category : 'accessing' }
 ClyRunTestsFromMethodsCommand >> description [
 
@@ -44,6 +32,18 @@ ClyRunTestsFromMethodsCommand >> description [
 { #category : 'execution' }
 ClyRunTestsFromMethodsCommand >> execute [
 	testItems do: [:each | self runTestItem: each ]
+]
+
+{ #category : 'execution' }
+ClyRunTestsFromMethodsCommand >> iconName [
+
+	| fullResult |
+	fullResult := self testResult.
+	runTestCases do: [ :each |
+		fullResult concreteResultOf: runTestCases first ifPresent: [:testResult |
+			^testResult iconName ]].
+
+	^fullResult iconName
 ]
 
 { #category : 'execution' }
