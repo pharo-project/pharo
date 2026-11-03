@@ -58,7 +58,7 @@ TaEmptyComposition >> allTraits [
 ]
 
 { #category : 'testing' }
-TaEmptyComposition >> changesSourceCode: aString [
+TaEmptyComposition >> changesSourceCode: compilationInfo [
 
 	^ false
 ]
@@ -108,6 +108,12 @@ TaEmptyComposition >> isEmpty [
 { #category : 'accessing' }
 TaEmptyComposition >> methods [
 	^ #()
+]
+
+{ #category : 'accessing' }
+TaEmptyComposition >> methodsCompilationInfo [
+
+	^ Array empty
 ]
 
 { #category : 'users' }

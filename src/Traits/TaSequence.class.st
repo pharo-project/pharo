@@ -86,10 +86,10 @@ TaSequence >> allTraits [
 ]
 
 { #category : 'testing' }
-TaSequence >> changesSourceCode: aSelector [
+TaSequence >> changesSourceCode: compilationInfo [
 	"If the selector has conflicts it should be recompiled"
-	^ (self isConflictingSelector: aSelector)
-		or: [ self members anySatisfy: [ :e | e changesSourceCode: aSelector ] ]
+
+	^ compilationInfo isConflicting or: [ self members anySatisfy: [ :e | e changesSourceCode: compilationInfo ] ]
 ]
 
 { #category : 'accessing' }
@@ -115,6 +115,13 @@ TaSequence >> copyWithoutTrait: aTrait [
 	newMembers := members collect: [ :e | e copyWithoutTrait: aTrait ] thenReject: #isEmpty.
 
 	^ self class withAll: newMembers
+]
+
+{ #category : 'testing' }
+TaSequence >> hasSlots [
+	"Speeding up my parent implementation to not gather all the slots of my members."
+
+	^ members anySatisfy: [ :member | member hasSlots ]
 ]
 
 { #category : 'comparing' }
@@ -165,6 +172,16 @@ TaSequence >> isLocalAliasSelector: aSymbol [
 ]
 
 { #category : 'accessing' }
+TaSequence >> manageConflictBetween: infos infosToRemove: toRemove [
+	"If protocols are different we create a conflict."
+
+	(infos collect: #protocol as: Set) size > 1 ifTrue: [ infos first protocol: Protocol traitConflictName ].
+	infos first sourceCode: (self sourceCodeForConflictFor: infos first selector).
+	infos first isConflicting: true.
+	toRemove addAll: infos allButFirst
+]
+
+{ #category : 'accessing' }
 TaSequence >> memberForSelector: aSelector [
 	"I return the member that defines a given selector.
 	I first look for a valid member, if not, I will return the first"
@@ -182,6 +199,32 @@ TaSequence >> members [
 { #category : 'accessing' }
 TaSequence >> methods [
 	^ members flatCollect: #methods
+]
+
+{ #category : 'accessing' }
+TaSequence >> methodsCompilationInfo [
+
+	| allInfos toRemove |
+	toRemove := OrderedCollection new.
+
+	"We remove duplicated info in case a trait is used in diamond."
+	allInfos := (members flatCollect: [ :member | member methodsCompilationInfo ] as: Set) asOrderedCollection.
+
+	"In case we have multiple info for the same selector, we reject the explicit requirements and manage potentiel conflicts."
+	(allInfos groupedBy: #selector) keysAndValuesDo: [ :selector :infos |
+			infos size > 1 ifTrue: [
+					"We do not take explicit requirement methods into account for conflicts except if we only have those."
+					(infos reject: #isExplicitRequirement)
+						ifEmpty: [
+								toRemove addAll: infos allButFirst.
+								(infos collect: #protocol as: Set) size > 1 ifTrue: [ infos first protocol: Protocol traitConflictName ] ]
+						ifNotEmpty: [ :implementations |
+								toRemove addAll: (infos select: #isExplicitRequirement).
+								implementations size = 1 ifFalse: [ self manageConflictBetween: implementations infosToRemove: toRemove ] ] ] ].
+
+
+	allInfos removeAll: toRemove.
+	^ allInfos
 ]
 
 { #category : 'accessing' }
