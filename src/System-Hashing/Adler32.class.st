@@ -13,7 +13,7 @@ Class {
 	#tag : 'Checksums'
 }
 
-{ #category : 'primitives' }
+{ #category : 'computing' }
 Adler32 class >> update: adler from: start to: stop in: aCollection [
 	"Update crc using the Adler32 checksum technique from RFC1950"
 "
@@ -27,7 +27,6 @@ Adler32 class >> update: adler from: start to: stop in: aCollection [
         }
         return (s2 << 16) + s1;
 "
-	<primitive: 'primitiveUpdateAdler32' module: 'ZipPlugin'>
 
 	| s1 s2 |
 	s1 := adler bitAnd: 16rFFFF.

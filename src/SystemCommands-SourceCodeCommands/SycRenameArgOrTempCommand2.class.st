@@ -28,17 +28,7 @@ SycRenameArgOrTempCommand2 class >> canBeExecutedInContext: aSourceCodeContext [
 SycRenameArgOrTempCommand2 >> applyResultInContext: aSourceCodeContext [
 	super applyResultInContext: aSourceCodeContext.
 
-	aSourceCodeContext showVariableNamed: newName
-]
-
-{ #category : 'accessing' }
-SycRenameArgOrTempCommand2 >> defaultMenuIconName [
-	^ #edit
-]
-
-{ #category : 'accessing' }
-SycRenameArgOrTempCommand2 >> defaultMenuItemName [
-	^'(R) Rename temp'
+	newName ifNotNil: [ :name | aSourceCodeContext showVariableNamed: name ]
 ]
 
 { #category : 'accessing' }
@@ -49,12 +39,27 @@ SycRenameArgOrTempCommand2 >> description [
 
 { #category : 'execution' }
 SycRenameArgOrTempCommand2 >> execute [
+	"The driver asks for the new name and applies the rename; the name it ends up with is kept for the selection afterwards."
 
-	^ (ReRenameArgumentOrTemporaryDriver2 new
-		   sourceNode: sourceNode;
-		   method: method;
-		   scopes: toolContext refactoringScopes;
-		   yourself) runRefactoring
+	| driver result |
+	driver := ReRenameArgumentOrTemporaryDriver2 new
+		sourceNode: sourceNode;
+		method: method;
+		scopes: toolContext refactoringScopes;
+		yourself.
+	result := driver runRefactoring.
+	newName := driver newName.
+	^ result
+]
+
+{ #category : 'accessing' }
+SycRenameArgOrTempCommand2 >> iconName [
+	^ #edit
+]
+
+{ #category : 'accessing' }
+SycRenameArgOrTempCommand2 >> name [
+	^'(R) Rename temp'
 ]
 
 { #category : 'execution' }

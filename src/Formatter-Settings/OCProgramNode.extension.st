@@ -15,22 +15,23 @@ OCProgramNode class >> formatters [
 
 { #category : '*Formatter-Settings' }
 OCProgramNode class >> settingsGroupOn: aBuilder [
-	<systemsettings>
 
+	<systemsettings>
 	(aBuilder group: #codeFormatters)
 		label: 'Code Formatting';
-		parent: #codeBrowsing
+		parentName: #codeBrowsing
 ]
 
 { #category : '*Formatter-Settings' }
 OCProgramNode class >> settingsOn: aBuilder [
+
 	<systemsettings>
 	(aBuilder pickOne: #formatterClass)
-		target: self ;
+		target: self;
 		domainValues: self formatters;
 		label: 'Default Formatter';
 		order: 0;
-		default: self defaultFormatter;
+		defaultValue: self defaultFormatter;
 		description: 'To set the default code formatter.';
-		parent: #codeFormatters
+		parentName: #codeFormatters
 ]

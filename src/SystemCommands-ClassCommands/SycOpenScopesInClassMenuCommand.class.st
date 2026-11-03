@@ -24,11 +24,11 @@ SycOpenScopesInClassMenuCommand >> cmCommandClass [
 ]
 
 { #category : 'accessing' }
-SycOpenScopesInClassMenuCommand >> defaultMenuIconName [
+SycOpenScopesInClassMenuCommand >> iconName [
 	^ #smallPushpin
 ]
 
 { #category : 'accessing' }
-SycOpenScopesInClassMenuCommand >> defaultMenuItemName [
+SycOpenScopesInClassMenuCommand >> name [
 	^'Scopes'
 ]

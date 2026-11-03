@@ -22,20 +22,20 @@ ClyDebugTestSetupCommand class >> fullBrowserTableIconActivation [
 	"It should not be as icon in table"
 ]
 
-{ #category : 'execution' }
-ClyDebugTestSetupCommand >> defaultMenuIconName [
-	^ #smallDebug
-]
-
-{ #category : 'accessing' }
-ClyDebugTestSetupCommand >> defaultMenuItemName [
-	^'Debug test setup'
-]
-
 { #category : 'accessing' }
 ClyDebugTestSetupCommand >> description [
 
 ^ 'Debug the setup method of the selected test, then executes the selected test method.' 
+]
+
+{ #category : 'execution' }
+ClyDebugTestSetupCommand >> iconName [
+	^ #smallDebug
+]
+
+{ #category : 'accessing' }
+ClyDebugTestSetupCommand >> name [
+	^'Debug test setup'
 ]
 
 { #category : 'execution' }

@@ -9,7 +9,7 @@ Internal Representation and Key Implementation Points.
 "
 Class {
 	#name : 'SycDuplicatePackageCommand',
-	#superclass : 'CmdCommand',
+	#superclass : 'ClyCommand',
 	#category : 'SystemCommands-PackageCommands-Scope',
 	#package : 'SystemCommands-PackageCommands',
 	#tag : 'Scope'
@@ -22,19 +22,19 @@ SycDuplicatePackageCommand class >> canBeExecutedInContext: aToolContext [
 ]
 
 { #category : 'accessing' }
-SycDuplicatePackageCommand >> defaultMenuIconName [
+SycDuplicatePackageCommand >> description [
+
+	^ 'Copy a given package.'
+]
+
+{ #category : 'accessing' }
+SycDuplicatePackageCommand >> iconName [
 	^#smallCopy
 ]
 
 { #category : 'accessing' }
-SycDuplicatePackageCommand >> defaultMenuItemName [
+SycDuplicatePackageCommand >> name [
 	^'Duplicate package'
-]
-
-{ #category : 'accessing' }
-SycDuplicatePackageCommand >> description [
-
-	^ 'Copy a given package.'
 ]
 
 { #category : 'execution' }
@@ -49,8 +49,8 @@ SycDuplicatePackageCommand >> prepareFullExecutionInContext: aToolContext [
 		request: 'New name of copied package'
 		initialAnswer: package name
 		title: 'Copy package'.
-	newName isEmptyOrNil | (newName = package name) ifTrue: [ ^ CmdCommandAborted signal ].
+	newName isEmptyOrNil | (newName = package name) ifTrue: [ ^ CmCommandAborted signal ].
 
 	dialog := SycCopyClassUsingPatternPresenter openOn: package -> newName.
-	dialog cancelled ifTrue: [ ^ CmdCommandAborted signal ]
+	dialog cancelled ifTrue: [ ^ CmCommandAborted signal ]
 ]

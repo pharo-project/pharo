@@ -24,7 +24,8 @@ Class {
 		'hashTail',
 		'hashValue',
 		'blockPosition',
-		'blockStart'
+		'blockStart',
+		'level'
 	],
 	#pools : [
 		'ZipConstants'
@@ -33,6 +34,22 @@ Class {
 	#package : 'Compression',
 	#tag : 'Streams'
 }
+
+{ #category : 'instance creation' }
+DeflateStream class >> levelParameters [
+	"For each level from 1 to 9: the maximum number of hash chains to traverse and the length of a match considered good enough to stop searching (chain and nice_length of zlib's configuration_table)"
+
+	^ #( #( 4 8 ) #( 8 16 ) #( 32 32 ) #( 16 16 ) #( 32 32 ) #( 128 128 ) #( 256 128 ) #( 1024 258 ) #( 4096 258 ) )
+]
+
+{ #category : 'instance creation' }
+DeflateStream class >> on: aCollectionOrStream level: anInteger [
+	"Answer a stream compressing with the level anInteger, from 0 (no compression, fastest) to 9 (best compression, slowest), as in zlib. The default is 9."
+
+	^ (self on: aCollectionOrStream)
+		  level: anInteger;
+		  yourself
+]
 
 { #category : 'deflating' }
 DeflateStream >> compare: here with: matchPos min: minLength [
@@ -64,19 +81,21 @@ DeflateStream >> deflateBlock [
 
 	| flushNeeded lastIndex |
 	blockStart ifNil: [ "One time initialization for the first block"
-		1 to: MinMatch - 1 do: [ :i | self updateHashAt: i ].
-		blockStart := 0 ].
+			1 to: MinMatch - 1 do: [ :i | self updateHashAt: i ].
+			blockStart := 0 ].
 
 	[ blockPosition < position ] whileTrue: [
-		position + MaxMatch + 1 > writeLimit
-			ifTrue: [ lastIndex := writeLimit - MaxMatch - 1 ]
-			ifFalse: [ lastIndex := position ].
-		flushNeeded := self deflateBlock: lastIndex - 1 chainLength: self hashChainLength goodMatch: self goodMatchLength.
-		flushNeeded ifTrue: [
-			self flushBlock.
-			blockStart := blockPosition ].
-		"Make room for more data"
-		self moveContentsToFront ]
+			position + MaxMatch + 1 > writeLimit
+				ifTrue: [ lastIndex := writeLimit - MaxMatch - 1 ]
+				ifFalse: [ lastIndex := position ].
+			flushNeeded := self level = 0
+				               ifTrue: [ self encodeLiterals: lastIndex - 1 ]
+				               ifFalse: [ self deflateBlock: lastIndex - 1 chainLength: self hashChainLength goodMatch: self goodMatchLength ].
+			flushNeeded ifTrue: [
+					self flushBlock.
+					blockStart := blockPosition ].
+			"Make room for more data"
+			self moveContentsToFront ]
 ]
 
 { #category : 'deflating' }
@@ -147,6 +166,18 @@ DeflateStream >> encodeLiteral: literal [
 	"Encode the given literal.
 	Return true if the current block needs to be flushed."
 	^false
+]
+
+{ #category : 'deflating' }
+DeflateStream >> encodeLiterals: lastIndex [
+	"Level 0: encode the receiver's collection from blockPosition to lastIndex as literals, without looking for matches, so that a block holds at most as many bytes as literals and can be stored"
+
+	| flushNeeded |
+	[ blockPosition <= lastIndex ] whileTrue: [
+			flushNeeded := self encodeLiteral: (collection byteAt: blockPosition + 1).
+			blockPosition := blockPosition + 1.
+			flushNeeded ifTrue: [ ^ true ] ].
+	^ false
 ]
 
 { #category : 'encoding' }
@@ -221,18 +252,20 @@ DeflateStream >> flushBlock [
 	"Flush a deflated block"
 ]
 
-{ #category : 'accessing' }
+{ #category : 'deflating' }
 DeflateStream >> goodMatchLength [
 	"Return the length that is considered to be a 'good' match.
 	Higher values will result in better compression but take more time."
-	^MaxMatch "Best compression"
+
+	^ (self class levelParameters at: (self level max: 1)) last
 ]
 
-{ #category : 'accessing' }
+{ #category : 'deflating' }
 DeflateStream >> hashChainLength [
 	"Return the max. number of hash chains to traverse.
 	Higher values will result in better compression but take more time."
-	^4096 "Best compression"
+
+	^ (self class levelParameters at: (self level max: 1)) first
 ]
 
 { #category : 'initialization' }
@@ -260,6 +293,22 @@ DeflateStream >> insertStringAt: here [
 	prevEntry := hashHead at: hashValue+1.
 	hashHead at: hashValue+1 put: here.
 	hashTail at: (here bitAnd: WindowMask)+1 put: prevEntry
+]
+
+{ #category : 'accessing' }
+DeflateStream >> level [
+	"Answer the compression level, from 0 (no compression) to 9 (best compression)"
+
+	^ level ifNil: [ 9 ]
+]
+
+{ #category : 'accessing' }
+DeflateStream >> level: anInteger [
+	"Set the compression level, from 0 (no compression, fastest) to 9 (best compression, slowest), as in zlib. It must be set before writing data."
+
+	(anInteger isInteger and: [ anInteger between: 0 and: 9 ]) ifFalse: [
+		^ self error: 'compression level must be between 0 and 9, not ' , anInteger printString ].
+	level := anInteger
 ]
 
 { #category : 'private' }
@@ -343,7 +392,6 @@ DeflateStream >> updateHashAt: here [
 
 { #category : 'private' }
 DeflateStream >> updateHashTable: table delta: delta [
-	<primitive: 'primitiveDeflateUpdateHashTable' module: 'ZipPlugin'>
 	| pos |
 	1 to: table size do:[:i|
 		"Discard entries that are out of range"

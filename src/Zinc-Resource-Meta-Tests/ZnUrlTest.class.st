@@ -163,6 +163,17 @@ ZnUrlTest >> testEncodedSlash [
 ]
 
 { #category : 'testing' }
+ZnUrlTest >> testFragmentWithQuestionMark [
+
+	| urlString url |
+	urlString := 'http://www.example.com/#fragment?with?question?mark'.
+	url := urlString asZnUrl.
+	self assert: url segments isNil.
+	self deny: url hasQuery.
+	self assert: url asString equals: urlString
+]
+
+{ #category : 'testing' }
 ZnUrlTest >> testFileUrl [
 	| url |
 	url := 'file://localhost/Users/Sven/Desktop/foo.txt' asZnUrl.

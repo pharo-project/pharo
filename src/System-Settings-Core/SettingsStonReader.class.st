@@ -1,7 +1,7 @@
 "
 I am a reader of system settings from a file (stream). I know how to load the settings and I return those stored settings.
 
-Collaborators: SystemSettingsPersistence
+Collaborators: SettingsManager
 
 Public API and Key Messages
 

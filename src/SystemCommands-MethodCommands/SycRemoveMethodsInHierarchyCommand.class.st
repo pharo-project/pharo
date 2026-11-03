@@ -20,12 +20,12 @@ SycRemoveMethodsInHierarchyCommand >> asRefactorings [
 ]
 
 { #category : 'accessing' }
-SycRemoveMethodsInHierarchyCommand >> defaultMenuIconName [
+SycRemoveMethodsInHierarchyCommand >> iconName [
 	^ #remove
 ]
 
 { #category : 'accessing' }
-SycRemoveMethodsInHierarchyCommand >> defaultMenuItemName [
+SycRemoveMethodsInHierarchyCommand >> name [
 	^'Remove and the ones in subclasses'
 ]
 

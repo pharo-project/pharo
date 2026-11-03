@@ -24,22 +24,22 @@ SycFileOutPackageCommand >> defaultFileName [
 		ifFalse: [ 'packagefileout' ]
 ]
 
-{ #category : 'accessing' }
-SycFileOutPackageCommand >> defaultMenuIconName [
-
-	^ #save
-]
-
-{ #category : 'accessing' }
-SycFileOutPackageCommand >> defaultMenuItemName [
-
-	^ 'File out'
-]
-
 { #category : 'execution' }
 SycFileOutPackageCommand >> execute [
 	^ Fileouter
 		fileoutNamed: self defaultFileName
 		configureWith: [ :fileouter |
 			packages do: [ :each | fileouter addFullPackage: each ] ]
+]
+
+{ #category : 'accessing' }
+SycFileOutPackageCommand >> iconName [
+
+	^ #save
+]
+
+{ #category : 'accessing' }
+SycFileOutPackageCommand >> name [
+
+	^ 'File out'
 ]

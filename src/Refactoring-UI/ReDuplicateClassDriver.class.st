@@ -125,21 +125,19 @@ ReDuplicateClassDriver >> newClassName: anObject [
 
 { #category : 'private' }
 ReDuplicateClassDriver >> newRequestClassDialog [
+
 	| dialog |
-
 	dialog := (StClassAndMethodsSelectionPresenter newApplication: self application model: self)
-		withInstanceMethods: rbClass localMethods
-		withClassMethods: rbMetaclass localMethods;
-		baseClassName: self className;
-		basePackageName: (self model environment at: self className) packageName;
-		onCancel: [ :d | d close ];
-		onAccept: [ :d |
-			self acceptClassRequest: d.
-			d close ];
-		yourself.
+		          withInstanceMethods: rbClass localMethods withClassMethods: rbMetaclass localMethods;
+		          baseClassName: self className;
+		          basePackageName: (self model environment at: self className) packageName;
+		          onCancel: [ :d | d close ];
+		          onAccept: [ :d |
+				          self acceptClassRequest: d.
+				          d close ];
+		          yourself.
 
-	(self model environment at: self className) packageTag name
-		ifNotNil: [ :tagName | dialog basePackageTagName: tagName ].
+	(self model environment at: self className) packageTag name ifNotNil: [ :tag | dialog basePackageTagName: tag ].
 
 	^ dialog
 ]

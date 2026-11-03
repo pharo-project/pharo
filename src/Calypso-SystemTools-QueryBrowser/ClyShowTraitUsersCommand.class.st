@@ -31,15 +31,15 @@ ClyShowTraitUsersCommand >> browser: anObject [
 	browser := anObject
 ]
 
-{ #category : 'accessing' }
-ClyShowTraitUsersCommand >> defaultMenuItemName [
-	^'Show trait users'
-]
-
 { #category : 'execution' }
 ClyShowTraitUsersCommand >> execute [
 
 	classes first isTrait ifTrue: [ (Smalltalk tools toolNamed: #messageList) browseUsersOfTrait: classes first ]
+]
+
+{ #category : 'accessing' }
+ClyShowTraitUsersCommand >> name [
+	^'Show trait users'
 ]
 
 { #category : 'execution' }

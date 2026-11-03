@@ -52,24 +52,25 @@ GrowlMorph class >> growlPositionChoices [
 
 { #category : 'settings' }
 GrowlMorph class >> growlSettingsOn: aBuilder [
+
 	<systemsettings>
 	(aBuilder group: #growl)
 		label: 'Popup notification';
-		parent: #appearance;
+		parentName: #appearance;
 		description: 'All settings concerned with the notifications popup look''n feel';
 		with: [
-			(aBuilder pickOne: #type)
-				label: 'Popup notification type';
-				target: self;
-				default: #growl;
-				order: 1;
-				domainValues: self growlTypeChoices.
-			(aBuilder pickOne: #position)
-				label: 'Popup position';
-				target: self;
-				default: #bottomLeft;
-				order: 2;
-				domainValues: self growlPositionChoices.]
+				(aBuilder pickOne: #type)
+					label: 'Popup notification type';
+					target: self;
+					defaultValue: #growl;
+					order: 1;
+					domainValues: self growlTypeChoices.
+				(aBuilder pickOne: #position)
+					label: 'Popup position';
+					target: self;
+					defaultValue: #bottomLeft;
+					order: 2;
+					domainValues: self growlPositionChoices ]
 ]
 
 { #category : 'settings' }

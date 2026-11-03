@@ -35,16 +35,6 @@ ClyCreateTraitCommand class >> fullBrowserMenuActivation [
 	^CmdContextMenuActivation byRootGroupItemOrder: 3 for: ClyFullBrowserClassContext
 ]
 
-{ #category : 'accessing' }
-ClyCreateTraitCommand >> defaultMenuIconName [
-	^#trait
-]
-
-{ #category : 'accessing' }
-ClyCreateTraitCommand >> defaultMenuItemName [
-	^'New trait'
-]
-
 { #category : 'command execution' }
 ClyCreateTraitCommand >> execute [
 
@@ -54,6 +44,16 @@ ClyCreateTraitCommand >> execute [
 	traitDefinition isEmptyOrNil ifTrue: [ ^ self ].
 	resultTrait := browser compileANewClassFrom: traitDefinition notifying: nil startingFrom: nil.
 	resultTrait ifNotNil: [ browser selectClass: resultTrait ]
+]
+
+{ #category : 'accessing' }
+ClyCreateTraitCommand >> iconName [
+	^#trait
+]
+
+{ #category : 'accessing' }
+ClyCreateTraitCommand >> name [
+	^'New trait'
 ]
 
 { #category : 'execution' }

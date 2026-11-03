@@ -57,16 +57,6 @@ ClyShowMessageImplementorCommand class >> sourceCodeShortcutActivation [
 ]
 
 { #category : 'accessing' }
-ClyShowMessageImplementorCommand >> defaultMenuIconName [
-	^ #smallFind
-]
-
-{ #category : 'accessing' }
-ClyShowMessageImplementorCommand >> defaultMenuItemName [
-	^'Implementors'
-]
-
-{ #category : 'accessing' }
 ClyShowMessageImplementorCommand >> description [
 
 	^ 'Show all message implementors.'
@@ -79,6 +69,16 @@ ClyShowMessageImplementorCommand >> execute [
 
 	selectors := messages collect: [ :each | each selector ].
 	(Smalltalk tools toolNamed: #messageList) browseImplementorsOfAll: selectors
+]
+
+{ #category : 'accessing' }
+ClyShowMessageImplementorCommand >> iconName [
+	^ #smallFind
+]
+
+{ #category : 'accessing' }
+ClyShowMessageImplementorCommand >> name [
+	^'Implementors'
 ]
 
 { #category : 'execution' }

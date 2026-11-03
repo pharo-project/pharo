@@ -1,7 +1,7 @@
 "
-I am responsible for creating new StoredSetting objects from existing SettingNodes. I know how to create a StoredSetting from a SettingNode.
+I am responsible for creating new StoredSetting objects from existing settings. I know how to create a StoredSetting from a setting.
 
-Collaborators: SystemSettingsPersistence
+Collaborators: SettingsManager
 
 Public API and Key Messages
 
@@ -29,22 +29,21 @@ Class {
 
 { #category : 'building' }
 StoredSettingsFactory >> from: aSettingNode [
+
 	storedSetting := nil.
-	aSettingNode item acceptSettings: self.
-	storedSetting ifNotNil: [
-		storedSetting settingNodeIdentifier: aSettingNode settingNodeIdentifier ].
+	aSettingNode acceptSettings: self.
+	storedSetting ifNotNil: [ storedSetting settingNodeIdentifier: aSettingNode settingIdentifier ].
 	^ storedSetting
 ]
 
 { #category : 'building' }
 StoredSettingsFactory >> fromSettingNodes: aCollectionOfSettingNodes [
+
 	storedSettings := OrderedCollection new.
 
 	aCollectionOfSettingNodes
-		select: [ :eachSettingNode |
-			eachSettingNode item hasValue ]
-		thenDo: [ :eachSettingNode |
-			(self from: eachSettingNode) ifNotNil: [ :aStoredNode | storedSettings add: aStoredNode ] ].
+		select: [ :eachSettingNode | eachSettingNode hasValue and: [ eachSettingNode isTransient not ] ]
+		thenDo: [ :eachSettingNode | (self from: eachSettingNode) ifNotNil: [ :aStoredNode | storedSettings add: aStoredNode ] ].
 
 	^ storedSettings
 ]
@@ -131,11 +130,6 @@ StoredSettingsFactory >> visitLogicalFont: aLogicalFont [
 { #category : 'visitor' }
 StoredSettingsFactory >> visitObject: anObject [
 	self newStoredSetting realValue: anObject
-]
-
-{ #category : 'visitor' }
-StoredSettingsFactory >> visitPragmaSetting: aPragmaSetting [
-	"do nothing"
 ]
 
 { #category : 'visitor' }

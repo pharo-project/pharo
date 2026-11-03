@@ -33,12 +33,13 @@ TaskListMorph class >> keepOpen: aBoolean [
 
 { #category : 'settings' }
 TaskListMorph class >> taskListSettingOn: aBuilder [
+
 	<systemsettings>
 	(aBuilder setting: #keepTaskListOpen)
 		label: 'Keep task list open';
 		description: 'Whether the tasklist is closed (and the selected window activated) when the command key is released';
-		default: false;
-		parent: #morphic;
+		defaultValue: false;
+		parentName: #morphic;
 		selector: #keepOpen;
 		target: self
 ]

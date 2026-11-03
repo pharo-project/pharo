@@ -111,9 +111,9 @@ ProcessMonitorTestService class >> settingsForFailingStrategyOn: aBuilder [
 
 	(aBuilder setting: #shouldFailTestLeavingProcesses)
 		target: self;
-		parent: self name ;
-		default: false;
-		label: 'Fail tests which left running processes' ;
+		parentName: self name;
+		defaultValue: false;
+		label: 'Fail tests which left running processes';
 		description: 'The test will be failed if it left running processes after the run.
 For example following test will fail:
 	testExample
@@ -129,10 +129,11 @@ ProcessMonitorTestService class >> settingsForTerminationStrategyOn: aBuilder [
 
 	(aBuilder setting: #shouldTerminateProcesses)
 		target: self;
-		parent: self name ;
-		default: true;
-		label: 'Terminate all processes after the test' ;
-		description: 'At the end of each test all forked processes will be terminated except when we are running in interractive mode under debugger.
+		parentName: self name;
+		defaultValue: true;
+		label: 'Terminate all processes after the test';
+		description:
+			'At the end of each test all forked processes will be terminated except when we are running in interractive mode under debugger.
 When debugger opens all control is up to the user.
 But when we are running the test suite to get results it is a good practice to remove all garbage after the test.
 This setting is about doing it in automatic way.

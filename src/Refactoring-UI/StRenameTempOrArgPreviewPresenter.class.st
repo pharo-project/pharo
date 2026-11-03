@@ -33,7 +33,6 @@ Class {
 		'buttonApplyAnyway',
 		'behaviorWarningIcon',
 		'buttonApplyTransformation',
-		'applyAnyway',
 		'mainLayout',
 		'behaviorLayout',
 		'behaviorPanel',

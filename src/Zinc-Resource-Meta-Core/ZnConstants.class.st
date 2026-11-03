@@ -87,15 +87,6 @@ ZnConstants class >> knownHTTPVersions [
 	^ #('HTTP/1.1' 'HTTP/1.0')
 ]
 
-{ #category : 'resource limits' }
-ZnConstants class >> maximumLineLength [
-	"Return the maximum line length to accept.
-	Used by ZnLineReader and thus for reading request/status lines as well as headers.
-	This helps to protect us from malicious content."
-
-	^ 8192 "4096*2"
-]
-
 { #category : 'accessing' }
 ZnConstants class >> officialHTTPStatusCodesSpec [
 	"This is the official list from http://www.iana.org/assignments/http-status-codes (version 2018-09-21)"

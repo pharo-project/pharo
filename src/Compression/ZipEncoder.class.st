@@ -103,7 +103,6 @@ ZipEncoder >> pastEndPut: anObject [
 { #category : 'private' }
 ZipEncoder >> privateSendBlock: literalStream with: distanceStream with: litTree with: distTree [
 	"Send the current block using the encodings from the given literal/length and distance tree"
-	<primitive: 'primitiveZipSendBlock' module: 'ZipPlugin'>
 	| lit dist code extra sum |
 	sum := 0.
 	[ lit := literalStream next.

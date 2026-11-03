@@ -21,7 +21,7 @@ ClyBreakOnVariableReadCommand class >> isAbstract [
 ]
 
 { #category : 'accessing' }
-ClyBreakOnVariableReadCommand >> defaultMenuItemName [
+ClyBreakOnVariableReadCommand >> name [
 
 	^ 'Break on read'
 ]
