@@ -51,7 +51,7 @@ ScriptBehavior >> remove [
 
 { #category : 'accessing' }
 ScriptBehavior >> script [
-	^script ifNil:['']
+	^ script ifNil: ['']
 ]
 
 { #category : 'accessing' }

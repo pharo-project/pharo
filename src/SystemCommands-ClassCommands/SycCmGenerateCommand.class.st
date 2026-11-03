@@ -11,6 +11,13 @@ Class {
 	#tag : 'Creation'
 }
 
+{ #category : 'testing' }
+SycCmGenerateCommand >> canBeExecuted [
+	"Answer <true> if the receiver has any variables"
+
+	^ false
+]
+
 { #category : 'executing' }
 SycCmGenerateCommand >> driverClass [
 	^ self subclassResponsibility
@@ -22,13 +29,6 @@ SycCmGenerateCommand >> executeRefactoring [
 	(self driverClass new
 		 targetClass: targetClass name;
 		 scopes: refactoringScopes) runRefactoring
-]
-
-{ #category : 'testing' }
-SycCmGenerateCommand >> isApplicable [
-	"Answer <true> if the receiver has any variables"
-
-	^ false
 ]
 
 { #category : 'accessing' }

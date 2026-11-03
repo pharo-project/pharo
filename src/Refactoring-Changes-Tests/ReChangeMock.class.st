@@ -23,13 +23,6 @@ ReChangeMock class >> classInsVar [
 	^ classInstVar
 ]
 
-{ #category : 'accessing' }
-ReChangeMock >> accessAll [ 
-	instVar := 0. 
-	SharedVar := 0.
-	^ instVar + SharedVar 
-]
-
 { #category : 'private' }
 ReChangeMock >> executeNotifying: aBlock [
 	"I'm a mock, I do nothing"
@@ -40,6 +33,7 @@ ReChangeMock >> executeNotifying: aBlock [
 ReChangeMock >> initialize [
 
 	<ignoreUnusedVariables: #( #instVar )>
+	<ignoreUnusedClassVariables: #( #SharedVar )>
 	super initialize
 ]
 

@@ -367,6 +367,14 @@ String class >> newCaseSensitiveOrder [
 	^ newTab
 ]
 
+{ #category : 'instance creation' }
+String class >> newLine [
+	"Pharo uses internally cr as new line but we want to move to lf in the long run. This method is here to hardcode the value in only one place.
+	When there is an exchange with an external source (files, sockets), users should explicitly use newline conversions."
+
+	^ self cr
+]
+
 { #category : 'private - accessing' }
 String class >> newLowercasingTable [
 	"a table for translating to lower case"
@@ -706,6 +714,15 @@ String >> asOctetString [
 { #category : 'converting' }
 String >> asPluralBasedOn: aNumberOrCollection [
 	"Append an 's' to this string based on whether aNumberOrCollection is 1 or of size 1."
+	
+	"('test' asPluralBasedOn: 0) >>> 'tests'"
+	"('test' asPluralBasedOn: #()) >>> 'tests'"
+	"('test' asPluralBasedOn: 1) >>> 'test'"
+	"('test' asPluralBasedOn: #(#first)) >>> 'test'"
+	"('test' asPluralBasedOn: 2) >>> 'tests'"
+	"('test' asPluralBasedOn: #(#first #second)) >>> 'tests'"
+	"('test' asPluralBasedOn: 100) >>> 'tests'"
+	"('test' asPluralBasedOn: (1 to: 100)) >>> 'tests'"
 
 	^ (aNumberOrCollection = 1 or:
 		[aNumberOrCollection isCollection and: [aNumberOrCollection size = 1]])
@@ -936,6 +953,14 @@ String >> compare: aString [
 
 { #category : 'comparing' }
 String >> compare: aString caseSensitive: aBool [
+	"('cAt' compare: 'ct' caseSensitive: true) >>> 1"
+	"('CAT' compare: 'CAT' caseSensitive: true) >>> 2"
+	"('xaT' compare: 'xAT' caseSensitive: true) >>> 3"
+	
+	"('CAT' compare: 'dat' caseSensitive: false) >>> 1"
+	"('CAT' compare: 'cat' caseSensitive: false) >>> 2"
+	"('xAT' compare: 'cat' caseSensitive: false) >>> 3"
+	
 	"Answer a comparison code telling how the receiver sorts relative to aString:
 		1 - before
 		2 - equal
@@ -1132,14 +1157,6 @@ String >> correctAgainstEnumerator: wordBlock continuedFrom: oldCollection [
 			results := choices
 			].
 	^ results
-]
-
-{ #category : 'copying' }
-String >> deepCopy [
-	"DeepCopy would otherwise mean make a copy of the character;  since
-	characters are unique, just return a shallowCopy."
-
-	^self shallowCopy
 ]
 
 { #category : 'displaying' }

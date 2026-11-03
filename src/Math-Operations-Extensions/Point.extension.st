@@ -145,10 +145,11 @@ Point >> rotateBy: direction centerAt: c [
 
 { #category : '*Math-Operations-Extensions' }
 Point >> setR: rho degrees: degrees [
+
 	| radians |
 	radians := degrees asFloat degreesToRadians.
-	x := rho asFloat * radians cos.
-	y := rho asFloat * radians sin
+	self x: rho asFloat * radians cos.
+	self y: rho asFloat * radians sin
 ]
 
 { #category : '*Math-Operations-Extensions' }

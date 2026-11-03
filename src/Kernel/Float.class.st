@@ -572,12 +572,6 @@ Float >> basicAt: index put: value [
 	^super basicAt: index put: value
 ]
 
-{ #category : 'copying' }
-Float >> deepCopy [
-
-	^self copy
-]
-
 { #category : 'mathematical functions' }
 Float >> exponent [
 	^ self subclassResponsibility

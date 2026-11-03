@@ -555,6 +555,12 @@ TextStyle >> marginTabAt: marginIndex side: sideIndex [
 		ifFalse: [ 0 ]
 ]
 
+{ #category : 'accessing' }
+TextStyle >> marginTabsArray: anObject [
+
+	marginTabsArray := anObject
+]
+
 { #category : 'private' }
 TextStyle >> newFontArray: anArray [
 	"Currently there is no supporting protocol for changing these arrays. If an editor wishes to implement margin setting, then a copy of the default should be stored with these instance variables.
@@ -658,6 +664,18 @@ TextStyle >> tabWidth [
 	"Answer the width of a tab."
 
 	^DefaultTab
+]
+
+{ #category : 'accessing' }
+TextStyle >> tabsArray [
+
+	^ tabsArray
+]
+
+{ #category : 'accessing' }
+TextStyle >> tabsArray: anObject [
+
+	tabsArray := anObject
 ]
 
 { #category : 'copying' }

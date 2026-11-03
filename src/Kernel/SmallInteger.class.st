@@ -366,10 +366,6 @@ SmallInteger >> decimalDigitLength [
 										ifFalse: [self < 10000000000000000000 ifTrue: [19] ifFalse: [20]]]]]]
 ]
 
-{ #category : 'copying' }
-SmallInteger >> deepCopy [
-]
-
 { #category : 'testing' }
 SmallInteger >> even [
 	" 0 even >>> true"

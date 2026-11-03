@@ -35,3 +35,9 @@ EpGenericRefactoring >> initializeWith: aRBRefactoring [
 	self initialize.
 	storeString := aRBRefactoring storeString
 ]
+
+{ #category : 'initialization' }
+EpGenericRefactoring >> storeString [
+
+	^ storeString
+]

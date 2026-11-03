@@ -84,8 +84,9 @@ RBRemoveClassRefactoringTest >> testFailureRaisesRBRefactoringErrorWhenRemovingN
 { #category : 'failure tests' }
 RBRemoveClassRefactoringTest >> testFailureRemoveClassWithBadNameRaisesRBRefactoringError [
 
-	self shouldFail:
-		(ReRemoveClassRefactoring model: model classNames: { #NonExistantClassName })
+	self shouldFail: (ReRemoveClassRefactoring
+			 model: model
+			 classNames: { #NonExistantClassName })
 ]
 
 { #category : 'tests preconditions' }

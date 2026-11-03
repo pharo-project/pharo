@@ -32,6 +32,11 @@ FTFilterFunction >> colorText: aText [
 	^ aText
 ]
 
+{ #category : 'accessing' }
+FTFilterFunction >> field [
+	^ field
+]
+
 { #category : 'updating' }
 FTFilterFunction >> filter [
 	pattern ifNil: [ ^ self ].
@@ -66,6 +71,16 @@ FTFilterFunction >> ghostText [
 	^ 'Filter...'
 ]
 
+{ #category : 'accessing' }
+FTFilterFunction >> initialDataSource [
+	^ initialDataSource
+]
+
+{ #category : 'accessing' }
+FTFilterFunction >> initialDataSource: aDataSource [
+	initialDataSource := aDataSource
+]
+
 { #category : 'initialization' }
 FTFilterFunction >> initialize [
 	super initialize.
@@ -77,6 +92,18 @@ FTFilterFunction >> initializeFilter [
 	initialDataSource := table dataSource.
 	isEditingSemaphore := Semaphore new.
 	self spawnFilterUpdateThread
+]
+
+{ #category : 'accessing' }
+FTFilterFunction >> isEditingSemaphore [
+
+	^ isEditingSemaphore
+]
+
+{ #category : 'accessing' }
+FTFilterFunction >> isEditingSemaphore: anObject [
+
+	isEditingSemaphore := anObject
 ]
 
 { #category : 'event handling' }
@@ -95,6 +122,17 @@ FTFilterFunction >> keyStroke: anEvent [
 
 	self showFilterFieldFromKeystrokeEvent: anEvent.
 	^ true
+]
+
+{ #category : 'accessing' }
+FTFilterFunction >> pattern [
+	^pattern
+]
+
+{ #category : 'accessing' }
+FTFilterFunction >> pattern: anObject [
+
+	pattern := anObject
 ]
 
 { #category : 'updating' }

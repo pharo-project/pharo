@@ -92,12 +92,6 @@ UndefinedObject >> commonSuperclassWith: aClass [
 	^ self
 ]
 
-{ #category : 'copying' }
-UndefinedObject >> deepCopy [
-	"Only one instance of UndefinedObject should ever be made, so answer
-	with self."
-]
-
 { #category : 'class hierarchy' }
 UndefinedObject >> environment [
 	"Necessary to support disjoint class hierarchies."

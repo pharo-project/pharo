@@ -61,7 +61,7 @@ TaskMorphTest >> setUp [
 	tasks := OrderedCollection new
 ]
 
-{ #category : 'acceas' }
+{ #category : 'accessing' }
 TaskMorphTest >> task1 [
 
 	^ tasks first

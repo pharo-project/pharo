@@ -21,18 +21,18 @@ CmCommandGroupDecorator >> allCommands [
 	^ self decoratedGroup allCommands
 ]
 
-{ #category : 'public-api' }
+{ #category : 'public api' }
 CmCommandGroupDecorator >> commandOrGroupNamed: aString [
 	^ self decoratedGroup commandOrGroupNamed: aString
 ]
 
-{ #category : 'public-api' }
+{ #category : 'public api' }
 CmCommandGroupDecorator >> commandOrGroupNamed: aString ifFound: aBlock [
 
 	^ self decoratedGroup commandOrGroupNamed: aString ifFound: aBlock
 ]
 
-{ #category : 'public-api' }
+{ #category : 'public api' }
 CmCommandGroupDecorator >> commands [
 	^ self decoratedGroup commands
 ]
@@ -72,12 +72,12 @@ CmCommandGroupDecorator >> dynamicName [
 	^ self decoratedGroup dynamicName
 ]
 
-{ #category : 'public-api' }
+{ #category : 'public api' }
 CmCommandGroupDecorator >> entries [
 	^ self decoratedGroup entries
 ]
 
-{ #category : 'public-api' }
+{ #category : 'public api' }
 CmCommandGroupDecorator >> groups [
 	^ self decoratedGroup groups
 ]
@@ -102,12 +102,12 @@ CmCommandGroupDecorator >> name: aString [
 	self decoratedGroup name: aString
 ]
 
-{ #category : 'public-api' }
+{ #category : 'public api' }
 CmCommandGroupDecorator >> register: aCmCommandOrGroup [
 	self decoratedGroup register: aCmCommandOrGroup
 ]
 
-{ #category : 'public-api' }
+{ #category : 'public api' }
 CmCommandGroupDecorator >> unregister: aCmCommandOrGroup [
 	^ self decoratedGroup unregister: aCmCommandOrGroup
 ]

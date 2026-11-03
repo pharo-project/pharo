@@ -55,7 +55,7 @@ FixedBitWidthRegister >> bitXor: aBitRegister [
 
 { #category : 'copying' }
 FixedBitWidthRegister >> copy [
-	"Use the clone primitive for speed."
+	"Use the shallowCopy primitive for speed."
 
 	<primitive: 148>
 	^ super copy

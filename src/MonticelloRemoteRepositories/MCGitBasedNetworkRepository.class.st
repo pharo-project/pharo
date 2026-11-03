@@ -336,6 +336,12 @@ MCGitBasedNetworkRepository >> asRepositorySpec [
 		  yourself
 ]
 
+{ #category : 'accessing' }
+MCGitBasedNetworkRepository >> basicRepoPath [
+
+	^ repoPath
+]
+
 { #category : 'private' }
 MCGitBasedNetworkRepository >> calculateRepositoryDirectory [
 

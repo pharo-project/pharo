@@ -10,3 +10,14 @@ Class {
 	#package : 'System-Support',
 	#tag : 'Utilities'
 }
+
+{ #category : 'checking' }
+UndeclaredRegistry >> verifyEmpty [
+	"Check if the receiver is emtpy.
+	If not, fail with an exception.
+	The exception carries information about what are the offending entries and where they are"
+
+	self ifEmpty: [ ^ self ].
+	self error: 'Undeclared registry is not empty. Offending entries: '
+		, (self associations collect: [ :a | a -> a usingMethods ]) printString
+]

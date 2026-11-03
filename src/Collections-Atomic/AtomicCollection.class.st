@@ -15,11 +15,6 @@ AtomicCollection >> copy [
 ]
 
 { #category : 'copying' }
-AtomicCollection >> deepCopy [
-	^ self errorDontCopy
-]
-
-{ #category : 'copying' }
 AtomicCollection >> errorDontCopy [
 	"copying a structure, involved in concurrent operations is a bad idea"
 	^ self error: 'Copying not available'

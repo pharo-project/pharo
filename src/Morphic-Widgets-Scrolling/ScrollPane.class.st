@@ -289,7 +289,7 @@ ScrollPane >> hHideScrollBar [
 	self resetExtent
 ]
 
-{ #category : 'geometry testing' }
+{ #category : 'geometry - testing' }
 ScrollPane >> hIsScrollable [
 
 	"If the contents of the pane are too small to scroll, return false."
@@ -309,14 +309,14 @@ ScrollPane >> hIsScrollbarNeeded [
 	^self hIsScrollable
 ]
 
-{ #category : 'geometry testing' }
+{ #category : 'geometry - testing' }
 ScrollPane >> hIsScrollbarShowing [
 	"Return true if a horz scroll bar is currently showing"
 
 	^submorphs includes: hScrollBar
 ]
 
-{ #category : 'geometry testing' }
+{ #category : 'geometry - testing' }
 ScrollPane >> hIsScrolled [
 	"If the scroller is not set to x = 0, then the pane has been h-scrolled."
 	^scroller offset x > 0
@@ -617,7 +617,7 @@ ScrollPane >> isAutoFit [
 	^ false
 ]
 
-{ #category : 'geometry testing' }
+{ #category : 'geometry - testing' }
 ScrollPane >> isScrolledFromTop [
 	"Have the contents of the pane been scrolled, so that the top of the contents are not visible?"
 	^scroller offset y > 0
@@ -987,7 +987,7 @@ ScrollPane >> vHideScrollBar [
 	self resetExtent
 ]
 
-{ #category : 'geometry testing' }
+{ #category : 'geometry - testing' }
 ScrollPane >> vIsScrollable [
 "Return whether the verticle scrollbar is scrollable"
 
@@ -1010,14 +1010,14 @@ ScrollPane >> vIsScrollbarNeeded [
 	^self vIsScrollable
 ]
 
-{ #category : 'geometry testing' }
+{ #category : 'geometry - testing' }
 ScrollPane >> vIsScrollbarShowing [
 	"Return true if a retractable scroll bar is currently showing"
 
 	^submorphs includes: scrollBar
 ]
 
-{ #category : 'geometry testing' }
+{ #category : 'geometry - testing' }
 ScrollPane >> vIsScrolled [
 	"If the scroller is not set to y = 0, then the pane has been scrolled."
 	^scroller offset y > 0

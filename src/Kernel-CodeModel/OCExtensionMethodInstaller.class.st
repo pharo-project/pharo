@@ -19,7 +19,7 @@ OCExtensionMethodInstaller >> initialize [
 { #category : 'installing' }
 OCExtensionMethodInstaller >> install: method into: extension compiler: compiler [
 
-	| literalIndex scopedSelector visibleExtensions methodCopyInExtendedClass selectorSymbol packagesToRecompile |
+	| literalIndex scopedSelector visibleExtensions methodCopyInExtendedClass selectorSymbol packagesToRecompile existingMethod isLegacyExtension |
 
 	selectorSymbol := method selector.
 	scopedSelector := extension internScopedSelector: selectorSymbol.
@@ -33,18 +33,26 @@ OCExtensionMethodInstaller >> install: method into: extension compiler: compiler
 	literalIndex > 0 ifTrue: [
 		"Then, patching the literal should fix also sends to this selector in the method"
 		method literalAt: literalIndex put: scopedSelector ].
+	"Also set the extension class into the method.
+	The method belongs to the extension and not to the extended class."
+	method methodClass: extension.
 	
 	super install: method into: extension compiler: compiler.
 	
 	"If the extension overwrites a normal method, then install a conflict method"
 	visibleExtensions := scopedSelector extensionsOn: extension extendedClass.
-	methodCopyInExtendedClass := (extension extendedClass methodDictionary includesKey: selectorSymbol)
-		                             ifTrue: [
-				                             ConflictMethod new
-					                             overwrittenSelector: selectorSymbol;
-					                             conflictingClass: extension extendedClass;
-					                             conflictingExtensions: visibleExtensions;
-					                             yourself ]
+	
+	
+	existingMethod := extension extendedClass methodDict at: selectorSymbol ifAbsent: [ nil ].
+	isLegacyExtension := Extension allowMigration and: [existingMethod notNil and: [ existingMethod isExtension ]].
+
+	methodCopyInExtendedClass := ((extension extendedClass methodDictionary includesKey: selectorSymbol) and: [ isLegacyExtension not ])
+    										ifTrue: [ 
+        										ConflictMethod new
+            										overwrittenSelector: selectorSymbol;
+            										conflictingClass: extension extendedClass;
+            										conflictingExtensions: visibleExtensions;
+            										yourself ]
 		                             ifFalse: [
 				                             visibleExtensions size > 1
 					                             ifTrue: [

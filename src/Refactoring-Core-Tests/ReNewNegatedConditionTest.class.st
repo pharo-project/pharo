@@ -13,16 +13,37 @@ Class {
 ReNewNegatedConditionTest >> model [
 
 	^ model ifNil: [
-			  model := RBNamespace onEnvironment: (RBClassEnvironment classes: {
-						            Number.
-						            Object }) ]
+		  model := RBNamespace onEnvironment: (RBClassEnvironment classes: { Object }).
+		  model
+			  defineClass: [ :aBuilder |
+				  aBuilder
+					  superclass: Object;
+					  name: #ReNewNegatedConditionConcrete;
+					  package: #'Refactory-Test data' ];
+			  defineClass: [ :aBuilder |
+				  aBuilder
+					  superclass: Object;
+					  name: #ReNewNegatedConditionReference;
+					  package: #'Refactory-Test data' ];
+			  defineClass: [ :aBuilder |
+				  aBuilder
+					  superclass: Object;
+					  name: #ReNewNegatedConditionAbstract;
+					  package: #'Refactory-Test data' ].
+		  (model classNamed: #ReNewNegatedConditionReference)
+			  compile: 'reference ^ ReNewNegatedConditionConcrete'
+			  classified: #testing.
+		  (model classNamed: #ReNewNegatedConditionAbstract)
+			  compile: 'required self subclassResponsibility'
+			  classified: #testing.
+		  model ]
 ]
 
 { #category : 'tests' }
 ReNewNegatedConditionTest >> testNegatedFalseConditionViolators [
 
 	| cls notcond condition |
-	cls := self model classNamed: #Object.
+	cls := self model classNamed: #ReNewNegatedConditionConcrete.
 	condition := ReClassesAreAbstractCondition new classes: { cls }.
 	notcond := condition not.
 
@@ -39,7 +60,7 @@ ReNewNegatedConditionTest >> testNegatedFalseConditionViolators [
 ReNewNegatedConditionTest >> testNegatedTrueConditionViolators [
 
 	| cls notcond condition |
-	cls := self model classNamed: #Number.
+	cls := self model classNamed: #ReNewNegatedConditionAbstract.
 	condition := ReClassesAreAbstractCondition new classes: { cls }.
 	notcond := condition not.
 

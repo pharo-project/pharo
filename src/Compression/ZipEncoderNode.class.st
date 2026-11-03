@@ -81,11 +81,6 @@ ZipEncoderNode >> frequency [
 ]
 
 { #category : 'accessing' }
-ZipEncoderNode >> frequency: aNumber [
-	frequency := aNumber
-]
-
-{ #category : 'accessing' }
 ZipEncoderNode >> height [
 	^height
 ]

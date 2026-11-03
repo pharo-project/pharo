@@ -6,10 +6,10 @@ TemporaryVariable >> styleNameIn: aVariableNode [
 	^ self isDefinedByBlock
 		  ifTrue: [
 			  aVariableNode isDefinition
-				  ifTrue: [ #blockPatternTempVar ]
-				  ifFalse: [ #blockTempVar ] ]
+				  ifTrue: [ 'blockPatternTempVar' ]
+				  ifFalse: [ 'blockTempVar' ] ]
 		  ifFalse: [
 			  aVariableNode isDefinition
-				  ifTrue: [ #patternTempVar ]
-				  ifFalse: [ #tempVar ] ]
+				  ifTrue: [ 'patternTempVar' ]
+				  ifFalse: [ 'tempVar' ] ]
 ]

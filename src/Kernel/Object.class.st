@@ -539,8 +539,10 @@ Object >> clone [
 	"Answer a shallow copy of the receiver."
 	<primitive: 148 error: ec>
 	| class newObject |
+	
 	ec == #'insufficient object memory' ifFalse:
 		[^self primitiveFailed].
+	self deprecated: 'Use shallowCopy'.
 	"If the primitive fails due to insufficient memory, instantiate via basicNew: to invoke the garbage collector before retrying, and use copyFrom: to copy state."
 	newObject := (class := self class) isVariable
 					ifTrue: [class basicNew: self basicSize]
@@ -588,28 +590,8 @@ Object >> copySameFrom: otherObject [
 
 { #category : 'copying' }
 Object >> deepCopy [
-	"Answer a copy of the receiver with its own copy of each instance variable. deepCopy does a deep copy. It should never be overridden and only be used if you want to get these very specific semantics.
-It doesn't handle cycles, #veryDeepCopy does. In the future we will make it handle cycles and deprecate veryDeepCopy"
-
-
-	| newObject class index |
-	class := self class.
-	(class == Object) ifTrue: [^self].
-	class isVariable
-		ifTrue:
-			[index := self basicSize.
-			newObject := class basicNew: index.
-			[index > 0]
-				whileTrue:
-					[newObject basicAt: index put: (self basicAt: index) deepCopy.
-					index := index - 1]]
-		ifFalse: [newObject := class basicNew].
-	index := class instSize.
-	[index > 0]
-		whileTrue:
-			[newObject instVarAt: index put: (self instVarAt: index) deepCopy.
-			index := index - 1].
-	^newObject
+	self deprecated: 'Use copy instead and migrate to copy/postCopy logic. Remember deep copy did NOT handle cycles'.
+	^ self shallowCopy postCopy
 ]
 
 { #category : 'displaying' }

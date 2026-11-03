@@ -52,6 +52,12 @@ MCClassDefinition >> addVariables: aCollection ofType: aClass [
 ]
 
 { #category : 'accessing' }
+MCClassDefinition >> basicVariables [
+
+	^ variables
+]
+
+{ #category : 'accessing' }
 MCClassDefinition >> category [
 
 	^ self tagName
@@ -640,6 +646,12 @@ MCClassDefinition >> unload [
 { #category : 'accessing' }
 MCClassDefinition >> variables [
 	^ variables ifNil: [ variables := OrderedCollection  new ]
+]
+
+{ #category : 'accessing' }
+MCClassDefinition >> variables: anObject [
+
+	variables := anObject
 ]
 
 { #category : 'installing' }

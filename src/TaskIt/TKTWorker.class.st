@@ -118,7 +118,7 @@ TKTWorker >> isRunning [
 	^ process isNotNil and: [ process isRunning ]
 ]
 
-{ #category : 'schedulling' }
+{ #category : 'scheduling' }
 TKTWorker >> isWorker [
 	^ true
 ]

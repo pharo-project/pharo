@@ -1308,7 +1308,7 @@ OCParser >> stepBar [
 
 	"Because the current token might escape, we need to update the old curent token and create a new current token"
 	currentToken value: '|'.
-	currentToken := currentToken clone.
+	currentToken := currentToken copy.
 	currentToken value: value allButFirst.
 	currentToken start: currentToken start + 1
 ]

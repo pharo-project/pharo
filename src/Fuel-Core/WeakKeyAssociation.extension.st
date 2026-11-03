@@ -8,5 +8,6 @@ WeakKeyAssociation >> fuelCheckEphemeronSupport [
 
 { #category : '*Fuel-Core' }
 WeakKeyAssociation >> fuelWasMourned [
-	^ (self container includesKey: key) not
+
+	^ (self container includesKey: self key) not
 ]

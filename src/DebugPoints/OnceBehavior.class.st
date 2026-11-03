@@ -18,6 +18,8 @@ OnceBehavior class >> isAbstract [
 
 { #category : 'execution' }
 OnceBehavior >> execute [
+	"Return true if execution should continue and false if it should interrupt."
+	
 	self debugPoint enabled: false.
-	^true.
+	^ true
 ]

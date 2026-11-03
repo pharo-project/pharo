@@ -6,7 +6,7 @@ This repository contains sources of the [Pharo language](http://pharo.org/). Pha
   <a href="https://www.pharo.org">
     <img alt="Pharo" src="https://img.shields.io/static/v1?style=for-the-badge&message=Pharo&color=3297d4&logo=Harbor&logoColor=FFFFFF&label=" />
   </a>
-  <a href="https://discord.gg/QewZMZa">  
+  <a href="https://discord.gg/QewZMZa">
     <img alt="Discord online members" src="https://img.shields.io/discord/223421264751099906?color=5865F2&label=Discord&style=for-the-badge" />
   </a>
   <img alt="Commit activity per month" src="https://img.shields.io/github/commit-activity/m/pharo-project/pharo?style=for-the-badge" />

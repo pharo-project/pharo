@@ -27,6 +27,13 @@ ReRenameClassRefactoring class >> basicMenuItemString [
 	^ 'Rename'
 ]
 
+{ #category : 'partial instantiation' }
+ReRenameClassRefactoring class >> model: aRBNamespace rename: aClassName [ 
+	^ self new
+		model: aRBNamespace;
+		className: aClassName ; yourself
+]
+
 { #category : 'instance creation' }
 ReRenameClassRefactoring class >> model: aRBNamespace rename: aClass to: aNewName [
 	^ self new
@@ -62,7 +69,7 @@ ReRenameClassRefactoring >> applicabilityPreconditions [
 { #category : 'preconditions' }
 ReRenameClassRefactoring >> breakingChangePreconditions [
 
-	^ { (ReSharedVariableShadowingClassNameCondition name: newName oldName: className model: self model) }
+	^ { self hasShadowingPrecondition }
 ]
 
 { #category : 'initialization' }
@@ -83,6 +90,15 @@ ReRenameClassRefactoring >> className: aName newName: aNewName [
 { #category : 'preconditions' }
 ReRenameClassRefactoring >> doesClassToBeRenamedExist [
 	^ class isNotNil 
+]
+
+{ #category : 'preconditions' }
+ReRenameClassRefactoring >> hasShadowingPrecondition [
+
+	^ ReSharedVariableShadowingClassNameCondition
+		name: newName
+		oldName: className
+		model: self model
 ]
 
 { #category : 'preconditions' }

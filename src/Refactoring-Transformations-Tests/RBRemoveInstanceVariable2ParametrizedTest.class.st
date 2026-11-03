@@ -11,6 +11,8 @@ RBRemoveInstanceVariable2ParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> ReRemoveInstanceVariableRefactoring .
 					  #constructor -> #variable:class: };
+		addCase: { #rbClass -> RBRemoveVariableTransformation .
+					  #constructor -> #instanceVariable:class: };
 		yourself
 ]
 
@@ -77,12 +79,6 @@ RBRemoveInstanceVariable2ParametrizedTest >> testRemoveNonLocalInstanceVariableP
 	self deny: (subsubclass directlyDefinesInstanceVariable: #foo1).
 	self assert: (subsubclass definesInstanceVariable: #foo1).
 	self assert: (subclass definesInstanceVariable: #foo1)
-]
-
-{ #category : 'failure tests' }
-RBRemoveInstanceVariable2ParametrizedTest >> testShouldWarnWhenVariableReferenced [
-
-	self shouldWarn: (self createRefactoringWithModel: model andArguments:  { 'name'. #RBLintRuleTestData })
 ]
 
 { #category : 'tests' }

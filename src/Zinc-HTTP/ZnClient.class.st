@@ -601,7 +601,7 @@ ZnClient >> getConnectionAndExecute [
 	self canReuseConnection
 		ifTrue: [
 			[ ^ self executeRequestResponse; cleanupConnection ]
-				on: Exception
+				on: Error
 				do: [ :exception | self logIgnoringExceptionOnReusedConnection: exception; close ] ].
 	self newConnectionTo: request url.
 	[ self executeRequestResponse ]
@@ -966,6 +966,13 @@ ZnClient >> maximumEntitySize: integer [
 ]
 
 { #category : 'options' }
+ZnClient >> maximumLineLength: integer [
+	"Set the maximum line length in bytes that I will read from a stream before signalling ZnLineTooLong"
+
+	self localOptions at: #maximumLineLength put: integer
+]
+
+{ #category : 'options' }
 ZnClient >> maximumNumberOfDictionaryEntries [
 	"Return the maximum number of entries allowed in ZnMutliValueDictionaries before signalling ZnTooManyDictionaryEntries. This protects us from overflow attacks."
 
@@ -1308,7 +1315,7 @@ ZnClient >> receiveCookies [
 		self session cookieJar add: each ]
 ]
 
-{ #category : 'private protocol' }
+{ #category : 'private - protocol' }
 ZnClient >> redirectUrl [
 	"We support both absolute and relative locations (http://en.wikipedia.org/wiki/HTTP_location)"
 
@@ -1459,7 +1466,7 @@ ZnClient >> setupTLSTo: url [
 	connection sslSession certificateName: self certificate.
 
 	[ connection sslSession serverName: url host ]
-		on: PrimitiveFailed
+		on: SocketError, PrimitiveFailed
 		do: [ :error | "log it?" ].
 
 	connection connect

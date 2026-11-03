@@ -58,7 +58,7 @@ ColorMappingCanvas >> drawPolygon: vertices color: aColor borderWidth: bw border
 		borderColor: (self mapColor: bc)
 ]
 
-{ #category : 'drawing  -text' }
+{ #category : 'drawing - text' }
 ColorMappingCanvas >> drawString: s from: firstIndex to: lastIndex in: boundsRect font: fontOrNil color: c [
 	"Draw the given string in the given font and color clipped to the given rectangle. If the font is nil, the default font is used."
 	myCanvas
@@ -68,7 +68,7 @@ ColorMappingCanvas >> drawString: s from: firstIndex to: lastIndex in: boundsRec
 		color: (self mapColor: c)
 ]
 
-{ #category : 'drawing  -text' }
+{ #category : 'drawing - text' }
 ColorMappingCanvas >> drawString: s from: firstIndex to: lastIndex in: boundsRect font: fontOrNil color: c underline: underline underlineColor: uc strikethrough: strikethrough strikethroughColor: sc [
 	"Draw the given string in the given font and color clipped to the given rectangle. If the font is nil, the default font is used."
 	myCanvas
@@ -154,6 +154,18 @@ ColorMappingCanvas >> line: pt1 to: pt2 width: w color: c [
 { #category : 'private' }
 ColorMappingCanvas >> mapColor: aColor [
 	^aColor
+]
+
+{ #category : 'accessing' }
+ColorMappingCanvas >> myCanvas [
+
+	^ myCanvas
+]
+
+{ #category : 'accessing' }
+ColorMappingCanvas >> myCanvas: anObject [
+
+	myCanvas := anObject
 ]
 
 { #category : 'initialization' }

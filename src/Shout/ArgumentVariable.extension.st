@@ -6,10 +6,10 @@ ArgumentVariable >> styleNameIn: aVariableNode [
 	^ self isDefinedByBlock
 		  ifTrue: [
 			  aVariableNode isDefinition
-				  ifTrue: [ #blockPatternArg ]
-				  ifFalse: [ #blockArg ] ]
+				  ifTrue: [ 'blockPatternArg' ]
+				  ifFalse: [ 'blockArg' ] ]
 		  ifFalse: [
 			  aVariableNode isDefinition			
-				  ifTrue: [ #patternArg ]
-				  ifFalse: [ #argument ] ]
+				  ifTrue: [ 'patternArg' ]
+				  ifFalse: [ 'argument' ] ]
 ]

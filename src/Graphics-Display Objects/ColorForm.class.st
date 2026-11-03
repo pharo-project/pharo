@@ -44,7 +44,7 @@ ColorForm class >> mappingWhiteToTransparentFrom: aFormOrCursor [
 	aFormOrCursor depth <= 8 ifFalse: [
 		^ self error: 'argument depth must be 8-bits per pixel or less'].
 	(aFormOrCursor isColorForm) ifTrue: [
-		f := aFormOrCursor deepCopy.
+		f := aFormOrCursor copy.
 		map := aFormOrCursor colors.
 	] ifFalse: [
 		f := ColorForm extent: aFormOrCursor extent depth: aFormOrCursor depth.
@@ -190,15 +190,6 @@ ColorForm >> copy: aRect [
 	^ newForm
 ]
 
-{ #category : 'copying' }
-ColorForm >> deepCopy [
-
-	^ self shallowCopy
-		bits: bits copy;
-		offset: offset copy;
-		colors: colors
-]
-
 { #category : 'private' }
 ColorForm >> depth: bitsPerPixel [
 
@@ -302,6 +293,13 @@ ColorForm >> pixelValueAt: aPoint [
 	"Details: To get the raw pixel value, be sure the peeker's colorMap is nil."
 
 	^ (BitBlt bitPeekerFromForm: self) colorMap: nil; pixelAt: aPoint
+]
+
+{ #category : 'copying' }
+ColorForm >> postCopy [
+
+	super postCopy.
+	self colors: colors
 ]
 
 { #category : 'file in/out' }

@@ -9,7 +9,7 @@ Class {
 	#tag : 'Potential Bugs'
 }
 
-{ #category : 'testing-interest' }
+{ #category : 'testing - interest' }
 ReTempVarOverridesInstVarRule class >> checksMethod [
 	^ true
 ]

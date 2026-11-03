@@ -81,7 +81,7 @@ DockingBarMorph >> aboutToBeGrabbedBy: aHand [
 		ifFalse: [self center: aHand position]
 ]
 
-{ #category : 'events-processing' }
+{ #category : 'events - processing' }
 DockingBarMorph >> activate: evt [
 	"Receiver should be activated; e.g., so that control passes
 	correctly."
@@ -415,7 +415,7 @@ DockingBarMorph >> gradientRamp: colorRamp [
 	self updateColor
 ]
 
-{ #category : 'events-processing' }
+{ #category : 'events - processing' }
 DockingBarMorph >> handleFocusEvent: evt [
 	"Handle focus events. Valid menu transitions are determined based on the menu currently holding the focus after the mouse went down on one of its children."
 
@@ -434,12 +434,12 @@ DockingBarMorph >> handleFocusEvent: evt [
 	selectedItem ifNotNil:[(selectedItem activateSubmenu: evt) ifTrue:[^self]]
 ]
 
-{ #category : 'events-processing' }
+{ #category : 'events - processing' }
 DockingBarMorph >> handlesKeyboard: evt [
 	^ true
 ]
 
-{ #category : 'events-processing' }
+{ #category : 'events - processing' }
 DockingBarMorph >> handlesMouseDown: evt [
 	^ true
 ]
@@ -542,7 +542,7 @@ DockingBarMorph >> justDroppedInto: aMorph event: anEvent [
 	self beFloating
 ]
 
-{ #category : 'events-processing' }
+{ #category : 'events - processing' }
 DockingBarMorph >> keyDown: anEvent [
 	"Handle menu navigation"
 
@@ -562,7 +562,7 @@ DockingBarMorph >> morphicLayerNumber [
 	^ 11
 ]
 
-{ #category : 'events-processing' }
+{ #category : 'events - processing' }
 DockingBarMorph >> mouseDown: anEvent [
 	"Release the mouse focus if clicked outside the receiver."
 
@@ -571,7 +571,7 @@ DockingBarMorph >> mouseDown: anEvent [
 	^super mouseDown: anEvent
 ]
 
-{ #category : 'events-processing' }
+{ #category : 'events - processing' }
 DockingBarMorph >> mouseUp: evt [
 	"If we click on a selected item with an action we want to execute the action and deselect the menu item."
 
@@ -586,7 +586,7 @@ DockingBarMorph >> mouseUp: evt [
 	self selectItem: nil event: evt
 ]
 
-{ #category : 'events-processing' }
+{ #category : 'events - processing' }
 DockingBarMorph >> moveSelectionRight: direction event: anEvent [
 	"Move the current selection left or right by one, presumably under keyboard control.
 	direction = +/-1"

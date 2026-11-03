@@ -3,7 +3,7 @@ A SycCategorizeAllUnclassifiedMethodsCommandTest is a test class for testing the
 "
 Class {
 	#name : 'SycCategorizeAllUnclassifiedMethodsCommandTest',
-	#superclass : 'TestCase',
+	#superclass : 'SycAbstractCommandTest',
 	#category : 'SystemCommands-ClassCommands-Tests-Tests',
 	#package : 'SystemCommands-ClassCommands-Tests',
 	#tag : 'Tests'
@@ -21,8 +21,8 @@ SycCategorizeAllUnclassifiedMethodsCommandTest >> setUp [
 { #category : 'running' }
 SycCategorizeAllUnclassifiedMethodsCommandTest >> tearDown [
 
-	SycCategorizeAllUnclassifiedTestClass methods do: [ :each |
-		each unclassify ].
+	SycCategorizeAllUnclassifiedTestClass >> #initialize protocol: #initialization.
+	SycCategorizeAllUnclassifiedTestClass >> #name protocol: #accessing.
 
 	super tearDown
 ]

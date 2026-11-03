@@ -3,18 +3,13 @@ Extension { #name : 'ScrollBarMorph' }
 { #category : '*Morphic-Widgets-FastTable' }
 ScrollBarMorph >> canScrollDown [
 
-	^value < 1
+	^ self value < 1
 ]
 
 { #category : '*Morphic-Widgets-FastTable' }
 ScrollBarMorph >> canScrollUp [
 
-	^value > 0
-]
-
-{ #category : '*Morphic-Widgets-FastTable' }
-ScrollBarMorph >> pageDelta [
-	^ pageDelta
+	^ self value > 0
 ]
 
 { #category : '*Morphic-Widgets-FastTable' }

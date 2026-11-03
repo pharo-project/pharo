@@ -18,16 +18,6 @@ SycMoveMethodsToClassSideCommand class >> canBeExecutedInContext: aToolContext [
 ]
 
 { #category : 'accessing' }
-SycMoveMethodsToClassSideCommand >> defaultMenuIconName [
-	^ #smallRedo
-]
-
-{ #category : 'accessing' }
-SycMoveMethodsToClassSideCommand >> defaultMenuItemName [
-	^'Move to class side'
-]
-
-{ #category : 'accessing' }
 SycMoveMethodsToClassSideCommand >> description [
 
 	^ 'Move method to the class side.'
@@ -39,6 +29,16 @@ SycMoveMethodsToClassSideCommand >> execute [
 	(ReMoveMethodsToClassSideDriver 
 		scopes: refactoringScopes 
 		methods: methods) runRefactoring
+]
+
+{ #category : 'accessing' }
+SycMoveMethodsToClassSideCommand >> iconName [
+	^ #smallRedo
+]
+
+{ #category : 'accessing' }
+SycMoveMethodsToClassSideCommand >> name [
+	^'Move to class side'
 ]
 
 { #category : 'execution' }

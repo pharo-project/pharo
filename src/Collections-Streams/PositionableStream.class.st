@@ -103,6 +103,18 @@ PositionableStream >> boolean: aBoolean [
 	self nextPut: (aBoolean ifTrue: [1] ifFalse: [0])
 ]
 
+{ #category : 'accessing' }
+PositionableStream >> collection [
+
+	^ collection
+]
+
+{ #category : 'accessing' }
+PositionableStream >> collection: anObject [
+
+	collection := anObject
+]
+
 { #category : 'private' }
 PositionableStream >> collectionSpecies [
 	"Answer the species of collection into which the receiver can stream"
@@ -588,6 +600,18 @@ PositionableStream >> readInto: aCollection startingAt: startIndex count: n [
 			ifNil: [ ^ i ]
 			ifNotNil: [ :obj | aCollection at: startIndex + i put: obj ] ].
 	^ n
+]
+
+{ #category : 'accessing' }
+PositionableStream >> readLimit [
+
+	^ readLimit
+]
+
+{ #category : 'accessing' }
+PositionableStream >> readLimit: anObject [
+
+	readLimit := anObject
 ]
 
 { #category : 'initialization' }

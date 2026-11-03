@@ -452,7 +452,7 @@ TextMorph >> container [
 	^ container
 ]
 
-{ #category : 'geometry testing' }
+{ #category : 'geometry - testing' }
 TextMorph >> containsPoint: aPoint [
 	(super containsPoint: aPoint) ifFalse: [^ false].  "Not in my bounds"
 	container ifNil: [^ true].  "In bounds of simple text"
@@ -911,7 +911,7 @@ TextMorph >> handleKeystroke: anEvent [
 	anEvent wasHandled: true
 ]
 
-{ #category : 'events-processing' }
+{ #category : 'events - processing' }
 TextMorph >> handleMouseMove: anEvent [
 	"Re-implemented to allow for mouse-up move events"
 	anEvent wasHandled ifTrue:[^self]. "not interested"

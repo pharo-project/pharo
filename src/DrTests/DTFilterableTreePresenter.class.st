@@ -17,13 +17,13 @@ Class {
 	#tag : 'Spec'
 }
 
-{ #category : 'api - actions' }
+{ #category : 'api actions' }
 DTFilterableTreePresenter >> actions [
 
 	^ self treePresenter actions
 ]
 
-{ #category : 'api - actions' }
+{ #category : 'api actions' }
 DTFilterableTreePresenter >> actions: aCommandGroup [
 
 	self treePresenter actions: aCommandGroup

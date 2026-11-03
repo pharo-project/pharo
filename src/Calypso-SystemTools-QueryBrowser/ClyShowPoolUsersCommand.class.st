@@ -12,6 +12,12 @@ Class {
 	#tag : 'Commands-Queries'
 }
 
+{ #category : 'testing' }
+ClyShowPoolUsersCommand class >> canBeExecutedInContext: aToolContext [
+
+	^ aToolContext isClassSelected and: [ aToolContext lastSelectedClass isPool ]
+]
+
 { #category : 'activation' }
 ClyShowPoolUsersCommand class >> fullBrowserMenuActivation [
 
@@ -33,16 +39,16 @@ ClyShowPoolUsersCommand >> browser: anObject [
 	browser := anObject
 ]
 
-{ #category : 'accessing' }
-ClyShowPoolUsersCommand >> defaultMenuItemName [
-
-	^ 'Show pool users'
-]
-
 { #category : 'execution' }
 ClyShowPoolUsersCommand >> execute [
 
 	(Smalltalk tools toolNamed: #messageList) browseUsersOfSharedPool: classes first
+]
+
+{ #category : 'accessing' }
+ClyShowPoolUsersCommand >> name [
+
+	^ 'Show pool users'
 ]
 
 { #category : 'execution' }

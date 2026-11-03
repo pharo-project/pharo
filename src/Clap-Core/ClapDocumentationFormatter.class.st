@@ -46,12 +46,12 @@ ClapDocumentationFormatter >> listIndent [
 	^ 4
 ]
 
-{ #category : 'formattting' }
+{ #category : 'formatting' }
 ClapDocumentationFormatter >> newLine [
 	^ stream newLine
 ]
 
-{ #category : 'formattting' }
+{ #category : 'formatting' }
 ClapDocumentationFormatter >> section: titleString with: contentsBlock [
 	| contents |
 	contents := self class new.
@@ -69,19 +69,18 @@ ClapDocumentationFormatter >> space [
 	^ stream space
 ]
 
-{ #category : 'formattting' }
+{ #category : 'formatting' }
 ClapDocumentationFormatter >> space: anInteger [
 	anInteger timesRepeat: [ stream space ]
 ]
 
 { #category : 'initialization' }
 ClapDocumentationFormatter >> stream: aStream [
-	stream := 	(aStream respondsTo: #newLine)
-		ifTrue: [ aStream ]
-		ifFalse: [ ZnNewLineWriterStream on: aStream ]
+
+	stream := ZnNewLineWriterStream on: aStream
 ]
 
-{ #category : 'formattting' }
+{ #category : 'formatting' }
 ClapDocumentationFormatter >> tabularize: associations [
 	associations do: [ :each |
 		| keyWidth |
@@ -95,7 +94,7 @@ ClapDocumentationFormatter >> tabularize: associations [
 		self newLine ]
 ]
 
-{ #category : 'formattting' }
+{ #category : 'formatting' }
 ClapDocumentationFormatter >> text: aString [
 	stream nextPutAll: aString
 ]

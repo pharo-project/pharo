@@ -55,7 +55,7 @@ OldPharoClassDefinitionPrinter >> basicMetaclassDefinitionString [
 		  self instanceVariablesOn: stream ]
 ]
 
-{ #category : 'public API' }
+{ #category : 'public api' }
 OldPharoClassDefinitionPrinter >> classDefinitionString [
 
 	^ forClass needsSlotClassDefinition
@@ -83,7 +83,7 @@ OldPharoClassDefinitionPrinter >> instanceVariablesOn: stream [
 	stream nextPut: $'
 ]
 
-{ #category : 'public API' }
+{ #category : 'public api' }
 OldPharoClassDefinitionPrinter >> metaclassDefinitionString [
 
 	^ forClass needsSlotClassDefinition

@@ -10,6 +10,12 @@ Class {
 	#tag : 'Creation'
 }
 
+{ #category : 'testing' }
+SycCmInsertSuperclassCommand2 >> canBeExecuted [
+
+	^ context lastSelectedClass isTrait not
+]
+
 { #category : 'executing' }
 SycCmInsertSuperclassCommand2 >> executeRefactoring [
 	"The class name is necessary so the browser can select the new subclass"
@@ -27,12 +33,6 @@ SycCmInsertSuperclassCommand2 >> executeRefactoring [
 { #category : 'accessing' }
 SycCmInsertSuperclassCommand2 >> icon [
 	^ self iconNamed: #smallLoadProject
-]
-
-{ #category : 'testing' }
-SycCmInsertSuperclassCommand2 >> isApplicable [
-
-	^ context lastSelectedClass isTrait not
 ]
 
 { #category : 'accessing' }

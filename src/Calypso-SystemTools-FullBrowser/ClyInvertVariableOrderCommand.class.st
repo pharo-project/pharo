@@ -17,14 +17,14 @@ ClyInvertVariableOrderCommand class >> browserContextMenuActivation [
 	^CmdContextMenuActivation byItemOf: CmdExtraMenuGroup for: ClyVariableMethodGroup asCalypsoItemContext
 ]
 
-{ #category : 'accessing' }
-ClyInvertVariableOrderCommand >> defaultMenuItemName [
-	^'Invert hierarchy'
-]
-
 { #category : 'execution' }
 ClyInvertVariableOrderCommand >> execute [
 
 	ClySubclassHierarchy invertVariableHierarchy.
 	browser switchToVariables
+]
+
+{ #category : 'accessing' }
+ClyInvertVariableOrderCommand >> name [
+	^'Invert hierarchy'
 ]

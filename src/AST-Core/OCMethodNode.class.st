@@ -631,7 +631,7 @@ OCMethodNode >> selectorParts [
 	^ self keywords collect: [:each | each asSymbol]
 ]
 
-{ #category : 'accessing compiled method' }
+{ #category : 'accessing - compiled method' }
 OCMethodNode >> semanticScope: aSemanticScope [
 	compilationContext ifNil: [
 		compilationContext := aSemanticScope targetClass compiler compilationContext].

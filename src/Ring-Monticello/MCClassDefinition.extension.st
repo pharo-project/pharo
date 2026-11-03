@@ -60,16 +60,15 @@ MCClassDefinition >> ensureRingDefinitionIn: anRGEnvironment package: anRGPackag
 MCClassDefinition >> ring2LayoutType [
 
 	^ (Dictionary newFrom: {
-		#compiledMethod -> RGCompiledMethodLayout.
-		#bytes -> RGByteLayout.
-		#immediate -> RGImmediateLayout.
-		#words -> RGWordLayout.
-		#week -> RGWeakLayout.
-		#variable -> RGVariableLayout.
-		#ephemeron -> RGEphemeronLayout.
-		#normal -> RGFixedLayout.
-		#weak -> RGWeakLayout.
-		#DoubleByteLayout -> RGDoubleByteLayout.
-		#DoubleWordLayout -> RGDoubleWordLayout
-	}) at: type
+			   (#compiledMethod -> RGCompiledMethodLayout).
+			   (#bytes -> RGByteLayout).
+			   (#immediate -> RGImmediateLayout).
+			   (#words -> RGWordLayout).
+			   (#week -> RGWeakLayout).
+			   (#variable -> RGVariableLayout).
+			   (#ephemeron -> RGEphemeronLayout).
+			   (#normal -> RGFixedLayout).
+			   (#weak -> RGWeakLayout).
+			   (#DoubleByteLayout -> RGDoubleByteLayout).
+			   (#DoubleWordLayout -> RGDoubleWordLayout) }) at: self type
 ]

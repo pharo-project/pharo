@@ -521,12 +521,6 @@ StrikeFont >> createCharacterToGlyphMap [
         ^ nil
 ]
 
-{ #category : 'copying' }
-StrikeFont >> deepCopy [
- " there is a circular reference from the derivative fonts back to the receiver. It is therefore not possible to make a deep copy. We make a sahllow copy. The method postCopy can be used to modify the shallow copy. "
-  ^self copy
-]
-
 { #category : 'emphasis' }
 StrikeFont >> derivativeFont: aStrikeFont at: index [
 
@@ -982,7 +976,7 @@ StrikeFont >> makeBoldGlyphs [
 	"Make a bold set of glyphs with same widths by ORing 1 bit to the right
 		(requires at least 1 pixel of intercharacter space)"
 	| g bonkForm |
-	g := glyphs deepCopy.
+	g := glyphs copy.
 	bonkForm := (Form extent: 1 @ 16) fillBlack offset: -1 @ 0.
 	self
 		bonk: g
@@ -1031,8 +1025,9 @@ StrikeFont >> makeCarriageReturnsWhite [
 StrikeFont >> makeCondensedGlyphs [
 	"Make a condensed set of glyphs with same widths.
 	NOTE: this has been superceded by kerning -- should not get called"
+	
 	| g newXTable x x1 w |
-	g := glyphs deepCopy.
+	g := glyphs copy.
 	newXTable := Array new: xTable size.
 	newXTable
 		at: 1
@@ -1235,7 +1230,7 @@ StrikeFont >> makeReturnArrow [
 StrikeFont >> makeStruckOutGlyphs [
 	"Make a struck-out set of glyphs with same widths"
 	| g |
-	g := glyphs deepCopy.
+	g := glyphs copy.
 	g fillBlack: (0 @ (self ascent - (self ascent // 3)) extent: g width @ 1).
 	glyphs := g.
 	self isSynthetic: true.
@@ -1258,7 +1253,7 @@ StrikeFont >> makeTabVisible [
 StrikeFont >> makeUnderlinedGlyphs [
 	"Make an underlined set of glyphs with same widths"
 	| g |
-	g := glyphs deepCopy.
+	g := glyphs copy.
 	g fillBlack: (0 @ (self ascent + 1) extent: g width @ 1).
 	glyphs := g.
 	self isSynthetic: true.
@@ -1365,13 +1360,13 @@ StrikeFont >> pointSize: anInteger [
 
 { #category : 'copying' }
 StrikeFont >> postCopy [
- " the receiver is a just created shallow copy. This method gives it the final touch. "
+ 	
+	super postCopy.
+   glyphs := glyphs copy.
+   xTable := xTable copy.
+   characterToGlyphMap := characterToGlyphMap copy.
 
-    glyphs := glyphs copy.
-    xTable := xTable copy.
-    characterToGlyphMap := characterToGlyphMap copy.
-
-    self reset.  " takes care of the derivative fonts "
+   self reset.  " takes care of the derivative fonts "
 ]
 
 { #category : 'printing' }

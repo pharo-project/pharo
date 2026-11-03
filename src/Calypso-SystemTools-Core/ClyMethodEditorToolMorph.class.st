@@ -80,7 +80,7 @@ ClyMethodEditorToolMorph >> chooseClassForNewMethodIfNone: aBlock [
 		  do: [ :err | aBlock value ]
 ]
 
-{ #category : 'events handling' }
+{ #category : 'event handling' }
 ClyMethodEditorToolMorph >> currentEditedAST [
 
 	^ self methodClass compiler
@@ -204,7 +204,7 @@ ClyMethodEditorToolMorph >> protocolAndPackageEditingMethod: aMethod [
 
 { #category : 'accessing' }
 ClyMethodEditorToolMorph >> protocolAndPackageEditor [
-	^(statusBar findDeeplyA: ClyProtocolEditorMorph) ifNil: [ CmdCommandAborted signal ]
+	^(statusBar findDeeplyA: ClyProtocolEditorMorph) ifNil: [ CmCommandAborted signal ]
 ]
 
 { #category : 'rubric interaction model' }
@@ -224,7 +224,7 @@ ClyMethodEditorToolMorph >> setUpTargetClasses [
 	self subclassResponsibility
 ]
 
-{ #category : 'events handling' }
+{ #category : 'event handling' }
 ClyMethodEditorToolMorph >> textChanged: aTextChanged [
 
 	super textChanged: aTextChanged.

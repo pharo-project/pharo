@@ -167,6 +167,12 @@ Paragraph >> adjustedFirstCharacterIndex [
 	^ text size - offsetToEnd
 ]
 
+{ #category : 'private' }
+Paragraph >> basicLines [
+
+	^ lines
+]
+
 { #category : 'selection' }
 Paragraph >> buildSelectionBlocksFrom: topLeft to: bottomRight [
 
@@ -271,6 +277,12 @@ Paragraph >> caretRect [
 	 or nil if the last drawing drew a range-selection rather than insertion point."
 
 	^ caretRect
+]
+
+{ #category : 'accessing' }
+Paragraph >> caretRect: anObject [
+
+	caretRect := anObject
 ]
 
 { #category : 'accessing' }
@@ -379,26 +391,27 @@ Paragraph >> composer [
 	^ composer ifNil: [composer := TextComposer new]
 ]
 
+{ #category : 'accessing' }
+Paragraph >> composer: anObject [
+
+	composer := anObject
+]
+
 { #category : 'composition' }
 Paragraph >> compositionRectangle [
 	^ container
+]
+
+{ #category : 'accessing' }
+Paragraph >> container: anObject [
+
+	container := anObject
 ]
 
 { #category : 'selection' }
 Paragraph >> containsPoint: aPoint [
 	^ (lines at: (self lineIndexForPoint: aPoint)) rectangle
 		containsPoint: aPoint
-]
-
-{ #category : 'copying' }
-Paragraph >> deepCopy [
-	"Don't want to copy the container (etc) or fonts in the TextStyle."
-	| new |
-	new := self copy.
-	new textStyle: textStyle copy
-		lines: lines copy
-		text: text deepCopy.
-	^ new
 ]
 
 { #category : 'selection' }
@@ -533,6 +546,18 @@ Paragraph >> extent [
 	^ container width @ (lines last bottom - lines first top)
 ]
 
+{ #category : 'accessing' }
+Paragraph >> extraSelectionBlocks [
+
+	^ extraSelectionBlocks
+]
+
+{ #category : 'accessing' }
+Paragraph >> extraSelectionBlocks: anObject [
+
+	extraSelectionBlocks := anObject
+]
+
 { #category : 'selection' }
 Paragraph >> extraSelectionChanged [
 	refreshExtraSelection := true
@@ -571,6 +596,12 @@ Paragraph >> findReplaceSelectionColor [
 	^  self theme currentSettings findReplaceSelectionColor
 ]
 
+{ #category : 'accessing' }
+Paragraph >> findReplaceSelectionRegex [
+
+	^ findReplaceSelectionRegex
+]
+
 { #category : 'selection' }
 Paragraph >> findReplaceSelectionRegex: aRegex [
 	findReplaceSelectionRegex := aRegex
@@ -579,6 +610,12 @@ Paragraph >> findReplaceSelectionRegex: aRegex [
 { #category : 'accessing' }
 Paragraph >> firstCharacterIndex [
 	^ firstCharacterIndex
+]
+
+{ #category : 'accessing' }
+Paragraph >> firstCharacterIndex: anObject [
+
+	firstCharacterIndex := anObject
 ]
 
 { #category : 'accessing' }
@@ -684,8 +721,20 @@ Paragraph >> lines [
 ]
 
 { #category : 'accessing' }
+Paragraph >> lines: anObject [
+
+	lines := anObject
+]
+
+{ #category : 'accessing' }
 Paragraph >> maxRightX [
 	^ maxRightX
+]
+
+{ #category : 'accessing' }
+Paragraph >> maxRightX: anObject [
+
+	maxRightX := anObject
 ]
 
 { #category : 'editing' }
@@ -748,9 +797,37 @@ Paragraph >> numberOfLines [
 	^lines size
 ]
 
+{ #category : 'accessing' }
+Paragraph >> offsetToEnd [
+
+	^ offsetToEnd
+]
+
+{ #category : 'accessing' }
+Paragraph >> offsetToEnd: anObject [
+
+	offsetToEnd := anObject
+]
+
+{ #category : 'accessing' }
+Paragraph >> positionWhenComposed [
+
+	^ positionWhenComposed
+]
+
 { #category : 'private' }
 Paragraph >> positionWhenComposed: pos [
 	positionWhenComposed := pos
+]
+
+{ #category : 'copying' }
+Paragraph >> postCopy [
+	
+	super postCopy.
+	self 
+		textStyle: textStyle copy
+		lines: lines copy
+		text: text copy
 ]
 
 { #category : 'composition' }
@@ -785,6 +862,18 @@ Paragraph >> recomposeFrom: start to: stop delta: delta [
 		into: newLines
 		priorLines: lines
 		atY: (lines at: startLine) top
+]
+
+{ #category : 'accessing' }
+Paragraph >> refreshExtraSelection [
+
+	^ refreshExtraSelection
+]
+
+{ #category : 'accessing' }
+Paragraph >> refreshExtraSelection: anObject [
+
+	refreshExtraSelection := anObject
 ]
 
 { #category : 'editing' }
@@ -882,10 +971,34 @@ Paragraph >> selectionRectsFrom: characterBlock1 to: characterBlock2 [
 	^ rects
 ]
 
+{ #category : 'accessing' }
+Paragraph >> selectionStart [
+
+	^ selectionStart
+]
+
+{ #category : 'accessing' }
+Paragraph >> selectionStart: anObject [
+
+	selectionStart := anObject
+]
+
 { #category : 'selection' }
 Paragraph >> selectionStart: startBlock selectionStop: stopBlock [
 	selectionStart := startBlock.
 	selectionStop := stopBlock
+]
+
+{ #category : 'accessing' }
+Paragraph >> selectionStop [
+
+	^ selectionStop
+]
+
+{ #category : 'accessing' }
+Paragraph >> selectionStop: anObject [
+
+	selectionStop := anObject
 ]
 
 { #category : 'accessing' }
@@ -906,6 +1019,12 @@ Paragraph >> string [
 { #category : 'accessing' }
 Paragraph >> text [
 	^ text
+]
+
+{ #category : 'accessing' }
+Paragraph >> text: anObject [
+
+	text := anObject
 ]
 
 { #category : 'accessing' }

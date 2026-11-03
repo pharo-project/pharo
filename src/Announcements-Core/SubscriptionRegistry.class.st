@@ -17,7 +17,7 @@ Class {
 	#tag : 'Subscription'
 }
 
-{ #category : 'add/remove' }
+{ #category : 'adding-removing' }
 SubscriptionRegistry >> add: subscription [
 
 	^ self protected: [
@@ -91,14 +91,14 @@ SubscriptionRegistry >> protected: aBlock [
 	^ monitor critical: [ aBlock value ]
 ]
 
-{ #category : 'add/remove' }
+{ #category : 'adding-removing' }
 SubscriptionRegistry >> remove: subscription [
 
 	^ self protected: [
 		subscriptions remove: subscription ifAbsent: nil ]
 ]
 
-{ #category : 'add/remove' }
+{ #category : 'adding-removing' }
 SubscriptionRegistry >> removeSubscriber: subscriber [
 
 	^ self protected: [ | toRemove |
@@ -107,7 +107,7 @@ SubscriptionRegistry >> removeSubscriber: subscriber [
 		subscriptions removeAll: toRemove ]
 ]
 
-{ #category : 'add/remove' }
+{ #category : 'adding-removing' }
 SubscriptionRegistry >> replace: subscription with: newOne [
 
 	" Note that it will signal an error if subscription is not there "

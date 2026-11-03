@@ -2,20 +2,24 @@ Extension { #name : 'CmdSimpleToolContext' }
 
 { #category : '*Commander-Activators-DragAndDrop' }
 CmdSimpleToolContext >> allowsDropExecutionOf: aCommand [
-	^aCommand canBeExecutedInDropContext: tool
+
+	^ aCommand canBeExecutedInDropContext: self tool
 ]
 
 { #category : '*Commander-Activators-DragAndDrop' }
 CmdSimpleToolContext >> applyDropResultOf: aCommand [
-	aCommand applyDropResultInContext: tool
+
+	aCommand applyDropResultInContext: self tool
 ]
 
 { #category : '*Commander-Activators-DragAndDrop' }
 CmdSimpleToolContext >> prepareDragActivationOf: aCommand [
-	aCommand prepareExecutionInDragContext: tool
+
+	aCommand prepareExecutionInDragContext: self tool
 ]
 
 { #category : '*Commander-Activators-DragAndDrop' }
 CmdSimpleToolContext >> prepareDropExecutionOf: aCommand [
-	aCommand prepareExecutionInDropContext: tool
+
+	aCommand prepareExecutionInDropContext: self tool
 ]

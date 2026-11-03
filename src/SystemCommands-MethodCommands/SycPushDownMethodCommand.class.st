@@ -18,16 +18,6 @@ SycPushDownMethodCommand >> asRefactorings [
 ]
 
 { #category : 'accessing' }
-SycPushDownMethodCommand >> defaultMenuIconName [
-	^ #down
-]
-
-{ #category : 'accessing' }
-SycPushDownMethodCommand >> defaultMenuItemName [
-	^'Push down'
-]
-
-{ #category : 'accessing' }
 SycPushDownMethodCommand >> description [
 
 	^ 'Push down methods.'
@@ -38,6 +28,16 @@ SycPushDownMethodCommand >> executeRefactorings [
 
 	^ ((RePushDownMethodDriver newApplication: self application) model: model scopes: refactoringScopes pushDownMethods: methods)
 		  runRefactoring
+]
+
+{ #category : 'accessing' }
+SycPushDownMethodCommand >> iconName [
+	^ #down
+]
+
+{ #category : 'accessing' }
+SycPushDownMethodCommand >> name [
+	^'Push down'
 ]
 
 { #category : 'execution' }

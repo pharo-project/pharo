@@ -231,7 +231,7 @@ TraitedClass >> recompile: selector from: oldClass [
 	TraitChange addSelector: selector on: self
 ]
 
-{ #category : 'trait-composition' }
+{ #category : 'trait composition' }
 TraitedClass >> removeFromComposition: aTrait [
 
 	self setTraitComposition: (self traitComposition copyWithoutTrait: aTrait asTraitComposition)

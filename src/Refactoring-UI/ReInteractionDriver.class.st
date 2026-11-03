@@ -72,17 +72,18 @@ ReInteractionDriver class >> refactoringsSettingsOn: aBuilder [
 	(aBuilder group: #Refactorings)
 		label: 'Refactorings';
 		description: 'Settings about the refactorings and transformations of Pharo.';
-		parent: #tools;
+		parentName: #tools;
 		with: [
 				(aBuilder group: #Previews)
 					label: 'Preview changes';
-					description: 'A list of settings to declare for which refactoring the user wants a preview of the cnahges before applying them or not.';
+					description:
+						'A list of settings to declare for which refactoring the user wants a preview of the cnahges before applying them or not.';
 					with: [
 							self drivers do: [ :aDriver |
 										(aBuilder setting: aDriver name asSymbol)
 											label: 'Preview changes: ' , aDriver menuItemString;
 											selector: #shouldPreviewChanges;
-											default: self shouldPreviewChangesByDefault;
+											defaultValue: self shouldPreviewChangesByDefault;
 											target: aDriver ] ] ]
 ]
 
@@ -143,7 +144,7 @@ ReInteractionDriver >> configureRefactoring [
 	refactoring prepareForExecution
 ]
 
-{ #category : 'ui - requests' }
+{ #category : 'ui requests' }
 ReInteractionDriver >> confirm: aString [
 
 	^ self application confirm: aString
@@ -237,7 +238,7 @@ ReInteractionDriver >> hasFailedBehaviorPreservingPreconditions [
 	^ refactoring failedBreakingChangePreconditions isNotEmpty
 ]
 
-{ #category : 'ui - requests' }
+{ #category : 'ui requests' }
 ReInteractionDriver >> inform: aString [
 	"Display a message for the user to read and then dismiss."
 

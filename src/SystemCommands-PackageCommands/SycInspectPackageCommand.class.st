@@ -9,7 +9,7 @@ package:		<Package>
 "
 Class {
 	#name : 'SycInspectPackageCommand',
-	#superclass : 'CmdCommand',
+	#superclass : 'ClyCommand',
 	#instVars : [
 		'package'
 	],
@@ -32,16 +32,6 @@ SycInspectPackageCommand class >> fullBrowserMenuActivation [
 ]
 
 { #category : 'accessing' }
-SycInspectPackageCommand >> defaultMenuIconName [
-	^ #inspect
-]
-
-{ #category : 'accessing' }
-SycInspectPackageCommand >> defaultMenuItemName [
-	^'Inspect'
-]
-
-{ #category : 'accessing' }
 SycInspectPackageCommand >> description [
 
 	^ 'Inspect package'
@@ -51,6 +41,16 @@ SycInspectPackageCommand >> description [
 SycInspectPackageCommand >> execute [
 
 	(Smalltalk tools toolNamed: #inspector) openOn: package
+]
+
+{ #category : 'accessing' }
+SycInspectPackageCommand >> iconName [
+	^ #inspect
+]
+
+{ #category : 'accessing' }
+SycInspectPackageCommand >> name [
+	^'Inspect'
 ]
 
 { #category : 'execution' }

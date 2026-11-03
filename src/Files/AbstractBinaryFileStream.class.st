@@ -208,7 +208,7 @@ AbstractBinaryFileStream >> nextInto: aBuffer [
 	^ self next: aBuffer size into: aBuffer
 ]
 
-{ #category : 'endianess' }
+{ #category : 'endianness' }
 AbstractBinaryFileStream >> nextLittleEndianNumber: n [
 	"Answer the next n bytes as a positive Integer or LargePositiveInteger, where the bytes are ordered from least significant to most significant."
 
@@ -219,7 +219,7 @@ AbstractBinaryFileStream >> nextLittleEndianNumber: n [
 	^ s
 ]
 
-{ #category : 'endianess' }
+{ #category : 'endianness' }
 AbstractBinaryFileStream >> nextLittleEndianNumber: n put: value [
 	"Answer the next n bytes as a positive Integer or LargePositiveInteger, where the bytes are ordered from least significant to most significant."
 	| bytes |

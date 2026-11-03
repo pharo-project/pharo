@@ -33,10 +33,12 @@ SystemWindow >> isTaskbarPresent [
 SystemWindow >> minimizeAfterGeneratingThumbnail [
 	"Minimize the window after thumbnail generation."
 
-	self isMinimized ifTrue: [^self].
-	isCollapsed := true.
-	paneMorphs
-		do: [:m | m delete; releaseCachedState].
+	self isMinimized ifTrue: [ ^ self ].
+	self isCollapsed: true.
+	self paneMorphs do: [ :m |
+			m
+				delete;
+				releaseCachedState ].
 	self setBoundsWithFlex: (-10 @ -10 extent: 2 @ 2).
 	self hide.
 	self layoutChanged
@@ -46,12 +48,11 @@ SystemWindow >> minimizeAfterGeneratingThumbnail [
 SystemWindow >> restoreBeforeGeneratingThumbnail [
 	"Restore the window without activating unlocking or stepping."
 
-	self isMinimized ifFalse: [^self].
-	isCollapsed := false.
+	self isMinimized ifFalse: [ ^ self ].
+	self isCollapsed: false.
 	self show.
-	self setBoundsWithFlex: fullFrame.
-	paneMorphs reverseDo: [:m |
-		self addMorph: m].
+	self setBoundsWithFlex: self fullFrame.
+	self paneMorphs reverseDo: [ :m | self addMorph: m ].
 	self layoutChanged
 ]
 
@@ -290,10 +291,10 @@ SystemWindow >> taskbarCloseHiddenWindows [
 	(ConfirmationRequest signal: 'Do you really want to close all windows hidden behind other windows?') ifFalse: [ ^ self ].
 	windows := (self world submorphs select: [ :each | each isSystemWindow ]) reversed.
 	invisible := windows withIndexSelect: [ :win :index |
-			             bounds := win fullBoundsInWorld.
+			             self bounds: win fullBoundsInWorld.
 			             parts := OrderedCollection new.
 			             other := (windows copyFrom: index + 1 to: windows size) collect: [ :each | each fullBoundsInWorld ].
-			             bounds allAreasOutsideList: other do: [ :each | parts add: each ].
+			             self bounds allAreasOutsideList: other do: [ :each | parts add: each ].
 			             parts isEmpty ].
 	invisible do: [ :each | each close ]
 ]

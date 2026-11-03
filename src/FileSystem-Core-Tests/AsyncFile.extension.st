@@ -7,27 +7,27 @@ AsyncFile >> test: byteCount fileName: fileName [
 	| buf1 buf2 bytesWritten bytesRead |
 	buf1 := String new: byteCount withAll: $x.
 	buf2 := String new: byteCount.
-	self open: fileName  asFileReference fullName forWrite: true.
-	self primWriteStart: fileHandle
+	self open: fileName asFileReference fullName forWrite: true.
+	self
+		primWriteStart: self fileHandle
 		fPosition: 0
 		fromBuffer: buf1
 		at: 1
 		count: byteCount.
-	semaphore wait.
-	bytesWritten := self primWriteResult: fileHandle.
+	self semaphore wait.
+	bytesWritten := self primWriteResult: self fileHandle.
 	self close.
 
 	self open: fileName asFileReference fullName forWrite: false.
-	self primReadStart: fileHandle fPosition: 0 count: byteCount.
-	semaphore wait.
-	bytesRead :=
-		self primReadResult: fileHandle
-			intoBuffer: buf2
-			at: 1
-			count: byteCount.
+	self primReadStart: self fileHandle fPosition: 0 count: byteCount.
+	self semaphore wait.
+	bytesRead := self
+		             primReadResult: self fileHandle
+		             intoBuffer: buf2
+		             at: 1
+		             count: byteCount.
 	self close.
 
-	buf1 = buf2 ifFalse: [self error: 'buffers do not match'].
-	^ 'wrote ', bytesWritten printString, ' bytes; ',
-	   'read ', bytesRead printString, ' bytes'
+	buf1 = buf2 ifFalse: [ self error: 'buffers do not match' ].
+	^ 'wrote ' , bytesWritten printString , ' bytes; ' , 'read ' , bytesRead printString , ' bytes'
 ]

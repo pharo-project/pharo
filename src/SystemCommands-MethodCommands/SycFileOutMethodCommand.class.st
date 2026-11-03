@@ -24,12 +24,10 @@ SycFileOutMethodCommand >> description [
 	^ 'Requests to save a textual version of the selected class to a new file in chunk format and .st extension. Instance and class side methods are both saved'
 ]
 
-{ #category : 'executing' }
-SycFileOutMethodCommand >> executeRefactoring [
-	^ Fileouter
-		fileoutNamed: self defaultFileName
-		configureWith: [ :fileouter | 
-			self methods do: [ :each | fileouter addMethod: each ] ]
+{ #category : 'execution' }
+SycFileOutMethodCommand >> execute [
+
+	^ Fileouter fileoutNamed: self defaultFileName configureWith: [ :fileouter | self methods do: [ :method | fileouter addMethod: method ] ]
 ]
 
 { #category : 'accessing' }

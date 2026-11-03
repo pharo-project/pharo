@@ -6,27 +6,57 @@ Class {
 	#tag : 'Conditions'
 }
 
+{ #category : 'accessing' }
+ReClassesAreAbstractTest >> model [
+
+	^ model ifNil: [
+		  model := RBNamespace onEnvironment: (RBClassEnvironment classes: { Object }).
+		  model
+			  defineClass: [ :aBuilder |
+				  aBuilder
+					  superclass: Object;
+					  name: #ReClassesAreAbstractConcrete;
+					  package: #'Refactory-Test data' ];
+			  defineClass: [ :aBuilder |
+				  aBuilder
+					  superclass: Object;
+					  name: #ReClassesAreAbstractReference;
+					  package: #'Refactory-Test data' ];
+			  defineClass: [ :aBuilder |
+				  aBuilder
+					  superclass: Object;
+					  name: #ReClassesAreAbstractAbstract;
+					  package: #'Refactory-Test data' ].
+		  (model classNamed: #ReClassesAreAbstractReference)
+			  compile: 'reference ^ ReClassesAreAbstractConcrete'
+			  classified: #testing.
+		  (model classNamed: #ReClassesAreAbstractAbstract)
+			  compile: 'required self subclassResponsibility'
+			  classified: #testing.
+		  model ]
+]
+
 { #category : 'tests' }
 ReClassesAreAbstractTest >> testClassIsAbstract [
-	| classNumber cond |
-	classNumber := self model classNamed: #Number.
+	| abstractClass cond |
+	abstractClass := self model classNamed: #ReClassesAreAbstractAbstract.
 	
 	cond := ReClassesAreAbstractCondition new 
-		classes: { classNumber }.
+		classes: { abstractClass }.
 		
-	" Number is abstract"
+	"The fixture explicitly defines an abstract method."
 	self assert: cond check.
 	self assert: cond violators isEmpty.
-	self assert: cond nonViolators equals: { classNumber }
+	self assert: cond nonViolators equals: { abstractClass }
 ]
 
 { #category : 'tests' }
 ReClassesAreAbstractTest >> testClassIsAbstractWithMessage [
-	| classNumber cond |
-	classNumber := self model classNamed: #Number.
+	| abstractClass cond |
+	abstractClass := self model classNamed: #ReClassesAreAbstractAbstract.
 	
 	cond := ReClassesAreAbstractCondition new 
-		classes: { classNumber }.
+		classes: { abstractClass }.
 		
 	self assert: cond errorString isEmpty
 ]
@@ -35,7 +65,7 @@ ReClassesAreAbstractTest >> testClassIsAbstractWithMessage [
 ReClassesAreAbstractTest >> testNoClassIsAbstract [
 
 	| concrete cond |
-	concrete := self model classNamed: #Object.
+	concrete := self model classNamed: #ReClassesAreAbstractConcrete.
 	cond := ReClassesAreAbstractCondition new classes: { concrete }.
 
 	self deny: cond check.
@@ -47,7 +77,7 @@ ReClassesAreAbstractTest >> testNoClassIsAbstract [
 ReClassesAreAbstractTest >> testNoClassIsAbstractWithMessage [
 
 	| concrete cond |
-	concrete := self model classNamed: #Object.
+	concrete := self model classNamed: #ReClassesAreAbstractConcrete.
 	cond := ReClassesAreAbstractCondition new classes: { concrete }.
 
 	self assert: ('*' , concrete name , '*' match: cond errorString)
@@ -57,8 +87,8 @@ ReClassesAreAbstractTest >> testNoClassIsAbstractWithMessage [
 ReClassesAreAbstractTest >> testSomeClassesAreAbstract [
 
 	| abstract concrete cond |
-	abstract := self model classNamed: #Number.
-	concrete := self model classNamed: #Object.
+	abstract := self model classNamed: #ReClassesAreAbstractAbstract.
+	concrete := self model classNamed: #ReClassesAreAbstractConcrete.
 	cond := ReClassesAreAbstractCondition new classes: {
 			        abstract.
 			        concrete }.
@@ -72,8 +102,8 @@ ReClassesAreAbstractTest >> testSomeClassesAreAbstract [
 ReClassesAreAbstractTest >> testSomeClassesAreAbstractWithMessage [
 
 	| abstract concrete cond |
-	abstract := self model classNamed: #Number.
-	concrete := self model classNamed: #Object.
+	abstract := self model classNamed: #ReClassesAreAbstractAbstract.
+	concrete := self model classNamed: #ReClassesAreAbstractConcrete.
 	cond := ReClassesAreAbstractCondition new classes: {
 			        abstract.
 			        concrete }.

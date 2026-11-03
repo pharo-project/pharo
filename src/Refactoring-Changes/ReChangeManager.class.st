@@ -123,7 +123,7 @@ ReChangeManager >> addUndoPointer: aNumber [
 	undoPointers push: aNumber
 ]
 
-{ #category : 'change-factory' }
+{ #category : 'change - factory' }
 ReChangeManager >> changeFactory [
 
 	^ changeFactory

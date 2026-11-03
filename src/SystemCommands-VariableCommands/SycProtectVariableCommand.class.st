@@ -18,16 +18,6 @@ SycProtectVariableCommand class >> sourceCodeMenuActivation [
 	^SycSourceCodeMenuActivation byRootGroupItemOrder: 1.2 for: ClySourceCodeContext
 ]
 
-{ #category : 'accessing' }
-SycProtectVariableCommand >> defaultMenuIconName [
-	^ #group
-]
-
-{ #category : 'accessing' }
-SycProtectVariableCommand >> defaultMenuItemName [
-	^'Protect'
-]
-
 { #category : 'execution' }
 SycProtectVariableCommand >> execute [ 
 
@@ -35,6 +25,16 @@ SycProtectVariableCommand >> execute [
 		   scopes: refactoringScopes 
 		   variable: variables first
 		   class: selectedClass) runRefactoring
+]
+
+{ #category : 'accessing' }
+SycProtectVariableCommand >> iconName [
+	^ #group
+]
+
+{ #category : 'accessing' }
+SycProtectVariableCommand >> name [
+	^'Protect'
 ]
 
 { #category : 'execution' }

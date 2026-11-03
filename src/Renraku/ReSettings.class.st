@@ -20,18 +20,19 @@ ReSettings class >> cleanUp [
 
 { #category : 'settings-definition' }
 ReSettings class >> resetButtonSettingsOn: aBuilder [
-	<systemsettings>
 
+	<systemsettings>
 	(aBuilder button: #resetWithInform)
 		order: 10;
 		target: ReRuleManager;
 		label: 'Rule cache';
-		parent: #qualityAssistant;
-		description: 'Renraku (the engine behind quality rules) caches the rule objects for performance boost. Here you can reset the cache, this may be useful if you''ve implemented a new rule and want to include it.';
+		parentName: #qualityAssistant;
+		description:
+			'Renraku (the engine behind quality rules) caches the rule objects for performance boost. Here you can reset the cache, this may be useful if you''ve implemented a new rule and want to include it.';
 		buttonLabel: 'Reset'
 ]
 
-{ #category : 'settings-accessing' }
+{ #category : 'settings - accessing' }
 ReSettings class >> showErrors [
 	self flag: 'switch to exception strategy completely'.
 	"Utilize the ReExceptionStrategy to either skip the exception,
@@ -41,7 +42,7 @@ ReSettings class >> showErrors [
 	^ ReExceptionStrategy current = RePassExceptionStrategy
 ]
 
-{ #category : 'settings-accessing' }
+{ #category : 'settings - accessing' }
 ReSettings class >> showErrors: aBoolean [
 
 	ReExceptionStrategy current: (aBoolean
@@ -51,14 +52,15 @@ ReSettings class >> showErrors: aBoolean [
 
 { #category : 'settings-definition' }
 ReSettings class >> showErrorsSettingsOn: aBuilder [
+
 	<systemsettings>
 	(aBuilder setting: #showErrors)
 		target: self;
 		order: 5;
-		default: false;
+		defaultValue: false;
 		label: 'Show errors (dev. only!)';
 		description: 'Signal errors that happen during critique-checking (and related). This should be used by developers.';
-		parent: #qualityAssistant
+		parentName: #qualityAssistant
 ]
 
 { #category : 'accessing' }

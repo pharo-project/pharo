@@ -24,7 +24,7 @@ FLTCreateClassOrTraitSerializationTest >> materializeSilently: aBoolean [
 	^ materialized
 ]
 
-{ #category : 'class-factory' }
+{ #category : 'class factory' }
 FLTCreateClassOrTraitSerializationTest >> newAnonymousClassOrTrait [
 	^ self explicitRequirement
 ]

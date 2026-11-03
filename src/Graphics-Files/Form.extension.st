@@ -53,31 +53,21 @@ Form >> readResourceFrom: aStream [
 	Must be specific to the receiver so that no code is filed out."
 
 	| bitsSize msb |
-	(aStream next: 4) asString = self resourceTag
-		ifFalse:
-			[aStream position: aStream position - 4.
-			^self readNativeResourceFrom: aStream].
-	width := aStream nextNumber: 4.
-	height := aStream nextNumber: 4.
-	depth := aStream nextNumber: 4.
+	(aStream next: 4) asString = self resourceTag ifFalse: [
+			aStream position: aStream position - 4.
+			^ self readNativeResourceFrom: aStream ].
+	self width: (aStream nextNumber: 4).
+	self height: (aStream nextNumber: 4).
+	self basicDepth: (aStream nextNumber: 4).
 	bitsSize := aStream nextNumber: 4.
-	bitsSize = 0
-		ifFalse:
-			[bits := aStream next: bitsSize.
-			^self].
+	bitsSize = 0 ifFalse: [
+			self bits: (aStream next: bitsSize).
+			^ self ].
 	msb := (aStream nextNumber: 4) = 1.
 	bitsSize := aStream nextNumber: 4.
-	bits := Bitmap new: self bitsSize.
-	(Form
-		extent: width @ height
-		depth: depth
-		bits: (aStream next: bitsSize * 4)) displayOn: self.
-	msb = EndianDetector isBigEndian
-		ifFalse:
-			[Bitmap
-				swapBytesIn: bits
-				from: 1
-				to: bits size]
+	self bits: (Bitmap new: self bitsSize).
+	(Form extent: self width @ self height depth: self basicDepth bits: (aStream next: bitsSize * 4)) displayOn: self.
+	msb = EndianDetector isBigEndian ifFalse: [ Bitmap swapBytesIn: self bits from: 1 to: self bits size ]
 ]
 
 { #category : '*Graphics-Files' }
@@ -89,17 +79,19 @@ Form >> resourceTag [
 Form >> storeResourceOn: aStream [
 	"Store a resource representation of the receiver on aStream.
 	Must be specific to the receiver so that no code is filed out."
+
 	self hibernate.
 	aStream nextPutAll: self resourceTag asByteArray. "tag"
-	aStream nextNumber: 4 put: width.
-	aStream nextNumber: 4 put: height.
-	aStream nextNumber: 4 put: depth.
-	(bits isMemberOf: ByteArray) ifFalse:
-		"must store bitmap"
-		[aStream nextNumber: 4 put: 0. "tag"
-		aStream nextNumber: 4 put: (EndianDetector isBigEndian ifTrue:[1] ifFalse: [0])].
-	aStream nextNumber: 4 put: bits size.
-	aStream nextPutAll: bits
+	aStream nextNumber: 4 put: self width.
+	aStream nextNumber: 4 put: self height.
+	aStream nextNumber: 4 put: self basicDepth.
+	(self bits isMemberOf: ByteArray) ifFalse: [ "must store bitmap"
+			aStream nextNumber: 4 put: 0. "tag"
+			aStream nextNumber: 4 put: (EndianDetector isBigEndian
+					 ifTrue: [ 1 ]
+					 ifFalse: [ 0 ]) ].
+	aStream nextNumber: 4 put: self bits size.
+	aStream nextPutAll: self bits
 ]
 
 { #category : '*Graphics-Files' }
@@ -134,8 +126,9 @@ Form fromUser writeJPEGfileNamed: 'yourPatch.jpeg' progressive: true
 { #category : '*Graphics-Files' }
 Form >> writeOnMovie: file [
 	"Write just my bits on the file."
+
 	self unhibernate.
-	bits writeUncompressedOn: file
+	self bits writeUncompressedOn: file
 ]
 
 { #category : '*Graphics-Files' }

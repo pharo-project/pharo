@@ -171,6 +171,12 @@ SetTest >> firstCollection [
 	^ firstCollection
 ]
 
+{ #category : 'accessing' }
+SetTest >> full [
+
+	^ full
+]
+
 { #category : 'requirements' }
 SetTest >> integerCollectionWithoutEqualElements [
 " return a collection of integer without equal elements"

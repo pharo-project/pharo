@@ -105,7 +105,7 @@ FLSerializationTest >> materializer [
 	^ materializer
 ]
 
-{ #category : 'class-factory' }
+{ #category : 'class factory' }
 FLSerializationTest >> newClassOrTrait [
 	^ self classFactory silentlyNewClass
 ]

@@ -5,22 +5,16 @@ I am a refactoring for moving an instance variable up **to** the superclass of t
 Class {
 	#name : 'RePullUpInstanceVariableRefactoring',
 	#superclass : 'RBVariableRefactoring',
+	#instVars : [
+		'transformation'
+	],
 	#category : 'Refactoring-Transformations',
 	#package : 'Refactoring-Transformations'
 }
 
 { #category : 'preconditions' }
 RePullUpInstanceVariableRefactoring >> applicabilityPreconditions [
-
-	"^ { (RBCondition withBlock: [
-		   (class hierarchyDefinesInstanceVariable: variableName) ifFalse: [
-			   self refactoringError: 'No subclass defines ' , variableName ].
-		   true ]) }"
-	
-	"we will have to handle multiple variables"
-"	^ { ReHierarchyDefinesInstanceVariableCondition new instanceVariables: { variableName } ; yourself}"
-	
-	^ { (ReHierarchyDefinesInstanceVariableCondition new class: class; instanceVariables: { variableName }; yourself) }
+	^ transformation applicabilityPreconditions
 ]
 
 { #category : 'preconditions' }
@@ -34,15 +28,15 @@ RePullUpInstanceVariableRefactoring >> breakingChangePreconditions [
 			   true ]) }
 ]
 
+{ #category : 'initialization' }
+RePullUpInstanceVariableRefactoring >> model: aRBNamespace [
+	super model: aRBNamespace.
+	transformation ifNotNil: [ transformation model: aRBNamespace ]
+]
+
 { #category : 'transforming' }
 RePullUpInstanceVariableRefactoring >> privateTransform [
-	"Remove all the variables in the hierarchy below the classes and define one on the top."
-	
-	class allSubclasses do:
-			[:each |
-			(each directlyDefinesInstanceVariable: variableName)
-				ifTrue: [each removeInstanceVariable: variableName]].
-	class addInstanceVariable: variableName
+	^ transformation privateTransform
 ]
 
 { #category : 'preconditions' }
@@ -51,4 +45,13 @@ RePullUpInstanceVariableRefactoring >> subclassesNotDefiningTheVariable [
 	^ class allSubclasses 
 			reject: [ :each | each directlyDefinesInstanceVariable: variableName ]
 			 
+]
+
+{ #category : 'initialization' }
+RePullUpInstanceVariableRefactoring >> variable: aVarName class: aClassName [
+	super variable: aVarName class: aClassName.
+	transformation := RBPullUpVariableTransformation
+		model: self model
+		instanceVariable: aVarName
+		class: aClassName
 ]

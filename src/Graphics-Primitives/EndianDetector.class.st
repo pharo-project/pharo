@@ -24,7 +24,7 @@ Class {
 }
 
 { #category : 'private' }
-EndianDetector class >> calcEndianness [
+EndianDetector class >> computeEndianness [
 	"Store the least significant word of the float with 1; on big endian machines
 	 this is the second word"
 
@@ -40,7 +40,7 @@ EndianDetector class >> calcEndianness [
 { #category : 'accessing' }
 EndianDetector class >> endianness [
 
-	^ EndianCache ifNil: [ EndianCache := self calcEndianness ]
+	^ EndianCache ifNil: [ EndianCache := self computeEndianness ]
 ]
 
 { #category : 'class initialization' }

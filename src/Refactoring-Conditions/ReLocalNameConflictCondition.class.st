@@ -40,6 +40,7 @@ ReLocalNameConflictCondition >> check [
     (definingNode exactNodeDefines: variableName) ifTrue: [
         violators addIfNotPresent: variableName ].
 
+	"check if there is existing temp either above or below in AST"
     (parseTree withAllChildren anySatisfy: [ :node |
         (node exactNodeDefines: variableName) and: [
             (node withAllChildren includes: definingNode) 
@@ -69,7 +70,7 @@ ReLocalNameConflictCondition >> violationMessageOn: aStream [
 
 	^ violators do: [ :violator |
 		aStream
-			nextPutAll: ('The variable {1} is invalid in the context of the class {2}'
-         		format: { violator. class name });
-			nextPut: Character cr ].
+			nextPutAll: ('The variable name "{1}" is already defined in the current scope.'
+			format: { violator });
+			nextPut: Character cr ]
 ]

@@ -683,7 +683,7 @@ HaloMorph >> changed [
 		ifFalse: [ super changed ]
 ]
 
-{ #category : 'geometry -  testing' }
+{ #category : 'geometry - testing' }
 HaloMorph >> containsPoint: aPoint [
 	"This method is overridden so that, once up, the handles will stay up as long as the mouse is within the box that encloses all the handles even if it is not over any handle or over its owner."
 
@@ -963,7 +963,7 @@ HaloMorph >> handleSize [
 	^ 30 scaledByDisplayScaleFactor
 ]
 
-{ #category : 'meta-actions' }
+{ #category : 'meta actions' }
 HaloMorph >> handleSpecialGesture: event [
 	"Transfer the halo to the next likely recipient"
 
@@ -979,7 +979,7 @@ HaloMorph >> handleSpecialGesture: event [
 		threshold: 5
 ]
 
-{ #category : 'meta-actions' }
+{ #category : 'meta actions' }
 HaloMorph >> handlerForSpecialGestureDown:  anEvent [
 	"The special gesture for halo has been done"
 	^ self

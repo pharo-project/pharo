@@ -53,20 +53,25 @@ RBRemoveTemporaryVariableTransformation class >> variable: aString inMethod: aSe
 { #category : 'preconditions' }
 RBRemoveTemporaryVariableTransformation >> applicabilityPreconditions [
 
-	^ {
-		  self classExist.
-		 (ReDefinesSelectorsCondition new definesSelectors: (Array with: selector) in: self definingClass).
-		  (RBCondition
-			   withBlock: [
-			   self definingMethod allTemporaryVariables includes: variableName ]
-			   errorString: 'Method named ' , selector
-				   , ' does not define a temporary variable named ' , variableName).
-		  (RBCondition
-			   withBlock: [
-				   (self definingMethod allArgumentVariables includes:
-					    variableName) not ]
-			   errorString: 'Variable named ' , variableName
-				   , ' cannot be removed because it is an argument in this method') }
+	^ { 
+		self classExist.
+		(ReDefinesSelectorsCondition new definesSelectors: { selector } in: self definingClass).
+		(RBCondition
+			withBlock: [ 
+				self definingMethod allTemporaryVariables includes: variableName ]
+			errorString: 'Method named ' , selector
+				, ' does not define a temporary variable named ' , variableName).
+		(RBCondition
+			withBlock: [ 
+				(self definingMethod argumentNames includes: variableName) not ]
+			errorString: 'Variable named ' , variableName
+				, ' cannot be removed because it is an argument in this method').
+		(RBCondition
+			withBlock: [ 
+				self hasUsagesInScope not or: [ 
+					self definingClass definesInstanceVariable: variableName ] ]
+			errorString: 'Variable named ' , variableName
+				, ' cannot be removed because it is used in the method') }
 ]
 
 { #category : 'scripting api - conditions' }
@@ -83,19 +88,42 @@ RBRemoveTemporaryVariableTransformation >> classExist [
 		  errorString: 'No such class or trait named ' , className asString
 ]
 
-{ #category : 'executing' }
+{ #category : 'private - accessing' }
+RBRemoveTemporaryVariableTransformation >> definingSequenceNode [
+	"Answer the sequence whose declaration of the variable is removed, or nil when none declares it.
+	When several scopes declare the same name (a block temporary shadowing an outer one), prefer one
+	where the variable is unused: nothing refers to that declaration, so it can be removed safely."
+
+	| candidates |
+	candidates := self definingMethod allChildren select: [ :each | each isSequence and: [ each exactNodeDefines: variableName ] ].
+	candidates ifEmpty: [ ^ nil ].
+	^ candidates detect: [ :each | (self hasUsagesIn: each) not ] ifNone: [ candidates first ]
+]
+
+{ #category : 'private-testing' }
+RBRemoveTemporaryVariableTransformation >> hasUsagesIn: aSequenceNode [
+	"Answer whether a variable node refers to the declaration of the variable in aSequenceNode,
+	and not to another declaration of the same name in an inner scope."
+
+	^ aSequenceNode statements anySatisfy: [ :statement |
+			  statement withAllChildren anySatisfy: [ :node |
+				  node isVariable and: [ node name = variableName and: [ (node whichUpNodeDefines: variableName) == aSequenceNode ] ] ] ]
+]
+
+{ #category : 'private-testing' }
+RBRemoveTemporaryVariableTransformation >> hasUsagesInScope [
+
+	| definingSequence |
+	definingSequence := self definingSequenceNode.
+	definingSequence ifNil: [ ^ false ].
+	^ self hasUsagesIn: definingSequence
+]
+
+{ #category : 'transforming' }
 RBRemoveTemporaryVariableTransformation >> privateTransform [
 
-	| methodTree modifiedNode |
-	methodTree := self definingMethod.
-
-	modifiedNode := (methodTree withAllChildren select: [:each | each isSequence])
-						detect: [ :sequence | sequence exactNodeDefines: variableName ]
-						ifNone: [ nil ].
-
-	modifiedNode ifNotNil: [ modifiedNode removeTemporaryNamed: variableName ].
-
-	class compileTree: methodTree
+	self definingSequenceNode ifNotNil: [ :sequence | sequence removeTemporaryNamed: variableName ].
+	class compileTree: self definingMethod
 ]
 
 { #category : 'api' }

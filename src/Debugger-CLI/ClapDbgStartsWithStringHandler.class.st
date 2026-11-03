@@ -4,8 +4,9 @@
 Class {
 	#name : 'ClapDbgStartsWithStringHandler',
 	#superclass : 'ClapDbgDebuggerHistoryHandler',
-	#category : 'Debugger-CLI',
-	#package : 'Debugger-CLI'
+	#category : 'Debugger-CLI-Core',
+	#package : 'Debugger-CLI',
+	#tag : 'Core'
 }
 
 { #category : 'execution' }
@@ -31,5 +32,7 @@ ClapDbgStartsWithStringHandler >> handle: aString for: aDebugger [
 	unMot := aString allButFirst.
 	commandsArray := aDebugger commandsStack asArray.
 
-	^ commandsArray detect: [ :command | command beginsWith: unMot ] ifNone: [ ClapDbgHistoryEventNotFound signal: aString , ': event not found' ]
+	^ commandsArray 
+		detect: [ :command | command beginsWith: unMot ] 
+		ifNone: [ ClapDbgHistoryEventNotFound signal: aString , ': event not found' ]
 ]

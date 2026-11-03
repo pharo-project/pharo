@@ -13,6 +13,18 @@ Class {
 	#package : 'System-Time-Tests'
 }
 
+{ #category : 'accessing' }
+DateTest >> aTime [
+
+	^ aTime
+]
+
+{ #category : 'accessing' }
+DateTest >> aTime: anObject [
+
+	aTime := anObject
+]
+
 { #category : 'coverage' }
 DateTest >> classToBeTested [
 
@@ -29,6 +41,30 @@ DateTest >> dateClass [
 DateTest >> epoch [
 
 	^ Date year: 1901 month: 1 day: 1
+]
+
+{ #category : 'accessing' }
+DateTest >> january23rd2004 [
+
+	^ january23rd2004
+]
+
+{ #category : 'accessing' }
+DateTest >> january23rd2004: anObject [
+
+	january23rd2004 := anObject
+]
+
+{ #category : 'accessing' }
+DateTest >> june2nd1973 [
+
+	^ june2nd1973
+]
+
+{ #category : 'accessing' }
+DateTest >> june2nd1973: anObject [
+
+	june2nd1973 := anObject
 ]
 
 { #category : 'helpers' }

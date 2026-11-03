@@ -19,15 +19,15 @@ SycDemoteToPackageWithTagCommand >> applyResultInContext: aBrowserContext [
 	aBrowserContext showPackage: newPackage tag: tag asSymbol
 ]
 
-{ #category : 'accessing' }
-SycDemoteToPackageWithTagCommand >> defaultMenuItemName [
-	^'Demote to package with tag'
-]
-
 { #category : 'execution' }
 SycDemoteToPackageWithTagCommand >> execute [
 
 	packages
 		select: [ :package | package name includes: $- ]
 		thenDo: [ :package | package demoteToTagInPackage ]
+]
+
+{ #category : 'accessing' }
+SycDemoteToPackageWithTagCommand >> name [
+	^'Demote to package with tag'
 ]

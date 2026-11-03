@@ -154,6 +154,14 @@ WriteStream >> lf [
 	self nextPut: Character lf
 ]
 
+{ #category : 'character writing' }
+WriteStream >> newLine [
+	"Pharo uses its own new line convention inside, defined in String.
+	When there is an exchange with an external source (files, sockets), users should explicitly use newline conversions."
+
+	self nextPutAll: String newLine
+]
+
 { #category : 'accessing' }
 WriteStream >> next [
 
@@ -342,4 +350,16 @@ WriteStream >> withAttribute: att do: strmBlock [
 WriteStream >> withAttributes: attributes do: strmBlock [
 	"No-op here is overriden in TextStream for font emphasis"
 	^ strmBlock value
+]
+
+{ #category : 'accessing' }
+WriteStream >> writeLimit [
+
+	^ writeLimit
+]
+
+{ #category : 'accessing' }
+WriteStream >> writeLimit: anObject [
+
+	writeLimit := anObject
 ]

@@ -52,7 +52,7 @@ EllipseMorph >> closestPointTo: aPoint [
 	^self intersectionWithLineSegmentFromCenterTo: aPoint
 ]
 
-{ #category : 'geometry testing' }
+{ #category : 'geometry - testing' }
 EllipseMorph >> containsPoint: aPoint [
 
 	| radius other delta xOverY |

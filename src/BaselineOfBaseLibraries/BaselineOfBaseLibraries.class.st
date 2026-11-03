@@ -27,6 +27,6 @@ BaselineOfBaseLibraries >> baseline: spec [
 			spec baseline: 'Slot' with: [ spec loads: 'core' from: repository ].
 			spec baseline: 'Beacon' with: [ spec loads: #( 'CoreTests' ) from: repository ].
 			spec baseline: 'SystemBenchmark' with: [ spec loads: #( 'tests' ) from: repository ].
-			spec baseline: 'Clap' with: [ spec loads: #( 'core' ) from: repository ].
+			spec baseline: 'Clap' with: [ spec loads: #( 'Core' ) from: repository ].
 			spec baseline: 'TaskIt' with: [ spec loads: #( 'coreTests' ) from: repository ] ]
 ]

@@ -4,6 +4,9 @@ A simple refactoring to remove a shared variable.
 Class {
 	#name : 'ReRemoveSharedVariableRefactoring',
 	#superclass : 'RBVariableRefactoring',
+	#instVars : [
+		'transformation'
+	],
 	#category : 'Refactoring-Transformations',
 	#package : 'Refactoring-Transformations'
 }
@@ -29,11 +32,7 @@ ReRemoveSharedVariableRefactoring class >> remove: variable from: class [
 { #category : 'preconditions' }
 ReRemoveSharedVariableRefactoring >> applicabilityPreconditions [
 
-	^ {
-		  (ReClassesAreNotMetaClassCondition new classes: { class }).
-		  (ReDirectlyDefinesSharedVariableCondition
-			   class: class
-			   sharedVariables: { variableName }) }
+	^ transformation applicabilityPreconditions
 ]
 
 { #category : 'preconditions' }
@@ -44,6 +43,13 @@ ReRemoveSharedVariableRefactoring >> breakingChangePreconditions [
 		   referencesSharedVariable: variableName) not }
 ]
 
+{ #category : 'accessing' }
+ReRemoveSharedVariableRefactoring >> model: aRBNamespace [
+
+	super model: aRBNamespace.
+	transformation ifNotNil: [ transformation model: aRBNamespace ]
+]
+
 { #category : 'preconditions' }
 ReRemoveSharedVariableRefactoring >> preconditions [
 
@@ -52,11 +58,16 @@ ReRemoveSharedVariableRefactoring >> preconditions [
 
 { #category : 'transforming' }
 ReRemoveSharedVariableRefactoring >> privateTransform [
-	class removeClassVariable: variableName
+
+	transformation privateTransform
 ]
 
-{ #category : 'accessing' }
-ReRemoveSharedVariableRefactoring >> refactoredClass [
+{ #category : 'initialization' }
+ReRemoveSharedVariableRefactoring >> variable: aVarName class: aClassName [
 
-	^ class
+	super variable: aVarName class: aClassName.
+	transformation := RBRemoveVariableTransformation
+				  model: self model
+				  classVariable: aVarName
+				  class: aClassName
 ]

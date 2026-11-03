@@ -65,6 +65,7 @@ ClyMethodVisibilityLevel >> detectActiveState [
 
 { #category : 'accessing' }
 ClyMethodVisibilityLevel >> extraClassScope [
+
 	^ extraClassScope
 ]
 

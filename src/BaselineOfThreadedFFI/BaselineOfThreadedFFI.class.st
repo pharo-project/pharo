@@ -29,7 +29,7 @@ BaselineOfThreadedFFI >> baseline: spec [
 		group: 'Tests' with: #( 'ThreadedFFI-Tests' 'ThreadedFFI-UFFI-Tests' )
 ]
 
-{ #category : 'doits' }
+{ #category : 'do-its' }
 BaselineOfThreadedFFI >> reset [
 
 	self classNamed: #FFIMethodRegistry ifPresent: [ :class | class resetAll ].

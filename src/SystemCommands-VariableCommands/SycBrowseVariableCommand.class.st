@@ -10,18 +10,18 @@ Class {
 	#package : 'SystemCommands-VariableCommands'
 }
 
-{ #category : 'accessing' }
-SycBrowseVariableCommand >> defaultMenuIconName [
-	^#browse
-]
-
-{ #category : 'accessing' }
-SycBrowseVariableCommand >> defaultMenuItemName [
-	^'Browse'
-]
-
 { #category : 'execution' }
 SycBrowseVariableCommand >> execute [
 
 	variables last openBrowser
+]
+
+{ #category : 'accessing' }
+SycBrowseVariableCommand >> iconName [
+	^#browse
+]
+
+{ #category : 'accessing' }
+SycBrowseVariableCommand >> name [
+	^'Browse'
 ]

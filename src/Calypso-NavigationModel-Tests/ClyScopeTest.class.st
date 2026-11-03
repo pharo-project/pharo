@@ -19,6 +19,18 @@ ClyScopeTest >> createSampleScope [
 	self subclassResponsibility
 ]
 
+{ #category : 'accessing' }
+ClyScopeTest >> scope [
+
+	^ scope
+]
+
+{ #category : 'accessing' }
+ClyScopeTest >> scope: anObject [
+
+	scope := anObject
+]
+
 { #category : 'running' }
 ClyScopeTest >> setUp [
 	super setUp.

@@ -1,16 +1,16 @@
 "
-I represent a part of SettingNode that can be stored to a preference file.
+I represent a part of a setting that can be stored to a preference file.
 
-Responsibility: I keep SettingNode's stored value and I know to which SettingNode I belong.
+Responsibility: I keep a setting's stored value and I know to which setting I belong.
 
 Collaborators: 
- - SystemSettings manages all my instances, stores, load, and gives an appropriate stored value for any SettingNode.
- - StoredSettingBuilder creates instances of me.
- - I represent stored value of #realValue of a SettingNode object.
+ - SettingsManager stores and loads my instances, and updates the settings with their stored values.
+ - StoredSettingsFactory creates instances of me.
+ - I represent stored value of #realValue of a setting.
 
 Public API and Key Messages
-- realValue returns SettingNode's stored value.
-- isForSettingNode: returns true if my instance belongs to a given SettingNode.
+- realValue returns the setting's stored value.
+- isForSettingIdentifier: returns true if my instance belongs to the setting with the given identifier.
  
 Internal Representation and Key Implementation Points.
 

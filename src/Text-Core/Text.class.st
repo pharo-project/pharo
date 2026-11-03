@@ -251,12 +251,6 @@ Text >> copyWithoutExternalReferences [
 		yourself
 ]
 
-{ #category : 'copying' }
-Text >> deepCopy [
-
-	^ self copy "Both string and runs are assumed to be read-only"
-]
-
 { #category : 'displaying' }
 Text >> displayStringOn: aStream [
 	self printOn: aStream

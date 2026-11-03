@@ -35,7 +35,7 @@ DummyTestClass >> classVarWrite [
 { #category : 'accessing' }
 DummyTestClass >> id [
 
-	^ id
+	^ id   
 ]
 
 { #category : 'accessing' }

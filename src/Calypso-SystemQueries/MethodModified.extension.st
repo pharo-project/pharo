@@ -2,14 +2,14 @@ Extension { #name : 'MethodModified' }
 
 { #category : '*Calypso-SystemQueries' }
 MethodModified >> affectsMethod: aMethod [
-	^(super affectsMethod: aMethod) or: [oldMethod == aMethod]
+
+	^ (super affectsMethod: aMethod) or: [ self oldMethod == aMethod ]
 ]
 
 { #category : '*Calypso-SystemQueries' }
 MethodModified >> affectsMethodsDefinedInPackage: aPackage [
 
-	^(super affectsMethodsDefinedInPackage: aPackage) or: [
-		oldMethod package == aPackage ]
+	^ (super affectsMethodsDefinedInPackage: aPackage) or: [ self oldMethod package == aPackage ]
 ]
 
 { #category : '*Calypso-SystemQueries' }

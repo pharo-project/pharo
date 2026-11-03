@@ -89,11 +89,7 @@ UITheme class >> current: aUITheme [
 	SystemProgressMorph reset. "reset to use new fill styles"
 	ScrollBarMorph initializeImagesCache. "reset to use new arrows"
 
-	self class environment 
-		at: #SHPreferences 
-		ifPresent: [ :shPreferences | 
-			aUITheme shStyleTable 
-				ifNotNil: [ :aName | shPreferences styleTableSelector: aName ] ].
+	self class environment at: #SHPreferences ifPresent: [ :shPreferences | shPreferences themeChanged ].
 
 	self class environment at: #PolymorphSystemSettings ifPresent: [ :polymorphSystemSettings | polymorphSystemSettings desktopColor: aUITheme desktopColor ].
 
@@ -913,6 +909,12 @@ UITheme >> chooseOrRequestIn: aThemedMorph title: title labels: labels values: v
 UITheme >> classExtensionColor [
 
 	^ colorPalette classExtensionColor
+]
+
+{ #category : 'accessing' }
+UITheme >> colorPalette [
+
+	^ colorPalette
 ]
 
 { #category : 'label-styles' }

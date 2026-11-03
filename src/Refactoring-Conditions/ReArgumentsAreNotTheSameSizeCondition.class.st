@@ -13,7 +13,7 @@ Class {
 	#package : 'Refactoring-Conditions'
 }
 
-{ #category : 'intialization' }
+{ #category : 'initialization' }
 ReArgumentsAreNotTheSameSizeCondition >> oldSelector: aSelector newSelector: anOtherSelector newArgs: args [
 
 	oldSelector := aSelector.

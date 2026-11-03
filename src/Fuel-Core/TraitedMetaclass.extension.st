@@ -9,10 +9,12 @@ TraitedMetaclass >> fuelAccept: aGeneralMapper [
 TraitedMetaclass >> fuelSetTraitComposition: aTraitComposition [
 	"prevent checks while the composition hasn't been
 	fully materialized yet"
-	composition := aTraitComposition
+
+	self composition: aTraitComposition
 ]
 
 { #category : '*Fuel-Core' }
 TraitedMetaclass >> localMethodDict: aMethodDictionary [
-	localMethods := aMethodDictionary
+
+	self localMethods: aMethodDictionary
 ]

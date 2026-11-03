@@ -22,7 +22,7 @@ SimpleTestResource class >> allowAvailability [
 	^preventAvailability isNil
 ]
 
-{ #category : 'utilties' }
+{ #category : 'utilities' }
 SimpleTestResource class >> preventAvailabilityDuring: aBlock [
 	"Only setter of preventAvailability."
 

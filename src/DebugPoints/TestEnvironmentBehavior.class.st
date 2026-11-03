@@ -19,6 +19,8 @@ TestEnvironmentBehavior class >> isAbstract [
 
 { #category : 'execution' }
 TestEnvironmentBehavior >> execute [
-	^(CurrentExecutionEnvironment value isTest).
+	"Should return true if execution should continue and false if it should interrupt."
+	
+	^ CurrentExecutionEnvironment value isTest
 
 ]

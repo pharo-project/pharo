@@ -612,13 +612,6 @@ Behavior >> compiledMethodAt: selector ifPresent: aBlock ifAbsent: anotherBlock 
 	^ self methodDict at: selector ifPresent: aBlock ifAbsent: anotherBlock
 ]
 
-{ #category : 'copying' }
-Behavior >> deepCopy [
-	"Classes should only be shallowCopied or made anew."
-
-	^ self shallowCopy
-]
-
 { #category : 'accessing - method dictionary' }
 Behavior >> definedMethods [
 	"Returns the methods of classes excluding the ones of the traits or extensions"

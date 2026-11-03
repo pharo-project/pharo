@@ -22,19 +22,21 @@ CountBehavior class >> isAbstract [
 
 { #category : 'accessing' }
 CountBehavior >> count [
-	^count ifNil: [ count := 0 ].
+	^ count ifNil: [ count := 0 ]
 ]
 
 { #category : 'accessing' }
 CountBehavior >> count: anInteger [
-	count:= anInteger 
+	count := anInteger 
 ]
 
 { #category : 'execution' }
 CountBehavior >> execute [
+	"Return true if execution should continue and false if it should interrupt."
+	
 	self increaseCount.
 	DebugPointManager notifyDebugPointChanged: self debugPoint.
-	^true
+	^ true
 	
 
 	
@@ -43,6 +45,7 @@ CountBehavior >> execute [
 
 { #category : 'private' }
 CountBehavior >> increaseCount [
-	self count: self count + 1.
+
+	self count: self count + 1
 	
 ]

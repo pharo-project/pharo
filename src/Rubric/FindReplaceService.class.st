@@ -1,9 +1,13 @@
 "
-Model for a find and replace service in editors
+I am the base class of the find and replace services used by Rubric text areas.
+
+I hold the search state (find text, replacement text, case sensitivity, entire word only, wrap around, search direction, start index) and implement the find and replace engine over the text area I am attached to with #textArea:.
+
+My subclasses provide the user interface: SpRubFindReplaceService opens a Spec dialog, while RubNullFindReplaceService does nothing and is used by the text areas that have no find and replace support (see RubAbstractTextArea class>>defaultFindReplaceServiceClass).
 "
 Class {
 	#name : 'FindReplaceService',
-	#superclass : 'Model',
+	#superclass : 'Object',
 	#instVars : [
 		'findText',
 		'replaceText',
@@ -12,7 +16,8 @@ Class {
 		'wrapAround',
 		'searchBackwards',
 		'findStartIndex',
-		'isRegex'
+		'isRegex',
+		'textAreaHolder'
 	],
 	#category : 'Rubric-Editing-FindReplaceService',
 	#package : 'Rubric',
@@ -59,44 +64,50 @@ FindReplaceService >> entireWordsOnly: aBoolean [
 ]
 
 { #category : 'services' }
-FindReplaceService >> findInTextMorph: aTextMorph [
-	| where  |
-	findStartIndex
-		ifNil: [findStartIndex := self searchBackwards
-			ifTrue: [aTextMorph editor stopIndex]
-			ifFalse: [aTextMorph editor startIndex]].
-	findStartIndex > 0
-		ifTrue: [where := aTextMorph
-			findAndSelect: self findRegex
-			startingAt: findStartIndex
-			searchBackwards: self searchBackwards].
-	(where isNil and: [self wrapAround])
-		ifTrue: [ | idx |
-			idx := self searchBackwards ifTrue: [aTextMorph editor string size] ifFalse: [1].
-			where := aTextMorph
-				findAndSelect: self findRegex
-				startingAt: idx
-				searchBackwards: self searchBackwards].
-	where ifNil: [aTextMorph flash].
+FindReplaceService >> find [
+
+	| where |
+	self setStartIndex.
+	where := self findAndSelectRegex.
+	where ifNil: [ self textArea flash ].
 	^ where
 ]
 
 { #category : 'services' }
-FindReplaceService >> findNextSubstring: aSubstring inTextMorph: aTextMorph [
-	| where  |
-	findStartIndex
-		ifNil: [findStartIndex := aTextMorph editor startIndex].
-	findStartIndex > 0
-		ifTrue: [where := aTextMorph findNextString: aSubstring asString startingAt: findStartIndex].
-	(where isNil and: [self wrapAround])
-		ifTrue: [where := aTextMorph findNextString: aSubstring asString startingAt: 1].
+FindReplaceService >> findAndSelect [
+
+	| where |
+	findStartIndex > 0 ifTrue: [ where := self textArea findAndSelect: self findRegex startingAt: findStartIndex searchBackwards: self searchBackwards ].
+	(where isNil and: [ self wrapAround ]) ifTrue: [
+			| idx |
+			idx := self searchBackwards
+				       ifTrue: [ self textArea editor string size ]
+				       ifFalse: [ 1 ].
+			where := self textArea findAndSelect: self findRegex startingAt: idx searchBackwards: self searchBackwards ].
+	^ where
+]
+
+{ #category : 'services' }
+FindReplaceService >> findAndSelectRegex [
+
+	^ self findRegex ifNotNil: [ self findAndSelect ]
+]
+
+{ #category : 'services' }
+FindReplaceService >> findNext [
+
+	| where |
+	findStartIndex ifNil: [ findStartIndex := self textArea editor startIndex ].
+	findStartIndex > 0 ifTrue: [ where := self textArea findNextString: self findString startingAt: findStartIndex ].
+	(where isNil and: [ self wrapAround ]) ifTrue: [ where := self textArea findNextString: self findString asString startingAt: 1 ].
+	where ifNil: [ self textArea flash ].
 	^ where
 ]
 
 { #category : 'accessing' }
 FindReplaceService >> findPolicyChanged [
 
-	self changed: #findPolicy
+	self textArea ifNotNil: [ :textArea | textArea whenFindTextChanged: RubFindTextChanged new ]
 ]
 
 { #category : 'services' }
@@ -110,8 +121,7 @@ FindReplaceService >> findRegex [
 			ifTrue: [s asRegex]
 			ifFalse: [s asRegexIgnoringCase]]
 		on: Error
-		do: [self changed: #regexError.
-			^ '' asRegex]
+		do: [^ '' asRegex]
 ]
 
 { #category : 'accessing' }
@@ -136,6 +146,7 @@ FindReplaceService >> findText [
 
 { #category : 'accessing' }
 FindReplaceService >> findText: aStringOrText [
+
 	findText := aStringOrText asText.
 	self findPolicyChanged
 ]
@@ -162,6 +173,14 @@ FindReplaceService >> findText: aStringOrText isRegex: aBoolean entireWordsOnly:
 		self entireWordsOnly: forEntireWordsOnly
 ]
 
+{ #category : 'initialization' }
+FindReplaceService >> initialize [
+
+	super initialize.
+
+	textAreaHolder := WeakArray new: 1
+]
+
 { #category : 'accessing' }
 FindReplaceService >> isRegex [
 	^ isRegex ifNil: [isRegex := false]
@@ -181,20 +200,22 @@ FindReplaceService >> regexString [
 ]
 
 { #category : 'services' }
-FindReplaceService >> replaceAllInTextMorph: aTextMorph [
-	| startIdx |
-	startIdx := self wrapAround ifTrue: [1] ifFalse: [aTextMorph editor selectionInterval first].
-	aTextMorph replaceAll: self findRegex with: self replaceText startingAt: startIdx
+FindReplaceService >> replace [
+
+	findStartIndex := self searchBackwards
+		                  ifTrue: [ self textArea editor stopIndex ]
+		                  ifFalse: [ self textArea editor startIndex ].
+	self find ifNotNil: [ self textArea replaceSelectionWith: self replaceText ]
 ]
 
 { #category : 'services' }
-FindReplaceService >> replaceInTextMorph: aTextMorph [
+FindReplaceService >> replaceAll [
 
-	findStartIndex := self searchBackwards
-		ifTrue: [aTextMorph editor stopIndex]
-		ifFalse: [aTextMorph editor startIndex].
-	(self findInTextMorph: aTextMorph)
-		ifNotNil: [aTextMorph replaceSelectionWith: self replaceText]
+	| startIdx |
+	startIdx := self wrapAround
+		            ifTrue: [ 1 ]
+		            ifFalse: [ self textArea editor selectionInterval first ].
+	self textArea replaceAll: self findRegex with: self replaceText startingAt: startIdx
 ]
 
 { #category : 'accessing' }
@@ -215,7 +236,9 @@ FindReplaceService >> searchBackwards [
 
 { #category : 'accessing' }
 FindReplaceService >> searchBackwards: aBoolean [
+
 	searchBackwards := aBoolean.
+	self updateFindStartIndex.
 	self findPolicyChanged
 ]
 
@@ -225,10 +248,49 @@ FindReplaceService >> selectionRegexString [
 ]
 
 { #category : 'updating' }
-FindReplaceService >> updateFindStartIndexForTextMorph: aTextMorph [
+FindReplaceService >> setStartIndex [
+
+	findStartIndex ifNil: [
+			findStartIndex := self searchBackwards
+				                  ifTrue: [ self textArea editor stopIndex ]
+				                  ifFalse: [ self textArea editor startIndex ] ]
+]
+
+{ #category : 'accessing' }
+FindReplaceService >> textArea [
+
+	^ textAreaHolder at: 1
+]
+
+{ #category : 'accessing' }
+FindReplaceService >> textArea: aTextArea [
+
+	| oldTextArea |
+	oldTextArea := textAreaHolder at: 1 ifAbsent: nil.
+	oldTextArea == aTextArea ifTrue: [ ^ self ].
+	oldTextArea ifNotNil: [ oldTextArea announcer unsubscribe: self ].
+	textAreaHolder at: 1 put: aTextArea.
+	aTextArea announcer when: RubFindReplaceWindowRequired send: #whenFindReplaceWindowRequired: to: self
+]
+
+{ #category : 'updating' }
+FindReplaceService >> updateFindStartIndex [
+
 	| si |
-	si := aTextMorph editor selectionInterval.
-	self findStartIndex: (self searchBackwards ifTrue: [si first - 1] ifFalse: [si last + 1])
+	self textArea
+		ifNil: [ ^ self ]
+		ifNotNil: [ :aTextArea |
+				aTextArea changed.
+				si := aTextArea selectionInterval.
+				self findStartIndex: (self searchBackwards
+						 ifTrue: [ si first - 1 ]
+						 ifFalse: [ si last + 1 ]) ]
+]
+
+{ #category : 'event handling' }
+FindReplaceService >> whenTextAreaSelectionChanged: anAnnouncement [
+
+	self updateFindStartIndex
 ]
 
 { #category : 'accessing' }

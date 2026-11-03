@@ -136,17 +136,12 @@ SmallFloat64 >> basicIdentityHash [
 { #category : 'copying' }
 SmallFloat64 >> clone [
 	"Answer the receiver, because SmallFloat64s are unique."
+	self deprecated: 'Use shallowCopy'.
 	^self
 ]
 
 { #category : 'copying' }
 SmallFloat64 >> copy [
-	"Answer the receiver, because SmallFloat64s are unique."
-	^self
-]
-
-{ #category : 'copying' }
-SmallFloat64 >> deepCopy [
 	"Answer the receiver, because SmallFloat64s are unique."
 	^self
 ]

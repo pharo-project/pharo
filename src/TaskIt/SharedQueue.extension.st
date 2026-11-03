@@ -2,10 +2,10 @@ Extension { #name : 'SharedQueue' }
 
 { #category : '*TaskIt' }
 SharedQueue >> fixedSize: aSize nextPut: anObject [
-	monitor
-		critical:
-			[ [ aSize - items size < 1 ] whileTrue: [ items removeFirst ].
-			items addLast: anObject.
-			monitor signal ].
+
+	self monitor critical: [
+			[ aSize - self items size < 1 ] whileTrue: [ self items removeFirst ].
+			self items addLast: anObject.
+			self monitor signal ].
 	^ anObject
 ]

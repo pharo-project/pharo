@@ -190,15 +190,20 @@ ZipConstants class >> initializeFixedTrees [
 
 { #category : 'private - initialization' }
 ZipConstants class >> initializeLengthCodes [
+
 	| length |
 	BaseLength := WordArray new: MaxLengthCodes.
 	MatchLengthCodes := WordArray new: MaxMatch - MinMatch + 1.
 	length := 0.
-	1 to: MaxLengthCodes - 1 do:[:code|
-		BaseLength at: code put: length.
-		1 to: (1 bitShift: (ExtraLengthBits at: code)) do:[:n|
-			length := length + 1.
-			MatchLengthCodes at: length put: NumLiterals + code]]
+	1 to: MaxLengthCodes - 1 do: [ :code |
+			BaseLength at: code put: length.
+			1 to: (1 bitShift: (ExtraLengthBits at: code)) do: [ :n |
+					length := length + 1.
+					MatchLengthCodes at: length put: NumLiterals + code ] ].
+	"The loop gives the longest match (258) to code 284 with 31 extra bits, beyond its range (227-257):
+	RFC 1951 encodes it with its own code, 285, without extra bits"
+	BaseLength at: MaxLengthCodes put: MaxMatch - MinMatch.
+	MatchLengthCodes at: MaxMatch - MinMatch + 1 put: NumLiterals + MaxLengthCodes
 ]
 
 { #category : 'private - initialization' }

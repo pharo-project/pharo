@@ -85,7 +85,7 @@ MetacelloProjectRegistration >> hasLoadConflicts: aProjectRegistration [
 { #category : 'comparing' }
 MetacelloProjectRegistration >> hash [
 
-	^ String stringHash: projectSpec metacelloRegistrationHash initialHash: 0
+	^ String stringHash: projectSpec metacelloRegistrationHash printString initialHash: 0
 ]
 
 { #category : 'accessing' }

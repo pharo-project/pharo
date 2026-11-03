@@ -3,7 +3,7 @@ Extension { #name : 'PragmaMenuBuilder' }
 { #category : '*Morphic-Base' }
 PragmaMenuBuilder >> fallbackMenu [
 
-	^ FallbackMenu when: self fails: model
+	^ FallbackMenu when: self fails: self model
 ]
 
 { #category : '*Morphic-Base' }

@@ -177,13 +177,6 @@ RubParagraph >> decoratorNamed: aKey [
 	^ nil
 ]
 
-{ #category : 'copying' }
-RubParagraph >> deepCopy [
-	"Don't want to copy the container (etc) or fonts in the TextStyle."
-
-	^ self error: 'A ParagraphHandler should never be deep copied'
-]
-
 { #category : 'querying' }
 RubParagraph >> defaultCharacterBlock [
 	^ (RubCharacterBlock new

@@ -115,6 +115,11 @@ MetaLinkAnonymousClassBuilder >> migrateObjectToOriginalClass: anObject [
 	class superclass adoptInstance: anObject
 ]
 
+{ #category : 'accessing' }
+MetaLinkAnonymousClassBuilder >> migratedObjects [
+	^ migratedObjects
+]
+
 { #category : 'creation' }
 MetaLinkAnonymousClassBuilder >> newAnonymousSubclassFor: aClass [
 	| anonSubclass |

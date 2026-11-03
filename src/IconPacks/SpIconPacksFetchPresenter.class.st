@@ -85,10 +85,10 @@ SpIconPacksFetchPresenter class >> reset [
 
 { #category : 'settings' }
 SpIconPacksFetchPresenter class >> settingsOn: aBuilder [
-	<systemsettings>
 
+	<systemsettings>
 	(aBuilder button: #open)
-		parent: #appearance;
+		parentName: #appearance;
 		order: 2;
 		target: self;
 		"Should not be stored"
