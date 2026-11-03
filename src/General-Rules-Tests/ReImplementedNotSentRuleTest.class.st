@@ -13,6 +13,13 @@ ReImplementedNotSentRuleTest >> calledMethod [
 ]
 
 { #category : 'test-help' }
+ReImplementedNotSentRuleTest >> first [
+	"Sends its own selector to another object, while that selector is also sent in many other places in the system"
+
+	^ compiledMethods first
+]
+
+{ #category : 'test-help' }
 ReImplementedNotSentRuleTest >> methodWithReallySpecificNameInTheSystem [
 
 	^ self calledMethod
@@ -21,6 +28,21 @@ ReImplementedNotSentRuleTest >> methodWithReallySpecificNameInTheSystem [
 { #category : 'test-help' }
 ReImplementedNotSentRuleTest >> methodWithReallySpecificNameInTheSystemCallingItself [
 	false ifTrue: [ self methodWithReallySpecificNameInTheSystemCallingItself ]
+]
+
+{ #category : 'test-help' }
+ReImplementedNotSentRuleTest >> methodWithReallySpecificNameInTheSystemCallingItselfThreeTimes [
+
+	false ifTrue: [
+		self methodWithReallySpecificNameInTheSystemCallingItselfThreeTimes.
+		self methodWithReallySpecificNameInTheSystemCallingItselfThreeTimes ].
+	#(  ) do: [ :each | self methodWithReallySpecificNameInTheSystemCallingItselfThreeTimes ]
+]
+
+{ #category : 'test-help' }
+ReImplementedNotSentRuleTest >> otherSenderOfMethodCallingItselfThreeTimes [
+
+	self methodWithReallySpecificNameInTheSystemCallingItselfThreeTimes
 ]
 
 { #category : 'tests' }
@@ -33,6 +55,18 @@ ReImplementedNotSentRuleTest >> testRule [
 ReImplementedNotSentRuleTest >> testRuleDoesNotMatchCalledMethod [
 
 	self assertEmpty: (self myCritiquesOnMethod: self class >> #calledMethod)
+]
+
+{ #category : 'tests' }
+ReImplementedNotSentRuleTest >> testRuleDoesNotMatchMethodCallingItselfSeveralTimesAndCalledOnceElsewhere [
+
+	self assertEmpty: (self myCritiquesOnMethod: self class >> #methodWithReallySpecificNameInTheSystemCallingItselfThreeTimes)
+]
+
+{ #category : 'tests' }
+ReImplementedNotSentRuleTest >> testRuleDoesNotMatchMethodSendingItsSelectorToAnotherObject [
+
+	self assertEmpty: (self myCritiquesOnMethod: self class >> #first)
 ]
 
 { #category : 'tests' }
