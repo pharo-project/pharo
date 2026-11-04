@@ -6,8 +6,7 @@ Class {
 	#superclass : 'SycChangeMessageMenuCmCommand',
 	#instVars : [
 		'newSignature',
-		'driver',
-		'toolContext'
+		'driver'
 	],
 	#category : 'SystemCommands-MessageCommands',
 	#package : 'SystemCommands-MessageCommands'

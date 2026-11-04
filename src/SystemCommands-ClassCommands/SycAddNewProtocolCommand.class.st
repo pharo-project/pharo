@@ -76,11 +76,11 @@ SycAddNewProtocolCommand >> protocol: protocolName [
 { #category : 'execution' }
 SycAddNewProtocolCommand >> requestClassInContext: aToolContext [
 
-	| classes |
-	classes := aToolContext selectedClasses.
-	classes size = 1 ifTrue: [ ^ classes first ].
+	| collectionOfClasses |
+	collectionOfClasses := aToolContext selectedClasses.
+	collectionOfClasses size = 1 ifTrue: [ ^ collectionOfClasses first ].
 
-	^ aToolContext requestSingleClass: 'In what class you want a protocol?' from: classes
+	^ aToolContext requestSingleClass: 'In what class you want a protocol?' from: collectionOfClasses
 ]
 
 { #category : 'accessing' }

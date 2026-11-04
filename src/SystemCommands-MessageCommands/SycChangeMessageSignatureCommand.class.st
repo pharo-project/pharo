@@ -129,13 +129,3 @@ SycChangeMessageSignatureCommand >> requestNewMessageIn: aToolContext [
 SycChangeMessageSignatureCommand >> resultMessageSelector [
 	self subclassResponsibility
 ]
-
-{ #category : 'preparation' }
-SycChangeMessageSignatureCommand >> setUpModelFromContext: aContext [
-
-	| browser scope |
-	browser := aContext browser.
-	scope := browser defaultNavigationScope.
-	scope isCurrentImage ifTrue: [ scope := ScopesManager defaultScope ].
-	model := RBNamespace onEnvironment: scope asRBEnvironment
-]

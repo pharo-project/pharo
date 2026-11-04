@@ -10,8 +10,7 @@ Class {
 	#name : 'SycMoveTempDefinitionCommand',
 	#superclass : 'SycSourceCodeRefactoringCommand',
 	#instVars : [
-		'newName',
-		'toolContext'
+		'newName'
 	],
 	#category : 'SystemCommands-SourceCodeCommands',
 	#package : 'SystemCommands-SourceCodeCommands'

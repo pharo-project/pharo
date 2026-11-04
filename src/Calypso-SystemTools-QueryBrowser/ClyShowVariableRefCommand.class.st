@@ -11,9 +11,6 @@ Internal Representation and Key Implementation Points.
 Class {
 	#name : 'ClyShowVariableRefCommand',
 	#superclass : 'SycVariableNavigationCmCommand',
-	#instVars : [
-		'browser'
-	],
 	#category : 'Calypso-SystemTools-QueryBrowser-Commands-Queries',
 	#package : 'Calypso-SystemTools-QueryBrowser',
 	#tag : 'Commands-Queries'
