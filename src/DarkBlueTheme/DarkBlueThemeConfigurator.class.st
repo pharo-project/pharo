@@ -10,78 +10,120 @@ Class {
 
 { #category : 'colors' }
 DarkBlueThemeConfigurator >> backgroundColor [
-	^ Color r: 0.116 g: 0.147 b: 0.210
-]
 
-{ #category : 'colors' }
-DarkBlueThemeConfigurator >> balloonBackgroundColor [
-
-	^ self backgroundColor lighter
+	^ Color fromHexString: '1B2536'
 ]
 
 { #category : 'colors' }
 DarkBlueThemeConfigurator >> baseColor [
 
-	^ Color r: 0.2 g: 0.24 b: 0.37
+	^ Color fromHexString: '212D41'
 ]
 
 { #category : 'colors' }
 DarkBlueThemeConfigurator >> basePassiveBackgroundColor [
-	^ self baseColor lighter
+
+	^ Color fromHexString: '2A384F'
 ]
 
 { #category : 'colors' }
 DarkBlueThemeConfigurator >> baseSelectionColor [
-	^ (Color r: 0.243 g: 0.271 b: 0.394 alpha: 1.0)
+
+	^ Color fromHexString: '5B9BFF'
 ]
 
 { #category : 'colors' }
 DarkBlueThemeConfigurator >> borderColor [
-	^ self darkBaseColor adjustBrightness: -0.04
+
+	^ Color fromHexString: '364660'
+]
+
+{ #category : 'colors' }
+DarkBlueThemeConfigurator >> buttonColor [
+
+	^ Color fromHexString: '324260'
+]
+
+{ #category : 'colors' }
+DarkBlueThemeConfigurator >> caretColor [
+
+	^ Color fromHexString: '8FBCFF'
 ]
 
 { #category : 'colors' }
 DarkBlueThemeConfigurator >> darkBaseColor [
 
-	^ self baseColor lighter lighter
+	^ Color fromHexString: '172030'
 ]
 
 { #category : 'colors' }
 DarkBlueThemeConfigurator >> desktopColor [
-	^ Color fromHexString: '263238'
+
+	^ Color fromHexString: '141B27'
+]
+
+{ #category : 'colors' }
+DarkBlueThemeConfigurator >> disabledColor [
+
+	^ Color fromHexString: '8B98AD'
 ]
 
 { #category : 'colors' }
 DarkBlueThemeConfigurator >> growlBorderColorFor: aGrowlMorph [
-	^ self borderColor alpha: 0.5
+
+	^ self borderColor
 ]
 
 { #category : 'colors' }
 DarkBlueThemeConfigurator >> growlFillColorFor: aGrowlMorph [
-	^ self lightBackgroundColor alpha: 0.5
+
+	^ self lightBackgroundColor
 ]
 
 { #category : 'colors' }
 DarkBlueThemeConfigurator >> lightBackgroundColor [
-	^ Color r: 16r30 g: 16r3b b: 16r4f range: 16rff
-]
 
-{ #category : 'colors' }
-DarkBlueThemeConfigurator >> lightBaseColor [
-	^ self baseColor lighter
+	^ Color fromHexString: '2A384F'
 ]
 
 { #category : 'colors' }
 DarkBlueThemeConfigurator >> lightSelectionColor [
-	^ self baseSelectionColor lighter
+
+	^ self selectionColor
+]
+
+{ #category : 'colors' }
+DarkBlueThemeConfigurator >> lineNumberColor [
+
+	^ Color fromHexString: '8B98AD'
+]
+
+{ #category : 'colors' }
+DarkBlueThemeConfigurator >> menuBorderColor [
+
+	^ Color fromHexString: '415470'
+]
+
+{ #category : 'colors' }
+DarkBlueThemeConfigurator >> scrollbarColor [
+
+	^ Color fromHexString: '43556F'
 ]
 
 { #category : 'colors' }
 DarkBlueThemeConfigurator >> secondarySelectionColor [
-	^ self selectionColor alpha: 0.4
+
+	^ Color fromHexString: '2F3E57'
 ]
 
 { #category : 'colors' }
 DarkBlueThemeConfigurator >> selectionColor [
-	^ self baseSelectionColor lighter
+
+	^ Color fromHexString: '264576'
+]
+
+{ #category : 'colors' }
+DarkBlueThemeConfigurator >> textColor [
+
+	^ Color fromHexString: 'D6DEEA'
 ]

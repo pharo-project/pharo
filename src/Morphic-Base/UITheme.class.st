@@ -2218,6 +2218,13 @@ UITheme >> menuFont [
 ]
 
 { #category : 'defaults' }
+UITheme >> menuInset [
+	"Answer the inset between a menu border and its items."
+
+	^ 3
+]
+
+{ #category : 'defaults' }
 UITheme >> menuItemDisabledTextColorFor: aMenuItem [
 	"Answer the color to use for disabled menu item text."
 
@@ -2278,6 +2285,13 @@ UITheme >> menuItemSelectedTextColorFor: aMenuItem [
 	"Answer the color to use for selected menu item text."
 
 	^ self settings menuSelectionTextColor
+]
+
+{ #category : 'defaults' }
+UITheme >> menuItemVerticalPadding [
+	"Answer the extra height of a menu item, above its font height."
+
+	^ 0
 ]
 
 { #category : 'accessing - colors' }
@@ -4262,6 +4276,13 @@ UITheme >> tabPanelBorderStyleFor: aTabGroup [
 		width: 1 scaledByDisplayScaleFactor;
 		baseColor: ((self darkBaseColorFor: aTabGroup));
 		tabSelector: aTabGroup tabSelectorMorph
+]
+
+{ #category : 'accessing - colors' }
+UITheme >> tabSelectionIndicatorColor [
+	"Answer the color of the line marking the selected tab, nil for no line."
+
+	^ nil
 ]
 
 { #category : 'defaults' }
