@@ -49,7 +49,7 @@ AbstractExtensionTest >> setUp [
 
 	super setUp.
 
-	environment := SystemEnvironment new.
+	environment := SystemEnvironmentForTesting new.
 	environment codeChangeAnnouncer: SystemAnnouncer new.
 	environment undeclaredRegistry: Dictionary new.
 	

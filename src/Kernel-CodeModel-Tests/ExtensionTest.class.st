@@ -466,7 +466,12 @@ ExtensionTest >> test20CleanExtendedBehaviorsCleansAliases [
 { #category : 'tests - runtime' }
 ExtensionTest >> test21ExtensionMethodCanNotAccessInstanceVariable [
 
-	pointClass addInstVarNamed: 'x'.
+	pointClass classInstaller
+		update: pointClass
+		to: [ :builder | 
+			builder
+				sourcesManager: NoSourcesManager new;
+				slots: (pointClass localSlots copyWith: (InstanceVariableSlot named: #x)) ].
 
 	self should: [ self compile: 'getX ^ x' on: extensionOnPoint ] raise: OCCompilationError
 ]
