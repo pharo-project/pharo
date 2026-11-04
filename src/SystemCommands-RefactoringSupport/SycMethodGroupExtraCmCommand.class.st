@@ -4,8 +4,8 @@ Root of the Extras commands of the variable and inherited method group menus of 
 Class {
 	#name : 'SycMethodGroupExtraCmCommand',
 	#superclass : 'SycCmCommand',
-	#category : 'Calypso-SystemTools-FullBrowser',
-	#package : 'Calypso-SystemTools-FullBrowser'
+	#category : 'SystemCommands-RefactoringSupport',
+	#package : 'SystemCommands-RefactoringSupport'
 }
 
 { #category : 'accessing' }
