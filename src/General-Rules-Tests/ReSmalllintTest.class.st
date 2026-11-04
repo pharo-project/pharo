@@ -15,10 +15,10 @@ ReSmalllintTest class >> packageNamesUnderTest [
 ReSmalllintTest >> assertEnvironment: anEnvironment hasAllClassesOfTheResult: critiques [
 
 	critiques do: [ :crit |
-		| target |
-		target := crit entity.
-		self assert: target isClass.
-		self assert: (anEnvironment includesClass: target) ]
+			| target |
+			target := crit entity.
+			self assert: target isClass description: target asString , ' is not a class.'.
+			self assert: (anEnvironment includesClass: target) description: target asString , ' is not in the system.' ]
 ]
 
 { #category : 'private' }
