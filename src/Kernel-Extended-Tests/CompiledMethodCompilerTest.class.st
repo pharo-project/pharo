@@ -429,6 +429,31 @@ CompiledMethodCompilerTest >> testRecompilingDoesNotRemoveExtensions [
 		self class compiledMethodAt: #isExtensionTestMethod ifPresent: [ :method | method removeFromSystem ] ]
 ]
 
+{ #category : 'tests - compilation' }
+CompiledMethodCompilerTest >> testReformatUsesTheFormatterOfThePackage [
+	"A package declares how its methods are formatted through its manifest. Reformatting must not use the manifest of the package defining the AST nodes instead."
+
+	| manifest method |
+	manifest := self class classInstaller make: [ :aBuilder |
+			            aBuilder
+				            name: #ManifestGeneratedCompiledMethodTestPackage;
+				            superclass: PackageManifest;
+				            package: self packageNameForTests ].
+	"A width no default formatter uses, so the two formatters cannot agree by accident"
+	manifest class compile: 'formatter ^ EFFormatter new installNewContext: (EFContext new maxLineLength: 20)'.
+	class := self class classInstaller make: [ :aBuilder |
+			         aBuilder
+				         name: #TUTU;
+				         package: self packageNameForTests ].
+	class compile: 'foo ^ 1 between: 1000000 and: 2000000'.
+
+	(class >> #foo) reformat.
+
+	method := class >> #foo.
+	self assert: method sourceCode equals: (method ast formattedCodeIn: class).
+	self deny: method sourceCode equals: method ast formattedCode
+]
+
 { #category : 'tests - accessing' }
 CompiledMethodCompilerTest >> testSelector [
 

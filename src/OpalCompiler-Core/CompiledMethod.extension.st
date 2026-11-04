@@ -53,7 +53,7 @@ CompiledMethod >> recompile [
 { #category : '*OpalCompiler-Core' }
 CompiledMethod >> reformat [
 
-	self methodClass compile: self ast formattedCode classified: self protocol
+	self methodClass compile: (self ast formattedCodeIn: self methodClass) classified: self protocol
 ]
 
 { #category : '*OpalCompiler-Core' }
