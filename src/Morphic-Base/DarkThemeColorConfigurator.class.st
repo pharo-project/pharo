@@ -12,7 +12,7 @@ Class {
 { #category : 'colors' }
 DarkThemeColorConfigurator >> backgroundColor [
 
-	^ Color fromHexString: '22252B'
+	^ Color r: 0.130 g: 0.130 b: 0.130
 ]
 
 { #category : 'colors' }
@@ -30,49 +30,49 @@ DarkThemeColorConfigurator >> badgeTextColor [
 { #category : 'colors' }
 DarkThemeColorConfigurator >> balloonBackgroundColor [
 
-	^ self menuColor
+	^ self darkBaseColor lighter
 ]
 
 { #category : 'colors' }
 DarkThemeColorConfigurator >> baseColor [
 
-	^ Color fromHexString: '282C33'
+	^ Color veryDarkGray
 ]
 
 { #category : 'colors' }
 DarkThemeColorConfigurator >> basePassiveBackgroundColor [
 
-	^ Color fromHexString: '30343C'
+	^ Color darkGray
 ]
 
 { #category : 'colors' }
 DarkThemeColorConfigurator >> baseSelectionColor [
 
-	^ Color fromHexString: '4C8DFF'
+	^ Color r: 97 g: 163 b: 225 range: 255
 ]
 
 { #category : 'colors' }
 DarkThemeColorConfigurator >> borderColor [
 
-	^ Color fromHexString: '3C414B'
+	^ Color darkGray darker darker darker
 ]
 
 { #category : 'colors' }
 DarkThemeColorConfigurator >> buttonColor [
 
-	^ Color fromHexString: '3B4049'
+	^ self backgroundColor lighter lighter
 ]
 
 { #category : 'colors' }
 DarkThemeColorConfigurator >> caretColor [
 
-	^ Color fromHexString: '7FB0FF'
+	^ Color lightBlue
 ]
 
 { #category : 'colors' }
 DarkThemeColorConfigurator >> classExtensionColor [
 
-	^ Color fromHexString: 'A3AAB5'
+	^ Color gray lighter lighter
 ]
 
 { #category : 'colors' }
@@ -84,13 +84,13 @@ DarkThemeColorConfigurator >> dangerTextColor [
 { #category : 'colors' }
 DarkThemeColorConfigurator >> darkBaseColor [
 
-	^ Color fromHexString: '1D2025'
+	^ Color veryDarkGray
 ]
 
 { #category : 'colors' }
 DarkThemeColorConfigurator >> desktopColor [
 
-	^ Color fromHexString: '1A1D22'
+	^ Color darkGray darker
 ]
 
 { #category : 'colors' }
@@ -120,13 +120,16 @@ DarkThemeColorConfigurator >> diffRemovedLinesBackgroundColor [
 { #category : 'colors' }
 DarkThemeColorConfigurator >> disabledColor [
 
-	^ Color fromHexString: '8A919C'
+	^ Color gray lighter
 ]
 
 { #category : 'colors' }
 DarkThemeColorConfigurator >> disabledLabelColor [
 
-	^ self disabledColor
+	^ Color r: 0.7673509286412512
+		  g: 0.7673509286412512
+		  b: 0.7673509286412512
+		  alpha: 0.7647058823529411
 ]
 
 { #category : 'colors' }
@@ -169,19 +172,19 @@ DarkThemeColorConfigurator >> lessConspicuousColorFrom: aColor [
 { #category : 'colors' }
 DarkThemeColorConfigurator >> lightBackgroundColor [
 
-	^ Color fromHexString: '30343C'
+	^ Color r: 0.218 g: 0.217 b: 0.217
 ]
 
 { #category : 'colors' }
 DarkThemeColorConfigurator >> lightBaseColor [
 
-	^ self lightBackgroundColor
+	^ Color darkGray
 ]
 
 { #category : 'colors' }
 DarkThemeColorConfigurator >> lineNumberColor [
 
-	^ Color fromHexString: '8A919C'
+	^ Color gray lighter lighter
 ]
 
 { #category : 'colors' }
@@ -199,31 +202,13 @@ DarkThemeColorConfigurator >> listTextColor [
 { #category : 'colors' }
 DarkThemeColorConfigurator >> menuBorderColor [
 
-	^ Color fromHexString: '474D58'
-]
-
-{ #category : 'menus' }
-DarkThemeColorConfigurator >> menuColor [
-
-	^ self lightBackgroundColor
+	^ self borderColor
 ]
 
 { #category : 'colors' }
 DarkThemeColorConfigurator >> menuItemDisabledTextColorFor: aMenuItem [
 
-	^ self disabledColor
-]
-
-{ #category : 'menus' }
-DarkThemeColorConfigurator >> menuSelectionColor [
-
-	^ Color fromHexString: '2F6FE0'
-]
-
-{ #category : 'menus' }
-DarkThemeColorConfigurator >> menuTitleColor [
-
-	^ self menuColor
+	^ Color lightGray
 ]
 
 { #category : 'colors' }
@@ -247,13 +232,7 @@ DarkThemeColorConfigurator >> popoverButtonColor [
 { #category : 'colors' }
 DarkThemeColorConfigurator >> scrollbarColor [
 
-	^ Color fromHexString: '4A505C'
-]
-
-{ #category : 'scrollbars' }
-DarkThemeColorConfigurator >> scrollbarImageColorFor: aScrollbar [
-
-	^ self disabledColor
+	^ self buttonColor
 ]
 
 { #category : 'colors' }
@@ -261,31 +240,25 @@ DarkThemeColorConfigurator >> scrollbarNormalFillStyleFor: aScrollbar [
 
 	"Return the normal scrollbar fillStyle for the given scrollbar."
 
-	^ SolidFillStyle color: self backgroundColor
+	^ SolidFillStyle color: self backgroundColor lighter
 ]
 
 { #category : 'colors' }
 DarkThemeColorConfigurator >> secondarySelectionColor [
 
-	^ Color fromHexString: '3C414B'
-]
-
-{ #category : 'custom' }
-DarkThemeColorConfigurator >> selectedTabBorderColor [
-
-	^ self baseSelectionColor
+	^ Color r: 0.31 g: 0.31 b: 0.36 alpha: 1.0
 ]
 
 { #category : 'colors' }
 DarkThemeColorConfigurator >> selectionColor [
 
-	^ Color fromHexString: '27416A'
+	^ Color r: 16r07 g: 16r63 b: 16rAD range: 255
 ]
 
 { #category : 'colors' }
 DarkThemeColorConfigurator >> selectionTextColor [
 
-	^ Color fromHexString: 'FFFFFF'
+	^ Color r: 16rE0 g: 16rE2 b: 16rE4 range: 255
 ]
 
 { #category : 'colors' }
@@ -309,19 +282,19 @@ DarkThemeColorConfigurator >> successTextColor [
 { #category : 'colors' }
 DarkThemeColorConfigurator >> taskbarItemLabelColorForCollapsed: aButton [
 
-	^ self disabledColor
+	^ Color lightGray
 ]
 
 { #category : 'colors' }
 DarkThemeColorConfigurator >> taskbarItemLabelColorForExpanded: aButton [
 
-	^ self textColor
+	^ Color white
 ]
 
 { #category : 'colors' }
 DarkThemeColorConfigurator >> textColor [
 
-	^ Color fromHexString: 'D5D9E0'
+	^ Color white
 ]
 
 { #category : 'colors' }
@@ -358,16 +331,4 @@ DarkThemeColorConfigurator >> warningTextColor [
 DarkThemeColorConfigurator >> windowActiveLabelFillStyleFor: aWindow [
 
 	^ self textColor
-]
-
-{ #category : 'windows' }
-DarkThemeColorConfigurator >> windowColor [
-
-	^ self baseColor
-]
-
-{ #category : 'colors' }
-DarkThemeColorConfigurator >> worldMainDockingBarColorFor: anObject [
-
-	^ self darkBaseColor
 ]

@@ -32,22 +32,6 @@ PharoLightTheme class >> themeName [
 ]
 
 { #category : 'border-styles - buttons' }
-PharoLightTheme >> buttonDisabledBorderStyleFor: aButton [
-	"Return the disabled button borderStyle for the given button."
-
-	^ BorderStyle width: 0 color: Color transparent
-]
-
-{ #category : 'fill-styles - buttons' }
-PharoLightTheme >> buttonMouseOverFillStyleFor: aButton [
-	"Return the button mouse over fillStyle for the given color."
-
-	(aButton valueOfProperty: #noFill ifAbsent: [ false ]) ifTrue: [
-		^ self buttonNormalFillStyleFor: aButton ].
-	^ SolidFillStyle color: self mouseOverColor
-]
-
-{ #category : 'border-styles - buttons' }
 PharoLightTheme >> buttonNormalBorderStyleFor: aButton [
 	"Return the normal button borderStyle for the given button."
 
@@ -65,21 +49,11 @@ PharoLightTheme >> buttonNormalBorderStyleFor: aButton [
 { #category : 'border-styles' }
 PharoLightTheme >> configureWindowBorderFor: aWindow [
 
-	aWindow borderStyle: (SimpleBorderStyle new
-			 color: self borderColor;
-			 width: 1 scaledByDisplayScaleFactor)
-]
-
-{ #category : 'initialization' }
-PharoLightTheme >> defaultSettings [
-
-	^ super defaultSettings
-		  menuColor: self menuColor;
-		  menuTitleColor: self menuTitleColor;
-		  menuSelectionTextColor: Color white;
-		  progressBarColor: self lightBackgroundColor;
-		  flatMenu: true;
-		  yourself
+	| aStyle |
+	aStyle := SimpleBorderStyle new
+					color: (Color lightGray);
+					width: 1 scaledByDisplayScaleFactor.
+	aWindow borderStyle: aStyle
 ]
 
 { #category : 'initialization' }
@@ -91,54 +65,6 @@ PharoLightTheme >> initialize [
 	settings preferGradientFill: false
 ]
 
-{ #category : 'accessing' }
-PharoLightTheme >> menuBorderWidth [
-
-	^ 1 scaledByDisplayScaleFactor
-]
-
-{ #category : 'defaults' }
-PharoLightTheme >> menuInset [
-
-	^ 4 scaledByDisplayScaleFactor
-]
-
-{ #category : 'defaults' }
-PharoLightTheme >> menuItemVerticalPadding [
-
-	^ 5 scaledByDisplayScaleFactor
-]
-
-{ #category : 'fill-styles - scrollbars' }
-PharoLightTheme >> scrollbarMouseOverThumbFillStyleFor: aScrollbar [
-	"Return the scrollbar mouse over thumb fillStyle for the given scrollbar."
-
-	^ SolidFillStyle color: self disabledColor
-]
-
-{ #category : 'fill-styles - scrollbars' }
-PharoLightTheme >> scrollbarNormalButtonFillStyleFor: aScrollbar [
-	"Keep the arrow buttons but draw them as part of the track."
-
-	^ self scrollbarNormalFillStyleFor: aScrollbar
-]
-
-{ #category : 'border-styles - scrollbars' }
-PharoLightTheme >> scrollbarNormalThumbBorderStyleFor: aScrollbar [
-	"A border in the color of the track makes the thumb look inset without any extra drawing."
-
-	^ SimpleBorderStyle new
-		  width: 2 scaledByDisplayScaleFactor;
-		  baseColor: (self scrollbarNormalFillStyleFor: aScrollbar) asColor
-]
-
-{ #category : 'fill-styles - scrollbars' }
-PharoLightTheme >> scrollbarNormalThumbFillStyleFor: aScrollbar [
-	"Return the normal scrollbar thumb fillStyle for the given scrollbar."
-
-	^ SolidFillStyle color: self scrollbarColor
-]
-
 { #category : 'fill-styles - scrollbars' }
 PharoLightTheme >> scrollbarPressedThumbFillStyleFor: aScrollbar [
 	"Return the pressed scrollbar thumb fillStyle for the given scrollbar."
@@ -148,51 +74,9 @@ PharoLightTheme >> scrollbarPressedThumbFillStyleFor: aScrollbar [
 	^ self selectedFillStyleFor: aScrollbar height: aScrollbar height
 ]
 
-{ #category : 'defaults' }
-PharoLightTheme >> scrollbarThickness [
-	"Answer the width or height of a scrollbar as appropriate to
-	its orientation."
-
-	^ 11 * self displayScaleFactor
-]
-
-{ #category : 'border-styles' }
-PharoLightTheme >> tabLabelNormalBorderStyleFor: aTabLabel [
-
-	^ BottomBorderStyle new
-		  color: Color transparent;
-		  width: 2 scaledByDisplayScaleFactor;
-		  yourself
-]
-
-{ #category : 'fill-styles - buttons' }
-PharoLightTheme >> tabLabelNormalFillStyleFor: aTabLabel [
-
-	^ SolidFillStyle color: Color transparent
-]
-
-{ #category : 'border-styles' }
-PharoLightTheme >> tabLabelSelectedBorderStyleFor: aTabLabel [
-
-	^ self tabLabelNormalBorderStyleFor: aTabLabel
-]
-
-{ #category : 'fill-styles - buttons' }
-PharoLightTheme >> tabLabelSelectedFillStyleFor: aTabLabel [
-
-	^ SolidFillStyle color: self backgroundColor
-]
-
-{ #category : 'accessing - colors' }
-PharoLightTheme >> tabSelectionIndicatorColor [
-
-	^ self selectedTabBorderColor
-]
-
 { #category : 'fill-styles - taskbar' }
 PharoLightTheme >> taskbarFillStyleFor: aTaskbar [
-
-	^ SolidFillStyle color: self baseColor
+	^ SolidFillStyle color: (Color gray muchLighter alpha: 0.8)
 ]
 
 { #category : 'border-styles - taskbar' }
@@ -209,11 +93,10 @@ PharoLightTheme >> taskbarItemDisabledFillStyleFor: aButton [
 
 { #category : 'border-styles - taskbar' }
 PharoLightTheme >> taskbarItemMouseOverBorderStyleFor: aButton [
-
 	^ BottomBorderStyle new
-		  color: self selectedTabBorderColor;
-		  width: 2 scaledByDisplayScaleFactor;
-		  yourself
+		color: (Color fromHexString: '616161');
+		width: 2 scaledByDisplayScaleFactor;
+		yourself
 ]
 
 { #category : 'fill-styles - taskbar' }
@@ -223,12 +106,11 @@ PharoLightTheme >> taskbarItemMouseOverFillStyleFor: aButton [
 
 { #category : 'border-styles - taskbar' }
 PharoLightTheme >> taskbarItemNormalBorderStyleFor: aButton [
-
 	^ BottomBorderStyle new
-		  color: self borderColor;
-		  width: 2 scaledByDisplayScaleFactor;
-		  trimSize: 2 scaledByDisplayScaleFactor;
-		  yourself
+		color: (Color fromHexString: '757575');
+		width: 2 scaledByDisplayScaleFactor;
+		trimSize: 2 scaledByDisplayScaleFactor;
+		yourself
 ]
 
 { #category : 'fill-styles - taskbar' }
@@ -279,23 +161,4 @@ PharoLightTheme >> taskbarItemSelectedPressedBorderStyleFor: aButton [
 { #category : 'fill-styles - taskbar' }
 PharoLightTheme >> taskbarItemSelectedPressedFillStyleFor: aButton [
 	^ SolidFillStyle color: (Color black alpha: 0.2)
-]
-
-{ #category : 'fill-styles' }
-PharoLightTheme >> windowActiveTitleFillStyleFor: aWindow [
-
-	^ SolidFillStyle color: self lightBackgroundColor
-]
-
-{ #category : 'fill-styles' }
-PharoLightTheme >> windowInactiveLabelFillStyleFor: aWindow [
-
-	^ self disabledColor
-]
-
-{ #category : 'fill-styles' }
-PharoLightTheme >> worldMainDockingBarNormalFillStyleFor: aDockingBar [
-	"A solid fill keeps the bar cheap to redraw."
-
-	^ SolidFillStyle color: aDockingBar originalColor
 ]

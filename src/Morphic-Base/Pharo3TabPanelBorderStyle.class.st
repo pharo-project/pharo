@@ -25,12 +25,7 @@ Pharo3TabPanelBorderStyle >> frameRectangle: aRectangle on: aCanvas [
 	r := aRectangle topLeft + (w@0) corner: tab bounds left + w@(aRectangle top + h).
 	aCanvas fillRectangle: r color: self color. "top 1"
 	r := tab bounds left + w@ aRectangle top corner: tab bounds right - w@(aRectangle top + h).
-	tab theme tabSelectionIndicatorColor
-		ifNil: [ aCanvas fillRectangle: r color: tab paneColor ] "top 2"
-		ifNotNil: [ :indicatorColor |
-			aCanvas
-				fillRectangle: (tab bounds left @ aRectangle top extent: tab bounds width @ (2 * h))
-				color: indicatorColor ].
+	aCanvas fillRectangle: r color: tab paneColor. "top 2"
 	r :=  tab bounds right - w@ aRectangle top corner: aRectangle topRight - (w@h negated).
 	aCanvas fillRectangle: r color: self color. "top 3"
 ]
