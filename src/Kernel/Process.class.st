@@ -31,7 +31,9 @@ Class {
 		'terminating',
 		'level',
 		'shouldOverflow',
-		'errorHandler'
+		'errorHandler',
+		'currentDomain',
+		'currentDomainIsDefault'
 	],
 	#classVars : [
 		'InheritablePSKeys',
