@@ -16,7 +16,7 @@ ReAbstractRuleTestCase class >> isAbstract [
 ]
 
 { #category : 'utilities' }
-ReAbstractRuleTestCase >> critiguesFor: ruleClass onMethod: method [
+ReAbstractRuleTestCase >> critiquesFor: ruleClass onMethod: method [
 	| critiques |
 	critiques := OrderedCollection new.
 	ruleClass new
@@ -90,7 +90,7 @@ ReAbstractRuleTestCase >> setUp [
 ]
 
 { #category : 'utilities' }
-ReAbstractRuleTestCase >> sourceAtChritique: critique [
+ReAbstractRuleTestCase >> sourceAtCritique: critique [
 
 	| anchor |
 	anchor := critique sourceAnchor.

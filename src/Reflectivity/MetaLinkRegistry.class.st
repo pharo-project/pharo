@@ -86,6 +86,13 @@ MetaLinkRegistry >> isNodeWithInstanceSpecificLinks: node [
 ]
 
 { #category : 'registry access' }
+MetaLinkRegistry >> objectSpecificLinks [
+	"Answer the links currently registered to at least one object, without scanning the whole image"
+
+	^ links keys
+]
+
+{ #category : 'registry access' }
 MetaLinkRegistry >> objectsForLink: aMetaLink [
 	^ links at: aMetaLink ifAbsent: [ WeakSet new ]
 ]
