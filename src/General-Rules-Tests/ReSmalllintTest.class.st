@@ -17,8 +17,8 @@ ReSmalllintTest >> assertEnvironment: anEnvironment hasAllClassesOfTheResult: cr
 	critiques do: [ :crit |
 			| target |
 			target := crit entity.
-			self assert: target isClass description: target asString , ' is not a class.'.
-			self assert: (anEnvironment includesClass: target) description: target asString , ' is not in the system.' ]
+			self assert: target isClass description: target displayString , ' is not a class.'.
+			self assert: (anEnvironment includesClass: target) description: target displayString , ' is not in the system.' ]
 ]
 
 { #category : 'private' }
@@ -42,9 +42,8 @@ ReSmalllintTest >> assertIsValidRule: aRule [
 
 { #category : 'asserting' }
 ReSmalllintTest >> assertResult: critiques hasAllClassesInEnvironment: anEnvironment [
-	anEnvironment classesDo: [ :class |
-		self assert: (critiques anySatisfy: [ :crit |
-			crit entity instanceSide = class instanceSide ]) ]
+
+	anEnvironment classesDo: [ :class | self assert: (critiques anySatisfy: [ :crit | crit entity instanceSide = class instanceSide ]) description: 'No critique for class: ' , class displayString ]
 ]
 
 { #category : 'asserting' }
