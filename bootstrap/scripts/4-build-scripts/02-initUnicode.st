@@ -2,7 +2,7 @@
 | dataFilePath caseFolding unicodeData|
 
 unicodeData := CommandLineArguments new arguments last , 'UnicodeData.txt'.
-caseFolding := CommandLineArguments new arguments last , 'CaseFolding-8.0.0.txt'.
+caseFolding := CommandLineArguments new arguments last , 'CaseFolding-18.0.0.txt'.
 
 Unicode initializeTagConstants.
 

@@ -211,6 +211,19 @@ SparseLargeTable >> pvtCheckIndex: index [
 	index > size ifTrue: [self errorSubscriptBounds: index]
 ]
 
+{ #category : 'accessing' }
+SparseLargeTable >> shareEqualChunks [
+	"Keep a single read-only copy of chunks holding the same values.
+	Send it once the table is filled: a chunk can then appear at several places,
+	so writing into it fails instead of changing all of them."
+
+	| chunks |
+	chunks := Dictionary new.
+	1 to: self basicSize do: [ :index |
+		(self basicAt: index) ifNotNil: [ :chunk |
+			self basicAt: index put: (chunks at: chunk ifAbsentPut: [ chunk beReadOnlyObject; yourself ]) ] ]
+]
+
 { #category : 'private' }
 SparseLargeTable >> similarInstance [
 

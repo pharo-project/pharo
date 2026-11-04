@@ -412,7 +412,7 @@ Unicode class >> digitValueOf: char [
 					ifTrue: [^value - $a asciiValue + 10]].
 
 	value > (DecimalProperty size - 1) ifTrue: [^ -1].
-	^ (DecimalProperty at: value+1)
+	^ (DecimalProperty at: value+1) - 1
 ]
 
 { #category : 'class methods' }
@@ -783,42 +783,41 @@ Unicode class >> parseCaseMappingFrom: stream [
 
 { #category : 'class initialization' }
 Unicode class >> parseUnicodeDataFrom: stream [
-	| line fieldEnd point fieldStart toNumber generalCategory decimalProperty loValue |
+	"Read the general category and the decimal digit value of each code point from UnicodeData.txt.
+	A line whose name ends with 'First>' starts a range of code points that the next line ends,
+	and every code point of the range has the properties given by these two lines."
 
-	toNumber := [:quad | ('16r', quad) asNumber].
+	| line rangeStart |
+	GeneralCategory := SparseLargeTable
+		new: self maxValue + 1
+		chunkSize: 1024
+		arrayClass: ByteArray
+		base: 1
+		defaultValue: (self readClassVariableNamed: #Cn).
+	"A digit value is stored plus one, so that a ByteArray can hold the default for non-digits"
+	DecimalProperty := SparseLargeTable
+		new: self maxValue + 1
+		chunkSize: 1024
+		arrayClass: ByteArray
+		base: 1
+		defaultValue: 0.
 
-	GeneralCategory := SparseLargeTable new: 16rE0080 chunkSize: 1024 arrayClass: Array base: 1 defaultValue:  (self readClassVariableNamed: #Cn).
-	DecimalProperty := SparseLargeTable new: 16rE0080 chunkSize: 32 arrayClass: Array base: 1 defaultValue: -1.
+	[ (line := stream nextLine) isNotNil and: [ line isNotEmpty ] ] whileTrue: [
+		| fields point category |
+		fields := line splitOn: $;.
+		point := Integer readFrom: fields first base: 16.
+		((fields at: 2) endsWith: 'First>')
+			ifTrue: [ rangeStart := point ]
+			ifFalse: [
+				category := self readClassVariableNamed: (fields at: 3) asSymbol.
+				(rangeStart ifNil: [ point ]) to: point do: [ :each |
+					GeneralCategory at: each + 1 put: category ].
+				category = Nd ifTrue: [
+					DecimalProperty at: point + 1 put: (fields at: 7) asNumber + 1 ].
+				rangeStart := nil ] ].
 
-	loValue := (self readClassVariableNamed: #Lo).
-	16r3400 to: 16r4DB5 do: [:i | GeneralCategory at: i+1 put: loValue].
-	16r4E00 to: 16r9FA5 do: [:i | GeneralCategory at: i+1 put: loValue].
-	16rAC00 to: 16rD7FF do: [:i | GeneralCategory at: i+1 put: loValue].
-
-	[(line := stream nextLine) isNotNil and: [line size > 0 ]] whileTrue: [
-		fieldEnd := line indexOf: $; startingAt: 1.
-		point := toNumber value: (line copyFrom: 1 to: fieldEnd - 1).
-		point > 16rE007F ifTrue: [
-			GeneralCategory zapDefaultOnlyEntries.
-			DecimalProperty zapDefaultOnlyEntries.
-			^ self].
-		2 to: 3 do: [:i |
-			fieldStart := fieldEnd + 1.
-			fieldEnd := line indexOf: $; startingAt: fieldStart.
-		].
-		generalCategory := line copyFrom: fieldStart to: fieldEnd - 1.
-		GeneralCategory at: point+1 put: (self readClassVariableNamed: generalCategory asSymbol).
-		generalCategory = 'Nd' ifTrue: [
-			4 to: 7 do: [:i |
-				fieldStart := fieldEnd + 1.
-				fieldEnd := line indexOf: $; startingAt: fieldStart.
-			].
-			decimalProperty :=  line copyFrom: fieldStart to: fieldEnd - 1.
-			DecimalProperty at: point+1 put: decimalProperty asNumber.
-		].
-	].
-	GeneralCategory zapDefaultOnlyEntries.
-	DecimalProperty zapDefaultOnlyEntries
+	GeneralCategory zapDefaultOnlyEntries; shareEqualChunks.
+	DecimalProperty zapDefaultOnlyEntries; shareEqualChunks
 ]
 
 { #category : 'casing' }
