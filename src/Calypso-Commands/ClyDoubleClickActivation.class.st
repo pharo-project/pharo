@@ -8,6 +8,12 @@ Class {
 	#package : 'Calypso-Commands'
 }
 
+{ #category : 'testing' }
+ClyDoubleClickActivation class >> isAbstract [
+
+	^ self == ClyDoubleClickActivation
+]
+
 { #category : 'morphs setup' }
 ClyDoubleClickActivation class >> morphicEventType [
 	^#doubleClick

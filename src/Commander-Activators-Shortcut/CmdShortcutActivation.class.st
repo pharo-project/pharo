@@ -46,11 +46,6 @@ CmdShortcutActivation class >> moveFor: anAnnotationUser [
 	^self by: $o meta for: anAnnotationUser
 ]
 
-{ #category : 'accessing' }
-CmdShortcutActivation class >> registeredInstances [
-	^ self registry allInstancesOf: self
-]
-
 { #category : 'well known shortcuts' }
 CmdShortcutActivation class >> removalFor: anAnnotationUser [
 	<classAnnotationDependency>

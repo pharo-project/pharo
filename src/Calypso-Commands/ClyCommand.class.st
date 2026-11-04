@@ -172,18 +172,6 @@ ClyCommand >> isAvailableInMenuOf: aToolContext [
 	^ true
 ]
 
-{ #category : 'testing' }
-ClyCommand >> isCommand [
-
-	^ true
-]
-
-{ #category : 'testing' }
-ClyCommand >> isGroup [
-
-	^ false
-]
-
 { #category : 'menu' }
 ClyCommand >> menuAlternatives [
 	"The commands this command stands for in a context menu, one item each (the scope switcher). Empty when it is a single item."

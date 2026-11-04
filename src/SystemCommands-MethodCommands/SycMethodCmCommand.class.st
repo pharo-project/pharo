@@ -33,21 +33,9 @@ SycMethodCmCommand class >> for: methods [
 		  yourself
 ]
 
-{ #category : 'accessing' }
-SycMethodCmCommand >> application [
-
-	^ StPharoApplication current
-]
-
 { #category : 'testing' }
 SycMethodCmCommand >> canBeExecuted [
 	^ self methods isNotEmpty
-]
-
-{ #category : 'ui requests' }
-SycMethodCmCommand >> confirm: aString [
-
-	^ self application confirm: aString
 ]
 
 { #category : 'execution' }
@@ -69,12 +57,6 @@ SycMethodCmCommand >> execute [
 SycMethodCmCommand >> executeRefactoring [
 
 	self asRefactorings do: [ :each | each execute ]
-]
-
-{ #category : 'testing' }
-SycMethodCmCommand >> isComplexRefactoring [
-
-	^ false
 ]
 
 { #category : 'accessing' }

@@ -18,11 +18,6 @@ Class {
 	#package : 'SystemCommands-MethodCommands'
 }
 
-{ #category : 'testing' }
-SycShowMethodVersionCommand class >> canBeExecutedInContext: aToolContext [
-	^aToolContext isMethodSelected
-]
-
 { #category : 'accessing' }
 SycShowMethodVersionCommand >> description [
 

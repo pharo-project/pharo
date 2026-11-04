@@ -43,12 +43,6 @@ SycFormatSourceCodeCommand >> icon [
 	^ self iconNamed: #smallJustified
 ]
 
-{ #category : 'testing' }
-SycFormatSourceCodeCommand >> isComplexRefactoring [
-
-	^ false
-]
-
 { #category : 'accessing' }
 SycFormatSourceCodeCommand >> name [
 

@@ -28,12 +28,6 @@ ClyDebugVariableCommand class >> fullBrowserMenuActivation [
 		for: ClyFullBrowserVariableContext
 ]
 
-{ #category : 'testing' }
-ClyDebugVariableCommand class >> isAbstract [
-
-	^ false
-]
-
 { #category : 'accessing' }
 ClyDebugVariableCommand >> accessStrategy [
 

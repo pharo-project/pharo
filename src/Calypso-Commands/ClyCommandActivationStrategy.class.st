@@ -31,7 +31,8 @@ ClyCommandActivationStrategy class >> createActivatorsExecutableInContext: aTool
 
 { #category : 'testing' }
 ClyCommandActivationStrategy class >> isAbstract [
-	^ self subclasses isEmpty not
+
+	^ self == ClyCommandActivationStrategy
 ]
 
 { #category : 'accessing' }

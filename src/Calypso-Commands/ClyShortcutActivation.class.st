@@ -24,12 +24,6 @@ ClyShortcutActivation class >> moveFor: anAnnotationUser [
 	^self by: $o meta for: anAnnotationUser
 ]
 
-{ #category : 'accessing' }
-ClyShortcutActivation class >> registeredInstances [
-
-	^ self registry allInstancesOf: self
-]
-
 { #category : 'well known shortcuts' }
 ClyShortcutActivation class >> removalFor: anAnnotationUser [
 	<classAnnotationDependency>

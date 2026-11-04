@@ -54,12 +54,6 @@ SycCmDuplicateClassCommand >> icon [
 	^ self iconNamed: #smallCopy
 ]
 
-{ #category : 'testing' }
-SycCmDuplicateClassCommand >> isComplexRefactoring [
-	
-	^ false
-]
-
 { #category : 'accessing' }
 SycCmDuplicateClassCommand >> name [
 

@@ -44,7 +44,7 @@ ClyQueryBrowserContext >> isPackageSelected [
 { #category : 'testing' }
 ClyQueryBrowserContext >> isQueryBrowserContext [
 
-	^ true.
+	^ true
 ]
 
 { #category : 'selection-classes' }

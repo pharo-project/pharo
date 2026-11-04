@@ -19,11 +19,6 @@ Class {
 	#package : 'SystemCommands-PackageCommands'
 }
 
-{ #category : 'testing' }
-SycAddNewClassTagCommand class >> canBeExecutedInContext: aToolContext [
-	^aToolContext isPackageSelected
-]
-
 { #category : 'execution' }
 SycAddNewClassTagCommand >> applyCommandResult [
 	super applyCommandResult.

@@ -53,12 +53,6 @@ ClyMethodEditorCommand >> methodEditor: anObject [
 	methodEditor := anObject
 ]
 
-{ #category : 'accessing' }
-ClyMethodEditorCommand >> orderInContext: aToolContext [
-
-	^ self order
-]
-
 { #category : 'preparation' }
 ClyMethodEditorCommand >> prepareFullExecution [
 

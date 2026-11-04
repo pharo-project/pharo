@@ -53,12 +53,6 @@ SycCmCommand >> isEnabled [
 ]
 
 { #category : 'accessing' }
-SycCmCommand >> menuGroup [
-
-	^ ClyRootMenuGroup
-]
-
-{ #category : 'accessing' }
 SycCmCommand >> name [
 	^ basicName
 ]
@@ -67,14 +61,6 @@ SycCmCommand >> name [
 SycCmCommand >> order [
 
 	^ 10100
-]
-
-{ #category : 'accessing' }
-SycCmCommand >> orderInContext: aToolContext [
-	"For some commands it allow to have an order different depending on the menu.
-	Fallback to #order."
-
-	^ self order
 ]
 
 { #category : 'accessing' }
@@ -91,12 +77,6 @@ SycCmCommand >> parentGroup: aCmdRootMenuGroup [
 
 { #category : 'preparation' }
 SycCmCommand >> prepareFullExecution [
-]
-
-{ #category : 'execution' }
-SycCmCommand >> processCommandFailure: anException [
-
-	context processFailure: anException of: self
 ]
 
 { #category : 'context menu' }

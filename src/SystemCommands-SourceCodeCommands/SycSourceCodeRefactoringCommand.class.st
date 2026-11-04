@@ -29,12 +29,6 @@ SycSourceCodeRefactoringCommand >> executeRefactoring: refactoring [
 		do: [ :e | self morphicUIManager alert: e messageText ]
 ]
 
-{ #category : 'accessing' }
-SycSourceCodeRefactoringCommand >> orderInContext: aToolContext [
-
-	^ self order
-]
-
 { #category : 'execution' }
 SycSourceCodeRefactoringCommand >> prepareFullExecution [
 

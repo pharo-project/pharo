@@ -69,7 +69,8 @@ ClyMenuCommandActivationStrategy class >> byRootGroupItemOrder: aNumber for: aTo
 
 { #category : 'testing' }
 ClyMenuCommandActivationStrategy class >> isAbstract [
-	^ self subclasses isEmpty not
+
+	^ self == ClyMenuCommandActivationStrategy
 ]
 
 { #category : 'building' }

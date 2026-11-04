@@ -54,6 +54,12 @@ ClyMouseCommandActivation class >> handleMouseUsing: someObjectWithCommandContex
 	anEvent wasHandled: false
 ]
 
+{ #category : 'testing' }
+ClyMouseCommandActivation class >> isAbstract [
+
+	^ self == ClyMouseCommandActivation
+]
+
 { #category : 'morphs setup' }
 ClyMouseCommandActivation class >> morphicEventType [
 	self subclassResponsibility
