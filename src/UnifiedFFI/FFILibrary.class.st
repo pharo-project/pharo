@@ -98,6 +98,16 @@ FFILibrary >> macLibraryName [
 	^ self subclassResponsibility
 ]
 
+{ #category : 'accessing' }
+FFILibrary >> newCallback: aCallbackClass signature: aSignature block: aBlock [
+	"Answer a new callback owned by the receiver, so it runs with the receiver's runner. Libraries that need another kind of callback can override this method."
+
+	^ aCallbackClass new
+		  ffiLibrary: self;
+		  signature: aSignature block: aBlock;
+		  yourself
+]
+
 { #category : 'accessing - platform' }
 FFILibrary >> options [
 

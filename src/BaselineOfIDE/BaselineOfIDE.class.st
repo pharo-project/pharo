@@ -280,8 +280,7 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 	SourceCodeFonts setSourceCodeFonts: 10.
 	FreeTypeSystemSettings loadFt2Library: true.
 	FreeTypeSettings current monitorType: #LCD.
-	FreeTypeSettings current glyphContrast: 55.
-
+	FreeTypeSettings current glyphContrast: 50.
 	RealEstateAgent usedStrategy: #cascadeFor:initialExtent:world:.
 	GrowlMorph position: #bottomLeft.
 	ShortcutReminder enabled: true.

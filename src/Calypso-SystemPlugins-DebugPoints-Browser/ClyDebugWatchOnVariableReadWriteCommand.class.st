@@ -21,7 +21,7 @@ ClyDebugWatchOnVariableReadWriteCommand class >> isAbstract [
 ]
 
 { #category : 'accessing' }
-ClyDebugWatchOnVariableReadWriteCommand >> defaultMenuItemName [
+ClyDebugWatchOnVariableReadWriteCommand >> name [
 
 	^ 'Watch on access'
 ]

@@ -25,16 +25,6 @@ SycInlineMethodCommand >> asRefactorings [
 		   yourself) }
 ]
 
-{ #category : 'accessing' }
-SycInlineMethodCommand >> defaultMenuIconName [
-	^ #smallRightFlush
-]
-
-{ #category : 'accessing' }
-SycInlineMethodCommand >> defaultMenuItemName [
-	^ 'Inline method'
-]
-
 { #category : 'execution' }
 SycInlineMethodCommand >> execute [
 
@@ -43,4 +33,14 @@ SycInlineMethodCommand >> execute [
 		   interval: sourceNode sourceInterval
 		   selector: method selector
 		   class: method origin) runRefactoring 
+]
+
+{ #category : 'accessing' }
+SycInlineMethodCommand >> iconName [
+	^ #smallRightFlush
+]
+
+{ #category : 'accessing' }
+SycInlineMethodCommand >> name [
+	^ 'Inline method'
 ]

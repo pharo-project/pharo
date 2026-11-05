@@ -1,11 +1,15 @@
 "
-""Handles the command !! and return the most recent command typed ""
+I handle commands starting with !! and 
+return the last command typed.
+
+
 "
 Class {
 	#name : 'ClapDbgLastCommandHandler',
 	#superclass : 'ClapDbgDebuggerHistoryHandler',
-	#category : 'Debugger-CLI',
-	#package : 'Debugger-CLI'
+	#category : 'Debugger-CLI-Core',
+	#package : 'Debugger-CLI',
+	#tag : 'Core'
 }
 
 { #category : 'execution' }
@@ -16,6 +20,7 @@ ClapDbgLastCommandHandler >> canHandle: aString [
 
 { #category : 'execution' }
 ClapDbgLastCommandHandler >> handle: aString for: aDebugger [
-
+	"aString should start with !!"
+	
 	^ aDebugger lastCommand , (aString copyReplaceAll: '!' with: '')
 ]

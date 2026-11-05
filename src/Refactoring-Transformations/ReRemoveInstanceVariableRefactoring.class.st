@@ -77,11 +77,6 @@ ReRemoveInstanceVariableRefactoring >> privateTransform [
 	transformation privateTransform
 ]
 
-{ #category : 'accessing' }
-ReRemoveInstanceVariableRefactoring >> refactoredClass [
-	^ class
-]
-
 { #category : 'initialization' }
 ReRemoveInstanceVariableRefactoring >> variable: aVarName class: aClassName [
 

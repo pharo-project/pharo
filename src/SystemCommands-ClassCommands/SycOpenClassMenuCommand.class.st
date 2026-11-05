@@ -14,18 +14,30 @@ SycOpenClassMenuCommand >> activationStrategy [
 	^ SycClassMenuActivation
 ]
 
+{ #category : 'execution' }
+SycOpenClassMenuCommand >> addClyCommandsToMenu: aMenuMorph [
+
+	| group |
+	group := ClyCommandGroupBuilder
+		         buildFor: self cmCommandClass
+		         context: self context.
+	^ ClyCommandGroupMenuRenderer
+		  render: group
+		  on: aMenuMorph
+]
+
 { #category : 'context menu' }
 SycOpenClassMenuCommand >> cmCommandClass [
 	^ SycClassCmCommand
-]
-
-{ #category : 'execution' }
-SycOpenClassMenuCommand >> defaultMenuItemName [
-	^'Refactorings'
 ]
 
 { #category : 'accessing' }
 SycOpenClassMenuCommand >> description [
 
 	^ 'Opens special class menu.'
+]
+
+{ #category : 'execution' }
+SycOpenClassMenuCommand >> name [
+	^'Refactorings'
 ]

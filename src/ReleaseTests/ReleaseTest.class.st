@@ -63,7 +63,7 @@ ReleaseTest >> assertValidLintRule: aLintRule withExceptions: someNames [
 
 	self
 		assert: results isEmpty
-		description: [ String
+		description: (String
 				streamContents: [ :s |
 					s
 						<< aLintRule rationale;
@@ -75,7 +75,7 @@ ReleaseTest >> assertValidLintRule: aLintRule withExceptions: someNames [
 							s
 								<< '- ';
 								print: e entity ]
-						separatedBy: [ s lf ] ] ]
+						separatedBy: [ s lf ] ] )
 ]
 
 { #category : 'helpers' }
@@ -278,7 +278,7 @@ ReleaseTest >> testLayoutIntegrity [
 ReleaseTest >> testLocalMethodsOfTheClassShouldNotBeRepeatedInItsTraits [
 	"If a class is using a trait with an explicit requirement method, this class should implement the method"
 
-	self assertValidLintRule: ReLocalMethodsSameThanTraitRule new withExceptions: #(RBSmalllintTestLocalMethodsSameThanTraitObject)
+	self assertValidLintRule: ReLocalMethodsSameThanTraitRule new withExceptions: #(ReSmalllintTestLocalMethodsSameThanTraitObject)
 ]
 
 { #category : 'tests' }
@@ -349,9 +349,9 @@ ReleaseTest >> testNoEquivalentSuperclassMethods [
 	"we do not care about methods that are installed from traits"
 	methods := SystemNavigation new allMethods reject: [ :method | method isFromTrait ].
 
-	methods := methods select: [ :method | method hasEquivalentMethodInSuperclass ].
+	methods := methods select: [ :method | method hasEquivalentMethodInSuperclass and: [ method package isSystemPackage ] ].
 
-	self assert: methods size <= 38
+	self assert: methods size <= 35
 ]
 
 { #category : 'tests - variables' }

@@ -19,7 +19,19 @@ SycOpenExtraInMethodMenuCommand class >> methodContextMenuActivation [
 { #category : 'execution' }
 SycOpenExtraInMethodMenuCommand >> activationStrategy [
 
-	^ SycExtraMenuActivation 
+	^ SycExtraMenuActivation
+]
+
+{ #category : 'execution' }
+SycOpenExtraInMethodMenuCommand >> addClyCommandsToMenu: aMenuMorph [
+
+	| group |
+	group := ClyCommandGroupBuilder
+		         buildFor: self cmCommandClass
+		         context: self context.
+	^ ClyCommandGroupMenuRenderer
+		  render: group
+		  on: aMenuMorph
 ]
 
 { #category : 'context menu' }
@@ -28,13 +40,13 @@ SycOpenExtraInMethodMenuCommand >> cmCommandClass [
 ]
 
 { #category : 'accessing' }
-SycOpenExtraInMethodMenuCommand >> defaultMenuIconName [
+SycOpenExtraInMethodMenuCommand >> iconName [
 
 	^ #forward 
 ]
 
 { #category : 'accessing' }
-SycOpenExtraInMethodMenuCommand >> defaultMenuItemName [
+SycOpenExtraInMethodMenuCommand >> name [
 
 	^ 'Extra' 
 ]

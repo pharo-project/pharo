@@ -106,12 +106,13 @@ HandMorph class >> logEventStatsStop [
 
 { #category : 'settings' }
 HandMorph class >> settingsOn: aBuilder [
+
 	<systemsettings>
 	(aBuilder setting: #handMorphsLogEventStats)
-		parent: #pharoSystem;
+		parentName: #pharoSystem;
 		label: 'HandMorph event statistics';
 		target: self;
-		default: false;
+		defaultValue: false;
 		selector: #logEventStatsEnabled;
 		description: 'Enable/disable gathering global statistics of events handled by HandMorphs.
 "HandMorph eventStats inspect"'

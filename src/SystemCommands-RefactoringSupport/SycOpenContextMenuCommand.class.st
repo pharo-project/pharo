@@ -4,10 +4,18 @@ I show in menu all commands annotated by activationStrategy class
 "
 Class {
 	#name : 'SycOpenContextMenuCommand',
-	#superclass : 'CmdOpenContextMenuCommand',
+	#superclass : 'ClyOpenContextMenuCommand',
 	#category : 'SystemCommands-RefactoringSupport',
 	#package : 'SystemCommands-RefactoringSupport'
 }
+
+{ #category : 'execution' }
+SycOpenContextMenuCommand >> addClyCommandsToMenu: aMenuMorph [
+
+	self cmCommandClass
+		addMenuItemsTo: aMenuMorph
+		onContext: self context
+]
 
 { #category : 'context menu' }
 SycOpenContextMenuCommand >> cmCommandClass [
@@ -19,7 +27,7 @@ SycOpenContextMenuCommand >> createContextMenu [
 
 	| menuMorph |
 	menuMorph := super createContextMenu.
-	self cmCommandClass addMenuItemsTo: menuMorph onContext: self context.
+	self addClyCommandsToMenu: menuMorph.
 	^ menuMorph
 ]
 

@@ -26,17 +26,15 @@ ReExceptionStrategy class >> current: aStrategy [
 
 { #category : 'settings' }
 ReExceptionStrategy class >> exceptionStrategySettingsOn: aBuilder [
-	<systemsettings>
 
+	<systemsettings>
 	(aBuilder pickOne: #current)
 		label: 'Exception handling strategy';
 		target: self;
-		parent: #qualityAssistant;
-		default: ReLogExceptionStrategy;
+		parentName: #qualityAssistant;
+		defaultValue: ReLogExceptionStrategy;
 		description: self settingDescription;
-		domainValues: (
-			self allSubclasses collect: [ :c |
-				c strategyTitle -> c ])
+		domainValues: (self allSubclasses collect: [ :c | c strategyTitle -> c ])
 ]
 
 { #category : 'error handling' }

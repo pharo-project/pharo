@@ -27,11 +27,6 @@ ClyBrowseCoveringTestCaseCommand class >> fullBrowserMenuActivation [
 		for: ClyClass asCalypsoItemContext
 ]
 
-{ #category : 'accessing' }
-ClyBrowseCoveringTestCaseCommand >> defaultMenuItemName [
-	^ 'Browse test class'
-]
-
 { #category : 'execution' }
 ClyBrowseCoveringTestCaseCommand >> execute [
 	| testCase |
@@ -39,6 +34,11 @@ ClyBrowseCoveringTestCaseCommand >> execute [
 
 	browser spawnBrowser: ClyFullBrowserMorph withState: [ :b |
 		b selectClass: testCase]
+]
+
+{ #category : 'accessing' }
+ClyBrowseCoveringTestCaseCommand >> name [
+	^ 'Browse test class'
 ]
 
 { #category : 'execution' }

@@ -10,7 +10,7 @@ Internal Representation and Key Implementation Points.
 "
 Class {
 	#name : 'ClyIcebergShowMethodVersionCommand',
-	#superclass : 'CmdCommand',
+	#superclass : 'ClyCommand',
 	#instVars : [
 		'method'
 	],
@@ -40,17 +40,6 @@ ClyIcebergShowMethodVersionCommand class >> methodMenuActivation [
 	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup order: 1001 for: ClyMethod asCalypsoItemContext
 ]
 
-{ #category : 'accessing' }
-ClyIcebergShowMethodVersionCommand >> defaultMenuIconName [
-	^#komitterSmalltalkhubRemote
-]
-
-{ #category : 'accessing' }
-ClyIcebergShowMethodVersionCommand >> defaultMenuItemName [
-
-	^ 'Commit history'
-]
-
 { #category : 'execution' }
 ClyIcebergShowMethodVersionCommand >> execute [
 	| browserClass packageName repositoriesWithPackage repository |
@@ -76,6 +65,17 @@ ClyIcebergShowMethodVersionCommand >> execute [
 		asClassInEnvironment: self class environment.
 
 	(browserClass onRepository: repository method: method) open
+]
+
+{ #category : 'accessing' }
+ClyIcebergShowMethodVersionCommand >> iconName [
+	^#komitterSmalltalkhubRemote
+]
+
+{ #category : 'accessing' }
+ClyIcebergShowMethodVersionCommand >> name [
+
+	^ 'Commit history'
 ]
 
 { #category : 'execution' }

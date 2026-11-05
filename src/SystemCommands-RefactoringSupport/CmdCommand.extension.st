@@ -13,7 +13,7 @@ CmdCommand >> confirmRefactoringInContext: aToolContext by: aCommandActivator [
 					aCommandActivator applyCommandResult ];
 				cancelAction: [ :p | p beCancel ] ]
 		ifFalse: [ submitDialog alert: 'There is no change produced by this refactoring' ].
-	CmdCommandAborted signal
+	CmCommandAborted signal
 ]
 
 { #category : '*SystemCommands-RefactoringSupport' }

@@ -30,7 +30,7 @@ SycCmCommand class >> addItemsToSubmenu: aCmdMenu forContext: aClyMethodContext 
 			            e new
 				            context: aClyMethodContext;
 				            yourself ]
-		            thenSelect: [ :e | e isApplicable ].
+		            thenSelect: [ :e | e canBeExecuted ].
 
 	commands do: [ :e | aCmdMenu rootGroup addItem: e ]
 ]
@@ -43,7 +43,7 @@ SycCmCommand class >> addMenuItemsTo: menuMorph onContext: context [
 	commands := self allSubclasses collect: [:aClass |
 		aClass new
 			context: context;
-			yourself] thenSelect: [:aCommand | aCommand isApplicable ].
+			yourself] thenSelect: [:aCommand | aCommand canBeExecuted ].
 
 	commands do: [ :aCommand | | anItem |
 		anItem := menuMorph add: aCommand name target: aCommand selector: #execute.
@@ -83,12 +83,6 @@ SycCmCommand >> executeRefactoring [
 SycCmCommand >> icon [
 
 	^ nil
-]
-
-{ #category : 'testing' }
-SycCmCommand >> isApplicable [
-
-	^ true
 ]
 
 { #category : 'testing' }

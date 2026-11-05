@@ -11,7 +11,6 @@ ClapDbgMockForDebugger >> methodForNavigationInACode [
 
 	| response |
 	response := self methodToStepInto.
-
 	^ response
 ]
 

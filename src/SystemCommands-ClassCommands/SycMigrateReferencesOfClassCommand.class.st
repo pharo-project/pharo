@@ -16,25 +16,25 @@ Class {
 	#package : 'SystemCommands-ClassCommands'
 }
 
-{ #category : 'accessing' }
-SycMigrateReferencesOfClassCommand >> defaultMenuIconName [
-	^ #source
-]
-
-{ #category : 'accessing' }
-SycMigrateReferencesOfClassCommand >> defaultMenuItemName [
-	^'Migrate references'
-]
-
 { #category : 'execution' }
 SycMigrateReferencesOfClassCommand >> execute [
 
 	self asRefactorings do: [ :ref | ref execute ]
 ]
 
+{ #category : 'accessing' }
+SycMigrateReferencesOfClassCommand >> iconName [
+	^ #source
+]
+
 { #category : 'testing' }
 SycMigrateReferencesOfClassCommand >> isComplexRefactoring [
 	^ true
+]
+
+{ #category : 'accessing' }
+SycMigrateReferencesOfClassCommand >> name [
+	^'Migrate references'
 ]
 
 { #category : 'execution' }

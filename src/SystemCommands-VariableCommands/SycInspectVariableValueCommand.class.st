@@ -18,16 +18,6 @@ SycInspectVariableValueCommand class >> canBeExecutedInContext: aToolContext [
 ]
 
 { #category : 'accessing' }
-SycInspectVariableValueCommand >> defaultMenuIconName [
-	^#inspect
-]
-
-{ #category : 'accessing' }
-SycInspectVariableValueCommand >> defaultMenuItemName [
-	^'Inspect value'
-]
-
-{ #category : 'accessing' }
 SycInspectVariableValueCommand >> description [
 
 	^ 'Inspect variable value'
@@ -37,4 +27,14 @@ SycInspectVariableValueCommand >> description [
 SycInspectVariableValueCommand >> execute [
 
 	variables last openValueInspector
+]
+
+{ #category : 'accessing' }
+SycInspectVariableValueCommand >> iconName [
+	^#inspect
+]
+
+{ #category : 'accessing' }
+SycInspectVariableValueCommand >> name [
+	^'Inspect value'
 ]

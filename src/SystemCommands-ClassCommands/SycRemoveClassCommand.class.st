@@ -11,20 +11,20 @@ Class {
 	#package : 'SystemCommands-ClassCommands'
 }
 
-{ #category : 'accessing' }
-SycRemoveClassCommand >> defaultMenuIconName [
-	^#remove
-]
-
-{ #category : 'accessing' }
-SycRemoveClassCommand >> defaultMenuItemName [
-	^'(R) Remove'
-]
-
 { #category : 'execution' }
 SycRemoveClassCommand >> execute [
 
 	^ ((ReRemoveClassDriver newApplication: self application) scopes: toolContext refactoringScopes classes: classes) runRefactoring 
+]
+
+{ #category : 'accessing' }
+SycRemoveClassCommand >> iconName [
+	^#remove
+]
+
+{ #category : 'accessing' }
+SycRemoveClassCommand >> name [
+	^'(R) Remove'
 ]
 
 { #category : 'execution' }

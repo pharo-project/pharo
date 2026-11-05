@@ -37,7 +37,7 @@ ClyRunFailedTestsFromMethodDataSourceCommand >> buildTestSuite [
 ]
 
 { #category : 'accessing' }
-ClyRunFailedTestsFromMethodDataSourceCommand >> defaultMenuItemName [
+ClyRunFailedTestsFromMethodDataSourceCommand >> name [
 	self hasTestResult ifFalse: [ ^'Run failed' ].
 
 	^'Run failed (', self testResult brokenCount asString, ')'

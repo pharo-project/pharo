@@ -14,10 +14,12 @@ Class {
 
 { #category : 'accessing' }
 ZipFileSystemFile >> bytes [
-	| uncompressed |
-	uncompressed := self readFromMember.
-	self updateSize: uncompressed size.
-	^ uncompressed
+	"My member is read the first time I am used, then I hold the bytes, possibly written since"
+
+	member ifNotNil: [
+			bytes := self readFromMember.
+			member := nil ].
+	^ bytes
 ]
 
 { #category : 'accessing' }
@@ -27,7 +29,9 @@ ZipFileSystemFile >> member [
 
 { #category : 'accessing' }
 ZipFileSystemFile >> member: aZipArchiveMember [
-	member := aZipArchiveMember
+
+	member := aZipArchiveMember.
+	size := aZipArchiveMember uncompressedSize
 ]
 
 { #category : 'private' }

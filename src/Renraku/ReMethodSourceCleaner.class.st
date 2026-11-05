@@ -35,14 +35,15 @@ ReMethodSourceCleaner class >> clean: aString keepFinalDot: aBoolean [
 
 { #category : 'settings' }
 ReMethodSourceCleaner class >> compactSourceCodeCleanupSettingsOn: aBuilder [
-	<systemsettings>
 
+	<systemsettings>
 	(aBuilder setting: #keepFinalDotInMethodBody)
 		order: 16;
 		label: 'Keep final dot dot in method body when critique is autofixed';
-		description: 'Define if the system keeps an unnecessary final dot at the end of a method body when critique on it is automatically resolved';
-		parent: #qualityAssistant;
-		default: false;
+		description:
+			'Define if the system keeps an unnecessary final dot at the end of a method body when critique on it is automatically resolved';
+		parentName: #qualityAssistant;
+		defaultValue: false;
 		target: self
 ]
 

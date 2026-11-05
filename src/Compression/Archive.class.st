@@ -14,7 +14,9 @@ Class {
 
 { #category : 'archive operations' }
 Archive >> addDirectory: aFileReference [
-	^self addDirectory: aFileReference as: aFileReference path pathString
+	"Add a member for the directory aFileReference (not its contents) under its basename"
+
+	^ self addDirectory: aFileReference as: aFileReference basename
 ]
 
 { #category : 'archive operations' }
@@ -28,7 +30,9 @@ Archive >> addDirectory: aFileReference as: anotherFileName [
 
 { #category : 'archive operations' }
 Archive >> addFile: aFileReference [
-	^self addFile: aFileReference as: aFileReference path pathString
+	"Add aFileReference under its basename. Use #addFile:as: or #addTree:relativeTo:match: to keep a path"
+
+	^ self addFile: aFileReference as: aFileReference basename
 ]
 
 { #category : 'archive operations' }
@@ -83,13 +87,12 @@ Archive >> contentsOf: aMemberOrName [
 
 { #category : 'archive operations' }
 Archive >> extractMember: aMemberOrName [
+	"Extract the member under the working directory, at the path given by its name, replacing an existing file"
+
 	| member |
 	member := self member: aMemberOrName.
 	member ifNil: [ ^ nil ].
-	member
-		extractToFileNamed: member localFileName
-		inDirectory: FileSystem workingDirectory
-		overwrite: true
+	member extractInDirectory: FileSystem workingDirectory overwrite: true
 ]
 
 { #category : 'archive operations' }
@@ -109,10 +112,14 @@ Archive >> extractMemberWithoutPath: aMemberOrName [
 
 { #category : 'archive operations' }
 Archive >> extractMemberWithoutPath: aMemberOrName inDirectory: dir [
-	| member |
+	"Extract the member directly into dir, under the last part of its name"
+
+	| member file |
 	member := self member: aMemberOrName.
 	member ifNil: [ ^ nil ].
-	member extractToFileNamed: member asFileReference basename inDirectory: dir overwrite: true
+	file := dir / member splitFileName last.
+	member ensureExtractionTarget: file isInside: dir.
+	member extractToFile: file overwrite: true
 ]
 
 { #category : 'initialization' }
@@ -177,10 +184,11 @@ Archive >> replaceMember: aMemberOrName with: newMember [
 
 { #category : 'archive operations' }
 Archive >> setContentsOf: aMemberOrName to: aString [
+
 	| newMember oldMember |
-	oldMember := self member: aMemberOrName.
-	newMember := (self memberClass newFromString: aString named: oldMember fileName)
-		copyFrom: oldMember.
+	oldMember := (self member: aMemberOrName) ifNil: [ ^ ZipArchiveError signal: 'no member named ' , aMemberOrName printString ].
+	newMember := self memberClass newFromString: aString named: oldMember fileName.
+	newMember copyAttributesFrom: oldMember.
 	self replaceMember: oldMember with: newMember
 ]
 
@@ -191,11 +199,12 @@ Archive >> writeTo: aStream [
 
 { #category : 'archive operations' }
 Archive >> writeToFile: aFileReferenceOrFileName [
-
 	"Catch attempts to overwrite existing zip file"
-	(self canWriteToFile: aFileReferenceOrFileName)
-		ifFalse: [ ^self error: (aFileReferenceOrFileName asString, ' is needed by one or more members in this archive') ].
 
-	aFileReferenceOrFileName asFileReference
-		binaryWriteStreamDo: [ :stream | self writeTo: stream ]
+	| file |
+	(self canWriteToFile: aFileReferenceOrFileName) ifFalse: [
+		^ ZipArchiveError signal: aFileReferenceOrFileName asString , ' is needed by one or more members in this archive' ].
+	file := aFileReferenceOrFileName asFileReference.
+	file ensureDelete.
+	file binaryWriteStreamDo: [ :stream | self writeTo: stream ]
 ]
