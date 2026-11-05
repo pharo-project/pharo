@@ -42,7 +42,7 @@ DelayBenchmark >> bench [
 	sampleSetSeeds := #( 42 ). "5975 13746 22634 44022" "uncomment items to get a better average"
 	trialOfNumberConcurrent := #( 1000 2000 3000 4000 5000 6000 7000 8000 9000 10000 ).
 	completed := Semaphore new.
-	self newLineTrace: String cr , 'Benchmarking ' , Delay delaySchedulerClass printString.
+	self newLineTrace: String newLine , 'Benchmarking ' , Delay delaySchedulerClass printString.
 	[
 		trialOfNumberConcurrent do: [ :numberConcurrent |
 				self newLineTrace: '#ConcurrentDelays: ' , numberConcurrent printString , String space.

@@ -1172,7 +1172,7 @@ PNGReadWriter >> writeChunk: crcStream [
 	debug ifTrue: [
 			self newLineTrace: (String streamContents: [ :str |
 						 str
-							 cr;
+							 newLine;
 							 print: stream position;
 							 space;
 							 nextPutAll: (bytes copyFrom: 1 to: 4) asString;
