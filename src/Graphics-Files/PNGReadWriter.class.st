@@ -765,7 +765,6 @@ PNGReadWriter >> nextImage [
 	idatChunkStream
 		ifNil: [ self error: 'image data is missing' ]
 		ifNotNil: [ self processIDATChunk ].
-	unknownChunks isEmpty ifFalse: [ "Transcript show: ' ',unknownChunks asSortedCollection asArray printString." ].
 	self debugging ifTrue: [
 			self newLineTrace: 'form = ' , form printString.
 			self newLineTrace: 'colorType = ' , colorType printString.
