@@ -795,6 +795,12 @@ Package >> renameTo: aSymbol [
 	self codeChangeAnnouncer  announce: (PackageRenamed to: self oldName: oldName newName: newName)
 ]
 
+{ #category : 'accessing' }
+Package >> repositories [
+	
+	^ IceRepository registry select: [ :repo | repo includesPackageNamed: self name ]
+]
+
 { #category : 'tags' }
 Package >> rootTag [
 
