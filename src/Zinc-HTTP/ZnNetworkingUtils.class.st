@@ -238,10 +238,12 @@ ZnNetworkingUtils >> secureSocketStreamOn: socket [
 ZnNetworkingUtils >> serverSocketOn: port [
 	| socket |
 	socket := Socket newTCP.
-	self setServerSocketOptions: socket.
-	socket listenOn: port backlogSize: self class listenBacklogSize.
-	socket isValid
-		ifFalse: [ self error: 'Cannot create socket on port ', port printString ].
+	[
+		self setServerSocketOptions: socket.
+		socket listenOn: port backlogSize: self class listenBacklogSize.
+		socket isValid
+			ifFalse: [ self error: 'Cannot create socket on port ', port printString ] ]
+		ifCurtailed: [ socket destroy ].
 	^ socket
 ]
 
@@ -249,13 +251,15 @@ ZnNetworkingUtils >> serverSocketOn: port [
 ZnNetworkingUtils >> serverSocketOn: port interface: address [
 	| socket |
 	socket := Socket newTCP.
-	self setServerSocketOptions: socket.
-	socket
-		listenOn: port
-		backlogSize: self class listenBacklogSize
-		interface: address.
-	socket isValid
-		ifFalse: [ self error: 'Cannot create socket on port ', port printString ].
+	[
+		self setServerSocketOptions: socket.
+		socket
+			listenOn: port
+			backlogSize: self class listenBacklogSize
+			interface: address.
+		socket isValid
+			ifFalse: [ self error: 'Cannot create socket on port ', port printString ] ]
+		ifCurtailed: [ socket destroy ].
 	^ socket
 ]
 

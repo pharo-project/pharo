@@ -32,18 +32,6 @@ SycMoveTempDefinitionCommand >> applyResultInContext: aSourceCodeContext [
 ]
 
 { #category : 'accessing' }
-SycMoveTempDefinitionCommand >> defaultMenuIconName [
-
-	^ #edit
-]
-
-{ #category : 'accessing' }
-SycMoveTempDefinitionCommand >> defaultMenuItemName [
-
-	^'(R) Move temp. definition'
-]
-
-{ #category : 'accessing' }
 SycMoveTempDefinitionCommand >> description [
 
 	^ 'Moves the definition of the temporary variable closed to its user.'
@@ -57,6 +45,18 @@ SycMoveTempDefinitionCommand >> execute [
 		   method: method;
 		   scopes: toolContext refactoringScopes;
 		   yourself) runRefactoring
+]
+
+{ #category : 'accessing' }
+SycMoveTempDefinitionCommand >> iconName [
+
+	^ #edit
+]
+
+{ #category : 'accessing' }
+SycMoveTempDefinitionCommand >> name [
+
+	^'(R) Move temp. definition'
 ]
 
 { #category : 'execution' }

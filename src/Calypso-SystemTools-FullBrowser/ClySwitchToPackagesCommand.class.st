@@ -15,12 +15,6 @@ ClySwitchToPackagesCommand class >> toolbarOrder [
 ]
 
 { #category : 'accessing' }
-ClySwitchToPackagesCommand >> defaultMenuItemName [
-
-	^ 'All Packages'
-]
-
-{ #category : 'accessing' }
 ClySwitchToPackagesCommand >> description [
 	^ 'Click to show all packages'
 ]
@@ -35,4 +29,10 @@ ClySwitchToPackagesCommand >> execute [
 ClySwitchToPackagesCommand >> isAppliedToBrowser [
 
 	^ (browser packageView showsItemsFromQuery: ClyAllPackagesQuery) and: [ browser isScopedModeEnabled not ]
+]
+
+{ #category : 'accessing' }
+ClySwitchToPackagesCommand >> name [
+
+	^ 'All Packages'
 ]

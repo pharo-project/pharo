@@ -18,16 +18,6 @@ SycPullUpMethodCommand class >> canBeExecutedInContext: aToolContext [
 ]
 
 { #category : 'accessing' }
-SycPullUpMethodCommand >> defaultMenuIconName [
-	^ #up
-]
-
-{ #category : 'accessing' }
-SycPullUpMethodCommand >> defaultMenuItemName [
-	^'(R) Pull up'
-]
-
-{ #category : 'accessing' }
 SycPullUpMethodCommand >> description [
 
 	^ 'Pull up methods.'
@@ -38,6 +28,16 @@ SycPullUpMethodCommand >> executeRefactorings [
 
 	^ ((RePullUpMethodDriver newApplication: self application) model: model scopes: refactoringScopes pullUpMethods: methods)
 		  runRefactoring
+]
+
+{ #category : 'accessing' }
+SycPullUpMethodCommand >> iconName [
+	^ #up
+]
+
+{ #category : 'accessing' }
+SycPullUpMethodCommand >> name [
+	^'(R) Pull up'
 ]
 
 { #category : 'execution' }

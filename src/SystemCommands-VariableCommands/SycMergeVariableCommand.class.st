@@ -3,7 +3,7 @@ I am a command to merge given variable into another
 "
 Class {
 	#name : 'SycMergeVariableCommand',
-	#superclass : 'CmdCommand',
+	#superclass : 'ClyCommand',
 	#instVars : [
 		'variable',
 		'newName'
@@ -15,11 +15,6 @@ Class {
 { #category : 'testing' }
 SycMergeVariableCommand class >> canBeExecutedInContext: aToolContext [
 	^aToolContext isVariableSelected and: [ aToolContext isGlobalVariableSelected not ]
-]
-
-{ #category : 'accessing' }
-SycMergeVariableCommand class >> defaultMenuIconName [
-	^ #merge
 ]
 
 { #category : 'activation' }
@@ -45,11 +40,6 @@ SycMergeVariableCommand >> classRefactoring [
 	^ RBMergeInstanceVariableIntoAnother
 ]
 
-{ #category : 'accessing' }
-SycMergeVariableCommand >> defaultMenuItemName [
-	^'Merge into another'
-]
-
 { #category : 'execution' }
 SycMergeVariableCommand >> execute [
 
@@ -57,6 +47,16 @@ SycMergeVariableCommand >> execute [
 	refactoring := variable createVariableRefactoring: self classRefactoring.
 	refactoring newName: self newVariableName.
 	refactoring execute
+]
+
+{ #category : 'accessing' }
+SycMergeVariableCommand >> iconName [
+	^ #merge
+]
+
+{ #category : 'accessing' }
+SycMergeVariableCommand >> name [
+	^'Merge into another'
 ]
 
 { #category : 'accessing' }

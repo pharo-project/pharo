@@ -29,6 +29,6 @@ RFSenderReification >> genForASTMethodNode [
 	^OCMessageNode
 		receiver: (OCMessageNode
 			receiver: OCVariableNode thisContextNode
-			selector: #sender)
-		selector: #receiver
+			selector: (OCSelectorNode value: #sender))
+		selector: (OCSelectorNode value: #receiver)
 ]

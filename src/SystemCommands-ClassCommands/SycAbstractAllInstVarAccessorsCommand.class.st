@@ -32,18 +32,18 @@ SycAbstractAllInstVarAccessorsCommand >> asRefactorings [
 ]
 
 { #category : 'accessing' }
-SycAbstractAllInstVarAccessorsCommand >> defaultMenuIconName [
+SycAbstractAllInstVarAccessorsCommand >> iconName [
 	^ #smallAdd
-]
-
-{ #category : 'accessing' }
-SycAbstractAllInstVarAccessorsCommand >> defaultMenuItemName [
-	^'Abstract instance variables'
 ]
 
 { #category : 'testing' }
 SycAbstractAllInstVarAccessorsCommand >> isComplexRefactoring [
 	^ true
+]
+
+{ #category : 'accessing' }
+SycAbstractAllInstVarAccessorsCommand >> name [
+	^'Abstract instance variables'
 ]
 
 { #category : 'testing' }
@@ -66,6 +66,6 @@ SycAbstractAllInstVarAccessorsCommand >> selectVariables [
 				                     withItems: vars
 				                     selecting: vars
 				                     acceptBlock: [ :items | selectedVars := items ].
-			           dialog cancelled ifTrue: [ CmdCommandAborted signal ].
+			           dialog cancelled ifTrue: [ CmCommandAborted signal ].
 			           aClass -> selectedVars ]
 ]

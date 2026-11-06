@@ -34,20 +34,20 @@ ClyShowGroupsInMethodBrowserCommand class >> fullBrowserMethodGroupMenuActivatio
 	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup for: ClyFullBrowserMethodGroupContext
 ]
 
-{ #category : 'accessing' }
-ClyShowGroupsInMethodBrowserCommand >> defaultMenuIconName [
-	^#browse
-]
-
-{ #category : 'accessing' }
-ClyShowGroupsInMethodBrowserCommand >> defaultMenuItemName [
-	^'Show in method browser'
-]
-
 { #category : 'execution' }
 ClyShowGroupsInMethodBrowserCommand >> execute [
 
 	(Smalltalk tools toolNamed: #messageList) browse: methodGroups first methods 
+]
+
+{ #category : 'accessing' }
+ClyShowGroupsInMethodBrowserCommand >> iconName [
+	^#browse
+]
+
+{ #category : 'accessing' }
+ClyShowGroupsInMethodBrowserCommand >> name [
+	^'Show in method browser'
 ]
 
 { #category : 'execution' }

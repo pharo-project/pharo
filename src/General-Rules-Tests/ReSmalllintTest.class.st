@@ -15,10 +15,10 @@ ReSmalllintTest class >> packageNamesUnderTest [
 ReSmalllintTest >> assertEnvironment: anEnvironment hasAllClassesOfTheResult: critiques [
 
 	critiques do: [ :crit |
-		| target |
-		target := crit entity.
-		self assert: target isClass.
-		self assert: (anEnvironment includesClass: target) ]
+			| target |
+			target := crit entity.
+			self assert: target isClass description: target displayString , ' is not a class.'.
+			self assert: (anEnvironment includesClass: target) description: target displayString , ' is not in the system.' ]
 ]
 
 { #category : 'private' }
@@ -42,9 +42,8 @@ ReSmalllintTest >> assertIsValidRule: aRule [
 
 { #category : 'asserting' }
 ReSmalllintTest >> assertResult: critiques hasAllClassesInEnvironment: anEnvironment [
-	anEnvironment classesDo: [ :class |
-		self assert: (critiques anySatisfy: [ :crit |
-			crit entity instanceSide = class instanceSide ]) ]
+
+	anEnvironment classesDo: [ :class | self assert: (critiques anySatisfy: [ :crit | crit entity instanceSide = class instanceSide ]) description: 'No critique for class: ' , class displayString ]
 ]
 
 { #category : 'asserting' }
@@ -351,11 +350,6 @@ ReSmalllintTest >> testLiteralArrayCharacters [
 { #category : 'tests' }
 ReSmalllintTest >> testLiteralArrayContainsComma [
 	self ruleFor: self currentSelector
-]
-
-{ #category : 'tests' }
-ReSmalllintTest >> testLocalMethodsSameThanTrait [
-	self classAndMetaClassRuleFor: self currentSelector
 ]
 
 { #category : 'tests' }

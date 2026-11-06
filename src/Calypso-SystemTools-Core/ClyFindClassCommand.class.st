@@ -14,20 +14,20 @@ Class {
 	#tag : 'Commands-Classes'
 }
 
-{ #category : 'accessing' }
-ClyFindClassCommand >> defaultMenuIconName [
-	^#smallFind
-]
-
-{ #category : 'accessing' }
-ClyFindClassCommand >> defaultMenuItemName [
-	^'Find class'
-]
-
 { #category : 'execution' }
 ClyFindClassCommand >> execute [
 
 	browser selectClass: class
+]
+
+{ #category : 'accessing' }
+ClyFindClassCommand >> iconName [
+	^#smallFind
+]
+
+{ #category : 'accessing' }
+ClyFindClassCommand >> name [
+	^'Find class'
 ]
 
 { #category : 'execution' }

@@ -38,16 +38,16 @@ ClyConvertMethodGroupToProtocolCommand >> applyResultInContext: aToolContext [
 	aToolContext showProtocol: protocol
 ]
 
-{ #category : 'accessing' }
-ClyConvertMethodGroupToProtocolCommand >> defaultMenuItemName [
-
-	^ 'Convert to protocol'
-]
-
 { #category : 'execution' }
 ClyConvertMethodGroupToProtocolCommand >> execute [
 
 	methodGroups do: [ :methodGroup | methodGroup categorizeMethodsIn: protocol ]
+]
+
+{ #category : 'accessing' }
+ClyConvertMethodGroupToProtocolCommand >> name [
+
+	^ 'Convert to protocol'
 ]
 
 { #category : 'execution' }

@@ -768,13 +768,6 @@ ClassDescription >> protocols: aCollection [
 	protocols := aCollection
 ]
 
-{ #category : 'compiling' }
-ClassDescription >> reformatAll [
-	"Reformat all methods in this class"
-
-	self methods do: [ :method | method reformat ]
-]
-
 { #category : 'protocols' }
 ClassDescription >> removeEmptyProtocols [
 	"We copy protocols because it is usually bad to remove elements of a collection while iterating on it"

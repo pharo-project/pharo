@@ -35,5 +35,5 @@ ReSentButNotUnderstoodBySuperRuleTest >> testRule [
 	critiques := self myCritiques .
 
 	self assert: critiques size equals: 1.
-	self assert: (self sourceAtChritique: critiques first) equals: 'super someMessageThatSuperDoesNotUnderstand'
+	self assert: (self sourceAtCritique: critiques first) equals: 'super someMessageThatSuperDoesNotUnderstand'
 ]

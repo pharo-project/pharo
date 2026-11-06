@@ -10,7 +10,7 @@ Internal Representation and Key Implementation Points.
 "
 Class {
 	#name : 'SycShowMethodVersionCommand',
-	#superclass : 'CmdCommand',
+	#superclass : 'ClyCommand',
 	#instVars : [
 		'method'
 	],
@@ -24,16 +24,6 @@ SycShowMethodVersionCommand class >> canBeExecutedInContext: aToolContext [
 ]
 
 { #category : 'accessing' }
-SycShowMethodVersionCommand >> defaultMenuIconName [
-	^#history
-]
-
-{ #category : 'accessing' }
-SycShowMethodVersionCommand >> defaultMenuItemName [
-	^'Versions'
-]
-
-{ #category : 'accessing' }
 SycShowMethodVersionCommand >> description [
 
 	^ 'Show local method version.'
@@ -42,6 +32,16 @@ SycShowMethodVersionCommand >> description [
 { #category : 'execution' }
 SycShowMethodVersionCommand >> execute [
 	(Smalltalk tools toolNamed: #versionBrowser) browseVersionsForMethod: method
+]
+
+{ #category : 'accessing' }
+SycShowMethodVersionCommand >> iconName [
+	^#history
+]
+
+{ #category : 'accessing' }
+SycShowMethodVersionCommand >> name [
+	^'Versions'
 ]
 
 { #category : 'execution' }

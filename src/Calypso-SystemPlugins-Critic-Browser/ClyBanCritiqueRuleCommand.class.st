@@ -15,11 +15,6 @@ ClyBanCritiqueRuleCommand >> applyResultInContext: aToolContext [
 	aToolContext tool criticView update
 ]
 
-{ #category : 'initialization' }
-ClyBanCritiqueRuleCommand >> defaultMenuIconName [
-	^#smallCancel
-]
-
 { #category : 'table decoration' }
 ClyBanCritiqueRuleCommand >> description [
 	^'Ban this rule'
@@ -29,4 +24,9 @@ ClyBanCritiqueRuleCommand >> description [
 ClyBanCritiqueRuleCommand >> execute [
 
 	critique guidedBan
+]
+
+{ #category : 'initialization' }
+ClyBanCritiqueRuleCommand >> iconName [
+	^#smallCancel
 ]
