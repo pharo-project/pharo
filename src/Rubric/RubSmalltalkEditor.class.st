@@ -536,7 +536,7 @@ RubSmalltalkEditor >> evaluate: source andDo: aBlock [
 			          requestor: self;
 			          context: ctxt;
 			          receiver: rcvr;
-			          permitFaulty: false;
+			          strict;
 			          evaluate ]
 		on: OCCodeError
 		do: [ :err | result := nil ].
