@@ -55,7 +55,7 @@ ClyRichTextClassCommentEditorToolMorph >> defaultIconName [
 
 { #category : 'initialization' }
 ClyRichTextClassCommentEditorToolMorph >> defaultTitle [
-	^'Comment Foo'
+	^'Comment'
 ]
 
 { #category : 'rendering' }
