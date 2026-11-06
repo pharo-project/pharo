@@ -666,7 +666,8 @@ ClassDescription >> package [
 { #category : 'accessing - packages' }
 ClassDescription >> package: aPackage [
 
-	^ (self packageOrganizer ensurePackage: aPackage) addClass: self
+	(self packageOrganizer ensurePackage: aPackage) addClass: self.
+	^ self 
 ]
 
 { #category : 'accessing - packages' }
