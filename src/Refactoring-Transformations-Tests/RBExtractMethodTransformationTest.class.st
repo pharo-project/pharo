@@ -20,24 +20,6 @@ RBExtractMethodTransformationTest >> errorMessageOfExtractingInterval: anInterva
 		do: [ :error | error messageText ]
 ]
 
-{ #category : 'tests' }
-RBExtractMethodTransformationTest >> testExtractValidInterval [
-	| source expression start refactoring class |
-	source := (RBBasicLintRuleTestData class >> #subclassResponsibilityNotDefined) sourceCode.
-	expression := '''subclassResponsibility'' asSymbol'.
-	start := source indexOfSubCollection: expression.
-
-	refactoring := ReCompositeExtractMethodRefactoring
-		               extractInterval: (start to: start + expression size - 1)
-		               from: #subclassResponsibilityNotDefined
-		               to: #extractedMethod
-		               in: #'RBBasicLintRuleTestData class'.
-	refactoring generateChanges.
-
-	class := refactoring model classNamed: #'RBBasicLintRuleTestData class'.
-	self assert: (class directlyDefinesMethod: #extractedMethod)
-]
-
 { #category : 'private' }
 RBExtractMethodTransformationTest >> sourceCodeAt: anInterval forMethod: aSelector in: aClass [
 
@@ -102,6 +84,24 @@ RBExtractMethodTransformationTest >> testExtractUsingExistingMethodRefactoring [
 	self deny: (class directlyDefinesMethod: #bar)
 ]
 
+{ #category : 'tests' }
+RBExtractMethodTransformationTest >> testExtractValidInterval [
+	| source expression start refactoring class |
+	source := (RBBasicLintRuleTestData class >> #subclassResponsibilityNotDefined) sourceCode.
+	expression := '''subclassResponsibility'' asSymbol'.
+	start := source indexOfSubCollection: expression.
+
+	refactoring := ReCompositeExtractMethodRefactoring
+		               extractInterval: (start to: start + expression size - 1)
+		               from: #subclassResponsibilityNotDefined
+		               to: #extractedMethod
+		               in: #'RBBasicLintRuleTestData class'.
+	refactoring generateChanges.
+
+	class := refactoring model classNamed: #'RBBasicLintRuleTestData class'.
+	self assert: (class directlyDefinesMethod: #extractedMethod)
+]
+
 { #category : 'tests - failures' }
 RBExtractMethodTransformationTest >> testFailureBadInterval [
 
@@ -115,30 +115,6 @@ RBExtractMethodTransformationTest >> testFailureBadInterval [
 								forMethod: #subclassOf:overrides: in: RBBasicLintRuleTestData class)
 							from: #subclassOf:overrides: to: #bla
 							in: #'RBBasicLintRuleTestData class')
-]
-
-{ #category : 'tests - failures' }
-RBExtractMethodTransformationTest >> testFailureIntervalEndsOutsideOfMethodSource [
-
-	self
-		assert: (self errorMessageOfExtractingInterval: (1 to: 100000) from: #subclassOf:overrides:)
-		equals: 'Invalid interval'
-]
-
-{ #category : 'tests - failures' }
-RBExtractMethodTransformationTest >> testFailureIntervalStartsAfterItsEnd [
-
-	self
-		assert: (self errorMessageOfExtractingInterval: (80 to: 20) from: #subclassOf:overrides:)
-		equals: 'Invalid interval'
-]
-
-{ #category : 'tests - failures' }
-RBExtractMethodTransformationTest >> testFailureIntervalOfMethodThatDoesNotExist [
-
-	self
-		assert: (self errorMessageOfExtractingInterval: (1 to: 10) from: #methodThatDoesNotExist)
-		equals: 'Invalid source'
 ]
 
 { #category : 'tests - failures' }
@@ -174,6 +150,30 @@ RBExtractMethodTransformationTest >> testFailureCannotExtractTwoAssignmentsToTem
 			 from: #subclassResponsibilityNotDefined
 			 to: #foo
 			 in: #'RBBasicLintRuleTestData class')
+]
+
+{ #category : 'tests - failures' }
+RBExtractMethodTransformationTest >> testFailureIntervalEndsOutsideOfMethodSource [
+
+	self
+		assert: (self errorMessageOfExtractingInterval: (1 to: 100000) from: #subclassOf:overrides:)
+		equals: 'Invalid interval'
+]
+
+{ #category : 'tests - failures' }
+RBExtractMethodTransformationTest >> testFailureIntervalOfMethodThatDoesNotExist [
+
+	self
+		assert: (self errorMessageOfExtractingInterval: (1 to: 10) from: #methodThatDoesNotExist)
+		equals: 'Invalid source'
+]
+
+{ #category : 'tests - failures' }
+RBExtractMethodTransformationTest >> testFailureIntervalStartsAfterItsEnd [
+
+	self
+		assert: (self errorMessageOfExtractingInterval: (80 to: 20) from: #subclassOf:overrides:)
+		equals: 'Invalid interval'
 ]
 
 { #category : 'tests - failures' }
