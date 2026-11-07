@@ -159,7 +159,7 @@ StRenameClassPreviewPresenter >> connectPresenters [
 	buttonOk action: [ self accept ] .
 	buttonBrowseMethod action: [ self browseMethods ].
 	
-	newNameInput whenTextChangedDo: [ :text | self schedulePreviewUpdate: text ] .
+	newNameInput whenTextChangedDo: [ :text | self refreshPreview: text ] .
 	newNameInput whenSubmitDo: [ :text | self accept ]
 ]
 
@@ -242,6 +242,8 @@ StRenameClassPreviewPresenter >> hasWarning [
 
 { #category : 'action' }
 StRenameClassPreviewPresenter >> hideBehaviorPanel [
+
+	topLayout ifNil: [ ^ self ].
 	
 	(topLayout children includes: behaviorPanel)
 		ifFalse: [ ^ self ].
@@ -255,11 +257,9 @@ StRenameClassPreviewPresenter >> initializeDialogWindow: aDialogWindowPresenter 
 
 	| applyButton |
 	aDialogWindowPresenter addButton: 'Cancel' do: [ :presenter |
-			self terminateUpdateProcess.
 			presenter close ].
 
 	applyButton := aDialogWindowPresenter addDefaultButton: 'Apply' do: [ :presenter |
-			               self terminateUpdateProcess.
 			               self accept.
 			               presenter close ].
 
@@ -287,17 +287,20 @@ StRenameClassPreviewPresenter >> initializePresenters [
 	scopeDropList display: [ :scope | scope description ].
 	
 	buttonOk := self newButton
-		label: 'Accept';
+		label: 'Apply';
 		icon: (self iconNamed: #smallOk).
 
 	buttonCancel := self newButton
 		label: 'Cancel';
 		icon: (self iconNamed: #smallCancel) .
 		
-	newNameLabel := self newLabel label: 'Selector'.
+	newNameLabel := self newLabel label: 'New name'.
 	newNameInput := self newTextInput.
 	
-	validationLabel := self newLabel label: '' .
+	validationLabel := self newLabel
+		label: '';
+		addStyle: 'dim';
+		yourself.
 	
 	behaviorWarningIcon := self newImage image: (self iconNamed: #warningIcon) .
 	behaviorWarningTitle := self newLabel label: 'Behavior-preserving warnings' .
@@ -344,6 +347,16 @@ StRenameClassPreviewPresenter >> performChanges [
 { #category : 'accessing' }
 StRenameClassPreviewPresenter >> refactoring: aRenameClassRefactoring [ 
 	refactoring := aRenameClassRefactoring
+]
+
+{ #category : 'update' }
+StRenameClassPreviewPresenter >> refreshPreview: aString [
+
+	self validateName: aString.
+	nameIsValid
+		ifTrue: [ self updateBehaviorPanelVisibility: aString ]
+		ifFalse: [ self hideBehaviorPanel ].
+	self updateName
 ]
 
 { #category : 'initialization' }
@@ -472,19 +485,16 @@ StRenameClassPreviewPresenter >> updateTablePresenter [
 StRenameClassPreviewPresenter >> validateName: aString [
 
 	| message |
+	(aString isEmpty or: [ aString = driver oldName asString ]) ifTrue: [
+		nameIsValid := false.
+		validationLabel label: ''.
+		^ self ].
+
 	driver newName: aString.
 	driver createAndSetNewRefactoring.
 	message := driver checkApplicabilityPreconditions.
-
-	message
-		ifNil: [
-				nameIsValid := true.
-				validationLabel label: '' ]
-		ifNotNil: [
-				nameIsValid := false.
-				validationLabel 
-					label: message;
-					addStyle: 'headerError' ]
+	nameIsValid := message isNil.
+	validationLabel label: (message ifNil: [ '' ])
 ]
 
 { #category : 'accessing' }
