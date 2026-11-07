@@ -78,10 +78,10 @@ ExternalSemaphoreTable class >> freedSlotsIn: externalObjects ratherThanIncrease
 				needToGrow
 					ifTrue: ["If we did GC, warn we had to gc so actions could be taken if appropriate."
 						self
-							traceCr:  'WARNING:  Had to GC to make room for more external objects.';
-							traceCr: 'If this happens often, it would be a good idea to either:';
-							traceCr: '- Raise the maxExternalSemaphores size.';
-							traceCr: '- Write your code to explicitly release them rather than wait for finalization.']
+							traceNewLine:  'WARNING:  Had to GC to make room for more external objects.';
+							traceNewLine: 'If this happens often, it would be a good idea to either:';
+							traceNewLine: '- Raise the maxExternalSemaphores size.';
+							traceNewLine: '- Write your code to explicitly release them rather than wait for finalization.']
 					ifFalse:  [Smalltalk vm maxExternalSemaphores: newSize].
 				needToGrow]]
 		ifNil:[false]

@@ -364,7 +364,7 @@ OSWindowMorphicEventHandler >> visitTextInputEvent: anEvent [
 { #category : 'visiting' }
 OSWindowMorphicEventHandler >> visitUnknownEvent: anEvent [
 	self
-		traceCr: ('Unknown event: <1s>' expandMacrosWith: anEvent data printString)
+		traceNewLine: ('Unknown event: <1s>' expandMacrosWith: anEvent data printString)
 ]
 
 { #category : 'visiting' }

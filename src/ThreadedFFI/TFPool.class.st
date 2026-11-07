@@ -108,7 +108,7 @@ TFPool >> returnOne: anObject [
 		index := pointer - 1.
 		index > 0 ifFalse: [
 			"This can happen if a new session starts in middle of a call."
-			'Returning an object but pool is full' crTrace.
+			'Returning an object but pool is full' newLineTrace.
 			releaseBlock value:anObject.
 			^ self  ].
 		elements at: index put: anObject.

@@ -43,10 +43,7 @@ ZnLogEvent class >> logToTranscript [
 
 	self stopLoggingToTranscript.
 
-	^ self announcer
-		  when: ZnLogEvent
-		  do: [ :event | self crTrace: event ]
-		  for: self
+	^ self announcer when: ZnLogEvent do: [ :event | self newLineTrace: event ] for: self
 ]
 
 { #category : 'accessing' }

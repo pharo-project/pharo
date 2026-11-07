@@ -2,30 +2,38 @@ Extension { #name : 'Object' }
 
 { #category : '*Transcript-NonInteractive' }
 Object >> crTrace [
-	self crTrace: self
-]
+	"To deprecate in favor of #newLineTrace."
 
-{ #category : '*Transcript-NonInteractive' }
-Object >> crTrace: aString [
-	"Log the argument. Use self crTrace: instead of Transcript cr; show: "
-
-	Transcript cr.
-	self trace: aString
+	self newLineTrace
 ]
 
 { #category : '*Transcript-NonInteractive' }
 Object >> logEntry [
-	self traceCr: 'Entered ' , thisContext sender printString
+	self traceNewLine: 'Entered ' , thisContext sender printString
 ]
 
 { #category : '*Transcript-NonInteractive' }
 Object >> logExecution [
-	self traceCr: 'Executing ' , thisContext sender printString
+	self traceNewLine: 'Executing ' , thisContext sender printString
 ]
 
 { #category : '*Transcript-NonInteractive' }
 Object >> logExit [
-	self traceCr: 'Exited ' , thisContext sender printString
+	self traceNewLine: 'Exited ' , thisContext sender printString
+]
+
+{ #category : '*Transcript-NonInteractive' }
+Object >> newLineTrace [
+
+	self newLineTrace: self
+]
+
+{ #category : '*Transcript-NonInteractive' }
+Object >> newLineTrace: aString [
+	"Log the argument. Use self newLineTrace: instead of Transcript newLine; show: "
+
+	Transcript newLine.
+	self trace: aString
 ]
 
 { #category : '*Transcript-NonInteractive' }
@@ -42,21 +50,38 @@ Object >> trace: anObject [
 
 { #category : '*Transcript-NonInteractive' }
 Object >> traceCr [
-	self traceCr: self
+	"To deprecate in favor of #traceNewLine."
+
+	self traceNewLine
 ]
 
 { #category : '*Transcript-NonInteractive' }
 Object >> traceCr: anObject [
-	"Log the argument. Use self traceCr: 'something' instead of Transcript show: 'something'  ; cr "
+	"To deprecate in favor of #traceNewLine:."
 
-	self trace: anObject.
-	Transcript cr 
+	self traceNewLine: anObject
 ]
 
 { #category : '*Transcript-NonInteractive' }
-Object >> traceCrTab: anObject [
-	"Log the argument. Use self traceCr: 'something' instead of Transcript show: 'something'  ; cr "
+Object >> traceNewLine [
+
+	self traceNewLine: self
+]
+
+{ #category : '*Transcript-NonInteractive' }
+Object >> traceNewLine: anObject [
+	"Log the argument. Use self traceNewLine: 'something' instead of Transcript show: 'something'  ; newLine "
 
 	self trace: anObject.
-	Transcript cr ; tab
+	Transcript newLine
+]
+
+{ #category : '*Transcript-NonInteractive' }
+Object >> traceNewLineTab: anObject [
+	"Log the argument. Use self traceNewLine: 'something' instead of Transcript show: 'something'  ; newLine "
+
+	self trace: anObject.
+	Transcript
+		newLine;
+		tab
 ]
