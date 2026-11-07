@@ -23,15 +23,9 @@ ClyDebugVariableCommand class >> debugPointClass [
 { #category : 'activation' }
 ClyDebugVariableCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
-	^ CmdContextMenuActivation
+	^ ClyContextMenuActivation
 		byItemOf: ClyDebuggingPointsMenuGroup
 		for: ClyFullBrowserVariableContext
-]
-
-{ #category : 'testing' }
-ClyDebugVariableCommand class >> isAbstract [
-
-	^ true
 ]
 
 { #category : 'accessing' }
@@ -46,12 +40,6 @@ ClyDebugVariableCommand >> debugPointClass [
 	^ self class debugPointClass
 ]
 
-{ #category : 'execution' }
-ClyDebugVariableCommand >> execute [
-
-	variables do: [ :var | self executeFor: var ]
-]
-
 { #category : 'private execution' }
 ClyDebugVariableCommand >> executeFor: aVariable [
 
@@ -60,6 +48,12 @@ ClyDebugVariableCommand >> executeFor: aVariable [
 		inClass: aVariable definingClass
 		onVariableNamed: aVariable name
 		accessStrategy: self accessStrategy
+]
+
+{ #category : 'execution' }
+ClyDebugVariableCommand >> executeRefactoring [
+
+	variables do: [ :var | self executeFor: var ]
 ]
 
 { #category : 'accessing' }
@@ -72,4 +66,10 @@ ClyDebugVariableCommand >> iconName [
 ClyDebugVariableCommand >> name [
 
 	^ 'Add debug point:'
+]
+
+{ #category : 'execution' }
+ClyDebugVariableCommand >> prepareFullExecution [
+
+	variables := self context selectedVariables
 ]

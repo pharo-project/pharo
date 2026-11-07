@@ -10,34 +10,17 @@ Internal Representation and Key Implementation Points.
 "
 Class {
 	#name : 'ClyShowVariableWriterCommand',
-	#superclass : 'SycVariableCommand',
-	#instVars : [
-		'browser'
-	],
+	#superclass : 'SycVariableNavigationCmCommand',
 	#category : 'Calypso-SystemTools-QueryBrowser-Commands-Queries',
 	#package : 'Calypso-SystemTools-QueryBrowser',
 	#tag : 'Commands-Queries'
 }
 
 { #category : 'activation' }
-ClyShowVariableWriterCommand class >> fullBrowserMenuActivation [
-	<classAnnotation>
-
-	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup order: 2001 for: ClyFullBrowserVariableContext
-]
-
-{ #category : 'activation' }
 ClyShowVariableWriterCommand class >> fullBrowserShortcutActivation [
 	<classAnnotation>
 
-	^CmdShortcutActivation by: $m meta for: ClyFullBrowserVariableContext
-]
-
-{ #category : 'activation' }
-ClyShowVariableWriterCommand class >> sourceCodeMenuActivation [
-	<classAnnotation>
-
-	^SycSourceCodeMenuActivation byItemOf: ClyQueryMenuGroup for: ClySourceCodeContext
+	^ClyShortcutActivation by: $m meta for: ClyFullBrowserVariableContext
 ]
 
 { #category : 'accessing' }
@@ -47,9 +30,15 @@ ClyShowVariableWriterCommand >> description [
 ]
 
 { #category : 'execution' }
-ClyShowVariableWriterCommand >> execute [
+ClyShowVariableWriterCommand >> executeRefactoring [
 
 	(Smalltalk tools toolNamed: #messageList) browseWritersOfVariables: variables 
+]
+
+{ #category : 'accessing' }
+ClyShowVariableWriterCommand >> fullBrowserOrder [
+
+	^ 2001
 ]
 
 { #category : 'accessing' }
@@ -57,9 +46,8 @@ ClyShowVariableWriterCommand >> name [
 	^'Writers'
 ]
 
-{ #category : 'execution' }
-ClyShowVariableWriterCommand >> prepareFullExecutionInContext: aToolContext [
-	super prepareFullExecutionInContext: aToolContext.
+{ #category : 'accessing' }
+ClyShowVariableWriterCommand >> order [
 
-	browser := aToolContext browser
+	^ 1000
 ]

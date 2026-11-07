@@ -31,10 +31,10 @@ ClyDebugBrokenCritiqueCommand >> decorateTableCell: anItemCellMorph with: aMorph
 ]
 
 { #category : 'execution' }
-ClyDebugBrokenCritiqueCommand >> execute [
+ClyDebugBrokenCritiqueCommand >> executeRefactoring [
 
-	(OupsDebugRequest newForContext: critique stack)
-		label: critique message;
+	(OupsDebugRequest newForContext: self critique stack)
+		label: self critique message;
 		submit
 ]
 

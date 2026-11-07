@@ -3,7 +3,7 @@ I am menu group to arrange together breakpoint commands
 "
 Class {
 	#name : 'ClyDebuggingMenuGroup',
-	#superclass : 'CmdMenuGroup',
+	#superclass : 'ClyMenuGroup',
 	#category : 'Calypso-SystemPlugins-Reflectivity-Browser-Commands',
 	#package : 'Calypso-SystemPlugins-Reflectivity-Browser',
 	#tag : 'Commands'

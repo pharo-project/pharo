@@ -4,17 +4,14 @@ Remove Class Refactoring: Safely delete a selected class, ensuring no references
 Class {
 	#name : 'SycRemoveClassCommand',
 	#superclass : 'SycClassCommand',
-	#instVars : [
-		'toolContext'
-	],
 	#category : 'SystemCommands-ClassCommands',
 	#package : 'SystemCommands-ClassCommands'
 }
 
 { #category : 'execution' }
-SycRemoveClassCommand >> execute [
+SycRemoveClassCommand >> executeRefactoring [
 
-	^ ((ReRemoveClassDriver newApplication: self application) scopes: toolContext refactoringScopes classes: classes) runRefactoring 
+	^ ((ReRemoveClassDriver newApplication: self application) scopes: self context refactoringScopes classes: classes) runRefactoring
 ]
 
 { #category : 'accessing' }
@@ -22,13 +19,19 @@ SycRemoveClassCommand >> iconName [
 	^#remove
 ]
 
+{ #category : 'testing' }
+SycRemoveClassCommand >> isAvailableInMenuOf: aToolContext [
+
+	^ aToolContext isFullBrowserClassContext
+]
+
 { #category : 'accessing' }
 SycRemoveClassCommand >> name [
 	^'(R) Remove'
 ]
 
-{ #category : 'execution' }
-SycRemoveClassCommand >> prepareFullExecutionInContext: aToolContext [
-	super prepareFullExecutionInContext: aToolContext.
-	toolContext := aToolContext.
+{ #category : 'accessing' }
+SycRemoveClassCommand >> order [
+
+	^ 10000
 ]

@@ -41,7 +41,7 @@ ClyCritiqueCommand class >> isAbstract [
 
 { #category : 'accessing' }
 ClyCritiqueCommand >> analyzedObject [
-	^ analyzedObject
+	^ analyzedObject ifNil: [ self context ifNotNil: [ :ctx | ctx analyzedObject ] ]
 ]
 
 { #category : 'accessing' }
@@ -51,7 +51,7 @@ ClyCritiqueCommand >> analyzedObject: anObject [
 
 { #category : 'accessing' }
 ClyCritiqueCommand >> critique [
-	^ critique
+	^ critique ifNil: [ self context ifNotNil: [ :ctx | ctx selectedCritique ] ]
 ]
 
 { #category : 'accessing' }
@@ -69,12 +69,4 @@ ClyCritiqueCommand >> decorateTableCell: anItemCellMorph with: aMorph [
 { #category : 'table decoration' }
 ClyCritiqueCommand >> description [
 	^''
-]
-
-{ #category : 'execution' }
-ClyCritiqueCommand >> readParametersFromContext: aCriticContext [
-	super readParametersFromContext: aCriticContext.
-
-	critique := aCriticContext selectedCritique.
-	analyzedObject := aCriticContext analyzedObject
 ]

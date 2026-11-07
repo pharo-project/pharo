@@ -19,22 +19,15 @@ ClyCreateTestCaseCommand class >> canBeExecutedInContext: aBrowserContext [
 	^aBrowserContext isPackageSelected
 ]
 
-{ #category : 'activation' }
-ClyCreateTestCaseCommand class >> fullBrowserMenuActivation [
-	<classAnnotation>
-
-	^CmdContextMenuActivation byRootGroupItemOrder: 5 for: ClyFullBrowserClassContext
-]
-
-{ #category : 'command execution' }
-ClyCreateTestCaseCommand >> execute [
+{ #category : 'execution' }
+ClyCreateTestCaseCommand >> executeRefactoring [
 
 	| classDefinition resultClass |
 	classDefinition := ClassDefinitionPrinter fluid testClassDefinitionTemplateInPackage: package name tag: packageTag.
 	classDefinition := self morphicUIManager multiLineRequest: 'Define test class:' initialAnswer: classDefinition answerHeight: 250.
 	classDefinition isEmptyOrNil ifTrue: [ ^ self ].
-	resultClass := browser compileANewClassFrom: classDefinition notifying: nil startingFrom: nil.
-	resultClass ifNotNil: [ browser selectClass: resultClass ]
+	resultClass := self browser compileANewClassFrom: classDefinition notifying: nil startingFrom: nil.
+	resultClass ifNotNil: [ self browser selectClass: resultClass ]
 ]
 
 { #category : 'accessing' }
@@ -42,16 +35,27 @@ ClyCreateTestCaseCommand >> iconName [
 	^#testGreen
 ]
 
+{ #category : 'testing' }
+ClyCreateTestCaseCommand >> isAvailableInMenuOf: aToolContext [
+
+	^ aToolContext isFullBrowserClassContext
+]
+
 { #category : 'accessing' }
 ClyCreateTestCaseCommand >> name [
 	^'New test class'
 ]
 
-{ #category : 'execution' }
-ClyCreateTestCaseCommand >> prepareFullExecutionInContext: aBrowserContext [
-	super prepareFullExecutionInContext: aBrowserContext.
+{ #category : 'accessing' }
+ClyCreateTestCaseCommand >> order [
 
-	package := aBrowserContext lastSelectedPackage.
-	aBrowserContext isPackageTagSelected ifTrue: [
-		packageTag := aBrowserContext lastSelectedPackageTag]
+	^ 5
+]
+
+{ #category : 'execution' }
+ClyCreateTestCaseCommand >> prepareFullExecution [
+
+	super prepareFullExecution.
+	package := self context lastSelectedPackage.
+	self context isPackageTagSelected ifTrue: [ packageTag := self context lastSelectedPackageTag ]
 ]

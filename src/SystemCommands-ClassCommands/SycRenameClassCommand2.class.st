@@ -13,24 +13,23 @@ Class {
 }
 
 { #category : 'execution' }
-SycRenameClassCommand2 >> execute [
+SycRenameClassCommand2 >> executeRefactoring [
 
-	toolContext class = ClyFullBrowserClassContext
+	toolContext isFullBrowserClassContext
 		ifTrue: [
 			(ReRenameClassDriver2 rename: targetClass name)
 				model: RBBrowserEnvironment new;
 				scopes: toolContext refactoringScopes;
 				runRefactoring ]
 		ifFalse: [
-			toolContext class = ClyClassDefinitionContext
+			toolContext isClassDefinitionContext
 				ifTrue: [
 					(ReRenameClassDriver2 rename: toolContext selectedSourceNode value)
 						model: RBBrowserEnvironment new;
 						scopes: toolContext refactoringScopes;
 						runRefactoring ]
 				ifFalse: [ "we are in selection in a method "
-					(ReRenameClassDriver2 rename:
-							 toolContext selectedSourceNode value name)
+					(ReRenameClassDriver2 rename: toolContext selectedSourceNode value name)
 						model: RBBrowserEnvironment new;
 						scopes: toolContext refactoringScopes;
 						runRefactoring ] ]
@@ -46,10 +45,15 @@ SycRenameClassCommand2 >> name [
 	^'(R) Rename class'
 ]
 
-{ #category : 'execution' }
-SycRenameClassCommand2 >> prepareFullExecutionInContext: aToolContext [
-	
-	super prepareFullExecutionInContext: aToolContext.
-	toolContext := aToolContext
+{ #category : 'accessing' }
+SycRenameClassCommand2 >> order [
 
+	^ 1.2
+]
+
+{ #category : 'preparation' }
+SycRenameClassCommand2 >> prepareFullExecution [
+
+	super prepareFullExecution.
+	toolContext := self context
 ]

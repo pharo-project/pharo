@@ -9,12 +9,10 @@ Class {
 }
 
 { #category : 'execution' }
-SycCategorizeAllUnclassifiedMethodsCommand >> execute [
+SycCategorizeAllUnclassifiedMethodsCommand >> executeRefactoring [
 	"MethodClassifier should not be hardcoded and should be based on Smalltalk tools"
 
-	classes do: [ :each |
-		each uncategorizedSelectors do: [ :selector |
-			MethodClassifier classify: each >> selector ] ]
+	classes do: [ :each | each uncategorizedSelectors do: [ :selector | MethodClassifier classify: each >> selector ] ]
 ]
 
 { #category : 'accessing' }
@@ -22,14 +20,26 @@ SycCategorizeAllUnclassifiedMethodsCommand >> iconName [
 	^#browse
 ]
 
+{ #category : 'testing' }
+SycCategorizeAllUnclassifiedMethodsCommand >> isAvailableInMenuOf: aToolContext [
+
+	^ aToolContext isFullBrowserMethodGroupContext
+]
+
 { #category : 'accessing' }
 SycCategorizeAllUnclassifiedMethodsCommand >> name [
 	^'Categorize all uncategorized'
 ]
 
-{ #category : 'execution' }
-SycCategorizeAllUnclassifiedMethodsCommand >> prepareFullExecutionInContext: aToolContext [
+{ #category : 'accessing' }
+SycCategorizeAllUnclassifiedMethodsCommand >> order [
 
-	super prepareFullExecutionInContext: aToolContext.
-	classes := classes collect: [:each | aToolContext currentMetaLevelOf: each]
+	^ 10000
+]
+
+{ #category : 'execution' }
+SycCategorizeAllUnclassifiedMethodsCommand >> prepareFullExecution [
+
+	super prepareFullExecution.
+	classes := classes collect: [ :each | self context currentMetaLevelOf: each ]
 ]

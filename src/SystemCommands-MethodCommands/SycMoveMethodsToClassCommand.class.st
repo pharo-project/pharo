@@ -8,10 +8,9 @@ Internal Representation and Key Implementation Points.
 "
 Class {
 	#name : 'SycMoveMethodsToClassCommand',
-	#superclass : 'SycMethodCommand',
+	#superclass : 'SycMethodCmCommand',
 	#instVars : [
-		'targetClass',
-		'refactoringScopes'
+		'targetClass'
 	],
 	#category : 'SystemCommands-MethodCommands',
 	#package : 'SystemCommands-MethodCommands'
@@ -31,47 +30,42 @@ SycMoveMethodsToClassCommand class >> methods: methods class: targetClass refact
 ]
 
 { #category : 'execution' }
-SycMoveMethodsToClassCommand >> execute [
+SycMoveMethodsToClassCommand >> executeRefactoring [
 
-	methods
-		collect: [ :each |(ReMoveMethodToClassDriver newApplication: self application) scopes: refactoringScopes method: each class: targetClass ]
-		thenDo: [ :each | each runRefactoring ].
-	methods do: [ :each | each origin removeEmptyProtocols ]
+	self methods
+		collect: [ :method | (ReMoveMethodToClassDriver newApplication: self application) scopes: self refactoringScopes method: method class: targetClass ]
+		thenDo: [ :refactoring | refactoring runRefactoring ].
+	self methods do: [ :method | method origin removeEmptyProtocols ]
 ]
 
 { #category : 'accessing' }
-SycMoveMethodsToClassCommand >> iconName [
-	^ #smallRedo
+SycMoveMethodsToClassCommand >> icon [
+
+	^ self iconNamed: #smallRedo
 ]
 
 { #category : 'accessing' }
 SycMoveMethodsToClassCommand >> name [
-	^'Move to another class'
-]
 
-{ #category : 'drag and drop support' }
-SycMoveMethodsToClassCommand >> prepareExecutionInDropContext: aToolContext [
-
-	super prepareExecutionInDropContext: aToolContext.
-	targetClass := aToolContext lastSelectedClass.
-	targetClass := aToolContext currentMetaLevelOf: targetClass.
-	refactoringScopes := aToolContext refactoringScopes
-]
-
-{ #category : 'execution' }
-SycMoveMethodsToClassCommand >> prepareFullExecutionInContext: aToolContext [
-
-	super prepareFullExecutionInContext: aToolContext.
-
-	targetClass := aToolContext requestSingleClass: 'Choose class'.
-	targetClass := aToolContext currentMetaLevelOf: targetClass.
-	refactoringScopes := aToolContext refactoringScopes
+	^ 'Move to another class'
 ]
 
 { #category : 'accessing' }
-SycMoveMethodsToClassCommand >> refactoringScopes: aCollection [
+SycMoveMethodsToClassCommand >> order [
 
-	refactoringScopes := aCollection
+	^ 60
+]
+
+{ #category : 'executing' }
+SycMoveMethodsToClassCommand >> prepareFullExecution [
+	| toolContext |
+	super prepareFullExecution.
+	toolContext := self dropContext ifNil: [ self context ].
+	targetClass := self dropContext
+		ifNil: [ self context requestSingleClass: 'Choose class' ]
+		ifNotNil: [ :drop | drop lastSelectedClass ].
+	targetClass := toolContext currentMetaLevelOf: targetClass.
+	self refactoringScopes: toolContext refactoringScopes
 ]
 
 { #category : 'accessing' }

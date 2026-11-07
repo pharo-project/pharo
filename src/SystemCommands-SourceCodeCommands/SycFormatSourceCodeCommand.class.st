@@ -8,49 +8,49 @@ Internal Representation and Key Implementation Points.
 "
 Class {
 	#name : 'SycFormatSourceCodeCommand',
-	#superclass : 'ClyCommand',
-	#instVars : [
-		'sourceCodeEditor'
-	],
+	#superclass : 'SycSourceCodeCmCommand',
 	#category : 'SystemCommands-SourceCodeCommands',
 	#package : 'SystemCommands-SourceCodeCommands'
 }
 
+{ #category : 'testing' }
+SycFormatSourceCodeCommand class >> canBeExecutedInContext: aToolContext [
+
+	^ true
+]
+
+{ #category : 'execution' }
+SycFormatSourceCodeCommand >> applyCommandResult [
+
+	"Nothing"
+]
+
 { #category : 'accessing' }
 SycFormatSourceCodeCommand >> description [
 
-	^ 'Formats source code in given code editor'.
+	^ 'Formats source code in given code editor'
 ]
 
 { #category : 'execution' }
 SycFormatSourceCodeCommand >> execute [
 
-	sourceCodeEditor formatSourceCode
+	self context editor formatSourceCode
 ]
 
 { #category : 'accessing' }
-SycFormatSourceCodeCommand >> iconName [
-	^ #smallJustified
+SycFormatSourceCodeCommand >> icon [
+
+	^ self iconNamed: #smallJustified
 ]
 
 { #category : 'accessing' }
 SycFormatSourceCodeCommand >> name [
+
 	^ 'Format code'
 ]
 
-{ #category : 'execution' }
-SycFormatSourceCodeCommand >> prepareFullExecutionInContext: aToolContext [
-	super prepareFullExecutionInContext: aToolContext.
-
-	sourceCodeEditor := aToolContext editor
-]
-
 { #category : 'accessing' }
-SycFormatSourceCodeCommand >> sourceCodeEditor [
-	^ sourceCodeEditor
-]
+SycFormatSourceCodeCommand >> order [
 
-{ #category : 'accessing' }
-SycFormatSourceCodeCommand >> sourceCodeEditor: anObject [
-	sourceCodeEditor := anObject
+	^ 100000
 ]

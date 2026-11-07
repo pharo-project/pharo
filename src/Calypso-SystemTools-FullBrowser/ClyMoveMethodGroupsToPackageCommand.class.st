@@ -24,35 +24,34 @@ ClyMoveMethodGroupsToPackageCommand class >> canBeExecutedInContext: aToolContex
 ]
 
 { #category : 'activation' }
-ClyMoveMethodGroupsToPackageCommand class >> fullBrowserContextMenuActivation [
-	<classAnnotation>
-
-	^CmdContextMenuActivation byRootGroupItemFor: ClyMethodGroup asCalypsoItemContext
-]
-
-{ #category : 'activation' }
 ClyMoveMethodGroupsToPackageCommand class >> fullBrowserDragAndDropActivation [
 	<classAnnotation>
 
-	^CmdDragAndDropActivation
+	^ClyDragAndDropActivation
 		for: ClyMethodGroup asCalypsoItemContext
 		toDropIn: Package asCalypsoItemContext
 ]
 
 { #category : 'execution' }
-ClyMoveMethodGroupsToPackageCommand >> execute [
+ClyMoveMethodGroupsToPackageCommand >> executeRefactoring [
 
 	| repackagingCommand |
-	methodGroups do: [ :each |
-		repackagingCommand := SycMoveMethodsToPackageCommand for: each methods to: package.
-		repackagingCommand execute.
-		each removeWithMethods]
+	methodGroups do: [ :group |
+			repackagingCommand := SycMoveMethodsToPackageCommand for: group methods to: package.
+			repackagingCommand execute.
+			group removeWithMethods ]
 ]
 
 { #category : 'accessing' }
 ClyMoveMethodGroupsToPackageCommand >> name [
 
 	^'Convert to extension'
+]
+
+{ #category : 'accessing' }
+ClyMoveMethodGroupsToPackageCommand >> order [
+
+	^ 1000
 ]
 
 { #category : 'accessing' }
@@ -65,15 +64,10 @@ ClyMoveMethodGroupsToPackageCommand >> package: anObject [
 	package := anObject
 ]
 
-{ #category : 'execution' }
-ClyMoveMethodGroupsToPackageCommand >> prepareExecutionInDropContext: aToolContext [
-	super prepareExecutionInDropContext: aToolContext.
-	package := aToolContext lastSelectedPackage
-]
-
-{ #category : 'execution' }
-ClyMoveMethodGroupsToPackageCommand >> prepareFullExecutionInContext: aToolContext [
-	super prepareFullExecutionInContext: aToolContext.
-
-	package := aToolContext requestSinglePackage: 'Choose package'
+{ #category : 'executing' }
+ClyMoveMethodGroupsToPackageCommand >> prepareFullExecution [
+	super prepareFullExecution.
+	package := self dropContext
+		ifNil: [ self context requestSinglePackage: 'Choose package' ]
+		ifNotNil: [ :drop | drop lastSelectedPackage ]
 ]

@@ -8,37 +8,43 @@ Class {
 	#package : 'SystemCommands-VariableCommands'
 }
 
-{ #category : 'activation' }
-SycPushDownVariableCommand class >> sourceCodeMenuActivation [
-	<classAnnotation>
-
-	^SycSourceCodeMenuActivation byRootGroupItemOrder: 1.4 for: ClySourceCodeContext
-]
-
 { #category : 'execution' }
-SycPushDownVariableCommand >> execute [
+SycPushDownVariableCommand >> executeRefactoring [
 
 	^ ((RePushDownInstanceVariableDriver newApplication: self application)
-		   scopes: toolContext refactoringScopes;
-		   variables: variables) runRefactoring
+		scopes: refactoringScopes;
+		variables: variables) runRefactoring
 ]
 
 { #category : 'accessing' }
-SycPushDownVariableCommand >> iconName [
-	^ #down
+SycPushDownVariableCommand >> fullBrowserOrder [
+
+	^ 2001
+]
+
+{ #category : 'accessing' }
+SycPushDownVariableCommand >> icon [
+
+	^ self iconNamed: #down
 ]
 
 { #category : 'accessing' }
 SycPushDownVariableCommand >> name [
-	^'Push down'
+
+	^ 'Push down'
+]
+
+{ #category : 'accessing' }
+SycPushDownVariableCommand >> order [
+
+	^ 1.4
 ]
 
 { #category : 'execution' }
-SycPushDownVariableCommand >> prepareFullExecutionInContext: aToolContext [
+SycPushDownVariableCommand >> prepareFullExecution [
 
-	super prepareFullExecutionInContext: aToolContext.
-
-	(aToolContext selectedVariables allSatisfy: [ :selectedVar | selectedVar definingClass hasSubclasses ]) ifTrue: [ ^ self ].
+	super prepareFullExecution.
+	(variables allSatisfy: [ :selectedVar | selectedVar definingClass hasSubclasses ]) ifTrue: [ ^ self ].
 	self inform: 'One of the selected variables belongs to a class that has no subclasses to push down the selection(s)'.
 	CmCommandAborted signal
 ]

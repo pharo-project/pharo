@@ -10,21 +10,15 @@ Class {
 	#package : 'SystemCommands-SourceCodeCommands'
 }
 
-{ #category : 'testing' }
-SycSourceCodeRefactoringCommand class >> isAbstract [
-
-	^ self == SycSourceCodeRefactoringCommand
-]
-
 { #category : 'converting' }
 SycSourceCodeRefactoringCommand >> asRefactorings [
 	self subclassResponsibility
 ]
 
 { #category : 'execution' }
-SycSourceCodeRefactoringCommand >> execute [
+SycSourceCodeRefactoringCommand >> executeRefactoring [
 
-	self executeRefactoring: self asRefactorings
+	^ self executeRefactoring: self asRefactorings
 ]
 
 { #category : 'private' }
@@ -36,8 +30,7 @@ SycSourceCodeRefactoringCommand >> executeRefactoring: refactoring [
 ]
 
 { #category : 'execution' }
-SycSourceCodeRefactoringCommand >> prepareFullExecutionInContext: aToolContext [
+SycSourceCodeRefactoringCommand >> prepareFullExecution [
 
-	super prepareFullExecutionInContext: aToolContext.
-	refactoringScopes := aToolContext refactoringScopes.
+	refactoringScopes := self context refactoringScopes
 ]

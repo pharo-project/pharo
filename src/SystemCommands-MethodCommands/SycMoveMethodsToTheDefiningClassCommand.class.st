@@ -5,7 +5,7 @@ I am used to convert extension method to normal one
 "
 Class {
 	#name : 'SycMoveMethodsToTheDefiningClassCommand',
-	#superclass : 'SycMethodRepackagingCommand',
+	#superclass : 'SycMethodRepackagingCmCommand',
 	#category : 'SystemCommands-MethodCommands',
 	#package : 'SystemCommands-MethodCommands'
 }
@@ -15,22 +15,34 @@ SycMoveMethodsToTheDefiningClassCommand class >> canBeExecutedInContext: aToolCo
 	^aToolContext isExtensionMethodSelected
 ]
 
-{ #category : 'execution' }
-SycMoveMethodsToTheDefiningClassCommand >> execute [
+{ #category : 'testing' }
+SycMoveMethodsToTheDefiningClassCommand >> canBeExecuted [
 
-	methods
+	^ self hasContext and: [ self class canBeExecutedInContext: self context ]
+]
+
+{ #category : 'execution' }
+SycMoveMethodsToTheDefiningClassCommand >> executeRefactoring [
+
+	self methods
 		select: [ :method | method isExtension ]
 		thenDo: [ :method | self classifyMethod: method ]
 ]
 
 { #category : 'accessing' }
-SycMoveMethodsToTheDefiningClassCommand >> iconName [
+SycMoveMethodsToTheDefiningClassCommand >> icon [
 
-	^ #smallRedo
+	^ self iconNamed: #smallRedo
 ]
 
 { #category : 'accessing' }
 SycMoveMethodsToTheDefiningClassCommand >> name [
 
 	^ 'Move to defining class'
+]
+
+{ #category : 'accessing' }
+SycMoveMethodsToTheDefiningClassCommand >> order [
+
+	^ 80
 ]

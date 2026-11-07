@@ -3,7 +3,7 @@ This class is an extension so we can mix command of Commander2 with Commander.
 "
 Class {
 	#name : 'SycCmCommand',
-	#superclass : 'CmCommand',
+	#superclass : 'ClyCommand',
 	#traits : 'TRefactoringCommandSupport',
 	#classTraits : 'TRefactoringCommandSupport classTrait',
 	#instVars : [
@@ -18,43 +18,6 @@ SycCmCommand class >> activationStrategy [
 	self subclassResponsibility
 ]
 
-{ #category : 'adding' }
-SycCmCommand class >> addItemsToSubmenu: aCmdMenu forContext: aClyMethodContext [
-
-	| commands |
-
-	aCmdMenu activationStrategyClass = self activationStrategy ifFalse: [ ^ self ].
-
-	commands := self subclasses
-		            collect: [ :e |
-			            e new
-				            context: aClyMethodContext;
-				            yourself ]
-		            thenSelect: [ :e | e canBeExecuted ].
-
-	commands do: [ :e | aCmdMenu rootGroup addItem: e ]
-]
-
-{ #category : 'adding' }
-SycCmCommand class >> addMenuItemsTo: menuMorph onContext: context [
-
-	| commands |
-
-	commands := self allSubclasses collect: [:aClass |
-		aClass new
-			context: context;
-			yourself] thenSelect: [:aCommand | aCommand canBeExecuted ].
-
-	commands do: [ :aCommand | | anItem |
-		anItem := menuMorph add: aCommand name target: aCommand selector: #execute.
-		anItem enabled: aCommand isEnabled.
-		anItem setBalloonText: aCommand description.
-		aCommand icon ifNotNil: [ anItem icon: aCommand icon ].
-	].
-
-	^ menuMorph
-]
-
 { #category : 'default' }
 SycCmCommand class >> defaultDescription [
 	"Answer a <String> describing the receiver, useful for instance in menu items pop-ups"
@@ -62,17 +25,15 @@ SycCmCommand class >> defaultDescription [
 	^ self comment
 ]
 
-{ #category : 'execution' }
-SycCmCommand >> applyCommandResult [
+{ #category : 'testing' }
+SycCmCommand >> canBeExecuted [
+
+	^ true
 ]
 
-{ #category : 'executing' }
-SycCmCommand >> execute [
-	
-	[self prepareFullExecution.
-	self executeRefactoring.
-	self applyCommandResult]
-		on: Exception do: [ :exc | self processCommandFailure: exc ]
+{ #category : 'accessing' }
+SycCmCommand >> description [
+	^ basicDescription
 ]
 
 { #category : 'executing' }
@@ -89,6 +50,11 @@ SycCmCommand >> icon [
 SycCmCommand >> isEnabled [
 
 	^ true
+]
+
+{ #category : 'accessing' }
+SycCmCommand >> name [
+	^ basicName
 ]
 
 { #category : 'accessing' }
@@ -111,12 +77,6 @@ SycCmCommand >> parentGroup: aCmdRootMenuGroup [
 
 { #category : 'preparation' }
 SycCmCommand >> prepareFullExecution [
-]
-
-{ #category : 'execution' }
-SycCmCommand >> processCommandFailure: anException [
-
-	context processFailure: anException of: self
 ]
 
 { #category : 'context menu' }

@@ -18,16 +18,16 @@ ClySwitchToScopedViewCommand >> description [
 ]
 
 { #category : 'execution' }
-ClySwitchToScopedViewCommand >> execute [
+ClySwitchToScopedViewCommand >> executeRefactoring [
 
-	^ browser packageSelection actualObjects ifNotEmpty: [ :packages |
-		browser switchToPackageScopeOf: packages]
+	^ self browser packageSelection actualObjects ifNotEmpty: [ :packages |
+		self browser switchToPackageScopeOf: packages]
 ]
 
 { #category : 'testing' }
 ClySwitchToScopedViewCommand >> isAppliedToBrowser [
 
-	^ (browser packageView showsItemsFromQuery: ClyAllPackagesQuery) and: [ browser isScopedModeEnabled ]
+	^ (self browser packageView showsItemsFromQuery: ClyAllPackagesQuery) and: [ self browser isScopedModeEnabled ]
 ]
 
 { #category : 'accessing' }

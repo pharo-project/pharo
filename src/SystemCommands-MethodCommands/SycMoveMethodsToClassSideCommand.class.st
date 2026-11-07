@@ -3,18 +3,21 @@ I am a command to move method to the class side of defining class
 "
 Class {
 	#name : 'SycMoveMethodsToClassSideCommand',
-	#superclass : 'SycMethodCommand',
-	#instVars : [
-		'refactoringScopes'
-	],
+	#superclass : 'SycMethodCmCommand',
 	#category : 'SystemCommands-MethodCommands',
 	#package : 'SystemCommands-MethodCommands'
 }
 
 { #category : 'testing' }
 SycMoveMethodsToClassSideCommand class >> canBeExecutedInContext: aToolContext [
-	^(super canBeExecutedInContext: aToolContext)
-		and: [ aToolContext isInstanceSideMethodSelected ]
+
+	^ aToolContext isMethodSelected and: [ aToolContext isInstanceSideMethodSelected ]
+]
+
+{ #category : 'testing' }
+SycMoveMethodsToClassSideCommand >> canBeExecuted [
+
+	^ self hasContext and: [ self class canBeExecutedInContext: self context ]
 ]
 
 { #category : 'accessing' }
@@ -24,26 +27,25 @@ SycMoveMethodsToClassSideCommand >> description [
 ]
 
 { #category : 'execution' }
-SycMoveMethodsToClassSideCommand >> execute [
+SycMoveMethodsToClassSideCommand >> executeRefactoring [
 
-	(ReMoveMethodsToClassSideDriver 
-		scopes: refactoringScopes 
-		methods: methods) runRefactoring
+	(ReMoveMethodsToClassSideDriver scopes: self refactoringScopes methods: self methods) runRefactoring
 ]
 
 { #category : 'accessing' }
-SycMoveMethodsToClassSideCommand >> iconName [
-	^ #smallRedo
+SycMoveMethodsToClassSideCommand >> icon [
+
+	^ self iconNamed: #smallRedo
 ]
 
 { #category : 'accessing' }
 SycMoveMethodsToClassSideCommand >> name [
-	^'Move to class side'
+
+	^ 'Move to class side'
 ]
 
-{ #category : 'execution' }
-SycMoveMethodsToClassSideCommand >> prepareFullExecutionInContext: aToolContext [
+{ #category : 'accessing' }
+SycMoveMethodsToClassSideCommand >> order [
 
-	super prepareFullExecutionInContext: aToolContext.
-	refactoringScopes := aToolContext refactoringScopes
+	^ 50
 ]

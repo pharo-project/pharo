@@ -42,13 +42,13 @@ ClySwitchClassMetaLevelCommand class >> toolbarOrder [
 ]
 
 { #category : 'execution' }
-ClySwitchClassMetaLevelCommand >> execute [
-	browser switchToMetaLevelScope: self metaLevelScope
+ClySwitchClassMetaLevelCommand >> executeRefactoring [
+	self browser switchToMetaLevelScope: self metaLevelScope
 ]
 
 { #category : 'testing' }
 ClySwitchClassMetaLevelCommand >> isAppliedToBrowser [
-	^browser metaLevelScope = self metaLevelScope
+	^self browser metaLevelScope = self metaLevelScope
 ]
 
 { #category : 'execution' }

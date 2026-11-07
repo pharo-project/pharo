@@ -10,7 +10,7 @@ Internal Representation and Key Implementation Points.
 "
 Class {
 	#name : 'SycAddNewClassTagCommand',
-	#superclass : 'ClyCommand',
+	#superclass : 'SycPackageCommand',
 	#instVars : [
 		'package',
 		'tagName'
@@ -19,19 +19,14 @@ Class {
 	#package : 'SystemCommands-PackageCommands'
 }
 
-{ #category : 'testing' }
-SycAddNewClassTagCommand class >> canBeExecutedInContext: aToolContext [
-	^aToolContext isPackageSelected
+{ #category : 'execution' }
+SycAddNewClassTagCommand >> applyCommandResult [
+	super applyCommandResult.
+	self context showPackage: package tag: tagName
 ]
 
 { #category : 'execution' }
-SycAddNewClassTagCommand >> applyResultInContext: aToolContext [
-	super applyResultInContext: aToolContext.
-	aToolContext showPackage: package tag: tagName
-]
-
-{ #category : 'execution' }
-SycAddNewClassTagCommand >> execute [
+SycAddNewClassTagCommand >> executeRefactoring [
 
 	package ensureTag: tagName
 ]
@@ -41,9 +36,21 @@ SycAddNewClassTagCommand >> iconName [
 	^#add
 ]
 
+{ #category : 'testing' }
+SycAddNewClassTagCommand >> isAvailableInMenuOf: aToolContext [
+
+	^ true
+]
+
 { #category : 'accessing' }
 SycAddNewClassTagCommand >> name [
 	^'New tag'
+]
+
+{ #category : 'accessing' }
+SycAddNewClassTagCommand >> order [
+
+	^ 1000
 ]
 
 { #category : 'accessing' }
@@ -57,14 +64,11 @@ SycAddNewClassTagCommand >> package: anObject [
 ]
 
 { #category : 'execution' }
-SycAddNewClassTagCommand >> prepareFullExecutionInContext: aToolContext [
-	super prepareFullExecutionInContext: aToolContext.
-	package := aToolContext lastSelectedPackage.
+SycAddNewClassTagCommand >> prepareFullExecution [
 
-	tagName := self morphicUIManager
-		request: ('New class tag in ' , package name)
-		initialAnswer: ''
-		title: 'Create a new class tag'.
+	super prepareFullExecution.
+	package := self context lastSelectedPackage.
+	tagName := self morphicUIManager request: 'New class tag in ' , package name initialAnswer: '' title: 'Create a new class tag'.
 	tagName isEmptyOrNil ifTrue: [ CmCommandAborted signal ]
 ]
 

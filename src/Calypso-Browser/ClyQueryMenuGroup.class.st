@@ -4,7 +4,7 @@ I am supposed to group commands which are related to querying the system
 "
 Class {
 	#name : 'ClyQueryMenuGroup',
-	#superclass : 'CmdMenuGroup',
+	#superclass : 'ClyMenuGroup',
 	#category : 'Calypso-Browser-MenuGroups',
 	#package : 'Calypso-Browser',
 	#tag : 'MenuGroups'

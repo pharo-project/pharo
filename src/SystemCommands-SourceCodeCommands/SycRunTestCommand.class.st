@@ -1,15 +1,21 @@
 Class {
 	#name : 'SycRunTestCommand',
-	#superclass : 'SycTestCommand',
+	#superclass : 'SycSourceCodeRefactoringCommand',
 	#category : 'SystemCommands-SourceCodeCommands',
 	#package : 'SystemCommands-SourceCodeCommands'
 }
+
+{ #category : 'testing' }
+SycRunTestCommand class >> canBeExecutedInContext: aToolContext [
+
+	^ aToolContext isMethodSelected not and: [ aToolContext isTestMethodSelected ]
+]
 
 { #category : 'activation' }
 SycRunTestCommand class >> methodEditorShorcutActivation [
 
 	<classAnnotation>
-	^ CmdShortcutActivation
+	^ ClyShortcutActivation
 		  by: $e meta , $t meta
 		  for: ClyTextEditorContext
 ]
@@ -26,14 +32,14 @@ SycRunTestCommand >> description [
 	^ 'Runs test.'
 ]
 
-{ #category : 'converting' }
-SycRunTestCommand >> execute [
+{ #category : 'execution' }
+SycRunTestCommand >> executeRefactoring [
 
 	| selector testClasses |
-	selector := method selector.
-	testClasses := method methodClass isAbstract
-		               ifTrue: [ method methodClass allSubclasses ]
-		               ifFalse: [ { method methodClass } ].
+	selector := self method selector.
+	testClasses := self method methodClass isAbstract
+					   ifTrue: [ self method methodClass allSubclasses ]
+					   ifFalse: [ { self method methodClass } ].
 
 	testClasses do: [ :concreteClass |
 		| testResult |
@@ -45,4 +51,10 @@ SycRunTestCommand >> execute [
 { #category : 'accessing' }
 SycRunTestCommand >> name [
 	^ 'Run test'
+]
+
+{ #category : 'accessing' }
+SycRunTestCommand >> order [
+
+	^ 1.4
 ]

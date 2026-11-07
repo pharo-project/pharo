@@ -35,7 +35,7 @@ ClyDebuggingPointsCommand class >> methodContextMenuActivation [
 ClyDebuggingPointsCommand class >> methodEditorLeftBarMenuActivation [
 
 	<classAnnotation>
-	^ CmdTextLeftBarMenuActivation
+	^ ClyTextLeftBarMenuActivation
 		  byItemOf: ClyDebuggingPointsMenuGroup
 		  order: self contextMenuOrder
 		  for: ClyMethodSourceCodeContext
@@ -53,6 +53,6 @@ ClyDebuggingPointsCommand class >> sourceCodeMenuActivation [
 
 { #category : 'execution' }
 ClyDebuggingPointsCommand >> putIconInProperties: dp [
-	dp properties at: #Icon put: self defaultMenuIconName.
+	dp properties at: #Icon put: self iconName.
 	DebugPointManager notifyDebugPointChanged: dp.
 ]

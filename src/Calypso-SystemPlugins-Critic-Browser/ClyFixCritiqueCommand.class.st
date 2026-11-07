@@ -22,9 +22,9 @@ ClyFixCritiqueCommand >> description [
 ]
 
 { #category : 'execution' }
-ClyFixCritiqueCommand >> execute [
+ClyFixCritiqueCommand >> executeRefactoring [
 
-	(StChangesBrowserPresenter changes: { critique change }) open
+	(StChangesBrowserPresenter changes: { self critique change }) open
 ]
 
 { #category : 'initialization' }

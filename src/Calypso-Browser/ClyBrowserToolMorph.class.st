@@ -191,25 +191,20 @@ ClyBrowserToolMorph >> addDecorator: aBrowserToolDecorator [
 	decorators add: aBrowserToolDecorator
 ]
 
-{ #category : 'building' }
+{ #category : 'notebook' }
 ClyBrowserToolMorph >> addNotebookPageOn: aNotebook [
-	| menu |
-
-	menu := CmdMenu activatedBy: ClyBrowserTabCommandActivation.
-	menu buildInContext: context.
-
+	| tree |
+	tree := ClyCommandGroupBuilder new buildToolbarFor: ClyBrowserTabCommandActivation contexts: { context }.
 	containerTab := ClyNotebookPageMorph
 		newLabel: self defaultTitle
 		icon: self defaultIcon
 		provider: [ self buildPageAndDecorate ].
 	containerTab beCloseable.
-	containerTab actions: menu buildBrowserNotebookActions.
+	containerTab actions: (ClyCommandGroupMenuRenderer new notebookActionsOf: tree).
 	containerTab model: self.
-
 	aNotebook
 		addPage: containerTab
 		label: containerTab labelMorph.
-
 	^ containerTab
 ]
 

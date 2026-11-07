@@ -13,7 +13,7 @@ Class {
 ClyResetProtocolForEditorCommand class >> methodEditorShorcutActivation [
 	<classAnnotation>
 
-	^CmdShortcutActivation by: $e meta, $u meta for: ClyTextEditorContext
+	^ClyShortcutActivation by: $e meta, $u meta for: ClyTextEditorContext
 ]
 
 { #category : 'accessing' }
@@ -23,7 +23,7 @@ ClyResetProtocolForEditorCommand >> description [
 ]
 
 { #category : 'execution' }
-ClyResetProtocolForEditorCommand >> execute [
+ClyResetProtocolForEditorCommand >> executeRefactoring [
 
 	methodEditor protocolAndPackageEditor resetProtocolAndPackage
 ]
@@ -32,4 +32,10 @@ ClyResetProtocolForEditorCommand >> execute [
 ClyResetProtocolForEditorCommand >> name [
 
 	^ 'Unclassify method'
+]
+
+{ #category : 'accessing' }
+ClyResetProtocolForEditorCommand >> order [
+
+	^ 1000
 ]

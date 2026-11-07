@@ -10,17 +10,10 @@ Class {
 }
 
 { #category : 'activation' }
-ClyShowMethodInheritanceCommand class >> browserContextMenuActivation [
-
-	<classAnnotation>
-	^ CmdContextMenuActivation byRootGroupItemOrder: 2 for: ClyMethod asCalypsoItemContext
-]
-
-{ #category : 'activation' }
 ClyShowMethodInheritanceCommand class >> browserShortcutActivation [
 	<classAnnotation>
 
-	^CmdShortcutActivation by: $h meta for: ClyMethod asCalypsoItemContext
+	^ClyShortcutActivation by: $h meta for: ClyMethod asCalypsoItemContext
 ]
 
 { #category : 'execution' }
@@ -47,4 +40,10 @@ ClyShowMethodInheritanceCommand >> iconName [
 { #category : 'accessing' }
 ClyShowMethodInheritanceCommand >> name [
 	^'Hierarchical implementors'
+]
+
+{ #category : 'accessing' }
+ClyShowMethodInheritanceCommand >> order [
+
+	^ 2
 ]

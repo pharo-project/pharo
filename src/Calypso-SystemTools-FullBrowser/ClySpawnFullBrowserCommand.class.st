@@ -12,27 +12,17 @@ Internal Representation and Key Implementation Points.
 "
 Class {
 	#name : 'ClySpawnFullBrowserCommand',
-	#superclass : 'ClyCommand',
-	#instVars : [
-		'browser'
-	],
+	#superclass : 'ClyBrowserCommand',
 	#category : 'Calypso-SystemTools-FullBrowser-Commands-Queries',
 	#package : 'Calypso-SystemTools-FullBrowser',
 	#tag : 'Commands-Queries'
 }
 
 { #category : 'activation' }
-ClySpawnFullBrowserCommand class >> browserMenuActivation [
-	<classAnnotation>
-
-	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup for: ClySystemBrowserContext
-]
-
-{ #category : 'activation' }
 ClySpawnFullBrowserCommand class >> browserShortcutActivation [
 	<classAnnotation>
 
-	^CmdShortcutActivation by: $b meta for: ClySystemBrowserContext
+	^ClyShortcutActivation by: $b meta for: ClySystemBrowserContext
 ]
 
 { #category : 'testing' }
@@ -44,7 +34,7 @@ ClySpawnFullBrowserCommand class >> canBeExecutedInContext: aToolContext [
 ClySpawnFullBrowserCommand class >> fullBrowserDoubleClickMenuActivation [
 	<classAnnotation>
 
-	^CmdDoubleClickActivation for: ClyFullBrowserContext
+	^ClyDoubleClickActivation for: ClyFullBrowserContext
 ]
 
 { #category : 'accessing' }
@@ -54,9 +44,9 @@ ClySpawnFullBrowserCommand >> description [
 ]
 
 { #category : 'execution' }
-ClySpawnFullBrowserCommand >> execute [
+ClySpawnFullBrowserCommand >> executeRefactoring [
 
-	browser spawnFullBrowser
+	self browser spawnFullBrowser
 ]
 
 { #category : 'accessing' }
@@ -65,13 +55,18 @@ ClySpawnFullBrowserCommand >> iconName [
 ]
 
 { #category : 'accessing' }
+ClySpawnFullBrowserCommand >> menuGroup [
+
+	^ ClyQueryMenuGroup
+]
+
+{ #category : 'accessing' }
 ClySpawnFullBrowserCommand >> name [
 	^'Browse'
 ]
 
-{ #category : 'execution' }
-ClySpawnFullBrowserCommand >> prepareFullExecutionInContext: aToolContext [
-	super prepareFullExecutionInContext: aToolContext.
+{ #category : 'accessing' }
+ClySpawnFullBrowserCommand >> order [
 
-	browser := aToolContext browser
+	^ 1000
 ]

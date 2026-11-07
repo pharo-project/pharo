@@ -51,7 +51,7 @@ ClyRunTestsFromMethodDataSourceCommand >> buildTestSuite [
 ]
 
 { #category : 'execution' }
-ClyRunTestsFromMethodDataSourceCommand >> execute [
+ClyRunTestsFromMethodDataSourceCommand >> executeRefactoring [
 	| testSuite result |
 	testSuite := self buildTestSuite.
 
@@ -67,20 +67,18 @@ ClyRunTestsFromMethodDataSourceCommand >> execute [
 { #category : 'testing' }
 ClyRunTestsFromMethodDataSourceCommand >> hasTestResult [
 
-	^methodDataSource hasMetaProperty: ClyTestResultProperty
+	^self methodDataSource hasMetaProperty: ClyTestResultProperty
 ]
 
-{ #category : 'execution' }
-ClyRunTestsFromMethodDataSourceCommand >> readParametersFromContext: aBrowserContext [
-	super readParametersFromContext: aBrowserContext.
-
-	methodDataSource := aBrowserContext browser resultView dataSource
+{ #category : 'accessing' }
+ClyRunTestsFromMethodDataSourceCommand >> methodDataSource [
+	^ methodDataSource ifNil: [ self context ifNotNil: [ :ctx | ctx browser resultView dataSource ] ]
 ]
 
 { #category : 'execution' }
 ClyRunTestsFromMethodDataSourceCommand >> testMethodsDo: aBlock [
 
-	methodDataSource queryResult rawItemsDo: [ :eachMethod |
+	self methodDataSource queryResult rawItemsDo: [ :eachMethod |
 		(eachMethod isTestMethod and: [ eachMethod methodClass isAbstract not])
 			ifTrue: [ aBlock value: eachMethod]]
 ]
@@ -88,5 +86,5 @@ ClyRunTestsFromMethodDataSourceCommand >> testMethodsDo: aBlock [
 { #category : 'testing' }
 ClyRunTestsFromMethodDataSourceCommand >> testResult [
 
-	^methodDataSource getMetaProperty: ClyTestResultProperty
+	^self methodDataSource getMetaProperty: ClyTestResultProperty
 ]

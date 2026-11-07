@@ -10,9 +10,9 @@ Class {
 	#tag : 'Commands-MethodGroups'
 }
 
-{ #category : 'controlling' }
-ClySwitchToVariablesCommand >> execute [
-	browser switchToVariables
+{ #category : 'execution' }
+ClySwitchToVariablesCommand >> executeRefactoring [
+	self browser switchToVariables
 ]
 
 { #category : 'accessing' }

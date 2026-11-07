@@ -16,7 +16,7 @@ ClyExpandClassDefinitionCommand class >> canBeExecutedInContext: aToolContext [
 ClyExpandClassDefinitionCommand class >> contextMenuActivation [
 	<classAnnotation>
 
-	^CmdContextMenuActivation byRootGroupItemOrder: -20 for: ClyClassDefinitionContext 
+	^ClyContextMenuActivation byRootGroupItemOrder: -20 for: ClyClassDefinitionContext 
 ]
 
 { #category : 'activation' }
@@ -29,14 +29,14 @@ ClyExpandClassDefinitionCommand class >> sourceCodeMenuActivation [
 ClyExpandClassDefinitionCommand class >> sourceCodeShortcutActivation [
    <classAnnotation>
 
-   ^CmdShortcutActivation by: $e meta for: ClyClassDefinitionContext
+   ^ClyShortcutActivation by: $e meta for: ClyClassDefinitionContext
 ]
 
 { #category : 'accessing' }
-ClyExpandClassDefinitionCommand >> applyResultInContext: aToolContext [
+ClyExpandClassDefinitionCommand >> applyCommandResult [
 
-	super applyResultInContext: aToolContext.
-	aToolContext tool pendingText: aToolContext tool editingClass expandedDefinitionString
+	super applyCommandResult.
+	self context tool pendingText: self context tool editingClass expandedDefinitionString
 ]
 
 { #category : 'accessing' }
@@ -45,8 +45,8 @@ ClyExpandClassDefinitionCommand >> description [
 	^ 'Expands the fluid definition to include all possible elements and shows the default values'
 ]
 
-{ #category : 'accessing' }
-ClyExpandClassDefinitionCommand >> execute [
+{ #category : 'execution' }
+ClyExpandClassDefinitionCommand >> executeRefactoring [
 	"
 	empty on purpose logic is in applyResultInContext:
 	"

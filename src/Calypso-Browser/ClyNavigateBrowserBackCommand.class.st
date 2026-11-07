@@ -23,8 +23,8 @@ ClyNavigateBrowserBackCommand >> description [
 ]
 
 { #category : 'execution' }
-ClyNavigateBrowserBackCommand >> execute [
-	browser navigateBack
+ClyNavigateBrowserBackCommand >> executeRefactoring [
+	self browser navigateBack
 ]
 
 { #category : 'accessing' }

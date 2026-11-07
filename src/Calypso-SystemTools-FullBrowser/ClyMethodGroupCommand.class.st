@@ -22,11 +22,6 @@ ClyMethodGroupCommand class >> canBeExecutedInContext: aToolContext [
 	^aToolContext isMethodGroupSelected
 ]
 
-{ #category : 'testing' }
-ClyMethodGroupCommand class >> isAbstract [
-	^self = ClyMethodGroupCommand
-]
-
 { #category : 'accessing' }
 ClyMethodGroupCommand >> methodGroups [
 	^ methodGroups
@@ -37,16 +32,8 @@ ClyMethodGroupCommand >> methodGroups: anObject [
 	methodGroups := anObject
 ]
 
-{ #category : 'activation - drag and drop' }
-ClyMethodGroupCommand >> prepareExecutionInDragContext: aToolContext [
-	super prepareExecutionInDragContext: aToolContext.
-
-	methodGroups := aToolContext selectedMethodGroups
-]
-
 { #category : 'execution' }
-ClyMethodGroupCommand >> prepareFullExecutionInContext: aToolContext [
-	super prepareFullExecutionInContext: aToolContext.
+ClyMethodGroupCommand >> prepareFullExecution [
 
-	methodGroups := aToolContext selectedMethodGroups
+	methodGroups := self context selectedMethodGroups
 ]

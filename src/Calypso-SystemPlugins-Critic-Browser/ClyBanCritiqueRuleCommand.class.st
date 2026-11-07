@@ -9,10 +9,10 @@ Class {
 }
 
 { #category : 'execution' }
-ClyBanCritiqueRuleCommand >> applyResultInContext: aToolContext [
-	super applyResultInContext: aToolContext.
+ClyBanCritiqueRuleCommand >> applyCommandResult [
+	super applyCommandResult.
 
-	aToolContext tool criticView update
+	self context tool criticView update
 ]
 
 { #category : 'table decoration' }
@@ -21,9 +21,9 @@ ClyBanCritiqueRuleCommand >> description [
 ]
 
 { #category : 'execution' }
-ClyBanCritiqueRuleCommand >> execute [
+ClyBanCritiqueRuleCommand >> executeRefactoring [
 
-	critique guidedBan
+	self critique guidedBan
 ]
 
 { #category : 'initialization' }

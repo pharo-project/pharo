@@ -22,8 +22,9 @@ SycPackageCommand class >> canBeExecutedInContext: aToolContext [
 ]
 
 { #category : 'testing' }
-SycPackageCommand class >> isAbstract [
-	^self = SycPackageCommand
+SycPackageCommand >> isAvailableInMenuOf: aToolContext [
+
+	^ aToolContext isFullBrowserPackageContext
 ]
 
 { #category : 'accessing' }
@@ -37,8 +38,7 @@ SycPackageCommand >> packages: anObject [
 ]
 
 { #category : 'execution' }
-SycPackageCommand >> prepareFullExecutionInContext: aToolContext [
-	super prepareFullExecutionInContext: aToolContext.
+SycPackageCommand >> prepareFullExecution [
 
-	packages := aToolContext selectedPackages
+	packages := self context selectedPackages
 ]

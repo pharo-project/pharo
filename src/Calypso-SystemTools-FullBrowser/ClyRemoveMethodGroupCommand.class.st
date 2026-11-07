@@ -13,17 +13,10 @@ Class {
 }
 
 { #category : 'activation' }
-ClyRemoveMethodGroupCommand class >> fullBrowserMenuActivation [
-	<classAnnotation>
-
-	^CmdContextMenuActivation byRootGroupItemOrder: 100000 for: ClyFullBrowserMethodGroupContext
-]
-
-{ #category : 'activation' }
 ClyRemoveMethodGroupCommand class >> fullBrowserShortcutActivation [
 	<classAnnotation>
 
-	^CmdShortcutActivation removalFor: ClyFullBrowserMethodGroupContext
+	^ClyShortcutActivation removalFor: ClyFullBrowserMethodGroupContext
 ]
 
 { #category : 'accessing' }
@@ -33,12 +26,12 @@ ClyRemoveMethodGroupCommand >> description [
 ]
 
 { #category : 'execution' }
-ClyRemoveMethodGroupCommand >> execute [
+ClyRemoveMethodGroupCommand >> executeRefactoring [
 
 	methodGroups do: [ :group |
-		group
-			removeWithMethods;
-			removeProtocolFrom: selectedClasses ]
+			group
+				removeWithMethods;
+				removeProtocolFrom: selectedClasses ]
 ]
 
 { #category : 'accessing' }
@@ -51,16 +44,20 @@ ClyRemoveMethodGroupCommand >> name [
 	^'Remove'
 ]
 
+{ #category : 'accessing' }
+ClyRemoveMethodGroupCommand >> order [
+
+	^ 100000
+]
+
 { #category : 'execution' }
-ClyRemoveMethodGroupCommand >> prepareFullExecutionInContext: aToolContext [
+ClyRemoveMethodGroupCommand >> prepareFullExecution [
 
 	| tagsString confirmed |
-	super prepareFullExecutionInContext: aToolContext.
-	selectedClasses := aToolContext  selectedClasses.
-	
+	super prepareFullExecution.
+	selectedClasses := self context selectedClasses.
 	tagsString := ', ' join: (methodGroups collect: [ :each | each name ]).
 	(methodGroups anySatisfy: [ :each | each methodsSize > 0 ]) ifFalse: [ ^ self ].
-	
 	confirmed := self confirm: 'Are you sure you want to remove methods from ' , tagsString , '?'.
 	confirmed ifFalse: [ CmCommandAborted signal ]
 ]

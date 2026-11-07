@@ -3,7 +3,7 @@ I am a command to launch the Remove All Senders Refactoring: removes all possibl
 "
 Class {
 	#name : 'SycRemoveAllSendersCommand',
-	#superclass : 'SycChangeMessageSignatureCommand',
+	#superclass : 'SycMessageCmCommand',
 	#category : 'SystemCommands-MessageCommands',
 	#package : 'SystemCommands-MessageCommands'
 }
@@ -26,11 +26,19 @@ SycRemoveAllSendersCommand >> createRefactoring [
 ]
 
 { #category : 'accessing' }
-SycRemoveAllSendersCommand >> iconName [
-	^#remove
+SycRemoveAllSendersCommand >> icon [
+
+	^ self iconNamed: #remove
 ]
 
 { #category : 'accessing' }
 SycRemoveAllSendersCommand >> name [
-	^'Remove all senders'
+
+	^ 'Remove all senders'
+]
+
+{ #category : 'accessing' }
+SycRemoveAllSendersCommand >> order [
+
+	^ 35
 ]

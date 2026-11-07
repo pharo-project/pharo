@@ -10,18 +10,13 @@ Internal Representation and Key Implementation Points.
 "
 Class {
 	#name : 'SycShowMethodVersionCommand',
-	#superclass : 'ClyCommand',
+	#superclass : 'SycMethodCommand',
 	#instVars : [
 		'method'
 	],
 	#category : 'SystemCommands-MethodCommands',
 	#package : 'SystemCommands-MethodCommands'
 }
-
-{ #category : 'testing' }
-SycShowMethodVersionCommand class >> canBeExecutedInContext: aToolContext [
-	^aToolContext isMethodSelected
-]
 
 { #category : 'accessing' }
 SycShowMethodVersionCommand >> description [
@@ -30,7 +25,8 @@ SycShowMethodVersionCommand >> description [
 ]
 
 { #category : 'execution' }
-SycShowMethodVersionCommand >> execute [
+SycShowMethodVersionCommand >> executeRefactoring [
+
 	(Smalltalk tools toolNamed: #versionBrowser) browseVersionsForMethod: method
 ]
 
@@ -40,13 +36,25 @@ SycShowMethodVersionCommand >> iconName [
 ]
 
 { #category : 'accessing' }
+SycShowMethodVersionCommand >> menuGroup [
+
+	^ ClyQueryMenuGroup
+]
+
+{ #category : 'accessing' }
 SycShowMethodVersionCommand >> name [
 	^'Versions'
 ]
 
-{ #category : 'execution' }
-SycShowMethodVersionCommand >> prepareFullExecutionInContext: aToolContext [
-	super prepareFullExecutionInContext: aToolContext.
+{ #category : 'accessing' }
+SycShowMethodVersionCommand >> order [
 
-	method := aToolContext lastSelectedMethod
+	^ 1000
+]
+
+{ #category : 'execution' }
+SycShowMethodVersionCommand >> prepareFullExecution [
+
+	super prepareFullExecution.
+	method := self context lastSelectedMethod
 ]

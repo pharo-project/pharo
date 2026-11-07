@@ -10,9 +10,9 @@ Class {
 	#tag : 'Commands-MethodGroups'
 }
 
-{ #category : 'controlling' }
-ClySwitchToMethodGroupsCommand >> execute [
-	browser switchToMethodGroups
+{ #category : 'execution' }
+ClySwitchToMethodGroupsCommand >> executeRefactoring [
+	self browser switchToMethodGroups
 ]
 
 { #category : 'accessing' }

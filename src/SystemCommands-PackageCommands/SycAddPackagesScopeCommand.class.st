@@ -3,21 +3,17 @@ I am a command to add packages scope to listScopes
 "
 Class {
 	#name : 'SycAddPackagesScopeCommand',
-	#superclass : 'ClyCommand',
-	#instVars : [
-		'packages'
-	],
+	#superclass : 'SycPackageCommand',
 	#category : 'SystemCommands-PackageCommands-Scope',
 	#package : 'SystemCommands-PackageCommands',
 	#tag : 'Scope'
 }
 
 { #category : 'execution' }
-SycAddPackagesScopeCommand >> execute [
+SycAddPackagesScopeCommand >> executeRefactoring [
 
 	| scope |
-	
-	scope := ScopesManager newScopeFrom: packages.
+	scope := ScopesManager newScopeFrom: self packages.
 	ScopesManager addScope: scope.
 	ScopesPresenter openSelecting: scope
 ]
@@ -33,20 +29,13 @@ SycAddPackagesScopeCommand >> name [
 ]
 
 { #category : 'accessing' }
-SycAddPackagesScopeCommand >> packages [
+SycAddPackagesScopeCommand >> order [
 
-	^ packages
-]
-
-{ #category : 'accessing' }
-SycAddPackagesScopeCommand >> packages: anObject [
-
-	packages := anObject
+	^ 1000
 ]
 
 { #category : 'execution' }
-SycAddPackagesScopeCommand >> prepareFullExecutionInContext: aBrowserContext [
+SycAddPackagesScopeCommand >> prepareFullExecution [
 
-	super prepareFullExecutionInContext: aBrowserContext.
-	packages := aBrowserContext selectedPackageItems collect: [:e | e actualObject ]
+	packages := self context selectedPackageItems collect: [ :packageItem | packageItem actualObject ]
 ]

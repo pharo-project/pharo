@@ -3,18 +3,14 @@ I am a command to pull up given methods
 "
 Class {
 	#name : 'SycPullUpMethodCommand',
-	#superclass : 'SycRefactoringMethodCommand',
-	#instVars : [
-		'refactoringScopes'
-	],
+	#superclass : 'SycMethodCmCommand',
 	#category : 'SystemCommands-MethodCommands',
 	#package : 'SystemCommands-MethodCommands'
 }
 
 { #category : 'testing' }
-SycPullUpMethodCommand class >> canBeExecutedInContext: aToolContext [
-
-	^aToolContext isMethodSelected and: [ aToolContext lastSelectedClass superclass ~= Object ]
+SycPullUpMethodCommand >> canBeExecuted [
+	^ super canBeExecuted and: [ self context lastSelectedClass superclass ~= Object ]
 ]
 
 { #category : 'accessing' }
@@ -24,25 +20,26 @@ SycPullUpMethodCommand >> description [
 ]
 
 { #category : 'execution' }
-SycPullUpMethodCommand >> executeRefactorings [
+SycPullUpMethodCommand >> executeRefactoring [
 
-	^ ((RePullUpMethodDriver newApplication: self application) model: model scopes: refactoringScopes pullUpMethods: methods)
+	^ ((RePullUpMethodDriver newApplication: self application)
+		   model: model
+		   scopes: self refactoringScopes
+		   pullUpMethods: self methods)
 		  runRefactoring
 ]
 
 { #category : 'accessing' }
-SycPullUpMethodCommand >> iconName [
-	^ #up
+SycPullUpMethodCommand >> icon [
+	^ self iconNamed: #up
 ]
 
 { #category : 'accessing' }
 SycPullUpMethodCommand >> name [
-	^'(R) Pull up'
+	^ '(R) Pull up'
 ]
 
-{ #category : 'execution' }
-SycPullUpMethodCommand >> prepareFullExecutionInContext: aToolContext [
-
-	super prepareFullExecutionInContext: aToolContext.
-	refactoringScopes := aToolContext refactoringScopes
+{ #category : 'accessing' }
+SycPullUpMethodCommand >> order [
+	^ 10
 ]
