@@ -4,9 +4,9 @@ SUnit tests for ASTVariableNode
 Class {
 	#name : 'OCVariableNodeNameResolutionTest',
 	#superclass : 'OCParseTreeTest',
-	#category : 'OpalCompiler-Tests-Semantic',
+	#category : 'OpalCompiler-Tests-Semantics',
 	#package : 'OpalCompiler-Tests',
-	#tag : 'Semantic'
+	#tag : 'Semantics'
 }
 
 { #category : 'tests' }

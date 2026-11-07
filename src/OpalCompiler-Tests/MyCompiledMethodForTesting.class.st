@@ -2,7 +2,7 @@ Class {
 	#name : 'MyCompiledMethodForTesting',
 	#superclass : 'CompiledMethod',
 	#type : 'compiledMethod',
-	#category : 'OpalCompiler-Tests-Semantic',
+	#category : 'OpalCompiler-Tests-Semantics',
 	#package : 'OpalCompiler-Tests',
-	#tag : 'Semantic'
+	#tag : 'Semantics'
 }
