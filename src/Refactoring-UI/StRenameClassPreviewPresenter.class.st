@@ -1,7 +1,13 @@
 "
-I am a tool for previewing the changes produced by a class rename refactoring. I allow the user to enter a new name, choose the refactoring scope, and inspect the resulting changes. The preview is updated live as the user edits the new name and enables the Apply button only when the name is valid and the refactoring can be applied.
+I preview a class rename and let the user choose which changes to apply.
 
-I am responsible for keeping track of the selected changes. When the user selects a change, I display a diff between its old and new versions. When behavior-preserving preconditions are detected, I display the corresponding warning and provide the user with a way to browse the affected methods.
+Computing a preview can take time, so I run it in the background after a short typing pause. Only one computation runs at a time. If the user keeps typing, I keep only the latest pending request.
+
+refreshPreview: stores a computation block in pendingPreview. That block asks the driver for a preview and returns another block that displays the result. startNextPreview runs the computation in the background, then sends the returned block to the UI thread. Once that block finishes, it starts the latest pending computation, if any.
+
+Each request has a token. publishPreview:named:request: displays a result only if its token still matches previewRequest. Editing the name or closing the dialog invalidates the token, so an older result cannot replace the current preview.
+
+Apply stays disabled until the current preview is ready. I also show validation errors and warnings about changes in behavior.
 "
 Class {
 	#name : 'StRenameClassPreviewPresenter',
