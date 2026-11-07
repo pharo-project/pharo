@@ -63,6 +63,67 @@ RBCopyPackageParametrizedTest >> testCopyPackageAndChangesCopyReferences [
 ]
 
 { #category : 'tests' }
+RBCopyPackageParametrizedTest >> testCopyPackagePreservesAliasesAndExclusionsWhenRemappingTraits [
+
+	| refactoring sourceComposition copiedComposition |
+	refactoring := self createRefactoringWithArguments: {
+		TReComposedTraitForDuplication packageName.
+		#RefactoringCOPYSmallPackageForTest }.
+	sourceComposition := TReTraitToBeUsedInDuplication
+		@ { #aliasedMethod -> #methodInTrait } - { #methodInTrait }.
+	(refactoring model classFor: TReComposedTraitForDuplication)
+		traitComposition: sourceComposition.
+	self executeRefactoring: (refactoring classMappings: {
+		#TReComposedTraitForDuplication -> #TReDuplicatedComposedTrait.
+		#TReTraitToBeUsedInDuplication -> #TReDuplicatedTrait } asDictionary).
+	copiedComposition := (refactoring model classNamed: #TReDuplicatedComposedTrait)
+		traitComposition.
+	self assertCollection: (copiedComposition traits collect: #name)
+		hasSameElements: #( TReDuplicatedTrait ).
+	self assertCollection: sourceComposition traits
+		hasSameElements: { TReTraitToBeUsedInDuplication }.
+	self
+		assert: (OCParser parseExpression: copiedComposition traitCompositionExpression)
+		equals: (OCParser parseExpression: 'TReDuplicatedTrait @ { (#aliasedMethod -> #methodInTrait) } - { #methodInTrait }')
+]
+
+{ #category : 'tests' }
+RBCopyPackageParametrizedTest >> testCopyPackageRemapsCopiedTraitDependencies [
+
+	| refactoring |
+	refactoring := self createRefactoringWithArguments: {
+		TReComposedTraitForDuplication packageName.
+		#RefactoringCOPYSmallPackageForTest }.
+	self executeRefactoring: (refactoring classMappings: {
+		#TReComposedTraitForDuplication -> #TReDuplicatedComposedTrait.
+		#TReTraitToBeUsedInDuplication -> #TReDuplicatedTrait } asDictionary).
+	self assertCollection: ((refactoring model classNamed: #TReDuplicatedComposedTrait)
+		traitComposition traits collect: #name)
+		hasSameElements: #( TReDuplicatedTrait ).
+	self
+		assertCollection: (refactoring model classNamed: #TReComposedTraitForDuplication)
+			traitComposition traits
+		hasSameElements: { TReTraitToBeUsedInDuplication }
+]
+
+{ #category : 'tests' }
+RBCopyPackageParametrizedTest >> testCopyPackageWithComposedTraitPreservesBothMethodSides [
+
+	| duplicate refactoring |
+	refactoring := self createRefactoringWithArguments: {
+		TReComposedTraitForDuplication packageName.
+		#RefactoringCOPYSmallPackageForTest }.
+	self executeRefactoring: (refactoring classMappings: {
+		#TReComposedTraitForDuplication -> #TReDuplicatedComposedTrait } asDictionary).
+	duplicate := refactoring model classNamed: #TReDuplicatedComposedTrait.
+	self assert: duplicate isTrait.
+	self assertCollection: duplicate traitComposition traits
+		hasSameElements: { TReTraitToBeUsedInDuplication }.
+	self assert: (duplicate directlyDefinesMethod: #instanceSideValue).
+	self assert: (duplicate classSide directlyDefinesMethod: #classSideValue)
+]
+
+{ #category : 'tests' }
 RBCopyPackageParametrizedTest >> testCopyPackageWithParameters [
 
 	| refactoring aModel |
@@ -75,6 +136,25 @@ RBCopyPackageParametrizedTest >> testCopyPackageWithParameters [
 	self assert: (aModel includesClassNamed: #BarFTTest2) description: 'It test that class was copied'.
 	self assert: (aModel includesClassNamed: #RBFTTest1) description: 'It test that original class where we copied from is still there'.
 	self assert: (aModel includesClassNamed: #RBFTTest2) description: 'It test that original class where we copied from is still there'
+]
+
+{ #category : 'tests' }
+RBCopyPackageParametrizedTest >> testCopyPackageWithTrait [
+
+	| duplicate refactoring |
+	refactoring := self createRefactoringWithArguments: {
+		               TReTraitToBeUsedInDuplication packageName.
+		               #RefactoringCOPYSmallPackageForTest }.
+	self executeRefactoring: (refactoring classMappings: {
+			 #TReTraitToBeUsedInDuplication -> #TReDuplicatedTrait } asDictionary).
+
+	duplicate := refactoring model classNamed: #TReDuplicatedTrait.
+	self assert: duplicate class equals: RBTrait.
+	self assert: duplicate superclass isNil.
+	self assert: (duplicate directlyDefinesMethod: #methodInTrait).
+	self
+		assert: duplicate packageName
+		equals: #RefactoringCOPYSmallPackageForTest
 ]
 
 { #category : 'failure tests' }
