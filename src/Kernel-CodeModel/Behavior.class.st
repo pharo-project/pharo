@@ -12,7 +12,7 @@ Class {
 	],
 	#classVars : [
 		'ClassProperties',
-		'ObsoleteSubclasses'
+        'ObsoleteSubclasses'
 	],
 	#category : 'Kernel-CodeModel-Classes',
 	#package : 'Kernel-CodeModel',
@@ -23,11 +23,6 @@ Class {
 Behavior class >> initialize [
 	"Behavior initialize"
 	"Never called for real"
-	ObsoleteSubclasses
-		ifNil: [ self initializeObsoleteSubclasses ]
-		ifNotNil: [ | newDict |
-			newDict := WeakIdentityKeyDictionary newFrom: ObsoleteSubclasses.
-			ObsoleteSubclasses := newDict ].
 
 	ClassProperties
 		ifNil: [ self initializeClassProperties ]
@@ -41,11 +36,6 @@ Behavior class >> initializeClassProperties [
 	ClassProperties := WeakIdentityKeyDictionary new
 ]
 
-{ #category : 'class initialization' }
-Behavior class >> initializeObsoleteSubclasses [
-	ObsoleteSubclasses := WeakIdentityKeyDictionary new
-]
-
 { #category : 'accessing - method dictionary' }
 Behavior >> >> selector [
 	"Answer the compiled method associated with the argument, selector (a
@@ -55,28 +45,13 @@ Behavior >> >> selector [
 	^self compiledMethodAt: selector
 ]
 
-{ #category : 'obsolete subclasses' }
-Behavior >> addObsoleteSubclass: aClass [
-	"Weakly remember that aClass was a subclass of the receiver and is now obsolete"
-	<reflection: 'Class structural modification - Hierarchy modification'>
-
-	| obsoleteSubclasses |
-	obsoleteSubclasses := self basicObsoleteSubclasses
-		                      at: self
-		                      ifAbsent: [ WeakSet new ].
-	obsoleteSubclasses add: aClass
-]
-
 { #category : 'adding-removing methods' }
 Behavior >> addSelectorSilently: selector withMethod: compiledMethod [
 	"Add the message selector with the corresponding compiled method to the
 	receiver's method dictionary.
 	Do this without sending system change notifications"
 	<reflection: 'Class structural modification - Selector/Method modification'>
-	self methodDict at: selector put: compiledMethod.
-
-	"We record all selectors that are used as method names"
-	Symbol recordSelector: selector
+	self methodDict at: selector put: compiledMethod
 ]
 
 { #category : 'adding-removing methods' }
@@ -425,11 +400,6 @@ Behavior >> basicNewTenured: sizeRequested [
 	self isVariable ifFalse: [
 		self error: self printString , ' cannot have variable sized instances' ].
 	self primitiveFailed
-]
-
-{ #category : 'obsolete subclasses' }
-Behavior >> basicObsoleteSubclasses [
-	^ObsoleteSubclasses
 ]
 
 { #category : 'accessing - class hierarchy' }
@@ -1039,17 +1009,6 @@ Behavior >> instVarNames [
 ]
 
 { #category : 'accessing - instances and variables' }
-Behavior >> instanceCount [
-	"Answer the number of instances of the receiver that are currently in use.
-	Note: we do not use #allInstances as allInstancesDo: has a fallback for low memory"
-
-	| count |
-	count := 0.
-	self allInstancesDo: [:x | count := count + 1].
-	^count
-]
-
-{ #category : 'accessing - instances and variables' }
 Behavior >> instanceVariables [
 	"in older version, this method was returning names, not objects"
 	<reflection: 'Class structural inspection - Slot inspection'>
@@ -1208,13 +1167,6 @@ Behavior >> isManifest [
 Behavior >> isMeta [
 	<reflection: 'Class structural inspection - Class kind testing'>
 	^ false
-]
-
-{ #category : 'testing' }
-Behavior >> isObsolete [
-	"Return true if the receiver is obsolete."
-	<reflection: 'Class structural inspection - Class kind testing'>
-	^self instanceCount = 0
 ]
 
 { #category : 'testing' }
@@ -1451,32 +1403,8 @@ Behavior >> newTenured: sizeRequested [
 ]
 
 { #category : 'initialization' }
-Behavior >> nonObsoleteClass [
-	"Attempt to find and return the current version of this obsolete class"
-
-	^ self environment at: self originalName
-]
-
-{ #category : 'initialization' }
 Behavior >> obsolete [
 	"nothing to be done"
-]
-
-{ #category : 'obsolete subclasses' }
-Behavior >> obsoleteSubclasses [
-	"Return all the weakly remembered obsolete subclasses of the receiver"
-	<reflection: 'Class structural inspection - Iterating and querying hierarchy'>
-	^ self basicObsoleteSubclasses at: self ifAbsent: [ #(  ) ]
-]
-
-{ #category : 'initialization' }
-Behavior >> originalName [
-	| obsName |
-	obsName := self name.
-	self isObsolete ifFalse: [ ^obsName asSymbol].
- 	[obsName beginsWith: 'AnObsolete']
- 		whileTrue: [obsName := obsName copyFrom: 'AnObsolete' size + 1 to: obsName size].
-	^obsName asSymbol
 ]
 
 { #category : 'accessing' }
@@ -1542,13 +1470,6 @@ Behavior >> propertyAt: propName put: propValue [
 Behavior >> realClass [
 
 	^ self
-]
-
-{ #category : 'obsolete subclasses' }
-Behavior >> removeAllObsoleteSubclasses [
-	"Remove all the obsolete subclasses of the receiver"
-	<reflection: 'Class structural modification - Hierarchy modification'>
-	self basicObsoleteSubclasses removeKey: self ifAbsent: [  ]
 ]
 
 { #category : 'accessing - method dictionary' }
