@@ -4,5 +4,5 @@ Extension { #name : 'ClySwitchFocusToNextBrowserPaneCommand' }
 ClySwitchFocusToNextBrowserPaneCommand class >> fullBrowserShortcutActivation [
 	<classAnnotation>
 
-	^CmdShortcutActivation by: Character arrowRight asShortcut for: ClyFullBrowserContext
+	^ClyShortcutActivation by: Character arrowRight asShortcut for: ClyFullBrowserContext
 ]

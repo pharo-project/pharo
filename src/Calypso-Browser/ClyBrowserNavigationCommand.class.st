@@ -16,7 +16,7 @@ Class {
 ClyBrowserNavigationCommand class >> browserShortcutActivation [
 	<classAnnotation>
 
-	^CmdShortcutActivation by: self defaultShortcut for: ClyBrowserContext
+	^ClyShortcutActivation by: self defaultShortcut for: ClyBrowserContext
 ]
 
 { #category : 'activation' }
@@ -42,5 +42,5 @@ ClyBrowserNavigationCommand class >> isAbstract [
 ClyBrowserNavigationCommand class >> textEditorShortcutActivation [
 	<classAnnotation>
 
-	^CmdShortcutActivation by: self defaultShortcut for: ClyTextEditorContext
+	^ClyShortcutActivation by: self defaultShortcut for: ClyTextEditorContext
 ]

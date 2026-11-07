@@ -10,7 +10,7 @@ Class {
 SycOpenScopesInClassMenuCommand class >> browserContextMenuActivation [
 	<classAnnotation>
 
-	^ CmdContextMenuActivation byRootGroupItemOrder: 1.5 for: ClyClass asCalypsoItemContext
+	^ ClyContextMenuActivation byRootGroupItemOrder: 1.5 for: ClyClass asCalypsoItemContext
 ]
 
 { #category : 'execution' }
@@ -24,11 +24,17 @@ SycOpenScopesInClassMenuCommand >> cmCommandClass [
 ]
 
 { #category : 'accessing' }
-SycOpenScopesInClassMenuCommand >> defaultMenuIconName [
+SycOpenScopesInClassMenuCommand >> iconName [
 	^ #smallPushpin
 ]
 
 { #category : 'accessing' }
-SycOpenScopesInClassMenuCommand >> defaultMenuItemName [
+SycOpenScopesInClassMenuCommand >> name [
 	^'Scopes'
+]
+
+{ #category : 'menu' }
+SycOpenScopesInClassMenuCommand >> pureMenuCommands [
+	"The commands of the class of this opener that apply here, in the order they are built."
+	^ self classFamilyPureMenuCommands
 ]

@@ -19,39 +19,43 @@ ClyCreateTestCaseCommand class >> canBeExecutedInContext: aBrowserContext [
 	^aBrowserContext isPackageSelected
 ]
 
-{ #category : 'activation' }
-ClyCreateTestCaseCommand class >> fullBrowserMenuActivation [
-	<classAnnotation>
-
-	^CmdContextMenuActivation byRootGroupItemOrder: 5 for: ClyFullBrowserClassContext
-]
-
-{ #category : 'accessing' }
-ClyCreateTestCaseCommand >> defaultMenuIconName [
-	^#testGreen
-]
-
-{ #category : 'accessing' }
-ClyCreateTestCaseCommand >> defaultMenuItemName [
-	^'New test class'
-]
-
-{ #category : 'command execution' }
-ClyCreateTestCaseCommand >> execute [
+{ #category : 'execution' }
+ClyCreateTestCaseCommand >> executeRefactoring [
 
 	| classDefinition resultClass |
 	classDefinition := ClassDefinitionPrinter fluid testClassDefinitionTemplateInPackage: package name tag: packageTag.
 	classDefinition := self morphicUIManager multiLineRequest: 'Define test class:' initialAnswer: classDefinition answerHeight: 250.
 	classDefinition isEmptyOrNil ifTrue: [ ^ self ].
-	resultClass := browser compileANewClassFrom: classDefinition notifying: nil startingFrom: nil.
-	resultClass ifNotNil: [ browser selectClass: resultClass ]
+	resultClass := self browser compileANewClassFrom: classDefinition notifying: nil startingFrom: nil.
+	resultClass ifNotNil: [ self browser selectClass: resultClass ]
+]
+
+{ #category : 'accessing' }
+ClyCreateTestCaseCommand >> iconName [
+	^#testGreen
+]
+
+{ #category : 'testing' }
+ClyCreateTestCaseCommand >> isAvailableInMenuOf: aToolContext [
+
+	^ aToolContext isFullBrowserClassContext
+]
+
+{ #category : 'accessing' }
+ClyCreateTestCaseCommand >> name [
+	^'New test class'
+]
+
+{ #category : 'accessing' }
+ClyCreateTestCaseCommand >> order [
+
+	^ 5
 ]
 
 { #category : 'execution' }
-ClyCreateTestCaseCommand >> prepareFullExecutionInContext: aBrowserContext [
-	super prepareFullExecutionInContext: aBrowserContext.
+ClyCreateTestCaseCommand >> prepareFullExecution [
 
-	package := aBrowserContext lastSelectedPackage.
-	aBrowserContext isPackageTagSelected ifTrue: [
-		packageTag := aBrowserContext lastSelectedPackageTag]
+	super prepareFullExecution.
+	package := self context lastSelectedPackage.
+	self context isPackageTagSelected ifTrue: [ packageTag := self context lastSelectedPackageTag ]
 ]

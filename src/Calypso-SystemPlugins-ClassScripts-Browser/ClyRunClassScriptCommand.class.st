@@ -10,7 +10,7 @@ Internal Representation and Key Implementation Points.
 "
 Class {
 	#name : 'ClyRunClassScriptCommand',
-	#superclass : 'CmdCommand',
+	#superclass : 'SycClassCommand',
 	#instVars : [
 		'targetClass',
 		'script'
@@ -34,34 +34,31 @@ ClyRunClassScriptCommand class >> methodTableIconActivation [
 	^ClyTableIconCommandActivation for: ClyMethod asCalypsoItemContext
 ]
 
-{ #category : 'accessing' }
-ClyRunClassScriptCommand >> defaultMenuIconName [
-	^ script iconName
+{ #category : 'execution' }
+ClyRunClassScriptCommand >> executeRefactoring [
+	self script executeOn: targetClass
 ]
 
 { #category : 'accessing' }
-ClyRunClassScriptCommand >> defaultMenuItemName [
+ClyRunClassScriptCommand >> iconName [
+	^ self script iconName
+]
+
+{ #category : 'accessing' }
+ClyRunClassScriptCommand >> name [
 	^'Run script'
 ]
 
 { #category : 'execution' }
-ClyRunClassScriptCommand >> execute [
-	script executeOn: targetClass
+ClyRunClassScriptCommand >> prepareFullExecution [
+
+	super prepareFullExecution.
+	targetClass := self context selectedClasses
+		               detect: [ :each | self script isImplementedByClass: each ]
+		               ifNone: [ self script implementorClass ]
 ]
 
-{ #category : 'execution' }
-ClyRunClassScriptCommand >> prepareFullExecutionInContext: aBrowserContext [
-	super prepareFullExecutionInContext: aBrowserContext.
-
-	script := aBrowserContext selectedClassScript.
-	targetClass := aBrowserContext selectedClasses
-		detect: [ :each | script isImplementedByClass: each ]
-		ifNone: [ script implementorClass ]
-]
-
-{ #category : 'execution' }
-ClyRunClassScriptCommand >> readParametersFromContext: aBrowserContext [
-	super readParametersFromContext: aBrowserContext.
-
-	script := aBrowserContext selectedClassScript
+{ #category : 'accessing' }
+ClyRunClassScriptCommand >> script [
+	^ script ifNil: [ self context ifNotNil: [ :ctx | ctx selectedClassScript ] ]
 ]

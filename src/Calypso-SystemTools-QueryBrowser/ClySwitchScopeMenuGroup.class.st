@@ -3,7 +3,7 @@ I am a context menu group which holds all generated ClySwitchQueryScopeCommand i
 "
 Class {
 	#name : 'ClySwitchScopeMenuGroup',
-	#superclass : 'CmdMenuGroup',
+	#superclass : 'ClyMenuGroup',
 	#category : 'Calypso-SystemTools-QueryBrowser-Commands-Controlling',
 	#package : 'Calypso-SystemTools-QueryBrowser',
 	#tag : 'Commands-Controlling'

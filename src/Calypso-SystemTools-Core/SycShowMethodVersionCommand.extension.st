@@ -8,15 +8,8 @@ SycShowMethodVersionCommand class >> methodBrowserTabActivation [
 ]
 
 { #category : '*Calypso-SystemTools-Core' }
-SycShowMethodVersionCommand class >> methodMenuActivation [
-	<classAnnotation>
-
-	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup for: ClyMethod asCalypsoItemContext
-]
-
-{ #category : '*Calypso-SystemTools-Core' }
 SycShowMethodVersionCommand class >> methodShortcutActivation [
     <classAnnotation>
-    ^ CmdShortcutActivation by: $v meta for: ClyMethod asCalypsoItemContext
+    ^ ClyShortcutActivation by: $v meta for: ClyMethod asCalypsoItemContext
 
 ]

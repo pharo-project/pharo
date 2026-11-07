@@ -19,6 +19,11 @@ ClyBrowserContextAbstractTest >> allClyContextBut: contexts [
 		reject: [ :ctx | contexts includes: ctx ]
 ]
 
+{ #category : 'accessing' }
+ClyBrowserContextAbstractTest >> browser [
+	^ browser
+]
+
 { #category : 'helpers' }
 ClyBrowserContextAbstractTest >> classContext [
 

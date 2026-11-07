@@ -20,22 +20,12 @@ Class {
 { #category : 'activation' }
 ClyBrowseCritiqueRuleCommand class >> browserContextMenuActivation [
 	<classAnnotation>
-	^ CmdContextMenuActivation byItemOf: CmdExtraMenuGroup for: ClyCriticContext
+	^ ClyContextMenuActivation byItemOf: ClyExtraMenuGroup for: ClyCriticContext
 ]
 
 { #category : 'activation' }
 ClyBrowseCritiqueRuleCommand class >> criticTableIconActivation [
 	"We do not want this command to appear in the command icons next to critiques, so we override the method."
-]
-
-{ #category : 'accessing' }
-ClyBrowseCritiqueRuleCommand >> defaultMenuIconName [
-	^ #smallSystemBrowser
-]
-
-{ #category : 'accessing' }
-ClyBrowseCritiqueRuleCommand >> defaultMenuItemName [
-	^ 'Browse rule'
 ]
 
 { #category : 'table decoration' }
@@ -44,6 +34,16 @@ ClyBrowseCritiqueRuleCommand >> description [
 ]
 
 { #category : 'execution' }
-ClyBrowseCritiqueRuleCommand >> execute [
+ClyBrowseCritiqueRuleCommand >> executeRefactoring [
 	self critique rule class browse
+]
+
+{ #category : 'accessing' }
+ClyBrowseCritiqueRuleCommand >> iconName [
+	^ #smallSystemBrowser
+]
+
+{ #category : 'accessing' }
+ClyBrowseCritiqueRuleCommand >> name [
+	^ 'Browse rule'
 ]

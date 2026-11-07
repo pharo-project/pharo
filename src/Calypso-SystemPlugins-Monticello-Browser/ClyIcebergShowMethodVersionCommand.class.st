@@ -10,7 +10,7 @@ Internal Representation and Key Implementation Points.
 "
 Class {
 	#name : 'ClyIcebergShowMethodVersionCommand',
-	#superclass : 'CmdCommand',
+	#superclass : 'SycMethodCommand',
 	#instVars : [
 		'method'
 	],
@@ -33,54 +33,53 @@ ClyIcebergShowMethodVersionCommand class >> methodBrowserTabActivation [
 	^ClyBrowserTabCommandActivation for: ClyMethod asCalypsoItemContext
 ]
 
-{ #category : 'accessing' }
-ClyIcebergShowMethodVersionCommand class >> methodMenuActivation [
-	<classAnnotation>
-
-	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup order: 1001 for: ClyMethod asCalypsoItemContext
-]
-
-{ #category : 'accessing' }
-ClyIcebergShowMethodVersionCommand >> defaultMenuIconName [
-	^#komitterSmalltalkhubRemote
-]
-
-{ #category : 'accessing' }
-ClyIcebergShowMethodVersionCommand >> defaultMenuItemName [
-
-	^ 'Commit history'
-]
-
 { #category : 'execution' }
-ClyIcebergShowMethodVersionCommand >> execute [
-	| browserClass packageName repositoriesWithPackage repository |
+ClyIcebergShowMethodVersionCommand >> executeRefactoring [
 
+	| browserClass packageName repositoriesWithPackage repository |
 	packageName := method package name.
-	repositoriesWithPackage := 	IceRepository registry
-		select: [ :repo | repo includesPackageNamed: packageName ].
+	repositoriesWithPackage := IceRepository registry select: [ :repo | repo includesPackageNamed: packageName ].
 	repositoriesWithPackage ifEmpty: [
-		self inform: 'No repositories include package ', packageName.
-		^ self ].
+			self inform: 'No repositories include package ' , packageName.
+			^ self ].
 	repository := repositoriesWithPackage size > 1
-		ifTrue: [
-			self morphicUIManager
-				chooseFrom: (repositoriesWithPackage collect: [ :each | each name ])
-				values: repositoriesWithPackage
-				title: 'Repository' ]
-		ifFalse: [ repositoriesWithPackage anyOne ].
+		              ifTrue: [ self morphicUIManager chooseFrom: (repositoriesWithPackage collect: [ :each | each name ]) values: repositoriesWithPackage title: 'Repository' ]
+		              ifFalse: [ repositoriesWithPackage anyOne ].
 	repository ifNil: [ ^ self ].
 
 	self flag: #pharoTodo.
 	"This is a way to hide a dependency to Iceberg-IceTip package."
-	browserClass := #IceTipVersionHistoryBrowser
-		asClassInEnvironment: self class environment.
+	browserClass := #IceTipVersionHistoryBrowser asClassInEnvironment: self class environment.
 
 	(browserClass onRepository: repository method: method) open
 ]
 
-{ #category : 'execution' }
-ClyIcebergShowMethodVersionCommand >> prepareFullExecutionInContext: aToolContext [
+{ #category : 'accessing' }
+ClyIcebergShowMethodVersionCommand >> iconName [
+	^#komitterSmalltalkhubRemote
+]
 
-	super prepareFullExecutionInContext: aToolContext.
-	method := aToolContext lastSelectedMethod
+{ #category : 'accessing' }
+ClyIcebergShowMethodVersionCommand >> menuGroup [
+
+	^ ClyQueryMenuGroup
+]
+
+{ #category : 'accessing' }
+ClyIcebergShowMethodVersionCommand >> name [
+
+	^ 'Commit history'
+]
+
+{ #category : 'accessing' }
+ClyIcebergShowMethodVersionCommand >> order [
+
+	^ 1001
+]
+
+{ #category : 'execution' }
+ClyIcebergShowMethodVersionCommand >> prepareFullExecution [
+
+	super prepareFullExecution.
+	method := self context lastSelectedMethod
 ]

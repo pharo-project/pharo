@@ -63,7 +63,7 @@ ReleaseTest >> assertValidLintRule: aLintRule withExceptions: someNames [
 
 	self
 		assert: results isEmpty
-		description: [ String
+		description: (String
 				streamContents: [ :s |
 					s
 						<< aLintRule rationale;
@@ -75,7 +75,7 @@ ReleaseTest >> assertValidLintRule: aLintRule withExceptions: someNames [
 							s
 								<< '- ';
 								print: e entity ]
-						separatedBy: [ s lf ] ] ]
+						separatedBy: [ s lf ] ] )
 ]
 
 { #category : 'helpers' }
@@ -278,7 +278,7 @@ ReleaseTest >> testLayoutIntegrity [
 ReleaseTest >> testLocalMethodsOfTheClassShouldNotBeRepeatedInItsTraits [
 	"If a class is using a trait with an explicit requirement method, this class should implement the method"
 
-	self assertValidLintRule: ReLocalMethodsSameThanTraitRule new withExceptions: #(RBSmalllintTestLocalMethodsSameThanTraitObject)
+	self assertValidLintRule: ReLocalMethodsSameThanTraitRule new withExceptions: #(ReSmalllintTestLocalMethodsSameThanTraitObject)
 ]
 
 { #category : 'tests' }

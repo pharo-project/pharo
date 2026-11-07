@@ -16,6 +16,12 @@ ClyFullBrowserMethodContext class >> selectionStrategy [
 	^ClyContextSelectionStrategyAnnotation for: ClyFullBrowserMorph selectionType: ClyMethod
 ]
 
+{ #category : 'testing' }
+ClyFullBrowserMethodContext >> isFullBrowserMethodContext [
+
+	^ true
+]
+
 { #category : 'browser state' }
 ClyFullBrowserMethodContext >> restoreBrowserState [
 

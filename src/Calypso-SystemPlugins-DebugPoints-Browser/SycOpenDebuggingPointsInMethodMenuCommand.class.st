@@ -12,7 +12,7 @@ Class {
 SycOpenDebuggingPointsInMethodMenuCommand class >> methodContextMenuActivation [
 
 	<classAnnotation>
-	^ CmdContextMenuActivation
+	^ ClyContextMenuActivation
 		  byRootGroupItemOrder: 1.4
 		  for: ClyMethod asCalypsoItemContext 
 ]
@@ -24,19 +24,25 @@ SycOpenDebuggingPointsInMethodMenuCommand >> activationStrategy [
 ]
 
 { #category : 'accessing' }
-SycOpenDebuggingPointsInMethodMenuCommand >> defaultMenuIconName [
+SycOpenDebuggingPointsInMethodMenuCommand >> description [
+
+	^ 'Defines how the debugging point menu group should activate inside the calypso method view.'
+]
+
+{ #category : 'accessing' }
+SycOpenDebuggingPointsInMethodMenuCommand >> iconName [
 
 	^ #smallDebug 
 ]
 
 { #category : 'accessing' }
-SycOpenDebuggingPointsInMethodMenuCommand >> defaultMenuItemName [
+SycOpenDebuggingPointsInMethodMenuCommand >> name [
 
 	^ 'Debug Points' 
 ]
 
-{ #category : 'accessing' }
-SycOpenDebuggingPointsInMethodMenuCommand >> description [
-
-	^ 'Defines how the debugging point menu group should activate inside the calypso method view.'
+{ #category : 'menu' }
+SycOpenDebuggingPointsInMethodMenuCommand >> pureMenuCommands [
+	"Its sub-menu holds debugging points only: no pure commands."
+	^ #()
 ]

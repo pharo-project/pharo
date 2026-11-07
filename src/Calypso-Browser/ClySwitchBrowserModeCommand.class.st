@@ -21,18 +21,17 @@ ClySwitchBrowserModeCommand class >> isAbstract [
 ]
 
 { #category : 'execution' }
-ClySwitchBrowserModeCommand >> applyResultInContext: aToolContext [
-	super applyResultInContext: aToolContext.
-	browser rebuildToolbar
-]
-
-{ #category : 'activation - toolbar support' }
-ClySwitchBrowserModeCommand >> createToolbarItemFor: aCommandActivator [
-
-	^ClyBrowserModeSwitchMorph activatingBy: aCommandActivator
+ClySwitchBrowserModeCommand >> applyCommandResult [
+	super applyCommandResult.
+	self browser rebuildToolbar
 ]
 
 { #category : 'testing' }
 ClySwitchBrowserModeCommand >> isAppliedToBrowser [
 	self subclassResponsibility
+]
+
+{ #category : 'toolbar' }
+ClySwitchBrowserModeCommand >> toolbarItemFor: aCommandActivator [
+	^ ClyBrowserModeSwitchMorph activatingBy: aCommandActivator
 ]

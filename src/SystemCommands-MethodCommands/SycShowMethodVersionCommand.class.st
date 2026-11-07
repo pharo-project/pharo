@@ -10,28 +10,13 @@ Internal Representation and Key Implementation Points.
 "
 Class {
 	#name : 'SycShowMethodVersionCommand',
-	#superclass : 'CmdCommand',
+	#superclass : 'SycMethodCommand',
 	#instVars : [
 		'method'
 	],
 	#category : 'SystemCommands-MethodCommands',
 	#package : 'SystemCommands-MethodCommands'
 }
-
-{ #category : 'testing' }
-SycShowMethodVersionCommand class >> canBeExecutedInContext: aToolContext [
-	^aToolContext isMethodSelected
-]
-
-{ #category : 'accessing' }
-SycShowMethodVersionCommand >> defaultMenuIconName [
-	^#history
-]
-
-{ #category : 'accessing' }
-SycShowMethodVersionCommand >> defaultMenuItemName [
-	^'Versions'
-]
 
 { #category : 'accessing' }
 SycShowMethodVersionCommand >> description [
@@ -40,13 +25,36 @@ SycShowMethodVersionCommand >> description [
 ]
 
 { #category : 'execution' }
-SycShowMethodVersionCommand >> execute [
+SycShowMethodVersionCommand >> executeRefactoring [
+
 	(Smalltalk tools toolNamed: #versionBrowser) browseVersionsForMethod: method
 ]
 
-{ #category : 'execution' }
-SycShowMethodVersionCommand >> prepareFullExecutionInContext: aToolContext [
-	super prepareFullExecutionInContext: aToolContext.
+{ #category : 'accessing' }
+SycShowMethodVersionCommand >> iconName [
+	^#history
+]
 
-	method := aToolContext lastSelectedMethod
+{ #category : 'accessing' }
+SycShowMethodVersionCommand >> menuGroup [
+
+	^ ClyQueryMenuGroup
+]
+
+{ #category : 'accessing' }
+SycShowMethodVersionCommand >> name [
+	^'Versions'
+]
+
+{ #category : 'accessing' }
+SycShowMethodVersionCommand >> order [
+
+	^ 1000
+]
+
+{ #category : 'execution' }
+SycShowMethodVersionCommand >> prepareFullExecution [
+
+	super prepareFullExecution.
+	method := self context lastSelectedMethod
 ]

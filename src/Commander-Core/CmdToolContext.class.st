@@ -57,6 +57,12 @@ CmdToolContext >> applyResultOf: aCommand [
 	aCommand applyResultInContext: self
 ]
 
+{ #category : 'testing' }
+CmdToolContext >> commanderCommandClasses [
+
+	^ #()
+]
+
 { #category : 'command execution' }
 CmdToolContext >> executeCommand: aCommand by: aCommandActivator [
 	aCommand execute
@@ -68,8 +74,68 @@ CmdToolContext >> hasUnacceptedEdits [
 ]
 
 { #category : 'testing' }
+CmdToolContext >> isClassDefinitionContext [
+
+	^ false
+]
+
+{ #category : 'testing' }
+CmdToolContext >> isFullBrowserClassContext [
+
+	^ false
+]
+
+{ #category : 'testing' }
+CmdToolContext >> isFullBrowserClassGroupContext [
+
+	^ false
+]
+
+{ #category : 'testing' }
+CmdToolContext >> isFullBrowserMethodContext [
+
+	^ false
+]
+
+{ #category : 'testing' }
+CmdToolContext >> isFullBrowserMethodGroupContext [
+
+	^ false
+]
+
+{ #category : 'testing' }
+CmdToolContext >> isFullBrowserPackageContext [
+
+	^ false
+]
+
+{ #category : 'testing' }
+CmdToolContext >> isFullBrowserVariableContext [
+
+	^ false
+]
+
+{ #category : 'testing' }
+CmdToolContext >> isMethodSourceContext [
+
+	^ false
+]
+
+{ #category : 'testing' }
+CmdToolContext >> isQueryBrowserContext [
+
+	^ false
+]
+
+{ #category : 'testing' }
 CmdToolContext >> isSimilarTo: anotherToolContext [
 	^self = anotherToolContext
+]
+
+{ #category : 'testing' }
+CmdToolContext >> isSourceCodeContext [
+
+	^ false
 ]
 
 { #category : 'ui requests' }

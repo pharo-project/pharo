@@ -9,7 +9,7 @@ Internal Representation and Key Implementation Points.
 "
 Class {
 	#name : 'SycSourceCodeCommand',
-	#superclass : 'CmdCommand',
+	#superclass : 'ClyCommand',
 	#instVars : [
 		'method',
 		'sourceNode'
@@ -32,7 +32,7 @@ SycSourceCodeCommand class >> method: aMethod node: aProgramNode [
 
 { #category : 'accessing' }
 SycSourceCodeCommand >> method [
-	^ method
+	^ method ifNil: [ self context ifNotNil: [ :ctx | ctx lastSelectedMethod ] ]
 ]
 
 { #category : 'accessing' }
@@ -40,17 +40,9 @@ SycSourceCodeCommand >> method: anObject [
 	method := anObject
 ]
 
-{ #category : 'execution' }
-SycSourceCodeCommand >> readParametersFromContext: aSourceCodeContext [
-	super readParametersFromContext: aSourceCodeContext.
-
-	method := aSourceCodeContext lastSelectedMethod.
-	sourceNode := aSourceCodeContext lastSelectedSourceNode
-]
-
 { #category : 'accessing' }
 SycSourceCodeCommand >> sourceNode [
-	^ sourceNode
+	^ sourceNode ifNil: [ self context ifNotNil: [ :ctx | ctx lastSelectedSourceNode ] ]
 ]
 
 { #category : 'accessing' }

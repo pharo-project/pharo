@@ -30,20 +30,20 @@ ClyDebugBrokenCritiqueCommand >> decorateTableCell: anItemCellMorph with: aMorph
 	anItemCellMorph definitionIcon: #exception
 ]
 
+{ #category : 'execution' }
+ClyDebugBrokenCritiqueCommand >> executeRefactoring [
+
+	(OupsDebugRequest newForContext: self critique stack)
+		label: self critique message;
+		submit
+]
+
 { #category : 'accessing' }
-ClyDebugBrokenCritiqueCommand >> defaultMenuIconName [
+ClyDebugBrokenCritiqueCommand >> iconName [
 	^#smallDebug
 ]
 
 { #category : 'accessing' }
-ClyDebugBrokenCritiqueCommand >> defaultMenuItemName [
+ClyDebugBrokenCritiqueCommand >> name [
 	^'Debug the exception'
-]
-
-{ #category : 'execution' }
-ClyDebugBrokenCritiqueCommand >> execute [
-
-	(OupsDebugRequest newForContext: critique stack)
-		label: critique message;
-		submit
 ]

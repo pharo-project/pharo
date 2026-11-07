@@ -21,18 +21,18 @@ SycOpenAdvancedDebuggingMenuCommand >> cmCommandClass [
 ]
 
 { #category : 'accessing' }
-SycOpenAdvancedDebuggingMenuCommand >> defaultMenuIconName [
+SycOpenAdvancedDebuggingMenuCommand >> description [
+
+	^ 'Open the advanced debugging menu after a right click on the source code.'
+]
+
+{ #category : 'accessing' }
+SycOpenAdvancedDebuggingMenuCommand >> iconName [
 	^ #smallDebug
 ]
 
 { #category : 'accessing' }
-SycOpenAdvancedDebuggingMenuCommand >> defaultMenuItemName [
+SycOpenAdvancedDebuggingMenuCommand >> name [
 
 	^ 'Debugging'
-]
-
-{ #category : 'accessing' }
-SycOpenAdvancedDebuggingMenuCommand >> description [
-
-	^ 'Open the advanced debugging menu after a right click on the source code.'
 ]

@@ -1,15 +1,53 @@
 "
-ReSmallintChecker is responsible for running a set of rules on a given subsystem.
+I run a set of Renraku rules on an environment (a package, a class, ...) and collect their critiques. I give each rule the entities it is interested in: the packages to the package rules, the classes to the class rules, the methods to the method rules and the AST nodes of each method to the node rules.
 
+## Responsibility:
+
+- Split my rules according to the entities they check (`reParseRule`).
+- Visit the entities of my environment and collect the critiques of my rules, leaving out the ones banned in the manifests.
+- Answer the critiques of one rule (`criticsOf:`).
+
+## Collaborators: 
+
+- `ReAbstractRule` and its subclasses: the rules I run.
+- `RBBrowserEnvironment`: the code I check, for example `aPackage asEnvironment` or `aClass asEnvironment`.
+- `TheManifestBuilder`: knows the critiques banned or marked as false positives.
+
+## Public API and Key Messages
+
+- `rule:` sets the collection of rules to run, `environment:` the code to check, and `run` runs them.
+- `runRules: aCollectionOfRules onPackage: aPackage` sets both and runs.
+- `criticsOf: aRule` answers the critiques reported by the rules of the class of `aRule`.
+
+Run one rule on a class:
 
 ```
-| rules checker | 
-rules := ReRuleManager defaultRules.
-
+| rule checker |
+rule := ReFloatEqualityComparisonRule new.
 checker := ReSmalllintChecker new
-	runRules: rules onPackage: (PackageOrganizer default packageNamed: #'Manifest-Core').
+	rule: { rule };
+	environment: Point asEnvironment;
+	yourself.
+checker run.
+checker criticsOf: rule
+```
+
+Run the default rules on a package:
 
 ```
+| checker |
+checker := ReSmalllintChecker new.
+checker
+	runRules: ReRuleManager defaultRules
+	onPackage: (PackageOrganizer default packageNamed: 'Kernel').
+checker criticsOf: ReFloatEqualityComparisonRule new
+```
+
+## Internal Representation
+
+- `methodRules`, `nodeRules`, `classRules`, `packageRules`: my rules, grouped by the entities they check.
+- `critiques`: the critiques collected by `run`.
+- `manifestClassCache`: the manifest builders of the visited packages.
 "
 Class {
 	#name : 'ReSmalllintChecker',

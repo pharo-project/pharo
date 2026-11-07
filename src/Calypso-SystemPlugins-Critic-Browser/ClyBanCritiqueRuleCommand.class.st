@@ -9,15 +9,10 @@ Class {
 }
 
 { #category : 'execution' }
-ClyBanCritiqueRuleCommand >> applyResultInContext: aToolContext [
-	super applyResultInContext: aToolContext.
+ClyBanCritiqueRuleCommand >> applyCommandResult [
+	super applyCommandResult.
 
-	aToolContext tool criticView update
-]
-
-{ #category : 'initialization' }
-ClyBanCritiqueRuleCommand >> defaultMenuIconName [
-	^#smallCancel
+	self context tool criticView update
 ]
 
 { #category : 'table decoration' }
@@ -26,7 +21,12 @@ ClyBanCritiqueRuleCommand >> description [
 ]
 
 { #category : 'execution' }
-ClyBanCritiqueRuleCommand >> execute [
+ClyBanCritiqueRuleCommand >> executeRefactoring [
 
-	critique guidedBan
+	self critique guidedBan
+]
+
+{ #category : 'initialization' }
+ClyBanCritiqueRuleCommand >> iconName [
+	^#smallCancel
 ]

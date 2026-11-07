@@ -19,12 +19,7 @@ ClyRequestMethodPackageForEditorCommand class >> canBeExecutedInMethodEditor: aT
 ClyRequestMethodPackageForEditorCommand class >> methodEditorShorcutActivation [
 	<classAnnotation>
 
-	^CmdShortcutActivation by: $e meta, $m meta, $p meta for: ClyTextEditorContext
-]
-
-{ #category : 'accessing' }
-ClyRequestMethodPackageForEditorCommand >> defaultMenuItemName [
-	^'Select method package'
+	^ClyShortcutActivation by: $e meta, $m meta, $p meta for: ClyTextEditorContext
 ]
 
 { #category : 'accessing' }
@@ -34,8 +29,19 @@ ClyRequestMethodPackageForEditorCommand >> description [
 ]
 
 { #category : 'execution' }
-ClyRequestMethodPackageForEditorCommand >> execute [
+ClyRequestMethodPackageForEditorCommand >> executeRefactoring [
 	| packageEditor |
 	packageEditor := methodEditor protocolAndPackageEditor.
 	packageEditor requestChangeBy: [ packageEditor requestPackage]
+]
+
+{ #category : 'accessing' }
+ClyRequestMethodPackageForEditorCommand >> name [
+	^'Select method package'
+]
+
+{ #category : 'accessing' }
+ClyRequestMethodPackageForEditorCommand >> order [
+
+	^ 1000
 ]

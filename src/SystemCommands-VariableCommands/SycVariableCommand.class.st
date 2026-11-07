@@ -9,7 +9,7 @@ Internal Representation and Key Implementation Points.
 "
 Class {
 	#name : 'SycVariableCommand',
-	#superclass : 'CmdCommand',
+	#superclass : 'ClyCommand',
 	#instVars : [
 		'variables',
 		'toolContext'
@@ -26,14 +26,6 @@ SycVariableCommand class >> canBeExecutedInContext: aToolContext [
 { #category : 'testing' }
 SycVariableCommand class >> isAbstract [
 	^self = SycVariableCommand
-]
-
-{ #category : 'execution' }
-SycVariableCommand >> prepareFullExecutionInContext: aToolContext [
-	
-	super prepareFullExecutionInContext: aToolContext.
-	toolContext := aToolContext.
-	variables := aToolContext selectedVariables
 ]
 
 { #category : 'accessing' }

@@ -27,24 +27,10 @@ ClyShowMessageImplementorCommand class >> methodBrowserToolbarActivation [
 ]
 
 { #category : 'activation' }
-ClyShowMessageImplementorCommand class >> methodMenuActivation [
-	<classAnnotation>
-
-	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup for: ClyMethod asCalypsoItemContext
-]
-
-{ #category : 'activation' }
 ClyShowMessageImplementorCommand class >> methodShortcutActivation [
 	<classAnnotation>
 
-	^CmdShortcutActivation by: $m meta for: ClyMethod asCalypsoItemContext
-]
-
-{ #category : 'activation' }
-ClyShowMessageImplementorCommand class >> sourceCodeMenuActivation [
-	<classAnnotation>
-
-	^SycSourceCodeMenuActivation byItemOf: ClyQueryMenuGroup for: ClySourceCodeContext
+	^ClyShortcutActivation by: $m meta for: ClyMethod asCalypsoItemContext
 ]
 
 { #category : 'activation' }
@@ -57,33 +43,42 @@ ClyShowMessageImplementorCommand class >> sourceCodeShortcutActivation [
 ]
 
 { #category : 'accessing' }
-ClyShowMessageImplementorCommand >> defaultMenuIconName [
-	^ #smallFind
-]
-
-{ #category : 'accessing' }
-ClyShowMessageImplementorCommand >> defaultMenuItemName [
-	^'Implementors'
-]
-
-{ #category : 'accessing' }
 ClyShowMessageImplementorCommand >> description [
 
 	^ 'Show all message implementors.'
 ]
 
 { #category : 'execution' }
-ClyShowMessageImplementorCommand >> execute [
+ClyShowMessageImplementorCommand >> executeRefactoring [
 
-	| selectors |
+	(Smalltalk tools toolNamed: #messageList) browseImplementorsOfAll: (messages collect: [ :message | message selector ])
+]
 
-	selectors := messages collect: [ :each | each selector ].
-	(Smalltalk tools toolNamed: #messageList) browseImplementorsOfAll: selectors
+{ #category : 'accessing' }
+ClyShowMessageImplementorCommand >> iconName [
+	^ #smallFind
+]
+
+{ #category : 'accessing' }
+ClyShowMessageImplementorCommand >> menuGroup [
+
+	^ ClyQueryMenuGroup
+]
+
+{ #category : 'accessing' }
+ClyShowMessageImplementorCommand >> name [
+	^'Implementors'
+]
+
+{ #category : 'accessing' }
+ClyShowMessageImplementorCommand >> order [
+
+	^ 1000
 ]
 
 { #category : 'execution' }
-ClyShowMessageImplementorCommand >> prepareFullExecutionInContext: aToolContext [
-	super prepareFullExecutionInContext: aToolContext.
+ClyShowMessageImplementorCommand >> prepareFullExecution [
 
-	browser := aToolContext browser
+	super prepareFullExecution.
+	browser := self context browser
 ]

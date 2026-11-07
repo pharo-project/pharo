@@ -3,18 +3,17 @@ Call the rename method refactoring (yes the class name is not good)
 "
 Class {
 	#name : 'SycRenameMessageCommand',
-	#superclass : 'SycChangeMessageSignatureCommand',
+	#superclass : 'SycChangeMessageMenuCmCommand',
 	#instVars : [
 		'newSignature',
-		'driver',
-		'toolContext'
+		'driver'
 	],
 	#category : 'SystemCommands-MessageCommands',
 	#package : 'SystemCommands-MessageCommands'
 }
 
 { #category : 'execution' }
-SycRenameMessageCommand >> applyResultInContext: aToolContext [
+SycRenameMessageCommand >> applyCommandResult [
 	"I have problem to understand how to plug the call to the driver in the cmd architecture
 	in a way that I can come back here only once the refactoring is applied."
 
@@ -42,23 +41,13 @@ SycRenameMessageCommand >> createRefactoring [
 ]
 
 { #category : 'accessing' }
-SycRenameMessageCommand >> defaultMenuIconName [
-	^ #edit
-]
-
-{ #category : 'accessing' }
-SycRenameMessageCommand >> defaultMenuItemName [
-	^ '(R) Rename'
-]
-
-{ #category : 'accessing' }
 SycRenameMessageCommand >> description [
 
 	^ 'Rename method'
 ]
 
 { #category : 'execution' }
-SycRenameMessageCommand >> execute [
+SycRenameMessageCommand >> executeRefactoring [
 
 	driver := ReRenameMethodDriver new
 		          scopes: refactoringScopes
@@ -67,6 +56,16 @@ SycRenameMessageCommand >> execute [
 		          in: originalMessage methodClass.
 	driver runRefactoring.
 	
+]
+
+{ #category : 'accessing' }
+SycRenameMessageCommand >> iconName [
+	^ #edit
+]
+
+{ #category : 'accessing' }
+SycRenameMessageCommand >> name [
+	^ '(R) Rename'
 ]
 
 { #category : 'accessing' }
@@ -81,11 +80,18 @@ SycRenameMessageCommand >> newSignature: anObject [
 	newSignature := anObject
 ]
 
-{ #category : 'execution' }
-SycRenameMessageCommand >> prepareFullExecutionInContext: aToolContext [
+{ #category : 'accessing' }
+SycRenameMessageCommand >> order [
 
-	super prepareFullExecutionInContext: aToolContext.
-	toolContext := aToolContext
+	^ 1.7
+]
+
+{ #category : 'accessing' }
+SycRenameMessageCommand >> orderInContext: aToolContext [
+
+	^ aToolContext isMethodSourceContext
+		ifTrue: [ 1.2 ]
+		ifFalse: [ self order ]
 ]
 
 { #category : 'execution' }

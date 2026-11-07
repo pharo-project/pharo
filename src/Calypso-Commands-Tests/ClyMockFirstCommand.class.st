@@ -13,3 +13,9 @@ ClyMockFirstCommand >> execute [
 
 	^ self
 ]
+
+{ #category : 'accessing' }
+ClyMockFirstCommand >> order [
+
+	^ 20
+]

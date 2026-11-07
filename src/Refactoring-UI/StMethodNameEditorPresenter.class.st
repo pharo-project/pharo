@@ -408,10 +408,10 @@ StMethodNameEditorPresenter >> renameArgument: anItem [
 
 	selectedIndex := argumentsList selection selectedIndex.
 	argName := self request: 'Enter default name of argument' initialAnswer: anItem asString.
-	argName ifNil: [ CmdCommandAborted signal ].
+	argName ifNil: [ CmCommandAborted signal ].
 	(self invalidArgNames includes: argName) ifTrue: [
 		self inform: 'It''s a invalid name'.
-		CmdCommandAborted signal ].
+		CmCommandAborted signal ].
 	anItem newName: argName.
 	argumentsList items: (argumentsList items copyUpTo: anItem), {anItem}, (argumentsList items copyAfter: anItem).
 	argumentsList selectIndex: selectedIndex.

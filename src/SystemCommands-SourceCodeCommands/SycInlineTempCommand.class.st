@@ -16,42 +16,43 @@ SycInlineTempCommand class >> canBeExecutedInContext: aSourceCodeContext [
 { #category : 'converting' }
 SycInlineTempCommand >> asRefactorings [ 
 	| assignment |
-	assignment := sourceNode methodNode assignmentNodes
-		detect: [:each | each variable = sourceNode ].
+	assignment := self sourceNode methodNode assignmentNodes
+		detect: [:each | each variable = self sourceNode ].
 
 	^ { ReInlineTemporaryRefactoring
 		inline: assignment sourceInterval
-		from: method selector
-		in: method origin }
+		from: self method selector
+		in: self method origin }
 
-]
-
-{ #category : 'accessing' }
-SycInlineTempCommand >> defaultMenuIconName [
-	^ ##smallRightFlush
-]
-
-{ #category : 'accessing' }
-SycInlineTempCommand >> defaultMenuItemName [
-	^'Inline temp'
 ]
 
 { #category : 'execution' }
-SycInlineTempCommand >> execute [
+SycInlineTempCommand >> executeRefactoring [
 
 	| assignment |
-	assignment := sourceNode methodNode assignmentNodes detect: [ :each | each variable = sourceNode ].
+	assignment := self sourceNode methodNode assignmentNodes detect: [ :each | each variable = self sourceNode ].
 
 	^ { ((ReInlineTemporaryDriver newApplication: self application)
 		   scopes: refactoringScopes
 		   interval: assignment sourceInterval
-		   selector: method selector
-		   class: method origin) runRefactoring }
+		   selector: self method selector
+		   class: self method origin) runRefactoring }
 ]
 
-{ #category : 'execution' }
-SycInlineTempCommand >> prepareFullExecutionInContext: aSourceCodeContext [
+{ #category : 'accessing' }
+SycInlineTempCommand >> icon [
 
-	super prepareFullExecutionInContext: aSourceCodeContext.
-	refactoringScopes := aSourceCodeContext refactoringScopes
+	^ self iconNamed: #smallRightFlush
+]
+
+{ #category : 'accessing' }
+SycInlineTempCommand >> name [
+
+	^ 'Inline temp'
+]
+
+{ #category : 'accessing' }
+SycInlineTempCommand >> order [
+
+	^ 1.4
 ]
