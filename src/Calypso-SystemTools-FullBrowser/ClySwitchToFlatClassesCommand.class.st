@@ -10,15 +10,15 @@ Class {
 }
 
 { #category : 'execution' }
-ClySwitchToFlatClassesCommand >> execute [
+ClySwitchToFlatClassesCommand >> executeRefactoring [
 
-	browser switchToFlatClasses
+	self browser switchToFlatClasses
 ]
 
 { #category : 'testing' }
 ClySwitchToFlatClassesCommand >> isAppliedToBrowser [
 
-	^browser showsFlatClasses
+	^self browser showsFlatClasses
 ]
 
 { #category : 'accessing' }

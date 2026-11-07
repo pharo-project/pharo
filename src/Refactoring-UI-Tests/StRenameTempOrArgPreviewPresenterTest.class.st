@@ -10,6 +10,16 @@ Class {
 }
 
 { #category : 'running' }
+StRenameTempOrArgPreviewPresenterTest >> newPresenterFor: aDriver [
+
+	^ StRenameTempOrArgPreviewPresenter new
+		driver: aDriver;
+		scopes: { RBBrowserEnvironment default };
+		name: 'temp';
+		yourself
+]
+
+{ #category : 'running' }
 StRenameTempOrArgPreviewPresenterTest >> setUpDriver [ 
    | driver method sourceNode |
 
@@ -30,26 +40,66 @@ StRenameTempOrArgPreviewPresenterTest >> setUpDriver [
 ]
 
 { #category : 'tests' }
-StRenameTempOrArgPreviewPresenterTest >> testInvalidNameUpdatesValidationLabel [
-	"Verify that entering an invalid name updates the validation label."
+StRenameTempOrArgPreviewPresenterTest >> testClearingNameClearsErrorAndDisablesApply [
 
-	| driver presenter |
-	
-	driver := self setUpDriver.
+	| presenter |
+	presenter := self newPresenterFor: self setUpDriver.
+	presenter newNameInput text: 'Tmp2'.
+	self deny: presenter validationLabel label isEmpty.
 
-	presenter := StRenameTempOrArgPreviewPresenter new.
-	presenter
-		driver: driver;
-		scopes: { RBBrowserEnvironment default };
-		name: 'temp'.
+	presenter newNameInput text: ''.
 
-	presenter initializePresenters.
+	self assert: presenter validationLabel label equals: ''.
+	self deny: presenter buttonOk isEnabled.
+	self assert: presenter changes isEmptyOrNil
+]
+
+{ #category : 'tests' }
+StRenameTempOrArgPreviewPresenterTest >> testCorrectingInvalidNameClearsErrorAndEnablesApply [
+
+	| presenter |
+	presenter := self newPresenterFor: self setUpDriver.
+	presenter newNameInput text: 'Tmp2'.
+	self deny: presenter validationLabel label isEmpty.
+	self deny: presenter buttonOk isEnabled.
+
+	presenter newNameInput text: 'renamedTemporary'.
+
+	self assert: presenter validationLabel label equals: ''.
+	self assert: presenter buttonOk isEnabled.
+	self deny: presenter changes isEmptyOrNil
+]
+
+{ #category : 'tests' }
+StRenameTempOrArgPreviewPresenterTest >> testInvalidNameClearsPreviousPreviewAndDisablesApply [
+
+	| presenter |
+	presenter := self newPresenterFor: self setUpDriver.
+	presenter newNameInput text: 'renamedTemporary'.
+	self assert: presenter buttonOk isEnabled.
+	self deny: presenter changes isEmptyOrNil.
 
 	presenter newNameInput text: 'Tmp2'.
-	presenter validateName: 'Tmp2'.
 
-	self assert: presenter validationLabel label
-		equals: 'Tmp2 the name musn''t start in uppercase or be a reserved word.'
+	self deny: presenter validationLabel label isEmpty.
+	self deny: presenter buttonOk isEnabled.
+	self assert: presenter changes isEmptyOrNil
+]
+
+{ #category : 'tests' }
+StRenameTempOrArgPreviewPresenterTest >> testRestoringOriginalNameDiscardsPreviousPreview [
+
+	| presenter |
+	presenter := self newPresenterFor: self setUpDriver.
+	presenter newNameInput text: 'renamedTemporary'.
+	self assert: presenter buttonOk isEnabled.
+	self deny: presenter changes isEmptyOrNil.
+
+	presenter newNameInput text: 'temp'.
+
+	self assert: presenter validationLabel label equals: ''.
+	self deny: presenter buttonOk isEnabled.
+	self assert: presenter changes isEmptyOrNil
 ]
 
 { #category : 'accessing' }
@@ -73,47 +123,18 @@ StRenameTempOrArgPreviewPresenterTest >> testRunRefactoringCreatesAndConfiguresP
 ]
 
 { #category : 'tests' }
-StRenameTempOrArgPreviewPresenterTest >> testUpdateChangesWithValidNameGeneratesPreview [
-"Verify that entering a valid name generates the preview of the refactoring changes."
+StRenameTempOrArgPreviewPresenterTest >> testTypingValidNameUpdatesPreviewImmediately [
 
-	| driver presenter |
+	| presenter renamedMethod |
+	presenter := self newPresenterFor: self setUpDriver.
+	presenter newNameInput text: 'renamedTemporary'.
 
-    driver := self setUpDriver .
-
-    presenter := StRenameTempOrArgPreviewPresenter new.
-    presenter
-        driver: driver;
-        scopes: { RBBrowserEnvironment default };
-        name: 'temp'.
-
-    presenter initializePresenters.
-
-    presenter newNameInput text: 'tmp2'.
-	 presenter validateName: 'tmp2'.
-   
-    presenter updateName.
-
-    self deny: presenter changes isEmpty
-]
-
-{ #category : 'tests' }
-StRenameTempOrArgPreviewPresenterTest >> testValidNameClearsValidationLabel [
-	"Verify that entering an invalid name updates the validation label."
-
-	| driver presenter |
-	
-	driver := self setUpDriver.
-
-	presenter := StRenameTempOrArgPreviewPresenter new.
-	presenter
-		driver: driver;
-		scopes: { RBBrowserEnvironment default };
-		name: 'temp'.
-
-	presenter initializePresenters.
-
-	presenter newNameInput text: 'tmp2'.
-	presenter validateName: 'tmp2'.
-
-	self assert: presenter validationLabel label equals: ''
+	self assert: presenter buttonOk isEnabled.
+	self assert: presenter name equals: 'renamedTemporary'.
+	self assert: presenter changes size equals: 1.
+	renamedMethod := RBParser parseMethod: presenter changes first textToDisplay.
+	self assert: (renamedMethod allChildren anySatisfy: [ :node |
+		node isVariable and: [ node name = 'renamedTemporary' ] ]).
+	self deny: (renamedMethod allChildren anySatisfy: [ :node |
+		node isVariable and: [ node name = 'temp' ] ])
 ]

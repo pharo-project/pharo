@@ -21,7 +21,7 @@ SycShowLocalSendersCommand >> description [
 ]
 
 { #category : 'execution' }
-SycShowLocalSendersCommand >> execute [
+SycShowLocalSendersCommand >> executeRefactoring [
 
 	(Smalltalk tools toolNamed: #messageList) browse: self searchInTheWholeHierarchy.
 ]
@@ -36,6 +36,12 @@ SycShowLocalSendersCommand >> iconName [
 SycShowLocalSendersCommand >> name [
 
 	^ 'Hierarchical senders'
+]
+
+{ #category : 'accessing' }
+SycShowLocalSendersCommand >> order [
+
+	^ 2
 ]
 
 { #category : 'execution' }

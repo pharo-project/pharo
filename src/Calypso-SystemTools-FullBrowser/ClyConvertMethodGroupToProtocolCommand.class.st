@@ -24,22 +24,15 @@ ClyConvertMethodGroupToProtocolCommand class >> canBeExecutedInContext: aToolCon
 	^ aToolContext isExtensionMethodGroupSelected
 ]
 
-{ #category : 'activation' }
-ClyConvertMethodGroupToProtocolCommand class >> fullBrowserContextMenuActivation [
-	<classAnnotation>
+{ #category : 'execution' }
+ClyConvertMethodGroupToProtocolCommand >> applyCommandResult [
 
-	^CmdContextMenuActivation byRootGroupItemFor: ClyMethodGroup asCalypsoItemContext
+	super applyCommandResult.
+	self context showProtocol: protocol
 ]
 
 { #category : 'execution' }
-ClyConvertMethodGroupToProtocolCommand >> applyResultInContext: aToolContext [
-
-	super applyResultInContext: aToolContext.
-	aToolContext showProtocol: protocol
-]
-
-{ #category : 'execution' }
-ClyConvertMethodGroupToProtocolCommand >> execute [
+ClyConvertMethodGroupToProtocolCommand >> executeRefactoring [
 
 	methodGroups do: [ :methodGroup | methodGroup categorizeMethodsIn: protocol ]
 ]
@@ -50,12 +43,17 @@ ClyConvertMethodGroupToProtocolCommand >> name [
 	^ 'Convert to protocol'
 ]
 
+{ #category : 'accessing' }
+ClyConvertMethodGroupToProtocolCommand >> order [
+
+	^ 1000
+]
+
 { #category : 'execution' }
-ClyConvertMethodGroupToProtocolCommand >> prepareFullExecutionInContext: aToolContext [
+ClyConvertMethodGroupToProtocolCommand >> prepareFullExecution [
 
-	super prepareFullExecutionInContext: aToolContext.
-
-	protocol := StProtocolNameChooserPresenter requestProtocolNameConfiguring: [ :presenter | presenter concernedClass: aToolContext lastSelectedClass ]
+	super prepareFullExecution.
+	protocol := StProtocolNameChooserPresenter requestProtocolNameConfiguring: [ :presenter | presenter concernedClass: self context lastSelectedClass ]
 ]
 
 { #category : 'accessing' }

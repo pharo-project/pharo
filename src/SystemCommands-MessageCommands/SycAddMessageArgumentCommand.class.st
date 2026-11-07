@@ -9,7 +9,7 @@ Internal Representation and Key Implementation Points.
 "
 Class {
 	#name : 'SycAddMessageArgumentCommand',
-	#superclass : 'SycChangeMessageSignatureCommand',
+	#superclass : 'SycMessageCmCommand',
 	#instVars : [
 		'newSelector'
 	],
@@ -29,7 +29,7 @@ SycAddMessageArgumentCommand class >> canBeExecutedInContext: aToolContext [
 ]
 
 { #category : 'execution' }
-SycAddMessageArgumentCommand >> applyResultInContext: aToolContext [
+SycAddMessageArgumentCommand >> applyCommandResult [
 	"The refactoring was applied by the driver while executing the command."
 
 	
@@ -52,24 +52,26 @@ SycAddMessageArgumentCommand >> createRefactoring [
 ]
 
 { #category : 'execution' }
-SycAddMessageArgumentCommand >> execute [
+SycAddMessageArgumentCommand >> executeRefactoring [
 
 	ReAddParameterDriver new
 		scopes: refactoringScopes
-			model: model
-			addParameterToMethodSignature: originalMessage
-			in: originalMessage methodClass;
+		model: model
+		addParameterToMethodSignature: originalMessage
+		in: originalMessage methodClass;
 		runRefactoring
 ]
 
 { #category : 'accessing' }
-SycAddMessageArgumentCommand >> iconName [
-	^#smallAdd
+SycAddMessageArgumentCommand >> icon [
+
+	^ self iconNamed: #smallAdd
 ]
 
 { #category : 'accessing' }
 SycAddMessageArgumentCommand >> name [
-	^'Add argument'
+
+	^ 'Add argument'
 ]
 
 { #category : 'accessing' }
@@ -80,6 +82,12 @@ SycAddMessageArgumentCommand >> newSelector [
 { #category : 'accessing' }
 SycAddMessageArgumentCommand >> newSelector: anObject [
 	newSelector := anObject
+]
+
+{ #category : 'accessing' }
+SycAddMessageArgumentCommand >> order [
+
+	^ 30
 ]
 
 { #category : 'execution' }

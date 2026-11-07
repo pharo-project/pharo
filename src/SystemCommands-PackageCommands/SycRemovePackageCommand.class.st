@@ -8,16 +8,21 @@ Class {
 	#package : 'SystemCommands-PackageCommands'
 }
 
+{ #category : 'accessing' }
+SycRemovePackageCommand class >> iconName [
+	^ #delete
+]
+
 { #category : 'execution' }
-SycRemovePackageCommand >> applyResultInContext: aToolContext [
+SycRemovePackageCommand >> applyCommandResult [
 	"Update the browser's title and method editor  after removal of a package"
 
 	| browserTool |
 	
-	super applyResultInContext: aToolContext.
+	super applyCommandResult.
 
-	browserTool := aToolContext tool.
-	aToolContext tool navigationEnvironment: ClyNavigationEnvironment currentImage.
+	browserTool := self context tool.
+	self context tool navigationEnvironment: ClyNavigationEnvironment currentImage.
 	browserTool 
 		updateWindowTitle;
 		updateMethodEditorAfterPackageRemoval.
@@ -31,10 +36,10 @@ SycRemovePackageCommand >> description [
 ]
 
 { #category : 'execution' }
-SycRemovePackageCommand >> execute [
+SycRemovePackageCommand >> executeRefactoring [
 
 	self packages do: [ :each | each removeFromSystem ].
-	self packages: OrderedCollection new.
+	self packages: OrderedCollection new
 ]
 
 { #category : 'accessing' }
@@ -47,15 +52,20 @@ SycRemovePackageCommand >> name [
 	^'Remove'
 ]
 
+{ #category : 'accessing' }
+SycRemovePackageCommand >> order [
+
+	^ 10000
+]
+
 { #category : 'execution' }
-SycRemovePackageCommand >> prepareFullExecutionInContext: aToolContext [
+SycRemovePackageCommand >> prepareFullExecution [
 
 	| packagesWithClasses names answer |
-	super prepareFullExecutionInContext: aToolContext.
-	packagesWithClasses := packages reject: [ :each | each isEmpty].
+	super prepareFullExecution.
+	packagesWithClasses := self packages reject: [ :each | each isEmpty ].
 	packagesWithClasses ifNotEmpty: [
-		names := (packagesWithClasses collect: [:package | package name ]) joinUsing: ', '.
-		answer := self morphicUIManager confirm: (
-			'Are you sure you want to delete the selection(s)?', String cr, names, ' still contains classes.').
-		answer ifFalse: [ CmCommandAborted signal ]]
+			names := (packagesWithClasses collect: [ :package | package name ]) joinUsing: ', '.
+			answer := self morphicUIManager confirm: 'Are you sure you want to delete the selection(s)?' , String cr , names , ' still contains classes.'.
+			answer ifFalse: [ CmCommandAborted signal ] ]
 ]

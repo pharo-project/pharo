@@ -8,13 +8,6 @@ Class {
 	#package : 'SystemCommands-ClassCommands'
 }
 
-{ #category : 'activation' }
-SycAbstractAllInstVarAccessorsCommand class >> sourceCodeMenuActivation [
-
-	<classAnnotation>
-	^ SycSourceCodeMenuActivation byRootGroupItemFor: ClySourceCodeContext
-]
-
 { #category : 'accessing' }
 SycAbstractAllInstVarAccessorsCommand >> asRefactorings [
 
@@ -32,8 +25,21 @@ SycAbstractAllInstVarAccessorsCommand >> asRefactorings [
 ]
 
 { #category : 'accessing' }
+SycAbstractAllInstVarAccessorsCommand >> fullBrowserOrder [
+
+	^ 2.1
+]
+
+{ #category : 'accessing' }
 SycAbstractAllInstVarAccessorsCommand >> iconName [
 	^ #smallAdd
+]
+
+{ #category : 'testing' }
+SycAbstractAllInstVarAccessorsCommand >> isAvailableInMenuOf: aToolContext [
+
+	^ aToolContext isFullBrowserClassContext
+		or: [ aToolContext isSourceCodeContext ]
 ]
 
 { #category : 'testing' }
@@ -46,11 +52,17 @@ SycAbstractAllInstVarAccessorsCommand >> name [
 	^'Abstract instance variables'
 ]
 
-{ #category : 'testing' }
-SycAbstractAllInstVarAccessorsCommand >> prepareFullExecutionInContext: aToolContext [
-	super prepareFullExecutionInContext: aToolContext.
+{ #category : 'accessing' }
+SycAbstractAllInstVarAccessorsCommand >> order [
 
-	classes := classes collect: [:each | aToolContext currentMetaLevelOf: each].
+	^ 1000
+]
+
+{ #category : 'preparation' }
+SycAbstractAllInstVarAccessorsCommand >> prepareFullExecution [
+
+	super prepareFullExecution.
+	classes := classes collect: [ :each | self context currentMetaLevelOf: each ].
 	self selectVariables
 ]
 

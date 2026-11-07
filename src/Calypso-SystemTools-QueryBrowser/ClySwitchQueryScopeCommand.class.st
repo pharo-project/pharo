@@ -23,7 +23,7 @@ Class {
 ClySwitchQueryScopeCommand class >> queryBrowserMenuActivation [
 	<classAnnotation>
 
-	^CmdContextMenuActivation byItemOf: ClySwitchScopeMenuGroup for: ClyQueryBrowserContext
+	^ClyContextMenuActivation byItemOf: ClySwitchScopeMenuGroup for: ClyQueryBrowserContext
 ]
 
 { #category : 'activation' }
@@ -40,13 +40,10 @@ ClySwitchQueryScopeCommand class >> toScope: anEnvironmentScope in: aBrowser [
 		queryScope: anEnvironmentScope
 ]
 
-{ #category : 'activation - toolbar support' }
-ClySwitchQueryScopeCommand >> addToolbarItemInto: toolbarMorph using: aCommandActivator [
-
-	| compoBox |
-	compoBox := ClyScopeCompoBoxMorph for: browser.
-
-	toolbarMorph addNewItem: compoBox
+{ #category : 'toolbar' }
+ClySwitchQueryScopeCommand >> decoratesToolbarItem [
+	"The scope combo box is not decorated."
+	^ false
 ]
 
 { #category : 'accessing' }
@@ -56,23 +53,20 @@ ClySwitchQueryScopeCommand >> defaultToolbarItemName [
 ]
 
 { #category : 'execution' }
-ClySwitchQueryScopeCommand >> execute [
-	browser switchScopeTo: queryScope
-]
-
-{ #category : 'activation - context menu' }
-ClySwitchQueryScopeCommand >> fillContextMenu: aMenu using: aCommandActivator [
-	| concreteScopeCommand switchActivator |
-
-	browser allNavigationScopes do: [ :newScope |
-		concreteScopeCommand := self class toScope: newScope in: browser.
-		switchActivator := aCommandActivator newForCommand: concreteScopeCommand.
-		aMenu 	add: switchActivator menuItemName target: switchActivator selector: #executeCommand]
+ClySwitchQueryScopeCommand >> executeRefactoring [
+	self browser switchScopeTo: queryScope
 ]
 
 { #category : 'testing' }
 ClySwitchQueryScopeCommand >> isAppliedToBrowser [
-	^browser isQueryScopeActive: queryScope
+	^self browser isQueryScopeActive: queryScope
+]
+
+{ #category : 'menu' }
+ClySwitchQueryScopeCommand >> menuAlternatives [
+	"One switch command per navigation scope of the browser."
+	^ self browser allNavigationScopes collect: [ :newScope |
+		self class toScope: newScope in: self browser ]
 ]
 
 { #category : 'accessing' }
@@ -90,4 +84,9 @@ ClySwitchQueryScopeCommand >> queryScope [
 { #category : 'accessing' }
 ClySwitchQueryScopeCommand >> queryScope: anObject [
 	queryScope := anObject
+]
+
+{ #category : 'toolbar' }
+ClySwitchQueryScopeCommand >> toolbarItemFor: aCommandActivator [
+	^ ClyScopeCompoBoxMorph for: self browser
 ]

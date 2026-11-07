@@ -148,3 +148,22 @@ ReRenameClassDriver2 >> runRefactoring [
 		name: oldName;
 		openModal
 ]
+
+{ #category : 'actions' }
+ReRenameClassDriver2 >> previewFor: aString [
+	"Use a fresh driver so an obsolete preview cannot mutate the current model."
+
+	| previewDriver result |
+	previewDriver := self class new
+		oldName: oldName;
+		newName: aString;
+		scopes: scopes;
+		yourself.
+	result := ReClassRenamePreview new driver: previewDriver; yourself.
+	previewDriver createAndSetNewRefactoring.
+	result errorMessage: previewDriver checkApplicabilityPreconditions.
+	result errorMessage ifNil: [
+		result warning: previewDriver checkBehaviorPreconditions.
+		result compositeChange: previewDriver refactoring privateTransform ].
+	^ result
+]

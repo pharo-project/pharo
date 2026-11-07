@@ -13,19 +13,19 @@ Class {
 ClySwitchToFullHierarchyCommand class >> fullBrowserShortcutActivation [
 	<classAnnotation>
 
-	^CmdShortcutActivation by: $h meta for: ClyFullBrowserClassContext
+	^ClyShortcutActivation by: $h meta for: ClyFullBrowserClassContext
 ]
 
 { #category : 'execution' }
-ClySwitchToFullHierarchyCommand >> execute [
+ClySwitchToFullHierarchyCommand >> executeRefactoring [
 
-	browser switchToFullClassHierarchy
+	self browser switchToFullClassHierarchy
 ]
 
 { #category : 'testing' }
 ClySwitchToFullHierarchyCommand >> isAppliedToBrowser [
 
-	^browser showsFullClassHierarchy
+	^self browser showsFullClassHierarchy
 ]
 
 { #category : 'accessing' }

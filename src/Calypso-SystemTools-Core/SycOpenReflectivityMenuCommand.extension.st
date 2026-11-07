@@ -4,5 +4,5 @@ Extension { #name : 'SycOpenReflectivityMenuCommand' }
 SycOpenReflectivityMenuCommand class >> sourceCodeMenuActivation [
 	<classAnnotation>
 
-	^CmdContextMenuActivation byRootGroupItemOrder: 0.3 for: ClySourceCodeContext
+	^ClyContextMenuActivation byRootGroupItemOrder: 0.3 for: ClySourceCodeContext
 ]

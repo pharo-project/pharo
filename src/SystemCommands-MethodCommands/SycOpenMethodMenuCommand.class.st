@@ -19,6 +19,14 @@ SycOpenMethodMenuCommand >> cmCommandClass [
 	^ SycMethodCmCommand
 ]
 
+{ #category : 'context menu' }
+SycOpenMethodMenuCommand >> cmCommandClasses [
+
+	^ {
+		  SycMethodCmCommand.
+		  SycMessageCmCommand }
+]
+
 { #category : 'accessing' }
 SycOpenMethodMenuCommand >> description [
 
@@ -28,4 +36,15 @@ SycOpenMethodMenuCommand >> description [
 { #category : 'accessing' }
 SycOpenMethodMenuCommand >> name [
 	^'Refactorings'
+]
+
+{ #category : 'menu' }
+SycOpenMethodMenuCommand >> pureMenuCommands [
+	"The sorted commands of the method menu, placed in front of the activations."
+	^ (ClyCommandGroupBuilder buildSortedForAll: self cmCommandClasses context: self context) commands
+]
+
+{ #category : 'menu' }
+SycOpenMethodMenuCommand >> pureMenuPlacement [
+	^ #prepend
 ]

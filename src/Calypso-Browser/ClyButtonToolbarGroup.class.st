@@ -4,7 +4,7 @@ I allow to place all button based commands at the end of toolbar.
 "
 Class {
 	#name : 'ClyButtonToolbarGroup',
-	#superclass : 'CmdMenuGroup',
+	#superclass : 'ClyToolbarGroup',
 	#category : 'Calypso-Browser-Toolbar',
 	#package : 'Calypso-Browser',
 	#tag : 'Toolbar'

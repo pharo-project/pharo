@@ -20,15 +20,15 @@ ClySwitchToPackagesCommand >> description [
 ]
 
 { #category : 'execution' }
-ClySwitchToPackagesCommand >> execute [
+ClySwitchToPackagesCommand >> executeRefactoring [
 
-	^ browser switchToPackages
+	^ self browser switchToPackages
 ]
 
 { #category : 'testing' }
 ClySwitchToPackagesCommand >> isAppliedToBrowser [
 
-	^ (browser packageView showsItemsFromQuery: ClyAllPackagesQuery) and: [ browser isScopedModeEnabled not ]
+	^ (self browser packageView showsItemsFromQuery: ClyAllPackagesQuery) and: [ self browser isScopedModeEnabled not ]
 ]
 
 { #category : 'accessing' }

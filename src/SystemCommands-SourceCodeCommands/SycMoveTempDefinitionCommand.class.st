@@ -10,8 +10,7 @@ Class {
 	#name : 'SycMoveTempDefinitionCommand',
 	#superclass : 'SycSourceCodeRefactoringCommand',
 	#instVars : [
-		'newName',
-		'toolContext'
+		'newName'
 	],
 	#category : 'SystemCommands-SourceCodeCommands',
 	#package : 'SystemCommands-SourceCodeCommands'
@@ -25,10 +24,10 @@ SycMoveTempDefinitionCommand class >> canBeExecutedInContext: aSourceCodeContext
 ]
 
 { #category : 'execution' }
-SycMoveTempDefinitionCommand >> applyResultInContext: aSourceCodeContext [
+SycMoveTempDefinitionCommand >> applyCommandResult [
 
-	super applyResultInContext: aSourceCodeContext.
-	aSourceCodeContext showVariableNamed: newName
+	super applyCommandResult.
+	self context showVariableNamed: newName
 ]
 
 { #category : 'accessing' }
@@ -38,12 +37,12 @@ SycMoveTempDefinitionCommand >> description [
 ]
 
 { #category : 'execution' }
-SycMoveTempDefinitionCommand >> execute [
+SycMoveTempDefinitionCommand >> executeRefactoring [
 
 	^ (ReMoveTemporaryDefinitionDriver new
-		   sourceNode: sourceNode;
-		   method: method;
-		   scopes: toolContext refactoringScopes;
+		   sourceNode: self sourceNode;
+		   method: self method;
+		   scopes: refactoringScopes;
 		   yourself) runRefactoring
 ]
 
@@ -59,9 +58,8 @@ SycMoveTempDefinitionCommand >> name [
 	^'(R) Move temp. definition'
 ]
 
-{ #category : 'execution' }
-SycMoveTempDefinitionCommand >> prepareFullExecutionInContext: aToolContext [
+{ #category : 'accessing' }
+SycMoveTempDefinitionCommand >> order [
 
-	super prepareFullExecutionInContext: aToolContext.
-	toolContext := aToolContext
+	^ 1.2
 ]

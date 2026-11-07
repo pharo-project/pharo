@@ -1,6 +1,6 @@
 Class {
 	#name : 'ClySUnitMethodMenuGroup',
-	#superclass : 'CmdMenuGroup',
+	#superclass : 'ClyMenuGroup',
 	#category : 'Calypso-SystemPlugins-SUnit-Browser-MenuGroups',
 	#package : 'Calypso-SystemPlugins-SUnit-Browser',
 	#tag : 'MenuGroups'

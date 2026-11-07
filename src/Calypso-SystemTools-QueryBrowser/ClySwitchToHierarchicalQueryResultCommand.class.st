@@ -12,13 +12,13 @@ Class {
 }
 
 { #category : 'execution' }
-ClySwitchToHierarchicalQueryResultCommand >> execute [
-	browser switchToHierarchicalResult
+ClySwitchToHierarchicalQueryResultCommand >> executeRefactoring [
+	self browser switchToHierarchicalResult
 ]
 
 { #category : 'testing' }
 ClySwitchToHierarchicalQueryResultCommand >> isAppliedToBrowser [
-	^browser showsFlatResult not
+	^self browser showsFlatResult not
 ]
 
 { #category : 'accessing' }

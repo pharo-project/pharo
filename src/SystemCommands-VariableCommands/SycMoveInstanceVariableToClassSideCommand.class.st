@@ -8,30 +8,23 @@ Class {
 	#package : 'SystemCommands-VariableCommands'
 }
 
-{ #category : 'activation' }
-SycMoveInstanceVariableToClassSideCommand class >> fullBrowserMenuActivation [
-
-	<classAnnotation>
-	^ CmdContextMenuActivation byRootGroupItemFor: ClyFullBrowserVariableContext
-]
-
-{ #category : 'activation' }
-SycMoveInstanceVariableToClassSideCommand class >> sourceCodeMenuActivation [
-	<classAnnotation>
-
-	^SycSourceCodeMenuActivation byRootGroupItemOrder: 1.6 for: ClySourceCodeContext
-]
-
 { #category : 'execution' }
-SycMoveInstanceVariableToClassSideCommand >> execute [
+SycMoveInstanceVariableToClassSideCommand >> executeRefactoring [
 
 	^ ((ReMoveVariablesToClassSideDriver newApplication: self application) scopes: refactoringScopes variables: variables)
-		  runRefactoring
+		runRefactoring
 ]
 
 { #category : 'accessing' }
-SycMoveInstanceVariableToClassSideCommand >> iconName [
-	^ #smallRedo
+SycMoveInstanceVariableToClassSideCommand >> fullBrowserOrder [
+
+	^ 1000
+]
+
+{ #category : 'accessing' }
+SycMoveInstanceVariableToClassSideCommand >> icon [
+
+	^ self iconNamed: #smallRedo
 ]
 
 { #category : 'accessing' }
@@ -40,10 +33,8 @@ SycMoveInstanceVariableToClassSideCommand >> name [
 	^ '(T) Move to class side'
 ]
 
-{ #category : 'execution' }
-SycMoveInstanceVariableToClassSideCommand >> prepareFullExecutionInContext: aToolContext [
+{ #category : 'accessing' }
+SycMoveInstanceVariableToClassSideCommand >> order [
 
-	super prepareFullExecutionInContext: aToolContext.
-	toolContext := aToolContext.
-
+	^ 1.6
 ]

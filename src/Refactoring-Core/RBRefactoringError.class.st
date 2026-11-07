@@ -35,3 +35,10 @@ RBRefactoringError >> failedPreconditions: aCollection [
 	"aCollection should contain objects of kind RBNewAbstractCondition"
 	failedPreconditions := aCollection
 ]
+
+{ #category : 'notification' }
+RBRefactoringError >> notifyUserOfCommand: aCommand [
+	"This is part of Commander2. For now I live in refactorings because the dependencies are not yet clean. In the future Commander2 should depend on refactorings and this method should be an extension."
+
+	InformativeNotification signal: messageText
+]

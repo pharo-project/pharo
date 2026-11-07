@@ -33,24 +33,10 @@ ClyShowMessageSenderCommand class >> methodBrowserToolbarActivation [
 ]
 
 { #category : 'activation' }
-ClyShowMessageSenderCommand class >> methodMenuActivation [
-	<classAnnotation>
-
-	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup for: ClyMethod asCalypsoItemContext
-]
-
-{ #category : 'activation' }
 ClyShowMessageSenderCommand class >> methodShortcutActivation [
 	<classAnnotation>
 
-	^CmdShortcutActivation by: $n meta for: ClyMethod asCalypsoItemContext
-]
-
-{ #category : 'activation' }
-ClyShowMessageSenderCommand class >> sourceCodeMenuActivation [
-	<classAnnotation>
-
-	^SycSourceCodeMenuActivation byItemOf: ClyQueryMenuGroup for: ClySourceCodeContext
+	^ClyShortcutActivation by: $n meta for: ClyMethod asCalypsoItemContext
 ]
 
 { #category : 'activation' }
@@ -81,11 +67,9 @@ ClyShowMessageSenderCommand >> description [
 ]
 
 { #category : 'execution' }
-ClyShowMessageSenderCommand >> execute [
+ClyShowMessageSenderCommand >> executeRefactoring [
 
-	| selectors |
-	selectors := messages collect: [ :each | each selector ].
-	(Smalltalk tools toolNamed: #messageList) browseSendersOfAll: selectors
+	(Smalltalk tools toolNamed: #messageList) browseSendersOfAll: (messages collect: [ :message | message selector ])
 ]
 
 { #category : 'accessing' }
@@ -94,13 +78,25 @@ ClyShowMessageSenderCommand >> iconName [
 ]
 
 { #category : 'accessing' }
+ClyShowMessageSenderCommand >> menuGroup [
+
+	^ ClyQueryMenuGroup
+]
+
+{ #category : 'accessing' }
 ClyShowMessageSenderCommand >> name [
 	^'Senders'
 ]
 
-{ #category : 'execution' }
-ClyShowMessageSenderCommand >> prepareFullExecutionInContext: aToolContext [
-	super prepareFullExecutionInContext: aToolContext.
+{ #category : 'accessing' }
+ClyShowMessageSenderCommand >> order [
 
-	browser := aToolContext browser
+	^ 1000
+]
+
+{ #category : 'execution' }
+ClyShowMessageSenderCommand >> prepareFullExecution [
+
+	super prepareFullExecution.
+	browser := self context browser
 ]

@@ -30,7 +30,7 @@ ClyMoveClassToGroupCommand class >> browserContextMenuActivation [
 ClyMoveClassToGroupCommand class >> fullBrowserDragAndDropActivation [
 	<classAnnotation>
 
-	^CmdDragAndDropActivation
+	^ClyDragAndDropActivation
 		for: ClyClass asCalypsoItemContext
 		toDropIn: Package asCalypsoItemContext
 ]
@@ -39,7 +39,7 @@ ClyMoveClassToGroupCommand class >> fullBrowserDragAndDropActivation [
 ClyMoveClassToGroupCommand class >> fullBrowserDragAndDropActivation2 [
 	<classAnnotation>
 
-	^CmdDragAndDropActivation
+	^ClyDragAndDropActivation
 		for: ClyClass asCalypsoItemContext
 		toDropIn: ClyTaggedClassGroup asCalypsoItemContext
 ]
@@ -48,7 +48,7 @@ ClyMoveClassToGroupCommand class >> fullBrowserDragAndDropActivation2 [
 ClyMoveClassToGroupCommand class >> fullBrowserDragAndDropActivation3 [
 	<classAnnotation>
 
-	^CmdDragAndDropActivation
+	^ClyDragAndDropActivation
 		for: ClyClass asCalypsoItemContext
 		toDropIn: ClyNoTagClassGroup asCalypsoItemContext
 ]
@@ -57,7 +57,7 @@ ClyMoveClassToGroupCommand class >> fullBrowserDragAndDropActivation3 [
 ClyMoveClassToGroupCommand class >> fullBrowserShortcutActivation [
 	<classAnnotation>
 
-	^CmdShortcutActivation by: $m meta, $c meta for: ClyFullBrowserClassContext
+	^ClyShortcutActivation by: $m meta, $c meta for: ClyFullBrowserClassContext
 ]
 
 { #category : 'accessing' }
@@ -71,7 +71,7 @@ ClyMoveClassToGroupCommand >> classGroup: anObject [
 ]
 
 { #category : 'execution' }
-ClyMoveClassToGroupCommand >> execute [
+ClyMoveClassToGroupCommand >> executeRefactoring [
 
 	classes do: [ :class | classGroup addClass: class ]
 ]
@@ -86,18 +86,11 @@ ClyMoveClassToGroupCommand >> name [
 	^'Move to package'
 ]
 
-{ #category : 'execution' }
-ClyMoveClassToGroupCommand >> prepareExecutionInDropContext: aToolContext [
-	super prepareExecutionInDropContext: aToolContext.
-	classGroup := aToolContext lastSelectedClassGroup
-	"this command can be also activated on package which is polimorphic to class group.
-	If given context is package context then it will return package as class group"
-]
-
-{ #category : 'execution' }
-ClyMoveClassToGroupCommand >> prepareFullExecutionInContext: aToolContext [
-	super prepareFullExecutionInContext: aToolContext.
+{ #category : 'executing' }
+ClyMoveClassToGroupCommand >> prepareFullExecution [
+	super prepareFullExecution.
 	"class group could be package. In this activation it is only make sense to request user for package"
-
-	classGroup := aToolContext requestSinglePackage: 'Choose package'
+	classGroup := self dropContext
+		ifNil: [ self context requestSinglePackage: 'Choose package' ]
+		ifNotNil: [ :drop | drop lastSelectedClassGroup ]
 ]

@@ -18,17 +18,10 @@ ClyCommitPackageCommand class >> canBeExecutedInContext: aToolContext [
 ]
 
 { #category : 'activation' }
-ClyCommitPackageCommand class >> fullBrowserMenuActivation [
-	<classAnnotation>
-
-	^CmdContextMenuActivation byRootGroupItemOrder: 10000 for: ClyFullBrowserPackageContext
-]
-
-{ #category : 'activation' }
 ClyCommitPackageCommand class >> fullBrowserShortcutActivation [
 	<classAnnotation>
 
-	^CmdShortcutActivation by: $s meta for: ClyFullBrowserGlobalContext
+	^ClyShortcutActivation by: $s meta for: ClyFullBrowserGlobalContext
 ]
 
 { #category : 'accessing' }
@@ -38,32 +31,20 @@ ClyCommitPackageCommand >> description [
 ]
 
 { #category : 'execution' }
-ClyCommitPackageCommand >> execute [
+ClyCommitPackageCommand >> executeRefactoring [
 
 	| repos targetRepo |
 	packages ifEmpty: [ ^ IceTipRepositoriesBrowser ensureIsOpen ].
-	repos := IceRepository registry select: [ :repo |
-		         packages anySatisfy: [ :package |
-			         repo includesPackageNamed: package name ] ].
-	repos ifEmpty: [
-		^ InformativeNotification signal: 'Selected packages are not managed by Iceberg' ].
+	repos := IceRepository registry select: [ :repo | packages anySatisfy: [ :package | repo includesPackageNamed: package name ] ].
+	repos ifEmpty: [ ^ InformativeNotification signal: 'Selected packages are not managed by Iceberg' ].
 	targetRepo := repos size = 1
 		              ifTrue: [ repos first ]
-		              ifFalse: [
-			              self morphicUIManager
-				              chooseFrom: (repos collect: [ :each | each name ])
-				              values: repos
-				              title: 'Choose repository' ].
+		              ifFalse: [ self morphicUIManager chooseFrom: (repos collect: [ :each | each name ]) values: repos title: 'Choose repository' ].
 	targetRepo ifNil: [ ^ self ].
-	(targetRepo isMissing or: [
-		 targetRepo isCodeMissing or: [
-			 targetRepo workingCopy isDetached or: [
-				 targetRepo head isDetached or: [
-					 targetRepo workingCopy project isUnborn ] ] ] ]) ifTrue: [
-		self morphicUIManager
-			alert:
-				'The ' , targetRepo name
-				, ' repository is not operational to commit.
+	(targetRepo isMissing or: [ targetRepo isCodeMissing or: [ targetRepo workingCopy isDetached or: [ targetRepo head isDetached or: [ targetRepo workingCopy project isUnborn ] ] ] ]) ifTrue: [
+			self morphicUIManager
+				alert: 'The ' , targetRepo name , ' repository is not operational to commit.
+
 Causes can be:
 - The local repository is missing
 - The code directory is missing
@@ -71,8 +52,8 @@ Causes can be:
 - Metadatas are missing.
 
 You can fix this problem using the Iceberg tool.'
-			title: 'Error'.
-		^ self ].
+				title: 'Error'.
+			^ self ].
 	(IceTipCommitBrowser onRepository: targetRepo) open
 ]
 
@@ -84,4 +65,10 @@ ClyCommitPackageCommand >> iconName [
 { #category : 'accessing' }
 ClyCommitPackageCommand >> name [
 	^'Commit'
+]
+
+{ #category : 'accessing' }
+ClyCommitPackageCommand >> order [
+
+	^ 10000
 ]

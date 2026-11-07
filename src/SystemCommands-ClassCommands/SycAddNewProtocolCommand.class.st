@@ -9,7 +9,7 @@ Internal Representation and Key Implementation Points.
 "
 Class {
 	#name : 'SycAddNewProtocolCommand',
-	#superclass : 'ClyCommand',
+	#superclass : 'SycClassCommand',
 	#instVars : [
 		'targetClass',
 		'protocol'
@@ -19,13 +19,13 @@ Class {
 }
 
 { #category : 'execution' }
-SycAddNewProtocolCommand >> applyResultInContext: aToolContext [
-	super applyResultInContext: aToolContext.
-	aToolContext showProtocol: protocol
+SycAddNewProtocolCommand >> applyCommandResult [
+	super applyCommandResult.
+	self context showProtocol: protocol
 ]
 
 { #category : 'execution' }
-SycAddNewProtocolCommand >> execute [
+SycAddNewProtocolCommand >> executeRefactoring [
 
 	targetClass addProtocol: protocol
 ]
@@ -36,21 +36,31 @@ SycAddNewProtocolCommand >> iconName [
 	^ #add
 ]
 
+{ #category : 'testing' }
+SycAddNewProtocolCommand >> isAvailableInMenuOf: aToolContext [
+
+	^ aToolContext isFullBrowserMethodGroupContext
+]
+
 { #category : 'accessing' }
 SycAddNewProtocolCommand >> name [
 
 	^ 'New protocol'
 ]
 
+{ #category : 'accessing' }
+SycAddNewProtocolCommand >> order [
+
+	^ 2
+]
+
 { #category : 'execution' }
-SycAddNewProtocolCommand >> prepareFullExecutionInContext: aToolContext [
+SycAddNewProtocolCommand >> prepareFullExecution [
 
-	super prepareFullExecutionInContext: aToolContext.
-
-	protocol := StProtocolNameChooserPresenter requestProtocolNameConfiguring: [ :presenter | presenter concernedClass: aToolContext lastSelectedClass ].
-
-	targetClass := self requestClassInContext: aToolContext.
-	targetClass := aToolContext currentMetaLevelOf: targetClass
+	super prepareFullExecution.
+	protocol := StProtocolNameChooserPresenter requestProtocolNameConfiguring: [ :presenter | presenter concernedClass: self context lastSelectedClass ].
+	targetClass := self requestClassInContext: self context.
+	targetClass := self context currentMetaLevelOf: targetClass
 ]
 
 { #category : 'accessing' }
@@ -66,11 +76,11 @@ SycAddNewProtocolCommand >> protocol: protocolName [
 { #category : 'execution' }
 SycAddNewProtocolCommand >> requestClassInContext: aToolContext [
 
-	| classes |
-	classes := aToolContext selectedClasses.
-	classes size = 1 ifTrue: [ ^ classes first ].
+	| collectionOfClasses |
+	collectionOfClasses := aToolContext selectedClasses.
+	collectionOfClasses size = 1 ifTrue: [ ^ collectionOfClasses first ].
 
-	^ aToolContext requestSingleClass: 'In what class you want a protocol?' from: classes
+	^ aToolContext requestSingleClass: 'In what class you want a protocol?' from: collectionOfClasses
 ]
 
 { #category : 'accessing' }

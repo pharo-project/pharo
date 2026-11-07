@@ -22,15 +22,21 @@ SycGenerateAllInstVarAccessorsCommand >> asRefactorings [
 	^ refactorings
 ]
 
-{ #category : 'execution' }
-SycGenerateAllInstVarAccessorsCommand >> execute [
+{ #category : 'accessing' }
+SycGenerateAllInstVarAccessorsCommand >> fullBrowserOrder [
 
-	self executeRefactorings
+	^ 2.1
 ]
 
 { #category : 'accessing' }
 SycGenerateAllInstVarAccessorsCommand >> iconName [
 	^ #smallAdd
+]
+
+{ #category : 'testing' }
+SycGenerateAllInstVarAccessorsCommand >> isAvailableInMenuOf: aToolContext [
+
+	^ aToolContext isFullBrowserClassContext
 ]
 
 { #category : 'testing' }
@@ -43,9 +49,15 @@ SycGenerateAllInstVarAccessorsCommand >> name [
 	^'Generate accessors'
 ]
 
-{ #category : 'execution' }
-SycGenerateAllInstVarAccessorsCommand >> prepareFullExecutionInContext: aToolContext [
+{ #category : 'accessing' }
+SycGenerateAllInstVarAccessorsCommand >> order [
 
-	super prepareFullExecutionInContext: aToolContext.
-	classes := classes collect: [:each | aToolContext currentMetaLevelOf: each]
+	^ 2.1
+]
+
+{ #category : 'preparation' }
+SycGenerateAllInstVarAccessorsCommand >> prepareFullExecution [
+
+	super prepareFullExecution.
+	classes := classes collect: [ :class | self context currentMetaLevelOf: class ]
 ]

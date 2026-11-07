@@ -125,9 +125,7 @@ ClyProtocolEditorMorph >> printProtocolOrPackage [
 { #category : 'operations' }
 ClyProtocolEditorMorph >> requestChangeBy: aBlock [
 
-	aBlock
-		on: CmCommandAborted
-		do: [ :err |  ].
+	aBlock on: CmCommandAborted do: [ :err ].
 
 	self update
 ]

@@ -4,16 +4,15 @@ I am a command to inspect given variable.
 "
 Class {
 	#name : 'SycInspectVariableCommand',
-	#superclass : 'SycVariableCommand',
+	#superclass : 'SycMethodGroupExtraCmCommand',
 	#category : 'SystemCommands-VariableCommands',
 	#package : 'SystemCommands-VariableCommands'
 }
 
-{ #category : 'activation' }
-SycInspectVariableCommand class >> browserContextMenuActivation [
+{ #category : 'testing' }
+SycInspectVariableCommand >> canBeExecuted [
 
-	<classAnnotation>
-	^ CmdContextMenuActivation byItemOf: CmdExtraMenuGroup for: ClyVariableMethodGroup asCalypsoItemContext
+	^ context isAboutBrowserItemType: ClyVariableMethodGroup
 ]
 
 { #category : 'accessing' }
@@ -23,9 +22,15 @@ SycInspectVariableCommand >> description [
 ]
 
 { #category : 'execution' }
-SycInspectVariableCommand >> execute [
+SycInspectVariableCommand >> executeRefactoring [
 
-	variables last openInspector 
+	self context selectedVariables last openInspector
+]
+
+{ #category : 'accessing' }
+SycInspectVariableCommand >> icon [
+
+	^ self iconNamed: #inspect
 ]
 
 { #category : 'accessing' }
@@ -36,5 +41,12 @@ SycInspectVariableCommand >> iconName [
 
 { #category : 'accessing' }
 SycInspectVariableCommand >> name [
-	^'Inspect variable'
+
+	^ 'Inspect variable'
+]
+
+{ #category : 'accessing' }
+SycInspectVariableCommand >> order [
+
+	^ 1000
 ]

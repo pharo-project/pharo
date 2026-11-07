@@ -1,10 +1,36 @@
 "
-I should be used as singleton which provides sets of rules for checking classes and methods.
+I provide the sets of rules used to check classes, methods, packages and AST nodes. The Quality Assistant and `ReCriticEngine` ask me for the rules to run on an entity.
 
-Use:
+## Responsibility:
 
-ReRuleManager uniqueInstance classRules ""to get rules for checking classes""
-ReRuleManager uniqueInstance methodRules ""to get rules for checking methods""
+- Know the visible rule classes (`visibleRuleClasses`) and instantiate the enabled ones.
+- Keep one manager per package (`managerFor:`), and the default one, so that the rules are not created again for each check.
+- Store the user choices of the settings: the rules profile and the enabled rule groups.
+
+## Collaborators: 
+
+- `ReAbstractRule`: the rules I provide.
+- `ReCriticEngine` and the Quality Assistant: ask me for the rules of an entity.
+- The settings browser: shows the rule groups (by `groupSelector`) to enable or disable.
+
+## Public API and Key Messages
+
+- `ReRuleManager uniqueInstance` (or `ReRuleManager default`) answers the default manager.
+- `classRules`, `methodRules`, `packageRules`, `nodeRules` and `allRules` answer its rules.
+- `ReRuleManager defaultRules` answers new instances of the enabled visible rules.
+- `ReRuleManager reset` empties my cache.
+
+```
+ReRuleManager uniqueInstance classRules.
+ReRuleManager uniqueInstance methodRules
+```
+
+My cache is reset automatically when a rule class is added or removed. Since a new rule is usually not visible until it is complete (for example before `checksMethod` is defined), execute `ReRuleManager reset` once it is ready.
+
+## Internal Representation
+
+- `rules`: the rules of a manager.
+- class side `default` and `managers`: the default manager and the managers per package.
 "
 Class {
 	#name : 'ReRuleManager',

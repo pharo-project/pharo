@@ -14,12 +14,6 @@ ClyBreakOnVariableWriteCommand class >> accessStrategy [
 	^ #write
 ]
 
-{ #category : 'testing' }
-ClyBreakOnVariableWriteCommand class >> isAbstract [
-
-	^ false
-]
-
 { #category : 'accessing' }
 ClyBreakOnVariableWriteCommand >> name [
 

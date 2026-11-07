@@ -9,10 +9,9 @@ Class {
 	#package : 'Commander-Activators-TextView'
 }
 
-{ #category : 'activation' }
+{ #category : 'annotations' }
 CmdOpenTextLeftBarMenuCommand class >> contextClickActivation [
 	<classAnnotation>
-
 	^CmdTextLeftBarClickActivation byYellowButtonFor: CmdToolContext
 ]
 

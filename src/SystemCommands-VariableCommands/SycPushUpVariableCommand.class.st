@@ -8,15 +8,8 @@ Class {
 	#package : 'SystemCommands-VariableCommands'
 }
 
-{ #category : 'activation' }
-SycPushUpVariableCommand class >> sourceCodeMenuActivation [
-	<classAnnotation>
-
-	^SycSourceCodeMenuActivation byRootGroupItemOrder: 1.3 for: ClySourceCodeContext
-]
-
 { #category : 'accessing' }
-SycPushUpVariableCommand >> executeRefactorings [
+SycPushUpVariableCommand >> executeRefactoring [
 
 	^ ((RePushUpVariableDriver newApplication: self application)
 		   scopes: refactoringScopes
@@ -24,12 +17,26 @@ SycPushUpVariableCommand >> executeRefactorings [
 		   to: variables first definingClass superclass) runRefactoring
 ]
 
-{ #category : 'execution' }
-SycPushUpVariableCommand >> iconName [
-	^ #up
+{ #category : 'accessing' }
+SycPushUpVariableCommand >> fullBrowserOrder [
+
+	^ 2000
+]
+
+{ #category : 'accessing' }
+SycPushUpVariableCommand >> icon [
+
+	^ self iconNamed: #up
 ]
 
 { #category : 'accessing' }
 SycPushUpVariableCommand >> name [
-	^'(R) Push up'
+
+	^ '(R) Push up'
+]
+
+{ #category : 'accessing' }
+SycPushUpVariableCommand >> order [
+
+	^ 1.3
 ]

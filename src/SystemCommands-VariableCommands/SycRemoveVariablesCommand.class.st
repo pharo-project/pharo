@@ -10,13 +10,6 @@ Class {
 	#package : 'SystemCommands-VariableCommands'
 }
 
-{ #category : 'activation' }
-SycRemoveVariablesCommand class >> sourceCodeMenuActivation [
-	<classAnnotation>
-
-	^SycSourceCodeMenuActivation byRootGroupItemOrder: 1.5 for: ClySourceCodeContext
-]
-
 { #category : 'accessing' }
 SycRemoveVariablesCommand >> description [
 
@@ -24,7 +17,7 @@ SycRemoveVariablesCommand >> description [
 ]
 
 { #category : 'execution' }
-SycRemoveVariablesCommand >> execute [
+SycRemoveVariablesCommand >> executeRefactoring [
 	"Clearly from the UI we do not accept variables mixed from different classes and kinds"
 	
 	variables first isClassVariable
@@ -41,6 +34,12 @@ SycRemoveVariablesCommand >> execute [
 ]
 
 { #category : 'accessing' }
+SycRemoveVariablesCommand >> fullBrowserOrder [
+
+	^ 10000
+]
+
+{ #category : 'accessing' }
 SycRemoveVariablesCommand >> iconName [
 	^#remove
 ]
@@ -54,4 +53,10 @@ SycRemoveVariablesCommand >> name [
 	Or it means that this user feedback should be expressed differently."
 	
 	^ 'Remove'
+]
+
+{ #category : 'accessing' }
+SycRemoveVariablesCommand >> order [
+
+	^ 1.5
 ]

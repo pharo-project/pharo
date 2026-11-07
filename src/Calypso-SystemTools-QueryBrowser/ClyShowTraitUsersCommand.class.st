@@ -12,13 +12,6 @@ Class {
 	#tag : 'Commands-Queries'
 }
 
-{ #category : 'activation' }
-ClyShowTraitUsersCommand class >> fullBrowserMenuActivation [
-	<classAnnotation>
-
-	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup for: ClyFullBrowserClassContext
-]
-
 { #category : 'accessing' }
 ClyShowTraitUsersCommand >> browser [
 
@@ -32,9 +25,21 @@ ClyShowTraitUsersCommand >> browser: anObject [
 ]
 
 { #category : 'execution' }
-ClyShowTraitUsersCommand >> execute [
+ClyShowTraitUsersCommand >> executeRefactoring [
 
 	classes first isTrait ifTrue: [ (Smalltalk tools toolNamed: #messageList) browseUsersOfTrait: classes first ]
+]
+
+{ #category : 'testing' }
+ClyShowTraitUsersCommand >> isAvailableInMenuOf: aToolContext [
+
+	^ aToolContext isFullBrowserClassContext
+]
+
+{ #category : 'accessing' }
+ClyShowTraitUsersCommand >> menuGroup [
+
+	^ ClyQueryMenuGroup
 ]
 
 { #category : 'accessing' }
@@ -42,9 +47,15 @@ ClyShowTraitUsersCommand >> name [
 	^'Show trait users'
 ]
 
-{ #category : 'execution' }
-ClyShowTraitUsersCommand >> prepareFullExecutionInContext: aToolContext [
-	super prepareFullExecutionInContext: aToolContext.
+{ #category : 'accessing' }
+ClyShowTraitUsersCommand >> order [
 
-	browser := aToolContext browser
+	^ 1000
+]
+
+{ #category : 'execution' }
+ClyShowTraitUsersCommand >> prepareFullExecution [
+
+	super prepareFullExecution.
+	browser := self context browser
 ]

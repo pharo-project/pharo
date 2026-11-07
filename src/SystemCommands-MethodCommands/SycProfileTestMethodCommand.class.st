@@ -15,12 +15,11 @@ Class {
 }
 
 { #category : 'execution' }
-SycProfileTestMethodCommand >> execute [
+SycProfileTestMethodCommand >> executeRefactoring [
 
-	methods 
-		select: [ : cm | cm isTestMethod ]
-		thenDo: [ : cm | self profileMethod: cm ].
-
+	methods
+		select: [ :cm | cm isTestMethod ]
+		thenDo: [ :cm | self profileMethod: cm ]
 ]
 
 { #category : 'accessing' }
@@ -41,6 +40,12 @@ SycProfileTestMethodCommand >> newProfilerPresenter [
 	^ self profilerPresenterClass new
 ]
 
+{ #category : 'accessing' }
+SycProfileTestMethodCommand >> order [
+
+	^ 1000
+]
+
 { #category : 'execution' }
 SycProfileTestMethodCommand >> profileMethod: aCompiledMethod [ 
 	
@@ -59,18 +64,6 @@ SycProfileTestMethodCommand >> profilerPresenterClass [
 	^ Smalltalk
 		at: #StProfilerPresenter
 		ifAbsent: [ self error: 'Profiler not installed' ]
-]
-
-{ #category : 'initialization' }
-SycProfileTestMethodCommand >> setUpModelFromContext: aContext [
-
-	| browser |
-	
-	browser := aContext browser.
-	browser classSelection isMultipleSelected
-		ifTrue: [ ^ CmCommandAborted signal ].
-
-
 ]
 
 { #category : 'execution' }

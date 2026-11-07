@@ -4,12 +4,12 @@ Extension { #name : 'SycOpenDebuggingMenuCommand' }
 SycOpenDebuggingMenuCommand class >> methodEditorShortcutActivation [
 	<classAnnotation>
 
-	^CmdShortcutActivation by: $g meta shift for: ClySourceCodeContext
+	^ClyShortcutActivation by: $g meta shift for: ClySourceCodeContext
 ]
 
 { #category : '*Calypso-SystemTools-Core' }
 SycOpenDebuggingMenuCommand class >> sourceCodeMenuActivation [
 	<classAnnotation>
 
-	^CmdContextMenuActivation byRootGroupItemOrder: 0.2 for: ClySourceCodeContext
+	^ClyContextMenuActivation byRootGroupItemOrder: 0.2 for: ClySourceCodeContext
 ]

@@ -12,7 +12,7 @@ Class {
 SycOpenDebuggingPointsInMethodMenuCommand class >> methodContextMenuActivation [
 
 	<classAnnotation>
-	^ CmdContextMenuActivation
+	^ ClyContextMenuActivation
 		  byRootGroupItemOrder: 1.4
 		  for: ClyMethod asCalypsoItemContext 
 ]
@@ -39,4 +39,10 @@ SycOpenDebuggingPointsInMethodMenuCommand >> iconName [
 SycOpenDebuggingPointsInMethodMenuCommand >> name [
 
 	^ 'Debug Points' 
+]
+
+{ #category : 'menu' }
+SycOpenDebuggingPointsInMethodMenuCommand >> pureMenuCommands [
+	"Its sub-menu holds debugging points only: no pure commands."
+	^ #()
 ]

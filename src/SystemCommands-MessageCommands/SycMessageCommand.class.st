@@ -35,11 +35,6 @@ SycMessageCommand class >> forMethods: methods [
 	^self for: (methods collect: [:each | SycMessageDescription ofMethod: each])
 ]
 
-{ #category : 'testing' }
-SycMessageCommand class >> isAbstract [
-	^self = SycMessageCommand
-]
-
 { #category : 'accessing' }
 SycMessageCommand >> messages [
 	^ messages
@@ -50,11 +45,18 @@ SycMessageCommand >> messages: anObject [
 	messages := anObject
 ]
 
-{ #category : 'execution' }
-SycMessageCommand >> prepareFullExecutionInContext: aToolContext [
-	super prepareFullExecutionInContext: aToolContext.
+{ #category : 'accessing' }
+SycMessageCommand >> orderInContext: aToolContext [
 
-	messages := aToolContext selectedMessages
+	^ aToolContext isMethodSourceContext
+		ifTrue: [ 1.2 ]
+		ifFalse: [ self order ]
+]
+
+{ #category : 'preparation' }
+SycMessageCommand >> prepareFullExecution [
+
+	messages := self context selectedMessages
 ]
 
 { #category : 'accessing' }

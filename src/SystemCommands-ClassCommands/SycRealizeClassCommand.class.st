@@ -14,10 +14,16 @@ SycRealizeClassCommand >> asRefactorings [
 	^classes collect: [ :each | self refactoringClass className: each name]
 ]
 
-{ #category : 'execution' }
-SycRealizeClassCommand >> execute [
+{ #category : 'accessing' }
+SycRealizeClassCommand >> fullBrowserOrder [
 
-	self executeRefactorings
+	^ 2.1
+]
+
+{ #category : 'testing' }
+SycRealizeClassCommand >> isAvailableInMenuOf: aToolContext [
+
+	^ aToolContext isFullBrowserClassContext
 ]
 
 { #category : 'testing' }
@@ -30,6 +36,12 @@ SycRealizeClassCommand >> name [
 	"Make sure that the user knows that this is a transformation by adding (T) in front of the menu item name."
 
 	^ self refactoringClass menuItemString
+]
+
+{ #category : 'accessing' }
+SycRealizeClassCommand >> order [
+
+	^ 2.1
 ]
 
 { #category : 'factory method' }

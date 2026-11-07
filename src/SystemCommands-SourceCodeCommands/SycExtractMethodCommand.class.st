@@ -22,19 +22,19 @@ SycExtractMethodCommand class >> canBeExecutedInContext: aSourceCodeContext [
 SycExtractMethodCommand class >> methodEditorShortcutActivation [
 	<classAnnotation>
 
-	^CmdShortcutActivation by: $e meta, $m meta for: ClySourceCodeContext
+	^ClyShortcutActivation by: $e meta, $m meta for: ClySourceCodeContext
 ]
 
 { #category : 'converting' }
 SycExtractMethodCommand >> asRefactorings [
 
 	| selectedInterval refactoring |
-	selectedInterval := (selectedTextInterval ifNil: [(1 to: 0)]) ifEmpty: [
-		                    sourceNode sourceInterval ].
+	selectedInterval := (self selectedTextInterval ifNil: [(1 to: 0)]) ifEmpty: [
+		                    self sourceNode sourceInterval ].
 	refactoring := RBExtractMethodRefactoring
 		               extract: selectedInterval
-		               from: method selector
-		               in: method origin.
+		               from: self method selector
+		               in: self method origin.
 	self setUpOptionsOf: refactoring.
 	^ { refactoring }
 ]
@@ -55,11 +55,22 @@ SycExtractMethodCommand >> name [
 	^ '(Old refactor) Extract method (no occurrences)'
 ]
 
+{ #category : 'accessing' }
+SycExtractMethodCommand >> order [
+
+	^ 1.4
+]
+
 { #category : 'execution' }
-SycExtractMethodCommand >> readParametersFromContext: aSourceCodeContext [
-	super readParametersFromContext: aSourceCodeContext.
-	self setUpModelFromContext: aSourceCodeContext.
-	selectedTextInterval := aSourceCodeContext selectedTextInterval
+SycExtractMethodCommand >> prepareFullExecution [
+
+	super prepareFullExecution.
+	self setUpModelFromContext: self context.
+]
+
+{ #category : 'accessing' }
+SycExtractMethodCommand >> selectedTextInterval [
+	^ selectedTextInterval ifNil: [ self context ifNotNil: [ :ctx | ctx selectedTextInterval ] ]
 ]
 
 { #category : 'execution' }
@@ -85,7 +96,7 @@ SycExtractMethodCommand >> setUpOptionToChangeMethodNameDuring: refactoring [
 
 	refactoring setOption: #methodName toUse: [ :methodName :ref |
 		| dialog invalidArgs |
-		invalidArgs := self computeInvalidArgNamesForSelector: method selector.
+		invalidArgs := self computeInvalidArgNamesForSelector: self method selector.
 		dialog := nil.
 		[ dialog isNil or: [ dialog presenter methodName isValid not ] ] whileTrue: [
 			dialog := (StMethodNameEditorPresenter newApplication: StPharoApplication current model: methodName)

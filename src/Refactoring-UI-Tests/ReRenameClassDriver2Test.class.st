@@ -30,7 +30,7 @@ ReRenameClassDriver2Test >> testDetectsBehaviorPreservingPrecondition [
 ReRenameClassDriver2Test >> testInvalidNewClassNameFails [
 "Verify that renaming a class to an invalid class name fails the applicability preconditions."
 
-	| driver refactoring |
+	| driver |
 
 	driver := ReRenameClassDriver2 new.
 	driver
@@ -39,19 +39,17 @@ ReRenameClassDriver2Test >> testInvalidNewClassNameFails [
 		scopes: { RBBrowserEnvironment default };
 		configureRefactoring.
 
-	refactoring := driver instantiateRefactoring.
-	refactoring newName: driver newName .
+	driver createAndSetNewRefactoring.
 
-	self
-		should: [ refactoring checkApplicabilityPreconditions ]
-		raise: RBRefactoringError 
+	self deny: driver applicabilityPreconditionsAreSatisfied.
+	self deny: driver checkApplicabilityPreconditions isEmptyOrNil 
 ]
 
 { #category : 'tests' }
 ReRenameClassDriver2Test >> testValidRenameClassPreconditions [
 "Verify that renaming a class to a valid name passes the applicability preconditions."
 
-	| driver refactoring |
+	| driver |
 
 	driver := ReRenameClassDriver2 new.
 	driver
@@ -60,8 +58,7 @@ ReRenameClassDriver2Test >> testValidRenameClassPreconditions [
 		scopes: { RBBrowserEnvironment default };
 		configureRefactoring.
 
-	refactoring := driver instantiateRefactoring.
-	refactoring newName: driver newName .
+	driver createAndSetNewRefactoring.
 
 	self assert: driver applicabilityPreconditionsAreSatisfied 
 ]

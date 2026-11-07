@@ -10,7 +10,7 @@ Internal Representation and Key Implementation Points.
 "
 Class {
 	#name : 'ClyRunClassScriptCommand',
-	#superclass : 'ClyCommand',
+	#superclass : 'SycClassCommand',
 	#instVars : [
 		'targetClass',
 		'script'
@@ -35,13 +35,13 @@ ClyRunClassScriptCommand class >> methodTableIconActivation [
 ]
 
 { #category : 'execution' }
-ClyRunClassScriptCommand >> execute [
-	script executeOn: targetClass
+ClyRunClassScriptCommand >> executeRefactoring [
+	self script executeOn: targetClass
 ]
 
 { #category : 'accessing' }
 ClyRunClassScriptCommand >> iconName [
-	^ script iconName
+	^ self script iconName
 ]
 
 { #category : 'accessing' }
@@ -50,18 +50,15 @@ ClyRunClassScriptCommand >> name [
 ]
 
 { #category : 'execution' }
-ClyRunClassScriptCommand >> prepareFullExecutionInContext: aBrowserContext [
-	super prepareFullExecutionInContext: aBrowserContext.
+ClyRunClassScriptCommand >> prepareFullExecution [
 
-	script := aBrowserContext selectedClassScript.
-	targetClass := aBrowserContext selectedClasses
-		detect: [ :each | script isImplementedByClass: each ]
-		ifNone: [ script implementorClass ]
+	super prepareFullExecution.
+	targetClass := self context selectedClasses
+		               detect: [ :each | self script isImplementedByClass: each ]
+		               ifNone: [ self script implementorClass ]
 ]
 
-{ #category : 'execution' }
-ClyRunClassScriptCommand >> readParametersFromContext: aBrowserContext [
-	super readParametersFromContext: aBrowserContext.
-
-	script := aBrowserContext selectedClassScript
+{ #category : 'accessing' }
+ClyRunClassScriptCommand >> script [
+	^ script ifNil: [ self context ifNotNil: [ :ctx | ctx selectedClassScript ] ]
 ]

@@ -20,7 +20,7 @@ Class {
 { #category : 'activation' }
 ClyBrowseCritiqueRuleCommand class >> browserContextMenuActivation [
 	<classAnnotation>
-	^ CmdContextMenuActivation byItemOf: CmdExtraMenuGroup for: ClyCriticContext
+	^ ClyContextMenuActivation byItemOf: ClyExtraMenuGroup for: ClyCriticContext
 ]
 
 { #category : 'activation' }
@@ -34,7 +34,7 @@ ClyBrowseCritiqueRuleCommand >> description [
 ]
 
 { #category : 'execution' }
-ClyBrowseCritiqueRuleCommand >> execute [
+ClyBrowseCritiqueRuleCommand >> executeRefactoring [
 	self critique rule class browse
 ]
 

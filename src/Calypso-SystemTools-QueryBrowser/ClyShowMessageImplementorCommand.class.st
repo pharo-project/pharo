@@ -27,24 +27,10 @@ ClyShowMessageImplementorCommand class >> methodBrowserToolbarActivation [
 ]
 
 { #category : 'activation' }
-ClyShowMessageImplementorCommand class >> methodMenuActivation [
-	<classAnnotation>
-
-	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup for: ClyMethod asCalypsoItemContext
-]
-
-{ #category : 'activation' }
 ClyShowMessageImplementorCommand class >> methodShortcutActivation [
 	<classAnnotation>
 
-	^CmdShortcutActivation by: $m meta for: ClyMethod asCalypsoItemContext
-]
-
-{ #category : 'activation' }
-ClyShowMessageImplementorCommand class >> sourceCodeMenuActivation [
-	<classAnnotation>
-
-	^SycSourceCodeMenuActivation byItemOf: ClyQueryMenuGroup for: ClySourceCodeContext
+	^ClyShortcutActivation by: $m meta for: ClyMethod asCalypsoItemContext
 ]
 
 { #category : 'activation' }
@@ -63,12 +49,9 @@ ClyShowMessageImplementorCommand >> description [
 ]
 
 { #category : 'execution' }
-ClyShowMessageImplementorCommand >> execute [
+ClyShowMessageImplementorCommand >> executeRefactoring [
 
-	| selectors |
-
-	selectors := messages collect: [ :each | each selector ].
-	(Smalltalk tools toolNamed: #messageList) browseImplementorsOfAll: selectors
+	(Smalltalk tools toolNamed: #messageList) browseImplementorsOfAll: (messages collect: [ :message | message selector ])
 ]
 
 { #category : 'accessing' }
@@ -77,13 +60,25 @@ ClyShowMessageImplementorCommand >> iconName [
 ]
 
 { #category : 'accessing' }
+ClyShowMessageImplementorCommand >> menuGroup [
+
+	^ ClyQueryMenuGroup
+]
+
+{ #category : 'accessing' }
 ClyShowMessageImplementorCommand >> name [
 	^'Implementors'
 ]
 
-{ #category : 'execution' }
-ClyShowMessageImplementorCommand >> prepareFullExecutionInContext: aToolContext [
-	super prepareFullExecutionInContext: aToolContext.
+{ #category : 'accessing' }
+ClyShowMessageImplementorCommand >> order [
 
-	browser := aToolContext browser
+	^ 1000
+]
+
+{ #category : 'execution' }
+ClyShowMessageImplementorCommand >> prepareFullExecution [
+
+	super prepareFullExecution.
+	browser := self context browser
 ]

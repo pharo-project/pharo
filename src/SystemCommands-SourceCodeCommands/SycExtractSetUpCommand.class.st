@@ -3,7 +3,7 @@ I am a command to extract setUp method and then replaces its occurrences
 "
 Class {
 	#name : 'SycExtractSetUpCommand',
-	#superclass : 'SycTestCommand',
+	#superclass : 'SycSourceCodeRefactoringCommand',
 	#instVars : [
 		'selectedTextInterval'
 	],
@@ -11,32 +11,46 @@ Class {
 	#package : 'SystemCommands-SourceCodeCommands'
 }
 
+{ #category : 'testing' }
+SycExtractSetUpCommand class >> canBeExecutedInContext: aToolContext [
+
+	^ aToolContext isMethodSelected not and: [ aToolContext isTestMethodSelected ]
+]
+
 { #category : 'executing' }
 SycExtractSetUpCommand >> asRefactorings [
 	| selectedInterval refactoring |
 	selectedInterval := selectedTextInterval ifEmpty: [
-		                    sourceNode sourceInterval ].
+		                    self sourceNode sourceInterval ].
 	refactoring := RBExtractSetUpMethodAndOccurrences
 		extract: selectedInterval
-		from: method selector
-		in: method origin.
+		from: self method selector
+		in: self method origin.
 	
 	^ { refactoring }
 ]
 
 { #category : 'accessing' }
-SycExtractSetUpCommand >> iconName [
-	^ #restart
+SycExtractSetUpCommand >> icon [
+
+	^ self iconNamed: #restart
 ]
 
 { #category : 'accessing' }
 SycExtractSetUpCommand >> name [
+
 	^ 'Extract setUp'
 ]
 
-{ #category : 'preparation' }
-SycExtractSetUpCommand >> readParametersFromContext: aSourceCodeContext [
-	super readParametersFromContext: aSourceCodeContext.
+{ #category : 'accessing' }
+SycExtractSetUpCommand >> order [
 
-	selectedTextInterval := aSourceCodeContext selectedTextInterval
+	^ 1.4
+]
+
+{ #category : 'execution' }
+SycExtractSetUpCommand >> prepareFullExecution [
+
+	super prepareFullExecution.
+	selectedTextInterval := self context selectedTextInterval
 ]

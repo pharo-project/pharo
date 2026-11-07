@@ -9,13 +9,19 @@ Class {
 }
 
 { #category : 'execution' }
-SycGenerateVariableAccessorCommand >> execute [
+SycGenerateVariableAccessorCommand >> executeRefactoring [
 
 	(ReGenerateAccessorsDriver new
 		 targetClass: variables first definingClass;
 		 scopes: toolContext refactoringScopes
 		 scopeInstanceSide: variables first definingClass isInstanceSide
 		 selectedVariables: (variables collect: [ :each | each name ])) runRefactoring
+]
+
+{ #category : 'accessing' }
+SycGenerateVariableAccessorCommand >> fullBrowserOrder [
+
+	^ 1000
 ]
 
 { #category : 'accessing' }
@@ -30,10 +36,10 @@ SycGenerateVariableAccessorCommand >> name [
 	^ self refactoringClass menuItemString
 ]
 
-{ #category : 'execution' }
-SycGenerateVariableAccessorCommand >> prepareFullExecutionInContext: aToolContext [
-	super prepareFullExecutionInContext: aToolContext.
-	toolContext := aToolContext.
+{ #category : 'accessing' }
+SycGenerateVariableAccessorCommand >> order [
+
+	^ 1000
 ]
 
 { #category : 'factory method' }

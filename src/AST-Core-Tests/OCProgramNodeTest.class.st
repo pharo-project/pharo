@@ -1171,6 +1171,15 @@ OCProgramNodeTest >> testReplaceMessageAddsParenthesesForBinaryArgument [
 ]
 
 { #category : 'tests - replacing' }
+OCProgramNodeTest >> testReplaceMessageAddsParenthesesForKeywordReceiver [
+
+	| tree |
+	tree := self parseMethod: 'run "1" ^ 33 asPoint foo: 1 "2"'.
+	tree body statements first value receiver replaceWith: (self parseExpression: 'self bar: 2').
+	self assert: tree newSource equals: 'run "1" ^ (self bar: 2) foo: 1 "2"'
+]
+
+{ #category : 'tests - replacing' }
 OCProgramNodeTest >> testReplaceMessageAddsParenthesesForUnaryReceiver [
 
 	| tree |
@@ -1191,6 +1200,16 @@ OCProgramNodeTest >> testReplaceMessageArgument [
 	tree := self parseMethod: 'foo "1" self "2" foo: "3" foo bar "4"'.
 	tree body statements first arguments first replaceWith: (self parseExpression: 'bar').
 	self assert: tree newSource equals: 'foo "1" self "2" foo: "3" bar "4"'
+]
+
+{ #category : 'tests - replacing' }
+OCProgramNodeTest >> testReplaceMessageKeepsBinaryReceiverOfBinaryWithoutParentheses [
+	"Binary messages associate to the left, so a binary receiver of a binary message needs no parentheses."
+
+	| tree |
+	tree := self parseMethod: 'run "1" ^ 33 asPoint + 1 "2"'.
+	tree body statements first value receiver replaceWith: (self parseExpression: '33 @ 33').
+	self assert: tree newSource equals: 'run "1" ^ 33 @ 33 + 1 "2"'
 ]
 
 { #category : 'tests - replacing' }

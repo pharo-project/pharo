@@ -1,33 +1,41 @@
 "
-I am a command to demote given packages into the package with tag
+Demotes the selected packages whose name contains a dash to a package with a tag, and shows the resulting package in the Full Browser.
 "
 Class {
 	#name : 'SycDemoteToPackageWithTagCommand',
-	#superclass : 'SycPackageCommand',
+	#superclass : 'SycPackageExtraCmCommand',
 	#category : 'SystemCommands-PackageCommands',
 	#package : 'SystemCommands-PackageCommands'
 }
 
 { #category : 'execution' }
-SycDemoteToPackageWithTagCommand >> applyResultInContext: aBrowserContext [
+SycDemoteToPackageWithTagCommand >> applyCommandResult [
 
 	| lastPackage newPackage tag |
-	lastPackage := packages detect: [ :each | each name includes: $- ] ifNone: [ ^self ].
-
+	lastPackage := self packages
+		               detect: [ :pack | pack name includes: $- ]
+		               ifNone: [ ^ self ].
 	newPackage := (lastPackage name copyUpToLast: $-) asPackage.
 	tag := lastPackage name last: lastPackage name size - newPackage name size - 1.
-	aBrowserContext showPackage: newPackage tag: tag asSymbol
+	context showPackage: newPackage tag: tag asSymbol
+]
+
+{ #category : 'testing' }
+SycDemoteToPackageWithTagCommand >> canBeExecuted [
+
+	^ context isAboutBrowserItemType: Package
 ]
 
 { #category : 'execution' }
-SycDemoteToPackageWithTagCommand >> execute [
+SycDemoteToPackageWithTagCommand >> executeRefactoring [
 
-	packages
+	self packages
 		select: [ :package | package name includes: $- ]
 		thenDo: [ :package | package demoteToTagInPackage ]
 ]
 
 { #category : 'accessing' }
 SycDemoteToPackageWithTagCommand >> name [
-	^'Demote to package with tag'
+
+	^ 'Demote to package with tag'
 ]

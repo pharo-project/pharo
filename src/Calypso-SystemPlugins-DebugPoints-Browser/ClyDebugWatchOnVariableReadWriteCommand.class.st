@@ -14,12 +14,6 @@ ClyDebugWatchOnVariableReadWriteCommand class >> accessStrategy [
 	^ #all
 ]
 
-{ #category : 'testing' }
-ClyDebugWatchOnVariableReadWriteCommand class >> isAbstract [
-
-	^ false
-]
-
 { #category : 'accessing' }
 ClyDebugWatchOnVariableReadWriteCommand >> name [
 

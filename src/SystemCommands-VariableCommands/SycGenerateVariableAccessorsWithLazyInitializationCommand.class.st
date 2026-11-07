@@ -1,6 +1,6 @@
 Class {
 	#name : 'SycGenerateVariableAccessorsWithLazyInitializationCommand',
-	#superclass : 'ClyCommand',
+	#superclass : 'SycRefactorVariableCommand',
 	#instVars : [
 		'variable',
 		'value'
@@ -17,13 +17,6 @@ SycGenerateVariableAccessorsWithLazyInitializationCommand class >> canBeExecuted
 			  aToolContext isGlobalVariableSelected not ] ]
 ]
 
-{ #category : 'activation' }
-SycGenerateVariableAccessorsWithLazyInitializationCommand class >> fullBrowserMenuActivation [
-	<classAnnotation>
-
-	^CmdContextMenuActivation byRootGroupItemOrder: 2 for: ClyFullBrowserVariableContext
-]
-
 { #category : 'converting' }
 SycGenerateVariableAccessorsWithLazyInitializationCommand >> asRefactorings [
 
@@ -35,8 +28,20 @@ SycGenerateVariableAccessorsWithLazyInitializationCommand >> asRefactorings [
 ]
 
 { #category : 'accessing' }
+SycGenerateVariableAccessorsWithLazyInitializationCommand >> fullBrowserOrder [
+
+	^ 2
+]
+
+{ #category : 'accessing' }
 SycGenerateVariableAccessorsWithLazyInitializationCommand >> iconName [
 	^ #smallAdd
+]
+
+{ #category : 'testing' }
+SycGenerateVariableAccessorsWithLazyInitializationCommand >> isAvailableInMenuOf: aToolContext [
+
+	^ aToolContext isFullBrowserVariableContext
 ]
 
 { #category : 'testing' }
@@ -51,15 +56,21 @@ SycGenerateVariableAccessorsWithLazyInitializationCommand >> name [
 	^ self refactoringClass menuItemString
 ]
 
-{ #category : 'execution' }
-SycGenerateVariableAccessorsWithLazyInitializationCommand >> prepareFullExecutionInContext: aToolContext [
+{ #category : 'accessing' }
+SycGenerateVariableAccessorsWithLazyInitializationCommand >> order [
 
-	super prepareFullExecutionInContext: aToolContext.
-	variable := aToolContext lastSelectedVariable. 
-	value := aToolContext tool morphicUIManager
-		           request: 'Default value of variable accessor'
-		           initialAnswer: 'nil'
-		           title: 'Default variable''s value'.
+	^ 2
+]
+
+{ #category : 'preparation' }
+SycGenerateVariableAccessorsWithLazyInitializationCommand >> prepareFullExecution [
+
+	super prepareFullExecution.
+	variable := self context lastSelectedVariable.
+	value := self context tool morphicUIManager
+		request: 'Default value of variable accessor'
+		initialAnswer: 'nil'
+		title: 'Default variable''s value'.
 	value isEmptyOrNil ifTrue: [ CmCommandAborted signal ]
 ]
 

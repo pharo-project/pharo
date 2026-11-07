@@ -19,17 +19,20 @@ SycAbstractVariableCommand >> description [
 ]
 
 { #category : 'execution' }
-SycAbstractVariableCommand >> execute [
+SycAbstractVariableCommand >> executeRefactoring [
 
-	^ ((ReAbstractInstanceVariableDriver newApplication: self application)
-		   scopes: refactoringScopes
-		   name: variables first name
-		   class: selectedClass name) runRefactoring
+	^ ((ReAbstractInstanceVariableDriver newApplication: self application) scopes: refactoringScopes name: variables first name class: selectedClass name) runRefactoring
 ]
 
 { #category : 'accessing' }
 SycAbstractVariableCommand >> iconName [
 	^ #smallAdd
+]
+
+{ #category : 'testing' }
+SycAbstractVariableCommand >> isAvailableInMenuOf: aToolContext [
+
+	^ aToolContext isFullBrowserVariableContext
 ]
 
 { #category : 'accessing' }
@@ -38,10 +41,15 @@ SycAbstractVariableCommand >> name [
 	^'Abstract accessors'
 ]
 
-{ #category : 'execution' }
-SycAbstractVariableCommand >> prepareFullExecutionInContext: aToolContext [
+{ #category : 'accessing' }
+SycAbstractVariableCommand >> order [
 
-	super prepareFullExecutionInContext: aToolContext.
-	selectedClass := aToolContext selectedVariables first definingClass.
-	variables := aToolContext selectedVariables
+	^ 1000
+]
+
+{ #category : 'execution' }
+SycAbstractVariableCommand >> prepareFullExecution [
+
+	super prepareFullExecution.
+	selectedClass := variables first definingClass
 ]

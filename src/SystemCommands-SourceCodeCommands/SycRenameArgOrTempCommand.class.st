@@ -10,8 +10,7 @@ Class {
 	#name : 'SycRenameArgOrTempCommand',
 	#superclass : 'SycSourceCodeRefactoringCommand',
 	#instVars : [
-		'newName',
-		'toolContext'
+		'newName'
 	],
 	#category : 'SystemCommands-SourceCodeCommands',
 	#package : 'SystemCommands-SourceCodeCommands'
@@ -25,10 +24,10 @@ SycRenameArgOrTempCommand class >> canBeExecutedInContext: aSourceCodeContext [
 ]
 
 { #category : 'execution' }
-SycRenameArgOrTempCommand >> applyResultInContext: aSourceCodeContext [
-	super applyResultInContext: aSourceCodeContext.
+SycRenameArgOrTempCommand >> applyCommandResult [
+	super applyCommandResult.
 
-	aSourceCodeContext showVariableNamed: newName
+	self context showVariableNamed: newName
 ]
 
 { #category : 'accessing' }
@@ -38,12 +37,12 @@ SycRenameArgOrTempCommand >> description [
 ]
 
 { #category : 'execution' }
-SycRenameArgOrTempCommand >> execute [
+SycRenameArgOrTempCommand >> executeRefactoring [
 
 	^ (ReRenameArgumentOrTemporaryDriver new
-		   sourceNode: sourceNode;
-		   method: method;
-		   scopes: toolContext refactoringScopes;
+		   sourceNode: self sourceNode;
+		   method: self method;
+		   scopes: refactoringScopes;
 		   yourself) runRefactoring
 ]
 
@@ -57,10 +56,8 @@ SycRenameArgOrTempCommand >> name [
 	^' (Old refactor) rename temp'
 ]
 
-{ #category : 'execution' }
-SycRenameArgOrTempCommand >> prepareFullExecutionInContext: aToolContext [
+{ #category : 'accessing' }
+SycRenameArgOrTempCommand >> order [
 
-	super prepareFullExecutionInContext: aToolContext.
-
-	toolContext := aToolContext
+	^ 1.2
 ]

@@ -12,7 +12,7 @@ Class {
 SycOpenDebuggingPointsMenuCommand class >> sourceCodeMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation byRootGroupItemOrder: 0.2 for: ClySourceCodeContext
+	^ClyContextMenuActivation byRootGroupItemOrder: 0.2 for: ClySourceCodeContext
 ]
 
 { #category : 'execution' }

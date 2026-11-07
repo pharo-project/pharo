@@ -4,9 +4,6 @@ I am a command to request a protocol from the user which should be used to recla
 Class {
 	#name : 'ClyRequestProtocolForEditorCommand',
 	#superclass : 'ClyMethodEditorCommand',
-	#instVars : [
-		'menuItemName'
-	],
 	#category : 'Calypso-SystemTools-Core-Editors-Methods',
 	#package : 'Calypso-SystemTools-Core',
 	#tag : 'Editors-Methods'
@@ -16,7 +13,7 @@ Class {
 ClyRequestProtocolForEditorCommand class >> methodEditorShorcutActivation [
 	<classAnnotation>
 
-	^CmdShortcutActivation by: $e meta, $p meta for: ClyTextEditorContext
+	^ClyShortcutActivation by: $e meta, $p meta for: ClyTextEditorContext
 ]
 
 { #category : 'accessing' }
@@ -26,7 +23,7 @@ ClyRequestProtocolForEditorCommand >> description [
 ]
 
 { #category : 'execution' }
-ClyRequestProtocolForEditorCommand >> execute [
+ClyRequestProtocolForEditorCommand >> executeRefactoring [
 	| protocolEditor |
 	protocolEditor := methodEditor protocolAndPackageEditor.
 	protocolEditor requestChangeBy: [ protocolEditor requestProtocol]
@@ -35,13 +32,13 @@ ClyRequestProtocolForEditorCommand >> execute [
 { #category : 'accessing' }
 ClyRequestProtocolForEditorCommand >> name [
 
-	^ menuItemName
-]
-
-{ #category : 'execution' }
-ClyRequestProtocolForEditorCommand >> readParametersFromContext: aToolContext [
-
-	menuItemName := aToolContext tool hasUnacceptedEdits
+	^ self context tool hasUnacceptedEdits
 		ifTrue: [ 'Classify currently editing method' ]
 		ifFalse: [ 'Classify method' ]
+]
+
+{ #category : 'accessing' }
+ClyRequestProtocolForEditorCommand >> order [
+
+	^ 1000
 ]

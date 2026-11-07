@@ -20,21 +20,29 @@ SycExtractTempCommand class >> canBeExecutedInContext: aSourceCodeContext [
 ]
 
 { #category : 'execution' }
-SycExtractTempCommand >> execute [ 
+SycExtractTempCommand >> executeRefactoring [ 
 
 	(ReExtractTempDriver new
-		  extract: sourceNode sourceInterval
-		  from: method selector
-		  in: method origin;
+		  extract: self sourceNode sourceInterval
+		  from: self method selector
+		  in: self method origin;
 		  scopes: refactoringScopes) runRefactoring
 ]
 
 { #category : 'accessing' }
-SycExtractTempCommand >> iconName [
-	^ ##smallUpdate
+SycExtractTempCommand >> icon [
+
+	^ self iconNamed: #smallUpdate
 ]
 
 { #category : 'accessing' }
 SycExtractTempCommand >> name [
+
 	^ 'Extract temp'
+]
+
+{ #category : 'accessing' }
+SycExtractTempCommand >> order [
+
+	^ 1.4
 ]

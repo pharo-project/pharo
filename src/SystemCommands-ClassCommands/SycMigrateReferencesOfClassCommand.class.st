@@ -17,14 +17,27 @@ Class {
 }
 
 { #category : 'execution' }
-SycMigrateReferencesOfClassCommand >> execute [
+SycMigrateReferencesOfClassCommand >> executeRefactoring [
 
 	self asRefactorings do: [ :ref | ref execute ]
 ]
 
 { #category : 'accessing' }
+SycMigrateReferencesOfClassCommand >> fullBrowserOrder [
+
+	^ 1.4
+]
+
+{ #category : 'accessing' }
 SycMigrateReferencesOfClassCommand >> iconName [
 	^ #source
+]
+
+{ #category : 'testing' }
+SycMigrateReferencesOfClassCommand >> isAvailableInMenuOf: aToolContext [
+
+	^ aToolContext isFullBrowserClassContext
+		or: [ aToolContext isSourceCodeContext ]
 ]
 
 { #category : 'testing' }
@@ -37,9 +50,15 @@ SycMigrateReferencesOfClassCommand >> name [
 	^'Migrate references'
 ]
 
-{ #category : 'execution' }
-SycMigrateReferencesOfClassCommand >> prepareFullExecutionInContext: aToolContext [
+{ #category : 'accessing' }
+SycMigrateReferencesOfClassCommand >> order [
 
-	super prepareFullExecutionInContext: aToolContext.
-	newName := aToolContext requestSingleClass: 'Choose new class'
+	^ 1.3
+]
+
+{ #category : 'preparation' }
+SycMigrateReferencesOfClassCommand >> prepareFullExecution [
+
+	super prepareFullExecution.
+	newName := self context requestSingleClass: 'Choose new class'
 ]

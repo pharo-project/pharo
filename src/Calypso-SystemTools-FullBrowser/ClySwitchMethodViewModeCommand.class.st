@@ -33,7 +33,7 @@ ClySwitchMethodViewModeCommand class >> isAbstract [
 
 { #category : 'testing' }
 ClySwitchMethodViewModeCommand >> isAppliedToBrowser [
-	^browser methodGroupView showsItemsOfType: self methodGroupType
+	^self browser methodGroupView showsItemsOfType: self methodGroupType
 ]
 
 { #category : 'accessing' }
