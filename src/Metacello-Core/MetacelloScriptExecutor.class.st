@@ -25,6 +25,11 @@ MetacelloScriptExecutor >> applyArgsToProjectSpec: aProjectSpec [
     ^ aProjectSpec
 ]
 
+{ #category : 'accessing' }
+MetacelloScriptExecutor >> actionArg [
+	^ actionArg
+]
+
 { #category : 'args' }
 MetacelloScriptExecutor >> baselineArg [
 	^ baselineArg
