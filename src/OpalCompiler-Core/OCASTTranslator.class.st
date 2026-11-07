@@ -42,6 +42,13 @@ OCASTTranslator class >> initialize [
 		                     (#whileTrue -> #emitWhileTrue:) } asDictionary
 ]
 
+{ #category : 'visitor - double dispatching' }
+OCASTTranslator >> canUseConsArrayFor: anArrayNode [
+
+	self compilationContext optionPushConsArray ifFalse: [ ^ false ].
+	^ (anArrayNode hasProperty: #compileAsLargeArray) not
+]
+
 { #category : 'accessing' }
 OCASTTranslator >> compilationContext [
 	^methodBuilder compilationContext
@@ -420,6 +427,20 @@ OCASTTranslator >> initialize [
 	nextUniqueInlineID := 0
 ]
 
+{ #category : 'visitor - double dispatching' }
+OCASTTranslator >> inlinedTempCountIn: aNode [
+	"Inlined blocks add their temps to the frame of the enclosing method or full block.
+	Copied variables may be counted twice, which only makes the count an upper bound"
+
+	^ aNode children inject: 0 into: [ :count :child |
+			  (child isBlock and: [ child isInlined not ])
+				  ifTrue: [ count ]
+				  ifFalse: [
+						  count + (child isBlock
+							   ifTrue: [ self ownTempCountOf: child ]
+							   ifFalse: [ 0 ]) + (self inlinedTempCountIn: child) ] ]
+]
+
 { #category : 'accessing' }
 OCASTTranslator >> ir [
 
@@ -437,6 +458,40 @@ OCASTTranslator >> nextUniqueInlineID [
 
 	nextUniqueInlineID := nextUniqueInlineID + 1.
 	^ '0', nextUniqueInlineID asString asSymbol
+]
+
+{ #category : 'visitor - double dispatching' }
+OCASTTranslator >> outermostStatementOf: aNode [
+	"Inlined blocks run on the stack of the statement that holds them"
+
+	| statement |
+	statement := aNode statementNode.
+	[
+		statement parent isNotNil and: [
+			statement parent parent isNotNil and: [ statement parent parent isBlock and: [ statement parent parent isInlined ] ] ] ]
+		whileTrue: [ statement := statement parent parent statementNode ].
+	^ statement
+]
+
+{ #category : 'visitor - double dispatching' }
+OCASTTranslator >> ownTempCountOf: aMethodOrBlockNode [
+
+	| scope |
+	scope := aMethodOrBlockNode scope.
+	^ aMethodOrBlockNode argumentNames size + scope copiedVarNames size + scope tempVarNamesWithoutArguments size
+	  + (scope tempVector ifEmpty: [ 0 ] ifNotEmpty: [ 1 ])
+]
+
+{ #category : 'visitor - double dispatching' }
+OCASTTranslator >> planArraysIn: aMethodOrBlockNode [
+	"Temps are computed up front because inlined blocks add theirs during translation"
+
+	| temps limit |
+	self compilationContext optionPushConsArray ifFalse: [ ^ self ].
+	temps := (self ownTempCountOf: aMethodOrBlockNode) + (self inlinedTempCountIn: aMethodOrBlockNode).
+	limit := self compilationContext maxFrameSize - temps min:
+		         self compilationContext encoderClass arraySizeLimitForPushArrayInstruction.
+	(OCArrayCompilationPlanner new limit: limit) visitNode: aMethodOrBlockNode body
 ]
 
 { #category : 'visitor - double dispatching' }
@@ -537,6 +592,8 @@ OCASTTranslator >> translateFullBlock: aBlockNode [
 	| originalBlockNode |
 	methodBuilder mapToNode: aBlockNode.
 
+	self planArraysIn: aBlockNode.
+
 	"args, then copied, then temps"
 	methodBuilder addTemps: aBlockNode argumentNames.
 	methodBuilder addTemps: aBlockNode scope inComingCopiedVarNames.
@@ -544,15 +601,12 @@ OCASTTranslator >> translateFullBlock: aBlockNode [
 	methodBuilder numArgs: aBlockNode arguments size.
 
 	aBlockNode scope tempVector ifNotEmpty: [
-		methodBuilder
-			createTempVectorNamed: aBlockNode scope tempVectorName
-			withVars: aBlockNode scope tempVectorVarNames.
-	].
+		methodBuilder createTempVectorNamed: aBlockNode scope tempVectorName withVars: aBlockNode scope tempVectorVarNames ].
 	self visitNode: aBlockNode body.
 	methodBuilder mapToNode: aBlockNode body.
 	methodBuilder addBlockReturnTopIfRequired.
-	
-	originalBlockNode := aBlockNode propertyAt: #originalNode ifAbsent: [aBlockNode].
+
+	originalBlockNode := aBlockNode propertyAt: #originalNode ifAbsent: [ aBlockNode ].
 	originalBlockNode ir: self ir.
 	originalBlockNode resetBcToASTCache.
 	^ originalBlockNode ir compiledBlock: originalBlockNode scope
@@ -566,15 +620,9 @@ OCASTTranslator >> visitAnnotationMarkNode: aAnnotationValueNode [
 
 { #category : 'visitor - double dispatching' }
 OCASTTranslator >> visitArrayNode: anArrayNode [
+
 	| elementNodes |
-
-	self flag: #WORKAROUND. "This is reverted to the old magic number because 
-	this is failing (see https://github.com/pharo-project/pharo/issues/19058). 
-	This is not a real fix, but it allow me to continue working :)"
-
-	"stackLimit := CompiledCode fullFrameSize min: self compilationContext encoderClass arraySizeLimitForPushArrayInstruction.
-	methodBuilder stackSize + anArrayNode statements size > stackLimit ifTrue: [ ^ self visitLargeArrayNode: anArrayNode ]."
-	anArrayNode statements size > 32 ifTrue: [^ self visitLargeArrayNode: anArrayNode ].
+	(self canUseConsArrayFor: anArrayNode) ifFalse: [ ^ self visitLargeArrayNode: anArrayNode ].
 
 	elementNodes := anArrayNode children.
 	elementNodes do: [ :node | self visitNode: node ].
@@ -766,31 +814,31 @@ OCASTTranslator >> visitMessageNode: aMessageNode [
 { #category : 'visitor - double dispatching' }
 OCASTTranslator >> visitMethodNode: aMethodNode [
 
-	aMethodNode isError ifTrue: [self emitRuntimeError: aMethodNode ].
+	aMethodNode isError ifTrue: [ self emitRuntimeError: aMethodNode ].
 
+	self planArraysIn: aMethodNode.
 	methodBuilder addTemps: aMethodNode scope tempVarNames.
 
 	methodBuilder properties: aMethodNode methodProperties.
 	methodBuilder irPrimitive: aMethodNode primitiveFromPragma.
-	aMethodNode pragmas do: [:each | self visitPragmaNode: each].
+	aMethodNode pragmas do: [ :each | self visitPragmaNode: each ].
 	methodBuilder numArgs: aMethodNode arguments size.
 
 	aMethodNode scope tempVector ifNotEmpty: [
-		methodBuilder
-			createTempVectorNamed: aMethodNode scope tempVectorName
-			withVars: aMethodNode scope tempVectorVarNames
-	].
+		methodBuilder createTempVectorNamed: aMethodNode scope tempVectorName withVars: aMethodNode scope tempVectorVarNames ].
 
 	aMethodNode body lastIsReturn
-		ifTrue: [
-			self visitEffectNode: aMethodNode body ]
-		ifFalse: [ aMethodNode isDoIt
-			ifTrue: [ 
-				self visitNode: aMethodNode body.
-				methodBuilder returnTop ]
-			ifFalse: [ 
-				self visitEffectNode: aMethodNode body.
-				methodBuilder pushReceiver; returnTop ] ]
+		ifTrue: [ self visitEffectNode: aMethodNode body ]
+		ifFalse: [
+				aMethodNode isDoIt
+					ifTrue: [
+							self visitNode: aMethodNode body.
+							methodBuilder returnTop ]
+					ifFalse: [
+							self visitEffectNode: aMethodNode body.
+							methodBuilder
+								pushReceiver;
+								returnTop ] ]
 ]
 
 { #category : 'visitor - double dispatching' }

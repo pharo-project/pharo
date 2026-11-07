@@ -6,6 +6,119 @@ Class {
 	#tag : 'Misc'
 }
 
+{ #category : 'tests - array' }
+OpalCompilerTest >> arrayElements: aCount [
+
+	^ ' . ' join: ((1 to: aCount) collect: [ :each | each asString ])
+]
+
+{ #category : 'tests - array' }
+OpalCompilerTest >> arraySourceWithTemps: tempCount pending: pendingCount nesting: nestingCount [
+	"A method with many temps and a large array whose last element nests sends, as in issue 19058"
+
+	| nested |
+	nested := (1 to: nestingCount) inject: '1' into: [ :source :each | '(1 max: ' , source , ')' ].
+	^ String streamContents: [ :stream |
+			  stream nextPutAll: 'test | '.
+			  1 to: tempCount do: [ :index | stream nextPutAll: 't' , index asString , ' ' ].
+			  stream nextPutAll: '| ^ { '.
+			  1 to: pendingCount do: [ :index | stream nextPutAll: index asString , ' . ' ].
+			  stream nextPutAll: nested , ' }' ]
+]
+
+{ #category : 'tests - array' }
+OpalCompilerTest >> assertConsArrayCompilationOf: aString equals: anArray translator: aTranslatorClass [
+
+	| method |
+	method := self compileArraySource: aString options: #( #+ optionPushConsArray ) translator: aTranslatorClass.
+	self deny: (method sendsSelector: #new:).
+	self deny: (method sendsSelector: #at:put:).
+	self assert: (nil executeMethod: method) equals: anArray
+]
+
+{ #category : 'tests - array' }
+OpalCompilerTest >> assertLargeArrayCompilationOf: aString equals: anArray translator: aTranslatorClass [
+
+	| method |
+	method := self compileArraySource: aString options: #( #- optionPushConsArray ) translator: aTranslatorClass.
+	self assert: (method sendsSelector: #new:).
+	self assert: (nil executeMethod: method) equals: anArray
+]
+
+{ #category : 'tests - array' }
+OpalCompilerTest >> compileArraySource: aString options: anArray translator: aTranslatorClass [
+
+	| compiler |
+	compiler := OpalCompiler new.
+	compiler compilationContext
+		compilerOptions: anArray;
+		astTranslatorClass: aTranslatorClass.
+	^ compiler
+		  source: aString;
+		  compileOrFail
+]
+
+{ #category : 'tests - array' }
+OpalCompilerTest >> inlinedTempsSource: aCount [
+
+	^ String streamContents: [ :stream |
+			  stream nextPutAll: '| '.
+			  1 to: aCount do: [ :index | stream nextPutAll: 'x' , index asString , ' ' ].
+			  stream nextPutAll: '| '.
+			  1 to: aCount do: [ :index | stream nextPutAll: 'x' , index asString , ' := 1. ' ] ]
+]
+
+{ #category : 'tests - array' }
+OpalCompilerTest >> testArrayAfterInlinedBlockCountsItsTemps [
+
+	| method |
+	method := self
+		          compileArraySource:
+		          'test true ifTrue: [ ' , (self inlinedTempsSource: 20) , ' ]. ^ { ' , (self arrayElements: 40) , ' }'
+		          options: #( #+ optionPushConsArray )
+		          translator: OCASTTranslator.
+	self assert: (method sendsSelector: #at:put:).
+	self assert: (nil executeMethod: method) size equals: 40
+]
+
+{ #category : 'tests - array' }
+OpalCompilerTest >> testArrayAsArgumentCountsPendingStack [
+
+	| method |
+	method := self
+		          compileArraySource: 'test ^ 1 max: (2 max: (3 max: ((1 to: 50) size max: { ' , (self arrayElements: 50) , ' } size)))'
+		          options: #( #+ optionPushConsArray )
+		          translator: OCASTTranslator.
+	self assert: (nil executeMethod: method) equals: 50
+]
+
+{ #category : 'tests - array' }
+OpalCompilerTest >> testArrayBeforeInlinedBlockCountsItsTemps [
+
+	| method |
+	method := self
+		          compileArraySource:
+		          'test | r | r := { ' , (self arrayElements: 40) , ' }. true ifTrue: [ ' , (self inlinedTempsSource: 20) , ' ]. ^ r'
+		          options: #( #+ optionPushConsArray )
+		          translator: OCASTTranslator.
+	self assert: (method sendsSelector: #at:put:).
+	self assert: (nil executeMethod: method) size equals: 40
+]
+
+{ #category : 'tests - array' }
+OpalCompilerTest >> testArrayBeforeInlinedLoopCountsItsTemps [
+
+	| method |
+	method := self
+		          compileArraySource:
+		          'test | r | r := { ' , (self arrayElements: 40) , ' }. 1 to: 1 do: [ :i | ' , (self inlinedTempsSource: 20)
+		          , ' ]. ^ r'
+		          options: #( #+ optionPushConsArray )
+		          translator: OCASTTranslator.
+	self assert: (method sendsSelector: #at:put:).
+	self assert: (nil executeMethod: method) size equals: 40
+]
+
 { #category : 'tests - bindings' }
 OpalCompilerTest >> testArrayBindingsWithUppercaseNameDoOverwriteGlobals [
 	| result |
@@ -49,6 +162,51 @@ OpalCompilerTest >> testArrayEvaluateWithBindingsWithUppercaseName [
 		bindings: {(#MyVar -> 3)};
 		evaluate: '1+MyVar'.
 	self assert: result equals: 4
+]
+
+{ #category : 'tests - array' }
+OpalCompilerTest >> testArrayInFullBlockCountsBlockTemps [
+
+	| method |
+	method := self
+		          compileArraySource: 'test ^ [ ' , (self inlinedTempsSource: 30) , ' { ' , (self arrayElements: 30) , ' } ] value'
+		          options: #( #+ optionPushConsArray )
+		          translator: OCASTTranslator.
+	self assert: (nil executeMethod: method) size equals: 30
+]
+
+{ #category : 'tests - array' }
+OpalCompilerTest >> testArrayWithNestedElementFittingFrameUsesConsArray [
+
+	| method |
+	method := self
+		          compileArraySource: (self arraySourceWithTemps: 0 pending: 20 nesting: 5)
+		          options: #( #+ optionPushConsArray )
+		          translator: OCASTTranslator.
+	self deny: (method sendsSelector: #at:put:)
+]
+
+{ #category : 'tests - array' }
+OpalCompilerTest >> testArrayWithNestedElementOverflowingFrameFallsBackToLargeArray [
+
+	| method |
+	method := self
+		          compileArraySource: (self arraySourceWithTemps: 30 pending: 20 nesting: 10)
+		          options: #( #+ optionPushConsArray )
+		          translator: OCASTTranslator.
+	self assert: (method sendsSelector: #at:put:).
+	self assert: (nil executeMethod: method) size equals: 21
+]
+
+{ #category : 'tests - array' }
+OpalCompilerTest >> testArrayWithNestedElementOverflowingFrameInReflectivity [
+
+	| method |
+	method := self
+		          compileArraySource: (self arraySourceWithTemps: 30 pending: 20 nesting: 10)
+		          options: #( #+ optionPushConsArray )
+		          translator: RFASTTranslator.
+	self assert: (nil executeMethod: method) size equals: 21
 ]
 
 { #category : 'tests - bindings' }
@@ -122,6 +280,18 @@ OpalCompilerTest >> testCompilerUsingCleanBlockClosureHasBlockAsLiteral [
 	self assert: method literals second class equals: CleanBlockClosure
 ]
 
+{ #category : 'tests - array' }
+OpalCompilerTest >> testElementOverflowingFrameByItselfStillFails [
+
+	self
+		should: [
+				self
+					compileArraySource: (self arraySourceWithTemps: 0 pending: 1 nesting: 60)
+					options: #( #+ optionPushConsArray )
+					translator: OCASTTranslator ]
+		raise: Error
+]
+
 { #category : 'tests - bindings' }
 OpalCompilerTest >> testEvaluateWithBindings [
 	| result |
@@ -188,6 +358,76 @@ OpalCompilerTest >> testInstall [
 	"Cleanup"
 	method removeFromSystem.
 	self deny: (MockForCompilation includesSelector: #foo)
+]
+
+{ #category : 'tests - array' }
+OpalCompilerTest >> testMaxFrameSizeDecidesArrayCompilation [
+
+	| compile |
+	compile := [ :size |
+		           | compiler |
+		           compiler := OpalCompiler new.
+		           compiler compilationContext
+			           compilerOptions: #( #+ optionPushConsArray );
+			           maxFrameSize: size.
+		           compiler
+			           source: 'test ^ { 1 . 2 . 3 . 4 }';
+			           compileOrFail ].
+	self deny: ((compile value: 4) sendsSelector: #at:put:).
+	self assert: ((compile value: 3) sendsSelector: #at:put:)
+]
+
+{ #category : 'tests - array' }
+OpalCompilerTest >> testOptionPushConsArrayDisabledUsesLargeArray [
+
+	self assertLargeArrayCompilationOf: 'test ^ { }' equals: #(  ) translator: OCASTTranslator.
+	self assertLargeArrayCompilationOf: 'test ^ { 1 }' equals: #( 1 ) translator: OCASTTranslator.
+	self assertLargeArrayCompilationOf: 'test ^ { 1 . 2 + 1 }' equals: #( 1 3 ) translator: OCASTTranslator
+]
+
+{ #category : 'tests - array' }
+OpalCompilerTest >> testOptionPushConsArrayDisabledUsesLargeArrayInReflectivity [
+
+	self assertLargeArrayCompilationOf: 'test ^ { }' equals: #(  ) translator: RFASTTranslator.
+	self assertLargeArrayCompilationOf: 'test ^ { 1 . 2 + 1 }' equals: #( 1 3 ) translator: RFASTTranslator
+]
+
+{ #category : 'tests - array' }
+OpalCompilerTest >> testOptionPushConsArrayEnabledUsesConsArray [
+
+	self assertConsArrayCompilationOf: 'test ^ { }' equals: #(  ) translator: OCASTTranslator.
+	self assertConsArrayCompilationOf: 'test ^ { 1 }' equals: #( 1 ) translator: OCASTTranslator.
+	self assertConsArrayCompilationOf: 'test ^ { 1 . 2 + 1 }' equals: #( 1 3 ) translator: OCASTTranslator
+]
+
+{ #category : 'tests - array' }
+OpalCompilerTest >> testOptionPushConsArrayEnabledUsesConsArrayInReflectivity [
+
+	self assertConsArrayCompilationOf: 'test ^ { 1 . 2 + 1 }' equals: #( 1 3 ) translator: RFASTTranslator
+]
+
+{ #category : 'tests - array' }
+OpalCompilerTest >> testOverflowingArrayKeepsDeepOneElementNestingAsConsArray [
+
+	| nested method |
+	nested := (1 to: 20) inject: '1' into: [ :source :each | '{ ' , source , ' }' ].
+	method := self
+		          compileArraySource: 'test ^ { ' , (self arrayElements: 56) , ' . ' , nested , ' }'
+		          options: #( #+ optionPushConsArray )
+		          translator: OCASTTranslator.
+	self assert: (nil executeMethod: method) size equals: 57
+]
+
+{ #category : 'tests - array' }
+OpalCompilerTest >> testOverflowingArrayKeepsInnerArrayAsConsArray [
+
+	| source consFirst allLarge |
+	source := 'test ^ { ' , (self arrayElements: 50) , ' . { ' , (self arrayElements: 10) , ' } }'.
+	consFirst := self compileArraySource: source options: #( #+ optionPushConsArray ) translator: OCASTTranslator.
+	allLarge := self compileArraySource: source options: #( #- optionPushConsArray ) translator: OCASTTranslator.
+	self assert: (consFirst sendsSelector: #at:put:).
+	self assert: consFirst bytecodes size < allLarge bytecodes size.
+	self assert: (nil executeMethod: consFirst) equals: (nil executeMethod: allLarge)
 ]
 
 { #category : 'tests' }
