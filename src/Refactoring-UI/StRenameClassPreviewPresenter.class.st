@@ -18,7 +18,6 @@ Class {
 		'scopeDropList',
 		'buttonOk',
 		'buttonCancel',
-		'compositeChange',
 		'refactoring',
 		'name',
 		'newNameLabel',
@@ -34,7 +33,9 @@ Class {
 		'behaviorWarningTitle',
 		'behaviorMessageLabel',
 		'buttonBrowseMethod',
-		'updateProcess'
+		'previewRequest',
+		'previewRunning',
+		'pendingPreview'
 	],
 	#category : 'Refactoring-UI-UI',
 	#package : 'Refactoring-UI',
@@ -43,7 +44,7 @@ Class {
 
 { #category : 'instance creation' }
 StRenameClassPreviewPresenter class >> withChanges: changes scopes: scopes [
-	
+
 	^ self new
 		  changesFrom: changes scopes: scopes;
 		  yourself
@@ -51,26 +52,12 @@ StRenameClassPreviewPresenter class >> withChanges: changes scopes: scopes [
 
 { #category : 'action' }
 StRenameClassPreviewPresenter >> accept [
-	
-	(self okToChange not or: [ selectedChanges isEmptyOrNil ]) ifTrue: [
-		self application newInform 
-				title: 'No changes to apply.';
-				acceptLabel: 'Close this!';
-				openDialog.
-		
-		self closeWindow ].
+
+	(nameIsValid and: [ self isPreviewPending not and: [ selectedChanges isEmptyOrNil not ] ])
+		ifFalse: [ ^ self ].
 	self performChanges.
 	self updateGlobalActiveScope.
 	self closeWindow
-]
-
-{ #category : 'action' }
-StRenameClassPreviewPresenter >> addBehaviorPanel [
-
-	behaviorMessageLabel label: driver checkBehaviorPreconditions.
-	
-	(topLayout children includes: behaviorPanel)
-		ifFalse: [ topLayout add: behaviorPanel expand: false ]
 ]
 
 { #category : 'accessing' }
@@ -93,14 +80,6 @@ StRenameClassPreviewPresenter >> buildDiffFor: aChange [
 ]
 
 { #category : 'accessing' }
-StRenameClassPreviewPresenter >> buildLeftSideDiff [
-
-	diffPresenter
-		leftText: (Smalltalk classNamed: driver oldName) definitionString;
-		rightText: ''
-]
-
-{ #category : 'accessing' }
 StRenameClassPreviewPresenter >> buttonOk [
 	^ buttonOk
 ]
@@ -120,9 +99,6 @@ StRenameClassPreviewPresenter >> changes [
 { #category : 'initialization' }
 StRenameClassPreviewPresenter >> changesFrom: aCompositeChange [
 
-	compositeChange := aCompositeChange.
-	"we keep the composite because we want to use it for performing changes later on."
-	
 	changes := aCompositeChange changesToDisplayIn: self.
 	self updateScopeList.
 	self updateChanges.
@@ -139,6 +115,8 @@ StRenameClassPreviewPresenter >> changesFrom: aCompositeChange scopes: aCollecti
 { #category : 'action' }
 StRenameClassPreviewPresenter >> closeWindow [
 
+	self invalidatePreview.
+
 	self withWindowDo: [ :window | window close ]
 ]
 
@@ -149,17 +127,17 @@ StRenameClassPreviewPresenter >> connectPresenters [
 		selection selectedItem ifNotNil: [
 			self buildDiffFor: selection selectedItem ] ].
 
-	scopeDropList whenSelectedItemChangedDo: [ :scope | 
-			self 
-				updateActiveScope; 
-				updateChanges; 
+	scopeDropList whenSelectedItemChangedDo: [ :scope |
+			self
+				updateActiveScope;
+				updateChanges;
 				updateTablePresenter ].
 
 	buttonCancel action: [ self closeWindow ].
 	buttonOk action: [ self accept ] .
 	buttonBrowseMethod action: [ self browseMethods ].
-	
-	newNameInput whenTextChangedDo: [ :text | self schedulePreviewUpdate: text ] .
+
+	newNameInput whenTextChangedDo: [ :text | self refreshPreview: text ] .
 	newNameInput whenSubmitDo: [ :text | self accept ]
 ]
 
@@ -172,38 +150,38 @@ StRenameClassPreviewPresenter >> defaultKeyboardFocus [
 { #category : 'layout' }
 StRenameClassPreviewPresenter >> defaultLayout [
 	| scopesLayout nameLayout inputLayout behaviorHeaderLayout |
-	
+
 	scopesLayout := SpBoxLayout newLeftToRight
 		vAlignCenter;
 		spacing: 5;
 		add: scopeLabel expand: false;
 		add: scopeDropList;
 		yourself.
-		
-	inputLayout := SpBoxLayout newTopToBottom 
+
+	inputLayout := SpBoxLayout newTopToBottom
 		spacing: 2;
 		add: newNameInput expand: false;
-		add: validationLabel expand: false; 
-		yourself. 
-		
-	nameLayout := SpBoxLayout newLeftToRight 
+		add: validationLabel expand: false;
+		yourself.
+
+	nameLayout := SpBoxLayout newLeftToRight
 		spacing: 5;
-		add:newNameLabel expand: false; 
+		add:newNameLabel expand: false;
 		add: inputLayout;
 		yourself.
-		
-	topLayout := SpBoxLayout newTopToBottom 
+
+	topLayout := SpBoxLayout newTopToBottom
 		spacing: 10;
 		add: nameLayout expand: false;
 		yourself.
-		
-	behaviorHeaderLayout := SpBoxLayout newLeftToRight 
+
+	behaviorHeaderLayout := SpBoxLayout newLeftToRight
 		vAlignCenter;
 		spacing: 5;
 		add: behaviorWarningIcon expand: false;
 		add: behaviorWarningTitle expand: false;
 		yourself.
-		
+
 	behaviorLayout := SpBoxLayout newTopToBottom
 		spacing: 4;
 		add: behaviorHeaderLayout;
@@ -211,7 +189,7 @@ StRenameClassPreviewPresenter >> defaultLayout [
 		add: buttonBrowseMethod expand: false;
 		yourself.
 	behaviorPanel layout: behaviorLayout.
-	
+
 	mainLayout := SpBoxLayout newTopToBottom
 		spacing: 10;
 		add: topLayout expand: false;
@@ -235,31 +213,26 @@ StRenameClassPreviewPresenter >> globalActiveScope [
 ]
 
 { #category : 'action' }
-StRenameClassPreviewPresenter >> hasWarning [
-
-	^ driver notNil and: [ driver hasFailedBehaviorPreservingPreconditions ]
-]
-
-{ #category : 'action' }
 StRenameClassPreviewPresenter >> hideBehaviorPanel [
-	
+
+	topLayout ifNil: [ ^ self ].
+
 	(topLayout children includes: behaviorPanel)
 		ifFalse: [ ^ self ].
-		
+
 	topLayout remove: behaviorPanel.
-		self rebuildLayout 
+		self rebuildLayout
 ]
 
 { #category : 'initialization' }
 StRenameClassPreviewPresenter >> initializeDialogWindow: aDialogWindowPresenter [
 
 	| applyButton |
+	aDialogWindowPresenter whenClosedDo: [ self invalidatePreview ].
 	aDialogWindowPresenter addButton: 'Cancel' do: [ :presenter |
-			self terminateUpdateProcess.
 			presenter close ].
 
 	applyButton := aDialogWindowPresenter addDefaultButton: 'Apply' do: [ :presenter |
-			               self terminateUpdateProcess.
 			               self accept.
 			               presenter close ].
 
@@ -285,39 +258,42 @@ StRenameClassPreviewPresenter >> initializePresenters [
 	scopeLabel := self newLabel label: 'Scope '.
 	scopeDropList := self newDropList.
 	scopeDropList display: [ :scope | scope description ].
-	
+
 	buttonOk := self newButton
-		label: 'Accept';
+		label: 'Apply';
 		icon: (self iconNamed: #smallOk).
 
 	buttonCancel := self newButton
 		label: 'Cancel';
 		icon: (self iconNamed: #smallCancel) .
-		
-	newNameLabel := self newLabel label: 'Selector'.
+
+	newNameLabel := self newLabel label: 'New name'.
 	newNameInput := self newTextInput.
-	
-	validationLabel := self newLabel label: '' .
-	
+
+	validationLabel := self newLabel
+		label: '';
+		addStyle: 'dim';
+		yourself.
+
 	behaviorWarningIcon := self newImage image: (self iconNamed: #warningIcon) .
 	behaviorWarningTitle := self newLabel label: 'Behavior-preserving warnings' .
 	behaviorMessageLabel := self newLabel label: ''.
 	behaviorPanel := SpPresenter new .
-	nameIsValid := false. 
-	
+	nameIsValid := false.
+
 	buttonBrowseMethod := self newButton
 		label: 'Browse affected methods';
 		icon: (self iconNamed: #search)
 ]
 
 { #category : 'accessing' }
-StRenameClassPreviewPresenter >> name [ 
+StRenameClassPreviewPresenter >> name [
 	^ name
 ]
 
 { #category : 'accessing' }
 StRenameClassPreviewPresenter >> name: aName [
-	
+
 	name := aName.
 	newNameInput text: aName
 ]
@@ -330,7 +306,7 @@ StRenameClassPreviewPresenter >> newNameInput [
 
 { #category : 'action' }
 StRenameClassPreviewPresenter >> performChanges [
-	"the following behavior should not be kept in the UI. 
+	"the following behavior should not be kept in the UI.
 	It should be moved to the driver or the refactoring itself because the driver is a model of interaction.
 	May be this should be in the refactoring."
 
@@ -342,22 +318,32 @@ StRenameClassPreviewPresenter >> performChanges [
 ]
 
 { #category : 'accessing' }
-StRenameClassPreviewPresenter >> refactoring: aRenameClassRefactoring [ 
+StRenameClassPreviewPresenter >> refactoring: aRenameClassRefactoring [
 	refactoring := aRenameClassRefactoring
 ]
 
-{ #category : 'initialization' }
-StRenameClassPreviewPresenter >> schedulePreviewUpdate: aString [
-	"Use a short delay to avoid updating the preview on every keystroke while keeping the UI responsive."
+{ #category : 'update' }
+StRenameClassPreviewPresenter >> refreshPreview: aString [
 
-	updateProcess ifNotNil: [ updateProcess terminate ].
-
-	updateProcess := [
-		                 200 milliSeconds wait.
-		                 self application defer: [
-				                 self validateName: aString.
-				                 self updateBehaviorPanelVisibility: aString.
-				                 self updateName ] ] fork
+	| request previewDriver |
+	self invalidatePreview.
+	self clearPreview.
+	(aString isEmpty or: [ aString = driver oldName asString ]) ifTrue: [ ^ self ].
+	request := Object new.
+	previewRequest := request.
+	previewDriver := driver.
+	validationLabel label: 'Preparing preview...'.
+	pendingPreview := [
+		previewRequest == request
+		ifFalse: [ [ ] ]
+		ifTrue: [
+			| result |
+			result := [
+				previewDriver previewFor: aString
+			] on: Error do: [ :error |
+				ReClassRenamePreview new errorMessage: error messageText; yourself ].
+			[ self publishPreview: result named: aString request: request ] ] ].
+	self startNextPreview
 ]
 
 { #category : 'accessing' }
@@ -373,12 +359,12 @@ StRenameClassPreviewPresenter >> selectorInput [
 	^ newNameInput
 ]
 
-{ #category : 'accessing' }
-StRenameClassPreviewPresenter >> terminateUpdateProcess [
+{ #category : 'private' }
+StRenameClassPreviewPresenter >> invalidatePreview [
 
-	updateProcess ifNotNil: [ 
-		updateProcess terminate.
-		updateProcess := nil ]
+	"Invalidate queued completions. Running computations own isolated models."
+	previewRequest := nil.
+	pendingPreview := nil
 ]
 
 { #category : 'accessing' }
@@ -392,29 +378,17 @@ StRenameClassPreviewPresenter >> updateActiveScope [
 	activeScope := scopeDropList selectedItem asRBEnvironment
 ]
 
-{ #category : 'action' }
-StRenameClassPreviewPresenter >> updateBehaviorPanelVisibility: aString [
-
-	mainLayout ifNil: [ ^ self ].
-	
-	driver newName: aString .
-	
-	self hasWarning 
-		ifTrue: [ self addBehaviorPanel ]
-		ifFalse: [ self hideBehaviorPanel ]
-]
-
 { #category : 'update' }
 StRenameClassPreviewPresenter >> updateChanges [
 
-	changes ifNil: [ changesInScope := OrderedCollection new. 
-		selectedChanges := OrderedCollection new ] 
+	changes ifNil: [ changesInScope := OrderedCollection new.
+		selectedChanges := OrderedCollection new ]
 
-	ifNotNil: [ 
+	ifNotNil: [
 		changesInScope := changes select: [ :change |
 							change isInScope: activeScope ].
 		selectedChanges := OrderedCollection withAll: changesInScope ]
-	
+
 ]
 
 { #category : 'update' }
@@ -424,27 +398,6 @@ StRenameClassPreviewPresenter >> updateGlobalActiveScope [
 ]
 
 { #category : 'update' }
-StRenameClassPreviewPresenter >> updateName [
-
-	name := newNameInput text.
-	
-	nameIsValid 
-		ifFalse: [ 
-			changes := nil.
-			compositeChange := nil.
-			self buildLeftSideDiff .
-			buttonOk disable]
-		
-		ifTrue: [ 
-			compositeChange := driver refactoring privateTransform .
-			changes := compositeChange changesToDisplayIn: self .
-			buttonOk enable] .
-		
-	self updateChanges .
-	self updateTablePresenter
-]
-
-{ #category : 'initialization' }
 StRenameClassPreviewPresenter >> updateOkButtonState [
 
 	nameIsValid
@@ -456,7 +409,7 @@ StRenameClassPreviewPresenter >> updateOkButtonState [
 StRenameClassPreviewPresenter >> updateScopeList [
 
 	scopeDropList items: scopes.
-	self globalActiveScope 
+	self globalActiveScope
 		ifNotNil: [ :scope | scopeDropList selectItem: scope ]
 		ifNil: [ scopeDropList selectFirst ]
 ]
@@ -469,31 +422,87 @@ StRenameClassPreviewPresenter >> updateTablePresenter [
 ]
 
 { #category : 'accessing' }
-StRenameClassPreviewPresenter >> validateName: aString [
-
-	| message |
-	driver newName: aString.
-	driver createAndSetNewRefactoring.
-	message := driver checkApplicabilityPreconditions.
-
-	message
-		ifNil: [
-				nameIsValid := true.
-				validationLabel label: '' ]
-		ifNotNil: [
-				nameIsValid := false.
-				validationLabel 
-					label: message;
-					addStyle: 'headerError' ]
-]
-
-{ #category : 'accessing' }
 StRenameClassPreviewPresenter >> validationLabel [
 	^ validationLabel
 ]
 
 { #category : 'accessing' }
-StRenameClassPreviewPresenter >> windowTitle [ 
-	
+StRenameClassPreviewPresenter >> windowTitle [
+
 	^ 'Refactoring changes'
+]
+
+{ #category : 'testing' }
+StRenameClassPreviewPresenter >> isPreviewPending [
+
+	^ previewRequest notNil
+]
+
+{ #category : 'private' }
+StRenameClassPreviewPresenter >> clearPreview [
+
+	nameIsValid := false.
+	changes := nil.
+	validationLabel label: ''.
+	buttonOk disable.
+	diffPresenter leftText: ''; rightText: ''.
+	self hideBehaviorPanel.
+	self updateChanges.
+	self updateTablePresenter
+]
+
+{ #category : 'private' }
+StRenameClassPreviewPresenter >> schedulePreview: aBlock [
+
+	[ 150 milliSeconds wait. aBlock value ] forkAt: Processor userBackgroundPriority
+]
+
+{ #category : 'private' }
+StRenameClassPreviewPresenter >> dispatchPreview: aBlock [
+
+	self application defer: aBlock
+]
+
+{ #category : 'private' }
+StRenameClassPreviewPresenter >> publishPreview: result named: aString request: request [
+
+	previewRequest == request ifFalse: [ ^ self ].
+	previewRequest := nil.
+	[
+		result errorMessage ifNotNil: [
+			self clearPreview.
+			validationLabel label: result errorMessage.
+			^ self ].
+		driver := result driver.
+		name := aString.
+		changes := result compositeChange changesToDisplayIn: self.
+		result warning ifNotNil: [
+			behaviorMessageLabel label: result warning.
+			topLayout ifNotNil: [ topLayout add: behaviorPanel expand: false ] ].
+		self updateChanges.
+		self updateTablePresenter.
+		validationLabel label: ''.
+		nameIsValid := true.
+		self updateOkButtonState
+	] on: Error do: [ :error |
+		self clearPreview.
+		validationLabel label: error messageText
+	]
+]
+
+{ #category : 'private' }
+StRenameClassPreviewPresenter >> startNextPreview [
+
+	| computation |
+	(previewRunning == true or: [ pendingPreview isNil ]) ifTrue: [ ^ self ].
+	computation := pendingPreview.
+	pendingPreview := nil.
+	previewRunning := true.
+	self schedulePreview: [
+		| publication |
+		publication := computation value.
+		self dispatchPreview: [
+			[ publication value ] ensure: [
+				previewRunning := false.
+				self startNextPreview ] ] ]
 ]
