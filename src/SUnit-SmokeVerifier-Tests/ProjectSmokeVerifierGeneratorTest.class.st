@@ -4,7 +4,7 @@ I test `ProjectSmokeVerifierGenerator` and, through the classes it generates, th
 ## Responsibility:
 
 - Check the generated classes: names, superclass, traits, packages checked, excluded methods kept on regeneration.
-- Check that they run every method with the pragma, report the broken ones, skip the excluded ones and close the windows opened.
+- Check that they run every method with the pragma, report the broken ones, and skip the excluded ones.
 - Check that they fail when they check nothing: missing package, no package, no method.
 
 ## Collaborators:
@@ -258,17 +258,4 @@ ProjectSmokeVerifierGeneratorTest >> testScriptTestRunsEveryScript [
 	result := (self scriptTestFor: { self fixturePackageName }) suite run.
 	self assert: result runCount equals: 2.
 	self assert: (self failingMethodsIn: result) equals: #( #scriptBreaking )
-]
-
-{ #category : 'tests - running' }
-ProjectSmokeVerifierGeneratorTest >> testWindowOpenedByScriptIsClosed [
-
-	| world before |
-	world := Smalltalk globals at: #World ifAbsent: [ ^ self skip ].
-	fixtureClass class compile: 'scriptOpeningWindow
-	<script>
-	^ SystemWindow new openInWorld' classified: #fixture.
-	before := world submorphs size.
-	self assert: (self scriptTestFor: { self fixturePackageName }) suite run runCount equals: 3.
-	self assert: world submorphs size equals: before
 ]

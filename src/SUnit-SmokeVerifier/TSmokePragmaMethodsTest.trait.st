@@ -6,7 +6,7 @@ The design is modular: no class of `SUnit-SmokeVerifier` checks anything. Each p
 ## Responsibility:
 
 - Find the class-side methods with the pragma of the test (`pragmaSelector`) in the packages to check, except the excluded ones, and give one to each test (`testParameters`).
-- Run a method on its class, closing the windows it opens (`runMethod`).
+- Run a method on its class (`runMethod`).
 - Never pass while checking nothing: `setUp` fails when there is no package to check, when one of them is not loaded (naming it), or when no method has the pragma.
 
 ## Collaborators:
@@ -36,7 +36,7 @@ ProjectSmokeVerifierGenerator new
 ### Implementation Points
 
 - `testParameters` answers an empty matrix when there is no method: `ParametrizedTestCase>>#setUp` cannot use a matrix without options. The single test is then run without method and fails in `setUp`.
-- When there is no Morphic world, `closeWindowsOpenedDuring:` only runs its block. A method opening a modal dialog blocks the test: exclude it.
+- I know nothing about user interfaces: the windows a method opens stay open. A project that wants to close them overrides `runMethod` in its generated class, in its own package. A method opening a modal dialog blocks the test: exclude it.
 "
 Trait {
 	#name : 'TSmokePragmaMethodsTest',
@@ -109,19 +109,6 @@ TSmokePragmaMethodsTest >> assertPackagesToCheckAreLoaded [
 	missing ifNotEmpty: [ self fail: ('Packages to check not loaded: {1}' format: { ', ' join: missing }) ]
 ]
 
-{ #category : 'running' }
-TSmokePragmaMethodsTest >> closeWindowsOpenedDuring: aBlock [
-	"Answer the value of aBlock, and close the windows and morphs it added to the world, if there is one."
-
-	| world before |
-	world := Smalltalk globals at: #World ifAbsent: [ ^ aBlock value ].
-	before := world submorphs copy.
-	^ aBlock ensure: [
-		world submorphs
-			reject: [ :each | before includes: each ]
-			thenDo: [ :each | each delete ] ]
-]
-
 { #category : 'accessing' }
 TSmokePragmaMethodsTest >> method [
 
@@ -136,9 +123,9 @@ TSmokePragmaMethodsTest >> method: aCompiledMethod [
 
 { #category : 'running' }
 TSmokePragmaMethodsTest >> runMethod [
-	"Answer the result of running my method on its class, closing the windows it opens."
+	"Answer the result of running my method on its class. A class using me can override it, for example to close the windows the method opens."
 
-	^ self closeWindowsOpenedDuring: [ method valueWithReceiver: method methodClass instanceSide ]
+	^ method valueWithReceiver: method methodClass instanceSide
 ]
 
 { #category : 'running' }

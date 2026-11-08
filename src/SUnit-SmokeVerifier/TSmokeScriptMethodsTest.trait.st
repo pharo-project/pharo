@@ -4,7 +4,7 @@ I am the smoke test running every class-side method with the pragma `<script>` o
 ## Responsibility:
 
 - Answer `#script` as the pragma of the methods to run.
-- Run each script, closing the windows it opens.
+- Run each script.
 
 ## Collaborators:
 
