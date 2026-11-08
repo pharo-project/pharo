@@ -194,25 +194,26 @@ RBRemoveSenderMethodParametrizedTest >> testRemoveSenderIntoCascaded3Message [
 RBRemoveSenderMethodParametrizedTest >> testRemoveSenderIntoCascadedMessage [
 
 	| refactoring classUnderRef |
-	model := self modelOnClasses: { RBClassDataForRefactoringTest . Character class}.
+	model := self modelOnClasses: {
+			         RBClassDataForRefactoringTest.
+			         Character class }.
 	classUnderRef := model classNamed: #RBClassDataForRefactoringTest.
-	refactoring := self createRefactoringWithModel: model andArguments:
-			{{(	32 to: 63) . #cr}.
-			(#called:, #on:) asSymbol .
-			#RBClassDataForRefactoringTest}.
-	refactoring classOfTheMethodToInline: classUnderRef.		
-	self proceedThroughWarning: [ 
-		self setupInlineExpressionFor: refactoring toReturn: false.
-		self
-			setupImplementorToInlineFor: refactoring
-			toReturn: (refactoring model classNamed: #RBClassDataForRefactoringTest).	
-		self executeRefactoring: refactoring ].
-	self assert: ((refactoring model classNamed: #RBClassDataForRefactoringTest) parseTreeForSelector: (#called:, #on:) asSymbol )
-		equals: (self parseMethod: 'called: anObject on: aBlock
+	refactoring := self createRefactoringWithModel: model andArguments: {
+			               {
+				               (32 to: 68).
+				               #cr }.
+			               (#called: , #on:) asSymbol.
+			               #RBClassDataForRefactoringTest }.
+	refactoring classOfTheMethodToInline: classUnderRef.
+	self proceedThroughWarning: [
+			self setupInlineExpressionFor: refactoring toReturn: false.
+			self setupImplementorToInlineFor: refactoring toReturn: (refactoring model classNamed: #RBClassDataForRefactoringTest).
+			self executeRefactoring: refactoring ].
+	self assert: ((refactoring model classNamed: #RBClassDataForRefactoringTest) parseTreeForSelector: (#called: , #on:) asSymbol) equals: (self parseMethod: 'called: anObject on: aBlock
 
 	| anObject1 |
 	anObject1 := anObject printString.
-	anObject1 traceCr.
+	anObject1 traceNewLine.
 	aBlock value')
 ]
 

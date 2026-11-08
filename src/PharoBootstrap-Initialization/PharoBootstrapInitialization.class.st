@@ -129,26 +129,26 @@ PharoBootstrapInitialization class >> initializeCommandLineHandlerAndErrorHandli
 
 	InstructionStream initialize.
 
-	'Initializing Collections' traceCr.
+	'Initializing Collections' traceNewLine.
 	CollectionElement initialize.
 	ExternalSemaphoreTable initialize.
 
-	'Initializing code model' traceCr.
+	'Initializing code model' traceNewLine.
 	CompiledMethod initialize.
 	Slot initialize.
 	Behavior initialize.
 	Class initialize.
 	Package initialize.
 
-	'Initializing sources' traceCr.
+	'Initializing sources' traceNewLine.
 	SourcesManager initialize.
 
-	'Initializing Session Manager' traceCr.
+	'Initializing Session Manager' traceNewLine.
 	SessionManager initialize.
 	SessionManager initializeKernelRegistrations.
 
 
-	'Initializing basic command line behaviors' traceCr.
+	'Initializing basic command line behaviors' traceNewLine.
 	"Initialize basic command line behaviour"
 	NonInteractiveTranscript initialize.
 	PerformMessageCommandLineHandler registerAsCommandLinehandler.

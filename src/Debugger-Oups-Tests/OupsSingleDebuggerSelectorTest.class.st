@@ -17,7 +17,7 @@ OupsSingleDebuggerSelectorTest >> setUp [
 	super setUp.
 	debuggers := OupsDummyDebugger dummyDebuggerList.
 	debuggerSelector := OupsSingleDebuggerSelector with: debuggers copy.
-	('Running: ' , testSelector asString , ' from ' , self class name) traceCr.
+	('Running: ' , testSelector asString , ' from ' , self class name) traceNewLine.
 ]
 
 { #category : 'running' }

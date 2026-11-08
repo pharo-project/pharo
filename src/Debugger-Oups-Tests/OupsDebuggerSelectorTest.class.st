@@ -23,7 +23,7 @@ OupsDebuggerSelectorTest >> setUp [
 	debuggers := OupsDummyDebugger dummyDebuggerList.
 	debuggerSelector := OupsDebuggerSelector with: debuggers copy.
 	debuggerSelector handlesDebuggerErrors: false.
-	('Running: ' , testSelector asString , ' from ' , self class name) traceCr.
+	('Running: ' , testSelector asString , ' from ' , self class name) traceNewLine.
 ]
 
 { #category : 'running' }
