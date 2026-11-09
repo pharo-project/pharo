@@ -47,10 +47,10 @@ NonInteractiveTranscriptTest >> testSimple [
 
 { #category : 'tests' }
 NonInteractiveTranscriptTest >> testStderr [
-	NonInteractiveTranscript stderr << 'Pharo writing to the standard error'; cr; flush
+	NonInteractiveTranscript stderr << 'Pharo writing to the standard error'; newLine; flush
 ]
 
 { #category : 'tests' }
 NonInteractiveTranscriptTest >> testStdout [
-	NonInteractiveTranscript stdout << 'Pharo writing to the standard output'; cr; flush
+	NonInteractiveTranscript stdout << 'Pharo writing to the standard output'; newLine; flush
 ]
