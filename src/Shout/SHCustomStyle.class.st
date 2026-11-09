@@ -27,22 +27,18 @@ SHCustomStyle class >> colorForGroup: groupName [
 
 { #category : 'class initialization' }
 SHCustomStyle class >> copyFromCurrentStyle [
-
 	SHRBTextStyler styleTable do: [ :row |
 			| token |
 			token := row first.
-			groups
-				detect: [ :entry | token = (entry at: 'tokens') first ]
-				ifFound: [ :entry |
-						| colorDesc emphasis |
-						colorDesc := row second.
-						emphasis := #normal.
-						row size >= 3 ifTrue: [ emphasis := row third ].
-						(emphasis isKindOf: Symbol) ifFalse: [
-							emphasis := (' ' join: emphasis) asSymbol ].
-						entry at: 'color' put: (Color colorFrom: colorDesc).
-						entry at: 'emphasis' put: emphasis ] ].
-	SettingBrowser refreshAllSettingBrowsers
+			groups detect: [ :entry | token = (entry at: 'tokens') first ] ifFound: [ :entry |
+					| colorDesc emphasis |
+					colorDesc := row second.
+					emphasis := #normal.
+					row size >= 3 ifTrue: [ emphasis := row third ].
+					(emphasis isKindOf: Symbol) ifFalse: [ emphasis := (' ' join: emphasis) asSymbol ].
+					(entry at: 'style')
+						color: (Color colorFrom: colorDesc) ;
+						emphasis: emphasis ] ].
 ]
 
 { #category : 'private' }
@@ -55,6 +51,22 @@ SHCustomStyle class >> defaultColor [
 SHCustomStyle class >> defaultEmphasis [
 
 	^ #normal
+]
+
+{ #category : 'reflective operations' }
+SHCustomStyle class >> doesNotUnderstand: aMessage [
+	"Handles messages of the form #defaultStyle or #argumentStyle: "
+
+	(aMessage selector endsWith: 'Style') ifTrue: [
+			^ (self groups at: (aMessage selector withoutSuffix: 'Style') asSymbol) at: 'style' ].
+	(aMessage selector endsWith: 'Style:') ifTrue: [
+			| style |
+			style := aMessage argument.
+			((self groups at: ((aMessage selector withoutSuffix: 'Style:') asSymbol)) at: 'style')
+				color: style color ;
+				emphasis: style emphasis.
+			^ self ].
+	^ super doesNotUnderstand: aMessage
 ]
 
 { #category : 'accessing' }
@@ -168,9 +180,41 @@ SHCustomStyle class >> groups [
 SHCustomStyle class >> initialize [
 
 	groups := self groupDefaults.
-	groups do: [ :entry |
-			entry at: 'color' put: self defaultColor.
-			entry at: 'emphasis' put: self defaultEmphasis ].
+	groups keysAndValuesDo: [ :key :entry | | styleElement |
+			styleElement := SHStyleElement new 
+					group: key ;
+					color: self defaultColor ;
+					emphasis: self defaultEmphasis ;
+					yourself.
+			entry at: 'style' put: styleElement.
+			styleElement when: #changed send: #styleElementChanged to: self ].
+]
+
+{ #category : 'settings' }
+SHCustomStyle class >> settingsOn: aBuilder [
+
+	<systemsettings>
+	(aBuilder group: 'Edit Custom Style')
+		parentName: 'Syntax Highlighting';
+		description: 'Change the Custom style to your liking.  You have to activate it for your changes to take effect.';
+		with: [
+				(aBuilder button: #copyFromCurrentStyle)
+					order: 0;
+					description: 'Initialize custom style to colors of the currently selected them';
+					target: self;
+					label: 'Copy from current style';
+					buttonLabel: 'Copy'.
+				self groups keysAndValuesDo: [ :group :info |
+						(aBuilder setting: group , 'Style')
+							target: self;
+							label: (info at: 'label');
+							description: (info at: 'description' ifAbsent: [ '' ]) ] ]
+]
+
+{ #category : 'updating' }
+SHCustomStyle class >> styleElementChanged [
+
+	self triggerEvent: #changed
 ]
 
 { #category : 'accessing' }
@@ -179,12 +223,14 @@ SHCustomStyle class >> styleTable [
 	^ groups flatCollect: [ :entry |
 			  (entry at: 'tokens') collect: [ :token |
 					  | emphasis |
-					  emphasis := entry at: 'emphasis'.
-					  (emphasis includes: Character space) ifTrue: [
-						  emphasis := (emphasis substrings: ' ') collect: [ :str |
-							              str asSymbol ] ].
+					  emphasis := (entry at: 'style') emphasis.
+					  emphasis := (emphasis includes: Character space) 
+							ifTrue: [
+						  		(emphasis substrings: ' ') collect: [ :str |
+							              str asSymbol ] ]
+							ifFalse: [ emphasis asSymbol ].
 					  {
 						  token.
-						  (entry at: 'color').
+						  (entry at: 'style') color.
 						  emphasis } ] ]
 ]
