@@ -23,10 +23,11 @@ OCAnnouncingMethodInstaller >> addAndClassifyMethod: compiledMethod into: behavi
 	super addAndClassifyMethod: compiledMethod into: behavior.
 	
 	"Protocols are set even for anonymous classes"
-
 	oldProtocol := behavior protocolOfSelector: selector.
 	(self codeChangeAnnouncerFor: behavior) prevent: MethodRecategorized during: [ behavior classify: selector under: protocol ]. "If anonymous, do not announce any change."
 	behavior isAnonymous ifTrue: [ ^ self ].
+	
+	behavior environment recordSelector: compiledMethod selector asSymbol.
 
 	newProtocol := behavior protocolOfSelector: selector.
 	
