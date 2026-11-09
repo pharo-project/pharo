@@ -71,18 +71,10 @@ ZnPercentEncoder >> decode: stringStream to: byteStream [
 				ifFalse: [
 					char == $%
 						ifTrue: [ byteStream nextPut: (self readHexFrom: stringStream) ]
-						ifFalse: [ self decodeChar: char toByteStream: byteStream ] ] ]
-]
-
-{ #category : 'private' }
-ZnPercentEncoder >> decodeChar: char toByteStream: byteStream [
-	char charCode < 128
-		ifTrue: [ 
-			byteStream nextPut: char charCode ]
-		ifFalse: [
-			self urlAsIri
-				ifTrue: [ self characterEncoder nextPut: char toStream: byteStream ]
-				ifFalse: [ self errorAsciiCharacterExpected ] ]
+						ifFalse: [
+							char charCode < 128
+								ifTrue: [ byteStream nextPut: char charCode ]
+								ifFalse: [ self errorAsciiCharacterExpected ] ] ] ]
 ]
 
 { #category : 'accessing' }
@@ -116,28 +108,6 @@ ZnPercentEncoder >> encode: string [
 
 { #category : 'converting' }
 ZnPercentEncoder >> encode: readStream to: writeStream [
-	self urlAsIri
-		ifTrue: [ self encodeAsIri: readStream to: writeStream ]
-		ifFalse: [ self encodeAsUrl: readStream to: writeStream ]
-]
-
-{ #category : 'converting' }
-ZnPercentEncoder >> encodeAsIri: readStream to: writeStream [
-	| character codePoint |
-	[ readStream atEnd ]
-		whileFalse: [
-			character := readStream next.
-			codePoint := character codePoint.
-			((self safeSet includes: codePoint) or: [ codePoint > 16rA0 ])
-				ifTrue: [ 
-					writeStream nextPut: character ]
-				ifFalse: [ 
-					writeStream nextPut: $%.
-					self writeHex: codePoint to: writeStream ] ]
-]
-
-{ #category : 'converting' }
-ZnPercentEncoder >> encodeAsUrl: readStream to: writeStream [
 	| bytes buffer byte |
 	buffer := (bytes := ByteArray new: 4) writeStream.
 	self safeSet; characterEncoder.
@@ -186,11 +156,6 @@ ZnPercentEncoder >> safeSet: string [
 	"Set my safe set to be the characters in string, which I will convert to bytes"
 
 	safeSet := string asByteArray
-]
-
-{ #category : 'private' }
-ZnPercentEncoder >> urlAsIri [
-	^ ZnCurrentOptions at: #urlAsIri
 ]
 
 { #category : 'private' }

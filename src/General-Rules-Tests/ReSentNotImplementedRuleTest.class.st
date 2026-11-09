@@ -37,5 +37,5 @@ ReSentNotImplementedRuleTest >> testRule [
 	critiques := self myCritiques.
 
 	self assert: critiques size equals: 3.
-	self assert: (self sourceAtChritique:  critiques third) equals: '88 whatShallIDoNow'
+	self assert: (self sourceAtCritique:  critiques third) equals: '88 whatShallIDoNow'
 ]

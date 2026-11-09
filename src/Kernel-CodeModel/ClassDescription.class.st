@@ -666,7 +666,8 @@ ClassDescription >> package [
 { #category : 'accessing - packages' }
 ClassDescription >> package: aPackage [
 
-	^ (self packageOrganizer ensurePackage: aPackage) addClass: self
+	(self packageOrganizer ensurePackage: aPackage) addClass: self.
+	^ self 
 ]
 
 { #category : 'accessing - packages' }
@@ -766,13 +767,6 @@ ClassDescription >> protocols [
 ClassDescription >> protocols: aCollection [
 	
 	protocols := aCollection
-]
-
-{ #category : 'compiling' }
-ClassDescription >> reformatAll [
-	"Reformat all methods in this class"
-
-	self methods do: [ :method | method reformat ]
 ]
 
 { #category : 'protocols' }

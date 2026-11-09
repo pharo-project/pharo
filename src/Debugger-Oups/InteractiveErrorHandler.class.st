@@ -24,7 +24,7 @@ InteractiveErrorHandler >> handleError: anError log: shouldLog [
 { #category : 'error handling' }
 InteractiveErrorHandler >> handleNotification: aNotification [
 
-	aNotification messageText traceCr.
+	aNotification messageText traceNewLine.
 	aNotification resume
 ]
 

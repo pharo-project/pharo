@@ -47,20 +47,13 @@ ZnUTF16Encoder >> backOnStream: stream [
 			self back16BitWordOnStream: stream ]
 ]
 
-{ #category : 'accessing' }
-ZnUTF16Encoder >> byteOrderMarkLE [
-	"My little endian sequence of the Unicode BOM. See #byteOrderMark"
-	
-	^ 16rFFFE
-]
-
 { #category : 'encoding - decoding' }
 ZnUTF16Encoder >> encodedByteCountForCodePoint: codePoint [
 	"Return how many bytes are needed to encode integer code point"
 
 	codePoint <= 65535 ifTrue: [ ^ 2 ].
 	codePoint <= self maximumUTFCode ifTrue: [ ^ 4 ].
-	^ self errorOutsideRangeByteCount: codePoint
+	self errorOutsideRange
 ]
 
 { #category : 'encoding - decoding' }
@@ -81,17 +74,34 @@ ZnUTF16Encoder >> ensureAtBeginOfCodePointOnStream: stream [
 			self back16BitWordOnStream: stream ]
 ]
 
-{ #category : 'encoding - decoding' }
-ZnUTF16Encoder >> forwardOnStream: stream [
-	"Move forward one character on stream"
+{ #category : 'error handling' }
+ZnUTF16Encoder >> errorIncomplete [
+	self error: 'Incomplete utf-16 encoding'
+]
 
-	| firstUnit |
-	"Read the first 16-bit code unit because character are on 2 or 4 bytes."
-	firstUnit := self read16BitWordFromStream: stream.
+{ #category : 'encoding - decoding' }
+ZnUTF16Encoder >> forwardOnStream: aStream [
+	"Move the stream forward by one Unicode character encoded in UTF‑16."
+
+	| firstUnit lowByte highByte |
+	
+	"Read the first 16‑bit code unit because character are on 2 or 4 bytes."
+	lowByte := aStream next ifNil: [ self error: 'Cannot move forward once at the end' ].
+	highByte := aStream next ifNil: [ self error: 'Cannot move forward once at the end' ].
+
+	firstUnit := self isBigEndian
+		             ifTrue: [  (lowByte bitShift: 8) + highByte ] "BE: high byte first"
+		             ifFalse: [ (highByte bitShift: 8) + lowByte ]. "LE: low byte first"
+		
 	"If we have a surrogate code point, we need to read two more bytes."	
-	(self isSurrogateCodePoint: firstUnit) ifFalse: [ ^ self ].
-	stream next ifNil: [ self errorIncompleteFrom: stream ].
-	stream next ifNil: [ self errorIncompleteFrom: stream ]
+	(self isSurrogateCodePoint: firstUnit) ifTrue: [
+			lowByte := aStream next ifNil: [ self error: 'Last character is truncated' ].
+			highByte := aStream next ifNil: [ self error: 'Last character is truncated' ] ]
+]
+
+{ #category : 'accessing' }
+ZnUTF16Encoder >> identifier [
+	^ #utf16
 ]
 
 { #category : 'testing' }
@@ -107,7 +117,7 @@ ZnUTF16Encoder >> nextCodePointFromStream: stream [
 
 	| word leadSurrogate trailSurrogate code |
 	word := self read16BitWordFromStream: stream.
-	((self processByteOrderMark: word) and: [ self ignoreByteOrderMark ])
+	(self processByteOrderMark: word)
 		ifTrue: [ word := self read16BitWordFromStream: stream ].
 	^ (word < 16rD800 or: [ word > 16rDBFF ])
 		ifTrue: [
@@ -124,8 +134,7 @@ ZnUTF16Encoder >> nextPutCodePoint: codePoint toStream: stream [
 	"Write the encoding for integer code point to stream"
 
 	| leadSurrogate trailSurrogate shifted |
-	(self isSurrogateCodePoint: codePoint) 
-		ifTrue: [ ^ self errorOutsideRange: codePoint to: stream ].
+	(self isSurrogateCodePoint: codePoint) ifTrue: [ self errorOutsideRange ].
 	codePoint <= 65535
 		ifTrue: [
 			^ self write16BitWord: codePoint toStream: stream ].
@@ -137,14 +146,14 @@ ZnUTF16Encoder >> nextPutCodePoint: codePoint toStream: stream [
 			self write16BitWord: leadSurrogate toStream: stream.
 			self write16BitWord: trailSurrogate toStream: stream ]
 		ifFalse: [
-			^ self errorOutsideRange: codePoint to: stream ]
+			self errorOutsideRange ]
 ]
 
 { #category : 'private' }
 ZnUTF16Encoder >> processByteOrderMark: word [
-	^ (word = self byteOrderMark or: [ word = self byteOrderMarkLE ])
+	^ (word = 16rFEFF or: [ word = 16rFFFE ])
 		ifTrue: [
-			word = self byteOrderMarkLE 
+			word = 16rFFFE
 				ifTrue: [ self swapEndianness ].
 			true ]
 		ifFalse: [ false ]
@@ -156,7 +165,7 @@ ZnUTF16Encoder >> read16BitWordFromStream: stream [
 	firstByte := stream next.
 	secondByte := stream next.
 	(firstByte isNil or: [ secondByte isNil ])
-		ifTrue: [ ^ self errorIncompleteFrom: stream ].
+		ifTrue: [ ^ self errorIncomplete ].
 	^ self isBigEndian
 		ifTrue: [ secondByte + (firstByte << 8) ]
 		ifFalse: [ firstByte + (secondByte << 8) ]

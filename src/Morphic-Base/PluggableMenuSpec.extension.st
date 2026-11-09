@@ -34,7 +34,7 @@ PluggableMenuSpec class >> exampleWithOneSingleItem [
 	s := (self withModel: nil) label: 'Hello'.
 	s
 		add: 'Print Hello'
-		action: (MessageSend receiver: [ self traceCr: 'Hello' ] selector: #value).
+		action: (MessageSend receiver: [ self traceNewLine: 'Hello' ] selector: #value).
 	s asMenuMorph popUpInWorld
 ]
 
@@ -46,7 +46,7 @@ PluggableMenuSpec class >> exampleWithTwoSimpleItems [
 	s := (self withModel: Object) label: 'Hello'.
 	s
 		add: 'Print Hello'
-		action: (MessageSend receiver: [ self traceCr: 'Hello' ] selector: #value).
+		action: (MessageSend receiver: [ self traceNewLine: 'Hello' ] selector: #value).
 	s
 		add: 'Print Hello again'
 		selector: #trace:

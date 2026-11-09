@@ -10,7 +10,7 @@ Internal Representation and Key Implementation Points.
 "
 Class {
 	#name : 'SycMoveMethodsToPackageCommand',
-	#superclass : 'SycMethodRepackagingCommand',
+	#superclass : 'SycMethodRepackagingCmCommand',
 	#instVars : [
 		'package'
 	],
@@ -24,22 +24,23 @@ SycMoveMethodsToPackageCommand class >> for: methods to: aPackage [
 		package: aPackage
 ]
 
-{ #category : 'accessing' }
-SycMoveMethodsToPackageCommand >> defaultMenuIconName [
-	^ #smallRedo
-]
-
-{ #category : 'accessing' }
-SycMoveMethodsToPackageCommand >> defaultMenuItemName [
-	^'Move to package'
-]
-
 { #category : 'execution' }
-SycMoveMethodsToPackageCommand >> execute [
+SycMoveMethodsToPackageCommand >> executeRefactoring [
 
-	methods do: [ :each |
-		self moveMethod: each toPackage: package.
-		each origin removeEmptyProtocols ]
+	self methods do: [ :method |
+			self moveMethod: method toPackage: package.
+			method origin removeEmptyProtocols ]
+]
+
+{ #category : 'accessing' }
+SycMoveMethodsToPackageCommand >> icon [
+
+	^ self iconNamed: #smallRedo
+]
+
+{ #category : 'accessing' }
+SycMoveMethodsToPackageCommand >> iconName [
+	^ #smallRedo
 ]
 
 { #category : 'execution' }
@@ -54,6 +55,18 @@ SycMoveMethodsToPackageCommand >> moveMethod: aMethod toPackage: aPackage [
 ]
 
 { #category : 'accessing' }
+SycMoveMethodsToPackageCommand >> name [
+
+	^ 'Move to package'
+]
+
+{ #category : 'accessing' }
+SycMoveMethodsToPackageCommand >> order [
+
+	^ 70
+]
+
+{ #category : 'accessing' }
 SycMoveMethodsToPackageCommand >> package [
 	^ package
 ]
@@ -63,15 +76,10 @@ SycMoveMethodsToPackageCommand >> package: anObject [
 	package := anObject
 ]
 
-{ #category : 'execution' }
-SycMoveMethodsToPackageCommand >> prepareExecutionInDropContext: aToolContext [
-	super prepareExecutionInDropContext: aToolContext.
-	package := aToolContext lastSelectedPackage
-]
-
-{ #category : 'execution' }
-SycMoveMethodsToPackageCommand >> prepareFullExecutionInContext: aToolContext [
-	super prepareFullExecutionInContext: aToolContext.
-
-	package := aToolContext requestSinglePackage: 'Choose package'
+{ #category : 'executing' }
+SycMoveMethodsToPackageCommand >> prepareFullExecution [
+	super prepareFullExecution.
+	package := self dropContext
+		ifNil: [ self context requestSinglePackage: 'Choose package' ]
+		ifNotNil: [ :drop | drop lastSelectedPackage ]
 ]

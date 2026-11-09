@@ -23,18 +23,6 @@ ClyRunTestsFromMethodsCommand class >> contextClass [
 	^ClyMethod asCalypsoItemContext
 ]
 
-{ #category : 'execution' }
-ClyRunTestsFromMethodsCommand >> defaultMenuIconName [
-
-	| fullResult |
-	fullResult := self testResult.
-	runTestCases do: [ :each |
-		fullResult concreteResultOf: runTestCases first ifPresent: [:testResult |
-			^testResult iconName ]].
-
-	^fullResult iconName
-]
-
 { #category : 'accessing' }
 ClyRunTestsFromMethodsCommand >> description [
 
@@ -42,15 +30,20 @@ ClyRunTestsFromMethodsCommand >> description [
 ]
 
 { #category : 'execution' }
-ClyRunTestsFromMethodsCommand >> execute [
-	testItems do: [:each | self runTestItem: each ]
+ClyRunTestsFromMethodsCommand >> executeRefactoring [
+	self testItems do: [:each | self runTestItem: each ]
 ]
 
 { #category : 'execution' }
-ClyRunTestsFromMethodsCommand >> readParametersFromContext: aToolContext [
-	super readParametersFromContext: aToolContext.
+ClyRunTestsFromMethodsCommand >> iconName [
 
-	runTestCases := aToolContext selectedClasses
+	| fullResult |
+	fullResult := self testResult.
+	self runTestCases do: [ :each |
+		fullResult concreteResultOf: self runTestCases first ifPresent: [:testResult |
+			^testResult iconName ]].
+
+	^fullResult iconName
 ]
 
 { #category : 'execution' }
@@ -62,6 +55,11 @@ ClyRunTestsFromMethodsCommand >> runTest: testSelector of: testClass [
 	self
 		notifyUserAboutResults: testResult
 		with: 'Method: ' , testClass asString , '>>#' , testSelector asString
+]
+
+{ #category : 'accessing' }
+ClyRunTestsFromMethodsCommand >> runTestCases [
+	^ runTestCases ifNil: [ self context ifNotNil: [ :ctx | ctx selectedClasses ] ]
 ]
 
 { #category : 'execution' }
@@ -80,7 +78,7 @@ ClyRunTestsFromMethodsCommand >> targetTestCasesFor: testItem [
 	itemTestCases := IdentitySet new.
 	fullResult := self testResultOf: testItem.
 
-	runTestCases do: [:each |
+	self runTestCases do: [:each |
 		fullResult concreteResultOf: each ifPresent: [ :concreteResult |
 			itemTestCases add: each ]].
 

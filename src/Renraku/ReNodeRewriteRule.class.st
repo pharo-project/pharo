@@ -1,19 +1,61 @@
 "
-The base rule for smalltalk code match & rewrite rules. The rule operates on AST nodes.
+I am the base rule for code match and rewrite rules: I report the AST nodes matching rewrite expressions and my critiques propose a change rewriting them. The Quality Assistant offers to apply it automatically.
 
-Use the following methods in the initialization to setup your subclass:
+For example, `ReAsOrderedCollectionNotNeededRule` reports
 
-- replace:with:
-- addMatchingExpression:rewriteTo:
-	add a ""from->to"" pair of strings that represent a rewrite expression string to match and a rewrite expression to replace the matched node.
+```
+aCollection addAll: anArray asOrderedCollection
+```
 
-- addMatchingMethod:rewriteTo: 
-	same as the previous, but the rewrite expression are parsed as method definitions
+and proposes to rewrite it as `aCollection addAll: anArray`, since `addAll:` accepts any collection.
 
-- replace:by:
-- addMatchingExpression:rewriteWith:
-	add 	a ""from->to"" pair, first element of which is a rewrite expression in a form of a string that is used to match nodes. The second parameter is a block that has to return a node which should replace the matched one. The block may accept 2 atguments: the matched node, and a dictionary of wildcard variables mapping. 
-	
+## Responsibility:
+
+- Hold the pairs (expression to match, rewrite) defined in my `initialize` method.
+- Report a `ReReplaceNodeCritique`, which provides the change, for each matching node accepted by `afterCheck:mappings:`.
+
+## Collaborators: 
+
+- `OCParser`: parses my rewrite expressions into pattern nodes, which match and rewrite the checked nodes.
+- `ReSmalllintChecker` and `ReCriticEngine`: give me the nodes of the methods to check (on a copy of the AST).
+
+## Public API and Key Messages
+
+Use the following methods in `initialize` to set up a subclass:
+
+- `replace:with:` (or `addMatchingExpression:rewriteTo:`): a rewrite expression to match and the rewrite expression replacing it.
+- `replaceMethod:with:` (or `addMatchingMethod:rewriteTo:`): same, parsed as methods.
+- `replace:byEvaluating:` (or `addMatchingExpression:rewriteWith:`): a rewrite expression to match and a block answering the node replacing the matched one. The block may accept 2 arguments: the matched node and the dictionary of wildcard mappings.
+- `addMatchingMethod:rewriteWith:`: same, parsed as a method.
+
+Override `afterCheck: aNode mappings: aDictionary` to validate a match.
+
+```
+initialize
+	super initialize.
+	self
+		replace: '``@receiver addAll: ``@arg asOrderedCollection'
+		with: '``@receiver addAll: ``@arg'
+```
+
+Run me on a class or a package with `ReSmalllintChecker`:
+
+```
+| rule checker |
+rule := ReAsOrderedCollectionNotNeededRule new.
+checker := ReSmalllintChecker new
+	rule: { rule };
+	environment: (PackageOrganizer default packageNamed: 'Kernel') asEnvironment;
+	yourself.
+checker run.
+checker criticsOf: rule
+```
+
+Replace the environment by `Point asEnvironment` to check one class.
+
+## Internal Representation
+
+- `matches`: a dictionary mapping the pattern nodes to match to their rewrites (pattern nodes or block wrappers).
 "
 Class {
 	#name : 'ReNodeRewriteRule',

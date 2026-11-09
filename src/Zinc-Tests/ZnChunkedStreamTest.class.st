@@ -5,11 +5,6 @@ Class {
 	#package : 'Zinc-Tests'
 }
 
-{ #category : 'accessing' }
-ZnChunkedStreamTest class >> defaultTimeLimit [
-	^15 seconds
-]
-
 { #category : 'private' }
 ZnChunkedStreamTest >> nextPutAll: collection on: stream chunked: size [
 	| written |
@@ -42,7 +37,10 @@ ZnChunkedStreamTest >> testBinaryWriteRead [
 { #category : 'testing' }
 ZnChunkedStreamTest >> testGzipWriteRead [
 	| data written read |
-	data := (String loremIpsum: 16*1024) utf8Encoded.
+	data := String streamContents: [ :out |
+		{ Collection. Stream. Exception. Magnitude } do: [ :cls |
+			cls allSubclassesDo: [ :each | out nextPutAll: each comment ] ] ].
+	data := data asByteArray.
 	written := ByteArray streamContents: [ :out |
 		| stream chunkedStream |
 		stream := GZipWriteStream on: (chunkedStream := ZnChunkedWriteStream on: out).

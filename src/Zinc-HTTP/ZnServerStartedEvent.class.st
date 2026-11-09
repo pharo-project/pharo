@@ -26,6 +26,5 @@ ZnServerStartedEvent >> description: anObject [
 { #category : 'printing' }
 ZnServerStartedEvent >> printContentsOn: stream [
 	super printContentsOn: stream.
-
-	description ifNotNil: [ stream << 'Started '; << description ]
+	stream << 'Started '; << description
 ]

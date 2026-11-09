@@ -93,11 +93,6 @@ ZnBivalentWriteStream >> on: writeStream [
 ]
 
 { #category : 'accessing' }
-ZnBivalentWriteStream >> print: object [
-	object printOn: self
-]
-
-{ #category : 'accessing' }
 ZnBivalentWriteStream >> space [
 	self nextPut: Character space
 ]

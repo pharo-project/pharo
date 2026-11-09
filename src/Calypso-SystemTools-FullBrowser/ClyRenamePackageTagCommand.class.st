@@ -11,7 +11,7 @@ Internal Representation and Key Implementation Points.
 "
 Class {
 	#name : 'ClyRenamePackageTagCommand',
-	#superclass : 'CmdCommand',
+	#superclass : 'SycPackageCommand',
 	#instVars : [
 		'package',
 		'newName',
@@ -28,28 +28,16 @@ ClyRenamePackageTagCommand class >> canBeExecutedInContext: aToolContext [
 ]
 
 { #category : 'activation' }
-ClyRenamePackageTagCommand class >> fullBrowserMenuActivation [
-	<classAnnotation>
-
-	^CmdContextMenuActivation byRootGroupItemOrder: 1 for: ClyFullBrowserClassGroupContext
-]
-
-{ #category : 'activation' }
 ClyRenamePackageTagCommand class >> fullBrowserShortcutActivation [
 	<classAnnotation>
 
-	^CmdShortcutActivation renamingFor: ClyFullBrowserClassGroupContext
+	^ClyShortcutActivation renamingFor: ClyFullBrowserClassGroupContext
 ]
 
 { #category : 'execution' }
-ClyRenamePackageTagCommand >> applyResultInContext: aToolContext [
-	super applyResultInContext: aToolContext.
-	aToolContext showPackage: package tag: newName
-]
-
-{ #category : 'accessing' }
-ClyRenamePackageTagCommand >> defaultMenuItemName [
-	^'Rename'
+ClyRenamePackageTagCommand >> applyCommandResult [
+	super applyCommandResult.
+	self context showPackage: package tag: newName
 ]
 
 { #category : 'accessing' }
@@ -59,9 +47,20 @@ ClyRenamePackageTagCommand >> description [
 ]
 
 { #category : 'execution' }
-ClyRenamePackageTagCommand >> execute [
+ClyRenamePackageTagCommand >> executeRefactoring [
 
 	packageTag renameTagTo: newName
+]
+
+{ #category : 'testing' }
+ClyRenamePackageTagCommand >> isAvailableInMenuOf: aToolContext [
+
+	^ aToolContext isFullBrowserClassGroupContext
+]
+
+{ #category : 'accessing' }
+ClyRenamePackageTagCommand >> name [
+	^'Rename'
 ]
 
 { #category : 'accessing' }
@@ -75,6 +74,12 @@ ClyRenamePackageTagCommand >> newName: anObject [
 ]
 
 { #category : 'accessing' }
+ClyRenamePackageTagCommand >> order [
+
+	^ 1
+]
+
+{ #category : 'accessing' }
 ClyRenamePackageTagCommand >> package [
 	^ package
 ]
@@ -85,14 +90,11 @@ ClyRenamePackageTagCommand >> package: anObject [
 ]
 
 { #category : 'execution' }
-ClyRenamePackageTagCommand >> prepareFullExecutionInContext: aToolContext [
-	super prepareFullExecutionInContext: aToolContext.
+ClyRenamePackageTagCommand >> prepareFullExecution [
 
-	package := aToolContext lastSelectedPackage.
-	packageTag := aToolContext lastSelectedClassGroup.
-	newName := self morphicUIManager
-		request: 'New name of the class tag'
-		initialAnswer: packageTag name
-		title: 'Rename a class tag'.
-	newName isEmptyOrNil | (newName = packageTag name) ifTrue: [ CmdCommandAborted signal]
+	super prepareFullExecution.
+	package := self context lastSelectedPackage.
+	packageTag := self context lastSelectedClassGroup.
+	newName := self morphicUIManager request: 'New name of the class tag' initialAnswer: packageTag name title: 'Rename a class tag'.
+	newName isEmptyOrNil | (newName = packageTag name) ifTrue: [ CmCommandAborted signal ]
 ]

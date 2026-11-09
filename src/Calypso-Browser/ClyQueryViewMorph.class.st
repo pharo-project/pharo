@@ -127,13 +127,21 @@ Class {
 }
 
 { #category : 'accessing' }
+ClyQueryViewMorph class >> defaultDragAndDropDelay [
+
+	^ 1500
+]
+
+{ #category : 'accessing' }
 ClyQueryViewMorph class >> dragAndDropDelay [
 	"Modified by settings CodeBrowsing/Calypso: self classSide >> #settingsDragAndDropDelayOn:"
-	^ DragAndDropDelay
+
+	^ DragAndDropDelay ifNil: [ self defaultDragAndDropDelay ]
 ]
 
 { #category : 'accessing' }
 ClyQueryViewMorph class >> dragAndDropDelay: aNumber [
+
 	DragAndDropDelay := aNumber
 ]
 
@@ -149,7 +157,7 @@ ClyQueryViewMorph class >> settingsDragAndDropDelayOn: aBuilder [
 	<systemsettings>
 	(aBuilder setting: #dragAndDropDelay)
 		parentName: #Calypso;
-		defaultValue: 1500;
+		defaultValue: self defaultDragAndDropDelay;
 		label: 'DragAndDrop delay (ms)';
 		description: 'Delay to extend the list of item in the target of a drag and drop.
 For example drag and drop on a package which contains tag will be extended after dragAndDropDelay miliseconds.
@@ -239,7 +247,7 @@ ClyQueryViewMorph >> createDragPassengerFor: aSelection [
 	| context |
 	context := self createSelectionContextOf: aSelection.
 
-	^CmdDragAndDropActivation createDragPassengerInContext: context
+	^ClyDragAndDropActivation createDragPassengerInContext: context
 ]
 
 { #category : 'context' }
@@ -603,7 +611,7 @@ ClyQueryViewMorph >> itemsChangedIn: aDataSource [
 { #category : 'keymapping' }
 ClyQueryViewMorph >> kmDispatcher [
 
-	^ CmdKMDispatcher attachedTo: self
+	^ ClyKMDispatcher attachedTo: self
 ]
 
 { #category : 'accessing' }
@@ -613,15 +621,15 @@ ClyQueryViewMorph >> mainColumn [
 	^ table columns detect: #isMainColumn
 ]
 
-{ #category : 'menu building' }
+{ #category : 'menu' }
 ClyQueryViewMorph >> menuColumn: column row: rowIndex [
-
+	"The context menu of a query row: the activations of the context and the pure commands of its context, as the Commander2 tree."
 	| menuSelection context |
 	menuSelection := self grabSelectionAt: rowIndex.
-
 	context := self createSelectionContextOf: menuSelection.
-
-	^CmdContextMenuActivation buildContextMenuFor: self inContext: context
+	^ ClyCommandGroupMenuRenderer new
+		renderTree: (ClyCommandGroupBuilder new buildMenuFor: ClyContextMenuActivation context: context pureRoots: context commanderCommandClasses)
+		on: self
 ]
 
 { #category : 'accessing' }
@@ -887,13 +895,13 @@ ClyQueryViewMorph >> treeStructure: anObject [
 { #category : 'event handling' }
 ClyQueryViewMorph >> triggerClickCommands [
 
-	CmdClickActivation executeCommandInContext: self createSelectionContext
+	ClyClickActivation executeCommandInContext: self createSelectionContext
 ]
 
 { #category : 'event handling' }
 ClyQueryViewMorph >> triggerDoubleClickCommands [
 
-	CmdDoubleClickActivation executeCommandInContext: self createSelectionContext
+	ClyDoubleClickActivation executeCommandInContext: self createSelectionContext
 ]
 
 { #category : 'controlling' }

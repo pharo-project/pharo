@@ -16,18 +16,18 @@ ClyFixCritiqueCommand class >> canBeExecutedInContext: aCriticContext [
 	^aCriticContext lastSelectedItem isMarkedWith: ClyCritiqueFixableTag
 ]
 
-{ #category : 'initialization' }
-ClyFixCritiqueCommand >> defaultMenuIconName [
-	^#repair
-]
-
 { #category : 'table decoration' }
 ClyFixCritiqueCommand >> description [
 	^'Automatically resolve the issue'
 ]
 
 { #category : 'execution' }
-ClyFixCritiqueCommand >> execute [
+ClyFixCritiqueCommand >> executeRefactoring [
 
-	(StChangesBrowserPresenter changes: { critique change }) open
+	(StChangesBrowserPresenter changes: { self critique change }) open
+]
+
+{ #category : 'initialization' }
+ClyFixCritiqueCommand >> iconName [
+	^#repair
 ]

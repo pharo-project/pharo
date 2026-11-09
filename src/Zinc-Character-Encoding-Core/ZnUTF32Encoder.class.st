@@ -35,19 +35,12 @@ ZnUTF32Encoder >> backOnStream: stream [
 	4 timesRepeat: [ stream back ]
 ]
 
-{ #category : 'private' }
-ZnUTF32Encoder >> byteOrderMarkLE [
-	"My little endian sequence of the Unicode BOM. See #byteOrderMark"
-	
-	^ 16rFFFE0000
-]
-
 { #category : 'encoding - decoding' }
 ZnUTF32Encoder >> encodedByteCountForCodePoint: codePoint [
 	"Return how many bytes are needed to encode integer codePoint"
 
 	codePoint > self maximumUTFCode
-		ifTrue: [ ^ self errorOutsideRangeByteCount: codePoint ].
+		ifTrue: [ ^ self errorOutsideRange ].
 	^ 4
 ]
 
@@ -62,11 +55,20 @@ ZnUTF32Encoder >> ensureAtBeginOfCodePointOnStream: stream [
 	[ stream position \\ 4 = 0 ] whileFalse: [ stream back ]
 ]
 
-{ #category : 'encoding - decoding' }
-ZnUTF32Encoder >> forwardOnStream: stream [
-	"Move forward one character on stream"
+{ #category : 'error handling' }
+ZnUTF32Encoder >> errorIncomplete [
+	self error: 'Incomplete utf-32 encoding'
+]
 
-	stream skip: 4
+{ #category : 'encoding - decoding' }
+ZnUTF32Encoder >> forwardOnStream: aStream [
+
+	aStream skip: 4
+]
+
+{ #category : 'accessing' }
+ZnUTF32Encoder >> identifier [
+	^ #utf32
 ]
 
 { #category : 'encoding - decoding' }
@@ -75,10 +77,10 @@ ZnUTF32Encoder >> nextCodePointFromStream: stream [
 
 	| codePoint |
 	codePoint := self readCodePointFrom: stream.
-	((self processByteOrderMark: codePoint) and: [ self ignoreByteOrderMark ])
+	(self processByteOrderMark: codePoint)
 		ifTrue: [ codePoint := self readCodePointFrom: stream ].
 	((self isSurrogateCodePoint: codePoint) or: [ codePoint > self maximumUTFCode ])
-		ifTrue: [ ^ self errorOutsideRange: codePoint from: stream ].
+		ifTrue: [ ^ self errorOutsideRange ].
 	^ codePoint
 ]
 
@@ -87,19 +89,19 @@ ZnUTF32Encoder >> nextPutCodePoint: codePoint toStream: stream [
 	"Write the encoding for integer code point to stream"
 
 	(self isSurrogateCodePoint: codePoint)
-		ifTrue: [ ^ self errorOutsideRange: codePoint to: stream ].
+		ifTrue: [ self errorOutsideRange ].
 	codePoint <= self maximumUTFCode
 		ifTrue: [
 			self writeCodePoint: codePoint to: stream ]
 		ifFalse: [
-			^ self errorOutsideRange: codePoint to: stream ]
+			self errorOutsideRange ]
 ]
 
 { #category : 'private' }
 ZnUTF32Encoder >> processByteOrderMark: codePoint [
-	^ (codePoint = self byteOrderMark or: [ codePoint = self byteOrderMarkLE ])
+	^ (codePoint = 16rFEFF or: [ codePoint = 16rFFFE0000 ])
 		ifTrue: [
-			codePoint = self byteOrderMarkLE 
+			codePoint = 16rFFFE0000
 				ifTrue: [ self swapEndianness ].
 			true ]
 		ifFalse: [ false ]
@@ -113,7 +115,7 @@ ZnUTF32Encoder >> readCodePointFrom: stream [
 	byte3 := stream next.
 	byte4 := stream next.
 	(byte1 isNil or: [ byte2 isNil or: [ byte3 isNil or: [ byte4 isNil ] ] ])
-		ifTrue: [ ^ self errorIncompleteFrom: stream ].
+		ifTrue: [ ^ self errorIncomplete ].
 	^ self isBigEndian
 		ifTrue: [
 			(byte1 bitShift: 24) + (byte2 bitShift: 16) + (byte3 bitShift: 8) + byte4 ]

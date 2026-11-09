@@ -489,7 +489,7 @@ ClyBrowserMorph >> itemsForQuery: aQuery inScope: aScope [
 { #category : 'keymapping' }
 ClyBrowserMorph >> kmDispatcher [
 
-	^ CmdKMDispatcher attachedTo: self
+	^ ClyKMDispatcher attachedTo: self
 ]
 
 { #category : 'initialization' }

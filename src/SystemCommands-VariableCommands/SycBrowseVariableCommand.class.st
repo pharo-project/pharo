@@ -5,23 +5,37 @@ For global variable I open browser of class of variable value
 "
 Class {
 	#name : 'SycBrowseVariableCommand',
-	#superclass : 'SycVariableCommand',
+	#superclass : 'SycVariableNavigationCmCommand',
 	#category : 'SystemCommands-VariableCommands',
 	#package : 'SystemCommands-VariableCommands'
 }
 
+{ #category : 'testing' }
+SycBrowseVariableCommand class >> canBeExecutedInContext: aToolContext [
+
+	"The full browser variables menu already has its own Browse entry."
+	^ aToolContext isFullBrowserVariableContext not
+		and: [ super canBeExecutedInContext: aToolContext ]
+]
+
+{ #category : 'execution' }
+SycBrowseVariableCommand >> executeRefactoring [
+
+	variables last openBrowser
+]
+
 { #category : 'accessing' }
-SycBrowseVariableCommand >> defaultMenuIconName [
+SycBrowseVariableCommand >> iconName [
 	^#browse
 ]
 
 { #category : 'accessing' }
-SycBrowseVariableCommand >> defaultMenuItemName [
+SycBrowseVariableCommand >> name [
 	^'Browse'
 ]
 
-{ #category : 'execution' }
-SycBrowseVariableCommand >> execute [
+{ #category : 'accessing' }
+SycBrowseVariableCommand >> order [
 
-	variables last openBrowser
+	^ 1000
 ]

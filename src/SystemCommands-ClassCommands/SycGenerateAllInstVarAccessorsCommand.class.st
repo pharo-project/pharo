@@ -23,19 +23,20 @@ SycGenerateAllInstVarAccessorsCommand >> asRefactorings [
 ]
 
 { #category : 'accessing' }
-SycGenerateAllInstVarAccessorsCommand >> defaultMenuIconName [
-	^ #smallAdd
+SycGenerateAllInstVarAccessorsCommand >> fullBrowserOrder [
+
+	^ 2.1
 ]
 
 { #category : 'accessing' }
-SycGenerateAllInstVarAccessorsCommand >> defaultMenuItemName [
-	^'Generate accessors'
+SycGenerateAllInstVarAccessorsCommand >> iconName [
+	^ #smallAdd
 ]
 
-{ #category : 'execution' }
-SycGenerateAllInstVarAccessorsCommand >> execute [
+{ #category : 'testing' }
+SycGenerateAllInstVarAccessorsCommand >> isAvailableInMenuOf: aToolContext [
 
-	self executeRefactorings
+	^ aToolContext isFullBrowserClassContext
 ]
 
 { #category : 'testing' }
@@ -43,9 +44,20 @@ SycGenerateAllInstVarAccessorsCommand >> isComplexRefactoring [
 	^true
 ]
 
-{ #category : 'execution' }
-SycGenerateAllInstVarAccessorsCommand >> prepareFullExecutionInContext: aToolContext [
+{ #category : 'accessing' }
+SycGenerateAllInstVarAccessorsCommand >> name [
+	^'Generate accessors'
+]
 
-	super prepareFullExecutionInContext: aToolContext.
-	classes := classes collect: [:each | aToolContext currentMetaLevelOf: each]
+{ #category : 'accessing' }
+SycGenerateAllInstVarAccessorsCommand >> order [
+
+	^ 2.1
+]
+
+{ #category : 'preparation' }
+SycGenerateAllInstVarAccessorsCommand >> prepareFullExecution [
+
+	super prepareFullExecution.
+	classes := classes collect: [ :class | self context currentMetaLevelOf: class ]
 ]

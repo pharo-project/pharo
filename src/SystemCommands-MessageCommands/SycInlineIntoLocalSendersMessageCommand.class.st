@@ -3,7 +3,7 @@ I am a command to launch the Inline All Senders Refactoring: the call to this me
 "
 Class {
 	#name : 'SycInlineIntoLocalSendersMessageCommand',
-	#superclass : 'SycChangeMessageSignatureCommand',
+	#superclass : 'SycMessageCmCommand',
 	#category : 'SystemCommands-MessageCommands',
 	#package : 'SystemCommands-MessageCommands'
 }
@@ -13,23 +13,30 @@ SycInlineIntoLocalSendersMessageCommand class >> canBeExecutedInContext: aToolCo
 	^ aToolContext isMethodSelected
 ]
 
-{ #category : 'accessing' }
-SycInlineIntoLocalSendersMessageCommand >> defaultMenuIconName [
-	^#smallRightFlush
-]
-
-{ #category : 'accessing' }
-SycInlineIntoLocalSendersMessageCommand >> defaultMenuItemName [
-	^'Inline senders'
-]
-
 { #category : 'execution' }
-SycInlineIntoLocalSendersMessageCommand >> execute [ 
+SycInlineIntoLocalSendersMessageCommand >> executeRefactoring [
 
 	| methodOrigin |
 	methodOrigin := originalMessage contextUser compiledMethod origin.
-	((ReInlineIntoLocalSendersDriver newApplication: self application) scopes: refactoringScopes message: originalMessage selector class: methodOrigin)
-		runRefactoring  
+	((ReInlineIntoLocalSendersDriver newApplication: self application) scopes: refactoringScopes message: originalMessage selector class: methodOrigin) runRefactoring
+]
+
+{ #category : 'accessing' }
+SycInlineIntoLocalSendersMessageCommand >> icon [
+
+	^ self iconNamed: #smallRightFlush
+]
+
+{ #category : 'accessing' }
+SycInlineIntoLocalSendersMessageCommand >> name [
+
+	^ 'Inline senders'
+]
+
+{ #category : 'accessing' }
+SycInlineIntoLocalSendersMessageCommand >> order [
+
+	^ 35
 ]
 
 { #category : 'execution' }

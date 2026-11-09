@@ -43,10 +43,7 @@ ZnLogEvent class >> logToTranscript [
 
 	self stopLoggingToTranscript.
 
-	^ self announcer
-		  when: ZnLogEvent
-		  do: [ :event | self crTrace: event ]
-		  for: self
+	^ self announcer when: ZnLogEvent do: [ :event | self newLineTrace: event ] for: self
 ]
 
 { #category : 'accessing' }
@@ -60,14 +57,6 @@ ZnLogEvent class >> nextId [
 { #category : 'convenience' }
 ZnLogEvent class >> open [
 	^ self announcer inspect
-]
-
-{ #category : 'utilities' }
-ZnLogEvent class >> printAddress: address on: stream [
-	"Try printing address as a IPv4 dotted address to stream.
-	If that fails, just print address as an object to stream."
-	
-	[ address asSocketAddress printOn: stream ] on: Error do: [ stream print: address ]
 ]
 
 { #category : 'system startup' }

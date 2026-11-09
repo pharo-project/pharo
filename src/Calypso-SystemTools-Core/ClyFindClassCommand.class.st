@@ -14,26 +14,43 @@ Class {
 	#tag : 'Commands-Classes'
 }
 
+{ #category : 'execution' }
+ClyFindClassCommand >> executeRefactoring [
+
+	self browser selectClass: class
+]
+
 { #category : 'accessing' }
-ClyFindClassCommand >> defaultMenuIconName [
+ClyFindClassCommand >> iconName [
 	^#smallFind
 ]
 
+{ #category : 'testing' }
+ClyFindClassCommand >> isAvailableInMenuOf: aToolContext [
+
+	^ aToolContext isFullBrowserPackageContext
+]
+
 { #category : 'accessing' }
-ClyFindClassCommand >> defaultMenuItemName [
+ClyFindClassCommand >> menuGroup [
+
+	^ ClyQueryMenuGroup
+]
+
+{ #category : 'accessing' }
+ClyFindClassCommand >> name [
 	^'Find class'
 ]
 
-{ #category : 'execution' }
-ClyFindClassCommand >> execute [
+{ #category : 'accessing' }
+ClyFindClassCommand >> order [
 
-	browser selectClass: class
+	^ 1000
 ]
 
 { #category : 'execution' }
-ClyFindClassCommand >> prepareFullExecutionInContext: aToolContext [
+ClyFindClassCommand >> prepareFullExecution [
 
-	super prepareFullExecutionInContext: aToolContext.
-
-	class := aToolContext requestSingleClass: 'Choose class'
+	super prepareFullExecution.
+	class := self context requestSingleClass: 'Choose class'
 ]

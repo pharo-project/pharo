@@ -98,6 +98,8 @@ MCRepositoryTest >> testCanCreateBitBucketRepositoryFromUrl [
 	self assert: repository repoPath equals: 'monticello/repos/itory/path'.
 	
 	self assert: repository hostname equals: 'bitbucket.org'.
+	self assert: repository scpUrl equals: 'git@ssh.bitbucket.org:dalehenrich/MetacelloRepository.git'.
+	self assert: repository httpsUrl equals: 'https://bitbucket.org/dalehenrich/MetacelloRepository.git'.
 ]
 
 { #category : 'tests' }

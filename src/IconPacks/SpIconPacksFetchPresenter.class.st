@@ -161,7 +161,7 @@ SpIconPacksFetchPresenter >> fetchPacks [
 	]
 	on: Error
 	do: [ :e | 
-		e crTrace.
+		e newLineTrace.
 		^ { Smalltalk ui icons } ].
 
 	^ jsonResponse

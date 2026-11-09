@@ -20,7 +20,7 @@ ClyTextEditor class >> contextMenuOn: aBuilder [
 		ifFalse: [ ^self ].
 
 	context := aBuilder model browserTool createCommandContext.
-	CmdContextMenuActivation registerContextMenuOn: aBuilder inContext: context
+	ClyContextMenuActivation registerContextMenuOn: aBuilder inContext: context
 ]
 
 { #category : 'accessing' }

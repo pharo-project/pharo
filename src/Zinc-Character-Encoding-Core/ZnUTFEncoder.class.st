@@ -4,9 +4,6 @@ I am ZnUTFEncoder. I am a ZnCharacterEncoder. My subclasses deal with the full r
 Class {
 	#name : 'ZnUTFEncoder',
 	#superclass : 'ZnCharacterEncoder',
-	#instVars : [
-		'ignoreByteOrderMark'
-	],
 	#category : 'Zinc-Character-Encoding-Core',
 	#package : 'Zinc-Character-Encoding-Core'
 }
@@ -16,11 +13,6 @@ ZnUTFEncoder class >> handlesEncoding: string [
 	"Return true when my instances handle the encoding described by string"
 
 	^ false
-]
-
-{ #category : 'testing' }
-ZnUTFEncoder class >> isAbstract [
-	^ self = ZnUTFEncoder
 ]
 
 { #category : 'accessing' }
@@ -68,20 +60,6 @@ ZnUTFEncoder >> encodeStringWithByteOrderMark: string [
 	^ ByteArray streamContents: [ :stream |
 		self nextPutByteOrderMarkToStream: stream.
 		self next: string size putAll: string startingAt: 1 toStream: stream ]
-]
-
-{ #category : 'accessing' }
-ZnUTFEncoder >> ignoreByteOrderMark [
-	"Return true when I ignore Unicode byte-order mark (BOM) occurences that I read (the default)."
-	
-	^ ignoreByteOrderMark ifNil: [ ignoreByteOrderMark := true ]
-]
-
-{ #category : 'accessing' }
-ZnUTFEncoder >> ignoreByteOrderMark: boolean [
-	"When boolean is true I ignore Unicode byte-order mark (BOM) occurences that I read (the default)."
-
-	ignoreByteOrderMark := boolean
 ]
 
 { #category : 'testing' }

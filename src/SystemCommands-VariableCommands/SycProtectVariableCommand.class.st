@@ -11,35 +11,42 @@ Class {
 	#package : 'SystemCommands-VariableCommands'
 }
 
-{ #category : 'activation' }
-SycProtectVariableCommand class >> sourceCodeMenuActivation [
-	<classAnnotation>
-
-	^SycSourceCodeMenuActivation byRootGroupItemOrder: 1.2 for: ClySourceCodeContext
-]
-
-{ #category : 'accessing' }
-SycProtectVariableCommand >> defaultMenuIconName [
-	^ #group
-]
-
-{ #category : 'accessing' }
-SycProtectVariableCommand >> defaultMenuItemName [
-	^'Protect'
-]
-
 { #category : 'execution' }
-SycProtectVariableCommand >> execute [ 
+SycProtectVariableCommand >> executeRefactoring [
 
 	^ ((ReProtectInstanceVariableDriver newApplication: self application)
-		   scopes: refactoringScopes 
-		   variable: variables first
-		   class: selectedClass) runRefactoring
+		scopes: refactoringScopes
+		variable: variables first
+		class: selectedClass) runRefactoring
+]
+
+{ #category : 'accessing' }
+SycProtectVariableCommand >> fullBrowserOrder [
+
+	^ 2000
+]
+
+{ #category : 'accessing' }
+SycProtectVariableCommand >> icon [
+
+	^ self iconNamed: #group
+]
+
+{ #category : 'accessing' }
+SycProtectVariableCommand >> name [
+
+	^ 'Protect'
+]
+
+{ #category : 'accessing' }
+SycProtectVariableCommand >> order [
+
+	^ 1.2
 ]
 
 { #category : 'execution' }
-SycProtectVariableCommand >> prepareFullExecutionInContext: aToolContext [
+SycProtectVariableCommand >> prepareFullExecution [
 
-	super prepareFullExecutionInContext: aToolContext.
-	selectedClass := aToolContext selectedVariables first definingClass.
+	super prepareFullExecution.
+	selectedClass := variables first definingClass
 ]

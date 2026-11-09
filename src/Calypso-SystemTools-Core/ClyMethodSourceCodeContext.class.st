@@ -9,7 +9,22 @@ Class {
 { #category : 'testing' }
 ClyMethodSourceCodeContext >> isMethodSelected [
 
-	^self selectedSourceNode isMethod
+	self selectedSourceNode ifNil: [ ^ false ].
+	^ self selectedSourceNode isMethod
+]
+
+{ #category : 'testing' }
+ClyMethodSourceCodeContext >> isMethodSourceContext [
+
+	^ true
+]
+
+{ #category : 'testing' }
+ClyMethodSourceCodeContext >> isTestMethodSelected [
+
+	| method |
+	method := self selectedMethod.
+	^ method notNil and: [ method selector isTestSelector ]
 ]
 
 { #category : 'tool controlling' }

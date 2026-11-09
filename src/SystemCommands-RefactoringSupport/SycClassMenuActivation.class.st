@@ -3,7 +3,7 @@ I am a root of command activation hierarchy which supposed to represent commands
 "
 Class {
 	#name : 'SycClassMenuActivation',
-	#superclass : 'CmdMenuCommandActivationStrategy',
+	#superclass : 'ClyMenuCommandActivationStrategy',
 	#category : 'SystemCommands-RefactoringSupport',
 	#package : 'SystemCommands-RefactoringSupport'
 }

@@ -25,7 +25,6 @@ ZnServerConnectionClosedEvent >> address: anObject [
 { #category : 'printing' }
 ZnServerConnectionClosedEvent >> printContentsOn: stream [
 	super printContentsOn: stream.
-
 	stream << 'Server Connection Closed '.
-	self class printAddress: address on: stream
+	address do: [ :each | stream print: each ] separatedBy: [ stream nextPut: $. ]
 ]

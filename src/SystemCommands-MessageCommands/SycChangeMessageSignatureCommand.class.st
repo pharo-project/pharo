@@ -16,9 +16,8 @@ Internal Representation and Key Implementation Points.
 "
 Class {
 	#name : 'SycChangeMessageSignatureCommand',
-	#superclass : 'CmdCommand',
+	#superclass : 'ClyCommand',
 	#traits : 'TRefactoringCommandSupport',
-	#classTraits : 'TRefactoringCommandSupport classTrait',
 	#instVars : [
 		'originalMessage',
 		'refactoringScopes',
@@ -39,10 +38,10 @@ SycChangeMessageSignatureCommand class >> isAbstract [
 ]
 
 { #category : 'execution' }
-SycChangeMessageSignatureCommand >> applyResultInContext: aToolContext [
+SycChangeMessageSignatureCommand >> applyCommandResult [
 
-	super applyResultInContext: aToolContext.
-	aToolContext
+	super applyCommandResult.
+	self context
 		showMessage: originalMessage
 		renamedTo: self resultMessageSelector asSymbol
 ]
@@ -77,12 +76,6 @@ SycChangeMessageSignatureCommand >> createRefactoring [
 	self subclassResponsibility
 ]
 
-{ #category : 'execution' }
-SycChangeMessageSignatureCommand >> execute [
-
-	self executeRefactorings
-]
-
 { #category : 'accessing' }
 SycChangeMessageSignatureCommand >> originalMessage [
 	^ originalMessage
@@ -93,14 +86,13 @@ SycChangeMessageSignatureCommand >> originalMessage: anObject [
 	originalMessage := anObject
 ]
 
-{ #category : 'execution' }
-SycChangeMessageSignatureCommand >> prepareFullExecutionInContext: aToolContext [
-	super prepareFullExecutionInContext: aToolContext.
-	self setUpModelFromContext: aToolContext.
-	
-	refactoredClass := aToolContext lastSelectedMessage methodClass.
-	refactoringScopes := aToolContext refactoringScopes.
-	originalMessage := aToolContext lastSelectedMessage
+{ #category : 'preparation' }
+SycChangeMessageSignatureCommand >> prepareFullExecution [
+
+	self setUpModelFromContext: self context.
+	refactoredClass := self context lastSelectedMessage methodClass.
+	refactoringScopes := self context refactoringScopes.
+	originalMessage := self context lastSelectedMessage
 ]
 
 { #category : 'accessing' }
@@ -124,11 +116,11 @@ SycChangeMessageSignatureCommand >> requestNewMessageIn: aToolContext [
 		canAddArgs: self canAddArgs;
 		canEditName: self canEditName;
 		openModal.
-	dialog cancelled ifTrue: [ CmdCommandAborted signal ].
+	dialog cancelled ifTrue: [ CmCommandAborted signal ].
 
 	((originalMessage selector = methodName selector) 
 		and: [ originalMessage argumentNames = methodName arguments ]) 
-		ifTrue: [ CmdCommandAborted signal ].
+		ifTrue: [ CmCommandAborted signal ].
 	
 	^ methodName
 ]

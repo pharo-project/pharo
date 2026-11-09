@@ -15,24 +15,24 @@ ClySwitchToPackagesCommand class >> toolbarOrder [
 ]
 
 { #category : 'accessing' }
-ClySwitchToPackagesCommand >> defaultMenuItemName [
-
-	^ 'All Packages'
-]
-
-{ #category : 'accessing' }
 ClySwitchToPackagesCommand >> description [
 	^ 'Click to show all packages'
 ]
 
 { #category : 'execution' }
-ClySwitchToPackagesCommand >> execute [
+ClySwitchToPackagesCommand >> executeRefactoring [
 
-	^ browser switchToPackages
+	^ self browser switchToPackages
 ]
 
 { #category : 'testing' }
 ClySwitchToPackagesCommand >> isAppliedToBrowser [
 
-	^ (browser packageView showsItemsFromQuery: ClyAllPackagesQuery) and: [ browser isScopedModeEnabled not ]
+	^ (self browser packageView showsItemsFromQuery: ClyAllPackagesQuery) and: [ self browser isScopedModeEnabled not ]
+]
+
+{ #category : 'accessing' }
+ClySwitchToPackagesCommand >> name [
+
+	^ 'All Packages'
 ]

@@ -22,11 +22,9 @@ ClyRunCoveringTestMethodsCommand >> description [
 	^ 'Runs all covering tests of selected methods.'
 ]
 
-{ #category : 'execution' }
-ClyRunCoveringTestMethodsCommand >> readParametersFromContext: aToolContext [
-	super readParametersFromContext: aToolContext.
-	testItems := aToolContext selectedItems
-		select: [ :each | each hasProperty: ClyTestedMethodProperty ]
+{ #category : 'accessing' }
+ClyRunCoveringTestMethodsCommand >> testItems [
+	^ testItems ifNil: [ self context ifNotNil: [ :ctx | ctx selectedItems select: [ :each | each hasProperty: ClyTestedMethodProperty ] ] ]
 ]
 
 { #category : 'execution' }

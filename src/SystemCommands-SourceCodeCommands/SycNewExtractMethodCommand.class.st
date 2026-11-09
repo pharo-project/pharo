@@ -22,18 +22,7 @@ SycNewExtractMethodCommand class >> canBeExecutedInContext: aSourceCodeContext [
 SycNewExtractMethodCommand class >> methodEditorShortcutActivation [
 	<classAnnotation>
 
-	^CmdShortcutActivation by: $e meta, $m meta, $t meta for: ClySourceCodeContext
-]
-
-{ #category : 'accessing' }
-SycNewExtractMethodCommand >> defaultMenuIconName [
-	^ #restart
-]
-
-{ #category : 'accessing' }
-SycNewExtractMethodCommand >> defaultMenuItemName [
-
-	^ '(R) Extract method (no occurrences)'
+	^ClyShortcutActivation by: $e meta, $m meta, $t meta for: ClySourceCodeContext
 ]
 
 { #category : 'accessing' }
@@ -42,29 +31,51 @@ SycNewExtractMethodCommand >> description [
 	^ 'Extract selected ast node into separate method.'
 ]
 
-{ #category : 'converting' }
-SycNewExtractMethodCommand >> execute [
+{ #category : 'execution' }
+SycNewExtractMethodCommand >> executeRefactoring [
 
 	| selectedInterval driver |
-	selectedInterval := selectedTextInterval ifEmpty: [
-		                    sourceNode sourceInterval ].
-	driver := ReExtractMethodDriver new 
+	selectedInterval := self selectedTextInterval ifEmpty: [
+					self sourceNode sourceInterval ].
+	driver := ReExtractMethodDriver new
 							scopes: refactoringScopes;
 							model: model;
-		               extract: (method sourceCode
-				                		copyFrom: selectedInterval first
-				               			to: selectedInterval last)
-		               from: method
-		               in: method origin.
-	driver runRefactoring.
-	
+							extract: (self method sourceCode
+										copyFrom: selectedInterval first
+										to: selectedInterval last)
+							   from: self method
+							   in: self method origin.
+	driver runRefactoring
+]
+
+{ #category : 'accessing' }
+SycNewExtractMethodCommand >> iconName [
+	^ #restart
+]
+
+{ #category : 'accessing' }
+SycNewExtractMethodCommand >> name [
+
+	^ '(R) Extract method (no occurrences)'
+]
+
+{ #category : 'accessing' }
+SycNewExtractMethodCommand >> order [
+
+	^ 1.4
 ]
 
 { #category : 'execution' }
-SycNewExtractMethodCommand >> readParametersFromContext: aSourceCodeContext [
-	super readParametersFromContext: aSourceCodeContext.
-	self setUpModelFromContext: aSourceCodeContext.
-	selectedTextInterval := aSourceCodeContext selectedTextInterval
+SycNewExtractMethodCommand >> prepareFullExecution [
+
+	super prepareFullExecution.
+	self setUpModelFromContext: self context.
+	selectedTextInterval := self context selectedTextInterval
+]
+
+{ #category : 'accessing' }
+SycNewExtractMethodCommand >> selectedTextInterval [
+	^ selectedTextInterval ifNil: [ self context ifNotNil: [ :ctx | ctx selectedTextInterval ] ]
 ]
 
 { #category : 'initialization' }

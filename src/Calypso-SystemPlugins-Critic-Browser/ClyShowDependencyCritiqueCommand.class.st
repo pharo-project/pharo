@@ -15,18 +15,18 @@ ClyShowDependencyCritiqueCommand class >> canBeExecutedInContext: aCriticContext
 	^aCriticContext selectedCritique class = ArchitecturalCritique
 ]
 
-{ #category : 'accessing' }
-ClyShowDependencyCritiqueCommand >> defaultMenuIconName [
-	^#smallWindow
-]
-
 { #category : 'table decoration' }
 ClyShowDependencyCritiqueCommand >> description [
 	^'Open dependency analyzer'
 ]
 
 { #category : 'execution' }
-ClyShowDependencyCritiqueCommand >> execute [
+ClyShowDependencyCritiqueCommand >> executeRefactoring [
 
-	(StPackageDependenciesPresenter onPackagesNamed: { analyzedObject name }) open
+	(StPackageDependenciesPresenter onPackagesNamed: { self analyzedObject name }) open
+]
+
+{ #category : 'accessing' }
+ClyShowDependencyCritiqueCommand >> iconName [
+	^#smallWindow
 ]

@@ -8,7 +8,7 @@ Internal Representation and Key Implementation Points.
 "
 Class {
 	#name : 'SycRemoveMessageArgumentCommand',
-	#superclass : 'SycChangeMessageSignatureCommand',
+	#superclass : 'SycMessageCmCommand',
 	#instVars : [
 		'argumentName',
 		'methodName'
@@ -25,11 +25,11 @@ SycRemoveMessageArgumentCommand class >> canBeExecutedInContext: aToolContext [
 
 { #category : 'private' }
 SycRemoveMessageArgumentCommand >> abort [
-	CmdCommandAborted signal
+	CmCommandAborted signal
 ]
 
 { #category : 'execution' }
-SycRemoveMessageArgumentCommand >> applyResultInContext: aToolContext [
+SycRemoveMessageArgumentCommand >> applyCommandResult [
 	"The refactoring was applied by the driver while executing the command."
 
 	
@@ -57,25 +57,21 @@ SycRemoveMessageArgumentCommand >> createRefactoring [
 	"not used"
 ]
 
-{ #category : 'accessing' }
-SycRemoveMessageArgumentCommand >> defaultMenuIconName [
-	^#remove
-]
-
-{ #category : 'accessing' }
-SycRemoveMessageArgumentCommand >> defaultMenuItemName [
-	^'Remove argument'
-]
-
 { #category : 'execution' }
-SycRemoveMessageArgumentCommand >> execute [
-	
+SycRemoveMessageArgumentCommand >> executeRefactoring [
+
 	ReRemoveParameterDriver new
 		scopes: refactoringScopes
-			model: model
-			removeParameterFromMethodSignature: originalMessage
-			in: originalMessage methodClass;
+		model: model
+		removeParameterFromMethodSignature: originalMessage
+		in: originalMessage methodClass;
 		runRefactoring
+]
+
+{ #category : 'accessing' }
+SycRemoveMessageArgumentCommand >> icon [
+
+	^ self iconNamed: #remove
 ]
 
 { #category : 'private' }
@@ -92,6 +88,18 @@ SycRemoveMessageArgumentCommand >> methodName [
 		  methodName := RBMethodName
 			                selector: originalMessage selector
 			                arguments: originalMessage argumentNames ]
+]
+
+{ #category : 'accessing' }
+SycRemoveMessageArgumentCommand >> name [
+
+	^ 'Remove argument'
+]
+
+{ #category : 'accessing' }
+SycRemoveMessageArgumentCommand >> order [
+
+	^ 40
 ]
 
 { #category : 'execution' }

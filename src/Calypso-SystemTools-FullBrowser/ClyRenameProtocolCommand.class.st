@@ -11,7 +11,7 @@ Internal Representation and Key Implementation Points.
 "
 Class {
 	#name : 'ClyRenameProtocolCommand',
-	#superclass : 'CmdCommand',
+	#superclass : 'ClyMethodGroupCommand',
 	#instVars : [
 		'methodGroup',
 		'newName',
@@ -28,28 +28,16 @@ ClyRenameProtocolCommand class >> canBeExecutedInContext: aToolContext [
 ]
 
 { #category : 'activation' }
-ClyRenameProtocolCommand class >> fullBrowserMenuActivation [
-	<classAnnotation>
-
-	^CmdContextMenuActivation byRootGroupItemOrder: 1 for: ClyFullBrowserMethodGroupContext
-]
-
-{ #category : 'activation' }
 ClyRenameProtocolCommand class >> fullBrowserShortcutActivation [
 	<classAnnotation>
 
-	^CmdShortcutActivation renamingFor: ClyFullBrowserMethodGroupContext
+	^ClyShortcutActivation renamingFor: ClyFullBrowserMethodGroupContext
 ]
 
 { #category : 'execution' }
-ClyRenameProtocolCommand >> applyResultInContext: aToolContext [
-	super applyResultInContext: aToolContext.
-	aToolContext showProtocol: newName
-]
-
-{ #category : 'accessing' }
-ClyRenameProtocolCommand >> defaultMenuItemName [
-	^'Rename'
+ClyRenameProtocolCommand >> applyCommandResult [
+	super applyCommandResult.
+	self context showProtocol: newName
 ]
 
 { #category : 'accessing' }
@@ -59,16 +47,13 @@ ClyRenameProtocolCommand >> description [
 ]
 
 { #category : 'execution' }
-ClyRenameProtocolCommand >> execute [
-	"The basic implementation iterates over the methods selected and update their protocol. Then Calypso is updated via the announcements of recategorization.
-	But this leads to a problem when there is no method in the selected protocol. In that case I'm updating directly the class to remove the old protocol and add the new one, which will update Calypso.
-	I hesitated to rename the protocol in the latest selected class but we could have multiple classes selected so I'm keeping part of the old implementation instead."
+ClyRenameProtocolCommand >> executeRefactoring [
 
 	methodGroup isEmpty
 		ifTrue: [
-			selectedClass
-				removeProtocol: methodGroup name;
-				addProtocol: newName ]
+				selectedClass
+					removeProtocol: methodGroup name;
+					addProtocol: newName ]
 		ifFalse: [ methodGroup categorizeMethodsIn: newName ]
 ]
 
@@ -83,6 +68,11 @@ ClyRenameProtocolCommand >> methodGroup: anObject [
 ]
 
 { #category : 'accessing' }
+ClyRenameProtocolCommand >> name [
+	^'Rename'
+]
+
+{ #category : 'accessing' }
 ClyRenameProtocolCommand >> newName [
 	^ newName
 ]
@@ -92,17 +82,21 @@ ClyRenameProtocolCommand >> newName: anObject [
 	newName := anObject
 ]
 
+{ #category : 'accessing' }
+ClyRenameProtocolCommand >> order [
+
+	^ 1
+]
+
 { #category : 'execution' }
-ClyRenameProtocolCommand >> prepareFullExecutionInContext: aToolContext [
+ClyRenameProtocolCommand >> prepareFullExecution [
 
-	super prepareFullExecutionInContext: aToolContext.
-
-	selectedClass := aToolContext lastSelectedClass.
-	methodGroup := aToolContext lastSelectedMethodGroup.
-
+	super prepareFullExecution.
+	selectedClass := self context lastSelectedClass.
+	methodGroup := self context lastSelectedMethodGroup.
 	newName := StProtocolNameChooserPresenter requestProtocolNameConfiguring: [ :presenter |
-		           presenter
-			           protocolName: methodGroup name;
-			           concernedClass: aToolContext lastSelectedClass ].
-	newName = methodGroup name ifTrue: [ CmdCommandAborted signal ]
+			           presenter
+				           protocolName: methodGroup name;
+				           concernedClass: self context lastSelectedClass ].
+	newName = methodGroup name ifTrue: [ CmCommandAborted signal ]
 ]

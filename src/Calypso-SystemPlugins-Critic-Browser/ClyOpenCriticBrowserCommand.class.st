@@ -8,23 +8,27 @@ Class {
 	#package : 'Calypso-SystemPlugins-Critic-Browser'
 }
 
-{ #category : 'activation' }
-ClyOpenCriticBrowserCommand class >> packageContextMenuActivation [
-	<classAnnotation>
+{ #category : 'execution' }
+ClyOpenCriticBrowserCommand >> executeRefactoring [
 
-	^CmdContextMenuActivation
-		byItemOf: ClyQueryMenuGroup for: Package asCalypsoItemContext
+	| env |
+	env := RBPackageEnvironment new packages: packages.
+	StCritiqueRuleSelectorPresenter openWithEnvironment: env removeTestCase: false
+]
+
+{ #category : 'accessing' }
+ClyOpenCriticBrowserCommand >> menuGroup [
+
+	^ ClyQueryMenuGroup
 ]
 
 { #category : 'activation' }
-ClyOpenCriticBrowserCommand >> defaultMenuItemName [
+ClyOpenCriticBrowserCommand >> name [
 	^'Browse critiques'
 ]
 
-{ #category : 'execution' }
-ClyOpenCriticBrowserCommand >> execute [
-	| env |
+{ #category : 'accessing' }
+ClyOpenCriticBrowserCommand >> order [
 
-	env := RBPackageEnvironment new packages: packages.
-	StCritiqueRuleSelectorPresenter openWithEnvironment: env removeTestCase: false
+	^ 1000
 ]

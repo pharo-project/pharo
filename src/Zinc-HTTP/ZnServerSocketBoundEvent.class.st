@@ -36,8 +36,7 @@ ZnServerSocketBoundEvent >> port: anObject [
 { #category : 'printing' }
 ZnServerSocketBoundEvent >> printContentsOn: stream [
 	super printContentsOn: stream.
-
 	stream << 'Server Socket Bound '.
-	self class printAddress: address on: stream.
+	address do: [ :each | stream print: each ] separatedBy: [ stream nextPut: $. ].
 	stream nextPut: $:; print: port
 ]

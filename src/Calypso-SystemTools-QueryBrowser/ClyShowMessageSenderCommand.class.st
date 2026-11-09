@@ -33,24 +33,10 @@ ClyShowMessageSenderCommand class >> methodBrowserToolbarActivation [
 ]
 
 { #category : 'activation' }
-ClyShowMessageSenderCommand class >> methodMenuActivation [
-	<classAnnotation>
-
-	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup for: ClyMethod asCalypsoItemContext
-]
-
-{ #category : 'activation' }
 ClyShowMessageSenderCommand class >> methodShortcutActivation [
 	<classAnnotation>
 
-	^CmdShortcutActivation by: $n meta for: ClyMethod asCalypsoItemContext
-]
-
-{ #category : 'activation' }
-ClyShowMessageSenderCommand class >> sourceCodeMenuActivation [
-	<classAnnotation>
-
-	^SycSourceCodeMenuActivation byItemOf: ClyQueryMenuGroup for: ClySourceCodeContext
+	^ClyShortcutActivation by: $n meta for: ClyMethod asCalypsoItemContext
 ]
 
 { #category : 'activation' }
@@ -75,32 +61,42 @@ ClyShowMessageSenderCommand >> browser: anObject [
 ]
 
 { #category : 'accessing' }
-ClyShowMessageSenderCommand >> defaultMenuIconName [
-	^ #smallFind
-]
-
-{ #category : 'accessing' }
-ClyShowMessageSenderCommand >> defaultMenuItemName [
-	^'Senders'
-]
-
-{ #category : 'accessing' }
 ClyShowMessageSenderCommand >> description [
 
 	^ 'Show all message senders.'
 ]
 
 { #category : 'execution' }
-ClyShowMessageSenderCommand >> execute [
+ClyShowMessageSenderCommand >> executeRefactoring [
 
-	| selectors |
-	selectors := messages collect: [ :each | each selector ].
-	(Smalltalk tools toolNamed: #messageList) browseSendersOfAll: selectors
+	(Smalltalk tools toolNamed: #messageList) browseSendersOfAll: (messages collect: [ :message | message selector ])
+]
+
+{ #category : 'accessing' }
+ClyShowMessageSenderCommand >> iconName [
+	^ #smallFind
+]
+
+{ #category : 'accessing' }
+ClyShowMessageSenderCommand >> menuGroup [
+
+	^ ClyQueryMenuGroup
+]
+
+{ #category : 'accessing' }
+ClyShowMessageSenderCommand >> name [
+	^'Senders'
+]
+
+{ #category : 'accessing' }
+ClyShowMessageSenderCommand >> order [
+
+	^ 1000
 ]
 
 { #category : 'execution' }
-ClyShowMessageSenderCommand >> prepareFullExecutionInContext: aToolContext [
-	super prepareFullExecutionInContext: aToolContext.
+ClyShowMessageSenderCommand >> prepareFullExecution [
 
-	browser := aToolContext browser
+	super prepareFullExecution.
+	browser := self context browser
 ]

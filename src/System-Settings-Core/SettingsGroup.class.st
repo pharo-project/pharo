@@ -20,13 +20,6 @@ SettingsGroup >> asParentWhile: aBlock [
 	self builder parent: self while: aBlock
 ]
 
-{ #category : 'testing' }
-SettingsGroup >> hasDefaultValue [
-
-	"Group should manage its visibily. When done, this methods should check the value of the visibility against the default value"
-	^ true
-]
-
 { #category : 'initialization' }
 SettingsGroup >> initialize [ 
 

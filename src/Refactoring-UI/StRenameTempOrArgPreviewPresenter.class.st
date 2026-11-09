@@ -33,15 +33,13 @@ Class {
 		'buttonApplyAnyway',
 		'behaviorWarningIcon',
 		'buttonApplyTransformation',
-		'applyAnyway',
 		'mainLayout',
 		'behaviorLayout',
 		'behaviorPanel',
 		'topLayout',
 		'nameIsValid',
 		'behaviorOptionsLayout',
-		'behaviorOptionsPanel',
-		'updateProcess'
+		'behaviorOptionsPanel'
 	],
 	#category : 'Refactoring-UI-UI',
 	#package : 'Refactoring-UI',
@@ -174,7 +172,7 @@ StRenameTempOrArgPreviewPresenter >> connectPresenters [
 	buttonCancel action: [ self closeWindow ].
 	buttonOk action: [ self accept ].
 		
-	newNameInput whenTextChangedDo: [ :text | self schedulePreviewUpdate: text ].
+	newNameInput whenTextChangedDo: [ :text | self refreshPreview: text ].
 	
 	newNameInput whenSubmitDo: [ :text | self accept ].
 
@@ -274,6 +272,7 @@ StRenameTempOrArgPreviewPresenter >> hasWarning [
 { #category : 'accessing' }
 StRenameTempOrArgPreviewPresenter >> hideBehaviorPanel [
 
+	topLayout ifNil: [ ^ self ].
 	(topLayout children includes: behaviorPanel)
 		ifFalse: [ ^ self].
 		
@@ -285,12 +284,9 @@ StRenameTempOrArgPreviewPresenter >> hideBehaviorPanel [
 StRenameTempOrArgPreviewPresenter >> initializeDialogWindow: aDialogWindowPresenter [
 
 	| applyButton |
-	aDialogWindowPresenter addButton: 'Cancel' do: [ :presenter |
-			self terminateUpdateProcess.
-			presenter close ].
+	aDialogWindowPresenter addButton: 'Cancel' do: [ :presenter | presenter close ].
 
 	applyButton := aDialogWindowPresenter addDefaultButton: 'Apply' do: [ :presenter |
-			               self terminateUpdateProcess.
 			               self accept.
 			               presenter close ].
 
@@ -325,11 +321,14 @@ StRenameTempOrArgPreviewPresenter >> initializePresenters [
 		                label: 'Cancel';
 		                icon: (self iconNamed: #smallCancel).
 
-	newNameLabel := self newLabel label: 'Selector'.
+	newNameLabel := self newLabel label: 'New name'.
 
 	newNameInput := self newTextInput.
 
-	validationLabel := self newLabel label: ''.
+	validationLabel := self newLabel
+		                   label: '';
+		                   addStyle: 'dim';
+		                   yourself.
 
 	behaviorWarningTitle := self newLabel label: 'Behavior-preserving warnings'.
 	behaviorWarningIcon := self newImage image: (self iconNamed: #warningIcon).
@@ -384,18 +383,15 @@ StRenameTempOrArgPreviewPresenter >> refactoring: aRenameArgOrTempRefactoring [
 	
 ]
 
-{ #category : 'accessing' }
-StRenameTempOrArgPreviewPresenter >> schedulePreviewUpdate: aString [
-	"Use a short delay to avoid updating the preview on every keystroke while keeping the UI responsive."
+{ #category : 'update' }
+StRenameTempOrArgPreviewPresenter >> refreshPreview: aString [
+	"Keep validation, preview and Apply state in sync with each text change."
 
-	updateProcess ifNotNil: [ updateProcess terminate ].
-
-	updateProcess := [
-		                 200 milliSeconds wait.
-		                 self application defer: [
-				                 self validateName: aString.
-				                 self updateBehaviorPanelVisibility: aString.
-				                 self updateName ] ] fork
+	self validateName: aString.
+	nameIsValid
+		ifTrue: [ self updateBehaviorPanelVisibility: aString ]
+		ifFalse: [ self hideBehaviorPanel ].
+	self updateName
 ]
 
 { #category : 'accessing' }
@@ -408,14 +404,6 @@ StRenameTempOrArgPreviewPresenter >> scopes: aCollection [
 { #category : 'accessing' }
 StRenameTempOrArgPreviewPresenter >> selectorInput [
     ^ newNameInput
-]
-
-{ #category : 'accessing' }
-StRenameTempOrArgPreviewPresenter >> terminateUpdateProcess [
-
-	updateProcess ifNotNil: [ 
-		updateProcess terminate.
-		updateProcess := nil ]
 ]
 
 { #category : 'update' }
@@ -500,22 +488,20 @@ StRenameTempOrArgPreviewPresenter >> updateTablePresenter [
 
 { #category : 'accessing' }
 StRenameTempOrArgPreviewPresenter >> validateName: aString [
+	"An unchanged or empty name is not an error: the user has not typed a new name yet, so we stay silent and only keep Apply disabled."
 
 	| errorMessage |
+	(aString isEmpty or: [ aString = driver sourceNode name ]) ifTrue: [
+		nameIsValid := false.
+		validationLabel label: ''.
+		^ self ].
 
 	driver newName: aString.
 	driver createAndSetNewRefactoring.
 	errorMessage := driver applicabilityPreconditionsMessage.
 
-	errorMessage
-		ifNil: [
-				nameIsValid := true.
-				validationLabel label: '' ]
-		ifNotNil: [
-				nameIsValid := false.
-				validationLabel 
-					label: errorMessage;
-					addStyle: 'headerError' ]
+	nameIsValid := errorMessage isNil.
+	validationLabel label: (errorMessage ifNil: [ '' ])
 ]
 
 { #category : 'accessing' }

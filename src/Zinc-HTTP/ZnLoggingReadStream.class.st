@@ -64,7 +64,7 @@ ZnLoggingReadStream >> identifier: string [
 { #category : 'initialization' }
 ZnLoggingReadStream >> initialize [
 	super initialize.
-	logger := [ :string | string traceCr ].
+	logger := [ :string | string traceNewLine ].
 	identifier := self class name asString.
 	logLevel := 1
 ]
@@ -148,15 +148,6 @@ ZnLoggingReadStream >> peek [
 				identifier.
 				byte printStringBase: 16 length: 2 padded: true }) ].
 	^ byte
-]
-
-{ #category : 'accessing' }
-ZnLoggingReadStream >> rawStream [
-	"Answer the innermost stream wrapped by the receiver, e.g. a raw binary file stream,
-	socket stream, or regular Read/WriteStream.
-	Defer to the wrappedStream."
-
-	^ self wrappedStream rawStream
 ]
 
 { #category : 'accessing' }

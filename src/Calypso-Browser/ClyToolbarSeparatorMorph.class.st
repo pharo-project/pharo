@@ -1,9 +1,5 @@
 "
-I am a vertical line which is used to separate toolbar elements which belongs to different menu groups.
-
-I am used by CmdMenuGroup to build toolbar items: 
-
-	menuGroup buildBrowserToolbar: aToolbar
+I am a vertical line which separates toolbar items belonging to different menu groups. I am created by the toolbar renderer between groups, and by the protocol editor after its checkbox.
 "
 Class {
 	#name : 'ClyToolbarSeparatorMorph',

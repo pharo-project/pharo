@@ -171,7 +171,7 @@ OSWindow >> deliverEvent: anEvent [
 	"TODO..."
 
 	TraceEvents
-		ifTrue: [ self traceCr: anEvent ].
+		ifTrue: [ self traceNewLine: anEvent ].
 	eventHandler ifNotNil: [ eventHandler handleEvent: anEvent ].
 ]
 
@@ -180,7 +180,7 @@ OSWindow >> deliverGlobalEvent: aGlobalEvent [
 	"TODO..."
 
 	TraceEvents
-		ifTrue: [ self traceCr: aGlobalEvent ].
+		ifTrue: [ self traceNewLine: aGlobalEvent ].
 	eventHandler ifNotNil: [ eventHandler handleEvent: aGlobalEvent ]
 ]
 

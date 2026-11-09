@@ -65,6 +65,30 @@ UnicodeTest >> setUp [
 	unicodeGenerator := UnicodeTestRNG current
 ]
 
+{ #category : 'tests' }
+UnicodeTest >> testCodePointRanges [
+	"UnicodeData.txt gives a block of code points with the same properties as a range,
+	between a line whose name ends with 'First>' and one whose name ends with 'Last>'"
+
+	self assert: (Character value: 16r4E00) isLetter.
+	self assert: (Character value: 16r9FFF) isLetter.
+	self assert: (Character value: 16r20001) isLetter.
+	self assert: (Character value: 16rD7A3) isLetter.
+	self deny: (Character value: 16rD7A4) isLetter.
+	self assert: (Unicode isSurrogateOther: (Character value: 16rDA00)).
+	self assert: (Unicode isPrivateOther: (Character value: 16rE001)).
+	self assert: (Unicode isPrivateOther: (Character value: 16r10FFFD))
+]
+
+{ #category : 'tests' }
+UnicodeTest >> testDigitValue [
+
+	self assert: (Character value: 16r0663) digitValue equals: 3.
+	self assert: (Character value: 16r1D7FF) digitValue equals: 9.
+	"CIRCLED DIGIT FOUR has a numeric value, but it is not a decimal digit"
+	self assert: (Character value: 16r2463) digitValue equals: -1
+]
+
 { #category : 'tests - categorization' }
 UnicodeTest >> testIsCasedLetter [
 	"The Cased letter category, LC, is empty"

@@ -99,21 +99,6 @@ ZnNewLineWriterStream >> nextPut: aCharacter [
 ]
 
 { #category : 'accessing' }
-ZnNewLineWriterStream >> rawStream [
-	"Answer the innermost stream wrapped by the receiver, e.g. a raw binary file stream,
-	socket stream, or regular Read/WriteStream.
-	Defer to the wrappedStream."
-
-	^ self wrappedStream rawStream
-]
-
-{ #category : 'accessing' }
 ZnNewLineWriterStream >> stream: aWriteStream [
 	stream := aWriteStream
-]
-
-{ #category : 'accessing' }
-ZnNewLineWriterStream >> wrappedStream [
-
-	^ stream
 ]

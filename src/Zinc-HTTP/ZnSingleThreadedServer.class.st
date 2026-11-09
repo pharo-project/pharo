@@ -498,11 +498,13 @@ ZnSingleThreadedServer >> readRequest: stream timing: timing [
 
 	| request initialMilliseconds |
 	initialMilliseconds := Time millisecondClockValue.
-	request := self withDefaultCharacterEncoderDo: [ self reader value: stream ].
+	request := self withMaximumNumberOfDictionaryEntriesDo: [
+			self withDefaultCharacterEncoderDo: [
+				self reader value: stream ] ].
 	request headers
 		at: ZnConstants remoteAddressHeader
 		put: (ZnNetworkingUtils ipAddressToString: stream socket remoteAddress).
-	timing requestDuration: (self logRequestRead: request started: initialMilliseconds).
+	timing requestDuration:  (self logRequestRead: request started: initialMilliseconds).
 	^ request
 ]
 
@@ -604,6 +606,16 @@ ZnSingleThreadedServer >> withDynamicVariablesDo: block [
 		value: self
 		during: [
 			self localOptions conditionallyDuring: block ]
+]
+
+{ #category : 'private' }
+ZnSingleThreadedServer >> withMaximumNumberOfDictionaryEntriesDo: block [
+	^ self maximumNumberOfDictionaryEntries = ZnMaximumNumberOfDictionaryEntries value
+			ifTrue: block
+			ifFalse: [
+				ZnMaximumNumberOfDictionaryEntries
+					value: self maximumNumberOfDictionaryEntries
+					during: block ]
 ]
 
 { #category : 'request handling' }

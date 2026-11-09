@@ -51,5 +51,5 @@ ReGlobalVariablesUsageRuleTest >> testRule [
 
 	"Sensor and Display are both known globals"
  	self assert: critiques size equals: 1.
- 	self assert: (self sourceAtChritique: critiques first) equals: 'MyGlobal'
+ 	self assert: (self sourceAtCritique: critiques first) equals: 'MyGlobal'
 ]
