@@ -12,19 +12,6 @@ Class {
 	#tag : 'Styling'
 }
 
-{ #category : 'accessing' }
-SHCustomStyle class >> color: aColor forGroup: aGroupName [
-
-	(groups at: aGroupName) at: 'color' put: aColor.
-	SHPreferences customStyleChanged
-]
-
-{ #category : 'accessing' }
-SHCustomStyle class >> colorForGroup: groupName [
-
-	^ (groups at: groupName) at: 'color'
-]
-
 { #category : 'class initialization' }
 SHCustomStyle class >> copyFromCurrentStyle [
 	SHRBTextStyler styleTable do: [ :row |
@@ -67,19 +54,6 @@ SHCustomStyle class >> doesNotUnderstand: aMessage [
 				emphasis: style emphasis.
 			^ self ].
 	^ super doesNotUnderstand: aMessage
-]
-
-{ #category : 'accessing' }
-SHCustomStyle class >> emphasis: anEmphasis forGroup: aGroupName [
-
-	(groups at: aGroupName) at: 'emphasis' put: anEmphasis.
-	SHPreferences customStyleChanged
-]
-
-{ #category : 'accessing' }
-SHCustomStyle class >> emphasisForGroup: groupName [
-
-	^ (groups at: groupName) at: 'emphasis'
 ]
 
 { #category : 'private' }
