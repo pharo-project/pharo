@@ -153,7 +153,7 @@ BaselineOfPharo class >> spec [
 		newName: 'Spec2' 
 		owner: 'ducasse' 
 		project:'Spec' 
-		version: 'feat/introductionOfRules'
+		version: 'newIntroductionOfRules'
 ]
 
 { #category : 'repository urls' }
