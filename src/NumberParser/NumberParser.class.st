@@ -185,13 +185,21 @@ NumberParser >> makeIntegerOrScaledIntegerOrFloat [
 	maybe it can be a scaled decimal with fraction omitted...
 	integer with negative exponent can be floats not fractions"
 
+	| value |
 	neg
 		ifTrue: [integerPart := integerPart negated].
 	self readExponent ifTrue:
-		["Check that the result is an integer, otherwise answer a Float.  Fractions are /not/ valid literals."
-		 (exponent >= 0 or: [(integerPart * (base raisedToInteger: exponent)) isInteger]) ifFalse:
-			[base := base asFloat].
-		^integerPart * (base raisedToInteger: exponent)].
+		[exponent >= 0 ifTrue: [^integerPart * (base raisedToInteger: exponent)].
+		"Negative exponent: answer an Integer if the value is exact, otherwise a correctly rounded Float.
+		Fractions are /not/ valid literals.
+		Do not multiply by a Float power of base: it can underflow/overflow
+		((10.0 raisedToInteger: -324) = 0.0, so 5e-324 would read as 0.0)
+		and it is inexact, which causes double rounding (1e-307 would read as 1.0000000000000003e-307).
+		Fraction>>asFloat is correctly rounded, including gradual underflow."
+		value := (Fraction numerator: integerPart denominator: (base raisedToInteger: exponent negated)) reduced.
+		^value isInteger
+			ifTrue: [value]
+			ifFalse: [value asFloat]].
 	(self readScaleWithDefaultNumberOfDigits: 0)
 		ifTrue: [^integerPart asScaledDecimal: scale].
 	^ integerPart
