@@ -31,12 +31,6 @@ MetacelloMVSRecordedSource >> baselineOf: aCandidate [
 		  MetacelloMVSBaselineDefinitions error: #repositoryFailure text: 'Not recorded: the baseline of ' , aCandidate printString ]
 ]
 
-{ #category : 'versions' }
-MetacelloMVSRecordedSource >> datesOf: aRepository [
-
-	^ dates at: aRepository ifAbsent: [ Dictionary new ]
-]
-
 { #category : 'building' }
 MetacelloMVSRecordedSource >> initialize [
 
@@ -221,9 +215,12 @@ MetacelloMVSRecordedSource >> storeOn: aStream [
 		nextPutAll: 'yourself)'
 ]
 
-{ #category : 'versions' }
+{ #category : 'accessing' }
 MetacelloMVSRecordedSource >> versionsOf: aRepository ifFail: aBlock [
 
+	| names known |
 	versionFailures at: aRepository ifPresent: [ :text | ^ aBlock value: text ].
-	^ versions at: aRepository ifAbsent: [ aBlock value: 'Not recorded: the versions of ' , aRepository ]
+	names := versions at: aRepository ifAbsent: [ ^ aBlock value: 'Not recorded: the versions of ' , aRepository ].
+	known := dates at: aRepository ifAbsent: [ Dictionary new ].
+	^ names collect: [ :each | MetacelloProjectVersion name: each date: (known at: each ifAbsent: [ nil ]) ]
 ]

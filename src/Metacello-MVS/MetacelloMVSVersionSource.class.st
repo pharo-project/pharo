@@ -47,16 +47,9 @@ MetacelloMVSVersionSource >> baselineOf: aCandidate [
 	^ self subclassResponsibility
 ]
 
-{ #category : 'versions' }
-MetacelloMVSVersionSource >> datesOf: aRepository [
-	"Version -> DateAndTime of what each version points to; empty when not known"
-
-	^ Dictionary new
-]
-
-{ #category : 'versions' }
+{ #category : 'accessing' }
 MetacelloMVSVersionSource >> versionsOf: aRepository ifFail: aBlock [
-	"The versions of aRepository; when it cannot be read, the value of aBlock with why"
+	"The versions aRepository publishes, each answering name and date (a date may be nil), like git tags; when they cannot be read, the value of aBlock with why"
 
 	^ self subclassResponsibility
 ]

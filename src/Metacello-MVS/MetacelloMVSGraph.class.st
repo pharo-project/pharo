@@ -38,13 +38,12 @@ MetacelloMVSGraph >> checkPlatformOf: aCandidate in: aSandbox into: aReading [
 	^ true
 ]
 
-{ #category : 'accessing' }
+{ #category : 'versions' }
 MetacelloMVSGraph >> datesOf: aRepository [
-	"Version -> DateAndTime of what each version of aRepository points to; empty when not known"
+	"Version name -> DateAndTime of each version of aRepository whose date is known"
 
-	^ dates
-		  at: aRepository
-		  ifAbsent: [ source ifNil: [ Dictionary new ] ifNotNil: [ dates at: aRepository put: (source datesOf: aRepository) ] ]
+	self versionsOf: aRepository.
+	^ dates at: aRepository ifAbsent: [ Dictionary new ]
 ]
 
 { #category : 'project specs' }
@@ -252,19 +251,24 @@ MetacelloMVSGraph >> versionStringOf: aProjectSpec [
 	^ (self repositoryFor: aProjectSpec) projectVersion ifNotNil: [ :string | string ifEmpty: [ nil ] ]
 ]
 
-{ #category : 'accessing' }
+{ #category : 'versions' }
 MetacelloMVSGraph >> versionsOf: aRepository [
-	"The versions of aRepository; none when they cannot be read, and failureOf: says why"
+	"The version names of aRepository; none when they cannot be read, and failureOf: says why"
 
 	^ versions at: aRepository ifAbsent: [
-			  versions at: aRepository put: (source
-					   ifNil: [
-							   versionFailures at: aRepository put: 'No versions known for ' , aRepository.
-							   #(  ) ]
-					   ifNotNil: [
-							   (source versionsOf: aRepository ifFail: [ :text |
-									    versionFailures at: aRepository put: text.
-									    #(  ) ]) asArray ]) ]
+			  | published |
+			  published := source
+				               ifNil: [
+						               versionFailures at: aRepository put: 'No versions known for ' , aRepository.
+						               #(  ) ]
+				               ifNotNil: [
+						               source versionsOf: aRepository ifFail: [ :text |
+								               versionFailures at: aRepository put: text.
+								               #(  ) ] ].
+			  dates
+				  at: aRepository
+				  put: ((published select: [ :each | each date notNil ]) collect: [ :each | each name -> each date ]) asDictionary.
+			  versions at: aRepository put: (published collect: [ :each | each name ]) asArray ]
 ]
 
 { #category : 'reading' }

@@ -62,7 +62,9 @@ MetacelloMVSRecordedSourceTest >> testReplaysTheResolution [
 	self assert: report errors isEmpty.
 	self assert: (report warnings anySatisfy: [ :each | each kind = #floatingVersion ]).
 	self assert: report buildList size equals: 2.
-	self assert: ((replayed datesOf: 'github://acme/Bar') at: 'v1.1.0') equals: (DateAndTime year: 2020 month: 1 day: 1)
+	self
+		assert: ((replayed versionsOf: 'github://acme/Bar' ifFail: [ :text | self fail: text ]) detect: [ :each | each name = 'v1.1.0' ]) date
+		equals: (DateAndTime year: 2020 month: 1 day: 1)
 ]
 
 { #category : 'tests' }

@@ -22,15 +22,6 @@ MetacelloMVSRecordingSource >> baselineOf: aCandidate [
 ]
 
 { #category : 'recording' }
-MetacelloMVSRecordingSource >> datesOf: aRepository [
-
-	| answer |
-	answer := source datesOf: aRepository.
-	recorded repository: aRepository dates: answer.
-	^ answer
-]
-
-{ #category : 'recording' }
 MetacelloMVSRecordingSource >> recorded [
 	"What the source answered so far, as an MetacelloMVSRecordedSource"
 
@@ -44,13 +35,16 @@ MetacelloMVSRecordingSource >> source: aVersionSource [
 	recorded := MetacelloMVSRecordedSource new
 ]
 
-{ #category : 'recording' }
+{ #category : 'accessing' }
 MetacelloMVSRecordingSource >> versionsOf: aRepository ifFail: aBlock [
 
 	| answer |
 	answer := source versionsOf: aRepository ifFail: [ :text |
 			          recorded repository: aRepository failsWith: text.
 			          ^ aBlock value: text ].
-	recorded repository: aRepository versions: answer.
+	recorded
+		repository: aRepository versions: (answer collect: [ :each | each name ]);
+		repository: aRepository
+		dates: ((answer select: [ :each | each date notNil ]) collect: [ :each | each name -> each date ]) asDictionary.
 	^ answer
 ]

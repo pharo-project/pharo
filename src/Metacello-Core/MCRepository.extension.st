@@ -63,3 +63,10 @@ MCRepository >> repositoryVersionString [
 
   ^ ''
 ]
+
+{ #category : '*Metacello-Core' }
+MCRepository >> versions [
+	"The versions of the project I hold, as I publish them (each answers name and date, like a git tag). None by default: only repositories that know their versions, such as Iceberg's, answer some"
+
+	^ #(  )
+]
