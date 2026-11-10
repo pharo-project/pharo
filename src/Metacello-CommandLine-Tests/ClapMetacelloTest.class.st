@@ -60,6 +60,16 @@ ClapMetacelloTest >> testCanSignalErrorOnWarning [
 ]
 
 { #category : 'tests' }
+ClapMetacelloTest >> testCanUseMVS [
+
+	| command |
+	context := ClapMetacello commandSpecification activationWith:
+		           #( 'metacello' 'install' '--mvs' 'github://myorg/myproject:v1.0.0/src' 'MyProject' ).
+	command := context command.
+	self assert: command usesMVS
+]
+
+{ #category : 'tests' }
 ClapMetacelloTest >> testDoesNotSaveWithNoSaveOption [
 
 	| command |
@@ -77,6 +87,16 @@ ClapMetacelloTest >> testDoesNotSignalErrorOnWarningByDefault [
 	command := context command.
 
 	self deny: command shouldSignalErrorOnWarning
+]
+
+{ #category : 'tests' }
+ClapMetacelloTest >> testDoesNotUseMVSByDefault [
+
+	| command |
+	context := ClapMetacello commandSpecification activationWith:
+		           #( 'metacello' 'install' 'github://myorg/myproject:main/src' 'MyProject' ).
+	command := context command.
+	self deny: command usesMVS
 ]
 
 { #category : 'tests' }
