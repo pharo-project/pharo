@@ -139,6 +139,7 @@ ZnDataUrl >> parseFrom: string [
 		ifFalse: [
 			ZnPercentEncoder new 
 				characterEncoder: mediaType charSet asZnCharacterEncoder;
+				urlAsIri: (ZnCurrentOptions at: #urlAsIri);
 				decode:	data ]
 ]
 
@@ -155,6 +156,7 @@ ZnDataUrl >> printOn: stream [
 			stream nextPut: $,.
 			ZnPercentEncoder new 
 				characterEncoder: mediaType charSet asZnCharacterEncoder;
+				urlAsIri: (ZnCurrentOptions at: #urlAsIri);
 				encode: data readStream to: stream ]
 ]
 

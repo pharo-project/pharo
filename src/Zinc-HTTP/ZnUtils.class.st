@@ -213,7 +213,7 @@ ZnUtils class >> signalProgress: amount total: total [
 			total
 				ifNil: [
 					HTTPProgress new
-						signal: ('Transferred {1} bytes ...' format: { amount humanReadableSIByteSize }) ]
+						signal: ('Transferred {1} bytes ...' format: { amount humanReadableSISizeString }) ]
 				ifNotNil: [
 					HTTPProgress new
 						total: total;
