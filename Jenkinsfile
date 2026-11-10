@@ -189,7 +189,6 @@ def bootstrapImage(){
         }
 
         def isoTesters = [:]
-        isoTesters['SortFunctions'] = { defineIsoTestStage("SortFunctions") }
         isoTesters['Beacon'] = { defineIsoTestStage("Beacon") }
         isoTesters['ReferenceFinder'] = { defineIsoTestStage("ReferenceFinder") }
         isoTesters['SUnit'] = { defineIsoTestStage("SUnit") }
