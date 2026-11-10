@@ -19,7 +19,8 @@ Class {
 	#instVars : [
 		'characterEncoder',
 		'safeSet',
-		'decodePlusAsSpace'
+		'decodePlusAsSpace',
+		'urlAsIri'
 	],
 	#category : 'Zinc-Character-Encoding-Core',
 	#package : 'Zinc-Character-Encoding-Core'
@@ -188,9 +189,20 @@ ZnPercentEncoder >> safeSet: string [
 	safeSet := string asByteArray
 ]
 
-{ #category : 'private' }
+{ #category : 'accessing' }
 ZnPercentEncoder >> urlAsIri [
-	^ ZnCurrentOptions at: #urlAsIri
+	"Return if I encode as an IRI, leaving non-ASCII characters as they are, and accept them when decoding.
+	ZnUrl and friends set this from the #urlAsIri ZnOptions, which this package cannot see."
+
+	^ urlAsIri ifNil: [ urlAsIri := false ]
+]
+
+{ #category : 'initialization' }
+ZnPercentEncoder >> urlAsIri: boolean [
+	"When boolean is true, I encode as an IRI, leaving non-ASCII characters as they are, and accept them when decoding.
+	Else I percent-encode everything outside my safe set, and reject non-ASCII characters when decoding."
+
+	urlAsIri := boolean
 ]
 
 { #category : 'private' }

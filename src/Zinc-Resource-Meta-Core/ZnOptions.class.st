@@ -68,7 +68,7 @@ ZnOptions class >> globalDefault [
 
 { #category : 'class initialization' }
 ZnOptions class >> initialize [
-	"Changed at 2021-12-13"
+	"Changed at 2025-11-16"
 
 	self resetGlobalDefault
 ]

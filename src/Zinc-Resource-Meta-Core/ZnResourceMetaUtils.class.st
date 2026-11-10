@@ -16,6 +16,7 @@ Class {
 ZnResourceMetaUtils class >> decodePercent: string [
 	^ ZnPercentEncoder new
 		decodePlusAsSpace: false;
+		urlAsIri: (ZnCurrentOptions at: #urlAsIri);
 		decode: string
 ]
 
@@ -23,6 +24,7 @@ ZnResourceMetaUtils class >> decodePercent: string [
 ZnResourceMetaUtils class >> decodePercentForQuery: string [
 	^ ZnPercentEncoder new
 		decodePlusAsSpace: true;
+		urlAsIri: (ZnCurrentOptions at: #urlAsIri);
 		decode: string
 ]
 
@@ -31,6 +33,7 @@ ZnResourceMetaUtils class >> encodePercent: string safeSet: safeSet encoder: enc
 	^ ZnPercentEncoder new
 		characterEncoder: encoder;
 		safeSet: (self perform: safeSet);
+		urlAsIri: (ZnCurrentOptions at: #urlAsIri);
 		encode: string
 ]
 
