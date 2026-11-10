@@ -177,6 +177,18 @@ MetacelloScriptExecutor >> repositoryArg: anObject [
     repositoryArg := anObject
 ]
 
+{ #category : 'actions api' }
+MetacelloScriptExecutor >> resolve: required [
+
+	actionArg := #resolve: -> { required }
+]
+
+{ #category : 'options api' }
+MetacelloScriptExecutor >> resolver: aMetacelloResolver [
+
+	self options at: #resolver put: aMetacelloResolver
+]
+
 { #category : 'accessing' }
 MetacelloScriptExecutor >> roots [
 

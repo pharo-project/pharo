@@ -1,6 +1,6 @@
 Class {
 	#name : 'MetacelloCoreVersionQueryTest',
-	#superclass : 'TestCase',
+	#superclass : 'MetacelloTestCase',
 	#category : 'Metacello-Tests-Configs',
 	#package : 'Metacello-Tests',
 	#tag : 'Configs'
