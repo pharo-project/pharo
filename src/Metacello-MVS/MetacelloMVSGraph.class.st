@@ -204,7 +204,7 @@ MetacelloMVSGraph >> repositoryFor: aProjectSpec [
 	descriptions size = 1 ifFalse: [ ^ nil ].
 	^ repositories at: descriptions first ifAbsentPut: [
 			  | repository |
-			  repository := [ aProjectSpec repositorySpecs first createRepository ]
+			  repository := [ MetacelloPlatform current createRepository: aProjectSpec repositorySpecs first ]
 				                on: Error
 				                do: [ nil ].
 			  (repository isNotNil and: [ (repository respondsTo: #projectPath) and: [ repository projectPath isNotNil ] ])
