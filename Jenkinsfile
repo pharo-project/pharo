@@ -189,6 +189,9 @@ def bootstrapImage(){
         }
 
         def isoTesters = [:]
+	isoTesters['Announcement'] = { defineIsoTestStage("Announcement") }
+	isoTesters['SortFunctions'] = { defineIsoTestStage("SortFunctions") }
+	isoTesters['FuzzyMatcher'] = { defineIsoTestStage("FuzzyMatcher") }		
 	isoTesters['Beacon'] = { defineIsoTestStage("Beacon") }
 	isoTesters['Geometry'] = { defineIsoTestStage("Geometry") }
 	isoTesters['RTree'] = { defineIsoTestStage("RTree") }
