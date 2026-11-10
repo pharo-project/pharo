@@ -189,6 +189,9 @@ def bootstrapImage(){
         }
 
         def isoTesters = [:]
+	isoTesters['Beacon'] = { defineIsoTestStage("Beacon") }
+	isoTesters['Geometry'] = { defineIsoTestStage("Geometry") }
+	isoTesters['RTree'] = { defineIsoTestStage("RTree") }
 	isoTesters['Flashback'] = { defineIsoTestStage("Flashback") }
 	isoTesters['EnlumineurFormatter'] = { defineIsoTestStage("EnlumineurFormatter") }
         isoTesters['ReferenceFinder'] = { defineIsoTestStage("ReferenceFinder") }
