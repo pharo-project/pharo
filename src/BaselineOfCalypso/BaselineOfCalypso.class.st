@@ -23,7 +23,6 @@ BaselineOfCalypso >> baseline: spec [
 			copyFrom: 'ClassAnnotation'
 			with: [ spec loads: 'Tests' ];
 
-			baseline: 'Commander' with: [ spec repository: repository ];
 			baseline: 'SystemCommands' with: [ spec repository: repository ];
 			baseline: 'CalypsoNavigationModel' with: [ spec repository: repository ].
 
@@ -164,7 +163,7 @@ BaselineOfCalypso >> baseline: spec [
 			with: [ spec requires: #( #'Calypso-SystemTools-Core' ) ];
 			package: #'Calypso-Browser' with: [
 				spec requires: #( 'CalypsoNavigationModel'
-					   #Commander 'SystemCommands' ) ];
+					   'SystemCommands' ) ];
 			package: #'Calypso-Browser-Tests'
 			with: [ spec requires: #( #'Calypso-Browser' ) ];
 			package: #'Calypso-SystemTools-Core' with: [
