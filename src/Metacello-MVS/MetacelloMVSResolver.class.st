@@ -26,7 +26,8 @@ Class {
 		'locked',
 		'assumedInstalled',
 		'rootRequest',
-		'resolution'
+		'resolution',
+		'dropsUnused'
 	],
 	#category : 'Metacello-MVS',
 	#package : 'Metacello-MVS'
@@ -166,6 +167,13 @@ MetacelloMVSResolver >> consider: aCandidate [
 										about: installedCandidate ].
 							self select: installedCandidate ] ] ].
 	self select: aCandidate
+]
+
+{ #category : 'initialization' }
+MetacelloMVSResolver >> dropUnused: aBoolean [
+	"Whether the resolution ends by dropping the projects that only versions not selected asked for (true by default). Go keeps them"
+
+	dropsUnused := aBoolean
 ]
 
 { #category : 'findings' }
@@ -479,7 +487,7 @@ MetacelloMVSResolver >> resolve: aRepositoryString project: aProjectName [
 
 { #category : 'resolving' }
 MetacelloMVSResolver >> resolve: aRepositoryString project: aProjectName loads: aCollectionOfGroups [
-	"Walk the requirements from the root, loading aCollectionOfGroups of it (empty for its default ones), as far as possible and answer the MetacelloMVSResolution: the build list, the requirements met and the findings. aProjectName names the baseline of the root. Each project is read for the union of the groups its dependents ask"
+	"Walk the requirements from the root, loading aCollectionOfGroups of it (empty for its default ones), as far as possible and answer the MetacelloMVSResolution: the build list, the requirements met and the findings. aProjectName names the baseline of the root. Each project is read for the union of the groups its dependents ask. At the end, the projects nobody selected uses are dropped (see dropUnused:)"
 
 	| spec |
 	self reset.
@@ -492,7 +500,9 @@ MetacelloMVSResolver >> resolve: aRepositoryString project: aProjectName loads: 
 	resolution rootRepository: rootRepository.
 	self require: spec by: nil.
 	[ pending isEmpty ] whileFalse: [ self visit: pending removeFirst ].
-	resolution buildList: selected.
+	resolution buildList: (dropsUnused
+			 ifTrue: [ self usedIn: selected ]
+			 ifFalse: [ selected ]).
 	^ resolution
 ]
 
@@ -570,11 +580,12 @@ MetacelloMVSResolver >> select: aCandidate [
 	pending add: aCandidate
 ]
 
-{ #category : 'resolving' }
+{ #category : 'initialization' }
 MetacelloMVSResolver >> setGraph: aGraph [
 
 	graph := aGraph.
-	installed := Dictionary new
+	installed := Dictionary new.
+	dropsUnused := true
 ]
 
 { #category : 'resolving' }
@@ -593,6 +604,27 @@ MetacelloMVSResolver >> spell: aProjectSpec by: aCandidate [
 		  specFor: first , ((graph descriptionOf: aProjectSpec) allButFirst: repository size)
 		  project: (graph projectOf: aProjectSpec)
 		  loads: aProjectSpec loads
+]
+
+{ #category : 'resolving' }
+MetacelloMVSResolver >> usedIn: aBuildList [
+	"The part of aBuildList reached from the root through the selected versions only. A project only versions not selected asked for is unused. The versions kept are not changed"
+
+	| used toVisit |
+	used := Dictionary new.
+	toVisit := OrderedCollection new.
+	(aBuildList includesKey: rootRepository) ifTrue: [ toVisit add: rootRepository ].
+	[ toVisit isEmpty ] whileFalse: [
+			| repository candidate |
+			repository := toVisit removeFirst.
+			candidate := aBuildList at: repository.
+			(used includesKey: repository) ifFalse: [
+					used at: repository put: candidate.
+					resolution requirements do: [ :each |
+							(each from repository = repository and: [
+								 each from version = candidate version and: [ aBuildList includesKey: each repository ] ]) ifTrue: [
+								toVisit add: each repository ] ] ] ].
+	^ used
 ]
 
 { #category : 'resolving' }

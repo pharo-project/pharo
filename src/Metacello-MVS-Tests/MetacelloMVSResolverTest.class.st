@@ -29,6 +29,20 @@ MetacelloMVSResolverTest >> date: aString [
 	^ DateAndTime fromString: aString , 'T12:00:00+00:00'
 ]
 
+{ #category : 'tests' }
+MetacelloMVSResolverTest >> givenADependencyOfAVersionNotSelected [
+
+	self versions: #( 'v1.0.0' ) of: 'a'.
+	self versions: #( 'v1.0.0' ) of: 'b'.
+	self versions: #( 'v1.3.0' 'v1.4.0' ) of: 'd'.
+	self versions: #( 'v1.0.0' ) of: 'f'.
+	self version: 'v1.0.0' of: 'a' requires: #( 'b:v1.0.0' 'd:v1.4.0' ).
+	self version: 'v1.0.0' of: 'b' requires: #( 'd:v1.3.0' ).
+	self version: 'v1.3.0' of: 'd' requires: #( 'f:v1.0.0' ).
+	self version: 'v1.4.0' of: 'd' requires: #(  ).
+	self version: 'v1.0.0' of: 'f' requires: #(  )
+]
+
 { #category : 'running' }
 MetacelloMVSResolverTest >> project: aProjectName at: anOwnerNameAndRef [
 	"A project spec asking the baseline aProjectName in github://anOwnerNameAndRef/src, like a fork of it"
@@ -263,6 +277,18 @@ MetacelloMVSResolverTest >> testAMissingVersionIsAnError [
 	self versions: #( 'v1.0.0' 'v1.2.0' 'v2.0.0' ) of: 'b'.
 	self version: 'v1.0.0' of: 'a' requires: #( 'b:v1.3.0' ).
 	self assert: ((self resolve: 'a:v1.0.0') errors anySatisfy: [ :each | each kind = #missingVersion ])
+]
+
+{ #category : 'tests' }
+MetacelloMVSResolverTest >> testAProjectOnlyAVersionNotSelectedRequiresIsDropped [
+	"D 1.3 is not selected, so f, which only D 1.3 requires, is not used"
+
+	| buildList |
+	self givenADependencyOfAVersionNotSelected.
+	buildList := (self resolve: 'a:v1.0.0') buildList.
+	self
+		assert: (self selected: 'd' in: buildList) equals: 'v1.4.0';
+		deny: (buildList includesKey: (self repo: 'f'))
 ]
 
 { #category : 'tests - replace' }
@@ -579,20 +605,14 @@ MetacelloMVSResolverTest >> testProblemsReportsAProblemOnce [
 ]
 
 { #category : 'tests' }
-MetacelloMVSResolverTest >> testRequirementsOfVersionsNotSelectedStillCount [
+MetacelloMVSResolverTest >> testRequirementsOfVersionsNotSelectedStillCountWhenUnusedAreKept [
 	"As in Go: D 1.3 is not selected, but what it requires is"
 
 	| buildList |
-	self versions: #( 'v1.0.0' ) of: 'a'.
-	self versions: #( 'v1.0.0' ) of: 'b'.
-	self versions: #( 'v1.3.0' 'v1.4.0' ) of: 'd'.
-	self versions: #( 'v1.0.0' ) of: 'f'.
-	self version: 'v1.0.0' of: 'a' requires: #( 'b:v1.0.0' 'd:v1.4.0' ).
-	self version: 'v1.0.0' of: 'b' requires: #( 'd:v1.3.0' ).
-	self version: 'v1.3.0' of: 'd' requires: #( 'f:v1.0.0' ).
-	self version: 'v1.4.0' of: 'd' requires: #(  ).
-	self version: 'v1.0.0' of: 'f' requires: #(  ).
-	buildList := (self resolve: 'a:v1.0.0') buildList.
+	self givenADependencyOfAVersionNotSelected.
+	buildList := ((MetacelloMVSResolver on: graph)
+		              dropUnused: false;
+		              resolve: (self repo: 'a:v1.0.0') , '/src' project: 'a') buildList.
 	self
 		assert: (self selected: 'd' in: buildList) equals: 'v1.4.0';
 		assert: (self selected: 'f' in: buildList) equals: 'v1.0.0'
@@ -631,6 +651,33 @@ MetacelloMVSResolverTest >> testTheCanonicalSpellingOfAVersionIsPreferred [
 	self version: 'v1.2.0' of: 'plural' requires: #(  ).
 	buildList := (self resolve: 'root:v1.0.0') buildList.
 	self assert: (self selected: 'plural' in: buildList) equals: 'v1.2.0'
+]
+
+{ #category : 'tests' }
+MetacelloMVSResolverTest >> testTheExampleOfThePullRequest [
+	"A 1.0 -> B 1.0 -> C 1.2 -> E 3.5
+	                 -> D 2.1 -> C 1.3 -> F 4.2
+	C 1.3 is selected; E 3.5, which only C 1.2 asks for, is dropped"
+
+	| buildList |
+	self versions: #( 'v1.0.0' ) of: 'a'.
+	self versions: #( 'v1.0.0' ) of: 'b'.
+	self versions: #( 'v1.2.0' 'v1.3.0' 'v1.4.0' ) of: 'c'.
+	self versions: #( 'v2.1.0' 'v2.2.0' ) of: 'd'.
+	self versions: #( 'v3.5.0' 'v3.6.0' ) of: 'e'.
+	self versions: #( 'v4.2.0' ) of: 'f'.
+	self version: 'v1.0.0' of: 'a' requires: #( 'b:v1.0.0' ).
+	self version: 'v1.0.0' of: 'b' requires: #( 'c:v1.2.0' 'd:v2.1.0' ).
+	self version: 'v1.2.0' of: 'c' requires: #( 'e:v3.5.0' ).
+	self version: 'v1.3.0' of: 'c' requires: #( 'f:v4.2.0' ).
+	self version: 'v2.1.0' of: 'd' requires: #( 'c:v1.3.0' ).
+	self version: 'v3.5.0' of: 'e' requires: #(  ).
+	self version: 'v4.2.0' of: 'f' requires: #(  ).
+	buildList := (self resolve: 'a:v1.0.0') buildList.
+	self
+		assert: (#( 'a' 'b' 'c' 'd' 'f' ) collect: [ :each | self selected: each in: buildList ])
+		equals: #( 'v1.0.0' 'v1.0.0' 'v1.3.0' 'v2.1.0' 'v4.2.0' );
+		deny: (buildList includesKey: (self repo: 'e'))
 ]
 
 { #category : 'tests - requirements' }
