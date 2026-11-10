@@ -621,9 +621,8 @@ MetacelloMVSResolver >> usedIn: aBuildList [
 			(used includesKey: repository) ifFalse: [
 					used at: repository put: candidate.
 					resolution requirements do: [ :each |
-							(each from repository = repository and: [
-								 each from version = candidate version and: [ aBuildList includesKey: each repository ] ]) ifTrue: [
-								toVisit add: each repository ] ] ] ].
+						((each from isSameVersionAs: candidate) and: [ aBuildList includesKey: each repository ]) ifTrue: [
+							toVisit add: each repository ] ] ] ].
 	^ used
 ]
 

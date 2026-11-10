@@ -60,6 +60,13 @@ MetacelloMVSCandidate >> isLocked [
 	^ resolvedProject isLocked
 ]
 
+{ #category : 'testing' }
+MetacelloMVSCandidate >> isSameVersionAs: aCandidate [
+	"Whether aCandidate is my project at my version (each requirement makes its own candidate)"
+
+	^ self repository = aCandidate repository and: [ self version = aCandidate version ]
+]
+
 { #category : 'accessing' }
 MetacelloMVSCandidate >> line [
 

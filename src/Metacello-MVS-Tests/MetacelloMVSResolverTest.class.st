@@ -291,6 +291,31 @@ MetacelloMVSResolverTest >> testAProjectOnlyAVersionNotSelectedRequiresIsDropped
 		deny: (buildList includesKey: (self repo: 'f'))
 ]
 
+{ #category : 'tests' }
+MetacelloMVSResolverTest >> testAProjectStillUsedKeepsTheVersionAReplacedVersionAsked [
+	"A 1.0 -> B 1.0 -> C 1.2 -> E 3.5
+	                 -> D 2.1 -> C 1.3 -> E 3.2
+	C 1.3 still uses E, so E stays, at 3.5: the cleanup drops projects, it never lowers a version"
+
+	| buildList |
+	self versions: #( 'v1.0.0' ) of: 'a'.
+	self versions: #( 'v1.0.0' ) of: 'b'.
+	self versions: #( 'v1.2.0' 'v1.3.0' ) of: 'c'.
+	self versions: #( 'v2.1.0' ) of: 'd'.
+	self versions: #( 'v3.2.0' 'v3.5.0' ) of: 'e'.
+	self version: 'v1.0.0' of: 'a' requires: #( 'b:v1.0.0' ).
+	self version: 'v1.0.0' of: 'b' requires: #( 'c:v1.2.0' 'd:v2.1.0' ).
+	self version: 'v1.2.0' of: 'c' requires: #( 'e:v3.5.0' ).
+	self version: 'v1.3.0' of: 'c' requires: #( 'e:v3.2.0' ).
+	self version: 'v2.1.0' of: 'd' requires: #( 'c:v1.3.0' ).
+	self version: 'v3.2.0' of: 'e' requires: #(  ).
+	self version: 'v3.5.0' of: 'e' requires: #(  ).
+	buildList := (self resolve: 'a:v1.0.0') buildList.
+	self
+		assert: (self selected: 'c' in: buildList) equals: 'v1.3.0';
+		assert: (self selected: 'e' in: buildList) equals: 'v3.5.0'
+]
+
 { #category : 'tests - replace' }
 MetacelloMVSResolverTest >> testAReplaceOfTheRootPinsItsVersionWithWarnings [
 
