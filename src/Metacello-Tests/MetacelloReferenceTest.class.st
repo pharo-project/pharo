@@ -1,6 +1,6 @@
 Class {
 	#name : 'MetacelloReferenceTest',
-	#superclass : 'TestCase',
+	#superclass : 'MetacelloTestCase',
 	#category : 'Metacello-Tests',
 	#package : 'Metacello-Tests'
 }

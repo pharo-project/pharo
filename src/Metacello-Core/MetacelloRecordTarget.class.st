@@ -1,3 +1,8 @@
+"
+I am the record target: I walk a version spec for the names I am required to load (required:) and record the load directives, packages and projects in load order, with their pre and post load do-its (record: answers the root directive).
+
+I decide no version: each project reference takes the project the engine's resolution chose, recorded once with every group asked. A version spec recorded on its own is resolved first (see record:).
+"
 Class {
 	#name : 'MetacelloRecordTarget',
 	#superclass : 'MetacelloTarget',
@@ -30,69 +35,6 @@ MetacelloRecordTarget >> linearLoadPackages: packages ofSpec: spec [
 		for: self
 ]
 
-{ #category : 'actions' }
-MetacelloRecordTarget >> listLoadableSpecsFrom: aVersionSpec [
-	"I take a MetacelloVersionSpec and I return all the specs that needs to be loaded from my requirements."
-
-	| loadableSpecs requirementList managedRequirements |
-	loadableSpecs := OrderedCollection new.
-	requirementList := required copy.
-	managedRequirements := Set new.
-	[ requirementList isEmpty ] whileFalse: [
-			| newReqd |
-			newReqd := Set new.
-			requirementList do: [ :req |
-					| loadableSpec |
-					loadableSpec := aVersionSpec packageNamed: req ifAbsent: [ 
-						^ self error: 'Name not found: ' , req, ' in ', aVersionSpec label ]. "If the loadable spec is a Group we ignore it."
-					loadableSpec resolveToLoadableSpec ifNotNil: [ :resolvedSpec | loadableSpecs add: resolvedSpec ].
-					newReqd addAll: loadableSpec requires.
-					newReqd addAll: loadableSpec includes ].
-			managedRequirements addAll: requirementList.
-			newReqd removeAllFoundIn: managedRequirements.
-			requirementList := newReqd ].
-	^ loadableSpecs
-]
-
-{ #category : 'actions' }
-MetacelloRecordTarget >> packageSpecsInLoadOrderFrom: aVersionSpec [
-
-	| loadOrder specsToLoad packageNames importNames importSpec importProjectSpecs importProjectNameMap |
-	loadOrder := aVersionSpec packageSpecsInLoadOrder.
-	importNames := (packageNames := ((self listLoadableSpecsFrom: aVersionSpec) collect: [ :spec | spec name ]) asSet) copy.
-
-	aVersionSpec hasImports ifFalse: [ ^ loadOrder select: [ :spec | packageNames includes: spec name ] ].
-
-	loadOrder do: [ :spec | importNames remove: spec name ifAbsent: [ ] ].
-	specsToLoad := OrderedCollection new.
-	importProjectSpecs := Dictionary new.
-	importProjectNameMap := Dictionary new.
-	aVersionSpec importArray ifNotNil: [ :importArray |
-			loadOrder do: [ :spec |
-					importArray do: [ :assoc |
-							assoc key = spec name ifTrue: [
-									importProjectSpecs at: spec name put: spec.
-									(assoc value select: [ :each | importNames includes: each ]) do: [ :each | (importProjectNameMap at: spec name ifAbsentPut: [ Set new ]) add: each ] ] ] ] ].
-
-	aVersionSpec import ifNotNil: [ :import |
-			loadOrder do: [ :spec |
-					spec name = import ifTrue: [
-							importProjectSpecs at: spec name put: spec.
-							importProjectNameMap at: spec name put: importNames ] ] ].
-
-	loadOrder do: [ :spec |
-			(packageNames includes: spec name) ifTrue: [ specsToLoad add: spec ].
-			importProjectSpecs at: spec name ifPresent: [ :importProjectSpec | "insert the imports at this point"
-					importProjectNameMap at: spec name ifPresent: [ :importedNames |
-							importedNames do: [ :importedName |
-									specsToLoad add: (importSpec := importProjectSpec copy
-											               name: importedName;
-											               mergeImportLoads: { importedName };
-											               yourself).
-									importSpec projectReference name: importedName ] ] ] ].
-	^ specsToLoad
-]
-
 { #category : 'do-its' }
 MetacelloRecordTarget >> postLoad: packageOrVersionSpec [
 
@@ -103,6 +45,15 @@ MetacelloRecordTarget >> postLoad: packageOrVersionSpec [
 MetacelloRecordTarget >> preLoad: packageOrVersionSpec [
 
 	(MetacelloPreLoadDirective spec: packageOrVersionSpec) addTo: self specBuilder currentLoadDirective
+]
+
+{ #category : 'recording' }
+MetacelloRecordTarget >> record: aVersionSpec [
+	"Record the load directives for what I am required to load from aVersionSpec, and answer the root directive. Recording takes each project from the engine's resolution: a script resolves first (see MetacelloScriptEngine>>#do:required:commitIfSuccess:); a version spec recorded on its own is resolved here"
+
+	engine resolution ifNil: [ engine resolution: ((MetacelloResolveTarget on: engine) resolveVersion: aVersionSpec loads: required) ].
+	aVersionSpec acceptVisitor: self.
+	^ self specBuilder root
 ]
 
 { #category : 'accessing' }
@@ -142,36 +93,18 @@ MetacelloRecordTarget >> visitPackageSpec: aMetacelloPackageSpec [
 
 { #category : 'visiting' }
 MetacelloRecordTarget >> visitProjectReference: aMetacelloProjectReferenceSpec [
+	"Record the project at the version the resolution chose, here with the groups this reference asks: a group asked later is loaded where it is asked, after what comes before it (BaselineOfPharo asks Monticello's RemoteRepositories early and BaselineOfIDE its Tests once SUnit is loaded)"
 
-	| registered override registration requiredArray projectReferenceToLoad |
+	| projectReferenceToLoad project names |
 	projectReferenceToLoad := aMetacelloProjectReferenceSpec projectReference.
-
 	MetacelloNotification signal: 'Project: ' , projectReferenceToLoad name.
-
 	projectReferenceToLoad isLocked ifTrue: [
 			MetacelloNotification signal: 'Project is locked, skipping.'.
 			^ projectReferenceToLoad ].
-
-	registration := MetacelloProjectRegistry
-		                registrationNamed: projectReferenceToLoad className
-		                ifPresent: [ :existing | engine resolvePresentProject: existing new: projectReferenceToLoad asProjectRegistration ]
-		                ifAbsent: [ projectReferenceToLoad asProjectRegistration ].
-	registered := registration projectSpec.
-
-	(registered compareEqual: projectReferenceToLoad) ifFalse: [ "counts as override, only if they differ in some aspect"
-		override := registered copy.
-		override mergeScriptLoads: projectReferenceToLoad.
-		projectReferenceToLoad := override ].
-
-	projectReferenceToLoad ensureProjectLoadedWithEngine: engine.
-	"Propagate the strictness to the dependency as defined in the dependent before loading"
-	projectReferenceToLoad project version strict: projectReferenceToLoad strict.
-	
-	requiredArray := registered loadListForVersion: projectReferenceToLoad version.
-	projectReferenceToLoad version
-		recordRequiredFromArray: requiredArray
-		withEngine: engine.
-	registration registerProject
+	project := engine resolvedProjectFor: projectReferenceToLoad.
+	names := engine namesToRecord: (projectReferenceToLoad loadListForVersion: project version) of: project.
+	names ifEmpty: [ ^ self ].
+	project version recordRequiredFromArray: names withEngine: engine
 ]
 
 { #category : 'visiting' }
@@ -201,11 +134,12 @@ MetacelloRecordTarget >> visitVersionSpecChildren: aVersionSpec [
 	oldCurrentRepositorySpecs := currentRepositorySpecs.
 	currentRepositorySpecs := engine loader resolveRepositorySpecs: aVersionSpec repositorySpecs.
 
-	packages := self packageSpecsInLoadOrderFrom: aVersionSpec.
+	packages := aVersionSpec packageSpecsInLoadOrderFor: required.
 
 	[ "Iterate the internals of the version spec"
 		aVersionSpec project loadType == #atomic ifTrue: [ ^ self atomicLoadPackages: packages ofSpec: aVersionSpec ].
 		aVersionSpec project loadType == #linear ifTrue: [ ^ self linearLoadPackages: packages ofSpec: aVersionSpec ].
 
-		MetacelloError signal: 'Unknown loadType: ' , aVersionSpec project loadType printString ] ensure: [ currentRepositorySpecs := oldCurrentRepositorySpecs ]
+		MetacelloError signal: 'Unknown loadType: ' , aVersionSpec project loadType printString ] ensure: [
+		currentRepositorySpecs := oldCurrentRepositorySpecs ]
 ]

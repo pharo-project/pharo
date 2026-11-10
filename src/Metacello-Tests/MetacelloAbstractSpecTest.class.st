@@ -1,6 +1,6 @@
 Class {
 	#name : 'MetacelloAbstractSpecTest',
-	#superclass : 'TestCase',
+	#superclass : 'MetacelloTestCase',
 	#category : 'Metacello-Tests-Specs',
 	#package : 'Metacello-Tests',
 	#tag : 'Specs'

@@ -88,6 +88,22 @@ MetacelloProjectRegistration >> hash [
 	^ String stringHash: projectSpec metacelloRegistrationHash printString initialHash: 0
 ]
 
+{ #category : 'testing' }
+MetacelloProjectRegistration >> isInstalled [
+	"The image has this project's code: loads register every project they load as loaded (see MetacelloLoadTarget>>#registerResolvedProjectsAsLoaded), or the legacy rule says so (see isInstalledByLegacyRule)"
+
+	^ self loadedInImage or: [ self isInstalledByLegacyRule ]
+]
+
+{ #category : 'testing' }
+MetacelloProjectRegistration >> isInstalledByLegacyRule [
+	"Not registered as loaded, but a package its baseline declares is in the image. Images loaded before loads registered every project they load have such registrations, and so do projects only registered, fetched or locked. This tells that some code is there, not which version: resolvers relying on it should say so. To be revisited once images have been reloaded"
+
+	self loadedInImage ifTrue: [ ^ false ].
+	^ (Smalltalk globals at: self className asSymbol ifAbsent: [ ^ false ]) allPackageNames anySatisfy: [ :each |
+		  self packageOrganizer hasPackage: each ]
+]
+
 { #category : 'accessing' }
 MetacelloProjectRegistration >> loadedInImage [
 
