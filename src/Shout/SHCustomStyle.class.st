@@ -174,7 +174,7 @@ SHCustomStyle class >> settingsOn: aBuilder [
 		with: [
 				(aBuilder button: #copyFromCurrentStyle)
 					order: 0;
-					description: 'Initialize custom style to colors of the currently selected them';
+					description: 'Initialize custom style to colors of the currently selected style';
 					target: self;
 					label: 'Copy from current style';
 					buttonLabel: 'Copy'.
@@ -196,15 +196,13 @@ SHCustomStyle class >> styleTable [
 
 	^ groups flatCollect: [ :entry |
 			  (entry at: 'tokens') collect: [ :token |
-					  | emphasis |
+					  | emphasis color |
 					  emphasis := (entry at: 'style') emphasis.
-					  emphasis := (emphasis includes: Character space) 
-							ifTrue: [
-						  		(emphasis substrings: ' ') collect: [ :str |
-							              str asSymbol ] ]
-							ifFalse: [ emphasis asSymbol ].
-					  {
-						  token.
-						  (entry at: 'style') color.
-						  emphasis } ] ]
+					  emphasis := (emphasis includes: Character space)
+						              ifTrue: [ (emphasis substrings: ' ') collect: [ :str | str asSymbol ] ]
+						              ifFalse: [ emphasis asSymbol ].
+						color := (entry at: 'style') color.
+						Color transparent = color ifTrue: [ 
+							color := nil ].
+					  { token. color. emphasis } ] ]
 ]

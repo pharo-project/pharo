@@ -26,10 +26,10 @@ SHStyleElement >> color [
 
 { #category : 'accessing' }
 SHStyleElement >> color: aColor [
-	
+
+	color = aColor ifTrue: [ ^ self ].
 	color := aColor.
-	self triggerEvent: #changed with: self.
-	
+	self triggerEvent: #changed with: self
 ]
 
 { #category : 'accessing' }
@@ -43,6 +43,7 @@ SHStyleElement >> emphasis [
 { #category : 'accessing' }
 SHStyleElement >> emphasis: anEmphasis [
 
+	emphasis = anEmphasis ifTrue: [ ^ self ].
 	emphasis := anEmphasis.
 	self triggerEvent: #changed with: self.
 	
