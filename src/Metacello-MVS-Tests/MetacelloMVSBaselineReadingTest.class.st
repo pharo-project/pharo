@@ -1,5 +1,8 @@
+"
+I test what MVS reads from baselines (warnings, Pharo versions, replaces, groups, locks), on baselines written by hand in a MetacelloMVSRecordedSource.
+"
 Class {
-	#name : 'MetacelloMVSMemorySourceTest',
+	#name : 'MetacelloMVSBaselineReadingTest',
 	#superclass : 'MetacelloTestCase',
 	#instVars : [
 		'source',
@@ -10,7 +13,7 @@ Class {
 }
 
 { #category : 'running' }
-MetacelloMVSMemorySourceTest >> baselineRequiring: aCollection [
+MetacelloMVSBaselineReadingTest >> baselineRequiring: aCollection [
 	"The source of a baseline: method requiring each project named -> repository string in aCollection"
 
 	^ String lf join: {
@@ -23,13 +26,13 @@ MetacelloMVSMemorySourceTest >> baselineRequiring: aCollection [
 ]
 
 { #category : 'running' }
-MetacelloMVSMemorySourceTest >> descriptionOf: aProjectSpec [
+MetacelloMVSBaselineReadingTest >> descriptionOf: aProjectSpec [
 
 	^ aProjectSpec repositoryDescriptions first
 ]
 
 { #category : 'tests - groups' }
-MetacelloMVSMemorySourceTest >> fooRequiring: aCollectionOfLines [
+MetacelloMVSBaselineReadingTest >> fooRequiring: aCollectionOfLines [
 
 	source
 		repository: 'github://acme/Foo'
@@ -40,7 +43,7 @@ MetacelloMVSMemorySourceTest >> fooRequiring: aCollectionOfLines [
 ]
 
 { #category : 'tests - groups' }
-MetacelloMVSMemorySourceTest >> groupsSetUp [
+MetacelloMVSBaselineReadingTest >> groupsSetUp [
 	"Bar's default group needs nothing; its Tests group needs Tester"
 
 	source
@@ -59,7 +62,7 @@ MetacelloMVSMemorySourceTest >> groupsSetUp [
 ]
 
 { #category : 'tests - platform' }
-MetacelloMVSMemorySourceTest >> pharoBaseline: aLine [
+MetacelloMVSBaselineReadingTest >> pharoBaseline: aLine [
 
 	^ String lf join: {
 			  'baseline: spec'.
@@ -70,14 +73,14 @@ MetacelloMVSMemorySourceTest >> pharoBaseline: aLine [
 ]
 
 { #category : 'running' }
-MetacelloMVSMemorySourceTest >> projectOf: aProjectSpec [
+MetacelloMVSBaselineReadingTest >> projectOf: aProjectSpec [
 	"The project a spec read from a baseline names: its baseline's"
 
 	^ aProjectSpec className allButFirst: 'BaselineOf' size
 ]
 
 { #category : 'tests - dev' }
-MetacelloMVSMemorySourceTest >> resolveInstalled: aBarMinimum [
+MetacelloMVSBaselineReadingTest >> resolveInstalled: aBarMinimum [
 
 	source
 		repository: 'github://acme/Foo'
@@ -90,7 +93,7 @@ MetacelloMVSMemorySourceTest >> resolveInstalled: aBarMinimum [
 ]
 
 { #category : 'tests - locks' }
-MetacelloMVSMemorySourceTest >> resolveWithBarLockedAt: aLockedTag asking: aBarMinimum [
+MetacelloMVSBaselineReadingTest >> resolveWithBarLockedAt: aLockedTag asking: aBarMinimum [
 
 	source
 		repository: 'github://acme/Foo'
@@ -110,7 +113,7 @@ MetacelloMVSMemorySourceTest >> resolveWithBarLockedAt: aLockedTag asking: aBarM
 ]
 
 { #category : 'running' }
-MetacelloMVSMemorySourceTest >> selectionOf: aRepositoryString project: aProjectName [
+MetacelloMVSBaselineReadingTest >> selectionOf: aRepositoryString project: aProjectName [
 	"The candidate for aRepositoryString at its minimum, for the project aProjectName"
 
 	| parts spec resolver |
@@ -121,15 +124,15 @@ MetacelloMVSMemorySourceTest >> selectionOf: aRepositoryString project: aProject
 ]
 
 { #category : 'running' }
-MetacelloMVSMemorySourceTest >> setUp [
+MetacelloMVSBaselineReadingTest >> setUp [
 
 	super setUp.
-	source := MetacelloMVSMemorySource new.
+	source := MetacelloMVSRecordedSource new.
 	graph := MetacelloMVSGraph new source: source
 ]
 
 { #category : 'tests' }
-MetacelloMVSMemorySourceTest >> testABaselineThatAsksTheImageIsAWarning [
+MetacelloMVSBaselineReadingTest >> testABaselineThatAsksTheImageIsAWarning [
 
 	| warnings |
 	source
@@ -144,7 +147,7 @@ MetacelloMVSMemorySourceTest >> testABaselineThatAsksTheImageIsAWarning [
 ]
 
 { #category : 'tests' }
-MetacelloMVSMemorySourceTest >> testAGraphReadsTheDatesOfTheSource [
+MetacelloMVSBaselineReadingTest >> testAGraphReadsTheDatesOfTheSource [
 
 	| date |
 	date := DateAndTime year: 2020 month: 1 day: 1.
@@ -153,12 +156,12 @@ MetacelloMVSMemorySourceTest >> testAGraphReadsTheDatesOfTheSource [
 		version: 'v1.0.0'
 		project: 'Foo'
 		baseline: (self baselineRequiring: #(  )).
-	source repository: 'github://acme/Foo' version: 'v1.0.0' date: date.
+	source repository: 'github://acme/Foo' dates: { ('v1.0.0' -> date) } asDictionary.
 	self assert: ((MetacelloMVSGraph new source: source) datesOf: 'github://acme/Foo') equals: { ('v1.0.0' -> date) } asDictionary
 ]
 
 { #category : 'tests - groups' }
-MetacelloMVSMemorySourceTest >> testAGroupAskedPullsWhatItNeeds [
+MetacelloMVSBaselineReadingTest >> testAGroupAskedPullsWhatItNeeds [
 
 	self groupsSetUp.
 	self fooRequiring: #( '		spec baseline: ''Bar'' with: [ spec repository: ''github://acme/Bar:v1.0.0''; loads: #(''Tests'') ].' ).
@@ -167,7 +170,7 @@ MetacelloMVSMemorySourceTest >> testAGroupAskedPullsWhatItNeeds [
 ]
 
 { #category : 'tests - locks' }
-MetacelloMVSMemorySourceTest >> testALockHoldsAgainstAHigherMinimumOfItsMajor [
+MetacelloMVSBaselineReadingTest >> testALockHoldsAgainstAHigherMinimumOfItsMajor [
 
 	| report |
 	report := self resolveWithBarLockedAt: 'v1.0.0' asking: 'v1.2.0'.
@@ -178,7 +181,7 @@ MetacelloMVSMemorySourceTest >> testALockHoldsAgainstAHigherMinimumOfItsMajor [
 ]
 
 { #category : 'tests - locks' }
-MetacelloMVSMemorySourceTest >> testALockOfAnotherMajorIsAnError [
+MetacelloMVSBaselineReadingTest >> testALockOfAnotherMajorIsAnError [
 
 	| report |
 	report := self resolveWithBarLockedAt: 'v1.0.0' asking: 'v2.0.0'.
@@ -188,7 +191,7 @@ MetacelloMVSMemorySourceTest >> testALockOfAnotherMajorIsAnError [
 ]
 
 { #category : 'tests - platform' }
-MetacelloMVSMemorySourceTest >> testANewerPharoMinimumIsAnError [
+MetacelloMVSBaselineReadingTest >> testANewerPharoMinimumIsAnError [
 
 	graph pharoMajor: 13.
 	source
@@ -201,7 +204,7 @@ MetacelloMVSMemorySourceTest >> testANewerPharoMinimumIsAnError [
 ]
 
 { #category : 'tests - platform' }
-MetacelloMVSMemorySourceTest >> testAPharoBlockIsAWarning [
+MetacelloMVSBaselineReadingTest >> testAPharoBlockIsAWarning [
 
 	| warnings |
 	source
@@ -214,7 +217,7 @@ MetacelloMVSMemorySourceTest >> testAPharoBlockIsAWarning [
 ]
 
 { #category : 'tests' }
-MetacelloMVSMemorySourceTest >> testAnAliasIsNamedAfterItsBaseline [
+MetacelloMVSBaselineReadingTest >> testAnAliasIsNamedAfterItsBaseline [
 	"XMLWriter names OrderPreservingDictionary through project:copyFrom:with:, which is accepted with a warning"
 
 	| selection |
@@ -232,7 +235,7 @@ MetacelloMVSMemorySourceTest >> testAnAliasIsNamedAfterItsBaseline [
 ]
 
 { #category : 'tests - locks' }
-MetacelloMVSMemorySourceTest >> testAnInstalledVersionThatIsNotLockedIsRaised [
+MetacelloMVSBaselineReadingTest >> testAnInstalledVersionThatIsNotLockedIsRaised [
 
 	| report |
 	source
@@ -253,7 +256,7 @@ MetacelloMVSMemorySourceTest >> testAnInstalledVersionThatIsNotLockedIsRaised [
 ]
 
 { #category : 'tests - platform' }
-MetacelloMVSMemorySourceTest >> testAnOlderPharoMinimumResolves [
+MetacelloMVSBaselineReadingTest >> testAnOlderPharoMinimumResolves [
 
 	graph pharoMajor: 15.
 	source
@@ -265,7 +268,7 @@ MetacelloMVSMemorySourceTest >> testAnOlderPharoMinimumResolves [
 ]
 
 { #category : 'tests - groups' }
-MetacelloMVSMemorySourceTest >> testGroupsAskedAddUpAndTheVersionIsReadAgain [
+MetacelloMVSBaselineReadingTest >> testGroupsAskedAddUpAndTheVersionIsReadAgain [
 	"Foo asks Bar's default groups, then its alias BarTests asks Bar's Tests: Bar is read again for both"
 
 	| report |
@@ -281,7 +284,7 @@ MetacelloMVSMemorySourceTest >> testGroupsAskedAddUpAndTheVersionIsReadAgain [
 ]
 
 { #category : 'tests - replace' }
-MetacelloMVSMemorySourceTest >> testReadsTheReplacesOfABaseline [
+MetacelloMVSBaselineReadingTest >> testReadsTheReplacesOfABaseline [
 
 	source
 		repository: 'github://acme/Foo'
@@ -294,7 +297,7 @@ MetacelloMVSMemorySourceTest >> testReadsTheReplacesOfABaseline [
 ]
 
 { #category : 'tests' }
-MetacelloMVSMemorySourceTest >> testReadsTheRequirementsFromATonelBaseline [
+MetacelloMVSBaselineReadingTest >> testReadsTheRequirementsFromATonelBaseline [
 
 	| requirements |
 	source
@@ -307,7 +310,7 @@ MetacelloMVSMemorySourceTest >> testReadsTheRequirementsFromATonelBaseline [
 ]
 
 { #category : 'tests' }
-MetacelloMVSMemorySourceTest >> testResolvesThroughAGraph [
+MetacelloMVSBaselineReadingTest >> testResolvesThroughAGraph [
 
 	| buildList |
 	source
@@ -330,7 +333,7 @@ MetacelloMVSMemorySourceTest >> testResolvesThroughAGraph [
 ]
 
 { #category : 'tests - groups' }
-MetacelloMVSMemorySourceTest >> testTheDefaultGroupsLeaveOutWhatOnlyTestsNeed [
+MetacelloMVSBaselineReadingTest >> testTheDefaultGroupsLeaveOutWhatOnlyTestsNeed [
 
 	self groupsSetUp.
 	self fooRequiring: #( '		spec baseline: ''Bar'' with: [ spec repository: ''github://acme/Bar:v1.0.0'' ].' ).
@@ -339,7 +342,7 @@ MetacelloMVSMemorySourceTest >> testTheDefaultGroupsLeaveOutWhatOnlyTestsNeed [
 ]
 
 { #category : 'tests - groups' }
-MetacelloMVSMemorySourceTest >> testTheRootLoadsTheGroupsAsked [
+MetacelloMVSBaselineReadingTest >> testTheRootLoadsTheGroupsAsked [
 
 	self groupsSetUp.
 	self
@@ -351,7 +354,7 @@ MetacelloMVSMemorySourceTest >> testTheRootLoadsTheGroupsAsked [
 ]
 
 { #category : 'running' }
-MetacelloMVSMemorySourceTest >> warningsOf: aCandidate [
+MetacelloMVSBaselineReadingTest >> warningsOf: aCandidate [
 	"The texts of the warnings reading the baseline of aCandidate gives"
 
 	^ ((graph readingOf: aCandidate) findings select: [ :each | each isWarning ]) collect: [ :each | each text ]

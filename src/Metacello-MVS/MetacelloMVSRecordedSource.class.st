@@ -1,5 +1,5 @@
 "
-I am a version source that replays what another source answered (see MetacelloMVSRecordingSource): tags, dates, failures to read tags, and the definitions of each baseline read. storeOn: writes me as Smalltalk code, to keep as a fixture.
+I am a version source that answers from versions and baselines given up front: replayed from what another source answered (see MetacelloMVSRecordingSource), or written by hand in tests (repository:version:project:baseline:). I keep versions, dates, failures to read versions, and the definitions of each baseline. storeOn: writes me as Smalltalk code, to keep as a fixture.
 "
 Class {
 	#name : 'MetacelloMVSRecordedSource',
@@ -117,6 +117,17 @@ MetacelloMVSRecordedSource >> repository: aRepository failsWith: aString [
 	"The versions of aRepository could not be read, for the reason aString"
 
 	versionFailures at: aRepository put: aString
+]
+
+{ #category : 'recording' }
+MetacelloMVSRecordedSource >> repository: aRepository version: aVersion project: aProjectName baseline: aMethodSource [
+	"aVersion of aRepository, whose BaselineOf<aProjectName> has the baseline: method aMethodSource. For tests written by hand"
+
+	versions at: aRepository put: ((versions at: aRepository ifAbsent: [ #(  ) ]) copyWith: aVersion).
+	self repository: aRepository at: aVersion baseline: (MetacelloMVSBaselineDefinitions
+			 baselineClassNamed: 'BaselineOf' , aProjectName
+			 method: aMethodSource
+			 repository: aRepository , ':' , aVersion)
 ]
 
 { #category : 'building' }

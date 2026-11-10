@@ -19,7 +19,7 @@ Class {
 
 { #category : 'instance creation' }
 MetacelloMVSBaselineDefinitions class >> baselineClassNamed: aClassName method: aMethodSource repository: aString [
-	"The definitions of a BaselineOf subclass named aClassName with the single method aMethodSource, as tests and in-memory sources build them"
+	"The definitions of a BaselineOf subclass named aClassName with the single method aMethodSource, as baselines written by hand build them"
 
 	^ self
 		  definitions: {

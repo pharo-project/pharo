@@ -1,5 +1,5 @@
 "
-I test MetacelloMVSResolver as a Metacello resolver: Metacello scripts resolve, record and load the versions it selects. Repositories are in memory and loading goes through MetacelloTestLoader, so nothing is fetched.
+I test MetacelloMVSResolver as a Metacello resolver: Metacello scripts resolve, record and load the versions it selects. Repositories are written by hand in a MetacelloMVSRecordedSource and loading goes through MetacelloTestLoader, so nothing is fetched.
 "
 Class {
 	#name : 'MetacelloMVSScriptTest',
@@ -44,7 +44,7 @@ MetacelloMVSScriptTest >> resolver [
 MetacelloMVSScriptTest >> setUp [
 
 	super setUp.
-	source := MetacelloMVSMemorySource new.
+	source := MetacelloMVSRecordedSource new.
 	source
 		repository: 'github://acme/Foo'
 		version: 'v1.0.0'

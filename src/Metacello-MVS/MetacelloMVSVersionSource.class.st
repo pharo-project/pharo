@@ -1,7 +1,7 @@
 "
-I am where mvs learns about repositories: their tags (and the dates they point to), their default branch, and, for a version, the definitions of its baseline (an MetacelloMVSBaselineDefinitions). I answer data only: MetacelloMVSGraph runs baselines in the sandbox.
+I am where mvs learns about repositories: their versions (and the dates of their commits), and, for a version, the definitions of its baseline (an MetacelloMVSBaselineDefinitions). I answer data only: MetacelloMVSGraph runs baselines in the sandbox.
 
-Subclasses: MetacelloMVSMemorySource (told, for tests), MetacelloMVSRecordedSource (replays a recording), MetacelloMVSRecordingSource (records another source). Reading git lives outside Metacello (MetacelloMVSIcebergSource, which makes itself the default when loaded).
+Subclasses: MetacelloMVSRecordedSource (versions and baselines given up front: replayed from a recording, or written by hand in tests), MetacelloMVSRecordingSource (records another source). The source that reads git makes itself the default when loaded (beDefault).
 "
 Class {
 	#name : 'MetacelloMVSVersionSource',
@@ -20,18 +20,18 @@ MetacelloMVSVersionSource class >> beDefault [
 	MetacelloMVSVersionSource defaultClass: self
 ]
 
-{ #category : 'default' }
+{ #category : 'accessing' }
 MetacelloMVSVersionSource class >> default [
-	"A new source of the kind mvs reads repositories from: the one a source package made the default (MetacelloMVSIcebergSource when Iceberg is loaded), or else an MetacelloMVSMemorySource, which knows no repository"
+	"A new source of the kind mvs reads repositories from: the one a source package made the default (beDefault)"
 
-	^ MetacelloMVSVersionSource defaultClass new
+	^ self defaultClass new
 ]
 
-{ #category : 'default' }
+{ #category : 'accessing' }
 MetacelloMVSVersionSource class >> defaultClass [
 	"Only meaningful on MetacelloMVSVersionSource itself"
 
-	^ defaultClass ifNil: [ MetacelloMVSMemorySource ]
+	^ defaultClass ifNil: [ self error: 'mvs has no source to read repositories from: load one that calls beDefault' ]
 ]
 
 { #category : 'default' }

@@ -1,6 +1,6 @@
 Class {
 	#name : 'MetacelloMVSRecordedSourceTest',
-	#superclass : 'MetacelloMVSMemorySourceTest',
+	#superclass : 'MetacelloMVSBaselineReadingTest',
 	#category : 'Metacello-MVS-Tests',
 	#package : 'Metacello-MVS-Tests'
 }
@@ -13,7 +13,7 @@ MetacelloMVSRecordedSourceTest class >> shouldInheritSelectors [
 
 { #category : 'tests' }
 MetacelloMVSRecordedSourceTest >> replayOf: aRootString [
-	"Resolve aRootString (github://acme/Name:version, whose project is Name) recording what the memory source answers, and answer the recorded source rebuilt from its code"
+	"Resolve aRootString (github://acme/Name:version, whose project is Name) recording what the source written by hand answers, and answer the recorded source rebuilt from its code"
 
 	| recording |
 	recording := MetacelloMVSRecordingSource new source: source.
@@ -27,9 +27,10 @@ MetacelloMVSRecordedSourceTest >> replayOf: aRootString [
 MetacelloMVSRecordedSourceTest >> testReplaysAFailingBaseline [
 
 	| replayed reading |
+	source repository: 'github://acme/Foo' versions: #( 'v1.0.0' ).
 	source
 		repository: 'github://acme/Foo'
-		ref: 'v1.0.0'
+		at: 'v1.0.0'
 		baseline: (MetacelloMVSBaselineDefinitions error: #missingBaseline text: 'github://acme/Foo v1.0.0 has no BaselineOfFoo').
 	replayed := self replayOf: 'github://acme/Foo:v1.0.0'.
 	reading := (MetacelloMVSGraph new source: replayed) readingOf: (self selectionOf: 'github://acme/Foo:v1.0.0' project: 'Foo').
@@ -55,7 +56,7 @@ MetacelloMVSRecordedSourceTest >> testReplaysTheResolution [
 		version: 'v1.2.0'
 		project: 'Bar'
 		baseline: (self baselineRequiring: #(  )).
-	source repository: 'github://acme/Bar' version: 'v1.1.0' date: (DateAndTime year: 2020 month: 1 day: 1).
+	source repository: 'github://acme/Bar' dates: { ('v1.1.0' -> (DateAndTime year: 2020 month: 1 day: 1)) } asDictionary.
 	replayed := self replayOf: 'github://acme/Foo:v1.0.0'.
 	report := (MetacelloMVSResolver on: (MetacelloMVSGraph new source: replayed)) resolve: 'github://acme/Foo:v1.0.0' project: 'Foo'.
 	self assert: report errors isEmpty.
