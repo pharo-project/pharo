@@ -205,7 +205,7 @@ EFFormatter class >> minimumNewLinesBetweenStatements: anInteger [
 
 { #category : 'accessing' }
 EFFormatter class >> multiLineMessages [
-	^ DefaultPrettyPrintContext multiLineMessages printString
+	^ DefaultPrettyPrintContext multiLineMessages
 ]
 
 { #category : 'accessing' }
@@ -364,7 +364,7 @@ EFFormatter class >> numberOfSpacesInsideParentheses: anInteger [
 
 { #category : 'accessing' }
 EFFormatter class >> oneLineMessages [
-	^ DefaultPrettyPrintContext oneLineMessages printString
+	^ DefaultPrettyPrintContext oneLineMessages
 ]
 
 { #category : 'accessing' }

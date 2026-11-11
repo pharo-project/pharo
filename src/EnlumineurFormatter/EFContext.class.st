@@ -53,23 +53,24 @@ Class {
 { #category : 'initialization' }
 EFContext >> configureMultiLineMessages [
 
-	multiLineMessages := self defaultMultiLineMessages
+	self multiLineMessages: self defaultMultiLineMessages
 ]
 
 { #category : 'initialization' }
 EFContext >> configureOneLineMessages [
-	oneLineMessages := self defaultOneLineMessages
+
+	self oneLineMessages: self defaultOneLineMessages
 ]
 
 { #category : 'initialization' }
 EFContext >> defaultMultiLineMessages [
 
-	^ #(#ifTrue:ifFalse: #ifFalse:ifTrue: #ifTrue: #ifFalse: #on:do: #ensure: #ifCurtailed:)
+	^ 'ifTrue:ifFalse: ifFalse:ifTrue: ifTrue: ifFalse: on:do: ensure: ifCurtailed:'
 ]
 
 { #category : 'initialization' }
 EFContext >> defaultOneLineMessages [
-  ^#(#to: #to:do: #to:by: #to:by:do:)
+  ^ 'to: to:do: to:by: to:by:do:'
 ]
 
 { #category : 'accessing' }
@@ -228,7 +229,7 @@ EFContext >> multiLineMessages [
 { #category : 'accessing' }
 EFContext >> multiLineMessages: aString [
 	"aString should be a list of selectors or strings representing a method name."
-
+	
 	multiLineMessages :=  aString substrings collect: [ :each | each asString ]
 ]
 
