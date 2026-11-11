@@ -3,7 +3,7 @@ I am default text editor context
 "
 Class {
 	#name : 'ClyTextEditorContext',
-	#superclass : 'CmdToolContext',
+	#superclass : 'ClyToolContext',
 	#category : 'Calypso-Browser-TextEditors',
 	#package : 'Calypso-Browser',
 	#tag : 'TextEditors'

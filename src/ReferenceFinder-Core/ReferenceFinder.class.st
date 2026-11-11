@@ -182,10 +182,8 @@ ReferenceFinder >> initialize [
 
 { #category : 'private' }
 ReferenceFinder >> printToDoNotice [
-	self
-		crTrace:
-			'Level ' , backlinks size printString , ' with '
-				, objectsLeft size printString , ' objects to search'
+
+	self newLineTrace: 'Level ' , backlinks size printString , ' with ' , objectsLeft size printString , ' objects to search'
 ]
 
 { #category : 'private' }

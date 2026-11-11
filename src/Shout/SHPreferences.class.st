@@ -83,19 +83,18 @@ SHPreferences class >> settingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder group: 'Syntax Highlighting')
 		parentName: 'codeBrowsing';
+		description:
+			'Syntax Highlighting As You Type: Enable syntax highlighting in browsers, debuggers and workspaces and set patterns style.';
+		isActive: true;
+		readBlock: [ self enabled ];
+		writeBlock: [ :active | self enabled: active ];
 		target: self;
 		iconName: #smallConfiguration;
 		noOrdering;
 		with: [
-				(aBuilder setting: 'Enable Syntax Highlighting')
-					target: self;
-					default: true;
-					selector: #enabled;
-					description:
-						'Syntax Highlighting As You Type: Enable syntax highlighting in browsers, debuggers and workspaces and set patterns style.'.
 				(aBuilder setting: #formatIncompleteIdentifiers)
 					target: SHRBTextStyler;
-					default: false;
+					defaultValue: false;
 					label: 'Format Incomplete Identifiers';
 					parentName: 'Syntax Highlighting';
 					description:
@@ -126,5 +125,6 @@ SHPreferences class >> styleTableNames [
 { #category : 'updating' }
 SHPreferences class >> themeChanged [
 
-	activeStyleTable = 'Default' ifTrue: [ self activeStyleTable: 'Default' ]
+	(activeStyleTable isNil or: [ activeStyleTable = 'Default' ])
+		ifTrue: [ self activeStyleTable: 'Default' ]
 ]

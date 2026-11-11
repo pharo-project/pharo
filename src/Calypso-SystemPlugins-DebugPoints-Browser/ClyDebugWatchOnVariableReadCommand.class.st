@@ -14,14 +14,8 @@ ClyDebugWatchOnVariableReadCommand class >> accessStrategy [
 	^ #read
 ]
 
-{ #category : 'testing' }
-ClyDebugWatchOnVariableReadCommand class >> isAbstract [
-
-	^ false
-]
-
 { #category : 'accessing' }
-ClyDebugWatchOnVariableReadCommand >> defaultMenuItemName [
+ClyDebugWatchOnVariableReadCommand >> name [
 
 	^ 'Watch on read'
 ]

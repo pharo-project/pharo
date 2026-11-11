@@ -145,6 +145,17 @@ OCMessageNode >> equalTo: anObject withMapping: aDictionary [
 	^true
 ]
 
+{ #category : 'private - replacing' }
+OCMessageNode >> formattedCodeInPlaceOf: aNode [
+	"Answer my formatted code as it reads where aNode stands. The formatter decides my parentheses by asking whether I am my parent's receiver, and my parent still holds aNode until the replacement is done, so I am formatted in a copy of my parent that holds me instead."
+
+	| standIn |
+	(parent isNotNil and: [ parent isMessage and: [ parent receiver == aNode ] ]) ifFalse: [ ^ self formattedCode ].
+	standIn := self copy.
+	parent copy receiver: standIn.
+	^ standIn formattedCode
+]
+
 { #category : 'testing' }
 OCMessageNode >> hasBlock [
 
@@ -357,6 +368,17 @@ OCMessageNode >> replaceNode: aNode withNode: anotherNode [
 				ifTrue: [parent messages do: [:each | each isMessage ifTrue: [ each receiver: anotherNode]]]].
 	self arguments: (arguments
 				collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]])
+]
+
+{ #category : 'private - replacing' }
+OCMessageNode >> replaceSourceFrom: aNode [
+	"I replace aNode: write my source in place of the source of aNode (its parentheses included),
+	so the rest of the method keeps its formatting. My formatted code has parentheses when my
+	new position needs them.
+	If the edited source does not parse to the expected tree, OCMethodNode>>#reformatSource
+	falls back to formatting the whole method."
+
+	self addReplacement: (OCStringReplacement replaceFrom: aNode start to: aNode stop with: (self formattedCodeInPlaceOf: aNode))
 ]
 
 { #category : 'private - replacing' }

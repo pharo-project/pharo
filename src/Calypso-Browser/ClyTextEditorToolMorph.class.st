@@ -104,7 +104,7 @@ ClyTextEditorToolMorph >> buildTextMorph [
 		"build is performed in background when owner is not exist yet. But we need proper width to perform kind of styling/formatting if needed"beWrapped;
 		font: StandardFonts codeFont;
 		editingMode: self editingMode.
-	CmdKMDispatcher attachedTo: textMorph textArea withCommandsFrom: self. "It overrides default text morph shortcuts with Commander"
+	ClyKMDispatcher attachedTo: textMorph textArea withCommandsFrom: self. "It overrides default text morph shortcuts with Commander"
 	self buildLeftSideBar.
 	textModel setInitialText: self editingText
 ]
@@ -243,7 +243,7 @@ ClyTextEditorToolMorph >> isScripting [
 { #category : 'keymapping' }
 ClyTextEditorToolMorph >> kmDispatcher [
 
-	^ CmdKMDispatcher attachedTo: self
+	^ ClyKMDispatcher attachedTo: self
 ]
 
 { #category : 'accessing' }

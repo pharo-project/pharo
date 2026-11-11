@@ -8,22 +8,25 @@ Class {
 	#package : 'Calypso-SystemPlugins-DependencyAnalyser-Browser'
 }
 
-{ #category : 'activation' }
-ClyOpenDependencyBrowserCommand class >> packageContextMenuActivation [
-	<classAnnotation>
+{ #category : 'execution' }
+ClyOpenDependencyBrowserCommand >> executeRefactoring [
 
-	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup for: Package asCalypsoItemContext
+	(StPackageDependenciesPresenter onPackagesNamed: (packages collect: [ :package | package name ])) open
 ]
 
 { #category : 'accessing' }
-ClyOpenDependencyBrowserCommand >> defaultMenuItemName [
+ClyOpenDependencyBrowserCommand >> menuGroup [
+
+	^ ClyQueryMenuGroup
+]
+
+{ #category : 'accessing' }
+ClyOpenDependencyBrowserCommand >> name [
 	^'Browse dependencies'
 ]
 
-{ #category : 'execution' }
-ClyOpenDependencyBrowserCommand >> execute [
+{ #category : 'accessing' }
+ClyOpenDependencyBrowserCommand >> order [
 
-	| packageNames |
-	packageNames := packages collect: [ :each | each name ].
-	(StPackageDependenciesPresenter onPackagesNamed: packageNames) open
+	^ 1000
 ]

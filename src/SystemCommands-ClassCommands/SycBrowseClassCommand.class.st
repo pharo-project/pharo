@@ -8,27 +8,44 @@ Class {
 	#package : 'SystemCommands-ClassCommands'
 }
 
-{ #category : 'accessing' }
-SycBrowseClassCommand >> defaultMenuIconName [
-	^#browse
-]
-
-{ #category : 'accessing' }
-SycBrowseClassCommand >> defaultMenuItemName [
-	^'Browse'
-]
-
 { #category : 'execution' }
-SycBrowseClassCommand >> execute [
+SycBrowseClassCommand >> executeRefactoring [
 	targetClass browse
 ]
 
-{ #category : 'execution' }
-SycBrowseClassCommand >> prepareFullExecutionInContext: aToolContext [
+{ #category : 'accessing' }
+SycBrowseClassCommand >> iconName [
+	^#browse
+]
+
+{ #category : 'testing' }
+SycBrowseClassCommand >> isAvailableInMenuOf: aToolContext [
+
+	^ aToolContext isSourceCodeContext
+]
+
+{ #category : 'accessing' }
+SycBrowseClassCommand >> menuGroup [
+
+	^ ClyQueryMenuGroup
+]
+
+{ #category : 'accessing' }
+SycBrowseClassCommand >> name [
+	^'Browse'
+]
+
+{ #category : 'accessing' }
+SycBrowseClassCommand >> order [
+
+	^ 1000
+]
+
+{ #category : 'preparation' }
+SycBrowseClassCommand >> prepareFullExecution [
 
 	| scope |
 	scope := RBBrowserEnvironment new.
-	super prepareFullExecutionInContext: aToolContext.
-	targetClass := (scope at: aToolContext selectedSourceNode name) 
-		ifNil: [ aToolContext lastSelectedClass ]
+	targetClass := (scope at: self context selectedSourceNode name)
+		ifNil: [ self context lastSelectedClass ]
 ]

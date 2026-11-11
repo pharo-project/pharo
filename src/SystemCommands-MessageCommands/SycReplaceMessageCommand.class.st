@@ -3,7 +3,7 @@ I am a command to replace senders of message selector.
 "
 Class {
 	#name : 'SycReplaceMessageCommand',
-	#superclass : 'SycChangeMessageSignatureCommand',
+	#superclass : 'SycMessageCmCommand',
 	#instVars : [
 		'newSelector',
 		'selectedClass'
@@ -12,51 +12,46 @@ Class {
 	#package : 'SystemCommands-MessageCommands'
 }
 
-{ #category : 'accessing' }
-SycReplaceMessageCommand >> defaultMenuIconName [
-	^#edit
+{ #category : 'execution' }
+SycReplaceMessageCommand >> executeRefactoring [
+
+	^ ((ReReplaceMessageSendDriver newApplication: self application)
+		scopes: refactoringScopes
+		class: selectedClass
+		selector: newSelector
+		oldSelector: originalMessage) runRefactoring
 ]
 
 { #category : 'accessing' }
-SycReplaceMessageCommand >> defaultMenuItemName [
+SycReplaceMessageCommand >> icon [
+
+	^ self iconNamed: #edit
+]
+
+{ #category : 'accessing' }
+SycReplaceMessageCommand >> name [
+
 	"Make sure that the user knows that this is a transformation by adding (T) in front of the menu item name."
 
 	^ self refactoringClass menuItemString
 ]
 
-{ #category : 'execution' }
-SycReplaceMessageCommand >> execute [
+{ #category : 'accessing' }
+SycReplaceMessageCommand >> order [
 
-	^ ((ReReplaceMessageSendDriver newApplication: self application)
-		   scopes: refactoringScopes
-		   class: selectedClass
-		   selector: newSelector
-		   oldSelector: originalMessage) runRefactoring 
+	^ 1100
 ]
 
 { #category : 'execution' }
-SycReplaceMessageCommand >> prepareFullExecutionInContext: aToolContext [
+SycReplaceMessageCommand >> prepareFullExecution [
 
 	| methodName dialog |
-	super prepareFullExecutionInContext: aToolContext.
-
-	"This is for the code editor
-		selectedClass := aToolContext selectedMethod methodClass.
-
-	The following expression 	selectedClass := originalMessage methodClass. is for the method list. The context is pain bad because it cannot handle both. We kept the method list.
-	Check class side canBeExecutedInContext: if you know how to fix it"
-
+	super prepareFullExecution.
 	selectedClass := originalMessage methodClass.
-	methodName := RBMethodName
-		              selector: originalMessage selector
-		              arguments: originalMessage argumentNames copy.
-	dialog := (StMethodNameEditorPresenter 
-		newApplication: self application model: methodName)
-		openModal.
-	dialog cancelled ifTrue: [ CmdCommandAborted signal ].
-
-	originalMessage selector = methodName selector ifTrue: [
-		CmdCommandAborted signal ].
+	methodName := RBMethodName selector: originalMessage selector arguments: originalMessage argumentNames copy.
+	dialog := (StMethodNameEditorPresenter newApplication: self application model: methodName) openModal.
+	dialog cancelled ifTrue: [ CmCommandAborted signal ].
+	originalMessage selector = methodName selector ifTrue: [ CmCommandAborted signal ].
 	newSelector := methodName
 ]
 

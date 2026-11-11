@@ -53,16 +53,16 @@ PharoDocCommentNode class >> parseDocComments: aCommentNode [
 
 { #category : 'settings' }
 PharoDocCommentNode class >> settingsOn: aBuilder [
+
 	<systemsettings>
 	(aBuilder setting: #docCommentEnabled)
 		target: self;
-		default: true;
-		description:
-			'Allow styled and executable example expressions within method comments.
+		defaultValue: true;
+		description: 'Allow styled and executable example expressions within method comments.
 		Example:
 		"3+4 >>> 7."';
 		label: 'Pharo doc comments';
-		parent: #codeBrowsing
+		parentName: #codeBrowsing
 ]
 
 { #category : 'private' }

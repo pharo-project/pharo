@@ -3,18 +3,20 @@ I am a submenu for rarely used refactorings
 "
 Class {
 	#name : 'ClyMoreRefactorsMenuGroup',
-	#superclass : 'CmdMenuGroup',
+	#superclass : 'ClyMenuGroup',
 	#category : 'Calypso-Browser-MenuGroups',
 	#package : 'Calypso-Browser',
 	#tag : 'MenuGroups'
 }
 
-{ #category : 'accessing' }
-ClyMoreRefactorsMenuGroup >> buildContextMenu: aMenu [
-	aMenu addLine.
+{ #category : 'presenting' }
+ClyMoreRefactorsMenuGroup >> hasLineAfter [
+	^ true
+]
 
-	super buildContextMenu: aMenu.
-	aMenu addLine
+{ #category : 'presenting' }
+ClyMoreRefactorsMenuGroup >> hasLineBefore [
+	^ true
 ]
 
 { #category : 'accessing' }

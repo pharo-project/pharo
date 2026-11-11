@@ -35,14 +35,14 @@ ClyRunTestsFromSelectedItemsCommand class >> contextClass [
 ClyRunTestsFromSelectedItemsCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 
-	^CmdContextMenuActivation byRootGroupItemFor: self contextClass
+	^ClyContextMenuActivation byRootGroupItemFor: self contextClass
 ]
 
 { #category : 'activation' }
 ClyRunTestsFromSelectedItemsCommand class >> fullBrowserShortcutActivation [
 	<classAnnotation>
 
-	^CmdShortcutActivation by: $t meta for: self contextClass
+	^ClyShortcutActivation by: $t meta for: self contextClass
 ]
 
 { #category : 'activation' }
@@ -58,15 +58,8 @@ ClyRunTestsFromSelectedItemsCommand class >> isAbstract [
 ]
 
 { #category : 'accessing' }
-ClyRunTestsFromSelectedItemsCommand >> defaultMenuItemName [
+ClyRunTestsFromSelectedItemsCommand >> name [
 	^'Run tests'
-]
-
-{ #category : 'execution' }
-ClyRunTestsFromSelectedItemsCommand >> readParametersFromContext: aToolContext [
-	super readParametersFromContext: aToolContext.
-	testItems := aToolContext selectedItems
-		select: [ :each | each hasProperty: ClyTestResultProperty ]
 ]
 
 { #category : 'execution' }
@@ -78,7 +71,7 @@ ClyRunTestsFromSelectedItemsCommand >> runTestCase: testCase results: testResult
 
 { #category : 'accessing' }
 ClyRunTestsFromSelectedItemsCommand >> testItems [
-	^ testItems
+	^ testItems ifNil: [ self context ifNotNil: [ :ctx | ctx selectedItems select: [ :each | each hasProperty: ClyTestResultProperty ] ] ]
 ]
 
 { #category : 'accessing' }
@@ -89,7 +82,7 @@ ClyRunTestsFromSelectedItemsCommand >> testItems: anObject [
 { #category : 'context menu support' }
 ClyRunTestsFromSelectedItemsCommand >> testResult [
 
-	^self testResultOf: testItems first
+	^self testResultOf: self testItems first
 ]
 
 { #category : 'context menu support' }

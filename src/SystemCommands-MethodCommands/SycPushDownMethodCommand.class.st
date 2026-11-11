@@ -3,10 +3,7 @@ I am a command to push down given methods
 "
 Class {
 	#name : 'SycPushDownMethodCommand',
-	#superclass : 'SycRefactoringMethodCommand',
-	#instVars : [
-		'refactoringScopes'
-	],
+	#superclass : 'SycMethodCmCommand',
 	#category : 'SystemCommands-MethodCommands',
 	#package : 'SystemCommands-MethodCommands'
 }
@@ -18,30 +15,31 @@ SycPushDownMethodCommand >> asRefactorings [
 ]
 
 { #category : 'accessing' }
-SycPushDownMethodCommand >> defaultMenuIconName [
-	^ #down
-]
-
-{ #category : 'accessing' }
-SycPushDownMethodCommand >> defaultMenuItemName [
-	^'Push down'
-]
-
-{ #category : 'accessing' }
 SycPushDownMethodCommand >> description [
 
 	^ 'Push down methods.'
 ]
 
 { #category : 'execution' }
-SycPushDownMethodCommand >> executeRefactorings [
+SycPushDownMethodCommand >> executeRefactoring [
 
-	^ ((RePushDownMethodDriver newApplication: self application) model: model scopes: refactoringScopes pushDownMethods: methods)
-		  runRefactoring
+	^ ((RePushDownMethodDriver newApplication: self application) model: model scopes: self refactoringScopes pushDownMethods: self methods) runRefactoring
 ]
 
-{ #category : 'execution' }
-SycPushDownMethodCommand >> prepareFullExecutionInContext: aToolContext [
-	super prepareFullExecutionInContext: aToolContext.
-	refactoringScopes := aToolContext refactoringScopes
+{ #category : 'accessing' }
+SycPushDownMethodCommand >> icon [
+
+	^ self iconNamed: #down
+]
+
+{ #category : 'accessing' }
+SycPushDownMethodCommand >> name [
+
+	^ 'Push down'
+]
+
+{ #category : 'accessing' }
+SycPushDownMethodCommand >> order [
+
+	^ 20
 ]

@@ -51,12 +51,6 @@ CompiledMethod >> recompile [
 ]
 
 { #category : '*OpalCompiler-Core' }
-CompiledMethod >> reformat [
-
-	self methodClass compile: self ast formattedCode classified: self protocol
-]
-
-{ #category : '*OpalCompiler-Core' }
 CompiledMethod >> saveBcToASTCacheWithAST: aMethodAST [
 
 	| compiledBlockAST |

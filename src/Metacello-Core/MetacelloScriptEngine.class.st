@@ -8,7 +8,9 @@ Class {
 		'root',
 		'options',
 		'specBuilder',
-		'projectSpec'
+		'projectSpec',
+		'resolution',
+		'recordedProjects'
 	],
 	#category : 'Metacello-Core-Scripts',
 	#package : 'Metacello-Core',
@@ -17,20 +19,16 @@ Class {
 
 { #category : 'actions api' }
 MetacelloScriptEngine >> do: aBlock required: required commitIfSuccess: aBoolean [
+	"Resolve first; with errors, signal MetacelloResolutionError and do nothing. Otherwise run aBlock on the root of the resolution: its version spec, the names to load from it and its project spec"
 
 	MetacelloProjectRegistry
 		copyRegistryDuring: [
 				self handleNotificationsForAction: [
-						| versionSpec projectSpec2 requiredArray |
-						[ projectSpec2 := (self lookupProjectSpecFor: self projectSpec) copy ]
-							on: MetacelloAllowProjectUpgrade
-							do: [ :notification | notification resume: notification newProjectRegistration ].
-
-						projectSpec2 loads: required.
-						projectSpec2 ensureProjectLoadedWithEngine: self.
-						versionSpec := projectSpec2 project version.
-						requiredArray := projectSpec2 loadListForVersion: versionSpec.
-						self root: (aBlock value: versionSpec value: requiredArray value: projectSpec2) ] ]
+						| rootProject |
+						self resolve: required.
+						resolution hasErrors ifTrue: [ MetacelloResolutionError signalFor: resolution ].
+						rootProject := resolution root.
+						self root: (aBlock value: rootProject version value: rootProject loadList value: rootProject projectSpec) ] ]
 		commitIfSuccess: aBoolean
 ]
 
@@ -146,20 +144,7 @@ MetacelloScriptEngine >> list [
 MetacelloScriptEngine >> load: required [
 
 	self
-		do: [ :versionSpec :requiredArray :projectSpec2 |
-				| result |
-				result := versionSpec doLoadRequiredFromArray: requiredArray withEngine: self.
-				self root: result.
-				MetacelloProjectRegistry
-					registrationNamed: projectSpec2 className
-					ifPresent: [ :existing |
-							existing
-								loadedInImage: true;
-								projectSpec: projectSpec2 ]
-					ifAbsent: [
-							projectSpec2 asProjectRegistration
-								loadedInImage: true;
-								registerProject ] ]
+		do: [ :versionSpec :requiredArray :rootSpec | versionSpec doLoadRequiredFromArray: requiredArray withEngine: self ]
 		required: required
 		commitIfSuccess: true
 ]
@@ -211,6 +196,17 @@ MetacelloScriptEngine >> lookupProjectSpecFor: aProjectSpec [
 		  ifAbsent: [ aProjectSpec ]
 ]
 
+{ #category : 'resolution' }
+MetacelloScriptEngine >> namesToRecord: aCollectionOfNames of: aResolvedProject [
+	"The names of aCollectionOfNames not recorded yet for aResolvedProject, now counted as recorded: a project is recorded at each place that asks it something new, never twice for the same names"
+
+	| recorded |
+	recorded := recordedProjects at: aResolvedProject className ifAbsentPut: [ Set new ].
+	^ (aCollectionOfNames reject: [ :each | recorded includes: each ]) asArray in: [ :names |
+			  recorded addAll: names.
+			  names ]
+]
+
 { #category : 'accessing' }
 MetacelloScriptEngine >> options [
     options ifNil: [ options := Dictionary new ].
@@ -255,6 +251,34 @@ MetacelloScriptEngine >> register [
 	self root: spec
 ]
 
+{ #category : 'resolution' }
+MetacelloScriptEngine >> resolution [
+	"The MetacelloResolution recording and loading follow"
+
+	^ resolution
+]
+
+{ #category : 'resolution' }
+MetacelloScriptEngine >> resolution: aResolution [
+	"The resolution recording and loading follow from now on (see MetacelloResolveTarget)"
+
+	resolution := aResolution.
+	recordedProjects := Dictionary new
+]
+
+{ #category : 'actions api' }
+MetacelloScriptEngine >> resolve: required [
+	"Answer the resolution of a load of required, errors included, leaving the registry as it was"
+
+	MetacelloProjectRegistry
+		copyRegistryDuring: [
+				self handleNotificationsForAction: [
+						self resolution: ((MetacelloResolveTarget on: self) resolve: self projectSpec loads: required).
+						self root: resolution ] ]
+		commitIfSuccess: false.
+	^ resolution
+]
+
 { #category : 'private' }
 MetacelloScriptEngine >> resolvePresentProject: existingRegistration new: newRegistration [
 
@@ -269,6 +293,20 @@ MetacelloScriptEngine >> resolvePresentProject: existingRegistration new: newReg
 					  newProjectRegistration: newRegistration;
 					  signal ]
 		  ifFalse: [ newRegistration ]
+]
+
+{ #category : 'resolution' }
+MetacelloScriptEngine >> resolvedProjectFor: aProjectSpec [
+	"The project of the resolution aProjectSpec names. The resolver answered every project the load reaches: one missing is a bug of the resolver"
+
+	^ resolution projectFor: aProjectSpec ifAbsent: [ MetacelloError signal: aProjectSpec name , ' is not in the resolution' ]
+]
+
+{ #category : 'resolution' }
+MetacelloScriptEngine >> resolver [
+	"The MetacelloResolver that chooses the version of each project, MetacelloInteractiveResolver unless the options name another"
+
+	^ self options at: #resolver ifAbsent: [ MetacelloInteractiveResolver new ]
 ]
 
 { #category : 'accessing' }

@@ -49,15 +49,6 @@ ClySourceCodeContext >> confirmUnusedVariablesInDefiningClass: variables [
 	^self browser confirmUnusedVariablesInDefiningClass: variables
 ]
 
-{ #category : 'command execution' }
-ClySourceCodeContext >> executeCommand: aCommand by: aCommandActivator [
-
-	aCommand isComplexRefactoring ifTrue: [
-		aCommand confirmRefactoringInContext: self by: aCommandActivator].
-
-	aCommand execute
-]
-
 { #category : 'testing' }
 ClySourceCodeContext >> hasUnacceptedEdits [
 	^ self tool hasUnacceptedEdits 
@@ -67,7 +58,7 @@ ClySourceCodeContext >> hasUnacceptedEdits [
 ClySourceCodeContext >> isArgOrTempVariableSelected [
 
 	| sourceNode |
-	sourceNode := self selectedSourceNode.
+	sourceNode := self selectedSourceNode ifNil: [ ^ false ].
 	^ sourceNode isTempVariable or: [ sourceNode isArgumentVariable ]
 ]
 
@@ -85,28 +76,28 @@ ClySourceCodeContext >> isAssignmentSelected [
 ClySourceCodeContext >> isClassSelected [
 
 	| node |
-	node := self selectedSourceNode.
-	node isVariable ifFalse: [ ^false ].
+	node := self selectedSourceNode ifNil: [ ^ false ].
+	node isVariable ifFalse: [ ^ false ].
 
-	^node binding isLiteralVariable
+	^ node binding isLiteralVariable
 		and: [ node binding isGlobalClassNameBinding ]
 ]
 
 { #category : 'testing' }
 ClySourceCodeContext >> isGlobalVariableSelected [
-	| node binding |
-	node := self selectedSourceNode.
-	node isVariable ifFalse: [ ^false ].
 
-	binding := node binding.
+	| node |
+	node := self selectedSourceNode ifNil: [ ^ false ].
+	node isVariable ifFalse: [ ^ false ].
 
-	^binding isGlobalVariable
+	^ node binding isGlobalVariable
 ]
 
 { #category : 'testing' }
 ClySourceCodeContext >> isMessageSelected [
 
-	^self selectedSourceNode isMessage
+	self selectedSourceNode ifNil: [ ^ false ].
+	^ self selectedSourceNode isMessage
 ]
 
 { #category : 'testing' }
@@ -115,18 +106,31 @@ ClySourceCodeContext >> isMethodSelected [
 ]
 
 { #category : 'testing' }
+ClySourceCodeContext >> isSourceCodeContext [
+
+	^ true
+]
+
+{ #category : 'testing' }
 ClySourceCodeContext >> isTempVariableSelected [
+
+	self selectedSourceNode ifNil: [ ^ false ].
 	^ self selectedSourceNode isTempVariable
 ]
 
 { #category : 'testing' }
-ClySourceCodeContext >> isVariableSelected [
-	| node |
-	self isClassSelected ifTrue: [ ^ false ].
-	node := self selectedSourceNode.
-	node isVariable ifFalse: [ ^ false ].
+ClySourceCodeContext >> isTestMethodSelected [
 
-	^ node isLiteralVariable | node isInstanceVariable
+	^ false
+]
+
+{ #category : 'testing' }
+ClySourceCodeContext >> isVariableSelected [
+
+	self selectedSourceNode ifNil: [ ^ false ].
+	self isClassSelected ifTrue: [ ^ false ].
+	^ self selectedSourceNode isVariable
+		and: [ self selectedSourceNode isLiteralVariable | self selectedSourceNode isInstanceVariable ]
 ]
 
 { #category : 'selection' }

@@ -295,20 +295,14 @@ RBTransformationsTest >> testRemoveClassTransform [
 RBTransformationsTest >> testRemoveMessageSendTransform [
 
 	| transformation class |
-	transformation := RBRemoveAllMessageSendsTransformation new
-		                  messageSend: #cr
-		                  inMethod: (#called: , #on:) asSymbol
-		                  inClass: #RBClassDataForRefactoringTest.
+	transformation := RBRemoveAllMessageSendsTransformation new messageSend: #cr inMethod: (#called: , #on:) asSymbol inClass: #RBClassDataForRefactoringTest.
 	transformation generateChanges.
 
 	self assert: transformation model changes changes size equals: 1.
 
-	class := transformation model classNamed:
-		         #RBClassDataForRefactoringTest.
-	self
-		assert: (class parseTreeForSelector: (#called: , #on:) asSymbol)
-		equals: (self parseMethod: 'called: anObject on: aBlock
-	anObject printString traceCr.
+	class := transformation model classNamed: #RBClassDataForRefactoringTest.
+	self assert: (class parseTreeForSelector: (#called: , #on:) asSymbol) equals: (self parseMethod: 'called: anObject on: aBlock
+	anObject printString traceNewLine.
 	aBlock value')
 ]
 

@@ -19,8 +19,7 @@ Class {
 		'sslSessionClass'
 	],
 	#classVars : [
-		'Default',
-		'DefaultSocketStreamTimeout'
+		'Default'
 	],
 	#category : 'Zinc-HTTP-Support',
 	#package : 'Zinc-HTTP',
@@ -37,26 +36,11 @@ ZnNetworkingUtils class >> default: instance [
 	Default := instance
 ]
 
-{ #category : 'constants' }
-ZnNetworkingUtils class >> defaultSocketStreamTimeout [
-	"Global default timeout in seconds for SocketStream IO"
-
-	^ DefaultSocketStreamTimeout
-]
-
-{ #category : 'constants' }
-ZnNetworkingUtils class >> defaultSocketStreamTimeout: seconds [
-	"Global default timeout in seconds for SocketStream IO"
-
-	^ DefaultSocketStreamTimeout := seconds
-]
-
 { #category : 'class initialization' }
 ZnNetworkingUtils class >> initialize [
 	"The default will try to use ZdcSocketStream and ZdcSecureSocketStream"
 
-	Default := self new.
-	DefaultSocketStreamTimeout := 30
+	Default := self new
 ]
 
 { #category : 'converting' }
@@ -69,9 +53,10 @@ ZnNetworkingUtils class >> ipAddressToString: byteArray [
 
 { #category : 'constants' }
 ZnNetworkingUtils class >> listenBacklogSize [
-	"Server socket backlog size (number of pending connection waiting to be accepted)"
+	"Server socket listen backlog size.
+	The number of pending connections queued up, waiting to be accepted, at any one time."
 
-	^ 32
+	^ ZnCurrentOptions at: #listenBacklogSize
 ]
 
 { #category : 'proxy' }
@@ -128,10 +113,9 @@ ZnNetworkingUtils class >> socketStreamOn: socket [
 
 { #category : 'constants' }
 ZnNetworkingUtils class >> socketStreamTimeout [
-	"Access the current timeout in seconds for SocketStream IO"
+	"Return the timeout in seconds for network socket stream operations like connecting, reading and writing."
 
-	^ ZnConnectionTimeout value
-		ifNil: [ self defaultSocketStreamTimeout ]
+	^ ZnCurrentOptions at: #socketStreamTimeout
 ]
 
 { #category : 'networking' }
@@ -238,10 +222,12 @@ ZnNetworkingUtils >> secureSocketStreamOn: socket [
 ZnNetworkingUtils >> serverSocketOn: port [
 	| socket |
 	socket := Socket newTCP.
-	self setServerSocketOptions: socket.
-	socket listenOn: port backlogSize: self class listenBacklogSize.
-	socket isValid
-		ifFalse: [ self error: 'Cannot create socket on port ', port printString ].
+	[
+		self setServerSocketOptions: socket.
+		socket listenOn: port backlogSize: self class listenBacklogSize.
+		socket isValid
+			ifFalse: [ self error: 'Cannot create socket on port ', port printString ] ]
+		ifCurtailed: [ socket destroy ].
 	^ socket
 ]
 
@@ -249,13 +235,15 @@ ZnNetworkingUtils >> serverSocketOn: port [
 ZnNetworkingUtils >> serverSocketOn: port interface: address [
 	| socket |
 	socket := Socket newTCP.
-	self setServerSocketOptions: socket.
-	socket
-		listenOn: port
-		backlogSize: self class listenBacklogSize
-		interface: address.
-	socket isValid
-		ifFalse: [ self error: 'Cannot create socket on port ', port printString ].
+	[
+		self setServerSocketOptions: socket.
+		socket
+			listenOn: port
+			backlogSize: self class listenBacklogSize
+			interface: address.
+		socket isValid
+			ifFalse: [ self error: 'Cannot create socket on port ', port printString ] ]
+		ifCurtailed: [ socket destroy ].
 	^ socket
 ]
 

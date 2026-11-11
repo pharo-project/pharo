@@ -83,13 +83,13 @@ ClyToolbarMorph >> initialize [
 
 { #category : 'updating' }
 ClyToolbarMorph >> updateItems [
-
-	| menu |
-	menu := CmdMenu activatedBy: ClyToolbarActivation.
-	browser navigationContextsDo: [ :eachContext | menu buildInContext: eachContext].
-
+	"Rebuilds the toolbar from the Commander2 tree of every navigation context of the browser."
+	| contexts tree |
+	contexts := OrderedCollection new.
+	browser navigationContextsDo: [ :eachContext | contexts add: eachContext ].
+	tree := ClyCommandGroupBuilder new buildToolbarFor: ClyToolbarActivation contexts: contexts.
 	self hide.
 	self removeAllMorphs.
 	self initialize.
-	[menu buildBrowserToolbar: self] ensure: [self show]
+	[ ClyCommandGroupMenuRenderer new renderToolbarOf: tree on: self ] ensure: [ self show ]
 ]

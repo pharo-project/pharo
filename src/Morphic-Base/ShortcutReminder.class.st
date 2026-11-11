@@ -44,13 +44,15 @@ ShortcutReminder class >> enabled: aBoolean [
 
 { #category : 'settings' }
 ShortcutReminder class >> settingsOn: aBuilder [
+
 	<systemsettings>
-	(aBuilder setting: #'Shortcut Reminder')
-		target: self;
-		parent: #appearance;
-		default: true;
-		description: 'Shortcut reminder is a reminding tool which pops up when a menu entry which includes a keyboard shortcut is invoked by the mouse instead';
-		selector: #enabled;
+	(aBuilder group: #'Shortcut Reminder')
+		parentName: #appearance;
+		isActive: true;
+		description:
+			'Shortcut reminder is a reminding tool which pops up when a menu entry which includes a keyboard shortcut is invoked by the mouse instead';
+		readBlock: [ self enabled ];
+		writeBlock: [ :active | self enabled: active ];
 		iconName: #smallConfiguration;
 		with: [ self defaultReminder customSettingsOn: aBuilder ]
 ]
@@ -118,7 +120,7 @@ ShortcutReminder >> customSettingsOn: aBuilder [
 		target: self;
 		label: 'Position in World';
 		description: 'Select one of the positons available to specify where the shortcut notification morph will be shown';
-		default: #bottomLeft;
+		defaultValue: #bottomLeft;
 		domainValues: self positions.
 
 	(aBuilder pickOne: #textSize)
@@ -132,19 +134,20 @@ ShortcutReminder >> customSettingsOn: aBuilder [
 		order: 3;
 		target: self;
 		label: 'Text color';
-		default: self defaultTextColor.
+		defaultValue: self defaultTextColor.
 
 	(aBuilder setting: #backgroundColor)
 		target: self;
 		label: 'Background color';
-		default: self defaultBackgroundColor.
+		defaultValue: self defaultBackgroundColor.
 
 	(aBuilder range: #limit)
 		order: 6;
 		target: self;
-      label: 'Notification limit' ;
-		description: 'Set the limit of how many notifications per menu entry one should be reminded about. Setting the value to -1 means that it will allways remind you' ;
-		default: self defaultLimit;
+		label: 'Notification limit';
+		description:
+			'Set the limit of how many notifications per menu entry one should be reminded about. Setting the value to -1 means that it will allways remind you';
+		defaultValue: self defaultLimit;
 		range: (-1 to: 100).
 
 	(aBuilder button: #resetCount)

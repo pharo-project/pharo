@@ -3,50 +3,39 @@ I am a command to add packages scope to listScopes
 "
 Class {
 	#name : 'SycAddPackagesScopeCommand',
-	#superclass : 'CmdCommand',
-	#instVars : [
-		'packages'
-	],
+	#superclass : 'SycPackageCommand',
 	#category : 'SystemCommands-PackageCommands-Scope',
 	#package : 'SystemCommands-PackageCommands',
 	#tag : 'Scope'
 }
 
-{ #category : 'accessing' }
-SycAddPackagesScopeCommand >> defaultMenuIconName [
-	^ #smallPushpin
-]
-
-{ #category : 'accessing' }
-SycAddPackagesScopeCommand >> defaultMenuItemName [
-	^ 'Create scope from selected package(s)'
-]
-
 { #category : 'execution' }
-SycAddPackagesScopeCommand >> execute [
+SycAddPackagesScopeCommand >> executeRefactoring [
 
 	| scope |
-	
-	scope := ScopesManager newScopeFrom: packages.
+	scope := ScopesManager newScopeFrom: self packages.
 	ScopesManager addScope: scope.
 	ScopesPresenter openSelecting: scope
 ]
 
 { #category : 'accessing' }
-SycAddPackagesScopeCommand >> packages [
-
-	^ packages
+SycAddPackagesScopeCommand >> iconName [
+	^ #smallPushpin
 ]
 
 { #category : 'accessing' }
-SycAddPackagesScopeCommand >> packages: anObject [
+SycAddPackagesScopeCommand >> name [
+	^ 'Create scope from selected package(s)'
+]
 
-	packages := anObject
+{ #category : 'accessing' }
+SycAddPackagesScopeCommand >> order [
+
+	^ 1000
 ]
 
 { #category : 'execution' }
-SycAddPackagesScopeCommand >> prepareFullExecutionInContext: aBrowserContext [
+SycAddPackagesScopeCommand >> prepareFullExecution [
 
-	super prepareFullExecutionInContext: aBrowserContext.
-	packages := aBrowserContext selectedPackageItems collect: [:e | e actualObject ]
+	packages := self context selectedPackageItems collect: [ :packageItem | packageItem actualObject ]
 ]

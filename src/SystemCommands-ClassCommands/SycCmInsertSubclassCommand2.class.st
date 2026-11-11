@@ -11,6 +11,12 @@ Class {
 	#tag : 'Creation'
 }
 
+{ #category : 'testing' }
+SycCmInsertSubclassCommand2 >> canBeExecuted [
+
+	^ context lastSelectedClass isTrait not
+]
+
 { #category : 'executing' }
 SycCmInsertSubclassCommand2 >> executeRefactoring [
 	"The class name is necessary so the browser can select the new subclass"
@@ -37,12 +43,6 @@ SycCmInsertSubclassCommand2 >> executeRefactoring [
 { #category : 'accessing' }
 SycCmInsertSubclassCommand2 >> icon [
 	^self iconNamed:#add
-]
-
-{ #category : 'testing' }
-SycCmInsertSubclassCommand2 >> isApplicable [
-
-	^ context lastSelectedClass isTrait not
 ]
 
 { #category : 'accessing' }

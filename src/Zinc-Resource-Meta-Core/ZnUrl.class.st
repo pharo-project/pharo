@@ -494,7 +494,7 @@ ZnUrl >> isRelative [
 { #category : 'private' }
 ZnUrl >> isSchemeNotUsingDoubleSlash: schemeString [
 	^ self class schemesNotUsingDoubleSlash , self class schemesOptionallyNotUsingDoubleSlash
-		includes: schemeString asLowercase
+		includes: schemeString asLowercase asSymbol
 ]
 
 { #category : 'testing' }
@@ -552,7 +552,7 @@ ZnUrl >> parseFrom: string defaultScheme: defaultScheme [
 		ifTrue: [
 			self fragment: (self decodePercent: (string copyFrom: index + 1 to: end)).
 			end := index - 1 ].
-	(index := string indexOf: $?) > 0
+	((index := (string indexOf: $?)) between: 1 and: end)
 		ifTrue: [
 			self query: (self parseQueryFrom: (ReadStream on: string from: index + 1 to: end)).
 			end := index - 1 ].

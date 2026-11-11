@@ -5,7 +5,7 @@ I am used to convert extension method to normal one
 "
 Class {
 	#name : 'SycMoveMethodsToTheDefiningClassCommand',
-	#superclass : 'SycMethodRepackagingCommand',
+	#superclass : 'SycMethodRepackagingCmCommand',
 	#category : 'SystemCommands-MethodCommands',
 	#package : 'SystemCommands-MethodCommands'
 }
@@ -15,22 +15,34 @@ SycMoveMethodsToTheDefiningClassCommand class >> canBeExecutedInContext: aToolCo
 	^aToolContext isExtensionMethodSelected
 ]
 
-{ #category : 'accessing' }
-SycMoveMethodsToTheDefiningClassCommand >> defaultMenuIconName [
+{ #category : 'testing' }
+SycMoveMethodsToTheDefiningClassCommand >> canBeExecuted [
 
-	^ #smallRedo
+	^ self hasContext and: [ self class canBeExecutedInContext: self context ]
+]
+
+{ #category : 'execution' }
+SycMoveMethodsToTheDefiningClassCommand >> executeRefactoring [
+
+	self methods
+		select: [ :method | method isExtension ]
+		thenDo: [ :method | self classifyMethod: method ]
 ]
 
 { #category : 'accessing' }
-SycMoveMethodsToTheDefiningClassCommand >> defaultMenuItemName [
+SycMoveMethodsToTheDefiningClassCommand >> icon [
+
+	^ self iconNamed: #smallRedo
+]
+
+{ #category : 'accessing' }
+SycMoveMethodsToTheDefiningClassCommand >> name [
 
 	^ 'Move to defining class'
 ]
 
-{ #category : 'execution' }
-SycMoveMethodsToTheDefiningClassCommand >> execute [
+{ #category : 'accessing' }
+SycMoveMethodsToTheDefiningClassCommand >> order [
 
-	methods
-		select: [ :method | method isExtension ]
-		thenDo: [ :method | self classifyMethod: method ]
+	^ 80
 ]

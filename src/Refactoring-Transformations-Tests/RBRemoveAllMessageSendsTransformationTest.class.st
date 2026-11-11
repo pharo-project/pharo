@@ -128,15 +128,11 @@ RBRemoveAllMessageSendsTransformationTest >> testRemoveSenderIntoCascaded3Messag
 RBRemoveAllMessageSendsTransformationTest >> testRemoveSenderIntoCascadedMessage [
 
 	| trans |
-	trans := (RBRemoveAllMessageSendsTransformation
-				messageSend: #cr
-				inMethod: (#called:, #on:) asSymbol
-				inClass: #RBClassDataForRefactoringTest).
+	trans := RBRemoveAllMessageSendsTransformation messageSend: #cr inMethod: (#called: , #on:) asSymbol inClass: #RBClassDataForRefactoringTest.
 	trans generateChanges.
 
-	self assert: ((trans model classNamed: #RBClassDataForRefactoringTest) parseTreeForSelector: (#called:, #on:) asSymbol)
-		equals: (self parseMethod: 'called: anObject on: aBlock
-			anObject printString traceCr.
+	self assert: ((trans model classNamed: #RBClassDataForRefactoringTest) parseTreeForSelector: (#called: , #on:) asSymbol) equals: (self parseMethod: 'called: anObject on: aBlock
+			anObject printString traceNewLine.
 			aBlock value')
 ]
 

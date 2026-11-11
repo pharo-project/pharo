@@ -1,6 +1,6 @@
 Class {
 	#name : 'SycCmFileOutClassCommandTest',
-	#superclass : 'TestCase',
+	#superclass : 'SycAbstractCommandTest',
 	#category : 'SystemCommands-ClassCommands-Tests-Tests',
 	#package : 'SystemCommands-ClassCommands-Tests',
 	#tag : 'Tests'
@@ -18,10 +18,10 @@ SycCmFileOutClassCommandTest >> testDefaultFileNameForMultipleClasses [
 
 { #category : 'tests' }
 SycCmFileOutClassCommandTest >> testDefaultFileNameForSingleClass [
-	| cmd context |
+
+	| cmd |
 	cmd := SycCmFileOutClassCommand new.
-	context := SycMockClassContext new.
-	context selectedObjects: { Point }.
-	cmd context: context.
+	cmd context: self contextOnPoint.
+
 	self assert: cmd defaultFileName equals: 'Point'
 ]

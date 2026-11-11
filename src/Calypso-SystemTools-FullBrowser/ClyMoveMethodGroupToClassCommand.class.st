@@ -35,35 +35,30 @@ ClyMoveMethodGroupToClassCommand class >> canBeExecutedInContext: aToolContext [
 ClyMoveMethodGroupToClassCommand class >> fullBrowserDragAndDropActivation [
 	<classAnnotation>
 
-	^CmdDragAndDropActivation
+	^ClyDragAndDropActivation
 		for: ClyMethodGroup asCalypsoItemContext
 		toDropIn: ClyClass asCalypsoItemContext
 ]
 
 { #category : 'execution' }
-ClyMoveMethodGroupToClassCommand >> execute [
+ClyMoveMethodGroupToClassCommand >> executeRefactoring [
 
 	| moveCommand |
-	methodGroups do: [ :each |
-			moveCommand := SycMoveMethodsToClassCommand methods: each methods class: targetClass refactoringScopes: refactoringScopes.
+	methodGroups do: [ :group |
+			moveCommand := SycMoveMethodsToClassCommand methods: group methods class: targetClass refactoringScopes: refactoringScopes.
 			moveCommand execute ]
 ]
 
-{ #category : 'execution' }
-ClyMoveMethodGroupToClassCommand >> prepareExecutionInDropContext: aToolContext [
-
-	super prepareExecutionInDropContext: aToolContext.
-	targetClass := aToolContext lastSelectedClass.
-	targetClass := aToolContext currentMetaLevelOf: targetClass.
-	refactoringScopes := aToolContext refactoringScopes
-]
-
-{ #category : 'execution' }
-ClyMoveMethodGroupToClassCommand >> prepareFullExecutionInContext: aToolContext [
-	super prepareFullExecutionInContext: aToolContext.
-
-	targetClass := aToolContext requestSingleClass: 'Choose class'.
-	targetClass := aToolContext currentMetaLevelOf: targetClass
+{ #category : 'executing' }
+ClyMoveMethodGroupToClassCommand >> prepareFullExecution [
+	| toolContext |
+	super prepareFullExecution.
+	toolContext := self dropContext ifNil: [ self context ].
+	targetClass := self dropContext
+		ifNil: [ self context requestSingleClass: 'Choose class' ]
+		ifNotNil: [ :drop | drop lastSelectedClass ].
+	targetClass := toolContext currentMetaLevelOf: targetClass.
+	refactoringScopes := toolContext refactoringScopes
 ]
 
 { #category : 'accessing' }

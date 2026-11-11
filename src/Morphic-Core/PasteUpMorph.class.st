@@ -52,11 +52,12 @@ PasteUpMorph class >> shouldShowWorldMenu: anObject [
 
 { #category : 'settings' }
 PasteUpMorph class >> shouldShowWorldMenuSettingOn: aBuilder [
+
 	<systemsettings>
 	(aBuilder setting: #shouldShowWorldMenu)
 		target: self;
-		default: true;
-		parent: #morphic;
+		defaultValue: true;
+		parentName: #morphic;
 		label: 'Show world menu';
 		description: 'Whether the World''s world menu should be shown or not on a click in the World.'
 ]
@@ -73,16 +74,17 @@ PasteUpMorph class >> shouldSwapMenuOpenerButtons: aBoolean [
 
 { #category : 'settings' }
 PasteUpMorph class >> shouldSwapMenuOpenerButtonsSetting: aBuilder [
+
 	<systemsettings>
 	(aBuilder setting: #shouldSwapMenuOpenerButtons)
 		label: 'Invert right and left click on world menu in Linux and Windows';
-		parent: #desktopSettings;
+		parentName: #desktopSettings;
 		target: self;
 		getSelector: #shouldSwapMenuOpenerButtons;
 		setSelector: #shouldSwapMenuOpenerButtons:;
 		description:
-				'If checked the behaviour of the world menu is changed only under Linux and Windows. The main menu will appear on right click instead of left click.';
-		default: false
+			'If checked the behaviour of the world menu is changed only under Linux and Windows. The main menu will appear on right click instead of left click.';
+		defaultValue: false
 ]
 
 { #category : 'event handling' }
@@ -210,7 +212,7 @@ PasteUpMorph >> cleanseOtherworldlySteppers [
 		do: [:m | m delete].
 	self world cleanseStepList.
 	(delta := old - self world stepListSize) > 0
-		ifTrue: [ self crTrace: delta asString , ' morphs removed from steplist' ]
+		ifTrue: [ self newLineTrace: delta asString , ' morphs removed from steplist' ]
 ]
 
 { #category : 'Morphic-Base-Windows' }

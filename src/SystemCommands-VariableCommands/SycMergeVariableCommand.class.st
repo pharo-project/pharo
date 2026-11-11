@@ -3,7 +3,7 @@ I am a command to merge given variable into another
 "
 Class {
 	#name : 'SycMergeVariableCommand',
-	#superclass : 'CmdCommand',
+	#superclass : 'SycRefactorVariableCommand',
 	#instVars : [
 		'variable',
 		'newName'
@@ -17,13 +17,13 @@ SycMergeVariableCommand class >> canBeExecutedInContext: aToolContext [
 	^aToolContext isVariableSelected and: [ aToolContext isGlobalVariableSelected not ]
 ]
 
-{ #category : 'accessing' }
-SycMergeVariableCommand class >> defaultMenuIconName [
-	^ #merge
-]
-
 { #category : 'activation' }
 SycMergeVariableCommand class >> fullBrowserShortcutActivation [
+]
+
+{ #category : 'accessing' }
+SycMergeVariableCommand class >> iconName [
+	^ #merge
 ]
 
 { #category : 'activation' }
@@ -35,9 +35,9 @@ SycMergeVariableCommand class >> sourceCodeShortcutActivation [
 ]
 
 { #category : 'execution' }
-SycMergeVariableCommand >> applyResultInContext: aToolContext [
-	super applyResultInContext: aToolContext.
-	aToolContext showVariableNamed: newName
+SycMergeVariableCommand >> applyCommandResult [
+	super applyCommandResult.
+	self context showVariableNamed: newName
 ]
 
 { #category : 'execution' }
@@ -45,18 +45,24 @@ SycMergeVariableCommand >> classRefactoring [
 	^ RBMergeInstanceVariableIntoAnother
 ]
 
-{ #category : 'accessing' }
-SycMergeVariableCommand >> defaultMenuItemName [
-	^'Merge into another'
-]
-
 { #category : 'execution' }
-SycMergeVariableCommand >> execute [
+SycMergeVariableCommand >> executeRefactoring [
 
 	| refactoring |
 	refactoring := variable createVariableRefactoring: self classRefactoring.
 	refactoring newName: self newVariableName.
-	refactoring execute
+	^ refactoring execute
+]
+
+{ #category : 'testing' }
+SycMergeVariableCommand >> isAvailableInMenuOf: aToolContext [
+
+	^ aToolContext isFullBrowserVariableContext
+]
+
+{ #category : 'accessing' }
+SycMergeVariableCommand >> name [
+	^'Merge into another'
 ]
 
 { #category : 'accessing' }
@@ -75,16 +81,20 @@ SycMergeVariableCommand >> newVariableName [
 	^ newName name
 ]
 
+{ #category : 'accessing' }
+SycMergeVariableCommand >> order [
+
+	^ 1.1
+]
+
 { #category : 'execution' }
-SycMergeVariableCommand >> prepareFullExecutionInContext: aToolContext [
+SycMergeVariableCommand >> prepareFullExecution [
 
-	super prepareFullExecutionInContext: aToolContext.
-	variable := aToolContext lastSelectedVariable.
-
+	super prepareFullExecution.
+	variable := self context lastSelectedVariable.
 	newName := StBrowserSearchPresenter searchConfiguring: [ :presenter :dialog |
-		           dialog title: 'Select a variable'.
-		           presenter items:
-			           (aToolContext browser itemsForQuery: ClyAllInstanceVariablesQuery sorted inScope: (ClyClassScope of: variable definingClass) withInheritedScope) ]
+			           dialog title: 'Select a variable'.
+			           presenter items: (self context browser itemsForQuery: ClyAllInstanceVariablesQuery sorted inScope: (ClyClassScope of: variable definingClass) withInheritedScope) ]
 ]
 
 { #category : 'accessing' }

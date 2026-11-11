@@ -1,10 +1,36 @@
 "
-I should be used as singleton which provides sets of rules for checking classes and methods.
+I provide the sets of rules used to check classes, methods, packages and AST nodes. The Quality Assistant and `ReCriticEngine` ask me for the rules to run on an entity.
 
-Use:
+## Responsibility:
 
-ReRuleManager uniqueInstance classRules ""to get rules for checking classes""
-ReRuleManager uniqueInstance methodRules ""to get rules for checking methods""
+- Know the visible rule classes (`visibleRuleClasses`) and instantiate the enabled ones.
+- Keep one manager per package (`managerFor:`), and the default one, so that the rules are not created again for each check.
+- Store the user choices of the settings: the rules profile and the enabled rule groups.
+
+## Collaborators: 
+
+- `ReAbstractRule`: the rules I provide.
+- `ReCriticEngine` and the Quality Assistant: ask me for the rules of an entity.
+- The settings browser: shows the rule groups (by `groupSelector`) to enable or disable.
+
+## Public API and Key Messages
+
+- `ReRuleManager uniqueInstance` (or `ReRuleManager default`) answers the default manager.
+- `classRules`, `methodRules`, `packageRules`, `nodeRules` and `allRules` answer its rules.
+- `ReRuleManager defaultRules` answers new instances of the enabled visible rules.
+- `ReRuleManager reset` empties my cache.
+
+```
+ReRuleManager uniqueInstance classRules.
+ReRuleManager uniqueInstance methodRules
+```
+
+My cache is reset automatically when a rule class is added or removed. Since a new rule is usually not visible until it is complete (for example before `checksMethod` is defined), execute `ReRuleManager reset` once it is ready.
+
+## Internal Representation
+
+- `rules`: the rules of a manager.
+- class side `default` and `managers`: the default manager and the managers per package.
 "
 Class {
 	#name : 'ReRuleManager',
@@ -69,30 +95,22 @@ ReRuleManager class >> defaultRules [
 			thenCollect: [:ruleClass | ruleClass new]
 ]
 
-{ #category : 'reflective operations' }
-ReRuleManager class >> doesNotUnderstand: aMessage [ 
-	"
-	Currently, the setting model requires for each setting a getter and a setter method existing to execute. This does not work with the way rules group settings are implemented because we want to be able to add groups dynamically, thus we build the settings collecting the groups present in the image and this does not work with having pre-existing methods to execute through a setting.
-	Since we cannot have those methods and it would take too much efforts currently to update the settings model, we are handling those missing getter/setter with the doesNotUnderstood:.
-	
-	We build the getters and setters for the settings in the method #ruleToggleSettingsOn:
-	"
-	(aMessage selector beginsWith: 'toggleGroupNamed')
-		ifTrue: [
-			| ruleName rules |
-			ruleName := (aMessage selector allButFirst: 16) withoutSuffix: ':'.
-			rules := self visibleRuleClasses select: [ :class |
-				         class groupSelector = ruleName ].
-			^ (aMessage selector endsWith: ':')
-				  ifTrue: [ rules do: [ :rule | rule enabled: aMessage arguments first] ]
-				  ifFalse: [ rules anySatisfy: [ :rule | rule enabled] ] ]
-		ifFalse: [ super doesNotUnderstand: aMessage ]
+{ #category : 'enabling' }
+ReRuleManager class >> enable: aBoolean groupNamed: aRuleGroupSelector [
+
+	(self rulesFor: aRuleGroupSelector) do: [ :rule | rule enabled: aBoolean ]
 ]
 
 { #category : 'class initialization' }
 ReRuleManager class >> initialize [
 	self reset.
 	self subscribe.
+]
+
+{ #category : 'enabling' }
+ReRuleManager class >> isGroupEnabled: aRuleGroupSelector [
+
+	^ (self rulesFor: aRuleGroupSelector) anySatisfy: [ :rule | rule enabled ]
 ]
 
 { #category : 'instance creation' }
@@ -165,9 +183,9 @@ ReRuleManager class >> ruleProfileSettingsOn: aBuilder [
 		order: 1;
 		label: 'Select a quality rules profile ';
 		description: 'Select a profile according to your experience with Pharo. This will allow the QualityAssistant to show the rules that are appropiate to your level.';
-		parent: #qualityAssistant;
+		parentName: #qualityAssistant;
 		target: self;
-		default: #setDefaultProfile;
+		defaultValue: #setDefaultProfile;
 		domainValues: {'Default' translated -> #setDefaultProfile .
 							'Beginner' translated -> #setBeginnerProfile }
 ]
@@ -186,20 +204,26 @@ ReRuleManager class >> ruleToggleSettingsOn: aBuilder [
 		order: 1;
 		label: 'Toggle rules to run';
 		description: 'Select which rules do you want to see in the live feedback';
-		parent: #qualityAssistant;
+		parentName: #qualityAssistant;
 		with: [
 				(self visibleRuleClasses groupedBy: [ :class | class groupSelector ]) keysAndValuesDo: [ :groupNameSelector :rules |
 							| groupName |
 							groupName := ReAbstractRule perform: groupNameSelector.
-							(aBuilder setting: groupNameSelector asSymbol)
-								target: self;
-								selector: #toggleGroupNamed , groupNameSelector capitalized;
-								default: true;
+							(aBuilder group: groupNameSelector asSymbol)
+								readBlock: [ self isGroupEnabled: groupNameSelector ];
+								writeBlock: [ :active | self enable: active groupNamed: groupNameSelector ];
+								isActive: true;
 								noOrdering;
 								iconName: #smallConfiguration;
 								label: groupName , ' rules';
 								description: 'select ' , groupName , ' rules';
 								with: [ self subSettingsOn: aBuilder with: rules ] ] ]
+]
+
+{ #category : 'utilities' }
+ReRuleManager class >> rulesFor: aRuleGroupSelector [
+
+	^ self visibleRuleClasses select: [ :class | class groupSelector = aRuleGroupSelector ]
 ]
 
 { #category : 'accessing' }
@@ -236,7 +260,7 @@ ReRuleManager class >> subSettingsOn: aBuilder with: rules [
 			(aBuilder setting: rule enabledSettingID)
 				  selector: #enabled;
 				  target: rule;
-				  default: rule enabledByDefault;
+				  defaultValue: rule enabledByDefault;
 				  label: rule ruleName;
 				  description: rule rationale ]
 ]

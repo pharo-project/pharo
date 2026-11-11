@@ -62,12 +62,6 @@ ReRemoveSharedVariableRefactoring >> privateTransform [
 	transformation privateTransform
 ]
 
-{ #category : 'accessing' }
-ReRemoveSharedVariableRefactoring >> refactoredClass [
-
-	^ class
-]
-
 { #category : 'initialization' }
 ReRemoveSharedVariableRefactoring >> variable: aVarName class: aClassName [
 

@@ -3,7 +3,7 @@ I am a command to find and replace selector in a range of methods, with a call t
 "
 Class {
 	#name : 'SycFindAndReplaceMethodCommand',
-	#superclass : 'SycChangeMessageSignatureCommand',
+	#superclass : 'SycMessageCmCommand',
 	#category : 'SystemCommands-MessageCommands',
 	#package : 'SystemCommands-MessageCommands'
 }
@@ -13,13 +13,8 @@ SycFindAndReplaceMethodCommand class >> canBeExecutedInContext: aToolContext [
 	^ aToolContext isMethodSelected
 ]
 
-{ #category : 'accessing' }
-SycFindAndReplaceMethodCommand class >> defaultMenuIconName [
-	^#smallFind
-]
-
 { #category : 'execution' }
-SycFindAndReplaceMethodCommand >> applyResultInContext: aToolContext [
+SycFindAndReplaceMethodCommand >> applyCommandResult [
 ]
 
 { #category : 'execution' }
@@ -33,9 +28,21 @@ SycFindAndReplaceMethodCommand >> createRefactoring [
 ]
 
 { #category : 'accessing' }
-SycFindAndReplaceMethodCommand >> defaultMenuItemName [
+SycFindAndReplaceMethodCommand >> icon [
+
+	^ self iconNamed: #smallFind
+]
+
+{ #category : 'accessing' }
+SycFindAndReplaceMethodCommand >> name [
 
 	^ self refactoringClass menuItemString
+]
+
+{ #category : 'accessing' }
+SycFindAndReplaceMethodCommand >> order [
+
+	^ 25
 ]
 
 { #category : 'factory method' }

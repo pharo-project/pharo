@@ -27,48 +27,50 @@ Class {
 }
 
 { #category : 'activation' }
-ClyJumpToTestClassCommand class >> fullBrowserMenuActivation [
-	<classAnnotation>
-
-	^ CmdContextMenuActivation byRootGroupItemOrder: 5 for: ClyFullBrowserClassContext
-]
-
-{ #category : 'activation' }
 ClyJumpToTestClassCommand class >> fullBrowserShortcutActivation [
 	<classAnnotation>
 
-	^ CmdShortcutActivation by: $g meta, $j meta for: ClyFullBrowserClassContext
-]
-
-{ #category : 'accessing' }
-ClyJumpToTestClassCommand >> defaultMenuIconName [
-	^#jump
-]
-
-{ #category : 'accessing' }
-ClyJumpToTestClassCommand >> defaultMenuItemName [
-	^ 'Jump to test class'
+	^ ClyShortcutActivation by: $g meta, $j meta for: ClyFullBrowserClassContext
 ]
 
 { #category : 'execution' }
-ClyJumpToTestClassCommand >> execute [
+ClyJumpToTestClassCommand >> executeRefactoring [
 
-	self systemEnvironment 
-		classNamed: (self testClassNameFor: targetClass)
-		ifAbsent: [
-			(self confirm: 'Do you want to create a test class for: ' , targetClass asString )
-				ifFalse: [ ^ self ] ].
+	self systemEnvironment classNamed: (self testClassNameFor: targetClass) ifAbsent: [ (self confirm: 'Do you want to create a test class for: ' , targetClass asString) ifFalse: [ ^ self ] ].
 
 	[ browser selectClass: (self testClassFor: targetClass) ]
 		on: ClyInvalidClassForTestClassGeneration
 		do: [ :ex | self inform: 'Cannot generate test class for ' , ex baseClass printString , '.' ]
 ]
 
+{ #category : 'accessing' }
+ClyJumpToTestClassCommand >> iconName [
+	^#jump
+]
+
+{ #category : 'testing' }
+ClyJumpToTestClassCommand >> isAvailableInMenuOf: aToolContext [
+
+	^ aToolContext isFullBrowserClassContext
+]
+
+{ #category : 'accessing' }
+ClyJumpToTestClassCommand >> name [
+	^ 'Jump to test class'
+]
+
+{ #category : 'accessing' }
+ClyJumpToTestClassCommand >> order [
+
+	^ 5
+]
+
 { #category : 'execution' }
-ClyJumpToTestClassCommand >> prepareFullExecutionInContext: aToolContext [
-	super prepareFullExecutionInContext: aToolContext.
-	browser := aToolContext browser.
-	systemEnvironment := aToolContext systemEnvironment
+ClyJumpToTestClassCommand >> prepareFullExecution [
+
+	super prepareFullExecution.
+	browser := self context browser.
+	systemEnvironment := self context systemEnvironment
 ]
 
 { #category : 'accessing' }

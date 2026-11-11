@@ -6,9 +6,13 @@ Class {
 }
 
 { #category : 'testing' }
-SycDeprecateClassCmCommand >> isApplicable [
+SycDeprecateClassCmCommand >> canBeExecuted [
 
-	^ context lastSelectedClass realClass isDeprecated not
+	self flag: 'Disabled for Pharo14, as it is not working'.
+
+	"^ context lastSelectedClass realClass isDeprecated not"
+	
+	^ false
 ]
 
 { #category : 'accessing' }

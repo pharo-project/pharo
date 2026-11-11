@@ -135,6 +135,12 @@ FTBasicItem >> collapseAndRefresh [
 		self refreshTable ]
 ]
 
+{ #category : 'private' }
+FTBasicItem >> collapseWithoutChange [
+
+	isExpanded := false
+]
+
 { #category : 'button' }
 FTBasicItem >> collpasedButton [
 	^ IconicButtonMorph new

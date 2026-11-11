@@ -14,31 +14,36 @@ Class {
 	#package : 'SystemCommands-MethodCommands'
 }
 
+{ #category : 'execution' }
+SycProfileTestMethodCommand >> executeRefactoring [
+
+	methods
+		select: [ :cm | cm isTestMethod ]
+		thenDo: [ :cm | self profileMethod: cm ]
+]
+
 { #category : 'accessing' }
-SycProfileTestMethodCommand >> defaultMenuIconName [
+SycProfileTestMethodCommand >> iconName [
 
 	^ #smallProfile
 ]
 
 { #category : 'accessing' }
-SycProfileTestMethodCommand >> defaultMenuItemName [
+SycProfileTestMethodCommand >> name [
 
 	^ 'Profile method'
-]
-
-{ #category : 'execution' }
-SycProfileTestMethodCommand >> execute [
-
-	methods 
-		select: [ : cm | cm isTestMethod ]
-		thenDo: [ : cm | self profileMethod: cm ].
-
 ]
 
 { #category : 'execution' }
 SycProfileTestMethodCommand >> newProfilerPresenter [
 
 	^ self profilerPresenterClass new
+]
+
+{ #category : 'accessing' }
+SycProfileTestMethodCommand >> order [
+
+	^ 1000
 ]
 
 { #category : 'execution' }
@@ -59,18 +64,6 @@ SycProfileTestMethodCommand >> profilerPresenterClass [
 	^ Smalltalk
 		at: #StProfilerPresenter
 		ifAbsent: [ self error: 'Profiler not installed' ]
-]
-
-{ #category : 'initialization' }
-SycProfileTestMethodCommand >> setUpModelFromContext: aContext [
-
-	| browser |
-	
-	browser := aContext browser.
-	browser classSelection isMultipleSelected
-		ifTrue: [ ^ CmdCommandAborted signal ].
-
-
 ]
 
 { #category : 'execution' }

@@ -19,13 +19,19 @@ SycOpenClassMenuCommand >> cmCommandClass [
 	^ SycClassCmCommand
 ]
 
-{ #category : 'execution' }
-SycOpenClassMenuCommand >> defaultMenuItemName [
-	^'Refactorings'
-]
-
 { #category : 'accessing' }
 SycOpenClassMenuCommand >> description [
 
 	^ 'Opens special class menu.'
+]
+
+{ #category : 'execution' }
+SycOpenClassMenuCommand >> name [
+	^'Refactorings'
+]
+
+{ #category : 'menu' }
+SycOpenClassMenuCommand >> pureMenuCommands [
+	"The commands of the class of this opener that apply here, in the order they are built."
+	^ self classFamilyPureMenuCommands
 ]

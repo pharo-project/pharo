@@ -4,27 +4,33 @@ By default variables are ordered from superclass to subclass. And I allow to tog
 "
 Class {
 	#name : 'ClyInvertVariableOrderCommand',
-	#superclass : 'ClyBrowserCommand',
+	#superclass : 'SycMethodGroupExtraCmCommand',
 	#category : 'Calypso-SystemTools-FullBrowser-Commands-MethodGroups',
 	#package : 'Calypso-SystemTools-FullBrowser',
 	#tag : 'Commands-MethodGroups'
 }
 
-{ #category : 'activation' }
-ClyInvertVariableOrderCommand class >> browserContextMenuActivation [
-	<classAnnotation>
+{ #category : 'testing' }
+ClyInvertVariableOrderCommand >> canBeExecuted [
 
-	^CmdContextMenuActivation byItemOf: CmdExtraMenuGroup for: ClyVariableMethodGroup asCalypsoItemContext
-]
-
-{ #category : 'accessing' }
-ClyInvertVariableOrderCommand >> defaultMenuItemName [
-	^'Invert hierarchy'
+	^ context isAboutBrowserItemType: ClyVariableMethodGroup
 ]
 
 { #category : 'execution' }
-ClyInvertVariableOrderCommand >> execute [
+ClyInvertVariableOrderCommand >> executeRefactoring [
 
 	ClySubclassHierarchy invertVariableHierarchy.
-	browser switchToVariables
+	self context browser switchToVariables
+]
+
+{ #category : 'accessing' }
+ClyInvertVariableOrderCommand >> name [
+
+	^ 'Invert hierarchy'
+]
+
+{ #category : 'accessing' }
+ClyInvertVariableOrderCommand >> order [
+
+	^ 1000
 ]

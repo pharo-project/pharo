@@ -3,7 +3,7 @@ A SycCategorizeAllUnclassifiedMethodsCommandTest is a test class for testing the
 "
 Class {
 	#name : 'SycCategorizeAllUnclassifiedMethodsCommandTest',
-	#superclass : 'TestCase',
+	#superclass : 'SycAbstractCommandTest',
 	#category : 'SystemCommands-ClassCommands-Tests-Tests',
 	#package : 'SystemCommands-ClassCommands-Tests',
 	#tag : 'Tests'

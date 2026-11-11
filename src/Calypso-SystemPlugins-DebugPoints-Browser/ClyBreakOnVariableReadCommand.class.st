@@ -14,14 +14,8 @@ ClyBreakOnVariableReadCommand class >> accessStrategy [
 	^ #read
 ]
 
-{ #category : 'testing' }
-ClyBreakOnVariableReadCommand class >> isAbstract [
-
-	^ false
-]
-
 { #category : 'accessing' }
-ClyBreakOnVariableReadCommand >> defaultMenuItemName [
+ClyBreakOnVariableReadCommand >> name [
 
 	^ 'Break on read'
 ]

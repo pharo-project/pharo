@@ -334,9 +334,12 @@ ReInlineMethodParametrizedTest >> testInlineMethod [
 
 { #category : 'tests' }
 ReInlineMethodParametrizedTest >> testInlineMethod1 [
+
 	| refactoring |
-	refactoring := self createRefactoringWithArguments:
-		{ (39 to: 84) . #caller . RBClassDataForRefactoringTest }.
+	refactoring := self createRefactoringWithArguments: {
+			               (39 to: 84).
+			               #caller.
+			               RBClassDataForRefactoringTest }.
 	self setupInlineExpressionFor: refactoring toReturn: false.
 
 	self executeRefactoring: refactoring.
@@ -347,17 +350,20 @@ ReInlineMethodParametrizedTest >> testInlineMethod1 [
 	anObject := 5.
 	anObject1 := anObject + 1.
 	anObject1 printString
-		traceCr;
+		traceNewLine;
 		cr.
 	^ anObject')
 ]
 
 { #category : 'tests' }
 ReInlineMethodParametrizedTest >> testInlineMethod2 [
+
 	| refactoring methodName |
 	methodName := #caller1.
-	refactoring := self createRefactoringWithArguments:
-		{ (40 to: 120) .  methodName . RBClassDataForRefactoringTest }.
+	refactoring := self createRefactoringWithArguments: {
+			               (40 to: 120).
+			               methodName.
+			               RBClassDataForRefactoringTest }.
 	self setupInlineExpressionFor: refactoring toReturn: false.
 
 	self executeRefactoring: refactoring.
@@ -368,7 +374,7 @@ ReInlineMethodParametrizedTest >> testInlineMethod2 [
 	anObject := 5.
 	anObject1 := anObject + 1.
 	each1 := anObject1 printString.
-	each1 traceCr.
+	each1 traceNewLine.
 	[ :each |
 	each printString.
 	^ anObject ] value: each1')

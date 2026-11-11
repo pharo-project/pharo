@@ -110,7 +110,7 @@ StRefactoringAddClassPresenter >> open [
 		centered
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'private - accessing' }
 StRefactoringAddClassPresenter >> textInputPresenter [
 	^ textInput 
 ]

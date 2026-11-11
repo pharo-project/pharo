@@ -14,34 +14,42 @@ Class {
 }
 
 { #category : 'accessing' }
-SycAbstractVariableCommand >> defaultMenuIconName [
-	^ #smallAdd
-]
-
-{ #category : 'accessing' }
-SycAbstractVariableCommand >> defaultMenuItemName [
-
-	^'Abstract accessors'
-]
-
-{ #category : 'accessing' }
 SycAbstractVariableCommand >> description [
     ^ 'Replace direct accesses to an instance variable with calls to its getter or setter. Missing accessor methods will be generated automatically.'
 ]
 
 { #category : 'execution' }
-SycAbstractVariableCommand >> execute [
+SycAbstractVariableCommand >> executeRefactoring [
 
-	^ ((ReAbstractInstanceVariableDriver newApplication: self application)
-		   scopes: refactoringScopes
-		   name: variables first name
-		   class: selectedClass name) runRefactoring
+	^ ((ReAbstractInstanceVariableDriver newApplication: self application) scopes: refactoringScopes name: variables first name class: selectedClass name) runRefactoring
+]
+
+{ #category : 'accessing' }
+SycAbstractVariableCommand >> iconName [
+	^ #smallAdd
+]
+
+{ #category : 'testing' }
+SycAbstractVariableCommand >> isAvailableInMenuOf: aToolContext [
+
+	^ aToolContext isFullBrowserVariableContext
+]
+
+{ #category : 'accessing' }
+SycAbstractVariableCommand >> name [
+
+	^'Abstract accessors'
+]
+
+{ #category : 'accessing' }
+SycAbstractVariableCommand >> order [
+
+	^ 1000
 ]
 
 { #category : 'execution' }
-SycAbstractVariableCommand >> prepareFullExecutionInContext: aToolContext [
+SycAbstractVariableCommand >> prepareFullExecution [
 
-	super prepareFullExecutionInContext: aToolContext.
-	selectedClass := aToolContext selectedVariables first definingClass.
-	variables := aToolContext selectedVariables
+	super prepareFullExecution.
+	selectedClass := variables first definingClass
 ]

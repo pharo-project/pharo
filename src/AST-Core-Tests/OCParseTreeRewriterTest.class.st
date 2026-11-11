@@ -217,6 +217,15 @@ OCParseTreeRewriterTest >> testPatternCascade [
 ]
 
 { #category : 'tests - ok' }
+OCParseTreeRewriterTest >> testRewriteBinaryReceiverOfBinaryGetsNoParentheses [
+	"The rewritten message is still the receiver of the next one, where a binary message needs no parentheses."
+
+	rewriter := OCParseTreeRewriter new replace: '`@a << (`@b , `@c)' with: '`@a << `@b << `@c'.
+	rewriter executeTree: (self parseMethod: 'run ^ s << (''x'' , y) << z').
+	self assert: rewriter tree newSource equals: 'run ^ s << ''x'' << y << z'
+]
+
+{ #category : 'tests - ok' }
 OCParseTreeRewriterTest >> testRewriteDoesNotReuseOriginalNodes [
 	"Due to a bug in ASTPatternVariableNode copyInContext method, creating a new astTree from the rewriter reused some nodes
 	 of the original tree, this results in two trees sharing the identical nodes. The original AST now contained statement nodes

@@ -5,7 +5,7 @@ Also I open inspector on instance variable of class side because they also have 
 "
 Class {
 	#name : 'SycInspectVariableValueCommand',
-	#superclass : 'SycVariableCommand',
+	#superclass : 'SycVariableNavigationCmCommand',
 	#category : 'SystemCommands-VariableCommands',
 	#package : 'SystemCommands-VariableCommands'
 }
@@ -18,23 +18,35 @@ SycInspectVariableValueCommand class >> canBeExecutedInContext: aToolContext [
 ]
 
 { #category : 'accessing' }
-SycInspectVariableValueCommand >> defaultMenuIconName [
-	^#inspect
-]
-
-{ #category : 'accessing' }
-SycInspectVariableValueCommand >> defaultMenuItemName [
-	^'Inspect value'
-]
-
-{ #category : 'accessing' }
 SycInspectVariableValueCommand >> description [
 
 	^ 'Inspect variable value'
 ]
 
 { #category : 'execution' }
-SycInspectVariableValueCommand >> execute [
+SycInspectVariableValueCommand >> executeRefactoring [
 
 	variables last openValueInspector
+]
+
+{ #category : 'accessing' }
+SycInspectVariableValueCommand >> fullBrowserOrder [
+
+	^ 1000
+]
+
+{ #category : 'accessing' }
+SycInspectVariableValueCommand >> iconName [
+	^#inspect
+]
+
+{ #category : 'accessing' }
+SycInspectVariableValueCommand >> name [
+	^'Inspect value'
+]
+
+{ #category : 'accessing' }
+SycInspectVariableValueCommand >> order [
+
+	^ 1000
 ]

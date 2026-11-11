@@ -1,5 +1,15 @@
 "
-An abstract class containing common tools for match and rewrite rules
+I am an abstract class holding what is common to the rules defined by rewrite expressions: `ReNodeMatchRule`, which reports the code matching a pattern, and `ReNodeRewriteRule`, which also proposes a transformation of it.
+
+## Responsibility:
+
+- Answer `afterCheck: aNode mappings: aDictionary`, the hook used to validate a match (true by default).
+- Flatten the wildcard mappings so that they can be accessed both with the pattern nodes and with their pattern strings, for example `mappings at: '`#floatLiteral'`.
+
+## Collaborators: 
+
+- `OCParser class >> #parseRewriteExpression:`: parses the rewrite expressions into pattern nodes, which match the checked nodes (`match:onSuccess:onFailure:`).
+- `ReNodeMatchRule` and `ReNodeRewriteRule`: my concrete subclasses. See their comments to define and run such a rule.
 "
 Class {
 	#name : 'RePatternCodeRule',

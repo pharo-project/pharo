@@ -175,10 +175,11 @@ MethodClassifier class >> settingsOn: aBuilder [
 
 	<systemsettings>
 	(aBuilder setting: #shouldAlwaysClassify)
-		parent: #Calypso;
+		parentName: #Calypso;
 		label: 'Automatically classify methods instead of using the selected protocol.';
-		default: false;
-		description: 'If true, the system browser will try to classify the methods using their name instead of using the currently selected protocol.';
+		defaultValue: false;
+		description:
+			'If true, the system browser will try to classify the methods using their name instead of using the currently selected protocol.';
 		target: self
 ]
 

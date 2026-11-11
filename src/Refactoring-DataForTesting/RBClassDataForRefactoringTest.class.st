@@ -61,14 +61,14 @@ RBClassDataForRefactoringTest >> callMethod [
 RBClassDataForRefactoringTest >> called: anObject on1: aBlock [
 	| each |
 	each := anObject printString.
-	each traceCr.
+	each traceNewLine.
 	aBlock value: each
 ]
 
 { #category : 'inline' }
 RBClassDataForRefactoringTest >> called: anObject on: aBlock [
 	
-	anObject printString traceCr; cr.
+	anObject printString traceNewLine; cr.
 	aBlock value
 ]
 
@@ -565,7 +565,7 @@ RBClassDataForRefactoringTest >> sendsDifferentSuper [
 RBClassDataForRefactoringTest >> sizeCheck [
 
 	self isEmpty
-		ifFalse: [ self do: [ :each | each traceCr ] ]
+		ifFalse: [ self do: [ :each | each traceNewLine ] ]
 ]
 
 { #category : 'lint' }

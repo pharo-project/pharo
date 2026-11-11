@@ -46,6 +46,7 @@ BaselineOfGeneralTests >> baseline: spec [
 				package: 'NECompletion-Tests';
 				package: 'PragmaCollector-Tests';
 				package: 'Regex-Core-Tests';
+				package: 'Rubric-SpecFindReplaceDialog-Tests';
 				package: 'Rubric-Tests';
 				package: 'ScriptingExtensions-Tests';
 				package: 'StartupPreferences-Tests';

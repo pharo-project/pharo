@@ -10,7 +10,7 @@ Internal Representation and Key Implementation Points.
 "
 Class {
 	#name : 'ClyMethodEditorCommand',
-	#superclass : 'CmdCommand',
+	#superclass : 'ClyCommand',
 	#instVars : [
 		'methodEditor'
 	],
@@ -43,18 +43,6 @@ ClyMethodEditorCommand class >> canBeExecutedInMethodEditor: aTool [
 	^ false
 ]
 
-{ #category : 'testing' }
-ClyMethodEditorCommand class >> isAbstract [
-	^self = ClyMethodEditorCommand
-]
-
-{ #category : 'activation' }
-ClyMethodEditorCommand class >> sourceCodeMenuActivation [
-	<classAnnotation>
-
-	^SycSourceCodeMenuActivation for: ClyTextEditorContext
-]
-
 { #category : 'accessing' }
 ClyMethodEditorCommand >> methodEditor [
 	^ methodEditor
@@ -65,9 +53,8 @@ ClyMethodEditorCommand >> methodEditor: anObject [
 	methodEditor := anObject
 ]
 
-{ #category : 'execution' }
-ClyMethodEditorCommand >> prepareFullExecutionInContext: aToolContext [
-	super prepareFullExecutionInContext: aToolContext.
+{ #category : 'preparation' }
+ClyMethodEditorCommand >> prepareFullExecution [
 
-	methodEditor := aToolContext tool
+	methodEditor := self context tool
 ]
