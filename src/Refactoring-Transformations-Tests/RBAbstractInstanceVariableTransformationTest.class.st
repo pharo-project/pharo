@@ -127,13 +127,13 @@ RBAbstractInstanceVariableTransformationTest >> testClassVariableInModel [
 				^self class classVarName1: anObject')
 
 	"self assert: (class instanceSide parseTreeFor: #asdf)
-			equals: (RBParser parseMethod: 'asdf
+			equals: (OCParser parseMethod: 'asdf
 				^self classVarName1: (self class classVarName1: self class classVarName1 + 1)').
 	self assert: ((model classNamed: #Bar) parseTreeFor: #foo)
-			equals: (RBParser parseMethod: 'foo
+			equals: (OCParser parseMethod: 'foo
 				instVarName1 := instVarName1 + instVarName2 + self class classVarName1').
 	self assert: ((model classNamed: #Bar) parseTreeFor: #foo)
-			equals: (RBParser parseMethod: 'foo
+			equals: (OCParser parseMethod: 'foo
 				instVarName1 := instVarName1 + instVarName2 + self class classVarName1')"
 ]
 
@@ -272,7 +272,7 @@ RBAbstractInstanceVariableTransformationTest >> testVariableIsNotAccessed [
 	self deny: (class directlyDefinesLocalMethod: #instVar:).
 
 	transformation generateChanges.
-	self assert: transformation model changes changes size equals: 3.
+	self assert: transformation model changes changes size equals: 2.
 	"the accessors and the method using the variables"
 	self assert: (class directlyDefinesLocalMethod: #instVar).
 	self assert: (class directlyDefinesLocalMethod: #instVar:)

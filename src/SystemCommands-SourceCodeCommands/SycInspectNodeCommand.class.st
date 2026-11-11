@@ -3,28 +3,43 @@ I'm a simple command to inspect any AST node.
 "
 Class {
 	#name : 'SycInspectNodeCommand',
-	#superclass : 'SycSourceCodeCommand',
+	#superclass : 'SycSourceCodeCmCommand',
 	#category : 'SystemCommands-SourceCodeCommands',
 	#package : 'SystemCommands-SourceCodeCommands'
 }
 
-{ #category : 'execution' }
-SycInspectNodeCommand >> asRefactorings [
+{ #category : 'testing' }
+SycInspectNodeCommand >> canBeExecuted [
 
-	self error: 'Not a refactoring'
+	^ self context lastSelectedSourceNode notNil
 ]
 
-{ #category : 'execution' }
-SycInspectNodeCommand >> defaultMenuIconName [
-	^ #smallInspectIt
-]
+{ #category : 'accessing' }
+SycInspectNodeCommand >> description [
 
-{ #category : 'execution' }
-SycInspectNodeCommand >> defaultMenuItemName [
-	^'Inspect AST Node ' , sourceNode class name
+	^ 'Inspects the selected AST node'
 ]
 
 { #category : 'execution' }
 SycInspectNodeCommand >> execute [
-	sourceNode inspect
+
+	self context lastSelectedSourceNode inspect
+]
+
+{ #category : 'accessing' }
+SycInspectNodeCommand >> icon [
+
+	^ self iconNamed: #smallInspectIt
+]
+
+{ #category : 'accessing' }
+SycInspectNodeCommand >> name [
+
+	^ 'Inspect AST Node ', self context lastSelectedSourceNode class name
+]
+
+{ #category : 'accessing' }
+SycInspectNodeCommand >> order [
+
+	^ 1.4
 ]

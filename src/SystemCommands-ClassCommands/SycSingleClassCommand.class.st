@@ -8,7 +8,7 @@ Internal Representation and Key Implementation Points.
 "
 Class {
 	#name : 'SycSingleClassCommand',
-	#superclass : 'CmdCommand',
+	#superclass : 'ClyCommand',
 	#instVars : [
 		'targetClass'
 	],
@@ -23,11 +23,6 @@ SycSingleClassCommand class >> canBeExecutedInContext: aToolContext [
 		  aToolContext isClassSelected ]
 ]
 
-{ #category : 'testing' }
-SycSingleClassCommand class >> isAbstract [
-	^self = SycSingleClassCommand
-]
-
 { #category : 'accessing' }
 SycSingleClassCommand >> description [
 	"Answer a <String> describing the receiver, useful for instance in menu items pop-ups"
@@ -35,11 +30,18 @@ SycSingleClassCommand >> description [
 	^ self class comment.
 ]
 
-{ #category : 'execution' }
-SycSingleClassCommand >> prepareFullExecutionInContext: aToolContext [
-	super prepareFullExecutionInContext: aToolContext.
+{ #category : 'accessing' }
+SycSingleClassCommand >> orderInContext: aToolContext [
 
-	targetClass := aToolContext lastSelectedClass
+	^ aToolContext isFullBrowserClassContext
+		ifTrue: [ self fullBrowserOrder ]
+		ifFalse: [ self order ]
+]
+
+{ #category : 'preparation' }
+SycSingleClassCommand >> prepareFullExecution [
+
+	targetClass := self context lastSelectedClass
 ]
 
 { #category : 'accessing' }

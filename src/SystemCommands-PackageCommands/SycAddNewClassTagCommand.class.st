@@ -10,7 +10,7 @@ Internal Representation and Key Implementation Points.
 "
 Class {
 	#name : 'SycAddNewClassTagCommand',
-	#superclass : 'CmdCommand',
+	#superclass : 'SycPackageCommand',
 	#instVars : [
 		'package',
 		'tagName'
@@ -19,31 +19,38 @@ Class {
 	#package : 'SystemCommands-PackageCommands'
 }
 
-{ #category : 'testing' }
-SycAddNewClassTagCommand class >> canBeExecutedInContext: aToolContext [
-	^aToolContext isPackageSelected
+{ #category : 'execution' }
+SycAddNewClassTagCommand >> applyCommandResult [
+	super applyCommandResult.
+	self context showPackage: package tag: tagName
 ]
 
 { #category : 'execution' }
-SycAddNewClassTagCommand >> applyResultInContext: aToolContext [
-	super applyResultInContext: aToolContext.
-	aToolContext showPackage: package tag: tagName
+SycAddNewClassTagCommand >> executeRefactoring [
+
+	package ensureTag: tagName
 ]
 
 { #category : 'accessing' }
-SycAddNewClassTagCommand >> defaultMenuIconName [
+SycAddNewClassTagCommand >> iconName [
 	^#add
 ]
 
+{ #category : 'testing' }
+SycAddNewClassTagCommand >> isAvailableInMenuOf: aToolContext [
+
+	^ true
+]
+
 { #category : 'accessing' }
-SycAddNewClassTagCommand >> defaultMenuItemName [
+SycAddNewClassTagCommand >> name [
 	^'New tag'
 ]
 
-{ #category : 'execution' }
-SycAddNewClassTagCommand >> execute [
+{ #category : 'accessing' }
+SycAddNewClassTagCommand >> order [
 
-	package ensureTag: tagName
+	^ 1000
 ]
 
 { #category : 'accessing' }
@@ -57,15 +64,12 @@ SycAddNewClassTagCommand >> package: anObject [
 ]
 
 { #category : 'execution' }
-SycAddNewClassTagCommand >> prepareFullExecutionInContext: aToolContext [
-	super prepareFullExecutionInContext: aToolContext.
-	package := aToolContext lastSelectedPackage.
+SycAddNewClassTagCommand >> prepareFullExecution [
 
-	tagName := self morphicUIManager
-		request: ('New class tag in ' , package name)
-		initialAnswer: ''
-		title: 'Create a new class tag'.
-	tagName isEmptyOrNil ifTrue: [ CmdCommandAborted signal ]
+	super prepareFullExecution.
+	package := self context lastSelectedPackage.
+	tagName := self morphicUIManager request: 'New class tag in ' , package name initialAnswer: '' title: 'Create a new class tag'.
+	tagName isEmptyOrNil ifTrue: [ CmCommandAborted signal ]
 ]
 
 { #category : 'accessing' }

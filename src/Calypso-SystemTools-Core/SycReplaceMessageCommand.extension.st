@@ -10,10 +10,3 @@ SycReplaceMessageCommand class >> canBeExecutedInContext: aToolContext [
  ^ "aToolContext isMessageSelected |"
 	 aToolContext isMethodSelected
 ]
-
-{ #category : '*Calypso-SystemTools-Core' }
-SycReplaceMessageCommand class >> methodContextMenuActivation [
-	<classAnnotation>
-
-	^ SycMethodMenuActivation byRootGroupItemOrder: 1100 for: ClyMethod asCalypsoItemContext
-]

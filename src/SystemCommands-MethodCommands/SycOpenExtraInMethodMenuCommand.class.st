@@ -10,8 +10,8 @@ SycOpenExtraInMethodMenuCommand class >> methodContextMenuActivation [
 
 	<classAnnotation>
 	
-	^ CmdContextMenuActivation
-		byItemOf: CmdRootMenuGroup 
+	^ ClyContextMenuActivation
+		byItemOf: ClyRootMenuGroup 
 		order: 11200 
 		for: ClyMethod asCalypsoItemContext
 ]
@@ -19,7 +19,7 @@ SycOpenExtraInMethodMenuCommand class >> methodContextMenuActivation [
 { #category : 'execution' }
 SycOpenExtraInMethodMenuCommand >> activationStrategy [
 
-	^ SycExtraMenuActivation 
+	^ SycExtraMenuActivation
 ]
 
 { #category : 'context menu' }
@@ -28,13 +28,19 @@ SycOpenExtraInMethodMenuCommand >> cmCommandClass [
 ]
 
 { #category : 'accessing' }
-SycOpenExtraInMethodMenuCommand >> defaultMenuIconName [
+SycOpenExtraInMethodMenuCommand >> iconName [
 
 	^ #forward 
 ]
 
 { #category : 'accessing' }
-SycOpenExtraInMethodMenuCommand >> defaultMenuItemName [
+SycOpenExtraInMethodMenuCommand >> name [
 
 	^ 'Extra' 
+]
+
+{ #category : 'menu' }
+SycOpenExtraInMethodMenuCommand >> pureMenuCommands [
+	"The commands of the class of this opener that apply here, in the order they are built."
+	^ self classFamilyPureMenuCommands
 ]

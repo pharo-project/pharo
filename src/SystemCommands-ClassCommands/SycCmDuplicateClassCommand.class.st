@@ -10,7 +10,7 @@ Class {
 SycCmDuplicateClassCommand class >> browserShortcutActivation [
 
 	<classAnnotation>
-	^ CmdShortcutActivation
+	^ ClyShortcutActivation
 		  by: $d meta
 		  for: ClyClass asCalypsoItemContext
 ]
@@ -22,9 +22,15 @@ SycCmDuplicateClassCommand class >> canBeExecutedInContext: aToolContext [
 ]
 
 { #category : 'execution' }
-SycCmDuplicateClassCommand >> applyResultInContext: aClyFullBrowserClassContext [ 
+SycCmDuplicateClassCommand >> applyCommandResult [
 	
 	"Nothing"
+]
+
+{ #category : 'testing' }
+SycCmDuplicateClassCommand >> canBeExecuted [
+
+	^ context lastSelectedClass isTrait not
 ]
 
 { #category : 'accessing' }
@@ -38,8 +44,7 @@ SycCmDuplicateClassCommand >> executeRefactoring [
 	"The class name is necessary so the browser can select the new subclass"
 
 	| driver |
-	driver := (ReDuplicateClassDriver className: self targetClass name)
-		          scopes: refactoringScopes.
+	driver := (ReDuplicateClassDriver className: self targetClass name) scopes: { (ClyClassScope of: self targetClass) }.
 	driver runRefactoring
 ]
 
@@ -47,18 +52,6 @@ SycCmDuplicateClassCommand >> executeRefactoring [
 SycCmDuplicateClassCommand >> icon [
 
 	^ self iconNamed: #smallCopy
-]
-
-{ #category : 'testing' }
-SycCmDuplicateClassCommand >> isApplicable [
-
-	^ context lastSelectedClass isTrait not
-]
-
-{ #category : 'testing' }
-SycCmDuplicateClassCommand >> isComplexRefactoring [
-	
-	^ false
 ]
 
 { #category : 'accessing' }
@@ -78,16 +71,4 @@ SycCmDuplicateClassCommand >> prepareFullExecution [
 	refactoringScopes := context refactoringScopes.
 	targetClass := context lastSelectedClass.
 
-]
-
-{ #category : 'execution' }
-SycCmDuplicateClassCommand >> prepareFullExecutionInContext: aClyFullBrowserClassContext [ 
-	
-	"Nothing"
-]
-
-{ #category : 'execution' }
-SycCmDuplicateClassCommand >> readParametersFromContext: aToolContext [
-
-	context := aToolContext
 ]

@@ -8,7 +8,7 @@ Internal Representation and Key Implementation Points.
 "
 Class {
 	#name : 'SycMethodCommand',
-	#superclass : 'CmdCommand',
+	#superclass : 'ClyCommand',
 	#traits : 'TRefactoringCommandSupport',
 	#classTraits : 'TRefactoringCommandSupport classTrait',
 	#instVars : [
@@ -29,11 +29,6 @@ SycMethodCommand class >> for: methods [
 		methods: methods
 ]
 
-{ #category : 'testing' }
-SycMethodCommand class >> isAbstract [
-	^self = SycMethodCommand
-]
-
 { #category : 'accessing' }
 SycMethodCommand >> methods [
 	^ methods
@@ -44,15 +39,8 @@ SycMethodCommand >> methods: anObject [
 	methods := anObject
 ]
 
-{ #category : 'activation - drag and drop' }
-SycMethodCommand >> prepareExecutionInDragContext: aToolContext [
-	super prepareExecutionInDragContext: aToolContext.
-
-	methods := aToolContext selectedMethods
-]
-
 { #category : 'execution' }
-SycMethodCommand >> prepareFullExecutionInContext: aToolContext [
-	super prepareFullExecutionInContext: aToolContext.
-	methods := aToolContext selectedMethods
+SycMethodCommand >> prepareFullExecution [
+
+	methods := self context selectedMethods
 ]

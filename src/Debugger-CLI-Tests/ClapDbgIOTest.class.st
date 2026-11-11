@@ -13,11 +13,10 @@ ClapDbgIOTest >> setUp [
 
 	super setUp.
 	debugger := ClapDebugger new.
-
 	debugger lineEnding: String lf
 ]
 
-{ #category : 'running' }
+{ #category : 'tests' }
 ClapDbgIOTest >> testAskTypingWritesToOutStream [
 
 	| tempStream |
@@ -28,7 +27,7 @@ ClapDbgIOTest >> testAskTypingWritesToOutStream [
 	self assert: tempStream contents equals: '(debug) '
 ]
 
-{ #category : 'running' }
+{ #category : 'tests' }
 ClapDbgIOTest >> testInformResultsWritesToOutStream [
 
 	| tempWriteStream |
@@ -38,7 +37,7 @@ ClapDbgIOTest >> testInformResultsWritesToOutStream [
 	self assert: tempWriteStream contents equals: 'Hello World' , String lf
 ]
 
-{ #category : 'running' }
+{ #category : 'tests' }
 ClapDbgIOTest >> testReadNextLine [
 
 	| tempReadStream |
@@ -49,7 +48,7 @@ ClapDbgIOTest >> testReadNextLine [
 	self assert: debugger readNextLine equals: 'p a'
 ]
 
-{ #category : 'running' }
+{ #category : 'tests' }
 ClapDbgIOTest >> testRunLoopSimulation [
 
 	| tempReadStream tempWriteStream |

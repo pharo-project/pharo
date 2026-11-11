@@ -112,12 +112,12 @@ OSWindowMorphicEventHandler class >> simulateMiddleClick: aValue [
 
 { #category : 'asserting' }
 OSWindowMorphicEventHandler class >> simulateMiddleClickSettingOn: aBuilder [
-	<systemsettings>
 
+	<systemsettings>
 	(aBuilder setting: #simulateMiddleClick)
 		target: self;
-		default: true;
-		parent: #morphic;
+		defaultValue: true;
+		parentName: #morphic;
 		label: 'Simulate Middle Mouse Button';
 		description: 'Sets if we are simulating the middle button by doing Alt + Left button'
 ]
@@ -364,7 +364,7 @@ OSWindowMorphicEventHandler >> visitTextInputEvent: anEvent [
 { #category : 'visiting' }
 OSWindowMorphicEventHandler >> visitUnknownEvent: anEvent [
 	self
-		traceCr: ('Unknown event: <1s>' expandMacrosWith: anEvent data printString)
+		traceNewLine: ('Unknown event: <1s>' expandMacrosWith: anEvent data printString)
 ]
 
 { #category : 'visiting' }

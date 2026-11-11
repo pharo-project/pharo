@@ -25,14 +25,14 @@ SystemResolver class >> defaultLocalDirectoryName [
 
 { #category : 'settings' }
 SystemResolver class >> settingsOn: aBuilder [
-	<systemsettings>
 
+	<systemsettings>
 	(aBuilder setting: #userLocalDirectory)
-		parent: #pharoSystem;
+		parentName: #pharoSystem;
 		type: #Directory;
 		target: self;
-		default: self defaultLocalDirectory;
-		description: 'The path of a directory where Pharo will store local files' ;
+		defaultValue: self defaultLocalDirectory;
+		description: 'The path of a directory where Pharo will store local files';
 		label: 'Local directory'
 ]
 

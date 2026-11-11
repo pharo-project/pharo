@@ -27,9 +27,10 @@ OSTouchGestureDetector class >> reinitializeAllSubclasses [
 
 { #category : 'settings' }
 OSTouchGestureDetector class >> touchGestureSettingsOn: aBuilder [
+
 	<systemsettings>
 	(aBuilder group: #touchGestures)
-		parent: #appearance;
+		parentName: #appearance;
 		label: 'Touch Gestures'
 ]
 

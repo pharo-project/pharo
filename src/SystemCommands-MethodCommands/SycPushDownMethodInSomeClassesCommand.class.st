@@ -5,10 +5,7 @@ I am responsible for delegating execution to `RBPushDownMethodInSomeClassesDrive
 "
 Class {
 	#name : 'SycPushDownMethodInSomeClassesCommand',
-	#superclass : 'SycRefactoringMethodCommand',
-	#instVars : [
-		'refactoringScopes'
-	],
+	#superclass : 'SycMethodCmCommand',
 	#category : 'SystemCommands-MethodCommands',
 	#package : 'SystemCommands-MethodCommands'
 }
@@ -19,28 +16,26 @@ SycPushDownMethodInSomeClassesCommand >> asRefactorings [
 	self shouldNotImplement
 ]
 
-{ #category : 'accessing' }
-SycPushDownMethodInSomeClassesCommand >> defaultMenuIconName [
-	^ #down
-]
-
-{ #category : 'accessing' }
-SycPushDownMethodInSomeClassesCommand >> defaultMenuItemName [
-	^'Push down in some classes'
-]
-
 { #category : 'execution' }
-SycPushDownMethodInSomeClassesCommand >> executeRefactorings [
+SycPushDownMethodInSomeClassesCommand >> executeRefactoring [
 
-	(RePushDownMethodInSomeClassesDriver
-		model: model
-		scopes: refactoringScopes
-		pushDownMethods: methods) runRefactoring
+	(RePushDownMethodInSomeClassesDriver model: model scopes: self refactoringScopes pushDownMethods: self methods) runRefactoring
 ]
 
-{ #category : 'execution' }
-SycPushDownMethodInSomeClassesCommand >> prepareFullExecutionInContext: aToolContext [
-	super prepareFullExecutionInContext: aToolContext.
-	refactoringScopes := aToolContext refactoringScopes
+{ #category : 'accessing' }
+SycPushDownMethodInSomeClassesCommand >> icon [
 
+	^ self iconNamed: #down
+]
+
+{ #category : 'accessing' }
+SycPushDownMethodInSomeClassesCommand >> name [
+
+	^ 'Push down in some classes'
+]
+
+{ #category : 'accessing' }
+SycPushDownMethodInSomeClassesCommand >> order [
+
+	^ 21
 ]

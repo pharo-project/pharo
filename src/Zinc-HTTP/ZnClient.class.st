@@ -601,7 +601,7 @@ ZnClient >> getConnectionAndExecute [
 	self canReuseConnection
 		ifTrue: [
 			[ ^ self executeRequestResponse; cleanupConnection ]
-				on: Exception
+				on: Error
 				do: [ :exception | self logIgnoringExceptionOnReusedConnection: exception; close ] ].
 	self newConnectionTo: request url.
 	[ self executeRequestResponse ]
@@ -963,6 +963,13 @@ ZnClient >> maximumEntitySize: integer [
 	"Set the maximum entity size in bytes that I will read from a stream before signalling ZnEntityTooLarge"
 
 	self localOptions at: #maximumEntitySize put: integer
+]
+
+{ #category : 'options' }
+ZnClient >> maximumLineLength: integer [
+	"Set the maximum line length in bytes that I will read from a stream before signalling ZnLineTooLong"
+
+	self localOptions at: #maximumLineLength put: integer
 ]
 
 { #category : 'options' }
@@ -1459,7 +1466,7 @@ ZnClient >> setupTLSTo: url [
 	connection sslSession certificateName: self certificate.
 
 	[ connection sslSession serverName: url host ]
-		on: PrimitiveFailed
+		on: SocketError, PrimitiveFailed
 		do: [ :error | "log it?" ].
 
 	connection connect

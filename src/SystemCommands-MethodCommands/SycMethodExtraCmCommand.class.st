@@ -23,12 +23,5 @@ SycMethodExtraCmCommand >> canBeExecuted [
 SycMethodExtraCmCommand >> methods [
 	"Private - Answer a <Collection> of context's selected <CompiledMethod>"
 
-	^ context selectedMethods 
-]
-
-{ #category : 'preparation' }
-SycMethodExtraCmCommand >> prepareFullExecution [
-
-	super prepareFullExecution.
-	self setUpModelFromContext: context
+	^ context selectedMethods
 ]

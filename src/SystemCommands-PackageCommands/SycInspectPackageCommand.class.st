@@ -1,62 +1,33 @@
 "
-I am a command to inspect given package.
-
-Internal Representation and Key Implementation Points.
-
-Instance Variables
-
-package:		<Package>
+Opens an inspector on the last selected package.
 "
 Class {
 	#name : 'SycInspectPackageCommand',
-	#superclass : 'CmdCommand',
-	#instVars : [
-		'package'
-	],
+	#superclass : 'SycPackageExtraCmCommand',
 	#category : 'SystemCommands-PackageCommands',
 	#package : 'SystemCommands-PackageCommands'
 }
 
 { #category : 'testing' }
-SycInspectPackageCommand class >> canBeExecutedInContext: aToolContext [
-	^aToolContext isPackageSelected
-]
+SycInspectPackageCommand >> canBeExecuted [
 
-{ #category : 'activation' }
-SycInspectPackageCommand class >> fullBrowserMenuActivation [
-
-	<classAnnotation>
-	^ CmdContextMenuActivation
-		  byItemOf: CmdExtraMenuGroup
-		  for: Package asCalypsoItemContext
-]
-
-{ #category : 'accessing' }
-SycInspectPackageCommand >> defaultMenuIconName [
-	^ #inspect
-]
-
-{ #category : 'accessing' }
-SycInspectPackageCommand >> defaultMenuItemName [
-	^'Inspect'
-]
-
-{ #category : 'accessing' }
-SycInspectPackageCommand >> description [
-
-	^ 'Inspect package'
+	^ context isAboutBrowserItemType: Package
 ]
 
 { #category : 'execution' }
-SycInspectPackageCommand >> execute [
+SycInspectPackageCommand >> executeRefactoring [
 
-	(Smalltalk tools toolNamed: #inspector) openOn: package
+	(Smalltalk tools toolNamed: #inspector) openOn: context lastSelectedPackage
 ]
 
-{ #category : 'execution' }
-SycInspectPackageCommand >> prepareFullExecutionInContext: aToolContext [
+{ #category : 'accessing' }
+SycInspectPackageCommand >> icon [
 
-	super prepareFullExecutionInContext: aToolContext.
+	^ self iconNamed: #inspect
+]
 
-	package := aToolContext lastSelectedPackage
+{ #category : 'accessing' }
+SycInspectPackageCommand >> name [
+
+	^ 'Inspect'
 ]

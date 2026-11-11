@@ -102,20 +102,20 @@ OSWindowDriver class >> pickDriverClass [
 
 { #category : 'settings' }
 OSWindowDriver class >> settingsOn: aBuilder [
-	<systemsettings>
 
+	<systemsettings>
 	(aBuilder group: #oswindow)
 		label: 'OSWindow';
-		parent: #pharoSystem;
+		parentName: #pharoSystem;
 		description: 'OSWindow subsystem';
 		with: [
-			(aBuilder pickOne: #driverClassFromSystem)
-				label: 'Driver to use';
-				description: 'Select the driver to use for OSWindow.
+				(aBuilder pickOne: #driverClassFromSystem)
+					label: 'Driver to use';
+					description: 'Select the driver to use for OSWindow.
 WARNING: Changing the driver will change the world rendering itself.
 You will need to restart the image to make this changes take effect.';
-				target: self;
-				domainValues: (self allSubclasses select: [ :each | each isSuitable ]) ]
+					target: self;
+					domainValues: (self allSubclasses select: [ :each | each isSuitable ]) ]
 ]
 
 { #category : 'system startup' }

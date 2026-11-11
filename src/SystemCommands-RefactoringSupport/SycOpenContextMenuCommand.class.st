@@ -4,43 +4,41 @@ I show in menu all commands annotated by activationStrategy class
 "
 Class {
 	#name : 'SycOpenContextMenuCommand',
-	#superclass : 'CmdOpenContextMenuCommand',
+	#superclass : 'ClyOpenContextMenuCommand',
 	#category : 'SystemCommands-RefactoringSupport',
 	#package : 'SystemCommands-RefactoringSupport'
 }
+
+{ #category : 'registering' }
+SycOpenContextMenuCommand >> addPureItemsTo: aPresentedRoot [
+	"The pure commands of cmCommandClass are added to the sub-menu of a pragma menu builder only when their own activation strategy is the strategy of this sub-menu, as addItemsToSubmenu:forContext: did."
+	| commands |
+	self cmCommandClass activationStrategy = self activationStrategy ifFalse: [ ^ self ].
+	commands := self cmCommandClass subclasses
+		collect: [ :each | each new context: self context; yourself ]
+		thenSelect: [ :each | each canBeExecuted ].
+	commands do: [ :each |
+		aPresentedRoot register: (ClyPresentedCommand new
+			decorate: each;
+			identifier: each class name;
+			yourself) ]
+]
+
+{ #category : 'menu' }
+SycOpenContextMenuCommand >> classFamilyPureMenuCommands [
+	"The commands of the class of this opener that apply here, in the order they are built (for the class-family openers)."
+	^ (ClyCommandGroupBuilder buildFor: self cmCommandClass context: self context) commands
+]
 
 { #category : 'context menu' }
 SycOpenContextMenuCommand >> cmCommandClass [
 	self subclassResponsibility
 ]
 
-{ #category : 'execution' }
-SycOpenContextMenuCommand >> createContextMenu [
-
-	| menuMorph |
-	menuMorph := super createContextMenu.
-	self cmCommandClass addMenuItemsTo: menuMorph onContext: self context.
-	^ menuMorph
-]
-
-{ #category : 'context menu' }
-SycOpenContextMenuCommand >> registerContextMenuItemsFor: aCommandItem withBuilder: aBuilder [
-
-	"Here we need to take care because this command itself is added to menu of same context.
-	So we will always enter into this method during submenu generation.
-	We catch this recursion using RecursionStopper.
-	It is easier than adding extra logic to menu registration process"
-
-	| submenu |
-	RecursionStopper during: [
-		submenu := self activationStrategy buildMenuInContext: context.
-		submenu isActive ifTrue: [
-			self
-				doRegisterContextMenuItemsFor: aCommandItem
-				withBuilder: aBuilder.
-			self cmCommandClass addItemsToSubmenu: submenu forContext: context.
-
-			"Registration builder uses #name to bind children to parent"
-			submenu rootGroup name: aCommandItem name.
-			submenu registerContextMenuItemsWithBuilder: aBuilder ] ]
+{ #category : 'menu' }
+SycOpenContextMenuCommand >> pureMenuCommands [
+	"The commands of the class of this opener that apply here (the generic drawing of addMenuItemsTo:onContext:)."
+	^ self cmCommandClass allSubclasses
+		collect: [ :each | each new context: self context; yourself ]
+		thenSelect: [ :each | each canBeExecuted ]
 ]

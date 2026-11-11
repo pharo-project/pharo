@@ -643,7 +643,7 @@ MailMessage >> parseParts [
 	"If we can't find a valid separator, handle it as if the message is not multipart"
 	separator := self attachmentSeparator.
 	separator
-		ifNil: [ self traceCr: 'Ignoring bad attachment separater'.
+		ifNil: [ self traceNewLine: 'Ignoring bad attachment separater'.
 			parts := #().
 			^ self ].
 	separator := '--' , separator trimRight.

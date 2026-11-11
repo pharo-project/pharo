@@ -1,16 +1,10 @@
 Class {
 	#name : 'MetacelloLockTest',
-	#superclass : 'TestCase',
+	#superclass : 'MetacelloTestCase',
 	#category : 'Metacello-Tests-Specs',
 	#package : 'Metacello-Tests',
 	#tag : 'Specs'
 }
-
-{ #category : 'private' }
-MetacelloLockTest >> performTest [
-
-	MetacelloProjectRegistry useRegistry: MetacelloProjectRegistry new during: [ super performTest ]
-]
 
 { #category : 'accessing' }
 MetacelloLockTest >> project [

@@ -31,15 +31,6 @@ ClyCriticContext >> browser [
 	^tool browser
 ]
 
-{ #category : 'command execution' }
-ClyCriticContext >> executeCommand: aCommand by: aCommandActivator [
-
-	aCommand isComplexRefactoring ifTrue: [
-		aCommand confirmRefactoringInContext: self by: aCommandActivator].
-
-	aCommand execute
-]
-
 { #category : 'refactoring support' }
 ClyCriticContext >> refactoringScopes [
 	^self browser allNavigationScopes

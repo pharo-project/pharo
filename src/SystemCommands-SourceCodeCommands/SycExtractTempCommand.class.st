@@ -19,22 +19,30 @@ SycExtractTempCommand class >> canBeExecutedInContext: aSourceCodeContext [
 		^ (super canBeExecutedInContext: aSourceCodeContext) and: [ aSourceCodeContext isMethodSelected not ]
 ]
 
-{ #category : 'accessing' }
-SycExtractTempCommand >> defaultMenuIconName [
-	^ ##smallUpdate
+{ #category : 'execution' }
+SycExtractTempCommand >> executeRefactoring [ 
+
+	(ReExtractTempDriver new
+		  extract: self sourceNode sourceInterval
+		  from: self method selector
+		  in: self method origin;
+		  scopes: refactoringScopes) runRefactoring
 ]
 
 { #category : 'accessing' }
-SycExtractTempCommand >> defaultMenuItemName [
+SycExtractTempCommand >> icon [
+
+	^ self iconNamed: #smallUpdate
+]
+
+{ #category : 'accessing' }
+SycExtractTempCommand >> name [
+
 	^ 'Extract temp'
 ]
 
-{ #category : 'execution' }
-SycExtractTempCommand >> execute [ 
+{ #category : 'accessing' }
+SycExtractTempCommand >> order [
 
-	(ReExtractTempDriver new
-		  extract: sourceNode sourceInterval
-		  from: method selector
-		  in: method origin;
-		  scopes: refactoringScopes) runRefactoring
+	^ 1.4
 ]

@@ -187,22 +187,27 @@ BaselineOfPharo >> baseline: spec [
 	repository := self packageRepositoryURLForSpec: spec.
 
 	spec for: #common do: [
-		spec postLoadDoIt: #postload:package:.
-		spec baseline: 'Monticello' with: [ spec loads: 'RemoteRepositories' from: repository ].
-		spec baseline: 'BaseLibraries' with: [ spec repository: repository ].
+			spec postLoadDoIt: #postload:package:.
+			spec baseline: 'Monticello' with: [ spec loads: 'RemoteRepositories' from: repository ].
+			spec baseline: 'BaseLibraries' with: [ spec repository: repository ].
 
-		spec baseline: 'IDE' with: [ spec repository: repository ].
-		spec baseline: 'Calypso' with: [
+			spec baseline: 'IDE' with: [ spec repository: repository ].
+			spec baseline: 'Calypso' with: [
+					spec
+						repository: repository;
+						loads: #( 'IcebergSupport' ) ].
+
+			"Commander v1 is deprecated and should not be used anymore. Pharo now uses Commander2."
+			spec baseline: 'Commander' with: [ spec repository: repository ].
+
 			spec
-				repository: repository;
-				loads: #( 'IcebergSupport' ) ].
-
-		spec
-			package: 'Morphic-Deprecated';
-			package: 'Deprecated13';
-			package: 'Deprecated13-Kernel';
-			package: 'Deprecated14';
-			package: 'Deprecated14-Kernel' ]
+				package: 'Morphic-Deprecated';
+				package: 'Deprecated13';
+				package: 'Deprecated13-Kernel';
+				package: 'Deprecated14';
+				package: 'Deprecated14-Kernel';
+				package: 'Deprecated15';
+				package: 'Deprecated15-Kernel' ]
 ]
 
 { #category : 'actions' }
@@ -213,7 +218,7 @@ BaselineOfPharo >> postload: loader package: packageSpec [
 		| credential |
 		credential := (self classNamed: #IceCredentialStore) current plaintextCredentialForHostname: 'github.com'.
 		credential password = token ifTrue: [ (self classNamed: #IceCredentialStore) current removePlainTextCredential: credential ].
-		'Removing credential.' traceCr ].
+		'Removing credential.' traceNewLine ].
 
 	"Reset all ffi structures that may have been initialised durying bootstrap"
 	(Smalltalk classNamed: #FFIStructure) 

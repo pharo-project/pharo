@@ -16,20 +16,28 @@ Class {
 	#package : 'SystemCommands-ClassCommands'
 }
 
+{ #category : 'execution' }
+SycMigrateReferencesOfClassCommand >> executeRefactoring [
+
+	self asRefactorings do: [ :ref | ref execute ]
+]
+
 { #category : 'accessing' }
-SycMigrateReferencesOfClassCommand >> defaultMenuIconName [
+SycMigrateReferencesOfClassCommand >> fullBrowserOrder [
+
+	^ 1.4
+]
+
+{ #category : 'accessing' }
+SycMigrateReferencesOfClassCommand >> iconName [
 	^ #source
 ]
 
-{ #category : 'accessing' }
-SycMigrateReferencesOfClassCommand >> defaultMenuItemName [
-	^'Migrate references'
-]
+{ #category : 'testing' }
+SycMigrateReferencesOfClassCommand >> isAvailableInMenuOf: aToolContext [
 
-{ #category : 'execution' }
-SycMigrateReferencesOfClassCommand >> execute [
-
-	self asRefactorings do: [ :ref | ref execute ]
+	^ aToolContext isFullBrowserClassContext
+		or: [ aToolContext isSourceCodeContext ]
 ]
 
 { #category : 'testing' }
@@ -37,9 +45,20 @@ SycMigrateReferencesOfClassCommand >> isComplexRefactoring [
 	^ true
 ]
 
-{ #category : 'execution' }
-SycMigrateReferencesOfClassCommand >> prepareFullExecutionInContext: aToolContext [
+{ #category : 'accessing' }
+SycMigrateReferencesOfClassCommand >> name [
+	^'Migrate references'
+]
 
-	super prepareFullExecutionInContext: aToolContext.
-	newName := aToolContext requestSingleClass: 'Choose new class'
+{ #category : 'accessing' }
+SycMigrateReferencesOfClassCommand >> order [
+
+	^ 1.3
+]
+
+{ #category : 'preparation' }
+SycMigrateReferencesOfClassCommand >> prepareFullExecution [
+
+	super prepareFullExecution.
+	newName := self context requestSingleClass: 'Choose new class'
 ]

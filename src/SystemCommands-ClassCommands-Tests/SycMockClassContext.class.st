@@ -12,6 +12,24 @@ Class {
 	#tag : 'Tests'
 }
 
+{ #category : 'testing' }
+SycMockClassContext >> isClassSelected [
+	^ self selectedObjects isNotEmpty
+]
+
+{ #category : 'accessing' }
+SycMockClassContext >> lastSelectedClass [
+
+	^ self selectedObjects
+		  ifEmpty: [ nil ]
+		  ifNotEmpty: [ :objects | objects first ]
+]
+
+{ #category : 'accessing' }
+SycMockClassContext >> selectedClasses [
+	^ self selectedObjects
+]
+
 { #category : 'accessing' }
 SycMockClassContext >> selectedObjects [
 	^ selectedObjects ifNil: [ #() ]

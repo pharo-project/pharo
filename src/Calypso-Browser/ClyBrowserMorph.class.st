@@ -193,13 +193,13 @@ ClyBrowserMorph class >> postOpeningBlock: aBlock [
 
 { #category : 'settings' }
 ClyBrowserMorph class >> settingsNavigationHistoryOn: aBuilder [
-	<systemsettings>
 
+	<systemsettings>
 	(aBuilder pickOne: #navigationHistoryClass)
-		parent: #Calypso;
+		parentName: #Calypso;
 		label: 'Navigation History';
 		domainValues: ClyNavigationHistory withAllSubclasses;
-		default: self navigationHistoryClass;
+		defaultValue: self navigationHistoryClass;
 		description: 'Enable to set a custom navigation history to handle how collection of visited items is managed';
 		target: self
 ]
@@ -489,7 +489,7 @@ ClyBrowserMorph >> itemsForQuery: aQuery inScope: aScope [
 { #category : 'keymapping' }
 ClyBrowserMorph >> kmDispatcher [
 
-	^ CmdKMDispatcher attachedTo: self
+	^ ClyKMDispatcher attachedTo: self
 ]
 
 { #category : 'initialization' }

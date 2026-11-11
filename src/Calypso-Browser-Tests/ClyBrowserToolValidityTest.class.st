@@ -260,13 +260,12 @@ ClyBrowserToolValidityTest >> testWindowLabelIsUpdatedAfterPackageRemoval [
 		yourself.
 	cmdContext := browser createCommandContext. 
 
-	activator := CmdCommandActivator new 
+	activator := ClyCommandActivator new 
 		command: command;
 		context: cmdContext;
 		yourself.
 
-	cmdContext executeCommand: command by: activator.
-	activator applyCommandResult.
+	activator executeCommand.
 	self 
 		assert: browser window label 
 		equals: 'Current image'

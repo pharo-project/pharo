@@ -31,17 +31,17 @@ ClySwitchMethodViewModeCommand class >> isAbstract [
 	^self = ClySwitchMethodViewModeCommand
 ]
 
-{ #category : 'accessing' }
-ClySwitchMethodViewModeCommand >> defaultMenuItemName [
-	^self methodGroupType shortName
-]
-
 { #category : 'testing' }
 ClySwitchMethodViewModeCommand >> isAppliedToBrowser [
-	^browser methodGroupView showsItemsOfType: self methodGroupType
+	^self browser methodGroupView showsItemsOfType: self methodGroupType
 ]
 
 { #category : 'accessing' }
 ClySwitchMethodViewModeCommand >> methodGroupType [
 	self subclassResponsibility
+]
+
+{ #category : 'accessing' }
+ClySwitchMethodViewModeCommand >> name [
+	^self methodGroupType shortName
 ]

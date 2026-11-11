@@ -47,10 +47,10 @@ HDTestReport class >> runClasses: aCollectionOfClasses named: packageName [
 	classes do: [ :class | suite addTests: class buildSuite tests ].
 	time := DateAndTime now.
 	('Beginning to run tests of ' , packageName , ' with random seed ' , self shuffleSeed asString , OSPlatform current lineEnding)
-		traceCr.
+		traceNewLine.
 	result := self runSuite: suite.
 	('Finished to run tests of ' , packageName , ' in ' , (DateAndTime now - time) humanReadablePrintString
-	 , OSPlatform current lineEnding) traceCr.
+	 , OSPlatform current lineEnding) traceNewLine.
 	^ result
 ]
 

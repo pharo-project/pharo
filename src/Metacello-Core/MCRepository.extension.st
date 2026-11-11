@@ -7,6 +7,13 @@ MCRepository >> asRepositorySpec [
 ]
 
 { #category : '*Metacello-Core' }
+MCRepository >> baselineOf: aProjectName atVersion: aVersionName [
+	"The Monticello definitions of BaselineOf<aProjectName> at the version named aVersionName (one of my versions), read without checking out or installing anything; nil when there is none. None by default: I answer no versions"
+
+	^ nil
+]
+
+{ #category : '*Metacello-Core' }
 MCRepository class >> createRepositoryFromSpec: aRepositorySpec [
 	self subclassResponsibility
 ]
@@ -62,4 +69,11 @@ MCRepository >> repositoryVersionString [
   "extract a version string from the repository ... if possible"
 
   ^ ''
+]
+
+{ #category : '*Metacello-Core' }
+MCRepository >> versions [
+	"The versions of the project I hold, as I publish them (each answers name and date, like a git tag). None by default: only repositories that know their versions, such as Iceberg's, answer some"
+
+	^ #(  )
 ]

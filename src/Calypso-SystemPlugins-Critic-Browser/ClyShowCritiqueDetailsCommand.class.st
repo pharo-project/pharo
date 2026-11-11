@@ -15,16 +15,11 @@ ClyShowCritiqueDetailsCommand >> critiqueDescription [
 	^ String streamContents: [ :s |
 		  s
 			  nextPutAll: '[';
-			  nextPutAll: critique rule group;
+			  nextPutAll: self critique rule group;
 			  nextPutAll: ']';
 			  cr;
 			  cr;
-			  nextPutAll: critique description ]
-]
-
-{ #category : 'accessing' }
-ClyShowCritiqueDetailsCommand >> defaultMenuIconName [
-	^#smallQuestion
+			  nextPutAll: self critique description ]
 ]
 
 { #category : 'table decoration' }
@@ -33,12 +28,17 @@ ClyShowCritiqueDetailsCommand >> description [
 ]
 
 { #category : 'execution' }
-ClyShowCritiqueDetailsCommand >> execute [
+ClyShowCritiqueDetailsCommand >> executeRefactoring [
 
 	self specUIManager
-		title: critique title;
+		title: self critique title;
 		message: self critiqueDescription;
 		acceptLabel: 'close';
 		extent: 500 @ 500;
 		openDialog
+]
+
+{ #category : 'accessing' }
+ClyShowCritiqueDetailsCommand >> iconName [
+	^#smallQuestion
 ]

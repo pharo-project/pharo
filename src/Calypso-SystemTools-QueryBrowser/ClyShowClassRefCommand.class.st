@@ -26,17 +26,10 @@ ClyShowClassRefCommand class >> forClasses: classes by: aBrowser [
 ]
 
 { #category : 'activation' }
-ClyShowClassRefCommand class >> fullBrowserMenuActivation [
-	<classAnnotation>
-
-	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup for: ClyFullBrowserClassContext
-]
-
-{ #category : 'activation' }
 ClyShowClassRefCommand class >> fullBrowserShortcutActivation [
 	<classAnnotation>
 
-	^CmdShortcutActivation by: $n meta for: ClyFullBrowserClassContext
+	^ClyShortcutActivation by: $n meta for: ClyFullBrowserClassContext
 ]
 
 { #category : 'activation' }
@@ -47,17 +40,10 @@ ClyShowClassRefCommand class >> fullBrowserToolbarActivation [
 ]
 
 { #category : 'activation' }
-ClyShowClassRefCommand class >> queryBrowserMenuActivation [
-	<classAnnotation>
-
-	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup for: ClyQueryBrowserContext
-]
-
-{ #category : 'activation' }
 ClyShowClassRefCommand class >> queryBrowserShortcutActivation [
 	<classAnnotation>
 
-	^CmdShortcutActivation by: $c meta, $n meta for: ClyQueryBrowserContext
+	^ClyShortcutActivation by: $c meta, $n meta for: ClyQueryBrowserContext
 ]
 
 { #category : 'activation' }
@@ -65,13 +51,6 @@ ClyShowClassRefCommand class >> queryBrowserToolbarActivation [
 	<classAnnotation>
 
 	^ClyToolbarActivation byItemOf: ClyButtonToolbarGroup for: ClyQueryBrowserContext
-]
-
-{ #category : 'activation' }
-ClyShowClassRefCommand class >> sourceCodeMenuActivation [
-	<classAnnotation>
-
-	^SycSourceCodeMenuActivation byItemOf: ClyQueryMenuGroup for: ClySourceCodeContext
 ]
 
 { #category : 'accessing' }
@@ -86,20 +65,38 @@ ClyShowClassRefCommand >> browser: anObject [
 	browser := anObject
 ]
 
-{ #category : 'accessing' }
-ClyShowClassRefCommand >> defaultMenuItemName [
-	^'Class refs.'
-]
-
 { #category : 'execution' }
-ClyShowClassRefCommand >> execute [
+ClyShowClassRefCommand >> executeRefactoring [
 
 	(Smalltalk tools toolNamed: #messageList) browseReferencesToClass: classes first
 ]
 
-{ #category : 'execution' }
-ClyShowClassRefCommand >> prepareFullExecutionInContext: aToolContext [
-	super prepareFullExecutionInContext: aToolContext.
+{ #category : 'testing' }
+ClyShowClassRefCommand >> isAvailableInMenuOf: aToolContext [
 
-	browser := aToolContext browser
+	^ aToolContext isFullBrowserClassContext or: [ aToolContext isQueryBrowserContext or: [ aToolContext isSourceCodeContext ] ]
+]
+
+{ #category : 'accessing' }
+ClyShowClassRefCommand >> menuGroup [
+
+	^ ClyQueryMenuGroup
+]
+
+{ #category : 'accessing' }
+ClyShowClassRefCommand >> name [
+	^'Class refs.'
+]
+
+{ #category : 'accessing' }
+ClyShowClassRefCommand >> order [
+
+	^ 1000
+]
+
+{ #category : 'execution' }
+ClyShowClassRefCommand >> prepareFullExecution [
+
+	super prepareFullExecution.
+	browser := self context browser
 ]

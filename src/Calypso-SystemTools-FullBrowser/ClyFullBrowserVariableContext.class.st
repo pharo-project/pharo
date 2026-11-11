@@ -24,6 +24,20 @@ ClyFullBrowserVariableContext class >> selectionStrategy2 [
 	^(ClyContextSelectionStrategyAnnotation for: ClyFullBrowserMorph selectionType: ClyVariable)
 ]
 
+{ #category : 'testing' }
+ClyFullBrowserVariableContext >> commanderCommandClasses [
+
+	^ {
+		  SycRefactorVariableCommand.
+		  SycVariableNavigationCmCommand }
+]
+
+{ #category : 'testing' }
+ClyFullBrowserVariableContext >> isFullBrowserVariableContext [
+
+	^ true
+]
+
 { #category : 'selection-variables' }
 ClyFullBrowserVariableContext >> isGlobalVariableSelected [
 	^false

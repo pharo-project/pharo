@@ -777,15 +777,6 @@ Class >> readClassVariableNamed: aString [
 	^(self classVariableNamed: aString) read
 ]
 
-{ #category : 'compiling' }
-Class >> reformatAll [
-	"Reformat all methods in this class.
-	Leaves old code accessible to version browsing"
-
-	super reformatAll.		"me..."
-	self classSide reformatAll.	"...and my metaclass"
-]
-
 { #category : 'class variables' }
 Class >> removeClassVarNamed: aStringOrSymbol [
 	"Remove the class variable whose name is the argument, aString, from the names defined in the receiver, a class. Create an error notification if aString is not a class variable"

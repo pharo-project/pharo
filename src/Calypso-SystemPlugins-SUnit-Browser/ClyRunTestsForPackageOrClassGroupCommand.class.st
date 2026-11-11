@@ -14,9 +14,9 @@ ClyRunTestsForPackageOrClassGroupCommand >> decorateTableCell: anItemCellMorph u
 ]
 
 { #category : 'execution' }
-ClyRunTestsForPackageOrClassGroupCommand >> execute [
+ClyRunTestsForPackageOrClassGroupCommand >> executeRefactoring [
 
-	testItems do: [ :each | self runTestsOf: each actualObject ]
+	self testItems do: [ :item | self runTestsOf: item actualObject ]
 ]
 
 { #category : 'execution' }

@@ -8,13 +8,6 @@ Class {
 	#package : 'SystemCommands-ClassCommands'
 }
 
-{ #category : 'activation' }
-SycAbstractAllInstVarAccessorsCommand class >> sourceCodeMenuActivation [
-
-	<classAnnotation>
-	^ SycSourceCodeMenuActivation byRootGroupItemFor: ClySourceCodeContext
-]
-
 { #category : 'accessing' }
 SycAbstractAllInstVarAccessorsCommand >> asRefactorings [
 
@@ -32,13 +25,21 @@ SycAbstractAllInstVarAccessorsCommand >> asRefactorings [
 ]
 
 { #category : 'accessing' }
-SycAbstractAllInstVarAccessorsCommand >> defaultMenuIconName [
-	^ #smallAdd
+SycAbstractAllInstVarAccessorsCommand >> fullBrowserOrder [
+
+	^ 2.1
 ]
 
 { #category : 'accessing' }
-SycAbstractAllInstVarAccessorsCommand >> defaultMenuItemName [
-	^'Abstract instance variables'
+SycAbstractAllInstVarAccessorsCommand >> iconName [
+	^ #smallAdd
+]
+
+{ #category : 'testing' }
+SycAbstractAllInstVarAccessorsCommand >> isAvailableInMenuOf: aToolContext [
+
+	^ aToolContext isFullBrowserClassContext
+		or: [ aToolContext isSourceCodeContext ]
 ]
 
 { #category : 'testing' }
@@ -46,11 +47,22 @@ SycAbstractAllInstVarAccessorsCommand >> isComplexRefactoring [
 	^ true
 ]
 
-{ #category : 'testing' }
-SycAbstractAllInstVarAccessorsCommand >> prepareFullExecutionInContext: aToolContext [
-	super prepareFullExecutionInContext: aToolContext.
+{ #category : 'accessing' }
+SycAbstractAllInstVarAccessorsCommand >> name [
+	^'Abstract instance variables'
+]
 
-	classes := classes collect: [:each | aToolContext currentMetaLevelOf: each].
+{ #category : 'accessing' }
+SycAbstractAllInstVarAccessorsCommand >> order [
+
+	^ 1000
+]
+
+{ #category : 'preparation' }
+SycAbstractAllInstVarAccessorsCommand >> prepareFullExecution [
+
+	super prepareFullExecution.
+	classes := classes collect: [ :each | self context currentMetaLevelOf: each ].
 	self selectVariables
 ]
 
@@ -66,6 +78,6 @@ SycAbstractAllInstVarAccessorsCommand >> selectVariables [
 				                     withItems: vars
 				                     selecting: vars
 				                     acceptBlock: [ :items | selectedVars := items ].
-			           dialog cancelled ifTrue: [ CmdCommandAborted signal ].
+			           dialog cancelled ifTrue: [ CmCommandAborted signal ].
 			           aClass -> selectedVars ]
 ]

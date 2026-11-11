@@ -42,20 +42,25 @@ RBAddParameterParametrizedTest >> setUp [
 
 { #category : 'tests' }
 RBAddParameterParametrizedTest >> testAddParameterAndRenameParameters [
+
 	| oldSelector newSelector refactoring class newArg |
 	oldSelector := ('called:' , 'on:') asSymbol.
 	"please note that this strange way to create symbol is because some tests are counting symbol
 	and rewriting the code in a bad way so for now do not change them."
 	newSelector := #called:bar:on:.
 	newArg := RBArgumentName name: 'anObject' value: '#(1.0)'.
-	refactoring := self createRefactoringWithModel: model andArguments:
-		{ oldSelector . RBClassDataForRefactoringTest . newSelector . #(1 -1 2) . { newArg }}.
+	refactoring := self createRefactoringWithModel: model andArguments: {
+			               oldSelector.
+			               RBClassDataForRefactoringTest.
+			               newSelector.
+			               #( 1 -1 2 ).
+			               { newArg } }.
 	refactoring renameMap: (Array with: ((RBArgumentName name: 'aBlock') newName: 'aBlock1')).
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBClassDataForRefactoringTest.
 	self assert: (class parseTreeForSelector: newSelector) equals: (self parseMethod: 'called: anObject bar: anObject1 on: aBlock1
 	anObject printString
-		traceCr;
+		traceNewLine;
 		cr.
 	aBlock1 value').
 	self assert: (class parseTreeForSelector: #caller) equals: (self parseMethod: 'caller
@@ -69,19 +74,24 @@ RBAddParameterParametrizedTest >> testAddParameterAndRenameParameters [
 
 { #category : 'tests' }
 RBAddParameterParametrizedTest >> testAddParameterForTwoArgumentMessage [
+
 	| oldSelector newSelector refactoring class newArg |
 	oldSelector := ('called:' , 'on:') asSymbol.
 	"please note that this strange way to create symbol is because some tests are counting symbol
 	and rewriting the code in a bad way so for now do not change them."
 	newSelector := #called:bar:on:.
 	newArg := RBArgumentName name: 'anObject' value: '#(1.0)'.
-	refactoring := self createRefactoringWithModel: model andArguments:
-		{oldSelector . RBClassDataForRefactoringTest . newSelector . #(1 -1 2) . { newArg }}.
+	refactoring := self createRefactoringWithModel: model andArguments: {
+			               oldSelector.
+			               RBClassDataForRefactoringTest.
+			               newSelector.
+			               #( 1 -1 2 ).
+			               { newArg } }.
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBClassDataForRefactoringTest.
 	self assert: (class parseTreeForSelector: newSelector) equals: (self parseMethod: 'called: anObject bar: anObject1 on: aBlock
 	
-	anObject printString traceCr; cr.
+	anObject printString traceNewLine; cr.
 	aBlock value').
 	self assert: (class parseTreeForSelector: #caller) equals: (self parseMethod: 'caller
 							| anObject |

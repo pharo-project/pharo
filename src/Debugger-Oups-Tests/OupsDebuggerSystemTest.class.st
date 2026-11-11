@@ -20,7 +20,7 @@ OupsDebuggerSystemTest >> createDummyDebugRequest [
 OupsDebuggerSystemTest >> setUp [
 	super setUp.
 	debuggerSystem := OupsDummyDebuggerSystem new.
-	('Running: ' , testSelector asString , ' from ' , self class name) traceCr.
+	('Running: ' , testSelector asString , ' from ' , self class name) traceNewLine.
 ]
 
 { #category : 'tests' }

@@ -9,27 +9,11 @@ Internal Representation and Key Implementation Points.
 "
 Class {
 	#name : 'SycDuplicatePackageCommand',
-	#superclass : 'CmdCommand',
+	#superclass : 'SycPackageCommand',
 	#category : 'SystemCommands-PackageCommands-Scope',
 	#package : 'SystemCommands-PackageCommands',
 	#tag : 'Scope'
 }
-
-{ #category : 'testing' }
-SycDuplicatePackageCommand class >> canBeExecutedInContext: aToolContext [
-
-	^ aToolContext isPackageSelected
-]
-
-{ #category : 'accessing' }
-SycDuplicatePackageCommand >> defaultMenuIconName [
-	^#smallCopy
-]
-
-{ #category : 'accessing' }
-SycDuplicatePackageCommand >> defaultMenuItemName [
-	^'Duplicate package'
-]
 
 { #category : 'accessing' }
 SycDuplicatePackageCommand >> description [
@@ -38,19 +22,36 @@ SycDuplicatePackageCommand >> description [
 ]
 
 { #category : 'execution' }
-SycDuplicatePackageCommand >> prepareFullExecutionInContext: aToolContext [
+SycDuplicatePackageCommand >> executeRefactoring [
+	"The copy is made by the dialog in #prepareFullExecution."
+
+	
+]
+
+{ #category : 'accessing' }
+SycDuplicatePackageCommand >> iconName [
+	^#smallCopy
+]
+
+{ #category : 'accessing' }
+SycDuplicatePackageCommand >> name [
+	^'Duplicate package'
+]
+
+{ #category : 'accessing' }
+SycDuplicatePackageCommand >> order [
+
+	^ 1.1
+]
+
+{ #category : 'execution' }
+SycDuplicatePackageCommand >> prepareFullExecution [
 
 	| dialog package newName |
-
-	super prepareFullExecutionInContext: aToolContext.
-
-	package := aToolContext lastSelectedPackage.
-	newName := self morphicUIManager
-		request: 'New name of copied package'
-		initialAnswer: package name
-		title: 'Copy package'.
-	newName isEmptyOrNil | (newName = package name) ifTrue: [ ^ CmdCommandAborted signal ].
-
+	super prepareFullExecution.
+	package := self context lastSelectedPackage.
+	newName := self morphicUIManager request: 'New name of copied package' initialAnswer: package name title: 'Copy package'.
+	newName isEmptyOrNil | (newName = package name) ifTrue: [ ^ CmCommandAborted signal ].
 	dialog := SycCopyClassUsingPatternPresenter openOn: package -> newName.
-	dialog cancelled ifTrue: [ ^ CmdCommandAborted signal ]
+	dialog cancelled ifTrue: [ ^ CmCommandAborted signal ]
 ]

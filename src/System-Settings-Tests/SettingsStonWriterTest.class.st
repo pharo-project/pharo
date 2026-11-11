@@ -44,9 +44,9 @@ SettingsStonWriterTest >> testEmptyStream [
 { #category : 'tests' }
 SettingsStonWriterTest >> testStore [
 
-	| settingNode |
-	settingNode := MockSettings booleanSettingNode.
-	writer addSetting: (StoredSettingsFactory new from: settingNode).
+	| setting |
+	setting := MockSettings settingNamed: #booleanSetting.
+	writer addSetting: (StoredSettingsFactory new from: setting).
 	writer store.
 	fileStream flush.
 	self assert: fileReference contents equals: (OSPlatform current lineEnding join: MockSettings oneStoredSettingSTONString lines)
@@ -55,9 +55,9 @@ SettingsStonWriterTest >> testStore [
 { #category : 'tests' }
 SettingsStonWriterTest >> testStoreShouldNotCloseBackingStream [
 
-	| settingNode |
-	settingNode := MockSettings booleanSettingNode.
-	writer addSetting: (StoredSettingsFactory new from: settingNode).
+	| setting |
+	setting := MockSettings settingNamed: #booleanSetting.
+	writer addSetting: (StoredSettingsFactory new from: setting).
 	writer store.
 	self deny: fileStream closed.
 	fileStream flush.
@@ -67,13 +67,13 @@ SettingsStonWriterTest >> testStoreShouldNotCloseBackingStream [
 { #category : 'tests' }
 SettingsStonWriterTest >> testStoreTwoObjects [
 
-	| settingNode1 settingNode2 |
-	settingNode1 := MockSettings booleanSettingNode.
-	settingNode2 := MockSettings rangeSettingNode.
-	writer addSetting: ((StoredSettingsFactory new from: settingNode1)
+	| setting1 setting2 |
+	setting1 := MockSettings settingNamed: #booleanSetting.
+	setting2 := MockSettings settingNamed: #rangeSetting.
+	writer addSetting: ((StoredSettingsFactory new from: setting1)
 			 realValue: false;
 			 yourself).
-	writer addSetting: ((StoredSettingsFactory new from: settingNode2)
+	writer addSetting: ((StoredSettingsFactory new from: setting2)
 			 realValue: 55;
 			 yourself).
 	writer store.

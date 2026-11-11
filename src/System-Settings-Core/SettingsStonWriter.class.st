@@ -1,7 +1,7 @@
 "
 I am a writer of system settings to a file (stream). I know how to write the settings into a stream.
 
-Collaborators: SystemSettingsPersistence
+Collaborators: SettingsManager
 
 Public API and Key Messages
 

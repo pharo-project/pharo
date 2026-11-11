@@ -63,24 +63,24 @@ TextDiffBuilder class >> buildDisplayPatchFrom: srcString to: dstString inClass:
 
 { #category : 'settings' }
 TextDiffBuilder class >> differatorSettingsOn: aBuilder [
+
 	<systemsettings>
 	(aBuilder group: #differator)
 		label: 'Code Diffs';
-		parent: #codeBrowsing;
-		description: 'All settings concerned with the computation of diffs' ;
+		parentName: #codeBrowsing;
+		description: 'All settings concerned with the computation of diffs';
 		with: [
-			(aBuilder setting: #ignoreLineEndings)
-				label: 'Ignore line endings';
-				target: self;
-				default: true;
-		 		description: 'When selected, line ending differences will be ignored ' ];
+				(aBuilder setting: #ignoreLineEndings)
+					label: 'Ignore line endings';
+					target: self;
+					defaultValue: true;
+					description: 'When selected, line ending differences will be ignored ' ];
 		with: [
-		(aBuilder setting: #diffsWithPrettyPrint)
-				target: self;
-				default: false;
-				label: 'Pretty print differences' ;
-				description: 'If true, displays of source code differences will be pretty-printed first'
-		]
+				(aBuilder setting: #diffsWithPrettyPrint)
+					target: self;
+					defaultValue: false;
+					label: 'Pretty print differences';
+					description: 'If true, displays of source code differences will be pretty-printed first' ]
 ]
 
 { #category : 'settings' }

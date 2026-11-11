@@ -11,5 +11,5 @@ Class {
 
 { #category : 'adding' }
 SycScopesCmCommand class >> activationStrategy [
-	^ SycClassMenuActivation 
+	^ SycScopesMenuActivation
 ]

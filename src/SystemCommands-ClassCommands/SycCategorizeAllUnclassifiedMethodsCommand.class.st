@@ -8,28 +8,38 @@ Class {
 	#package : 'SystemCommands-ClassCommands'
 }
 
+{ #category : 'execution' }
+SycCategorizeAllUnclassifiedMethodsCommand >> executeRefactoring [
+	"MethodClassifier should not be hardcoded and should be based on Smalltalk tools"
+
+	classes do: [ :each | each uncategorizedSelectors do: [ :selector | MethodClassifier classify: each >> selector ] ]
+]
+
 { #category : 'accessing' }
-SycCategorizeAllUnclassifiedMethodsCommand >> defaultMenuIconName [
+SycCategorizeAllUnclassifiedMethodsCommand >> iconName [
 	^#browse
 ]
 
+{ #category : 'testing' }
+SycCategorizeAllUnclassifiedMethodsCommand >> isAvailableInMenuOf: aToolContext [
+
+	^ aToolContext isFullBrowserMethodGroupContext
+]
+
 { #category : 'accessing' }
-SycCategorizeAllUnclassifiedMethodsCommand >> defaultMenuItemName [
+SycCategorizeAllUnclassifiedMethodsCommand >> name [
 	^'Categorize all uncategorized'
 ]
 
-{ #category : 'execution' }
-SycCategorizeAllUnclassifiedMethodsCommand >> execute [
-	"MethodClassifier should not be hardcoded and should be based on Smalltalk tools"
+{ #category : 'accessing' }
+SycCategorizeAllUnclassifiedMethodsCommand >> order [
 
-	classes do: [ :each |
-		each uncategorizedSelectors do: [ :selector |
-			MethodClassifier classify: each >> selector ] ]
+	^ 10000
 ]
 
 { #category : 'execution' }
-SycCategorizeAllUnclassifiedMethodsCommand >> prepareFullExecutionInContext: aToolContext [
+SycCategorizeAllUnclassifiedMethodsCommand >> prepareFullExecution [
 
-	super prepareFullExecutionInContext: aToolContext.
-	classes := classes collect: [:each | aToolContext currentMetaLevelOf: each]
+	super prepareFullExecution.
+	classes := classes collect: [ :each | self context currentMetaLevelOf: each ]
 ]

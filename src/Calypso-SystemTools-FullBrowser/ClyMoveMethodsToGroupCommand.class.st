@@ -29,7 +29,7 @@ Class {
 ClyMoveMethodsToGroupCommand class >> fullBrowserDragAndDropActivation [
 	<classAnnotation>
 
-	^CmdDragAndDropActivation
+	^ClyDragAndDropActivation
 		for: ClyMethod asCalypsoItemContext
 		toDropIn: ClyMethodsInProtocolGroup asCalypsoItemContext
 ]
@@ -38,7 +38,7 @@ ClyMoveMethodsToGroupCommand class >> fullBrowserDragAndDropActivation [
 ClyMoveMethodsToGroupCommand class >> fullBrowserDragAndDropActivation2 [
 	<classAnnotation>
 
-	^CmdDragAndDropActivation
+	^ClyDragAndDropActivation
 		for: ClyMethod asCalypsoItemContext
 		toDropIn: ClyAllMethodGroup asCalypsoItemContext
 ]
@@ -47,21 +47,16 @@ ClyMoveMethodsToGroupCommand class >> fullBrowserDragAndDropActivation2 [
 ClyMoveMethodsToGroupCommand class >> fullBrowserDragAndDropActivation3 [
 	<classAnnotation>
 
-	^CmdDragAndDropActivation
+	^ClyDragAndDropActivation
 		for: ClyMethod asCalypsoItemContext
 		toDropIn: ClyExternalPackageMethodGroup asCalypsoItemContext
 ]
 
-{ #category : 'accessing' }
-ClyMoveMethodsToGroupCommand >> defaultMenuItemName [
-	^'Move to method group'
-]
-
 { #category : 'execution' }
-ClyMoveMethodsToGroupCommand >> execute [
+ClyMoveMethodsToGroupCommand >> executeRefactoring [
 
 	| methodsOfAnotherClass |
-	methodsOfAnotherClass := methods reject: [ :each | each origin = targetClass ].
+	methodsOfAnotherClass := methods reject: [ :method | method origin = targetClass ].
 	methodsOfAnotherClass ifNotEmpty: [
 		(SycMoveMethodsToClassCommand methods: methodsOfAnotherClass class: targetClass refactoringScopes: refactoringScopes) execute ].
 	methodGroup importMethods: methods
@@ -77,18 +72,22 @@ ClyMoveMethodsToGroupCommand >> methodGroup: anObject [
 	methodGroup := anObject
 ]
 
-{ #category : 'drag and drop support' }
-ClyMoveMethodsToGroupCommand >> prepareExecutionInDropContext: aToolContext [
+{ #category : 'accessing' }
+ClyMoveMethodsToGroupCommand >> name [
+	^'Move to method group'
+]
 
+{ #category : 'executing' }
+ClyMoveMethodsToGroupCommand >> prepareFullExecution [
 	| selectedClasses |
-	super prepareExecutionInDropContext: aToolContext.
-	methodGroup := aToolContext lastSelectedMethodGroup.
-	selectedClasses := aToolContext selectedClasses.
-	selectedClasses := selectedClasses collect: [ :each | aToolContext currentMetaLevelOf: each ].
+	super prepareFullExecution.
+	methodGroup := self dropContext lastSelectedMethodGroup.
+	selectedClasses := self dropContext selectedClasses
+		collect: [ :each | self dropContext currentMetaLevelOf: each ].
 	targetClass := selectedClasses size > 1
-		               ifTrue: [ aToolContext requestSingleClass: 'In what class you want to move method?' from: selectedClasses ]
-		               ifFalse: [ selectedClasses last ].
-	refactoringScopes := aToolContext refactoringScopes
+		ifTrue: [ self dropContext requestSingleClass: 'In what class you want to move method?' from: selectedClasses ]
+		ifFalse: [ selectedClasses last ].
+	refactoringScopes := self dropContext refactoringScopes
 ]
 
 { #category : 'accessing' }

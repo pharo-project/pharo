@@ -1,14 +1,17 @@
 Class {
 	#name : 'ClapDbgDownCommand',
 	#superclass : 'ClapDbgCommand',
-	#category : 'Debugger-CLI',
-	#package : 'Debugger-CLI'
+	#category : 'Debugger-CLI-Commands',
+	#package : 'Debugger-CLI',
+	#tag : 'Commands'
 }
 
 { #category : 'execution' }
 ClapDbgDownCommand >> basicExecuteOn: aDebugger with: args [
 
-	aDebugger context sender ifNil: [ ^ 'Already at the bottom of the stack' ] ifNotNil: [ :s | aDebugger context: s ].
+	aDebugger context sender 
+		ifNil: [ ^ 'Already at the bottom of the stack' ] 
+		ifNotNil: [ :s | aDebugger context: s ].
 
 	^ ClapDbgPrintCodeCommand new executeOn: aDebugger with: ''
 ]

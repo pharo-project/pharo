@@ -88,20 +88,19 @@ OSWorldRenderer class >> restart [
 OSWorldRenderer class >> settingsOn: aBuilder [
 
 	<systemsettings>
-
 	(aBuilder group: #canvasScaleFactorGroup)
-		parent: #appearance;
+		parentName: #appearance;
 		label: 'World renderer canvas scaling';
 		with: [
-			(aBuilder pickOne: #canvasScaleFactor)
-				label: 'Canvas scale factor';
-				target: self;
-				domainValues: (1 to: 5);
-				default: 1.
-			(aBuilder setting: #autoSetCanvasScaleFactor)
-				label: 'Set canvas scale factor automatically';
-				target: self;
-				default: true ]
+				(aBuilder range: #canvasScaleFactor)
+					label: 'Canvas scale factor';
+					target: self;
+					range: (1 to: 5);
+					defaultValue: 1.
+				(aBuilder setting: #autoSetCanvasScaleFactor)
+					label: 'Set canvas scale factor automatically';
+					target: self;
+					defaultValue: true ]
 ]
 
 { #category : 'accessing' }

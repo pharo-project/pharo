@@ -1011,7 +1011,7 @@ RubTextEditor >> findAgain [
 	| where |
 
 	where := self findReplaceService findNext.
-	where ifNil: [ self flash ] ifNotNil: [ self selectInterval: where ].
+	where ifNotNil: [ self selectInterval: where ].
 	^ where
 ]
 

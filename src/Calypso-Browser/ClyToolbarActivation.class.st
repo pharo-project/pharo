@@ -6,7 +6,7 @@ But if you want the title which is different from context menu then you should o
 "
 Class {
 	#name : 'ClyToolbarActivation',
-	#superclass : 'CmdMenuCommandActivationStrategy',
+	#superclass : 'ClyMenuCommandActivationStrategy',
 	#category : 'Calypso-Browser-Toolbar',
 	#package : 'Calypso-Browser',
 	#tag : 'Toolbar'

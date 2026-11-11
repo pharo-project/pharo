@@ -9,7 +9,7 @@ Class {
 SycOpenExtraInClassMenuCommand class >> browserContextMenuActivation [
 	<classAnnotation>
 
-	^ CmdContextMenuActivation 
+	^ ClyContextMenuActivation 
 		byRootGroupItemOrder: 10200 
 		for: ClyClass asCalypsoItemContext
 ]
@@ -25,12 +25,18 @@ SycOpenExtraInClassMenuCommand >> cmCommandClass [
 ]
 
 { #category : 'accessing' }
-SycOpenExtraInClassMenuCommand >> defaultMenuIconName [
+SycOpenExtraInClassMenuCommand >> iconName [
 	^ #smallRedo
 ]
 
 { #category : 'accessing' }
-SycOpenExtraInClassMenuCommand >> defaultMenuItemName [
+SycOpenExtraInClassMenuCommand >> name [
 
 	^ 'Extras'
+]
+
+{ #category : 'menu' }
+SycOpenExtraInClassMenuCommand >> pureMenuCommands [
+	"The commands of the class of this opener that apply here, in the order they are built."
+	^ self classFamilyPureMenuCommands
 ]

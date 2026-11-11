@@ -57,7 +57,6 @@ FastInflateStream >> decompressBlock: llTable with: dTable [
 	"Process the compressed data in the block.
 	llTable is the huffman table for literal/length codes
 	and dTable is the huffman table for distance codes."
-	<primitive: 'primitiveInflateDecompressBlock' module: 'ZipPlugin'>
 	| value extra length distance oldPos oldBits oldBitPos |
 	[readLimit < collection size and:[sourcePos <= sourceLimit]] whileTrue:[
 		"Back up stuff if we're running out of space"

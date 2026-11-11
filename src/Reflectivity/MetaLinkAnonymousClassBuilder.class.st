@@ -132,8 +132,10 @@ MetaLinkAnonymousClassBuilder >> newAnonymousSubclassFor: aClass [
 
 { #category : 'creation' }
 MetaLinkAnonymousClassBuilder >> removeMethodNode: aNode fromObject: anObject [
-	anObject class isAnonymous ifFalse:[^self].
-	anObject class removeSelector: aNode methodNode selector
+
+	anObject class isAnonymous ifFalse: [ ^ self ].
+	"Guard against the fact that the selector might have been removed already."
+	(anObject class includesSelector: aNode methodNode selector) ifTrue: [ anObject class removeSelector: aNode methodNode selector ]
 ]
 
 { #category : 'accessing' }

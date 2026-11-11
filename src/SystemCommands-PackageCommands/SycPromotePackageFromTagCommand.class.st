@@ -1,16 +1,9 @@
 "
-I am a command to promote given package and tag to be separate package.
-
-Internal Representation and Key Implementation Points.
-
-    Instance Variables
-	classTag:		<Symbol>
-	package:		<Package>
-
+Promotes the selected package tag to a package of its own, and shows it in the Full Browser.
 "
 Class {
 	#name : 'SycPromotePackageFromTagCommand',
-	#superclass : 'CmdCommand',
+	#superclass : 'SycPackageExtraCmCommand',
 	#instVars : [
 		'package',
 		'classTag'
@@ -19,34 +12,36 @@ Class {
 	#package : 'SystemCommands-PackageCommands'
 }
 
-{ #category : 'testing' }
-SycPromotePackageFromTagCommand class >> canBeExecutedInContext: aToolContext [
-	^aToolContext isPackageSelected and: [aToolContext isPackageTagSelected]
-]
-
 { #category : 'execution' }
-SycPromotePackageFromTagCommand >> applyResultInContext: aBrowserContext [
+SycPromotePackageFromTagCommand >> applyCommandResult [
 
 	| newPackage |
-	newPackage := (package name, '-', classTag) asPackage.
-	aBrowserContext showPackage: newPackage
+	newPackage := (package name , '-' , classTag) asPackage.
+	context showPackage: newPackage
 ]
 
-{ #category : 'accessing' }
-SycPromotePackageFromTagCommand >> defaultMenuItemName [
-	^'Promote as package'
+{ #category : 'testing' }
+SycPromotePackageFromTagCommand >> canBeExecuted [
+
+	^ context isAboutBrowserItemType: ClyTaggedClassGroup
 ]
 
 { #category : 'execution' }
-SycPromotePackageFromTagCommand >> execute [
+SycPromotePackageFromTagCommand >> executeRefactoring [
 
 	(package tagNamed: classTag) promoteAsPackage
 ]
 
-{ #category : 'execution' }
-SycPromotePackageFromTagCommand >> prepareFullExecutionInContext: aToolContext [
-	super prepareFullExecutionInContext: aToolContext.
+{ #category : 'accessing' }
+SycPromotePackageFromTagCommand >> name [
 
-	package := aToolContext lastSelectedPackage.
-	classTag := aToolContext lastSelectedPackageTag
+	^ 'Promote as package'
+]
+
+{ #category : 'execution' }
+SycPromotePackageFromTagCommand >> prepareFullExecution [
+
+	super prepareFullExecution.
+	package := context lastSelectedPackage.
+	classTag := context lastSelectedPackageTag
 ]

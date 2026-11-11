@@ -17,42 +17,52 @@ Class {
 }
 
 { #category : 'menu' }
-ClyFindMethodInBrowserCommand class >> fullBrowserMenuActivation [
-	<classAnnotation>
-
-	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup for: ClyFullBrowserMethodContext
-]
-
-{ #category : 'menu' }
 ClyFindMethodInBrowserCommand class >> fullBrowserShortcutActivation [
 	<classAnnotation>
 
-	^CmdShortcutActivation by: $f meta for: ClyFullBrowserMethodContext
+	^ClyShortcutActivation by: $f meta for: ClyFullBrowserMethodContext
+]
+
+{ #category : 'execution' }
+ClyFindMethodInBrowserCommand >> executeRefactoring [
+
+	self browser selectMethod: method
 ]
 
 { #category : 'accessing' }
-ClyFindMethodInBrowserCommand >> defaultMenuIconName [
+ClyFindMethodInBrowserCommand >> iconName [
 	^#smallFind
 ]
 
+{ #category : 'testing' }
+ClyFindMethodInBrowserCommand >> isAvailableInMenuOf: aToolContext [
+
+	^ aToolContext isFullBrowserMethodContext
+]
+
 { #category : 'accessing' }
-ClyFindMethodInBrowserCommand >> defaultMenuItemName [
+ClyFindMethodInBrowserCommand >> menuGroup [
+
+	^ ClyQueryMenuGroup
+]
+
+{ #category : 'accessing' }
+ClyFindMethodInBrowserCommand >> name [
 	^'Find method'
 ]
 
-{ #category : 'execution' }
-ClyFindMethodInBrowserCommand >> execute [
+{ #category : 'accessing' }
+ClyFindMethodInBrowserCommand >> order [
 
-	browser selectMethod: method
+	^ 1000
 ]
 
 { #category : 'execution' }
-ClyFindMethodInBrowserCommand >> prepareFullExecutionInContext: aToolContext [
+ClyFindMethodInBrowserCommand >> prepareFullExecution [
 
-	super prepareFullExecutionInContext: aToolContext.
-
+	super prepareFullExecution.
 	method := StBrowserSearchPresenter searchConfiguring: [ :presenter :dialog |
-		          dialog title: 'Choose method'.
-		          presenter items: (aToolContext browser itemsForQuery: browser methodView query).
-		          presenter itemsList display: [ :aMethod | aMethod selector ] ]
+			          dialog title: 'Choose method'.
+			          presenter items: (self browser itemsForQuery: self browser methodView query).
+			          presenter itemsList display: [ :aMethod | aMethod selector ] ]
 ]

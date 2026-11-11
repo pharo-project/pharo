@@ -9,19 +9,19 @@ Class {
 	#tag : 'Commands-Hierarchy'
 }
 
-{ #category : 'accessing' }
-ClySwitchToFlatClassesCommand >> defaultMenuItemName [
-	^'Flat'
-]
-
 { #category : 'execution' }
-ClySwitchToFlatClassesCommand >> execute [
+ClySwitchToFlatClassesCommand >> executeRefactoring [
 
-	browser switchToFlatClasses
+	self browser switchToFlatClasses
 ]
 
 { #category : 'testing' }
 ClySwitchToFlatClassesCommand >> isAppliedToBrowser [
 
-	^browser showsFlatClasses
+	^self browser showsFlatClasses
+]
+
+{ #category : 'accessing' }
+ClySwitchToFlatClassesCommand >> name [
+	^'Flat'
 ]

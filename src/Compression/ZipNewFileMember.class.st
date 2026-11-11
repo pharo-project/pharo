@@ -38,21 +38,23 @@ ZipNewFileMember >> from: aFileReference [
 
 	| entry |
 	"Now get the size, attributes, and timestamps, and see if the file exists"
-	self localFileName: (externalFileName := aFileReference fullName).
+	externalFileName := aFileReference.
+	self localFileName: aFileReference fullName.
 	reference := aFileReference.
 	entry := aFileReference entry.
 	compressedSize := uncompressedSize := entry size.
-	desiredCompressionMethod := compressedSize > 0 ifTrue: [ CompressionDeflated ] ifFalse: [ CompressionStored ].
-	self flag: 'When we replace Files with FileSystem, the following line won''t have to jump throught hoops (FS returns aDateAndTime)'.
+	desiredCompressionMethod := compressedSize > 0
+		                            ifTrue: [ CompressionDeflated ]
+		                            ifFalse: [ CompressionStored ].
 	self modifiedAt: entry modificationTime
 ]
 
 { #category : 'initialization' }
 ZipNewFileMember >> initialize [
+
 	super initialize.
 	externalFileName := ''.
-	compressionMethod := CompressionStored.
-	self mapPermissionsFromUnix: DefaultFilePermissions
+	compressionMethod := CompressionStored
 ]
 
 { #category : 'private' }

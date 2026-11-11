@@ -20,14 +20,28 @@ SycOpenSourceCodeMenuCommand >> cmCommandClass [
 	^ SycSourceCodeCmCommand
 ]
 
-{ #category : 'accessing' }
-SycOpenSourceCodeMenuCommand >> defaultMenuIconName [
-	^#smallAuthoringTools
+{ #category : 'context menu' }
+SycOpenSourceCodeMenuCommand >> cmCommandClasses [
+
+	^ {
+		  SycSourceCodeCmCommand.
+		  SycSourceCodeRefactoringCommand.
+		  SycRefactorVariableCommand.
+		  SycMessageCmCommand.
+		  ClyMethodEditorCommand.
+		  SycVariableNavigationCmCommand.
+		  SycSingleClassCommand.
+		  SycClassCommand.
+		  SycChangeMessageMenuCmCommand.
+		  SycMessageCommand }
 ]
 
-{ #category : 'accessing' }
-SycOpenSourceCodeMenuCommand >> defaultMenuItemName [
-	^'Source code'
+{ #category : 'building' }
+SycOpenSourceCodeMenuCommand >> createContextMenu [
+	"The source-code menu: the activations and the pure commands of cmCommandClasses, built as the Commander2 tree and drawn by its renderer."
+	^ ClyCommandGroupMenuRenderer new
+		renderTree: (ClyCommandGroupBuilder new buildMenuFor: self activationStrategy context: self context pureRoots: self cmCommandClasses)
+		on: self context tool
 ]
 
 { #category : 'accessing' }
@@ -39,8 +53,28 @@ SycOpenSourceCodeMenuCommand >> description [
 { #category : 'execution' }
 SycOpenSourceCodeMenuCommand >> execute [
 
-	context selectedTextInterval ifEmpty: [
-		context showSourceNode].
+	self context selectedTextInterval ifEmpty: [
+		self context showSourceNode].
 
 	super execute
+]
+
+{ #category : 'accessing' }
+SycOpenSourceCodeMenuCommand >> iconName [
+	^#smallAuthoringTools
+]
+
+{ #category : 'accessing' }
+SycOpenSourceCodeMenuCommand >> name [
+	^'Source code'
+]
+
+{ #category : 'registering' }
+SycOpenSourceCodeMenuCommand >> registerPresented: aPresentedCommand on: aBuilder inGroup: aGroup actualName: actualName [
+	"The source-code sub-menu in a pragma menu builder: the activations and the pure commands of cmCommandClasses."
+	RecursionStopper during: [ | submenu |
+		submenu := ClyCommandGroupBuilder new buildMenuFor: self activationStrategy context: self context pureRoots: self cmCommandClasses.
+		submenu isActive ifTrue: [
+			self registerActivationItem: aPresentedCommand on: aBuilder inGroup: aGroup actualName: actualName.
+			ClyCommandGroupMenuRenderer new registerTree: submenu on: aBuilder rootName: aPresentedCommand dynamicName ] ]
 ]

@@ -12,13 +12,9 @@ Class {
 	#tag : 'Commands-Queries'
 }
 
-{ #category : 'activation' }
-ClyShowPoolUsersCommand class >> fullBrowserMenuActivation [
-
-	<classAnnotation>
-	^ CmdContextMenuActivation
-		  byItemOf: ClyQueryMenuGroup
-		  for: ClyFullBrowserClassContext
+{ #category : 'testing' }
+ClyShowPoolUsersCommand class >> canBeExecutedInContext: aToolContext [
+	^ aToolContext isClassSelected and: [ aToolContext lastSelectedClass isPool ]
 ]
 
 { #category : 'accessing' }
@@ -33,22 +29,39 @@ ClyShowPoolUsersCommand >> browser: anObject [
 	browser := anObject
 ]
 
-{ #category : 'accessing' }
-ClyShowPoolUsersCommand >> defaultMenuItemName [
-
-	^ 'Show pool users'
-]
-
 { #category : 'execution' }
-ClyShowPoolUsersCommand >> execute [
+ClyShowPoolUsersCommand >> executeRefactoring [
 
 	(Smalltalk tools toolNamed: #messageList) browseUsersOfSharedPool: classes first
 ]
 
+{ #category : 'testing' }
+ClyShowPoolUsersCommand >> isAvailableInMenuOf: aToolContext [
+
+	^ aToolContext isFullBrowserClassContext
+]
+
+{ #category : 'accessing' }
+ClyShowPoolUsersCommand >> menuGroup [
+
+	^ ClyQueryMenuGroup
+]
+
+{ #category : 'accessing' }
+ClyShowPoolUsersCommand >> name [
+
+	^ 'Show pool users'
+]
+
+{ #category : 'accessing' }
+ClyShowPoolUsersCommand >> order [
+
+	^ 1000
+]
+
 { #category : 'execution' }
-ClyShowPoolUsersCommand >> prepareFullExecutionInContext: aToolContext [
+ClyShowPoolUsersCommand >> prepareFullExecution [
 
-	super prepareFullExecutionInContext: aToolContext.
-
-	browser := aToolContext browser
+	super prepareFullExecution.
+	browser := self context browser
 ]
