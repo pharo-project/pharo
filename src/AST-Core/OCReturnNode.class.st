@@ -159,7 +159,7 @@ OCReturnNode >> stop: anInteger [
 	self value stop: anInteger
 ]
 
-{ #category : 'evaluating' }
+{ #category : 'accessing' }
 OCReturnNode >> value [
 	^ value
 ]

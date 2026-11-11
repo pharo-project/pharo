@@ -177,7 +177,7 @@ OCParseErrorNode >> temporaries [
 	^ #()
 ]
 
-{ #category : 'evaluating' }
+{ #category : 'accessing' }
 OCParseErrorNode >> value [
 	^value
 ]

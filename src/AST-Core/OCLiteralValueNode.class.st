@@ -57,13 +57,13 @@ OCLiteralValueNode >> copyInContext: aDictionary [
 	^ self class value: self value
 ]
 
-{ #category : 'evaluating' }
+{ #category : '*OpalCompiler-Core' }
 OCLiteralValueNode >> evaluateForContext: aContext [
 
 	^ value
 ]
 
-{ #category : 'evaluating' }
+{ #category : '*OpalCompiler-Core' }
 OCLiteralValueNode >> evaluateForReceiver: aReceicer [
 
 	^ value
