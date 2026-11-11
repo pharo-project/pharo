@@ -411,6 +411,12 @@ ShiftClassBuilder >> installingEnvironment: anObject [
 	installingEnvironment := anObject
 ]
 
+{ #category : 'testing' }
+ShiftClassBuilder >> instancesHasShrinked [
+	
+	^ self changes anySatisfy: [ :e | e instancesHasShrinked ]
+]
+
 { #category : 'accessing' }
 ShiftClassBuilder >> isInRemake [
 

@@ -22,6 +22,12 @@ ShInstanceShapeChanged >> hasToMigrateInstances [
 ]
 
 { #category : 'testing' }
+ShInstanceShapeChanged >> instancesHasShrinked [
+	
+	^ builder oldClass classLayout size > builder newClass classLayout size
+]
+
+{ #category : 'testing' }
 ShInstanceShapeChanged >> propagateToSubclasses: anotherBuilder [
 	anotherBuilder changes add: self
 ]
