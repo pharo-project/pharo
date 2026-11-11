@@ -31,7 +31,7 @@ MetacelloMVSRecordedSource >> baselineOf: aCandidate [
 		  MetacelloMVSBaselineDefinitions error: #repositoryFailure text: 'Not recorded: the baseline of ' , aCandidate printString ]
 ]
 
-{ #category : 'building' }
+{ #category : 'initialization' }
 MetacelloMVSRecordedSource >> initialize [
 
 	super initialize.

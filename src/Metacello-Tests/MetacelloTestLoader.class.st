@@ -19,7 +19,7 @@ MetacelloTestLoader >> fetchPackageDirective: aPackageLoadDirective [
 	
 ]
 
-{ #category : 'loading' }
+{ #category : 'initialization' }
 MetacelloTestLoader >> initialize [
 
 	super initialize.

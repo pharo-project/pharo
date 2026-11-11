@@ -24,7 +24,7 @@ MetacelloMVSTestRepository >> description [
 	^ 'test repository'
 ]
 
-{ #category : 'accessing' }
+{ #category : 'initialization' }
 MetacelloMVSTestRepository >> initialize [
 
 	super initialize.

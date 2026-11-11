@@ -80,7 +80,7 @@ MetacelloMVSBaselineDefinitions >> hasBaseline [
 	^ definitions notNil
 ]
 
-{ #category : 'accessing' }
+{ #category : 'initialization' }
 MetacelloMVSBaselineDefinitions >> initialize [
 
 	super initialize.

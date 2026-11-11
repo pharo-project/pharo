@@ -36,7 +36,7 @@ MetacelloMVSRepositorySource >> baselineOf: aCandidate [
 		  yourself
 ]
 
-{ #category : 'reading' }
+{ #category : 'initialization' }
 MetacelloMVSRepositorySource >> initialize [
 
 	super initialize.

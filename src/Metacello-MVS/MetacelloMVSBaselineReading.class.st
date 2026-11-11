@@ -70,7 +70,7 @@ MetacelloMVSBaselineReading >> hasErrors [
 	^ findings anySatisfy: [ :each | each isError ]
 ]
 
-{ #category : 'accessing' }
+{ #category : 'initialization' }
 MetacelloMVSBaselineReading >> initialize [
 
 	super initialize.

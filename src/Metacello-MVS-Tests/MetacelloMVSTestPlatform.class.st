@@ -17,7 +17,7 @@ MetacelloMVSTestPlatform >> createRepository: aRepositorySpec [
 	^ repositories at: aRepositorySpec description ifAbsent: [ super createRepository: aRepositorySpec ]
 ]
 
-{ #category : 'repositories' }
+{ #category : 'initialization' }
 MetacelloMVSTestPlatform >> initialize [
 
 	super initialize.

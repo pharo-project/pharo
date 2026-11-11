@@ -98,7 +98,7 @@ MetacelloMVSResolution >> findingsOf: aRepository [
 	^ findings select: [ :each | (self repositoryOf: each) = aRepository ]
 ]
 
-{ #category : 'accessing' }
+{ #category : 'initialization' }
 MetacelloMVSResolution >> initialize [
 
 	super initialize.

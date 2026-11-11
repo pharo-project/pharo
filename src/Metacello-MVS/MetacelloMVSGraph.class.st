@@ -68,7 +68,7 @@ MetacelloMVSGraph >> hasVersions: aProjectSpec [
 	^ (self repositoryFor: aProjectSpec) isNotNil
 ]
 
-{ #category : 'accessing' }
+{ #category : 'initialization' }
 MetacelloMVSGraph >> initialize [
 
 	super initialize.
