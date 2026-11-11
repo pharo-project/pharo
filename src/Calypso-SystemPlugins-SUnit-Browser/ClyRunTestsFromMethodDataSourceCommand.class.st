@@ -36,14 +36,6 @@ ClyRunTestsFromMethodDataSourceCommand class >> menuOrder [
 	^10000
 ]
 
-{ #category : 'activation' }
-ClyRunTestsFromMethodDataSourceCommand class >> queryBrowserToolbarActivation [
-	<classAnnotation>
-
-	^ClyToolbarActivation
-		byItemOf: ClyButtonToolbarGroup order: self menuOrder for: ClyQueryBrowserContext
-]
-
 { #category : 'execution' }
 ClyRunTestsFromMethodDataSourceCommand >> buildTestSuite [
 

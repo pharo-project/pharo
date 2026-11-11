@@ -18,23 +18,9 @@ Class {
 	#tag : 'Commands-Queries'
 }
 
-{ #category : 'activation' }
-ClySpawnFullBrowserCommand class >> browserShortcutActivation [
-	<classAnnotation>
-
-	^ClyShortcutActivation by: $b meta for: ClySystemBrowserContext
-]
-
 { #category : 'testing' }
 ClySpawnFullBrowserCommand class >> canBeExecutedInContext: aToolContext [
 	^aToolContext hasSelectedItems
-]
-
-{ #category : 'activation' }
-ClySpawnFullBrowserCommand class >> fullBrowserDoubleClickMenuActivation [
-	<classAnnotation>
-
-	^ClyDoubleClickActivation for: ClyFullBrowserContext
 ]
 
 { #category : 'accessing' }

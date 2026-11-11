@@ -27,13 +27,6 @@ ClyRenameProtocolCommand class >> canBeExecutedInContext: aToolContext [
 	^aToolContext isProtocolSelected
 ]
 
-{ #category : 'activation' }
-ClyRenameProtocolCommand class >> fullBrowserShortcutActivation [
-	<classAnnotation>
-
-	^ClyShortcutActivation renamingFor: ClyFullBrowserMethodGroupContext
-]
-
 { #category : 'execution' }
 ClyRenameProtocolCommand >> applyCommandResult [
 	super applyCommandResult.

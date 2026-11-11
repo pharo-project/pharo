@@ -13,20 +13,6 @@ Class {
 }
 
 { #category : 'activation' }
-ClyBrowserNavigationCommand class >> browserShortcutActivation [
-	<classAnnotation>
-
-	^ClyShortcutActivation by: self defaultShortcut for: ClyBrowserContext
-]
-
-{ #category : 'activation' }
-ClyBrowserNavigationCommand class >> browserTabActivation [
-	<classAnnotation>
-
-	^ClyBrowserTabCommandActivation for: ClyBrowserContext
-]
-
-{ #category : 'activation' }
 ClyBrowserNavigationCommand class >> defaultShortcut [
 	<classAnnotationDependency>
 
@@ -36,11 +22,4 @@ ClyBrowserNavigationCommand class >> defaultShortcut [
 { #category : 'testing' }
 ClyBrowserNavigationCommand class >> isAbstract [
 	^self = ClyBrowserNavigationCommand
-]
-
-{ #category : 'activation' }
-ClyBrowserNavigationCommand class >> textEditorShortcutActivation [
-	<classAnnotation>
-
-	^ClyShortcutActivation by: self defaultShortcut for: ClyTextEditorContext
 ]

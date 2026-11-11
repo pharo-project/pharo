@@ -25,34 +25,6 @@ ClyShowClassRefCommand class >> forClasses: classes by: aBrowser [
 		browser: aBrowser
 ]
 
-{ #category : 'activation' }
-ClyShowClassRefCommand class >> fullBrowserShortcutActivation [
-	<classAnnotation>
-
-	^ClyShortcutActivation by: $n meta for: ClyFullBrowserClassContext
-]
-
-{ #category : 'activation' }
-ClyShowClassRefCommand class >> fullBrowserToolbarActivation [
-	<classAnnotation>
-
-	^ClyToolbarActivation byItemOf: ClyButtonToolbarGroup for: ClyFullBrowserClassContext
-]
-
-{ #category : 'activation' }
-ClyShowClassRefCommand class >> queryBrowserShortcutActivation [
-	<classAnnotation>
-
-	^ClyShortcutActivation by: $c meta, $n meta for: ClyQueryBrowserContext
-]
-
-{ #category : 'activation' }
-ClyShowClassRefCommand class >> queryBrowserToolbarActivation [
-	<classAnnotation>
-
-	^ClyToolbarActivation byItemOf: ClyButtonToolbarGroup for: ClyQueryBrowserContext
-]
-
 { #category : 'accessing' }
 ClyShowClassRefCommand >> browser [
 

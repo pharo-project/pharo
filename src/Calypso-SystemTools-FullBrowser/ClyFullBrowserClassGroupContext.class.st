@@ -9,6 +9,19 @@ Class {
 	#tag : 'Contexts'
 }
 
+{ #category : 'commands' }
+ClyFullBrowserClassGroupContext class >> calypsoSystemToolsFullBrowserCommandsIn: aCommandMap [
+
+	<calypsoCommands>
+	(aCommandMap toolbar group: ClyPackageToolbarGroup)
+		add: ClySwitchToPackagesCommand order: 1;
+		add: ClySwitchToProjectsCommand order: 10;
+		add: ClySwitchToScopedViewCommand order: 1.
+	aCommandMap shortcuts
+		add: ClyRemoveClassGroupCommand key: $x meta;
+		add: ClyRenamePackageTagCommand key: $r meta
+]
+
 { #category : 'selection strategy' }
 ClyFullBrowserClassGroupContext class >> selectionStrategy [
 	<classAnnotation>

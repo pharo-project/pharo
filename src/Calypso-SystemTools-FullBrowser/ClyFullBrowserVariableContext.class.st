@@ -9,6 +9,17 @@ Class {
 	#tag : 'Contexts'
 }
 
+{ #category : 'commands' }
+ClyFullBrowserVariableContext class >> calypsoSystemToolsFullBrowserCommandsIn: aCommandMap [
+
+	<calypsoCommands>
+	aCommandMap shortcuts
+		add: SycRemoveVariablesCommand key: $x meta;
+		add: SycRenameVariableCommand key: $r meta.
+	(aCommandMap shortcuts add: SycInspectVariableValueCommand key: $i meta) priority: 100000.
+	(aCommandMap doubleClick add: SycInspectVariableValueCommand) priority: 10000
+]
+
 { #category : 'selection strategy' }
 ClyFullBrowserVariableContext class >> selectionStrategy [
 	<classAnnotation>

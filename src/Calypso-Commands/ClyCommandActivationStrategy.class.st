@@ -44,13 +44,15 @@ ClyCommandActivationStrategy class >> isAbstract [
 
 { #category : 'command registry' }
 ClyCommandActivationStrategy class >> registeredInstances [
-	"My class annotations followed by the commands declared for my interaction with the <calypsoCommands> pragma (see ClyCommandRegistry). Every way Calypso enumerates activations goes through me, so it shows both while commands move from class annotations to declarations."
+	"My class annotations and the commands declared for my interaction with the <calypsoCommands> pragma (see ClyCommandRegistry), in the order of my registry container, which sorts them by priority. Every way Calypso enumerates activations goes through me, so it shows both while commands move from class annotations to declarations."
 
-	| annotations |
+	| annotations entries |
 	annotations := super registeredInstances.
-	^ self interactionName
-		  ifNil: [ annotations ]
-		  ifNotNil: [ :interactionName | annotations asArray , (ClyCommandRegistry default allEntriesOf: interactionName) ]
+	entries := self interactionName
+		           ifNil: [ #(  ) ]
+		           ifNotNil: [ :interactionName | ClyCommandRegistry default allEntriesOf: interactionName ].
+	entries ifEmpty: [ ^ annotations ].
+	^ annotations asArray , entries sort: self createContainerForRegistry sortBlock
 ]
 
 { #category : 'accessing' }

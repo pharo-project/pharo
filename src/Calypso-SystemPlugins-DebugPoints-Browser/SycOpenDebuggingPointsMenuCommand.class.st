@@ -8,13 +8,6 @@ Class {
 	#package : 'Calypso-SystemPlugins-DebugPoints-Browser'
 }
 
-{ #category : 'activation' }
-SycOpenDebuggingPointsMenuCommand class >> sourceCodeMenuActivation [
-	<classAnnotation>
-	
-	^ClyContextMenuActivation byRootGroupItemOrder: 0.2 for: ClySourceCodeContext
-]
-
 { #category : 'execution' }
 SycOpenDebuggingPointsMenuCommand >> activationStrategy [
 

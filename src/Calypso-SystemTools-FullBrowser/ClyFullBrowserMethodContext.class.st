@@ -9,6 +9,13 @@ Class {
 	#tag : 'Contexts'
 }
 
+{ #category : 'commands' }
+ClyFullBrowserMethodContext class >> calypsoSystemToolsFullBrowserCommandsIn: aCommandMap [
+
+	<calypsoCommands>
+	aCommandMap shortcuts add: ClyFindMethodInBrowserCommand key: $f meta
+]
+
 { #category : 'selection strategy' }
 ClyFullBrowserMethodContext class >> selectionStrategy [
 	<classAnnotation>

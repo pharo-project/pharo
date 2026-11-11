@@ -14,6 +14,13 @@ Class {
 	#package : 'Calypso-SystemPlugins-Critic-Browser'
 }
 
+{ #category : 'commands' }
+ClyCriticContext class >> calypsoSystemPluginsCriticBrowserCommandsIn: aCommandMap [
+
+	<calypsoCommands>
+	(aCommandMap contextMenu group: ClyExtraMenuGroup) add: ClyBrowseCritiqueRuleCommand
+]
+
 { #category : 'selection strategy' }
 ClyCriticContext class >> selectionStrategy [
 	<classAnnotation>

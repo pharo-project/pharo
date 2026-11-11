@@ -27,13 +27,6 @@ ClyRenamePackageTagCommand class >> canBeExecutedInContext: aToolContext [
 	^aToolContext isPackageTagSelected
 ]
 
-{ #category : 'activation' }
-ClyRenamePackageTagCommand class >> fullBrowserShortcutActivation [
-	<classAnnotation>
-
-	^ClyShortcutActivation renamingFor: ClyFullBrowserClassGroupContext
-]
-
 { #category : 'execution' }
 ClyRenamePackageTagCommand >> applyCommandResult [
 	super applyCommandResult.

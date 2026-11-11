@@ -6,6 +6,14 @@ Class {
 	#tag : 'Editors-Classes'
 }
 
+{ #category : 'commands' }
+ClyClassDefinitionContext class >> calypsoSystemToolsCoreCommandsIn: aCommandMap [
+
+	<calypsoCommands>
+	aCommandMap contextMenu add: ClyExpandClassDefinitionCommand order: -20.
+	aCommandMap shortcuts add: ClyExpandClassDefinitionCommand key: $e meta
+]
+
 { #category : 'testing' }
 ClyClassDefinitionContext >> isArgOrTempVariableSelected [
 

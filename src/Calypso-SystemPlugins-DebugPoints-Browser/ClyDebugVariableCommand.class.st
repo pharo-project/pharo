@@ -20,14 +20,6 @@ ClyDebugVariableCommand class >> debugPointClass [
 	^ DebugPoint
 ]
 
-{ #category : 'activation' }
-ClyDebugVariableCommand class >> fullBrowserMenuActivation [
-	<classAnnotation>
-	^ ClyContextMenuActivation
-		byItemOf: ClyDebuggingPointsMenuGroup
-		for: ClyFullBrowserVariableContext
-]
-
 { #category : 'accessing' }
 ClyDebugVariableCommand >> accessStrategy [
 

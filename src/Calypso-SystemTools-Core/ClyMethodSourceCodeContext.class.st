@@ -6,6 +6,17 @@ Class {
 	#tag : 'Editors-Methods'
 }
 
+{ #category : 'commands' }
+ClyMethodSourceCodeContext class >> calypsoSystemToolsCoreCommandsIn: aCommandMap [
+
+	<calypsoCommands>
+	aCommandMap shortcuts
+		add: SycMoveTempDefinitionCommand key: $o meta;
+		add: SycRenameArgOrTempCommand2 key: $r meta;
+		add: SycRenameMessageCommand key: $r meta;
+		add: SycShowLocalSendersCommand key: $y shift meta
+]
+
 { #category : 'testing' }
 ClyMethodSourceCodeContext >> isMethodSelected [
 

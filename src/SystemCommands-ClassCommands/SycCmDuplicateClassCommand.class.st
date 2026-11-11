@@ -6,15 +6,6 @@ Class {
 	#tag : 'Creation'
 }
 
-{ #category : 'activation' }
-SycCmDuplicateClassCommand class >> browserShortcutActivation [
-
-	<classAnnotation>
-	^ ClyShortcutActivation
-		  by: $d meta
-		  for: ClyClass asCalypsoItemContext
-]
-
 { #category : 'testing' }
 SycCmDuplicateClassCommand class >> canBeExecutedInContext: aToolContext [
 

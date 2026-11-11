@@ -14,13 +14,6 @@ ClyRunTestsFromPackagesCommand class >> contextClass [
 	^Package asCalypsoItemContext
 ]
 
-{ #category : 'activation' }
-ClyRunTestsFromPackagesCommand class >> fullBrowserClassGroupTableIconActivation [
-	<classAnnotation>
-
-	^ClyTableIconCommandActivation for: ClyFullBrowserClassGroupContext
-]
-
 { #category : 'accessing' }
 ClyRunTestsFromPackagesCommand >> description [
 

@@ -13,23 +13,9 @@ ClyExpandClassDefinitionCommand class >> canBeExecutedInContext: aToolContext [
 ]
 
 { #category : 'activation' }
-ClyExpandClassDefinitionCommand class >> contextMenuActivation [
-	<classAnnotation>
-
-	^ClyContextMenuActivation byRootGroupItemOrder: -20 for: ClyClassDefinitionContext 
-]
-
-{ #category : 'activation' }
 ClyExpandClassDefinitionCommand class >> sourceCodeMenuActivation [
    <classAnnotation>
    ^SycSourceCodeMenuActivation byRootGroupItemOrder: -100 for: ClyClassDefinitionContext
-]
-
-{ #category : 'activation' }
-ClyExpandClassDefinitionCommand class >> sourceCodeShortcutActivation [
-   <classAnnotation>
-
-   ^ClyShortcutActivation by: $e meta for: ClyClassDefinitionContext
 ]
 
 { #category : 'accessing' }

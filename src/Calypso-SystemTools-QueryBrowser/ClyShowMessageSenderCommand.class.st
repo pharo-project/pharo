@@ -26,20 +26,6 @@ ClyShowMessageSenderCommand class >> forMethods: methods by: aBrowser [
 ]
 
 { #category : 'activation' }
-ClyShowMessageSenderCommand class >> methodBrowserToolbarActivation [
-	<classAnnotation>
-
-	^ClyToolbarActivation byItemOf: ClyButtonToolbarGroup for: ClyMethod asCalypsoItemContext
-]
-
-{ #category : 'activation' }
-ClyShowMessageSenderCommand class >> methodShortcutActivation [
-	<classAnnotation>
-
-	^ClyShortcutActivation by: $n meta for: ClyMethod asCalypsoItemContext
-]
-
-{ #category : 'activation' }
 ClyShowMessageSenderCommand class >> sourceCodeShortcutActivation [
 	"it is not supported yet.
 	One reason is that common text morph shorcuts are in priority.

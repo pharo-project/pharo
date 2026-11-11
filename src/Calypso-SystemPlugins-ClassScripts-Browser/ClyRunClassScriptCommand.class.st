@@ -27,13 +27,6 @@ ClyRunClassScriptCommand class >> canBeExecutedInContext: aBrowserContext [
 		and: [ aBrowserContext isClassScriptSelected ]
 ]
 
-{ #category : 'activation' }
-ClyRunClassScriptCommand class >> methodTableIconActivation [
-	<classAnnotation>
-
-	^ClyTableIconCommandActivation for: ClyMethod asCalypsoItemContext
-]
-
 { #category : 'execution' }
 ClyRunClassScriptCommand >> executeRefactoring [
 	self script executeOn: targetClass

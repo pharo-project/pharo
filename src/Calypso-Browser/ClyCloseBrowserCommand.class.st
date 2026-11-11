@@ -16,20 +16,6 @@ Class {
 	#tag : 'Commands'
 }
 
-{ #category : 'activation' }
-ClyCloseBrowserCommand class >> browserShortcutActivation [
-	<classAnnotation>
-
-	^ClyShortcutActivation by: $w meta for: ClyBrowserContext
-]
-
-{ #category : 'activation' }
-ClyCloseBrowserCommand class >> textToolShortcutActivation [
-	<classAnnotation>
-
-	^ClyShortcutActivation by: $w meta for: ClyTextEditorContext
-]
-
 { #category : 'execution' }
 ClyCloseBrowserCommand >> executeRefactoring [
 	self browser close

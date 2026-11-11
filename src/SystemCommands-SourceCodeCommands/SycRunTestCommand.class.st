@@ -11,15 +11,6 @@ SycRunTestCommand class >> canBeExecutedInContext: aToolContext [
 	^ aToolContext isMethodSelected not and: [ aToolContext isTestMethodSelected ]
 ]
 
-{ #category : 'activation' }
-SycRunTestCommand class >> methodEditorShorcutActivation [
-
-	<classAnnotation>
-	^ ClyShortcutActivation
-		  by: $e meta , $t meta
-		  for: ClyTextEditorContext
-]
-
 { #category : 'converting' }
 SycRunTestCommand >> asRefactorings [
 

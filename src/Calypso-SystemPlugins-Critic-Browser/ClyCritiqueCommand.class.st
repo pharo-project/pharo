@@ -27,13 +27,6 @@ ClyCritiqueCommand class >> canBeExecutedInContext: aCriticContext [
 		(aCriticContext lastSelectedItem isMarkedWith: ClyBackgroundProcessingTag) not]
 ]
 
-{ #category : 'activation' }
-ClyCritiqueCommand class >> criticTableIconActivation [
-	<classAnnotation>
-
-	^ClyTableIconCommandActivation for: ReAbstractCritique asCalypsoItemContext
-]
-
 { #category : 'testing' }
 ClyCritiqueCommand class >> isAbstract [
 	^self = ClyCritiqueCommand

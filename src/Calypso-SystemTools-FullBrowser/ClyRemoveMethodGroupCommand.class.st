@@ -12,13 +12,6 @@ Class {
 	#tag : 'Commands-MethodGroups'
 }
 
-{ #category : 'activation' }
-ClyRemoveMethodGroupCommand class >> fullBrowserShortcutActivation [
-	<classAnnotation>
-
-	^ClyShortcutActivation removalFor: ClyFullBrowserMethodGroupContext
-]
-
 { #category : 'accessing' }
 ClyRemoveMethodGroupCommand >> description [
 

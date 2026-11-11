@@ -13,13 +13,6 @@ ClyAddBreakPointCommand class >> contextMenuOrder [
 	^1
 ]
 
-{ #category : 'activation' }
-ClyAddBreakPointCommand class >> methodEditorLeftBarClickActivation [
-
-	<classAnnotation>
-	^ ClyTextLeftBarDoubleClickActivation for: ClyMethodSourceCodeContext
-]
-
 { #category : 'execution' }
 ClyAddBreakPointCommand >> executeRefactoring [
 

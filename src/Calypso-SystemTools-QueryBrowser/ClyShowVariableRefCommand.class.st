@@ -16,13 +16,6 @@ Class {
 	#tag : 'Commands-Queries'
 }
 
-{ #category : 'activation' }
-ClyShowVariableRefCommand class >> fullBrowserShortcutActivation [
-	<classAnnotation>
-
-	^ClyShortcutActivation by: $n meta for: ClyFullBrowserVariableContext
-]
-
 { #category : 'accessing' }
 ClyShowVariableRefCommand >> description [
 

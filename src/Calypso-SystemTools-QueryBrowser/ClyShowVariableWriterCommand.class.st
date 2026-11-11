@@ -16,13 +16,6 @@ Class {
 	#tag : 'Commands-Queries'
 }
 
-{ #category : 'activation' }
-ClyShowVariableWriterCommand class >> fullBrowserShortcutActivation [
-	<classAnnotation>
-
-	^ClyShortcutActivation by: $m meta for: ClyFullBrowserVariableContext
-]
-
 { #category : 'accessing' }
 ClyShowVariableWriterCommand >> description [
 

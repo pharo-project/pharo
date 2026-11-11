@@ -9,6 +9,21 @@ Class {
 	#tag : 'UI'
 }
 
+{ #category : 'commands' }
+ClyQueryBrowserContext class >> calypsoSystemToolsQueryBrowserCommandsIn: aCommandMap [
+
+	<calypsoCommands>
+	(aCommandMap contextMenu group: ClySwitchScopeMenuGroup) add: ClySwitchQueryScopeCommand.
+	(aCommandMap toolbar group: ClyButtonToolbarGroup)
+		add: ClyShowClassRefCommand order: 1000;
+		add: ClySpawnFullBrowserCommand order: 1000.
+	(aCommandMap toolbar group: ClyQueryResultToolbarGroup)
+		add: ClySwitchQueryScopeCommand order: -5;
+		addAllConcreteSubclassesOf: ClySwitchQueryResultCommand.
+	aCommandMap shortcuts add: ClyShowClassRefCommand key: $c meta , $n meta.
+	aCommandMap doubleClick add: ClySpawnFullBrowserCommand
+]
+
 { #category : 'selection strategy' }
 ClyQueryBrowserContext class >> selectionStrategy [
 	<classAnnotation>

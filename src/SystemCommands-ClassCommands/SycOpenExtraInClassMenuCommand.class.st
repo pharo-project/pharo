@@ -5,15 +5,6 @@ Class {
 	#package : 'SystemCommands-ClassCommands'
 }
 
-{ #category : 'activation' }
-SycOpenExtraInClassMenuCommand class >> browserContextMenuActivation [
-	<classAnnotation>
-
-	^ ClyContextMenuActivation 
-		byRootGroupItemOrder: 10200 
-		for: ClyClass asCalypsoItemContext
-]
-
 { #category : 'execution' }
 SycOpenExtraInClassMenuCommand >> activationStrategy [
 	^ SycExtraMenuActivation

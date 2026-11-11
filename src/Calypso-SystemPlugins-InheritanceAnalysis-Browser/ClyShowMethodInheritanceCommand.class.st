@@ -9,13 +9,6 @@ Class {
 	#package : 'Calypso-SystemPlugins-InheritanceAnalysis-Browser'
 }
 
-{ #category : 'activation' }
-ClyShowMethodInheritanceCommand class >> browserShortcutActivation [
-	<classAnnotation>
-
-	^ClyShortcutActivation by: $h meta for: ClyMethod asCalypsoItemContext
-]
-
 { #category : 'execution' }
 ClyShowMethodInheritanceCommand >> createInheritanceScopeFrom: classes [
 

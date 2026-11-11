@@ -8,20 +8,6 @@ Class {
 	#package : 'Calypso-SystemTools-FullBrowser'
 }
 
-{ #category : 'annotation' }
-SycOpenExtraInMethodGroupMenuCommand class >> inheritedMethodGroupContextMenuActivation [
-
-	<classAnnotation>
-	^ ClyContextMenuActivation byRootGroupItemOrder: 10200 for: ClyInheritedMethodGroup asCalypsoItemContext
-]
-
-{ #category : 'annotation' }
-SycOpenExtraInMethodGroupMenuCommand class >> variableMethodGroupContextMenuActivation [
-
-	<classAnnotation>
-	^ ClyContextMenuActivation byRootGroupItemOrder: 10200 for: ClyVariableMethodGroup asCalypsoItemContext
-]
-
 { #category : 'accessing' }
 SycOpenExtraInMethodGroupMenuCommand >> activationStrategy [
 

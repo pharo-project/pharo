@@ -11,6 +11,13 @@ Class {
 	#package : 'Calypso-Commands'
 }
 
+{ #category : 'commands' }
+ClyToolContext class >> calypsoCommandsIn: aCommandMap [
+
+	<calypsoCommands>
+	(aCommandMap textLeftBarClick add: ClyOpenTextLeftBarMenuCommand) beYellowButton
+]
+
 { #category : 'instance creation' }
 ClyToolContext class >> for: aTool [
 	^self new

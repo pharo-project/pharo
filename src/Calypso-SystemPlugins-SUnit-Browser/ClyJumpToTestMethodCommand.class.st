@@ -43,12 +43,6 @@ ClyJumpToTestMethodCommand class >> hasInstanceSelectedItemsIn: aBrowserContext 
 	^ aBrowserContext isInstanceSideMethodSelected and: [ aBrowserContext selectedItems anySatisfy: [ :each | (each hasProperty: ClyTestResultProperty) not ] ]
 ]
 
-{ #category : 'activation' }
-ClyJumpToTestMethodCommand class >> methodShortcutActivation [
-	<classAnnotation>
-	^ ClyShortcutActivation by: $h meta , $j meta for: ClyMethod asCalypsoItemContext
-]
-
 { #category : 'accessing' }
 ClyJumpToTestMethodCommand >> description [
 

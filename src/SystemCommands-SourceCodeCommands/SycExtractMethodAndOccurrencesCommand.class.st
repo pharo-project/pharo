@@ -18,13 +18,6 @@ SycExtractMethodAndOccurrencesCommand class >> canBeExecutedInContext: aSourceCo
 		  aSourceCodeContext isMethodSelected not ]
 ]
 
-{ #category : 'testing' }
-SycExtractMethodAndOccurrencesCommand class >> methodEditorShortcutActivation [
-	<classAnnotation>
-
-	^ClyShortcutActivation by: $e meta, $m meta for: ClySourceCodeContext
-]
-
 { #category : 'converting' }
 SycExtractMethodAndOccurrencesCommand >> asRefactorings [
 

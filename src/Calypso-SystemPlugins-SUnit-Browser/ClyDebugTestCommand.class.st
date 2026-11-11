@@ -10,18 +10,6 @@ Class {
 	#tag : 'Commands'
 }
 
-{ #category : 'activation' }
-ClyDebugTestCommand class >> fullBrowserShortcutActivation [
-	<classAnnotation>
-
-	^ClyShortcutActivation by: $d meta for: self contextClass
-]
-
-{ #category : 'activation' }
-ClyDebugTestCommand class >> fullBrowserTableIconActivation [
-	"It should not be as icon in table"
-]
-
 { #category : 'accessing' }
 ClyDebugTestCommand >> description [
 

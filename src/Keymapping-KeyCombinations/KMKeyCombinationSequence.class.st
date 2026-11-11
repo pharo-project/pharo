@@ -147,3 +147,8 @@ KMKeyCombinationSequence >> shortcutModifiers [
 
 	^ shortcuts collect: [ :s | s modifier ] as: Set
 ]
+
+{ #category : 'accessing' }
+KMKeyCombinationSequence >> shortcuts [
+	^ shortcuts
+]

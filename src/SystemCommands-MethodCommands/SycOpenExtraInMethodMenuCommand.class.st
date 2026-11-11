@@ -5,17 +5,6 @@ Class {
 	#package : 'SystemCommands-MethodCommands'
 }
 
-{ #category : 'activation' }
-SycOpenExtraInMethodMenuCommand class >> methodContextMenuActivation [
-
-	<classAnnotation>
-	
-	^ ClyContextMenuActivation
-		byItemOf: ClyRootMenuGroup 
-		order: 11200 
-		for: ClyMethod asCalypsoItemContext
-]
-
 { #category : 'execution' }
 SycOpenExtraInMethodMenuCommand >> activationStrategy [
 

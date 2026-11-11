@@ -19,13 +19,6 @@ ClySwitchMethodViewModeCommand class >> canBeExecutedInContext: aToolContext [
 	^aToolContext isClassSelected
 ]
 
-{ #category : 'activation' }
-ClySwitchMethodViewModeCommand class >> fullBrowserToolbarActivation [
-	<classAnnotation>
-
-	^ClyToolbarActivation byItemOf: ClyMethodViewToolbarGroup for: ClyFullBrowserClassContext
-]
-
 { #category : 'testing' }
 ClySwitchMethodViewModeCommand class >> isAbstract [
 	^self = ClySwitchMethodViewModeCommand

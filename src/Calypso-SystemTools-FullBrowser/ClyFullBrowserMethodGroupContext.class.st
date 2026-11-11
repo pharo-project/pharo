@@ -9,6 +9,15 @@ Class {
 	#tag : 'Contexts'
 }
 
+{ #category : 'commands' }
+ClyFullBrowserMethodGroupContext class >> calypsoSystemToolsFullBrowserCommandsIn: aCommandMap [
+
+	<calypsoCommands>
+	aCommandMap shortcuts
+		add: ClyRemoveMethodGroupCommand key: $x meta;
+		add: ClyRenameProtocolCommand key: $r meta
+]
+
 { #category : 'selection strategy' }
 ClyFullBrowserMethodGroupContext class >> selectionStrategy [
 	<classAnnotation>

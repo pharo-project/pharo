@@ -23,15 +23,6 @@ ClyMoveMethodGroupsToPackageCommand class >> canBeExecutedInContext: aToolContex
 	^ aToolContext isProtocolSelected
 ]
 
-{ #category : 'activation' }
-ClyMoveMethodGroupsToPackageCommand class >> fullBrowserDragAndDropActivation [
-	<classAnnotation>
-
-	^ClyDragAndDropActivation
-		for: ClyMethodGroup asCalypsoItemContext
-		toDropIn: Package asCalypsoItemContext
-]
-
 { #category : 'execution' }
 ClyMoveMethodGroupsToPackageCommand >> executeRefactoring [
 

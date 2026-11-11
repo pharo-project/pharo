@@ -31,27 +31,6 @@ ClyRunTestsFromSelectedItemsCommand class >> contextClass [
 	self subclassResponsibility
 ]
 
-{ #category : 'activation' }
-ClyRunTestsFromSelectedItemsCommand class >> fullBrowserMenuActivation [
-	<classAnnotation>
-
-	^ClyContextMenuActivation byRootGroupItemFor: self contextClass
-]
-
-{ #category : 'activation' }
-ClyRunTestsFromSelectedItemsCommand class >> fullBrowserShortcutActivation [
-	<classAnnotation>
-
-	^ClyShortcutActivation by: $t meta for: self contextClass
-]
-
-{ #category : 'activation' }
-ClyRunTestsFromSelectedItemsCommand class >> fullBrowserTableIconActivation [
-	<classAnnotation>
-
-	^ClyTableIconCommandActivation priority: 1000 for: self contextClass
-]
-
 { #category : 'testing' }
 ClyRunTestsFromSelectedItemsCommand class >> isAbstract [
 	^self = ClyRunTestsFromSelectedItemsCommand

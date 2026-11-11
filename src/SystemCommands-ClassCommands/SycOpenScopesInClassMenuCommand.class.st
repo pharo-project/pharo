@@ -6,13 +6,6 @@ Class {
 	#tag : 'Scope'
 }
 
-{ #category : 'activation' }
-SycOpenScopesInClassMenuCommand class >> browserContextMenuActivation [
-	<classAnnotation>
-
-	^ ClyContextMenuActivation byRootGroupItemOrder: 1.5 for: ClyClass asCalypsoItemContext
-]
-
 { #category : 'execution' }
 SycOpenScopesInClassMenuCommand >> activationStrategy [
 	^ SycScopesMenuActivation

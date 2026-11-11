@@ -26,13 +26,6 @@ ClyIcebergShowMethodVersionCommand class >> canBeExecutedInContext: aToolContext
 			   aToolContext lastSelectedMethod package) isNotNil ]
 ]
 
-{ #category : 'accessing' }
-ClyIcebergShowMethodVersionCommand class >> methodBrowserTabActivation [
-	<classAnnotation>
-
-	^ClyBrowserTabCommandActivation for: ClyMethod asCalypsoItemContext
-]
-
 { #category : 'execution' }
 ClyIcebergShowMethodVersionCommand >> executeRefactoring [
 

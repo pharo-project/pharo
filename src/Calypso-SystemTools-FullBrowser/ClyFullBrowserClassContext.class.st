@@ -9,6 +9,22 @@ Class {
 	#tag : 'Contexts'
 }
 
+{ #category : 'commands' }
+ClyFullBrowserClassContext class >> calypsoSystemToolsFullBrowserCommandsIn: aCommandMap [
+
+	<calypsoCommands>
+	(aCommandMap toolbar group: ClyClassHierarchyToolbarGroup) addAllConcreteSubclassesOf: ClySwitchClassViewModeCommand.
+	(aCommandMap toolbar group: ClyMetaLevelToolbarGroup)
+		add: ClySwitchToClassSideCommand order: 2;
+		add: ClySwitchToInstanceSideCommand order: 1.
+	(aCommandMap toolbar group: ClyMethodViewToolbarGroup) addAllConcreteSubclassesOf: ClySwitchMethodViewModeCommand.
+	aCommandMap tabActions add: SycOpenClassMenuCommand.
+	aCommandMap shortcuts
+		add: ClyMoveClassToGroupCommand key: $m meta , $c meta;
+		add: ClySwitchToFullHierarchyCommand key: $h meta;
+		add: SycRemoveClassCommand key: $x meta
+]
+
 { #category : 'selection strategy' }
 ClyFullBrowserClassContext class >> selectionStrategy [
 	<classAnnotation>

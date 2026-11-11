@@ -15,13 +15,6 @@ ClyRequestMethodPackageForEditorCommand class >> canBeExecutedInMethodEditor: aT
 	^ true
 ]
 
-{ #category : 'activation' }
-ClyRequestMethodPackageForEditorCommand class >> methodEditorShorcutActivation [
-	<classAnnotation>
-
-	^ClyShortcutActivation by: $e meta, $m meta, $p meta for: ClyTextEditorContext
-]
-
 { #category : 'accessing' }
 ClyRequestMethodPackageForEditorCommand >> description [ 
 

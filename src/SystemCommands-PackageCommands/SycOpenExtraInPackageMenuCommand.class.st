@@ -8,20 +8,6 @@ Class {
 	#package : 'SystemCommands-PackageCommands'
 }
 
-{ #category : 'annotation' }
-SycOpenExtraInPackageMenuCommand class >> packageContextMenuActivation [
-
-	<classAnnotation>
-	^ ClyContextMenuActivation byRootGroupItemOrder: 10200 for: Package asCalypsoItemContext
-]
-
-{ #category : 'annotation' }
-SycOpenExtraInPackageMenuCommand class >> taggedClassGroupContextMenuActivation [
-
-	<classAnnotation>
-	^ ClyContextMenuActivation byRootGroupItemOrder: 10200 for: ClyTaggedClassGroup asCalypsoItemContext
-]
-
 { #category : 'accessing' }
 SycOpenExtraInPackageMenuCommand >> activationStrategy [
 

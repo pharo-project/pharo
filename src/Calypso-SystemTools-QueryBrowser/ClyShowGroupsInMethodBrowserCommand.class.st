@@ -16,14 +16,6 @@ Class {
 	#tag : 'Commands-Queries'
 }
 
-{ #category : 'activation' }
-ClyShowGroupsInMethodBrowserCommand class >> fullBrowserDoubleClickMenuActivation [
-	<classAnnotation>
-
-	^(ClyDoubleClickActivation for: ClyFullBrowserMethodGroupContext)
-		priority: 10000
-]
-
 { #category : 'execution' }
 ClyShowGroupsInMethodBrowserCommand >> executeRefactoring [
 

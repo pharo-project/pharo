@@ -8,13 +8,6 @@ Class {
 	#package : 'Calypso-Commands'
 }
 
-{ #category : 'annotations' }
-ClyOpenTextLeftBarMenuCommand class >> contextClickActivation [
-	<classAnnotation>
-
-	^ ClyTextLeftBarClickActivation byYellowButtonFor: ClyToolContext
-]
-
 { #category : 'execution' }
 ClyOpenTextLeftBarMenuCommand >> activationStrategy [
 	^ClyTextLeftBarMenuActivation

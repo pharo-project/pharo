@@ -30,6 +30,17 @@ Class {
 	#tag : 'Contexts'
 }
 
+{ #category : 'commands' }
+ClyBrowserContext class >> calypsoBrowserCommandsIn: aCommandMap [
+
+	<calypsoCommands>
+	aCommandMap tabActions addAllConcreteSubclassesOf: ClyBrowserNavigationCommand.
+	aCommandMap shortcuts
+		add: ClyCloseBrowserCommand key: $w meta;
+		add: ClyNavigateBrowserBackCommand key: Character arrowLeft alt;
+		add: ClyNavigateBrowserForwardCommand key: Character arrowRight alt
+]
+
 { #category : 'instance creation' }
 ClyBrowserContext class >> of: selectedItems for: aBrowser [
 	^(self for: aBrowser)

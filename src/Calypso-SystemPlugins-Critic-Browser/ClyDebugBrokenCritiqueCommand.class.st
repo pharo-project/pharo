@@ -16,13 +16,6 @@ ClyDebugBrokenCritiqueCommand class >> canBeExecutedInContext: aCriticContext [
 		aCriticContext lastSelectedItem isMarkedWith: ClyBrokenCritiqueTag]
 ]
 
-{ #category : 'activation' }
-ClyDebugBrokenCritiqueCommand class >> criticTableIconActivation [
-	<classAnnotation>
-
-	^ClyTableIconCommandActivation for: ReProperty asCalypsoItemContext
-]
-
 { #category : 'table decoration' }
 ClyDebugBrokenCritiqueCommand >> decorateTableCell: anItemCellMorph with: aMorph [
 	super decorateTableCell: anItemCellMorph with: aMorph.

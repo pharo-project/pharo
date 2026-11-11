@@ -9,13 +9,6 @@ Class {
 	#tag : 'Editors-Methods'
 }
 
-{ #category : 'activation' }
-ClyRequestProtocolForEditorCommand class >> methodEditorShorcutActivation [
-	<classAnnotation>
-
-	^ClyShortcutActivation by: $e meta, $p meta for: ClyTextEditorContext
-]
-
 { #category : 'accessing' }
 ClyRequestProtocolForEditorCommand >> description [
 

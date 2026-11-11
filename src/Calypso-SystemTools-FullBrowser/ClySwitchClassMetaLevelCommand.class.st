@@ -19,16 +19,6 @@ Class {
 	#tag : 'Commands-MetaLevel'
 }
 
-{ #category : 'activation' }
-ClySwitchClassMetaLevelCommand class >> fullBrowserToolbarActivation [
-	<classAnnotation>
-
-	^ClyToolbarActivation
-		byItemOf: ClyMetaLevelToolbarGroup
-		order: self toolbarOrder
-		for: ClyFullBrowserClassContext
-]
-
 { #category : 'testing' }
 ClySwitchClassMetaLevelCommand class >> isAbstract [
 	^self = ClySwitchClassMetaLevelCommand

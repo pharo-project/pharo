@@ -16,13 +16,6 @@ Class {
 	#tag : 'Commands-Methods'
 }
 
-{ #category : 'menu' }
-ClyFindMethodInBrowserCommand class >> fullBrowserShortcutActivation [
-	<classAnnotation>
-
-	^ClyShortcutActivation by: $f meta for: ClyFullBrowserMethodContext
-]
-
 { #category : 'execution' }
 ClyFindMethodInBrowserCommand >> executeRefactoring [
 

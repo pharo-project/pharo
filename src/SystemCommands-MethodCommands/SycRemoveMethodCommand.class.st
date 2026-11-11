@@ -5,13 +5,6 @@ Class {
 	#package : 'SystemCommands-MethodCommands'
 }
 
-{ #category : 'activation' }
-SycRemoveMethodCommand class >> methodShortcutActivation [
-	<classAnnotation>
-
-	^ClyShortcutActivation removalFor: ClyMethod asCalypsoItemContext
-]
-
 { #category : 'accessing' }
 SycRemoveMethodCommand >> description [
 

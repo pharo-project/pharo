@@ -20,20 +20,6 @@ Class {
 }
 
 { #category : 'activation' }
-ClyShowMessageImplementorCommand class >> methodBrowserToolbarActivation [
-	<classAnnotation>
-
-	^ClyToolbarActivation byItemOf: ClyButtonToolbarGroup for: ClyMethod asCalypsoItemContext
-]
-
-{ #category : 'activation' }
-ClyShowMessageImplementorCommand class >> methodShortcutActivation [
-	<classAnnotation>
-
-	^ClyShortcutActivation by: $m meta for: ClyMethod asCalypsoItemContext
-]
-
-{ #category : 'activation' }
 ClyShowMessageImplementorCommand class >> sourceCodeShortcutActivation [
 	"it is not supported yet. Look senders command"
 
