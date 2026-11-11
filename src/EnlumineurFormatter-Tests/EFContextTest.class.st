@@ -10,9 +10,9 @@ EFContextTest >> testMultiLineMessagesClassSide [
 
 	| messageList |
 	
-	messageList := self class compiler evaluate: EFFormatter multiLineMessages.
-	self assert: (messageList includes: #ifTrue:).  
-	self assert: (messageList includes: #ifFalse:).
+	messageList := EFFormatter multiLineMessages.
+	self assert: (messageList includes: 'ifTrue:').  
+	self assert: (messageList includes: 'ifFalse:').
 ]
 
 { #category : 'tests' }
