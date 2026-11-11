@@ -28,6 +28,12 @@ ClyClickActivation class >> handleYellowMouseClickUsing: someObjectWithCommandCo
 	^self handleMouseUsing: someObjectWithCommandContext event: anEvent from: sourceMorph
 ]
 
+{ #category : 'command registry' }
+ClyClickActivation class >> interactionName [
+
+	^ #click
+]
+
 { #category : 'morphs setup' }
 ClyClickActivation class >> morphicEventType [
 	^#click

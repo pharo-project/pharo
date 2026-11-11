@@ -1,11 +1,11 @@
 "
-I am one command declared in a Calypso command map: the command class and where and how it is shown for one interaction (a context menu, a toolbar, a shortcut, a click, a drop...).
+I am one command declared in a Calypso command map: the command class and where and how it is shown for one interaction (a context menu, a toolbar, the tab actions, the table icons...).
 I am created by the methods marked with <calypsoCommands> through a ClyCommandInteraction, for example:
 	(aCommandMap contextMenu add: SycRemoveMethodCommand) order: 10000.
-	aCommandMap shortcuts add: SycRemoveMethodCommand key: $x meta.
-I hold the placement: the menu group class, the order, the label, the key combination, the mouse button and modifier, and the anchor where the dragged items can be dropped. An order or a label I do not have is asked to the command when it is shown (#orderInContext: and the label selector of my interaction).
+I hold the placement: the menu group class, the order and the label. An order or a label I do not have is asked to the command when it is shown (#orderInContext: and the label selector of my interaction).
+My subclasses are the entries of the interactions which need more: the key combination of a shortcut (ClyShortcutCommandEntry), the mouse button of a click (ClyMouseCommandEntry) and the drop anchor of drag and drop (ClyDropCommandEntry).
 I remember the method which declared me, so tools can show why a command appears somewhere.
-I answer the messages Calypso asks to command activations (#menuGroup, #menuItemNameFor:, #isActiveInContext:, #newActivatorFor: ...), so the existing menu builders and renderers can show me.
+I answer the messages Calypso asks to command activations (#menuGroup, #menuItemNameFor:, #isActiveInContext:, #newActivatorFor: ...). ClyCommandActivationStrategy class>>#registeredInstances answers me with the class annotations of my interaction, so Calypso shows both.
 "
 Class {
 	#name : 'ClyCommandEntry',
@@ -16,11 +16,8 @@ Class {
 		'group',
 		'order',
 		'label',
-		'keyCombination',
-		'mouseButton',
-		'keyboardModifier',
-		'dropAnchor',
-		'declaringMethod'
+		'declaringMethod',
+		'priority'
 	],
 	#category : 'Calypso-Commands',
 	#package : 'Calypso-Commands'
@@ -75,19 +72,6 @@ ClyCommandEntry >> declaringMethod: aCompiledMethod [
 ]
 
 { #category : 'accessing' }
-ClyCommandEntry >> dropAnchor [
-	"The anchor of the contexts where the dragged items can be dropped to run my command."
-
-	^ dropAnchor
-]
-
-{ #category : 'accessing' }
-ClyCommandEntry >> dropAnchor: aClass [
-
-	dropAnchor := aClass
-]
-
-{ #category : 'accessing' }
 ClyCommandEntry >> group [
 
 	^ group
@@ -118,12 +102,6 @@ ClyCommandEntry >> isActiveInContext: aToolContext [
 ]
 
 { #category : 'activation' }
-ClyCommandEntry >> isDropActiveInContext: aToolContext [
-
-	^ aToolContext isDescribedByCommandAnchor: dropAnchor
-]
-
-{ #category : 'activation' }
 ClyCommandEntry >> isForbidden [
 
 	^ commandClass isAbstract
@@ -139,30 +117,6 @@ ClyCommandEntry >> isSimilarTo: anotherEntry [
 ClyCommandEntry >> isVisibleInContext: aToolContext [
 
 	^ aToolContext isDescribedByCommandAnchor: self anchor
-]
-
-{ #category : 'accessing' }
-ClyCommandEntry >> keyCombination [
-
-	^ keyCombination
-]
-
-{ #category : 'accessing' }
-ClyCommandEntry >> keyCombination: aKeyCombination [
-
-	keyCombination := aKeyCombination
-]
-
-{ #category : 'accessing' }
-ClyCommandEntry >> keyboardModifier [
-
-	^ keyboardModifier
-]
-
-{ #category : 'accessing' }
-ClyCommandEntry >> keyboardModifier: aKMModifier [
-
-	keyboardModifier := aKMModifier
 ]
 
 { #category : 'accessing' }
@@ -207,19 +161,6 @@ ClyCommandEntry >> menuItemOrderFor: aCommand [
 	^ order ifNil: [ aCommand orderInContext: aCommand context ]
 ]
 
-{ #category : 'accessing' }
-ClyCommandEntry >> mouseButton [
-	"The mouse button of a click entry: #red (the default), #yellow or #blue."
-
-	^ mouseButton ifNil: [ #red ]
-]
-
-{ #category : 'accessing' }
-ClyCommandEntry >> mouseButton: aSymbol [
-
-	mouseButton := aSymbol
-]
-
 { #category : 'activation' }
 ClyCommandEntry >> newActivatorFor: aToolContext [
 
@@ -254,7 +195,13 @@ ClyCommandEntry >> printOn: aStream [
 
 { #category : 'activation' }
 ClyCommandEntry >> priority [
-	"Entries have no priority: when several commands share a key or a click, the first declared one runs."
+	"When several commands share a key, a click or a drop, the first one of the highest priority runs, as for class annotations."
 
-	^ 0
+	^ priority ifNil: [ 0 ]
+]
+
+{ #category : 'accessing' }
+ClyCommandEntry >> priority: aNumber [
+
+	priority := aNumber
 ]

@@ -8,6 +8,12 @@ Class {
 	#package : 'Calypso-Commands'
 }
 
+{ #category : 'command registry' }
+ClyDoubleClickActivation class >> interactionName [
+
+	^ #doubleClick
+]
+
 { #category : 'testing' }
 ClyDoubleClickActivation class >> isAbstract [
 

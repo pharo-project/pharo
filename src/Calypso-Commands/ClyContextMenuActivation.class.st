@@ -7,3 +7,9 @@ Class {
 	#category : 'Calypso-Commands',
 	#package : 'Calypso-Commands'
 }
+
+{ #category : 'command registry' }
+ClyContextMenuActivation class >> interactionName [
+
+	^ #contextMenu
+]

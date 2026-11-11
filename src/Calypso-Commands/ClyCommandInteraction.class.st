@@ -16,20 +16,20 @@ Class {
 		'name',
 		'entries',
 		'group',
-		'labelSelector'
+		'labelSelector',
+		'entryClass'
 	],
 	#category : 'Calypso-Commands',
 	#package : 'Calypso-Commands'
 }
 
 { #category : 'instance creation' }
-ClyCommandInteraction class >> named: aSymbol in: aCommandMap group: aMenuGroupClass labelSelector: aSelector [
+ClyCommandInteraction class >> named: aSymbol in: aCommandMap entryClass: aCommandEntryClass labelSelector: aSelector [
 
 	^ self new
 		  setName: aSymbol
 		  map: aCommandMap
-		  entries: OrderedCollection new
-		  group: aMenuGroupClass
+		  entryClass: aCommandEntryClass
 		  labelSelector: aSelector
 ]
 
@@ -37,7 +37,7 @@ ClyCommandInteraction class >> named: aSymbol in: aCommandMap group: aMenuGroupC
 ClyCommandInteraction >> add: aCommandClass [
 	"Answers the new entry, to set its order, label or key."
 
-	^ entries add: (ClyCommandEntry of: aCommandClass in: self group: group)
+	^ entries add: (entryClass of: aCommandClass in: self group: group)
 ]
 
 { #category : 'declaring' }
@@ -89,12 +89,7 @@ ClyCommandInteraction >> group [
 ClyCommandInteraction >> group: aMenuGroupClass [
 	"Answers a view of me which adds its commands to aMenuGroupClass. It shares my entries."
 
-	^ self class new
-		  setName: name
-		  map: map
-		  entries: entries
-		  group: aMenuGroupClass
-		  labelSelector: labelSelector
+	^ self copy setGroup: aMenuGroupClass
 ]
 
 { #category : 'accessing' }
@@ -129,11 +124,18 @@ ClyCommandInteraction >> printOn: aStream [
 ]
 
 { #category : 'initialization' }
-ClyCommandInteraction >> setName: aSymbol map: aCommandMap entries: aCollection group: aMenuGroupClass labelSelector: aSelector [
+ClyCommandInteraction >> setGroup: aMenuGroupClass [
+
+	group := aMenuGroupClass
+]
+
+{ #category : 'initialization' }
+ClyCommandInteraction >> setName: aSymbol map: aCommandMap entryClass: aCommandEntryClass labelSelector: aSelector [
 
 	name := aSymbol.
 	map := aCommandMap.
-	entries := aCollection.
-	group := aMenuGroupClass.
-	labelSelector := aSelector
+	entryClass := aCommandEntryClass.
+	labelSelector := aSelector.
+	entries := OrderedCollection new.
+	group := ClyRootMenuGroup
 ]

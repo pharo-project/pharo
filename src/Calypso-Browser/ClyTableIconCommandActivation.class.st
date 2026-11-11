@@ -55,6 +55,12 @@ ClyTableIconCommandActivation class >> createContainerForRegistry [
 	^SortedCollection sortBlock: #priority ascending
 ]
 
+{ #category : 'command registry' }
+ClyTableIconCommandActivation class >> interactionName [
+
+	^ #tableIcons
+]
+
 { #category : 'instance creation' }
 ClyTableIconCommandActivation class >> priority: aNumber for: aBrowserContext [
 	"More priority value will allow command to override decorations from less priority commands"

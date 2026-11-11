@@ -29,10 +29,28 @@ ClyCommandActivationStrategy class >> createActivatorsExecutableInContext: aTool
 	^result
 ]
 
+{ #category : 'command registry' }
+ClyCommandActivationStrategy class >> interactionName [
+	"The interaction of ClyCommandMap whose declared commands I answer with my annotations, or nil."
+
+	^ nil
+]
+
 { #category : 'testing' }
 ClyCommandActivationStrategy class >> isAbstract [
 
 	^ self == ClyCommandActivationStrategy
+]
+
+{ #category : 'command registry' }
+ClyCommandActivationStrategy class >> registeredInstances [
+	"My class annotations followed by the commands declared for my interaction with the <calypsoCommands> pragma (see ClyCommandRegistry). Every way Calypso enumerates activations goes through me, so it shows both while commands move from class annotations to declarations."
+
+	| annotations |
+	annotations := super registeredInstances.
+	^ self interactionName
+		  ifNil: [ annotations ]
+		  ifNotNil: [ :interactionName | annotations asArray , (ClyCommandRegistry default allEntriesOf: interactionName) ]
 ]
 
 { #category : 'accessing' }

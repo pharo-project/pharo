@@ -1,6 +1,7 @@
 "
 I know every command declared for Calypso with the <calypsoCommands> pragma. I find the anchors (the classes whose class side has such methods), build their ClyCommandMap lazily and keep them.
 For a tool context, I answer the entries of an interaction from every anchor which applies to it (see ClyToolContext>>#isDescribedByCommandAnchor:).
+While Calypso commands move from class annotations to declarations, ClyCommandActivationStrategy class>>#registeredInstances answers my entries of its interaction (#allEntriesOf:) with its annotations, so every menu, toolbar, shortcut, click and drop shows both.
 The default instance is reset when a declaration method or a command class changes, so new declarations are shown at once.
 To see what is declared in the image, inspect:
 	ClyCommandRegistry default allEntries
@@ -10,7 +11,8 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'anchors',
-		'maps'
+		'maps',
+		'entriesByInteraction'
 	],
 	#classInstVars : [
 		'default'
@@ -97,6 +99,13 @@ ClyCommandRegistry >> allEntries [
 ]
 
 { #category : 'accessing' }
+ClyCommandRegistry >> allEntriesOf: anInteractionName [
+	"The entries of an interaction declared on every anchor, whatever the context."
+
+	^ entriesByInteraction at: anInteractionName ifAbsentPut: [ anchors flatCollect: [ :anchor | (self mapOf: anchor) entriesOf: anInteractionName ] ]
+]
+
+{ #category : 'accessing' }
 ClyCommandRegistry >> anchors [
 
 	^ anchors
@@ -127,5 +136,6 @@ ClyCommandRegistry >> mapsDescribing: aToolContext [
 ClyCommandRegistry >> setAnchors: anchorClasses [
 
 	anchors := anchorClasses.
-	maps := IdentityDictionary new
+	maps := IdentityDictionary new.
+	entriesByInteraction := IdentityDictionary new
 ]

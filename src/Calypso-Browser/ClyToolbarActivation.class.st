@@ -12,6 +12,12 @@ Class {
 	#tag : 'Toolbar'
 }
 
+{ #category : 'command registry' }
+ClyToolbarActivation class >> interactionName [
+
+	^ #toolbar
+]
+
 { #category : 'accessing' }
 ClyToolbarActivation >> menuItemNameFor: aCommand [
 	^ menuItemName ifNil: [ aCommand defaultToolbarItemName ]

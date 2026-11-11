@@ -17,6 +17,12 @@ ClyShortcutActivation class >> by: aKeyCombination for: anAnnotationUser [
 		keyCombination: aKeyCombination
 ]
 
+{ #category : 'command registry' }
+ClyShortcutActivation class >> interactionName [
+
+	^ #shortcuts
+]
+
 { #category : 'well known shortcuts' }
 ClyShortcutActivation class >> moveFor: anAnnotationUser [
 	<classAnnotationDependency>

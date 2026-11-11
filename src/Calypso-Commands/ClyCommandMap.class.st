@@ -54,7 +54,7 @@ ClyCommandMap >> anchor [
 ClyCommandMap >> click [
 	"Commands run by a click on an item of a list."
 
-	^ self interactionNamed: #click labelSelector: #name
+	^ self interactionNamed: #click entryClass: ClyMouseCommandEntry labelSelector: #name
 ]
 
 { #category : 'building' }
@@ -70,7 +70,7 @@ ClyCommandMap >> collectDeclarations [
 ClyCommandMap >> contextMenu [
 	"The context menu of lists and text editors."
 
-	^ self interactionNamed: #contextMenu labelSelector: #name
+	^ self interactionNamed: #contextMenu entryClass: ClyCommandEntry labelSelector: #name
 ]
 
 { #category : 'accessing' }
@@ -84,14 +84,14 @@ ClyCommandMap >> declaringMethod [
 ClyCommandMap >> doubleClick [
 	"Commands run by a double click on an item of a list."
 
-	^ self interactionNamed: #doubleClick labelSelector: #name
+	^ self interactionNamed: #doubleClick entryClass: ClyMouseCommandEntry labelSelector: #name
 ]
 
 { #category : 'interactions' }
 ClyCommandMap >> dragAndDrop [
 	"Commands run when the selected items are dropped on another context, see ClyCommandInteraction>>#add:dropIn:."
 
-	^ self interactionNamed: #dragAndDrop labelSelector: #name
+	^ self interactionNamed: #dragAndDrop entryClass: ClyDropCommandEntry labelSelector: #name
 ]
 
 { #category : 'accessing' }
@@ -108,13 +108,13 @@ ClyCommandMap >> initialize [
 ]
 
 { #category : 'private' }
-ClyCommandMap >> interactionNamed: aSymbol labelSelector: aSelector [
+ClyCommandMap >> interactionNamed: aSymbol entryClass: aCommandEntryClass labelSelector: aSelector [
 
 	^ interactions at: aSymbol ifAbsentPut: [
 			  ClyCommandInteraction
 				  named: aSymbol
 				  in: self
-				  group: ClyRootMenuGroup
+				  entryClass: aCommandEntryClass
 				  labelSelector: aSelector ]
 ]
 
@@ -138,47 +138,47 @@ ClyCommandMap >> setAnchor: anAnchorClass [
 ClyCommandMap >> shortcuts [
 	"Commands run by a key combination, see ClyCommandInteraction>>#add:key:."
 
-	^ self interactionNamed: #shortcuts labelSelector: #name
+	^ self interactionNamed: #shortcuts entryClass: ClyShortcutCommandEntry labelSelector: #name
 ]
 
 { #category : 'interactions' }
 ClyCommandMap >> tabActions [
 	"The action buttons of the browser tabs."
 
-	^ self interactionNamed: #tabActions labelSelector: #name
+	^ self interactionNamed: #tabActions entryClass: ClyCommandEntry labelSelector: #name
 ]
 
 { #category : 'interactions' }
 ClyCommandMap >> tableIcons [
 	"The icons shown in the cells of the lists."
 
-	^ self interactionNamed: #tableIcons labelSelector: #name
+	^ self interactionNamed: #tableIcons entryClass: ClyCommandEntry labelSelector: #name
 ]
 
 { #category : 'interactions' }
 ClyCommandMap >> textLeftBarClick [
 	"Commands run by a click in the left bar of a text editor."
 
-	^ self interactionNamed: #textLeftBarClick labelSelector: #name
+	^ self interactionNamed: #textLeftBarClick entryClass: ClyMouseCommandEntry labelSelector: #name
 ]
 
 { #category : 'interactions' }
 ClyCommandMap >> textLeftBarDoubleClick [
 	"Commands run by a double click in the left bar of a text editor."
 
-	^ self interactionNamed: #textLeftBarDoubleClick labelSelector: #name
+	^ self interactionNamed: #textLeftBarDoubleClick entryClass: ClyMouseCommandEntry labelSelector: #name
 ]
 
 { #category : 'interactions' }
 ClyCommandMap >> textLeftBarMenu [
 	"The menu of the left bar of a text editor."
 
-	^ self interactionNamed: #textLeftBarMenu labelSelector: #name
+	^ self interactionNamed: #textLeftBarMenu entryClass: ClyCommandEntry labelSelector: #name
 ]
 
 { #category : 'interactions' }
 ClyCommandMap >> toolbar [
 	"The toolbar of the browsers."
 
-	^ self interactionNamed: #toolbar labelSelector: #defaultToolbarItemName
+	^ self interactionNamed: #toolbar entryClass: ClyCommandEntry labelSelector: #defaultToolbarItemName
 ]

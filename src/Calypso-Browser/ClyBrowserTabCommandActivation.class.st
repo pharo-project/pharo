@@ -9,3 +9,9 @@ Class {
 	#package : 'Calypso-Browser',
 	#tag : 'Tabs'
 }
+
+{ #category : 'command registry' }
+ClyBrowserTabCommandActivation class >> interactionName [
+
+	^ #tabActions
+]

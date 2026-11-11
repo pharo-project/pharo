@@ -7,3 +7,9 @@ Class {
 	#category : 'Calypso-Commands',
 	#package : 'Calypso-Commands'
 }
+
+{ #category : 'command registry' }
+ClyTextLeftBarMenuActivation class >> interactionName [
+
+	^ #textLeftBarMenu
+]

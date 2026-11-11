@@ -25,6 +25,12 @@ ClyDragAndDropActivation class >> for: dragAnnotationContext toDropIn: dropAnnot
 		activeDropContext: dropAnnotationContext asAnnotationContext
 ]
 
+{ #category : 'command registry' }
+ClyDragAndDropActivation class >> interactionName [
+
+	^ #dragAndDrop
+]
+
 { #category : 'accessing' }
 ClyDragAndDropActivation >> activeDropContext [
 	^ activeDropContext
