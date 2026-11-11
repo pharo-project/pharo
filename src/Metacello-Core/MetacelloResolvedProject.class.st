@@ -1,9 +1,10 @@
 "
 I am a project of a MetacelloResolution: the project at the version its resolver chose.
 
-- projectSpec: a MetacelloProjectSpec at that version, whose project holds the version spec read from its baseline; its loads are the union of the groups every request asked, the default ones counted as their names.
+- projectSpec: a MetacelloProjectSpec at that version, whose project holds the version spec read from its baseline; its loads are the union of the groups every request asked, the default ones counted as their names. A resolver may create me before reading the baseline, and give me the full spec later (changeVersionTo:).
 - requests: the MetacelloProjectRequests for me: who asked (another resolved project, nil for the root) and the project spec they declared, with its groups and findings.
 - installsBaseline: true when my resolver read my baseline without installing it; a load then installs my BaselineOf class once the projects are loaded.
+- locked: the registry locks this version; nothing the resolution asks changes it.
 "
 Class {
 	#name : 'MetacelloResolvedProject',
@@ -11,7 +12,8 @@ Class {
 	#instVars : [
 		'projectSpec',
 		'requests',
-		'installsBaseline'
+		'installsBaseline',
+		'locked'
 	],
 	#category : 'Metacello-Core-Resolution',
 	#package : 'Metacello-Core',
@@ -25,10 +27,26 @@ MetacelloResolvedProject class >> projectSpec: aProjectSpec [
 	^ self new setProjectSpec: aProjectSpec
 ]
 
+{ #category : 'requests' }
+MetacelloResolvedProject >> addRequest: aProjectRequest [
+	"Record aProjectRequest for this project and answer it. Groups add up: the project is loaded once, with every group asked, the default ones counted as their names"
+
+	requests add: aProjectRequest.
+	projectSpec loads:
+		(projectSpec loads , (aProjectRequest loads asArray ifEmpty: [ self version defaultPackageNames asArray ])) asSet asArray.
+	^ aProjectRequest
+]
+
 { #category : 'accessing' }
 MetacelloResolvedProject >> beInstallingBaseline [
 
 	installsBaseline := true
+]
+
+{ #category : 'pins' }
+MetacelloResolvedProject >> beLocked [
+
+	locked := true
 ]
 
 { #category : 'accessing' }
@@ -52,6 +70,13 @@ MetacelloResolvedProject >> installsBaseline [
 	"Its BaselineOf class is not in the image at the chosen version (the resolver read it without installing it): a load installs it once the project is loaded, for the tools"
 
 	^ installsBaseline == true
+]
+
+{ #category : 'pins' }
+MetacelloResolvedProject >> isLocked [
+	"The registry locks this version: it is never changed"
+
+	^ locked == true
 ]
 
 { #category : 'accessing' }
@@ -85,14 +110,9 @@ MetacelloResolvedProject >> projectSpec [
 
 { #category : 'requests' }
 MetacelloResolvedProject >> requestedBy: aResolvedProjectOrNil spec: aProjectSpec [
-	"Record that aResolvedProjectOrNil (nil for the root) asked for this project as aProjectSpec declares it, and answer the MetacelloProjectRequest. Groups add up: the project is loaded once, with every group asked, the default ones counted as their names"
+	"Record that aResolvedProjectOrNil (nil for the root) asked for this project as aProjectSpec declares it, and answer the MetacelloProjectRequest"
 
-	| request |
-	request := MetacelloProjectRequest requester: aResolvedProjectOrNil projectSpec: aProjectSpec.
-	requests add: request.
-	projectSpec loads:
-		(projectSpec loads , (request loads asArray ifEmpty: [ self version defaultPackageNames asArray ])) asSet asArray.
-	^ request
+	^ self addRequest: (MetacelloProjectRequest requester: aResolvedProjectOrNil projectSpec: aProjectSpec)
 ]
 
 { #category : 'accessing' }

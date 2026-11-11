@@ -1,94 +1,9 @@
 "
-MetacelloSemanticVersionNumber conforms to version 2.0.0-rc.1 of  [Semantic Versioning 2.0.0-rc.1](http://semver.org/)
+I am a semantic version: a normal version (major, minor, patch), prerelease identifiers and build metadata, ordered by semver precedence (numeric identifiers compare as numbers, a prerelease comes before its release).
 
-The most important thing that you need to know is that: 
-**A normal version number MUST take the form X.Y.Z where X, Y, and Z are non-negative integers.**
+Read from a git tag (fromTag:), I keep the tag. The canonical form is vMAJOR.MINOR.PATCH with an optional -prerelease and no leading zeros; other forms are accepted, to deprecate: two numbers (v1.2 is v1.2.0), leading zeros (v1.02 is v1.2), no v (1.2.7 is v1.2.7). isCanonical tells them apart. A floating tag (vX.Y.x, vX.x.x) reads as the first version of its series (fromSeriesTag:).
 
-**Semantic Versioning Specification** extracted from [Semantic versioning 2.0.0-rc.1](https://github.com/mojombo/semver/blob/3c7f2e8df747ea0ca15208fdfc90e3275240184f/semver.md):
-
-Semantic Versioning Specification (SemVer)
-------------------------------------------
-
-The key words ""MUST"", ""MUST NOT"", ""REQUIRED"", ""SHALL"", ""SHALL NOT"", ""SHOULD"",
-""SHOULD NOT"", ""RECOMMENDED"", ""MAY"", and ""OPTIONAL"" in this document are to be
-interpreted as described in RFC 2119.
-
-1. Software using Semantic Versioning MUST declare a public API. This API
-could be declared in the code itself or exist strictly in documentation.
-However it is done, it should be precise and comprehensive.
-
-1. A normal version number MUST take the form X.Y.Z where X, Y, and Z are
-non-negative integers. X is the major version, Y is the minor version, and Z
-is the patch version. Each element MUST increase numerically by increments of
-one. For instance: 1.9.0 -> 1.10.0 -> 1.11.0.
-
-1. Once a versioned package has been released, the contents of that version
-MUST NOT be modified. Any modifications must be released as a new version.
-
-1. Major version zero (0.y.z) is for initial development. Anything may change
-at any time. The public API should not be considered stable.
-
-1. Version 1.0.0 defines the public API. The way in which the version number
-is incremented after this release is dependent on this public API and how it
-changes.
-
-1. Patch version Z (x.y.Z | x > 0) MUST be incremented if only backwards
-compatible bug fixes are introduced. A bug fix is defined as an internal
-change that fixes incorrect behavior.
-
-1. Minor version Y (x.Y.z | x > 0) MUST be incremented if new, backwards
-compatible functionality is introduced to the public API. It MUST be
-incremented if any public API functionality is marked as deprecated. It MAY be
-incremented if substantial new functionality or improvements are introduced
-within the private code. It MAY include patch level changes. Patch version
-MUST be reset to 0 when minor version is incremented.
-
-1. Major version X (X.y.z | X > 0) MUST be incremented if any backwards
-incompatible changes are introduced to the public API. It MAY include minor
-and patch level changes. Patch and minor version MUST be reset to 0 when major
-version is incremented.
-
-1. A pre-release version MAY be denoted by appending a hyphen and a series of
-dot separated identifiers immediately following the patch version. Identifiers
-MUST be comprised of only ASCII alphanumerics and dash [0-9A-Za-z-].
-Pre-release versions satisfy but have a lower precedence than the associated
-normal version. Examples: 1.0.0-alpha, 1.0.0-alpha.1, 1.0.0-0.3.7,
-1.0.0-x.7.z.92.
-
-1. A build version MAY be denoted by appending a plus sign and a series of dot
-separated identifiers immediately following the patch version or pre-release
-version. Identifiers MUST be comprised of only ASCII alphanumerics and dash
-[0-9A-Za-z-]. Build versions satisfy and have a higher precedence than the
-associated normal version. Examples: 1.0.0+build.1, 1.3.7+build.11.e0f985a.
-
-1. Precedence MUST be calculated by separating the version into major, minor,
-patch, pre-release, and build identifiers in that order. Major, minor, and
-patch versions are always compared numerically. Pre-release and build version
-precedence MUST be determined by comparing each dot separated identifier as
-follows: identifiers consisting of only digits are compared numerically and
-identifiers with letters or dashes are compared lexically in ASCII sort order.
-Numeric identifiers always have lower precedence than non-numeric identifiers.
-Example: 1.0.0-alpha < 1.0.0-alpha.1 < 1.0.0-beta.2 < 1.0.0-beta.11 <
-1.0.0-rc.1 < 1.0.0-rc.1+build.1 < 1.0.0 < 1.0.0+0.3.7 < 1.3.7+build <
-1.3.7+build.2.b8f12d7 < 1.3.7+build.11.e0f985a.
-
-About
------
-
-The Semantic Versioning specification is authored by [Tom
-Preston-Werner](http://tom.preston-werner.com), inventor of Gravatars and
-cofounder of GitHub.
-
-If you'd like to leave feedback, please [open an issue on
-GitHub](https://github.com/mojombo/semver/issues).
-
-
-License
--------
-
-Creative Commons - CC BY 3.0
-http://creativecommons.org/licenses/by/3.0/
-
+fromString: reads a strict semver string, without v.
 "
 Class {
 	#name : 'MetacelloSemanticVersionNumber',
@@ -96,11 +11,20 @@ Class {
 	#instVars : [
 		'normalVersion',
 		'preReleaseVersion',
-		'buildVersion'
+		'buildVersion',
+		'string'
 	],
-	#category : 'Deprecated14',
-	#package : 'Deprecated14'
+	#category : 'Metacello-Core-Model',
+	#package : 'Metacello-Core',
+	#tag : 'Model'
 }
+
+{ #category : 'versions' }
+MetacelloSemanticVersionNumber class >> canonicalPattern [
+	"A canonical version: vX.Y.Z with an optional prerelease, without leading zeros"
+
+	^ '^v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)(-[0-9A-Za-z.-]*[0-9A-Za-z])?$' asRegex
+]
 
 { #category : 'private' }
 MetacelloSemanticVersionNumber class >> extractNumericComponent: subString forPattern: forPattern [
@@ -115,6 +39,23 @@ MetacelloSemanticVersionNumber class >> extractNumericComponent: subString forPa
     ^ number asString = subString
         ifTrue: [ number ]
         ifFalse: [ subString ]
+]
+
+{ #category : 'versions' }
+MetacelloSemanticVersionNumber class >> fromSeries: aString [
+	"A floating version counts as the first version of its series: vX.Y.x as vX.Y.0, vX.x.x as vX.0.0"
+
+	| pattern minor |
+	pattern := self seriesPattern.
+	(pattern matches: aString) ifFalse: [ ^ self error: aString printString , ' is not a vMAJOR.MINOR.x or vMAJOR.x.x string' ].
+	minor := pattern subexpression: 3.
+	^ self
+		  major: (pattern subexpression: 2) asNumber
+		  minor: (minor = 'x'
+				   ifTrue: [ 0 ]
+				   ifFalse: [ minor asNumber ])
+		  patch: 0
+		  prerelease: nil
 ]
 
 { #category : 'instance creation' }
@@ -196,6 +137,22 @@ MetacelloSemanticVersionNumber class >> fromString: aString forPattern: forPatte
     yourself
 ]
 
+{ #category : 'instance creation' }
+MetacelloSemanticVersionNumber class >> fromVersionString: aString [
+	"The version aString names: vX.Y.Z with an optional prerelease, or a tolerated form (see versionPattern). I keep aString"
+
+	| pattern |
+	pattern := self versionPattern.
+	(pattern matches: aString) ifFalse: [ ^ self error: aString printString , ' is not a vMAJOR.MINOR.PATCH or vMAJOR.MINOR version' ].
+	^ (self
+		   major: (pattern subexpression: 2) asNumber
+		   minor: (pattern subexpression: 3) asNumber
+		   patch: ((pattern subexpression: 5) ifNil: [ 0 ] ifNotNil: [ :digits | digits asNumber ])
+		   prerelease: ((pattern subexpression: 6) ifNotNil: [ :suffix | suffix allButFirst ]))
+		  setString: aString;
+		  yourself
+]
+
 { #category : 'private' }
 MetacelloSemanticVersionNumber class >> integerFromString: aString [
   aString
@@ -216,11 +173,10 @@ MetacelloSemanticVersionNumber class >> integerFromString: aString [
         , aString asString
 ]
 
-{ #category : 'testing' }
-MetacelloSemanticVersionNumber class >> isDeprecated [
-	"This was only used with ConfigurationOf but cannot be used with BaselineOf."
+{ #category : 'versions' }
+MetacelloSemanticVersionNumber class >> isCanonical: aString [
 
-	^ true
+	^ self canonicalPattern matches: aString
 ]
 
 { #category : 'private' }
@@ -236,13 +192,54 @@ MetacelloSemanticVersionNumber class >> isSemanticIdentifier: aString [
     ^ true
 ]
 
+{ #category : 'versions' }
+MetacelloSemanticVersionNumber class >> isSemanticVersion: aString [
+
+	^ self versionPattern matches: aString
+]
+
+{ #category : 'versions' }
+MetacelloSemanticVersionNumber class >> isSeries: aString [
+
+	^ self seriesPattern matches: aString
+]
+
+{ #category : 'versions' }
+MetacelloSemanticVersionNumber class >> major: major minor: minor patch: patch prerelease: aStringOrNil [
+
+	^ self new
+		  normalVersion: {
+				  major.
+				  minor.
+				  patch } asOrderedCollection;
+		  preReleaseVersion: (aStringOrNil
+				   ifNil: [ OrderedCollection new ]
+				   ifNotNil: [
+					   ((aStringOrNil findTokens: '.') collect: [ :each | self extractNumericComponent: each forPattern: false ])
+						   asOrderedCollection ]);
+		  buildVersion: OrderedCollection new;
+		  yourself
+]
+
+{ #category : 'versions' }
+MetacelloSemanticVersionNumber class >> seriesPattern [
+	"A floating version: vX.Y.x, or vX.x.x for a whole major"
+
+	^ '^v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*|x)\.x$' asRegex
+]
+
 { #category : 'private' }
 MetacelloSemanticVersionNumber class >> validateVersionNumber: svn against: aString [
-  svn printString = aString
-    ifFalse: [ 
-      self
-        error:
-          'The printString of a semantic version number should be equal to the source version string' ]
+
+	svn versionString = aString ifFalse: [
+		self error: 'The version string of a semantic version number should be equal to the source version string' ]
+]
+
+{ #category : 'versions' }
+MetacelloSemanticVersionNumber class >> versionPattern [
+	"What a string may be: vX.Y.Z with an optional prerelease, vX.Y, with or without the v, leading zeros allowed"
+
+	^ '^v?([0-9]+)\.([0-9]+)(\.([0-9]+)(-[0-9A-Za-z.-]*[0-9A-Za-z])?)?$' asRegex
 ]
 
 { #category : 'comparing' }
@@ -304,20 +301,19 @@ MetacelloSemanticVersionNumber >> compareEqualTo: myComponents other: otherCompo
 
 { #category : 'private' }
 MetacelloSemanticVersionNumber >> compareLessThan: aMetacelloVersionNumber [
+	"Semver precedence: the normal versions decide when they differ; then a prerelease comes before its release, and prereleases compare identifier by identifier; then build metadata"
 
 	| myComponents otherComponents defaultResult |
 	aMetacelloVersionNumber species = self species ifFalse: [ ^ false ].
 	myComponents := self normalVersion.
 	otherComponents := aMetacelloVersionNumber normalVersion.
-	defaultResult := true.
-	(self compareEqualTo: myComponents other: otherComponents)
-		ifTrue: [ defaultResult := false ]
-		ifFalse: [ (self compareLessThan: myComponents other: otherComponents version: #normal) ifFalse: [ ^ false ] ].
+	(self compareEqualTo: myComponents other: otherComponents) ifFalse: [
+		^ self compareLessThan: myComponents other: otherComponents version: #normal ].
+	defaultResult := false.
 	myComponents := self preReleaseVersion.
 	otherComponents := aMetacelloVersionNumber preReleaseVersion.
-	(self compareEqualTo: myComponents other: otherComponents)
-		ifTrue: [ myComponents size > 0 ifTrue: [ defaultResult := false ] ]
-		ifFalse: [ ^ self compareLessThan: myComponents other: otherComponents version: #preRelease ].
+	(self compareEqualTo: myComponents other: otherComponents) ifFalse: [
+		^ self compareLessThan: myComponents other: otherComponents version: #preRelease ].
 	myComponents := self buildVersion.
 	otherComponents := aMetacelloVersionNumber buildVersion.
 	^ (self compareEqualTo: myComponents other: otherComponents)
@@ -411,6 +407,25 @@ MetacelloSemanticVersionNumber >> incrementNormalVersionAt: index [
   col at: index put: int + 1
 ]
 
+{ #category : 'versions' }
+MetacelloSemanticVersionNumber >> isCanonical [
+	"Whether my string is vX.Y.Z without leading zeros; other spellings are accepted, to deprecate"
+
+	^ self class isCanonical: self string
+]
+
+{ #category : 'versions' }
+MetacelloSemanticVersionNumber >> isPrerelease [
+
+	^ self preReleaseVersion isNotEmpty
+]
+
+{ #category : 'versions' }
+MetacelloSemanticVersionNumber >> major [
+
+	^ self normalVersion at: 1
+]
+
 { #category : 'comparing' }
 MetacelloSemanticVersionNumber >> match: aVersionPattern [
     "Answer whether the version number of the receiver matches the given pattern string.
@@ -452,6 +467,12 @@ MetacelloSemanticVersionNumber >> match: aVersionPattern [
     ^ true
 ]
 
+{ #category : 'versions' }
+MetacelloSemanticVersionNumber >> minor [
+
+	^ self normalVersion at: 2
+]
+
 { #category : 'accessing' }
 MetacelloSemanticVersionNumber >> normalVersion [
     normalVersion ifNil: [ normalVersion := #() ].
@@ -461,6 +482,12 @@ MetacelloSemanticVersionNumber >> normalVersion [
 { #category : 'accessing' }
 MetacelloSemanticVersionNumber >> normalVersion: anObject [
 	normalVersion := anObject
+]
+
+{ #category : 'versions' }
+MetacelloSemanticVersionNumber >> patch [
+
+	^ self normalVersion at: 3
 ]
 
 { #category : 'copying' }
@@ -481,6 +508,14 @@ MetacelloSemanticVersionNumber >> preReleaseVersion: anObject [
 	preReleaseVersion := anObject
 ]
 
+{ #category : 'versions' }
+MetacelloSemanticVersionNumber >> prerelease [
+	"My prerelease identifiers as written, or nil"
+
+	self isPrerelease ifFalse: [ ^ nil ].
+	^ '.' join: (self preReleaseVersion collect: [ :each | each asString ])
+]
+
 { #category : 'printing' }
 MetacelloSemanticVersionNumber >> print: components prefix: prefixChar on: aStream [
     | beforeFirst |
@@ -497,9 +532,34 @@ MetacelloSemanticVersionNumber >> print: components prefix: prefixChar on: aStre
 
 { #category : 'printing' }
 MetacelloSemanticVersionNumber >> printOn: aStream [
-    self print: self normalVersion prefix: nil on: aStream.
-    self print: self preReleaseVersion prefix: $- on: aStream.
-    self print: self buildVersion prefix: $+ on: aStream
+	"As a version: vMAJOR.MINOR.PATCH, or the string I was read from (see versionString for the semver alone)"
+
+	aStream nextPutAll: self string
+]
+
+{ #category : 'versions' }
+MetacelloSemanticVersionNumber >> setString: aString [
+
+	string := aString
+]
+
+{ #category : 'versions' }
+MetacelloSemanticVersionNumber >> string [
+	"The git string I was read from, or the canonical vX.Y.Z"
+
+	string ifNotNil: [ ^ string ].
+	^ String streamContents: [ :stream |
+			  stream
+				  nextPut: $v;
+				  print: self major;
+				  nextPut: $.;
+				  print: self minor;
+				  nextPut: $.;
+				  print: self patch.
+			  self prerelease ifNotNil: [ :identifiers |
+					  stream
+						  nextPut: $-;
+						  nextPutAll: identifiers ] ]
 ]
 
 { #category : 'private' }
@@ -509,11 +569,12 @@ MetacelloSemanticVersionNumber >> versionComponents [
 
 { #category : 'accessing' }
 MetacelloSemanticVersionNumber >> versionString [
+	"The semver alone: MAJOR.MINOR.PATCH, then -prerelease and +build when there are"
 
-	| strm |
-	strm := WriteStream on: String new.
-	self printOn: strm.
-	^strm contents
+	^ String streamContents: [ :stream |
+			  self print: self normalVersion prefix: nil on: stream.
+			  self print: self preReleaseVersion prefix: $- on: stream.
+			  self print: self buildVersion prefix: $+ on: stream ]
 ]
 
 { #category : 'comparing' }

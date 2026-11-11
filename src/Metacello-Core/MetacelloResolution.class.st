@@ -56,7 +56,7 @@ MetacelloResolution >> includes: aProjectSpec [
 	^ projects includesKey: aProjectSpec className
 ]
 
-{ #category : 'accessing' }
+{ #category : 'initialization' }
 MetacelloResolution >> initialize [
 
 	super initialize.
