@@ -576,7 +576,7 @@ The following is obtained by setting minimumNewLinesBetweenStatements to 2.
 
 { #category : 'settings' }
 EFFormatter class >> settingsMultiLineMessages: aBuilder [
-	self halt.
+
 	(aBuilder setting: #multiLineMessages)
 		label: 'Multi line messages';
 		defaultValue: 'ifTrue:ifFalse: ifFalse:ifTrue: ifTrue: ifFalse: on:do: ensure: ifCurtailed:';
