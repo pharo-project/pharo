@@ -105,7 +105,7 @@ SHPreferences class >> settingsOn: aBuilder [
 					domainValues: self styleTableNames;
 					description:
 						'Choose between the different styles.  Default changes according to the UI Theme and Custom can be modified by you.';
-					default: 'Default'.]
+					defaultValue: 'Default'.]
 ]
 
 { #category : 'private' }
