@@ -1,0 +1,184 @@
+"
+I am the commands Calypso shows for one anchor, by interaction (context menu, toolbar, tab actions, table icons, shortcuts, clicks, drag and drop and the left bar of text editors).
+An anchor is a class which says when the commands apply:
+- a tool context class, such as ClyFullBrowserClassContext: the commands apply to the contexts which are instances of it or of its subclasses;
+- an item type, such as ClyMethod or Package: the commands apply to the browser contexts whose selection holds items of this type.
+I am built by running every class-side method of the anchor marked with the <calypsoCommands> pragma, in the order of their selectors. Each method receives me and adds its commands to my interactions. Any package can add such a method as an extension, which is how plugins add commands to Calypso:
+	ClyMethod class >> myCoverageCommandsIn: aCommandMap
+		<calypsoCommands>
+		aCommandMap contextMenu add: MyShowCoverageCommand order: 1000.
+		aCommandMap shortcuts add: MyShowCoverageCommand key: $k meta shift
+I am plain data, built without any tool context. ClyCommandRegistry keeps me in a cache and finds the maps which apply to a context.
+"
+Class {
+	#name : 'ClyCommandMap',
+	#superclass : 'Object',
+	#instVars : [
+		'anchor',
+		'interactions',
+		'declaringMethod'
+	],
+	#category : 'Calypso-Commands',
+	#package : 'Calypso-Commands'
+}
+
+{ #category : 'instance creation' }
+ClyCommandMap class >> forAnchor: anAnchorClass [
+
+	^ self new
+		  setAnchor: anAnchorClass;
+		  collectDeclarations;
+		  yourself
+]
+
+{ #category : 'accessing' }
+ClyCommandMap class >> pragmaName [
+	"Class-side methods of an anchor marked with this pragma declare its commands. They take one argument, the command map."
+
+	^ #calypsoCommands
+]
+
+{ #category : 'accessing' }
+ClyCommandMap >> allEntries [
+
+	^ interactions values flatCollect: [ :interaction | interaction entries ]
+]
+
+{ #category : 'accessing' }
+ClyCommandMap >> anchor [
+
+	^ anchor
+]
+
+{ #category : 'interactions' }
+ClyCommandMap >> click [
+	"Commands run by a click on an item of a list."
+
+	^ self interactionNamed: #click labelSelector: #name
+]
+
+{ #category : 'building' }
+ClyCommandMap >> collectDeclarations [
+	"Runs the declaration methods of my anchor in the order of their selectors, remembering the running one so each entry knows where it was declared."
+
+	((Pragma allNamed: self class pragmaName in: anchor classSide) sorted: [ :first :second | first methodSelector <= second methodSelector ]) do: [ :pragma |
+			declaringMethod := pragma method.
+			[ anchor perform: pragma methodSelector with: self ] ensure: [ declaringMethod := nil ] ]
+]
+
+{ #category : 'interactions' }
+ClyCommandMap >> contextMenu [
+	"The context menu of lists and text editors."
+
+	^ self interactionNamed: #contextMenu labelSelector: #name
+]
+
+{ #category : 'accessing' }
+ClyCommandMap >> declaringMethod [
+	"The declaration method running while I am built."
+
+	^ declaringMethod
+]
+
+{ #category : 'interactions' }
+ClyCommandMap >> doubleClick [
+	"Commands run by a double click on an item of a list."
+
+	^ self interactionNamed: #doubleClick labelSelector: #name
+]
+
+{ #category : 'interactions' }
+ClyCommandMap >> dragAndDrop [
+	"Commands run when the selected items are dropped on another context, see ClyCommandInteraction>>#add:dropIn:."
+
+	^ self interactionNamed: #dragAndDrop labelSelector: #name
+]
+
+{ #category : 'accessing' }
+ClyCommandMap >> entriesOf: anInteractionName [
+
+	^ (interactions at: anInteractionName ifAbsent: [ ^ #(  ) ]) entries
+]
+
+{ #category : 'initialization' }
+ClyCommandMap >> initialize [
+
+	super initialize.
+	interactions := IdentityDictionary new
+]
+
+{ #category : 'private' }
+ClyCommandMap >> interactionNamed: aSymbol labelSelector: aSelector [
+
+	^ interactions at: aSymbol ifAbsentPut: [
+			  ClyCommandInteraction
+				  named: aSymbol
+				  in: self
+				  group: ClyRootMenuGroup
+				  labelSelector: aSelector ]
+]
+
+{ #category : 'printing' }
+ClyCommandMap >> printOn: aStream [
+
+	super printOn: aStream.
+	aStream
+		nextPut: $(;
+		print: anchor;
+		nextPut: $)
+]
+
+{ #category : 'initialization' }
+ClyCommandMap >> setAnchor: anAnchorClass [
+
+	anchor := anAnchorClass
+]
+
+{ #category : 'interactions' }
+ClyCommandMap >> shortcuts [
+	"Commands run by a key combination, see ClyCommandInteraction>>#add:key:."
+
+	^ self interactionNamed: #shortcuts labelSelector: #name
+]
+
+{ #category : 'interactions' }
+ClyCommandMap >> tabActions [
+	"The action buttons of the browser tabs."
+
+	^ self interactionNamed: #tabActions labelSelector: #name
+]
+
+{ #category : 'interactions' }
+ClyCommandMap >> tableIcons [
+	"The icons shown in the cells of the lists."
+
+	^ self interactionNamed: #tableIcons labelSelector: #name
+]
+
+{ #category : 'interactions' }
+ClyCommandMap >> textLeftBarClick [
+	"Commands run by a click in the left bar of a text editor."
+
+	^ self interactionNamed: #textLeftBarClick labelSelector: #name
+]
+
+{ #category : 'interactions' }
+ClyCommandMap >> textLeftBarDoubleClick [
+	"Commands run by a double click in the left bar of a text editor."
+
+	^ self interactionNamed: #textLeftBarDoubleClick labelSelector: #name
+]
+
+{ #category : 'interactions' }
+ClyCommandMap >> textLeftBarMenu [
+	"The menu of the left bar of a text editor."
+
+	^ self interactionNamed: #textLeftBarMenu labelSelector: #name
+]
+
+{ #category : 'interactions' }
+ClyCommandMap >> toolbar [
+	"The toolbar of the browsers."
+
+	^ self interactionNamed: #toolbar labelSelector: #defaultToolbarItemName
+]

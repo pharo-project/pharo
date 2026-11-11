@@ -123,6 +123,13 @@ ClyMenuCommandActivationStrategy >> menuItemOrder: anObject [
 	menuItemOrder := anObject
 ]
 
+{ #category : 'accessing' }
+ClyMenuCommandActivationStrategy >> menuItemOrderFor: aCommand [
+	"The order of the menu item of the command. ClyCommandEntry can ask it to the command."
+
+	^ menuItemOrder
+]
+
 { #category : 'printing' }
 ClyMenuCommandActivationStrategy >> printOn: aStream [
 	super printOn: aStream.

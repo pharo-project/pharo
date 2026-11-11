@@ -202,6 +202,13 @@ ClyCommand >> name [
 ]
 
 { #category : 'accessing' }
+ClyCommand >> order [
+	"The order of the command in a menu when the entry that declares it gives none, see ClyCommandEntry>>#menuItemOrderFor:. It is the default order of menu activations."
+
+	^ 1000
+]
+
+{ #category : 'accessing' }
 ClyCommand >> orderInContext: aToolContext [
 
 	^ self order

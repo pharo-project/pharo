@@ -41,6 +41,13 @@ ClyToolContext >> isClassDefinitionContext [
 ]
 
 { #category : 'testing' }
+ClyToolContext >> isDescribedByCommandAnchor: anAnchorClass [
+	"The commands declared on an anchor apply to me when I am an instance of it or of its subclasses. See ClyCommandMap."
+
+	^ self class includesBehavior: anAnchorClass
+]
+
+{ #category : 'testing' }
 ClyToolContext >> isFullBrowserClassContext [
 
 	^ false

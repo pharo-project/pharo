@@ -109,7 +109,8 @@ ClyCommandActivator >> menuItemName [
 
 { #category : 'accessing' }
 ClyCommandActivator >> menuItemOrder [
-	^activationStrategy menuItemOrder
+
+	^ activationStrategy menuItemOrderFor: command
 ]
 
 { #category : 'accessing' }

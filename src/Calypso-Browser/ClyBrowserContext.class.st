@@ -139,6 +139,13 @@ ClyBrowserContext >> isAboutSelectedItem: aDataSourceItem [
 ]
 
 { #category : 'testing' }
+ClyBrowserContext >> isDescribedByCommandAnchor: anAnchorClass [
+	"An anchor can also be the type of the selected items, such as ClyMethod or Package."
+
+	^ (super isDescribedByCommandAnchor: anAnchorClass) or: [ self isAboutBrowserItemType: anAnchorClass ]
+]
+
+{ #category : 'testing' }
 ClyBrowserContext >> isSimilarTo: anotherBrowserContext [
 	self class = anotherBrowserContext class ifFalse: [ ^false ].
 
