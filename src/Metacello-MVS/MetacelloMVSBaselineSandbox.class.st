@@ -83,7 +83,7 @@ MetacelloMVSBaselineSandbox >> imageQueries [
 			(ast allChildren select: [ :node | node isVariable ]) do: [ :node |
 				(#( #Smalltalk #SystemVersion #BaselineOfPharo ) includes: node name asSymbol) ifTrue: [ found add: node name asString ] ].
 			(ast sentMessages select: [ :each |
-				 #( #classNamed: #classNamed:ifPresent: #classNamed:ifPresent:ifAbsent: #environment ) includes: each ]) do: [ :each |
+				 { #classNamed:. #classNamed:ifPresent:. #classNamed:ifPresent:ifAbsent:. #environment } includes: each ]) do: [ :each |
 				found add: each asString ] ].
 	^ found asSortedCollection asArray
 ]

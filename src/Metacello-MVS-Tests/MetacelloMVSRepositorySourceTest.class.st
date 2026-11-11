@@ -35,7 +35,7 @@ MetacelloMVSRepositorySourceTest >> fooBaseline [
 		   repository: 'github://acme/Foo:v1.0.0') definitions
 ]
 
-{ #category : 'tests' }
+{ #category : 'running' }
 MetacelloMVSRepositorySourceTest >> setUp [
 
 	super setUp.

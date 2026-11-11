@@ -12,7 +12,7 @@ Class {
 	#package : 'Metacello-MVS-Tests'
 }
 
-{ #category : 'tests' }
+{ #category : 'running' }
 MetacelloMVSProjectSpecTest >> setUp [
 
 	super setUp.
