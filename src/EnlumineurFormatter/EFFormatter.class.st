@@ -210,7 +210,7 @@ EFFormatter class >> multiLineMessages [
 
 { #category : 'accessing' }
 EFFormatter class >> multiLineMessages: aString [
-	DefaultPrettyPrintContext multiLineMessages: (self compiler evaluate: aString).
+	DefaultPrettyPrintContext multiLineMessages: aString.
 	self announceASettingChange
 ]
 
@@ -369,7 +369,7 @@ EFFormatter class >> oneLineMessages [
 
 { #category : 'accessing' }
 EFFormatter class >> oneLineMessages: aString [
-	DefaultPrettyPrintContext oneLineMessages: (self compiler evaluate: aString).
+	DefaultPrettyPrintContext oneLineMessages: aString.
 	self announceASettingChange
 ]
 
@@ -576,10 +576,10 @@ The following is obtained by setting minimumNewLinesBetweenStatements to 2.
 
 { #category : 'settings' }
 EFFormatter class >> settingsMultiLineMessages: aBuilder [
-
+	self halt.
 	(aBuilder setting: #multiLineMessages)
 		label: 'Multi line messages';
-		defaultValue: '#(#ifTrue:ifFalse: #ifFalse:ifTrue: #ifTrue: #ifFalse: #on:do: #ensure: #ifCurtailed:)';
+		defaultValue: '#ifTrue:ifFalse: #ifFalse:ifTrue: #ifTrue: #ifFalse: #on:do: #ensure: #ifCurtailed:';
 		description: 'An array containing all the messages that should be written on multiple lines.
 		
 Example:
@@ -1614,9 +1614,10 @@ EFFormatter >> isLineTooLongWithString: aString [
 
 { #category : 'private' }
 EFFormatter >> isMultiLineMessage: aMessageNode [
-	(self multiLineMessages includes: aMessageNode selector)
+	
+	(self multiLineMessages includes: aMessageNode selector asString)
 		ifTrue: [ ^ true ].
-	(self oneLineMessages includes: aMessageNode selector)
+	(self oneLineMessages includes: aMessageNode selector asString)
 		ifTrue: [ ^ false ].
 	self numberOfArgumentsForMultiLine <= aMessageNode arguments size
 		ifTrue: [ ^ true ].
@@ -1726,8 +1727,8 @@ EFFormatter >> multiLineMessages [
 ]
 
 { #category : 'accessing' }
-EFFormatter >> multiLineMessages: anArray [
-	context multiLineMessages: anArray
+EFFormatter >> multiLineMessages: aString [
+	context multiLineMessages: aString
 ]
 
 { #category : 'private' }
@@ -1964,8 +1965,8 @@ EFFormatter >> oneLineMessages [
 ]
 
 { #category : 'accessing' }
-EFFormatter >> oneLineMessages: anArray [
-	context oneLineMessages: anArray
+EFFormatter >> oneLineMessages: aString [
+	context oneLineMessages: aString
 ]
 
 { #category : 'accessing' }

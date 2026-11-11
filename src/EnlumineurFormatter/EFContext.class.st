@@ -226,10 +226,10 @@ EFContext >> multiLineMessages [
 ]
 
 { #category : 'accessing' }
-EFContext >> multiLineMessages: anArray [
-	"In case the user entered a string representing array we convert it into array."
-	self flag: #tocheck. "we should change this logic. It is terrible, the UI should give us an array and not a string!"
-	multiLineMessages := self class compiler evaluate: anArray asString
+EFContext >> multiLineMessages: aString [
+	"aString should be a list of selectors or strings representing a method name."
+
+	multiLineMessages :=  aString substrings collect: [ :each | each asString ]
 ]
 
 { #category : 'accessing' }
@@ -388,9 +388,9 @@ EFContext >> oneLineMessages [
 ]
 
 { #category : 'accessing' }
-EFContext >> oneLineMessages: anArray [
+EFContext >> oneLineMessages: aString [
 	"To be revisited latter. Apparently this trick is to convert strings into an array."
-	oneLineMessages := self class compiler evaluate: anArray asString
+	oneLineMessages := aString substrings collect: [ :each | each asString ]
 ]
 
 { #category : 'accessing' }
