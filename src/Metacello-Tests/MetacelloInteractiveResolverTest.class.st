@@ -18,6 +18,18 @@ MetacelloInteractiveResolverTest >> lock2Registration [
 			   yourself)
 ]
 
+{ #category : 'private' }
+MetacelloInteractiveResolverTest >> lockSpec: aName [
+	"The project spec of the test baseline aName, loading its default groups"
+
+	^ (MetacelloProjectSpec project: MetacelloProject new)
+		  name: aName;
+		  className: 'BaselineOf' , aName;
+		  repository: 'http://repo.com';
+		  loads: #(  );
+		  yourself
+]
+
 { #category : 'tests' }
 MetacelloInteractiveResolverTest >> resolveDiamondOnConflict: aBlock [
 	"TestDiamond reaches TestToLock2 twice: from http://v1.com (Left, first) and from http://v2.com (Right). aBlock handles the conflict between them"
@@ -32,14 +44,11 @@ MetacelloInteractiveResolverTest >> resolveDiamondOnConflict: aBlock [
 { #category : 'private' }
 MetacelloInteractiveResolverTest >> resolveLock1Loading: aCollection [
 
-	| spec |
-	spec := (MetacelloProjectSpec project: MetacelloProject new)
-		        name: 'TestToLock1';
-		        className: 'BaselineOfTestToLock1';
-		        repository: 'http://repo.com';
-		        loads: aCollection;
-		        yourself.
-	^ MetacelloInteractiveResolver new resolve: spec engine: MetacelloScriptEngine new
+	^ MetacelloInteractiveResolver new
+		  resolve: ((self lockSpec: 'TestToLock1')
+				   loads: aCollection;
+				   yourself)
+		  engine: MetacelloScriptEngine new
 ]
 
 { #category : 'tests' }
@@ -290,6 +299,21 @@ MetacelloInteractiveResolverTest >> testResolveRegistersNothing [
 		resolve.
 
 	self assert: MetacelloProjectRegistry registry isEmpty
+]
+
+{ #category : 'tests' }
+MetacelloInteractiveResolverTest >> testResolvesEveryRootInTheOrderAsked [
+
+	| resolution |
+	resolution := MetacelloInteractiveResolver new
+		              resolveRoots: {
+				              (self lockSpec: 'TestToLock2').
+				              (self lockSpec: 'TestToLock1') }
+		              engine: MetacelloScriptEngine new.
+
+	self assert: (resolution roots collect: [ :each | each name ]) asArray equals: #( 'TestToLock2' 'TestToLock1' ).
+	self assertCollection: (resolution projects collect: [ :each | each name ]) hasSameElements: #( 'TestToLock1' 'TestToLock2' ).
+	self deny: resolution hasErrors
 ]
 
 { #category : 'tests' }

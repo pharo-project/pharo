@@ -20,6 +20,23 @@ Class {
 	#tag : 'Resolution'
 }
 
+{ #category : 'resolving' }
+MetacelloInteractiveResolver >> addRootFor: aProjectSpec [
+	"Add the root aProjectSpec names to the resolution, at the version it asks, loading what it loads, and answer it"
+
+	| rootSpec root |
+	[ rootSpec := (self registrationFor: aProjectSpec) projectSpec copy ]
+		on: MetacelloAllowProjectUpgrade
+		do: [ :notification | notification resume: notification newProjectRegistration ].
+	rootSpec ensureProjectLoadedWithEngine: engine.
+	root := MetacelloResolvedProject projectSpec: rootSpec.
+	resolution addRoot: root.
+	root requestedBy: nil spec: (rootSpec copy
+			 loads: aProjectSpec loads;
+			 yourself).
+	^ root
+]
+
 { #category : 'private' }
 MetacelloInteractiveResolver >> path [
 	"The projects whose references are being visited, the outermost first"
@@ -60,20 +77,19 @@ MetacelloInteractiveResolver >> reportCycleAt: aResolvedProject [
 
 { #category : 'resolving' }
 MetacelloInteractiveResolver >> resolve: aProjectSpec engine: anEngine [
-	"The root takes the version asked, even over the registry (an upgrade of the root is always allowed)"
+	"Resolve the one root aProjectSpec names (see resolveRoots:engine:)"
 
-	| rootSpec root |
+	^ self resolveRoots: { aProjectSpec } engine: anEngine
+]
+
+{ #category : 'resolving' }
+MetacelloInteractiveResolver >> resolveRoots: someProjectSpecs engine: anEngine [
+	"Add a root for each of someProjectSpecs, in order, then walk the references of each. A root takes the version asked, even over the registry (an upgrade of a root is always allowed)"
+
+	| roots |
 	self setEngine: anEngine.
-	[ rootSpec := (self registrationFor: aProjectSpec) projectSpec copy ]
-		on: MetacelloAllowProjectUpgrade
-		do: [ :notification | notification resume: notification newProjectRegistration ].
-	rootSpec ensureProjectLoadedWithEngine: engine.
-	root := MetacelloResolvedProject projectSpec: rootSpec.
-	resolution addRoot: root.
-	root requestedBy: nil spec: (rootSpec copy
-			 loads: aProjectSpec loads;
-			 yourself).
-	self visitReferencesOf: root.
+	roots := someProjectSpecs collect: [ :each | self addRootFor: each ].
+	roots do: [ :each | self visitReferencesOf: each ].
 	^ resolution
 ]
 
