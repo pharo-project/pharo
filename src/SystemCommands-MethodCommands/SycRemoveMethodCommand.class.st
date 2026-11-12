@@ -1,15 +1,12 @@
+"
+Removes methods.
+"
 Class {
 	#name : 'SycRemoveMethodCommand',
 	#superclass : 'SycMethodCommand',
 	#category : 'SystemCommands-MethodCommands',
 	#package : 'SystemCommands-MethodCommands'
 }
-
-{ #category : 'accessing' }
-SycRemoveMethodCommand >> description [
-
-	^ 'Removes methods.'
-]
 
 { #category : 'execution' }
 SycRemoveMethodCommand >> executeRefactoring [

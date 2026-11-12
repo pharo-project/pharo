@@ -1,5 +1,5 @@
 "
-I am a command to run all covering tests of selected methods
+Runs all covering tests of selected methods.
 "
 Class {
 	#name : 'ClyRunCoveringTestMethodsCommand',
@@ -13,12 +13,6 @@ Class {
 ClyRunCoveringTestMethodsCommand >> canBeExecuted [
 
 	^ self context selectedMethodItems anySatisfy: [ :each | each hasProperty: ClyTestedMethodProperty ]
-]
-
-{ #category : 'accessing' }
-ClyRunCoveringTestMethodsCommand >> description [
-
-	^ 'Runs all covering tests of selected methods.'
 ]
 
 { #category : 'accessing' }

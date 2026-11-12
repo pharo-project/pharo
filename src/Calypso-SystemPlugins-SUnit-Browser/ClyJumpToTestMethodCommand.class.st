@@ -1,6 +1,5 @@
 "
-Description
---------------------
+Jump on the test method corresponding to the method. If the method does not exists I will create it in the corresponding class.
 
 I am a command available in the method context menu of Calypso. When activated I'll jump on the test method corresponding to the method. 
 
@@ -12,7 +11,6 @@ Internal Representation and Key Implementation Points.
     Instance Variables
 	selectedMethods:			<aCollection>	Methods selected by the user that should have their tests generated.
 	testMethodToBrowse:		<aMethod>			The method to browse at the end of the execution of the command.
-
 "
 Class {
 	#name : 'ClyJumpToTestMethodCommand',
@@ -40,12 +38,6 @@ ClyJumpToTestMethodCommand >> canBeExecuted [
 
 	self context isQueryBrowserContext ifTrue: [ ^ false ].
 	^ self class hasInstanceSelectedItemsIn: self context
-]
-
-{ #category : 'accessing' }
-ClyJumpToTestMethodCommand >> description [
-
-^ 'Jump on the test method corresponding to the method. If the method does not exists I will create it in the corresponding class.'
 ]
 
 { #category : 'execution' }

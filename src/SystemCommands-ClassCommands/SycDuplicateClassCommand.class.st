@@ -1,3 +1,6 @@
+"
+Duplicate Class.
+"
 Class {
 	#name : 'SycDuplicateClassCommand',
 	#superclass : 'SycClassRefactoringCommand',
@@ -16,12 +19,6 @@ SycDuplicateClassCommand >> applyCommandResult [
 SycDuplicateClassCommand >> canBeExecuted [
 
 	^ self context isClassSelected and: [ self context lastSelectedClass isTrait not ]
-]
-
-{ #category : 'accessing' }
-SycDuplicateClassCommand >> description [
-
-	^ 'Duplicate Class.'
 ]
 
 { #category : 'executing' }

@@ -88,9 +88,13 @@ ClyCommand >> defaultMenuIconFormSet [
 
 { #category : 'accessing' }
 ClyCommand >> description [
-	"By default the result is nil which is not really nice
-	but it is already expected by many tools. So it is easy to allow nil"
-	^nil
+	"Answer the first paragraph of my class comment. Tools show it as the tooltip of my menu items, so it should be a short sentence for users. Developer details go in the following paragraphs."
+
+	| lines separatorIndex |
+	lines := self class comment ifEmpty: [ ^ nil ] ifNotEmpty: [ :comment | comment trimBoth lines ].
+	separatorIndex := lines findFirst: [ :line | line isAllSeparators ].
+	separatorIndex > 0 ifTrue: [ lines := lines first: separatorIndex - 1 ].
+	^ String cr join: lines
 ]
 
 { #category : 'accessing' }

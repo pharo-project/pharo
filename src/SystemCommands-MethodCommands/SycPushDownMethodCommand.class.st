@@ -1,5 +1,5 @@
 "
-I am a command to push down given methods
+Push down methods.
 "
 Class {
 	#name : 'SycPushDownMethodCommand',
@@ -12,12 +12,6 @@ Class {
 SycPushDownMethodCommand >> asRefactorings [
 
 	^ self shouldNotImplement
-]
-
-{ #category : 'accessing' }
-SycPushDownMethodCommand >> description [
-
-	^ 'Push down methods.'
 ]
 
 { #category : 'execution' }

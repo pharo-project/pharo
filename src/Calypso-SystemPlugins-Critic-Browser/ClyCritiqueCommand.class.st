@@ -57,8 +57,3 @@ ClyCritiqueCommand >> decorateTableCell: anItemCellMorph with: aMorph [
 	aMorph setBalloonText: self description.
 	anItemCellMorph addExtraTool: aMorph
 ]
-
-{ #category : 'table decoration' }
-ClyCritiqueCommand >> description [
-	^''
-]

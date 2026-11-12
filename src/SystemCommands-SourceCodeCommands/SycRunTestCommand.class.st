@@ -1,3 +1,6 @@
+"
+Runs test.
+"
 Class {
 	#name : 'SycRunTestCommand',
 	#superclass : 'SycSourceCodeRefactoringCommand',
@@ -15,12 +18,6 @@ SycRunTestCommand >> asRefactorings [
 SycRunTestCommand >> canBeExecuted [
 
 	^ self context isMethodSelected not and: [ self context isTestMethodSelected ]
-]
-
-{ #category : 'accessing' }
-SycRunTestCommand >> description [
-
-	^ 'Runs test.'
 ]
 
 { #category : 'execution' }

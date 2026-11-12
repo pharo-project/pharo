@@ -1,5 +1,6 @@
 "
-I am a command that debug the setup method of the selected test, then I executed the selected test method.
+Debug the setup method of the selected test, then executes the selected test method.
+
 I install breakpoint to the start of method which opens debugger during following test run
 "
 Class {
@@ -9,12 +10,6 @@ Class {
 	#package : 'Calypso-SystemPlugins-SUnit-Browser',
 	#tag : 'Commands'
 }
-
-{ #category : 'accessing' }
-ClyDebugTestSetupCommand >> description [
-
-^ 'Debug the setup method of the selected test, then executes the selected test method.' 
-]
 
 { #category : 'execution' }
 ClyDebugTestSetupCommand >> iconName [

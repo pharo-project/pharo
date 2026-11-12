@@ -8,11 +8,6 @@ Class {
 	#package : 'SystemCommands-MethodCommands'
 }
 
-{ #category : 'accessing' }
-SycCopyTestMethodNameToClipboardCommand >> description [
-	^ 'Copy selected methods selector into Clipboard as testXXX'
-]
-
 { #category : 'execution' }
 SycCopyTestMethodNameToClipboardCommand >> execute [
 

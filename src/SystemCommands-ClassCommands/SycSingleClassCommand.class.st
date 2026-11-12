@@ -23,13 +23,6 @@ SycSingleClassCommand >> canBeExecuted [
 ]
 
 { #category : 'accessing' }
-SycSingleClassCommand >> description [
-	"Answer a <String> describing the receiver, useful for instance in menu items pop-ups"
-
-	^ self class comment.
-]
-
-{ #category : 'accessing' }
 SycSingleClassCommand >> orderInContext: aToolContext [
 
 	^ aToolContext isFullBrowserClassContext

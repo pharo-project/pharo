@@ -1,4 +1,6 @@
 "
+Automatically resolve the issue
+
 I am a command to fix given critique by applying proposed changes.
 I open changes preview on them
 "
@@ -15,11 +17,6 @@ ClyFixCritiqueCommand >> canBeExecuted [
 	super canBeExecuted ifFalse: [ ^ false ].
 
 	^ self context lastSelectedItem isMarkedWith: ClyCritiqueFixableTag
-]
-
-{ #category : 'table decoration' }
-ClyFixCritiqueCommand >> description [
-	^'Automatically resolve the issue'
 ]
 
 { #category : 'execution' }

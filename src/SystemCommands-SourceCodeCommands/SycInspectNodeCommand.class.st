@@ -1,5 +1,5 @@
 "
-I'm a simple command to inspect any AST node.
+Inspects the selected AST node
 "
 Class {
 	#name : 'SycInspectNodeCommand',
@@ -12,12 +12,6 @@ Class {
 SycInspectNodeCommand >> canBeExecuted [
 
 	^ self context lastSelectedSourceNode notNil
-]
-
-{ #category : 'accessing' }
-SycInspectNodeCommand >> description [
-
-	^ 'Inspects the selected AST node'
 ]
 
 { #category : 'execution' }

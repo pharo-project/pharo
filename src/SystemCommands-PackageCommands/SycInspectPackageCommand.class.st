@@ -14,12 +14,6 @@ SycInspectPackageCommand >> canBeExecuted [
 	^ context isAboutBrowserItemType: Package
 ]
 
-{ #category : 'accessing' }
-SycInspectPackageCommand >> description [
-
-	^ 'Opens an inspector on the last selected package.'
-]
-
 { #category : 'execution' }
 SycInspectPackageCommand >> executeRefactoring [
 

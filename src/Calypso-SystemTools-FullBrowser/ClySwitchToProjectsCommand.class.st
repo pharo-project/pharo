@@ -1,4 +1,6 @@
 "
+Click to group packages by projects. Projects are currently defined by baselines.
+
 I am a command to switch full browser to the projects mode.
 
 Projects mode is not really supported. It requires plugin which provides package manager implementation.
@@ -17,12 +19,6 @@ Class {
 ClySwitchToProjectsCommand >> canBeExecuted [
 
 	^ ClySystemEnvironment currentImage projectManager hasProjects
-]
-
-{ #category : 'accessing' }
-ClySwitchToProjectsCommand >> description [
-
-	^ 'Click to group packages by projects. Projects are currently defined by baselines.'
 ]
 
 { #category : 'execution' }

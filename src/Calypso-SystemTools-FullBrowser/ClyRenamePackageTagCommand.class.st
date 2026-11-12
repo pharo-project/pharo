@@ -1,5 +1,5 @@
 "
-I am a command to rename class tag of the package
+Renames class tag of the package
  
 Internal Representation and Key Implementation Points.
 
@@ -7,7 +7,6 @@ Internal Representation and Key Implementation Points.
 	classGroup:		<ClyClassGroup>
 	newName:		<String>
 	package:		<Package>
-
 "
 Class {
 	#name : 'ClyRenamePackageTagCommand',
@@ -32,12 +31,6 @@ ClyRenamePackageTagCommand >> applyCommandResult [
 ClyRenamePackageTagCommand >> canBeExecuted [
 
 	^ self context isPackageTagSelected
-]
-
-{ #category : 'accessing' }
-ClyRenamePackageTagCommand >> description [ 
-
-^'Renames class tag of the package'
 ]
 
 { #category : 'execution' }

@@ -1,5 +1,5 @@
 "
-I am a command to show all message implementors.
+Show all message implementors.
 
 To show implementors I ask the browser to spawn new query browser.
 
@@ -26,12 +26,6 @@ ClyShowMessageImplementorCommand class >> sourceCodeShortcutActivation [
 	"<commandActivator>
 
 	^ClyShortcutCommandActivator by: $m meta for: ClySourceCodeContext"
-]
-
-{ #category : 'accessing' }
-ClyShowMessageImplementorCommand >> description [
-
-	^ 'Show all message implementors.'
 ]
 
 { #category : 'execution' }

@@ -29,17 +29,6 @@ SycMoveMethodsToClassCommand class >> methods: methods class: targetClass refact
 	^ (self methods: methods class: targetClass) refactoringScopes: refactoringScopes
 ]
 
-{ #category : 'accessing' }
-SycMoveMethodsToClassCommand >> description [
-
-	^ 'I am a command to move methods to given class
- 
-Internal Representation and Key Implementation Points.
-
-    Instance Variables
-	targetClass:		<Class>'
-]
-
 { #category : 'execution' }
 SycMoveMethodsToClassCommand >> executeRefactoring [
 

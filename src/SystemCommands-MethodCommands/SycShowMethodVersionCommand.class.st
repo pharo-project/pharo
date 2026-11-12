@@ -1,5 +1,5 @@
 "
-I am a command to show local method version.
+Show local method version.
 
 Local version has not relation to actual source code system. Versions are retrieved form changes file.
 
@@ -17,12 +17,6 @@ Class {
 	#category : 'SystemCommands-MethodCommands',
 	#package : 'SystemCommands-MethodCommands'
 }
-
-{ #category : 'accessing' }
-SycShowMethodVersionCommand >> description [
-
-	^ 'Show local method version.'
-]
 
 { #category : 'execution' }
 SycShowMethodVersionCommand >> executeRefactoring [

@@ -1,5 +1,6 @@
 "
-I am a command to inspect given variable value.
+Inspect variable value
+
 For live variables lile globals or class variables I open inspector on variable value.
 Also I open inspector on instance variable of class side because they also have live values.
 "
@@ -16,12 +17,6 @@ SycInspectVariableValueCommand >> canBeExecuted [
 	super canBeExecuted ifFalse: [ ^ false ].
 
 	^ self context lastSelectedVariable isLive
-]
-
-{ #category : 'accessing' }
-SycInspectVariableValueCommand >> description [
-
-	^ 'Inspect variable value'
 ]
 
 { #category : 'execution' }

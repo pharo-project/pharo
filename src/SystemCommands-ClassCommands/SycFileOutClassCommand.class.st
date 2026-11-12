@@ -1,4 +1,6 @@
 "
+Requests to save a textual version of the selected class to a new file in chunk format and .st extension. Instance and class side methods are both saved
+
 I am a command to file out the selected classes.
 I simply call #fileOut for each of them.
 "
@@ -18,12 +20,6 @@ SycFileOutClassCommand >> defaultFileName [
 	^ codeObjects size = 1
 		  ifTrue: [ codeObjects first name ]
 		  ifFalse: [ 'classfileout' ]
-]
-
-{ #category : 'accessing' }
-SycFileOutClassCommand >> description [
-
-	^ 'Requests to save a textual version of the selected class to a new file in chunk format and .st extension. Instance and class side methods are both saved'
 ]
 
 { #category : 'execution' }

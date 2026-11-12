@@ -16,14 +16,6 @@ SycPushDownMethodInSomeClassesCommand >> asRefactorings [
 	self shouldNotImplement
 ]
 
-{ #category : 'accessing' }
-SycPushDownMethodInSomeClassesCommand >> description [
-
-	^ 'I am a command that pushes down methods in some classes.
-
-I am responsible for delegating execution to `RBPushDownMethodInSomeClassesDriver`.'
-]
-
 { #category : 'execution' }
 SycPushDownMethodInSomeClassesCommand >> executeRefactoring [
 

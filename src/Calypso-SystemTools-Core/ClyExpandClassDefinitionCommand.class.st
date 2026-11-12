@@ -1,3 +1,6 @@
+"
+Expands the fluid definition to include all possible elements and shows the default values
+"
 Class {
 	#name : 'ClyExpandClassDefinitionCommand',
 	#superclass : 'SycSingleClassCommand',
@@ -17,12 +20,6 @@ ClyExpandClassDefinitionCommand >> applyCommandResult [
 ClyExpandClassDefinitionCommand >> canBeExecuted [
 
 	^ true
-]
-
-{ #category : 'accessing' }
-ClyExpandClassDefinitionCommand >> description [
-
-	^ 'Expands the fluid definition to include all possible elements and shows the default values'
 ]
 
 { #category : 'execution' }

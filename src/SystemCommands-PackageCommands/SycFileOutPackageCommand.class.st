@@ -22,12 +22,6 @@ SycFileOutPackageCommand >> defaultFileName [
 		  ifFalse: [ 'packagefileout' ]
 ]
 
-{ #category : 'accessing' }
-SycFileOutPackageCommand >> description [
-
-	^ 'Files out the selected packages into a single chunk format file.'
-]
-
 { #category : 'execution' }
 SycFileOutPackageCommand >> executeRefactoring [
 

@@ -1,5 +1,5 @@
 "
-I am a command to extract selected ast node into separate method 
+Extract selected ast node into separate method.
 "
 Class {
 	#name : 'SycNewExtractMethodCommand',
@@ -16,12 +16,6 @@ SycNewExtractMethodCommand >> canBeExecuted [
 
 	^ true "(super canBeExecutedInContext: aSourceCodeContext) and: [
 		  aSourceCodeContext isMethodSelected not ]"
-]
-
-{ #category : 'accessing' }
-SycNewExtractMethodCommand >> description [
-
-	^ 'Extract selected ast node into separate method.'
 ]
 
 { #category : 'execution' }

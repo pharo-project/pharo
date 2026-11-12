@@ -1,4 +1,6 @@
 "
+Go backward in the navigation history
+
 I am a command to go back in the browser.
 I move browser to previous navigation state.
 
@@ -15,11 +17,6 @@ Class {
 { #category : 'accessing' }
 ClyNavigateBrowserBackCommand class >> defaultShortcut [
 	^Character arrowLeft alt
-]
-
-{ #category : 'accessing' }
-ClyNavigateBrowserBackCommand >> description [
-	^'go backward in the navigation history'
 ]
 
 { #category : 'execution' }

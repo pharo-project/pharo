@@ -1,3 +1,6 @@
+"
+Generate accessors for the selected variable, where the getter lazily initializes the variable with a default value that you enter.
+"
 Class {
 	#name : 'SycGenerateVariableAccessorsWithLazyInitializationCommand',
 	#superclass : 'SycRefactorVariableCommand',

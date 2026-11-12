@@ -1,5 +1,5 @@
 "
-I am a command to remove method group with containing methods
+Removes method group with containing methods.
 "
 Class {
 	#name : 'ClyRemoveMethodGroupCommand',
@@ -11,12 +11,6 @@ Class {
 	#package : 'Calypso-SystemTools-FullBrowser',
 	#tag : 'Commands-MethodGroups'
 }
-
-{ #category : 'accessing' }
-ClyRemoveMethodGroupCommand >> description [
-
-^ 'Removes method group with containing methods.'
-]
 
 { #category : 'execution' }
 ClyRemoveMethodGroupCommand >> executeRefactoring [

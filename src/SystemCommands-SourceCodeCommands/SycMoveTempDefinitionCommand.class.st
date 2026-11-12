@@ -1,5 +1,5 @@
 "
-I am a command to rename temp variable in given method.
+Moves the definition of the temporary variable closed to its user.
  
 Internal Representation and Key Implementation Points.
 
@@ -27,12 +27,6 @@ SycMoveTempDefinitionCommand >> applyCommandResult [
 SycMoveTempDefinitionCommand >> canBeExecuted [
 
 	^ super canBeExecuted and: [ self context isArgOrTempVariableSelected ]
-]
-
-{ #category : 'accessing' }
-SycMoveTempDefinitionCommand >> description [
-
-	^ 'Moves the definition of the temporary variable closed to its user.'
 ]
 
 { #category : 'execution' }

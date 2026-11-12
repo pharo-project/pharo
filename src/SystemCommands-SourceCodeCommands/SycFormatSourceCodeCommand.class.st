@@ -1,5 +1,5 @@
 "
-I am a command to format source code in given code editor.
+Formats source code in given code editor
  
 Internal Representation and Key Implementation Points.
 
@@ -17,12 +17,6 @@ Class {
 SycFormatSourceCodeCommand >> applyCommandResult [
 
 	"Nothing"
-]
-
-{ #category : 'accessing' }
-SycFormatSourceCodeCommand >> description [
-
-	^ 'Formats source code in given code editor'
 ]
 
 { #category : 'execution' }

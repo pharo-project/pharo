@@ -1,5 +1,5 @@
 "
-I am a command to rename method protocol.
+Renames method protocol.
 
 My method group should be either ClyMethodsInProtocolGroup or ClyUnclassifiedMethodGroup.
  
@@ -32,12 +32,6 @@ ClyRenameProtocolCommand >> applyCommandResult [
 ClyRenameProtocolCommand >> canBeExecuted [
 
 	^ self context isProtocolSelected
-]
-
-{ #category : 'accessing' }
-ClyRenameProtocolCommand >> description [ 
-
-^'Renames method protocol.'
 ]
 
 { #category : 'execution' }

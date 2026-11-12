@@ -1,5 +1,5 @@
 "
-I am a command to move method to the instance side of defining class
+Move method to the instance side.
 "
 Class {
 	#name : 'SycMoveMethodsToInstanceSideCommand',
@@ -12,12 +12,6 @@ Class {
 SycMoveMethodsToInstanceSideCommand >> canBeExecuted [
 
 	^ self hasContext and: [ self context isMethodSelected and: [ self context isClassSideMethodSelected ] ]
-]
-
-{ #category : 'accessing' }
-SycMoveMethodsToInstanceSideCommand >> description [
-
-	^ 'Move method to the instance side.'
 ]
 
 { #category : 'execution' }

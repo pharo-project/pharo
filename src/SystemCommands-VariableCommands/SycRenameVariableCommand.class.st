@@ -1,5 +1,5 @@
 "
-I am a command to rename a variable. 
+Rename variable.
 "
 Class {
 	#name : 'SycRenameVariableCommand',
@@ -17,12 +17,6 @@ SycRenameVariableCommand class >> iconName [
 SycRenameVariableCommand >> canBeExecuted [
 
 	^ self context isVariableSelected and: [ self context isGlobalVariableSelected not ]
-]
-
-{ #category : 'accessing' }
-SycRenameVariableCommand >> description [
-
-	^ 'Rename variable.'
 ]
 
 { #category : 'execution' }

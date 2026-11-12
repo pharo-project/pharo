@@ -14,12 +14,6 @@ SycRecompilePackageCommand >> canBeExecuted [
 	^ context isAboutBrowserItemType: Package
 ]
 
-{ #category : 'accessing' }
-SycRecompilePackageCommand >> description [
-
-	^ 'Recompiles all the methods of the selected packages.'
-]
-
 { #category : 'execution' }
 SycRecompilePackageCommand >> executeRefactoring [
 

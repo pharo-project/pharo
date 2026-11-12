@@ -1,6 +1,5 @@
 "
-I am a command to inspect given variable.
-
+Inspect variable
 "
 Class {
 	#name : 'SycInspectVariableCommand',
@@ -13,12 +12,6 @@ Class {
 SycInspectVariableCommand >> canBeExecuted [
 
 	^ context isAboutBrowserItemType: ClyVariableMethodGroup
-]
-
-{ #category : 'accessing' }
-SycInspectVariableCommand >> description [
-
-	^ 'Inspect variable'
 ]
 
 { #category : 'execution' }

@@ -1,4 +1,6 @@
 "
+Run all tests from selected classGroup.
+
 I run all tests from selected classGroup (package tags)
 "
 Class {
@@ -12,10 +14,4 @@ Class {
 { #category : 'activation' }
 ClyRunTestsFromClassGroupCommand class >> contextClass [
 	^ ClyClassGroup asCalypsoItemContext
-]
-
-{ #category : 'accessing' }
-ClyRunTestsFromClassGroupCommand >> description [
-
-	^ 'Run all tests from selected classGroup.'
 ]

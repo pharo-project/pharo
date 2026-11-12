@@ -1,4 +1,6 @@
 "
+Go forward in the navigation history
+
 I am a command to go forward in the browser.
 I move browser to the next navigation state which was recorded after go back operation.
 
@@ -15,11 +17,6 @@ Class {
 { #category : 'accessing' }
 ClyNavigateBrowserForwardCommand class >> defaultShortcut [
 	^Character arrowRight alt
-]
-
-{ #category : 'accessing' }
-ClyNavigateBrowserForwardCommand >> description [
-	^'go forward in the navigation history'
 ]
 
 { #category : 'execution' }

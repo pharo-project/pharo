@@ -1,5 +1,5 @@
 "
-I am a command to show all message senders.
+Show all message senders.
 
 To show senders I ask the browser to spawn new query browser.
 
@@ -44,12 +44,6 @@ ClyShowMessageSenderCommand >> browser [
 { #category : 'accessing' }
 ClyShowMessageSenderCommand >> browser: anObject [
 	browser := anObject
-]
-
-{ #category : 'accessing' }
-ClyShowMessageSenderCommand >> description [
-
-	^ 'Show all message senders.'
 ]
 
 { #category : 'execution' }

@@ -1,5 +1,5 @@
 "
-I am a command that is used for removing variables.
+Removes Variables.
 
 My responsibility is to delegate removal execution to the remove variable driver.
 "
@@ -9,12 +9,6 @@ Class {
 	#category : 'SystemCommands-VariableCommands',
 	#package : 'SystemCommands-VariableCommands'
 }
-
-{ #category : 'accessing' }
-SycRemoveVariablesCommand >> description [
-
-	^ 'Removes Variables.'
-]
 
 { #category : 'execution' }
 SycRemoveVariablesCommand >> executeRefactoring [

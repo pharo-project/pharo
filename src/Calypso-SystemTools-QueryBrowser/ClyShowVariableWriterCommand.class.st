@@ -1,4 +1,6 @@
 "
+Show all variable writers.
+
 I am a command to show all variable writers (the methods which assigns new value to the variables).
 
 To show writers I ask the browser to spawn new query browser.
@@ -10,17 +12,11 @@ Internal Representation and Key Implementation Points.
 "
 Class {
 	#name : 'ClyShowVariableWriterCommand',
-	#superclass : 'SycVariableNavigationCmCommand',
+	#superclass : 'SycVariableNavigationCommand',
 	#category : 'Calypso-SystemTools-QueryBrowser-Commands-Queries',
 	#package : 'Calypso-SystemTools-QueryBrowser',
 	#tag : 'Commands-Queries'
 }
-
-{ #category : 'accessing' }
-ClyShowVariableWriterCommand >> description [
-
-	^ 'Show all variable writers.'
-]
 
 { #category : 'execution' }
 ClyShowVariableWriterCommand >> executeRefactoring [

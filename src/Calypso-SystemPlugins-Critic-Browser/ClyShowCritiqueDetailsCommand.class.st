@@ -1,4 +1,6 @@
 "
+View rationale behind the rule
+
 I am a command to show critique details.
 I just show the dialog with critique description and title
 "
@@ -20,11 +22,6 @@ ClyShowCritiqueDetailsCommand >> critiqueDescription [
 			  cr;
 			  cr;
 			  nextPutAll: self critique description ]
-]
-
-{ #category : 'table decoration' }
-ClyShowCritiqueDetailsCommand >> description [
-	^'View rationale behind the rule'
 ]
 
 { #category : 'execution' }

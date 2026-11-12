@@ -1,5 +1,5 @@
 "
-I am a command to rename temp variable in given method.
+Renames temp variable in given method.
  
 Internal Representation and Key Implementation Points.
 
@@ -26,12 +26,6 @@ SycRenameArgOrTempCommand2 >> applyCommandResult [
 SycRenameArgOrTempCommand2 >> canBeExecuted [
 
 	^ super canBeExecuted and: [ self context isArgOrTempVariableSelected ]
-]
-
-{ #category : 'accessing' }
-SycRenameArgOrTempCommand2 >> description [
-
-	^ 'Renames temp variable in given method.'
 ]
 
 { #category : 'execution' }

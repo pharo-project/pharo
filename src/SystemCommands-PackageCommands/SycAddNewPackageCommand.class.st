@@ -1,5 +1,5 @@
 "
-I am a command to add new package into the system.
+Adds a new package into the system.
 
 I should be created on particular system environment which allow create packages:
 
@@ -36,12 +36,6 @@ SycAddNewPackageCommand >> applyCommandResult [
 SycAddNewPackageCommand >> canBeExecuted [
 
 	^ true
-]
-
-{ #category : 'accessing' }
-SycAddNewPackageCommand >> description [
-
-	^ 'Adds a new package into the system.'
 ]
 
 { #category : 'execution' }

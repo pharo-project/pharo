@@ -1,4 +1,6 @@
 "
+Open dependency analyzer
+
 I a command which opens dependency browser of given package which is my analyzed object
 "
 Class {
@@ -14,11 +16,6 @@ ClyShowDependencyCritiqueCommand >> canBeExecuted [
 	super canBeExecuted ifFalse: [ ^ false ].
 
 	^ self context selectedCritique class = ArchitecturalCritique
-]
-
-{ #category : 'table decoration' }
-ClyShowDependencyCritiqueCommand >> description [
-	^'Open dependency analyzer'
 ]
 
 { #category : 'execution' }

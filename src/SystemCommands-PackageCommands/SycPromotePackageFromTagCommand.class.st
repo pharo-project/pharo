@@ -26,12 +26,6 @@ SycPromotePackageFromTagCommand >> canBeExecuted [
 	^ context isAboutBrowserItemType: ClyTaggedClassGroup
 ]
 
-{ #category : 'accessing' }
-SycPromotePackageFromTagCommand >> description [
-
-	^ 'Promotes the selected package tag to a package of its own, and shows it in the Full Browser.'
-]
-
 { #category : 'execution' }
 SycPromotePackageFromTagCommand >> executeRefactoring [
 

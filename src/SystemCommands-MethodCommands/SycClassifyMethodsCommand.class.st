@@ -8,12 +8,6 @@ Class {
 	#package : 'SystemCommands-MethodCommands'
 }
 
-{ #category : 'accessing' }
-SycClassifyMethodsCommand >> description [
-
-	^ 'Classify the selected methods'
-]
-
 { #category : 'execution' }
 SycClassifyMethodsCommand >> execute [
 

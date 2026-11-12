@@ -1,5 +1,5 @@
 "
-I am a command to extract selected ast node into separate method 
+Extracts selected ast node into separate method.
 "
 Class {
 	#name : 'SycExtractMethodAndOccurrencesCommand',
@@ -29,12 +29,6 @@ SycExtractMethodAndOccurrencesCommand >> asRefactorings [
 SycExtractMethodAndOccurrencesCommand >> canBeExecuted [
 
 	^ super canBeExecuted and: [ self context isMethodSelected not ]
-]
-
-{ #category : 'accessing' }
-SycExtractMethodAndOccurrencesCommand >> description [
-
-	^ 'Extracts selected ast node into separate method.'
 ]
 
 { #category : 'accessing' }

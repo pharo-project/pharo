@@ -1,5 +1,7 @@
 "
-I am a command to switch full browser to raw packages mode. 
+Click to show all packages
+
+I am a command to switch full browser to raw packages mode.
 "
 Class {
 	#name : 'ClySwitchToPackagesCommand',
@@ -12,11 +14,6 @@ Class {
 { #category : 'activation' }
 ClySwitchToPackagesCommand class >> toolbarOrder [
 	^1
-]
-
-{ #category : 'accessing' }
-ClySwitchToPackagesCommand >> description [
-	^ 'Click to show all packages'
 ]
 
 { #category : 'execution' }

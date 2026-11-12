@@ -1,4 +1,6 @@
 "
+Command to browse the class defining the rule producing the critique.
+
 I am a command that can be executed in the critic context (ClyCriticContext) and that will allows one to browser the class of a rule in the system.
 
 This might be useful in case a user want to understand a rule from the code.
@@ -16,11 +18,6 @@ Class {
 	#category : 'Calypso-SystemPlugins-Critic-Browser',
 	#package : 'Calypso-SystemPlugins-Critic-Browser'
 }
-
-{ #category : 'table decoration' }
-ClyBrowseCritiqueRuleCommand >> description [
-	^ 'Command to browse the class defining the rule producing the critique.'
-]
 
 { #category : 'execution' }
 ClyBrowseCritiqueRuleCommand >> executeRefactoring [

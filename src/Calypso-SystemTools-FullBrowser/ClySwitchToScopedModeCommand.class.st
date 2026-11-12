@@ -1,3 +1,6 @@
+"
+Scope the browser to the packages selected in a dialog.
+"
 Class {
 	#name : 'ClySwitchToScopedModeCommand',
 	#superclass : 'ClyBrowserCommand',

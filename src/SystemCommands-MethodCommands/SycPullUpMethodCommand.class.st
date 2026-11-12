@@ -1,5 +1,5 @@
 "
-I am a command to pull up given methods
+Pull up methods.
 "
 Class {
 	#name : 'SycPullUpMethodCommand',
@@ -11,12 +11,6 @@ Class {
 { #category : 'testing' }
 SycPullUpMethodCommand >> canBeExecuted [
 	^ super canBeExecuted and: [ self context lastSelectedClass superclass ~= Object ]
-]
-
-{ #category : 'accessing' }
-SycPullUpMethodCommand >> description [
-
-	^ 'Pull up methods.'
 ]
 
 { #category : 'execution' }

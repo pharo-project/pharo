@@ -1,4 +1,6 @@
 "
+Requests package to be used as editing method package.
+
 I am a command to request package from the user which should be used as editing method package
 "
 Class {
@@ -13,12 +15,6 @@ Class {
 ClyRequestMethodPackageForEditorCommand class >> canBeExecutedInMethodEditor: aTool [
 
 	^ true
-]
-
-{ #category : 'accessing' }
-ClyRequestMethodPackageForEditorCommand >> description [ 
-
-^'Requests package to be used as editing method package.'
 ]
 
 { #category : 'execution' }

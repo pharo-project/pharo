@@ -1,4 +1,6 @@
 "
+Requests a protocol to reclassify a method.
+
 I am a command to request a protocol from the user which should be used to reclassify a method
 "
 Class {
@@ -8,12 +10,6 @@ Class {
 	#package : 'Calypso-SystemTools-Core',
 	#tag : 'Editors-Methods'
 }
-
-{ #category : 'accessing' }
-ClyRequestProtocolForEditorCommand >> description [
-
-	^ 'Requests a protocol to reclassify a method.'
-]
 
 { #category : 'execution' }
 ClyRequestProtocolForEditorCommand >> executeRefactoring [

@@ -1,5 +1,5 @@
 "
-I run all tests from selected packages
+Run all tests from selected packages.
 "
 Class {
 	#name : 'ClyRunTestsFromPackagesCommand',
@@ -12,10 +12,4 @@ Class {
 { #category : 'activation' }
 ClyRunTestsFromPackagesCommand class >> contextClass [
 	^Package asCalypsoItemContext
-]
-
-{ #category : 'accessing' }
-ClyRunTestsFromPackagesCommand >> description [
-
-	^ 'Run all tests from selected packages.'
 ]

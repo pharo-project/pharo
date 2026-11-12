@@ -1,4 +1,6 @@
 "
+Rename method
+
 Call the rename method refactoring (yes the class name is not good)
 "
 Class {
@@ -38,12 +40,6 @@ SycRenameMessageCommand >> canRemoveArgs [
 SycRenameMessageCommand >> createRefactoring [
 	"not used"
 	^ self
-]
-
-{ #category : 'accessing' }
-SycRenameMessageCommand >> description [
-
-	^ 'Rename method'
 ]
 
 { #category : 'execution' }

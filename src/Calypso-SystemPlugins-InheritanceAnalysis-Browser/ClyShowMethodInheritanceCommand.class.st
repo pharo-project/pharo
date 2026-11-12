@@ -1,5 +1,6 @@
 "
-I am a command to show all method implementors in full hierarchy of selected method classes.
+Show all method implementors in full hierarchy of selected method classes.
+
 I select current method in spawned browser by default.
 "
 Class {
@@ -16,12 +17,6 @@ ClyShowMethodInheritanceCommand >> createInheritanceScopeFrom: classes [
 	classScope := ClyClassScope ofAll: classes in: browser navigationEnvironment.
 
 	^classScope asFullHierarchyScope
-]
-
-{ #category : 'accessing' }
-ClyShowMethodInheritanceCommand >> description [
-
-	^ 'Show all method implementors in full hierarchy of selected method classes.'
 ]
 
 { #category : 'accessing' }

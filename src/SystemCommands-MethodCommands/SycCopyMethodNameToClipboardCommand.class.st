@@ -1,5 +1,5 @@
 "
-Copy selected methods into Clipboard as `class>>selector`
+Copy selected methods into Clipboard as class>>selector
 "
 Class {
 	#name : 'SycCopyMethodNameToClipboardCommand',
@@ -7,12 +7,6 @@ Class {
 	#category : 'SystemCommands-MethodCommands',
 	#package : 'SystemCommands-MethodCommands'
 }
-
-{ #category : 'accessing' }
-SycCopyMethodNameToClipboardCommand >> description [
-
-	^ 'Copy selected methods into Clipboard as class>>selector'
-]
 
 { #category : 'execution' }
 SycCopyMethodNameToClipboardCommand >> execute [

@@ -8,12 +8,6 @@ Class {
 	#package : 'SystemCommands-MethodCommands'
 }
 
-{ #category : 'accessing' }
-SycInspectMethodCommand >> description [
-
-	^ 'Inspect the selected methods'
-]
-
 { #category : 'execution' }
 SycInspectMethodCommand >> execute [
 
