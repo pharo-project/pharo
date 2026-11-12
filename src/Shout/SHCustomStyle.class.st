@@ -12,6 +12,30 @@ Class {
 	#tag : 'Styling'
 }
 
+{ #category : 'settings - accessing' }
+SHCustomStyle class >> argsStyle [
+
+	^ self styleForGroup: 'args'
+]
+
+{ #category : 'settings - accessing' }
+SHCustomStyle class >> argsStyle: aStyle [
+
+	^ self style: aStyle forGroup: 'args'
+]
+
+{ #category : 'settings - accessing' }
+SHCustomStyle class >> commentStyle [
+
+	^ self styleForGroup: 'comment'
+]
+
+{ #category : 'settings - accessing' }
+SHCustomStyle class >> commentStyle: aStyle [ 
+
+	^ self style: aStyle forGroup: 'comment'
+]
+
 { #category : 'class initialization' }
 SHCustomStyle class >> copyFromCurrentStyle [
 	SHRBTextStyler styleTable do: [ :row |
@@ -40,20 +64,40 @@ SHCustomStyle class >> defaultEmphasis [
 	^ #normal
 ]
 
-{ #category : 'reflective operations' }
-SHCustomStyle class >> doesNotUnderstand: aMessage [
-	"Handles messages of the form #defaultStyle or #argumentStyle: "
+{ #category : 'settings - accessing' }
+SHCustomStyle class >> defaultStyle [
 
-	(aMessage selector endsWith: 'Style') ifTrue: [
-			^ (self groups at: (aMessage selector withoutSuffix: 'Style') asSymbol) at: 'style' ].
-	(aMessage selector endsWith: 'Style:') ifTrue: [
-			| style |
-			style := aMessage argument.
-			((self groups at: ((aMessage selector withoutSuffix: 'Style:') asSymbol)) at: 'style')
-				color: style color ;
-				emphasis: style emphasis.
-			^ self ].
-	^ super doesNotUnderstand: aMessage
+	^ self styleForGroup: 'default'
+]
+
+{ #category : 'settings - accessing' }
+SHCustomStyle class >> defaultStyle: aStyle [ 
+
+	^ self style: aStyle forGroup: 'default'
+]
+
+{ #category : 'settings - accessing' }
+SHCustomStyle class >> errorStyle [
+
+	^ self styleForGroup: 'error'
+]
+
+{ #category : 'settings - accessing' }
+SHCustomStyle class >> errorStyle: aStyle [ 
+
+	^ self style: aStyle forGroup: 'error'
+]
+
+{ #category : 'settings - accessing' }
+SHCustomStyle class >> globalVarStyle [
+
+	^ self styleForGroup: 'globalVar'
+]
+
+{ #category : 'settings - accessing' }
+SHCustomStyle class >> globalVarStyle: aStyle [ 
+
+	^ self style: aStyle forGroup: 'globalVar'
 ]
 
 { #category : 'private' }
@@ -164,6 +208,66 @@ SHCustomStyle class >> initialize [
 			styleElement when: #changed send: #styleElementChanged to: self ].
 ]
 
+{ #category : 'settings - accessing' }
+SHCustomStyle class >> instanceVarStyle [
+
+	^ self styleForGroup: 'instanceVar'
+]
+
+{ #category : 'settings - accessing' }
+SHCustomStyle class >> instanceVarStyle: aStyle [ 
+
+	^ self style: aStyle forGroup: 'instanceVar'
+]
+
+{ #category : 'settings - accessing' }
+SHCustomStyle class >> messageSendsStyle [
+
+	^ self styleForGroup: 'messageSends'
+]
+
+{ #category : 'settings - accessing' }
+SHCustomStyle class >> messageSendsStyle: aStyle [ 
+
+	^ self style: aStyle forGroup: 'messageSends'
+]
+
+{ #category : 'settings - accessing' }
+SHCustomStyle class >> primitiveTypesStyle [
+
+	^ self styleForGroup: 'primitiveTypes'
+]
+
+{ #category : 'settings - accessing' }
+SHCustomStyle class >> primitiveTypesStyle: aStyle [ 
+
+	^ self style: aStyle forGroup: 'primitiveTypes'
+]
+
+{ #category : 'settings - accessing' }
+SHCustomStyle class >> reservedWordsStyle [
+
+	^ self styleForGroup: 'reservedWords'
+]
+
+{ #category : 'settings - accessing' }
+SHCustomStyle class >> reservedWordsStyle: aStyle [ 
+
+	^ self style: aStyle forGroup: 'reservedWords'
+]
+
+{ #category : 'settings - accessing' }
+SHCustomStyle class >> selectorPatternsStyle [
+
+	^ self styleForGroup: 'selectorPatterns'
+]
+
+{ #category : 'settings - accessing' }
+SHCustomStyle class >> selectorPatternsStyle: aStyle [ 
+
+	^ self style: aStyle forGroup: 'selectorPatterns'
+]
+
 { #category : 'settings' }
 SHCustomStyle class >> settingsOn: aBuilder [
 
@@ -185,10 +289,26 @@ SHCustomStyle class >> settingsOn: aBuilder [
 							description: (info at: 'description' ifAbsent: [ '' ]) ] ]
 ]
 
+{ #category : 'accessing' }
+SHCustomStyle class >> style: aStyle forGroup: groupName [
+
+	"We don't want to replace the old style element, only set it's attributes"
+	"Otherwise the settings browser UI might reference an outdated StyleElement"
+	(self styleForGroup: groupName)
+		color: aStyle color ;
+		emphasis: aStyle emphasis
+]
+
 { #category : 'updating' }
 SHCustomStyle class >> styleElementChanged [
 
 	self triggerEvent: #changed
+]
+
+{ #category : 'accessing' }
+SHCustomStyle class >> styleForGroup: groupName [
+
+	^ (groups at: groupName) at: 'style'
 ]
 
 { #category : 'accessing' }
@@ -205,4 +325,28 @@ SHCustomStyle class >> styleTable [
 						Color transparent = color ifTrue: [ 
 							color := nil ].
 					  { token. color. emphasis } ] ]
+]
+
+{ #category : 'settings - accessing' }
+SHCustomStyle class >> syntaxStyle [
+
+	^ self styleForGroup: 'syntax'
+]
+
+{ #category : 'settings - accessing' }
+SHCustomStyle class >> syntaxStyle: aStyle [ 
+
+	^ self style: aStyle forGroup: 'syntax'
+]
+
+{ #category : 'settings - accessing' }
+SHCustomStyle class >> variableStyle [
+
+	^ self styleForGroup: 'variable'
+]
+
+{ #category : 'settings - accessing' }
+SHCustomStyle class >> variableStyle: aStyle [ 
+
+	^ self style: aStyle forGroup: 'variable'
 ]
