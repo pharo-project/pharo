@@ -19,10 +19,10 @@ Class {
 }
 
 { #category : 'private' }
-MetacelloScriptEngine >> doLoad: rootLoadList [
+MetacelloScriptEngine >> doLoad [
 	"The directive, loaded, fetching first if needed"
 
-	(MetacelloLoadTarget on: self) load: (self ensureFetched: rootLoadList).
+	(MetacelloLoadTarget on: self) load: self ensureFetched.
 	^ directive
 ]
 
@@ -44,37 +44,39 @@ MetacelloScriptEngine >> during: aBlock keepingRegistry: aBoolean [
 ]
 
 { #category : 'private' }
-MetacelloScriptEngine >> ensureFetched: rootLoadList [
+MetacelloScriptEngine >> ensureFetched [
 	"The directive, its packages fetched once, recording first if needed"
 
 	fetched == true ifTrue: [ ^ directive ].
-	(self ensureRecorded: rootLoadList) acceptVisitor: (MetacelloFetchTarget on: self).
+	self ensureRecorded acceptVisitor: (MetacelloFetchTarget on: self).
 	fetched := true.
 	^ directive
 ]
 
 { #category : 'private' }
-MetacelloScriptEngine >> ensureRecorded: rootLoadList [
+MetacelloScriptEngine >> ensureRecorded [
 	"The directive loading the resolution, recorded once, resolving first if needed. A resolution with errors is never recorded: it signals MetacelloResolutionError"
 
 	directive ifNotNil: [ ^ directive ].
-	(self ensureResolved: rootLoadList) hasErrors ifTrue: [ MetacelloResolutionError signalFor: resolution ].
-	^ directive := self recordDirective: rootLoadList
+	self ensureResolved hasErrors ifTrue: [ MetacelloResolutionError signalFor: resolution ].
+	^ directive := self recordDirective
 ]
 
 { #category : 'private' }
-MetacelloScriptEngine >> ensureResolved: rootLoadList [
-	"The resolution of rootLoadList, resolved once from the root"
+MetacelloScriptEngine >> ensureResolved [
+	"The resolution of the root, with the names its project spec loads, resolved once"
 
-	resolution ifNil: [ self resolution: ((MetacelloResolveTarget on: self) resolve: self projectSpec loads: rootLoadList) ].
+	resolution ifNotNil: [ ^ resolution ].
+	self resolution: ((MetacelloResolveTarget on: self) resolve: self projectSpec).
 	^ resolution
 ]
 
 { #category : 'actions api' }
-MetacelloScriptEngine >> fetch: rootLoadList [
-	"Fetch what the directive loads, recording first if needed (see ensureFetched:), and answer the directive"
+MetacelloScriptEngine >> fetch: aCollectionOfNames [
+	"Fetch what loading aCollectionOfNames of the root (empty for its default ones) needs, recording first if needed (see ensureFetched), and answer the directive"
 
-	self during: [ self root: (self ensureFetched: rootLoadList) ] keepingRegistry: false.
+	self projectSpec loads: aCollectionOfNames.
+	self during: [ self root: self ensureFetched ] keepingRegistry: false.
 	^ root
 ]
 
@@ -170,10 +172,11 @@ MetacelloScriptEngine >> list [
 ]
 
 { #category : 'actions api' }
-MetacelloScriptEngine >> load: rootLoadList [
-	"Load the directive, fetching first if needed (see doLoad:), and keep the registry changes"
+MetacelloScriptEngine >> load: aCollectionOfNames [
+	"Load aCollectionOfNames of the root (empty for its default ones), fetching first if needed (see doLoad), and keep the registry changes"
 
-	self during: [ self root: (self doLoad: rootLoadList) ] keepingRegistry: true.
+	self projectSpec loads: aCollectionOfNames.
+	self during: [ self root: self doLoad ] keepingRegistry: true.
 	^ root
 ]
 
@@ -238,15 +241,16 @@ MetacelloScriptEngine >> projectSpec: aSpec [
 ]
 
 { #category : 'actions api' }
-MetacelloScriptEngine >> record: rootLoadList [
-	"Record the directive loading rootLoadList, resolving first if needed (see ensureRecorded:), and answer it"
+MetacelloScriptEngine >> record: aCollectionOfNames [
+	"Record the directive loading aCollectionOfNames of the root (empty for its default ones), resolving first if needed (see ensureRecorded), and answer it"
 
-	self during: [ self root: (self ensureRecorded: rootLoadList) ] keepingRegistry: false.
+	self projectSpec loads: aCollectionOfNames.
+	self during: [ self root: self ensureRecorded ] keepingRegistry: false.
 	^ root
 ]
 
 { #category : 'private' }
-MetacelloScriptEngine >> recordDirective: rootLoadList [
+MetacelloScriptEngine >> recordDirective [
 	"Record the resolution into a directive and answer it (see MetacelloRecordTarget>>#record:)"
 
 	^ (MetacelloRecordTarget on: self) record: resolution
@@ -279,10 +283,11 @@ MetacelloScriptEngine >> resolution: aResolution [
 ]
 
 { #category : 'actions api' }
-MetacelloScriptEngine >> resolve: rootLoadList [
-	"Answer the resolution of a load of rootLoadList (the names to load from the root, empty for its default ones), errors included, leaving the registry as it was"
+MetacelloScriptEngine >> resolve: aCollectionOfNames [
+	"Answer the resolution of a load of aCollectionOfNames of the root (empty for its default ones), errors included, leaving the registry as it was"
 
-	self during: [ self root: (self ensureResolved: rootLoadList) ] keepingRegistry: false.
+	self projectSpec loads: aCollectionOfNames.
+	self during: [ self root: self ensureResolved ] keepingRegistry: false.
 	^ resolution
 ]
 

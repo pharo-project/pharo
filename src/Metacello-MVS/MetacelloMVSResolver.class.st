@@ -441,7 +441,7 @@ MetacelloMVSResolver >> reset [
 ]
 
 { #category : 'metacello' }
-MetacelloMVSResolver >> resolutionOf: aResolution loads: aCollectionOfNames [
+MetacelloMVSResolver >> resolutionOf: aResolution [
 	"aResolution, the walk done, for Metacello to record: when it has no errors, every selected project, the roots first in their order, with the requests of selected versions (each root's own first)"
 
 	| roots |
@@ -462,8 +462,8 @@ MetacelloMVSResolver >> resolutionOf: aResolution loads: aCollectionOfNames [
 ]
 
 { #category : 'metacello' }
-MetacelloMVSResolver >> resolve: aProjectSpec loads: aCollectionOfNames engine: anEngine [
-	"As a Metacello resolver: resolve the root aProjectSpec names, loading aCollectionOfNames of it, counting what the registry says is installed (and locked), and answer an MetacelloMVSResolution"
+MetacelloMVSResolver >> resolve: aProjectSpec engine: anEngine [
+	"As a Metacello resolver: resolve the root aProjectSpec names, loading what it loads, counting what the registry says is installed (and locked), and answer an MetacelloMVSResolution"
 
 	| descriptions |
 	self installedFromRegistry.
@@ -474,10 +474,8 @@ MetacelloMVSResolver >> resolve: aProjectSpec loads: aCollectionOfNames engine: 
 				error: #invalidReference
 				text: 'mvs needs the one repository of ' , aProjectSpec name , ', not ' , descriptions size printString
 				about: nil.
-			^ self resolutionOf: resolution loads: aCollectionOfNames ].
-	^ self
-		  resolutionOf: (self resolveRoots: { (graph specFor: descriptions first project: aProjectSpec name loads: aCollectionOfNames) })
-		  loads: aCollectionOfNames
+			^ self resolutionOf: resolution ].
+	^ self resolutionOf: (self resolveRoots: { (graph specFor: descriptions first project: aProjectSpec name loads: aProjectSpec loads) })
 ]
 
 { #category : 'resolving' }

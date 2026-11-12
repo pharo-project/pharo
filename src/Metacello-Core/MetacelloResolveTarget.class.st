@@ -1,6 +1,6 @@
 "
 I am the resolve target, the first of the chain: I choose the version of every project a load reaches, with the engine's resolver (MetacelloInteractiveResolver unless the script names another), and answer the MetacelloResolution the other targets follow. I load and register nothing.
-- resolve:loads: resolves a load from a project spec (a script's root).
+- resolve: resolves a load from a project spec (a script's root).
 "
 Class {
 	#name : 'MetacelloResolveTarget',
@@ -11,8 +11,8 @@ Class {
 }
 
 { #category : 'resolving' }
-MetacelloResolveTarget >> resolve: aProjectSpec loads: aCollectionOfNames [
-	"The resolution of loading aCollectionOfNames (empty for the default ones) from aProjectSpec"
+MetacelloResolveTarget >> resolve: aProjectSpec [
+	"The resolution of loading what aProjectSpec loads (empty for its default groups)"
 
-	^ engine resolver resolve: aProjectSpec loads: aCollectionOfNames engine: engine
+	^ engine resolver resolve: aProjectSpec engine: engine
 ]

@@ -37,8 +37,9 @@ MetacelloInteractiveResolverTest >> resolveLock1Loading: aCollection [
 		        name: 'TestToLock1';
 		        className: 'BaselineOfTestToLock1';
 		        repository: 'http://repo.com';
+		        loads: aCollection;
 		        yourself.
-	^ MetacelloInteractiveResolver new resolve: spec loads: aCollection engine: MetacelloScriptEngine new
+	^ MetacelloInteractiveResolver new resolve: spec engine: MetacelloScriptEngine new
 ]
 
 { #category : 'tests' }

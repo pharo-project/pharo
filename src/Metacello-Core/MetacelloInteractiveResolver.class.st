@@ -59,7 +59,7 @@ MetacelloInteractiveResolver >> reportCycleAt: aResolvedProject [
 ]
 
 { #category : 'resolving' }
-MetacelloInteractiveResolver >> resolve: aProjectSpec loads: aCollectionOfNames engine: anEngine [
+MetacelloInteractiveResolver >> resolve: aProjectSpec engine: anEngine [
 	"The root takes the version asked, even over the registry (an upgrade of the root is always allowed)"
 
 	| rootSpec root |
@@ -71,7 +71,7 @@ MetacelloInteractiveResolver >> resolve: aProjectSpec loads: aCollectionOfNames 
 	root := MetacelloResolvedProject projectSpec: rootSpec.
 	resolution root: root.
 	root requestedBy: nil spec: (rootSpec copy
-			 loads: aCollectionOfNames;
+			 loads: aProjectSpec loads;
 			 yourself).
 	self visitReferencesOf: root.
 	^ resolution
