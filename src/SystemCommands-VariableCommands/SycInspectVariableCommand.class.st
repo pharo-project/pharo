@@ -4,7 +4,7 @@ I am a command to inspect given variable.
 "
 Class {
 	#name : 'SycInspectVariableCommand',
-	#superclass : 'SycMethodGroupExtraCmCommand',
+	#superclass : 'ClyCommand',
 	#category : 'SystemCommands-VariableCommands',
 	#package : 'SystemCommands-VariableCommands'
 }

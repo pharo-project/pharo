@@ -8,7 +8,7 @@ Internal Representation and Key Implementation Points.
 "
 Class {
 	#name : 'SycFormatSourceCodeCommand',
-	#superclass : 'SycSourceCodeCmCommand',
+	#superclass : 'SycSourceCodeCommand',
 	#category : 'SystemCommands-SourceCodeCommands',
 	#package : 'SystemCommands-SourceCodeCommands'
 }

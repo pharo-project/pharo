@@ -1,12 +1,12 @@
 Class {
-	#name : 'SycDeprecateClassCmCommand',
-	#superclass : 'SycClassCmCommand',
+	#name : 'SycDeprecateClassCommand',
+	#superclass : 'SycClassRefactoringCommand',
 	#category : 'SystemCommands-ClassCommands',
 	#package : 'SystemCommands-ClassCommands'
 }
 
 { #category : 'testing' }
-SycDeprecateClassCmCommand >> canBeExecuted [
+SycDeprecateClassCommand >> canBeExecuted [
 
 	self flag: 'Disabled for Pharo14, as it is not working'.
 
@@ -16,7 +16,7 @@ SycDeprecateClassCmCommand >> canBeExecuted [
 ]
 
 { #category : 'accessing' }
-SycDeprecateClassCmCommand >> name [
+SycDeprecateClassCommand >> name [
 
 	^ 'Deprecate'
 ]

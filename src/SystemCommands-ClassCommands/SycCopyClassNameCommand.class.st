@@ -2,21 +2,21 @@
 Command that implements the copy the class name to the clipboard
 "
 Class {
-	#name : 'SycCmCopyClassNameCommand',
-	#superclass : 'SycClassExtraCmCommand',
+	#name : 'SycCopyClassNameCommand',
+	#superclass : 'SycSingleClassCommand',
 	#category : 'SystemCommands-ClassCommands-Extra',
 	#package : 'SystemCommands-ClassCommands',
 	#tag : 'Extra'
 }
 
 { #category : 'testing' }
-SycCmCopyClassNameCommand >> canBeExecuted [ 
+SycCopyClassNameCommand >> canBeExecuted [ 
 
 	^ self selectedClass notNil
 ]
 
 { #category : 'executing' }
-SycCmCopyClassNameCommand >> execute [
+SycCopyClassNameCommand >> execute [
 	| name |
 	
 	name := self selectedClass name.
@@ -25,24 +25,24 @@ SycCmCopyClassNameCommand >> execute [
 ]
 
 { #category : 'accessing' }
-SycCmCopyClassNameCommand >> iconName [
+SycCopyClassNameCommand >> iconName [
 
 	^ #smallCopy
 ]
 
 { #category : 'accessing' }
-SycCmCopyClassNameCommand >> name [
+SycCopyClassNameCommand >> name [
 
 	^ 'Copy class name to Clipboard'
 ]
 
 { #category : 'accessing' }
-SycCmCopyClassNameCommand >> order [
+SycCopyClassNameCommand >> order [
 	^ 46
 ]
 
 { #category : 'testing' }
-SycCmCopyClassNameCommand >> selectedClass [
+SycCopyClassNameCommand >> selectedClass [
 	"Answer the last selected <Class>"
 
 	^ context lastSelectedClass realClass

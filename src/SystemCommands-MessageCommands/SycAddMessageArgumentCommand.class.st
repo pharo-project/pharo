@@ -9,7 +9,7 @@ Internal Representation and Key Implementation Points.
 "
 Class {
 	#name : 'SycAddMessageArgumentCommand',
-	#superclass : 'SycMessageCmCommand',
+	#superclass : 'SycMessageRefactoringCommand',
 	#instVars : [
 		'newSelector'
 	],

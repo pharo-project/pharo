@@ -3,21 +3,21 @@ I am a command to insert new superclass into my target class.
 I create new class using supeclass of my target class. And I replace superclass of target class with new created class
 "
 Class {
-	#name : 'SycCmInsertSuperclassCommand2',
-	#superclass : 'SycCmNewClassCreationCommand',
+	#name : 'SycInsertSuperclassCommand',
+	#superclass : 'SycNewClassCreationCommand',
 	#category : 'SystemCommands-ClassCommands-Creation',
 	#package : 'SystemCommands-ClassCommands',
 	#tag : 'Creation'
 }
 
 { #category : 'testing' }
-SycCmInsertSuperclassCommand2 >> canBeExecuted [
+SycInsertSuperclassCommand >> canBeExecuted [
 
 	^ context lastSelectedClass isTrait not
 ]
 
 { #category : 'executing' }
-SycCmInsertSuperclassCommand2 >> executeRefactoring [
+SycInsertSuperclassCommand >> executeRefactoring [
 	"The class name is necessary so the browser can select the new subclass"
 
 	| driver |
@@ -31,30 +31,30 @@ SycCmInsertSuperclassCommand2 >> executeRefactoring [
 ]
 
 { #category : 'accessing' }
-SycCmInsertSuperclassCommand2 >> iconName [
+SycInsertSuperclassCommand >> iconName [
 
 	^ #smallLoadProject
 ]
 
 { #category : 'accessing' }
-SycCmInsertSuperclassCommand2 >> name [
+SycInsertSuperclassCommand >> name [
 	^ '(R) Insert superclass'
 ]
 
 { #category : 'accessing' }
-SycCmInsertSuperclassCommand2 >> order [
+SycInsertSuperclassCommand >> order [
 	^ 30
 ]
 
 { #category : 'accessing' }
-SycCmInsertSuperclassCommand2 >> packageNames [
+SycInsertSuperclassCommand >> packageNames [
 	"Answer a <Collection> of <Symbol> of the packages available to the new class"
 	
 	^ PackageOrganizer default packageNames
 ]
 
 { #category : 'preparation' }
-SycCmInsertSuperclassCommand2 >> prepareFullExecution [
+SycInsertSuperclassCommand >> prepareFullExecution [
 	
 	refactoringScopes := context refactoringScopes.
 	targetClass := context lastSelectedClass.

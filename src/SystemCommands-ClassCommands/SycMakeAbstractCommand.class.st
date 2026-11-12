@@ -2,42 +2,42 @@
 I am a command to make a class abstract by adding a method that returns whether the class is abstract
 "
 Class {
-	#name : 'SycCMakeAbstractCommand',
-	#superclass : 'SycClassCmCommand',
+	#name : 'SycMakeAbstractCommand',
+	#superclass : 'SycClassRefactoringCommand',
 	#category : 'SystemCommands-ClassCommands',
 	#package : 'SystemCommands-ClassCommands'
 }
 
 { #category : 'testing' }
-SycCMakeAbstractCommand >> canBeExecuted [
+SycMakeAbstractCommand >> canBeExecuted [
 
 	^ context lastSelectedClass realClass isAbstract not
 ]
 
 { #category : 'executing' }
-SycCMakeAbstractCommand >> executeRefactoring [
+SycMakeAbstractCommand >> executeRefactoring [
 
 	(self refactoringClass class: targetClass) execute
 ]
 
 { #category : 'accessing' }
-SycCMakeAbstractCommand >> iconName [
+SycMakeAbstractCommand >> iconName [
 
 	^ #smallLoadProject
 ]
 
 { #category : 'testing' }
-SycCMakeAbstractCommand >> name [
+SycMakeAbstractCommand >> name [
 	^ self refactoringClass menuItemString
 ]
 
 { #category : 'testing' }
-SycCMakeAbstractCommand >> order [
+SycMakeAbstractCommand >> order [
 	^ 40
 ]
 
 { #category : 'factory method' }
-SycCMakeAbstractCommand >> refactoringClass [
+SycMakeAbstractCommand >> refactoringClass [
 
 	^ RBMakeClassAbstractTransformation
 ]

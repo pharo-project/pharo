@@ -10,7 +10,7 @@ Internal Representation and Key Implementation Points.
 "
 Class {
 	#name : 'SycMoveMethodsToPackageCommand',
-	#superclass : 'SycMethodRepackagingCmCommand',
+	#superclass : 'SycMethodRepackagingCommand',
 	#instVars : [
 		'package'
 	],

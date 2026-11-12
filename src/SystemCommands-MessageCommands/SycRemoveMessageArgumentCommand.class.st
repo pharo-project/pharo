@@ -8,7 +8,7 @@ Internal Representation and Key Implementation Points.
 "
 Class {
 	#name : 'SycRemoveMessageArgumentCommand',
-	#superclass : 'SycMessageCmCommand',
+	#superclass : 'SycMessageRefactoringCommand',
 	#instVars : [
 		'argumentName',
 		'methodName'

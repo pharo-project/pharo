@@ -3,7 +3,7 @@ I am a command to move method to the class side of defining class
 "
 Class {
 	#name : 'SycMoveMethodsToClassSideCommand',
-	#superclass : 'SycMethodCmCommand',
+	#superclass : 'SycMethodRefactoringCommand',
 	#category : 'SystemCommands-MethodCommands',
 	#package : 'SystemCommands-MethodCommands'
 }

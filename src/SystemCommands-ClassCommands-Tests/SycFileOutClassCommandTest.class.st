@@ -1,5 +1,5 @@
 Class {
-	#name : 'SycCmFileOutClassCommandTest',
+	#name : 'SycFileOutClassCommandTest',
 	#superclass : 'SycAbstractCommandTest',
 	#category : 'SystemCommands-ClassCommands-Tests-Tests',
 	#package : 'SystemCommands-ClassCommands-Tests',
@@ -7,9 +7,9 @@ Class {
 }
 
 { #category : 'tests' }
-SycCmFileOutClassCommandTest >> testDefaultFileNameForMultipleClasses [
+SycFileOutClassCommandTest >> testDefaultFileNameForMultipleClasses [
 	| cmd context |
-	cmd := SycCmFileOutClassCommand new.
+	cmd := SycFileOutClassCommand new.
 	context := SycMockClassContext new.
 	context selectedObjects: { Point . Rectangle }.
 	cmd context: context.
@@ -17,10 +17,10 @@ SycCmFileOutClassCommandTest >> testDefaultFileNameForMultipleClasses [
 ]
 
 { #category : 'tests' }
-SycCmFileOutClassCommandTest >> testDefaultFileNameForSingleClass [
+SycFileOutClassCommandTest >> testDefaultFileNameForSingleClass [
 
 	| cmd |
-	cmd := SycCmFileOutClassCommand new.
+	cmd := SycFileOutClassCommand new.
 	cmd context: self contextOnPoint.
 
 	self assert: cmd defaultFileName equals: 'Point'

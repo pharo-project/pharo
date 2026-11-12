@@ -2,28 +2,28 @@
 Force full update of all browser views
 "
 Class {
-	#name : 'SycCmUpdateClassCommand',
-	#superclass : 'SycClassExtraCmCommand',
+	#name : 'SycUpdateClassCommand',
+	#superclass : 'SycSingleClassCommand',
 	#category : 'SystemCommands-ClassCommands-Extra',
 	#package : 'SystemCommands-ClassCommands',
 	#tag : 'Extra'
 }
 
 { #category : 'executing' }
-SycCmUpdateClassCommand >> execute [
+SycUpdateClassCommand >> execute [
 
 	context tool update.
 	self inform: 'Browser updated'
 ]
 
 { #category : 'accessing' }
-SycCmUpdateClassCommand >> iconName [
+SycUpdateClassCommand >> iconName [
 
 	^ #smallUpdate
 ]
 
 { #category : 'accessing' }
-SycCmUpdateClassCommand >> name [
+SycUpdateClassCommand >> name [
 
 	^ 'Update'
 ]

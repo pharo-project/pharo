@@ -5,7 +5,7 @@ For global variable I open browser of class of variable value
 "
 Class {
 	#name : 'SycBrowseVariableCommand',
-	#superclass : 'SycVariableNavigationCmCommand',
+	#superclass : 'SycVariableNavigationCommand',
 	#category : 'SystemCommands-VariableCommands',
 	#package : 'SystemCommands-VariableCommands'
 }

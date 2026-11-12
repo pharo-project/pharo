@@ -1,31 +1,31 @@
 Class {
-	#name : 'SycCmDuplicateClassCommand',
-	#superclass : 'SycClassCmCommand',
+	#name : 'SycDuplicateClassCommand',
+	#superclass : 'SycClassRefactoringCommand',
 	#category : 'SystemCommands-ClassCommands-Creation',
 	#package : 'SystemCommands-ClassCommands',
 	#tag : 'Creation'
 }
 
 { #category : 'execution' }
-SycCmDuplicateClassCommand >> applyCommandResult [
+SycDuplicateClassCommand >> applyCommandResult [
 	
 	"Nothing"
 ]
 
 { #category : 'testing' }
-SycCmDuplicateClassCommand >> canBeExecuted [
+SycDuplicateClassCommand >> canBeExecuted [
 
 	^ self context isClassSelected and: [ self context lastSelectedClass isTrait not ]
 ]
 
 { #category : 'accessing' }
-SycCmDuplicateClassCommand >> description [
+SycDuplicateClassCommand >> description [
 
 	^ 'Duplicate Class.'
 ]
 
 { #category : 'executing' }
-SycCmDuplicateClassCommand >> executeRefactoring [
+SycDuplicateClassCommand >> executeRefactoring [
 	"The class name is necessary so the browser can select the new subclass"
 
 	| driver |
@@ -34,24 +34,24 @@ SycCmDuplicateClassCommand >> executeRefactoring [
 ]
 
 { #category : 'accessing' }
-SycCmDuplicateClassCommand >> iconName [
+SycDuplicateClassCommand >> iconName [
 
 	^ #smallCopy
 ]
 
 { #category : 'accessing' }
-SycCmDuplicateClassCommand >> name [
+SycDuplicateClassCommand >> name [
 
 	^ 'Duplicate class'
 ]
 
 { #category : 'accessing' }
-SycCmDuplicateClassCommand >> order [
+SycDuplicateClassCommand >> order [
 	^ 11
 ]
 
 { #category : 'preparation' }
-SycCmDuplicateClassCommand >> prepareFullExecution [
+SycDuplicateClassCommand >> prepareFullExecution [
 	
 	refactoringScopes := context refactoringScopes.
 	targetClass := context lastSelectedClass.

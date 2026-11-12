@@ -4,21 +4,21 @@ By default I insert the new class between given class and its subclasses (mytarg
 If you choose the Add class option, I will add the class as a subclass of the given class and the new class will become a sibling to its subclasses.
 "
 Class {
-	#name : 'SycCmInsertSubclassCommand2',
-	#superclass : 'SycCmNewClassCreationCommand',
+	#name : 'SycInsertSubclassCommand',
+	#superclass : 'SycNewClassCreationCommand',
 	#category : 'SystemCommands-ClassCommands-Creation',
 	#package : 'SystemCommands-ClassCommands',
 	#tag : 'Creation'
 }
 
 { #category : 'testing' }
-SycCmInsertSubclassCommand2 >> canBeExecuted [
+SycInsertSubclassCommand >> canBeExecuted [
 
 	^ context lastSelectedClass isTrait not
 ]
 
 { #category : 'executing' }
-SycCmInsertSubclassCommand2 >> executeRefactoring [
+SycInsertSubclassCommand >> executeRefactoring [
 	"The class name is necessary so the browser can select the new subclass"
 
 	| driver dialog choice dictionnary |
@@ -41,42 +41,42 @@ SycCmInsertSubclassCommand2 >> executeRefactoring [
 ]
 
 { #category : 'accessing' }
-SycCmInsertSubclassCommand2 >> iconName [
+SycInsertSubclassCommand >> iconName [
 
 	^ #add
 ]
 
 { #category : 'accessing' }
-SycCmInsertSubclassCommand2 >> name [
+SycInsertSubclassCommand >> name [
 	^ '(R) Insert subclass'
 ]
 
 { #category : 'accessing' }
-SycCmInsertSubclassCommand2 >> newClassName [
+SycInsertSubclassCommand >> newClassName [
 
 	^ newClassName 
 ]
 
 { #category : 'accessing' }
-SycCmInsertSubclassCommand2 >> newClassName: aString [ 
+SycInsertSubclassCommand >> newClassName: aString [ 
 
 	newClassName := aString asSymbol
 ]
 
 { #category : 'accessing' }
-SycCmInsertSubclassCommand2 >> order [
+SycInsertSubclassCommand >> order [
 	^ 10100.1
 ]
 
 { #category : 'accessing' }
-SycCmInsertSubclassCommand2 >> packageNames [
+SycInsertSubclassCommand >> packageNames [
 	"Answer a <Collection> of <Symbol> of the packages available to the new class"
 	
 	^ PackageOrganizer default packageNames
 ]
 
 { #category : 'preparation' }
-SycCmInsertSubclassCommand2 >> prepareFullExecution [
+SycInsertSubclassCommand >> prepareFullExecution [
 	
 	refactoringScopes := context refactoringScopes.
 	targetClass := context lastSelectedClass.

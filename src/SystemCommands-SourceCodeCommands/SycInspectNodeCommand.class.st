@@ -3,7 +3,7 @@ I'm a simple command to inspect any AST node.
 "
 Class {
 	#name : 'SycInspectNodeCommand',
-	#superclass : 'SycSourceCodeCmCommand',
+	#superclass : 'SycSourceCodeCommand',
 	#category : 'SystemCommands-SourceCodeCommands',
 	#package : 'SystemCommands-SourceCodeCommands'
 }

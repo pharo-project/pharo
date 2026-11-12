@@ -5,7 +5,7 @@ Also I open inspector on instance variable of class side because they also have 
 "
 Class {
 	#name : 'SycInspectVariableValueCommand',
-	#superclass : 'SycVariableNavigationCmCommand',
+	#superclass : 'SycVariableNavigationCommand',
 	#category : 'SystemCommands-VariableCommands',
 	#package : 'SystemCommands-VariableCommands'
 }

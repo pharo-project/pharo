@@ -5,7 +5,7 @@ I am used to convert extension method to normal one
 "
 Class {
 	#name : 'SycMoveMethodsToTheDefiningClassCommand',
-	#superclass : 'SycMethodRepackagingCmCommand',
+	#superclass : 'SycMethodRepackagingCommand',
 	#category : 'SystemCommands-MethodCommands',
 	#package : 'SystemCommands-MethodCommands'
 }

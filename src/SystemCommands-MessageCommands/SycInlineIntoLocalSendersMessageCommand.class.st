@@ -3,7 +3,7 @@ I am a command to launch the Inline All Senders Refactoring: the call to this me
 "
 Class {
 	#name : 'SycInlineIntoLocalSendersMessageCommand',
-	#superclass : 'SycMessageCmCommand',
+	#superclass : 'SycMessageRefactoringCommand',
 	#category : 'SystemCommands-MessageCommands',
 	#package : 'SystemCommands-MessageCommands'
 }

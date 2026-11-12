@@ -3,7 +3,7 @@ Call the rename method refactoring (yes the class name is not good)
 "
 Class {
 	#name : 'SycRenameMessageCommand',
-	#superclass : 'SycChangeMessageMenuCmCommand',
+	#superclass : 'SycChangeMessageSignatureCommand',
 	#instVars : [
 		'newSignature',
 		'driver'

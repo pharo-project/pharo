@@ -4,7 +4,7 @@ I am a command to invert hierarhcy in the method visibility class list.
 "
 Class {
 	#name : 'ClyInvertMethodVisibilityHierarchyCommand',
-	#superclass : 'SycMethodGroupExtraCmCommand',
+	#superclass : 'ClyCommand',
 	#category : 'Calypso-SystemTools-FullBrowser-Commands-MethodGroups',
 	#package : 'Calypso-SystemTools-FullBrowser',
 	#tag : 'Commands-MethodGroups'
@@ -14,6 +14,13 @@ Class {
 ClyInvertMethodVisibilityHierarchyCommand >> canBeExecuted [
 
 	^ context isAboutBrowserItemType: ClyInheritedMethodGroup
+]
+
+{ #category : 'accessing' }
+ClyInvertMethodVisibilityHierarchyCommand >> description [
+
+	^ 'I am a command to invert hierarhcy in the method visibility class list.
+(it is shown when user expands first item in the method groups pane)'
 ]
 
 { #category : 'execution' }

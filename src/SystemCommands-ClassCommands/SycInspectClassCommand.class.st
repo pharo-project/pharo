@@ -3,15 +3,15 @@ Inspect current selected class in the browser.
 If there are multiple selection, the command will open an inspector on the selected list of classes. If there there is a single selection, it will open the inspector directly on the selected class.
 "
 Class {
-	#name : 'SycCmInspectClassCommand',
-	#superclass : 'SycClassExtraCmCommand',
+	#name : 'SycInspectClassCommand',
+	#superclass : 'SycSingleClassCommand',
 	#category : 'SystemCommands-ClassCommands-Extra',
 	#package : 'SystemCommands-ClassCommands',
 	#tag : 'Extra'
 }
 
 { #category : 'execution' }
-SycCmInspectClassCommand >> execute [
+SycInspectClassCommand >> execute [
 
 	| selectedItems |
 	selectedItems := context selectedObjects.
@@ -21,13 +21,13 @@ SycCmInspectClassCommand >> execute [
 ]
 
 { #category : 'accessing' }
-SycCmInspectClassCommand >> iconName [
+SycInspectClassCommand >> iconName [
 
 	^ #smallInspectIt
 ]
 
 { #category : 'accessing' }
-SycCmInspectClassCommand >> name [
+SycInspectClassCommand >> name [
 
 	^ 'Inspect'
 ]

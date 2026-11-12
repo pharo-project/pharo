@@ -8,8 +8,8 @@ Internal Representation and Key Implementation Points.
 	newClassName:		<String>
 "
 Class {
-	#name : 'SycCmNewClassCreationCommand',
-	#superclass : 'SycClassCmCommand',
+	#name : 'SycNewClassCreationCommand',
+	#superclass : 'SycClassRefactoringCommand',
 	#instVars : [
 		'newClassName'
 	],
@@ -19,7 +19,7 @@ Class {
 }
 
 { #category : 'execution' }
-SycCmNewClassCreationCommand >> applyCommandResult [
+SycNewClassCreationCommand >> applyCommandResult [
 	"Check if user cancelled while viewing changes"
 	| newClass |
 	
@@ -31,7 +31,7 @@ SycCmNewClassCreationCommand >> applyCommandResult [
 ]
 
 { #category : 'testing' }
-SycCmNewClassCreationCommand >> canBeExecuted [
+SycNewClassCreationCommand >> canBeExecuted [
 
 	^ false
 ]

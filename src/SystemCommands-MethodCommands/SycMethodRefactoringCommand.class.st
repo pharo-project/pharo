@@ -1,8 +1,10 @@
 "
-This class is an extension so we can mix command of Commander2 with Commander.
+I am the root of the refactorings of the selected methods, such as pull up, push down or the moves to another class, side or package.
+I add the refactoring scopes and the refactoring model to SycMethodCommand. My subclasses usually answer their refactorings with #asRefactorings, which I execute.
+#for: answers a command already prepared for some methods, to run it outside of a tool.
 "
 Class {
-	#name : 'SycMethodCmCommand',
+	#name : 'SycMethodRefactoringCommand',
 	#superclass : 'SycMethodCommand',
 	#instVars : [
 		'refactoringScopes'
@@ -12,7 +14,7 @@ Class {
 }
 
 { #category : 'instance creation' }
-SycMethodCmCommand class >> for: methods [
+SycMethodRefactoringCommand class >> for: methods [
 
 	^ self new
 		  methods: methods;
@@ -21,25 +23,25 @@ SycMethodCmCommand class >> for: methods [
 ]
 
 { #category : 'testing' }
-SycMethodCmCommand >> canBeExecuted [
+SycMethodRefactoringCommand >> canBeExecuted [
 
 	^ self methods isNotEmpty
 ]
 
 { #category : 'execution' }
-SycMethodCmCommand >> executeRefactoring [
+SycMethodRefactoringCommand >> executeRefactoring [
 
 	self asRefactorings do: [ :each | each execute ]
 ]
 
 { #category : 'preparation' }
-SycMethodCmCommand >> prepareFullExecution [
+SycMethodRefactoringCommand >> prepareFullExecution [
 	super prepareFullExecution.
 	model ifNil: [ self setUpModelFromContext: self context ]
 ]
 
 { #category : 'accessing' }
-SycMethodCmCommand >> refactoringScopes [
+SycMethodRefactoringCommand >> refactoringScopes [
 
 	^ refactoringScopes ifNil: [
 			  self hasContext
@@ -48,7 +50,7 @@ SycMethodCmCommand >> refactoringScopes [
 ]
 
 { #category : 'accessing' }
-SycMethodCmCommand >> refactoringScopes: aCollection [
+SycMethodRefactoringCommand >> refactoringScopes: aCollection [
 
 	refactoringScopes := aCollection
 ]

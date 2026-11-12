@@ -8,7 +8,7 @@ Internal Representation and Key Implementation Points.
 "
 Class {
 	#name : 'SycDeprecateMessageCommand',
-	#superclass : 'SycChangeMessageMenuCmCommand',
+	#superclass : 'SycChangeMessageSignatureCommand',
 	#category : 'SystemCommands-MessageCommands',
 	#package : 'SystemCommands-MessageCommands'
 }

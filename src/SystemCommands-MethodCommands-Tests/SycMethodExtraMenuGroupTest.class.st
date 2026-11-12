@@ -1,5 +1,5 @@
 Class {
-	#name : 'SycMethodExtraCmCommandTest',
+	#name : 'SycMethodExtraMenuGroupTest',
 	#superclass : 'TestCase',
 	#category : 'SystemCommands-MethodCommands-Tests-Tests',
 	#package : 'SystemCommands-MethodCommands-Tests',
@@ -7,7 +7,7 @@ Class {
 }
 
 { #category : 'helpers' }
-SycMethodExtraCmCommandTest >> contextOnPoint [
+SycMethodExtraMenuGroupTest >> contextOnPoint [
 
 	^ SycMockMethodContext new
 		  selectedMethods: { Point >> #x };
@@ -15,7 +15,7 @@ SycMethodExtraCmCommandTest >> contextOnPoint [
 ]
 
 { #category : 'tests' }
-SycMethodExtraCmCommandTest >> testGroupContainsExtraCommands [
+SycMethodExtraMenuGroupTest >> testGroupContainsExtraCommands [
 
 	| entries |
 	entries := ((ClyCommandRegistry default mapOf: ClyMethod) entriesOf: #contextMenu) select: [ :entry | entry menuGroup = SycMethodExtraMenuGroup ].

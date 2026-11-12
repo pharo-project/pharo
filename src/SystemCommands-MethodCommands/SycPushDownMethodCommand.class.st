@@ -3,7 +3,7 @@ I am a command to push down given methods
 "
 Class {
 	#name : 'SycPushDownMethodCommand',
-	#superclass : 'SycMethodCmCommand',
+	#superclass : 'SycMethodRefactoringCommand',
 	#category : 'SystemCommands-MethodCommands',
 	#package : 'SystemCommands-MethodCommands'
 }

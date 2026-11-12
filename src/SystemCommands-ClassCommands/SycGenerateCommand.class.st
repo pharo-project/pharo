@@ -1,30 +1,29 @@
 "
-Abstract class that groups Commander 2 behavior related to method generation.
-
-Subclasses must implement `driverClass` answering the driver which will be executed by running the command.
+I am the root of the commands which generate methods in the selected class with a refactoring driver, such as #= and #hash or #printOn:.
+My subclasses answer the driver with #driverClass.
 "
 Class {
-	#name : 'SycCmGenerateCommand',
-	#superclass : 'SycClassCmCommand',
+	#name : 'SycGenerateCommand',
+	#superclass : 'SycClassRefactoringCommand',
 	#category : 'SystemCommands-ClassCommands-Creation',
 	#package : 'SystemCommands-ClassCommands',
 	#tag : 'Creation'
 }
 
 { #category : 'testing' }
-SycCmGenerateCommand >> canBeExecuted [
+SycGenerateCommand >> canBeExecuted [
 	"Answer <true> if the receiver has any variables"
 
 	^ false
 ]
 
 { #category : 'executing' }
-SycCmGenerateCommand >> driverClass [
+SycGenerateCommand >> driverClass [
 	^ self subclassResponsibility
 ]
 
 { #category : 'executing' }
-SycCmGenerateCommand >> executeRefactoring [
+SycGenerateCommand >> executeRefactoring [
 
 	(self driverClass new
 		 targetClass: targetClass name;
@@ -32,7 +31,7 @@ SycCmGenerateCommand >> executeRefactoring [
 ]
 
 { #category : 'accessing' }
-SycCmGenerateCommand >> name [
+SycGenerateCommand >> name [
 
 	^ self driverClass menuItemString
 ]

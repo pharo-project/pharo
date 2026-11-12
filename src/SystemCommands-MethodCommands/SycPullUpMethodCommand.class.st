@@ -3,7 +3,7 @@ I am a command to pull up given methods
 "
 Class {
 	#name : 'SycPullUpMethodCommand',
-	#superclass : 'SycMethodCmCommand',
+	#superclass : 'SycMethodRefactoringCommand',
 	#category : 'SystemCommands-MethodCommands',
 	#package : 'SystemCommands-MethodCommands'
 }
