@@ -14,6 +14,6 @@ MetacelloFailingResolver >> resolve: aProjectSpec engine: anEngine [
 
 	| answer |
 	answer := super resolve: aProjectSpec engine: anEngine.
-	answer addFinding: (MetacelloResolutionFinding error: #cannotResolve text: 'cannot resolve' request: answer root requests first).
+	answer addFinding: (MetacelloResolutionFinding error: #cannotResolve text: 'cannot resolve' request: answer roots first requests first).
 	^ answer
 ]

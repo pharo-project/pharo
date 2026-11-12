@@ -69,7 +69,7 @@ MetacelloInteractiveResolver >> resolve: aProjectSpec engine: anEngine [
 		do: [ :notification | notification resume: notification newProjectRegistration ].
 	rootSpec ensureProjectLoadedWithEngine: engine.
 	root := MetacelloResolvedProject projectSpec: rootSpec.
-	resolution root: root.
+	resolution addRoot: root.
 	root requestedBy: nil spec: (rootSpec copy
 			 loads: aProjectSpec loads;
 			 yourself).

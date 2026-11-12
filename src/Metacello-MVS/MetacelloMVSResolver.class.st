@@ -449,7 +449,7 @@ MetacelloMVSResolver >> resolutionOf: aResolution [
 	roots := aResolution rootCandidates.
 	roots do: [ :candidate |
 			(self resolvedProjectOf: candidate into: aResolution) ifNotNil: [ :project |
-					aResolution root: project.
+					aResolution addRoot: project.
 					project addRequest: candidate request ] ].
 	aResolution buildList valuesDo: [ :candidate |
 			(roots includes: candidate) ifFalse: [

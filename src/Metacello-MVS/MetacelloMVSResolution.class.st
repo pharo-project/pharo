@@ -100,11 +100,11 @@ MetacelloMVSResolution >> findingsOf: aRepository [
 
 { #category : 'initialization' }
 MetacelloMVSResolution >> initialize [
-
 	super initialize.
 	buildList := Dictionary new.
 	subjects := IdentityDictionary new.
-	requirements := OrderedCollection new
+	requirements := OrderedCollection new.
+	rootRepositories := #(  )
 ]
 
 { #category : 'accessing' }
@@ -179,7 +179,7 @@ MetacelloMVSResolution >> resolves [
 MetacelloMVSResolution >> rootCandidates [
 	"The candidates of the roots that could be selected, in order"
 
-	^ (rootRepositories ifNil: [ #(  ) ]) select: [ :each | buildList includesKey: each ] thenCollect: [ :each | buildList at: each ]
+	^ rootRepositories select: [ :each | buildList includesKey: each ] thenCollect: [ :each | buildList at: each ]
 ]
 
 { #category : 'accessing' }

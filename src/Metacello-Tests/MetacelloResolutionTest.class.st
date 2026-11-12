@@ -86,9 +86,9 @@ MetacelloResolutionTest >> testFindsProjectsByTheirSpec [
 	| resolution project |
 	project := self lock2.
 	resolution := MetacelloResolution new.
-	resolution root: project.
+	resolution addRoot: project.
 
-	self assert: resolution root identicalTo: project.
+	self assert: resolution roots asArray equals: { project }.
 	self assert: (resolution projectFor: project projectSpec ifAbsent: [ nil ]) identicalTo: project.
 	self assert: (resolution includes: project projectSpec)
 ]

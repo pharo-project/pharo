@@ -298,7 +298,7 @@ MetacelloInteractiveResolverTest >> testResolvesTheRootAndWhatItRequires [
 	| resolution |
 	resolution := self resolveLock1Loading: #(  ).
 
-	self assert: resolution root name equals: 'TestToLock1'.
+	self assert: (resolution roots collect: [ :each | each name ]) asArray equals: #( 'TestToLock1' ).
 	self assertCollection: (resolution projects collect: [ :each | each name ]) hasSameElements: #( 'TestToLock1' 'TestToLock2' ).
 	self deny: resolution hasErrors
 ]

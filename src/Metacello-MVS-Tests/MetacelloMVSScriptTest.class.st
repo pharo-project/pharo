@@ -171,7 +171,7 @@ MetacelloMVSScriptTest >> testResolveAnswersTheProjectsAtTheVersionsSelected [
 	| resolution |
 	resolution := self fooScript resolve.
 	self assert: resolution class equals: MetacelloMVSResolution.
-	self assert: resolution root name equals: 'Foo'.
+	self assert: (resolution roots collect: [ :each | each name ]) asArray equals: #( 'Foo' ).
 	self
 		assert: (resolution projects collect: [ :each | each name -> each projectSpec repositoryDescriptions first ]) asDictionary
 		equals: {

@@ -1,15 +1,13 @@
 "
 I am what a resolver answers: every project a load needs, each at the version chosen (MetacelloResolvedProject), and what the resolver found on the way (MetacelloResolutionFinding). Recording and loading follow me and decide nothing; a load goes ahead only when I have no errors.
-
-root: the MetacelloResolvedProject asked for.
-projects: project class name -> MetacelloResolvedProject, the root included.
+roots: the MetacelloResolvedProjects the load asked for, in order.
+projects: project class name -> MetacelloResolvedProject, the roots included.
 findings: errors and warnings, in the order found.
 "
 Class {
 	#name : 'MetacelloResolution',
 	#superclass : 'Object',
 	#instVars : [
-		'root',
 		'projects',
 		'findings',
 		'roots'
@@ -31,6 +29,14 @@ MetacelloResolution >> addFinding: aFinding [
 
 	findings add: aFinding.
 	^ aFinding
+]
+
+{ #category : 'accessing' }
+MetacelloResolution >> addRoot: aResolvedProject [
+	"Add aResolvedProject as a root of the load, after the roots added before"
+
+	self add: aResolvedProject.
+	(roots includes: aResolvedProject) ifFalse: [ roots add: aResolvedProject ]
 ]
 
 { #category : 'findings' }
@@ -77,21 +83,6 @@ MetacelloResolution >> projectFor: aProjectSpec ifAbsent: aBlock [
 MetacelloResolution >> projects [
 
 	^ projects values
-]
-
-{ #category : 'accessing' }
-MetacelloResolution >> root [
-
-	^ root
-]
-
-{ #category : 'accessing' }
-MetacelloResolution >> root: aResolvedProject [
-	"aResolvedProject is a root of the load; the first one is the root"
-
-	self add: aResolvedProject.
-	root ifNil: [ root := aResolvedProject ].
-	(roots includes: aResolvedProject) ifFalse: [ roots add: aResolvedProject ]
 ]
 
 { #category : 'accessing' }

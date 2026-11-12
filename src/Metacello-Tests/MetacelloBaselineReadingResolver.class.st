@@ -14,6 +14,6 @@ MetacelloBaselineReadingResolver >> resolve: aProjectSpec engine: anEngine [
 
 	| answer |
 	answer := super resolve: aProjectSpec engine: anEngine.
-	answer projects do: [ :each | each == answer root ifFalse: [ each beInstallingBaseline ] ].
+	answer projects do: [ :each | (answer roots includes: each) ifFalse: [ each beInstallingBaseline ] ].
 	^ answer
 ]
