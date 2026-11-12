@@ -1,5 +1,5 @@
 "
-I am the context in which the Calypso commands run. I hold the tool that owns the command and answer the questions that commands and their menus ask about the selection (classes, packages, methods, variables, source nodes). Concrete contexts (browser, text editor, critics) specialise me. I replace the v1 base context while the v1 activators still exist.
+I am the context in which the Calypso commands run. I hold the tool that owns the command and answer the questions that commands and their menus ask about the selection (classes, packages, methods, variables, source nodes). Concrete contexts (browser, text editor, critics) specialise me. Commands are declared on context classes, or on the types of the selected items, see #isDescribedByCommandAnchor: and the guide doc/Calypso/Commands.md of the Pharo repository.
 "
 Class {
 	#name : 'ClyToolContext',

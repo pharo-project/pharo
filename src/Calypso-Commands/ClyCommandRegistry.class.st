@@ -1,10 +1,11 @@
 "
 I know every command declared for Calypso with the <calypsoCommands> pragma. I find the anchors (the classes whose class side has such methods), build their ClyCommandMap lazily and keep them.
 Calypso asks me the commands of an interaction for a tool context: #activationsOf:inContext: answers the entries declared on every anchor which describes the context (see ClyToolContext>>#isDescribedByCommandAnchor:), sorted by priority. Menus, toolbars, tab actions, table icons, shortcuts, clicks and drag and drop are all built from it.
-Class annotations of commands which are not migrated yet are still shown: #legacyAnnotationsOf: adds them to the activations. Code that still enumerates the annotation strategies directly also sees the declared entries, see ClyCommandActivationStrategy class>>#registeredInstances.
+Class annotations of commands which are not migrated yet are still shown while the deprecated Commander-Calypso-Compatibility package is loaded: #legacyAnnotationsOf: adds them to the activations. doc/Calypso/CommandAnnotationsMigration.md explains how to migrate them.
 The default instance is reset when a declaration method or a command class changes, so new declarations are shown at once.
 To see what is declared in the image, inspect:
 	ClyCommandRegistry default allEntries
+The guide doc/Calypso/Commands.md of the Pharo repository explains how commands are declared and how a tool uses me.
 "
 Class {
 	#name : 'ClyCommandRegistry',

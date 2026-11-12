@@ -1,7 +1,7 @@
 "
 I am a command declared for drag and drop in a Calypso command map. My anchor describes the dragged items and my drop anchor the contexts where they can be dropped:
 	aCommandMap dragAndDrop add: SycMoveMethodsToClassCommand dropIn: ClyClass
-My activator is a ClyDragAndDropCommandActivator, as for ClyDragAndDropActivation.
+My activator is a ClyDragAndDropCommandActivator.
 "
 Class {
 	#name : 'ClyDropCommandEntry',

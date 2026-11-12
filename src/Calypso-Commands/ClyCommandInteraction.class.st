@@ -7,6 +7,7 @@ I am the commands of one interaction in a Calypso command map, such as its conte
 #group: answers a view of me which adds its commands to a menu group class. The views share my entries.
 #addAllConcreteSubclassesOf: adds a whole family of commands. Use it only for closed families whose hierarchy is the menu, such as view mode switches. Otherwise add each command, so a command does not have to subclass a family to be shown.
 My label selector is the message asked to a command for its label when its entry has none: #name for menus, #defaultToolbarItemName for the toolbar.
+The interactions and the options of their entries are described in doc/Calypso/Commands.md of the Pharo repository.
 "
 Class {
 	#name : 'ClyCommandInteraction',

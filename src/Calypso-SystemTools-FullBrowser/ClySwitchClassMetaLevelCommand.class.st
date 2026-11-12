@@ -7,7 +7,7 @@ My subclasses define target meta level in following method:
 - metaLevelScope
 It should return ClyInstanceSideScope or ClyClassSideScope.
 
-Also I am annotated with toolbar activation strategy. So my subclasses will be shown in the browser toolbar as radio buttons.
+My subclasses are declared in the browser toolbar, where they are shown as radio buttons.
 And they should implement #toolbarOrder method
 
 "

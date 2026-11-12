@@ -1,5 +1,11 @@
 "
-I am the root of the Calypso commands. I am a Commander2 command, and I keep the helper methods that the v1 activators and the Calypso morphs (toolbar, tab, table cells, context menus) still call on a command, so that commands can move off the Commander v1 base classes.
+I am the root of the Calypso commands, Commander2 commands run in a tool context (ClyToolContext, see #context).
+
+Subclasses implement #execute, and usually #name, #iconName, and #canBeExecuted, calling super, to check the selection of their context. The first paragraph of the class comment of a command is its tooltip (#description), so start it with a short sentence for users and put the developer details in the following paragraphs.
+
+A command does not say where it is shown: anchors declare it in their menus, toolbars, shortcuts... with class-side methods marked with the <calypsoCommands> pragma (see ClyCommandMap). The guide doc/Calypso/Commands.md of the Pharo repository explains how to write and declare commands, and doc/Calypso/CommandAnnotationsMigration.md how to migrate commands placed by class annotations.
+
+I also keep the helper methods that the Calypso morphs (toolbar, tabs, table cells, context menus) call on a command.
 "
 Class {
 	#name : 'ClyCommand',
@@ -14,7 +20,7 @@ Class {
 
 { #category : 'testing' }
 ClyCommand class >> canBeExecutedInContext: aToolContext [
-	"Deprecated: commands check their context in the instance-side #canBeExecuted. I am kept for the commands of other projects which still check it here."
+	"Deprecated: commands check their context in the instance-side #canBeExecuted. I am kept for the commands of other projects which still check it here, see doc/Calypso/CommandAnnotationsMigration.md of the Pharo repository."
 
 	^ self isAbstract not
 ]

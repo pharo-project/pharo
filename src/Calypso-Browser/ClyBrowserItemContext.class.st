@@ -1,11 +1,12 @@
 "
 I represent any browser context of the selected items of particular class.
 
-I was introduced to activate browser commands and tools in the context of concrete type of selected items. It avoids duplication of annotaions for every browser type. So you can annotated command in context of ClyMethod. And it will be available in all browser which shows methods.
+I was introduced to activate browser tools and table decorators in the context of a concrete type of selected items. It avoids duplicating annotations for every browser type: a tool annotated in the context of ClyClassComment is available in all the browsers which show class comments. Commands no longer use me: they are declared on the item type directly (see ClyCommandMap).
 
-You can use the scope class directly as context in browser annotations:
-	ClyRenameMessageCommand class>>shortcutActivation
-		^CmdShortcutCommandActivation by: $r meta for: ClyMethod
+Annotations get me from the item type:
+	ClyRichTextClassCommentEditorToolMorph class >> classCommentTabActivation
+		<classAnnotation>
+		^ ClyTabActivationStrategyAnnotation for: ClyClassComment asCalypsoItemContext
 
 Internal Representation and Key Implementation Points.
 

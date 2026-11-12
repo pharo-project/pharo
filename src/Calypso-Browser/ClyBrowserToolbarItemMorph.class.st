@@ -4,7 +4,7 @@ Instances should be created with command activator:
 
 	ClyBrowserButton activatingBy: aCommandActivator  
 
-When browser buids the toolbar it collect all commands annotated with ClyToolbarCommandActivation and asks all of them to build toolbar item.
+When the browser builds the toolbar, it asks each command declared for the #toolbar interaction to build its toolbar item (ClyCommand>>#toolbarItemFor:).
 So command decides what UI element (my subclass) should be used to represent it in the toolbar. 
   
 Subclasses should implement method #build which should create actual widged which will perform the command using #executeCommand method.
@@ -13,7 +13,7 @@ Also I provide the #title method which is based on menu item name of the command
 Internal Representation and Key Implementation Points.
 
     Instance Variables
-	activator:		<CmdCommandActivator>
+	activator:		<ClyCommandActivator>
 "
 Class {
 	#name : 'ClyBrowserToolbarItemMorph',

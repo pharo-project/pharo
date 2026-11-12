@@ -1,4 +1,6 @@
 "
+Deprecated: I will be removed in Pharo 16 with the Commander-Calypso-Compatibility package. Declare commands with the <calypsoCommands> pragma instead, see ClyCommandMap and the guide doc/Calypso/Commands.md of the Pharo repository. The migration from class annotations is explained in doc/Calypso/CommandAnnotationsMigration.md of the Pharo repository and ClyCommandDeclarationGenerator converts them.
+
 I am the root of the Calypso command activation strategies. I describe how a command is reached in a given context, for example from a table icon. Concrete subclasses are attached to a command as a class annotation, and they build the activators that execute the command.
 "
 Class {

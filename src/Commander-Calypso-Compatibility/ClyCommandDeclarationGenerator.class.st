@@ -9,6 +9,7 @@ Usage:
 	generator removeAnnotationMethods.
 #mismatches compares every converted annotation with the entry declared for it, so the conversion can be checked before the annotations are removed. #undo removes the generated declarations and compiles back the removed annotation methods.
 Annotation methods which also annotate commands of other projects through inheritance are not converted (see #commandPackagePrefixes).
+The migration is explained in doc/Calypso/CommandAnnotationsMigration.md of the Pharo repository.
 "
 Class {
 	#name : 'ClyCommandDeclarationGenerator',

@@ -5,7 +5,7 @@ I am created by the methods marked with <calypsoCommands> through a ClyCommandIn
 I hold the placement: the menu group class, the order and the label. An order or a label I do not have is asked to the command when it is shown (#orderInContext: and the label selector of my interaction).
 My subclasses are the entries of the interactions which need more: the key combination of a shortcut (ClyShortcutCommandEntry), the mouse button of a click (ClyMouseCommandEntry) and the drop anchor of drag and drop (ClyDropCommandEntry).
 I remember the method which declared me, so tools can show why a command appears somewhere.
-I answer the messages Calypso asks to command activations (#menuGroup, #menuItemNameFor:, #isActiveInContext:, #newActivatorFor: ...). ClyCommandActivationStrategy class>>#registeredInstances answers me with the class annotations of my interaction, so Calypso shows both.
+I answer the messages Calypso asks to command activations (#menuGroup, #menuItemNameFor:, #isActiveInContext:, #newActivatorFor: ...), so Calypso handles me and the class annotations of the deprecated Commander-Calypso-Compatibility package alike.
 "
 Class {
 	#name : 'ClyCommandEntry',
@@ -229,7 +229,7 @@ ClyCommandEntry >> printOn: aStream [
 
 { #category : 'activation' }
 ClyCommandEntry >> priority [
-	"When several commands share a key, a click or a drop, the first one of the highest priority runs, as for class annotations."
+	"When several commands share a key, a click or a drop, the first one of the highest priority runs."
 
 	^ priority ifNil: [ 0 ]
 ]

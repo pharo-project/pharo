@@ -1,5 +1,7 @@
 "
-I am the base of the groups which place Calypso commands into a toolbar. My subclasses are used as the menu group of a toolbar activation. ClyToolbarBuilder orders the groups by their order and name and places the commands of each group into the toolbar.
+I am the base of the groups which place Calypso commands into a toolbar. Commands are put in a toolbar group by their declaration:
+	(aCommandMap toolbar group: ClyPackageToolbarGroup) add: ClySwitchToPackagesCommand order: 1
+The toolbar orders the groups by their order and name and places the commands of each group next to each other. See the guide doc/Calypso/Commands.md of the Pharo repository.
 "
 Class {
 	#name : 'ClyToolbarGroup',

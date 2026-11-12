@@ -29,7 +29,7 @@ Ideally browser should be a model itself independently from UI.  But this point 
 
 !! Browser contexts 
 
-Browser contexts are not for maintaining the state. They only represent possible state of components. They are approach to have pluggability points for commands, tabs, toolbars and table decorators. Remember that commands are annotated with activators for particular context where they should be used. Exactly the same logic is used for other parts of browser. Everything you read in Commander chapter is applicable for tabs, table decorators and toolbar items. Tabs are annotated with ClyTabActivationStrategy. Table decorators are annotated with ClyTableDecorationStrategy.
+Browser contexts are not for maintaining the state. They only represent possible state of components. They are approach to have pluggability points for commands, tabs, toolbars and table decorators. Commands are declared for the contexts where they are used, with the <calypsoCommands> pragma (see ClyCommandMap and the guide doc/Calypso/Commands.md of the Pharo repository). Tabs are annotated with ClyTabActivationStrategyAnnotation and table decorators with ClyTableDecorationStrategyAnnotation, for the contexts where they are used.
 
 So a browser collects contexts from children because otherwise children will need to know about toolbar and tabs. Now they only know the browser. Also all contexts are used to build spotter command menu (cmd+/). Query views has no information about it.  
 

@@ -1,14 +1,10 @@
 "
-I implement toobar in the browser (middle panel).
-I collect all commands annotated by ClyToolbarCommandActivation strategy and ask them to build toolbar items.
+I implement the toolbar of the browser (middle panel).
+I show the commands declared for the #toolbar interaction of the navigation contexts of the browser (see ClyCommandMap and the guide doc/Calypso/Commands.md of the Pharo repository).
 
-This logic is implemented in method #updateItems. You can ask it anytime to update toolbar in the browser.
-It is based on Commander menu:
+This logic is implemented in method #updateItems. You can ask it anytime to update the toolbar of the browser.
 
-	menu := CmdMenu activatedBy: ClyToolbarCommandActivation.
-
-But in contrast to context menu all toolbar groups inline UI items into single toolbar panel.
-So the menu groups in toolbar only allow to group several commands together to be close to each other. 
+In contrast to context menus, all toolbar groups (ClyToolbarGroup) inline their items into a single toolbar panel. So the groups only keep several commands close to each other.
 
 My instances are created on the browser: 
 

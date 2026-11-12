@@ -54,28 +54,19 @@ It adds simple ClyItemNameFilter.
 
 - enableFilter: anItemStringFilterClass
 
-I use Commander library to implement:
+I show the Calypso commands declared for the context of the selection (see ClyCommandRegistry and the guide doc/Calypso/Commands.md of the Pharo repository):
+- the context menu: #menuColumn:row:
+- the shortcuts: #kmDispatcher
+- clicks and double clicks: #triggerClickCommands and #triggerDoubleClickCommands
+- drag and drop: #createDragPassengerFor:
 
-- context menu using CmdContextMenuCommandActivator:
-
-	- menuColumn: column row: rowIndex
-
-- shortcuts using CmdShortcutCommandActivator 
-
-	- kmDispatcher
-
--  drag and drop using CmdDragAndDropCommandActivator 
-
-	- createDragPassengerFor: aSelection
-
-To use Commander I ask browser for command context of given selection.
+I ask the browser for the command context of a given selection.
 The context is also used to decorate table cells with appropriate decorators:
 
 	- decorateMainTableCell: anItemCellMorph of: aDataSourceItem
 	- decorateTableCell: anItemCellMorph of: aDataSourceItem
 
-There is special decorator which also based on Commander: ClyTableIconCommandActivation. It adds iconic button to table cells for all interested commands.
-It brings behaviour of Nautilus method widget where table icons are extended by AbstractMethodIconAction. Here commands should be marked with ClyTableIconCommandActivation.
+ClyCommandBasedTableDecorator adds the icons of the commands declared for the #tableIcons interaction to the table cells.
 
 I provide extra suitable events which in future should be also based on commands:
 - whenDoubleClickDo: 

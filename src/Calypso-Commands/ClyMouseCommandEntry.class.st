@@ -2,7 +2,7 @@
 I am a command declared for a click or a double click in a Calypso command map, with the mouse button and the optional keyboard modifier it waits for:
 	aCommandMap doubleClick add: ClySpawnFullBrowserCommand.
 	(aCommandMap textLeftBarClick add: ClyOpenTextLeftBarMenuCommand) beYellowButton
-I am active only when the last mouse event matches, as ClyMouseCommandActivation.
+I am active only when the last mouse event is a click of my button with my keyboard modifier.
 "
 Class {
 	#name : 'ClyMouseCommandEntry',
@@ -47,7 +47,7 @@ ClyMouseCommandEntry >> keyboardModifier: aKMModifier [
 
 { #category : 'activation' }
 ClyMouseCommandEntry >> matchesEvent: aMouseEvent [
-	"The same matching as ClyMouseCommandActivation>>#matchesEvent:."
+	"Whether the event is a click of my button with my keyboard modifier, or with no modifier when I have none."
 
 	aMouseEvent isMouse ifFalse: [ ^ false ].
 	aMouseEvent fixStateForClickAndModifierIssue.

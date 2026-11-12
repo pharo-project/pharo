@@ -9,6 +9,7 @@ I am built by running every class-side method of the anchor marked with the <cal
 		aCommandMap contextMenu add: MyShowCoverageCommand order: 1000.
 		aCommandMap shortcuts add: MyShowCoverageCommand key: $k meta shift
 I am plain data, built without any tool context. ClyCommandRegistry keeps me in a cache and finds the maps which apply to a context.
+The guide doc/Calypso/Commands.md of the Pharo repository describes the anchors, the interactions and the menu groups.
 "
 Class {
 	#name : 'ClyCommandMap',
@@ -33,7 +34,7 @@ ClyCommandMap class >> forAnchor: anAnchorClass [
 
 { #category : 'accessing' }
 ClyCommandMap class >> pragmaName [
-	"Class-side methods of an anchor marked with this pragma declare its commands. They take one argument, the command map."
+	"Class-side methods of an anchor marked with this pragma declare its commands. They take one argument, the command map. See the guide doc/Calypso/Commands.md of the Pharo repository."
 
 	^ #calypsoCommands
 ]
