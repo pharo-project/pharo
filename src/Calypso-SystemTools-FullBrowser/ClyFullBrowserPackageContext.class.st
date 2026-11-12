@@ -13,6 +13,7 @@ Class {
 ClyFullBrowserPackageContext class >> calypsoSystemToolsFullBrowserCommandsIn: aCommandMap [
 
 	<calypsoCommands>
+	aCommandMap tabs add: ClyClassCreationToolMorph.
 	(aCommandMap toolbar group: ClyPackageToolbarGroup)
 		add: ClySwitchToPackagesCommand order: 1;
 		add: ClySwitchToProjectsCommand order: 10;

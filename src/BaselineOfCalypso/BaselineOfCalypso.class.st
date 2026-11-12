@@ -113,7 +113,7 @@ BaselineOfCalypso >> baseline: spec [
 						#( #'Calypso-SystemQueries-Tests' #'Calypso-SystemPlugins-Reflectivity-Queries' ) ];
 			package: #'Calypso-SystemPlugins-SUnit-Browser' with: [
 				spec requires: #( #'Calypso-SystemPlugins-SUnit-Queries'
-						   #'Calypso-SystemTools-FullBrowser' ) ];
+						   #'Calypso-SystemTools-QueryBrowser' ) ];
 			package: #'Calypso-SystemPlugins-SUnit-Queries'
 			with: [ spec requires: #( #'Calypso-SystemQueries' ) ];
 			package: #'Calypso-SystemPlugins-SUnit-Queries-Tests' with: [
@@ -150,10 +150,10 @@ BaselineOfCalypso >> baseline: spec [
 				spec requires: #( #'Calypso-SystemPlugins-ClassScripts-Queries'
 						   #'Calypso-SystemTools-Core' ) ];
 			package: #'Calypso-SystemPlugins-DependencyAnalyser-Browser'
-			with: [ spec requires: #( #'Calypso-SystemTools-Core' ) ];
+			with: [ spec requires: #( #'Calypso-SystemTools-FullBrowser' ) ];
 			package: #'Calypso-Browser' with: [
 				spec requires: #( 'CalypsoNavigationModel'
-					   'SystemCommands' ) ];
+					   'SystemCommands' #'Calypso-SystemQueries' ) ];
 			package: #'Calypso-Browser-Tests'
 			with: [ spec requires: #( #'Calypso-Browser' ) ];
 			package: #'Calypso-SystemTools-Core' with: [

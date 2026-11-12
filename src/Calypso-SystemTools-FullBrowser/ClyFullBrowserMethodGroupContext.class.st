@@ -13,6 +13,7 @@ Class {
 ClyFullBrowserMethodGroupContext class >> calypsoSystemToolsFullBrowserCommandsIn: aCommandMap [
 
 	<calypsoCommands>
+	aCommandMap tabs add: ClyMethodCreationToolMorph.
 	aCommandMap shortcuts
 		add: ClyRemoveMethodGroupCommand key: $x meta;
 		add: ClyRenameProtocolCommand key: $r meta.

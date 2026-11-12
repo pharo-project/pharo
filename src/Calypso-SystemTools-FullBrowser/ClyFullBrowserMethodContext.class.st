@@ -13,6 +13,7 @@ Class {
 ClyFullBrowserMethodContext class >> calypsoSystemToolsFullBrowserCommandsIn: aCommandMap [
 
 	<calypsoCommands>
+	aCommandMap tableDecorators add: ClyClassSideLinkTableDecorator.
 	aCommandMap shortcuts add: ClyFindMethodInBrowserCommand key: $f meta.
 	aCommandMap tableDecorators add: ClyClassSideBoldTableDecorator
 ]

@@ -10,3 +10,10 @@ ClyTextEditorContext class >> calypsoSystemToolsCoreCommandsIn: aCommandMap [
 		add: ClyResetProtocolForEditorCommand key: $e meta , $u meta;
 		add: SycFormatSourceCodeCommand key: $f meta shift
 ]
+
+{ #category : '*Calypso-SystemTools-Core' }
+ClyTextEditorContext class >> systemCommandsSourceCodeCommandsIn: aCommandMap [
+
+	<calypsoCommands>
+	aCommandMap shortcuts add: SycRunTestCommand key: $e meta , $t meta
+]

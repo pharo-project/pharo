@@ -13,6 +13,7 @@ Class {
 ClyFullBrowserVariableContext class >> calypsoSystemToolsFullBrowserCommandsIn: aCommandMap [
 
 	<calypsoCommands>
+	aCommandMap tabs add: ClyMethodCreationToolMorph.
 	aCommandMap shortcuts
 		add: SycRemoveVariablesCommand key: $x meta;
 		add: SycRenameVariableCommand key: $r meta.

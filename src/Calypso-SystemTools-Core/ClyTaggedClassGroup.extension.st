@@ -1,6 +1,6 @@
 Extension { #name : 'ClyTaggedClassGroup' }
 
-{ #category : '*SystemCommands-PackageCommands' }
+{ #category : '*Calypso-SystemTools-Core' }
 ClyTaggedClassGroup class >> systemCommandsPackageCommandsIn: aCommandMap [
 
 	<calypsoCommands>

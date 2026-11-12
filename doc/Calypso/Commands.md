@@ -112,6 +112,7 @@ A declaration method:
 - is marked with the `<calypsoCommands>` pragma (see `ClyCommandMap class>>#pragmaName`);
 - takes one argument, the `ClyCommandMap` of the anchor, and adds commands to its interactions;
 - is often an extension method, so the package of the commands declares them on an anchor of another package. Name it after the package, such as `systemCommandsMethodCommandsIn:`, so two packages never override each other.
+- must be in a package which loads after the package of the anchor, and so requires it in its baseline: an extension method cannot be loaded before its class. Packages loaded before Calypso, such as the SystemCommands ones, have their commands declared by a Calypso package instead (`ClyMethod class >> systemCommandsMethodCommandsIn:` is in Calypso-SystemTools-Core).
 
 ```smalltalk
 ClyFullBrowserPackageContext class >> calypsoSystemToolsFullBrowserCommandsIn: aCommandMap
