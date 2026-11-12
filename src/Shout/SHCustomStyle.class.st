@@ -48,7 +48,7 @@ SHCustomStyle class >> copyFromCurrentStyle [
 					row size >= 3 ifTrue: [ emphasis := row third ].
 					(emphasis isKindOf: Symbol) ifFalse: [ emphasis := (' ' join: emphasis) asSymbol ].
 					(entry at: 'style')
-						color: (Color colorFrom: colorDesc) ;
+						color: ((Color colorFrom: colorDesc) ifNil: [ Color transparent ]) ;
 						emphasis: emphasis ] ].
 ]
 
