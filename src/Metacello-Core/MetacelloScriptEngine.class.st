@@ -20,15 +20,11 @@ Class {
 }
 
 { #category : 'private' }
-MetacelloScriptEngine >> directiveLoading: required [
-	"The directive loading the resolution: every project once, after the projects it requires. A version spec loaded on its own (no script) is not a project of the resolution: it comes last, after the projects it requires, with the names required of it"
+MetacelloScriptEngine >> doLoad: rootLoadList [
+	"The directive, loaded, fetching first if needed"
 
-	| target |
-	target := MetacelloRecordTarget on: self.
-	version ifNil: [ ^ target record: resolution ].
-	target recordProjects: (resolution loadOrderFrom: (resolution requirementsOf: nil in: version)).
-	target record: version loading: (self versionLoads: required).
-	^ target specBuilder root
+	(MetacelloLoadTarget on: self) load: (self ensureFetched: rootLoadList).
+	^ directive
 ]
 
 { #category : 'project lookup' }
@@ -48,22 +44,42 @@ MetacelloScriptEngine >> during: aBlock keepingRegistry: aBoolean [
 		commitIfSuccess: aBoolean
 ]
 
-{ #category : 'actions api' }
-MetacelloScriptEngine >> fetch: required [
-	"Fetch what the directive loads, recording first if needed (see fetched:), and answer the directive"
-
-	self during: [ self root: (self fetched: required) ] keepingRegistry: false.
-	^ root
-]
-
 { #category : 'private' }
-MetacelloScriptEngine >> fetched: required [
+MetacelloScriptEngine >> ensureFetched: rootLoadList [
 	"The directive, its packages fetched once, recording first if needed"
 
 	fetched == true ifTrue: [ ^ directive ].
-	(self recorded: required) acceptVisitor: (MetacelloFetchTarget on: self).
+	(self ensureRecorded: rootLoadList) acceptVisitor: (MetacelloFetchTarget on: self).
 	fetched := true.
 	^ directive
+]
+
+{ #category : 'private' }
+MetacelloScriptEngine >> ensureRecorded: rootLoadList [
+	"The directive loading the resolution, recorded once, resolving first if needed. A resolution with errors is never recorded: it signals MetacelloResolutionError"
+
+	directive ifNotNil: [ ^ directive ].
+	(self ensureResolved: rootLoadList) hasErrors ifTrue: [ MetacelloResolutionError signalFor: resolution ].
+	^ directive := self recordDirective: rootLoadList
+]
+
+{ #category : 'private' }
+MetacelloScriptEngine >> ensureResolved: rootLoadList [
+	"The resolution of rootLoadList, resolved once: from the root, or from a version spec loaded on its own (no script, see version:)"
+
+	resolution ifNil: [
+			self resolution: (version
+					 ifNil: [ (MetacelloResolveTarget on: self) resolve: self projectSpec loads: rootLoadList ]
+					 ifNotNil: [ (MetacelloResolveTarget on: self) resolveVersion: version loads: (self loadListOfVersion: rootLoadList) ]) ].
+	^ resolution
+]
+
+{ #category : 'actions api' }
+MetacelloScriptEngine >> fetch: rootLoadList [
+	"Fetch what the directive loads, recording first if needed (see ensureFetched:), and answer the directive"
+
+	self during: [ self root: (self ensureFetched: rootLoadList) ] keepingRegistry: false.
+	^ root
 ]
 
 { #category : 'actions api' }
@@ -158,19 +174,18 @@ MetacelloScriptEngine >> list [
 ]
 
 { #category : 'actions api' }
-MetacelloScriptEngine >> load: required [
-	"Load the directive, fetching first if needed (see loaded:), and keep the registry changes"
+MetacelloScriptEngine >> load: rootLoadList [
+	"Load the directive, fetching first if needed (see doLoad:), and keep the registry changes"
 
-	self during: [ self root: (self loaded: required) ] keepingRegistry: true.
+	self during: [ self root: (self doLoad: rootLoadList) ] keepingRegistry: true.
 	^ root
 ]
 
 { #category : 'private' }
-MetacelloScriptEngine >> loaded: required [
-	"The directive, loaded, fetching first if needed"
+MetacelloScriptEngine >> loadListOfVersion: rootLoadList [
+	"The names to load from a version spec loaded on its own: rootLoadList, or its default ones when none"
 
-	(MetacelloLoadTarget on: self) load: (self fetched: required).
-	^ directive
+	^ rootLoadList ifEmpty: [ version defaultPackageNames ]
 ]
 
 { #category : 'accessing' }
@@ -210,16 +225,6 @@ MetacelloScriptEngine >> lookupProjectClassNamed: aString [
 	^ self loader lookupProjectClassNamed: aString 
 ]
 
-{ #category : 'project lookup' }
-MetacelloScriptEngine >> lookupProjectSpecFor: aProjectSpec [
-	"if there is no conflict, choose new spec"
-
-	^ MetacelloProjectRegistry
-		  registrationNamed: aProjectSpec className
-		  ifPresent: [ :existing | (self resolvePresentProject: existing new: aProjectSpec asProjectRegistration) projectSpec ]
-		  ifAbsent: [ aProjectSpec ]
-]
-
 { #category : 'accessing' }
 MetacelloScriptEngine >> options [
     options ifNil: [ options := Dictionary new ].
@@ -244,20 +249,23 @@ MetacelloScriptEngine >> projectSpec: aSpec [
 ]
 
 { #category : 'actions api' }
-MetacelloScriptEngine >> record: required [
-	"Record the directive loading required, resolving first if needed (see recorded:), and answer it"
+MetacelloScriptEngine >> record: rootLoadList [
+	"Record the directive loading rootLoadList, resolving first if needed (see ensureRecorded:), and answer it"
 
-	self during: [ self root: (self recorded: required) ] keepingRegistry: false.
+	self during: [ self root: (self ensureRecorded: rootLoadList) ] keepingRegistry: false.
 	^ root
 ]
 
 { #category : 'private' }
-MetacelloScriptEngine >> recorded: required [
-	"The directive loading the resolution, recorded once, resolving first if needed. A resolution with errors is never recorded: it signals MetacelloResolutionError"
+MetacelloScriptEngine >> recordDirective: rootLoadList [
+	"Record the resolution into a directive and answer it: every project once, after the projects it requires. A version spec loaded on its own (no script) is not a project of the resolution: it comes last, after the projects it requires, with its load list (see loadListOfVersion:)"
 
-	directive ifNotNil: [ ^ directive ].
-	(self resolved: required) hasErrors ifTrue: [ MetacelloResolutionError signalFor: resolution ].
-	^ directive := self directiveLoading: required
+	| target |
+	target := MetacelloRecordTarget on: self.
+	version ifNil: [ ^ target record: resolution ].
+	target recordProjects: (resolution loadOrderFrom: (resolution requirementsOf: nil in: version)).
+	target record: version loading: (self loadListOfVersion: rootLoadList).
+	^ target specBuilder root
 ]
 
 { #category : 'actions api' }
@@ -287,10 +295,10 @@ MetacelloScriptEngine >> resolution: aResolution [
 ]
 
 { #category : 'actions api' }
-MetacelloScriptEngine >> resolve: required [
-	"Answer the resolution of a load of required, errors included, leaving the registry as it was"
+MetacelloScriptEngine >> resolve: rootLoadList [
+	"Answer the resolution of a load of rootLoadList (the names to load from the root, empty for its default ones), errors included, leaving the registry as it was"
 
-	self during: [ self root: (self resolved: required) ] keepingRegistry: false.
+	self during: [ self root: (self ensureResolved: rootLoadList) ] keepingRegistry: false.
 	^ resolution
 ]
 
@@ -308,17 +316,6 @@ MetacelloScriptEngine >> resolvePresentProject: existingRegistration new: newReg
 					  newProjectRegistration: newRegistration;
 					  signal ]
 		  ifFalse: [ newRegistration ]
-]
-
-{ #category : 'private' }
-MetacelloScriptEngine >> resolved: required [
-	"The resolution of required, resolved once: from the root, or from a version spec loaded on its own (no script, see version:)"
-
-	resolution ifNil: [
-			self resolution: (version
-					 ifNil: [ (MetacelloResolveTarget on: self) resolve: self projectSpec loads: required ]
-					 ifNotNil: [ (MetacelloResolveTarget on: self) resolveVersion: version loads: (self versionLoads: required) ]) ].
-	^ resolution
 ]
 
 { #category : 'resolution' }
@@ -382,11 +379,4 @@ MetacelloScriptEngine >> version: aVersionSpec [
 	"Resolve from aVersionSpec, loaded on its own (no script), instead of from the root"
 
 	version := aVersionSpec
-]
-
-{ #category : 'private' }
-MetacelloScriptEngine >> versionLoads: required [
-	"The names to load from a version spec loaded on its own: required, or its default ones when none"
-
-	^ required ifEmpty: [ version defaultPackageNames ]
 ]

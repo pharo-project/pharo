@@ -92,15 +92,13 @@ MetacelloRecordTarget >> visitGroupSpec: aMetacelloGroupSpec [
 
 { #category : 'visiting' }
 MetacelloRecordTarget >> visitPackageSpec: aMetacelloPackageSpec [
-	"Add one package: its preLoad, the package, its postLoad. A package already in the directive is skipped"
+	"Create the directives of a package: its preLoad, the package, its postLoad; nothing when the package is in the directive already"
 
 	| directive packageRepositorySpecs |
-	"The package's own repositories, or those of its version spec"
 	packageRepositorySpecs := aMetacelloPackageSpec repositorySpecs ifEmpty: [ currentRepositorySpecs ].
 	directive := (MetacelloPackageLoadDirective spec: aMetacelloPackageSpec)
 		             repositorySpecs: packageRepositorySpecs;
 		             yourself.
-	"Already there: nothing to add"
 	(self specBuilder currentLoadDirective includes: directive) ifTrue: [ ^ self ].
 	self preLoad: aMetacelloPackageSpec.
 	directive addTo: self specBuilder currentLoadDirective.
@@ -113,41 +111,25 @@ MetacelloRecordTarget >> visitProjectReference: aMetacelloProjectReferenceSpec [
 ]
 
 { #category : 'visiting' }
-MetacelloRecordTarget >> visitProjectSpec: aMetacelloProjectSpec [
-	"Not reached by recording a load (version specs are visited, see recordProjects:); kept from before: look the project's baseline up and visit its package"
-
-	| loadedSpec |
-	loadedSpec := engine lookupProjectSpecFor: aMetacelloProjectSpec.
-	currentRepositorySpecs := aMetacelloProjectSpec repositorySpecs.
-	loadedSpec projectPackage acceptVisitor: self
-]
-
-{ #category : 'visiting' }
 MetacelloRecordTarget >> visitVersionSpec: aMetacelloVersionSpec [
-	"Add one version spec to the directive: its preLoad, then its packages, then its postLoad. Sent by acceptVisitor: from record: and recordProjects:"
+	"Create the directives of a version spec: its preLoad, its packages (see visitVersionSpecChildren:), its postLoad"
 
-	"Its preLoad first (a directive that runs preLoadDoIt, if it has one)"
 	self preLoad: aMetacelloVersionSpec.
-	"Then its packages, for the names in required"
 	self visitVersionSpecChildren: aMetacelloVersionSpec.
-	"Its postLoad last"
 	self postLoad: aMetacelloVersionSpec
 ]
 
 { #category : 'visiting' }
 MetacelloRecordTarget >> visitVersionSpecChildren: aVersionSpec [
-	"Add the packages of aVersionSpec that the names in required reach, in their load order, inside one linear or atomic directive as its project says"
+	"Create the directives of the packages the names in required reach, in load order, inside one linear or atomic directive as the project says, with the version spec's repositories"
 
 	| packages oldCurrentRepositorySpecs |
-	"Remember the repositories the packages come from, and use aVersionSpec's while visiting its packages"
 	oldCurrentRepositorySpecs := currentRepositorySpecs.
 	currentRepositorySpecs := engine loader resolveRepositorySpecs: aVersionSpec repositorySpecs.
-	"The package and project specs required reaches, in load order (a project reference among them goes to visitProjectReference:, which adds nothing)"
 	packages := aVersionSpec packageSpecsInLoadOrderFor: required.
-	[ "Visit them inside a directive of the project's load type"
+	[ "Iterate the internals of the version spec"
 		aVersionSpec project loadType == #atomic ifTrue: [ ^ self atomicLoadPackages: packages ofSpec: aVersionSpec ].
 		aVersionSpec project loadType == #linear ifTrue: [ ^ self linearLoadPackages: packages ofSpec: aVersionSpec ].
 		MetacelloError signal: 'Unknown loadType: ' , aVersionSpec project loadType printString ] ensure: [
-		"Back to the repositories of before"
 		currentRepositorySpecs := oldCurrentRepositorySpecs ]
 ]
