@@ -4,8 +4,8 @@ I am a command placed with class annotations, which ClyCommandDeclarationGenerat
 Class {
 	#name : 'ClyMockAnnotatedCommand',
 	#superclass : 'ClyCommand',
-	#category : 'Calypso-Commands-Tests',
-	#package : 'Calypso-Commands-Tests'
+	#category : 'Commander-Calypso-Compatibility-Tests',
+	#package : 'Commander-Calypso-Compatibility-Tests'
 }
 
 { #category : 'activation' }

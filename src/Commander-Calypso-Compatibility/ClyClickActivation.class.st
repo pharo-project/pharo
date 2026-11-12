@@ -4,8 +4,8 @@ I am a mouse activation which runs a command on a mouse click. I also listen to 
 Class {
 	#name : 'ClyClickActivation',
 	#superclass : 'ClyMouseCommandActivation',
-	#category : 'Calypso-Commands',
-	#package : 'Calypso-Commands'
+	#category : 'Commander-Calypso-Compatibility',
+	#package : 'Commander-Calypso-Compatibility'
 }
 
 { #category : 'morphs setup' }

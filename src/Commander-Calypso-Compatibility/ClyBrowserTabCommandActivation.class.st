@@ -5,9 +5,8 @@ TabManagerMorph provides special place in tab panel (top right) for extended ico
 Class {
 	#name : 'ClyBrowserTabCommandActivation',
 	#superclass : 'ClyMenuCommandActivationStrategy',
-	#category : 'Calypso-Browser-Tabs',
-	#package : 'Calypso-Browser',
-	#tag : 'Tabs'
+	#category : 'Commander-Calypso-Compatibility',
+	#package : 'Commander-Calypso-Compatibility'
 }
 
 { #category : 'command registry' }

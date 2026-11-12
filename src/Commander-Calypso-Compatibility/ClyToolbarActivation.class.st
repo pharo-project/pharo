@@ -7,9 +7,8 @@ But if you want the title which is different from context menu then you should o
 Class {
 	#name : 'ClyToolbarActivation',
 	#superclass : 'ClyMenuCommandActivationStrategy',
-	#category : 'Calypso-Browser-Toolbar',
-	#package : 'Calypso-Browser',
-	#tag : 'Toolbar'
+	#category : 'Commander-Calypso-Compatibility',
+	#package : 'Commander-Calypso-Compatibility'
 }
 
 { #category : 'command registry' }

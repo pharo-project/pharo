@@ -7,8 +7,8 @@ Class {
 	#instVars : [
 		'activeDropContext'
 	],
-	#category : 'Calypso-Commands',
-	#package : 'Calypso-Commands'
+	#category : 'Commander-Calypso-Compatibility',
+	#package : 'Commander-Calypso-Compatibility'
 }
 
 { #category : 'passenger creation' }

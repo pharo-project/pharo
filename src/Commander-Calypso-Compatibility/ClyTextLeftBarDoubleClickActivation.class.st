@@ -4,8 +4,8 @@ I am a double click activation of the left bar of a text editor. I run a command
 Class {
 	#name : 'ClyTextLeftBarDoubleClickActivation',
 	#superclass : 'ClyDoubleClickActivation',
-	#category : 'Calypso-Commands',
-	#package : 'Calypso-Commands'
+	#category : 'Commander-Calypso-Compatibility',
+	#package : 'Commander-Calypso-Compatibility'
 }
 
 { #category : 'command registry' }

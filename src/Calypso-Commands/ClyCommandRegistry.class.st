@@ -153,9 +153,13 @@ ClyCommandRegistry >> executeFirstCommandOf: anInteractionName inContext: aToolC
 
 { #category : 'legacy' }
 ClyCommandRegistry >> legacyAnnotationsOf: anInteractionName [
-	"The class annotations of Calypso commands for the interaction, which are still supported while projects move to <calypsoCommands> declarations. See ClyCommandActivationStrategy class>>#interactionName."
+	"The class annotations of Calypso commands for the interaction, which are still supported by the deprecated Commander-Calypso-Compatibility package while projects move to <calypsoCommands> declarations. The strategy classes are looked up by name, so Calypso works without that package."
 
-	^ (ClyCommandActivationStrategy allSubclasses select: [ :strategy | strategy interactionName = anInteractionName ]) flatCollect: [ :strategy | strategy registry allInstancesOf: strategy ]
+	^ self class environment
+		  at: #ClyCommandActivationStrategy
+		  ifPresent: [ :strategyRoot |
+		  (strategyRoot allSubclasses select: [ :strategy | strategy interactionName = anInteractionName ]) flatCollect: [ :strategy | strategy registry allInstancesOf: strategy ] ]
+		  ifAbsent: [ #(  ) ]
 ]
 
 { #category : 'accessing' }

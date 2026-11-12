@@ -4,8 +4,8 @@ I am the root of the Calypso command activation strategies. I describe how a com
 Class {
 	#name : 'ClyCommandActivationStrategy',
 	#superclass : 'ClassAnnotation',
-	#category : 'Calypso-Commands',
-	#package : 'Calypso-Commands'
+	#category : 'Commander-Calypso-Compatibility',
+	#package : 'Commander-Calypso-Compatibility'
 }
 
 { #category : 'activation' }

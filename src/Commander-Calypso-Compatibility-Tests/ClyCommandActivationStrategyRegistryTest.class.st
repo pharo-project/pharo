@@ -4,8 +4,8 @@ Tests that the class annotation strategies of Calypso also answer the commands d
 Class {
 	#name : 'ClyCommandActivationStrategyRegistryTest',
 	#superclass : 'TestCase',
-	#category : 'Calypso-Commands-Tests',
-	#package : 'Calypso-Commands-Tests'
+	#category : 'Commander-Calypso-Compatibility-Tests',
+	#package : 'Commander-Calypso-Compatibility-Tests'
 }
 
 { #category : 'helpers' }
@@ -18,6 +18,15 @@ ClyCommandActivationStrategyRegistryTest >> mouseEventWithButton: aButton [
 		  buttons: aButton
 		  hand: nil
 		  stamp: 0
+]
+
+{ #category : 'tests' }
+ClyCommandActivationStrategyRegistryTest >> testActivationsIncludeRemainingClassAnnotations [
+
+	| activations |
+	activations := ClyCommandRegistry default activationsOf: #contextMenu inContext: ClyMockAnnotatedToolContext new.
+	self assert: activations size equals: 1.
+	self assert: activations first commandClass identicalTo: ClyMockAnnotatedCommand
 ]
 
 { #category : 'tests' }

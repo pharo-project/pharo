@@ -4,8 +4,8 @@ I am the activation strategy of the commands shown in the menu of the left bar o
 Class {
 	#name : 'ClyTextLeftBarMenuActivation',
 	#superclass : 'ClyMenuCommandActivationStrategy',
-	#category : 'Calypso-Commands',
-	#package : 'Calypso-Commands'
+	#category : 'Commander-Calypso-Compatibility',
+	#package : 'Commander-Calypso-Compatibility'
 }
 
 { #category : 'command registry' }

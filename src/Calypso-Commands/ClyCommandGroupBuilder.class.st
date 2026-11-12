@@ -1,8 +1,7 @@
 "
 I build the Commander2 command groups (CmCommandGroup) that Calypso tools show.
 - #buildFor:context: and #buildForAll:context: instantiate every concrete subclass of base command classes with a tool context and keep the commands which can run in it.
-- #buildMenuOf:context:pureRoots: and #buildToolbarOf:contexts: build the trees of menus, toolbars and tab actions (ClyPresentedGroup and ClyPresentedCommand) from activations. The activations are class annotations (ClyCommandActivationStrategy) or entries declared with the <calypsoCommands> pragma (ClyCommandEntry, see ClyCommandRegistry).
-- #buildMenuFor:context:pureRoots: and #buildToolbarFor:contexts: do the same with the class annotations of an activation strategy class.
+- #buildMenuOf:context:pureRoots: and #buildToolbarOf:contexts: build the trees of menus, toolbars and tab actions (ClyPresentedGroup and ClyPresentedCommand) from activations: the entries declared with the <calypsoCommands> pragma that ClyCommandRegistry answers for an interaction (ClyCommandEntry), or the class annotations of the deprecated Commander-Calypso-Compatibility package.
 Use ClyCommandGroupMenuRenderer to display the trees in Morphic.
 "
 Class {
@@ -69,16 +68,6 @@ ClyCommandGroupBuilder >> buildForAll: commandClasses context: aContext [
 ]
 
 { #category : 'building' }
-ClyCommandGroupBuilder >> buildMenuFor: strategyClass context: aToolContext pureRoots: rootClasses [
-	"Answers the Commander2 tree of the menu of aToolContext from the activations of strategyClass visible in it, then the pure commands of rootClasses."
-
-	| activations |
-	activations := OrderedCollection new.
-	strategyClass visibleInstancesInContext: aToolContext do: [ :activation | activations add: activation ].
-	^ self buildMenuOf: activations context: aToolContext pureRoots: rootClasses
-]
-
-{ #category : 'building' }
 ClyCommandGroupBuilder >> buildMenuOf: activations context: aToolContext pureRoots: rootClasses [
 	"Answers the Commander2 tree of the menu of aToolContext: the presentation that ClyMenu gives. Hybrid commands come from the activations, which are class annotations or ClyCommandEntry instances visible in the context, then the pure commands of rootClasses are placed in their groups, in the same order consumers add them. Each group keeps its entries sorted as ClyMenuGroup does. Identifiers are unique inside their group; labels may repeat."
 
@@ -136,19 +125,6 @@ ClyCommandGroupBuilder >> buildMenuOf: activations context: aToolContext pureRoo
 			(entries at: group) add: item ].
 	groups valuesDo: [ :group | (entries at: group) do: [ :each | group register: each ] ].
 	^ root
-]
-
-{ #category : 'building' }
-ClyCommandGroupBuilder >> buildToolbarFor: strategyClass contexts: toolContexts [
-	"Answers the Commander2 tree of a toolbar or of the browser tab actions from the activations of strategyClass visible in each context."
-
-	^ self
-		  buildToolbarOf: [ :toolContext |
-				  | activations |
-				  activations := OrderedCollection new.
-				  strategyClass visibleInstancesInContext: toolContext do: [ :activation | activations add: activation ].
-				  activations ]
-		  contexts: toolContexts
 ]
 
 { #category : 'building' }

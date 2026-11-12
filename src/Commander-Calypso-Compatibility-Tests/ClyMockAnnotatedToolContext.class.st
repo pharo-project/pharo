@@ -4,6 +4,6 @@ I am a tool context used only by the class annotations of ClyMockAnnotatedComman
 Class {
 	#name : 'ClyMockAnnotatedToolContext',
 	#superclass : 'ClyToolContext',
-	#category : 'Calypso-Commands-Tests',
-	#package : 'Calypso-Commands-Tests'
+	#category : 'Commander-Calypso-Compatibility-Tests',
+	#package : 'Commander-Calypso-Compatibility-Tests'
 }

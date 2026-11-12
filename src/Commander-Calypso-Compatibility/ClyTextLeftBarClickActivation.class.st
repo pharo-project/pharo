@@ -4,8 +4,8 @@ I am a click activation of the left bar of a text editor. I run a command from a
 Class {
 	#name : 'ClyTextLeftBarClickActivation',
 	#superclass : 'ClyClickActivation',
-	#category : 'Calypso-Commands',
-	#package : 'Calypso-Commands'
+	#category : 'Commander-Calypso-Compatibility',
+	#package : 'Commander-Calypso-Compatibility'
 }
 
 { #category : 'command registry' }

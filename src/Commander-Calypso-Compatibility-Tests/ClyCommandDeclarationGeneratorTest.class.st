@@ -7,15 +7,16 @@ Class {
 	#instVars : [
 		'generator'
 	],
-	#category : 'Calypso-Commands-Tests',
-	#package : 'Calypso-Commands-Tests'
+	#category : 'Commander-Calypso-Compatibility-Tests',
+	#package : 'Commander-Calypso-Compatibility-Tests'
 }
 
 { #category : 'running' }
 ClyCommandDeclarationGeneratorTest >> setUp [
 
 	super setUp.
-	generator := ClyCommandDeclarationGenerator forPackagesNamed: #( 'Calypso-Commands-Tests' )
+	generator := ClyCommandDeclarationGenerator forPackagesNamed: #( 'Commander-Calypso-Compatibility-Tests' ).
+	generator commandPackagePrefixes: #( 'Commander-Calypso-Compatibility-Tests' )
 ]
 
 { #category : 'tests' }
@@ -24,9 +25,9 @@ ClyCommandDeclarationGeneratorTest >> testDeclarationKeepsThePlacementOfTheAnnot
 	| sources |
 	sources := generator declarationSources.
 	self assert: sources size equals: 1.
-	self assert: sources keys anyOne equals: ClyMockAnnotatedToolContext -> 'Calypso-Commands-Tests'.
+	self assert: sources keys anyOne equals: ClyMockAnnotatedToolContext -> 'Commander-Calypso-Compatibility-Tests'.
 	self assert: sources values anyOne lines equals: {
-			'calypsoCommandsTestsCommandsIn: aCommandMap'.
+			'commanderCalypsoCompatibilityTestsCommandsIn: aCommandMap'.
 			''.
 			(String tab , '<calypsoCommands>').
 			(String tab , '((aCommandMap contextMenu group: ClyExtraMenuGroup) add: ClyMockAnnotatedCommand order: 42) label: ''Mock''.').

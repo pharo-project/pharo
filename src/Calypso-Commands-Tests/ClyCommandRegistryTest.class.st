@@ -39,15 +39,6 @@ ClyCommandRegistryTest >> testActivationsAreSortedByPriority [
 ]
 
 { #category : 'tests' }
-ClyCommandRegistryTest >> testActivationsIncludeRemainingClassAnnotations [
-
-	| activations |
-	activations := ClyCommandRegistry default activationsOf: #contextMenu inContext: ClyMockAnnotatedToolContext new.
-	self assert: activations size equals: 1.
-	self assert: activations first commandClass identicalTo: ClyMockAnnotatedCommand
-]
-
-{ #category : 'tests' }
 ClyCommandRegistryTest >> testAddMenuOfDeclaresACommandOpeningTheGroup [
 
 	| entry command |

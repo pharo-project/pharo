@@ -7,8 +7,8 @@ Class {
 	#instVars : [
 		'keyCombination'
 	],
-	#category : 'Calypso-Commands',
-	#package : 'Calypso-Commands'
+	#category : 'Commander-Calypso-Compatibility',
+	#package : 'Commander-Calypso-Compatibility'
 }
 
 { #category : 'instance creation' }

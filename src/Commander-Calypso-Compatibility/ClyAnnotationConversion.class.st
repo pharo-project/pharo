@@ -15,8 +15,8 @@ Class {
 		'extras',
 		'annotations'
 	],
-	#category : 'Calypso-Commands',
-	#package : 'Calypso-Commands'
+	#category : 'Commander-Calypso-Compatibility',
+	#package : 'Commander-Calypso-Compatibility'
 }
 
 { #category : 'accessing' }

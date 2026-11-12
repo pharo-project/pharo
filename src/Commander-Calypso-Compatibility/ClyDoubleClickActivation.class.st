@@ -4,8 +4,8 @@ I am a mouse activation which runs a command on a mouse double click.
 Class {
 	#name : 'ClyDoubleClickActivation',
 	#superclass : 'ClyMouseCommandActivation',
-	#category : 'Calypso-Commands',
-	#package : 'Calypso-Commands'
+	#category : 'Commander-Calypso-Compatibility',
+	#package : 'Commander-Calypso-Compatibility'
 }
 
 { #category : 'command registry' }

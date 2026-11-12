@@ -40,13 +40,6 @@ ClyBrowserItemContext >> = anObject [
 	^ itemType = anObject itemType
 ]
 
-{ #category : 'command registry' }
-ClyBrowserItemContext >> commandAnchor [
-	"The anchor of ClyCommandMap that describes the same contexts as me, used to convert class annotations into declarations."
-
-	^ itemType
-]
-
 { #category : 'testing' }
 ClyBrowserItemContext >> describes: aBrowserContext [
 

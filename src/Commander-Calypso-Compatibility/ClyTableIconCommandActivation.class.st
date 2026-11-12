@@ -38,9 +38,8 @@ To implement correct order of my instances in registry I provide special sorted 
 Class {
 	#name : 'ClyTableIconCommandActivation',
 	#superclass : 'ClyCommandActivationStrategy',
-	#category : 'Calypso-Browser-Table',
-	#package : 'Calypso-Browser',
-	#tag : 'Table'
+	#category : 'Commander-Calypso-Compatibility',
+	#package : 'Commander-Calypso-Compatibility'
 }
 
 { #category : 'private' }
