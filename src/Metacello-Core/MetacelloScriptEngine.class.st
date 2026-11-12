@@ -77,7 +77,7 @@ MetacelloScriptEngine >> fetch [
 
 { #category : 'actions api' }
 MetacelloScriptEngine >> get [
-	" load a fresh copy from repo"
+	"Load a fresh copy of the baseline the script names from its repository, register it, and answer its project. It loads only that baseline's class, not its packages: it resolves nothing, so the roots of a load never come into it"
 
 	^ MetacelloProjectRegistry
 		  copyRegistryDuring: [
@@ -163,6 +163,7 @@ MetacelloScriptEngine >> initialize [
 
 { #category : 'actions api' }
 MetacelloScriptEngine >> list [
+	"Answer the project spec of the baseline the script names. Like the other registry actions (get, lock, unlock, register, unregister), it works on that one baseline's registration: it resolves and records nothing, so the roots of a load never come into it"
 
 	^ self projectSpec
 ]
@@ -186,6 +187,7 @@ MetacelloScriptEngine >> loader [
 
 { #category : 'actions api' }
 MetacelloScriptEngine >> lock [
+	"Lock the registration of the baseline the script names, registering it if needed, and answer its project spec. A later load that reaches this project keeps the locked version. It resolves nothing, so the roots of a load never come into it"
 
 	^ MetacelloProjectRegistry
 		  copyRegistryDuring: [
@@ -250,6 +252,7 @@ MetacelloScriptEngine >> recordDirective [
 
 { #category : 'actions api' }
 MetacelloScriptEngine >> register [
+	"Register the baseline the script names with the script's project spec, replacing the spec of an existing registration, and answer it. It loads and resolves nothing, so the roots of a load never come into it"
 
 	| spec |
 	spec := self projectSpec.
@@ -324,6 +327,7 @@ MetacelloScriptEngine >> strict [
 
 { #category : 'actions api' }
 MetacelloScriptEngine >> unlock [
+	"Unlock the registration of the baseline the script names, if it is registered, and answer the script's project spec. It resolves nothing, so the roots of a load never come into it"
 
 	^ MetacelloProjectRegistry
 		  copyRegistryDuring: [
@@ -336,6 +340,7 @@ MetacelloScriptEngine >> unlock [
 
 { #category : 'actions api' }
 MetacelloScriptEngine >> unregister [
+	"Remove the registration of the baseline the script names, if any, and answer the script's project spec. It resolves nothing, so the roots of a load never come into it"
 
 	| spec |
 	spec := self projectSpec.
