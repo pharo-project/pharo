@@ -10,7 +10,7 @@ Class {
 		'required',
 		'currentRepositorySpecs',
 		'recorded',
-		'postLoads'
+		'hookedVersionSpecs'
 	],
 	#category : 'Metacello-Core-Targets',
 	#package : 'Metacello-Core',
@@ -28,6 +28,13 @@ MetacelloRecordTarget >> atomicLoadPackages: packages ofSpec: spec [
 		for: self
 ]
 
+{ #category : 'accessing' }
+MetacelloRecordTarget >> hookedVersionSpecs [
+	"The version specs whose preLoad and postLoad are recorded"
+
+	^ hookedVersionSpecs ifNil: [ hookedVersionSpecs := IdentitySet new ]
+]
+
 { #category : 'visiting' }
 MetacelloRecordTarget >> linearLoadPackages: packages ofSpec: spec [
 	"Visit the packages inside the root linear directive: each is loaded on its own, in order"
@@ -40,26 +47,10 @@ MetacelloRecordTarget >> linearLoadPackages: packages ofSpec: spec [
 ]
 
 { #category : 'recording' }
-MetacelloRecordTarget >> placeProjectHooks [
-	"Keep only the last postLoad of each version spec, so it runs once, after the last of its packages even when they are loaded in several places. Answer the root directive"
-
-	self postLoads do: [ :directives |
-		directives allButLast do: [ :each | each value loadDirectives remove: each key ] ].
-	^ self specBuilder root
-]
-
-{ #category : 'recording' }
 MetacelloRecordTarget >> postLoad: packageOrVersionSpec [
-	"Add the directive that runs the spec's postLoadDoIt (it does nothing when there is none), and answer it"
+	"Add the directive that runs the spec's postLoadDoIt (it does nothing when there is none)"
 
-	^ (MetacelloPostLoadDirective spec: packageOrVersionSpec) addTo: self specBuilder currentLoadDirective; yourself
-]
-
-{ #category : 'accessing' }
-MetacelloRecordTarget >> postLoads [
-	"For each version spec visited, its postLoad directives with the directive holding each, in the order added"
-
-	^ postLoads ifNil: [ postLoads := IdentityDictionary new ]
+	(MetacelloPostLoadDirective spec: packageOrVersionSpec) addTo: self specBuilder currentLoadDirective
 ]
 
 { #category : 'visiting' }
@@ -71,10 +62,10 @@ MetacelloRecordTarget >> preLoad: packageOrVersionSpec [
 
 { #category : 'recording' }
 MetacelloRecordTarget >> record: aResolution [
-	"The directive loading aResolution: the root, each package where it is first asked (see visitProjectReference:), and each project's preLoad before its first packages and its postLoad after its last (see visitVersionSpec:)"
+	"The directive loading aResolution: the root, each package where it is first asked (see visitProjectReference:), each project's preLoad and postLoad around its first packages (see visitVersionSpec:)"
 
 	self recordProject: aResolution root loading: aResolution root loadList.
-	^ self placeProjectHooks
+	^ self specBuilder root
 ]
 
 { #category : 'recording' }
@@ -106,7 +97,7 @@ MetacelloRecordTarget >> recordVersion: aVersionSpec loading: aCollectionOfNames
 	"The directive loading aVersionSpec, a version spec loaded on its own, with the names given (see record:)"
 
 	self record: aVersionSpec loading: aCollectionOfNames.
-	^ self placeProjectHooks
+	^ self specBuilder root
 ]
 
 { #category : 'accessing' }
@@ -158,14 +149,13 @@ MetacelloRecordTarget >> visitProjectReference: aMetacelloProjectReferenceSpec [
 
 { #category : 'visiting' }
 MetacelloRecordTarget >> visitVersionSpec: aMetacelloVersionSpec [
-	"Create the directives of the packages required reaches. The version spec's preLoad comes before its first packages, the first time it is visited; its postLoad after each visit, and placeProjectHooks keeps only the last one"
+	"Create the directives of the packages required reaches. The first time a version spec is visited, its preLoad and postLoad go around its packages; when it is visited again (a project asked in several places) they do not run again"
 
-	| directives |
-	(self postLoads includesKey: aMetacelloVersionSpec) ifFalse: [ self preLoad: aMetacelloVersionSpec ].
-	directives := self postLoads at: aMetacelloVersionSpec ifAbsentPut: [ OrderedCollection new ].
+	(self hookedVersionSpecs includes: aMetacelloVersionSpec) ifTrue: [ ^ self visitVersionSpecChildren: aMetacelloVersionSpec ].
+	self hookedVersionSpecs add: aMetacelloVersionSpec.
+	self preLoad: aMetacelloVersionSpec.
 	self visitVersionSpecChildren: aMetacelloVersionSpec.
-	aMetacelloVersionSpec postLoadDoIt ifNotNil: [
-		directives add: (self postLoad: aMetacelloVersionSpec) -> self specBuilder currentLoadDirective ]
+	self postLoad: aMetacelloVersionSpec
 ]
 
 { #category : 'visiting' }

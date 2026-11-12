@@ -132,7 +132,7 @@ MetacelloInteractiveResolverTest >> testALoadWithResolutionErrorsLoadsNothing [
 
 { #category : 'tests' }
 MetacelloInteractiveResolverTest >> testAProjectAskedTwiceRunsItsPreLoadAndPostLoadOnce [
-	"TestGroupsShared, asked by TestGroups for Core and by TestGroupsLate for Tests, has a preLoad and a postLoad: its preLoad comes before its first package and its postLoad after its last one"
+	"TestGroupsShared, asked by TestGroups for Core and by TestGroupsLate for Tests, has a preLoad and a postLoad: they go around its first packages only, so they never wrap the packages of another project"
 	| kinds |
 	kinds := (Metacello new
 		          baseline: 'TestGroups';
@@ -140,7 +140,7 @@ MetacelloInteractiveResolverTest >> testAProjectAskedTwiceRunsItsPreLoadAndPostL
 		          record) loadDirectives collect: [ :each | each class name ].
 	self
 		assert: kinds asArray
-		equals: #( #MetacelloPreLoadDirective #MetacelloPackageLoadDirective #MetacelloPackageLoadDirective #MetacelloPackageLoadDirective #MetacelloPostLoadDirective #MetacelloPackageLoadDirective )
+		equals: #( #MetacelloPreLoadDirective #MetacelloPackageLoadDirective #MetacelloPostLoadDirective #MetacelloPackageLoadDirective #MetacelloPackageLoadDirective #MetacelloPackageLoadDirective )
 ]
 
 { #category : 'tests' }
