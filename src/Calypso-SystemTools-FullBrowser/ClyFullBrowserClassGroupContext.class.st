@@ -23,12 +23,7 @@ ClyFullBrowserClassGroupContext class >> calypsoSystemToolsFullBrowserCommandsIn
 	aCommandMap contextMenu
 		add: ClyRemoveClassGroupCommand;
 		add: ClyRenamePackageTagCommand;
-		add: SycAddNewClassTagCommand;
-		add: SycAddNewPackageCommand;
-		add: SycAddPackagesScopeCommand;
-		add: SycDuplicatePackageCommand;
-		add: SycRemovePackageCommand;
-		add: SycRenamePackageCommand
+		add: SycAddNewClassTagCommand
 ]
 
 { #category : 'selection strategy' }

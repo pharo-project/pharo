@@ -3,7 +3,7 @@ Files out the selected packages into a single chunk format file.
 "
 Class {
 	#name : 'SycFileOutPackageCommand',
-	#superclass : 'SycPackageExtraCmCommand',
+	#superclass : 'SycPackageCommand',
 	#category : 'SystemCommands-PackageCommands',
 	#package : 'SystemCommands-PackageCommands'
 }
@@ -20,6 +20,12 @@ SycFileOutPackageCommand >> defaultFileName [
 	^ self packages size = 1
 		  ifTrue: [ self packages first name ]
 		  ifFalse: [ 'packagefileout' ]
+]
+
+{ #category : 'accessing' }
+SycFileOutPackageCommand >> description [
+
+	^ 'Files out the selected packages into a single chunk format file.'
 ]
 
 { #category : 'execution' }

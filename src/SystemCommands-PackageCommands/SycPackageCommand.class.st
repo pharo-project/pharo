@@ -22,12 +22,6 @@ SycPackageCommand >> canBeExecuted [
 	^ self context isPackageSelected
 ]
 
-{ #category : 'testing' }
-SycPackageCommand >> isAvailableInMenuOf: aToolContext [
-
-	^ aToolContext isFullBrowserPackageContext
-]
-
 { #category : 'accessing' }
 SycPackageCommand >> packages [
 	^ packages

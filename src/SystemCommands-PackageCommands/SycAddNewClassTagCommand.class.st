@@ -36,12 +36,6 @@ SycAddNewClassTagCommand >> iconName [
 	^#add
 ]
 
-{ #category : 'testing' }
-SycAddNewClassTagCommand >> isAvailableInMenuOf: aToolContext [
-
-	^ true
-]
-
 { #category : 'accessing' }
 SycAddNewClassTagCommand >> name [
 	^'New tag'

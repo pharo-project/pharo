@@ -46,12 +46,6 @@ ClyRenamePackageTagCommand >> executeRefactoring [
 	packageTag renameTagTo: newName
 ]
 
-{ #category : 'testing' }
-ClyRenamePackageTagCommand >> isAvailableInMenuOf: aToolContext [
-
-	^ aToolContext isFullBrowserClassGroupContext
-]
-
 { #category : 'accessing' }
 ClyRenamePackageTagCommand >> name [
 	^'Rename'

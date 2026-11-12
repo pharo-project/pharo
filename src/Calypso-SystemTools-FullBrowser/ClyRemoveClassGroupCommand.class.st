@@ -50,12 +50,6 @@ ClyRemoveClassGroupCommand >> iconName [
 	^#remove
 ]
 
-{ #category : 'testing' }
-ClyRemoveClassGroupCommand >> isAvailableInMenuOf: aToolContext [
-
-	^ aToolContext isFullBrowserClassGroupContext
-]
-
 { #category : 'accessing' }
 ClyRemoveClassGroupCommand >> name [
 	^'Remove'

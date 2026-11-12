@@ -3,7 +3,7 @@ Demotes the selected packages whose name contains a dash to a package with a tag
 "
 Class {
 	#name : 'SycDemoteToPackageWithTagCommand',
-	#superclass : 'SycPackageExtraCmCommand',
+	#superclass : 'SycPackageCommand',
 	#category : 'SystemCommands-PackageCommands',
 	#package : 'SystemCommands-PackageCommands'
 }
@@ -24,6 +24,12 @@ SycDemoteToPackageWithTagCommand >> applyCommandResult [
 SycDemoteToPackageWithTagCommand >> canBeExecuted [
 
 	^ context isAboutBrowserItemType: Package
+]
+
+{ #category : 'accessing' }
+SycDemoteToPackageWithTagCommand >> description [
+
+	^ 'Demotes the selected packages whose name contains a dash to a package with a tag, and shows the resulting package in the Full Browser.'
 ]
 
 { #category : 'execution' }

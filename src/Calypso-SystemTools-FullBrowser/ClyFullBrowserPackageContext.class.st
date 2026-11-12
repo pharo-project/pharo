@@ -22,8 +22,6 @@ ClyFullBrowserPackageContext class >> calypsoSystemToolsFullBrowserCommandsIn: a
 		add: SycRemovePackageCommand key: $x meta;
 		add: SycRenamePackageCommand key: $r meta.
 	aCommandMap contextMenu
-		add: ClyRemoveClassGroupCommand;
-		add: ClyRenamePackageTagCommand;
 		add: SycAddNewClassTagCommand;
 		add: SycAddNewPackageCommand;
 		add: SycAddPackagesScopeCommand;

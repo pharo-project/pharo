@@ -3,7 +3,7 @@ Opens an inspector on the last selected package.
 "
 Class {
 	#name : 'SycInspectPackageCommand',
-	#superclass : 'SycPackageExtraCmCommand',
+	#superclass : 'SycPackageCommand',
 	#category : 'SystemCommands-PackageCommands',
 	#package : 'SystemCommands-PackageCommands'
 }
@@ -12,6 +12,12 @@ Class {
 SycInspectPackageCommand >> canBeExecuted [
 
 	^ context isAboutBrowserItemType: Package
+]
+
+{ #category : 'accessing' }
+SycInspectPackageCommand >> description [
+
+	^ 'Opens an inspector on the last selected package.'
 ]
 
 { #category : 'execution' }
