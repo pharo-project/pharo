@@ -269,9 +269,11 @@ ClyCommand >> secureMenuIcon [
 
 { #category : 'context menu' }
 ClyCommand >> setUpIconForMenuItem: menuItem [
+	"The icon named by #iconName, or else the form answered by #icon, which many commands override instead."
 
-	self defaultMenuIconFormSet ifNotNil: [:iconFormSet |
-		menuItem iconFormSet: iconFormSet ]
+	self defaultMenuIconFormSet
+		ifNotNil: [ :iconFormSet | menuItem iconFormSet: iconFormSet ]
+		ifNil: [ self icon ifNotNil: [ :form | menuItem icon: form ] ]
 ]
 
 { #category : 'context menu' }
