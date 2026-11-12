@@ -42,6 +42,13 @@ MetacelloScriptExecutor >> beStrict: aBoolean [
 	self options at: #strict put: aBoolean
 ]
 
+{ #category : 'execution callback' }
+MetacelloScriptExecutor >> checkCanRunOn: aProjectSpec [
+	"Signal an error if the script cannot run on the registered aProjectSpec. Any registered project will do"
+
+	
+]
+
 { #category : 'args' }
 MetacelloScriptExecutor >> classNameArg [
     ^ classNameArg
@@ -72,8 +79,10 @@ MetacelloScriptExecutor >> execute [
 MetacelloScriptExecutor >> executeString: aString do: projectSpecBlock [
 
 	| projectSpec |
-	projectSpec := MetacelloProjectRegistration projectSpecForClassNamed: aString ifAbsent: [ ].
-	(self shouldBeExecutedFor: projectSpec) ifFalse: [ ^ nil ].
+	projectSpec := MetacelloProjectRegistration
+		               projectSpecForClassNamed: aString
+		               ifAbsent: [ NotFound signal: 'Project ' , aString , ' is not registered' ].
+	self checkCanRunOn: projectSpec.
 	^ projectSpecBlock value: (self applyArgsToProjectSpec: projectSpec copy)
 ]
 
@@ -189,12 +198,6 @@ MetacelloScriptExecutor >> resolve: required [
 MetacelloScriptExecutor >> resolver: aMetacelloResolver [
 
 	self options at: #resolver put: aMetacelloResolver
-]
-
-{ #category : 'execution callback' }
-MetacelloScriptExecutor >> shouldBeExecutedFor: aSpec [
-
-	^ true
 ]
 
 { #category : 'actions api' }

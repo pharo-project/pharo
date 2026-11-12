@@ -13,9 +13,3 @@ MetacelloScriptRegistryExecutor >> remove [
 { #category : 'initialization' }
 MetacelloScriptRegistryExecutor >> reset [
 ]
-
-{ #category : 'execution callback' }
-MetacelloScriptRegistryExecutor >> shouldBeExecutedFor: projectSpec [
-
-	^ projectSpec isNotNil
-]
