@@ -14,8 +14,8 @@ Class {
 	#instVars : [
 		'buildList',
 		'requirements',
-		'rootRepository',
-		'subjects'
+		'subjects',
+		'rootRepositories'
 	],
 	#category : 'Metacello-MVS',
 	#package : 'Metacello-MVS'
@@ -118,6 +118,12 @@ MetacelloMVSResolution >> isOnlyAboutSuperseded: aFinding [
 ]
 
 { #category : 'accessing' }
+MetacelloMVSResolution >> isRoot: aCandidate [
+
+	^ self rootCandidates includes: aCandidate
+]
+
+{ #category : 'accessing' }
 MetacelloMVSResolution >> isSuperseded: aRequirement [
 	"Whether it was asked by a version that lost to a higher one of its repository"
 
@@ -171,15 +177,23 @@ MetacelloMVSResolution >> resolves [
 
 { #category : 'accessing' }
 MetacelloMVSResolution >> rootCandidate [
-	"The candidate of the root, or nil when it could not be selected"
+	"The candidate of the first root, or nil when it could not be selected"
 
-	^ buildList at: rootRepository ifAbsent: [ nil ]
+	^ self rootCandidates ifEmpty: [ nil ] ifNotEmpty: [ :candidates | candidates first ]
 ]
 
 { #category : 'accessing' }
-MetacelloMVSResolution >> rootRepository: aRepository [
+MetacelloMVSResolution >> rootCandidates [
+	"The candidates of the roots that could be selected, in order"
 
-	rootRepository := aRepository
+	^ (rootRepositories ifNil: [ #(  ) ]) select: [ :each | buildList includesKey: each ] thenCollect: [ :each | buildList at: each ]
+]
+
+{ #category : 'accessing' }
+MetacelloMVSResolution >> rootRepositories: aCollection [
+	"The repositories of the roots, in the order they were asked"
+
+	rootRepositories := aCollection
 ]
 
 { #category : 'accessing' }

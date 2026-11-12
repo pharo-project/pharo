@@ -11,7 +11,8 @@ Class {
 	#instVars : [
 		'root',
 		'projects',
-		'findings'
+		'findings',
+		'roots'
 	],
 	#category : 'Metacello-Core-Resolution',
 	#package : 'Metacello-Core',
@@ -61,35 +62,8 @@ MetacelloResolution >> initialize [
 
 	super initialize.
 	projects := Dictionary new.
+	roots := OrderedCollection new.
 	findings := OrderedCollection new
-]
-
-{ #category : 'accessing' }
-MetacelloResolution >> loadOrder [
-	"The projects to load, each once, every project after the projects it requires, from the root (see loadOrderFrom:)"
-
-	^ self loadOrderFrom: { root }
-]
-
-{ #category : 'accessing' }
-MetacelloResolution >> loadOrderFrom: aCollectionOfResolvedProjects [
-	"The projects to load from aCollectionOfResolvedProjects, each once, in post-order: a project comes after every project it requires, in the order it lists them, and aCollectionOfResolvedProjects in their order. A cycle cannot be ordered: it signals MetacelloError"
-
-	| list path visit |
-	list := OrderedCollection new.
-	path := OrderedCollection new.
-	visit := nil.
-	visit := [ :project |
-	         (list includes: project) ifFalse: [
-			         (path includes: project) ifTrue: [
-					         MetacelloError signal: 'Dependency cycle: ' , (' -> ' join:
-							          (((path copyFrom: (path indexOf: project) to: path size) copyWith: project) collect: [ :each | each name ])) ].
-			         path addLast: project.
-			         (self requirementsOf: project in: project version) do: visit.
-			         path removeLast.
-			         list add: project ] ].
-	aCollectionOfResolvedProjects do: visit.
-	^ list asArray
 ]
 
 { #category : 'accessing' }
@@ -123,9 +97,18 @@ MetacelloResolution >> root [
 
 { #category : 'accessing' }
 MetacelloResolution >> root: aResolvedProject [
+	"aResolvedProject is a root of the load; the first one is the root"
 
 	self add: aResolvedProject.
-	root := aResolvedProject
+	root ifNil: [ root := aResolvedProject ].
+	(roots includes: aResolvedProject) ifFalse: [ roots add: aResolvedProject ]
+]
+
+{ #category : 'accessing' }
+MetacelloResolution >> roots [
+	"The projects the load asked for, each loaded with the groups asked of it: one, unless the load names several roots"
+
+	^ roots
 ]
 
 { #category : 'findings' }

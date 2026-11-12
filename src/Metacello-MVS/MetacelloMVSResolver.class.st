@@ -18,7 +18,6 @@ Class {
 		'spellings',
 		'chronologyChecked',
 		'replacements',
-		'rootRepository',
 		'currentRequirement',
 		'askedGroups',
 		'defaultAsked',
@@ -27,7 +26,8 @@ Class {
 		'assumedInstalled',
 		'rootRequest',
 		'resolution',
-		'dropsUnused'
+		'dropsUnused',
+		'rootRepositories'
 	],
 	#category : 'Metacello-MVS',
 	#package : 'Metacello-MVS'
@@ -424,7 +424,6 @@ MetacelloMVSResolver >> require: aRequiredSpec by: aCandidate [
 
 { #category : 'resolving' }
 MetacelloMVSResolver >> reset [
-
 	selected := Dictionary new.
 	projects := Dictionary new.
 	spellings := Dictionary new.
@@ -435,6 +434,7 @@ MetacelloMVSResolver >> reset [
 	askedGroups := Dictionary new.
 	defaultAsked := Set new.
 	requiredFrom := Dictionary new.
+	rootRepositories := OrderedCollection new.
 	currentRequirement := nil.
 	rootRequest := nil.
 	resolution := MetacelloMVSResolution new
@@ -442,16 +442,18 @@ MetacelloMVSResolver >> reset [
 
 { #category : 'metacello' }
 MetacelloMVSResolver >> resolutionOf: aResolution loads: aCollectionOfNames [
-	"aResolution, the walk done, for Metacello to record: when it has no errors, every selected project, with the requests of selected versions (the root's first)"
+	"aResolution, the walk done, for Metacello to record: when it has no errors, every selected project, the roots first in their order, with the requests of selected versions (each root's own first)"
 
+	| roots |
 	aResolution hasErrors ifTrue: [ ^ aResolution ].
-	aResolution buildList valuesDo: [ :candidate |
+	roots := aResolution rootCandidates.
+	roots do: [ :candidate |
 			(self resolvedProjectOf: candidate into: aResolution) ifNotNil: [ :project |
-					candidate == aResolution rootCandidate
-						ifTrue: [
-								aResolution root: project.
-								project addRequest: candidate request ]
-						ifFalse: [ aResolution add: project ] ] ].
+					aResolution root: project.
+					project addRequest: candidate request ] ].
+	aResolution buildList valuesDo: [ :candidate |
+			(roots includes: candidate) ifFalse: [
+				(self resolvedProjectOf: candidate into: aResolution) ifNotNil: [ :project | aResolution add: project ] ] ].
 	aResolution requirements do: [ :requirement |
 			(self isRequestOfASelectedVersion: requirement in: aResolution) ifTrue: [
 					(aResolution buildList at: requirement repository ifAbsent: [ nil ]) ifNotNil: [ :candidate |
@@ -474,7 +476,7 @@ MetacelloMVSResolver >> resolve: aProjectSpec loads: aCollectionOfNames engine: 
 				about: nil.
 			^ self resolutionOf: resolution loads: aCollectionOfNames ].
 	^ self
-		  resolutionOf: (self resolve: descriptions first project: aProjectSpec name loads: aCollectionOfNames)
+		  resolutionOf: (self resolveRoots: { (graph specFor: descriptions first project: aProjectSpec name loads: aCollectionOfNames) })
 		  loads: aCollectionOfNames
 ]
 
@@ -487,18 +489,29 @@ MetacelloMVSResolver >> resolve: aRepositoryString project: aProjectName [
 
 { #category : 'resolving' }
 MetacelloMVSResolver >> resolve: aRepositoryString project: aProjectName loads: aCollectionOfGroups [
-	"Walk the requirements from the root, loading aCollectionOfGroups of it (empty for its default ones), as far as possible and answer the MetacelloMVSResolution: the build list, the requirements met and the findings. aProjectName names the baseline of the root. Each project is read for the union of the groups its dependents ask. At the end, the projects nobody selected uses are dropped (see dropUnused:)"
+	"Resolve from one root, loading aCollectionOfGroups of it (empty for its default ones), and from the projects in dev mode, roots too (see resolveRoots:)"
 
-	| spec |
+	^ self resolveRoots: { (graph specFor: aRepositoryString project: aProjectName loads: aCollectionOfGroups) }
+]
+
+{ #category : 'resolving' }
+MetacelloMVSResolver >> resolveRoots: aCollectionOfProjectSpecs [
+	"Walk the requirements from each root aCollectionOfProjectSpecs names, in order, as far as possible and answer the MetacelloMVSResolution: the build list, the requirements met and the findings. Each project is read for the union of the groups its dependents ask. At the end, the projects nobody selected uses are dropped (see dropUnused:)"
+
 	self reset.
-	spec := graph specFor: aRepositoryString project: aProjectName loads: aCollectionOfGroups.
-	rootRequest := MetacelloProjectRequest requester: nil projectSpec: spec.
-	(graph hasVersions: spec) ifFalse: [
-			self error: #invalidReference text: aRepositoryString printString , ' is not a repository with versions' about: nil.
+	aCollectionOfProjectSpecs ifEmpty: [
+			self error: #invalidReference text: 'Nothing to load: no root' about: nil.
 			^ resolution ].
-	rootRepository := graph repositoryUrlOf: spec.
-	resolution rootRepository: rootRepository.
-	self require: spec by: nil.
+	rootRequest := MetacelloProjectRequest requester: nil projectSpec: aCollectionOfProjectSpecs first.
+	aCollectionOfProjectSpecs do: [ :root |
+			(graph hasVersions: root)
+				ifTrue: [
+				(rootRepositories includes: (graph repositoryUrlOf: root)) ifFalse: [ rootRepositories add: (graph repositoryUrlOf: root) ] ]
+				ifFalse: [
+				self error: #invalidReference text: (graph descriptionOf: root) printString , ' is not a repository with versions' about: nil ] ].
+	resolution hasErrors ifTrue: [ ^ resolution ].
+	resolution rootRepositories: rootRepositories.
+	aCollectionOfProjectSpecs do: [ :spec | self require: spec by: nil ].
 	[ pending isEmpty ] whileFalse: [ self visit: pending removeFirst ].
 	resolution buildList: (dropsUnused
 			 ifTrue: [ self usedIn: selected ]
@@ -608,12 +621,12 @@ MetacelloMVSResolver >> spell: aProjectSpec by: aCandidate [
 
 { #category : 'resolving' }
 MetacelloMVSResolver >> usedIn: aBuildList [
-	"The part of aBuildList reached from the root through the selected versions only. A project only versions not selected asked for is unused. The versions kept are not changed"
+	"The part of aBuildList reached from the roots through the selected versions only. A project only versions not selected asked for is unused. The versions kept are not changed"
 
 	| used toVisit |
 	used := Dictionary new.
 	toVisit := OrderedCollection new.
-	(aBuildList includesKey: rootRepository) ifTrue: [ toVisit add: rootRepository ].
+	rootRepositories do: [ :each | (aBuildList includesKey: each) ifTrue: [ toVisit add: each ] ].
 	[ toVisit isEmpty ] whileFalse: [
 			| repository candidate |
 			repository := toVisit removeFirst.
@@ -660,7 +673,7 @@ MetacelloMVSResolver >> visit: aCandidate [
 		         includingDefault: (defaultAsked includes: aCandidate repository)
 		         into: found.
 	reading findings , found findings do: [ :each | self keep: each about: aCandidate ].
-	(aCandidate repository = rootRepository and: [ aCandidate requiredBy isNil ])
+	((rootRepositories includes: aCandidate repository) and: [ aCandidate requiredBy isNil ])
 		ifTrue: [ self replace: reading replacements about: aCandidate ]
 		ifFalse: [
 				reading replacements ifNotEmpty: [ :replaces |

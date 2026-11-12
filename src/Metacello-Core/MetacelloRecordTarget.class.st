@@ -62,9 +62,9 @@ MetacelloRecordTarget >> preLoad: packageOrVersionSpec [
 
 { #category : 'recording' }
 MetacelloRecordTarget >> record: aResolution [
-	"The directive loading aResolution: the root, each package where it is first asked (see visitProjectReference:), each project's preLoad and postLoad around its first packages (see visitVersionSpec:)"
+	"The directive loading aResolution: its roots in their order, each package where it is first asked (see visitProjectReference:), each project's preLoad and postLoad around its first packages (see visitVersionSpec:)"
 
-	self recordProject: aResolution root loading: aResolution root loadList.
+	aResolution roots do: [ :root | self recordProject: root loading: root loadList ].
 	^ self specBuilder root
 ]
 
