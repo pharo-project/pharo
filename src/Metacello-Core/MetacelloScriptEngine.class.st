@@ -5,7 +5,6 @@ Class {
 	#name : 'MetacelloScriptEngine',
 	#superclass : 'Object',
 	#instVars : [
-		'result',
 		'options',
 		'specBuilder',
 		'projectSpec',
@@ -36,11 +35,9 @@ MetacelloScriptEngine >> doLoadProjectSpecFrom: aMetacelloPackageSpec [
 
 { #category : 'private' }
 MetacelloScriptEngine >> during: aBlock keepingRegistry: aBoolean [
-	"Run aBlock on a copy of the registry, with the script's handlers for upgrades, downgrades, conflicts and locks; keep the copy only when aBlock succeeds and aBoolean"
+	"Run aBlock on a copy of the registry, with the script's handlers for upgrades, downgrades, conflicts and locks; keep the copy only when aBlock succeeds and aBoolean. Answer what aBlock answers"
 
-	MetacelloProjectRegistry
-		copyRegistryDuring: [ self handleNotificationsForAction: aBlock ]
-		commitIfSuccess: aBoolean
+	^ MetacelloProjectRegistry copyRegistryDuring: [ self handleNotificationsForAction: aBlock ] commitIfSuccess: aBoolean
 ]
 
 { #category : 'private' }
@@ -72,32 +69,30 @@ MetacelloScriptEngine >> ensureResolved [
 ]
 
 { #category : 'actions api' }
-MetacelloScriptEngine >> fetch: aCollectionOfNames [
-	"Fetch what loading aCollectionOfNames of the default root (empty for its default ones) needs, recording first if needed (see ensureFetched), and answer the directive"
+MetacelloScriptEngine >> fetch [
+	"Fetch what loading the default root needs, recording first if needed (see ensureFetched), and answer the directive"
 
-	self projectSpec loads: aCollectionOfNames.
-	self during: [ self result: self ensureFetched ] keepingRegistry: false.
-	^ result
+	^ self during: [ self ensureFetched ] keepingRegistry: false
 ]
 
 { #category : 'actions api' }
 MetacelloScriptEngine >> get [
 	" load a fresh copy from repo"
 
-	MetacelloProjectRegistry
-		copyRegistryDuring: [
-				self handleNotificationsForAction: [
-						| spec projectPackage |
-						spec := self projectSpec.
-						projectPackage := spec projectPackage.
-						projectPackage repositorySpecs do: [ :repoSpec | repoSpec createRepository flushForScriptGet ].
-						self doLoadProjectSpecFrom: projectPackage.
-						self result: (Smalltalk at: spec className asSymbol) project.
-						MetacelloProjectRegistry
-							registrationNamed: spec className
-							ifPresent: [ :existing | existing projectSpec repositories: spec repositories ]
-							ifAbsent: [ spec asProjectRegistration registerProject ] ] ]
-		commitIfSuccess: true
+	^ MetacelloProjectRegistry
+		  copyRegistryDuring: [
+				  self handleNotificationsForAction: [
+						  | spec projectPackage |
+						  spec := self projectSpec.
+						  projectPackage := spec projectPackage.
+						  projectPackage repositorySpecs do: [ :repoSpec | repoSpec createRepository flushForScriptGet ].
+						  self doLoadProjectSpecFrom: projectPackage.
+						  MetacelloProjectRegistry
+							  registrationNamed: spec className
+							  ifPresent: [ :existing | existing projectSpec repositories: spec repositories ]
+							  ifAbsent: [ spec asProjectRegistration registerProject ].
+						  (Smalltalk at: spec className asSymbol) project ] ]
+		  commitIfSuccess: true
 ]
 
 { #category : 'handlers' }
@@ -127,16 +122,17 @@ MetacelloScriptEngine >> handleLock: exception [
 { #category : 'handlers' }
 MetacelloScriptEngine >> handleNotificationsForAction: actionBlock [
 
-	[
-		[
-			actionBlock
-				on: MetacelloAllowProjectUpgrade , MetacelloAllowConflictingProjectUpgrade
-				do: [ :ex | "option handlers need to be outermost set of handlers ... last line of defense before users are involved" ex handleResolutionFor: self ] ]
-			on: MetacelloAllowLockedProjectChange
-			do: [ :ex | "MetacelloAllowLockedProjectChange need to be outermost handler ... since it is signaled from second line of handlers"
-			ex handleResolutionFor: self ] ]
-		on: Warning
-		do: [ :ex | "Warning is absolute outermost handler" self handleWarning: ex ]
+	^ [
+		  [
+			  actionBlock
+				  on: MetacelloAllowProjectUpgrade , MetacelloAllowConflictingProjectUpgrade
+				  do: [ :ex | "option handlers need to be outermost set of handlers ... last line of defense before users are involved"
+					  ex handleResolutionFor: self ] ]
+			  on: MetacelloAllowLockedProjectChange
+			  do: [ :ex | "MetacelloAllowLockedProjectChange need to be outermost handler ... since it is signaled from second line of handlers"
+				  ex handleResolutionFor: self ] ]
+		  on: Warning
+		  do: [ :ex | "Warning is absolute outermost handler" self handleWarning: ex ]
 ]
 
 { #category : 'handlers' }
@@ -168,16 +164,14 @@ MetacelloScriptEngine >> initialize [
 { #category : 'actions api' }
 MetacelloScriptEngine >> list [
 
-	self result: self projectSpec
+	^ self projectSpec
 ]
 
 { #category : 'actions api' }
-MetacelloScriptEngine >> load: aCollectionOfNames [
-	"Load aCollectionOfNames of the default root (empty for its default ones), fetching first if needed (see doLoad), and keep the registry changes"
+MetacelloScriptEngine >> load [
+	"Load the default root, fetching first if needed (see doLoad), and keep the registry changes"
 
-	self projectSpec loads: aCollectionOfNames.
-	self during: [ self result: self doLoad ] keepingRegistry: true.
-	^ result
+	^ self during: [ self doLoad ] keepingRegistry: true
 ]
 
 { #category : 'accessing' }
@@ -193,22 +187,22 @@ MetacelloScriptEngine >> loader [
 { #category : 'actions api' }
 MetacelloScriptEngine >> lock [
 
-	| spec |
-	MetacelloProjectRegistry
-		copyRegistryDuring: [
-				spec := self projectSpec.
-				MetacelloProjectRegistry
-					registrationNamed: spec className
-					ifPresent: [ :existing |
-							existing locked: true. "We need to merge the repositories"
-							existing projectSpec repositories: spec repositories.
-							spec := existing projectSpec ]
-					ifAbsent: [
-							spec asProjectRegistration
-								locked: true;
-								registerProject ].
-				self result: spec ]
-		commitIfSuccess: true
+	^ MetacelloProjectRegistry
+		  copyRegistryDuring: [
+				  | spec |
+				  spec := self projectSpec.
+				  MetacelloProjectRegistry
+					  registrationNamed: spec className
+					  ifPresent: [ :existing |
+							  existing locked: true. "We need to merge the repositories"
+							  existing projectSpec repositories: spec repositories.
+							  spec := existing projectSpec ]
+					  ifAbsent: [
+							  spec asProjectRegistration
+								  locked: true;
+								  registerProject ].
+				  spec ]
+		  commitIfSuccess: true
 ]
 
 { #category : 'accessing' }
@@ -241,12 +235,10 @@ MetacelloScriptEngine >> projectSpec: aSpec [
 ]
 
 { #category : 'actions api' }
-MetacelloScriptEngine >> record: aCollectionOfNames [
-	"Record the directive loading aCollectionOfNames of the default root (empty for its default ones), resolving first if needed (see ensureRecorded), and answer it"
+MetacelloScriptEngine >> record [
+	"Record the directive loading the default root, resolving first if needed (see ensureRecorded), and answer it"
 
-	self projectSpec loads: aCollectionOfNames.
-	self during: [ self result: self ensureRecorded ] keepingRegistry: false.
-	^ result
+	^ self during: [ self ensureRecorded ] keepingRegistry: false
 ]
 
 { #category : 'private' }
@@ -265,7 +257,7 @@ MetacelloScriptEngine >> register [
 		registrationNamed: spec className
 		ifPresent: [ :existing | existing projectSpec: spec ]
 		ifAbsent: [ spec asProjectRegistration registerProject ].
-	self result: spec
+	^ spec
 ]
 
 { #category : 'resolution' }
@@ -283,12 +275,10 @@ MetacelloScriptEngine >> resolution: aResolution [
 ]
 
 { #category : 'actions api' }
-MetacelloScriptEngine >> resolve: aCollectionOfNames [
-	"Answer the resolution of a load of aCollectionOfNames of the default root (empty for its default ones), errors included, leaving the registry as it was"
+MetacelloScriptEngine >> resolve [
+	"Answer the resolution of a load of the default root, errors included, leaving the registry as it was"
 
-	self projectSpec loads: aCollectionOfNames.
-	self during: [ self result: self ensureResolved ] keepingRegistry: false.
-	^ resolution
+	^ self during: [ self ensureResolved ] keepingRegistry: false
 ]
 
 { #category : 'private' }
@@ -322,19 +312,6 @@ MetacelloScriptEngine >> resolver [
 ]
 
 { #category : 'accessing' }
-MetacelloScriptEngine >> result [
-	"What the action answers: the directive of a load, fetch or record, the resolution of a resolve, the project or project spec of the other actions"
-
-	^ result
-]
-
-{ #category : 'accessing' }
-MetacelloScriptEngine >> result: anObject [
-
-	result := anObject
-]
-
-{ #category : 'accessing' }
 MetacelloScriptEngine >> specBuilder [
 	^ specBuilder
 ]
@@ -348,13 +325,13 @@ MetacelloScriptEngine >> strict [
 { #category : 'actions api' }
 MetacelloScriptEngine >> unlock [
 
-	| spec |
-	MetacelloProjectRegistry
-		copyRegistryDuring: [
-				spec := self projectSpec.
-				MetacelloProjectRegistry registrationNamed: spec className ifPresent: [ :existing | existing locked: false ].
-				self result: spec ]
-		commitIfSuccess: true
+	^ MetacelloProjectRegistry
+		  copyRegistryDuring: [
+				  | spec |
+				  spec := self projectSpec.
+				  MetacelloProjectRegistry registrationNamed: spec className ifPresent: [ :existing | existing locked: false ].
+				  spec ]
+		  commitIfSuccess: true
 ]
 
 { #category : 'actions api' }
@@ -363,5 +340,5 @@ MetacelloScriptEngine >> unregister [
 	| spec |
 	spec := self projectSpec.
 	MetacelloProjectRegistry registrationNamed: spec className ifPresent: [ :existing | existing unregisterProject ].
-	self result: spec
+	^ spec
 ]

@@ -6,12 +6,11 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'options',
-		'results',
-		'singleResult',
 		'actionArg',
 		'baselineArg',
 		'classNameArg',
-		'repositoryArg'
+		'repositoryArg',
+		'loadsArg'
 	],
 	#category : 'Metacello-Core-Scripts',
 	#package : 'Metacello-Core',
@@ -20,9 +19,11 @@ Class {
 
 { #category : 'execution' }
 MetacelloScriptExecutor >> applyArgsToProjectSpec: aProjectSpec [
-    classNameArg ifNotNil: [ aProjectSpec className: classNameArg ].
-    repositoryArg ifNotNil: [ aProjectSpec repository: repositoryArg ].
-    ^ aProjectSpec
+
+	classNameArg ifNotNil: [ aProjectSpec className: classNameArg ].
+	repositoryArg ifNotNil: [ aProjectSpec repository: repositoryArg ].
+	loadsArg ifNotNil: [ aProjectSpec loads: loadsArg ].
+	^ aProjectSpec
 ]
 
 { #category : 'args' }
@@ -55,35 +56,32 @@ MetacelloScriptExecutor >> classNameArg: anObject [
 MetacelloScriptExecutor >> execute [
 
 	baselineArg ifNil: [ self error: 'Baseline not specified' ].
-	self executeString: baselineArg do: [ :projectReferenceSpec |
-			| engine |
-			engine := MetacelloScriptEngine new
-				          options: self options copy;
-				          projectSpec: projectReferenceSpec;
-				          yourself.
-			[
-				self class codeSupportAnnouncer announce: (MetacelloExecutionStartAnnouncement executor: self).
-				engine perform: actionArg key withArguments: actionArg value ] ensure: [
-				self class codeSupportAnnouncer announce: (MetacelloExecutionEndAnnouncement executor: self) ].
-			engine result ifNotNil: [ :result | self results add: result ] ].
-	^ (self singleResult and: [ self results size == 1 ])
-		  ifTrue: [ self results first ]
-		  ifFalse: [ self results ]
+	^ self executeString: baselineArg do: [ :projectReferenceSpec |
+			  | engine |
+			  engine := MetacelloScriptEngine new
+				            options: self options copy;
+				            projectSpec: projectReferenceSpec;
+				            yourself.
+			  [
+				  self class codeSupportAnnouncer announce: (MetacelloExecutionStartAnnouncement executor: self).
+				  engine perform: actionArg key withArguments: actionArg value ] ensure: [
+				  self class codeSupportAnnouncer announce: (MetacelloExecutionEndAnnouncement executor: self) ] ]
 ]
 
 { #category : 'execution callback' }
 MetacelloScriptExecutor >> executeString: aString do: projectSpecBlock [
 
 	| projectSpec |
-	singleResult ifNil: [ self singleResult: true ].
 	projectSpec := MetacelloProjectRegistration projectSpecForClassNamed: aString ifAbsent: [ ].
-
-	(self shouldBeExecutedFor: projectSpec) ifTrue: [ projectSpecBlock value: (self applyArgsToProjectSpec: projectSpec copy) ]
+	(self shouldBeExecutedFor: projectSpec) ifFalse: [ ^ nil ].
+	^ projectSpecBlock value: (self applyArgsToProjectSpec: projectSpec copy)
 ]
 
 { #category : 'actions api' }
 MetacelloScriptExecutor >> fetch: required [
-    actionArg := #'fetch:' -> {required}
+
+	loadsArg := required.
+	actionArg := #fetch -> #(  )
 ]
 
 { #category : 'actions api' }
@@ -98,13 +96,15 @@ MetacelloScriptExecutor >> ignoreImage: aBool [
 
 { #category : 'actions api' }
 MetacelloScriptExecutor >> list [
-  actionArg := #'list' -> #().
-  self singleResult: false
+
+	actionArg := #list -> #(  )
 ]
 
 { #category : 'actions api' }
 MetacelloScriptExecutor >> load: required [
-    actionArg := #load: -> {required}
+
+	loadsArg := required.
+	actionArg := #load -> #(  )
 ]
 
 { #category : 'options api' }
@@ -158,7 +158,9 @@ MetacelloScriptExecutor >> postCopy [
 
 { #category : 'actions api' }
 MetacelloScriptExecutor >> record: required [
-    actionArg := #'record:' -> {required}
+
+	loadsArg := required.
+	actionArg := #record -> #(  )
 ]
 
 { #category : 'actions api' }
@@ -179,7 +181,8 @@ MetacelloScriptExecutor >> repositoryArg: anObject [
 { #category : 'actions api' }
 MetacelloScriptExecutor >> resolve: required [
 
-	actionArg := #resolve: -> { required }
+	loadsArg := required.
+	actionArg := #resolve -> #(  )
 ]
 
 { #category : 'options api' }
@@ -188,30 +191,10 @@ MetacelloScriptExecutor >> resolver: aMetacelloResolver [
 	self options at: #resolver put: aMetacelloResolver
 ]
 
-{ #category : 'accessing' }
-MetacelloScriptExecutor >> results [
-	"What the engine of each baseline the script names answered, in order"
-
-	^ results ifNil: [ results := OrderedCollection new ]
-]
-
 { #category : 'execution callback' }
 MetacelloScriptExecutor >> shouldBeExecutedFor: aSpec [
 
 	^ true
-]
-
-{ #category : 'accessing' }
-MetacelloScriptExecutor >> singleResult [
-	"Whether the script names one baseline, so it answers that baseline's result rather than a collection"
-
-	^ singleResult ifNil: [ singleResult := false ]
-]
-
-{ #category : 'accessing' }
-MetacelloScriptExecutor >> singleResult: aBoolean [
-
-	singleResult := aBoolean
 ]
 
 { #category : 'actions api' }
