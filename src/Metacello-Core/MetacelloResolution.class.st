@@ -33,10 +33,10 @@ MetacelloResolution >> addFinding: aFinding [
 
 { #category : 'accessing' }
 MetacelloResolution >> addRoot: aResolvedProject [
-	"Add aResolvedProject as a root of the load, after the roots added before"
+	"Add aResolvedProject as a root of the load, after the roots added before.
+	roots holds the projects the load asked for; projects holds every project of the resolution: the roots, and the projects they depend on. So a root goes in both"
 
-	self add: aResolvedProject.
-	(roots includes: aResolvedProject) ifFalse: [ roots add: aResolvedProject ]
+	roots add: (self add: aResolvedProject)
 ]
 
 { #category : 'findings' }
