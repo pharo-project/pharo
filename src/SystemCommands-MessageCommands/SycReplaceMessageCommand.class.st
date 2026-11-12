@@ -23,9 +23,9 @@ SycReplaceMessageCommand >> executeRefactoring [
 ]
 
 { #category : 'accessing' }
-SycReplaceMessageCommand >> icon [
+SycReplaceMessageCommand >> iconName [
 
-	^ self iconNamed: #edit
+	^ #edit
 ]
 
 { #category : 'accessing' }

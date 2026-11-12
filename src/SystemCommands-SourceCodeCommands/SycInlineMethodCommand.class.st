@@ -34,9 +34,9 @@ SycInlineMethodCommand >> executeRefactoring [
 ]
 
 { #category : 'accessing' }
-SycInlineMethodCommand >> icon [
+SycInlineMethodCommand >> iconName [
 
-	^ self iconNamed: #smallRightFlush
+	^ #smallRightFlush
 ]
 
 { #category : 'accessing' }

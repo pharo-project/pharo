@@ -29,9 +29,9 @@ SycFileOutPackageCommand >> executeRefactoring [
 ]
 
 { #category : 'accessing' }
-SycFileOutPackageCommand >> icon [
+SycFileOutPackageCommand >> iconName [
 
-	^ self iconNamed: #save
+	^ #save
 ]
 
 { #category : 'accessing' }

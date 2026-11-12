@@ -21,9 +21,9 @@ SycInspectPackageCommand >> executeRefactoring [
 ]
 
 { #category : 'accessing' }
-SycInspectPackageCommand >> icon [
+SycInspectPackageCommand >> iconName [
 
-	^ self iconNamed: #inspect
+	^ #inspect
 ]
 
 { #category : 'accessing' }

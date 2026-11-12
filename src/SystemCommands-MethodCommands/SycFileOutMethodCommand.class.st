@@ -31,9 +31,9 @@ SycFileOutMethodCommand >> execute [
 ]
 
 { #category : 'accessing' }
-SycFileOutMethodCommand >> icon [
+SycFileOutMethodCommand >> iconName [
 
-	^ self iconNamed: #save
+	^ #save
 ]
 
 { #category : 'accessing' }

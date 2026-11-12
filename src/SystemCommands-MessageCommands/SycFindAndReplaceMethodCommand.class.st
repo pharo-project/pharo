@@ -29,9 +29,9 @@ SycFindAndReplaceMethodCommand >> createRefactoring [
 ]
 
 { #category : 'accessing' }
-SycFindAndReplaceMethodCommand >> icon [
+SycFindAndReplaceMethodCommand >> iconName [
 
-	^ self iconNamed: #smallFind
+	^ #smallFind
 ]
 
 { #category : 'accessing' }

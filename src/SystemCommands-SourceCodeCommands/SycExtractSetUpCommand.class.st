@@ -31,9 +31,9 @@ SycExtractSetUpCommand >> canBeExecuted [
 ]
 
 { #category : 'accessing' }
-SycExtractSetUpCommand >> icon [
+SycExtractSetUpCommand >> iconName [
 
-	^ self iconNamed: #restart
+	^ #restart
 ]
 
 { #category : 'accessing' }

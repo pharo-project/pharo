@@ -63,9 +63,9 @@ SycAddMessageArgumentCommand >> executeRefactoring [
 ]
 
 { #category : 'accessing' }
-SycAddMessageArgumentCommand >> icon [
+SycAddMessageArgumentCommand >> iconName [
 
-	^ self iconNamed: #smallAdd
+	^ #smallAdd
 ]
 
 { #category : 'accessing' }

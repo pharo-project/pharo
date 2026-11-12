@@ -23,9 +23,9 @@ SycInlineIntoLocalSendersMessageCommand >> executeRefactoring [
 ]
 
 { #category : 'accessing' }
-SycInlineIntoLocalSendersMessageCommand >> icon [
+SycInlineIntoLocalSendersMessageCommand >> iconName [
 
-	^ self iconNamed: #smallRightFlush
+	^ #smallRightFlush
 ]
 
 { #category : 'accessing' }

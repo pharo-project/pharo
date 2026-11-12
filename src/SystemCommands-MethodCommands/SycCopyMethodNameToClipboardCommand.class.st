@@ -24,9 +24,9 @@ SycCopyMethodNameToClipboardCommand >> execute [
 ]
 
 { #category : 'accessing' }
-SycCopyMethodNameToClipboardCommand >> icon [
+SycCopyMethodNameToClipboardCommand >> iconName [
 
-	^ self iconNamed: #smallCopy
+	^ #smallCopy
 ]
 
 { #category : 'accessing' }

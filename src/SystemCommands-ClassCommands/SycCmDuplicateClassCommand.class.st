@@ -34,9 +34,9 @@ SycCmDuplicateClassCommand >> executeRefactoring [
 ]
 
 { #category : 'accessing' }
-SycCmDuplicateClassCommand >> icon [
+SycCmDuplicateClassCommand >> iconName [
 
-	^ self iconNamed: #smallCopy
+	^ #smallCopy
 ]
 
 { #category : 'accessing' }

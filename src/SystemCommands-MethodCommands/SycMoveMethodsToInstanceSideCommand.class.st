@@ -29,9 +29,9 @@ SycMoveMethodsToInstanceSideCommand >> executeRefactoring [
 ]
 
 { #category : 'accessing' }
-SycMoveMethodsToInstanceSideCommand >> icon [
+SycMoveMethodsToInstanceSideCommand >> iconName [
 
-	^ self iconNamed: #smallRedo
+	^ #smallRedo
 ]
 
 { #category : 'accessing' }

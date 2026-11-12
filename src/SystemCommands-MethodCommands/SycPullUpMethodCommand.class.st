@@ -30,8 +30,9 @@ SycPullUpMethodCommand >> executeRefactoring [
 ]
 
 { #category : 'accessing' }
-SycPullUpMethodCommand >> icon [
-	^ self iconNamed: #up
+SycPullUpMethodCommand >> iconName [
+
+	^ #up
 ]
 
 { #category : 'accessing' }

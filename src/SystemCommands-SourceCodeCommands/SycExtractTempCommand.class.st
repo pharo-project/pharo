@@ -31,9 +31,9 @@ SycExtractTempCommand >> executeRefactoring [
 ]
 
 { #category : 'accessing' }
-SycExtractTempCommand >> icon [
+SycExtractTempCommand >> iconName [
 
-	^ self iconNamed: #smallUpdate
+	^ #smallUpdate
 ]
 
 { #category : 'accessing' }

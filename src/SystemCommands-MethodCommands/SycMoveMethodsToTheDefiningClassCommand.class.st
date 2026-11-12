@@ -25,9 +25,9 @@ SycMoveMethodsToTheDefiningClassCommand >> executeRefactoring [
 ]
 
 { #category : 'accessing' }
-SycMoveMethodsToTheDefiningClassCommand >> icon [
+SycMoveMethodsToTheDefiningClassCommand >> iconName [
 
-	^ self iconNamed: #smallRedo
+	^ #smallRedo
 ]
 
 { #category : 'accessing' }

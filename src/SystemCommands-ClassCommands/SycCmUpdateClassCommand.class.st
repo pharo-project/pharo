@@ -17,9 +17,9 @@ SycCmUpdateClassCommand >> execute [
 ]
 
 { #category : 'accessing' }
-SycCmUpdateClassCommand >> icon [
+SycCmUpdateClassCommand >> iconName [
 
-	^ self iconNamed: #smallUpdate
+	^ #smallUpdate
 ]
 
 { #category : 'accessing' }

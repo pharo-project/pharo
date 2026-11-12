@@ -32,9 +32,9 @@ SycFormatSourceCodeCommand >> execute [
 ]
 
 { #category : 'accessing' }
-SycFormatSourceCodeCommand >> icon [
+SycFormatSourceCodeCommand >> iconName [
 
-	^ self iconNamed: #smallJustified
+	^ #smallJustified
 ]
 
 { #category : 'accessing' }

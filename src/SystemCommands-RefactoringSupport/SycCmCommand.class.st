@@ -35,12 +35,6 @@ SycCmCommand >> description [
 SycCmCommand >> executeRefactoring [
 ]
 
-{ #category : 'accessing' }
-SycCmCommand >> icon [
-
-	^ nil
-]
-
 { #category : 'testing' }
 SycCmCommand >> isEnabled [
 

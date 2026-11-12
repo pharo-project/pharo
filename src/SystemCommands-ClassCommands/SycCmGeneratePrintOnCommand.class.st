@@ -22,16 +22,16 @@ SycCmGeneratePrintOnCommand >> canBeExecuted [
 	^ context lastSelectedClass realClass slots notEmpty
 ]
 
+{ #category : 'accessing' }
+SycCmGeneratePrintOnCommand >> defaultMenuIconFormSet [
+
+	^ FormSet form: (Form fromBinaryStream: self class printIconContents base64Decoded asByteArray readStream)
+]
+
 { #category : 'executing' }
 SycCmGeneratePrintOnCommand >> driverClass [
 
 	^ ReGeneratePrintOnDriver 
-]
-
-{ #category : 'accessing' }
-SycCmGeneratePrintOnCommand >> icon [
-
-	^ Form fromBinaryStream: self class printIconContents base64Decoded asByteArray readStream
 ]
 
 { #category : 'accessing' }

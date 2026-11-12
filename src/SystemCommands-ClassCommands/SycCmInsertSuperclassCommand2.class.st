@@ -31,8 +31,9 @@ SycCmInsertSuperclassCommand2 >> executeRefactoring [
 ]
 
 { #category : 'accessing' }
-SycCmInsertSuperclassCommand2 >> icon [
-	^ self iconNamed: #smallLoadProject
+SycCmInsertSuperclassCommand2 >> iconName [
+
+	^ #smallLoadProject
 ]
 
 { #category : 'accessing' }

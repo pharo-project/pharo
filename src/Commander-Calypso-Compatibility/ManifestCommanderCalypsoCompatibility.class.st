@@ -8,3 +8,10 @@ Class {
 	#package : 'Commander-Calypso-Compatibility',
 	#tag : 'Manifest'
 }
+
+{ #category : 'deprecation' }
+ManifestCommanderCalypsoCompatibility class >> isDeprecated [
+	"Commander v1 is deprecated and will be removed in Pharo 16."
+
+	^ true
+]

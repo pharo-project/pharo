@@ -22,16 +22,16 @@ SycCmGenerateEqualAndHashCommand >> canBeExecuted [
 	^ context lastSelectedClass realClass slots notEmpty
 ]
 
+{ #category : 'accessing' }
+SycCmGenerateEqualAndHashCommand >> defaultMenuIconFormSet [
+
+	^ FormSet form: (Form fromBinaryStream: self class equalIconContents base64Decoded asByteArray readStream)
+]
+
 { #category : 'executing' }
 SycCmGenerateEqualAndHashCommand >> driverClass [
 
 	^ ReGenerateEqualAndHashDriver
-]
-
-{ #category : 'accessing' }
-SycCmGenerateEqualAndHashCommand >> icon [
-
-	^ Form fromBinaryStream: self class equalIconContents base64Decoded asByteArray readStream
 ]
 
 { #category : 'accessing' }

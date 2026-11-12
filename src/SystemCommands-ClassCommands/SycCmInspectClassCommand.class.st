@@ -21,9 +21,9 @@ SycCmInspectClassCommand >> execute [
 ]
 
 { #category : 'accessing' }
-SycCmInspectClassCommand >> icon [
+SycCmInspectClassCommand >> iconName [
 
-	^ self iconNamed: #smallInspectIt
+	^ #smallInspectIt
 ]
 
 { #category : 'accessing' }

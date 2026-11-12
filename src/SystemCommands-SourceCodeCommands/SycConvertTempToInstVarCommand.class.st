@@ -25,9 +25,9 @@ SycConvertTempToInstVarCommand >> executeRefactoring [
 ]
 
 { #category : 'accessing' }
-SycConvertTempToInstVarCommand >> icon [
+SycConvertTempToInstVarCommand >> iconName [
 
-	^ self iconNamed: #smallRedo
+	^ #smallRedo
 ]
 
 { #category : 'accessing' }

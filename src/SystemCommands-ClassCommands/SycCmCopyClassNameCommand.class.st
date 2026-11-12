@@ -25,8 +25,9 @@ SycCmCopyClassNameCommand >> execute [
 ]
 
 { #category : 'accessing' }
-SycCmCopyClassNameCommand >> icon [
-	^ self iconNamed: #smallCopy
+SycCmCopyClassNameCommand >> iconName [
+
+	^ #smallCopy
 ]
 
 { #category : 'accessing' }

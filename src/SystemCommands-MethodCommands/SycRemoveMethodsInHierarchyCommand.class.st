@@ -18,9 +18,9 @@ SycRemoveMethodsInHierarchyCommand >> asRefactorings [
 ]
 
 { #category : 'accessing' }
-SycRemoveMethodsInHierarchyCommand >> icon [
+SycRemoveMethodsInHierarchyCommand >> iconName [
 
-	^ self iconNamed: #remove
+	^ #remove
 ]
 
 { #category : 'accessing' }

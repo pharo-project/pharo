@@ -21,9 +21,9 @@ SycInspectMethodCommand >> execute [
 ]
 
 { #category : 'accessing' }
-SycInspectMethodCommand >> icon [
+SycInspectMethodCommand >> iconName [
 
-	^ self iconNamed: #inspect
+	^ #inspect
 ]
 
 { #category : 'accessing' }

@@ -27,9 +27,9 @@ SycInspectNodeCommand >> execute [
 ]
 
 { #category : 'accessing' }
-SycInspectNodeCommand >> icon [
+SycInspectNodeCommand >> iconName [
 
-	^ self iconNamed: #smallInspectIt
+	^ #smallInspectIt
 ]
 
 { #category : 'accessing' }

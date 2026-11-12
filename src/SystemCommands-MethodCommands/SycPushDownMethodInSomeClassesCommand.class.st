@@ -23,9 +23,9 @@ SycPushDownMethodInSomeClassesCommand >> executeRefactoring [
 ]
 
 { #category : 'accessing' }
-SycPushDownMethodInSomeClassesCommand >> icon [
+SycPushDownMethodInSomeClassesCommand >> iconName [
 
-	^ self iconNamed: #down
+	^ #down
 ]
 
 { #category : 'accessing' }

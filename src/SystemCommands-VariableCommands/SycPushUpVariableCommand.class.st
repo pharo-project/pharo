@@ -24,9 +24,9 @@ SycPushUpVariableCommand >> fullBrowserOrder [
 ]
 
 { #category : 'accessing' }
-SycPushUpVariableCommand >> icon [
+SycPushUpVariableCommand >> iconName [
 
-	^ self iconNamed: #up
+	^ #up
 ]
 
 { #category : 'accessing' }

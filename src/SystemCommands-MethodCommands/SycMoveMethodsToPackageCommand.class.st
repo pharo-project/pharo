@@ -33,12 +33,6 @@ SycMoveMethodsToPackageCommand >> executeRefactoring [
 ]
 
 { #category : 'accessing' }
-SycMoveMethodsToPackageCommand >> icon [
-
-	^ self iconNamed: #smallRedo
-]
-
-{ #category : 'accessing' }
 SycMoveMethodsToPackageCommand >> iconName [
 	^ #smallRedo
 ]

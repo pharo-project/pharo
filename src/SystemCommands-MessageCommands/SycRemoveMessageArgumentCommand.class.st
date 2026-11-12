@@ -69,9 +69,9 @@ SycRemoveMessageArgumentCommand >> executeRefactoring [
 ]
 
 { #category : 'accessing' }
-SycRemoveMessageArgumentCommand >> icon [
+SycRemoveMessageArgumentCommand >> iconName [
 
-	^ self iconNamed: #remove
+	^ #remove
 ]
 
 { #category : 'private' }

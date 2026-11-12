@@ -28,12 +28,6 @@ SycInspectVariableCommand >> executeRefactoring [
 ]
 
 { #category : 'accessing' }
-SycInspectVariableCommand >> icon [
-
-	^ self iconNamed: #inspect
-]
-
-{ #category : 'accessing' }
 SycInspectVariableCommand >> iconName [
 
 	^ #inspect

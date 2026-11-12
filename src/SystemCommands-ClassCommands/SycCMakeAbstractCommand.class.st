@@ -21,9 +21,9 @@ SycCMakeAbstractCommand >> executeRefactoring [
 ]
 
 { #category : 'accessing' }
-SycCMakeAbstractCommand >> icon [
+SycCMakeAbstractCommand >> iconName [
 
-	^ self iconNamed: #smallLoadProject
+	^ #smallLoadProject
 ]
 
 { #category : 'testing' }

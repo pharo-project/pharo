@@ -20,9 +20,9 @@ SycClassifyMethodsCommand >> execute [
 ]
 
 { #category : 'accessing' }
-SycClassifyMethodsCommand >> icon [
+SycClassifyMethodsCommand >> iconName [
 
-	^ self iconNamed: #browse
+	^ #browse
 ]
 
 { #category : 'accessing' }

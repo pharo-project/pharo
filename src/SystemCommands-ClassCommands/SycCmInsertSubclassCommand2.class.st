@@ -41,8 +41,9 @@ SycCmInsertSubclassCommand2 >> executeRefactoring [
 ]
 
 { #category : 'accessing' }
-SycCmInsertSubclassCommand2 >> icon [
-	^self iconNamed:#add
+SycCmInsertSubclassCommand2 >> iconName [
+
+	^ #add
 ]
 
 { #category : 'accessing' }

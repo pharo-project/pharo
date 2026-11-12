@@ -27,9 +27,9 @@ SycRemoveAllSendersCommand >> createRefactoring [
 ]
 
 { #category : 'accessing' }
-SycRemoveAllSendersCommand >> icon [
+SycRemoveAllSendersCommand >> iconName [
 
-	^ self iconNamed: #remove
+	^ #remove
 ]
 
 { #category : 'accessing' }
