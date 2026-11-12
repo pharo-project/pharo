@@ -3,7 +3,7 @@ Requests to save a textual version of the selected class to a new file in chunk 
 "
 Class {
 	#name : 'SycFileOutMethodCommand',
-	#superclass : 'SycMethodExtraCmCommand',
+	#superclass : 'SycMethodCommand',
 	#category : 'SystemCommands-MethodCommands',
 	#package : 'SystemCommands-MethodCommands'
 }

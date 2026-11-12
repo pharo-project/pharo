@@ -3,10 +3,16 @@ Classify the selected methods
 "
 Class {
 	#name : 'SycClassifyMethodsCommand',
-	#superclass : 'SycMethodExtraCmCommand',
+	#superclass : 'SycMethodCommand',
 	#category : 'SystemCommands-MethodCommands',
 	#package : 'SystemCommands-MethodCommands'
 }
+
+{ #category : 'accessing' }
+SycClassifyMethodsCommand >> description [
+
+	^ 'Classify the selected methods'
+]
 
 { #category : 'execution' }
 SycClassifyMethodsCommand >> execute [

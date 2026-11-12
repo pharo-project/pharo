@@ -3,9 +3,8 @@ This class is an extension so we can mix command of Commander2 with Commander.
 "
 Class {
 	#name : 'SycMethodCmCommand',
-	#superclass : 'SycCmCommand',
+	#superclass : 'SycMethodCommand',
 	#instVars : [
-		'methods',
 		'refactoringScopes'
 	],
 	#category : 'SystemCommands-MethodCommands',
@@ -28,39 +27,9 @@ SycMethodCmCommand >> canBeExecuted [
 ]
 
 { #category : 'execution' }
-SycMethodCmCommand >> execute [
-
-	prepared
-		ifTrue: [ self executeRefactoring ]
-		ifFalse: [
-				[
-					prepared := true.
-					self prepareFullExecution.
-					self executeRefactoring.
-					self applyCommandResult ]
-					on: Exception
-					do: [ :exception | self processCommandFailure: exception ] ]
-]
-
-{ #category : 'execution' }
 SycMethodCmCommand >> executeRefactoring [
 
 	self asRefactorings do: [ :each | each execute ]
-]
-
-{ #category : 'accessing' }
-SycMethodCmCommand >> methods [
-
-	^ methods ifNil: [
-			  self hasContext
-				  ifTrue: [ self context selectedMethods ]
-				  ifFalse: [ #(  ) ] ]
-]
-
-{ #category : 'accessing' }
-SycMethodCmCommand >> methods: aCollection [
-
-	methods := aCollection
 ]
 
 { #category : 'preparation' }

@@ -17,7 +17,11 @@ SycMethodExtraCmCommandTest >> contextOnPoint [
 { #category : 'tests' }
 SycMethodExtraCmCommandTest >> testGroupContainsExtraCommands [
 
-	| group |
-	group := ClyCommandGroupBuilder buildFor: SycMethodExtraCmCommand context: self contextOnPoint.
-	self denyEmpty: group commands
+	| entries |
+	entries := ((ClyCommandRegistry default mapOf: ClyMethod) entriesOf: #contextMenu) select: [ :entry | entry menuGroup = SycMethodExtraMenuGroup ].
+	self denyEmpty: entries.
+	self assert: (entries allSatisfy: [ :entry |
+				 (entry commandClass new
+					  context: self contextOnPoint;
+					  yourself) canBeExecuted ])
 ]

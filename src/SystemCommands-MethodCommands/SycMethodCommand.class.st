@@ -32,7 +32,11 @@ SycMethodCommand >> canBeExecuted [
 
 { #category : 'accessing' }
 SycMethodCommand >> methods [
-	^ methods
+
+	^ methods ifNil: [
+			  self hasContext
+				  ifTrue: [ self context selectedMethods ]
+				  ifFalse: [ #(  ) ] ]
 ]
 
 { #category : 'accessing' }

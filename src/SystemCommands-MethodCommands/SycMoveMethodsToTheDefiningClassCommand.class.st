@@ -16,6 +16,14 @@ SycMoveMethodsToTheDefiningClassCommand >> canBeExecuted [
 	^ self hasContext and: [ self context isExtensionMethodSelected ]
 ]
 
+{ #category : 'accessing' }
+SycMoveMethodsToTheDefiningClassCommand >> description [
+
+	^ 'I am a command to move methods to their defining class.
+
+I am used to convert extension method to normal one'
+]
+
 { #category : 'execution' }
 SycMoveMethodsToTheDefiningClassCommand >> executeRefactoring [
 

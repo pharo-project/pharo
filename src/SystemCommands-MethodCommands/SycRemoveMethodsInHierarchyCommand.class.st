@@ -18,6 +18,13 @@ SycRemoveMethodsInHierarchyCommand >> asRefactorings [
 ]
 
 { #category : 'accessing' }
+SycRemoveMethodsInHierarchyCommand >> description [
+
+	^ 'I am a command to remove given methods and the ones in the subclasses.
+'
+]
+
+{ #category : 'accessing' }
 SycRemoveMethodsInHierarchyCommand >> iconName [
 
 	^ #remove

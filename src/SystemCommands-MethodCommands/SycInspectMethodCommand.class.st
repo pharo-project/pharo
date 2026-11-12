@@ -3,7 +3,7 @@ Inspect the selected methods
 "
 Class {
 	#name : 'SycInspectMethodCommand',
-	#superclass : 'SycMethodExtraCmCommand',
+	#superclass : 'SycMethodCommand',
 	#category : 'SystemCommands-MethodCommands',
 	#package : 'SystemCommands-MethodCommands'
 }
