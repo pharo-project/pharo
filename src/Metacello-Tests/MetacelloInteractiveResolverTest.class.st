@@ -179,6 +179,17 @@ MetacelloInteractiveResolverTest >> testAProjectRegisteredWithoutItsPackagesIsNo
 ]
 
 { #category : 'tests' }
+MetacelloInteractiveResolverTest >> testAProjectWithoutPostLoadAskedTwiceIsRecorded [
+	"TestNoHooksShared, asked by TestNoHooks for Core and by TestNoHooksLate for Tests, has no preLoad nor postLoad: it is recorded where each group is asked, with no hook directive"
+	| directives |
+	directives := (Metacello new
+		          baseline: 'TestNoHooks';
+		          repository: 'http://repo.com';
+		          record) loadDirectives.
+	self assert: (directives collect: [ :each | each spec name ]) asArray equals: #( 'NoHooksCore' 'NoHooksTests' 'NoHooksLatePackage' )
+]
+
+{ #category : 'tests' }
 MetacelloInteractiveResolverTest >> testKeepsWhoRequiredAProject [
 
 	| lock2 |
