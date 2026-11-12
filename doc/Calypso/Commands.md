@@ -13,6 +13,7 @@ Everything goes through one mechanism: class-side methods marked with the `<caly
 - [Toolbar groups](#toolbar-groups)
 - [When a command is shown and when it runs](#when-a-command-is-shown-and-when-it-runs)
 - [Finding where a command is declared](#finding-where-a-command-is-declared)
+- [Changing the commands of another package](#changing-the-commands-of-another-package)
 - [Using the commands in a tool](#using-the-commands-in-a-tool)
 - [Testing](#testing)
 - [Classes involved](#classes-involved)
@@ -234,9 +235,35 @@ ClyCommandRegistry default allEntries.
 ClyCommandRegistry default activationsOf: #contextMenu inContext: aToolContext.
 ```
 
-The shortcuts browser of NewTools lists the declared shortcuts and browses their declaration method.
+The shortcuts browser of NewTools lists the declared shortcuts and browses their declaration method, or the method which changed their key (see below).
 
-Overriding or removing a command declared by another package is not supported yet.
+## Changing the commands of another package
+
+A package can remove a command declared by another package, or change its shortcut, from its own declaration method on the same anchor:
+
+```smalltalk
+ClyMethod class >> myTweaksCommandsIn: aCommandMap
+
+	<calypsoCommands>
+	aCommandMap contextMenu remove: SycFileOutMethodCommand.
+	aCommandMap shortcuts rebind: SycRemoveMethodCommand to: $d meta.
+	aCommandMap shortcuts rebindMenuOf: SycMethodRefactoringMenuGroup to: $t meta shift
+```
+
+| Message | Effect |
+|---|---|
+| `remove: Cmd` | Removes the entries of the command in this interaction, whatever their menu group |
+| `removeMenuOf: AGroup` | Removes the entries declared with `addMenuOf:` which open the group |
+| `rebind: Cmd to: keys` | Changes the key combination of the shortcuts of the command (shortcuts only) |
+| `rebindMenuOf: AGroup to: keys` | Changes the key combination of the shortcuts which open the group (shortcuts only) |
+
+These overrides:
+
+- only change the entries declared on the same anchor: a command declared on `ClyMethod` is overridden from `ClyMethod class`, not from a tool context class;
+- are applied after all the declaration methods of the anchor ran, so the selector of your method does not matter;
+- do nothing when the command is not declared, for example when the package declaring it is not loaded.
+
+An entry changed by an override remembers the method which changed it in `#overridingMethod`, next to its `#declaringMethod`.
 
 ## Using the commands in a tool
 

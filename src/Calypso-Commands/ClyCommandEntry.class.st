@@ -4,7 +4,7 @@ I am created by the methods marked with <calypsoCommands> through a ClyCommandIn
 	(aCommandMap contextMenu add: SycRemoveMethodCommand) order: 10000.
 I hold the placement: the menu group class, the order and the label. An order or a label I do not have is asked to the command when it is shown (#orderInContext: and the label selector of my interaction).
 My subclasses are the entries of the interactions which need more: the key combination of a shortcut (ClyShortcutCommandEntry), the mouse button of a click (ClyMouseCommandEntry) and the drop anchor of drag and drop (ClyDropCommandEntry).
-I remember the method which declared me, so tools can show why a command appears somewhere.
+I remember the method which declared me, and the one which changed me with an override such as ClyCommandInteraction>>#rebind:to:, so tools can show why a command appears somewhere.
 I answer the messages Calypso asks to command activations (#menuGroup, #menuItemNameFor:, #isActiveInContext:, #newActivatorFor: ...), so Calypso handles me and the class annotations of the deprecated Commander-Calypso-Compatibility package alike.
 "
 Class {
@@ -18,7 +18,8 @@ Class {
 		'label',
 		'declaringMethod',
 		'priority',
-		'openedGroup'
+		'openedGroup',
+		'overridingMethod'
 	],
 	#category : 'Calypso-Commands',
 	#package : 'Calypso-Commands'
@@ -211,6 +212,19 @@ ClyCommandEntry >> order [
 ClyCommandEntry >> order: aNumber [
 
 	order := aNumber
+]
+
+{ #category : 'accessing' }
+ClyCommandEntry >> overridingMethod [
+	"The declaration method which changed me with an override such as ClyCommandInteraction>>#rebind:to:, or nil."
+
+	^ overridingMethod
+]
+
+{ #category : 'accessing' }
+ClyCommandEntry >> overridingMethod: aCompiledMethod [
+
+	overridingMethod := aCompiledMethod
 ]
 
 { #category : 'printing' }

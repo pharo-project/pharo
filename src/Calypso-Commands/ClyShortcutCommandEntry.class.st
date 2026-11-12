@@ -15,15 +15,15 @@ Class {
 
 { #category : 'shortcuts browser' }
 ClyShortcutCommandEntry >> action [
-	"The method to browse from the shortcuts browser of NewTools."
+	"The method to browse from the shortcuts browser of NewTools: the one which gave me my key combination."
 
-	^ declaringMethod
+	^ overridingMethod ifNil: [ declaringMethod ]
 ]
 
 { #category : 'shortcuts browser' }
 ClyShortcutCommandEntry >> description [
 
-	^ declaringMethod comment ifNil: [ String empty ]
+	^ self action comment ifNil: [ String empty ]
 ]
 
 { #category : 'executing' }

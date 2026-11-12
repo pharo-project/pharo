@@ -60,11 +60,12 @@ ClyCommandMap >> click [
 
 { #category : 'building' }
 ClyCommandMap >> collectDeclarations [
-	"Runs the declaration methods of my anchor in the order of their selectors, remembering the running one so each entry knows where it was declared."
+	"Runs the declaration methods of my anchor in the order of their selectors, remembering the running one so each entry knows where it was declared. Then applies the overrides they recorded, so an override does not depend on the order of the methods."
 
 	((Pragma allNamed: self class pragmaName in: anchor classSide) sorted: [ :first :second | first methodSelector <= second methodSelector ]) do: [ :pragma |
 			declaringMethod := pragma method.
-			[ anchor perform: pragma methodSelector with: self ] ensure: [ declaringMethod := nil ] ]
+			[ anchor perform: pragma methodSelector with: self ] ensure: [ declaringMethod := nil ] ].
+	interactions do: [ :interaction | interaction applyOverrides ]
 ]
 
 { #category : 'interactions' }
@@ -79,6 +80,12 @@ ClyCommandMap >> declaringMethod [
 	"The declaration method running while I am built."
 
 	^ declaringMethod
+]
+
+{ #category : 'accessing' }
+ClyCommandMap >> declaringMethod: aCompiledMethod [
+
+	declaringMethod := aCompiledMethod
 ]
 
 { #category : 'interactions' }
