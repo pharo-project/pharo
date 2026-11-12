@@ -23,7 +23,31 @@ SHCustomStyleTest >> setUp [
 SHCustomStyleTest >> tearDown [
 
 	SHCustomStyle instVarNamed: #groups put: savedGroups.
+	SHCustomStyle triggerEvent: #changed.
 	super tearDown
+]
+
+{ #category : 'tests' }
+SHCustomStyleTest >> testAllStyleAccessors [
+
+	SHCustomStyle groups keysDo: [ :groupName | 
+		| getter setter style color emphasis|
+		getter := (groupName , 'Style') asSymbol.
+		setter := (groupName , 'Style:') asSymbol. 
+		style := SHCustomStyle perform: getter.
+		color := style color.
+		color := color ifNil: [ Color veryLightGray ] ifNotNil: [ color paler negated ].
+		emphasis := style emphasis = #normal ifTrue: [ #bold ] ifFalse: [ #normal ].
+		style := SHStyleElement new
+			color: color  ;
+			emphasis: emphasis ;
+			yourself.
+		SHCustomStyle 
+			perform: setter 
+			with: style.
+		style := SHCustomStyle perform: getter.
+		self assert: style color equals: color.
+		self assert: style emphasis equals: emphasis.]
 ]
 
 { #category : 'tests' }
@@ -40,13 +64,14 @@ SHCustomStyleTest >> testCopyFromCurrentStyleButtonIsASetting [
 { #category : 'tests' }
 SHCustomStyleTest >> testCopyFromCurrentStyleCopiesCurrentColors [
 
-	| currentDefaultRow |
+	| currentDefaultRow currentColor |
 	currentDefaultRow := SHRBTextStyler styleTable detect: [ :row | row first = 'default' ].
-	SHCustomStyle color: Color transparent forGroup: 'default'.
+	currentColor := (Color colorFrom: currentDefaultRow second).
+	(SHCustomStyle styleForGroup: 'default') color: currentColor lighter negated.
 
 	SHCustomStyle copyFromCurrentStyle.
 
 	self
-		assert: (SHCustomStyle colorForGroup: 'default')
-		equals: (Color colorFrom: currentDefaultRow second)
+		assert: (SHCustomStyle styleForGroup: 'default') color
+		equals: currentColor
 ]
