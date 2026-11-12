@@ -6,8 +6,8 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'options',
-		'roots',
-		'singleRoot',
+		'results',
+		'singleResult',
 		'actionArg',
 		'baselineArg',
 		'classNameArg',
@@ -55,7 +55,6 @@ MetacelloScriptExecutor >> classNameArg: anObject [
 MetacelloScriptExecutor >> execute [
 
 	baselineArg ifNil: [ self error: 'Baseline not specified' ].
-
 	self executeString: baselineArg do: [ :projectReferenceSpec |
 			| engine |
 			engine := MetacelloScriptEngine new
@@ -66,17 +65,17 @@ MetacelloScriptExecutor >> execute [
 				self class codeSupportAnnouncer announce: (MetacelloExecutionStartAnnouncement executor: self).
 				engine perform: actionArg key withArguments: actionArg value ] ensure: [
 				self class codeSupportAnnouncer announce: (MetacelloExecutionEndAnnouncement executor: self) ].
-			engine root ifNotNil: [ :root | self roots add: root ] ].
-	^ (self singleRoot and: [ self roots size == 1 ])
-		  ifTrue: [ self roots first ]
-		  ifFalse: [ self roots ]
+			engine result ifNotNil: [ :result | self results add: result ] ].
+	^ (self singleResult and: [ self results size == 1 ])
+		  ifTrue: [ self results first ]
+		  ifFalse: [ self results ]
 ]
 
 { #category : 'execution callback' }
 MetacelloScriptExecutor >> executeString: aString do: projectSpecBlock [
 
 	| projectSpec |
-	singleRoot ifNil: [ self singleRoot: true ].
+	singleResult ifNil: [ self singleResult: true ].
 	projectSpec := MetacelloProjectRegistration projectSpecForClassNamed: aString ifAbsent: [ ].
 
 	(self shouldBeExecutedFor: projectSpec) ifTrue: [ projectSpecBlock value: (self applyArgsToProjectSpec: projectSpec copy) ]
@@ -100,7 +99,7 @@ MetacelloScriptExecutor >> ignoreImage: aBool [
 { #category : 'actions api' }
 MetacelloScriptExecutor >> list [
   actionArg := #'list' -> #().
-  self singleRoot: false
+  self singleResult: false
 ]
 
 { #category : 'actions api' }
@@ -190,9 +189,10 @@ MetacelloScriptExecutor >> resolver: aMetacelloResolver [
 ]
 
 { #category : 'accessing' }
-MetacelloScriptExecutor >> roots [
+MetacelloScriptExecutor >> results [
+	"What the engine of each baseline the script names answered, in order"
 
-	^ roots ifNil: [ roots := OrderedCollection new ]
+	^ results ifNil: [ results := OrderedCollection new ]
 ]
 
 { #category : 'execution callback' }
@@ -202,15 +202,16 @@ MetacelloScriptExecutor >> shouldBeExecutedFor: aSpec [
 ]
 
 { #category : 'accessing' }
-MetacelloScriptExecutor >> singleRoot [
+MetacelloScriptExecutor >> singleResult [
+	"Whether the script names one baseline, so it answers that baseline's result rather than a collection"
 
-	^ singleRoot ifNil: [ singleRoot := false ]
+	^ singleResult ifNil: [ singleResult := false ]
 ]
 
 { #category : 'accessing' }
-MetacelloScriptExecutor >> singleRoot: aBoolean [
+MetacelloScriptExecutor >> singleResult: aBoolean [
 
-	singleRoot := aBoolean
+	singleResult := aBoolean
 ]
 
 { #category : 'actions api' }

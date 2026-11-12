@@ -5,7 +5,7 @@ Class {
 	#name : 'MetacelloScriptEngine',
 	#superclass : 'Object',
 	#instVars : [
-		'root',
+		'result',
 		'options',
 		'specBuilder',
 		'projectSpec',
@@ -73,11 +73,11 @@ MetacelloScriptEngine >> ensureResolved [
 
 { #category : 'actions api' }
 MetacelloScriptEngine >> fetch: aCollectionOfNames [
-	"Fetch what loading aCollectionOfNames of the root (empty for its default ones) needs, recording first if needed (see ensureFetched), and answer the directive"
+	"Fetch what loading aCollectionOfNames of the default root (empty for its default ones) needs, recording first if needed (see ensureFetched), and answer the directive"
 
 	self projectSpec loads: aCollectionOfNames.
-	self during: [ self root: self ensureFetched ] keepingRegistry: false.
-	^ root
+	self during: [ self result: self ensureFetched ] keepingRegistry: false.
+	^ result
 ]
 
 { #category : 'actions api' }
@@ -92,7 +92,7 @@ MetacelloScriptEngine >> get [
 						projectPackage := spec projectPackage.
 						projectPackage repositorySpecs do: [ :repoSpec | repoSpec createRepository flushForScriptGet ].
 						self doLoadProjectSpecFrom: projectPackage.
-						self root: (Smalltalk at: spec className asSymbol) project.
+						self result: (Smalltalk at: spec className asSymbol) project.
 						MetacelloProjectRegistry
 							registrationNamed: spec className
 							ifPresent: [ :existing | existing projectSpec repositories: spec repositories ]
@@ -168,16 +168,16 @@ MetacelloScriptEngine >> initialize [
 { #category : 'actions api' }
 MetacelloScriptEngine >> list [
 
-	self root: self projectSpec
+	self result: self projectSpec
 ]
 
 { #category : 'actions api' }
 MetacelloScriptEngine >> load: aCollectionOfNames [
-	"Load aCollectionOfNames of the root (empty for its default ones), fetching first if needed (see doLoad), and keep the registry changes"
+	"Load aCollectionOfNames of the default root (empty for its default ones), fetching first if needed (see doLoad), and keep the registry changes"
 
 	self projectSpec loads: aCollectionOfNames.
-	self during: [ self root: self doLoad ] keepingRegistry: true.
-	^ root
+	self during: [ self result: self doLoad ] keepingRegistry: true.
+	^ result
 ]
 
 { #category : 'accessing' }
@@ -207,7 +207,7 @@ MetacelloScriptEngine >> lock [
 							spec asProjectRegistration
 								locked: true;
 								registerProject ].
-				self root: spec ]
+				self result: spec ]
 		commitIfSuccess: true
 ]
 
@@ -242,11 +242,11 @@ MetacelloScriptEngine >> projectSpec: aSpec [
 
 { #category : 'actions api' }
 MetacelloScriptEngine >> record: aCollectionOfNames [
-	"Record the directive loading aCollectionOfNames of the root (empty for its default ones), resolving first if needed (see ensureRecorded), and answer it"
+	"Record the directive loading aCollectionOfNames of the default root (empty for its default ones), resolving first if needed (see ensureRecorded), and answer it"
 
 	self projectSpec loads: aCollectionOfNames.
-	self during: [ self root: self ensureRecorded ] keepingRegistry: false.
-	^ root
+	self during: [ self result: self ensureRecorded ] keepingRegistry: false.
+	^ result
 ]
 
 { #category : 'private' }
@@ -265,7 +265,7 @@ MetacelloScriptEngine >> register [
 		registrationNamed: spec className
 		ifPresent: [ :existing | existing projectSpec: spec ]
 		ifAbsent: [ spec asProjectRegistration registerProject ].
-	self root: spec
+	self result: spec
 ]
 
 { #category : 'resolution' }
@@ -284,10 +284,10 @@ MetacelloScriptEngine >> resolution: aResolution [
 
 { #category : 'actions api' }
 MetacelloScriptEngine >> resolve: aCollectionOfNames [
-	"Answer the resolution of a load of aCollectionOfNames of the root (empty for its default ones), errors included, leaving the registry as it was"
+	"Answer the resolution of a load of aCollectionOfNames of the default root (empty for its default ones), errors included, leaving the registry as it was"
 
 	self projectSpec loads: aCollectionOfNames.
-	self during: [ self root: self ensureResolved ] keepingRegistry: false.
+	self during: [ self result: self ensureResolved ] keepingRegistry: false.
 	^ resolution
 ]
 
@@ -322,13 +322,16 @@ MetacelloScriptEngine >> resolver [
 ]
 
 { #category : 'accessing' }
-MetacelloScriptEngine >> root [
-	^ root
+MetacelloScriptEngine >> result [
+	"What the action answers: the directive of a load, fetch or record, the resolution of a resolve, the project or project spec of the other actions"
+
+	^ result
 ]
 
 { #category : 'accessing' }
-MetacelloScriptEngine >> root: anObject [
-	root := anObject
+MetacelloScriptEngine >> result: anObject [
+
+	result := anObject
 ]
 
 { #category : 'accessing' }
@@ -350,7 +353,7 @@ MetacelloScriptEngine >> unlock [
 		copyRegistryDuring: [
 				spec := self projectSpec.
 				MetacelloProjectRegistry registrationNamed: spec className ifPresent: [ :existing | existing locked: false ].
-				self root: spec ]
+				self result: spec ]
 		commitIfSuccess: true
 ]
 
@@ -360,5 +363,5 @@ MetacelloScriptEngine >> unregister [
 	| spec |
 	spec := self projectSpec.
 	MetacelloProjectRegistry registrationNamed: spec className ifPresent: [ :existing | existing unregisterProject ].
-	self root: spec
+	self result: spec
 ]

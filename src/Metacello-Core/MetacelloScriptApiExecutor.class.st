@@ -19,7 +19,7 @@ MetacelloScriptApiExecutor >> execute [
 MetacelloScriptApiExecutor >> executeString: aString do: projectSpecBlock [
 
 	| spec |
-	singleRoot ifNil: [ self singleRoot: true ].
+	singleResult ifNil: [ self singleResult: true ].
 
 	spec := (MetacelloProjectSpec project: MetacelloProject new)
 		        name: aString;
