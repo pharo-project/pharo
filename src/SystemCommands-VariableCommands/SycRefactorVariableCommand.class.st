@@ -45,14 +45,6 @@ SycRefactorVariableCommand >> createRefactorings: variableRefactoringClass using
 		  refactoring ]
 ]
 
-{ #category : 'accessing' }
-SycRefactorVariableCommand >> orderInContext: aToolContext [
-
-	^ aToolContext isFullBrowserVariableContext
-		ifTrue: [ self fullBrowserOrder ]
-		ifFalse: [ self order ]
-]
-
 { #category : 'execution' }
 SycRefactorVariableCommand >> prepareFullExecution [
 

@@ -11,10 +11,16 @@ Class {
 }
 
 { #category : 'testing' }
-SycGenerateCommand >> canBeExecuted [
-	"Answer <true> if the receiver has any variables"
+SycGenerateCommand class >> isAbstract [
 
-	^ false
+	^ self == SycGenerateCommand
+]
+
+{ #category : 'testing' }
+SycGenerateCommand >> canBeExecuted [
+	"Whether the selected class has variables to generate code from."
+
+	^ context lastSelectedClass realClass slots isNotEmpty
 ]
 
 { #category : 'executing' }

@@ -45,11 +45,3 @@ SycDeprecateMessageCommand >> order [
 
 	^ 2.5
 ]
-
-{ #category : 'accessing' }
-SycDeprecateMessageCommand >> orderInContext: aToolContext [
-
-	^ aToolContext isMethodSourceContext
-		ifTrue: [ 1.3 ]
-		ifFalse: [ self order ]
-]

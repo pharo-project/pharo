@@ -10,14 +10,6 @@ Class {
 	#package : 'SystemCommands-VariableCommands'
 }
 
-{ #category : 'accessing' }
-SycVariableNavigationCommand >> orderInContext: aToolContext [
-
-	^ aToolContext isFullBrowserVariableContext
-		ifTrue: [ self fullBrowserOrder ]
-		ifFalse: [ self order ]
-]
-
 { #category : 'execution' }
 SycVariableNavigationCommand >> prepareFullExecution [
 

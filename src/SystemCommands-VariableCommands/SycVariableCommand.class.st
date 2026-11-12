@@ -30,6 +30,14 @@ SycVariableCommand >> canBeExecuted [
 ]
 
 { #category : 'accessing' }
+SycVariableCommand >> orderInContext: aToolContext [
+
+	^ aToolContext isFullBrowserVariableContext
+		ifTrue: [ self fullBrowserOrder ]
+		ifFalse: [ self order ]
+]
+
+{ #category : 'accessing' }
 SycVariableCommand >> variables [
 	^ variables
 ]

@@ -9,11 +9,3 @@ Class {
 	#category : 'SystemCommands-MessageCommands',
 	#package : 'SystemCommands-MessageCommands'
 }
-
-{ #category : 'accessing' }
-SycMessageRefactoringCommand >> orderInContext: aToolContext [
-
-	^ aToolContext isMethodSourceContext
-		ifTrue: [ 1.3 ]
-		ifFalse: [ self order ]
-]

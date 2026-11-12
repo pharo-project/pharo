@@ -7,7 +7,6 @@ ClyClass class >> systemCommandsClassCommandsIn: aCommandMap [
 	(aCommandMap contextMenu group: SycClassRefactoringMenuGroup)
 		add: SycMakeAbstractCommand order: 20;
 		add: SycDuplicateClassCommand order: 30;
-		add: SycNewClassCreationCommand order: 40;
 		add: SycDeprecateClassCommand order: 50;
 		add: SycGenerateEqualAndHashCommand order: 60;
 		add: SycGeneratePrintOnCommand order: 70;

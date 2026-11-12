@@ -11,12 +11,6 @@ Class {
 	#tag : 'Creation'
 }
 
-{ #category : 'testing' }
-SycInsertSubclassCommand >> canBeExecuted [
-
-	^ context lastSelectedClass isTrait not
-]
-
 { #category : 'execution' }
 SycInsertSubclassCommand >> executeRefactoring [
 	"The class name is necessary so the browser can select the new subclass"
@@ -66,19 +60,4 @@ SycInsertSubclassCommand >> newClassName: aString [
 { #category : 'accessing' }
 SycInsertSubclassCommand >> order [
 	^ 10100.1
-]
-
-{ #category : 'accessing' }
-SycInsertSubclassCommand >> packageNames [
-	"Answer a <Collection> of <Symbol> of the packages available to the new class"
-	
-	^ PackageOrganizer default packageNames
-]
-
-{ #category : 'execution' }
-SycInsertSubclassCommand >> prepareFullExecution [
-	
-	refactoringScopes := context refactoringScopes.
-	targetClass := context lastSelectedClass.
-
 ]
