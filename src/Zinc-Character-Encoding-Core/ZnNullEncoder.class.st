@@ -25,7 +25,7 @@ ZnNullEncoder class >> handlesEncoding: string [
 
 { #category : 'accessing' }
 ZnNullEncoder class >> knownEncodingIdentifiers [
-	^ #( null )
+	^ #( 'null' )
 ]
 
 { #category : 'instance creation' }
@@ -99,15 +99,15 @@ ZnNullEncoder >> ensureAtBeginOfCodePointOnStream: stream [
 ]
 
 { #category : 'encoding - decoding' }
-ZnNullEncoder >> forwardOnStream: aStream [
-	"I should move from 1 character forward on the stream. The stream is over a ByteArray."
+ZnNullEncoder >> forwardOnStream: stream [
+	"Move forward one character on stream"
 
-	aStream next
+	stream next
 ]
 
 { #category : 'accessing' }
 ZnNullEncoder >> identifier [
-	^ #ascii
+	^ 'null'
 ]
 
 { #category : 'convenience' }
@@ -136,7 +136,7 @@ ZnNullEncoder >> nextPutCodePoint: codePoint toStream: stream [
 
 	codePoint < 256
 		ifTrue: [ stream nextPut: codePoint ]
-		ifFalse: [ self errorOutsideRange ]
+		ifFalse: [ ^ self errorOutsideRange: codePoint to: stream ]
 ]
 
 { #category : 'convenience' }

@@ -170,7 +170,7 @@ ZnCharacterStreamTest >> testUTF8ReadStreamPositioning [
 	stream position: 6.
 	self assert: stream next equals: $e.
 	stream position: 7.
-	self assert: stream atEnd
+	self assert: stream atEnd.
 ]
 
 { #category : 'tests' }

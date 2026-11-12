@@ -270,6 +270,15 @@ ZnBufferedWriteStream >> printOn: aStream [
 		nextPutAll: self class name
 ]
 
+{ #category : 'initialize-release' }
+ZnBufferedWriteStream >> rawStream [
+	"Answer the innermost stream wrapped by the receiver, e.g. a raw binary file stream,
+	socket stream, or regular Read/WriteStream.
+	Defer to the wrappedStream."
+
+	^ self wrappedStream rawStream
+]
+
 { #category : 'accessing' }
 ZnBufferedWriteStream >> reset [
 	self flushBuffer.
@@ -325,4 +334,10 @@ ZnBufferedWriteStream >> uint32: integer [
 { #category : 'accessing - bytes' }
 ZnBufferedWriteStream >> uint8: integer [
 	^ self nextIntegerOfSize: 1 signed: false bigEndian: true put: integer
+]
+
+{ #category : 'initialize-release' }
+ZnBufferedWriteStream >> wrappedStream [
+
+	^ stream
 ]

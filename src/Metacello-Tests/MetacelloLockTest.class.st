@@ -24,9 +24,12 @@ MetacelloLockTest >> testLoadLockedWillNotIncludeLockedPackages [
 		baseline: 'TestToLock2';
 		repository: 'http://repo.com';
 		lock.
-		
-	packages := (self project version recordWithEngine: MetacelloScriptEngine new)  loadDirectives collect: [ :directive | directive spec ].
-	self assertCollection: (packages collect: #name) hasSameElements: #( 'Package1' )
+	packages := OrderedCollection new.
+	(Metacello new
+		 baseline: 'TestToLock1';
+		 repository: 'http://repo.com';
+		 record) packageDirectivesDo: [ :each | packages add: each spec name ].
+	self assertCollection: packages hasSameElements: #( 'Package1' )
 ]
 
 { #category : 'tests' }

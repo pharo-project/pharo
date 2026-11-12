@@ -42,17 +42,19 @@ MetacelloInteractiveResolverTest >> resolveLock1Loading: aCollection [
 ]
 
 { #category : 'tests' }
-MetacelloInteractiveResolverTest >> testAGroupAskedLaterIsRecordedWhereItIsAsked [
-	"TestGroups asks TestGroupsShared for Core, then TestGroupsLate asks it for Tests: its tests come after LatePackage, as Monticello's tests come after SUnit in Pharo's build"
-
-	| names |
-	names := OrderedCollection new.
-	(Metacello new
-		 baseline: 'TestGroups';
-		 repository: 'http://repo.com';
-		 record) packageDirectivesDo: [ :each | names add: each spec name ].
-
-	self assert: names asArray equals: #( 'SharedCore' 'LatePackage' 'SharedTests' 'LateTests' )
+MetacelloInteractiveResolverTest >> testADependencyCycleIsAnErrorOfTheResolution [
+	"TestCycleA requires TestCycleB, which requires TestCycleA: there is no order to load them in"
+	self
+		should: [
+				Metacello new
+					baseline: 'TestCycleA';
+					repository: 'http://repo.com';
+					record ]
+		raise: MetacelloResolutionError
+		withExceptionDo: [ :error |
+				self
+					assert: (error resolution errors collect: [ :each | each text ]) asArray
+					equals: #( 'Dependency cycle: TestCycleA -> TestCycleB -> TestCycleA' ) ]
 ]
 
 { #category : 'tests' }
@@ -129,6 +131,31 @@ MetacelloInteractiveResolverTest >> testALoadWithResolutionErrorsLoadsNothing [
 ]
 
 { #category : 'tests' }
+MetacelloInteractiveResolverTest >> testAProjectAskedTwiceRunsItsPreLoadAndPostLoadOnce [
+	"TestGroupsShared, asked by TestGroups for Core and by TestGroupsLate for Tests, has a preLoad and a postLoad: they go around its first packages only, so they never wrap the packages of another project"
+	| kinds |
+	kinds := (Metacello new
+		          baseline: 'TestGroups';
+		          repository: 'http://repo.com';
+		          record) loadDirectives collect: [ :each | each class name ].
+	self
+		assert: kinds asArray
+		equals: #( #MetacelloPreLoadDirective #MetacelloPackageLoadDirective #MetacelloPostLoadDirective #MetacelloPackageLoadDirective #MetacelloPackageLoadDirective #MetacelloPackageLoadDirective )
+]
+
+{ #category : 'tests' }
+MetacelloInteractiveResolverTest >> testAProjectIsLoadedWhereEachGroupIsAsked [
+	"TestGroups asks TestGroupsShared for Core and TestGroupsLate asks it for Tests: each group is loaded where it is asked, once"
+	| names |
+	names := OrderedCollection new.
+	(Metacello new
+		 baseline: 'TestGroups';
+		 repository: 'http://repo.com';
+		 record) packageDirectivesDo: [ :each | names add: each spec name ].
+	self assert: names asArray equals: #( 'SharedCore' 'LatePackage' 'SharedTests' 'LateTests' )
+]
+
+{ #category : 'tests' }
 MetacelloInteractiveResolverTest >> testAProjectLoadedIsInstalled [
 
 	self assert: (self lock2Registration
@@ -149,6 +176,17 @@ MetacelloInteractiveResolverTest >> testAProjectRegisteredWithoutItsPackagesIsNo
 	"TestToLockPackage1 and TestToLockPackage2 are not in the image"
 
 	self deny: self lock2Registration isInstalled
+]
+
+{ #category : 'tests' }
+MetacelloInteractiveResolverTest >> testAProjectWithoutPostLoadAskedTwiceIsRecorded [
+	"TestNoHooksShared, asked by TestNoHooks for Core and by TestNoHooksLate for Tests, has no preLoad nor postLoad: it is recorded where each group is asked, with no hook directive"
+	| directives |
+	directives := (Metacello new
+		          baseline: 'TestNoHooks';
+		          repository: 'http://repo.com';
+		          record) loadDirectives.
+	self assert: (directives collect: [ :each | each spec name ]) asArray equals: #( 'NoHooksCore' 'NoHooksTests' 'NoHooksLatePackage' )
 ]
 
 { #category : 'tests' }

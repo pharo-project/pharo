@@ -48,7 +48,7 @@ MetacelloMVSBaselineSandbox >> anonymousSubclassOf: aClass named: aSymbol with: 
 
 { #category : 'reading' }
 MetacelloMVSBaselineSandbox >> baselineClass [
-	"An anonymous subclass of BaselineOf with the variables and methods of my definitions, installed nowhere: a class of the same name in the image is neither used nor changed"
+	"An anonymous subclass of BaselineOf with the variables and methods of my definitions, installed nowhere: a class of the same name in the image is neither used nor changed. The extensions the baseline package makes to other classes are left out: compiled here they would land in the wrong class, and in a package of the image"
 
 	| classDefinition baselineClass |
 	classDefinition := definitions detect: [ :each | each isClassDefinition ].
@@ -58,7 +58,7 @@ MetacelloMVSBaselineSandbox >> baselineClass [
 				                 classSlots: (classDefinition classInstVarNames collect: [ :each | each asSymbol asSlot ]);
 				                 sharedVariablesFromString: (' ' join: classDefinition classVarNames) ].
 	definitions do: [ :each |
-			each isMethodDefinition ifTrue: [
+			(each isMethodDefinition and: [ each className = classDefinition className ]) ifTrue: [
 					(each classIsMeta
 						 ifTrue: [ baselineClass class ]
 						 ifFalse: [ baselineClass ]) compile: each source classified: each category ] ].
