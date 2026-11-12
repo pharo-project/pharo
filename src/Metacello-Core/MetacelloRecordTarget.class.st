@@ -160,12 +160,12 @@ MetacelloRecordTarget >> visitProjectReference: aMetacelloProjectReferenceSpec [
 MetacelloRecordTarget >> visitVersionSpec: aMetacelloVersionSpec [
 	"Create the directives of the packages required reaches. The version spec's preLoad comes before its first packages, the first time it is visited; its postLoad after each visit, and placeProjectHooks keeps only the last one"
 
-	| postLoads |
+	| directives |
 	(self postLoads includesKey: aMetacelloVersionSpec) ifFalse: [ self preLoad: aMetacelloVersionSpec ].
-	postLoads := self postLoads at: aMetacelloVersionSpec ifAbsentPut: [ OrderedCollection new ].
+	directives := self postLoads at: aMetacelloVersionSpec ifAbsentPut: [ OrderedCollection new ].
 	self visitVersionSpecChildren: aMetacelloVersionSpec.
 	aMetacelloVersionSpec postLoadDoIt ifNotNil: [
-		postLoads add: (self postLoad: aMetacelloVersionSpec) -> self specBuilder currentLoadDirective ]
+		directives add: (self postLoad: aMetacelloVersionSpec) -> self specBuilder currentLoadDirective ]
 ]
 
 { #category : 'visiting' }
