@@ -199,8 +199,7 @@ SHCustomStyle class >> initialize [
 
 	groups := self groupDefaults.
 	groups keysAndValuesDo: [ :key :entry | | styleElement |
-			styleElement := SHStyleElement new 
-					group: key ;
+			styleElement := SHStyleElement new
 					color: self defaultColor ;
 					emphasis: self defaultEmphasis ;
 					yourself.

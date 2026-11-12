@@ -7,7 +7,6 @@ Class {
 	#name : 'SHStyleElement',
 	#superclass : 'Object',
 	#instVars : [
-		'group',
 		'color',
 		'emphasis'
 	],
@@ -49,22 +48,9 @@ SHStyleElement >> emphasis: anEmphasis [
 	
 ]
 
-{ #category : 'accessing' }
-SHStyleElement >> group [
-
-	^ group
-]
-
-{ #category : 'accessing' }
-SHStyleElement >> group: aString [ 
-	group := aString
-]
-
 { #category : 'printing' }
 SHStyleElement >> printOn: aStream [
 	super printOn: aStream.
-	aStream nextPutAll: ' group: '.
-	group printOn: aStream.
 	aStream nextPutAll: ' (color: '.
 	"aStream nextPutAll: self color shortPrintString."
 	aStream nextPut: $#.
