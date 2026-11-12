@@ -12,13 +12,6 @@ Class {
 	#package : 'SystemCommands-MethodCommands'
 }
 
-{ #category : 'testing' }
-SycMethodCmCommand class >> canBeExecutedInContext: aToolContext [
-	^ (self new
-		context: aToolContext;
-		yourself) canBeExecuted
-]
-
 { #category : 'instance creation' }
 SycMethodCmCommand class >> for: methods [
 
@@ -30,6 +23,7 @@ SycMethodCmCommand class >> for: methods [
 
 { #category : 'testing' }
 SycMethodCmCommand >> canBeExecuted [
+
 	^ self methods isNotEmpty
 ]
 

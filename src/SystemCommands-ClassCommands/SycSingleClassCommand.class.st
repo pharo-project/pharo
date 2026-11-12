@@ -17,10 +17,9 @@ Class {
 }
 
 { #category : 'testing' }
-SycSingleClassCommand class >> canBeExecutedInContext: aToolContext [
+SycSingleClassCommand >> canBeExecuted [
 
-	^ (super canBeExecutedInContext: aToolContext) and: [
-		  aToolContext isClassSelected ]
+	^ super canBeExecuted and: [ self context isClassSelected ]
 ]
 
 { #category : 'accessing' }

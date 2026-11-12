@@ -8,11 +8,6 @@ Class {
 	#package : 'SystemCommands-SourceCodeCommands'
 }
 
-{ #category : 'testing' }
-SycInlineTempCommand class >> canBeExecutedInContext: aSourceCodeContext [
-	^ (super canBeExecutedInContext: aSourceCodeContext) and: [ aSourceCodeContext isTempVariableSelected]
-]
-
 { #category : 'converting' }
 SycInlineTempCommand >> asRefactorings [ 
 	| assignment |
@@ -24,6 +19,12 @@ SycInlineTempCommand >> asRefactorings [
 		from: self method selector
 		in: self method origin }
 
+]
+
+{ #category : 'testing' }
+SycInlineTempCommand >> canBeExecuted [
+
+	^ super canBeExecuted and: [ self context isTempVariableSelected ]
 ]
 
 { #category : 'execution' }

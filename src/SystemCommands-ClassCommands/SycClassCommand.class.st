@@ -18,15 +18,16 @@ Class {
 	#package : 'SystemCommands-ClassCommands'
 }
 
-{ #category : 'testing' }
-SycClassCommand class >> canBeExecutedInContext: aToolContext [
-	^aToolContext isClassSelected
-]
-
 { #category : 'instance creation' }
 SycClassCommand class >> for: classes [
 	^self new
 		classes: classes
+]
+
+{ #category : 'testing' }
+SycClassCommand >> canBeExecuted [
+
+	^ self context isClassSelected
 ]
 
 { #category : 'accessing' }

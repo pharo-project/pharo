@@ -11,11 +11,12 @@ Class {
 }
 
 { #category : 'testing' }
-ClySwitchClassViewModeCommand class >> canBeExecutedInContext: aToolContext [
-	^aToolContext isClassSelected
+ClySwitchClassViewModeCommand class >> isAbstract [
+	^self = ClySwitchClassViewModeCommand
 ]
 
 { #category : 'testing' }
-ClySwitchClassViewModeCommand class >> isAbstract [
-	^self = ClySwitchClassViewModeCommand
+ClySwitchClassViewModeCommand >> canBeExecuted [
+
+	^ self context isClassSelected
 ]

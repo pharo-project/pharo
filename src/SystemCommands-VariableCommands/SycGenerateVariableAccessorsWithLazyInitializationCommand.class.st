@@ -9,14 +9,6 @@ Class {
 	#package : 'SystemCommands-VariableCommands'
 }
 
-{ #category : 'testing' }
-SycGenerateVariableAccessorsWithLazyInitializationCommand class >> canBeExecutedInContext: aToolContext [
-
-	^ (super canBeExecutedInContext: aToolContext) and: [
-		  aToolContext isVariableSelected and: [
-			  aToolContext isGlobalVariableSelected not ] ]
-]
-
 { #category : 'converting' }
 SycGenerateVariableAccessorsWithLazyInitializationCommand >> asRefactorings [
 
@@ -25,6 +17,12 @@ SycGenerateVariableAccessorsWithLazyInitializationCommand >> asRefactorings [
 		class: variable definingClass
 		classVariable: variable isClassVariable
 		defaultValue: value) }
+]
+
+{ #category : 'testing' }
+SycGenerateVariableAccessorsWithLazyInitializationCommand >> canBeExecuted [
+
+	^ super canBeExecuted and: [ self context isVariableSelected and: [ self context isGlobalVariableSelected not ] ]
 ]
 
 { #category : 'accessing' }

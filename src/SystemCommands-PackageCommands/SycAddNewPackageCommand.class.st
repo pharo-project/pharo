@@ -26,16 +26,16 @@ Class {
 	#package : 'SystemCommands-PackageCommands'
 }
 
-{ #category : 'testing' }
-SycAddNewPackageCommand class >> canBeExecutedInContext: aToolContext [
-
-	^ true
-]
-
 { #category : 'execution' }
 SycAddNewPackageCommand >> applyCommandResult [
 	super applyCommandResult.
 	self context showPackage: resultPackage
+]
+
+{ #category : 'testing' }
+SycAddNewPackageCommand >> canBeExecuted [
+
+	^ true
 ]
 
 { #category : 'accessing' }

@@ -16,17 +16,16 @@ Class {
 	#package : 'SystemCommands-SourceCodeCommands'
 }
 
-{ #category : 'testing' }
-SycRenameArgOrTempCommand2 class >> canBeExecutedInContext: aSourceCodeContext [
-
-	^ (super canBeExecutedInContext: aSourceCodeContext) and: [
-		  aSourceCodeContext isArgOrTempVariableSelected ]
-]
-
 { #category : 'execution' }
 SycRenameArgOrTempCommand2 >> applyCommandResult [
 	super applyCommandResult.
 	newName ifNotNil: [ :name | self context showVariableNamed: name ]
+]
+
+{ #category : 'testing' }
+SycRenameArgOrTempCommand2 >> canBeExecuted [
+
+	^ super canBeExecuted and: [ self context isArgOrTempVariableSelected ]
 ]
 
 { #category : 'accessing' }

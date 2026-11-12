@@ -19,8 +19,9 @@ Class {
 }
 
 { #category : 'testing' }
-ClySpawnFullBrowserCommand class >> canBeExecutedInContext: aToolContext [
-	^aToolContext hasSelectedItems
+ClySpawnFullBrowserCommand >> canBeExecuted [
+
+	^ self context hasSelectedItems
 ]
 
 { #category : 'accessing' }

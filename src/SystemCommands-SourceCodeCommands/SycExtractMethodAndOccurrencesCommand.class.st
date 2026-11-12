@@ -11,13 +11,6 @@ Class {
 	#package : 'SystemCommands-SourceCodeCommands'
 }
 
-{ #category : 'testing' }
-SycExtractMethodAndOccurrencesCommand class >> canBeExecutedInContext: aSourceCodeContext [
-
-	^ (super canBeExecutedInContext: aSourceCodeContext) and: [
-		  aSourceCodeContext isMethodSelected not ]
-]
-
 { #category : 'converting' }
 SycExtractMethodAndOccurrencesCommand >> asRefactorings [
 
@@ -30,6 +23,12 @@ SycExtractMethodAndOccurrencesCommand >> asRefactorings [
 		               in: self method origin.
 	self setUpOptionsOf: refactoring.
 	^ { refactoring }
+]
+
+{ #category : 'testing' }
+SycExtractMethodAndOccurrencesCommand >> canBeExecuted [
+
+	^ super canBeExecuted and: [ self context isMethodSelected not ]
 ]
 
 { #category : 'accessing' }

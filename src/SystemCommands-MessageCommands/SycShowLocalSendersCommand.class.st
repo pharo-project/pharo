@@ -9,9 +9,9 @@ Class {
 }
 
 { #category : 'testing' }
-SycShowLocalSendersCommand class >> canBeExecutedInContext: aToolContext [
+SycShowLocalSendersCommand >> canBeExecuted [
 
-	^ (super canBeExecutedInContext: aToolContext) and: [ aToolContext selectedMessages size = 1 ]
+	^ super canBeExecuted and: [ self context selectedMessages size = 1 ]
 ]
 
 { #category : 'accessing' }

@@ -13,12 +13,6 @@ Class {
 	#package : 'SystemCommands-SourceCodeCommands'
 }
 
-{ #category : 'testing' }
-SycFormatSourceCodeCommand class >> canBeExecutedInContext: aToolContext [
-
-	^ true
-]
-
 { #category : 'execution' }
 SycFormatSourceCodeCommand >> applyCommandResult [
 

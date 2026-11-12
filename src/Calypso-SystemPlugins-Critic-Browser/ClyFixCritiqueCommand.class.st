@@ -10,10 +10,11 @@ Class {
 }
 
 { #category : 'testing' }
-ClyFixCritiqueCommand class >> canBeExecutedInContext: aCriticContext [
-	(super canBeExecutedInContext: aCriticContext) ifFalse: [ ^false ].
+ClyFixCritiqueCommand >> canBeExecuted [
 
-	^aCriticContext lastSelectedItem isMarkedWith: ClyCritiqueFixableTag
+	super canBeExecuted ifFalse: [ ^ false ].
+
+	^ self context lastSelectedItem isMarkedWith: ClyCritiqueFixableTag
 ]
 
 { #category : 'table decoration' }

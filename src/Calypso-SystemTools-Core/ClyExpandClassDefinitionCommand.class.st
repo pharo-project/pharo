@@ -6,17 +6,17 @@ Class {
 	#tag : 'Commands-Classes'
 }
 
-{ #category : 'testing' }
-ClyExpandClassDefinitionCommand class >> canBeExecutedInContext: aToolContext [
-
-	^ true 
-]
-
 { #category : 'accessing' }
 ClyExpandClassDefinitionCommand >> applyCommandResult [
 
 	super applyCommandResult.
 	self context tool pendingText: self context tool editingClass expandedDefinitionString
+]
+
+{ #category : 'testing' }
+ClyExpandClassDefinitionCommand >> canBeExecuted [
+
+	^ true
 ]
 
 { #category : 'accessing' }

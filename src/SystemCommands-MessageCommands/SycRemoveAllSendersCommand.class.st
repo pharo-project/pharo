@@ -9,8 +9,9 @@ Class {
 }
 
 { #category : 'testing' }
-SycRemoveAllSendersCommand class >> canBeExecutedInContext: aToolContext [
-	^ aToolContext isMethodSelected
+SycRemoveAllSendersCommand >> canBeExecuted [
+
+	^ self context isMethodSelected
 ]
 
 { #category : 'execution' }

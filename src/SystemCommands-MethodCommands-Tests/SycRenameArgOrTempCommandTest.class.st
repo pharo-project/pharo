@@ -13,7 +13,9 @@ SycRenameArgOrTempCommandTest >> testCanExecuteOnArgumentNode [
 	"we don't need to set the tools"
 	argNode := OCVariableNode new variable: ArgumentVariable new.
 	sourceCodeContext := ClySourceCodeContext for: nil selectedNode: argNode.
-	self assert: (SycRenameArgOrTempCommand canBeExecutedInContext: sourceCodeContext)
+	self assert: (SycRenameArgOrTempCommand new
+			 context: sourceCodeContext;
+			 yourself) canBeExecuted
 ]
 
 { #category : 'tests' }
@@ -23,5 +25,7 @@ SycRenameArgOrTempCommandTest >> testCanExecuteOnTemporaryNode [
 	"we don't need to set the tools"
 	tempNode := OCVariableNode new variable: TemporaryVariable new.
 	sourceCodeContext := ClySourceCodeContext for: nil selectedNode: tempNode.
-	self assert: (SycRenameArgOrTempCommand canBeExecutedInContext: sourceCodeContext)
+	self assert: (SycRenameArgOrTempCommand new
+			 context: sourceCodeContext;
+			 yourself) canBeExecuted
 ]

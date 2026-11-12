@@ -22,15 +22,16 @@ Class {
 	#tag : 'Commands-MethodGroups'
 }
 
-{ #category : 'testing' }
-ClyRenameProtocolCommand class >> canBeExecutedInContext: aToolContext [
-	^aToolContext isProtocolSelected
-]
-
 { #category : 'execution' }
 ClyRenameProtocolCommand >> applyCommandResult [
 	super applyCommandResult.
 	self context showProtocol: newName
+]
+
+{ #category : 'testing' }
+ClyRenameProtocolCommand >> canBeExecuted [
+
+	^ self context isProtocolSelected
 ]
 
 { #category : 'accessing' }

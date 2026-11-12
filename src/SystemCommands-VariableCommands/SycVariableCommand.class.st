@@ -19,13 +19,14 @@ Class {
 }
 
 { #category : 'testing' }
-SycVariableCommand class >> canBeExecutedInContext: aToolContext [
-	^aToolContext isVariableSelected
+SycVariableCommand class >> isAbstract [
+	^self = SycVariableCommand
 ]
 
 { #category : 'testing' }
-SycVariableCommand class >> isAbstract [
-	^self = SycVariableCommand
+SycVariableCommand >> canBeExecuted [
+
+	^ self context isVariableSelected
 ]
 
 { #category : 'accessing' }

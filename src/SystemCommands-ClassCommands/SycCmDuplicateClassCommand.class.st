@@ -6,12 +6,6 @@ Class {
 	#tag : 'Creation'
 }
 
-{ #category : 'testing' }
-SycCmDuplicateClassCommand class >> canBeExecutedInContext: aToolContext [
-
-	^ aToolContext isClassSelected
-]
-
 { #category : 'execution' }
 SycCmDuplicateClassCommand >> applyCommandResult [
 	
@@ -21,7 +15,7 @@ SycCmDuplicateClassCommand >> applyCommandResult [
 { #category : 'testing' }
 SycCmDuplicateClassCommand >> canBeExecuted [
 
-	^ context lastSelectedClass isTrait not
+	^ self context isClassSelected and: [ self context lastSelectedClass isTrait not ]
 ]
 
 { #category : 'accessing' }

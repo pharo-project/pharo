@@ -18,13 +18,14 @@ SycDeprecateMessageCommand class >> browserMenuOrder [
 	^ 2.5
 ]
 
-{ #category : 'testing' }
-SycDeprecateMessageCommand class >> canBeExecutedInContext: aToolContext [
-	^ aToolContext isMethodSelected
-]
-
 { #category : 'execution' }
 SycDeprecateMessageCommand >> applyCommandResult [
+]
+
+{ #category : 'testing' }
+SycDeprecateMessageCommand >> canBeExecuted [
+
+	^ self context isMethodSelected
 ]
 
 { #category : 'execution' }

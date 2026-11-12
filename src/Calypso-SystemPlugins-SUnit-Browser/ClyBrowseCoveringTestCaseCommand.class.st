@@ -13,10 +13,11 @@ Class {
 }
 
 { #category : 'testing' }
-ClyBrowseCoveringTestCaseCommand class >> canBeExecutedInContext: aBrowserContext [
-	(super canBeExecutedInContext: aBrowserContext) ifFalse: [ ^false ].
+ClyBrowseCoveringTestCaseCommand >> canBeExecuted [
 
-	^ aBrowserContext lastSelectedItem hasProperty: ClyTestedClassProperty
+	super canBeExecuted ifFalse: [ ^ false ].
+
+	^ self context lastSelectedItem hasProperty: ClyTestedClassProperty
 ]
 
 { #category : 'execution' }

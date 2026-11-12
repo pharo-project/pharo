@@ -16,18 +16,17 @@ Class {
 	#package : 'SystemCommands-SourceCodeCommands'
 }
 
-{ #category : 'testing' }
-SycMoveTempDefinitionCommand class >> canBeExecutedInContext: aSourceCodeContext [
-
-	^ (super canBeExecutedInContext: aSourceCodeContext) and: [
-		  aSourceCodeContext isArgOrTempVariableSelected ]
-]
-
 { #category : 'execution' }
 SycMoveTempDefinitionCommand >> applyCommandResult [
 
 	super applyCommandResult.
 	self context showVariableNamed: newName
+]
+
+{ #category : 'testing' }
+SycMoveTempDefinitionCommand >> canBeExecuted [
+
+	^ super canBeExecuted and: [ self context isArgOrTempVariableSelected ]
 ]
 
 { #category : 'accessing' }

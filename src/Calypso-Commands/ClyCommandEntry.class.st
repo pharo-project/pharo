@@ -98,11 +98,13 @@ ClyCommandEntry >> interaction: aCommandInteraction [
 
 { #category : 'activation' }
 ClyCommandEntry >> isActiveInContext: aToolContext [
-	"The context must be described by my anchor and allow my command class. In menus, my command must also be able to run in the context (#canBeExecuted), so menus hide what cannot run, as Commander2 does."
+	"The context must be described by my anchor and my command must be able to run in it (#canBeExecuted). Menus, toolbars, tab actions and table icons also ask the command whether it shows there (ClyCommand>>#isAvailableInMenuOf:)."
 
+	| command |
 	(self isVisibleInContext: aToolContext) ifFalse: [ ^ false ].
-	(aToolContext allowsExecutionOf: commandClass) ifFalse: [ ^ false ].
-	^ interaction hidesCommandsThatCannotRun not or: [ (self newCommandInContext: aToolContext) canBeExecuted ]
+	command := self newCommandInContext: aToolContext.
+	command canBeExecuted ifFalse: [ ^ false ].
+	^ interaction hidesCommandsThatCannotRun not or: [ command isAvailableInMenuOf: aToolContext ]
 ]
 
 { #category : 'activation' }

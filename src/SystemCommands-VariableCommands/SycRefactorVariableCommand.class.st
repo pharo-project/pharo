@@ -25,9 +25,9 @@ Class {
 }
 
 { #category : 'testing' }
-SycRefactorVariableCommand class >> canBeExecutedInContext: aToolContext [
-	^(super canBeExecutedInContext: aToolContext)
-		and: [ aToolContext isGlobalVariableSelected not ]
+SycRefactorVariableCommand >> canBeExecuted [
+
+	^ super canBeExecuted and: [ self context isGlobalVariableSelected not ]
 ]
 
 { #category : 'execution' }

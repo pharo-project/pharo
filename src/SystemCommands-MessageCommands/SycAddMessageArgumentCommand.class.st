@@ -17,22 +17,22 @@ Class {
 	#package : 'SystemCommands-MessageCommands'
 }
 
-{ #category : 'testing' }
-SycAddMessageArgumentCommand class >> canBeExecutedInContext: aToolContext [
-
-	"This method overrides the superclass definition to make appear this option only for methods.
-
-	Using the refactor from the method selection panel works fine.
-	Otherwise createValidNameArgument creates an argument name that is not already in use (for example: if anObject is used then it return anObject1).
-	However when we ask this refactoring from a message we don't know the method and cannot do those checks. (If there is only one)"
-	^aToolContext isMethodSelected
-]
-
 { #category : 'execution' }
 SycAddMessageArgumentCommand >> applyCommandResult [
 	"The refactoring was applied by the driver while executing the command."
 
 	
+]
+
+{ #category : 'testing' }
+SycAddMessageArgumentCommand >> canBeExecuted [
+	"This method overrides the superclass definition to make appear this option only for methods.
+
+	Using the refactor from the method selection panel works fine.
+	Otherwise createValidNameArgument creates an argument name that is not already in use (for example: if anObject is used then it return anObject1).
+	However when we ask this refactoring from a message we don't know the method and cannot do those checks. (If there is only one)"
+
+	^ self context isMethodSelected
 ]
 
 { #category : 'testing' }

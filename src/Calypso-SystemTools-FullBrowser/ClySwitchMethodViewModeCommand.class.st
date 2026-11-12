@@ -15,13 +15,14 @@ Class {
 }
 
 { #category : 'testing' }
-ClySwitchMethodViewModeCommand class >> canBeExecutedInContext: aToolContext [
-	^aToolContext isClassSelected
+ClySwitchMethodViewModeCommand class >> isAbstract [
+	^self = ClySwitchMethodViewModeCommand
 ]
 
 { #category : 'testing' }
-ClySwitchMethodViewModeCommand class >> isAbstract [
-	^self = ClySwitchMethodViewModeCommand
+ClySwitchMethodViewModeCommand >> canBeExecuted [
+
+	^ self context isClassSelected
 ]
 
 { #category : 'testing' }

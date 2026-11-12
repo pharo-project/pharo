@@ -19,13 +19,6 @@ Class {
 	#tag : 'Commands'
 }
 
-{ #category : 'testing' }
-ClyRunTestsFromSelectedItemsCommand class >> canBeExecutedInContext: aToolContext [
-
-	^aToolContext selectedItems	anySatisfy: [ :each |
-			each hasProperty: ClyTestResultProperty ]
-]
-
 { #category : 'activation' }
 ClyRunTestsFromSelectedItemsCommand class >> contextClass [
 	self subclassResponsibility
@@ -34,6 +27,12 @@ ClyRunTestsFromSelectedItemsCommand class >> contextClass [
 { #category : 'testing' }
 ClyRunTestsFromSelectedItemsCommand class >> isAbstract [
 	^self = ClyRunTestsFromSelectedItemsCommand
+]
+
+{ #category : 'testing' }
+ClyRunTestsFromSelectedItemsCommand >> canBeExecuted [
+
+	^ self context selectedItems anySatisfy: [ :each | each hasProperty: ClyTestResultProperty ]
 ]
 
 { #category : 'accessing' }

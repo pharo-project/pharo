@@ -10,8 +10,9 @@ Class {
 }
 
 { #category : 'testing' }
-ClySwitchFocusToNextBrowserPaneCommand class >> canBeExecutedInContext: aBrowserContext [
-	^aBrowserContext browser isNavigationPanelFocused
+ClySwitchFocusToNextBrowserPaneCommand >> canBeExecuted [
+
+	^ self context browser isNavigationPanelFocused
 ]
 
 { #category : 'execution' }

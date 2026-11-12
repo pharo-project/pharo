@@ -26,9 +26,9 @@ Class {
 }
 
 { #category : 'testing' }
-ClyMoveMethodGroupToClassCommand class >> canBeExecutedInContext: aToolContext [
+ClyMoveMethodGroupToClassCommand >> canBeExecuted [
 
-	^aToolContext isSelectedMethodGroupEditable
+	^ self context isSelectedMethodGroupEditable
 ]
 
 { #category : 'execution' }

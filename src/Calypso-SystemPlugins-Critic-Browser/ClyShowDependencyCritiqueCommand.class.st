@@ -9,10 +9,11 @@ Class {
 }
 
 { #category : 'testing' }
-ClyShowDependencyCritiqueCommand class >> canBeExecutedInContext: aCriticContext [
-	(super canBeExecutedInContext: aCriticContext) ifFalse: [ ^false ].
+ClyShowDependencyCritiqueCommand >> canBeExecuted [
 
-	^aCriticContext selectedCritique class = ArchitecturalCritique
+	super canBeExecuted ifFalse: [ ^ false ].
+
+	^ self context selectedCritique class = ArchitecturalCritique
 ]
 
 { #category : 'table decoration' }

@@ -17,12 +17,6 @@ Class {
 	#package : 'SystemCommands-MessageCommands'
 }
 
-{ #category : 'testing' }
-SycRemoveMessageArgumentCommand class >> canBeExecutedInContext: aToolContext [
-	^(super canBeExecutedInContext: aToolContext)
-		and: [ aToolContext lastSelectedMessage argumentNames notEmpty]
-]
-
 { #category : 'private' }
 SycRemoveMessageArgumentCommand >> abort [
 	CmCommandAborted signal
@@ -43,6 +37,12 @@ SycRemoveMessageArgumentCommand >> argumentName [
 { #category : 'accessing' }
 SycRemoveMessageArgumentCommand >> argumentName: anObject [
 	argumentName := anObject
+]
+
+{ #category : 'testing' }
+SycRemoveMessageArgumentCommand >> canBeExecuted [
+
+	^ super canBeExecuted and: [ self context lastSelectedMessage argumentNames isNotEmpty ]
 ]
 
 { #category : 'private' }

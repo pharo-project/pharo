@@ -5,16 +5,16 @@ Class {
 	#package : 'SystemCommands-SourceCodeCommands'
 }
 
-{ #category : 'testing' }
-SycRunTestCommand class >> canBeExecutedInContext: aToolContext [
-
-	^ aToolContext isMethodSelected not and: [ aToolContext isTestMethodSelected ]
-]
-
 { #category : 'converting' }
 SycRunTestCommand >> asRefactorings [
 
 	^ {  }
+]
+
+{ #category : 'testing' }
+SycRunTestCommand >> canBeExecuted [
+
+	^ self context isMethodSelected not and: [ self context isTestMethodSelected ]
 ]
 
 { #category : 'accessing' }

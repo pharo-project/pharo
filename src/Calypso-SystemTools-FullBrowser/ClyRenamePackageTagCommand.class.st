@@ -22,15 +22,16 @@ Class {
 	#tag : 'Commands-Class groups'
 }
 
-{ #category : 'testing' }
-ClyRenamePackageTagCommand class >> canBeExecutedInContext: aToolContext [
-	^aToolContext isPackageTagSelected
-]
-
 { #category : 'execution' }
 ClyRenamePackageTagCommand >> applyCommandResult [
 	super applyCommandResult.
 	self context showPackage: package tag: newName
+]
+
+{ #category : 'testing' }
+ClyRenamePackageTagCommand >> canBeExecuted [
+
+	^ self context isPackageTagSelected
 ]
 
 { #category : 'accessing' }

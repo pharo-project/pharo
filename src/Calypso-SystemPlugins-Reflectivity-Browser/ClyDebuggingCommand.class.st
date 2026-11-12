@@ -9,24 +9,6 @@ Class {
 	#tag : 'Commands'
 }
 
-{ #category : 'testing' }
-ClyDebuggingCommand class >> canBeExecutedInContext: aBrowserContext [
-
-	| node |
-	
-	aBrowserContext hasUnacceptedEdits ifTrue: [ ^ false ].
-	
-	^ self isAbstract not and: [
-		  node := aBrowserContext lastSelectedSourceNode.
-			
-		  node isNotNil and: [
-			  node isCommentNode not and: [
-				  node isPragma not and: [
-					  node isSequence not and: [
-						  node isLiteralNode not and: [
-							  (node isVariable and: [ node isDefinition ]) not ] ] ] ] ] ]
-]
-
 { #category : 'activation' }
 ClyDebuggingCommand class >> contextMenuOrder [
 	<classAnnotationDependency>
@@ -36,4 +18,16 @@ ClyDebuggingCommand class >> contextMenuOrder [
 { #category : 'testing' }
 ClyDebuggingCommand class >> isAbstract [
 	^self = ClyDebuggingCommand
+]
+
+{ #category : 'testing' }
+ClyDebuggingCommand >> canBeExecuted [
+
+	| node |
+	self context hasUnacceptedEdits ifTrue: [ ^ false ].
+
+	^ self class isAbstract not and: [
+			  node := self context lastSelectedSourceNode.
+
+			  node isNotNil and: [ node isCommentNode not and: [ node isPragma not and: [ node isSequence not and: [ node isLiteralNode not and: [ (node isVariable and: [ node isDefinition ]) not ] ] ] ] ] ]
 ]

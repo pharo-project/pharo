@@ -13,7 +13,9 @@ SycInlineTempCommandTest >> testCanExecuteOnArgumentNode [
 	"we don't need to set the tools"
 	argNode := OCVariableNode new variable: ArgumentVariable new.
 	sourceCodeContext := ClySourceCodeContext for: nil selectedNode: argNode.
-	self deny: (SycInlineTempCommand canBeExecutedInContext: sourceCodeContext)
+	self deny: (SycInlineTempCommand new
+			 context: sourceCodeContext;
+			 yourself) canBeExecuted
 ]
 
 { #category : 'tests' }
@@ -23,5 +25,7 @@ SycInlineTempCommandTest >> testCanExecuteOnTemporaryNode [
 	"we don't need to set the tools"
 	tempNode := OCVariableNode new variable: TemporaryVariable new.
 	sourceCodeContext := ClySourceCodeContext for: nil selectedNode: tempNode.
-	self assert: (SycInlineTempCommand canBeExecutedInContext: sourceCodeContext)
+	self assert: (SycInlineTempCommand new
+			 context: sourceCodeContext;
+			 yourself) canBeExecuted
 ]

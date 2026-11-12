@@ -9,15 +9,6 @@ Class {
 	#tag : 'Commands'
 }
 
-{ #category : 'testing' }
-ClyRunFailedTestsFromMethodDataSourceCommand class >> canBeExecutedInContext: aBrowserContext [
-	| testResult |
-	(super canBeExecutedInContext: aBrowserContext) ifFalse: [ ^false].
-
-	testResult := aBrowserContext browser resultView dataSource getMetaProperty: ClyTestResultProperty.
-	^testResult hasBrokenTests
-]
-
 { #category : 'activation' }
 ClyRunFailedTestsFromMethodDataSourceCommand class >> menuOrder [
 	^super menuOrder + 1
@@ -34,6 +25,16 @@ ClyRunFailedTestsFromMethodDataSourceCommand >> buildTestSuite [
 			suite addTest: (eachMethod methodClass selector: eachMethod selector)]].
 
 	^suite
+]
+
+{ #category : 'testing' }
+ClyRunFailedTestsFromMethodDataSourceCommand >> canBeExecuted [
+
+	| testResult |
+	super canBeExecuted ifFalse: [ ^ false ].
+
+	testResult := self context browser resultView dataSource getMetaProperty: ClyTestResultProperty.
+	^ testResult hasBrokenTests
 ]
 
 { #category : 'accessing' }

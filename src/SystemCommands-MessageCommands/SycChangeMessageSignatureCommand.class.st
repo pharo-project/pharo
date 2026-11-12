@@ -28,11 +28,6 @@ Class {
 }
 
 { #category : 'testing' }
-SycChangeMessageSignatureCommand class >> canBeExecutedInContext: aToolContext [
-	^aToolContext isMessageSelected | aToolContext isMethodSelected
-]
-
-{ #category : 'testing' }
 SycChangeMessageSignatureCommand class >> isAbstract [
 	^self = SycChangeMessageSignatureCommand
 ]
@@ -54,6 +49,12 @@ SycChangeMessageSignatureCommand >> asRefactorings [
 { #category : 'requesting' }
 SycChangeMessageSignatureCommand >> canAddArgs [
 	^ true
+]
+
+{ #category : 'testing' }
+SycChangeMessageSignatureCommand >> canBeExecuted [
+
+	^ self context isMessageSelected | self context isMethodSelected
 ]
 
 { #category : 'testing' }

@@ -18,8 +18,9 @@ Class {
 }
 
 { #category : 'testing' }
-ClyRemoveClassGroupCommand class >> canBeExecutedInContext: aToolContext [
-	^aToolContext isPackageTagSelected
+ClyRemoveClassGroupCommand >> canBeExecuted [
+
+	^ self context isPackageTagSelected
 ]
 
 { #category : 'accessing' }

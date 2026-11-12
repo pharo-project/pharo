@@ -11,12 +11,6 @@ Class {
 	#package : 'SystemCommands-SourceCodeCommands'
 }
 
-{ #category : 'testing' }
-SycExtractSetUpCommand class >> canBeExecutedInContext: aToolContext [
-
-	^ aToolContext isMethodSelected not and: [ aToolContext isTestMethodSelected ]
-]
-
 { #category : 'executing' }
 SycExtractSetUpCommand >> asRefactorings [
 	| selectedInterval refactoring |
@@ -28,6 +22,12 @@ SycExtractSetUpCommand >> asRefactorings [
 		in: self method origin.
 	
 	^ { refactoring }
+]
+
+{ #category : 'testing' }
+SycExtractSetUpCommand >> canBeExecuted [
+
+	^ self context isMethodSelected not and: [ self context isTestMethodSelected ]
 ]
 
 { #category : 'accessing' }

@@ -9,15 +9,9 @@ Class {
 }
 
 { #category : 'testing' }
-SycMoveMethodsToInstanceSideCommand class >> canBeExecutedInContext: aToolContext [
-
-	^ aToolContext isMethodSelected and: [ aToolContext isClassSideMethodSelected ]
-]
-
-{ #category : 'testing' }
 SycMoveMethodsToInstanceSideCommand >> canBeExecuted [
 
-	^ self hasContext and: [ self class canBeExecutedInContext: self context ]
+	^ self hasContext and: [ self context isMethodSelected and: [ self context isClassSideMethodSelected ] ]
 ]
 
 { #category : 'accessing' }

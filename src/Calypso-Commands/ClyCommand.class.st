@@ -14,7 +14,9 @@ Class {
 
 { #category : 'testing' }
 ClyCommand class >> canBeExecutedInContext: aToolContext [
-	^self isAbstract not
+	"Deprecated: commands check their context in the instance-side #canBeExecuted. I am kept for the commands of other projects which still check it here."
+
+	^ self isAbstract not
 ]
 
 { #category : 'accessing' }
@@ -52,9 +54,9 @@ ClyCommand >> applyCommandResult [
 
 { #category : 'testing' }
 ClyCommand >> canBeExecuted [
+	"Whether I can run in my context. Commands override me, calling super, to check their context. The class-side #canBeExecutedInContext: is still asked for the commands of other projects that check their context there."
 
-	^ (self class canBeExecutedInContext: self context)
-		and: [ self isAvailableInMenuOf: self context ]
+	^ self class canBeExecutedInContext: self context
 ]
 
 { #category : 'ui requests' }

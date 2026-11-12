@@ -20,11 +20,11 @@ Class {
 }
 
 { #category : 'testing' }
-ClyRunClassScriptCommand class >> canBeExecutedInContext: aBrowserContext [
-	(super canBeExecutedInContext: aBrowserContext) ifFalse: [ ^false ].
+ClyRunClassScriptCommand >> canBeExecuted [
 
-	^aBrowserContext isClassSelected
-		and: [ aBrowserContext isClassScriptSelected ]
+	super canBeExecuted ifFalse: [ ^ false ].
+
+	^ self context isClassSelected and: [ self context isClassScriptSelected ]
 ]
 
 { #category : 'execution' }

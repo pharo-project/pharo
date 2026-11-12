@@ -8,13 +8,14 @@ Class {
 	#package : 'SystemCommands-MessageCommands'
 }
 
-{ #category : 'testing' }
-SycFindAndReplaceMethodCommand class >> canBeExecutedInContext: aToolContext [
-	^ aToolContext isMethodSelected
-]
-
 { #category : 'execution' }
 SycFindAndReplaceMethodCommand >> applyCommandResult [
+]
+
+{ #category : 'testing' }
+SycFindAndReplaceMethodCommand >> canBeExecuted [
+
+	^ self context isMethodSelected
 ]
 
 { #category : 'execution' }

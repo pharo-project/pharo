@@ -11,13 +11,6 @@ Class {
 	#package : 'SystemCommands-SourceCodeCommands'
 }
 
-{ #category : 'testing' }
-SycExtractMethodCommand class >> canBeExecutedInContext: aSourceCodeContext [
-
-	^ (super canBeExecutedInContext: aSourceCodeContext) and: [
-		  aSourceCodeContext isMethodSelected not ]
-]
-
 { #category : 'converting' }
 SycExtractMethodCommand >> asRefactorings [
 
@@ -30,6 +23,12 @@ SycExtractMethodCommand >> asRefactorings [
 		               in: self method origin.
 	self setUpOptionsOf: refactoring.
 	^ { refactoring }
+]
+
+{ #category : 'testing' }
+SycExtractMethodCommand >> canBeExecuted [
+
+	^ super canBeExecuted and: [ self context isMethodSelected not ]
 ]
 
 { #category : 'accessing' }

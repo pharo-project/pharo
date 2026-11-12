@@ -13,7 +13,9 @@ SycConvertTempToinstVarCommandTest >> testCanExecuteOnArgumentNode [
 	"we don't need to set the tools"
 	argNode := OCVariableNode new variable: ArgumentVariable new.
 	sourceCodeContext := ClySourceCodeContext for: nil selectedNode: argNode.
-	self deny: (SycConvertTempToInstVarCommand canBeExecutedInContext: sourceCodeContext)
+	self deny: (SycConvertTempToInstVarCommand new
+			 context: sourceCodeContext;
+			 yourself) canBeExecuted
 ]
 
 { #category : 'tests' }
@@ -23,5 +25,7 @@ SycConvertTempToinstVarCommandTest >> testCanExecuteOnTemporaryNode [
 	"we don't need to set the tools"
 	tempNode := OCVariableNode new variable: TemporaryVariable new.
 	sourceCodeContext := ClySourceCodeContext for: nil selectedNode: tempNode.
-	self assert: (SycConvertTempToInstVarCommand canBeExecutedInContext: sourceCodeContext)
+	self assert: (SycConvertTempToInstVarCommand new
+			 context: sourceCodeContext;
+			 yourself) canBeExecuted
 ]

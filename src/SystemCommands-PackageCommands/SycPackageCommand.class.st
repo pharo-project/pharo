@@ -17,8 +17,9 @@ Class {
 }
 
 { #category : 'testing' }
-SycPackageCommand class >> canBeExecutedInContext: aToolContext [
-	^aToolContext isPackageSelected
+SycPackageCommand >> canBeExecuted [
+
+	^ self context isPackageSelected
 ]
 
 { #category : 'testing' }

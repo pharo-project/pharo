@@ -18,17 +18,17 @@ Class {
 	#tag : 'Commands-MethodGroups'
 }
 
-{ #category : 'testing' }
-ClyConvertMethodGroupToProtocolCommand class >> canBeExecutedInContext: aToolContext [
-
-	^ aToolContext isExtensionMethodGroupSelected
-]
-
 { #category : 'execution' }
 ClyConvertMethodGroupToProtocolCommand >> applyCommandResult [
 
 	super applyCommandResult.
 	self context showProtocol: protocol
+]
+
+{ #category : 'testing' }
+ClyConvertMethodGroupToProtocolCommand >> canBeExecuted [
+
+	^ self context isExtensionMethodGroupSelected
 ]
 
 { #category : 'execution' }

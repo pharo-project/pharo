@@ -14,7 +14,7 @@ Class {
 }
 
 { #category : 'testing' }
-ClySwitchToProjectsCommand class >> canBeExecutedInContext: aContext [
+ClySwitchToProjectsCommand >> canBeExecuted [
 
 	^ ClySystemEnvironment currentImage projectManager hasProjects
 ]

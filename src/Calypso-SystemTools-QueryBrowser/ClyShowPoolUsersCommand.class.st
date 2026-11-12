@@ -12,11 +12,6 @@ Class {
 	#tag : 'Commands-Queries'
 }
 
-{ #category : 'testing' }
-ClyShowPoolUsersCommand class >> canBeExecutedInContext: aToolContext [
-	^ aToolContext isClassSelected and: [ aToolContext lastSelectedClass isPool ]
-]
-
 { #category : 'accessing' }
 ClyShowPoolUsersCommand >> browser [
 
@@ -27,6 +22,12 @@ ClyShowPoolUsersCommand >> browser [
 ClyShowPoolUsersCommand >> browser: anObject [
 
 	browser := anObject
+]
+
+{ #category : 'testing' }
+ClyShowPoolUsersCommand >> canBeExecuted [
+
+	^ self context isClassSelected and: [ self context lastSelectedClass isPool ]
 ]
 
 { #category : 'execution' }

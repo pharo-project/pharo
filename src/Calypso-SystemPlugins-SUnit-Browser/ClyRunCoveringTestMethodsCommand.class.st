@@ -10,10 +10,9 @@ Class {
 }
 
 { #category : 'testing' }
-ClyRunCoveringTestMethodsCommand class >> canBeExecutedInContext: aToolContext [
+ClyRunCoveringTestMethodsCommand >> canBeExecuted [
 
-	^aToolContext selectedMethodItems anySatisfy: [ :each |
-		each hasProperty: ClyTestedMethodProperty ]
+	^ self context selectedMethodItems anySatisfy: [ :each | each hasProperty: ClyTestedMethodProperty ]
 ]
 
 { #category : 'accessing' }

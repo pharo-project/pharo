@@ -11,14 +11,9 @@ Class {
 }
 
 { #category : 'testing' }
-SycMoveMethodsToTheDefiningClassCommand class >> canBeExecutedInContext: aToolContext [
-	^aToolContext isExtensionMethodSelected
-]
-
-{ #category : 'testing' }
 SycMoveMethodsToTheDefiningClassCommand >> canBeExecuted [
 
-	^ self hasContext and: [ self class canBeExecutedInContext: self context ]
+	^ self hasContext and: [ self context isExtensionMethodSelected ]
 ]
 
 { #category : 'execution' }

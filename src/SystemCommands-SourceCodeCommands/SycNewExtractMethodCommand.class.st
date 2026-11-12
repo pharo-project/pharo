@@ -12,9 +12,9 @@ Class {
 }
 
 { #category : 'testing' }
-SycNewExtractMethodCommand class >> canBeExecutedInContext: aSourceCodeContext [
+SycNewExtractMethodCommand >> canBeExecuted [
 
-	^ true. "(super canBeExecutedInContext: aSourceCodeContext) and: [
+	^ true "(super canBeExecutedInContext: aSourceCodeContext) and: [
 		  aSourceCodeContext isMethodSelected not ]"
 ]
 

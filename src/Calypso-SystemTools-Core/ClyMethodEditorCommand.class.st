@@ -32,15 +32,15 @@ ClyMethodEditorCommand class >> canBeExecutedInCodeMethodEditor: aTool [
 ]
 
 { #category : 'testing' }
-ClyMethodEditorCommand class >> canBeExecutedInContext: aToolContext [
-
-	^ aToolContext tool isCommandAvailable: self
-]
-
-{ #category : 'testing' }
 ClyMethodEditorCommand class >> canBeExecutedInMethodEditor: aTool [
 
 	^ false
+]
+
+{ #category : 'testing' }
+ClyMethodEditorCommand >> canBeExecuted [
+
+	^ self context tool isCommandAvailable: self class
 ]
 
 { #category : 'accessing' }

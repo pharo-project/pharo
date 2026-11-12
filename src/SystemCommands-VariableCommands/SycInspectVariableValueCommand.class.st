@@ -11,10 +11,11 @@ Class {
 }
 
 { #category : 'testing' }
-SycInspectVariableValueCommand class >> canBeExecutedInContext: aToolContext [
-	(super canBeExecutedInContext: aToolContext) ifFalse: [ ^false ].
+SycInspectVariableValueCommand >> canBeExecuted [
 
-	^aToolContext lastSelectedVariable isLive
+	super canBeExecuted ifFalse: [ ^ false ].
+
+	^ self context lastSelectedVariable isLive
 ]
 
 { #category : 'accessing' }

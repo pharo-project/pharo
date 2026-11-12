@@ -9,8 +9,9 @@ Class {
 }
 
 { #category : 'testing' }
-SycInlineIntoLocalSendersMessageCommand class >> canBeExecutedInContext: aToolContext [
-	^ aToolContext isMethodSelected
+SycInlineIntoLocalSendersMessageCommand >> canBeExecuted [
+
+	^ self context isMethodSelected
 ]
 
 { #category : 'execution' }

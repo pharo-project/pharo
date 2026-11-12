@@ -19,11 +19,6 @@ Class {
 	#package : 'SystemCommands-MessageCommands'
 }
 
-{ #category : 'testing' }
-SycMessageCommand class >> canBeExecutedInContext: aToolContext [
-	^aToolContext isMessageSelected | aToolContext isMethodSelected
-]
-
 { #category : 'instance creation' }
 SycMessageCommand class >> for: messages [
 	^self new
@@ -33,6 +28,12 @@ SycMessageCommand class >> for: messages [
 { #category : 'instance creation' }
 SycMessageCommand class >> forMethods: methods [
 	^self for: (methods collect: [:each | SycMessageDescription ofMethod: each])
+]
+
+{ #category : 'testing' }
+SycMessageCommand >> canBeExecuted [
+
+	^ self context isMessageSelected | self context isMethodSelected
 ]
 
 { #category : 'accessing' }

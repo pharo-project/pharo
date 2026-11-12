@@ -18,9 +18,9 @@ Class {
 }
 
 { #category : 'testing' }
-ClyMoveMethodGroupsToPackageCommand class >> canBeExecutedInContext: aToolContext [
+ClyMoveMethodGroupsToPackageCommand >> canBeExecuted [
 
-	^ aToolContext isProtocolSelected
+	^ self context isProtocolSelected
 ]
 
 { #category : 'execution' }

@@ -16,7 +16,9 @@ ClyShowPoolUsersCommandTest >> testCanExecuteOnPool [
 	context := ClyFullBrowserClassContext new
 		           selectedItems: { (ClyBrowserItem named: 'SharedPool' with: SharedPool) };
 		           yourself.
-	self assert: (ClyShowPoolUsersCommand canBeExecutedInContext: context)
+	self assert: (ClyShowPoolUsersCommand new
+			 context: context;
+			 yourself) canBeExecuted
 ]
 
 { #category : 'tests' }
@@ -26,5 +28,7 @@ ClyShowPoolUsersCommandTest >> testCannotExecuteOnNonPoolClass [
 	context := ClyFullBrowserClassContext new
 		           selectedItems: { (ClyBrowserItem named: 'Object' with: Object) };
 		           yourself.
-	self deny: (ClyShowPoolUsersCommand canBeExecutedInContext: context)
+	self deny: (ClyShowPoolUsersCommand new
+			 context: context;
+			 yourself) canBeExecuted
 ]

@@ -15,8 +15,9 @@ Class {
 }
 
 { #category : 'testing' }
-SycExtractTempCommand class >> canBeExecutedInContext: aSourceCodeContext [
-		^ (super canBeExecutedInContext: aSourceCodeContext) and: [ aSourceCodeContext isMethodSelected not ]
+SycExtractTempCommand >> canBeExecuted [
+
+	^ super canBeExecuted and: [ self context isMethodSelected not ]
 ]
 
 { #category : 'execution' }
