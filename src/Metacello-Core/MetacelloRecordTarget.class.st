@@ -49,11 +49,37 @@ MetacelloRecordTarget >> preLoad: packageOrVersionSpec [
 
 { #category : 'recording' }
 MetacelloRecordTarget >> record: aVersionSpec [
-	"Record the load directives for what I am required to load from aVersionSpec, and answer the root directive. Recording takes each project from the engine's resolution: a script resolves first (see MetacelloScriptEngine>>#do:required:commitIfSuccess:); a version spec recorded on its own is resolved here"
+	"Record the load directives for what I am required to load from aVersionSpec, and answer the root directive. Recording follows the engine's resolution: a script resolves first (see MetacelloScriptEngine>>#do:required:commitIfSuccess:). A version spec recorded on its own is resolved here, and recorded after the projects it requires"
 
-	engine resolution ifNil: [ engine resolution: ((MetacelloResolveTarget on: engine) resolveVersion: aVersionSpec loads: required) ].
+	| ownRequired |
+	engine resolution ifNotNil: [ ^ self recordLoadOrder ].
+	engine resolution: ((MetacelloResolveTarget on: engine) resolveVersion: aVersionSpec loads: required).
+	ownRequired := required.
+	self recordProjects: (engine resolution loadOrderFrom: (engine resolution requirementsOfVersion: aVersionSpec)).
+	required := ownRequired.
 	aVersionSpec acceptVisitor: self.
 	^ self specBuilder root
+]
+
+{ #category : 'recording' }
+MetacelloRecordTarget >> recordLoadOrder [
+	"Record every project of the engine's resolution once, in its load order (a project after what it requires), with every group asked of it, its preLoad before its packages and its postLoad after them; answer the root directive"
+
+	self recordProjects: engine resolution loadOrder.
+	^ self specBuilder root
+]
+
+{ #category : 'recording' }
+MetacelloRecordTarget >> recordProjects: aCollectionOfResolvedProjects [
+	"Record each project in order, with every group asked of it; a locked project is left out"
+
+	aCollectionOfResolvedProjects do: [ :project |
+			MetacelloNotification signal: 'Project: ' , project name.
+			project isLocked
+				ifTrue: [ MetacelloNotification signal: 'Project is locked, skipping.' ]
+				ifFalse: [
+						required := project loadList.
+						project version acceptVisitor: self ] ]
 ]
 
 { #category : 'accessing' }
@@ -93,18 +119,7 @@ MetacelloRecordTarget >> visitPackageSpec: aMetacelloPackageSpec [
 
 { #category : 'visiting' }
 MetacelloRecordTarget >> visitProjectReference: aMetacelloProjectReferenceSpec [
-	"Record the project at the version the resolution chose, here with the groups this reference asks: a group asked later is loaded where it is asked, after what comes before it (BaselineOfPharo asks Monticello's RemoteRepositories early and BaselineOfIDE its Tests once SUnit is loaded)"
-
-	| projectReferenceToLoad project names |
-	projectReferenceToLoad := aMetacelloProjectReferenceSpec projectReference.
-	MetacelloNotification signal: 'Project: ' , projectReferenceToLoad name.
-	projectReferenceToLoad isLocked ifTrue: [
-			MetacelloNotification signal: 'Project is locked, skipping.'.
-			^ projectReferenceToLoad ].
-	project := engine resolvedProjectFor: projectReferenceToLoad.
-	names := engine namesToRecord: (projectReferenceToLoad loadListForVersion: project version) of: project.
-	names ifEmpty: [ ^ self ].
-	project version recordRequiredFromArray: names withEngine: engine
+	"Nothing: every project is recorded once from the build list, before the projects that require it (see recordBuildList)"
 ]
 
 { #category : 'visiting' }

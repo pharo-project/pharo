@@ -4,6 +4,7 @@ I am Metacello's default resolver: a project takes the version its dependents de
 engine: the MetacelloScriptEngine resolving, for its loader, options and handlers.
 resolution: the MetacelloResolution being built.
 requester: the name of the project whose references I am visiting.
+path: the projects whose references I am visiting, the outermost first: a project reached again on it is a dependency cycle.
 "
 Class {
 	#name : 'MetacelloInteractiveResolver',
@@ -11,12 +12,20 @@ Class {
 	#instVars : [
 		'engine',
 		'resolution',
-		'requester'
+		'requester',
+		'path'
 	],
 	#category : 'Metacello-Core-Resolution',
 	#package : 'Metacello-Core',
 	#tag : 'Resolution'
 }
+
+{ #category : 'private' }
+MetacelloInteractiveResolver >> path [
+	"The projects whose references are being visited, the outermost first"
+
+	^ path ifNil: [ path := OrderedCollection new ]
+]
 
 { #category : 'private' }
 MetacelloInteractiveResolver >> prepare: aProjectSpec registering: aRegistration [
@@ -35,6 +44,18 @@ MetacelloInteractiveResolver >> registrationFor: aProjectSpec [
 		  registrationNamed: aProjectSpec className
 		  ifPresent: [ :existing | engine resolvePresentProject: existing new: aProjectSpec asProjectRegistration ]
 		  ifAbsent: [ aProjectSpec asProjectRegistration ]
+]
+
+{ #category : 'private' }
+MetacelloInteractiveResolver >> reportCycleAt: aResolvedProject [
+	"aResolvedProject requires itself through the projects after it on the path: report the cycle on its last request"
+
+	| cycle |
+	cycle := (path copyFrom: (path indexOf: aResolvedProject) to: path size) copyWith: aResolvedProject.
+	resolution addFinding: (MetacelloResolutionFinding
+			 error: #cycle
+			 text: 'Dependency cycle: ' , (' -> ' join: (cycle collect: [ :each | each name ]))
+			 request: aResolvedProject requests last)
 ]
 
 { #category : 'resolving' }
@@ -130,8 +151,12 @@ MetacelloInteractiveResolver >> visitProjectSpec: aProjectSpec [
 
 { #category : 'private' }
 MetacelloInteractiveResolver >> visitReferencesOf: aResolvedProject [
+	"Visit the references of aResolvedProject, unless it is already on the path being visited: a project requiring itself through others cannot be loaded in any order, an error of the resolution"
 
-	self visitReferencesOf: aResolvedProject version loads: aResolvedProject loadList requester: aResolvedProject
+	(self path includes: aResolvedProject) ifTrue: [ ^ self reportCycleAt: aResolvedProject ].
+	self path addLast: aResolvedProject.
+	[ self visitReferencesOf: aResolvedProject version loads: aResolvedProject loadList requester: aResolvedProject ] ensure: [
+		self path removeLast ]
 ]
 
 { #category : 'private' }

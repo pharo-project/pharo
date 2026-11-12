@@ -9,26 +9,23 @@ Class {
 		'options',
 		'specBuilder',
 		'projectSpec',
-		'resolution',
-		'recordedProjects'
+		'resolution'
 	],
 	#category : 'Metacello-Core-Scripts',
 	#package : 'Metacello-Core',
 	#tag : 'Scripts'
 }
 
-{ #category : 'actions api' }
+{ #category : 'private' }
 MetacelloScriptEngine >> do: aBlock required: required commitIfSuccess: aBoolean [
-	"Resolve first; with errors, signal MetacelloResolutionError and do nothing. Otherwise run aBlock on the root of the resolution: its version spec, the names to load from it and its project spec"
+	"Resolve first; with errors, signal MetacelloResolutionError and do nothing. Otherwise record the build list of the resolution, every project once, after what it requires (see MetacelloResolution>>#loadOrder), into one directive, and run aBlock on it; its answer is the root of this engine"
 
 	MetacelloProjectRegistry
 		copyRegistryDuring: [
 				self handleNotificationsForAction: [
-						| rootProject |
 						self resolve: required.
 						resolution hasErrors ifTrue: [ MetacelloResolutionError signalFor: resolution ].
-						rootProject := resolution root.
-						self root: (aBlock value: rootProject version value: rootProject loadList value: rootProject projectSpec) ] ]
+						self root: (aBlock value: (MetacelloRecordTarget on: self) recordLoadOrder) ] ]
 		commitIfSuccess: aBoolean
 ]
 
@@ -42,9 +39,10 @@ MetacelloScriptEngine >> doLoadProjectSpecFrom: aMetacelloPackageSpec [
 
 { #category : 'actions api' }
 MetacelloScriptEngine >> fetch: required [
-
 	^ self
-		  do: [ :versionSpec :requiredArray :projectSpec2 | versionSpec doFetchRequiredFromArray: requiredArray withEngine: self ]
+		  do: [ :directive |
+				  directive acceptVisitor: (MetacelloFetchTarget on: self).
+				  directive ]
 		  required: required
 		  commitIfSuccess: false
 ]
@@ -142,9 +140,11 @@ MetacelloScriptEngine >> list [
 
 { #category : 'actions api' }
 MetacelloScriptEngine >> load: required [
-
 	self
-		do: [ :versionSpec :requiredArray :rootSpec | versionSpec doLoadRequiredFromArray: requiredArray withEngine: self ]
+		do: [ :directive |
+				directive acceptVisitor: (MetacelloFetchTarget on: self).
+				(MetacelloLoadTarget on: self) load: directive.
+				directive ]
 		required: required
 		commitIfSuccess: true
 ]
@@ -196,17 +196,6 @@ MetacelloScriptEngine >> lookupProjectSpecFor: aProjectSpec [
 		  ifAbsent: [ aProjectSpec ]
 ]
 
-{ #category : 'resolution' }
-MetacelloScriptEngine >> namesToRecord: aCollectionOfNames of: aResolvedProject [
-	"The names of aCollectionOfNames not recorded yet for aResolvedProject, now counted as recorded: a project is recorded at each place that asks it something new, never twice for the same names"
-
-	| recorded |
-	recorded := recordedProjects at: aResolvedProject className ifAbsentPut: [ Set new ].
-	^ (aCollectionOfNames reject: [ :each | recorded includes: each ]) asArray in: [ :names |
-			  recorded addAll: names.
-			  names ]
-]
-
 { #category : 'accessing' }
 MetacelloScriptEngine >> options [
     options ifNil: [ options := Dictionary new ].
@@ -232,9 +221,8 @@ MetacelloScriptEngine >> projectSpec: aSpec [
 
 { #category : 'actions api' }
 MetacelloScriptEngine >> record: required [
-
 	^ self
-		  do: [ :versionSpec :requiredArray :projectSpec2 | versionSpec doRecordRequiredFromArray: requiredArray withEngine: self ]
+		  do: [ :directive | directive ]
 		  required: required
 		  commitIfSuccess: false
 ]
@@ -262,8 +250,7 @@ MetacelloScriptEngine >> resolution [
 MetacelloScriptEngine >> resolution: aResolution [
 	"The resolution recording and loading follow from now on (see MetacelloResolveTarget)"
 
-	resolution := aResolution.
-	recordedProjects := Dictionary new
+	resolution := aResolution
 ]
 
 { #category : 'actions api' }
