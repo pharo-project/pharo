@@ -55,13 +55,6 @@ MetacelloVersionSpec >> defaultPackageNames [
 	^ #( 'default' )
 ]
 
-{ #category : 'private' }
-MetacelloVersionSpec >> fetchRequiredFromArray: anArray withEngine: anEngine [
-	"Loaded on its own (no script): the engine resolves from me (see MetacelloScriptEngine>>#version:). Answer the directive"
-
-	^ (anEngine version: self) fetch: anArray
-]
-
 { #category : 'accessing' }
 MetacelloVersionSpec >> groups [
 	"Answers the list of groups associated with this version"
@@ -104,13 +97,6 @@ MetacelloVersionSpec >> importArray [
 MetacelloVersionSpec >> label [
 
 	^ 'baseline [' , self projectLabel , ']'
-]
-
-{ #category : 'private' }
-MetacelloVersionSpec >> loadRequiredFromArray: anArray withEngine: anEngine [
-	"Loaded on its own (no script): the engine resolves from me (see MetacelloScriptEngine>>#version:). Answer the directive"
-
-	^ (anEngine version: self) load: anArray
 ]
 
 { #category : 'querying' }
@@ -316,13 +302,6 @@ MetacelloVersionSpec >> projects [
 	^ self packageSpecsInLoadOrder
 		  select: [ :spec | spec isProjectReferenceSpec ]
 		  thenCollect: [ :spec | spec projectReference ]
-]
-
-{ #category : 'private' }
-MetacelloVersionSpec >> recordRequiredFromArray: anArray withEngine: anEngine [
-	"Loaded on its own (no script): the engine resolves from me (see MetacelloScriptEngine>>#version:). Answer the directive"
-
-	^ (anEngine version: self) record: anArray
 ]
 
 { #category : 'accessing' }

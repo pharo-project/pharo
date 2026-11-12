@@ -10,7 +10,6 @@ Class {
 		'specBuilder',
 		'projectSpec',
 		'resolution',
-		'version',
 		'directive',
 		'fetched'
 	],
@@ -65,12 +64,9 @@ MetacelloScriptEngine >> ensureRecorded: rootLoadList [
 
 { #category : 'private' }
 MetacelloScriptEngine >> ensureResolved: rootLoadList [
-	"The resolution of rootLoadList, resolved once: from the root, or from a version spec loaded on its own (no script, see version:)"
+	"The resolution of rootLoadList, resolved once from the root"
 
-	resolution ifNil: [
-			self resolution: (version
-					 ifNil: [ (MetacelloResolveTarget on: self) resolve: self projectSpec loads: rootLoadList ]
-					 ifNotNil: [ (MetacelloResolveTarget on: self) resolveVersion: version loads: (self loadListOfVersion: rootLoadList) ]) ].
+	resolution ifNil: [ self resolution: ((MetacelloResolveTarget on: self) resolve: self projectSpec loads: rootLoadList) ].
 	^ resolution
 ]
 
@@ -181,13 +177,6 @@ MetacelloScriptEngine >> load: rootLoadList [
 	^ root
 ]
 
-{ #category : 'private' }
-MetacelloScriptEngine >> loadListOfVersion: rootLoadList [
-	"The names to load from a version spec loaded on its own: rootLoadList, or its default ones when none"
-
-	^ rootLoadList ifEmpty: [ version defaultPackageNames ]
-]
-
 { #category : 'accessing' }
 MetacelloScriptEngine >> loader [
 
@@ -258,12 +247,9 @@ MetacelloScriptEngine >> record: rootLoadList [
 
 { #category : 'private' }
 MetacelloScriptEngine >> recordDirective: rootLoadList [
-	"Record the resolution into a directive and answer it (see MetacelloRecordTarget>>#record:). A version spec loaded on its own (no script) is not a project of the resolution: it is recorded with its load list (see loadListOfVersion:)"
+	"Record the resolution into a directive and answer it (see MetacelloRecordTarget>>#record:)"
 
-	| target |
-	target := MetacelloRecordTarget on: self.
-	version ifNil: [ ^ target record: resolution ].
-	^ target recordVersion: version loading: (self loadListOfVersion: rootLoadList)
+	^ (MetacelloRecordTarget on: self) record: resolution
 ]
 
 { #category : 'actions api' }
@@ -370,11 +356,4 @@ MetacelloScriptEngine >> unregister [
 	spec := self projectSpec.
 	MetacelloProjectRegistry registrationNamed: spec className ifPresent: [ :existing | existing unregisterProject ].
 	self root: spec
-]
-
-{ #category : 'accessing' }
-MetacelloScriptEngine >> version: aVersionSpec [
-	"Resolve from aVersionSpec, loaded on its own (no script), instead of from the root"
-
-	version := aVersionSpec
 ]

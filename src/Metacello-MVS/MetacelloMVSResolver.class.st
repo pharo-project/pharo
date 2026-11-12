@@ -520,13 +520,6 @@ MetacelloMVSResolver >> resolveRoots: aCollectionOfProjectSpecs [
 ]
 
 { #category : 'metacello' }
-MetacelloMVSResolver >> resolveVersion: aVersionSpec loads: aCollectionOfNames engine: anEngine [
-	"mvs resolves from a root repository: a version spec chosen elsewhere has none"
-
-	^ self error: 'mvs resolves from the repository of a root, not from a version spec'
-]
-
-{ #category : 'metacello' }
 MetacelloMVSResolver >> resolvedProjectOf: aCandidate into: aResolution [
 	"The resolved project of aCandidate, given its spec at its version, its project built from the baseline read in the sandbox, so that Metacello records it without loading its BaselineOf. Its BaselineOf is installed after the load, unless the image has it from there or it is pinned"
 

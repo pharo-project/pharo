@@ -17,10 +17,3 @@ MetacelloResolver >> resolve: aProjectSpec loads: aCollectionOfNames engine: anE
 
 	^ self subclassResponsibility
 ]
-
-{ #category : 'resolving' }
-MetacelloResolver >> resolveVersion: aVersionSpec loads: aCollectionOfNames engine: anEngine [
-	"Answer a MetacelloResolution of the projects that loading aCollectionOfNames from aVersionSpec reaches, for a version already chosen (it has no root)"
-
-	^ self subclassResponsibility
-]

@@ -77,15 +77,6 @@ MetacelloInteractiveResolver >> resolve: aProjectSpec loads: aCollectionOfNames 
 	^ resolution
 ]
 
-{ #category : 'resolving' }
-MetacelloInteractiveResolver >> resolveVersion: aVersionSpec loads: aCollectionOfNames engine: anEngine [
-	"A version spec resolved on its own has no resolved project: what it requires is requested by nobody"
-
-	self setEngine: anEngine.
-	self visitReferencesOf: aVersionSpec loads: aCollectionOfNames requester: nil.
-	^ resolution
-]
-
 { #category : 'private' }
 MetacelloInteractiveResolver >> setEngine: anEngine [
 
