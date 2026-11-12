@@ -56,50 +56,11 @@ MetacelloVersionSpec >> defaultPackageNames [
 ]
 
 { #category : 'private' }
-MetacelloVersionSpec >> doFetchRequiredFromArray: anArray withEngine: anEngine [
-
-	^ self doWithProgress: [ self fetchRequiredFromArray: anArray withEngine: anEngine ] label: 'Fetching'
-]
-
-{ #category : 'private' }
-MetacelloVersionSpec >> doLoadRequiredFromArray: anArray withEngine: anEngine [
-
-	^ self doWithProgress: [ self loadRequiredFromArray: anArray withEngine: anEngine ] label: 'Loading'
-]
-
-{ #category : 'private' }
-MetacelloVersionSpec >> doRecordRequiredFromArray: anArray withEngine: anEngine [
-
-	^ self doWithProgress: [ self recordRequiredFromArray: anArray withEngine: anEngine ] label: 'Recording'
-]
-
-{ #category : 'private' }
-MetacelloVersionSpec >> doWithProgress: aBlock label: aLabel [
-
-	| displayString result startTime |
-	startTime := Time millisecondClockValue.
-	displayString := aLabel , ' baseline of ' , self projectLabel.
-	MetacelloNotification signal: displayString , '...'.
-
-	displayString displayProgressFrom: 0 to: 2 during: [ :bar |
-			bar value: 1.
-			result := aBlock value.
-			bar value: 2 ].
-
-	MetacelloNotification 
-		signal: '...finished to load the baseline' 
-		milliSeconds: (Time millisecondClockValue - startTime).
-	^ result
-]
-
-{ #category : 'private' }
 MetacelloVersionSpec >> fetchRequiredFromArray: anArray withEngine: anEngine [
+	"Loaded on its own (no script): the engine resolves from me (see MetacelloScriptEngine>>#version:). Answer the directive"
 
-	| directive |
-	directive := self recordRequiredFromArray: (anArray ifEmpty: [ self defaultPackageNames ]) withEngine: anEngine.
-
-	directive acceptVisitor: (MetacelloFetchTarget on: anEngine).
-	^ directive
+	(anEngine version: self) fetch: anArray.
+	^ anEngine root
 ]
 
 { #category : 'accessing' }
@@ -148,12 +109,10 @@ MetacelloVersionSpec >> label [
 
 { #category : 'private' }
 MetacelloVersionSpec >> loadRequiredFromArray: anArray withEngine: anEngine [
+	"Loaded on its own (no script): the engine resolves from me (see MetacelloScriptEngine>>#version:). Answer the directive"
 
-	| directive |
-	directive := self fetchRequiredFromArray: (anArray ifEmpty: [ self defaultPackageNames ]) withEngine: anEngine.
-
-	(MetacelloLoadTarget on: anEngine) load: directive.
-	^ directive
+	(anEngine version: self) load: anArray.
+	^ anEngine root
 ]
 
 { #category : 'querying' }
@@ -363,18 +322,15 @@ MetacelloVersionSpec >> projects [
 
 { #category : 'private' }
 MetacelloVersionSpec >> recordRequiredFromArray: anArray withEngine: anEngine [
+	"Loaded on its own (no script): the engine resolves from me (see MetacelloScriptEngine>>#version:). Answer the directive"
 
-	| target |
-	target := MetacelloRecordTarget on: anEngine.
-	target required: anArray.
-
-	^ target record: self
+	(anEngine version: self) record: anArray.
+	^ anEngine root
 ]
 
 { #category : 'actions' }
 MetacelloVersionSpec >> recordWithEngine: anEngine [
-
-	^ self doRecordRequiredFromArray: self defaultPackageNames withEngine: anEngine
+	^ self recordRequiredFromArray: #(  ) withEngine: anEngine
 ]
 
 { #category : 'accessing' }

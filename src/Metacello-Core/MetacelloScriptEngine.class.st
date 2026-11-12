@@ -9,7 +9,8 @@ Class {
 		'options',
 		'specBuilder',
 		'projectSpec',
-		'resolution'
+		'resolution',
+		'version'
 	],
 	#category : 'Metacello-Core-Scripts',
 	#package : 'Metacello-Core',
@@ -17,15 +18,27 @@ Class {
 }
 
 { #category : 'private' }
+MetacelloScriptEngine >> directiveLoading: required [
+	"The directive loading the resolution: every project once, after the projects it requires. A version spec loaded on its own (no script) is not a project of the resolution: it comes last, after the projects it requires, with the names required of it"
+
+	| target |
+	target := MetacelloRecordTarget on: self.
+	version ifNil: [ ^ target record: resolution ].
+	target recordProjects: (resolution loadOrderFrom: (resolution requirementsOf: nil in: version)).
+	target record: version loading: (self versionLoads: required).
+	^ target specBuilder root
+]
+
+{ #category : 'private' }
 MetacelloScriptEngine >> do: aBlock required: required commitIfSuccess: aBoolean [
-	"Resolve first; with errors, signal MetacelloResolutionError and do nothing. Otherwise record the build list of the resolution, every project once, after what it requires (see MetacelloResolution>>#loadOrder), into one directive, and run aBlock on it; its answer is the root of this engine"
+	"Resolve first; with errors, signal MetacelloResolutionError and do nothing. Otherwise record the resolution into one directive (see directiveLoading:) and run aBlock on it; its answer is the root of this engine"
 
 	MetacelloProjectRegistry
 		copyRegistryDuring: [
 				self handleNotificationsForAction: [
 						self resolve: required.
 						resolution hasErrors ifTrue: [ MetacelloResolutionError signalFor: resolution ].
-						self root: (aBlock value: (MetacelloRecordTarget on: self) recordLoadOrder) ] ]
+						self root: (aBlock value: (self directiveLoading: required)) ] ]
 		commitIfSuccess: aBoolean
 ]
 
@@ -255,12 +268,14 @@ MetacelloScriptEngine >> resolution: aResolution [
 
 { #category : 'actions api' }
 MetacelloScriptEngine >> resolve: required [
-	"Answer the resolution of a load of required, errors included, leaving the registry as it was"
+	"Answer the resolution of a load of required, errors included, leaving the registry as it was: from the root, or from a version spec loaded on its own (no script, see version:)"
 
 	MetacelloProjectRegistry
 		copyRegistryDuring: [
 				self handleNotificationsForAction: [
-						self resolution: ((MetacelloResolveTarget on: self) resolve: self projectSpec loads: required).
+						self resolution: (version
+								 ifNil: [ (MetacelloResolveTarget on: self) resolve: self projectSpec loads: required ]
+								 ifNotNil: [ (MetacelloResolveTarget on: self) resolveVersion: version loads: (self versionLoads: required) ]).
 						self root: resolution ] ]
 		commitIfSuccess: false.
 	^ resolution
@@ -336,4 +351,18 @@ MetacelloScriptEngine >> unregister [
 	spec := self projectSpec.
 	MetacelloProjectRegistry registrationNamed: spec className ifPresent: [ :existing | existing unregisterProject ].
 	self root: spec
+]
+
+{ #category : 'accessing' }
+MetacelloScriptEngine >> version: aVersionSpec [
+	"Resolve from aVersionSpec, loaded on its own (no script), instead of from the root"
+
+	version := aVersionSpec
+]
+
+{ #category : 'private' }
+MetacelloScriptEngine >> versionLoads: required [
+	"The names to load from a version spec loaded on its own: required, or its default ones when none"
+
+	^ required ifEmpty: [ version defaultPackageNames ]
 ]

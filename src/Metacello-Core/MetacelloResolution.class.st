@@ -85,7 +85,7 @@ MetacelloResolution >> loadOrderFrom: aCollectionOfResolvedProjects [
 					         MetacelloError signal: 'Dependency cycle: ' , (' -> ' join:
 							          (((path copyFrom: (path indexOf: project) to: path size) copyWith: project) collect: [ :each | each name ])) ].
 			         path addLast: project.
-			         (self requirementsOf: project) do: visit.
+			         (self requirementsOf: project in: project version) do: visit.
 			         path removeLast.
 			         list add: project ] ].
 	aCollectionOfResolvedProjects do: visit.
@@ -106,22 +106,12 @@ MetacelloResolution >> projects [
 ]
 
 { #category : 'accessing' }
-MetacelloResolution >> requirementsOf: aResolvedProject [
-	"The projects aResolvedProject asks for, in the order its version spec lists them"
-
-	| names |
-	names := (aResolvedProject version packageSpecsInLoadOrder collect: [ :each | each name ]) asArray.
-	^ ((projects values select: [ :each | each requests anySatisfy: [ :request | request requester == aResolvedProject ] ])
-		   asSortedCollection: [ :a :b | (names indexOf: a name) <= (names indexOf: b name) ]) asArray
-]
-
-{ #category : 'accessing' }
-MetacelloResolution >> requirementsOfVersion: aVersionSpec [
-	"The projects a version spec with no resolved project asks for (requested by nobody), in the order it lists them"
+MetacelloResolution >> requirementsOf: aResolvedProjectOrNil in: aVersionSpec [
+	"The projects aResolvedProjectOrNil asks for, in the order aVersionSpec (its version) lists them. nil asks for what a version spec loaded on its own (no script) requires"
 
 	| names |
 	names := (aVersionSpec packageSpecsInLoadOrder collect: [ :each | each name ]) asArray.
-	^ ((projects values select: [ :each | each requests anySatisfy: [ :request | request requester isNil ] ])
+	^ ((projects values select: [ :each | each requests anySatisfy: [ :request | request requester == aResolvedProjectOrNil ] ])
 		   asSortedCollection: [ :a :b | (names indexOf: a name) <= (names indexOf: b name) ]) asArray
 ]
 
