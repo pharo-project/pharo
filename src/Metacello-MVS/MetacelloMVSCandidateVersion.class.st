@@ -4,7 +4,7 @@ I am one candidate version of a repository the MVS walk reached: a MetacelloReso
 A project installed from a branch has a branch and a placeholder version; one locked in the registry is locked. Both are pins, kept by my resolved project: nothing the resolution asks changes them. A candidate that loses to a higher version of its repository is superseded: it stays in the report, for debugging.
 "
 Class {
-	#name : 'MetacelloMVSCandidate',
+	#name : 'MetacelloMVSCandidateVersion',
 	#superclass : 'Object',
 	#instVars : [
 		'resolvedProject',
@@ -20,27 +20,27 @@ Class {
 }
 
 { #category : 'instance creation' }
-MetacelloMVSCandidate class >> resolvedProject: aResolvedProject repository: aRepository path: aPathOrNil [
+MetacelloMVSCandidateVersion class >> resolvedProject: aResolvedProject repository: aRepository path: aPathOrNil [
 	"A candidate for aResolvedProject, from aRepository (type://owner/name), its code at aPathOrNil inside it. Give it its version, and who required it"
 
 	^ self new setResolvedProject: aResolvedProject repository: aRepository path: aPathOrNil
 ]
 
 { #category : 'accessing' }
-MetacelloMVSCandidate >> beInstalled [
+MetacelloMVSCandidateVersion >> beInstalled [
 	"The image already has me"
 
 	installed := true
 ]
 
 { #category : 'pins' }
-MetacelloMVSCandidate >> beLocked [
+MetacelloMVSCandidateVersion >> beLocked [
 
 	resolvedProject beLocked
 ]
 
 { #category : 'accessing' }
-MetacelloMVSCandidate >> chainString [
+MetacelloMVSCandidateVersion >> chainString [
 	"One line per selection, from the root down to me"
 
 	requiredBy ifNil: [ ^ self line ].
@@ -48,27 +48,27 @@ MetacelloMVSCandidate >> chainString [
 ]
 
 { #category : 'accessing' }
-MetacelloMVSCandidate >> isInstalled [
+MetacelloMVSCandidateVersion >> isInstalled [
 	"Whether the image already has me"
 
 	^ installed
 ]
 
 { #category : 'accessing' }
-MetacelloMVSCandidate >> isLocked [
+MetacelloMVSCandidateVersion >> isLocked [
 
 	^ resolvedProject isLocked
 ]
 
 { #category : 'testing' }
-MetacelloMVSCandidate >> isSameVersionAs: aCandidate [
+MetacelloMVSCandidateVersion >> isSameVersionAs: aCandidate [
 	"Whether aCandidate is my project at my version (each requirement makes its own candidate)"
 
 	^ self repository = aCandidate repository and: [ self version = aCandidate version ]
 ]
 
 { #category : 'accessing' }
-MetacelloMVSCandidate >> line [
+MetacelloMVSCandidateVersion >> line [
 
 	^ String streamContents: [ :stream |
 			  stream nextPutAll: '  '.
@@ -80,14 +80,14 @@ MetacelloMVSCandidate >> line [
 ]
 
 { #category : 'accessing' }
-MetacelloMVSCandidate >> path [
+MetacelloMVSCandidateVersion >> path [
 	"The path of my code inside my repository, or nil"
 
 	^ path
 ]
 
 { #category : 'accessing' }
-MetacelloMVSCandidate >> printOn: aStream [
+MetacelloMVSCandidateVersion >> printOn: aStream [
 
 	aStream
 		nextPutAll: self repository;
@@ -96,20 +96,20 @@ MetacelloMVSCandidate >> printOn: aStream [
 ]
 
 { #category : 'accessing' }
-MetacelloMVSCandidate >> project [
+MetacelloMVSCandidateVersion >> project [
 	"The name of my project: its baseline's"
 	^ resolvedProject projectSpec className allButFirst: 'BaselineOf' size
 ]
 
 { #category : 'accessing' }
-MetacelloMVSCandidate >> repository [
+MetacelloMVSCandidateVersion >> repository [
 	"type://owner/name"
 
 	^ repository
 ]
 
 { #category : 'accessing' }
-MetacelloMVSCandidate >> repositoryDescription [
+MetacelloMVSCandidateVersion >> repositoryDescription [
 	"The Metacello repository description to load me from: my repository at my version, with my path"
 
 	^ String streamContents: [ :stream |
@@ -124,40 +124,40 @@ MetacelloMVSCandidate >> repositoryDescription [
 ]
 
 { #category : 'accessing' }
-MetacelloMVSCandidate >> request [
+MetacelloMVSCandidateVersion >> request [
 	"The MetacelloProjectRequest I was chosen for: findings about me that no requirement holds are about it"
 
 	^ request
 ]
 
 { #category : 'accessing' }
-MetacelloMVSCandidate >> request: aProjectRequestOrNil [
+MetacelloMVSCandidateVersion >> request: aProjectRequestOrNil [
 
 	request := aProjectRequestOrNil
 ]
 
 { #category : 'accessing' }
-MetacelloMVSCandidate >> requiredBy [
+MetacelloMVSCandidateVersion >> requiredBy [
 	"The candidate that required me; nil for the root and for what the image has"
 
 	^ requiredBy
 ]
 
 { #category : 'accessing' }
-MetacelloMVSCandidate >> requiredBy: aCandidateOrNil [
+MetacelloMVSCandidateVersion >> requiredBy: aCandidateOrNil [
 
 	requiredBy := aCandidateOrNil
 ]
 
 { #category : 'accessing' }
-MetacelloMVSCandidate >> resolvedProject [
+MetacelloMVSCandidateVersion >> resolvedProject [
 	"My project: the spec asked, at my version once its baseline is read"
 
 	^ resolvedProject
 ]
 
 { #category : 'accessing' }
-MetacelloMVSCandidate >> setResolvedProject: aResolvedProject repository: aRepository path: aPathOrNil [
+MetacelloMVSCandidateVersion >> setResolvedProject: aResolvedProject repository: aRepository path: aPathOrNil [
 
 	resolvedProject := aResolvedProject.
 	repository := aRepository.
@@ -166,20 +166,20 @@ MetacelloMVSCandidate >> setResolvedProject: aResolvedProject repository: aRepos
 ]
 
 { #category : 'accessing' }
-MetacelloMVSCandidate >> spec [
+MetacelloMVSCandidateVersion >> spec [
 	"The project spec asked"
 
 	^ resolvedProject projectSpec
 ]
 
 { #category : 'accessing' }
-MetacelloMVSCandidate >> version [
+MetacelloMVSCandidateVersion >> version [
 
 	^ version
 ]
 
 { #category : 'accessing' }
-MetacelloMVSCandidate >> version: aVersion [
+MetacelloMVSCandidateVersion >> version: aVersion [
 
 	version := aVersion
 ]

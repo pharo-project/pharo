@@ -1,7 +1,7 @@
 "
 I am the resolution mvs answers: what the walk found, as far as it could go, and, when it resolves, the projects for Metacello to record (see MetacelloResolution).
 
-buildList: repository -> the MetacelloMVSCandidate chosen.
+buildList: repository -> the MetacelloMVSCandidateVersion chosen.
 requirements: every MetacelloMVSRequirement met: what was asked, by which version, and what it resolved to.
 rootRepository: the repository of the root.
 subjects: finding -> the candidate it was found about, for its repository and its chain.
@@ -39,7 +39,7 @@ MetacelloMVSResolution >> addRequirement: aRequirement [
 
 { #category : 'accessing' }
 MetacelloMVSResolution >> buildList [
-	"Repository -> the MetacelloMVSCandidate chosen for it"
+	"Repository -> the MetacelloMVSCandidateVersion chosen for it"
 
 	^ buildList
 ]

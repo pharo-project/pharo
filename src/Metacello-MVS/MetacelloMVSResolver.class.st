@@ -82,7 +82,7 @@ MetacelloMVSResolver >> assumedInstalled: aCollectionOfRepositories [
 MetacelloMVSResolver >> candidateFor: aProjectSpec version: aVersion requiredBy: aCandidateOrNil [
 	"A candidate chosen for the request being resolved"
 
-	^ (MetacelloMVSCandidate
+	^ (MetacelloMVSCandidateVersion
 		   resolvedProject: (MetacelloResolvedProject projectSpec: aProjectSpec)
 		   repository: (graph repositoryUrlOf: aProjectSpec)
 		   path: (graph pathOf: aProjectSpec))
