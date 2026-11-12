@@ -1,6 +1,6 @@
 Extension { #name : 'Object' }
 
-{ #category : '*Calypso-Browser' }
+{ #category : '*Commander-Calypso-Compatibility' }
 Object class >> asCalypsoItemContext [
 	^ClyBrowserItemContext itemType: self
 ]

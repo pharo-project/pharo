@@ -31,22 +31,23 @@ ClyFullBrowserVariableContext class >> calypsoSystemToolsFullBrowserCommandsIn: 
 		add: SycRenameVariableCommand.
 	(aCommandMap contextMenu group: ClyQueryMenuGroup)
 		add: SycBrowseVariableCommand;
-		add: SycInspectVariableValueCommand
+		add: SycInspectVariableValueCommand.
+	aCommandMap tableDecorators add: ClyClassSideBoldTableDecorator
 ]
 
 { #category : 'selection strategy' }
-ClyFullBrowserVariableContext class >> selectionStrategy [
-	<classAnnotation>
+ClyFullBrowserVariableContext class >> selectionContextDeclaration [
 
-	^(ClyContextSelectionStrategyAnnotation for: ClyFullBrowserMorph selectionType: ClyVariableMethodGroup)
-		priority: 1000 "variable context should be with more priority than basic method group context"
+	<calypsoSelectionContext>
+	^ ClySelectionContextDeclaration browser: ClyFullBrowserMorph itemType: ClyVariable
 ]
 
 { #category : 'selection strategy' }
-ClyFullBrowserVariableContext class >> selectionStrategy2 [
-	<classAnnotation>
+ClyFullBrowserVariableContext class >> variableGroupSelectionContextDeclaration [
 
-	^(ClyContextSelectionStrategyAnnotation for: ClyFullBrowserMorph selectionType: ClyVariable)
+	"Before ClyFullBrowserMethodGroupContext, because a variable group is a method group."
+	<calypsoSelectionContext>
+	^ (ClySelectionContextDeclaration browser: ClyFullBrowserMorph itemType: ClyVariableMethodGroup) priority: 1000
 ]
 
 { #category : 'testing' }

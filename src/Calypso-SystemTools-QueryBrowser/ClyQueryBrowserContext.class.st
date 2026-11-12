@@ -37,10 +37,10 @@ ClyQueryBrowserContext class >> calypsoSystemToolsQueryBrowserCommandsIn: aComma
 ]
 
 { #category : 'selection strategy' }
-ClyQueryBrowserContext class >> selectionStrategy [
-	<classAnnotation>
+ClyQueryBrowserContext class >> selectionContextDeclaration [
 
-	^ClyContextSelectionStrategyAnnotation for: ClyQueryBrowserMorph
+	<calypsoSelectionContext>
+	^ ClySelectionContextDeclaration browser: ClyQueryBrowserMorph
 ]
 
 { #category : 'selection-classes' }

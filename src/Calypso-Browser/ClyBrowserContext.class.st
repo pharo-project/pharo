@@ -38,7 +38,8 @@ ClyBrowserContext class >> calypsoBrowserCommandsIn: aCommandMap [
 	aCommandMap shortcuts
 		add: ClyCloseBrowserCommand key: $w meta;
 		add: ClyNavigateBrowserBackCommand key: Character arrowLeft alt;
-		add: ClyNavigateBrowserForwardCommand key: Character arrowRight alt
+		add: ClyNavigateBrowserForwardCommand key: Character arrowRight alt.
+	aCommandMap tableDecorators add: ClyCommandBasedTableDecorator
 ]
 
 { #category : 'instance creation' }

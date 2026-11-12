@@ -16,3 +16,12 @@ ClyMockToolContext class >> mockCommandsIn: aCommandMap [
 	(aCommandMap contextMenu group: ClyExtraMenuGroup) add: ClyMockRegisteredSecondCommand.
 	aCommandMap shortcuts add: ClyMockRegisteredFirstCommand key: $x meta
 ]
+
+{ #category : 'commands' }
+ClyMockToolContext class >> mockTabsIn: aCommandMap [
+
+	<calypsoCommands>
+	aCommandMap tabs add: ClyMockTabTool.
+	aCommandMap tableDecorators add: ClyMockTableDecorator.
+	(aCommandMap tableDecorators add: ClyMockTableDecorator) priority: 1
+]

@@ -3,7 +3,7 @@ I am one command declared in a Calypso command map: the command class and where 
 I am created by the methods marked with <calypsoCommands> through a ClyCommandInteraction, for example:
 	(aCommandMap contextMenu add: SycRemoveMethodCommand) order: 10000.
 I hold the placement: the menu group class, the order and the label. An order or a label I do not have is asked to the command when it is shown (#orderInContext: and the label selector of my interaction).
-My subclasses are the entries of the interactions which need more: the key combination of a shortcut (ClyShortcutCommandEntry), the mouse button of a click (ClyMouseCommandEntry) and the drop anchor of drag and drop (ClyDropCommandEntry).
+My subclasses are the entries of the interactions which need more: the key combination of a shortcut (ClyShortcutCommandEntry), the mouse button of a click (ClyMouseCommandEntry) and the drop anchor of drag and drop (ClyDropCommandEntry), the browser tool of a tab (ClyTabEntry) and the decorator of table cells (ClyTableDecoratorEntry).
 I remember the method which declared me, and the one which changed me with an override such as ClyCommandInteraction>>#rebind:to:, so tools can show why a command appears somewhere.
 I answer the messages Calypso asks to command activations (#menuGroup, #menuItemNameFor:, #isActiveInContext:, #newActivatorFor: ...), so Calypso handles me and the class annotations of the deprecated Commander-Calypso-Compatibility package alike.
 "

@@ -1,7 +1,7 @@
 "
 I know every command declared for Calypso with the <calypsoCommands> pragma. I find the anchors (the classes whose class side has such methods), build their ClyCommandMap lazily and keep them.
 Calypso asks me the commands of an interaction for a tool context: #activationsOf:inContext: answers the entries declared on every anchor which describes the context (see ClyToolContext>>#isDescribedByCommandAnchor:), sorted by priority. Menus, toolbars, tab actions, table icons, shortcuts, clicks and drag and drop are all built from it.
-Class annotations of commands which are not migrated yet are still shown while the deprecated Commander-Calypso-Compatibility package is loaded: #legacyAnnotationsOf: adds them to the activations. doc/Calypso/CommandAnnotationsMigration.md explains how to migrate them.
+Class annotations of commands, tabs and table decorators which are not migrated yet are still shown while the deprecated Commander-Calypso-Compatibility package is loaded: #legacyAnnotationsOf: adds them to the activations. doc/Calypso/CommandAnnotationsMigration.md explains how to migrate them.
 The default instance is reset when a declaration method or a command class changes, so new declarations are shown at once.
 To see what is declared in the image, inspect:
 	ClyCommandRegistry default allEntries
@@ -153,14 +153,23 @@ ClyCommandRegistry >> executeFirstCommandOf: anInteractionName inContext: aToolC
 ]
 
 { #category : 'legacy' }
-ClyCommandRegistry >> legacyAnnotationsOf: anInteractionName [
-	"The class annotations of Calypso commands for the interaction, which are still supported by the deprecated Commander-Calypso-Compatibility package while projects move to <calypsoCommands> declarations. The strategy classes are looked up by name, so Calypso works without that package."
+ClyCommandRegistry >> legacyAnnotationClasses [
+	"The annotation classes of the deprecated Commander-Calypso-Compatibility package. They are looked up by name, so Calypso works without that package."
 
-	^ self class environment
-		  at: #ClyCommandActivationStrategy
-		  ifPresent: [ :strategyRoot |
-		  (strategyRoot allSubclasses select: [ :strategy | strategy interactionName = anInteractionName ]) flatCollect: [ :strategy | strategy registry allInstancesOf: strategy ] ]
-		  ifAbsent: [ #(  ) ]
+	| environment |
+	environment := self class environment.
+	^ (environment at: #ClyCommandActivationStrategy ifPresent: [ :strategyRoot | strategyRoot allSubclasses ] ifAbsent: [ #(  ) ])
+	  , (#( #ClyTabActivationStrategyAnnotation #ClyTableDecorationStrategyAnnotation ) 
+			   select: [ :className | environment includesKey: className ]
+			   thenCollect: [ :className | environment at: className ])
+]
+
+{ #category : 'legacy' }
+ClyCommandRegistry >> legacyAnnotationsOf: anInteractionName [
+	"The class annotations of Calypso commands, tabs and table decorators for the interaction, which are still supported by the deprecated Commander-Calypso-Compatibility package while projects move to <calypsoCommands> declarations."
+
+	^ (self legacyAnnotationClasses select: [ :annotationClass | annotationClass interactionName = anInteractionName ]) flatCollect: [ :annotationClass |
+			  annotationClass registry allInstancesOf: annotationClass ]
 ]
 
 { #category : 'accessing' }
@@ -201,8 +210,8 @@ ClyCommandRegistry >> shortcutsOpeningGroup: aMenuGroupClass inContext: aToolCon
 
 { #category : 'private' }
 ClyCommandRegistry >> sortBlockOf: anInteractionName [
-	"Activations run by priority, the highest first. Table icons are the opposite: the command of the highest priority decorates the cell last, so its icons are the ones shown."
+	"Activations run by priority, the highest first. Table icons and table decorators are the opposite: the one of the highest priority decorates the cell last, so its changes are the ones shown."
 
-	anInteractionName = #tableIcons ifTrue: [ ^ [ :first :second | first priority <= second priority ] ].
+	(#( #tableIcons #tableDecorators ) includes: anInteractionName) ifTrue: [ ^ [ :first :second | first priority <= second priority ] ].
 	^ [ :first :second | first priority >= second priority ]
 ]

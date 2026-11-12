@@ -8,8 +8,3 @@ Class {
 	#package : 'Calypso-SystemPlugins-SUnit-Browser',
 	#tag : 'Commands'
 }
-
-{ #category : 'activation' }
-ClyRunTestsFromPackagesCommand class >> contextClass [
-	^Package asCalypsoItemContext
-]

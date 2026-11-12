@@ -24,13 +24,6 @@ ClySwitchClassMetaLevelCommand class >> isAbstract [
 	^self = ClySwitchClassMetaLevelCommand
 ]
 
-{ #category : 'activation' }
-ClySwitchClassMetaLevelCommand class >> toolbarOrder [
-	<classAnnotationDependency>
-
-	self subclassResponsibility
-]
-
 { #category : 'execution' }
 ClySwitchClassMetaLevelCommand >> executeRefactoring [
 	self browser switchToMetaLevelScope: self metaLevelScope

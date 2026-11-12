@@ -24,12 +24,6 @@ ClyRunTestsFromMethodDataSourceCommand class >> isAbstract [
 	^self = ClyRunTestsFromMethodDataSourceCommand
 ]
 
-{ #category : 'activation' }
-ClyRunTestsFromMethodDataSourceCommand class >> menuOrder [
-	<classAnnotationDependency>
-	^10000
-]
-
 { #category : 'execution' }
 ClyRunTestsFromMethodDataSourceCommand >> buildTestSuite [
 

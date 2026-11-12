@@ -1,4 +1,6 @@
 "
+Deprecated: the method visibility providers are marked with the <calypsoMethodVisibilityProvider: aPriority> pragma (ClyMethodVisibilityGroupsResult class>>#methodVisibilityProvider). I am kept, in the deprecated Commander-Calypso-Compatibility package, for the projects which still use me, and I will be removed in Pharo 16. doc/Calypso/CommandAnnotationsMigration.md of the Pharo repository explains the migration.
+
 I am special annotation which marks classes that they can provide special hierarchy to represent method visibility classes.
 Users do not need to lookup my instances. They can simple use following method which will find appropriate class and create the hierarchy:
 
@@ -22,9 +24,9 @@ Look at ClyMethodVisibilityProvider references for details
 Class {
 	#name : 'ClyMethodVisibilityProviderAnnotation',
 	#superclass : 'ClassAnnotation',
-	#category : 'Calypso-SystemQueries-Results',
-	#package : 'Calypso-SystemQueries',
-	#tag : 'Results'
+	#category : 'Commander-Calypso-Compatibility-Annotations',
+	#package : 'Commander-Calypso-Compatibility',
+	#tag : 'Annotations'
 }
 
 { #category : 'default hierarchy' }

@@ -8,5 +8,6 @@ ReAbstractCritique class >> calypsoSystemPluginsCriticBrowserCommandsIn: aComman
 		add: ClyBanCritiqueRuleCommand;
 		add: ClyFixCritiqueCommand;
 		add: ClyShowCritiqueDetailsCommand;
-		add: ClyShowDependencyCritiqueCommand
+		add: ClyShowDependencyCritiqueCommand.
+	aCommandMap tableDecorators add: ClyCritiquesTableDecorator
 ]

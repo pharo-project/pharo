@@ -19,11 +19,6 @@ Class {
 	#tag : 'Commands'
 }
 
-{ #category : 'activation' }
-ClyRunTestsFromSelectedItemsCommand class >> contextClass [
-	self subclassResponsibility
-]
-
 { #category : 'testing' }
 ClyRunTestsFromSelectedItemsCommand class >> isAbstract [
 	^self = ClyRunTestsFromSelectedItemsCommand

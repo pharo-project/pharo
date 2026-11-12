@@ -42,8 +42,9 @@ ClyCommandMapTest >> testEntriesKnowTheirDeclaringMethod [
 
 	| map |
 	map := ClyCommandMap forAnchor: ClyMockToolContext.
-	self assert: map allEntries size equals: 3.
-	self assert: (map allEntries allSatisfy: [ :entry | entry declaringMethod == (ClyMockToolContext class >> #mockCommandsIn:) ])
+	self assert: map allEntries size equals: 6.
+	self assert: ((map entriesOf: #contextMenu) , (map entriesOf: #shortcuts) allSatisfy: [ :entry | entry declaringMethod == (ClyMockToolContext class >> #mockCommandsIn:) ]).
+	self assert: ((map entriesOf: #tabs) , (map entriesOf: #tableDecorators) allSatisfy: [ :entry | entry declaringMethod == (ClyMockToolContext class >> #mockTabsIn:) ])
 ]
 
 { #category : 'tests - overrides' }
@@ -144,4 +145,33 @@ ClyCommandMapTest >> testShortcutsBrowserBrowsesTheOverridingMethod [
 	map := ClyCommandMap forAnchor: ClyMockOverridingToolContext.
 	self assert: ((map entriesOf: #shortcuts) detect: [ :entry | entry annotates: ClyMockRegisteredFirstCommand ]) action identicalTo: ClyMockOverridingToolContext class >> #earlyMockOverridesIn:.
 	self assert: ((map entriesOf: #shortcuts) detect: [ :entry | entry openedGroup = ClyExtraMenuGroup ]) action identicalTo: ClyMockOverridingToolContext class >> #earlyMockOverridesIn:
+]
+
+{ #category : 'tests - tabs and decorators' }
+ClyCommandMapTest >> testTabEntryAsksItsToolForTheContext [
+
+	| tab |
+	tab := ((ClyCommandMap forAnchor: ClyMockToolContext) entriesOf: #tabs) first.
+	self assert: tab toolClass identicalTo: ClyMockTabTool.
+	self assert: (tab isActiveInContext: ClyMockToolContext new).
+	self deny: (tab isActiveInContext: ClyMockToolSubContext new).
+	self assert: (tab createToolFor: nil inContext: ClyMockToolContext new) class identicalTo: ClyMockTabTool
+]
+
+{ #category : 'tests - tabs and decorators' }
+ClyCommandMapTest >> testTableDecoratorEntryAsksItsDecoratorForTheContext [
+
+	| decorator |
+	decorator := ((ClyCommandMap forAnchor: ClyMockToolContext) entriesOf: #tableDecorators) first.
+	self assert: decorator decoratorClass identicalTo: ClyMockTableDecorator.
+	self assert: (decorator isActiveInContext: ClyMockToolContext new).
+	self deny: (decorator isActiveInContext: ClyMockToolSubContext new)
+]
+
+{ #category : 'tests - tabs and decorators' }
+ClyCommandMapTest >> testTableDecoratorEntryHasThePriorityOfItsDecorator [
+
+	| decorators |
+	decorators := (ClyCommandMap forAnchor: ClyMockToolContext) entriesOf: #tableDecorators.
+	self assert: (decorators collect: [ :each | each priority ]) asArray equals: #( 5 1 )
 ]

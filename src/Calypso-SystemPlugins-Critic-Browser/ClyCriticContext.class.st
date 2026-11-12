@@ -22,10 +22,10 @@ ClyCriticContext class >> calypsoSystemPluginsCriticBrowserCommandsIn: aCommandM
 ]
 
 { #category : 'selection strategy' }
-ClyCriticContext class >> selectionStrategy [
-	<classAnnotation>
+ClyCriticContext class >> selectionContextDeclaration [
 
-	^ClyContextSelectionStrategyAnnotation for: ClyCriticDecorator
+	<calypsoSelectionContext>
+	^ ClySelectionContextDeclaration browser: ClyCriticDecorator
 ]
 
 { #category : 'accessing' }

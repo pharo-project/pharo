@@ -72,8 +72,10 @@ Put all the commands of a package for one anchor in one declaration method, name
 | `ClyTextLeftBarDoubleClickActivation for: ctx` | `aCommandMap textLeftBarDoubleClick add: Cmd` |
 | An annotation with a priority, such as `(... for: ctx) priority: 1000` | `(... add: Cmd) priority: 1000` |
 | `CmdContextMenuActivation`, `CmdShortcutActivation` (Commander 1) | Same as their Calypso counterparts |
+| `ClyTabActivationStrategyAnnotation for: ctx` on a tool | `aCommandMap tabs add: Tool` |
+| `ClyTableDecorationStrategyAnnotation for: ctx` on a decorator | `aCommandMap tableDecorators add: Decorator` |
 
-When an abstract command declares an annotation inherited by all its concrete subclasses, declare each subclass. For a closed family whose hierarchy is the menu, such as view modes, use `addAllConcreteSubclassesOf:` instead.
+When an abstract command, tool or decorator declares an annotation inherited by all its concrete subclasses, declare each subclass. For a closed family whose hierarchy is the menu, such as view modes, use `addAllConcreteSubclassesOf:` instead.
 
 ### Sub-menus opened by a command
 
@@ -89,6 +91,20 @@ The groups of the system are `SycMethodRefactoringMenuGroup`, `SycMethodExtraMen
 ### Root command classes
 
 `ClyToolContext>>#commanderCommandClasses` answered root classes whose concrete subclasses were all shown in the context menu. It is no longer asked by Calypso: declare each command in the context menu, in the menu group its class used to answer with `#menuGroup`.
+
+### Contexts and providers
+
+The other class annotations of Calypso become pragmas on the annotated class:
+
+| Annotation | Declaration |
+|---|---|
+| `ClyContextSelectionStrategyAnnotation for: ABrowser selectionType: AnItemType` | `<calypsoSelectionContext>` method answering `ClySelectionContextDeclaration browser: ABrowser itemType: AnItemType` |
+| `ClyContextSelectionStrategyAnnotation for: ABrowser` | `<calypsoSelectionContext>` method answering `ClySelectionContextDeclaration browser: ABrowser` |
+| `(... ) priority: 1000` | `(ClySelectionContextDeclaration ...) priority: 1000` |
+| `ClyInheritedScopeProviderAnnotation new priority: 100` | A method marked with `<calypsoInheritedScopeProvider: 100>` |
+| `ClyMethodVisibilityProviderAnnotation new priority: 100` | A method marked with `<calypsoMethodVisibilityProvider: 100>` |
+
+These annotations still work while `Commander-Calypso-Compatibility` is loaded. With them, `asCalypsoItemContext` and `ClyBrowserItemContext` moved to that package, and the `ClassAnnotation` packages are deprecated: they will be removed in Pharo 16 too.
 
 ## Other changes to commands
 
@@ -119,6 +135,8 @@ generator removeAnnotationMethods
 
 Review the generated methods: they are formatted, but you may want to group or reorder the entries.
 
+The generator converts the annotations of commands only. Convert the annotations of tabs, table decorators, contexts and providers by hand, following the tables above.
+
 ## Checking the result
 
 To check that nothing moved, compare the menus before and after the conversion, for example by printing `ClyCommandRegistry default activationsOf: #contextMenu inContext: aContext` for the contexts of your plugin. The remaining annotations of the image are listed by:
@@ -126,5 +144,7 @@ To check that nothing moved, compare the menus before and after the conversion, 
 ```smalltalk
 ClyCommandActivationStrategy allSubclasses flatCollect: [ :strategy | strategy registry allInstancesOf: strategy ]
 ```
+
+and those of tabs and table decorators by `ClyCommandRegistry default legacyAnnotationsOf: #tabs` and `ClyCommandRegistry default legacyAnnotationsOf: #tableDecorators`.
 
 Once a project has no annotation left, it no longer needs `Commander-Calypso-Compatibility`.

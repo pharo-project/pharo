@@ -14,11 +14,6 @@ Class {
 	#tag : 'NavigationHistory'
 }
 
-{ #category : 'accessing' }
-ClyNavigateBrowserBackCommand class >> defaultShortcut [
-	^Character arrowLeft alt
-]
-
 { #category : 'execution' }
 ClyNavigateBrowserBackCommand >> executeRefactoring [
 	self browser navigateBack

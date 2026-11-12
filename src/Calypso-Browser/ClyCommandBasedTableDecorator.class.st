@@ -20,13 +20,6 @@ ClyCommandBasedTableDecorator class >> decorateTableCell: anItemCellMorph of: aD
 ]
 
 { #category : 'decoration' }
-ClyCommandBasedTableDecorator class >> decorationStrategy [
-	<classAnnotation>
-
-	^ClyTableDecorationStrategyAnnotation for: ClyBrowserContext
-]
-
-{ #category : 'decoration' }
 ClyCommandBasedTableDecorator class >> priority [
 	"command based decoration should be in most priority then anything else"
 	^1000

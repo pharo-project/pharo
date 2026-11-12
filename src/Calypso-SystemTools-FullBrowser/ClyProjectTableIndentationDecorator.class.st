@@ -23,13 +23,6 @@ ClyProjectTableIndentationDecorator class >> decorateMainTableCell: anItemCellMo
 ClyProjectTableIndentationDecorator class >> decorateTableCell: anItemCellMorph of: aDataSourceItem [
 ]
 
-{ #category : 'decoration' }
-ClyProjectTableIndentationDecorator class >> decorationStrategy [
-	<classAnnotation>
-
-	^ClyTableDecorationStrategyAnnotation for: ClyFullBrowserContext
-]
-
 { #category : 'testing' }
 ClyProjectTableIndentationDecorator class >> wantsDecorateTableCellOf: aDataSourceItem [
 	^aDataSourceItem rootParentItem isBasedOnItemType: Project

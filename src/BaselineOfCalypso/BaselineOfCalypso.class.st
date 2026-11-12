@@ -14,24 +14,14 @@ BaselineOfCalypso >> baseline: spec [
 
 	spec for: #common do: [
 		spec
-			baseline: 'ClassAnnotation' with: [
-				spec
-					repository: repository;
-					loads: 'Core' ];
-
-			project: 'ClassAnnotationTests'
-			copyFrom: 'ClassAnnotation'
-			with: [ spec loads: 'Tests' ];
-
 			baseline: 'SystemCommands' with: [ spec repository: repository ];
 			baseline: 'CalypsoNavigationModel' with: [ spec repository: repository ].
 
 		spec
-			package: #'Calypso-SystemQueries' with: [ spec requires: #( 'CalypsoNavigationModel' #ClassAnnotation ) ];
+			package: #'Calypso-SystemQueries' with: [ spec requires: #( 'CalypsoNavigationModel' ) ];
 			package: #'Calypso-SystemQueries-Tests' with: [
 				spec requires:
-						#( 'CalypsoNavigationModel'
-						   #ClassAnnotationTests #'Calypso-SystemQueries'
+						#( 'CalypsoNavigationModel' #'Calypso-SystemQueries'
 						   #'Calypso-SystemQueries-Tests-PWithSingleClass'
 						   #'Calypso-SystemQueries-Tests-PExtendedByP1'
 						   #'Calypso-SystemQueries-Tests-P1WithHierarchy'

@@ -1,4 +1,6 @@
 "
+Deprecated: the inherited scope providers are marked with the <calypsoInheritedScopeProvider: aPriority> pragma (ClyAbstractClassScope class>>#inheritedScopeProvider). I am kept, in the deprecated Commander-Calypso-Compatibility package, for the projects which still use me, and I will be removed in Pharo 16. doc/Calypso/CommandAnnotationsMigration.md of the Pharo repository explains the migration.
+
 I am special annotation which marks classes that they can provide inherited scope.
 
 Users do not need to lookup my instances. They can simple use following method which will find appropriate class and create the scope using it:
@@ -24,9 +26,9 @@ Look at ClyInheritedScopeProvider references for examples
 Class {
 	#name : 'ClyInheritedScopeProviderAnnotation',
 	#superclass : 'ClassAnnotation',
-	#category : 'Calypso-SystemQueries-Scopes',
-	#package : 'Calypso-SystemQueries',
-	#tag : 'Scopes'
+	#category : 'Commander-Calypso-Compatibility-Annotations',
+	#package : 'Commander-Calypso-Compatibility',
+	#tag : 'Annotations'
 }
 
 { #category : 'scope creation' }

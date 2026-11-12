@@ -1,4 +1,6 @@
 "
+Deprecated: Calypso declares its commands, tabs, table decorators, contexts and providers with pragmas, and I will be removed in Pharo 16 with Commander 1 (see ManifestClassAnnotation).
+
 I am the root of class annotation hierarchy.
 My subclasses should annotate classes using class side methods with the pragma #classAnnotation. 
 For example:

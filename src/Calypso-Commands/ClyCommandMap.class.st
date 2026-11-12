@@ -1,5 +1,5 @@
 "
-I am the commands Calypso shows for one anchor, by interaction (context menu, toolbar, tab actions, table icons, shortcuts, clicks, drag and drop and the left bar of text editors).
+I am the commands Calypso shows for one anchor, by interaction (context menu, toolbar, tab actions, table icons, shortcuts, clicks, drag and drop and the left bar of text editors), and the browser tools opened as tabs (#tabs) and the decorators of table cells (#tableDecorators) for the same anchor.
 An anchor is a class which says when the commands apply:
 - a tool context class, such as ClyFullBrowserClassContext: the commands apply to the contexts which are instances of it or of its subclasses;
 - an item type, such as ClyMethod or Package: the commands apply to the browser contexts whose selection holds items of this type.
@@ -157,10 +157,24 @@ ClyCommandMap >> tabActions [
 ]
 
 { #category : 'interactions' }
+ClyCommandMap >> tableDecorators [
+	"The decorators of the cells of the lists, subclasses of ClyTableDecorator."
+
+	^ self interactionNamed: #tableDecorators entryClass: ClyTableDecoratorEntry labelSelector: #name
+]
+
+{ #category : 'interactions' }
 ClyCommandMap >> tableIcons [
 	"The icons shown in the cells of the lists."
 
 	^ self interactionNamed: #tableIcons entryClass: ClyCommandEntry labelSelector: #name
+]
+
+{ #category : 'interactions' }
+ClyCommandMap >> tabs [
+	"The browser tools opened as tabs, subclasses of ClyBrowserToolMorph."
+
+	^ self interactionNamed: #tabs entryClass: ClyTabEntry labelSelector: #name
 ]
 
 { #category : 'interactions' }

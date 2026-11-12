@@ -11,11 +11,13 @@ Everything goes through one mechanism: class-side methods marked with the `<caly
 - [Interactions](#interactions)
 - [Menu groups and sub-menus](#menu-groups-and-sub-menus)
 - [Toolbar groups](#toolbar-groups)
+- [Tabs and table decorators](#tabs-and-table-decorators)
 - [When a command is shown and when it runs](#when-a-command-is-shown-and-when-it-runs)
 - [Finding where a command is declared](#finding-where-a-command-is-declared)
 - [Changing the commands of another package](#changing-the-commands-of-another-package)
 - [Using the commands in a tool](#using-the-commands-in-a-tool)
 - [Testing](#testing)
+- [Selection contexts and providers](#selection-contexts-and-providers)
 - [Classes involved](#classes-involved)
 
 ## A first example
@@ -158,6 +160,8 @@ A command map has one interaction per way of reaching a command:
 | `dragAndDrop` | Dropping the selected items on another item | `add:dropIn:` |
 | `textLeftBarMenu` | The menu of the left bar of code editors | `add:` |
 | `textLeftBarClick` / `textLeftBarDoubleClick` | A click or double click in the left bar of code editors | `add:` |
+| `tabs` | The browser tools opened as tabs (not commands, see [Tabs and table decorators](#tabs-and-table-decorators)) | `add:` |
+| `tableDecorators` | The decorators of the cells of the lists (not commands either) | `add:`, `(add:) priority:` |
 
 Shortcuts take a `KMKeyCombination`, such as `$x meta` or `$t meta shift`. The key of a shortcut is shown next to the menu item of the same command.
 
@@ -209,6 +213,23 @@ aCommandMap tabActions addMenuOf: SycClassRefactoringMenuGroup
 ## Toolbar groups
 
 Toolbar commands are placed in subclasses of `ClyToolbarGroup`, ordered by their `#order` and name, such as `ClyClassHierarchyToolbarGroup` or `ClyPackageToolbarGroup`. A command can put its own widget in the toolbar instead of a button by overriding `#toolbarItemFor:`, as `ClySwitchBrowserModeCommand` and `ClySwitchQueryScopeCommand` do.
+
+## Tabs and table decorators
+
+The same declaration methods place two things which are not commands: the tools opened as tabs of the browsers (subclasses of `ClyBrowserToolMorph`) and the decorators of the cells of their lists (subclasses of `ClyTableDecorator`). They use the same anchors:
+
+```smalltalk
+ClyMethod class >> calypsoSystemToolsCoreCommandsIn: aCommandMap
+
+	<calypsoCommands>
+	aCommandMap tabs add: ClyMethodCodeEditorToolMorph.
+	aCommandMap tableDecorators add: ClyFFIMethodTableDecorator
+```
+
+- A tab is opened when the context of the browser is described by its anchor and its tool answers `true` to the class-side `#shouldBeActivatedInContext:`. The tabs are ordered by the class-side `#tabOrder` of their tools.
+- A decorator decorates the cell of an item when the context of the item is described by its anchor and the decorator answers `true` to the class-side `#wantsDecorateTableCellInContext:`. Decorators are applied by ascending priority, the class-side `#priority` of the decorator unless the declaration gives one, so the decorator of the highest priority changes the cell last.
+
+`remove:` removes a tab or a decorator declared by another package, as it removes a command (see [Changing the commands of another package](#changing-the-commands-of-another-package)).
 
 ## When a command is shown and when it runs
 
@@ -289,6 +310,29 @@ registry activationsOf: #contextMenu inContext: MyMockToolContext new
 
 See `ClyCommandRegistryTest` and `ClyCommandMapTest` in `Calypso-Commands-Tests`.
 
+## Selection contexts and providers
+
+Two other pragmas replace the class annotations Calypso used.
+
+A browser creates the context of its selected items from the declarations of the context classes. A context class declares the browser and the type of items it is created for with a class-side method marked with `<calypsoSelectionContext>`:
+
+```smalltalk
+ClyFullBrowserMethodContext class >> selectionContextDeclaration
+
+	<calypsoSelectionContext>
+	^ ClySelectionContextDeclaration browser: ClyFullBrowserMorph itemType: ClyMethod
+```
+
+A declaration without item type, `ClySelectionContextDeclaration browser: ClyQueryBrowserMorph`, applies to any selection. The declarations are tried by descending priority (`priority:`), then by name of the context class, and the first one which applies creates the context.
+
+The inherited scope of class scopes and the hierarchy of the method visibility groups are built by providers: the class whose class-side method is marked with `<calypsoInheritedScopeProvider: aPriority>` or `<calypsoMethodVisibilityProvider: aPriority>` with the highest priority. Calypso provides `ClySuperclassScope` and `ClySubclassHierarchy` with priority 0, and the traits plugin overrides them with `ClyInheritedTraitScope` and `ClyTraitUserHierarchy` with priority 100:
+
+```smalltalk
+ClyInheritedTraitScope class >> inheritedScopeProvider
+
+	<calypsoInheritedScopeProvider: 100>
+```
+
 ## Classes involved
 
 | Class | Role |
@@ -298,6 +342,8 @@ See `ClyCommandRegistryTest` and `ClyCommandMapTest` in `Calypso-Commands-Tests`
 | `ClyCommandMap` | The commands of one anchor, by interaction |
 | `ClyCommandInteraction` | The commands of one interaction of a map, the receiver of `add:` |
 | `ClyCommandEntry` and its subclasses `ClyShortcutCommandEntry`, `ClyMouseCommandEntry`, `ClyDropCommandEntry` | One declared command and its placement |
+| `ClyTabEntry`, `ClyTableDecoratorEntry` | One declared tab or table decorator |
+| `ClySelectionContextDeclaration` | The context class a browser creates for a selection |
 | `ClyCommandRegistry` | Finds the declarations, caches the maps, answers the commands of a context |
 | `ClyMenuGroup`, `ClyRootMenuGroup`, `ClyToolbarGroup` | Groups of menus and toolbars |
 | `ClyOpenMenuGroupCommand` | Opens a menu group as a pop-up menu |

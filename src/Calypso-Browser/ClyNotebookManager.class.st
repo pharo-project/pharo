@@ -118,11 +118,10 @@ ClyNotebookManager >> browser: anObject [
 
 { #category : 'private' }
 ClyNotebookManager >> buildToolsOn: toolsList for: aBrowserContext [
+
 	| tool |
-	ClyTabActivationStrategyAnnotation
-		activeInstancesInContext: aBrowserContext
-		do: [ :strategy |
-			tool := strategy createToolFor: browser inContext: aBrowserContext.
+	(ClyCommandRegistry default activeActivationsOf: #tabs inContext: aBrowserContext) do: [ :tab |
+			tool := tab createToolFor: browser inContext: aBrowserContext.
 			browser decorateTool: tool.
 			toolsList add: tool ]
 ]

@@ -4,17 +4,16 @@ My subclasses should implement single method #build where they should create and
 
 The build is always executed in background due to the TabManagerMorph logic.
 
-Tab manager collects all subclasses which should be opened for current browser state.
-It lookups tools annotated with ClyTabActivationStrategy for current browser context.
+Tab manager collects the tools which should be opened for current browser state: the tabs declared for the current browser context (ClyCommandRegistry, interaction #tabs).
 
-So to enable any tool in the browser you should annotated it with еру strategy for appropriate context where tool should be opened.
+So to enable a tool in the browser, declare it in the tabs of the context or item type where it should be opened, with a class-side method marked with the <calypsoCommands> pragma (see ClyCommandMap>>#tabs and the guide doc/Calypso/Commands.md of the Pharo repository).
 For example:
 
-	ClyMethodCodeEditorTool class>>methodTabActivation
-		<classAnnotation>
-		^ClyTabActivationStrategy for: ClyMethod asCalypsoItemContext
+	ClyMethod class >> calypsoSystemToolsCoreCommandsIn: aCommandMap
+		<calypsoCommands>
+		aCommandMap tabs add: ClyMethodCodeEditorToolMorph
 
-It will open method editor when method is selected in the browser.	
+It will open method editor when method is selected in the browser.
 
 Subclasses can define extra condition to check that they can be opened in particular browser context instance.
 They should override class side method: 
@@ -22,9 +21,6 @@ They should override class side method:
 - shouldBeActivatedInContext: aBrowserContext
 
 It returns true by default.
-
-Also abstract subclasses are never opened in the browser. By default the tool is abstract if it has subclasses.
-The class side method #isAbstact should be overridden if this default condition is not valid.
 
 Tab instances are created with browser context 
 

@@ -9,11 +9,6 @@ Class {
 	#tag : 'Commands'
 }
 
-{ #category : 'activation' }
-ClyRunFailedTestsFromMethodDataSourceCommand class >> menuOrder [
-	^super menuOrder + 1
-]
-
 { #category : 'execution' }
 ClyRunFailedTestsFromMethodDataSourceCommand >> buildTestSuite [
 

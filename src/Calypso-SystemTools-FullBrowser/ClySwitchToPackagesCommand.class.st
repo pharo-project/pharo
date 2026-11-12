@@ -11,11 +11,6 @@ Class {
 	#tag : 'Commands-Packages'
 }
 
-{ #category : 'activation' }
-ClySwitchToPackagesCommand class >> toolbarOrder [
-	^1
-]
-
 { #category : 'execution' }
 ClySwitchToPackagesCommand >> executeRefactoring [
 

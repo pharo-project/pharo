@@ -1,4 +1,6 @@
 "
+Deprecated: table decorators are declared with the <calypsoCommands> pragma (ClyCommandMap>>#tableDecorators). I am kept, in the deprecated Commander-Calypso-Compatibility package, for the projects which still use me, and I will be removed in Pharo 16. doc/Calypso/CommandAnnotationsMigration.md of the Pharo repository explains the migration.
+
 I annotate table decorators (ClyTableDecorator subclasses) to define where decorator should be used, in what context of selected items.
 
 For example following method will declare that classes in any browsers should be decorated with abstract class decorator:
@@ -18,9 +20,9 @@ Important notice. The actual priority is defined by decorator classes in class s
 Class {
 	#name : 'ClyTableDecorationStrategyAnnotation',
 	#superclass : 'ClassAnnotation',
-	#category : 'Calypso-Browser-Table',
-	#package : 'Calypso-Browser',
-	#tag : 'Table'
+	#category : 'Commander-Calypso-Compatibility-Annotations',
+	#package : 'Commander-Calypso-Compatibility',
+	#tag : 'Annotations'
 }
 
 { #category : 'private' }
@@ -32,6 +34,13 @@ ClyTableDecorationStrategyAnnotation class >> createContainerForRegistry [
 	according to described idea"
 
 	^SortedCollection sortBlock: #priority ascending
+]
+
+{ #category : 'accessing' }
+ClyTableDecorationStrategyAnnotation class >> interactionName [
+	"ClyCommandRegistry adds my instances to the table decorators declared with <calypsoCommands> (ClyCommandMap>>#tableDecorators)."
+
+	^ #tableDecorators
 ]
 
 { #category : 'accessing' }

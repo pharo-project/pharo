@@ -9,11 +9,6 @@ Class {
 	#tag : 'Commands-Packages'
 }
 
-{ #category : 'activation' }
-ClySwitchToScopedViewCommand class >> toolbarOrder [
-	^1
-]
-
 { #category : 'execution' }
 ClySwitchToScopedViewCommand >> executeRefactoring [
 

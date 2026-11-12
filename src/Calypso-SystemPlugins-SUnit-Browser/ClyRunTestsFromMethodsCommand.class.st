@@ -20,11 +20,6 @@ Class {
 	#tag : 'Commands'
 }
 
-{ #category : 'activation' }
-ClyRunTestsFromMethodsCommand class >> contextClass [
-	^ClyMethod asCalypsoItemContext
-]
-
 { #category : 'execution' }
 ClyRunTestsFromMethodsCommand >> executeRefactoring [
 	self testItems do: [:each | self runTestItem: each ]

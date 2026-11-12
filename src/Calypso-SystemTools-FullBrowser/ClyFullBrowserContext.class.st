@@ -27,7 +27,8 @@ ClyFullBrowserContext class >> calypsoSystemToolsFullBrowserCommandsIn: aCommand
 	aCommandMap shortcuts
 		add: ClySwitchFocusToNextBrowserPaneCommand key: Character arrowRight asShortcut;
 		add: ClySwitchFocusToPreviousBrowserPaneCommand key: Character arrowLeft asShortcut.
-	aCommandMap doubleClick add: ClySpawnFullBrowserCommand
+	aCommandMap doubleClick add: ClySpawnFullBrowserCommand.
+	aCommandMap tableDecorators add: ClyProjectTableIndentationDecorator
 ]
 
 { #category : 'accessing' }

@@ -59,7 +59,7 @@ It is internal method to support #asScope: convertion propertly. Idea that conve
 And I provide several convertion methods whichare used by tools to increase or decrease class and methods visibility:
 
 - asInheritedScope
-It return the scope based on receiver basis which provide view on all inherited classes by any definition of inheritance availably in the system. It uses class annotation ClyInheritedScopeProvider to find actual scope class which is responsible to build inheritance scope from receiver. By default it is ClySuperclassScope which includes all superclasses of basis. But with Traits plugin it will be composed scope which includes superclasses and inherited traits. 
+It return the scope based on receiver basis which provide view on all inherited classes by any definition of inheritance availably in the system. It asks the class answered by #inheritedScopeProvider on my class side to build the inheritance scope from receiver: the class whose class-side method marked with <calypsoInheritedScopeProvider: aPriority> has the highest priority. By default it is ClySuperclassScope which includes all superclasses of basis. But with Traits plugin it will be composed scope which includes superclasses and inherited traits. 
 
 - increasedByClassesFrom: aClassScope 
 It returned similar scope to receiver but with basis increased by all classes visible from given aClassScope. 
@@ -105,6 +105,20 @@ ClyAbstractClassScope class >> inheritedScopeName [
 	^'parents'
 ]
 
+{ #category : 'inherited scope' }
+ClyAbstractClassScope class >> inheritedScopeProvider [
+	"The class which builds the inherited and inheriting scopes of class scopes (#createInheritedScopeFrom: and #createInheritingScopeFrom:). It is the class whose class-side method marked with <calypsoInheritedScopeProvider: aPriority> has the highest priority: ClySuperclassScope, or ClyInheritedTraitScope when the traits plugin is loaded. The class annotations of the deprecated Commander-Calypso-Compatibility package (ClyInheritedScopeProviderAnnotation) are still taken into account."
+
+	| providers |
+	providers := (Pragma allNamed: #calypsoInheritedScopeProvider:) collect: [ :pragma | pragma arguments first -> pragma methodClass instanceSide ].
+	providers := providers , (self environment
+		              at: #ClyInheritedScopeProviderAnnotation
+		              ifPresent: [ :annotationClass | annotationClass registeredInstances asArray collect: [ :annotation | annotation priority -> annotation annotatedClass ] ]
+		              ifAbsent: [ #(  ) ]).
+	providers ifEmpty: [ self error: 'No scope is found which defines inherited class scope' ].
+	^ (providers detectMax: [ :provider | provider key ]) value
+]
+
 { #category : 'scope names' }
 ClyAbstractClassScope class >> inheritingScopeName [
 	^'children'
@@ -122,12 +136,20 @@ ClyAbstractClassScope >> adoptLocalScopeClassTo: aLocalScopeClass [
 
 { #category : 'converting' }
 ClyAbstractClassScope >> asInheritedScope [
-	^ClyInheritedScopeProviderAnnotation createInheritedScopeFrom: self
+
+	| scope |
+	scope := self class inheritedScopeProvider createInheritedScopeFrom: self.
+	scope name: ClyClassScope inheritedScopeName.
+	^ scope
 ]
 
 { #category : 'converting' }
 ClyAbstractClassScope >> asInheritingScope [
-	^ClyInheritedScopeProviderAnnotation createInheritingScopeFrom: self
+
+	| scope |
+	scope := self class inheritedScopeProvider createInheritingScopeFrom: self.
+	scope name: ClyClassScope inheritingScopeName.
+	^ scope
 ]
 
 { #category : 'converting' }

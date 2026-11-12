@@ -9,12 +9,6 @@ Class {
 	#tag : 'Commands'
 }
 
-{ #category : 'activation' }
-ClyDebuggingCommand class >> contextMenuOrder [
-	<classAnnotationDependency>
-	self subclassResponsibility
-]
-
 { #category : 'testing' }
 ClyDebuggingCommand class >> isAbstract [
 	^self = ClyDebuggingCommand

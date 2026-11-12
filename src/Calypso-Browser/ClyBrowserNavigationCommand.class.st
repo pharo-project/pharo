@@ -12,13 +12,6 @@ Class {
 	#tag : 'NavigationHistory'
 }
 
-{ #category : 'activation' }
-ClyBrowserNavigationCommand class >> defaultShortcut [
-	<classAnnotationDependency>
-
-	self subclassResponsibility
-]
-
 { #category : 'testing' }
 ClyBrowserNavigationCommand class >> isAbstract [
 	^self = ClyBrowserNavigationCommand

@@ -31,10 +31,10 @@ ClyFullBrowserPackageContext class >> calypsoSystemToolsFullBrowserCommandsIn: a
 ]
 
 { #category : 'selection strategy' }
-ClyFullBrowserPackageContext class >> selectionStrategy [
-	<classAnnotation>
+ClyFullBrowserPackageContext class >> selectionContextDeclaration [
 
-	^ClyContextSelectionStrategyAnnotation for: ClyFullBrowserMorph selectionType: Package
+	<calypsoSelectionContext>
+	^ ClySelectionContextDeclaration browser: ClyFullBrowserMorph itemType: Package
 ]
 
 { #category : 'selection-class groups' }

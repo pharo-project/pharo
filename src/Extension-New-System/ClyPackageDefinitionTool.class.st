@@ -10,13 +10,6 @@ Class {
 }
 
 { #category : 'accessing' }
-ClyPackageDefinitionTool class >> browserTabActivation [
-
-	<classAnnotation>
-	^ ClyTabActivationStrategyAnnotation for: Package asCalypsoItemContext
-]
-
-{ #category : 'accessing' }
 ClyPackageDefinitionTool class >> tabOrder [
 
 	^ 1

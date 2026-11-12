@@ -9,11 +9,6 @@ Class {
 	#tag : 'Commands'
 }
 
-{ #category : 'activation' }
-ClyRunTestsFromClassesCommand class >> contextClass [
-	^ClyClass asCalypsoItemContext
-]
-
 { #category : 'execution' }
 ClyRunTestsFromClassesCommand >> executeRefactoring [
 

@@ -13,11 +13,6 @@ Class {
 	#package : 'SystemCommands-MessageCommands'
 }
 
-{ #category : 'accessing' }
-SycDeprecateMessageCommand class >> browserMenuOrder [
-	^ 2.5
-]
-
 { #category : 'execution' }
 SycDeprecateMessageCommand >> applyCommandResult [
 ]

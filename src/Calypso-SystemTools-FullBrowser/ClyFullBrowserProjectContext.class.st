@@ -20,10 +20,10 @@ ClyFullBrowserProjectContext class >> calypsoSystemToolsFullBrowserCommandsIn: a
 ]
 
 { #category : 'selection strategy' }
-ClyFullBrowserProjectContext class >> selectionStrategy [
-	<classAnnotation>
+ClyFullBrowserProjectContext class >> selectionContextDeclaration [
 
-	^ClyContextSelectionStrategyAnnotation for: ClyFullBrowserMorph selectionType: Project
+	<calypsoSelectionContext>
+	^ ClySelectionContextDeclaration browser: ClyFullBrowserMorph itemType: Project
 ]
 
 { #category : 'testing' }

@@ -34,10 +34,10 @@ ClyFullBrowserClassContext class >> calypsoSystemToolsFullBrowserCommandsIn: aCo
 ]
 
 { #category : 'selection strategy' }
-ClyFullBrowserClassContext class >> selectionStrategy [
-	<classAnnotation>
+ClyFullBrowserClassContext class >> selectionContextDeclaration [
 
-	^ClyContextSelectionStrategyAnnotation for: ClyFullBrowserMorph selectionType: ClyClass
+	<calypsoSelectionContext>
+	^ ClySelectionContextDeclaration browser: ClyFullBrowserMorph itemType: ClyClass
 ]
 
 { #category : 'testing' }

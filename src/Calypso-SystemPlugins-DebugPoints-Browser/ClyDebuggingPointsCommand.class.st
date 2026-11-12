@@ -10,12 +10,6 @@ Class {
 	#package : 'Calypso-SystemPlugins-DebugPoints-Browser'
 }
 
-{ #category : 'activation' }
-ClyDebuggingPointsCommand class >> contextMenuOrder [
-	<classAnnotationDependency>
-	^ 1.8
-]
-
 { #category : 'testing' }
 ClyDebuggingPointsCommand class >> isAbstract [
 	^self == ClyDebuggingPointsCommand 

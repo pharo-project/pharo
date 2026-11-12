@@ -15,12 +15,6 @@ ClySwitchPackageViewModeCommand class >> isAbstract [
 	^self = ClySwitchPackageViewModeCommand
 ]
 
-{ #category : 'activation' }
-ClySwitchPackageViewModeCommand class >> toolbarOrder [
-	<classAnnotationDependency>
-	^10
-]
-
 { #category : 'testing' }
 ClySwitchPackageViewModeCommand >> isAppliedToBrowser [
 	^false

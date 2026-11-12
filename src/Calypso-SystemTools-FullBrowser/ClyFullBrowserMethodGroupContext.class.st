@@ -27,14 +27,15 @@ ClyFullBrowserMethodGroupContext class >> calypsoSystemToolsFullBrowserCommandsI
 		add: SycGenerateAllInstVarAccessorsCommand;
 		add: SycRealizeClassCommand;
 		add: SycRemoveClassCommand;
-		add: SycRemoveEmptyMethodTagsCommand
+		add: SycRemoveEmptyMethodTagsCommand.
+	aCommandMap tableDecorators add: ClyClassSideBoldTableDecorator
 ]
 
 { #category : 'selection strategy' }
-ClyFullBrowserMethodGroupContext class >> selectionStrategy [
-	<classAnnotation>
+ClyFullBrowserMethodGroupContext class >> selectionContextDeclaration [
 
-	^ClyContextSelectionStrategyAnnotation for: ClyFullBrowserMorph selectionType: ClyMethodGroup
+	<calypsoSelectionContext>
+	^ ClySelectionContextDeclaration browser: ClyFullBrowserMorph itemType: ClyMethodGroup
 ]
 
 { #category : 'testing' }

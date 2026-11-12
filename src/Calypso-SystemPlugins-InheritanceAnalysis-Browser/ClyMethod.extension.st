@@ -5,5 +5,8 @@ ClyMethod class >> calypsoSystemPluginsInheritanceAnalysisBrowserCommandsIn: aCo
 
 	<calypsoCommands>
 	aCommandMap shortcuts add: ClyShowMethodInheritanceCommand key: $h meta.
-	aCommandMap contextMenu add: ClyShowMethodInheritanceCommand
+	aCommandMap contextMenu add: ClyShowMethodInheritanceCommand.
+	aCommandMap tableDecorators
+		add: ClyAbstractMethodTableDecorator;
+		add: ClyOverriddenMethodTableDecorator
 ]

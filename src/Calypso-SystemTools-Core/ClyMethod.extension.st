@@ -17,5 +17,6 @@ ClyMethod class >> calypsoSystemToolsCoreCommandsIn: aCommandMap [
 		add: SycShowMethodVersionCommand key: $v meta.
 	aCommandMap dragAndDrop
 		add: SycMoveMethodsToClassCommand dropIn: ClyClass;
-		add: SycMoveMethodsToPackageCommand dropIn: Package
+		add: SycMoveMethodsToPackageCommand dropIn: Package.
+	aCommandMap tabs add: ClyMethodCodeEditorToolMorph
 ]

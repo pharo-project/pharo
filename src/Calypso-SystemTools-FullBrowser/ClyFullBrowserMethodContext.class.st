@@ -13,14 +13,15 @@ Class {
 ClyFullBrowserMethodContext class >> calypsoSystemToolsFullBrowserCommandsIn: aCommandMap [
 
 	<calypsoCommands>
-	aCommandMap shortcuts add: ClyFindMethodInBrowserCommand key: $f meta
+	aCommandMap shortcuts add: ClyFindMethodInBrowserCommand key: $f meta.
+	aCommandMap tableDecorators add: ClyClassSideBoldTableDecorator
 ]
 
 { #category : 'selection strategy' }
-ClyFullBrowserMethodContext class >> selectionStrategy [
-	<classAnnotation>
+ClyFullBrowserMethodContext class >> selectionContextDeclaration [
 
-	^ClyContextSelectionStrategyAnnotation for: ClyFullBrowserMorph selectionType: ClyMethod
+	<calypsoSelectionContext>
+	^ ClySelectionContextDeclaration browser: ClyFullBrowserMorph itemType: ClyMethod
 ]
 
 { #category : 'testing' }

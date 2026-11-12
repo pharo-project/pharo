@@ -1,4 +1,6 @@
 "
+Deprecated: context classes declare the selections they are created for with the <calypsoSelectionContext> pragma (ClySelectionContextDeclaration). I am kept, in the deprecated Commander-Calypso-Compatibility package, for the projects which still use me, and I will be removed in Pharo 16. doc/Calypso/CommandAnnotationsMigration.md of the Pharo repository explains the migration.
+
 I describe the way the context of browser selection should be actived
 
 
@@ -9,9 +11,9 @@ Class {
 	#instVars : [
 		'targetItemType'
 	],
-	#category : 'Calypso-Browser-Contexts',
-	#package : 'Calypso-Browser',
-	#tag : 'Contexts'
+	#category : 'Commander-Calypso-Compatibility-Annotations',
+	#package : 'Commander-Calypso-Compatibility',
+	#tag : 'Annotations'
 }
 
 { #category : 'instance creation' }
