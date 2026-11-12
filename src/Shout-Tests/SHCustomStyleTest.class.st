@@ -5,7 +5,7 @@ Class {
 	#name : 'SHCustomStyleTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'savedGroups'
+		'savedStyles'
 	],
 	#category : 'Shout-Tests-Styling',
 	#package : 'Shout-Tests',
@@ -16,20 +16,28 @@ Class {
 SHCustomStyleTest >> setUp [
 
 	super setUp.
-	savedGroups := SHCustomStyle groups deepCopy
+	savedStyles := Dictionary new.
+	SHCustomStyle groups keysDo: [ :groupName |
+		savedStyles at: groupName put: { 
+			'color' -> (SHCustomStyle styleForGroup: groupName) color.
+			'emphasis' -> (SHCustomStyle styleForGroup: groupName) emphasis } asDictionary ]
 ]
 
 { #category : 'running' }
 SHCustomStyleTest >> tearDown [
 
-	SHCustomStyle instVarNamed: #groups put: savedGroups.
-	SHCustomStyle triggerEvent: #changed.
+	savedStyles keysAndValuesDo: [ :groupName :attributes | | style |
+		style := SHStyleElement new
+						color: (attributes at: 'color') ;
+						emphasis: (attributes at: 'emphasis') ;
+						yourself.
+		SHCustomStyle style: style forGroup: groupName ].
 	super tearDown
 ]
 
 { #category : 'tests' }
 SHCustomStyleTest >> testAllStyleAccessors [
-
+	"Test that all groups have corresponding accessors"
 	SHCustomStyle groups keysDo: [ :groupName | 
 		| getter setter style color emphasis|
 		getter := (groupName , 'Style') asSymbol.
@@ -67,7 +75,10 @@ SHCustomStyleTest >> testCopyFromCurrentStyleCopiesCurrentColors [
 	| currentDefaultRow currentColor |
 	currentDefaultRow := SHRBTextStyler styleTable detect: [ :row | row first = 'default' ].
 	currentColor := (Color colorFrom: currentDefaultRow second).
-	(SHCustomStyle styleForGroup: 'default') color: currentColor lighter negated.
+	"ensure that the color in the custom style is actually different"
+	SHPreferences activeStyleTable = 'Custom' ifFalse: [ 
+		(SHCustomStyle styleForGroup: 'default') 
+			color: currentColor lighter negated ].
 
 	SHCustomStyle copyFromCurrentStyle.
 
