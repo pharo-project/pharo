@@ -29,7 +29,7 @@ It enumerates all class variables available from visible classes. It is not abst
 It enumerates all available variables from visible classes. It is not abstract.
 
 - methodGroupsDo: aBlock 
-It is special method which collects and enumerates all methods groups available for given class scope using environment plugins. The actual logic of groups colletion is explained in ClyAllMethodGroups comment.
+It is special method which collects and enumerates all methods groups available for given class scope using environment plugins. The actual logic of groups colletion is explained in ClyAllMethodGroupsQuery comment.
 
 - collectAllClasses
 

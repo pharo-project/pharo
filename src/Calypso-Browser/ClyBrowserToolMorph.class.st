@@ -24,7 +24,7 @@ It returns true by default.
 
 Tab instances are created with browser context 
 
-	ClyBrowserTool for: aBrowser inContext: aBrowserContext
+	ClyBrowserToolMorph for: aBrowser inContext: aBrowserContext
 	
 Subclasses should implement initialization methods to retrieve required state from the given context:
 
@@ -34,9 +34,9 @@ Subclasses should implement initialization methods to retrieve required state fr
 Last method is also used to update tool when model is changed.
 
 Subclasses should override method #isSimilarTo: to compare with another tool which has same parameters.
-For example ClyMethodCodeEditorTool checks that other method editor is based on same method.
-#isSimilarTo: method is used by ClyTabManager to update existing tabs in new browser state. If similar tool is already opened in browser then it will be not replaced by new instance.
-Look ClyTabManager comments for details.
+For example ClyMethodCodeEditorToolMorph checks that other method editor is based on same method.
+#isSimilarTo: method is used by ClyNotebookManager to update existing tabs in new browser state. If similar tool is already opened in browser then it will be not replaced by new instance.
+Look ClyNotebookManager comments for details.
 
 Tab manager never close dirty tabs when browser selection is changed. Instead if ask the tool to indicate different browser context.
 To support this logic tools should implement following methods: 
@@ -80,7 +80,7 @@ In addition I provide method #update which subclasses should reuse in the update
 
 TabManager orders retrieved tools using method #tabOrder.
 Also manager chooses what tab should be selected first. It selects the tool with highest #activationPriority which is equal to #tabOrder by default.
-In general tab selection logic is more complex. Look at ClyTabManager comments for details.
+In general tab selection logic is more complex. Look at ClyNotebookManager comments for details.
 
 To specify tab title and icon subclasses can implement following methods: 
 
@@ -110,13 +110,13 @@ To remove the tool from browser just call #removeFromBrowser method.
 Internal Representation and Key Implementation Points.
 
     Instance Variables
-	browser:		<ClyBrowser>
+	browser:		<ClyBrowserMorph>
 	containerTab:		<TabMorph>
 	context:		<ClyBrowserContext>
 	decorators:		<OrderedCollection of<ClyBrowserToolDecorator>>
 	isDirty:		<Boolean>
 	isManagedByUser:		<Boolean>
-	statusBar:		<ClyStatusBar>
+	statusBar:		<ClyStatusBarMorph>
 "
 Class {
 	#name : 'ClyBrowserToolMorph',

@@ -8,7 +8,7 @@ Class {
 	#package : 'SystemCommands-VariableCommands'
 }
 
-{ #category : 'accessing' }
+{ #category : 'execution' }
 SycPushUpVariableCommand >> executeRefactoring [
 
 	^ ((RePushUpVariableDriver newApplication: self application)

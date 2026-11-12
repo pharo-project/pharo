@@ -1,3 +1,6 @@
+"
+Tests that SycConvertTempToInstVarCommand can run when a temporary is selected in a method editor, but not an argument.
+"
 Class {
 	#name : 'SycConvertTempToinstVarCommandTest',
 	#superclass : 'TestCase',

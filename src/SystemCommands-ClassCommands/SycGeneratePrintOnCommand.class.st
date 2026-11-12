@@ -19,7 +19,7 @@ SycGeneratePrintOnCommand class >> printIconContents [
 SycGeneratePrintOnCommand >> canBeExecuted [
 	"Answer <true> if the receiver has any variables"
 
-	^ context lastSelectedClass realClass slots notEmpty
+	^ context lastSelectedClass realClass slots isNotEmpty
 ]
 
 { #category : 'accessing' }

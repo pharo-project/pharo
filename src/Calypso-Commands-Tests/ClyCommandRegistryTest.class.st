@@ -126,10 +126,10 @@ ClyCommandRegistryTest >> testShortcutsOpeningAGroup [
 { #category : 'tests' }
 ClyCommandRegistryTest >> testTableDecoratorsAreSortedByAscendingPriority [
 
-	| registry |
-	registry := ClyCommandRegistry forAnchors: { ClyMockToolContext }.
-	self assert: ((registry entriesOf: #tableDecorators inContext: ClyMockToolContext new) collect: [ :each | each priority ]) asArray equals: #( 5 1 ).
-	self assert: ((registry activationsOf: #tableDecorators inContext: ClyMockToolContext new) collect: [ :each | each priority ]) asArray equals: #( 1 5 )
+	| mockRegistry |
+	mockRegistry := ClyCommandRegistry forAnchors: { ClyMockToolContext }.
+	self assert: ((mockRegistry entriesOf: #tableDecorators inContext: ClyMockToolContext new) collect: [ :each | each priority ]) asArray equals: #( 5 1 ).
+	self assert: ((mockRegistry activationsOf: #tableDecorators inContext: ClyMockToolContext new) collect: [ :each | each priority ]) asArray equals: #( 1 5 )
 ]
 
 { #category : 'tests' }

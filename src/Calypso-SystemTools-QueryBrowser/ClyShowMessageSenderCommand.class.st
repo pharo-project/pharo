@@ -6,7 +6,7 @@ To show senders I ask the browser to spawn new query browser.
 Internal Representation and Key Implementation Points.
 
     Instance Variables
-	browser:		<ClyBrowser>
+	browser:		<ClyBrowserMorph>
 "
 Class {
 	#name : 'ClyShowMessageSenderCommand',

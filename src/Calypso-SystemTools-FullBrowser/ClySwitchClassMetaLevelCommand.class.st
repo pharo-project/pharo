@@ -8,7 +8,6 @@ My subclasses define target meta level in following method:
 It should return ClyInstanceSideScope or ClyClassSideScope.
 
 My subclasses are declared in the browser toolbar, where they are shown as radio buttons.
-And they should implement #toolbarOrder method
 
 "
 Class {

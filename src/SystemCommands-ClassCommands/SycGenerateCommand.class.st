@@ -22,7 +22,7 @@ SycGenerateCommand >> driverClass [
 	^ self subclassResponsibility
 ]
 
-{ #category : 'executing' }
+{ #category : 'execution' }
 SycGenerateCommand >> executeRefactoring [
 
 	(self driverClass new

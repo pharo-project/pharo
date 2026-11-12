@@ -70,7 +70,7 @@ SycMoveMethodsToPackageCommand >> package: anObject [
 	package := anObject
 ]
 
-{ #category : 'executing' }
+{ #category : 'execution' }
 SycMoveMethodsToPackageCommand >> prepareFullExecution [
 	super prepareFullExecution.
 	package := self dropContext

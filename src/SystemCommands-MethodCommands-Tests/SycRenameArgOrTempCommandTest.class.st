@@ -1,3 +1,6 @@
+"
+Tests that SycRenameArgOrTempCommand can run when a temporary or an argument is selected in a method editor.
+"
 Class {
 	#name : 'SycRenameArgOrTempCommandTest',
 	#superclass : 'TestCase',

@@ -18,7 +18,7 @@ SycVariableNavigationCommand >> orderInContext: aToolContext [
 		ifFalse: [ self order ]
 ]
 
-{ #category : 'preparation' }
+{ #category : 'execution' }
 SycVariableNavigationCommand >> prepareFullExecution [
 
 	variables := self context selectedVariables.

@@ -14,7 +14,7 @@ SycMakeAbstractCommand >> canBeExecuted [
 	^ context lastSelectedClass realClass isAbstract not
 ]
 
-{ #category : 'executing' }
+{ #category : 'execution' }
 SycMakeAbstractCommand >> executeRefactoring [
 
 	(self refactoringClass class: targetClass) execute
@@ -26,12 +26,12 @@ SycMakeAbstractCommand >> iconName [
 	^ #smallLoadProject
 ]
 
-{ #category : 'testing' }
+{ #category : 'accessing' }
 SycMakeAbstractCommand >> name [
 	^ self refactoringClass menuItemString
 ]
 
-{ #category : 'testing' }
+{ #category : 'accessing' }
 SycMakeAbstractCommand >> order [
 	^ 40
 ]

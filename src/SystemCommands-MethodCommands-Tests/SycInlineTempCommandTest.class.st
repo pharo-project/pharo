@@ -1,3 +1,6 @@
+"
+Tests that SycInlineTempCommand can run when a temporary is selected in a method editor, but not an argument.
+"
 Class {
 	#name : 'SycInlineTempCommandTest',
 	#superclass : 'TestCase',

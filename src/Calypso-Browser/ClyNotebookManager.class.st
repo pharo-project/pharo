@@ -1,6 +1,6 @@
 "
 I manage tabs in the browser.
-Any tab in browser is represented by ClyBrowserTool subclasses.
+Any tab in browser is represented by ClyBrowserToolMorph subclasses.
 And my responsibility is to show all appropriate tools which are relevant to the current browser context (state). 
 `#updateTools` method is doing that. 
 
@@ -35,7 +35,7 @@ By default activationPriority is equal to `#tabOrder` which defines general orde
 My instances are created on the browser: 
 
 ```
-	ClyTabManager of: aBrowser
+	ClyNotebookManager of: aBrowser
 ```	
 "
 Class {

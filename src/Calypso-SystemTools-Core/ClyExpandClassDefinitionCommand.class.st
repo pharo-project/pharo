@@ -9,7 +9,7 @@ Class {
 	#tag : 'Commands-Classes'
 }
 
-{ #category : 'accessing' }
+{ #category : 'execution' }
 ClyExpandClassDefinitionCommand >> applyCommandResult [
 
 	super applyCommandResult.

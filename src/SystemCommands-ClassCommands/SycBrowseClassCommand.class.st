@@ -35,7 +35,7 @@ SycBrowseClassCommand >> order [
 	^ 1000
 ]
 
-{ #category : 'preparation' }
+{ #category : 'execution' }
 SycBrowseClassCommand >> prepareFullExecution [
 
 	| scope |

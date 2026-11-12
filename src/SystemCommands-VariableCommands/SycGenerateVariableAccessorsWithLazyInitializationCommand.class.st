@@ -63,7 +63,7 @@ SycGenerateVariableAccessorsWithLazyInitializationCommand >> order [
 	^ 2
 ]
 
-{ #category : 'preparation' }
+{ #category : 'execution' }
 SycGenerateVariableAccessorsWithLazyInitializationCommand >> prepareFullExecution [
 
 	super prepareFullExecution.

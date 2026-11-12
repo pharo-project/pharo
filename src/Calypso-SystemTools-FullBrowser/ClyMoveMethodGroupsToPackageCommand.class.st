@@ -55,7 +55,7 @@ ClyMoveMethodGroupsToPackageCommand >> package: anObject [
 	package := anObject
 ]
 
-{ #category : 'executing' }
+{ #category : 'execution' }
 ClyMoveMethodGroupsToPackageCommand >> prepareFullExecution [
 	super prepareFullExecution.
 	package := self dropContext

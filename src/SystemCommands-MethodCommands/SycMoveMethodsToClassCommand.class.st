@@ -56,7 +56,7 @@ SycMoveMethodsToClassCommand >> order [
 	^ 60
 ]
 
-{ #category : 'executing' }
+{ #category : 'execution' }
 SycMoveMethodsToClassCommand >> prepareFullExecution [
 	| toolContext |
 	super prepareFullExecution.

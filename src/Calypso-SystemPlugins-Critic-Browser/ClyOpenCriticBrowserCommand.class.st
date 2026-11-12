@@ -16,7 +16,7 @@ ClyOpenCriticBrowserCommand >> executeRefactoring [
 	StCritiqueRuleSelectorPresenter openWithEnvironment: env removeTestCase: false
 ]
 
-{ #category : 'activation' }
+{ #category : 'accessing' }
 ClyOpenCriticBrowserCommand >> name [
 	^'Browse critiques'
 ]

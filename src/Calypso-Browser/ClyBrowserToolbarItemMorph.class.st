@@ -2,7 +2,7 @@
 My subclasses are different kind of UI elements which represent particular command in the browser toolbar. 
 Instances should be created with command activator: 
 
-	ClyBrowserButton activatingBy: aCommandActivator  
+	ClyBrowserButtonMorph activatingBy: aCommandActivator  
 
 When the browser builds the toolbar, it asks each command declared for the #toolbar interaction to build its toolbar item (ClyCommand>>#toolbarItemFor:).
 So command decides what UI element (my subclass) should be used to represent it in the toolbar. 

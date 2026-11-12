@@ -8,12 +8,6 @@ Class {
 	#package : 'Commander-Calypso-Compatibility-Tests'
 }
 
-{ #category : 'testing' }
-ClyMockAnnotatedTableDecorator class >> isAbstract [
-
-	^ false
-]
-
 { #category : 'annotations' }
 ClyMockAnnotatedTableDecorator class >> mockDecorationStrategy [
 

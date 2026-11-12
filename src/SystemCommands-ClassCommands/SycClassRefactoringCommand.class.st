@@ -12,7 +12,7 @@ Class {
 	#package : 'SystemCommands-ClassCommands'
 }
 
-{ #category : 'preparation' }
+{ #category : 'execution' }
 SycClassRefactoringCommand >> prepareFullExecution [
 
 	super prepareFullExecution.

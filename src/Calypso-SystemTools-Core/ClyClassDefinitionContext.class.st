@@ -1,3 +1,7 @@
+"
+I am the context of the class definition editor (ClyClassDefinitionEditorToolMorph): its source code is a class definition, not a method.
+I answer false to the questions about variables and breakpoints that the method source code context answers from the selected node, so the commands of methods are not shown in the definition editor. Commands declared on me only apply to class definitions.
+"
 Class {
 	#name : 'ClyClassDefinitionContext',
 	#superclass : 'ClySourceCodeContext',

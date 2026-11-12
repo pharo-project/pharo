@@ -1,3 +1,6 @@
+"
+Tests that the method context menu declares commands in SycMethodExtraMenuGroup, the Extra sub-menu of methods, and that one of them can run on a method.
+"
 Class {
 	#name : 'SycMethodExtraMenuGroupTest',
 	#superclass : 'TestCase',

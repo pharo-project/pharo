@@ -29,12 +29,6 @@ SycMethodRefactoringCommand >> canBeExecuted [
 ]
 
 { #category : 'execution' }
-SycMethodRefactoringCommand >> executeRefactoring [
-
-	self asRefactorings do: [ :each | each execute ]
-]
-
-{ #category : 'preparation' }
 SycMethodRefactoringCommand >> prepareFullExecution [
 	super prepareFullExecution.
 	model ifNil: [ self setUpModelFromContext: self context ]

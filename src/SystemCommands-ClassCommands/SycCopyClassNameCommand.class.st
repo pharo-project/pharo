@@ -12,10 +12,10 @@ Class {
 { #category : 'testing' }
 SycCopyClassNameCommand >> canBeExecuted [ 
 
-	^ self selectedClass notNil
+	^ self selectedClass isNotNil
 ]
 
-{ #category : 'executing' }
+{ #category : 'execution' }
 SycCopyClassNameCommand >> execute [
 	| name |
 	

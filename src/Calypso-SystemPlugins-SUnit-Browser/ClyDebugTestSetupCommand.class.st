@@ -11,7 +11,7 @@ Class {
 	#tag : 'Commands'
 }
 
-{ #category : 'execution' }
+{ #category : 'accessing' }
 ClyDebugTestSetupCommand >> iconName [
 	^ #smallDebug
 ]

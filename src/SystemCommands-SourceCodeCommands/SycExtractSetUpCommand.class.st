@@ -11,7 +11,7 @@ Class {
 	#package : 'SystemCommands-SourceCodeCommands'
 }
 
-{ #category : 'executing' }
+{ #category : 'converting' }
 SycExtractSetUpCommand >> asRefactorings [
 	| selectedInterval refactoring |
 	selectedInterval := selectedTextInterval ifEmpty: [

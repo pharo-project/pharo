@@ -25,7 +25,7 @@ ClyRunTestsFromMethodsCommand >> executeRefactoring [
 	self testItems do: [:each | self runTestItem: each ]
 ]
 
-{ #category : 'execution' }
+{ #category : 'accessing' }
 ClyRunTestsFromMethodsCommand >> iconName [
 
 	| fullResult |

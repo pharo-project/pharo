@@ -9,7 +9,7 @@ Class {
 	#tag : 'Extra'
 }
 
-{ #category : 'executing' }
+{ #category : 'execution' }
 SycUpdateClassCommand >> execute [
 
 	context tool update.

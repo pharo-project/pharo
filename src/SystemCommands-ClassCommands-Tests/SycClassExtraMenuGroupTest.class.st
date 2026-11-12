@@ -1,3 +1,6 @@
+"
+Tests that the class context menu declares commands in SycClassExtraMenuGroup, the Extra sub-menu of classes, and that one of them can run on a class.
+"
 Class {
 	#name : 'SycClassExtraMenuGroupTest',
 	#superclass : 'SycAbstractCommandTest',

@@ -4,7 +4,7 @@ Deprecated: the method visibility providers are marked with the <calypsoMethodVi
 I am special annotation which marks classes that they can provide special hierarchy to represent method visibility classes.
 Users do not need to lookup my instances. They can simple use following method which will find appropriate class and create the hierarchy:
 
-	ClyMethodVisibilityProvider defaultHierarchy
+	ClyMethodVisibilityProviderAnnotation defaultHierarchy
 
 In simple case it is just inverse ClySubclassHierarchy. 
 So when you expand inherited classes (first item in third browser pane) you will see selected class on top of list and then all superclasses.
@@ -19,7 +19,7 @@ I expect that annotated classes will implement following class side method
 
 - hierarchyForMethodVisibility
 
-Look at ClyMethodVisibilityProvider references for details
+Look at ClyMethodVisibilityProviderAnnotation references for details
 "
 Class {
 	#name : 'ClyMethodVisibilityProviderAnnotation',

@@ -241,7 +241,7 @@ ClyCommandEntry >> printOn: aStream [
 		nextPut: $)
 ]
 
-{ #category : 'activation' }
+{ #category : 'accessing' }
 ClyCommandEntry >> priority [
 	"When several commands share a key, a click or a drop, the first one of the highest priority runs."
 

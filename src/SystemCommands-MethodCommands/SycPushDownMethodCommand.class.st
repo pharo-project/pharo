@@ -8,7 +8,7 @@ Class {
 	#package : 'SystemCommands-MethodCommands'
 }
 
-{ #category : 'execution' }
+{ #category : 'converting' }
 SycPushDownMethodCommand >> asRefactorings [
 
 	^ self shouldNotImplement

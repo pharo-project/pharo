@@ -8,7 +8,7 @@ Class {
 	#package : 'SystemCommands-ClassCommands'
 }
 
-{ #category : 'accessing' }
+{ #category : 'converting' }
 SycAbstractAllInstVarAccessorsCommand >> asRefactorings [
 
 	| refactorings env |
@@ -58,7 +58,7 @@ SycAbstractAllInstVarAccessorsCommand >> order [
 	^ 1000
 ]
 
-{ #category : 'preparation' }
+{ #category : 'execution' }
 SycAbstractAllInstVarAccessorsCommand >> prepareFullExecution [
 
 	super prepareFullExecution.

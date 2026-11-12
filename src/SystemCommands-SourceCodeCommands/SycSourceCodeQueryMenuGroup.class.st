@@ -8,7 +8,7 @@ Class {
 	#package : 'SystemCommands-SourceCodeCommands'
 }
 
-{ #category : 'accessing' }
+{ #category : 'parents' }
 SycSourceCodeQueryMenuGroup class >> parentGroup [
 
 	^ SycSourceCodeMenuGroup

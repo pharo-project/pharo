@@ -5,7 +5,7 @@ I am special annotation which marks classes that they can provide inherited scop
 
 Users do not need to lookup my instances. They can simple use following method which will find appropriate class and create the scope using it:
 
-	ClyInheritedScopeProvider createScopeFrom: aClassScope
+	ClyInheritedScopeProviderAnnotation createScopeFrom: aClassScope
 
 Or simply convert given class scope using: 
 
@@ -21,7 +21,7 @@ I expect that annotated classes will implement following class side method
 
 - createInheritedScopeFrom: aClassScope
 
-Look at ClyInheritedScopeProvider references for examples
+Look at ClyInheritedScopeProviderAnnotation references for examples
 "
 Class {
 	#name : 'ClyInheritedScopeProviderAnnotation',

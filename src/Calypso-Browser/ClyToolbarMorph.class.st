@@ -8,12 +8,12 @@ In contrast to context menus, all toolbar groups (ClyToolbarGroup) inline their 
 
 My instances are created on the browser: 
 
-	ClyToolbar of: aBrowser
+	ClyToolbarMorph of: aBrowser
 	 
 Internal Representation and Key Implementation Points.
 
     Instance Variables
-	browser:		<ClyBrowser>
+	browser:		<ClyBrowserMorph>
 "
 Class {
 	#name : 'ClyToolbarMorph',

@@ -48,7 +48,7 @@ SycClassCommand >> orderInContext: aToolContext [
 		ifFalse: [ self order ]
 ]
 
-{ #category : 'preparation' }
+{ #category : 'execution' }
 SycClassCommand >> prepareFullExecution [
 
 	classes := self context selectedClasses

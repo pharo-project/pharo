@@ -25,11 +25,11 @@ ClyCommandGroupMenuRenderer class >> render: aCommandGroup on: aMenuMorph [
 ClyCommandGroupMenuRenderer >> keyTextOfGroup: aPresentedGroup [
 	"The keys of the shortcut that opens the commands of the group, or nil."
 
-	| context keyText |
+	| context |
 	context := aPresentedGroup toolContext ifNil: [ ^ nil ].
-	(ClyCommandRegistry default shortcutsOpeningGroup: aPresentedGroup descriptor class inContext: context) do: [ :shortcut |
-		keyText := shortcut keyCombination acceptVisitor: OSPlatform current shortcutPrinter ].
-	^ keyText
+	^ (ClyCommandRegistry default shortcutsOpeningGroup: aPresentedGroup descriptor class inContext: context)
+		  ifEmpty: [ nil ]
+		  ifNotEmpty: [ :shortcuts | shortcuts last keyCombination acceptVisitor: OSPlatform current shortcutPrinter ]
 ]
 
 { #category : 'rendering' }
@@ -81,7 +81,7 @@ ClyCommandGroupMenuRenderer >> registerItem: aPresentedCommand on: aBuilder inGr
 
 { #category : 'registering' }
 ClyCommandGroupMenuRenderer >> registerPureItem: aPresentedCommand on: aBuilder inGroup: aGroup actualName: actualName [
-	"ClyCommandMenuItem>>registerContextMenuItemsWithBuilder:, for a pure command."
+	"Registers a pure command, which has no activator, in a pragma menu builder."
 
 	| command itemOrder item |
 	command := aPresentedCommand command.

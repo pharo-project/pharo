@@ -43,7 +43,7 @@ ClyBrowserItemContext >> = anObject [
 	^ itemType = anObject itemType
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 ClyBrowserItemContext >> commandAnchor [
 	"The anchor of ClyCommandMap that describes the same contexts as me, used to convert class annotations into declarations."
 

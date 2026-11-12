@@ -69,7 +69,7 @@ ClyCommandGroupBuilder >> buildForAll: commandClasses context: aContext [
 
 { #category : 'building' }
 ClyCommandGroupBuilder >> buildMenuOf: activations context: aToolContext pureRoots: rootClasses [
-	"Answers the Commander2 tree of the menu of aToolContext: the presentation that ClyMenu gives. Hybrid commands come from the activations, which are class annotations or ClyCommandEntry instances visible in the context, then the pure commands of rootClasses are placed in their groups, in the same order consumers add them. Each group keeps its entries sorted as ClyMenuGroup does. Identifiers are unique inside their group; labels may repeat."
+	"Answers the Commander2 tree of the menu of aToolContext. Hybrid commands come from the activations, which are class annotations or ClyCommandEntry instances visible in the context, then the pure commands of rootClasses are placed in their groups, in the same order consumers add them. Each group keeps its entries sorted as ClyMenuGroup does. Identifiers are unique inside their group; labels may repeat."
 
 	| root groups entries names sortBlock uniqueName ensureGroup |
 	sortBlock := [ :a :b |
@@ -116,7 +116,7 @@ ClyCommandGroupBuilder >> buildMenuOf: activations context: aToolContext pureRoo
 			item activator: activator.
 			item identifier: (uniqueName value: group value: activator command class name).
 			(entries at: group) add: item ].
-	(ClyCommandGroupBuilder buildSortedForAll: rootClasses context: aToolContext) commands do: [ :command |
+	(self class buildSortedForAll: rootClasses context: aToolContext) commands do: [ :command |
 			| group item |
 			group := ensureGroup value: command menuGroup.
 			item := ClyPresentedCommand new.
@@ -129,7 +129,7 @@ ClyCommandGroupBuilder >> buildMenuOf: activations context: aToolContext pureRoo
 
 { #category : 'building' }
 ClyCommandGroupBuilder >> buildToolbarOf: activationsBlock contexts: toolContexts [
-	"Answers the Commander2 tree of a toolbar or of the browser tab actions: one presented group per toolbar group class, holding the presented activations that activationsBlock answers for every context. The activations are class annotations or ClyCommandEntry instances. Groups and entries are sorted as ClyToolbarBuilder sorts them."
+	"Answers the Commander2 tree of a toolbar or of the browser tab actions: one presented group per toolbar group class, holding the presented activations that activationsBlock answers for every context. The activations are class annotations or ClyCommandEntry instances. Groups and entries are sorted by order, then by name."
 
 	| root groups entries names sortBlock uniqueName ensureGroup |
 	sortBlock := [ :a :b |

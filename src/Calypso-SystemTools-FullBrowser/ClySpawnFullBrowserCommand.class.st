@@ -8,7 +8,7 @@ By default I am available everywhere using cmd+b shortcut and ""Browse"" context
 Internal Representation and Key Implementation Points.
 
     Instance Variables
-	browser:		<ClyBrowser>
+	browser:		<ClyBrowserMorph>
 "
 Class {
 	#name : 'ClySpawnFullBrowserCommand',

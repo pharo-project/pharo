@@ -45,7 +45,7 @@ ClyMoveClassToGroupCommand >> name [
 	^'Move to package'
 ]
 
-{ #category : 'executing' }
+{ #category : 'execution' }
 ClyMoveClassToGroupCommand >> prepareFullExecution [
 	super prepareFullExecution.
 	"class group could be package. In this activation it is only make sense to request user for package"

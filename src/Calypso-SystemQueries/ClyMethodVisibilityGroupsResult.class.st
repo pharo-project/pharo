@@ -5,11 +5,11 @@ ClyInheritedMethodGroup instances provide tools to control method visibility in 
 
 I sort classes hierarchically according to specified hierarchy. You can create my instances with: 
 
-	ClyMethodVisibilityGroups withHierarchy: ClySubclassHierarchy inverse.
+	ClyMethodVisibilityGroupsResult withHierarchy: ClySubclassHierarchy inverse.
 	
 Tools create me with default hierarchy using: 
 	
-	ClyMethodVisibilityGroups withDefaultHierarchy.
+	ClyMethodVisibilityGroupsResult withDefaultHierarchy.
 
 Calypso provides settings to invert default hierarchy and to extend it with plugins. 
 The default hierarchy is built by the class answered by #methodVisibilityProvider: the class whose class-side method marked with <calypsoMethodVisibilityProvider: aPriority> has the highest priority, ClyTraitUserHierarchy when the traits plugin is loaded and ClySubclassHierarchy otherwise.

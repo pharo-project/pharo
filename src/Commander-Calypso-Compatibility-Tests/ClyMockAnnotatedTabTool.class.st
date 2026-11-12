@@ -8,12 +8,6 @@ Class {
 	#package : 'Commander-Calypso-Compatibility-Tests'
 }
 
-{ #category : 'testing' }
-ClyMockAnnotatedTabTool class >> isAbstract [
-
-	^ false
-]
-
 { #category : 'annotations' }
 ClyMockAnnotatedTabTool class >> mockTabActivation [
 

@@ -40,7 +40,7 @@ ClyMoveMethodGroupToClassCommand >> executeRefactoring [
 			moveCommand execute ]
 ]
 
-{ #category : 'executing' }
+{ #category : 'execution' }
 ClyMoveMethodGroupToClassCommand >> prepareFullExecution [
 	| toolContext |
 	super prepareFullExecution.

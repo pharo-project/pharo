@@ -77,7 +77,7 @@ ClyCommandRegistry class >> handleOldMethodChange: aMethodModified [
 	self resetIfDeclares: aMethodModified oldMethod
 ]
 
-{ #category : 'system changes' }
+{ #category : 'class initialization' }
 ClyCommandRegistry class >> reset [
 
 	<script>

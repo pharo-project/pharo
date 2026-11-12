@@ -25,7 +25,7 @@ ClyFixCritiqueCommand >> executeRefactoring [
 	(StChangesBrowserPresenter changes: { self critique change }) open
 ]
 
-{ #category : 'initialization' }
+{ #category : 'accessing' }
 ClyFixCritiqueCommand >> iconName [
 	^#repair
 ]

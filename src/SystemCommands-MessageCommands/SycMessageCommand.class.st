@@ -54,7 +54,7 @@ SycMessageCommand >> orderInContext: aToolContext [
 		ifFalse: [ self order ]
 ]
 
-{ #category : 'preparation' }
+{ #category : 'execution' }
 SycMessageCommand >> prepareFullExecution [
 
 	messages := self context selectedMessages

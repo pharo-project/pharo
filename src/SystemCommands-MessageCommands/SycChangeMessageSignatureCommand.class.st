@@ -12,7 +12,7 @@ it should return target selector of the message after modification.
 Internal Representation and Key Implementation Points.
 
     Instance Variables
-	originalMessage:		<ClyMessageDescription>
+	originalMessage:		<SycMessageDescription>
 "
 Class {
 	#name : 'SycChangeMessageSignatureCommand',
@@ -41,7 +41,7 @@ SycChangeMessageSignatureCommand >> applyCommandResult [
 		renamedTo: self resultMessageSelector asSymbol
 ]
 
-{ #category : 'execution' }
+{ #category : 'converting' }
 SycChangeMessageSignatureCommand >> asRefactorings [
 	^{self createRefactoring}
 ]
@@ -87,7 +87,7 @@ SycChangeMessageSignatureCommand >> originalMessage: anObject [
 	originalMessage := anObject
 ]
 
-{ #category : 'preparation' }
+{ #category : 'execution' }
 SycChangeMessageSignatureCommand >> prepareFullExecution [
 
 	self setUpModelFromContext: self context.

@@ -19,7 +19,7 @@ SycGenerateEqualAndHashCommand class >> equalIconContents [
 SycGenerateEqualAndHashCommand >> canBeExecuted [
 	"Answer <true> if the receiver has any variables"
 
-	^ context lastSelectedClass realClass slots notEmpty
+	^ context lastSelectedClass realClass slots isNotEmpty
 ]
 
 { #category : 'accessing' }

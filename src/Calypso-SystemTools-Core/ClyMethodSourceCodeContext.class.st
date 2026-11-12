@@ -1,3 +1,7 @@
+"
+I am the context of the method editor (ClyMethodCodeEditorToolMorph): the source code of a method, with the node selected in it.
+I answer the edited method as the selected method (#selectedMethods, #lastSelectedMethod), so the commands of methods also apply in the editor, and the commands declared on me apply to method source code, such as the debug points of the left bar of the editor.
+"
 Class {
 	#name : 'ClyMethodSourceCodeContext',
 	#superclass : 'ClySourceCodeContext',

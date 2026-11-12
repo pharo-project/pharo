@@ -1,3 +1,6 @@
+"
+Tests the default file names that SycFileOutClassCommand proposes for one class or several classes.
+"
 Class {
 	#name : 'SycFileOutClassCommandTest',
 	#superclass : 'SycAbstractCommandTest',

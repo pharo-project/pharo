@@ -1,6 +1,6 @@
 "
 I am a base class for various browser implementations.
-My main subcasses are ClyFullBrowser (for an advanced 4 panes browser) and ClyQueryBrowser (to display results of senders/implementors/...).
+My main subcasses are ClyFullBrowserMorph (for an advanced 4 panes browser) and ClyQueryBrowserMorph (to display results of senders/implementors/...).
 
 I provide UI layout structure for my subclasses:
 
@@ -8,7 +8,7 @@ I provide UI layout structure for my subclasses:
 - the tabs panel is placed at the bottom half of the browser.
 - and the toolbar is placed at the middle.
 
-Navigation is represented by ClyQueryView(Morph) instances placed from left to right. This reflects the flow of navigation: selection in the left panel leads to the new content at the right panel.
+Navigation is represented by ClyQueryViewMorph instances placed from left to right. This reflects the flow of navigation: selection in the left panel leads to the new content at the right panel.
 
 !! Example of Queries 
 
@@ -76,11 +76,11 @@ Also to describe navigation flow you should setup selector which should called w
 	
 	packageView requestNavigationBy: #packageSelectionChanged.
 	 
-Look at ClyQueryView(Morph) to find more possible settings and browser senders of #newNavigationView (for example you can add more columns to the view).
+Look at ClyQueryViewMorph to find more possible settings and browser senders of #newNavigationView (for example you can add more columns to the view).
 
 To setup the content of the navigation views you should implement method #prepareInitialState. For the package view example it can be: 
 
-	packages := ClyAllPackages sortedFrom: self systemScope.
+	packages := ClyAllPackagesQuery sortedFrom: self systemScope.
 	packageView showQuery: packages 
 
 You do not need to set up the content of all navigation views. They have kind of empty data source by default.
@@ -103,12 +103,12 @@ Internal Representation and Key Implementation Points.
 	navigationHistory:		<ClyNavigationHistory>
 	navigationPanel:		<Morph>
 	navigationStarted:		<Boolean>
-	navigationViews:		<OrderedCollection of<ClyQueryView>>
+	navigationViews:		<OrderedCollection of<ClyQueryViewMorph>>
 	plugins:		<Collection of<ClyBrowserPlugin>>
 	systemScope:		<ClySystemScope>
-	tabManager:		<ClyTabManager>
+	tabManager:		<ClyNotebookManager>
 	toolPanel:		<Morph>
-	toolbar:		<ClyToolbar>
+	toolbar:		<ClyToolbarMorph>
 "
 Class {
 	#name : 'ClyBrowserMorph',

@@ -21,7 +21,7 @@ SycDuplicateClassCommand >> canBeExecuted [
 	^ self context isClassSelected and: [ self context lastSelectedClass isTrait not ]
 ]
 
-{ #category : 'executing' }
+{ #category : 'execution' }
 SycDuplicateClassCommand >> executeRefactoring [
 	"The class name is necessary so the browser can select the new subclass"
 
@@ -47,7 +47,7 @@ SycDuplicateClassCommand >> order [
 	^ 11
 ]
 
-{ #category : 'preparation' }
+{ #category : 'execution' }
 SycDuplicateClassCommand >> prepareFullExecution [
 	
 	refactoringScopes := context refactoringScopes.

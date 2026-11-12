@@ -113,7 +113,7 @@ ClySelectionContextDeclaration class >> pragmaName [
 	^ #calypsoSelectionContext
 ]
 
-{ #category : 'system changes' }
+{ #category : 'class initialization' }
 ClySelectionContextDeclaration class >> reset [
 
 	<script>

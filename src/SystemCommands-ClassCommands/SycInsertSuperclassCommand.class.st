@@ -16,7 +16,7 @@ SycInsertSuperclassCommand >> canBeExecuted [
 	^ context lastSelectedClass isTrait not
 ]
 
-{ #category : 'executing' }
+{ #category : 'execution' }
 SycInsertSuperclassCommand >> executeRefactoring [
 	"The class name is necessary so the browser can select the new subclass"
 
@@ -53,7 +53,7 @@ SycInsertSuperclassCommand >> packageNames [
 	^ PackageOrganizer default packageNames
 ]
 
-{ #category : 'preparation' }
+{ #category : 'execution' }
 SycInsertSuperclassCommand >> prepareFullExecution [
 	
 	refactoringScopes := context refactoringScopes.

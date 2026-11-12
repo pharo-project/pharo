@@ -21,7 +21,7 @@ ClyBanCritiqueRuleCommand >> executeRefactoring [
 	self critique guidedBan
 ]
 
-{ #category : 'initialization' }
+{ #category : 'accessing' }
 ClyBanCritiqueRuleCommand >> iconName [
 	^#smallCancel
 ]

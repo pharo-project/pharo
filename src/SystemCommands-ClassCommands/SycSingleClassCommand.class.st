@@ -30,7 +30,7 @@ SycSingleClassCommand >> orderInContext: aToolContext [
 		ifFalse: [ self order ]
 ]
 
-{ #category : 'preparation' }
+{ #category : 'execution' }
 SycSingleClassCommand >> prepareFullExecution [
 
 	targetClass := self context lastSelectedClass

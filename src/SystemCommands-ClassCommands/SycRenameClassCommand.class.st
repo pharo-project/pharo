@@ -51,7 +51,7 @@ SycRenameClassCommand >> order [
 	^ 1.2
 ]
 
-{ #category : 'preparation' }
+{ #category : 'execution' }
 SycRenameClassCommand >> prepareFullExecution [
 
 	super prepareFullExecution.

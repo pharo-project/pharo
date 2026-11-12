@@ -44,7 +44,7 @@ ClyCommandActivationStrategy class >> isAbstract [
 	^ self == ClyCommandActivationStrategy
 ]
 
-{ #category : 'command registry' }
+{ #category : 'queries-general' }
 ClyCommandActivationStrategy class >> registeredInstances [
 	"My class annotations and the commands declared for my interaction with the <calypsoCommands> pragma (see ClyCommandRegistry), in the order of my registry container, which sorts them by priority. Every way Calypso enumerates activations goes through me, so it shows both while commands move from class annotations to declarations."
 

@@ -50,7 +50,7 @@ ClyMoveMethodsToGroupCommand >> name [
 	^'Move to method group'
 ]
 
-{ #category : 'executing' }
+{ #category : 'execution' }
 ClyMoveMethodsToGroupCommand >> prepareFullExecution [
 	| selectedClasses |
 	super prepareFullExecution.

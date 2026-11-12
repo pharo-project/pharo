@@ -247,7 +247,7 @@ ClyCommand >> orderInContext: aToolContext [
 	^ self order
 ]
 
-{ #category : 'executing' }
+{ #category : 'execution' }
 ClyCommand >> prepareFullExecution [
 	^ self
 ]

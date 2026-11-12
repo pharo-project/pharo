@@ -2,7 +2,7 @@
 I represent query result using fast table.
 I should be created for browser:
 
-	ClyQueryView for: aBrowser
+	ClyQueryViewMorph for: aBrowser
 
 or using helper browser method:
 
@@ -36,7 +36,7 @@ When user selects any item in table I trigger navigation request which ask brows
 
 I maintain several selection objects to always show correct table selection after any tree expansion, items addition of removal.
 
-Main selection is what user selects on table. I manage it in #selection variable, instance of ClyDataSourceSeleciton.
+Main selection is what user selects on table. I manage it in #selection variable, instance of ClyDataSourceSelection.
 
 Next is desiredSelection, instance of ClyDesiredSelection. Every time user passes me new query I am trying to restore desired selection on new items. Idea is to show previously selected items on new data source. I try to find same items and if they not exists I lookup similar items by name.
 I set new desiredSelection instance only when user manually modifies table selection.
@@ -83,7 +83,7 @@ Internal Representation and Key Implementation Points.
 
     Instance Variables
 	table:		<FTTableMorph>
-	browser:		<ClyBrowser>
+	browser:		<ClyBrowserMorph>
 	navigationSelector:		<aSymbol>
 	selection:		<ClyDataSourceSelection>
 	desiredSelection:		<ClyDesiredSelection>
