@@ -21,6 +21,33 @@ ClyCommandRegistryTest >> setUp [
 ]
 
 { #category : 'tests' }
+ClyCommandRegistryTest >> testActivationsAreSortedByPriority [
+
+	| map context |
+	map := registry mapOf: ClyMockToolContext.
+	(map doubleClick add: ClyMockRegisteredFirstCommand) priority: 1.
+	(map doubleClick add: ClyMockRegisteredSecondCommand) priority: 10.
+	(map tableIcons add: ClyMockRegisteredFirstCommand) priority: 1.
+	(map tableIcons add: ClyMockRegisteredSecondCommand) priority: 10.
+	context := ClyMockToolContext new.
+	self assert: ((registry activationsOf: #doubleClick inContext: context) collect: [ :entry | entry commandClass ]) asArray equals: {
+			ClyMockRegisteredSecondCommand.
+			ClyMockRegisteredFirstCommand }.
+	self assert: ((registry activationsOf: #tableIcons inContext: context) collect: [ :entry | entry commandClass ]) asArray equals: {
+			ClyMockRegisteredFirstCommand.
+			ClyMockRegisteredSecondCommand }
+]
+
+{ #category : 'tests' }
+ClyCommandRegistryTest >> testActivationsIncludeRemainingClassAnnotations [
+
+	| activations |
+	activations := ClyCommandRegistry default activationsOf: #contextMenu inContext: ClyMockAnnotatedToolContext new.
+	self assert: activations size equals: 1.
+	self assert: activations first commandClass identicalTo: ClyMockAnnotatedCommand
+]
+
+{ #category : 'tests' }
 ClyCommandRegistryTest >> testDefaultRegistryFindsDeclaredAnchors [
 
 	self assert: (ClyCommandRegistry default anchors includesAll: {
@@ -57,6 +84,16 @@ ClyCommandRegistryTest >> testMenuOfEntriesIsPresentedInGroups [
 	extraGroup := root entries last.
 	self assert: extraGroup descriptor class identicalTo: ClyExtraMenuGroup.
 	self assert: (extraGroup entries collect: [ :entry | entry dynamicName ]) asArray equals: #( 'Second' )
+]
+
+{ #category : 'tests' }
+ClyCommandRegistryTest >> testShortcutsOfACommandInContext [
+
+	| shortcuts |
+	shortcuts := registry shortcutsOf: ClyMockRegisteredFirstCommand inContext: ClyMockToolSubContext new.
+	self assert: shortcuts size equals: 1.
+	self assert: shortcuts first keyCombination equals: $x meta.
+	self assertEmpty: (registry shortcutsOf: ClyMockRegisteredSecondCommand inContext: ClyMockToolSubContext new)
 ]
 
 { #category : 'tests' }

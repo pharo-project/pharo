@@ -134,8 +134,6 @@ ClyCommandActivator >> printOn: aStream [
 { #category : 'context menu' }
 ClyCommandActivator >> setUpShortcutTipForMenuItem: aMenuItemMorph [
 
-	ClyShortcutActivation
-		activeInstancesFor: self command class inContext: self context
-		do: [ :shortcut |
-			aMenuItemMorph keyText: (shortcut keyCombination acceptVisitor: OSPlatform current shortcutPrinter)]
+	(ClyCommandRegistry default shortcutsOf: self command class inContext: self context) do: [ :shortcut |
+		aMenuItemMorph keyText: (shortcut keyCombination acceptVisitor: OSPlatform current shortcutPrinter) ]
 ]

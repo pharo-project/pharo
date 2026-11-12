@@ -1,7 +1,7 @@
 "
 I know every command declared for Calypso with the <calypsoCommands> pragma. I find the anchors (the classes whose class side has such methods), build their ClyCommandMap lazily and keep them.
-For a tool context, I answer the entries of an interaction from every anchor which applies to it (see ClyToolContext>>#isDescribedByCommandAnchor:).
-While Calypso commands move from class annotations to declarations, ClyCommandActivationStrategy class>>#registeredInstances answers my entries of its interaction (#allEntriesOf:) with its annotations, so every menu, toolbar, shortcut, click and drop shows both.
+Calypso asks me the commands of an interaction for a tool context: #activationsOf:inContext: answers the entries declared on every anchor which describes the context (see ClyToolContext>>#isDescribedByCommandAnchor:), sorted by priority. Menus, toolbars, tab actions, table icons, shortcuts, clicks and drag and drop are all built from it.
+Class annotations of commands which are not migrated yet are still shown: #legacyAnnotationsOf: adds them to the activations. Code that still enumerates the annotation strategies directly also sees the declared entries, see ClyCommandActivationStrategy class>>#registeredInstances.
 The default instance is reset when a declaration method or a command class changes, so new declarations are shown at once.
 To see what is declared in the image, inspect:
 	ClyCommandRegistry default allEntries
@@ -91,6 +91,29 @@ ClyCommandRegistry class >> resetIfDeclares: aCompiledMethod [
 	(aCompiledMethod hasPragmaNamed: ClyCommandMap pragmaName) ifTrue: [ self reset ]
 ]
 
+{ #category : 'activations' }
+ClyCommandRegistry >> activationsOf: anInteractionName inContext: aToolContext [
+	"The entries of the interaction declared for the context, and the class annotations of the same interaction which describe it, by priority. Calypso shows them in this order, and runs the first active one for a key, a click or a drop. The annotations come first among the activations of the same priority, as before."
+
+	| activations |
+	activations := ((self legacyAnnotationsOf: anInteractionName) select: [ :annotation | annotation isVisibleInContext: aToolContext ]) asArray
+	               , (self entriesOf: anInteractionName inContext: aToolContext) asArray.
+	^ activations sort: (self sortBlockOf: anInteractionName)
+]
+
+{ #category : 'activations' }
+ClyCommandRegistry >> activatorsOf: anInteractionName inContext: aToolContext [
+	"The activators of the commands of the interaction which can run in the context."
+
+	^ (self activeActivationsOf: anInteractionName inContext: aToolContext) collect: [ :activation | activation newActivatorFor: aToolContext ]
+]
+
+{ #category : 'activations' }
+ClyCommandRegistry >> activeActivationsOf: anInteractionName inContext: aToolContext [
+
+	^ (self activationsOf: anInteractionName inContext: aToolContext) select: [ :activation | activation isActiveInContext: aToolContext ]
+]
+
 { #category : 'accessing' }
 ClyCommandRegistry >> allEntries [
 	"Every command declared for Calypso, for tools and documentation."
@@ -118,6 +141,23 @@ ClyCommandRegistry >> entriesOf: anInteractionName inContext: aToolContext [
 	^ (self mapsDescribing: aToolContext) flatCollect: [ :map | map entriesOf: anInteractionName ]
 ]
 
+{ #category : 'activations' }
+ClyCommandRegistry >> executeFirstCommandOf: anInteractionName inContext: aToolContext [
+	"Runs the first command of the interaction which can run in the context, for a click for example. Answers whether one ran."
+
+	(self activeActivationsOf: anInteractionName inContext: aToolContext) ifNotEmpty: [ :activations |
+			(activations first newActivatorFor: aToolContext) executeCommand.
+			^ true ].
+	^ false
+]
+
+{ #category : 'legacy' }
+ClyCommandRegistry >> legacyAnnotationsOf: anInteractionName [
+	"The class annotations of Calypso commands for the interaction, which are still supported while projects move to <calypsoCommands> declarations. See ClyCommandActivationStrategy class>>#interactionName."
+
+	^ (ClyCommandActivationStrategy allSubclasses select: [ :strategy | strategy interactionName = anInteractionName ]) flatCollect: [ :strategy | strategy registry allInstancesOf: strategy ]
+]
+
 { #category : 'accessing' }
 ClyCommandRegistry >> mapOf: anAnchorClass [
 
@@ -138,4 +178,19 @@ ClyCommandRegistry >> setAnchors: anchorClasses [
 	anchors := anchorClasses.
 	maps := IdentityDictionary new.
 	entriesByInteraction := IdentityDictionary new
+]
+
+{ #category : 'activations' }
+ClyCommandRegistry >> shortcutsOf: aCommandClass inContext: aToolContext [
+	"The shortcut activations of a command which can run in the context, to show their keys in menus."
+
+	^ (self activeActivationsOf: #shortcuts inContext: aToolContext) select: [ :shortcut | shortcut annotates: aCommandClass ]
+]
+
+{ #category : 'private' }
+ClyCommandRegistry >> sortBlockOf: anInteractionName [
+	"Activations run by priority, the highest first. Table icons are the opposite: the command of the highest priority decorates the cell last, so its icons are the ones shown."
+
+	anInteractionName = #tableIcons ifTrue: [ ^ [ :first :second | first priority <= second priority ] ].
+	^ [ :first :second | first priority >= second priority ]
 ]

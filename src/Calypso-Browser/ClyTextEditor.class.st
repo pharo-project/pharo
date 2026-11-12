@@ -13,14 +13,16 @@ Class {
 
 { #category : 'context menu' }
 ClyTextEditor class >> contextMenuOn: aBuilder [
-	<RubSmalltalkCodeMenu>
 
+	<RubSmalltalkCodeMenu>
 	| context |
-	(aBuilder model editingMode isKindOf: ClyTextEditingMode)
-		ifFalse: [ ^self ].
+	(aBuilder model editingMode isKindOf: ClyTextEditingMode) ifFalse: [ ^ self ].
 
 	context := aBuilder model browserTool createCommandContext.
-	ClyContextMenuActivation registerContextMenuOn: aBuilder inContext: context
+	ClyCommandGroupMenuRenderer new
+		registerTree: (ClyCommandGroupBuilder new buildMenuOf: (ClyCommandRegistry default activationsOf: #contextMenu inContext: context) context: context pureRoots: #(  ))
+		on: aBuilder
+		rootName: nil
 ]
 
 { #category : 'accessing' }

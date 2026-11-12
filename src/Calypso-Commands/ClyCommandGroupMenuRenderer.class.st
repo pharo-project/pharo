@@ -71,21 +71,18 @@ ClyCommandGroupMenuRenderer >> registerItem: aPresentedCommand on: aBuilder inGr
 { #category : 'registering' }
 ClyCommandGroupMenuRenderer >> registerPureItem: aPresentedCommand on: aBuilder inGroup: aGroup actualName: actualName [
 	"ClyCommandMenuItem>>registerContextMenuItemsWithBuilder:, for a pure command."
+
 	| command itemOrder item |
 	command := aPresentedCommand command.
 	itemOrder := aPresentedCommand order.
 	(aGroup descriptor isRoot not and: [ aGroup descriptor isInlined ]) ifTrue: [ itemOrder := aGroup order + (itemOrder / 10000000.0) ].
 	item := (aBuilder item: aPresentedCommand dynamicName)
-		parent: actualName;
-		order: itemOrder;
-		help: command description;
-		action: [ command execute ];
-		icon: command icon.
-	ClyShortcutActivation
-		activeInstancesFor: command class
-		inContext: command context
-		do: [ :shortcut |
-			item keyText: (shortcut keyCombination acceptVisitor: OSPlatform current shortcutPrinter) ]
+		        parent: actualName;
+		        order: itemOrder;
+		        help: command description;
+		        action: [ command execute ];
+		        icon: command icon.
+	(ClyCommandRegistry default shortcutsOf: command class inContext: command context) do: [ :shortcut | item keyText: (shortcut keyCombination acceptVisitor: OSPlatform current shortcutPrinter) ]
 ]
 
 { #category : 'registering' }

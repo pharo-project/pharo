@@ -104,9 +104,12 @@ ClyMethodCodeEditorToolMorph >> belongsToRemovedBrowserContext [
 ClyMethodCodeEditorToolMorph >> buildLeftSideBar [
 
 	super buildLeftSideBar.
-
-	ClyTextLeftBarClickActivation enableInMorph: self leftSideBar withCommandsFrom: self.
-	ClyTextLeftBarDoubleClickActivation enableInMorph: self leftSideBar withCommandsFrom: self
+	ClyMouseInteractionHandler enableClick: #textLeftBarClick on: self leftSideBar withCommandsFrom: self.
+	ClyMouseInteractionHandler
+		enable: #textLeftBarDoubleClick
+		on: self leftSideBar
+		event: #doubleClick
+		withCommandsFrom: self
 ]
 
 { #category : 'operations' }

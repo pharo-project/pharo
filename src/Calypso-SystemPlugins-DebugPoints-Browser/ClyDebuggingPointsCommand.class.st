@@ -32,16 +32,6 @@ ClyDebuggingPointsCommand class >> methodContextMenuActivation [
 ]
 
 { #category : 'activation' }
-ClyDebuggingPointsCommand class >> methodEditorLeftBarMenuActivation [
-
-	<classAnnotation>
-	^ ClyTextLeftBarMenuActivation
-		  byItemOf: ClyDebuggingPointsMenuGroup
-		  order: self contextMenuOrder
-		  for: ClyMethodSourceCodeContext
-]
-
-{ #category : 'activation' }
 ClyDebuggingPointsCommand class >> sourceCodeMenuActivation [
 
 	<classAnnotation>

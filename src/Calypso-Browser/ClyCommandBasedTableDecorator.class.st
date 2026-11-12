@@ -14,10 +14,7 @@ Class {
 { #category : 'decoration' }
 ClyCommandBasedTableDecorator class >> decorateMainTableCell: anItemCellMorph inContext: itemContext [
 
-	ClyTableIconCommandActivation
-		activateAllInContext: itemContext
-		by: [:commandActivator |
-			commandActivator decorateTableCell: anItemCellMorph ]
+	(ClyCommandRegistry default activatorsOf: #tableIcons inContext: itemContext) do: [ :commandActivator | commandActivator decorateTableCell: anItemCellMorph ]
 ]
 
 { #category : 'decoration' }

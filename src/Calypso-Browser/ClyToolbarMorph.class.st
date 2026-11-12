@@ -84,10 +84,11 @@ ClyToolbarMorph >> initialize [
 { #category : 'updating' }
 ClyToolbarMorph >> updateItems [
 	"Rebuilds the toolbar from the Commander2 tree of every navigation context of the browser."
+
 	| contexts tree |
 	contexts := OrderedCollection new.
 	browser navigationContextsDo: [ :eachContext | contexts add: eachContext ].
-	tree := ClyCommandGroupBuilder new buildToolbarFor: ClyToolbarActivation contexts: contexts.
+	tree := ClyCommandGroupBuilder new buildToolbarOf: [ :context | ClyCommandRegistry default activationsOf: #toolbar inContext: context ] contexts: contexts.
 	self hide.
 	self removeAllMorphs.
 	self initialize.
