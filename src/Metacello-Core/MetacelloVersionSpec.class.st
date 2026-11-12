@@ -325,11 +325,6 @@ MetacelloVersionSpec >> recordRequiredFromArray: anArray withEngine: anEngine [
 	^ (anEngine version: self) record: anArray
 ]
 
-{ #category : 'actions' }
-MetacelloVersionSpec >> recordWithEngine: anEngine [
-	^ self recordRequiredFromArray: #(  ) withEngine: anEngine
-]
-
 { #category : 'accessing' }
 MetacelloVersionSpec >> repositories [
 
