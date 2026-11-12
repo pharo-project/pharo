@@ -109,7 +109,7 @@ MetacelloRecordTarget >> visitPackageSpec: aMetacelloPackageSpec [
 
 { #category : 'visiting' }
 MetacelloRecordTarget >> visitProjectReference: aMetacelloProjectReferenceSpec [
-	"Reached when a version spec's packages include a reference to another project (spec baseline: 'Bloc' with: [...]): the visitor sends this for it. Nothing to do: that project is a project of the resolution, already added to the directive before this one (see record:). Kept because the visitor sends it"
+	"Nothing to record. The packages of a version spec include references to the projects it requires (spec baseline: 'Bloc' with: [ ... ]), and visitVersionSpecChildren: sends acceptVisitor: to each, so every reference comes here; without this method recording would fail on the first baseline with a dependency. The project referenced is a project of the resolution: record: added it to the directive already, before this one, since the load order puts every project after the projects it requires"
 ]
 
 { #category : 'visiting' }
