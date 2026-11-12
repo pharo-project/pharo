@@ -72,6 +72,23 @@ ClyCommandInteraction >> addAllConcreteSubclassesOf: aCommandClass [
 	^ ((aCommandClass allSubclasses reject: [ :commandClass | commandClass isAbstract ]) sorted: [ :first :second | first name <= second name ]) collect: [ :commandClass | self add: commandClass ]
 ]
 
+{ #category : 'declaring' }
+ClyCommandInteraction >> addMenuOf: aMenuGroupClass [
+	"Adds a command opening the commands of the context menu declared in the menu group, as a pop-up menu. Used for shortcuts and tab actions."
+
+	^ (self add: ClyOpenMenuGroupCommand)
+		  openedGroup: aMenuGroupClass;
+		  yourself
+]
+
+{ #category : 'declaring' }
+ClyCommandInteraction >> addMenuOf: aMenuGroupClass key: aKeyCombination [
+
+	^ (self addMenuOf: aMenuGroupClass)
+		  keyCombination: aKeyCombination;
+		  yourself
+]
+
 { #category : 'accessing' }
 ClyCommandInteraction >> entries [
 
@@ -90,6 +107,13 @@ ClyCommandInteraction >> group: aMenuGroupClass [
 	"Answers a view of me which adds its commands to aMenuGroupClass. It shares my entries."
 
 	^ self copy setGroup: aMenuGroupClass
+]
+
+{ #category : 'testing' }
+ClyCommandInteraction >> hidesCommandsThatCannotRun [
+	"Menus, toolbars, tab actions and table icons only show the commands that can run (#canBeExecuted). Shortcuts, clicks and drops run their command when the context allows it."
+
+	^ #( #contextMenu #toolbar #tabActions #tableIcons #textLeftBarMenu ) includes: name
 ]
 
 { #category : 'accessing' }

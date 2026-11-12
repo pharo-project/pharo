@@ -11,6 +11,7 @@ ClyClassDefinitionContext class >> calypsoSystemToolsCoreCommandsIn: aCommandMap
 
 	<calypsoCommands>
 	aCommandMap contextMenu add: ClyExpandClassDefinitionCommand order: -20.
+	(aCommandMap contextMenu group: SycSourceCodeMenuGroup) add: ClyExpandClassDefinitionCommand order: -100.
 	aCommandMap shortcuts add: ClyExpandClassDefinitionCommand key: $e meta
 ]
 

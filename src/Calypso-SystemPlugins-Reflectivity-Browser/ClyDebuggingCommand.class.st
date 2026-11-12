@@ -37,19 +37,3 @@ ClyDebuggingCommand class >> contextMenuOrder [
 ClyDebuggingCommand class >> isAbstract [
 	^self = ClyDebuggingCommand
 ]
-
-{ #category : 'activation' }
-ClyDebuggingCommand class >> methodContextMenuActivation [
-	<classAnnotation>
-
-	^SycDebuggingMenuActivation
-		byItemOf: ClyDebuggingMenuGroup order: self contextMenuOrder for: ClyMethod asCalypsoItemContext
-]
-
-{ #category : 'activation' }
-ClyDebuggingCommand class >> sourceCodeMenuActivation [
-	<classAnnotation>
-
-	^SycDebuggingMenuActivation
-		byItemOf: ClyDebuggingMenuGroup order: self contextMenuOrder for: ClyMethodSourceCodeContext
-]

@@ -8,11 +8,6 @@ Class {
 	#package : 'SystemCommands-MethodCommands'
 }
 
-{ #category : 'adding' }
-SycMethodExtraCmCommand class >> activationStrategy [
-	^ SycExtraMenuActivation
-]
-
 { #category : 'testing' }
 SycMethodExtraCmCommand >> canBeExecuted [
 

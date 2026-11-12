@@ -68,3 +68,10 @@ ClyMenuGroup >> name [
 ClyMenuGroup >> order [
 	^500
 ]
+
+{ #category : 'opening' }
+ClyMenuGroup >> prepareToOpenIn: aToolContext [
+	"Hook run before a shortcut or a tab action opens my commands as a pop-up menu, see ClyOpenMenuGroupCommand. Nothing by default."
+
+	^ self
+]

@@ -29,9 +29,7 @@ ClyShortcutCommandEntry >> description [
 { #category : 'executing' }
 ClyShortcutCommandEntry >> executeCommandInContext: aToolContext [
 
-	commandClass new
-		context: aToolContext;
-		execute
+	(self newCommandInContext: aToolContext) execute
 ]
 
 { #category : 'accessing' }

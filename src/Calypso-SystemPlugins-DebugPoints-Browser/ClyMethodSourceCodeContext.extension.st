@@ -4,6 +4,9 @@ Extension { #name : 'ClyMethodSourceCodeContext' }
 ClyMethodSourceCodeContext class >> calypsoSystemPluginsDebugPointsBrowserCommandsIn: aCommandMap [
 
 	<calypsoCommands>
+	(aCommandMap contextMenu group: ClySourceCodeDebugPointsMenuGroup)
+		add: ClyAddBreakPointCommand order: 1;
+		add: ClyAddWatchDebugPointCommand order: 4.
 	(aCommandMap textLeftBarMenu group: ClyDebuggingPointsMenuGroup)
 		add: ClyAddBreakPointCommand order: 1;
 		add: ClyAddWatchDebugPointCommand order: 4.

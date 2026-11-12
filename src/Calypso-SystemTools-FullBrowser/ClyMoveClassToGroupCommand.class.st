@@ -19,13 +19,6 @@ Class {
 	#tag : 'Commands-Classes'
 }
 
-{ #category : 'activation' }
-ClyMoveClassToGroupCommand class >> browserContextMenuActivation [
-	<classAnnotation>
-
-	^ SycClassMenuActivation byRootGroupItemOrder: 1000 for: ClyClass asCalypsoItemContext
-]
-
 { #category : 'accessing' }
 ClyMoveClassToGroupCommand >> classGroup [
 	^ classGroup

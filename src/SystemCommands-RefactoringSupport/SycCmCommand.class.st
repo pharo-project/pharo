@@ -13,11 +13,6 @@ Class {
 	#package : 'SystemCommands-RefactoringSupport'
 }
 
-{ #category : 'adding' }
-SycCmCommand class >> activationStrategy [
-	self subclassResponsibility
-]
-
 { #category : 'default' }
 SycCmCommand class >> defaultDescription [
 	"Answer a <String> describing the receiver, useful for instance in menu items pop-ups"

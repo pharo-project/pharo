@@ -48,6 +48,18 @@ ClyCommandRegistryTest >> testActivationsIncludeRemainingClassAnnotations [
 ]
 
 { #category : 'tests' }
+ClyCommandRegistryTest >> testAddMenuOfDeclaresACommandOpeningTheGroup [
+
+	| entry command |
+	entry := (registry mapOf: ClyMockToolContext) shortcuts addMenuOf: ClyExtraMenuGroup key: $y meta.
+	self assert: entry commandClass identicalTo: ClyOpenMenuGroupCommand.
+	self assert: entry openedGroup identicalTo: ClyExtraMenuGroup.
+	command := entry newCommandInContext: ClyMockToolContext new.
+	self assert: command menuGroupClass identicalTo: ClyExtraMenuGroup.
+	self assert: command name equals: ClyExtraMenuGroup new name
+]
+
+{ #category : 'tests' }
 ClyCommandRegistryTest >> testDefaultRegistryFindsDeclaredAnchors [
 
 	self assert: (ClyCommandRegistry default anchors includesAll: {
@@ -87,6 +99,19 @@ ClyCommandRegistryTest >> testMenuOfEntriesIsPresentedInGroups [
 ]
 
 { #category : 'tests' }
+ClyCommandRegistryTest >> testPresentedGroupOfAMenuGroupClass [
+
+	| context root group |
+	context := ClyMockToolContext new.
+	root := ClyCommandGroupBuilder new buildMenuOf: (registry activationsOf: #contextMenu inContext: context) context: context pureRoots: #(  ).
+	group := root presentedGroupOf: ClyExtraMenuGroup.
+	self assert: group descriptor class identicalTo: ClyExtraMenuGroup.
+	self assert: (group entries collect: [ :entry | entry command class ]) asArray equals: { ClyMockRegisteredSecondCommand }.
+	self assert: (root presentedGroupOf: ClyQueryMenuGroup) isNil.
+	self assert: group toolContext identicalTo: context
+]
+
+{ #category : 'tests' }
 ClyCommandRegistryTest >> testShortcutsOfACommandInContext [
 
 	| shortcuts |
@@ -94,6 +119,17 @@ ClyCommandRegistryTest >> testShortcutsOfACommandInContext [
 	self assert: shortcuts size equals: 1.
 	self assert: shortcuts first keyCombination equals: $x meta.
 	self assertEmpty: (registry shortcutsOf: ClyMockRegisteredSecondCommand inContext: ClyMockToolSubContext new)
+]
+
+{ #category : 'tests' }
+ClyCommandRegistryTest >> testShortcutsOpeningAGroup [
+
+	| shortcuts |
+	(registry mapOf: ClyMockToolContext) shortcuts addMenuOf: ClyExtraMenuGroup key: $y meta.
+	shortcuts := registry shortcutsOpeningGroup: ClyExtraMenuGroup inContext: ClyMockToolSubContext new.
+	self assert: shortcuts size equals: 1.
+	self assert: shortcuts first keyCombination equals: $y meta.
+	self assertEmpty: (registry shortcutsOpeningGroup: ClyRootMenuGroup inContext: ClyMockToolSubContext new)
 ]
 
 { #category : 'tests' }

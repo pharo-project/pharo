@@ -8,11 +8,6 @@ Class {
 	#package : 'SystemCommands-SourceCodeCommands'
 }
 
-{ #category : 'execution' }
-SycSourceCodeCmCommand class >> activationStrategy [
-	^ SycSourceCodeMenuActivation
-]
-
 { #category : 'accessing' }
 SycSourceCodeCmCommand >> order [
 

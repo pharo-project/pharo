@@ -12,11 +12,6 @@ Class {
 	#package : 'SystemCommands-ClassCommands'
 }
 
-{ #category : 'adding' }
-SycClassCmCommand class >> activationStrategy [
-	^ SycClassMenuActivation
-]
-
 { #category : 'preparation' }
 SycClassCmCommand >> prepareFullExecution [
 	super prepareFullExecution.

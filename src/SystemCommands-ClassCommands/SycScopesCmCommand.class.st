@@ -8,8 +8,3 @@ Class {
 	#package : 'SystemCommands-ClassCommands',
 	#tag : 'Scope'
 }
-
-{ #category : 'adding' }
-SycScopesCmCommand class >> activationStrategy [
-	^ SycScopesMenuActivation
-]

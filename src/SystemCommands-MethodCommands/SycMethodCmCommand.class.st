@@ -12,11 +12,6 @@ Class {
 	#package : 'SystemCommands-MethodCommands'
 }
 
-{ #category : 'adding' }
-SycMethodCmCommand class >> activationStrategy [
-	^ SycMethodMenuActivation
-]
-
 { #category : 'testing' }
 SycMethodCmCommand class >> canBeExecutedInContext: aToolContext [
 	^ (self new

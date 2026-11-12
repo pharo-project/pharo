@@ -12,12 +12,6 @@ Class {
 }
 
 { #category : 'accessing' }
-SycPackageExtraCmCommand class >> activationStrategy [
-
-	^ SycExtraMenuActivation
-]
-
-{ #category : 'accessing' }
 SycPackageExtraCmCommand >> packages [
 
 	^ packages ifNil: [ context selectedPackages ]

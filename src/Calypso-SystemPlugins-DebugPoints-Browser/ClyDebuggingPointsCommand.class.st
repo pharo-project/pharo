@@ -21,26 +21,6 @@ ClyDebuggingPointsCommand class >> isAbstract [
 	^self == ClyDebuggingPointsCommand 
 ]
 
-{ #category : 'activation' }
-ClyDebuggingPointsCommand class >> methodContextMenuActivation [
-
-	<classAnnotation>
-	^ SycDebuggingPointsMenuActivation
-		  byItemOf: ClyDebuggingPointsMenuGroup
-		  order: self contextMenuOrder
-		  for: ClyMethod asCalypsoItemContext
-]
-
-{ #category : 'activation' }
-ClyDebuggingPointsCommand class >> sourceCodeMenuActivation [
-
-	<classAnnotation>
-	^ SycDebuggingPointsMenuActivation 
-		  byItemOf: ClyDebuggingPointsMenuGroup
-		  order: self contextMenuOrder
-		  for: ClyMethodSourceCodeContext
-]
-
 { #category : 'execution' }
 ClyDebuggingPointsCommand >> putIconInProperties: dp [
 	dp properties at: #Icon put: self iconName.

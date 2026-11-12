@@ -8,9 +8,3 @@ Class {
 	#package : 'SystemCommands-ClassCommands',
 	#tag : 'Extra'
 }
-
-{ #category : 'execution' }
-SycClassExtraCmCommand class >> activationStrategy [
-
-	^ SycExtraMenuActivation
-]

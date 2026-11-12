@@ -4,5 +4,8 @@ Extension { #name : 'ClyMethod' }
 ClyMethod class >> calypsoSystemPluginsDebugPointsBrowserCommandsIn: aCommandMap [
 
 	<calypsoCommands>
-	aCommandMap contextMenu add: SycOpenDebuggingPointsInMethodMenuCommand order: 1.4
+	(aCommandMap contextMenu group: ClyMethodDebugPointsMenuGroup)
+		add: ClyAddBreakPointCommand order: 1;
+		add: ClyAddWatchDebugPointCommand order: 4.
+	aCommandMap shortcuts addMenuOf: ClyMethodDebugPointsMenuGroup key: $t meta
 ]

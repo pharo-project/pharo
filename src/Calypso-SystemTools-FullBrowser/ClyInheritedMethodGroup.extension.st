@@ -4,7 +4,10 @@ Extension { #name : 'ClyInheritedMethodGroup' }
 ClyInheritedMethodGroup class >> calypsoSystemToolsFullBrowserCommandsIn: aCommandMap [
 
 	<calypsoCommands>
-	aCommandMap contextMenu add: SycOpenExtraInMethodGroupMenuCommand order: 10200
+	(aCommandMap contextMenu group: ClyMethodGroupExtraMenuGroup)
+		add: SycInspectVariableCommand order: 10;
+		add: ClyInvertMethodVisibilityHierarchyCommand order: 20;
+		add: ClyInvertVariableOrderCommand order: 30
 ]
 
 { #category : '*Calypso-SystemTools-FullBrowser' }

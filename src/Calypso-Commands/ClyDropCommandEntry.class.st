@@ -35,5 +35,9 @@ ClyDropCommandEntry >> isDropActiveInContext: aToolContext [
 { #category : 'activation' }
 ClyDropCommandEntry >> newActivatorFor: aToolContext [
 
-	^ ClyDragAndDropCommandActivator for: commandClass inContext: aToolContext using: self
+	^ ClyDragAndDropCommandActivator new
+		  command: (self newCommandInContext: aToolContext);
+		  context: aToolContext;
+		  activationStrategy: self;
+		  yourself
 ]

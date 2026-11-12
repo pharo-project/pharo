@@ -7,9 +7,3 @@ Class {
 	#category : 'SystemCommands-RefactoringSupport',
 	#package : 'SystemCommands-RefactoringSupport'
 }
-
-{ #category : 'accessing' }
-SycMethodGroupExtraCmCommand class >> activationStrategy [
-
-	^ SycExtraMenuActivation
-]

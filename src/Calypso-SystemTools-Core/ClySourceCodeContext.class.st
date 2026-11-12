@@ -41,16 +41,13 @@ Class {
 ClySourceCodeContext class >> calypsoSystemToolsCoreCommandsIn: aCommandMap [
 
 	<calypsoCommands>
-	aCommandMap contextMenu
-		add: SycOpenAdvancedDebuggingMenuCommand order: 0.2;
-		add: SycOpenDebuggingMenuCommand order: 0.2;
-		add: SycOpenReflectivityMenuCommand order: 0.3;
-		add: SycOpenSourceCodeMenuCommand order: -10.
+	(aCommandMap contextMenu group: SycSourceCodeMenuGroup)
+		add: ClyRequestMethodPackageForEditorCommand;
+		add: ClyRequestProtocolForEditorCommand;
+		add: ClyResetProtocolForEditorCommand.
 	aCommandMap shortcuts
 		add: SycInspectVariableValueCommand key: $i meta;
-		add: SycOpenAdvancedDebuggingMenuCommand key: $h meta shift;
-		add: SycOpenDebuggingMenuCommand key: $g meta shift;
-		add: SycOpenSourceCodeMenuCommand key: $t meta;
+		addMenuOf: SycSourceCodeMenuGroup key: $t meta;
 		add: SycRenameClassCommand2 key: $r meta;
 		add: SycRenameVariableCommand key: $r meta
 ]

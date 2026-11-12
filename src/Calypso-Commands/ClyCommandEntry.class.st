@@ -17,7 +17,8 @@ Class {
 		'order',
 		'label',
 		'declaringMethod',
-		'priority'
+		'priority',
+		'openedGroup'
 	],
 	#category : 'Calypso-Commands',
 	#package : 'Calypso-Commands'
@@ -97,8 +98,11 @@ ClyCommandEntry >> interaction: aCommandInteraction [
 
 { #category : 'activation' }
 ClyCommandEntry >> isActiveInContext: aToolContext [
+	"The context must be described by my anchor and allow my command class. In menus, my command must also be able to run in the context (#canBeExecuted), so menus hide what cannot run, as Commander2 does."
 
-	^ (self isVisibleInContext: aToolContext) and: [ aToolContext allowsExecutionOf: commandClass ]
+	(self isVisibleInContext: aToolContext) ifFalse: [ ^ false ].
+	(aToolContext allowsExecutionOf: commandClass) ifFalse: [ ^ false ].
+	^ interaction hidesCommandsThatCannotRun not or: [ (self newCommandInContext: aToolContext) canBeExecuted ]
 ]
 
 { #category : 'activation' }
@@ -164,7 +168,35 @@ ClyCommandEntry >> menuItemOrderFor: aCommand [
 { #category : 'activation' }
 ClyCommandEntry >> newActivatorFor: aToolContext [
 
-	^ ClyCommandActivator for: commandClass inContext: aToolContext using: self
+	^ ClyCommandActivator new
+		  command: (self newCommandInContext: aToolContext);
+		  context: aToolContext;
+		  activationStrategy: self;
+		  yourself
+]
+
+{ #category : 'activation' }
+ClyCommandEntry >> newCommandInContext: aToolContext [
+
+	| command |
+	command := commandClass new
+		           context: aToolContext;
+		           yourself.
+	openedGroup ifNotNil: [ command menuGroupClass: openedGroup ].
+	^ command
+]
+
+{ #category : 'accessing' }
+ClyCommandEntry >> openedGroup [
+	"The menu group whose commands my ClyOpenMenuGroupCommand opens, see ClyCommandInteraction>>#addMenuOf:."
+
+	^ openedGroup
+]
+
+{ #category : 'accessing' }
+ClyCommandEntry >> openedGroup: aMenuGroupClass [
+
+	openedGroup := aMenuGroupClass
 ]
 
 { #category : 'accessing' }

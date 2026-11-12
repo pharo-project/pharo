@@ -4,10 +4,9 @@ Extension { #name : 'ClyClass' }
 ClyClass class >> calypsoSystemToolsCoreCommandsIn: aCommandMap [
 
 	<calypsoCommands>
-	aCommandMap contextMenu add: SycOpenClassMenuCommand order: 10100.
 	aCommandMap shortcuts
 		add: SycAbstractAllInstVarAccessorsCommand key: $a meta , $a meta;
 		add: SycGenerateAllInstVarAccessorsCommand key: $g meta , $a meta;
-		add: SycOpenClassMenuCommand key: $t meta;
+		addMenuOf: SycClassRefactoringMenuGroup key: $t meta;
 		add: SycRenameClassCommand2 key: $r meta
 ]

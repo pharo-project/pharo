@@ -187,6 +187,13 @@ ClyCommandRegistry >> shortcutsOf: aCommandClass inContext: aToolContext [
 	^ (self activeActivationsOf: #shortcuts inContext: aToolContext) select: [ :shortcut | shortcut annotates: aCommandClass ]
 ]
 
+{ #category : 'activations' }
+ClyCommandRegistry >> shortcutsOpeningGroup: aMenuGroupClass inContext: aToolContext [
+	"The shortcuts which open the commands of the menu group in the context, to show their keys next to its sub-menu."
+
+	^ (self shortcutsOf: ClyOpenMenuGroupCommand inContext: aToolContext) select: [ :shortcut | shortcut openedGroup = aMenuGroupClass ]
+]
+
 { #category : 'private' }
 ClyCommandRegistry >> sortBlockOf: anInteractionName [
 	"Activations run by priority, the highest first. Table icons are the opposite: the command of the highest priority decorates the cell last, so its icons are the ones shown."

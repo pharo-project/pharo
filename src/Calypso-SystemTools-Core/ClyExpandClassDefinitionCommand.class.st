@@ -12,12 +12,6 @@ ClyExpandClassDefinitionCommand class >> canBeExecutedInContext: aToolContext [
 	^ true 
 ]
 
-{ #category : 'activation' }
-ClyExpandClassDefinitionCommand class >> sourceCodeMenuActivation [
-   <classAnnotation>
-   ^SycSourceCodeMenuActivation byRootGroupItemOrder: -100 for: ClyClassDefinitionContext
-]
-
 { #category : 'accessing' }
 ClyExpandClassDefinitionCommand >> applyCommandResult [
 
