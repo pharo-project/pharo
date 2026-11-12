@@ -124,7 +124,7 @@ EntryCompletion >> handlesKeyboard: anEvent [
 		or: [anEvent keyCharacter = Character escape]
 ]
 
-{ #category : 'events - handling' }
+{ #category : 'event handling' }
 EntryCompletion >> keystroke: anEvent from: aMorph [
 	(self handlesKeyboard: anEvent)
 		ifFalse: [ ^ false ].
@@ -136,7 +136,8 @@ EntryCompletion >> keystroke: anEvent from: aMorph [
 			^ true ].
 	(chooser isNil and: [ anEvent keyCharacter = Character arrowDown ])
 		ifTrue: [ self openChooserWith: aMorph textMorph text string from: aMorph ].
-	^ chooser ifNil: [ false ] ifNotNil: [ chooser keyStroke: anEvent ]
+	"the chooser handles the arrows in keyDown: and the other keys in keyStroke:"
+	^ chooser ifNil: [ false ] ifNotNil: [ (chooser keyDown: anEvent) or: [ chooser keyStroke: anEvent ] ]
 ]
 
 { #category : 'events - handling' }
