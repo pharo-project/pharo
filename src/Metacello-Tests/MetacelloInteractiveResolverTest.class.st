@@ -71,7 +71,7 @@ MetacelloInteractiveResolverTest >> testALoadInstallsTheBaselinesTheResolverDidN
 
 	self
 		assert: (loader loaded collect: [ :each | each key ]) asArray
-		equals: #( 'TestToLockPackage1' 'TestToLockPackage2' 'Package1' 'BaselineOfTestToLock2' )
+		equals: #( 'Package1' 'TestToLockPackage1' 'TestToLockPackage2' 'BaselineOfTestToLock2' )
 ]
 
 { #category : 'tests' }
@@ -132,28 +132,27 @@ MetacelloInteractiveResolverTest >> testALoadWithResolutionErrorsLoadsNothing [
 
 { #category : 'tests' }
 MetacelloInteractiveResolverTest >> testAProjectAskedTwiceRunsItsPreLoadAndPostLoadOnce [
-	"TestGroupsShared, asked by TestGroups and TestGroupsLate, has a preLoad and a postLoad: each is recorded once, around its packages"
+	"TestGroupsShared, asked by TestGroups for Core and by TestGroupsLate for Tests, has a preLoad and a postLoad: its preLoad comes before its first package and its postLoad after its last one"
 	| kinds |
 	kinds := (Metacello new
 		          baseline: 'TestGroups';
 		          repository: 'http://repo.com';
 		          record) loadDirectives collect: [ :each | each class name ].
-	self assert: (kinds reject: [ :each | each = #MetacelloPackageLoadDirective ]) size equals: 2.
 	self
-		assert: (kinds first: 4) asArray
-		equals: #( #MetacelloPreLoadDirective #MetacelloPackageLoadDirective #MetacelloPackageLoadDirective #MetacelloPostLoadDirective )
+		assert: kinds asArray
+		equals: #( #MetacelloPreLoadDirective #MetacelloPackageLoadDirective #MetacelloPackageLoadDirective #MetacelloPackageLoadDirective #MetacelloPostLoadDirective #MetacelloPackageLoadDirective )
 ]
 
 { #category : 'tests' }
-MetacelloInteractiveResolverTest >> testAProjectIsRecordedOnceWithEveryGroupAsked [
-	"TestGroups asks TestGroupsShared for Core and TestGroupsLate asks it for Tests: it is recorded once, with both groups, before the projects that require it"
+MetacelloInteractiveResolverTest >> testAProjectIsLoadedWhereEachGroupIsAsked [
+	"TestGroups asks TestGroupsShared for Core and TestGroupsLate asks it for Tests: each group is loaded where it is asked, once"
 	| names |
 	names := OrderedCollection new.
 	(Metacello new
 		 baseline: 'TestGroups';
 		 repository: 'http://repo.com';
 		 record) packageDirectivesDo: [ :each | names add: each spec name ].
-	self assert: names asArray equals: #( 'SharedCore' 'SharedTests' 'LatePackage' 'LateTests' )
+	self assert: names asArray equals: #( 'SharedCore' 'LatePackage' 'SharedTests' 'LateTests' )
 ]
 
 { #category : 'tests' }
@@ -233,7 +232,7 @@ MetacelloInteractiveResolverTest >> testRecordingFollowsTheResolution [
 		 repository: 'http://repo.com';
 		 record) packageDirectivesDo: [ :each | names add: each spec name ].
 
-	self assert: names asArray equals: #( 'TestToLockPackage1' 'TestToLockPackage2' 'Package1' )
+	self assert: names asArray equals: #( 'Package1' 'TestToLockPackage1' 'TestToLockPackage2' )
 ]
 
 { #category : 'tests' }

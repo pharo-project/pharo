@@ -258,14 +258,12 @@ MetacelloScriptEngine >> record: rootLoadList [
 
 { #category : 'private' }
 MetacelloScriptEngine >> recordDirective: rootLoadList [
-	"Record the resolution into a directive and answer it: every project once, after the projects it requires. A version spec loaded on its own (no script) is not a project of the resolution: it comes last, after the projects it requires, with its load list (see loadListOfVersion:)"
+	"Record the resolution into a directive and answer it (see MetacelloRecordTarget>>#record:). A version spec loaded on its own (no script) is not a project of the resolution: it is recorded with its load list (see loadListOfVersion:)"
 
 	| target |
 	target := MetacelloRecordTarget on: self.
 	version ifNil: [ ^ target record: resolution ].
-	target recordProjects: (resolution loadOrderFrom: (resolution requirementsOf: nil in: version)).
-	target record: version loading: (self loadListOfVersion: rootLoadList).
-	^ target specBuilder root
+	^ target recordVersion: version loading: (self loadListOfVersion: rootLoadList)
 ]
 
 { #category : 'actions api' }

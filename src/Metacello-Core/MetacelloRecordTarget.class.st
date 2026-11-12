@@ -8,7 +8,9 @@ Class {
 	#superclass : 'MetacelloTarget',
 	#instVars : [
 		'required',
-		'currentRepositorySpecs'
+		'currentRepositorySpecs',
+		'recorded',
+		'postLoads'
 	],
 	#category : 'Metacello-Core-Targets',
 	#package : 'Metacello-Core',
@@ -37,11 +39,27 @@ MetacelloRecordTarget >> linearLoadPackages: packages ofSpec: spec [
 		for: self
 ]
 
-{ #category : 'visiting' }
-MetacelloRecordTarget >> postLoad: packageOrVersionSpec [
-	"Add the directive that runs the spec's postLoadDoIt (it does nothing when there is none)"
+{ #category : 'recording' }
+MetacelloRecordTarget >> placeProjectHooks [
+	"Keep only the last postLoad of each version spec, so it runs once, after the last of its packages even when they are loaded in several places. Answer the root directive"
 
-	(MetacelloPostLoadDirective spec: packageOrVersionSpec) addTo: self specBuilder currentLoadDirective
+	self postLoads do: [ :directives |
+		directives allButLast do: [ :each | each value loadDirectives remove: each key ] ].
+	^ self specBuilder root
+]
+
+{ #category : 'recording' }
+MetacelloRecordTarget >> postLoad: packageOrVersionSpec [
+	"Add the directive that runs the spec's postLoadDoIt (it does nothing when there is none), and answer it"
+
+	^ (MetacelloPostLoadDirective spec: packageOrVersionSpec) addTo: self specBuilder currentLoadDirective; yourself
+]
+
+{ #category : 'accessing' }
+MetacelloRecordTarget >> postLoads [
+	"For each version spec visited, its postLoad directives with the directive holding each, in the order added"
+
+	^ postLoads ifNil: [ postLoads := IdentityDictionary new ]
 ]
 
 { #category : 'visiting' }
@@ -53,29 +71,49 @@ MetacelloRecordTarget >> preLoad: packageOrVersionSpec [
 
 { #category : 'recording' }
 MetacelloRecordTarget >> record: aResolution [
-	"The directive loading aResolution: every project once, after the projects it requires (see MetacelloResolution>>#loadOrder)"
+	"The directive loading aResolution: the root, each package where it is first asked (see visitProjectReference:), and each project's preLoad before its first packages and its postLoad after its last (see visitVersionSpec:)"
 
-	^ self recordProjects: aResolution loadOrder
+	self recordProject: aResolution root loading: aResolution root loadList.
+	^ self placeProjectHooks
 ]
 
 { #category : 'recording' }
 MetacelloRecordTarget >> record: aVersionSpec loading: aCollectionOfNames [
-	"Add aVersionSpec's preLoad, the packages aCollectionOfNames reach, and its postLoad (see visitVersionSpec:)"
+	"Add the packages aCollectionOfNames reach in aVersionSpec, in one directive (see visitVersionSpec:). A project reference among them records its project here, so required is restored afterwards"
 
+	| oldRequired |
+	oldRequired := required.
 	required := aCollectionOfNames.
-	aVersionSpec acceptVisitor: self
+	[ aVersionSpec acceptVisitor: self ] ensure: [ required := oldRequired ]
 ]
 
 { #category : 'recording' }
-MetacelloRecordTarget >> recordProjects: aCollectionOfResolvedProjects [
-	"Add each project to the directive, in the order given, with every group asked of it, and answer the directive. A locked project is left as the image has it"
+MetacelloRecordTarget >> recordProject: aResolvedProject loading: aCollectionOfNames [
+	"Add the names of aCollectionOfNames not recorded yet for aResolvedProject, at its resolved version: a project is recorded at each place that asks it something new, never twice for the same names. A locked project is left as the image has it"
 
-	aCollectionOfResolvedProjects do: [ :project |
-			MetacelloNotification signal: 'Project: ' , project name.
-			project isLocked
-				ifTrue: [ MetacelloNotification signal: 'Project is locked, skipping.' ]
-				ifFalse: [ self record: project version loading: project loadList ] ].
-	^ self specBuilder root
+	| names done |
+	MetacelloNotification signal: 'Project: ' , aResolvedProject name.
+	aResolvedProject isLocked ifTrue: [ ^ MetacelloNotification signal: 'Project is locked, skipping.' ].
+	done := self recorded at: aResolvedProject ifAbsentPut: [ Set new ].
+	names := (aCollectionOfNames reject: [ :each | done includes: each ]) asArray.
+	names ifEmpty: [ ^ self ].
+	done addAll: names.
+	self record: aResolvedProject version loading: names
+]
+
+{ #category : 'recording' }
+MetacelloRecordTarget >> recordVersion: aVersionSpec loading: aCollectionOfNames [
+	"The directive loading aVersionSpec, a version spec loaded on its own, with the names given (see record:)"
+
+	self record: aVersionSpec loading: aCollectionOfNames.
+	^ self placeProjectHooks
+]
+
+{ #category : 'accessing' }
+MetacelloRecordTarget >> recorded [
+	"The names recorded so far for each resolved project"
+
+	^ recorded ifNil: [ recorded := Dictionary new ]
 ]
 
 { #category : 'accessing' }
@@ -107,16 +145,25 @@ MetacelloRecordTarget >> visitPackageSpec: aMetacelloPackageSpec [
 
 { #category : 'visiting' }
 MetacelloRecordTarget >> visitProjectReference: aMetacelloProjectReferenceSpec [
-	"Nothing to record. The packages of a version spec include references to the projects it requires (spec baseline: 'Bloc' with: [ ... ]), and visitVersionSpecChildren: sends acceptVisitor: to each, so every reference comes here; without this method recording would fail on the first baseline with a dependency. The project referenced is a project of the resolution: record: added it to the directive already, before this one, since the load order puts every project after the projects it requires"
+	"Record the referenced project here, at the version the resolution chose, with what this reference asks of it: a group asked later is loaded where it is asked (BaselineOfPharo asks Monticello's RemoteRepositories early and BaselineOfIDE its Tests once SUnit is loaded). A locked project is left as the image has it"
+
+	| reference project |
+	reference := aMetacelloProjectReferenceSpec projectReference.
+	reference isLocked ifTrue: [
+		MetacelloNotification signal: 'Project: ' , reference name.
+		^ MetacelloNotification signal: 'Project is locked, skipping.' ].
+	project := engine resolvedProjectFor: reference.
+	self recordProject: project loading: (reference loadListForVersion: project version)
 ]
 
 { #category : 'visiting' }
 MetacelloRecordTarget >> visitVersionSpec: aMetacelloVersionSpec [
-	"Create the directives of a version spec: its preLoad, its packages (see visitVersionSpecChildren:), its postLoad"
+	"Create the directives of the packages required reaches. The version spec's preLoad comes before its first packages, the first time it is visited; its postLoad after each visit, and placeProjectHooks keeps only the last one"
 
-	self preLoad: aMetacelloVersionSpec.
+	(self postLoads includesKey: aMetacelloVersionSpec) ifFalse: [ self preLoad: aMetacelloVersionSpec ].
 	self visitVersionSpecChildren: aMetacelloVersionSpec.
-	self postLoad: aMetacelloVersionSpec
+	(self postLoads at: aMetacelloVersionSpec ifAbsentPut: [ OrderedCollection new ])
+		add: (self postLoad: aMetacelloVersionSpec) -> self specBuilder currentLoadDirective
 ]
 
 { #category : 'visiting' }
