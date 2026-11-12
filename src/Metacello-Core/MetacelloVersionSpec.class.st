@@ -59,8 +59,7 @@ MetacelloVersionSpec >> defaultPackageNames [
 MetacelloVersionSpec >> fetchRequiredFromArray: anArray withEngine: anEngine [
 	"Loaded on its own (no script): the engine resolves from me (see MetacelloScriptEngine>>#version:). Answer the directive"
 
-	(anEngine version: self) fetch: anArray.
-	^ anEngine root
+	^ (anEngine version: self) fetch: anArray
 ]
 
 { #category : 'accessing' }
@@ -111,8 +110,7 @@ MetacelloVersionSpec >> label [
 MetacelloVersionSpec >> loadRequiredFromArray: anArray withEngine: anEngine [
 	"Loaded on its own (no script): the engine resolves from me (see MetacelloScriptEngine>>#version:). Answer the directive"
 
-	(anEngine version: self) load: anArray.
-	^ anEngine root
+	^ (anEngine version: self) load: anArray
 ]
 
 { #category : 'querying' }
@@ -324,8 +322,7 @@ MetacelloVersionSpec >> projects [
 MetacelloVersionSpec >> recordRequiredFromArray: anArray withEngine: anEngine [
 	"Loaded on its own (no script): the engine resolves from me (see MetacelloScriptEngine>>#version:). Answer the directive"
 
-	(anEngine version: self) record: anArray.
-	^ anEngine root
+	^ (anEngine version: self) record: anArray
 ]
 
 { #category : 'actions' }

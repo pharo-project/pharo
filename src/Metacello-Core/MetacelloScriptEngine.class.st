@@ -10,7 +10,9 @@ Class {
 		'specBuilder',
 		'projectSpec',
 		'resolution',
-		'version'
+		'version',
+		'directive',
+		'fetched'
 	],
 	#category : 'Metacello-Core-Scripts',
 	#package : 'Metacello-Core',
@@ -29,19 +31,6 @@ MetacelloScriptEngine >> directiveLoading: required [
 	^ target specBuilder root
 ]
 
-{ #category : 'private' }
-MetacelloScriptEngine >> do: aBlock required: required commitIfSuccess: aBoolean [
-	"Resolve first; with errors, signal MetacelloResolutionError and do nothing. Otherwise record the resolution into one directive (see directiveLoading:) and run aBlock on it; its answer is the root of this engine"
-
-	MetacelloProjectRegistry
-		copyRegistryDuring: [
-				self handleNotificationsForAction: [
-						self resolve: required.
-						resolution hasErrors ifTrue: [ MetacelloResolutionError signalFor: resolution ].
-						self root: (aBlock value: (self directiveLoading: required)) ] ]
-		commitIfSuccess: aBoolean
-]
-
 { #category : 'project lookup' }
 MetacelloScriptEngine >> doLoadProjectSpecFrom: aMetacelloPackageSpec [
 
@@ -50,14 +39,31 @@ MetacelloScriptEngine >> doLoadProjectSpecFrom: aMetacelloPackageSpec [
 		engine: self
 ]
 
+{ #category : 'private' }
+MetacelloScriptEngine >> during: aBlock keepingRegistry: aBoolean [
+	"Run aBlock on a copy of the registry, with the script's handlers for upgrades, downgrades, conflicts and locks; keep the copy only when aBlock succeeds and aBoolean"
+
+	MetacelloProjectRegistry
+		copyRegistryDuring: [ self handleNotificationsForAction: aBlock ]
+		commitIfSuccess: aBoolean
+]
+
 { #category : 'actions api' }
 MetacelloScriptEngine >> fetch: required [
-	^ self
-		  do: [ :directive |
-				  directive acceptVisitor: (MetacelloFetchTarget on: self).
-				  directive ]
-		  required: required
-		  commitIfSuccess: false
+	"Fetch what the directive loads, recording first if needed (see fetched:), and answer the directive"
+
+	self during: [ self root: (self fetched: required) ] keepingRegistry: false.
+	^ root
+]
+
+{ #category : 'private' }
+MetacelloScriptEngine >> fetched: required [
+	"The directive, its packages fetched once, recording first if needed"
+
+	fetched == true ifTrue: [ ^ directive ].
+	(self recorded: required) acceptVisitor: (MetacelloFetchTarget on: self).
+	fetched := true.
+	^ directive
 ]
 
 { #category : 'actions api' }
@@ -153,13 +159,18 @@ MetacelloScriptEngine >> list [
 
 { #category : 'actions api' }
 MetacelloScriptEngine >> load: required [
-	self
-		do: [ :directive |
-				directive acceptVisitor: (MetacelloFetchTarget on: self).
-				(MetacelloLoadTarget on: self) load: directive.
-				directive ]
-		required: required
-		commitIfSuccess: true
+	"Load the directive, fetching first if needed (see loaded:), and keep the registry changes"
+
+	self during: [ self root: (self loaded: required) ] keepingRegistry: true.
+	^ root
+]
+
+{ #category : 'private' }
+MetacelloScriptEngine >> loaded: required [
+	"The directive, loaded, fetching first if needed"
+
+	(MetacelloLoadTarget on: self) load: (self fetched: required).
+	^ directive
 ]
 
 { #category : 'accessing' }
@@ -234,10 +245,19 @@ MetacelloScriptEngine >> projectSpec: aSpec [
 
 { #category : 'actions api' }
 MetacelloScriptEngine >> record: required [
-	^ self
-		  do: [ :directive | directive ]
-		  required: required
-		  commitIfSuccess: false
+	"Record the directive loading required, resolving first if needed (see recorded:), and answer it"
+
+	self during: [ self root: (self recorded: required) ] keepingRegistry: false.
+	^ root
+]
+
+{ #category : 'private' }
+MetacelloScriptEngine >> recorded: required [
+	"The directive loading the resolution, recorded once, resolving first if needed. A resolution with errors is never recorded: it signals MetacelloResolutionError"
+
+	directive ifNotNil: [ ^ directive ].
+	(self resolved: required) hasErrors ifTrue: [ MetacelloResolutionError signalFor: resolution ].
+	^ directive := self directiveLoading: required
 ]
 
 { #category : 'actions api' }
@@ -268,16 +288,9 @@ MetacelloScriptEngine >> resolution: aResolution [
 
 { #category : 'actions api' }
 MetacelloScriptEngine >> resolve: required [
-	"Answer the resolution of a load of required, errors included, leaving the registry as it was: from the root, or from a version spec loaded on its own (no script, see version:)"
+	"Answer the resolution of a load of required, errors included, leaving the registry as it was"
 
-	MetacelloProjectRegistry
-		copyRegistryDuring: [
-				self handleNotificationsForAction: [
-						self resolution: (version
-								 ifNil: [ (MetacelloResolveTarget on: self) resolve: self projectSpec loads: required ]
-								 ifNotNil: [ (MetacelloResolveTarget on: self) resolveVersion: version loads: (self versionLoads: required) ]).
-						self root: resolution ] ]
-		commitIfSuccess: false.
+	self during: [ self root: (self resolved: required) ] keepingRegistry: false.
 	^ resolution
 ]
 
@@ -295,6 +308,17 @@ MetacelloScriptEngine >> resolvePresentProject: existingRegistration new: newReg
 					  newProjectRegistration: newRegistration;
 					  signal ]
 		  ifFalse: [ newRegistration ]
+]
+
+{ #category : 'private' }
+MetacelloScriptEngine >> resolved: required [
+	"The resolution of required, resolved once: from the root, or from a version spec loaded on its own (no script, see version:)"
+
+	resolution ifNil: [
+			self resolution: (version
+					 ifNil: [ (MetacelloResolveTarget on: self) resolve: self projectSpec loads: required ]
+					 ifNotNil: [ (MetacelloResolveTarget on: self) resolveVersion: version loads: (self versionLoads: required) ]) ].
+	^ resolution
 ]
 
 { #category : 'resolution' }
