@@ -367,7 +367,7 @@ MetacelloMVSResolverTest >> testAReportHasTheBuildList [
 		assert: report resolves;
 		assert: (self selected: 'bloc' in: report buildList) equals: 'v3.0.0';
 		assert: (report dependenciesOf: (self repo: 'root')) asArray equals: { (self repo: 'bloc') };
-		assert: report rootCandidate repository equals: (self repo: 'root')
+		assert: (report rootCandidates collect: [ :each | each repository ]) asArray equals: { (self repo: 'root') }
 ]
 
 { #category : 'tests - warnings' }

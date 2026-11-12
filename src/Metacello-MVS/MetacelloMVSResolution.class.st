@@ -176,13 +176,6 @@ MetacelloMVSResolution >> resolves [
 ]
 
 { #category : 'accessing' }
-MetacelloMVSResolution >> rootCandidate [
-	"The candidate of the first root, or nil when it could not be selected"
-
-	^ self rootCandidates ifEmpty: [ nil ] ifNotEmpty: [ :candidates | candidates first ]
-]
-
-{ #category : 'accessing' }
 MetacelloMVSResolution >> rootCandidates [
 	"The candidates of the roots that could be selected, in order"
 
