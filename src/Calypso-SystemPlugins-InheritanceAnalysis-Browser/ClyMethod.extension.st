@@ -4,5 +4,6 @@ Extension { #name : 'ClyMethod' }
 ClyMethod class >> calypsoSystemPluginsInheritanceAnalysisBrowserCommandsIn: aCommandMap [
 
 	<calypsoCommands>
-	aCommandMap shortcuts add: ClyShowMethodInheritanceCommand key: $h meta
+	aCommandMap shortcuts add: ClyShowMethodInheritanceCommand key: $h meta.
+	aCommandMap contextMenu add: ClyShowMethodInheritanceCommand
 ]

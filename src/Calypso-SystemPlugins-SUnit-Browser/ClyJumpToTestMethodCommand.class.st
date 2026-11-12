@@ -82,12 +82,6 @@ ClyJumpToTestMethodCommand >> generateTestMethodNamed: aSymbol in: aClass [
 ]
 
 { #category : 'accessing' }
-ClyJumpToTestMethodCommand >> menuGroup [
-
-	^ ClySUnitMethodMenuGroup
-]
-
-{ #category : 'accessing' }
 ClyJumpToTestMethodCommand >> name [
 	^ 'Jump to test method'
 ]

@@ -53,12 +53,6 @@ ClyIcebergShowMethodVersionCommand >> iconName [
 ]
 
 { #category : 'accessing' }
-ClyIcebergShowMethodVersionCommand >> menuGroup [
-
-	^ ClyQueryMenuGroup
-]
-
-{ #category : 'accessing' }
 ClyIcebergShowMethodVersionCommand >> name [
 
 	^ 'Commit history'

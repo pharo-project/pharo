@@ -623,13 +623,13 @@ ClyQueryViewMorph >> mainColumn [
 
 { #category : 'menu' }
 ClyQueryViewMorph >> menuColumn: column row: rowIndex [
-	"The context menu of a query row: the commands of the context menu interaction and the pure commands of its context, as the Commander2 tree."
+	"The context menu of a query row: the commands of the context menu interaction, as the Commander2 tree."
 
 	| menuSelection context |
 	menuSelection := self grabSelectionAt: rowIndex.
 	context := self createSelectionContextOf: menuSelection.
 	^ ClyCommandGroupMenuRenderer new
-		  renderTree: (ClyCommandGroupBuilder new buildMenuOf: (ClyCommandRegistry default activationsOf: #contextMenu inContext: context) context: context pureRoots: context commanderCommandClasses)
+		  renderTree: (ClyCommandGroupBuilder new buildMenuOf: (ClyCommandRegistry default activationsOf: #contextMenu inContext: context) context: context pureRoots: #(  ))
 		  on: self
 ]
 

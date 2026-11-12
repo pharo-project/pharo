@@ -28,12 +28,6 @@ ClyShowGroupsInMethodBrowserCommand >> iconName [
 ]
 
 { #category : 'accessing' }
-ClyShowGroupsInMethodBrowserCommand >> menuGroup [
-
-	^ ClyQueryMenuGroup
-]
-
-{ #category : 'accessing' }
 ClyShowGroupsInMethodBrowserCommand >> name [
 	^'Show in method browser'
 ]

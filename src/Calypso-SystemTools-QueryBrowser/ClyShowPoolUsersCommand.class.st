@@ -42,12 +42,6 @@ ClyShowPoolUsersCommand >> isAvailableInMenuOf: aToolContext [
 ]
 
 { #category : 'accessing' }
-ClyShowPoolUsersCommand >> menuGroup [
-
-	^ ClyQueryMenuGroup
-]
-
-{ #category : 'accessing' }
 ClyShowPoolUsersCommand >> name [
 
 	^ 'Show pool users'

@@ -6,5 +6,8 @@ ClyFullBrowserVariableContext class >> calypsoSystemToolsQueryBrowserCommandsIn:
 	<calypsoCommands>
 	aCommandMap shortcuts
 		add: ClyShowVariableRefCommand key: $n meta;
-		add: ClyShowVariableWriterCommand key: $m meta
+		add: ClyShowVariableWriterCommand key: $m meta.
+	(aCommandMap contextMenu group: ClyQueryMenuGroup)
+		add: ClyShowVariableRefCommand;
+		add: ClyShowVariableWriterCommand
 ]

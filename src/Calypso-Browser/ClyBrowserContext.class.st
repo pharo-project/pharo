@@ -77,20 +77,6 @@ ClyBrowserContext >> browser [
 	^tool
 ]
 
-{ #category : 'accessing' }
-ClyBrowserContext >> commanderCommandClasses [
-
-	| roots |
-	roots := OrderedCollection new.
-	(self isAboutBrowserItemType: ClyClass) ifTrue: [ roots add: SycSingleClassCommand ].
-	(self isAboutBrowserItemType: ClyMethod) ifTrue: [
-			roots
-				add: SycChangeMessageMenuCmCommand;
-				add: SycMessageCommand;
-				add: SycMethodCommand ].
-	^ roots asArray
-]
-
 { #category : 'copying' }
 ClyBrowserContext >> copyForBrowserStateSnapshot [
 

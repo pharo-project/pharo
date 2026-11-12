@@ -46,12 +46,6 @@ ClyShowMessageImplementorCommand >> iconName [
 ]
 
 { #category : 'accessing' }
-ClyShowMessageImplementorCommand >> menuGroup [
-
-	^ ClyQueryMenuGroup
-]
-
-{ #category : 'accessing' }
 ClyShowMessageImplementorCommand >> name [
 	^'Implementors'
 ]

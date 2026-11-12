@@ -50,12 +50,6 @@ ClyShowClassRefCommand >> isAvailableInMenuOf: aToolContext [
 ]
 
 { #category : 'accessing' }
-ClyShowClassRefCommand >> menuGroup [
-
-	^ ClyQueryMenuGroup
-]
-
-{ #category : 'accessing' }
 ClyShowClassRefCommand >> name [
 	^'Class refs.'
 ]

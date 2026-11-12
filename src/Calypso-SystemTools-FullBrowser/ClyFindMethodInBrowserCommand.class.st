@@ -34,12 +34,6 @@ ClyFindMethodInBrowserCommand >> isAvailableInMenuOf: aToolContext [
 ]
 
 { #category : 'accessing' }
-ClyFindMethodInBrowserCommand >> menuGroup [
-
-	^ ClyQueryMenuGroup
-]
-
-{ #category : 'accessing' }
 ClyFindMethodInBrowserCommand >> name [
 	^'Find method'
 ]

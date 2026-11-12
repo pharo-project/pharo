@@ -16,12 +16,6 @@ ClyOpenCriticBrowserCommand >> executeRefactoring [
 	StCritiqueRuleSelectorPresenter openWithEnvironment: env removeTestCase: false
 ]
 
-{ #category : 'accessing' }
-ClyOpenCriticBrowserCommand >> menuGroup [
-
-	^ ClyQueryMenuGroup
-]
-
 { #category : 'activation' }
 ClyOpenCriticBrowserCommand >> name [
 	^'Browse critiques'

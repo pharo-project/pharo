@@ -20,7 +20,16 @@ ClyFullBrowserPackageContext class >> calypsoSystemToolsFullBrowserCommandsIn: a
 	aCommandMap shortcuts
 		add: SycDuplicatePackageCommand key: $c meta;
 		add: SycRemovePackageCommand key: $x meta;
-		add: SycRenamePackageCommand key: $r meta
+		add: SycRenamePackageCommand key: $r meta.
+	aCommandMap contextMenu
+		add: ClyRemoveClassGroupCommand;
+		add: ClyRenamePackageTagCommand;
+		add: SycAddNewClassTagCommand;
+		add: SycAddNewPackageCommand;
+		add: SycAddPackagesScopeCommand;
+		add: SycDuplicatePackageCommand;
+		add: SycRemovePackageCommand;
+		add: SycRenamePackageCommand
 ]
 
 { #category : 'selection strategy' }
@@ -28,12 +37,6 @@ ClyFullBrowserPackageContext class >> selectionStrategy [
 	<classAnnotation>
 
 	^ClyContextSelectionStrategyAnnotation for: ClyFullBrowserMorph selectionType: Package
-]
-
-{ #category : 'accessing' }
-ClyFullBrowserPackageContext >> commanderCommandClasses [
-
-	^ super commanderCommandClasses , { SycPackageCommand }
 ]
 
 { #category : 'selection-class groups' }

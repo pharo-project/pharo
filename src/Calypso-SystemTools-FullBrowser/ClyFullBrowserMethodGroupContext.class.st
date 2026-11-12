@@ -15,7 +15,19 @@ ClyFullBrowserMethodGroupContext class >> calypsoSystemToolsFullBrowserCommandsI
 	<calypsoCommands>
 	aCommandMap shortcuts
 		add: ClyRemoveMethodGroupCommand key: $x meta;
-		add: ClyRenameProtocolCommand key: $r meta
+		add: ClyRenameProtocolCommand key: $r meta.
+	aCommandMap contextMenu
+		add: ClyConvertMethodGroupToProtocolCommand;
+		add: ClyMoveMethodGroupsToPackageCommand;
+		add: ClyRemoveMethodGroupCommand;
+		add: ClyRenameProtocolCommand;
+		add: SycAbstractAllInstVarAccessorsCommand;
+		add: SycAddNewProtocolCommand;
+		add: SycCategorizeAllUnclassifiedMethodsCommand;
+		add: SycGenerateAllInstVarAccessorsCommand;
+		add: SycRealizeClassCommand;
+		add: SycRemoveClassCommand;
+		add: SycRemoveEmptyMethodTagsCommand
 ]
 
 { #category : 'selection strategy' }
@@ -23,14 +35,6 @@ ClyFullBrowserMethodGroupContext class >> selectionStrategy [
 	<classAnnotation>
 
 	^ClyContextSelectionStrategyAnnotation for: ClyFullBrowserMorph selectionType: ClyMethodGroup
-]
-
-{ #category : 'accessing' }
-ClyFullBrowserMethodGroupContext >> commanderCommandClasses [
-
-	^ super commanderCommandClasses , {
-		  SycClassCommand.
-		  ClyMethodGroupCommand }
 ]
 
 { #category : 'testing' }

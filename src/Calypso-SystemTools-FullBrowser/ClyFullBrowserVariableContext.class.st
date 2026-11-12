@@ -17,7 +17,21 @@ ClyFullBrowserVariableContext class >> calypsoSystemToolsFullBrowserCommandsIn: 
 		add: SycRemoveVariablesCommand key: $x meta;
 		add: SycRenameVariableCommand key: $r meta.
 	(aCommandMap shortcuts add: SycInspectVariableValueCommand key: $i meta) priority: 100000.
-	(aCommandMap doubleClick add: SycInspectVariableValueCommand) priority: 10000
+	(aCommandMap doubleClick add: SycInspectVariableValueCommand) priority: 10000.
+	aCommandMap contextMenu
+		add: SycAbstractVariableCommand;
+		add: SycGenerateVariableAccessorCommand;
+		add: SycGenerateVariableAccessorsWithLazyInitializationCommand;
+		add: SycMergeVariableCommand;
+		add: SycMoveInstanceVariableToClassSideCommand;
+		add: SycProtectVariableCommand;
+		add: SycPushDownVariableCommand;
+		add: SycPushUpVariableCommand;
+		add: SycRemoveVariablesCommand;
+		add: SycRenameVariableCommand.
+	(aCommandMap contextMenu group: ClyQueryMenuGroup)
+		add: SycBrowseVariableCommand;
+		add: SycInspectVariableValueCommand
 ]
 
 { #category : 'selection strategy' }
@@ -33,14 +47,6 @@ ClyFullBrowserVariableContext class >> selectionStrategy2 [
 	<classAnnotation>
 
 	^(ClyContextSelectionStrategyAnnotation for: ClyFullBrowserMorph selectionType: ClyVariable)
-]
-
-{ #category : 'testing' }
-ClyFullBrowserVariableContext >> commanderCommandClasses [
-
-	^ {
-		  SycRefactorVariableCommand.
-		  SycVariableNavigationCmCommand }
 ]
 
 { #category : 'testing' }

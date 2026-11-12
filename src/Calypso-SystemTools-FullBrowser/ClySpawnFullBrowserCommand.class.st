@@ -41,12 +41,6 @@ ClySpawnFullBrowserCommand >> iconName [
 ]
 
 { #category : 'accessing' }
-ClySpawnFullBrowserCommand >> menuGroup [
-
-	^ ClyQueryMenuGroup
-]
-
-{ #category : 'accessing' }
 ClySpawnFullBrowserCommand >> name [
 	^'Browse'
 ]

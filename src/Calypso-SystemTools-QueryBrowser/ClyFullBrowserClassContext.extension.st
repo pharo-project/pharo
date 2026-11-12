@@ -5,5 +5,9 @@ ClyFullBrowserClassContext class >> calypsoSystemToolsQueryBrowserCommandsIn: aC
 
 	<calypsoCommands>
 	(aCommandMap toolbar group: ClyButtonToolbarGroup) add: ClyShowClassRefCommand order: 1000.
-	aCommandMap shortcuts add: ClyShowClassRefCommand key: $n meta
+	aCommandMap shortcuts add: ClyShowClassRefCommand key: $n meta.
+	(aCommandMap contextMenu group: ClyQueryMenuGroup)
+		add: ClyShowClassRefCommand;
+		add: ClyShowPoolUsersCommand;
+		add: ClyShowTraitUsersCommand
 ]

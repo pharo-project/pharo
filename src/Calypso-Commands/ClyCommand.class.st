@@ -180,6 +180,7 @@ ClyCommand >> menuAlternatives [
 
 { #category : 'accessing' }
 ClyCommand >> menuGroup [
+	"The menu group of the command when ClyCommandGroupBuilder places it as a pure command (#buildMenuOf:context:pureRoots:). Commands declared with <calypsoCommands> get their group from their declaration."
 
 	^ ClyRootMenuGroup
 ]

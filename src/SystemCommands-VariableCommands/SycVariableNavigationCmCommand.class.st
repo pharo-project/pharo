@@ -9,12 +9,6 @@ Class {
 }
 
 { #category : 'accessing' }
-SycVariableNavigationCmCommand >> menuGroup [
-
-	^ ClyQueryMenuGroup
-]
-
-{ #category : 'accessing' }
 SycVariableNavigationCmCommand >> orderInContext: aToolContext [
 
 	^ aToolContext isFullBrowserVariableContext

@@ -19,7 +19,16 @@ ClyFullBrowserClassGroupContext class >> calypsoSystemToolsFullBrowserCommandsIn
 		add: ClySwitchToScopedViewCommand order: 1.
 	aCommandMap shortcuts
 		add: ClyRemoveClassGroupCommand key: $x meta;
-		add: ClyRenamePackageTagCommand key: $r meta
+		add: ClyRenamePackageTagCommand key: $r meta.
+	aCommandMap contextMenu
+		add: ClyRemoveClassGroupCommand;
+		add: ClyRenamePackageTagCommand;
+		add: SycAddNewClassTagCommand;
+		add: SycAddNewPackageCommand;
+		add: SycAddPackagesScopeCommand;
+		add: SycDuplicatePackageCommand;
+		add: SycRemovePackageCommand;
+		add: SycRenamePackageCommand
 ]
 
 { #category : 'selection strategy' }
@@ -27,12 +36,6 @@ ClyFullBrowserClassGroupContext class >> selectionStrategy [
 	<classAnnotation>
 
 	^ClyContextSelectionStrategyAnnotation for: ClyFullBrowserMorph selectionType: ClyClassGroup
-]
-
-{ #category : 'accessing' }
-ClyFullBrowserClassGroupContext >> commanderCommandClasses [
-
-	^ super commanderCommandClasses , { SycPackageCommand }
 ]
 
 { #category : 'testing' }

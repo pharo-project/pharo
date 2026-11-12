@@ -34,12 +34,6 @@ ClyBrowseCoveringTestCaseCommand >> isAvailableInMenuOf: aToolContext [
 ]
 
 { #category : 'accessing' }
-ClyBrowseCoveringTestCaseCommand >> menuGroup [
-
-	^ ClyQueryMenuGroup
-]
-
-{ #category : 'accessing' }
 ClyBrowseCoveringTestCaseCommand >> name [
 	^ 'Browse test class'
 ]

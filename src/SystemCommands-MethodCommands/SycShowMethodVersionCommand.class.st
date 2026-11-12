@@ -36,12 +36,6 @@ SycShowMethodVersionCommand >> iconName [
 ]
 
 { #category : 'accessing' }
-SycShowMethodVersionCommand >> menuGroup [
-
-	^ ClyQueryMenuGroup
-]
-
-{ #category : 'accessing' }
 SycShowMethodVersionCommand >> name [
 	^'Versions'
 ]

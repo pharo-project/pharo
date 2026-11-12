@@ -53,6 +53,13 @@ Class {
 	#tag : 'Contexts'
 }
 
+{ #category : 'commands' }
+ClySystemBrowserContext class >> calypsoSystemToolsCoreCommandsIn: aCommandMap [
+
+	<calypsoCommands>
+	(aCommandMap contextMenu group: ClyQueryMenuGroup) add: ClyFindClassCommand
+]
+
 { #category : 'accessing - packages' }
 ClySystemBrowserContext class >> rememberedPackage [
 
@@ -63,12 +70,6 @@ ClySystemBrowserContext class >> rememberedPackage [
 ClySystemBrowserContext class >> rememberedPackage: aPackage [
 
 	RememberedPackage := aPackage
-]
-
-{ #category : 'accessing' }
-ClySystemBrowserContext >> commanderCommandClasses [
-
-	^ super commanderCommandClasses , { ClyBrowserCommand }
 ]
 
 { #category : 'user requests' }

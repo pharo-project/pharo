@@ -64,12 +64,6 @@ ClyShowMessageSenderCommand >> iconName [
 ]
 
 { #category : 'accessing' }
-ClyShowMessageSenderCommand >> menuGroup [
-
-	^ ClyQueryMenuGroup
-]
-
-{ #category : 'accessing' }
 ClyShowMessageSenderCommand >> name [
 	^'Senders'
 ]

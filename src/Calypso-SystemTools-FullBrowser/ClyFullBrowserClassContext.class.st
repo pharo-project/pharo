@@ -22,7 +22,15 @@ ClyFullBrowserClassContext class >> calypsoSystemToolsFullBrowserCommandsIn: aCo
 	aCommandMap shortcuts
 		add: ClyMoveClassToGroupCommand key: $m meta , $c meta;
 		add: ClySwitchToFullHierarchyCommand key: $h meta;
-		add: SycRemoveClassCommand key: $x meta
+		add: SycRemoveClassCommand key: $x meta.
+	aCommandMap contextMenu
+		add: SycAbstractAllInstVarAccessorsCommand;
+		add: SycAddNewProtocolCommand;
+		add: SycCategorizeAllUnclassifiedMethodsCommand;
+		add: SycGenerateAllInstVarAccessorsCommand;
+		add: SycRealizeClassCommand;
+		add: SycRemoveClassCommand;
+		add: SycRemoveEmptyMethodTagsCommand
 ]
 
 { #category : 'selection strategy' }
@@ -30,12 +38,6 @@ ClyFullBrowserClassContext class >> selectionStrategy [
 	<classAnnotation>
 
 	^ClyContextSelectionStrategyAnnotation for: ClyFullBrowserMorph selectionType: ClyClass
-]
-
-{ #category : 'testing' }
-ClyFullBrowserClassContext >> commanderCommandClasses [
-
-	^ super commanderCommandClasses , { SycClassCommand }
 ]
 
 { #category : 'testing' }

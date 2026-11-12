@@ -37,12 +37,6 @@ ClyShowTraitUsersCommand >> isAvailableInMenuOf: aToolContext [
 ]
 
 { #category : 'accessing' }
-ClyShowTraitUsersCommand >> menuGroup [
-
-	^ ClyQueryMenuGroup
-]
-
-{ #category : 'accessing' }
 ClyShowTraitUsersCommand >> name [
 	^'Show trait users'
 ]

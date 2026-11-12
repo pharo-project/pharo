@@ -25,12 +25,6 @@ SycBrowseClassCommand >> isAvailableInMenuOf: aToolContext [
 ]
 
 { #category : 'accessing' }
-SycBrowseClassCommand >> menuGroup [
-
-	^ ClyQueryMenuGroup
-]
-
-{ #category : 'accessing' }
 SycBrowseClassCommand >> name [
 	^'Browse'
 ]

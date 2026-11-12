@@ -15,12 +15,6 @@ ClyOpenDependencyBrowserCommand >> executeRefactoring [
 ]
 
 { #category : 'accessing' }
-ClyOpenDependencyBrowserCommand >> menuGroup [
-
-	^ ClyQueryMenuGroup
-]
-
-{ #category : 'accessing' }
 ClyOpenDependencyBrowserCommand >> name [
 	^'Browse dependencies'
 ]

@@ -21,7 +21,19 @@ ClyQueryBrowserContext class >> calypsoSystemToolsQueryBrowserCommandsIn: aComma
 		add: ClySwitchQueryScopeCommand order: -5;
 		addAllConcreteSubclassesOf: ClySwitchQueryResultCommand.
 	aCommandMap shortcuts add: ClyShowClassRefCommand key: $c meta , $n meta.
-	aCommandMap doubleClick add: ClySpawnFullBrowserCommand
+	aCommandMap doubleClick add: ClySpawnFullBrowserCommand.
+	aCommandMap contextMenu
+		add: SycAbstractAllInstVarAccessorsCommand;
+		add: SycAddNewProtocolCommand;
+		add: SycCategorizeAllUnclassifiedMethodsCommand;
+		add: SycGenerateAllInstVarAccessorsCommand;
+		add: SycRealizeClassCommand;
+		add: SycRemoveClassCommand;
+		add: SycRemoveEmptyMethodTagsCommand.
+	(aCommandMap contextMenu group: ClyQueryMenuGroup)
+		add: ClyShowClassRefCommand;
+		add: ClyShowPoolUsersCommand;
+		add: ClyShowTraitUsersCommand
 ]
 
 { #category : 'selection strategy' }
@@ -29,12 +41,6 @@ ClyQueryBrowserContext class >> selectionStrategy [
 	<classAnnotation>
 
 	^ClyContextSelectionStrategyAnnotation for: ClyQueryBrowserMorph
-]
-
-{ #category : 'accessing' }
-ClyQueryBrowserContext >> commanderCommandClasses [
-
-	^ super commanderCommandClasses , { SycClassCommand }
 ]
 
 { #category : 'selection-classes' }

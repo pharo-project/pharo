@@ -9,5 +9,8 @@ ClyMethod class >> calypsoSystemToolsQueryBrowserCommandsIn: aCommandMap [
 		add: ClyShowMessageSenderCommand order: 1000.
 	aCommandMap shortcuts
 		add: ClyShowMessageImplementorCommand key: $m meta;
-		add: ClyShowMessageSenderCommand key: $n meta
+		add: ClyShowMessageSenderCommand key: $n meta.
+	(aCommandMap contextMenu group: ClyQueryMenuGroup)
+		add: ClyShowMessageImplementorCommand;
+		add: ClyShowMessageSenderCommand
 ]

@@ -17,5 +17,8 @@ ClyMethod class >> calypsoSystemPluginsSUnitBrowserCommandsIn: aCommandMap [
 		add: ClyJumpToTestMethodCommand key: $h meta , $j meta;
 		add: ClyOpenTestMethodCommand key: $t meta , $o meta;
 		add: ClyRunCoveringTestMethodsCommand key: $t meta;
-		add: ClyRunTestsFromMethodsCommand key: $t meta
+		add: ClyRunTestsFromMethodsCommand key: $t meta.
+	(aCommandMap contextMenu group: ClySUnitMethodMenuGroup)
+		add: ClyJumpToTestMethodCommand;
+		add: ClyOpenTestMethodCommand
 ]
