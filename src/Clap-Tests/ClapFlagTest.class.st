@@ -62,6 +62,14 @@ ClapFlagTest >> testAnOptionalPositionalCanBeLeftOut [
 ]
 
 { #category : 'tests' }
+ClapFlagTest >> testAnOptionalPositionalCanBeLeftOutAfterOneGivenExplicitly [
+	"Given in the first flag, left out in the last one, at the end of the line"
+	self
+		assert: (self devsIn: #( 'install' '--dev' 'Album' 'other' 'Tests' '--dev' 'Bloc' 'repo' ))
+		equals: #( #( 'Album' 'other' 'Tests' ) #( 'Bloc' 'repo' 'default' ) )
+]
+
+{ #category : 'tests' }
 ClapFlagTest >> testAnOptionalPositionalIsBracketedInTheSynopsis [
 
 	self
