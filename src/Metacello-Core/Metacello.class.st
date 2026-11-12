@@ -474,6 +474,27 @@ Metacello >> repository: repositoryDescription [
 	self scriptExecutor repositoryArg: repositoryDescription
 ]
 
+{ #category : 'api actions' }
+Metacello >> resolve [
+	"Answer the MetacelloResolution of a load of the default groups: every project it would load, at the version chosen, and the errors and warnings found. Loads and registers nothing"
+
+	^ self execute: [ :executor | executor resolve: #(  ) ]
+]
+
+{ #category : 'api actions' }
+Metacello >> resolve: required [
+	"Answer the MetacelloResolution of a load of required: every project it would load, at the version chosen, and the errors and warnings found. Loads and registers nothing"
+
+	^ self execute: [ :executor | executor resolve: required ]
+]
+
+{ #category : 'api options' }
+Metacello >> resolver: aMetacelloResolver [
+	"Choose the versions to load with aMetacelloResolver instead of Metacello's default, which asks the handlers or the user at each conflict (MetacelloInteractiveResolver)"
+
+	self scriptExecutor resolver: aMetacelloResolver
+]
+
 { #category : 'accessing' }
 Metacello >> scriptExecutor [
 

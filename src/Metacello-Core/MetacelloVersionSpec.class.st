@@ -56,50 +56,10 @@ MetacelloVersionSpec >> defaultPackageNames [
 ]
 
 { #category : 'private' }
-MetacelloVersionSpec >> doFetchRequiredFromArray: anArray withEngine: anEngine [
-
-	^ self doWithProgress: [ self fetchRequiredFromArray: anArray withEngine: anEngine ] label: 'Fetching'
-]
-
-{ #category : 'private' }
-MetacelloVersionSpec >> doLoadRequiredFromArray: anArray withEngine: anEngine [
-
-	^ self doWithProgress: [ self loadRequiredFromArray: anArray withEngine: anEngine ] label: 'Loading'
-]
-
-{ #category : 'private' }
-MetacelloVersionSpec >> doRecordRequiredFromArray: anArray withEngine: anEngine [
-
-	^ self doWithProgress: [ self recordRequiredFromArray: anArray withEngine: anEngine ] label: 'Recording'
-]
-
-{ #category : 'private' }
-MetacelloVersionSpec >> doWithProgress: aBlock label: aLabel [
-
-	| displayString result startTime |
-	startTime := Time millisecondClockValue.
-	displayString := aLabel , ' baseline of ' , self projectLabel.
-	MetacelloNotification signal: displayString , '...'.
-
-	displayString displayProgressFrom: 0 to: 2 during: [ :bar |
-			bar value: 1.
-			result := aBlock value.
-			bar value: 2 ].
-
-	MetacelloNotification 
-		signal: '...finished to load the baseline' 
-		milliSeconds: (Time millisecondClockValue - startTime).
-	^ result
-]
-
-{ #category : 'private' }
 MetacelloVersionSpec >> fetchRequiredFromArray: anArray withEngine: anEngine [
+	"Loaded on its own (no script): the engine resolves from me (see MetacelloScriptEngine>>#version:). Answer the directive"
 
-	| directive |
-	directive := self recordRequiredFromArray: (anArray ifEmpty: [ self defaultPackageNames ]) withEngine: anEngine.
-
-	directive acceptVisitor: (MetacelloFetchTarget on: anEngine).
-	^ directive
+	^ (anEngine version: self) fetch: anArray
 ]
 
 { #category : 'accessing' }
@@ -148,12 +108,32 @@ MetacelloVersionSpec >> label [
 
 { #category : 'private' }
 MetacelloVersionSpec >> loadRequiredFromArray: anArray withEngine: anEngine [
+	"Loaded on its own (no script): the engine resolves from me (see MetacelloScriptEngine>>#version:). Answer the directive"
 
-	| directive |
-	directive := self fetchRequiredFromArray: (anArray ifEmpty: [ self defaultPackageNames ]) withEngine: anEngine.
+	^ (anEngine version: self) load: anArray
+]
 
-	directive acceptVisitor: (MetacelloLoadTarget on: anEngine).
-	^ directive
+{ #category : 'querying' }
+MetacelloVersionSpec >> loadableSpecsFor: aCollectionOfNames [
+	"The loadable specs (packages and projects, not groups) that loading aCollectionOfNames reaches through includes and requires"
+
+	| loadableSpecs requirementList managedRequirements |
+	loadableSpecs := OrderedCollection new.
+	requirementList := aCollectionOfNames copy.
+	managedRequirements := Set new.
+	[ requirementList isEmpty ] whileFalse: [
+			| newReqd |
+			newReqd := Set new.
+			requirementList do: [ :req |
+					| loadableSpec |
+					loadableSpec := self packageNamed: req ifAbsent: [ ^ self error: 'Name not found: ' , req , ' in ' , self label ].
+					loadableSpec resolveToLoadableSpec ifNotNil: [ :resolvedSpec | loadableSpecs add: resolvedSpec ].
+					newReqd addAll: loadableSpec requires.
+					newReqd addAll: loadableSpec includes ].
+			managedRequirements addAll: requirementList.
+			newReqd removeAllFoundIn: managedRequirements.
+			requirementList := newReqd ].
+	^ loadableSpecs
 ]
 
 { #category : 'accessing' }
@@ -205,6 +185,47 @@ MetacelloVersionSpec >> packageNames [
 MetacelloVersionSpec >> packageSpecsInLoadOrder [
 
 	^ self packagesSpec packageSpecsInLoadOrderFor: self
+]
+
+{ #category : 'querying' }
+MetacelloVersionSpec >> packageSpecsInLoadOrderFor: aCollectionOfNames [
+	"The package and project specs to load for aCollectionOfNames, in load order, imports included"
+
+	| loadOrder specsToLoad packageNames importNames importSpec importProjectSpecs importProjectNameMap |
+	loadOrder := self packageSpecsInLoadOrder.
+	importNames := (packageNames := ((self loadableSpecsFor: aCollectionOfNames) collect: [ :spec | spec name ]) asSet) copy.
+
+	self hasImports ifFalse: [ ^ loadOrder select: [ :spec | packageNames includes: spec name ] ].
+
+	loadOrder do: [ :spec | importNames remove: spec name ifAbsent: [ ] ].
+	specsToLoad := OrderedCollection new.
+	importProjectSpecs := Dictionary new.
+	importProjectNameMap := Dictionary new.
+	self importArray ifNotNil: [ :imports |
+			loadOrder do: [ :spec |
+					imports do: [ :assoc |
+							assoc key = spec name ifTrue: [
+									importProjectSpecs at: spec name put: spec.
+									(assoc value select: [ :each | importNames includes: each ]) do: [ :each |
+										(importProjectNameMap at: spec name ifAbsentPut: [ Set new ]) add: each ] ] ] ] ].
+
+	self import ifNotNil: [ :importedProjectName |
+			loadOrder do: [ :spec |
+					spec name = importedProjectName ifTrue: [
+							importProjectSpecs at: spec name put: spec.
+							importProjectNameMap at: spec name put: importNames ] ] ].
+
+	loadOrder do: [ :spec |
+			(packageNames includes: spec name) ifTrue: [ specsToLoad add: spec ].
+			importProjectSpecs at: spec name ifPresent: [ :importProjectSpec | "insert the imports at this point"
+					importProjectNameMap at: spec name ifPresent: [ :importedNames |
+							importedNames do: [ :importedName |
+									specsToLoad add: (importSpec := importProjectSpec copy
+											               name: importedName;
+											               mergeImportLoads: { importedName };
+											               yourself).
+									importSpec projectReference name: importedName ] ] ] ].
+	^ specsToLoad
 ]
 
 { #category : 'accessing' }
@@ -299,20 +320,9 @@ MetacelloVersionSpec >> projects [
 
 { #category : 'private' }
 MetacelloVersionSpec >> recordRequiredFromArray: anArray withEngine: anEngine [
+	"Loaded on its own (no script): the engine resolves from me (see MetacelloScriptEngine>>#version:). Answer the directive"
 
-	| target |
-	target := MetacelloRecordTarget on: anEngine.
-	target required: anArray.
-
-	self acceptVisitor: target.
-
-	^ target specBuilder root
-]
-
-{ #category : 'actions' }
-MetacelloVersionSpec >> recordWithEngine: anEngine [
-
-	^ self doRecordRequiredFromArray: self defaultPackageNames withEngine: anEngine
+	^ (anEngine version: self) record: anArray
 ]
 
 { #category : 'accessing' }
