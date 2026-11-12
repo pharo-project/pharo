@@ -11,8 +11,8 @@ EFCascadeExpressionTest >> basicConfiguration [
 	^ self contextClass basicNew
 		formatCommentCloseToStatements:true;
 		newLineBeforeFirstCascade: false;
-		multiLineMessages: Array new;
-		oneLineMessages: Array new;
+		 multiLineMessages: '';
+		  oneLineMessages: '';
 		numberOfArgumentsForMultiLine:3;
 		maxLineLength:50;
 		keepBlockInMessage:false;
@@ -33,8 +33,8 @@ EFCascadeExpressionTest >> multilineMessageConfiguration [
 		  newLineAfterCascade: true;
 		  newLineBeforeFirstCascade: true;
 		  formatCommentCloseToStatements: false;
-		  multiLineMessages: #( #multi:line: );
-		  oneLineMessages: Array new;
+		   multiLineMessages: 'multi:line:';
+		  oneLineMessages: '';
 		  numberOfArgumentsForMultiLine: 3;
 		  maxLineLength: 50;
 		  keepBlockInMessage: true;
@@ -61,8 +61,8 @@ EFCascadeExpressionTest >> newLineAfterCascadeConfiguration [
 		  newLineAfterCascade: true;
 		  newLineBeforeFirstCascade: false;
 		  formatCommentCloseToStatements: false;
-		  multiLineMessages: Array new;
-		  oneLineMessages: Array new;
+		 multiLineMessages: '';
+		  oneLineMessages: '';
 		  numberOfArgumentsForMultiLine: 3;
 		  maxLineLength: 50;
 		  keepBlockInMessage: false;
@@ -82,8 +82,8 @@ EFCascadeExpressionTest >> newLineBeforeAndAfterCascadeConfiguration [
 		  newLineAfterCascade: true;
 		  newLineBeforeFirstCascade: true;
 		  formatCommentCloseToStatements: false;
-		  multiLineMessages: Array new;
-		  oneLineMessages: Array new;
+		 multiLineMessages: '';
+		  oneLineMessages: '';
 		  numberOfArgumentsForMultiLine: 3;
 		  maxLineLength: 50;
 		  keepBlockInMessage: false;
@@ -103,8 +103,8 @@ EFCascadeExpressionTest >> newLineBeforeCascadeConfiguration [
 		  newLineAfterCascade: false;
 		  newLineBeforeFirstCascade: true;
 		  formatCommentCloseToStatements: false;
-		  multiLineMessages: Array new;
-		  oneLineMessages: Array new;
+		   multiLineMessages: '';
+		  oneLineMessages: '';
 		  numberOfArgumentsForMultiLine: 3;
 		  maxLineLength: 50;
 		  keepBlockInMessage: false;
@@ -124,8 +124,8 @@ EFCascadeExpressionTest >> noNewLineAfterCascadeConfiguration [
 		  newLineAfterCascade: false;
 		  newLineBeforeFirstCascade: false;
 		  formatCommentCloseToStatements: false;
-		  multiLineMessages: Array new;
-		  oneLineMessages: Array new;
+		   multiLineMessages: '';
+		  oneLineMessages: '';
 		  numberOfArgumentsForMultiLine: 3;
 		  maxLineLength: 50;
 		  keepBlockInMessage: false;
@@ -145,8 +145,8 @@ EFCascadeExpressionTest >> noNewLineBeforeCascadeConfiguration [
 		  newLineAfterCascade: false;
 		  newLineBeforeFirstCascade: false;
 		  formatCommentCloseToStatements: false;
-		  multiLineMessages: Array new;
-		  oneLineMessages: Array new;
+		   multiLineMessages: '';
+		  oneLineMessages: '';
 		  numberOfArgumentsForMultiLine: 3;
 		  maxLineLength: 50;
 		  keepBlockInMessage: false;
@@ -161,8 +161,8 @@ EFCascadeExpressionTest >> spaceIndentConfiguration [
 		formatCommentCloseToStatements:false;
 		newLineAfterCascade:true;
 		newLineBeforeFirstCascade: true;
-		multiLineMessages: Array new;
-		oneLineMessages: Array new;
+	 multiLineMessages: '';
+		  oneLineMessages: '';
 		numberOfArgumentsForMultiLine:3;
 		maxLineLength:50;
 		keepBlockInMessage:false;
@@ -405,8 +405,8 @@ EFCascadeExpressionTest >> tooLongArgumentConfiguration [
 	^ self contextClass basicNew
 		formatCommentCloseToStatements:true;
 		newLineBeforeFirstCascade: false;
-		multiLineMessages: Array new;
-		oneLineMessages: Array new;
+		 multiLineMessages: '';
+		  oneLineMessages: '';
 		numberOfArgumentsForMultiLine:3;
 		maxLineLength:10;
 		keepBlockInMessage:false;
@@ -420,8 +420,8 @@ EFCascadeExpressionTest >> tooLongArgumentConfigurationWithNewLineAfterCascade [
 	^ self contextClass basicNew
 		formatCommentCloseToStatements:true;
 		newLineBeforeFirstCascade: false;
-		multiLineMessages: Array new;
-		oneLineMessages: Array new;
+		 multiLineMessages: '';
+		  oneLineMessages: '';
 		numberOfArgumentsForMultiLine:3;
 		maxLineLength:10;
 		keepBlockInMessage:false;

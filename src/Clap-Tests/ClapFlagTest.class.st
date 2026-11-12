@@ -12,6 +12,75 @@ ClapFlagTest >> classToTest [
 ]
 
 { #category : 'tests' }
+ClapFlagTest >> commandWithOptionalPositional [
+	"A command whose repeatable flag --dev takes a name, a repository and optional groups"
+
+	^ (ClapCommandSpec id: #install)
+		  add: ((ClapFlag id: #dev)
+				   add: (ClapPositional id: #name);
+				   add: (ClapPositional id: #repository);
+				   add: ((ClapPositional id: #groups)
+						    beOptional;
+						    defaultValue: [ 'default' ];
+						    yourself);
+				   multiple: true;
+				   yourself);
+		  addFlag: #quiet description: 'Say nothing';
+		  yourself
+]
+
+{ #category : 'tests' }
+ClapFlagTest >> devsIn: anArray [
+
+	^ ((self commandWithOptionalPositional match: anArray) occurrencesOf: #dev collect: [ :each |
+			   {
+				   (each at: #name) value.
+				   (each at: #repository) value.
+				   (each at: #groups) value } ]) asArray
+]
+
+{ #category : 'tests' }
+ClapFlagTest >> testAMandatoryPositionalCannotBeLeftOut [
+
+	self deny: (self commandWithOptionalPositional match: #( 'install' '--dev' 'Bloc' )) isValid
+]
+
+{ #category : 'tests' }
+ClapFlagTest >> testAnOptionalPositionalCanBeGiven [
+
+	self assert: (self devsIn: #( 'install' '--dev' 'Bloc' 'repo' 'Core,Tests' )) equals: #( #( 'Bloc' 'repo' 'Core,Tests' ) )
+]
+
+{ #category : 'tests' }
+ClapFlagTest >> testAnOptionalPositionalCanBeLeftOut [
+	"Left out, it takes its default value, even when another flag follows"
+
+	self
+		assert: (self devsIn: #( 'install' '--dev' 'Bloc' 'repo' '--dev' 'Album' 'other' 'Tests' '--quiet' ))
+		equals: #( #( 'Bloc' 'repo' 'default' ) #( 'Album' 'other' 'Tests' ) ).
+	self assert: (self commandWithOptionalPositional match: #( 'install' '--dev' 'Bloc' 'repo' '--quiet' )) isValid
+]
+
+{ #category : 'tests' }
+ClapFlagTest >> testAnOptionalPositionalCanBeLeftOutAfterOneGivenExplicitly [
+	"Given in the first flag, left out in the last one, at the end of the line"
+	self
+		assert: (self devsIn: #( 'install' '--dev' 'Album' 'other' 'Tests' '--dev' 'Bloc' 'repo' ))
+		equals: #( #( 'Album' 'other' 'Tests' ) #( 'Bloc' 'repo' 'default' ) )
+]
+
+{ #category : 'tests' }
+ClapFlagTest >> testAnOptionalPositionalIsBracketedInTheSynopsis [
+
+	self
+		assert: (String streamContents: [ :stream |
+					 (ClapPositional id: #groups)
+						 beOptional;
+						 synopsisOn: stream ])
+		equals: '[<groups>]'
+]
+
+{ #category : 'tests' }
 ClapFlagTest >> testMatchesLongForm [
 	| subject argv flagName match |
 	subject := self namedSubject.

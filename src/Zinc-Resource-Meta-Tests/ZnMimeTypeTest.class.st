@@ -17,7 +17,8 @@ ZnMimeTypeTest >> someNonBinaryMimeTypes [
 		'image/svg+xml'
 		'application/SGML'
 		'model/x3d+xml'
-		'application/csv')
+		'application/csv'
+		'application/x-ndjson')
 ]
 
 { #category : 'testing' }

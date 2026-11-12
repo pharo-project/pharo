@@ -11,13 +11,23 @@ Class {
 
 { #category : 'baselines' }
 BaselineOfTestGroupsShared >> baseline: spec [
-
 	<baseline>
 	spec for: #common do: [
+			spec
+				preLoadDoIt: #preLoad;
+				postLoadDoIt: #postLoad.
 			spec
 				package: 'SharedCore';
 				package: 'SharedTests'.
 			spec
 				group: 'Core' with: #( 'SharedCore' );
 				group: 'Tests' with: #( 'SharedTests' ) ]
+]
+
+{ #category : 'actions' }
+BaselineOfTestGroupsShared >> postLoad [
+]
+
+{ #category : 'actions' }
+BaselineOfTestGroupsShared >> preLoad [
 ]

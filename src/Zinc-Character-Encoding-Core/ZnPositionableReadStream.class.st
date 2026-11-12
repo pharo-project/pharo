@@ -230,6 +230,15 @@ ZnPositionableReadStream >> position: newPosition [
 ]
 
 { #category : 'accessing' }
+ZnPositionableReadStream >> rawStream [
+	"Answer the innermost stream wrapped by the receiver, e.g. a raw binary file stream,
+	socket stream, or regular Read/WriteStream.
+	Defer to the wrappedStream."
+
+	^ self wrappedStream rawStream
+]
+
+{ #category : 'accessing' }
 ZnPositionableReadStream >> readInto: collection startingAt: offset count: requestedCount [
 	"Read requestedCount elements into collection starting at offset,
 	returning the number of elements read, there could be less elements available."

@@ -39,6 +39,17 @@ ZnCookieJar >> cookiesForUrl: urlObject [
 		(cookie isExpired not) & (cookie isInDomain: urlObject) & (cookie isInPath: urlObject) ]
 ]
 
+{ #category : 'operations' }
+ZnCookieJar >> readNetscapeFormatFrom: fileReference [
+	| cookie |
+	fileReference readStreamDo: [ :fileStream | 
+		(ZnFastLineReader on: fileStream) linesDo: [ :each | 
+			(each beginsWith: '#')
+				ifFalse: [ cookie := ZnCookie new.
+					cookie fromNetscapeString: each.
+					self add: cookie ] ] ]
+]
+
 { #category : 'accessing' }
 ZnCookieJar >> remove: aCookie [
 	self cookies remove: aCookie ifAbsent: [ nil ]
@@ -57,4 +68,13 @@ ZnCookieJar >> removeIfExpired: aCookie [
 			true ]
 		ifFalse: [
 			false ]
+]
+
+{ #category : 'operations' }
+ZnCookieJar >> writeNetscapeFormatTo: fileReference [
+	fileReference writeStreamDo: [ :fileStream |
+		(ZnNewLineWriterStream on: fileStream) in: [ :out |
+			out nextPutAll: '# Netscape HTTP Cookie File'; cr.
+			self cookies do: [ :each |
+				out nextPutAll: each netscapeString; cr ] ] ]
 ]

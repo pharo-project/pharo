@@ -202,6 +202,25 @@ MetacelloMVSBaselineSandboxTest >> testLeavesAClassOfTheSameNameUntouched [
 ]
 
 { #category : 'tests' }
+MetacelloMVSBaselineSandboxTest >> testLeavesTheExtensionsOfTheBaselinePackageOut [
+	"A baseline package may extend other classes (BaselineOfAlexandrie extends SDL_Version with versionString): the sandbox compiles only the methods of the baseline class, so it neither gets the extension nor puts it in a package of the image"
+	| extension sandboxClass |
+	extension := MCMethodDefinition
+		             className: 'Object'
+		             classIsMeta: false
+		             selector: #metacelloSandboxExtension
+		             category: '*BaselineOfFoo'
+		             timeStamp: ''
+		             source: 'metacelloSandboxExtension ^ 1'.
+	sandboxClass := (MetacelloMVSBaselineSandbox onDefinitions:
+		                 (TonelParser parseString: (self tonelOf: { (self baselineMethod: #( 'spec for: #common do: [ spec package: ''Foo'' ]' )) })) , { extension })
+		                baselineClass.
+	self deny: (sandboxClass includesSelector: #metacelloSandboxExtension).
+	self deny: (Object includesSelector: #metacelloSandboxExtension).
+	self deny: (PackageOrganizer default hasPackage: 'BaselineOfFoo')
+]
+
+{ #category : 'tests' }
 MetacelloMVSBaselineSandboxTest >> testOnlyTheBlocksOfThisPlatformCount [
 
 	| requirements |
