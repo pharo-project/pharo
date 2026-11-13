@@ -47,25 +47,8 @@ SHPreferences class >> activeStyleTable: aStyleTableName [
 { #category : 'updating' }
 SHPreferences class >> customStyleChanged [
 
-	activeStyleTable = 'Custom' ifTrue: [
+	self activeStyleTable = 'Custom' ifTrue: [
 		self styleTable: SHCustomStyle styleTable ]
-]
-
-{ #category : 'reflective operations' }
-SHPreferences class >> doesNotUnderstand: aMessage [
-	"Handles messages of the form #defaultStyle or #argumentStyle: "
-
-	(aMessage selector endsWith: 'Style') ifTrue: [
-			^ SHStyleElement group:
-				  (aMessage selector withoutSuffix: 'Style') asSymbol ].
-	(aMessage selector endsWith: 'Style:') ifTrue: [
-		| style |
-		style := aMessage argument.
-		(SHStyleElement group: (style at: 'group'))
-			color: (style at: 'color') ;
-			emphasis: (style at: 'emphasis').
-		^ self ].
-	^ super doesNotUnderstand: aMessage
 ]
 
 { #category : 'accessing' }
@@ -87,9 +70,16 @@ SHPreferences class >> informUI [
 	self currentWorld themeChanged
 ]
 
+{ #category : 'class initialization' }
+SHPreferences class >> initialize [
+
+	SHCustomStyle when: #changed send: #customStyleChanged to: self.
+	
+]
+
 { #category : 'settings' }
 SHPreferences class >> settingsOn: aBuilder [
-	
+
 	<systemsettings>
 	(aBuilder group: 'Syntax Highlighting')
 		parentName: 'codeBrowsing';
@@ -113,22 +103,9 @@ SHPreferences class >> settingsOn: aBuilder [
 					label: 'Predefined styles';
 					target: self;
 					domainValues: self styleTableNames;
-					description: 'Choose between the different styles.  Default changes according to the UI Theme and Custom can be modified by you.' ;
-					defaultValue: 'Default'.
-				(aBuilder group: 'Edit Custom Style')
-					description: 'Change the Custom style to your liking.  You have to activate it for your changes to take effect.' ;
-					with: [
-							(aBuilder button: #copyFromCurrentStyle)
-								order: 0;
-								target: SHCustomStyle;
-								label: 'Copy from current style';
-								description: 'Initialize custom style to colors of the currently selected style';
-								buttonLabel: 'Copy'.
-							SHCustomStyle groups keysAndValuesDo: [ :group :info |
-										(aBuilder setting: group , 'Style')
-											target: self;
-											label: (info at: 'label');
-											description: (info at: 'description' ifAbsent: [ '' ]) ] ] ]
+					description:
+						'Choose between the different styles.  Default changes according to the UI Theme and Custom can be modified by you.';
+					defaultValue: 'Default'.]
 ]
 
 { #category : 'private' }

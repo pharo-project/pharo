@@ -12,36 +12,44 @@ Class {
 	#tag : 'Styling'
 }
 
-{ #category : 'accessing' }
-SHCustomStyle class >> color: aColor forGroup: aGroupName [
+{ #category : 'settings - accessing' }
+SHCustomStyle class >> argsStyle [
 
-	(groups at: aGroupName) at: 'color' put: aColor.
-	SHPreferences customStyleChanged
+	^ self styleForGroup: 'args'
 ]
 
-{ #category : 'accessing' }
-SHCustomStyle class >> colorForGroup: groupName [
+{ #category : 'settings - accessing' }
+SHCustomStyle class >> argsStyle: aStyle [
 
-	^ (groups at: groupName) at: 'color'
+	^ self style: aStyle forGroup: 'args'
+]
+
+{ #category : 'settings - accessing' }
+SHCustomStyle class >> commentStyle [
+
+	^ self styleForGroup: 'comment'
+]
+
+{ #category : 'settings - accessing' }
+SHCustomStyle class >> commentStyle: aStyle [ 
+
+	^ self style: aStyle forGroup: 'comment'
 ]
 
 { #category : 'class initialization' }
 SHCustomStyle class >> copyFromCurrentStyle [
-
 	SHRBTextStyler styleTable do: [ :row |
 			| token |
 			token := row first.
-			groups
-				detect: [ :entry | token = (entry at: 'tokens') first ]
-				ifFound: [ :entry |
-						| colorDesc emphasis |
-						colorDesc := row second.
-						emphasis := #normal.
-						row size >= 3 ifTrue: [ emphasis := row third ].
-						(emphasis isKindOf: Symbol) ifFalse: [
-							emphasis := (' ' join: emphasis) asSymbol ].
-						entry at: 'color' put: (Color colorFrom: colorDesc).
-						entry at: 'emphasis' put: emphasis ] ]
+			groups detect: [ :entry | token = (entry at: 'tokens') first ] ifFound: [ :entry |
+					| colorDesc emphasis |
+					colorDesc := row second.
+					emphasis := #normal.
+					row size >= 3 ifTrue: [ emphasis := row third ].
+					(emphasis isKindOf: Symbol) ifFalse: [ emphasis := (' ' join: emphasis) asSymbol ].
+					(entry at: 'style')
+						color: ((Color colorFrom: colorDesc) ifNil: [ Color transparent ]) ;
+						emphasis: emphasis ] ].
 ]
 
 { #category : 'private' }
@@ -56,17 +64,40 @@ SHCustomStyle class >> defaultEmphasis [
 	^ #normal
 ]
 
-{ #category : 'accessing' }
-SHCustomStyle class >> emphasis: anEmphasis forGroup: aGroupName [
+{ #category : 'settings - accessing' }
+SHCustomStyle class >> defaultStyle [
 
-	(groups at: aGroupName) at: 'emphasis' put: anEmphasis.
-	SHPreferences customStyleChanged
+	^ self styleForGroup: 'default'
 ]
 
-{ #category : 'accessing' }
-SHCustomStyle class >> emphasisForGroup: groupName [
+{ #category : 'settings - accessing' }
+SHCustomStyle class >> defaultStyle: aStyle [ 
 
-	^ (groups at: groupName) at: 'emphasis'
+	^ self style: aStyle forGroup: 'default'
+]
+
+{ #category : 'settings - accessing' }
+SHCustomStyle class >> errorStyle [
+
+	^ self styleForGroup: 'error'
+]
+
+{ #category : 'settings - accessing' }
+SHCustomStyle class >> errorStyle: aStyle [ 
+
+	^ self style: aStyle forGroup: 'error'
+]
+
+{ #category : 'settings - accessing' }
+SHCustomStyle class >> globalVarStyle [
+
+	^ self styleForGroup: 'globalVar'
+]
+
+{ #category : 'settings - accessing' }
+SHCustomStyle class >> globalVarStyle: aStyle [ 
+
+	^ self style: aStyle forGroup: 'globalVar'
 ]
 
 { #category : 'private' }
@@ -167,9 +198,116 @@ SHCustomStyle class >> groups [
 SHCustomStyle class >> initialize [
 
 	groups := self groupDefaults.
-	groups do: [ :entry |
-			entry at: 'color' put: self defaultColor.
-			entry at: 'emphasis' put: self defaultEmphasis ].
+	groups keysAndValuesDo: [ :key :entry | | styleElement |
+			styleElement := SHStyleElement new
+					color: self defaultColor ;
+					emphasis: self defaultEmphasis ;
+					yourself.
+			entry at: 'style' put: styleElement.
+			styleElement when: #changed send: #styleElementChanged to: self ].
+]
+
+{ #category : 'settings - accessing' }
+SHCustomStyle class >> instanceVarStyle [
+
+	^ self styleForGroup: 'instanceVar'
+]
+
+{ #category : 'settings - accessing' }
+SHCustomStyle class >> instanceVarStyle: aStyle [ 
+
+	^ self style: aStyle forGroup: 'instanceVar'
+]
+
+{ #category : 'settings - accessing' }
+SHCustomStyle class >> messageSendsStyle [
+
+	^ self styleForGroup: 'messageSends'
+]
+
+{ #category : 'settings - accessing' }
+SHCustomStyle class >> messageSendsStyle: aStyle [ 
+
+	^ self style: aStyle forGroup: 'messageSends'
+]
+
+{ #category : 'settings - accessing' }
+SHCustomStyle class >> primitiveTypesStyle [
+
+	^ self styleForGroup: 'primitiveTypes'
+]
+
+{ #category : 'settings - accessing' }
+SHCustomStyle class >> primitiveTypesStyle: aStyle [ 
+
+	^ self style: aStyle forGroup: 'primitiveTypes'
+]
+
+{ #category : 'settings - accessing' }
+SHCustomStyle class >> reservedWordsStyle [
+
+	^ self styleForGroup: 'reservedWords'
+]
+
+{ #category : 'settings - accessing' }
+SHCustomStyle class >> reservedWordsStyle: aStyle [ 
+
+	^ self style: aStyle forGroup: 'reservedWords'
+]
+
+{ #category : 'settings - accessing' }
+SHCustomStyle class >> selectorPatternsStyle [
+
+	^ self styleForGroup: 'selectorPatterns'
+]
+
+{ #category : 'settings - accessing' }
+SHCustomStyle class >> selectorPatternsStyle: aStyle [ 
+
+	^ self style: aStyle forGroup: 'selectorPatterns'
+]
+
+{ #category : 'settings' }
+SHCustomStyle class >> settingsOn: aBuilder [
+
+	<systemsettings>
+	(aBuilder group: 'Edit Custom Style')
+		parentName: 'Syntax Highlighting';
+		description: 'Change the Custom style to your liking.  You have to activate it for your changes to take effect.';
+		with: [
+				(aBuilder button: #copyFromCurrentStyle)
+					order: 0;
+					description: 'Initialize custom style to colors of the currently selected style';
+					target: self;
+					label: 'Copy from current style';
+					buttonLabel: 'Copy'.
+				self groups keysAndValuesDo: [ :group :info |
+						(aBuilder setting: group , 'Style')
+							target: self;
+							label: (info at: 'label');
+							description: (info at: 'description' ifAbsent: [ '' ]) ] ]
+]
+
+{ #category : 'accessing' }
+SHCustomStyle class >> style: aStyle forGroup: groupName [
+
+	"We don't want to replace the old style element, only set it's attributes"
+	"Otherwise the settings browser UI might reference an outdated StyleElement"
+	(self styleForGroup: groupName)
+		color: aStyle color ;
+		emphasis: aStyle emphasis
+]
+
+{ #category : 'updating' }
+SHCustomStyle class >> styleElementChanged [
+
+	self triggerEvent: #changed
+]
+
+{ #category : 'accessing' }
+SHCustomStyle class >> styleForGroup: groupName [
+
+	^ (groups at: groupName) at: 'style'
 ]
 
 { #category : 'accessing' }
@@ -177,13 +315,37 @@ SHCustomStyle class >> styleTable [
 
 	^ groups flatCollect: [ :entry |
 			  (entry at: 'tokens') collect: [ :token |
-					  | emphasis |
-					  emphasis := entry at: 'emphasis'.
-					  (emphasis includes: Character space) ifTrue: [
-						  emphasis := (emphasis substrings: ' ') collect: [ :str |
-							              str asSymbol ] ].
-					  {
-						  token.
-						  (entry at: 'color').
-						  emphasis } ] ]
+					  | emphasis color |
+					  emphasis := (entry at: 'style') emphasis.
+					  emphasis := (emphasis includes: Character space)
+						              ifTrue: [ (emphasis substrings: ' ') collect: [ :str | str asSymbol ] ]
+						              ifFalse: [ emphasis asSymbol ].
+						color := (entry at: 'style') color.
+						Color transparent = color ifTrue: [ 
+							color := nil ].
+					  { token. color. emphasis } ] ]
+]
+
+{ #category : 'settings - accessing' }
+SHCustomStyle class >> syntaxStyle [
+
+	^ self styleForGroup: 'syntax'
+]
+
+{ #category : 'settings - accessing' }
+SHCustomStyle class >> syntaxStyle: aStyle [ 
+
+	^ self style: aStyle forGroup: 'syntax'
+]
+
+{ #category : 'settings - accessing' }
+SHCustomStyle class >> variableStyle [
+
+	^ self styleForGroup: 'variable'
+]
+
+{ #category : 'settings - accessing' }
+SHCustomStyle class >> variableStyle: aStyle [ 
+
+	^ self style: aStyle forGroup: 'variable'
 ]
