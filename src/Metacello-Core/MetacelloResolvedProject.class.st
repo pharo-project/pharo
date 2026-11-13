@@ -53,9 +53,7 @@ MetacelloResolvedProject >> beLocked [
 MetacelloResolvedProject >> chainNames [
 	"The names of the projects that led to me, from the root, ending with mine"
 
-	^ requests first chain
-		  addLast: self name;
-		  yourself
+	^ requests first chain copyWith: self name
 ]
 
 { #category : 'accessing' }

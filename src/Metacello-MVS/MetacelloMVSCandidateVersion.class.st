@@ -42,11 +42,9 @@ MetacelloMVSCandidateVersion >> beLocked [
 MetacelloMVSCandidateVersion >> chainDisplayNames [
 	"For people, the versions from the root down to me (see chainLine)"
 
-	^ requiredBy chainDisplayNames
-		  addLast: (self isInstalled
-				   ifTrue: [ 'installed ' , self displayName ]
-				   ifFalse: [ self displayName ]);
-		  yourself
+	^ requiredBy chainDisplayNames copyWith: (self isInstalled
+			   ifTrue: [ 'installed ' , self displayName ]
+			   ifFalse: [ self displayName ])
 ]
 
 { #category : 'printing' }
@@ -60,9 +58,7 @@ MetacelloMVSCandidateVersion >> chainLine [
 MetacelloMVSCandidateVersion >> chainLines [
 	"One line per version, from the root down to me"
 
-	^ requiredBy chainLines
-		  addLast: self line;
-		  yourself
+	^ requiredBy chainLines copyWith: self line
 ]
 
 { #category : 'accessing' }

@@ -11,9 +11,9 @@ Class {
 
 { #category : 'requests' }
 MetacelloImageRequest >> chainNames [
-	"The names of the projects that led to what I ask for: none, I asked first"
+	"The names of the projects that led to what the image asks for: none, nobody asked before the image"
 
-	^ OrderedCollection new
+	^ #(  )
 ]
 
 { #category : 'accessing' }

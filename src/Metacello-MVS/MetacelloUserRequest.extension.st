@@ -9,9 +9,9 @@ MetacelloUserRequest >> appliesReplaces [
 
 { #category : '*Metacello-MVS' }
 MetacelloUserRequest >> chainDisplayNames [
-	"The versions that led to a version I require: none, I asked first"
+	"The versions that led to a version the script requires: none, nobody asked before the script"
 
-	^ OrderedCollection new
+	^ #(  )
 ]
 
 { #category : '*Metacello-MVS' }
@@ -23,9 +23,9 @@ MetacelloUserRequest >> chainLine [
 
 { #category : '*Metacello-MVS' }
 MetacelloUserRequest >> chainLines [
-	"The versions that led to a version I require: none, I ran the script"
+	"The versions that led to a version the script requires: none, nobody asked before the script"
 
-	^ OrderedCollection new
+	^ #(  )
 ]
 
 { #category : '*Metacello-MVS' }

@@ -21,9 +21,9 @@ MetacelloUserRequest >> addFinding: aFinding [
 
 { #category : 'requests' }
 MetacelloUserRequest >> chainNames [
-	"The names of the projects that led to what I ask for: none, I asked first"
+	"The names of the projects that led to what the script asks for: none, nobody asked before the script"
 
-	^ OrderedCollection new
+	^ #(  )
 ]
 
 { #category : 'findings' }

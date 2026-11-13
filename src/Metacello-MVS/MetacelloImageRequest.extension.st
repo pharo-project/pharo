@@ -9,9 +9,9 @@ MetacelloImageRequest >> appliesReplaces [
 
 { #category : '*Metacello-MVS' }
 MetacelloImageRequest >> chainDisplayNames [
-	"The versions that led to a version I require: none, I asked first"
+	"The versions that led to a version the image requires: none, nobody asked before the image"
 
-	^ OrderedCollection new
+	^ #(  )
 ]
 
 { #category : '*Metacello-MVS' }
@@ -23,9 +23,9 @@ MetacelloImageRequest >> chainLine [
 
 { #category : '*Metacello-MVS' }
 MetacelloImageRequest >> chainLines [
-	"The versions that led to a version I require: none, the image has it"
+	"The versions that led to a version the image requires: none, the image has it"
 
-	^ OrderedCollection new
+	^ #(  )
 ]
 
 { #category : '*Metacello-MVS' }
