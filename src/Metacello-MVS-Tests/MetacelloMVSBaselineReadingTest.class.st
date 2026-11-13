@@ -93,7 +93,7 @@ MetacelloMVSBaselineReadingTest >> resolveInstalled: aBarMinimum [
 		version: 'v1.0.0'
 		project: 'Foo'
 		baseline: (self baselineRequiring: { ('Bar' -> ('github://acme/Bar:' , aBarMinimum)) }).
-	^ (MetacelloMVSResolver on: (MetacelloMVSGraph new source: source))
+	^ (MetacelloMVSResolver on: (MetacelloMVSGraph on: source))
 		  installed: { ('github://acme/Bar' -> (self installed: 'github://acme/Bar:main' project: 'Bar')) } asDictionary;
 		  resolve: 'github://acme/Foo:v1.0.0' project: 'Foo'
 ]
@@ -123,7 +123,7 @@ MetacelloMVSBaselineReadingTest >> selectionOf: aRepositoryString project: aProj
 	"The candidate for aRepositoryString at its minimum, for the project aProjectName"
 
 	| parts spec resolver |
-	parts := MetacelloMVSGraph new.
+	parts := MetacelloMVSGraph on: MetacelloMVSRecordedSource new.
 	resolver := MetacelloMVSResolver on: parts.
 	spec := parts specFor: aRepositoryString project: aProjectName loads: #(  ).
 	^ resolver candidateFor: spec version: (resolver minimumOf: spec) requiredBy: nil
@@ -134,7 +134,7 @@ MetacelloMVSBaselineReadingTest >> setUp [
 
 	super setUp.
 	source := MetacelloMVSRecordedSource new.
-	graph := MetacelloMVSGraph new source: source
+	graph := MetacelloMVSGraph on: source
 ]
 
 { #category : 'tests' }
@@ -153,6 +153,11 @@ MetacelloMVSBaselineReadingTest >> testABaselineThatAsksTheImageIsAWarning [
 ]
 
 { #category : 'tests' }
+MetacelloMVSBaselineReadingTest >> testAGraphNeedsASource [
+	self should: [ MetacelloMVSGraph new ] raise: Error
+]
+
+{ #category : 'tests' }
 MetacelloMVSBaselineReadingTest >> testAGraphReadsTheDatesOfTheSource [
 	| date graph |
 	date := DateAndTime year: 2020 month: 1 day: 1.
@@ -162,7 +167,7 @@ MetacelloMVSBaselineReadingTest >> testAGraphReadsTheDatesOfTheSource [
 		project: 'Foo'
 		baseline: (self baselineRequiring: #(  )).
 	source repository: 'github://acme/Foo' dates: { ('v1.0.0' -> date) } asDictionary.
-	graph := MetacelloMVSGraph new source: source.
+	graph := MetacelloMVSGraph on: source.
 	graph versionsOf: 'github://acme/Foo' ifFail: [ :text | self fail: text ].
 	self assert: (graph datesOf: 'github://acme/Foo') equals: { ('v1.0.0' -> date) } asDictionary
 ]
@@ -310,7 +315,7 @@ MetacelloMVSBaselineReadingTest >> testResolvesThroughAGraph [
 		version: 'v1.2.0'
 		project: 'Bar'
 		baseline: (self baselineRequiring: #(  )).
-	buildList := ((MetacelloMVSResolver on: (MetacelloMVSGraph new source: source)) resolve: 'github://acme/Foo:v1.0.0' project: 'Foo') buildList.
+	buildList := ((MetacelloMVSResolver on: (MetacelloMVSGraph on: source)) resolve: 'github://acme/Foo:v1.0.0' project: 'Foo') buildList.
 	self assert: (buildList at: 'github://acme/Bar') version string equals: 'v1.1.0'
 ]
 

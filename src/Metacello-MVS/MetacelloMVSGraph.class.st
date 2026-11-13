@@ -17,6 +17,17 @@ Class {
 	#package : 'Metacello-MVS'
 }
 
+{ #category : 'instance creation' }
+MetacelloMVSGraph class >> new [
+	self error: 'A graph needs a version source: use on:'
+]
+
+{ #category : 'instance creation' }
+MetacelloMVSGraph class >> on: aVersionSource [
+	"A graph asks aVersionSource the facts it was not told"
+	^ self basicNew initializeOn: aVersionSource
+]
+
 { #category : 'reading' }
 MetacelloMVSGraph >> checkPlatformOf: aCandidate in: aSandbox into: aReading [
 	"for: #pharoN.x blocks are accepted, with a warning: the requirements then depend on the image"
@@ -48,13 +59,14 @@ MetacelloMVSGraph >> hasVersions: aProjectSpec [
 ]
 
 { #category : 'initialization' }
-MetacelloMVSGraph >> initialize [
+MetacelloMVSGraph >> initializeOn: aVersionSource [
+	"Facts the graph was not told are asked to aVersionSource, once"
 	super initialize.
+	source := aVersionSource.
 	versions := Dictionary new.
 	dates := Dictionary new.
 	readings := Dictionary new.
 	repositories := Dictionary new.
-	source := MetacelloMVSRecordedSource new
 ]
 
 { #category : 'project specs' }
@@ -173,13 +185,6 @@ MetacelloMVSGraph >> repositoryUrlOf: aProjectSpec [
 	"The URL of the repository aProjectSpec asks for, without its version or path: type://owner/name. What the graph knows is kept per repository"
 
 	^ aProjectSpec repositorySpecs first type , '://' , (self repositoryFor: aProjectSpec) projectPath
-]
-
-{ #category : 'accessing' }
-MetacelloMVSGraph >> source: aVersionSource [
-	"Facts the graph was not told are asked to aVersionSource, once"
-
-	source := aVersionSource
 ]
 
 { #category : 'project specs' }

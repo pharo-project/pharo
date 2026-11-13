@@ -14,7 +14,7 @@ MetacelloMVSResolverTest class >> specAt: aRepositoryString [
 
 	| rest |
 	rest := aRepositoryString allButFirst: (aRepositoryString indexOfSubCollection: '://') + 2.
-	^ MetacelloMVSGraph new specFor: aRepositoryString project: ((rest substrings: '/') second copyUpTo: $:) loads: #(  )
+	^ (MetacelloMVSGraph on: MetacelloMVSRecordedSource new) specFor: aRepositoryString project: ((rest substrings: '/') second copyUpTo: $:) loads: #(  )
 ]
 
 { #category : 'specs' }
@@ -103,7 +103,7 @@ MetacelloMVSResolverTest >> selected: aName in: aBuildList [
 MetacelloMVSResolverTest >> setUp [
 
 	super setUp.
-	graph := MetacelloMVSGraph new
+	graph := MetacelloMVSGraph on: MetacelloMVSRecordedSource new
 ]
 
 { #category : 'tests' }

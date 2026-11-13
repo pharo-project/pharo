@@ -17,7 +17,7 @@ MetacelloMVSRecordedSourceTest >> replayOf: aRootString [
 
 	| recording |
 	recording := MetacelloMVSRecordingSource new source: source.
-	(MetacelloMVSResolver on: (MetacelloMVSGraph new source: recording))
+	(MetacelloMVSResolver on: (MetacelloMVSGraph on: recording))
 		resolve: aRootString
 		project: ((aRootString copyAfterLast: $/) copyUpTo: $:).
 	^ self class compiler evaluate: recording recorded storeString
@@ -33,7 +33,7 @@ MetacelloMVSRecordedSourceTest >> testReplaysAFailingBaseline [
 		at: 'v1.0.0'
 		baseline: (MetacelloMVSBaselineDefinitions error: #missingBaseline text: 'github://acme/Foo v1.0.0 has no BaselineOfFoo').
 	replayed := self replayOf: 'github://acme/Foo:v1.0.0'.
-	reading := (MetacelloMVSGraph new source: replayed) readingOf: (self selectionOf: 'github://acme/Foo:v1.0.0' project: 'Foo').
+	reading := (MetacelloMVSGraph on: replayed) readingOf: (self selectionOf: 'github://acme/Foo:v1.0.0' project: 'Foo').
 	self assert: (reading findings anySatisfy: [ :each | each isError and: [ each kind = #missingBaseline ] ])
 ]
 
@@ -58,7 +58,7 @@ MetacelloMVSRecordedSourceTest >> testReplaysTheResolution [
 		baseline: (self baselineRequiring: #(  )).
 	source repository: 'github://acme/Bar' dates: { ('v1.1.0' -> (DateAndTime year: 2020 month: 1 day: 1)) } asDictionary.
 	replayed := self replayOf: 'github://acme/Foo:v1.0.0'.
-	report := (MetacelloMVSResolver on: (MetacelloMVSGraph new source: replayed)) resolve: 'github://acme/Foo:v1.0.0' project: 'Foo'.
+	report := (MetacelloMVSResolver on: (MetacelloMVSGraph on: replayed)) resolve: 'github://acme/Foo:v1.0.0' project: 'Foo'.
 	self assert: report errors isEmpty.
 	self assert: (report warnings anySatisfy: [ :each | each kind = #floatingVersion ]).
 	self assert: report buildList size equals: 2.
@@ -93,6 +93,6 @@ MetacelloMVSRecordedSourceTest >> testStoresItsBaselines [
 		assert: baseline problems first equals: #( #writtenPath #warning 'writes the path src' );
 		assert: (copy versionsOf: 'github://acme/Bar' ifFail: [ :text | text ]) equals: 'no network';
 		deny: (copy baselineOf: (self selectionOf: 'github://acme/Baz:v1.0.0' project: 'Baz')) hasBaseline.
-	reading := (MetacelloMVSGraph new source: copy) readingOf: (self selectionOf: 'github://acme/Foo:v1.0.0' project: 'Foo').
+	reading := (MetacelloMVSGraph on: copy) readingOf: (self selectionOf: 'github://acme/Foo:v1.0.0' project: 'Foo').
 	self assert: (reading references collect: [ :each | self descriptionOf: each ]) asArray equals: #( 'github://acme/Bar:v1.0.0' )
 ]
