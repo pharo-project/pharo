@@ -159,7 +159,7 @@ MetacelloMVSResolver >> consider: aCandidate [
 					(self isInstalledAtAVersion: each) ifTrue: [
 							| installedCandidate |
 							installedCandidate := self installedCandidateFrom: each for: aCandidate.
-							(assumedInstalled notNil and: [ assumedInstalled includes: aCandidate repository ]) ifTrue: [
+							(assumedInstalled includes: aCandidate repository) ifTrue: [
 									self
 										warning: #assumedInstalled
 										text: installedCandidate printString
@@ -261,7 +261,7 @@ MetacelloMVSResolver >> isInstalledAtAVersion: aProjectSpec [
 { #category : 'resolving' }
 MetacelloMVSResolver >> isLocked: aRepository [
 
-	^ locked notNil and: [ locked includes: aRepository ]
+	^ locked includes: aRepository
 ]
 
 { #category : 'metacello' }
@@ -550,25 +550,25 @@ MetacelloMVSResolver >> revisit: aRepository [
 
 { #category : 'resolving' }
 MetacelloMVSResolver >> select: aCandidate [
-
-	| current |
 	(self checkProjectOf: aCandidate) ifFalse: [ ^ self ].
-	current := selected at: aCandidate repository ifAbsent: [ nil ].
-	current ifNotNil: [
-			current isLocked ifTrue: [
-					^ self
-						  checkLocked: aCandidate printString
-						  minimum: aCandidate version
-						  against: current
-						  about: aCandidate ].
-			current version major = aCandidate version major ifFalse: [
-					^ self
-						  error: #majorConflict
-						  text:
-							  'Two majors of ' , aCandidate repository , ' are required: ' , aCandidate version string , ', and ' , current version string
-							  , ' by:' , String lf , current chainString
-						  about: aCandidate ] ].
-	(current isNil or: [ current version < aCandidate version ]) ifTrue: [ selected at: aCandidate repository put: aCandidate ].
+	selected
+		at: aCandidate repository
+		ifPresent: [ :current |
+				current isLocked ifTrue: [
+						^ self
+							  checkLocked: aCandidate printString
+							  minimum: aCandidate version
+							  against: current
+							  about: aCandidate ].
+				current version major = aCandidate version major ifFalse: [
+						^ self
+							  error: #majorConflict
+							  text:
+								  'Two majors of ' , aCandidate repository , ' are required: ' , aCandidate version string , ', and ' , current version string
+								  , ' by:' , String lf , current chainString
+							  about: aCandidate ].
+				current version < aCandidate version ifTrue: [ selected at: aCandidate repository put: aCandidate ] ]
+		ifAbsent: [ selected at: aCandidate repository put: aCandidate ].
 	(visited includes: aCandidate repository -> aCandidate version) ifTrue: [ ^ self ].
 	visited add: aCandidate repository -> aCandidate version.
 	pending add: aCandidate
@@ -579,6 +579,8 @@ MetacelloMVSResolver >> setGraph: aGraph [
 
 	graph := aGraph.
 	installed := Dictionary new.
+	locked := Set new.
+	assumedInstalled := Set new.
 	dropsUnused := true
 ]
 
