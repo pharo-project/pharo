@@ -174,8 +174,7 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'scriptExecutor',
-		'silently',
-		'resolution'
+		'silently'
 	],
 	#category : 'Metacello-Core-Model',
 	#package : 'Metacello-Core',
@@ -259,21 +258,16 @@ Metacello >> className: className [
 
 { #category : 'private' }
 Metacello >> execute: aBlock [
-	"I'm doing a copy of the script executor so that we can execute different commands with the same setup of our Metacello instance.
-	
-	If the execution should be silent, disable Jobs. The resolution of the execution is kept, even when it fails (see resolution)"
+	"Run one command with my executor. A Metacello runs one command and is thrown away. If the execution should be silent, disable Jobs. My executor keeps the resolution, even when the command fails (see resolution)"
 
-	| executor |
-	executor := self scriptExecutor copy.
-	^ [
-	  silently
+	^ silently
 		  ifTrue: [
 				  Job disableDuring: [
-						  aBlock value: executor.
-						  executor execute ] ]
+						  aBlock value: self scriptExecutor.
+						  self scriptExecutor execute ] ]
 		  ifFalse: [
-				  aBlock value: executor.
-				  executor execute ] ] ensure: [ resolution := executor resolution ]
+				  aBlock value: self scriptExecutor.
+				  self scriptExecutor execute ]
 ]
 
 { #category : 'api actions' }
@@ -495,10 +489,10 @@ Metacello >> repository: repositoryDescription [
 
 { #category : 'api actions' }
 Metacello >> resolution [
-	"The MetacelloResolution of the last command that resolved (load, resolve...), errors and warnings included, also after a load failed; nil before any did. For example:
+	"The MetacelloResolution of my command (load, resolve...), errors and warnings included, also after a load failed; nil before it resolved. For example:
 		Metacello new baseline: 'Foo'; repository: '...'; load; resolution"
 
-	^ resolution
+	^ self scriptExecutor resolution
 ]
 
 { #category : 'api actions' }
