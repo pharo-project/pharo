@@ -61,6 +61,12 @@ MetacelloMVSBaselineReadingTest >> groupsSetUp [
 		baseline: (self baselineRequiring: #(  ))
 ]
 
+{ #category : 'helpers' }
+MetacelloMVSBaselineReadingTest >> installed: aDescription project: aName [
+	"What the image has installed: the project spec it was loaded from, by the description aDescription"
+	^ graph specFor: aDescription project: aName loads: #(  )
+]
+
 { #category : 'tests - platform' }
 MetacelloMVSBaselineReadingTest >> pharoBaseline: aLine [
 
@@ -88,7 +94,7 @@ MetacelloMVSBaselineReadingTest >> resolveInstalled: aBarMinimum [
 		project: 'Foo'
 		baseline: (self baselineRequiring: { ('Bar' -> ('github://acme/Bar:' , aBarMinimum)) }).
 	^ (MetacelloMVSResolver on: (MetacelloMVSGraph new source: source))
-		  installed: { ('github://acme/Bar' -> 'main') } asDictionary;
+		  installed: { ('github://acme/Bar' -> (self installed: 'github://acme/Bar:main' project: 'Bar')) } asDictionary;
 		  resolve: 'github://acme/Foo:v1.0.0' project: 'Foo'
 ]
 
@@ -107,7 +113,7 @@ MetacelloMVSBaselineReadingTest >> resolveWithBarLockedAt: aLockedTag asking: aB
 				project: 'Bar'
 				baseline: (self baselineRequiring: #(  )) ].
 	^ (MetacelloMVSResolver on: graph)
-		  installed: { ('github://acme/Bar' -> aLockedTag) } asDictionary;
+		  installed: { ('github://acme/Bar' -> (self installed: 'github://acme/Bar:' , aLockedTag project: 'Bar')) } asDictionary;
 		  locked: #( 'github://acme/Bar' );
 		  resolve: 'github://acme/Foo:v1.0.0' project: 'Foo'
 ]
@@ -250,7 +256,7 @@ MetacelloMVSBaselineReadingTest >> testAnInstalledVersionThatIsNotLockedIsRaised
 				project: 'Bar'
 				baseline: (self baselineRequiring: #(  )) ].
 	report := (MetacelloMVSResolver on: graph)
-		          installed: { ('github://acme/Bar' -> 'v1.0.0') } asDictionary;
+		          installed: { ('github://acme/Bar' -> (self installed: 'github://acme/Bar:v1.0.0' project: 'Bar')) } asDictionary;
 		          resolve: 'github://acme/Foo:v1.0.0' project: 'Foo'.
 	self assert: (report buildList at: 'github://acme/Bar') version string equals: 'v1.2.0'
 ]

@@ -154,16 +154,16 @@ MetacelloMVSResolver >> checkProjectOf: aCandidate [
 { #category : 'resolving' }
 MetacelloMVSResolver >> consider: aCandidate [
 	"An installed version is a requirement too, so that mvs never downgrades it. An installed version the legacy rule assumes is said"
-
 	(selected includesKey: aCandidate repository) ifFalse: [
 			installed at: aCandidate repository ifPresent: [ :each |
-					(self installedCandidateFrom: each for: aCandidate) ifNotNil: [ :installedCandidate |
+					(self isInstalledAtAVersion: each) ifTrue: [
+							| installedCandidate |
+							installedCandidate := self installedCandidateFrom: each for: aCandidate.
 							(assumedInstalled notNil and: [ assumedInstalled includes: aCandidate repository ]) ifTrue: [
 									self
 										warning: #assumedInstalled
 										text: installedCandidate printString
-											,
-											' is assumed installed: its packages are in the image, but it is not registered as loaded. Reload it to register it exactly'
+											, ' is assumed installed: its packages are in the image, but it is not registered as loaded. Reload it to register it exactly'
 										about: installedCandidate ].
 							self select: installedCandidate ] ] ].
 	self select: aCandidate
@@ -207,22 +207,14 @@ MetacelloMVSResolver >> holdInRequirement: aFinding [
 
 { #category : 'metacello' }
 MetacelloMVSResolver >> installed: aDictionary [
-	"Repository -> what the image has loaded from it: a project spec, or just its version"
-
+	"Repository -> the project spec the image loaded from it"
 	installed := aDictionary
 ]
 
 { #category : 'resolving' }
-MetacelloMVSResolver >> installedCandidateFrom: aProjectSpecOrVersion for: aCandidate [
-	"The candidate for the version the image has of the repository of aCandidate (locked or not); nil when the registration names no version"
-
-	| spec ref |
-	spec := aProjectSpecOrVersion isString
-		        ifTrue: [ graph specFor: aCandidate repository , ':' , aProjectSpecOrVersion project: aCandidate project loads: #(  ) ]
-		        ifFalse: [ aProjectSpecOrVersion ].
-	ref := graph versionStringOf: spec.
-	(ref notNil and: [ MetacelloSemanticVersionNumber isSemanticVersion: ref ]) ifFalse: [ ^ nil ].
-	^ (self candidateFor: spec version: (MetacelloSemanticVersionNumber fromVersionString: ref) requiredBy: nil)
+MetacelloMVSResolver >> installedCandidateFrom: aProjectSpec for: aCandidate [
+	"The candidate for the version the image has of the repository of aCandidate (locked or not). Asked only when it is installed at a version (#isInstalledAtAVersion:)"
+	^ (self candidateFor: aProjectSpec version: (MetacelloSemanticVersionNumber fromVersionString: (graph versionStringOf: aProjectSpec)) requiredBy: nil)
 		  beInstalled;
 		  in: [ :candidate | (self isLocked: candidate repository) ifTrue: [ candidate beLocked ] ];
 		  yourself
@@ -256,6 +248,14 @@ MetacelloMVSResolver >> installedFromRegistry [
 MetacelloMVSResolver >> isFloating: aProjectSpec [
 
 	^ (graph versionStringOf: aProjectSpec) ifNil: [ false ] ifNotNil: [ :ref | MetacelloSemanticVersionNumber isSeries: ref ]
+]
+
+{ #category : 'resolving' }
+MetacelloMVSResolver >> isInstalledAtAVersion: aProjectSpec [
+	"Whether what the image has installed, loaded from aProjectSpec, is at a semantic version, which can be compared with the versions asked. A branch or a commit is not"
+	^ (graph versionStringOf: aProjectSpec)
+		  ifNil: [ false ]
+		  ifNotNil: [ :ref | MetacelloSemanticVersionNumber isSemanticVersion: ref ]
 ]
 
 { #category : 'resolving' }

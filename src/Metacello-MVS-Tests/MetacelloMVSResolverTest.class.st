@@ -43,6 +43,12 @@ MetacelloMVSResolverTest >> givenADependencyOfAVersionNotSelected [
 	self version: 'v1.0.0' of: 'f' requires: #(  )
 ]
 
+{ #category : 'helpers' }
+MetacelloMVSResolverTest >> installed: aDescription project: aName [
+	"What the image has installed: the project spec it was loaded from, by the description aDescription"
+	^ graph specFor: aDescription project: aName loads: #(  )
+]
+
 { #category : 'running' }
 MetacelloMVSResolverTest >> project: aProjectName at: anOwnerNameAndRef [
 	"A project spec asking the baseline aProjectName in github://anOwnerNameAndRef/src, like a fork of it"
@@ -476,7 +482,7 @@ MetacelloMVSResolverTest >> testAnInstalledVersionIsNeverDowngraded [
 	self version: 'v1.2.0' of: 'b' requires: #(  ).
 	self version: 'v1.5.0' of: 'b' requires: #(  ).
 	buildList := ((MetacelloMVSResolver on: graph)
-		              installed: { ((self repo: 'b') -> 'v1.5.0') } asDictionary;
+		              installed: { ((self repo: 'b') -> (self installed: (self repo: 'b:v1.5.0') project: 'b')) } asDictionary;
 		              resolve: (self repo: 'a:v1.0.0/src') project: 'a') buildList.
 	self
 		assert: (self selected: 'b' in: buildList) equals: 'v1.5.0';
