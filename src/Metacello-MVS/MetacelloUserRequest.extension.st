@@ -16,7 +16,7 @@ MetacelloUserRequest >> chainDisplayNames [
 
 { #category : '*Metacello-MVS' }
 MetacelloUserRequest >> chainLine [
-	"Who asked, for people"
+	"How the report says who asked, after 'Required by:': the script"
 
 	^ self name
 ]
@@ -30,7 +30,7 @@ MetacelloUserRequest >> chainLines [
 
 { #category : '*Metacello-MVS' }
 MetacelloUserRequest >> displayName [
-	"For people"
+	"How the report names the user: the script"
 
 	^ self name
 ]

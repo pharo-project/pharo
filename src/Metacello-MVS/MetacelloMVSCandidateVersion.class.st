@@ -40,7 +40,7 @@ MetacelloMVSCandidateVersion >> beLocked [
 
 { #category : 'printing' }
 MetacelloMVSCandidateVersion >> chainDisplayNames [
-	"For people, the versions from the root down to me (see chainLine)"
+	"How the report names the versions from the root down to me (see chainLine)"
 
 	^ requiredBy chainDisplayNames copyWith: (self isInstalled
 			   ifTrue: [ 'installed ' , self displayName ]
@@ -49,7 +49,7 @@ MetacelloMVSCandidateVersion >> chainDisplayNames [
 
 { #category : 'printing' }
 MetacelloMVSCandidateVersion >> chainLine [
-	"From the root down to me, on one line, with project names: Moose v13.0.0 > Famix v1.2.1"
+	"How the report says who asked, after 'Required by:': the versions from the root down to me, on one line (Moose v13.0.0 > Famix v1.2.1)"
 
 	^ ' > ' join: self chainDisplayNames
 ]
@@ -70,7 +70,7 @@ MetacelloMVSCandidateVersion >> chainString [
 
 { #category : 'printing' }
 MetacelloMVSCandidateVersion >> displayName [
-	"For people: my project and version (Famix v1.2.1)"
+	"How the report names me: my project and version (Famix v1.2.1)"
 
 	^ self project , ' ' , version string
 ]

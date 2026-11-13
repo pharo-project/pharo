@@ -16,7 +16,7 @@ MetacelloImageRequest >> chainDisplayNames [
 
 { #category : '*Metacello-MVS' }
 MetacelloImageRequest >> chainLine [
-	"Who asked, for people"
+	"How the report says who asked, after 'Required by:': the image"
 
 	^ self name
 ]
@@ -30,7 +30,7 @@ MetacelloImageRequest >> chainLines [
 
 { #category : '*Metacello-MVS' }
 MetacelloImageRequest >> displayName [
-	"For people"
+	"How the report names the image: the image"
 
 	^ self name
 ]
