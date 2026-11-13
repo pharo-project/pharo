@@ -166,24 +166,6 @@ MetacelloMVSResolver >> checkProjectOf: aCandidate [
 	^ true
 ]
 
-{ #category : 'resolving' }
-MetacelloMVSResolver >> consider: aCandidate [
-	"An installed version is a requirement too, so that mvs never downgrades it. An installed version the legacy rule assumes is said"
-	(selected includesKey: aCandidate repository) ifFalse: [
-			installed at: aCandidate repository ifPresent: [ :each |
-					(self isInstalledAtAVersion: each) ifTrue: [
-							| installedCandidate |
-							installedCandidate := self installedCandidateFrom: each for: aCandidate.
-							(assumedInstalled includes: aCandidate repository) ifTrue: [
-									self
-										warning: #assumedInstalled
-										text: installedCandidate printString
-											, ' is assumed installed: its packages are in the image, but it is not registered as loaded. Reload it to register it exactly'
-										about: installedCandidate ].
-							self select: installedCandidate ] ] ].
-	self select: aCandidate
-]
-
 { #category : 'initialization' }
 MetacelloMVSResolver >> dropUnused: aBoolean [
 	"Whether the resolution ends by dropping the projects that only versions not selected asked for (true by default). Go keeps them"
@@ -434,8 +416,26 @@ MetacelloMVSResolver >> require: aRequiredSpec by: aCandidate [
 					warning: #nonCanonicalVersion
 					text: repository , ' ' , version string , ' is selected, a version that is not vX.Y.Z'
 					about: aCandidate ].
-		self consider: (self candidateFor: spec version: version requiredBy: aCandidate).
+		self requireVersion: (self candidateFor: spec version: version requiredBy: aCandidate).
 		grew ifTrue: [ self revisit: repository ] ] ensure: [ currentRequirement := nil ]
+]
+
+{ #category : 'resolving' }
+MetacelloMVSResolver >> requireVersion: aCandidate [
+	"Each requirement can raise the selected version, never lower it. An installed version counts as a requirement, so that MVS never downgrades it. A version that is only assumed installed is reported with a warning."
+	(selected includesKey: aCandidate repository) ifFalse: [
+			installed at: aCandidate repository ifPresent: [ :each |
+					(self isInstalledAtAVersion: each) ifTrue: [
+							| installedCandidate |
+							installedCandidate := self installedCandidateFrom: each for: aCandidate.
+							(assumedInstalled includes: aCandidate repository) ifTrue: [
+									self
+										warning: #assumedInstalled
+										text: installedCandidate printString
+											, ' is assumed installed: its packages are in the image, but it is not registered as loaded. Reload it to register it exactly'
+										about: installedCandidate ].
+							self select: installedCandidate ] ] ].
+	self select: aCandidate
 ]
 
 { #category : 'resolving' }
