@@ -52,27 +52,22 @@ PBAbstractImageBuilder class >> forArchitecture: architecture [
 	^ candidates anyOne new
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'running' }
 PBAbstractImageBuilder >> allocateClassTable [
 	"Allocate the root of the classTable plus enough pages to accomodate all classes in
 	 the classToIndex map.  Don't fill in the entries yet; the classes have yet to be cloned."
-	| tableRoot page maxSize numPages newHeap newOop |
+
+	| tableRoot page maxSize numPages newHeap |
 	newHeap := objectSpace backend simulator objectMemory.
-	tableRoot := newHeap
-					allocateSlots: newHeap classTableRootSlots + newHeap hiddenRootSlots
-					format: newHeap arrayFormat
-					classIndex: newHeap arrayClassIndexPun.
-	newOop := tableRoot.
-	self haltIf: [ newOop = 4239888 ].
+	tableRoot := newHeap allocateSlots: newHeap classTableRootSlots + newHeap hiddenRootSlots format: newHeap arrayFormat classIndex: newHeap arrayClassIndexPun.
+
 	self assert: (newHeap numSlotsOf: tableRoot) = (newHeap classTableRootSlots + newHeap hiddenRootSlots).
 	self assert: (newHeap formatOf: tableRoot) = newHeap arrayFormat.
 	self assert: (newHeap classIndexOf: tableRoot) = newHeap arrayClassIndexPun.
 	newHeap nilFieldsOf: tableRoot.
+
 	"first page is strong"
-	page := newHeap
-					allocateSlots: newHeap classTablePageSize
-					format: newHeap arrayFormat
-					classIndex: newHeap arrayClassIndexPun.
+	page := newHeap allocateSlots: newHeap classTablePageSize format: newHeap arrayFormat classIndex: newHeap arrayClassIndexPun.
 	self assert: (newHeap numSlotsOf: page) = newHeap classTablePageSize.
 	self assert: (newHeap formatOf: tableRoot) = newHeap arrayFormat.
 	self assert: (newHeap classIndexOf: tableRoot) = newHeap arrayClassIndexPun.
@@ -81,25 +76,21 @@ PBAbstractImageBuilder >> allocateClassTable [
 	newHeap nilFieldsOf: page.
 	newHeap storePointer: 0 ofObject: tableRoot withValue: page.
 	newHeap setHiddenRootsObj: tableRoot.
-	
+
 	"this should actually take into account special indexes and immediate classes.
 	Skipped for the moment"
-	maxSize := (1 << self objectMemory classTableMajorIndexShift) + (self systemDefinition allClasses size * 2).
-	
+	maxSize := 1 << self objectMemory classTableMajorIndexShift + (self systemDefinition allClasses size * 2).
+
 	numPages := (maxSize + newHeap classTableMinorIndexMask / newHeap classTablePageSize) truncated.
-	2 to: numPages do:
-		[:i|
-		page := newHeap
-					allocateSlots: newHeap classTablePageSize
-					format: newHeap arrayFormat
-					classIndex: newHeap arrayClassIndexPun.
-		self assert: (newHeap numSlotsOf: page) = newHeap classTablePageSize.
-		self assert: (newHeap formatOf: page) = newHeap arrayFormat.
-		self assert: (newHeap classIndexOf: page) = newHeap arrayClassIndexPun.
-		newHeap fillObj: page numSlots: newHeap classTablePageSize with: newHeap nilObject.
-		newHeap storePointer: i - 1 ofObject: tableRoot withValue: page.
-		self assert: (newHeap objectAfter: (newHeap fetchPointer: i - 2 ofObject: tableRoot)  limit: newHeap freeStart) = page.
-		"lastClassTablePage := page"].
+	2 to: numPages do: [ :i |
+			page := newHeap allocateSlots: newHeap classTablePageSize format: newHeap arrayFormat classIndex: newHeap arrayClassIndexPun.
+			self assert: (newHeap numSlotsOf: page) = newHeap classTablePageSize.
+			self assert: (newHeap formatOf: page) = newHeap arrayFormat.
+			self assert: (newHeap classIndexOf: page) = newHeap arrayClassIndexPun.
+			newHeap fillObj: page numSlots: newHeap classTablePageSize with: newHeap nilObject.
+			newHeap storePointer: i - 1 ofObject: tableRoot withValue: page.
+			self assert: (newHeap objectAfter: (newHeap fetchPointer: i - 2 ofObject: tableRoot) limit: newHeap freeStart) = page
+			"lastClassTablePage := page" ].
 	"and once again to recompute numClassTablePages post building the class table."
 	newHeap instVarNamed: 'numClassTablePages' put: nil.
 	newHeap setHiddenRootsObj: tableRoot
@@ -108,21 +99,15 @@ PBAbstractImageBuilder >> allocateClassTable [
 { #category : 'running' }
 PBAbstractImageBuilder >> allocateFreeLists [
 	"Allocate the freeLists array."
-	| newOop |
+
 	freeListsOop := self objectMemory
-						allocateSlots: objectSpace backend simulator objectMemory numFreeLists
-						format: objectSpace backend simulator objectMemory wordIndexableFormat
-						classIndex: objectSpace backend simulator objectMemory wordSizeClassIndexPun.
+		                allocateSlots: objectSpace backend simulator objectMemory numFreeLists
+		                format: objectSpace backend simulator objectMemory wordIndexableFormat
+		                classIndex: objectSpace backend simulator objectMemory wordSizeClassIndexPun.
 	self assert: (self objectMemory objectAfter: objectSpace backend trueObject target address) = freeListsOop.
-	newOop := freeListsOop.
-	self haltIf: [ newOop = 4239888 ].
-	0 to: objectSpace backend simulator objectMemory numFreeLists - 1 do:
-		[:i|
-		self objectMemory
-			storePointerUnchecked: i
-			ofObject: freeListsOop
-			withValue: 0].
-	self objectMemory initializeFreeSpacePostLoad: freeListsOop.
+
+	0 to: objectSpace backend simulator objectMemory numFreeLists - 1 do: [ :i | self objectMemory storePointerUnchecked: i ofObject: freeListsOop withValue: 0 ].
+	self objectMemory initializeFreeSpacePostLoad: freeListsOop
 ]
 
 { #category : 'class-indexes' }
@@ -309,46 +294,44 @@ PBAbstractImageBuilder >> createFalse [
 PBAbstractImageBuilder >> createInitialObjects [
 
 	self logger
-		execute: [
-			| characterTable |
-			"We add the main globals  in the bootstrap environment before a system dictionary exists. These globals are needed to create a system dictionary, and will be used by the AST interpreter"
-			self log: 'Initializing objects.'.
-			self bootstrapEnvironment at: #Smalltalk put: objectSpace nilObject.
-			self bootstrapEnvironment at: #Undeclared put: objectSpace nilObject.
+		execute: [ "We add the main globals  in the bootstrap environment before a system dictionary exists. These globals are needed to create a system dictionary, and will be used by the AST interpreter"
+				self log: 'Initializing objects.'.
+				self bootstrapEnvironment at: #Smalltalk put: objectSpace nilObject.
+				self bootstrapEnvironment at: #Undeclared put: objectSpace nilObject.
 
-			"We initialize the hash table sizes by hand.
+				"We initialize the hash table sizes by hand.
 	The AST interpreter is too slow to interpret HashTableSizes>>#initialize"
-			self log: 'initializing hash table sizes'.
+				self log: 'initializing hash table sizes'.
 
-			(self classNamed: #HashTableSizes) mirror
-				instanceVariableAtIndex: (self classInstanceVariableIndexAt: 1)
-				put: (objectSpace newArrayWithAll: (HashTableSizes sizes collect: [ :each | objectSpace backend smallIntegerMirrorOn: each ])).
+				(self classNamed: #HashTableSizes) mirror
+					instanceVariableAtIndex: (self classInstanceVariableIndexAt: 1)
+					put: (objectSpace newArrayWithAll: (HashTableSizes sizes collect: [ :each | objectSpace backend smallIntegerMirrorOn: each ])).
 
-			self log: 'preparing class builder'.
-			self bootstrapInterpreter evaluateCode: 'DangerousClassNotifier disable'.
+				self log: 'preparing class builder'.
+				self bootstrapInterpreter evaluateCode: 'DangerousClassNotifier disable'.
 
-			self bootstrapInterpreter evaluateCode: 'Undeclared := UndeclaredRegistry new.'.
-			self bootstrapInterpreter evaluateCode: 'Smalltalk := SmalltalkImage basicNew.'.
-			self bootstrapInterpreter evaluateCode: 'Smalltalk instVarAt: 1 put: SystemEnvironment new.'.
-			self bootstrapInterpreter evaluateCode: 'Smalltalk globals at: #Smalltalk put: Smalltalk.'.
-			self bootstrapInterpreter evaluateCode: 'Smalltalk globals at: #Undeclared put: Undeclared.'.
+				self bootstrapInterpreter evaluateCode: 'Undeclared := UndeclaredRegistry new.'.
+				self bootstrapInterpreter evaluateCode: 'Smalltalk := SmalltalkImage basicNew.'.
+				self bootstrapInterpreter evaluateCode: 'Smalltalk instVarAt: 1 put: SystemEnvironment new.'.
+				self bootstrapInterpreter evaluateCode: 'Smalltalk globals at: #Smalltalk put: Smalltalk.'.
+				self bootstrapInterpreter evaluateCode: 'Smalltalk globals at: #Undeclared put: Undeclared.'.
 
-			"Initialize the globals of the system. Careful: The AST interpreter will not know about these if we do not put them in the bootstrapEnvironment."
-			self bootstrapInterpreter evaluateCode: 'Smalltalk globals at: #Processor put: nil.'.
-			self bootstrapInterpreter evaluateCode: 'Smalltalk globals at: #Transcript put: nil.'.
+				"Initialize the globals of the system. Careful: The AST interpreter will not know about these if we do not put them in the bootstrapEnvironment."
+				self bootstrapInterpreter evaluateCode: 'Smalltalk globals at: #Processor put: nil.'.
+				self bootstrapInterpreter evaluateCode: 'Smalltalk globals at: #Transcript put: nil.'.
 
 
-			self log: 'class loader now creates class pools'.
-			classLoader initializeClassPools.
+				self log: 'class loader now creates class pools'.
+				classLoader initializeClassPools.
 
-			self log: 'Initializing StartUp list'.
-			self bootstrapInterpreter evaluateCode: 'SmalltalkImage initialize.'.
+				self log: 'Initializing StartUp list'.
+				self bootstrapInterpreter evaluateCode: 'SmalltalkImage initialize.'.
 
-			self log: 'Initializing Character Table'.
-			self bootstrapInterpreter evaluateCode: 'Character initialize.'.
+				self log: 'Initializing Character Table'.
+				self bootstrapInterpreter evaluateCode: 'Character initialize.'.
 
-			self log: 'Initializing String Ascii and CaseInsensitive Table'.
-			self bootstrapInterpreter evaluateCode: '| asciiOrder caseInsesitiveOrder |
+				self log: 'Initializing String Ascii and CaseInsensitive Table'.
+				self bootstrapInterpreter evaluateCode: '| asciiOrder caseInsesitiveOrder |
 		asciiOrder := ((0 to: 255) as: ByteArray).
 	caseInsesitiveOrder := asciiOrder copy.
     (0 to: 255) do:[ :v |
@@ -360,22 +343,22 @@ PBAbstractImageBuilder >> createInitialObjects [
 		String classPool at: #AsciiOrder put: asciiOrder.
 		String classPool at: #CaseInsensitiveOrder put: caseInsesitiveOrder'.
 
-			self log: 'Initializing SmallInteger constants'.
-			self bootstrapInterpreter evaluateCode: 'SmallInteger instVarAt: ' , (self classInstanceVariableIndexAt: 1) asString , ' put: -16r40000000.'. "minVal"
-			self bootstrapInterpreter evaluateCode: 'SmallInteger instVarAt: ' , (self classInstanceVariableIndexAt: 2) asString , ' put: 16r3FFFFFFF.'. "maxVal"
+				self log: 'Initializing SmallInteger constants'.
+				self bootstrapInterpreter evaluateCode: 'SmallInteger instVarAt: ' , (self classInstanceVariableIndexAt: 1) asString , ' put: -16r40000000.'. "minVal"
+				self bootstrapInterpreter evaluateCode: 'SmallInteger instVarAt: ' , (self classInstanceVariableIndexAt: 2) asString , ' put: 16r3FFFFFFF.'. "maxVal"
 
-			self log: 'Initializing CompiledMethod constants'.
-			self bootstrapInterpreter evaluateCode: 'CompiledMethod initialize.'.
+				self log: 'Initializing CompiledMethod constants'.
+				self bootstrapInterpreter evaluateCode: 'CompiledMethod initialize.'.
 
-			self log: 'Installing symbol table'.
-			self bootstrapInterpreter evaluateCode: 'SymbolTableSemaphore disable'.
-			self bootstrapInterpreter evaluateCode: 'Symbol initialize.
+				self log: 'Installing symbol table'.
+				self bootstrapInterpreter evaluateCode: 'SymbolTableSemaphore disable'.
+				self bootstrapInterpreter evaluateCode: 'Symbol initialize.
 	Symbol classPool at: #SymbolTable put: (WeakSet withAll: ByteSymbol allInstances)'.
-			objectSpace symbolTable: (EPInternalSymbolTable new objectSpace: objectSpace).
+				objectSpace symbolTable: (EPInternalSymbolTable new objectSpace: objectSpace).
 
 
-			self log: 'Bootstrapping class layouts'.
-			bootstrapInterpreter evaluateCode: ('| superLayout |
+				self log: 'Bootstrapping class layouts'.
+				bootstrapInterpreter evaluateCode: ('| superLayout |
 		superLayout := EmptyLayout instance.
 		Class
 			instVarAt: 4
@@ -528,7 +511,7 @@ PBAbstractImageBuilder >> espellBackend: anObject [
 	espellBackend := anObject
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 PBAbstractImageBuilder >> firstOrdinaryClassIndex [
 	
 	^ self objectMemory classTablePageSize
@@ -581,7 +564,7 @@ PBAbstractImageBuilder >> followForwardingPointers [
 						withValue: (newHeap followForwarded: field)]]]].
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'formatting' }
 PBAbstractImageBuilder >> formatOfClass: aRFiClass [ 
 	
 	"A class format is composed by"
@@ -619,11 +602,10 @@ PBAbstractImageBuilder >> freeForwarders [
 ]
 
 { #category : 'accessing' }
-PBAbstractImageBuilder >> globalNamed: aString [ 
-	
-	(self includesClassNamed: aString)
-		ifTrue: [ ^ (self classNamed: aString) mirror ].
-	self halt.
+PBAbstractImageBuilder >> globalNamed: aString [
+
+	(self includesClassNamed: aString) ifTrue: [ ^ (self classNamed: aString) mirror ].
+	^ self error: 'There is no global named ' , aString
 ]
 
 { #category : 'accessing' }
@@ -976,7 +958,7 @@ PBAbstractImageBuilder >> newSpecialObjectsArray [
 	^newSpecialObjectsArray.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 PBAbstractImageBuilder >> nextOrdinaryClassIndex [
 	
 	| result |
@@ -1000,19 +982,13 @@ PBAbstractImageBuilder >> objectSpace [
 { #category : 'as yet unclassified' }
 PBAbstractImageBuilder >> prepareSimulatorForExecution [
 
-	| savedEndOfMemory |
-	self objectMemory initializePostBootstrap.
-	
-	"savedEndOfMemory := self objectMemory endOfMemory.
-	self objectMemory setEndOfMemory: self objectMemory freeOldSpaceStart.
-	self objectMemory setEndOfMemory: savedEndOfMemory."
-"	self objectMemory interpreter initializeInterpreter: 0.
-"	self objectMemory
+	self objectMemory
+		initializePostBootstrap;
 		initializeNewSpaceVariables;
 		bootstrapping: false;
 		assimilateNewSegment: (self objectMemory segmentManager segments at: 0);
 		setCheckForLeaks: 0;
-		runLeakCheckerForFullGC.
+		runLeakCheckerForFullGC
 ]
 
 { #category : 'final steps' }
@@ -1069,7 +1045,7 @@ PBAbstractImageBuilder >> visitTrait: aRFiTrait [
 		environment: self
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'writing' }
 PBAbstractImageBuilder >> writeSnapshot: imageFileName ofTransformedImage: spurHeap headerFlags: headerFlags screenSize: screenSizeInteger [
 	"The bootstrapped image typically contains a few big free chunks and one huge free chunk.
 	 Test snapshot writing and loading by turning the largest non-huge chunks into segment bridges
