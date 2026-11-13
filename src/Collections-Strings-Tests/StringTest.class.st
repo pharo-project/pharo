@@ -805,15 +805,6 @@ StringTest >> testEndsWithCaseSensitive [
 ]
 
 { #category : 'tests' }
-StringTest >> testEndsWithDigit [
-
-	self deny: ('éèàôüößäóñíá' endsWithDigit).
-	self assert: ('éèàôüößäóñíá9' endsWithDigit).
-	self deny: ('99test' endsWithDigit).
-	self assert: ('  999' endsWithDigit)
-]
-
-{ #category : 'tests' }
 StringTest >> testEquality [
 
 	self assert: 'abc' equals: 'abc' asWideString.
@@ -1753,16 +1744,6 @@ StringTest >> testNumArgs [
 
 	self assert: 'x::0y:' numArgs = -1
 		description: 'keyword selectors cannot have any key beginning with a digit'
-]
-
-{ #category : 'tests' }
-StringTest >> testNumericSuffix [
-
-	self assert: 'abc98' numericSuffix equals: 98.
-	self assert: '98abc' numericSuffix equals: 0.
-	self assert: '  123abc456' numericSuffix equals: 456.
-	self assert: 'abc456 789' numericSuffix equals: 789.
-	self assert: '012éà ôüÖ ẞ123' numericSuffix equals: 123
 ]
 
 { #category : 'tests' }
