@@ -1,13 +1,6 @@
 Extension { #name : 'Object' }
 
 { #category : '*Transcript-NonInteractive' }
-Object >> crTrace [
-	"To deprecate in favor of #newLineTrace."
-
-	self newLineTrace
-]
-
-{ #category : '*Transcript-NonInteractive' }
 Object >> logEntry [
 	self traceNewLine: 'Entered ' , thisContext sender printString
 ]
@@ -46,20 +39,6 @@ Object >> trace: anObject [
 	"Log the argument. Use self trace: instead of Transcript show: "
 
 	Transcript show: anObject asString
-]
-
-{ #category : '*Transcript-NonInteractive' }
-Object >> traceCr [
-	"To deprecate in favor of #traceNewLine."
-
-	self traceNewLine
-]
-
-{ #category : '*Transcript-NonInteractive' }
-Object >> traceCr: anObject [
-	"To deprecate in favor of #traceNewLine:."
-
-	self traceNewLine: anObject
 ]
 
 { #category : '*Transcript-NonInteractive' }

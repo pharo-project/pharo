@@ -791,10 +791,10 @@ PNGReadWriter >> nextImage [
 	self processIDATChunk.
 
 	self debugging ifTrue: [
-			self crTrace: 'form = ' , form printString.
-			self crTrace: 'colorType = ' , colorType printString.
-			self crTrace: 'interlaceMethod = ' , interlaceMethod printString.
-			self crTrace: 'filters = ' , filtersSeen sortedCounts asArray printString ].
+			self newLineTrace: 'form = ' , form printString.
+			self newLineTrace: 'colorType = ' , colorType printString.
+			self newLineTrace: 'interlaceMethod = ' , interlaceMethod printString.
+			self newLineTrace: 'filters = ' , filtersSeen sortedCounts asArray printString ].
 
 	^ form
 ]
