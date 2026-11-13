@@ -39,12 +39,6 @@ ClyBrowseCoveringTestCaseCommand >> name [
 	^ 'Browse test class'
 ]
 
-{ #category : 'accessing' }
-ClyBrowseCoveringTestCaseCommand >> order [
-
-	^ 1000
-]
-
 { #category : 'execution' }
 ClyBrowseCoveringTestCaseCommand >> prepareFullExecution [
 

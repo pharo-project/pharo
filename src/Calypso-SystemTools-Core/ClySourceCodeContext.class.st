@@ -59,7 +59,7 @@ ClySourceCodeContext class >> for: anEditorTool selectedNode: aProgramNode [
 		selectedSourceNode: aProgramNode
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'commands' }
 ClySourceCodeContext class >> systemCommandsSourceCodeCommandsIn: aCommandMap [
 
 	<calypsoCommands>

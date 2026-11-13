@@ -43,12 +43,6 @@ ClyConvertMethodGroupToProtocolCommand >> name [
 	^ 'Convert to protocol'
 ]
 
-{ #category : 'accessing' }
-ClyConvertMethodGroupToProtocolCommand >> order [
-
-	^ 1000
-]
-
 { #category : 'execution' }
 ClyConvertMethodGroupToProtocolCommand >> prepareFullExecution [
 

@@ -48,12 +48,6 @@ ClyShowPoolUsersCommand >> name [
 	^ 'Show pool users'
 ]
 
-{ #category : 'accessing' }
-ClyShowPoolUsersCommand >> order [
-
-	^ 1000
-]
-
 { #category : 'execution' }
 ClyShowPoolUsersCommand >> prepareFullExecution [
 

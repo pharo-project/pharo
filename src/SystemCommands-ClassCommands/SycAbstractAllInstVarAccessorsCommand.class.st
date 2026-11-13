@@ -52,12 +52,6 @@ SycAbstractAllInstVarAccessorsCommand >> name [
 	^'Abstract instance variables'
 ]
 
-{ #category : 'accessing' }
-SycAbstractAllInstVarAccessorsCommand >> order [
-
-	^ 1000
-]
-
 { #category : 'execution' }
 SycAbstractAllInstVarAccessorsCommand >> prepareFullExecution [
 

@@ -62,12 +62,6 @@ ClyShowMessageSenderCommand >> name [
 	^'Senders'
 ]
 
-{ #category : 'accessing' }
-ClyShowMessageSenderCommand >> order [
-
-	^ 1000
-]
-
 { #category : 'execution' }
 ClyShowMessageSenderCommand >> prepareFullExecution [
 

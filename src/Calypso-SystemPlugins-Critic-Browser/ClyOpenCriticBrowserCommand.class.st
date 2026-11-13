@@ -20,9 +20,3 @@ ClyOpenCriticBrowserCommand >> executeRefactoring [
 ClyOpenCriticBrowserCommand >> name [
 	^'Browse critiques'
 ]
-
-{ #category : 'accessing' }
-ClyOpenCriticBrowserCommand >> order [
-
-	^ 1000
-]

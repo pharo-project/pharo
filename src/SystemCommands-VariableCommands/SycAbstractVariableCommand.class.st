@@ -38,12 +38,6 @@ SycAbstractVariableCommand >> name [
 	^'Abstract accessors'
 ]
 
-{ #category : 'accessing' }
-SycAbstractVariableCommand >> order [
-
-	^ 1000
-]
-
 { #category : 'execution' }
 SycAbstractVariableCommand >> prepareFullExecution [
 

@@ -31,9 +31,3 @@ ClyShowGroupsInMethodBrowserCommand >> iconName [
 ClyShowGroupsInMethodBrowserCommand >> name [
 	^'Show in method browser'
 ]
-
-{ #category : 'accessing' }
-ClyShowGroupsInMethodBrowserCommand >> order [
-
-	^ 1000
-]

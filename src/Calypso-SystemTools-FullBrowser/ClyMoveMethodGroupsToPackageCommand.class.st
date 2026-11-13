@@ -40,12 +40,6 @@ ClyMoveMethodGroupsToPackageCommand >> name [
 ]
 
 { #category : 'accessing' }
-ClyMoveMethodGroupsToPackageCommand >> order [
-
-	^ 1000
-]
-
-{ #category : 'accessing' }
 ClyMoveMethodGroupsToPackageCommand >> package [
 	^ package
 ]

@@ -31,9 +31,3 @@ SycInspectVariableCommand >> name [
 
 	^ 'Inspect variable'
 ]
-
-{ #category : 'accessing' }
-SycInspectVariableCommand >> order [
-
-	^ 1000
-]

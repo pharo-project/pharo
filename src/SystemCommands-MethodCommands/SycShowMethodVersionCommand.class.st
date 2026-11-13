@@ -34,12 +34,6 @@ SycShowMethodVersionCommand >> name [
 	^'Versions'
 ]
 
-{ #category : 'accessing' }
-SycShowMethodVersionCommand >> order [
-
-	^ 1000
-]
-
 { #category : 'execution' }
 SycShowMethodVersionCommand >> prepareFullExecution [
 

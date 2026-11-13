@@ -39,9 +39,3 @@ ClySpawnFullBrowserCommand >> iconName [
 ClySpawnFullBrowserCommand >> name [
 	^'Browse'
 ]
-
-{ #category : 'accessing' }
-ClySpawnFullBrowserCommand >> order [
-
-	^ 1000
-]

@@ -25,9 +25,3 @@ ClyRequestProtocolForEditorCommand >> name [
 		ifTrue: [ 'Classify currently editing method' ]
 		ifFalse: [ 'Classify method' ]
 ]
-
-{ #category : 'accessing' }
-ClyRequestProtocolForEditorCommand >> order [
-
-	^ 1000
-]

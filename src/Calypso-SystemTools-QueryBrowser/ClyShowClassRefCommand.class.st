@@ -54,12 +54,6 @@ ClyShowClassRefCommand >> name [
 	^'Class refs.'
 ]
 
-{ #category : 'accessing' }
-ClyShowClassRefCommand >> order [
-
-	^ 1000
-]
-
 { #category : 'execution' }
 ClyShowClassRefCommand >> prepareFullExecution [
 

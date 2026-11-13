@@ -41,12 +41,6 @@ ClyShowTraitUsersCommand >> name [
 	^'Show trait users'
 ]
 
-{ #category : 'accessing' }
-ClyShowTraitUsersCommand >> order [
-
-	^ 1000
-]
-
 { #category : 'execution' }
 ClyShowTraitUsersCommand >> prepareFullExecution [
 

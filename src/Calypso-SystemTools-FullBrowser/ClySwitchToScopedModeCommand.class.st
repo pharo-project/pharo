@@ -30,12 +30,6 @@ ClySwitchToScopedModeCommand >> name [
 ]
 
 { #category : 'accessing' }
-ClySwitchToScopedModeCommand >> order [
-
-	^ 1000
-]
-
-{ #category : 'accessing' }
 ClySwitchToScopedModeCommand >> packages [
 	^ packages
 ]

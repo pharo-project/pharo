@@ -28,9 +28,3 @@ ClyRequestMethodPackageForEditorCommand >> executeRefactoring [
 ClyRequestMethodPackageForEditorCommand >> name [
 	^'Select method package'
 ]
-
-{ #category : 'accessing' }
-ClyRequestMethodPackageForEditorCommand >> order [
-
-	^ 1000
-]

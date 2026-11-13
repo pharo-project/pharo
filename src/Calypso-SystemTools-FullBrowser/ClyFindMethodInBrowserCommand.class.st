@@ -38,12 +38,6 @@ ClyFindMethodInBrowserCommand >> name [
 	^'Find method'
 ]
 
-{ #category : 'accessing' }
-ClyFindMethodInBrowserCommand >> order [
-
-	^ 1000
-]
-
 { #category : 'execution' }
 ClyFindMethodInBrowserCommand >> prepareFullExecution [
 

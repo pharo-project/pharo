@@ -29,12 +29,6 @@ SycBrowseClassCommand >> name [
 	^'Browse'
 ]
 
-{ #category : 'accessing' }
-SycBrowseClassCommand >> order [
-
-	^ 1000
-]
-
 { #category : 'execution' }
 SycBrowseClassCommand >> prepareFullExecution [
 

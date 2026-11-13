@@ -32,9 +32,3 @@ ClyShowVariableRefCommand >> fullBrowserOrder [
 ClyShowVariableRefCommand >> name [
 	^'References'
 ]
-
-{ #category : 'accessing' }
-ClyShowVariableRefCommand >> order [
-
-	^ 1000
-]

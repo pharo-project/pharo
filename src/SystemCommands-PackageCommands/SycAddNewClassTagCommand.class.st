@@ -42,12 +42,6 @@ SycAddNewClassTagCommand >> name [
 ]
 
 { #category : 'accessing' }
-SycAddNewClassTagCommand >> order [
-
-	^ 1000
-]
-
-{ #category : 'accessing' }
 SycAddNewClassTagCommand >> package [
 	^ package
 ]

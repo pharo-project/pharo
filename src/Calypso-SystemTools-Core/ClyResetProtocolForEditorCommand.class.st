@@ -20,9 +20,3 @@ ClyResetProtocolForEditorCommand >> name [
 
 	^ 'Unclassify method'
 ]
-
-{ #category : 'accessing' }
-ClyResetProtocolForEditorCommand >> order [
-
-	^ 1000
-]

@@ -44,12 +44,6 @@ ClyShowMessageImplementorCommand >> name [
 	^'Implementors'
 ]
 
-{ #category : 'accessing' }
-ClyShowMessageImplementorCommand >> order [
-
-	^ 1000
-]
-
 { #category : 'execution' }
 ClyShowMessageImplementorCommand >> prepareFullExecution [
 

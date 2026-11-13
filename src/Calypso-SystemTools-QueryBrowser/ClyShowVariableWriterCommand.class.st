@@ -34,9 +34,3 @@ ClyShowVariableWriterCommand >> fullBrowserOrder [
 ClyShowVariableWriterCommand >> name [
 	^'Writers'
 ]
-
-{ #category : 'accessing' }
-ClyShowVariableWriterCommand >> order [
-
-	^ 1000
-]

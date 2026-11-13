@@ -28,9 +28,3 @@ ClyInvertMethodVisibilityHierarchyCommand >> name [
 
 	^ 'Invert hierarchy'
 ]
-
-{ #category : 'accessing' }
-ClyInvertMethodVisibilityHierarchyCommand >> order [
-
-	^ 1000
-]

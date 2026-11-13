@@ -57,12 +57,6 @@ SycAddNewPackageCommand >> name [
 ]
 
 { #category : 'accessing' }
-SycAddNewPackageCommand >> order [
-
-	^ 1000
-]
-
-{ #category : 'accessing' }
 SycAddNewPackageCommand >> packageName [
 	^ packageName
 ]

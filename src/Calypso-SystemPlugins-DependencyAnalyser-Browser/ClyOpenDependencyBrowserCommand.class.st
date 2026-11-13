@@ -18,9 +18,3 @@ ClyOpenDependencyBrowserCommand >> executeRefactoring [
 ClyOpenDependencyBrowserCommand >> name [
 	^'Browse dependencies'
 ]
-
-{ #category : 'accessing' }
-ClyOpenDependencyBrowserCommand >> order [
-
-	^ 1000
-]

@@ -36,12 +36,6 @@ ClyFindClassCommand >> name [
 	^'Find class'
 ]
 
-{ #category : 'accessing' }
-ClyFindClassCommand >> order [
-
-	^ 1000
-]
-
 { #category : 'execution' }
 ClyFindClassCommand >> prepareFullExecution [
 
