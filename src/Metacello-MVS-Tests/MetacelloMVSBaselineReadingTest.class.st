@@ -122,11 +122,12 @@ MetacelloMVSBaselineReadingTest >> resolveWithBarLockedAt: aLockedTag asking: aB
 MetacelloMVSBaselineReadingTest >> selectionOf: aRepositoryString project: aProjectName [
 	"The candidate for aRepositoryString at its minimum, for the project aProjectName"
 
-	| parts spec resolver |
+	| parts spec resolver user |
 	parts := MetacelloMVSGraph on: MetacelloMVSRecordedSource new.
 	resolver := MetacelloMVSResolver on: parts.
+	user := MetacelloUserRequest new.
 	spec := parts specFor: aRepositoryString project: aProjectName loads: #(  ).
-	^ resolver candidateFor: spec version: (resolver minimumOf: spec) requiredBy: MetacelloUserRequest new
+	^ resolver candidateFor: spec version: (resolver minimumOf: spec) requiredBy: user in: (MetacelloMVSRequirement from: user asked: spec)
 ]
 
 { #category : 'running' }
