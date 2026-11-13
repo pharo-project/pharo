@@ -1,3 +1,8 @@
+"
+I create the classes and traits of the new image in the object space of the bootstrap, from their Ring definitions.
+
+I first create stubs of the classes needed by the VM, then the real classes and their class pools. I keep the mapping between the mirrors of the created classes and their definitions, which is used by the image builder (see `PBAbstractImageBuilder`) and by the AST interpreter.
+"
 Class {
 	#name : 'PBClassLoader',
 	#superclass : 'Object',
@@ -179,7 +184,7 @@ PBClassLoader >> initialize [
 	super initialize.
 	definitionMirrorMap := EPDictionary new.
 	mirrorDefinitionMap := EPDictionary new.
-	
+
 	fullyLoaded := Dictionary new
 ]
 
@@ -342,23 +347,20 @@ PBClassLoader >> registerClass: aClassMirror named: aName [
 
 { #category : 'registration' }
 PBClassLoader >> registerClass: aClassMirror named: aName fullyLoaded: aBoolean [
-
 	"If it existed before, we migrate its state"
-	(environment includesKey: aName)
-		ifTrue: [ 
-			self migrateOldClass: (environment at: aName) to: aClassMirror ].
 
-	"We register it and keep up to date our compact class index"
+	(environment includesKey: aName) ifTrue: [ self migrateOldClass: (environment at: aName) to: aClassMirror ].
+
 	environment at: aName put: aClassMirror.
-		
+
 	"We create a mapping between the real classes and their definitions for later"
 	self map: aClassMirror with: (systemDefinition classNamed: aName).
-	
-	"We say the simulator that this class is a root, possible becomes can come into it. THIS IS ONLY VALID FOR SPUR SIMULATOR BOOTSTRAP. REFACTOR ME".
+
+	"We say the simulator that this class is a root, possible becomes can come into it. THIS IS ONLY VALID FOR SPUR SIMULATOR BOOTSTRAP. REFACTOR ME"
 	self flag: #refactorMe.
 	builder objectSpace backend addExtraRoot: aClassMirror.
 	builder objectSpace backend addExtraRoot: aClassMirror classSide.
-	
+
 	"We reset the class map of the ast interpreter"
 	fullyLoaded at: aName put: aBoolean
 ]

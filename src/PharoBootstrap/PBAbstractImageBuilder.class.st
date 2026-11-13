@@ -38,7 +38,7 @@ PBAbstractImageBuilder class >> example5617 [
 		bootstrap.
 ]
 
-{ #category : 'instance-creation' }
+{ #category : 'instance creation' }
 PBAbstractImageBuilder class >> forArchitecture: architecture [
 
 	| candidates |
@@ -450,7 +450,7 @@ PBAbstractImageBuilder >> environment [
 	^ bootstrapEnvironment 
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 PBAbstractImageBuilder >> errorMessagesArray [
 
 	"return objects for error messages - special objects array at index 52"
@@ -477,7 +477,7 @@ PBAbstractImageBuilder >> espellBackend: anObject [
 	espellBackend := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : 'class-indexes' }
 PBAbstractImageBuilder >> firstOrdinaryClassIndex [
 	
 	^ self objectMemory classTablePageSize
@@ -530,7 +530,7 @@ PBAbstractImageBuilder >> followForwardingPointers [
 						withValue: (newHeap followForwarded: field)]]]].
 ]
 
-{ #category : 'formatting' }
+{ #category : 'helpers' }
 PBAbstractImageBuilder >> formatOfClass: aRFiClass [ 
 	
 	"A class format is composed by"
@@ -548,7 +548,7 @@ PBAbstractImageBuilder >> formatOfClass: aRFiClass [
 	^newInstSpec << 16 + instSize
 ]
 
-{ #category : 'final step' }
+{ #category : 'final steps' }
 PBAbstractImageBuilder >> freeForwarders [
 	"Check that all forwarders have been followed.  Then free them."
 
@@ -599,7 +599,7 @@ PBAbstractImageBuilder >> includesGlobalNamed: aString [
 	^ self systemDefinition includesClassNamed: aString.
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 PBAbstractImageBuilder >> initialize [
 
 	super initialize.
@@ -612,7 +612,7 @@ PBAbstractImageBuilder >> initialize [
 	self instantiateClassLoader.
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 PBAbstractImageBuilder >> initializeBackend [
 
 	self subclassResponsibility
@@ -705,7 +705,7 @@ PBAbstractImageBuilder >> initializeSpecialObjectArray [
 		withTemps: { 'newArray' -> objectSpace backend specialObjectsArray }.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'helpers' }
 PBAbstractImageBuilder >> instSpecOfClass: aRFiClass [
 
 	"NEW:
@@ -826,7 +826,7 @@ PBAbstractImageBuilder >> installMethodsInBehaviorMapping: aBehaviorMapping onMi
 		self installMethod: method inBehavior: theClass ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'initialization' }
 PBAbstractImageBuilder >> instantiateClassLoader [
 
 	classLoader := PBClassLoader new.
@@ -924,7 +924,7 @@ PBAbstractImageBuilder >> newSpecialObjectsArray [
 	^newSpecialObjectsArray.
 ]
 
-{ #category : 'accessing' }
+{ #category : 'class-indexes' }
 PBAbstractImageBuilder >> nextOrdinaryClassIndex [
 	
 	| result |
@@ -934,7 +934,7 @@ PBAbstractImageBuilder >> nextOrdinaryClassIndex [
 	^ result
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 PBAbstractImageBuilder >> objectMemory [
 	
 	^ espellBackend simulator objectMemory
@@ -945,7 +945,7 @@ PBAbstractImageBuilder >> objectSpace [
 	^ objectSpace
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'running' }
 PBAbstractImageBuilder >> prepareSimulatorForExecution [
 
 	self objectMemory
@@ -1011,18 +1011,13 @@ PBAbstractImageBuilder >> visitTrait: aRFiTrait [
 		environment: self
 ]
 
-{ #category : 'writing' }
+{ #category : 'final steps' }
 PBAbstractImageBuilder >> writeSnapshot: imageFileName ofTransformedImage: spurHeap headerFlags: headerFlags screenSize: screenSizeInteger [
 	"The bootstrapped image typically contains a few big free chunks and one huge free chunk.
 	 Test snapshot writing and loading by turning the largest non-huge chunks into segment bridges
 	 and saving."
 
 	| penultimate ultimate sim |
-	"	[ spurHeap  flushNewSpace. ]
-		on: Halt
-		do: [:ex|""suppress halts from the usual suspects (development time halts)""			(#(#fullGC #compactImage  #doScavenge:) includes: ex signalerContext sender selector)
-				ifTrue: [ex resume]
-				ifFalse: [ex pass]]."
 	sim := spurHeap coInterpreter.
 	sim bootstrapping: true.
 	spurHeap segmentManager prepareForSnapshot.

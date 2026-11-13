@@ -1,3 +1,8 @@
+"
+I wrap the Ring definition of a class of the image to bootstrap so that it can be used as the class of the methods analyzed by the compiler during the bootstrap.
+
+I resolve the variables of the methods: the slots, the class variables and the shared pools of the class and of its superclasses, then the globals of the bootstrap environment.
+"
 Class {
 	#name : 'PBClassDefinition',
 	#superclass : 'Object',
@@ -9,7 +14,7 @@ Class {
 	#package : 'PharoBootstrap'
 }
 
-{ #category : 'instance-creation' }
+{ #category : 'instance creation' }
 PBClassDefinition class >> on: classDefinition environment: aBootstrapEnvironment [ 
 	
 	^ self new
@@ -29,7 +34,7 @@ PBClassDefinition >> definesClassVariable: aString [
 	^ classDefinition instanceSide classVarNames includes: aString
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 PBClassDefinition >> initializeOn: aClassDefinition environment: aBootstrapEnvironment [
 
 	classDefinition := aClassDefinition.

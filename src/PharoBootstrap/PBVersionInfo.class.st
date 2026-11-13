@@ -27,7 +27,7 @@ Class {
 	#package : 'PharoBootstrap'
 }
 
-{ #category : 'instance-creation' }
+{ #category : 'instance creation' }
 PBVersionInfo class >> fromLongGitDescribe: aString [ 
 	
 	| parts commitish semanticVersion |
@@ -41,7 +41,7 @@ PBVersionInfo class >> fromLongGitDescribe: aString [
 		yourself 
 ]
 
-{ #category : 'instance-creation' }
+{ #category : 'instance creation' }
 PBVersionInfo class >> fromSemanticVersion: aString [ 
 	
 	^ self basicNew
@@ -55,7 +55,7 @@ PBVersionInfo class >> invalidMajorVersion: anObject [
 	self error: 'Invalid major version: ', anObject printString
 ]
 
-{ #category : 'instance-creation' }
+{ #category : 'instance creation' }
 PBVersionInfo class >> major: anInteger [ 
 	
 	^ self basicNew

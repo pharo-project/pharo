@@ -1,3 +1,22 @@
+"
+I am the entry point of the bootstrap of a Pharo image. I run in the host image and I build, from the sources of a Pharo repository, the smallest image described by `BaselineOfPharoBootstrap`, together with the files needed to finish building the image (the Hermes binary packages, the Monticello packages and the list of the protocols of the kernel methods).
+
+The bootstrap happens in two phases:
+- `#prepareBootstrap` loads the baselines to bootstrap, exports the packages of the repository and builds a Ring model of the kernel
+- `#createImage` gives this model to an image builder (see `PBAbstractImageBuilder`) that creates the objects of the new image in a simulated VM and writes the image file
+
+Example:
+
+```
+(PBBootstrap for64Bits
+	versionInfo: ((PBVersionInfo fromLongGitDescribe: 'v15.0.0-21-g975b') buildNumber: 42; yourself);
+	repositoryLocation: 'path/to/pharo' asFileReference;
+	imageName: 'bootstrap.image';
+	yourself) bootstrap
+```
+
+`#fromCommandLine` builds an instance from the arguments given by the bootstrap scripts.
+"
 Class {
 	#name : 'PBBootstrap',
 	#superclass : 'Object',
@@ -353,7 +372,7 @@ PBBootstrap >> repositoryLocation: aFileReference [
 	repositoryLocation := aFileReference
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'preparation' }
 PBBootstrap >> updateBootstrapPackage: packageName [
 	"Load the package named packageName of the bootstrapped version.
 	This is used to update bootstrap packages to newer versions of the system seamlessly."
