@@ -10,10 +10,11 @@ Class {
 }
 
 { #category : 'resolving' }
-MetacelloFailingResolver >> resolve: aProjectSpec engine: anEngine [
+MetacelloFailingResolver >> resolveRoots: someProjectSpecs engine: anEngine [
 
 	| answer |
-	answer := super resolve: aProjectSpec engine: anEngine.
-	answer addFinding: (MetacelloResolutionFinding error: #cannotResolve text: 'cannot resolve' request: answer roots first requests first).
+	answer := super resolveRoots: someProjectSpecs engine: anEngine.
+	answer addFinding:
+		(MetacelloResolutionFinding error: #cannotResolve text: 'cannot resolve' request: answer roots first requests first).
 	^ answer
 ]

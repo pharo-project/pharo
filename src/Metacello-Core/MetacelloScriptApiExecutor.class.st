@@ -16,12 +16,8 @@ MetacelloScriptApiExecutor >> execute [
 ]
 
 { #category : 'execution callback' }
-MetacelloScriptApiExecutor >> executeString: aString do: projectSpecBlock [
+MetacelloScriptApiExecutor >> rootFor: aProjectSpec [
+	"A script of Metacello new works on the spec it names, registered or not"
 
-	| spec |
-	spec := (MetacelloProjectSpec project: MetacelloProject new)
-		        name: aString;
-		        className: 'BaselineOf' , aString;
-		        yourself.
-	^ projectSpecBlock value: (self applyArgsToProjectSpec: spec)
+	^ aProjectSpec
 ]

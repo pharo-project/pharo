@@ -7,10 +7,10 @@ Class {
 	#instVars : [
 		'options',
 		'specBuilder',
-		'projectSpec',
 		'resolution',
 		'directive',
-		'fetched'
+		'fetched',
+		'roots'
 	],
 	#category : 'Metacello-Core-Scripts',
 	#package : 'Metacello-Core',
@@ -61,10 +61,10 @@ MetacelloScriptEngine >> ensureRecorded [
 
 { #category : 'private' }
 MetacelloScriptEngine >> ensureResolved [
-	"The resolution of the root, with the names its project spec loads, resolved once"
+	"The resolution of the roots, each with the names its project spec loads, resolved together once"
 
 	resolution ifNotNil: [ ^ resolution ].
-	self resolution: ((MetacelloResolveTarget on: self) resolve: self projectSpec).
+	self resolution: ((MetacelloResolveTarget on: self) resolveRoots: self roots).
 	^ resolution
 ]
 
@@ -77,21 +77,21 @@ MetacelloScriptEngine >> fetch [
 
 { #category : 'actions api' }
 MetacelloScriptEngine >> get [
-	"Load a fresh copy of the baseline the script names from its repository, register it, and answer its project. It loads only that baseline's class, not its packages: it resolves nothing, so the roots of a load never come into it"
+	"For each root, load a fresh copy of its baseline from its repository and register it; answer their projects, in order. It loads only the baseline classes, not their packages, and resolves nothing"
 
 	^ MetacelloProjectRegistry
 		  copyRegistryDuring: [
 				  self handleNotificationsForAction: [
-						  | spec projectPackage |
-						  spec := self projectSpec.
-						  projectPackage := spec projectPackage.
-						  projectPackage repositorySpecs do: [ :repoSpec | repoSpec createRepository flushForScriptGet ].
-						  self doLoadProjectSpecFrom: projectPackage.
-						  MetacelloProjectRegistry
-							  registrationNamed: spec className
-							  ifPresent: [ :existing | existing projectSpec repositories: spec repositories ]
-							  ifAbsent: [ spec asProjectRegistration registerProject ].
-						  (Smalltalk at: spec className asSymbol) project ] ]
+						  self roots collect: [ :spec |
+								  | projectPackage |
+								  projectPackage := spec projectPackage.
+								  projectPackage repositorySpecs do: [ :repoSpec | repoSpec createRepository flushForScriptGet ].
+								  self doLoadProjectSpecFrom: projectPackage.
+								  MetacelloProjectRegistry
+									  registrationNamed: spec className
+									  ifPresent: [ :existing | existing projectSpec repositories: spec repositories ]
+									  ifAbsent: [ spec asProjectRegistration registerProject ].
+								  (Smalltalk at: spec className asSymbol) project ] ] ]
 		  commitIfSuccess: true
 ]
 
@@ -163,9 +163,9 @@ MetacelloScriptEngine >> initialize [
 
 { #category : 'actions api' }
 MetacelloScriptEngine >> list [
-	"Answer the project spec of the baseline the script names. Like the other registry actions (get, lock, unlock, register, unregister), it works on that one baseline's registration: it resolves and records nothing, so the roots of a load never come into it"
+	"Answer the project spec of each root, in order. Like the other registry actions (get, lock, unlock, register, unregister), it works on each root's registration on its own: it resolves and records nothing"
 
-	^ self projectSpec
+	^ self roots
 ]
 
 { #category : 'actions api' }
@@ -187,23 +187,24 @@ MetacelloScriptEngine >> loader [
 
 { #category : 'actions api' }
 MetacelloScriptEngine >> lock [
-	"Lock the registration of the baseline the script names, registering it if needed, and answer its project spec. A later load that reaches this project keeps the locked version. It resolves nothing, so the roots of a load never come into it"
+	"Lock the registration of each root, registering it if needed, and answer their project specs, in order. A later load that reaches a locked project keeps its version. It resolves nothing"
 
 	^ MetacelloProjectRegistry
 		  copyRegistryDuring: [
-				  | spec |
-				  spec := self projectSpec.
-				  MetacelloProjectRegistry
-					  registrationNamed: spec className
-					  ifPresent: [ :existing |
-							  existing locked: true. "We need to merge the repositories"
-							  existing projectSpec repositories: spec repositories.
-							  spec := existing projectSpec ]
-					  ifAbsent: [
-							  spec asProjectRegistration
-								  locked: true;
-								  registerProject ].
-				  spec ]
+				  self roots collect: [ :each |
+						  | spec |
+						  spec := each.
+						  MetacelloProjectRegistry
+							  registrationNamed: spec className
+							  ifPresent: [ :existing |
+									  existing locked: true. "We need to merge the repositories"
+									  existing projectSpec repositories: spec repositories.
+									  spec := existing projectSpec ]
+							  ifAbsent: [
+									  spec asProjectRegistration
+										  locked: true;
+										  registerProject ].
+						  spec ] ]
 		  commitIfSuccess: true
 ]
 
@@ -224,18 +225,6 @@ MetacelloScriptEngine >> options: aDictionary [
     options := aDictionary
 ]
 
-{ #category : 'accessing' }
-MetacelloScriptEngine >> projectSpec [
-
-	^ projectSpec
-]
-
-{ #category : 'accessing' }
-MetacelloScriptEngine >> projectSpec: aSpec [
-
-	projectSpec := aSpec
-]
-
 { #category : 'actions api' }
 MetacelloScriptEngine >> record [
 	"Record the directive loading the default root, resolving first if needed (see ensureRecorded), and answer it"
@@ -252,15 +241,14 @@ MetacelloScriptEngine >> recordDirective [
 
 { #category : 'actions api' }
 MetacelloScriptEngine >> register [
-	"Register the baseline the script names with the script's project spec, replacing the spec of an existing registration, and answer it. It loads and resolves nothing, so the roots of a load never come into it"
+	"Register each root with its project spec, replacing the spec of an existing registration, and answer the specs, in order. It loads and resolves nothing"
 
-	| spec |
-	spec := self projectSpec.
-	MetacelloProjectRegistry
-		registrationNamed: spec className
-		ifPresent: [ :existing | existing projectSpec: spec ]
-		ifAbsent: [ spec asProjectRegistration registerProject ].
-	^ spec
+	^ self roots collect: [ :spec |
+			  MetacelloProjectRegistry
+				  registrationNamed: spec className
+				  ifPresent: [ :existing | existing projectSpec: spec ]
+				  ifAbsent: [ spec asProjectRegistration registerProject ].
+			  spec ]
 ]
 
 { #category : 'resolution' }
@@ -315,6 +303,19 @@ MetacelloScriptEngine >> resolver [
 ]
 
 { #category : 'accessing' }
+MetacelloScriptEngine >> roots [
+	"The project specs of the roots the script names, in order"
+
+	^ roots
+]
+
+{ #category : 'accessing' }
+MetacelloScriptEngine >> roots: aCollectionOfProjectSpecs [
+
+	roots := aCollectionOfProjectSpecs
+]
+
+{ #category : 'accessing' }
 MetacelloScriptEngine >> specBuilder [
 	^ specBuilder
 ]
@@ -327,23 +328,21 @@ MetacelloScriptEngine >> strict [
 
 { #category : 'actions api' }
 MetacelloScriptEngine >> unlock [
-	"Unlock the registration of the baseline the script names, if it is registered, and answer the script's project spec. It resolves nothing, so the roots of a load never come into it"
+	"Unlock the registration of each root that is registered, and answer the roots' project specs, in order. It resolves nothing"
 
 	^ MetacelloProjectRegistry
 		  copyRegistryDuring: [
-				  | spec |
-				  spec := self projectSpec.
-				  MetacelloProjectRegistry registrationNamed: spec className ifPresent: [ :existing | existing locked: false ].
-				  spec ]
+				  self roots collect: [ :spec |
+						  MetacelloProjectRegistry registrationNamed: spec className ifPresent: [ :existing | existing locked: false ].
+						  spec ] ]
 		  commitIfSuccess: true
 ]
 
 { #category : 'actions api' }
 MetacelloScriptEngine >> unregister [
-	"Remove the registration of the baseline the script names, if any, and answer the script's project spec. It resolves nothing, so the roots of a load never come into it"
+	"Remove the registration of each root, if any, and answer the roots' project specs, in order. It resolves nothing"
 
-	| spec |
-	spec := self projectSpec.
-	MetacelloProjectRegistry registrationNamed: spec className ifPresent: [ :existing | existing unregisterProject ].
-	^ spec
+	^ self roots collect: [ :spec |
+			  MetacelloProjectRegistry registrationNamed: spec className ifPresent: [ :existing | existing unregisterProject ].
+			  spec ]
 ]

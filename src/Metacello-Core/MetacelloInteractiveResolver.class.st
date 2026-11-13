@@ -76,13 +76,6 @@ MetacelloInteractiveResolver >> reportCycleAt: aResolvedProject [
 ]
 
 { #category : 'resolving' }
-MetacelloInteractiveResolver >> resolve: aProjectSpec engine: anEngine [
-	"Resolve the one root aProjectSpec names (see resolveRoots:engine:)"
-
-	^ self resolveRoots: { aProjectSpec } engine: anEngine
-]
-
-{ #category : 'resolving' }
 MetacelloInteractiveResolver >> resolveRoots: someProjectSpecs engine: anEngine [
 	"Add a root for each of someProjectSpecs, in order, then walk the references of each. A root takes the version asked, even over the registry (an upgrade of a root is always allowed)"
 

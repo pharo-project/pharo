@@ -461,23 +461,6 @@ MetacelloMVSResolver >> resolutionOf: aResolution [
 	^ aResolution
 ]
 
-{ #category : 'metacello' }
-MetacelloMVSResolver >> resolve: aProjectSpec engine: anEngine [
-	"As a Metacello resolver: resolve the root aProjectSpec names, loading what it loads, counting what the registry says is installed (and locked), and answer an MetacelloMVSResolution"
-
-	| descriptions |
-	self installedFromRegistry.
-	descriptions := aProjectSpec repositoryDescriptions.
-	descriptions size = 1 ifFalse: [
-			self reset.
-			self
-				error: #invalidReference
-				text: 'mvs needs the one repository of ' , aProjectSpec name , ', not ' , descriptions size printString
-				about: nil.
-			^ self resolutionOf: resolution ].
-	^ self resolutionOf: (self resolveRoots: { (graph specFor: descriptions first project: aProjectSpec name loads: aProjectSpec loads) })
-]
-
 { #category : 'resolving' }
 MetacelloMVSResolver >> resolve: aRepositoryString project: aProjectName [
 	"As resolve:project:loads:, loading the default groups of the root"
@@ -515,6 +498,26 @@ MetacelloMVSResolver >> resolveRoots: aCollectionOfProjectSpecs [
 			 ifTrue: [ self usedIn: selected ]
 			 ifFalse: [ selected ]).
 	^ resolution
+]
+
+{ #category : 'metacello' }
+MetacelloMVSResolver >> resolveRoots: someProjectSpecs engine: anEngine [
+	"As a Metacello resolver: resolve the roots someProjectSpecs name, in order, each loading what its spec loads, counting what the registry says is installed (and locked), and answer a MetacelloMVSResolution"
+
+	| roots |
+	self installedFromRegistry.
+	roots := someProjectSpecs collect: [ :each |
+			         | descriptions |
+			         descriptions := each repositoryDescriptions.
+			         descriptions size = 1 ifFalse: [
+					         self reset.
+					         self
+						         error: #invalidReference
+						         text: 'mvs needs the one repository of ' , each name , ', not ' , descriptions size printString
+						         about: nil.
+					         ^ self resolutionOf: resolution ].
+			         graph specFor: descriptions first project: each name loads: each loads ].
+	^ self resolutionOf: (self resolveRoots: roots)
 ]
 
 { #category : 'metacello' }

@@ -45,9 +45,9 @@ MetacelloInteractiveResolverTest >> resolveDiamondOnConflict: aBlock [
 MetacelloInteractiveResolverTest >> resolveLock1Loading: aCollection [
 
 	^ MetacelloInteractiveResolver new
-		  resolve: ((self lockSpec: 'TestToLock1')
+		  resolveRoots: { ((self lockSpec: 'TestToLock1')
 				   loads: aCollection;
-				   yourself)
+				   yourself) }
 		  engine: MetacelloScriptEngine new
 ]
 
