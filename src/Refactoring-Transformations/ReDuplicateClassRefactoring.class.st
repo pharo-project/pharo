@@ -59,16 +59,19 @@ ReDuplicateClassRefactoring class >> copyClass: aClass withName: copyName in: aS
 { #category : 'copying' }
 ReDuplicateClassRefactoring class >> model: aRBNamespace copyClass: aClass withName: copyName [
 
-	^ (self copyClass: aClass withName: copyName)
+	^ self new
 		  model: aRBNamespace;
+		  copyClass: aClass withName: copyName;
 		  yourself
 ]
 
 { #category : 'copying' }
 ReDuplicateClassRefactoring class >> model: aRBNamespace copyClass: aClass withName: copyName in: aSymbol [
 
-	^ (self copyClass: aClass withName: copyName in: aSymbol)
+	^ self new
 		  model: aRBNamespace;
+		  packageName: aSymbol;
+		  copyClass: aClass withName: copyName;
 		  yourself
 ]
 
