@@ -49,6 +49,15 @@ MetacelloResolvedProject >> beLocked [
 	locked := true
 ]
 
+{ #category : 'requests' }
+MetacelloResolvedProject >> chainNames [
+	"The names of the projects that led to me, from the root, ending with mine"
+
+	^ requests first chain
+		  addLast: self name;
+		  yourself
+]
+
 { #category : 'accessing' }
 MetacelloResolvedProject >> changeVersionTo: aProjectSpec [
 	"Another version of the project was chosen: take aProjectSpec, keeping the groups asked so far and who asked them"
@@ -109,15 +118,15 @@ MetacelloResolvedProject >> projectSpec [
 ]
 
 { #category : 'requests' }
-MetacelloResolvedProject >> requestedBy: aResolvedProjectOrNil spec: aProjectSpec [
-	"Record that aResolvedProjectOrNil (nil for the root) asked for this project as aProjectSpec declares it, and answer the MetacelloProjectRequest"
+MetacelloResolvedProject >> requestedBy: aRequester spec: aProjectSpec [
+	"Record that aRequester (a resolved project, or the user for a root) asked for this project as aProjectSpec declares it, and answer the MetacelloProjectRequest"
 
-	^ self addRequest: (MetacelloProjectRequest requester: aResolvedProjectOrNil projectSpec: aProjectSpec)
+	^ self addRequest: (MetacelloProjectRequest requester: aRequester projectSpec: aProjectSpec)
 ]
 
 { #category : 'accessing' }
 MetacelloResolvedProject >> requests [
-	"Requester name (nil for the root) -> the groups it asked, empty for its default ones"
+	"The MetacelloProjectRequests that asked for me, in order: the user's first for a root"
 
 	^ requests
 ]

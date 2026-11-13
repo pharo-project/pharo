@@ -31,7 +31,7 @@ MetacelloInteractiveResolver >> addRootFor: aProjectSpec [
 	rootSpec ensureProjectLoadedWithEngine: engine.
 	root := MetacelloResolvedProject projectSpec: rootSpec.
 	resolution addRoot: root.
-	root requestedBy: nil spec: (rootSpec copy
+	root requestedBy: MetacelloUserRequest new spec: (rootSpec copy
 			 loads: aProjectSpec loads;
 			 yourself).
 	^ root

@@ -47,7 +47,7 @@ MetacelloResolutionTest >> testAFindingIsAddedToItsRequest [
 
 	| project request finding |
 	project := self lock2.
-	request := project requestedBy: nil spec: (self request: project loads: #(  )).
+	request := project requestedBy: MetacelloUserRequest new spec: (self request: project loads: #(  )).
 	finding := MetacelloResolutionFinding error: #cannotResolve text: 'cannot resolve' request: request.
 
 	self
@@ -61,7 +61,7 @@ MetacelloResolutionTest >> testARequestKnowsTheChainThatLedToIt [
 
 	| root middle leaf request |
 	root := self requester: 'Root'.
-	root requestedBy: nil spec: (self request: root loads: #( 'Core' )).
+	root requestedBy: MetacelloUserRequest new spec: (self request: root loads: #( 'Core' )).
 	middle := self requester: 'Middle'.
 	middle requestedBy: root spec: (self request: middle loads: #( 'Core' )).
 	leaf := self lock2.
@@ -110,7 +110,7 @@ MetacelloResolutionTest >> testOnlyErrorsStopALoad [
 
 	| resolution project request |
 	project := self lock2.
-	request := project requestedBy: nil spec: (self request: project loads: #(  )).
+	request := project requestedBy: MetacelloUserRequest new spec: (self request: project loads: #(  )).
 	resolution := MetacelloResolution new.
 	resolution addFinding: (MetacelloResolutionFinding warning: #aWarning text: 'a warning' request: request).
 	self deny: resolution hasErrors.
@@ -127,13 +127,10 @@ MetacelloResolutionTest >> testRequestsKeepWhoAskedWhat [
 	| project b |
 	project := self lock2.
 	b := self requester: 'B'.
-	project requestedBy: nil spec: (self request: project loads: #(  )).
+	project requestedBy: MetacelloUserRequest new spec: (self request: project loads: #(  )).
 	project requestedBy: b spec: (self request: project loads: #( 'TestToLockPackage2' )).
-
 	self
-		assert: (project requests collect: [ :each | each requester ]) asArray equals: {
-				nil.
-				b };
+		assert: (project requests collect: [ :each | each requesterName ]) asArray equals: #( 'the script' 'B' );
 		assert: (project requests collect: [ :each | each loads asArray ]) asArray equals: #( #(  ) #( 'TestToLockPackage2' ) );
 		assert: (project requests collect: [ :each | each projectName ]) asArray equals: #( 'TestToLock2' 'TestToLock2' )
 ]

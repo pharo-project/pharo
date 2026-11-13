@@ -492,7 +492,7 @@ MetacelloMVSResolver >> resolveRoots: aCollectionOfProjectSpecs [
 	aCollectionOfProjectSpecs ifEmpty: [
 			self error: #invalidReference text: 'Nothing to load: no root' about: nil.
 			^ resolution ].
-	rootRequest := MetacelloProjectRequest requester: nil projectSpec: aCollectionOfProjectSpecs first.
+	rootRequest := MetacelloProjectRequest requester: MetacelloUserRequest new projectSpec: aCollectionOfProjectSpecs first.
 	aCollectionOfProjectSpecs do: [ :root |
 			(graph hasVersions: root)
 				ifTrue: [
