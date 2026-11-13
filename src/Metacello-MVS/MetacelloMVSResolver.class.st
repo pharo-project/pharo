@@ -61,7 +61,7 @@ MetacelloMVSResolver >> ask: aProjectSpec [
 	| repository loads asked size |
 	repository := graph repositoryUrlOf: aProjectSpec.
 	loads := aProjectSpec loads.
-	(loads isNil or: [ loads isEmpty ]) ifTrue: [
+	loads isEmpty ifTrue: [
 			(defaultAsked includes: repository) ifTrue: [ ^ false ].
 			defaultAsked add: repository.
 			^ true ].

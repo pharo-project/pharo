@@ -53,8 +53,7 @@ MetacelloProjectRequest >> findings [
 { #category : 'accessing' }
 MetacelloProjectRequest >> loads [
 	"The groups asked; empty for the default ones"
-
-	^ projectSpec loads ifNil: [ #(  ) ]
+	^ projectSpec loads
 ]
 
 { #category : 'accessing' }

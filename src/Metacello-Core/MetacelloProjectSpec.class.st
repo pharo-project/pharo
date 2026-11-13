@@ -143,6 +143,12 @@ MetacelloProjectSpec >> hasVersion [
 	^ self version isNotNil
 ]
 
+{ #category : 'initialization' }
+MetacelloProjectSpec >> initialize [
+	super initialize.
+	loads := #(  )
+]
+
 { #category : 'scripting' }
 MetacelloProjectSpec >> isLocked [
 
@@ -157,10 +163,7 @@ MetacelloProjectSpec >> label [
 
 { #category : 'private' }
 MetacelloProjectSpec >> loadListForVersion: vrsn [
-
-	^ (self loads isNil or: [ self loads isEmpty ])
-		  ifTrue: [ vrsn defaultPackageNames ]
-		  ifFalse: [ self loads ]
+	^ self loads ifEmpty: [ vrsn defaultPackageNames ]
 ]
 
 { #category : 'querying' }
@@ -178,11 +181,7 @@ MetacelloProjectSpec >> loads: aCollection [
 
 { #category : 'importing' }
 MetacelloProjectSpec >> mergeImportLoads: aLoadList [
-
-	aLoadList ifNotNil: [ :otherLoads |
-			self loads
-				ifNil: [ loads := otherLoads ]
-				ifNotNil: [ loads := loads , otherLoads ] ]
+	loads := loads , aLoadList
 ]
 
 { #category : 'merging' }
@@ -192,7 +191,7 @@ MetacelloProjectSpec >> mergeMap [
 	map := super mergeMap.
 	map at: #name put: name.
 	map at: #className put: className.
-	map at: #loads put: loads.
+	loads ifNotEmpty: [ map at: #loads put: loads ].
 	map at: #preLoadDoIt put: preLoadDoIt.
 	map at: #postLoadDoIt put: postLoadDoIt.
 	^ map
@@ -200,11 +199,10 @@ MetacelloProjectSpec >> mergeMap [
 
 { #category : 'scripting' }
 MetacelloProjectSpec >> mergeScriptLoads: aSpec [
-
-	aSpec loads ifNotNil: [ :otherLoads |
-			self loads
-				ifNil: [ loads := otherLoads ]
-				ifNotNil: [ loads := (loads , otherLoads) asSet asArray ] ]
+	aSpec loads ifEmpty: [ ^ self ].
+	loads := loads
+		         ifEmpty: [ aSpec loads ]
+		         ifNotEmpty: [ (loads , aSpec loads) asSet asArray ]
 ]
 
 { #category : 'scripting' }
