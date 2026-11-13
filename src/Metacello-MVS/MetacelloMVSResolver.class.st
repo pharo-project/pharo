@@ -533,23 +533,6 @@ MetacelloMVSResolver >> requireVersion: aCandidate in: aRequirement [
 	self select: aCandidate in: aRequirement
 ]
 
-{ #category : 'initialization' }
-MetacelloMVSResolver >> reset [
-	selected := Dictionary new.
-	projects := Dictionary new.
-	spellings := Dictionary new.
-	replacements := Dictionary new.
-	chronologyChecked := Set new.
-	visited := Set new.
-	pending := OrderedCollection new.
-	askedGroups := Dictionary new.
-	defaultAsked := Set new.
-	requiredFrom := Dictionary new.
-	rootRepositories := OrderedCollection new.
-	user := MetacelloUserRequest new.
-	resolution := MetacelloMVSResolution new
-]
-
 { #category : 'metacello' }
 MetacelloMVSResolver >> resolutionOf: aResolution [
 	"aResolution, the walk done, for Metacello to record: when it has no errors, every selected project, the roots first in their order, with the requests of selected versions (each root's own first)"
@@ -582,7 +565,6 @@ MetacelloMVSResolver >> resolve: aRepositoryString project: aProjectName loads: 
 MetacelloMVSResolver >> resolveRoots: aCollectionOfProjectSpecs [
 	"Walk the requirements from each root aCollectionOfProjectSpecs names, in order, as far as possible and answer the MetacelloMVSResolution: the build list, the requirements met and the findings. The user requires the roots. Each project is read for the union of the groups its dependents ask. At the end, the projects nobody selected uses are dropped (see dropUnused:), and the newer versions the baselines could ask for are reported as infos (see reportUpgrades)"
 
-	self reset.
 	aCollectionOfProjectSpecs ifEmpty: [
 			self error: #invalidReference text: 'Nothing to load: no root' on: user.
 			^ resolution ].
@@ -669,13 +651,26 @@ MetacelloMVSResolver >> select: aCandidate in: aRequirement [
 
 { #category : 'initialization' }
 MetacelloMVSResolver >> setGraph: aGraph [
+	"A resolver resolves once: make another one to resolve again"
 
 	graph := aGraph.
 	installed := Dictionary new.
 	locked := Set new.
 	assumedInstalled := Set new.
 	dropsUnused := true.
-	self reset
+	selected := Dictionary new.
+	projects := Dictionary new.
+	spellings := Dictionary new.
+	replacements := Dictionary new.
+	chronologyChecked := Set new.
+	visited := Set new.
+	pending := OrderedCollection new.
+	askedGroups := Dictionary new.
+	defaultAsked := Set new.
+	requiredFrom := Dictionary new.
+	rootRepositories := OrderedCollection new.
+	user := MetacelloUserRequest new.
+	resolution := MetacelloMVSResolution new
 ]
 
 { #category : 'resolving' }
