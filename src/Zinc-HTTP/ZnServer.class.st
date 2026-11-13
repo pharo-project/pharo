@@ -289,6 +289,13 @@ ZnServer >> isRunning [
 	self subclassResponsibility
 ]
 
+{ #category : 'options' }
+ZnServer >> listenBacklogSize: integer [
+	"Set my server socket listen backlog size, the number of pending connections queued up, waiting to be accepted, at any one time."
+
+	self localOptions at: #listenBacklogSize put: integer
+]
+
 { #category : 'accessing' }
 ZnServer >> localOptions [
 	"Return my options. This is a writable clone of the global options.
@@ -331,6 +338,13 @@ ZnServer >> maximumEntitySize: integer [
 ]
 
 { #category : 'options' }
+ZnServer >> maximumLineLength: integer [
+	"Set the maximum line length in bytes that I will read from a stream before signalling ZnLineTooLong"
+
+	self localOptions at: #maximumLineLength put: integer
+]
+
+{ #category : 'options' }
 ZnServer >> maximumNumberOfConcurrentConnections: count [
 	"Set the maximum number of concurrent connections that I will accept.
 	When this threshold is reached, a 503 Service Unavailable response will be sent
@@ -353,9 +367,7 @@ ZnServer >> maximumNumberOfDictionaryEntries [
 ZnServer >> maximumNumberOfDictionaryEntries: anInteger [
 	"Set the maximum number of entries allowed in ZnMutliValueDictionaries before signalling ZnTooManyDictionaryEntries. This protects us from overflow attacks."
 
-	^ self
-		optionAt: #maximumNumberOfDictionaryEntries
-		put: anInteger
+	self localOptions at: #maximumNumberOfDictionaryEntries put: anInteger
 ]
 
 { #category : 'accessing' }
@@ -536,6 +548,14 @@ ZnServer >> stop: unregister [
 	Does nothing when I am not running"
 
 	self subclassResponsibility
+]
+
+{ #category : 'options' }
+ZnServer >> timeout: seconds [
+	"Set the timeout for network socket stream operations
+	like connecting, reading and writing to seconds."
+
+	self localOptions at: #socketStreamTimeout put: seconds
 ]
 
 { #category : 'public' }

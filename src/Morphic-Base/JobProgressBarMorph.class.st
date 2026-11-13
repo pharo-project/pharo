@@ -31,13 +31,13 @@ JobProgressBarMorph class >> example [
 
 { #category : 'settings' }
 JobProgressBarMorph class >> interruptionSetting: aBuilder [
-	<systemsettings>
 
+	<systemsettings>
 	(aBuilder setting: #isInterruptible)
 		label: 'Make progress bar interruptible';
-		default: true;
+		defaultValue: true;
 		description: 'When enabled, add a button to progress bars to interrupt the action when clicked.';
-		parent: #progress;
+		parentName: #progress;
 		target: self;
 		order: 1
 ]

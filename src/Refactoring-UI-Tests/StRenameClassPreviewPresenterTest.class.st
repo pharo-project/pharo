@@ -9,108 +9,242 @@ Class {
 	#tag : 'UI'
 }
 
-{ #category : 'tests' }
-StRenameClassPreviewPresenterTest >> testBehaviorPanelIsHiddenWhenBehaviorPreconditionIsResolved [
-    "Verify that the behavior panel is hidden when the behavior-preserving precondition is resolved."
+{ #category : 'helpers' }
+StRenameClassPreviewPresenterTest >> newDriver [
 
-    | driver presenter |
+	^ ReRenameClassDriver2 new
+		oldName: #ReClassToBeRenamed;
+		scopes: { RBBrowserEnvironment default };
+		configureRefactoring;
+		yourself
+]
 
-    driver := ReRenameClassDriver2 new
-        oldName: #ReClassToBeRenamedChild;
-        newName: #SharedVar;
-        scopes: { RBBrowserEnvironment default };
-        configureRefactoring.
+{ #category : 'helpers' }
+StRenameClassPreviewPresenterTest >> newPresenterFor: aDriver [
 
-    driver createAndSetNewRefactoring.
-
-    presenter := StRenameClassPreviewPresenter new.
-    presenter
-        driver: driver;
-        scopes: driver scopes.
-
-    presenter defaultLayout.
-
-    presenter updateBehaviorPanelVisibility: 'SharedVar'.
-
-    self assert: (presenter topLayout children includes: presenter behaviorPanel).
-
-    presenter name: #NewClassName.
-    presenter validateName: 'NewClassName'.
-    presenter updateBehaviorPanelVisibility: 'NewClassName'.
-
-    self deny: (presenter topLayout children includes: presenter behaviorPanel)
+	^ StControlledRenameClassPreviewPresenter new
+		driver: aDriver;
+		scopes: { RBBrowserEnvironment default };
+		name: aDriver oldName asString;
+		yourself
 ]
 
 { #category : 'tests' }
-StRenameClassPreviewPresenterTest >> testBehaviorPanelIsShownWhenBehaviorPreconditionFails [
-    "Verify that the behavior panel is shown when a behavior-preserving precondition fails."
+StRenameClassPreviewPresenterTest >> testClearingNameClearsErrorAndDisablesApply [
 
-    | driver presenter |
+	| presenter |
+	presenter := self newPresenterFor: self newDriver.
+	presenter newNameInput text: 'Object'.
+	self finishPreview: presenter.
+	self deny: presenter validationLabel label isEmpty.
 
-    driver := ReRenameClassDriver2 new
-        oldName: #ReClassToBeRenamedChild;
-        newName: #SharedVar;
-        scopes: { RBBrowserEnvironment default };
-        configureRefactoring.
+	presenter newNameInput text: ''.
+	self finishPreview: presenter.
 
-    driver createAndSetNewRefactoring.
-
-    presenter := StRenameClassPreviewPresenter new.
-    presenter
-        driver: driver;
-        scopes: driver scopes.
-
-    presenter defaultLayout.
-    presenter updateBehaviorPanelVisibility: 'SharedVar'.
-
-    self assert: (presenter topLayout children includes: presenter behaviorPanel)
+	self assert: presenter validationLabel label equals: ''.
+	self deny: presenter buttonOk isEnabled.
+	self assert: presenter changes isEmptyOrNil
 ]
 
 { #category : 'tests' }
-StRenameClassPreviewPresenterTest >> testExistingClassNameDisplaysValidationError [
-"Verify that entering an existing class name displays a validation error"
+StRenameClassPreviewPresenterTest >> testCorrectingInvalidNameClearsErrorAndEnablesApply [
 
-    | driver presenter |
+	| presenter |
+	presenter := self newPresenterFor: self newDriver.
+	presenter newNameInput text: 'Object'.
+	self finishPreview: presenter.
+	self deny: presenter validationLabel label isEmpty.
+	self deny: presenter buttonOk isEnabled.
 
-    driver := ReRenameClassDriver2 new
-        oldName: #ReClassToBeRenamed;
-        newName: #Object;
-        scopes: { RBBrowserEnvironment default };
-        configureRefactoring.
+	presenter newNameInput text: 'IrisRenamedClass'.
+	self finishPreview: presenter.
 
-    presenter := StRenameClassPreviewPresenter new.
-    presenter
-        driver: driver;
-        scopes: driver scopes.
-
-    presenter validateName: 'Object'.
-
-    self assert: presenter validationLabel label notEmpty
+	self assert: presenter validationLabel label equals: ''.
+	self assert: presenter buttonOk isEnabled.
+	self deny: presenter changes isEmptyOrNil
 ]
 
 { #category : 'tests' }
-StRenameClassPreviewPresenterTest >> testUpdateChangesWithValidClassNameGeneratesPreview [
-"Verify that a valid class name generates the preview changes for the rename refactoring."
+StRenameClassPreviewPresenterTest >> testCorrectingShadowingNameHidesWarning [
 
-    | driver presenter |
-
+	| driver presenter |
 	driver := ReRenameClassDriver2 new
-   		oldName: #ReClassToBeRenamed;
-    	newName: #NewName;
-    	scopes: { RBBrowserEnvironment default };
-    	configureRefactoring.
+		oldName: #ReClassToBeRenamedChild;
+		scopes: { RBBrowserEnvironment default };
+		configureRefactoring;
+		yourself.
+	presenter := self newPresenterFor: driver.
+	presenter defaultLayout.
+	presenter newNameInput text: 'SharedVar'.
+	self finishPreview: presenter.
+	self assert: (presenter topLayout children includes: presenter behaviorPanel).
 
-	presenter := StRenameClassPreviewPresenter new.
-	presenter
-    	driver: driver;
-    	scopes: driver scopes.
+	presenter newNameInput text: 'IrisRenamedClass'.
+	self finishPreview: presenter.
 
-	presenter newNameInput text: 'NewName'.
-	presenter validateName: 'NewName'.
-	presenter updateName.
+	self deny: (presenter topLayout children includes: presenter behaviorPanel).
+	self assert: presenter buttonOk isEnabled
+]
 
-	self assert: driver newName equals: 'NewName'.
-	self deny: presenter changes isNil
+{ #category : 'tests' }
+StRenameClassPreviewPresenterTest >> testInvalidNameClearsPreviousPreviewAndDisablesApply [
 
+	| presenter |
+	presenter := self newPresenterFor: self newDriver.
+	presenter newNameInput text: 'IrisRenamedClass'.
+	self finishPreview: presenter.
+	self assert: presenter buttonOk isEnabled.
+	self deny: presenter changes isEmptyOrNil.
 
+	presenter newNameInput text: 'Object'.
+	self finishPreview: presenter.
+
+	self deny: presenter validationLabel label isEmpty.
+	self deny: presenter buttonOk isEnabled.
+	self assert: presenter changes isEmptyOrNil
+]
+
+{ #category : 'tests' }
+StRenameClassPreviewPresenterTest >> testRestoringOriginalNameDiscardsPreviousPreview [
+
+	| presenter |
+	presenter := self newPresenterFor: self newDriver.
+	presenter newNameInput text: 'IrisRenamedClass'.
+	self finishPreview: presenter.
+	self assert: presenter buttonOk isEnabled.
+	self deny: presenter changes isEmptyOrNil.
+
+	presenter newNameInput text: 'ReClassToBeRenamed'.
+	self finishPreview: presenter.
+
+	self assert: presenter validationLabel label equals: ''.
+	self deny: presenter buttonOk isEnabled.
+	self assert: presenter changes isEmptyOrNil.
+
+	"A completion queued before restoring the original name must also stay hidden."
+	presenter newNameInput text: 'IrisAnotherName'.
+	presenter computeNextPreview.
+	presenter newNameInput text: 'ReClassToBeRenamed'.
+	presenter publishNextPreview.
+	self deny: presenter isPreviewPending.
+	self assert: presenter validationLabel label equals: ''.
+	self deny: presenter buttonOk isEnabled.
+	self assert: presenter changes isEmptyOrNil
+
+]
+
+{ #category : 'tests' }
+StRenameClassPreviewPresenterTest >> testTypingValidNameGeneratesRenamePreview [
+
+	| presenter |
+	presenter := StRenameClassPreviewPresenter new
+		driver: self newDriver;
+		scopes: { RBBrowserEnvironment default };
+		name: 'ReClassToBeRenamed';
+		yourself.
+	presenter newNameInput text: 'IrisRenamedClass'.
+	self waitForEnabledPreview: presenter.
+
+	self assert: presenter buttonOk isEnabled.
+	self assert: presenter name equals: 'IrisRenamedClass'.
+	self deny: presenter changes isEmptyOrNil.
+	self assert: (presenter changes anySatisfy: [ :change |
+		change class = ReRenameClassChange and: [
+			change oldName = #ReClassToBeRenamed and: [
+				change newName = #IrisRenamedClass ] ] ])
+]
+
+{ #category : 'helpers' }
+StRenameClassPreviewPresenterTest >> waitForEnabledPreview: presenter [
+
+	| deadline |
+	deadline := Time millisecondClockValue + 5000.
+	[ presenter buttonOk isEnabled not and: [
+		Time millisecondClockValue < deadline ] ] whileTrue: [ 10 milliSeconds wait ].
+	self assert: presenter buttonOk isEnabled
+]
+
+{ #category : 'helpers' }
+StRenameClassPreviewPresenterTest >> controlledPresenter [
+
+	^ self newPresenterFor: self newDriver
+]
+
+{ #category : 'tests' }
+StRenameClassPreviewPresenterTest >> testLatestPendingNameWinsAndOlderCompletionIsDiscarded [
+
+	| presenter |
+	presenter := self controlledPresenter.
+	presenter newNameInput text: 'IrisFirstName'.
+	presenter computeNextPreview.
+	"Only the latest pending name should be computed after the first result is discarded."
+	presenter newNameInput text: 'IrisIntermediateName'.
+	presenter newNameInput text: 'IrisFinalName'.
+	self deny: presenter buttonOk isEnabled.
+	self assert: presenter queuedComputations equals: 0.
+	presenter publishNextPreview.
+	self deny: presenter buttonOk isEnabled.
+	self assert: presenter changes isEmptyOrNil.
+	self assert: presenter queuedComputations equals: 1.
+	presenter computeNextPreview.
+	presenter publishNextPreview.
+
+	self assert: presenter name equals: 'IrisFinalName'.
+	self assert: presenter queuedComputations equals: 0.
+	self assert: presenter buttonOk isEnabled.
+	self assert: (presenter changes anySatisfy: [ :change |
+		change class = ReRenameClassChange and: [ change newName = #IrisFinalName ] ])
+]
+
+{ #category : 'tests' }
+StRenameClassPreviewPresenterTest >> testPendingPreviewCannotBeAccepted [
+
+	| presenter |
+	presenter := self controlledPresenter.
+	presenter newNameInput text: 'IrisFirstName'.
+	presenter accept.
+	self assert: presenter isPreviewPending.
+	self deny: presenter buttonOk isEnabled
+]
+
+{ #category : 'tests' }
+StRenameClassPreviewPresenterTest >> testClosingDiscardsQueuedCompletion [
+
+	| presenter |
+	presenter := self controlledPresenter.
+	presenter newNameInput text: 'IrisFirstName'.
+	presenter computeNextPreview.
+	presenter closeWindow.
+	presenter publishNextPreview.
+	self deny: presenter isPreviewPending.
+	self deny: presenter buttonOk isEnabled.
+	self assert: presenter changes isEmptyOrNil
+]
+
+{ #category : 'tests' }
+StRenameClassPreviewPresenterTest >> testPublicationFailureLeavesApplyDisabledAndAllowsRecovery [
+
+	| presenter brokenResult |
+	presenter := self controlledPresenter.
+	presenter newNameInput text: 'IrisFirstName'.
+	brokenResult := ReClassRenamePreview new
+		driver: self newDriver;
+		compositeChange: Object new;
+		yourself.
+	presenter publishPreview: brokenResult named: 'IrisFirstName' request: presenter currentRequest.
+	self deny: presenter isPreviewPending.
+	self deny: presenter buttonOk isEnabled.
+	self deny: presenter validationLabel label isEmpty.
+	presenter newNameInput text: 'IrisFinalName'.
+	presenter computeNextPreview; publishNextPreview; computeNextPreview; publishNextPreview.
+	self assert: presenter buttonOk isEnabled.
+	self assert: presenter validationLabel label equals: ''
+]
+
+{ #category : 'helpers' }
+StRenameClassPreviewPresenterTest >> finishPreview: presenter [
+
+	presenter isPreviewPending ifTrue: [
+		presenter computeNextPreview; publishNextPreview ].
+	self deny: presenter isPreviewPending
 ]

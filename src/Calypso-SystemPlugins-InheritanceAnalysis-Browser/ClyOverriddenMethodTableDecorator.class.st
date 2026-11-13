@@ -51,7 +51,7 @@ ClyOverriddenMethodTableDecorator class >> decorateTableCell: anItemCellMorph wi
 	| panel activator button |
 	panel := self createMultiIconMorph.
 	commands do: [ :each |
-		activator := CmdCommandActivator new
+		activator := ClyCommandActivator new
 			command: each;
 			context: itemContext.
 		button := each createTableCellButtonUsing: activator.

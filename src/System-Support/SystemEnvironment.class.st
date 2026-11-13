@@ -396,6 +396,15 @@ SystemEnvironment >> pseudoVariables [
 		  pseudoVariables := PseudoVariable lookupDictionary ]
 ]
 
+{ #category : 'selector table' }
+SystemEnvironment >> recordSelector: aSelector [
+	"We record all selectors that are used as method names.
+	The selector table is a weak table of selectors, used by tools.
+	Only done for non an"
+
+	Symbol recordSelector: aSelector
+]
+
 { #category : 'accessing - classes and traits' }
 SystemEnvironment >> removeClassNamed: aName [
 	"Invoked from fileouts: if there is currently a class in the system named aName, then remove it"

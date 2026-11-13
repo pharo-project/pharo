@@ -20,14 +20,15 @@ ReCompactSourceCodeRule class >> checksMethod [
 
 { #category : 'settings' }
 ReCompactSourceCodeRule class >> compactSourceCodeSettingsOn: aBuilder [
-	<systemsettings>
 
+	<systemsettings>
 	(aBuilder setting: #criticizeFinalDotInMethodBody)
 		order: 15;
 		label: 'Criticize final dot in method body';
-		description: 'Define if the system laments about an unnecessary final dot at the end of method body or not when checking for unnecessary separators';
-		parent: #qualityAssistant;
-		default: true;
+		description:
+			'Define if the system laments about an unnecessary final dot at the end of method body or not when checking for unnecessary separators';
+		parentName: #qualityAssistant;
+		defaultValue: true;
 		target: self
 ]
 

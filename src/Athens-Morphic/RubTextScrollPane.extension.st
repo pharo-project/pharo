@@ -6,8 +6,7 @@ RubTextScrollPane >> drawSubmorphsOnAthensCanvas: anAthensCanvas [
 	for the focus rectangle."
 
 	super drawSubmorphsOnAthensCanvas: anAthensCanvas.
-	self textArea readOnly ifTrue: [ ^self ].
-	self drawFocusBorder ifFalse: [ ^self ].
-	(self hasKeyboardFocus or: [ self textArea hasFindReplaceFocus ])
-		ifTrue: [self drawKeyboardFocusOnAthensCanvas: anAthensCanvas]
+	self textArea readOnly ifTrue: [ ^ self ].
+	self drawFocusBorder ifFalse: [ ^ self ].
+	self hasKeyboardFocus ifTrue: [ self drawKeyboardFocusOnAthensCanvas: anAthensCanvas ]
 ]

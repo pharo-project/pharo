@@ -4,12 +4,12 @@ Extension { #name : 'SycOpenMethodMenuCommand' }
 SycOpenMethodMenuCommand class >> methodContextMenuActivation [
 	<classAnnotation>
 
-	^CmdContextMenuActivation byRootGroupItemOrder: 10100 for: ClyMethod asCalypsoItemContext
+	^ClyContextMenuActivation byRootGroupItemOrder: 10100 for: ClyMethod asCalypsoItemContext
 ]
 
 { #category : '*Calypso-SystemTools-Core' }
 SycOpenMethodMenuCommand class >> methodEditorShortcutActivation [
 	<classAnnotation>
 
-	^CmdShortcutActivation by: $t meta for: ClyMethod asCalypsoItemContext
+	^ClyShortcutActivation by: $t meta for: ClyMethod asCalypsoItemContext
 ]

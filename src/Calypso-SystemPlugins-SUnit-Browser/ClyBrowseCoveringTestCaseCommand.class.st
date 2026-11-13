@@ -19,31 +19,40 @@ ClyBrowseCoveringTestCaseCommand class >> canBeExecutedInContext: aBrowserContex
 	^ aBrowserContext lastSelectedItem hasProperty: ClyTestedClassProperty
 ]
 
-{ #category : 'activation' }
-ClyBrowseCoveringTestCaseCommand class >> fullBrowserMenuActivation [
-	<classAnnotation>
-	^ CmdContextMenuActivation
-		byItemOf: ClyQueryMenuGroup
-		for: ClyClass asCalypsoItemContext
+{ #category : 'execution' }
+ClyBrowseCoveringTestCaseCommand >> executeRefactoring [
+
+	| testCase |
+	testCase := (selectedClassItem getProperty: ClyTestedClassProperty) coveringTestCase.
+	self browser spawnBrowser: ClyFullBrowserMorph withState: [ :b | b selectClass: testCase ]
+]
+
+{ #category : 'testing' }
+ClyBrowseCoveringTestCaseCommand >> isAvailableInMenuOf: aToolContext [
+
+	^ aToolContext isAboutBrowserItemType: ClyClass
 ]
 
 { #category : 'accessing' }
-ClyBrowseCoveringTestCaseCommand >> defaultMenuItemName [
+ClyBrowseCoveringTestCaseCommand >> menuGroup [
+
+	^ ClyQueryMenuGroup
+]
+
+{ #category : 'accessing' }
+ClyBrowseCoveringTestCaseCommand >> name [
 	^ 'Browse test class'
 ]
 
-{ #category : 'execution' }
-ClyBrowseCoveringTestCaseCommand >> execute [
-	| testCase |
-	testCase := (selectedClassItem getProperty: ClyTestedClassProperty) coveringTestCase.
+{ #category : 'accessing' }
+ClyBrowseCoveringTestCaseCommand >> order [
 
-	browser spawnBrowser: ClyFullBrowserMorph withState: [ :b |
-		b selectClass: testCase]
+	^ 1000
 ]
 
 { #category : 'execution' }
-ClyBrowseCoveringTestCaseCommand >> prepareFullExecutionInContext: aToolContext [
-	super prepareFullExecutionInContext: aToolContext.
+ClyBrowseCoveringTestCaseCommand >> prepareFullExecution [
 
-	selectedClassItem := aToolContext lastSelectedItem
+	super prepareFullExecution.
+	selectedClassItem := self context lastSelectedItem
 ]

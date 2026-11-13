@@ -6,7 +6,7 @@ Instance Variables
 "
 Class {
 	#name : 'ClyBrowserCommand',
-	#superclass : 'CmdCommand',
+	#superclass : 'ClyCommand',
 	#instVars : [
 		'browser'
 	],
@@ -15,14 +15,9 @@ Class {
 	#tag : 'Commands'
 }
 
-{ #category : 'testing' }
-ClyBrowserCommand class >> isAbstract [
-	^self = ClyBrowserCommand
-]
-
 { #category : 'accessing' }
 ClyBrowserCommand >> browser [
-	^ browser
+	^ browser ifNil: [ self context ifNotNil: [ :ctx | ctx browser ] ]
 ]
 
 { #category : 'accessing' }
@@ -35,10 +30,4 @@ ClyBrowserCommand >> description [
 	"Answer a <String> describing the receiver, useful for instance in menu items pop-ups"
 
 	^ self class comment.
-]
-
-{ #category : 'execution' }
-ClyBrowserCommand >> readParametersFromContext: aToolContext [
-	super readParametersFromContext: aToolContext.
-	browser := aToolContext browser
 ]

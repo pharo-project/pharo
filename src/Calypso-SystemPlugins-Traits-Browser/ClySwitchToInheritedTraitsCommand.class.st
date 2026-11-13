@@ -16,7 +16,7 @@ ClySwitchToInheritedTraitsCommand class >> canBeExecutedInContext: aToolContext 
 ]
 
 { #category : 'accessing' }
-ClySwitchToInheritedTraitsCommand >> defaultMenuItemName [
+ClySwitchToInheritedTraitsCommand >> name [
 	^'Traits'
 ]
 

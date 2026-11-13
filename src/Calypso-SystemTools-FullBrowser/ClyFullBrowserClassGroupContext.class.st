@@ -16,9 +16,21 @@ ClyFullBrowserClassGroupContext class >> selectionStrategy [
 	^ClyContextSelectionStrategyAnnotation for: ClyFullBrowserMorph selectionType: ClyClassGroup
 ]
 
+{ #category : 'accessing' }
+ClyFullBrowserClassGroupContext >> commanderCommandClasses [
+
+	^ super commanderCommandClasses , { SycPackageCommand }
+]
+
 { #category : 'testing' }
 ClyFullBrowserClassGroupContext >> isClassGroupSelected [
 	^self hasSelectedItems
+]
+
+{ #category : 'testing' }
+ClyFullBrowserClassGroupContext >> isFullBrowserClassGroupContext [
+
+	^ true
 ]
 
 { #category : 'testing' }

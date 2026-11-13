@@ -26,6 +26,6 @@ ReSelfSentNotImplementedRuleTest >> testRule [
 	critiques := self myCritiques.
 	self assert: critiques size equals: 4.
 	self 
-		assert: (self sourceAtChritique: critiques first) 
+		assert: (self sourceAtCritique: critiques first) 
 		equals: 'self bar'
 ]

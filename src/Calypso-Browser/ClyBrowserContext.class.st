@@ -21,7 +21,7 @@ There are several operation with browser which can be performed using me:
 "
 Class {
 	#name : 'ClyBrowserContext',
-	#superclass : 'CmdToolContext',
+	#superclass : 'ClyToolContext',
 	#instVars : [
 		'selectedItems'
 	],
@@ -64,6 +64,20 @@ ClyBrowserContext >> asDraggableMorph [
 { #category : 'accessing' }
 ClyBrowserContext >> browser [
 	^tool
+]
+
+{ #category : 'accessing' }
+ClyBrowserContext >> commanderCommandClasses [
+
+	| roots |
+	roots := OrderedCollection new.
+	(self isAboutBrowserItemType: ClyClass) ifTrue: [ roots add: SycSingleClassCommand ].
+	(self isAboutBrowserItemType: ClyMethod) ifTrue: [
+			roots
+				add: SycChangeMessageMenuCmCommand;
+				add: SycMessageCommand;
+				add: SycMethodCommand ].
+	^ roots asArray
 ]
 
 { #category : 'copying' }
@@ -122,12 +136,6 @@ ClyBrowserContext >> isAboutSelectedItem: aDataSourceItem [
 	(selectedItems anySatisfy: [ :each | each name = aDataSourceItem name])
 		ifFalse: [ ^false ].
 	^selectedItems anySatisfy: [ :each | each isEqualTo: aDataSourceItem  ]
-]
-
-{ #category : 'testing' }
-ClyBrowserContext >> isQueryBrowserContext [
-
-	^ false.
 ]
 
 { #category : 'testing' }

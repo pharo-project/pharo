@@ -16,7 +16,7 @@ Internal Representation and Key Implementation Points.
 "
 Class {
 	#name : 'SycAddNewPackageCommand',
-	#superclass : 'CmdCommand',
+	#superclass : 'SycPackageCommand',
 	#instVars : [
 		'systemEnvironment',
 		'packageName',
@@ -26,20 +26,16 @@ Class {
 	#package : 'SystemCommands-PackageCommands'
 }
 
+{ #category : 'testing' }
+SycAddNewPackageCommand class >> canBeExecutedInContext: aToolContext [
+
+	^ true
+]
+
 { #category : 'execution' }
-SycAddNewPackageCommand >> applyResultInContext: aToolContext [
-	super applyResultInContext: aToolContext.
-	aToolContext showPackage: resultPackage
-]
-
-{ #category : 'accessing' }
-SycAddNewPackageCommand >> defaultMenuIconName [
-	^#add
-]
-
-{ #category : 'accessing' }
-SycAddNewPackageCommand >> defaultMenuItemName [
-	^'New package'
+SycAddNewPackageCommand >> applyCommandResult [
+	super applyCommandResult.
+	self context showPackage: resultPackage
 ]
 
 { #category : 'accessing' }
@@ -49,11 +45,27 @@ SycAddNewPackageCommand >> description [
 ]
 
 { #category : 'execution' }
-SycAddNewPackageCommand >> execute [
+SycAddNewPackageCommand >> executeRefactoring [
 
 	resultPackage := [ systemEnvironment createPackageNamed: packageName ]
 		                 on: PackageConflictError
 		                 do: [ systemEnvironment packageNamed: packageName ]
+]
+
+{ #category : 'accessing' }
+SycAddNewPackageCommand >> iconName [
+	^#add
+]
+
+{ #category : 'accessing' }
+SycAddNewPackageCommand >> name [
+	^'New package'
+]
+
+{ #category : 'accessing' }
+SycAddNewPackageCommand >> order [
+
+	^ 1000
 ]
 
 { #category : 'accessing' }
@@ -67,17 +79,13 @@ SycAddNewPackageCommand >> packageName: anObject [
 ]
 
 { #category : 'execution' }
-SycAddNewPackageCommand >> prepareFullExecutionInContext: aToolContext [
-	super prepareFullExecutionInContext: aToolContext.
+SycAddNewPackageCommand >> prepareFullExecution [
 
-	systemEnvironment := aToolContext systemEnvironment.
+	systemEnvironment := self context systemEnvironment.
 	packageName := ''.
-	aToolContext isPackageSelected ifTrue: [
-		packageName := aToolContext lastSelectedPackage name].
-
-	packageName := self morphicUIManager
-		request: 'Name of the new package:' initialAnswer: packageName title: 'Create a new package'.
-	packageName isEmptyOrNil ifTrue: [ ^CmdCommandAborted signal]
+	self context isPackageSelected ifTrue: [ packageName := self context lastSelectedPackage name ].
+	packageName := self morphicUIManager request: 'Name of the new package:' initialAnswer: packageName title: 'Create a new package'.
+	packageName isEmptyOrNil ifTrue: [ ^ CmCommandAborted signal ]
 ]
 
 { #category : 'accessing' }

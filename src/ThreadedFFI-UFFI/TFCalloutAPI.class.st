@@ -14,7 +14,7 @@ Class {
 { #category : 'tracing' }
 TFCalloutAPI class >> activateTrace [
 
-	self activateTraceWith: [ :sender | sender crTrace ]
+	self activateTraceWith: [ :sender | sender newLineTrace ]
 ]
 
 { #category : 'tracing' }

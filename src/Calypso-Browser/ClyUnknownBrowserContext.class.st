@@ -5,7 +5,7 @@ Many browser extensions are defined for the specific context. And I allow to ign
 "
 Class {
 	#name : 'ClyUnknownBrowserContext',
-	#superclass : 'CmdToolContext',
+	#superclass : 'ClyToolContext',
 	#category : 'Calypso-Browser-Contexts',
 	#package : 'Calypso-Browser',
 	#tag : 'Contexts'

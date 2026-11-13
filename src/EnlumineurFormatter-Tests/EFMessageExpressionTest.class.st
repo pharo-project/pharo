@@ -11,8 +11,8 @@ EFMessageExpressionTest >> basicConfiguration [
 	^ self contextClass basicNew
 		indentStyle: #tabulation;
 		formatCommentCloseToStatements:false;
-		multiLineMessages:Array new;
-		oneLineMessages:Array new;
+		 multiLineMessages: '';
+		  oneLineMessages: '';
 		numberOfArgumentsForMultiLine:10;
 		indentsForKeywords: 0;
 		maxLineLength: 70;
@@ -26,8 +26,8 @@ EFMessageExpressionTest >> blockAndCascadeInMessageConfiguration [
 	^ self contextClass basicNew
 		indentStyle: #tabulation;
 		formatCommentCloseToStatements: false;
-		multiLineMessages: Array new;
-		oneLineMessages: Array new;
+		 multiLineMessages: '';
+		  oneLineMessages: '';
 		numberOfArgumentsForMultiLine: 10;
 		indentsForKeywords: 1;
 		maxLineLength: 70;
@@ -51,8 +51,8 @@ EFMessageExpressionTest >> blockAndParenthesesInMessageConfiguration [
 	^ self contextClass basicNew
 		indentStyle: #tabulation;
 		formatCommentCloseToStatements: false;
-		multiLineMessages: Array new;
-		oneLineMessages: Array new;
+	 multiLineMessages: '';
+		  oneLineMessages: '';
 		numberOfArgumentsForMultiLine: 10;
 		indentsForKeywords: 1;
 		maxLineLength: 70;
@@ -76,8 +76,8 @@ EFMessageExpressionTest >> blockInMessageConfiguration [
 	^ self contextClass basicNew
 		indentStyle: #tabulation;
 		formatCommentCloseToStatements: false;
-		multiLineMessages: Array new;
-		oneLineMessages: Array new;
+		 multiLineMessages: '';
+		  oneLineMessages: '';
 		numberOfArgumentsForMultiLine: 10;
 		indentsForKeywords: 1;
 		maxLineLength: 70;
@@ -98,8 +98,8 @@ EFMessageExpressionTest >> blockInMessageTooLongConfiguration [
 	^ self contextClass basicNew
 		indentStyle: #tabulation;
 		formatCommentCloseToStatements: false;
-		multiLineMessages: Array new;
-		oneLineMessages: Array new;
+	 multiLineMessages: '';
+		  oneLineMessages: '';
 		numberOfArgumentsForMultiLine: 10;
 		indentsForKeywords: 1;
 		maxLineLength: 20;
@@ -120,8 +120,8 @@ EFMessageExpressionTest >> dontKeepBlockInMessageConfiguration [
 	^ self contextClass basicNew
 		indentStyle: #tabulation;
 		formatCommentCloseToStatements: false;
-		multiLineMessages: Array new;
-		oneLineMessages: Array new;
+	 multiLineMessages: '';
+		  oneLineMessages: '';
 		numberOfArgumentsForMultiLine: 10;
 		indentsForKeywords: 1;
 		maxLineLength: 70;
@@ -142,8 +142,8 @@ EFMessageExpressionTest >> extraIndentWithThreeSpacesInsideParenthesesConfigurat
 	^ self contextClass basicNew
 		indentStyle: #tabulation;
 		formatCommentCloseToStatements: false;
-		multiLineMessages: Array new;
-		oneLineMessages: Array new;
+		 multiLineMessages: '';
+		  oneLineMessages: '';
 		numberOfArgumentsForMultiLine: 10;
 		indentsForKeywords: 0;
 		maxLineLength: 70;
@@ -168,8 +168,8 @@ EFMessageExpressionTest >> formatStatementsWithCommentsConfiguration [
 	^ self contextClass basicNew
 		indentStyle: #tabulation;
 		formatCommentCloseToStatements:true;
-		multiLineMessages:Array new;
-		oneLineMessages:Array new;
+	 multiLineMessages: '';
+		  oneLineMessages: '';
 		numberOfArgumentsForMultiLine:10;
 		indentsForKeywords: 0;
 		maxLineLength: 50;
@@ -182,8 +182,8 @@ EFMessageExpressionTest >> ifTrueIfFalseMutlilineMessageConfiguration [
 	^ self contextClass basicNew
 		indentStyle: #tabulation;
 		formatCommentCloseToStatements: false;
-		multiLineMessages:#(#ifTrue:ifFalse:);
-		oneLineMessages: Array new;
+	 multiLineMessages: 'ifTrue:ifFalse:';
+		  oneLineMessages: '';
 		numberOfArgumentsForMultiLine: 10;
 		indentsForKeywords: 1;
 		maxLineLength: 70;
@@ -207,8 +207,8 @@ EFMessageExpressionTest >> keepBlockInMessageConfiguration [
 	^ self contextClass basicNew
 		indentStyle: #tabulation;
 		formatCommentCloseToStatements: false;
-		multiLineMessages: Array new;
-		oneLineMessages: Array new;
+		 multiLineMessages: '';
+		  oneLineMessages: '';
 		numberOfArgumentsForMultiLine: 10;
 		indentsForKeywords: 1;
 		maxLineLength: 70;
@@ -229,8 +229,8 @@ EFMessageExpressionTest >> littleMaxLineLengthConfiguration [
 	^ self contextClass basicNew
 		indentStyle: #tabulation;
 		formatCommentCloseToStatements: false;
-		multiLineMessages: Array new;
-		oneLineMessages: Array new;
+		 multiLineMessages: '';
+		  oneLineMessages: '';
 		numberOfArgumentsForMultiLine: 10;
 		indentsForKeywords: 1;
 		maxLineLength: 20;
@@ -251,8 +251,8 @@ EFMessageExpressionTest >> multiLineMessageConfiguration [
 	^ self contextClass basicNew
 		indentStyle: #tabulation;
 		formatCommentCloseToStatements: false;
-		multiLineMessages: #(#multi:line:);
-		oneLineMessages: Array new;
+		 multiLineMessages: 'multi:line:';
+		  oneLineMessages: '';
 		numberOfArgumentsForMultiLine: 10;
 		indentsForKeywords: 1;
 		maxLineLength: 50;
@@ -267,8 +267,8 @@ EFMessageExpressionTest >> newLineBeforeFirstKeywordConfiguration [
 	^ self contextClass basicNew
 		indentStyle: #tabulation;
 		formatCommentCloseToStatements:false;
-		multiLineMessages:Array new;
-		oneLineMessages:Array new;
+	 multiLineMessages: '';
+		  oneLineMessages: '';
 		numberOfArgumentsForMultiLine:10;
 		indentsForKeywords: 0;
 		maxLineLength: 50;
@@ -287,8 +287,8 @@ EFMessageExpressionTest >> noIdentsForKeyWordConfiguration [
 	^ self contextClass basicNew
 		  indentStyle: #tabulation;
 		  formatCommentCloseToStatements: false;
-		  multiLineMessages: Array new;
-		  oneLineMessages: Array new;
+		   multiLineMessages: '';
+		  oneLineMessages: '';
 		  maxLineLength: 50;
 		  newLineBeforeFirstKeyword: true;
 		  keepBlockInMessage: false;
@@ -307,8 +307,8 @@ EFMessageExpressionTest >> noTraditionalBinaryPrecedenceConfiguration [
 	^ self contextClass basicNew
 		  indentStyle: #tabulation;
 		  formatCommentCloseToStatements: false;
-		  multiLineMessages: Array new;
-		  oneLineMessages: Array new;
+		   multiLineMessages: '';
+		  oneLineMessages: '';
 		  numberOfArgumentsForMultiLine: 10;
 		  indentsForKeywords: 0;
 		  maxLineLength: 50;
@@ -323,8 +323,8 @@ EFMessageExpressionTest >> oneArgumentPerLineConfiguration [
 	^ self contextClass basicNew
 		indentStyle: #tabulation;
 		formatCommentCloseToStatements: false;
-		multiLineMessages: Array new;
-		oneLineMessages: Array new;
+		 multiLineMessages: '';
+		  oneLineMessages: '';
 		numberOfArgumentsForMultiLine: 1;
 		indentsForKeywords: 0;
 		maxLineLength: 50;
@@ -349,8 +349,9 @@ EFMessageExpressionTest >> oneLineMessageConfiguration [
 	^ self contextClass basicNew
 		indentStyle: #tabulation;
 		formatCommentCloseToStatements:false;
-		multiLineMessages:Array new;
-		oneLineMessages:#(#one:line:message:);
+		 multiLineMessages: '';
+		  oneLineMessages: 'one:line:message:';
+	
 		numberOfArgumentsForMultiLine:2;
 		indentsForKeywords: 0;
 		maxLineLength: 50;
@@ -364,8 +365,8 @@ EFMessageExpressionTest >> parentheseConfiguration [
 	^ self contextClass basicNew
 		indentStyle: #tabulation;
 		formatCommentCloseToStatements: false;
-		multiLineMessages: Array new;
-		oneLineMessages: Array new;
+		 multiLineMessages: '';
+		  oneLineMessages: '';
 		numberOfArgumentsForMultiLine: 10;
 		indentsForKeywords: 0;
 		maxLineLength: 70;
@@ -381,8 +382,8 @@ EFMessageExpressionTest >> shortMaxLineLengthConfiguration [
 	^ self contextClass basicNew
 		indentStyle: #tabulation;
 		formatCommentCloseToStatements:false;
-		multiLineMessages:Array new;
-		oneLineMessages:Array new;
+		 multiLineMessages: '';
+		  oneLineMessages: '';
 		numberOfArgumentsForMultiLine:10;
 		indentsForKeywords: 1;
 		maxLineLength: 13;
@@ -401,8 +402,8 @@ EFMessageExpressionTest >> simpleConfiguration [
 	^ self contextClass basicNew
 		  indentStyle: #tabulation;
 		  formatCommentCloseToStatements: false;
-		  multiLineMessages: Array new;
-		  oneLineMessages: Array new;
+		 multiLineMessages: '';
+		  oneLineMessages: '';
 		  numberOfArgumentsForMultiLine: 10;
 		  indentsForKeywords: 0;
 		  maxLineLength: 50;
@@ -1401,8 +1402,8 @@ EFMessageExpressionTest >> twoIdentsForKeyWordConfiguration [
 	^ self contextClass basicNew
 		  indentStyle: #tabulation;
 		  formatCommentCloseToStatements: false;
-		  multiLineMessages: Array new;
-		  oneLineMessages: Array new;
+		  multiLineMessages: '';
+		  oneLineMessages: '';
 		  numberOfArgumentsForMultiLine: 1;
 		  indentsForKeywords: 2;
 		  maxLineLength: 50;
@@ -1418,8 +1419,8 @@ EFMessageExpressionTest >> twoSpacesInsideParenthesesConfiguration [
 		numberOfSpacesInsideParentheses: 2;
 		indentStyle: #tabulation;
 		formatCommentCloseToStatements:false;
-		multiLineMessages:Array new;
-		oneLineMessages:Array new;
+		 multiLineMessages: '';
+		  oneLineMessages: '';
 		numberOfArgumentsForMultiLine:10;
 		indentsForKeywords: 0;
 		maxLineLength: 50;

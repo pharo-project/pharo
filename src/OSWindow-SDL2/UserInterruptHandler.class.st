@@ -34,14 +34,12 @@ UserInterruptHandler class >> cmdDotEnabled: aBoolean [
 UserInterruptHandler class >> settingsOn: aBuilder [
 
 	<systemsettings>
-
 	(aBuilder setting: #cmdDotEnabled)
-		parent: #debugging;
+		parentName: #debugging;
 		label: 'Enable cmd-dot interrupt key';
 		target: UserInterruptHandler;
-		default: true;
-		description:
-			'If true, it allows the user to stop currently running process by opening-up a debugger'
+		defaultValue: true;
+		description: 'If true, it allows the user to stop currently running process by opening-up a debugger'
 ]
 
 { #category : 'private' }

@@ -12,7 +12,7 @@ Class {
 SycOpenDebuggingPointsMenuCommand class >> sourceCodeMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation byRootGroupItemOrder: 0.2 for: ClySourceCodeContext
+	^ClyContextMenuActivation byRootGroupItemOrder: 0.2 for: ClySourceCodeContext
 ]
 
 { #category : 'execution' }
@@ -28,12 +28,12 @@ SycOpenDebuggingPointsMenuCommand >> cmCommandClass [
 ]
 
 { #category : 'accessing' }
-SycOpenDebuggingPointsMenuCommand >> defaultMenuIconName [
+SycOpenDebuggingPointsMenuCommand >> iconName [
 	^ #smallDebug
 ]
 
 { #category : 'accessing' }
-SycOpenDebuggingPointsMenuCommand >> defaultMenuItemName [
+SycOpenDebuggingPointsMenuCommand >> name [
 
 	^ 'Debug Points'
 ]

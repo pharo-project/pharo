@@ -27,3 +27,20 @@ ReTemporaryNeitherReadNorWrittenRule >> check: aNode forCritiquesDo: aBlock [
 	aNode variable isReferenced ifFalse: [
 		aBlock cull: (self critiqueFor: aNode) ]
 ]
+
+{ #category : 'helpers' }
+ReTemporaryNeitherReadNorWrittenRule >> critiqueFor: aNode [
+	"Answer a critique whose change removes the unused temporary variable defined by aNode.
+	The change needs an installed method to transform: when the node does not belong to one
+	(e.g. code that is not compiled into its class yet), only report the problem."
+
+	| methodNode methodClass |
+	methodNode := aNode methodNode.
+	methodClass := methodNode ifNotNil: [ methodNode methodClass ].
+	(methodClass isNotNil and: [ methodClass includesSelector: methodNode selector ]) ifFalse: [ ^ super critiqueFor: aNode ].
+
+	^ (ReRefactoringCritique withAnchor: (self anchorFor: aNode) by: self)
+		  tinyHint: aNode name;
+		  refactoring: (RBRemoveTemporaryVariableTransformation variable: aNode name inMethod: methodNode selector inClass: methodClass);
+		  yourself
+]

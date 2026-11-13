@@ -1,6 +1,6 @@
 Class {
 	#name : 'SycScopesMenuActivation',
-	#superclass : 'CmdMenuCommandActivationStrategy',
+	#superclass : 'ClyMenuCommandActivationStrategy',
 	#category : 'SystemCommands-RefactoringSupport-Scopes',
 	#package : 'SystemCommands-RefactoringSupport',
 	#tag : 'Scopes'

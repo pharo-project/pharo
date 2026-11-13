@@ -3,7 +3,7 @@ I define the class whose instances should contain the debugging point menu group
 "
 Class {
 	#name : 'SycDebuggingPointsMenuActivation',
-	#superclass : 'CmdMenuCommandActivationStrategy',
+	#superclass : 'ClyMenuCommandActivationStrategy',
 	#category : 'Calypso-SystemPlugins-DebugPoints-Browser',
 	#package : 'Calypso-SystemPlugins-DebugPoints-Browser'
 }

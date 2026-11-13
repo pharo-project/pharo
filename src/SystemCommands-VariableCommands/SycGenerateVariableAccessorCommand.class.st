@@ -8,20 +8,8 @@ Class {
 	#package : 'SystemCommands-VariableCommands'
 }
 
-{ #category : 'accessing' }
-SycGenerateVariableAccessorCommand >> defaultMenuIconName [
-	^ #smallAdd
-]
-
-{ #category : 'accessing' }
-SycGenerateVariableAccessorCommand >> defaultMenuItemName [
-	"Make sure that the user knows that this is a transformation by adding (T) in front of the menu item name."
-
-	^ self refactoringClass menuItemString
-]
-
 { #category : 'execution' }
-SycGenerateVariableAccessorCommand >> execute [
+SycGenerateVariableAccessorCommand >> executeRefactoring [
 
 	(ReGenerateAccessorsDriver new
 		 targetClass: variables first definingClass;
@@ -30,10 +18,28 @@ SycGenerateVariableAccessorCommand >> execute [
 		 selectedVariables: (variables collect: [ :each | each name ])) runRefactoring
 ]
 
-{ #category : 'execution' }
-SycGenerateVariableAccessorCommand >> prepareFullExecutionInContext: aToolContext [
-	super prepareFullExecutionInContext: aToolContext.
-	toolContext := aToolContext.
+{ #category : 'accessing' }
+SycGenerateVariableAccessorCommand >> fullBrowserOrder [
+
+	^ 1000
+]
+
+{ #category : 'accessing' }
+SycGenerateVariableAccessorCommand >> iconName [
+	^ #smallAdd
+]
+
+{ #category : 'accessing' }
+SycGenerateVariableAccessorCommand >> name [
+	"Make sure that the user knows that this is a transformation by adding (T) in front of the menu item name."
+
+	^ self refactoringClass menuItemString
+]
+
+{ #category : 'accessing' }
+SycGenerateVariableAccessorCommand >> order [
+
+	^ 1000
 ]
 
 { #category : 'factory method' }

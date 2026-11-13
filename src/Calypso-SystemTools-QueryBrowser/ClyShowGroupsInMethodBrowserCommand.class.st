@@ -11,9 +11,6 @@ Internal Representation and Key Implementation Points.
 Class {
 	#name : 'ClyShowGroupsInMethodBrowserCommand',
 	#superclass : 'ClyMethodGroupCommand',
-	#instVars : [
-		'browser'
-	],
 	#category : 'Calypso-SystemTools-QueryBrowser-Commands-Queries',
 	#package : 'Calypso-SystemTools-QueryBrowser',
 	#tag : 'Commands-Queries'
@@ -23,36 +20,34 @@ Class {
 ClyShowGroupsInMethodBrowserCommand class >> fullBrowserDoubleClickMenuActivation [
 	<classAnnotation>
 
-	^(CmdDoubleClickActivation for: ClyFullBrowserMethodGroupContext)
+	^(ClyDoubleClickActivation for: ClyFullBrowserMethodGroupContext)
 		priority: 10000
 ]
 
-{ #category : 'activation' }
-ClyShowGroupsInMethodBrowserCommand class >> fullBrowserMethodGroupMenuActivation [
-	<classAnnotation>
+{ #category : 'execution' }
+ClyShowGroupsInMethodBrowserCommand >> executeRefactoring [
 
-	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup for: ClyFullBrowserMethodGroupContext
+	(Smalltalk tools toolNamed: #messageList) browse: methodGroups first methods
 ]
 
 { #category : 'accessing' }
-ClyShowGroupsInMethodBrowserCommand >> defaultMenuIconName [
+ClyShowGroupsInMethodBrowserCommand >> iconName [
 	^#browse
 ]
 
 { #category : 'accessing' }
-ClyShowGroupsInMethodBrowserCommand >> defaultMenuItemName [
+ClyShowGroupsInMethodBrowserCommand >> menuGroup [
+
+	^ ClyQueryMenuGroup
+]
+
+{ #category : 'accessing' }
+ClyShowGroupsInMethodBrowserCommand >> name [
 	^'Show in method browser'
 ]
 
-{ #category : 'execution' }
-ClyShowGroupsInMethodBrowserCommand >> execute [
+{ #category : 'accessing' }
+ClyShowGroupsInMethodBrowserCommand >> order [
 
-	(Smalltalk tools toolNamed: #messageList) browse: methodGroups first methods 
-]
-
-{ #category : 'execution' }
-ClyShowGroupsInMethodBrowserCommand >> prepareFullExecutionInContext: aToolContext [
-	super prepareFullExecutionInContext: aToolContext.
-
-	browser := aToolContext browser
+	^ 1000
 ]

@@ -4,7 +4,7 @@ I am a command to remove given methods and the ones in the subclasses.
 "
 Class {
 	#name : 'SycRemoveMethodsInHierarchyCommand',
-	#superclass : 'SycRefactoringMethodCommand',
+	#superclass : 'SycMethodCmCommand',
 	#category : 'SystemCommands-MethodCommands',
 	#package : 'SystemCommands-MethodCommands'
 }
@@ -13,20 +13,26 @@ Class {
 SycRemoveMethodsInHierarchyCommand >> asRefactorings [
 
 	| refactoring |
-	refactoring := ReRemoveMethodsInHierarchyRefactoring
-				      		selectors: (methods collect: [ :each | each selector ])
-							from: methods first origin.
+	refactoring := ReRemoveMethodsInHierarchyRefactoring selectors: (self methods collect: [ :each | each selector ]) from: self methods first origin.
 	^ OrderedCollection with: refactoring
 ]
 
 { #category : 'accessing' }
-SycRemoveMethodsInHierarchyCommand >> defaultMenuIconName [
-	^ #remove
+SycRemoveMethodsInHierarchyCommand >> icon [
+
+	^ self iconNamed: #remove
 ]
 
 { #category : 'accessing' }
-SycRemoveMethodsInHierarchyCommand >> defaultMenuItemName [
-	^'Remove and the ones in subclasses'
+SycRemoveMethodsInHierarchyCommand >> name [
+
+	^ 'Remove and the ones in subclasses'
+]
+
+{ #category : 'accessing' }
+SycRemoveMethodsInHierarchyCommand >> order [
+
+	^ 100
 ]
 
 { #category : 'initialization' }

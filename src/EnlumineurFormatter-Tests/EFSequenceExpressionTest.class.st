@@ -36,8 +36,8 @@ EFSequenceExpressionTest >> dontFormatCommentWithStatementConfiguration [
 		minimumNewLinesBetweenStatements:0;
 		periodAtEndOfBlock:false;
 		periodAtEndOfMethod:false;
-		multiLineMessages: Array new;
-		oneLineMessages: Array new;
+		 multiLineMessages: '';
+		  oneLineMessages: '';
 		numberOfArgumentsForMultiLine: 5;
 		indentsForKeywords: 0;
 		keepBlockInMessage: false;
@@ -101,8 +101,8 @@ EFSequenceExpressionTest >> formatBlockConfiguration [
 		minimumNewLinesBetweenStatements:0;
 		periodAtEndOfBlock:false;
 		periodAtEndOfMethod:false;
-		multiLineMessages: Array new;
-		oneLineMessages: Array new;
+		 multiLineMessages: '';
+		  oneLineMessages: '';
 		numberOfArgumentsForMultiLine: 5;
 		indentsForKeywords: 1;
 		keepBlockInMessage: true;
@@ -126,8 +126,8 @@ EFSequenceExpressionTest >> formatCommentWithStatementConfiguration [
 		minimumNewLinesBetweenStatements:0;
 		periodAtEndOfBlock:false;
 		periodAtEndOfMethod:false;
-		multiLineMessages: Array new;
-		oneLineMessages: Array new;
+	 multiLineMessages: '';
+		  oneLineMessages: '';
 		numberOfArgumentsForMultiLine: 5;
 		indentsForKeywords: 0;
 		keepBlockInMessage: false;
@@ -177,8 +177,8 @@ EFSequenceExpressionTest >> noPeriodAtEndOfMethodConfiguration [
 		minimumNewLinesBetweenStatements:0;
 		numberOfSpacesInsideBlock:1;
 		lineUpBlockBrackets: false;
-		multiLineMessages:Array new;
-		oneLineMessages:Array new;
+		 multiLineMessages: '';
+		  oneLineMessages: '';
 		numberOfArgumentsForMultiLine:2;
 		newLineBeforeFirstKeyword:false;
 		indentExtraSpaces:0
@@ -204,8 +204,8 @@ EFSequenceExpressionTest >> periodAtEndOfMethodConfiguration [
 		  minimumNewLinesBetweenStatements: 0;
 		  numberOfSpacesInsideBlock: 1;
 		  lineUpBlockBrackets: true;
-		  multiLineMessages: Array new;
-		  oneLineMessages: Array new;
+		   multiLineMessages: '';
+		  oneLineMessages: '';
 		  numberOfArgumentsForMultiLine: 2;
 		  newLineBeforeFirstKeyword: false;
 		  indentExtraSpaces: 0

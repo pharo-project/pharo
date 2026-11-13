@@ -1,45 +1,41 @@
 "
-Requests to save a textual version of the selected package to a new file in chunk format and .st extension. 
+Files out the selected packages into a single chunk format file.
 "
 Class {
 	#name : 'SycFileOutPackageCommand',
-	#superclass : 'SycPackageCommand',
+	#superclass : 'SycPackageExtraCmCommand',
 	#category : 'SystemCommands-PackageCommands',
 	#package : 'SystemCommands-PackageCommands'
 }
 
-{ #category : 'activation' }
-SycFileOutPackageCommand class >> fullBrowserMenuActivation [
+{ #category : 'testing' }
+SycFileOutPackageCommand >> canBeExecuted [
 
-	<classAnnotation>
-	^ CmdContextMenuActivation
-		  byItemOf: CmdExtraMenuGroup
-		  for: Package asCalypsoItemContext 
+	^ context isAboutBrowserItemType: Package
 ]
 
 { #category : 'accessing' }
 SycFileOutPackageCommand >> defaultFileName [
-	^ packages size = 1
-		ifTrue: [ packages first name ]
-		ifFalse: [ 'packagefileout' ]
-]
 
-{ #category : 'accessing' }
-SycFileOutPackageCommand >> defaultMenuIconName [
-
-	^ #save
-]
-
-{ #category : 'accessing' }
-SycFileOutPackageCommand >> defaultMenuItemName [
-
-	^ 'File out'
+	^ self packages size = 1
+		  ifTrue: [ self packages first name ]
+		  ifFalse: [ 'packagefileout' ]
 ]
 
 { #category : 'execution' }
-SycFileOutPackageCommand >> execute [
-	^ Fileouter
-		fileoutNamed: self defaultFileName
-		configureWith: [ :fileouter |
-			packages do: [ :each | fileouter addFullPackage: each ] ]
+SycFileOutPackageCommand >> executeRefactoring [
+
+	Fileouter fileoutNamed: self defaultFileName configureWith: [ :fileouter | self packages do: [ :package | fileouter addFullPackage: package ] ]
+]
+
+{ #category : 'accessing' }
+SycFileOutPackageCommand >> icon [
+
+	^ self iconNamed: #save
+]
+
+{ #category : 'accessing' }
+SycFileOutPackageCommand >> name [
+
+	^ 'File out'
 ]

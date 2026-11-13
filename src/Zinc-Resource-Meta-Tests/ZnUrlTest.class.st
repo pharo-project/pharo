@@ -36,6 +36,23 @@ ZnUrlTest >> testAuthority [
 ]
 
 { #category : 'testing' }
+ZnUrlTest >> testBasicIRIHandling [
+	| iri url |
+	iri := 'https://fr.wikipedia.org/wiki/Ångström?enquête=zéro#fragment%20(forme%20littéraire)'.
+	url := nil.
+	self should: [ iri asZnUrl ] raise: Error.
+	ZnOptions globalDefault clone
+		at: #urlAsIri put: true;
+		during: [ 
+			url := iri asZnUrl.
+			self assert: url lastPathSegment equals: 'Ångström'.
+			self assert: url fragment equals: 'fragment (forme littéraire)'.
+			self assert: (url queryAt: 'enquête') equals: 'zéro'.
+			self assert: url printString equals: iri ].
+	self deny: url printString equals: iri
+]
+
+{ #category : 'testing' }
 ZnUrlTest >> testBogusBackups [
 	self assert: '/../../../' asZnUrl isSlash
 ]
@@ -177,6 +194,17 @@ ZnUrlTest >> testFileUrl [
 	self assert: url isFile.
 	self deny: url hasHost.
 	self assert: url pathSegments equals: #( 'Users' 'Sven' 'Desktop' 'foo.txt' ) asOrderedCollection
+]
+
+{ #category : 'testing' }
+ZnUrlTest >> testFragmentWithQuestionMark [
+
+	| urlString url |
+	urlString := 'http://www.example.com/#fragment?with?question?mark'.
+	url := urlString asZnUrl.
+	self assert: url segments isNil.
+	self deny: url hasQuery.
+	self assert: url asString equals: urlString
 ]
 
 { #category : 'testing' }
@@ -480,7 +508,7 @@ ZnUrlTest >> testQueryAccessing [
 	| url |
 	url := 'http://www.google.com/?one=1&two=2' asZnUrl.
 	self assert: url hasQuery.
-	self assert: url queryKeys sorted equals: #(one two).
+	self assert: url queryKeys sorted equals: #('one' 'two').
 	self assert: (url queryAt: 'two' ifAbsent: [ self fail ]) equals: '2'.
 	self assert: (url queryAt: 'three' ifAbsent: [ #missing ]) equals: #missing.
 	url queryAt: 'one' ifPresent: [ :value | self assert: value equals: '1' ].
@@ -520,7 +548,7 @@ ZnUrlTest >> testQueryManipulation [
 	url := 'http://www.google.com/?one=1&two=2' asZnUrl.
 	url queryAt: 'three' put: '3'.
 	url queryRemoveKey: 'one'.
-	self assert: url queryKeys sorted equals: #(three two).
+	self assert: url queryKeys sorted equals: #('three' 'two').
 	self assert: (url queryAt: 'two') equals: '2'.
 	self assert: (url queryAt: 'three') equals: '3'.
 	url queryRemoveAll.

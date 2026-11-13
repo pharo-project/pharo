@@ -17,25 +17,25 @@ ClyAddBreakPointCommand class >> contextMenuOrder [
 ClyAddBreakPointCommand class >> methodEditorLeftBarClickActivation [
 
 	<classAnnotation>
-	^ CmdTextLeftBarDoubleClickActivation for: ClyMethodSourceCodeContext
+	^ ClyTextLeftBarDoubleClickActivation for: ClyMethodSourceCodeContext
+]
+
+{ #category : 'execution' }
+ClyAddBreakPointCommand >> executeRefactoring [
+
+	| dp |
+	dp := DebugPointManager installNew: BreakDebugPoint on: self sourceNode.
+
+	self putIconInProperties: dp 
 ]
 
 { #category : 'accessing' }
-ClyAddBreakPointCommand >> defaultMenuIconName [
+ClyAddBreakPointCommand >> iconName [
 	^#smallDebug 
 ]
 
 { #category : 'accessing' }
-ClyAddBreakPointCommand >> defaultMenuItemName [
+ClyAddBreakPointCommand >> name [
 
-	^ String streamContents: [ :stream | stream << 'Break on "' << sourceNode displaySourceCode << '"' ]
-]
-
-{ #category : 'execution' }
-ClyAddBreakPointCommand >> execute [
-
-	| dp |
-	dp := DebugPointManager installNew: BreakDebugPoint on: sourceNode.
-
-	self putIconInProperties: dp 
+	^ String streamContents: [ :stream | stream << 'Break on "' << self sourceNode displaySourceCode << '"' ]
 ]

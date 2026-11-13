@@ -11,17 +11,17 @@ Class {
 	#tag : 'Commands-Controlling'
 }
 
-{ #category : 'accessing' }
-ClySwitchToHierarchicalQueryResultCommand >> defaultMenuItemName [
-	^'Hier.'
-]
-
 { #category : 'execution' }
-ClySwitchToHierarchicalQueryResultCommand >> execute [
-	browser switchToHierarchicalResult
+ClySwitchToHierarchicalQueryResultCommand >> executeRefactoring [
+	self browser switchToHierarchicalResult
 ]
 
 { #category : 'testing' }
 ClySwitchToHierarchicalQueryResultCommand >> isAppliedToBrowser [
-	^browser showsFlatResult not
+	^self browser showsFlatResult not
+]
+
+{ #category : 'accessing' }
+ClySwitchToHierarchicalQueryResultCommand >> name [
+	^'Hier.'
 ]

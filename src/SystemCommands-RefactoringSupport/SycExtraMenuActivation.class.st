@@ -1,6 +1,6 @@
 Class {
 	#name : 'SycExtraMenuActivation',
-	#superclass : 'CmdMenuCommandActivationStrategy',
+	#superclass : 'ClyMenuCommandActivationStrategy',
 	#category : 'SystemCommands-RefactoringSupport-Extra',
 	#package : 'SystemCommands-RefactoringSupport',
 	#tag : 'Extra'

@@ -3,10 +3,7 @@ I am a command to rename a variable.
 "
 Class {
 	#name : 'SycRenameVariableCommand',
-	#superclass : 'CmdCommand',
-	#instVars : [
-		'toolContext'
-	],
+	#superclass : 'SycRefactorVariableCommand',
 	#category : 'SystemCommands-VariableCommands',
 	#package : 'SystemCommands-VariableCommands'
 }
@@ -17,14 +14,8 @@ SycRenameVariableCommand class >> canBeExecutedInContext: aToolContext [
 ]
 
 { #category : 'accessing' }
-SycRenameVariableCommand class >> defaultMenuIconName [
+SycRenameVariableCommand class >> iconName [
 	^ #edit
-]
-
-{ #category : 'accessing' }
-SycRenameVariableCommand >> defaultMenuItemName [
-
-	^ 'Rename'
 ]
 
 { #category : 'accessing' }
@@ -34,14 +25,14 @@ SycRenameVariableCommand >> description [
 ]
 
 { #category : 'execution' }
-SycRenameVariableCommand >> execute [
+SycRenameVariableCommand >> executeRefactoring [
 
 	| variable driver |
 	variable := toolContext lastSelectedVariable.
 	
 	driver := variable isClassVariable
-		          ifFalse: [ ReRenameInstanceVariableDriver new ]
-		          ifTrue: [ ReRenameSharedVariableDriver new ].
+				  ifFalse: [ ReRenameInstanceVariableDriver new ]
+				  ifTrue: [ ReRenameSharedVariableDriver new ].
 
 	(driver
 		 scopes: toolContext refactoringScopes
@@ -49,9 +40,20 @@ SycRenameVariableCommand >> execute [
 		 for: variable definingClass) runRefactoring
 ]
 
-{ #category : 'execution' }
-SycRenameVariableCommand >> prepareFullExecutionInContext: aToolContext [
+{ #category : 'accessing' }
+SycRenameVariableCommand >> fullBrowserOrder [
 
-	super prepareFullExecutionInContext: aToolContext.
-	toolContext := aToolContext
+	^ 1
+]
+
+{ #category : 'accessing' }
+SycRenameVariableCommand >> name [
+
+	^ 'Rename'
+]
+
+{ #category : 'accessing' }
+SycRenameVariableCommand >> order [
+
+	^ 1.1
 ]

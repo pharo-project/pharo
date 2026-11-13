@@ -14,14 +14,8 @@ ClyBreakOnVariableWriteCommand class >> accessStrategy [
 	^ #write
 ]
 
-{ #category : 'testing' }
-ClyBreakOnVariableWriteCommand class >> isAbstract [
-
-	^ false
-]
-
 { #category : 'accessing' }
-ClyBreakOnVariableWriteCommand >> defaultMenuItemName [
+ClyBreakOnVariableWriteCommand >> name [
 
 	^ 'Break on write'
 ]

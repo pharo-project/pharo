@@ -9,7 +9,7 @@ Internal Representation and Key Implementation Points.
 "
 Class {
 	#name : 'SycRenamePackageCommand',
-	#superclass : 'CmdCommand',
+	#superclass : 'SycPackageCommand',
 	#instVars : [
 		'package',
 		'refactoringScopes'
@@ -18,21 +18,6 @@ Class {
 	#package : 'SystemCommands-PackageCommands'
 }
 
-{ #category : 'testing' }
-SycRenamePackageCommand class >> canBeExecutedInContext: aToolContext [
-	^aToolContext isPackageSelected
-]
-
-{ #category : 'accessing' }
-SycRenamePackageCommand >> defaultMenuIconName [
-	^ #edit
-]
-
-{ #category : 'accessing' }
-SycRenamePackageCommand >> defaultMenuItemName [
-	^'Rename'
-]
-
 { #category : 'accessing' }
 SycRenamePackageCommand >> description [
 
@@ -40,17 +25,31 @@ SycRenamePackageCommand >> description [
 ]
 
 { #category : 'execution' }
-SycRenamePackageCommand >> execute [
+SycRenamePackageCommand >> executeRefactoring [
 
-	^ ((ReRenamePackageDriver newApplication: self application)
-		scopes: refactoringScopes
-		packageName: package name) runRefactoring
+	^ ((ReRenamePackageDriver newApplication: self application) scopes: refactoringScopes packageName: package name) runRefactoring
+]
+
+{ #category : 'accessing' }
+SycRenamePackageCommand >> iconName [
+	^ #edit
+]
+
+{ #category : 'accessing' }
+SycRenamePackageCommand >> name [
+	^'Rename'
+]
+
+{ #category : 'accessing' }
+SycRenamePackageCommand >> order [
+
+	^ 1
 ]
 
 { #category : 'execution' }
-SycRenamePackageCommand >> prepareFullExecutionInContext: aToolContext [
-	super prepareFullExecutionInContext: aToolContext.
-	package := aToolContext lastSelectedPackage.
-	refactoringScopes := aToolContext refactoringScopes.
-	
+SycRenamePackageCommand >> prepareFullExecution [
+
+	super prepareFullExecution.
+	package := self context lastSelectedPackage.
+	refactoringScopes := self context refactoringScopes
 ]

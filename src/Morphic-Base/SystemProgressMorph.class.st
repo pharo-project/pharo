@@ -113,27 +113,34 @@ SystemProgressMorph class >> reset [
 
 { #category : 'settings' }
 SystemProgressMorph class >> settingOn: aBuilder [
-	<systemsettings>
 	"By returning only numbers, the settings do not give enough information so that we can reposition well the the progres bar. For now we tweak the number."
+
+	<systemsettings>
 	(aBuilder group: #progress)
 		label: 'Progress Bar';
 		description: 'Progress Bar settings';
-		parent: #morphic;
+		parentName: #morphic;
 		with: [
-			(aBuilder pickOne: #horizontalPosition)
-				target: self;
-				getSelector: #horizontalPosition;
-				setSelector: #horizontalPosition:;
-				label: 'Horizontal progress indicator position';
-				domainValues: {'left'->0 . 'middle'->0.5 . 'right'->0.88}.
+				(aBuilder pickOne: #horizontalPosition)
+					target: self;
+					getSelector: #horizontalPosition;
+					setSelector: #horizontalPosition:;
+					label: 'Horizontal progress indicator position';
+					domainValues: {
+							('left' -> 0).
+							('middle' -> 0.5).
+							('right' -> 0.88) }.
 
-			(aBuilder pickOne: #verticalPosition)
-				target: self;
-				getSelector: #verticalPosition;
-				setSelector: #verticalPosition:;
-				default: 0;
-				label: 'Vertical progress indicator position';
-				domainValues: {'bottom'->0.95 . 'middle'->0.5 . 'top'->0}]
+				(aBuilder pickOne: #verticalPosition)
+					target: self;
+					getSelector: #verticalPosition;
+					setSelector: #verticalPosition:;
+					defaultValue: 0;
+					label: 'Vertical progress indicator position';
+					domainValues: {
+							('bottom' -> 0.95).
+							('middle' -> 0.5).
+							('top' -> 0) } ]
 ]
 
 { #category : 'instance creation' }

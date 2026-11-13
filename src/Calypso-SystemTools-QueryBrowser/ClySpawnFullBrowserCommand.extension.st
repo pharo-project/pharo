@@ -4,7 +4,7 @@ Extension { #name : 'ClySpawnFullBrowserCommand' }
 ClySpawnFullBrowserCommand class >> queryBrowserDoubleClickMenuActivation [
 	<classAnnotation>
 
-	^CmdDoubleClickActivation for: ClyQueryBrowserContext
+	^ClyDoubleClickActivation for: ClyQueryBrowserContext
 ]
 
 { #category : '*Calypso-SystemTools-QueryBrowser' }

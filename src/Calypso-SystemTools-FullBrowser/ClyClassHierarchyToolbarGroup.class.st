@@ -3,7 +3,7 @@ I am a toolbar menu group to show class view modes of the browser together
 "
 Class {
 	#name : 'ClyClassHierarchyToolbarGroup',
-	#superclass : 'CmdMenuGroup',
+	#superclass : 'ClyToolbarGroup',
 	#category : 'Calypso-SystemTools-FullBrowser-Toolbar',
 	#package : 'Calypso-SystemTools-FullBrowser',
 	#tag : 'Toolbar'
