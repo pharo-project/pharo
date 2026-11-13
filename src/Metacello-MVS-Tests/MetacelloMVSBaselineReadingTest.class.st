@@ -154,8 +154,7 @@ MetacelloMVSBaselineReadingTest >> testABaselineThatAsksTheImageIsAWarning [
 
 { #category : 'tests' }
 MetacelloMVSBaselineReadingTest >> testAGraphReadsTheDatesOfTheSource [
-
-	| date |
+	| date graph |
 	date := DateAndTime year: 2020 month: 1 day: 1.
 	source
 		repository: 'github://acme/Foo'
@@ -163,7 +162,9 @@ MetacelloMVSBaselineReadingTest >> testAGraphReadsTheDatesOfTheSource [
 		project: 'Foo'
 		baseline: (self baselineRequiring: #(  )).
 	source repository: 'github://acme/Foo' dates: { ('v1.0.0' -> date) } asDictionary.
-	self assert: ((MetacelloMVSGraph new source: source) datesOf: 'github://acme/Foo') equals: { ('v1.0.0' -> date) } asDictionary
+	graph := MetacelloMVSGraph new source: source.
+	graph versionsOf: 'github://acme/Foo' ifFail: [ :text | self fail: text ].
+	self assert: (graph datesOf: 'github://acme/Foo') equals: { ('v1.0.0' -> date) } asDictionary
 ]
 
 { #category : 'tests - groups' }

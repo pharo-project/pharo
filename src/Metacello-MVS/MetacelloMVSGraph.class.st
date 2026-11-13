@@ -12,8 +12,7 @@ Class {
 		'readings',
 		'pharoMajor',
 		'repositories',
-		'versions',
-		'versionFailures'
+		'versions'
 	],
 	#category : 'Metacello-MVS',
 	#package : 'Metacello-MVS'
@@ -40,10 +39,8 @@ MetacelloMVSGraph >> checkPlatformOf: aCandidate in: aSandbox into: aReading [
 
 { #category : 'versions' }
 MetacelloMVSGraph >> datesOf: aRepository [
-	"Version name -> DateAndTime of each version of aRepository whose date is known"
-
-	self versionsOf: aRepository.
-	^ dates at: aRepository ifAbsent: [ Dictionary new ]
+	"Version name -> DateAndTime of each version of aRepository whose date is known. Asked once its versions are read (see versionsOf:ifFail:)"
+	^ dates at: aRepository
 ]
 
 { #category : 'project specs' }
@@ -51,14 +48,6 @@ MetacelloMVSGraph >> descriptionOf: aProjectSpec [
 	"The one repository description of aProjectSpec, as written (github://owner/name:ref/path)"
 
 	^ aProjectSpec repositoryDescriptions first
-]
-
-{ #category : 'accessing' }
-MetacelloMVSGraph >> failureOf: aRepository [
-	"Why the versions of aRepository cannot be read, or nil"
-
-	self versionsOf: aRepository.
-	^ versionFailures at: aRepository ifAbsent: [ nil ]
 ]
 
 { #category : 'project specs' }
@@ -70,13 +59,12 @@ MetacelloMVSGraph >> hasVersions: aProjectSpec [
 
 { #category : 'initialization' }
 MetacelloMVSGraph >> initialize [
-
 	super initialize.
 	versions := Dictionary new.
-	versionFailures := Dictionary new.
 	dates := Dictionary new.
 	readings := Dictionary new.
-	repositories := Dictionary new
+	repositories := Dictionary new.
+	source := MetacelloMVSRecordedSource new
 ]
 
 { #category : 'project specs' }
@@ -148,15 +136,7 @@ MetacelloMVSGraph >> readingFrom: aBaselineDefinitions of: aCandidate [
 { #category : 'reading' }
 MetacelloMVSGraph >> readingOf: aCandidate [
 	"The reading of the baseline of the version of aCandidate: told, or read once from the definitions the source answers"
-
-	^ readings at: aCandidate repository -> aCandidate version string ifAbsentPut: [
-			  source
-				  ifNil: [
-						  MetacelloMVSBaselineReading new
-							  request: aCandidate request;
-							  error: #repositoryFailure text: 'No requirements known for ' , aCandidate printString;
-							  yourself ]
-				  ifNotNil: [ self readingFrom: (source baselineOf: aCandidate) of: aCandidate ] ]
+	^ readings at: aCandidate repository -> aCandidate version string ifAbsentPut: [ self readingFrom: (source baselineOf: aCandidate) of: aCandidate ]
 ]
 
 { #category : 'accessing' }
@@ -252,23 +232,13 @@ MetacelloMVSGraph >> versionStringOf: aProjectSpec [
 ]
 
 { #category : 'versions' }
-MetacelloMVSGraph >> versionsOf: aRepository [
-	"The version names of aRepository; none when they cannot be read, and failureOf: says why"
-
-	^ versions at: aRepository ifAbsent: [
-			  | published |
-			  published := source
-				               ifNil: [
-						               versionFailures at: aRepository put: 'No versions known for ' , aRepository.
-						               #(  ) ]
-				               ifNotNil: [
-						               source versionsOf: aRepository ifFail: [ :text |
-								               versionFailures at: aRepository put: text.
-								               #(  ) ] ].
-			  dates
-				  at: aRepository
-				  put: ((published select: [ :each | each date notNil ]) collect: [ :each | each name -> each date ]) asDictionary.
-			  versions at: aRepository put: (published collect: [ :each | each name ]) asArray ]
+MetacelloMVSGraph >> versionsOf: aRepository ifFail: aBlock [
+	"The version names of aRepository, read once from the source. When they cannot be read, aBlock is given why, at that moment"
+	| published |
+	versions at: aRepository ifPresent: [ :names | ^ names ].
+	published := source versionsOf: aRepository ifFail: [ :text | ^ aBlock value: text ].
+	dates at: aRepository put: ((published select: [ :each | each date notNil ]) collect: [ :each | each name -> each date ]) asDictionary.
+	^ versions at: aRepository put: (published collect: [ :each | each name ]) asArray
 ]
 
 { #category : 'reading' }

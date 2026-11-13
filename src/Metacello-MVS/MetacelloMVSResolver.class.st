@@ -85,7 +85,7 @@ MetacelloMVSResolver >> checkChronologyOf: aRepository about: aCandidate [
 	(chronologyChecked includes: aRepository) ifTrue: [ ^ self ].
 	chronologyChecked add: aRepository.
 	dates := graph datesOf: aRepository.
-	versions := ((graph versionsOf: aRepository) select: [ :each | (MetacelloSemanticVersionNumber isSemanticVersion: each) and: [ dates includesKey: each ] ]) collect: [
+	versions := ((graph versionsOf: aRepository ifFail: [ ^ self ]) select: [ :each | (MetacelloSemanticVersionNumber isSemanticVersion: each) and: [ dates includesKey: each ] ]) collect: [
 		            :each | MetacelloSemanticVersionNumber fromVersionString: each ].
 	(versions groupedBy: [ :each | each major -> each minor ]) valuesDo: [ :series |
 			| sorted |
@@ -178,14 +178,12 @@ MetacelloMVSResolver >> dropUnused: aBoolean [
 
 { #category : 'findings' }
 MetacelloMVSResolver >> error: aKind text: aString about: aCandidate [
-	"Record an error of aKind about aCandidate (and the requirement being resolved). Answer nil: the caller stops there"
-
+	"Record an error of aKind about aCandidate (and the requirement being resolved)"
 	self
 		record: #error
 		kind: aKind
 		text: aString
-		about: aCandidate.
-	^ nil
+		about: aCandidate
 ]
 
 { #category : 'metacello' }
@@ -411,8 +409,8 @@ MetacelloMVSResolver >> require: aRequiredSpec by: aCandidate [
 							text: (graph descriptionOf: spec) , ' names a version that is not vX.Y.Z'
 							about: aCandidate ] ].
 		currentRequirement ifNotNil: [ :requirement | requirement minimum: (self minimumOf: spec) ].
-		version := self versionFor: spec requiredBy: aCandidate.
-		version ifNil: [ ^ self ].
+		version := self versionFor: spec requiredBy: aCandidate ifNone: [ ^ self ].
+		
 		(version isCanonical or: [ version string = (graph versionStringOf: spec) ]) ifFalse: [
 				self
 					warning: #nonCanonicalVersion
@@ -623,23 +621,25 @@ MetacelloMVSResolver >> usedIn: aBuildList [
 ]
 
 { #category : 'resolving' }
-MetacelloMVSResolver >> versionFor: aProjectSpec requiredBy: aCandidate [
-	"The lowest version at least the minimum, in its major. A prerelease only when it is the minimum itself. Between two spellings of one version (v1.2 and v1.2.0), the canonical one. nil, with an error, when there is none"
+MetacelloMVSResolver >> versionFor: aProjectSpec requiredBy: aCandidate ifNone: aBlock [
+	"The lowest version at least the minimum, in its major. A prerelease only when it is the minimum itself. Between two spellings of one version (v1.2 and v1.2.0), the canonical one. When there is none, the error is recorded and aBlock answers"
 
 	| repository minimum candidates lowest |
 	repository := graph repositoryUrlOf: aProjectSpec.
 	minimum := self minimumOf: aProjectSpec.
-	candidates := ((graph versionsOf: repository) select: [ :each | MetacelloSemanticVersionNumber isSemanticVersion: each ]) collect: [ :each |
+	candidates := ((graph versionsOf: repository ifFail: [ :text |
+			   self error: #repositoryFailure text: text about: aCandidate.
+			   ^ aBlock value ]) select: [ :each | MetacelloSemanticVersionNumber isSemanticVersion: each ]) collect: [ :each |
 		              MetacelloSemanticVersionNumber fromVersionString: each ].
-	(graph failureOf: repository) ifNotNil: [ :text | ^ self error: #repositoryFailure text: text about: aCandidate ].
 	self checkChronologyOf: repository about: aCandidate.
 	candidates := candidates select: [ :each |
 		              each major = minimum major and: [ each >= minimum and: [ each isPrerelease not or: [ each = minimum ] ] ] ].
 	candidates ifEmpty: [
-			^ self
-				  error: #missingVersion
-				  text: (graph descriptionOf: aProjectSpec) , ' has no version at least ' , minimum string , ' in major ' , minimum major printString
-				  about: aCandidate ].
+			self
+				error: #missingVersion
+				text: (graph descriptionOf: aProjectSpec) , ' has no version at least ' , minimum string , ' in major ' , minimum major printString
+				about: aCandidate.
+			^ aBlock value ].
 	lowest := candidates detectMin: [ :each | each ].
 	^ (candidates select: [ :each | each = lowest ]) detect: [ :each | each isCanonical ] ifNone: [ lowest ]
 ]
