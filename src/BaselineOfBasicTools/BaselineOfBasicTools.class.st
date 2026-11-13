@@ -44,6 +44,7 @@ BaselineOfBasicTools >> baseline: spec [
 				baseline: 'Debugging' with: [ spec loads: 'Core' from: repository ];
 				baseline: 'UnifiedFFI' with: [ spec repository: repository ];
 				baseline: 'ThreadedFFI' with: [ spec repository: repository ];
+				baseline: 'NewFiles' with: [ spec repository: repository ];
 				baseline: 'UIInfrastructure' with: [ spec repository: repository ];
 				baseline: 'UI' with: [ spec repository: repository ];
 				baseline: 'Reflectivity' with: [ spec repository: repository ];

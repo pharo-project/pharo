@@ -423,7 +423,9 @@ DiskStore >> gidOf: aPath [
 
 { #category : 'accessing' }
 DiskStore >> handleClass [
-	^ FileHandle
+	^ (Smalltalk globals at: #FileAPI ifAbsent: [ nil ])
+		ifNil: [ FileHandle ]
+		ifNotNil: [ :fileAPI | fileAPI currentFileClass ]
 ]
 
 { #category : 'comparing' }
