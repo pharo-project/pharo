@@ -13,6 +13,12 @@ StepOverTest >> methodWithUnwindReturn [
 ]
 
 { #category : 'helper' }
+StepOverTest >> signalStepOverTestWarning [
+	StepOverTestWarning signal: 'hey'.
+	^ 42
+]
+
+{ #category : 'helper' }
 StepOverTest >> step1 [
 	self step2
 ]
@@ -166,6 +172,25 @@ StepOverTest >> testStepOverHalt [
 ]
 
 { #category : 'tests' }
+StepOverTest >> testStepOverHandledWarningRunsTheHandler [
+	"A warning that is handled is not stopped at: its handler runs and the step completes"
+
+	| handled |
+	handled := false.
+	self settingUpSessionAndProcessAndContextForBlock: [
+		[ self signalStepOverTestWarning ]
+			on: StepOverTestWarning
+			do: [ :aWarning | handled := true. aWarning resume: 7 ] ].
+	[ session interruptedContext method == (self class >> #signalStepOverTestWarning) ]
+		whileFalse: [ session stepInto ].
+
+	session stepOver.
+
+	self assert: handled.
+	self assert: session interruptedContext method equals: self class >> #signalStepOverTestWarning
+]
+
+{ #category : 'tests' }
 StepOverTest >> testStepOverLastNodeOfContext [
 	"Stepping over the last node of a method brings the execution to the method node of that method."
 	| node |
@@ -242,6 +267,23 @@ StepOverTest >> testStepOverReturnInUnwindBlock [
 		whileTrue: [ session stepOver ].
 
 	self assert: session interruptedContext closure identicalTo: rootBlock
+]
+
+{ #category : 'tests' }
+StepOverTest >> testStepOverUnhandledWarningStopsAtTheSignal [
+	"Stepping over a send that signals a warning nobody handles stops at the signal, like for an Error.
+	The default action of the warning must not run inside the simulation: it would open a debugger
+	on the process that simulates the step instead of the debugged process"
+
+	self settingUpSessionAndProcessAndContextForBlock: [ self signalStepOverTestWarning ].
+	[ session interruptedContext method == (self class >> #signalStepOverTestWarning) ]
+		whileFalse: [ session stepInto ].
+
+	session stepOver.
+
+	self assert: session interruptedContext selector equals: #signal.
+	self assert: (session interruptedContext receiver isKindOf: StepOverTestWarning).
+	self deny: session interruptedProcess isTerminated
 ]
 
 { #category : 'tests' }
