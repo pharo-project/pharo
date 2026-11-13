@@ -8,7 +8,8 @@ Class {
 		'dates',
 		'baselines',
 		'versions',
-		'versionFailures'
+		'versionFailures',
+		'redirects'
 	],
 	#category : 'Metacello-MVS',
 	#package : 'Metacello-MVS'
@@ -31,14 +32,15 @@ MetacelloMVSRecordedSource >> baselineOf: aCandidate [
 		  MetacelloMVSBaselineDefinitions error: #repositoryFailure text: 'Not recorded: the baseline of ' , aCandidate printString ]
 ]
 
-{ #category : 'initialization' }
+{ #category : 'building' }
 MetacelloMVSRecordedSource >> initialize [
 
 	super initialize.
 	versions := Dictionary new.
 	versionFailures := Dictionary new.
 	dates := Dictionary new.
-	baselines := Dictionary new
+	baselines := Dictionary new.
+	redirects := Dictionary new
 ]
 
 { #category : 'building' }
@@ -55,7 +57,29 @@ MetacelloMVSRecordedSource >> recordings [
 		  versions.
 		  versionFailures.
 		  dates.
-		  baselines }
+		  baselines.
+		  redirects }
+]
+
+{ #category : 'building' }
+MetacelloMVSRecordedSource >> redirect: aWrittenDescription to: aDescription [
+	"The repository written aWrittenDescription (github://olekscode/SingularizePluralize:v1.0/src) answered as aDescription (github://pharo-contributions/SingularizePluralize:v1.0/src): it was moved"
+
+	redirects at: aWrittenDescription put: aDescription
+]
+
+{ #category : 'accessing' }
+MetacelloMVSRecordedSource >> redirects [
+	"Written repository description -> the description its repository answered, for the repositories that were moved"
+
+	^ redirects
+]
+
+{ #category : 'accessing' }
+MetacelloMVSRecordedSource >> replayPlatform [
+	"A platform that makes repositories as the recording saw them: moved ones at their new place"
+
+	^ MetacelloMVSReplayPlatform redirects: redirects
 ]
 
 { #category : 'building' }
@@ -203,6 +227,14 @@ MetacelloMVSRecordedSource >> storeOn: aStream [
 				print: repository;
 				nextPutAll: ' failsWith: ';
 				print: (versionFailures at: repository);
+				nextPut: $; ].
+	(redirects keys sort: [ :a :b | a <= b ]) do: [ :written |
+			aStream
+				crtab;
+				nextPutAll: 'redirect: ';
+				print: written;
+				nextPutAll: ' to: ';
+				print: (redirects at: written);
 				nextPut: $; ].
 	(baselines keys sort: [ :a :b | a printString <= b printString ]) do: [ :key |
 			self
