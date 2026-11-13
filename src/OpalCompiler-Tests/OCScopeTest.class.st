@@ -7,9 +7,9 @@ Class {
 	#classVars : [
 		'MyClassVarForTesting'
 	],
-	#category : 'OpalCompiler-Tests-Semantic',
+	#category : 'OpalCompiler-Tests-Semantics',
 	#package : 'OpalCompiler-Tests',
-	#tag : 'Semantic'
+	#tag : 'Semantics'
 }
 
 { #category : 'accessing' }

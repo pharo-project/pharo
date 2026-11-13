@@ -4,9 +4,9 @@ Class {
 	#instVars : [
 		'createdClasses'
 	],
-	#category : 'Kernel-CodeModel-Tests-UndeclaredVariables',
+	#category : 'Kernel-CodeModel-Tests-Variables',
 	#package : 'Kernel-CodeModel-Tests',
-	#tag : 'UndeclaredVariables'
+	#tag : 'Variables'
 }
 
 { #category : 'tests' }
