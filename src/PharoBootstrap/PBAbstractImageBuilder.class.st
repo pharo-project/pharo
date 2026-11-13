@@ -602,23 +602,19 @@ PBAbstractImageBuilder >> formatOfClass: aRFiClass [
 { #category : 'final step' }
 PBAbstractImageBuilder >> freeForwarders [
 	"Check that all forwarders have been followed.  Then free them."
+
 	| numForwarders numFreed newHeap |
 	numForwarders := numFreed := 0.
 	newHeap := espellBackend objectMemory.
-	newHeap allObjectsDo:
-		[:o|
-		(newHeap isForwarded: o)
-			ifTrue: [numForwarders := numForwarders + 1]
-			ifFalse:
-				[0 to: (newHeap numPointerSlotsOf: o) - 1 do:
-					[:i|
-					self assert: (newHeap isOopForwarded: (newHeap fetchPointer: i ofObject: o)) not]]].
-	Transcript cr;  nextPutAll: 'freeing '; print: numForwarders; nextPutAll: ' forwarders'; cr; flush.
-	newHeap allObjectsDo:
-		[:o|
-		(newHeap isForwarded: o) ifTrue:
-			[numFreed := numFreed + 1.
-			 newHeap freeObject: o]].
+	newHeap allObjectsDo: [ :o |
+			(newHeap isForwarded: o)
+				ifTrue: [ numForwarders := numForwarders + 1 ]
+				ifFalse: [ 0 to: (newHeap numPointerSlotsOf: o) - 1 do: [ :i | self assert: (newHeap isOopForwarded: (newHeap fetchPointer: i ofObject: o)) not ] ] ].
+	('freeing ' , numForwarders printString , ' forwarders') traceNewLine.
+	newHeap allObjectsDo: [ :o |
+			(newHeap isForwarded: o) ifTrue: [
+					numFreed := numFreed + 1.
+					newHeap freeObject: o ] ].
 	self assert: numFreed = numForwarders
 ]
 
@@ -1021,23 +1017,15 @@ PBAbstractImageBuilder >> prepareSimulatorForExecution [
 
 { #category : 'final steps' }
 PBAbstractImageBuilder >> reportSizes [
-	| oldAvgBytes "newAvgBytes" newHeapSize newHeap |
+
+	| newHeapSize newHeap finalHeapSize |
 	newHeapSize := 20 * 1024 * 1024.
 	newHeap := espellBackend objectMemory.
-	Transcript
-		nextPutAll: 'done.'; cr;
-		nextPutAll: 'initial heap size: '; nextPutAll: newHeapSize asStringWithCommas; cr;
-"		nextPutAll: 'change: '; print: change * 100.0 maxDecimalPlaces: 2; nextPut: $%; cr;"
-		flush.
-	newHeapSize := newHeap endOfMemory
-					- newHeap scavenger eden limit
-					- newHeap totalFreeListBytes.
-"	newAvgBytes := newHeapSize asFloat / newHeapNumObjs."
-	Transcript
-		nextPutAll: 'final new heap size: '; nextPutAll: newHeapSize asStringWithCommas; tab;
-	"	nextPutAll: ' (avg obj bytes '; print: newAvgBytes maxDecimalPlaces: 2; nextPutAll: ' words '; print: newAvgBytes / self wordSize maxDecimalPlaces: 2; nextPut: $); cr;
-""		nextPutAll: 'change: '; print: change * 100.0 maxDecimalPlaces: 2; nextPut: $%; cr;"
-		flush
+	finalHeapSize := newHeap endOfMemory - newHeap scavenger eden limit - newHeap totalFreeListBytes.
+
+	'Done.' traceNewLine.
+	('Initial heap size: ' , newHeapSize asStringWithCommas) traceNewLine.
+	('Final new heap size: ' , finalHeapSize asStringWithCommas) traceNewLine
 ]
 
 { #category : 'accessing' }
@@ -1086,24 +1074,25 @@ PBAbstractImageBuilder >> writeSnapshot: imageFileName ofTransformedImage: spurH
 	"The bootstrapped image typically contains a few big free chunks and one huge free chunk.
 	 Test snapshot writing and loading by turning the largest non-huge chunks into segment bridges
 	 and saving."
+
 	| penultimate ultimate sim |
-"	[ spurHeap  flushNewSpace. ]
+	"	[ spurHeap  flushNewSpace. ]
 		on: Halt
-		do: [:ex|"
-			"suppress halts from the usual suspects (development time halts)"	
-"			(#(#fullGC #compactImage  #doScavenge:) includes: ex signalerContext sender selector)
+		do: [:ex|""suppress halts from the usual suspects (development time halts)""			(#(#fullGC #compactImage  #doScavenge:) includes: ex signalerContext sender selector)
 				ifTrue: [ex resume]
 				ifFalse: [ex pass]]."
 	sim := spurHeap coInterpreter.
 	sim bootstrapping: true.
 	spurHeap segmentManager prepareForSnapshot.
-	spurHeap
-		setEndOfMemory: spurHeap endOfMemory + spurHeap bridgeSize. "hack; initializeInterpreter: cuts it back by bridgeSize"
-	sim initializeInterpreter: 0;
+	spurHeap setEndOfMemory: spurHeap endOfMemory + spurHeap bridgeSize. "hack; initializeInterpreter: cuts it back by bridgeSize"
+	sim
+		initializeInterpreter: 0;
 		setImageHeaderFlagsFrom: headerFlags;
-		setSavedWindowSize: (800<<16)+600;
+		setSavedWindowSize: 800 << 16 + 600;
 		setDisplayForm: nil.
-	spurHeap allOldSpaceEntitiesDo: [:e| penultimate := ultimate. ultimate := e].
+	spurHeap allOldSpaceEntitiesDo: [ :e |
+			penultimate := ultimate.
+			ultimate := e ].
 	"Check that we've left behind the old, pre-pigCompact segmented save"
 	self assert: (spurHeap isFreeObject: penultimate) not.
 	spurHeap checkFreeSpace.
@@ -1111,5 +1100,5 @@ PBAbstractImageBuilder >> writeSnapshot: imageFileName ofTransformedImage: spurH
 	sim bereaveAllMarriedContextsForSnapshotFlushingExternalPrimitivesIf: true.
 	sim imageName: imageFileName.
 	sim writeImageFileIO.
-	Transcript cr; show: 'Done!'
+	'Done!' traceNewLine
 ]
