@@ -4,8 +4,9 @@ I am the ""Query"" group of the ""Source code"" sub-menu of code editors (SycSou
 Class {
 	#name : 'SycSourceCodeQueryMenuGroup',
 	#superclass : 'ClyQueryMenuGroup',
-	#category : 'SystemCommands-SourceCodeCommands',
-	#package : 'SystemCommands-SourceCodeCommands'
+	#category : 'Calypso-SystemTools-Core-Menu groups',
+	#package : 'Calypso-SystemTools-Core',
+	#tag : 'Menu groups'
 }
 
 { #category : 'parents' }
