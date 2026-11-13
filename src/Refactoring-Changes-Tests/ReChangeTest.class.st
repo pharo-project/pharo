@@ -633,3 +633,37 @@ ReChangeTest >> universalTestFor: aChange [
 	(aChange isKindOf: ReClassChange)
 		ifTrue: [ self undoTestFor: aChange ]
 ]
+
+{ #category : 'tests - perform' }
+ReChangeTest >> testPerformChangeTraitCompositionAndUndo [
+
+	| factory original replacement custom target change originalClassComposition |
+	factory := ClassFactoryForTestCase environment: workingEnvironment.
+	[
+		original := factory newTrait.
+		replacement := factory newTrait.
+		custom := factory newTrait.
+		original compile: 'instanceValue ^ 1'.
+		replacement compile: 'instanceValue ^ 2'.
+		custom compile: 'classValue ^ 3'.
+		{ false. true } do: [ :hasCustomComposition |
+			target := factory make: [ :builder |
+				builder traitComposition: original.
+				hasCustomComposition ifTrue: [ builder classTraitComposition: custom ] ].
+			originalClassComposition := target class basicTraitComposition.
+			change := changeFactory changeTraitCompositionOf: target name
+				to: replacement name , ' @ { #alias -> #instanceValue } - { #instanceValue }'.
+			self performAndUndoChange: change do: [
+				self assert: target new alias equals: 2.
+				self deny: (target canUnderstand: #instanceValue).
+				self assert: target class basicTraitComposition equals:
+					(hasCustomComposition
+						ifTrue: [ originalClassComposition ]
+						ifFalse: [ target traitComposition classComposition ]).
+				hasCustomComposition ifTrue: [ self assert: target classValue equals: 3 ] ].
+			self assert: target new instanceValue equals: 1.
+			self deny: (target canUnderstand: #alias).
+			self assert: target class basicTraitComposition equals: originalClassComposition.
+			hasCustomComposition ifTrue: [ self assert: target classValue equals: 3 ] ]
+	] ensure: [ factory cleanUp ]
+]

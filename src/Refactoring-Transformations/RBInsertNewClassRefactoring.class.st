@@ -74,8 +74,8 @@ RBInsertNewClassRefactoring >> privateTransform [
 				name: className;
 				package: packageName;
 				tag: tagName;
-				comment: self comment;
-				traitComposition: self traitComposition ];
+				comment: self comment ]
+		traitComposition: self traitComposition;
 		reparentClasses: subclasses to: (self model classNamed: className)
 ]
 

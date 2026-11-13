@@ -437,6 +437,26 @@ RBNamespaceTest >> testDefineTraitWithoutBuilderFlag [
 ]
 
 { #category : 'tests - classes' }
+RBNamespaceTest >> testDefineTraitWithModelCompositionDefersIt [
+
+	| baseTrait trait |
+	namespace defineTrait: [ :builder |
+		builder
+			name: #TNamespaceModelOnlyTrait;
+			package: #'Refactoring-Core-Tests' ].
+	baseTrait := namespace classNamed: #TNamespaceModelOnlyTrait.
+	namespace
+		defineTrait: [ :builder |
+			builder
+				name: #TNamespaceDefinedTrait;
+				package: #'Refactoring-Core-Tests' ]
+		traitComposition: (RBTraitComposition model: namespace expression: 'TNamespaceModelOnlyTrait').
+	trait := namespace classNamed: #TNamespaceDefinedTrait.
+	self assertCollection: trait traitComposition traits hasSameElements: { baseTrait }.
+	self assert: (namespace changes changes last isKindOf: ReChangeTraitCompositionChange)
+]
+
+{ #category : 'tests - classes' }
 RBNamespaceTest >> testDefineTraitPreservesCompositionAndMetadata [
 
 	| change trait |
