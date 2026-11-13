@@ -39,6 +39,21 @@ MetacelloMVSResolver class >> on: aGraph [
 	^ self new setGraph: aGraph
 ]
 
+{ #category : 'metacello' }
+MetacelloMVSResolver >> addProjectOf: aCandidate to: aResolution [
+	"Add the resolved project of aCandidate to aResolution"
+	aResolution add: (self resolvedProjectOf: aCandidate into: aResolution ifNone: [ ^ self ])
+]
+
+{ #category : 'metacello' }
+MetacelloMVSResolver >> addRoot: aCandidate to: aResolution [
+	"Add the resolved project of the root aCandidate to aResolution, with its own request first"
+	| project |
+	project := self resolvedProjectOf: aCandidate into: aResolution ifNone: [ ^ self ].
+	aResolution addRoot: project.
+	project addRequest: aCandidate request
+]
+
 { #category : 'resolving' }
 MetacelloMVSResolver >> ask: aProjectSpec [
 	"Add the groups aProjectSpec asks (its loads, or the default ones) to those of its repository. Answer whether they grew"
@@ -265,9 +280,10 @@ MetacelloMVSResolver >> isLocked: aRepository [
 { #category : 'metacello' }
 MetacelloMVSResolver >> isRequestOfASelectedVersion: aRequirement in: aResolution [
 	"Only the requirements of the versions selected ask groups: superseded versions are not loaded"
-
-	aRequirement reference ifNil: [ ^ false ].
-	^ (aResolution buildList at: aRequirement from repository ifAbsent: [ nil ]) == aRequirement from
+	^ aResolution buildList
+		  at: aRequirement from repository
+		  ifPresent: [ :selected | selected == aRequirement from ]
+		  ifAbsent: [ false ]
 ]
 
 { #category : 'versions' }
@@ -443,21 +459,14 @@ MetacelloMVSResolver >> reset [
 { #category : 'metacello' }
 MetacelloMVSResolver >> resolutionOf: aResolution [
 	"aResolution, the walk done, for Metacello to record: when it has no errors, every selected project, the roots first in their order, with the requests of selected versions (each root's own first)"
-
 	| roots |
 	aResolution hasErrors ifTrue: [ ^ aResolution ].
 	roots := aResolution rootCandidates.
-	roots do: [ :candidate |
-			(self resolvedProjectOf: candidate into: aResolution) ifNotNil: [ :project |
-					aResolution addRoot: project.
-					project addRequest: candidate request ] ].
-	aResolution buildList valuesDo: [ :candidate |
-			(roots includes: candidate) ifFalse: [
-				(self resolvedProjectOf: candidate into: aResolution) ifNotNil: [ :project | aResolution add: project ] ] ].
+	roots do: [ :candidate | self addRoot: candidate to: aResolution ].
+	aResolution buildList valuesDo: [ :candidate | (roots includes: candidate) ifFalse: [ self addProjectOf: candidate to: aResolution ] ].
 	aResolution requirements do: [ :requirement |
 			(self isRequestOfASelectedVersion: requirement in: aResolution) ifTrue: [
-					(aResolution buildList at: requirement repository ifAbsent: [ nil ]) ifNotNil: [ :candidate |
-						candidate resolvedProject addRequest: requirement request ] ] ].
+				(aResolution buildList at: requirement repository) resolvedProject addRequest: requirement request ] ].
 	^ aResolution
 ]
 
@@ -508,17 +517,11 @@ MetacelloMVSResolver >> resolveRoots: someProjectSpecs engine: anEngine [
 ]
 
 { #category : 'metacello' }
-MetacelloMVSResolver >> resolvedProjectOf: aCandidate into: aResolution [
-	"The resolved project of aCandidate, given its spec at its version, its project built from the baseline read in the sandbox, so that Metacello records it without loading its BaselineOf. Its BaselineOf is installed after the load, unless the image has it from there or it is pinned"
+MetacelloMVSResolver >> resolvedProjectOf: aCandidate into: aResolution ifNone: aBlock [
+	"The resolved project of aCandidate, given its spec at its version, its project built from the baseline read in the sandbox, so that Metacello records it without loading its BaselineOf. Its BaselineOf is installed after the load, unless the image has it from there or it is pinned. When the baseline fails, the error is recorded and aBlock answers"
 
 	| reading project spec resolved |
 	reading := graph readingOf: aCandidate.
-	reading baselineClass ifNil: [
-			aResolution addFinding: (MetacelloResolutionFinding
-					 error: #baselineFailure
-					 text: 'No baseline was read for ' , aCandidate printString
-					 request: aCandidate request).
-			^ nil ].
 	project := [ reading newProject ]
 		           on: Error
 		           do: [ :error |
@@ -526,7 +529,7 @@ MetacelloMVSResolver >> resolvedProjectOf: aCandidate into: aResolution [
 						            error: #baselineFailure
 						            text: 'The baseline of ' , aCandidate printString , ' fails: ' , error description
 						            request: aCandidate request).
-				           ^ nil ].
+				           ^ aBlock value ].
 	spec := (MetacelloProjectSpec project: project)
 		        name: aCandidate project;
 		        className: 'BaselineOf' , aCandidate project;
