@@ -10,7 +10,6 @@ Class {
 		'dates',
 		'source',
 		'readings',
-		'pharoMajor',
 		'repositories',
 		'versions'
 	],
@@ -20,21 +19,12 @@ Class {
 
 { #category : 'reading' }
 MetacelloMVSGraph >> checkPlatformOf: aCandidate in: aSandbox into: aReading [
-	"A declared minimum Pharo newer than this image is an error before anything is loaded (answer false); for: #pharoN.x blocks are accepted, with a warning"
-
-	aSandbox pharoMinimum ifNotNil: [ :minimum |
-			minimum > self pharoMajor ifTrue: [
-					aReading
-						error: #platformMismatch
-						text:
-						aCandidate printString , ' needs Pharo ' , minimum printString , ' or newer, this is Pharo ' , self pharoMajor printString.
-					^ false ] ].
+	"for: #pharoN.x blocks are accepted, with a warning: the requirements then depend on the image"
 	aSandbox platformBlocks ifNotEmpty: [ :platforms |
 			aReading
 				warning: #platformBlock
 				text: 'The baseline of ' , aCandidate printString , ' has blocks for ' , (', ' join: platforms)
-					, ': its requirements depend on the image that resolves them' ].
-	^ true
+					, ': its requirements depend on the image that resolves them' ]
 ]
 
 { #category : 'versions' }
@@ -74,24 +64,10 @@ MetacelloMVSGraph >> pathOf: aProjectSpec [
 	^ (self repositoryFor: aProjectSpec) repoPath ifNotNil: [ :path | path ifEmpty: [ nil ] ]
 ]
 
-{ #category : 'reading' }
-MetacelloMVSGraph >> pharoMajor [
-	"The major version of Pharo that baselines are checked against: this image's, unless told"
-
-	^ pharoMajor ifNil: [ SystemVersion current major ]
-]
-
-{ #category : 'reading' }
-MetacelloMVSGraph >> pharoMajor: anInteger [
-
-	pharoMajor := anInteger
-]
-
 { #category : 'project specs' }
 MetacelloMVSGraph >> projectOf: aProjectSpec [
-	"The name of its project: its baseline's (an alias made with project:copyFrom:with: names the same baseline), or nil when unknown"
-
-	^ aProjectSpec className ifNil: [ aProjectSpec name ] ifNotNil: [ :className | className allButFirst: 'BaselineOf' size ]
+	"The name of its project: its baseline's (an alias made with project:copyFrom:with: names the same baseline)"
+	^ aProjectSpec className allButFirst: 'BaselineOf' size
 ]
 
 { #category : 'reading' }
@@ -102,7 +78,7 @@ MetacelloMVSGraph >> read: aBaselineDefinitions of: aCandidate into: aReading [
 		           onDefinitions: aBaselineDefinitions definitions
 		           repository: aBaselineDefinitions repositoryDescription.
 	aReading repositoryDescription: aBaselineDefinitions repositoryDescription.
-	(self checkPlatformOf: aCandidate in: sandbox into: aReading) ifFalse: [ ^ self ].
+	self checkPlatformOf: aCandidate in: sandbox into: aReading.
 	self warnAboutBaselineOf: aCandidate in: sandbox into: aReading.
 	aReading replacements: sandbox replacements.
 	aReading references: (sandbox requirementsInto: aReading)

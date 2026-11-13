@@ -198,19 +198,6 @@ MetacelloMVSBaselineReadingTest >> testALockOfAnotherMajorIsAnError [
 ]
 
 { #category : 'tests - platform' }
-MetacelloMVSBaselineReadingTest >> testANewerPharoMinimumIsAnError [
-
-	graph pharoMajor: 13.
-	source
-		repository: 'github://acme/Foo'
-		version: 'v1.0.0'
-		project: 'Foo'
-		baseline: (self pharoBaseline: '		spec pharo: 14.').
-	self assert: ((graph readingOf: (self selectionOf: 'github://acme/Foo:v1.0.0' project: 'Foo')) findings anySatisfy: [ :each |
-			 each isError and: [ each kind = #platformMismatch ] ])
-]
-
-{ #category : 'tests - platform' }
 MetacelloMVSBaselineReadingTest >> testAPharoBlockIsAWarning [
 
 	| warnings |
@@ -260,18 +247,6 @@ MetacelloMVSBaselineReadingTest >> testAnInstalledVersionThatIsNotLockedIsRaised
 		          installed: { ('github://acme/Bar' -> (self installed: 'github://acme/Bar:v1.0.0' project: 'Bar')) } asDictionary;
 		          resolve: 'github://acme/Foo:v1.0.0' project: 'Foo'.
 	self assert: (report buildList at: 'github://acme/Bar') version string equals: 'v1.2.0'
-]
-
-{ #category : 'tests - platform' }
-MetacelloMVSBaselineReadingTest >> testAnOlderPharoMinimumResolves [
-
-	graph pharoMajor: 15.
-	source
-		repository: 'github://acme/Foo'
-		version: 'v1.0.0'
-		project: 'Foo'
-		baseline: (self pharoBaseline: '		spec pharo: 14.').
-	self assert: (graph readingOf: (self selectionOf: 'github://acme/Foo:v1.0.0' project: 'Foo')) references isEmpty
 ]
 
 { #category : 'tests - groups' }

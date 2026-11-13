@@ -135,7 +135,7 @@ MetacelloMVSResolver >> checkPin: aProjectSpec by: aCandidate [
 MetacelloMVSResolver >> checkProjectOf: aCandidate [
 	"One project comes from one repository: two forks of it cannot both be loaded. Answer whether aCandidate may be selected"
 
-	aCandidate project ifNil: [ ^ true ].
+	
 	projects
 		at: aCandidate project
 		ifPresent: [ :other |
@@ -289,7 +289,8 @@ MetacelloMVSResolver >> keep: aFinding about: aCandidate [
 		            findingKind: aFinding kind
 		            severity: aFinding severity
 		            text: aFinding text
-		            about: aCandidate) ifNil: [ resolution add: aFinding about: aCandidate ].
+		            about: aCandidate
+		            ifNone: [ resolution add: aFinding about: aCandidate ]).
 	self holdInRequirement: finding
 ]
 
@@ -320,14 +321,15 @@ MetacelloMVSResolver >> record: aSeverity kind: aKind text: aString about: aCand
 		            findingKind: aKind
 		            severity: aSeverity
 		            text: aString
-		            about: aCandidate) ifNil: [
+		            about: aCandidate
+		            ifNone: [
 			           resolution
 				           add: (MetacelloResolutionFinding
 						            severity: aSeverity
 						            kind: aKind
 						            text: aString
 						            request: (self requestAbout: aCandidate))
-				           about: aCandidate ].
+				           about: aCandidate ]).
 	self holdInRequirement: finding
 ]
 
@@ -354,7 +356,7 @@ MetacelloMVSResolver >> replacementFor: aProjectSpec by: aCandidate [
 	"The replacement of the project of aProjectSpec, if the root replaces it; a higher minimum than the replacement is ignored, with a warning"
 
 	| replacement |
-	replacement := replacements at: ((graph projectOf: aProjectSpec) ifNil: [ ^ aProjectSpec ]) ifAbsent: [ ^ aProjectSpec ].
+	replacement := replacements at: (graph projectOf: aProjectSpec) ifAbsent: [ ^ aProjectSpec ].
 	(graph descriptionOf: aProjectSpec) = (graph descriptionOf: replacement) ifTrue: [ ^ aProjectSpec ].
 	((self isVersioned: aProjectSpec) and: [
 		 (self isVersioned: replacement) and: [ (self minimumOf: replacement) < (self minimumOf: aProjectSpec) ] ]) ifTrue: [

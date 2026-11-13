@@ -97,9 +97,8 @@ MetacelloMVSCandidate >> printOn: aStream [
 
 { #category : 'accessing' }
 MetacelloMVSCandidate >> project [
-	"The name of my project, nil when unknown"
-
-	^ resolvedProject projectSpec className ifNotNil: [ :className | className allButFirst: 'BaselineOf' size ]
+	"The name of my project: its baseline's"
+	^ resolvedProject projectSpec className allButFirst: 'BaselineOf' size
 ]
 
 { #category : 'accessing' }

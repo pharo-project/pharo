@@ -79,7 +79,7 @@ MetacelloMVSResolution >> errorsDescription [
 ]
 
 { #category : 'accessing' }
-MetacelloMVSResolution >> findingKind: aKind severity: aSeverity text: aString about: aCandidateOrNil [
+MetacelloMVSResolution >> findingKind: aKind severity: aSeverity text: aString about: aCandidateOrNil ifNone: aBlock [
 	"The finding kept already with this kind, severity and text about the same repository, or nil: each is reported once, with its first chain"
 
 	| repository |
@@ -88,7 +88,7 @@ MetacelloMVSResolution >> findingKind: aKind severity: aSeverity text: aString a
 		  detect: [ :each |
 			  each kind = aKind and: [
 				  each severity = aSeverity and: [ each text = aString and: [ (self repositoryOf: each) = repository ] ] ] ]
-		  ifNone: [ nil ]
+		  ifNone: aBlock
 ]
 
 { #category : 'accessing' }
