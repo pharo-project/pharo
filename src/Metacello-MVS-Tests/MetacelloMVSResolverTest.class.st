@@ -370,6 +370,22 @@ MetacelloMVSResolverTest >> testAReportHasTheBuildList [
 		assert: (report rootCandidates collect: [ :each | each repository ]) asArray equals: { (self repo: 'root') }
 ]
 
+{ #category : 'tests' }
+MetacelloMVSResolverTest >> testARootWithTwoRepositoriesIsAnError [
+	"Metacello lets a spec declare several repositories; mvs needs exactly one"
+	| spec resolution |
+	spec := (MetacelloProjectSpec project: MetacelloProject new)
+		        name: 'a';
+		        className: 'BaselineOfa';
+		        repository: (self repo: 'a:v1.0.0');
+		        repository: 'github://fork/a:v1.0.0';
+		        yourself.
+	resolution := (MetacelloMVSResolver on: graph) resolveRoots: { spec }.
+	self
+		assert: (resolution errors collect: [ :each | each text ]) asArray
+		equals: #( '''a'' declares 2 repositories instead of one' )
+]
+
 { #category : 'tests - warnings' }
 MetacelloMVSResolverTest >> testASelectedNonCanonicalVersionIsAWarning [
 	"Asking for v1.2.7 in a repository tagged 1.2.7"

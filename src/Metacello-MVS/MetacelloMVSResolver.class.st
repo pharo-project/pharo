@@ -489,7 +489,7 @@ MetacelloMVSResolver >> resolveRoots: aCollectionOfProjectSpecs [
 				ifTrue: [
 				(rootRepositories includes: (graph repositoryUrlOf: root)) ifFalse: [ rootRepositories add: (graph repositoryUrlOf: root) ] ]
 				ifFalse: [
-				self error: #invalidReference text: (graph descriptionOf: root) printString , ' is not a repository with versions' about: nil ] ].
+				self error: #invalidReference text: (self whyNoVersions: root) about: nil ] ].
 	resolution hasErrors ifTrue: [ ^ resolution ].
 	resolution rootRepositories: rootRepositories.
 	aCollectionOfProjectSpecs do: [ :spec | self require: spec by: nil ].
@@ -503,21 +503,8 @@ MetacelloMVSResolver >> resolveRoots: aCollectionOfProjectSpecs [
 { #category : 'metacello' }
 MetacelloMVSResolver >> resolveRoots: someProjectSpecs engine: anEngine [
 	"As a Metacello resolver: resolve the roots someProjectSpecs name, in order, each loading what its spec loads, counting what the registry says is installed (and locked), and answer a MetacelloMVSResolution"
-
-	| roots |
 	self installedFromRegistry.
-	roots := someProjectSpecs collect: [ :each |
-			         | descriptions |
-			         descriptions := each repositoryDescriptions.
-			         descriptions size = 1 ifFalse: [
-					         self reset.
-					         self
-						         error: #invalidReference
-						         text: 'mvs needs the one repository of ' , each name , ', not ' , descriptions size printString
-						         about: nil.
-					         ^ self resolutionOf: resolution ].
-			         graph specFor: descriptions first project: each name loads: each loads ].
-	^ self resolutionOf: (self resolveRoots: roots)
+	^ self resolutionOf: (self resolveRoots: someProjectSpecs)
 ]
 
 { #category : 'metacello' }
