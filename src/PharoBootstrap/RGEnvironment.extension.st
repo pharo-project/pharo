@@ -8,20 +8,17 @@ RGEnvironment >> allClasses [
 
 { #category : '*PharoBootstrap' }
 RGEnvironment >> cleanUnusedUnreferencedPackages [
-
 	"remove packages that are not not used"
 
 	| referenced unreferenced |
-
 	referenced := IdentitySet new.
-	self ask behaviorsDo: [ :each |
-		referenced addAll: each referencedPackages ].
+	self ask behaviorsDo: [ :behavior | referenced addAll: behavior referencedPackages ].
 
-	unreferenced := (self ask packages copyWithoutAll: referenced).
+	unreferenced := self ask packages copyWithoutAll: referenced.
 	"Do not skip packages that only have extension methods..."
-	unreferenced := unreferenced reject: [ :e | e definedBehaviors isEmpty and: [ e extensionMethods notEmpty ] ].
+	unreferenced := unreferenced reject: [ :package | package definedBehaviors isEmpty and: [ package extensionMethods isNotEmpty ] ].
 
-	unreferenced do: [:each | self removePackage: each  ].
+	unreferenced do: [ :each | self removePackage: each ].
 
 	^ unreferenced
 ]

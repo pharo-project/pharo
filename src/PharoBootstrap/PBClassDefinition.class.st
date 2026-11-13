@@ -79,13 +79,12 @@ PBClassDefinition >> name [
 { #category : 'accessing' }
 PBClassDefinition >> sharedPools [
 
-	^ classDefinition instanceSide sharedPools collect: [ :pool | 
-		PBClassDefinition on: pool environment: bootstrapEnvironment ]
+	^ classDefinition instanceSide sharedPools collect: [ :pool | self class on: pool environment: bootstrapEnvironment ]
 ]
 
 { #category : 'accessing' }
 PBClassDefinition >> superclass [
-	
+
 	classDefinition superclass ifNil: [ ^ nil ].
-	^ PBClassDefinition on: classDefinition superclass environment: bootstrapEnvironment
+	^ self class on: classDefinition superclass environment: bootstrapEnvironment
 ]
