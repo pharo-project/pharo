@@ -136,6 +136,13 @@ MetacelloMVSCandidateVersion >> line [
 				  nextPutAll: version string ]
 ]
 
+{ #category : 'printing' }
+MetacelloMVSCandidateVersion >> locate: aString [
+	"aString, the one line of a finding about me, saying where it is: in my version, whose baseline asks or was read"
+
+	^ aString , ' in ' , self displayName
+]
+
 { #category : 'testing' }
 MetacelloMVSCandidateVersion >> mustReplace [
 	"Whether the replaces of my baseline apply: only when the user required me"

@@ -128,7 +128,7 @@ MetacelloResolution >> print: aString asFindingOn: aStream [
 
 { #category : 'report' }
 MetacelloResolution >> print: someFindings of: aSeverity verbose: aBoolean on: aStream [
-	"The findings of aSeverity, grouped by kind. Errors, and warnings when verbose, are listed with who required what they are about; infos with their text. Otherwise warnings are only counted per kind"
+	"The findings of aSeverity, counted per kind. Verbose, each is listed with who required what it is about; otherwise only errors are listed, one line each"
 
 	((someFindings groupedBy: [ :each | self descriptionOfKind: each kind ]) associations sort: [ :a :b | a key <= b key ]) do: [
 			:kind |
@@ -139,9 +139,10 @@ MetacelloResolution >> print: someFindings of: aSeverity verbose: aBoolean on: a
 				nextPutAll: ' (';
 				print: kind value size;
 				nextPut: $).
-			(aSeverity = #error or: [ aSeverity = #warning and: [ aBoolean ] ]) ifTrue: [
-				kind value do: [ :each | self print: (self descriptionOfFinding: each) asFindingOn: aStream ] ].
-			aSeverity = #info ifTrue: [ kind value do: [ :each | self print: each text asFindingOn: aStream ] ] ]
+			aBoolean
+				ifTrue: [ kind value do: [ :each | self print: (self descriptionOfFinding: each) asFindingOn: aStream ] ]
+				ifFalse: [
+				aSeverity = #error ifTrue: [ kind value do: [ :each | self print: (self shortDescriptionOf: each) asFindingOn: aStream ] ] ] ]
 ]
 
 { #category : 'report' }
@@ -152,7 +153,7 @@ MetacelloResolution >> printReportOn: aStream [
 
 { #category : 'report' }
 MetacelloResolution >> printReportOn: aStream verbose: aBoolean [
-	"How many findings of each severity, then each severity in turn (see print:of:verbose:on:)"
+	"How many findings of each severity, then each severity in turn (see print:of:verbose:on:). The short report says where the details are"
 
 	aStream
 		print: self errors size;
@@ -161,6 +162,7 @@ MetacelloResolution >> printReportOn: aStream verbose: aBoolean [
 		nextPutAll: ' warnings, ';
 		print: self infos size;
 		nextPutAll: ' infos'.
+	aBoolean ifFalse: [ aStream nextPutAll: ' (the verbose report gives the details)' ].
 	#( #error #warning #info ) do: [ :severity |
 			| ofSeverity |
 			ofSeverity := findings select: [ :each | each severity = severity ].
@@ -204,6 +206,13 @@ MetacelloResolution >> roots [
 	"The projects the load asked for, each loaded with the groups asked of it: one, unless the load names several roots"
 
 	^ roots
+]
+
+{ #category : 'report' }
+MetacelloResolution >> shortDescriptionOf: aFinding [
+	"What aFinding says, on one line, for the short report. Resolvers that know where it is say it"
+
+	^ aFinding text lines first
 ]
 
 { #category : 'report' }

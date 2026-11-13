@@ -493,14 +493,14 @@ MetacelloMVSResolver >> require: aRequiredSpec by: aCandidate [
 		ifTrue: [
 				self
 					warning: #floatingVersion
-					text: (graph descriptionOf: spec) , ' names a floating version, taken as its first version ' , (self minimumOf: spec) string
+					text: (graph projectOf: spec) , ' ' , (graph versionStringOf: spec) , ', taken as ' , (self minimumOf: spec) string
 					about: aCandidate
 					in: requirement ]
 		ifFalse: [
 				(MetacelloSemanticVersionNumber isCanonical: (graph versionStringOf: spec)) ifFalse: [
 					self
 						warning: #nonCanonicalVersion
-						text: (graph descriptionOf: spec) , ' names a version that is not vX.Y.Z'
+						text: (graph projectOf: spec) , ' ' , (graph versionStringOf: spec)
 						about: aCandidate
 						in: requirement ] ].
 	requirement minimum: (self minimumOf: spec).
@@ -508,7 +508,7 @@ MetacelloMVSResolver >> require: aRequiredSpec by: aCandidate [
 	(version isCanonical or: [ version string = (graph versionStringOf: spec) ]) ifFalse: [
 			self
 				warning: #nonCanonicalVersion
-				text: repository , ' ' , version string , ' is selected, a version that is not vX.Y.Z'
+				text: (graph projectOf: spec) , ' ' , version string , ', selected'
 				about: aCandidate
 				in: requirement ].
 	self requireVersion: (self candidateFor: spec version: version requiredBy: aCandidate in: requirement) in: requirement.

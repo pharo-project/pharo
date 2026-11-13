@@ -68,6 +68,13 @@ MetacelloUserRequest >> isSupersededIn: aResolution [
 ]
 
 { #category : '*Metacello-MVS' }
+MetacelloUserRequest >> locate: aString [
+	"A finding about the load as a whole is nowhere else: aString says it all"
+
+	^ aString
+]
+
+{ #category : '*Metacello-MVS' }
 MetacelloUserRequest >> printRequiredByOn: aStream [
 	"A finding about the load as a whole: nobody but the script asked"
 ]

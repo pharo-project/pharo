@@ -176,7 +176,7 @@ MetacelloMVSResolverTest >> testAFloatingVersionIsTheFirstOfItsSeriesWithAWarnin
 	self assert: report resolves.
 	self
 		assert: (report descriptionOf: report warnings first)
-		equals: (String lf join: #( 'github://o/dictionary:v1.6.x/src names a floating version, taken as its first version v1.6.0'
+		equals: (String lf join: #( 'dictionary v1.6.x, taken as v1.6.0'
 				    'Required by: root v1.0.0' )).
 	self assert: (self selected: 'dictionary' in: (self resolve: 'root:v1.0.0') buildList) equals: 'v1.6.0'
 ]
@@ -222,7 +222,7 @@ MetacelloMVSResolverTest >> testALeadingZeroIsAcceptedWithAWarning [
 	self assert: report warnings size equals: 1.
 	self
 		assert: (report descriptionOf: report warnings first)
-		equals: (String lf join: #( 'github://o/exporters:v1.02/src names a version that is not vX.Y.Z'
+		equals: (String lf join: #( 'exporters v1.02'
 				    'Required by: root v1.0.0' )).
 	self assert: (self selected: 'exporters' in: (self resolve: 'root:v1.0.0') buildList) equals: 'v1.02'
 ]
@@ -471,7 +471,7 @@ MetacelloMVSResolverTest >> testASelectedNonCanonicalVersionIsAWarning [
 	self version: '1.2.7' of: 'charset' requires: #(  ).
 	report := (MetacelloMVSResolver on: graph) resolve: (self repo: 'root:v1.0.0') project: 'root'.
 	self assert: report resolves.
-	self assert: (report warnings first text beginsWith: 'github://o/charset 1.2.7 is selected, a version that is not vX.Y.Z')
+	self assert: (report warnings first text = 'charset 1.2.7, selected')
 ]
 
 { #category : 'tests - cases' }
@@ -899,7 +899,7 @@ MetacelloMVSResolverTest >> testTheReportListsUpgradesByTheProjectThatAsks [
 	self version: 'v1.0.0' of: 'b' requires: #( 'c:v1.2.0' ).
 	self version: 'v1.0.0' of: 'c' requires: #(  ).
 	self version: 'v1.2.0' of: 'c' requires: #(  ).
-	report := (self resolve: 'root:v1.0.0') report.
+	report := (self resolve: 'root:v1.0.0') verboseReport.
 	self assert: (report includesSubstring:
 			 (String lf join: #( 'Information (3)' '  root v1.0.0 can ask for' '    - c v1.2.0 instead of v1.0.0: already selected'
 				     '    - c v2.0.0 instead of v1.0.0: a newer major' '  b v1.0.0 can ask for' '    - c v2.0.0 instead of v1.2.0: a newer major' )))
@@ -936,6 +936,37 @@ MetacelloMVSResolverTest >> testTheSameProjectFromTheSameRepositoryIsFine [
 	graph repository: 'github://upstream/bloc' at: 'v3.1.0' requires: #(  ).
 	buildList := (self resolve: 'root:v1.0.0') buildList.
 	self assert: (buildList at: 'github://upstream/bloc') version string equals: 'v3.1.0'
+]
+
+{ #category : 'tests - report' }
+MetacelloMVSResolverTest >> testTheShortReportNamesWhereEachErrorIs [
+	"Without its chain, an error still names the version whose baseline asks: that is where it gets fixed"
+
+	| report |
+	self versions: #( 'v1.0.0' ) of: 'root'.
+	self versions: #( 'v1.0.0' ) of: 'b'.
+	self versions: #( 'v1.0.0' ) of: 'c'.
+	self version: 'v1.0.0' of: 'root' requires: #( 'b:v1.0.0' ).
+	self version: 'v1.0.0' of: 'b' requires: #( 'c' ).
+	report := (self resolve: 'root:v1.0.0') report.
+	self assert:
+		(report includesSubstring: (String lf join: #( '  No version asked (1)' '    - github://o/c/src names no version in b v1.0.0' )))
+]
+
+{ #category : 'tests - report' }
+MetacelloMVSResolverTest >> testTheShortReportNamesWhoAskedEachMajor [
+	"A major conflict names, for each major, the version that asked for it"
+
+	| line |
+	self versions: #( 'v1.0.0' ) of: 'root'.
+	self versions: #( 'v1.0.0' 'v2.0.0' ) of: 'b'.
+	self versions: #( 'v1.0.0' ) of: 'c'.
+	self version: 'v1.0.0' of: 'root' requires: #( 'b:v1.0.0' 'c:v1.0.0' ).
+	self version: 'v1.0.0' of: 'c' requires: #( 'b:v2.0.0' ).
+	self version: 'v1.0.0' of: 'b' requires: #(  ).
+	self version: 'v2.0.0' of: 'b' requires: #(  ).
+	line := (self resolve: 'root:v1.0.0') report lines detect: [ :each | each beginsWith: '    - b ' ].
+	self assert: line equals: '    - b v1.0.0 in root v1.0.0, v2.0.0 in c v1.0.0'
 ]
 
 { #category : 'tests - cases' }

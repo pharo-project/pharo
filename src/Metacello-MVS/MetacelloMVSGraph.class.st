@@ -38,11 +38,8 @@ MetacelloMVSGraph >> causeOf: aCompilationError [
 { #category : 'reading' }
 MetacelloMVSGraph >> checkPlatformOf: aCandidate in: aSandbox into: aReading [
 	"for: #pharoN.x blocks are accepted, with a warning: the requirements then depend on the image"
-	aSandbox platformBlocks ifNotEmpty: [ :platforms |
-			aReading
-				warning: #platformBlock
-				text: 'The baseline of ' , aCandidate printString , ' has blocks for ' , (', ' join: platforms)
-					, ': its requirements depend on the image that resolves them' ]
+
+	aSandbox platformBlocks ifNotEmpty: [ :platforms | aReading warning: #platformBlock text: (', ' join: platforms) ]
 ]
 
 { #category : 'versions' }
@@ -105,7 +102,7 @@ MetacelloMVSGraph >> read: aBaselineDefinitions of: aCandidate into: aReading [
 
 { #category : 'reading' }
 MetacelloMVSGraph >> readingFrom: aBaselineDefinitions of: aCandidate [
-	"Run the baseline in the sandbox, as the version of aCandidate. Never signals: the baseline is third-party code, so whatever it fails with becomes a problem naming the version and the cause. A baseline that does not compile says why in one line. The problems are about the request of aCandidate, the first that asked for this version"
+	"Run the baseline in the sandbox, as the version of aCandidate. Never signals: the baseline is third-party code, so whatever it fails with becomes a problem saying the cause; the report names the version. A baseline that does not compile says why in one line. The problems are about the request of aCandidate, the first that asked for this version"
 
 	| reading |
 	reading := MetacelloMVSBaselineReading new
@@ -121,9 +118,9 @@ MetacelloMVSGraph >> readingFrom: aBaselineDefinitions of: aCandidate [
 	[
 		[ self read: aBaselineDefinitions of: aCandidate into: reading ]
 			on: OCCompilationError
-			do: [ :error | reading error: #baselineFailure text: aCandidate displayName , ': ' , (self causeOf: error) ] ]
+			do: [ :error | reading error: #baselineFailure text: (self causeOf: error) ] ]
 		on: Error
-		do: [ :error | reading error: #baselineFailure text: aCandidate displayName , ': ' , error description ].
+		do: [ :error | reading error: #baselineFailure text: error description ].
 	^ reading
 ]
 
@@ -230,16 +227,10 @@ MetacelloMVSGraph >> versionsOf: aRepository ifFail: aBlock [
 
 { #category : 'reading' }
 MetacelloMVSGraph >> warnAboutBaselineOf: aCandidate in: aSandbox into: aReading [
+	"Each text says what its kind does not already say (SystemVersion). The finding is about aCandidate, so the report names it"
 
-	aSandbox imageQueries ifNotEmpty: [ :queries |
-			aReading warning: #imageQuery text: 'The baseline of ' , aCandidate printString , ' asks the image (' , (', ' join: queries)
-				, '): its requirements can depend on the image that resolves them' ].
+	aSandbox imageQueries ifNotEmpty: [ :queries | aReading warning: #imageQuery text: (', ' join: queries) ].
 	aSandbox usesRemovedMetacelloAPI ifTrue: [
-			aReading warning: #removedAPI text: 'The baseline of ' , aCandidate printString
-				, ' sends packageRepositoryURL, which Metacello replaced by packageRepositoryURLForSpec:' ].
-	aSandbox copiesProjects ifTrue: [
-			aReading
-				warning: #copiedProject
-				text:
-				'The baseline of ' , aCandidate printString , ' uses project:copyFrom:with:, a second name for a project it already requires' ]
+		aReading warning: #removedAPI text: 'packageRepositoryURL, replaced by packageRepositoryURLForSpec:' ].
+	aSandbox copiesProjects ifTrue: [ aReading warning: #copiedProject text: 'project:copyFrom:with:' ]
 ]

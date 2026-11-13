@@ -150,7 +150,7 @@ MetacelloMVSBaselineReadingTest >> testABaselineThatAsksTheImageIsAWarning [
 				 #( 'baseline: spec' '	<baseline>' '	spec for: #common do: [' '		(Smalltalk includesKey: #Foo) ifTrue: [ spec package: ''Extra'' ].'
 				    '		spec package: ''Core'' ]' )).
 	warnings := self warningsOf: (self selectionOf: 'github://acme/Foo:v1.0.0' project: 'Foo').
-	self assert: (warnings anySatisfy: [ :each | each includesSubstring: 'asks the image' ])
+	self assert: (warnings anySatisfy: [ :each | each = 'Smalltalk' ])
 ]
 
 { #category : 'tests' }
@@ -231,7 +231,7 @@ MetacelloMVSBaselineReadingTest >> testAnAliasIsNamedAfterItsBaseline [
 				    '		spec package: ''Core'' with: [ spec requires: #(''BarCore'') ] ]' )).
 	selection := self selectionOf: 'github://acme/Foo:v1.0.0' project: 'Foo'.
 	self assert: ((graph readingOf: selection) references collect: [ :each | self projectOf: each ]) asSet equals: #( 'Bar' ) asSet.
-	self assert: ((self warningsOf: selection) anySatisfy: [ :each | each includesSubstring: 'project:copyFrom:with:' ])
+	self assert: ((self warningsOf: selection) anySatisfy: [ :each | each = 'project:copyFrom:with:' ])
 ]
 
 { #category : 'tests - locks' }

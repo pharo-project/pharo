@@ -208,10 +208,10 @@ MetacelloMVSResolution >> lineOfUpgrade: anUpgradeFinding [
 
 { #category : 'report' }
 MetacelloMVSResolution >> print: someFindings of: aSeverity verbose: aBoolean on: aStream [
-	"Infos are upgrades: grouped by who asks, in the order found, one line per dependency it can ask for (see lineOfUpgrade:)"
+	"Verbose, infos are upgrades: grouped by who asks, in the order found, one line per dependency it can ask for (see lineOfUpgrade:)"
 
 	| byAsker |
-	aSeverity = #info ifFalse: [
+	(aSeverity = #info and: [ aBoolean ]) ifFalse: [
 			^ super
 				  print: someFindings
 				  of: aSeverity
@@ -272,6 +272,18 @@ MetacelloMVSResolution >> rootRepositories: aCollection [
 	"The repositories of the roots, in the order they were asked"
 
 	rootRepositories := aCollection
+]
+
+{ #category : 'report' }
+MetacelloMVSResolution >> shortDescriptionOf: aFinding [
+	"One line naming where it is: the version that asked (Talents in Famix v1.2.1), or for a major conflict the version that asked each major"
+
+	| subject |
+	subject := self subjectOf: aFinding.
+	rivals at: aFinding ifPresent: [ :rival |
+			^ subject project , ' ' , rival version string , ' in ' , rival requiredBy displayName , ', ' , subject version string , ' in '
+			  , subject requiredBy displayName ].
+	^ subject locate: (super shortDescriptionOf: aFinding)
 ]
 
 { #category : 'accessing' }
