@@ -173,17 +173,6 @@ MetacelloMVSResolver >> dropUnused: aBoolean [
 ]
 
 { #category : 'findings' }
-MetacelloMVSResolver >> error: aKind text: aString about: aSubject [
-	"Record an error of aKind about aSubject, found outside any requirement"
-
-	self
-		record: #error
-		kind: aKind
-		text: aString
-		about: aSubject
-]
-
-{ #category : 'findings' }
 MetacelloMVSResolver >> error: aKind text: aString about: aCandidate in: aRequirement [
 	"Record an error of aKind about aCandidate, found resolving aRequirement"
 
@@ -193,6 +182,17 @@ MetacelloMVSResolver >> error: aKind text: aString about: aCandidate in: aRequir
 		text: aString
 		about: aCandidate
 		in: aRequirement
+]
+
+{ #category : 'findings' }
+MetacelloMVSResolver >> error: aKind text: aString on: aSubject [
+	"Record an error of aKind about aSubject, found outside any requirement"
+
+	self
+		record: #error
+		kind: aKind
+		text: aString
+		on: aSubject
 ]
 
 { #category : 'metacello' }
@@ -331,25 +331,6 @@ MetacelloMVSResolver >> minimumOf: aProjectSpec [
 ]
 
 { #category : 'findings' }
-MetacelloMVSResolver >> record: aSeverity kind: aKind text: aString about: aSubject [
-	"Keep a problem once, about the request of aSubject: found outside any requirement"
-
-	resolution
-		findingKind: aKind
-		severity: aSeverity
-		text: aString
-		about: aSubject
-		ifNone: [
-			resolution
-				add: (MetacelloResolutionFinding
-						 severity: aSeverity
-						 kind: aKind
-						 text: aString
-						 request: aSubject request)
-				about: aSubject ]
-]
-
-{ #category : 'findings' }
 MetacelloMVSResolver >> record: aSeverity kind: aKind text: aString about: aCandidate in: aRequirement [
 	"Keep a problem once, about the request of aRequirement, and attach it to aRequirement"
 
@@ -368,6 +349,25 @@ MetacelloMVSResolver >> record: aSeverity kind: aKind text: aString about: aCand
 						            request: aRequirement request)
 				           about: aCandidate ].
 	aRequirement findings add: finding
+]
+
+{ #category : 'findings' }
+MetacelloMVSResolver >> record: aSeverity kind: aKind text: aString on: aSubject [
+	"Keep a problem once, about the request of aSubject: found outside any requirement"
+
+	resolution
+		findingKind: aKind
+		severity: aSeverity
+		text: aString
+		about: aSubject
+		ifNone: [
+				resolution
+					add: (MetacelloResolutionFinding
+							 severity: aSeverity
+							 kind: aKind
+							 text: aString
+							 request: aSubject request)
+					about: aSubject ]
 ]
 
 { #category : 'upgrades' }
@@ -389,12 +389,12 @@ MetacelloMVSResolver >> replace: aDictionary about: aRootCandidate [
 			(graph hasVersions: spec)
 				ifTrue: [
 						replacements at: name put: spec.
-						self warning: #replaced text: name , ' is replaced by ' , repositoryString about: aRootCandidate ]
+						self warning: #replaced text: name , ' is replaced by ' , repositoryString on: aRootCandidate ]
 				ifFalse: [
 						self
 							error: #invalidReference
 							text: name , ' is replaced by ' , repositoryString printString , ', not a with versions repository'
-							about: aRootCandidate ] ]
+							on: aRootCandidate ] ]
 ]
 
 { #category : 'resolving' }
@@ -584,13 +584,13 @@ MetacelloMVSResolver >> resolveRoots: aCollectionOfProjectSpecs [
 
 	self reset.
 	aCollectionOfProjectSpecs ifEmpty: [
-			self error: #invalidReference text: 'Nothing to load: no root' about: user.
+			self error: #invalidReference text: 'Nothing to load: no root' on: user.
 			^ resolution ].
 	aCollectionOfProjectSpecs do: [ :root |
 			(graph hasVersions: root)
 				ifTrue: [
 				(rootRepositories includes: (graph repositoryUrlOf: root)) ifFalse: [ rootRepositories add: (graph repositoryUrlOf: root) ] ]
-				ifFalse: [ self error: #invalidReference text: (self whyNoVersions: root) about: user ] ].
+				ifFalse: [ self error: #invalidReference text: (self whyNoVersions: root) on: user ] ].
 	resolution hasErrors ifTrue: [ ^ resolution ].
 	resolution rootRepositories: rootRepositories.
 	aCollectionOfProjectSpecs do: [ :spec | self require: spec by: user ].
@@ -765,7 +765,9 @@ MetacelloMVSResolver >> visit: aCandidate [
 
 	| reading found specs already |
 	reading := graph readingOf: aCandidate.
-	found := MetacelloMVSBaselineReading new request: aCandidate request; yourself.
+	found := MetacelloMVSBaselineReading new
+		         request: aCandidate request;
+		         yourself.
 	specs := reading
 		         referencesForGroups: (askedGroups at: aCandidate repository ifAbsent: [ #(  ) ])
 		         includingDefault: (defaultAsked includes: aCandidate repository)
@@ -779,7 +781,7 @@ MetacelloMVSResolver >> visit: aCandidate [
 							warning: #ignoredReplace
 							text: 'The baseline of ' , aCandidate printString , ' replaces ' , (', ' join: replaces keys sorted)
 								, ', ignored: only the replaces of the root apply'
-							about: aCandidate ] ].
+							on: aCandidate ] ].
 	already := requiredFrom at: aCandidate repository -> aCandidate version ifAbsentPut: [ Set new ].
 	specs do: [ :each |
 			| key |
@@ -787,17 +789,6 @@ MetacelloMVSResolver >> visit: aCandidate [
 			(already includes: key) ifFalse: [
 					already add: key.
 					self require: each by: aCandidate ] ]
-]
-
-{ #category : 'findings' }
-MetacelloMVSResolver >> warning: aKind text: aString about: aSubject [
-	"Record a warning of aKind about aSubject, found outside any requirement: accepted, but to deprecate"
-
-	self
-		record: #warning
-		kind: aKind
-		text: aString
-		about: aSubject
 ]
 
 { #category : 'findings' }
@@ -810,6 +801,17 @@ MetacelloMVSResolver >> warning: aKind text: aString about: aCandidate in: aRequ
 		text: aString
 		about: aCandidate
 		in: aRequirement
+]
+
+{ #category : 'findings' }
+MetacelloMVSResolver >> warning: aKind text: aString on: aSubject [
+	"Record a warning of aKind about aSubject, found outside any requirement: accepted, but to deprecate"
+
+	self
+		record: #warning
+		kind: aKind
+		text: aString
+		on: aSubject
 ]
 
 { #category : 'resolving' }

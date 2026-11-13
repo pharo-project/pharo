@@ -661,8 +661,8 @@ MetacelloMVSResolverTest >> testEveryKindOfFindingIsDescribed [
 	"Each kind Metacello-MVS records (the symbol given to error:, warning:, record:kind: or upgrade:) has a description for people"
 
 	| selectors kinds descriptions |
-	selectors := #( #error:text: #warning:text: #error:text:about: #warning:text:about: #error:text:about:in: #warning:text:about:in:
-	                #record:kind:text:about: #record:kind:text:about:in: #upgrade:to:asked:text:about: ).
+	selectors := #( #error:text: #warning:text: #error:text:on: #warning:text:on: #error:text:about:in: #warning:text:about:in:
+	                #record:kind:text:on: #record:kind:text:about:in: #upgrade:to:asked:text:about: ).
 	kinds := Set new.
 	(PackageOrganizer default packageNamed: 'Metacello-MVS') methods do: [ :method |
 			method ast nodesDo: [ :node |
