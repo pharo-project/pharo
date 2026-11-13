@@ -83,7 +83,7 @@ PBBootstrap class >> repositoryLocation [
 { #category : 'package-names' }
 PBBootstrap >> allPackagesForHermes [
 
-	^ #BaselineOfPharoBootstrap asClass allPackageNames
+	^ self bootstrapBaseline allPackageNames
 ]
 
 { #category : 'accessing' }
@@ -108,6 +108,13 @@ PBBootstrap >> bootstrap [
 			logger log: '[+] Initializing image for bootstrapping'.
 			self initializeImage ]
 		logged: 'Bootstrap process'
+]
+
+{ #category : 'accessing' }
+PBBootstrap >> bootstrapBaseline [
+	"The baseline is looked up by name because #ensureBaselineOfPharoBootstrap reloads it from the repository to bootstrap."
+
+	^ self class environment at: #BaselineOfPharoBootstrap
 ]
 
 { #category : 'accessing' }
@@ -244,7 +251,7 @@ PBBootstrap >> generateHermesFiles [
 { #category : 'package-names' }
 PBBootstrap >> hermesPackageNames [
 
-	^ #BaselineOfPharoBootstrap asClass packagesToExportWithHermes
+	^ self bootstrapBaseline packagesToExportWithHermes
 ]
 
 { #category : 'accessing' }
@@ -267,7 +274,7 @@ PBBootstrap >> initializeImage [
 { #category : 'package-names' }
 PBBootstrap >> kernelPackageNames [
 
-	^ #BaselineOfPharoBootstrap asClass kernelPackageNames
+	^ self bootstrapBaseline kernelPackageNames
 ]
 
 { #category : 'accessing' }
@@ -290,7 +297,7 @@ PBBootstrap >> originRepository [
 { #category : 'package-names' }
 PBBootstrap >> packagesToExportAsMCZ [
 
-	^ #BaselineOfPharoBootstrap asClass packagesToExportAsMCZ
+	^ self bootstrapBaseline packagesToExportAsMCZ
 ]
 
 { #category : 'preparation' }
@@ -308,27 +315,23 @@ PBBootstrap >> prepareBootstrap [
 
 { #category : 'preparation' }
 PBBootstrap >> prepareEnvironmentForExport [
-	| allPackages |
 
+	| allPackages |
 	logger log: '[+] Cleaning bootstrap model'.
 	allPackages := ringEnvironment packages collect: #name.
 
-	(allPackages reject: [ :x | #BaselineOfPharoBootstrap asClass kernelPackageNames includes: x ])
-		do: [ :x | 
+	(allPackages reject: [ :x | self bootstrapBaseline kernelPackageNames includes: x ]) do: [ :x |
 			| p |
 			p := ringEnvironment ask packageNamed: x.
 			p extensionMethods do: [ :e | e methodClass removeLocalMethod: e ].
-			p definedBehaviors
-				do: [ :e | 
+			p definedBehaviors do: [ :e |
 					ringEnvironment removeBehavior: e.
-					ringEnvironment removeBehavior: e classSide
-					].
-			ringEnvironment removePackage: p].
+					ringEnvironment removeBehavior: e classSide ].
+			ringEnvironment removePackage: p ].
 
 	ringEnvironment cleanGlobalVariables.
-	ringEnvironment addGlobalsNamed: #(#Smalltalk #Transcript #Undeclared #TextConstants #Processor).
+	ringEnvironment addGlobalsNamed: #( #Smalltalk #Transcript #Undeclared #TextConstants #Processor ).
 	ringEnvironment clean
-
 ]
 
 { #category : 'preparation' }
