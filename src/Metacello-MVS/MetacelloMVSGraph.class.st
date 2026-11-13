@@ -29,6 +29,13 @@ MetacelloMVSGraph class >> on: aVersionSource [
 ]
 
 { #category : 'reading' }
+MetacelloMVSGraph >> causeOf: aCompilationError [
+	"Why the baseline does not compile, in one line: what the compiler noticed"
+
+	^ ', ' join: (aCompilationError compilationResult ast allNotices collect: [ :each | each messageText ])
+]
+
+{ #category : 'reading' }
 MetacelloMVSGraph >> checkPlatformOf: aCandidate in: aSandbox into: aReading [
 	"for: #pharoN.x blocks are accepted, with a warning: the requirements then depend on the image"
 	aSandbox platformBlocks ifNotEmpty: [ :platforms |
@@ -98,7 +105,7 @@ MetacelloMVSGraph >> read: aBaselineDefinitions of: aCandidate into: aReading [
 
 { #category : 'reading' }
 MetacelloMVSGraph >> readingFrom: aBaselineDefinitions of: aCandidate [
-	"Run the baseline in the sandbox, as the version of aCandidate. Never signals: the baseline is third-party code, so whatever it fails with becomes a problem naming the version. The problems are about the request of aCandidate, the first that asked for this version"
+	"Run the baseline in the sandbox, as the version of aCandidate. Never signals: the baseline is third-party code, so whatever it fails with becomes a problem naming the version and the cause. A baseline that does not compile says why in one line. The problems are about the request of aCandidate, the first that asked for this version"
 
 	| reading |
 	reading := MetacelloMVSBaselineReading new
@@ -111,13 +118,12 @@ MetacelloMVSGraph >> readingFrom: aBaselineDefinitions of: aCandidate [
 					 text: each third
 					 request: aCandidate request) ].
 	aBaselineDefinitions hasBaseline ifFalse: [ ^ reading ].
-	[ self read: aBaselineDefinitions of: aCandidate into: reading ]
+	[
+		[ self read: aBaselineDefinitions of: aCandidate into: reading ]
+			on: OCCompilationError
+			do: [ :error | reading error: #baselineFailure text: aCandidate displayName , ': ' , (self causeOf: error) ] ]
 		on: Error
-		do: [ :error |
-				reading error: #baselineFailure text: 'The baseline of ' , aCandidate printString , ' fails: ' , error description
-					,
-					'. If this version is too old for this Pharo, it is a platform break, not a missed major: the root can replace: it with a newer version of '
-					, aCandidate repository ].
+		do: [ :error | reading error: #baselineFailure text: aCandidate displayName , ': ' , error description ].
 	^ reading
 ]
 

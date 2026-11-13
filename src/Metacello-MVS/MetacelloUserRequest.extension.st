@@ -8,10 +8,31 @@ MetacelloUserRequest >> appliesReplaces [
 ]
 
 { #category : '*Metacello-MVS' }
+MetacelloUserRequest >> chainDisplayNames [
+	"The versions that led to a version I require: none, I asked first"
+
+	^ OrderedCollection new
+]
+
+{ #category : '*Metacello-MVS' }
+MetacelloUserRequest >> chainLine [
+	"Who asked, for people"
+
+	^ self name
+]
+
+{ #category : '*Metacello-MVS' }
 MetacelloUserRequest >> chainLines [
 	"The versions that led to a version I require: none, I ran the script"
 
 	^ OrderedCollection new
+]
+
+{ #category : '*Metacello-MVS' }
+MetacelloUserRequest >> displayName [
+	"For people"
+
+	^ self name
 ]
 
 { #category : '*Metacello-MVS' }

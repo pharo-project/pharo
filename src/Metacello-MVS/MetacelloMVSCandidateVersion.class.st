@@ -38,6 +38,24 @@ MetacelloMVSCandidateVersion >> beLocked [
 	resolvedProject beLocked
 ]
 
+{ #category : 'printing' }
+MetacelloMVSCandidateVersion >> chainDisplayNames [
+	"For people, the versions from the root down to me (see chainLine)"
+
+	^ requiredBy chainDisplayNames
+		  addLast: (self isInstalled
+				   ifTrue: [ 'installed ' , self displayName ]
+				   ifFalse: [ self displayName ]);
+		  yourself
+]
+
+{ #category : 'printing' }
+MetacelloMVSCandidateVersion >> chainLine [
+	"From the root down to me, on one line, with project names: Moose v13.0.0 > Famix v1.2.1"
+
+	^ ' > ' join: self chainDisplayNames
+]
+
 { #category : 'accessing' }
 MetacelloMVSCandidateVersion >> chainLines [
 	"One line per version, from the root down to me"
@@ -52,6 +70,13 @@ MetacelloMVSCandidateVersion >> chainString [
 	"One line per version, from the root down to me"
 
 	^ String lf join: self chainLines
+]
+
+{ #category : 'printing' }
+MetacelloMVSCandidateVersion >> displayName [
+	"For people: my project and version (Famix v1.2.1)"
+
+	^ self project , ' ' , version string
 ]
 
 { #category : 'findings' }
@@ -136,12 +161,12 @@ MetacelloMVSCandidateVersion >> printOn: aStream [
 
 { #category : 'printing' }
 MetacelloMVSCandidateVersion >> printRequiredByOn: aStream [
-	"Who required me, after the text of a finding about me"
+	"Who required me, on the line after the text of a finding about me"
 
 	aStream
-		nextPutAll: '. Required by:';
 		lf;
-		nextPutAll: self chainString
+		nextPutAll: 'Required by: ';
+		nextPutAll: self chainLine
 ]
 
 { #category : 'accessing' }

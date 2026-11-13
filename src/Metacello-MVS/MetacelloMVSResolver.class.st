@@ -149,7 +149,6 @@ MetacelloMVSResolver >> checkPin: aProjectSpec by: aCandidate in: aRequirement [
 MetacelloMVSResolver >> checkProjectOf: aCandidate in: aRequirement [
 	"One project comes from one repository: two forks of it cannot both be loaded. Answer whether aCandidate may be selected"
 
-	
 	projects
 		at: aCandidate project
 		ifPresent: [ :other |
@@ -158,8 +157,9 @@ MetacelloMVSResolver >> checkProjectOf: aCandidate in: aRequirement [
 							error: #projectConflict
 							text:
 								'The project ' , aCandidate project , ' is required from two repositories: ' , aCandidate repository , ', and '
-								, other repository , ' by:' , String lf , other chainString
-							about: aCandidate in: aRequirement.
+								, other repository , ', required by ' , other chainLine
+							about: aCandidate
+							in: aRequirement.
 						^ false ] ]
 		ifAbsent: [ projects at: aCandidate project put: aCandidate ].
 	^ true
@@ -300,6 +300,25 @@ MetacelloMVSResolver >> locked: aCollectionOfRepositories [
 	locked := aCollectionOfRepositories asSet
 ]
 
+{ #category : 'resolving' }
+MetacelloMVSResolver >> majorConflictOf: aCandidate against: anotherCandidate in: aRequirement [
+	"An error, attached to aRequirement: aCandidate is another major than anotherCandidate, selected already. Its text names both versions; its description, who asked each"
+
+	| text finding |
+	text := aCandidate project , ' ' , anotherCandidate version string , ' and ' , aCandidate version string.
+	finding := resolution
+		           findingKind: #majorConflict
+		           severity: #error
+		           text: text
+		           about: aCandidate
+		           ifNone: [
+				           resolution
+					           addMajorConflict: (MetacelloResolutionFinding error: #majorConflict text: text request: aRequirement request)
+					           about: aCandidate
+					           against: anotherCandidate ].
+	aRequirement findings add: finding
+]
+
 { #category : 'versions' }
 MetacelloMVSResolver >> minimumOf: aProjectSpec [
 	"The lowest version aProjectSpec accepts"
@@ -351,6 +370,15 @@ MetacelloMVSResolver >> record: aSeverity kind: aKind text: aString about: aCand
 	aRequirement findings add: finding
 ]
 
+{ #category : 'upgrades' }
+MetacelloMVSResolver >> releasesOf: aRepository [
+	"The versions of aRepository a baseline can ask as a minimum: no prereleases, tolerated spellings included. None when its versions cannot be read: that was reported already"
+
+	^ (((graph versionsOf: aRepository ifFail: [ :why | ^ #(  ) ]) select: [ :each |
+		    MetacelloSemanticVersionNumber isSemanticVersion: each ]) collect: [ :each |
+		   MetacelloSemanticVersionNumber fromVersionString: each ]) reject: [ :each | each isPrerelease ]
+]
+
 { #category : 'resolving' }
 MetacelloMVSResolver >> replace: aDictionary about: aRootCandidate [
 	"The replaces of the root apply, each with a warning: a replaced project is pinned to the exact version of its replacement"
@@ -384,6 +412,62 @@ MetacelloMVSResolver >> replacementFor: aProjectSpec by: aCandidate in: aRequire
 					, ', which is kept'
 				about: aCandidate in: aRequirement ].
 	^ replacement
+]
+
+{ #category : 'upgrades' }
+MetacelloMVSResolver >> reportUpgrades [
+	"The resolution is over: for each requirement of a selected version, report as infos the newer versions its baseline could ask for. Requirements of versions not selected are left out: a newer version of their baseline exists already"
+
+	resolution requirements do: [ :each | (resolution isSuperseded: each) ifFalse: [ self reportUpgradesOf: each ] ]
+]
+
+{ #category : 'upgrades' }
+MetacelloMVSResolver >> reportUpgradesOf: aRequirement [
+	"Infos about what aRequirement could ask instead: the version MVS selected already (#raisedByOthers), the latest of its major (#newerInMajor), a newer major (#newerMajor), or, when it names no version, the latest version (#taggedVersionAvailable)"
+
+	| releases asked latestInMajor newest |
+	"A requirement that stopped before its reference was read (no versions) has no repository"
+	aRequirement repository ifNil: [ ^ self ].
+	releases := self releasesOf: aRequirement repository.
+	releases ifEmpty: [ ^ self ].
+	newest := releases max.
+	asked := aRequirement from displayName , ' asks for ' , (graph descriptionOf: aRequirement asked).
+	"A requirement that names no version, or is pinned, never gets a minimum"
+	aRequirement minimum ifNil: [
+			(aRequirement findings anySatisfy: [ :each | each kind = #unversionedReference ]) ifTrue: [
+					self
+						upgrade: #taggedVersionAvailable
+						to: newest
+						asked: 'no version'
+						text: asked , ', which names no version; can ask for :' , newest string
+						about: aRequirement ].
+			^ self ].
+	"A requirement whose version could not be found or selected is never resolved"
+	aRequirement resolved ifNil: [ ^ self ].
+	aRequirement isRaised ifTrue: [
+			self
+				upgrade: #raisedByOthers
+				to: aRequirement resolved version
+				asked: (graph versionStringOf: aRequirement reference)
+				text:
+				asked , '; already selected at ' , aRequirement resolved version string , ' by '
+				, aRequirement resolved requiredBy displayName
+				about: aRequirement ].
+	latestInMajor := (releases select: [ :each | each major = aRequirement minimum major ]) max.
+	latestInMajor > aRequirement resolved version ifTrue: [
+			self
+				upgrade: #newerInMajor
+				to: latestInMajor
+				asked: (graph versionStringOf: aRequirement reference)
+				text: asked , '; can ask for :' , latestInMajor string
+				about: aRequirement ].
+	newest major > aRequirement minimum major ifTrue: [
+			self
+				upgrade: #newerMajor
+				to: newest
+				asked: (graph versionStringOf: aRequirement reference)
+				text: asked , '; a newer major exists: ' , newest string
+				about: aRequirement ]
 ]
 
 { #category : 'resolving' }
@@ -496,7 +580,7 @@ MetacelloMVSResolver >> resolve: aRepositoryString project: aProjectName loads: 
 
 { #category : 'resolving' }
 MetacelloMVSResolver >> resolveRoots: aCollectionOfProjectSpecs [
-	"Walk the requirements from each root aCollectionOfProjectSpecs names, in order, as far as possible and answer the MetacelloMVSResolution: the build list, the requirements met and the findings. The user requires the roots. Each project is read for the union of the groups its dependents ask. At the end, the projects nobody selected uses are dropped (see dropUnused:)"
+	"Walk the requirements from each root aCollectionOfProjectSpecs names, in order, as far as possible and answer the MetacelloMVSResolution: the build list, the requirements met and the findings. The user requires the roots. Each project is read for the union of the groups its dependents ask. At the end, the projects nobody selected uses are dropped (see dropUnused:), and the newer versions the baselines could ask for are reported as infos (see reportUpgrades)"
 
 	self reset.
 	aCollectionOfProjectSpecs ifEmpty: [
@@ -506,8 +590,7 @@ MetacelloMVSResolver >> resolveRoots: aCollectionOfProjectSpecs [
 			(graph hasVersions: root)
 				ifTrue: [
 				(rootRepositories includes: (graph repositoryUrlOf: root)) ifFalse: [ rootRepositories add: (graph repositoryUrlOf: root) ] ]
-				ifFalse: [
-				self error: #invalidReference text: (self whyNoVersions: root) about: user ] ].
+				ifFalse: [ self error: #invalidReference text: (self whyNoVersions: root) about: user ] ].
 	resolution hasErrors ifTrue: [ ^ resolution ].
 	resolution rootRepositories: rootRepositories.
 	aCollectionOfProjectSpecs do: [ :spec | self require: spec by: user ].
@@ -515,6 +598,7 @@ MetacelloMVSResolver >> resolveRoots: aCollectionOfProjectSpecs [
 	resolution buildList: (dropsUnused
 			 ifTrue: [ self usedIn: selected ]
 			 ifFalse: [ selected ]).
+	self reportUpgrades.
 	^ resolution
 ]
 
@@ -536,7 +620,7 @@ MetacelloMVSResolver >> resolvedProjectOf: aCandidate into: aResolution ifNone: 
 		           do: [ :error |
 				           aResolution addFinding: (MetacelloResolutionFinding
 						            error: #baselineFailure
-						            text: 'The baseline of ' , aCandidate printString , ' fails: ' , error description
+						            text: aCandidate displayName , ': ' , error description
 						            request: aCandidate request).
 				           ^ aBlock value ].
 	spec := (MetacelloProjectSpec project: project)
@@ -562,6 +646,7 @@ MetacelloMVSResolver >> revisit: aRepository [
 
 { #category : 'resolving' }
 MetacelloMVSResolver >> select: aCandidate in: aRequirement [
+
 	(self checkProjectOf: aCandidate in: aRequirement) ifFalse: [ ^ self ].
 	selected
 		at: aCandidate repository
@@ -571,14 +656,10 @@ MetacelloMVSResolver >> select: aCandidate in: aRequirement [
 							  checkLocked: aCandidate printString
 							  minimum: aCandidate version
 							  against: current
-							  about: aCandidate in: aRequirement ].
+							  about: aCandidate
+							  in: aRequirement ].
 				current version major = aCandidate version major ifFalse: [
-						^ self
-							  error: #majorConflict
-							  text:
-								  'Two majors of ' , aCandidate repository , ' are required: ' , aCandidate version string , ', and ' , current version string
-								  , ' by:' , String lf , current chainString
-							  about: aCandidate in: aRequirement ].
+					^ self majorConflictOf: aCandidate against: current in: aRequirement ].
 				current version < aCandidate version ifTrue: [ selected at: aCandidate repository put: aCandidate ] ]
 		ifAbsent: [ selected at: aCandidate repository put: aCandidate ].
 	(visited includes: aCandidate repository -> aCandidate version) ifTrue: [ ^ self ].
@@ -613,6 +694,25 @@ MetacelloMVSResolver >> spell: aProjectSpec by: aCandidate in: aRequirement [
 		  specFor: first , ((graph descriptionOf: aProjectSpec) allButFirst: repository size)
 		  project: (graph projectOf: aProjectSpec)
 		  loads: aProjectSpec loads
+]
+
+{ #category : 'upgrades' }
+MetacelloMVSResolver >> upgrade: aKind to: aVersion asked: aString text: aText about: aRequirement [
+	"Record once an info of aKind proposing aRequirement asks for aVersion instead of aString, and attach it to aRequirement"
+
+	| finding |
+	finding := resolution
+		           findingKind: aKind
+		           severity: #info
+		           text: aText
+		           about: aRequirement from
+		           ifNone: [
+				           resolution
+					           add: ((MetacelloMVSUpgradeFinding info: aKind text: aText request: aRequirement request)
+							            project: (graph projectOf: aRequirement asked) asked: aString version: aVersion string;
+							            yourself)
+					           about: aRequirement from ].
+	aRequirement findings add: finding
 ]
 
 { #category : 'resolving' }
