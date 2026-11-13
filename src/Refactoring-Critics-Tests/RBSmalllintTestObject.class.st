@@ -213,6 +213,12 @@ RBSmalllintTestObject >> ifTrueReturns [
 	^false
 ]
 
+{ #category : 'accessing - good' }
+RBSmalllintTestObject >> initialize [
+    super initialize.
+    temporaryVariable := 0
+]
+
 { #category : 'methods' }
 RBSmalllintTestObject >> inlineTemporary [
 	| temp |
