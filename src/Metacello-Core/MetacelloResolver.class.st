@@ -12,8 +12,8 @@ Class {
 }
 
 { #category : 'resolving' }
-MetacelloResolver >> resolve: aProjectSpec engine: anEngine [
-	"Answer a MetacelloResolution whose root is the project aProjectSpec names, loading what it loads (empty for its default groups), with every project that load reaches"
+MetacelloResolver >> resolveRoots: someProjectSpecs engine: anEngine [
+	"Answer a MetacelloResolution whose roots are the projects someProjectSpecs name, in order, each loading what its spec loads (empty for its default groups), with every project those loads reach"
 
 	^ self subclassResponsibility
 ]

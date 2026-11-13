@@ -10,12 +10,20 @@ Class {
 		'baselineArg',
 		'classNameArg',
 		'repositoryArg',
-		'loadsArg'
+		'loadsArg',
+		'roots'
 	],
 	#category : 'Metacello-Core-Scripts',
 	#package : 'Metacello-Core',
 	#tag : 'Scripts'
 }
+
+{ #category : 'args' }
+MetacelloScriptExecutor >> addRoot: aProjectSpec [
+	"Add the root aProjectSpec names, after the roots added before"
+
+	self roots add: aProjectSpec
+]
 
 { #category : 'execution' }
 MetacelloScriptExecutor >> applyArgsToProjectSpec: aProjectSpec [
@@ -61,29 +69,17 @@ MetacelloScriptExecutor >> classNameArg: anObject [
 
 { #category : 'execution' }
 MetacelloScriptExecutor >> execute [
+	"Perform the action with one engine on every root the script names"
 
-	baselineArg ifNil: [ self error: 'Baseline not specified' ].
-	^ self executeString: baselineArg do: [ :projectReferenceSpec |
-			  | engine |
-			  engine := MetacelloScriptEngine new
-				            options: self options copy;
-				            projectSpec: projectReferenceSpec;
-				            yourself.
-			  [
-				  self class codeSupportAnnouncer announce: (MetacelloExecutionStartAnnouncement executor: self).
-				  engine perform: actionArg key withArguments: actionArg value ] ensure: [
-				  self class codeSupportAnnouncer announce: (MetacelloExecutionEndAnnouncement executor: self) ] ]
-]
-
-{ #category : 'execution callback' }
-MetacelloScriptExecutor >> executeString: aString do: projectSpecBlock [
-
-	| projectSpec |
-	projectSpec := MetacelloProjectRegistration
-		               projectSpecForClassNamed: aString
-		               ifAbsent: [ NotFound signal: 'Project ' , aString , ' is not registered' ].
-	self checkCanRunOn: projectSpec.
-	^ projectSpecBlock value: (self applyArgsToProjectSpec: projectSpec copy)
+	| engine |
+	engine := MetacelloScriptEngine new
+		          options: self options copy;
+		          roots: self rootSpecs;
+		          yourself.
+	^ [
+		  self class codeSupportAnnouncer announce: (MetacelloExecutionStartAnnouncement executor: self).
+		  engine perform: actionArg key withArguments: actionArg value ] ensure: [
+		  self class codeSupportAnnouncer announce: (MetacelloExecutionEndAnnouncement executor: self) ]
 ]
 
 { #category : 'actions api' }
@@ -162,7 +158,8 @@ MetacelloScriptExecutor >> options [
 MetacelloScriptExecutor >> postCopy [
 
 	super postCopy.
-	options := options copy
+	options := options copy.
+	roots := roots copy
 ]
 
 { #category : 'actions api' }
@@ -198,6 +195,47 @@ MetacelloScriptExecutor >> resolve: required [
 MetacelloScriptExecutor >> resolver: aMetacelloResolver [
 
 	self options at: #resolver put: aMetacelloResolver
+]
+
+{ #category : 'execution callback' }
+MetacelloScriptExecutor >> rootFor: aProjectSpec [
+	"The project spec the action works on for the root aProjectSpec: a copy of its registered spec. Signal an error when it is not registered, or the script cannot run on it (see checkCanRunOn:)"
+
+	| registered |
+	registered := MetacelloProjectRegistration
+		              projectSpecForClassNamed: aProjectSpec name
+		              ifAbsent: [ NotFound signal: 'Project ' , aProjectSpec name , ' is not registered' ].
+	self checkCanRunOn: registered.
+	^ registered copy
+]
+
+{ #category : 'execution' }
+MetacelloScriptExecutor >> rootSpecs [
+	"The project specs of the roots the script names, in order: the one its baseline:, repository: and load: pieces build, then each root added (see addRoot:)"
+
+	| all |
+	all := OrderedCollection new.
+	baselineArg ifNotNil: [ all add: (self applyArgsToProjectSpec: (self rootFor: (self specNamed: baselineArg))) ].
+	self roots do: [ :each | all add: (self rootFor: each) ].
+	all ifEmpty: [ MetacelloNoRootError signal: 'The script names no baseline' ].
+	^ all asArray
+]
+
+{ #category : 'args' }
+MetacelloScriptExecutor >> roots [
+	"The roots added to the script, in order, besides the one its baseline:, repository: and load: pieces build"
+
+	^ roots ifNil: [ roots := OrderedCollection new ]
+]
+
+{ #category : 'execution' }
+MetacelloScriptExecutor >> specNamed: aString [
+	"A new project spec for the baseline aString"
+
+	^ (MetacelloProjectSpec project: MetacelloProject new)
+		  name: aString;
+		  className: 'BaselineOf' , aString;
+		  yourself
 ]
 
 { #category : 'actions api' }

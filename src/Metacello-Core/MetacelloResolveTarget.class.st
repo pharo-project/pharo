@@ -11,8 +11,8 @@ Class {
 }
 
 { #category : 'resolving' }
-MetacelloResolveTarget >> resolve: aProjectSpec [
-	"The resolution of loading what aProjectSpec loads (empty for its default groups)"
+MetacelloResolveTarget >> resolveRoots: someProjectSpecs [
+	"The resolution of loading the roots someProjectSpecs name, each loading what its spec loads (empty for its default groups)"
 
-	^ engine resolver resolve: aProjectSpec engine: engine
+	^ engine resolver resolveRoots: someProjectSpecs engine: engine
 ]
