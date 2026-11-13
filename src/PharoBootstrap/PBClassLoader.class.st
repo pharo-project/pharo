@@ -4,9 +4,6 @@ Class {
 	#instVars : [
 		'nextClassIndex',
 		'builder',
-		'useClassBuilder',
-		'initializedClasses',
-		'compactClasses',
 		'mirrorDefinitionMap',
 		'definitionMirrorMap',
 		'shouldInitializeClassPool',
@@ -87,12 +84,6 @@ PBClassLoader >> classNamed: aString [
 	^ class
 ]
 
-{ #category : 'stubs' }
-PBClassLoader >> compactClassIndexForClass: aRFiClass [ 
-	
-	^ builder compactClassIndexForClassNamed: aRFiClass name.
-]
-
 { #category : 'class-loading' }
 PBClassLoader >> createBehaviorFromDefinition: aRFiDefinition [
 
@@ -148,15 +139,6 @@ PBClassLoader >> createStubForClassNamed: aSymbol [
 ]
 
 { #category : 'class-loading' }
-PBClassLoader >> createTraitFromDefinition: aTrait [
-
-	| newTrait |	
-	newTrait := builder objectSpace interpreter evaluateCode: aTrait definition.
-	self registerTrait: newTrait named: aTrait name.
-	^ newTrait
-]
-
-{ #category : 'class-loading' }
 PBClassLoader >> ensureAllSlotsAreInstanceVariableSlotsIn: aRFiDefinition [
 
 	aRFiDefinition slots
@@ -195,22 +177,10 @@ PBClassLoader >> formatOfClass: aRFiClass [
 PBClassLoader >> initialize [
 
 	super initialize.
-	initializedClasses := Set new.
-	compactClasses := EPDictionary new.
 	definitionMirrorMap := EPDictionary new.
 	mirrorDefinitionMap := EPDictionary new.
 	
 	fullyLoaded := Dictionary new
-]
-
-{ #category : 'initialization' }
-PBClassLoader >> initializeClassNamed: aClassName [
-
-	(self shouldInitializeClassNamed: aClassName) ifFalse: [ ^ self ].
-		
-	self doInitializeClassNamed: aClassName.
-	initializedClasses add: aClassName.
-	self postInitializeClassNamed: aClassName
 ]
 
 { #category : 'stubs' }
@@ -246,14 +216,6 @@ PBClassLoader >> initializeClassPools [
 	environment keysDo: [ :name |
 		(systemDefinition classNamed: name) isBehavior
 			ifTrue: [ self initializeClassPool: name ] ].
-]
-
-{ #category : 'initialization' }
-PBClassLoader >> initializeTraitNamed: aClassName [
-
-	(self shouldInitializeClassNamed: aClassName) ifFalse: [ ^ self ].
-	self doInitializeTraitNamed: aClassName.
-	initializedClasses add: aClassName.
 ]
 
 { #category : 'class-loading' }
@@ -389,9 +351,7 @@ PBClassLoader >> registerClass: aClassMirror named: aName fullyLoaded: aBoolean 
 
 	"We register it and keep up to date our compact class index"
 	environment at: aName put: aClassMirror.
-	aClassMirror asClassMirror compactClassIndex = 0 ifFalse: [ 
-		builder objectSpace backend compactClassAt: aClassMirror asClassMirror compactClassIndex put: aClassMirror ].
-	
+		
 	"We create a mapping between the real classes and their definitions for later"
 	self map: aClassMirror with: (systemDefinition classNamed: aName).
 	
@@ -407,20 +367,13 @@ PBClassLoader >> registerClass: aClassMirror named: aName fullyLoaded: aBoolean 
 { #category : 'registration' }
 PBClassLoader >> registerTrait: aTraitMirror named: aName fullyLoaded: aBoolean [
 
-	(environment includesKey: aName)
-		ifTrue: [ | oldClass |
+	(environment includesKey: aName) ifTrue: [
+			| oldClass |
 			oldClass := environment at: aName.
-			oldClass becomeInto: aTraitMirror.
-			"oldClassMetaclass target handle == Metaclass
-				ifFalse:[ oldClassMetaclass becomeInto: aClassMirror classSide ] "].
+			oldClass becomeInto: aTraitMirror ].
 
 	environment at: aName put: aTraitMirror.
 	fullyLoaded at: aName put: aBoolean
-	"aClassMirror compactClassIndex = 0 ifFalse: [ 
-		compactClasses at: aClassMirror compactClassIndex put: aClassMirror ].
-	
-	objectSpace interpreter resetClassMap.
-"
 ]
 
 { #category : 'accessing' }

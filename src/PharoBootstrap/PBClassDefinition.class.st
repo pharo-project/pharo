@@ -89,9 +89,3 @@ PBClassDefinition >> superclass [
 	classDefinition superclass ifNil: [ ^ nil ].
 	^ PBClassDefinition on: classDefinition superclass environment: bootstrapEnvironment
 ]
-
-{ #category : 'accessing' }
-PBClassDefinition >> usesClassVariable: aString [ 
-	
-	^ classDefinition instanceSide allClassVarNames includes: aString
-]
