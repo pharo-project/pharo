@@ -117,12 +117,12 @@ MetacelloResolution >> print: aString asFindingOn: aStream [
 	lines := aString lines.
 	aStream
 		lf;
-		nextPutAll: '    - ';
+		nextPutAll: '  - ';
 		nextPutAll: lines first.
 	lines allButFirst do: [ :each |
 			aStream
 				lf;
-				nextPutAll: '      ';
+				nextPutAll: '    ';
 				nextPutAll: each ]
 ]
 
@@ -134,7 +134,6 @@ MetacelloResolution >> print: someFindings of: aSeverity verbose: aBoolean on: a
 			:kind |
 			aStream
 				lf;
-				nextPutAll: '  ';
 				nextPutAll: kind key;
 				nextPutAll: ' (';
 				print: kind value size;
@@ -153,7 +152,7 @@ MetacelloResolution >> printReportOn: aStream [
 
 { #category : 'report' }
 MetacelloResolution >> printReportOn: aStream verbose: aBoolean [
-	"How many findings of each severity, then each severity in turn (see print:of:verbose:on:). The short report says where the details are"
+	"How many findings of each severity, then each severity in turn under a title between bars (see print:of:verbose:on:). The short report says where the details are"
 
 	aStream
 		print: self errors size;
@@ -162,23 +161,36 @@ MetacelloResolution >> printReportOn: aStream verbose: aBoolean [
 		nextPutAll: ' warnings, ';
 		print: self infos size;
 		nextPutAll: ' infos'.
-	aBoolean ifFalse: [ aStream nextPutAll: ' (the verbose report gives the details)' ].
+	aBoolean ifFalse: [
+			aStream
+				lf;
+				nextPutAll: 'Check verbose report for issue details' ].
 	#( #error #warning #info ) do: [ :severity |
 			| ofSeverity |
 			ofSeverity := findings select: [ :each | each severity = severity ].
 			ofSeverity ifNotEmpty: [
-					aStream
-						lf;
-						lf;
-						nextPutAll: (self descriptionOfSeverity: severity);
-						nextPutAll: ' (';
-						print: ofSeverity size;
-						nextPut: $).
+					self printTitle: (self descriptionOfSeverity: severity) , ' (' , ofSeverity size printString , ')' on: aStream.
 					self
 						print: ofSeverity
 						of: severity
 						verbose: aBoolean
 						on: aStream ] ]
+]
+
+{ #category : 'report' }
+MetacelloResolution >> printTitle: aString on: aStream [
+	"A title between two bars as long as it, after a blank line"
+
+	| bar |
+	bar := String new: aString size withAll: $-.
+	aStream
+		lf;
+		lf;
+		nextPutAll: bar;
+		lf;
+		nextPutAll: aString;
+		lf;
+		nextPutAll: bar
 ]
 
 { #category : 'accessing' }

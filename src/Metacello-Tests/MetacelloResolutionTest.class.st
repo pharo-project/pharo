@@ -137,7 +137,7 @@ MetacelloResolutionTest >> testRequestsKeepWhoAskedWhat [
 
 { #category : 'tests' }
 MetacelloResolutionTest >> testTheReportGroupsFindingsBySeverityAndKind [
-	"Only errors are listed, one line each; warnings and infos are counted per kind. The verbose report lists them all"
+	"Each severity under a title between bars. Only errors are listed, one line each; warnings and infos are counted per kind. The verbose report lists them all"
 
 	| project request resolution |
 	project := self lock2.
@@ -148,14 +148,14 @@ MetacelloResolutionTest >> testTheReportGroupsFindingsBySeverityAndKind [
 		addFinding: (MetacelloResolutionFinding warning: #oddVersion text: 'odd version' request: request);
 		addFinding: (MetacelloResolutionFinding info: #newerVersion text: 'newer version' request: request).
 
-	self
-		assert: resolution report
-		equals: (String lf join: #( '1 errors, 1 warnings, 1 infos (the verbose report gives the details)'
-				    '' 'Errors (1)' '  cannotResolve (1)' '    - cannot resolve' '' 'Warnings (1)' '  oddVersion (1)' '' 'Information (1)'
-				    '  newerVersion (1)' )).
+	self assert: resolution report equals: (String lf join:
+			 #( '1 errors, 1 warnings, 1 infos' 'Check verbose report for issue details' '' '----------' 'Errors (1)' '----------'
+			    'cannotResolve (1)' '  - cannot resolve' '' '------------' 'Warnings (1)' '------------' 'oddVersion (1)' '' '---------------'
+			    'Information (1)' '---------------' 'newerVersion (1)' )).
 	self assert: resolution verboseReport equals: (String lf join:
-			 #( '1 errors, 1 warnings, 1 infos' '' 'Errors (1)' '  cannotResolve (1)' '    - cannot resolve' '' 'Warnings (1)'
-			    '  oddVersion (1)' '    - odd version' '' 'Information (1)' '  newerVersion (1)' '    - newer version' ))
+			 #( '1 errors, 1 warnings, 1 infos' '' '----------' 'Errors (1)' '----------' 'cannotResolve (1)' '  - cannot resolve'
+			    '' '------------' 'Warnings (1)' '------------' 'oddVersion (1)' '  - odd version' '' '---------------' 'Information (1)'
+			    '---------------' 'newerVersion (1)' '  - newer version' ))
 ]
 
 { #category : 'tests' }
@@ -167,7 +167,6 @@ MetacelloResolutionTest >> testTheVerboseReportListsWarnings [
 	resolution := MetacelloResolution new.
 	resolution addFinding: (MetacelloResolutionFinding warning: #oddVersion text: 'odd version' request: request).
 
-	self
-		assert: resolution verboseReport
-		equals: (String lf join: #( '0 errors, 1 warnings, 0 infos' '' 'Warnings (1)' '  oddVersion (1)' '    - odd version' ))
+	self assert: resolution verboseReport equals: (String lf join:
+			 #( '0 errors, 1 warnings, 0 infos' '' '------------' 'Warnings (1)' '------------' 'oddVersion (1)' '  - odd version' ))
 ]

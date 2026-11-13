@@ -222,7 +222,6 @@ MetacelloMVSResolution >> print: someFindings of: aSeverity verbose: aBoolean on
 	byAsker keysAndValuesDo: [ :asker :upgrades |
 			aStream
 				lf;
-				nextPutAll: '  ';
 				nextPutAll: asker displayName;
 				nextPutAll: ' can ask for'.
 			upgrades do: [ :each | self print: (self lineOfUpgrade: each) asFindingOn: aStream ] ]

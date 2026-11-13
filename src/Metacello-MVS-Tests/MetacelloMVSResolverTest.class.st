@@ -901,8 +901,8 @@ MetacelloMVSResolverTest >> testTheReportListsUpgradesByTheProjectThatAsks [
 	self version: 'v1.2.0' of: 'c' requires: #(  ).
 	report := (self resolve: 'root:v1.0.0') verboseReport.
 	self assert: (report includesSubstring:
-			 (String lf join: #( 'Information (3)' '  root v1.0.0 can ask for' '    - c v1.2.0 instead of v1.0.0: already selected'
-				     '    - c v2.0.0 instead of v1.0.0: a newer major' '  b v1.0.0 can ask for' '    - c v2.0.0 instead of v1.2.0: a newer major' )))
+			 (String lf join: #( 'Information (3)' '---------------' 'root v1.0.0 can ask for' '  - c v1.2.0 instead of v1.0.0: already selected'
+				     '  - c v2.0.0 instead of v1.0.0: a newer major' 'b v1.0.0 can ask for' '  - c v2.0.0 instead of v1.2.0: a newer major' )))
 ]
 
 { #category : 'tests' }
@@ -950,7 +950,7 @@ MetacelloMVSResolverTest >> testTheShortReportNamesWhereEachErrorIs [
 	self version: 'v1.0.0' of: 'b' requires: #( 'c' ).
 	report := (self resolve: 'root:v1.0.0') report.
 	self assert:
-		(report includesSubstring: (String lf join: #( '  No version asked (1)' '    - github://o/c/src names no version in b v1.0.0' )))
+		(report includesSubstring: (String lf join: #( 'No version asked (1)' '  - github://o/c/src names no version in b v1.0.0' )))
 ]
 
 { #category : 'tests - report' }
@@ -965,8 +965,8 @@ MetacelloMVSResolverTest >> testTheShortReportNamesWhoAskedEachMajor [
 	self version: 'v1.0.0' of: 'c' requires: #( 'b:v2.0.0' ).
 	self version: 'v1.0.0' of: 'b' requires: #(  ).
 	self version: 'v2.0.0' of: 'b' requires: #(  ).
-	line := (self resolve: 'root:v1.0.0') report lines detect: [ :each | each beginsWith: '    - b ' ].
-	self assert: line equals: '    - b v1.0.0 in root v1.0.0, v2.0.0 in c v1.0.0'
+	line := (self resolve: 'root:v1.0.0') report lines detect: [ :each | each beginsWith: '  - b ' ].
+	self assert: line equals: '  - b v1.0.0 in root v1.0.0, v2.0.0 in c v1.0.0'
 ]
 
 { #category : 'tests - cases' }
