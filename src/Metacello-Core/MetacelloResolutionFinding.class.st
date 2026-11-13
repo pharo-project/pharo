@@ -4,7 +4,7 @@ I am something a resolver found: an error (the load cannot go ahead) or a warnin
 - severity: #error or #warning;
 - kind: a symbol naming what was found (#cannotResolve, #majorConflict...), for code and tests;
 - text: what was found, for people;
-- request: the MetacelloProjectRequest I am about, or nil; its chain tells how the load got there. I am added to its findings when created.
+- request: the MetacelloProjectRequest I am about, or the MetacelloUserRequest for the load as a whole; its chain tells how the load got there. I am added to its findings when created.
 "
 Class {
 	#name : 'MetacelloResolutionFinding',
@@ -21,37 +21,34 @@ Class {
 }
 
 { #category : 'instance creation' }
-MetacelloResolutionFinding class >> error: aKind text: aString request: aRequestOrNil [
+MetacelloResolutionFinding class >> error: aKind text: aString request: aRequest [
 
 	^ self
 		  severity: #error
 		  kind: aKind
 		  text: aString
-		  request: aRequestOrNil
+		  request: aRequest
 ]
 
 { #category : 'instance creation' }
-MetacelloResolutionFinding class >> severity: aSeverity kind: aKind text: aString request: aRequestOrNil [
-	"A finding about aRequestOrNil, added to its findings"
+MetacelloResolutionFinding class >> severity: aSeverity kind: aKind text: aString request: aRequest [
+	"A finding about aRequest, added to its findings"
 
-	| finding |
-	finding := self new
-		           setSeverity: aSeverity
-		           kind: aKind
-		           text: aString
-		           request: aRequestOrNil.
-	aRequestOrNil ifNotNil: [ :request | request addFinding: finding ].
-	^ finding
+	^ aRequest addFinding: (self new
+			   setSeverity: aSeverity
+			   kind: aKind
+			   text: aString
+			   request: aRequest)
 ]
 
 { #category : 'instance creation' }
-MetacelloResolutionFinding class >> warning: aKind text: aString request: aRequestOrNil [
+MetacelloResolutionFinding class >> warning: aKind text: aString request: aRequest [
 
 	^ self
 		  severity: #warning
 		  kind: aKind
 		  text: aString
-		  request: aRequestOrNil
+		  request: aRequest
 ]
 
 { #category : 'accessing' }
@@ -83,26 +80,19 @@ MetacelloResolutionFinding >> printOn: aStream [
 ]
 
 { #category : 'accessing' }
-MetacelloResolutionFinding >> projectName [
-	"The name of the project I am about, or nil"
-
-	^ request ifNotNil: [ :aRequest | aRequest projectName ]
-]
-
-{ #category : 'accessing' }
 MetacelloResolutionFinding >> request [
-	"The request I am about, or nil"
+	"The request I am about: a MetacelloProjectRequest, or the MetacelloUserRequest for the load as a whole"
 
 	^ request
 ]
 
-{ #category : 'accessing' }
-MetacelloResolutionFinding >> setSeverity: aSymbol kind: aKind text: aString request: aRequestOrNil [
+{ #category : 'initialization' }
+MetacelloResolutionFinding >> setSeverity: aSymbol kind: aKind text: aString request: aRequest [
 
 	severity := aSymbol.
 	kind := aKind.
 	text := aString.
-	request := aRequestOrNil
+	request := aRequest
 ]
 
 { #category : 'accessing' }

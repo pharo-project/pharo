@@ -126,7 +126,7 @@ MetacelloMVSBaselineReadingTest >> selectionOf: aRepositoryString project: aProj
 	parts := MetacelloMVSGraph on: MetacelloMVSRecordedSource new.
 	resolver := MetacelloMVSResolver on: parts.
 	spec := parts specFor: aRepositoryString project: aProjectName loads: #(  ).
-	^ resolver candidateFor: spec version: (resolver minimumOf: spec) requiredBy: nil
+	^ resolver candidateFor: spec version: (resolver minimumOf: spec) requiredBy: MetacelloUserRequest new
 ]
 
 { #category : 'running' }

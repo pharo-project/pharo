@@ -12,8 +12,7 @@ Class {
 		'path',
 		'version',
 		'requiredBy',
-		'request',
-		'installed'
+		'request'
 	],
 	#category : 'Metacello-MVS',
 	#package : 'Metacello-MVS'
@@ -26,11 +25,11 @@ MetacelloMVSCandidateVersion class >> resolvedProject: aResolvedProject reposito
 	^ self new setResolvedProject: aResolvedProject repository: aRepository path: aPathOrNil
 ]
 
-{ #category : 'accessing' }
-MetacelloMVSCandidateVersion >> beInstalled [
-	"The image already has me"
+{ #category : 'testing' }
+MetacelloMVSCandidateVersion >> appliesReplaces [
+	"Only the replaces of a root apply"
 
-	installed := true
+	^ false
 ]
 
 { #category : 'pins' }
@@ -40,18 +39,38 @@ MetacelloMVSCandidateVersion >> beLocked [
 ]
 
 { #category : 'accessing' }
-MetacelloMVSCandidateVersion >> chainString [
-	"One line per selection, from the root down to me"
+MetacelloMVSCandidateVersion >> chainLines [
+	"One line per version, from the root down to me"
 
-	requiredBy ifNil: [ ^ self line ].
-	^ requiredBy chainString , String lf , self line
+	^ requiredBy chainLines
+		  addLast: self line;
+		  yourself
 ]
 
 { #category : 'accessing' }
-MetacelloMVSCandidateVersion >> isInstalled [
-	"Whether the image already has me"
+MetacelloMVSCandidateVersion >> chainString [
+	"One line per version, from the root down to me"
 
-	^ installed
+	^ String lf join: self chainLines
+]
+
+{ #category : 'findings' }
+MetacelloMVSCandidateVersion >> isAboutRepository: aRepository [
+
+	^ repository = aRepository
+]
+
+{ #category : 'findings' }
+MetacelloMVSCandidateVersion >> isAboutSameRepositoryAs: aSubject [
+
+	^ aSubject isAboutRepository: repository
+]
+
+{ #category : 'testing' }
+MetacelloMVSCandidateVersion >> isInstalled [
+	"Whether the image already has me: the image required me"
+
+	^ requiredBy requiresInstalledVersions
 ]
 
 { #category : 'accessing' }
@@ -67,6 +86,19 @@ MetacelloMVSCandidateVersion >> isSameVersionAs: aCandidate [
 	^ self repository = aCandidate repository and: [ self version = aCandidate version ]
 ]
 
+{ #category : 'findings' }
+MetacelloMVSCandidateVersion >> isSelectedIn: aResolution [
+	"Whether I am the version aResolution selected for my repository"
+
+	^ aResolution buildList at: repository ifPresent: [ :selected | selected == self ] ifAbsent: [ false ]
+]
+
+{ #category : 'findings' }
+MetacelloMVSCandidateVersion >> isSupersededIn: aResolution [
+
+	^ aResolution isSupersededSelection: self
+]
+
 { #category : 'accessing' }
 MetacelloMVSCandidateVersion >> line [
 
@@ -77,6 +109,13 @@ MetacelloMVSCandidateVersion >> line [
 				  nextPutAll: self repository;
 				  space;
 				  nextPutAll: version string ]
+]
+
+{ #category : 'testing' }
+MetacelloMVSCandidateVersion >> mustReplace [
+	"Whether the replaces of my baseline apply: only when the user required me"
+
+	^ requiredBy appliesReplaces
 ]
 
 { #category : 'accessing' }
@@ -93,6 +132,16 @@ MetacelloMVSCandidateVersion >> printOn: aStream [
 		nextPutAll: self repository;
 		space;
 		nextPutAll: version string
+]
+
+{ #category : 'printing' }
+MetacelloMVSCandidateVersion >> printRequiredByOn: aStream [
+	"Who required me, after the text of a finding about me"
+
+	aStream
+		nextPutAll: '. Required by:';
+		lf;
+		nextPutAll: self chainString
 ]
 
 { #category : 'accessing' }
@@ -136,17 +185,30 @@ MetacelloMVSCandidateVersion >> request: aProjectRequestOrNil [
 	request := aProjectRequestOrNil
 ]
 
+{ #category : 'requests' }
+MetacelloMVSCandidateVersion >> requestFor: aProjectSpec [
+	"My request for the project aProjectSpec names, which my baseline declares"
+
+	^ MetacelloProjectRequest requester: resolvedProject projectSpec: aProjectSpec
+]
+
 { #category : 'accessing' }
 MetacelloMVSCandidateVersion >> requiredBy [
-	"The candidate that required me; nil for the root and for what the image has"
+	"Who required me: another candidate version, the user (MetacelloUserRequest) for a root, or the image (MetacelloImageRequest) for what it has installed"
 
 	^ requiredBy
 ]
 
 { #category : 'accessing' }
-MetacelloMVSCandidateVersion >> requiredBy: aCandidateOrNil [
+MetacelloMVSCandidateVersion >> requiredBy: aRequester [
 
-	requiredBy := aCandidateOrNil
+	requiredBy := aRequester
+]
+
+{ #category : 'testing' }
+MetacelloMVSCandidateVersion >> requiresInstalledVersions [
+
+	^ false
 ]
 
 { #category : 'accessing' }
@@ -156,13 +218,12 @@ MetacelloMVSCandidateVersion >> resolvedProject [
 	^ resolvedProject
 ]
 
-{ #category : 'accessing' }
+{ #category : 'initialization' }
 MetacelloMVSCandidateVersion >> setResolvedProject: aResolvedProject repository: aRepository path: aPathOrNil [
 
 	resolvedProject := aResolvedProject.
 	repository := aRepository.
-	path := aPathOrNil.
-	installed := false
+	path := aPathOrNil
 ]
 
 { #category : 'accessing' }

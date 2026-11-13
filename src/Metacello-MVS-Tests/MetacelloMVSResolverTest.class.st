@@ -450,7 +450,7 @@ MetacelloMVSResolverTest >> testAWarningOfASupersededVersionIsOnlyHistory [
 	self version: 'v3.0.0' of: 'bloc' requires: #(  ).
 	self version: 'v3.1.0' of: 'bloc' requires: #(  ).
 	report := self resolve: 'root:v1.0.0'.
-	requirement := report requirements detect: [ :each | each from version string = 'v0.10.0' ].
+	requirement := report requirements detect: [ :each | each from printString = 'github://o/album v0.10.0' ].
 	self
 		assert: report warnings isEmpty;
 		assert: (report isSuperseded: requirement);

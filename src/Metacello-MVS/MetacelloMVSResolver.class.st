@@ -24,10 +24,10 @@ Class {
 		'requiredFrom',
 		'locked',
 		'assumedInstalled',
-		'rootRequest',
 		'resolution',
 		'dropsUnused',
-		'rootRepositories'
+		'rootRepositories',
+		'user'
 	],
 	#category : 'Metacello-MVS',
 	#package : 'Metacello-MVS'
@@ -79,7 +79,7 @@ MetacelloMVSResolver >> assumedInstalled: aCollectionOfRepositories [
 ]
 
 { #category : 'versions' }
-MetacelloMVSResolver >> candidateFor: aProjectSpec version: aVersion requiredBy: aCandidateOrNil [
+MetacelloMVSResolver >> candidateFor: aProjectSpec version: aVersion requiredBy: aRequester [
 	"A candidate chosen for the request being resolved"
 
 	^ (MetacelloMVSCandidateVersion
@@ -87,8 +87,8 @@ MetacelloMVSResolver >> candidateFor: aProjectSpec version: aVersion requiredBy:
 		   repository: (graph repositoryUrlOf: aProjectSpec)
 		   path: (graph pathOf: aProjectSpec))
 		  version: aVersion;
-		  requiredBy: aCandidateOrNil;
-		  request: (self requestAbout: nil);
+		  requiredBy: aRequester;
+		  request: (self requestAbout: user);
 		  yourself
 ]
 
@@ -208,9 +208,8 @@ MetacelloMVSResolver >> installed: aDictionary [
 
 { #category : 'resolving' }
 MetacelloMVSResolver >> installedCandidateFrom: aProjectSpec for: aCandidate [
-	"The candidate for the version the image has of the repository of aCandidate (locked or not). Asked only when it is installed at a version (#isInstalledAtAVersion:)"
-	^ (self candidateFor: aProjectSpec version: (MetacelloSemanticVersionNumber fromVersionString: (graph versionStringOf: aProjectSpec)) requiredBy: nil)
-		  beInstalled;
+	"The candidate for the version the image has of the repository of aCandidate (locked or not), required by the image. Asked only when it is installed at a version (#isInstalledAtAVersion:)"
+	^ (self candidateFor: aProjectSpec version: (MetacelloSemanticVersionNumber fromVersionString: (graph versionStringOf: aProjectSpec)) requiredBy: MetacelloImageRequest new)
 		  in: [ :candidate | (self isLocked: candidate repository) ifTrue: [ candidate beLocked ] ];
 		  yourself
 ]
@@ -261,11 +260,9 @@ MetacelloMVSResolver >> isLocked: aRepository [
 
 { #category : 'metacello' }
 MetacelloMVSResolver >> isRequestOfASelectedVersion: aRequirement in: aResolution [
-	"Only the requirements of the versions selected ask groups: superseded versions are not loaded"
-	^ aResolution buildList
-		  at: aRequirement from repository
-		  ifPresent: [ :selected | selected == aRequirement from ]
-		  ifAbsent: [ false ]
+	"Only the requirements of the versions selected, and the user's, ask groups: superseded versions are not loaded"
+
+	^ aRequirement from isSelectedIn: aResolution
 ]
 
 { #category : 'versions' }
@@ -367,19 +364,18 @@ MetacelloMVSResolver >> replacementFor: aProjectSpec by: aCandidate [
 ]
 
 { #category : 'findings' }
-MetacelloMVSResolver >> requestAbout: aCandidateOrNil [
-	"The request a finding about aCandidateOrNil is about: the current requirement's, else the one aCandidateOrNil was chosen for, else the root's"
+MetacelloMVSResolver >> requestAbout: aSubject [
+	"The request a finding about aSubject is about: the current requirement's, else the one aSubject was chosen for, or the user's for the load as a whole"
 
 	currentRequirement ifNotNil: [ :requirement | ^ requirement request ].
-	^ (aCandidateOrNil ifNotNil: [ aCandidateOrNil request ]) ifNil: [ rootRequest ]
+	^ aSubject request
 ]
 
 { #category : 'resolving' }
 MetacelloMVSResolver >> require: aRequiredSpec by: aCandidate [
-	"Resolve one requirement, recorded as an MetacelloMVSRequirement (but the root's own). An error stops it there"
+	"Resolve one requirement, recorded as a MetacelloMVSRequirement. aCandidate asked for it: a candidate version, or the user for a root. An error stops it there"
 
-	aCandidate ifNotNil: [
-		currentRequirement := resolution addRequirement: (MetacelloMVSRequirement from: aCandidate asked: aRequiredSpec) ].
+	currentRequirement := resolution addRequirement: (MetacelloMVSRequirement from: aCandidate asked: aRequiredSpec).
 	[
 		| spec repository version grew |
 		(graph hasVersions: aRequiredSpec) ifFalse: [
@@ -452,7 +448,7 @@ MetacelloMVSResolver >> reset [
 	requiredFrom := Dictionary new.
 	rootRepositories := OrderedCollection new.
 	currentRequirement := nil.
-	rootRequest := nil.
+	user := MetacelloUserRequest new.
 	resolution := MetacelloMVSResolution new
 ]
 
@@ -486,22 +482,21 @@ MetacelloMVSResolver >> resolve: aRepositoryString project: aProjectName loads: 
 
 { #category : 'resolving' }
 MetacelloMVSResolver >> resolveRoots: aCollectionOfProjectSpecs [
-	"Walk the requirements from each root aCollectionOfProjectSpecs names, in order, as far as possible and answer the MetacelloMVSResolution: the build list, the requirements met and the findings. Each project is read for the union of the groups its dependents ask. At the end, the projects nobody selected uses are dropped (see dropUnused:)"
+	"Walk the requirements from each root aCollectionOfProjectSpecs names, in order, as far as possible and answer the MetacelloMVSResolution: the build list, the requirements met and the findings. The user requires the roots. Each project is read for the union of the groups its dependents ask. At the end, the projects nobody selected uses are dropped (see dropUnused:)"
 
 	self reset.
 	aCollectionOfProjectSpecs ifEmpty: [
-			self error: #invalidReference text: 'Nothing to load: no root' about: nil.
+			self error: #invalidReference text: 'Nothing to load: no root' about: user.
 			^ resolution ].
-	rootRequest := MetacelloProjectRequest requester: MetacelloUserRequest new projectSpec: aCollectionOfProjectSpecs first.
 	aCollectionOfProjectSpecs do: [ :root |
 			(graph hasVersions: root)
 				ifTrue: [
 				(rootRepositories includes: (graph repositoryUrlOf: root)) ifFalse: [ rootRepositories add: (graph repositoryUrlOf: root) ] ]
 				ifFalse: [
-				self error: #invalidReference text: (self whyNoVersions: root) about: nil ] ].
+				self error: #invalidReference text: (self whyNoVersions: root) about: user ] ].
 	resolution hasErrors ifTrue: [ ^ resolution ].
 	resolution rootRepositories: rootRepositories.
-	aCollectionOfProjectSpecs do: [ :spec | self require: spec by: nil ].
+	aCollectionOfProjectSpecs do: [ :spec | self require: spec by: user ].
 	[ pending isEmpty ] whileFalse: [ self visit: pending removeFirst ].
 	resolution buildList: (dropsUnused
 			 ifTrue: [ self usedIn: selected ]
@@ -584,7 +579,8 @@ MetacelloMVSResolver >> setGraph: aGraph [
 	installed := Dictionary new.
 	locked := Set new.
 	assumedInstalled := Set new.
-	dropsUnused := true
+	dropsUnused := true.
+	self reset
 ]
 
 { #category : 'resolving' }
@@ -661,7 +657,7 @@ MetacelloMVSResolver >> visit: aCandidate [
 		         includingDefault: (defaultAsked includes: aCandidate repository)
 		         into: found.
 	reading findings , found findings do: [ :each | self keep: each about: aCandidate ].
-	((rootRepositories includes: aCandidate repository) and: [ aCandidate requiredBy isNil ])
+	aCandidate mustReplace
 		ifTrue: [ self replace: reading replacements about: aCandidate ]
 		ifFalse: [
 				reading replacements ifNotEmpty: [ :replaces |

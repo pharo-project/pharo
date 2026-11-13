@@ -97,7 +97,9 @@ MetacelloMVSBaselineSandboxTest >> testAGroupTheBaselineDoesNotDeclareIsAnError 
 	reading := MetacelloMVSBaselineReading new.
 	(self sandboxOnTonel: (self tonelOf: { (self baselineMethod: #( 'spec for: #common do: [ spec package: ''Foo-Core'' ]' )) }))
 		requirementsInto: reading.
-	found := MetacelloMVSBaselineReading new.
+	found := MetacelloMVSBaselineReading new
+		         request: MetacelloUserRequest new;
+		         yourself.
 
 	self assert: (reading referencesFor: #( 'Missing' ) into: found) isEmpty.
 	self assert: (found findings anySatisfy: [ :each |

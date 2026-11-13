@@ -115,10 +115,10 @@ MetacelloResolutionTest >> testOnlyErrorsStopALoad [
 	resolution addFinding: (MetacelloResolutionFinding warning: #aWarning text: 'a warning' request: request).
 	self deny: resolution hasErrors.
 
-	resolution addFinding: (MetacelloResolutionFinding error: #anError text: 'an error' request: nil).
+	resolution addFinding: (MetacelloResolutionFinding error: #anError text: 'an error' request: MetacelloUserRequest new).
 	self assert: resolution hasErrors.
 	self assert: (resolution errors collect: [ :each | each text ]) asArray equals: #( 'an error' ).
-	self assert: (resolution warnings collect: [ :each | each projectName ]) asArray equals: #( 'TestToLock2' )
+	self assert: (resolution warnings collect: [ :each | each request projectName ]) asArray equals: #( 'TestToLock2' )
 ]
 
 { #category : 'tests' }

@@ -22,11 +22,11 @@ Class {
 }
 
 { #category : 'accessing' }
-MetacelloMVSResolution >> add: aFinding about: aCandidateOrNil [
-	"Keep aFinding, found about aCandidateOrNil (the version that asked, or whose baseline was read), and answer it"
+MetacelloMVSResolution >> add: aFinding about: aSubject [
+	"Keep aFinding, found about aSubject (the version that asked, or whose baseline was read, or the user), and answer it"
 
 	findings add: aFinding.
-	subjects at: aFinding put: aCandidateOrNil.
+	subjects at: aFinding put: aSubject.
 	^ aFinding
 ]
 
@@ -64,11 +64,11 @@ MetacelloMVSResolution >> dependenciesOf: aRepository [
 
 { #category : 'accessing' }
 MetacelloMVSResolution >> descriptionOf: aFinding [
-	"Its text, and the chain of versions that led to it"
+	"Its text, and who required what it is about"
 
-	^ (self subjectOf: aFinding)
-		  ifNil: [ aFinding text ]
-		  ifNotNil: [ :candidate | aFinding text , '. Required by:' , String lf , candidate chainString ]
+	^ String streamContents: [ :stream |
+			  stream nextPutAll: aFinding text.
+			  (self subjectOf: aFinding) printRequiredByOn: stream ]
 ]
 
 { #category : 'accessing' }
@@ -79,15 +79,13 @@ MetacelloMVSResolution >> errorsDescription [
 ]
 
 { #category : 'accessing' }
-MetacelloMVSResolution >> findingKind: aKind severity: aSeverity text: aString about: aCandidateOrNil ifNone: aBlock [
-	"The finding kept already with this kind, severity and text about the same repository, or nil: each is reported once, with its first chain"
+MetacelloMVSResolution >> findingKind: aKind severity: aSeverity text: aString about: aSubject ifNone: aBlock [
+	"The finding kept already with this kind, severity and text about the same repository, or the value of aBlock: each is reported once, with its first chain"
 
-	| repository |
-	repository := aCandidateOrNil ifNotNil: [ aCandidateOrNil repository ].
 	^ findings
 		  detect: [ :each |
 			  each kind = aKind and: [
-				  each severity = aSeverity and: [ each text = aString and: [ (self repositoryOf: each) = repository ] ] ] ]
+				  each severity = aSeverity and: [ each text = aString and: [ (self subjectOf: each) isAboutSameRepositoryAs: aSubject ] ] ] ]
 		  ifNone: aBlock
 ]
 
@@ -95,7 +93,7 @@ MetacelloMVSResolution >> findingKind: aKind severity: aSeverity text: aString a
 MetacelloMVSResolution >> findingsOf: aRepository [
 	"The findings about the version selected (or visited) of aRepository"
 
-	^ findings select: [ :each | (self repositoryOf: each) = aRepository ]
+	^ findings select: [ :each | (self subjectOf: each) isAboutRepository: aRepository ]
 ]
 
 { #category : 'initialization' }
@@ -113,7 +111,7 @@ MetacelloMVSResolution >> isOnlyAboutSuperseded: aFinding [
 
 	| holders |
 	holders := requirements select: [ :each | each findings identityIncludes: aFinding ].
-	holders ifEmpty: [ ^ (self subjectOf: aFinding) notNil and: [ self isSupersededSelection: (self subjectOf: aFinding) ] ].
+	holders ifEmpty: [ ^ (self subjectOf: aFinding) isSupersededIn: self ].
 	^ holders allSatisfy: [ :each | self isSuperseded: each ]
 ]
 
@@ -127,7 +125,7 @@ MetacelloMVSResolution >> isRoot: aCandidate [
 MetacelloMVSResolution >> isSuperseded: aRequirement [
 	"Whether it was asked by a version that lost to a higher one of its repository"
 
-	^ self isSupersededSelection: aRequirement from
+	^ aRequirement from isSupersededIn: self
 ]
 
 { #category : 'accessing' }
@@ -150,12 +148,6 @@ MetacelloMVSResolution >> printOn: aStream [
 ]
 
 { #category : 'accessing' }
-MetacelloMVSResolution >> repositoryOf: aFinding [
-
-	^ (self subjectOf: aFinding) ifNotNil: [ :candidate | candidate repository ]
-]
-
-{ #category : 'accessing' }
 MetacelloMVSResolution >> requirements [
 	"Every requirement met, those of superseded versions included"
 
@@ -166,7 +158,7 @@ MetacelloMVSResolution >> requirements [
 MetacelloMVSResolution >> requirementsOfSelected: aRepository [
 	"The requirements the selected version of aRepository asked"
 
-	^ requirements select: [ :each | each from repository = aRepository and: [ (self isSuperseded: each) not ] ]
+	^ requirements select: [ :each | (each from isAboutRepository: aRepository) and: [ (self isSuperseded: each) not ] ]
 ]
 
 { #category : 'accessing' }
@@ -191,7 +183,7 @@ MetacelloMVSResolution >> rootRepositories: aCollection [
 
 { #category : 'accessing' }
 MetacelloMVSResolution >> subjectOf: aFinding [
-	"The version aFinding was found about: the one that asked, or whose baseline was read; nil for the root's own spec"
+	"What aFinding was found about: the version that asked, or whose baseline was read, or the user for the load as a whole"
 
-	^ subjects at: aFinding ifAbsent: [ nil ]
+	^ subjects at: aFinding
 ]

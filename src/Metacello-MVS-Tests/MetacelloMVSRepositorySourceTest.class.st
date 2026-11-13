@@ -21,7 +21,7 @@ MetacelloMVSRepositorySourceTest >> candidateFor: aRepositoryString [
 	graph := MetacelloMVSGraph on: MetacelloMVSRecordedSource new.
 	resolver := MetacelloMVSResolver on: graph.
 	spec := graph specFor: aRepositoryString project: 'Foo' loads: #(  ).
-	^ resolver candidateFor: spec version: (resolver minimumOf: spec) requiredBy: nil
+	^ resolver candidateFor: spec version: (resolver minimumOf: spec) requiredBy: MetacelloUserRequest new
 ]
 
 { #category : 'tests' }
