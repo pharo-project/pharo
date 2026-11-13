@@ -15,14 +15,10 @@ and the subclasses (if any) were direct subclasses of the superclass.
 "
 Class {
 	#name : 'RBInsertNewClassRefactoring',
-	#superclass : 'RBClassRefactoring',
+	#superclass : 'RBInsertNewBehaviorRefactoring',
 	#instVars : [
 		'superclass',
-		'subclasses',
-		'comment',
-		'packageName',
-		'tagName',
-		'traitComposition'
+		'subclasses'
 	],
 	#category : 'Refactoring-Transformations',
 	#package : 'Refactoring-Transformations'
@@ -39,12 +35,7 @@ RBInsertNewClassRefactoring >> applicabilityPreconditions [
 				 	((RBCondition isMetaclass: sub) errorMacro:
 				         'Subclass must <1?not :>be a metaclass') not.
 			        (RBCondition isImmediateSubclass: sub of: superclass) } ].
-	^ cond , { 
-			(RBCondition isValidClassName: className).
-			(RBCondition isGlobal: className in: self model) not.
-			(RBCondition isSymbol: packageName).
-			((RBCondition withBlock: [ packageName isNotEmpty ]) errorMacro:
-				 'Invalid package name') }
+	^ cond , super applicabilityPreconditions
 ]
 
 { #category : 'transforming' }
@@ -60,34 +51,11 @@ RBInsertNewClassRefactoring >> checkSuperclass [
 			self refactoringError: 'The new class'' superclass ' , superclassName , 'is missing from the model' ]
 ]
 
-{ #category : 'accessing' }
-RBInsertNewClassRefactoring >> comment [
-
-	^ comment
-]
-
-{ #category : 'accessing' }
-RBInsertNewClassRefactoring >> comment: aString [
-	comment := aString
-]
-
 { #category : 'initialization' }
 RBInsertNewClassRefactoring >> initialize [
 
 	super initialize.
 	subclasses := #(  )
-]
-
-{ #category : 'accessing' }
-RBInsertNewClassRefactoring >> packageName [
-
-	^ packageName
-]
-
-{ #category : 'accessing' }
-RBInsertNewClassRefactoring >> packageName: anObject [
-
-	packageName := anObject
 ]
 
 { #category : 'transforming' }
@@ -107,7 +75,7 @@ RBInsertNewClassRefactoring >> privateTransform [
 				package: packageName;
 				tag: tagName;
 				comment: self comment;
-				traitComposition: (traitComposition ifNil: #()) ];
+				traitComposition: self traitComposition ];
 		reparentClasses: subclasses to: (self model classNamed: className)
 ]
 
@@ -123,22 +91,4 @@ RBInsertNewClassRefactoring >> superclass: aClass [
 	"set the superclass object"
 
 	superclass := self classObjectFor: aClass
-]
-
-{ #category : 'accessing' }
-RBInsertNewClassRefactoring >> tagName [
-
-	^ tagName
-]
-
-{ #category : 'accessing' }
-RBInsertNewClassRefactoring >> tagName: anObject [
-
-	tagName := anObject
-]
-
-{ #category : 'accessing' }
-RBInsertNewClassRefactoring >> traitComposition: aTraitComposition [
-
-	traitComposition := aTraitComposition
 ]
