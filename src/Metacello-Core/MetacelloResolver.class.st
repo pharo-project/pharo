@@ -12,15 +12,8 @@ Class {
 }
 
 { #category : 'resolving' }
-MetacelloResolver >> resolve: aProjectSpec loads: aCollectionOfNames engine: anEngine [
-	"Answer a MetacelloResolution whose root is the project aProjectSpec names, loading aCollectionOfNames (empty for its default groups), with every project that load reaches"
-
-	^ self subclassResponsibility
-]
-
-{ #category : 'resolving' }
-MetacelloResolver >> resolveVersion: aVersionSpec loads: aCollectionOfNames engine: anEngine [
-	"Answer a MetacelloResolution of the projects that loading aCollectionOfNames from aVersionSpec reaches, for a version already chosen (it has no root)"
+MetacelloResolver >> resolve: aProjectSpec engine: anEngine [
+	"Answer a MetacelloResolution whose root is the project aProjectSpec names, loading what it loads (empty for its default groups), with every project that load reaches"
 
 	^ self subclassResponsibility
 ]

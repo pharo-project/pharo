@@ -7,9 +7,9 @@ Class {
 }
 
 { #category : 'execution callback' }
-MetacelloScriptImageExecutor >> shouldBeExecutedFor: projectSpec [
+MetacelloScriptImageExecutor >> checkCanRunOn: aProjectSpec [
+	"A script of Metacello image runs only on projects loaded in the image"
 
-	projectSpec ifNil: [ ^ false ].
-
-	^ MetacelloProjectRegistry registrationNamed: projectSpec ifPresent: [ :existingRegistration | existingRegistration loadedInImage ] ifAbsent: [ false ]
+	(MetacelloProjectRegistry registrationNamed: aProjectSpec className ifPresent: [ :each | each loadedInImage ] ifAbsent: [ false ])
+		ifFalse: [ NotFound signal: 'Project ' , aProjectSpec name , ' is not loaded in the image' ]
 ]

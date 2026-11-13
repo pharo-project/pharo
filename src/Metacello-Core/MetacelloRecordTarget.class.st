@@ -1,7 +1,6 @@
 "
-I am the record target: I walk a version spec for the names I am required to load (required:) and record the load directives, packages and projects in load order, with their pre and post load do-its (record: answers the root directive).
-
-I decide no version: each project reference takes the project the engine's resolution chose, recorded once with every group asked. A version spec recorded on its own is resolved first (see record:).
+I am the record target: I turn the engine's resolution into load directives (record: answers the root directive). I walk from each root, in order, and record each package where it is first asked: a project reference records its project at that place, with the names it asks that are not recorded yet. A project's preLoad and postLoad go around its first packages only.
+I decide no version: each project reference takes the project the resolution chose.
 "
 Class {
 	#name : 'MetacelloRecordTarget',
@@ -62,9 +61,9 @@ MetacelloRecordTarget >> preLoad: packageOrVersionSpec [
 
 { #category : 'recording' }
 MetacelloRecordTarget >> record: aResolution [
-	"The directive loading aResolution: the root, each package where it is first asked (see visitProjectReference:), each project's preLoad and postLoad around its first packages (see visitVersionSpec:)"
+	"The directive loading aResolution: its roots in their order, each package where it is first asked (see visitProjectReference:), each project's preLoad and postLoad around its first packages (see visitVersionSpec:)"
 
-	self recordProject: aResolution root loading: aResolution root loadList.
+	aResolution roots do: [ :root | self recordProject: root loading: root loadList ].
 	^ self specBuilder root
 ]
 
@@ -90,14 +89,6 @@ MetacelloRecordTarget >> recordProject: aResolvedProject loading: aCollectionOfN
 	names ifEmpty: [ ^ self ].
 	done addAll: names.
 	self record: aResolvedProject version loading: names
-]
-
-{ #category : 'recording' }
-MetacelloRecordTarget >> recordVersion: aVersionSpec loading: aCollectionOfNames [
-	"The directive loading aVersionSpec, a version spec loaded on its own, with the names given (see record:)"
-
-	self record: aVersionSpec loading: aCollectionOfNames.
-	^ self specBuilder root
 ]
 
 { #category : 'accessing' }

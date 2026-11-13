@@ -5,12 +5,10 @@ Class {
 	#name : 'MetacelloScriptEngine',
 	#superclass : 'Object',
 	#instVars : [
-		'root',
 		'options',
 		'specBuilder',
 		'projectSpec',
 		'resolution',
-		'version',
 		'directive',
 		'fetched'
 	],
@@ -20,10 +18,10 @@ Class {
 }
 
 { #category : 'private' }
-MetacelloScriptEngine >> doLoad: rootLoadList [
+MetacelloScriptEngine >> doLoad [
 	"The directive, loaded, fetching first if needed"
 
-	(MetacelloLoadTarget on: self) load: (self ensureFetched: rootLoadList).
+	(MetacelloLoadTarget on: self) load: self ensureFetched.
 	^ directive
 ]
 
@@ -37,69 +35,64 @@ MetacelloScriptEngine >> doLoadProjectSpecFrom: aMetacelloPackageSpec [
 
 { #category : 'private' }
 MetacelloScriptEngine >> during: aBlock keepingRegistry: aBoolean [
-	"Run aBlock on a copy of the registry, with the script's handlers for upgrades, downgrades, conflicts and locks; keep the copy only when aBlock succeeds and aBoolean"
+	"Run aBlock on a copy of the registry, with the script's handlers for upgrades, downgrades, conflicts and locks; keep the copy only when aBlock succeeds and aBoolean. Answer what aBlock answers"
 
-	MetacelloProjectRegistry
-		copyRegistryDuring: [ self handleNotificationsForAction: aBlock ]
-		commitIfSuccess: aBoolean
+	^ MetacelloProjectRegistry copyRegistryDuring: [ self handleNotificationsForAction: aBlock ] commitIfSuccess: aBoolean
 ]
 
 { #category : 'private' }
-MetacelloScriptEngine >> ensureFetched: rootLoadList [
+MetacelloScriptEngine >> ensureFetched [
 	"The directive, its packages fetched once, recording first if needed"
 
 	fetched == true ifTrue: [ ^ directive ].
-	(self ensureRecorded: rootLoadList) acceptVisitor: (MetacelloFetchTarget on: self).
+	self ensureRecorded acceptVisitor: (MetacelloFetchTarget on: self).
 	fetched := true.
 	^ directive
 ]
 
 { #category : 'private' }
-MetacelloScriptEngine >> ensureRecorded: rootLoadList [
+MetacelloScriptEngine >> ensureRecorded [
 	"The directive loading the resolution, recorded once, resolving first if needed. A resolution with errors is never recorded: it signals MetacelloResolutionError"
 
 	directive ifNotNil: [ ^ directive ].
-	(self ensureResolved: rootLoadList) hasErrors ifTrue: [ MetacelloResolutionError signalFor: resolution ].
-	^ directive := self recordDirective: rootLoadList
+	self ensureResolved hasErrors ifTrue: [ MetacelloResolutionError signalFor: resolution ].
+	^ directive := self recordDirective
 ]
 
 { #category : 'private' }
-MetacelloScriptEngine >> ensureResolved: rootLoadList [
-	"The resolution of rootLoadList, resolved once: from the root, or from a version spec loaded on its own (no script, see version:)"
+MetacelloScriptEngine >> ensureResolved [
+	"The resolution of the root, with the names its project spec loads, resolved once"
 
-	resolution ifNil: [
-			self resolution: (version
-					 ifNil: [ (MetacelloResolveTarget on: self) resolve: self projectSpec loads: rootLoadList ]
-					 ifNotNil: [ (MetacelloResolveTarget on: self) resolveVersion: version loads: (self loadListOfVersion: rootLoadList) ]) ].
+	resolution ifNotNil: [ ^ resolution ].
+	self resolution: ((MetacelloResolveTarget on: self) resolve: self projectSpec).
 	^ resolution
 ]
 
 { #category : 'actions api' }
-MetacelloScriptEngine >> fetch: rootLoadList [
-	"Fetch what the directive loads, recording first if needed (see ensureFetched:), and answer the directive"
+MetacelloScriptEngine >> fetch [
+	"Fetch what loading the default root needs, recording first if needed (see ensureFetched), and answer the directive"
 
-	self during: [ self root: (self ensureFetched: rootLoadList) ] keepingRegistry: false.
-	^ root
+	^ self during: [ self ensureFetched ] keepingRegistry: false
 ]
 
 { #category : 'actions api' }
 MetacelloScriptEngine >> get [
-	" load a fresh copy from repo"
+	"Load a fresh copy of the baseline the script names from its repository, register it, and answer its project. It loads only that baseline's class, not its packages: it resolves nothing, so the roots of a load never come into it"
 
-	MetacelloProjectRegistry
-		copyRegistryDuring: [
-				self handleNotificationsForAction: [
-						| spec projectPackage |
-						spec := self projectSpec.
-						projectPackage := spec projectPackage.
-						projectPackage repositorySpecs do: [ :repoSpec | repoSpec createRepository flushForScriptGet ].
-						self doLoadProjectSpecFrom: projectPackage.
-						self root: (Smalltalk at: spec className asSymbol) project.
-						MetacelloProjectRegistry
-							registrationNamed: spec className
-							ifPresent: [ :existing | existing projectSpec repositories: spec repositories ]
-							ifAbsent: [ spec asProjectRegistration registerProject ] ] ]
-		commitIfSuccess: true
+	^ MetacelloProjectRegistry
+		  copyRegistryDuring: [
+				  self handleNotificationsForAction: [
+						  | spec projectPackage |
+						  spec := self projectSpec.
+						  projectPackage := spec projectPackage.
+						  projectPackage repositorySpecs do: [ :repoSpec | repoSpec createRepository flushForScriptGet ].
+						  self doLoadProjectSpecFrom: projectPackage.
+						  MetacelloProjectRegistry
+							  registrationNamed: spec className
+							  ifPresent: [ :existing | existing projectSpec repositories: spec repositories ]
+							  ifAbsent: [ spec asProjectRegistration registerProject ].
+						  (Smalltalk at: spec className asSymbol) project ] ]
+		  commitIfSuccess: true
 ]
 
 { #category : 'handlers' }
@@ -129,16 +122,17 @@ MetacelloScriptEngine >> handleLock: exception [
 { #category : 'handlers' }
 MetacelloScriptEngine >> handleNotificationsForAction: actionBlock [
 
-	[
-		[
-			actionBlock
-				on: MetacelloAllowProjectUpgrade , MetacelloAllowConflictingProjectUpgrade
-				do: [ :ex | "option handlers need to be outermost set of handlers ... last line of defense before users are involved" ex handleResolutionFor: self ] ]
-			on: MetacelloAllowLockedProjectChange
-			do: [ :ex | "MetacelloAllowLockedProjectChange need to be outermost handler ... since it is signaled from second line of handlers"
-			ex handleResolutionFor: self ] ]
-		on: Warning
-		do: [ :ex | "Warning is absolute outermost handler" self handleWarning: ex ]
+	^ [
+		  [
+			  actionBlock
+				  on: MetacelloAllowProjectUpgrade , MetacelloAllowConflictingProjectUpgrade
+				  do: [ :ex | "option handlers need to be outermost set of handlers ... last line of defense before users are involved"
+					  ex handleResolutionFor: self ] ]
+			  on: MetacelloAllowLockedProjectChange
+			  do: [ :ex | "MetacelloAllowLockedProjectChange need to be outermost handler ... since it is signaled from second line of handlers"
+				  ex handleResolutionFor: self ] ]
+		  on: Warning
+		  do: [ :ex | "Warning is absolute outermost handler" self handleWarning: ex ]
 ]
 
 { #category : 'handlers' }
@@ -169,23 +163,16 @@ MetacelloScriptEngine >> initialize [
 
 { #category : 'actions api' }
 MetacelloScriptEngine >> list [
+	"Answer the project spec of the baseline the script names. Like the other registry actions (get, lock, unlock, register, unregister), it works on that one baseline's registration: it resolves and records nothing, so the roots of a load never come into it"
 
-	self root: self projectSpec
+	^ self projectSpec
 ]
 
 { #category : 'actions api' }
-MetacelloScriptEngine >> load: rootLoadList [
-	"Load the directive, fetching first if needed (see doLoad:), and keep the registry changes"
+MetacelloScriptEngine >> load [
+	"Load the default root, fetching first if needed (see doLoad), and keep the registry changes"
 
-	self during: [ self root: (self doLoad: rootLoadList) ] keepingRegistry: true.
-	^ root
-]
-
-{ #category : 'private' }
-MetacelloScriptEngine >> loadListOfVersion: rootLoadList [
-	"The names to load from a version spec loaded on its own: rootLoadList, or its default ones when none"
-
-	^ rootLoadList ifEmpty: [ version defaultPackageNames ]
+	^ self during: [ self doLoad ] keepingRegistry: true
 ]
 
 { #category : 'accessing' }
@@ -200,23 +187,24 @@ MetacelloScriptEngine >> loader [
 
 { #category : 'actions api' }
 MetacelloScriptEngine >> lock [
+	"Lock the registration of the baseline the script names, registering it if needed, and answer its project spec. A later load that reaches this project keeps the locked version. It resolves nothing, so the roots of a load never come into it"
 
-	| spec |
-	MetacelloProjectRegistry
-		copyRegistryDuring: [
-				spec := self projectSpec.
-				MetacelloProjectRegistry
-					registrationNamed: spec className
-					ifPresent: [ :existing |
-							existing locked: true. "We need to merge the repositories"
-							existing projectSpec repositories: spec repositories.
-							spec := existing projectSpec ]
-					ifAbsent: [
-							spec asProjectRegistration
-								locked: true;
-								registerProject ].
-				self root: spec ]
-		commitIfSuccess: true
+	^ MetacelloProjectRegistry
+		  copyRegistryDuring: [
+				  | spec |
+				  spec := self projectSpec.
+				  MetacelloProjectRegistry
+					  registrationNamed: spec className
+					  ifPresent: [ :existing |
+							  existing locked: true. "We need to merge the repositories"
+							  existing projectSpec repositories: spec repositories.
+							  spec := existing projectSpec ]
+					  ifAbsent: [
+							  spec asProjectRegistration
+								  locked: true;
+								  registerProject ].
+				  spec ]
+		  commitIfSuccess: true
 ]
 
 { #category : 'accessing' }
@@ -249,25 +237,22 @@ MetacelloScriptEngine >> projectSpec: aSpec [
 ]
 
 { #category : 'actions api' }
-MetacelloScriptEngine >> record: rootLoadList [
-	"Record the directive loading rootLoadList, resolving first if needed (see ensureRecorded:), and answer it"
+MetacelloScriptEngine >> record [
+	"Record the directive loading the default root, resolving first if needed (see ensureRecorded), and answer it"
 
-	self during: [ self root: (self ensureRecorded: rootLoadList) ] keepingRegistry: false.
-	^ root
+	^ self during: [ self ensureRecorded ] keepingRegistry: false
 ]
 
 { #category : 'private' }
-MetacelloScriptEngine >> recordDirective: rootLoadList [
-	"Record the resolution into a directive and answer it (see MetacelloRecordTarget>>#record:). A version spec loaded on its own (no script) is not a project of the resolution: it is recorded with its load list (see loadListOfVersion:)"
+MetacelloScriptEngine >> recordDirective [
+	"Record the resolution into a directive and answer it (see MetacelloRecordTarget>>#record:)"
 
-	| target |
-	target := MetacelloRecordTarget on: self.
-	version ifNil: [ ^ target record: resolution ].
-	^ target recordVersion: version loading: (self loadListOfVersion: rootLoadList)
+	^ (MetacelloRecordTarget on: self) record: resolution
 ]
 
 { #category : 'actions api' }
 MetacelloScriptEngine >> register [
+	"Register the baseline the script names with the script's project spec, replacing the spec of an existing registration, and answer it. It loads and resolves nothing, so the roots of a load never come into it"
 
 	| spec |
 	spec := self projectSpec.
@@ -275,7 +260,7 @@ MetacelloScriptEngine >> register [
 		registrationNamed: spec className
 		ifPresent: [ :existing | existing projectSpec: spec ]
 		ifAbsent: [ spec asProjectRegistration registerProject ].
-	self root: spec
+	^ spec
 ]
 
 { #category : 'resolution' }
@@ -293,11 +278,10 @@ MetacelloScriptEngine >> resolution: aResolution [
 ]
 
 { #category : 'actions api' }
-MetacelloScriptEngine >> resolve: rootLoadList [
-	"Answer the resolution of a load of rootLoadList (the names to load from the root, empty for its default ones), errors included, leaving the registry as it was"
+MetacelloScriptEngine >> resolve [
+	"Answer the resolution of a load of the default root, errors included, leaving the registry as it was"
 
-	self during: [ self root: (self ensureResolved: rootLoadList) ] keepingRegistry: false.
-	^ resolution
+	^ self during: [ self ensureResolved ] keepingRegistry: false
 ]
 
 { #category : 'private' }
@@ -331,16 +315,6 @@ MetacelloScriptEngine >> resolver [
 ]
 
 { #category : 'accessing' }
-MetacelloScriptEngine >> root [
-	^ root
-]
-
-{ #category : 'accessing' }
-MetacelloScriptEngine >> root: anObject [
-	root := anObject
-]
-
-{ #category : 'accessing' }
 MetacelloScriptEngine >> specBuilder [
 	^ specBuilder
 ]
@@ -353,28 +327,23 @@ MetacelloScriptEngine >> strict [
 
 { #category : 'actions api' }
 MetacelloScriptEngine >> unlock [
+	"Unlock the registration of the baseline the script names, if it is registered, and answer the script's project spec. It resolves nothing, so the roots of a load never come into it"
 
-	| spec |
-	MetacelloProjectRegistry
-		copyRegistryDuring: [
-				spec := self projectSpec.
-				MetacelloProjectRegistry registrationNamed: spec className ifPresent: [ :existing | existing locked: false ].
-				self root: spec ]
-		commitIfSuccess: true
+	^ MetacelloProjectRegistry
+		  copyRegistryDuring: [
+				  | spec |
+				  spec := self projectSpec.
+				  MetacelloProjectRegistry registrationNamed: spec className ifPresent: [ :existing | existing locked: false ].
+				  spec ]
+		  commitIfSuccess: true
 ]
 
 { #category : 'actions api' }
 MetacelloScriptEngine >> unregister [
+	"Remove the registration of the baseline the script names, if any, and answer the script's project spec. It resolves nothing, so the roots of a load never come into it"
 
 	| spec |
 	spec := self projectSpec.
 	MetacelloProjectRegistry registrationNamed: spec className ifPresent: [ :existing | existing unregisterProject ].
-	self root: spec
-]
-
-{ #category : 'accessing' }
-MetacelloScriptEngine >> version: aVersionSpec [
-	"Resolve from aVersionSpec, loaded on its own (no script), instead of from the root"
-
-	version := aVersionSpec
+	^ spec
 ]

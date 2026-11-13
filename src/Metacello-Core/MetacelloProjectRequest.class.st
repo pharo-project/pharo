@@ -1,10 +1,8 @@
 "
 I am one request a resolver met: a project asked by another, as its baseline declares it.
-
-- requester: the MetacelloResolvedProject that asked, nil for the root of the load (or for a version spec resolved on its own);
+- requester: the MetacelloResolvedProject that asked, nil for a root of the load;
 - projectSpec: the project spec asked: its repository (and so its version) and its loads (the groups asked, empty for the default ones);
 - findings: the MetacelloResolutionFindings about me.
-
 Following requesters gives the chain that led to a project (see chain).
 "
 Class {

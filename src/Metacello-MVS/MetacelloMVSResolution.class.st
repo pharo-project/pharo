@@ -14,8 +14,8 @@ Class {
 	#instVars : [
 		'buildList',
 		'requirements',
-		'rootRepository',
-		'subjects'
+		'subjects',
+		'rootRepositories'
 	],
 	#category : 'Metacello-MVS',
 	#package : 'Metacello-MVS'
@@ -100,11 +100,11 @@ MetacelloMVSResolution >> findingsOf: aRepository [
 
 { #category : 'initialization' }
 MetacelloMVSResolution >> initialize [
-
 	super initialize.
 	buildList := Dictionary new.
 	subjects := IdentityDictionary new.
-	requirements := OrderedCollection new
+	requirements := OrderedCollection new.
+	rootRepositories := #(  )
 ]
 
 { #category : 'accessing' }
@@ -115,6 +115,12 @@ MetacelloMVSResolution >> isOnlyAboutSuperseded: aFinding [
 	holders := requirements select: [ :each | each findings identityIncludes: aFinding ].
 	holders ifEmpty: [ ^ (self subjectOf: aFinding) notNil and: [ self isSupersededSelection: (self subjectOf: aFinding) ] ].
 	^ holders allSatisfy: [ :each | self isSuperseded: each ]
+]
+
+{ #category : 'accessing' }
+MetacelloMVSResolution >> isRoot: aCandidate [
+
+	^ self rootCandidates includes: aCandidate
 ]
 
 { #category : 'accessing' }
@@ -170,16 +176,17 @@ MetacelloMVSResolution >> resolves [
 ]
 
 { #category : 'accessing' }
-MetacelloMVSResolution >> rootCandidate [
-	"The candidate of the root, or nil when it could not be selected"
+MetacelloMVSResolution >> rootCandidates [
+	"The candidates of the roots that could be selected, in order"
 
-	^ buildList at: rootRepository ifAbsent: [ nil ]
+	^ rootRepositories select: [ :each | buildList includesKey: each ] thenCollect: [ :each | buildList at: each ]
 ]
 
 { #category : 'accessing' }
-MetacelloMVSResolution >> rootRepository: aRepository [
+MetacelloMVSResolution >> rootRepositories: aCollection [
+	"The repositories of the roots, in the order they were asked"
 
-	rootRepository := aRepository
+	rootRepositories := aCollection
 ]
 
 { #category : 'accessing' }

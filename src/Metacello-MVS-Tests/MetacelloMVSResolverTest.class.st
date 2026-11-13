@@ -79,6 +79,14 @@ MetacelloMVSResolverTest >> resolve: aRootNameAndRef [
 	^ (MetacelloMVSResolver on: graph) resolve: (self repo: aRootNameAndRef) , '/src' project: (aRootNameAndRef copyUpTo: $:)
 ]
 
+{ #category : 'helpers' }
+MetacelloMVSResolverTest >> resolveRoots: aCollectionOfNamesAndRefs [
+	"Resolve from several roots, each name:ref, in order"
+
+	^ (MetacelloMVSResolver on: graph) resolveRoots: (aCollectionOfNamesAndRefs collect: [ :each |
+			   graph specFor: (self repo: each) , '/src' project: (each copyUpTo: $:) loads: #(  ) ])
+]
+
 { #category : 'running' }
 MetacelloMVSResolverTest >> selected: aName in: aBuildList [
 
@@ -359,7 +367,7 @@ MetacelloMVSResolverTest >> testAReportHasTheBuildList [
 		assert: report resolves;
 		assert: (self selected: 'bloc' in: report buildList) equals: 'v3.0.0';
 		assert: (report dependenciesOf: (self repo: 'root')) asArray equals: { (self repo: 'bloc') };
-		assert: report rootCandidate repository equals: (self repo: 'root')
+		assert: (report rootCandidates collect: [ :each | each repository ]) asArray equals: { (self repo: 'root') }
 ]
 
 { #category : 'tests - warnings' }
@@ -560,6 +568,21 @@ MetacelloMVSResolverTest >> testChronologyIsCheckedOncePerRepository [
 	self assert: report warnings size equals: 1
 ]
 
+{ #category : 'tests - warnings' }
+MetacelloMVSResolverTest >> testEveryRootIsResolvedInOrder [
+	"Each root is loaded even when nothing requires it, in the order asked"
+	| resolution |
+	self versions: #( 'v1.0.0' ) of: 'a'.
+	self versions: #( 'v1.0.0' ) of: 'b'.
+	self version: 'v1.0.0' of: 'a' requires: #(  ).
+	self version: 'v1.0.0' of: 'b' requires: #(  ).
+	resolution := self resolveRoots: #( 'b:v1.0.0' 'a:v1.0.0' ).
+	self assert: resolution resolves.
+	self assert: (resolution rootCandidates collect: [ :each | each repository ]) asArray equals: {
+			(self repo: 'b').
+			(self repo: 'a') }
+]
+
 { #category : 'tests' }
 MetacelloMVSResolverTest >> testNeverSelectsMoreThanNeeded [
 
@@ -580,6 +603,14 @@ MetacelloMVSResolverTest >> testNoProblemsForAGraphThatResolves [
 	self version: 'v1.0.0' of: 'root' requires: #( 'a:v1.0.0' ).
 	self version: 'v1.0.0' of: 'a' requires: #(  ).
 	self assert: ((MetacelloMVSResolver on: graph) resolve: (self repo: 'root:v1.0.0') project: 'root') errors isEmpty
+]
+
+{ #category : 'tests - dev mode' }
+MetacelloMVSResolverTest >> testNothingToLoadIsAnError [
+
+	self
+		assert: (((MetacelloMVSResolver on: graph) resolveRoots: #(  )) errors collect: [ :each | each kind ]) asArray
+		equals: #( #invalidReference )
 ]
 
 { #category : 'tests' }
@@ -641,6 +672,23 @@ MetacelloMVSResolverTest >> testRequirementsOfVersionsNotSelectedStillCountWhenU
 	self
 		assert: (self selected: 'd' in: buildList) equals: 'v1.4.0';
 		assert: (self selected: 'f' in: buildList) equals: 'v1.0.0'
+]
+
+{ #category : 'tests - warnings' }
+MetacelloMVSResolverTest >> testRootsShareTheVersionsTheyRequire [
+	"Two roots requiring the same project get one version of it, the highest asked, and it is not a root"
+	| resolution |
+	self versions: #( 'v1.0.0' ) of: 'a'.
+	self versions: #( 'v1.0.0' ) of: 'b'.
+	self versions: #( 'v1.0.0' 'v1.1.0' ) of: 'c'.
+	self version: 'v1.0.0' of: 'a' requires: #( 'c:v1.0.0' ).
+	self version: 'v1.0.0' of: 'b' requires: #( 'c:v1.1.0' ).
+	self version: 'v1.0.0' of: 'c' requires: #(  ).
+	self version: 'v1.1.0' of: 'c' requires: #(  ).
+	resolution := self resolveRoots: #( 'a:v1.0.0' 'b:v1.0.0' ).
+	self assert: resolution resolves.
+	self assert: (self selected: 'c' in: resolution buildList) equals: 'v1.1.0'.
+	self deny: (resolution isRoot: (resolution buildList at: (self repo: 'c')))
 ]
 
 { #category : 'tests' }
