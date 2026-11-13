@@ -29,6 +29,13 @@ Class {
 	#tag : 'Exceptions'
 }
 
+{ #category : 'testing' }
+UnhandledError class >> captureIfSignalledWhenStepping [
+	"While stepping, stop where an exception that nobody handles would open a debugger, instead of running that debugger opening inside the simulation"
+
+	^ self == UnhandledError
+]
+
 { #category : 'signalling' }
 UnhandledError class >> signalForException: anError [
 
