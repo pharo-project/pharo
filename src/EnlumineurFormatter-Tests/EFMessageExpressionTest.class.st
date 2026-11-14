@@ -505,9 +505,9 @@ EFMessageExpressionTest >> testBlockParameterOnTheMethodLineWhenMultiline [
 		assert: source
 		equals:
 '1 to: 10 do: [ :i |
-		Transcript show: i.
-		Transcript cr.
-		Transcript cr ]'
+	Transcript show: i.
+	Transcript cr.
+	Transcript cr ]'
 ]
 
 { #category : 'tests - block arg' }
@@ -650,8 +650,8 @@ EFMessageExpressionTest >> testKeepBlockInMessage [
 		assert: source
 		equals:
 'aBoolean ifTrue: [ :i |
-		i := i factorial.
-		Transcript show: i ]'
+	i := i factorial.
+	Transcript show: i ]'
 ]
 
 { #category : 'tests' }
@@ -664,9 +664,9 @@ EFMessageExpressionTest >> testKeepBlockInMessageMutlilineNewLine [
 		assert: source
 		equals:
 'aBoolean ifTrue: [
-		Transcript cr.
-		Transcript cr.
-		Transcript cr ]'
+	Transcript cr.
+	Transcript cr.
+	Transcript cr ]'
 ]
 
 { #category : 'tests' }
@@ -681,9 +681,9 @@ EFMessageExpressionTest >> testKeepBlockInMessageMutlilineSpace [
 		assert: source
 		equals:
 'aBoolean ifTrue: [
-		12 factorial.
-		12 factorial.
-		3 factorial ]'
+	12 factorial.
+	12 factorial.
+	3 factorial ]'
 ]
 
 { #category : 'tests' }
@@ -799,10 +799,10 @@ EFMessageExpressionTest >> testKeywordOnMultipleLine [
 	source := self formatExpression: '1 to: 100 by: 2 do: [ :i | transcript show: i;cr; cr]'.
 	self assert: source equals:
 '1 to: 100 by: 2 do: [ :i |
-		transcript
-			show: i;
-			cr;
-			cr ]'
+	transcript
+		show: i;
+		cr;
+		cr ]'
 ]
 
 { #category : 'tests - keyword' }
@@ -818,8 +818,8 @@ EFMessageExpressionTest >> testKeywordOnMultipleLine10 [
 	self assert: source equals:
 'foo
 	bar: [
-			1 + 2.
-			2 + 2 ]
+		1 + 2.
+		2 + 2 ]
 	bar3: 5'
 ]
 
@@ -833,8 +833,8 @@ EFMessageExpressionTest >> testKeywordOnMultipleLine11 [
 	2 + 2 ]'.
 	self assert: source equals:
 'foo bar3: 5 bar2: [
-		1 + 1.
-		2 + 2 ]'
+	1 + 1.
+	2 + 2 ]'
 ]
 
 { #category : 'tests - keyword' }
@@ -852,8 +852,8 @@ EFMessageExpressionTest >> testKeywordOnMultipleLine12 [
 'foo
 	bar3: 5
 	bar: [
-			1 + 2.
-			2 + 2 ]
+		1 + 2.
+		2 + 2 ]
 	bar3: 5'
 ]
 
@@ -867,8 +867,8 @@ EFMessageExpressionTest >> testKeywordOnMultipleLine13 [
 	2 + 2 ]'.
 	self assert: source equals:
 'foo bar3: 5 bar3: 5 bar2: [
-		1 + 1.
-		2 + 2 ]'
+	1 + 1.
+	2 + 2 ]'
 ]
 
 { #category : 'tests - keyword' }
@@ -885,8 +885,8 @@ EFMessageExpressionTest >> testKeywordOnMultipleLine14 [
 	self assert: source equals:
 'foo
 	bar: [
-			1 + 2.
-			2 + 2 ]
+		1 + 2.
+		2 + 2 ]
 	bar3: 5
 	bar3: 5'.
 ]
@@ -903,11 +903,11 @@ EFMessageExpressionTest >> testKeywordOnMultipleLine15 [
 	self assert: source equals:
 'self
 	indent: (self do: [
-				 1.
-				 2 ])
+		 1.
+		 2 ])
 	around: [
-			1.
-			2 ]'
+		1.
+		2 ]'
 ]
 
 { #category : 'tests - keyword' }
@@ -919,8 +919,8 @@ EFMessageExpressionTest >> testKeywordOnMultipleLine2 [
 'aBoolean
 	ifTrue: [ ^1 ]
 	ifFalse: [
-			tmp := tmp + a.
-			^tmp ]'
+		tmp := tmp + a.
+		^tmp ]'
 ]
 
 { #category : 'tests - keyword' }
@@ -931,8 +931,8 @@ EFMessageExpressionTest >> testKeywordOnMultipleLine3 [
 	self assert: source equals:
 'aBoolean
 	ifTrue: [
-			tmp := tmp + a.
-			^ tmp ]
+		tmp := tmp + a.
+		^ tmp ]
 	ifFalse: [ ^ 0 ]'
 ]
 
@@ -944,11 +944,11 @@ EFMessageExpressionTest >> testKeywordOnMultipleLine4 [
 	self assert: source equals:
 'aBoolean
 	ifTrue: [
-			tmp := tmp + a.
-			^ tmp ]
+		tmp := tmp + a.
+		^ tmp ]
 	ifFalse: [
-			tmp := tmp + a.
-			^ tmp ]'
+		tmp := tmp + a.
+		^ tmp ]'
 ]
 
 { #category : 'tests - keyword' }
@@ -958,8 +958,8 @@ EFMessageExpressionTest >> testKeywordOnMultipleLine5 [
 	source := self formatExpression: 'aBoolean ifTrue:[ ^ 1] ifFalse:[ tmp := tmp + a. ^tmp]'.
 	self assert: source equals:
 'aBoolean ifTrue: [ ^ 1 ] ifFalse: [
-		tmp := tmp + a.
-		^ tmp ]'
+	tmp := tmp + a.
+	^ tmp ]'
 ]
 
 { #category : 'tests - keyword' }
@@ -978,11 +978,11 @@ EFMessageExpressionTest >> testKeywordOnMultipleLine6 [
 	self assert: source equals:
 'foo
 	bar: [
-			1 + 2.
-			2 + 2 ]
+		1 + 2.
+		2 + 2 ]
 	bar2: [
-			1 + 1.
-			2 + 2 ]
+		1 + 1.
+		2 + 2 ]
 	bar3: 5'
 ]
 
@@ -1003,11 +1003,11 @@ EFMessageExpressionTest >> testKeywordOnMultipleLine7 [
 'foo
 	bar3: 5
 	bar: [
-			1 + 2.
-			2 + 2 ]
+		1 + 2.
+		2 + 2 ]
 	bar2: [
-			1 + 1.
-			2 + 2 ]'
+		1 + 1.
+		2 + 2 ]'
 ]
 
 { #category : 'tests - keyword' }
@@ -1026,12 +1026,12 @@ EFMessageExpressionTest >> testKeywordOnMultipleLine8 [
 	self assert: source equals:
 'foo
 	bar: [
-			1 + 2.
-			2 + 2 ]
+		1 + 2.
+		2 + 2 ]
 	bar3: 5
 	bar2: [
-			1 + 1.
-			2 + 2 ]'.
+		1 + 1.
+		2 + 2 ]'.
 ]
 
 { #category : 'tests - keyword' }
@@ -1052,11 +1052,11 @@ EFMessageExpressionTest >> testKeywordOnMultipleLine9 [
 'foo
 	bar3: 5
 	bar: [
-			1 + 2.
-			2 + 2 ]
+		1 + 2.
+		2 + 2 ]
 	bar2: [
-			1 + 1.
-			2 + 2 ]
+		1 + 1.
+		2 + 2 ]
 	bar3: 5'
 ]
 
@@ -1110,6 +1110,22 @@ EFMessageExpressionTest >> testMultiLineMessage [
 	line: 2'
 ]
 
+{ #category : 'tests - block arg' }
+EFMessageExpressionTest >> testNestedBlocksIndentOnceEach [
+	"A keyword message and its block argument open on the same line, so they share one level of indentation."
+
+	| source |
+	configurationSelector := #blockInMessageConfiguration.
+	source := self formatExpression:
+		          'aCollection do: [ :each | each foo ifTrue: [ self bar. self assert: firstArgumentValue + secondArgumentValue equals: thirdArgumentValue + fourthArgumentValue ] ]'.
+	self assert: source equals: 'aCollection do: [ :each |
+	each foo ifTrue: [
+		self bar.
+		self
+			assert: firstArgumentValue + secondArgumentValue
+			equals: thirdArgumentValue + fourthArgumentValue ] ]'
+]
+
 { #category : 'tests' }
 EFMessageExpressionTest >> testNewLineBeforeFirstKeyword [
 	| source |
@@ -1143,8 +1159,8 @@ EFMessageExpressionTest >> testNewLineBeforeStatementsWhenMultilineBlock [
 		assert: source
 		equals:
 'x = 0 ifFalse: [
-		tan := y asFloat / x asFloat.
-		theta := tan arcCos ]'
+	tan := y asFloat / x asFloat.
+	theta := tan arcCos ]'
 ]
 
 { #category : 'tests' }
@@ -1187,11 +1203,11 @@ EFMessageExpressionTest >> testNoNewLineBetweenVariableAndIfTrue [
 				  ungammaTable: gammaInverseTable ]'.
 	self assert: source equals: 
 'x ifTrue: [
-		aBitBlt
-			copyBitsColor: foreColorVal
-			alpha: foreColorAlpha
-			gammaTable: gammaTable
-			ungammaTable: gammaInverseTable ]'
+	aBitBlt
+		copyBitsColor: foreColorVal
+		alpha: foreColorAlpha
+		gammaTable: gammaTable
+		ungammaTable: gammaInverseTable ]'
 ]
 
 { #category : 'tests' }

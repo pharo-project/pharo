@@ -41,7 +41,8 @@ Class {
 		'lookAheadCode',
 		'mustSkip',
 		'doNotFormatMessageSelectors',
-		'doNotFormatMethodSelectors'
+		'doNotFormatMethodSelectors',
+		'lineIndent'
 	],
 	#classVars : [
 		'DefaultPrettyPrintContext',
@@ -1083,12 +1084,6 @@ EFFormatter >> currentLineLength [
 ]
 
 { #category : 'private - formatting' }
-EFFormatter >> decrementIdentation [
-
-	 indent := indent - 1
-]
-
-{ #category : 'private - formatting' }
 EFFormatter >> firstSeparatorShouldNotPassLine: aMessageNode [
 	"predicate that tells if the keyword should be forced to be on the same line."
 
@@ -1101,6 +1096,7 @@ EFFormatter >> firstSeparatorShouldNotPassLine: aMessageNode [
 EFFormatter >> format: aParseTree [
 
 	self initializeCodeStream.
+	lineIndent ifNil: [ lineIndent := indent ].
 	originalSource := aParseTree source.
 	self visitNode: aParseTree.
 	mustSkip ifTrue: [ ^ originalSource ].
@@ -1188,26 +1184,27 @@ EFFormatter >> formatBlock2: aBlockNode [
 { #category : 'private - formatting' }
 EFFormatter >> formatBlock: aBlockNode [
 	" see formatBlock2: for a possible alternate and faster definition."
+
 	| isMultiline |
-	
 	isMultiline := self willBeMultiline: aBlockNode body.
-	isMultiline ifTrue: [ self incrementIdentation ].
+	self
+		indent: (isMultiline
+			 ifTrue: [ 1 ]
+			 ifFalse: [ 0 ])
+		around: [
+			(self isEmptyBlock: aBlockNode) ifFalse: [ codeStream nextPutAll: self spacesInsideBlocksString ].
 
-	(self isEmptyBlock: aBlockNode) ifFalse: [ codeStream nextPutAll: self spacesInsideBlocksString ].
+			self formatBlockArgumentsFor: aBlockNode.
+			self formatBlockCommentFor: aBlockNode.
 
-	self formatBlockArgumentsFor: aBlockNode.
-	self formatBlockCommentFor: aBlockNode.
+			((isMultiline or: [ self isLineTooLongWithNode: aBlockNode body ]) and: [ self shouldPassNewLineAfterHeadOfBlock: aBlockNode ])
+				ifTrue: [ self newLine ].
 
-	((isMultiline or: [ self isLineTooLongWithNode: aBlockNode body ])
-		 and: [ self shouldPassNewLineAfterHeadOfBlock: aBlockNode ])
-		ifTrue: [ self newLine ].
+			self visitSequenceNode: aBlockNode body.
 
-	self visitSequenceNode: aBlockNode body.
-
-	(self lineUpBlockBrackets and: [ isMultiline ])
-		ifTrue: [ self newLine ]
-		ifFalse: [ codeStream nextPutAll: self spacesInsideBlocksString ].
-	isMultiline ifTrue: [ self decrementIdentation ].
+			(self lineUpBlockBrackets and: [ isMultiline ])
+				ifTrue: [ self newLine ]
+				ifFalse: [ codeStream nextPutAll: self spacesInsideBlocksString ] ]
 ]
 
 { #category : 'private - formatting' }
@@ -1420,6 +1417,7 @@ EFFormatter >> formattedSourceFor: aNode [
 	^ lookAheadCode at: aNode ifAbsentPut: [ 
 		  self class new
 			indent: self indent;
+			lineIndent: self lineIndent;
 			installNewContext: context;
 			lookAheadCode: lookAheadCode;
 			format: aNode ]
@@ -1451,12 +1449,6 @@ EFFormatter >> headOfBlockNotEmpty: aBlockNode [
 	^ aBlockNode arguments isNotEmpty or: [aBlockNode comments isNotEmpty]
 ]
 
-{ #category : 'private - formatting' }
-EFFormatter >> incrementIdentation [
-
-	 indent := indent + 1
-]
-
 { #category : 'accessing' }
 EFFormatter >> indent [
 	^ indent
@@ -1469,9 +1461,16 @@ EFFormatter >> indent: anInteger [
 ]
 
 { #category : 'private' }
-EFFormatter >> indent: anInteger around: aBlock [ 
-	self indent: self indent + anInteger.
-	^aBlock ensure: [self indent: self indent - anInteger]
+EFFormatter >> indent: anInteger around: aBlock [
+	"Indent the lines started in aBlock by anInteger levels from the line being written, not from the enclosing constructs.
+	Constructs that open on the same line, such as a keyword message and its block argument, share their levels, so a line is never indented more than anInteger levels deeper than the line its construct starts on."
+
+	| previousIndent |
+	previousIndent := indent.
+	indent := indent < lineIndent
+		ifTrue: [ indent + anInteger ]
+		ifFalse: [ indent max: lineIndent + anInteger ].
+	^ aBlock ensure: [ indent := previousIndent ]
 ]
 
 { #category : 'private' }
@@ -1647,6 +1646,18 @@ EFFormatter >> keepBlockInMessage [
 { #category : 'accessing' }
 EFFormatter >> keepBlockInMessage: aBoolean [
 	context keepBlockInMessage: aBoolean
+]
+
+{ #category : 'accessing' }
+EFFormatter >> lineIndent [
+
+	^ lineIndent
+]
+
+{ #category : 'accessing' }
+EFFormatter >> lineIndent: anInteger [
+
+	lineIndent := anInteger
 ]
 
 { #category : 'accessing' }
@@ -1833,6 +1844,7 @@ EFFormatter >> newLines: anInteger [
 	anInteger > 0 ifTrue: [ self cleanSpacesAtTheEnd ].
 	anInteger timesRepeat: [ codeStream cr ].
 	lineStart := codeStream position.
+	lineIndent := self indent.
 	self indentTimesRepeat: self indent
 ]
 
