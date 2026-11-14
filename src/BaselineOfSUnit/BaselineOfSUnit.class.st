@@ -41,7 +41,9 @@ BaselineOfSUnit >> baseline: spec [
 				package: 'SUnit-MockObjects' with: [ spec requires: #('SUnit-Core') ];
 				package: 'SUnit-Basic-CLI' with: [ spec requires: #('SUnit-Core' 'DebuggingUtils') ];
 
+				package: 'SUnit-SmokeVerifier' with: [ spec requires: #('SUnit-Core') ];
 				package: 'SUnit-Tests' with: [ spec requires: #('SUnit-Core') ];
+				package: 'SUnit-SmokeVerifier-Tests' with: [ spec requires: #('SUnit-SmokeVerifier') ];
 				package: 'SUnit-Visitor-Tests' with: [ spec requires: #('SUnit-Visitor') ];
 				package: 'SUnit-MockObjects-Tests' with: [ spec requires: #('SUnit-MockObjects') ];
 
@@ -55,8 +57,8 @@ BaselineOfSUnit >> baseline: spec [
 
 			"Custom groups"				
 			spec
-				group: 'Core' with: #('SUnit-Core' 'SUnit-Core-Traits' 'SUnit-Visitor' 'SUnit-MockObjects' 'SUnit-Basic-CLI');
-				group: 'Tests' with: #('SUnit-Tests' 'SUnit-Visitor-Tests' 'SUnit-MockObjects-Tests');
+				group: 'Core' with: #('SUnit-Core' 'SUnit-Core-Traits' 'SUnit-Visitor' 'SUnit-MockObjects' 'SUnit-Basic-CLI' 'SUnit-SmokeVerifier');
+				group: 'Tests' with: #('SUnit-Tests' 'SUnit-Visitor-Tests' 'SUnit-MockObjects-Tests' 'SUnit-SmokeVerifier-Tests');
 
 				group: 'UI' with: #('SUnit-UI');
 				group: 'UITests' with: #('SUnit-UI-Tests').
