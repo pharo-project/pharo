@@ -102,6 +102,15 @@ SmokeVerifierTest >> setUp [
 	<script>
 	^ 1 / 0' classified: #fixture.
 	
+	fixtureClass class compile: 'exampleRunning
+	<example>
+	^ Object new' classified: #fixture.
+		
+	fixtureClass class compile: 'exampleBreaking
+	<example>
+	^ 1 / 0' classified: #fixture.
+	
+	
 	fixtureClass class compile: 'sampleInstanceOfItsClass
 	<sampleInstance>
 	^ self new' classified: #fixture.
@@ -204,8 +213,10 @@ SmokeVerifierTest >> testPackageNameDifferingByCaseIsChecked [
 
 	| result |
 	result := (self scriptTestFor: { self fixturePackageName asLowercase }) suite run.
-	self assert: result runCount equals: 2.
-	self assert: (self failingMethodsIn: result) equals: #( #scriptBreaking )
+	self assert: result runCount equals: 4.
+	self assert: (self failingMethodsIn: result) size equals: 2.
+	self assert: ((self failingMethodsIn: result) includes: #scriptBreaking ).
+	self assert: ((self failingMethodsIn: result) includes: #exampleBreaking )
 ]
 
 { #category : 'tests - checking nothing' }
@@ -231,6 +242,7 @@ SmokeVerifierTest >> testSampleInstanceTestChecksTheClassOfEveryInstance [
 	| result |
 	result := (self sampleInstanceTestFor: { self fixturePackageName }) suite run.
 	self assert: result runCount equals: 3.
+	self assert: (self failingMethodsIn: result)  size equals: 2.
 	self assert: ((self failingMethodsIn: result) includes: #sampleInstanceOfAnotherClass ).
 	self assert: ((self failingMethodsIn: result) includes: #breakingSampleInstance ).
 ]
@@ -239,9 +251,11 @@ SmokeVerifierTest >> testSampleInstanceTestChecksTheClassOfEveryInstance [
 SmokeVerifierTest >> testScriptTestRunsEveryScript [
 
 	| result |
-	result := (self scriptTestFor: { self fixturePackageName }) suite run.
-	self assert: result runCount equals: 2.
-	self assert: (self failingMethodsIn: result) equals: #( #scriptBreaking )
+	result := (self scriptTestFor: { self fixturePackageName asLowercase }) suite run.
+	self assert: result runCount equals: 4.
+	self assert: (self failingMethodsIn: result) size equals: 2.
+	self assert: ((self failingMethodsIn: result) includes: #scriptBreaking ).
+	self assert: ((self failingMethodsIn: result) includes: #exampleBreaking )
 ]
 
 { #category : 'tests - checking nothing' }
