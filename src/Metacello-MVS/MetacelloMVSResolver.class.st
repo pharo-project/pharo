@@ -18,16 +18,15 @@ Class {
 		'spellings',
 		'chronologyChecked',
 		'replacements',
-		'currentRequirement',
 		'askedGroups',
 		'defaultAsked',
 		'requiredFrom',
 		'locked',
 		'assumedInstalled',
-		'rootRequest',
 		'resolution',
 		'dropsUnused',
-		'rootRepositories'
+		'rootRepositories',
+		'user'
 	],
 	#category : 'Metacello-MVS',
 	#package : 'Metacello-MVS'
@@ -39,6 +38,21 @@ MetacelloMVSResolver class >> on: aGraph [
 	^ self new setGraph: aGraph
 ]
 
+{ #category : 'metacello' }
+MetacelloMVSResolver >> addProjectOf: aCandidate to: aResolution [
+	"Add the resolved project of aCandidate to aResolution"
+	aResolution add: (self resolvedProjectOf: aCandidate into: aResolution ifNone: [ ^ self ])
+]
+
+{ #category : 'metacello' }
+MetacelloMVSResolver >> addRoot: aCandidate to: aResolution [
+	"Add the resolved project of the root aCandidate to aResolution, with its own request first"
+	| project |
+	project := self resolvedProjectOf: aCandidate into: aResolution ifNone: [ ^ self ].
+	aResolution addRoot: project.
+	project addRequest: aCandidate request
+]
+
 { #category : 'resolving' }
 MetacelloMVSResolver >> ask: aProjectSpec [
 	"Add the groups aProjectSpec asks (its loads, or the default ones) to those of its repository. Answer whether they grew"
@@ -46,7 +60,7 @@ MetacelloMVSResolver >> ask: aProjectSpec [
 	| repository loads asked size |
 	repository := graph repositoryUrlOf: aProjectSpec.
 	loads := aProjectSpec loads.
-	(loads isNil or: [ loads isEmpty ]) ifTrue: [
+	loads isEmpty ifTrue: [
 			(defaultAsked includes: repository) ifTrue: [ ^ false ].
 			defaultAsked add: repository.
 			^ true ].
@@ -64,28 +78,28 @@ MetacelloMVSResolver >> assumedInstalled: aCollectionOfRepositories [
 ]
 
 { #category : 'versions' }
-MetacelloMVSResolver >> candidateFor: aProjectSpec version: aVersion requiredBy: aCandidateOrNil [
-	"A candidate chosen for the request being resolved"
+MetacelloMVSResolver >> candidateFor: aProjectSpec version: aVersion requiredBy: aRequester in: aRequirement [
+	"A candidate chosen for aRequirement: its request is the one of aRequirement"
 
-	^ (MetacelloMVSCandidate
+	^ (MetacelloMVSCandidateVersion
 		   resolvedProject: (MetacelloResolvedProject projectSpec: aProjectSpec)
 		   repository: (graph repositoryUrlOf: aProjectSpec)
 		   path: (graph pathOf: aProjectSpec))
 		  version: aVersion;
-		  requiredBy: aCandidateOrNil;
-		  request: (self requestAbout: nil);
+		  requiredBy: aRequester;
+		  request: aRequirement request;
 		  yourself
 ]
 
 { #category : 'resolving' }
-MetacelloMVSResolver >> checkChronologyOf: aRepository about: aCandidate [
+MetacelloMVSResolver >> checkChronologyOf: aRepository about: aCandidate in: aRequirement [
 	"Within one vX.Y, a higher patch is never older than a lower one: an inversion (a version moved or misplaced) is a warning. Across minors and majors no order holds, a v2.1.5 can follow a v3.0.0. Checked once per repository"
 
 	| dates versions |
 	(chronologyChecked includes: aRepository) ifTrue: [ ^ self ].
 	chronologyChecked add: aRepository.
 	dates := graph datesOf: aRepository.
-	versions := ((graph versionsOf: aRepository) select: [ :each | (MetacelloSemanticVersionNumber isSemanticVersion: each) and: [ dates includesKey: each ] ]) collect: [
+	versions := ((graph versionsOf: aRepository ifFail: [ ^ self ]) select: [ :each | (MetacelloSemanticVersionNumber isSemanticVersion: each) and: [ dates includesKey: each ] ]) collect: [
 		            :each | MetacelloSemanticVersionNumber fromVersionString: each ].
 	(versions groupedBy: [ :each | each major -> each minor ]) valuesDo: [ :series |
 			| sorted |
@@ -97,26 +111,26 @@ MetacelloMVSResolver >> checkChronologyOf: aRepository about: aCandidate [
 								text:
 									aRepository , ' ' , lower string , ' (' , (dates at: lower string) asDate yyyymmdd , ') is newer than ' , higher string , ' ('
 									, (dates at: higher string) asDate yyyymmdd , ')'
-								about: aCandidate ] ] ]
+								about: aCandidate in: aRequirement ] ] ]
 ]
 
 { #category : 'resolving' }
-MetacelloMVSResolver >> checkLocked: aDescription minimum: aMinimum against: aLock about: aCandidate [
+MetacelloMVSResolver >> checkLocked: aDescription minimum: aMinimum against: aLock about: aCandidate in: aRequirement [
 	"aLock, a version locked in the registry, settles what aDescription asks, with a warning; a minimum of another major is an error"
 
 	aMinimum major = aLock version major ifFalse: [
 			^ self
 				  error: #majorConflict
 				  text: aDescription , ' needs another major than ' , aLock printString , ', locked in the registry'
-				  about: aCandidate ].
+				  about: aCandidate in: aRequirement ].
 	self
 		warning: #heldByLock
 		text: aDescription , ' is settled by ' , aLock printString , ', locked in the registry'
-		about: aCandidate
+		about: aCandidate in: aRequirement
 ]
 
 { #category : 'resolving' }
-MetacelloMVSResolver >> checkPin: aProjectSpec by: aCandidate [
+MetacelloMVSResolver >> checkPin: aProjectSpec by: aCandidate in: aRequirement [
 	"A requirement of a repository whose selected version is locked in the registry: the lock settles it and is never changed. Answer whether aProjectSpec is settled by it"
 
 	| lock |
@@ -127,15 +141,14 @@ MetacelloMVSResolver >> checkPin: aProjectSpec by: aCandidate [
 		checkLocked: (graph descriptionOf: aProjectSpec)
 		minimum: (self minimumOf: aProjectSpec)
 		against: lock
-		about: aCandidate.
+		about: aCandidate in: aRequirement.
 	^ true
 ]
 
 { #category : 'resolving' }
-MetacelloMVSResolver >> checkProjectOf: aCandidate [
+MetacelloMVSResolver >> checkProjectOf: aCandidate in: aRequirement [
 	"One project comes from one repository: two forks of it cannot both be loaded. Answer whether aCandidate may be selected"
 
-	aCandidate project ifNil: [ ^ true ].
 	projects
 		at: aCandidate project
 		ifPresent: [ :other |
@@ -144,29 +157,12 @@ MetacelloMVSResolver >> checkProjectOf: aCandidate [
 							error: #projectConflict
 							text:
 								'The project ' , aCandidate project , ' is required from two repositories: ' , aCandidate repository , ', and '
-								, other repository , ' by:' , String lf , other chainString
-							about: aCandidate.
+								, other repository , ', required by ' , other chainLine
+							about: aCandidate
+							in: aRequirement.
 						^ false ] ]
 		ifAbsent: [ projects at: aCandidate project put: aCandidate ].
 	^ true
-]
-
-{ #category : 'resolving' }
-MetacelloMVSResolver >> consider: aCandidate [
-	"An installed version is a requirement too, so that mvs never downgrades it. An installed version the legacy rule assumes is said"
-
-	(selected includesKey: aCandidate repository) ifFalse: [
-			installed at: aCandidate repository ifPresent: [ :each |
-					(self installedCandidateFrom: each for: aCandidate) ifNotNil: [ :installedCandidate |
-							(assumedInstalled notNil and: [ assumedInstalled includes: aCandidate repository ]) ifTrue: [
-									self
-										warning: #assumedInstalled
-										text: installedCandidate printString
-											,
-											' is assumed installed: its packages are in the image, but it is not registered as loaded. Reload it to register it exactly'
-										about: installedCandidate ].
-							self select: installedCandidate ] ] ].
-	self select: aCandidate
 ]
 
 { #category : 'initialization' }
@@ -177,15 +173,26 @@ MetacelloMVSResolver >> dropUnused: aBoolean [
 ]
 
 { #category : 'findings' }
-MetacelloMVSResolver >> error: aKind text: aString about: aCandidate [
-	"Record an error of aKind about aCandidate (and the requirement being resolved). Answer nil: the caller stops there"
+MetacelloMVSResolver >> error: aKind text: aString about: aCandidate in: aRequirement [
+	"Record an error of aKind about aCandidate, found resolving aRequirement"
 
 	self
 		record: #error
 		kind: aKind
 		text: aString
-		about: aCandidate.
-	^ nil
+		about: aCandidate
+		in: aRequirement
+]
+
+{ #category : 'findings' }
+MetacelloMVSResolver >> error: aKind text: aString on: aSubject [
+	"Record an error of aKind about aSubject, found outside any requirement"
+
+	self
+		record: #error
+		kind: aKind
+		text: aString
+		on: aSubject
 ]
 
 { #category : 'metacello' }
@@ -199,31 +206,16 @@ MetacelloMVSResolver >> hasBaselineOf: aProjectSpec [
 		  ifAbsent: [ false ]
 ]
 
-{ #category : 'findings' }
-MetacelloMVSResolver >> holdInRequirement: aFinding [
-
-	currentRequirement ifNotNil: [ :requirement | requirement findings add: aFinding ]
-]
-
 { #category : 'metacello' }
 MetacelloMVSResolver >> installed: aDictionary [
-	"Repository -> what the image has loaded from it: a project spec, or just its version"
-
+	"Repository -> the project spec the image loaded from it"
 	installed := aDictionary
 ]
 
 { #category : 'resolving' }
-MetacelloMVSResolver >> installedCandidateFrom: aProjectSpecOrVersion for: aCandidate [
-	"The candidate for the version the image has of the repository of aCandidate (locked or not); nil when the registration names no version"
-
-	| spec ref |
-	spec := aProjectSpecOrVersion isString
-		        ifTrue: [ graph specFor: aCandidate repository , ':' , aProjectSpecOrVersion project: aCandidate project loads: #(  ) ]
-		        ifFalse: [ aProjectSpecOrVersion ].
-	ref := graph versionStringOf: spec.
-	(ref notNil and: [ MetacelloSemanticVersionNumber isSemanticVersion: ref ]) ifFalse: [ ^ nil ].
-	^ (self candidateFor: spec version: (MetacelloSemanticVersionNumber fromVersionString: ref) requiredBy: nil)
-		  beInstalled;
+MetacelloMVSResolver >> installedCandidateFrom: aProjectSpec for: aCandidate in: aRequirement [
+	"The candidate for the version the image has of the repository of aCandidate (locked or not), required by the image. Asked only when it is installed at a version (#isInstalledAtAVersion:)"
+	^ (self candidateFor: aProjectSpec version: (MetacelloSemanticVersionNumber fromVersionString: (graph versionStringOf: aProjectSpec)) requiredBy: MetacelloImageRequest new in: aRequirement)
 		  in: [ :candidate | (self isLocked: candidate repository) ifTrue: [ candidate beLocked ] ];
 		  yourself
 ]
@@ -259,17 +251,24 @@ MetacelloMVSResolver >> isFloating: aProjectSpec [
 ]
 
 { #category : 'resolving' }
+MetacelloMVSResolver >> isInstalledAtAVersion: aProjectSpec [
+	"Whether what the image has installed, loaded from aProjectSpec, is at a semantic version, which can be compared with the versions asked. A branch or a commit is not"
+	^ (graph versionStringOf: aProjectSpec)
+		  ifNil: [ false ]
+		  ifNotNil: [ :ref | MetacelloSemanticVersionNumber isSemanticVersion: ref ]
+]
+
+{ #category : 'resolving' }
 MetacelloMVSResolver >> isLocked: aRepository [
 
-	^ locked notNil and: [ locked includes: aRepository ]
+	^ locked includes: aRepository
 ]
 
 { #category : 'metacello' }
 MetacelloMVSResolver >> isRequestOfASelectedVersion: aRequirement in: aResolution [
-	"Only the requirements of the versions selected ask groups: superseded versions are not loaded"
+	"Only the requirements of the versions selected, and the user's, ask groups: superseded versions are not loaded"
 
-	aRequirement reference ifNil: [ ^ false ].
-	^ (aResolution buildList at: aRequirement from repository ifAbsent: [ nil ]) == aRequirement from
+	^ aRequirement from isSelectedIn: aResolution
 ]
 
 { #category : 'versions' }
@@ -286,13 +285,12 @@ MetacelloMVSResolver >> isVersioned: aProjectSpec [
 MetacelloMVSResolver >> keep: aFinding about: aCandidate [
 	"Keep aFinding, found reading the baseline of aCandidate, once"
 
-	| finding |
-	finding := (resolution
-		            findingKind: aFinding kind
-		            severity: aFinding severity
-		            text: aFinding text
-		            about: aCandidate) ifNil: [ resolution add: aFinding about: aCandidate ].
-	self holdInRequirement: finding
+	resolution
+		findingKind: aFinding kind
+		severity: aFinding severity
+		text: aFinding text
+		about: aCandidate
+		ifNone: [ resolution add: aFinding about: aCandidate ]
 ]
 
 { #category : 'resolving' }
@@ -300,6 +298,25 @@ MetacelloMVSResolver >> locked: aCollectionOfRepositories [
 	"The repositories whose installed version the registry locks"
 
 	locked := aCollectionOfRepositories asSet
+]
+
+{ #category : 'resolving' }
+MetacelloMVSResolver >> majorConflictOf: aCandidate against: anotherCandidate in: aRequirement [
+	"An error, attached to aRequirement: aCandidate is another major than anotherCandidate, selected already. Its text names both versions; its description, who asked each"
+
+	| text finding |
+	text := aCandidate project , ' ' , anotherCandidate version string , ' and ' , aCandidate version string.
+	finding := resolution
+		           findingKind: #majorConflict
+		           severity: #error
+		           text: text
+		           about: aCandidate
+		           ifNone: [
+				           resolution
+					           addMajorConflict: (MetacelloResolutionFinding error: #majorConflict text: text request: aRequirement request)
+					           about: aCandidate
+					           against: anotherCandidate ].
+	aRequirement findings add: finding
 ]
 
 { #category : 'versions' }
@@ -314,23 +331,52 @@ MetacelloMVSResolver >> minimumOf: aProjectSpec [
 ]
 
 { #category : 'findings' }
-MetacelloMVSResolver >> record: aSeverity kind: aKind text: aString about: aCandidate [
-	"Keep a problem once, about the request it concerns (see requestAbout:)"
+MetacelloMVSResolver >> record: aSeverity kind: aKind text: aString about: aCandidate in: aRequirement [
+	"Keep a problem once, about the request of aRequirement, and attach it to aRequirement"
 
 	| finding |
-	finding := (resolution
-		            findingKind: aKind
-		            severity: aSeverity
-		            text: aString
-		            about: aCandidate) ifNil: [
+	finding := resolution
+		           findingKind: aKind
+		           severity: aSeverity
+		           text: aString
+		           about: aCandidate
+		           ifNone: [
 			           resolution
 				           add: (MetacelloResolutionFinding
 						            severity: aSeverity
 						            kind: aKind
 						            text: aString
-						            request: (self requestAbout: aCandidate))
+						            request: aRequirement request)
 				           about: aCandidate ].
-	self holdInRequirement: finding
+	aRequirement findings add: finding
+]
+
+{ #category : 'findings' }
+MetacelloMVSResolver >> record: aSeverity kind: aKind text: aString on: aSubject [
+	"Keep a problem once, about the request of aSubject: found outside any requirement"
+
+	resolution
+		findingKind: aKind
+		severity: aSeverity
+		text: aString
+		about: aSubject
+		ifNone: [
+				resolution
+					add: (MetacelloResolutionFinding
+							 severity: aSeverity
+							 kind: aKind
+							 text: aString
+							 request: aSubject request)
+					about: aSubject ]
+]
+
+{ #category : 'upgrades' }
+MetacelloMVSResolver >> releasesOf: aRepository [
+	"The versions of aRepository a baseline can ask as a minimum: no prereleases, tolerated spellings included. None when its versions cannot be read: that was reported already"
+
+	^ (((graph versionsOf: aRepository ifFail: [ :why | ^ #(  ) ]) select: [ :each |
+		    MetacelloSemanticVersionNumber isSemanticVersion: each ]) collect: [ :each |
+		   MetacelloSemanticVersionNumber fromVersionString: each ]) reject: [ :each | each isPrerelease ]
 ]
 
 { #category : 'resolving' }
@@ -343,20 +389,20 @@ MetacelloMVSResolver >> replace: aDictionary about: aRootCandidate [
 			(graph hasVersions: spec)
 				ifTrue: [
 						replacements at: name put: spec.
-						self warning: #replaced text: name , ' is replaced by ' , repositoryString about: aRootCandidate ]
+						self warning: #replaced text: name , ' is replaced by ' , repositoryString on: aRootCandidate ]
 				ifFalse: [
 						self
 							error: #invalidReference
 							text: name , ' is replaced by ' , repositoryString printString , ', not a with versions repository'
-							about: aRootCandidate ] ]
+							on: aRootCandidate ] ]
 ]
 
 { #category : 'resolving' }
-MetacelloMVSResolver >> replacementFor: aProjectSpec by: aCandidate [
+MetacelloMVSResolver >> replacementFor: aProjectSpec by: aCandidate in: aRequirement [
 	"The replacement of the project of aProjectSpec, if the root replaces it; a higher minimum than the replacement is ignored, with a warning"
 
 	| replacement |
-	replacement := replacements at: ((graph projectOf: aProjectSpec) ifNil: [ ^ aProjectSpec ]) ifAbsent: [ ^ aProjectSpec ].
+	replacement := replacements at: (graph projectOf: aProjectSpec) ifAbsent: [ ^ aProjectSpec ].
 	(graph descriptionOf: aProjectSpec) = (graph descriptionOf: replacement) ifTrue: [ ^ aProjectSpec ].
 	((self isVersioned: aProjectSpec) and: [
 		 (self isVersioned: replacement) and: [ (self minimumOf: replacement) < (self minimumOf: aProjectSpec) ] ]) ifTrue: [
@@ -364,100 +410,140 @@ MetacelloMVSResolver >> replacementFor: aProjectSpec by: aCandidate [
 				warning: #higherThanReplace
 				text: (graph descriptionOf: aProjectSpec) , ' asks for more than its replacement ' , (graph descriptionOf: replacement)
 					, ', which is kept'
-				about: aCandidate ].
+				about: aCandidate in: aRequirement ].
 	^ replacement
 ]
 
-{ #category : 'findings' }
-MetacelloMVSResolver >> requestAbout: aCandidateOrNil [
-	"The request a finding about aCandidateOrNil is about: the current requirement's, else the one aCandidateOrNil was chosen for, else the root's"
+{ #category : 'upgrades' }
+MetacelloMVSResolver >> reportUpgrades [
+	"The resolution is over: for each requirement of a selected version, report as infos the newer versions its baseline could ask for. Requirements of versions not selected are left out: a newer version of their baseline exists already"
 
-	currentRequirement ifNotNil: [ :requirement | ^ requirement request ].
-	^ (aCandidateOrNil ifNotNil: [ aCandidateOrNil request ]) ifNil: [ rootRequest ]
+	resolution requirements do: [ :each | (resolution isSuperseded: each) ifFalse: [ self reportUpgradesOf: each ] ]
+]
+
+{ #category : 'upgrades' }
+MetacelloMVSResolver >> reportUpgradesOf: aRequirement [
+	"Infos about what aRequirement could ask instead: the version MVS selected already (#raisedByOthers), the latest of its major (#newerInMajor), a newer major (#newerMajor), or, when it names no version, the latest version (#taggedVersionAvailable)"
+
+	| releases asked latestInMajor newest |
+	"A requirement that stopped before its reference was read (no versions) has no repository"
+	aRequirement repository ifNil: [ ^ self ].
+	releases := self releasesOf: aRequirement repository.
+	releases ifEmpty: [ ^ self ].
+	newest := releases max.
+	asked := aRequirement from displayName , ' asks for ' , (graph descriptionOf: aRequirement asked).
+	"A requirement that names no version, or is pinned, never gets a minimum"
+	aRequirement minimum ifNil: [
+			(aRequirement findings anySatisfy: [ :each | each kind = #unversionedReference ]) ifTrue: [
+					self
+						upgrade: #taggedVersionAvailable
+						to: newest
+						asked: 'no version'
+						text: asked , ', which names no version; can ask for :' , newest string
+						about: aRequirement ].
+			^ self ].
+	"A requirement whose version could not be found or selected is never resolved"
+	aRequirement resolved ifNil: [ ^ self ].
+	aRequirement isRaised ifTrue: [
+			self
+				upgrade: #raisedByOthers
+				to: aRequirement resolved version
+				asked: (graph versionStringOf: aRequirement reference)
+				text:
+				asked , '; already selected at ' , aRequirement resolved version string , ' by '
+				, aRequirement resolved requiredBy displayName
+				about: aRequirement ].
+	latestInMajor := (releases select: [ :each | each major = aRequirement minimum major ]) max.
+	latestInMajor > aRequirement resolved version ifTrue: [
+			self
+				upgrade: #newerInMajor
+				to: latestInMajor
+				asked: (graph versionStringOf: aRequirement reference)
+				text: asked , '; can ask for :' , latestInMajor string
+				about: aRequirement ].
+	newest major > aRequirement minimum major ifTrue: [
+			self
+				upgrade: #newerMajor
+				to: newest
+				asked: (graph versionStringOf: aRequirement reference)
+				text: asked , '; a newer major exists: ' , newest string
+				about: aRequirement ]
 ]
 
 { #category : 'resolving' }
 MetacelloMVSResolver >> require: aRequiredSpec by: aCandidate [
-	"Resolve one requirement, recorded as an MetacelloMVSRequirement (but the root's own). An error stops it there"
+	"Resolve one requirement, recorded as a MetacelloMVSRequirement and passed to what it calls, which attach their findings to it. aCandidate asked for it: a candidate version, or the user for a root. An error stops it there"
 
-	aCandidate ifNotNil: [
-		currentRequirement := resolution addRequirement: (MetacelloMVSRequirement from: aCandidate asked: aRequiredSpec) ].
-	[
-		| spec repository version grew |
-		(graph hasVersions: aRequiredSpec) ifFalse: [
-			^ self error: #invalidReference text: (self whyNoVersions: aRequiredSpec) about: aCandidate ].
-		spec := self spell: (self replacementFor: aRequiredSpec by: aCandidate) by: aCandidate.
-		repository := graph repositoryUrlOf: spec.
-		currentRequirement ifNotNil: [ :requirement |
-				requirement
-					reference: spec;
-					repository: repository ].
-		grew := self ask: spec.
-		(self checkPin: spec by: aCandidate) ifTrue: [
-				grew ifTrue: [ self revisit: repository ].
-				^ self ].
-		(self isVersioned: spec) ifFalse: [
-			^ self error: #unversionedReference text: (graph descriptionOf: spec) , ' names no version' about: aCandidate ].
-		(self isFloating: spec)
-			ifTrue: [
-					self
-						warning: #floatingVersion
-						text: (graph descriptionOf: spec) , ' names a floating version, taken as its first version ' , (self minimumOf: spec) string
-						about: aCandidate ]
-			ifFalse: [
-					(MetacelloSemanticVersionNumber isCanonical: (graph versionStringOf: spec)) ifFalse: [
-						self
-							warning: #nonCanonicalVersion
-							text: (graph descriptionOf: spec) , ' names a version that is not vX.Y.Z'
-							about: aCandidate ] ].
-		currentRequirement ifNotNil: [ :requirement | requirement minimum: (self minimumOf: spec) ].
-		version := self versionFor: spec requiredBy: aCandidate.
-		version ifNil: [ ^ self ].
-		(version isCanonical or: [ version string = (graph versionStringOf: spec) ]) ifFalse: [
+	| requirement spec repository version grew |
+	requirement := resolution addRequirement: (MetacelloMVSRequirement from: aCandidate asked: aRequiredSpec).
+	(graph hasVersions: aRequiredSpec) ifFalse: [
+		^ self error: #invalidReference text: (self whyNoVersions: aRequiredSpec) about: aCandidate in: requirement ].
+	spec := self spell: (self replacementFor: aRequiredSpec by: aCandidate in: requirement) by: aCandidate in: requirement.
+	repository := graph repositoryUrlOf: spec.
+	requirement
+		reference: spec;
+		repository: repository.
+	grew := self ask: spec.
+	(self checkPin: spec by: aCandidate in: requirement) ifTrue: [
+			grew ifTrue: [ self revisit: repository ].
+			^ self ].
+	(self isVersioned: spec) ifFalse: [
+		^ self error: #unversionedReference text: (graph descriptionOf: spec) , ' names no version' about: aCandidate in: requirement ].
+	(self isFloating: spec)
+		ifTrue: [
 				self
-					warning: #nonCanonicalVersion
-					text: repository , ' ' , version string , ' is selected, a version that is not vX.Y.Z'
-					about: aCandidate ].
-		self consider: (self candidateFor: spec version: version requiredBy: aCandidate).
-		grew ifTrue: [ self revisit: repository ] ] ensure: [ currentRequirement := nil ]
+					warning: #floatingVersion
+					text: (graph projectOf: spec) , ' ' , (graph versionStringOf: spec) , ', taken as ' , (self minimumOf: spec) string
+					about: aCandidate
+					in: requirement ]
+		ifFalse: [
+				(MetacelloSemanticVersionNumber isCanonical: (graph versionStringOf: spec)) ifFalse: [
+					self
+						warning: #nonCanonicalVersion
+						text: (graph projectOf: spec) , ' ' , (graph versionStringOf: spec)
+						about: aCandidate
+						in: requirement ] ].
+	requirement minimum: (self minimumOf: spec).
+	version := self versionFor: spec requiredBy: aCandidate in: requirement ifNone: [ ^ self ].
+	(version isCanonical or: [ version string = (graph versionStringOf: spec) ]) ifFalse: [
+			self
+				warning: #nonCanonicalVersion
+				text: (graph projectOf: spec) , ' ' , version string , ', selected'
+				about: aCandidate
+				in: requirement ].
+	self requireVersion: (self candidateFor: spec version: version requiredBy: aCandidate in: requirement) in: requirement.
+	grew ifTrue: [ self revisit: repository ]
 ]
 
 { #category : 'resolving' }
-MetacelloMVSResolver >> reset [
-	selected := Dictionary new.
-	projects := Dictionary new.
-	spellings := Dictionary new.
-	replacements := Dictionary new.
-	chronologyChecked := Set new.
-	visited := Set new.
-	pending := OrderedCollection new.
-	askedGroups := Dictionary new.
-	defaultAsked := Set new.
-	requiredFrom := Dictionary new.
-	rootRepositories := OrderedCollection new.
-	currentRequirement := nil.
-	rootRequest := nil.
-	resolution := MetacelloMVSResolution new
+MetacelloMVSResolver >> requireVersion: aCandidate in: aRequirement [
+	"Each requirement can raise the selected version, never lower it. An installed version counts as a requirement, so that MVS never downgrades it. A version that is only assumed installed is reported with a warning."
+	(selected includesKey: aCandidate repository) ifFalse: [
+			installed at: aCandidate repository ifPresent: [ :each |
+					(self isInstalledAtAVersion: each) ifTrue: [
+							| installedCandidate |
+							installedCandidate := self installedCandidateFrom: each for: aCandidate in: aRequirement.
+							(assumedInstalled includes: aCandidate repository) ifTrue: [
+									self
+										warning: #assumedInstalled
+										text: installedCandidate printString
+											, ' is assumed installed: its packages are in the image, but it is not registered as loaded. Reload it to register it exactly'
+										about: installedCandidate in: aRequirement ].
+							self select: installedCandidate in: aRequirement ] ] ].
+	self select: aCandidate in: aRequirement
 ]
 
 { #category : 'metacello' }
 MetacelloMVSResolver >> resolutionOf: aResolution [
 	"aResolution, the walk done, for Metacello to record: when it has no errors, every selected project, the roots first in their order, with the requests of selected versions (each root's own first)"
-
 	| roots |
 	aResolution hasErrors ifTrue: [ ^ aResolution ].
 	roots := aResolution rootCandidates.
-	roots do: [ :candidate |
-			(self resolvedProjectOf: candidate into: aResolution) ifNotNil: [ :project |
-					aResolution addRoot: project.
-					project addRequest: candidate request ] ].
-	aResolution buildList valuesDo: [ :candidate |
-			(roots includes: candidate) ifFalse: [
-				(self resolvedProjectOf: candidate into: aResolution) ifNotNil: [ :project | aResolution add: project ] ] ].
+	roots do: [ :candidate | self addRoot: candidate to: aResolution ].
+	aResolution buildList valuesDo: [ :candidate | (roots includes: candidate) ifFalse: [ self addProjectOf: candidate to: aResolution ] ].
 	aResolution requirements do: [ :requirement |
 			(self isRequestOfASelectedVersion: requirement in: aResolution) ifTrue: [
-					(aResolution buildList at: requirement repository ifAbsent: [ nil ]) ifNotNil: [ :candidate |
-						candidate resolvedProject addRequest: requirement request ] ] ].
+				(aResolution buildList at: requirement repository) resolvedProject addRequest: requirement request ] ].
 	^ aResolution
 ]
 
@@ -477,26 +563,24 @@ MetacelloMVSResolver >> resolve: aRepositoryString project: aProjectName loads: 
 
 { #category : 'resolving' }
 MetacelloMVSResolver >> resolveRoots: aCollectionOfProjectSpecs [
-	"Walk the requirements from each root aCollectionOfProjectSpecs names, in order, as far as possible and answer the MetacelloMVSResolution: the build list, the requirements met and the findings. Each project is read for the union of the groups its dependents ask. At the end, the projects nobody selected uses are dropped (see dropUnused:)"
+	"Walk the requirements from each root aCollectionOfProjectSpecs names, in order, as far as possible and answer the MetacelloMVSResolution: the build list, the requirements met and the findings. The user requires the roots. Each project is read for the union of the groups its dependents ask. At the end, the projects nobody selected uses are dropped (see dropUnused:), and the newer versions the baselines could ask for are reported as infos (see reportUpgrades)"
 
-	self reset.
 	aCollectionOfProjectSpecs ifEmpty: [
-			self error: #invalidReference text: 'Nothing to load: no root' about: nil.
+			self error: #invalidReference text: 'Nothing to load: no root' on: user.
 			^ resolution ].
-	rootRequest := MetacelloProjectRequest requester: nil projectSpec: aCollectionOfProjectSpecs first.
 	aCollectionOfProjectSpecs do: [ :root |
 			(graph hasVersions: root)
 				ifTrue: [
 				(rootRepositories includes: (graph repositoryUrlOf: root)) ifFalse: [ rootRepositories add: (graph repositoryUrlOf: root) ] ]
-				ifFalse: [
-				self error: #invalidReference text: (self whyNoVersions: root) about: nil ] ].
+				ifFalse: [ self error: #invalidReference text: (self whyNoVersions: root) on: user ] ].
 	resolution hasErrors ifTrue: [ ^ resolution ].
 	resolution rootRepositories: rootRepositories.
-	aCollectionOfProjectSpecs do: [ :spec | self require: spec by: nil ].
+	aCollectionOfProjectSpecs do: [ :spec | self require: spec by: user ].
 	[ pending isEmpty ] whileFalse: [ self visit: pending removeFirst ].
 	resolution buildList: (dropsUnused
 			 ifTrue: [ self usedIn: selected ]
 			 ifFalse: [ selected ]).
+	self reportUpgrades.
 	^ resolution
 ]
 
@@ -508,25 +592,19 @@ MetacelloMVSResolver >> resolveRoots: someProjectSpecs engine: anEngine [
 ]
 
 { #category : 'metacello' }
-MetacelloMVSResolver >> resolvedProjectOf: aCandidate into: aResolution [
-	"The resolved project of aCandidate, given its spec at its version, its project built from the baseline read in the sandbox, so that Metacello records it without loading its BaselineOf. Its BaselineOf is installed after the load, unless the image has it from there or it is pinned"
+MetacelloMVSResolver >> resolvedProjectOf: aCandidate into: aResolution ifNone: aBlock [
+	"The resolved project of aCandidate, given its spec at its version, its project built from the baseline read in the sandbox, so that Metacello records it without loading its BaselineOf. Its BaselineOf is installed after the load, unless the image has it from there or it is pinned. When the baseline fails, the error is recorded and aBlock answers"
 
 	| reading project spec resolved |
 	reading := graph readingOf: aCandidate.
-	reading baselineClass ifNil: [
-			aResolution addFinding: (MetacelloResolutionFinding
-					 error: #baselineFailure
-					 text: 'No baseline was read for ' , aCandidate printString
-					 request: aCandidate request).
-			^ nil ].
 	project := [ reading newProject ]
 		           on: Error
 		           do: [ :error |
 				           aResolution addFinding: (MetacelloResolutionFinding
 						            error: #baselineFailure
-						            text: 'The baseline of ' , aCandidate printString , ' fails: ' , error description
+						            text: aCandidate displayName , ': ' , error description
 						            request: aCandidate request).
-				           ^ nil ].
+				           ^ aBlock value ].
 	spec := (MetacelloProjectSpec project: project)
 		        name: aCandidate project;
 		        className: 'BaselineOf' , aCandidate project;
@@ -549,26 +627,23 @@ MetacelloMVSResolver >> revisit: aRepository [
 ]
 
 { #category : 'resolving' }
-MetacelloMVSResolver >> select: aCandidate [
+MetacelloMVSResolver >> select: aCandidate in: aRequirement [
 
-	| current |
-	(self checkProjectOf: aCandidate) ifFalse: [ ^ self ].
-	current := selected at: aCandidate repository ifAbsent: [ nil ].
-	current ifNotNil: [
-			current isLocked ifTrue: [
-					^ self
-						  checkLocked: aCandidate printString
-						  minimum: aCandidate version
-						  against: current
-						  about: aCandidate ].
-			current version major = aCandidate version major ifFalse: [
-					^ self
-						  error: #majorConflict
-						  text:
-							  'Two majors of ' , aCandidate repository , ' are required: ' , aCandidate version string , ', and ' , current version string
-							  , ' by:' , String lf , current chainString
-						  about: aCandidate ] ].
-	(current isNil or: [ current version < aCandidate version ]) ifTrue: [ selected at: aCandidate repository put: aCandidate ].
+	(self checkProjectOf: aCandidate in: aRequirement) ifFalse: [ ^ self ].
+	selected
+		at: aCandidate repository
+		ifPresent: [ :current |
+				current isLocked ifTrue: [
+						^ self
+							  checkLocked: aCandidate printString
+							  minimum: aCandidate version
+							  against: current
+							  about: aCandidate
+							  in: aRequirement ].
+				current version major = aCandidate version major ifFalse: [
+					^ self majorConflictOf: aCandidate against: current in: aRequirement ].
+				current version < aCandidate version ifTrue: [ selected at: aCandidate repository put: aCandidate ] ]
+		ifAbsent: [ selected at: aCandidate repository put: aCandidate ].
 	(visited includes: aCandidate repository -> aCandidate version) ifTrue: [ ^ self ].
 	visited add: aCandidate repository -> aCandidate version.
 	pending add: aCandidate
@@ -576,14 +651,30 @@ MetacelloMVSResolver >> select: aCandidate [
 
 { #category : 'initialization' }
 MetacelloMVSResolver >> setGraph: aGraph [
+	"A resolver resolves once: make another one to resolve again"
 
 	graph := aGraph.
 	installed := Dictionary new.
-	dropsUnused := true
+	locked := Set new.
+	assumedInstalled := Set new.
+	dropsUnused := true.
+	selected := Dictionary new.
+	projects := Dictionary new.
+	spellings := Dictionary new.
+	replacements := Dictionary new.
+	chronologyChecked := Set new.
+	visited := Set new.
+	pending := OrderedCollection new.
+	askedGroups := Dictionary new.
+	defaultAsked := Set new.
+	requiredFrom := Dictionary new.
+	rootRepositories := OrderedCollection new.
+	user := MetacelloUserRequest new.
+	resolution := MetacelloMVSResolution new
 ]
 
 { #category : 'resolving' }
-MetacelloMVSResolver >> spell: aProjectSpec by: aCandidate [
+MetacelloMVSResolver >> spell: aProjectSpec by: aCandidate in: aRequirement [
 	"Repositories are told apart ignoring case: the first spelling seen stands for them all, and another spelling is a warning"
 
 	| repository first |
@@ -593,11 +684,30 @@ MetacelloMVSResolver >> spell: aProjectSpec by: aCandidate [
 	self
 		warning: #spelling
 		text: (graph descriptionOf: aProjectSpec) , ' spells ' , first , ' with another capitalization'
-		about: aCandidate.
+		about: aCandidate in: aRequirement.
 	^ graph
 		  specFor: first , ((graph descriptionOf: aProjectSpec) allButFirst: repository size)
 		  project: (graph projectOf: aProjectSpec)
 		  loads: aProjectSpec loads
+]
+
+{ #category : 'upgrades' }
+MetacelloMVSResolver >> upgrade: aKind to: aVersion asked: aString text: aText about: aRequirement [
+	"Record once an info of aKind proposing aRequirement asks for aVersion instead of aString, and attach it to aRequirement"
+
+	| finding |
+	finding := resolution
+		           findingKind: aKind
+		           severity: #info
+		           text: aText
+		           about: aRequirement from
+		           ifNone: [
+				           resolution
+					           add: ((MetacelloMVSUpgradeFinding info: aKind text: aText request: aRequirement request)
+							            project: (graph projectOf: aRequirement asked) asked: aString version: aVersion string;
+							            yourself)
+					           about: aRequirement from ].
+	aRequirement findings add: finding
 ]
 
 { #category : 'resolving' }
@@ -621,23 +731,25 @@ MetacelloMVSResolver >> usedIn: aBuildList [
 ]
 
 { #category : 'resolving' }
-MetacelloMVSResolver >> versionFor: aProjectSpec requiredBy: aCandidate [
-	"The lowest version at least the minimum, in its major. A prerelease only when it is the minimum itself. Between two spellings of one version (v1.2 and v1.2.0), the canonical one. nil, with an error, when there is none"
+MetacelloMVSResolver >> versionFor: aProjectSpec requiredBy: aCandidate in: aRequirement ifNone: aBlock [
+	"The lowest version at least the minimum, in its major. A prerelease only when it is the minimum itself. Between two spellings of one version (v1.2 and v1.2.0), the canonical one. When there is none, the error is recorded and aBlock answers"
 
 	| repository minimum candidates lowest |
 	repository := graph repositoryUrlOf: aProjectSpec.
 	minimum := self minimumOf: aProjectSpec.
-	candidates := ((graph versionsOf: repository) select: [ :each | MetacelloSemanticVersionNumber isSemanticVersion: each ]) collect: [ :each |
+	candidates := ((graph versionsOf: repository ifFail: [ :text |
+			   self error: #repositoryFailure text: text about: aCandidate in: aRequirement.
+			   ^ aBlock value ]) select: [ :each | MetacelloSemanticVersionNumber isSemanticVersion: each ]) collect: [ :each |
 		              MetacelloSemanticVersionNumber fromVersionString: each ].
-	(graph failureOf: repository) ifNotNil: [ :text | ^ self error: #repositoryFailure text: text about: aCandidate ].
-	self checkChronologyOf: repository about: aCandidate.
+	self checkChronologyOf: repository about: aCandidate in: aRequirement.
 	candidates := candidates select: [ :each |
 		              each major = minimum major and: [ each >= minimum and: [ each isPrerelease not or: [ each = minimum ] ] ] ].
 	candidates ifEmpty: [
-			^ self
-				  error: #missingVersion
-				  text: (graph descriptionOf: aProjectSpec) , ' has no version at least ' , minimum string , ' in major ' , minimum major printString
-				  about: aCandidate ].
+			self
+				error: #missingVersion
+				text: (graph descriptionOf: aProjectSpec) , ' has no version at least ' , minimum string , ' in major ' , minimum major printString
+				about: aCandidate in: aRequirement.
+			^ aBlock value ].
 	lowest := candidates detectMin: [ :each | each ].
 	^ (candidates select: [ :each | each = lowest ]) detect: [ :each | each isCanonical ] ifNone: [ lowest ]
 ]
@@ -648,13 +760,15 @@ MetacelloMVSResolver >> visit: aCandidate [
 
 	| reading found specs already |
 	reading := graph readingOf: aCandidate.
-	found := MetacelloMVSBaselineReading new request: aCandidate request; yourself.
+	found := MetacelloMVSBaselineReading new
+		         request: aCandidate request;
+		         yourself.
 	specs := reading
 		         referencesForGroups: (askedGroups at: aCandidate repository ifAbsent: [ #(  ) ])
 		         includingDefault: (defaultAsked includes: aCandidate repository)
 		         into: found.
 	reading findings , found findings do: [ :each | self keep: each about: aCandidate ].
-	((rootRepositories includes: aCandidate repository) and: [ aCandidate requiredBy isNil ])
+	aCandidate mustReplace
 		ifTrue: [ self replace: reading replacements about: aCandidate ]
 		ifFalse: [
 				reading replacements ifNotEmpty: [ :replaces |
@@ -662,7 +776,7 @@ MetacelloMVSResolver >> visit: aCandidate [
 							warning: #ignoredReplace
 							text: 'The baseline of ' , aCandidate printString , ' replaces ' , (', ' join: replaces keys sorted)
 								, ', ignored: only the replaces of the root apply'
-							about: aCandidate ] ].
+							on: aCandidate ] ].
 	already := requiredFrom at: aCandidate repository -> aCandidate version ifAbsentPut: [ Set new ].
 	specs do: [ :each |
 			| key |
@@ -673,14 +787,26 @@ MetacelloMVSResolver >> visit: aCandidate [
 ]
 
 { #category : 'findings' }
-MetacelloMVSResolver >> warning: aKind text: aString about: aCandidate [
-	"Record a warning of aKind about aCandidate (and the requirement being resolved): accepted, but to deprecate"
+MetacelloMVSResolver >> warning: aKind text: aString about: aCandidate in: aRequirement [
+	"Record a warning of aKind about aCandidate, found resolving aRequirement: accepted, but to deprecate"
 
 	self
 		record: #warning
 		kind: aKind
 		text: aString
 		about: aCandidate
+		in: aRequirement
+]
+
+{ #category : 'findings' }
+MetacelloMVSResolver >> warning: aKind text: aString on: aSubject [
+	"Record a warning of aKind about aSubject, found outside any requirement: accepted, but to deprecate"
+
+	self
+		record: #warning
+		kind: aKind
+		text: aString
+		on: aSubject
 ]
 
 { #category : 'resolving' }

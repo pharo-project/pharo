@@ -37,7 +37,7 @@ MetacelloMVSScriptTest >> fooScript [
 { #category : 'running' }
 MetacelloMVSScriptTest >> resolver [
 
-	^ MetacelloMVSResolver on: (MetacelloMVSGraph new source: source)
+	^ MetacelloMVSResolver on: (MetacelloMVSGraph on: source)
 ]
 
 { #category : 'running' }

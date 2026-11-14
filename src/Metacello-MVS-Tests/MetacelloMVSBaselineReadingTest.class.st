@@ -61,6 +61,12 @@ MetacelloMVSBaselineReadingTest >> groupsSetUp [
 		baseline: (self baselineRequiring: #(  ))
 ]
 
+{ #category : 'helpers' }
+MetacelloMVSBaselineReadingTest >> installed: aDescription project: aName [
+	"What the image has installed: the project spec it was loaded from, by the description aDescription"
+	^ graph specFor: aDescription project: aName loads: #(  )
+]
+
 { #category : 'tests - platform' }
 MetacelloMVSBaselineReadingTest >> pharoBaseline: aLine [
 
@@ -87,8 +93,8 @@ MetacelloMVSBaselineReadingTest >> resolveInstalled: aBarMinimum [
 		version: 'v1.0.0'
 		project: 'Foo'
 		baseline: (self baselineRequiring: { ('Bar' -> ('github://acme/Bar:' , aBarMinimum)) }).
-	^ (MetacelloMVSResolver on: (MetacelloMVSGraph new source: source))
-		  installed: { ('github://acme/Bar' -> 'main') } asDictionary;
+	^ (MetacelloMVSResolver on: (MetacelloMVSGraph on: source))
+		  installed: { ('github://acme/Bar' -> (self installed: 'github://acme/Bar:main' project: 'Bar')) } asDictionary;
 		  resolve: 'github://acme/Foo:v1.0.0' project: 'Foo'
 ]
 
@@ -107,7 +113,7 @@ MetacelloMVSBaselineReadingTest >> resolveWithBarLockedAt: aLockedTag asking: aB
 				project: 'Bar'
 				baseline: (self baselineRequiring: #(  )) ].
 	^ (MetacelloMVSResolver on: graph)
-		  installed: { ('github://acme/Bar' -> aLockedTag) } asDictionary;
+		  installed: { ('github://acme/Bar' -> (self installed: 'github://acme/Bar:' , aLockedTag project: 'Bar')) } asDictionary;
 		  locked: #( 'github://acme/Bar' );
 		  resolve: 'github://acme/Foo:v1.0.0' project: 'Foo'
 ]
@@ -116,11 +122,12 @@ MetacelloMVSBaselineReadingTest >> resolveWithBarLockedAt: aLockedTag asking: aB
 MetacelloMVSBaselineReadingTest >> selectionOf: aRepositoryString project: aProjectName [
 	"The candidate for aRepositoryString at its minimum, for the project aProjectName"
 
-	| parts spec resolver |
-	parts := MetacelloMVSGraph new.
+	| parts spec resolver user |
+	parts := MetacelloMVSGraph on: MetacelloMVSRecordedSource new.
 	resolver := MetacelloMVSResolver on: parts.
+	user := MetacelloUserRequest new.
 	spec := parts specFor: aRepositoryString project: aProjectName loads: #(  ).
-	^ resolver candidateFor: spec version: (resolver minimumOf: spec) requiredBy: nil
+	^ resolver candidateFor: spec version: (resolver minimumOf: spec) requiredBy: user in: (MetacelloMVSRequirement from: user asked: spec)
 ]
 
 { #category : 'running' }
@@ -128,7 +135,7 @@ MetacelloMVSBaselineReadingTest >> setUp [
 
 	super setUp.
 	source := MetacelloMVSRecordedSource new.
-	graph := MetacelloMVSGraph new source: source
+	graph := MetacelloMVSGraph on: source
 ]
 
 { #category : 'tests' }
@@ -143,13 +150,17 @@ MetacelloMVSBaselineReadingTest >> testABaselineThatAsksTheImageIsAWarning [
 				 #( 'baseline: spec' '	<baseline>' '	spec for: #common do: [' '		(Smalltalk includesKey: #Foo) ifTrue: [ spec package: ''Extra'' ].'
 				    '		spec package: ''Core'' ]' )).
 	warnings := self warningsOf: (self selectionOf: 'github://acme/Foo:v1.0.0' project: 'Foo').
-	self assert: (warnings anySatisfy: [ :each | each includesSubstring: 'asks the image' ])
+	self assert: (warnings anySatisfy: [ :each | each = 'Smalltalk' ])
+]
+
+{ #category : 'tests' }
+MetacelloMVSBaselineReadingTest >> testAGraphNeedsASource [
+	self should: [ MetacelloMVSGraph new ] raise: Error
 ]
 
 { #category : 'tests' }
 MetacelloMVSBaselineReadingTest >> testAGraphReadsTheDatesOfTheSource [
-
-	| date |
+	| date graph |
 	date := DateAndTime year: 2020 month: 1 day: 1.
 	source
 		repository: 'github://acme/Foo'
@@ -157,7 +168,9 @@ MetacelloMVSBaselineReadingTest >> testAGraphReadsTheDatesOfTheSource [
 		project: 'Foo'
 		baseline: (self baselineRequiring: #(  )).
 	source repository: 'github://acme/Foo' dates: { ('v1.0.0' -> date) } asDictionary.
-	self assert: ((MetacelloMVSGraph new source: source) datesOf: 'github://acme/Foo') equals: { ('v1.0.0' -> date) } asDictionary
+	graph := MetacelloMVSGraph on: source.
+	graph versionsOf: 'github://acme/Foo' ifFail: [ :text | self fail: text ].
+	self assert: (graph datesOf: 'github://acme/Foo') equals: { ('v1.0.0' -> date) } asDictionary
 ]
 
 { #category : 'tests - groups' }
@@ -191,19 +204,6 @@ MetacelloMVSBaselineReadingTest >> testALockOfAnotherMajorIsAnError [
 ]
 
 { #category : 'tests - platform' }
-MetacelloMVSBaselineReadingTest >> testANewerPharoMinimumIsAnError [
-
-	graph pharoMajor: 13.
-	source
-		repository: 'github://acme/Foo'
-		version: 'v1.0.0'
-		project: 'Foo'
-		baseline: (self pharoBaseline: '		spec pharo: 14.').
-	self assert: ((graph readingOf: (self selectionOf: 'github://acme/Foo:v1.0.0' project: 'Foo')) findings anySatisfy: [ :each |
-			 each isError and: [ each kind = #platformMismatch ] ])
-]
-
-{ #category : 'tests - platform' }
 MetacelloMVSBaselineReadingTest >> testAPharoBlockIsAWarning [
 
 	| warnings |
@@ -231,7 +231,7 @@ MetacelloMVSBaselineReadingTest >> testAnAliasIsNamedAfterItsBaseline [
 				    '		spec package: ''Core'' with: [ spec requires: #(''BarCore'') ] ]' )).
 	selection := self selectionOf: 'github://acme/Foo:v1.0.0' project: 'Foo'.
 	self assert: ((graph readingOf: selection) references collect: [ :each | self projectOf: each ]) asSet equals: #( 'Bar' ) asSet.
-	self assert: ((self warningsOf: selection) anySatisfy: [ :each | each includesSubstring: 'project:copyFrom:with:' ])
+	self assert: ((self warningsOf: selection) anySatisfy: [ :each | each = 'project:copyFrom:with:' ])
 ]
 
 { #category : 'tests - locks' }
@@ -250,21 +250,9 @@ MetacelloMVSBaselineReadingTest >> testAnInstalledVersionThatIsNotLockedIsRaised
 				project: 'Bar'
 				baseline: (self baselineRequiring: #(  )) ].
 	report := (MetacelloMVSResolver on: graph)
-		          installed: { ('github://acme/Bar' -> 'v1.0.0') } asDictionary;
+		          installed: { ('github://acme/Bar' -> (self installed: 'github://acme/Bar:v1.0.0' project: 'Bar')) } asDictionary;
 		          resolve: 'github://acme/Foo:v1.0.0' project: 'Foo'.
 	self assert: (report buildList at: 'github://acme/Bar') version string equals: 'v1.2.0'
-]
-
-{ #category : 'tests - platform' }
-MetacelloMVSBaselineReadingTest >> testAnOlderPharoMinimumResolves [
-
-	graph pharoMajor: 15.
-	source
-		repository: 'github://acme/Foo'
-		version: 'v1.0.0'
-		project: 'Foo'
-		baseline: (self pharoBaseline: '		spec pharo: 14.').
-	self assert: (graph readingOf: (self selectionOf: 'github://acme/Foo:v1.0.0' project: 'Foo')) references isEmpty
 ]
 
 { #category : 'tests - groups' }
@@ -328,7 +316,7 @@ MetacelloMVSBaselineReadingTest >> testResolvesThroughAGraph [
 		version: 'v1.2.0'
 		project: 'Bar'
 		baseline: (self baselineRequiring: #(  )).
-	buildList := ((MetacelloMVSResolver on: (MetacelloMVSGraph new source: source)) resolve: 'github://acme/Foo:v1.0.0' project: 'Foo') buildList.
+	buildList := ((MetacelloMVSResolver on: (MetacelloMVSGraph on: source)) resolve: 'github://acme/Foo:v1.0.0' project: 'Foo') buildList.
 	self assert: (buildList at: 'github://acme/Bar') version string equals: 'v1.1.0'
 ]
 

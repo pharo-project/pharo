@@ -1,9 +1,10 @@
 "
 I am the resolution mvs answers: what the walk found, as far as it could go, and, when it resolves, the projects for Metacello to record (see MetacelloResolution).
 
-buildList: repository -> the MetacelloMVSCandidate chosen.
+buildList: repository -> the MetacelloMVSCandidateVersion chosen.
 requirements: every MetacelloMVSRequirement met: what was asked, by which version, and what it resolved to.
 rootRepository: the repository of the root.
+rivals: major conflict -> the candidate version of the other major, so that the description tells who asked each.
 subjects: finding -> the candidate it was found about, for its repository and its chain.
 
 I resolve when I have no errors; with errors, the build list is incomplete and I hold no projects.
@@ -15,19 +16,28 @@ Class {
 		'buildList',
 		'requirements',
 		'subjects',
-		'rootRepositories'
+		'rootRepositories',
+		'rivals'
 	],
 	#category : 'Metacello-MVS',
 	#package : 'Metacello-MVS'
 }
 
 { #category : 'accessing' }
-MetacelloMVSResolution >> add: aFinding about: aCandidateOrNil [
-	"Keep aFinding, found about aCandidateOrNil (the version that asked, or whose baseline was read), and answer it"
+MetacelloMVSResolution >> add: aFinding about: aSubject [
+	"Keep aFinding, found about aSubject (the version that asked, or whose baseline was read, or the user), and answer it"
 
 	findings add: aFinding.
-	subjects at: aFinding put: aCandidateOrNil.
+	subjects at: aFinding put: aSubject.
 	^ aFinding
+]
+
+{ #category : 'accessing' }
+MetacelloMVSResolution >> addMajorConflict: aFinding about: aCandidate against: anotherCandidate [
+	"Keep aFinding, two majors of one repository: aCandidate's and anotherCandidate's, and answer it"
+
+	rivals at: aFinding put: anotherCandidate.
+	^ self add: aFinding about: aCandidate
 ]
 
 { #category : 'accessing' }
@@ -39,7 +49,7 @@ MetacelloMVSResolution >> addRequirement: aRequirement [
 
 { #category : 'accessing' }
 MetacelloMVSResolution >> buildList [
-	"Repository -> the MetacelloMVSCandidate chosen for it"
+	"Repository -> the MetacelloMVSCandidateVersion chosen for it"
 
 	^ buildList
 ]
@@ -64,11 +74,24 @@ MetacelloMVSResolution >> dependenciesOf: aRepository [
 
 { #category : 'accessing' }
 MetacelloMVSResolution >> descriptionOf: aFinding [
-	"Its text, and the chain of versions that led to it"
+	"Its text, and on the next line who required what it is about. A major conflict shows who asked each major, one per line"
 
-	^ (self subjectOf: aFinding)
-		  ifNil: [ aFinding text ]
-		  ifNotNil: [ :candidate | aFinding text , '. Required by:' , String lf , candidate chainString ]
+	| subject |
+	subject := self subjectOf: aFinding.
+	rivals at: aFinding ifPresent: [ :rival |
+			^ String lf join: {
+					  aFinding text.
+					  ('- ' , rival version string , ' required by ' , rival requiredBy chainLine).
+					  ('- ' , subject version string , ' required by ' , subject requiredBy chainLine) } ].
+	^ String streamContents: [ :stream |
+			  stream nextPutAll: aFinding text.
+			  subject printRequiredByOn: stream ]
+]
+
+{ #category : 'report' }
+MetacelloMVSResolution >> descriptionOfFinding: aFinding [
+
+	^ self descriptionOf: aFinding
 ]
 
 { #category : 'accessing' }
@@ -79,23 +102,21 @@ MetacelloMVSResolution >> errorsDescription [
 ]
 
 { #category : 'accessing' }
-MetacelloMVSResolution >> findingKind: aKind severity: aSeverity text: aString about: aCandidateOrNil [
-	"The finding kept already with this kind, severity and text about the same repository, or nil: each is reported once, with its first chain"
+MetacelloMVSResolution >> findingKind: aKind severity: aSeverity text: aString about: aSubject ifNone: aBlock [
+	"The finding kept already with this kind, severity and text about the same repository, or the value of aBlock: each is reported once, with its first chain"
 
-	| repository |
-	repository := aCandidateOrNil ifNotNil: [ aCandidateOrNil repository ].
 	^ findings
 		  detect: [ :each |
 			  each kind = aKind and: [
-				  each severity = aSeverity and: [ each text = aString and: [ (self repositoryOf: each) = repository ] ] ] ]
-		  ifNone: [ nil ]
+				  each severity = aSeverity and: [ each text = aString and: [ (self subjectOf: each) isAboutSameRepositoryAs: aSubject ] ] ] ]
+		  ifNone: aBlock
 ]
 
 { #category : 'accessing' }
 MetacelloMVSResolution >> findingsOf: aRepository [
 	"The findings about the version selected (or visited) of aRepository"
 
-	^ findings select: [ :each | (self repositoryOf: each) = aRepository ]
+	^ findings select: [ :each | (self subjectOf: each) isAboutRepository: aRepository ]
 ]
 
 { #category : 'initialization' }
@@ -103,6 +124,7 @@ MetacelloMVSResolution >> initialize [
 	super initialize.
 	buildList := Dictionary new.
 	subjects := IdentityDictionary new.
+	rivals := IdentityDictionary new.
 	requirements := OrderedCollection new.
 	rootRepositories := #(  )
 ]
@@ -113,7 +135,7 @@ MetacelloMVSResolution >> isOnlyAboutSuperseded: aFinding [
 
 	| holders |
 	holders := requirements select: [ :each | each findings identityIncludes: aFinding ].
-	holders ifEmpty: [ ^ (self subjectOf: aFinding) notNil and: [ self isSupersededSelection: (self subjectOf: aFinding) ] ].
+	holders ifEmpty: [ ^ (self subjectOf: aFinding) isSupersededIn: self ].
 	^ holders allSatisfy: [ :each | self isSuperseded: each ]
 ]
 
@@ -127,7 +149,7 @@ MetacelloMVSResolution >> isRoot: aCandidate [
 MetacelloMVSResolution >> isSuperseded: aRequirement [
 	"Whether it was asked by a version that lost to a higher one of its repository"
 
-	^ self isSupersededSelection: aRequirement from
+	^ aRequirement from isSupersededIn: self
 ]
 
 { #category : 'accessing' }
@@ -135,6 +157,74 @@ MetacelloMVSResolution >> isSupersededSelection: aCandidate [
 	"Whether aCandidate is not the version its repository ended up with"
 
 	^ (buildList at: aCandidate repository ifAbsent: [ ^ true ]) version ~= aCandidate version
+]
+
+{ #category : 'report' }
+MetacelloMVSResolution >> kindDescriptions [
+
+	^ {
+		  (#assumedInstalled -> 'Counted as installed because its packages are present').
+		  (#baselineFailure -> 'Baseline does not load').
+		  (#chronologyInversion -> 'Versions dated out of order').
+		  (#copiedProject -> 'Project required under a second name').
+		  (#floatingVersion -> 'Floating version, taken as the first of its series').
+		  (#heldByLock -> 'Kept at the locked version').
+		  (#higherThanReplace -> 'Asks more than the replace gives').
+		  (#ignoredReplace -> 'Replace ignored outside the root').
+		  (#imageQuery -> 'Baseline asks the image').
+		  (#invalidReference -> 'Not a repository with versions').
+		  (#majorConflict -> 'Two majors of one repository').
+		  (#missingBaseline -> 'Baseline not found').
+		  (#missingGroup -> 'Group not declared').
+		  (#missingVersion -> 'No version satisfies the minimum').
+		  (#newerInMajor -> 'Newer version in the same major').
+		  (#newerMajor -> 'Newer major').
+		  (#nonCanonicalVersion -> 'Version not written vX.Y.Z').
+		  (#platformBlock -> 'Baseline depends on the Pharo version').
+		  (#platformMismatch -> 'Needs another Pharo version').
+		  (#projectConflict -> 'One project from two repositories').
+		  (#raisedByOthers -> 'Already selected at a newer version').
+		  (#removedAPI -> 'Baseline uses an API removed from Pharo').
+		  (#replaced -> 'Replaced').
+		  (#repositoryFailure -> 'Repository cannot be read').
+		  (#spelling -> 'Repository spelled with another capitalization').
+		  (#taggedVersionAvailable -> 'No version asked, but the repository has versions').
+		  (#unversionedReference -> 'No version asked').
+		  (#writtenPath -> 'Repository string writes a path') } asDictionary
+]
+
+{ #category : 'report' }
+MetacelloMVSResolution >> lineOfUpgrade: anUpgradeFinding [
+	"The version it can ask for, instead of what it asks, and why when it is not just newer: Hashtable v1.0.5 instead of v1.x.x"
+
+	| note |
+	note := {
+		        (#raisedByOthers -> ': already selected').
+		        (#taggedVersionAvailable -> ': fixes an error').
+		        (#newerMajor -> ': a newer major').
+		        (#newerInMajor -> '') } asDictionary at: anUpgradeFinding kind.
+	^ anUpgradeFinding project , ' ' , anUpgradeFinding version , ' instead of ' , anUpgradeFinding asked , note
+]
+
+{ #category : 'report' }
+MetacelloMVSResolution >> print: someFindings of: aSeverity verbose: aBoolean on: aStream [
+	"Verbose, infos are upgrades: grouped by who asks, in the order found, one line per dependency it can ask for (see lineOfUpgrade:)"
+
+	| byAsker |
+	(aSeverity = #info and: [ aBoolean ]) ifFalse: [
+			^ super
+				  print: someFindings
+				  of: aSeverity
+				  verbose: aBoolean
+				  on: aStream ].
+	byAsker := OrderedDictionary new.
+	someFindings do: [ :each | (byAsker at: (self subjectOf: each) ifAbsentPut: [ OrderedCollection new ]) add: each ].
+	byAsker keysAndValuesDo: [ :asker :upgrades |
+			aStream
+				lf;
+				nextPutAll: asker displayName;
+				nextPutAll: ' can ask for'.
+			upgrades do: [ :each | self print: (self lineOfUpgrade: each) asFindingOn: aStream ] ]
 ]
 
 { #category : 'accessing' }
@@ -150,12 +240,6 @@ MetacelloMVSResolution >> printOn: aStream [
 ]
 
 { #category : 'accessing' }
-MetacelloMVSResolution >> repositoryOf: aFinding [
-
-	^ (self subjectOf: aFinding) ifNotNil: [ :candidate | candidate repository ]
-]
-
-{ #category : 'accessing' }
 MetacelloMVSResolution >> requirements [
 	"Every requirement met, those of superseded versions included"
 
@@ -166,7 +250,7 @@ MetacelloMVSResolution >> requirements [
 MetacelloMVSResolution >> requirementsOfSelected: aRepository [
 	"The requirements the selected version of aRepository asked"
 
-	^ requirements select: [ :each | each from repository = aRepository and: [ (self isSuperseded: each) not ] ]
+	^ requirements select: [ :each | (each from isAboutRepository: aRepository) and: [ (self isSuperseded: each) not ] ]
 ]
 
 { #category : 'accessing' }
@@ -189,9 +273,21 @@ MetacelloMVSResolution >> rootRepositories: aCollection [
 	rootRepositories := aCollection
 ]
 
+{ #category : 'report' }
+MetacelloMVSResolution >> shortDescriptionOf: aFinding [
+	"One line naming where it is: the version that asked (Talents in Famix v1.2.1), or for a major conflict the version that asked each major"
+
+	| subject |
+	subject := self subjectOf: aFinding.
+	rivals at: aFinding ifPresent: [ :rival |
+			^ subject project , ' ' , rival version string , ' in ' , rival requiredBy displayName , ', ' , subject version string , ' in '
+			  , subject requiredBy displayName ].
+	^ subject locate: (super shortDescriptionOf: aFinding)
+]
+
 { #category : 'accessing' }
 MetacelloMVSResolution >> subjectOf: aFinding [
-	"The version aFinding was found about: the one that asked, or whose baseline was read; nil for the root's own spec"
+	"What aFinding was found about: the version that asked, or whose baseline was read, or the user for the load as a whole"
 
-	^ subjects at: aFinding ifAbsent: [ nil ]
+	^ subjects at: aFinding
 ]

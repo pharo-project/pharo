@@ -24,6 +24,7 @@ ClapMetacello class >> commandSpecification [
 		addFlag: #strict description: 'Perform a strict loading -- Avoid undeclared variables and syntax errors. Default: false, for compatibility';
 		addFlag: #signalErrorOnWarning description: 'Signal an error if a warning is raised during metacello load';
 		addFlag: #mvs description: 'Choose the versions with minimal version selection: each project at the lowest version that meets every minimum asked for it';
+		addFlag: #verbose description: 'Report each warning of the resolution, not only how many there are of each kind';
 		yourself.
 		
 	self 
@@ -52,7 +53,12 @@ ClapMetacello >> execute [
 		             yourself.
 	self usesMVS ifTrue: [ metacello mvs ].
 	self shouldSignalErrorOnWarning ifTrue: [ metacello onWarning: [ :e | Error signal: e messageText in: e signalerContext ] ].
-	self groups ifEmpty: [ metacello load ] ifNotEmpty: [ metacello load: self groups ].
+	[ self groups ifEmpty: [ metacello load ] ifNotEmpty: [ metacello load: self groups ] ] ensure: [
+		"The only place that checks: a load stopped before resolving has no resolution"
+		metacello resolution ifNotNil: [ :resolution |
+				self inform: (self isVerbose
+						 ifTrue: [ resolution verboseReport ]
+						 ifFalse: [ resolution report ]) ] ].
 
 	self saveSessionIfAsked
 ]
@@ -63,6 +69,12 @@ ClapMetacello >> groups [
 	^ self positional: #groups 
 		ifPresent: [ :groups | $, split: groups ] 
 		ifAbsent: [ #(  ) ]
+]
+
+{ #category : 'accessing' }
+ClapMetacello >> isVerbose [
+
+	^ self hasFlag: #verbose
 ]
 
 { #category : 'execution' }
