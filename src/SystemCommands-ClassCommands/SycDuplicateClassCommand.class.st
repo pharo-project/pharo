@@ -26,7 +26,7 @@ SycDuplicateClassCommand >> executeRefactoring [
 	"The class name is necessary so the browser can select the new subclass"
 
 	| driver |
-	driver := (ReDuplicateClassDriver className: self targetClass name) scopes: { (ClyClassScope of: self targetClass) }.
+	driver := (ReDuplicateClassDriver className: self targetClass name) scopes: refactoringScopes.
 	driver runRefactoring
 ]
 
