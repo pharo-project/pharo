@@ -32,22 +32,22 @@ Class {
 SmokeSampleInstanceVerifierTest >> compileFixtureMethods [
 	"Compile sample instances answering an instance of their class, of another class, or breaking."
 
-	fixtureClass class
+	self
 		compile: 'sampleInstanceOfItsClass
 	<sampleInstance>
 	^ self new'
-		classified: #fixture.
-	fixtureClass class
+		in: fixtureClass class.
+	self
 		compile: 'sampleInstanceOfAnotherClass
 	<sampleInstance>
 	^ 42'
-		classified: #fixture.
-	fixtureClass class
+		in: fixtureClass class.
+	self
 		compile: 'breakingSampleInstance
 	<sampleInstance>
 	1 / 0.
 	^ self new'
-		classified: #fixture
+		in: fixtureClass class
 ]
 
 { #category : 'hooks' }

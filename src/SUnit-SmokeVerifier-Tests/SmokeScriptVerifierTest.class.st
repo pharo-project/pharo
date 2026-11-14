@@ -32,31 +32,31 @@ Class {
 SmokeScriptVerifierTest >> compileFixtureMethods [
 	"Compile scripts and examples that run or break, and an instance-side script, which is not run."
 
-	fixtureClass
+	self
 		compile: 'instanceSideScript
 	<script>
 	^ 1 / 0'
-		classified: #fixture.
-	fixtureClass class
+		in: fixtureClass.
+	self
 		compile: 'scriptRunning
 	<script>
 	^ 3 + 4'
-		classified: #fixture.
-	fixtureClass class
+		in: fixtureClass class.
+	self
 		compile: 'scriptBreaking
 	<script>
 	^ 1 / 0'
-		classified: #fixture.
-	fixtureClass class
+		in: fixtureClass class.
+	self
 		compile: 'exampleRunning
 	<example>
 	^ Object new'
-		classified: #fixture.
-	fixtureClass class
+		in: fixtureClass class.
+	self
 		compile: 'exampleBreaking
 	<example>
 	^ 1 / 0'
-		classified: #fixture
+		in: fixtureClass class
 ]
 
 { #category : 'hooks' }
