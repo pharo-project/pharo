@@ -761,3 +761,12 @@ RBNamespace >> unmarkPackageAsRemoved: newPackageName [
 	removedPackages
 		remove: newPackageName ifAbsent: [  ]
 ]
+
+{ #category : 'changes' }
+RBNamespace >> changeTraitCompositionOf: aClass to: anExpression [
+
+	aClass traitComposition: (RBTraitComposition model: self expression: anExpression).
+	^ changes addChange: (changeFactory
+		changeTraitCompositionOf: aClass name
+		to: anExpression)
+]
