@@ -1,3 +1,8 @@
+"
+I compute, from the Ring model of the image to bootstrap, the indexes of the instance variables of the kernel classes the bootstrap needs to read or write directly in the objects of the new image (classes, contexts, processes, dictionaries, ...).
+
+These indexes depend on the definitions of the classes in the bootstrapped sources and not on the classes of the host image.
+"
 Class {
 	#name : 'PBInstanceVariableMapping',
 	#superclass : 'Object',
@@ -34,7 +39,7 @@ Class {
 	#package : 'PharoBootstrap'
 }
 
-{ #category : 'instance-creation' }
+{ #category : 'instance creation' }
 PBInstanceVariableMapping class >> onEnvironment: aRingEnvironment [ 
 	^ self new
 		environment: aRingEnvironment;
@@ -182,7 +187,7 @@ PBInstanceVariableMapping >> lookup: anInstanceVariable in: aClass [
 	^ slot index
 ]
 
-{ #category : 'initialize' }
+{ #category : 'accessing' }
 PBInstanceVariableMapping >> numberOfInstanceVariablesOf: aClassName [ 
 	^ (environment classNamed: aClassName) allSlots size
 ]

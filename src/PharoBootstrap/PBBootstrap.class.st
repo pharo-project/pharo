@@ -1,3 +1,22 @@
+"
+I am the entry point of the bootstrap of a Pharo image. I run in the host image and I build, from the sources of a Pharo repository, the smallest image described by `BaselineOfPharoBootstrap`, together with the files needed to finish building the image (the Hermes binary packages, the Monticello packages and the list of the protocols of the kernel methods).
+
+The bootstrap happens in two phases:
+- `#prepareBootstrap` loads the baselines to bootstrap, exports the packages of the repository and builds a Ring model of the kernel
+- `#createImage` gives this model to an image builder (see `PBAbstractImageBuilder`) that creates the objects of the new image in a simulated VM and writes the image file
+
+Example:
+
+```
+(PBBootstrap for64Bits
+	versionInfo: ((PBVersionInfo fromLongGitDescribe: 'v15.0.0-21-g975b') buildNumber: 42; yourself);
+	repositoryLocation: 'path/to/pharo' asFileReference;
+	imageName: 'bootstrap.image';
+	yourself) bootstrap
+```
+
+`#fromCommandLine` builds an instance from the arguments given by the bootstrap scripts.
+"
 Class {
 	#name : 'PBBootstrap',
 	#superclass : 'Object',
@@ -75,15 +94,14 @@ PBBootstrap class >> new [
 { #category : 'instance creation' }
 PBBootstrap class >> repositoryLocation [
 	"Returns the location of the repository that we want to bootstrap, which is usually the working directory. Can be overridden if BOOTSTRAP_REPOSITORY is specified"
-	^ (Smalltalk os environment
-		at: 'BOOTSTRAP_REPOSITORY'
-		ifAbsent: [ '.' ]) asFileReference
+
+	^ (OSEnvironment current at: 'BOOTSTRAP_REPOSITORY' ifAbsent: [ '.' ]) asFileReference
 ]
 
 { #category : 'package-names' }
 PBBootstrap >> allPackagesForHermes [
 
-	^ #BaselineOfPharoBootstrap asClass allPackageNames
+	^ self bootstrapBaseline allPackageNames
 ]
 
 { #category : 'accessing' }
@@ -111,9 +129,16 @@ PBBootstrap >> bootstrap [
 ]
 
 { #category : 'accessing' }
+PBBootstrap >> bootstrapBaseline [
+	"The baseline is looked up by name because #ensureBaselineOfPharoBootstrap reloads it from the repository to bootstrap."
+
+	^ self class environment at: #BaselineOfPharoBootstrap
+]
+
+{ #category : 'accessing' }
 PBBootstrap >> bootstrapCacheDirectory [
 
-	^ (Smalltalk os environment at: 'BOOTSTRAP_CACHE' ifAbsent: ['bootstrap-cache']) asFileReference ensureCreateDirectory
+	^ (OSEnvironment current at: 'BOOTSTRAP_CACHE' ifAbsent: [ 'bootstrap-cache' ]) asFileReference ensureCreateDirectory
 ]
 
 { #category : 'accessing' }
@@ -244,7 +269,7 @@ PBBootstrap >> generateHermesFiles [
 { #category : 'package-names' }
 PBBootstrap >> hermesPackageNames [
 
-	^ #BaselineOfPharoBootstrap asClass packagesToExportWithHermes
+	^ self bootstrapBaseline packagesToExportWithHermes
 ]
 
 { #category : 'accessing' }
@@ -267,7 +292,7 @@ PBBootstrap >> initializeImage [
 { #category : 'package-names' }
 PBBootstrap >> kernelPackageNames [
 
-	^ #BaselineOfPharoBootstrap asClass kernelPackageNames
+	^ self bootstrapBaseline kernelPackageNames
 ]
 
 { #category : 'accessing' }
@@ -290,7 +315,7 @@ PBBootstrap >> originRepository [
 { #category : 'package-names' }
 PBBootstrap >> packagesToExportAsMCZ [
 
-	^ #BaselineOfPharoBootstrap asClass packagesToExportAsMCZ
+	^ self bootstrapBaseline packagesToExportAsMCZ
 ]
 
 { #category : 'preparation' }
@@ -308,27 +333,23 @@ PBBootstrap >> prepareBootstrap [
 
 { #category : 'preparation' }
 PBBootstrap >> prepareEnvironmentForExport [
-	| allPackages |
 
+	| allPackages |
 	logger log: '[+] Cleaning bootstrap model'.
 	allPackages := ringEnvironment packages collect: #name.
 
-	(allPackages reject: [ :x | #BaselineOfPharoBootstrap asClass kernelPackageNames includes: x ])
-		do: [ :x | 
+	(allPackages reject: [ :x | self bootstrapBaseline kernelPackageNames includes: x ]) do: [ :x |
 			| p |
 			p := ringEnvironment ask packageNamed: x.
 			p extensionMethods do: [ :e | e methodClass removeLocalMethod: e ].
-			p definedBehaviors
-				do: [ :e | 
+			p definedBehaviors do: [ :e |
 					ringEnvironment removeBehavior: e.
-					ringEnvironment removeBehavior: e classSide
-					].
-			ringEnvironment removePackage: p].
+					ringEnvironment removeBehavior: e classSide ].
+			ringEnvironment removePackage: p ].
 
 	ringEnvironment cleanGlobalVariables.
-	ringEnvironment addGlobalsNamed: #(#Smalltalk #Transcript #Undeclared #TextConstants #Processor).
+	ringEnvironment addGlobalsNamed: #( #Smalltalk #Transcript #Undeclared #TextConstants #Processor ).
 	ringEnvironment clean
-
 ]
 
 { #category : 'preparation' }
@@ -351,7 +372,7 @@ PBBootstrap >> repositoryLocation: aFileReference [
 	repositoryLocation := aFileReference
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'preparation' }
 PBBootstrap >> updateBootstrapPackage: packageName [
 	"Load the package named packageName of the bootstrapped version.
 	This is used to update bootstrap packages to newer versions of the system seamlessly."

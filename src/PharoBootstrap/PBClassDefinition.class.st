@@ -1,3 +1,8 @@
+"
+I wrap the Ring definition of a class of the image to bootstrap so that it can be used as the class of the methods analyzed by the compiler during the bootstrap.
+
+I resolve the variables of the methods: the slots, the class variables and the shared pools of the class and of its superclasses, then the globals of the bootstrap environment.
+"
 Class {
 	#name : 'PBClassDefinition',
 	#superclass : 'Object',
@@ -9,7 +14,7 @@ Class {
 	#package : 'PharoBootstrap'
 }
 
-{ #category : 'instance-creation' }
+{ #category : 'instance creation' }
 PBClassDefinition class >> on: classDefinition environment: aBootstrapEnvironment [ 
 	
 	^ self new
@@ -29,7 +34,7 @@ PBClassDefinition >> definesClassVariable: aString [
 	^ classDefinition instanceSide classVarNames includes: aString
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 PBClassDefinition >> initializeOn: aClassDefinition environment: aBootstrapEnvironment [
 
 	classDefinition := aClassDefinition.
@@ -79,19 +84,12 @@ PBClassDefinition >> name [
 { #category : 'accessing' }
 PBClassDefinition >> sharedPools [
 
-	^ classDefinition instanceSide sharedPools collect: [ :pool | 
-		PBClassDefinition on: pool environment: bootstrapEnvironment ]
+	^ classDefinition instanceSide sharedPools collect: [ :pool | self class on: pool environment: bootstrapEnvironment ]
 ]
 
 { #category : 'accessing' }
 PBClassDefinition >> superclass [
-	
-	classDefinition superclass ifNil: [ ^ nil ].
-	^ PBClassDefinition on: classDefinition superclass environment: bootstrapEnvironment
-]
 
-{ #category : 'accessing' }
-PBClassDefinition >> usesClassVariable: aString [ 
-	
-	^ classDefinition instanceSide allClassVarNames includes: aString
+	classDefinition superclass ifNil: [ ^ nil ].
+	^ self class on: classDefinition superclass environment: bootstrapEnvironment
 ]

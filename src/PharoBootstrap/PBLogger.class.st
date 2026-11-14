@@ -1,3 +1,8 @@
+"
+I print the progress of the bootstrap on the standard output, with the time and an indentation that follows the nesting of the steps.
+
+`#execute:logged:` logs the beginning and the end of a step, or the error that stopped it. The messages are written by a separate process so that logging does not slow down the bootstrap.
+"
 Class {
 	#name : 'PBLogger',
 	#superclass : 'Object',
@@ -51,7 +56,7 @@ PBLogger >> execute: aBlock logged: aString [
 	^ result
 ]
 
-{ #category : 'logging' }
+{ #category : 'initialization' }
 PBLogger >> initialize [
 
 	super initialize.
