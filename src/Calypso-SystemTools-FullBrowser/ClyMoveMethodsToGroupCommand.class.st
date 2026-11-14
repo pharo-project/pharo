@@ -25,33 +25,6 @@ Class {
 	#tag : 'Commands-Methods'
 }
 
-{ #category : 'activation' }
-ClyMoveMethodsToGroupCommand class >> fullBrowserDragAndDropActivation [
-	<classAnnotation>
-
-	^ClyDragAndDropActivation
-		for: ClyMethod asCalypsoItemContext
-		toDropIn: ClyMethodsInProtocolGroup asCalypsoItemContext
-]
-
-{ #category : 'activation' }
-ClyMoveMethodsToGroupCommand class >> fullBrowserDragAndDropActivation2 [
-	<classAnnotation>
-
-	^ClyDragAndDropActivation
-		for: ClyMethod asCalypsoItemContext
-		toDropIn: ClyAllMethodGroup asCalypsoItemContext
-]
-
-{ #category : 'activation' }
-ClyMoveMethodsToGroupCommand class >> fullBrowserDragAndDropActivation3 [
-	<classAnnotation>
-
-	^ClyDragAndDropActivation
-		for: ClyMethod asCalypsoItemContext
-		toDropIn: ClyExternalPackageMethodGroup asCalypsoItemContext
-]
-
 { #category : 'execution' }
 ClyMoveMethodsToGroupCommand >> executeRefactoring [
 
@@ -77,7 +50,7 @@ ClyMoveMethodsToGroupCommand >> name [
 	^'Move to method group'
 ]
 
-{ #category : 'executing' }
+{ #category : 'execution' }
 ClyMoveMethodsToGroupCommand >> prepareFullExecution [
 	| selectedClasses |
 	super prepareFullExecution.

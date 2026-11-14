@@ -56,7 +56,7 @@ SycMigrateReferencesOfClassCommand >> order [
 	^ 1.3
 ]
 
-{ #category : 'preparation' }
+{ #category : 'execution' }
 SycMigrateReferencesOfClassCommand >> prepareFullExecution [
 
 	super prepareFullExecution.

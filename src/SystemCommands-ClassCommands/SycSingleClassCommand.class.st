@@ -16,18 +16,17 @@ Class {
 	#package : 'SystemCommands-ClassCommands'
 }
 
-{ #category : 'testing' }
-SycSingleClassCommand class >> canBeExecutedInContext: aToolContext [
+{ #category : 'class initialization' }
+SycSingleClassCommand class >> initialize [
+	"SycClassExtraCmCommand was the root of the commands of the Extra menu of classes. It is merged into me, and its name is kept so that the projects which subclass it still load. Their commands are not shown until they are declared with <calypsoCommands> in SycClassExtraMenuGroup. To remove in Pharo 16."
 
-	^ (super canBeExecutedInContext: aToolContext) and: [
-		  aToolContext isClassSelected ]
+	self deprecatedAliases: #( #SycClassExtraCmCommand )
 ]
 
-{ #category : 'accessing' }
-SycSingleClassCommand >> description [
-	"Answer a <String> describing the receiver, useful for instance in menu items pop-ups"
+{ #category : 'testing' }
+SycSingleClassCommand >> canBeExecuted [
 
-	^ self class comment.
+	^ super canBeExecuted and: [ self context isClassSelected ]
 ]
 
 { #category : 'accessing' }
@@ -38,7 +37,7 @@ SycSingleClassCommand >> orderInContext: aToolContext [
 		ifFalse: [ self order ]
 ]
 
-{ #category : 'preparation' }
+{ #category : 'execution' }
 SycSingleClassCommand >> prepareFullExecution [
 
 	targetClass := self context lastSelectedClass

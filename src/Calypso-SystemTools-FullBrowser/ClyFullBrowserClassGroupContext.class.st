@@ -9,17 +9,29 @@ Class {
 	#tag : 'Contexts'
 }
 
-{ #category : 'selection strategy' }
-ClyFullBrowserClassGroupContext class >> selectionStrategy [
-	<classAnnotation>
+{ #category : 'commands' }
+ClyFullBrowserClassGroupContext class >> calypsoSystemToolsFullBrowserCommandsIn: aCommandMap [
 
-	^ClyContextSelectionStrategyAnnotation for: ClyFullBrowserMorph selectionType: ClyClassGroup
+	<calypsoCommands>
+	aCommandMap tabs add: ClyClassCreationToolMorph.
+	(aCommandMap toolbar group: ClyPackageToolbarGroup)
+		add: ClySwitchToPackagesCommand order: 1;
+		add: ClySwitchToProjectsCommand order: 10;
+		add: ClySwitchToScopedViewCommand order: 1.
+	aCommandMap shortcuts
+		add: ClyRemoveClassGroupCommand key: $x meta;
+		add: ClyRenamePackageTagCommand key: $r meta.
+	aCommandMap contextMenu
+		add: ClyRemoveClassGroupCommand;
+		add: ClyRenamePackageTagCommand;
+		add: SycAddNewClassTagCommand
 ]
 
-{ #category : 'accessing' }
-ClyFullBrowserClassGroupContext >> commanderCommandClasses [
+{ #category : 'selection strategy' }
+ClyFullBrowserClassGroupContext class >> selectionContextDeclaration [
 
-	^ super commanderCommandClasses , { SycPackageCommand }
+	<calypsoSelectionContext>
+	^ ClySelectionContextDeclaration browser: ClyFullBrowserMorph itemType: ClyClassGroup
 ]
 
 { #category : 'testing' }

@@ -12,7 +12,7 @@ it should return target selector of the message after modification.
 Internal Representation and Key Implementation Points.
 
     Instance Variables
-	originalMessage:		<ClyMessageDescription>
+	originalMessage:		<SycMessageDescription>
 "
 Class {
 	#name : 'SycChangeMessageSignatureCommand',
@@ -28,11 +28,6 @@ Class {
 }
 
 { #category : 'testing' }
-SycChangeMessageSignatureCommand class >> canBeExecutedInContext: aToolContext [
-	^aToolContext isMessageSelected | aToolContext isMethodSelected
-]
-
-{ #category : 'testing' }
 SycChangeMessageSignatureCommand class >> isAbstract [
 	^self = SycChangeMessageSignatureCommand
 ]
@@ -46,7 +41,7 @@ SycChangeMessageSignatureCommand >> applyCommandResult [
 		renamedTo: self resultMessageSelector asSymbol
 ]
 
-{ #category : 'execution' }
+{ #category : 'converting' }
 SycChangeMessageSignatureCommand >> asRefactorings [
 	^{self createRefactoring}
 ]
@@ -54,6 +49,12 @@ SycChangeMessageSignatureCommand >> asRefactorings [
 { #category : 'requesting' }
 SycChangeMessageSignatureCommand >> canAddArgs [
 	^ true
+]
+
+{ #category : 'testing' }
+SycChangeMessageSignatureCommand >> canBeExecuted [
+
+	^ self context isMessageSelected | self context isMethodSelected
 ]
 
 { #category : 'testing' }
@@ -77,6 +78,14 @@ SycChangeMessageSignatureCommand >> createRefactoring [
 ]
 
 { #category : 'accessing' }
+SycChangeMessageSignatureCommand >> orderInContext: aToolContext [
+
+	^ aToolContext isMethodSourceContext
+		ifTrue: [ 1.3 ]
+		ifFalse: [ self order ]
+]
+
+{ #category : 'accessing' }
 SycChangeMessageSignatureCommand >> originalMessage [
 	^ originalMessage
 ]
@@ -86,7 +95,7 @@ SycChangeMessageSignatureCommand >> originalMessage: anObject [
 	originalMessage := anObject
 ]
 
-{ #category : 'preparation' }
+{ #category : 'execution' }
 SycChangeMessageSignatureCommand >> prepareFullExecution [
 
 	self setUpModelFromContext: self context.

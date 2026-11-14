@@ -40,12 +40,6 @@ SycProfileTestMethodCommand >> newProfilerPresenter [
 	^ self profilerPresenterClass new
 ]
 
-{ #category : 'accessing' }
-SycProfileTestMethodCommand >> order [
-
-	^ 1000
-]
-
 { #category : 'execution' }
 SycProfileTestMethodCommand >> profileMethod: aCompiledMethod [ 
 	

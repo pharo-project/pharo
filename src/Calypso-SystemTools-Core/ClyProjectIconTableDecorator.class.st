@@ -22,10 +22,3 @@ ClyProjectIconTableDecorator class >> decorateTableCell: anItemCellMorph of: aDa
 
 	
 ]
-
-{ #category : 'decoration' }
-ClyProjectIconTableDecorator class >> decorationStrategy [
-
-	<classAnnotation>
-	^ ClyTableDecorationStrategyAnnotation for: Project asCalypsoItemContext
-]

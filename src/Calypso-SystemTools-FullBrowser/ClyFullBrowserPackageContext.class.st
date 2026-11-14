@@ -9,17 +9,33 @@ Class {
 	#tag : 'Contexts'
 }
 
-{ #category : 'selection strategy' }
-ClyFullBrowserPackageContext class >> selectionStrategy [
-	<classAnnotation>
+{ #category : 'commands' }
+ClyFullBrowserPackageContext class >> calypsoSystemToolsFullBrowserCommandsIn: aCommandMap [
 
-	^ClyContextSelectionStrategyAnnotation for: ClyFullBrowserMorph selectionType: Package
+	<calypsoCommands>
+	aCommandMap tabs add: ClyClassCreationToolMorph.
+	(aCommandMap toolbar group: ClyPackageToolbarGroup)
+		add: ClySwitchToPackagesCommand order: 1;
+		add: ClySwitchToProjectsCommand order: 10;
+		add: ClySwitchToScopedViewCommand order: 1.
+	aCommandMap shortcuts
+		add: SycDuplicatePackageCommand key: $c meta;
+		add: SycRemovePackageCommand key: $x meta;
+		add: SycRenamePackageCommand key: $r meta.
+	aCommandMap contextMenu
+		add: SycAddNewClassTagCommand;
+		add: SycAddNewPackageCommand;
+		add: SycAddPackagesScopeCommand;
+		add: SycDuplicatePackageCommand;
+		add: SycRemovePackageCommand;
+		add: SycRenamePackageCommand
 ]
 
-{ #category : 'accessing' }
-ClyFullBrowserPackageContext >> commanderCommandClasses [
+{ #category : 'selection strategy' }
+ClyFullBrowserPackageContext class >> selectionContextDeclaration [
 
-	^ super commanderCommandClasses , { SycPackageCommand }
+	<calypsoSelectionContext>
+	^ ClySelectionContextDeclaration browser: ClyFullBrowserMorph itemType: Package
 ]
 
 { #category : 'selection-class groups' }

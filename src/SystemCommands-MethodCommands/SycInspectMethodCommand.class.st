@@ -3,16 +3,10 @@ Inspect the selected methods
 "
 Class {
 	#name : 'SycInspectMethodCommand',
-	#superclass : 'SycMethodExtraCmCommand',
+	#superclass : 'SycMethodCommand',
 	#category : 'SystemCommands-MethodCommands',
 	#package : 'SystemCommands-MethodCommands'
 }
-
-{ #category : 'accessing' }
-SycInspectMethodCommand >> description [
-
-	^ 'Inspect the selected methods'
-]
 
 { #category : 'execution' }
 SycInspectMethodCommand >> execute [
@@ -21,9 +15,9 @@ SycInspectMethodCommand >> execute [
 ]
 
 { #category : 'accessing' }
-SycInspectMethodCommand >> icon [
+SycInspectMethodCommand >> iconName [
 
-	^ self iconNamed: #inspect
+	^ #inspect
 ]
 
 { #category : 'accessing' }

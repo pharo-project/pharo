@@ -10,17 +10,9 @@ Class {
 }
 
 { #category : 'testing' }
-ClyDebugBrokenCritiqueCommand class >> canBeExecutedInContext: aCriticContext [
+ClyDebugBrokenCritiqueCommand >> canBeExecuted [
 
-	^aCriticContext hasSelectedItems and: [
-		aCriticContext lastSelectedItem isMarkedWith: ClyBrokenCritiqueTag]
-]
-
-{ #category : 'activation' }
-ClyDebugBrokenCritiqueCommand class >> criticTableIconActivation [
-	<classAnnotation>
-
-	^ClyTableIconCommandActivation for: ReProperty asCalypsoItemContext
+	^ self context hasSelectedItems and: [ self context lastSelectedItem isMarkedWith: ClyBrokenCritiqueTag ]
 ]
 
 { #category : 'table decoration' }

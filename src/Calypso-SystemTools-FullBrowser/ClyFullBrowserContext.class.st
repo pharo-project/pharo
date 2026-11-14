@@ -20,6 +20,17 @@ Class {
 	#tag : 'Contexts'
 }
 
+{ #category : 'commands' }
+ClyFullBrowserContext class >> calypsoSystemToolsFullBrowserCommandsIn: aCommandMap [
+
+	<calypsoCommands>
+	aCommandMap shortcuts
+		add: ClySwitchFocusToNextBrowserPaneCommand key: Character arrowRight asShortcut;
+		add: ClySwitchFocusToPreviousBrowserPaneCommand key: Character arrowLeft asShortcut.
+	aCommandMap doubleClick add: ClySpawnFullBrowserCommand.
+	aCommandMap tableDecorators add: ClyProjectTableIndentationDecorator
+]
+
 { #category : 'accessing' }
 ClyFullBrowserContext >> currentMetaLevelOf: aClass [
 	^metaLevelScope metaLevelOf: aClass

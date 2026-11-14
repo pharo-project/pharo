@@ -1,12 +1,12 @@
 "
 I a base class for commands which manages the method editor.
 
-Subclasses can be executed in context of ClyMetodEditor.
+Subclasses can be executed in context of ClyMethodEditorToolMorph.
 
 Internal Representation and Key Implementation Points.
 
     Instance Variables
-	methodEditor:		<ClyMethodEditor>
+	methodEditor:		<ClyMethodEditorToolMorph>
 "
 Class {
 	#name : 'ClyMethodEditorCommand',
@@ -32,15 +32,15 @@ ClyMethodEditorCommand class >> canBeExecutedInCodeMethodEditor: aTool [
 ]
 
 { #category : 'testing' }
-ClyMethodEditorCommand class >> canBeExecutedInContext: aToolContext [
-
-	^ aToolContext tool isCommandAvailable: self
-]
-
-{ #category : 'testing' }
 ClyMethodEditorCommand class >> canBeExecutedInMethodEditor: aTool [
 
 	^ false
+]
+
+{ #category : 'testing' }
+ClyMethodEditorCommand >> canBeExecuted [
+
+	^ self context tool isCommandAvailable: self class
 ]
 
 { #category : 'accessing' }
@@ -53,7 +53,7 @@ ClyMethodEditorCommand >> methodEditor: anObject [
 	methodEditor := anObject
 ]
 
-{ #category : 'preparation' }
+{ #category : 'execution' }
 ClyMethodEditorCommand >> prepareFullExecution [
 
 	methodEditor := self context tool

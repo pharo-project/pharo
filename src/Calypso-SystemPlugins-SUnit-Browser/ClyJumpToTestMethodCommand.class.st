@@ -1,6 +1,5 @@
 "
-Description
---------------------
+Jump on the test method corresponding to the method. If the method does not exists I will create it in the corresponding class.
 
 I am a command available in the method context menu of Calypso. When activated I'll jump on the test method corresponding to the method. 
 
@@ -12,7 +11,6 @@ Internal Representation and Key Implementation Points.
     Instance Variables
 	selectedMethods:			<aCollection>	Methods selected by the user that should have their tests generated.
 	testMethodToBrowse:		<aMethod>			The method to browse at the end of the execution of the command.
-
 "
 Class {
 	#name : 'ClyJumpToTestMethodCommand',
@@ -30,29 +28,16 @@ Class {
 }
 
 { #category : 'testing' }
-ClyJumpToTestMethodCommand class >> canBeExecutedInContext: aBrowserContext [
-
-	aBrowserContext isQueryBrowserContext
-		ifTrue: [ ^ false ].
-	^ self hasInstanceSelectedItemsIn: aBrowserContext.
-]
-
-{ #category : 'testing' }
 ClyJumpToTestMethodCommand class >> hasInstanceSelectedItemsIn: aBrowserContext [
 
 	^ aBrowserContext isInstanceSideMethodSelected and: [ aBrowserContext selectedItems anySatisfy: [ :each | (each hasProperty: ClyTestResultProperty) not ] ]
 ]
 
-{ #category : 'activation' }
-ClyJumpToTestMethodCommand class >> methodShortcutActivation [
-	<classAnnotation>
-	^ ClyShortcutActivation by: $h meta , $j meta for: ClyMethod asCalypsoItemContext
-]
+{ #category : 'testing' }
+ClyJumpToTestMethodCommand >> canBeExecuted [
 
-{ #category : 'accessing' }
-ClyJumpToTestMethodCommand >> description [
-
-^ 'Jump on the test method corresponding to the method. If the method does not exists I will create it in the corresponding class.'
+	self context isQueryBrowserContext ifTrue: [ ^ false ].
+	^ self class hasInstanceSelectedItemsIn: self context
 ]
 
 { #category : 'execution' }
@@ -85,12 +70,6 @@ ClyJumpToTestMethodCommand >> generateTestMethodNamed: aSymbol in: aClass [
 	self flag: #toImplement.
 	self assert: false' format: {aSymbol}.
 	aClass compile: body classified: 'tests'
-]
-
-{ #category : 'accessing' }
-ClyJumpToTestMethodCommand >> menuGroup [
-
-	^ ClySUnitMethodMenuGroup
 ]
 
 { #category : 'accessing' }

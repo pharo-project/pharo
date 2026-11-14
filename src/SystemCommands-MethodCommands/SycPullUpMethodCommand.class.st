@@ -1,9 +1,9 @@
 "
-I am a command to pull up given methods
+Pull up methods.
 "
 Class {
 	#name : 'SycPullUpMethodCommand',
-	#superclass : 'SycMethodCmCommand',
+	#superclass : 'SycMethodRefactoringCommand',
 	#category : 'SystemCommands-MethodCommands',
 	#package : 'SystemCommands-MethodCommands'
 }
@@ -11,12 +11,6 @@ Class {
 { #category : 'testing' }
 SycPullUpMethodCommand >> canBeExecuted [
 	^ super canBeExecuted and: [ self context lastSelectedClass superclass ~= Object ]
-]
-
-{ #category : 'accessing' }
-SycPullUpMethodCommand >> description [
-
-	^ 'Pull up methods.'
 ]
 
 { #category : 'execution' }
@@ -30,8 +24,9 @@ SycPullUpMethodCommand >> executeRefactoring [
 ]
 
 { #category : 'accessing' }
-SycPullUpMethodCommand >> icon [
-	^ self iconNamed: #up
+SycPullUpMethodCommand >> iconName [
+
+	^ #up
 ]
 
 { #category : 'accessing' }

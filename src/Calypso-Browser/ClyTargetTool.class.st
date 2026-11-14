@@ -16,10 +16,11 @@ Class {
 }
 
 { #category : 'initialization' }
-ClyTargetTool class >> forActivation: aClyTabActivationStrategyAnnotation context: aClyBrowserContext [
+ClyTargetTool class >> forActivation: aTab context: aClyBrowserContext [
+	"aTab is a ClyTabEntry, or a class annotation of the deprecated Commander-Calypso-Compatibility package."
 
 	^ self new
-		forActivation: aClyTabActivationStrategyAnnotation context: aClyBrowserContext;
+		forActivation: aTab context: aClyBrowserContext;
 		yourself
 ]
 
@@ -41,9 +42,9 @@ ClyTargetTool >> createToolFor: browser [
 ]
 
 { #category : 'initialization' }
-ClyTargetTool >> forActivation: aClyTabActivationStrategyAnnotation context: aClyBrowserContext [
+ClyTargetTool >> forActivation: aTab context: aClyBrowserContext [
 
-	activation := aClyTabActivationStrategyAnnotation.
+	activation := aTab.
 	context := aClyBrowserContext
 ]
 

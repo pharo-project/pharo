@@ -7,8 +7,7 @@ My subclasses define target meta level in following method:
 - metaLevelScope
 It should return ClyInstanceSideScope or ClyClassSideScope.
 
-Also I am annotated with toolbar activation strategy. So my subclasses will be shown in the browser toolbar as radio buttons.
-And they should implement #toolbarOrder method
+My subclasses are declared in the browser toolbar, where they are shown as radio buttons.
 
 "
 Class {
@@ -19,26 +18,9 @@ Class {
 	#tag : 'Commands-MetaLevel'
 }
 
-{ #category : 'activation' }
-ClySwitchClassMetaLevelCommand class >> fullBrowserToolbarActivation [
-	<classAnnotation>
-
-	^ClyToolbarActivation
-		byItemOf: ClyMetaLevelToolbarGroup
-		order: self toolbarOrder
-		for: ClyFullBrowserClassContext
-]
-
 { #category : 'testing' }
 ClySwitchClassMetaLevelCommand class >> isAbstract [
 	^self = ClySwitchClassMetaLevelCommand
-]
-
-{ #category : 'activation' }
-ClySwitchClassMetaLevelCommand class >> toolbarOrder [
-	<classAnnotationDependency>
-
-	self subclassResponsibility
 ]
 
 { #category : 'execution' }

@@ -22,6 +22,17 @@ ClyCommandGroupMenuRenderer class >> render: aCommandGroup on: aMenuMorph [
 ]
 
 { #category : 'rendering' }
+ClyCommandGroupMenuRenderer >> keyTextOfGroup: aPresentedGroup [
+	"The keys of the shortcut that opens the commands of the group, or nil."
+
+	| context |
+	context := aPresentedGroup toolContext ifNil: [ ^ nil ].
+	^ (ClyCommandRegistry default shortcutsOpeningGroup: aPresentedGroup descriptor class inContext: context)
+		  ifEmpty: [ nil ]
+		  ifNotEmpty: [ :shortcuts | shortcuts last keyCombination acceptVisitor: OSPlatform current shortcutPrinter ]
+]
+
+{ #category : 'rendering' }
 ClyCommandGroupMenuRenderer >> notebookActionsFor: aPresentedCommand [
 	"The notebook action buttons of one command, nothing when it cannot run."
 	| activator |
@@ -70,35 +81,34 @@ ClyCommandGroupMenuRenderer >> registerItem: aPresentedCommand on: aBuilder inGr
 
 { #category : 'registering' }
 ClyCommandGroupMenuRenderer >> registerPureItem: aPresentedCommand on: aBuilder inGroup: aGroup actualName: actualName [
-	"ClyCommandMenuItem>>registerContextMenuItemsWithBuilder:, for a pure command."
+	"Registers a pure command, which has no activator, in a pragma menu builder."
+
 	| command itemOrder item |
 	command := aPresentedCommand command.
 	itemOrder := aPresentedCommand order.
 	(aGroup descriptor isRoot not and: [ aGroup descriptor isInlined ]) ifTrue: [ itemOrder := aGroup order + (itemOrder / 10000000.0) ].
 	item := (aBuilder item: aPresentedCommand dynamicName)
-		parent: actualName;
-		order: itemOrder;
-		help: command description;
-		action: [ command execute ];
-		icon: command icon.
-	ClyShortcutActivation
-		activeInstancesFor: command class
-		inContext: command context
-		do: [ :shortcut |
-			item keyText: (shortcut keyCombination acceptVisitor: OSPlatform current shortcutPrinter) ]
+		        parent: actualName;
+		        order: itemOrder;
+		        help: command description;
+		        action: [ command execute ];
+		        icon: command icon.
+	(ClyCommandRegistry default shortcutsOf: command class inContext: command context) do: [ :shortcut | item keyText: (shortcut keyCombination acceptVisitor: OSPlatform current shortcutPrinter) ]
 ]
 
 { #category : 'registering' }
 ClyCommandGroupMenuRenderer >> registerSubMenuOf: aPresentedGroup on: aBuilder parentName: parentName [
-	"ClyMenuGroup>>registerContextSubMenuWithBuilder:."
-	| descriptor |
+	"ClyMenuGroup>>registerContextSubMenuWithBuilder:, with the keys of the shortcut opening the group."
+
+	| descriptor item |
 	descriptor := aPresentedGroup descriptor.
-	(aBuilder item: descriptor name)
-		order: descriptor order;
-		parent: parentName;
-		target: aPresentedGroup;
-		icon: descriptor icon;
-		help: descriptor description
+	item := (aBuilder item: descriptor name)
+		        order: descriptor order;
+		        parent: parentName;
+		        target: aPresentedGroup;
+		        icon: descriptor icon;
+		        help: descriptor description.
+	(self keyTextOfGroup: aPresentedGroup) ifNotNil: [ :keyText | item keyText: keyText ]
 ]
 
 { #category : 'registering' }
@@ -131,6 +141,18 @@ ClyCommandGroupMenuRenderer >> renderCommand: aCommand on: aMenuMorph [
 ]
 
 { #category : 'rendering' }
+ClyCommandGroupMenuRenderer >> renderContentsOf: aPresentedGroup on: aMorph [
+	"A pop-up menu showing the entries of a group, or an empty menu when the group is not in the tree."
+
+	| menu |
+	menu := MorphicUIManager new newMenuIn: aMorph for: aMorph.
+	aPresentedGroup ifNil: [ ^ menu ].
+	aPresentedGroup entries do: [ :each | self renderEntry: each on: menu ].
+	menu hasSubmorphs ifTrue: [ menu lastSubmorph isMenuLineMorph ifTrue: [ menu lastSubmorph delete ] ].
+	^ menu
+]
+
+{ #category : 'rendering' }
 ClyCommandGroupMenuRenderer >> renderEntry: anEntry on: aMenu [
 	anEntry isGroup
 		ifTrue: [ self renderGroup: anEntry on: aMenu ]
@@ -139,18 +161,20 @@ ClyCommandGroupMenuRenderer >> renderEntry: anEntry on: aMenu [
 
 { #category : 'rendering' }
 ClyCommandGroupMenuRenderer >> renderGroup: aPresentedGroup on: aMenu [
-	"Renders a group of the presented tree the way ClyMenuGroup>>buildContextMenu: does."
+	"Renders a group of the presented tree the way ClyMenuGroup>>buildContextMenu: does. A group without active entry is not shown, as in pragma menus (#registerGroup:on:parentName:actualName:), so it leaves no separator."
+
 	| descriptor |
+	aPresentedGroup isActive ifFalse: [ ^ self ].
 	descriptor := aPresentedGroup descriptor.
 	descriptor isInlined
 		ifTrue: [
-			aMenu addLine.
-			aPresentedGroup entries do: [ :each | self renderEntry: each on: aMenu ].
-			aMenu addLine ]
+				aMenu addLine.
+				aPresentedGroup entries do: [ :each | self renderEntry: each on: aMenu ].
+				aMenu addLine ]
 		ifFalse: [
-			descriptor hasLineBefore ifTrue: [ aMenu addLine ].
-			self renderSubMenuOf: aPresentedGroup on: aMenu.
-			descriptor hasLineAfter ifTrue: [ aMenu addLine ] ]
+				descriptor hasLineBefore ifTrue: [ aMenu addLine ].
+				self renderSubMenuOf: aPresentedGroup on: aMenu.
+				descriptor hasLineAfter ifTrue: [ aMenu addLine ] ]
 ]
 
 { #category : 'rendering' }
@@ -177,27 +201,17 @@ ClyCommandGroupMenuRenderer >> renderItem: aPresentedCommand on: aMenu [
 ]
 
 { #category : 'rendering' }
-ClyCommandGroupMenuRenderer >> renderPureMenuItems: commands on: aMenu placement: placement [
-	"Draws the pure commands of an opener: appended to the menu, or put in front of its items keeping their order."
-	placement = #prepend
-		ifTrue: [
-			| temp |
-			temp := MenuMorph new.
-			commands do: [ :each | self renderCommand: each on: temp ].
-			temp items reverseDo: [ :each | aMenu addMorphFront: each ] ]
-		ifFalse: [ commands do: [ :each | self renderCommand: each on: aMenu ] ]
-]
-
-{ #category : 'rendering' }
 ClyCommandGroupMenuRenderer >> renderSubMenuOf: aPresentedGroup on: aMenu [
-	"Renders a group as a sub-menu item, as ClyMenuGroup>>buildContextSubMenuIn: does."
+	"Renders a group as a sub-menu item, as ClyMenuGroup>>buildContextSubMenuIn: does, with the keys of the shortcut opening it."
+
 	| descriptor submenu |
 	descriptor := aPresentedGroup descriptor.
 	submenu := MorphicUIManager new newMenuIn: aMenu defaultTarget for: aMenu defaultTarget.
 	aPresentedGroup entries do: [ :each | self renderEntry: each on: submenu ].
 	submenu hasItems ifTrue: [
-		aMenu add: descriptor name icon: descriptor icon subMenu: submenu.
-		descriptor description ifNotNil: [ :text | aMenu lastItem setBalloonText: text ] ]
+			aMenu add: descriptor name icon: descriptor icon subMenu: submenu.
+			descriptor description ifNotNil: [ :text | aMenu lastItem setBalloonText: text ].
+			(self keyTextOfGroup: aPresentedGroup) ifNotNil: [ :keyText | aMenu lastItem keyText: keyText ] ]
 ]
 
 { #category : 'rendering' }

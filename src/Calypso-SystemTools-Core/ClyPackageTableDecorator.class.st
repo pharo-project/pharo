@@ -12,13 +12,6 @@ Class {
 	#tag : 'TableDecorators'
 }
 
-{ #category : 'decoration' }
-ClyPackageTableDecorator class >> decorationStrategy [
-	<classAnnotation>
-
-	^ClyTableDecorationStrategyAnnotation for: Package asCalypsoItemContext
-]
-
 { #category : 'testing' }
 ClyPackageTableDecorator class >> isAbstract [
 	^self = ClyPackageTableDecorator

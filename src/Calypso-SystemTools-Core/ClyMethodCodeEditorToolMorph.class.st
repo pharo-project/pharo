@@ -21,14 +21,6 @@ Class {
 	#tag : 'Editors-Methods'
 }
 
-{ #category : 'activation' }
-ClyMethodCodeEditorToolMorph class >> browserTabActivation [
-	"This declaration specifies that in any browser when methods are selected, a method editor will be available in a tab."
-
-	<classAnnotation>
-	^ClyTabActivationStrategyAnnotation for: ClyMethod asCalypsoItemContext
-]
-
 { #category : 'testing' }
 ClyMethodCodeEditorToolMorph class >> shouldBeActivatedInContext: aBrowserContext [
 	^aBrowserContext isMethodSelected
@@ -104,9 +96,12 @@ ClyMethodCodeEditorToolMorph >> belongsToRemovedBrowserContext [
 ClyMethodCodeEditorToolMorph >> buildLeftSideBar [
 
 	super buildLeftSideBar.
-
-	ClyTextLeftBarClickActivation enableInMorph: self leftSideBar withCommandsFrom: self.
-	ClyTextLeftBarDoubleClickActivation enableInMorph: self leftSideBar withCommandsFrom: self
+	ClyMouseInteractionHandler enableClick: #textLeftBarClick on: self leftSideBar withCommandsFrom: self.
+	ClyMouseInteractionHandler
+		enable: #textLeftBarDoubleClick
+		on: self leftSideBar
+		event: #doubleClick
+		withCommandsFrom: self
 ]
 
 { #category : 'operations' }

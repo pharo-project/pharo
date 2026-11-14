@@ -1,8 +1,9 @@
 Extension { #name : 'ClySwitchToFullHierarchyCommand' }
 
 { #category : '*Calypso-SystemPlugins-Traits-Browser' }
-ClySwitchToFullHierarchyCommand class >> canBeExecutedInContext: aToolContext [
-	(super canBeExecutedInContext: aToolContext) ifFalse: [ ^false ].
+ClySwitchToFullHierarchyCommand >> canBeExecuted [
 
-	^aToolContext isTraitSelected not
+	super canBeExecuted ifFalse: [ ^ false ].
+
+	^ self context isTraitSelected not
 ]

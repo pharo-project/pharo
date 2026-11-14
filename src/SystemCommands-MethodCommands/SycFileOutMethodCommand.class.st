@@ -3,7 +3,7 @@ Requests to save a textual version of the selected class to a new file in chunk 
 "
 Class {
 	#name : 'SycFileOutMethodCommand',
-	#superclass : 'SycMethodExtraCmCommand',
+	#superclass : 'SycMethodCommand',
 	#category : 'SystemCommands-MethodCommands',
 	#package : 'SystemCommands-MethodCommands'
 }
@@ -18,12 +18,6 @@ SycFileOutMethodCommand >> defaultFileName [
 		ifFalse: [ 'methodsfileout' ]
 ]
 
-{ #category : 'accessing' }
-SycFileOutMethodCommand >> description [
-
-	^ 'Requests to save a textual version of the selected class to a new file in chunk format and .st extension. Instance and class side methods are both saved'
-]
-
 { #category : 'execution' }
 SycFileOutMethodCommand >> execute [
 
@@ -31,9 +25,9 @@ SycFileOutMethodCommand >> execute [
 ]
 
 { #category : 'accessing' }
-SycFileOutMethodCommand >> icon [
+SycFileOutMethodCommand >> iconName [
 
-	^ self iconNamed: #save
+	^ #save
 ]
 
 { #category : 'accessing' }

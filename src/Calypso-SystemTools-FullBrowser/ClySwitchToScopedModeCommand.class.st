@@ -1,3 +1,6 @@
+"
+Scope the browser to the packages selected in a dialog.
+"
 Class {
 	#name : 'ClySwitchToScopedModeCommand',
 	#superclass : 'ClyBrowserCommand',
@@ -24,12 +27,6 @@ ClySwitchToScopedModeCommand >> isAvailableInMenuOf: aToolContext [
 { #category : 'accessing' }
 ClySwitchToScopedModeCommand >> name [
 	^'Set up scope'
-]
-
-{ #category : 'accessing' }
-ClySwitchToScopedModeCommand >> order [
-
-	^ 1000
 ]
 
 { #category : 'accessing' }

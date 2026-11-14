@@ -1,3 +1,6 @@
+"
+Expands the fluid definition to include all possible elements and shows the default values
+"
 Class {
 	#name : 'ClyExpandClassDefinitionCommand',
 	#superclass : 'SycSingleClassCommand',
@@ -6,43 +9,17 @@ Class {
 	#tag : 'Commands-Classes'
 }
 
-{ #category : 'testing' }
-ClyExpandClassDefinitionCommand class >> canBeExecutedInContext: aToolContext [
-
-	^ true 
-]
-
-{ #category : 'activation' }
-ClyExpandClassDefinitionCommand class >> contextMenuActivation [
-	<classAnnotation>
-
-	^ClyContextMenuActivation byRootGroupItemOrder: -20 for: ClyClassDefinitionContext 
-]
-
-{ #category : 'activation' }
-ClyExpandClassDefinitionCommand class >> sourceCodeMenuActivation [
-   <classAnnotation>
-   ^SycSourceCodeMenuActivation byRootGroupItemOrder: -100 for: ClyClassDefinitionContext
-]
-
-{ #category : 'activation' }
-ClyExpandClassDefinitionCommand class >> sourceCodeShortcutActivation [
-   <classAnnotation>
-
-   ^ClyShortcutActivation by: $e meta for: ClyClassDefinitionContext
-]
-
-{ #category : 'accessing' }
+{ #category : 'execution' }
 ClyExpandClassDefinitionCommand >> applyCommandResult [
 
 	super applyCommandResult.
 	self context tool pendingText: self context tool editingClass expandedDefinitionString
 ]
 
-{ #category : 'accessing' }
-ClyExpandClassDefinitionCommand >> description [
+{ #category : 'testing' }
+ClyExpandClassDefinitionCommand >> canBeExecuted [
 
-	^ 'Expands the fluid definition to include all possible elements and shows the default values'
+	^ true
 ]
 
 { #category : 'execution' }

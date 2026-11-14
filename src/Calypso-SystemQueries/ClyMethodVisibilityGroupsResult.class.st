@@ -5,14 +5,14 @@ ClyInheritedMethodGroup instances provide tools to control method visibility in 
 
 I sort classes hierarchically according to specified hierarchy. You can create my instances with: 
 
-	ClyMethodVisibilityGroups withHierarchy: ClySubclassHierarchy inverse.
+	ClyMethodVisibilityGroupsResult withHierarchy: ClySubclassHierarchy inverse.
 	
 Tools create me with default hierarchy using: 
 	
-	ClyMethodVisibilityGroups withDefaultHierarchy.
+	ClyMethodVisibilityGroupsResult withDefaultHierarchy.
 
 Calypso provides settings to invert default hierarchy and to extend it with plugins. 
-It is based on class annotation ClyMethodVisibilityProvider. Look at it for details.
+The default hierarchy is built by the class answered by #methodVisibilityProvider: the class whose class-side method marked with <calypsoMethodVisibilityProvider: aPriority> has the highest priority, ClyTraitUserHierarchy when the traits plugin is loaded and ClySubclassHierarchy otherwise.
 
 Internal Representation and Key Implementation Points.
 
@@ -33,7 +33,21 @@ Class {
 { #category : 'instance creation' }
 ClyMethodVisibilityGroupsResult class >> defaultHierarchy [
 
-	^ClyMethodVisibilityProviderAnnotation defaultHierarchy
+	^ self methodVisibilityProvider hierarchyForMethodVisibility
+]
+
+{ #category : 'instance creation' }
+ClyMethodVisibilityGroupsResult class >> methodVisibilityProvider [
+	"The class which builds the hierarchy of the method visibility groups (#hierarchyForMethodVisibility). It is the class whose class-side method marked with <calypsoMethodVisibilityProvider: aPriority> has the highest priority: ClySubclassHierarchy, or ClyTraitUserHierarchy when the traits plugin is loaded. The class annotations of the deprecated Commander-Calypso-Compatibility package (ClyMethodVisibilityProviderAnnotation) are still taken into account."
+
+	| providers |
+	providers := (Pragma allNamed: #calypsoMethodVisibilityProvider:) collect: [ :pragma | pragma arguments first -> pragma methodClass instanceSide ].
+	providers := providers , (self environment
+		              at: #ClyMethodVisibilityProviderAnnotation
+		              ifPresent: [ :annotationClass | annotationClass registeredInstances asArray collect: [ :annotation | annotation priority -> annotation annotatedClass ] ]
+		              ifAbsent: [ #(  ) ]).
+	providers ifEmpty: [ self error: 'No hierarchy provider is found to represent method visibility hierarchy' ].
+	^ (providers detectMax: [ :provider | provider key ]) value
 ]
 
 { #category : 'instance creation' }

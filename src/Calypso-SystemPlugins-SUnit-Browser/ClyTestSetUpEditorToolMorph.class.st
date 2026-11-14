@@ -18,14 +18,6 @@ Class {
 	#tag : 'Tools'
 }
 
-{ #category : 'activation' }
-ClyTestSetUpEditorToolMorph class >> browserTabActivation [
-	"This declaration specifies that in any browser when classes are selected, a test setup editor will be available in a tab."
-
-	<classAnnotation>
-	^ ClyTabActivationStrategyAnnotation for: ClyClass asCalypsoItemContext
-]
-
 { #category : 'testing' }
 ClyTestSetUpEditorToolMorph class >> shouldBeActivatedInContext: aBrowserContext [
 	aBrowserContext isClassSelected ifFalse: [ ^false ].

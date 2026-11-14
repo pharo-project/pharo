@@ -16,13 +16,6 @@ Class {
 	#tag : 'Commands-Methods'
 }
 
-{ #category : 'menu' }
-ClyFindMethodInBrowserCommand class >> fullBrowserShortcutActivation [
-	<classAnnotation>
-
-	^ClyShortcutActivation by: $f meta for: ClyFullBrowserMethodContext
-]
-
 { #category : 'execution' }
 ClyFindMethodInBrowserCommand >> executeRefactoring [
 
@@ -41,20 +34,8 @@ ClyFindMethodInBrowserCommand >> isAvailableInMenuOf: aToolContext [
 ]
 
 { #category : 'accessing' }
-ClyFindMethodInBrowserCommand >> menuGroup [
-
-	^ ClyQueryMenuGroup
-]
-
-{ #category : 'accessing' }
 ClyFindMethodInBrowserCommand >> name [
 	^'Find method'
-]
-
-{ #category : 'accessing' }
-ClyFindMethodInBrowserCommand >> order [
-
-	^ 1000
 ]
 
 { #category : 'execution' }

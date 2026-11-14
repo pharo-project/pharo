@@ -1,5 +1,5 @@
 "
-I run all selected test cases
+Run all selected test cases
 "
 Class {
 	#name : 'ClyRunTestsFromClassesCommand',
@@ -8,17 +8,6 @@ Class {
 	#package : 'Calypso-SystemPlugins-SUnit-Browser',
 	#tag : 'Commands'
 }
-
-{ #category : 'activation' }
-ClyRunTestsFromClassesCommand class >> contextClass [
-	^ClyClass asCalypsoItemContext
-]
-
-{ #category : 'accessing' }
-ClyRunTestsFromClassesCommand >> description [
-
-	^ 'Run all selected test cases'
-]
 
 { #category : 'execution' }
 ClyRunTestsFromClassesCommand >> executeRefactoring [

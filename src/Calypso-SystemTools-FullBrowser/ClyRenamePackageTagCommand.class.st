@@ -1,5 +1,5 @@
 "
-I am a command to rename class tag of the package
+Renames class tag of the package
  
 Internal Representation and Key Implementation Points.
 
@@ -7,7 +7,6 @@ Internal Representation and Key Implementation Points.
 	classGroup:		<ClyClassGroup>
 	newName:		<String>
 	package:		<Package>
-
 "
 Class {
 	#name : 'ClyRenamePackageTagCommand',
@@ -22,40 +21,22 @@ Class {
 	#tag : 'Commands-Class groups'
 }
 
-{ #category : 'testing' }
-ClyRenamePackageTagCommand class >> canBeExecutedInContext: aToolContext [
-	^aToolContext isPackageTagSelected
-]
-
-{ #category : 'activation' }
-ClyRenamePackageTagCommand class >> fullBrowserShortcutActivation [
-	<classAnnotation>
-
-	^ClyShortcutActivation renamingFor: ClyFullBrowserClassGroupContext
-]
-
 { #category : 'execution' }
 ClyRenamePackageTagCommand >> applyCommandResult [
 	super applyCommandResult.
 	self context showPackage: package tag: newName
 ]
 
-{ #category : 'accessing' }
-ClyRenamePackageTagCommand >> description [ 
+{ #category : 'testing' }
+ClyRenamePackageTagCommand >> canBeExecuted [
 
-^'Renames class tag of the package'
+	^ self context isPackageTagSelected
 ]
 
 { #category : 'execution' }
 ClyRenamePackageTagCommand >> executeRefactoring [
 
 	packageTag renameTagTo: newName
-]
-
-{ #category : 'testing' }
-ClyRenamePackageTagCommand >> isAvailableInMenuOf: aToolContext [
-
-	^ aToolContext isFullBrowserClassGroupContext
 ]
 
 { #category : 'accessing' }

@@ -3,7 +3,7 @@ Classify the selected methods
 "
 Class {
 	#name : 'SycClassifyMethodsCommand',
-	#superclass : 'SycMethodExtraCmCommand',
+	#superclass : 'SycMethodCommand',
 	#category : 'SystemCommands-MethodCommands',
 	#package : 'SystemCommands-MethodCommands'
 }
@@ -20,9 +20,9 @@ SycClassifyMethodsCommand >> execute [
 ]
 
 { #category : 'accessing' }
-SycClassifyMethodsCommand >> icon [
+SycClassifyMethodsCommand >> iconName [
 
-	^ self iconNamed: #browse
+	^ #browse
 ]
 
 { #category : 'accessing' }

@@ -1,4 +1,6 @@
 "
+Runs all selected test methods using selected test cases (runTestCases)
+
 I run all selected test methods using selected test cases (runTestCases) as their implementation.
 I am allow browser to run inherited test method by selected class.
  
@@ -18,23 +20,12 @@ Class {
 	#tag : 'Commands'
 }
 
-{ #category : 'activation' }
-ClyRunTestsFromMethodsCommand class >> contextClass [
-	^ClyMethod asCalypsoItemContext
-]
-
-{ #category : 'accessing' }
-ClyRunTestsFromMethodsCommand >> description [
-
-	^ 'Runs all selected test methods using selected test cases (runTestCases)'
-]
-
 { #category : 'execution' }
 ClyRunTestsFromMethodsCommand >> executeRefactoring [
 	self testItems do: [:each | self runTestItem: each ]
 ]
 
-{ #category : 'execution' }
+{ #category : 'accessing' }
 ClyRunTestsFromMethodsCommand >> iconName [
 
 	| fullResult |

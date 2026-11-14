@@ -36,12 +36,6 @@ SycGenerateVariableAccessorCommand >> name [
 	^ self refactoringClass menuItemString
 ]
 
-{ #category : 'accessing' }
-SycGenerateVariableAccessorCommand >> order [
-
-	^ 1000
-]
-
 { #category : 'factory method' }
 SycGenerateVariableAccessorCommand >> refactoringClass [
 

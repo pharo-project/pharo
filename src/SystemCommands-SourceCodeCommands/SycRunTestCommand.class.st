@@ -1,3 +1,6 @@
+"
+Runs test.
+"
 Class {
 	#name : 'SycRunTestCommand',
 	#superclass : 'SycSourceCodeRefactoringCommand',
@@ -5,31 +8,16 @@ Class {
 	#package : 'SystemCommands-SourceCodeCommands'
 }
 
-{ #category : 'testing' }
-SycRunTestCommand class >> canBeExecutedInContext: aToolContext [
-
-	^ aToolContext isMethodSelected not and: [ aToolContext isTestMethodSelected ]
-]
-
-{ #category : 'activation' }
-SycRunTestCommand class >> methodEditorShorcutActivation [
-
-	<classAnnotation>
-	^ ClyShortcutActivation
-		  by: $e meta , $t meta
-		  for: ClyTextEditorContext
-]
-
 { #category : 'converting' }
 SycRunTestCommand >> asRefactorings [
 
 	^ {  }
 ]
 
-{ #category : 'accessing' }
-SycRunTestCommand >> description [
+{ #category : 'testing' }
+SycRunTestCommand >> canBeExecuted [
 
-	^ 'Runs test.'
+	^ self context isMethodSelected not and: [ self context isTestMethodSelected ]
 ]
 
 { #category : 'execution' }

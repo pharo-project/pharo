@@ -3,7 +3,7 @@ Recompiles all the methods of the selected packages.
 "
 Class {
 	#name : 'SycRecompilePackageCommand',
-	#superclass : 'SycPackageExtraCmCommand',
+	#superclass : 'SycPackageCommand',
 	#category : 'SystemCommands-PackageCommands',
 	#package : 'SystemCommands-PackageCommands'
 }

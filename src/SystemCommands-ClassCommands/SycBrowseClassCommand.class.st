@@ -25,23 +25,11 @@ SycBrowseClassCommand >> isAvailableInMenuOf: aToolContext [
 ]
 
 { #category : 'accessing' }
-SycBrowseClassCommand >> menuGroup [
-
-	^ ClyQueryMenuGroup
-]
-
-{ #category : 'accessing' }
 SycBrowseClassCommand >> name [
 	^'Browse'
 ]
 
-{ #category : 'accessing' }
-SycBrowseClassCommand >> order [
-
-	^ 1000
-]
-
-{ #category : 'preparation' }
+{ #category : 'execution' }
 SycBrowseClassCommand >> prepareFullExecution [
 
 	| scope |

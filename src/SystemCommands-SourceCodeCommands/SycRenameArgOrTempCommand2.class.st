@@ -1,5 +1,5 @@
 "
-I am a command to rename temp variable in given method.
+Renames temp variable in given method.
  
 Internal Representation and Key Implementation Points.
 
@@ -16,23 +16,16 @@ Class {
 	#package : 'SystemCommands-SourceCodeCommands'
 }
 
-{ #category : 'testing' }
-SycRenameArgOrTempCommand2 class >> canBeExecutedInContext: aSourceCodeContext [
-
-	^ (super canBeExecutedInContext: aSourceCodeContext) and: [
-		  aSourceCodeContext isArgOrTempVariableSelected ]
-]
-
 { #category : 'execution' }
 SycRenameArgOrTempCommand2 >> applyCommandResult [
 	super applyCommandResult.
 	newName ifNotNil: [ :name | self context showVariableNamed: name ]
 ]
 
-{ #category : 'accessing' }
-SycRenameArgOrTempCommand2 >> description [
+{ #category : 'testing' }
+SycRenameArgOrTempCommand2 >> canBeExecuted [
 
-	^ 'Renames temp variable in given method.'
+	^ super canBeExecuted and: [ self context isArgOrTempVariableSelected ]
 ]
 
 { #category : 'execution' }

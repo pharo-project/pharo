@@ -1,5 +1,5 @@
 "
-I am a command to add new package into the system.
+Adds a new package into the system.
 
 I should be created on particular system environment which allow create packages:
 
@@ -26,22 +26,16 @@ Class {
 	#package : 'SystemCommands-PackageCommands'
 }
 
-{ #category : 'testing' }
-SycAddNewPackageCommand class >> canBeExecutedInContext: aToolContext [
-
-	^ true
-]
-
 { #category : 'execution' }
 SycAddNewPackageCommand >> applyCommandResult [
 	super applyCommandResult.
 	self context showPackage: resultPackage
 ]
 
-{ #category : 'accessing' }
-SycAddNewPackageCommand >> description [
+{ #category : 'testing' }
+SycAddNewPackageCommand >> canBeExecuted [
 
-	^ 'Adds a new package into the system.'
+	^ true
 ]
 
 { #category : 'execution' }
@@ -60,12 +54,6 @@ SycAddNewPackageCommand >> iconName [
 { #category : 'accessing' }
 SycAddNewPackageCommand >> name [
 	^'New package'
-]
-
-{ #category : 'accessing' }
-SycAddNewPackageCommand >> order [
-
-	^ 1000
 ]
 
 { #category : 'accessing' }

@@ -39,9 +39,9 @@ ClySuperclassScope class >> defaultName [
 
 { #category : 'inherited scope' }
 ClySuperclassScope class >> inheritedScopeProvider [
-	<classAnnotation>
+	"I build the inherited and inheriting scopes of class scopes, unless a provider of higher priority is loaded. See ClyAbstractClassScope class>>#inheritedScopeProvider."
 
-	^ClyInheritedScopeProviderAnnotation new
+	<calypsoInheritedScopeProvider: 0>
 ]
 
 { #category : 'converting' }

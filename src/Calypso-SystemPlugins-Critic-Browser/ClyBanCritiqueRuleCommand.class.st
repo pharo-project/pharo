@@ -1,5 +1,5 @@
 "
-I am a command to ban given critique rule
+Ban this rule
 "
 Class {
 	#name : 'ClyBanCritiqueRuleCommand',
@@ -15,18 +15,13 @@ ClyBanCritiqueRuleCommand >> applyCommandResult [
 	self context tool criticView update
 ]
 
-{ #category : 'table decoration' }
-ClyBanCritiqueRuleCommand >> description [
-	^'Ban this rule'
-]
-
 { #category : 'execution' }
 ClyBanCritiqueRuleCommand >> executeRefactoring [
 
 	self critique guidedBan
 ]
 
-{ #category : 'initialization' }
+{ #category : 'accessing' }
 ClyBanCritiqueRuleCommand >> iconName [
 	^#smallCancel
 ]

@@ -19,47 +19,6 @@ Class {
 	#tag : 'Commands-Classes'
 }
 
-{ #category : 'activation' }
-ClyMoveClassToGroupCommand class >> browserContextMenuActivation [
-	<classAnnotation>
-
-	^ SycClassMenuActivation byRootGroupItemOrder: 1000 for: ClyClass asCalypsoItemContext
-]
-
-{ #category : 'activation' }
-ClyMoveClassToGroupCommand class >> fullBrowserDragAndDropActivation [
-	<classAnnotation>
-
-	^ClyDragAndDropActivation
-		for: ClyClass asCalypsoItemContext
-		toDropIn: Package asCalypsoItemContext
-]
-
-{ #category : 'activation' }
-ClyMoveClassToGroupCommand class >> fullBrowserDragAndDropActivation2 [
-	<classAnnotation>
-
-	^ClyDragAndDropActivation
-		for: ClyClass asCalypsoItemContext
-		toDropIn: ClyTaggedClassGroup asCalypsoItemContext
-]
-
-{ #category : 'activation' }
-ClyMoveClassToGroupCommand class >> fullBrowserDragAndDropActivation3 [
-	<classAnnotation>
-
-	^ClyDragAndDropActivation
-		for: ClyClass asCalypsoItemContext
-		toDropIn: ClyNoTagClassGroup asCalypsoItemContext
-]
-
-{ #category : 'activation' }
-ClyMoveClassToGroupCommand class >> fullBrowserShortcutActivation [
-	<classAnnotation>
-
-	^ClyShortcutActivation by: $m meta, $c meta for: ClyFullBrowserClassContext
-]
-
 { #category : 'accessing' }
 ClyMoveClassToGroupCommand >> classGroup [
 	^ classGroup
@@ -86,7 +45,7 @@ ClyMoveClassToGroupCommand >> name [
 	^'Move to package'
 ]
 
-{ #category : 'executing' }
+{ #category : 'execution' }
 ClyMoveClassToGroupCommand >> prepareFullExecution [
 	super prepareFullExecution.
 	"class group could be package. In this activation it is only make sense to request user for package"

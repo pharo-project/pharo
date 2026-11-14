@@ -9,27 +9,46 @@ Class {
 	#tag : 'Contexts'
 }
 
-{ #category : 'selection strategy' }
-ClyFullBrowserVariableContext class >> selectionStrategy [
-	<classAnnotation>
+{ #category : 'commands' }
+ClyFullBrowserVariableContext class >> calypsoSystemToolsFullBrowserCommandsIn: aCommandMap [
 
-	^(ClyContextSelectionStrategyAnnotation for: ClyFullBrowserMorph selectionType: ClyVariableMethodGroup)
-		priority: 1000 "variable context should be with more priority than basic method group context"
+	<calypsoCommands>
+	aCommandMap tabs add: ClyMethodCreationToolMorph.
+	aCommandMap shortcuts
+		add: SycRemoveVariablesCommand key: $x meta;
+		add: SycRenameVariableCommand key: $r meta.
+	(aCommandMap shortcuts add: SycInspectVariableValueCommand key: $i meta) priority: 100000.
+	(aCommandMap doubleClick add: SycInspectVariableValueCommand) priority: 10000.
+	aCommandMap contextMenu
+		add: SycAbstractVariableCommand;
+		add: SycGenerateVariableAccessorCommand;
+		add: SycGenerateVariableAccessorsWithLazyInitializationCommand;
+		add: SycMergeVariableCommand;
+		add: SycMoveInstanceVariableToClassSideCommand;
+		add: SycProtectVariableCommand;
+		add: SycPushDownVariableCommand;
+		add: SycPushUpVariableCommand;
+		add: SycRemoveVariablesCommand;
+		add: SycRenameVariableCommand.
+	(aCommandMap contextMenu group: ClyQueryMenuGroup)
+		add: SycBrowseVariableCommand;
+		add: SycInspectVariableValueCommand.
+	aCommandMap tableDecorators add: ClyClassSideBoldTableDecorator
 ]
 
 { #category : 'selection strategy' }
-ClyFullBrowserVariableContext class >> selectionStrategy2 [
-	<classAnnotation>
+ClyFullBrowserVariableContext class >> selectionContextDeclaration [
 
-	^(ClyContextSelectionStrategyAnnotation for: ClyFullBrowserMorph selectionType: ClyVariable)
+	<calypsoSelectionContext>
+	^ ClySelectionContextDeclaration browser: ClyFullBrowserMorph itemType: ClyVariable
 ]
 
-{ #category : 'testing' }
-ClyFullBrowserVariableContext >> commanderCommandClasses [
+{ #category : 'selection strategy' }
+ClyFullBrowserVariableContext class >> variableGroupSelectionContextDeclaration [
 
-	^ {
-		  SycRefactorVariableCommand.
-		  SycVariableNavigationCmCommand }
+	"Before ClyFullBrowserMethodGroupContext, because a variable group is a method group."
+	<calypsoSelectionContext>
+	^ (ClySelectionContextDeclaration browser: ClyFullBrowserMorph itemType: ClyVariableMethodGroup) priority: 1000
 ]
 
 { #category : 'testing' }

@@ -1,26 +1,22 @@
 "
-I am a command to inspect given variable value.
+Inspect variable value
+
 For live variables lile globals or class variables I open inspector on variable value.
 Also I open inspector on instance variable of class side because they also have live values.
 "
 Class {
 	#name : 'SycInspectVariableValueCommand',
-	#superclass : 'SycVariableNavigationCmCommand',
+	#superclass : 'SycVariableNavigationCommand',
 	#category : 'SystemCommands-VariableCommands',
 	#package : 'SystemCommands-VariableCommands'
 }
 
 { #category : 'testing' }
-SycInspectVariableValueCommand class >> canBeExecutedInContext: aToolContext [
-	(super canBeExecutedInContext: aToolContext) ifFalse: [ ^false ].
+SycInspectVariableValueCommand >> canBeExecuted [
 
-	^aToolContext lastSelectedVariable isLive
-]
+	super canBeExecuted ifFalse: [ ^ false ].
 
-{ #category : 'accessing' }
-SycInspectVariableValueCommand >> description [
-
-	^ 'Inspect variable value'
+	^ self context lastSelectedVariable isLive
 ]
 
 { #category : 'execution' }
@@ -43,10 +39,4 @@ SycInspectVariableValueCommand >> iconName [
 { #category : 'accessing' }
 SycInspectVariableValueCommand >> name [
 	^'Inspect value'
-]
-
-{ #category : 'accessing' }
-SycInspectVariableValueCommand >> order [
-
-	^ 1000
 ]

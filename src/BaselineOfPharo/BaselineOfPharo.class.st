@@ -196,6 +196,9 @@ BaselineOfPharo >> baseline: spec [
 					spec
 						repository: repository;
 						loads: #( 'IcebergSupport' ) ].
+					
+			"ClassAnnotation is deprecated. Only Commander v1 and Commander-Calypso-Compatibility use it, and it will be removed with them in Pharo 16."
+			spec baseline: 'ClassAnnotation' with: [ spec repository: repository ].
 
 			"Commander v1 is deprecated and should not be used anymore. Pharo now uses Commander2."
 			spec baseline: 'Commander' with: [ spec repository: repository ].

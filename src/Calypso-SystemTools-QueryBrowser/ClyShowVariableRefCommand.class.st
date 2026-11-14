@@ -1,33 +1,20 @@
 "
-I am a command to show all variable references.
+Show all variable references.
 
 To show references I ask the browser to spawn new query browser.
 
 Internal Representation and Key Implementation Points.
 
     Instance Variables
-	browser:		<ClyBrowser>
+	browser:		<ClyBrowserMorph>
 "
 Class {
 	#name : 'ClyShowVariableRefCommand',
-	#superclass : 'SycVariableNavigationCmCommand',
+	#superclass : 'SycVariableNavigationCommand',
 	#category : 'Calypso-SystemTools-QueryBrowser-Commands-Queries',
 	#package : 'Calypso-SystemTools-QueryBrowser',
 	#tag : 'Commands-Queries'
 }
-
-{ #category : 'activation' }
-ClyShowVariableRefCommand class >> fullBrowserShortcutActivation [
-	<classAnnotation>
-
-	^ClyShortcutActivation by: $n meta for: ClyFullBrowserVariableContext
-]
-
-{ #category : 'accessing' }
-ClyShowVariableRefCommand >> description [
-
-	^ 'Show all variable references.'
-]
 
 { #category : 'execution' }
 ClyShowVariableRefCommand >> executeRefactoring [
@@ -44,10 +31,4 @@ ClyShowVariableRefCommand >> fullBrowserOrder [
 { #category : 'accessing' }
 ClyShowVariableRefCommand >> name [
 	^'References'
-]
-
-{ #category : 'accessing' }
-ClyShowVariableRefCommand >> order [
-
-	^ 1000
 ]

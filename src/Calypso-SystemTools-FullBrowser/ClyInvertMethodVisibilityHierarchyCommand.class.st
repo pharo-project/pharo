@@ -4,7 +4,7 @@ I am a command to invert hierarhcy in the method visibility class list.
 "
 Class {
 	#name : 'ClyInvertMethodVisibilityHierarchyCommand',
-	#superclass : 'SycMethodGroupExtraCmCommand',
+	#superclass : 'ClyCommand',
 	#category : 'Calypso-SystemTools-FullBrowser-Commands-MethodGroups',
 	#package : 'Calypso-SystemTools-FullBrowser',
 	#tag : 'Commands-MethodGroups'
@@ -27,10 +27,4 @@ ClyInvertMethodVisibilityHierarchyCommand >> executeRefactoring [
 ClyInvertMethodVisibilityHierarchyCommand >> name [
 
 	^ 'Invert hierarchy'
-]
-
-{ #category : 'accessing' }
-ClyInvertMethodVisibilityHierarchyCommand >> order [
-
-	^ 1000
 ]

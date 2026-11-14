@@ -17,14 +17,9 @@ Class {
 }
 
 { #category : 'testing' }
-SycPackageCommand class >> canBeExecutedInContext: aToolContext [
-	^aToolContext isPackageSelected
-]
+SycPackageCommand >> canBeExecuted [
 
-{ #category : 'testing' }
-SycPackageCommand >> isAvailableInMenuOf: aToolContext [
-
-	^ aToolContext isFullBrowserPackageContext
+	^ self context isPackageSelected
 ]
 
 { #category : 'accessing' }

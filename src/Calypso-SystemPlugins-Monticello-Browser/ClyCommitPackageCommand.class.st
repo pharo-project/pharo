@@ -12,22 +12,10 @@ Class {
 }
 
 { #category : 'testing' }
-ClyCommitPackageCommand class >> canBeExecutedInContext: aToolContext [
+ClyCommitPackageCommand >> canBeExecuted [
 	"if no packages are selected then command will commit all changes in image"
-	^true
-]
 
-{ #category : 'activation' }
-ClyCommitPackageCommand class >> fullBrowserShortcutActivation [
-	<classAnnotation>
-
-	^ClyShortcutActivation by: $s meta for: ClyFullBrowserGlobalContext
-]
-
-{ #category : 'accessing' }
-ClyCommitPackageCommand >> description [
-
-^ 'I am a command to commit given packages' 
+	^ true
 ]
 
 { #category : 'execution' }

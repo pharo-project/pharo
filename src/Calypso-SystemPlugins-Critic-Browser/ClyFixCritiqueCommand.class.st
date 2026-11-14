@@ -1,4 +1,6 @@
 "
+Automatically resolve the issue
+
 I am a command to fix given critique by applying proposed changes.
 I open changes preview on them
 "
@@ -10,15 +12,11 @@ Class {
 }
 
 { #category : 'testing' }
-ClyFixCritiqueCommand class >> canBeExecutedInContext: aCriticContext [
-	(super canBeExecutedInContext: aCriticContext) ifFalse: [ ^false ].
+ClyFixCritiqueCommand >> canBeExecuted [
 
-	^aCriticContext lastSelectedItem isMarkedWith: ClyCritiqueFixableTag
-]
+	super canBeExecuted ifFalse: [ ^ false ].
 
-{ #category : 'table decoration' }
-ClyFixCritiqueCommand >> description [
-	^'Automatically resolve the issue'
+	^ self context lastSelectedItem isMarkedWith: ClyCritiqueFixableTag
 ]
 
 { #category : 'execution' }
@@ -27,7 +25,7 @@ ClyFixCritiqueCommand >> executeRefactoring [
 	(StChangesBrowserPresenter changes: { self critique change }) open
 ]
 
-{ #category : 'initialization' }
+{ #category : 'accessing' }
 ClyFixCritiqueCommand >> iconName [
 	^#repair
 ]

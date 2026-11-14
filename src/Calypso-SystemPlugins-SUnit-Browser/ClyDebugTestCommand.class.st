@@ -1,5 +1,6 @@
 "
-I am a command to debug selected test method.
+Debug selected test method
+
 I install breakpoint to the start of method which opens debugger during following test run
 "
 Class {
@@ -10,25 +11,7 @@ Class {
 	#tag : 'Commands'
 }
 
-{ #category : 'activation' }
-ClyDebugTestCommand class >> fullBrowserShortcutActivation [
-	<classAnnotation>
-
-	^ClyShortcutActivation by: $d meta for: self contextClass
-]
-
-{ #category : 'activation' }
-ClyDebugTestCommand class >> fullBrowserTableIconActivation [
-	"It should not be as icon in table"
-]
-
 { #category : 'accessing' }
-ClyDebugTestCommand >> description [
-
-^ 'Debug selected test method' 
-]
-
-{ #category : 'execution' }
 ClyDebugTestCommand >> iconName [
 	^ #smallDebug
 ]

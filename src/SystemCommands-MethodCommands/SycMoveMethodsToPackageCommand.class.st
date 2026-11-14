@@ -10,7 +10,7 @@ Internal Representation and Key Implementation Points.
 "
 Class {
 	#name : 'SycMoveMethodsToPackageCommand',
-	#superclass : 'SycMethodRepackagingCmCommand',
+	#superclass : 'SycMethodRepackagingCommand',
 	#instVars : [
 		'package'
 	],
@@ -30,12 +30,6 @@ SycMoveMethodsToPackageCommand >> executeRefactoring [
 	self methods do: [ :method |
 			self moveMethod: method toPackage: package.
 			method origin removeEmptyProtocols ]
-]
-
-{ #category : 'accessing' }
-SycMoveMethodsToPackageCommand >> icon [
-
-	^ self iconNamed: #smallRedo
 ]
 
 { #category : 'accessing' }
@@ -76,7 +70,7 @@ SycMoveMethodsToPackageCommand >> package: anObject [
 	package := anObject
 ]
 
-{ #category : 'executing' }
+{ #category : 'execution' }
 SycMoveMethodsToPackageCommand >> prepareFullExecution [
 	super prepareFullExecution.
 	package := self dropContext

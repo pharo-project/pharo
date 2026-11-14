@@ -1,6 +1,16 @@
 Extension { #name : 'ClyInheritedMethodGroup' }
 
 { #category : '*Calypso-SystemTools-FullBrowser' }
+ClyInheritedMethodGroup class >> calypsoSystemToolsFullBrowserCommandsIn: aCommandMap [
+
+	<calypsoCommands>
+	(aCommandMap contextMenu group: ClyMethodGroupExtraMenuGroup)
+		add: SycInspectVariableCommand order: 10;
+		add: ClyInvertMethodVisibilityHierarchyCommand order: 20;
+		add: ClyInvertVariableOrderCommand order: 30
+]
+
+{ #category : '*Calypso-SystemTools-FullBrowser' }
 ClyInheritedMethodGroup >> decorateTableCell: anItemCellMorph of: groupItem [
 	super decorateTableCell: anItemCellMorph of: groupItem.
 	anItemCellMorph setBalloonText: self tooltipText.

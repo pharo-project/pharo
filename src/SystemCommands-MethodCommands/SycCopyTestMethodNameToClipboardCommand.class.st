@@ -3,15 +3,10 @@ Copy selected methods selector into Clipboard as testXXX
 "
 Class {
 	#name : 'SycCopyTestMethodNameToClipboardCommand',
-	#superclass : 'SycMethodExtraCmCommand',
+	#superclass : 'SycMethodCommand',
 	#category : 'SystemCommands-MethodCommands',
 	#package : 'SystemCommands-MethodCommands'
 }
-
-{ #category : 'accessing' }
-SycCopyTestMethodNameToClipboardCommand >> description [
-	^ 'Copy selected methods selector into Clipboard as testXXX'
-]
 
 { #category : 'execution' }
 SycCopyTestMethodNameToClipboardCommand >> execute [
@@ -23,9 +18,9 @@ SycCopyTestMethodNameToClipboardCommand >> execute [
 ]
 
 { #category : 'accessing' }
-SycCopyTestMethodNameToClipboardCommand >> icon [
+SycCopyTestMethodNameToClipboardCommand >> iconName [
 
-	^ self iconNamed: #smallCopy
+	^ #smallCopy
 ]
 
 { #category : 'accessing' }

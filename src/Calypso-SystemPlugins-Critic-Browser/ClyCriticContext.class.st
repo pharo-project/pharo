@@ -14,11 +14,18 @@ Class {
 	#package : 'Calypso-SystemPlugins-Critic-Browser'
 }
 
-{ #category : 'selection strategy' }
-ClyCriticContext class >> selectionStrategy [
-	<classAnnotation>
+{ #category : 'commands' }
+ClyCriticContext class >> calypsoSystemPluginsCriticBrowserCommandsIn: aCommandMap [
 
-	^ClyContextSelectionStrategyAnnotation for: ClyCriticDecorator
+	<calypsoCommands>
+	(aCommandMap contextMenu group: ClyExtraMenuGroup) add: ClyBrowseCritiqueRuleCommand
+]
+
+{ #category : 'selection strategy' }
+ClyCriticContext class >> selectionContextDeclaration [
+
+	<calypsoSelectionContext>
+	^ ClySelectionContextDeclaration browser: ClyCriticDecorator
 ]
 
 { #category : 'accessing' }

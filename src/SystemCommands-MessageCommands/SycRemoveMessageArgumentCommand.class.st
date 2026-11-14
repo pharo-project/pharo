@@ -8,7 +8,7 @@ Internal Representation and Key Implementation Points.
 "
 Class {
 	#name : 'SycRemoveMessageArgumentCommand',
-	#superclass : 'SycMessageCmCommand',
+	#superclass : 'SycMessageRefactoringCommand',
 	#instVars : [
 		'argumentName',
 		'methodName'
@@ -16,12 +16,6 @@ Class {
 	#category : 'SystemCommands-MessageCommands',
 	#package : 'SystemCommands-MessageCommands'
 }
-
-{ #category : 'testing' }
-SycRemoveMessageArgumentCommand class >> canBeExecutedInContext: aToolContext [
-	^(super canBeExecutedInContext: aToolContext)
-		and: [ aToolContext lastSelectedMessage argumentNames notEmpty]
-]
 
 { #category : 'private' }
 SycRemoveMessageArgumentCommand >> abort [
@@ -43,6 +37,12 @@ SycRemoveMessageArgumentCommand >> argumentName [
 { #category : 'accessing' }
 SycRemoveMessageArgumentCommand >> argumentName: anObject [
 	argumentName := anObject
+]
+
+{ #category : 'testing' }
+SycRemoveMessageArgumentCommand >> canBeExecuted [
+
+	^ super canBeExecuted and: [ self context lastSelectedMessage argumentNames isNotEmpty ]
 ]
 
 { #category : 'private' }
@@ -69,9 +69,9 @@ SycRemoveMessageArgumentCommand >> executeRefactoring [
 ]
 
 { #category : 'accessing' }
-SycRemoveMessageArgumentCommand >> icon [
+SycRemoveMessageArgumentCommand >> iconName [
 
-	^ self iconNamed: #remove
+	^ #remove
 ]
 
 { #category : 'private' }

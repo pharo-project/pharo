@@ -1,5 +1,5 @@
 "
-I am a command to remove class group with containing classes.
+Removes class group with containing classes.
  
 Internal Representation and Key Implementation Points.
 
@@ -18,15 +18,9 @@ Class {
 }
 
 { #category : 'testing' }
-ClyRemoveClassGroupCommand class >> canBeExecutedInContext: aToolContext [
-	^aToolContext isPackageTagSelected
-]
+ClyRemoveClassGroupCommand >> canBeExecuted [
 
-{ #category : 'activation' }
-ClyRemoveClassGroupCommand class >> fullBrowserShortcutActivation [
-	<classAnnotation>
-
-	^ClyShortcutActivation removalFor: ClyFullBrowserClassGroupContext
+	^ self context isPackageTagSelected
 ]
 
 { #category : 'accessing' }
@@ -39,12 +33,6 @@ ClyRemoveClassGroupCommand >> classGroup: anObject [
 	classGroup := anObject
 ]
 
-{ #category : 'accessing' }
-ClyRemoveClassGroupCommand >> description [
-
-^ 'Removes class group with containing classes.'
-]
-
 { #category : 'execution' }
 ClyRemoveClassGroupCommand >> executeRefactoring [
 
@@ -54,12 +42,6 @@ ClyRemoveClassGroupCommand >> executeRefactoring [
 { #category : 'accessing' }
 ClyRemoveClassGroupCommand >> iconName [
 	^#remove
-]
-
-{ #category : 'testing' }
-ClyRemoveClassGroupCommand >> isAvailableInMenuOf: aToolContext [
-
-	^ aToolContext isFullBrowserClassGroupContext
 ]
 
 { #category : 'accessing' }

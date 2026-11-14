@@ -19,18 +19,9 @@ Class {
 }
 
 { #category : 'testing' }
-ClyIcebergShowMethodVersionCommand class >> canBeExecutedInContext: aToolContext [
+ClyIcebergShowMethodVersionCommand >> canBeExecuted [
 
-	^ aToolContext isMethodSelected and: [
-		  (IceRepository registeredRepositoryIncludingPackage:
-			   aToolContext lastSelectedMethod package) isNotNil ]
-]
-
-{ #category : 'accessing' }
-ClyIcebergShowMethodVersionCommand class >> methodBrowserTabActivation [
-	<classAnnotation>
-
-	^ClyBrowserTabCommandActivation for: ClyMethod asCalypsoItemContext
+	^ self context isMethodSelected and: [ (IceRepository registeredRepositoryIncludingPackage: self context lastSelectedMethod package) isNotNil ]
 ]
 
 { #category : 'execution' }
@@ -57,12 +48,6 @@ ClyIcebergShowMethodVersionCommand >> executeRefactoring [
 { #category : 'accessing' }
 ClyIcebergShowMethodVersionCommand >> iconName [
 	^#komitterSmalltalkhubRemote
-]
-
-{ #category : 'accessing' }
-ClyIcebergShowMethodVersionCommand >> menuGroup [
-
-	^ ClyQueryMenuGroup
 ]
 
 { #category : 'accessing' }

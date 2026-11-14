@@ -31,13 +31,6 @@ ClyUncommentedItemTableDecorator class >> decorateTableCell: anItemCellMorph of:
 ]
 
 { #category : 'decoration' }
-ClyUncommentedItemTableDecorator class >> decorationStrategy [
-	<classAnnotation>
-
-	^ClyTableDecorationStrategyAnnotation for: ClyClass asCalypsoItemContext
-]
-
-{ #category : 'decoration' }
 ClyUncommentedItemTableDecorator class >> wantsDecorateTableCellOf: aDataSourceItem [
 	^aDataSourceItem isMarkedWith: ClyNoCommentTag
 ]

@@ -33,8 +33,7 @@ ClyInheritedTraitScope class >> defaultName [
 
 { #category : 'inherited scope' }
 ClyInheritedTraitScope class >> inheritedScopeProvider [
-	<classAnnotation>
+	"With traits, the inherited scope of a class also includes its traits. See ClyAbstractClassScope class>>#inheritedScopeProvider."
 
-	^ClyInheritedScopeProviderAnnotation new
-		priority: 100
+	<calypsoInheritedScopeProvider: 100>
 ]

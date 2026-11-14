@@ -9,11 +9,20 @@ Class {
 	#tag : 'Contexts'
 }
 
-{ #category : 'selection strategy' }
-ClyFullBrowserMethodContext class >> selectionStrategy [
-	<classAnnotation>
+{ #category : 'commands' }
+ClyFullBrowserMethodContext class >> calypsoSystemToolsFullBrowserCommandsIn: aCommandMap [
 
-	^ClyContextSelectionStrategyAnnotation for: ClyFullBrowserMorph selectionType: ClyMethod
+	<calypsoCommands>
+	aCommandMap tableDecorators add: ClyClassSideLinkTableDecorator.
+	aCommandMap shortcuts add: ClyFindMethodInBrowserCommand key: $f meta.
+	aCommandMap tableDecorators add: ClyClassSideBoldTableDecorator
+]
+
+{ #category : 'selection strategy' }
+ClyFullBrowserMethodContext class >> selectionContextDeclaration [
+
+	<calypsoSelectionContext>
+	^ ClySelectionContextDeclaration browser: ClyFullBrowserMorph itemType: ClyMethod
 ]
 
 { #category : 'testing' }

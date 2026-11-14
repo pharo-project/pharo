@@ -14,24 +14,14 @@ BaselineOfCalypso >> baseline: spec [
 
 	spec for: #common do: [
 		spec
-			baseline: 'ClassAnnotation' with: [
-				spec
-					repository: repository;
-					loads: 'Core' ];
-
-			project: 'ClassAnnotationTests'
-			copyFrom: 'ClassAnnotation'
-			with: [ spec loads: 'Tests' ];
-
 			baseline: 'SystemCommands' with: [ spec repository: repository ];
 			baseline: 'CalypsoNavigationModel' with: [ spec repository: repository ].
 
 		spec
-			package: #'Calypso-SystemQueries' with: [ spec requires: #( 'CalypsoNavigationModel' #ClassAnnotation ) ];
+			package: #'Calypso-SystemQueries' with: [ spec requires: #( 'CalypsoNavigationModel' ) ];
 			package: #'Calypso-SystemQueries-Tests' with: [
 				spec requires:
-						#( 'CalypsoNavigationModel'
-						   #ClassAnnotationTests #'Calypso-SystemQueries'
+						#( 'CalypsoNavigationModel' #'Calypso-SystemQueries'
 						   #'Calypso-SystemQueries-Tests-PWithSingleClass'
 						   #'Calypso-SystemQueries-Tests-PExtendedByP1'
 						   #'Calypso-SystemQueries-Tests-P1WithHierarchy'
@@ -123,7 +113,7 @@ BaselineOfCalypso >> baseline: spec [
 						#( #'Calypso-SystemQueries-Tests' #'Calypso-SystemPlugins-Reflectivity-Queries' ) ];
 			package: #'Calypso-SystemPlugins-SUnit-Browser' with: [
 				spec requires: #( #'Calypso-SystemPlugins-SUnit-Queries'
-						   #'Calypso-SystemTools-FullBrowser' ) ];
+						   #'Calypso-SystemTools-QueryBrowser' ) ];
 			package: #'Calypso-SystemPlugins-SUnit-Queries'
 			with: [ spec requires: #( #'Calypso-SystemQueries' ) ];
 			package: #'Calypso-SystemPlugins-SUnit-Queries-Tests' with: [
@@ -160,10 +150,10 @@ BaselineOfCalypso >> baseline: spec [
 				spec requires: #( #'Calypso-SystemPlugins-ClassScripts-Queries'
 						   #'Calypso-SystemTools-Core' ) ];
 			package: #'Calypso-SystemPlugins-DependencyAnalyser-Browser'
-			with: [ spec requires: #( #'Calypso-SystemTools-Core' ) ];
+			with: [ spec requires: #( #'Calypso-SystemTools-FullBrowser' ) ];
 			package: #'Calypso-Browser' with: [
 				spec requires: #( 'CalypsoNavigationModel'
-					   'SystemCommands' ) ];
+					   'SystemCommands' #'Calypso-SystemQueries' ) ];
 			package: #'Calypso-Browser-Tests'
 			with: [ spec requires: #( #'Calypso-Browser' ) ];
 			package: #'Calypso-SystemTools-Core' with: [

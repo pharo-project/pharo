@@ -15,20 +15,14 @@ Class {
 }
 
 { #category : 'testing' }
-ClySwitchMethodViewModeCommand class >> canBeExecutedInContext: aToolContext [
-	^aToolContext isClassSelected
-]
-
-{ #category : 'activation' }
-ClySwitchMethodViewModeCommand class >> fullBrowserToolbarActivation [
-	<classAnnotation>
-
-	^ClyToolbarActivation byItemOf: ClyMethodViewToolbarGroup for: ClyFullBrowserClassContext
+ClySwitchMethodViewModeCommand class >> isAbstract [
+	^self = ClySwitchMethodViewModeCommand
 ]
 
 { #category : 'testing' }
-ClySwitchMethodViewModeCommand class >> isAbstract [
-	^self = ClySwitchMethodViewModeCommand
+ClySwitchMethodViewModeCommand >> canBeExecuted [
+
+	^ self context isClassSelected
 ]
 
 { #category : 'testing' }

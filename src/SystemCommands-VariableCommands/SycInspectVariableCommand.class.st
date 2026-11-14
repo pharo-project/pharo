@@ -1,10 +1,9 @@
 "
-I am a command to inspect given variable.
-
+Inspect variable
 "
 Class {
 	#name : 'SycInspectVariableCommand',
-	#superclass : 'SycMethodGroupExtraCmCommand',
+	#superclass : 'ClyCommand',
 	#category : 'SystemCommands-VariableCommands',
 	#package : 'SystemCommands-VariableCommands'
 }
@@ -15,22 +14,10 @@ SycInspectVariableCommand >> canBeExecuted [
 	^ context isAboutBrowserItemType: ClyVariableMethodGroup
 ]
 
-{ #category : 'accessing' }
-SycInspectVariableCommand >> description [
-
-	^ 'Inspect variable'
-]
-
 { #category : 'execution' }
 SycInspectVariableCommand >> executeRefactoring [
 
 	self context selectedVariables last openInspector
-]
-
-{ #category : 'accessing' }
-SycInspectVariableCommand >> icon [
-
-	^ self iconNamed: #inspect
 ]
 
 { #category : 'accessing' }
@@ -43,10 +30,4 @@ SycInspectVariableCommand >> iconName [
 SycInspectVariableCommand >> name [
 
 	^ 'Inspect variable'
-]
-
-{ #category : 'accessing' }
-SycInspectVariableCommand >> order [
-
-	^ 1000
 ]

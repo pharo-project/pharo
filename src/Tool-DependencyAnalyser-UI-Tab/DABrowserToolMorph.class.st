@@ -13,12 +13,6 @@ Class {
 	#package : 'Tool-DependencyAnalyser-UI-Tab'
 }
 
-{ #category : 'activation' }
-DABrowserToolMorph class >> packageActivation [
-	<classAnnotation>
-	^ ClyTabActivationStrategyAnnotation for: Package asCalypsoItemContext
-]
-
 { #category : 'accessing' }
 DABrowserToolMorph class >> tabOrder [
 	^ -10

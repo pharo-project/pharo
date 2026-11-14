@@ -40,3 +40,23 @@ ClyPresentedGroup >> isInlined [
 ClyPresentedGroup >> order [
 	^ descriptor order
 ]
+
+{ #category : 'accessing' }
+ClyPresentedGroup >> presentedGroupOf: aMenuGroupClass [
+	"The presented group of a menu group class in my tree, or nil."
+
+	descriptor class = aMenuGroupClass ifTrue: [ ^ self ].
+	self entries do: [ :entry | entry isGroup ifTrue: [ (entry presentedGroupOf: aMenuGroupClass) ifNotNil: [ :found | ^ found ] ] ].
+	^ nil
+]
+
+{ #category : 'accessing' }
+ClyPresentedGroup >> toolContext [
+	"The tool context of my commands, or nil when I have none."
+
+	self entries do: [ :entry |
+			(entry isGroup
+				 ifTrue: [ entry toolContext ]
+				 ifFalse: [ entry command context ]) ifNotNil: [ :context | ^ context ] ].
+	^ nil
+]

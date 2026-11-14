@@ -9,17 +9,38 @@ Class {
 	#tag : 'UI'
 }
 
-{ #category : 'selection strategy' }
-ClyQueryBrowserContext class >> selectionStrategy [
-	<classAnnotation>
+{ #category : 'commands' }
+ClyQueryBrowserContext class >> calypsoSystemToolsQueryBrowserCommandsIn: aCommandMap [
 
-	^ClyContextSelectionStrategyAnnotation for: ClyQueryBrowserMorph
+	<calypsoCommands>
+	(aCommandMap contextMenu group: ClySwitchScopeMenuGroup) add: ClySwitchQueryScopeCommand.
+	(aCommandMap toolbar group: ClyButtonToolbarGroup)
+		add: ClyShowClassRefCommand order: 1000;
+		add: ClySpawnFullBrowserCommand order: 1000.
+	(aCommandMap toolbar group: ClyQueryResultToolbarGroup)
+		add: ClySwitchQueryScopeCommand order: -5;
+		addAllConcreteSubclassesOf: ClySwitchQueryResultCommand.
+	aCommandMap shortcuts add: ClyShowClassRefCommand key: $c meta , $n meta.
+	aCommandMap doubleClick add: ClySpawnFullBrowserCommand.
+	aCommandMap contextMenu
+		add: SycAbstractAllInstVarAccessorsCommand;
+		add: SycAddNewProtocolCommand;
+		add: SycCategorizeAllUnclassifiedMethodsCommand;
+		add: SycGenerateAllInstVarAccessorsCommand;
+		add: SycRealizeClassCommand;
+		add: SycRemoveClassCommand;
+		add: SycRemoveEmptyMethodTagsCommand.
+	(aCommandMap contextMenu group: ClyQueryMenuGroup)
+		add: ClyShowClassRefCommand;
+		add: ClyShowPoolUsersCommand;
+		add: ClyShowTraitUsersCommand
 ]
 
-{ #category : 'accessing' }
-ClyQueryBrowserContext >> commanderCommandClasses [
+{ #category : 'selection strategy' }
+ClyQueryBrowserContext class >> selectionContextDeclaration [
 
-	^ super commanderCommandClasses , { SycClassCommand }
+	<calypsoSelectionContext>
+	^ ClySelectionContextDeclaration browser: ClyQueryBrowserMorph
 ]
 
 { #category : 'selection-classes' }

@@ -13,10 +13,11 @@ Class {
 }
 
 { #category : 'testing' }
-ClyBrowseCoveringTestCaseCommand class >> canBeExecutedInContext: aBrowserContext [
-	(super canBeExecutedInContext: aBrowserContext) ifFalse: [ ^false ].
+ClyBrowseCoveringTestCaseCommand >> canBeExecuted [
 
-	^ aBrowserContext lastSelectedItem hasProperty: ClyTestedClassProperty
+	super canBeExecuted ifFalse: [ ^ false ].
+
+	^ self context lastSelectedItem hasProperty: ClyTestedClassProperty
 ]
 
 { #category : 'execution' }
@@ -34,20 +35,8 @@ ClyBrowseCoveringTestCaseCommand >> isAvailableInMenuOf: aToolContext [
 ]
 
 { #category : 'accessing' }
-ClyBrowseCoveringTestCaseCommand >> menuGroup [
-
-	^ ClyQueryMenuGroup
-]
-
-{ #category : 'accessing' }
 ClyBrowseCoveringTestCaseCommand >> name [
 	^ 'Browse test class'
-]
-
-{ #category : 'accessing' }
-ClyBrowseCoveringTestCaseCommand >> order [
-
-	^ 1000
 ]
 
 { #category : 'execution' }

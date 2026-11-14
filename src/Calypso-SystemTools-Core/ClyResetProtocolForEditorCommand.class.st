@@ -1,5 +1,5 @@
 "
-I am a command that unclasifies a method.
+Unclasifies a method.
 "
 Class {
 	#name : 'ClyResetProtocolForEditorCommand',
@@ -8,19 +8,6 @@ Class {
 	#package : 'Calypso-SystemTools-Core',
 	#tag : 'Editors-Methods'
 }
-
-{ #category : 'activation' }
-ClyResetProtocolForEditorCommand class >> methodEditorShorcutActivation [
-	<classAnnotation>
-
-	^ClyShortcutActivation by: $e meta, $u meta for: ClyTextEditorContext
-]
-
-{ #category : 'accessing' }
-ClyResetProtocolForEditorCommand >> description [
-
-	^ 'Unclasifies a method.'
-]
 
 { #category : 'execution' }
 ClyResetProtocolForEditorCommand >> executeRefactoring [
@@ -32,10 +19,4 @@ ClyResetProtocolForEditorCommand >> executeRefactoring [
 ClyResetProtocolForEditorCommand >> name [
 
 	^ 'Unclassify method'
-]
-
-{ #category : 'accessing' }
-ClyResetProtocolForEditorCommand >> order [
-
-	^ 1000
 ]

@@ -1,5 +1,5 @@
 "
-I am a command to copy given package.
+Copy a given package.
  
 Internal Representation and Key Implementation Points.
 
@@ -14,12 +14,6 @@ Class {
 	#package : 'SystemCommands-PackageCommands',
 	#tag : 'Scope'
 }
-
-{ #category : 'accessing' }
-SycDuplicatePackageCommand >> description [
-
-	^ 'Copy a given package.'
-]
 
 { #category : 'execution' }
 SycDuplicatePackageCommand >> executeRefactoring [

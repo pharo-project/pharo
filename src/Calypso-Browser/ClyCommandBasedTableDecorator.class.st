@@ -1,7 +1,5 @@
 "
-I delegate decoration of table to all commands annotated by ClyTableIconCommandActivation.
-I allow extend table cell with command based iconic buttons. 
-Any command class which is annotated with ClyTableIconCommandActivation will be represented by clickable icon in main table cell
+I decorate the main cell of the tables with the commands declared for the #tableIcons interaction of ClyCommandMap: each command which can run in the context of the item adds its clickable icon (ClyCommand>>#decorateTableCell:using:). See the guide doc/Calypso/Commands.md of the Pharo repository.
 "
 Class {
 	#name : 'ClyCommandBasedTableDecorator',
@@ -14,21 +12,11 @@ Class {
 { #category : 'decoration' }
 ClyCommandBasedTableDecorator class >> decorateMainTableCell: anItemCellMorph inContext: itemContext [
 
-	ClyTableIconCommandActivation
-		activateAllInContext: itemContext
-		by: [:commandActivator |
-			commandActivator decorateTableCell: anItemCellMorph ]
+	(ClyCommandRegistry default activatorsOf: #tableIcons inContext: itemContext) do: [ :commandActivator | commandActivator decorateTableCell: anItemCellMorph ]
 ]
 
 { #category : 'decoration' }
 ClyCommandBasedTableDecorator class >> decorateTableCell: anItemCellMorph of: aDataSourceItem [
-]
-
-{ #category : 'decoration' }
-ClyCommandBasedTableDecorator class >> decorationStrategy [
-	<classAnnotation>
-
-	^ClyTableDecorationStrategyAnnotation for: ClyBrowserContext
 ]
 
 { #category : 'decoration' }
