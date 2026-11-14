@@ -40,3 +40,48 @@ ReDuplicateClassRefactoringTest >> testDuplicateClassPreservesHierarchyAndBothMe
 	self assert: (duplicate parseTreeForSelector: #accessing)
 		equals: ((model classFor: MyClassARoot) parseTreeForSelector: #accessing)
 ]
+
+{ #category : 'tests' }
+ReDuplicateClassRefactoringTest >> testDuplicateComposedTraitPreservesBothMethodSides [
+
+	| duplicate refactoring source |
+	source := TReComposedTraitForDuplication.
+	refactoring := ReDuplicateClassRefactoring
+		model: model
+		copyClass: source
+		withName: #TReDuplicatedComposedTrait
+		in: #'Refactoring-Transformations-Tests'.
+	refactoring generateChanges.
+	duplicate := model classNamed: #TReDuplicatedComposedTrait.
+	self assertCollection: duplicate traitComposition traits
+		hasSameElements: { TReTraitToBeUsedInDuplication }.
+	self assert: (duplicate directlyDefinesMethod: #instanceSideValue).
+	self assert: (duplicate classSide directlyDefinesMethod: #classSideValue).
+	self assert: (duplicate parseTreeForSelector: #instanceSideValue)
+		equals: ((model classFor: source) parseTreeForSelector: #instanceSideValue)
+]
+
+{ #category : 'tests' }
+ReDuplicateClassRefactoringTest >> testDuplicateTrait [
+
+	| addition duplicate refactoring |
+	refactoring := ReDuplicateClassRefactoring
+		model: model
+		copyClass: TReTraitToBeUsedInDuplication
+		withName: #TReDuplicatedTrait
+		in: #'Refactoring-Transformations-Tests'.
+
+	refactoring generateChanges.
+	duplicate := model classNamed: #TReDuplicatedTrait.
+
+	self assert: duplicate class equals: RBTrait.
+	self assert: duplicate superclass isNil.
+	self assert: (duplicate directlyDefinesMethod: #methodInTrait).
+	self
+		assert: duplicate packageName
+		equals: #'Refactoring-Transformations-Tests'.
+
+	addition := refactoring changes changes
+		detect: [ :change | change isKindOf: ReAddClassChange ].
+	self assert: addition builder isTrait
+]
