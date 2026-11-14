@@ -1,5 +1,6 @@
 "
-I am a command to spawn full browser from current browser state.
+Spawn full browser from current browser state.
+
 I simply ask browser #spawnFullBrowser.
 
 By default I am available everywhere using cmd+b shortcut and ""Browse"" context menu item.
@@ -7,8 +8,7 @@ By default I am available everywhere using cmd+b shortcut and ""Browse"" context
 Internal Representation and Key Implementation Points.
 
     Instance Variables
-	browser:		<ClyBrowser>
-
+	browser:		<ClyBrowserMorph>
 "
 Class {
 	#name : 'ClySpawnFullBrowserCommand',
@@ -18,29 +18,10 @@ Class {
 	#tag : 'Commands-Queries'
 }
 
-{ #category : 'activation' }
-ClySpawnFullBrowserCommand class >> browserShortcutActivation [
-	<classAnnotation>
-
-	^ClyShortcutActivation by: $b meta for: ClySystemBrowserContext
-]
-
 { #category : 'testing' }
-ClySpawnFullBrowserCommand class >> canBeExecutedInContext: aToolContext [
-	^aToolContext hasSelectedItems
-]
+ClySpawnFullBrowserCommand >> canBeExecuted [
 
-{ #category : 'activation' }
-ClySpawnFullBrowserCommand class >> fullBrowserDoubleClickMenuActivation [
-	<classAnnotation>
-
-	^ClyDoubleClickActivation for: ClyFullBrowserContext
-]
-
-{ #category : 'accessing' }
-ClySpawnFullBrowserCommand >> description [
-
-	^ 'Spawn full browser from current browser state.'
+	^ self context hasSelectedItems
 ]
 
 { #category : 'execution' }
@@ -55,18 +36,6 @@ ClySpawnFullBrowserCommand >> iconName [
 ]
 
 { #category : 'accessing' }
-ClySpawnFullBrowserCommand >> menuGroup [
-
-	^ ClyQueryMenuGroup
-]
-
-{ #category : 'accessing' }
 ClySpawnFullBrowserCommand >> name [
 	^'Browse'
-]
-
-{ #category : 'accessing' }
-ClySpawnFullBrowserCommand >> order [
-
-	^ 1000
 ]

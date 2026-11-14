@@ -10,54 +10,18 @@ Class {
 }
 
 { #category : 'testing' }
-ClyDebuggingCommand class >> canBeExecutedInContext: aBrowserContext [
-
-	| node |
-	
-	aBrowserContext hasUnacceptedEdits ifTrue: [ ^ false ].
-	
-	^ self isAbstract not and: [
-		  node := aBrowserContext lastSelectedSourceNode.
-			
-		  node isNotNil and: [
-			  node isCommentNode not and: [
-				  node isPragma not and: [
-					  node isSequence not and: [
-						  node isLiteralNode not and: [
-							  (node isVariable and: [ node isDefinition ]) not ] ] ] ] ] ]
-]
-
-{ #category : 'activation' }
-ClyDebuggingCommand class >> contextMenuOrder [
-	<classAnnotationDependency>
-	self subclassResponsibility
-]
-
-{ #category : 'testing' }
 ClyDebuggingCommand class >> isAbstract [
 	^self = ClyDebuggingCommand
 ]
 
-{ #category : 'activation' }
-ClyDebuggingCommand class >> methodContextMenuActivation [
-	<classAnnotation>
+{ #category : 'testing' }
+ClyDebuggingCommand >> canBeExecuted [
 
-	^SycDebuggingMenuActivation
-		byItemOf: ClyDebuggingMenuGroup order: self contextMenuOrder for: ClyMethod asCalypsoItemContext
-]
+	| node |
+	self context hasUnacceptedEdits ifTrue: [ ^ false ].
 
-{ #category : 'activation' }
-ClyDebuggingCommand class >> methodEditorLeftBarMenuActivation [
-	<classAnnotation>
+	^ self class isAbstract not and: [
+			  node := self context lastSelectedSourceNode.
 
-	^ClyTextLeftBarMenuActivation
-		byItemOf: ClyDebuggingMenuGroup order: self contextMenuOrder for: ClyMethodSourceCodeContext
-]
-
-{ #category : 'activation' }
-ClyDebuggingCommand class >> sourceCodeMenuActivation [
-	<classAnnotation>
-
-	^SycDebuggingMenuActivation
-		byItemOf: ClyDebuggingMenuGroup order: self contextMenuOrder for: ClyMethodSourceCodeContext
+			  node isNotNil and: [ node isCommentNode not and: [ node isPragma not and: [ node isSequence not and: [ node isLiteralNode not and: [ (node isVariable and: [ node isDefinition ]) not ] ] ] ] ] ]
 ]

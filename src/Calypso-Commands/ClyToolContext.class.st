@@ -1,5 +1,5 @@
 "
-I am the context in which the Calypso commands run. I hold the tool that owns the command and answer the questions that commands and their menus ask about the selection (classes, packages, methods, variables, source nodes). Concrete contexts (browser, text editor, critics) specialise me. I replace the v1 base context while the v1 activators still exist.
+I am the context in which the Calypso commands run. I hold the tool that owns the command and answer the questions that commands and their menus ask about the selection (classes, packages, methods, variables, source nodes). Concrete contexts (browser, text editor, critics) specialise me. Commands are declared on context classes, or on the types of the selected items, see #isDescribedByCommandAnchor: and the guide doc/Calypso/Commands.md of the Pharo repository.
 "
 Class {
 	#name : 'ClyToolContext',
@@ -10,6 +10,13 @@ Class {
 	#category : 'Calypso-Commands',
 	#package : 'Calypso-Commands'
 }
+
+{ #category : 'commands' }
+ClyToolContext class >> calypsoCommandsIn: aCommandMap [
+
+	<calypsoCommands>
+	(aCommandMap textLeftBarClick add: ClyOpenTextLeftBarMenuCommand) beYellowButton
+]
 
 { #category : 'instance creation' }
 ClyToolContext class >> for: aTool [
@@ -24,12 +31,6 @@ ClyToolContext >> allowsExecutionOf: aCommandClass [
 ]
 
 { #category : 'testing' }
-ClyToolContext >> commanderCommandClasses [
-
-	^ #()
-]
-
-{ #category : 'testing' }
 ClyToolContext >> hasUnacceptedEdits [ 
 	^ false 
 ]
@@ -38,6 +39,13 @@ ClyToolContext >> hasUnacceptedEdits [
 ClyToolContext >> isClassDefinitionContext [
 
 	^ false
+]
+
+{ #category : 'testing' }
+ClyToolContext >> isDescribedByCommandAnchor: anAnchorClass [
+	"The commands declared on an anchor apply to me when I am an instance of it or of its subclasses. See ClyCommandMap."
+
+	^ self class includesBehavior: anAnchorClass
 ]
 
 { #category : 'testing' }

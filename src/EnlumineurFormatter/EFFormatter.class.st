@@ -205,12 +205,12 @@ EFFormatter class >> minimumNewLinesBetweenStatements: anInteger [
 
 { #category : 'accessing' }
 EFFormatter class >> multiLineMessages [
-	^ DefaultPrettyPrintContext multiLineMessages printString
+	^ DefaultPrettyPrintContext multiLineMessages
 ]
 
 { #category : 'accessing' }
 EFFormatter class >> multiLineMessages: aString [
-	DefaultPrettyPrintContext multiLineMessages: (self compiler evaluate: aString).
+	DefaultPrettyPrintContext multiLineMessages: aString.
 	self announceASettingChange
 ]
 
@@ -364,12 +364,12 @@ EFFormatter class >> numberOfSpacesInsideParentheses: anInteger [
 
 { #category : 'accessing' }
 EFFormatter class >> oneLineMessages [
-	^ DefaultPrettyPrintContext oneLineMessages printString
+	^ DefaultPrettyPrintContext oneLineMessages
 ]
 
 { #category : 'accessing' }
 EFFormatter class >> oneLineMessages: aString [
-	DefaultPrettyPrintContext oneLineMessages: (self compiler evaluate: aString).
+	DefaultPrettyPrintContext oneLineMessages: aString.
 	self announceASettingChange
 ]
 
@@ -579,14 +579,14 @@ EFFormatter class >> settingsMultiLineMessages: aBuilder [
 
 	(aBuilder setting: #multiLineMessages)
 		label: 'Multi line messages';
-		defaultValue: '#(#ifTrue:ifFalse: #ifFalse:ifTrue: #ifTrue: #ifFalse: #on:do: #ensure: #ifCurtailed:)';
-		description: 'An array containing all the messages that should be written on multiple lines.
+		defaultValue: 'ifTrue:ifFalse: ifFalse:ifTrue: ifTrue: ifFalse: on:do: ensure: ifCurtailed:';
+		description: 'A string containing all the selector names that should be written on multiple lines.
 		
 Example:
 aBoolean
 	ifTrue: [ 1 ]
 	ifFalse: [ 0 ]
-is the result if #ifTrue:ifFalse is in the array'
+is the result if ifTrue:ifFalse is in the string'
 ]
 
 { #category : 'settings' }
@@ -799,10 +799,10 @@ EFFormatter class >> settingsOneLineMessages: aBuilder [
 
 	(aBuilder setting: #oneLineMessages)
 		label: 'One line messages';
-		defaultValue: '#(#to: #to:do: #to:by: #to:by:do:)';
+		defaultValue: 'to: to:do: to:by: to:by:do:)';
 		description: 'All the messages listed in this setting will be formatted on one single line. 
 		
-If we include #todo: in the oneLineMessages we get 
+If we include todo: in the oneLineMessages we get 
 
 1 to: 4 do: [ :i | Transcript show: i ]'
 ]
@@ -1614,9 +1614,10 @@ EFFormatter >> isLineTooLongWithString: aString [
 
 { #category : 'private' }
 EFFormatter >> isMultiLineMessage: aMessageNode [
-	(self multiLineMessages includes: aMessageNode selector)
+	
+	(self multiLineMessages includes: aMessageNode selector asString)
 		ifTrue: [ ^ true ].
-	(self oneLineMessages includes: aMessageNode selector)
+	(self oneLineMessages includes: aMessageNode selector asString)
 		ifTrue: [ ^ false ].
 	self numberOfArgumentsForMultiLine <= aMessageNode arguments size
 		ifTrue: [ ^ true ].
@@ -1726,8 +1727,8 @@ EFFormatter >> multiLineMessages [
 ]
 
 { #category : 'accessing' }
-EFFormatter >> multiLineMessages: anArray [
-	context multiLineMessages: anArray
+EFFormatter >> multiLineMessages: aString [
+	context multiLineMessages: aString
 ]
 
 { #category : 'private' }
@@ -1964,8 +1965,8 @@ EFFormatter >> oneLineMessages [
 ]
 
 { #category : 'accessing' }
-EFFormatter >> oneLineMessages: anArray [
-	context oneLineMessages: anArray
+EFFormatter >> oneLineMessages: aString [
+	context oneLineMessages: aString
 ]
 
 { #category : 'accessing' }

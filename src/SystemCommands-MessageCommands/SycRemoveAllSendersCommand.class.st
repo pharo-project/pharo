@@ -3,14 +3,15 @@ I am a command to launch the Remove All Senders Refactoring: removes all possibl
 "
 Class {
 	#name : 'SycRemoveAllSendersCommand',
-	#superclass : 'SycMessageCmCommand',
+	#superclass : 'SycMessageRefactoringCommand',
 	#category : 'SystemCommands-MessageCommands',
 	#package : 'SystemCommands-MessageCommands'
 }
 
 { #category : 'testing' }
-SycRemoveAllSendersCommand class >> canBeExecutedInContext: aToolContext [
-	^ aToolContext isMethodSelected
+SycRemoveAllSendersCommand >> canBeExecuted [
+
+	^ self context isMethodSelected
 ]
 
 { #category : 'execution' }
@@ -26,9 +27,9 @@ SycRemoveAllSendersCommand >> createRefactoring [
 ]
 
 { #category : 'accessing' }
-SycRemoveAllSendersCommand >> icon [
+SycRemoveAllSendersCommand >> iconName [
 
-	^ self iconNamed: #remove
+	^ #remove
 ]
 
 { #category : 'accessing' }

@@ -28,12 +28,6 @@ SycAddPackagesScopeCommand >> name [
 	^ 'Create scope from selected package(s)'
 ]
 
-{ #category : 'accessing' }
-SycAddPackagesScopeCommand >> order [
-
-	^ 1000
-]
-
 { #category : 'execution' }
 SycAddPackagesScopeCommand >> prepareFullExecution [
 

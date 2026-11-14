@@ -3,7 +3,7 @@ Demotes the selected packages whose name contains a dash to a package with a tag
 "
 Class {
 	#name : 'SycDemoteToPackageWithTagCommand',
-	#superclass : 'SycPackageExtraCmCommand',
+	#superclass : 'SycPackageCommand',
 	#category : 'SystemCommands-PackageCommands',
 	#package : 'SystemCommands-PackageCommands'
 }

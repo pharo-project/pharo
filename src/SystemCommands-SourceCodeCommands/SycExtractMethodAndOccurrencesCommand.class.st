@@ -1,5 +1,5 @@
 "
-I am a command to extract selected ast node into separate method 
+Extracts selected ast node into separate method.
 "
 Class {
 	#name : 'SycExtractMethodAndOccurrencesCommand',
@@ -10,20 +10,6 @@ Class {
 	#category : 'SystemCommands-SourceCodeCommands',
 	#package : 'SystemCommands-SourceCodeCommands'
 }
-
-{ #category : 'testing' }
-SycExtractMethodAndOccurrencesCommand class >> canBeExecutedInContext: aSourceCodeContext [
-
-	^ (super canBeExecutedInContext: aSourceCodeContext) and: [
-		  aSourceCodeContext isMethodSelected not ]
-]
-
-{ #category : 'testing' }
-SycExtractMethodAndOccurrencesCommand class >> methodEditorShortcutActivation [
-	<classAnnotation>
-
-	^ClyShortcutActivation by: $e meta, $m meta for: ClySourceCodeContext
-]
 
 { #category : 'converting' }
 SycExtractMethodAndOccurrencesCommand >> asRefactorings [
@@ -39,10 +25,10 @@ SycExtractMethodAndOccurrencesCommand >> asRefactorings [
 	^ { refactoring }
 ]
 
-{ #category : 'accessing' }
-SycExtractMethodAndOccurrencesCommand >> description [
+{ #category : 'testing' }
+SycExtractMethodAndOccurrencesCommand >> canBeExecuted [
 
-	^ 'Extracts selected ast node into separate method.'
+	^ super canBeExecuted and: [ self context isMethodSelected not ]
 ]
 
 { #category : 'accessing' }

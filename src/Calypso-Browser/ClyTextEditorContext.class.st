@@ -9,6 +9,16 @@ Class {
 	#tag : 'TextEditors'
 }
 
+{ #category : 'commands' }
+ClyTextEditorContext class >> calypsoBrowserCommandsIn: aCommandMap [
+
+	<calypsoCommands>
+	aCommandMap shortcuts
+		add: ClyCloseBrowserCommand key: $w meta;
+		add: ClyNavigateBrowserBackCommand key: Character arrowLeft alt;
+		add: ClyNavigateBrowserForwardCommand key: Character arrowRight alt
+]
+
 { #category : 'public' }
 ClyTextEditorContext >> browser [
 	^tool browser

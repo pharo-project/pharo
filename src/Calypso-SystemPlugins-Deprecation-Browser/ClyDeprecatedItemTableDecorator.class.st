@@ -9,13 +9,6 @@ Class {
 }
 
 { #category : 'decoration' }
-ClyDeprecatedItemTableDecorator class >> browserDecorationStrategy [
-	<classAnnotation>
-
-	^ClyTableDecorationStrategyAnnotation for: ClySystemBrowserContext
-]
-
-{ #category : 'decoration' }
 ClyDeprecatedItemTableDecorator class >> decorateTableCell: anItemCellMorph of: aDataSourceItem [
 	| nameMorph |
 

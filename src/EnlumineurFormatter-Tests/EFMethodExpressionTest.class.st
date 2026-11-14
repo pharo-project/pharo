@@ -56,8 +56,8 @@ EFMethodExpressionTest >> bigMethodeConfiguration [
 		  maxLineLength: 50;
 		  periodAtEndOfBlock: false;
 		  periodAtEndOfMethod: false;
-		  multiLineMessages: Array new;
-		  oneLineMessages: Array new;
+		   multiLineMessages: '';
+		  oneLineMessages: '';
 		  indentsForKeywords: 1;
 		  keepBlockInMessage: true;
 		  retainBlankLinesBetweenStatements: false;
@@ -92,8 +92,8 @@ EFMethodExpressionTest >> cascadeConfiguration [
 		  periodAtEndOfMethod: false;
 		  newLineBeforeFirstCascade: true;
 		  newLineAfterCascade: true;
-		  multiLineMessages: Array new;
-		  oneLineMessages: Array new;
+		   multiLineMessages: '';
+		  oneLineMessages: '';
 		  numberOfArgumentsForMultiLine: 10;
 		  keepBlockInMessage: true;
 		  retainBlankLinesBetweenStatements: false;

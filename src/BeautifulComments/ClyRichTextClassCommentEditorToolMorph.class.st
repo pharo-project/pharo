@@ -16,11 +16,11 @@ Class {
 	#tag : 'UI'
 }
 
-{ #category : 'activation' }
-ClyRichTextClassCommentEditorToolMorph class >> classCommentTabActivation [
-	<classAnnotation>
-	
-	^ClyTabActivationStrategyAnnotation for: ClyClassComment asCalypsoItemContext
+{ #category : 'accessing' }
+ClyRichTextClassCommentEditorToolMorph class >> tabOrder [
+	"After the class definition and before the test set-up (ClyTestSetUpEditorToolMorph)."
+
+	^ ClyClassDefinitionEditorToolMorph tabOrder + 0.5
 ]
 
 { #category : 'operations' }

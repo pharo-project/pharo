@@ -10,9 +10,9 @@ EFContextTest >> testMultiLineMessagesClassSide [
 
 	| messageList |
 	
-	messageList := self class compiler evaluate: EFFormatter multiLineMessages.
-	self assert: (messageList includes: #ifTrue:).  
-	self assert: (messageList includes: #ifFalse:).
+	messageList := EFFormatter multiLineMessages.
+	self assert: (messageList includes: 'ifTrue:').  
+	self assert: (messageList includes: 'ifFalse:').
 ]
 
 { #category : 'tests' }
@@ -28,17 +28,16 @@ EFContextTest >> testOneLineMessage [
 
 	| context |
 	context := EFContext new. 
-	self assert: (context oneLineMessages includes: #to:).
-	self assert: (context oneLineMessages includes: #to:do:).
+	self assert: (context oneLineMessages includes: 'to:').
+	self assert: (context oneLineMessages includes: 'to:do:').
 ]
 
 { #category : 'tests' }
 EFContextTest >> testOneLineMessageClassSide [
 
 	| messageList |
-	
-	messageList := self class compiler evaluate: EFFormatter oneLineMessages.
-	self assert: (messageList includes: #to:).  
-	self assert: (messageList includes: #to:do:).
+	messageList := EFFormatter oneLineMessages.
+	self assert: (messageList includes: 'to:').  
+	self assert: (messageList includes: 'to:do:').
 
 ]

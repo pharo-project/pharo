@@ -22,10 +22,11 @@ Class {
 }
 
 { #category : 'testing' }
-ClyCreateTraitCommand class >> canBeExecutedInContext: aBrowserContext [
-	(super canBeExecutedInContext: aBrowserContext) ifFalse: [ ^false ].
+ClyCreateTraitCommand >> canBeExecuted [
 
-	^aBrowserContext isPackageSelected
+	super canBeExecuted ifFalse: [ ^ false ].
+
+	^ self context isPackageSelected
 ]
 
 { #category : 'execution' }

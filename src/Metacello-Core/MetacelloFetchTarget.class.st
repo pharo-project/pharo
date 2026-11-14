@@ -1,3 +1,6 @@
+"
+I am the fetch target: I visit the load directives the record target built and fetch, through the engine's loader, what each package directive needs, without loading anything.
+"
 Class {
 	#name : 'MetacelloFetchTarget',
 	#superclass : 'MetacelloTarget',

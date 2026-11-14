@@ -25,5 +25,6 @@ ZnServerStoppedEvent >> description: anObject [
 { #category : 'printing' }
 ZnServerStoppedEvent >> printContentsOn: stream [
 	super printContentsOn: stream.
-	stream << 'Stopped '; << description
+
+	description ifNotNil: [ stream << 'Stopped '; << description ]
 ]

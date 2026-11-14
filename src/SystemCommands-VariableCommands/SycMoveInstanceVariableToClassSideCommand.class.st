@@ -22,9 +22,9 @@ SycMoveInstanceVariableToClassSideCommand >> fullBrowserOrder [
 ]
 
 { #category : 'accessing' }
-SycMoveInstanceVariableToClassSideCommand >> icon [
+SycMoveInstanceVariableToClassSideCommand >> iconName [
 
-	^ self iconNamed: #smallRedo
+	^ #smallRedo
 ]
 
 { #category : 'accessing' }

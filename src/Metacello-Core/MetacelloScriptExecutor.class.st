@@ -6,23 +6,32 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'options',
-		'roots',
-		'singleRoot',
 		'actionArg',
 		'baselineArg',
 		'classNameArg',
-		'repositoryArg'
+		'repositoryArg',
+		'loadsArg',
+		'roots'
 	],
 	#category : 'Metacello-Core-Scripts',
 	#package : 'Metacello-Core',
 	#tag : 'Scripts'
 }
 
+{ #category : 'args' }
+MetacelloScriptExecutor >> addRoot: aProjectSpec [
+	"Add the root aProjectSpec names, after the roots added before"
+
+	self roots add: aProjectSpec
+]
+
 { #category : 'execution' }
 MetacelloScriptExecutor >> applyArgsToProjectSpec: aProjectSpec [
-    classNameArg ifNotNil: [ aProjectSpec className: classNameArg ].
-    repositoryArg ifNotNil: [ aProjectSpec repository: repositoryArg ].
-    ^ aProjectSpec
+
+	classNameArg ifNotNil: [ aProjectSpec className: classNameArg ].
+	repositoryArg ifNotNil: [ aProjectSpec repository: repositoryArg ].
+	loadsArg ifNotNil: [ aProjectSpec loads: loadsArg ].
+	^ aProjectSpec
 ]
 
 { #category : 'args' }
@@ -41,6 +50,13 @@ MetacelloScriptExecutor >> beStrict: aBoolean [
 	self options at: #strict put: aBoolean
 ]
 
+{ #category : 'execution callback' }
+MetacelloScriptExecutor >> checkCanRunOn: aProjectSpec [
+	"Signal an error if the script cannot run on the registered aProjectSpec. Any registered project will do"
+
+	
+]
+
 { #category : 'args' }
 MetacelloScriptExecutor >> classNameArg [
     ^ classNameArg
@@ -53,38 +69,24 @@ MetacelloScriptExecutor >> classNameArg: anObject [
 
 { #category : 'execution' }
 MetacelloScriptExecutor >> execute [
+	"Perform the action with one engine on every root the script names"
 
-	baselineArg ifNil: [ self error: 'Baseline not specified' ].
-
-	self executeString: baselineArg do: [ :projectReferenceSpec |
-			| engine |
-			engine := MetacelloScriptEngine new
-				          options: self options copy;
-				          projectSpec: projectReferenceSpec;
-				          yourself.
-			[
-				self class codeSupportAnnouncer announce: (MetacelloExecutionStartAnnouncement executor: self).
-				engine perform: actionArg key withArguments: actionArg value ] ensure: [
-				self class codeSupportAnnouncer announce: (MetacelloExecutionEndAnnouncement executor: self) ].
-			engine root ifNotNil: [ :root | self roots add: root ] ].
-	^ (self singleRoot and: [ self roots size == 1 ])
-		  ifTrue: [ self roots first ]
-		  ifFalse: [ self roots ]
-]
-
-{ #category : 'execution callback' }
-MetacelloScriptExecutor >> executeString: aString do: projectSpecBlock [
-
-	| projectSpec |
-	singleRoot ifNil: [ self singleRoot: true ].
-	projectSpec := MetacelloProjectRegistration projectSpecForClassNamed: aString ifAbsent: [ ].
-
-	(self shouldBeExecutedFor: projectSpec) ifTrue: [ projectSpecBlock value: (self applyArgsToProjectSpec: projectSpec copy) ]
+	| engine |
+	engine := MetacelloScriptEngine new
+		          options: self options copy;
+		          roots: self rootSpecs;
+		          yourself.
+	^ [
+		  self class codeSupportAnnouncer announce: (MetacelloExecutionStartAnnouncement executor: self).
+		  engine perform: actionArg key withArguments: actionArg value ] ensure: [
+		  self class codeSupportAnnouncer announce: (MetacelloExecutionEndAnnouncement executor: self) ]
 ]
 
 { #category : 'actions api' }
 MetacelloScriptExecutor >> fetch: required [
-    actionArg := #'fetch:' -> {required}
+
+	loadsArg := required.
+	actionArg := #fetch -> #(  )
 ]
 
 { #category : 'actions api' }
@@ -99,13 +101,15 @@ MetacelloScriptExecutor >> ignoreImage: aBool [
 
 { #category : 'actions api' }
 MetacelloScriptExecutor >> list [
-  actionArg := #'list' -> #().
-  self singleRoot: false
+
+	actionArg := #list -> #(  )
 ]
 
 { #category : 'actions api' }
 MetacelloScriptExecutor >> load: required [
-    actionArg := #load: -> {required}
+
+	loadsArg := required.
+	actionArg := #load -> #(  )
 ]
 
 { #category : 'options api' }
@@ -154,12 +158,15 @@ MetacelloScriptExecutor >> options [
 MetacelloScriptExecutor >> postCopy [
 
 	super postCopy.
-	options := options copy
+	options := options copy.
+	roots := roots copy
 ]
 
 { #category : 'actions api' }
 MetacelloScriptExecutor >> record: required [
-    actionArg := #'record:' -> {required}
+
+	loadsArg := required.
+	actionArg := #record -> #(  )
 ]
 
 { #category : 'actions api' }
@@ -177,28 +184,58 @@ MetacelloScriptExecutor >> repositoryArg: anObject [
     repositoryArg := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : 'actions api' }
+MetacelloScriptExecutor >> resolve: required [
+
+	loadsArg := required.
+	actionArg := #resolve -> #(  )
+]
+
+{ #category : 'options api' }
+MetacelloScriptExecutor >> resolver: aMetacelloResolver [
+
+	self options at: #resolver put: aMetacelloResolver
+]
+
+{ #category : 'execution callback' }
+MetacelloScriptExecutor >> rootFor: aProjectSpec [
+	"The project spec the action works on for the root aProjectSpec: a copy of its registered spec. Signal an error when it is not registered, or the script cannot run on it (see checkCanRunOn:)"
+
+	| registered |
+	registered := MetacelloProjectRegistration
+		              projectSpecForClassNamed: aProjectSpec name
+		              ifAbsent: [ NotFound signal: 'Project ' , aProjectSpec name , ' is not registered' ].
+	self checkCanRunOn: registered.
+	^ registered copy
+]
+
+{ #category : 'execution' }
+MetacelloScriptExecutor >> rootSpecs [
+	"The project specs of the roots the script names, in order: the one its baseline:, repository: and load: pieces build, then each root added (see addRoot:)"
+
+	| all |
+	all := OrderedCollection new.
+	baselineArg ifNotNil: [ all add: (self applyArgsToProjectSpec: (self rootFor: (self specNamed: baselineArg))) ].
+	self roots do: [ :each | all add: (self rootFor: each) ].
+	all ifEmpty: [ MetacelloNoRootError signal: 'The script names no baseline' ].
+	^ all asArray
+]
+
+{ #category : 'args' }
 MetacelloScriptExecutor >> roots [
+	"The roots added to the script, in order, besides the one its baseline:, repository: and load: pieces build"
 
 	^ roots ifNil: [ roots := OrderedCollection new ]
 ]
 
-{ #category : 'execution callback' }
-MetacelloScriptExecutor >> shouldBeExecutedFor: aSpec [
+{ #category : 'execution' }
+MetacelloScriptExecutor >> specNamed: aString [
+	"A new project spec for the baseline aString"
 
-	^ true
-]
-
-{ #category : 'accessing' }
-MetacelloScriptExecutor >> singleRoot [
-
-	^ singleRoot ifNil: [ singleRoot := false ]
-]
-
-{ #category : 'accessing' }
-MetacelloScriptExecutor >> singleRoot: aBoolean [
-
-	singleRoot := aBoolean
+	^ (MetacelloProjectSpec project: MetacelloProject new)
+		  name: aString;
+		  className: 'BaselineOf' , aString;
+		  yourself
 ]
 
 { #category : 'actions api' }

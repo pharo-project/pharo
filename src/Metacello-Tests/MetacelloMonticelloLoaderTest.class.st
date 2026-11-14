@@ -3,7 +3,7 @@ Tests for MetacelloMonticelloLoader behavior, especially ignoreImage flag propag
 "
 Class {
 	#name : 'MetacelloMonticelloLoaderTest',
-	#superclass : 'TestCase',
+	#superclass : 'MetacelloTestCase',
 	#category : 'Metacello-Tests-Monticello',
 	#package : 'Metacello-Tests',
 	#tag : 'Monticello'

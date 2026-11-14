@@ -30,8 +30,7 @@ FinalizationProcess class >> finalizationProcess [
 	 "Support the old scheme until things have changed over..."
 	 [firstMourner := self primitiveFetchMourner.
 	  firstMourner isNotNil] whileTrue:
-		[[throttle signal.
-		  self mournLoopWith: firstMourner] forkAt: Processor activePriority + 1.
+		[[[self mournLoopWith: firstMourner] ensure: [throttle signal]] forkAt: Processor activePriority + 1.
 		 throttle wait]]
 ]
 

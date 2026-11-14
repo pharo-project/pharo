@@ -237,6 +237,15 @@ ZnHtmlOutputStream >> print: object [
 	object printOn: self
 ]
 
+{ #category : 'accessing' }
+ZnHtmlOutputStream >> rawStream [
+	"Answer the innermost stream wrapped by the receiver, e.g. a raw binary file stream,
+	socket stream, or regular Read/WriteStream.
+	Defer to the wrappedStream."
+
+	^ self wrappedStream rawStream
+]
+
 { #category : 'private - html' }
 ZnHtmlOutputStream >> renderAttributes: attributes [
 	attributes pairsDo: [ :name :value |

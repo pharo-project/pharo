@@ -9,11 +9,6 @@ Class {
 	#tag : 'Commands-MetaLevel'
 }
 
-{ #category : 'activation' }
-ClySwitchToClassSideCommand class >> toolbarOrder [
-	^2
-]
-
 { #category : 'execution' }
 ClySwitchToClassSideCommand >> metaLevelScope [
 	^ClyClassSideScope

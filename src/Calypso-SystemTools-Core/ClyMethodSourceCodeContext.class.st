@@ -1,3 +1,7 @@
+"
+I am the context of the method editor (ClyMethodCodeEditorToolMorph): the source code of a method, with the node selected in it.
+I answer the edited method as the selected method (#selectedMethods, #lastSelectedMethod), so the commands of methods also apply in the editor, and the commands declared on me apply to method source code, such as the debug points of the left bar of the editor.
+"
 Class {
 	#name : 'ClyMethodSourceCodeContext',
 	#superclass : 'ClySourceCodeContext',
@@ -5,6 +9,17 @@ Class {
 	#package : 'Calypso-SystemTools-Core',
 	#tag : 'Editors-Methods'
 }
+
+{ #category : 'commands' }
+ClyMethodSourceCodeContext class >> calypsoSystemToolsCoreCommandsIn: aCommandMap [
+
+	<calypsoCommands>
+	aCommandMap shortcuts
+		add: SycMoveTempDefinitionCommand key: $o meta;
+		add: SycRenameArgOrTempCommand2 key: $r meta;
+		add: SycRenameMessageCommand key: $r meta;
+		add: SycShowLocalSendersCommand key: $y shift meta
+]
 
 { #category : 'testing' }
 ClyMethodSourceCodeContext >> isMethodSelected [

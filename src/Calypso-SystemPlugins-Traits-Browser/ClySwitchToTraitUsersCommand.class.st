@@ -9,10 +9,11 @@ Class {
 }
 
 { #category : 'testing' }
-ClySwitchToTraitUsersCommand class >> canBeExecutedInContext: aToolContext [
-	(super canBeExecutedInContext: aToolContext) ifFalse: [ ^false ].
+ClySwitchToTraitUsersCommand >> canBeExecuted [
 
-	^aToolContext isTraitSelected
+	super canBeExecuted ifFalse: [ ^ false ].
+
+	^ self context isTraitSelected
 ]
 
 { #category : 'accessing' }

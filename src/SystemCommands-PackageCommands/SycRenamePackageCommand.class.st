@@ -1,5 +1,5 @@
 "
-I am a command to rename given package.
+Rename package
  
 Internal Representation and Key Implementation Points.
 
@@ -17,12 +17,6 @@ Class {
 	#category : 'SystemCommands-PackageCommands',
 	#package : 'SystemCommands-PackageCommands'
 }
-
-{ #category : 'accessing' }
-SycRenamePackageCommand >> description [
-
-	^ 'Rename package'
-]
 
 { #category : 'execution' }
 SycRenamePackageCommand >> executeRefactoring [

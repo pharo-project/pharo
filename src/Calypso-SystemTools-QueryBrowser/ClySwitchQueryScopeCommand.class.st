@@ -19,20 +19,6 @@ Class {
 	#tag : 'Commands-Controlling'
 }
 
-{ #category : 'activation' }
-ClySwitchQueryScopeCommand class >> queryBrowserMenuActivation [
-	<classAnnotation>
-
-	^ClyContextMenuActivation byItemOf: ClySwitchScopeMenuGroup for: ClyQueryBrowserContext
-]
-
-{ #category : 'activation' }
-ClySwitchQueryScopeCommand class >> queryBrowserToolbarActivation [
-	<classAnnotation>
-
-	^ClyToolbarActivation byItemOf: ClyQueryResultToolbarGroup order: -5 for: ClyQueryBrowserContext
-]
-
 { #category : 'instance creation' }
 ClySwitchQueryScopeCommand class >> toScope: anEnvironmentScope in: aBrowser [
 	^self new

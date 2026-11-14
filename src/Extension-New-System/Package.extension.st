@@ -1,6 +1,13 @@
 Extension { #name : 'Package' }
 
 { #category : '*Extension-New-System' }
+Package class >> extensionNewSystemCommandsIn: aCommandMap [
+
+	<calypsoCommands>
+	aCommandMap tabs add: ClyPackageDefinitionTool
+]
+
+{ #category : '*Extension-New-System' }
 Package >> description [
 
 	| stream |

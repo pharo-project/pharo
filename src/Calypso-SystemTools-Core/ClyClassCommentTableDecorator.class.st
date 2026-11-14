@@ -20,10 +20,3 @@ ClyClassCommentTableDecorator class >> decorateMainTableCell: anItemCellMorph of
 { #category : 'decoration' }
 ClyClassCommentTableDecorator class >> decorateTableCell: anItemCellMorph of: aDataSourceItem [
 ]
-
-{ #category : 'decoration' }
-ClyClassCommentTableDecorator class >> decorationStrategy [
-	<classAnnotation>
-
-	^ClyTableDecorationStrategyAnnotation for: ClyClassComment asCalypsoItemContext
-]

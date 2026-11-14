@@ -1,6 +1,6 @@
 "
 I am a base class for various browser implementations.
-My main subcasses are ClyFullBrowser (for an advanced 4 panes browser) and ClyQueryBrowser (to display results of senders/implementors/...).
+My main subcasses are ClyFullBrowserMorph (for an advanced 4 panes browser) and ClyQueryBrowserMorph (to display results of senders/implementors/...).
 
 I provide UI layout structure for my subclasses:
 
@@ -8,7 +8,7 @@ I provide UI layout structure for my subclasses:
 - the tabs panel is placed at the bottom half of the browser.
 - and the toolbar is placed at the middle.
 
-Navigation is represented by ClyQueryView(Morph) instances placed from left to right. This reflects the flow of navigation: selection in the left panel leads to the new content at the right panel.
+Navigation is represented by ClyQueryViewMorph instances placed from left to right. This reflects the flow of navigation: selection in the left panel leads to the new content at the right panel.
 
 !! Example of Queries 
 
@@ -29,7 +29,7 @@ Ideally browser should be a model itself independently from UI.  But this point 
 
 !! Browser contexts 
 
-Browser contexts are not for maintaining the state. They only represent possible state of components. They are approach to have pluggability points for commands, tabs, toolbars and table decorators. Remember that commands are annotated with activators for particular context where they should be used. Exactly the same logic is used for other parts of browser. Everything you read in Commander chapter is applicable for tabs, table decorators and toolbar items. Tabs are annotated with ClyTabActivationStrategy. Table decorators are annotated with ClyTableDecorationStrategy.
+Browser contexts are not for maintaining the state. They only represent possible state of components. They are approach to have pluggability points for commands, tabs, toolbars and table decorators. Commands, tabs and table decorators are declared for the contexts where they are used, with the <calypsoCommands> pragma (see ClyCommandMap and the guide doc/Calypso/Commands.md of the Pharo repository). The context class created for a selection is declared with the <calypsoSelectionContext> pragma (see ClySelectionContextDeclaration).
 
 So a browser collects contexts from children because otherwise children will need to know about toolbar and tabs. Now they only know the browser. Also all contexts are used to build spotter command menu (cmd+/). Query views has no information about it.  
 
@@ -76,11 +76,11 @@ Also to describe navigation flow you should setup selector which should called w
 	
 	packageView requestNavigationBy: #packageSelectionChanged.
 	 
-Look at ClyQueryView(Morph) to find more possible settings and browser senders of #newNavigationView (for example you can add more columns to the view).
+Look at ClyQueryViewMorph to find more possible settings and browser senders of #newNavigationView (for example you can add more columns to the view).
 
 To setup the content of the navigation views you should implement method #prepareInitialState. For the package view example it can be: 
 
-	packages := ClyAllPackages sortedFrom: self systemScope.
+	packages := ClyAllPackagesQuery sortedFrom: self systemScope.
 	packageView showQuery: packages 
 
 You do not need to set up the content of all navigation views. They have kind of empty data source by default.
@@ -103,12 +103,12 @@ Internal Representation and Key Implementation Points.
 	navigationHistory:		<ClyNavigationHistory>
 	navigationPanel:		<Morph>
 	navigationStarted:		<Boolean>
-	navigationViews:		<OrderedCollection of<ClyQueryView>>
+	navigationViews:		<OrderedCollection of<ClyQueryViewMorph>>
 	plugins:		<Collection of<ClyBrowserPlugin>>
 	systemScope:		<ClySystemScope>
-	tabManager:		<ClyTabManager>
+	tabManager:		<ClyNotebookManager>
 	toolPanel:		<Morph>
-	toolbar:		<ClyToolbar>
+	toolbar:		<ClyToolbarMorph>
 "
 Class {
 	#name : 'ClyBrowserMorph',
