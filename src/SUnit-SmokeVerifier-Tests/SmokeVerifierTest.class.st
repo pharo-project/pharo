@@ -1,28 +1,43 @@
 "
-I test the smoke tests of `SUnit-SmokeVerifier` the way a project uses them: by subclassing `SmokeScriptMethodsTest` and `SmokeSampleInstanceMethodsTest` and overriding `packageNamesToCheck`.
+I am the abstract test of the smoke tests of `SUnit-SmokeVerifier`: I check them the way a project uses them, by subclassing one and overriding `packageNamesToCheck`. Each of my subclasses verifies one smoke test, so the script concern and the sample instance concern never mix.
 
 ## Responsibility:
 
-- Check that the three smoke test classes are abstract and that a project subclass is concrete.
-- Check that a project subclass runs every method with the pragma, reports the broken ones and skips the excluded ones.
-- Check that a subclass never passes while checking nothing: hook not overridden, package misspelled or not loaded, package without such a method.
+- Make a fixture class in `setUp` and remove it, and the project subclasses, in `tearDown`; my subclass fills it with its own methods.
+- Check what every smoke test must do: run every method of the packages to check and skip the excluded ones.
+- Check that a smoke test never passes while checking nothing: hook not overridden, package misspelled, not loaded or without such a method.
 
 ## Collaborators:
 
-- `SmokeScriptMethodsTest`, `SmokeSampleInstanceMethodsTest`: subclassed by my helpers `scriptTestFor:` and `sampleInstanceTestFor:`; I run the suites of these subclasses.
-- `SmokeVerifierFixtureClass`: a fixture class made in `setUp`, with scripts and sample instances that work or break.
+- `SmokeScriptVerifierTest`: my subclass verifying `SmokeScriptMethodsShouldNotBreakTest`.
+- `SmokeSampleInstanceVerifierTest`: my subclass verifying `SmokeSampleInstanceMethodsReturnInstanceTest`.
+- `SmokePragmaMethodsTest` subclasses: I define project subclasses of them in the fixture package and run their suites.
 
 ## Public API and Key Messages
 
-- `subclassOf:named:checking:` defines a project subclass checking the given packages; `subclassOf:named:` one that does not override the hook.
+Hooks for my subclasses:
+- `smokeTestClass`: the smoke test verified.
+- `compileFixtureMethods`: compile in `fixtureClass` the methods that this smoke test runs or ignores.
+- `fixtureMethodToExclude`: one of the class-side methods, to exclude. The smoke test must run every class-side method of `fixtureClass`.
+
+Helpers:
+- `smokeTestFor:` defines a project subclass of `smokeTestClass` checking the given packages; `smokeTestNotOverridingTheHook` one that does not override the hook.
+
+Run `SmokeVerifierTest class >> #scriptRunEveryVerifier` to run both verifiers:
+
+```
+SmokeScriptVerifierTest suite run.
+SmokeSampleInstanceVerifierTest suite run.
+```
 
 ## Internal Representation
 
-- `fixtureClass`: the fixture class.
+- `fixtureClass`: the fixture class, `SmokeVerifierFixtureClass`.
 
 ### Implementation Points
 
 - The fixture class and the project subclasses live in the package `SUnit-SmokeVerifier-Tests-Fixture`; `tearDown` removes it, and the empty package `SUnit-SmokeVerifier-Tests-Fixture-Empty`.
+- I am abstract (`isAbstract`): my tests run once per subclass.
 - SUnit clears the slots of a test after running it, so `failingMethodsIn:` reads the method of a failed test from its parameters.
 "
 Class {
@@ -34,6 +49,27 @@ Class {
 	#category : 'SUnit-SmokeVerifier-Tests',
 	#package : 'SUnit-SmokeVerifier-Tests'
 }
+
+{ #category : 'testing' }
+SmokeVerifierTest class >> isAbstract [
+
+	^ self == SmokeVerifierTest
+]
+
+{ #category : 'script' }
+SmokeVerifierTest class >> scriptRunEveryVerifier [
+	"Run the verifier of each smoke test of SUnit-SmokeVerifier and inspect their results."
+
+	<example>
+	(self allSubclasses select: [ :each | each isAbstract not ] thenCollect: [ :each | each suite run ]) inspect
+]
+
+{ #category : 'hooks' }
+SmokeVerifierTest >> compileFixtureMethods [
+	"Compile in the fixture class the methods that the smoke test I verify runs or ignores."
+
+	self subclassResponsibility
+]
 
 { #category : 'helpers' }
 SmokeVerifierTest >> emptyPackageName [
@@ -56,6 +92,13 @@ SmokeVerifierTest >> failureMessageIn: aTestResult [
 	^ [ aTestResult failures anyOne debug. nil ] on: TestFailure do: [ :failure | failure messageText ]
 ]
 
+{ #category : 'hooks' }
+SmokeVerifierTest >> fixtureMethodToExclude [
+	"Answer a fixture method run by the smoke test I verify, as a string such as 'SmokeVerifierFixtureClass class>>#scriptBreaking', to check that excluding it skips it."
+
+	^ self subclassResponsibility
+]
+
 { #category : 'helpers' }
 SmokeVerifierTest >> fixturePackageName [
 
@@ -68,61 +111,37 @@ SmokeVerifierTest >> missingPackageName [
 	^ 'SUnit-SmokeVerifier-Tests-Fixture-NotLoaded'
 ]
 
-{ #category : 'helpers' }
-SmokeVerifierTest >> sampleInstanceTestFor: someNames [
-
-	^ self subclassOf: SmokeSampleInstanceMethodsReturnInstanceTest named: #SmokeVerifierFixtureSampleInstanceMethodsTest checking: someNames
-]
-
-{ #category : 'helpers' }
-SmokeVerifierTest >> scriptTestFor: someNames [
-
-	^ self subclassOf: SmokeScriptMethodsShouldNotBreakTest named: #SmokeVerifierFixtureScriptMethodsTest checking: someNames
-]
-
 { #category : 'running' }
 SmokeVerifierTest >> setUp [
 
 	super setUp.
 	fixtureClass := ShiftClassInstaller make: [ :builder |
-		builder
-			name: #SmokeVerifierFixtureClass;
-			superclass: Object;
-			package: self fixturePackageName ].
-	
-	fixtureClass compile: 'instanceSideScript
-	<script>
-	^ 1 / 0' classified: #fixture.
-	
-	fixtureClass class compile: 'scriptRunning
-	<script>
-	^ 3 + 4' classified: #fixture.
-	
-	fixtureClass class compile: 'scriptBreaking
-	<script>
-	^ 1 / 0' classified: #fixture.
-	
-	fixtureClass class compile: 'exampleRunning
-	<example>
-	^ Object new' classified: #fixture.
-		
-	fixtureClass class compile: 'exampleBreaking
-	<example>
-	^ 1 / 0' classified: #fixture.
-	
-	
-	fixtureClass class compile: 'sampleInstanceOfItsClass
-	<sampleInstance>
-	^ self new' classified: #fixture.
-	
-	fixtureClass class compile: 'sampleInstanceOfAnotherClass
-	<sampleInstance>
-	^ 42' classified: #fixture.
-	
-	fixtureClass class compile: 'breakingSampleInstance
-	<sampleInstance>
-	1/0.
-	^ self new' classified: #fixture
+			                builder
+				                name: #SmokeVerifierFixtureClass;
+				                superclass: Object;
+				                package: self fixturePackageName ].
+	self compileFixtureMethods
+]
+
+{ #category : 'hooks' }
+SmokeVerifierTest >> smokeTestClass [
+	"Answer the abstract smoke test of SUnit-SmokeVerifier that I verify."
+
+	^ self subclassResponsibility
+]
+
+{ #category : 'helpers' }
+SmokeVerifierTest >> smokeTestFor: someNames [
+	"Answer a project subclass of the smoke test I verify, checking the packages named someNames."
+
+	^ self subclassOf: self smokeTestClass named: #SmokeVerifierFixtureProjectTest checking: someNames
+]
+
+{ #category : 'helpers' }
+SmokeVerifierTest >> smokeTestNotOverridingTheHook [
+	"Answer a project subclass of the smoke test I verify that does not override packageNamesToCheck."
+
+	^ self subclassOf: self smokeTestClass named: #SmokeVerifierFixtureProjectTest
 ]
 
 { #category : 'helpers' }
@@ -155,28 +174,47 @@ SmokeVerifierTest >> tearDown [
 ]
 
 { #category : 'tests - running' }
+SmokeVerifierTest >> testEveryFixtureMethodIsRun [
+
+	self assert: (self smokeTestFor: { self fixturePackageName }) suite run runCount equals: fixtureClass class selectors size
+]
+
+{ #category : 'tests - running' }
 SmokeVerifierTest >> testExcludedMethodIsNotRun [
 
-	| script |
-	script := self scriptTestFor: { self fixturePackageName }.
-	script class compile: 'excludedMethods
-	^ #( ''SmokeVerifierFixtureClass class>>#scriptBreaking'' )' classified: #accessing.
-	self assert: script suite run runCount equals: 1
+	| smokeTest |
+	smokeTest := self smokeTestFor: { self fixturePackageName }.
+	smokeTest class
+		compile: ('excludedMethods
+	^ {1}' format: { { self fixtureMethodToExclude } printString })
+		classified: #accessing.
+	self assert: smokeTest suite run runCount equals: fixtureClass class selectors size - 1
 ]
 
 { #category : 'tests - checking nothing' }
 SmokeVerifierTest >> testFailureNamesTheMissingPackage [
 
 	| result |
-	result := (self scriptTestFor: { self missingPackageName }) suite run.
-	self assert: (self failureMessageIn: result) equals: ('Packages to check not found, misspelled or not loaded: {1}' format: { self missingPackageName })
+	result := (self smokeTestFor: { self missingPackageName }) suite run.
+	self
+		assert: (self failureMessageIn: result)
+		equals: ('Packages to check not found, misspelled or not loaded: {1}' format: { self missingPackageName })
+]
+
+{ #category : 'tests - checking nothing' }
+SmokeVerifierTest >> testFailureSaysThereIsNoMethod [
+
+	| result |
+	PackageOrganizer default ensurePackage: self emptyPackageName.
+	result := (self smokeTestFor: { self emptyPackageName }) suite run.
+	self assert: (self failureMessageIn: result) equals: 'No method to check in the packages to check'
 ]
 
 { #category : 'tests - checking nothing' }
 SmokeVerifierTest >> testFailureSaysThereIsNoPackage [
 
 	| result |
-	result := (self subclassOf: SmokeScriptMethodsShouldNotBreakTest named: #SmokeVerifierFixtureScriptMethodsTest) suite run.
+	result := self smokeTestNotOverridingTheHook suite run.
 	self assert: (self failureMessageIn: result) equals: 'No package to check'
 ]
 
@@ -184,16 +222,18 @@ SmokeVerifierTest >> testFailureSaysThereIsNoPackage [
 SmokeVerifierTest >> testMissingPackageAmongOthersFailsEveryTest [
 
 	| result |
-	result := (self scriptTestFor: { self fixturePackageName. self missingPackageName }) suite run.
-	self assert: result runCount equals: 2.
-	self assert: result failures size equals: 2
+	result := (self smokeTestFor: {
+			           self fixturePackageName.
+			           self missingPackageName }) suite run.
+	self assert: result runCount equals: fixtureClass class selectors size.
+	self assert: result failures size equals: fixtureClass class selectors size
 ]
 
 { #category : 'tests - checking nothing' }
 SmokeVerifierTest >> testMissingPackageFails [
 
 	| result |
-	result := (self scriptTestFor: { self missingPackageName }) suite run.
+	result := (self smokeTestFor: { self missingPackageName }) suite run.
 	self assert: result runCount equals: 1.
 	self assert: result failures size equals: 1
 ]
@@ -202,21 +242,9 @@ SmokeVerifierTest >> testMissingPackageFails [
 SmokeVerifierTest >> testMisspelledPackageFails [
 
 	| result |
-	result := (self scriptTestFor: { 'SUnit-SmokeVerfier-Tests-Fixture' }) suite run.
+	result := (self smokeTestFor: { 'SUnit-SmokeVerfier-Tests-Fixture' }) suite run.
 	self assert: result runCount equals: 1.
 	self assert: result failures size equals: 1
-]
-
-{ #category : 'tests - running' }
-SmokeVerifierTest >> testPackageNameDifferingByCaseIsChecked [
-	"Package names are found ignoring case, so such a name is not misspelled: its scripts are run."
-
-	| result |
-	result := (self scriptTestFor: { self fixturePackageName asLowercase }) suite run.
-	self assert: result runCount equals: 4.
-	self assert: (self failingMethodsIn: result) size equals: 2.
-	self assert: ((self failingMethodsIn: result) includes: #scriptBreaking ).
-	self assert: ((self failingMethodsIn: result) includes: #exampleBreaking )
 ]
 
 { #category : 'tests - checking nothing' }
@@ -224,45 +252,16 @@ SmokeVerifierTest >> testPackageWithoutMethodFails [
 
 	| result |
 	PackageOrganizer default ensurePackage: self emptyPackageName.
-	result := (self scriptTestFor: { self emptyPackageName }) suite run.
+	result := (self smokeTestFor: { self emptyPackageName }) suite run.
 	self assert: result runCount equals: 1.
 	self assert: result failures size equals: 1
-]
-
-{ #category : 'tests - abstract' }
-SmokeVerifierTest >> testProjectSubclassIsConcrete [
-
-	self deny: (self scriptTestFor: { self fixturePackageName }) isAbstract.
-	self deny: (self sampleInstanceTestFor: { self fixturePackageName }) isAbstract
-]
-
-{ #category : 'tests - running' }
-SmokeVerifierTest >> testSampleInstanceTestChecksTheClassOfEveryInstance [
-
-	| result |
-	result := (self sampleInstanceTestFor: { self fixturePackageName }) suite run.
-	self assert: result runCount equals: 3.
-	self assert: (self failingMethodsIn: result)  size equals: 2.
-	self assert: ((self failingMethodsIn: result) includes: #sampleInstanceOfAnotherClass ).
-	self assert: ((self failingMethodsIn: result) includes: #breakingSampleInstance ).
-]
-
-{ #category : 'tests - running' }
-SmokeVerifierTest >> testScriptTestRunsEveryScript [
-
-	| result |
-	result := (self scriptTestFor: { self fixturePackageName asLowercase }) suite run.
-	self assert: result runCount equals: 4.
-	self assert: (self failingMethodsIn: result) size equals: 2.
-	self assert: ((self failingMethodsIn: result) includes: #scriptBreaking ).
-	self assert: ((self failingMethodsIn: result) includes: #exampleBreaking )
 ]
 
 { #category : 'tests - checking nothing' }
 SmokeVerifierTest >> testSubclassNotOverridingTheHookFails [
 
 	| result |
-	result := (self subclassOf: SmokeScriptMethodsShouldNotBreakTest named: #SmokeVerifierFixtureScriptMethodsTest) suite run.
+	result := self smokeTestNotOverridingTheHook suite run.
 	self assert: result runCount equals: 1.
 	self assert: result failures size equals: 1
 ]

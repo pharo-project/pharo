@@ -4,7 +4,7 @@ I am the abstract smoke test of the class-side `<sampleInstance>` methods: each 
 Like every subclass of `SmokePragmaMethodsTest`, I check nothing by myself: each project subclasses me in its own test package and overrides the class-side hook `packageNamesToCheck` to name its packages. I complement the static rule `ReSampleInstanceShouldReturnInstanceRule` by running the methods.
 
 ```
-SmokeSampleInstanceMethodsTest << #MyProjectSampleInstanceMethodsTest
+SmokeSampleInstanceMethodsReturnInstanceTest << #MyProjectSampleInstanceMethodsTest
 	package: 'MyProject-Tests'.
 
 MyProjectSampleInstanceMethodsTest class >> packageNamesToCheck
@@ -35,7 +35,7 @@ Class {
 { #category : 'private' }
 SmokeSampleInstanceMethodsReturnInstanceTest class >> isAbstract [
 
-	^ self == SmokeSampleInstanceMethodsTest
+	^ self == SmokeSampleInstanceMethodsReturnInstanceTest
 ]
 
 { #category : 'accessing' }

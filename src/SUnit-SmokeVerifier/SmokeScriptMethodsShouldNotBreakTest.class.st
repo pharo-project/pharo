@@ -1,10 +1,10 @@
 "
-I am the abstract smoke test of the class-side `<script>` methods: each script must run without error.
+I am the abstract smoke test of the class-side `<script>` and `<example>` methods: each must run without error.
 
 Like every subclass of `SmokePragmaMethodsTest`, I check nothing by myself: each project subclasses me in its own test package and overrides the class-side hook `packageNamesToCheck` to name its packages.
 
 ```
-SmokeScriptMethodsTest << #MyProjectScriptMethodsTest
+SmokeScriptMethodsShouldNotBreakTest << #MyProjectScriptMethodsTest
 	package: 'MyProject-Tests'.
 
 MyProjectScriptMethodsTest class >> packageNamesToCheck
@@ -13,7 +13,7 @@ MyProjectScriptMethodsTest class >> packageNamesToCheck
 
 ## Responsibility:
 
-- Select the methods with `<script>` (`pragmaSelector`).
+- Select the methods with `<script>` or `<example>` (`pragmaSelectors`).
 - Run each script in its own test and let any error fail it (`testScriptRunsWithoutError`).
 
 ## Collaborators:
@@ -35,7 +35,7 @@ Class {
 { #category : 'private' }
 SmokeScriptMethodsShouldNotBreakTest class >> isAbstract [
 
-	^ self == SmokeScriptMethodsTest
+	^ self == SmokeScriptMethodsShouldNotBreakTest
 ]
 
 { #category : 'accessing' }

@@ -1,10 +1,10 @@
 "
 I am the abstract smoke test of the class-side methods tagged with a pragma: I run each of them in its own test.
 
-My design is modular: I live in `SUnit-SmokeVerifier`, which only needs `SUnit-Core`, and I check nothing by myself. Each project defines its own subclass of `SmokeScriptMethodsTest` or `SmokeSampleInstanceMethodsTest`, in its own test package, and scopes it to its packages by overriding the class-side hook `packageNamesToCheck`. 
+My design is modular: I live in `SUnit-SmokeVerifier`, which only needs `SUnit-Core`, and I check nothing by myself. Each project defines its own subclass of `SmokeScriptMethodsShouldNotBreakTest` or `SmokeSampleInstanceMethodsReturnInstanceTest`, in its own test package, and scopes it to its packages by overriding the class-side hook `packageNamesToCheck`. 
 
 ```
-SmokeScriptMethodsTest << #MyProjectScriptMethodsTest
+SmokeScriptMethodsShouldNotBreakTest << #MyProjectScriptMethodsTest
 	package: 'MyProject-Tests'.
 
 MyProjectScriptMethodsTest class >> packageNamesToCheck
@@ -13,8 +13,8 @@ MyProjectScriptMethodsTest class >> packageNamesToCheck
 
 ## Responsibility:
 
-- Collect the class-side methods with following a list of pragmas in the packages to check, minus the excluded ones, and make one test per method (`testParameters`).
-- Fail, never pass, when I would check nothing: no package to check, a package not found (misspelled or not loaded).
+- Collect the class-side methods with one of my pragmas in the packages to check, minus the excluded ones, and make one test per method (`testParameters`).
+- Fail, never pass, when I would check nothing: no package to check, a package not found (misspelled or not loaded), no method to check in the packages.
 - Run a method on its class (`runMethod`) for the tests of my subclasses.
 
 ## Collaborators:
@@ -30,7 +30,7 @@ Class side, for project subclasses:
 - `excludedMethods`: methods not to run, as strings such as `'MyClass class>>#resetAll'`. By default none.
 
 Class side, for my subclasses:
-- `pragmaSelector`: the pragma of the methods to check.
+- `pragmaSelectors`: the pragmas of the methods to check.
 
 Instance side:
 - `runMethod`: a project subclass can override it, for example to close the windows its scripts open: I know nothing about user interfaces. A method opening a modal dialog blocks the test: exclude it.
@@ -42,7 +42,7 @@ Instance side:
 ### Implementation Points
 
 - When there is no method to check, `testParameters` answers an empty matrix: `ParametrizedTestCase` then makes a single test, which fails in `setUp` instead of erring on a matrix without options.
-- I, `SmokeScriptMethodsTest` and `SmokeSampleInstanceMethodsTest` are abstract (`isAbstract`); a project subclass is concrete.
+- I, `SmokeScriptMethodsShouldNotBreakTest` and `SmokeSampleInstanceMethodsReturnInstanceTest` are abstract (`isAbstract`); a project subclass is concrete.
 "
 Class {
 	#name : 'SmokePragmaMethodsTest',
@@ -115,6 +115,13 @@ SmokePragmaMethodsTest class >> testParameters [
 ]
 
 { #category : 'running' }
+SmokePragmaMethodsTest >> failIfNoMethodToCheck [
+	"Fail when the packages to check have no method with my pragmas: the single test made for an empty matrix has no method, and a test checking nothing must not pass."
+
+	method ifNil: [ self fail: 'No method to check in the packages to check' ]
+]
+
+{ #category : 'running' }
 SmokePragmaMethodsTest >> failIfNoPackageToCheck [
 	"Fail when my class does not name any package: a test checking nothing must not pass."
 
@@ -153,4 +160,5 @@ SmokePragmaMethodsTest >> setUp [
 	super setUp.
 	self failIfNoPackageToCheck.
 	self failIfPackageIsNotFound.
+	self failIfNoMethodToCheck
 ]
