@@ -1,7 +1,7 @@
 "
 I am the abstract smoke test of the class-side methods tagged with a pragma: I run each of them in its own test.
 
-My design is modular: I live in `SUnit-SmokeVerifier`, which only needs `SUnit-Core`, and I check nothing by myself. Each project defines its own subclass of `SmokeScriptMethodsTest` or `SmokeSampleInstanceMethodsTest`, in its own test package, and scopes it to its packages by overriding the class-side hook `packageNamesToCheck`. No core package is loaded to check a project, and no code is generated.
+My design is modular: I live in `SUnit-SmokeVerifier`, which only needs `SUnit-Core`, and I check nothing by myself. Each project defines its own subclass of `SmokeScriptMethodsTest` or `SmokeSampleInstanceMethodsTest`, in its own test package, and scopes it to its packages by overriding the class-side hook `packageNamesToCheck`. 
 
 ```
 SmokeScriptMethodsTest << #MyProjectScriptMethodsTest
@@ -13,15 +13,15 @@ MyProjectScriptMethodsTest class >> packageNamesToCheck
 
 ## Responsibility:
 
-- Collect the class-side methods with my pragma in the packages to check, minus the excluded ones, and make one test per method (`testParameters`).
-- Fail, never pass, when I would check nothing: no package to check, a package not found (misspelled or not loaded), or no method with my pragma.
+- Collect the class-side methods with following a list of pragmas in the packages to check, minus the excluded ones, and make one test per method (`testParameters`).
+- Fail, never pass, when I would check nothing: no package to check, a package not found (misspelled or not loaded).
 - Run a method on its class (`runMethod`) for the tests of my subclasses.
 
 ## Collaborators:
 
 - `ParametrizedTestCase`: my superclass; it builds one test per element of my `testParameters` matrix and sets `method`.
 - `PackageOrganizer`: finds the packages to check and their methods, extension methods included.
-- `SmokeScriptMethodsTest` and `SmokeSampleInstanceMethodsTest`: my subclasses, which define the pragma and the test.
+- `SmokeScriptMethodsShouldNotBreakTest` and `SmokeSampleInstanceMethodsReturnInstanceTest`: my subclasses, which define the pragmas and the test.
 
 ## Public API and Key Messages
 

@@ -45,13 +45,8 @@ SmokeScriptMethodsShouldNotBreakTest class >> pragmaSelectors [
 ]
 
 { #category : 'tests' }
-SmokeScriptMethodsShouldNotBreakTest >> scriptRunsWithoutError [
-
-	self shouldnt: [ self runMethod ] raise: Error
-]
-
-{ #category : 'tests' }
 SmokeScriptMethodsShouldNotBreakTest >> testScriptRunsWithoutError [
-
+	"Check that all the methods with a script or example pragma run without error."
+	
 	self shouldnt: [ self runMethod ] raise: Error
 ]

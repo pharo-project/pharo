@@ -108,7 +108,12 @@ SmokeVerifierTest >> setUp [
 	
 	fixtureClass class compile: 'sampleInstanceOfAnotherClass
 	<sampleInstance>
-	^ 42' classified: #fixture
+	^ 42' classified: #fixture.
+	
+	fixtureClass class compile: 'breakingSampleInstance
+	<sampleInstance>
+	1/0.
+	^ self new' classified: #fixture
 ]
 
 { #category : 'helpers' }
@@ -162,7 +167,7 @@ SmokeVerifierTest >> testFailureNamesTheMissingPackage [
 SmokeVerifierTest >> testFailureSaysThereIsNoPackage [
 
 	| result |
-	result := (self subclassOf: SmokeScriptMethodsTest named: #SmokeVerifierFixtureScriptMethodsTest) suite run.
+	result := (self subclassOf: SmokeScriptMethodsShouldNotBreakTest named: #SmokeVerifierFixtureScriptMethodsTest) suite run.
 	self assert: (self failureMessageIn: result) equals: 'No package to check'
 ]
 
@@ -225,8 +230,9 @@ SmokeVerifierTest >> testSampleInstanceTestChecksTheClassOfEveryInstance [
 
 	| result |
 	result := (self sampleInstanceTestFor: { self fixturePackageName }) suite run.
-	self assert: result runCount equals: 2.
-	self assert: (self failingMethodsIn: result) equals: #( #sampleInstanceOfAnotherClass )
+	self assert: result runCount equals: 3.
+	self assert: ((self failingMethodsIn: result) includes: #sampleInstanceOfAnotherClass ).
+	self assert: ((self failingMethodsIn: result) includes: #breakingSampleInstance ).
 ]
 
 { #category : 'tests - running' }

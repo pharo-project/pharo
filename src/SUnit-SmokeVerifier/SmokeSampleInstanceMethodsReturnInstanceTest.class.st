@@ -13,7 +13,7 @@ MyProjectSampleInstanceMethodsTest class >> packageNamesToCheck
 
 ## Responsibility:
 
-- Select the methods with `<sampleInstance>` (`pragmaSelector`).
+- Select the methods with `<sampleInstance>` (`pragmaSelectors`).
 - Run each method and check that its result is an instance of the class defining it, or of a subclass (`testSampleInstanceAnswersAnInstanceOfItsClass`).
 
 ## Collaborators:
