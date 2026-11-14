@@ -642,11 +642,10 @@ RBNamespace >> removeProtocolNamed: aString in: aClass [
 { #category : 'changes' }
 RBNamespace >> renameClass: aRBClass to: aSymbol around: aBlock [
 
-	| change value dict oldChanges |
+	| change value dict |
 	change := changeFactory renameClass: aRBClass to: aSymbol.
-	changes addChange: change.
-	oldChanges := changes.
-	aBlock ensure: [ changes := oldChanges ].
+	"Reference changes must be nested: the rename change moves them to the new class name when executing and undoing."
+	self perform: aBlock onlyWithChange: change.
 	self flushCaches.
 
 	dict := (newClasses includesKey: aRBClass name)
