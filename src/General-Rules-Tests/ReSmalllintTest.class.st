@@ -212,6 +212,23 @@ ReSmalllintTest >> runRuleFor: aTestSelector onEnvironment: anEnvironment [
 	^ runner criticsOf: rule
 ]
 
+{ #category : 'tests' }
+ReSmalllintTest >> testAccessorRuleIgnoresInitialize [
+    | method |
+    self deny: (RBSmalllintTestObject includesSelector: #initialize).
+    [
+        RBSmalllintTestObject
+            compile: 'initialize
+    super initialize.
+    temporaryVariable := 0'
+            classified: 'accessing - good'.
+        method := RBSmalllintTestObject >> #initialize.
+        self deny: (ReUnaryAccessingMethodWithoutReturnRule new basicCheck: method)
+    ] ensure: [
+        (RBSmalllintTestObject includesSelector: #initialize) ifTrue: [
+            RBSmalllintTestObject removeSelector: #initialize ] ]
+]
+
 { #category : 'private' }
 ReSmalllintTest >> testAddClassRules [
 
