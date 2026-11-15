@@ -93,9 +93,9 @@ BaselineOfPharo class >> newTools [
 
 	^ PharoExternalProject 
 		newName: 'NewTools' 
-		owner: 'pharo-spec' 
+		owner: 'Ducasse' 
 		project: 'NewTools' 
-		version: 'Pharo15'
+		version: 'FixingRuleViolations'
 ]
 
 { #category : 'repository urls' }
