@@ -78,7 +78,6 @@ SmokeVerifierTest >> compile: aSource in: aBehavior [
 		compile: aSource
 		classified: #fixture
 		withStamp: nil
-		notifying: nil
 		logSource: false
 ]
 
