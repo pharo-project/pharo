@@ -17,18 +17,6 @@ ClyOpenCriticBrowserCommand >> executeRefactoring [
 ]
 
 { #category : 'accessing' }
-ClyOpenCriticBrowserCommand >> menuGroup [
-
-	^ ClyQueryMenuGroup
-]
-
-{ #category : 'activation' }
 ClyOpenCriticBrowserCommand >> name [
 	^'Browse critiques'
-]
-
-{ #category : 'accessing' }
-ClyOpenCriticBrowserCommand >> order [
-
-	^ 1000
 ]

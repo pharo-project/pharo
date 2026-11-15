@@ -19,8 +19,8 @@ EFAssignmentExpressionTest >> multilineConfiguration [
 	^ self contextClass basicNew
 		formatCommentCloseToStatements: false;
 		maxLineLength: 70;
-		multiLineMessages: Array new;
-		oneLineMessages: Array new;
+		multiLineMessages: '';
+		oneLineMessages: '';
 		numberOfArgumentsForMultiLine: 4;
 		indentsForKeywords: 1;
 		keepBlockInMessage: true;

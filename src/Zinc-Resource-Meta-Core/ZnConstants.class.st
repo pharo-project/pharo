@@ -73,16 +73,6 @@ ZnConstants class >> initializeHTTPStatusCodes [
 ]
 
 { #category : 'accessing' }
-ZnConstants class >> knownHTTPMethods [
-	^ #(
-		"Standard HTTP 1.1 Verbs"
-		GET PUT POST DELETE HEAD
-		TRACE OPTIONS CONNECT PATCH
-		"WebDAV verbs"
-		PROPFIND PROPPATCH MKCOL COPY MOVE LOCK UNLOCK)
-]
-
-{ #category : 'accessing' }
 ZnConstants class >> knownHTTPVersions [
 	^ #('HTTP/1.1' 'HTTP/1.0')
 ]

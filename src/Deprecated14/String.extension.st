@@ -38,11 +38,6 @@ String >> metacelloSemanticStringLessThanSelf: aString [
 ]
 
 { #category : '*Deprecated14' }
-String >> metacelloSemanticVersionComponentLessThan: aMetacelloVersonComponent [
-    ^ aMetacelloVersonComponent metacelloSemanticStringLessThanSelf: self
-]
-
-{ #category : '*Deprecated14' }
 String >> metacelloStringLessThanSelf: aString [
 
 	^aString < self

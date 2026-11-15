@@ -89,8 +89,6 @@ MemoryLogger class >> writeFilename [
 		  WriteFilename := String streamContents: [ :stream |
 			                   stream
 				                   << self name;
-				                   << '-';
-				                   print: LibC uniqueInstance currentProcessId;
 				                   << '.stgz' ] ]
 ]
 

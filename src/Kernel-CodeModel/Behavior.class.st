@@ -73,10 +73,7 @@ Behavior >> addSelectorSilently: selector withMethod: compiledMethod [
 	receiver's method dictionary.
 	Do this without sending system change notifications"
 	<reflection: 'Class structural modification - Selector/Method modification'>
-	self methodDict at: selector put: compiledMethod.
-
-	"We record all selectors that are used as method names"
-	Symbol recordSelector: selector
+	self methodDict at: selector put: compiledMethod
 ]
 
 { #category : 'adding-removing methods' }

@@ -26,13 +26,6 @@ Class {
 	#tag : 'Commands'
 }
 
-{ #category : 'activation' }
-ClyJumpToTestClassCommand class >> fullBrowserShortcutActivation [
-	<classAnnotation>
-
-	^ ClyShortcutActivation by: $g meta, $j meta for: ClyFullBrowserClassContext
-]
-
 { #category : 'execution' }
 ClyJumpToTestClassCommand >> executeRefactoring [
 

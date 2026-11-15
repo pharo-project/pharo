@@ -366,6 +366,21 @@ NumberParserTest >> testIntegerReadWithRadix [
 ]
 
 { #category : 'tests - Float' }
+NumberParserTest >> testIntegerWithNegExponentGradualUnderflow [
+	"An integer mantissa with a negative exponent must read like the same number written with a decimal point,
+	including in the gradual underflow range. 5e-324 used to answer 0.0 while 5.0e-324 answered Float fminDenormalized."
+
+	self assert: (NumberParser parse: '5e-324') equals: Float fminDenormalized.
+	self assert: (NumberParser parse: '5e-324') equals: (NumberParser parse: '5.0e-324').
+	self assert: (NumberParser parse: '-5e-324') equals: Float fminDenormalized negated.
+	self assert: (NumberParser parse: '3e-324') equals: Float fminDenormalized.
+	self assert: (NumberParser parse: '1e-310') equals: (1 / (10 raisedTo: 310)) asFloat.
+	self assert: (NumberParser parse: '1e-310') equals: (NumberParser parse: '1.0e-310').
+	self assert: (NumberParser parse: '2e-324') equals: 0.0.
+	self assert: (NumberParser parse: '1e-400') equals: 0.0
+]
+
+{ #category : 'tests - Float' }
 NumberParserTest >> testIntegerWithNegExponentIsAFloat [
 	"Make sure a float literal like 1e(some possible neg exponent)
 	isn't evaluated to the non-literal Fraction"
@@ -378,6 +393,26 @@ NumberParserTest >> testIntegerWithNegExponentIsAFloat [
 	rs := '1e-14' readStream.
 	aFloat := (NumberParser on: rs ) nextNumberBase: 10.
 	self assert: aFloat isFloat
+]
+
+{ #category : 'tests - Float' }
+NumberParserTest >> testIntegerWithNegExponentIsCorrectlyRounded [
+	"An integer mantissa with a negative exponent must be converted to the nearest Float,
+	without double rounding through an inexact Float power of ten (1e-307 used to answer 1.0000000000000003e-307)."
+
+	self assert: (NumberParser parse: '1e-307') equals: 1.0e-307.
+	#( 1 5 7 123 4503599627370497 ) do: [ :mantissa |
+		1 to: 330 do: [ :k |
+			| string |
+			string := mantissa printString , 'e-' , k printString.
+			(NumberParser parse: string) isFloat ifTrue: [
+				self
+					assert: (NumberParser parse: string)
+					equals: (mantissa / (10 raisedTo: k)) asFloat ] ] ].
+
+	"Exact results are still answered as Integers"
+	self assert: (NumberParser parse: '1200e-2') equals: 12.
+	self assert: (NumberParser parse: '1200e-2') isInteger
 ]
 
 { #category : 'tests - Float' }

@@ -2,7 +2,7 @@
 I represent query result using fast table.
 I should be created for browser:
 
-	ClyQueryView for: aBrowser
+	ClyQueryViewMorph for: aBrowser
 
 or using helper browser method:
 
@@ -36,7 +36,7 @@ When user selects any item in table I trigger navigation request which ask brows
 
 I maintain several selection objects to always show correct table selection after any tree expansion, items addition of removal.
 
-Main selection is what user selects on table. I manage it in #selection variable, instance of ClyDataSourceSeleciton.
+Main selection is what user selects on table. I manage it in #selection variable, instance of ClyDataSourceSelection.
 
 Next is desiredSelection, instance of ClyDesiredSelection. Every time user passes me new query I am trying to restore desired selection on new items. Idea is to show previously selected items on new data source. I try to find same items and if they not exists I lookup similar items by name.
 I set new desiredSelection instance only when user manually modifies table selection.
@@ -54,28 +54,19 @@ It adds simple ClyItemNameFilter.
 
 - enableFilter: anItemStringFilterClass
 
-I use Commander library to implement:
+I show the Calypso commands declared for the context of the selection (see ClyCommandRegistry and the guide doc/Calypso/Commands.md of the Pharo repository):
+- the context menu: #menuColumn:row:
+- the shortcuts: #kmDispatcher
+- clicks and double clicks: #triggerClickCommands and #triggerDoubleClickCommands
+- drag and drop: #createDragPassengerFor:
 
-- context menu using CmdContextMenuCommandActivator:
-
-	- menuColumn: column row: rowIndex
-
-- shortcuts using CmdShortcutCommandActivator 
-
-	- kmDispatcher
-
--  drag and drop using CmdDragAndDropCommandActivator 
-
-	- createDragPassengerFor: aSelection
-
-To use Commander I ask browser for command context of given selection.
+I ask the browser for the command context of a given selection.
 The context is also used to decorate table cells with appropriate decorators:
 
 	- decorateMainTableCell: anItemCellMorph of: aDataSourceItem
 	- decorateTableCell: anItemCellMorph of: aDataSourceItem
 
-There is special decorator which also based on Commander: ClyTableIconCommandActivation. It adds iconic button to table cells for all interested commands.
-It brings behaviour of Nautilus method widget where table icons are extended by AbstractMethodIconAction. Here commands should be marked with ClyTableIconCommandActivation.
+ClyCommandBasedTableDecorator adds the icons of the commands declared for the #tableIcons interaction to the table cells.
 
 I provide extra suitable events which in future should be also based on commands:
 - whenDoubleClickDo: 
@@ -92,7 +83,7 @@ Internal Representation and Key Implementation Points.
 
     Instance Variables
 	table:		<FTTableMorph>
-	browser:		<ClyBrowser>
+	browser:		<ClyBrowserMorph>
 	navigationSelector:		<aSymbol>
 	selection:		<ClyDataSourceSelection>
 	desiredSelection:		<ClyDesiredSelection>
@@ -244,10 +235,10 @@ ClyQueryViewMorph >> createCommandContext [
 
 { #category : 'drag and drop support' }
 ClyQueryViewMorph >> createDragPassengerFor: aSelection [
+
 	| context |
 	context := self createSelectionContextOf: aSelection.
-
-	^ClyDragAndDropActivation createDragPassengerInContext: context
+	^ ClyDragPassenger draggedFromContext: context toActivate: (ClyCommandRegistry default activatorsOf: #dragAndDrop inContext: context)
 ]
 
 { #category : 'context' }
@@ -258,7 +249,7 @@ ClyQueryViewMorph >> createSelectionContext [
 { #category : 'context' }
 ClyQueryViewMorph >> createSelectionContextOf: aSelection [
 
-	^ClyContextSelectionStrategyAnnotation selectContextOf: aSelection for: browser
+	^ ClySelectionContextDeclaration selectContextOf: aSelection for: browser
 ]
 
 { #category : 'accessing' }
@@ -288,20 +279,20 @@ ClyQueryViewMorph >> dataSourceClass: aClass [
 
 { #category : 'controlling' }
 ClyQueryViewMorph >> decorateMainTableCell: anItemCellMorph of: aDataSourceItem [
-	| context |
-	context := ClyContextSelectionStrategyAnnotation selectContextOfSingleItem: aDataSourceItem for: browser.
 
-	ClyTableDecorationStrategyAnnotation activeInstancesInContext: context do: [ :strategy |
-		strategy decorateMainTableCell: anItemCellMorph inContext: context]
+	| context |
+	context := ClySelectionContextDeclaration selectContextOfSingleItem: aDataSourceItem for: browser.
+	(ClyCommandRegistry default activeActivationsOf: #tableDecorators inContext: context) do: [ :decorator |
+			decorator decorateMainTableCell: anItemCellMorph inContext: context ]
 ]
 
 { #category : 'controlling' }
 ClyQueryViewMorph >> decorateTableCell: anItemCellMorph of: aDataSourceItem [
-	| context |
-	context := ClyContextSelectionStrategyAnnotation selectContextOfSingleItem: aDataSourceItem for: browser.
 
-	ClyTableDecorationStrategyAnnotation activeInstancesInContext: context do: [ :strategy |
-		strategy decorateTableCell: anItemCellMorph inContext: context]
+	| context |
+	context := ClySelectionContextDeclaration selectContextOfSingleItem: aDataSourceItem for: browser.
+	(ClyCommandRegistry default activeActivationsOf: #tableDecorators inContext: context) do: [ :decorator |
+			decorator decorateTableCell: anItemCellMorph inContext: context ]
 ]
 
 { #category : 'initialization' }
@@ -623,13 +614,14 @@ ClyQueryViewMorph >> mainColumn [
 
 { #category : 'menu' }
 ClyQueryViewMorph >> menuColumn: column row: rowIndex [
-	"The context menu of a query row: the activations of the context and the pure commands of its context, as the Commander2 tree."
+	"The context menu of a query row: the commands of the context menu interaction, as the Commander2 tree."
+
 	| menuSelection context |
 	menuSelection := self grabSelectionAt: rowIndex.
 	context := self createSelectionContextOf: menuSelection.
 	^ ClyCommandGroupMenuRenderer new
-		renderTree: (ClyCommandGroupBuilder new buildMenuFor: ClyContextMenuActivation context: context pureRoots: context commanderCommandClasses)
-		on: self
+		  renderTree: (ClyCommandGroupBuilder new buildMenuOf: (ClyCommandRegistry default activationsOf: #contextMenu inContext: context) context: context pureRoots: #(  ))
+		  on: self
 ]
 
 { #category : 'accessing' }
@@ -895,13 +887,13 @@ ClyQueryViewMorph >> treeStructure: anObject [
 { #category : 'event handling' }
 ClyQueryViewMorph >> triggerClickCommands [
 
-	ClyClickActivation executeCommandInContext: self createSelectionContext
+	ClyCommandRegistry default executeFirstCommandOf: #click inContext: self createSelectionContext
 ]
 
 { #category : 'event handling' }
 ClyQueryViewMorph >> triggerDoubleClickCommands [
 
-	ClyDoubleClickActivation executeCommandInContext: self createSelectionContext
+	ClyCommandRegistry default executeFirstCommandOf: #doubleClick inContext: self createSelectionContext
 ]
 
 { #category : 'controlling' }

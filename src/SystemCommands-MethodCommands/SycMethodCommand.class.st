@@ -18,20 +18,25 @@ Class {
 	#package : 'SystemCommands-MethodCommands'
 }
 
-{ #category : 'testing' }
-SycMethodCommand class >> canBeExecutedInContext: aToolContext [
-	^aToolContext isMethodSelected
-]
-
 { #category : 'instance creation' }
 SycMethodCommand class >> for: methods [
 	^self new
 		methods: methods
 ]
 
+{ #category : 'testing' }
+SycMethodCommand >> canBeExecuted [
+
+	^ self context isMethodSelected
+]
+
 { #category : 'accessing' }
 SycMethodCommand >> methods [
-	^ methods
+
+	^ methods ifNil: [
+			  self hasContext
+				  ifTrue: [ self context selectedMethods ]
+				  ifFalse: [ #(  ) ] ]
 ]
 
 { #category : 'accessing' }

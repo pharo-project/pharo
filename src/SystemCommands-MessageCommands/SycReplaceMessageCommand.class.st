@@ -3,7 +3,7 @@ I am a command to replace senders of message selector.
 "
 Class {
 	#name : 'SycReplaceMessageCommand',
-	#superclass : 'SycMessageCmCommand',
+	#superclass : 'SycMessageRefactoringCommand',
 	#instVars : [
 		'newSelector',
 		'selectedClass'
@@ -23,9 +23,9 @@ SycReplaceMessageCommand >> executeRefactoring [
 ]
 
 { #category : 'accessing' }
-SycReplaceMessageCommand >> icon [
+SycReplaceMessageCommand >> iconName [
 
-	^ self iconNamed: #edit
+	^ #edit
 ]
 
 { #category : 'accessing' }

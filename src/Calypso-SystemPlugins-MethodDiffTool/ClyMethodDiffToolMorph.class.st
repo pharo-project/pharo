@@ -21,14 +21,6 @@ Class {
 	#package : 'Calypso-SystemPlugins-MethodDiffTool'
 }
 
-{ #category : 'activation' }
-ClyMethodDiffToolMorph class >> browserTabActivation [
-	"This declaration specifies that in any browser when methods are selected, a diff tool will be available in a tab."
-
-	<classAnnotation>
-	^ClyTabActivationStrategyAnnotation for: ClyMethod asCalypsoItemContext
-]
-
 { #category : 'accessing' }
 ClyMethodDiffToolMorph class >> shouldBeActivatedInContext: aBrowserContext [
 	^aBrowserContext selectedMethods size > 1

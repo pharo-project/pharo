@@ -1,4 +1,6 @@
 "
+Finds Hierarchical senders of a method
+
 This command find the senders of a given method in the classes upper in the inheritance chain above a given method.
 "
 Class {
@@ -9,15 +11,9 @@ Class {
 }
 
 { #category : 'testing' }
-SycShowLocalSendersCommand class >> canBeExecutedInContext: aToolContext [
+SycShowLocalSendersCommand >> canBeExecuted [
 
-	^ (super canBeExecutedInContext: aToolContext) and: [ aToolContext selectedMessages size = 1 ]
-]
-
-{ #category : 'accessing' }
-SycShowLocalSendersCommand >> description [
-
-	^ 'Finds Hierarchical senders of a method'
+	^ super canBeExecuted and: [ self context selectedMessages size = 1 ]
 ]
 
 { #category : 'execution' }

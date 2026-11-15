@@ -1,5 +1,9 @@
 "
-I am a group of a Calypso context menu tree. I hold the items and the nested groups, sorted by their order and name. My subclasses are the groups which place the commands of a context menu.
+I am a group of a Calypso context menu: a sub-menu, or commands shown together between lines when I am inlined (#isInlined). I hold the items and the nested groups, sorted by their order and name.
+Commands are put in a group by their declaration:
+	(aCommandMap contextMenu group: SycMethodRefactoringMenuGroup) add: SycPullUpMethodCommand order: 10
+My subclasses define #name, #order, #iconName, #description, the lines around them (#hasLineBefore, #hasLineAfter) and the group they are nested in (class-side #parentGroup). A shortcut or a tab action can open a group as a pop-up menu (ClyCommandInteraction>>#addMenuOf:), after #prepareToOpenIn:.
+See the menu groups in the guide doc/Calypso/Commands.md of the Pharo repository.
 "
 Class {
 	#name : 'ClyMenuGroup',
@@ -67,4 +71,11 @@ ClyMenuGroup >> name [
 { #category : 'accessing' }
 ClyMenuGroup >> order [
 	^500
+]
+
+{ #category : 'opening' }
+ClyMenuGroup >> prepareToOpenIn: aToolContext [
+	"Hook run before a shortcut or a tab action opens my commands as a pop-up menu, see ClyOpenMenuGroupCommand. Nothing by default."
+
+	^ self
 ]

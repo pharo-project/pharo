@@ -13,7 +13,7 @@ Class {
 { #category : 'announcing' }
 ShClassChanged >> announceChanges [
 
-	self class codeChangeAnnouncer
+	builder newClass codeChangeAnnouncer
 		classDefinitionChangedFrom: oldClass to: builder newClass;
 		classModificationAppliedTo: builder newClass
 ]

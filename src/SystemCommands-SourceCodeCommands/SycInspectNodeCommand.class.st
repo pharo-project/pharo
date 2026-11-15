@@ -1,9 +1,9 @@
 "
-I'm a simple command to inspect any AST node.
+Inspects the selected AST node
 "
 Class {
 	#name : 'SycInspectNodeCommand',
-	#superclass : 'SycSourceCodeCmCommand',
+	#superclass : 'SycSourceCodeCommand',
 	#category : 'SystemCommands-SourceCodeCommands',
 	#package : 'SystemCommands-SourceCodeCommands'
 }
@@ -14,12 +14,6 @@ SycInspectNodeCommand >> canBeExecuted [
 	^ self context lastSelectedSourceNode notNil
 ]
 
-{ #category : 'accessing' }
-SycInspectNodeCommand >> description [
-
-	^ 'Inspects the selected AST node'
-]
-
 { #category : 'execution' }
 SycInspectNodeCommand >> execute [
 
@@ -27,9 +21,9 @@ SycInspectNodeCommand >> execute [
 ]
 
 { #category : 'accessing' }
-SycInspectNodeCommand >> icon [
+SycInspectNodeCommand >> iconName [
 
-	^ self iconNamed: #smallInspectIt
+	^ #smallInspectIt
 ]
 
 { #category : 'accessing' }

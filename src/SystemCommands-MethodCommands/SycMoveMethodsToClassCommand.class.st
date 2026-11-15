@@ -8,7 +8,7 @@ Internal Representation and Key Implementation Points.
 "
 Class {
 	#name : 'SycMoveMethodsToClassCommand',
-	#superclass : 'SycMethodCmCommand',
+	#superclass : 'SycMethodRefactoringCommand',
 	#instVars : [
 		'targetClass'
 	],
@@ -39,9 +39,9 @@ SycMoveMethodsToClassCommand >> executeRefactoring [
 ]
 
 { #category : 'accessing' }
-SycMoveMethodsToClassCommand >> icon [
+SycMoveMethodsToClassCommand >> iconName [
 
-	^ self iconNamed: #smallRedo
+	^ #smallRedo
 ]
 
 { #category : 'accessing' }
@@ -56,7 +56,7 @@ SycMoveMethodsToClassCommand >> order [
 	^ 60
 ]
 
-{ #category : 'executing' }
+{ #category : 'execution' }
 SycMoveMethodsToClassCommand >> prepareFullExecution [
 	| toolContext |
 	super prepareFullExecution.

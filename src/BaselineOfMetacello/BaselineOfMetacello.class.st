@@ -11,7 +11,7 @@ BaselineOfMetacello class >> corePackageNames [
 	^ self packagesOfGroupNamed: #Core
 ]
 
-{ #category : 'baseline' }
+{ #category : 'baselines' }
 BaselineOfMetacello >> baseline: spec [
 
 	<baseline>
@@ -19,10 +19,12 @@ BaselineOfMetacello >> baseline: spec [
 			spec
 				package: 'Metacello-Core';
 				package: 'Metacello-CommandLine';
-				package: 'Metacello-Tests'.
+				package: 'Metacello-MVS' with: [ spec requires: #( 'Metacello-Core' ) ];
+				package: 'Metacello-Tests';
+				package: 'Metacello-MVS-Tests' with: [ spec requires: #( 'Metacello-MVS' 'Metacello-Tests' ) ].
 
 			spec
-				group: 'Core' with: #( 'Metacello-Core' 'Metacello-CommandLine' );
-				group: 'Tests' with: #( 'Metacello-Tests' );
+				group: 'Core' with: #( 'Metacello-Core' 'Metacello-CommandLine' 'Metacello-MVS' );
+				group: 'Tests' with: #( 'Metacello-Tests' 'Metacello-MVS-Tests' );
 				group: 'default' with: #( 'Core' ) ]
 ]

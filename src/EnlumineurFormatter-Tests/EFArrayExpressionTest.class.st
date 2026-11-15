@@ -100,8 +100,8 @@ EFArrayExpressionTest >> multiLineConfiguration [
 		periodAtEndOfBlock: false;
 		periodAtEndOfMethod: false;
 		numberOfSpacesInsideParentheses: 0;
-		multiLineMessages: #();
-		oneLineMessages: #();
+		multiLineMessages: '';
+		oneLineMessages: '';
 		numberOfArgumentsForMultiLine: 4;
 		indentsForKeywords: 1;
 		keepBlockInMessage: true;
@@ -146,8 +146,8 @@ EFArrayExpressionTest >> periodAtEndOfMethod [
 		  indentExtraSpaces: 0;
 		  periodAtEndOfBlock: false;
 		  periodAtEndOfMethod: true;
-		  multiLineMessages: #(  );
-		  oneLineMessages: #(  );
+		  multiLineMessages: '';
+		  oneLineMessages: '';
 		  numberOfSpacesInsideParentheses: 0;
 		  numberOfArgumentsForMultiLine: 2;
 		  newLineBeforeFirstKeyword: false;

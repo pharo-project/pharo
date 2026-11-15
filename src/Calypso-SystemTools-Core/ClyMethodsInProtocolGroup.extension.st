@@ -1,6 +1,13 @@
 Extension { #name : 'ClyMethodsInProtocolGroup' }
 
 { #category : '*Calypso-SystemTools-Core' }
+ClyMethodsInProtocolGroup class >> calypsoSystemToolsCoreCommandsIn: aCommandMap [
+
+	<calypsoCommands>
+	aCommandMap tableDecorators add: ClyClassSideLinkTableDecorator
+]
+
+{ #category : '*Calypso-SystemTools-Core' }
 ClyMethodsInProtocolGroup >> decorateTableCell: anItemCellMorph of: groupItem [
 	| myName |
 	super decorateTableCell: anItemCellMorph of: groupItem.

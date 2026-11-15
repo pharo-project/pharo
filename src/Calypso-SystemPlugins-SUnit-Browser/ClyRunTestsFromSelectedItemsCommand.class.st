@@ -20,41 +20,14 @@ Class {
 }
 
 { #category : 'testing' }
-ClyRunTestsFromSelectedItemsCommand class >> canBeExecutedInContext: aToolContext [
-
-	^aToolContext selectedItems	anySatisfy: [ :each |
-			each hasProperty: ClyTestResultProperty ]
-]
-
-{ #category : 'activation' }
-ClyRunTestsFromSelectedItemsCommand class >> contextClass [
-	self subclassResponsibility
-]
-
-{ #category : 'activation' }
-ClyRunTestsFromSelectedItemsCommand class >> fullBrowserMenuActivation [
-	<classAnnotation>
-
-	^ClyContextMenuActivation byRootGroupItemFor: self contextClass
-]
-
-{ #category : 'activation' }
-ClyRunTestsFromSelectedItemsCommand class >> fullBrowserShortcutActivation [
-	<classAnnotation>
-
-	^ClyShortcutActivation by: $t meta for: self contextClass
-]
-
-{ #category : 'activation' }
-ClyRunTestsFromSelectedItemsCommand class >> fullBrowserTableIconActivation [
-	<classAnnotation>
-
-	^ClyTableIconCommandActivation priority: 1000 for: self contextClass
+ClyRunTestsFromSelectedItemsCommand class >> isAbstract [
+	^self = ClyRunTestsFromSelectedItemsCommand
 ]
 
 { #category : 'testing' }
-ClyRunTestsFromSelectedItemsCommand class >> isAbstract [
-	^self = ClyRunTestsFromSelectedItemsCommand
+ClyRunTestsFromSelectedItemsCommand >> canBeExecuted [
+
+	^ self context selectedItems anySatisfy: [ :each | each hasProperty: ClyTestResultProperty ]
 ]
 
 { #category : 'accessing' }

@@ -3,7 +3,7 @@ Files out the selected packages into a single chunk format file.
 "
 Class {
 	#name : 'SycFileOutPackageCommand',
-	#superclass : 'SycPackageExtraCmCommand',
+	#superclass : 'SycPackageCommand',
 	#category : 'SystemCommands-PackageCommands',
 	#package : 'SystemCommands-PackageCommands'
 }
@@ -29,9 +29,9 @@ SycFileOutPackageCommand >> executeRefactoring [
 ]
 
 { #category : 'accessing' }
-SycFileOutPackageCommand >> icon [
+SycFileOutPackageCommand >> iconName [
 
-	^ self iconNamed: #save
+	^ #save
 ]
 
 { #category : 'accessing' }

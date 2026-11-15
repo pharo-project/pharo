@@ -23,6 +23,7 @@ ClapMetacello class >> commandSpecification [
 		addFlagWithPositional: #groups description: 'Names of groups to load, comma-separated';
 		addFlag: #strict description: 'Perform a strict loading -- Avoid undeclared variables and syntax errors. Default: false, for compatibility';
 		addFlag: #signalErrorOnWarning description: 'Signal an error if a warning is raised during metacello load';
+		addFlag: #mvs description: 'Choose the versions with minimal version selection: each project at the lowest version that meets every minimum asked for it';
 		yourself.
 		
 	self 
@@ -49,6 +50,7 @@ ClapMetacello >> execute [
 		             beStrict: self strict;
 		             silently;
 		             yourself.
+	self usesMVS ifTrue: [ metacello mvs ].
 	self shouldSignalErrorOnWarning ifTrue: [ metacello onWarning: [ :e | Error signal: e messageText in: e signalerContext ] ].
 	self groups ifEmpty: [ metacello load ] ifNotEmpty: [ metacello load: self groups ].
 
@@ -98,4 +100,10 @@ ClapMetacello >> shouldSignalErrorOnWarning [
 { #category : 'accessing' }
 ClapMetacello >> strict [
 	^ self hasFlag: #strict
+]
+
+{ #category : 'accessing' }
+ClapMetacello >> usesMVS [
+
+	^ self hasFlag: #mvs
 ]

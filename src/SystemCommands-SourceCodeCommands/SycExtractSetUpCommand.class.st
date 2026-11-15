@@ -11,13 +11,7 @@ Class {
 	#package : 'SystemCommands-SourceCodeCommands'
 }
 
-{ #category : 'testing' }
-SycExtractSetUpCommand class >> canBeExecutedInContext: aToolContext [
-
-	^ aToolContext isMethodSelected not and: [ aToolContext isTestMethodSelected ]
-]
-
-{ #category : 'executing' }
+{ #category : 'converting' }
 SycExtractSetUpCommand >> asRefactorings [
 	| selectedInterval refactoring |
 	selectedInterval := selectedTextInterval ifEmpty: [
@@ -30,10 +24,16 @@ SycExtractSetUpCommand >> asRefactorings [
 	^ { refactoring }
 ]
 
-{ #category : 'accessing' }
-SycExtractSetUpCommand >> icon [
+{ #category : 'testing' }
+SycExtractSetUpCommand >> canBeExecuted [
 
-	^ self iconNamed: #restart
+	^ self context isMethodSelected not and: [ self context isTestMethodSelected ]
+]
+
+{ #category : 'accessing' }
+SycExtractSetUpCommand >> iconName [
+
+	^ #restart
 ]
 
 { #category : 'accessing' }

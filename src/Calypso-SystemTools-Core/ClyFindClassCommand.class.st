@@ -32,20 +32,8 @@ ClyFindClassCommand >> isAvailableInMenuOf: aToolContext [
 ]
 
 { #category : 'accessing' }
-ClyFindClassCommand >> menuGroup [
-
-	^ ClyQueryMenuGroup
-]
-
-{ #category : 'accessing' }
 ClyFindClassCommand >> name [
 	^'Find class'
-]
-
-{ #category : 'accessing' }
-ClyFindClassCommand >> order [
-
-	^ 1000
 ]
 
 { #category : 'execution' }

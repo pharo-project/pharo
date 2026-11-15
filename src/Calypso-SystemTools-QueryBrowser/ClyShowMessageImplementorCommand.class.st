@@ -1,12 +1,12 @@
 "
-I am a command to show all message implementors.
+Show all message implementors.
 
 To show implementors I ask the browser to spawn new query browser.
 
 Internal Representation and Key Implementation Points.
 
     Instance Variables
-	browser:		<ClyBrowser>
+	browser:		<ClyBrowserMorph>
 "
 Class {
 	#name : 'ClyShowMessageImplementorCommand',
@@ -20,32 +20,12 @@ Class {
 }
 
 { #category : 'activation' }
-ClyShowMessageImplementorCommand class >> methodBrowserToolbarActivation [
-	<classAnnotation>
-
-	^ClyToolbarActivation byItemOf: ClyButtonToolbarGroup for: ClyMethod asCalypsoItemContext
-]
-
-{ #category : 'activation' }
-ClyShowMessageImplementorCommand class >> methodShortcutActivation [
-	<classAnnotation>
-
-	^ClyShortcutActivation by: $m meta for: ClyMethod asCalypsoItemContext
-]
-
-{ #category : 'activation' }
 ClyShowMessageImplementorCommand class >> sourceCodeShortcutActivation [
 	"it is not supported yet. Look senders command"
 
 	"<commandActivator>
 
 	^ClyShortcutCommandActivator by: $m meta for: ClySourceCodeContext"
-]
-
-{ #category : 'accessing' }
-ClyShowMessageImplementorCommand >> description [
-
-	^ 'Show all message implementors.'
 ]
 
 { #category : 'execution' }
@@ -60,20 +40,8 @@ ClyShowMessageImplementorCommand >> iconName [
 ]
 
 { #category : 'accessing' }
-ClyShowMessageImplementorCommand >> menuGroup [
-
-	^ ClyQueryMenuGroup
-]
-
-{ #category : 'accessing' }
 ClyShowMessageImplementorCommand >> name [
 	^'Implementors'
-]
-
-{ #category : 'accessing' }
-ClyShowMessageImplementorCommand >> order [
-
-	^ 1000
 ]
 
 { #category : 'execution' }

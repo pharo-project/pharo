@@ -215,6 +215,23 @@ Metacello >> baseline: projectName [
 	self scriptExecutor baselineArg: projectName
 ]
 
+{ #category : 'api projectSpec' }
+Metacello >> baseline: aProjectName repository: aRepositoryDescription [
+	"Add aProjectName from aRepositoryDescription as a root of the script, loading its default groups (see baseline:repository:loads:)"
+
+	self baseline: aProjectName repository: aRepositoryDescription loads: #(  )
+]
+
+{ #category : 'api projectSpec' }
+Metacello >> baseline: aProjectName repository: aRepositoryDescription loads: aCollectionOfNames [
+	"Add aProjectName from aRepositoryDescription as a root of the script, loading aCollectionOfNames (empty for its default groups), after the root the baseline:, repository: and load: pieces build and the roots added before. A load resolves all its roots together"
+
+	self scriptExecutor addRoot: ((self scriptExecutor specNamed: aProjectName)
+			 repository: aRepositoryDescription;
+			 loads: aCollectionOfNames asArray;
+			 yourself)
+]
+
 { #category : 'api options' }
 Metacello >> beStrict [
 
@@ -472,6 +489,27 @@ Metacello >> register [
 Metacello >> repository: repositoryDescription [
 
 	self scriptExecutor repositoryArg: repositoryDescription
+]
+
+{ #category : 'api actions' }
+Metacello >> resolve [
+	"Answer the MetacelloResolution of a load of the default groups: every project it would load, at the version chosen, and the errors and warnings found. Loads and registers nothing"
+
+	^ self execute: [ :executor | executor resolve: #(  ) ]
+]
+
+{ #category : 'api actions' }
+Metacello >> resolve: required [
+	"Answer the MetacelloResolution of a load of required: every project it would load, at the version chosen, and the errors and warnings found. Loads and registers nothing"
+
+	^ self execute: [ :executor | executor resolve: required ]
+]
+
+{ #category : 'api options' }
+Metacello >> resolver: aMetacelloResolver [
+	"Choose the versions to load with aMetacelloResolver instead of Metacello's default, which asks the handlers or the user at each conflict (MetacelloInteractiveResolver)"
+
+	self scriptExecutor resolver: aMetacelloResolver
 ]
 
 { #category : 'accessing' }

@@ -8,18 +8,6 @@ Class {
 	#package : 'Calypso-SystemPlugins-DebugPoints-Browser'
 }
 
-{ #category : 'activation' }
-ClyAddBreakPointCommand class >> contextMenuOrder [
-	^1
-]
-
-{ #category : 'activation' }
-ClyAddBreakPointCommand class >> methodEditorLeftBarClickActivation [
-
-	<classAnnotation>
-	^ ClyTextLeftBarDoubleClickActivation for: ClyMethodSourceCodeContext
-]
-
 { #category : 'execution' }
 ClyAddBreakPointCommand >> executeRefactoring [
 

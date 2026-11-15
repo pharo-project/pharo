@@ -13,10 +13,11 @@ Class {
 }
 
 { #category : 'testing' }
-ClyCreateClassCommand class >> canBeExecutedInContext: aBrowserContext [
-	(super canBeExecutedInContext: aBrowserContext) ifFalse: [ ^false ].
+ClyCreateClassCommand >> canBeExecuted [
 
-	^aBrowserContext isPackageSelected
+	super canBeExecuted ifFalse: [ ^ false ].
+
+	^ self context isPackageSelected
 ]
 
 { #category : 'execution' }

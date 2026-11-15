@@ -189,6 +189,9 @@ def bootstrapImage(){
         }
 
         def isoTesters = [:]
+        isoTesters['Beacon'] = { defineIsoTestStage("Beacon") }
+	      isoTesters['EnlumineurFormatter'] = { defineIsoTestStage("EnlumineurFormatter") }
+        isoTesters['ReferenceFinder'] = { defineIsoTestStage("ReferenceFinder") }
         isoTesters['SUnit'] = { defineIsoTestStage("SUnit") }
         isoTesters['Kernel'] = { defineIsoTestStage("Kernel", "\'Kernel-Tests\'  \'Kernel-CodeModel-Tests\'") }
         isoTesters['Compiler'] = { defineIsoTestStage("Compiler", "\'OpalCompiler-Tests\'  \'DebugInfo-Tests\' \'Kernel-Extended-Tests\' \'Kernel-Tests-WithCompiler\'") }

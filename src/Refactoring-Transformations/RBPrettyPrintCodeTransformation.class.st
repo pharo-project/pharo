@@ -22,7 +22,7 @@ RBPrettyPrintCodeTransformation >> privateTransform [
 							source
 								ifNotNil: [ tree := class parseTreeForSelector: selector.
 									tree
-										ifNotNil: [ formatted := tree formattedCode.
+										ifNotNil: [ formatted := tree formattedCodeIn: class realClass.
 											(source ~= formatted
 												and: [ (self parserClass parseMethod: formatted) = tree ])
 												ifTrue:

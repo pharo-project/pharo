@@ -19,6 +19,13 @@ MetacelloPlatform class >> current [
 	^ Current
 ]
 
+{ #category : 'accessing' }
+MetacelloPlatform class >> current: aPlatform [
+	"Make aPlatform the current one, for example a plain MetacelloPlatform in tests (Iceberg's platform clones repositories); nil goes back to the default"
+
+	Current := aPlatform
+]
+
 { #category : 'class initialization' }
 MetacelloPlatform class >> initialize [
 

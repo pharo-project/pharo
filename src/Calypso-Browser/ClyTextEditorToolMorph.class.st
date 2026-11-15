@@ -163,12 +163,12 @@ ClyTextEditorToolMorph >> changesCancelled [
 	self textUpdated
 ]
 
-{ #category : 'contexts' }
+{ #category : 'context' }
 ClyTextEditorToolMorph >> createCommandContext [
 	^self createTextContext
 ]
 
-{ #category : 'contexts' }
+{ #category : 'context' }
 ClyTextEditorToolMorph >> createTextContext [
 	^ClyTextEditorContext for: self
 ]
