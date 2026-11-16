@@ -19,7 +19,8 @@ Class {
 		'repository',
 		'minimum',
 		'request',
-		'findings'
+		'findings',
+		'project'
 	],
 	#category : 'Metacello-MVS',
 	#package : 'Metacello-MVS'
@@ -96,6 +97,19 @@ MetacelloMVSRequirement >> printOn: aStream [
 ]
 
 { #category : 'accessing' }
+MetacelloMVSRequirement >> project [
+	"The name of the project asked, once its reference is read: the key of the build list"
+
+	^ project
+]
+
+{ #category : 'accessing' }
+MetacelloMVSRequirement >> project: aProjectName [
+
+	project := aProjectName
+]
+
+{ #category : 'accessing' }
 MetacelloMVSRequirement >> reference [
 	"The reference resolution used, after spelling and replace; nil when it never got that far"
 
@@ -129,9 +143,9 @@ MetacelloMVSRequirement >> request [
 
 { #category : 'accessing' }
 MetacelloMVSRequirement >> resolveIn: aBuildList [
-	"The resolution is over: remember what my repository ended up with"
+	"The resolution is over: remember what my project ended up with"
 
-	resolved := self hasErrors ifFalse: [ aBuildList at: self repository ifAbsent: [ nil ] ]
+	resolved := self hasErrors ifFalse: [ aBuildList at: self project ifAbsent: [ nil ] ]
 ]
 
 { #category : 'accessing' }

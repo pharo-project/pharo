@@ -94,7 +94,7 @@ MetacelloMVSBaselineReadingTest >> resolveInstalled: aBarMinimum [
 		project: 'Foo'
 		baseline: (self baselineRequiring: { ('Bar' -> ('github://acme/Bar:' , aBarMinimum)) }).
 	^ (MetacelloMVSResolver on: (MetacelloMVSGraph on: source))
-		  installed: { ('github://acme/Bar' -> (self installed: 'github://acme/Bar:main' project: 'Bar')) } asDictionary;
+		  installed: { ('Bar' -> (self installed: 'github://acme/Bar:main' project: 'Bar')) } asDictionary;
 		  resolve: 'github://acme/Foo:v1.0.0' project: 'Foo'
 ]
 
@@ -113,8 +113,8 @@ MetacelloMVSBaselineReadingTest >> resolveWithBarLockedAt: aLockedTag asking: aB
 				project: 'Bar'
 				baseline: (self baselineRequiring: #(  )) ].
 	^ (MetacelloMVSResolver on: graph)
-		  installed: { ('github://acme/Bar' -> (self installed: 'github://acme/Bar:' , aLockedTag project: 'Bar')) } asDictionary;
-		  locked: #( 'github://acme/Bar' );
+		  installed: { ('Bar' -> (self installed: 'github://acme/Bar:' , aLockedTag project: 'Bar')) } asDictionary;
+		  locked: #( 'Bar' );
 		  resolve: 'github://acme/Foo:v1.0.0' project: 'Foo'
 ]
 
@@ -180,7 +180,7 @@ MetacelloMVSBaselineReadingTest >> testAGroupAskedPullsWhatItNeeds [
 	self groupsSetUp.
 	self fooRequiring: #( '		spec baseline: ''Bar'' with: [ spec repository: ''github://acme/Bar:v1.0.0''; loads: #(''Tests'') ].' ).
 
-	self assert: (((MetacelloMVSResolver on: graph) resolve: 'github://acme/Foo:v1.0.0' project: 'Foo') buildList includesKey: 'github://acme/Tester')
+	self assert: (((MetacelloMVSResolver on: graph) resolve: 'github://acme/Foo:v1.0.0' project: 'Foo') buildList includesKey: 'Tester')
 ]
 
 { #category : 'tests - locks' }
@@ -190,7 +190,7 @@ MetacelloMVSBaselineReadingTest >> testALockHoldsAgainstAHigherMinimumOfItsMajor
 	report := self resolveWithBarLockedAt: 'v1.0.0' asking: 'v1.2.0'.
 	self
 		assert: report errors isEmpty;
-		assert: (report buildList at: 'github://acme/Bar') version string equals: 'v1.0.0';
+		assert: (report buildList at: 'Bar') version string equals: 'v1.0.0';
 		assert: (report warnings anySatisfy: [ :each | each kind = #heldByLock ])
 ]
 
@@ -200,7 +200,7 @@ MetacelloMVSBaselineReadingTest >> testALockOfAnotherMajorIsAnError [
 	| report |
 	report := self resolveWithBarLockedAt: 'v1.0.0' asking: 'v2.0.0'.
 	self
-		assert: (report buildList at: 'github://acme/Bar') version string equals: 'v1.0.0';
+		assert: (report buildList at: 'Bar') version string equals: 'v1.0.0';
 		assert: (report errors anySatisfy: [ :each | (each kind = #majorConflict) and: [ each text includesSubstring: 'locked' ] ])
 ]
 
@@ -253,7 +253,7 @@ MetacelloMVSBaselineReadingTest >> testAnInstalledVersionThatIsNotLockedIsRaised
 	report := (MetacelloMVSResolver on: graph)
 		          installed: { ('github://acme/Bar' -> (self installed: 'github://acme/Bar:v1.0.0' project: 'Bar')) } asDictionary;
 		          resolve: 'github://acme/Foo:v1.0.0' project: 'Foo'.
-	self assert: (report buildList at: 'github://acme/Bar') version string equals: 'v1.2.0'
+	self assert: (report buildList at: 'Bar') version string equals: 'v1.2.0'
 ]
 
 { #category : 'tests - groups' }
@@ -268,7 +268,7 @@ MetacelloMVSBaselineReadingTest >> testGroupsAskedAddUpAndTheVersionIsReadAgain 
 		   '		spec group: ''default'' with: #(''Core'' ''Foo-Tests'').' ).
 
 	report := (MetacelloMVSResolver on: graph) resolve: 'github://acme/Foo:v1.0.0' project: 'Foo'.
-	self assert: (report buildList includesKey: 'github://acme/Tester').
+	self assert: (report buildList includesKey: 'Tester').
 	self assert: (report requirements select: [ :each | each repository = 'github://acme/Tester' ]) size equals: 1
 ]
 
@@ -318,7 +318,7 @@ MetacelloMVSBaselineReadingTest >> testResolvesThroughAGraph [
 		project: 'Bar'
 		baseline: (self baselineRequiring: #(  )).
 	buildList := ((MetacelloMVSResolver on: (MetacelloMVSGraph on: source)) resolve: 'github://acme/Foo:v1.0.0' project: 'Foo') buildList.
-	self assert: (buildList at: 'github://acme/Bar') version string equals: 'v1.1.0'
+	self assert: (buildList at: 'Bar') version string equals: 'v1.1.0'
 ]
 
 { #category : 'tests - groups' }
@@ -327,7 +327,7 @@ MetacelloMVSBaselineReadingTest >> testTheDefaultGroupsLeaveOutWhatOnlyTestsNeed
 	self groupsSetUp.
 	self fooRequiring: #( '		spec baseline: ''Bar'' with: [ spec repository: ''github://acme/Bar:v1.0.0'' ].' ).
 
-	self deny: (((MetacelloMVSResolver on: graph) resolve: 'github://acme/Foo:v1.0.0' project: 'Foo') buildList includesKey: 'github://acme/Tester')
+	self deny: (((MetacelloMVSResolver on: graph) resolve: 'github://acme/Foo:v1.0.0' project: 'Foo') buildList includesKey: 'Tester')
 ]
 
 { #category : 'tests - groups' }
@@ -335,11 +335,9 @@ MetacelloMVSBaselineReadingTest >> testTheRootLoadsTheGroupsAsked [
 
 	self groupsSetUp.
 	self
-		deny: (((MetacelloMVSResolver on: graph) resolve: 'github://acme/Bar:v1.0.0' project: 'Bar' loads: #(  )) buildList includesKey:
-					 'github://acme/Tester');
+		deny: (((MetacelloMVSResolver on: graph) resolve: 'github://acme/Bar:v1.0.0' project: 'Bar' loads: #(  )) buildList includesKey: 'Tester');
 		assert:
-			(((MetacelloMVSResolver on: graph) resolve: 'github://acme/Bar:v1.0.0' project: 'Bar' loads: #( 'Tests' )) buildList includesKey:
-					 'github://acme/Tester')
+			(((MetacelloMVSResolver on: graph) resolve: 'github://acme/Bar:v1.0.0' project: 'Bar' loads: #( 'Tests' )) buildList includesKey: 'Tester')
 ]
 
 { #category : 'running' }

@@ -16,8 +16,8 @@ Class {
 		'buildList',
 		'requirements',
 		'subjects',
-		'rootRepositories',
-		'rivals'
+		'rivals',
+		'rootNames'
 	],
 	#category : 'Metacello-MVS',
 	#package : 'Metacello-MVS'
@@ -49,14 +49,14 @@ MetacelloMVSResolution >> addRequirement: aRequirement [
 
 { #category : 'accessing' }
 MetacelloMVSResolution >> buildList [
-	"Repository -> the MetacelloMVSCandidateVersion chosen for it"
+	"Project name -> the MetacelloMVSCandidateVersion chosen for it"
 
 	^ buildList
 ]
 
 { #category : 'accessing' }
 MetacelloMVSResolution >> buildList: aDictionary [
-	"The walk is over: each requirement remembers what its repository ended up with, and the warnings only about superseded versions stop being findings (their requirements keep them, as history)"
+	"The walk is over: each requirement remembers what its project ended up with, and the warnings only about superseded versions stop being findings (their requirements keep them, as history)"
 
 	buildList := aDictionary.
 	requirements do: [ :each | each resolveIn: aDictionary ].
@@ -64,11 +64,11 @@ MetacelloMVSResolution >> buildList: aDictionary [
 ]
 
 { #category : 'accessing' }
-MetacelloMVSResolution >> dependenciesOf: aRepository [
-	"The repositories of the build list that the selected version of aRepository requires"
+MetacelloMVSResolution >> dependenciesOf: aProjectName [
+	"The projects of the build list that the selected version of aProjectName requires"
 
-	^ ((self requirementsOfSelected: aRepository) collect: [ :each | each resolved ] thenSelect: [ :each | each notNil ])
-		  collect: [ :each | each repository ]
+	^ ((self requirementsOfSelected: aProjectName) collect: [ :each | each resolved ] thenSelect: [ :each | each notNil ])
+		  collect: [ :each | each project ]
 		  as: Set
 ]
 
@@ -108,25 +108,26 @@ MetacelloMVSResolution >> findingKind: aKind severity: aSeverity text: aString a
 	^ findings
 		  detect: [ :each |
 			  each kind = aKind and: [
-				  each severity = aSeverity and: [ each text = aString and: [ (self subjectOf: each) isAboutSameRepositoryAs: aSubject ] ] ] ]
+				  each severity = aSeverity and: [ each text = aString and: [ (self subjectOf: each) isAboutSameProjectAs: aSubject ] ] ] ]
 		  ifNone: aBlock
 ]
 
 { #category : 'accessing' }
-MetacelloMVSResolution >> findingsOf: aRepository [
-	"The findings about the version selected (or visited) of aRepository"
+MetacelloMVSResolution >> findingsOf: aProjectName [
+	"The findings about the version selected (or visited) of aProjectName"
 
-	^ findings select: [ :each | (self subjectOf: each) isAboutRepository: aRepository ]
+	^ findings select: [ :each | (self subjectOf: each) isAboutProject: aProjectName ]
 ]
 
 { #category : 'initialization' }
 MetacelloMVSResolution >> initialize [
+
 	super initialize.
 	buildList := Dictionary new.
 	subjects := IdentityDictionary new.
 	rivals := IdentityDictionary new.
 	requirements := OrderedCollection new.
-	rootRepositories := #(  )
+	rootNames := #(  )
 ]
 
 { #category : 'accessing' }
@@ -154,9 +155,9 @@ MetacelloMVSResolution >> isSuperseded: aRequirement [
 
 { #category : 'accessing' }
 MetacelloMVSResolution >> isSupersededSelection: aCandidate [
-	"Whether aCandidate is not the version its repository ended up with"
+	"Whether aCandidate is not the version its project ended up with"
 
-	^ (buildList at: aCandidate repository ifAbsent: [ ^ true ]) version ~= aCandidate version
+	^ (buildList at: aCandidate project ifAbsent: [ ^ true ]) version ~= aCandidate version
 ]
 
 { #category : 'report' }
@@ -249,10 +250,10 @@ MetacelloMVSResolution >> requirements [
 ]
 
 { #category : 'accessing' }
-MetacelloMVSResolution >> requirementsOfSelected: aRepository [
-	"The requirements the selected version of aRepository asked"
+MetacelloMVSResolution >> requirementsOfSelected: aProjectName [
+	"The requirements the selected version of aProjectName asked"
 
-	^ requirements select: [ :each | (each from isAboutRepository: aRepository) and: [ (self isSuperseded: each) not ] ]
+	^ requirements select: [ :each | (each from isAboutProject: aProjectName) and: [ (self isSuperseded: each) not ] ]
 ]
 
 { #category : 'accessing' }
@@ -265,14 +266,14 @@ MetacelloMVSResolution >> resolves [
 MetacelloMVSResolution >> rootCandidates [
 	"The candidates of the roots that could be selected, in order"
 
-	^ rootRepositories select: [ :each | buildList includesKey: each ] thenCollect: [ :each | buildList at: each ]
+	^ rootNames select: [ :each | buildList includesKey: each ] thenCollect: [ :each | buildList at: each ]
 ]
 
 { #category : 'accessing' }
-MetacelloMVSResolution >> rootRepositories: aCollection [
-	"The repositories of the roots, in the order they were asked"
+MetacelloMVSResolution >> rootNames: aCollection [
+	"The projects of the roots, in the order they were asked"
 
-	rootRepositories := aCollection
+	rootNames := aCollection
 ]
 
 { #category : 'report' }

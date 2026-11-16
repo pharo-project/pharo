@@ -82,16 +82,16 @@ MetacelloMVSCandidateVersion >> displayName [
 	^ self project , ' ' , version printString
 ]
 
-{ #category : 'findings' }
-MetacelloMVSCandidateVersion >> isAboutRepository: aRepository [
+{ #category : 'requiring' }
+MetacelloMVSCandidateVersion >> isAboutProject: aProjectName [
 
-	^ repository = aRepository
+	^ self project = aProjectName
 ]
 
-{ #category : 'findings' }
-MetacelloMVSCandidateVersion >> isAboutSameRepositoryAs: aSubject [
+{ #category : 'requiring' }
+MetacelloMVSCandidateVersion >> isAboutSameProjectAs: aSubject [
 
-	^ aSubject isAboutRepository: repository
+	^ aSubject isAboutProject: self project
 ]
 
 { #category : 'testing' }

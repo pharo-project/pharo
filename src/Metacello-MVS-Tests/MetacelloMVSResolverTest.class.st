@@ -129,9 +129,9 @@ MetacelloMVSResolverTest >> resolveWith: aResolver root: aRepositoryString proje
 
 { #category : 'running' }
 MetacelloMVSResolverTest >> selected: aName in: aBuildList [
-	"The version selected of aName, as printed: its string, or the description of its dev root"
+	"The version selected of the project aName, as printed: its string, or the description of its dev root"
 
-	^ (aBuildList at: (self repo: aName)) version printString
+	^ (aBuildList at: aName) version printString
 ]
 
 { #category : 'running' }
@@ -207,8 +207,8 @@ MetacelloMVSResolverTest >> testADevProjectFromAForkReplacesTheOriginal [
 		              project: 'a'
 		              devs: { ('b' -> 'github://fork/b:fix') }.
 	self assert: resolution resolves.
-	self assert: (resolution buildList at: 'github://fork/b') version printString equals: 'github://fork/b:fix'.
-	self deny: (resolution buildList includesKey: (self repo: 'b'))
+	self assert: (resolution buildList at: 'b') version printString equals: 'github://fork/b:fix'.
+	self assert: (resolution buildList at: 'b') repository equals: 'github://fork/b'
 ]
 
 { #category : 'tests - dev mode' }
@@ -434,7 +434,7 @@ MetacelloMVSResolverTest >> testAProjectOnlyAVersionNotSelectedRequiresIsDropped
 	buildList := (self resolve: 'a:v1.0.0') buildList.
 	self
 		assert: (self selected: 'd' in: buildList) equals: 'v1.4.0';
-		deny: (buildList includesKey: (self repo: 'f'))
+		deny: (buildList includesKey: 'f')
 ]
 
 { #category : 'tests - dev mode' }
@@ -483,8 +483,8 @@ MetacelloMVSResolverTest >> testAReplaceOfTheRootPinsItsVersionWithWarnings [
 	self assert: report errors isEmpty.
 	buildList := (self resolve: 'root:v1.0.0') buildList.
 	self
-		assert: (self selected: 'fork' in: buildList) equals: 'v3.0.1-fix';
-		deny: (buildList includesKey: (self repo: 'bloc'));
+		assert: (self selected: 'Bloc' in: buildList) equals: 'v3.0.1-fix';
+		assert: (buildList at: 'Bloc') repository equals: (self repo: 'fork');
 		assert: (report warnings anySatisfy: [ :each | each text includesSubstring: 'Bloc is replaced by' ]);
 		assert: (report warnings anySatisfy: [ :each | each text includesSubstring: 'asks for more than its replacement' ])
 ]
@@ -516,7 +516,7 @@ MetacelloMVSResolverTest >> testAReportHasTheBuildList [
 	self
 		assert: report resolves;
 		assert: (self selected: 'bloc' in: report buildList) equals: 'v3.0.0';
-		assert: (report dependenciesOf: (self repo: 'root')) asArray equals: { (self repo: 'bloc') };
+		assert: (report dependenciesOf: 'root') asArray equals: #( 'bloc' );
 		assert: (report rootCandidates collect: [ :each | each repository ]) asArray equals: { (self repo: 'root') }
 ]
 
@@ -633,7 +633,7 @@ MetacelloMVSResolverTest >> testAnErrorIsAttachedToTheRequirementAndTheVersionTh
 	self
 		assert: requirement hasErrors;
 		assert: requirement resolved isNil;
-		assert: ((report findingsOf: (self repo: 'root')) anySatisfy: [ :each | each kind = #missingVersion ])
+		assert: ((report findingsOf: 'root') anySatisfy: [ :each | each kind = #missingVersion ])
 ]
 
 { #category : 'tests - dev mode' }
@@ -648,7 +648,7 @@ MetacelloMVSResolverTest >> testAnInstalledProjectInDevModeIsAnError [
 	self version: 'master' of: 'b' requires: #(  ).
 	resolution := self
 		              resolveWith: ((MetacelloMVSResolver on: graph)
-				               installed: { ((self repo: 'b') -> (self installed: (self repo: 'b:v1.0.0') project: 'b')) } asDictionary;
+				               installed: { ('b' -> (self installed: (self repo: 'b:v1.0.0') project: 'b')) } asDictionary;
 				               yourself)
 		              root: (self repo: 'a:v1.0.0/src')
 		              project: 'a'
@@ -668,15 +668,15 @@ MetacelloMVSResolverTest >> testAnInstalledVersionIsNeverDowngraded [
 	self version: 'v1.2.0' of: 'b' requires: #(  ).
 	self version: 'v1.5.0' of: 'b' requires: #(  ).
 	buildList := ((MetacelloMVSResolver on: graph)
-		              installed: { ((self repo: 'b') -> (self installed: (self repo: 'b:v1.5.0') project: 'b')) } asDictionary;
+		              installed: { ('b' -> (self installed: (self repo: 'b:v1.5.0') project: 'b')) } asDictionary;
 		              resolve: (self repo: 'a:v1.0.0/src') project: 'a') buildList.
 	self
 		assert: (self selected: 'b' in: buildList) equals: 'v1.5.0';
-		assert: (buildList at: (self repo: 'b')) chainString equals: '  installed github://o/b v1.5.0'
+		assert: (buildList at: 'b') chainString equals: '  installed github://o/b v1.5.0'
 ]
 
-{ #category : 'tests - cases' }
-MetacelloMVSResolverTest >> testAnInstalledVersionKeepsItsPathAndProject [
+{ #category : 'tests' }
+MetacelloMVSResolverTest >> testAnInstalledVersionKeepsItsPath [
 
 	| installedSpec buildList |
 	self versions: #( 'v1.0.0' ) of: 'a'.
@@ -684,13 +684,13 @@ MetacelloMVSResolverTest >> testAnInstalledVersionKeepsItsPathAndProject [
 	self version: 'v1.0.0' of: 'a' requires: #( 'b:v1.2.0' ).
 	self version: 'v1.2.0' of: 'b' requires: #(  ).
 	self version: 'v1.5.0' of: 'b' requires: #(  ).
-	installedSpec := graph specFor: (self repo: 'b:v1.5.0/src') project: 'B' loads: #(  ).
+	installedSpec := graph specFor: (self repo: 'b:v1.5.0/src') project: 'b' loads: #(  ).
 	buildList := ((MetacelloMVSResolver on: graph)
-		              installed: { ((self repo: 'b') -> installedSpec) } asDictionary;
+		              installed: { ('b' -> installedSpec) } asDictionary;
 		              resolve: (self repo: 'a:v1.0.0/src') project: 'a') buildList.
 	self
-		assert: (buildList at: (self repo: 'b')) path equals: 'src';
-		assert: (buildList at: (self repo: 'b')) project equals: 'B'
+		assert: (buildList at: 'b') path equals: 'src';
+		assert: (buildList at: 'b') version string equals: 'v1.5.0'
 ]
 
 { #category : 'tests - warnings' }
@@ -753,7 +753,7 @@ MetacelloMVSResolverTest >> testAnotherCapitalizationIsTheSameRepositoryWithAWar
 	buildList := (self resolve: 'root:v1.0.0') buildList.
 	self
 		assert: buildList size equals: 3;
-		assert: (buildList at: 'github://upstream/bloc') version string equals: 'v3.1.0'
+		assert: (buildList at: 'Bloc') version string equals: 'v3.1.0'
 ]
 
 { #category : 'tests - warnings' }
@@ -982,7 +982,7 @@ MetacelloMVSResolverTest >> testRootsShareTheVersionsTheyRequire [
 	resolution := self resolveRoots: #( 'a:v1.0.0' 'b:v1.0.0' ).
 	self assert: resolution resolves.
 	self assert: (self selected: 'c' in: resolution buildList) equals: 'v1.1.0'.
-	self deny: (resolution isRoot: (resolution buildList at: (self repo: 'c')))
+	self deny: (resolution isRoot: (resolution buildList at: 'c'))
 ]
 
 { #category : 'tests' }
@@ -1064,7 +1064,7 @@ MetacelloMVSResolverTest >> testTheExampleOfThePullRequest [
 	self
 		assert: (#( 'a' 'b' 'c' 'd' 'f' ) collect: [ :each | self selected: each in: buildList ])
 		equals: #( 'v1.0.0' 'v1.0.0' 'v1.3.0' 'v2.1.0' 'v4.2.0' );
-		deny: (buildList includesKey: (self repo: 'e'))
+		deny: (buildList includesKey: 'e')
 ]
 
 { #category : 'tests - requirements' }
@@ -1090,7 +1090,7 @@ MetacelloMVSResolverTest >> testTheReportKeepsWhatWasAskedAndWhatItResolvedTo [
 			('github://o/album v0.11.0' -> 'v3.1.0') }.
 	self assert: (asked collect: [ :each | each resolved version string ]) asSet equals: #( 'v3.1.0' ) asSet.
 	self assert: (asked collect: [ :each | report isSuperseded: each ]) asArray equals: #( true false false ).
-	self assert: (report dependenciesOf: (self repo: 'album')) equals: { (self repo: 'bloc') } asSet
+	self assert: (report dependenciesOf: 'album') equals: #( 'bloc' ) asSet
 ]
 
 { #category : 'tests - upgrades' }
@@ -1117,7 +1117,7 @@ MetacelloMVSResolverTest >> testTheRootCanNameItsProject [
 	self versions: #( 'v1.0.0' ) of: 'a'.
 	self version: 'v1.0.0' of: 'a' requires: #(  ).
 	buildList := ((MetacelloMVSResolver on: graph) resolve: (self repo: 'a:v1.0.0/src') project: 'A') buildList.
-	self assert: (buildList at: (self repo: 'a')) project equals: 'A'
+	self assert: (buildList at: 'A') project equals: 'A'
 ]
 
 { #category : 'tests - dev mode' }
@@ -1156,7 +1156,7 @@ MetacelloMVSResolverTest >> testTheSameProjectFromTheSameRepositoryIsFine [
 	graph repository: 'github://upstream/bloc' at: 'v3.0.0' requires: #(  ).
 	graph repository: 'github://upstream/bloc' at: 'v3.1.0' requires: #(  ).
 	buildList := (self resolve: 'root:v1.0.0') buildList.
-	self assert: (buildList at: 'github://upstream/bloc') version string equals: 'v3.1.0'
+	self assert: (buildList at: 'Bloc') version string equals: 'v3.1.0'
 ]
 
 { #category : 'tests - report' }
@@ -1260,7 +1260,7 @@ MetacelloMVSResolverTest >> testWhyShowsWhoRequiredTheSelectedVersion [
 	self version: 'v1.3.0' of: 'd' requires: #(  ).
 	buildList := (self resolve: 'a:v1.0.0') buildList.
 	self
-		assert: (buildList at: (self repo: 'd')) chainString
+		assert: (buildList at: 'd') chainString
 		equals: (String lf join: #( '  github://o/a v1.0.0' '  github://o/b v1.0.0' '  github://o/d v1.4.0' ))
 ]
 
