@@ -32,6 +32,13 @@ MetacelloMVSCandidateVersion >> appliesReplaces [
 	^ false
 ]
 
+{ #category : 'accessing' }
+MetacelloMVSCandidateVersion >> baselineFrom: aSource [
+	"The Monticello definitions of my baseline, read from my repository as my version says"
+
+	^ version baselineOf: self from: aSource
+]
+
 { #category : 'pins' }
 MetacelloMVSCandidateVersion >> beLocked [
 
@@ -70,9 +77,9 @@ MetacelloMVSCandidateVersion >> chainString [
 
 { #category : 'printing' }
 MetacelloMVSCandidateVersion >> displayName [
-	"How the report names me: my project and version (Famix v1.2.1)"
+	"How the report names me: my project and version (Famix v1.2.1), or the description of my dev root"
 
-	^ self project , ' ' , version string
+	^ self project , ' ' , version printString
 ]
 
 { #category : 'findings' }
@@ -129,7 +136,7 @@ MetacelloMVSCandidateVersion >> line [
 			  stream
 				  nextPutAll: self repository;
 				  space;
-				  nextPutAll: version string ]
+				  print: version ]
 ]
 
 { #category : 'printing' }
@@ -159,7 +166,7 @@ MetacelloMVSCandidateVersion >> printOn: aStream [
 	aStream
 		nextPutAll: self repository;
 		space;
-		nextPutAll: version string
+		print: version
 ]
 
 { #category : 'printing' }
@@ -179,6 +186,13 @@ MetacelloMVSCandidateVersion >> project [
 ]
 
 { #category : 'accessing' }
+MetacelloMVSCandidateVersion >> readDescription [
+	"Where my baseline is read from, which names the reading the graph keeps: my repository at my version (github://o/b:v1.0.0), or for a project in dev mode the description of its dev root as written. A project in dev mode replaces every request of it, so it is never read at a version too: the two kinds of keys never meet"
+
+	^ version readDescriptionOf: self
+]
+
+{ #category : 'accessing' }
 MetacelloMVSCandidateVersion >> repository [
 	"type://owner/name"
 
@@ -187,17 +201,9 @@ MetacelloMVSCandidateVersion >> repository [
 
 { #category : 'accessing' }
 MetacelloMVSCandidateVersion >> repositoryDescription [
-	"The Metacello repository description to load me from: my repository at my version, with my path"
+	"The Metacello repository description to load me from, as my version says"
 
-	^ String streamContents: [ :stream |
-			  stream
-				  nextPutAll: repository;
-				  nextPut: $:;
-				  nextPutAll: version string.
-			  path ifNotNil: [ :aPath |
-					  stream
-						  nextPut: $/;
-						  nextPutAll: aPath ] ]
+	^ version descriptionOf: self
 ]
 
 { #category : 'accessing' }

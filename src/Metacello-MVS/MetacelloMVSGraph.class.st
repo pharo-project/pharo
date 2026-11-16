@@ -126,15 +126,16 @@ MetacelloMVSGraph >> readingFrom: aBaselineDefinitions of: aCandidate [
 
 { #category : 'reading' }
 MetacelloMVSGraph >> readingOf: aCandidate [
-	"The reading of the baseline of the version of aCandidate: told, or read once from the definitions the source answers"
-	^ readings at: aCandidate repository -> aCandidate version string ifAbsentPut: [ self readingFrom: (source baselineOf: aCandidate) of: aCandidate ]
+	"The reading of the baseline of the version of aCandidate: told, or read once from the definitions the source answers. Kept by where it is read from (see MetacelloMVSCandidateVersion>>readDescription)"
+
+	^ readings at: aCandidate readDescription ifAbsentPut: [ self readingFrom: (source baselineOf: aCandidate) of: aCandidate ]
 ]
 
 { #category : 'accessing' }
 MetacelloMVSGraph >> repository: aRepository at: aVersion reading: aReading [
-	"Told: the reading of the baseline of aRepository at aVersion"
+	"Told: the reading of the baseline of aRepository at the version or ref named aVersion"
 
-	readings at: aRepository -> aVersion put: aReading
+	readings at: aRepository , ':' , aVersion put: aReading
 ]
 
 { #category : 'accessing' }
@@ -204,8 +205,9 @@ MetacelloMVSGraph >> specFor: aRepositoryString project: aProjectName loads: aCo
 
 { #category : 'accessing' }
 MetacelloMVSGraph >> toldReadingOf: aRepository at: aVersion [
+	"The reading told for the baseline of aRepository at the version or ref named aVersion"
 
-	^ readings at: aRepository -> aVersion ifAbsentPut: [ MetacelloMVSBaselineReading new ]
+	^ readings at: aRepository , ':' , aVersion ifAbsentPut: [ MetacelloMVSBaselineReading new ]
 ]
 
 { #category : 'project specs' }

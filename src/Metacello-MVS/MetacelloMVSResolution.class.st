@@ -167,6 +167,8 @@ MetacelloMVSResolution >> kindDescriptions [
 		  (#baselineFailure -> 'Baseline does not load').
 		  (#chronologyInversion -> 'Versions dated out of order').
 		  (#copiedProject -> 'Project required under a second name').
+		  (#dev -> 'Project in dev mode').
+		  (#devInstalled -> 'Project in dev mode is installed').
 		  (#floatingVersion -> 'Floating version, taken as the first of its series').
 		  (#heldByLock -> 'Kept at the locked version').
 		  (#higherThanReplace -> 'Asks more than the replace gives').

@@ -19,11 +19,8 @@ MetacelloMVSRepositorySource >> baselineOf: aCandidate [
 
 	| findings definitions |
 	findings := MetacelloMVSBaselineDefinitions none.
-	aCandidate path ifNotNil: [ :written |
-			findings
-				warning: #writtenPath
-				text: written ].
-	definitions := [ (self repositoryAt: aCandidate repository) baselineOf: aCandidate project atVersion: aCandidate version string ]
+	aCandidate path ifNotNil: [ :written | findings warning: #writtenPath text: written ].
+	definitions := [ aCandidate baselineFrom: self ]
 		               on: Error
 		               do: [ :error |
 				               findings error: #repositoryFailure text: aCandidate repository , ': ' , error description.
@@ -32,7 +29,7 @@ MetacelloMVSRepositorySource >> baselineOf: aCandidate [
 			findings error: #missingBaseline text: aCandidate printString , ' has no BaselineOf' , aCandidate project.
 			^ findings ].
 	^ findings
-		  setDefinitions: definitions repository: aCandidate repository , ':' , aCandidate version string;
+		  setDefinitions: definitions repository: aCandidate readDescription;
 		  yourself
 ]
 

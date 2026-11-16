@@ -10,7 +10,8 @@ Class {
 		'repositories',
 		'postLoadDoIt',
 		'className',
-		'strict'
+		'strict',
+		'isDev'
 	],
 	#category : 'Metacello-Core-Model',
 	#package : 'Metacello-Core',
@@ -58,6 +59,13 @@ MetacelloProjectSpec >> asProjectRegistration [
 MetacelloProjectSpec >> baseName [
 
 	^ self className withoutPrefix: 'BaselineOf'
+]
+
+{ #category : 'dev mode' }
+MetacelloProjectSpec >> beDev [
+	"Put my project in dev mode for the load I am a root of: every request of it, wherever it comes from and whatever version it asks, takes my repository instead. Nothing installed is replaced"
+
+	isDev := true
 ]
 
 { #category : 'scripting' }
@@ -145,8 +153,17 @@ MetacelloProjectSpec >> hasVersion [
 
 { #category : 'initialization' }
 MetacelloProjectSpec >> initialize [
+
 	super initialize.
-	loads := #(  )
+	loads := #(  ).
+	isDev := false
+]
+
+{ #category : 'dev mode' }
+MetacelloProjectSpec >> isDev [
+	"Whether my project is in dev mode (see beDev)"
+
+	^ isDev
 ]
 
 { #category : 'scripting' }
