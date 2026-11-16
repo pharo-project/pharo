@@ -233,10 +233,8 @@ HEInstaller >> rebuildMethod: aMethod into: aClass [
 	extendedEnvironment newClass: aClass.
 	extendedEnvironment newSelector: aMethod name.
 
-	self flag: #pharo11. "We reserve the space of an empty trailer after the bytecode: 5 bytes since Pharo 12, and 4 bytes before (CompiledMethodTrailer empty). Remove this condition when Pharo 12 is the minimal version."
-	newMethod := CompiledMethod
-		             basicNew: aMethod bytecode size + (SystemVersion current major >= 12 ifTrue: [ CompiledMethod trailerSize ] ifFalse: [ 4 ])
-		             header: (aMethod headerFor: extendedEnvironment).
+	"We reserve the space of an empty trailer after the bytecode."
+	newMethod := CompiledMethod basicNew: aMethod bytecode size + CompiledMethod trailerSize header: (aMethod headerFor: extendedEnvironment).
 
 	extendedEnvironment newMethod: newMethod.
 
