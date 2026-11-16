@@ -15,6 +15,13 @@ MetacelloSemanticVersionNumber >> descriptionOf: aCandidate [
 ]
 
 { #category : '*Metacello-MVS' }
+MetacelloSemanticVersionNumber >> fileFormatOf: aCandidate from: aSource [
+	"The format of the packages of aCandidate at me, as the repository aSource keeps for its project tells"
+
+	^ (aSource repositoryAt: aCandidate repository) fileFormatAt: self string
+]
+
+{ #category : '*Metacello-MVS' }
 MetacelloSemanticVersionNumber >> hasMajor: anInteger [
 
 	^ self major = anInteger

@@ -28,6 +28,12 @@ MetacelloDirectoryBaselineTest >> setUp [
 ]
 
 { #category : 'tests' }
+MetacelloDirectoryBaselineTest >> testAnswersItsFormat [
+
+	self assert: self repository fileFormat equals: #tonel
+]
+
+{ #category : 'tests' }
 MetacelloDirectoryBaselineTest >> testAnswersNoBaselineItDoesNotHold [
 
 	self assert: (self repository baselineOf: 'Foo') isNil

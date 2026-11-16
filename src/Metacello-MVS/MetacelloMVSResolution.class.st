@@ -170,6 +170,7 @@ MetacelloMVSResolution >> kindDescriptions [
 		  (#copiedProject -> 'Project required under a second name').
 		  (#dev -> 'Project in dev mode').
 		  (#devInstalled -> 'Project in dev mode is installed').
+		  (#fileTreeFormat -> 'Code in FileTree format, to move to Tonel').
 		  (#floatingVersion -> 'Floating version, taken as the first of its series').
 		  (#heldByLock -> 'Kept at the locked version').
 		  (#higherThanReplace -> 'Asks more than the replace gives').

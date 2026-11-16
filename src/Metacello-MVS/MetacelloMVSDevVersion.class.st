@@ -52,6 +52,13 @@ MetacelloMVSDevVersion >> descriptionOf: aCandidate [
 ]
 
 { #category : 'accessing' }
+MetacelloMVSDevVersion >> fileFormatOf: aCandidate from: aSource [
+	"The format of the packages of aCandidate, from its repository as my description names it"
+
+	^ (MetacelloPlatform current createRepository: (MetacelloRepositorySpec description: description)) fileFormat
+]
+
+{ #category : 'accessing' }
 MetacelloMVSDevVersion >> hasMajor: anInteger [
 	"A project in dev mode is at a ref, never at a major"
 

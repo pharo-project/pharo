@@ -18,6 +18,12 @@ MCFileTreeRepository class >> createRepositoryFromSpec: aRepositorySpec [
 ]
 
 { #category : '*Metacello-Core' }
+MCFileTreeRepository >> fileFormat [
+
+	^ #filetree
+]
+
+{ #category : '*Metacello-Core' }
 MCFileTreeRepository class >> isAvailableFor: type [
 	^ type = 'filetree'
 ]

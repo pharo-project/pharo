@@ -81,6 +81,13 @@ MetacelloMVSCandidateVersion >> displayName [
 	^ self project , ' ' , version printString
 ]
 
+{ #category : 'accessing' }
+MetacelloMVSCandidateVersion >> fileFormatFrom: aSource [
+	"The format of my packages, read from my repository as my version says"
+
+	^ version fileFormatOf: self from: aSource
+]
+
 { #category : 'requiring' }
 MetacelloMVSCandidateVersion >> isAboutProject: aProjectName [
 
