@@ -25,11 +25,11 @@ MetacelloMVSRecordedSource >> addAll: aRecordedSource [
 
 { #category : 'versions' }
 MetacelloMVSRecordedSource >> baselineOf: aCandidate [
-	"What the baseline of the project of aCandidate was when it was recorded, at its version; what made its repository unreadable at that version; or that it was not recorded"
+	"What the baseline of the project of aCandidate was when it was recorded, where it is read from (its repository at its version, or the description of its dev root); what made its repository unreadable there; or that it was not recorded"
 
-	^ baselines at: aCandidate repository -> aCandidate version string -> ('BaselineOf' , aCandidate project) ifAbsent: [
+	^ baselines at: aCandidate readDescription -> ('BaselineOf' , aCandidate project) ifAbsent: [
 			  unreadable
-				  at: aCandidate repository -> aCandidate version string
+				  at: aCandidate readDescription
 				  ifAbsent: [
 				  MetacelloMVSBaselineDefinitions error: #repositoryFailure text: 'Not recorded: the baseline of ' , aCandidate printString ] ]
 ]
@@ -51,6 +51,18 @@ MetacelloMVSRecordedSource >> problemsFrom: aCollectionOfTriples into: aBaseline
 
 	aBaselineDefinitions problems addAll: aCollectionOfTriples.
 	^ aBaselineDefinitions
+]
+
+{ #category : 'building' }
+MetacelloMVSRecordedSource >> readFrom: aReadDescription baseline: aBaselineDefinitions [
+	"A baseline read from aReadDescription (a repository at a version or ref), kept by where it was read from and by its class: one repository can hold the baselines of several projects. One that could not be read (no baseline class known) is kept for where it was read from"
+
+	aBaselineDefinitions hasBaseline
+		ifTrue: [
+				baselines
+					at: aReadDescription -> (aBaselineDefinitions definitions detect: [ :each | each isClassDefinition ]) className asString
+					put: aBaselineDefinitions ]
+		ifFalse: [ unreadable at: aReadDescription put: aBaselineDefinitions ]
 ]
 
 { #category : 'building' }
@@ -88,15 +100,9 @@ MetacelloMVSRecordedSource >> replayPlatform [
 
 { #category : 'building' }
 MetacelloMVSRecordedSource >> repository: aRepository at: aVersion baseline: aBaselineDefinitions [
-	"A baseline read from aRepository at aVersion, kept by its class: one repository can hold the baselines of several projects. One that could not be read (no baseline class known) is kept for the repository at that version"
+	"A baseline read from aRepository at aVersion (see readFrom:baseline:)"
 
-	aBaselineDefinitions hasBaseline
-		ifTrue: [
-				baselines
-					at:
-					aRepository -> aVersion -> (aBaselineDefinitions definitions detect: [ :each | each isClassDefinition ]) className asString
-					put: aBaselineDefinitions ]
-		ifFalse: [ unreadable at: aRepository -> aVersion put: aBaselineDefinitions ]
+	self readFrom: aRepository , ':' , aVersion baseline: aBaselineDefinitions
 ]
 
 { #category : 'building' }
@@ -247,17 +253,18 @@ MetacelloMVSRecordedSource >> storeOn: aStream [
 				nextPutAll: ' to: ';
 				print: (redirects at: written);
 				nextPut: $; ].
+	"Baselines are kept by where they are read from, repository:version, and by class"
 	(baselines keys sort: [ :a :b | a printString <= b printString ]) do: [ :key |
 			self
 				storeBaseline: (baselines at: key)
-				of: key key key
-				at: key key value
+				of: (key key copyUpToLast: $:)
+				at: (key key copyAfterLast: $:)
 				on: aStream ].
-	(unreadable keys sort: [ :a :b | a printString <= b printString ]) do: [ :key |
+	(unreadable keys sort: [ :a :b | a <= b ]) do: [ :key |
 			self
 				storeBaseline: (unreadable at: key)
-				of: key key
-				at: key value
+				of: (key copyUpToLast: $:)
+				at: (key copyAfterLast: $:)
 				on: aStream ].
 	aStream
 		crtab;

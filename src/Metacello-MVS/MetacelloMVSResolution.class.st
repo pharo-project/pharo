@@ -187,9 +187,11 @@ MetacelloMVSResolution >> kindDescriptions [
 		  (#platformMismatch -> 'Needs another Pharo version').
 		  (#projectConflict -> 'One project from two repositories').
 		  (#raisedByOthers -> 'Already selected at a newer version').
+		  (#raisedWithSibling -> 'Raised with another project of its repository').
 		  (#removedAPI -> 'Baseline uses an API removed from Pharo').
 		  (#replaced -> 'Replaced').
 		  (#repositoryFailure -> 'Repository cannot be read').
+		  (#siblingConflict -> 'Projects of one repository at versions that cannot be aligned').
 		  (#spelling -> 'Repository spelled with another capitalization').
 		  (#taggedVersionAvailable -> 'No version asked, but the repository has versions').
 		  (#unversionedReference -> 'No version asked').

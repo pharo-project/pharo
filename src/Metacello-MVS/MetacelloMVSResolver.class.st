@@ -26,7 +26,8 @@ Class {
 		'dropsUnused',
 		'user',
 		'devUses',
-		'rootNames'
+		'rootNames',
+		'siblings'
 	],
 	#category : 'Metacello-MVS',
 	#package : 'Metacello-MVS'
@@ -51,6 +52,29 @@ MetacelloMVSResolver >> addRoot: aCandidate to: aResolution [
 	project := self resolvedProjectOf: aCandidate into: aResolution ifNone: [ ^ self ].
 	aResolution addRoot: project.
 	project addRequest: aCandidate request
+]
+
+{ #category : 'resolving' }
+MetacelloMVSResolver >> alignSiblingsOf: aCandidate in: aRequirement [
+	"A repository is loaded at one version: the other projects selected from the repository of aCandidate are raised to its version, or aCandidate to theirs, the highest. Two majors of one repository are an error, and so are a ref (dev mode) and a version"
+
+	| names |
+	names := siblings at: aCandidate repository ifAbsentPut: [ Set new ].
+	names add: aCandidate project.
+	names copy do: [ :name |
+			| other |
+			other := selected at: name.
+			other version = aCandidate version ifFalse: [
+					(other version isSameMajorAs: aCandidate version) ifFalse: [
+							^ self
+								  error: #siblingConflict
+								  text: other displayName , ' and ' , aCandidate displayName , ' come from one repository, ' , aCandidate repository
+									  , ', at two versions that cannot be aligned'
+								  about: aCandidate
+								  in: aRequirement ].
+					other version < aCandidate version
+						ifTrue: [ self raise: other with: aCandidate in: aRequirement ]
+						ifFalse: [ "Selecting aCandidate raised aligns its repository again" ^ self raise: aCandidate with: other in: aRequirement ] ] ]
 ]
 
 { #category : 'resolving' }
@@ -339,6 +363,27 @@ MetacelloMVSResolver >> minimumOf: aProjectSpec [
 	ref := graph versionStringOf: aProjectSpec.
 	(MetacelloSemanticVersionNumber isSeries: ref) ifTrue: [ ^ MetacelloSemanticVersionNumber fromSeries: ref ].
 	^ MetacelloSemanticVersionNumber fromVersionString: ref
+]
+
+{ #category : 'resolving' }
+MetacelloMVSResolver >> raise: aCandidate with: aSibling in: aRequirement [
+	"Select the project of aCandidate at the version of aSibling, a higher one of the same repository, asked by whoever asked aCandidate, with an info saying why"
+
+	| raised |
+	raised := (self
+		           candidateFor: aCandidate spec
+		           version: aSibling version
+		           requiredBy: aCandidate requiredBy
+		           in: aRequirement)
+		          request: aCandidate request;
+		          yourself.
+	self
+		record: #info
+		kind: #raisedWithSibling
+		text:
+		aCandidate displayName , ' is raised to ' , aSibling version printString , ' with ' , aSibling project , ', from one repository'
+		on: raised.
+	self select: raised in: aRequirement
 ]
 
 { #category : 'findings' }
@@ -728,6 +773,7 @@ MetacelloMVSResolver >> revisit: aProjectName [
 
 { #category : 'resolving' }
 MetacelloMVSResolver >> select: aCandidate in: aRequirement [
+	"Select aCandidate unless its project has a higher version of its major already, then align the other projects of its repository with the version selected (see alignSiblingsOf:in:). Each version is visited once"
 
 	(self checkProjectOf: aCandidate in: aRequirement) ifFalse: [ ^ self ].
 	selected
@@ -744,6 +790,7 @@ MetacelloMVSResolver >> select: aCandidate in: aRequirement [
 					^ self majorConflictOf: aCandidate against: current in: aRequirement ].
 				current version < aCandidate version ifTrue: [ selected at: aCandidate project put: aCandidate ] ]
 		ifAbsent: [ selected at: aCandidate project put: aCandidate ].
+	(selected at: aCandidate project) == aCandidate ifTrue: [ self alignSiblingsOf: aCandidate in: aRequirement ].
 	(visited includes: aCandidate project -> aCandidate version) ifTrue: [ ^ self ].
 	visited add: aCandidate project -> aCandidate version.
 	pending add: aCandidate
@@ -768,6 +815,7 @@ MetacelloMVSResolver >> setGraph: aGraph [
 	defaultAsked := Set new.
 	requiredFrom := Dictionary new.
 	devUses := OrderedDictionary new.
+	siblings := Dictionary new.
 	rootNames := OrderedCollection new.
 	user := MetacelloUserRequest new.
 	resolution := MetacelloMVSResolution new

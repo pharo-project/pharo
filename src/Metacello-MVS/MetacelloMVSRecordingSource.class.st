@@ -17,7 +17,7 @@ MetacelloMVSRecordingSource >> baselineOf: aCandidate [
 
 	| baseline |
 	baseline := source baselineOf: aCandidate.
-	recorded repository: aCandidate repository at: aCandidate version string baseline: baseline.
+	recorded readFrom: aCandidate readDescription baseline: baseline.
 	^ baseline
 ]
 

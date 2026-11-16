@@ -52,6 +52,13 @@ MetacelloMVSDevVersion >> descriptionOf: aCandidate [
 ]
 
 { #category : 'accessing' }
+MetacelloMVSDevVersion >> hasMajor: anInteger [
+	"A project in dev mode is at a ref, never at a major"
+
+	^ false
+]
+
+{ #category : 'accessing' }
 MetacelloMVSDevVersion >> hash [
 
 	^ description hash

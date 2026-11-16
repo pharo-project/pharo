@@ -23,10 +23,16 @@ MetacelloSemanticVersionNumber >> descriptionOf: aCandidate [
 ]
 
 { #category : '*Metacello-MVS' }
+MetacelloSemanticVersionNumber >> hasMajor: anInteger [
+
+	^ self major = anInteger
+]
+
+{ #category : '*Metacello-MVS' }
 MetacelloSemanticVersionNumber >> isSameMajorAs: aVersion [
 	"Whether aVersion, of the same repository, can replace me or be replaced by me: the same major"
 
-	^ self major = aVersion major
+	^ aVersion hasMajor: self major
 ]
 
 { #category : '*Metacello-MVS' }

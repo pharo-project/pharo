@@ -138,6 +138,23 @@ MetacelloMVSBaselineReadingTest >> setUp [
 	graph := MetacelloMVSGraph on: source
 ]
 
+{ #category : 'running' }
+MetacelloMVSBaselineReadingTest >> specRepositoryAt: someVersions [
+	"github://acme/Spec holds two projects at each of someVersions: Spec2, whose baseline asks SpecCore from its own repository at the same version, and SpecCore, which asks nothing"
+
+	someVersions do: [ :each |
+			source
+				repository: 'github://acme/Spec'
+				version: each
+				project: 'Spec2'
+				baseline: (self baselineRequiring: { ('SpecCore' -> ('github://acme/Spec:' , each)) }).
+			source
+				repository: 'github://acme/Spec'
+				version: each
+				project: 'SpecCore'
+				baseline: (self baselineRequiring: #(  )) ]
+]
+
 { #category : 'tests' }
 MetacelloMVSBaselineReadingTest >> testABaselineThatAsksTheImageIsAWarning [
 
@@ -151,6 +168,30 @@ MetacelloMVSBaselineReadingTest >> testABaselineThatAsksTheImageIsAWarning [
 				    '		spec package: ''Core'' ]' )).
 	warnings := self warningsOf: (self selectionOf: 'github://acme/Foo:v1.0.0' project: 'Foo').
 	self assert: (warnings anySatisfy: [ :each | each = 'Smalltalk' ])
+]
+
+{ #category : 'tests - siblings' }
+MetacelloMVSBaselineReadingTest >> testADevProjectAndAVersionOfItsRepositoryAreAnError [
+	"Spec2 in dev mode at master, SpecCore asked at v1.0.0: the repository would be at a ref and at a version"
+
+	| report |
+	self specRepositoryAt: #( 'v1.0.0' ).
+	source
+		repository: 'github://acme/Spec'
+		version: 'master'
+		project: 'Spec2'
+		baseline: (self baselineRequiring: #(  )).
+	source
+		repository: 'github://acme/Foo'
+		version: 'v1.0.0'
+		project: 'Foo'
+		baseline: (self baselineRequiring: { ('SpecCore' -> 'github://acme/Spec:v1.0.0') }).
+	report := (MetacelloMVSResolver on: graph) resolveRoots: {
+			          (graph specFor: 'github://acme/Foo:v1.0.0' project: 'Foo' loads: #(  )).
+			          ((graph specFor: 'github://acme/Spec:master' project: 'Spec2' loads: #(  ))
+				           beDev;
+				           yourself) }.
+	self assert: (report errors collect: [ :each | each kind ]) asArray equals: #( #siblingConflict )
 ]
 
 { #category : 'tests' }
@@ -215,6 +256,49 @@ MetacelloMVSBaselineReadingTest >> testAPharoBlockIsAWarning [
 		baseline: (self pharoBaseline: '		spec for: #''pharo14.x'' do: [ spec package: ''Old'' ].').
 	warnings := self warningsOf: (self selectionOf: 'github://acme/Foo:v1.0.0' project: 'Foo').
 	self assert: (warnings anySatisfy: [ :each | each includesSubstring: 'pharo14.x' ])
+]
+
+{ #category : 'tests - siblings' }
+MetacelloMVSBaselineReadingTest >> testAProjectIsRaisedToAHigherProjectOfItsRepository [
+	"Foo asks SpecCore v1.1.0 first, then Spec2 v1.0.0: Spec2 takes v1.1.0 directly"
+
+	| report |
+	self specRepositoryAt: #( 'v1.0.0' 'v1.1.0' ).
+	source
+		repository: 'github://acme/Foo'
+		version: 'v1.0.0'
+		project: 'Foo'
+		baseline: (self baselineRequiring: {
+					 ('SpecCore' -> 'github://acme/Spec:v1.1.0').
+					 ('Spec2' -> 'github://acme/Spec:v1.0.0') }).
+	report := (MetacelloMVSResolver on: graph) resolve: 'github://acme/Foo:v1.0.0' project: 'Foo'.
+	self assert: report resolves.
+	self assert: (report buildList at: 'Spec2') version string equals: 'v1.1.0'.
+	self assert: (report buildList at: 'SpecCore') version string equals: 'v1.1.0'
+]
+
+{ #category : 'tests - siblings' }
+MetacelloMVSBaselineReadingTest >> testAProjectIsRaisedWithAnotherProjectOfItsRepository [
+	"Foo asks Spec2 v1.0.0 (which asks SpecCore v1.0.0) and SpecCore v1.1.0: Spec2 is raised to v1.1.0, one version of the repository"
+
+	| report |
+	self specRepositoryAt: #( 'v1.0.0' 'v1.1.0' ).
+	source
+		repository: 'github://acme/Foo'
+		version: 'v1.0.0'
+		project: 'Foo'
+		baseline: (self baselineRequiring: {
+					 ('Spec2' -> 'github://acme/Spec:v1.0.0').
+					 ('SpecCore' -> 'github://acme/Spec:v1.1.0') }).
+	report := (MetacelloMVSResolver on: graph) resolve: 'github://acme/Foo:v1.0.0' project: 'Foo'.
+	self assert: report resolves.
+	self assert: (report buildList associations collect: [ :each | each key -> each value version string ]) asDictionary equals: {
+			('Foo' -> 'v1.0.0').
+			('Spec2' -> 'v1.1.0').
+			('SpecCore' -> 'v1.1.0') } asDictionary.
+	self
+		assert: ((report infos select: [ :each | each kind = #raisedWithSibling ]) collect: [ :each | each text ]) asArray
+		equals: #( 'Spec2 v1.0.0 is raised to v1.1.0 with SpecCore, from one repository' )
 ]
 
 { #category : 'tests' }
@@ -338,6 +422,23 @@ MetacelloMVSBaselineReadingTest >> testTheRootLoadsTheGroupsAsked [
 		deny: (((MetacelloMVSResolver on: graph) resolve: 'github://acme/Bar:v1.0.0' project: 'Bar' loads: #(  )) buildList includesKey: 'Tester');
 		assert:
 			(((MetacelloMVSResolver on: graph) resolve: 'github://acme/Bar:v1.0.0' project: 'Bar' loads: #( 'Tests' )) buildList includesKey: 'Tester')
+]
+
+{ #category : 'tests - siblings' }
+MetacelloMVSBaselineReadingTest >> testTwoMajorsOfOneRepositoryAreAnErrorAcrossProjects [
+
+	| report |
+	self specRepositoryAt: #( 'v1.0.0' 'v2.0.0' ).
+	source
+		repository: 'github://acme/Foo'
+		version: 'v1.0.0'
+		project: 'Foo'
+		baseline: (self baselineRequiring: {
+					 ('SpecCore' -> 'github://acme/Spec:v2.0.0').
+					 ('Spec2' -> 'github://acme/Spec:v1.0.0') }).
+	report := (MetacelloMVSResolver on: graph) resolve: 'github://acme/Foo:v1.0.0' project: 'Foo'.
+	self deny: report resolves.
+	self assert: (report errors anySatisfy: [ :each | each kind = #siblingConflict or: [ each kind = #majorConflict ] ])
 ]
 
 { #category : 'tests' }
