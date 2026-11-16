@@ -33,10 +33,3 @@ MetacelloSemanticVersionNumber >> isSameMajorAs: aVersion [
 
 	^ aVersion hasMajor: self major
 ]
-
-{ #category : '*Metacello-MVS' }
-MetacelloSemanticVersionNumber >> readDescriptionOf: aCandidate [
-	"Where the baseline of aCandidate at me is read from: its repository at me, without a path, since every path of a repository reads the same baseline"
-
-	^ aCandidate repository , ':' , self string
-]

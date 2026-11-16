@@ -185,13 +185,6 @@ MetacelloMVSCandidateVersion >> project [
 ]
 
 { #category : 'accessing' }
-MetacelloMVSCandidateVersion >> readDescription [
-	"Where my baseline is read from, which names the project version the graph keeps: my repository at my version (github://o/b:v1.0.0), or for a project in dev mode the description of its dev root as written. A project in dev mode replaces every request of it, so it is never read at a version too: the two kinds of keys never meet"
-
-	^ version readDescriptionOf: self
-]
-
-{ #category : 'accessing' }
 MetacelloMVSCandidateVersion >> repository [
 	"type://owner/name"
 
@@ -200,7 +193,7 @@ MetacelloMVSCandidateVersion >> repository [
 
 { #category : 'accessing' }
 MetacelloMVSCandidateVersion >> repositoryDescription [
-	"The Metacello repository description to load me from, as my version says"
+	"The Metacello repository description to load me from, as my version says, which also names the project version the graph keeps: my repository at my version (github://o/b:v1.0.0), or for a project in dev mode the description of its dev root as written. A project in dev mode replaces every request of it, so it is never read at a version too: the two kinds of keys never meet"
 
 	^ version descriptionOf: self
 ]

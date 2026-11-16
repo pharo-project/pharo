@@ -136,9 +136,9 @@ MetacelloMVSGraph >> projectVersionFrom: aBaselineDefinitions of: aCandidate [
 MetacelloMVSGraph >> projectVersionOf: aCandidate [
 	"The project of aCandidate at its version, with what its baseline declares: given by hand for its repository at that version, or read once from the definitions the source answers. Kept by where it is read from and by project: one repository can hold the baselines of several projects (Spec2 and SpecCore)"
 
-	^ projectVersions at: aCandidate readDescription -> aCandidate project ifAbsentPut: [
+	^ projectVersions at: aCandidate repositoryDescription -> aCandidate project ifAbsentPut: [
 		  givenProjectVersions
-			  at: aCandidate readDescription
+			  at: aCandidate repositoryDescription
 			  ifAbsent: [ self projectVersionFrom: (source baselineOf: aCandidate) of: aCandidate ] ]
 ]
 

@@ -85,13 +85,6 @@ MetacelloMVSDevVersion >> printOn: aStream [
 ]
 
 { #category : 'accessing' }
-MetacelloMVSDevVersion >> readDescriptionOf: aCandidate [
-	"Where the baseline of aCandidate is read from: its dev root, as described"
-
-	^ description
-]
-
-{ #category : 'accessing' }
 MetacelloMVSDevVersion >> setDescription: aDescriptionString [
 
 	description := aDescriptionString

@@ -32,7 +32,7 @@ MetacelloMVSRepositorySource >> baselineOf: aCandidate [
 	format = #filetree ifTrue: [
 		findings warning: #fileTreeFormat text: aCandidate printString , ' is in FileTree format, to deprecate for Tonel' ].
 	^ findings
-		  setDefinitions: definitions repository: aCandidate readDescription;
+		  setDefinitions: definitions repository: aCandidate repositoryDescription;
 		  yourself
 ]
 

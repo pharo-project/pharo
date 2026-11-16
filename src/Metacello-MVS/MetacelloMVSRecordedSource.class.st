@@ -27,9 +27,9 @@ MetacelloMVSRecordedSource >> addAll: aRecordedSource [
 MetacelloMVSRecordedSource >> baselineOf: aCandidate [
 	"What the baseline of the project of aCandidate was when it was recorded, where it is read from (its repository at its version, or the description of its dev root); what made its repository unreadable there; or that it was not recorded"
 
-	^ baselines at: aCandidate readDescription -> ('BaselineOf' , aCandidate project) ifAbsent: [
+	^ baselines at: aCandidate repositoryDescription -> ('BaselineOf' , aCandidate project) ifAbsent: [
 			  unreadable
-				  at: aCandidate readDescription
+				  at: aCandidate repositoryDescription
 				  ifAbsent: [
 				  MetacelloMVSBaselineDefinitions error: #repositoryFailure text: 'Not recorded: the baseline of ' , aCandidate printString ] ]
 ]
@@ -54,15 +54,15 @@ MetacelloMVSRecordedSource >> problemsFrom: aCollectionOfTriples into: aBaseline
 ]
 
 { #category : 'building' }
-MetacelloMVSRecordedSource >> readFrom: aReadDescription baseline: aBaselineDefinitions [
-	"A baseline read from aReadDescription (a repository at a version or ref), kept by where it was read from and by its class: one repository can hold the baselines of several projects. One that could not be read (no baseline class known) is kept for where it was read from"
+MetacelloMVSRecordedSource >> readFrom: aRepositoryDescription baseline: aBaselineDefinitions [
+	"A baseline read from aRepositoryDescription (a repository at a version or ref), kept by where it was read from and by its class: one repository can hold the baselines of several projects. One that could not be read (no baseline class known) is kept for where it was read from"
 
 	aBaselineDefinitions hasBaseline
 		ifTrue: [
 				baselines
-					at: aReadDescription -> (aBaselineDefinitions definitions detect: [ :each | each isClassDefinition ]) className asString
+					at: aRepositoryDescription -> (aBaselineDefinitions definitions detect: [ :each | each isClassDefinition ]) className asString
 					put: aBaselineDefinitions ]
-		ifFalse: [ unreadable at: aReadDescription put: aBaselineDefinitions ]
+		ifFalse: [ unreadable at: aRepositoryDescription put: aBaselineDefinitions ]
 ]
 
 { #category : 'building' }
