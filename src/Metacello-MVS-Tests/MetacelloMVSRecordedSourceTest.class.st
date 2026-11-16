@@ -96,3 +96,31 @@ MetacelloMVSRecordedSourceTest >> testStoresItsBaselines [
 	reading := (MetacelloMVSGraph on: copy) readingOf: (self selectionOf: 'github://acme/Foo:v1.0.0' project: 'Foo').
 	self assert: (reading references collect: [ :each | self descriptionOf: each ]) asArray equals: #( 'github://acme/Bar:v1.0.0' )
 ]
+
+{ #category : 'tests' }
+MetacelloMVSRecordedSourceTest >> testStoresOnlyTheMethodsOfTheBaselineClass [
+	"Like PCRE2: its baseline package also holds a formatter, which the reading of the baseline never compiles"
+
+	| recorded definitions copy baseline |
+	definitions := (MetacelloMVSBaselineDefinitions
+		                baselineClassNamed: 'BaselineOfFoo'
+		                method: (self baselineRequiring: {  })
+		                repository: 'github://acme/Foo:v1.0.0') definitions asOrderedCollection.
+	definitions
+		add: ((MCClassDefinition named: 'FooFormatter')
+				 superclassName: #Object;
+				 category: 'BaselineOfFoo';
+				 yourself);
+		add: (MCMethodDefinition className: 'FooFormatter' selector: #format category: 'formatting' timeStamp: '' source: 'format
+	^ codeStream').
+	recorded := MetacelloMVSRecordedSource new
+		            repository: 'github://acme/Foo'
+		            at: 'v1.0.0'
+		            baseline: (MetacelloMVSBaselineDefinitions definitions: definitions repository: 'github://acme/Foo:v1.0.0');
+		            yourself.
+	copy := Smalltalk compiler evaluate: recorded storeString.
+	baseline := copy baselineOf: (self selectionOf: 'github://acme/Foo:v1.0.0' project: 'Foo').
+	self
+		assert: ((baseline definitions select: [ :each | each isMethodDefinition ]) collect: [ :each | each className ]) asArray
+		equals: #( 'BaselineOfFoo' )
+]

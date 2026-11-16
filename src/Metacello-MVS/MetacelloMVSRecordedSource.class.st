@@ -173,8 +173,9 @@ MetacelloMVSRecordedSource >> repository: aRepository versions: aCollection [
 
 { #category : 'printing' }
 MetacelloMVSRecordedSource >> storeBaseline: aBaselineDefinitions of: aRepository at: aVersion on: aStream [
+	"The baseline class and its own methods: the other classes of the baseline package are not read (see MetacelloMVSBaselineSandbox>>baselineClass)"
 
-	| problems |
+	| problems class |
 	problems := (aBaselineDefinitions problems collect: [ :each | each asArray ]) asArray.
 	aStream
 		crtab;
@@ -188,18 +189,19 @@ MetacelloMVSRecordedSource >> storeBaseline: aBaselineDefinitions of: aRepositor
 				print: problems;
 				nextPut: $;.
 			^ self ].
-	aBaselineDefinitions definitions detect: [ :each | each isClassDefinition ] ifFound: [ :class |
-			aStream
-				nextPutAll: ' class: ';
-				print: {
-						class className asString.
-						class superclassName asString.
-						class instVarNames asArray.
-						class classVarNames asArray.
-						class classInstVarNames asArray } ].
+	class := aBaselineDefinitions definitions detect: [ :each | each isClassDefinition ].
 	aStream
+		nextPutAll: ' class: ';
+		print: {
+				class className asString.
+				class superclassName asString.
+				class instVarNames asArray.
+				class classVarNames asArray.
+				class classInstVarNames asArray };
 		nextPutAll: ' methods: ';
-		print: ((aBaselineDefinitions definitions select: [ :each | each isMethodDefinition ]) collect: [ :each |
+		print:
+			((aBaselineDefinitions definitions select: [ :each | each isMethodDefinition and: [ each className = class className ] ])
+				 collect: [ :each |
 						 {
 							 each classIsMeta.
 							 each category asString.

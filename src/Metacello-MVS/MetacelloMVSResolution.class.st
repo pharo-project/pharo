@@ -185,7 +185,6 @@ MetacelloMVSResolution >> kindDescriptions [
 		  (#newerMajor -> 'Newer major').
 		  (#nonCanonicalVersion -> 'Version not written vX.Y.Z').
 		  (#platformBlock -> 'Baseline depends on the Pharo version').
-		  (#platformMismatch -> 'Needs another Pharo version').
 		  (#projectConflict -> 'One project from two repositories').
 		  (#raisedByOthers -> 'Already selected at a newer version').
 		  (#raisedWithSibling -> 'Raised with another project of its repository').
