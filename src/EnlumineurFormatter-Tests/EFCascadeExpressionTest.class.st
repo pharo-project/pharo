@@ -185,7 +185,7 @@ EFCascadeExpressionTest >> testCommentAfterMessages [
 		assert: source
 		equals:
 'Transcript show: 1; "secondComment"cr; "thirdComment"
-		cr'
+	cr'
 ]
 
 { #category : 'tests' }
@@ -228,8 +228,8 @@ EFCascadeExpressionTest >> testFormatMultilineMessage [
 '1
 	between: 2 and: 5;
 	to: 4 do: [ :each |
-			each factorial.
-			each + 1 ]'
+		each factorial.
+		each + 1 ]'
 ]
 
 { #category : 'tests' }
@@ -383,7 +383,7 @@ EFCascadeExpressionTest >> testTooLongArgument [
 		assert: source
 		equals:
 'foo a; b:
-		toLongArgument'
+	toLongArgument'
 ]
 
 { #category : 'tests' }
