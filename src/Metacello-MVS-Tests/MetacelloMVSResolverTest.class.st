@@ -455,6 +455,24 @@ MetacelloMVSResolverTest >> testANewerVersionInTheSameMajorIsReportedWithoutPrer
 	self assert: (self selected: 'c' in: report buildList) equals: 'v1.0.0'
 ]
 
+{ #category : 'tests - dev mode' }
+MetacelloMVSResolverTest >> testAProjectInDevModeIsTheOneInstalledFromTheSameDescription [
+	"Loaded from the directory it is in dev mode at: it is the one in dev mode, not another installation"
+
+	| resolution |
+	self versions: #( 'v1.0.0' ) of: 'a'.
+	self versions: #( 'v1.0.0' ) of: 'b'.
+	self version: 'v1.0.0' of: 'a' requires: #( 'b:v1.0.0' ).
+	graph description: 'tonel:///work/b' requires: #(  ).
+	resolution := (MetacelloMVSResolver on: graph)
+		              installed: { ('b' -> (graph specFor: 'tonel:///work/b' project: 'b' loads: #(  ))) } asDictionary;
+		              resolveRoots: {
+				              (graph specFor: (self repo: 'a:v1.0.0') project: 'a' loads: #(  )).
+				              (self devSpec: 'b' at: 'tonel:///work/b') }.
+	self assert: resolution resolves.
+	self assert: (self selected: 'b' in: resolution buildList) equals: 'tonel:///work/b'
+]
+
 { #category : 'tests' }
 MetacelloMVSResolverTest >> testAProjectOnlyAVersionNotSelectedRequiresIsDropped [
 	"D 1.3 is not selected, so f, which only D 1.3 requires, is not used"
@@ -627,7 +645,25 @@ MetacelloMVSResolverTest >> testAVersionAskedOfAProjectInstalledAtABranchIsAnErr
 		              resolve: (self repo: 'a:v1.0.0') project: 'a'.
 	self
 		assert: (resolution errors collect: [ :each | each kind -> each text ]) asArray
-		equals: { (#installedAtNoVersion -> 'b is installed at github://o/b:master, not a version to compare with v1.0.0; unload it, or load the version you want') }
+		equals: { (#installedAtNoVersion -> 'b is installed at github://o/b:master, not a version to compare with v1.0.0; unload it, load the version you want, or put it in dev mode (--dev) at github://o/b:master') }
+]
+
+{ #category : 'tests - installed' }
+MetacelloMVSResolverTest >> testAVersionAskedOfAProjectInstalledFromADirectoryIsAnError [
+	"A directory has no version to compare with what is asked: nothing replaces it"
+
+	| resolution |
+	self versions: #( 'v1.0.0' ) of: 'a'.
+	self versions: #( 'v1.0.0' ) of: 'b'.
+	graph repository: 'tonel:///work/b' versions: #(  ).
+	self version: 'v1.0.0' of: 'a' requires: #( 'b:v1.0.0' ).
+	self version: 'v1.0.0' of: 'b' requires: #(  ).
+	resolution := (MetacelloMVSResolver on: graph)
+		              installed: { ('b' -> (graph specFor: 'tonel:///work/b' project: 'b' loads: #(  ))) } asDictionary;
+		              resolve: (self repo: 'a:v1.0.0') project: 'a'.
+	self
+		assert: (resolution errors collect: [ :each | each kind ]) asArray
+		equals: #( #installedAtNoVersion )
 ]
 
 { #category : 'tests - warnings' }

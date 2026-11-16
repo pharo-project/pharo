@@ -258,7 +258,7 @@ MetacelloMVSResolver >> installedCandidateFrom: aProjectSpec for: aCandidate in:
 
 { #category : 'metacello' }
 MetacelloMVSResolver >> installedFromRegistry [
-	"What the registry says the image has: project name -> the project spec each installed project was loaded from, the projects locked, and those installed only by the legacy rule"
+	"What the registry says the image has: project name -> the project spec each installed project was loaded from, the projects locked, and those installed only by the legacy rule. A project loaded from a directory counts too: it is installed at no version"
 
 	| found locks assumed |
 	found := Dictionary new.
@@ -267,14 +267,12 @@ MetacelloMVSResolver >> installedFromRegistry [
 	MetacelloProjectRegistry registry registrations do: [ :registration |
 			registration isInstalled ifTrue: [
 					registration repositoryDescriptions do: [ :description |
-							| spec |
+							| spec name |
 							spec := graph specFor: description project: registration projectName loads: #(  ).
-							(graph hasVersions: spec ifFail: [ :why | false ]) ifTrue: [
-									| name |
-									name := graph projectOf: spec.
-									found at: name put: spec.
-									registration locked ifTrue: [ locks add: name ].
-									registration isInstalledByLegacyRule ifTrue: [ assumed add: name ] ] ] ] ].
+							name := graph projectOf: spec.
+							found at: name put: spec.
+							registration locked ifTrue: [ locks add: name ].
+							registration isInstalledByLegacyRule ifTrue: [ assumed add: name ] ] ] ].
 	self installed: found.
 	self locked: locks.
 	self assumedInstalled: assumed
@@ -295,7 +293,11 @@ MetacelloMVSResolver >> isFloating: aProjectSpec [
 
 { #category : 'resolving' }
 MetacelloMVSResolver >> isInstalledAtAVersion: aProjectSpec [
-	"Whether what the image has installed, loaded from aProjectSpec, is at a semantic version, which can be compared with the versions asked. A branch or a commit is not"
+	"Whether what the image has installed, loaded from aProjectSpec, is at a semantic version, which can be compared with the versions asked. A branch, a commit or a directory is not"
+
+	"Only a repository with versions answers the version its description names (a git one): a directory names none"
+
+	(graph hasVersions: aProjectSpec ifFail: [ :why | false ]) ifFalse: [ ^ false ].
 	^ (graph versionStringOf: aProjectSpec)
 		  ifNil: [ false ]
 		  ifNotNil: [ :ref | MetacelloSemanticVersionNumber isSemanticVersion: ref ]
@@ -646,7 +648,7 @@ MetacelloMVSResolver >> require: aRequiredSpec by: aCandidate [
 
 { #category : 'dev mode' }
 MetacelloMVSResolver >> requireDev: aDevSpec by: aRequester in: aRequirement [
-	"Select the project in dev mode at its dev version, without comparing versions: nothing replaces it. What the image has installed of it is an error: dev mode never replaces it"
+	"Select the project in dev mode at its dev version, without comparing versions: nothing replaces it. What the image has installed of it is an error, dev mode never replaces it, unless it was loaded from the same description: it is the one in dev mode"
 
 	| name grew |
 	name := graph projectOf: aDevSpec.
@@ -655,13 +657,14 @@ MetacelloMVSResolver >> requireDev: aDevSpec by: aRequester in: aRequirement [
 		repository: (graph repositoryUrlOf: aDevSpec);
 		project: name.
 	self installedOf: name ifFound: [ :installedOne |
-			^ self
-				  error: #devInstalled
-				  text:
-				  name , ' is in dev mode at ' , (graph descriptionOf: aDevSpec) , ', but the image has '
-				  , (graph descriptionOf: installedOne)
-				  about: user
-				  in: aRequirement ].
+			(graph descriptionOf: installedOne) = (graph descriptionOf: aDevSpec) ifFalse: [
+					^ self
+						  error: #devInstalled
+						  text:
+						  name , ' is in dev mode at ' , (graph descriptionOf: aDevSpec) , ', but the image has '
+						  , (graph descriptionOf: installedOne)
+						  about: user
+						  in: aRequirement ] ].
 	grew := self ask: aDevSpec.
 	self
 		select: (self
@@ -684,7 +687,7 @@ MetacelloMVSResolver >> requireVersion: aCandidate in: aRequirement [
 							^ self
 								  error: #installedAtNoVersion
 								  text: aCandidate project , ' is installed at ' , (graph descriptionOf: each) , ', not a version to compare with '
-									  , aCandidate version string , '; unload it, or load the version you want'
+									  , aCandidate version string , '; unload it, load the version you want, or put it in dev mode (--dev) at ' , (graph descriptionOf: each)
 								  about: aCandidate requiredBy
 								  in: aRequirement ].
 					installedCandidate := self installedCandidateFrom: each for: aCandidate in: aRequirement.
