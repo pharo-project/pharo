@@ -80,5 +80,5 @@ MCBitbucketRepository >> projectTagsUrlFor: projectPath2 [
 MCBitbucketRepository >> scpUrl [
 	"Since 2026-11-12 Bitbucket Cloud accepts SSH connections only on ssh.bitbucket.org. HTTPS stays on bitbucket.org."
 
-	^ 'git@ssh.bitbucket.org:' , projectPath , '.git'
+	^ 'git@ssh.bitbucket.org:', projectPath, '.git'
 ]
