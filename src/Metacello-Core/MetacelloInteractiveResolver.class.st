@@ -22,12 +22,20 @@ Class {
 
 { #category : 'resolving' }
 MetacelloInteractiveResolver >> addRootFor: aProjectSpec [
-	"Add the root aProjectSpec names to the resolution, at the version it asks, loading what it loads, and answer it"
+	"Add the root aProjectSpec names to the resolution, at the version it asks, loading what it loads, and answer it. It takes the version asked over the registry when that is an upgrade, and always when aProjectSpec is in dev mode"
 
 	| rootSpec root |
-	[ rootSpec := (self registrationFor: aProjectSpec) projectSpec copy ]
-		on: MetacelloAllowProjectUpgrade
-		do: [ :notification | notification resume: notification newProjectRegistration ].
+	[
+		[ rootSpec := (self registrationFor: aProjectSpec) projectSpec copy ]
+			on: MetacelloAllowProjectUpgrade
+			do: [ :notification | notification resume: notification newProjectRegistration ] ]
+		on: MetacelloAllowConflictingProjectUpgrade
+		do: [ :notification |
+				aProjectSpec isDev
+					ifTrue: [ notification resume: notification newProjectRegistration ]
+					ifFalse: [ notification pass ] ].
+	"The root keeps the dev mark of the spec asked: references to its project look for it (see devRootFor:ifFound:)"
+	aProjectSpec isDev ifTrue: [ rootSpec beDev ].
 	rootSpec ensureProjectLoadedWithEngine: engine.
 	root := MetacelloResolvedProject projectSpec: rootSpec.
 	resolution addRoot: root.
@@ -35,6 +43,15 @@ MetacelloInteractiveResolver >> addRootFor: aProjectSpec [
 			 loads: aProjectSpec loads;
 			 yourself).
 	^ root
+]
+
+{ #category : 'visiting' }
+MetacelloInteractiveResolver >> devRootFor: aProjectSpec ifFound: aBlock [
+	"Give aBlock the root in dev mode of the project aProjectSpec asks for, when there is one. The roots are added before any reference is visited, each keeping the dev mark of the spec the script gave (see addRootFor:), so the resolution itself knows them: no separate list of dev projects is kept"
+
+	| project |
+	project := resolution projectFor: aProjectSpec ifAbsent: [ ^ self ].
+	project projectSpec isDev ifTrue: [ aBlock value: project ]
 ]
 
 { #category : 'private' }
@@ -77,7 +94,7 @@ MetacelloInteractiveResolver >> reportCycleAt: aResolvedProject [
 
 { #category : 'resolving' }
 MetacelloInteractiveResolver >> resolveRoots: someProjectSpecs engine: anEngine [
-	"Add a root for each of someProjectSpecs, in order, then walk the references of each. A root takes the version asked, even over the registry (an upgrade of a root is always allowed)"
+	"Add a root for each of someProjectSpecs, in order, then walk the references of each. A root takes the version asked, even over the registry (an upgrade of a root is always allowed). A root marked dev is never replaced: every reference to its project takes it (see visitProjectReference:)"
 
 	| roots |
 	self setEngine: anEngine.
@@ -91,6 +108,18 @@ MetacelloInteractiveResolver >> setEngine: anEngine [
 
 	engine := anEngine.
 	resolution := MetacelloResolution new
+]
+
+{ #category : 'visiting' }
+MetacelloInteractiveResolver >> visitDevReference: aProjectSpec of: aRoot [
+	"aProjectSpec asks for a project in dev mode, whose root is aRoot: it takes the root, at the root's version, whatever version it asks and without asking the handlers, and adds the groups it asks; the root's references are visited again when its groups grew"
+
+	| loadsBefore |
+	loadsBefore := aRoot loadList asSet.
+	aRoot requestedBy: requester spec: (aProjectSpec copy
+			 loads: (aProjectSpec loadListForVersion: aRoot version);
+			 yourself).
+	aRoot loadList asSet ~= loadsBefore ifTrue: [ self visitReferencesOf: aRoot ]
 ]
 
 { #category : 'visiting' }
@@ -109,11 +138,12 @@ MetacelloInteractiveResolver >> visitPackageSpec: aPackageSpec [
 
 { #category : 'visiting' }
 MetacelloInteractiveResolver >> visitProjectReference: aProjectReferenceSpec [
-	"A locked project is left as it is. Otherwise the registry decides between the version registered and the one declared (the script's handlers answer upgrades, downgrades and conflicts). A project already resolved gets the groups asked added and, when the handlers chose another version, takes it; its references are visited again when its version or its groups changed"
+	"A locked project is left as it is, and a project in dev mode keeps its root (see visitDevReference:of:). Otherwise the registry decides between the version registered and the one declared (the script's handlers answer upgrades, downgrades and conflicts). A project already resolved gets the groups asked added and, when the handlers chose another version, takes it; its references are visited again when its version or its groups changed"
 
 	| reference registration registered toLoad project loadsBefore changed |
 	reference := aProjectReferenceSpec projectReference.
 	reference isLocked ifTrue: [ ^ self ].
+	self devRootFor: reference ifFound: [ :root | ^ self visitDevReference: reference of: root ].
 
 	registration := self registrationFor: reference.
 	registered := registration projectSpec.

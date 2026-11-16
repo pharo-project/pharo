@@ -10,6 +10,19 @@ Class {
 }
 
 { #category : 'private' }
+MetacelloInteractiveResolverTest >> devSpec: aName [
+	"A root putting the test baseline aName in dev mode at http://dev.com"
+
+	^ (MetacelloProjectSpec project: MetacelloProject new)
+		  name: aName;
+		  className: 'BaselineOf' , aName;
+		  repository: 'http://dev.com';
+		  loads: #(  );
+		  beDev;
+		  yourself
+]
+
+{ #category : 'private' }
 MetacelloInteractiveResolverTest >> lock2Registration [
 
 	^ MetacelloProjectRegistration projectSpec: ((MetacelloProjectSpec project: MetacelloProject new)
@@ -65,6 +78,41 @@ MetacelloInteractiveResolverTest >> testADependencyCycleIsAnErrorOfTheResolution
 				self
 					assert: (error resolution errors collect: [ :each | each text ]) asArray
 					equals: #( 'Dependency cycle: TestCycleA -> TestCycleB -> TestCycleA' ) ]
+]
+
+{ #category : 'tests' }
+MetacelloInteractiveResolverTest >> testADevRootWinsOverTheRegisteredVersion [
+
+	| resolution lock2 |
+	Metacello new
+		baseline: 'TestToLock2';
+		repository: 'http://registered.com';
+		register.
+	resolution := MetacelloInteractiveResolver new
+		              resolveRoots: {
+				              (self lockSpec: 'TestToLock1').
+				              (self devSpec: 'TestToLock2') }
+		              engine: MetacelloScriptEngine new.
+
+	self deny: resolution hasErrors.
+	lock2 := resolution projects detect: [ :each | each name = 'TestToLock2' ].
+	self assert: lock2 projectSpec repositoryDescriptions asArray equals: #( 'http://dev.com' )
+]
+
+{ #category : 'tests' }
+MetacelloInteractiveResolverTest >> testADevRootWinsOverTheVersionAReferenceAsks [
+	"TestToLock1 asks for TestToLock2 at http://repo.com; TestToLock2 in dev mode at http://dev.com is taken instead"
+
+	| resolution lock2 |
+	resolution := MetacelloInteractiveResolver new
+		              resolveRoots: {
+				              (self lockSpec: 'TestToLock1').
+				              (self devSpec: 'TestToLock2') }
+		              engine: MetacelloScriptEngine new.
+	self deny: resolution hasErrors.
+	lock2 := resolution projects detect: [ :each | each name = 'TestToLock2' ].
+	self assert: lock2 projectSpec repositoryDescriptions asArray equals: #( 'http://dev.com' ).
+	self assert: (lock2 requests collect: [ :each | each requesterName ]) asArray equals: #( 'the script' 'TestToLock1' )
 ]
 
 { #category : 'tests' }
