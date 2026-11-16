@@ -613,6 +613,23 @@ MetacelloMVSResolverTest >> testATwoNumberVersionIsAMinimumAndKeepsItsName [
 	self assert: (self selected: 'plural' in: buildList) equals: 'v1.2'
 ]
 
+{ #category : 'tests - installed' }
+MetacelloMVSResolverTest >> testAVersionAskedOfAProjectInstalledAtABranchIsAnError [
+	"A branch has no version to compare with what is asked: nothing replaces it"
+
+	| resolution |
+	self versions: #( 'v1.0.0' ) of: 'a'.
+	self versions: #( 'v1.0.0' ) of: 'b'.
+	self version: 'v1.0.0' of: 'a' requires: #( 'b:v1.0.0' ).
+	self version: 'v1.0.0' of: 'b' requires: #(  ).
+	resolution := (MetacelloMVSResolver on: graph)
+		              installed: { ('b' -> (graph specFor: (self repo: 'b:master') project: 'b' loads: #(  ))) } asDictionary;
+		              resolve: (self repo: 'a:v1.0.0') project: 'a'.
+	self
+		assert: (resolution errors collect: [ :each | each kind -> each text ]) asArray
+		equals: { (#installedAtNoVersion -> 'b is installed at github://o/b:master, not a version to compare with v1.0.0; unload it, or load the version you want') }
+]
+
 { #category : 'tests - warnings' }
 MetacelloMVSResolverTest >> testAWarningOfASelectedVersionIsAFinding [
 	"The same floating version asked by the selected Album stays a warning"

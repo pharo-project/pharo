@@ -175,6 +175,7 @@ MetacelloMVSResolution >> kindDescriptions [
 		  (#higherThanReplace -> 'Asks more than the replace gives').
 		  (#ignoredReplace -> 'Replace ignored outside the root').
 		  (#imageQuery -> 'Baseline asks the image').
+		  (#installedAtNoVersion -> 'Installed at a branch or a commit, not a version').
 		  (#invalidReference -> 'Not a repository with versions').
 		  (#majorConflict -> 'Two majors of one repository').
 		  (#missingBaseline -> 'Baseline not found').

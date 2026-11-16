@@ -675,22 +675,28 @@ MetacelloMVSResolver >> requireDev: aDevSpec by: aRequester in: aRequirement [
 
 { #category : 'resolving' }
 MetacelloMVSResolver >> requireVersion: aCandidate in: aRequirement [
-	"Each requirement can raise the selected version, never lower it. An installed version counts as a requirement, so that MVS never downgrades it. A version that is only assumed installed is reported with a warning."
+	"Each requirement can raise the selected version, never lower it. An installed version counts as a requirement, so that MVS never downgrades it. A version that is only assumed installed is reported with a warning. What the image has installed at no version (a branch, a commit) cannot be compared with the version asked: an error, nothing replaces it"
 
 	(selected includesKey: aCandidate project) ifFalse: [
 			installed at: aCandidate project ifPresent: [ :each |
-					(self isInstalledAtAVersion: each) ifTrue: [
-							| installedCandidate |
-							installedCandidate := self installedCandidateFrom: each for: aCandidate in: aRequirement.
-							(assumedInstalled includes: aCandidate project) ifTrue: [
-									self
-										warning: #assumedInstalled
-										text: installedCandidate printString
-											,
-											' is assumed installed: its packages are in the image, but it is not registered as loaded. Reload it to register it exactly'
-										about: installedCandidate
-										in: aRequirement ].
-							self select: installedCandidate in: aRequirement ] ] ].
+					| installedCandidate |
+					(self isInstalledAtAVersion: each) ifFalse: [
+							^ self
+								  error: #installedAtNoVersion
+								  text: aCandidate project , ' is installed at ' , (graph descriptionOf: each) , ', not a version to compare with '
+									  , aCandidate version string , '; unload it, or load the version you want'
+								  about: aCandidate requiredBy
+								  in: aRequirement ].
+					installedCandidate := self installedCandidateFrom: each for: aCandidate in: aRequirement.
+					(assumedInstalled includes: aCandidate project) ifTrue: [
+							self
+								warning: #assumedInstalled
+								text: installedCandidate printString
+									,
+									' is assumed installed: its packages are in the image, but it is not registered as loaded. Reload it to register it exactly'
+								about: installedCandidate
+								in: aRequirement ].
+					self select: installedCandidate in: aRequirement ] ].
 	self select: aCandidate in: aRequirement
 ]
 
