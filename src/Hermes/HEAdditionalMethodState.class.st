@@ -47,11 +47,13 @@ HEAdditionalMethodState >> doReadFrom: aReader [
 
 { #category : 'accessing' }
 HEAdditionalMethodState >> value: anAdditionalMethodState [
-	"I extract the information from the additional method state and convert it to exported literals."
+	"I extract the information from the additional method state and convert it to exported literals.
+	The properties to persist (such as #extensionPackage since Pharo 12) are set by the image when a method is installed, and their values can be objects of the image that cannot be exported. So they are not exported."
+
 	method := anAdditionalMethodState method asExportedLiteral.
 	selector := anAdditionalMethodState selector asExportedLiteral.
 
-	value := Array new: anAdditionalMethodState size.
-	1 to: anAdditionalMethodState size do: [ :idx | value at: idx put: (anAdditionalMethodState basicAt: idx) ].
+	value := (1 to: anAdditionalMethodState basicSize) collect: [ :index | anAdditionalMethodState basicAt: index ].
+	value := value reject: [ :element | element isAssociation and: [ AdditionalMethodState propertiesToPersist includes: element key ] ].
 	value := value asExportedLiteral
 ]

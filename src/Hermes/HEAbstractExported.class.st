@@ -46,3 +46,11 @@ HEAbstractExported >> instVarNamesForEqualityComparison [
 	"By default all the instance variables are used in the comparison and in the hash calculation"
 	^ self class allInstVarNames
 ]
+
+{ #category : 'comparing' }
+HEAbstractExported >> valuesToCompareForEquality [
+	"By default all the instance variables are used in the comparison and in the hash calculation"
+
+	<ignoreMethodDuplicatedInSuperclass> "Overrides a method from Object to cut a dependency on Equals."
+	^ self instVarNamesForEqualityComparison collect: [ :ivName | self instVarNamed: ivName ]
+]
