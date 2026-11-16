@@ -101,15 +101,6 @@ MetacelloMVSBaselineSandbox >> methodASTsDo: aBlock [
 ]
 
 { #category : 'reading' }
-MetacelloMVSBaselineSandbox >> pharoMinimum [
-	"The minimum Pharo major the baseline declares with spec pharo: N, or nil"
-
-	self messageNodesDo: [ :node |
-		(node selector = #pharo: and: [ node arguments first isLiteralNode ]) ifTrue: [ ^ node arguments first value ] ].
-	^ nil
-]
-
-{ #category : 'reading' }
 MetacelloMVSBaselineSandbox >> platformBlocks [
 	"The Pharo-specific attributes of for:do: blocks, such as #'pharo14.x'"
 

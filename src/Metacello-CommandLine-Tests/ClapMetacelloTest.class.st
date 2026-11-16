@@ -6,6 +6,16 @@ Class {
 }
 
 { #category : 'tests' }
+ClapMetacelloTest >> testCanBeVerbose [
+
+	| command |
+	context := ClapMetacello commandSpecification activationWith:
+		           #( 'metacello' 'install' '--verbose' 'github://myorg/myproject:v1.0.0/src' 'MyProject' ).
+	command := context command.
+	self assert: command isVerbose
+]
+
+{ #category : 'tests' }
 ClapMetacelloTest >> testCanGetMultipleGroups [
 
 	| command |
@@ -107,6 +117,16 @@ ClapMetacelloTest >> testGetEmptyCollectionWhenNoGroupSpecified [
 	command := context command.
 
 	self assert: command groups isEmpty
+]
+
+{ #category : 'tests' }
+ClapMetacelloTest >> testIsNotVerboseByDefault [
+
+	| command |
+	context := ClapMetacello commandSpecification activationWith:
+		           #( 'metacello' 'install' 'github://myorg/myproject:v1.0.0/src' 'MyProject' ).
+	command := context command.
+	self deny: command isVerbose
 ]
 
 { #category : 'tests' }

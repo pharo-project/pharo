@@ -68,6 +68,26 @@ MetacelloInteractiveResolverTest >> testADependencyCycleIsAnErrorOfTheResolution
 ]
 
 { #category : 'tests' }
+MetacelloInteractiveResolverTest >> testALoadErrorListsEachErrorAfterItsKind [
+
+	| error |
+	error := [
+		         Metacello new
+			         baseline: 'TestToLock1';
+			         repository: 'http://repo.com';
+			         loader: MetacelloTestLoader new;
+			         resolver: MetacelloFailingResolver new;
+			         load.
+		         nil ]
+		         on: MetacelloResolutionError
+		         do: [ :e | e ].
+
+	self
+		assert: error messageText
+		equals: (String lf join: #( 'The resolution has errors, nothing was loaded:' '- cannotResolve: cannot resolve' ))
+]
+
+{ #category : 'tests' }
 MetacelloInteractiveResolverTest >> testALoadInstallsTheBaselinesTheResolverDidNotInstall [
 
 	| loader |
@@ -82,6 +102,22 @@ MetacelloInteractiveResolverTest >> testALoadInstallsTheBaselinesTheResolverDidN
 	self
 		assert: (loader loaded collect: [ :each | each key ]) asArray
 		equals: #( 'Package1' 'TestToLockPackage1' 'TestToLockPackage2' 'BaselineOfTestToLock2' )
+]
+
+{ #category : 'tests' }
+MetacelloInteractiveResolverTest >> testALoadKeepsItsResolution [
+
+	| metacello |
+	metacello := Metacello new
+		             baseline: 'TestToLock1';
+		             repository: 'http://repo.com';
+		             loader: MetacelloTestLoader new;
+		             resolver: MetacelloBaselineReadingResolver new;
+		             yourself.
+	metacello load.
+
+	self assert: (metacello resolution roots collect: [ :each | each projectSpec name ]) asArray equals: #( 'TestToLock1' ).
+	self deny: metacello resolution hasErrors
 ]
 
 { #category : 'tests' }
@@ -116,6 +152,21 @@ MetacelloInteractiveResolverTest >> testALoadRegistersTheGroupsLoaded [
 				 ifPresent: [ :registration | registration projectSpec loads ]
 				 ifAbsent: [ nil ])
 		hasSameElements: #( 'TestToLockPackage1' 'TestToLockPackage2' )
+]
+
+{ #category : 'tests' }
+MetacelloInteractiveResolverTest >> testALoadThatFailsKeepsItsResolution [
+
+	| metacello |
+	metacello := Metacello new
+		             baseline: 'TestToLock1';
+		             repository: 'http://repo.com';
+		             loader: MetacelloTestLoader new;
+		             resolver: MetacelloFailingResolver new;
+		             yourself.
+	self should: [ metacello load ] raise: MetacelloResolutionError.
+
+	self assert: (metacello resolution errors collect: [ :each | each text ]) asArray equals: #( 'cannot resolve' )
 ]
 
 { #category : 'tests' }

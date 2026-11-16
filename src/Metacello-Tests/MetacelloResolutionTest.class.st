@@ -47,7 +47,7 @@ MetacelloResolutionTest >> testAFindingIsAddedToItsRequest [
 
 	| project request finding |
 	project := self lock2.
-	request := project requestedBy: nil spec: (self request: project loads: #(  )).
+	request := project requestedBy: MetacelloUserRequest new spec: (self request: project loads: #(  )).
 	finding := MetacelloResolutionFinding error: #cannotResolve text: 'cannot resolve' request: request.
 
 	self
@@ -61,7 +61,7 @@ MetacelloResolutionTest >> testARequestKnowsTheChainThatLedToIt [
 
 	| root middle leaf request |
 	root := self requester: 'Root'.
-	root requestedBy: nil spec: (self request: root loads: #( 'Core' )).
+	root requestedBy: MetacelloUserRequest new spec: (self request: root loads: #( 'Core' )).
 	middle := self requester: 'Middle'.
 	middle requestedBy: root spec: (self request: middle loads: #( 'Core' )).
 	leaf := self lock2.
@@ -110,15 +110,15 @@ MetacelloResolutionTest >> testOnlyErrorsStopALoad [
 
 	| resolution project request |
 	project := self lock2.
-	request := project requestedBy: nil spec: (self request: project loads: #(  )).
+	request := project requestedBy: MetacelloUserRequest new spec: (self request: project loads: #(  )).
 	resolution := MetacelloResolution new.
 	resolution addFinding: (MetacelloResolutionFinding warning: #aWarning text: 'a warning' request: request).
 	self deny: resolution hasErrors.
 
-	resolution addFinding: (MetacelloResolutionFinding error: #anError text: 'an error' request: nil).
+	resolution addFinding: (MetacelloResolutionFinding error: #anError text: 'an error' request: MetacelloUserRequest new).
 	self assert: resolution hasErrors.
 	self assert: (resolution errors collect: [ :each | each text ]) asArray equals: #( 'an error' ).
-	self assert: (resolution warnings collect: [ :each | each projectName ]) asArray equals: #( 'TestToLock2' )
+	self assert: (resolution warnings collect: [ :each | each request projectName ]) asArray equals: #( 'TestToLock2' )
 ]
 
 { #category : 'tests' }
@@ -127,13 +127,46 @@ MetacelloResolutionTest >> testRequestsKeepWhoAskedWhat [
 	| project b |
 	project := self lock2.
 	b := self requester: 'B'.
-	project requestedBy: nil spec: (self request: project loads: #(  )).
+	project requestedBy: MetacelloUserRequest new spec: (self request: project loads: #(  )).
 	project requestedBy: b spec: (self request: project loads: #( 'TestToLockPackage2' )).
-
 	self
-		assert: (project requests collect: [ :each | each requester ]) asArray equals: {
-				nil.
-				b };
+		assert: (project requests collect: [ :each | each requesterName ]) asArray equals: #( 'the script' 'B' );
 		assert: (project requests collect: [ :each | each loads asArray ]) asArray equals: #( #(  ) #( 'TestToLockPackage2' ) );
 		assert: (project requests collect: [ :each | each projectName ]) asArray equals: #( 'TestToLock2' 'TestToLock2' )
+]
+
+{ #category : 'tests' }
+MetacelloResolutionTest >> testTheReportGroupsFindingsBySeverityAndKind [
+	"Each severity under a title between bars. Only errors are listed, one line each; warnings and infos are counted per kind. The verbose report lists them all"
+
+	| project request resolution |
+	project := self lock2.
+	request := project requestedBy: MetacelloUserRequest new spec: (self request: project loads: #(  )).
+	resolution := MetacelloResolution new.
+	resolution
+		addFinding: (MetacelloResolutionFinding error: #cannotResolve text: 'cannot resolve' request: request);
+		addFinding: (MetacelloResolutionFinding warning: #oddVersion text: 'odd version' request: request);
+		addFinding: (MetacelloResolutionFinding info: #newerVersion text: 'newer version' request: request).
+
+	self assert: resolution report equals: (String lf join:
+			 #( '1 errors, 1 warnings, 1 infos' 'Check verbose report for issue details' '' '----------' 'Errors (1)' '----------'
+			    'cannotResolve (1)' '  - cannot resolve' '' '------------' 'Warnings (1)' '------------' 'oddVersion (1)' '' '---------------'
+			    'Information (1)' '---------------' 'newerVersion (1)' )).
+	self assert: resolution verboseReport equals: (String lf join:
+			 #( '1 errors, 1 warnings, 1 infos' '' '----------' 'Errors (1)' '----------' 'cannotResolve (1)' '  - cannot resolve'
+			    '' '------------' 'Warnings (1)' '------------' 'oddVersion (1)' '  - odd version' '' '---------------' 'Information (1)'
+			    '---------------' 'newerVersion (1)' '  - newer version' ))
+]
+
+{ #category : 'tests' }
+MetacelloResolutionTest >> testTheVerboseReportListsWarnings [
+
+	| project request resolution |
+	project := self lock2.
+	request := project requestedBy: MetacelloUserRequest new spec: (self request: project loads: #(  )).
+	resolution := MetacelloResolution new.
+	resolution addFinding: (MetacelloResolutionFinding warning: #oddVersion text: 'odd version' request: request).
+
+	self assert: resolution verboseReport equals: (String lf join:
+			 #( '0 errors, 1 warnings, 0 infos' '' '------------' 'Warnings (1)' '------------' 'oddVersion (1)' '  - odd version' ))
 ]

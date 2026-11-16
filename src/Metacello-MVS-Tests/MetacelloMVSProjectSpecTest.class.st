@@ -16,7 +16,7 @@ Class {
 MetacelloMVSProjectSpecTest >> setUp [
 
 	super setUp.
-	graph := MetacelloMVSGraph new.
+	graph := MetacelloMVSGraph on: MetacelloMVSRecordedSource new.
 	resolver := MetacelloMVSResolver on: graph
 ]
 

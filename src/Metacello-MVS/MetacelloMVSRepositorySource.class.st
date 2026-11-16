@@ -22,7 +22,7 @@ MetacelloMVSRepositorySource >> baselineOf: aCandidate [
 	aCandidate path ifNotNil: [ :written |
 			findings
 				warning: #writtenPath
-				text: aCandidate repositoryDescription , ' writes the path ' , written , ', an internal detail of the repository' ].
+				text: written ].
 	definitions := [ (self repositoryAt: aCandidate repository) baselineOf: aCandidate project atVersion: aCandidate version string ]
 		               on: Error
 		               do: [ :error |
