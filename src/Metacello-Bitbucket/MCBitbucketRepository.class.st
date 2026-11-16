@@ -70,3 +70,10 @@ MCBitbucketRepository >> normalizeTagsData: jsonObject [
 MCBitbucketRepository >> projectTagsUrlFor: projectPath2 [
   ^ 'https://bitbucket.org/api/1.0/repositories/' , projectPath2 , '/tags'
 ]
+
+{ #category : 'accessing' }
+MCBitbucketRepository >> scpUrl [
+	"Since 2026-11-12 Bitbucket Cloud accepts SSH connections only on ssh.bitbucket.org. HTTPS stays on bitbucket.org."
+
+	^ 'git@ssh.bitbucket.org:', projectPath, '.git'
+]
