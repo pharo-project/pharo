@@ -83,6 +83,7 @@ MetacelloMVSGraph >> hasVersions: aProjectSpec ifFail: aBlock [
 
 	| repository |
 	aProjectSpec repositoryDescriptions size = 1 ifFalse: [ ^ false ].
+	"The repository is not ours, and creating it fails in ways with no common class: Monticello signals a plain Error for an unknown type, Iceberg its own errors when it cannot clone, the file system its own for a missing directory. Each becomes a finding instead of stopping the resolution, as reading its versions does (see MetacelloMVSRepositorySource>>versionsOf:ifFail:)"
 	repository := [ self repositoryUrlOf: aProjectSpec ]
 		              on: Error
 		              do: [ :error | ^ aBlock value: (self descriptionOf: aProjectSpec) , ': ' , error description ].
