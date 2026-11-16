@@ -9,17 +9,9 @@ MetacelloSemanticVersionNumber >> baselineOf: aCandidate from: aSource [
 
 { #category : '*Metacello-MVS' }
 MetacelloSemanticVersionNumber >> descriptionOf: aCandidate [
-	"The Metacello repository description to load aCandidate at me: its repository at me, with its path"
+	"The Metacello repository description to load aCandidate at me: its repository at me. No path: Iceberg reads where the code is from the project"
 
-	^ String streamContents: [ :stream |
-			  stream
-				  nextPutAll: aCandidate repository;
-				  nextPut: $:;
-				  nextPutAll: self string.
-			  aCandidate path ifNotNil: [ :aPath |
-					  stream
-						  nextPut: $/;
-						  nextPutAll: aPath ] ]
+	^ aCandidate repository , ':' , self string
 ]
 
 { #category : '*Metacello-MVS' }

@@ -19,7 +19,6 @@ MetacelloMVSRepositorySource >> baselineOf: aCandidate [
 
 	| findings definitions |
 	findings := MetacelloMVSBaselineDefinitions none.
-	aCandidate path ifNotNil: [ :written | findings warning: #writtenPath text: written ].
 	definitions := [ aCandidate baselineFrom: self ]
 		               on: Error
 		               do: [ :error |

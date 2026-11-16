@@ -62,14 +62,6 @@ MetacelloMVSRepositorySourceTest >> testAVersionWithoutBaselineIsAnError [
 ]
 
 { #category : 'tests' }
-MetacelloMVSRepositorySourceTest >> testAWrittenPathIsAWarning [
-
-	repository version: 'v1.0.0' baseline: self fooBaseline.
-	self assert: ((source baselineOf: (self candidateFor: 'github://acme/Foo:v1.0.0/src')) problems anySatisfy: [ :each |
-			 each first = #writtenPath ])
-]
-
-{ #category : 'tests' }
 MetacelloMVSRepositorySourceTest >> testAnswersTheVersionsOfTheRepository [
 
 	repository version: 'v1.0.0' baseline: self fooBaseline.

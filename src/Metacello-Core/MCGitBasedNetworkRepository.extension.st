@@ -6,3 +6,10 @@ MCGitBasedNetworkRepository >> baselineOf: aProjectName [
 
 	^ self baselineOf: aProjectName atVersion: projectVersion
 ]
+
+{ #category : '*Metacello-Core' }
+MCGitBasedNetworkRepository >> projectUrl [
+	"My description without the version and the path it names: type://owner/name"
+
+	^ self class basicDescription , '://' , self projectPath
+]

@@ -45,6 +45,15 @@ MetacelloMVSResolver >> addProjectOf: aCandidate to: aResolution [
 	aResolution add: (self resolvedProjectOf: aCandidate into: aResolution ifNone: [ ^ self ])
 ]
 
+{ #category : 'resolving' }
+MetacelloMVSResolver >> addRoot: aRootSpec [
+	"Count the project of aRootSpec among the roots, once: it must be in dev mode or name a repository with versions"
+
+	(aRootSpec isDev or: [ graph hasVersions: aRootSpec ifFail: [ :text | ^ self error: #repositoryFailure text: text on: user ] ])
+		ifTrue: [ (rootNames includes: (graph projectOf: aRootSpec)) ifFalse: [ rootNames add: (graph projectOf: aRootSpec) ] ]
+		ifFalse: [ self error: #invalidReference text: (self whyNoVersions: aRootSpec) on: user ]
+]
+
 { #category : 'metacello' }
 MetacelloMVSResolver >> addRoot: aCandidate to: aResolution [
 	"Add the resolved project of the root aCandidate to aResolution, with its own request first"
@@ -107,8 +116,7 @@ MetacelloMVSResolver >> candidateFor: aProjectSpec version: aVersion requiredBy:
 
 	^ (MetacelloMVSCandidateVersion
 		   resolvedProject: (MetacelloResolvedProject projectSpec: aProjectSpec)
-		   repository: (graph repositoryUrlOf: aProjectSpec)
-		   path: (graph pathOf: aProjectSpec))
+		   repository: (graph repositoryUrlOf: aProjectSpec))
 		  version: aVersion;
 		  requiredBy: aRequester;
 		  request: aRequirement request;
@@ -261,7 +269,7 @@ MetacelloMVSResolver >> installedFromRegistry [
 					registration repositoryDescriptions do: [ :description |
 							| spec |
 							spec := graph specFor: description project: registration projectName loads: #(  ).
-							(graph hasVersions: spec) ifTrue: [
+							(graph hasVersions: spec ifFail: [ :why | false ]) ifTrue: [
 									| name |
 									name := graph projectOf: spec.
 									found at: name put: spec.
@@ -439,19 +447,25 @@ MetacelloMVSResolver >> releasesOf: aRepository [
 MetacelloMVSResolver >> replace: aDictionary about: aRootCandidate [
 	"The replaces of the root apply, each with a warning: a replaced project is pinned to the exact version of its replacement. A project in dev mode stays in dev mode"
 
-	aDictionary keysAndValuesDo: [ :name :repositoryString |
-			| spec |
-			spec := graph specFor: repositoryString project: name loads: #(  ).
-			(replacements at: name ifAbsent: [ spec ]) isDev ifFalse: [
-					(graph hasVersions: spec)
-						ifTrue: [
-								replacements at: name put: spec.
-								self warning: #replaced text: name , ' is replaced by ' , repositoryString on: aRootCandidate ]
-						ifFalse: [
-								self
-									error: #invalidReference
-									text: name , ' is replaced by ' , repositoryString printString , ', not a with versions repository'
-									on: aRootCandidate ] ] ]
+	aDictionary keysAndValuesDo: [ :name :repositoryString | self replace: name by: repositoryString about: aRootCandidate ]
+]
+
+{ #category : 'resolving' }
+MetacelloMVSResolver >> replace: aName by: aRepositoryString about: aRootCandidate [
+	"One replace of the root (see replace:about:)"
+
+	| spec |
+	spec := graph specFor: aRepositoryString project: aName loads: #(  ).
+	(replacements at: aName ifAbsent: [ spec ]) isDev ifTrue: [ ^ self ].
+	(graph hasVersions: spec ifFail: [ :text | ^ self error: #repositoryFailure text: text on: aRootCandidate ])
+		ifTrue: [
+				replacements at: aName put: spec.
+				self warning: #replaced text: aName , ' is replaced by ' , aRepositoryString on: aRootCandidate ]
+		ifFalse: [
+				self
+					error: #invalidReference
+					text: aName , ' is replaced by ' , aRepositoryString printString , ', not a with versions repository'
+					on: aRootCandidate ]
 ]
 
 { #category : 'dev mode' }
@@ -565,7 +579,7 @@ MetacelloMVSResolver >> require: aRequiredSpec by: aCandidate [
 	requirement := resolution addRequirement: (MetacelloMVSRequirement from: aCandidate asked: aRequiredSpec).
 	replaced := self replacementFor: aRequiredSpec by: aCandidate in: requirement.
 	replaced isDev ifTrue: [ ^ self requireDev: replaced by: aCandidate in: requirement ].
-	(graph hasVersions: replaced) ifFalse: [
+	(graph hasVersions: replaced ifFail: [ :text | ^ self error: #repositoryFailure text: text about: aCandidate in: requirement ]) ifFalse: [
 			^ self
 				  error: #invalidReference
 				  text: (self whyNoVersions: replaced)
@@ -577,6 +591,13 @@ MetacelloMVSResolver >> require: aRequiredSpec by: aCandidate [
 		reference: spec;
 		repository: repository;
 		project: (graph projectOf: spec).
+	"Only a repository with versions gets here, a git one, so Monticello's parsing answers the path its description writes. Iceberg's repository would answer the path its project declares instead, written or not"
+	(MCRepository newRepositoryFromSpec: spec repositorySpecs first) repoPath ifNotEmpty: [ :written |
+			self
+				warning: #writtenPath
+				text: (graph descriptionOf: spec) , ' writes the path ' , written , ', ignored: Iceberg reads it from the project'
+				about: aCandidate
+				in: requirement ].
 	grew := self ask: spec.
 	(self checkPin: spec by: aCandidate in: requirement) ifTrue: [
 			grew ifTrue: [ self revisit: (graph projectOf: spec) ].
@@ -711,12 +732,7 @@ MetacelloMVSResolver >> resolveRoots: aCollectionOfProjectSpecs [
 			self error: #invalidReference text: 'Nothing to load: no root' on: user.
 			^ resolution ].
 	aCollectionOfProjectSpecs do: [ :spec | spec isDev ifTrue: [ self replaceByDev: spec ] ].
-	aCollectionOfProjectSpecs do: [ :spec |
-			| root |
-			root := replacements at: (graph projectOf: spec) ifAbsent: [ spec ].
-			(root isDev or: [ graph hasVersions: root ])
-				ifTrue: [ (rootNames includes: (graph projectOf: root)) ifFalse: [ rootNames add: (graph projectOf: root) ] ]
-				ifFalse: [ self error: #invalidReference text: (self whyNoVersions: root) on: user ] ].
+	aCollectionOfProjectSpecs do: [ :spec | self addRoot: (replacements at: (graph projectOf: spec) ifAbsent: [ spec ]) ].
 	resolution hasErrors ifTrue: [ ^ resolution ].
 	resolution rootNames: rootNames.
 	aCollectionOfProjectSpecs do: [ :spec | self require: spec by: user ].
@@ -974,11 +990,11 @@ MetacelloMVSResolver >> warning: aKind text: aString on: aSubject [
 
 { #category : 'resolving' }
 MetacelloMVSResolver >> whyNoVersions: aProjectSpec [
-	"Why aProjectSpec names no repository with versions: several repositories, or one that has no versions"
+	"Why aProjectSpec names no repository with versions: several repositories, or one that has no versions, which only dev mode takes"
 
 	| descriptions |
 	descriptions := aProjectSpec repositoryDescriptions.
 	descriptions size = 1 ifFalse: [
 		^ (graph projectOf: aProjectSpec) printString , ' declares ' , descriptions size printString , ' repositories instead of one' ].
-	^ descriptions first printString , ' is not a repository with versions'
+	^ descriptions first printString , ' has no versions; take it in dev mode (--dev)'
 ]

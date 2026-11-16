@@ -36,6 +36,12 @@ MetacelloMVSProjectSpecTest >> testABranchOrNoVersionIsNotAMinimum [
 ]
 
 { #category : 'tests' }
+MetacelloMVSProjectSpecTest >> testADirectoryIsNamedByItsWholeDescription [
+
+	self assert: (graph repositoryUrlOf: (self spec: 'tonel:///tmp/n/src')) equals: 'tonel:///tmp/n/src'
+]
+
+{ #category : 'tests' }
 MetacelloMVSProjectSpecTest >> testAFloatingVersionIsTheFirstOfItsSeries [
 
 	self
@@ -56,11 +62,19 @@ MetacelloMVSProjectSpecTest >> testAVersionIsItsMinimum [
 ]
 
 { #category : 'tests' }
-MetacelloMVSProjectSpecTest >> testOnlyRepositoriesWithAVersionHaveVersions [
+MetacelloMVSProjectSpecTest >> testOnlyRepositoriesThatPublishVersionsHaveVersions [
 
+	| source |
+	source := MetacelloMVSRecordedSource new.
+	source
+		repository: 'github://o/n' versions: #( 'v1.6.0' );
+		repository: 'github://o/m' versions: #(  );
+		repository: 'tonel:///tmp/n' versions: #(  ).
+	graph := MetacelloMVSGraph on: source.
 	self
-		assert: (graph hasVersions: (self spec: 'github://o/n:v1.6.0/src'));
-		deny: (graph hasVersions: (self spec: 'filetree:///tmp/n'))
+		assert: (graph hasVersions: (self spec: 'github://o/n:v1.6.0/src') ifFail: [ :why | self fail: why ]);
+		deny: (graph hasVersions: (self spec: 'github://o/m:v1.6.0/src') ifFail: [ :why | self fail: why ]);
+		deny: (graph hasVersions: (self spec: 'tonel:///tmp/n') ifFail: [ :why | self fail: why ])
 ]
 
 { #category : 'tests' }
@@ -70,16 +84,11 @@ MetacelloMVSProjectSpecTest >> testSplitsARepositoryString [
 	spec := self spec: 'github://pharo-graphics/Alexandrie:master/src'.
 	self
 		assert: (graph repositoryUrlOf: spec) equals: 'github://pharo-graphics/Alexandrie';
-		assert: (graph versionStringOf: spec) equals: 'master';
-		assert: (graph pathOf: spec) equals: 'src'
+		assert: (graph versionStringOf: spec) equals: 'master'
 ]
 
 { #category : 'tests' }
 MetacelloMVSProjectSpecTest >> testWithRefWithoutPath [
 
-	| spec |
-	spec := self spec: 'github://owner/name:v1.2.0'.
-	self
-		assert: (graph versionStringOf: spec) equals: 'v1.2.0';
-		assert: (graph pathOf: spec) isNil
+	self assert: (graph versionStringOf: (self spec: 'github://owner/name:v1.2.0')) equals: 'v1.2.0'
 ]

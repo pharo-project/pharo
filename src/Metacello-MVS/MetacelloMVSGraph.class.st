@@ -49,6 +49,13 @@ MetacelloMVSGraph >> datesOf: aRepository [
 	^ dates at: aRepository
 ]
 
+{ #category : 'accessing' }
+MetacelloMVSGraph >> description: aDescription requires: aCollectionOfProjectSpecs [
+	"Told: the baseline read from aDescription, a directory (tonel:///path), requires aCollectionOfProjectSpecs, and says nothing else"
+
+	(self toldReadingOf: aDescription) references: aCollectionOfProjectSpecs
+]
+
 { #category : 'project specs' }
 MetacelloMVSGraph >> descriptionOf: aProjectSpec [
 	"The one repository description of aProjectSpec, as written (github://owner/name:ref/path)"
@@ -57,10 +64,15 @@ MetacelloMVSGraph >> descriptionOf: aProjectSpec [
 ]
 
 { #category : 'project specs' }
-MetacelloMVSGraph >> hasVersions: aProjectSpec [
-	"Whether aProjectSpec names one repository that has versions: one that answers a project path and a version"
+MetacelloMVSGraph >> hasVersions: aProjectSpec ifFail: aBlock [
+	"Whether aProjectSpec names one repository, and that repository has versions (see versionsOf:ifFail:). When the repository cannot be created or its versions cannot be read, aBlock is given why"
 
-	^ (self repositoryFor: aProjectSpec) isNotNil
+	| repository |
+	aProjectSpec repositoryDescriptions size = 1 ifFalse: [ ^ false ].
+	repository := [ self repositoryUrlOf: aProjectSpec ]
+		              on: Error
+		              do: [ :error | ^ aBlock value: (self descriptionOf: aProjectSpec) , ': ' , error description ].
+	^ (self versionsOf: repository ifFail: aBlock) isNotEmpty
 ]
 
 { #category : 'reading' }
@@ -74,13 +86,6 @@ MetacelloMVSGraph >> initializeOn: aVersionSource [
 	readings := Dictionary new.
 	told := Dictionary new.
 	repositories := Dictionary new
-]
-
-{ #category : 'project specs' }
-MetacelloMVSGraph >> pathOf: aProjectSpec [
-	"The path of its code inside its repository, or nil"
-
-	^ (self repositoryFor: aProjectSpec) repoPath ifNotNil: [ :path | path ifEmpty: [ nil ] ]
 ]
 
 { #category : 'project specs' }
@@ -175,26 +180,18 @@ MetacelloMVSGraph >> repository: aRepository versions: aCollection [
 
 { #category : 'project specs' }
 MetacelloMVSGraph >> repositoryFor: aProjectSpec [
-	"The repository Metacello's platform creates for aProjectSpec (Iceberg's when it integrates, Monticello's otherwise), when it answers a project path, a version and a path inside it. nil otherwise. Once per description"
+	"The repository Metacello's platform creates for the one repository aProjectSpec names (Iceberg's when it integrates, Monticello's otherwise). Once per description"
 
-	| descriptions |
-	descriptions := aProjectSpec repositoryDescriptions.
-	descriptions size = 1 ifFalse: [ ^ nil ].
-	^ repositories at: descriptions first ifAbsentPut: [
-			  | repository |
-			  repository := [ MetacelloPlatform current createRepository: aProjectSpec repositorySpecs first ]
-				                on: Error
-				                do: [ nil ].
-			  (repository isNotNil and: [ (repository respondsTo: #projectPath) and: [ repository projectPath isNotNil ] ])
-				  ifTrue: [ repository ]
-				  ifFalse: [ nil ] ]
+	^ repositories
+		  at: (self descriptionOf: aProjectSpec)
+		  ifAbsentPut: [ MetacelloPlatform current createRepository: aProjectSpec repositorySpecs first ]
 ]
 
 { #category : 'project specs' }
 MetacelloMVSGraph >> repositoryUrlOf: aProjectSpec [
-	"The URL of the repository aProjectSpec asks for, without its version or path: type://owner/name. What the graph knows is kept per repository"
+	"Where the project aProjectSpec asks for lives, without the version it names: type://owner/name for git, the whole description for a directory (see MCRepository>>projectUrl). What the graph knows is kept per repository"
 
-	^ aProjectSpec repositorySpecs first type , '://' , (self repositoryFor: aProjectSpec) projectPath
+	^ (self repositoryFor: aProjectSpec) projectUrl
 ]
 
 { #category : 'project specs' }
@@ -210,10 +207,17 @@ MetacelloMVSGraph >> specFor: aRepositoryString project: aProjectName loads: aCo
 ]
 
 { #category : 'accessing' }
+MetacelloMVSGraph >> toldReadingOf: aDescription [
+	"The reading told for the baseline read from aDescription, a repository at a version or a directory, for whatever project asks it there"
+
+	^ told at: aDescription ifAbsentPut: [ MetacelloMVSBaselineReading new ]
+]
+
+{ #category : 'accessing' }
 MetacelloMVSGraph >> toldReadingOf: aRepository at: aVersion [
 	"The reading told for the baseline of aRepository at the version or ref named aVersion, for whatever project asks it there"
 
-	^ told at: aRepository , ':' , aVersion ifAbsentPut: [ MetacelloMVSBaselineReading new ]
+	^ self toldReadingOf: aRepository , ':' , aVersion
 ]
 
 { #category : 'project specs' }

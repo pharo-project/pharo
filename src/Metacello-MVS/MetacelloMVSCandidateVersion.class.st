@@ -9,7 +9,6 @@ Class {
 	#instVars : [
 		'resolvedProject',
 		'repository',
-		'path',
 		'version',
 		'requiredBy',
 		'request'
@@ -19,10 +18,10 @@ Class {
 }
 
 { #category : 'instance creation' }
-MetacelloMVSCandidateVersion class >> resolvedProject: aResolvedProject repository: aRepository path: aPathOrNil [
-	"A candidate for aResolvedProject, from aRepository (type://owner/name), its code at aPathOrNil inside it. Give it its version, and who required it"
+MetacelloMVSCandidateVersion class >> resolvedProject: aResolvedProject repository: aRepository [
+	"A candidate for aResolvedProject, from aRepository (type://owner/name, or a directory as described). Give it its version, and who required it"
 
-	^ self new setResolvedProject: aResolvedProject repository: aRepository path: aPathOrNil
+	^ self new setResolvedProject: aResolvedProject repository: aRepository
 ]
 
 { #category : 'testing' }
@@ -154,13 +153,6 @@ MetacelloMVSCandidateVersion >> mustReplace [
 ]
 
 { #category : 'accessing' }
-MetacelloMVSCandidateVersion >> path [
-	"The path of my code inside my repository, or nil"
-
-	^ path
-]
-
-{ #category : 'accessing' }
 MetacelloMVSCandidateVersion >> printOn: aStream [
 
 	aStream
@@ -253,11 +245,10 @@ MetacelloMVSCandidateVersion >> resolvedProject [
 ]
 
 { #category : 'initialization' }
-MetacelloMVSCandidateVersion >> setResolvedProject: aResolvedProject repository: aRepository path: aPathOrNil [
+MetacelloMVSCandidateVersion >> setResolvedProject: aResolvedProject repository: aRepository [
 
 	resolvedProject := aResolvedProject.
-	repository := aRepository.
-	path := aPathOrNil
+	repository := aRepository
 ]
 
 { #category : 'accessing' }

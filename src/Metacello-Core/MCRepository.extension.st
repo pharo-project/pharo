@@ -51,6 +51,13 @@ MCRepository class >> newRepositoryFromSpec: aRepositorySpec [
 ]
 
 { #category : '*Metacello-Core' }
+MCRepository >> projectUrl [
+	"Where my project lives, without the version my description may name: what tells my project apart from the projects of other repositories. My whole description by default: a directory names no version"
+
+	^ self description
+]
+
+{ #category : '*Metacello-Core' }
 MCRepository >> repositoryBranchName [
   "extract a branch name from the repository ... if possible"
 
