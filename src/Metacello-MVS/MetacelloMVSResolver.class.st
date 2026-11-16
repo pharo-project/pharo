@@ -765,9 +765,9 @@ MetacelloMVSResolver >> resolveRoots: someProjectSpecs engine: anEngine [
 MetacelloMVSResolver >> resolvedProjectOf: aCandidate into: aResolution ifNone: aBlock [
 	"The resolved project of aCandidate, given its spec at its version, its project built from the baseline read in the sandbox, so that Metacello records it without loading its BaselineOf. Its BaselineOf is installed after the load, unless the image has it from there or it is pinned. When the baseline fails, the error is recorded and aBlock answers"
 
-	| reading project spec resolved |
-	reading := graph readingOf: aCandidate.
-	project := [ reading newProject ]
+	| projectVersion project spec resolved |
+	projectVersion := graph projectVersionOf: aCandidate.
+	project := [ projectVersion newProject ]
 		           on: Error
 		           do: [ :error |
 				           aResolution addFinding: (MetacelloResolutionFinding
@@ -778,7 +778,7 @@ MetacelloMVSResolver >> resolvedProjectOf: aCandidate into: aResolution ifNone: 
 	spec := (MetacelloProjectSpec project: project)
 		        name: aCandidate project;
 		        className: 'BaselineOf' , aCandidate project;
-		        repository: reading repositoryDescription;
+		        repository: projectVersion repositoryDescription;
 		        yourself.
 	resolved := aCandidate resolvedProject.
 	resolved changeVersionTo: spec.
@@ -946,20 +946,20 @@ MetacelloMVSResolver >> versionFor: aProjectSpec requiredBy: aCandidate in: aReq
 MetacelloMVSResolver >> visit: aCandidate [
 	"Read the baseline of the version of aCandidate for the groups asked of its project: its problems become findings of the resolution, the root's replaces apply, and each project spec it requires is required, once per version"
 
-	| reading found specs already |
-	reading := graph readingOf: aCandidate.
-	found := MetacelloMVSBaselineReading new
+	| projectVersion found specs already |
+	projectVersion := graph projectVersionOf: aCandidate.
+	found := MetacelloMVSProjectVersion new
 		         request: aCandidate request;
 		         yourself.
-	specs := reading
+	specs := projectVersion
 		         referencesForGroups: (askedGroups at: aCandidate project ifAbsent: [ #(  ) ])
 		         includingDefault: (defaultAsked includes: aCandidate project)
 		         into: found.
-	reading findings , found findings do: [ :each | self keep: each about: aCandidate ].
+	projectVersion findings , found findings do: [ :each | self keep: each about: aCandidate ].
 	aCandidate mustReplace
-		ifTrue: [ self replace: reading replacements about: aCandidate ]
+		ifTrue: [ self replace: projectVersion replacements about: aCandidate ]
 		ifFalse: [
-				reading replacements ifNotEmpty: [ :replaces |
+				projectVersion replacements ifNotEmpty: [ :replaces |
 						self
 							warning: #ignoredReplace
 							text: 'The baseline of ' , aCandidate printString , ' replaces ' , (', ' join: replaces keys sorted)
