@@ -70,8 +70,6 @@ MCBitbucketRepository >> normalizeTagsData: jsonObject [
 MCBitbucketRepository >> projectTagsUrlFor: projectPath2 [
   ^ 'https://bitbucket.org/api/1.0/repositories/' , projectPath2 , '/tags'
 ]
-<<<<<<< HEAD:src/Metacello-Bitbucket/MCBitbucketRepository.class.st
-=======
 
 { #category : 'accessing' }
 MCBitbucketRepository >> scpUrl [
@@ -79,4 +77,3 @@ MCBitbucketRepository >> scpUrl [
 
 	^ 'git@ssh.bitbucket.org:', projectPath, '.git'
 ]
->>>>>>> 2cbf9051d4 (Use ssh.bitbucket.org for Bitbucket SCP URLs):src/MonticelloRemoteRepositories/MCBitbucketRepository.class.st
