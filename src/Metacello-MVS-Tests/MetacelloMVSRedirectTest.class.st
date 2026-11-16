@@ -34,6 +34,19 @@ MetacelloMVSRedirectTest >> testARecordingKeepsItsRedirectsWhenStored [
 ]
 
 { #category : 'tests' }
+MetacelloMVSRedirectTest >> testTheRecordingIgnoresAnotherDescriptionOfTheSamePlace [
+	"Iceberg describes a repository its own way: it was not moved"
+
+	| recorded wrapped platform |
+	recorded := MetacelloMVSRecordedSource new.
+	wrapped := MetacelloMVSTestPlatform new.
+	wrapped repository: 'github://acme/Foo:v1.0.0' is: (MCGitHubRepository location: 'github://acme/Foo:v1.0.0/src').
+	platform := MetacelloMVSRecordingPlatform on: wrapped recordingInto: recorded.
+	self assert: (self repositoryOf: 'github://acme/Foo:v1.0.0' on: platform) description equals: 'github://acme/Foo:v1.0.0/src'.
+	self assert: recorded redirects isEmpty
+]
+
+{ #category : 'tests' }
 MetacelloMVSRedirectTest >> testTheRecordingKeepsOnlyMovedRepositories [
 	"The wrapped platform moves olekscode's repository, as GitHub's redirect does"
 
