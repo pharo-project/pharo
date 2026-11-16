@@ -1276,6 +1276,21 @@ MetacelloMVSResolverTest >> testTheShortReportNamesWhoAskedEachMajor [
 	self assert: line equals: '  - b v1.0.0 in root v1.0.0, v2.0.0 in c v1.0.0'
 ]
 
+{ #category : 'tests - upgrades' }
+MetacelloMVSResolverTest >> testTheVerboseReportListsDevProjectsApartFromUpgrades [
+	"Dev mode is an info that proposes no upgrade: it is listed like any finding, and only the upgrades are grouped by who asks"
+
+	| report |
+	self versions: #( 'v1.0.0' ) of: 'a'.
+	self versions: #( 'v1.0.0' 'v1.1.0' ) of: 'b'.
+	self version: 'main' of: 'a' requires: #( 'b:v1.0.0' ).
+	self version: 'v1.0.0' of: 'b' requires: #(  ).
+	self version: 'v1.1.0' of: 'b' requires: #(  ).
+	report := (self resolve: 'a:main' devs: { ('a' -> 'a:main') } asDictionary) verboseReport.
+	self assert: (report includesSubstring: 'Project in dev mode (1)').
+	self assert: (report includesSubstring: (String lf join: #( 'github://o/a:main can ask for' '  - b v1.1.0 instead of v1.0.0' )))
+]
+
 { #category : 'tests - cases' }
 MetacelloMVSResolverTest >> testTwoForksOfAProjectAreAnError [
 	"Like gtoolkit's feenkcom/Bloc and pharo-graphics/Bloc: two repositories, one baseline"

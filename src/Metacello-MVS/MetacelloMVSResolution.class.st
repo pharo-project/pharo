@@ -203,34 +203,35 @@ MetacelloMVSResolution >> kindDescriptions [
 MetacelloMVSResolution >> lineOfUpgrade: anUpgradeFinding [
 	"The version it can ask for, instead of what it asks, and why when it is not just newer: Hashtable v1.0.5 instead of v1.x.x"
 
-	| note |
-	note := {
-		        (#raisedByOthers -> ': already selected').
-		        (#taggedVersionAvailable -> ': fixes an error').
-		        (#newerMajor -> ': a newer major').
-		        (#newerInMajor -> '') } asDictionary at: anUpgradeFinding kind.
-	^ anUpgradeFinding project , ' ' , anUpgradeFinding version , ' instead of ' , anUpgradeFinding asked , note
+	^ anUpgradeFinding project , ' ' , anUpgradeFinding version , ' instead of ' , anUpgradeFinding asked
+	  , (self upgradeNotes at: anUpgradeFinding kind)
 ]
 
 { #category : 'report' }
 MetacelloMVSResolution >> print: someFindings of: aSeverity verbose: aBoolean on: aStream [
-	"Verbose, infos are upgrades: grouped by who asks, in the order found, one line per dependency it can ask for (see lineOfUpgrade:)"
+	"Verbose, the infos that propose an upgrade are grouped by who asks, in the order found, one line per dependency it can ask for (see lineOfUpgrade:). The other infos (dev mode, raised with a sibling) are listed like any finding"
 
-	| byAsker |
+	| upgrades byAsker |
 	(aSeverity = #info and: [ aBoolean ]) ifFalse: [
 			^ super
 				  print: someFindings
 				  of: aSeverity
 				  verbose: aBoolean
 				  on: aStream ].
+	upgrades := someFindings select: [ :each | self upgradeNotes includesKey: each kind ].
+	super
+		print: (someFindings reject: [ :each | self upgradeNotes includesKey: each kind ])
+		of: aSeverity
+		verbose: aBoolean
+		on: aStream.
 	byAsker := OrderedDictionary new.
-	someFindings do: [ :each | (byAsker at: (self subjectOf: each) ifAbsentPut: [ OrderedCollection new ]) add: each ].
-	byAsker keysAndValuesDo: [ :asker :upgrades |
+	upgrades do: [ :each | (byAsker at: (self subjectOf: each) ifAbsentPut: [ OrderedCollection new ]) add: each ].
+	byAsker keysAndValuesDo: [ :asker :each |
 			aStream
 				lf;
 				nextPutAll: asker displayName;
 				nextPutAll: ' can ask for'.
-			upgrades do: [ :each | self print: (self lineOfUpgrade: each) asFindingOn: aStream ] ]
+			each do: [ :upgrade | self print: (self lineOfUpgrade: upgrade) asFindingOn: aStream ] ]
 ]
 
 { #category : 'accessing' }
@@ -296,4 +297,15 @@ MetacelloMVSResolution >> subjectOf: aFinding [
 	"What aFinding was found about: the version that asked, or whose baseline was read, or the user for the load as a whole"
 
 	^ subjects at: aFinding
+]
+
+{ #category : 'report' }
+MetacelloMVSResolution >> upgradeNotes [
+	"The kinds of the infos that propose an upgrade, each with why, when it is not just newer"
+
+	^ {
+		  (#raisedByOthers -> ': already selected').
+		  (#taggedVersionAvailable -> ': fixes an error').
+		  (#newerMajor -> ': a newer major').
+		  (#newerInMajor -> '') } asDictionary
 ]
