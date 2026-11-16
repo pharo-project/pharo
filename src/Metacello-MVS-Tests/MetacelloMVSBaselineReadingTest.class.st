@@ -160,7 +160,8 @@ MetacelloMVSBaselineReadingTest >> testAGraphNeedsASource [
 
 { #category : 'tests' }
 MetacelloMVSBaselineReadingTest >> testAGraphReadsTheDatesOfTheSource [
-	| date graph |
+
+	| date |
 	date := DateAndTime year: 2020 month: 1 day: 1.
 	source
 		repository: 'github://acme/Foo'
