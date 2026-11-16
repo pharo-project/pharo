@@ -60,6 +60,27 @@ ClapMetacelloTest >> testCanKeepAliveWithNoQuitOption [
 ]
 
 { #category : 'tests' }
+ClapMetacelloTest >> testCanPutProjectsInDevMode [
+
+	| command |
+	context := ClapMetacello commandSpecification activationWith:
+		           #( 'metacello' 'install' 'github://pharo-graphics/Toplo:v1.0.0/src' 'Toplo' '--dev' 'Bloc' 'github://pharo-graphics/Bloc:master/src'
+		              '--dev' 'Album' 'github://myfork/Album:fix/src' 'Core,Tests' '--mvs' ).
+	command := context command.
+
+	self assert: command devs asArray equals: {
+			{
+				'Bloc'.
+				'github://pharo-graphics/Bloc:master/src'.
+				#(  ) }.
+			{
+				'Album'.
+				'github://myfork/Album:fix/src'.
+				#( 'Core' 'Tests' ) } }.
+	self assert: (command projectNameIfAbsent: [ self fail ]) equals: 'Toplo'
+]
+
+{ #category : 'tests' }
 ClapMetacelloTest >> testCanSignalErrorOnWarning [
 
 	| command |
@@ -77,6 +98,21 @@ ClapMetacelloTest >> testCanUseMVS [
 		           #( 'metacello' 'install' '--mvs' 'github://myorg/myproject:v1.0.0/src' 'MyProject' ).
 	command := context command.
 	self assert: command usesMVS
+]
+
+{ #category : 'tests' }
+ClapMetacelloTest >> testDevProjectsNeedNoDefaultRoot [
+
+	| command |
+	context := ClapMetacello commandSpecification activationWith:
+		           #( 'metacello' 'install' '--dev' 'Bloc' 'github://pharo-graphics/Bloc:master/src' ).
+	command := context command.
+
+	self assert: (command projectNameIfAbsent: [ #none ]) equals: #none.
+	self assert: command devs asArray equals: { {
+			'Bloc'.
+			'github://pharo-graphics/Bloc:master/src'.
+			#(  ) } }
 ]
 
 { #category : 'tests' }
@@ -127,6 +163,14 @@ ClapMetacelloTest >> testIsNotVerboseByDefault [
 		           #( 'metacello' 'install' 'github://myorg/myproject:v1.0.0/src' 'MyProject' ).
 	command := context command.
 	self deny: command isVerbose
+]
+
+{ #category : 'tests' }
+ClapMetacelloTest >> testNoProjectIsInDevModeByDefault [
+
+	context := ClapMetacello commandSpecification activationWith:
+		           #( 'metacello' 'install' 'github://myorg/myproject:v1.0.0/src' 'MyProject' ).
+	self assert: context command devs isEmpty
 ]
 
 { #category : 'tests' }
