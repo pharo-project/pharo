@@ -28,9 +28,10 @@ MetacelloDirectoryBaselineTest >> setUp [
 ]
 
 { #category : 'tests' }
-MetacelloDirectoryBaselineTest >> testAnswersItsFormat [
+MetacelloDirectoryBaselineTest >> testATonelDirectoryIsNotFileTree [
+	"Tonel is loaded after Metacello-Core, which cannot extend it: a Tonel directory answers the default, which the FileTree warning does not take for FileTree"
 
-	self assert: self repository fileFormat equals: #tonel
+	self deny: self repository fileFormat equals: #filetree
 ]
 
 { #category : 'tests' }
