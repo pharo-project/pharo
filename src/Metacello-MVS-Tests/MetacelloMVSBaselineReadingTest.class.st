@@ -340,6 +340,31 @@ MetacelloMVSBaselineReadingTest >> testTheRootLoadsTheGroupsAsked [
 			(((MetacelloMVSResolver on: graph) resolve: 'github://acme/Bar:v1.0.0' project: 'Bar' loads: #( 'Tests' )) buildList includesKey: 'Tester')
 ]
 
+{ #category : 'tests' }
+MetacelloMVSBaselineReadingTest >> testTwoProjectsOfOneRepositoryAreReadEachFromItsBaseline [
+	"Like Spec2 asking SpecCore from its own repository: each project is read from its own baseline, not from the other's"
+
+	| report |
+	source
+		repository: 'github://acme/Spec'
+		version: 'v1.0.0'
+		project: 'Spec2'
+		baseline: (self baselineRequiring: { ('SpecCore' -> 'github://acme/Spec:v1.0.0') }).
+	source
+		repository: 'github://acme/Spec'
+		version: 'v1.0.0'
+		project: 'SpecCore'
+		baseline: (self baselineRequiring: { ('Tester' -> 'github://acme/Tester:v1.0.0') }).
+	source
+		repository: 'github://acme/Tester'
+		version: 'v1.0.0'
+		project: 'Tester'
+		baseline: (self baselineRequiring: #(  )).
+	report := (MetacelloMVSResolver on: graph) resolve: 'github://acme/Spec:v1.0.0' project: 'Spec2'.
+	self assert: report resolves.
+	self assert: report buildList keys asSortedCollection asArray equals: #( 'Spec2' 'SpecCore' 'Tester' )
+]
+
 { #category : 'running' }
 MetacelloMVSBaselineReadingTest >> warningsOf: aCandidate [
 	"The texts of the warnings reading the baseline of aCandidate gives"

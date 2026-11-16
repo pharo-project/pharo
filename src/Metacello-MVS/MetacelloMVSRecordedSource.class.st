@@ -9,7 +9,8 @@ Class {
 		'baselines',
 		'versions',
 		'versionFailures',
-		'redirects'
+		'redirects',
+		'unreadable'
 	],
 	#category : 'Metacello-MVS',
 	#package : 'Metacello-MVS'
@@ -24,15 +25,16 @@ MetacelloMVSRecordedSource >> addAll: aRecordedSource [
 
 { #category : 'versions' }
 MetacelloMVSRecordedSource >> baselineOf: aCandidate [
-	"What the baseline was when it was recorded"
+	"What the baseline of the project of aCandidate was when it was recorded, at its version; what made its repository unreadable at that version; or that it was not recorded"
 
-	^ baselines
-		  at: aCandidate repository -> aCandidate version string
-		  ifAbsent: [
-		  MetacelloMVSBaselineDefinitions error: #repositoryFailure text: 'Not recorded: the baseline of ' , aCandidate printString ]
+	^ baselines at: aCandidate repository -> aCandidate version string -> ('BaselineOf' , aCandidate project) ifAbsent: [
+			  unreadable
+				  at: aCandidate repository -> aCandidate version string
+				  ifAbsent: [
+				  MetacelloMVSBaselineDefinitions error: #repositoryFailure text: 'Not recorded: the baseline of ' , aCandidate printString ] ]
 ]
 
-{ #category : 'initialization' }
+{ #category : 'building' }
 MetacelloMVSRecordedSource >> initialize [
 
 	super initialize.
@@ -40,6 +42,7 @@ MetacelloMVSRecordedSource >> initialize [
 	versionFailures := Dictionary new.
 	dates := Dictionary new.
 	baselines := Dictionary new.
+	unreadable := Dictionary new.
 	redirects := Dictionary new
 ]
 
@@ -58,6 +61,7 @@ MetacelloMVSRecordedSource >> recordings [
 		  versionFailures.
 		  dates.
 		  baselines.
+		  unreadable.
 		  redirects }
 ]
 
@@ -84,8 +88,15 @@ MetacelloMVSRecordedSource >> replayPlatform [
 
 { #category : 'building' }
 MetacelloMVSRecordedSource >> repository: aRepository at: aVersion baseline: aBaselineDefinitions [
+	"A baseline read from aRepository at aVersion, kept by its class: one repository can hold the baselines of several projects. One that could not be read (no baseline class known) is kept for the repository at that version"
 
-	baselines at: aRepository -> aVersion put: aBaselineDefinitions
+	aBaselineDefinitions hasBaseline
+		ifTrue: [
+				baselines
+					at:
+					aRepository -> aVersion -> (aBaselineDefinitions definitions detect: [ :each | each isClassDefinition ]) className asString
+					put: aBaselineDefinitions ]
+		ifFalse: [ unreadable at: aRepository -> aVersion put: aBaselineDefinitions ]
 ]
 
 { #category : 'building' }
@@ -239,6 +250,12 @@ MetacelloMVSRecordedSource >> storeOn: aStream [
 	(baselines keys sort: [ :a :b | a printString <= b printString ]) do: [ :key |
 			self
 				storeBaseline: (baselines at: key)
+				of: key key key
+				at: key key value
+				on: aStream ].
+	(unreadable keys sort: [ :a :b | a printString <= b printString ]) do: [ :key |
+			self
+				storeBaseline: (unreadable at: key)
 				of: key key
 				at: key value
 				on: aStream ].

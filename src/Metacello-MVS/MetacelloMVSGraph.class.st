@@ -11,7 +11,8 @@ Class {
 		'source',
 		'readings',
 		'repositories',
-		'versions'
+		'versions',
+		'told'
 	],
 	#category : 'Metacello-MVS',
 	#package : 'Metacello-MVS'
@@ -62,15 +63,17 @@ MetacelloMVSGraph >> hasVersions: aProjectSpec [
 	^ (self repositoryFor: aProjectSpec) isNotNil
 ]
 
-{ #category : 'initialization' }
+{ #category : 'reading' }
 MetacelloMVSGraph >> initializeOn: aVersionSource [
 	"Facts the graph was not told are asked to aVersionSource, once"
+
 	super initialize.
 	source := aVersionSource.
 	versions := Dictionary new.
 	dates := Dictionary new.
 	readings := Dictionary new.
-	repositories := Dictionary new.
+	told := Dictionary new.
+	repositories := Dictionary new
 ]
 
 { #category : 'project specs' }
@@ -126,16 +129,19 @@ MetacelloMVSGraph >> readingFrom: aBaselineDefinitions of: aCandidate [
 
 { #category : 'reading' }
 MetacelloMVSGraph >> readingOf: aCandidate [
-	"The reading of the baseline of the version of aCandidate: told, or read once from the definitions the source answers. Kept by where it is read from (see MetacelloMVSCandidateVersion>>readDescription)"
+	"The reading of the baseline of the project of aCandidate at its version: told for its repository at that version, or read once from the definitions the source answers. Kept by where it is read from and by project: one repository can hold the baselines of several projects (Spec2 and SpecCore)"
 
-	^ readings at: aCandidate readDescription ifAbsentPut: [ self readingFrom: (source baselineOf: aCandidate) of: aCandidate ]
+	^ readings
+		  at: aCandidate readDescription -> aCandidate project
+		  ifAbsentPut: [
+		  told at: aCandidate readDescription ifAbsent: [ self readingFrom: (source baselineOf: aCandidate) of: aCandidate ] ]
 ]
 
 { #category : 'accessing' }
 MetacelloMVSGraph >> repository: aRepository at: aVersion reading: aReading [
-	"Told: the reading of the baseline of aRepository at the version or ref named aVersion"
+	"Told: the reading of the baseline of aRepository at the version or ref named aVersion, for whatever project asks it there"
 
-	readings at: aRepository , ':' , aVersion put: aReading
+	told at: aRepository , ':' , aVersion put: aReading
 ]
 
 { #category : 'accessing' }
@@ -205,9 +211,9 @@ MetacelloMVSGraph >> specFor: aRepositoryString project: aProjectName loads: aCo
 
 { #category : 'accessing' }
 MetacelloMVSGraph >> toldReadingOf: aRepository at: aVersion [
-	"The reading told for the baseline of aRepository at the version or ref named aVersion"
+	"The reading told for the baseline of aRepository at the version or ref named aVersion, for whatever project asks it there"
 
-	^ readings at: aRepository , ':' , aVersion ifAbsentPut: [ MetacelloMVSBaselineReading new ]
+	^ told at: aRepository , ':' , aVersion ifAbsentPut: [ MetacelloMVSBaselineReading new ]
 ]
 
 { #category : 'project specs' }
