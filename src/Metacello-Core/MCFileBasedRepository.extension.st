@@ -1,6 +1,15 @@
 Extension { #name : 'MCFileBasedRepository' }
 
 { #category : '*Metacello-Core' }
+MCFileBasedRepository >> baselineOf: aProjectName [
+	"The Monticello definitions of BaselineOf<aProjectName> as I hold it now: a directory names no version. nil when I hold none, as baselineOf:atVersion: answers"
+
+	| info |
+	info := (self versionInfoFromVersionNamed: 'BaselineOf' , aProjectName) ifNil: [ ^ nil ].
+	^ (self versionWithInfo: info ifAbsent: [ ^ nil ]) snapshot definitions
+]
+
+{ #category : '*Metacello-Core' }
 MCFileBasedRepository >> versionInfoFromVersionNamed: aString [
 
 	| versions |
