@@ -579,6 +579,7 @@ MetacelloMVSResolver >> require: aRequiredSpec by: aCandidate [
 
 	| requirement replaced spec repository version grew |
 	requirement := resolution addRequirement: (MetacelloMVSRequirement from: aCandidate asked: aRequiredSpec).
+	"replacements holds both the root's replaces (spec replace:with:, an exact version) and the projects in dev mode: what comes back is aRequiredSpec when nothing replaces it, a replace, or a dev spec"
 	replaced := self replacementFor: aRequiredSpec by: aCandidate in: requirement.
 	replaced isDev ifTrue: [ ^ self requireDev: replaced by: aCandidate in: requirement ].
 	(graph hasVersions: replaced ifFail: [ :text | ^ self error: #repositoryFailure text: text about: aCandidate in: requirement ]) ifFalse: [
