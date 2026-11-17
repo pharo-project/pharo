@@ -10,14 +10,6 @@ InstructionStream >> addSelectorTo: set [
 ]
 
 { #category : '*Debugging-Core' }
-InstructionStream >> advanceToFollowingPc [
-	"Advance the PC to the next valid PC in the instruction stream.
-	Take into account that the current instruction may have a variable size and occupy more than a single byte."
-
-	pc := self followingPc
-]
-
-{ #category : '*Debugging-Core' }
 InstructionStream >> atEnd [
 
 	^ pc > self method endPC
@@ -35,13 +27,6 @@ InstructionStream >> followingBytecode [
 	"Answer the bytecode of the following bytecode (different to nextByte)."
 
 	^self method at: self followingPc
-]
-
-{ #category : '*Debugging-Core' }
-InstructionStream >> followingPc [
-	"Answer the pc of the following bytecode."
-
-	^ self nextPc: (self method at: self pc)
 ]
 
 { #category : '*Debugging-Core' }
@@ -71,10 +56,4 @@ InstructionStream >> thirdByte [
 	"Answer the third byte of the current bytecode."
 
 	^ self method at: self pc + 2
-]
-
-{ #category : '*Debugging-Core' }
-InstructionStream >> willJustPop [
-
-	^ self method encoderClass isJustPopAt: pc in: self method
 ]

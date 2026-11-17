@@ -44,9 +44,24 @@ InstructionStream class >> on: method pc: aPC [
 	^self new method: method pc: aPC
 ]
 
+{ #category : 'scanning' }
+InstructionStream >> advanceToFollowingPc [
+	"Advance the PC to the next valid PC in the instruction stream.
+	Take into account that the current instruction may have a variable size and occupy more than a single byte."
+
+	pc := self followingPc
+]
+
 { #category : 'accessing' }
 InstructionStream >> compiledCode [
 	^self method
+]
+
+{ #category : 'scanning' }
+InstructionStream >> followingPc [
+	"Answer the pc of the following bytecode."
+
+	^ self nextPc: (self method at: self pc)
 ]
 
 { #category : 'interpreting' }
@@ -379,6 +394,12 @@ InstructionStream >> willJumpTo [
 	"Answer whether the next bytecode is a jump-if-false."
 
 	^ self method encoderClass isJumpAt: pc in: self method
+]
+
+{ #category : 'should be packaged in sindarin' }
+InstructionStream >> willJustPop [
+
+	^ self method encoderClass isJustPopAt: pc in: self method
 ]
 
 { #category : 'should be packaged in sindarin' }
