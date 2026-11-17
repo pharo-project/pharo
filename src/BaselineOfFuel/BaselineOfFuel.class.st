@@ -15,10 +15,16 @@ Class {
 BaselineOfFuel >> baseline: spec [
 
 	<baseline>
+	| repository |
+	repository := self packageRepositoryURLForSpec: spec.
 	spec for: #common do: [
 		spec
-			package: 'Fuel-Core';
-			package: 'Fuel-Core-Tests' with: [ spec requires: 'Core' ].
+			baseline: 'Display' with: [ spec repository: repository ];
+			baseline: 'Clap' with: [ spec loads: #( 'Tests' ) from: repository ].
+
+		spec
+			package: 'Fuel-Core' with: [ spec requires: #( 'Display' ) ];
+			package: 'Fuel-Core-Tests' with: [ spec requires: #( 'Core' 'Clap' ) ].
 
 		spec
 			group: 'Core' with: #( 'Fuel-Core' );
