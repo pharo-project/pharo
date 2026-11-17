@@ -355,6 +355,13 @@ OCBlockNode >> precedence [
 	^0
 ]
 
+{ #category : 'testing' }
+OCBlockNode >> referencesVariableNamed: aVariableName [
+	"Return wether the variable named aVariable is accessed in read or write with the receiver."
+	
+	^ body referencesVariableNamed: aVariableName
+]
+
 { #category : 'adding-removing' }
 OCBlockNode >> removeTemporaryNamed: aName [
 

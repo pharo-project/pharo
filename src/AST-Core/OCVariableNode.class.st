@@ -240,6 +240,13 @@ OCVariableNode >> precedence [
 	^0
 ]
 
+{ #category : 'testing' }
+OCVariableNode >> referencesVariableNamed: aVariableName [
+	"Return wether the variable named aVariable is accessed in read or write with the receiver."
+	
+	^ self name = aVariableName
+]
+
 { #category : 'replacing' }
 OCVariableNode >> replaceSourceFrom: aNode [
 	self addReplacement: (OCStringReplacement

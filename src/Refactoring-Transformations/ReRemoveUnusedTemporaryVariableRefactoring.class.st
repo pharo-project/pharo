@@ -39,7 +39,7 @@ ReRemoveUnusedTemporaryVariableRefactoring >> prepareForExecution [
 ReRemoveUnusedTemporaryVariableRefactoring >> privateTransform [
 
 	| unusedTemps |
-	unusedTemps := parseTree allTemporaryVariables reject: [ :temp | parseTree references: temp ].
+	unusedTemps := parseTree allTemporaryVariables reject: [ :temp | parseTree referencesVariableNamed: temp ].
 	unusedTemps do: [ :temp |
 		(RBRemoveTemporaryVariableTransformation
 			model: self model
