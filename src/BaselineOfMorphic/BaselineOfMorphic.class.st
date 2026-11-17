@@ -50,7 +50,10 @@ BaselineOfMorphic >> baseline: spec [
 
 		spec package: 'Native-Browser'.
 
-		spec package: 'Regex-Core'.
+		spec baseline: 'Regex' with: [
+			spec
+				repository: repository;
+				loads: #( 'Core' ) ].
 
 		spec package: 'Morphic-Base'.
 		spec package: 'Morphic-Widgets-Basic'.
