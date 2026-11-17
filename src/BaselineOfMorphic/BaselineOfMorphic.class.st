@@ -125,7 +125,7 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	#( #ProgressBarMorph #GlobalIdentifier #HaloMorph
 	   #CharacterScanner #ImageMorph
 	   #Locale #MenuItemMorph
-	   #MenuMorph #RxMatcher #RxParser #RxsPredicate #SHA1
+	   #MenuMorph #SHA1
 	   #SystemProgressMorph #SystemWindow #TextContainer
 	   #TextDiffBuilder #ThumbnailMorph #TransferMorph #UITheme )
 		do: [ :each | (self classNamed: each) initialize ].
