@@ -19,7 +19,7 @@ BaselineOfFuel >> baseline: spec [
 	repository := self packageRepositoryURLForSpec: spec.
 	spec for: #common do: [
 		spec
-			baseline: 'Display' with: [ spec repository: repository ];
+			baseline: 'Display' with: [ spec loads: #( 'Core' ) from: repository ];
 			baseline: 'Clap' with: [ spec loads: #( 'Tests' ) from: repository ].
 
 		spec
