@@ -61,6 +61,18 @@ DeprecationTest >> testDeprecationMajorVersion [
 ]
 
 { #category : 'tests' }
+DeprecationTest >> testDeprecationWithVersionAndNoDateIsDeprecated [
+
+	self assert: (ExampleForDeprecationTest >> #deprecatedMessageWithTransformAndNoDate) isDeprecated
+]
+
+{ #category : 'tests' }
+DeprecationTest >> testDeprecationWithVersionAndNoDateTransforms [
+
+	self assert: (self callerIsTransformedWhenSending: #deprecatedMessageWithTransformAndNoDate)
+]
+
+{ #category : 'tests' }
 DeprecationTest >> testDeprecationWithoutVersionDoesNotTransform [
 
 	self deny: (self callerIsTransformedWhenSending: #deprecatedMessageWithTransformAndNoVersion)
