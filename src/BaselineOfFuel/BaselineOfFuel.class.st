@@ -20,11 +20,13 @@ BaselineOfFuel >> baseline: spec [
 	spec for: #common do: [
 		spec
 			baseline: 'Display' with: [ spec loads: #( 'Core' ) from: repository ];
-			baseline: 'Clap' with: [ spec loads: #( 'Tests' ) from: repository ].
+			baseline: 'Clap' with: [ spec loads: #( 'Tests' ) from: repository ];
+			"A trait materialized without its source is recompiled from decompiled code when a class uses it"
+			baseline: 'Flashback' with: [ spec loads: #( 'Core' ) from: repository ].
 
 		spec
 			package: 'Fuel-Core' with: [ spec requires: #( 'Display' ) ];
-			package: 'Fuel-Core-Tests' with: [ spec requires: #( 'Core' 'Clap' ) ].
+			package: 'Fuel-Core-Tests' with: [ spec requires: #( 'Core' 'Clap' 'Flashback' ) ].
 
 		spec
 			group: 'Core' with: #( 'Fuel-Core' );
