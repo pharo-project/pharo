@@ -4,7 +4,10 @@ Extension { #name : 'DateAndTime' }
 DateAndTime class >> clock [
 	"the provider of real time seconds/milliseconds."
 
-	self deprecated: 'Use Time instead.' transformWith: '`@rcv clock' -> 'Time'.
+	self
+		deprecated: 'Use Time instead.'
+		in: #Pharo14
+		transformWith: '`@rcv clock' -> 'Time'.
 
 	^ Time
 ]
@@ -12,7 +15,10 @@ DateAndTime class >> clock [
 { #category : '*Deprecated14' }
 DateAndTime class >> millisecondClockValue [
 
-	self deprecated: 'Use Time as a receiver instead.' transformWith: '`@rcv millisecondClockValue' -> 'Time millisecondClockValue'.
+	self
+		deprecated: 'Use Time as a receiver instead.'
+		in: #Pharo14
+		transformWith: '`@rcv millisecondClockValue' -> 'Time millisecondClockValue'.
 	^ Time millisecondClockValue
 ]
 
@@ -20,7 +26,10 @@ DateAndTime class >> millisecondClockValue [
 DateAndTime class >> totalSeconds [
 	"Answer the total seconds ellapsed since the epoch: 1 January 1901"
 
-	self deprecated: 'Use Time as a receiver instead.' transformWith: '`@rcv totalSeconds' -> 'Time totalSeconds'.
+	self
+		deprecated: 'Use Time as a receiver instead.'
+		in: #Pharo14
+		transformWith: '`@rcv totalSeconds' -> 'Time totalSeconds'.
 
 	^ Time totalSeconds
 ]

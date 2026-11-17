@@ -4,7 +4,9 @@ Extension { #name : 'Behavior' }
 Behavior >> compile: sourceCode classified: protcol notifying: requestor [
 	"Return the selector of the compiled method"
 
-	self deprecated: 'Use #compile:classified:withStamp:notifying:logSource: if you need the old style requestor'.
+	self
+		deprecated: 'Use #compile:classified:withStamp:notifying:logSource: if you need the old style requestor'
+		in: #Pharo14.
 	^ self
 		  compile: sourceCode
 		  classified: protcol
@@ -17,7 +19,9 @@ Behavior >> compile: sourceCode classified: protcol notifying: requestor [
 Behavior >> compile: sourceCode classified: protocol withStamp: changeStamp notifying: requestor [
 	"Return the selector of the compiled method"
 
-	self deprecated: 'Use #compile:classified:withStamp:notifying:logSource: if you need the old style requestor'.
+	self
+		deprecated: 'Use #compile:classified:withStamp:notifying:logSource: if you need the old style requestor'
+		in: #Pharo14.
 	^ self
 		  compile: sourceCode
 		  classified: protocol
@@ -34,7 +38,9 @@ Behavior >> compile: code notifying: requestor [
 	argument code is either a string or an object that converts to a string or
 	a PositionableStream. This method also saves the source code."
 
-	self deprecated: 'Use #compile:classified:withStamp:notifying:logSource: if you need the old style requestor'.
+	self
+		deprecated: 'Use #compile:classified:withStamp:notifying:logSource: if you need the old style requestor'
+		in: #Pharo14.
 	^ self
 		  compile: code
 		  classified: nil

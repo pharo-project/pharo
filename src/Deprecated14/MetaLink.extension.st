@@ -3,7 +3,9 @@ Extension { #name : 'MetaLink' }
 { #category : '*Deprecated14' }
 MetaLink >> definitionString [
 
-	self deprecated: 'Please don''t use: metalinks have runtime information that cannot be converted safely to strings'.
+	self
+		deprecated: 'Please don''t use: metalinks have runtime information that cannot be converted safely to strings'
+		in: #Pharo14.
 	^String streamContents: [ :str |
 		str nextPutAll: 'MetaLink new'.
 		str cr;tab.

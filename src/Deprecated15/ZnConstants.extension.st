@@ -7,6 +7,7 @@ ZnConstants class >> knownHTTPMethods [
 
 	self
 		deprecated: 'Use the #allowedMethods ZnOption instead'
+		in: #Pharo15
 		transformWith: '`@rcv knownHTTPMethods' -> '(ZnCurrentOptions at: #allowedMethods)'.
 	^ ZnCurrentOptions at: #allowedMethods
 ]
@@ -18,6 +19,7 @@ ZnConstants class >> maximumLineLength [
 
 	self
 		deprecated: 'Use the #maximumLineLength ZnOption instead'
+		in: #Pharo15
 		transformWith: '`@rcv maximumLineLength' -> '(ZnCurrentOptions at: #maximumLineLength)'.
 	^ ZnCurrentOptions at: #maximumLineLength
 ]

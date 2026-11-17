@@ -4,7 +4,10 @@ Extension { #name : 'UIManager' }
 UIManager >> displayProgress: titleString from: minVal to: maxVal during: workBlock [
 	"SystemProgressMorph show: titleString from: minVal to:  during: "
 
-	self deprecated: 'This method should not be used. You can either use Jobs directly or use Spec and call your application.'.
+	self
+		deprecated: 'This method should not be used. You can either use Jobs directly or use Spec and call your application.'
+		on: '2025-10-29'
+		in: #Pharo14.
 	^ workBlock asJob
 		  title: titleString;
 		  min: minVal;
@@ -18,7 +21,10 @@ UIManager >> informUser: aString during: aBlock [
 	 during execution of the given block.
 		UIManager default informUser: 'Just a sec!' during: [(Delay forSeconds: 1) wait].
 	"
-	self deprecated: 'This method should not be used. You can either use Jobs directly or use Spec and call the same method from you rapplication.'.
+	self
+		deprecated: 'This method should not be used. You can either use Jobs directly or use Spec and call the same method from you rapplication.'
+		on: '2025-10-29'
+		in: #Pharo14.
 	^self informUserDuring: [:bar | bar label: aString. aBlock value]
 ]
 
@@ -33,7 +39,10 @@ UIManager >> informUserDuring: aBlock [
 				bar current: v.
 				(Delay forMilliseconds: 20) wait]]]"
 
-	self deprecated: 'This method should not be used. You can either use Jobs directly or use Spec and call the same method from you rapplication.'.
+	self
+		deprecated: 'This method should not be used. You can either use Jobs directly or use Spec and call the same method from you rapplication.'
+		on: '2025-10-29'
+		in: #Pharo14.
 	self
 		displayProgress: ''
 		from: 1

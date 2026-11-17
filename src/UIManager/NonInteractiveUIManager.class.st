@@ -106,7 +106,10 @@ NonInteractiveUIManager >> chooseOrRequestFrom: labelList values: valueList line
 { #category : 'ui requests' }
 NonInteractiveUIManager >> confirm: queryString [
 
-	self deprecated: 'Use ConfirmationRequest signal: instead.'.
+	self
+		deprecated: 'Use ConfirmationRequest signal: instead.'
+		on: '2026-01-19'
+		in: #Pharo14.
 	^ self nonInteractiveWarning: 'Confirming: ' , queryString
 ]
 

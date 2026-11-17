@@ -39,8 +39,10 @@ Setting >> basicRealValue [
 { #category : 'old setting builder compatibility' }
 Setting >> default: aValue [
 
-	self 
-		deprecated: 'Use #defaultValue: instead. #Pharo14'
+	self
+		deprecated: 'Use #defaultValue: instead.'
+		on: '2026-10-29'
+		in: #Pharo15
 		transformWith: '`@receiver default: `@aValue' -> '`@receiver defaultValue: `@aValue'.
 	self defaultValue: aValue
 ]

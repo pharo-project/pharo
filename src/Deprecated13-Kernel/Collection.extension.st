@@ -5,7 +5,9 @@ Collection >> asCommaString [
 
 	"Return collection printed as 'a, b, c' "
 
-	self deprecated: 'Use #join: instead'.
+	self
+		deprecated: 'Use #join: instead'
+		in: #Pharo13.
 
 	^ String streamContents: [ :s | self asStringOn: s delimiter: ', ' ]
 ]
@@ -15,7 +17,9 @@ Collection >> asCommaStringAnd [
 
 	"Return collection printed as 'a, b and c' "
 	
-	self deprecated: 'Use #join: instead'.
+	self
+		deprecated: 'Use #join: instead'
+		in: #Pharo13.
 
 	^String streamContents: [:s | self asStringOn: s delimiter: ', ' last: ' and ']
 ]
@@ -27,7 +31,9 @@ Collection >> asStringOn: aStream delimiter: delimString [
 	with a delimiter String like: 'a, b, c'
 	Uses #asString instead of #print:."
 	
-	self deprecated: 'Use #do:separatedBy: instead'.
+	self
+		deprecated: 'Use #do:separatedBy: instead'
+		in: #Pharo13.
 
 	self
 		do: [ :elem | aStream nextPutAll: elem asString ]
@@ -46,7 +52,9 @@ Collection >> asStringOn: aStream delimiter: delimString last: lastDelimString [
 
 	| n sz |
 	
-	self deprecated: 'Use #do:separatedBy: instead'.
+	self
+		deprecated: 'Use #do:separatedBy: instead'
+		in: #Pharo13.
 	
 	n := 1.
 	sz := self size.
@@ -62,7 +70,9 @@ Collection >> printOn: aStream delimiter: delimString [
 	"Print elements on a stream separated
 	with a delimiter String like: 'a, b, c'"
 		
-	self deprecated: 'Use #do:separatedBy: instead'.
+	self
+		deprecated: 'Use #do:separatedBy: instead'
+		in: #Pharo13.
 
 	self do: [:elem | aStream print: elem] separatedBy: [aStream nextPutAll: delimString]
 ]
@@ -77,7 +87,9 @@ Collection >> printOn: aStream delimiter: delimString last: lastDelimString [
 
 	| n sz |
 	
-	self deprecated: 'Use #do:separatedBy: instead'.
+	self
+		deprecated: 'Use #do:separatedBy: instead'
+		in: #Pharo13.
 	
 	n := 1.
 	sz := self size.
