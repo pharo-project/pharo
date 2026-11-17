@@ -10,11 +10,12 @@ Class {
 
 { #category : 'specs' }
 MetacelloMVSResolverTest class >> specAt: aRepositoryString [
-	"A project spec asking aRepositoryString (github://owner/name:version/path), for the project its repository names, with its default groups"
+	"A project spec asking aRepositoryString (github://owner/name:version/path), for the project its repository names, with its default groups.
+	The path is split on \ too: a directory description on Windows is written tonel://\work\name"
 
 	| rest |
 	rest := aRepositoryString allButFirst: (aRepositoryString indexOfSubCollection: '://') + 2.
-	^ (MetacelloMVSGraph on: MetacelloMVSRecordedSource new) specFor: aRepositoryString project: ((rest substrings: '/') second copyUpTo: $:) loads: #(  )
+	^ (MetacelloMVSGraph on: MetacelloMVSRecordedSource new) specFor: aRepositoryString project: ((rest substrings: '/\') second copyUpTo: $:) loads: #(  )
 ]
 
 { #category : 'specs' }
