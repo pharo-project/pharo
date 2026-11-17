@@ -293,3 +293,23 @@ ClapMetacelloTest >> testStrict [
 
 	self assert: command strict
 ]
+
+{ #category : 'tests' }
+ClapMetacelloTest >> testTheLoadSaysWhatItLoadsBeforeLoadingIt [
+	"A package that does not compile stops the load before Loaded is said: the plan and the Loading line before it say where it stopped"
+
+	| loader command texts |
+	loader := MetacelloTestLoader new.
+	command := self installFoo.
+	texts := OrderedCollection new.
+	[ self offlineDuring: [ command load: (self fooRequiringBar: 'v1.1.0' loader: loader) ] ]
+		on: MetacelloNotification
+		do: [ :notification |
+			texts add: notification messageText.
+			notification resume ].
+	self assert: (texts includes: 'Resolving the projects').
+	self assert: (texts anySatisfy: [ :each | (each beginsWith: 'Load plan:') and: [ each includesSubstring: 'load : Bar-Core' ] ]).
+	self assert: (texts includes: 'Loading the packages').
+	self assert: (texts includes: 'Loading -> Bar-Core (BaselineOfBar)').
+	self assert: (texts includes: 'Loading -> Foo-Core (BaselineOfFoo)')
+]
