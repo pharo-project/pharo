@@ -38,6 +38,13 @@ MetacelloMVSResolverTest >> devSpec: aProjectName at: aRepositoryString [
 		  yourself
 ]
 
+{ #category : 'helpers' }
+MetacelloMVSResolverTest >> directory: aPathString [
+	"A directory repository's description as this platform writes it: on Windows /work/a is written tonel://\work\a"
+
+	^ 'tonel://' , aPathString asFileReference fullName
+]
+
 { #category : 'tests' }
 MetacelloMVSResolverTest >> givenADependencyOfAVersionNotSelected [
 
@@ -255,12 +262,12 @@ MetacelloMVSResolverTest >> testADirectoryInDevMode [
 
 	| resolution |
 	self versions: #( 'v1.0.0' ) of: 'b'.
-	graph description: 'tonel:///work/a' requires: { (self class specAt: (self repo: 'b:v1.0.0')) }.
+	graph description: (self directory: '/work/a') requires: { (self class specAt: (self repo: 'b:v1.0.0')) }.
 	self version: 'v1.0.0' of: 'b' requires: #(  ).
-	resolution := (MetacelloMVSResolver on: graph) resolveRoots: { (self devSpec: 'a' at: 'tonel:///work/a') }.
+	resolution := (MetacelloMVSResolver on: graph) resolveRoots: { (self devSpec: 'a' at: (self directory: '/work/a')) }.
 	self assert: resolution resolves.
-	self assert: (self selected: 'a' in: resolution buildList) equals: 'tonel:///work/a'.
-	self assert: (resolution buildList at: 'a') repository equals: 'tonel:///work/a'.
+	self assert: (self selected: 'a' in: resolution buildList) equals: (self directory: '/work/a').
+	self assert: (resolution buildList at: 'a') repository equals: (self directory: '/work/a').
 	self assert: (self selected: 'b' in: resolution buildList) equals: 'v1.0.0'
 ]
 
@@ -269,10 +276,10 @@ MetacelloMVSResolverTest >> testADirectoryIsAnErrorOutsideDevMode [
 	"A directory has no versions: only dev mode takes it, and the error says so"
 
 	| resolution error |
-	graph repository: 'tonel:///work/a' versions: #(  ).
-	resolution := (MetacelloMVSResolver on: graph) resolveRoots: { (graph specFor: 'tonel:///work/a' project: 'a' loads: #(  )) }.
+	graph repository: (self directory: '/work/a') versions: #(  ).
+	resolution := (MetacelloMVSResolver on: graph) resolveRoots: { (graph specFor: (self directory: '/work/a') project: 'a' loads: #(  )) }.
 	error := resolution errors detect: [ :each | each kind = #invalidReference ].
-	self assert: (error text beginsWith: '''tonel:///work/a'' has no versions; take it in dev mode (--dev)')
+	self assert: (error text beginsWith: ('''' , (self directory: '/work/a') , ''' has no versions; take it in dev mode (--dev)'))
 ]
 
 { #category : 'tests - warnings' }
@@ -463,14 +470,14 @@ MetacelloMVSResolverTest >> testAProjectInDevModeIsTheOneInstalledFromTheSameDes
 	self versions: #( 'v1.0.0' ) of: 'a'.
 	self versions: #( 'v1.0.0' ) of: 'b'.
 	self version: 'v1.0.0' of: 'a' requires: #( 'b:v1.0.0' ).
-	graph description: 'tonel:///work/b' requires: #(  ).
+	graph description: (self directory: '/work/b') requires: #(  ).
 	resolution := (MetacelloMVSResolver on: graph)
-		              installed: { ('b' -> (graph specFor: 'tonel:///work/b' project: 'b' loads: #(  ))) } asDictionary;
+		              installed: { ('b' -> (graph specFor: (self directory: '/work/b') project: 'b' loads: #(  ))) } asDictionary;
 		              resolveRoots: {
 				              (graph specFor: (self repo: 'a:v1.0.0') project: 'a' loads: #(  )).
-				              (self devSpec: 'b' at: 'tonel:///work/b') }.
+				              (self devSpec: 'b' at: (self directory: '/work/b')) }.
 	self assert: resolution resolves.
-	self assert: (self selected: 'b' in: resolution buildList) equals: 'tonel:///work/b'
+	self assert: (self selected: 'b' in: resolution buildList) equals: (self directory: '/work/b')
 ]
 
 { #category : 'tests' }
@@ -655,11 +662,11 @@ MetacelloMVSResolverTest >> testAVersionAskedOfAProjectInstalledFromADirectoryIs
 	| resolution |
 	self versions: #( 'v1.0.0' ) of: 'a'.
 	self versions: #( 'v1.0.0' ) of: 'b'.
-	graph repository: 'tonel:///work/b' versions: #(  ).
+	graph repository: (self directory: '/work/b') versions: #(  ).
 	self version: 'v1.0.0' of: 'a' requires: #( 'b:v1.0.0' ).
 	self version: 'v1.0.0' of: 'b' requires: #(  ).
 	resolution := (MetacelloMVSResolver on: graph)
-		              installed: { ('b' -> (graph specFor: 'tonel:///work/b' project: 'b' loads: #(  ))) } asDictionary;
+		              installed: { ('b' -> (graph specFor: (self directory: '/work/b') project: 'b' loads: #(  ))) } asDictionary;
 		              resolve: (self repo: 'a:v1.0.0') project: 'a'.
 	self
 		assert: (resolution errors collect: [ :each | each kind ]) asArray

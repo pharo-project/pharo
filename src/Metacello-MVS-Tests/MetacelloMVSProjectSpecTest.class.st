@@ -12,6 +12,13 @@ Class {
 	#package : 'Metacello-MVS-Tests'
 }
 
+{ #category : 'helpers' }
+MetacelloMVSProjectSpecTest >> directory: aPathString [
+	"A directory repository's description as this platform writes it: on Windows /work/a is written tonel://\work\a"
+
+	^ 'tonel://' , aPathString asFileReference fullName
+]
+
 { #category : 'running' }
 MetacelloMVSProjectSpecTest >> setUp [
 
@@ -38,7 +45,7 @@ MetacelloMVSProjectSpecTest >> testABranchOrNoVersionIsNotAMinimum [
 { #category : 'tests' }
 MetacelloMVSProjectSpecTest >> testADirectoryIsNamedByItsWholeDescription [
 
-	self assert: (graph repositoryUrlOf: (self spec: 'tonel:///tmp/n/src')) equals: 'tonel:///tmp/n/src'
+	self assert: (graph repositoryUrlOf: (self spec: (self directory: '/tmp/n/src'))) equals: (self directory: '/tmp/n/src')
 ]
 
 { #category : 'tests' }
@@ -69,12 +76,12 @@ MetacelloMVSProjectSpecTest >> testOnlyRepositoriesThatPublishVersionsHaveVersio
 	source
 		repository: 'github://o/n' versions: #( 'v1.6.0' );
 		repository: 'github://o/m' versions: #(  );
-		repository: 'tonel:///tmp/n' versions: #(  ).
+		repository: (self directory: '/tmp/n') versions: #(  ).
 	graph := MetacelloMVSGraph on: source.
 	self
 		assert: (graph hasVersions: (self spec: 'github://o/n:v1.6.0/src') ifFail: [ :why | self fail: why ]);
 		deny: (graph hasVersions: (self spec: 'github://o/m:v1.6.0/src') ifFail: [ :why | self fail: why ]);
-		deny: (graph hasVersions: (self spec: 'tonel:///tmp/n') ifFail: [ :why | self fail: why ])
+		deny: (graph hasVersions: (self spec: (self directory: '/tmp/n')) ifFail: [ :why | self fail: why ])
 ]
 
 { #category : 'tests' }

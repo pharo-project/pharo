@@ -25,7 +25,7 @@ MetacelloMVSDevVersion >> < aVersion [
 	^ false
 ]
 
-{ #category : 'accessing' }
+{ #category : 'comparing' }
 MetacelloMVSDevVersion >> = anObject [
 
 	^ self class = anObject class and: [ description = anObject description ]
@@ -65,7 +65,7 @@ MetacelloMVSDevVersion >> hasMajor: anInteger [
 	^ false
 ]
 
-{ #category : 'accessing' }
+{ #category : 'comparing' }
 MetacelloMVSDevVersion >> hash [
 
 	^ description hash
