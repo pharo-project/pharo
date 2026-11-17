@@ -9,7 +9,10 @@ Class {
 BaselineOfRefactoring >> baseline: spec [
 
 	<baseline>
-	spec package: 'Regex-Core'.
+	spec baseline: 'Regex' with: [
+		spec
+			repository: (self packageRepositoryURLForSpec: spec);
+			loads: #( 'Core' ) ].
 	spec
 		package: 'AST-Core-Tests';
 		package: 'Refactoring-Environment';
@@ -19,7 +22,7 @@ BaselineOfRefactoring >> baseline: spec [
 		with: [ spec requires: #( 'Refactoring-Changes' 'Refactoring-Environment' 'Refactoring-CompilerSupport' ) ];
 		package: 'Refactoring-Conditions' with: [ spec requires: #( 'Refactoring-Core' 'Refactoring-CompilerSupport' ) ];
 		package: 'Refactoring-Transformations'
-		with: [ spec requires: #( 'Regex-Core' 'Refactoring-Core' 'Refactoring-Conditions' 'Refactoring-CompilerSupport' ) ];
+		with: [ spec requires: #( 'Regex' 'Refactoring-Core' 'Refactoring-Conditions' 'Refactoring-CompilerSupport' ) ];
 		package: 'Refactoring-DataForTesting'
 		with: [ spec requires: #( 'Refactoring-Core' 'Refactoring-Environment' 'Refactoring-Changes' ) ];
 		package: 'Refactoring-CompilerSupport-Tests' with: [ spec requires: #( 'Refactoring-CompilerSupport' ) ];

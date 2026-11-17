@@ -19,9 +19,12 @@ BaselineOfSystemVersion >> baseline: spec [
                		loads: #( 'Tests' ) ].
 			spec
 				baseline: 'SystemSupport' with: [ spec repository: repository ];
-				package: 'Regex-Core';
+				baseline: 'Regex' with: [
+					spec
+						repository: repository;
+						loads: #( 'Core' ) ];
 				package: 'System-Version' with: [ spec requires: #( 'SystemSupport' ) ];
-				package: 'System-Version-Tests' with: [ spec requires: #( 'ClapTests' 'System-Version' 'Regex-Core' ) ].
+				package: 'System-Version-Tests' with: [ spec requires: #( 'ClapTests' 'System-Version' 'Regex' ) ].
 
 			spec
 				group: 'Core' with: { 'System-Version' };

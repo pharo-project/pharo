@@ -79,6 +79,7 @@ BaselineOfIDE >> baseline: spec [
 
 		self load: 'Monticello' group: 'Tests' spec: spec.
 		self load: 'Metacello' group: 'Tests' spec: spec.
+		self load: 'Regex' group: 'Tests' spec: spec.
 
 		spec baseline: 'ReflectionMirrors' with: [ spec repository: repository ].
 		spec baseline: 'FuzzyMatcher' with: [ spec repository: repository ].

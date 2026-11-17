@@ -50,7 +50,10 @@ BaselineOfMorphic >> baseline: spec [
 
 		spec package: 'Native-Browser'.
 
-		spec package: 'Regex-Core'.
+		spec baseline: 'Regex' with: [
+			spec
+				repository: repository;
+				loads: #( 'Core' ) ].
 
 		spec package: 'Morphic-Base'.
 		spec package: 'Morphic-Widgets-Basic'.
@@ -66,13 +69,13 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'Morphic-Widgets-Menubar'.
 		spec package: 'Morphic-Widgets-Tree'.
 		spec package: 'Morphic-Widgets-Windows'.
-		spec package: 'Morphic-Widgets-FastTable'.
+		spec package: 'Morphic-Widgets-FastTable' with: [ spec requires: #( 'Regex' ) ].
 
 		spec package: 'Morphic-Widgets-Taskbar-Tests'.
 		spec package: 'Morphic-Widgets-MissionControl-Tests'.
 
 		"Several packages depend on Rubric as a basic Morphic component"
-		spec package: 'Rubric'.
+		spec package: 'Rubric' with: [ spec requires: #( 'Regex' ) ].
 
 		spec baseline: 'NewValueHolder' with: [
 			spec
@@ -122,7 +125,7 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	#( #ProgressBarMorph #GlobalIdentifier #HaloMorph
 	   #CharacterScanner #ImageMorph
 	   #Locale #MenuItemMorph
-	   #MenuMorph #RxMatcher #RxParser #RxsPredicate #SHA1
+	   #MenuMorph #SHA1
 	   #SystemProgressMorph #SystemWindow #TextContainer
 	   #TextDiffBuilder #ThumbnailMorph #TransferMorph #UITheme )
 		do: [ :each | (self classNamed: each) initialize ].
