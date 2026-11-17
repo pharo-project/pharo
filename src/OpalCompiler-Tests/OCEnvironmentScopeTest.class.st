@@ -4,9 +4,9 @@ tests related to environment
 Class {
 	#name : 'OCEnvironmentScopeTest',
 	#superclass : 'TestCase',
-	#category : 'OpalCompiler-Tests-Semantic',
+	#category : 'OpalCompiler-Tests-Semantics',
 	#package : 'OpalCompiler-Tests',
-	#tag : 'Semantic'
+	#tag : 'Semantics'
 }
 
 { #category : 'tests - environment' }

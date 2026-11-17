@@ -1,9 +1,9 @@
 Class {
 	#name : 'OCTargetCompilerSample',
 	#superclass : 'Object',
-	#category : 'OpalCompiler-Tests-Semantic',
+	#category : 'OpalCompiler-Tests-Semantics',
 	#package : 'OpalCompiler-Tests',
-	#tag : 'Semantic'
+	#tag : 'Semantics'
 }
 
 { #category : 'accessing' }

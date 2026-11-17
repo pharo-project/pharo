@@ -7,9 +7,9 @@ It's the simplest change to the compiler that I could imagine that doesn't inter
 Class {
 	#name : 'OCTargetCompiler',
 	#superclass : 'OpalCompiler',
-	#category : 'OpalCompiler-Tests-Semantic',
+	#category : 'OpalCompiler-Tests-Semantics',
 	#package : 'OpalCompiler-Tests',
-	#tag : 'Semantic'
+	#tag : 'Semantics'
 }
 
 { #category : 'accessing' }

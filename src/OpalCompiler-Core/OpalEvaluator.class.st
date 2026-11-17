@@ -82,7 +82,7 @@ OpalEvaluator >> initialize [
 	super initialize.
 	logged := false.
 	bindings := #().
-	compiler := OpalCompiler new.
+	compiler := self class compiler.
 	compiler isScripting: true
 ]
 
