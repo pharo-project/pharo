@@ -15,6 +15,10 @@
 # - BOOTSTRAP_VMTARGET		# Location of the target VM
 #				  This can be set when a custom VM is to be 
 #				  used during bootstrap.
+# - BOOTSTRAP_CACHE_HIT		# 1 when bootstrap-cache.sh restored the output
+#				  of 3-prepare.sh, so 2-download.sh skips what
+#				  only 3-prepare.sh needs
+# - BOOTSTRAP_FORCE		# 1 to make bootstrap-cache.sh always miss
 #
 if [ -z ${BUILD_NUMBER+x} ]
 then
