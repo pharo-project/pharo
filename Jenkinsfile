@@ -170,17 +170,72 @@ def defineIsoTestStage(projectName, testPackages=""){
     }
 }
 
+// The bootstrap cache holds the output of 3-prepare.sh (see bootstrap/scripts/bootstrap-cache.sh).
+// Development branch builds always bootstrap and archive it; pull request builds only read it.
+def bootstrapBundleDirectory() {
+    return "build/bootstrap-bundle"
+}
+
+// The full name of the multibranch job that holds this branch or pull request
+def multibranchJobName() {
+    return env.JOB_NAME.substring(0, env.JOB_NAME.lastIndexOf('/'))
+}
+
+// Answers whether the output of 3-prepare.sh was restored from the last successful build of the target branch
+def restoreBootstrapCache() {
+    if (isDevelopmentBranch() || env.CHANGE_TARGET == null) {
+        currentBuild.description = "Full bootstrap"
+        return false
+    }
+    try {
+        // lastSuccessful() also accepts unstable builds, such as builds with failing tests
+        copyArtifacts(
+            projectName: "${multibranchJobName()}/${env.CHANGE_TARGET}",
+            selector: lastSuccessful(),
+            filter: "${bootstrapBundleDirectory()}/*",
+            optional: true)
+        def force = params.FORCE_BOOTSTRAP ? 1 : 0
+        // bootstrap-cache.sh exits with 0 on a hit, 1 on a miss and anything else on an error
+        def status = sh(returnStatus: true, script: "BOOTSTRAP_ARCH=64 BOOTSTRAP_FORCE=${force} bash ./bootstrap/scripts/bootstrap-cache.sh restore ${bootstrapBundleDirectory()}")
+        currentBuild.description = status == 0 ? "Bootstrap cache hit" : (status == 1 ? "Bootstrap cache miss" : "Bootstrap cache error")
+        return status == 0
+    } catch (org.jenkinsci.plugins.workflow.steps.FlowInterruptedException e) {
+        // The build was aborted: stop
+        throw e
+    } catch (e) {
+        // The cache only saves time: when it fails, bootstrap as on a miss
+        echo "Bootstrap cache error, running the full bootstrap: ${e}"
+        currentBuild.description = "Bootstrap cache error"
+        return false
+    }
+}
+
+def saveBootstrapCache() {
+    shell "BUILD_NUMBER=${BUILD_NUMBER} BOOTSTRAP_ARCH=64 bash ./bootstrap/scripts/bootstrap-cache.sh save ${bootstrapBundleDirectory()}"
+    archiveArtifacts artifacts: "${bootstrapBundleDirectory()}/*", fingerprint: true
+}
+
 def bootstrapImage(){
     cleanWs()
     try {
+        def cacheHit = false
         stage ("Fetch Requirements") {
             checkout scm
+            cacheHit = restoreBootstrapCache()
             // Stage 1 is to remove any artefacts, not required for Jenkins
-            shell "BUILD_NUMBER=${BUILD_NUMBER} BOOTSTRAP_ARCH=64 bash ./bootstrap/scripts/2-download.sh"
+            shell "BUILD_NUMBER=${BUILD_NUMBER} BOOTSTRAP_ARCH=64 BOOTSTRAP_CACHE_HIT=${cacheHit ? 1 : 0} bash ./bootstrap/scripts/2-download.sh"
         }
 
         stage ("Bootstrap") {
-            shell "BUILD_NUMBER=${BUILD_NUMBER} BOOTSTRAP_ARCH=64 bash ./bootstrap/scripts/3-prepare.sh"
+            if (cacheHit) {
+                echo "Bootstrap cache hit: skipping 3-prepare.sh"
+            } else {
+                shell "BUILD_NUMBER=${BUILD_NUMBER} BOOTSTRAP_ARCH=64 bash ./bootstrap/scripts/3-prepare.sh"
+                // Saved before 4-installMetacello.sh, which changes bootstrap.image in place
+                if (isDevelopmentBranch()) {
+                    saveBootstrapCache()
+                }
+            }
         }
 
         stage ("Metacello") {
@@ -270,7 +325,12 @@ def launchBenchmark(){
 }
 
 try{
-  properties([disableConcurrentBuilds()])
+  properties([
+    disableConcurrentBuilds(),
+    parameters([booleanParam(name: 'FORCE_BOOTSTRAP', defaultValue: false, description: 'Run the bootstrap even if the bootstrap cache matches')]),
+    // Lets pull request builds copy the bootstrap cache from development branch builds
+    copyArtifactPermission("${multibranchJobName()}/*")
+  ])
 
   // We run the whole process in 64 bits all the time now
   def architectures = ['64']
