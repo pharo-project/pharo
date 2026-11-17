@@ -2,7 +2,10 @@ Extension { #name : 'String' }
 
 { #category : '*Deprecated14' }
 String >> asUrl [
-	self deprecated: 'Use asZnUrl instead' transformWith: '`@rcv asUrl' -> '`@rcv asZnUrl'.
+	self
+		deprecated: 'Use asZnUrl instead'
+		in: #Pharo14
+		transformWith: '`@rcv asUrl' -> '`@rcv asZnUrl'.
 	^ self asZnUrl
 ]
 

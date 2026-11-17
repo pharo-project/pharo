@@ -3,7 +3,9 @@ Extension { #name : 'Date' }
 { #category : '*Deprecated14' }
 Date class >> fromString: aString [
 	"Answer an instance of created from a string with format mm.dd.yyyy or mm-dd-yyyy or mm/dd/yyyy"
-	self deprecated: 'Use Date>>#readFrom:pattern: specifying a concrete pattern instead.'.
+	self
+		deprecated: 'Use Date>>#readFrom:pattern: specifying a concrete pattern instead.'
+		in: #Pharo14.
 
 	^ self readFrom: aString readStream
 ]
@@ -16,7 +18,9 @@ Date class >> readFrom: aStream [
 		<year>-<month>-<day>			(1982-04-15) (ISO8601)"
 	| day month year parsedNumber prefix |
 	
-	self deprecated: 'Use Date>>#readFrom:pattern: specifying a concrete pattern instead.'.
+	self
+		deprecated: 'Use Date>>#readFrom:pattern: specifying a concrete pattern instead.'
+		in: #Pharo14.
 
 	
 	aStream peek = $-

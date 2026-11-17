@@ -5,6 +5,7 @@ RubScrolledTextModel >> text: atextOrString [
 
 	self
 		deprecated: 'You should use setText: or privateText: if you are really in the same class'
+		in: #Pharo14
 		transformWith: '`@receiver text: `@arg' -> '`@receiver setText: `@arg'.
 		
 			

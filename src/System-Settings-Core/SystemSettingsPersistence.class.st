@@ -15,7 +15,9 @@ Class {
 SystemSettingsPersistence class >> defaultPreferenceFileReference [
 
 	self
-		deprecated: 'Use SettingsManager class>>#defaultPreferencesFileReference instead. #Pharo15'
+		deprecated: 'Use SettingsManager class>>#defaultPreferencesFileReference instead.'
+		on: '2026-10-29'
+		in: #Pharo15
 		transformWith: '`@receiver defaultPreferenceFileReference' -> 'SettingsManager defaultPreferencesFileReference'.
 
 	^ SettingsManager defaultPreferencesFileReference
@@ -25,7 +27,9 @@ SystemSettingsPersistence class >> defaultPreferenceFileReference [
 SystemSettingsPersistence class >> resumeSystemSettings [
 
 	self
-		deprecated: 'Use SettingsManager class>>#resumeSystemSettings instead. #Pharo15'
+		deprecated: 'Use SettingsManager class>>#resumeSystemSettings instead.'
+		on: '2026-10-29'
+		in: #Pharo15
 		transformWith: '`@receiver resumeSystemSettings' -> 'SettingsManager resumeSystemSettings'.
 
 	SettingsManager resumeSystemSettings
@@ -35,7 +39,9 @@ SystemSettingsPersistence class >> resumeSystemSettings [
 SystemSettingsPersistence class >> storeIdentifier: aSettingIdentifier [
 
 	self
-		deprecated: 'Use SettingsManager>>#storeIdentifier: instead. #Pharo15'
+		deprecated: 'Use SettingsManager>>#storeIdentifier: instead.'
+		on: '2026-10-29'
+		in: #Pharo15
 		transformWith: '`@receiver storeIdentifier: `@aSettingIdentifier' -> 'SettingsManager forSystemSettings storeIdentifier: `@aSettingIdentifier'.
 
 	SettingsManager forSystemSettings storeIdentifier: aSettingIdentifier
@@ -45,7 +51,9 @@ SystemSettingsPersistence class >> storeIdentifier: aSettingIdentifier [
 SystemSettingsPersistence class >> storeSettingNodes [
 
 	self
-		deprecated: 'Use SettingsManager>>#storeSettings instead. #Pharo15'
+		deprecated: 'Use SettingsManager>>#storeSettings instead.'
+		on: '2026-10-29'
+		in: #Pharo15
 		transformWith: '`@receiver storeSettingNodes' -> 'SettingsManager forSystemSettings storeSettings'.
 
 	SettingsManager forSystemSettings storeSettings
@@ -55,7 +63,9 @@ SystemSettingsPersistence class >> storeSettingNodes [
 SystemSettingsPersistence class >> updateSettingNodes [
 
 	self
-		deprecated: 'Use SettingsManager>>#loadSettings instead. #Pharo15'
+		deprecated: 'Use SettingsManager>>#loadSettings instead.'
+		on: '2026-10-29'
+		in: #Pharo15
 		transformWith: '`@receiver updateSettingNodes' -> 'SettingsManager forSystemSettings loadSettings'.
 
 	SettingsManager forSystemSettings loadSettings

@@ -6,6 +6,9 @@ Time class >> primMillisecondClock [
 	 was last reset or rolled over. Answer zero if the primitive fails.
 	As an alternative you can use #primUTCMillisecondsClock which does not overflow."
 
-	self deprecated: 'Use #millisecondClockValue instead' transformWith: '`@rcv primMillisecondClock' -> '`@rcv millisecondClockValue'.
+	self
+		deprecated: 'Use #millisecondClockValue instead'
+		in: #Pharo14
+		transformWith: '`@rcv primMillisecondClock' -> '`@rcv millisecondClockValue'.
 	^ self millisecondClockValue
 ]

@@ -7,6 +7,7 @@ Process >> isActiveProcess [
 
 	self
 		deprecated: 'Please use #isActive instead'
+		in: #Pharo14
 		transformWith: '`@receiver isActiveProcess' -> '`@receiver isActive'.
 	^ self isActive
 ]

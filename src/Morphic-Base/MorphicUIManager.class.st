@@ -182,7 +182,10 @@ MorphicUIManager >> confirm: aStringOrText [
 	Answer true if the response is yes, false if no.
 	This is a modal question--the user must respond yes or no."
 
-	self deprecated: 'Use ConfirmationRequest signal: instead.'.
+	self
+		deprecated: 'Use ConfirmationRequest signal: instead.'
+		on: '2026-01-19'
+		in: #Pharo14.
 	^ self confirm: aStringOrText label: 'Question' translated
 ]
 

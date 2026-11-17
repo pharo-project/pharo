@@ -3,7 +3,9 @@ Extension { #name : 'String' }
 { #category : '*Deprecated14-Kernel' }
 String >> asDate [
 	"Many allowed forms, see Date>>#readFrom:"
-	self deprecated: 'Use Date>>#readFrom:pattern: specifying a concrete pattern instead.'.
+	self
+		deprecated: 'Use Date>>#readFrom:pattern: specifying a concrete pattern instead.'
+		in: #Pharo14.
 	^ Date fromString: self
 ]
 
