@@ -5,12 +5,12 @@ The settings I use are declared on my class side and read and write my class-sid
 Class {
 	#name : 'SettingsManagerTest',
 	#superclass : 'TestCase',
+	#instVars : [
+		'manager'
+	],
 	#classInstVars : [
 		'testValue',
 		'otherTestValue'
-	],
-	#instVars : [
-		'manager'
 	],
 	#category : 'System-Settings-Tests',
 	#package : 'System-Settings-Tests'
@@ -72,16 +72,6 @@ SettingsManagerTest >> tearDown [
 ]
 
 { #category : 'tests' }
-SettingsManagerTest >> testDefaultValueIsNotStored [
-
-	self class testValue: 1.
-
-	manager storeSetting: (manager settingNamed: #testValue).
-
-	self assertEmpty: self storedIdentifiers
-]
-
-{ #category : 'tests' }
 SettingsManagerTest >> testAllSystemSettingsCanBeBuilt [
 	"System settings are loaded at startup: every declaration must build with the settings model"
 
@@ -90,6 +80,16 @@ SettingsManagerTest >> testAllSystemSettingsCanBeBuilt [
 
 	self denyEmpty: settings.
 	self assertEmpty: (settings select: [ :each | each parentName notNil and: [ each hasParent not ] ])
+]
+
+{ #category : 'tests' }
+SettingsManagerTest >> testDefaultValueIsNotStored [
+
+	self class testValue: 1.
+
+	manager storeSetting: (manager settingNamed: #testValue).
+
+	self assertEmpty: self storedIdentifiers
 ]
 
 { #category : 'tests' }
