@@ -2124,17 +2124,6 @@ String >> lineCorrespondingToIndex: anIndex [
 ]
 
 { #category : 'accessing' }
-String >> lineCount [
-	"Answer the number of lines represented by the receiver, where every line delimiter CR, LF or CRLF pair adds one line."
-
-	| lineCount |
-	lineCount := 0.
-	self lineIndicesDo: [:start :endWithoutDelimiters :end |
-		lineCount := lineCount + 1].
-	^lineCount
-]
-
-{ #category : 'accessing' }
 String >> lineIndicesDo: aBlock [
 	"execute aBlock with 3 arguments for each line:
 	- start index of line
