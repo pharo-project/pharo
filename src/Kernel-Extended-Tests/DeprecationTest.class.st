@@ -6,6 +6,66 @@ Class {
 	#tag : 'Deprecation'
 }
 
+{ #category : 'helpers' }
+DeprecationTest >> callerIsTransformedWhenSending: aSelector [
+	"Compile a caller of aSelector in ExampleForDeprecationTest, run it with transformations active, and answer whether it now sends #newMessage instead."
+
+	| classFactory oldRaiseWarning oldActivateTransformations caller transformed |
+	classFactory := ClassFactoryForTestCase environment: SystemEnvironment new.
+	classFactory silentlyCompile: 'sendsDeprecatedMessage ^ self ' , aSelector in: ExampleForDeprecationTest.
+	[
+		oldRaiseWarning := Deprecation raiseWarning.
+		oldActivateTransformations := Deprecation activateTransformations.
+		Deprecation raiseWarning: false.
+		Deprecation activateTransformations: true.
+		ExampleForDeprecationTest new perform: #sendsDeprecatedMessage.
+		caller := ExampleForDeprecationTest compiledMethodAt: #sendsDeprecatedMessage.
+		transformed := (caller sendsSelector: #newMessage) and: [ (caller sendsSelector: aSelector) not ] ] ensure: [
+			Deprecation raiseWarning: oldRaiseWarning.
+			Deprecation activateTransformations: oldActivateTransformations.
+			ExampleForDeprecationTest removeSelector: #sendsDeprecatedMessage ].
+	^ transformed
+]
+
+{ #category : 'tests' }
+DeprecationTest >> testDeprecationInCompatibilityPeriodDoesNotTransform [
+
+	self deny: (self callerIsTransformedWhenSending: #deprecatedMessageWithTransformInCompatibilityPeriod)
+]
+
+{ #category : 'tests' }
+DeprecationTest >> testDeprecationMajorVersion [
+
+	self
+		assert: (Deprecation new
+			 version: #Pharo14;
+			 deprecationMajorVersion)
+		equals: 14.
+	self
+		assert: (Deprecation new
+			 version: 'pharo13';
+			 deprecationMajorVersion)
+		equals: 13.
+	self
+		assert: (Deprecation new
+			 version: #Pharo8;
+			 deprecationMajorVersion)
+		equals: 8.
+	self assert: (Deprecation new
+		 version: 'someversion';
+		 deprecationMajorVersion) isNil.
+	self assert: (Deprecation new
+		 version: '';
+		 deprecationMajorVersion) isNil.
+	self assert: Deprecation new deprecationMajorVersion isNil
+]
+
+{ #category : 'tests' }
+DeprecationTest >> testDeprecationWithoutVersionDoesNotTransform [
+
+	self deny: (self callerIsTransformedWhenSending: #deprecatedMessageWithTransformAndNoVersion)
+]
+
 { #category : 'tests' }
 DeprecationTest >> testMessageTextFromBlock [
 	| notification |
@@ -41,29 +101,6 @@ DeprecationTest >> testNoInfiniteLoopWhenShowWarningIsTrue [
 
 { #category : 'tests' }
 DeprecationTest >> testTransformingDeprecation [
-	<ignoreNotImplementedSelectors: #(sendsDeprecatedMessageWithTransform)>
-	| classFactory oldRaiseWarning oldActivateTransformations |
-	classFactory := ClassFactoryForTestCase environment: SystemEnvironment new.
-	classFactory 
-		silentlyCompile: 'sendsDeprecatedMessageWithTransform ^ self deprecatedMessageWithTransform'
-		in: ExampleForDeprecationTest.
-		
-	self assert: ((ExampleForDeprecationTest compiledMethodAt: #sendsDeprecatedMessageWithTransform) sendsSelector: #deprecatedMessageWithTransform).
-	self deny: ((ExampleForDeprecationTest compiledMethodAt: #sendsDeprecatedMessageWithTransform) sendsSelector: #newMessage).
-	
-	[ 
-		oldRaiseWarning := Deprecation raiseWarning.
-		oldActivateTransformations := Deprecation activateTransformations.
-		Deprecation raiseWarning: false.
-		Deprecation activateTransformations: true.
-		ExampleForDeprecationTest new sendsDeprecatedMessageWithTransform
-	] ensure: [
-			Deprecation raiseWarning: oldRaiseWarning.
-			Deprecation activateTransformations: oldActivateTransformations ].
-	
-	self deny: ((ExampleForDeprecationTest compiledMethodAt: #sendsDeprecatedMessageWithTransform) sendsSelector: #deprecatedMessageWithTransform).
-	self assert: ((ExampleForDeprecationTest compiledMethodAt: #sendsDeprecatedMessageWithTransform) sendsSelector: #newMessage).
 
-	ExampleForDeprecationTest 
-		removeSelector: #sendsDeprecatedMessageWithTransform
+	self assert: (self callerIsTransformedWhenSending: #deprecatedMessageWithTransform)
 ]
