@@ -8,7 +8,7 @@ Class {
 
 { #category : 'helpers' }
 DeprecationTest >> callerIsTransformedWhenSending: aSelector [
-	"Compile a caller of aSelector in ExampleForDeprecationTest, run it with transformations active, and answer whether it now sends #newMessage instead."
+	"Compile a caller of aSelector in ExampleForDeprecationTest, run it with transformations active, and answer whether it now sends #newMessage instead. The deprecation is handled here and its default action run explicitly, since on the Pharo CI SUnit makes a deprecation reaching it an error."
 
 	| classFactory oldRaiseWarning oldActivateTransformations caller transformed |
 	classFactory := ClassFactoryForTestCase environment: SystemEnvironment new.
@@ -18,7 +18,9 @@ DeprecationTest >> callerIsTransformedWhenSending: aSelector [
 		oldActivateTransformations := Deprecation activateTransformations.
 		Deprecation raiseWarning: false.
 		Deprecation activateTransformations: true.
-		ExampleForDeprecationTest new perform: #sendsDeprecatedMessage.
+		[ ExampleForDeprecationTest new perform: #sendsDeprecatedMessage ]
+			on: Deprecation
+			do: [ :deprecation | deprecation resume: deprecation defaultAction ].
 		caller := ExampleForDeprecationTest compiledMethodAt: #sendsDeprecatedMessage.
 		transformed := (caller sendsSelector: #newMessage) and: [ (caller sendsSelector: aSelector) not ] ] ensure: [
 			Deprecation raiseWarning: oldRaiseWarning.
@@ -90,25 +92,25 @@ DeprecationTest >> testMessageTextFromBlock [
 
 { #category : 'tests' }
 DeprecationTest >> testNoInfiniteLoopWhenShowWarningIsTrue [
-    "Regression test for https://github.com/pharo-project/pharo/issues/19396"
-    
-    | oldShowWarning oldActivateTransformations classFactory |
-	  <ignoreNotImplementedSelectors: #(sendsDeprecatedMessageWithTransform)>
-    classFactory := ClassFactoryForTestCase new.
-    classFactory
-        silentlyCompile: 'sendsDeprecatedMessageWithTransform ^ self deprecatedMessageWithTransform'
-        in: ExampleForDeprecationTest.
-    [
-        oldShowWarning := Deprecation showWarning.
-        oldActivateTransformations := Deprecation activateTransformations.
-        Deprecation showWarning: true.
-        Deprecation activateTransformations: true.
-        ExampleForDeprecationTest new sendsDeprecatedMessageWithTransform
-    ] ensure: [
-        Deprecation showWarning: oldShowWarning.
-        Deprecation activateTransformations: oldActivateTransformations ].
-    ExampleForDeprecationTest
-        removeSelector: #sendsDeprecatedMessageWithTransform
+	"Regression test for https://github.com/pharo-project/pharo/issues/19396"
+
+	<ignoreNotImplementedSelectors: #( sendsDeprecatedMessageWithTransform )>
+	| oldShowWarning oldActivateTransformations classFactory |
+	classFactory := ClassFactoryForTestCase new.
+	classFactory
+		silentlyCompile: 'sendsDeprecatedMessageWithTransform ^ self deprecatedMessageWithTransform'
+		in: ExampleForDeprecationTest.
+	[
+		oldShowWarning := Deprecation showWarning.
+		oldActivateTransformations := Deprecation activateTransformations.
+		Deprecation showWarning: true.
+		Deprecation activateTransformations: true.
+		[ ExampleForDeprecationTest new sendsDeprecatedMessageWithTransform ]
+			on: Deprecation
+			do: [ :deprecation | deprecation resume: deprecation defaultAction ] ] ensure: [
+			Deprecation showWarning: oldShowWarning.
+			Deprecation activateTransformations: oldActivateTransformations ].
+	ExampleForDeprecationTest removeSelector: #sendsDeprecatedMessageWithTransform
 ]
 
 { #category : 'tests' }
