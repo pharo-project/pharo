@@ -11,6 +11,17 @@ String >> endsWithDigit [
 ]
 
 { #category : '*Deprecated15-Kernel' }
+String >> isCapitalized [
+	"Return true if the first letter is capitalized"
+	
+	"'abc' isCapitalized >>> false"
+	"'Abc' isCapitalized >>> true"
+	
+	self ifEmpty: [ ^ false ].
+	^ self first isUppercase
+]
+
+{ #category : '*Deprecated15-Kernel' }
 String >> numericSuffix [
 	"'abc98' numericSuffix >>> 98"
 	"'98abc' numericSuffix >>> 0"
