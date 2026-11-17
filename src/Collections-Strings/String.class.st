@@ -1228,16 +1228,6 @@ String >> endsWithAColon [
 	^ self notEmpty and: [ self last == $: ]
 ]
 
-{ #category : 'testing' }
-String >> endsWithDigit [
-	"Answer whether the receiver's final character represents a digit."
-	"'foo10' endsWithDigit >>> true"
-	"'foo10foo' endsWithDigit >>> false"
-	"'foo1' endsWithDigit >>> true"
-
-	^ self notEmpty and: [self last isDigit]
-]
-
 { #category : 'converting' }
 String >> escapeCharacter: aCharacter [
 	"Returns a copy of the string doubling all occurence of aCharacter."
@@ -2310,14 +2300,6 @@ String >> numArgs [
 	^ 1
 ]
 
-{ #category : 'converting' }
-String >> numericSuffix [
-	"'abc98' numericSuffix >>> 98"
-	"'98abc' numericSuffix >>> 0"
-	
-	^ self stemAndNumericSuffix last
-]
-
 { #category : 'testing' }
 String >> occursInWithEmpty: prefix caseSensitive: aBoolean [
 	"Answer whether the receiver begins with the given prefix string.
@@ -2527,23 +2509,6 @@ String >> startsWithDigit [
 	"'11abc' startsWithDigit >>> true"
 
 	^ self size > 0 and: [self first isDigit]
-]
-
-{ #category : 'converting' }
-String >> stemAndNumericSuffix [
-	"Parse the receiver into a string-valued stem and a numeric-valued suffix."
-	
-	"'Fred2305' stemAndNumericSuffix >>> #('Fred' 2305)"
-
-	| stem suffix position |
-	stem := self.
-	suffix := 0.
-	position := 1.
-	[stem endsWithDigit and: [stem size > 1]] whileTrue:
-		[suffix :=  stem last digitValue * position + suffix.
-		position := position * 10.
-		stem := stem copyFrom: 1 to: stem size - 1].
-	^ { stem . suffix }
 ]
 
 { #category : 'storing' }
