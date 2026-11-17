@@ -21,6 +21,16 @@ ExampleForDeprecationTest >> deprecatedMessageWithTransform [
 ]
 
 { #category : 'helpers' }
+ExampleForDeprecationTest >> deprecatedMessageWithTransformAndNoDate [
+	"Deprecated in the previous Pharo version, without a date: this class is not kernel, so its compatibility period ends now."
+
+	self
+		deprecated: 'This method is part of the DeprecationTest.'
+		in: 'Pharo' , (SystemVersion current major - 1) printString
+		transformWith: '`@receiver deprecatedMessageWithTransformAndNoDate' -> '`@receiver newMessage'
+]
+
+{ #category : 'helpers' }
 ExampleForDeprecationTest >> deprecatedMessageWithTransformAndNoVersion [
 
 	self
