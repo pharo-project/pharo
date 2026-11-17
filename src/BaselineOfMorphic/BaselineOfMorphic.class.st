@@ -69,13 +69,13 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'Morphic-Widgets-Menubar'.
 		spec package: 'Morphic-Widgets-Tree'.
 		spec package: 'Morphic-Widgets-Windows'.
-		spec package: 'Morphic-Widgets-FastTable'.
+		spec package: 'Morphic-Widgets-FastTable' with: [ spec requires: #( 'Regex' ) ].
 
 		spec package: 'Morphic-Widgets-Taskbar-Tests'.
 		spec package: 'Morphic-Widgets-MissionControl-Tests'.
 
 		"Several packages depend on Rubric as a basic Morphic component"
-		spec package: 'Rubric'.
+		spec package: 'Rubric' with: [ spec requires: #( 'Regex' ) ].
 
 		spec baseline: 'NewValueHolder' with: [
 			spec
