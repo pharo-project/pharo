@@ -35,10 +35,3 @@ OCMethodNode >> latestUseOfVariableNamed: aSymbol [
 		matchesArgument: aSymbol do: block.
 	^ matcher executeTree: self initialAnswer: nil
 ]
-
-{ #category : '*Refactoring-Core' }
-OCMethodNode >> references: aVariableName [
-	"Return wether the variable named aVariable is accessed in read or write with the receiver."
-	
-	^ body references: aVariableName
-]
