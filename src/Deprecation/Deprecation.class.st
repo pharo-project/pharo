@@ -83,13 +83,19 @@ Deprecation >> deprecatedClass [
 
 { #category : 'accessing' }
 Deprecation >> deprecationMajorVersion [
-	"Answer the major Pharo version given with #in:, such as #Pharo14 or 'pharo13', or nil when no Pharo version was given."
+	"Answer the major Pharo version given with #in:, such as #Pharo14 or 'pharo13', or nil when no Pharo version was given. Deprecation belongs to the kernel, which has no regular expressions."
 
-	| matcher |
+	| string stream digits |
 	versionString ifNil: [ ^ nil ].
-	matcher := '[Pp]haro\s*(\d+)' asRegex.
-	(matcher search: versionString asString) ifFalse: [ ^ nil ].
-	^ (matcher subexpression: 2) asNumber
+	string := versionString asString asLowercase.
+	(string includesSubstring: 'pharo') ifFalse: [ ^ nil ].
+	stream := ReadStream on: string.
+	stream upToAll: 'pharo'.
+	stream skipSeparators.
+	digits := String streamContents: [ :out |
+		          [ stream atEnd not and: [ stream peek isDigit ] ] whileTrue: [ out nextPut: stream next ] ].
+	digits ifEmpty: [ ^ nil ].
+	^ digits asNumber
 ]
 
 { #category : 'handling' }
