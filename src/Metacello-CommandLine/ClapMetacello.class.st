@@ -89,11 +89,7 @@ ClapMetacello >> execute [
 	self usesMVS ifTrue: [ metacello mvs ].
 	self devs do: [ :each | metacello dev: each first repository: each second loads: each third ].
 	self shouldSignalErrorOnWarning ifTrue: [ metacello onWarning: [ :e | Error signal: e messageText in: e signalerContext ] ].
-	[ self groups ifEmpty: [ metacello load ] ifNotEmpty: [ metacello load: self groups ] ] ensure: [ "The only place that checks: a load stopped before resolving has no resolution"
-			metacello resolution ifNotNil: [ :resolution |
-					self inform: (self isVerbose
-							 ifTrue: [ resolution verboseReport ]
-							 ifFalse: [ resolution report ]) ] ].
+	self load: metacello.
 
 	self saveSessionIfAsked
 ]
@@ -113,12 +109,33 @@ ClapMetacello >> isVerbose [
 ]
 
 { #category : 'execution' }
+ClapMetacello >> load: aMetacello [
+	"Load aMetacello, then print the report of its resolution.
+	Resolution errors are an outcome of the command, not a crash: the report lists them, and the command fails without a stack trace. They are caught here because an error left unhandled quits a headless image before any ensure: block runs"
+
+	[ self groups ifEmpty: [ aMetacello load ] ifNotEmpty: [ aMetacello load: self groups ] ]
+		on: MetacelloResolutionError
+		do: [ :error |
+			self printReportOf: error resolution.
+			^ self exitFailure: 'Nothing was loaded: the resolution has errors (see the report above)' ].
+	self printReportOf: aMetacello resolution
+]
+
+{ #category : 'execution' }
 ClapMetacello >> metacelloScript [
 
 	| metacello |
 	metacello := Metacello new.
 	self addProjectTo: metacello.
 	self groups ifEmpty: [ metacello load ] ifNotEmpty: [ metacello load: self groups ]
+]
+
+{ #category : 'printing' }
+ClapMetacello >> printReportOf: aResolution [
+
+	self inform: (self isVerbose
+			 ifTrue: [ aResolution verboseReport ]
+			 ifFalse: [ aResolution report ])
 ]
 
 { #category : 'accessing' }
