@@ -17,15 +17,3 @@ WorldMorph class >> scaleFactor: aValue [
 		transformWith: '`@rcv scaleFactor: `@arg1' -> '`@rcv zoomFactor: `@arg1'.
 	^ self zoomFactor: aValue
 ]
-
-{ #category : '*Morphic-Deprecated' }
-WorldMorph >> scaleFactor: newZoomFactor [
-
-	self
-		deprecated: 'Use #zoomFactor: instead'
-		on: '20/12/2024'
-		in: 'pharo13'
-		transformWith:
-		'`@receiver scaleFactor: `@arg' -> '`@receiver zoomFactor: `@arg'.
-	self zoomFactor: newZoomFactor
-]
