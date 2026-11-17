@@ -21,11 +21,11 @@ MetacelloMVSRecordingPlatform class >> on: aPlatform recordingInto: aRecordedSou
 
 { #category : 'repositories' }
 MetacelloMVSRecordingPlatform >> createRepository: aRepositorySpec [
-	"The repository the image's platform makes, recorded when it answers another description than the written one: it was moved"
+	"The repository the image's platform makes, recorded when it lives at another place than the written one: it was moved. Places are compared, not descriptions: Iceberg describes the same repository in its own way (git@github.com:owner/name.git[v1.0.0])"
 
 	| repository |
 	repository := platform createRepository: aRepositorySpec.
-	repository description = aRepositorySpec description ifFalse: [
+	repository projectUrl = (super createRepository: aRepositorySpec) projectUrl ifFalse: [
 		recorded redirect: aRepositorySpec description to: repository description ].
 	^ repository
 ]

@@ -1,16 +1,16 @@
 "
-I am what reading the baseline of one version gave: its replaces, the findings, and what it requires, which depends on the groups loaded from it.
+I am one version of a project, with what its baseline declares: what it requires, which depends on the groups loaded from it, its replaces, and the findings of reading it. I do not depend on who asks for me: the candidates of that version share me.
 
 baselineClass: the BaselineOf class the sandbox compiled, installed nowhere; newProject builds from it the Metacello project that Metacello records from.
 versionSpec: the Metacello version spec of that class. referencesFor:into: expands groups with it, through the same walk Metacello records with (MetacelloVersionSpec>>#packageSpecsInLoadOrderFor:).
 repositoryDescription: where the baseline was read from (repository:version/path), where its packages are.
-references: what a load of the default groups requires. A reading told by hand (tests) has only these, whatever the groups.
+references: what a load of the default groups requires. A project version given by hand (tests) has only these, whatever the groups.
 replacements: project name -> repository string, from spec replace:with:.
 request: the request of the first candidate that read me; my findings are about it.
 findings: what reading the baseline found, the same whatever the groups.
 "
 Class {
-	#name : 'MetacelloMVSBaselineReading',
+	#name : 'MetacelloMVSProjectVersion',
 	#superclass : 'Object',
 	#instVars : [
 		'references',
@@ -26,52 +26,52 @@ Class {
 }
 
 { #category : 'instance creation' }
-MetacelloMVSBaselineReading class >> references: aCollection [
+MetacelloMVSProjectVersion class >> references: aCollection [
 
 	^ self new references: aCollection
 ]
 
 { #category : 'accessing' }
-MetacelloMVSBaselineReading >> add: aFinding [
+MetacelloMVSProjectVersion >> add: aFinding [
 
 	findings add: aFinding.
 	^ aFinding
 ]
 
 { #category : 'groups' }
-MetacelloMVSBaselineReading >> baselineClass [
-	"The BaselineOf class the sandbox compiled, installed nowhere; nil when the reading was told"
+MetacelloMVSProjectVersion >> baselineClass [
+	"The BaselineOf class the sandbox compiled, installed nowhere; nil when the project version was given by hand"
 
 	^ baselineClass
 ]
 
 { #category : 'groups' }
-MetacelloMVSBaselineReading >> baselineClass: aClass [
+MetacelloMVSProjectVersion >> baselineClass: aClass [
 
 	baselineClass := aClass.
 	versionSpec := aClass version spec
 ]
 
 { #category : 'accessing' }
-MetacelloMVSBaselineReading >> error: aKind text: aString [
+MetacelloMVSProjectVersion >> error: aKind text: aString [
 
 	^ self add: (MetacelloResolutionFinding error: aKind text: aString request: request)
 ]
 
 { #category : 'accessing' }
-MetacelloMVSBaselineReading >> findings [
+MetacelloMVSProjectVersion >> findings [
 
 	^ findings
 ]
 
 { #category : 'accessing' }
-MetacelloMVSBaselineReading >> hasErrors [
+MetacelloMVSProjectVersion >> hasErrors [
 
 	^ findings anySatisfy: [ :each | each isError ]
 ]
 
 { #category : 'initialization' }
-MetacelloMVSBaselineReading >> initialize [
+MetacelloMVSProjectVersion >> initialize [
 
 	super initialize.
 	references := #(  ).
@@ -80,26 +80,26 @@ MetacelloMVSBaselineReading >> initialize [
 ]
 
 { #category : 'groups' }
-MetacelloMVSBaselineReading >> newProject [
+MetacelloMVSProjectVersion >> newProject [
 	"A Metacello project of the baseline, whose packages come from where it was read: what Metacello records from"
 
 	^ baselineClass new initalizeProjectWithRepositoryDescription: { repositoryDescription }
 ]
 
 { #category : 'accessing' }
-MetacelloMVSBaselineReading >> references [
+MetacelloMVSProjectVersion >> references [
 
 	^ references
 ]
 
 { #category : 'accessing' }
-MetacelloMVSBaselineReading >> references: aCollection [
+MetacelloMVSProjectVersion >> references: aCollection [
 
 	references := aCollection asArray
 ]
 
 { #category : 'groups' }
-MetacelloMVSBaselineReading >> referencesFor: aCollectionOfNames into: aFindingsCollector [
+MetacelloMVSProjectVersion >> referencesFor: aCollectionOfNames into: aFindingsCollector [
 	"The project specs a load of the groups (or packages) aCollectionOfNames requires, the default ones when empty: what Metacello would record for that load, through includes and requires. A name the baseline does not declare (#missingGroup) is an error given to aFindingsCollector (anything that understands error:text:)"
 
 	versionSpec ifNil: [ ^ references ].
@@ -111,8 +111,8 @@ MetacelloMVSBaselineReading >> referencesFor: aCollectionOfNames into: aFindings
 ]
 
 { #category : 'groups' }
-MetacelloMVSBaselineReading >> referencesForGroups: aCollectionOfNames includingDefault: aBoolean into: aFindingsCollector [
-	"The projects a load of the groups aCollectionOfNames, plus the default ones when aBoolean, requires. Told readings answer their references whatever the groups"
+MetacelloMVSProjectVersion >> referencesForGroups: aCollectionOfNames includingDefault: aBoolean into: aFindingsCollector [
+	"The projects a load of the groups aCollectionOfNames, plus the default ones when aBoolean, requires. Project versions given by hand answer their references whatever the groups"
 
 	| names |
 	versionSpec ifNil: [ ^ references ].
@@ -122,51 +122,51 @@ MetacelloMVSBaselineReading >> referencesForGroups: aCollectionOfNames including
 ]
 
 { #category : 'accessing' }
-MetacelloMVSBaselineReading >> replacements [
+MetacelloMVSProjectVersion >> replacements [
 
 	^ replacements
 ]
 
 { #category : 'accessing' }
-MetacelloMVSBaselineReading >> replacements: aDictionary [
+MetacelloMVSProjectVersion >> replacements: aDictionary [
 
 	replacements := aDictionary
 ]
 
 { #category : 'groups' }
-MetacelloMVSBaselineReading >> repositoryDescription [
+MetacelloMVSProjectVersion >> repositoryDescription [
 	"Where the baseline was read from, as repository:version/path: where its packages are"
 
 	^ repositoryDescription
 ]
 
 { #category : 'groups' }
-MetacelloMVSBaselineReading >> repositoryDescription: aString [
+MetacelloMVSProjectVersion >> repositoryDescription: aString [
 
 	repositoryDescription := aString
 ]
 
 { #category : 'accessing' }
-MetacelloMVSBaselineReading >> request: aProjectRequest [
+MetacelloMVSProjectVersion >> request: aProjectRequest [
 	"The request of the first candidate that read me: the problems I find are about it"
 
 	request := aProjectRequest
 ]
 
 { #category : 'groups' }
-MetacelloMVSBaselineReading >> versionSpec [
+MetacelloMVSProjectVersion >> versionSpec [
 
 	^ versionSpec
 ]
 
 { #category : 'groups' }
-MetacelloMVSBaselineReading >> versionSpec: aMetacelloVersionSpec [
+MetacelloMVSProjectVersion >> versionSpec: aMetacelloVersionSpec [
 
 	versionSpec := aMetacelloVersionSpec
 ]
 
 { #category : 'accessing' }
-MetacelloMVSBaselineReading >> warning: aKind text: aString [
+MetacelloMVSProjectVersion >> warning: aKind text: aString [
 
 	^ self add: (MetacelloResolutionFinding warning: aKind text: aString request: request)
 ]

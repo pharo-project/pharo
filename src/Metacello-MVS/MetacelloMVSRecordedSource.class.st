@@ -9,7 +9,8 @@ Class {
 		'baselines',
 		'versions',
 		'versionFailures',
-		'redirects'
+		'redirects',
+		'unreadable'
 	],
 	#category : 'Metacello-MVS',
 	#package : 'Metacello-MVS'
@@ -24,12 +25,13 @@ MetacelloMVSRecordedSource >> addAll: aRecordedSource [
 
 { #category : 'versions' }
 MetacelloMVSRecordedSource >> baselineOf: aCandidate [
-	"What the baseline was when it was recorded"
+	"What the baseline of the project of aCandidate was when it was recorded, where it is read from (its repository at its version, or the description of its dev root); what made its repository unreadable there; or that it was not recorded"
 
-	^ baselines
-		  at: aCandidate repository -> aCandidate version string
-		  ifAbsent: [
-		  MetacelloMVSBaselineDefinitions error: #repositoryFailure text: 'Not recorded: the baseline of ' , aCandidate printString ]
+	^ baselines at: aCandidate repositoryDescription -> ('BaselineOf' , aCandidate project) ifAbsent: [
+			  unreadable
+				  at: aCandidate repositoryDescription
+				  ifAbsent: [
+				  MetacelloMVSBaselineDefinitions error: #repositoryFailure text: 'Not recorded: the baseline of ' , aCandidate printString ] ]
 ]
 
 { #category : 'initialization' }
@@ -40,6 +42,7 @@ MetacelloMVSRecordedSource >> initialize [
 	versionFailures := Dictionary new.
 	dates := Dictionary new.
 	baselines := Dictionary new.
+	unreadable := Dictionary new.
 	redirects := Dictionary new
 ]
 
@@ -51,6 +54,18 @@ MetacelloMVSRecordedSource >> problemsFrom: aCollectionOfTriples into: aBaseline
 ]
 
 { #category : 'building' }
+MetacelloMVSRecordedSource >> readFrom: aRepositoryDescription baseline: aBaselineDefinitions [
+	"A baseline read from aRepositoryDescription (a repository at a version or ref), kept by where it was read from and by its class: one repository can hold the baselines of several projects. One that could not be read (no baseline class known) is kept for where it was read from"
+
+	aBaselineDefinitions hasBaseline
+		ifTrue: [
+				baselines
+					at: aRepositoryDescription -> (aBaselineDefinitions definitions detect: [ :each | each isClassDefinition ]) className asString
+					put: aBaselineDefinitions ]
+		ifFalse: [ unreadable at: aRepositoryDescription put: aBaselineDefinitions ]
+]
+
+{ #category : 'building' }
 MetacelloMVSRecordedSource >> recordings [
 
 	^ {
@@ -58,6 +73,7 @@ MetacelloMVSRecordedSource >> recordings [
 		  versionFailures.
 		  dates.
 		  baselines.
+		  unreadable.
 		  redirects }
 ]
 
@@ -84,8 +100,9 @@ MetacelloMVSRecordedSource >> replayPlatform [
 
 { #category : 'building' }
 MetacelloMVSRecordedSource >> repository: aRepository at: aVersion baseline: aBaselineDefinitions [
+	"A baseline read from aRepository at aVersion (see readFrom:baseline:)"
 
-	baselines at: aRepository -> aVersion put: aBaselineDefinitions
+	self readFrom: aRepository , ':' , aVersion baseline: aBaselineDefinitions
 ]
 
 { #category : 'building' }
@@ -156,8 +173,9 @@ MetacelloMVSRecordedSource >> repository: aRepository versions: aCollection [
 
 { #category : 'printing' }
 MetacelloMVSRecordedSource >> storeBaseline: aBaselineDefinitions of: aRepository at: aVersion on: aStream [
+	"The baseline class and its own methods: the other classes of the baseline package are not read (see MetacelloMVSBaselineSandbox>>baselineClass)"
 
-	| problems |
+	| problems class |
 	problems := (aBaselineDefinitions problems collect: [ :each | each asArray ]) asArray.
 	aStream
 		crtab;
@@ -171,18 +189,19 @@ MetacelloMVSRecordedSource >> storeBaseline: aBaselineDefinitions of: aRepositor
 				print: problems;
 				nextPut: $;.
 			^ self ].
-	aBaselineDefinitions definitions detect: [ :each | each isClassDefinition ] ifFound: [ :class |
-			aStream
-				nextPutAll: ' class: ';
-				print: {
-						class className asString.
-						class superclassName asString.
-						class instVarNames asArray.
-						class classVarNames asArray.
-						class classInstVarNames asArray } ].
+	class := aBaselineDefinitions definitions detect: [ :each | each isClassDefinition ].
 	aStream
+		nextPutAll: ' class: ';
+		print: {
+				class className asString.
+				class superclassName asString.
+				class instVarNames asArray.
+				class classVarNames asArray.
+				class classInstVarNames asArray };
 		nextPutAll: ' methods: ';
-		print: ((aBaselineDefinitions definitions select: [ :each | each isMethodDefinition ]) collect: [ :each |
+		print:
+			((aBaselineDefinitions definitions select: [ :each | each isMethodDefinition and: [ each className = class className ] ])
+				 collect: [ :each |
 						 {
 							 each classIsMeta.
 							 each category asString.
@@ -236,11 +255,18 @@ MetacelloMVSRecordedSource >> storeOn: aStream [
 				nextPutAll: ' to: ';
 				print: (redirects at: written);
 				nextPut: $; ].
+	"Baselines are kept by where they are read from, repository:version, and by class"
 	(baselines keys sort: [ :a :b | a printString <= b printString ]) do: [ :key |
 			self
 				storeBaseline: (baselines at: key)
-				of: key key
-				at: key value
+				of: (key key copyUpToLast: $:)
+				at: (key key copyAfterLast: $:)
+				on: aStream ].
+	(unreadable keys sort: [ :a :b | a <= b ]) do: [ :key |
+			self
+				storeBaseline: (unreadable at: key)
+				of: (key copyUpToLast: $:)
+				at: (key copyAfterLast: $:)
 				on: aStream ].
 	aStream
 		crtab;

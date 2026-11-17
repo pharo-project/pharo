@@ -76,14 +76,14 @@ MetacelloUserRequest >> initialize [
 ]
 
 { #category : 'requirements' }
-MetacelloUserRequest >> isAboutRepository: aRepository [
-	"A finding about me is about the load as a whole, no repository"
+MetacelloUserRequest >> isAboutProject: aProjectName [
+	"A finding about me is about the load as a whole, no project"
 
 	^ false
 ]
 
 { #category : 'requirements' }
-MetacelloUserRequest >> isAboutSameRepositoryAs: aSubject [
+MetacelloUserRequest >> isAboutSameProjectAs: aSubject [
 
 	^ aSubject == self
 ]

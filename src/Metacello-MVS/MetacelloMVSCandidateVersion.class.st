@@ -9,7 +9,6 @@ Class {
 	#instVars : [
 		'resolvedProject',
 		'repository',
-		'path',
 		'version',
 		'requiredBy',
 		'request'
@@ -19,10 +18,10 @@ Class {
 }
 
 { #category : 'instance creation' }
-MetacelloMVSCandidateVersion class >> resolvedProject: aResolvedProject repository: aRepository path: aPathOrNil [
-	"A candidate for aResolvedProject, from aRepository (type://owner/name), its code at aPathOrNil inside it. Give it its version, and who required it"
+MetacelloMVSCandidateVersion class >> resolvedProject: aResolvedProject repository: aRepository [
+	"A candidate for aResolvedProject, from aRepository (type://owner/name, or a directory as described). Give it its version, and who required it"
 
-	^ self new setResolvedProject: aResolvedProject repository: aRepository path: aPathOrNil
+	^ self new setResolvedProject: aResolvedProject repository: aRepository
 ]
 
 { #category : 'testing' }
@@ -30,6 +29,13 @@ MetacelloMVSCandidateVersion >> appliesReplaces [
 	"Only the replaces of a root apply"
 
 	^ false
+]
+
+{ #category : 'accessing' }
+MetacelloMVSCandidateVersion >> baselineFrom: aSource [
+	"The Monticello definitions of my baseline, read from my repository as my version says"
+
+	^ version baselineOf: self from: aSource
 ]
 
 { #category : 'pins' }
@@ -70,21 +76,28 @@ MetacelloMVSCandidateVersion >> chainString [
 
 { #category : 'printing' }
 MetacelloMVSCandidateVersion >> displayName [
-	"How the report names me: my project and version (Famix v1.2.1)"
+	"How the report names me: my project and version (Famix v1.2.1), or the description of my dev root"
 
-	^ self project , ' ' , version string
+	^ self project , ' ' , version printString
 ]
 
-{ #category : 'findings' }
-MetacelloMVSCandidateVersion >> isAboutRepository: aRepository [
+{ #category : 'accessing' }
+MetacelloMVSCandidateVersion >> fileFormatFrom: aSource [
+	"The format of my packages, read from my repository as my version says"
 
-	^ repository = aRepository
+	^ version fileFormatOf: self from: aSource
 ]
 
-{ #category : 'findings' }
-MetacelloMVSCandidateVersion >> isAboutSameRepositoryAs: aSubject [
+{ #category : 'requiring' }
+MetacelloMVSCandidateVersion >> isAboutProject: aProjectName [
 
-	^ aSubject isAboutRepository: repository
+	^ self project = aProjectName
+]
+
+{ #category : 'requiring' }
+MetacelloMVSCandidateVersion >> isAboutSameProjectAs: aSubject [
+
+	^ aSubject isAboutProject: self project
 ]
 
 { #category : 'testing' }
@@ -129,7 +142,7 @@ MetacelloMVSCandidateVersion >> line [
 			  stream
 				  nextPutAll: self repository;
 				  space;
-				  nextPutAll: version string ]
+				  print: version ]
 ]
 
 { #category : 'printing' }
@@ -147,19 +160,12 @@ MetacelloMVSCandidateVersion >> mustReplace [
 ]
 
 { #category : 'accessing' }
-MetacelloMVSCandidateVersion >> path [
-	"The path of my code inside my repository, or nil"
-
-	^ path
-]
-
-{ #category : 'accessing' }
 MetacelloMVSCandidateVersion >> printOn: aStream [
 
 	aStream
 		nextPutAll: self repository;
 		space;
-		nextPutAll: version string
+		print: version
 ]
 
 { #category : 'printing' }
@@ -187,17 +193,9 @@ MetacelloMVSCandidateVersion >> repository [
 
 { #category : 'accessing' }
 MetacelloMVSCandidateVersion >> repositoryDescription [
-	"The Metacello repository description to load me from: my repository at my version, with my path"
+	"The Metacello repository description to load me from, as my version says, which also names the project version the graph keeps: my repository at my version (github://o/b:v1.0.0), or for a project in dev mode the description of its dev root as written. A project in dev mode replaces every request of it, so it is never read at a version too: the two kinds of keys never meet"
 
-	^ String streamContents: [ :stream |
-			  stream
-				  nextPutAll: repository;
-				  nextPut: $:;
-				  nextPutAll: version string.
-			  path ifNotNil: [ :aPath |
-					  stream
-						  nextPut: $/;
-						  nextPutAll: aPath ] ]
+	^ version descriptionOf: self
 ]
 
 { #category : 'accessing' }
@@ -247,11 +245,10 @@ MetacelloMVSCandidateVersion >> resolvedProject [
 ]
 
 { #category : 'initialization' }
-MetacelloMVSCandidateVersion >> setResolvedProject: aResolvedProject repository: aRepository path: aPathOrNil [
+MetacelloMVSCandidateVersion >> setResolvedProject: aResolvedProject repository: aRepository [
 
 	resolvedProject := aResolvedProject.
-	repository := aRepository.
-	path := aPathOrNil
+	repository := aRepository
 ]
 
 { #category : 'accessing' }

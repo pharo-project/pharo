@@ -1,6 +1,6 @@
 Class {
 	#name : 'MetacelloMVSRecordedSourceTest',
-	#superclass : 'MetacelloMVSBaselineReadingTest',
+	#superclass : 'MetacelloMVSProjectVersionTest',
 	#category : 'Metacello-MVS-Tests',
 	#package : 'Metacello-MVS-Tests'
 }
@@ -26,15 +26,15 @@ MetacelloMVSRecordedSourceTest >> replayOf: aRootString [
 { #category : 'tests' }
 MetacelloMVSRecordedSourceTest >> testReplaysAFailingBaseline [
 
-	| replayed reading |
+	| replayed projectVersion |
 	source repository: 'github://acme/Foo' versions: #( 'v1.0.0' ).
 	source
 		repository: 'github://acme/Foo'
 		at: 'v1.0.0'
 		baseline: (MetacelloMVSBaselineDefinitions error: #missingBaseline text: 'github://acme/Foo v1.0.0 has no BaselineOfFoo').
 	replayed := self replayOf: 'github://acme/Foo:v1.0.0'.
-	reading := (MetacelloMVSGraph on: replayed) readingOf: (self selectionOf: 'github://acme/Foo:v1.0.0' project: 'Foo').
-	self assert: (reading findings anySatisfy: [ :each | each isError and: [ each kind = #missingBaseline ] ])
+	projectVersion := (MetacelloMVSGraph on: replayed) projectVersionOf: (self selectionOf: 'github://acme/Foo:v1.0.0' project: 'Foo').
+	self assert: (projectVersion findings anySatisfy: [ :each | each isError and: [ each kind = #missingBaseline ] ])
 ]
 
 { #category : 'tests' }
@@ -70,7 +70,7 @@ MetacelloMVSRecordedSourceTest >> testReplaysTheResolution [
 { #category : 'tests' }
 MetacelloMVSRecordedSourceTest >> testStoresItsBaselines [
 
-	| recorded copy baseline reading |
+	| recorded copy baseline projectVersion |
 	recorded := MetacelloMVSRecordedSource new
 		            repository: 'github://acme/Foo' versions: #( 'v1.0.0' );
 		            repository: 'github://acme/Bar' failsWith: 'no network';
@@ -93,6 +93,34 @@ MetacelloMVSRecordedSourceTest >> testStoresItsBaselines [
 		assert: baseline problems first equals: #( #writtenPath #warning 'writes the path src' );
 		assert: (copy versionsOf: 'github://acme/Bar' ifFail: [ :text | text ]) equals: 'no network';
 		deny: (copy baselineOf: (self selectionOf: 'github://acme/Baz:v1.0.0' project: 'Baz')) hasBaseline.
-	reading := (MetacelloMVSGraph on: copy) readingOf: (self selectionOf: 'github://acme/Foo:v1.0.0' project: 'Foo').
-	self assert: (reading references collect: [ :each | self descriptionOf: each ]) asArray equals: #( 'github://acme/Bar:v1.0.0' )
+	projectVersion := (MetacelloMVSGraph on: copy) projectVersionOf: (self selectionOf: 'github://acme/Foo:v1.0.0' project: 'Foo').
+	self assert: (projectVersion references collect: [ :each | self descriptionOf: each ]) asArray equals: #( 'github://acme/Bar:v1.0.0' )
+]
+
+{ #category : 'tests' }
+MetacelloMVSRecordedSourceTest >> testStoresOnlyTheMethodsOfTheBaselineClass [
+	"Like PCRE2: its baseline package also holds a formatter, which the reading of the baseline never compiles"
+
+	| recorded definitions copy baseline |
+	definitions := (MetacelloMVSBaselineDefinitions
+		                baselineClassNamed: 'BaselineOfFoo'
+		                method: (self baselineRequiring: {  })
+		                repository: 'github://acme/Foo:v1.0.0') definitions asOrderedCollection.
+	definitions
+		add: ((MCClassDefinition named: 'FooFormatter')
+				 superclassName: #Object;
+				 category: 'BaselineOfFoo';
+				 yourself);
+		add: (MCMethodDefinition className: 'FooFormatter' selector: #format category: 'formatting' timeStamp: '' source: 'format
+	^ codeStream').
+	recorded := MetacelloMVSRecordedSource new
+		            repository: 'github://acme/Foo'
+		            at: 'v1.0.0'
+		            baseline: (MetacelloMVSBaselineDefinitions definitions: definitions repository: 'github://acme/Foo:v1.0.0');
+		            yourself.
+	copy := Smalltalk compiler evaluate: recorded storeString.
+	baseline := copy baselineOf: (self selectionOf: 'github://acme/Foo:v1.0.0' project: 'Foo').
+	self
+		assert: ((baseline definitions select: [ :each | each isMethodDefinition ]) collect: [ :each | each className ]) asArray
+		equals: #( 'BaselineOfFoo' )
 ]

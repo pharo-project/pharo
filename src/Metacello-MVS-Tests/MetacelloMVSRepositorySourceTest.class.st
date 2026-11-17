@@ -54,19 +54,28 @@ MetacelloMVSRepositorySourceTest >> testARepositoryWithoutVersionsAnswersNone [
 ]
 
 { #category : 'tests' }
+MetacelloMVSRepositorySourceTest >> testAVersionInFileTreeFormatIsAWarning [
+
+	repository
+		version: 'v1.0.0' baseline: self fooBaseline;
+		fileFormat: #filetree.
+	self assert: ((source baselineOf: (self candidateFor: 'github://acme/Foo:v1.0.0')) problems anySatisfy: [ :each |
+			 each first = #fileTreeFormat ])
+]
+
+{ #category : 'tests' }
+MetacelloMVSRepositorySourceTest >> testAVersionInTonelFormatHasNoWarning [
+
+	repository version: 'v1.0.0' baseline: self fooBaseline.
+	self assert: (source baselineOf: (self candidateFor: 'github://acme/Foo:v1.0.0')) problems isEmpty
+]
+
+{ #category : 'tests' }
 MetacelloMVSRepositorySourceTest >> testAVersionWithoutBaselineIsAnError [
 
 	repository version: 'v1.0.0' baseline: nil.
 	self assert: ((source baselineOf: (self candidateFor: 'github://acme/Foo:v1.0.0')) problems anySatisfy: [ :each |
 			 each first = #missingBaseline ])
-]
-
-{ #category : 'tests' }
-MetacelloMVSRepositorySourceTest >> testAWrittenPathIsAWarning [
-
-	repository version: 'v1.0.0' baseline: self fooBaseline.
-	self assert: ((source baselineOf: (self candidateFor: 'github://acme/Foo:v1.0.0/src')) problems anySatisfy: [ :each |
-			 each first = #writtenPath ])
 ]
 
 { #category : 'tests' }

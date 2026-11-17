@@ -336,6 +336,13 @@ MCGitBasedNetworkRepository >> asRepositorySpec [
 		  yourself
 ]
 
+{ #category : 'metacello' }
+MCGitBasedNetworkRepository >> baselineOf: aProjectName [
+	"The baseline at the ref my description names"
+
+	^ self baselineOf: aProjectName atVersion: projectVersion
+]
+
 { #category : 'accessing' }
 MCGitBasedNetworkRepository >> basicRepoPath [
 
@@ -530,6 +537,13 @@ MCGitBasedNetworkRepository >> projectPath: aProjectPath projectVersion: aProjec
 { #category : 'private' }
 MCGitBasedNetworkRepository >> projectTagsUrlFor: aProjectPath [
 	self subclassResponsibility
+]
+
+{ #category : 'metacello' }
+MCGitBasedNetworkRepository >> projectUrl [
+	"My description without the version and the path it names: type://owner/name"
+
+	^ self class basicDescription , '://' , self projectPath
 ]
 
 { #category : 'accessing' }

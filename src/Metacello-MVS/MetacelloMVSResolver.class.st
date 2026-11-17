@@ -14,7 +14,6 @@ Class {
 		'selected',
 		'visited',
 		'pending',
-		'projects',
 		'spellings',
 		'chronologyChecked',
 		'replacements',
@@ -25,8 +24,10 @@ Class {
 		'assumedInstalled',
 		'resolution',
 		'dropsUnused',
-		'rootRepositories',
-		'user'
+		'user',
+		'devUses',
+		'rootNames',
+		'siblings'
 	],
 	#category : 'Metacello-MVS',
 	#package : 'Metacello-MVS'
@@ -44,6 +45,15 @@ MetacelloMVSResolver >> addProjectOf: aCandidate to: aResolution [
 	aResolution add: (self resolvedProjectOf: aCandidate into: aResolution ifNone: [ ^ self ])
 ]
 
+{ #category : 'resolving' }
+MetacelloMVSResolver >> addRoot: aRootSpec [
+	"Count the project of aRootSpec among the roots, once: it must be in dev mode or name a repository with versions"
+
+	(aRootSpec isDev or: [ graph hasVersions: aRootSpec ifFail: [ :text | ^ self error: #repositoryFailure text: text on: user ] ])
+		ifTrue: [ (rootNames includes: (graph projectOf: aRootSpec)) ifFalse: [ rootNames add: (graph projectOf: aRootSpec) ] ]
+		ifFalse: [ self error: #invalidReference text: (self whyNoVersions: aRootSpec) on: user ]
+]
+
 { #category : 'metacello' }
 MetacelloMVSResolver >> addRoot: aCandidate to: aResolution [
 	"Add the resolved project of the root aCandidate to aResolution, with its own request first"
@@ -54,27 +64,50 @@ MetacelloMVSResolver >> addRoot: aCandidate to: aResolution [
 ]
 
 { #category : 'resolving' }
-MetacelloMVSResolver >> ask: aProjectSpec [
-	"Add the groups aProjectSpec asks (its loads, or the default ones) to those of its repository. Answer whether they grew"
+MetacelloMVSResolver >> alignSiblingsOf: aCandidate in: aRequirement [
+	"A repository is loaded at one version: the other projects selected from the repository of aCandidate are raised to its version, or aCandidate to theirs, the highest. Two majors of one repository are an error, and so are a ref (dev mode) and a version"
 
-	| repository loads asked size |
-	repository := graph repositoryUrlOf: aProjectSpec.
+	| names |
+	names := siblings at: aCandidate repository ifAbsentPut: [ Set new ].
+	names add: aCandidate project.
+	names copy do: [ :name |
+			| other |
+			other := selected at: name.
+			other version = aCandidate version ifFalse: [
+					(other version isSameMajorAs: aCandidate version) ifFalse: [
+							^ self
+								  error: #siblingConflict
+								  text: other displayName , ' and ' , aCandidate displayName , ' come from one repository, ' , aCandidate repository
+									  , ', at two versions that cannot be aligned'
+								  about: aCandidate
+								  in: aRequirement ].
+					other version < aCandidate version
+						ifTrue: [ self raise: other with: aCandidate in: aRequirement ]
+						ifFalse: [ "Selecting aCandidate raised aligns its repository again" ^ self raise: aCandidate with: other in: aRequirement ] ] ]
+]
+
+{ #category : 'resolving' }
+MetacelloMVSResolver >> ask: aProjectSpec [
+	"Add the groups aProjectSpec asks (its loads, or the default ones) to those of its project. Answer whether they grew"
+
+	| name loads asked size |
+	name := graph projectOf: aProjectSpec.
 	loads := aProjectSpec loads.
 	loads isEmpty ifTrue: [
-			(defaultAsked includes: repository) ifTrue: [ ^ false ].
-			defaultAsked add: repository.
+			(defaultAsked includes: name) ifTrue: [ ^ false ].
+			defaultAsked add: name.
 			^ true ].
-	asked := askedGroups at: repository ifAbsentPut: [ Set new ].
+	asked := askedGroups at: name ifAbsentPut: [ Set new ].
 	size := asked size.
 	asked addAll: loads.
 	^ asked size > size
 ]
 
 { #category : 'resolving' }
-MetacelloMVSResolver >> assumedInstalled: aCollectionOfRepositories [
-	"The repositories installed only by the legacy rule: their version is the registration's, unchecked"
+MetacelloMVSResolver >> assumedInstalled: aCollectionOfProjectNames [
+	"The projects installed only by the legacy rule: their version is the registration's, unchecked"
 
-	assumedInstalled := aCollectionOfRepositories asSet
+	assumedInstalled := aCollectionOfProjectNames asSet
 ]
 
 { #category : 'versions' }
@@ -83,8 +116,7 @@ MetacelloMVSResolver >> candidateFor: aProjectSpec version: aVersion requiredBy:
 
 	^ (MetacelloMVSCandidateVersion
 		   resolvedProject: (MetacelloResolvedProject projectSpec: aProjectSpec)
-		   repository: (graph repositoryUrlOf: aProjectSpec)
-		   path: (graph pathOf: aProjectSpec))
+		   repository: (graph repositoryUrlOf: aProjectSpec))
 		  version: aVersion;
 		  requiredBy: aRequester;
 		  request: aRequirement request;
@@ -131,17 +163,18 @@ MetacelloMVSResolver >> checkLocked: aDescription minimum: aMinimum against: aLo
 
 { #category : 'resolving' }
 MetacelloMVSResolver >> checkPin: aProjectSpec by: aCandidate in: aRequirement [
-	"A requirement of a repository whose selected version is locked in the registry: the lock settles it and is never changed. Answer whether aProjectSpec is settled by it"
+	"A requirement of a project whose selected version is locked in the registry: the lock settles it and is never changed. Answer whether aProjectSpec is settled by it"
 
 	| lock |
-	lock := selected at: (graph repositoryUrlOf: aProjectSpec) ifAbsent: [ ^ false ].
+	lock := selected at: (graph projectOf: aProjectSpec) ifAbsent: [ ^ false ].
 	lock isLocked ifFalse: [ ^ false ].
 	(self isVersioned: aProjectSpec) ifFalse: [ ^ false ].
 	self
 		checkLocked: (graph descriptionOf: aProjectSpec)
 		minimum: (self minimumOf: aProjectSpec)
 		against: lock
-		about: aCandidate in: aRequirement.
+		about: aCandidate
+		in: aRequirement.
 	^ true
 ]
 
@@ -149,19 +182,16 @@ MetacelloMVSResolver >> checkPin: aProjectSpec by: aCandidate in: aRequirement [
 MetacelloMVSResolver >> checkProjectOf: aCandidate in: aRequirement [
 	"One project comes from one repository: two forks of it cannot both be loaded. Answer whether aCandidate may be selected"
 
-	projects
-		at: aCandidate project
-		ifPresent: [ :other |
-				other repository = aCandidate repository ifFalse: [
-						self
-							error: #projectConflict
-							text:
-								'The project ' , aCandidate project , ' is required from two repositories: ' , aCandidate repository , ', and '
-								, other repository , ', required by ' , other chainLine
-							about: aCandidate
-							in: aRequirement.
-						^ false ] ]
-		ifAbsent: [ projects at: aCandidate project put: aCandidate ].
+	selected at: aCandidate project ifPresent: [ :other |
+			other repository = aCandidate repository ifFalse: [
+					self
+						error: #projectConflict
+						text:
+							'The project ' , aCandidate project , ' is required from two repositories: ' , aCandidate repository , ', and '
+							, other repository , ', required by ' , other chainLine
+						about: aCandidate
+						in: aRequirement.
+					^ false ] ].
 	^ true
 ]
 
@@ -208,21 +238,27 @@ MetacelloMVSResolver >> hasBaselineOf: aProjectSpec [
 
 { #category : 'metacello' }
 MetacelloMVSResolver >> installed: aDictionary [
-	"Repository -> the project spec the image loaded from it"
+	"Project name -> the project spec the image loaded it from"
+
 	installed := aDictionary
 ]
 
 { #category : 'resolving' }
 MetacelloMVSResolver >> installedCandidateFrom: aProjectSpec for: aCandidate in: aRequirement [
-	"The candidate for the version the image has of the repository of aCandidate (locked or not), required by the image. Asked only when it is installed at a version (#isInstalledAtAVersion:)"
-	^ (self candidateFor: aProjectSpec version: (MetacelloSemanticVersionNumber fromVersionString: (graph versionStringOf: aProjectSpec)) requiredBy: MetacelloImageRequest new in: aRequirement)
-		  in: [ :candidate | (self isLocked: candidate repository) ifTrue: [ candidate beLocked ] ];
+	"The candidate for the version the image has of the project of aCandidate (locked or not), required by the image. Asked only when it is installed at a version (#isInstalledAtAVersion:)"
+
+	^ (self
+		   candidateFor: aProjectSpec
+		   version: (MetacelloSemanticVersionNumber fromVersionString: (graph versionStringOf: aProjectSpec))
+		   requiredBy: MetacelloImageRequest new
+		   in: aRequirement)
+		  in: [ :candidate | (self isLocked: candidate project) ifTrue: [ candidate beLocked ] ];
 		  yourself
 ]
 
 { #category : 'metacello' }
 MetacelloMVSResolver >> installedFromRegistry [
-	"What the registry says the image has: repository -> the project spec each installed project was loaded from, the repositories locked, and those installed only by the legacy rule"
+	"What the registry says the image has: project name -> the project spec each installed project was loaded from, the projects locked, and those installed only by the legacy rule. A project loaded from a directory counts too: it is installed at no version"
 
 	| found locks assumed |
 	found := Dictionary new.
@@ -231,17 +267,22 @@ MetacelloMVSResolver >> installedFromRegistry [
 	MetacelloProjectRegistry registry registrations do: [ :registration |
 			registration isInstalled ifTrue: [
 					registration repositoryDescriptions do: [ :description |
-							| spec |
+							| spec name |
 							spec := graph specFor: description project: registration projectName loads: #(  ).
-							(graph hasVersions: spec) ifTrue: [
-									| repository |
-									repository := graph repositoryUrlOf: spec.
-									found at: repository put: spec.
-									registration locked ifTrue: [ locks add: repository ].
-									registration isInstalledByLegacyRule ifTrue: [ assumed add: repository ] ] ] ] ].
+							name := graph projectOf: spec.
+							found at: name put: spec.
+							registration locked ifTrue: [ locks add: name ].
+							registration isInstalledByLegacyRule ifTrue: [ assumed add: name ] ] ] ].
 	self installed: found.
 	self locked: locks.
 	self assumedInstalled: assumed
+]
+
+{ #category : 'dev mode' }
+MetacelloMVSResolver >> installedOf: aProjectName ifFound: aBlock [
+	"Give aBlock what the image has installed of the project aProjectName, from whatever repository. Nothing happens when it has none"
+
+	installed at: aProjectName ifPresent: [ :each | aBlock value: each ]
 ]
 
 { #category : 'versions' }
@@ -252,16 +293,20 @@ MetacelloMVSResolver >> isFloating: aProjectSpec [
 
 { #category : 'resolving' }
 MetacelloMVSResolver >> isInstalledAtAVersion: aProjectSpec [
-	"Whether what the image has installed, loaded from aProjectSpec, is at a semantic version, which can be compared with the versions asked. A branch or a commit is not"
+	"Whether what the image has installed, loaded from aProjectSpec, is at a semantic version, which can be compared with the versions asked. A branch, a commit or a directory is not"
+
+	"Only a repository with versions answers the version its description names (a git one): a directory names none"
+
+	(graph hasVersions: aProjectSpec ifFail: [ :why | false ]) ifFalse: [ ^ false ].
 	^ (graph versionStringOf: aProjectSpec)
 		  ifNil: [ false ]
 		  ifNotNil: [ :ref | MetacelloSemanticVersionNumber isSemanticVersion: ref ]
 ]
 
 { #category : 'resolving' }
-MetacelloMVSResolver >> isLocked: aRepository [
+MetacelloMVSResolver >> isLocked: aProjectName [
 
-	^ locked includes: aRepository
+	^ locked includes: aProjectName
 ]
 
 { #category : 'metacello' }
@@ -294,10 +339,10 @@ MetacelloMVSResolver >> keep: aFinding about: aCandidate [
 ]
 
 { #category : 'resolving' }
-MetacelloMVSResolver >> locked: aCollectionOfRepositories [
-	"The repositories whose installed version the registry locks"
+MetacelloMVSResolver >> locked: aCollectionOfProjectNames [
+	"The projects whose installed version the registry locks"
 
-	locked := aCollectionOfRepositories asSet
+	locked := aCollectionOfProjectNames asSet
 ]
 
 { #category : 'resolving' }
@@ -328,6 +373,27 @@ MetacelloMVSResolver >> minimumOf: aProjectSpec [
 	ref := graph versionStringOf: aProjectSpec.
 	(MetacelloSemanticVersionNumber isSeries: ref) ifTrue: [ ^ MetacelloSemanticVersionNumber fromSeries: ref ].
 	^ MetacelloSemanticVersionNumber fromVersionString: ref
+]
+
+{ #category : 'resolving' }
+MetacelloMVSResolver >> raise: aCandidate with: aSibling in: aRequirement [
+	"Select the project of aCandidate at the version of aSibling, a higher one of the same repository, asked by whoever asked aCandidate, with an info saying why"
+
+	| raised |
+	raised := (self
+		           candidateFor: aCandidate spec
+		           version: aSibling version
+		           requiredBy: aCandidate requiredBy
+		           in: aRequirement)
+		          request: aCandidate request;
+		          yourself.
+	self
+		record: #info
+		kind: #raisedWithSibling
+		text:
+		aCandidate displayName , ' is raised to ' , aSibling version printString , ' with ' , aSibling project , ', from one repository'
+		on: raised.
+	self select: raised in: aRequirement
 ]
 
 { #category : 'findings' }
@@ -381,28 +447,51 @@ MetacelloMVSResolver >> releasesOf: aRepository [
 
 { #category : 'resolving' }
 MetacelloMVSResolver >> replace: aDictionary about: aRootCandidate [
-	"The replaces of the root apply, each with a warning: a replaced project is pinned to the exact version of its replacement"
+	"The replaces of the root apply, each with a warning: a replaced project is pinned to the exact version of its replacement. A project in dev mode stays in dev mode"
 
-	aDictionary keysAndValuesDo: [ :name :repositoryString |
-			| spec |
-			spec := graph specFor: repositoryString project: name loads: #(  ).
-			(graph hasVersions: spec)
-				ifTrue: [
-						replacements at: name put: spec.
-						self warning: #replaced text: name , ' is replaced by ' , repositoryString on: aRootCandidate ]
-				ifFalse: [
-						self
-							error: #invalidReference
-							text: name , ' is replaced by ' , repositoryString printString , ', not a with versions repository'
-							on: aRootCandidate ] ]
+	aDictionary keysAndValuesDo: [ :name :repositoryString | self replace: name by: repositoryString about: aRootCandidate ]
+]
+
+{ #category : 'resolving' }
+MetacelloMVSResolver >> replace: aName by: aRepositoryString about: aRootCandidate [
+	"One replace of the root (see replace:about:)"
+
+	| spec |
+	spec := graph specFor: aRepositoryString project: aName loads: #(  ).
+	(replacements at: aName ifAbsent: [ spec ]) isDev ifTrue: [ ^ self ].
+	(graph hasVersions: spec ifFail: [ :text | ^ self error: #repositoryFailure text: text on: aRootCandidate ])
+		ifTrue: [
+				replacements at: aName put: spec.
+				self warning: #replaced text: aName , ' is replaced by ' , aRepositoryString on: aRootCandidate ]
+		ifFalse: [
+				self
+					error: #invalidReference
+					text: aName , ' is replaced by ' , aRepositoryString printString , ', not a with versions repository'
+					on: aRootCandidate ]
+]
+
+{ #category : 'dev mode' }
+MetacelloMVSResolver >> replaceByDev: aDevSpec [
+	"Put the project of aDevSpec in dev mode: it replaces every request of the project. Two roots putting one project in dev mode is an error"
+
+	| name |
+	name := graph projectOf: aDevSpec.
+	(replacements includesKey: name) ifTrue: [ ^ self error: #invalidReference text: name , ' is put in dev mode twice' on: user ].
+	replacements at: name put: aDevSpec
 ]
 
 { #category : 'resolving' }
 MetacelloMVSResolver >> replacementFor: aProjectSpec by: aCandidate in: aRequirement [
-	"The replacement of the project of aProjectSpec, if the root replaces it; a higher minimum than the replacement is ignored, with a warning"
+	"The replacement of the project of aProjectSpec, if a root replaces it, or aProjectSpec. A project in dev mode always replaces it, asking the same groups (none, for the default ones), and the request replaced is kept, to say what dev mode replaced; a higher minimum than another replacement is ignored, with a warning"
 
 	| replacement |
 	replacement := replacements at: (graph projectOf: aProjectSpec) ifAbsent: [ ^ aProjectSpec ].
+	replacement isDev ifTrue: [
+			(graph descriptionOf: aProjectSpec) = (graph descriptionOf: replacement) ifFalse: [
+				(devUses at: (graph projectOf: replacement) ifAbsentPut: [ OrderedCollection new ]) add: aProjectSpec -> aCandidate ].
+			^ (graph specFor: (graph descriptionOf: replacement) project: (graph projectOf: replacement) loads: aProjectSpec loads)
+				  beDev;
+				  yourself ].
 	(graph descriptionOf: aProjectSpec) = (graph descriptionOf: replacement) ifTrue: [ ^ aProjectSpec ].
 	((self isVersioned: aProjectSpec) and: [
 		 (self isVersioned: replacement) and: [ (self minimumOf: replacement) < (self minimumOf: aProjectSpec) ] ]) ifTrue: [
@@ -410,8 +499,22 @@ MetacelloMVSResolver >> replacementFor: aProjectSpec by: aCandidate in: aRequire
 				warning: #higherThanReplace
 				text: (graph descriptionOf: aProjectSpec) , ' asks for more than its replacement ' , (graph descriptionOf: replacement)
 					, ', which is kept'
-				about: aCandidate in: aRequirement ].
+				about: aCandidate
+				in: aRequirement ].
 	^ replacement
+]
+
+{ #category : 'dev mode' }
+MetacelloMVSResolver >> reportDevs [
+	"Each project in dev mode is an info saying what it replaced (Bloc at github://pharo-graphics/Bloc:master instead of v3.0.0 in Toplo v0.11.0)"
+
+	replacements keysAndValuesDo: [ :name :spec |
+			spec isDev ifTrue: [
+					self
+						record: #info
+						kind: #dev
+						text: (self textOfDev: name at: (graph descriptionOf: spec) replacing: (devUses at: name ifAbsent: [ #(  ) ]))
+						on: user ] ]
 ]
 
 { #category : 'upgrades' }
@@ -472,23 +575,42 @@ MetacelloMVSResolver >> reportUpgradesOf: aRequirement [
 
 { #category : 'resolving' }
 MetacelloMVSResolver >> require: aRequiredSpec by: aCandidate [
-	"Resolve one requirement, recorded as a MetacelloMVSRequirement and passed to what it calls, which attach their findings to it. aCandidate asked for it: a candidate version, or the user for a root. An error stops it there"
+	"Resolve one requirement, recorded as a MetacelloMVSRequirement and passed to what it calls, which attach their findings to it. aCandidate asked for it: a candidate version, or the user for a root. A project in dev mode is taken at its dev version (see requireDev:by:in:). An error stops it there"
 
-	| requirement spec repository version grew |
+	| requirement replaced spec repository version grew |
 	requirement := resolution addRequirement: (MetacelloMVSRequirement from: aCandidate asked: aRequiredSpec).
-	(graph hasVersions: aRequiredSpec) ifFalse: [
-		^ self error: #invalidReference text: (self whyNoVersions: aRequiredSpec) about: aCandidate in: requirement ].
-	spec := self spell: (self replacementFor: aRequiredSpec by: aCandidate in: requirement) by: aCandidate in: requirement.
+	"replacements holds both the root's replaces (spec replace:with:, an exact version) and the projects in dev mode: what comes back is aRequiredSpec when nothing replaces it, a replace, or a dev spec"
+	replaced := self replacementFor: aRequiredSpec by: aCandidate in: requirement.
+	replaced isDev ifTrue: [ ^ self requireDev: replaced by: aCandidate in: requirement ].
+	(graph hasVersions: replaced ifFail: [ :text | ^ self error: #repositoryFailure text: text about: aCandidate in: requirement ]) ifFalse: [
+			^ self
+				  error: #invalidReference
+				  text: (self whyNoVersions: replaced)
+				  about: aCandidate
+				  in: requirement ].
+	spec := self spell: replaced by: aCandidate in: requirement.
 	repository := graph repositoryUrlOf: spec.
 	requirement
 		reference: spec;
-		repository: repository.
+		repository: repository;
+		project: (graph projectOf: spec).
+	"Only a repository with versions gets here, a git one, so Monticello's parsing answers the path its description writes. Iceberg's repository would answer the path its project declares instead, written or not"
+	(MCRepository newRepositoryFromSpec: spec repositorySpecs first) repoPath ifNotEmpty: [ :written |
+			self
+				warning: #writtenPath
+				text: (graph descriptionOf: spec) , ' writes the path ' , written , ', ignored: Iceberg reads it from the project'
+				about: aCandidate
+				in: requirement ].
 	grew := self ask: spec.
 	(self checkPin: spec by: aCandidate in: requirement) ifTrue: [
-			grew ifTrue: [ self revisit: repository ].
+			grew ifTrue: [ self revisit: (graph projectOf: spec) ].
 			^ self ].
 	(self isVersioned: spec) ifFalse: [
-		^ self error: #unversionedReference text: (graph descriptionOf: spec) , ' names no version' about: aCandidate in: requirement ].
+			^ self
+				  error: #unversionedReference
+				  text: (graph descriptionOf: spec) , ' names no version'
+				  about: aCandidate
+				  in: requirement ].
 	(self isFloating: spec)
 		ifTrue: [
 				self
@@ -498,52 +620,103 @@ MetacelloMVSResolver >> require: aRequiredSpec by: aCandidate [
 					in: requirement ]
 		ifFalse: [
 				(MetacelloSemanticVersionNumber isCanonical: (graph versionStringOf: spec)) ifFalse: [
-					self
-						warning: #nonCanonicalVersion
-						text: (graph projectOf: spec) , ' ' , (graph versionStringOf: spec)
-						about: aCandidate
-						in: requirement ] ].
+						self
+							warning: #nonCanonicalVersion
+							text: (graph projectOf: spec) , ' ' , (graph versionStringOf: spec)
+							about: aCandidate
+							in: requirement ] ].
 	requirement minimum: (self minimumOf: spec).
-	version := self versionFor: spec requiredBy: aCandidate in: requirement ifNone: [ ^ self ].
+	version := self
+		           versionFor: spec
+		           requiredBy: aCandidate
+		           in: requirement
+		           ifNone: [ ^ self ].
 	(version isCanonical or: [ version string = (graph versionStringOf: spec) ]) ifFalse: [
 			self
 				warning: #nonCanonicalVersion
 				text: (graph projectOf: spec) , ' ' , version string , ', selected'
 				about: aCandidate
 				in: requirement ].
-	self requireVersion: (self candidateFor: spec version: version requiredBy: aCandidate in: requirement) in: requirement.
-	grew ifTrue: [ self revisit: repository ]
+	self
+		requireVersion: (self
+				 candidateFor: spec
+				 version: version
+				 requiredBy: aCandidate
+				 in: requirement)
+		in: requirement.
+	grew ifTrue: [ self revisit: (graph projectOf: spec) ]
+]
+
+{ #category : 'dev mode' }
+MetacelloMVSResolver >> requireDev: aDevSpec by: aRequester in: aRequirement [
+	"Select the project in dev mode at its dev version, without comparing versions: nothing replaces it. What the image has installed of it is an error, dev mode never replaces it, unless it was loaded from the same description: it is the one in dev mode"
+
+	| name grew |
+	name := graph projectOf: aDevSpec.
+	aRequirement
+		reference: aDevSpec;
+		repository: (graph repositoryUrlOf: aDevSpec);
+		project: name.
+	self installedOf: name ifFound: [ :installedOne |
+			(graph descriptionOf: installedOne) = (graph descriptionOf: aDevSpec) ifFalse: [
+					^ self
+						  error: #devInstalled
+						  text:
+						  name , ' is in dev mode at ' , (graph descriptionOf: aDevSpec) , ', but the image has '
+						  , (graph descriptionOf: installedOne)
+						  about: user
+						  in: aRequirement ] ].
+	grew := self ask: aDevSpec.
+	self
+		select: (self
+				 candidateFor: aDevSpec
+				 version: (MetacelloMVSDevVersion description: (graph descriptionOf: aDevSpec))
+				 requiredBy: aRequester
+				 in: aRequirement)
+		in: aRequirement.
+	grew ifTrue: [ self revisit: name ]
 ]
 
 { #category : 'resolving' }
 MetacelloMVSResolver >> requireVersion: aCandidate in: aRequirement [
-	"Each requirement can raise the selected version, never lower it. An installed version counts as a requirement, so that MVS never downgrades it. A version that is only assumed installed is reported with a warning."
-	(selected includesKey: aCandidate repository) ifFalse: [
-			installed at: aCandidate repository ifPresent: [ :each |
-					(self isInstalledAtAVersion: each) ifTrue: [
-							| installedCandidate |
-							installedCandidate := self installedCandidateFrom: each for: aCandidate in: aRequirement.
-							(assumedInstalled includes: aCandidate repository) ifTrue: [
-									self
-										warning: #assumedInstalled
-										text: installedCandidate printString
-											, ' is assumed installed: its packages are in the image, but it is not registered as loaded. Reload it to register it exactly'
-										about: installedCandidate in: aRequirement ].
-							self select: installedCandidate in: aRequirement ] ] ].
+	"Each requirement can raise the selected version, never lower it. An installed version counts as a requirement, so that MVS never downgrades it. A version that is only assumed installed is reported with a warning. What the image has installed at no version (a branch, a commit) cannot be compared with the version asked: an error, nothing replaces it"
+
+	(selected includesKey: aCandidate project) ifFalse: [
+			installed at: aCandidate project ifPresent: [ :each |
+					| installedCandidate |
+					(self isInstalledAtAVersion: each) ifFalse: [
+							^ self
+								  error: #installedAtNoVersion
+								  text: aCandidate project , ' is installed at ' , (graph descriptionOf: each) , ', not a version to compare with '
+									  , aCandidate version string , '; unload it, load the version you want, or put it in dev mode (--dev) at ' , (graph descriptionOf: each)
+								  about: aCandidate requiredBy
+								  in: aRequirement ].
+					installedCandidate := self installedCandidateFrom: each for: aCandidate in: aRequirement.
+					(assumedInstalled includes: aCandidate project) ifTrue: [
+							self
+								warning: #assumedInstalled
+								text: installedCandidate printString
+									,
+									' is assumed installed: its packages are in the image, but it is not registered as loaded. Reload it to register it exactly'
+								about: installedCandidate
+								in: aRequirement ].
+					self select: installedCandidate in: aRequirement ] ].
 	self select: aCandidate in: aRequirement
 ]
 
 { #category : 'metacello' }
 MetacelloMVSResolver >> resolutionOf: aResolution [
 	"aResolution, the walk done, for Metacello to record: when it has no errors, every selected project, the roots first in their order, with the requests of selected versions (each root's own first)"
+
 	| roots |
 	aResolution hasErrors ifTrue: [ ^ aResolution ].
 	roots := aResolution rootCandidates.
 	roots do: [ :candidate | self addRoot: candidate to: aResolution ].
-	aResolution buildList valuesDo: [ :candidate | (roots includes: candidate) ifFalse: [ self addProjectOf: candidate to: aResolution ] ].
+	aResolution buildList valuesDo: [ :candidate |
+		(roots includes: candidate) ifFalse: [ self addProjectOf: candidate to: aResolution ] ].
 	aResolution requirements do: [ :requirement |
 			(self isRequestOfASelectedVersion: requirement in: aResolution) ifTrue: [
-				(aResolution buildList at: requirement repository) resolvedProject addRequest: requirement request ] ].
+				(aResolution buildList at: requirement project) resolvedProject addRequest: requirement request ] ].
 	^ aResolution
 ]
 
@@ -563,23 +736,21 @@ MetacelloMVSResolver >> resolve: aRepositoryString project: aProjectName loads: 
 
 { #category : 'resolving' }
 MetacelloMVSResolver >> resolveRoots: aCollectionOfProjectSpecs [
-	"Walk the requirements from each root aCollectionOfProjectSpecs names, in order, as far as possible and answer the MetacelloMVSResolution: the build list, the requirements met and the findings. The user requires the roots. Each project is read for the union of the groups its dependents ask. At the end, the projects nobody selected uses are dropped (see dropUnused:), and the newer versions the baselines could ask for are reported as infos (see reportUpgrades)"
+	"Walk the requirements from each root aCollectionOfProjectSpecs names, in order, as far as possible and answer the MetacelloMVSResolution: the build list, the requirements met and the findings. The user requires the roots. A root marked dev replaces its project (see MetacelloProjectSpec>>beDev). Each project is read for the union of the groups its dependents ask. At the end, the projects nobody selected uses are dropped (see dropUnused:), what dev mode did is said (see reportDevs), and the newer versions the baselines could ask for are reported as infos (see reportUpgrades)"
 
 	aCollectionOfProjectSpecs ifEmpty: [
 			self error: #invalidReference text: 'Nothing to load: no root' on: user.
 			^ resolution ].
-	aCollectionOfProjectSpecs do: [ :root |
-			(graph hasVersions: root)
-				ifTrue: [
-				(rootRepositories includes: (graph repositoryUrlOf: root)) ifFalse: [ rootRepositories add: (graph repositoryUrlOf: root) ] ]
-				ifFalse: [ self error: #invalidReference text: (self whyNoVersions: root) on: user ] ].
+	aCollectionOfProjectSpecs do: [ :spec | spec isDev ifTrue: [ self replaceByDev: spec ] ].
+	aCollectionOfProjectSpecs do: [ :spec | self addRoot: (replacements at: (graph projectOf: spec) ifAbsent: [ spec ]) ].
 	resolution hasErrors ifTrue: [ ^ resolution ].
-	resolution rootRepositories: rootRepositories.
+	resolution rootNames: rootNames.
 	aCollectionOfProjectSpecs do: [ :spec | self require: spec by: user ].
 	[ pending isEmpty ] whileFalse: [ self visit: pending removeFirst ].
 	resolution buildList: (dropsUnused
 			 ifTrue: [ self usedIn: selected ]
 			 ifFalse: [ selected ]).
+	self reportDevs.
 	self reportUpgrades.
 	^ resolution
 ]
@@ -595,9 +766,9 @@ MetacelloMVSResolver >> resolveRoots: someProjectSpecs engine: anEngine [
 MetacelloMVSResolver >> resolvedProjectOf: aCandidate into: aResolution ifNone: aBlock [
 	"The resolved project of aCandidate, given its spec at its version, its project built from the baseline read in the sandbox, so that Metacello records it without loading its BaselineOf. Its BaselineOf is installed after the load, unless the image has it from there or it is pinned. When the baseline fails, the error is recorded and aBlock answers"
 
-	| reading project spec resolved |
-	reading := graph readingOf: aCandidate.
-	project := [ reading newProject ]
+	| projectVersion project spec resolved |
+	projectVersion := graph projectVersionOf: aCandidate.
+	project := [ projectVersion newProject ]
 		           on: Error
 		           do: [ :error |
 				           aResolution addFinding: (MetacelloResolutionFinding
@@ -608,7 +779,7 @@ MetacelloMVSResolver >> resolvedProjectOf: aCandidate into: aResolution ifNone: 
 	spec := (MetacelloProjectSpec project: project)
 		        name: aCandidate project;
 		        className: 'BaselineOf' , aCandidate project;
-		        repository: reading repositoryDescription;
+		        repository: projectVersion repositoryDescription;
 		        yourself.
 	resolved := aCandidate resolvedProject.
 	resolved changeVersionTo: spec.
@@ -617,21 +788,22 @@ MetacelloMVSResolver >> resolvedProjectOf: aCandidate into: aResolution ifNone: 
 ]
 
 { #category : 'resolving' }
-MetacelloMVSResolver >> revisit: aRepository [
-	"The groups asked of aRepository grew: read its selected version again for them, unless it is still to be visited"
+MetacelloMVSResolver >> revisit: aProjectName [
+	"The groups asked of aProjectName grew: read its selected version again for them, unless it is still to be visited"
 
 	| selection |
-	selection := selected at: aRepository ifAbsent: [ ^ self ].
-	((visited includes: aRepository -> selection version) and: [ (pending includes: selection) not ]) ifTrue: [
+	selection := selected at: aProjectName ifAbsent: [ ^ self ].
+	((visited includes: aProjectName -> selection version) and: [ (pending includes: selection) not ]) ifTrue: [
 		pending add: selection ]
 ]
 
 { #category : 'resolving' }
 MetacelloMVSResolver >> select: aCandidate in: aRequirement [
+	"Select aCandidate unless its project has a higher version of its major already, then align the other projects of its repository with the version selected (see alignSiblingsOf:in:). Each version is visited once"
 
 	(self checkProjectOf: aCandidate in: aRequirement) ifFalse: [ ^ self ].
 	selected
-		at: aCandidate repository
+		at: aCandidate project
 		ifPresent: [ :current |
 				current isLocked ifTrue: [
 						^ self
@@ -640,12 +812,13 @@ MetacelloMVSResolver >> select: aCandidate in: aRequirement [
 							  against: current
 							  about: aCandidate
 							  in: aRequirement ].
-				current version major = aCandidate version major ifFalse: [
+				(current version isSameMajorAs: aCandidate version) ifFalse: [
 					^ self majorConflictOf: aCandidate against: current in: aRequirement ].
-				current version < aCandidate version ifTrue: [ selected at: aCandidate repository put: aCandidate ] ]
-		ifAbsent: [ selected at: aCandidate repository put: aCandidate ].
-	(visited includes: aCandidate repository -> aCandidate version) ifTrue: [ ^ self ].
-	visited add: aCandidate repository -> aCandidate version.
+				current version < aCandidate version ifTrue: [ selected at: aCandidate project put: aCandidate ] ]
+		ifAbsent: [ selected at: aCandidate project put: aCandidate ].
+	(selected at: aCandidate project) == aCandidate ifTrue: [ self alignSiblingsOf: aCandidate in: aRequirement ].
+	(visited includes: aCandidate project -> aCandidate version) ifTrue: [ ^ self ].
+	visited add: aCandidate project -> aCandidate version.
 	pending add: aCandidate
 ]
 
@@ -659,7 +832,6 @@ MetacelloMVSResolver >> setGraph: aGraph [
 	assumedInstalled := Set new.
 	dropsUnused := true.
 	selected := Dictionary new.
-	projects := Dictionary new.
 	spellings := Dictionary new.
 	replacements := Dictionary new.
 	chronologyChecked := Set new.
@@ -668,7 +840,9 @@ MetacelloMVSResolver >> setGraph: aGraph [
 	askedGroups := Dictionary new.
 	defaultAsked := Set new.
 	requiredFrom := Dictionary new.
-	rootRepositories := OrderedCollection new.
+	devUses := OrderedDictionary new.
+	siblings := Dictionary new.
+	rootNames := OrderedCollection new.
 	user := MetacelloUserRequest new.
 	resolution := MetacelloMVSResolution new
 ]
@@ -689,6 +863,22 @@ MetacelloMVSResolver >> spell: aProjectSpec by: aCandidate in: aRequirement [
 		  specFor: first , ((graph descriptionOf: aProjectSpec) allButFirst: repository size)
 		  project: (graph projectOf: aProjectSpec)
 		  loads: aProjectSpec loads
+]
+
+{ #category : 'dev mode' }
+MetacelloMVSResolver >> textOfDev: aName at: aRepositoryString replacing: someUses [
+	"aName at aRepositoryString, and instead of what each request it replaced asked: v3.0.0 in Toplo v0.11.0"
+
+	| replaced |
+	replaced := someUses collect: [ :each |
+			            String streamContents: [ :stream | "A request that writes no ref after its repository names no version"
+					            stream
+						            nextPutAll: ((graph versionStringOf: each key) ifNil: [ 'no version' ]);
+						            nextPutAll: ' in ';
+						            nextPutAll: each value displayName ] ].
+	replaced := replaced asSet asSortedCollection asArray.
+	replaced ifEmpty: [ ^ aName , ' at ' , aRepositoryString ].
+	^ aName , ' at ' , aRepositoryString , ' instead of ' , (', ' join: replaced)
 ]
 
 { #category : 'upgrades' }
@@ -717,16 +907,15 @@ MetacelloMVSResolver >> usedIn: aBuildList [
 	| used toVisit |
 	used := Dictionary new.
 	toVisit := OrderedCollection new.
-	rootRepositories do: [ :each | (aBuildList includesKey: each) ifTrue: [ toVisit add: each ] ].
+	rootNames do: [ :each | (aBuildList includesKey: each) ifTrue: [ toVisit add: each ] ].
 	[ toVisit isEmpty ] whileFalse: [
-			| repository candidate |
-			repository := toVisit removeFirst.
-			candidate := aBuildList at: repository.
-			(used includesKey: repository) ifFalse: [
-					used at: repository put: candidate.
+			| name candidate |
+			name := toVisit removeFirst.
+			candidate := aBuildList at: name.
+			(used includesKey: name) ifFalse: [
+					used at: name put: candidate.
 					resolution requirements do: [ :each |
-						((each from isSameVersionAs: candidate) and: [ aBuildList includesKey: each repository ]) ifTrue: [
-							toVisit add: each repository ] ] ] ].
+						((each from isSameVersionAs: candidate) and: [ aBuildList includesKey: each project ]) ifTrue: [ toVisit add: each project ] ] ] ].
 	^ used
 ]
 
@@ -756,28 +945,28 @@ MetacelloMVSResolver >> versionFor: aProjectSpec requiredBy: aCandidate in: aReq
 
 { #category : 'resolving' }
 MetacelloMVSResolver >> visit: aCandidate [
-	"Read the baseline of the version of aCandidate for the groups asked of its repository: its problems become findings of the resolution, the root's replaces apply, and each project spec it requires is required, once per version"
+	"Read the baseline of the version of aCandidate for the groups asked of its project: its problems become findings of the resolution, the root's replaces apply, and each project spec it requires is required, once per version"
 
-	| reading found specs already |
-	reading := graph readingOf: aCandidate.
-	found := MetacelloMVSBaselineReading new
+	| projectVersion found specs already |
+	projectVersion := graph projectVersionOf: aCandidate.
+	found := MetacelloMVSProjectVersion new
 		         request: aCandidate request;
 		         yourself.
-	specs := reading
-		         referencesForGroups: (askedGroups at: aCandidate repository ifAbsent: [ #(  ) ])
-		         includingDefault: (defaultAsked includes: aCandidate repository)
+	specs := projectVersion
+		         referencesForGroups: (askedGroups at: aCandidate project ifAbsent: [ #(  ) ])
+		         includingDefault: (defaultAsked includes: aCandidate project)
 		         into: found.
-	reading findings , found findings do: [ :each | self keep: each about: aCandidate ].
+	projectVersion findings , found findings do: [ :each | self keep: each about: aCandidate ].
 	aCandidate mustReplace
-		ifTrue: [ self replace: reading replacements about: aCandidate ]
+		ifTrue: [ self replace: projectVersion replacements about: aCandidate ]
 		ifFalse: [
-				reading replacements ifNotEmpty: [ :replaces |
+				projectVersion replacements ifNotEmpty: [ :replaces |
 						self
 							warning: #ignoredReplace
 							text: 'The baseline of ' , aCandidate printString , ' replaces ' , (', ' join: replaces keys sorted)
 								, ', ignored: only the replaces of the root apply'
 							on: aCandidate ] ].
-	already := requiredFrom at: aCandidate repository -> aCandidate version ifAbsentPut: [ Set new ].
+	already := requiredFrom at: aCandidate project -> aCandidate version ifAbsentPut: [ Set new ].
 	specs do: [ :each |
 			| key |
 			key := each repositoryDescriptions asArray -> each loads.
@@ -811,11 +1000,11 @@ MetacelloMVSResolver >> warning: aKind text: aString on: aSubject [
 
 { #category : 'resolving' }
 MetacelloMVSResolver >> whyNoVersions: aProjectSpec [
-	"Why aProjectSpec names no repository with versions: several repositories, or one that has no versions"
+	"Why aProjectSpec names no repository with versions: several repositories, or one that has no versions, which only dev mode takes"
 
 	| descriptions |
 	descriptions := aProjectSpec repositoryDescriptions.
 	descriptions size = 1 ifFalse: [
 		^ (graph projectOf: aProjectSpec) printString , ' declares ' , descriptions size printString , ' repositories instead of one' ].
-	^ descriptions first printString , ' is not a repository with versions'
+	^ descriptions first printString , ' has no versions; take it in dev mode (--dev)'
 ]

@@ -265,6 +265,13 @@ MetacelloSemanticVersionNumber >> approximateBase [
 	^base
 ]
 
+{ #category : 'resolving' }
+MetacelloSemanticVersionNumber >> baselineOf: aCandidate from: aSource [
+	"The Monticello definitions of the baseline of aCandidate at me, from the repository aSource keeps for its project"
+
+	^ (aSource repositoryAt: aCandidate repository) baselineOf: aCandidate project atVersion: self string
+]
+
 { #category : 'accessing' }
 MetacelloSemanticVersionNumber >> buildVersion [
     buildVersion ifNil: [ buildVersion := #() ].
@@ -372,6 +379,13 @@ MetacelloSemanticVersionNumber >> decrementNormalVersionAt: index [
     ifTrue: [ col at: index put: int - 1 ]
 ]
 
+{ #category : 'resolving' }
+MetacelloSemanticVersionNumber >> descriptionOf: aCandidate [
+	"The Metacello repository description to load aCandidate at me: its repository at me. No path: Iceberg reads where the code is from the project"
+
+	^ aCandidate repository , ':' , self string
+]
+
 { #category : 'enumerating' }
 MetacelloSemanticVersionNumber >> do: aBlock [ 
 	"Refer to the comment in Collection|do:."
@@ -392,6 +406,19 @@ MetacelloSemanticVersionNumber >> do: elementBlock separatedBy: separatorBlock [
 			ifTrue: [beforeFirst := false]
 			ifFalse: [separatorBlock value].
 		elementBlock value: each]
+]
+
+{ #category : 'resolving' }
+MetacelloSemanticVersionNumber >> fileFormatOf: aCandidate from: aSource [
+	"The format of the packages of aCandidate at me, as the repository aSource keeps for its project tells"
+
+	^ (aSource repositoryAt: aCandidate repository) fileFormatAt: self string
+]
+
+{ #category : 'resolving' }
+MetacelloSemanticVersionNumber >> hasMajor: anInteger [
+
+	^ self major = anInteger
 ]
 
 { #category : 'comparing' }
@@ -418,6 +445,13 @@ MetacelloSemanticVersionNumber >> isCanonical [
 MetacelloSemanticVersionNumber >> isPrerelease [
 
 	^ self preReleaseVersion isNotEmpty
+]
+
+{ #category : 'resolving' }
+MetacelloSemanticVersionNumber >> isSameMajorAs: aVersion [
+	"Whether aVersion, of the same repository, can replace me or be replaced by me: the same major"
+
+	^ aVersion hasMajor: self major
 ]
 
 { #category : 'versions' }
