@@ -506,18 +506,24 @@ SUnitTest >> testHangedTestDueToFailedChildProcess [
 
 { #category : 'testing' }
 SUnitTest >> testIgnoreDeprecationWarnings [
+
 	| oldRaiseWarning oldShowWarning reachedHere |
 	"save old state to recover it later"
 	oldRaiseWarning := Deprecation raiseWarning.
-	oldShowWarning :=  Deprecation showWarning.
+	oldShowWarning := Deprecation showWarning.
 	reachedHere := false.
-	[ Deprecation raiseWarning: false.
-	  Deprecation showWarning: false.
-	self deprecatedMessage.
-	reachedHere := true.
-	self assert: true. ]
-		ensure: [ Deprecation raiseWarning: oldRaiseWarning. Deprecation showWarning: oldRaiseWarning ].
-	"we reached reachedHere".
+	[
+		Deprecation raiseWarning: false.
+		Deprecation showWarning: false.
+		"Run the default action explicitly: on the Pharo CI, SUnit makes a deprecation reaching it an error."
+		[ self deprecatedMessage ]
+			on: Deprecation
+			do: [ :deprecation | deprecation resume: deprecation defaultAction ].
+		reachedHere := true.
+		self assert: true ] ensure: [
+			Deprecation raiseWarning: oldRaiseWarning.
+			Deprecation showWarning: oldRaiseWarning ].
+	"we reached reachedHere"
 	self assert: reachedHere
 ]
 
@@ -569,9 +575,15 @@ SUnitTest >> testLongRunningTestThenGreenTest [
 SUnitTest >> testRaiseDeprecationWarnings [
 
 	| case result deprecationWasRaised |
+	"On the Pharo CI a deprecation reaching SUnit is an error of the test instead: DeprecationOnCITest checks both."
+	self skipOnPharoCITestingEnvironment.
 	case := self newTestCase: #raiseDeprecationWarnings.
 	deprecationWasRaised := false.
-	[ result := case run ] on: Deprecation do:[ :e | deprecationWasRaised := true. e resume ].
+	[ result := case run ]
+		on: Deprecation
+		do: [ :e |
+			deprecationWasRaised := true.
+			e resume ].
 	self assert: deprecationWasRaised.
 	self assertEmpty: result defects asArray.
 	self
