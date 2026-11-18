@@ -11,31 +11,46 @@ Class {
 	],
 	#classInstVars : [
 		'log',
-		'raiseWarning',
-		'showWarning',
-		'active'
+		'reaction',
+		'rewriting'
 	],
 	#category : 'Deprecation-Exceptions',
 	#package : 'Deprecation',
 	#tag : 'Exceptions'
 }
 
-{ #category : 'logging' }
+{ #category : 'settings - deprecated' }
 AutomaticRewriting class >> activateTransformations [
 
-	^ active ifNil: [ active := true ]
+	self deprecated: 'Use #rewriting, a DeprecationRewriting subclass' in: #Pharo15.
+	^ self rewriting ~~ NeverRewriteDeprecation
 ]
 
-{ #category : 'logging' }
+{ #category : 'settings - deprecated' }
 AutomaticRewriting class >> activateTransformations: aBoolean [
 
-	active := aBoolean
+	self deprecated: 'Use #rewriting: with a DeprecationRewriting subclass' in: #Pharo15.
+	self rewriting: (aBoolean
+		 ifTrue: [ self defaultRewriting ]
+		 ifFalse: [ NeverRewriteDeprecation ])
 ]
 
 { #category : 'logging' }
 AutomaticRewriting class >> addLog: anElement [ 
 
 	self log add: anElement
+]
+
+{ #category : 'settings' }
+AutomaticRewriting class >> defaultReaction [
+
+	^ LogDeprecationReaction
+]
+
+{ #category : 'settings' }
+AutomaticRewriting class >> defaultRewriting [
+
+	^ CompatibilityPeriodRewriteDeprecation
 ]
 
 { #category : 'class initialization' }
@@ -49,37 +64,71 @@ AutomaticRewriting class >> log [
 	^ log ifNil: [ log := OrderedCollection new. log ]
 ]
 
-{ #category : 'settings' }
+{ #category : 'settings - deprecated' }
 AutomaticRewriting class >> raiseWarning [
-	"If true, then a dialog is popup for each method invocation"
-	^ raiseWarning ifNil: [ raiseWarning := false ]
+
+	self deprecated: 'Use #reaction, a DeprecationReaction subclass' in: #Pharo15.
+	^ self reaction == WarnDeprecationReaction
+]
+
+{ #category : 'settings - deprecated' }
+AutomaticRewriting class >> raiseWarning: aBoolean [
+
+	self deprecated: 'Use #reaction: with a DeprecationReaction subclass' in: #Pharo15.
+	aBoolean ifTrue: [ ^ self reaction: WarnDeprecationReaction ].
+	self reaction == WarnDeprecationReaction ifTrue: [ self reaction: LogDeprecationReaction ]
 ]
 
 { #category : 'settings' }
-AutomaticRewriting class >> raiseWarning: aBoolean [
-	raiseWarning := aBoolean
+AutomaticRewriting class >> reaction [
+	"The DeprecationReaction subclass that decides what happens when a deprecated method runs."
+
+	^ reaction ifNil: [ reaction := self defaultReaction ]
+]
+
+{ #category : 'settings' }
+AutomaticRewriting class >> reaction: aDeprecationReactionClass [
+
+	reaction := aDeprecationReactionClass
 ]
 
 { #category : 'class initialization' }
 AutomaticRewriting class >> reset [
+
 	<script>
 	log := nil.
-	raiseWarning := nil.
-	showWarning := nil.
-	active := nil
+	reaction := nil.
+	rewriting := nil
 ]
 
 { #category : 'settings' }
+AutomaticRewriting class >> rewriting [
+	"The DeprecationRewriting subclass that decides whether a deprecation with a rewriting rule rewrites the caller."
+
+	^ rewriting ifNil: [ rewriting := self defaultRewriting ]
+]
+
+{ #category : 'settings' }
+AutomaticRewriting class >> rewriting: aDeprecationRewritingClass [
+
+	rewriting := aDeprecationRewritingClass
+]
+
+{ #category : 'settings - deprecated' }
 AutomaticRewriting class >> showWarning [
-	"If true, then a message is send to the Transcript for each deprecated method invocation"
-	
-	^ showWarning ifNil: [ showWarning := true ]
+
+	self deprecated: 'Use #reaction, a DeprecationReaction subclass' in: #Pharo15.
+	^ self reaction == LogDeprecationReaction or: [ self reaction == WarnDeprecationReaction ]
 ]
 
-{ #category : 'settings' }
+{ #category : 'settings - deprecated' }
 AutomaticRewriting class >> showWarning: aBoolean [
-	
-	showWarning := aBoolean
+
+	self deprecated: 'Use #reaction: with a DeprecationReaction subclass' in: #Pharo15.
+	aBoolean ifTrue: [
+		self reaction == IgnoreDeprecationReaction ifTrue: [ self reaction: LogDeprecationReaction ].
+		^ self ].
+	self reaction == LogDeprecationReaction ifTrue: [ self reaction: IgnoreDeprecationReaction ]
 ]
 
 { #category : 'comparing' }
@@ -89,6 +138,15 @@ AutomaticRewriting >> = anObject [
 	  and: [context
 			ifNil: [explanationString = anObject explanationString]
 			ifNotNil: [true]]]
+]
+
+{ #category : 'compatibility period' }
+AutomaticRewriting >> compatibilityPeriod [
+	"PHEP-0004: number of Pharo versions, the one that deprecates included, that keep a deprecated API working."
+
+	^ self isKernel
+		  ifTrue: [ 4 ]
+		  ifFalse: [ 2 ]
 ]
 
 { #category : 'accessing' }
@@ -111,9 +169,31 @@ AutomaticRewriting >> contextOfSender [
 	^context home sender
 ]
 
+{ #category : 'compatibility period' }
+AutomaticRewriting >> currentMajorVersion [
+
+	^ SystemVersion current major
+]
+
 { #category : 'accessing' }
 AutomaticRewriting >> date: aDate [
 	deprecationDate := aDate
+]
+
+{ #category : 'handling' }
+AutomaticRewriting >> defaultAction [
+	"Record the deprecation in the log that #deprecationsWhile: reads, react as the settings say, and rewrite the caller if the settings say so."
+
+	RecursionStopper during: [
+		self class addLog: self.
+		self class reaction react: self.
+		self shouldTransform ifTrue: [ self transform ] ]
+]
+
+{ #category : 'compatibility period' }
+AutomaticRewriting >> deprecatedClass [
+
+	^ self contextOfDeprecatedMethod homeMethod methodClass
 ]
 
 { #category : 'private' }
@@ -125,6 +205,23 @@ AutomaticRewriting >> deprecatedMethodName [
 AutomaticRewriting >> deprecationDate [
 
 	^ deprecationDate ifNil: [ 'unknown' ]
+]
+
+{ #category : 'compatibility period' }
+AutomaticRewriting >> deprecationMajorVersion [
+	"Answer the major Pharo version given with #in:, such as #Pharo14 or 'pharo13', or nil when no Pharo version was given. Deprecation belongs to the kernel, which has no regular expressions."
+
+	| string stream digits |
+	versionString ifNil: [ ^ nil ].
+	string := versionString asString asLowercase.
+	(string includesSubstring: 'pharo') ifFalse: [ ^ nil ].
+	stream := ReadStream on: string.
+	stream upToAll: 'pharo'.
+	stream skipSeparators.
+	digits := String streamContents: [ :out |
+		          [ stream atEnd not and: [ stream peek isDigit ] ] whileTrue: [ out nextPut: stream next ] ].
+	digits ifEmpty: [ ^ nil ].
+	^ digits asNumber
 ]
 
 { #category : 'accessing' }
@@ -143,9 +240,22 @@ AutomaticRewriting >> hash [
 	^(context ifNil: [explanationString]) hash
 ]
 
-{ #category : 'settings' }
-AutomaticRewriting >> raiseWarning [
-	^ self class raiseWarning
+{ #category : 'compatibility period' }
+AutomaticRewriting >> isAtEndOfCompatibilityPeriod [
+	"PHEP-0004: whether this deprecation states the Pharo version that introduced it and the current version is the last of its compatibility period or later."
+
+	| deprecationVersion |
+	deprecationVersion := self deprecationMajorVersion ifNil: [ ^ false ].
+	^ self currentMajorVersion >= (deprecationVersion + self compatibilityPeriod - 1)
+]
+
+{ #category : 'compatibility period' }
+AutomaticRewriting >> isKernel [
+	"PHEP-0004: the deprecated API is kernel when the class that defines it belongs to the minimal image. The class is asked rather than the method, since deprecated methods move to DeprecatedN packages. Without the bootstrap baseline, assume kernel, which keeps the longer period."
+
+	| baseline |
+	baseline := self class environment at: #BaselineOfPharoBootstrap ifAbsent: [ ^ true ].
+	^ baseline kernelPackageNames includes: self deprecatedClass instanceSide package name
 ]
 
 { #category : 'private' }
@@ -167,14 +277,9 @@ AutomaticRewriting >> sendingMethodName [
 { #category : 'handling' }
 AutomaticRewriting >> shouldTransform [
 
-	self class activateTransformations ifFalse: [ ^false  ].
-	(condition isNil or: [ condition cull: self ]) ifFalse: [ ^false ].
-	^rule isNotNil
-]
-
-{ #category : 'settings' }
-AutomaticRewriting >> showWarning [
-	^ self class showWarning
+	rule ifNil: [ ^ false ].
+	(condition isNil or: [ condition cull: self ]) ifFalse: [ ^ false ].
+	^ self class rewriting shouldRewrite: self
 ]
 
 { #category : 'signaling' }
@@ -188,6 +293,13 @@ AutomaticRewriting >> signal [
 	self transform
 ]
 
+{ #category : 'reacting' }
+AutomaticRewriting >> signalError [
+	"Signal an error for this deprecation, so that running deprecated code fails."
+
+	Error signal: self messageText
+]
+
 { #category : 'accessing' }
 AutomaticRewriting >> version: aString [
 	versionString := aString
@@ -197,4 +309,11 @@ AutomaticRewriting >> version: aString [
 AutomaticRewriting >> versionString [
 
 	^ versionString ifNil: [ 'unknown' ]
+]
+
+{ #category : 'reacting' }
+AutomaticRewriting >> warn [
+	"Signal this deprecation as an unhandled warning: a blocking dialog in an interactive image."
+
+	super defaultAction
 ]
