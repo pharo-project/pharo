@@ -141,6 +141,43 @@ DeprecationTest >> testDeprecationWithoutVersionDoesNotTransform [
 ]
 
 { #category : 'tests - strategies' }
+DeprecationTest >> testErrorAtEndOfPeriodReactionLogsInThePeriod [
+
+	| notified |
+	notified := false.
+	self reaction: ErrorAtEndOfCompatibilityPeriodDeprecationReaction rewriting: NeverRewriteDeprecation during: [
+		[ self runDefaultActionOfDeprecationsIn: [ ExampleForDeprecationTest new deprecatedMessageWithTransformInCompatibilityPeriod ] ]
+			on: DeprecationPerformedNotification
+			do: [ :notification |
+				notified := true.
+				notification resume ] ].
+	self assert: notified
+]
+
+{ #category : 'tests - strategies' }
+DeprecationTest >> testErrorAtEndOfPeriodReactionLogsWithoutVersion [
+
+	| notified |
+	notified := false.
+	self reaction: ErrorAtEndOfCompatibilityPeriodDeprecationReaction rewriting: NeverRewriteDeprecation during: [
+		[ self runDefaultActionOfDeprecationsIn: [ ExampleForDeprecationTest new deprecatedMessageWithTransformAndNoVersion ] ]
+			on: DeprecationPerformedNotification
+			do: [ :notification |
+				notified := true.
+				notification resume ] ].
+	self assert: notified
+]
+
+{ #category : 'tests - strategies' }
+DeprecationTest >> testErrorAtEndOfPeriodReactionSignalsAnErrorAtTheEnd [
+
+	self reaction: ErrorAtEndOfCompatibilityPeriodDeprecationReaction rewriting: NeverRewriteDeprecation during: [
+		self
+			should: [ self runDefaultActionOfDeprecationsIn: [ ExampleForDeprecationTest new deprecatedMessageWithTransform ] ]
+			raise: Error ]
+]
+
+{ #category : 'tests - strategies' }
 DeprecationTest >> testErrorReactionSignalsAnError [
 
 	self reaction: ErrorDeprecationReaction rewriting: NeverRewriteDeprecation during: [

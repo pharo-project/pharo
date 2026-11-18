@@ -27,6 +27,16 @@ DeprecationAsErrorExampleTest >> deprecatedMessage [
 ]
 
 { #category : 'helpers' }
+DeprecationAsErrorExampleTest >> deprecatedMessageInItsPeriod [
+	"Deprecated in the current version: still in its compatibility period."
+
+	self
+		deprecated: 'Part of DeprecationAsErrorTest'
+		in: 'Pharo' , SystemVersion current major printString
+		transformWith: '`@receiver deprecatedMessageInItsPeriod' -> '`@receiver newMessage'
+]
+
+{ #category : 'helpers' }
 DeprecationAsErrorExampleTest >> newMessage [
 
 	
@@ -36,4 +46,10 @@ DeprecationAsErrorExampleTest >> newMessage [
 DeprecationAsErrorExampleTest >> testSendsDeprecatedMessage [
 
 	self deprecatedMessage
+]
+
+{ #category : 'tests' }
+DeprecationAsErrorExampleTest >> testSendsDeprecatedMessageInItsPeriod [
+
+	self deprecatedMessageInItsPeriod
 ]

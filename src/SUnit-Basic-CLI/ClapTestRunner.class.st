@@ -32,7 +32,8 @@ ClapTestRunner class >> commandSpecification [
 		        addFlag: #'fail-on-error' description: 'if there is a test error, it will exit with error code 1';
 		        addFlag: #'fail-on-failure' description: 'if there is a test error or failure, it will exit with error code 1';
 		        addFlag: #'deprecations-as-errors'
-		        description: 'a deprecated method run by a test is an error of the test, and never rewrites its caller';
+		        description:
+			        'a deprecated method run by a test at the end of its compatibility period (PHEP-0004) is an error of the test; no deprecation rewrites its caller';
 		        addPositional: #PACKAGE spec: [ :positional |
 			        positional
 				        description: 'Run tests from packages matching this pattern';
@@ -70,14 +71,14 @@ ClapTestRunner >> addPackagesMatchingRegex: aString to: aSet [
 
 { #category : 'execution' }
 ClapTestRunner >> deprecationStrategiesDuring: aBlock [
-	"With --deprecations-as-errors, run aBlock with deprecations as errors that rewrite nothing, and restore the strategies of the image afterwards."
+	"With --deprecations-as-errors, run aBlock with deprecations as errors once their compatibility period ends, rewriting nothing, and restore the strategies of the image afterwards. A deprecation still in its period is a legitimate use of a supported API."
 
 	| oldReaction oldRewriting |
 	self shouldTreatDeprecationsAsErrors ifFalse: [ ^ aBlock value ].
 	oldReaction := Deprecation reaction.
 	oldRewriting := Deprecation rewriting.
 	Deprecation
-		reaction: ErrorDeprecationReaction;
+		reaction: ErrorAtEndOfCompatibilityPeriodDeprecationReaction;
 		rewriting: NeverRewriteDeprecation.
 	^ aBlock ensure: [
 		  Deprecation

@@ -10,8 +10,8 @@ Class {
 }
 
 { #category : 'helpers' }
-DeprecationAsErrorTest >> runExampleWithReaction: aReaction rewriting: aRewriting [
-	"Run the example test with these deprecation strategies, restoring the ones of the image afterwards. When the deprecation goes on past the example's runner, it reaches this test, which resumes it: it must not be an error of this test."
+DeprecationAsErrorTest >> run: aSelector withReaction: aReaction rewriting: aRewriting [
+	"Run an example test with these deprecation strategies, restoring the ones of the image afterwards. When the deprecation goes on past the example's runner, it reaches this test, which resumes it: it must not be an error of this test."
 
 	| oldReaction oldRewriting |
 	oldReaction := Deprecation reaction.
@@ -20,12 +20,18 @@ DeprecationAsErrorTest >> runExampleWithReaction: aReaction rewriting: aRewritin
 		reaction: aReaction;
 		rewriting: aRewriting.
 	^ [
-		  [ (DeprecationAsErrorExampleTest selector: #testSendsDeprecatedMessage) run ]
+		  [ (DeprecationAsErrorExampleTest selector: aSelector) run ]
 			  on: Deprecation
 			  do: [ :deprecation | deprecation resume ] ] ensure: [
 			  Deprecation
 				  reaction: oldReaction;
 				  rewriting: oldRewriting ]
+]
+
+{ #category : 'helpers' }
+DeprecationAsErrorTest >> runExampleWithReaction: aReaction rewriting: aRewriting [
+
+	^ self run: #testSendsDeprecatedMessage withReaction: aReaction rewriting: aRewriting
 ]
 
 { #category : 'tests' }
@@ -34,6 +40,29 @@ DeprecationAsErrorTest >> testDeprecationAsErrorRewritesNothing [
 
 	self runExampleWithReaction: ErrorDeprecationReaction rewriting: AlwaysRewriteDeprecation.
 	self assert: (DeprecationAsErrorExampleTest >> #testSendsDeprecatedMessage sendsSelector: #deprecatedMessage)
+]
+
+{ #category : 'tests' }
+DeprecationAsErrorTest >> testDeprecationAtEndOfItsPeriodIsAnErrorOfTheTest [
+
+	| result |
+	result := self
+		          run: #testSendsDeprecatedMessage
+		          withReaction: ErrorAtEndOfCompatibilityPeriodDeprecationReaction
+		          rewriting: NeverRewriteDeprecation.
+	self assert: result errors size equals: 1
+]
+
+{ #category : 'tests' }
+DeprecationAsErrorTest >> testDeprecationInItsPeriodLetsTheTestPass [
+
+	| result |
+	result := self
+		          run: #testSendsDeprecatedMessageInItsPeriod
+		          withReaction: ErrorAtEndOfCompatibilityPeriodDeprecationReaction
+		          rewriting: NeverRewriteDeprecation.
+	self assert: result passed size equals: 1.
+	self assert: result errors isEmpty
 ]
 
 { #category : 'tests' }

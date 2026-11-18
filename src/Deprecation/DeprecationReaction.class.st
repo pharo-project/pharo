@@ -11,6 +11,13 @@ Class {
 	#tag : 'Strategies'
 }
 
+{ #category : 'reacting' }
+DeprecationReaction class >> failsTestsFor: anAutomaticRewriting [
+	"Whether anAutomaticRewriting, reaching the test runner, is an error of the test. SUnit then stops the test without running its default action."
+
+	^ false
+]
+
 { #category : 'accessing' }
 DeprecationReaction class >> label [
 	"The name of this reaction in the settings."
