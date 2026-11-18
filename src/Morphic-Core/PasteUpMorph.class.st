@@ -124,18 +124,6 @@ PasteUpMorph >> addMorphInLayer: aMorph [
 	aMorph wantsToBeTopmost ifFalse:[self bringTopmostsToFront]
 ]
 
-{ #category : 'menu & halo' }
-PasteUpMorph >> addWorldToggleItemsToHaloMenu: aMenu [
-	"Add toggle items for the world to the halo menu"
-
-	#(
-	(hasDragAndDropEnabledString changeDragAndDrop 'whether I am open to having objects dropped into me')
-	(roundedCornersString toggleCornerRounding 'whether the world should have rounded corners')) do:
-
-		[:trip | aMenu addUpdating: trip first selector: trip second.
-			aMenu balloonTextForLastItem: trip third]
-]
-
 { #category : 'accessing' }
 PasteUpMorph >> backgroundImage: aForm layout: aSymbol [
 	"Set a background image, replacing the current background morph, if any,
@@ -233,19 +221,6 @@ PasteUpMorph >> collapseNonWindows [
 	self nonWindows reject: [:m | m isSticky] thenDo: [:m | m collapse]
 ]
 
-{ #category : 'menu & halo' }
-PasteUpMorph >> contentsMenu: aMenu [
-	"Build the menu used from PopUpContentsMenu:"
-	(self submorphs asSortedCollection: [:w1 :w2 | w1 class name caseInsensitiveLessOrEqual: w2 class name]) do:
-		[:w | aMenu add: w class name target: w selector: #comeToFront ].
-	^ aMenu
-]
-
-{ #category : 'menu & halo' }
-PasteUpMorph >> contentsMenuTitle [
-	^ 'Contents' translated
-]
-
 { #category : 'accessing' }
 PasteUpMorph >> currentWindow [
 
@@ -276,11 +251,6 @@ PasteUpMorph >> defaultColor [
 		r: 0.8
 		g: 1.0
 		b: 0.6
-]
-
-{ #category : 'world menu' }
-PasteUpMorph >> discoveredWorldMenu [
-	^ owner discoveredWorldMenu
 ]
 
 { #category : 'menu & halo' }
@@ -388,29 +358,6 @@ PasteUpMorph >> expandAll [
 	"Expand all windows"
 	(self  windowsSatisfying: [:w | w isCollapsed])
 		reverseDo: [:w | w collapseOrExpand.  self displayWorld]
-]
-
-{ #category : 'Morphic-Base-Windows' }
-PasteUpMorph >> findWindow: evt [
-	"Present a menu names of windows and naked morphs, and activate the one that gets chosen.  Collapsed windows appear below line, expand if chosen; naked morphs appear below second line; if any of them has been given an explicit name, that is what's shown, else the class-name of the morph shows; if a naked morph is chosen, bring it to front and have it don a halo."
-	| menu expanded collapsed nakedMorphs |
-	menu := self morphicUIManager newMenuIn: self for: self.
-	expanded := self  windowsSatisfying: [:w | w isCollapsed not].
-	collapsed := self  windowsSatisfying: [:w | w isCollapsed].
-	nakedMorphs := self submorphsSatisfying:[:m | m isSystemWindow not].
-	(expanded isEmpty and: [collapsed isEmpty and: [nakedMorphs isEmpty]]) ifTrue: [^ InformativeNotification signal: 'No morph in world'].
-	(expanded asSortedCollection: [:w1 :w2 | w1 label caseInsensitiveLessOrEqual: w2 label]) do:
-		[:w | menu add: w label target: w selector: #activateAndForceLabelToShow.
-			w model canDiscardEdits ifFalse: [menu lastItem color: Color red]].
-	(expanded isEmpty or: [ collapsed isEmpty and: [ nakedMorphs isEmpty ]]) ifFalse: [menu addLine].
-	(collapsed asSortedCollection: [:w1 :w2 | w1 label caseInsensitiveLessOrEqual: w2 label]) do:
-		[:w | menu add: w label target: w selector: #collapseOrExpand.
-		w model canDiscardEdits ifFalse: [menu lastItem color: Color red]].
-	nakedMorphs isEmpty ifFalse: [menu addLine].
-	(nakedMorphs asSortedCollection: [:w1 :w2 | w1 class name caseInsensitiveLessOrEqual: w2 class name]) do:
-		[:w | menu add: w class name target: w selector: #comeToFrontAndAddHalo].
-	menu addTitle: 'find window'.
-	menu popUpEvent: evt in: self
 ]
 
 { #category : 'drawing' }
@@ -824,9 +771,4 @@ PasteUpMorph >> windowsSatisfying: windowBlock [
 				ifTrue: [ windows addLast: m ] ] ].
 
 	^ windows
-]
-
-{ #category : 'world menu' }
-PasteUpMorph >> worldMenu [
-	^ owner worldMenu
 ]
