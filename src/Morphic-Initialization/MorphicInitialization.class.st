@@ -23,20 +23,10 @@ MorphicInitialization class >> cleanUp [
 ]
 
 { #category : 'initialization' }
-MorphicInitialization class >> initializeClasses [
-	"These class initializers depend on each other and on fonts and the theme, so run them again, in this order, once everything is loaded."
-
-	#( #ProgressBarMorph #GlobalIdentifier #HaloMorph #CharacterScanner #ImageMorph #Locale #MenuItemMorph #MenuMorph #SHA1 #SystemProgressMorph
-	   #SystemWindow #TextContainer #TextDiffBuilder #ThumbnailMorph #TransferMorph #UITheme ) do: [ :each |
-		(self class environment at: each) initialize ]
-]
-
-{ #category : 'initialization' }
 MorphicInitialization class >> initializeEnvironment [
 	"Set up Morphic after loading Pharo, and start its UI. Run once per image, before saving it."
 
 	self
-		initializeClasses;
 		startUIProcess;
 		cleanUp;
 		initializeFontsAndDesktop;
