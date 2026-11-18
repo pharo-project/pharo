@@ -151,9 +151,9 @@ BaselineOfPharo class >> spec [
 
 	^ PharoExternalProject 
 		newName: 'Spec2' 
-		owner: 'Ducasse' 
+		owner: 'pharo-spec' 
 		project:'Spec' 
-		version: 'workingOnSpecRules'
+		version: 'Pharo15'
 ]
 
 { #category : 'repository urls' }
