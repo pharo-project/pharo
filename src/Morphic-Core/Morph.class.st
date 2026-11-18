@@ -1022,18 +1022,6 @@ Morph >> changeClipSubmorphs [
 	self clipSubmorphs: self clipSubmorphs not
 ]
 
-{ #category : 'user prompt' }
-Morph >> changeColor [
-
-	| dialog |
-	dialog := ColorSelectorDialogWindow new
-		title: 'Choose color';
-		selectedColor: self color.
-	dialog openModal.
-	dialog cancelled
-		ifFalse: [self fillStyle: dialog selectedColor]
-]
-
 { #category : 'recategorized' }
 Morph >> changed [
 	"Report that the area occupied by this morph should be redrawn.
@@ -1341,9 +1329,8 @@ Morph >> defaultYellowButtonMenuEnabled [
 { #category : 'deferred message' }
 Morph >> defer: aValuable [
 	"aValuable will be executed in the next UI rendering cycle"
-	self owner
-		ifNotNil: [ self owner defer: aValuable]
-		ifNil: [ self morphicUIManager defer: aValuable ]
+
+	self owner ifNotNil: [ self owner defer: aValuable ] ifNil: [ UIManager default defer: aValuable ]
 ]
 
 { #category : 'rotate scale and flex' }
@@ -1651,19 +1638,6 @@ Morph >> duplicate [
 	newMorph arrangeToStartStepping.
 		newMorph privateOwner: nil. "no longer in world"
 	^newMorph
-]
-
-{ #category : 'halos and balloon help' }
-Morph >> editBalloonHelpContent: aString [
-	| reply |
-	reply := self morphicUIManager
-		multiLineRequest: 'Edit the balloon help text for ' translated, self externalName
-		initialAnswer: (aString ifNil: [self noHelpString] ifNotNil: [aString])
-		answerHeight: 200.
-	reply ifNil: [^ self].  "User cancelled out of the dialog"
-	(reply isEmpty or: [reply asString = self noHelpString])
-		ifTrue: [self setBalloonText: nil]
-		ifFalse: [self setBalloonText: reply]
 ]
 
 { #category : 'halos and balloon help' }

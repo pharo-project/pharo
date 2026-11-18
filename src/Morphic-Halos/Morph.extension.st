@@ -646,6 +646,18 @@ Morph >> changeClipLayoutCells [
 ]
 
 { #category : '*Morphic-Halos' }
+Morph >> changeColor [
+
+	| dialog |
+	dialog := ColorSelectorDialogWindow new
+		title: 'Choose color';
+		selectedColor: self color.
+	dialog openModal.
+	dialog cancelled
+		ifFalse: [self fillStyle: dialog selectedColor]
+]
+
+{ #category : '*Morphic-Halos' }
 Morph >> changeColorTarget: anObject selector: aSymbol originalColor: aColor hand: aHand [
 	"Put up a color picker for changing some kind of color."
 
@@ -825,6 +837,19 @@ Morph >> duplicateMorph: evt [
 	dup := self duplicate.
 	evt hand grabMorph: dup from: owner. "duplicate was ownerless so use #grabMorph:from: here"
 	^dup
+]
+
+{ #category : '*Morphic-Halos' }
+Morph >> editBalloonHelpContent: aString [
+	| reply |
+	reply := self morphicUIManager
+		multiLineRequest: 'Edit the balloon help text for ' translated, self externalName
+		initialAnswer: (aString ifNil: [self noHelpString] ifNotNil: [aString])
+		answerHeight: 200.
+	reply ifNil: [^ self].  "User cancelled out of the dialog"
+	(reply isEmpty or: [reply asString = self noHelpString])
+		ifTrue: [self setBalloonText: nil]
+		ifFalse: [self setBalloonText: reply]
 ]
 
 { #category : '*Morphic-Halos' }
