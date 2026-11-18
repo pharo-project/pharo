@@ -6,9 +6,8 @@ Set me on a root morph, usually the world: aWorld rootEventHandler: HaloRootEven
 Class {
 	#name : 'HaloRootEventHandler',
 	#superclass : 'MorphRootEventHandler',
-	#category : 'Morphic-Base-Halos',
-	#package : 'Morphic-Base',
-	#tag : 'Halos'
+	#category : 'Morphic-Halos',
+	#package : 'Morphic-Halos'
 }
 
 { #category : 'event handling' }
@@ -49,4 +48,14 @@ HaloRootEventHandler >> handleSpecialGesture: mouseDownEvent for: aMorph [
 		threshold: 5.
 	"Pass focus explicitly here"
 	mouseDownEvent hand newMouseFocus: h
+]
+
+{ #category : 'event handling' }
+HaloRootEventHandler >> handleYellowButtonMenu: shiftState for: aMorph [
+
+	| menu |
+	menu := aMorph buildYellowButtonMenu: aMorph activeHand.
+	menu addTitle: aMorph externalName icon: (aMorph iconOrThumbnailOfSize: 28).
+	menu popUpInWorld: aMorph currentWorld.
+	^ true
 ]

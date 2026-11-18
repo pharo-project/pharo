@@ -21,9 +21,8 @@ Class {
 		'HaloWithDebugHandle',
 		'ShowBoundsInHalo'
 	],
-	#category : 'Morphic-Base-Widgets',
-	#package : 'Morphic-Base',
-	#tag : 'Widgets'
+	#category : 'Morphic-Halos',
+	#package : 'Morphic-Halos'
 }
 
 { #category : 'halo theme' }

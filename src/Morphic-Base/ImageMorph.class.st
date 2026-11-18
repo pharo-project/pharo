@@ -74,12 +74,6 @@ ImageMorph class >> withFormSet: aFormSet [
 	^ self new formSet: aFormSet; yourself
 ]
 
-{ #category : 'menus' }
-ImageMorph >> addCustomMenuItems: aMenu hand: aHand [
-	super addCustomMenuItems: aMenu hand: aHand.
-	aMenu addUpdating: #opacityString selector: #changeOpacity
-]
-
 { #category : 'testing' }
 ImageMorph >> areasRemainingToFill: aRectangle [
 
@@ -114,11 +108,6 @@ ImageMorph >> borderWidth: bw [
 	newExtent := 2 * bw + formSet extent.
 	bounds extent = newExtent ifFalse: [super extent: newExtent].
 	super borderWidth: bw
-]
-
-{ #category : 'menu' }
-ImageMorph >> changeOpacity [
-	self isOpaque: self isOpaque not
 ]
 
 { #category : 'accessing' }
@@ -186,12 +175,6 @@ ImageMorph >> formSet: aFormSet [
 	self changed
 ]
 
-{ #category : 'menu commands' }
-ImageMorph >> grabFromScreen [
-
-	self form: Screenshot new formScreenshotFromUserSelection
-]
-
 { #category : 'accessing' }
 ImageMorph >> image: anImage [
 
@@ -228,21 +211,6 @@ ImageMorph >> isOpaque: aBool [
 		ifTrue: [self removeProperty: #isOpaque]
 		ifFalse: [self setProperty: #isOpaque toValue: aBool].
 	self changed
-]
-
-{ #category : 'menu' }
-ImageMorph >> opacityString [
-	^ (self isOpaque) -> 'opaque' translated
-]
-
-{ #category : 'menu commands' }
-ImageMorph >> readFromFile [
-	| fileName |
-	fileName := self morphicUIManager
-		request: 'Please enter the image file name' translated
-		initialAnswer: 'fileName'.
-	fileName isEmptyOrNil ifTrue: [^ self].
-	self form: (Form fromFileNamed: fileName)
 ]
 
 { #category : 'caching' }

@@ -61,6 +61,8 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'Morphic-Widgets-Tree'.
 		spec package: 'Morphic-Widgets-Windows'.
 		spec package: 'Morphic-Widgets-FastTable' with: [ spec requires: #( 'Regex' ) ].
+		"Halos plug into the world's root event handler, and open menus"
+		spec package: 'Morphic-Halos'.
 
 		spec package: 'Morphic-Widgets-Taskbar-Tests'.
 		spec package: 'Morphic-Widgets-MissionControl-Tests'.

@@ -125,24 +125,6 @@ PasteUpMorph >> addMorphInLayer: aMorph [
 ]
 
 { #category : 'menu & halo' }
-PasteUpMorph >> addWorldHaloMenuItemsTo: aMenu hand: aHandMorph [
-	"Add standard halo items to the menu, given that the receiver is a World"
-
-	self addFillStyleMenuItems: aMenu hand: aHandMorph.
-	self addLayoutMenuItems: aMenu hand: aHandMorph.
-
-	aMenu addLine.
-	self addWorldToggleItemsToHaloMenu: aMenu.
-	aMenu addLine.
-	self addExportMenuItems: aMenu hand: aHandMorph.
-	self addMiscExtrasTo: aMenu.
-	self addDebuggingItemsTo: aMenu hand: aHandMorph.
-
-	aMenu addLine.
-	aMenu defaultTarget: aHandMorph
-]
-
-{ #category : 'menu & halo' }
 PasteUpMorph >> addWorldToggleItemsToHaloMenu: aMenu [
 	"Add toggle items for the world to the halo menu"
 
@@ -294,12 +276,6 @@ PasteUpMorph >> defaultColor [
 		r: 0.8
 		g: 1.0
 		b: 0.6
-]
-
-{ #category : 'halos and balloon help' }
-PasteUpMorph >> defersHaloOnClickTo: aSubMorph [
-	"If a cmd-click on aSubMorph would make it a preferred recipient of the halo, answer true"
-	^ true
 ]
 
 { #category : 'world menu' }

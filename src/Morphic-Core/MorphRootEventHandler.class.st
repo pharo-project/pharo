@@ -24,3 +24,10 @@ MorphRootEventHandler >> handleSpecialGesture: anEvent for: aMorph [
 
 	
 ]
+
+{ #category : 'event handling' }
+MorphRootEventHandler >> handleYellowButtonMenu: shiftState for: aMorph [
+	"aMorph wants its yellow button menu. Answer whether a menu was opened: none"
+
+	^ false
+]

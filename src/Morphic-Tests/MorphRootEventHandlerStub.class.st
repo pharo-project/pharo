@@ -24,6 +24,13 @@ MorphRootEventHandlerStub >> handleSpecialGesture: anEvent for: aMorph [
 	handled add: #specialGesture -> aMorph
 ]
 
+{ #category : 'event handling' }
+MorphRootEventHandlerStub >> handleYellowButtonMenu: shiftState for: aMorph [
+
+	handled add: #yellowButtonMenu -> aMorph.
+	^ true
+]
+
 { #category : 'accessing' }
 MorphRootEventHandlerStub >> handled [
 

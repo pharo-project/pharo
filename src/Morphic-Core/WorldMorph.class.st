@@ -312,13 +312,6 @@ WorldMorph >> addHand: aHandMorph [
 	aHandMorph privateOwner: self
 ]
 
-{ #category : 'menus' }
-WorldMorph >> addStandardHaloMenuItemsTo: aMenu hand: aHandMorph [
-	"Add standard halo items to the menu"
-
-	self addWorldHaloMenuItemsTo: aMenu hand: aHandMorph
-]
-
 { #category : 'submorphs - accessing' }
 WorldMorph >> allMorphsDo: aBlock [
 	"Enumerate all morphs in the world, including those held in hands."
@@ -353,14 +346,6 @@ WorldMorph >> becomeActiveDuring: aBlock [
 			ActiveWorld := priorWorld.
 			ex pass ].
 	ActiveWorld := priorWorld
-]
-
-{ #category : 'meta actions' }
-WorldMorph >> buildMetaMenu: evt [
-	| menu |
-	menu := self morphicUIManager newMenuIn: self for: self.
-	self addStandardHaloMenuItemsTo: menu hand: evt hand.
-	^ menu
 ]
 
 { #category : 'stepping' }
@@ -764,12 +749,6 @@ WorldMorph >> viewBox: newViewBox [
 	super viewBox: newViewBox.
 	worldState handsDo: [ :hand | hand releaseKeyboardFocus ].
 	self fullRepaintNeeded
-]
-
-{ #category : 'halos and balloon help' }
-WorldMorph >> wantsDirectionHandles [
-
-	^ false
 ]
 
 { #category : 'event handling' }

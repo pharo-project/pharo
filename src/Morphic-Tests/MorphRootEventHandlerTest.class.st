@@ -70,3 +70,14 @@ MorphRootEventHandlerTest >> testSpecialGestureGoesToTheRootHandler [
 
 	self assert: handler handled asArray equals: { (#specialGesture -> child) }
 ]
+
+{ #category : 'tests' }
+MorphRootEventHandlerTest >> testYellowButtonMenuGoesToTheRootHandler [
+
+	root rootEventHandler: handler.
+	root setProperty: #wantsYellowButtonMenu toValue: true.
+
+	root yellowButtonActivity: false.
+
+	self assert: handler handled asArray equals: { (#yellowButtonMenu -> root) }
+]
