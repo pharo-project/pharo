@@ -37,47 +37,76 @@ MorphRootEventHandlerTest >> setUp [
 ]
 
 { #category : 'tests' }
-MorphRootEventHandlerTest >> testMetaMenuGestureGoesToTheRootHandler [
+MorphRootEventHandlerTest >> testHandlersAreAskedInOrderUntilOneHandlesTheGesture [
 
-	root rootEventHandler: handler.
+	| declining last |
+	declining := MorphRootEventHandlerStub new decline; yourself.
+	last := MorphRootEventHandlerStub new.
+	root
+		addRootEventHandler: declining;
+		addRootEventHandler: handler;
+		addRootEventHandler: last.
 
-	child invokeMetaMenu: self mouseDown.
+	self assert: (child handleSpecialGesture: self mouseDown).
 
-	self assert: handler handled asArray equals: { (#metaMenuGesture -> child) }
+	self assert: declining handled asArray equals: { #specialGesture -> child }.
+	self assert: handler handled asArray equals: { #specialGesture -> child }.
+	self assertEmpty: last handled
 ]
 
 { #category : 'tests' }
-MorphRootEventHandlerTest >> testMorphsAskTheHandlerOfTheirRoot [
+MorphRootEventHandlerTest >> testMetaMenuGestureGoesToTheRootHandler [
 
-	root rootEventHandler: handler.
+	root addRootEventHandler: handler.
 
-	self assert: child rootEventHandler identicalTo: handler.
-	self assert: root rootEventHandler identicalTo: handler
+	child invokeMetaMenu: self mouseDown.
+
+	self assert: handler handled asArray equals: { #metaMenuGesture -> child }
+]
+
+{ #category : 'tests' }
+MorphRootEventHandlerTest >> testMorphsAskTheHandlersOfTheirRoot [
+
+	root addRootEventHandler: handler.
+
+	self assert: child rootEventHandlers asArray equals: { handler }
+]
+
+{ #category : 'tests' }
+MorphRootEventHandlerTest >> testRemovedHandlerIsNoLongerAsked [
+
+	root addRootEventHandler: handler.
+	root removeRootEventHandler: handler.
+
+	child handleSpecialGesture: self mouseDown.
+
+	self assertEmpty: handler handled
 ]
 
 { #category : 'tests' }
 MorphRootEventHandlerTest >> testRootWithoutHandlerIgnoresMetaGestures [
 
-	self assert: child rootEventHandler class identicalTo: MorphRootEventHandler
+	self assertEmpty: child rootEventHandlers.
+	self deny: (child handleSpecialGesture: self mouseDown)
 ]
 
 { #category : 'tests' }
 MorphRootEventHandlerTest >> testSpecialGestureGoesToTheRootHandler [
 
-	root rootEventHandler: handler.
+	root addRootEventHandler: handler.
 
 	child handleSpecialGesture: self mouseDown.
 
-	self assert: handler handled asArray equals: { (#specialGesture -> child) }
+	self assert: handler handled asArray equals: { #specialGesture -> child }
 ]
 
 { #category : 'tests' }
 MorphRootEventHandlerTest >> testYellowButtonMenuGoesToTheRootHandler [
 
-	root rootEventHandler: handler.
+	root addRootEventHandler: handler.
 	root setProperty: #wantsYellowButtonMenu toValue: true.
 
 	root yellowButtonActivity: false.
 
-	self assert: handler handled asArray equals: { (#yellowButtonMenu -> root) }
+	self assert: handler handled asArray equals: { #yellowButtonMenu -> root }
 ]

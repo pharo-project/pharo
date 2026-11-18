@@ -1,7 +1,7 @@
 "
-I give meta gestures their meaning in the Pharo desktop: a special gesture (cmd-click on macOS, alt-click elsewhere) opens a halo on the morph, and the meta menu gesture opens its meta menu.
+I give meta gestures their meaning in the Pharo desktop: a special gesture (cmd-click on macOS, alt-click elsewhere) opens a halo on the morph, the meta menu gesture opens its meta menu, and the yellow button opens its morph menu.
 
-Set me on a root morph, usually the world: aWorld rootEventHandler: HaloRootEventHandler new.
+Add me to a root morph, usually the world: aWorld addRootEventHandler: HaloRootEventHandler new.
 "
 Class {
 	#name : 'HaloRootEventHandler',
@@ -14,11 +14,12 @@ Class {
 HaloRootEventHandler >> handleMetaMenuGesture: evt for: aMorph [
 
 	| menu |
-	aMorph world ifNil: [ ^ self ].
+	aMorph world ifNil: [ ^ false ].
 
 	menu := aMorph buildMetaMenu: evt.
 	aMorph addTitleForHaloMenu: menu.
-	menu popUpEvent: evt in: aMorph world
+	menu popUpEvent: evt in: aMorph world.
+	^ true
 ]
 
 { #category : 'event handling' }
@@ -38,8 +39,8 @@ HaloRootEventHandler >> handleSpecialGesture: mouseDownEvent for: aMorph [
 
 	"cmd-drag on flexed morphs works better this way"
 	h := aMorph addHalo: (mouseDownEvent transformedBy: tfm).
-	h ifNil: [ ^ self ].
-	doNotDrag ifTrue: [ ^ self ].
+	h ifNil: [ ^ true ].
+	doNotDrag ifTrue: [ ^ true ].
 	"Initiate drag transition if requested"
 	mouseDownEvent hand
 		waitForClicksOrDrag: h
@@ -47,7 +48,8 @@ HaloRootEventHandler >> handleSpecialGesture: mouseDownEvent for: aMorph [
 		selectors: { nil. nil. nil. #dragTarget: }
 		threshold: 5.
 	"Pass focus explicitly here"
-	mouseDownEvent hand newMouseFocus: h
+	mouseDownEvent hand newMouseFocus: h.
+	^ true
 ]
 
 { #category : 'event handling' }

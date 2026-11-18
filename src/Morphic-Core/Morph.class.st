@@ -430,6 +430,13 @@ Morph >> addMorphInLayer: aMorph [
 	self addMorphBack: aMorph
 ]
 
+{ #category : 'events - root handler' }
+Morph >> addRootEventHandler: aMorphRootEventHandler [
+	"Ask aMorphRootEventHandler about the meta gestures of the morphs under me, when I am a root, after the handlers I already have"
+
+	self setProperty: #rootEventHandlers toValue: (self rootEventHandlers copyWith: aMorphRootEventHandler)
+]
+
 { #category : 'utilities' }
 Morph >> addTransparentSpacerOfSize: aPoint [
 	self addMorphBack: (self transparentSpacerOfSize: aPoint)
@@ -2254,9 +2261,9 @@ Morph >> handleMouseWheel: anEvent [
 
 { #category : 'meta actions' }
 Morph >> handleSpecialGesture: mouseDownEvent [
-	"Special gestures (cmd-mouse on the Macintosh; Alt-mouse on Windows and Unix) are handled by my root, usually the world"
+	"Special gestures (cmd-mouse on the Macintosh; Alt-mouse on Windows and Unix) are handled by the first of my root's handlers that wants them"
 
-	^ self rootEventHandler handleSpecialGesture: mouseDownEvent for: self
+	^ self rootEventHandlers anySatisfy: [ :handler | handler handleSpecialGesture: mouseDownEvent for: self ]
 ]
 
 { #category : 'event handling' }
@@ -2759,9 +2766,9 @@ Morph >> invalidRect: aRectangle from: aMorph [
 
 { #category : 'meta actions' }
 Morph >> invokeMetaMenu: evt [
-	"The meta menu gesture is handled by my root, usually the world"
+	"The meta menu gesture is handled by the first of my root's handlers that wants it"
 
-	^ self rootEventHandler handleMetaMenuGesture: evt for: self
+	^ self rootEventHandlers anySatisfy: [ :handler | handler handleMetaMenuGesture: evt for: self ]
 ]
 
 { #category : 'classification' }
@@ -4347,6 +4354,12 @@ Morph >> removeProperty: aSymbol [
 	extension removeProperty: aSymbol
 ]
 
+{ #category : 'events - root handler' }
+Morph >> removeRootEventHandler: aMorphRootEventHandler [
+
+	self setProperty: #rootEventHandlers toValue: (self rootEventHandlers copyWithout: aMorphRootEventHandler)
+]
+
 { #category : 'submorphs - add/remove' }
 Morph >> removedMorph: aMorph [
 	"Notify the receiver that aMorph was just removed from its children"
@@ -4502,18 +4515,11 @@ Morph >> root [
 ]
 
 { #category : 'events - root handler' }
-Morph >> rootEventHandler [
-	"Answer the handler of meta gestures of my root: the outermost owner, usually the world"
+Morph >> rootEventHandlers [
+	"Answer the handlers of meta gestures of my root (the outermost owner, usually the world), in the order they are asked"
 
-	owner ifNotNil: [ ^ owner rootEventHandler ].
-	^ self valueOfProperty: #rootEventHandler ifAbsent: [ MorphRootEventHandler new ]
-]
-
-{ #category : 'events - root handler' }
-Morph >> rootEventHandler: aMorphRootEventHandler [
-	"Handle the meta gestures of the morphs under me, when I am a root"
-
-	self setProperty: #rootEventHandler toValue: aMorphRootEventHandler
+	owner ifNotNil: [ ^ owner rootEventHandlers ].
+	^ self valueOfProperty: #rootEventHandlers ifAbsent: [ #(  ) ]
 ]
 
 { #category : 'submorphs - accessing' }
@@ -5954,12 +5960,12 @@ Morph >> yellowButtonActivity: shiftState [
 	"Find me or my outermost owner that has items to add to a
 	yellow button menu.
 	shiftState is true if the shift was pressed.
-	The menu itself is opened by my root's handler, usually the world's."
+	The menu itself is opened by the first of my root's handlers that wants to."
 
 	self isWorldMorph ifFalse: [
 		| outerOwner |
 		outerOwner := self outermostOwnerWithYellowButtonMenu.
 		outerOwner ifNil: [ ^ false ].
 		outerOwner == self ifFalse: [ ^ outerOwner yellowButtonActivity: shiftState ] ].
-	^ self rootEventHandler handleYellowButtonMenu: shiftState for: self
+	^ self rootEventHandlers anySatisfy: [ :handler | handler handleYellowButtonMenu: shiftState for: self ]
 ]

@@ -1,7 +1,7 @@
 "
-I handle the meta gestures (special gesture, meta menu gesture) of the morphs under a root morph, usually the world. A root keeps one of me; the morphs below it ask their root for me.
+I handle meta gestures (special gesture, meta menu gesture, yellow button menu) for the morphs under a root morph, usually the world. A root keeps an ordered list of handlers like me; the morphs below it ask their root, and each handler is asked in turn until one answers that it handled the gesture.
 
-I do nothing: with only Morphic's core loaded, meta gestures are ignored. Modules on top of the core, such as halos, set a subclass of me on the root to give these gestures a meaning.
+I handle nothing: I answer false. With only Morphic's core loaded a root has no handlers, and meta gestures are ignored. Modules on top of the core, such as halos, add a subclass of me to the root: aWorld addRootEventHandler: aHandler.
 "
 Class {
 	#name : 'MorphRootEventHandler',
@@ -13,21 +13,21 @@ Class {
 
 { #category : 'event handling' }
 MorphRootEventHandler >> handleMetaMenuGesture: anEvent for: aMorph [
-	"aMorph got the meta menu gesture. Ignore it"
+	"aMorph got the meta menu gesture. Answer whether I handled it: no"
 
-	
+	^ false
 ]
 
 { #category : 'event handling' }
 MorphRootEventHandler >> handleSpecialGesture: anEvent for: aMorph [
-	"aMorph got a special gesture (cmd-click on macOS, alt-click elsewhere). Ignore it"
+	"aMorph got a special gesture (cmd-click on macOS, alt-click elsewhere). Answer whether I handled it: no"
 
-	
+	^ false
 ]
 
 { #category : 'event handling' }
 MorphRootEventHandler >> handleYellowButtonMenu: shiftState for: aMorph [
-	"aMorph wants its yellow button menu. Answer whether a menu was opened: none"
+	"aMorph wants its yellow button menu. Answer whether I opened one: no"
 
 	^ false
 ]
