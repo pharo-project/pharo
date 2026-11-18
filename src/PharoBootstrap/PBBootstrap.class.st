@@ -335,7 +335,7 @@ PBBootstrap >> prepareEnvironmentForExport [
 	| allPackages |
 
 	logger log: '[+] Cleaning bootstrap model'.
-	allPackages := ringEnvironment packages collect: #name.
+	allPackages := ringEnvironment ask packages collect: #name.
 
 	(allPackages reject: [ :x | #BaselineOfPharoBootstrap asClass kernelPackageNames includes: x ])
 		do: [ :x | 
