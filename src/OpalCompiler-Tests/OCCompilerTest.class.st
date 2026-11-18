@@ -101,7 +101,22 @@ OCCompilerTest >> testAssignmentOfGlobalVarBinding [
 					class: MockForCompilation;
 					compileOrFail ]
 		raise: OCCompilationError
-		with: [ :err | self assert: (err messageText beginsWith: 'Compilation failed with following errors:') ]
+		with: [ :err | self assert: (err messageText beginsWith: 'Compilation of MockForCompilation>>temp failed with following errors:') ]
+]
+
+{ #category : 'tests' }
+OCCompilerTest >> testCompilationErrorNamesTheClassAndTheMethod [
+
+	| error |
+	error := [
+	         Object compiler
+		         permitFaulty: false;
+		         permitUndeclared: false;
+		         source: 'fooBar ^ UndeclaredForThisTest new';
+		         compileOrFail ]
+		         on: OCCompilationError
+		         do: [ :e | e ].
+	self assert: (error messageText beginsWith: 'Compilation of Object>>fooBar failed with following errors:')
 ]
 
 { #category : 'tests' }

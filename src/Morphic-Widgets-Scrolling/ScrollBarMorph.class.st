@@ -32,7 +32,12 @@ Class {
 { #category : 'images' }
 ScrollBarMorph class >> arrowOfDirection: aSymbol size: finalSizeInteger color: aColor [
 	"answer a FormSet with an arrow based on the parameters"
-	^ ArrowImagesCache at: {aSymbol. finalSizeInteger. aColor}
+
+	ArrowImagesCache ifNil: [ self initializeImagesCache ].
+	^ ArrowImagesCache at: {
+		  aSymbol.
+		  finalSizeInteger.
+		  aColor }
 ]
 
 { #category : 'images - samples' }
@@ -76,7 +81,11 @@ ScrollBarMorph class >> arrowSamples [
 { #category : 'images' }
 ScrollBarMorph class >> boxOfSize: finalSizeInteger color: aColor [
 	"answer a form with an box based on the parameters"
-	^ BoxesImagesCache at: {finalSizeInteger. aColor}
+
+	BoxesImagesCache ifNil: [ self initializeImagesCache ].
+	^ BoxesImagesCache at: {
+		  finalSizeInteger.
+		  aColor }
 ]
 
 { #category : 'images - samples' }
@@ -122,8 +131,10 @@ ScrollBarMorph class >> cleanUp [
 
 { #category : 'class initialization' }
 ScrollBarMorph class >> initialize [
+	"The images caches are built from the theme the first time they are needed"
 
-	self initializeImagesCache
+	ArrowImagesCache := nil.
+	BoxesImagesCache := nil
 ]
 
 { #category : 'private - initialization' }

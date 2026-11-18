@@ -20,7 +20,7 @@ MetacelloAtomicLoad >> finishLoading [
 	preLoads do: [ :e | target visitPreLoadDirective: e ].
 	preLoads := OrderedCollection new.
 
-	target loader loadAtomicPackageDirectives: packageDirectives engine: target engine.
+	target loadPackageDirectives: packageDirectives.
 	packageDirectives := OrderedCollection new.
 	
 	postLoads do: [ :e | target visitPostLoadDirective: e ].

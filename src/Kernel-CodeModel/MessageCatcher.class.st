@@ -10,8 +10,8 @@ Class {
 	#instVars : [
 		'accumulator'
 	],
-	#category : 'Debugging-Core',
-	#package : 'Debugging-Core'
+	#category : 'Kernel-CodeModel',
+	#package : 'Kernel-CodeModel'
 }
 
 { #category : 'reflective operations' }

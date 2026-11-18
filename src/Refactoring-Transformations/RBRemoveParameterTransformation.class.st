@@ -75,7 +75,7 @@ RBRemoveParameterTransformation >> hasReferencesToTemporaryIn: each [
 	| tree |
 	tree := each parseTreeForSelector: oldSelector.
 	tree ifNil: [ self refactoringError: 'Cannot parse sources.' ].
-	^ tree references: ( tree argumentNames at: parameterIndex )
+	^ tree referencesVariableNamed: ( tree argumentNames at: parameterIndex )
 ]
 
 { #category : 'private' }

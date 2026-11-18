@@ -116,10 +116,9 @@ UITheme class >> currentSettings [
 
 { #category : 'class initialization' }
 UITheme class >> initialize [
+	"Drop a current theme that is a plain UITheme (now abstract); #current builds the default theme the first time it is asked for"
 
-	self current class = UITheme
-		ifTrue: [self current: nil
-			"due to change to being abstract"]
+	(Current isNotNil and: [ Current class = UITheme ]) ifTrue: [ Current := nil ]
 ]
 
 { #category : 'testing' }

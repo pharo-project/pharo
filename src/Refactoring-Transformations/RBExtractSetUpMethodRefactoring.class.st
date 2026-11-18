@@ -73,7 +73,7 @@ RBExtractSetUpMethodRefactoring >> checkAssignments: variableNames [
 	removeAssigned := variableNames copy.
 	node := self placeholderNode.
 	outsideVars := variableNames
-				select: [:each | (node whichUpNodeDefines: each) references: each].
+				select: [:each | (node whichUpNodeDefines: each) referencesVariableNamed: each].
 	outsideVars do: [ :var | self checkSingleAssignment: var ].
 	removeAssigned removeAll: outsideVars.
 	(OCReadBeforeWrittenTester readBeforeWritten: removeAssigned
