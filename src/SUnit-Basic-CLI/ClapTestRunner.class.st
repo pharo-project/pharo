@@ -14,28 +14,34 @@ Class {
 
 { #category : 'command line' }
 ClapTestRunner class >> commandSpecification [
+
 	<commandline>
 	| spec |
 	spec := (ClapCommandSpec id: #test)
-		commandClass: self;
-		addHelp;
-		description: 'A Test runner to run test suites from a shell';
-		addFlag: #'junit-xml-output' description: 'Output results in JUnit-compatible XML format';
-		addFlagWithPositional: #'shuffle-seed' description: 'an integer specifying the seed used to shuffle the tests';
-		addFlagWithPositional: #'stage-name' description: 'adds a prefix to the generated xml, this is useful when running in the CI infrastructure';
-		addFlagWithPositional: #'project-name' description: 'the name of the metacello project, what follows the BaselineOf prefix, used to obtain the tests from the project Tests group';
-		addFlag: #'no-xterm' description: 'use this option when no xterm available';
-		addFlag: #'fail-on-error' description: 'if there is a test error, it will exit with error code 1';
-		addFlag: #'fail-on-failure' description: 'if there is a test error or failure, it will exit with error code 1';
-		addPositional: #PACKAGE spec: [ :positional |
-			positional
-				description: 'Run tests from packages matching this pattern';
-				multiple: true ];
-		yourself.
-	self 
+		        commandClass: self;
+		        addHelp;
+		        description: 'A Test runner to run test suites from a shell';
+		        addFlag: #'junit-xml-output' description: 'Output results in JUnit-compatible XML format';
+		        addFlagWithPositional: #'shuffle-seed' description: 'an integer specifying the seed used to shuffle the tests';
+		        addFlagWithPositional: #'stage-name'
+		        description: 'adds a prefix to the generated xml, this is useful when running in the CI infrastructure';
+		        addFlagWithPositional: #'project-name'
+		        description:
+			        'the name of the metacello project, what follows the BaselineOf prefix, used to obtain the tests from the project Tests group';
+		        addFlag: #'no-xterm' description: 'use this option when no xterm available';
+		        addFlag: #'fail-on-error' description: 'if there is a test error, it will exit with error code 1';
+		        addFlag: #'fail-on-failure' description: 'if there is a test error or failure, it will exit with error code 1';
+		        addFlag: #'deprecations-as-errors'
+		        description: 'a deprecated method run by a test is an error of the test, and never rewrites its caller';
+		        addPositional: #PACKAGE spec: [ :positional |
+			        positional
+				        description: 'Run tests from packages matching this pattern';
+				        multiple: true ];
+		        yourself.
+	self
 		addSaveFlagTo: spec;
 		addRenameOptionTo: spec.
-	^ spec	
+	^ spec
 ]
 
 { #category : 'private - packages  selection' }
@@ -60,6 +66,23 @@ ClapTestRunner >> addPackagesMatchingRegex: aString to: aSet [
 	self packageOrganizer packageNames
 		select: [ :packageName | regex matches: packageName ]
 		thenDo: [ :packageName | aSet add: packageName ]
+]
+
+{ #category : 'execution' }
+ClapTestRunner >> deprecationStrategiesDuring: aBlock [
+	"With --deprecations-as-errors, run aBlock with deprecations as errors that rewrite nothing, and restore the strategies of the image afterwards."
+
+	| oldReaction oldRewriting |
+	self shouldTreatDeprecationsAsErrors ifFalse: [ ^ aBlock value ].
+	oldReaction := Deprecation reaction.
+	oldRewriting := Deprecation rewriting.
+	Deprecation
+		reaction: ErrorDeprecationReaction;
+		rewriting: NeverRewriteDeprecation.
+	^ aBlock ensure: [
+		  Deprecation
+			  reaction: oldReaction;
+			  rewriting: oldRewriting ]
 ]
 
 { #category : 'execution' }
@@ -122,20 +145,18 @@ ClapTestRunner >> projectName [
 
 { #category : 'execution' }
 ClapTestRunner >> runPackages [
+
 	| packages results |
-	
 	packages := self testPackages.
-	self inform: 'Running tests in ', packages size asString, ' Packages'.
-	results := (self testRunner runPackages: packages) select: #isNotNil.
-				
+	self inform: 'Running tests in ' , packages size asString , ' Packages'.
+	results := self deprecationStrategiesDuring: [ (self testRunner runPackages: packages) select: #isNotNil ].
+
 	self informResults: results.
 	self saveSessionIfAsked.
-		
-	(self shouldFailOnFailure and: [ results anySatisfy: #hasFailuresOrErrors ])
-		ifTrue: [ ^ self exitFailure: 'Tests do not pass!' ].
-		
-	(self shouldFailOnError and: [ results anySatisfy: #hasErrors ])
-		ifTrue: [ ^ self exitFailure: 'Tests do not pass!' ].
+
+	(self shouldFailOnFailure and: [ results anySatisfy: #hasFailuresOrErrors ]) ifTrue: [ ^ self exitFailure: 'Tests do not pass!' ].
+
+	(self shouldFailOnError and: [ results anySatisfy: #hasErrors ]) ifTrue: [ ^ self exitFailure: 'Tests do not pass!' ]
 ]
 
 { #category : 'testing' }
@@ -154,6 +175,12 @@ ClapTestRunner >> shouldFailOnFailure [
 ClapTestRunner >> shouldOutputJunitXml [
 
 	^ self hasFlag: #'junit-xml-output'
+]
+
+{ #category : 'testing' }
+ClapTestRunner >> shouldTreatDeprecationsAsErrors [
+
+	^ self hasFlag: #'deprecations-as-errors'
 ]
 
 { #category : 'accessing' }

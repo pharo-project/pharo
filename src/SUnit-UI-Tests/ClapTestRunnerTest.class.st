@@ -87,6 +87,40 @@ ClapTestRunnerTest >> testDefaultTestRunnerIsVTermTestRunner [
 ]
 
 { #category : 'tests' }
+ClapTestRunnerTest >> testDeprecationsAsErrorsDuringTheRun [
+
+	| command oldReaction oldRewriting strategies |
+	context := ClapTestRunner commandSpecification activationWith: #( 'test' '--deprecations-as-errors' 'Kernel' ).
+	command := context command.
+	oldReaction := Deprecation reaction.
+	oldRewriting := Deprecation rewriting.
+	strategies := command deprecationStrategiesDuring: [
+		              {
+			              Deprecation reaction.
+			              Deprecation rewriting } ].
+	self assert: strategies equals: {
+		ErrorDeprecationReaction.
+		NeverRewriteDeprecation }.
+	self assert: Deprecation reaction identicalTo: oldReaction.
+	self assert: Deprecation rewriting identicalTo: oldRewriting
+]
+
+{ #category : 'tests' }
+ClapTestRunnerTest >> testDeprecationsKeepTheirStrategiesByDefault [
+
+	| command strategies |
+	context := ClapTestRunner commandSpecification activationWith: #( 'test' 'Kernel' ).
+	command := context command.
+	strategies := command deprecationStrategiesDuring: [
+		              {
+			              Deprecation reaction.
+			              Deprecation rewriting } ].
+	self assert: strategies equals: {
+		Deprecation reaction.
+		Deprecation rewriting }
+]
+
+{ #category : 'tests' }
 ClapTestRunnerTest >> testResolvePackagesForGeneralProject [
 	"Tests that a baseline mixing direct packages and nested groups in its Tests group is resolved correctly"
 	| runner packages |

@@ -8,8 +8,8 @@ Deprecation >> manageTestProcessBy: aProcessMonitorTestService [
 
 { #category : '*SUnit-Core' }
 Deprecation >> sunitAnnounce: aTestCase toResult: aTestResult [
-	"On the Pharo CI, a deprecation reaching the test runner is an error of the test and stops it: it does not go unnoticed, and its default action never runs, so it does not rewrite the code under test. Elsewhere it goes on as a warning. A test that exercises deprecations on purpose handles them itself."
+	"When deprecations react as errors (the test command's --deprecations-as-errors, as the Pharo CI runs it), a deprecation reaching the test runner is an error of the test and stops it: its default action never runs, so it does not rewrite the code under test. Otherwise it goes on to its default action. A test that exercises deprecations on purpose handles them itself."
 
-	aTestCase onPharoCITestingEnvironment ifFalse: [ ^ self pass ].
+	self class reaction == ErrorDeprecationReaction ifFalse: [ ^ self pass ].
 	aTestResult addError: aTestCase
 ]
