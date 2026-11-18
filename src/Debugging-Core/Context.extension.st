@@ -144,6 +144,14 @@ Context >> runSimulated: aBlock contextAtEachStep: block2 [
 ]
 
 { #category : '*Debugging-Core' }
+Context class >> senderOf: aContextOrBlock startingFrom: aBlock [
+	"While simulating aBlock, the step before the first one is aBlock itself, which has no sender: answer the one of the context that created it, none for a clean block."
+
+	aContextOrBlock == aBlock ifFalse: [ ^ aContextOrBlock sender ].
+	^ aBlock outerContext ifNotNil: [ :outer | outer sender ]
+]
+
+{ #category : '*Debugging-Core' }
 Context >> stepIntoQuickMethod [
 	^self compiledCode stepIntoQuickMethods
 ]
@@ -239,17 +247,14 @@ Context class >> tallyInstructions: aBlock [
 Context class >> tallyMethods: aBlock [
 	"This method uses the simulator to count the number of calls on each method
 	invoked in evaluating aBlock. Results are given in order of decreasing counts."
+
 	| prev tallies |
 	tallies := Bag new.
 	prev := aBlock.
-	thisContext sender
-		runSimulated: aBlock
-		contextAtEachStep:
-			[:current |
-			current == prev ifFalse: "call or return"
-				[prev sender ifNotNil: "call only"
-					[tallies add: current printString].
-				prev := current]].
+	thisContext sender runSimulated: aBlock contextAtEachStep: [ :current |
+		current == prev ifFalse: [ "call or return"
+			(self senderOf: prev startingFrom: aBlock) ifNotNil: [ "call only" tallies add: current printString ].
+			prev := current ] ].
 	^ tallies sortedCounts
 
 	"Contex tallyMethods: [3.14159 printString]"
