@@ -17,6 +17,7 @@ Class {
 { #category : 'initialization' }
 MorphicInitialization class >> cleanUp [
 
+	FreeTypeCache clearCurrent.
 	World cleanseOtherworldlySteppers.
 	MCFileBasedRepository flushAllCaches
 ]
@@ -26,7 +27,7 @@ MorphicInitialization class >> initializeClasses [
 	"These class initializers depend on each other and on fonts and the theme, so run them again, in this order, once everything is loaded."
 
 	#( #ProgressBarMorph #GlobalIdentifier #HaloMorph #CharacterScanner #ImageMorph #Locale #MenuItemMorph #MenuMorph #SHA1 #SystemProgressMorph
-	   #SystemWindow #TextContainer #TextDiffBuilder #ThumbnailMorph #TransferMorph #UITheme #BalloonMorph ) do: [ :each |
+	   #SystemWindow #TextContainer #TextDiffBuilder #ThumbnailMorph #TransferMorph #UITheme ) do: [ :each |
 		(self class environment at: each) initialize ]
 ]
 
@@ -48,7 +49,9 @@ MorphicInitialization class >> initializeFontsAndDesktop [
 	GraphicFontSettings setFontsToStyleNamed: #small.
 	PolymorphSystemSettings showDesktopLogo: false.
 	PolymorphSystemSettings showDesktopLogo: true.
-	PolymorphSystemSettings desktopColor: Color white
+	PolymorphSystemSettings desktopColor: Color white.
+	"The balloon font is taken from the fonts just set"
+	BalloonMorph initialize
 ]
 
 { #category : 'initialization' }
