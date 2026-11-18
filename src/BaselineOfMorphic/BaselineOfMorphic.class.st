@@ -98,7 +98,7 @@ BaselineOfMorphic >> baseline: spec [
 		spec
 			package: 'Morphic-Initialization'
 			with: [
-			spec requires: #( 'Morphic-Base' 'Morphic-Widgets-Menubar' 'Morphic-Widgets-Taskbar' 'Settings-Polymorph' 'Text-Diff' ) ] ]
+			spec requires: #( 'Morphic-Base' 'Morphic-Widgets-Menubar' 'Morphic-Widgets-Taskbar' 'Settings-Polymorph' 'Text-Diff' 'Morphic-Halos' ) ] ]
 ]
 
 { #category : 'baseline' }

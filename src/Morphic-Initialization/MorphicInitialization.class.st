@@ -30,6 +30,7 @@ MorphicInitialization class >> initializeEnvironment [
 		startUIProcess;
 		cleanUp;
 		initializeFontsAndDesktop;
+		installHalos;
 		openWorldBars
 ]
 
@@ -42,6 +43,13 @@ MorphicInitialization class >> initializeFontsAndDesktop [
 	PolymorphSystemSettings desktopColor: Color white.
 	"The balloon font is taken from the fonts just set"
 	BalloonMorph initialize
+]
+
+{ #category : 'initialization' }
+MorphicInitialization class >> installHalos [
+	"Meta gestures on the world (cmd/alt-click, meta menu, yellow button menu) open halos and morph menus"
+
+	World addRootEventHandler: HaloRootEventHandler new
 ]
 
 { #category : 'initialization' }
