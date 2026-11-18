@@ -23,8 +23,8 @@ Class {
 		'allAttributes',
 		'windows'
 	],
-	#category : 'Morphic-Base',
-	#package : 'Morphic-Base'
+	#category : 'Morphic-Desktop',
+	#package : 'Morphic-Desktop'
 }
 
 { #category : 'instance creation' }

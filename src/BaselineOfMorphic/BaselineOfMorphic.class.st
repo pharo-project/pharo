@@ -63,7 +63,7 @@ BaselineOfMorphic >> baseline: spec [
 		"Halos plug into the world's root event handler, and open menus"
 		spec package: 'Morphic-Halos'.
 		"The world menu, the windows menu, the selection rectangle and the quit dialog"
-		spec package: 'Morphic-Desktop' with: [ spec requires: #( 'Morphic-Halos' ) ].
+		spec package: 'Morphic-Desktop' with: [ spec requires: #( 'Morphic-Halos' 'Morphic-Widgets-Taskbar' 'Growl' ) ].
 
 		spec package: 'Morphic-Widgets-Taskbar-Tests'.
 		spec package: 'Morphic-Widgets-MissionControl-Tests'.

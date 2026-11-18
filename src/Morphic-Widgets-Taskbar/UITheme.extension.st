@@ -37,6 +37,15 @@ UITheme >> newBasicTaskbarButtonIn: aTaskbar for: aMorph [
 ]
 
 { #category : '*Morphic-Widgets-Taskbar' }
+UITheme >> newTaskbarButtonIn: aTaskbar for: aWindow [
+	"Answer a taskbar button morph for the given window."
+
+	^ (TaskbarItemMorph on: aWindow getState: #isActive action: #taskbarButtonClicked)
+		initializeFor: aTaskbar;
+		yourself
+]
+
+{ #category : '*Morphic-Widgets-Taskbar' }
 UITheme >> openTaskListIn: world from: event [
 
 	(tasklistMorph isNil or: [ (tasklistMorph hasCurrentWindows: world taskbarTasks) not ]) ifTrue: [
