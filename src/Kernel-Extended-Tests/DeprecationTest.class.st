@@ -29,6 +29,18 @@ DeprecationTest >> callerIsTransformedWhenSending: aSelector rewriting: aRewriti
 		  ExampleForDeprecationTest removeSelector: #sendsDeprecatedMessage ]
 ]
 
+{ #category : 'tests - compatibility period' }
+DeprecationTest >> deprecationIn: aMethod [
+
+	^ Deprecation new
+		  context: (Context
+			   sender: nil
+			   receiver: nil
+			   method: aMethod
+			   arguments: #(  ));
+		  yourself
+]
+
 { #category : 'helpers' }
 DeprecationTest >> reaction: aReaction rewriting: aRewriting during: aBlock [
 	"Run aBlock with these deprecation strategies, and restore the ones of the image afterwards."
@@ -68,6 +80,18 @@ DeprecationTest >> testCompatibilityPeriodRewritingNeedsAVersion [
 		(self
 			 callerIsTransformedWhenSending: #deprecatedMessageWithTransformAndNoVersion
 			 rewriting: CompatibilityPeriodRewriteDeprecation)
+]
+
+{ #category : 'tests - compatibility period' }
+DeprecationTest >> testDeprecatedPackageNames [
+
+	| deprecation |
+	deprecation := Deprecation new.
+	self assert: (deprecation isDeprecatedPackageName: 'Deprecated14').
+	self assert: (deprecation isDeprecatedPackageName: 'Deprecated14-Kernel').
+	self deny: (deprecation isDeprecatedPackageName: 'Morphic-Deprecated').
+	self deny: (deprecation isDeprecatedPackageName: 'Deprecation').
+	self deny: (deprecation isDeprecatedPackageName: 'DeprecatedSomething')
 ]
 
 { #category : 'tests - strategies' }
@@ -212,6 +236,14 @@ DeprecationTest >> testIgnoreReactionNotifiesNothing [
 				notified := true.
 				notification resume ] ].
 	self deny: notified
+]
+
+{ #category : 'tests - compatibility period' }
+DeprecationTest >> testKernelIsDecidedByThePackageOfTheMethod [
+	"An extension method belongs to the package that extends the class: this test method's package is not kernel, while Object's is."
+
+	self deny: (self deprecationIn: DeprecationTest >> #testDeprecatedPackageNames) isKernel.
+	self assert: (self deprecationIn: Object >> #printString) isKernel
 ]
 
 { #category : 'tests - strategies' }
